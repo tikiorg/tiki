@@ -178,7 +178,7 @@
 		<label for="banning-find">{tr}Find:{/tr}</label><input type="text" name="find" id="banning-find" value="{$find|escape}">
 	</form>
 {/if}
-<h2>{tr}Rules:{/tr}</h2>
+<h2>{tr}Current rules{/tr}</h2>
 <form method="post" action="tiki-admin_banning.php">
 	<input type="hidden" name="offset" value="{$offset|escape}">
 	<input type="hidden" name="find" value="{$find|escape}">
@@ -187,7 +187,7 @@
 		<table class="table normal">
 			<tr>
 				<th>
-					{if $items|count eq 0}
+					{if $items|count > 0}
 						<input type="submit" class="btn btn-warning btn-sm tips" name="del" value="{tr}x{/tr}" title=":{tr}Remove{/tr}">
 					{/if}
 				</th>
@@ -227,7 +227,7 @@
 					</div>
 				</div>
 			{sectionelse}
-				{norecords _colspan=5}
+				{norecords _colspan=5 _text="{tr}No rules found{/tr}"}
 			{/section}
 		</table>
 	</div>
