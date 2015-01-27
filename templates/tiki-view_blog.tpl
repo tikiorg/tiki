@@ -6,7 +6,8 @@
 		{include file='blog_heading.tpl'}
 	{/if}
 
-	<div class="pull-right btn-group blogactions" >
+	<div class="blogactions clearfix">
+        <div class="btn-group">
 		{if $tiki_p_blog_post eq "y"}
 			{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y" or $public eq "y"}
 				<a class="btn btn-default btn-small bloglink" href="tiki-blog_post.php?blogId={$blogId}" alt="{tr}Post{/tr}" title="{tr}Post{/tr}">{icon name=post}</a>
@@ -41,7 +42,7 @@
 				{/section}
 			{/if}
 		{/if}
-	</div>
+	</div></div>
 
 	{if $use_find eq 'y'}
 		<div class="blogtools">
