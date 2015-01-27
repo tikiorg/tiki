@@ -39,7 +39,7 @@
 	}
 {/jq}
 
-{title help="Banning+System"}{tr}Banning system{/tr}{/title}
+{title help="Banning"}{tr}Banning system{/tr}{/title}
 
 <div class="t_navbar" xmlns="http://www.w3.org/1999/html">
 	<form action="tiki-admin_banning.php" method="post">
@@ -76,19 +76,18 @@
 			<label class="col-sm-4 control-label" for="banning-ipregex">{tr}Multiple IP regex matching{/tr}</label>
 			<div class="col-sm-8">
 				<input type="radio" name="mode" value="mass_ban_ip" {if $info.mode eq 'mass_ban_ip'}checked="checked"{/if}>
+				<br>
+				<input type="checkbox" name="checkmultiip" checked="checked" onclick="CheckMultiIP();">
+				<label for="sectionswitch">{tr}Check / Uncheck All{/tr}</label><br>
+				{foreach key=ip item=comment from=$ban_comments_list}
+					<input type="checkbox" name="multi_banned_ip[{$ip|escape}]" id="multi-banning-section" checked="checked">
+					<label for="multi-banning-section">{$ip|escape}</label>
+					{foreach key=id item=user from=$comment}
+						<label>{$user.userName|escape}</label>
+					{/foreach}
+				{/foreach}
 			</div>
 		</div>
-		<div class="form-group">
-			<input type="checkbox" name="checkmultiip" checked="checked" onclick="CheckMultiIP();">
-			<label class="col-sm-4 control-label" for="sectionswitch">{tr}Check / Uncheck All{/tr}</label>
-		</div>
-		{foreach key=ip item=comment from=$ban_comments_list}
-			<input type="checkbox" name="multi_banned_ip[{$ip|escape}]" id="multi-banning-section" checked="checked">
-			<label for="multi-banning-section">{$ip|escape}</label>
-			{foreach key=id item=user from=$comment}
-				<div>{$user.userName|escape}</div>
-			{/foreach}
-		{/foreach}
 	{else}
 		<div class="form-group">
 			<label class="col-sm-4 control-label" for="banning-ipregex">{tr}IP regex matching{/tr}</label></label>
@@ -105,16 +104,16 @@
 		<label class="col-sm-4 control-label" for="banning-section">{tr}Banned from sections{/tr}</label>
 		<div class="col-sm-8">
 			<input type="checkbox" name="checkall" {if (!$banId)}checked="checked"{/if} onclick="CheckAll();">
-			<label for="sectionswitch">{tr}Check / Uncheck All{/tr}</label>
-		</div>
-		<div class="col-sm-8">
+			<label for="sectionswitch">{tr}Check / Uncheck All{/tr}</label><br>
 			{foreach key=sec name=ix item=it from=$sections}
-				<label for="banning-section"><input type="checkbox" name="section[{$sec}]" id="banning-section" {if ((!$banId) || in_array($sec,$info.sections))}checked="checked"{/if}>
+				<label class="control-label" for="banning-section"><input type="checkbox" name="section[{$sec}]" id="banning-section" {if ((!$banId) || in_array($sec,$info.sections))}checked="checked"{/if}>
 					{tr}{$sec}{/tr}
 				</label>
 				{if $smarty.foreach.ix.index mod 2}
 				{/if}
 			{/foreach}
+		</div>
+		<div class="col-sm-8">
 		</div>
 	</div>
 	<div class="form-group">
@@ -154,21 +153,19 @@
 	<div class="form-group">
 		<label class="col-sm-4 control-label" for="csv">{tr}CSV File{/tr}
 			{capture name=help}{tr}Column names on the first line:{/tr}<br>banId,mode,title,ip1,ip2,ip3,ip4,user,date_from,date_to,use_dates,created,created_readable,message,sections<br>{tr}Sections format:{/tr} {tr}section names are splitted by pipes (vertical bars). To see an example and use it as template, add one rule by hand, and export it as csv{/tr}<br>{tr}Date format:{/tr} {tr}See:{/tr} http://php.net/strtotime{/capture}
-			<a title="{tr}Help{/tr}" {popup text=$smarty.capture.help|escape}>{icon _id='help'}</a>
+			<a title="{tr}Help{/tr}" {popup text=$smarty.capture.help|escape}>{icon name='help'}</a>
 		</label>
 		<div class="col-sm-8">
 			<input type="file" name="fileCSV" class="form-control">
-		</div>
-	</div>
-	<div class="form-group">
-		<div class="col-sm-offset-4">
-			<label class="col-sm-5 control-label" for="import_as_new">
+			<label class="control-label" for="import_as_new">
 				<input type="checkbox" name="import_as_new" id="import_as_new">
 				{tr}Import as new rules{/tr}
 			</label>
-			<div class="col-sm-5">
-				<input type="submit" class="btn btn-default btn-sm" name="import" value="{tr}import{/tr}">
-			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-8 col-sm-offset-4">
+			<input type="submit" class="btn btn-default btn-sm" name="import" value="{tr}Import{/tr}">
 		</div>
 	</div>
  </form>
@@ -189,7 +186,11 @@
 	<div class="table-responsive">
 		<table class="table normal">
 			<tr>
-				<th><input type="submit" class="btn btn-warning btn-sm" name="del" value="{tr}x{/tr} "></th>
+				<th>
+					{if $items|count eq 0}
+						<input type="submit" class="btn btn-warning btn-sm tips" name="del" value="{tr}x{/tr}" title=":{tr}Remove{/tr}">
+					{/if}
+				</th>
 				<th>{tr}Title{/tr}</th>
 				<th>{tr}User/IP{/tr}</th>
 				<th>{tr}Sections{/tr}</th>
@@ -217,11 +218,11 @@
 						{/section}
 					</div>
 					<div class="form-group">
-						&nbsp;&nbsp;<a title="{tr}Edit{/tr}" href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;banId={$items[user].banId}" class="link">
-							{icon _id='page_edit' alt="{tr}Edit{/tr}"}
+						&nbsp;&nbsp;<a title="{tr}Edit{/tr}" href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;banId={$items[user].banId}" class="link tips">
+							{icon name='edit' alt="{tr}Edit{/tr}"}
 						</a>
-						<a title="{tr}Delete{/tr}" href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link">
-							{icon _id='cross' alt="{tr}Delete{/tr}"}
+						<a title="{tr}Delete{/tr}" href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link tips">
+							{icon name='remove' alt="{tr}Delete{/tr}"}
 						</a>
 					</div>
 				</div>
