@@ -24,10 +24,6 @@
 			{button href="tiki-admin_forums.php?forumId=$thisforum_info&amp;cookietab=2" _text="{tr}Edit Forum{/tr}"}
 		{/if}
 
-		{if $queued > 0}
-			{button href="tiki-forum_queue.php?forumId=$forumId" _text="{tr}Manage Message Queue{/tr}&nbsp;($queued)"}
-		{/if}
-
 		{if $prefs.feed_forum eq 'y'}
 			<a href="tiki-forum_rss.php?forumId={$forumId}" class="tips" title=":{tr}RSS feed{/tr}">{icon name="rss"}</a>
 		{/if}
@@ -427,9 +423,11 @@
 				</div>
 				<div class="pull-right">
 					{if $reported > 0}
-						<a class="btn btn-default btn-sm" href="tiki-forums_reported.php?forumId={$forumId}">{tr}Reported Messages{/tr} <span class="badge">{$reported}<span></a>
+						<a class="btn btn-default btn-sm" href="tiki-forums_reported.php?forumId={$forumId}">{tr}Reported messages{/tr} <span class="badge">{$reported}<span></a>
 					{/if}
-					<a class="btn btn-default btn-sm" href="tiki-forum_queue.php?forumId={$forumId}">{tr}Queued Messages{/tr} <span class="badge">{$queued}</span></a>
+					{if $queued > 0}
+						<a class="btn btn-default btn-sm" href="tiki-forum_queue.php?forumId={$forumId}">{tr}Queued messages{/tr} <span class="badge">{$queued}</span></a>
+					{/if}
 				</div>
 			</div>
 		</div>

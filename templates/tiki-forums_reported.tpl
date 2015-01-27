@@ -1,25 +1,24 @@
-{title help="Forums" admpage="forums"}{tr _0=$forum_info.name}Reported messages for forum %0{/tr}{/title}
+{title help="Forums" admpage="forums"}{$forum_info.name}{/title}
+<h4>
+	{tr}Reported messages{/tr}
+	<span class="badge">{$cant}</span>
+	{icon name="refresh" href="tiki-forums_reported.php?forumId=$forumId" class="btn btn-link tips" title=":{tr}Refresh list{/tr}"}
+</h4>
 
-<div class="t_navbar">
-	{button href="tiki-view_forum.php?forumId=$forumId" class="btn btn-default" _text="{tr}Back to forum{/tr}"}
-</div>
-
-<h2>{tr}List of messages{/tr} ({$cant})</h2>
 {* FILTERING FORM *}
 {if $items or ($find ne '')}
-	<form action="tiki-forums_reported.php" method="post">
-		<input type="hidden" name="forumId" value="{$forumId|escape}">
-		<input type="hidden" name="offset" value="{$offset|escape}">
-		<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
-		<table>
-			<tr>
-				<td>
-					<small>{tr}Find{/tr}</small>
-					<input size="8" type="text" name="find" value="{$find|escape}">
-					<input type="submit" class="btn btn-default btn-sm" name="filter" value="{tr}Filter{/tr}">
-				</td>
-			</tr>
-		</table>
+	<form action="tiki-forums_reported.php" method="post" class="form">
+		<div class="form-group">
+			<input type="hidden" name="forumId" value="{$forumId|escape}">
+			<input type="hidden" name="offset" value="{$offset|escape}">
+			<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
+			<div class="input-group">
+				<input type="text" class="form-control" name="find" value="{$find|escape}" placeholder="{tr}Find{/tr}...">
+				<div class="input-group-btn">
+					<button type="submit" class="btn btn-default" name="filter">{tr}Filter{/tr}</button>
+				</div>
+			</div>
+		</div>
 	</form>
 {/if}
 {*END OF FILTERING FORM *}
@@ -30,7 +29,7 @@
 	<input type="hidden" name="offset" value="{$offset|escape}">
 	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 	<input type="hidden" name="find" value="{$find|escape}">
-	<table class="table normal">
+	<table class="table normal table-hover">
 		<tr>
 			{if $items}
 				<th></th>

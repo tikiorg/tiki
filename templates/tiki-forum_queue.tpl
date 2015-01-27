@@ -1,120 +1,129 @@
-
-{title help="forums" admpage="forums"}{tr}Message queue for forum{/tr} {$forum_info.name}{/title}
-
-<div class="t_navbar">
-	{button href="tiki-view_forum.php?forumId=$forumId" class="btn btn-default" _text="{tr}Back to forum{/tr}"}
-</div>
+{title help="forums" admpage="forums"}{$forum_info.name}{/title}
+<h4>
+	{tr}Queued messages{/tr}
+	<span class="badge">{$cant}</span>
+	{icon name="refresh" href="tiki-forum_queue.php?forumId=$forumId" class="btn btn-link tips" title=":{tr}Refresh list{/tr}"}
+</h4>
 
 {if $smarty.request.qId and $form eq 'y'}
-	<h3>{tr}Edit queued message{/tr}</h3>
-	<form method="post" action="tiki-forum_queue.php">
-		<input type="hidden" name="forumId" value="{$forumId|escape}">
-		<input type="hidden" name="in_reply_to" value="{$msg_info.in_reply_to|escape}">
-		<input type="hidden" name="qId" value="{$smarty.request.qId|escape}">
-		<table class="formcolor">
-			<tr>
-				<td>{tr}Title{/tr}</td>
-				<td>
-					<input type="text" name="title" value="{$msg_info.title|escape}">
-				</td>
-			</tr>
-			{if $msg_info.parentId > 0}
-				<tr>
-					<td>{tr}Topic{/tr}</td>
-					<td>
-						<select name="parentId">
-							{section name=ix loop=$topics}
-								<option value="{$topics[ix].threadId|escape}" {if $topics[ix].threadId eq $msg_info.parentId}selected="selected"{/if}>{$topics[ix].title|escape}</option>
-							{/section}
-						</select>
-					</td>
-				</tr>
-			{else}
-				<tr>
-					<td>{tr}make this a thread of{/tr}</td>
-					<td>
-						<select name="parentId">
-							<option value="0" {if $topics[ix].threadId eq $msg_info.parentId}selected="selected"{/if}>{tr}None, this is a thread message{/tr}</option>
-							{section name=ix loop=$topics}
-								<option value="{$topics[ix].threadId|escape}" {if $topics[ix].threadId eq $msg_info.parentId}selected="selected"{/if}>{$topics[ix].title|escape}</option>
-							{/section}
-						</select>
-					</td>
-				</tr>
-			{/if}
-			{if $msg_info.parentId eq 0 and $forum_info.topic_summary eq 'y'}
-				<tr>
-					<td>{tr}summary{/tr}</td>
-					<td>
-						<input type="text" name="summary" value="{$msg_info.summary|escape}">
-					</td>
-				</tr>
-			{/if}
-			{if $msg_info.parentId eq 0}
-				<tr>
-					<td>{tr}Type{/tr}</td>
-					<td>
-						<select name="type">
-							<option value="n" {if $msg_info.type eq 'n'}selected="selected"{/if}>{tr}Normal{/tr}</option>
-							<option value="a" {if $msg_info.type eq 'a'}selected="selected"{/if}>{tr}Announce{/tr}</option>
-							<option value="h" {if $msg_info.type eq 'h'}selected="selected"{/if}>{tr}Hot{/tr}</option>
-							<option value="s" {if $msg_info.type eq 's'}selected="selected"{/if}>{tr}Sticky{/tr}</option>
-							<option value="l" {if $msg_info.type eq 'l'}selected="selected"{/if}>{tr}Locked{/tr}</option>
-						</select>
-						{if $forum_info.topic_smileys eq 'y'}
-							<select name="topic_smiley">
-								<option value="" {if $msg_info.topic_smiley eq ''}selected="selected"{/if}>{tr}no feeling{/tr}</option>
-								<option value="icon_frown.gif" {if $msg_info.topic_smiley eq 'icon_frown.gif'}selected="selected"{/if}>{tr}frown{/tr}</option>
-								<option value="icon_exclaim.gif" {if $msg_info.topic_smiley eq 'icon_exclaim.gif'}selected="selected"{/if}>{tr}exclaim{/tr}</option>
-								<option value="icon_idea.gif" {if $msg_info.topic_smiley eq 'icon_idea.gif'}selected="selected"{/if}>{tr}idea{/tr}</option>
-								<option value="icon_mad.gif" {if $msg_info.topic_smiley eq 'icon_mad.gif'}selected="selected"{/if}>{tr}mad{/tr}</option>
-								<option value="icon_neutral.gif" {if $msg_info.topic_smiley eq 'icon_neutral.gif'}selected="selected"{/if}>{tr}neutral{/tr}</option>
-								<option value="icon_question.gif" {if $msg_info.topic_smiley eq 'icon_question.gif'}selected="selected"{/if}>{tr}question{/tr}</option>
-								<option value="icon_sad.gif" {if $msg_info.topic_smiley eq 'icon_sad.gif'}selected="selected"{/if}>{tr}sad{/tr}</option>
-								<option value="icon_smile.gif" {if $msg_info.topic_smiley eq 'icon_smile.gif'}selected="selected"{/if}>{tr}happy{/tr}</option>
-								<option value="icon_wink.gif" {if $msg_info.topic_smiley eq 'icon_wink.gif'}selected="selected"{/if}>{tr}wink{/tr}</option>
+	<form method="post" action="tiki-forum_queue.php" role="form" class="form-horizontal">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				{tr}Edit queued message{/tr}
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label for="title" class="control-label col-sm-2">
+						{tr}Title{/tr}
+					</label>
+					<div class="col-sm-10">
+						<input type="text" name="title" value="{$msg_info.title|escape}" class="form-control">
+					</div>
+				</div>
+				{if $msg_info.parentId > 0}
+					<div class="form-group">
+						<label for="parentId" class="control-label col-sm-2">
+							{tr}Topic{/tr}
+						</label>
+						<div class="col-sm-10">
+							<select name="parentId" class="form-control">
+								{section name=ix loop=$topics}
+									<option value="{$topics[ix].threadId|escape}" {if $topics[ix].threadId eq $msg_info.parentId}selected="selected"{/if}>{$topics[ix].title|escape}</option>
+								{/section}
 							</select>
-						{/if}
-					</td>
-				</tr>
-			{/if}
-			<tr>
-				<td>{tr}data{/tr}</td>
-				<td>
-					{textarea rows="6" cols="60" name="data"}{$msg_info.data}{/textarea}
-				</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>
-					<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-					<input type="submit" class="btn btn-default btn-sm" name="saveapp" value="{tr}Save and Approve{/tr}">
-					<input type="submit" class="btn btn-warning btn-sm" name="remove" value="{tr}Remove{/tr}">
-					<input type="submit" class="btn btn-default btn-sm" name="topicize" value="{tr}convert to topic{/tr}">
-				</td>
-			</tr>
-		</table>
+						</div>
+					</div>
+				{else}
+					<div class="form-group">
+						<label for="parentId" class="control-label col-sm-2">
+							{tr}Make this a thread of{/tr}
+						</label>
+						<div class="col-sm-10">
+							<select name="parentId" class="form-control">
+								<option value="0" {if $topics[ix].threadId eq $msg_info.parentId}selected="selected"{/if}>{tr}None, this is a thread message{/tr}</option>
+								{section name=ix loop=$topics}
+									<option value="{$topics[ix].threadId|escape}" {if $topics[ix].threadId eq $msg_info.parentId}selected="selected"{/if}>{$topics[ix].title|escape}</option>
+								{/section}
+							</select>
+						</div>
+					</div>
+				{/if}
+				{if $msg_info.parentId eq 0 and $forum_info.topic_summary eq 'y'}
+					<div class="form-group">
+						<label for="summary" class="control-label col-sm-2">
+							{tr}summary{/tr}
+						</label>
+						<div class="col-sm-10">
+							<input type="text" name="summary" value="{$msg_info.summary|escape}" class="form-control">
+						</div>
+					</div>
+				{/if}
+				{if $msg_info.parentId eq 0}
+					<div class="form-group">
+						<label for="type" class="control-label col-sm-2">
+							{tr}Type{/tr}
+						</label>
+						<div class="col-sm-10">
+							<select name="type" class="form-control">
+								<option value="n" {if $msg_info.type eq 'n'}selected="selected"{/if}>{tr}Normal{/tr}</option>
+								<option value="a" {if $msg_info.type eq 'a'}selected="selected"{/if}>{tr}Announce{/tr}</option>
+								<option value="h" {if $msg_info.type eq 'h'}selected="selected"{/if}>{tr}Hot{/tr}</option>
+								<option value="s" {if $msg_info.type eq 's'}selected="selected"{/if}>{tr}Sticky{/tr}</option>
+								<option value="l" {if $msg_info.type eq 'l'}selected="selected"{/if}>{tr}Locked{/tr}</option>
+							</select>
+							{if $forum_info.topic_smileys eq 'y'}
+								<select name="topic_smiley" class="form-control">
+									<option value="" {if $msg_info.topic_smiley eq ''}selected="selected"{/if}>{tr}no feeling{/tr}</option>
+									<option value="icon_frown.gif" {if $msg_info.topic_smiley eq 'icon_frown.gif'}selected="selected"{/if}>{tr}frown{/tr}</option>
+									<option value="icon_exclaim.gif" {if $msg_info.topic_smiley eq 'icon_exclaim.gif'}selected="selected"{/if}>{tr}exclaim{/tr}</option>
+									<option value="icon_idea.gif" {if $msg_info.topic_smiley eq 'icon_idea.gif'}selected="selected"{/if}>{tr}idea{/tr}</option>
+									<option value="icon_mad.gif" {if $msg_info.topic_smiley eq 'icon_mad.gif'}selected="selected"{/if}>{tr}mad{/tr}</option>
+									<option value="icon_neutral.gif" {if $msg_info.topic_smiley eq 'icon_neutral.gif'}selected="selected"{/if}>{tr}neutral{/tr}</option>
+									<option value="icon_question.gif" {if $msg_info.topic_smiley eq 'icon_question.gif'}selected="selected"{/if}>{tr}question{/tr}</option>
+									<option value="icon_sad.gif" {if $msg_info.topic_smiley eq 'icon_sad.gif'}selected="selected"{/if}>{tr}sad{/tr}</option>
+									<option value="icon_smile.gif" {if $msg_info.topic_smiley eq 'icon_smile.gif'}selected="selected"{/if}>{tr}happy{/tr}</option>
+									<option value="icon_wink.gif" {if $msg_info.topic_smiley eq 'icon_wink.gif'}selected="selected"{/if}>{tr}wink{/tr}</option>
+								</select>
+							{/if}
+						</div>
+					</div>
+				{/if}
+				<div class="form-group">
+					<label for="data" class="control-label col-sm-2">
+						{tr}Body{/tr}
+					</label>
+					<div class="col-sm-10">
+						{textarea rows="6" cols="60" class="form-control" name="data"}{$msg_info.data}{/textarea}
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer text-center">
+				<input type="hidden" name="forumId" value="{$forumId|escape}">
+				<input type="hidden" name="in_reply_to" value="{$msg_info.in_reply_to|escape}">
+				<input type="hidden" name="qId" value="{$smarty.request.qId|escape}">
+				<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+				<input type="submit" class="btn btn-primary btn-sm" name="saveapp" value="{tr}Save and Approve{/tr}">
+				<input type="submit" class="btn btn-warning btn-sm" name="remove" value="{tr}Remove{/tr}">
+				<input type="submit" class="btn btn-default btn-sm" name="topicize" value="{tr}Convert to topic{/tr}">
+			</div>
+		</div>
 	</form>
 {/if}
 
-<br>
-<h3>{tr}List of messages{/tr} ({$cant})</h3>
-
 {* FILTERING FORM *}
 {if $items or ($find ne '')}
-	<form action="tiki-forum_queue.php" method="post">
-		<input type="hidden" name="forumId" value="{$forumId|escape}">
-		<input type="hidden" name="offset" value="{$offset|escape}">
-		<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
-		<table>
-			<tr>
-				<td>
-					<small>{tr}Find{/tr}</small>
-					<input size="8" type="text" name="find" value="{$find|escape}">
-					<input type="submit" class="btn btn-default btn-sm" name="filter" value="{tr}Filter{/tr}">
-				</td>
-			</tr>
-		</table>
+	<form action="tiki-forum_queue.php" method="post" class="form">
+		<div class="form-group">
+			<input type="hidden" name="forumId" value="{$forumId|escape}">
+			<input type="hidden" name="offset" value="{$offset|escape}">
+			<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
+			<div class="input-group">
+				<input type="text" name="find" value="{$find|escape}" class="form-control" placeholder="{tr}Find{/tr}...">
+				<div class="input-group-btn">
+					<input type="submit" class="btn btn-default" name="filter" value="{tr}Filter{/tr}">
+				</div>
+			</div>
+		</div>
 	</form>
 {/if}
 {*END OF FILTERING FORM *}
