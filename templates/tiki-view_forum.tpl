@@ -423,10 +423,10 @@
 				</div>
 				<div class="pull-right">
 					{if $reported > 0}
-						<a class="btn btn-default btn-sm" href="tiki-forums_reported.php?forumId={$forumId}">{tr}Reported messages{/tr} <span class="badge">{$reported}<span></a>
+						<a class="btn btn-default btn-sm tips" href="tiki-forums_reported.php?forumId={$forumId}" title=":{tr}Reported messages{/tr}">{tr}Reported{/tr} <span class="badge">{$reported}<span></a>
 					{/if}
 					{if $queued > 0}
-						<a class="btn btn-default btn-sm" href="tiki-forum_queue.php?forumId={$forumId}">{tr}Queued messages{/tr} <span class="badge">{$queued}</span></a>
+						<a class="btn btn-default btn-sm tips" href="tiki-forum_queue.php?forumId={$forumId}" title=":{tr}Queued messages{/tr}">{tr}Queued{/tr} <span class="badge">{$queued}</span></a>
 					{/if}
 				</div>
 			</div>
