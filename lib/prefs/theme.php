@@ -28,7 +28,7 @@ function prefs_theme_list($partial = false)
 
 	//get list of icon sets shipped by Tiki
 	$iconsets = $themelib->list_base_iconsets();
-	$iconsets['theme_specific_iconset'] = tr('Icons of the selected theme'); //add a specific option to allow theme specific icon set to be used
+	$iconsets['theme_specific_iconset'] = tr('Icons of the displayed theme'); //add a specific option to allow theme specific icon set to be used
 	
 	return array(
 		'theme' => array(
