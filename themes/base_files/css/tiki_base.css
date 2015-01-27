@@ -1274,7 +1274,7 @@ body.tiki_wiki #comments {
   height: 20px;
 }
 .ic_active {
-  border: 2px solid #337ab7;
+  border: 2px solid #428bca;
 }
 .ic_caption {
   background: #222222;
@@ -1486,7 +1486,7 @@ body.tiki_forums .normal {
 }
 .post .postbody {
   clear: both;
-  margin: 5px 0 0;
+  margin: 0;
   padding: 0;
 }
 .post .postbody .content {
@@ -2343,7 +2343,7 @@ fieldset.dropzone {
 }
 .webmail_list .button {
   background: #ffffff;
-  border: 1px solid #337ab7;
+  border: 1px solid #428bca;
   padding: 0 2px;
 }
 .webmail_list .webmail_read {
