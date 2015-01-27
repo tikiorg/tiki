@@ -16,6 +16,6 @@
 		{/if}
 	{/remarksbox}
 	{if !empty($timeoutMsg)}
-		<h6><em>{$timeoutMsg}</em></h6>
+		<h5>{$timeoutMsg}</h5>
 	{/if}
 {/block}
