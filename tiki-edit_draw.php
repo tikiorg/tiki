@@ -174,7 +174,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_REQUEST['data'])) {
 			$definition = $item->getDefinition();
 			$field = $definition->getField($_REQUEST['fromFieldId']);
 			$trackerInput = $item->prepareFieldInput($field, array($_REQUEST['fromFieldId'] -> $fileId));
-			$trackerInput['value'] = $fileId;
+			$fileIds = explode(',', $trackerInput['value']);
+			if (!in_array($fileId, $fileIds)) {
+				if (!empty($_REQUEST['fileId']) && $fileId != $_REQUEST['fileId']) {
+					$old_index = array_search($_REQUEST['fileId'], $fileIds);			// replacement (id changed when drawn on)
+				} else {
+					$old_index = false;
+				}
+				if ($old_index !== false) {
+					$fileIds[$old_index] = $fileId;
+				} else {
+					$fileIds[] = $fileId;
+				}
+			}
+			$trackerInput['value'] = implode(',', $fileIds);
 
 			TikiLib::lib('trk')->replace_item($field['trackerId'], $_REQUEST['fromItemId'], array('data' => array($trackerInput)));
 		}
