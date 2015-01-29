@@ -921,6 +921,14 @@ class UnifiedSearchLib
 			$query->filterMultivalue($filter['groups'], 'groups');
 		}
 
+		if (isset($filter['prefix']) && is_array($filter['prefix'])) {
+			foreach ($filter['prefix'] as $field => $prefix) {
+				$query->filterInitial((string) $prefix, $field);
+			}
+
+			unset($filter['prefix']);
+		}
+
 		unset($filter['type']);
 		unset($filter['categories']);
 		unset($filter['deep']);
