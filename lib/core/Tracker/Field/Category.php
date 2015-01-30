@@ -11,7 +11,7 @@
  * Letter key: ~e~
  *
  */
-class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Exportable
+class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Exportable, Tracker_Field_Filterable
 {
 	public static function getTypes()
 	{
@@ -487,6 +487,61 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 				}
 			});
 			;
+	}
+
+	function getFilterCollection()
+	{
+		$collection = new Tracker\Filter\Collection($this->getTrackerDefinition());
+		$permName = $this->getConfiguration('permName');
+		$name = $this->getConfiguration('name');
+		$baseKey = $this->getBaseKey();
+
+		$sourceCategories = $this->getApplicableCategories();
+		$options = array_map(function ($i) {
+			return $i['relativePathString'];
+		}, $sourceCategories);
+
+		$collection->addNew($permName, 'dropdown')
+			->setLabel($name)
+			->setControl(new Tracker\Filter\Control\DropDown("tf_{$permName}_dd", $options))
+			->setApplyCondition(function ($control, Search_Query $query) use ($baseKey) {
+				$value = $control->getValue();
+
+				if ($value) {
+					$query->filterCategory((string) $value);
+				}
+			})
+			;
+
+		$collection->addNew($permName, 'any-of')
+			->setLabel(tr('%0 (any of)', $name))
+			->setControl(new Tracker\Filter\Control\MultiSelect("tf_{$permName}_all", $options))
+			->setApplyCondition(function ($control, Search_Query $query) use ($baseKey) {
+				$values = $control->getValues();
+
+				if (! empty($values)) {
+					$query->filterCategory(implode(' OR ', $values));
+				}
+			})
+			;
+
+		$type = $this->getOption('inputtype');
+
+		if ($type == 'm' || $type == 'checkbox') {
+			$collection->addNew($permName, 'all-of')
+				->setLabel(tr('%0 (all of)', $name))
+				->setControl(new Tracker\Filter\Control\MultiSelect("tf_{$permName}_all", $options))
+				->setApplyCondition(function ($control, Search_Query $query) use ($baseKey) {
+					$values = $control->getValues();
+
+					if (! empty($values)) {
+						$query->filterCategory(implode(' AND ', $values));
+					}
+				})
+				;
+		}
+
+		return $collection;
 	}
 }
 
