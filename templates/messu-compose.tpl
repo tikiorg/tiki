@@ -36,7 +36,7 @@
 			</label>
 			<div class="col-sm-10">
 				<input type="text" class="username form-control" name="to" id="mess-composeto" value="{$to|escape}">
-				<input type="hidden" name="replyto_hash" value="{$replyto_hash}">
+				<input type="hidden" name="replyto_hash" value="{$replyto_hash|escape}">
 				<input type="hidden" name="reply" value="{$reply}">
 			</div>
 		</div>
