@@ -2904,6 +2904,11 @@ body.tiki.navbar-padding {
   margin-bottom: 0;
   min-height: 32px;
 }
+@media print {
+  body a[href]:after {
+    content: none;
+  }
+}
 /* becomes height using padding (so it's divided by 2) */
 /* url(icons/loading.gif); */
 /* Filter widget transition */

@@ -121,3 +121,9 @@ body.tiki.navbar-padding {
   }
 }
 
+// To prevent urls from being printed for all links.
+@media print {
+body a[href]:after {
+    content: none;
+  }
+}
