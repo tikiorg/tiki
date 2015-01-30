@@ -2938,14 +2938,9 @@ highlight on "button" links, e.g. if there are some comments it highlights the "
 	background: #dfb300;
 }
 
-/* Since button background is actually applied to the link within the button, apply button highlight to same bg area as normal button state . */
-.button.highlight {
-	background: inherit;
-}
-
 /* Highlight effect is just visual distinction, so no need for block element. */
 span.highlight {
-	padding: 0 .3em;
+	padding: inherit;
 }
 
 /* Border and background should "shrinkwrap" to text size. */
