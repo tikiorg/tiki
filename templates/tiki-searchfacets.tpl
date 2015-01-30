@@ -13,7 +13,7 @@
 			<input class="form-control" type="search" name="filter~content" value="{$filter.content|escape}"/>
 
 			{foreach from=$facets item=facet}
-				<input type="hidden" name="filter~{$facet|escape}" value="{$filter[$facet]|escape}"/>
+				<input type="hidden" name="filter~{$facet|escape}" value="{$postfilter[$facet]|default:$filter[$facet]|escape}"/>
 			{/foreach}
 		</div>
 		<input type="submit" class="btn btn-primary" value="{tr}Search{/tr}"/>

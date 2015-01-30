@@ -15,6 +15,7 @@ class Search_Query implements Search_Query_Interface
 	private $weightCalculator = null;
 	private $identifierFields = null;
 
+	private $postFilter;
 	private $subQueries = array();
 	private $facets = [];
 	private $foreignQueries = [];
@@ -337,10 +338,14 @@ class Search_Query implements Search_Query_Interface
 	private function finalize()
 	{
 		if ($this->weightCalculator) {
-			$this->expr->walk(array($this->weightCalculator, 'calculate'));
+			$this->expr->walk([$this->weightCalculator, 'calculate']);
+
+			if ($this->postFilter) {
+				$this->postFilter->expr->walk([$this->weightCalculator, 'calculate']);
+			}
 
 			foreach ($this->foreignQueries as $query) {
-				$query->expr->walk(array($this->weightCalculator, 'calculate'));
+				$query->expr->walk([$this->weightCalculator, 'calculate']);
 			}
 		}
 
@@ -353,6 +358,16 @@ class Search_Query implements Search_Query_Interface
 					}
 				}
 			);
+
+			if ($this->postFilter) {
+				$this->postFilter->expr->walk(
+					function (Search_Expr_Interface $expr) use ($fields) {
+						if (method_exists($expr, 'getField') && in_array($expr->getField(), $fields)) {
+							$expr->setType('identifier');
+						}
+					}
+				);
+			}
 
 			foreach ($this->foreignQueries as $query) {
 				$query->expr->walk(
@@ -415,6 +430,17 @@ class Search_Query implements Search_Query_Interface
 		}
 
 		return $this->subQueries[$name];
+	}
+
+	function getPostFilter()
+	{
+		if (! $this->postFilter) {
+			$subquery = new self;
+			$this->postFilter = $subquery;
+			$subquery->postFilter = $subquery;
+		}
+
+		return $this->postFilter;
 	}
 
 	function requestFacet(Search_Query_Facet_Interface $facet)

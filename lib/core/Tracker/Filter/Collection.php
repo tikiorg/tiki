@@ -14,6 +14,7 @@ class Collection
 	private $definition;
 	private $filters = [];
 	private $collections = [];
+	private $resultset;
 
 	function __construct(\Tracker_Definition $definition)
 	{
@@ -165,6 +166,49 @@ class Collection
 				});
 
 			return $collection;
+		case 'facet':
+			$collection = new self($this->definition);
+
+			$lib = \TikiLib::lib('unifiedsearch');
+			$provider = $lib->getFacetProvider();
+
+			foreach ($provider->getFacets() as $facet) {
+				$getoptions = function () use ($facet) {
+					if ($this->resultset) {
+						if ($filter = $this->resultset->getFacet($facet)) {
+							return $filter->getOptions();
+						}
+					}
+
+					return [];
+				};
+
+				$collection->addNew($name, 'facet-any-' . $facet->getName())
+					->setLabel(tr('%0 (any of)', $facet->getLabel()))
+					->setControl(new Control\MultiSelect("facet_any_{$facet->getName()}", $getoptions))
+					->setApplyCondition(function ($control, Search_Query $query) use ($facet) {
+						$query->requestFacet($facet);
+
+						$values = $control->getValues();
+						if (! empty($values)) {
+							$query->getPostFilter()->filterContent(implode(" OR ", $values), $facet->getName());
+						}
+					});
+
+				$collection->addNew($name, 'facet-all-' . $facet->getName())
+					->setLabel(tr('%0 (all of)', $facet->getLabel()))
+					->setControl(new Control\MultiSelect("facet_all_{$facet->getName()}", $getoptions))
+					->setApplyCondition(function ($control, Search_Query $query) use ($facet) {
+						$query->requestFacet($facet);
+
+						$values = $control->getValues();
+						if (! empty($values)) {
+							$query->getPostFilter()->filterContent(implode(" AND ", $values), $facet->getName());
+						}
+					});
+			}
+			
+			return $collection;
 		}
 	}
 
@@ -187,5 +231,21 @@ class Collection
 		}
 		
 		return $parts;
+	}
+
+	function getAvailableFields()
+	{
+		$fields = ['itemId' => tr('Item ID'), 'status' => tr('Status'), 'actions' => tr('Actions'), 'facet' => tr('Dynamic Filters')];
+
+		foreach ($this->definition->getFields() as $f) {
+			$fields[$f['permName']] = $f['name'];
+		}
+
+		return $fields;
+	}
+
+	function setResultSet(Search_ResultSet $resultset)
+	{
+		$this->resultset = $resultset;
 	}
 }

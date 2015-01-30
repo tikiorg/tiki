@@ -327,6 +327,16 @@ class Services_Tracker_TabularController
 
 		$collection->applyInput($input);
 
+		$search = TikiLib::lib('unifiedsearch');
+		$query = $search->buildQuery([
+			'type' => 'trackeritem',
+			'tracker_id' => $trackerId,
+		]);
+		$query->setRange(1);
+		$collection->applyConditions($query);
+		$resultset = $query->search($search->getIndex());
+		$collection->setResultSet($resultset);
+
 		$target = $input->target->word();
 
 		if ($target == 'list') {

@@ -30,6 +30,11 @@ class Search_Elastic_QueryBuilder
 	function build(Search_Expr_Interface $expr)
 	{
 		$query = $expr->traverse($this);
+
+		if (count($query) && isset($query['bool']) && empty($query['bool'])) {
+			return [];
+		}
+
 		$query = array("query" => $query);
 
 		return $query;

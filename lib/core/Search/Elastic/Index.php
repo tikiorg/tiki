@@ -215,6 +215,15 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 		$builder->setDocumentReader($this->createDocumentReader());
 		$queryPart = $builder->build($query->getExpr());
 
+		$postFilterPart = $builder->build($query->getPostFilter()->getExpr());
+		if (empty($postFilterPart)) {
+			$postFilterPart = [];
+		} else {
+			$postFilterPart = ["post_filter" => [
+				'fquery' => $postFilterPart,
+			]];
+		}
+
 		$indices = [$this->index];
 
 		$foreign = array_map(function ($query) use ($builder) {
@@ -237,6 +246,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 			$orderPart,
 			$facetPart,
 			$rescorePart,
+			$postFilterPart,
 			array(
 				"from" => $resultStart,
 				"size" => $resultCount,

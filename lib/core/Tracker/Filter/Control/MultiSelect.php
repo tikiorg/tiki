@@ -13,7 +13,7 @@ class MultiSelect implements Control
 	private $options;
 	private $values = [];
 
-	function __construct($name, array $options)
+	function __construct($name, $options)
 	{
 		$this->fieldName = $name;
 		$this->options = $options;
@@ -32,6 +32,7 @@ class MultiSelect implements Control
 
 	function getDescription()
 	{
+		$this->applyOptions();
 		return implode(', ', array_map(function ($val) {
 			return $this->options[$val];
 		}, $this->values)) ?: null;
@@ -47,8 +48,17 @@ class MultiSelect implements Control
 		return $this->values;
 	}
 
+	private function applyOptions()
+	{
+		if (is_callable($this->options)) {
+			$this->options = call_user_func($this->options);
+		}
+	}
+
 	function __toString()
 	{
+		$this->applyOptions();
+
 		$smarty = \TikiLib::lib('smarty');
 		$smarty->assign('control', [
 			'field' => $this->fieldName,

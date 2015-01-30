@@ -4,7 +4,7 @@
 		{foreach from=$facets item=facet}
 			<div class="form-group facet-hide-group">
 				<label for="{$facet.name|escape}">{$facet.label|escape}</label>
-				<select id="{$facet.name|escape}" class="form-control" multiple data-for="#search-form input[name='filter~{$facet.name|escape}']" data-join="{$facet.operator|escape}">
+				<select id="{$facet.name|escape}" class="form-control" multiple data-for="#search-form input[name$='filter~{$facet.name|escape}']" data-join="{$facet.operator|escape}">
 					{foreach from=$facet.options key=value item=label}
 						<option value="{$value|escape}">{$label|escape}</option>
 					{/foreach}

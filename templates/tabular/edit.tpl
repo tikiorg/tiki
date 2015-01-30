@@ -115,7 +115,7 @@
 						<tr>
 							<td>
 								<select class="selection form-control">
-									{foreach $schema->getAvailableFields() as $permName => $label}
+									{foreach $filterCollection->getAvailableFields() as $permName => $label}
 										<option value="{$permName|escape}" {if $permName eq 'itemId'} selected="selected" {/if}>{$label|escape}</option>
 									{/foreach}
 								</select>

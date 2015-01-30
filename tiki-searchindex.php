@@ -38,9 +38,10 @@ foreach (array('find', 'highlight', 'where') as $possibleKey) {
 	}
 }
 $filter = isset($_REQUEST['filter']) ? $_REQUEST['filter'] : array();
+$postfilter = isset($_REQUEST['postfilter']) ? $_REQUEST['postfilter'] : array();
 $facets = array();
 
-if (count($filter)) {
+if (count($filter) || count($postfilter)) {
 	if (isset($_REQUEST['save_query'])) {
 		$_SESSION['quick_search'][(int) $_REQUEST['save_query']] = $_REQUEST;
 	}
@@ -51,7 +52,7 @@ if (count($filter)) {
 		$jitRequest->replaceFilter('fields', 'word');
 		$fetchFields = array_merge(array('title', 'modification_date', 'url'), $jitRequest->asArray('fields', ','));;
 
-		$results = tiki_searchindex_get_results($filter, $offset, $maxRecords);
+		$results = tiki_searchindex_get_results($filter, $postfilter, $offset, $maxRecords);
 
 		$smarty->loadPlugin('smarty_function_object_link');
 		$smarty->loadPlugin('smarty_modifier_sefurl');
@@ -100,7 +101,7 @@ if (count($filter)) {
 			}
 		}
 		if (!$isCached) {
-			$results = tiki_searchindex_get_results($filter, $offset, $maxRecords);
+			$results = tiki_searchindex_get_results($filter, $postfilter, $offset, $maxRecords);
 			$facets = array_map(
 				function ($facet) {
 					return $facet->getName();
@@ -142,6 +143,7 @@ if (count($filter)) {
 }
 
 $smarty->assign('filter', $filter);
+$smarty->assign('postfilter', $postfilter);
 $smarty->assign('facets', $facets);
 
 // disallow robots to index page:
@@ -159,7 +161,7 @@ if ($prefs['search_use_facets'] == 'y') {
  * @param $maxRecords
  * @return mixed
  */
-function tiki_searchindex_get_results($filter, $offset, $maxRecords)
+function tiki_searchindex_get_results($filter, $postfilter, $offset, $maxRecords)
 {
 	global $prefs;
 
@@ -169,6 +171,10 @@ function tiki_searchindex_get_results($filter, $offset, $maxRecords)
 	$unifiedsearchlib->initQueryBase($query);
 	$query = $unifiedsearchlib->buildQuery($filter, $query);
 	$query->filterContent('y', 'searchable');
+
+	if (count($postfilter)) {
+		$unifiedsearchlib->buildQuery($postfilter, $query->getPostFilter());
+	}
 
 	if (isset($_REQUEST['sort_mode']) && $order = Search_Query_Order::parse($_REQUEST['sort_mode'])) {
 		$query->setOrder($order);
