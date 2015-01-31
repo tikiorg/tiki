@@ -58,6 +58,9 @@ function iconset_glyphicons()
 			'down' => array(
 				'id' => 'arrow-down',
 			),
+			'ellipsis' => array(
+				'id' => 'option-horizontal',
+			),
 			'enable' => array(
 				'id' => 'ok-sign',
 			),
@@ -137,6 +140,9 @@ function iconset_glyphicons()
 				'id' => 'ok',
 			),
 			//use a better unlock icon when available
+			'three-d' => array(
+				'id' => 'road',
+			),
 			'unlock' => array(
 				'id' => 'folder-open',
 			),

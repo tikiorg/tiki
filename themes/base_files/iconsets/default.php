@@ -215,6 +215,9 @@ function iconset_default()
 			'down' => array(
 				'id' => 'sort-desc',
 			),
+			'ellipsis' => array(
+				'id' => 'ellipsis-h',
+			),
 			'enable' => array(
 				'id' => 'check-square',
 			),
@@ -341,6 +344,9 @@ function iconset_default()
 			),
 			'themegenerator' => array(
 				'id' => 'paint-brush',
+			),
+			'three-d' => array(
+				'id' => 'cube',
 			),
 			'toggle-down' => array(
 				'id' => 'toggle-down',
