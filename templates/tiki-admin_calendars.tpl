@@ -58,32 +58,32 @@
 					<td class="id">{$id}</td>
 					<td class="text">
 						<a class="tablename" href="tiki-admin_calendars.php?calendarId={$id}&cookietab=2" title="{tr}Edit{/tr}">{$cal.name|escape}</a>
-						{if $cal.show_calname eq 'y'} {icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}
+						{if $cal.show_calname eq 'y'} {icon name="list-alt" class="tips" title=":{tr}Show in popup box{/tr}"}{/if}
 					</td>
 					<td class="text">
-						{$cal.customlocations|yesno}{if $cal.show_location eq 'y'}{icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}
+						{$cal.customlocations|yesno}{if $cal.show_location eq 'y'}{icon name="list-alt" class="tips" title=":{tr}Show in popup box{/tr}"}{/if}
 					</td>
 					<td class="text">
-						{$cal.customparticipants|yesno}{if $cal.show_participants eq 'y'}{icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}
+						{$cal.customparticipants|yesno}{if $cal.show_participants eq 'y'}{icon name="list-alt" class="tips" title=":{tr}Show in popup box{/tr}"}{/if}
 					</td>
 					<td class="text">
-						{$cal.customcategories|yesno}{if $cal.show_category eq 'y'}{icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}
+						{$cal.customcategories|yesno}{if $cal.show_category eq 'y'}{icon name="list-alt" class="tips" title=":{tr}Show in popup box{/tr}"}{/if}
 					</td>
 					<td class="text">
-						{$cal.customlanguages|yesno}{if $cal.show_language eq 'y'}{icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}
+						{$cal.customlanguages|yesno}{if $cal.show_language eq 'y'}{icon name="list-alt" class="tips" title=":{tr}Show in popup box{/tr}"}{/if}
 					</td>
 					<td class="text">
-						{$cal.customurl|yesno}{if $cal.show_url eq 'y'}{icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}
+						{$cal.customurl|yesno}{if $cal.show_url eq 'y'}{icon name="list-alt" class="tips" title=":{tr}Show in popup box{/tr}"}{/if}
 					</td>
 					<td class="text">{$cal.custompriorities|yesno}</td>
 					<td class="text">{$cal.customsubscription|yesno}</td>
 					<td class="text">{$cal.personal|yesno}</td>
-					<td class="text">{permission_link mode=icon type=calendar id=$id title=$cal.name}</td>
+					<td class="text">{permission_link mode=glyph type=calendar id=$id title=$cal.name}</td>
 					<td class="action">
-						<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;calendarId={$id}&cookietab=2">{icon _id='page_edit'}</a>
-						<a title="{tr}View Calendar{/tr}" class="link" href="tiki-calendar.php?calIds[]={$id}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
-						<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;drop={$id}&amp;calendarId={$id}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
-						<a title="{tr}Add Event{/tr}" class="link" href="tiki-calendar_edit_item.php?calendarId={$id}">{icon _id='add' alt="{tr}Add Event{/tr}"}</a>
+						<a title="{$cal.name|escape}:{tr}Edit{/tr}" class="link tips" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;calendarId={$id}&cookietab=2">{icon name='edit'}</a>
+						<a title="{$cal.name|escape}:{tr}View{/tr}" class="link tips" href="tiki-calendar.php?calIds[]={$id}">{icon name='view' alt="{tr}View{/tr}"}</a>
+						<a title="{$cal.name|escape}:{tr}Delete{/tr}" class="link tips" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;drop={$id}&amp;calendarId={$id}" title="{tr}Delete{/tr}">{icon name='remove' alt="{tr}Delete{/tr}"}</a>
+						<a title="{$cal.name|escape}:{tr}Add event{/tr}" class="link tips" href="tiki-calendar_edit_item.php?calendarId={$id}">{icon name='add' alt="{tr}Add Event{/tr}"}</a>
 					</td>
 				</tr>
 			{foreachelse}
