@@ -28,15 +28,13 @@
 <table class="table">
 	<tr>
 		{foreach $columns as $column}
-			{if ! $column->isExportOnly()}
-				<th>{$column->getLabel()}</th>
-			{/if}
+			<th class="text-{$column->getDisplayAlign()|escape}">{$column->getLabel()}</th>
 		{/foreach}
 	</tr>
 	{foreach $data as $row}
 		<tr>
-			{foreach $row as $col}
-				<td>{$col}</td>
+			{foreach $row as $i => $col}
+				<td class="text-{$columns[$i]->getDisplayAlign()|escape}">{$col}</td>
 			{/foreach}
 		</td>
 	{/foreach}

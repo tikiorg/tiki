@@ -397,7 +397,9 @@ class Services_Tracker_TabularController
 		$source = new \Tracker\Tabular\Source\PaginatedQuerySource($schema, $query);
 		$writer = new \Tracker\Tabular\Writer\HtmlWriter();
 
-		$columns = $schema->getColumns();
+		$columns = array_values(array_filter($schema->getColumns(), function ($c) {
+			return ! $c->isExportOnly();
+		}));
 		$arguments = $collection->getQueryArguments();
 
 		return [

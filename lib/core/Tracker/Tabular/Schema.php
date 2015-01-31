@@ -93,6 +93,10 @@ class Schema
 				$col->setReadOnly(true);
 			}
 
+			if (! empty($column['displayAlign'])) {
+				$col->setDisplayAlign($column['displayAlign']);
+			}
+
 			if ($column['label']) {
 				$col->setLabel($column['label']);
 			}
@@ -120,6 +124,7 @@ class Schema
 				'label' => $column->getLabel(),
 				'field' => $column->getField(),
 				'mode' => $column->getMode(),
+				'displayAlign' => $column->getDisplayAlign(),
 				'isPrimary' => $column->isPrimaryKey(),
 				'isReadOnly' => $column->isReadOnly(),
 				'isExportOnly' => $column->isExportOnly(),

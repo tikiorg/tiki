@@ -37,7 +37,25 @@
 					</thead>
 					<tbody>
 						<tr class="hidden">
-							<td>{icon name=sort} <input type="text" class="field-label" value="Label" /></td>
+							<td>
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon">{icon name=sort}</span>
+									<input type="text" class="field-label form-control" />
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+											<span class="align">{tr}Left{/tr}</span>
+											<span class="caret"></span>
+											<input class="display-align" type="hidden" value="left">
+										</button>
+										<ul class="dropdown-menu dropdown-menu-right" role="menu">
+											<li><a class="align-option" href="#left">{tr}Left{/tr}</a></li>
+											<li><a class="align-option" href="#center">{tr}Center{/tr}</a></li>
+											<li><a class="align-option" href="#right">{tr}Right{/tr}</a></li>
+											<li><a class="align-option" href="#justify">{tr}Justify{/tr}</a></li>
+										</ul>
+									</div>
+								</div>
+							</td>
 							<td><span class="field">Field Name</span>:<span class="mode">Mode</span></td>
 							<td><input class="primary" type="radio" name="pk" /></td>
 							<td><input class="read-only" type="checkbox" /></td>
@@ -46,7 +64,25 @@
 						</tr>
 						{foreach $schema->getColumns() as $column}
 							<tr>
-								<td>{icon name=sort} <input type="text" class="field-label" value="{$column->getLabel()|escape}" /></td>
+								<td>
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon">{icon name=sort}</span>
+										<input type="text" class="field-label form-control" value="{$column->getLabel()|escape}" />
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+												<span class="align">{$column->getDisplayAlign()|ucfirst|tra}</span>
+												<span class="caret"></span>
+												<input class="display-align" type="hidden" value="{$column->getDisplayAlign()|escape}">
+											</button>
+											<ul class="dropdown-menu dropdown-menu-right" role="menu">
+												<li><a class="align-option" href="#left">{tr}Left{/tr}</a></li>
+												<li><a class="align-option" href="#center">{tr}Center{/tr}</a></li>
+												<li><a class="align-option" href="#right">{tr}Right{/tr}</a></li>
+												<li><a class="align-option" href="#justify">{tr}Justify{/tr}</a></li>
+											</ul>
+										</div>
+									</div>
+								</td>
 								<td><span class="field">{$column->getField()|escape}</span>:<span class="mode">{$column->getMode()|escape}</td>
 								<td><input class="primary" type="radio" name="pk" {if $column->isPrimaryKey()} checked {/if} /></td>
 								<td><input class="read-only" type="checkbox" {if $column->isReadOnly()} checked {/if} /></td>
@@ -99,13 +135,23 @@
 					</thead>
 					<tbody>
 						<tr class="hidden">
-							<td>{icon name=sort} <input type="text" class="filter-label" value="Label" /></td>
+							<td>
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon">{icon name=sort}</span>
+									<input type="text" class="filter-label form-control" value="Label" />
+								</div>
+							</td>
 							<td><span class="field">Field Name</span>:<span class="mode">Mode</span></td>
 							<td class="text-right"><button class="remove">{icon name=remove}</button></td>
 						</tr>
 						{foreach $filterCollection->getFilters() as $filter}
 							<tr>
-								<td>{icon name=sort} <input type="text" class="field-label" value="{$filter->getLabel()|escape}" /></td>
+								<td>
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon">{icon name=sort}</span>
+										<input type="text" class="field-label form-control" value="{$filter->getLabel()|escape}" />
+									</div>
+								</td>
 								<td><span class="field">{$filter->getField()|escape}</span>:<span class="mode">{$filter->getMode()|escape}</td>
 								<td class="text-right"><button class="remove">{icon name=remove}</button></td>
 							</tr>

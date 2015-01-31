@@ -17,6 +17,7 @@ class Column
 	private $isPrimary = false;
 	private $isReadOnly = false;
 	private $isExportOnly = false;
+	private $displayAlign = 'left';
 	private $renderTransform;
 	private $parseIntoTransform;
 	private $querySources = [];
@@ -39,6 +40,17 @@ class Column
 	function setLabel($label)
 	{
 		$this->label = $label;
+		return $this;
+	}
+
+	function getDisplayAlign()
+	{
+		return $this->displayAlign;
+	}
+
+	function setDisplayAlign($align)
+	{
+		$this->displayAlign = $align;
 		return $this;
 	}
 
@@ -194,6 +206,7 @@ class Column
 		$column->isPrimary = $this->isPrimary;
 		$column->isReadOnly = $this->isReadOnly;
 		$column->isExportOnly = $this->isExportOnly;
+		$column->displayAlign = $this->displayAlign;
 		$column->parseIntoTransform = $this->parseIntoTransform;
 		$column->querySources = $this->querySources;
 		$column->incompatibilities = $this->incompatibilities;
