@@ -1,9 +1,9 @@
 {* $Id$ *}
 {title help="Menus" url="tiki-admin_menu_options.php?menuId=$menuId" admpage="general&amp;cookietab=3"}{tr}Menu{/tr}: {$editable_menu_info.name}{/title}
 
-<div class="t_navbar btn-group form-group">
+<div class="navbar">
 	<a class="btn btn-default" href="tiki-admin_menus.php">
-		{icon name="list"} {tr}List Menus{/tr}
+		{tr}List Menus{/tr}
 	</a>
 	{if $tiki_p_edit_menu eq 'y'}
 		<a class="btn btn-default" href="{bootstrap_modal controller=menu action=manage_menu menuId=$menuId}">
@@ -68,15 +68,15 @@
 										<td class="id">{$channels[user].optionId}</td>
 										<td class="id">{$channels[user].position}</td>
 										<td class="text">
-											<a href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}&amp;maxRecords={$maxRecords}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}" title="{tr}Edit{/tr}">{if $escape_menu_labels}{$channels[user].name|escape}{else}{$channels[user].name}{/if}</a>
-											<div style="margin-left:10px;">
+											<a href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}&amp;maxRecords={$maxRecords}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}" class="tips" title=":{tr}Edit{/tr}">{if $escape_menu_labels}{$channels[user].name|escape}{else}{$channels[user].name}{/if}</a>
+											<span class="help-block">
 												{if $channels[user].url}
-													{tr}URL:{/tr} <a href="{if $prefs.menus_item_names_raw eq 'n'}{$channels[user].url|escape}{else}{$channels[user].url}{/if}" class="link" target="_blank" title="{$channels[user].canonic|escape}">{$channels[user].canonic|truncate:40:' ...'|escape}</a>
+													{tr}URL:{/tr} <a href="{if $prefs.menus_item_names_raw eq 'n'}{$channels[user].url|escape}{else}{$channels[user].url}{/if}" class="link tips" target="_blank" title=":{$channels[user].canonic|escape}">{$channels[user].canonic|truncate:40:' ...'|escape}</a>
 												{/if}
 												{if $channels[user].section}<br>{tr}Sections:{/tr} {$channels[user].section}{/if}
 												{if $channels[user].perm}<br>{tr}Permissions:{/tr} {$channels[user].perm}{/if}
 												{if $channels[user].groupname}<br>{tr}Groups:{/tr} {$channels[user].groupname|escape}{/if}
-											</div>
+											</span>
 										</td>
 										<td class="text">{$channels[user].type_description}</td>
 
@@ -86,14 +86,14 @@
 										{/if}
 
 										<td class="action">
-											<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}&amp;maxRecords={$maxRecords}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+											<a class="tips" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}&amp;maxRecords={$maxRecords}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}" title=":{tr}Edit{/tr}">{icon name="edit"}</a>
 											{if !$smarty.section.user.first}
-												<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;up={$channels[user].optionId}&amp;maxRecords={$maxRecords}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}#options" title="{tr}switch with previous option{/tr}">{icon _id='resultset_up'}</a>
+												<a class="tips" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;up={$channels[user].optionId}&amp;maxRecords={$maxRecords}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}#options" title=":{tr}switch with previous option{/tr}">{icon name="up"}</a>
 											{/if}
 											{if !$smarty.section.user.last}
-												<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;down={$channels[user].optionId}&amp;maxRecords={$maxRecords}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}#options" title="{tr}switch with next option{/tr}">{icon _id='resultset_down'}</a>
+												<a class="tips" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;down={$channels[user].optionId}&amp;maxRecords={$maxRecords}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}#options" title=":{tr}switch with next option{/tr}">{icon name="down"}</a>
 											{/if}
-											<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}&amp;maxRecords={$maxRecords}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+											<a class="tips" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}&amp;maxRecords={$maxRecords}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}" title=":{tr}Delete{/tr}">{icon name="delete"}</a>
 										</td>
 									</tr>
 								{sectionelse}
