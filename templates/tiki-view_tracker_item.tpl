@@ -75,7 +75,9 @@
 	{* when printing, no js is called to select the tab thus no class "active" assigned (would show nothing). print=y sets this class on printing *}
 	{tab name="{tr}View{/tr}" print=y} 
 		{* --- tab with view ------------------------------------------------------------------------- *}
-		<h2>{$tracker_info.name|escape}</h2>
+		{* In most cases one will not want this header when viewing an item *}
+		{* <h3>{$tracker_info.name|escape}</h3> *}
+		<h3></h3>
 		{if $tracker_is_multilingual}
 			<div class="translations">
 				<a href="{service controller=translation action=manage type=trackeritem source=$itemId}">{tr}Translations{/tr}</a>
