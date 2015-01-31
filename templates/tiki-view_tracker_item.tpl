@@ -9,7 +9,11 @@
 	{* --------- navigation ------ *}
 	<div class="t_navbar">
 		<div class="pull-right btn-group">
-			{self_link print='y' _class="btn btn-default"}{icon name="print"}{/self_link}
+			{if $viewItemPretty.override}
+				{self_link print='y' vi_tpl={$viewItemPretty.value} _class="btn btn-default"}{icon name="print"}{/self_link}
+			{else}
+				{self_link print='y' _class="btn btn-default"}{icon name="print"}{/self_link}
+			{/if}
 			{if $item_info.logs.cant}
 				<a class="btn btn-default" class="link" href="tiki-tracker_view_history.php?itemId={$itemId}" title="{tr}History{/tr}">{icon name="history"}</a>
 			{/if}
