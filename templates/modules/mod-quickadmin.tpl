@@ -15,37 +15,108 @@
 					{/foreach}
 				</ul>
 			</div>
-			{icon name="wizard" class="btn btn-link tikihelp" title=":{tr}Wizards{/tr}" href="tiki-wizard_admin.php?stepNr=0&amp;url=index.php"}
-			{icon name="administer" class="btn btn-link tikihelp" title=":{tr}Control panels{/tr}" href="tiki-admin.php"}
-			{icon name="theme" class="btn btn-link tikihelp" title=":{tr}Themes{/tr}" href="tiki-admin.php?page=look"}
-			{icon name="user" class="btn btn-link tikihelp" title=":{tr}Users{/tr}" href="tiki-adminusers.php"}
-			{icon name="group" class="btn btn-link tikihelp" title=":{tr}Groups{/tr}" href="tiki-admingroups.php"}
-			{permission_link mode=icon addclass="tikihelp" label=":{tr}Permissions{/tr}"}
-			{icon name="menu" class="btn btn-link tikihelp" title=":{tr}Menus{/tr}" href="tiki-admin_menus.php"}
-			{if $prefs.lang_use_db eq "y"}
-				{if isset($smarty.session.interactive_translation_mode) && $smarty.session.interactive_translation_mode eq "on"}
-					{icon name="translate" class="btn btn-link tikihelp" title=":{tr}Toggle interactive translation off{/tr}" href="tiki-interactive_trans.php?interactive_translation_mode=off" class="btn btn-warning btn-sm"}
-				{else}
-					{icon name="translate" class="btn btn-link tikihelp" title=":{tr}Toggle interactive translation on{/tr}" href="tiki-interactive_trans.php?interactive_translation_mode=on"}
-				{/if}
-			{/if}
-			{if $prefs.themegenerator_feature eq "y" and !empty($prefs.themegenerator_theme)}
-				{icon name="themegenerator" class="btn btn-link tikihelp" title=":{tr}Theme generator{/tr}" href="#" onclick="openThemeGenDialog();return false;"}
-			{/if}
-			{if $prefs.feature_comments_moderation eq "y"}
-				{icon name="comments" class="btn btn-link tikihelp" title=":{tr}Comment moderation{/tr}" href="tiki-list_comments.php"}
-			{/if}
-			{icon name="trash" class="btn btn-link tikihelp" title=":{tr}Clear all caches{/tr}" href="tiki-admin_system.php?do=all"}
-			{icon name="index" class="btn btn-link tikihelp" title=":{tr}Rebuild search index{/tr}" href="{bootstrap_modal controller=search action=rebuild}"}
-			{icon name="plugin" class="btn btn-link tikihelp" title=":{tr}Plugin approval{/tr}" href="tiki-plugins.php"}
-			{icon name="log" class="btn btn-link tikihelp" title=":{tr}Logs{/tr}" href="tiki-syslog.php"}
-			{icon name="module" class="btn btn-link tikihelp" title=":{tr}Modules{/tr}" href="tiki-admin_modules.php"}
-			{if $prefs.feature_debug_console}
-				{icon name="bug" class="btn btn-link tikihelp" title=":{tr}Smarty debug window{/tr}" href="{query _type='relative' show_smarty_debug=1}"}
-			{/if}
-			{if $prefs.feature_jcapture eq "y"}
-				{icon name="screencapture" class="btn btn-link tikihelp" title=":{tr}Screen capture{/tr}" href="#" onclick="openJCaptureDialog('none', '{$page}', event);return false;"}
-			{/if}
+			<div class="btn-group">
+				<a class="btn btn-link tips" title=":{tr}Quick admin{/tr}" data-toggle="dropdown" href="#">
+					{icon name="ellipsis"}
+				</a>
+				<ul class="dropdown-menu">
+					<li>
+						<a href="tiki-wizard_admin.php?stepNr=0&amp;url=index.php">
+							{icon name="wizard"} {tr}Wizards{/tr}
+						</a>
+					</li>
+					<li>
+						<a href="tiki-admin.php">
+							{icon name="administer"} {tr}Control panels{/tr}
+						</a>
+					</li>
+					<li>
+						<a href="tiki-admin.php?page=look">
+							{icon name="theme"} {tr}Themes{/tr}
+						</a>
+					</li>
+					<li>
+						<a href="tiki-adminusers.php">
+							{icon name="user"} {tr}Users{/tr}
+						</a>
+					</li>
+					<li>
+						<a href="tiki-admingroups.php">
+							{icon name="group"} {tr}Groups{/tr}
+						</a>
+					</li>
+					<li>
+						{permission_link mode=text}
+					</li>
+					<li>
+						<a href="tiki-admin_menus.php">
+							{icon name="menu"} {tr}Menus{/tr}
+						</a>
+					</li>
+						{if $prefs.lang_use_db eq "y"}
+							<li>
+								{if isset($smarty.session.interactive_translation_mode) && $smarty.session.interactive_translation_mode eq "on"}
+									<a href="tiki-interactive_trans.php?interactive_translation_mode=off">
+										{icon name="translate"} {tr}Turn off interactive translation{/tr}
+									</a>
+								{else}
+									<a href="tiki-interactive_trans.php?interactive_translation_mode=on">
+										{icon name="translate"} {tr}Turn on interactive translation{/tr}
+									</a>
+								{/if}
+							</li>
+						{/if}
+					{if $prefs.themegenerator_feature eq "y" and !empty($prefs.themegenerator_theme)}
+						{icon name="themegenerator" class="btn btn-link tikihelp" title=":{tr}Theme generator{/tr}" href="#" onclick="openThemeGenDialog();return false;"}
+					{/if}
+					{if $prefs.feature_comments_moderation eq "y"}
+						<li>
+							<a href="tiki-list_comments.php">
+								{icon name="comments"} {tr}Comment moderation{/tr}
+							</a>
+						</li>
+					{/if}
+					<li>
+						<a href="tiki-admin_system.php?do=all">
+							{icon name="trash"} {tr}Clear all caches{/tr}
+						</a>
+					</li>
+					<li>
+						<a href="{bootstrap_modal controller=search action=rebuild}">
+							{icon name="index"} {tr}Rebuild search index{/tr}
+						</a>
+					</li>
+					<li>
+						<a  href="tiki-plugins.php">
+							{icon name="plugin"} {tr}Plugin approval{/tr}
+						</a>
+					</li>
+					<li>
+						<a href="tiki-syslog.php">
+							{icon name="log"} {tr}Logs{/tr}
+						</a>
+					</li>
+					<li>
+						<a href="tiki-admin_modules.php">
+							{icon name="module"} {tr}Modules{/tr}
+						</a>
+					</li>
+					{if $prefs.feature_debug_console}
+						<li>
+							<a href="{query _type='relative' show_smarty_debug=1}">
+								{icon name="bug"} {tr}Smarty debug window{/tr}
+							</a>
+						</li>
+					{/if}
+					{if $prefs.feature_jcapture eq "y"}
+						<li>
+							<a href="#" onclick="openJCaptureDialog('none', '{$page}', event);return false;">
+								{icon name="screencapture"} {tr}Screen capture{/tr}
+							</a>
+						</li>
+					{/if}
+				</ul>
+			</div>
 		</div>
 	{/if}
 {/tikimodule}
