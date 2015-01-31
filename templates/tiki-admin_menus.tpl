@@ -37,15 +37,15 @@
 				<td class="action">
 					{if $channels[user].menuId neq 42}
 						{if $tiki_p_edit_menu eq 'y'}
-							<a class="btn btn-default btn-sm" href="{bootstrap_modal controller=menu action=manage_menu menuId=$channels[user].menuId}" title="{tr}Edit Menu{/tr}">
+							<a class="tips" href="{bootstrap_modal controller=menu action=manage_menu menuId=$channels[user].menuId}" title="{tr}Edit Menu{/tr}">
 								{icon name="edit"}
 							</a>
 						{/if}
 						{if $tiki_p_edit_menu_option eq 'y'}
-							<a class="btn btn-default btn-sm" href="tiki-admin_menu_options.php?menuId={$channels[user].menuId}" title="{tr}Menu Options{/tr}">{icon name="list"}</a>
+							<a class="tips" href="tiki-admin_menu_options.php?menuId={$channels[user].menuId}" title="{tr}Menu Options{/tr}">{icon name="list"}</a>
 						{/if}
 						{if $tiki_p_edit_menu eq 'y'}
-							{self_link remove=$channels[user].menuId _title="{tr}Delete{/tr}" _class="btn btn-default btn-sm"}{icon name="remove"}{/self_link}
+							{self_link remove=$channels[user].menuId _title="{tr}Delete{/tr}" _class="tips"}{icon name="remove"}{/self_link}
 						{/if}
 					{else}
 						{if $tiki_p_admin eq 'y'}
@@ -53,7 +53,7 @@
 						{/if}
 					{/if}
 					{if $tiki_p_edit_menu eq 'y'}
-						<a class="btn btn-default btn-sm" href="{bootstrap_modal controller=menu action=clone_menu menuId=$channels[user].menuId}" title="{tr}Clone Menu{/tr}">
+						<a class="tips" href="{bootstrap_modal controller=menu action=clone_menu menuId=$channels[user].menuId}" title="{tr}Clone Menu{/tr}">
 							{icon name="copy"}
 						</a>
 					{/if}
