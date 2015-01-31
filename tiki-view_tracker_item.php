@@ -736,6 +736,49 @@ $smarty->assign('canView', $itemObject->canView());
 $smarty->assign('canModify', $itemObject->canModify());
 $smarty->assign('canRemove', $itemObject->canRemove());
 
+
+// Add view/edit template. Override an optional template defined in the tracker by a template passed via request
+// Note: Override is only allowed if a default template was set already in the tracker.
+
+// View
+$viewItemPretty = array(
+		'override' => false,
+		'value' => $tracker_info['viewItemPretty'],
+		'type' => 'wiki'
+);
+if (!empty($tracker_info['viewItemPretty'])) {
+	if (isset($_REQUEST['vi_tpl'])) {
+		$viewItemPretty['override'] = true;
+		$viewItemPretty['value'] = $_REQUEST['vi_tpl'];
+	}
+	// Need to check wether this is a wiki: or tpl: template, bc the smarty template needs to take care of this
+	if (strpos(strtolower($viewItemPretty['value']), 'wiki:') === false) {
+		$viewItemPretty['type'] = 'tpl';
+	}
+}
+$smarty->assign('viewItemPretty', $viewItemPretty);
+
+// Edit 
+$editItemPretty = array(
+	'override' => false,
+	'value' => $tracker_info['editItemPretty'],
+	'type' => 'wiki'
+); 
+if (!empty($tracker_info['editItemPretty'])) {
+	if (isset($_REQUEST['ei_tpl'])) {
+		$editItemPretty['override'] = true;
+		$editItemPretty['value'] = $_REQUEST['ei_tpl'];
+	}
+	if (strpos(strtolower($editItemPretty['value']), 'wiki:') === false) {
+		$editItemPretty['type'] = 'tpl';
+	}
+}
+$smarty->assign('editItemPretty', $editItemPretty);
+
+// add referer to setup the back button
+$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+$smarty->assign('referer', $referer);
+
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker_item.tpl');
 
@@ -747,7 +790,7 @@ try {
 		$smarty->display('tiki.tpl');
 	}
 } catch (SmartyException $e) {
-	$message = tr('This element cannot be displayed appropriately. Template not found (%0). Contact the administrator.', $tracker_info['viewItemPretty']);
+	$message = tr('This element cannot be displayed appropriately. One of the view/edit templates not found (%0)/(%1). Contact the administrator.', $viewItemPretty['value'], $editItemPretty['value']);
 	$smarty->loadPlugin('smarty_modifier_sefurl');
 	$access->redirect(smarty_modifier_sefurl($info['trackerId'], 'tracker'), $message);
 }

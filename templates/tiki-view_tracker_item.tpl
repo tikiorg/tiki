@@ -1,5 +1,8 @@
 {* $Id$ *}
-{title help="trackers"}{$tracker_item_main_value}{/title}
+{if !$viewItemPretty.override}
+	{title help="trackers"}{$tracker_item_main_value}{/title}
+{/if}
+
 
 {if ! isset($print_page) || $print_page ne 'y'}
 
@@ -25,7 +28,16 @@
 		{if $canModify && $prefs.tracker_legacy_insert neq 'y'}
 			<a class="btn btn-default" href="{bootstrap_modal controller=tracker action=update_item trackerId=$trackerId itemId=$itemId}">{icon name="edit"} {tr}Edit{/tr}</a>
 		{/if}
-		{include file="tracker_actions.tpl"}
+	
+		{* only include actions bar if no custom view template is assigned *}
+		{if !$viewItemPretty.override}
+			{include file="tracker_actions.tpl"}
+		{/if}
+		
+		{* show button back only if tpl has been set with vi_tpl or ei_tpl *}
+		{if $viewItemPretty.override and !empty($referer)}
+			<a class="btn btn-default" href="{$referer}" title="{tr}Back{/tr}">{icon name="arrow-circle-left"} {tr}Back{/tr}</a>
+		{/if}
 	</div>
 
 	<div class="categbar" align="right">
@@ -46,9 +58,13 @@
 			{$smarty.server.php_self}?{query itemId=NULL trackerId=$trackerId}
 		{/pagination_links}
 	{/if}
-
+	
 	{include file='tracker_error.tpl'}
-{/if}{*print_page*}
+	
+{/if} 
+{* print_page *}
+
+
 
 {tabset name='tabs_view_tracker_item' skipsingle=1 toggle=n}
 
@@ -76,7 +92,8 @@
 			{/jq}
 		{/if}
 
-		{trackerfields mode=view trackerId=$trackerId fields=$fields itemId=$itemId}
+		{* show item *}
+		{trackerfields mode=view trackerId=$trackerId fields=$fields itemId=$itemId viewItemPretty=$viewItemPretty.value}
 
 		{* -------------------------------------------------- section with comments --- *}
 		{if $tracker_info.useComments eq 'y' and ($tiki_p_tracker_view_comments ne 'n' or $tiki_p_comment_tracker_items ne 'n') and $prefs.tracker_show_comments_below eq 'y'}
@@ -179,7 +196,9 @@
 							</tr>
 						{/if}
 
-						{if empty($tracker_info.editItemPretty)}
+						
+						{* no template defined in the tracker *}
+						{if empty($editItemPretty.value)}
 
 							{foreach from=$ins_fields key=ix item=cur_field}
 								<tr>
@@ -198,9 +217,15 @@
 							{trackerheader level=-1 title='' inTable='formcolor'}
 
 						{else}
+						{* we have a preset template: it could be a wiki:myPage or a tpl:MyTpl.tpl *}
+						{* Note: tracker plugin usally consumes a pagename or a tpl filename without a prefix of tpl: or wiki: as the tracker definition does *}
 							<tr>
 								<td colspan="4">
-									{wikiplugin _name=tracker trackerId=$trackerId itemId=$itemId view=page wiki=$tracker_info.editItemPretty formtag='n'}{/wikiplugin}
+								{if $editItemPretty.type eq 'wiki'}
+									{wikiplugin _name=tracker trackerId=$trackerId itemId=$itemId view=page wiki=$editItemPretty.value formtag='n'}{/wikiplugin}
+								{else}
+									{wikiplugin _name=tracker trackerId=$trackerId itemId=$itemId view=page tpl=$editItemPretty.value formtag='n'}{/wikiplugin}
+								{/if}
 								</td>
 							</tr>
 						{/if}

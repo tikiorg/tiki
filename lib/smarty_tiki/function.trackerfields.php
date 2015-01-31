@@ -11,6 +11,16 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+
+/*
+ * Render fields of a trackeritem when called from the tracker
+ * @param array $params - params passed from tempate as key/value pairs
+ * Added keys to set the view/edit item template in tiki14. Format as defined in the tracker, i.e. 'wiki:myPageName, 'tpl:myTpl.tpl' 
+ * 'viewItemPretty': define a template to view the item. 
+ * 'editItemPretty': define a template to edit the item. 
+ * These keys treat the template setting in the tracker as a default value and will therefore override if present.
+ * They only apply if the default setting would apply - i.e sectionformat must be set to configured.
+ */
 function smarty_function_trackerfields($params, $smarty)
 {
 	if (! isset($params['fields']) || ! is_array($params['fields'])) {
@@ -101,9 +111,12 @@ function smarty_function_trackerfields($params, $smarty)
 	$smarty->assign('fields', $params['fields']);
 	$smarty->assign('auto', $auto);
 
+	$editItemPretty = isset($params['editItemPretty']) ? $params['editItemPretty'] : '';
+	$viewItemPretty = isset($params['viewItemPretty']) ? $params['viewItemPretty'] : '';
+
 	$trklib = TikiLib::lib('trk');
-	$trklib->registerSectionFormat('config', 'edit', $trackerInfo['editItemPretty'], tr('Configured'));
-	$trklib->registerSectionFormat('config', 'view', $trackerInfo['viewItemPretty'], tr('Configured'));
+	$trklib->registerSectionFormat('config', 'edit', $editItemPretty, tr('Configured'));
+	$trklib->registerSectionFormat('config', 'view', $viewItemPretty, tr('Configured'));
 	$template = $trklib->getSectionFormatTemplate($sectionFormat, $params['mode']);
 
 	$trklib->unregisterSectionFormat('config');
