@@ -784,8 +784,8 @@ $smarty->assign('mid', 'tiki-view_tracker_item.tpl');
 
 try {
 	if (isset($_REQUEST['print'])) {
+		$smarty->assign('print_page', 'y');
 		$smarty->display('tiki-print.tpl');
-		$smarty->assign('print', 'y');
 	} else {
 		$smarty->display('tiki.tpl');
 	}

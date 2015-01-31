@@ -68,7 +68,8 @@
 
 {tabset name='tabs_view_tracker_item' skipsingle=1 toggle=n}
 
-	{tab name="{tr}View{/tr}"}
+	{* when printing, no js is called to select the tab thus no class "active" assigned (would show nothing). print=y sets this class on printing *}
+	{tab name="{tr}View{/tr}" print=y} 
 		{* --- tab with view ------------------------------------------------------------------------- *}
 		<h2>{$tracker_info.name|escape}</h2>
 		{if $tracker_is_multilingual}
@@ -111,7 +112,7 @@
 	{* -------------------------------------------------- tab with comments --- *}
 	{if $tracker_info.useComments eq 'y' and ($tiki_p_tracker_view_comments ne 'n' or $tiki_p_comment_tracker_items ne 'n') and $prefs.tracker_show_comments_below ne 'y'}
 
-		{tab name="{tr}Comments{/tr} (`$comCount`)"}
+		{tab name="{tr}Comments{/tr} (`$comCount`)" print=n}
 			<div id="comment-container" data-target="{service controller=comment action=list type=trackeritem objectId=$itemId}"></div>
 			{jq}
 				var id = '#comment-container';
@@ -123,7 +124,7 @@
 
 	{* ---------------------------------------- tab with attachments --- *}
 	{if $tracker_info.useAttachments eq 'y' and $tiki_p_tracker_view_attachments eq 'y'}
-		{tab name="{tr}Attachments{/tr} (`$attCount`)"}
+		{tab name="{tr}Attachments{/tr} (`$attCount`)" print=n}
 			{include file='attachments_tracker.tpl'}
 		{/tab}
 	{/if}
