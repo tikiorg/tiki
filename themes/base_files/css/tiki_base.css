@@ -1274,7 +1274,7 @@ body.tiki_wiki #comments {
   height: 20px;
 }
 .ic_active {
-  border: 2px solid #428bca;
+  border: 2px solid #337ab7;
 }
 .ic_caption {
   background: #222222;
@@ -2343,7 +2343,7 @@ fieldset.dropzone {
 }
 .webmail_list .button {
   background: #ffffff;
-  border: 1px solid #428bca;
+  border: 1px solid #337ab7;
   padding: 0 2px;
 }
 .webmail_list .webmail_read {
