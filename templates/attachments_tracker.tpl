@@ -1,7 +1,7 @@
 {* $Id$ *}
 {strip}
 {if $print_page ne 'y' and $tiki_p_attach_trackers eq 'y'}
-	<h2>{tr}Attach a file to this item{/tr}</h2>
+	<h3>{tr}Attach a file to this item{/tr}</h3>
 	<form enctype="multipart/form-data" action="tiki-view_tracker_item.php" method="post" class="form-horizontal" role="form">
 		<input type="hidden" name="trackerId" value="{$trackerId|escape}">
 		<input type="hidden" name="itemId" value="{$itemId|escape}">
@@ -35,7 +35,7 @@
 				{tr}Description{/tr}
 			</label>
 			<div class="col-sm-10">
-				<textarea name="attach_longdesc" style="width:100%;" rows="10" >{$attach_longdesc|escape}</textarea>
+				<textarea name="attach_longdesc" style="width:100%;" rows="3" >{$attach_longdesc|escape}</textarea>
 			</div>
 		</div>
 		<div class="form-group">
@@ -46,7 +46,7 @@
 	</form>
 {/if}
 
-<h2>{tr}Attachments{/tr}</h2>
+<h3>{tr}Attachments{/tr}</h3>
 <div class="table-responsive">
 	<table class="table normal">
 	<tr>
