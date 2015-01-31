@@ -32,6 +32,16 @@ interface Control
 	 * Provide the ID of the primary field to be referenced by the label.
 	 */
 	function getId();
+
+	/**
+	 * Determines if the control is usable.
+	 */
+	function isUsable();
+
+	/**
+	 * Determines if the control has a selected value.
+	 */
+	function hasValue();
 	
 	/**
 	 * Render the field within a form.

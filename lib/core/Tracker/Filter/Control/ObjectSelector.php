@@ -45,6 +45,16 @@ class ObjectSelector implements Control
 		return $this->fieldName;
 	}
 
+	function isUsable()
+	{
+		return true;
+	}
+
+	function hasValue()
+	{
+		return ! empty($this->value);
+	}
+
 	function getValue()
 	{
 		return $this->value;

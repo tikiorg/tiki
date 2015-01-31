@@ -60,7 +60,11 @@ class Collection
 		foreach ($descriptor as $filter) {
 			$fil = $this->addFilter($filter['field'], $filter['mode']);
 
-			if ($filter['label']) {
+			if (! empty($filter['position'])) {
+				$fil->setPosition($filter['position']);
+			}
+
+			if (! empty($filter['label'])) {
 				$fil->setLabel($filter['label']);
 			}
 		}
@@ -183,9 +187,14 @@ class Collection
 					return [];
 				};
 
+				$renderextra = function ($id) use ($facet) {
+					$label = $facet->render($id) ?: tr('Unknown value');
+					return "$label (0)";
+				};
+
 				$collection->addNew($name, 'facet-any-' . $facet->getName())
 					->setLabel(tr('%0 (any of)', $facet->getLabel()))
-					->setControl(new Control\MultiSelect("facet_any_{$facet->getName()}", $getoptions))
+					->setControl(new Control\MultiSelect("facet_any_{$facet->getName()}", $getoptions, $renderextra))
 					->setApplyCondition(function ($control, Search_Query $query) use ($facet) {
 						$query->requestFacet($facet);
 
@@ -197,7 +206,7 @@ class Collection
 
 				$collection->addNew($name, 'facet-all-' . $facet->getName())
 					->setLabel(tr('%0 (all of)', $facet->getLabel()))
-					->setControl(new Control\MultiSelect("facet_all_{$facet->getName()}", $getoptions))
+					->setControl(new Control\MultiSelect("facet_all_{$facet->getName()}", $getoptions, $renderextra))
 					->setApplyCondition(function ($control, Search_Query $query) use ($facet) {
 						$query->requestFacet($facet);
 
@@ -219,6 +228,7 @@ class Collection
 				'label' => $filter->getLabel(),
 				'field' => $filter->getField(),
 				'mode' => $filter->getMode(),
+				'position' => $filter->getPosition(),
 			];
 		}, $this->filters);
 	}
@@ -244,7 +254,7 @@ class Collection
 		return $fields;
 	}
 
-	function setResultSet(Search_ResultSet $resultset)
+	function setResultSet(\Search_ResultSet $resultset)
 	{
 		$this->resultset = $resultset;
 	}

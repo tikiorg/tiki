@@ -11,6 +11,7 @@ class Filter
 {
 	private $permName;
 	private $mode;
+	private $position = 'default';
 	private $label;
 	private $help;
 	private $control;
@@ -41,6 +42,17 @@ class Filter
 	function getLabel()
 	{
 		return $this->label;
+	}
+
+	function getPosition()
+	{
+		return $this->position;
+	}
+
+	function setPosition($position)
+	{
+		$this->position = $position;
+		return $this;
 	}
 
 	function setHelp($help)
@@ -86,6 +98,7 @@ class Filter
 	{
 		$this->help = $other->help;
 		$this->label = $other->label;
+		$this->position = $other->position;
 		$this->control = clone $other->control;
 		$this->applyCondition = $other->applyCondition;
 	}

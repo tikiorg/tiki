@@ -139,6 +139,18 @@
 								<div class="input-group input-group-sm">
 									<span class="input-group-addon">{icon name=sort}</span>
 									<input type="text" class="filter-label form-control" value="Label" />
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+											<span class="position-label">{tr}Default{/tr}</span>
+											<span class="caret"></span>
+											<input class="position" type="hidden" value="default">
+										</button>
+										<ul class="dropdown-menu dropdown-menu-right" role="menu">
+											<li><a class="position-option" href="#default">{tr}Default{/tr}</a></li>
+											<li><a class="position-option" href="#primary">{tr}Primary{/tr}</a></li>
+											<li><a class="position-option" href="#side">{tr}Side{/tr}</a></li>
+										</ul>
+									</div>
 								</div>
 							</td>
 							<td><span class="field">Field Name</span>:<span class="mode">Mode</span></td>
@@ -150,6 +162,18 @@
 									<div class="input-group input-group-sm">
 										<span class="input-group-addon">{icon name=sort}</span>
 										<input type="text" class="field-label form-control" value="{$filter->getLabel()|escape}" />
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+												<span class="position-label">{$filter->getPosition()|ucfirst|tra}</span>
+												<span class="caret"></span>
+												<input class="position" type="hidden" value="{$filter->getPosition()|escape}">
+											</button>
+											<ul class="dropdown-menu dropdown-menu-right" role="menu">
+												<li><a class="position-option" href="#default">{tr}Default{/tr}</a></li>
+												<li><a class="position-option" href="#primary">{tr}Primary{/tr}</a></li>
+												<li><a class="position-option" href="#side">{tr}Side{/tr}</a></li>
+											</ul>
+										</div>
 									</div>
 								</td>
 								<td><span class="field">{$filter->getField()|escape}</span>:<span class="mode">{$filter->getMode()|escape}</td>

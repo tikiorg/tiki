@@ -11,12 +11,14 @@ class MultiSelect implements Control
 {
 	private $fieldName;
 	private $options;
+	private $extra;
 	private $values = [];
 
-	function __construct($name, $options)
+	function __construct($name, $options, callable $extra = null)
 	{
 		$this->fieldName = $name;
 		$this->options = $options;
+		$this->extra = $extra;
 	}
 
 	function applyInput(\JitFilter $input)
@@ -43,6 +45,17 @@ class MultiSelect implements Control
 		return $this->fieldName;
 	}
 
+	function isUsable()
+	{
+		$this->applyOptions();
+		return count($this->options) > 0;
+	}
+
+	function hasValue()
+	{
+		return count($this->values) > 0;
+	}
+
 	function getValues()
 	{
 		return $this->values;
@@ -52,6 +65,18 @@ class MultiSelect implements Control
 	{
 		if (is_callable($this->options)) {
 			$this->options = call_user_func($this->options);
+		}
+
+		if ($this->extra) {
+			// Include values selected, but not in the provided options,
+			// which can happen with dynamic filters
+			foreach ($this->values as $value) {
+				if (! isset($this->options[$value])) {
+					if ($label = call_user_func($this->extra, $value)) {
+						$this->options[$value] = $label;
+					}
+				}
+			}
 		}
 	}
 

@@ -45,6 +45,16 @@ class DropDown implements Control
 		return $this->fieldName;
 	}
 
+	function isUsable()
+	{
+		return count($this->options) > 0;
+	}
+
+	function hasValue()
+	{
+		return ! empty($this->value);
+	}
+
 	function getValue()
 	{
 		return $this->value;

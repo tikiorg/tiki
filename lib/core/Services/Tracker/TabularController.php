@@ -360,6 +360,9 @@ class Services_Tracker_TabularController
 			'action' => $action,
 			'label' => $label,
 			'filters' => array_map(function ($filter) {
+				if (! $filter->getControl()->isUsable()) {
+					return false;
+				}
 				return [
 					'id' => $filter->getControl()->getId(),
 					'label' => $filter->getLabel(),
@@ -402,15 +405,37 @@ class Services_Tracker_TabularController
 		}));
 		$arguments = $collection->getQueryArguments();
 
+		$collection->setResultSet($source->getResultSet());
+
+		$template = ['controls' => [], 'usable' => false, 'selected' => false];
+		$filters = ['default' => $template, 'primary' => $template, 'side' => $template];
+		foreach ($collection->getFilters() as $filter) {
+			// Exclude unusable controls
+			if (! $filter->getControl()->isUsable()) {
+				continue;
+			}
+
+			$pos = $filter->getPosition();
+
+			$filters[$pos]['controls'][] = [
+				'id' => $filter->getControl()->getId(),
+				'label' => $filter->getLabel(),
+				'help' => $filter->getHelp(),
+				'control' => $filter->getControl(),
+				'description' => $filter->getControl()->getDescription(),
+				'selected' => $filter->getControl()->hasValue(),
+			];
+
+			$filters[$pos]['usable'] = true;
+			if ($filter->getControl()->hasValue()) {
+				$filters[$pos]['selected'] = true;
+			}
+		}
+
 		return [
 			'title' => tr($info['name']),
 			'tabularId' => $tabularId,
-			'filters' => array_map(function ($filter) {
-				return [
-					'label' => $filter->getLabel(),
-					'description' => $filter->getControl()->getDescription(),
-				];
-			}, $collection->getFilters()),
+			'filters' => $filters,
 			'columns' => $columns,
 			'data' => $writer->getData($source),
 			'resultset' => $source->getResultSet(),
