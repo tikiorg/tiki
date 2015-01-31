@@ -1066,7 +1066,9 @@ if ( \$('#$id') ) {
 			}
 		}
 		$arg_str = rtrim($arg_str, '&');
-		$icon = isset($info['icon']) ? $info['icon'] : 'img/icons/wiki_plugin_edit.png';
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_function_icon');
+		$icon = isset($info['icon']) ? $info['icon'] : smarty_function_icon(['name' => 'plugin'], $smarty);
 
 		// some plugins are just too fragile to do wysiwyg, so show the "source" for them ;(
 		$excluded = array('tracker', 'trackerlist', 'trackerfilter', 'kaltura', 'toc', 'freetagged', 'draw', 'googlemap',
