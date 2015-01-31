@@ -106,6 +106,9 @@ function iconset_glyphicons()
 			'permission' => array(
 				'id' => 'lock',
 			),
+			'popup' => array(
+				'id' => 'list-alt',
+			),
 			'post' => array(
 				'id' => 'pencil',
 			),

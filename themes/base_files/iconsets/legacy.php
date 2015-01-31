@@ -329,6 +329,9 @@ function iconset_legacy()
 			'plugin' => array(
 				'id' => 'plugin',
 			),
+			'popup' => array(
+				'id' => 'application_view_columns',
+			),
 			'post' => array(
 				'id' => 'pencil_add',
 			),

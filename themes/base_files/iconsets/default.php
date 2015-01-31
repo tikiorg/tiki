@@ -300,6 +300,9 @@ function iconset_default()
 			'plugin' => array(
 				'id' => 'puzzle-piece',
 			),
+			'popup' => array(
+				'id' => 'list-alt',
+			),
 			'post' => array(
 				'id' => 'pencil',
 			),
