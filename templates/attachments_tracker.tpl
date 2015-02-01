@@ -35,7 +35,7 @@
 				{tr}Description{/tr}
 			</label>
 			<div class="col-sm-10">
-				<textarea name="attach_longdesc" style="width:100%;" rows="3" >{$attach_longdesc|escapedefault:null}</textarea>
+				<textarea name="attach_longdesc" style="width:100%;" rows="3" >{$attach_longdesc|escape|default:null}</textarea>
 			</div>
 		</div>
 		<div class="form-group">

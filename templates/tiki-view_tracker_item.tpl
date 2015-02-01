@@ -59,7 +59,7 @@
 	{if $canView}
 		{pagination_links cant=$cant|default:null offset=$offset reloff=$smarty.request.reloff|default:null itemname="{tr}Item{/tr}"}
 			{* Do not specify an itemId in URL used for pagination, because it will use the specified itemId instead of moving to another item *}
-			{$smarty.server.php_self}?{query itemId=NULL trackerId=$trackerId}
+			{$smarty.server.php_self|default:null}?{query itemId=NULL trackerId=$trackerId}
 		{/pagination_links}
 	{/if}
 	
