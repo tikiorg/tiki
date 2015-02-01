@@ -277,7 +277,7 @@ $admin_icons = array(
 		'help' => 'Text+area',
 	),
 	"module" => array(
-		'title' => tr('Module'),
+		'title' => tr('Modules'),
 		'description' => tr('Module appearance settings'),
 		'help' => 'Module',
 	),
@@ -325,6 +325,7 @@ $admin_icons = array(
 	"rating" => array(
 		'title' => tr('Rating'),
 		'help' => 'Rating',
+		'description' => tr('Rating settings'),
 		'disabled' => $prefs['wiki_simple_ratings'] !== 'y' &&
 						$prefs['wiki_comments_simple_ratings'] !== 'y' &&
 						$prefs['comments_vote'] !== 'y' &&
@@ -500,6 +501,7 @@ $admin_icons = array(
 	"payment" => array(
 		'title' => tr('Payment'),
 		'disabled' => $prefs['payment_feature'] != 'y',
+		'description' => tr('Payment settings'),
 		'help' => 'Payment',
 	),
 	"socialnetworks" => array(
