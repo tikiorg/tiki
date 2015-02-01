@@ -891,7 +891,7 @@ body {
   font-size: 14px;
   line-height: 1.42857143;
   color: #333333;
-  background-color: url('../../img/icons/flakesptn2.jpg');
+  background-color: url('../images/flakesptn2.jpg');
 }
 input,
 button,
@@ -936,7 +936,7 @@ img {
 .img-thumbnail {
   padding: 4px;
   line-height: 1.42857143;
-  background-color: url('../../img/icons/flakesptn2.jpg');
+  background-color: url('../images/flakesptn2.jpg');
   border: 1px solid #dddddd;
   border-radius: 4px;
   -webkit-transition: all 0.2s ease-in-out;
@@ -2083,7 +2083,7 @@ th {
   border-top: 2px solid #dddddd;
 }
 .table .table {
-  background-color: url('../../img/icons/flakesptn2.jpg');
+  background-color: url('../images/flakesptn2.jpg');
 }
 .table-condensed > thead > tr > th,
 .table-condensed > tbody > tr > th,
@@ -3216,7 +3216,7 @@ tbody.collapse.in {
   list-style: none;
   font-size: 14px;
   text-align: left;
-  background-color: url('../../img/icons/flakesptn2.jpg');
+  background-color: url('../images/flakesptn2.jpg');
   border: 1px solid #cccccc;
   border: 1px solid #6a6a6a;
   border-radius: 4px;
@@ -3247,7 +3247,7 @@ tbody.collapse.in {
 .dropdown-menu > li > a:focus {
   text-decoration: none;
   color: #262626;
-  background-color: url('../../img/icons/flakesptn3.jpg') transparent;
+  background-color: url('../images/flakesptn3.jpg') transparent;
 }
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover,
@@ -3669,7 +3669,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav > li > a:hover,
 .nav > li > a:focus {
   text-decoration: none;
-  background-color: url('../../img/icons/flakesptn3.jpg');
+  background-color: url('../images/flakesptn3.jpg');
 }
 .nav > li.disabled > a {
   color: #999999;
@@ -3684,7 +3684,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav .open > a,
 .nav .open > a:hover,
 .nav .open > a:focus {
-  background-color: url('../../img/icons/flakesptn3.jpg');
+  background-color: url('../images/flakesptn3.jpg');
   border-color: #402b5d;
 }
 .nav .nav-divider {
@@ -3716,7 +3716,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
   color: #555555;
-  background-color: url('../../img/icons/flakesptn2.jpg');
+  background-color: url('../images/flakesptn2.jpg');
   border: 1px solid #dddddd;
   border-bottom-color: transparent;
   cursor: default;
@@ -3762,7 +3762,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .nav-tabs.nav-justified > .active > a,
   .nav-tabs.nav-justified > .active > a:hover,
   .nav-tabs.nav-justified > .active > a:focus {
-    border-bottom-color: url('../../img/icons/flakesptn2.jpg');
+    border-bottom-color: url('../images/flakesptn2.jpg');
   }
 }
 .nav-pills > li {
@@ -3830,7 +3830,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .nav-tabs-justified > .active > a,
   .nav-tabs-justified > .active > a:hover,
   .nav-tabs-justified > .active > a:focus {
-    border-bottom-color: url('../../img/icons/flakesptn2.jpg');
+    border-bottom-color: url('../images/flakesptn2.jpg');
   }
 }
 .tab-content > .tab-pane {
@@ -4191,7 +4191,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
   color: #6c7b8c;
-  background-color: url('../../img/icons/flakesptn3.jpg');
+  background-color: url('../images/flakesptn3.jpg');
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
@@ -4232,7 +4232,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
     color: #6c7b8c;
-    background-color: url('../../img/icons/flakesptn3.jpg');
+    background-color: url('../images/flakesptn3.jpg');
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
@@ -4666,7 +4666,7 @@ a.list-group-item.active > .badge,
   padding: 4px;
   margin-bottom: 20px;
   line-height: 1.42857143;
-  background-color: url('../../img/icons/flakesptn2.jpg');
+  background-color: url('../images/flakesptn2.jpg');
   border: 1px solid #dddddd;
   border-radius: 4px;
   -webkit-transition: border 0.2s ease-in-out;
@@ -6312,141 +6312,6 @@ button.close {
     display: none !important;
   }
 }
-body {
-  background: url('../../img/icons/flakesptn2.jpg');
-  background-attachment: fixed;
-}
-.container {
-  background: #b1c1db url('../../img/icons/flakesptn.jpg');
-  border: 1px solid #6C7B8C;
-}
-header.container {
-  margin-top: 20px;
-}
-.layout_social .navbar-inverse,
-.layout_social .navbar-inverse .navbar-collapse,
-.layout_social .navbar-inverse .navbar-form,
-.layout_social .navbar-inverse .container {
-  background: url('../../img/icons/flakesptn2.jpg');
-  border: none;
-}
-.layout_social .navbar-inverse {
-  border-bottom: 1px solid #6c7b8c;
-}
-.navbar-inverse .navbar-brand,
-.navbar-inverse a,
-.navbar-inverse .navbar-nav > li > a {
-  color: #1C1329;
-}
-body.layout_social > .container {
-  padding-top: 20px;
-}
-.panel {
-  background: url('../../img/icons/flakesptn2.jpg');
-}
-.panel-heading,
-.panel-footer {
-  background: transparent;
-}
-#col2 .panel-heading,
-#col3 .panel-heading {
-  background: url('../../img/icons/boxtop.jpg') no-repeat transparent;
-  background-size: 100%;
-  border-bottom: medium none currentColor;
-}
-#col2 .panel-footer,
-#col3 .panel-footer {
-  background: url('../../img/icons/boxbtm.jpg') no-repeat transparent 0 100%;
-  background-size: 100%;
-  border-top: none;
-}
-#col2 .panel,
-#col3 .panel {
-  background: url('../../img/icons/boxmid.jpg') repeat-y transparent;
-  background-size: 100%;
-}
-.navbar-default {
-  background: #d7e5f3 url('../../img/icons/pagetitle-bg.jpg') repeat-x;
-  min-height: 35px;
-  margin-bottom: 5px;
-}
-.navbar-default .navbar-nav > .active > a,
-.navbar-default .navbar-nav > .active > a:hover,
-.navbar-default .navbar-nav > .active > a:focus {
-  background: #d7e5f3 url('../../img/icons/pagetitle-bg.jpg') repeat-x;
-  color: #555555;
-}
-.dropdown-menu > li > form {
-  background: url('../../img/icons/flakesptn2.jpg');
-}
-.dropdown-menu > li > a {
-  background: url('../../img/icons/flakesptn2.jpg');
-}
-.dropdown-menu > li > a:hover {
-  background: url('../../img/icons/flakesptn3.jpg');
-}
-.nav > li > a:hover {
-  background: url('../../img/icons/flakesptn3.jpg');
-}
-.btn,
-.btn-default,
-.nav-tabs > li > a,
-.input-group-addon {
-  background: url('../../img/icons/pagetitle-bg.jpg');
-}
-.btn:hover,
-.btn-default:hover,
-.nav-tabs > li > a:hover,
-.input-group-addon:hover {
-  background: url('../../img/icons/pagetitle-bg.jpg') 0 100%;
-}
-/*
-.table-striped > tbody > tr:nth-child(2n+1) > td,
-.table-striped > tbody > tr:nth-child(2n+1) > th {background: transparent url('@{imagePath}flakesptn3.jpg') }
-
-.table-striped > tbody > tr.success:nth-child(2n+1) > td,
-.table-striped > tbody > tr.success:nth-child(2n+1) > th {background: @state-success-bg; }
-
-.table-striped > tbody > tr.info:nth-child(2n+1) > td,
-.table-striped > tbody > tr.info:nth-child(2n+1) > th {background: @state-info-bg; }
-
-.table-striped > tbody > tr.warning:nth-child(2n+1) > td,
-.table-striped > tbody > tr.warning:nth-child(2n+1) > th {background: @state-warning-bg; }
-
-.table-striped > tbody > tr.danger:nth-child(2n+1) > td,
-.table-striped > tbody > tr.danger:nth-child(2n+1) > th {background: @state-danger-bg; }*/
-.cssmenu_horiz li ul,
-.cssmenu_vert li ul {
-  padding: 5px 0;
-  margin: 2px 0 0;
-  background: url('../../img/icons/flakesptn2.jpg');
-  border: 1px solid #cccccc;
-  border: 1px solid #6a6a6a;
-  border-radius: 4px;
-  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-  background-clip: padding-box;
-}
-.cssmenu_horiz li ul > li > a,
-.cssmenu_vert li ul > li > a {
-  padding: 3px 20px;
-  font-weight: normal;
-  line-height: 1.42857143;
-  color: #333333;
-  background: url('../../img/icons/flakesptn2.jpg');
-}
-.cssmenu_horiz > li > a:hover,
-.cssmenu_vert > li > a:hover,
-.cssmenu_horiz ul > li > a:hover,
-.cssmenu_vert ul > li > a:hover,
-.cssmenu_horiz > li > a:focus,
-.cssmenu_vert > li > a:focus,
-.cssmenu_horiz ul > li > a:focus,
-.cssmenu_vert ul > li > a:focus {
-  text-decoration: none;
-  color: #262626;
-  background: url('../../img/icons/flakesptn3.jpg');
-}
 .meta-section {
   border-bottom: solid 1px #999999;
 }
@@ -6466,7 +6331,7 @@ a.fc-event:hover {
   border: thin solid #818181 /*black*/;
 }
 .filter .fancyfilter .token {
-  background: url('../../img/icons/flakesptn2.jpg');
+  background: url('../images/flakesptn2.jpg');
 }
 .note-list .postbody-title {
   background: #ffffff;
@@ -6481,19 +6346,19 @@ a.fc-event:hover {
   border-left: 3px double #8a6d3b;
 }
 .post-approved-r .content * {
-  background: url('../../img/icons/dots.gif');
+  background: url('../images/dots.gif');
 }
 .cssmenu_horiz ul li,
 .cssmenu_vert ul li,
 .cssmenu_horiz ul ul li,
 .cssmenu_vert ul ul li {
-  background: url('../../img/icons/flakesptn2.jpg');
+  background: url('../images/flakesptn2.jpg');
 }
 .cssmenu_horiz li:hover,
 .cssmenu_horiz li.sfHover,
 .cssmenu_vert li:hover,
 .cssmenu_vert li.sfHover {
-  background: url('../../img/icons/flakesptn3.jpg') transparent;
+  background: url('../images/flakesptn3.jpg') transparent;
   /* only transition out, not in */
   -webkit-transition: none;
   transition: none;
@@ -6633,7 +6498,7 @@ div #metadata div.tabs {
   background-color: transparent;
 }
 .openid_url {
-  background: #ffffff url('../../img/icons/icons/login-OpenID-bg.gif') 1px 1px no-repeat;
+  background: #ffffff url('../images/icons/login-OpenID-bg.gif') 1px 1px no-repeat;
 }
 input:-webkit-autofill {
   background-color: #eceef2 !important;
@@ -6643,27 +6508,27 @@ input:-webkit-autofill {
   /* the Google guys forgot the number-one rule... when they specify background they should specify forgeround color too ;) */
 }
 #cboxTitle {
-  background-color: url('../../img/icons/flakesptn2.jpg');
+  background-color: url('../images/flakesptn2.jpg');
 }
 #captchaImg {
   border: 1px solid #dddddd;
 }
 form.simple label.error {
-  background: url('../../img/icons/error.png') no-repeat 0 4px;
+  background: url('../images/error.png') no-repeat 0 4px;
   color: #a94442;
 }
 form.simple label .warning {
   color: #a94442;
 }
 .tiki-modal .mask {
-  background-color: url('../../img/icons/flakesptn2.jpg');
+  background-color: url('../images/flakesptn2.jpg');
 }
 .ui-dialog {
-  background: url('../../img/icons/flakesptn2.jpg');
+  background: url('../images/flakesptn2.jpg');
   color: #333333;
 }
 .box-quickadmin .cssmenu_horiz ul li {
-  background-color: url('../../img/icons/flakesptn2.jpg');
+  background-color: url('../images/flakesptn2.jpg');
 }
 .box-switch_lang .box-data img.highlight {
   border: 0.1em solid #ebccd1;
@@ -6731,7 +6596,7 @@ div.cvsup {
   background: #f9f9f9;
 }
 .webmail_list .button {
-  background: url('../../img/icons/flakesptn2.jpg');
+  background: url('../images/flakesptn2.jpg');
   border: 1px solid #402b5d;
 }
 .webmail_list .webmail_read {
@@ -6745,10 +6610,10 @@ div.cvsup {
   color: #8a6d3b;
 }
 .webmail_message {
-  background: url('../../img/icons/flakesptn2.jpg');
+  background: url('../images/flakesptn2.jpg');
 }
 .webmail_message_headers {
-  background: url('../../img/icons/flakesptn2.jpg');
+  background: url('../images/flakesptn2.jpg');
 }
 .webmail_message_headers th {
   background: transparent;
@@ -6774,12 +6639,12 @@ div.cvsup {
   border-left: medium double #999999;
 }
 .toolbars-picker {
-  background: url('../../img/icons/flakesptn2.jpg');
+  background: url('../images/flakesptn2.jpg');
   border: thin solid #333333;
   color: #333333;
 }
 .toolbars-picker a {
-  border: 1px solid url('../../img/icons/flakesptn2.jpg');
+  border: 1px solid url('../images/flakesptn2.jpg');
   color: #333333;
 }
 .toolbars-picker a:hover {
@@ -6890,7 +6755,7 @@ div#outerToc * {
   color: #333333;
 }
 .plugin-form-float {
-  background: url('../../img/icons/flakesptn2.jpg');
+  background: url('../images/flakesptn2.jpg');
   color: #333333;
   border: solid 2px #333333;
 }
@@ -6898,18 +6763,18 @@ div#outerToc * {
   border: 1px solid #eeeeee;
 }
 body.wikitext {
-  background: url('../../img/icons/flakesptn2.jpg');
+  background: url('../images/flakesptn2.jpg');
   color: #333333;
 }
 .editable-inline {
-  background: transparent url('../../img/icons/database_lightning.png') no-repeat top right;
+  background: transparent url('../images/database_lightning.png') no-repeat top right;
   padding-right: 20px;
 }
 .editable-inline.loaded {
   background: transparent;
 }
 .editable-inline.failure {
-  background: transparent url('../../img/icons/lock_gray.png') no-repeat top right;
+  background: transparent url('../images/lock_gray.png') no-repeat top right;
 }
 .editable-inline.modified {
   border: solid 2px #d43f3a;
@@ -6928,16 +6793,16 @@ body.wikitext {
 }
 .TextArea-fullscreen .actions,
 .CodeMirror-fullscreen .actions {
-  background-color: url('../../img/icons/flakesptn2.jpg');
+  background-color: url('../images/flakesptn2.jpg');
   border-top: #eeeeee 1px solid;
 }
 #autosave_preview {
-  background-color: url('../../img/icons/flakesptn2.jpg');
+  background-color: url('../images/flakesptn2.jpg');
   color: #333333;
 }
 #autosave_preview_grippy {
   background-color: #eeeeee;
-  background-image: url('../../img/icons/shading.png');
+  background-image: url('../images/shading.png');
 }
 h1:hover a.tiki_anchor,
 h2:hover a.tiki_anchor,
@@ -7079,4 +6944,139 @@ input.tablesorter-filter {
 .tablesorter input.dateTo {
   border: none;
   background-color: #e3e7ec;
+}
+body {
+  background: url('../images/flakesptn2.jpg');
+  background-attachment: fixed;
+}
+.container {
+  background: #b1c1db url('../images/flakesptn.jpg');
+  border: 1px solid #6C7B8C;
+}
+header.container {
+  margin-top: 20px;
+}
+.layout_social .navbar-inverse,
+.layout_social .navbar-inverse .navbar-collapse,
+.layout_social .navbar-inverse .navbar-form,
+.layout_social .navbar-inverse .container {
+  background: url('../images/flakesptn2.jpg');
+  border: none;
+}
+.layout_social .navbar-inverse {
+  border-bottom: 1px solid #6c7b8c;
+}
+.navbar-inverse .navbar-brand,
+.navbar-inverse a,
+.navbar-inverse .navbar-nav > li > a {
+  color: #1C1329;
+}
+body.layout_social > .container {
+  padding-top: 20px;
+}
+.panel {
+  background: url('../images/flakesptn2.jpg');
+}
+.panel-heading,
+.panel-footer {
+  background: transparent;
+}
+#col2 .panel-heading,
+#col3 .panel-heading {
+  background: url('../images/boxtop.jpg') no-repeat transparent;
+  background-size: 100%;
+  border-bottom: medium none currentColor;
+}
+#col2 .panel-footer,
+#col3 .panel-footer {
+  background: url('../images/boxbtm.jpg') no-repeat transparent 0 100%;
+  background-size: 100%;
+  border-top: none;
+}
+#col2 .panel,
+#col3 .panel {
+  background: url('../images/boxmid.jpg') repeat-y transparent;
+  background-size: 100%;
+}
+.navbar-default {
+  background: #d7e5f3 url('../images/pagetitle-bg.jpg') repeat-x;
+  min-height: 35px;
+  margin-bottom: 5px;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  background: #d7e5f3 url('../images/pagetitle-bg.jpg') repeat-x;
+  color: #555555;
+}
+.dropdown-menu > li > form {
+  background: url('../images/flakesptn2.jpg');
+}
+.dropdown-menu > li > a {
+  background: url('../images/flakesptn2.jpg');
+}
+.dropdown-menu > li > a:hover {
+  background: url('../images/flakesptn3.jpg');
+}
+.nav > li > a:hover {
+  background: url('../images/flakesptn3.jpg');
+}
+.btn,
+.btn-default,
+.nav-tabs > li > a,
+.input-group-addon {
+  background: url('../images/pagetitle-bg.jpg');
+}
+.btn:hover,
+.btn-default:hover,
+.nav-tabs > li > a:hover,
+.input-group-addon:hover {
+  background: url('../images/pagetitle-bg.jpg') 0 100%;
+}
+/*
+.table-striped > tbody > tr:nth-child(2n+1) > td,
+.table-striped > tbody > tr:nth-child(2n+1) > th {background: transparent url('@{imagePath}flakesptn3.jpg') }
+
+.table-striped > tbody > tr.success:nth-child(2n+1) > td,
+.table-striped > tbody > tr.success:nth-child(2n+1) > th {background: @state-success-bg; }
+
+.table-striped > tbody > tr.info:nth-child(2n+1) > td,
+.table-striped > tbody > tr.info:nth-child(2n+1) > th {background: @state-info-bg; }
+
+.table-striped > tbody > tr.warning:nth-child(2n+1) > td,
+.table-striped > tbody > tr.warning:nth-child(2n+1) > th {background: @state-warning-bg; }
+
+.table-striped > tbody > tr.danger:nth-child(2n+1) > td,
+.table-striped > tbody > tr.danger:nth-child(2n+1) > th {background: @state-danger-bg; }*/
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {
+  padding: 5px 0;
+  margin: 2px 0 0;
+  background: url('../images/flakesptn2.jpg');
+  border: 1px solid #cccccc;
+  border: 1px solid #6a6a6a;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  background-clip: padding-box;
+}
+.cssmenu_horiz li ul > li > a,
+.cssmenu_vert li ul > li > a {
+  padding: 3px 20px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  color: #333333;
+  background: url('../images/flakesptn2.jpg');
+}
+.cssmenu_horiz > li > a:hover,
+.cssmenu_vert > li > a:hover,
+.cssmenu_horiz ul > li > a:hover,
+.cssmenu_vert ul > li > a:hover,
+.cssmenu_horiz > li > a:focus,
+.cssmenu_vert > li > a:focus,
+.cssmenu_horiz ul > li > a:focus,
+.cssmenu_vert ul > li > a:focus {
+  text-decoration: none;
+  color: #262626;
+  background: url('../images/flakesptn3.jpg');
 }
