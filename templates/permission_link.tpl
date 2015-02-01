@@ -1,6 +1,6 @@
 {if $permission_link.mode eq 'text'}
 	<a class="{if $permission_link.active}text-success{else}text-warning{/if}{if !empty($permission_link.addclass)} {$permission_link.addclass}{/if}" href="{$permission_link.url|escape}">
-		{icon name="permission"}{$permission_link.label|escape}
+		{icon name="permission"} {$permission_link.label|escape}
 		{if $permission_link.count}
 			<span class="badge">{$permission_link.count|escape}</span>
 		{/if}
