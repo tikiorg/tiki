@@ -14,7 +14,7 @@
 			{else}
 				{self_link print='y' _class="btn btn-default"}{icon name="print"}{/self_link}
 			{/if}
-			{if $item_info.logs.cant}
+			{if $item_info.logs.cant|default:null}
 				<a class="btn btn-default" class="link" href="tiki-tracker_view_history.php?itemId={$itemId}" title="{tr}History{/tr}">{icon name="history"}</a>
 			{/if}
 			{monitor_link type=trackeritem object=$itemId}
@@ -57,7 +57,7 @@
 
 	{* ------- return/next/previous tab --- *}
 	{if $canView}
-		{pagination_links cant=$cant offset=$offset reloff=$smarty.request.reloff itemname="{tr}Item{/tr}"}
+		{pagination_links cant=$cant|default:null offset=$offset reloff=$smarty.request.reloff|default:null itemname="{tr}Item{/tr}"}
 			{* Do not specify an itemId in URL used for pagination, because it will use the specified itemId instead of moving to another item *}
 			{$smarty.server.php_self}?{query itemId=NULL trackerId=$trackerId}
 		{/pagination_links}

@@ -33,7 +33,7 @@
 					<!--/span -->
 				{/if}
 
-				{if $prefs.feature_backlinks eq 'y' and $backlinks and $tiki_p_view_backlink eq 'y'}
+				{if $prefs.feature_backlinks eq 'y' and $backlinks|default:null and $tiki_p_view_backlink eq 'y'}
 					<li>
 						<div class="btn-group backlinks">
 							<a data-toggle="dropdown">

@@ -18,7 +18,7 @@
 		</div>
 	</div>
 </div>
-{if $module_pref_errors}
+{if $module_pref_errors|default:null}
 	<div class="container modules">
 		{remarksbox type="warning" title="{tr}Module errors{/tr}"}
 			{tr}The following modules could not be loaded{/tr}

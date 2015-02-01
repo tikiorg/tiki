@@ -5,7 +5,7 @@
 	<div class="table-responsive">
 		<table class="table">
 			<tr>
-				{if ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')) and $showstatus ne 'n'}
+				{if ($tracker_info.showStatus|default:null eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')) and $showstatus|default:null ne 'n'}
 					{foreach key=st item=stdata from=$status_types}
 						<td>
 							<div class="{$stdata.class}">

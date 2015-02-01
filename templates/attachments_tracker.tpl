@@ -1,17 +1,17 @@
 {* $Id$ *}
 {strip}
-{if $print_page ne 'y' and $tiki_p_attach_trackers eq 'y'}
+{if $print_page|default:null ne 'y' and $tiki_p_attach_trackers eq 'y'}
 	<h3>{tr}Attach a file to this item{/tr}</h3>
 	<form enctype="multipart/form-data" action="tiki-view_tracker_item.php" method="post" class="form-horizontal" role="form">
 		<input type="hidden" name="trackerId" value="{$trackerId|escape}">
 		<input type="hidden" name="itemId" value="{$itemId|escape}">
-		<input type="hidden" name="attId" value="{$attId|escape}">
+		<input type="hidden" name="attId" value="{$attId|escape|default:null}">
 		<div class="form-group">
 			<label for="" class="col-sm-2 control-label">
 				{tr}Upload file{/tr}
 			</label>
 			<div class="col-sm-10">
-				{if $attach_file}{tr}Edit:{/tr} {/if}<input type="hidden" name="MAX_FILE_SIZE" value="1000000000"><input name="userfile1" type="file">{if $attach_file}<br>{$attach_file|escape}{/if}
+				{if $attach_file|default:null}{tr}Edit:{/tr} {/if}<input type="hidden" name="MAX_FILE_SIZE" value="1000000000"><input name="userfile1" type="file">{if $attach_file|default:null}<br>{$attach_file|escape}{/if}
 			</div>
 		</div>
 		<div class="form-group">
@@ -19,7 +19,7 @@
 				{tr}Comment{/tr}
 			</label>
 			<div class="col-sm-10">
-				<input type="text" name="attach_comment" maxlength="250" value="{$attach_comment|escape}">
+				<input type="text" name="attach_comment" maxlength="250" value="{$attach_comment|escape|default:null}">
 			</div>
 		</div>
 		<div class="form-group">
@@ -27,7 +27,7 @@
 				{tr}Version{/tr}
 			</label>
 			<div class="col-sm-10">
-				<input type="text" name="attach_version" size="5" maxlength="10" value="{$attach_version|escape}">
+				<input type="text" name="attach_version" size="5" maxlength="10" value="{$attach_version|escape|default:null}">
 			</div>
 		</div>
 		<div class="form-group">
@@ -35,12 +35,12 @@
 				{tr}Description{/tr}
 			</label>
 			<div class="col-sm-10">
-				<textarea name="attach_longdesc" style="width:100%;" rows="3" >{$attach_longdesc|escape}</textarea>
+				<textarea name="attach_longdesc" style="width:100%;" rows="3" >{$attach_longdesc|escapedefault:null}</textarea>
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="col-sm-10 col-sm-push-2">
-				<input type="submit" class="btn btn-default btn-sm" name="attach" value={if $attach_file}"{tr}Edit{/tr}"{else}"{tr}Attach{/tr}"{/if}>
+				<input type="submit" class="btn btn-default btn-sm" name="attach" value={if $attach_file|default:null}"{tr}Edit{/tr}"{else}"{tr}Attach{/tr}"{/if}>
 			</div>
 		</div>
 	</form>
