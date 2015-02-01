@@ -4,10 +4,14 @@
 	<h3>{tr}Comments{/tr}
 		<span class="lock">
 			{if ! $parentId && $allow_lock}
-				{self_link controller=comment action=lock modal=true type=$type objectId=$objectId _icon=lock _class="confirm-prompt btn btn-default btn-sm" _bootstrap="y" _confirm="{tr}Do you really want to lock comments?{/tr}"}{tr}Lock{/tr}{/self_link}
+				<a href="{bootstrap_modal controller=comment action=lock type=$type objectId=$objectId}" class="btn btn-link btn-sm tips" title="{tr}Comments unlocked{/tr}:{tr}Lock comments{/tr}">
+					{icon name="unlock"}
+				</a>
 			{/if}
 			{if ! $parentId && $allow_unlock}
-				{self_link controller=comment action=unlock type=$type objectId=$objectId _icon=lock_break _class="confirm-prompt btn btn-default btn-sm" _confirm="{tr}Do you really want to unlock comments?{/tr}"}{tr}Unlock{/tr}{/self_link}
+				<a href="{bootstrap_modal controller=comment action=unlock type=$type objectId=$objectId}" class="btn btn-link btn-sm tips" title="{tr}Comments locked{/tr}:{tr}Unlock comments{/tr}">
+					{icon name="lock"}
+				</a>
 			{/if}
 		</span>
 	</h3>

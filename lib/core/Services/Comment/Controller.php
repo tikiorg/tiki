@@ -305,7 +305,15 @@ class Services_Comment_Controller
 			$status = 'DONE';
 		}
 
+		if ($mode === 'lock') {
+			$title = tr('Lock comments');
+		} 
+		else {
+			$title = tr('Unlock comments');
+		}
+		
 		return array(
+			'title' => $title,
 			'type' => $type,
 			'objectId' => $objectId,
 			'status' => $status,
