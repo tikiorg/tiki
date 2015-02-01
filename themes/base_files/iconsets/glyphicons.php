@@ -143,6 +143,9 @@ function iconset_glyphicons()
 			'three-d' => array(
 				'id' => 'road',
 			),
+			'translate' => array(
+				'id' => 'globe',
+			),
 			'unlock' => array(
 				'id' => 'folder-open',
 			),

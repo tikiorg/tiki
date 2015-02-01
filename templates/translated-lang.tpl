@@ -2,8 +2,8 @@
 {** Currently works for the following object types: 'article' and 'wiki page' **}
 <div class="btn-group">
 	{* For all object types: First show the world icon and on hover the language of the current object *}
-	<a class="btn-i18n dropdown-toggle" data-toggle="dropdown">
-		{icon name="admin_i18n" class="btn btn-link tikihelp" title="{if !empty($trads[0].langName)}{tr}Current language{/tr}:{$trads[0].langName|escape} ({$trads[0].lang|escape}){else}{tr}:No translations{/tr}{/if}"}
+	<a class="btn btn-link tips dropdown-toggle" data-toggle="dropdown" title="{if !empty($trads[0].langName)}{tr}Current language{/tr}:{$trads[0].langName|escape} ({$trads[0].lang|escape}){else}:{tr}No translations{/tr}{/if}">
+		{icon name="translate"}
 	</a>
 	{* ..than on hover first show the list of translations including the current language highlighted *}
 	{if empty($trads[0].lang)}
@@ -34,7 +34,7 @@
 			</li>
 			{if $object_type eq 'wiki page'}
 				<li role="presentation">
-					<a role="menuitem" tabindex="-1" href="tiki-index.php?page={$trads[0].objName|escape}&no_bl=y" title="{$trads[0].langName|escape} ({$trads[0].lang|escape}): {$trads[0].objName}" class="selected">
+					<a role="menuitem" tabindex="-1" href="tiki-index.php?page={$trads[0].objName|escape}&no_bl=y" class="tips" title="{$trads[0].langName|escape} ({$trads[0].lang|escape}): {$trads[0].objName}" class="selected">
 						{$trads[0].langName|escape} ({$trads[0].lang|escape})
 					</a>
 				</li>
@@ -45,7 +45,7 @@
 					</a>
 				</li>
 			{/if}
-			{* Than the header for human translations - shown only if there is a translation availble *}
+			{* Than the header for human translations - shown only if there is a translation available *}
 				{if isset($trads) and count($trads) > 1}
 					<li role="presentation" class="divider"></li>
 					<li role="presentation" class="dropdown-header">
@@ -97,12 +97,12 @@
 			{* For all object types: Translation maintenance *}
 				{capture}{if $object_type eq 'wiki page' and $tiki_p_edit eq 'y'}
 					<li role="presentation">
-						<a role="menuitem" tabindex="-1" href="tiki-edit_translation.php?page={$trads[0].objName|escape:url}&no_bl=y" title="{tr}Translate page{/tr}">
+						<a role="menuitem" tabindex="-1" class="tips" href="tiki-edit_translation.php?page={$trads[0].objName|escape:url}&no_bl=y" title=":{tr}Translate page{/tr}">
 							{tr}Translate{/tr}
 						</a>
 					</li>
 					<li role="presentation">
-						<a role="menuitem" tabindex="-1" href="{service controller=translation action=manage type='wiki page' source=$page}" class="attach_detach_translation" data-object_type="wiki page" data-object_id="{$page|escape:'quotes'}" title="{tr}Manage page translations{/tr}">
+						<a role="menuitem" tabindex="-1" href="{service controller=translation action=manage type='wiki page' source=$page}" class="attach_detach_translation tips" data-object_type="wiki page" data-object_id="{$page|escape:'quotes'}" title=":{tr}Manage page translations{/tr}">
 							{tr}Manage translations{/tr}
 						</a>
 					</li>

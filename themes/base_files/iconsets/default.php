@@ -367,7 +367,7 @@ function iconset_default()
 				'id' => 'th-list',
 			),
 			'translate' => array(
-				'id' => 'flag',
+				'id' => 'globe',
 			),
 			'trash' => array(
 				'id' => 'trash-o',
