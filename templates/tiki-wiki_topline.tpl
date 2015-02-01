@@ -34,32 +34,30 @@
 				{/if}
 
 				{if $prefs.feature_backlinks eq 'y' and $backlinks|default:null and $tiki_p_view_backlink eq 'y'}
-					<li>
-						<div class="btn-group backlinks">
-							<a data-toggle="dropdown">
-								{icon name="backlink" class="btn btn-link dropdown-toggle tikihelp" title=":{tr}Backlinks{/tr}"}
-							</a>
-							<ul class="dropdown-menu" role="menu">
-								<li role="presentation">
-									{section name=back loop=$backlinks}
-										<a role="menuitem" tabindex="-1" href="{$backlinks[back].fromPage|sefurl:'wiki'}" title="{$backlinks[back].fromPage|escape}">
-											{if $prefs.wiki_backlinks_name_len ge '1'}{$backlinks[back].fromPage|truncate:$prefs.wiki_backlinks_name_len:"...":true|escape}{else}{$backlinks[back].fromPage|escape}{/if}
-										</a>
-									{/section}
-								</li>
-							</ul>
-						</div>
-					</li>
+					<div class="btn-group backlinks">
+						<a role="button" data-toggle="dropdown" class="btn btn-link dropdown-toggle tips" title=":{tr}Backlinks{/tr}">
+							{icon name="backlink"}
+						</a>
+						<ul class="dropdown-menu" role="menu">
+							<li role="presentation">
+								{section name=back loop=$backlinks}
+									<a role="menuitem" tabindex="-1" href="{$backlinks[back].fromPage|sefurl:'wiki'}" title="{$backlinks[back].fromPage|escape}">
+										{if $prefs.wiki_backlinks_name_len ge '1'}{$backlinks[back].fromPage|truncate:$prefs.wiki_backlinks_name_len:"...":true|escape}{else}{$backlinks[back].fromPage|escape}{/if}
+									</a>
+								{/section}
+							</li>
+						</ul>
+					</div>
 				{/if}
 				{if $structure eq 'y' or ( $structure eq 'n' and count($showstructs) neq 0 )}
 					<div class="btn-group structures">
-						<a class="btn btn-link tikihelp dropdown-toggle" data-toggle="dropdown" title=":{tr}Click icon to show drop down list of all Structures this page is part of{/tr}">
+						<a class="btn btn-link tikihelp dropdown-toggle" data-toggle="dropdown" title=":{tr}Show list of all structures this page is part of{/tr}">
 							{icon name="structure"}
 						</a>
 						<ul class="structure_poppedup dropdown-menu" role="menu">
 							<li role="presentation">
 								{section name=struct loop=$showstructs}
-									<a href="tiki-index.php?page={$page}&structure={$showstructs[struct].pageName|escape}" {if $showstructs[struct].pageName eq $structure_path[0].pageName} title="Current structure: {$showstructs[struct].pageName|escape}" class="selected" {else} title="Click to move to structure: {$showstructs[struct].pageName|escape}"{/if}>
+									<a href="tiki-index.php?page={$page}&structure={$showstructs[struct].pageName|escape}" {if $showstructs[struct].pageName eq $structure_path[0].pageName} title="Current structure: {$showstructs[struct].pageName|escape}" class="selected" {else} title="{tr}Move to structure{/tr}: {$showstructs[struct].pageName|escape}"{/if}>
 										{if $showstructs[struct].page_alias}
 											{$showstructs[struct].page_alias}
 										{else}
