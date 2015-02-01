@@ -224,7 +224,7 @@ function iconset_legacy()
 				'id' => 'page_edit',
 			),
 			'ellipsis' => array(
-				'id' => 'bullet_arrow_down',
+				'id' => 'resultset_down',
 			),
 			'enable' => array(
 				'id' => 'accept',
@@ -396,7 +396,7 @@ function iconset_legacy()
 				'id' => 'palette',
 			),
 			'three-d' => array(
-				'id' => 'application_view_tile',
+				'id' => 'application_side_tree',
 			),
 			'toggle-off' => array(
 				'id' => 'accept',
