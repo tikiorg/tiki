@@ -102,6 +102,12 @@ class Table_Code_Abstract
 	 */
 	protected function iterate(array $data, $start = '', $finish = '', $before = '\'' , $after = '\'', $separator = ', ')
 	{
+		// if $data is just emtpy, count($data) equals 1. So need to check for type. 
+		if (!is_array($data)) {
+			$ret = $start. $before. $after. $finish;
+			return $ret;
+		}
+		
 		$c = count($data);
 		$i = 0;
 		$ret = '';
