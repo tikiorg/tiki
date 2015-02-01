@@ -6470,6 +6470,608 @@ header.page-header::before,
 .panel-info .panel-title {
   color: #fff;
 }
+.meta-section {
+  border-bottom: solid 1px #999999;
+}
+.warning a,
+.warning a:link,
+.warning a:visited {
+  color: #c09853;
+}
+.calhighlight {
+  background: #d9edf7;
+}
+a.fc-event:hover {
+  color: #ffffff;
+}
+/* Fancy filter */
+.filter .fancyfilter {
+  border: thin solid rgba(0, 0, 0, 0.1) /*black*/;
+}
+.filter .fancyfilter .token {
+  background: #ffffff;
+}
+.note-list .postbody-title {
+  background: #ffffff;
+  /*#ccc*/
+  color: #555555;
+  /*#000*/
+}
+.post-approved-n {
+  border-left: 3px dotted #468847;
+}
+.post-approved-r {
+  border-left: 3px double #c09853;
+}
+.post-approved-r .content * {
+  background: url('../../img/icons/dots.gif');
+}
+.cssmenu_horiz ul li,
+.cssmenu_vert ul li,
+.cssmenu_horiz ul ul li,
+.cssmenu_vert ul ul li {
+  background: #ffffff;
+}
+.cssmenu_horiz li:hover,
+.cssmenu_horiz li.sfHover,
+.cssmenu_vert li:hover,
+.cssmenu_vert li.sfHover {
+  background: #2fa4e7;
+  /* only transition out, not in */
+  -webkit-transition: none;
+  transition: none;
+}
+/* styling for both css and generated arrows */
+.sf-arrows .sf-with-ul:after {
+  border: 5px solid transparent;
+  border-top-color: #333333;
+  /* edit this to suit design (no rgba in IE8) */
+}
+/* styling for right-facing arrows */
+.sf-arrows ul .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #333333;
+}
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+  border-left-color: #ffffff;
+}
+.cssmenu_vert.sf-arrows > li > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #333333;
+}
+.cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
+.cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
+.cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
+  border-left-color: #ffffff;
+}
+.thumbinfosothers {
+  color: #eeeeee;
+}
+table.treetable.objectperms td.added {
+  background-color: #dff0d8;
+}
+table.treetable.objectperms td.removed {
+  background-color: #fcf8e3;
+}
+.thumbnailcontener {
+  border: solid 1px #dddddd;
+}
+.progressBarInProgress,
+.progressBarComplete,
+.progressBarError {
+  background-color: #3a87ad;
+  color: white;
+}
+.progressBarComplete {
+  background-color: #468847;
+}
+.progressBarError {
+  background-color: #c09853;
+}
+.progressContainer {
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+}
+.filter-panel-heading a:after {
+  color: #555555;
+}
+.olControlMousePosition {
+  background: rgba(0, 0, 0, 0.75);
+  color: #FFF;
+}
+.olControlScaleLineTop,
+.olControlScaleLineBottom {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.ui-selectmenu-icon {
+  background-color: inherit;
+  border: solid 5px transparent !important;
+  box-shadow: -5px 0 5px 2px rgba(0, 0, 0, 0.1), -1px 0 0 rgba(0, 0, 0, 0.1), -2px 0 0 rgba(255, 255, 255, 0.25);
+}
+.dirsitetrail {
+  color: #f5f5f5;
+}
+.dirsitecats {
+  color: #f5f5f5;
+}
+#resultzone > div:hover {
+  background: #73a839;
+}
+.searchresults blockquote em,
+.highlight,
+.button.highlight a,
+.button a.highlight {
+  background: #f2dede;
+  color: #b94a48;
+}
+.button a.highlight:hover {
+  background: #dca7a7;
+}
+#ajaxLoadingBG {
+  background: transparent url('../../img/overlay-light.png');
+}
+#ajaxLoading {
+  color: #eeeeee;
+  background: transparent url('../../img/loading-light.gif') no-repeat 50% 50%;
+}
+#cookie_consent_div {
+  padding: 15px;
+  border: 1px solid #bce8f1;
+  color: #3a87ad;
+  background-color: #d9edf7;
+}
+#cookie_consent_div.banner {
+  padding: 15px;
+  border: 1px solid #bce8f1;
+}
+html#print {
+  background: #fff;
+  color: #000;
+}
+body.fullscreen {
+  background: #fff;
+}
+.attention {
+  color: #b94a48;
+}
+#debugconsole {
+  background: #033c73;
+  color: #ffffff;
+  border: 2px solid #022f5a;
+}
+#debugconsole form {
+  color: #022f5a;
+}
+#debugconsole a {
+  color: #ffffff;
+}
+a.icon,
+img.icon {
+  background: transparent;
+}
+div #metadata fieldset.tabcontent,
+div #metadata div.tabs {
+  background-color: transparent;
+}
+.openid_url {
+  background: #ffffff url('../../img/icons/icons/login-OpenID-bg.gif') 1px 1px no-repeat;
+}
+input:-webkit-autofill {
+  background-color: #ffffff !important;
+  /* needs important because Chrome has it already important */
+  background-image: none !important;
+  color: #555555 !important;
+  /* the Google guys forgot the number-one rule... when they specify background they should specify forgeround color too ;) */
+}
+#cboxTitle {
+  background-color: #ffffff;
+}
+#captchaImg {
+  border: 1px solid #dddddd;
+}
+form.simple label.error {
+  background: url('../../img/icons/error.png') no-repeat 0 4px;
+  color: #b94a48;
+}
+form.simple label .warning {
+  color: #b94a48;
+}
+.tiki-modal .mask {
+  background-color: #ffffff;
+}
+.ui-dialog {
+  background: #ffffff;
+  color: #555555;
+}
+.box-quickadmin .cssmenu_horiz ul li {
+  background-color: #ffffff;
+}
+.box-switch_lang .box-data img.highlight {
+  border: 0.1em solid #eed3d7;
+}
+.box-switch_lang .box-data .highlight {
+  border: 0.1em solid #eed3d7;
+}
+div.cvsup {
+  color: #999999;
+}
+.layout_social .topbar_modules h1.sitetitle,
+.layout_social_modules .topbar_modules h1.sitetitle,
+.layout_moving_headers #top_modules h1.sitetitle {
+  color: #ffffff;
+}
+.layout_social .topbar_modules .navbar-inverse .navbar-collapse,
+.layout_social_modules .topbar_modules .navbar-inverse .navbar-collapse,
+.layout_moving_headers #top_modules .navbar-inverse .navbar-collapse,
+.layout_social .topbar_modules .navbar-inverse .navbar-form,
+.layout_social_modules .topbar_modules .navbar-inverse .navbar-form,
+.layout_moving_headers #top_modules .navbar-inverse .navbar-form,
+.layout_social .topbar_modules .navbar-inverse,
+.layout_social_modules .topbar_modules .navbar-inverse,
+.layout_moving_headers #top_modules .navbar-inverse {
+  border-color: transparent;
+}
+.prio1,
+.prio2,
+.prio3,
+.prio4,
+.prio5 {
+  border: 1px solid #dddddd;
+}
+.prio1 {
+  background: #c71c22;
+}
+.prio2 {
+  background: #dd5600;
+}
+.prio3 {
+  background: #73a839;
+}
+.prio4 {
+  background: #033c73;
+}
+.prio5 {
+  background: #f5f5f5;
+}
+.messureadflag {
+  background: #555555;
+}
+.messureadhead {
+  background: #999999;
+}
+.messureadbody {
+  background: #eeeeee;
+}
+.readlink {
+  color: black;
+}
+.webmail_item {
+  border: 1px solid #dddddd;
+}
+.webmail_list .odd {
+  background: #f9f9f9;
+}
+.webmail_list .button {
+  background: #ffffff;
+  border: 1px solid #dddddd;
+}
+.webmail_list .webmail_read {
+  background: #d9edf7;
+}
+.webmail_list .webmail_replied {
+  background: #dff0d8;
+}
+.webmail_list .webmail_taken {
+  border: #fbeed5;
+  color: #c09853;
+}
+.webmail_message {
+  background: #ffffff;
+}
+.webmail_message_headers {
+  background: #ffffff;
+}
+.webmail_message_headers th {
+  background: transparent;
+}
+.tiki_sheet table td {
+  border: 1px solid #dddddd;
+}
+.table-responsive {
+  box-shadow: -5rem 0 9rem -9rem rgba(0, 0, 0, 0.75) inset;
+}
+.odd {
+  background: transparent;
+  color: #555555;
+}
+.even {
+  background: #f9f9f9;
+  color: #555555;
+}
+.helptool-admin {
+  border-left: medium double #999999;
+}
+.toolbar-list {
+  border-left: medium double #999999;
+}
+.toolbars-picker {
+  background: #ffffff;
+  border: thin solid #555555;
+  color: #555555;
+}
+.toolbars-picker a {
+  border: 1px solid #ffffff;
+  color: #555555;
+}
+.toolbars-picker a:hover {
+  border: 1px solid #b94a48;
+  background: #999999;
+  color: #555555;
+}
+.textarea-toolbar > div {
+  background-color: #eeeeee;
+  border: outset 1px #eeeeee;
+}
+#intertrans-indicator {
+  background-color: #dff0d8;
+  color: #468847;
+}
+#intertrans-form {
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  color: #555555;
+}
+#edit_translations tr.last {
+  border-bottom: 2px solid #d6e9c6;
+}
+ul.all_languages > li {
+  border: 1px solid #d6e9c6;
+}
+.convene-ok {
+  color: #468847;
+  background-color: #dff0d8;
+}
+.convene-no {
+  color: #b94a48;
+  background-color: #f2dede;
+}
+.plugin-mouseover {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.mandatory_note {
+  color: #b94a48;
+}
+.author0 {
+  color: #468847;
+}
+.author1 {
+  color: #3a87ad;
+}
+.author2 {
+  color: #c09853;
+}
+.author3 {
+  color: #b94a48;
+}
+.author4 {
+  color: #46887e;
+}
+.author5 {
+  color: #733aad;
+}
+.author6 {
+  color: #8dc053;
+}
+.author7 {
+  color: #b9a848;
+}
+.author8 {
+  color: #465b88;
+}
+.author9 {
+  color: #ad3aad;
+}
+.author10 {
+  color: #53c074;
+}
+.author11 {
+  color: #6cb948;
+}
+.author12 {
+  color: #7e4688;
+}
+.author13 {
+  color: #ad3a61;
+}
+.author14 {
+  color: #539fc0;
+}
+.author15 {
+  color: #48b995;
+}
+.structuremenu .menuSection {
+  border-left: 1px dotted #555555;
+}
+.cke_editable:hover {
+  outline: #555555 dotted 1px;
+}
+.tiki_plugin {
+  background-color: transparent;
+  border: 1px solid #999999;
+}
+.unsavedChangesInEditor {
+  border: 1px solid;
+  border-color: #fbeed5;
+}
+div#outerToc {
+  background: #eeeeee;
+}
+div#outerToc * {
+  color: #555555;
+}
+.plugin-form-float {
+  background: #ffffff;
+  color: #555555;
+  border: solid 2px #555555;
+}
+.backlinks_button .cssmenu_horiz ul li {
+  border: 1px solid #eeeeee;
+}
+body.wikitext {
+  background: #ffffff;
+  color: #555555;
+}
+.editable-inline {
+  background: transparent url('../../img/icons/database_lightning.png') no-repeat top right;
+  padding-right: 20px;
+}
+.editable-inline.loaded {
+  background: transparent;
+}
+.editable-inline.failure {
+  background: transparent url('../../img/icons/lock_gray.png') no-repeat top right;
+}
+.editable-inline.modified {
+  border: solid 2px #c71c22;
+}
+.editable-inline.unsaved {
+  border: solid 2px #c71c22;
+}
+.structure_select .cssmenu_horiz ul li {
+  border: 1px solid #555555;
+}
+.admintoclevel .actions input {
+  border: solid 1px #555555;
+}
+.TextArea-fullscreen {
+  background-color: #555555;
+}
+.TextArea-fullscreen .actions,
+.CodeMirror-fullscreen .actions {
+  background-color: #ffffff;
+  border-top: #eeeeee 1px solid;
+}
+#autosave_preview {
+  background-color: #ffffff;
+  color: #555555;
+}
+#autosave_preview_grippy {
+  background-color: #eeeeee;
+  background-image: url('../../img/icons/shading.png');
+}
+h1:hover a.tiki_anchor,
+h2:hover a.tiki_anchor,
+h3:hover a.tiki_anchor,
+h4:hover a.tiki_anchor,
+h5:hover a.tiki_anchor,
+h6:hover a.tiki_anchor {
+  color: #eeeeee;
+}
+h1 a.tiki_anchor:hover,
+h2 a.tiki_anchor:hover,
+h3 a.tiki_anchor:hover,
+h4 a.tiki_anchor:hover,
+h5 a.tiki_anchor:hover,
+h6 a.tiki_anchor:hover {
+  color: #555555;
+}
+.wiki .namespace {
+  background: #eeeeee;
+}
+.site_report a {
+  border-left: 1px solid #555555;
+  border-right: 1px solid #555555;
+}
+.quotebody {
+  border-left: 2px solid #999999;
+}
+.mandatory_star {
+  color: #eed3d7;
+}
+.trackerplugindesc {
+  color: #333333;
+}
+.charCount {
+  color: #333333;
+}
+.imgbox {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+}
+.ic_button {
+  border: 2px solid #dddddd;
+}
+.ic_active {
+  border: 2px solid #dddddd;
+}
+.ic_caption {
+  background: #033c73;
+  color: #ffffff;
+}
+.wp-cookie-consent-required {
+  color: #b94a48;
+}
+.toc {
+  border-top: 1px dotted #999999;
+  border-bottom: 1px dotted #999999;
+}
+.diff td {
+  border: 1px solid #333333;
+}
+.diff div {
+  border-top: 1px solid #999999;
+}
+.diffadded {
+  background: #dff0d8;
+  color: #468847;
+}
+.diffdeleted {
+  background: #f2dede;
+  color: #b94a48;
+}
+.diffinldel {
+  background: #fcf8e3;
+}
+.diffbody {
+  background: #eeeeee;
+  color: #222222;
+}
+.diffchar {
+  color: #c76e6d;
+}
+.diffadded .diffchar {
+  color: #58a959;
+}
+.morcego_embedded {
+  border: 1px solid;
+}
+.highlight_word_0 {
+  color: #468847;
+  background: #73a839;
+}
+.highlight_word_1 {
+  color: #3a87ad;
+  background: #033c73;
+}
+.highlight_word_2 {
+  color: #c09853;
+  background: #dd5600;
+}
+.highlight_word_3 {
+  color: #b94a48;
+  background: #c71c22;
+}
+.highlight_word_4 {
+  color: #b97048;
+  background: #c74f1c;
+}
+/* Structures drill-down menu */
+div.drillshow {
+  border: 1px solid #999999;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */

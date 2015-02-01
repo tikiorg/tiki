@@ -6498,6 +6498,608 @@ input:focus,
 .panel-default .panel-footer {
   color: #98978b;
 }
+.meta-section {
+  border-bottom: solid 1px #dfd7ca;
+}
+.warning a,
+.warning a:link,
+.warning a:visited {
+  color: #ffffff;
+}
+.calhighlight {
+  background: #d9edf7;
+}
+a.fc-event:hover {
+  color: #ffffff;
+}
+/* Fancy filter */
+.filter .fancyfilter {
+  border: thin solid transparent /*black*/;
+}
+.filter .fancyfilter .token {
+  background: #ffffff;
+}
+.note-list .postbody-title {
+  background: #ffffff;
+  /*#ccc*/
+  color: #3e3f3a;
+  /*#000*/
+}
+.post-approved-n {
+  border-left: 3px dotted #ffffff;
+}
+.post-approved-r {
+  border-left: 3px double #ffffff;
+}
+.post-approved-r .content * {
+  background: url('../../img/icons/dots.gif');
+}
+.cssmenu_horiz ul li,
+.cssmenu_vert ul li,
+.cssmenu_horiz ul ul li,
+.cssmenu_vert ul ul li {
+  background: #ffffff;
+}
+.cssmenu_horiz li:hover,
+.cssmenu_horiz li.sfHover,
+.cssmenu_vert li:hover,
+.cssmenu_vert li.sfHover {
+  background: #f8f5f0;
+  /* only transition out, not in */
+  -webkit-transition: none;
+  transition: none;
+}
+/* styling for both css and generated arrows */
+.sf-arrows .sf-with-ul:after {
+  border: 5px solid transparent;
+  border-top-color: #98978b;
+  /* edit this to suit design (no rgba in IE8) */
+}
+/* styling for right-facing arrows */
+.sf-arrows ul .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #98978b;
+}
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+  border-left-color: #98978b;
+}
+.cssmenu_vert.sf-arrows > li > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #98978b;
+}
+.cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
+.cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
+.cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
+  border-left-color: #98978b;
+}
+.thumbinfosothers {
+  color: #f8f5f0;
+}
+table.treetable.objectperms td.added {
+  background-color: #dff0d8;
+}
+table.treetable.objectperms td.removed {
+  background-color: #fcf8e3;
+}
+.thumbnailcontener {
+  border: solid 1px #dfd7ca;
+}
+.progressBarInProgress,
+.progressBarComplete,
+.progressBarError {
+  background-color: #29abe0;
+  color: white;
+}
+.progressBarComplete {
+  background-color: #93c54b;
+}
+.progressBarError {
+  background-color: #f47c3c;
+}
+.progressContainer {
+  border: solid 1px #f8f5f0;
+  background-color: #ffffff;
+}
+.filter-panel-heading a:after {
+  color: #98978b;
+}
+.olControlMousePosition {
+  background: rgba(0, 0, 0, 0.75);
+  color: #FFF;
+}
+.olControlScaleLineTop,
+.olControlScaleLineBottom {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.ui-selectmenu-icon {
+  background-color: inherit;
+  border: solid 5px transparent !important;
+  box-shadow: -5px 0 5px 2px rgba(0, 0, 0, 0.1), -1px 0 0 rgba(0, 0, 0, 0.1), -2px 0 0 rgba(255, 255, 255, 0.25);
+}
+.dirsitetrail {
+  color: #f8f5f0;
+}
+.dirsitecats {
+  color: #f8f5f0;
+}
+#resultzone > div:hover {
+  background: #93c54b;
+}
+.searchresults blockquote em,
+.highlight,
+.button.highlight a,
+.button a.highlight {
+  background: #f2dede;
+  color: #d9534f;
+}
+.button a.highlight:hover {
+  background: #dca7a7;
+}
+#ajaxLoadingBG {
+  background: transparent url('../../img/overlay-light.png');
+}
+#ajaxLoading {
+  color: #f8f5f0;
+  background: transparent url('../../img/loading-light.gif') no-repeat 50% 50%;
+}
+#cookie_consent_div {
+  padding: 15px;
+  border: 1px solid transparent;
+  color: #ffffff;
+  background-color: #29abe0;
+}
+#cookie_consent_div.banner {
+  padding: 15px;
+  border: 1px solid transparent;
+}
+html#print {
+  background: #fff;
+  color: #000;
+}
+body.fullscreen {
+  background: #fff;
+}
+.attention {
+  color: #ffffff;
+}
+#debugconsole {
+  background: #93c54b;
+  color: #6b9430;
+  border: 2px solid #93c54b;
+}
+#debugconsole form {
+  color: #89be3d;
+}
+#debugconsole a {
+  color: #ffffff;
+}
+a.icon,
+img.icon {
+  background: transparent;
+}
+div #metadata fieldset.tabcontent,
+div #metadata div.tabs {
+  background-color: transparent;
+}
+.openid_url {
+  background: #ffffff url('../../img/icons/icons/login-OpenID-bg.gif') 1px 1px no-repeat;
+}
+input:-webkit-autofill {
+  background-color: #ffffff !important;
+  /* needs important because Chrome has it already important */
+  background-image: none !important;
+  color: #3e3f3a !important;
+  /* the Google guys forgot the number-one rule... when they specify background they should specify forgeround color too ;) */
+}
+#cboxTitle {
+  background-color: #ffffff;
+}
+#captchaImg {
+  border: 1px solid #dfd7ca;
+}
+form.simple label.error {
+  background: url('../../img/icons/error.png') no-repeat 0 4px;
+  color: #d9534f;
+}
+form.simple label .warning {
+  color: #d9534f;
+}
+.tiki-modal .mask {
+  background-color: #ffffff;
+}
+.ui-dialog {
+  background: #ffffff;
+  color: #3e3f3a;
+}
+.box-quickadmin .cssmenu_horiz ul li {
+  background-color: #ffffff;
+}
+.box-switch_lang .box-data img.highlight {
+  border: 0.1em solid transparent;
+}
+.box-switch_lang .box-data .highlight {
+  border: 0.1em solid transparent;
+}
+div.cvsup {
+  color: #dfd7ca;
+}
+.layout_social .topbar_modules h1.sitetitle,
+.layout_social_modules .topbar_modules h1.sitetitle,
+.layout_moving_headers #top_modules h1.sitetitle {
+  color: #ffffff;
+}
+.layout_social .topbar_modules .navbar-inverse .navbar-collapse,
+.layout_social_modules .topbar_modules .navbar-inverse .navbar-collapse,
+.layout_moving_headers #top_modules .navbar-inverse .navbar-collapse,
+.layout_social .topbar_modules .navbar-inverse .navbar-form,
+.layout_social_modules .topbar_modules .navbar-inverse .navbar-form,
+.layout_moving_headers #top_modules .navbar-inverse .navbar-form,
+.layout_social .topbar_modules .navbar-inverse,
+.layout_social_modules .topbar_modules .navbar-inverse,
+.layout_moving_headers #top_modules .navbar-inverse {
+  border-color: transparent;
+}
+.prio1,
+.prio2,
+.prio3,
+.prio4,
+.prio5 {
+  border: 1px solid #dfd7ca;
+}
+.prio1 {
+  background: #d9534f;
+}
+.prio2 {
+  background: #f47c3c;
+}
+.prio3 {
+  background: #93c54b;
+}
+.prio4 {
+  background: #29abe0;
+}
+.prio5 {
+  background: #f8f5f0;
+}
+.messureadflag {
+  background: #98978b;
+}
+.messureadhead {
+  background: #dfd7ca;
+}
+.messureadbody {
+  background: #f8f5f0;
+}
+.readlink {
+  color: black;
+}
+.webmail_item {
+  border: 1px solid #dfd7ca;
+}
+.webmail_list .odd {
+  background: #f8f5f0;
+}
+.webmail_list .button {
+  background: #ffffff;
+  border: 1px solid #325d88;
+}
+.webmail_list .webmail_read {
+  background: #d9edf7;
+}
+.webmail_list .webmail_replied {
+  background: #dff0d8;
+}
+.webmail_list .webmail_taken {
+  border: #faebcc;
+  color: #f47c3c;
+}
+.webmail_message {
+  background: #ffffff;
+}
+.webmail_message_headers {
+  background: #ffffff;
+}
+.webmail_message_headers th {
+  background: transparent;
+}
+.tiki_sheet table td {
+  border: 1px solid #dfd7ca;
+}
+.table-responsive {
+  box-shadow: -5rem 0 9rem -9rem rgba(0, 0, 0, 0.75) inset;
+}
+.odd {
+  background: transparent;
+  color: #3e3f3a;
+}
+.even {
+  background: #f8f5f0;
+  color: #3e3f3a;
+}
+.helptool-admin {
+  border-left: medium double #dfd7ca;
+}
+.toolbar-list {
+  border-left: medium double #dfd7ca;
+}
+.toolbars-picker {
+  background: #ffffff;
+  border: thin solid #3e3f3a;
+  color: #3e3f3a;
+}
+.toolbars-picker a {
+  border: 1px solid #ffffff;
+  color: #3e3f3a;
+}
+.toolbars-picker a:hover {
+  border: 1px solid #d9534f;
+  background: #dfd7ca;
+  color: #3e3f3a;
+}
+.textarea-toolbar > div {
+  background-color: #f8f5f0;
+  border: outset 1px #f8f5f0;
+}
+#intertrans-indicator {
+  background-color: #93c54b;
+  color: #ffffff;
+}
+#intertrans-form {
+  background-color: #ffffff;
+  border: 1px solid #dfd7ca;
+  color: #3e3f3a;
+}
+#edit_translations tr.last {
+  border-bottom: 2px solid transparent;
+}
+ul.all_languages > li {
+  border: 1px solid transparent;
+}
+.convene-ok {
+  color: #93c54b;
+  background-color: #dff0d8;
+}
+.convene-no {
+  color: #d9534f;
+  background-color: #f2dede;
+}
+.plugin-mouseover {
+  background: #ffffff;
+  border: 1px solid #dfd7ca;
+}
+.mandatory_note {
+  color: #d9534f;
+}
+.author0 {
+  color: #93c54b;
+}
+.author1 {
+  color: #29abe0;
+}
+.author2 {
+  color: #f47c3c;
+}
+.author3 {
+  color: #d9534f;
+}
+.author4 {
+  color: #4bc569;
+}
+.author5 {
+  color: #7d29e0;
+}
+.author6 {
+  color: #d3f43c;
+}
+.author7 {
+  color: #d9c64f;
+}
+.author8 {
+  color: #4bbcc5;
+}
+.author9 {
+  color: #d829e0;
+}
+.author10 {
+  color: #3cf43f;
+}
+.author11 {
+  color: #79d94f;
+}
+.author12 {
+  color: #694bc5;
+}
+.author13 {
+  color: #e0296e;
+}
+.author14 {
+  color: #3cf1f4;
+}
+.author15 {
+  color: #4fd9af;
+}
+.structuremenu .menuSection {
+  border-left: 1px dotted #98978b;
+}
+.cke_editable:hover {
+  outline: #98978b dotted 1px;
+}
+.tiki_plugin {
+  background-color: transparent;
+  border: 1px solid #dfd7ca;
+}
+.unsavedChangesInEditor {
+  border: 1px solid;
+  border-color: transparent;
+}
+div#outerToc {
+  background: #f8f5f0;
+}
+div#outerToc * {
+  color: #3e3f3a;
+}
+.plugin-form-float {
+  background: #ffffff;
+  color: #3e3f3a;
+  border: solid 2px #3e3f3a;
+}
+.backlinks_button .cssmenu_horiz ul li {
+  border: 1px solid #f8f5f0;
+}
+body.wikitext {
+  background: #ffffff;
+  color: #3e3f3a;
+}
+.editable-inline {
+  background: transparent url('../../img/icons/database_lightning.png') no-repeat top right;
+  padding-right: 20px;
+}
+.editable-inline.loaded {
+  background: transparent;
+}
+.editable-inline.failure {
+  background: transparent url('../../img/icons/lock_gray.png') no-repeat top right;
+}
+.editable-inline.modified {
+  border: solid 2px transparent;
+}
+.editable-inline.unsaved {
+  border: solid 2px transparent;
+}
+.structure_select .cssmenu_horiz ul li {
+  border: 1px solid #98978b;
+}
+.admintoclevel .actions input {
+  border: solid 1px #98978b;
+}
+.TextArea-fullscreen {
+  background-color: #98978b;
+}
+.TextArea-fullscreen .actions,
+.CodeMirror-fullscreen .actions {
+  background-color: #ffffff;
+  border-top: #f8f5f0 1px solid;
+}
+#autosave_preview {
+  background-color: #ffffff;
+  color: #3e3f3a;
+}
+#autosave_preview_grippy {
+  background-color: #f8f5f0;
+  background-image: url('../../img/icons/shading.png');
+}
+h1:hover a.tiki_anchor,
+h2:hover a.tiki_anchor,
+h3:hover a.tiki_anchor,
+h4:hover a.tiki_anchor,
+h5:hover a.tiki_anchor,
+h6:hover a.tiki_anchor {
+  color: #f8f5f0;
+}
+h1 a.tiki_anchor:hover,
+h2 a.tiki_anchor:hover,
+h3 a.tiki_anchor:hover,
+h4 a.tiki_anchor:hover,
+h5 a.tiki_anchor:hover,
+h6 a.tiki_anchor:hover {
+  color: #98978b;
+}
+.wiki .namespace {
+  background: #f8f5f0;
+}
+.site_report a {
+  border-left: 1px solid #98978b;
+  border-right: 1px solid #98978b;
+}
+.quotebody {
+  border-left: 2px solid #dfd7ca;
+}
+.mandatory_star {
+  color: transparent;
+}
+.trackerplugindesc {
+  color: #8e8c84;
+}
+.charCount {
+  color: #8e8c84;
+}
+.imgbox {
+  border: 1px solid #dfd7ca;
+  background-color: #ffffff;
+}
+.ic_button {
+  border: 2px solid #dfd7ca;
+}
+.ic_active {
+  border: 2px solid #dfd7ca;
+}
+.ic_caption {
+  background: #93c54b;
+  color: #dfd7ca;
+}
+.wp-cookie-consent-required {
+  color: #ffffff;
+}
+.toc {
+  border-top: 1px dotted #dfd7ca;
+  border-bottom: 1px dotted #dfd7ca;
+}
+.diff td {
+  border: 1px solid #8e8c84;
+}
+.diff div {
+  border-top: 1px solid #dfd7ca;
+}
+.diffadded {
+  background: #dff0d8;
+  color: #93c54b;
+}
+.diffdeleted {
+  background: #f2dede;
+  color: #d9534f;
+}
+.diffinldel {
+  background: #fcf8e3;
+}
+.diffbody {
+  background: #f8f5f0;
+  color: #3e3f3a;
+}
+.diffchar {
+  color: #e27c79;
+}
+.diffadded .diffchar {
+  color: #aad172;
+}
+.morcego_embedded {
+  border: 1px solid;
+}
+.highlight_word_0 {
+  color: #93c54b;
+  background: #93c54b;
+}
+.highlight_word_1 {
+  color: #29abe0;
+  background: #29abe0;
+}
+.highlight_word_2 {
+  color: #f47c3c;
+  background: #f47c3c;
+}
+.highlight_word_3 {
+  color: #d9534f;
+  background: #d9534f;
+}
+.highlight_word_4 {
+  color: #d9814f;
+  background: #d9814f;
+}
+/* Structures drill-down menu */
+div.drillshow {
+  border: 1px solid #dfd7ca;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */

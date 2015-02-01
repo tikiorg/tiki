@@ -18,7 +18,7 @@
 
 .box-quickadmin .cssmenu_horiz ul li {
   padding-left: 1em;
-  background-color: @body-bg;
+//  background-color: @body-bg; (moved to tiki-color_selectors.less)
 }
 
 .mod-share-item {
@@ -54,12 +54,12 @@ li.archivedate {
 }
 .box-switch_lang .box-data img.highlight {
   padding: .1em;
-  border: .1em solid @alert-danger-border;
+//  border: .1em solid @alert-danger-border;
 }
 
-.box-switch_lang .box-data .highlight {
-  border: .1em solid @alert-danger-border;
-}
+// .box-switch_lang .box-data .highlight {
+//  border: .1em solid @alert-danger-border;
+// }
 
 .box-switch_lang li {
   list-style: none;
@@ -86,8 +86,6 @@ li.archivedate {
 #col2 .box-search input[type=submit]:hover,
 #col3 .box-search input[type=submit],
 #col3 .box-search input[type=submit]:hover{
-//  font-size: smaller;
-//  padding: 0.1em 0.3em;
   margin: 0.2em;
 }
 
@@ -194,7 +192,7 @@ a.flip:hover,
 
 // /* For correct styling when RSS feed is put in botbar custom code */
 #footer .rsslist {
-  width: 190px;
+//  width: 190px;
   text-align: left;
   margin: auto;
 }
@@ -248,7 +246,7 @@ a.flip:hover,
 div.cvsup {
 	font-size: x-small;
 	text-align: left;
-	color: @gray-light;
+//	color: @gray-light; (moved to tiki-color_selectors.less)
 }
 
 
@@ -267,7 +265,7 @@ div.cvsup {
     line-height: 2;
     margin-bottom: 0;
     margin-left: 1rem;
-    color: @navbar-default-brand-color;
+//    color: @navbar-default-brand-color; (This and the following commented-out lines moved to tiki-color_selectors.less)
   }
   .sitesubtitle {
     display: none;
@@ -275,11 +273,11 @@ div.cvsup {
   #topbar_modules {
     display: inline-block;
   }
-  .navbar-inverse .navbar-collapse,
-  .navbar-inverse .navbar-form,
-  .navbar-inverse {
-    border-color: transparent;
-  }
+//  .navbar-inverse .navbar-collapse,
+//  .navbar-inverse .navbar-form,
+//  .navbar-inverse {
+//    border-color: transparent;
+//  }
 }
 
 .layout_social_modules {
@@ -302,11 +300,3 @@ div.cvsup {
     top-margin: -34px;
   }
 }
-
-
-/*
-.sitelogo img {
-  margin-bottom: 1em;
-  max-height: 34px;
-  width: auto;
-}*/

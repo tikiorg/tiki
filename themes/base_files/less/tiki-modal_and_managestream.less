@@ -4,8 +4,8 @@
 
 
 form.simple label.error {
-  background: url('@{imagePath}error.png') no-repeat 0 4px;
-  color: @state-danger-text;
+//  background: url('@{imagePath}error.png') no-repeat 0 4px; (moved to tiki-color_selectors.less)
+//  color: @state-danger-text;
   padding: 4px 0 0 20px;
   margin-left: 0.5em;
 }
@@ -25,7 +25,7 @@ form.simple label .description {
 
 form.simple label .warning {
   padding-top: 12px;
-  color: @state-danger-text;
+//  color: @state-danger-text;
 }
 
 form.simple textarea,
@@ -51,7 +51,7 @@ form.simple textarea.export {
 }
 .tiki-modal .mask {
   position: absolute;
-  background-color: @body-bg;
+//  background-color: @body-bg;
   display: none;
   width: 100%;
   height: auto;
@@ -65,10 +65,10 @@ form.simple textarea.export {
 }
 // /* end $.fn.modal */
 
-.ui-dialog {
-  background: @body-bg;
-  color: @text-color;
-}
+// .ui-dialog {
+//  background: @body-bg;
+//  color: @text-color;
+// }
 
 body > .ui-front {   /* bs .modal has z-index: 1050, need body specified so as to override jquery-ui.css */
     z-index: 2000;

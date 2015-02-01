@@ -6728,6 +6728,608 @@ a.thumbnail.active {
 .panel-info .panel-heading {
   border-color: #000;
 }
+.meta-section {
+  border-bottom: solid 1px #7a8288;
+}
+.warning a,
+.warning a:link,
+.warning a:visited {
+  color: #ffffff;
+}
+.calhighlight {
+  background: #5bc0de;
+}
+a.fc-event:hover {
+  color: #ffffff;
+}
+/* Fancy filter */
+.filter .fancyfilter {
+  border: thin solid #3a3f44 /*black*/;
+}
+.filter .fancyfilter .token {
+  background: #272b30;
+}
+.note-list .postbody-title {
+  background: #2e3338;
+  /*#ccc*/
+  color: #c8c8c8;
+  /*#000*/
+}
+.post-approved-n {
+  border-left: 3px dotted #ffffff;
+}
+.post-approved-r {
+  border-left: 3px double #ffffff;
+}
+.post-approved-r .content * {
+  background: url('../../img/icons/dots.gif');
+}
+.cssmenu_horiz ul li,
+.cssmenu_vert ul li,
+.cssmenu_horiz ul ul li,
+.cssmenu_vert ul ul li {
+  background: #3a3f44;
+}
+.cssmenu_horiz li:hover,
+.cssmenu_horiz li.sfHover,
+.cssmenu_vert li:hover,
+.cssmenu_vert li.sfHover {
+  background: #272b30;
+  /* only transition out, not in */
+  -webkit-transition: none;
+  transition: none;
+}
+/* styling for both css and generated arrows */
+.sf-arrows .sf-with-ul:after {
+  border: 5px solid transparent;
+  border-top-color: #c8c8c8;
+  /* edit this to suit design (no rgba in IE8) */
+}
+/* styling for right-facing arrows */
+.sf-arrows ul .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #c8c8c8;
+}
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+  border-left-color: #ffffff;
+}
+.cssmenu_vert.sf-arrows > li > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #c8c8c8;
+}
+.cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
+.cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
+.cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
+  border-left-color: #ffffff;
+}
+.thumbinfosothers {
+  color: #999999;
+}
+table.treetable.objectperms td.added {
+  background-color: #62c462;
+}
+table.treetable.objectperms td.removed {
+  background-color: #f89406;
+}
+.thumbnailcontener {
+  border: solid 1px #0c0d0e;
+}
+.progressBarInProgress,
+.progressBarComplete,
+.progressBarError {
+  background-color: #ffffff;
+  color: white;
+}
+.progressBarComplete {
+  background-color: #ffffff;
+}
+.progressBarError {
+  background-color: #ffffff;
+}
+.progressContainer {
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  background-color: #2e3338;
+}
+.filter-panel-heading a:after {
+  color: #52575c;
+}
+.olControlMousePosition {
+  background: rgba(0, 0, 0, 0.75);
+  color: #FFF;
+}
+.olControlScaleLineTop,
+.olControlScaleLineBottom {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.ui-selectmenu-icon {
+  background-color: inherit;
+  border: solid 5px transparent !important;
+  box-shadow: -5px 0 5px 2px rgba(0, 0, 0, 0.1), -1px 0 0 rgba(0, 0, 0, 0.1), -2px 0 0 rgba(255, 255, 255, 0.25);
+}
+.dirsitetrail {
+  color: transparent;
+}
+.dirsitecats {
+  color: transparent;
+}
+#resultzone > div:hover {
+  background: #62c462;
+}
+.searchresults blockquote em,
+.highlight,
+.button.highlight a,
+.button a.highlight {
+  background: #ee5f5b;
+  color: #ffffff;
+}
+.button a.highlight:hover {
+  background: #e51d18;
+}
+#ajaxLoadingBG {
+  background: transparent url('../../img/overlay-light.png');
+}
+#ajaxLoading {
+  color: #999999;
+  background: transparent url('../../img/loading-light.gif') no-repeat 50% 50%;
+}
+#cookie_consent_div {
+  padding: 15px;
+  border: 1px solid #3dced8;
+  color: #ffffff;
+  background-color: #5bc0de;
+}
+#cookie_consent_div.banner {
+  padding: 15px;
+  border: 1px solid #3dced8;
+}
+html#print {
+  background: #fff;
+  color: #000;
+}
+body.fullscreen {
+  background: #fff;
+}
+.attention {
+  color: #ffffff;
+}
+#debugconsole {
+  background: #7a8288;
+  color: #cccccc;
+  border: 2px solid #62686d;
+}
+#debugconsole form {
+  color: #5d6368;
+}
+#debugconsole a {
+  color: #ffffff;
+}
+a.icon,
+img.icon {
+  background: transparent;
+}
+div #metadata fieldset.tabcontent,
+div #metadata div.tabs {
+  background-color: transparent;
+}
+.openid_url {
+  background: #ffffff url('../../img/icons/icons/login-OpenID-bg.gif') 1px 1px no-repeat;
+}
+input:-webkit-autofill {
+  background-color: #ffffff !important;
+  /* needs important because Chrome has it already important */
+  background-image: none !important;
+  color: #272b30 !important;
+  /* the Google guys forgot the number-one rule... when they specify background they should specify forgeround color too ;) */
+}
+#cboxTitle {
+  background-color: #272b30;
+}
+#captchaImg {
+  border: 1px solid rgba(0, 0, 0, 0.6);
+}
+form.simple label.error {
+  background: url('../../img/icons/error.png') no-repeat 0 4px;
+  color: #ffffff;
+}
+form.simple label .warning {
+  color: #ffffff;
+}
+.tiki-modal .mask {
+  background-color: #272b30;
+}
+.ui-dialog {
+  background: #272b30;
+  color: #c8c8c8;
+}
+.box-quickadmin .cssmenu_horiz ul li {
+  background-color: #272b30;
+}
+.box-switch_lang .box-data img.highlight {
+  border: 0.1em solid #ed4d63;
+}
+.box-switch_lang .box-data .highlight {
+  border: 0.1em solid #ed4d63;
+}
+div.cvsup {
+  color: #7a8288;
+}
+.layout_social .topbar_modules h1.sitetitle,
+.layout_social_modules .topbar_modules h1.sitetitle,
+.layout_moving_headers #top_modules h1.sitetitle {
+  color: #c8c8c8;
+}
+.layout_social .topbar_modules .navbar-inverse .navbar-collapse,
+.layout_social_modules .topbar_modules .navbar-inverse .navbar-collapse,
+.layout_moving_headers #top_modules .navbar-inverse .navbar-collapse,
+.layout_social .topbar_modules .navbar-inverse .navbar-form,
+.layout_social_modules .topbar_modules .navbar-inverse .navbar-form,
+.layout_moving_headers #top_modules .navbar-inverse .navbar-form,
+.layout_social .topbar_modules .navbar-inverse,
+.layout_social_modules .topbar_modules .navbar-inverse,
+.layout_moving_headers #top_modules .navbar-inverse {
+  border-color: transparent;
+}
+.prio1,
+.prio2,
+.prio3,
+.prio4,
+.prio5 {
+  border: 1px solid rgba(0, 0, 0, 0.6);
+}
+.prio1 {
+  background: #ee5f5b;
+}
+.prio2 {
+  background: #f89406;
+}
+.prio3 {
+  background: #62c462;
+}
+.prio4 {
+  background: #5bc0de;
+}
+.prio5 {
+  background: #3e444c;
+}
+.messureadflag {
+  background: #52575c;
+}
+.messureadhead {
+  background: #7a8288;
+}
+.messureadbody {
+  background: #999999;
+}
+.readlink {
+  color: black;
+}
+.webmail_item {
+  border: 1px solid rgba(0, 0, 0, 0.6);
+}
+.webmail_list .odd {
+  background: #353a41;
+}
+.webmail_list .button {
+  background: #272b30;
+  border: 1px solid rgba(0, 0, 0, 0.6);
+}
+.webmail_list .webmail_read {
+  background: #5bc0de;
+}
+.webmail_list .webmail_replied {
+  background: #62c462;
+}
+.webmail_list .webmail_taken {
+  border: #e96506;
+  color: #ffffff;
+}
+.webmail_message {
+  background: #272b30;
+}
+.webmail_message_headers {
+  background: #272b30;
+}
+.webmail_message_headers th {
+  background: transparent;
+}
+.tiki_sheet table td {
+  border: 1px solid rgba(0, 0, 0, 0.6);
+}
+.table-responsive {
+  box-shadow: -5rem 0 9rem -9rem rgba(0, 0, 0, 0.75) inset;
+}
+.odd {
+  background: #2e3338;
+  color: #c8c8c8;
+}
+.even {
+  background: #353a41;
+  color: #c8c8c8;
+}
+.helptool-admin {
+  border-left: medium double #7a8288;
+}
+.toolbar-list {
+  border-left: medium double #7a8288;
+}
+.toolbars-picker {
+  background: #272b30;
+  border: thin solid #c8c8c8;
+  color: #c8c8c8;
+}
+.toolbars-picker a {
+  border: 1px solid #272b30;
+  color: #c8c8c8;
+}
+.toolbars-picker a:hover {
+  border: 1px solid #ffffff;
+  background: #7a8288;
+  color: #c8c8c8;
+}
+.textarea-toolbar > div {
+  background-color: #999999;
+  border: outset 1px #999999;
+}
+#intertrans-indicator {
+  background-color: #62c462;
+  color: #ffffff;
+}
+#intertrans-form {
+  background-color: #2e3338;
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  color: #c8c8c8;
+}
+#edit_translations tr.last {
+  border-bottom: 2px solid #62bd4f;
+}
+ul.all_languages > li {
+  border: 1px solid #62bd4f;
+}
+.convene-ok {
+  color: #ffffff;
+  background-color: #62c462;
+}
+.convene-no {
+  color: #ffffff;
+  background-color: #ee5f5b;
+}
+.plugin-mouseover {
+  background: #2e3338;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.mandatory_note {
+  color: #ffffff;
+}
+.author0 {
+  color: #ffffff;
+}
+.author1 {
+  color: #ffffff;
+}
+.author2 {
+  color: #ffffff;
+}
+.author3 {
+  color: #ffffff;
+}
+.author4 {
+  color: #ffffff;
+}
+.author5 {
+  color: #ffffff;
+}
+.author6 {
+  color: #ffffff;
+}
+.author7 {
+  color: #ffffff;
+}
+.author8 {
+  color: #ffffff;
+}
+.author9 {
+  color: #ffffff;
+}
+.author10 {
+  color: #ffffff;
+}
+.author11 {
+  color: #ffffff;
+}
+.author12 {
+  color: #ffffff;
+}
+.author13 {
+  color: #ffffff;
+}
+.author14 {
+  color: #ffffff;
+}
+.author15 {
+  color: #ffffff;
+}
+.structuremenu .menuSection {
+  border-left: 1px dotted #52575c;
+}
+.cke_editable:hover {
+  outline: #52575c dotted 1px;
+}
+.tiki_plugin {
+  background-color: transparent;
+  border: 1px solid #7a8288;
+}
+.unsavedChangesInEditor {
+  border: 1px solid;
+  border-color: #e96506;
+}
+div#outerToc {
+  background: #999999;
+}
+div#outerToc * {
+  color: #c8c8c8;
+}
+.plugin-form-float {
+  background: #272b30;
+  color: #c8c8c8;
+  border: solid 2px #c8c8c8;
+}
+.backlinks_button .cssmenu_horiz ul li {
+  border: 1px solid #999999;
+}
+body.wikitext {
+  background: #272b30;
+  color: #c8c8c8;
+}
+.editable-inline {
+  background: transparent url('../../img/icons/database_lightning.png') no-repeat top right;
+  padding-right: 20px;
+}
+.editable-inline.loaded {
+  background: transparent;
+}
+.editable-inline.failure {
+  background: transparent url('../../img/icons/lock_gray.png') no-repeat top right;
+}
+.editable-inline.modified {
+  border: solid 2px #ee5f5b;
+}
+.editable-inline.unsaved {
+  border: solid 2px #ee5f5b;
+}
+.structure_select .cssmenu_horiz ul li {
+  border: 1px solid #52575c;
+}
+.admintoclevel .actions input {
+  border: solid 1px #52575c;
+}
+.TextArea-fullscreen {
+  background-color: #52575c;
+}
+.TextArea-fullscreen .actions,
+.CodeMirror-fullscreen .actions {
+  background-color: #272b30;
+  border-top: #999999 1px solid;
+}
+#autosave_preview {
+  background-color: #272b30;
+  color: #c8c8c8;
+}
+#autosave_preview_grippy {
+  background-color: #999999;
+  background-image: url('../../img/icons/shading.png');
+}
+h1:hover a.tiki_anchor,
+h2:hover a.tiki_anchor,
+h3:hover a.tiki_anchor,
+h4:hover a.tiki_anchor,
+h5:hover a.tiki_anchor,
+h6:hover a.tiki_anchor {
+  color: #999999;
+}
+h1 a.tiki_anchor:hover,
+h2 a.tiki_anchor:hover,
+h3 a.tiki_anchor:hover,
+h4 a.tiki_anchor:hover,
+h5 a.tiki_anchor:hover,
+h6 a.tiki_anchor:hover {
+  color: #52575c;
+}
+.wiki .namespace {
+  background: #999999;
+}
+.site_report a {
+  border-left: 1px solid #52575c;
+  border-right: 1px solid #52575c;
+}
+.quotebody {
+  border-left: 2px solid #7a8288;
+}
+.mandatory_star {
+  color: #ed4d63;
+}
+.trackerplugindesc {
+  color: #3a3f44;
+}
+.charCount {
+  color: #3a3f44;
+}
+.imgbox {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: #2e3338;
+}
+.ic_button {
+  border: 2px solid rgba(0, 0, 0, 0.6);
+}
+.ic_active {
+  border: 2px solid rgba(0, 0, 0, 0.6);
+}
+.ic_caption {
+  background: #7a8288;
+  color: #cccccc;
+}
+.wp-cookie-consent-required {
+  color: #ffffff;
+}
+.toc {
+  border-top: 1px dotted #7a8288;
+  border-bottom: 1px dotted #7a8288;
+}
+.diff td {
+  border: 1px solid #3a3f44;
+}
+.diff div {
+  border-top: 1px solid #7a8288;
+}
+.diffadded {
+  background: #62c462;
+  color: #ffffff;
+}
+.diffdeleted {
+  background: #ee5f5b;
+  color: #ffffff;
+}
+.diffinldel {
+  background: #f89406;
+}
+.diffbody {
+  background: #999999;
+  color: #272b30;
+}
+.diffchar {
+  color: #ffffff;
+}
+.diffadded .diffchar {
+  color: #ffffff;
+}
+.morcego_embedded {
+  border: 1px solid;
+}
+.highlight_word_0 {
+  color: #ffffff;
+  background: #62c462;
+}
+.highlight_word_1 {
+  color: #ffffff;
+  background: #5bc0de;
+}
+.highlight_word_2 {
+  color: #ffffff;
+  background: #f89406;
+}
+.highlight_word_3 {
+  color: #ffffff;
+  background: #ee5f5b;
+}
+.highlight_word_4 {
+  color: #ffffff;
+  background: #ee905b;
+}
+/* Structures drill-down menu */
+div.drillshow {
+  border: 1px solid #7a8288;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */

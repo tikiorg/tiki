@@ -1,0 +1,767 @@
+// $Id$
+// This file contains rules for colors, consolidated from the tiki_base less files. They're moved here so that theme variables can provide values for them.
+@imagePathToImgDir: ~"../../img/";
+@imagePath: ~"../../img/icons/";
+
+// tiki-admin.less
+.meta-section {
+  border-bottom: solid 1px @gray-light;
+}
+
+// tiki-boxes_and_panels.less
+.warning a,
+.warning a:link,
+.warning a:visited {
+  color: @alert-warning-text; // #b93c2e
+}
+
+// tiki-calendar.less
+.calhighlight {
+  background: @state-info-bg;
+}
+a.fc-event:hover {
+  color: @tooltip-color;
+}
+
+// tiki-categories.less
+/* Fancy filter */
+.filter {
+  .fancyfilter {
+    border: thin solid @btn-default-border/*black*/;
+    .token {
+      background: @body-bg;
+    }
+  }
+}
+
+// tiki-comments.less
+.note-list .postbody-title {
+  background: @panel-bg;/*#ccc*/
+  color: @panel-default-text;/*#000*/
+}
+
+// Comments moderation
+.post-approved-n {
+  border-left: 3px dotted @alert-success-text;// blue
+}
+
+.post-approved-r {
+  border-left: 3px double @alert-warning-text; // red
+}
+
+.post-approved-r .content * {
+  background: url('@{imagePath}dots.gif');
+}
+
+// tiki-cssmenus.less
+.cssmenu_horiz ul li,
+.cssmenu_vert ul li,
+.cssmenu_horiz ul ul li,
+.cssmenu_vert ul ul li {
+  background: @dropdown-bg;
+}
+
+.cssmenu_horiz li:hover,
+.cssmenu_horiz li.sfHover,
+.cssmenu_vert li:hover,
+.cssmenu_vert li.sfHover {
+  background: @dropdown-link-hover-bg;
+  /* only transition out, not in */
+  -webkit-transition: none;
+  transition: none;
+}
+
+/* styling for both css and generated arrows */
+.sf-arrows .sf-with-ul:after {
+  border: 5px solid transparent;
+  border-top-color: @dropdown-link-color; /* edit this to suit design (no rgba in IE8) */
+}
+
+/* styling for right-facing arrows */
+.sf-arrows ul .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: @dropdown-link-color; // @link-color; /* edit this to suit design (no rgba in IE8) */
+}
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+  border-left-color: @dropdown-link-hover-color;
+}
+
+.cssmenu_vert.sf-arrows > li > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: @dropdown-link-color;
+}
+.cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
+.cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
+.cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
+  border-left-color: @dropdown-link-hover-color; // white;
+}
+
+// tiki-file_galleries.less
+.thumbinfosothers {
+  color: @gray-lighter;// #888
+}
+
+table.treetable.objectperms td.added {
+  background-color: @state-success-bg// #dfd
+}
+
+table.treetable.objectperms td.removed {
+  background-color: @state-warning-bg; // #fdd
+}
+
+.thumbnailcontener {
+  border: solid 1px @thumbnail-border; // #d3d3d3
+}
+
+.progressBarInProgress,
+.progressBarComplete,
+.progressBarError {
+  background-color: @state-info-text;
+  color: white;
+}
+
+.progressBarComplete {
+  background-color: @state-success-text;
+}
+
+.progressBarError {
+  background-color: @state-warning-text;
+}
+
+.progressContainer {
+  border: solid 1px @modal-content-border-color;
+  background-color: @modal-content-bg;
+}
+
+// tiki-forums.less
+//* Forum filter collapsible panel. Adds +/-*/
+.filter-panel-heading a:after {
+  color: @gray;
+}
+
+// tiki-maps.less
+.olControlMousePosition {
+  background: rgba(0, 0, 0, 0.75);
+  color: #FFF;
+}
+.olControlScaleLineTop,
+.olControlScaleLineBottom {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.ui-selectmenu-icon {
+  background-color: inherit;
+  border: solid 5px transparent !important;
+  box-shadow: -5px 0 5px 2px rgba(0,0,0,.1), -1px 0 0 rgba(0,0,0,.1), -2px 0 0 rgba(255,255,255,.25);
+}
+
+// tiki-minor_features.less
+.dirsitetrail {
+  color: @breadcrumb-bg; // lightgray
+}
+
+.dirsitecats {
+  color: @breadcrumb-bg;// lightgray
+}
+
+#resultzone > div:hover {
+  background: @panel-success-heading-bg;
+}
+
+// tiki-miscellaneous_global.less
+.searchresults blockquote em,
+.highlight,
+.button.highlight a,
+.button a.highlight {
+  background: @state-danger-bg;
+  color: @state-danger-text;
+}
+
+.button a.highlight:hover {
+  background: darken(@state-danger-bg, 15%);
+}
+
+// Ajax, jquery. etc.
+// Ajax Loading Overlay
+#ajaxLoadingBG {
+  background: transparent url('@{imagePathToImgDir}overlay-light.png');
+}
+#ajaxLoading {
+  color: @gray-lighter;
+  background: transparent url('@{imagePathToImgDir}loading-light.gif') no-repeat 50% 50%;
+}
+// cookie consent style
+#cookie_consent_div {
+  padding: @alert-padding;
+  border: 1px solid @alert-info-border;
+  color: @alert-info-text;
+  background-color: @alert-info-bg;
+}
+
+#cookie_consent_div.banner {
+  padding: @alert-padding;
+  border: 1px solid @alert-info-border;
+}
+
+
+// print mode only - to make sure print templates will use and print on seamless white bg color
+html#print {
+  background: #fff;
+  color: #000;
+}
+body.fullscreen {
+  background: #fff;
+}
+
+.attention {
+  color: @alert-danger-text;
+}
+
+#debugconsole {
+  background: @navbar-inverse-bg;
+  color: @navbar-inverse-link-color;
+  border: 2px solid @navbar-inverse-border;
+}
+
+#debugconsole form {
+  color: @navbar-inverse-link-active-bg;
+}
+
+#debugconsole a {
+  color: @navbar-inverse-link-active-color;
+}
+
+// /* Icons */
+a.icon,
+img.icon {
+  background: transparent;
+}
+
+div #metadata fieldset.tabcontent, div #metadata div.tabs {
+  background-color: transparent;
+}
+.openid_url {
+  background: #fff url('@{imagePath}icons/login-OpenID-bg.gif') 1px 1px no-repeat;
+}
+// Input fields auto-fill/
+// Webkit-based browser specific (Google Chrome, Chromium, etc.)
+input:-webkit-autofill {
+  background-color: @input-bg !important; /* needs important because Chrome has it already important */
+  background-image: none !important;
+  color: @input-color !important; /* the Google guys forgot the number-one rule... when they specify background they should specify forgeround color too ;) */
+}
+
+// ColorBox
+#cboxTitle {
+  background-color: @body-bg;
+}
+
+#captchaImg {
+  border: 1px solid @panel-default-border;
+}
+
+// tiki-modal_and_managestream.less
+form.simple label.error {
+  background: url('@{imagePath}error.png') no-repeat 0 4px;
+  color: @state-danger-text;
+}
+form.simple label .warning {
+  color: @state-danger-text;
+}
+.tiki-modal .mask {
+  background-color: @body-bg;
+}
+.ui-dialog {
+  background: @body-bg;
+  color: @text-color;
+}
+
+// tiki-modules.less
+.box-quickadmin .cssmenu_horiz ul li {
+  background-color: @body-bg;
+}
+.box-switch_lang .box-data img.highlight {
+  border: .1em solid @alert-danger-border;
+}
+
+.box-switch_lang .box-data .highlight {
+  border: .1em solid @alert-danger-border;
+}
+div.cvsup {
+  color: @gray-light;
+}
+
+.layout_social .topbar_modules,
+.layout_social_modules .topbar_modules,
+.layout_moving_headers #top_modules {
+   h1.sitetitle {
+     color: @navbar-default-brand-color;
+  }
+  .navbar-inverse .navbar-collapse,
+  .navbar-inverse .navbar-form,
+  .navbar-inverse {
+    border-color: transparent;
+  }
+}
+
+// tiki-mytiki.less
+// /***** Messages *****/
+.prio1,
+.prio2,
+.prio3,
+.prio4,
+.prio5 {
+  border: 1px solid @panel-default-border;
+}
+.prio1 {
+  background: @panel-danger-heading-bg;
+}
+.prio2 {
+  background: @panel-warning-heading-bg;
+}
+.prio3 {
+  background: @panel-success-heading-bg;
+}
+.prio4 {
+  background: @panel-info-heading-bg;
+}
+.prio5 {
+  background: @panel-default-heading-bg;
+}
+.messureadflag {
+  background: @gray;
+}
+.messureadhead {
+  background: @gray-light;
+}
+.messureadbody {
+  background: @gray-lighter;
+}
+.readlink {
+  color: black;
+}
+
+// /* webmail & groupmail */
+.webmail_item {
+  border: 1px solid @panel-default-border;
+}
+.webmail_list .odd {
+  background: @table-bg-accent;
+}
+.webmail_list .button {
+  background: @body-bg;
+  border: 1px solid @panel-primary-border;
+}
+.webmail_list .webmail_read {
+  background: @state-info-bg;
+}
+.webmail_list .webmail_replied {
+  background: @state-success-bg;
+}
+.webmail_list .webmail_taken {
+  border: @state-warning-border;
+  color: @state-warning-text;
+}
+.webmail_message {
+  background: @body-bg;
+}
+.webmail_message_headers {
+  background: @body-bg;
+}
+.webmail_message_headers th {
+  background: transparent;
+}
+
+// tiki-sheets.less
+.tiki_sheet table td { // /* override .tabcontent table td */
+  border: 1px solid @panel-default-border;
+}
+
+// tiki-tabs_and_tables.less
+.table-responsive {
+  box-shadow: -5rem 0 9rem -9rem rgba(0, 0, 0, 0.75) inset;
+}
+
+// /* odd and even classes for tr, td, and li */
+.odd {
+  background: @table-bg;
+  color: @text-color;
+}
+
+.even {
+  background: @table-bg-accent;
+  color: @text-color;
+}
+
+// tiki-toolbars.less
+.helptool-admin {	// /* right justified section of toolbars */
+  border-left: medium double @gray-light;
+}
+
+.toolbar-list {
+  border-left: medium double @gray-light;
+}
+.toolbars-picker { //	/* colours, smilies etc */
+  background: @body-bg;
+  border: thin solid @text-color;
+  color: @text-color;
+}
+.toolbars-picker a {
+  border: 1px solid @body-bg;
+  color: @text-color;
+}
+.toolbars-picker a:hover {
+  border: 1px solid @state-danger-text;
+  background: @gray-light;
+  color: @text-color;
+}
+// /* New Toolbars */
+.textarea-toolbar > div {
+  background-color: @gray-lighter;
+  border: outset 1px @gray-lighter;
+}
+
+// tiki-translation.less
+#intertrans-indicator {
+  background-color: @alert-success-bg;
+  color: @alert-success-text;
+}
+#intertrans-form {
+  background-color: @panel-bg;
+  border: 1px solid @panel-default-border;
+  color: @panel-default-text;
+}
+#edit_translations tr.last {
+  border-bottom: 2px solid @alert-success-border;
+}
+ul.all_languages > li {
+  border: 1px solid @alert-success-border;
+}
+
+// tiki-wikipages_and_plugins.less
+.convene-ok {
+  color: @state-success-text;
+  background-color: @state-success-bg;
+}
+
+.convene-no {
+  color: @state-danger-text;
+  background-color: @state-danger-bg;
+}
+
+// /* mouseover plugin */
+.plugin-mouseover {
+  background: @popover-bg;
+  border: 1px solid @popover-border-color;
+}
+// /* wikiplugin_tracker */
+.mandatory_note {
+  color: @state-danger-text;
+}
+// /* page contribution by author / wikiplugin_author */
+.author0 {
+  color: @panel-success-text;
+}
+
+.author1 {
+  color: @panel-info-text;
+}
+
+.author2 {
+  color: @panel-warning-text;
+}
+
+.author3 {
+  color: @panel-danger-text;
+}
+
+.author4 {
+  color: spin(@panel-success-text, 50);
+}
+
+.author5 {
+  color: spin(@panel-info-text, 70);
+}
+
+.author6 {
+  color: spin(@panel-warning-text, 50);
+}
+
+.author7 {
+  color: spin(@panel-danger-text, 50);
+}
+
+.author8 {
+  color: spin(@panel-success-text, 100);
+}
+
+.author9 {
+  color: spin(@panel-info-text, 100);
+}
+
+.author10 {
+  color: spin(@panel-warning-text, 100);
+}
+
+.author11 {
+  color: spin(@panel-danger-text, 100);
+}
+
+.author12 {
+  color: spin(@panel-success-text, 170);
+}
+
+.author13 {
+  color: spin(@panel-info-text, 140);
+}
+
+.author14 {
+  color: spin(@panel-warning-text, 160);
+}
+
+.author15 {
+  color: spin(@panel-danger-text, 160);
+}
+
+.structuremenu .menuSection {
+  border-left: 1px dotted @gray;
+}
+// /* Inline CkEditor */
+.cke_editable:hover {
+  outline: @gray dotted 1px;
+}
+
+.tiki_plugin {
+  background-color: transparent; // /* was #f8f8f8; */
+  border: 1px solid @gray-light;
+}
+.unsavedChangesInEditor {
+  border: 1px solid;
+  border-color: @alert-warning-border;
+}
+// /* Auto TOC */
+div#outerToc {
+  background: @gray-lighter;
+}
+
+div#outerToc * {
+  color: @text-color;
+}
+.plugin-form-float {
+  background: @body-bg;
+  color: @text-color;
+  border: solid 2px @text-color;
+}
+.backlinks_button .cssmenu_horiz ul li {
+  border: 1px solid @gray-lighter;
+}
+// /* CKeditor contrast */
+body.wikitext {
+  background: @body-bg;
+  color: @text-color;
+}
+.editable-inline {
+  background: transparent url('@{imagePath}database_lightning.png') no-repeat top right;
+  padding-right: 20px;
+}
+
+.editable-inline.loaded {
+  background: transparent;
+}
+
+.editable-inline.failure {
+  background: transparent url('@{imagePath}lock_gray.png') no-repeat top right;
+}
+
+.editable-inline.modified {
+  border: solid 2px @btn-danger-border;
+}
+
+.editable-inline.unsaved {
+  border: solid 2px @btn-danger-border;
+}
+
+.structure_select .cssmenu_horiz ul li {
+  border: 1px solid @gray;
+}
+.admintoclevel .actions input {
+  border: solid 1px @gray;
+}
+// /* Fullscreen textareas */
+.TextArea-fullscreen {
+  background-color: @gray;
+}
+.TextArea-fullscreen .actions,
+.CodeMirror-fullscreen .actions {
+  background-color: @body-bg;
+  border-top: @gray-lighter 1px solid;
+}
+// /* Autosave Preview handle */
+#autosave_preview {
+  background-color: @body-bg;
+  color: @text-color;
+}
+
+#autosave_preview_grippy {
+  background-color: @gray-lighter;
+  background-image: url('@{imagePath}shading.png');
+}
+h1:hover a.tiki_anchor,
+h2:hover a.tiki_anchor,
+h3:hover a.tiki_anchor,
+h4:hover a.tiki_anchor,
+h5:hover a.tiki_anchor,
+h6:hover a.tiki_anchor {
+  color: @gray-lighter;
+//  display: inline;
+}
+
+h1 a.tiki_anchor:hover,
+h2 a.tiki_anchor:hover,
+h3 a.tiki_anchor:hover,
+h4 a.tiki_anchor:hover,
+h5 a.tiki_anchor:hover,
+h6 a.tiki_anchor:hover {
+  color: @gray;
+}
+
+// /* Namespace styling */
+.wiki .namespace {
+  background: @gray-lighter;
+}
+.site_report a {
+  border-left: 1px solid @gray;
+  border-right: 1px solid @gray;
+}
+.quotebody {
+  border-left: 2px solid @gray-light;
+}
+// /* wikiplugin tracker */
+.mandatory_star {
+  color: @alert-danger-border;
+}
+
+.trackerplugindesc {
+  color: @gray-dark;
+}
+
+.charCount {
+  color: @gray-dark;
+}
+
+// /* img plugin */
+.imgbox {
+  border: 1px solid @popover-border-color;
+  background-color: @popover-bg;
+}
+// /* wikiplugin_carousel v3 */
+.ic_button {
+  border: 2px solid @pagination-border;
+}
+
+.ic_active {
+  border: 2px solid @pagination-active-border;
+}
+
+.ic_caption {
+  background: @navbar-inverse-bg;
+  color: @navbar-inverse-color;
+}
+.wp-cookie-consent-required {
+  color: @alert-danger-text;
+}
+// /* TOC */
+.toc {
+  border-top: 1px dotted @gray-light;
+  border-bottom: 1px dotted @gray-light;
+}
+// /* Wiki diff styles */
+.diff td {
+  border: 1px solid @gray-dark;
+}
+.diff div {
+  border-top: 1px solid @gray-light;
+}
+
+.diffadded {
+  background: @state-success-bg;
+  color: @state-success-text;
+}
+
+.diffdeleted {
+  background: @state-danger-bg;
+  color: @state-danger-text;
+}
+
+.diffinldel {
+  background: @state-warning-bg;
+}
+
+.diffbody {
+  background: @gray-lighter;
+  color: @gray-darker;
+}
+
+.diffchar {
+  color: lighten(@state-danger-text, 10%);
+}
+
+.diffadded .diffchar {
+  color: lighten(@state-success-text, 10%);
+}
+
+.morcego_embedded {
+  border: 1px solid;
+}
+
+.highlight_word_0 {
+  color: @panel-success-text;
+  background: @panel-success-heading-bg;
+}
+
+.highlight_word_1 {
+  color: @panel-info-text;
+  background: @panel-info-heading-bg;
+}
+
+.highlight_word_2 {
+  color: @panel-warning-text;
+  background: @panel-warning-heading-bg;
+}
+
+.highlight_word_3 {
+  color: @panel-danger-text;
+  background: @panel-danger-heading-bg;
+}
+
+.highlight_word_4 {
+  color: spin(@panel-danger-text, 20);
+  background: spin(@panel-danger-heading-bg, 20);
+}
+/* Structures drill-down menu */
+div.drillshow {
+  border: 1px solid @gray-light;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -6531,6 +6531,608 @@ label,
 .popover-title {
   border: none;
 }
+.meta-section {
+  border-bottom: solid 1px #4e5d6c;
+}
+.warning a,
+.warning a:link,
+.warning a:visited {
+  color: #ebebeb;
+}
+.calhighlight {
+  background: #5bc0de;
+}
+a.fc-event:hover {
+  color: #ffffff;
+}
+/* Fancy filter */
+.filter .fancyfilter {
+  border: thin solid transparent /*black*/;
+}
+.filter .fancyfilter .token {
+  background: #2b3e50;
+}
+.note-list .postbody-title {
+  background: #4e5d6c;
+  /*#ccc*/
+  color: #333333;
+  /*#000*/
+}
+.post-approved-n {
+  border-left: 3px dotted #ebebeb;
+}
+.post-approved-r {
+  border-left: 3px double #ebebeb;
+}
+.post-approved-r .content * {
+  background: url('../../img/icons/dots.gif');
+}
+.cssmenu_horiz ul li,
+.cssmenu_vert ul li,
+.cssmenu_horiz ul ul li,
+.cssmenu_vert ul ul li {
+  background: #4e5d6c;
+}
+.cssmenu_horiz li:hover,
+.cssmenu_horiz li.sfHover,
+.cssmenu_vert li:hover,
+.cssmenu_vert li.sfHover {
+  background: #485563;
+  /* only transition out, not in */
+  -webkit-transition: none;
+  transition: none;
+}
+/* styling for both css and generated arrows */
+.sf-arrows .sf-with-ul:after {
+  border: 5px solid transparent;
+  border-top-color: #ebebeb;
+  /* edit this to suit design (no rgba in IE8) */
+}
+/* styling for right-facing arrows */
+.sf-arrows ul .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #ebebeb;
+}
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+  border-left-color: #ebebeb;
+}
+.cssmenu_vert.sf-arrows > li > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #ebebeb;
+}
+.cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
+.cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
+.cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
+  border-left-color: #ebebeb;
+}
+.thumbinfosothers {
+  color: #ebebeb;
+}
+table.treetable.objectperms td.added {
+  background-color: #5cb85c;
+}
+table.treetable.objectperms td.removed {
+  background-color: #f0ad4e;
+}
+.thumbnailcontener {
+  border: solid 1px #dddddd;
+}
+.progressBarInProgress,
+.progressBarComplete,
+.progressBarError {
+  background-color: #ebebeb;
+  color: white;
+}
+.progressBarComplete {
+  background-color: #ebebeb;
+}
+.progressBarError {
+  background-color: #ebebeb;
+}
+.progressContainer {
+  border: solid 1px transparent;
+  background-color: #4e5d6c;
+}
+.filter-panel-heading a:after {
+  color: #555555;
+}
+.olControlMousePosition {
+  background: rgba(0, 0, 0, 0.75);
+  color: #FFF;
+}
+.olControlScaleLineTop,
+.olControlScaleLineBottom {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.ui-selectmenu-icon {
+  background-color: inherit;
+  border: solid 5px transparent !important;
+  box-shadow: -5px 0 5px 2px rgba(0, 0, 0, 0.1), -1px 0 0 rgba(0, 0, 0, 0.1), -2px 0 0 rgba(255, 255, 255, 0.25);
+}
+.dirsitetrail {
+  color: #4e5d6c;
+}
+.dirsitecats {
+  color: #4e5d6c;
+}
+#resultzone > div:hover {
+  background: #5cb85c;
+}
+.searchresults blockquote em,
+.highlight,
+.button.highlight a,
+.button a.highlight {
+  background: #d9534f;
+  color: #ebebeb;
+}
+.button a.highlight:hover {
+  background: #b52b27;
+}
+#ajaxLoadingBG {
+  background: transparent url('../../img/overlay-light.png');
+}
+#ajaxLoading {
+  color: #ebebeb;
+  background: transparent url('../../img/loading-light.gif') no-repeat 50% 50%;
+}
+#cookie_consent_div {
+  padding: 15px;
+  border: 1px solid transparent;
+  color: #ebebeb;
+  background-color: #5bc0de;
+}
+#cookie_consent_div.banner {
+  padding: 15px;
+  border: 1px solid transparent;
+}
+html#print {
+  background: #fff;
+  color: #000;
+}
+body.fullscreen {
+  background: #fff;
+}
+.attention {
+  color: #ebebeb;
+}
+#debugconsole {
+  background: #df691a;
+  color: #ebebeb;
+  border: 2px solid transparent;
+}
+#debugconsole form {
+  color: #c85e17;
+}
+#debugconsole a {
+  color: #ebebeb;
+}
+a.icon,
+img.icon {
+  background: transparent;
+}
+div #metadata fieldset.tabcontent,
+div #metadata div.tabs {
+  background-color: transparent;
+}
+.openid_url {
+  background: #ffffff url('../../img/icons/icons/login-OpenID-bg.gif') 1px 1px no-repeat;
+}
+input:-webkit-autofill {
+  background-color: #ffffff !important;
+  /* needs important because Chrome has it already important */
+  background-image: none !important;
+  color: #2b3e50 !important;
+  /* the Google guys forgot the number-one rule... when they specify background they should specify forgeround color too ;) */
+}
+#cboxTitle {
+  background-color: #2b3e50;
+}
+#captchaImg {
+  border: 1px solid transparent;
+}
+form.simple label.error {
+  background: url('../../img/icons/error.png') no-repeat 0 4px;
+  color: #ebebeb;
+}
+form.simple label .warning {
+  color: #ebebeb;
+}
+.tiki-modal .mask {
+  background-color: #2b3e50;
+}
+.ui-dialog {
+  background: #2b3e50;
+  color: #ebebeb;
+}
+.box-quickadmin .cssmenu_horiz ul li {
+  background-color: #2b3e50;
+}
+.box-switch_lang .box-data img.highlight {
+  border: 0.1em solid transparent;
+}
+.box-switch_lang .box-data .highlight {
+  border: 0.1em solid transparent;
+}
+div.cvsup {
+  color: #4e5d6c;
+}
+.layout_social .topbar_modules h1.sitetitle,
+.layout_social_modules .topbar_modules h1.sitetitle,
+.layout_moving_headers #top_modules h1.sitetitle {
+  color: #ebebeb;
+}
+.layout_social .topbar_modules .navbar-inverse .navbar-collapse,
+.layout_social_modules .topbar_modules .navbar-inverse .navbar-collapse,
+.layout_moving_headers #top_modules .navbar-inverse .navbar-collapse,
+.layout_social .topbar_modules .navbar-inverse .navbar-form,
+.layout_social_modules .topbar_modules .navbar-inverse .navbar-form,
+.layout_moving_headers #top_modules .navbar-inverse .navbar-form,
+.layout_social .topbar_modules .navbar-inverse,
+.layout_social_modules .topbar_modules .navbar-inverse,
+.layout_moving_headers #top_modules .navbar-inverse {
+  border-color: transparent;
+}
+.prio1,
+.prio2,
+.prio3,
+.prio4,
+.prio5 {
+  border: 1px solid transparent;
+}
+.prio1 {
+  background: #d9534f;
+}
+.prio2 {
+  background: #f0ad4e;
+}
+.prio3 {
+  background: #5cb85c;
+}
+.prio4 {
+  background: #5bc0de;
+}
+.prio5 {
+  background: #f5f5f5;
+}
+.messureadflag {
+  background: #555555;
+}
+.messureadhead {
+  background: #4e5d6c;
+}
+.messureadbody {
+  background: #ebebeb;
+}
+.readlink {
+  color: black;
+}
+.webmail_item {
+  border: 1px solid transparent;
+}
+.webmail_list .odd {
+  background: #4e5d6c;
+}
+.webmail_list .button {
+  background: #2b3e50;
+  border: 1px solid transparent;
+}
+.webmail_list .webmail_read {
+  background: #5bc0de;
+}
+.webmail_list .webmail_replied {
+  background: #5cb85c;
+}
+.webmail_list .webmail_taken {
+  border: transparent;
+  color: #ebebeb;
+}
+.webmail_message {
+  background: #2b3e50;
+}
+.webmail_message_headers {
+  background: #2b3e50;
+}
+.webmail_message_headers th {
+  background: transparent;
+}
+.tiki_sheet table td {
+  border: 1px solid transparent;
+}
+.table-responsive {
+  box-shadow: -5rem 0 9rem -9rem rgba(0, 0, 0, 0.75) inset;
+}
+.odd {
+  background: transparent;
+  color: #ebebeb;
+}
+.even {
+  background: #4e5d6c;
+  color: #ebebeb;
+}
+.helptool-admin {
+  border-left: medium double #4e5d6c;
+}
+.toolbar-list {
+  border-left: medium double #4e5d6c;
+}
+.toolbars-picker {
+  background: #2b3e50;
+  border: thin solid #ebebeb;
+  color: #ebebeb;
+}
+.toolbars-picker a {
+  border: 1px solid #2b3e50;
+  color: #ebebeb;
+}
+.toolbars-picker a:hover {
+  border: 1px solid #ebebeb;
+  background: #4e5d6c;
+  color: #ebebeb;
+}
+.textarea-toolbar > div {
+  background-color: #ebebeb;
+  border: outset 1px #ebebeb;
+}
+#intertrans-indicator {
+  background-color: #5cb85c;
+  color: #ebebeb;
+}
+#intertrans-form {
+  background-color: #4e5d6c;
+  border: 1px solid transparent;
+  color: #333333;
+}
+#edit_translations tr.last {
+  border-bottom: 2px solid transparent;
+}
+ul.all_languages > li {
+  border: 1px solid transparent;
+}
+.convene-ok {
+  color: #ebebeb;
+  background-color: #5cb85c;
+}
+.convene-no {
+  color: #ebebeb;
+  background-color: #d9534f;
+}
+.plugin-mouseover {
+  background: #4e5d6c;
+  border: 1px solid transparent;
+}
+.mandatory_note {
+  color: #ebebeb;
+}
+.author0 {
+  color: #ebebeb;
+}
+.author1 {
+  color: #ebebeb;
+}
+.author2 {
+  color: #ebebeb;
+}
+.author3 {
+  color: #ebebeb;
+}
+.author4 {
+  color: #ebebeb;
+}
+.author5 {
+  color: #ebebeb;
+}
+.author6 {
+  color: #ebebeb;
+}
+.author7 {
+  color: #ebebeb;
+}
+.author8 {
+  color: #ebebeb;
+}
+.author9 {
+  color: #ebebeb;
+}
+.author10 {
+  color: #ebebeb;
+}
+.author11 {
+  color: #ebebeb;
+}
+.author12 {
+  color: #ebebeb;
+}
+.author13 {
+  color: #ebebeb;
+}
+.author14 {
+  color: #ebebeb;
+}
+.author15 {
+  color: #ebebeb;
+}
+.structuremenu .menuSection {
+  border-left: 1px dotted #555555;
+}
+.cke_editable:hover {
+  outline: #555555 dotted 1px;
+}
+.tiki_plugin {
+  background-color: transparent;
+  border: 1px solid #4e5d6c;
+}
+.unsavedChangesInEditor {
+  border: 1px solid;
+  border-color: transparent;
+}
+div#outerToc {
+  background: #ebebeb;
+}
+div#outerToc * {
+  color: #ebebeb;
+}
+.plugin-form-float {
+  background: #2b3e50;
+  color: #ebebeb;
+  border: solid 2px #ebebeb;
+}
+.backlinks_button .cssmenu_horiz ul li {
+  border: 1px solid #ebebeb;
+}
+body.wikitext {
+  background: #2b3e50;
+  color: #ebebeb;
+}
+.editable-inline {
+  background: transparent url('../../img/icons/database_lightning.png') no-repeat top right;
+  padding-right: 20px;
+}
+.editable-inline.loaded {
+  background: transparent;
+}
+.editable-inline.failure {
+  background: transparent url('../../img/icons/lock_gray.png') no-repeat top right;
+}
+.editable-inline.modified {
+  border: solid 2px transparent;
+}
+.editable-inline.unsaved {
+  border: solid 2px transparent;
+}
+.structure_select .cssmenu_horiz ul li {
+  border: 1px solid #555555;
+}
+.admintoclevel .actions input {
+  border: solid 1px #555555;
+}
+.TextArea-fullscreen {
+  background-color: #555555;
+}
+.TextArea-fullscreen .actions,
+.CodeMirror-fullscreen .actions {
+  background-color: #2b3e50;
+  border-top: #ebebeb 1px solid;
+}
+#autosave_preview {
+  background-color: #2b3e50;
+  color: #ebebeb;
+}
+#autosave_preview_grippy {
+  background-color: #ebebeb;
+  background-image: url('../../img/icons/shading.png');
+}
+h1:hover a.tiki_anchor,
+h2:hover a.tiki_anchor,
+h3:hover a.tiki_anchor,
+h4:hover a.tiki_anchor,
+h5:hover a.tiki_anchor,
+h6:hover a.tiki_anchor {
+  color: #ebebeb;
+}
+h1 a.tiki_anchor:hover,
+h2 a.tiki_anchor:hover,
+h3 a.tiki_anchor:hover,
+h4 a.tiki_anchor:hover,
+h5 a.tiki_anchor:hover,
+h6 a.tiki_anchor:hover {
+  color: #555555;
+}
+.wiki .namespace {
+  background: #ebebeb;
+}
+.site_report a {
+  border-left: 1px solid #555555;
+  border-right: 1px solid #555555;
+}
+.quotebody {
+  border-left: 2px solid #4e5d6c;
+}
+.mandatory_star {
+  color: transparent;
+}
+.trackerplugindesc {
+  color: #333333;
+}
+.charCount {
+  color: #333333;
+}
+.imgbox {
+  border: 1px solid transparent;
+  background-color: #4e5d6c;
+}
+.ic_button {
+  border: 2px solid transparent;
+}
+.ic_active {
+  border: 2px solid transparent;
+}
+.ic_caption {
+  background: #df691a;
+  color: #ebebeb;
+}
+.wp-cookie-consent-required {
+  color: #ebebeb;
+}
+.toc {
+  border-top: 1px dotted #4e5d6c;
+  border-bottom: 1px dotted #4e5d6c;
+}
+.diff td {
+  border: 1px solid #333333;
+}
+.diff div {
+  border-top: 1px solid #4e5d6c;
+}
+.diffadded {
+  background: #5cb85c;
+  color: #ebebeb;
+}
+.diffdeleted {
+  background: #d9534f;
+  color: #ebebeb;
+}
+.diffinldel {
+  background: #f0ad4e;
+}
+.diffbody {
+  background: #ebebeb;
+  color: #222222;
+}
+.diffchar {
+  color: #ffffff;
+}
+.diffadded .diffchar {
+  color: #ffffff;
+}
+.morcego_embedded {
+  border: 1px solid;
+}
+.highlight_word_0 {
+  color: #ebebeb;
+  background: #5cb85c;
+}
+.highlight_word_1 {
+  color: #ebebeb;
+  background: #5bc0de;
+}
+.highlight_word_2 {
+  color: #ebebeb;
+  background: #f0ad4e;
+}
+.highlight_word_3 {
+  color: #ebebeb;
+  background: #d9534f;
+}
+.highlight_word_4 {
+  color: #ebebeb;
+  background: #d9814f;
+}
+/* Structures drill-down menu */
+div.drillshow {
+  border: 1px solid #4e5d6c;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */

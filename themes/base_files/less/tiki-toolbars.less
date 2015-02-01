@@ -8,7 +8,7 @@
 .helptool-admin {	// /* right justified section of toolbars */
   padding-left: 8px;
   margin-left: 8px;
-  border-left: medium double @gray-light;
+//  border-left: medium double @gray-light; (This and other color-related rules are moved to tiki-color_selectors.less.)
 }
 
 a.toolbar,
@@ -22,7 +22,7 @@ a.toolbar:hover {	//		/* each tool button */
 .toolbar-list {
   padding: 0 0 0 .5em;
   line-height: 20px;
-  border-left: medium double @gray-light;
+//  border-left: medium double @gray-light;
 }
 
 .toolbars-picker { //	/* colours, smilies etc */
@@ -30,9 +30,9 @@ a.toolbar:hover {	//		/* each tool button */
   width: 128px;
   z-index: 300;
   line-height: 12px;
-  background: @body-bg;
-  border: thin solid @text-color;
-  color: @text-color;
+//  background: @body-bg;
+//  border: thin solid @text-color;
+//  color: @text-color;
   padding: 4px;
 }
 
@@ -44,9 +44,9 @@ a.toolbar:hover {	//		/* each tool button */
   padding: 4px 0 4px 4px;
   margin: 0;
   display: inline-block;
-  border: 1px solid @body-bg;
+//  border: 1px solid @body-bg;
   overflow: hidden;
-  color: @text-color;
+//  color: @text-color;
 }
 
 .toolbars-picker.color a ,.toolbars-picker.bgcolor a {
@@ -55,11 +55,11 @@ a.toolbar:hover {	//		/* each tool button */
   padding: 0;
 }
 
-.toolbars-picker a:hover {
-  border: 1px solid @state-danger-text;
-  background: @gray-light;
-  color: @text-color;
-}
+// .toolbars-picker a:hover {
+//  border: 1px solid @state-danger-text;
+//  background: @gray-light;
+//  color: @text-color;
+// }
 
 .toolbars-picker-reset {
   width: 100% !important;
@@ -72,12 +72,12 @@ a.toolbar:hover {	//		/* each tool button */
   width: 14px;
   height: 12px;
 }
-// /* New Toolbars */
 
-.textarea-toolbar > div {
-  background-color: @gray-lighter;
-  border: outset 1px @gray-lighter;
-}
+// /* New Toolbars */
+// .textarea-toolbar > div {
+//  background-color: @gray-lighter;
+//  border: outset 1px @gray-lighter;
+//}
 
 /* tiki-admin_toolbars.php toolbar icon alignment */
 a.cke_button span.cke_icon {
