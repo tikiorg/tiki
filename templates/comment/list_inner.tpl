@@ -6,22 +6,6 @@
 			</div>
 			<div class="media-body">
 				<div class="comment-item">
-					<div class="actions pull-right">
-						{if $allow_remove}
-							{self_link controller=comment action=remove threadId=$comment.threadId _icon=cross _class="confirm-prompt btn btn-default btn-sm" _confirm="{tr}Are you sure you want to remove this comment?{/tr}"}{tr}Remove{/tr}{/self_link}
-						{/if}
-						{if $allow_archive}
-							{if $comment.archived eq 'y'}
-								{self_link controller=comment action=archive do=unarchive threadId=$comment.threadId _icon=ofolder _class="confirm-prompt btn btn-default btn-sm" _confirm="{tr}Are you sure you want to unarchive this comment?{/tr}"}{tr}Unarchive{/tr}{/self_link}
-							{else}
-								{self_link controller=comment action=archive do=archive threadId=$comment.threadId _icon=folder _class="confirm-prompt btn btn-default btn-sm" _confirm="{tr}Are you sure you want to archive this comment?{/tr}"}{tr}Archive{/tr}{/self_link}
-							{/if}
-						{/if}
-						{if $allow_moderate and $comment.approved neq 'y'}
-							{self_link controller=comment action=moderate do=approve threadId=$comment.threadId _icon=comment_approve _class="confirm-prompt btn btn-default btn-sm" _confirm="{tr}Are you sure you want to approve this comment?{/tr}"}{tr}Approve{/tr}{/self_link}
-							{self_link controller=comment action=moderate do=reject threadId=$comment.threadId _icon=comment_reject _class="confirm-prompt btn btn-default btn-sm" _confirm="{tr}Are you sure you want to reject this comment?{/tr}"}{tr}Reject{/tr}{/self_link}
-						{/if}
-					</div>
 					{if $prefs.comments_notitle eq 'y'}
 						<h4 class="media-heading">
 							<div class="comment-info">
@@ -43,10 +27,24 @@
 					</div>
 					<div class="buttons comment-form comment-footer">
 						{if $allow_post && $comment.locked neq 'y'}
-							<a class='btn btn-link' href="{service controller=comment action=post type=$type objectId=$objectId parentId=$comment.threadId}">{tr}Reply{/tr}</a>
+							<a class='btn btn-link btn-sm' href="{service controller=comment action=post type=$type objectId=$objectId parentId=$comment.threadId}">{tr}Reply{/tr}</a>
 						{/if}
 						{if $comment.can_edit}
-							<a class='btn btn-link' href="{service controller=comment action=edit threadId=$comment.threadId}">{tr}Edit{/tr}</a>
+							<a class='btn btn-link btn-sm' href="{service controller=comment action=edit threadId=$comment.threadId}">{tr}Edit{/tr}</a>
+						{/if}
+						{if $allow_remove}
+							<a class="btn btn-link btn-sm" href="{service controller=comment action=remove threadId=$comment.threadId}">{tr}Delete{/tr}</a>
+						{/if}
+						{if $allow_archive}
+							{if $comment.archived eq 'y'}
+								<a class="btn btn-link btn-sm" href="{service controller=comment action=archive do=unarchive threadId=$comment.threadId}">{tr}Unarchive{/tr}</a>
+							{else}
+								<a class="btn btn-link btn-sm" href="{service controller=comment action=archive do=archive threadId=$comment.threadId}">{tr}Archive{/tr}</a>
+							{/if}
+						{/if}
+						{if $allow_moderate and $comment.approved neq 'y'}
+							{self_link controller=comment action=moderate do=approve threadId=$comment.threadId _icon=comment_approve _class="confirm-prompt btn btn-default btn-sm" _confirm="{tr}Are you sure you want to approve this comment?{/tr}"}{tr}Approve{/tr}{/self_link}
+							{self_link controller=comment action=moderate do=reject threadId=$comment.threadId _icon=comment_reject _class="confirm-prompt btn btn-default btn-sm" _confirm="{tr}Are you sure you want to reject this comment?{/tr}"}{tr}Reject{/tr}{/self_link}
 						{/if}
 						{if $comment.userName ne $user and $comment.approved eq 'y' and $prefs.wiki_comments_simple_ratings eq 'y' and ($tiki_p_vote_comments eq 'y' or $tiki_p_admin_comments eq 'y' )}
 							<form class="commentRatingForm" method="post">
