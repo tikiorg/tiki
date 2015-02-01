@@ -6312,98 +6312,6 @@ button.close {
     display: none !important;
   }
 }
-.container {
-  border: 1px solid #006669;
-}
-header.container {
-  margin-top: 30px;
-  border-bottom: none;
-}
-.page-header {
-  background: url('../../img/icons/header.jpg') repeat-x bottom;
-}
-.layout_social .navbar-inverse,
-.layout_social .navbar-inverse .navbar-collapse,
-.layout_social .navbar-inverse .navbar-form,
-.layout_social .navbar-inverse .container,
-.navbar-default .navbar-collapse,
-.navbar-default .navbar-form,
-#topbar_modules {
-  background: url('../../img/icons/header.jpg') repeat-x;
-  color: #F5F5F5;
-  border: none;
-}
-#topbar_modules .box-search .form-group {
-  margin-bottom: 0;
-}
-#topbar_modules .box-search .form-group input[type="text"] {
-  margin-top: 5px;
-  height: 28px;
-}
-#topbar_modules .box-search .btn {
-  font-size: 10px;
-  margin-top: 4px;
-}
-#topbar_modules .navbar-default .navbar-nav > .active > a,
-#topbar_modules .navbar-default .navbar-nav > .active > a:hover,
-#topbar_modules .navbar-default .navbar-nav > .active > a:focus {
-  background: url('../../img/icons/page.jpg') repeat-x;
-}
-.navbar {
-  margin-bottom: 0;
-  border: none;
-}
-#col1,
-#col3 {
-  padding-top: 30px;
-}
-#col2 {
-  background: #a8cce2 url('../../img/icons/columnbg.jpg') repeat-x;
-}
-.panel.module {
-  border: none;
-  background: none;
-}
-.panel.module .panel-heading {
-  border: none;
-  border-bottom: 1px solid #57a5d0;
-  background: none;
-}
-.panel.module .panel-title {
-  color: #93554a;
-  font-weight: 700;
-  font-size: 1.2em;
-}
-.topbar + .row,
-.layout_social > .container {
-  background: #ffffff url('../../img/icons/page.jpg') repeat-x;
-}
-.topbar + .row {
-  border-width: 0 1px;
-}
-.footer_liner .container {
-  background: #fff;
-  border-top: none;
-}
-.cssmenu_horiz li ul,
-.cssmenu_vert li ul {
-  padding: 5px 0;
-  margin: 2px 0 0;
-  background-color: #a8cce2;
-  border: 1px solid #cccccc;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 4px;
-  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-  background-clip: padding-box;
-}
-.cssmenu_horiz li ul > li > a,
-.cssmenu_vert li ul > li > a {
-  padding: 3px 20px;
-  font-weight: normal;
-  line-height: 1.42857143;
-  color: #333333;
-}
 .meta-section {
   border-bottom: solid 1px #777777;
 }
@@ -6438,7 +6346,7 @@ a.fc-event:hover {
   border-left: 3px double #8a6d3b;
 }
 .post-approved-r .content * {
-  background: url('../../img/icons/dots.gif');
+  background: url('../images/dots.gif');
 }
 .cssmenu_horiz ul li,
 .cssmenu_vert ul li,
@@ -6590,7 +6498,7 @@ div #metadata div.tabs {
   background-color: transparent;
 }
 .openid_url {
-  background: #ffffff url('../../img/icons/icons/login-OpenID-bg.gif') 1px 1px no-repeat;
+  background: #ffffff url('../images/icons/login-OpenID-bg.gif') 1px 1px no-repeat;
 }
 input:-webkit-autofill {
   background-color: #ffffff !important;
@@ -6606,7 +6514,7 @@ input:-webkit-autofill {
   border: 1px solid #dddddd;
 }
 form.simple label.error {
-  background: url('../../img/icons/error.png') no-repeat 0 4px;
+  background: url('../images/error.png') no-repeat 0 4px;
   color: #a94442;
 }
 form.simple label .warning {
@@ -6859,14 +6767,14 @@ body.wikitext {
   color: #333333;
 }
 .editable-inline {
-  background: transparent url('../../img/icons/database_lightning.png') no-repeat top right;
+  background: transparent url('../images/database_lightning.png') no-repeat top right;
   padding-right: 20px;
 }
 .editable-inline.loaded {
   background: transparent;
 }
 .editable-inline.failure {
-  background: transparent url('../../img/icons/lock_gray.png') no-repeat top right;
+  background: transparent url('../images/lock_gray.png') no-repeat top right;
 }
 .editable-inline.modified {
   border: solid 2px #d43f3a;
@@ -6894,7 +6802,7 @@ body.wikitext {
 }
 #autosave_preview_grippy {
   background-color: #eeeeee;
-  background-image: url('../../img/icons/shading.png');
+  background-image: url('../images/shading.png');
 }
 h1:hover a.tiki_anchor,
 h2:hover a.tiki_anchor,
@@ -7036,4 +6944,96 @@ input.tablesorter-filter {
 .tablesorter input.dateTo {
   border: none;
   background-color: #dbf0f2;
+}
+.container {
+  border: 1px solid #006669;
+}
+header.container {
+  margin-top: 30px;
+  border-bottom: none;
+}
+.page-header {
+  background: url('../images/header.jpg') repeat-x bottom;
+}
+.layout_social .navbar-inverse,
+.layout_social .navbar-inverse .navbar-collapse,
+.layout_social .navbar-inverse .navbar-form,
+.layout_social .navbar-inverse .container,
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form,
+#topbar_modules {
+  background: url('../images/header.jpg') repeat-x;
+  color: #F5F5F5;
+  border: none;
+}
+#topbar_modules .box-search .form-group {
+  margin-bottom: 0;
+}
+#topbar_modules .box-search .form-group input[type="text"] {
+  margin-top: 5px;
+  height: 28px;
+}
+#topbar_modules .box-search .btn {
+  font-size: 10px;
+  margin-top: 4px;
+}
+#topbar_modules .navbar-default .navbar-nav > .active > a,
+#topbar_modules .navbar-default .navbar-nav > .active > a:hover,
+#topbar_modules .navbar-default .navbar-nav > .active > a:focus {
+  background: url('../images/page.jpg') repeat-x;
+}
+.navbar {
+  margin-bottom: 0;
+  border: none;
+}
+#col1,
+#col3 {
+  padding-top: 30px;
+}
+#col2 {
+  background: #a8cce2 url('../images/columnbg.jpg') repeat-x;
+}
+.panel.module {
+  border: none;
+  background: none;
+}
+.panel.module .panel-heading {
+  border: none;
+  border-bottom: 1px solid #57a5d0;
+  background: none;
+}
+.panel.module .panel-title {
+  color: #93554a;
+  font-weight: 700;
+  font-size: 1.2em;
+}
+.topbar + .row,
+.layout_social > .container {
+  background: #ffffff url('../images/page.jpg') repeat-x;
+}
+.topbar + .row {
+  border-width: 0 1px;
+}
+.footer_liner .container {
+  background: #fff;
+  border-top: none;
+}
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {
+  padding: 5px 0;
+  margin: 2px 0 0;
+  background-color: #a8cce2;
+  border: 1px solid #cccccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  background-clip: padding-box;
+}
+.cssmenu_horiz li ul > li > a,
+.cssmenu_vert li ul > li > a {
+  padding: 3px 20px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  color: #333333;
 }
