@@ -72,7 +72,6 @@ foreach (TikiAddons::getPaths() as $path) {
 
 //5) Now add the theme or theme option
 $themelib = TikiLib::lib('theme');
-$theme_path = '';
 
 if ($theme_active == 'custom_url' && !empty($prefs['theme_custom_url'])) { //custom URL, use only if file exists at the custom location
 	$custom_theme = $prefs['theme_custom_url'];
@@ -84,19 +83,19 @@ if ($theme_active == 'custom_url' && !empty($prefs['theme_custom_url'])) { //cus
 }
 else {
 	//first load the main theme css
-	$theme_path = $themelib->get_theme_css($theme_active);
-	if ($theme_path) {
-		$headerlib->add_cssfile($theme_path);
+	$theme_css = $themelib->get_theme_css($theme_active);
+	if ($theme_css) {
+		$headerlib->add_cssfile($theme_css);
 		//than load the theme option css file if needed
 		if (!empty($theme_option_active)) {
-			$theme_path = $themelib->get_theme_css($theme_active, $theme_option_active);
-			$headerlib->add_cssfile($theme_path);
+			$option_css = $themelib->get_theme_css($theme_active, $theme_option_active);
+			$headerlib->add_cssfile($option_css);
 		}
 	} else {
 		$theme_active = 'default';
 		$theme_option_active = '';
-		$theme_path = $themelib->get_theme_css($theme_active);
-		$headerlib->add_cssfile($theme_path);
+		$theme_css = $themelib->get_theme_css($theme_active);
+		$headerlib->add_cssfile($theme_css);
 	}
 }
 
@@ -112,6 +111,7 @@ if(!empty($theme_option_active)) {
 		$headerlib->add_cssfile($main_theme_custom_css, 53);
 	}
 }
+$theme_path = $themelib->get_theme_path($theme_active, $theme_option_active);
 $custom_css = "{$theme_path}css/custom.css";
 if (is_readable($custom_css)) {
 	$headerlib->add_cssfile($custom_css, 53);
