@@ -1,6 +1,6 @@
 <ol class="media-list">
 	{foreach from=$comments item=comment}
-		<li class="media comment {if $comment.archived eq 'y'}archived{/if} {if ! $parentId && $prefs.feature_wiki_paragraph_formatting eq 'y'}inline{/if}" data-comment-thread-id="{$comment.threadId|escape}">
+		<li class="media comment {if $comment.archived eq 'y'}archived well well-sm{/if} {if $allow_moderate and $comment.approved neq 'y'} pending bg-warning{/if}{if ! $parentId && $prefs.feature_wiki_paragraph_formatting eq 'y'}inline{/if}" data-comment-thread-id="{$comment.threadId|escape}">
 			<div class="pull-left">
 				<span class="avatar">{$comment.userName|avatarize:'':'img/noavatar.png'}</span>
 			</div>
@@ -37,12 +37,14 @@
 						{/if}
 						{if $allow_archive}
 							{if $comment.archived eq 'y'}
+								<span class="label label-default">{tr}Archived{/tr}</span>
 								<a class="btn btn-link btn-sm" href="{service controller=comment action=archive do=unarchive threadId=$comment.threadId}">{tr}Unarchive{/tr}</a>
 							{else}
 								<a class="btn btn-link btn-sm" href="{service controller=comment action=archive do=archive threadId=$comment.threadId}">{tr}Archive{/tr}</a>
 							{/if}
 						{/if}
 						{if $allow_moderate and $comment.approved neq 'y'}
+							<span class="label label-warning">{tr}Pending{/tr}</span>
 							{self_link controller=comment action=moderate do=approve threadId=$comment.threadId _icon=comment_approve _class="confirm-prompt btn btn-default btn-sm" _confirm="{tr}Are you sure you want to approve this comment?{/tr}"}{tr}Approve{/tr}{/self_link}
 							{self_link controller=comment action=moderate do=reject threadId=$comment.threadId _icon=comment_reject _class="confirm-prompt btn btn-default btn-sm" _confirm="{tr}Are you sure you want to reject this comment?{/tr}"}{tr}Reject{/tr}{/self_link}
 						{/if}
