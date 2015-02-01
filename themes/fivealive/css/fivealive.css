@@ -7271,6 +7271,10 @@ header.header a:visited {
 .tablesorter-header {
   background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
 }
+tr.tablesorter-headerRow,
+tr.tablesorter-filter-row {
+  background-color: #ffffff;
+}
 .tablesorter .bootstrap-icon-unsorted {
   background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
 }

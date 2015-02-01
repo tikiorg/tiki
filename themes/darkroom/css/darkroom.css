@@ -7281,6 +7281,10 @@ input {
 .tablesorter-header {
   background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAAP///////yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
 }
+tr.tablesorter-headerRow,
+tr.tablesorter-filter-row {
+  background-color: #232323;
+}
 .tablesorter .bootstrap-icon-unsorted {
   background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAAP///////yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
 }
