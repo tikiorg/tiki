@@ -1,6 +1,6 @@
 <ol class="media-list">
 	{foreach from=$comments item=comment}
-		<li class="media comment {if $comment.archived eq 'y'}archived well well-sm{/if} {if $allow_moderate and $comment.approved neq 'y'} pending bg-warning{/if}{if ! $parentId && $prefs.feature_wiki_paragraph_formatting eq 'y'}inline{/if}" data-comment-thread-id="{$comment.threadId|escape}">
+		<li class="media comment{if $comment.archived eq 'y'} archived well well-sm{/if} {if $allow_moderate and $comment.approved neq 'y'} pending bg-warning{/if}{if ! $parentId && $prefs.feature_wiki_paragraph_formatting eq 'y'} inline{/if}" data-comment-thread-id="{$comment.threadId|escape}">
 			<div class="pull-left">
 				<span class="avatar">{$comment.userName|avatarize:'':'img/noavatar.png'}</span>
 			</div>
