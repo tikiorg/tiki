@@ -116,7 +116,7 @@
 								{/jq}
 								<li>
 									<a href="#" id="wiki_plugin_edit_view">
-										{icon name='puzzle-piece'} {tr}Edit icons{/tr}
+										{icon name='plugin'} {tr}Edit icons{/tr}
 									</a>
 								</li>
 							{/if}
