@@ -745,16 +745,15 @@ if (isset($prefs['feature_references']) && $prefs['feature_references'] === 'y')
 
 			$references = $referenceslib->list_references($page_id);
 			$lib_references = $referenceslib->list_lib_references();
+			$perms = Perms::get(array('wiki page', $page));
 
-			$tiki_p_use_references = $referenceslib->get_permission('tiki_p_use_references');
-			$tiki_p_edit_references = $referenceslib->get_permission('tiki_p_edit_references');
-			if (isset($tiki_p_use_references) && $tiki_p_use_references=='y') {
+			if ($perms->use_references) {
 				$use_references = 1;
 			} else {
 				$use_references = 0;
 			}
 
-			if (isset($tiki_p_edit_references) && $tiki_p_edit_references=='y') {
+			if ($perms->edit_references) {
 				$edit_references = 1;
 			} else {
 				$edit_references = 0;

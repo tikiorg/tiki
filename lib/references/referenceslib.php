@@ -395,37 +395,4 @@ class ReferencesLib extends TikiLib
 
 		return $result->numrows;
 	}
-
-	public function get_permission($perm)
-	{
-		global $user, $tiki_p_admin;
-		$userlib = TikiLib::lib('user');
-
-		if (isset($tiki_p_admin) && $tiki_p_admin == 'y') {
-			return 'y';
-		}
-
-		// Avoid processing a generic perm specification
-		if (!($perm == 'tiki_p_use_references' || $perm == 'tiki_p_edit_references')) {
-			return 'n';
-		}
-
-		$all_groups = $userlib->get_user_groups($user);
-
-		if (count($all_groups)) {
-			foreach ($all_groups as $k => $v) {
-				$all_groups[$k] = "'" . $v . "'";
-			}
-			$all_groups = implode(',', $all_groups);
-		} else {
-			$all_groups = '';
-		}
-
-		$all_groups = '(' . $all_groups . ')';
-		$query = "SELECT * FROM `users_grouppermissions` WHERE `groupName` IN $all_groups AND `permName` = ?";
-		$result = $this->query($query, array($perm));
-
-		return ($result->numrows > 0) ? 'y' : 'n';
-	}
-
 }

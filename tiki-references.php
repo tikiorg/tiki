@@ -15,22 +15,6 @@ $access->check_permission(array('tiki_p_edit_references'), tra('Edit Library Ref
 global $dbTiki;
 $referenceslib = TikiLib::lib('references');
 
-$tiki_p_use_references = $referenceslib->get_permission('tiki_p_use_references');
-$tiki_p_edit_references = $referenceslib->get_permission('tiki_p_edit_references');
-
-if (isset($tiki_p_edit_references) && $tiki_p_edit_references == 'y') {
-	$edit_references = 1;
-} else {
-	$edit_references = 0;
-}
-
-if (!$edit_references) {
-	$smarty->assign('msg', tra('You do not have permissions to view this page.'));
-	$smarty->display('error.tpl');
-	die;
-}
-
-
 $smarty->assign('page', $_REQUEST["page"]);
 $page = $_REQUEST['page'];
 

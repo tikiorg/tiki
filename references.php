@@ -27,6 +27,9 @@ if (!isset($_REQUEST['page'])) {
 
 $smarty->assign('page', $_REQUEST['page']);
 $page = $_REQUEST['page'];
+
+$perms = Perms::get(array('wiki page', $page));
+
 $page_id = TikiLib::lib('tiki')->get_page_id_from_name($_REQUEST['page']);
 
 $action = $_REQUEST['action'];
@@ -44,7 +47,7 @@ $ref_style = $_REQUEST['ref_style'];
 $ref_template = $_REQUEST['ref_template'];
 
 if (isset($_REQUEST['addreference']) && $action='a_ref') {
-	if ($referenceslib->get_permission('tiki_p_edit_references') != 'y') {
+	if (! $perms->edit_references) {
 		echo json_encode(
 			array(
 				'result'=>tra('failure'),
@@ -104,7 +107,7 @@ if (isset($_REQUEST['addreference']) && $action='a_ref') {
 if (isset($_REQUEST['addlibreference']) && $action = 'a_lib') {
 
 	$errors = array();
-	if ($referenceslib->get_permission('tiki_p_use_references') != 'y') {
+	if (! $perms->use_references) {
 		echo json_encode(
 			array(
 				'result'=>tra('failure'),
@@ -164,7 +167,7 @@ if (isset($_REQUEST['addlibreference']) && $action = 'a_lib') {
 }
 
 if (isset($_REQUEST['editreference'])) {
-	if ($referenceslib->get_permission('tiki_p_edit_references') != 'y') {
+	if (! $perms->edit_references) {
 		echo json_encode(
 			array(
 				'result'=>tra('failure'),
@@ -226,7 +229,7 @@ if (isset($_REQUEST['editreference'])) {
 }
 
 if (isset($_REQUEST['action']) && isset($ref_id)) {
-	if ($referenceslib->get_permission('tiki_p_use_references') != 'y') {
+	if (! $perms->use_references) {
 		echo json_encode(
 			array(
 				'result'=>tra('failure'),
@@ -275,7 +278,7 @@ if (isset($_REQUEST['action']) && isset($ref_id)) {
 }
 
 if (isset($_REQUEST['action']) && isset($ref_id)) {
-	if ($referenceslib->get_permission('tiki_p_edit_references') != 'y') {
+	if (! $perms->edit_references) {
 		echo json_encode(
 			array(
 				'result'=>tra('failure'),
