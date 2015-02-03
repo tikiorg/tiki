@@ -405,6 +405,11 @@ class ReferencesLib extends TikiLib
 			return 'y';
 		}
 
+		// Avoid processing a generic perm specification
+		if (!($perm == 'tiki_p_use_references' || $perm == 'tiki_p_edit_references')) {
+			return 'n';
+		}
+
 		$all_groups = $userlib->get_user_groups($user);
 
 		if (count($all_groups)) {
