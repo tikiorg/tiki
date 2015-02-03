@@ -119,14 +119,14 @@ class MenuLib extends TikiLib
 		return $max;
 	}
 
-	public function replace_menu_option($menuId, $optionId, $name, $url, $type='o', $position=1, $section='', $perm='', $groupname='', $level=0, $icon='')
+	public function replace_menu_option($menuId, $optionId, $name, $url, $type='o', $position=1, $section='', $perm='', $groupname='', $level=0, $icon='',$class='')
 	{
 		if ($optionId) {
-			$query = "update `tiki_menu_options` set `name`=?,`url`=?,`type`=?,`position`=?,`section`=?,`perm`=?,`groupname`=?,`userlevel`=?,`icon`=?  where `optionId`=?";
-			$bindvars=array($name,$url,$type,(int) $position,$section,$perm,$groupname,$level,$icon,$optionId);
+			$query = "update `tiki_menu_options` set `name`=?,`url`=?,`type`=?,`position`=?,`section`=?,`perm`=?,`groupname`=?,`userlevel`=?,`icon`=?,`class`=?  where `optionId`=?";
+			$bindvars=array($name,$url,$type,(int) $position,$section,$perm,$groupname,$level,$icon,$class,$optionId);
 		} else {
-			$query = "insert ignore into `tiki_menu_options`(`menuId`,`name`,`url`,`type`,`position`,`section`,`perm`,`groupname`,`userlevel`,`icon`) values(?,?,?,?,?,?,?,?,?,?)";
-			$bindvars=array((int) $menuId,$name,$url,$type,(int) $position,$section,$perm,$groupname,$level,$icon);
+			$query = "insert ignore into `tiki_menu_options`(`menuId`,`name`,`url`,`type`,`position`,`section`,`perm`,`groupname`,`userlevel`,`icon`,`class`) values(?,?,?,?,?,?,?,?,?,?,?)";
+			$bindvars=array((int) $menuId,$name,$url,$type,(int) $position,$section,$perm,$groupname,$level,$icon,$class);
 		}
 
 		$this->empty_menu_cache($menuId);
@@ -516,7 +516,7 @@ class MenuLib extends TikiLib
 			die;
 		}
 		while (!feof($fhandle)) {
-			$res = array('optionId'=>'', 'type'=>'', 'name'=>'', 'url'=>'', 'position'=>0, 'section'=>'', 'perm'=>'', 'groupname'=>'', 'userlevel'=>'', 'remove'=>'');
+			$res = array('optionId'=>'', 'type'=>'', 'name'=>'', 'url'=>'', 'position'=>0, 'section'=>'', 'perm'=>'', 'groupname'=>'', 'userlevel'=>'', 'class'=>'', 'remove'=>'');
 			$data = fgetcsv($fhandle, 1000);
 			if (empty($data)) {
 				continue;
@@ -537,14 +537,14 @@ class MenuLib extends TikiLib
 			if ($option['remove'] == 'y') {
 				$this->remove_menu_option($option['optionId']);
 			} else {
-				$this->replace_menu_option($menuId, $option['optionId'], $option['name'], $option['url'], $option['type'], $option['position'], $option['section'], $option['perm'], $option['groupname'], $option['userlevel']);
+				$this->replace_menu_option($menuId, $option['optionId'], $option['name'], $option['url'], $option['type'], $option['position'], $option['section'], $option['perm'], $option['groupname'], $option['userlevel'], '', $option['class']);
 			}
 		}
 	}
 
 	public function export_menu_options($menuId, $encoding)
 	{
-		$data = '"optionId","type","name","url","position","section","perm","groupname","userlevel","remove"' . "\r\n";
+		$data = '"optionId","type","name","url","position","section","perm","groupname","userlevel","class","remove"' . "\r\n";
 		$options = $this->list_menu_options($menuId, 0, -1, 'position_asc', '', true, 0, true);
 		foreach ($options['data'] as $option) {
 			$data .=  $option['optionId']
@@ -556,6 +556,7 @@ class MenuLib extends TikiLib
 							. '","' . $option['perm']
 							. '","' . $option['groupname']
 							. '",' . $option['userlevel']
+							. '",' . $option['class']
 							. ',"n"' . "\r\n"
 							;
 		}

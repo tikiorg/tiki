@@ -47,6 +47,7 @@ if ($_REQUEST["optionId"]) {
 	$info["userlevel"] = '';
 	$info["type"] = 'o';
 	$info["icon"] = '';
+	$info["class"] = '';
 	$info["position"] = $maxPos + 10;
 }
 $smarty->assign('name', $info["name"]);
@@ -58,6 +59,8 @@ $smarty->assign('icon', $info["icon"]);
 $smarty->assign('position', $info["position"]);
 $smarty->assign('groupname', $info["groupname"]);
 $smarty->assign('userlevel', $info["userlevel"]);
+$smarty->assign('class', $info["class"]);
+
 if (isset($_REQUEST["remove"])) {
 	$access->check_authenticity();
 	$menulib->remove_menu_option($_REQUEST["remove"]);
@@ -87,7 +90,7 @@ if (isset($_REQUEST["save"])) {
 	if (!isset($_REQUEST['level'])) $_REQUEST['level'] = 0;
 	$modlib = TikiLib::lib('mod');
 	check_ticket('admin-menu-options');
-	$menulib->replace_menu_option($_REQUEST["menuId"], $_REQUEST["optionId"], $_REQUEST["name"], $_REQUEST["url"], $_REQUEST["type"], $_REQUEST["position"], $_REQUEST["section"], $_REQUEST["perm"], $_REQUEST["groupname"], $_REQUEST['level'], $_REQUEST['icon']);
+	$menulib->replace_menu_option($_REQUEST["menuId"], $_REQUEST["optionId"], $_REQUEST["name"], $_REQUEST["url"], $_REQUEST["type"], $_REQUEST["position"], $_REQUEST["section"], $_REQUEST["perm"], $_REQUEST["groupname"], $_REQUEST['level'], $_REQUEST['icon'], $_REQUEST['class']);
 	$modlib->clear_cache();
 	$smarty->assign('position', $_REQUEST["position"] + 10);
 	$smarty->assign('name', '');
@@ -99,6 +102,7 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('userlevel', 0);
 	$smarty->assign('type', 'o');
 	$smarty->assign('icon', '');
+	$smarty->assign('class', '');
 	$cookietab = 1;
 }
 if (!isset($_REQUEST["sort_mode"])) {

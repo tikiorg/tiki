@@ -1307,6 +1307,7 @@ CREATE TABLE `tiki_menu_options` (
   `groupname` text default NULL,
   `userlevel` int(4) default 0,
   `icon` varchar(200),
+  `class` text default NULL,
   PRIMARY KEY (`optionId`),
   UNIQUE KEY `uniq_menu` (`menuId`,`name`(30),`url`(50),`position`,`section`(60),`perm`(50),`groupname`(50))
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;

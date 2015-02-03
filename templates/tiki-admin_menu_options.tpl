@@ -76,6 +76,7 @@
 												{if $channels[user].section}<br>{tr}Sections:{/tr} {$channels[user].section}{/if}
 												{if $channels[user].perm}<br>{tr}Permissions:{/tr} {$channels[user].perm}{/if}
 												{if $channels[user].groupname}<br>{tr}Groups:{/tr} {$channels[user].groupname|escape}{/if}
+												{if $channels[user].groupname}<br>{tr}Class:{/tr} {$channels[user].class|escape}{/if}
 											</span>
 										</td>
 										<td class="text">{$channels[user].type_description}</td>
@@ -360,6 +361,13 @@
 										<input id="menu_perm" type="text" name="perm" value="{$perm|escape}" size="34"><br>
 										{autocomplete element="#menu_perm" type="array" options="source:permNames,multiple:true,multipleSeparator:','"}{* note, multiple doesn't work in jquery-ui 1.8 *}
 										<em>{tr}Separate multiple permissions with a comma ( , ) for an AND or a vertical bar ( | ) for an OR.{/tr}</em>
+									</td>
+								</tr>
+								<tr>
+									<td>{tr}Class:{/tr}</td>
+									<td colspan="3">
+										<input id="menu_class" type="text" name="class" value="{$class|escape}" size="34"><br>
+										<em>{tr}Input an HTML class value for the menu option. Separate with a space for multiple classes.{/tr}</em>
 									</td>
 								</tr>
 								{if $prefs.feature_userlevels eq 'y'}
