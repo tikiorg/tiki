@@ -133,6 +133,8 @@ class ReferencesLib extends TikiLib
 
 	public function list_lib_references()
 	{
+		global $page;
+
 		$query = 'select * from `tiki_page_references` WHERE `page_id` IS NULL ORDER BY `biblio_code`';
 		$query_cant = 'select count(*) from `tiki_page_references` WHERE `page_id` IS NULL';
 		$result = $this->query($query, array($page));
@@ -163,96 +165,6 @@ class ReferencesLib extends TikiLib
 			$query,
 			array(
 				$page,
-				$biblio_code,
-				$author,
-				$title,
-				$part,
-				$uri,
-				$code,
-				$year,
-				$style,
-				$template,
-				$publisher,
-				$location
-			)
-		);
-
-		return true;
-	}
-
-	public function add_reference_ajax($page, $biblio_code, $author, $title,
-															$part, $uri, $code, $year, $style,
-															$template, $publisher, $location)
-	{
-		$query = 'insert `tiki_page_references`' .
-							' (`page_id`, `biblio_code`, `author`, `title`, `part`, `uri`,' .
-							' `code`, `year`, `style`, `template`, `publisher`, `location`)' .
-							' values (?,?,?,?,?,?,?,?,?,?,?,?)';
-
-		$this->query(
-			$query,
-			array(
-				$page,
-				$biblio_code,
-				$author,
-				$title,
-				$part,
-				$uri,
-				$code,
-				$year,
-				$style,
-				$template,
-				$publisher,
-				$location
-			)
-		);
-
-		return $this->lastInsertId();
-	}
-
-	public function add_lib_reference_ajax($biblio_code, $author, $title, $part,
-																	$uri, $code, $year, $style, $template,
-																	$publisher, $location)
-	{
-		$query = 'insert `tiki_page_references`' .
-							' (`page_id`, `biblio_code`, `author`, `title`, `part`, `uri`, `code`,' .
-							' `year`, `style`, `template`, `publisher`, `location`)' .
-							' values (?,?,?,?,?,?,?,?,?,?,?,?)';
-
-		$this->query(
-			$query,
-			array(
-				null,
-				$biblio_code,
-				$author,
-				$title,
-				$part,
-				$uri,
-				$code,
-				$year,
-				$style,
-				$template,
-				$publisher,
-				$location
-			)
-		);
-
-		return $this->lastInsertId();
-	}
-
-	public function add_lib_reference($biblio_code, $author, $title, $part,
-															$uri, $code, $year, $style, $template,
-															$publisher, $location)
-	{
-		$query = 'insert `tiki_page_references`' .
-							' (`page_id`, `biblio_code`, `author`, `title`, `part`, `uri`,' .
-							' `code`, `year`, `style`, `template`, `publisher`, `location`)' .
-							' values (?,?,?,?,?,?,?,?,?,?,?,?)';
-
-		$this->query(
-			$query,
-			array(
-				null,
 				$biblio_code,
 				$author,
 				$title,
@@ -337,44 +249,7 @@ class ReferencesLib extends TikiLib
 		return true;
 	}
 
-	public function edit_libReference($ref_id, $biblio_code, $author, $title,
-															$part, $uri, $code, $year, $style,
-															$template, $publisher, $location)
-	{
-		$query = 'update `tiki_page_references`' .
-								' SET `biblio_code`=?, `author`=?, `title`=?, `part`=?, `uri`=?, `code`=?,' .
-									' `year`=?, `style`=?, `template`=?, `publisher`=?, `location`=?' .
-								' where `ref_id`=?';
-
-		$this->query(
-			$query,
-			array(
-					$biblio_code,
-					$author,
-					$title,
-					$part,
-					$uri,
-					$code,
-					$year,
-					$style,
-					$template,
-					$publisher,
-					$location,
-					(int) $ref_id
-			)
-		);
-
-		return true;
-	}
-
 	public function remove_reference($id)
-	{
-		$query = 'delete from `tiki_page_references` where `ref_id`=?';
-		$this->query($query, array((int) $id));
-		return true;
-	}
-
-	public function remove_libReference($id)
 	{
 		$query = 'delete from `tiki_page_references` where `ref_id`=?';
 		$this->query($query, array((int) $id));

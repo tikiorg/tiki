@@ -74,7 +74,7 @@ if (isset($_REQUEST['addreference']) && $action='a_ref') {
 				echo json_encode(array('result'=>tra('failure'), 'id'=>-1));
 			} else {
 				$is_library = $referenceslib->check_lib_existence($ref_biblio_code);
-				$id = $referenceslib->add_reference_ajax(
+				$id = $referenceslib->add_reference(
 					$page_id,
 					$ref_biblio_code,
 					$ref_author,
@@ -135,7 +135,7 @@ if (isset($_REQUEST['addlibreference']) && $action = 'a_lib') {
 				)
 			);
 		} else {
-			$id = $referenceslib->add_lib_reference_ajax(
+			$id = $referenceslib->add_reference(
 				$ref_biblio_code,
 				$ref_author,
 				$ref_title,

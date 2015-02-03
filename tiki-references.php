@@ -46,7 +46,7 @@ if (isset($_REQUEST['addreference'])) {
 	}
 
 	if (count($errors) < 1) {
-		$id = $referenceslib->add_lib_reference(
+		$id = $referenceslib->add_reference(
 			$ref_biblio_code,
 			$ref_author,
 			$ref_title,
@@ -79,7 +79,7 @@ if (isset($_REQUEST['editreference'])) {
 	}
 
 	if (count($errors) < 1) {
-		$referenceslib->edit_libReference(
+		$referenceslib->edit_reference(
 			$ref_id,
 			$ref_biblio_code,
 			$ref_author,
@@ -104,7 +104,7 @@ if (isset($_REQUEST['editreference'])) {
 if (isset($_REQUEST['action']) && isset($ref_id)) {
 	if ($_REQUEST['action'] == 'delete') {
 		$access->check_authenticity();
-		$referenceslib->remove_libReference($ref_id);
+		$referenceslib->remove_reference($ref_id);
 	}
 }
 
