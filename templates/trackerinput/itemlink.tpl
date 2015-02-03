@@ -30,7 +30,7 @@
 						.text(data.itemTitle)
 						.appendTo($(this).prev());
 					$(this).prev().val(data.itemId);
-					$.closeModal({});
+					$.closeModal();
 				}
 			});
 		{/jq}

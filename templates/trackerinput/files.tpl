@@ -117,7 +117,7 @@
 					addFile(file.fileId, file.type, file.name);
 				});
 
-				$.closeModal({});
+				$.closeModal();
 			}
 		});
 
@@ -139,7 +139,7 @@
 					addFile(file.fileId, file.type, file.name);
 				});
 
-				$.closeModal({});
+				$.closeModal();
 			}
 		});
 

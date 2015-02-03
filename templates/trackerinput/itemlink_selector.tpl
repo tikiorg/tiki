@@ -11,7 +11,7 @@
 				success: function (data) {
 					$('#{{$field.ins_id|escape}}')
 						.object_selector('set', "trackeritem:" + data.itemId, data.itemTitle);
-					$.closeModal({});
+					$.closeModal();
 				}
 			});
 		{/jq}
