@@ -44,6 +44,16 @@ $ref_style = $_REQUEST['ref_style'];
 $ref_template = $_REQUEST['ref_template'];
 
 if (isset($_REQUEST['addreference']) && $action='a_ref') {
+	if ($referenceslib->get_permission('tiki_p_edit_references') != 'y') {
+		echo json_encode(
+			array(
+				'result'=>tra('failure'),
+				'message'=>tra('You do not have sufficient permissions to perform this action.')
+			)
+		);
+		exit;
+	}
+
 
 	$errors = array();
 
@@ -154,6 +164,16 @@ if (isset($_REQUEST['addlibreference']) && $action = 'a_lib') {
 }
 
 if (isset($_REQUEST['editreference'])) {
+	if ($referenceslib->get_permission('tiki_p_edit_references') != 'y') {
+		echo json_encode(
+			array(
+				'result'=>tra('failure'),
+				'message'=>tra('You do not have sufficient permissions to perform this action.')
+			)
+		);
+		exit;
+	}
+
 
 	$errors = array();
 
@@ -255,6 +275,16 @@ if (isset($_REQUEST['action']) && isset($ref_id)) {
 }
 
 if (isset($_REQUEST['action']) && isset($ref_id)) {
+	if ($referenceslib->get_permission('tiki_p_edit_references') != 'y') {
+		echo json_encode(
+			array(
+				'result'=>tra('failure'),
+				'message'=>tra('You do not have sufficient permissions to perform this action.')
+			)
+		);
+		exit;
+	}
+
 	if ($_REQUEST['action'] == 'e_del') {
 		$referenceslib->remove_reference($ref_id);
 		echo tra('success');
