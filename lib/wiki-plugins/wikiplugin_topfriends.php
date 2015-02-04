@@ -39,7 +39,9 @@ function wikiplugin_topfriends_info()
 function wikiplugin_topfriends($data, $params)
 {
 	// TODO : Re-implement
-	$smarty->assign_by_ref('listusers', array());
+	$smarty = TikiLib::lib('smarty');
+	$empty = array();
+	$smarty->assign_by_ref('listusers', $empty);
 
 	return $smarty->fetch('plugins/plugin-topfriends.tpl');
 }
