@@ -624,11 +624,11 @@ if ( \$('#$id') ) {
 	}
 
 	//*
-	function plugin_info( $name )
+	function plugin_info( $name, $args = array() )
 	{
 		static $known = array();
 
-		if ( isset( $known[$name] ) ) {
+		if ( isset( $known[$name] ) && $name != 'addon') {
 			return $known[$name];
 		}
 
@@ -644,6 +644,38 @@ if ( \$('#$id') ) {
 			} else {
 				return $known[$name] = false;
 			}
+		}
+
+		// Support Tiki Addons param overrides for Addon plugin
+		if ($name == 'addon' && !empty($args['package']) && !empty($args['view'])) {
+			$info = $func_name_info();
+
+			$parts = explode('/', $args['package']);
+			$path = TIKI_PATH . '/addons/' . $parts[0] . '_' . $parts[1] . '/views/' . $args['view'] . '.php';
+
+			if (!file_exists($path)) {
+				return $known[$name] = $info;
+			}
+
+			require_once($path);
+
+			$functionname = "tikiaddon\\" . $parts[0] . "\\" . $parts[1] . "\\" . $args['view'] . "_info";
+
+			if (!function_exists($functionname)) {
+				return $known[$name] = $info;
+			}
+
+			$viewinfo = $functionname();
+			if (isset($viewinfo['params'])) {
+				$combinedparams = $viewinfo['params'] + $info['params'];
+			} else {
+				$combinedparams = $info['params'];
+			}
+
+			$info = $viewinfo + $info;
+			$info['params'] = $combinedparams;
+
+			return $known[$name] = $info;
 		}
 
 		return $known[$name] = $func_name_info();
@@ -727,7 +759,7 @@ if ( \$('#$id') ) {
 		if ( $prefs['wiki_validate_plugin'] != 'y' )
 			return true;
 
-		$meta = $this->plugin_info($name);
+		$meta = $this->plugin_info($name, $args);
 
 		if ( ! isset( $meta['validate'] ) )
 			return true;
@@ -980,7 +1012,7 @@ if ( \$('#$id') ) {
 		if ( function_exists($func_name) || $classExists == true) {
 			$pluginFormat = 'wiki';
 
-			$info = $this->plugin_info($name);
+			$info = $this->plugin_info($name, $args);
 			if ( isset( $info['format'] ) ) {
 				$pluginFormat = $info['format'];
 			}
@@ -1173,7 +1205,7 @@ if ( \$('#$id') ) {
 	{
 		$tikilib = TikiLib::lib('tiki');
 
-		$info = $this->plugin_info($name);
+		$info = $this->plugin_info($name, $args);
 
 		$default = TikiFilter::get(isset( $info['defaultfilter'] ) ? $info['defaultfilter'] : 'xss');
 

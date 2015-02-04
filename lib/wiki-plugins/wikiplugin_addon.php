@@ -12,11 +12,9 @@ function wikiplugin_addon_info()
 		'documentation' => 'PluginAddon',
 		'description' => tra('Display output of a Tiki Addon View'),
 		'prefs' => array('wikiplugin_addon'),
-		'validate' => 'all',
 		'body' => '',
 		'filter' => 'rawhtml_unsafe',
-		'tags' => array( 'basic' ),	
-		'extraparams' => true,
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'package' => array(
 				'required' => true,
@@ -39,8 +37,6 @@ function wikiplugin_addon($data, $params)
 	if (empty($params['package']) || empty($params['view'])) {
 		return tra("Please specify the name of the package and the view.");
 	}
-
-	$extraparams = $params;
 
 	$parts = explode('/', $params['package']);
 	$path = TIKI_PATH . '/addons/' . $parts[0] . '_' . $parts[1] . '/views/' . $params['view'] . '.php';
