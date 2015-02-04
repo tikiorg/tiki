@@ -30,7 +30,8 @@ class TikiAddons_Api_NavBar extends TikiAddons_Api
 		return true;
 	}
 
-	function getNavBar($token, $from) {
+
+	function getNavBar($token, $from = '') {
 		$smarty = TikiLib::lib('smarty');
 
 		$folder = $this->getFolderFromToken($token);
@@ -41,6 +42,7 @@ class TikiAddons_Api_NavBar extends TikiAddons_Api
 
 		if ($id = $this->getItemIdFromToken($token)) {
 			$smarty->assign('groupTrackerItemId', $id);
+			$_REQUEST['organicgroup'] = $id;
 		} elseif (isset($_REQUEST['organicgroup'])) {
 			$smarty->assign('groupTrackerItemId', $_REQUEST['organicgroup']);
 		}
@@ -72,6 +74,9 @@ class TikiAddons_Api_NavBar extends TikiAddons_Api
 			$cat = \TikiLib::lib('categ')->get_category_id($ogname);
 			$_REQUEST['cat'] = $cat;
 		}
+
+		$approvalCount = TikiLib::lib('user')->nb_users_in_group($folder . "_" . $_REQUEST['organicgroup']);
+		$smarty->assign('groupapprovalcount', $approvalCount);
 
 		$smarty->assign('groupnavfrom', $from);
 		return $smarty->fetch(self::$templates[$folder]);
