@@ -99,6 +99,18 @@ function wikiplugin_bloglist_info()
 				),
 				'parent' => array('name' => 'simpleList', 'value' => 'n'),
 			),
+			'useExcerpt' => array(
+				'required' => false,
+				'name' => tra('Use Excerpt'),
+				'description' => tra('If the blog has "Use post excerpt" enabled then use excerpts where available') . ' ' . tra('(default=y)'),
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				),
+				'parent' => array('name' => 'simpleList', 'value' => 'n'),
+			),
 			'dateStart' => array(
 				'required' => false,
 				'name' => tra('Start Date'),
@@ -140,6 +152,7 @@ function wikiplugin_bloglist($data, $params)
 	if (!isset($params['author'])) $params['author'] = '';
 	if (!isset($params['simpleList'])) $params['simpleList'] = 'y';
 	if (!isset($params['isHtml'])) $params['isHtml'] = 'n';
+	if (!isset($params['useExcerpt'])) $params['useExcerpt'] = 'y';
 
 	if (isset($params['dateStart'])) {
 		$dateStartTS = strtotime($params['dateStart']);
@@ -176,6 +189,11 @@ function wikiplugin_bloglist($data, $params)
 
 		if ($params['showIcons'] == 'n') {
 			$smarty->assign('excerpt', 'y');
+		}
+
+		if ($params['useExcerpt'] === 'y' && $blog_data['use_excerpt'] === 'y') {
+			$smarty->assign('use_excerpt', 'y');
+			$smarty->assign('excerpt', 'n');	// no real idea why this gets assigned depending on showIcons above but it prevents excerpts being shown
 		}
 
 		$smarty->assign('show_heading', 'n');
