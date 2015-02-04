@@ -26,7 +26,7 @@
 				</tr>
 
 				<tr>
-					<td>{tr}Does your mail reader need a special charset{/tr}</td>
+					<td>{tr}Does your email application need a special character set{/tr}</td>
 					<td>
 						<select name="mailCharset">
 							{section name=ix loop=$mailCharsets}

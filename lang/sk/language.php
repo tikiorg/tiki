@@ -14537,7 +14537,7 @@ $lang = array(
 // "Your personal tracker information" => "Your personal tracker information",
 "Is email public? (uses scrambling to prevent spam)" => "Zverejniť e-mail? (s ošetrením proti spamu)",
 // "Unavailable - please set your email below" => "Unavailable - please set your email below",
-// "Does your mail reader need a special charset" => "Does your mail reader need a special charset",
+// "Does your email application need a special charactDoes your email application need a special character setcial charset",
 // "Preferred Language" => "Preferred Language",
 // "Can you read more languages" => "Can you read more languages",
 // "Other languages you can read (select from the dropdown to add to the field below)" => "Other languages you can read (select from the dropdown to add to the field below)",

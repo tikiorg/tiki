@@ -182,7 +182,7 @@
 				{/if}
 			</div>
 			<div class="form-group">
-				<label class="control-label" for="mailCharset">{tr}Does your mail reader need a special charset?{/tr}</label>
+				<label class="control-label" for="mailCharset">{tr}Does your email application need a special character set?{/tr}</label>
 				<select id="mailCharset" name="mailCharset" class="form-control">
 					{section name=ix loop=$mailCharsets}
 						<option value="{$mailCharsets[ix]|escape}" {if $user_prefs.mailCharset eq $mailCharsets[ix]}selected="selected"{/if}>
