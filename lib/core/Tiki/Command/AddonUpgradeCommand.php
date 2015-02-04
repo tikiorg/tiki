@@ -125,7 +125,7 @@ class AddonUpgradeCommand extends Command
 		// First forget profiles that need to be forgotten
 		foreach ($forgetProfiles as $toForget) {
 			if (in_array($toForget, $installedProfileNames)) {
-				if ($confirm) {
+				if ($confirm || (!$willRemove)) {
 					$addon_utilities->forgetProfileAllVersions($folder, $toForget);
 					$profile = \Tiki_Profile::fromNames($repository, $toForget);
 					if (! $profile) {
