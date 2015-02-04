@@ -1,3 +1,0 @@
-{REMARKSBOX(type="error" title="Unable to Create")}
-Please contact us to let us know of the problem. Please include the name and description you used when trying to create.
-{REMARKSBOX}

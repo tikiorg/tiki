@@ -1,4 +1,0 @@
-~tc~This page is system generated. Do not edit manually~/tc~
-{addon package="tikiorg/organicgrp" view="groupnavloader" from="members"}
-!Members
-{memberlist groups="tikiorg_organicgrp_{{organicgroup}}" readOnly="y"}

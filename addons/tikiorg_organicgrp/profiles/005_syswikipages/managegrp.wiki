@@ -1,2 +1,0 @@
-~tc~This page is system generated. Do not edit manually~/tc~
-{trackerlist trackerId="$profileobject:004_og_tracker:trk_og$" showlinks="n" status="opc" max="1" tpl="tikiorg-managegrp.tpl" force_compile="y"}
