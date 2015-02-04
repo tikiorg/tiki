@@ -12,6 +12,7 @@
 		"ckeditor/ckeditor/skins/kama": "4.3.4",
 		"ckeditor/ckeditor/plugins/divarea": "4.3.4",
 		"codemirror/codemirror": "3.19",
+	    "dompdf/dompdf": "0.6.1",
 		"ezyang/htmlpurifier": "4.6.0",
 		"jcapture-applet/jcapture-applet": "dev-master",
 		"jquery/jquery": "1.10.2",

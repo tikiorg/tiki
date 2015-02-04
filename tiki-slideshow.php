@@ -40,8 +40,9 @@ if (isset($_REQUEST['pdf'])) {
 	$_POST["html"] = urldecode($_POST["html"]);
 	
 	define("DOMPDF_ENABLE_REMOTE", true);
-	
-	require_once("vendor/jquery/jquery-s5/lib/dompdf/dompdf_config.inc.php");
+	define('DOMPDF_ENABLE_AUTOLOAD', false);
+
+	require_once("vendor/dompdf/dompdf/dompdf_config.inc.php");
 	
 	if ( isset( $_POST["html"] ) ) {
 		$dompdf = new DOMPDF();
