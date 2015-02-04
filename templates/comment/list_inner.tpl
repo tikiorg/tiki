@@ -45,8 +45,8 @@
 						{/if}
 						{if $allow_moderate and $comment.approved neq 'y'}
 							<span class="label label-warning">{tr}Pending{/tr}</span>
-							{self_link controller=comment action=moderate do=approve threadId=$comment.threadId _icon=comment_approve _class="confirm-prompt btn btn-default btn-sm" _confirm="{tr}Are you sure you want to approve this comment?{/tr}"}{tr}Approve{/tr}{/self_link}
-							{self_link controller=comment action=moderate do=reject threadId=$comment.threadId _icon=comment_reject _class="confirm-prompt btn btn-default btn-sm" _confirm="{tr}Are you sure you want to reject this comment?{/tr}"}{tr}Reject{/tr}{/self_link}
+							<a href="{service controller=comment action=moderate do=approve threadId=$comment.threadId}" class="btn btn-default btn-sm tips" title="{tr}Approve{/tr}">{icon name="ok"}</a>
+							<a href="{service controller=comment action=moderate do=reject threadId=$comment.threadId}" class="btn btn-default btn-sm tips" title="{tr}Reject{/tr}">{icon name="remove"}</a>
 						{/if}
 						{if $comment.userName ne $user and $comment.approved eq 'y' and $prefs.wiki_comments_simple_ratings eq 'y' and ($tiki_p_vote_comments eq 'y' or $tiki_p_admin_comments eq 'y' )}
 							<form class="commentRatingForm" method="post">
