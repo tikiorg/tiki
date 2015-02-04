@@ -99,6 +99,18 @@ function wikiplugin_bloglist_info()
 				),
 				'parent' => array('name' => 'simpleList', 'value' => 'n'),
 			),
+			'useExcerpt' => array(
+				'required' => false,
+				'name' => tra('Use Excerpt'),
+				'description' => tra('If the blog has "Use post excerpt" enabled then use excerpts where available') . ' ' . tra('(default=y)'),
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				),
+				'parent' => array('name' => 'simpleList', 'value' => 'n'),
+			),
 			'dateStart' => array(
 				'required' => false,
 				'name' => tra('Start Date'),
@@ -119,17 +131,6 @@ function wikiplugin_bloglist_info()
 				'description' => tra('CSS Class to add to the container DIV.article. (Default="wikiplugin_bloglist")'),
 				'filter' => 'striptags',
 				'default' => 'wikiplugin_bloglist',
-			),
-			'useExcerpt' => array(
-				'required' => false,
-				'name' => tra('Use Excerpt'),
-				'description' => tra('If the blog has "Use post excerpt" enabled then use excerpts where available') . ' ' . tra('(default=y)'),
-				'default' => 'y',
-				'options' => array(
-					array('text' => '', 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n')
-				),
 			),
 		),
 	);
