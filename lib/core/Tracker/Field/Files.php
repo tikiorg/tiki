@@ -130,6 +130,11 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 		$count = (int) $this->getOption('count');
 		$deepGallerySearch = (boolean) $this->getOption('deepGallerySearch');
 
+		// Support Addon File Gallery API switching
+		$api = new TikiAddons_Api_FileGallery;
+		$itemId = $this->getItemId();
+		$galleryId = $api->mapGalleryId($galleryId, $itemId);
+
 		// to use the user's userfiles gallery enter the fgal_root_user_id which is often (but not always) 2
 		$galleryId = $filegallib->check_user_file_gallery($galleryId);
 
@@ -221,6 +226,11 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 		global $prefs;
 		global $mimetypes; include ('lib/mime/mimetypes.php');
 		$galleryId = (int)$this->getOption('galleryId');
+
+		// Support Addon File Gallery API switching
+		$api = new TikiAddons_Api_FileGallery;
+		$itemId = $this->getItemId();
+		$galleryId = $api->mapGalleryId($galleryId, $itemId);
 
 		if (!isset($context['list_mode'])) {
 			$context['list_mode'] = 'n';

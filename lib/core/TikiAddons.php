@@ -53,9 +53,11 @@ abstract class TikiAddons
 	}
 
 	private static function initializeFileGalleryApi($package) {
-		if (!empty(self::$installed[$package]->api->files)) {
-			$parent = self::$installed[$package]->api->files->parent;
+		if (!empty(self::$installed[$package]->api->filegallery)) {
+			$parent = self::$installed[$package]->api->filegallery->parent;
 			TikiAddons_Api_FileGallery::setParents($package, $parent);
+			$tracker = self::$installed[$package]->api->filegallery->tracker;
+			TikiAddons_Api_FileGallery::setTrackers($package, $tracker);
 		}
 	}
 
