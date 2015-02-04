@@ -91,7 +91,7 @@ function prefs_user_list($partial = false)
 			'profile_reference' => 'file',
 		),
 		'user_who_viewed_my_stuff' => array(
-			'name' => tra('Display who viewed my stuff on the user information page'),
+			'name' => tra('Display who viewed my items on the user information page'),
 			'description' => tra('You will need to activate tracking of views for various items in the action log for this to work'),
 			'type' => 'flag',
 			'dependencies' => array(
@@ -100,16 +100,16 @@ function prefs_user_list($partial = false)
 			'default' => 'n',
 		),
 		'user_who_viewed_my_stuff_days' => array(
-			'name' => tra('Number of days to consider who viewed my stuff'),
-			'description' => tra('Number of days before current time to consider when showing who viewed my stuff'),
+			'name' => tra('Number of days to consider who viewed my items'),
+			'description' => tra('Number of days before current time to consider when showing who viewed my items'),
 			'type' => 'text',
 			'filter' => 'digits',
 			'size' => '4',
 			'default' => 90,
 		),
 		'user_who_viewed_my_stuff_show_others' => array(
-			'name' => tra('Show to others who viewed my stuff on the user information page'),
-			'description' => tra('Show to others who viewed my stuff on the user information page. Admins can always see this information.'),
+			'name' => tra('Show to others who viewed my items on the user information page'),
+			'description' => tra('Show to others who viewed my items on the user information page. Admins can always see this information.'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'user_who_viewed_my_stuff',

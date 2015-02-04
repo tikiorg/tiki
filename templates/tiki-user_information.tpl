@@ -323,10 +323,10 @@
 
 
 	{if $prefs.feature_actionlog eq 'y' and $prefs.user_who_viewed_my_stuff eq 'y' and !empty($user) and ($prefs.user_who_viewed_my_stuff_show_others eq 'y' or $user eq $userinfo.login or $tiki_p_admin eq "y") and $infoPublic eq "y"}
-		{tab name="{tr}Who Looks At Stuff?{/tr}"}
+		{tab name="{tr}Who Looks at Items?{/tr}"}
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<h2 class="text-center">{if $user eq $userinfo.login}{tr}Who Looks At Your Stuff?{/tr}{else}{tr}Who Looks At His Stuff?{/tr}{/if}</h2>
+					<h2 class="text-center">{if $user eq $userinfo.login}{tr}Who Looks at Your Items?{/tr}{else}{tr}Who Looks at His or Her Items?{/tr}{/if}</h2>
 
 					{section name=ix loop=$whoviewed}
 						<div class="clearfix {cycle}">
