@@ -2505,6 +2505,20 @@ class UsersLib extends TikiLib
 				$title = $auser;
 			}
 
+			if (empty($prefs['urlOnUsername'])) {
+				$url = 'tiki-user_information.php?userId='.$id;
+				if ($prefs['feature_sefurl'] == 'y') {
+					include_once('tiki-sefurl.php');
+					$url = filter_out_sefurl($url);
+				}
+			} else {
+				$url = preg_replace(
+								array('/%userId%/', '/%user%/'),
+								array($id, $auser),
+								$prefs['urlOnUsername']
+				);
+			}
+
 			$lat = $this->get_user_preference($auser, 'lat');
 			$lon = $this->get_user_preference($auser, 'lon');
 			$zoom = $this->get_user_preference($auser, 'zoom');
