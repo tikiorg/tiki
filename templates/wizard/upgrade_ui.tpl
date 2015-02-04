@@ -13,7 +13,7 @@
 			<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
 		</a>
 		<fieldset class="table clearfix featurelist">
-			<legend> {tr}Icons and Avatars{/tr} </legend>
+			<legend> {tr}Icons and Profile Pictures{/tr} </legend>
 			{preference name=menus_items_icons}
 			{preference name=user_use_gravatar}
 		</fieldset>

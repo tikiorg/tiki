@@ -31,7 +31,7 @@
 					<th>{tr}Comments{/tr}</th>
 					<th>{tr}Comment can rate article{/tr}</th>
 					<th>{tr}Show image{/tr}</th>
-					<th>{tr}Show avatar{/tr}</th>
+					<th>{tr}Show profile picture{/tr}</th>
 					<th>{tr}Show author{/tr}</th>
 					<th>{tr}Show publish date{/tr}</th>
 				</tr>

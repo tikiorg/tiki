@@ -2,9 +2,9 @@
 
 {title}
 	{if $user ne $userwatch}
-		{tr}Avatar:{/tr} {$userwatch}
+		{tr}Profile picture:{/tr} {$userwatch}
 	{else}
-		{tr}Pick your avatar{/tr}
+		{tr}Pick your profile picture{/tr}
 	{/if}
 {/title}
 
@@ -18,7 +18,7 @@
 	</div>
 {/if}
 
-<h2>{if $user eq $userwatch}{tr}Your current avatar{/tr}{else}{tr}Avatar{/tr}{/if}</h2>
+<h2>{if $user eq $userwatch}{tr}Your current profile picture{/tr}{else}{tr}Profile picture{/tr}{/if}</h2>
 {if $avatar}
 	<div>
 		{if isset($user_picture_id)}{tr}Thumbnail{/tr}<br>{/if}
@@ -30,7 +30,7 @@
 		</div>
 	{/if}
 {else}
-	{tr}no avatar{/tr}
+	{tr}no profile picture{/tr}
 {/if}
 
 {if sizeof($avatars) eq 0 and $avatar}
@@ -40,7 +40,7 @@
 {if sizeof($avatars) > 0}
 
 	{if $showall eq 'y'}
-		<h2>{if $user eq $userwatch}{tr}Pick avatar from the library{/tr}{else}{tr}Pick user Avatar{/tr}{/if} <a href="tiki-pick_avatar.php?showall=n">{tr}Hide all{/tr}</a> {$numav} {tr}icons{/tr}</h2>
+		<h2>{if $user eq $userwatch}{tr}Pick user profile picture from the library{/tr}{else}{tr}Pick user profile picture{/tr}{/if} <a href="tiki-pick_avatar.php?showall=n">{tr}Hide all{/tr}</a> {$numav} {tr}icons{/tr}</h2>
 		<div class="table normal">
 			{section name=im loop=$avatars}
 				<a href="tiki-pick_avatar.php?showall=n&amp;avatar={$avatars[im]|escape:"url"}&amp;uselib=use"><img src="{$avatars[im]}" alt=''></a>
@@ -76,7 +76,7 @@
 			}
 		{/jq}
 
-		<h2>{tr}Pick avatar from the library{/tr} <a href="tiki-pick_avatar.php?showall=y">{tr}Show all{/tr}</a> {$numav} {tr}Items{/tr}</h2>
+		<h2>{tr}Pick user profile picture from the library{/tr} <a href="tiki-pick_avatar.php?showall=y">{tr}Show all{/tr}</a> {$numav} {tr}Items{/tr}</h2>
 		<form action="tiki-pick_avatar.php" method="post">
 			<input id="avatar" type="hidden" name="avatar" value="{$yours|escape}">
 			{if $user ne $userwatch}<input type="hidden" name="view_user" value="{$userwatch|escape}">{/if}
@@ -85,7 +85,7 @@
 					<td>
 						<div align="center">
 							<a class="link" href="javascript:subavt();">{tr}Prev{/tr}</a>
-							<img id='avtimg' src="{$yours}" alt="{tr}Avatar Image{/tr}">
+							<img id='avtimg' src="{$yours}" alt="{tr}Profile picture{/tr}">
 							<a class="link" href="javascript:addavt();">{tr}Next{/tr}</a>
 						</div>
 					</td>
@@ -95,7 +95,7 @@
 						<div align="center">
 							<input type="submit" class="btn btn-default btn-sm" name="rand" value="{tr}random{/tr}">
 							<input type="submit" class="btn btn-default btn-sm" name="uselib" value="{tr}Use{/tr}">
-							<input type="submit" class="btn btn-default btn-sm" name="reset" value="{tr}no avatar{/tr}">
+							<input type="submit" class="btn btn-default btn-sm" name="reset" value="{tr}no profile picture{/tr}">
 						</div>
 					</td>
 				</tr>
@@ -108,7 +108,7 @@
 <div class="table normal">
 	<form enctype="multipart/form-data" action="tiki-pick_avatar.php" method="post">
 		<fieldset>
-			<legend><strong>{tr}Upload your own avatar{/tr}</strong></legend>
+			<legend><strong>{tr}Upload your own profile picture{/tr}</strong></legend>
 			{if $user ne $userwatch}<input type="hidden" name="view_user" value="{$userwatch|escape}">{/if}
 			<label for="userfile1">{if $prefs.user_store_file_gallery_picture neq 'y'}{tr}File (only .gif, .jpg and .png images approximately 45px × 45px){/tr}{else}{tr}File (only .gif, .jpg and .png images){/tr}{/if}:</label>
 			<input type="hidden" name="MAX_FILE_SIZE" value="10000000">

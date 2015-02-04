@@ -32,16 +32,16 @@
 				</tr>
 
 				<tr>
-					<td>{tr}Avatar:{/tr}</td>
+					<td>{tr}Profile picture:{/tr}</td>
 					<td>
 						{$avatar}
 						{if $prefs.user_use_gravatar eq 'y'}
 							<a href="http://www.gravatar.com" class="link">
-								{tr}Pick user Avatar{/tr}
+								{tr}Pick user profile picture{/tr}
 							</a>
 						{else}
 							<a href="tiki-pick_avatar.php{if $userwatch ne $user}?view_user={$userwatch}{/if}" class="link" target="_blank">
-								{tr}Pick user Avatar{/tr}
+								{tr}Pick user profile picture{/tr}
 							</a>
 						{/if}
 					</td>

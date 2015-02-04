@@ -39,8 +39,8 @@ function module_wiki_last_comments_info()
 				'default' => 40,
 			),
 			'avatars' => array(
-				'name' => tra('Show user avatars'),
-				'description' => tra("Display user avatars instead of numbers."),
+				'name' => tra('Show user profile pictures'),
+				'description' => tra('Display user profile pictures instead of numbers.'),
 				'filter' => 'alpha',
 				'default' => 'n',
 			),

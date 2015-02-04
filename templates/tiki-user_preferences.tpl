@@ -44,13 +44,13 @@
 						{if $prefs.auth_ldap_nameattr eq '' || $prefs.auth_method ne 'ldap'}{else}disabled{/if}>
 				</div>
 				<div class="form-group">
-					<label class="control-label">{tr}Avatar{/tr}</label>
+					<label class="control-label">{tr}Profile picture{/tr}</label>
 					<div class="col-md-12" style="margin-bottom:10px">
 						{$avatar}
 						{if $prefs.user_use_gravatar eq 'y'}
-							<a class="link" href="http://www.gravatar.com" target="_blank">{tr}Pick user Avatar{/tr}</a>
+							<a class="link" href="http://www.gravatar.com" target="_blank">{tr}Pick user profile picture{/tr}</a>
 						{else}
-							<a class="link" target="_blank" href="tiki-pick_avatar.php{if $userwatch ne $user}?view_user={$userwatch}{/if}">{tr}Pick user Avatar{/tr}</a>
+							<a class="link" target="_blank" href="tiki-pick_avatar.php{if $userwatch ne $user}?view_user={$userwatch}{/if}">{tr}Pick user profile picture{/tr}</a>
 						{/if}
 					</div>
 				</div>

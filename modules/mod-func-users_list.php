@@ -49,8 +49,8 @@ function module_users_list_info()
 				'default' => 'n'
 			),
 			'avatar' => array(
-				'name' => tra('Avatar'),
-				'description' => tra('Show the user avatar.') . ' ' . tra('Possible values:') . ' ' . tra('y|n'),
+				'name' => tra('Profile picture'),
+				'description' => tra('Show the user profile picture.') . ' ' . tra('Possible values:') . ' ' . tra('y|n'),
 				'filter' => 'word',
 				'required' => false,
 				'default' => 'n'

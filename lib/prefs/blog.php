@@ -77,7 +77,7 @@ function prefs_blog_list()
 				'disabled' => tra('Disabled'),
 				'text' => tra('Plain text'),
 				'link' => tra('Link to user information'),
-				'avatar' => tra('User avatar'),
+				'avatar' => tra('User profile picture'),
 			),
 			'default' => 'text',
 		),

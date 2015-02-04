@@ -42,7 +42,7 @@
 				<div class="panel-body">
 					{if $avatar}
 						<div class="clearfix {cycle}">
-							<div class="pull-left">{tr}Avatar{/tr} ({tr}User Icon{/tr}):</div>
+							<div class="pull-left">{tr}Profile picture{/tr} ({tr}User Icon{/tr}):</div>
 							<div class="pull-right">
 								{if $userinfo.login eq $user}<a href="tiki-pick_avatar.php">{/if}
 								{$avatar}

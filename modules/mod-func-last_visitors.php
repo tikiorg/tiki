@@ -21,8 +21,8 @@ function module_last_visitors_info()
 		'description' => tra('Displays information about the specified number of users in decreasing order of last login time.'),
 		'params' => array(
 			'showavatars' => array(
-				'name' => tra('Show avatars'),
-				'description' => tra('If set to "y", show user avatars.') . ' ' . tra('Default:') . ' "n"'
+				'name' => tra('Show profile pictures'),
+				'description' => tra('If set to "y", show user profile pictures.') . ' ' . tra('Default:') . ' "n"'
 			),
 			'maxlen' => array(
 				'name' => tra('Maximum length'),

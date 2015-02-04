@@ -399,7 +399,7 @@
 								</div>
 								<div class="checkbox">
 									<label for="topics_list_lastpost_avatar">
-										<input type="checkbox" name="topics_list_lastpost_avatar" id="topics_list_lastpost_avatar" {if $topics_list_lastpost_avatar eq 'y'}checked="checked"{/if}> {tr}Last post avatar{/tr}
+										<input type="checkbox" name="topics_list_lastpost_avatar" id="topics_list_lastpost_avatar" {if $topics_list_lastpost_avatar eq 'y'}checked="checked"{/if}> {tr}Last post profile picture{/tr}
 									</label>
 								</div>
 								<div class="checkbox">
@@ -409,7 +409,7 @@
 								</div>
 								<div class="checkbox">
 									<label for="topics_list_author_avatar">
-										<input type="checkbox" name="topics_list_author_avatar" id="topics_list_author_avatar" {if $topics_list_author_avatar eq 'y'}checked="checked"{/if}> {tr}Author avatar{/tr}
+										<input type="checkbox" name="topics_list_author_avatar" id="topics_list_author_avatar" {if $topics_list_author_avatar eq 'y'}checked="checked"{/if}> {tr}Author profile picture{/tr}
 									</label>
 								</div>
 							</div>
@@ -463,7 +463,7 @@
 							<div class="col-sm-8">
 								<div class="checkbox">
 									<label for="ui_avatar">
-										<input type="checkbox" name="ui_avatar" id="ui_avatar" {if $ui_avatar eq 'y'}checked="checked"{/if}> {tr}Avatar{/tr}
+										<input type="checkbox" name="ui_avatar" id="ui_avatar" {if $ui_avatar eq 'y'}checked="checked"{/if}> {tr}Profile picture{/tr}
 									</label>
 								</div>
 								<div class="checkbox">

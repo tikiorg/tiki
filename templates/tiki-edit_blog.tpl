@@ -134,7 +134,7 @@
 						</label>
 					</div>
 					<div class="checkbox">
-						<label for="blogs-avatar">{tr}Show user avatar{/tr}
+						<label for="blogs-avatar">{tr}Show user profile picture{/tr}
 							<input type="checkbox" name="show_avatar" id="blogs-avatar" {if $show_avatar eq 'y'}checked='checked'{/if}>
 						</label>
 					</div>

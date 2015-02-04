@@ -8,9 +8,9 @@
 function wikiplugin_avatar_info()
 {
 	return array(
-		'name' => tra('Avatar'),
+		'name' => tra('Profile picture'),
 		'documentation' => 'PluginAvatar',
-		'description' => tra('Display a user\'s avatar'),
+		'description' => tra('Display a user\'s profile picture'),
 		'prefs' => array('wikiplugin_avatar'),
 		'body' => tra('username'),
 		'icon' => 'img/icons/user.png',
@@ -18,14 +18,14 @@ function wikiplugin_avatar_info()
 			'page' => array(
 				'required' => false,
 				'name' => tra('Page'),
-				'description' => tra('The wiki page the avatar will link to. If empty and the user\'s information is public, then the avatar will link automatically the that user\'s user information page'),
+				'description' => tra('The wiki page the profile picture will link to. If empty and the user\'s information is public, then the profile picture will link automatically the that user\'s user information page'),
 				'default' => '',
 				'profile_reference' => 'wiki_page',
 			),
 			'float' => array(
 				'required' => false,
 				'name' => tra('Float'),
-				'description' => tra('Align the avatar on the page'),
+				'description' => tra('Align the profile picture on the page'),
 				'filter' => 'word',
 				'options' => array(
 					array('text' => '', 'value' => ''),

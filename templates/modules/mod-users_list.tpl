@@ -8,7 +8,7 @@
 				{if $module_params_users_list.email eq 'y'}<td class="heading">{tr}Email{/tr}</td>{/if}
 				{if $module_params_users_list.lastLogin eq 'y'}<td class="heading">{tr}Last login{/tr}</td>{/if}
 				{if $module_params_users_list.groups eq 'y'}<td class="heading">{tr}Groups{/tr}</td>{/if}
-				{if $module_params_users_list.avatar eq 'y'}<td class="heading">{tr}Avatar{/tr}</td>{/if}
+				{if $module_params_users_list.avatar eq 'y'}<td class="heading">{tr}Profile picture{/tr}</td>{/if}
 				{if $module_params_users_list.userPage eq 'y'or $module_params_users_list.log eq 'y'}<td class="heading"></td>{/if}
 			</tr>
 		{/if}

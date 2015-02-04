@@ -64,13 +64,13 @@ function prefs_user_list($partial = false)
 			'default' => 'module',
 		),
 		'user_store_file_gallery_picture' => array(
-			'name' => tra('Store full-size copy of avatar in file gallery'),
+			'name' => tra('Store full-size copy of profile picture in file gallery'),
 			'help' => 'User+Preferences',
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'user_picture_gallery_id' => array(
-			'name' => tra('File gallery to store full-size copy of avatar in'),
+			'name' => tra('File gallery in which to store full-size copy of profile picture'),
 			'description' => tra('Enter the gallery id here. Please create a dedicated gallery that is admin-only for security, or make sure gallery permissions are set so that only admins can edit.'),
 			'help' => 'User+Preferences',
 			'type' => 'text',
@@ -80,8 +80,8 @@ function prefs_user_list($partial = false)
 			'profile_reference' => 'file_gallery',
 		),
 		'user_default_picture_id' => array(
-			'name' => tra('File ID of default avatar image'),
-			'deacription' => tra('File ID of image to use in file gallery as the avatar if user has no avatar image in file galleries'), 
+			'name' => tra('File ID of default profile picture'),
+			'deacription' => tra('File ID of image to use in file gallery as the profile picture if user has no profile picture in file galleries'),
 			'help' => 'User+Preferences',
 			'type' => 'text',
 			'filter' => 'digits',
@@ -309,8 +309,8 @@ function prefs_user_list($partial = false)
 			'default' => 'none',
 		),
 		'user_use_gravatar' => array(
-			'name' => tr('Use Gravatar for user avatars'),
-			'description' => tr('Always request the gravatar picture for the user avatar.'),
+			'name' => tr('Use Gravatar for user profile pictures'),
+			'description' => tr('Always request the Gravatar image for the user profile picture.'),
 			'hint' => tr('See [http://gravatar.com/|Gravatar].'),
 			'type' => 'flag',
 			'default' => 'n',
