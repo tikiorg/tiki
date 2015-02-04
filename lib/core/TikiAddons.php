@@ -23,6 +23,7 @@ abstract class TikiAddons
 				self::$paths[$package] = dirname($file);
 				self::initializeGroupApi($package);
 				self::initializeNavbarApi($package);
+				self::initializeFileGalleryApi($package);
 			} catch (InvalidArgumentException $e) {
 				// Do nothing, absence of tikiaddon.json
 			}
@@ -47,7 +48,14 @@ abstract class TikiAddons
 	private static function initializeNavbarApi($package) {
 		if (!empty(self::$installed[$package]->api->navbar)) {
 			$tpl = self::$installed[$package]->api->navbar->tpl;
-			TikiAddons_Api_NavBar::setTemplate($package, $tpl);
+			TikiAddons_Api_NavBar::setNavBar($package, $tpl);
+		}
+	}
+
+	private static function initializeFileGalleryApi($package) {
+		if (!empty(self::$installed[$package]->api->files)) {
+			$parent = self::$installed[$package]->api->files->parent;
+			TikiAddons_Api_FileGallery::setParents($package, $parent);
 		}
 	}
 

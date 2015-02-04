@@ -1,5 +1,5 @@
 {* $Id$ *}
-{$forum_info.name|addonnavbar}
+{$forum_info.name|addonnavbar:'forum'}
 {title help="forums" admpage="forums"}
 	{$forum_info.name|addongroupname}
 	{if $prefs.feature_forum_topics_archiving eq 'y' && $thread_info.archived eq 'y'}({tr}Archived{/tr}){/if}

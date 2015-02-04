@@ -24,7 +24,15 @@ function smarty_function_addonobjectid($params, $smarty)
 		$profile = '';
 	}
 
-	$package = $smarty->getTemplateVars('tikiaddon_package');
+	if (!empty($params['package'])) {
+		$package = $params['package'];
+	} else {
+		$package = $smarty->getTemplateVars('tikiaddon_package');
+	}
+
+	if (!$package) {
+		return tra('Package is not specified');
+	}
 
 	$utilities = new TikiAddons_Utilities();
 

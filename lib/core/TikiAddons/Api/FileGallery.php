@@ -7,5 +7,27 @@
 
 class TikiAddons_Api_FileGallery extends TikiAddons_Api
 {
+	protected static $parents = array();
+
+	// overriding isInstalled in TikiAddons_Utilities
+	function isInstalled($folder) {
+		$installed1 = array_keys(self::$parents);
+		if (strpos($folder, '/') !== false && strpos($folder, '_') === false) {
+			$folder = str_replace('/', '_', $folder);
+		}
+		if (parent::isInstalled($folder) && in_array($folder, $installed1) ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	static function setParents($folder, $parent) {
+		if (strpos($folder, '/') !== false && strpos($folder, '_') === false) {
+			$folder = str_replace('/', '_', $folder);
+		}
+		self::$parents[$folder] = $parent;
+		return true;
+	}
 
 }

@@ -56,6 +56,8 @@ class TikiAddons_Api extends TikiAddons_Utilities
 			if ($pos2 = strpos($token, '_', $pos1 + 1)) {
 				$folder = substr($token, 0, $pos2);
 				return $folder;
+			} elseif ($pos2 === false) {
+				return $token;
 			}
 		}
 		return '';

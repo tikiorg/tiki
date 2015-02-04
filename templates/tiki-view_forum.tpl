@@ -1,6 +1,6 @@
 {* $Id$ *}
 {if !$tsAjax}
-	{$forum_info.name|addonnavbar}
+	{$forum_info.name|addonnavbar:'forum'}
 	{title help="forums" admpage="forums" url=$forum_info.forumId|sefurl:'forum'}{$forum_info.name|addongroupname}{/title}
 
 	{if $forum_info.show_description eq 'y'}

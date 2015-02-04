@@ -22,7 +22,7 @@ class TikiAddons_Api_NavBar extends TikiAddons_Api
 		}
 	}
 
-	static function setTemplate($folder, $tpl) {
+	static function setNavBar($folder, $tpl) {
 		if (strpos($folder, '/') !== false && strpos($folder, '_') === false) {
 			$folder = str_replace('/', '_', $folder);
 		}
@@ -30,14 +30,51 @@ class TikiAddons_Api_NavBar extends TikiAddons_Api
 		return true;
 	}
 
-	function getNavBar($token) {
+	function getNavBar($token, $from) {
+		$smarty = TikiLib::lib('smarty');
+
 		$folder = $this->getFolderFromToken($token);
+
 		if (!$this->isInstalled($folder)) {
 			return '';
 		}
-		TikiLib::lib('smarty')->assign('from', 'forum');
-		$ret = TikiLib::lib('smarty')->fetch(self::$templates[$folder]);
 
-		return $ret;
+		if ($id = $this->getItemIdFromToken($token)) {
+			$smarty->assign('groupTrackerItemId', $id);
+		} elseif (isset($_REQUEST['organicgroup'])) {
+			$smarty->assign('groupTrackerItemId', $_REQUEST['organicgroup']);
+		}
+
+		if (!isset($_REQUEST['organicgroup']) && !empty($_REQUEST['page'])) {
+			$info = $this->getOrganicGroupInfoForItem('wiki page', $_REQUEST['page']);
+			$cat = $info['cat'];
+			$ogid = $info['organicgroup'];
+			$smarty->assign('groupTrackerItemId', $ogid);
+			$_REQUEST['organicgroup'] = $ogid;
+			if (!isset($_REQUEST['cat'])) {
+				$_REQUEST['cat'] = $cat;
+			}
+		}
+
+		if (!isset($_REQUEST['organicgroup']) && !empty($_REQUEST['itemId'])) {
+			$info = $this->getOrganicGroupInfoForItem('trackeritem', $_REQUEST['itemId']);
+			$cat = $info['cat'];
+			$ogid = $info['organicgroup'];
+			$smarty->assign('groupTrackerItemId', $ogid);
+			$_REQUEST['organicgroup'] = $ogid;
+			if (!isset($_REQUEST['cat'])) {
+				$_REQUEST['cat'] = $cat;
+			}
+		}
+
+		if (!empty($_REQUEST['organicgroup']) && empty($_REQUEST['cat'])) {
+			$ogname = 'syn_organicgrp_' . $_REQUEST['organicgroup'];
+			$cat = \TikiLib::lib('categ')->get_category_id($ogname);
+			$_REQUEST['cat'] = $cat;
+		}
+
+		$smarty->assign('groupnavfrom', $from);
+		return $smarty->fetch(self::$templates[$folder]);
 	}
+
 }
