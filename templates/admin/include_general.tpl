@@ -211,6 +211,10 @@
 				<div class="adminoptionboxchild" id="feature_help_childcontainer">
 					{preference name=helpurl}
 				</div>
+				<strong>{tr}Change admin password{/tr}</strong>
+				<div style="padding:1em; text-align:left;">
+					<p>{tr}Change the <strong>Admin</strong> password:{/tr} <a href="tiki-adminusers.php?find=admin">{tr}User administration{/tr}</a></p>
+				</div>
 			</fieldset>
 		{/tab}
 
@@ -369,12 +373,6 @@
 			</div>
 		{/tab}
 
-		{tab name="{tr}Change admin password{/tr}"}
-			<h2>{tr}Change admin password{/tr}</h2>
-			<div style="padding:1em; text-align:left;">
-				<p>{tr}Change the <strong>Admin</strong> password:{/tr} <a href="tiki-adminusers.php?find=admin">{tr}User administration{/tr}</a></p>
-			</div>
-		{/tab}
 	{/tabset}
 
 	<br>{* I cheated. *}
