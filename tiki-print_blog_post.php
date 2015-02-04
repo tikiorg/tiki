@@ -42,6 +42,10 @@ $smarty->assign('postId', $postId);
 
 ask_ticket('print-blog-post');
 
+// note: tiki-print_blog_post.tpl doesn't use the $mid system for page layout,
+//       this is assigned here to trick canonical.tpl into generating a link tag
+$smarty->assign('mid', 'tiki-view_blog_post.tpl');
+
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
