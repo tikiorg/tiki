@@ -53,6 +53,10 @@ class Services_MustRead_Controller
 		$complete = $input->complete->int();
 		$completed = [];
 
+		if (!is_array($complete)) {
+			$complete = array($complete);
+		}
+		
 		foreach ($complete as $item) {
 			$this->getItem($item); // Validate the item exists
 
