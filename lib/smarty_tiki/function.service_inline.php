@@ -22,8 +22,8 @@ function smarty_function_service_inline($params, $smarty)
 
 	try {
 		$addonpackage = '';
-		if (strpos($params['controller'], ".") !== false) {
-			$parts = explode(".", $params['controller']);
+		if (strpos($controller, ".") !== false) {
+			$parts = explode(".", $controller);
 			if (count($parts) == 3) {
 				$addonpackage = $parts[0] . "." . $parts[1];
 				$controller = $parts[2];
