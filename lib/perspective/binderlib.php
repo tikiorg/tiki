@@ -41,7 +41,7 @@ class AreasLib extends CategLib
 
 		$objectPerspective = 0;
 		if (!empty($objectCategoryIds)) {
-			if (!isset($_SESSION['current_perspective'])) $_SESSION['current_perspective'] = 0;
+			if (!isset($_SESSION['current_perspective'])) unset($_SESSION['current_perspective']);
 			foreach ($objectCategoryIds as $categId) {
 				// If category is inside $prefs['areas_root']
 				if (in_array($categId, $descendants)) {
@@ -59,7 +59,7 @@ class AreasLib extends CategLib
 				$objectArea = $this->getAreaByPerspId($objectPerspective);
 
 				if (($area && !$area['share_common']) || ($objectArea && $objectArea['exclusive'])) {
-					$perspectivelib->set_perspective($objectPerspective);
+					$perspectivelib->set_perspective($objectPerspective, true);
 					Zend_OpenId::redirect(Zend_OpenId::selfUrl());
 				}
 			}
@@ -69,7 +69,7 @@ class AreasLib extends CategLib
 			$area = $this->getAreaByPerspId($_SESSION['current_perspective']);
 			if ($area) {
 				if ( !$area['share_common']) {
-					$perspectivelib->set_perspective($objectPerspective);
+					$perspectivelib->set_perspective($objectPerspective, true);
 					Zend_OpenId::redirect(Zend_OpenId::selfUrl());
 				}
 			}
