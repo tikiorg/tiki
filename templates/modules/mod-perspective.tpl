@@ -4,7 +4,7 @@
 			<input id="mod-switch-perspective-back" type="checkbox" name="back" value="1"/>
 			<label for="mod-switch-perspective-back">{tr}Stay on this page{/tr}</label>
 			<select name="perspective" onchange="this.form.submit();">
-				<option>{tr}Default{/tr}</option>
+				<option value="0">{tr}Default{/tr}</option>
 				{foreach from=$perspectives item=persp}
 					<option value="{$persp.perspectiveId|escape}"{if $persp.perspectiveId eq $current_perspective} selected="selected"{/if}>{$persp.name|escape}</option>
 				{/foreach}

@@ -156,24 +156,23 @@ class PerspectiveLib
 	}
 
 
-    /**
-     * @param $perspective
-     */
-    function set_perspective($perspective)
+	/**
+	 * Changes the current perspective and redirects if multidomain_switchdomain enabled
+	 *
+	 * @param int $perspective	perspective id
+	 * @param bool $by_area		switched by the "areas" feature according to content, so keeps the same REQUEST_URI
+	 */
+    function set_perspective($perspective, $by_area = false)
 	{
 		global $prefs, $url_scheme, $tikiroot;
 
-		if ( $this->get_perspective($perspective) || ($prefs['feature_areas'] === 'y' && $perspective === 0)) {
+		if ( $this->get_perspective($perspective) || empty($perspective)) {
 			if ($prefs['multidomain_switchdomain'] == 'y') {
-				foreach ( $this->get_domain_map() as $domain => $persp ) {
-					if ( $persp == $perspective && isset($_SERVER['HTTP_HOST']) && $domain != $_SERVER['HTTP_HOST'] ) {
-						$path = '';
-						if ($prefs['feature_areas'] === 'y') {
-							if (!empty($_SERVER['REQUEST_URI'])) {
-								$path = $_SERVER['REQUEST_URI'];
-							} else {
-								$path = $tikiroot;
-							}
+				foreach ($this->get_domain_map() as $domain => $persp) {
+					if ($persp == $perspective && isset($_SERVER['HTTP_HOST']) && $domain != $_SERVER['HTTP_HOST']) {
+						$path = $tikiroot;
+						if ($by_area && !empty($_SERVER['REQUEST_URI'])) {
+							$path = $_SERVER['REQUEST_URI'];
 						}
 						$targetUrl = $url_scheme . '://' . $domain . $path;
 
@@ -185,9 +184,11 @@ class PerspectiveLib
 					}
 				}
 			}
-			$_SESSION['current_perspective'] = $perspective;
+		}
+		if (empty($perspective)) {
+			unset($_SESSION['current_perspective']);
 		} else {
-			$_SESSION['current_perspective'] = 0;
+			$_SESSION['current_perspective'] = $perspective;
 		}
 
 	}

@@ -13,7 +13,7 @@ require_once 'lib/perspectivelib.php';
 
 $access->check_feature('feature_perspective');
 
-$_SESSION['current_perspective'] = 0;
+unset($_SESSION['current_perspective']);
 
 if ( isset($_REQUEST['perspective']) ) {
 	$perspectivelib->set_perspective($_REQUEST['perspective']);
