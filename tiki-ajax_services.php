@@ -20,7 +20,7 @@
 $inputConfiguration = array(array(
 	'staticKeyFilters' => array(
 		'action' => 'word',
-		'controller' => 'word',
+		'controller' => 'text',
 		// for tiki connect
 		'guid' => 'text',
 		'captcha' => 'alnum',
@@ -42,9 +42,19 @@ $errMsg = ob_get_clean();
 
 if (isset($_REQUEST['controller'], $_REQUEST['action'])) {
 	$controller = $_REQUEST['controller'];
+	$addonpackage = '';
+
+	if (strpos($_REQUEST['controller'], ".") !== false) {
+		$parts = explode(".", $_REQUEST['controller']);
+		if (count($parts) == 3) {
+			$addonpackage = $parts[0] . "." . $parts[1];
+			$controller = $parts[2];
+		}
+	}
+
 	$action = $_REQUEST['action'];
 
-	$broker = TikiLib::lib('service')->getBroker();
+	$broker = TikiLib::lib('service')->getBroker($addonpackage);
 	$broker->process($controller, $action, $jitRequest);
 	exit;
 }

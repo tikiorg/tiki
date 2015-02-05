@@ -8,14 +8,28 @@
 class ServiceLib
 {
 	private $broker;
+	private $addonbrokers = array();
 
-	function getBroker()
+	function getBroker($addonpackage = '')
 	{
-		if (! $this->broker) {
+		if ($addonpackage) {
+			$utilities = new TikiAddons_Utilities;
+			if (!$utilities->isInstalled(str_replace('.', '/', $addonpackage))) {
+				$addonpackage = '';
+			}
+		}
+
+		if ($addonpackage && !isset($this->addonbrokers[$addonpackage])) {
+			$this->addonbrokers[$addonpackage] = new Services_Broker(TikiInit::getContainer(), $addonpackage);
+		} else if (! $this->broker) {
 			$this->broker = new Services_Broker(TikiInit::getContainer());
 		}
 
-		return $this->broker;
+		if ($addonpackage) {
+			return $this->addonbrokers[$addonpackage];
+		} else {
+			return $this->broker;
+		}
 	}
 
 	function internal($controller, $action, $request = array())
