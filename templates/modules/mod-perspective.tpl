@@ -7,7 +7,7 @@
             </div>
 			<div class="form-group">
 				<select name="perspective" class="form-control" onchange="this.form.submit();">
-    				<option>{tr}Default{/tr}</option>
+    				<option value="0">{tr}Default{/tr}</option>
 	    			{foreach from=$perspectives item=persp}
 		    			<option value="{$persp.perspectiveId|escape}"{if $persp.perspectiveId eq $current_perspective} selected="selected"{/if}>{$persp.name|escape}</option>
 		    		{/foreach}
