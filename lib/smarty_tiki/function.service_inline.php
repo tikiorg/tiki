@@ -21,7 +21,15 @@ function smarty_function_service_inline($params, $smarty)
 	unset($params['action']);
 
 	try {
-		return $servicelib->render($controller, $action, $params);
+		$addonpackage = '';
+		if (strpos($params['controller'], ".") !== false) {
+			$parts = explode(".", $params['controller']);
+			if (count($parts) == 3) {
+				$addonpackage = $parts[0] . "." . $parts[1];
+				$controller = $parts[2];
+			}
+		}
+		return $servicelib->render($controller, $action, $params, $addonpackage);
 	} catch (Services_Exception $e) {
 		if (empty($params['_silent'])) {
 			$smarty->loadPlugin('smarty_block_remarksbox');

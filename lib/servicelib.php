@@ -32,14 +32,14 @@ class ServiceLib
 		}
 	}
 
-	function internal($controller, $action, $request = array())
+	function internal($controller, $action, $request = array(), $addonpackage = '')
 	{
-		return $this->getBroker()->internal($controller, $action, $request);
+		return $this->getBroker($addonpackage)->internal($controller, $action, $request);
 	}
 
-	function render($controller, $action, $request = array())
+	function render($controller, $action, $request = array(), $addonpackage = '')
 	{
-		return $this->getBroker()->internalRender($controller, $action, $request);
+		return $this->getBroker($addonpackage)->internalRender($controller, $action, $request);
 	}
 
 	function getUrl($params)
