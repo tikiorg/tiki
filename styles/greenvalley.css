@@ -608,8 +608,9 @@ h3.box-title .moduletitle em {
 	margin-bottom: 10px;
 }
 
-table.normal tr:first-child {
-    background: #004C1A !important;
+/*table.normal tr:first-child*/
+table.normal th {
+    background: #004C1A;
 }
 
 table.normal tr:nth-child(2n+1) {
