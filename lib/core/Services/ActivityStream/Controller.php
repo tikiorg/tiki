@@ -71,7 +71,7 @@ class Services_ActivityStream_Controller
 			'pageNumber' => $page,
 			'nextPossible' => $builder->isNextPossible(),
 			'stream' => $encoded,
-			'body' => TikiLib::lib('parser')->parse_data($out),
+			'body' => TikiLib::lib('parser')->parse_data($out, array('is_html' => true)),
 		);
 	}
 }
