@@ -54,6 +54,7 @@ function wikiplugin_addon($data, $params)
 	}
 
 	$prefname = 'ta_' . $parts[0] . '_' . $parts[1] . '_on';
+	$folder = $parts[0] . '_' . $parts[1];
 	if (!isset($GLOBALS['prefs'][$prefname]) || $GLOBALS['prefs'][$prefname] != 'y') {
 		return tra('Addon is not activated: ') . $folder;
 	}
