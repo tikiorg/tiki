@@ -233,7 +233,7 @@
 							'</style>'
 						);
 
-						s5.exportPDF('tiki-slideshow.php?page={$page}&pdf&' + $('#layout').val() + '&fontsize=' + $('#fontsize').val(), tr("PDF Loading... This can take a minute or two."));
+						s5.exportPDF('tiki-slideshow.php?page={{$page|escape:'url'}}&pdf&' + $('#layout').val() + '&fontsize=' + $('#fontsize').val(), tr("PDF Loading... This can take a minute or two."));
 						inputs.dialog('close');
 						$body.find('#tempStyle').remove();
 					};
