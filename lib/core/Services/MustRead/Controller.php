@@ -111,6 +111,14 @@ class Services_MustRead_Controller
 		];
 	}
 
+	function action_detailcount($input)
+	{
+		$item = $this->getItem($input->id->int());
+		$itemId = $item->getId();
+		$count = $this->getUserCount($itemId, 'open').'-'.$this->getUserCount($itemId, 'sent');
+		return $count;
+	}
+
 	function action_circulate($input)
 	{
 		$item = $this->getItem($input->id->int());
@@ -314,7 +322,7 @@ class Services_MustRead_Controller
 		return (bool) $relationlib->add_relation('tiki.mustread.complete', 'user', $user, 'trackeritem', $item, true);
 	}
 
-	private function getItem($id)
+	protected function getItem($id)
 	{
 		global $prefs;
 		$tracker = Tracker_Definition::get($prefs['mustread_tracker']);
@@ -331,7 +339,7 @@ class Services_MustRead_Controller
 		return $item;
 	}
 
-	private function findReason($itemId)
+	protected function findReason($itemId)
 	{
 		global $user;
 		static $relations = [];
@@ -353,9 +361,11 @@ class Services_MustRead_Controller
 				return $key;
 			}
 		}
+
+		return '';
 	}
 
-	private function canCirculate($itemId)
+	protected function canCirculate($itemId)
 	{
 		if ($itemId instanceof Tracker_Item) {
 			$itemId = $itemId->getId();
@@ -365,7 +375,7 @@ class Services_MustRead_Controller
 		return $reason === 'owner' || $reason === 'circulation';
 	}
 
-	private function getListQuery()
+	protected function getListQuery()
 	{
 		global $user, $prefs;
 		$owner = Search_Query_Relation::token('tiki.mustread.owns.invert', 'user', $user);
@@ -390,7 +400,7 @@ class Services_MustRead_Controller
 		return $query;
 	}
 
-	private function getUsers($itemId, $list)
+	protected function getUsers($itemId, $list)
 	{
 		$lib = TikiLib::lib('unifiedsearch');
 		$query = $lib->buildQuery([
@@ -419,7 +429,7 @@ class Services_MustRead_Controller
 		return $query;
 	}
 
-	private function getUserCount($itemId, $list)
+	protected function getUserCount($itemId, $list)
 	{
 		$lib = TikiLib::lib('unifiedsearch');
 		$query = $this->getUsers($itemId, $list);
@@ -429,16 +439,28 @@ class Services_MustRead_Controller
 		return $resultset->count();
 	}
 
-	private function getAvailableActions()
+	protected function getAvailableActions()
 	{
 		return [
 			'required' => tr('Read'),
-			'comment' => tr('Respond'),
+			'comment' => tr('Comment'),
+			'respond_privately' => tr('Respond Privately'),
 			'circulation' => tr('Circulate'),
 		];
 	}
 
-	private function getAction($input)
+	protected function getFullActions()
+	{
+		return [
+			'complete' => tr('Completed'),
+			'required' => tr('Read'),
+			'comment' => tr('Comment'),
+			'respond_privately' => tr('Respond Privately'),
+			'circulation' => tr('Circulate'),
+		];
+	}
+
+	protected function getAction($input)
 	{
 		$action = $input->required_action->word();
 		if (isset($this->getAvailableActions()[$action])) {
