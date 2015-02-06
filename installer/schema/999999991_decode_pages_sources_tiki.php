@@ -30,7 +30,7 @@ function upgrade_999999991_decode_pages_sources_tiki($installer)
 {
 	global $user_overrider_prefs, $systemConfiguration;
 	set_time_limit(60 * 60); // Set maximum execution time to 1 hour since this runs on all pages
-	include_once('tiki-setup_base.php');
+	include_once('tiki-setup.php');
 	$categlib = TikiLib::lib('categ');
 	$wikilib = TikiLib::lib('wiki');
 
