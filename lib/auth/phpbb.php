@@ -84,6 +84,7 @@ class TikiPhpBBLib
 		global $prefs;
 
 		$dbconnection = $this->connectdb();
+		$username = $dbconnection->Quote($username);
 
 		// MySQL queries are case insensitive anyway
 		$query = "select username from ".$prefs['auth_phpbb_table_prefix']."users where lcase(username) = lcase('". $username ."')";
@@ -109,6 +110,7 @@ class TikiPhpBBLib
 		global $prefs;
 
 		$dbconnection = $this->connectdb();
+		$username = $dbconnection->Quote($username);
 
 		$query = "select user_password from ".$prefs['auth_phpbb_table_prefix']."users where lcase(username) = lcase('". $username ."')";
 		$result = $dbconnection->Execute($query);
@@ -140,6 +142,7 @@ class TikiPhpBBLib
 	{
 		global $prefs;
 		$dbconnection = $this->connectdb();
+		$username = $dbconnection->Quote($username);
 
 		// Just add email
 		$query = "select user_email from ".$prefs['auth_phpbb_table_prefix'] . "users where lcase(username) = lcase('". $username ."')";
