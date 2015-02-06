@@ -45,6 +45,7 @@ require_once("lib/metrics/metricslib.php");
 require_once("lib/metrics/input-validation.php");
 
 $access->check_feature('feature_metrics_dashboard');
+$access->check_permission('tiki_p_admin');
 
 $metricslib = new MetricsLib($dbTiki);
 

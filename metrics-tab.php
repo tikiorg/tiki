@@ -45,6 +45,7 @@ define('COLUMN_MAXLEN', 64);
 require_once('tiki-setup.php');
 
 $access->check_feature('feature_metrics_dashboard');
+$access->check_permission('tiki_p_admin');
 
 require_once("lib/metrics/metricslib.php");
 require_once("lib/metrics/input-validation.php");
