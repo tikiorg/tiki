@@ -24,8 +24,10 @@
         <fieldset>
             <legend>{tr}Tracker Field Types{/tr}</legend>
             <div class="admin clearfix featurelist">
-                {preference name=trackerfield_rating}
                 <ul>
+	                <li>
+	                    {tr}Some field types may now come <b>pre-disabled</b>: <a href="tiki-admin.php?page=trackers&cookietab=3" target="_blank">re-check the list</a>{/tr}
+	                </li>
                     <li>{tr}Former ways to manage ratings in trackers are <b>deprecated</b>{/tr}
                         <a href="http://doc.tiki.org/Ratings" target="tikihelp" class="tikihelp" title="{tr}Deprecated Rating Systems in Trackers:{/tr}
                         <ul>
@@ -37,6 +39,7 @@
                         </a>
                     </li>
                 </ul>
+				{preference name=trackerfield_rating}
                 {preference name=trackerfield_kaltura}
             </div>
         </fieldset>
