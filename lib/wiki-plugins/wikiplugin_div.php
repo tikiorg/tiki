@@ -126,6 +126,14 @@ function wikiplugin_div_info()
 				'safe' => true,
 				'default' => '',
 			),
+ 			'onclick' => array(
+                                'required' => false,
+                                'name' => tra('onClick attribute'),
+                                'description' => tra('Enter on onclick event'),
+                                'filter' => 'text',
+				'advanced' => true,
+				'default' => '',
+			),
 			'style' => array(
 				// Note that this is ignored unless preference wiki_plugindiv_approvable is set in Configuration → Configuration Panels → Editing and Plugins → Miscellaneous
 				'required' => false,
@@ -161,7 +169,8 @@ function wikiplugin_div($data, $params)
 	$possibletypes = array('div','span','pre','b','i','tt','p','blockquote');
 	$t    = (isset($type) and in_array($type, $possibletypes)) ? "$type"  : "div";
 	$c    = (isset($class)) ? " class='$class'"  : "";
-	$id    = (isset($id)) ? " id='$id'"  : "";
+	$id   = (isset($id)) ? " id='$id'"  : "";
+	$oc   = (isset($onclick)) ? " onclick='$onclick'"  : "";
 	$w    = (isset($width)) ? " width: $width;"  : "";
 	$bg   = (isset($bg))    ? " background-color: $bg;" : "";
 	$al   = (isset($align) && ($align == 'right' || $align == "center" || $align == "justify" || $align == 'left')) ? " text-align: $align;" : '';
@@ -178,7 +187,7 @@ function wikiplugin_div($data, $params)
 	if (!empty($format)) {
 		$begin .= " style=\"$format\"";
 	}
-	$begin .= " $c $id>";
+	$begin .= " $c $id $oc>";
 	$end = "</$t>";
 	return $begin . $data . $end;
 }
