@@ -58,7 +58,11 @@ $isInstalled = $installer->isInstalled();
 
 if ($isInstalled) {
 	$bypass_siteclose_check = true;
-	require_once 'tiki-setup.php';
+	try {
+		require_once 'tiki-setup.php';
+	} catch (Exception $e) {
+		$console->renderException($e, new \Symfony\Component\Console\Output\ConsoleOutput());
+	}
 
 	if (! $asUser = $input->getParameterOption(array('--as-user'))) {
 		$asUser = 'admin';
