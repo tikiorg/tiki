@@ -42,6 +42,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "alxlit/bootstrap-chosen",
+				"version": "1.0.0",
+				"dist": {
+					"url": "https://github.com/alxlit/bootstrap-chosen/archive/v1.0.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "ckeditor/ckeditor",
 				"version": "4.1.1",
 				"dist": {
@@ -1048,11 +1059,13 @@
 	"require": {
 		"adodb/adodb": "5.18",
 		"aFarkas/html5shiv": "*",
+		"alxlit/bootstrap-chosen": ">=1.0.0",
 		"bombayworks/zendframework1": "1.12.3",
 		"ckeditor/ckeditor": "*",
 		"ckeditor/ckeditor/skins/kama": "*",
 		"ckeditor/ckeditor/plugins/divarea": "*",
 		"codemirror/codemirror": "*",
+		"cwspear/bootstrap-hover-dropdown": ">=2.0.11",
 		"dompdf/dompdf": "0.6.1",
 		"ezyang/htmlpurifier": ">=4.5.0",
 		"fivefilters/php-readability": "1.0",
