@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5bb8e7896ee293322b41897cda84c050",
+    "hash": "bdb272ebdea7f3eb0da7d201d72828c2",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -61,6 +61,17 @@
                 "shasum": null
             },
             "type": "component"
+        },
+        {
+            "name": "alxlit/bootstrap-chosen",
+            "version": "1.0.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/alxlit-bootstrap-chosen-1.0.0.zip",
+                "reference": "1.0.0",
+                "shasum": "c0ae82b09ec16f7cc2170cfcc211bd8b00e09651"
+            },
+            "type": "library"
         },
         {
             "name": "bombayworks/zendframework1",
@@ -192,6 +203,164 @@
                 "shasum": "f69131fd232f661b23656922ebeccc10b0e93bad"
             },
             "type": "library"
+        },
+        {
+            "name": "components/bootstrap",
+            "version": "3.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/components/bootstrap.git",
+                "reference": "bffd83f39eb2679850482410b9bdd39a8cc456e5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/components/bootstrap/zipball/bffd83f39eb2679850482410b9bdd39a8cc456e5",
+                "reference": "bffd83f39eb2679850482410b9bdd39a8cc456e5",
+                "shasum": ""
+            },
+            "require": {
+                "components/jquery": ">=1.9.1"
+            },
+            "suggest": {
+                "components/bootstrap-default": "Provide a theme for Bootstrap as components/bootstrap only provides the CSS as file assets"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "js/bootstrap.js"
+                    ],
+                    "files": [
+                        "js/*.js",
+                        "css/*.css",
+                        "css/*.map",
+                        "fonts/*",
+                        "less/mixins/*.less",
+                        "less/*.less"
+                    ],
+                    "shim": {
+                        "deps": [
+                            "jquery"
+                        ]
+                    }
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jacob Thornton",
+                    "email": "jacobthornton@gmail.com"
+                },
+                {
+                    "name": "Mark Otto",
+                    "email": "markdotto@gmail.com"
+                }
+            ],
+            "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
+            "homepage": "http://getbootstrap.com",
+            "keywords": [
+                "css",
+                "framework",
+                "front-end",
+                "less",
+                "mobile-first",
+                "responsive",
+                "web"
+            ],
+            "time": "2015-01-22 12:14:01"
+        },
+        {
+            "name": "components/jquery",
+            "version": "2.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/components/jquery.git",
+                "reference": "f8edb647d1833fd5d57410ab70860f03534cb2e8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/components/jquery/zipball/f8edb647d1833fd5d57410ab70860f03534cb2e8",
+                "reference": "f8edb647d1833fd5d57410ab70860f03534cb2e8",
+                "shasum": ""
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "jquery.js"
+                    ],
+                    "files": [
+                        "jquery.min.js",
+                        "jquery.min.map",
+                        "jquery-migrate.js",
+                        "jquery-migrate.min.js"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "John Resig",
+                    "email": "jeresig@gmail.com"
+                }
+            ],
+            "description": "jQuery JavaScript Library",
+            "homepage": "http://jquery.com",
+            "time": "2014-12-23 06:48:45"
+        },
+        {
+            "name": "cwspear/bootstrap-hover-dropdown",
+            "version": "2.0.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/CWSpear/bootstrap-hover-dropdown.git",
+                "reference": "ace10bf06c3a81447625faa4937733d2ff12163c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/cwspear-bootstrap-hover-dropdown-ace10bf06c3a81447625faa4937733d2ff12163c-zip-7b4cff.zip",
+                "reference": "2.0.11",
+                "shasum": "3d8a98a327a3487fd3b687b51f78f5becd0a6e5a"
+            },
+            "require": {
+                "components/bootstrap": "~3.0",
+                "components/jquery": ">=1.9"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "name": "bootstrap-hover-dropdown",
+                    "files": [
+                        "bootstrap-hover-dropdown.js"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cameron Spear",
+                    "email": "cam@cameronspear.com",
+                    "homepage": "http://cameronspear.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "An unofficial Bootstrap plugin to enable Bootstrap dropdowns to activate on hover and provide a nice user experience.",
+            "keywords": [
+                "bootstrap",
+                "dropdowns",
+                "hover",
+                "twitter"
+            ],
+            "time": "2014-08-22 17:08:08"
         },
         {
             "name": "dompdf/dompdf",
@@ -371,7 +540,7 @@
                     "name": "Robert Plummer",
                     "email": "rplummer@visop-dev.com",
                     "homepage": "http://visop-dev.com",
-                    "role": "Lead Developer"
+                    "role": "Assistant Developer"
                 },
                 {
                     "name": "Luke Gerhardt",
@@ -971,12 +1140,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jakiestfu/Medium.js.git",
-                "reference": "ce7b67fc0b272ddc012abaf59c980cc79e4ebea5"
+                "reference": "eae4f2378189bb0369fc964cc37d403610f4718d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/ce7b67fc0b272ddc012abaf59c980cc79e4ebea5",
-                "reference": "ce7b67fc0b272ddc012abaf59c980cc79e4ebea5",
+                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/eae4f2378189bb0369fc964cc37d403610f4718d",
+                "reference": "eae4f2378189bb0369fc964cc37d403610f4718d",
                 "shasum": ""
             },
             "require": {
@@ -1002,7 +1171,8 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-11-28 02:01:34"
+            "description": "A tiny JavaScript library for making contenteditable beautiful (Like Medium's editor).",
+            "time": "2015-02-03 19:56:28"
         },
         {
             "name": "phenx/php-font-lib",
@@ -1464,7 +1634,7 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.6.3",
+            "version": "v2.6.4",
             "target-dir": "Symfony/Component/Filesystem",
             "source": {
                 "type": "git",
@@ -1511,17 +1681,17 @@
         },
         {
             "name": "symfony/process",
-            "version": "v2.6.3",
+            "version": "v2.6.4",
             "target-dir": "Symfony/Component/Process",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Process.git",
-                "reference": "319794f611bd8bdefbac72beb3f05e847f8ebc92"
+                "reference": "ecfc23e89d9967999fa5f60a1e9af7384396e9ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/319794f611bd8bdefbac72beb3f05e847f8ebc92",
-                "reference": "319794f611bd8bdefbac72beb3f05e847f8ebc92",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/ecfc23e89d9967999fa5f60a1e9af7384396e9ae",
+                "reference": "ecfc23e89d9967999fa5f60a1e9af7384396e9ae",
                 "shasum": ""
             },
             "require": {
@@ -1554,7 +1724,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "http://symfony.com",
-            "time": "2015-01-06 22:47:52"
+            "time": "2015-01-25 04:39:26"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -1663,12 +1833,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikiLingo/CodeMirror.git",
-                "reference": "1772a120a31c757bbac9878e6003ee0a2631d214"
+                "reference": "6d010c763e2073915bd6beb468a6d4197cad1f58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/CodeMirror/zipball/1772a120a31c757bbac9878e6003ee0a2631d214",
-                "reference": "1772a120a31c757bbac9878e6003ee0a2631d214",
+                "url": "https://api.github.com/repos/wikiLingo/CodeMirror/zipball/6d010c763e2073915bd6beb468a6d4197cad1f58",
+                "reference": "6d010c763e2073915bd6beb468a6d4197cad1f58",
                 "shasum": ""
             },
             "require": {
@@ -1677,7 +1847,7 @@
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
             "description": "Syntax highlighter for wikiLingo",
-            "time": "2014-06-03 15:55:55"
+            "time": "2014-12-08 13:32:16"
         },
         {
             "name": "wikilingo/wikilingo",
