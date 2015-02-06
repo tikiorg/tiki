@@ -775,8 +775,18 @@ if (!empty($tracker_info['editItemPretty'])) {
 }
 $smarty->assign('editItemPretty', $editItemPretty);
 
-// add referer to setup the back button
+// add referer url to setup the back button in tpl
+// check wether we have been called from a different page than ourselfs to save a link to the referer for a back buttom.
+// this can be a wikipage with the trackerlist item and and view item temlate set using vi_tpl=wiki:mytemplate  
+// if we do anything on the current page (i.e. adding a comment) we need to keep that saved link. 
 $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+$temp = strtolower($referer);
+if (strpos($temp, 'vi_tpl=') || strpos($temp, 'ei_tpl=')) {
+	$referer = $_SESSION['item_tpl_referer'];
+} else {
+	$_SESSION['item_tpl_referer'] = $referer;
+}
+unset($temp);
 $smarty->assign('referer', $referer);
 
 // Display the template
