@@ -61,7 +61,7 @@
 						<option value="4" {if $priority eq 4}selected="selected"{/if}>4 -{tr}High{/tr}-</option>
 						<option value="5" {if $priority eq 5}selected="selected"{/if}>5 -{tr}Very High{/tr}-</option>
 					</select>
-					<input type="hidden" name="replyto_hash" value="{$replyto_hash}">
+					<input type="hidden" name="replyto_hash" value="{$replyto_hash|escape}">
 				</td>
 			</tr>
 			<tr>

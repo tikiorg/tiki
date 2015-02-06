@@ -38,7 +38,7 @@
 				</td>
 				<td>
 					<input type="text" name="to" id="mess-composeto" value="{$to|escape}" class="username" size="80">
-					<input type="hidden" name="replyto_hash" value="{$replyto_hash}">
+					<input type="hidden" name="replyto_hash" value="{$replyto_hash|escape}">
 					<input type="hidden" name="reply" value="{$reply}">
 				</td>
 			</tr>
