@@ -45,6 +45,39 @@ function wikiplugin_trackercalendar_info()
 				'required' => false,
 				'filter' => 'word',
 			),
+                        'external' => array(
+                                'required' => false,
+                                'name' => tra('External Link'),
+                                'description' => tra('Follow external link when event item is clicked. Useful for supporting links to pretty tracker supported pages.'),
+                                'filter' => 'alpha',
+                                'default' => 'n',
+                                'options' => array(
+                                        array('text' => '', 'value' => ''),
+                                        array('text' => tra('Yes'), 'value' => 'y'),
+                                        array('text' => tra('No'), 'value' => 'n')
+                                )
+                        ),
+                        'url' => array(
+                                'required' => false,
+                                'name' => tra('URL'),
+                                'description' => tra('Complete URL, internal or external.'),
+                                'filter' => 'url',
+                                'default' => '',
+				'parent' => array('name' => 'external', 'value' => 'y'),
+			),
+                        'trkitemid' => array(
+                                'required' => false,
+                                'name' => tra('Tracker Item Id'),
+                                'description' => tra('If "yes" the item id will be passed as "itemId" meaningful to Tracker plugins. Will be passed as "itemid" if "no"'),
+                                'filter' => 'alpha',
+                                'default' => 'n',
+                                'options' => array(
+                                        array('text' => '', 'value' => ''),
+                                        array('text' => tra('Yes'), 'value' => 'y'),
+                                        array('text' => tra('No'), 'value' => 'n')
+                                ),
+				'parent' => array('name' => 'external', 'value' => 'y'),
+			),
 			'amonth' => array(
 				'required' => false,
 				'name' => tra('Agenda by Months'),
@@ -124,13 +157,13 @@ function wikiplugin_trackercalendar_info()
 				'filter' => 'alpha',
 				'default' => 'month',
 				'options' => array(
-                    array('text' => '', 'value' => ''),
-                    array('text' => tra('Agenda by Months'), 'value' => 'month'),
-                    array('text' => tra('Agenda by Weeks'), 'value' => 'agendaWeek'),
-                    array('text' => tra('Agenda by Days'), 'value' => 'agendaDay'),
-                    array('text' => tra('Resources by Months'), 'value' => 'resourceMonth'),
-                    array('text' => tra('Resources by Weeks'), 'value' => 'resourceWeek'),
-                    array('text' => tra('Resources by Days'), 'value' => 'resourceDay')
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Agenda by Months'), 'value' => 'month'),
+					array('text' => tra('Agenda by Weeks'), 'value' => 'agendaWeek'),
+					array('text' => tra('Agenda by Days'), 'value' => 'agendaDay'),
+					array('text' => tra('Resources by Months'), 'value' => 'resourceMonth'),
+					array('text' => tra('Resources by Weeks'), 'value' => 'resourceWeek'),
+					array('text' => tra('Resources by Days'), 'value' => 'resourceDay')
 				)
 			),
 			'dYear' => array(
@@ -286,6 +319,8 @@ function wikiplugin_trackercalendar($data, $params)
 			'canInsert' => $itemObject->canModify(),
 			'dView' => $dView,
 			'body' => $data,
+			'url' => $params['url'],
+			'trkitemid' => $params['trkitemid'],
 		)
 	);
 	return $smarty->fetch('wiki-plugins/trackercalendar.tpl');
@@ -295,6 +330,6 @@ function wikiplugin_trackercalendar_get_resources($field)
 {
 	$db = TikiDb::get();
 
-	return $db->fetchAll('SELECT DISTINCT value as id, value as name FROM tiki_tracker_item_fields WHERE fieldId = ? ORDER BY  value', $field['fieldId']);
+	return $db->fetchAll('SELECT DISTINCT LOWER(value) as id, value as name FROM tiki_tracker_item_fields WHERE fieldId = ? ORDER BY  value', $field['fieldId']);
 }
 

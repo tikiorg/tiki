@@ -1,4 +1,4 @@
-<div id="{$trackercalendar.id|escape}" class="table-responsive"></div>
+<div id="{$trackercalendar.id|escape}"></div>
 {jq}
 	var data = {{$trackercalendar|json_encode}};
 	$('#' + data.id).each(function () {
@@ -6,7 +6,7 @@
 		var storeEvent = function(event) {
 			var request = {
 				itemId: event.id,
-				trackerId: data.trackerId
+				trackerId: data.trackerId,
 			}, end = event.end;
 
 			if (! end) {
@@ -27,40 +27,78 @@
 			},
 			editable: true,
 			events: $.service('tracker_calendar', 'list', {
-				trackerId: data.trackerId,
-				beginField: data.begin,
-				endField: data.end,
-				resourceField: data.resource,
-				coloringField: data.coloring,
-				filters: data.body
-			}),
+                           	     	trackerId: data.trackerId,
+                                	beginField: data.begin,
+                                	endField: data.end,
+                                	resourceField: data.resource,
+                                	coloringField: data.coloring,
+                                	filters: data.body,
+	                        }),
 			resources: data.resourceList,
 			year: data.viewyear,
 			month: data.viewmonth-1,
 			day: data.viewday,
 			minTime: data.minHourOfDay,
 			maxTime: data.maxHourOfDay,
-			monthNames: [ "{tr}January{/tr}", "{tr}February{/tr}", "{tr}March{/tr}", "{tr}April{/tr}", "{tr}May{/tr}", "{tr}June{/tr}", "{tr}July{/tr}", "{tr}August{/tr}", "{tr}September{/tr}", "{tr}October{/tr}", "{tr}November{/tr}", "{tr}December{/tr}"],
-			monthNamesShort: [ "{tr}Jan.{/tr}", "{tr}Feb.{/tr}", "{tr}Mar.{/tr}", "{tr}Apr.{/tr}", "{tr}May{/tr}", "{tr}June{/tr}", "{tr}July{/tr}", "{tr}Aug.{/tr}", "{tr}Sep.{/tr}", "{tr}Oct.{/tr}", "{tr}Nov.{/tr}", "{tr}Dec.{/tr}"],
+			monthNames: [ "{tr}January{/tr}", "{tr}February{/tr}", "{tr}March{/tr}", "{tr}April{/tr}", "{tr}May{/tr}", "{tr}June{/tr}", "{tr}July{/tr}", "{tr}August{/tr}", "{tr}September{/tr}", "{tr}October{/tr}", "{tr}November{/tr}", "{tr}December{/tr}"], 
+			monthNamesShort: [ "{tr}Jan.{/tr}", "{tr}Feb.{/tr}", "{tr}Mar.{/tr}", "{tr}Apr.{/tr}", "{tr}May{/tr}", "{tr}June{/tr}", "{tr}July{/tr}", "{tr}Aug.{/tr}", "{tr}Sep.{/tr}", "{tr}Oct.{/tr}", "{tr}Nov.{/tr}", "{tr}Dec.{/tr}"], 
 			dayNames: ["{tr}Sunday{/tr}", "{tr}Monday{/tr}", "{tr}Tuesday{/tr}", "{tr}Wednesday{/tr}", "{tr}Thursday{/tr}", "{tr}Friday{/tr}", "{tr}Saturday{/tr}"],
 			dayNamesShort: ["{tr}Sun{/tr}", "{tr}Mon{/tr}", "{tr}Tue{/tr}", "{tr}Wed{/tr}", "{tr}Thu{/tr}", "{tr}Fri{/tr}", "{tr}Sat{/tr}"],
 			buttonText: {
-				today: "{tr}today{/tr}",
-				month: "{tr}month{/tr}",
-				week: "{tr}week{/tr}",
-				day: "{tr}day{/tr}"
+				today:    "{tr}today{/tr}",
+				month:    "{tr}month{/tr}",
+				week:     "{tr}week{/tr}",
+				day:      "{tr}day{/tr}"
 			},
 			allDayText: "{tr}all-day{/tr}",
 			firstDay: data.firstDayofWeek,
 			slotMinutes: {{$prefs.calendar_timespan}},
 			defaultView: data.dView,
 			eventAfterRender : function( event, element, view ) {
-				element.attr('title',event.title);
-				element.data('content', event.description);
-				element.popover({ trigger: 'hover', html: true,'container': 'body' });
+				element.attr('title',event.title +'|'+event.description);
+				element.cluetip({arrows: true, splitTitle: '|', clickThrough: true});
 			},
 			eventClick: function(event) {
-				if (event.editable && event.trackerId) {
+				if (data.url) {
+					var lOp='';
+					var actualURL = '';
+                                        var html = $.parseHTML( event.description );
+
+					// Store useful data values to the URL for Wiki Argument Variable 
+					// use and to javascript session storage for JQuery use
+					actualURL = data.url + "&trackerid=" + event.trackerId;
+					if( data.trkitemid == 'y' ) {
+						actualURL = actualURL + "&itemId=" + event.id;
+					}
+					else {
+						actualURL = actualURL + "&itemid=" + event.id;
+					}
+					actualURL = actualURL + "&title=" + event.title;
+					actualURL = actualURL + "&end=" + event.end;
+					actualURL = actualURL + "&start=" + event.start;
+					sessionStorage.setItem( "trackerid", event.trackerId);
+					sessionStorage.setItem( "title", event.title);
+					sessionStorage.setItem( "start", event.start);
+					sessionStorage.setItem( "itemid", event.id);
+					sessionStorage.setItem( "end", event.end);
+
+					// Capture the description HTML as variables
+					// with the label being the variable name
+					$.each( html, function( i, el ) {
+						if( isEven( i ) == true ) {
+							lOp = el.textContent.replace( ' ', '_' );
+						}
+						else {
+							actualURL = actualURL + "&" + lOp + "=" + el.textContent;
+							sessionStorage.setItem( lOp, el.textContent);
+						}
+					});
+					// alert( "We're where we want to be\n" + event.url + "\n" + data.url + "\n" + actualURL );
+
+					location.href=actualURL;
+					return false;
+				}
+				else if (event.editable && event.trackerId) {
 					var info = {
 						trackerId: event.trackerId,
 						itemId: event.id
@@ -84,12 +122,17 @@
 					};
 					info[data.beginFieldName] = date.getTime() / 1000;
 					info[data.endFieldName] = date.getTime() / 1000 + 3600;
-					$('<a href="#"/>').attr('href', $.service('tracker', 'insert_item', info)).serviceDialog({
-						title: data.addTitle,
-						success: function () {
-							$(cal).fullCalendar('refetchEvents');
-						}
-					});
+					if (data.url) {
+						$('<a href="#"/>').attr('href', data.url);
+					}
+					else {
+						$('<a href="#"/>').attr('href', $.service('tracker', 'insert_item', info)).serviceDialog({
+							title: data.addTitle,
+							success: function () {
+								$(cal).fullCalendar('refetchEvents');
+							}
+						});
+					}
 				}
 
 				return false;
@@ -99,4 +142,6 @@
 		});
 		$(this).fullCalendar( 'gotoDate', data.viewyear, data.viewmonth-1, data.viewday );
 	});
+
+        function isEven(x) { return (x%2)==0; }
 {/jq}
