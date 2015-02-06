@@ -34,7 +34,7 @@
 				</td>
 				<td class="text">{$channels[user].filename|iconify}
 					<a class="link" href="tiki-download_userfile.php?fileId={$channels[user].fileId}">
-						{$channels[user].filename}
+						{$channels[user].filename|escape}
 					</a>
 				</td>
 				<td class="text">{$channels[user].created|tiki_short_datetime}</td>
