@@ -16,7 +16,7 @@
 		{/if}
 
 		{if $captchalib->type eq 'default'}
-			{button _id='captchaRegenerate' _class='' href='#antibot' _text='{tr}Try another code{/tr} <i class="fa fa-refresh"></i>' _onclick="generateCaptcha()"}
+			{button _id='captchaRegenerate' _class='' href='#antibot' _text='{tr}Try another code{/tr} {icon name="refresh"}' _onclick="generateCaptcha()"}
 		{/if}
 	</div>
 {/if}
