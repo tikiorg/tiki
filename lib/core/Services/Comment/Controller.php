@@ -182,14 +182,6 @@ class Services_Comment_Controller
 						$access->redirect($return_url, tr('Your comment was posted.'));
 					}
 					
-					// When we comment on a trackeritem it might be that this item is shown by a template
-					// passed via get using the vi_tpl=wiki:mytemplate param. In this case we do not want to create a link
-					// that points to the standard tracker item view, but keep that link when accessing the view template.
-					// Also we do not want the "your comment is saved - return to xyz" message but,
-					// just "your comment is saved" msg and return directly to that item / view.  
-					if ($type == 'trackeritem'  && isset($_SERVER['HTTP_REFERER'])) {
-						$access->redirect($_SERVER['HTTP_REFERER'], tr('Your comment was posted.'));
-					}
 
 					return array(
 						'threadId' => $threadId,
