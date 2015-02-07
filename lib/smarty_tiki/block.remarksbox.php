@@ -46,6 +46,9 @@ function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 	if (!isset($title)) $title = '';
 	if (!isset($close)) $close = 'y';
 	if (!isset($width)) $width = '';
+	if (!isset($id)) $id = '';
+	if (!isset($version)) $version = '';
+	if ($close != 'y' || !isset($store_cookie) || !isset($id) || !isset($version)) $store_cookie = 'n';
 	
 	if (isset($highlight) && $highlight == 'y') {
 		$highlightClass = ' highlight';
@@ -76,10 +79,23 @@ function smarty_block_remarksbox($params, $content, $smarty, &$repeat)
 	
 	if (isset($prefs['javascript_enabled']) && $prefs['javascript_enabled'] != 'y') {
 		$close = false;
+		$store_cookie = false;
 	} else {
 		$close = $close != 'n';
+		$store_cookie = $store_cookie != 'n';
 	}
-	
+
+	if ($store_cookie) {
+		global $user;
+		$cookie_hash = md5($id . $version . $_REQUEST['page'] . $user);
+	} else {
+		$cookie_hash = '';
+	}
+
+	$smarty->assign('remarksbox_cookiehash', $cookie_hash);
+	$smarty->assign('remarksbox_cookie', $store_cookie);
+	$smarty->assign('remarksbox_id', $id);
+	$smarty->assign('remarksbox_version', $version);
 	$smarty->assign('remarksbox_title', $title);
 	$smarty->assign('remarksbox_type', $type);
 	$smarty->assign('remarksbox_icon', $icon);
