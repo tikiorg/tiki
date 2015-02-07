@@ -96,7 +96,7 @@
 					{/if}
 					<a class="navbar-brand" href="./">
 						{if $prefs.sitelogo_icon}
-							<img src="{$prefs.sitelogo_icon}" style="max-height: 75%;" />
+							<img src="{$prefs.sitelogo_icon}">
 						{/if}
 						{$prefs.sitetitle|escape}
 					</a>
