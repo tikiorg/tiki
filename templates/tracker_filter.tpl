@@ -18,7 +18,7 @@
 				{/if}
 
 				<td style="width:100%;text-align:right;">
-					{if $show_filters eq 'y'}
+					{if $show_filters eq 'y' && isset($cnt)}
 						{jq}
 							fields = new Array({{$cnt}});
 							{{assign var=c value=0}}
