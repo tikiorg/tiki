@@ -40,10 +40,6 @@ function smarty_function_error_report($params, $smarty)
 			return false;
 		});
 	});
-	$("#error_report .clear").on("click", function () {
-		$("#error_report").empty();
-		return false;
-	});
 	'
 	);
 
@@ -56,9 +52,7 @@ function smarty_function_error_report($params, $smarty)
 				'type' => 'errors',
 				'title' => tra('Error(s)'),
 			),
-			'<a class="clear" style="float: right;" href="#">' .
-			tr('Clear errors') . '</a><ul><li>' .
-			implode('</li><li>', $errors) . '</li></ul>',
+			'<ul><li>' . implode('</li><li>', $errors) . '</li></ul>',
 			$smarty,
 			$repeat
 		) . $post;
