@@ -80,10 +80,10 @@
 				<input type="checkbox" name="checkmultiip" checked="checked" onclick="CheckMultiIP();">
 				<label for="sectionswitch">{tr}Check / Uncheck All{/tr}</label><br>
 				{foreach key=ip item=comment from=$ban_comments_list}
-					<input type="checkbox" name="multi_banned_ip[{$ip|escape}]" id="multi-banning-section" checked="checked">
-					<label for="multi-banning-section">{$ip|escape}</label>
 					{foreach key=id item=user from=$comment}
+						<input type="checkbox" name="multi_banned_ip[{$ip|escape}]" id="multi-banning-section" checked="checked">
 						<label>{$user.userName|escape}</label>
+						<label for="multi-banning-section">{$ip|escape}</label>
 					{/foreach}
 				{/foreach}
 			</div>
