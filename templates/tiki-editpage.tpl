@@ -623,9 +623,9 @@ $("input[name=allowhtml]").change(function() {
 											{if $prefs.wiki_auto_toc eq 'y'}
 												<li>{tr}Automatic Table of Contents generation{/tr}
 													<select name="pageAutoToc">
-														<option value="0" {if $pageAutoToc == 0}selected{/if}></option>
-														{* <option value="1" {if $pageAutoToc == 1}selected{/if}>On</option> *}
-														<option value="-1" {if $pageAutoToc == -1}selected{/if}>Off</option>
+														<option value="0" {if $pageAutoToc == 0}selected{/if}>{tr}Default{/tr}</option>
+														{* <option value="1" {if $pageAutoToc == 1}selected{/if}>{tr}On{/tr}</option> *}
+														<option value="-1" {if $pageAutoToc == -1}selected{/if}>{tr}Off{/tr}</option>
 													</select>
 												</li>
 											{/if}
@@ -633,9 +633,9 @@ $("input[name=allowhtml]").change(function() {
 											{if $prefs.wiki_page_hide_title eq 'y' && ($prefs.wiki_page_name_above eq 'y' or $prefs.feature_page_title eq 'y')}
 												<li>{tr}Show page title{/tr}
 													<select name="page_hide_title">
-														<option value="0" {if $page_hide_title == 0}selected{/if}></option>
-														{* <option value="1" {if $page_hide_title == 1}selected{/if}>On</option> *}
-														<option value="-1" {if $page_hide_title == -1}selected{/if}>Off</option>
+														<option value="0" {if $page_hide_title == 0}selected{/if}>{tr}Default{/tr}</option>
+														{*<option value="1" {if $page_hide_title == 1}selected{/if}>{tr}On{/tr}</option>*}
+														<option value="-1" {if $page_hide_title == -1}selected{/if}>{tr}Off{/tr}</option>
 													</select>
 												</li>
 											{/if}
@@ -658,19 +658,19 @@ $("input[name=allowhtml]").change(function() {
 										</div>
                                     </div>
 								</div>
-							{/if}
+						{/if}
 							{if $prefs.site_layout_per_object eq 'y'}
 								<fieldset>
-									<div class="form-group">
+							<div class="form-group">
 										<label for="object_layout" class="col-sm-2 control-label">{tr}Layout{/tr}</label>
-										<div class="col-sm-10">
+								<div class="col-sm-10">
 											<select name="object_layout" class="form-control">
 												<option value="">{tr}Site Default{/tr}</option>
 												{foreach $object_layout.available as $key => $label}
 													<option value="{$key|escape}"{if $object_layout.current eq $key} selected{/if}>{$label|escape}</option>
 												{/foreach}
-											</select>
-										</div>
+												</select>
+								</div>
 									</div>
 								</fieldset>
 							{/if}
