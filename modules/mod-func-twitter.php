@@ -33,6 +33,11 @@ function module_twitter_info()
 				'description' => tra('Show public|friends timeline. '),
 				'default' => 'public',
 			),
+			'search' => array(
+				'name' => 'search',
+				'description' => tra('Search string.'),
+				'default' => 'tikiwiki',
+			),
 			'showuser' => array(
 				'name' => 'showuser',
 				'description' => tra('Show username in timeline. y|n'),
@@ -60,11 +65,12 @@ function module_twitter( $mod_reference, $module_params )
 		$token=$tikilib->get_user_preference($user, 'twitter_token', '');
 		$smarty->assign('twitter', ($token!=''));
 
-		$response=$socialnetworkslib->getTwitterTimeline($user, $mod_reference['params']['timelinetype']);
+		$response=$socialnetworkslib->getTwitterTimeline($user, $mod_reference['params']['timelinetype'], $module_params['search']);
 		if ($response == -1) {
 			$timeline[0]['text'] = tra('user not registered with twitter').": $user";
 		}
 
+		$module_params['timelinetype'] == 'search' ? $response = $response->statuses : true;
 		for ($i = 0, $count_response_status = count($response); $i < $count_response_status; $i++) {
 
 			$timeline[$i]['text']=$response[$i]->text;

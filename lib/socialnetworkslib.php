@@ -573,10 +573,11 @@ class SocialNetworksLib extends LogsLib
 	/**
 	 * Get Timeline off Twitter
 	 * @param  string	$user		Tiki username to get timeline for
-	 * @param  string	$timelineType	Timeline to get: public/friends - Default: public
+	 * @param  string	$timelineType	Timeline to get: public/friends/search - Default: public
+	 * @param  string	$search		Search string
 	 * @return string|int			-1 if the user did not authorize the site with twitter, a negative number corresponding to the HTTP response codes from twitter (https://dev.twitter.com/docs/streaming-api/response-codes) or the requested timeline (json encoded object)
 	 */
-	function getTwitterTimeline($user, $timelineType = 'public' )
+	function getTwitterTimeline($user, $timelineType = 'public', $search = 'tikiwiki' )
 	{
 		global $prefs;
 		$token=$this->get_user_preference($user, 'twitter_token', '');
@@ -599,6 +600,8 @@ class SocialNetworksLib extends LogsLib
 
 		if ($timelineType=='friends') {
 			$response = $twitter->statusesHomeTimeline();
+		} elseif ($timelineType == 'search') {
+			$response = $twitter->search->tweets($search, array('include_entities' => true));
 		} else {
 			$response = $twitter->statusesUserTimeline();
 		}
