@@ -153,6 +153,11 @@
 			</div>
 		</div>
 	</div>
+
+			{if $user eq $userinfo.login and $prefs.feature_friends eq 'y'}
+				{module module=friend_list}
+			{/if}
+
 {else}{* infoPublic eq 'n' *}
 	<div>
 		{remarksbox type="info" title="Private"}{tr}The user has chosen to make his information private{/tr}{/remarksbox}
