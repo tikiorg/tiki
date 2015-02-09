@@ -23,7 +23,7 @@
 				</div>
 			</div>
 
-			<div class="row">
+			<div class="row row-middle">
 				{if zone_is_empty('left') and zone_is_empty('right')}
 					<div class="col-md-12" id="col1">
 						{if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}

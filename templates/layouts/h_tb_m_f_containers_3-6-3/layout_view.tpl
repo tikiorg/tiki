@@ -33,7 +33,7 @@
         </div>
         <div class="middle_outer">
             <div class="container clearfix middle" id="middle">
-				<div class="row">
+				<div class="row row-middle">
 					{if zone_is_empty('left') and zone_is_empty('right')}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
 							<div class="col-md-12" id="col1">

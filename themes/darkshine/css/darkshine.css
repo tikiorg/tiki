@@ -6533,10 +6533,8 @@ button.close {
 body {
   background: #90140c url('../../img/icons/stripes.png') repeat-x 50% 0;
 }
-#middle {
+.row-middle {
   background: #f3f3f3;
-}
-#middle {
   border: 15px solid #600000;
 }
 .btn-default {
