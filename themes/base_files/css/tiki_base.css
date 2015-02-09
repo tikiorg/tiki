@@ -2362,6 +2362,9 @@ div.form-group label.error {
 body.tiki.navbar-padding {
   padding-top: 70px;
 }
+.panel-body ul.nav {
+  overflow: visible;
+}
 .tiki.dropdown-menu {
   padding: 0;
 }
