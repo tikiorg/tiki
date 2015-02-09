@@ -145,8 +145,18 @@
 				</div>
 			</div>
 
-			{if $user eq $userinfo.login and $prefs.feature_friends eq 'y'}
-				{module module=friend_list}
+			{if $prefs.feature_friends eq 'y'}
+			<h3>{tr}Friendship Network{/tr}</h3>
+				{if $user eq $userinfo.login}
+			<h4>{tr}Your relation to other users{/tr}</h4>
+					{module module=friend_list nobox=y}
+				{else}
+			<h4>{tr}Relation of this user to you{/tr}</h4>
+			<div id="friendship"></div>
+					{jq}
+						$('#friendship').load("tiki-user-info?username={{$userinfo.login}} .friendship");
+					{/jq}
+				{/if}
 			{/if}
 
 		{else}{* infoPublic eq 'n' *}
