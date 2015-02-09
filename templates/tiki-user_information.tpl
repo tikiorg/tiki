@@ -37,7 +37,6 @@
 				</div>
 			{/if}
 
-
 			<div class="panel panel-default">
 				<div class="panel-body">
 					{if $avatar}
@@ -145,6 +144,10 @@
 					{/section}
 				</div>
 			</div>
+
+			{if $user eq $userinfo.login and $prefs.feature_friends eq 'y'}
+				{module module=friend_list}
+			{/if}
 
 		{else}{* infoPublic eq 'n' *}
 			<div>
