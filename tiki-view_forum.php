@@ -57,9 +57,10 @@ $tikilib->get_perm_object($_REQUEST['forumId'], 'forum', $forum_info, true);
 
 // Now if the user is the moderator then give him forum admin privs -. SHOULD BE IN get_perm_object
 if ($tiki_p_admin_forum != 'y' && $user) {
-	if ($forum_info['moderator'] == $user) {
-		$tiki_p_admin_forum = 'y';
-	} elseif (in_array($forum_info['moderator_group'], $userlib->get_user_groups($user))) {
+	if ($forum_info['moderator'] == $user
+		|| in_array($forum_info['moderator_group'], $userlib->get_user_groups($user))
+		|| Perms::get('forum', $_REQUEST['forumId'])->admin_forum)
+	{
 		$tiki_p_admin_forum = 'y';
 	}
 
