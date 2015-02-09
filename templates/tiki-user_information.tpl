@@ -154,8 +154,10 @@
 				{else}
 			<h4>{tr}Relation of this user to you{/tr}</h4>
 			<div id="friendship"></div>
+			<div id="addfriend"></div>
 					{jq}
 						$('#friendship').load("tiki-user-info?username={{$userinfo.login}} .friendship");
+						$('#addfriend').load("tiki-user-info?username={{$userinfo.login}} .add-friend");
 					{/jq}
 				{/if}
 			{/if}
