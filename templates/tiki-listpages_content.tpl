@@ -190,7 +190,9 @@
 
 					{if $prefs.wiki_list_id eq 'y'}
 						<td class="integer">
-							<a href="{$listpages[changes].pageName|sefurl}" class="link" title="{tr}View page{/tr}&nbsp;{$listpages[changes].pageName|escape}">{$listpages[changes].page_id}</a>
+							<a href="{$listpages[changes].pageName|sefurl}" class="link tips" title="{$listpages[changes].pageName|escape}:{tr}View page{/tr}">
+								{$listpages[changes].page_id}
+							</a>
 						</td>
 					{/if}
 
@@ -206,7 +208,9 @@
 							{* 
 								{object_link type=wiki id=$listpages[changes].pageName url=$listpages[changes].pageName|sefurl:'wiki':'':$all_langs title=$listpages[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true}
 							*}
-							<a href="{$listpages[changes].pageName|sefurl}" class="link" title="{tr}View page{/tr}&nbsp;{$listpages[changes].pageName|escape}">{$listpages[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true}</a>							
+							<a href="{$listpages[changes].pageName|sefurl}" class="link tips" title="{$listpages[changes].pageName|escape}:{tr}View page{/tr}">
+								{$listpages[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true}
+							</a>
 							{if $prefs.wiki_list_description eq 'y' && $listpages[changes].description neq ""}
 								<div class="subcomment">
 									{$listpages[changes].description|truncate:$prefs.wiki_list_description_len:"...":true}
