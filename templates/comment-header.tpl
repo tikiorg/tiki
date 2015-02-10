@@ -11,7 +11,7 @@
 	<div class="actions pull-right btn-group">
 		{if $comment.threadId eq $comments_parentId}
 			{* Only on the main forum topic *}
-			{monitor_link type="forum post" object=$comments_parentId}
+			{monitor_link type="forum post" object=$comments_parentId class='link'}
 		{/if}
 		{if $tiki_p_admin_forum eq 'y'
 			|| ( $comment.userName == $user && $tiki_p_forum_edit_own_posts eq 'y' )}
