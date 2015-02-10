@@ -77,13 +77,22 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 					),
 					'outputtype' => array(
 						'name' => tr('Output Type'),
-						'description' => tr('.'),
+						'description' => tr(''),
 						'filter' => 'word',
 						'options' => array(
 							'' => tr('Plain list separate by line breaks (default)'),
 							'links' => tr('Links separate by line breaks'),
 							'ul' => tr('Unordered list of labels'),
 							'ulinks' => tr('Unordered list of links'),
+						),
+					),
+					'doNotInheritCategories' => array(
+						'name' => tr('Do not Inherit Categories'),
+						'description' => tr("New tracker items will inherit the parent tracker's categories by default, unless you set this option."),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('Inherit (default)'),
+							1 => tr('Do not inherit'),
 						),
 					),
 				),
@@ -105,6 +114,13 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 			$selected = $this->getCategories($this->getItemId());
 		} else {
 			$selected = TikiLib::lib('categ')->get_default_categories();
+
+			if (! $this->getOption('doNotInheritCategories')) {
+				// use the parent tracker categories by default for new items
+				$trackerCategories = TikiLib::lib('categ')->get_object_categories('tracker', $this->getConfiguration('trackerId'));
+				// for now just merge these, category jail will get enforced later
+				$selected = array_merge($selected, $trackerCategories);
+			}
 		}
 
 		$categories = $this->getApplicableCategories();
