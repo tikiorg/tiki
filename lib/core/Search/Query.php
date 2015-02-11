@@ -148,6 +148,11 @@ class Search_Query implements Search_Query_Interface
 		$this->addPart(new Search_Expr_Initial($initial), 'plaintext', $field);
 	}
 
+	function filterNotInitial($initial, $field = 'title')
+	{
+		$this->addPart(new Search_Expr_Not(new Search_Expr_Initial($initial)), 'plaintext', $field);
+	}
+
 	function filterRelation($query, array $invertable = array())
 	{
 		$query = $this->parse($query);

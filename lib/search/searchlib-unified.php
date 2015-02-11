@@ -857,6 +857,14 @@ class UnifiedSearchLib
 			$query->filterLanguage($q);
 		}
 
+		if (isset($filter['not_prefix']) && is_array($filter['not_prefix'])) {
+			foreach ($filter['not_prefix'] as $field => $prefix) {
+				$query->filterNotInitial((string) $prefix, $field);
+			}
+
+			unset($filter['not_prefix']);
+		}
+
 		unset($filter['type']);
 		unset($filter['categories']);
 		unset($filter['deep']);
