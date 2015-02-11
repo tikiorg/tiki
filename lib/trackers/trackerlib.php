@@ -1748,17 +1748,22 @@ class TrackerLib extends TikiLib
 	/**
 	 * Called from tiki-list_trackers.php import button
 	 *
-	 * @param int		$trackerId
-	 * @param resource	$csvHandle 		file handle to import
-	 * @param bool		$replace_rows 	make new items for those with existing itemId
-	 * @param string	$dateFormat 	used for item fields of type date
-	 * @param string	$encoding 		defaults "UTF8"
-	 * @param string	$csvDelimiter 	defaults to ","
-	 * @return number	items imported
+	 * @param int $trackerId
+	 * @param resource $csvHandle file handle to import
+	 * @param bool $replace_rows make new items for those with existing itemId
+	 * @param string $dateFormat used for item fields of type date
+	 * @param string $encoding defaults "UTF8"
+	 * @param string $csvDelimiter defaults to ","
+	 * @param bool $updateLastModif default true
+	 * @param bool $convertItemLinkValues default false		attempts to find a linked or related item for ItemLink and Relations fields
+	 * @return number items imported
 	 */
 	public function import_csv($trackerId, $csvHandle, $replace_rows = true, $dateFormat='', $encoding='UTF8', $csvDelimiter=',', $updateLastModif = true, $convertItemLinkValues = false)
 	{
 		$tikilib = TikiLib::lib('tiki');
+		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
+		$errorreport = TikiLib::lib('errorreport');
+
 		$items = $this->items();
 		$itemFields = $this->itemFields();
 
@@ -1774,7 +1779,7 @@ class TrackerLib extends TikiLib
 		}
 		$max = count($header);
 		if ($max === 1 and strpos($header, "\t") !== false) {
-			TikiLib::lib('errorreport')->report(tr('No fields found in header, not a comma separated values file?'));
+			$errorreport->report(tr('No fields found in header, not a comma separated values file?'));
 			return 0;
 		}
 		for ($i = 0; $i < $max; $i++) {
@@ -1856,7 +1861,7 @@ class TrackerLib extends TikiLib
 					)
 				);
 				if (empty($itemId) || $itemId < 1) {
-					TikiLib::lib('errorreport')->report(tr('Problem inserting tracker item: trackerId=%0, created=%1, lastModif=%2, status=%3', $trackerId, $created, $lastModif, $status));
+					$errorreport->report(tr('Problem inserting tracker item: trackerId=%0, created=%1, lastModif=%2, status=%3', $trackerId, $created, $lastModif, $status));
 				} else {
 					// deal with autoincrement fields
 					foreach ($auto_fields as $afield) {
@@ -1949,12 +1954,48 @@ class TrackerLib extends TikiLib
 									if ($val !== null) {
 										$data[$i] = $val;
 									} else {
-										TikiLib::lib('errorreport')->report(
+										$errorreport->report(
 											tr(
 												'Problem converting tracker item link field: trackerId=%0, fieldId=%1, itemId=%2',
 												$trackerId,
 												$field['fieldId'],
 												$itemId
+											)
+										);
+									}
+								}
+								break;
+							case 'REL':	// Relations
+								if ($convertItemLinkValues && $data[$i] && ! $field['options_map']['readonly']) {
+
+									$filter = array();
+									$results = array();
+
+									parse_str($field['options_map']['filter'], $filter);
+									$filter['title'] = $data[$i];
+
+									$query = $unifiedsearchlib->buildQuery($filter);
+									$query->setRange(0, 1);
+
+									try {
+										$results = $query->search($unifiedsearchlib->getIndex());
+									} catch (Search_Elastic_TransportException $e) {
+										$errorreport->report('Search functionality currently unavailable.');
+									} catch (Exception $e) {
+										$errorreport->report($e->getMessage());
+									}
+
+									if (count($results)) {
+										$data[$i] = $results[0]['object_id'];
+										TikiLib::lib('relation')->add_relation($field['options_map']['relation'], 'trackeritem', $itemId, $results[0]['object_type'], $data[$i]);
+									} else {
+										$errorreport->report(
+											tr(
+												'Problem converting tracker relation field: trackerId=%0, fieldId=%1, itemId=%2 from value "%3"',
+												$trackerId,
+												$field['fieldId'],
+												$itemId,
+												$data[$i]
 											)
 										);
 									}
