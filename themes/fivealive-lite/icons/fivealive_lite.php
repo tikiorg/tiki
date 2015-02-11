@@ -19,11 +19,11 @@ function iconset_fivealive_lite()
 	return array(
 		'name' => tr('Theme icons'),
 		'description' => tr('Icons to be used for this theme'),
-		'source' => 'themes/base_files/iconsets/default.php', // full path to the source iconset that is to be overridden by $icons specified below.
-		'tag' => 'span', // the default html tag to sorround the icon
+		'source' => 'themes/base_files/iconsets/default.php', //path to the source icon set that is to be overridden by 'icons' subarray specified below
+		'tag' => 'span', // the default html tag to surround the icon
 		'icons' => array(
 			'information' => array(
-				'id' => 'info', // This is a sample icon, change it to have a customized font-aewesome icon or change/add parameters to have an image or a glyphicon. See http://dev.tiki.org/Icons for more details
+				'id' => 'info', // This is a sample icon, change it to have a theme specific icon
 			),
 		)
 	);
