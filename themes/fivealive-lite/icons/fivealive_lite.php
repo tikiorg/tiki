@@ -19,7 +19,8 @@ function iconset_fivealive_lite()
 	return array(
 		'name' => tr('Theme icons'),
 		'description' => tr('Icons to be used for this theme'),
-		'source' => 'themes/base_files/iconsets/default.php', //path to the source icon set that is to be overridden by 'icons' subarray specified below
+		//path to the source icon set that is to be overridden by 'icons' subarray specified below if not the default one
+		//'source' => 'themes/base_files/iconsets/default.php',
 		'tag' => 'span', // the default html tag to surround the icon
 		'icons' => array(
 			'information' => array(

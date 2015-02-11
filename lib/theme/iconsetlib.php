@@ -99,10 +99,10 @@ class Iconset
 			$this->description = '';
 		}
 		$this->tag = $data['tag'];
-		$this->prepend = $data['prepend'];
-		$this->append = $data['append'];
-		$this->icons = $data['icons'];
-		$this->defaults = $data['defaults'];
+		$this->prepend = isset($data['prepend']) ? $data['prepend'] : null;
+		$this->append = isset($data['append']) ? $data['append'] : null;
+		$this->icons = isset($data['icons']) ? $data['icons'] : [];
+		$this->defaults = isset($data['defaults']) ? $data['defaults'] : [];
 
 		if (!empty($data['source'])) {
 			$source = new Iconset(TikiLib::lib('iconset')->loadFile($data['source']));
@@ -118,13 +118,13 @@ class Iconset
 
 		foreach ($iconset->icons() as $name => $icon) {
 			if (! isset($this->icons[$name]) || $over) {
-				if ($this->tag !== $tag) {
+				if ($tag && $this->tag !== $tag) {
 					$icon['tag'] = $tag;
 				}
-				if ($this->prepend !== $prepend) {
+				if ($prepend && $this->prepend !== $prepend) {
 					$icon['prepend'] = $prepend;
 				}
-				if ($this->append !== $append) {
+				if ($append && $this->append !== $append) {
 					$icon['append'] = $append;
 				}
 				$this->icons[$name] = $icon;

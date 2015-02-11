@@ -10,14 +10,21 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
-$settings = array( //only these settings will be applied
-	'iconset_name' => tr('Custom icons'),
-	'iconset_description' => tr('Custom icons for the theme'),
-	'icon_tag' => 'span', //the default html tag to sorround the icon
-);
+/** Note, currently (Tiki 14) you can only have one custom iconset active at any time
+ *
+ * @return array
+ */
 
-$icons = array(
-	'information' => array(
-		'class' => 'fa fa-info-circle fa-fw', //This is a sample icon, change it to have a customized fa icon or change/add parameters to have an image or a glyphicon. See http://dev.tiki.org/Icons for more details
-	),
-);
+function iconset_custom()
+{
+	return array(
+		'name' => tr('Custom icons'),
+		'description' => tr('Custom icons for the theme'),
+		'tag' => 'span', // the default html tag to surround the icon
+		'icons' => array(
+			'information' => array(
+				'id' => 'exclamation-circle', // This is a sample icon, change it to have a theme specific icon
+			),
+		)
+	);
+}
