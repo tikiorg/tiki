@@ -49,7 +49,7 @@
 	</label>
 	<label style="display: block">
 		<input type="checkbox" name="convertItemLinkValues" value="1">
-		{tr}Convert values of ItemLink type fields from the value in the CSV file to the itemId of the linked item. Requires the linked item to be correctly set up in advance.{/tr}
+		{tr}Convert values of ItemLink and Relation type fields from the value in the CSV file to the itemId of the linked item. Requires the linked or related item to be correctly set up in advance.{/tr}
 	</label>
 	<div class="submit">
 		<input type="hidden" name="trackerId" value="{$trackerId|escape}">
