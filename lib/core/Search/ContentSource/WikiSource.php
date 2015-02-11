@@ -61,6 +61,7 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 			'contributors' => $typeFactory->multivalue($contributors),
 
 			'wiki_content' => $typeFactory->wikitext($info['data']),
+			'wiki_keywords' => $typeFactory->plaintext($info['keywords']),
 
 			'view_permission' => $typeFactory->identifier('tiki_p_view'),
 			'url' => $typeFactory->identifier($wikilib->sefurl($info['pageName'])),
@@ -126,6 +127,7 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 			'contributors',
 
 			'wiki_content',
+			'wiki_keywords',
 			'wiki_approval_state',
 
 			'view_permission',
@@ -145,6 +147,7 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 			'description' => true,
 
 			'wiki_content' => false,
+			'wiki_keywords' => true,
 		);
 	}
 }
