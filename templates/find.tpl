@@ -31,7 +31,7 @@
 *}
 
 <div class="find container-fluid">
-	<form method="post" action="{$smarty.server.PHP_SELF}" class="form-horizontal" role="form">
+	<form method="post" class="form-horizontal" role="form">
 	{if !isset($map_only) or $map_only ne 'y'}
 		{if !empty($filegals_manager)}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}">{/if}
 		{query _type='form_input' maxRecords='NULL' type='NULL' types='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' cat_categories='NULL' filegals_manager='NULL' save='NULL' offset='NULL' searchlist='NULL' searchmap='NULL'}

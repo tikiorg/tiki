@@ -31,7 +31,7 @@
 			{initials_filter_links}
 		{/if}
 
-		<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
+		<form name="checkform" method="post">
 			<div class="table-responsive">
 				<table class="table normal">
 					<tr>
@@ -405,7 +405,7 @@
 		{tab name="{tr}Members{/tr}"}
 		{* ----------------------- tab with memberlist --------------------------------------- *}
 			<h2>{tr}Members List:{/tr} {$groupname|escape}</h2>
-			<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
+			<form name="checkform" method="post">
 				<input type="hidden" name="group" value="{$group|escape}">
 				<div class="table-responsive">
 					<table class="table normal">

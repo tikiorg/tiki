@@ -10,7 +10,7 @@
 	{/if}
 </div>
 
-<form method="post" action="{$smarty.server.PHP_SELF}" class="text-center">
+<form method="post" class="text-center">
 	{if !empty($sort_mode)}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">{/if}
 	{if !empty($pollId)}<input type="hidden" name="pollId" value="{$pollId|escape}">{/if}
 	{if !empty($list)}<input type="hidden" name="list" value="{$list|escape}">{/if}

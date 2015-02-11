@@ -99,7 +99,7 @@
 
 			{if $items|@count ge '1'}
 				{* ------- list headings --- *}
-				<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
+				<form name="checkform" method="post">
 					<div class="table-responsive">
 						<table class="table normal">
 							<tr>

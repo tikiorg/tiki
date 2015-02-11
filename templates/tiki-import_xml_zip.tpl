@@ -16,7 +16,7 @@
 		{$msg}
 	{/remarksbox}
 {/if}
-<form enctype='multipart/form-data' method="post" action="{$smarty.server.PHP_SELF}">
+<form enctype='multipart/form-data' method="post">
 	<div><input type="file" name="zip"></div>
 	<div>{tr}Or{/tr}</div>
 	<div><label>{tr}Name of the zip file on the server{/tr}<input type="text" name="local"></label></div>

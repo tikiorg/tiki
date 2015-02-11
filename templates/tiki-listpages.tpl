@@ -9,7 +9,7 @@
 		{else}
 			{include file='find.tpl' map_only='y'}
 		{/if}
-		<form name="checkform" method="get" action="{$smarty.server.PHP_SELF}">
+		<form name="checkform" method="get">
 			<input type="hidden" name="offset" value="{$offset|escape}">
 			<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 			<input type="hidden" name="find" value="{$find|escape}">

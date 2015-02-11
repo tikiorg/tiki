@@ -29,7 +29,7 @@
 	{wikiplugin _name="map" scope=".listarticlesmap .geolocated" width="400" height="400"}{/wikiplugin}
 {/if}
 
-<form name="checkform" method="get" action="{$smarty.server.PHP_SELF}">
+<form name="checkform" method="get">
 	<input type="hidden" name="maxRecords" value="{$maxRecords|escape}">
 	{assign var=numbercol value=1}
 	<div class="table-responsive">

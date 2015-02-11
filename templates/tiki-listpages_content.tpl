@@ -20,7 +20,7 @@
 
 
 {if isset($checkboxes_on) and $checkboxes_on eq 'y'}
-	<form name="checkboxes_on" method="post" action="{$smarty.server.PHP_SELF}">
+	<form name="checkboxes_on" method="post">
 {/if}
 
 {assign var='pagefound' value='n'}
