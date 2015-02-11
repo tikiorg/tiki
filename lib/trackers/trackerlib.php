@@ -1710,6 +1710,10 @@ class TrackerLib extends TikiLib
 		$items = $this->items();
 		$itemFields = $this->itemFields();
 
+		global $prefs;
+		$display_timezone = $prefs['display_timezone'];
+		$prefs['display_timezone'] = $prefs['server_timezone'];
+
 		$tracker_info = $this->get_tracker_options($trackerId);
 		if (($header = fgetcsv($csvHandle, 100000, $csvDelimiter)) === false) {
 			return 'Illegal first line';
@@ -1961,7 +1965,6 @@ class TrackerLib extends TikiLib
 		$cant_items = $items->fetchCount(array('trackerId' => (int) $trackerId));
 		$this->trackers()->update(array('items' => (int) $cant_items, 'lastModif' => $this->now), array('trackerId' => (int) $trackerId));
 
-		global $prefs;
 		if ($prefs['feature_search'] === 'y' && $prefs['unified_incremental_update'] === 'y') {
 			$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 
@@ -1970,6 +1973,7 @@ class TrackerLib extends TikiLib
 			}
 			$unifiedsearchlib->processUpdateQueue();
 		}
+		$prefs['display_timezone'] = $display_timezone;
 
 		return $total;
 	}
