@@ -167,6 +167,19 @@ abstract class Search_Index_BaseTest extends PHPUnit_Framework_TestCase
 		$this->assertResultCount(0, 'filterInitial', 'Home Page');
 	}
 
+	function testNotMatchInitial()
+	{
+		$this->assertResultCount(0, 'filterNotInitial', 'a description for', 'description');
+		$this->assertResultCount(1, 'filterNotInitial', 'a description in', 'description');
+
+		$this->assertResultCount(0, 'filterNotInitial', 'HomePage');
+		$this->assertResultCount(0, 'filterNotInitial', 'Home');
+		$this->assertResultCount(1, 'filterNotInitial', 'Fuzzy');
+		$this->assertResultCount(1, 'filterNotInitial', 'Ham');
+		$this->assertResultCount(1, 'filterNotInitial', 'HomePagd');
+		$this->assertResultCount(1, 'filterNotInitial', 'Home Page');
+	}
+
 	function testFilterRelations()
 	{
 		$about = new Search_Query_Relation('tiki.content.link', 'wiki page', 'About');
