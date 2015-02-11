@@ -120,6 +120,8 @@
 
 					{preference name=unified_trackerfield_keys}
 					{preference name=unified_add_to_categ_search}
+
+					{preference name=unified_stopwords}
 				</div>
 			</fieldset>
 

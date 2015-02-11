@@ -149,6 +149,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 
 	private function getIndexDefinition()
 	{
+		global $prefs;
 		return [
 			'analysis' => [
 				'tokenizer' => [
@@ -170,7 +171,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 				'filter' => [
 					'tiki_stop' => [
 						'type' => 'stop',
-						'stopwords' => ["a", "an", "and", "are", "as", "at", "be", "but", "by", "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or", "s", "such", "t", "that", "the", "their", "then", "there", "these", "they", "this", "to", "was", "will", "with"],
+						'stopwords' => $prefs['unified_stopwords'],
 					],
 				],
 			],
