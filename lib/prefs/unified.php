@@ -257,6 +257,14 @@ function prefs_unified_list()
 				'feature_search',
 			),
 		),
+		'unified_stopwords' => array(
+			'name' => tr('Stop Word List'),
+			'description' => tr('Words excluded from the search index as they can be too frequent and cause noise.'),
+			'type' => 'text',
+			'default' => ["a", "an", "and", "are", "as", "at", "be", "but", "by", "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or", "s", "such", "t", "that", "the", "their", "then", "there", "these", "they", "this", "to", "was", "will", "with"],
+			'separator' => ',',
+			'hint' => tr('MySQL Full Text Search has its own list of stop words configured in the server.'),
+		),
 	);
 }
 
