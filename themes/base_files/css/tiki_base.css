@@ -2353,6 +2353,12 @@ h4.ui-accordion-header {
 div.form-group label.error {
   font-weight: normal !important;
 }
+.tiki .chosen-choices .search-field input.default {
+  width: auto !important;
+}
+.tiki #assign_order_chosen.chosen-container {
+  width: 60px !important;
+}
 .tiki .page-header {
   border-bottom: none;
   margin: auto;
