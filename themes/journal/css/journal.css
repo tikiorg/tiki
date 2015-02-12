@@ -6565,6 +6565,15 @@ header.page-header::before,
   color: #ffffff;
   background-color: #eb6864;
 }
+.dropdown-menu li {
+  background-color: #ffffff;
+  color: #333333;
+}
+.dropdown-menu li:hover,
+.dropdown-menu li:focus {
+  background-color: #eb6864;
+  color: #ffffff;
+}
 .navbar {
   font-size: 18px;
   font-family: "News Cycle", "Arial Narrow Bold", sans-serif;

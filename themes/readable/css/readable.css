@@ -6565,6 +6565,15 @@ header.page-header::before,
   color: #ffffff;
   background-color: #4582ec;
 }
+.dropdown-menu li {
+  background-color: #ffffff;
+  color: #333333;
+}
+.dropdown-menu li:hover,
+.dropdown-menu li:focus {
+  background-color: #4582ec;
+  color: #ffffff;
+}
 .navbar {
   font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }

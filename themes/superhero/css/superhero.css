@@ -6557,6 +6557,15 @@ header.page-header::before,
   color: #ebebeb;
   background-color: #485563;
 }
+.dropdown-menu li {
+  background-color: #4e5d6c;
+  color: #ebebeb;
+}
+.dropdown-menu li:hover,
+.dropdown-menu li:focus {
+  background-color: #485563;
+  color: #ebebeb;
+}
 .navbar {
   -webkit-box-shadow: none;
   box-shadow: none;

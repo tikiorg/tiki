@@ -6565,6 +6565,15 @@ header.page-header::before,
   color: #ffffff;
   background-color: #446e9b;
 }
+.dropdown-menu li {
+  background-color: #ffffff;
+  color: #333333;
+}
+.dropdown-menu li:hover,
+.dropdown-menu li:focus {
+  background-color: #446e9b;
+  color: #ffffff;
+}
 .navbar {
   background-image: -webkit-linear-gradient(#ffffff, #eeeeee 50%, #e4e4e4);
   background-image: -o-linear-gradient(#ffffff, #eeeeee 50%, #e4e4e4);

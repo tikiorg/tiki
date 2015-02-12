@@ -6565,6 +6565,15 @@ header.page-header::before,
   color: #ffffff;
   background-color: #15b5c1;
 }
+.dropdown-menu li {
+  background-color: #ffffff;
+  color: #444444;
+}
+.dropdown-menu li:hover,
+.dropdown-menu li:focus {
+  background-color: #15b5c1;
+  color: #ffffff;
+}
 .navbar-brand {
   font-family: 'Lobster', cursive;
 }

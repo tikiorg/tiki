@@ -6565,6 +6565,15 @@ header.page-header::before,
   color: #333333;
   background-color: transparent;
 }
+.dropdown-menu li {
+  background-color: #ffffff;
+  color: #999999;
+}
+.dropdown-menu li:hover,
+.dropdown-menu li:focus {
+  background-color: transparent;
+  color: #333333;
+}
 .navbar {
   border-width: 0 1px 4px 1px;
 }

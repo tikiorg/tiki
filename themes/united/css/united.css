@@ -6565,6 +6565,15 @@ header.page-header::before,
   color: #ffffff;
   background-color: #dd4814;
 }
+.dropdown-menu li {
+  background-color: #ffffff;
+  color: #333333;
+}
+.dropdown-menu li:hover,
+.dropdown-menu li:focus {
+  background-color: #dd4814;
+  color: #ffffff;
+}
 .navbar-default .badge {
   background-color: #fff;
   color: #dd4814;

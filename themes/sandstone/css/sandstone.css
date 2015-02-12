@@ -6562,6 +6562,15 @@ header.page-header::before,
   color: #98978b;
   background-color: #f8f5f0;
 }
+.dropdown-menu li {
+  background-color: #ffffff;
+  color: #98978b;
+}
+.dropdown-menu li:hover,
+.dropdown-menu li:focus {
+  background-color: #f8f5f0;
+  color: #98978b;
+}
 .sandstone {
   font-size: 11px;
   line-height: 22px;

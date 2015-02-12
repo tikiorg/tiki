@@ -35,3 +35,15 @@ header.page-header::before,
     background-color: @dropdown-link-hover-bg;
   }
 }
+
+// Widens scope of Bootstrap rule to cover L&F admin anchors filter, etc.
+.dropdown-menu li {
+  background-color: @dropdown-bg;
+  color: @dropdown-link-color;
+}
+
+.dropdown-menu li:hover,
+.dropdown-menu li:focus {
+  background-color: @dropdown-link-hover-bg;
+  color: @dropdown-link-hover-color;
+}
