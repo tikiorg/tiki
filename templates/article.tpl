@@ -46,7 +46,7 @@
 
 	<div class="articleheading">
 
-		<div class="garys">
+		<div class="media-left">
 			{capture name=imgTitle}{if $show_image_caption eq 'y' and $image_caption}{$image_caption|escape}{elseif isset($topicName)}{tr}{$topicName}{/tr}{/if}{/capture}
 			{assign var="big_image" value=$prefs.art_header_text_pos eq 'below' && $list_image_x > 0}
 			{if $big_image}
@@ -60,7 +60,7 @@
 			{if $useImage eq 'y' and $hasImage eq 'y'}
 				{* display article image *}{$style=''}
 				<img
-					{*{if $big_image}class="cboxElement"{elseif $isfloat eq 'y'}{$style="margin-right:4px;float:left;"}{else}*}class="articleimage"{*{/if}*}
+					{*{if $big_image}class="cboxElement"{elseif $isfloat eq 'y'}{$style="margin-right:4px;float:left;"}{else}*}class="art icleimage"{*{/if}*}
 					alt="{$smarty.capture.imgTitle}"
 					src="article_image.php?image_type={if isset($preview) and $imageIsChanged eq 'y'}preview&amp;id={$previewId}{elseif isset($preview) and $subId}submission&amp;id={$subId}{else}article&amp;id={$articleId}{/if}"
 					{if $image_x > 0}{$style=$style|cat:"max-width:"|cat:$image_x|cat:"px;"}{/if}
@@ -69,7 +69,7 @@
 			{elseif $topicId}
 				{if $topics[$topicId].image_size > 0}
 					<img
-						{if $big_image}class="cboxElement"{*{elseif $isfloat eq 'y'}style="margin-right:4px;float:left;"*}{else}class="articleimage"{/if}
+						{if $big_image}class="cboxElement"{*{elseif $isfloat eq 'y'}style="margin-right:4px;float:left;"*}{else}class="art icleimage"{/if}
 						alt="{tr}{$topicName}{/tr}"
 						src="article_image.php?image_type=topic&amp;id={$topicId}"
 					>
@@ -89,10 +89,10 @@
 				</div> {* class="imgbox" *}
 			{/if}
 			{if $prefs.art_header_text_pos eq 'below' && $list_image_x > 0}
-				</div></div><div class="garys">
+				</div></div><div class="media-body">
 			{elseif $isfloat eq 'n' and $topics[$topicId].image_size > 0}
 				</div>
-				<div class="table-cell">
+				<div class="table-cell media-body">
 			{/if}
 			<div class="articleheadingtext">
 				{if $article_attributes}

@@ -1,9 +1,9 @@
 {* $Id$ *}
 {* include file for module edit form - to be called by ajax *}
 
-<div class="module_selector">
-	<label for="assign_name"><strong>{tr}Module Name{/tr}</strong></label>
-	<select id="assign_name" name="assign_name">
+<div class="module_selector form-group">
+	<label for="assign_name">{tr}Module Name{/tr}</label>
+	<select id="assign_name" name="assign_name" class="form-control">
 		<option value=""></option>
 		{foreach key=name item=info from=$all_modules_info}
 			<option value="{$name|escape}" {if $assign_name eq $name || $assign_selected eq $name}selected="selected"{/if}>{$info.name}</option>
@@ -23,32 +23,32 @@
 		{else}
 		{/if}
 		<fieldset id="param_section_basic">
-			<div class="admin2cols adminoptionbox clearfix">
+			<div class="clearfix form-group">
 				<label for="assign_position">{tr}Position{/tr}</label>
-				<select id="assign_position" name="assign_position">
+				<select id="assign_position" name="assign_position" class="form-control">
 					{foreach from=$module_zone_list key=code item=zone}
 						<option value="{$code|escape}"{if $code eq $assign_position} selected="selected"{/if}>{$zone.name|escape}</option>
 					{/foreach}
 				</select>
 			</div>
 
-			<div class="admin2cols adminoptionbox clearfix">
+			<div class="clearfix form-group">
 				<label for="assign_order">{tr}Order{/tr}</label>
-				<select id="assign_order" name="assign_order">
+				<select id="assign_order" name="assign_order" class="form-control">
 					{section name=ix loop=$orders}
 						<option value="{$orders[ix]|escape}" {if $assign_order eq $orders[ix]}selected="selected"{/if}>{$orders[ix]}</option>
 					{/section}
 				</select>
 			</div>
 
-			<div class="admin2cols adminoptionbox clearfix">
+			<div class="clearfix form-group">
 				<label for="assign_cache">{tr}Cache Time{/tr} ({tr}secs{/tr})</label>
-				<input type="text" id="assign_cache" name="assign_cache" value="{$assign_cache|escape}">
+				<input type="text" id="assign_cache" name="assign_cache" class="form-control" value="{$assign_cache|escape}">
 			</div>
 			{if !isset($assign_info.type) or $assign_info.type neq 'function'}
-				<div class="admin2cols adminoptionbox clearfix">
+				<div class="clearfix form-group">
 					<label for="assign_rows">{tr}Rows{/tr}</label>
-					<input type="text" id="assign_rows" name="assign_rows" value="{$assign_rows|escape}">
+					<input type="text" id="assign_rows" name="assign_rows" value="{$assign_rows|escape}" class="form-control">
 				</div>
 			{/if}
 			<div class="admin2cols adminoptionbox clearfix">
