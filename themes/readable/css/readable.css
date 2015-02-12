@@ -6854,7 +6854,7 @@ body.fullscreen {
   border: 2px solid transparent;
 }
 #debugconsole form {
-  color: transparent;
+  color: #333333;
 }
 #debugconsole a {
   color: #333333;
