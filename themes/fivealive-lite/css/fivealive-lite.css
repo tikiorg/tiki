@@ -7240,6 +7240,21 @@ textarea,
 .footer_liner a:visited {
   color: #a9a9a9;
 }
+.topbar .nav > li > a {
+  padding-bottom: 2px;
+  padding-top: 2px;
+}
+.topbar .form-control,
+.topbar .btn {
+  font-size: 12px;
+  height: 20px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  margin-top: 2px;
+}
+.topbar .form-group {
+  margin-bottom: 0;
+}
 .navbar-nav .open .dropdown-menu,
 .navbar-nav .open .dropdown-menu li,
 .navbar-default .navbar-nav > li > a {
