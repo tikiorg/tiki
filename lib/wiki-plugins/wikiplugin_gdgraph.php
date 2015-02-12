@@ -43,6 +43,13 @@ function wikiplugin_gdgraph_info()
 				'filter' => 'text',
 				'default' => '',
 			),
+			'alttag' => array(
+				'required' => false,
+				'name' => tra('alt tag'),
+				'description' => tra('text for image alt tag'),
+				'filter' => 'text',
+				'default' => 'GDgraph graph image',
+			),			
 			'bg' => array(
 				'required' => false,
 				'name' => tra('Background color'),
@@ -157,7 +164,7 @@ function wikiplugin_gdgraph($data, $params)
 	);
 
 	$ret = '<div class="wp-gdgraph">'.
-		'<img src="tiki-gdgraph.php?'. http_build_query($imgparams, '', '&amp;') . '" alt="GDgraph graph image">'.
+		'<img src="tiki-gdgraph.php?'. http_build_query($imgparams, '', '&amp;') . '" alt="'.$params['alttag'].'">'.
 		'</div>';
 
 	return $ret;
