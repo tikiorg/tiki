@@ -748,7 +748,7 @@ function wikiplugin_img( $data, $params )
 					$imgalthumb == true;
 				}
 				$height = $imgdata['height'];
-				if (empty($imgdata['width']) && $fheight > 0) {
+				if (empty($imgdata['width']) && $fheight > 1) {
 					$width = floor($height * $fwidth / $fheight);
 				} else {
 					$width = $imgdata['width'];
@@ -762,7 +762,7 @@ function wikiplugin_img( $data, $params )
 					$imgalthumb == true;
 				}
 				$width =  $imgdata['width'];
-				if (empty($imgdata['height']) && $fwidth > 0) {
+				if (empty($imgdata['height']) && $fwidth > 1) {
 					$height = floor($width * $fheight / $fwidth);
 				} else {
 					$height = $imgdata['height'];
@@ -824,8 +824,9 @@ function wikiplugin_img( $data, $params )
 					$imgdata_dim .= ' height="' . $height . '"';
 				} elseif (!empty($height) && (empty($urly[0]) && empty($urlthumb) && empty($urlscale[0]))) {
 					$src .= '&y=' . $height;
-					$imgdata_dim = '';
 					$width = $fwidth;
+					$imgdata_dim .= ' width="' . $width . '"';
+					$imgdata_dim .= ' height="' . $height . '"';
 				}
 			} else {
 				$imgdata_dim = '';
@@ -845,7 +846,7 @@ function wikiplugin_img( $data, $params )
 			}
 			if (!empty($width)) {
 				$imgdata_dim .= ' width="' . $width . '"';
-			} else {
+			} elseif (empty($height)) {
 				$imgdata_dim = '';
 				$width = $fwidth;
 			}
@@ -1206,11 +1207,15 @@ function wikiplugin_img( $data, $params )
 				} else {
 					$styleboxplus = $styleboxinit;
 				}
+			} elseif ($boxwidth === 2) {
+				$styleboxplus = $alignbox . ' width: auto;';
 			} else {
 				$styleboxplus = $alignbox . ' width:' . $boxwidth . 'px;';
 			}
 		} elseif (!empty($imgdata['button']) || !empty($imgdata['desc']) || !empty($imgdata['metadata'])) {
-		$styleboxplus = ' width:' . $boxwidth . 'px;';
+			$styleboxplus = ' width:' . $boxwidth . 'px;';
+		} elseif ($boxwidth === 2) {
+			$styleboxplus = ' width: auto;';
 		}
 	}
 	if ( !empty($styleboxplus)) {
