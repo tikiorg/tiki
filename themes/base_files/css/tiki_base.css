@@ -2046,8 +2046,11 @@ img.pref_dependency {
 .taskcount {
   font-style: italic;
 }
-.adminanchors * {
+.adminanchors {
   font-size: 2rem;
+}
+.adminanchors .nav li {
+  display: inline-block;
 }
 .meta-col1 {
   text-align: right;
