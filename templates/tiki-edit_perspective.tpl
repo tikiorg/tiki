@@ -46,11 +46,13 @@
 		{tab name="{tr}Edit{/tr}"}
 			<h2>{tr}Edit{/tr}</h2>
 			<form method="post" action="tiki-edit_perspective.php">
-				<p>
-					{tr}Name:{/tr}
-					<input type="text" name="name" value="{$perspective_info.name|escape}">
-					<input type="hidden" name="id" value="{$perspective_info.perspectiveId|escape}">
-				</p>
+				<div class="form-group clearfix">
+					<label for="name" class="col-sm-4 control-label">{tr}Name{/tr}</label>
+					<div class="col-sm-8">
+                        <input type="text" name="name" id="name" value="{$perspective_info.name|escape}" class="form-control">
+                    </div>
+    					<input type="hidden" name="id" value="{$perspective_info.perspectiveId|escape}">
+				</div>
 				<fieldset id="preferences" class="panel panel-default dropzone" style="text-align: left;">
 					<p class="panel-heading">{tr}Configurations:{/tr}</p>
 					{foreach from=$perspective_info.preferences key=name item=val}
