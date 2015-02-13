@@ -298,30 +298,30 @@ $smarty->assign('categories', $categories);
 
 $treeNodes = array();
 $smarty->loadPlugin('smarty_function_icon');
+$smarty->loadPlugin('smarty_function_permission_link');
 foreach ($categories as $category) {
 	$perms = Perms::get(array('type' => 'category', 'object' => $category['categId']));
 	if ($perms->admin_categories == 'y') {
-		$data = '<a class="tips '
-			. $class . '" title="' . htmlspecialchars($category['name']) . ':' . tra('Edit')
+		$data = '<a class="tips" title="' . htmlspecialchars($category['name']) . ':' . tra('Edit')
 			. '" href="tiki-admin_categories.php?parentId=' . $category['parentId'] . '&amp;categId='
 			. $category['categId'] . '">' . smarty_function_icon(array('name'=>'edit'), $smarty) . '</a>';
-		$data .= '<a class="tips ' . $class . '" title="' . htmlspecialchars($category['name']) . ':' . tra('Delete')
+		$data .= '<a class="tips" title="' . htmlspecialchars($category['name']) . ':' . tra('Delete')
 			. '"href="tiki-admin_categories.php?parentId=' . $category['parentId'] . '&amp;removeCat='
-			. $category['categId'] . '" title="' . tra('Delete') . '">'
-			. smarty_function_icon(array('name'=>'remove'), $smarty) . '</a>';
+			. $category['categId'] . '">' . smarty_function_icon(array('name'=>'remove'), $smarty) . '</a>';
 
 		if ($userlib->object_has_one_permission($category['categId'], 'category')) {
 			$title = tra('Edit permissions for this category');
-			$class = 'text-warning';
 		} else {
 			$title = tra('Assign permissions');
-			$class = '';
 		}
-		$data .= '<a class="tips ' . $class . '" title="' . htmlspecialchars($category['name']) . ':' . $title
-			. '" href="tiki-objectpermissions.php?objectType=category&amp;objectId=' . $category['categId']
-			. '&amp;objectName=' . urlencode($category['name']) . '&amp;permType=category">'
-			. smarty_function_icon(array('name'=> 'permission'), $smarty) . '</a>';
-
+		$data .= smarty_function_permission_link([
+			'id'=> $category['categId'],
+			'type' => 'category',
+			'title' => $category['name'],
+			'addclass' => 'tips',
+			'mode' => 'glyph',
+			'label' => htmlspecialchars($category['name']) . ':' . $title
+		], $smarty);
 		$data .= '<a class="catname" href="tiki-admin_categories.php?parentId=' . $category["categId"] . '">'
 			. htmlspecialchars($category['name']) .'</a> ';
 		$treeNodes[] = array(
