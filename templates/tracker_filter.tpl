@@ -18,9 +18,9 @@
 				{/if}
 
 				<td style="width:100%;text-align:right;">
-					{if $show_filters eq 'y' && isset($cnt)}
+					{if $show_filters eq 'y'}
 						{jq}
-							fields = new Array({{$cnt}});
+							var fields = [];
 							{{assign var=c value=0}}
 							{{foreach key=fid item=field from=$listfields}
 								{if $field.isSearchable eq 'y' and $field.type ne 'f' and $field.type ne 'j' and $field.type ne 'i'}
