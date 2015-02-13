@@ -110,8 +110,30 @@ foreach ($chans as $chan) {
 				$lastid = $row['id'];
 				echo "minichat_updatelastid('$channel', $lastid);\n";
 			}
-			$t = date("H:i", $row['ts']);
-			$msgtotal = "<span class='minichat_ts'>[$t]</span><span class='minichat_nick'>&lt;" . ($row['nick'] === null ? '' : $row['nick']) . "&gt;</span><span class='minichat_msg'>" . htmlentities($row['msg'], ENT_QUOTES, 'UTF-8') . "</span><br>" . $msgtotal;
+            # if timestamp corresponds to previous days than current, show date with display_order according to the global preference
+            # daytmes = day from the time stamp of the message; daytnow = current day;
+            $daytmes = date("d/m/y", $row['ts']);
+            $daytnow = date("d/m/y");
+            if ($daytmes == $daytnow) {
+                $t = date("H:i", $row['ts']);
+            } else {
+                if ($prefs['display_field_order'] == 'DMY') {
+                    $t = date("d/m/y H:i", $row['ts']);
+                } elseif ($prefs['display_field_order'] == 'DYM') {
+                    $t = date("d/y/m H:i", $row['ts']);
+                } elseif ($prefs['display_field_order'] == 'MDY') {
+                    $t = date("m/d/y H:i", $row['ts']);
+                } elseif ($prefs['display_field_order'] == 'MYD') {
+                    $t = date("m/y/d H:i", $row['ts']);
+                } elseif ($prefs['display_field_order'] == 'YDM') {
+                    $t = date("y/d/m H:i", $row['ts']);
+                } elseif ($prefs['display_field_order'] == 'YMD') {
+                    $t = date("y/m/d H:i", $row['ts']);
+                } else {
+                    $t = date("H:i", $row['ts']);
+                }
+            }
+            $msgtotal = "<span class='minichat_ts'>[$t]</span><span class='minichat_nick'>&lt;" . ($row['nick'] === null ? '' : $row['nick']) . "&gt;</span><span class='minichat_msg'>" . htmlentities($row['msg'], ENT_QUOTES, 'UTF-8') . "</span><br>" . $msgtotal;
 		}
 		$msgtotal = str_replace(":-D", "<img border='0' src='img/smiles/icon_biggrin.gif' width='15' height='15'>", $msgtotal);
 		$msgtotal = str_replace(":D", "<img border='0' src='img/smiles/icon_biggrin.gif' width='15' height='15'>", $msgtotal);
