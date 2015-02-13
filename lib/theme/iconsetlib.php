@@ -42,7 +42,7 @@ class IconsetLib
 
 		//when a theme option is used, first override with the main theme's custom icons
 		if(!empty($theme_option)){
-			$filename = $themelib->get_theme_path($theme, '', 'custom.php', 'icons/');
+			$filename = $themelib->get_theme_path($theme, '', str_replace('-', '_', $theme).'_custom.php', 'icons/');
 			if ($filename) {
 				$iconset1 = new Iconset($this->loadFile($filename));
 				$iconset->merge($iconset1);
@@ -50,7 +50,7 @@ class IconsetLib
 		}
 		
 		//finally override with custom icons of the displayed theme
-		$filename = $themelib->get_theme_path($theme, $theme_option, 'custom.php', 'icons/');
+		$filename = $themelib->get_theme_path($theme, $theme_option, str_replace('-', '_', $theme_option).'_custom.php', 'icons/');
 		if ($filename) {
 			$iconset1 = new Iconset($this->loadFile($filename));
 			$iconset->merge($iconset1);
