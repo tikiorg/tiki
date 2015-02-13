@@ -2,7 +2,7 @@
 	<input type="hidden" name="trackerId" value="{$trackerId|escape}">
 	{if $status}<input type="hidden" name="status" value="{$status}">{/if}
 	{if $sort_mode}<input type="hidden" name="sort_mode" value="{$sort_mode}">{/if}
-	<div class="table-responsive">
+	<div class="table-responsive"{if $prefs.jquery_ui_chosen eq 'y'}style="overflow: visible;"{/if}>
 		<table class="table">
 			<tr>
 				{if ($tracker_info.showStatus|default:null eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')) and $showstatus|default:null ne 'n'}
@@ -20,7 +20,7 @@
 				<td style="width:100%;text-align:right;">
 					{if $show_filters eq 'y'}
 						{jq}
-							var fields = [];
+							fields = [];
 							{{assign var=c value=0}}
 							{{foreach key=fid item=field from=$listfields}
 								{if $field.isSearchable eq 'y' and $field.type ne 'f' and $field.type ne 'j' and $field.type ne 'i'}
