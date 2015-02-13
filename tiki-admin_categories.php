@@ -298,7 +298,6 @@ $smarty->assign('categories', $categories);
 
 $treeNodes = array();
 $smarty->loadPlugin('smarty_function_icon');
-$smarty->loadPlugin('smarty_function_permission_link');
 foreach ($categories as $category) {
 	$perms = Perms::get(array('type' => 'category', 'object' => $category['categId']));
 	if ($perms->admin_categories == 'y') {
@@ -313,20 +312,22 @@ foreach ($categories as $category) {
 
 		if ($userlib->object_has_one_permission($category['categId'], 'category')) {
 			$title = tra('Edit permissions for this category');
+			$class = 'text-warning';
 		} else {
 			$title = tra('Assign permissions');
+			$class = '';
 		}
-		$data .= '<a href="tiki-objectpermissions.php?objectType=category&amp;objectId=' . $category['categId']
+		$data .= '<a class="tips ' . $class . '" title="' . htmlspecialchars($category['name']) . ':' . $title
+			. '" href="tiki-objectpermissions.php?objectType=category&amp;objectId=' . $category['categId']
 			. '&amp;objectName=' . urlencode($category['name']) . '&amp;permType=category">'
-			. smarty_function_permission_link(['mode'=> 'glyph', 'label' => htmlspecialchars($category['name'])
-					. ':' . $title, 'addclass' => 'tips'], $smarty) . '</a>';
-	
+			. smarty_function_icon(array('name'=> 'permission'), $smarty) . '</a>';
+
 		$data .= '<a class="catname" href="tiki-admin_categories.php?parentId=' . $category["categId"] . '">'
 			. htmlspecialchars($category['name']) .'</a> ';
 		$treeNodes[] = array(
 			'id' => $category['categId'],
 			'parent' => $category['parentId'],
-			'data' => $data 
+			'data' => $data
 		);
 	}
 }
