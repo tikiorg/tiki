@@ -119,6 +119,12 @@ FileETag none
 # some features like assigning perms to a group with a name containing a quote will not work without this
 #php_flag magic_quotes_gpc off
 
+# Set a timezone (needed for dates and times to work properly in PHP)
+# php_value date.timezone "America/New_York"
+
+# Set a character set
+#php_value default_charset utf-8
+
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
