@@ -6858,6 +6858,9 @@ body.fullscreen {
 #debugconsole a {
   color: #ffffff;
 }
+#debugconsole a.btn {
+  color: #ffffff;
+}
 a.icon,
 img.icon {
   background: transparent;
