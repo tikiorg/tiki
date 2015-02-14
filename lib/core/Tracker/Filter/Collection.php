@@ -136,6 +136,27 @@ class Collection
 				})
 				;
 			return $collection;
+		case 'search':
+			$collection = new self($this->definition);
+			$collection->addNew($name, 'search')
+				->setLabel(tr('Search'))
+				->setHelp(tr('Full-text search across all of the content.'))
+				->setControl(new Control\TextField("tf_search"))
+				->setApplyCondition(function ($control, Search_Query $query) {
+					$value = $control->getValue();
+
+					if ($value) {
+						$o = TikiLib::lib('tiki')->get_preference('unified_default_content', array('contents'), true);
+						if (count($o) == 1 && empty($o[0])) {
+							// Use "contents" field by default, if no default is specified
+							$query->filterContent($value, array('contents'));
+						} else {
+							$query->filterContent($value, $o);
+						}
+					}
+				})
+				;
+			return $collection;
 		case 'status':
 			$types = TikiLib::lib('trk')->status_types();
 			$possibilities = array_map(function ($item) {
@@ -154,20 +175,26 @@ class Collection
 					}
 				});
 
-			$collection->addNew($name, 'multiselect')
-				->setLabel(tr('Status'))
-				->setControl(new Control\MultiSelect("tfms_status", $possibilities))
-				->setApplyCondition(function ($control, Search_Query $query) {
-					$values = $control->getValues();
+			$controls = [
+				'multiselect' => new Control\MultiSelect("tfms_status", $possibilities),
+				'checkboxes' => new Control\InlineCheckboxes("tfc_status", $possibilities),
+			];
+			foreach ($controls as $key => $control) {
+				$collection->addNew($name, $key)
+					->setLabel(tr('Status'))
+					->setControl($control)
+					->setApplyCondition(function ($control, Search_Query $query) {
+						$values = $control->getValues();
 
-					if (! empty($values)) {
-						$sub = $query->getSubQuery("tfms_status");
+						if (! empty($values)) {
+							$sub = $query->getSubQuery("tfms_status");
 
-						foreach ($values as $v) {
-							$sub->filterIdentifier((string) $v, 'tracker_status');
+							foreach ($values as $v) {
+								$sub->filterIdentifier((string) $v, 'tracker_status');
+							}
 						}
-					}
-				});
+					});
+			}
 
 			return $collection;
 		case 'facet':
@@ -245,7 +272,13 @@ class Collection
 
 	function getAvailableFields()
 	{
-		$fields = ['itemId' => tr('Item ID'), 'status' => tr('Status'), 'actions' => tr('Actions'), 'facet' => tr('Dynamic Filters')];
+		$fields = [
+			'itemId' => tr('Item ID'),
+			'status' => tr('Status'),
+			'search' => tr('Search'),
+			'actions' => tr('Actions'),
+			'facet' => tr('Dynamic Filters'),
+		];
 
 		foreach ($this->definition->getFields() as $f) {
 			$fields[$f['permName']] = $f['name'];
