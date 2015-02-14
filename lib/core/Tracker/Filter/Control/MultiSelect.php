@@ -9,10 +9,10 @@ namespace Tracker\Filter\Control;
 
 class MultiSelect implements Control
 {
-	private $fieldName;
-	private $options;
-	private $extra;
-	private $values = [];
+	protected $fieldName;
+	protected $options;
+	protected $extra;
+	protected $values = [];
 
 	function __construct($name, $options, callable $extra = null)
 	{
@@ -61,7 +61,7 @@ class MultiSelect implements Control
 		return $this->values;
 	}
 
-	private function applyOptions()
+	protected function applyOptions()
 	{
 		if (is_callable($this->options)) {
 			$this->options = call_user_func($this->options);

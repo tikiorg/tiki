@@ -466,6 +466,20 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 
 	private function addCheckboxColumn($schema, $matching, $permName, $categId, $categName)
 	{
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_function_icon');
+
+		$schema->addNew($permName, 'icon-' . $categId)
+			->setLabel($categName)
+			->addQuerySource('itemId', 'object_id')
+			->addQuerySource('categories', 'categories')
+			->setPlainReplacement('check-' . $categId)
+			->setRenderTransform(function ($value, $extra) use ($smarty, $matching, $categId) {
+				$categories = $matching($extra);
+
+				return in_array($categId, $categories) ? smarty_function_icon(['name' => 'success'], $smarty) : '';
+			})
+			;
 		$schema->addNew($permName, 'check-' . $categId)
 			->setLabel($categName)
 			->addIncompatibility($permName, 'id')
@@ -529,32 +543,44 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 			})
 			;
 
-		$collection->addNew($permName, 'any-of')
-			->setLabel(tr('%0 (any of)', $name))
-			->setControl(new Tracker\Filter\Control\MultiSelect("tf_{$permName}_all", $options))
-			->setApplyCondition(function ($control, Search_Query $query) use ($baseKey) {
-				$values = $control->getValues();
-
-				if (! empty($values)) {
-					$query->filterCategory(implode(' OR ', $values));
-				}
-			})
-			;
-
-		$type = $this->getOption('inputtype');
-
-		if ($type == 'm' || $type == 'checkbox') {
-			$collection->addNew($permName, 'all-of')
-				->setLabel(tr('%0 (all of)', $name))
-				->setControl(new Tracker\Filter\Control\MultiSelect("tf_{$permName}_all", $options))
+		$controls = [
+			'any-of' => new Tracker\Filter\Control\MultiSelect("tf_{$permName}_anyd", $options),
+			'any-of-checkboxes' => new Tracker\Filter\Control\InlineCheckboxes("tf_{$permName}_anyc", $options),
+		];
+		foreach ($controls as $key => $control) {
+			$collection->addNew($permName, $key)
+				->setLabel(tr('%0 (any of)', $name))
+				->setControl($control)
 				->setApplyCondition(function ($control, Search_Query $query) use ($baseKey) {
 					$values = $control->getValues();
 
 					if (! empty($values)) {
-						$query->filterCategory(implode(' AND ', $values));
+						$query->filterCategory(implode(' OR ', $values));
 					}
 				})
 				;
+		}
+
+		$type = $this->getOption('inputtype');
+
+		if ($type == 'm' || $type == 'checkbox') {
+			$controls = [
+				'all-of' => new Tracker\Filter\Control\MultiSelect("tf_{$permName}_alld", $options),
+				'all-of-checkboxes' => new Tracker\Filter\Control\InlineCheckboxes("tf_{$permName}_allc", $options),
+			];
+			foreach ($controls as $key => $control) {
+				$collection->addNew($permName, $key)
+					->setLabel(tr('%0 (all of)', $name))
+					->setControl($control)
+					->setApplyCondition(function ($control, Search_Query $query) use ($baseKey) {
+						$values = $control->getValues();
+
+						if (! empty($values)) {
+							$query->filterCategory(implode(' AND ', $values));
+						}
+					})
+					;
+			}
 		}
 
 		return $collection;

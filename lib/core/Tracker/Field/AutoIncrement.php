@@ -11,7 +11,7 @@
  * Letter key: ~q~
  *
  */
-class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract implements Tracker_Field_Exportable
+class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract implements Tracker_Field_Exportable, Tracker_Field_Filterable
 {
 	public static function getTypes()
 	{
@@ -130,6 +130,29 @@ class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract implements Trac
 			;
 
 		return $schema;
+	}
+
+	function getFilterCollection()
+	{
+		$filters = new Tracker\Filter\Collection($this->getTrackerDefinition());
+		$permName = $this->getConfiguration('permName');
+		$name = $this->getConfiguration('name');
+		$baseKey = $this->getBaseKey();
+
+
+		$filters->addNew($permName, 'lookup')
+			->setLabel($name)
+			->setControl(new Tracker\Filter\Control\TextField("tf_{$permName}_lookup"))
+			->setApplyCondition(function ($control, Search_Query $query) use ($baseKey) {
+				$value = $control->getValue();
+
+				if ($value) {
+					$query->filterIdentifier($value, $baseKey);
+				}
+			})
+			;
+
+		return $filters;
 	}
 }
 
