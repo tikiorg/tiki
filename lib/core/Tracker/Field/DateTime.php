@@ -11,7 +11,7 @@
  * Letter key: ~f~
  *
  */
-class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Exportable
+class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Exportable, Tracker_Field_Filterable
 {
 	public static function getTypes()
 	{
@@ -174,5 +174,23 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 		return $schema;
 	}
 
+	function getFilterCollection()
+	{
+		$filters = new Tracker\Filter\Collection($this->getTrackerDefinition());
+		$permName = $this->getConfiguration('permName');
+		$name = $this->getConfiguration('name');
+		$baseKey = $this->getBaseKey();
+
+		$filters->addNew($permName, 'range')
+			->setLabel($name)
+			->setControl(new Tracker\Filter\Control\DateRange("tf_{$permName}_range"))
+			->setApplyCondition(function ($control, Search_Query $query) use ($baseKey) {
+				if ($control->hasValue()) {
+					$query->filterRange($control->getFrom(), $control->getTo(), $baseKey);
+				}
+			});
+
+		return $filters;
+	}
 }
 
