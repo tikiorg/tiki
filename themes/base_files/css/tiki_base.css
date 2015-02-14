@@ -329,7 +329,7 @@ div.cvsup {
   display: inline;
   margin-bottom: 1em;
   max-height: 34px;
-  width: auto;
+  width: auto !important;
 }
 .layout_social .topbar_modules h1.sitetitle,
 .layout_social_modules .topbar_modules h1.sitetitle,
