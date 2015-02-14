@@ -10,7 +10,7 @@
  * 
  * - email key ~m~
  */
-class Tracker_Field_Email extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
+class Tracker_Field_Email extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Exportable, Tracker_Field_Filterable
 {
 	private $type;
 
@@ -131,6 +131,55 @@ class Tracker_Field_Email extends Tracker_Field_Abstract implements Tracker_Fiel
 	function importRemoteField(array $info, array $syncInfo)
 	{
 		return $info;
+	}
+
+	function getTabularSchema()
+	{
+		$schema = new Tracker\Tabular\Schema($this->getTrackerDefinition());
+
+		$permName = $this->getConfiguration('permName');
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_modifier_escape');
+
+		$schema->addNew($permName, 'default')
+			->setLabel($this->getConfiguration('name'))
+			->setRenderTransform(function ($value) {
+				return $value;
+			})
+			;
+		$schema->addNew($permName, 'mailto')
+			->setLabel($this->getConfiguration('name'))
+			->setPlainReplacement('default')
+			->setRenderTransform(function ($value) {
+				$escape = smarty_modifier_escape($value);
+				return "<a href=\"mailto:$escape\">$escape</a>";
+			})
+			;
+
+		return $schema;
+	}
+
+	function getFilterCollection()
+	{
+		$filters = new Tracker\Filter\Collection($this->getTrackerDefinition());
+		$permName = $this->getConfiguration('permName');
+		$name = $this->getConfiguration('name');
+		$baseKey = $this->getBaseKey();
+
+
+		$filters->addNew($permName, 'lookup')
+			->setLabel($name)
+			->setControl(new Tracker\Filter\Control\TextField("tf_{$permName}_lookup"))
+			->setApplyCondition(function ($control, Search_Query $query) use ($baseKey) {
+				$value = $control->getValue();
+
+				if ($value) {
+					$query->filterContent($value, $baseKey);
+				}
+			})
+			;
+
+		return $filters;
 	}
 }
 
