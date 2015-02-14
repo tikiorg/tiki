@@ -26,6 +26,7 @@
 				right: data.views
 			},
 			editable: true,
+			timezone: 'America/Boise',
 			events: $.service('tracker_calendar', 'list', {
                            	     	trackerId: data.trackerId,
                                 	beginField: data.begin,
@@ -81,6 +82,7 @@
 					sessionStorage.setItem( "start", event.start);
 					sessionStorage.setItem( "itemid", event.id);
 					sessionStorage.setItem( "end", event.end);
+					sessionStorage.setItem( "eventColor", event.color);
 
 					// Capture the description HTML as variables
 					// with the label being the variable name
@@ -93,7 +95,7 @@
 							sessionStorage.setItem( lOp, el.textContent);
 						}
 					});
-					// alert( "We're where we want to be\n" + event.url + "\n" + data.url + "\n" + actualURL );
+					// alert( "We're where we want to be\n" + event.color + "\n" + event.url + "\n" + data.url + "\n" + actualURL );
 
 					location.href=actualURL;
 					return false;
