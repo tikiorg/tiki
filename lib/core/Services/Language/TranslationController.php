@@ -39,6 +39,7 @@ class Services_Language_TranslationController
 		}
 
 		return array(
+			'title' => tr('Manage translations'),
 			'type' => $type,
 			'source' => $object,
 			'filters' => $this->getSearchFilters($type, $object),
@@ -108,6 +109,7 @@ class Services_Language_TranslationController
 
 		if (! $confirmed) {
 			return array(
+				'title' => tr('Manage translations'),
 				'type' => $type,
 				'source' => $source,
 				'target' => $target,

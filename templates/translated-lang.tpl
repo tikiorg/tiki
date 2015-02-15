@@ -94,7 +94,7 @@
 						</li>
 					{/foreach}
 				{/if}
-			{* For all object types: Translation maintenance *}
+			{* Translation maintenance *}
 				{capture}{if $object_type eq 'wiki page' and $tiki_p_edit eq 'y'}
 					<li role="presentation">
 						<a role="menuitem" tabindex="-1" class="tips" href="tiki-edit_translation.php?page={$trads[0].objName|escape:url}&no_bl=y" title=":{tr}Translate page{/tr}">
@@ -102,7 +102,7 @@
 						</a>
 					</li>
 					<li role="presentation">
-						<a role="menuitem" tabindex="-1" href="{service controller=translation action=manage type='wiki page' source=$page}" class="attach_detach_translation tips" data-object_type="wiki page" data-object_id="{$page|escape:'quotes'}" title=":{tr}Manage page translations{/tr}">
+						<a role="menuitem" tabindex="-1" href="{bootstrap_modal controller=translation action=manage type='wiki page' source=$page}" class="attach_detach_translation tips" data-object_type="wiki page" data-object_id="{$page|escape:'quotes'}" title=":{tr}Manage page translations{/tr}">
 							{tr}Manage translations{/tr}
 						</a>
 					</li>
@@ -113,8 +113,8 @@
 						</a>
 					</li>
 					<li role="presentation">
-						<a role="menuitem" tabindex="-1" href="{service controller=translation action=manage type=article source=$articleId}" class="attach_detach_translation" data-object_id="{$articleId|escape:'quotes'}" data-object_type="article" title="{tr}Manage article translations{/tr}">
-						{tr}Manage translations{/tr}
+						<a role="menuitem" tabindex="-1" href="{bootstrap_modal controller=translation action=manage type=article source=$articleId}" class="attach_detach_translation" data-object_id="{$articleId|escape:'quotes'}" data-object_type="article" title="{tr}Manage article translations{/tr}">
+							{tr}Manage translations{/tr}
 						</a>
 					</li>
 				{/if}{/capture}
@@ -126,20 +126,3 @@
 		</ul>
 	{/if}
 </div>
-{* this section is for the related javascripts *}
-{jq}
-	$('a.attach_detach_translation').click(function() {
-		var object_type = $(this).data('object_type');
-		var object_to_translate = $(this).data('object_id');
-		$(this).serviceDialog({
-			title: '{tr}Manage translations{/tr}',
-			data: {
-				controller: 'translation',
-				action: 'manage',
-				type: object_type,
-				source: object_to_translate
-			}
-		});
-		return false;
-	});
-{/jq}
