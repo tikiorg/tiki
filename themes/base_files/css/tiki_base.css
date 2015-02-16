@@ -360,7 +360,7 @@ div.cvsup {
 }
 @media (min-width: 768px) {
   .layout_social_modules .navbar-header {
-    top-margin: -34px;
+    margin-top: -34px;
   }
 }
 .textarea-toolbar img.icon {
@@ -2751,7 +2751,7 @@ input.tablesorter-filter {
   display: list-item;
 }
 .chosen-container .chosen-results li.highlighted {
-  background-color: #428bca;
+  background-color: #337ab7;
   background-image: none;
   color: white;
 }
