@@ -21,7 +21,8 @@ $post_info = $bloglib->get_post($postId);
 
 $blogId = $post_info["blogId"];
 $tikilib->get_perm_object($blogId, 'blog');
-$access->check_permission('tiki_p_read_blog');
+$access->check_permission('tiki_p_read_blog', '', 'blog', $blogId);
+
 
 $blog_data = $bloglib->get_blog($blogId);
 
