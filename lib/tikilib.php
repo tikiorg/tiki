@@ -5860,6 +5860,15 @@ class TikiLib extends TikiDb_Bridge
 
 
 	/**
+	 * @param {string} $data
+	 * @return string
+	 */
+	function strip_tags($data) {
+		$result = preg_replace('/[<]style[^>]*?[>](.|\n|\r)*?[<][\/]style[>]/', '', $data);
+		$result = strip_tags($result);
+		return $result;
+	}
+	/**
 	 * @param $data
 	 * @param string $outputType
 	 * @param string $is_html
