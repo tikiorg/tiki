@@ -75,7 +75,14 @@ class Services_Search_Controller
 					'title' => preg_replace_callback('/\{(\w+)\}/', function ($matches) use ($item) {
 						$key = $matches[1];
 						if (isset($item[$key])) {
-							return $item[$key];
+							// if this is a trackeritem we do not want only the name but also the trackerid listed when setting up a field
+							// otherwise its hard to distingish which field that is if multiple tracker use the same fieldname
+							// example: setup of trackerfield item-link: choose some fields from a list. currently this list show all fields of all trackers
+							if ($item['object_type'] == 'trackerfield') {
+								return $item[$key] . ' (Tracker-'. $item['tracker_id']. ')';
+							} else {
+								return $item[$key];
+							}
 						} else {
 							return tr('empty');
 						}
