@@ -1,21 +1,44 @@
-{extends 'layout_view.tpl'}
-{block name="title"}
-	{title}{$title|escape}{/title}
-{/block}
-{block name="content"}
-	{remarksbox type="{$type}" icon="{$icon}" close="n" title="{$heading}"}
-		{tr}
-			{$msg}
-		{/tr}
-		{if isset($items) && $items|count > 0}
+<div id="alert-wrapper">
+	{remarksbox type="{$ajaxtype}" icon="{$ajaxicon}" close="y" title="{$ajaxheading}"}
+		{if !empty($ajaxmsg)}
+			{$ajaxmsg|escape}
+		{/if}
+		{if isset($ajaxitems) && $ajaxitems|count > 0}
 			<ul>
-				{foreach from=$items key=id item=name}
-					<li>{$name|escape}</li>
-				{/foreach}
+				<li>
+					{foreach $ajaxitems as $name}
+						{$name|escape}{if !$name@last}, {/if}
+					{/foreach}
+				</li>
 			</ul>
 		{/if}
+		{if !empty($ajaxtoMsg)}
+			<br>
+			{$ajaxtoMsg|escape}
+		{/if}
+		{if isset($ajaxtoList) && $ajaxtoList|count > 0}
+			<ul>
+				<li>
+					{foreach $ajaxtoList as $toName}
+						{$toName|escape}{if !$toName@last}, {/if}
+					{/foreach}
+				</li>
+			</ul>
+		{/if}
+		{if !empty($ajaxtimeoutMsg)}
+			<h5>
+				{$ajaxtimeoutMsg|escape}
+			</h5>
+		{/if}<br>
+		{if !empty($ajaxtimer)}
+			<div style="text-align: center">
+				<em>{tr}Redirecting in {/tr}</em>
+				<span id="timer-seconds">
+						<em>
+							{$timer}
+						</em>
+				</span> <em>{tr}seconds{/tr}</em>
+			</div>
+		{/if}
 	{/remarksbox}
-	{if !empty($timeoutMsg)}
-		<h5>{$timeoutMsg}</h5>
-	{/if}
-{/block}
+</div>

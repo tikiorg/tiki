@@ -16,24 +16,35 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 class Services_Utilities_Controller
 {
-	/**
-	 * Used by action functions to give feedback alerts: e.g., success, warning, info, error
-	 *
-	 * @param $input
-	 * @return array
-	 */
 	function action_alert($input)
 	{
-		$input->replaceFilters(['type' => 'word',]);
+		return $this->alert($input);
+	}
+
+	function action_modal_alert($input)
+	{
+		return $this->alert($input);
+	}
+
+
+	private function alert($input)
+	{
+		$items = json_decode($input->offsetGet('ajaxitems'));
+		$toList = json_decode($input->offsetGet('ajaxtoList'));
+		$input->replaceFilters(['ajaxtype' => 'word',]);
 		return [
-			'title' => $input->offsetGet('title'),
-			'type' => $input->offsetGet('type'),
-			'icon' => $input->offsetGet('icon'),
-			'heading' => $input->offsetGet('heading'),
-			'msg' => $input->offsetGet('msg'),
-			'items' => $input->asArray('items'),
-			'timeoutMsg' => $input->offsetGet('timeoutMsg'),
+			'ajaxtitle' => $input->offsetGet('ajaxtitle'),
+			'ajaxtype' => $input->offsetGet('ajaxtype'),
+			'ajaxicon' => $input->offsetGet('ajaxicon'),
+			'ajaxheading' => $input->offsetGet('ajaxheading'),
+			'ajaxitems' => $items,
+			'ajaxmsg' => $input->offsetGet('ajaxmsg'),
+			'ajaxtoMsg' => $input->offsetGet('ajaxtoMsg'),
+			'ajaxtoList' => $toList,
+			'ajaxtimeoutMsg' => $input->offsetGet('ajaxtimeoutMsg'),
+			'ajaxtimer' => $input->offsetGet('ajaxtimer'),
 		];
 	}
+
 
 }
