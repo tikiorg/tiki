@@ -1399,7 +1399,7 @@ class TrackerLib extends TikiLib
 		return $retval;
 	}
 
-	/* listfields fieldId=>ooptions */
+	/* listfields fieldId=>fielddefinition */
 	public function get_item_fields($trackerId, $itemId, $listfields, &$itemUser, $alllang=false)
 	{
 		global $prefs, $user, $tiki_p_admin_trackers;
@@ -4347,6 +4347,18 @@ class TrackerLib extends TikiLib
 		return $fields;
 	}
 
+	/**
+	 * Get a field handler for a specific fieldtype. The handler comes initialized with the field / item data passed.
+	 * @param array $field. 
+	 * <pre>
+	 * $field = array(
+	 * 		// required
+	 * 		'trackerId' => 1 // trackerId
+	 * );
+	 * </pre 
+	 * @param array $item - array('itemId1' => value1, 'itemid2' => value2)
+	 * @return class $tracker_field_handler - i.e. Tracker_Field_Text
+	 */
 	public function get_field_handler($field, $item = array())
 	{
 		$trackerId = (int) $field['trackerId'];
@@ -4983,8 +4995,32 @@ class TrackerLib extends TikiLib
 		}
 	}
 
+	
+	/**
+	 * Render a field value for input or output. The result depends on the fieldtype. 
+	 * Note: Each fieldtype has its own input/output handler.
+	 * @param array $params - either a complete field array or a trackerid and a permName
+	 * <pre>
+	 * $param = array(
+	 * 		// required
+	 * 		'field' => array( 'fieldId' => 1, 'trackerId' => 2, 'permName' => 'myPermName', 'etc' => '...')
+	 * 		//'trackerId' => 1 // instread of 'field'
+	 * 		//'permName>' => 'myPermName' // instread of 'field'
+	 * 		
+	 * 		// optional
+	 * 		'item' => array('fieldId1' => fieldValue1, 'fieldId2' => fieldValue2) // optional
+	 * 		'itemId' = 5 // itemId
+	 * 		'process' => 'y' // ? will be used in xyz 
+	 * 
+	 * 		// unsure
+	 * 		'list_mode' => '' // i.e. 'cvs' will be used in xyz 
+	 * )
+	 * </pre>
+	 * @return string - rendered value (with html ?). i.e from $r = $handler->renderInput($context)
+	 */
 	public function field_render_value( $params )
 	{
+		// accept either a complete field definition or a trackerId/permName
 		if (isset($params['field'])) {
 			$field = $params['field'];
 		} elseif (isset($params['trackerId'], $params['permName'])) {
@@ -4994,16 +5030,23 @@ class TrackerLib extends TikiLib
 			return tr('Field not specified');
 		}
 
+		// preset $item = array('itemId' => value). Either from param or empty
 		$item = isset($params['item']) ? $params['item'] : array();
 
+		// check wether we have a value assigned to $fields. 
+		// This might be the case if $fields was passed through $params and not from the tracker definition.
+		// Build the $items['fieldId'] = value structure 
 		if (isset($field['value'])) {
 			$item[$field['fieldId']] = $field['value'];
 		}
 
+		
+		// if we have an itemId, pass it to our new item structure
 		if (isset($params['itemId'])) {
 			$item['itemId'] = $params['itemId'];
 		}
 
+		// get the handler for the specific fieldtype.
 		$handler = $this->get_field_handler($field, $item);
 
 		if ($handler && isset($params['process']) && $params['process'] == 'y') {
@@ -5012,7 +5055,8 @@ class TrackerLib extends TikiLib
 			} else {
 				$requestData = $field;
 			}
-			$field = array_merge($field, $handler->getFieldData($requestData));
+			$linkedField = $handler->getFieldData($requestData);
+			$field = array_merge($field, $linkedField);
 			$field['ins_id'] = 'ins_' . $field['fieldId'];
 			$handler = $this->get_field_handler($field, $item);
 		}

@@ -83,14 +83,23 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 		);
 	}
 
+	
+	/**
+	 * Get field data
+	 * @see Tracker_Field_Interface::getFieldData()
+	 * 
+	 */
 	function getFieldData(array $requestData = array())
 	{
 		$items = $this->getItemIds();
 		$list = $this->getItemLabels($items);
-		return array(
+		
+		$ret = array(
 			'value' => '',
 			'items' => $list,
 		);
+		
+		return $ret;
 	}
 
 	function renderInput($context = array())
@@ -232,7 +241,9 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 			$localValue = $this->getData($localField);
 			if (!$localValue) {
 				// in some cases e.g. pretty tracker $this->getData($localField) is not reliable as the info is not there
-				$localValue = $trklib->get_item_value($trackerId, $this->getItemId(), $localField);
+				// Note: this fix only works if the itemId is passed via the template
+				$itemId = $this->getItemId();
+				$localValue = $trklib->get_item_value($trackerId, $itemId, $localField);
 			}
 			if ($localFieldDef['type'] == 'r' && isset($localFieldDef['options_array'][0]) && isset($localFieldDef['options_array'][1])) {
 				$localValue = $trklib->get_item_value($localFieldDef['options_array'][0], $localValue, $localFieldDef['options_array'][1]);

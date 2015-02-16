@@ -5,14 +5,49 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+
+/**
+ * Foundation of all trackerfields. Each trackerfield defines its own class that derives from this one and also
+ * hast to implement Tracker_Field_Interface, Tracker_Field_Indexable.
+ *
+ */
 abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracker_Field_Indexable
 {
+	/**
+	 * @var string - ???
+	 */
 	private $baseKeyPrefix = '';
+
+	/**
+	 * @var array - the field definition
+	 */
 	private $definition;
+
+	/**
+	 * @var handle ??? -
+	 */
 	private $options;
+
+	/**
+	 * @var array - complex data about an item. including itemId, trackerId and values of fields by fieldId=>value pairs
+	 *
+	 */
 	private $itemData;
+
+	/**
+	 * @var array - trackerdefinition
+	 *
+	 */
 	private $trackerDefinition;
 
+
+	/**
+	 * Initialize the instance with field- and trackerdefinition and item value(s)
+	 * @param array $fieldInfo - the field definition
+	 * @param array $itemData - itemId/value pair(s)
+	 * @param array $trackerDefinition - the tracker definition.
+	 *
+	 */
 	function __construct($fieldInfo, $itemData, $trackerDefinition)
 	{
 		$this->options = Tracker_Options::fromSerialized($fieldInfo['options'], $fieldInfo);
@@ -26,13 +61,41 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 		$this->trackerDefinition = $trackerDefinition;
 	}
 
+
+	/**
+	 * Not implemented here. Its upto to the extending class.
+	 * @param array $context - ???
+	 * @return string $renderedContent depending on the $context
+	 */
 	public function renderInput($context = array())
 	{
 		return 'Not implemented';
 	}
 
+
+	/**
+	 * Render output for this field.
+	 * IMPORTANT: This method uses the following $_GET args directly: 'page'
+	 * @TODO fixit so it does not directly access the $_GET array. Better pass it as a param.
+	 * @param array $context -keys:
+	 * <pre>
+	 * $context = array(
+	 * 		// required
+	 * 		// optional
+	 * 		'url' => 'sefurl', // other values 'offset', 'tr_offset'
+	 *  	'reloff' => true, // checked only if set
+	 *  	'showpopup' => 'y', // wether to show that value in a mouseover popup
+	 *  	'showlinks' => 'n' // NO check for 'y' but 'n'
+	 *  	'list_mode' => 'csv' //
+	 * );
+	 * </pre>
+	 *
+	 * @return string $renderedContent depending on the $context
+	 */
 	public function renderOutput($context = array())
 	{
+		// only if this field is marked as link and the is no request for a csv export
+		// create the link and if required the mouseover popup
 		if ($this->isLink($context)) {
 			$itemId = $this->getItemId();
 			$query = $_GET;
@@ -73,6 +136,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 				$pre .= ' ' . $key . '="' . htmlentities($value, ENT_QUOTES, 'UTF-8') . '"';
 			}
 
+			// add the html / js for the mouseover popup
 			if (isset($context['showpopup']) && $context['showpopup'] == 'y') {
 				$popup = $this->renderPopup();
 
@@ -89,6 +153,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 
 			return $pre . $this->renderInnerOutput($context) . $post;
 		} else {
+			// no link, no mouseover popup. Note: can also be a part of a csv request
 			return $this->renderInnerOutput($context);
 		}
 	}
@@ -115,6 +180,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 			return "[-[$name]-]:\n$new";
 		}
 	}
+
 
 	private function isLink($context = array())
 	{
@@ -152,6 +218,12 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 		return false;
 	}
 
+
+	/**
+	 * Create the html/js to show a popupwindow on mouseover when the trackeritem has a field with link enabled.
+	 * The formatting is done via smarty based on 'trackeroutput/popup.tpl'
+	 * @return NULL|string $popupHtml
+	 */
 	private function renderPopup()
 	{
 		$fields = $this->trackerDefinition->getPopupFields();
@@ -192,8 +264,8 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 
 	/**
 	 * return the html for the output of a field without link, preprend...
-	 * @param
-	 * @return html
+	 * @param array $context - key 'list_mode' defines weher to output for a list or a simple value
+	 * @return string $html
 	 */
 	protected function renderInnerOutput($context = array())
 	{
