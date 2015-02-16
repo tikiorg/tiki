@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2015 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2014 by authors of the Tiki Wiki CMS Groupware Project
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -36,6 +36,7 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
 	{
 		$wikilib = TikiLib::lib('wiki');
+		$tikilib = TikiLib::lib('tiki');
 
 		$info = $this->tikilib->get_page_info($objectId, true, true);
 
@@ -50,7 +51,7 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 
 		if ($info['is_html']) {
 			// is_html flag does not get to the type handler, leaving HTML visible in the text provided
-			$info['data'] = strip_tags($info['data']);
+			$info['data'] = $tikilib->strip_tags($info['data']);
 		}
 
 		$data = array(
