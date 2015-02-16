@@ -140,6 +140,8 @@ function smarty_function_query($params, $smarty)
 
 		// If specified, use _script argument to determine the php script to link to
 		// ... else, use PHP_SELF server var
+		$php_self = '';
+
 		if ( isset($params['_script']) && $params['_script'] != '' ) {
 			$php_self = $params['_script'];
 
@@ -185,6 +187,9 @@ function smarty_function_query($params, $smarty)
 			}
 		}
 
+		if (strpos($php_self, '/') === 0) {
+			$php_self = "/" . ltrim($php_self, "/");
+		}
 		switch ( $params['_type'] ) {
 			case 'absolute_uri':
 				$ret = $base_host.$php_self.( $ret == '' ? '' : '?'.$ret );
