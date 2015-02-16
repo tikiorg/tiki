@@ -9,6 +9,9 @@
 	{accordion_group title="{tr}Quick Export{/tr}"}
 	<form method="post" class="simple no-ajax form-horizontal" action="{service controller=tracker action=dump_items trackerId=$trackerId}">
 		<p>{tr}Produce a CSV with basic formatting.{/tr}</p>
+        {remarksbox type="info" title="{tr}Note{/tr}" icon="bricks"}
+            <p>{tr}If you use field types such as 'User Preference', 'Relations' or 'Items list/Item link', please export your items through the next section below 'Export Tracker Items'{/tr}</p>
+        {/remarksbox}
 		<div>
 			<input type="submit" class="btn btn-default" value="{tr}Export{/tr}">
 		</div>
