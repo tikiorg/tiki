@@ -386,8 +386,11 @@ $smarty->assign_by_ref('last_comments', $last_comments);
 $smarty->assign('comments_cant', $comments_cant);
 $comments_maxRecords = $_REQUEST["comments_per_page"];
 $smarty->assign_by_ref('comments_coms', $comments_coms);
-$comms = array_column($comments_coms, 'title', 'threadId');
-$smarty->assign('comments_coms_encoded', json_encode($comms));
+
+$all_coms = $commentslib->get_forum_topics($_REQUEST['forumId'], 0, -1);
+$all_coms = array_column($all_coms, 'title', 'threadId');
+$smarty->assign('all_coms_encoded', json_encode($all_coms));
+
 $cat_type = 'forum';
 $cat_objid = $_REQUEST["forumId"];
 
@@ -494,6 +497,21 @@ if ($prefs['feature_forum_parse'] == 'y') {
 	$wikilib = TikiLib::lib('wiki');
 	$plugins = $wikilib->list_plugins(true, 'editpost');
 	$smarty->assign_by_ref('plugins', $plugins);
+}
+
+if (isset($_POST['ajaxtype']) || !empty($_SESSION['ajaxpost' . $_GET['deleted_parentId']])) {
+	$smarty->assign('ajaxfeedback', 'y');
+	$posted = isset($_POST['ajaxtype']) ? $_POST : $_SESSION['ajaxpost' . $_GET['deleted_parentId']];
+	unset($_SESSION['ajaxpost' . $_GET['deleted_parentId']]);
+	$ajaxpost = array_intersect_key($posted, [
+		'ajaxtype' => '',
+		'ajaxheading' => '',
+		'ajaxitems' => '',
+		'ajaxmsg' => '',
+		'ajaxtoMsg' => '',
+		'ajaxtoList' => '',
+	]);
+	$smarty->assign($ajaxpost);
 }
 
 ask_ticket('view-forum');

@@ -20,6 +20,12 @@
 		{/if}
 	</div>
 {/if}
+<div id="ajax-feedback" style="display:none"></div>
+{if isset($ajaxfeedback) && $ajaxfeedback eq 'y'}
+	<div id="posted-ajax-feedback">
+		{include file="utilities/alert.tpl"}
+	</div>
+{/if}
 {tabset}
 
 	{tab name="{tr}Forums{/tr}"}
@@ -104,7 +110,7 @@
 										{permission_link mode=glyph addclass="tips" type=forum permType=forums id=$channels[user].forumId title=$channels[user].name label="{$channels[user].name|escape}:{tr}Permissions{/tr}"}
 										{* go ahead and set action to delete_forum since that is the only action available in the multi selct dropdown *}
 										<span
-											onclick="modalActionModal(this, {ldelim}'data':'service'{rdelim});"
+											onclick="confirmModal(this, {ldelim}'data':'service'{rdelim});"
 											data-service="{service controller=forum action=delete_forum params="checked[]={$channels[user].forumId}"}"
 											class="btn-link tips"
 											title="{$channels[user].name|escape}:{tr}Delete{/tr}">
@@ -127,18 +133,24 @@
 				{if $channels}
 					<div class="text-left form-group">
 						<br>
-						<label for="batchaction" class="col-lg-5">{tr}Perform action with checked:{/tr}</label>
-						<div class="col-lg-4 input-group">
+						<label for="batchaction" class="col-lg"></label>
+						<div class="col-lg-9 input-group">
 							<select name="batchaction" class="form-control" onchange="show('groups');">
-								<option value="">{tr}...{/tr}</option>
+								<option value="no_action">
+									{tr}Select action to perform with checked forums...{/tr}
+								</option>
 								{if $tiki_p_admin_forum eq 'y'}
 									<option value="delete_forum">{tr}Delete{/tr}</option>
 								{/if}
 							</select>
+							{*
+							Currently only set up to handle delete action. Will need to change to be like
+							Will need to be changed to be like tiki-adminusers.php if more actions are added
+							*}
 							<span class="input-group-btn">
 							<button
 								type="button"
-								onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'delete_forum','closest':'form'{rdelim});"
+								onclick="confirmModal(this, {ldelim}'controller':'forum','action':'delete_forum','closest':'form'{rdelim});"
 								class="btn btn-primary">
 								{tr}OK{/tr}
 							</button>

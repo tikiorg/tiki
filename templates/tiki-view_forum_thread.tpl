@@ -14,7 +14,12 @@
 	{/if}
 	{button href="tiki-view_forum.php?forumId=$forumId" class="btn btn-default" _text="{tr}Topic List{/tr}"}
 </div>
-
+<div id="ajax-feedback" style="display:none"></div>
+{if isset($ajaxfeedback) && $ajaxfeedback eq 'y'}
+	<div id="posted-ajax-feedback">
+		{include file="utilities/alert.tpl"}
+	</div>
+{/if}
 {if $post_reported eq 'y'}
 	{remarksbox type=warning title="{tr}The post has been reported and will be reviewed by a moderator.{/tr}"}{/remarksbox}
 {/if}

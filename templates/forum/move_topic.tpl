@@ -38,7 +38,12 @@
 				</div>
 			</div>
 				<div class="submit">
-					<button type='submit' id="success" name="success" class="btn btn-primary success">
+					<button
+							id="move-topics"
+							name="move-topics"
+							type='button'
+							class="btn btn-primary"
+							onclick="confirmAction(this, {ldelim}'closest':'form'{rdelim});">
 						{tr}Move{/tr}
 					</button>
 					{$encodedItems = json_encode($items)}

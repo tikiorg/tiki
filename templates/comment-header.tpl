@@ -11,7 +11,7 @@
 	<div class="actions pull-right btn-group">
 		{if $comment.threadId eq $comments_parentId}
 			{* Only on the main forum topic *}
-			{monitor_link type="forum post" object=$comments_parentId class='link'}
+			{monitor_link type="forum post" object=$comments_parentId class='tips' title="{$comment.title|escape}:{tr}Notification{/tr}"}
 		{/if}
 		{if $tiki_p_admin_forum eq 'y'
 			|| ( $comment.userName == $user && $tiki_p_forum_edit_own_posts eq 'y' )}
@@ -31,9 +31,9 @@
 				{else}
 					data-service="{service controller=forum action=delete_topic params="forumId={$forum_info.forumId}&comments_threshold={$comments_threshold}&forumtopic[]={$comment.threadId}&comments_offset={$comments_offset}&thread_sort_mode={$thread_sort_mode}&comments_per_page={$comments_per_page}&comments_parentId={$comments_parentId}&thread_style={$thread_style}"}"
 				{/if}
-				onclick="modalActionModal(this, {ldelim}'data':'service'{rdelim});"
+				onclick="confirmModal(this, {ldelim}'data':'service'{rdelim});"
 				class="btn-link tips"
-				title="{$comments_coms[ix].title|escape}:{tr}Delete post{/tr}">
+				title="{$comment.title|escape|replace:':':' '}:{tr}Delete post{/tr}">
 					{icon name='remove'}
 			</span>
 		{/if}

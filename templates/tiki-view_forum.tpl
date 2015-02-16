@@ -90,6 +90,12 @@
 			{/foreach}
 		{/remarksbox}
 	{/if}
+	<div id="ajax-feedback" style="display:none"></div>
+	{if isset($ajaxfeedback) && $ajaxfeedback eq 'y'}
+		<div id="posted-ajax-feedback">
+			{include file="utilities/alert.tpl"}
+		</div>
+	{/if}
 
 	{if $tiki_p_forum_post_topic eq 'y'}
 		{if $comment_preview eq 'y'}
@@ -371,7 +377,7 @@
 	<input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}">
 	<input type="hidden" name="forumId" value="{$forumId|escape}">
 	<input type="hidden" name="all_forums" value="{$all_forums_encoded|escape}">
-	<input type="hidden" name="comments_coms" value="{$comments_coms_encoded|escape}">
+	<input type="hidden" name="all_coms" value="{$all_coms_encoded|escape}">
 	{if $tiki_p_admin_forum eq 'y' && ($comments_coms|@count > 0 || $queued > 0 || $reported > 0)}
 		<div class="panel panel-primary">
 			<div class="panel-heading">
@@ -382,7 +388,8 @@
 					{if $comments_coms|@count > 1}
 						<button
 							type="button"
-							onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'merge_topic','closest':'form'{rdelim});"
+							id="merge-topic"
+							onclick="confirmModal(this, {ldelim}'controller':'forum','action':'merge_topic','closest':'form'{rdelim});"
 							class="btn btn-default btn-sm tips"
 							title=":{tr}Merge selected topics{/tr}">
 								{icon name="merge"}
@@ -391,7 +398,8 @@
 					{if $all_forums|@count > 1 && $comments_coms|@count > 0}
 						<button
 							type="button"
-							onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'move_topic','closest':'form'{rdelim});"
+							id="move-topic"
+							onclick="confirmModal(this, {ldelim}'controller':'forum','action':'move_topic','closest':'form'{rdelim});"
 							class="btn btn-default btn-sm tips"
 							title=":{tr}Move selected topics{/tr}">
 								{icon name="move"}
@@ -400,21 +408,24 @@
 					{if $comments_coms|@count > 0}
 						<button
 							type="button"
-							onclick="actionModal(this, {ldelim}'controller':'forum','action':'lock_topic','closest':'form'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+							id="lock-topic"
+							onclick="confirmModal(this, {ldelim}'controller':'forum','action':'lock_topic','closest':'form'{rdelim});"
 							class="btn btn-default btn-sm tips"
 							title=":{tr}Lock selected topics{/tr}">
 								{icon name="lock"}
 						</button>
 						<button
 							type="button"
-							onclick="actionModal(this, {ldelim}'controller':'forum','action':'unlock_topic','closest':'form'{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+							id="unlock-topic"
+							onclick="confirmModal(this, {ldelim}'controller':'forum','action':'unlock_topic','closest':'form'{rdelim});"
 							class="btn btn-default btn-sm tips"
 							title=":{tr}Unlock selected topics{/tr}">
 								{icon name="unlock"}
 						</button>
 						<button
 							type="button"
-							onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'delete_topic','closest':'form'{rdelim});"
+							id="delete-topic"
+							onclick="confirmModal(this, {ldelim}'controller':'forum','action':'delete_topic','closest':'form'{rdelim});"
 							class="btn btn-default btn-sm tips"
 							title=":{tr}Delete selected topics{/tr}">
 								{icon name="remove"}
@@ -431,6 +442,7 @@
 				</div>
 			</div>
 		</div>
+		<div id="ajax-feedback" style="display:none"></div>
 	{/if}
 	<div id="{$ts_tableid}-div" class="table-responsive ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}>
 		<table id="{$ts_tableid}" class="table normal table-striped table-hover">
@@ -440,7 +452,9 @@
 				<tr>
 					{$cntcol = 0}
 					{if $tiki_p_admin_forum eq 'y'}
-						<th id="checkbox">&nbsp;</th>
+						<th id="checkbox">
+							{select_all checkbox_names='forumtopic[]'}
+						</th>
 						{$cntcol = $cntcol + 1}
 					{/if}
 					<th id="type">{self_link _sort_arg='thread_sort_mode' _sort_field='type'}{tr}Type{/tr}{/self_link}</th>
@@ -640,27 +654,59 @@
 							{if $prefs.feature_forum_topics_archiving eq 'y' && $tiki_p_admin_forum eq 'y'}
 								{if $comments_coms[ix].archived eq 'y'}
 									<span
-										onclick="actionModal(this, {ldelim}'controller':'forum','action':'unarchive_topic','params':{ldelim}'comments_parentId':'{$comments_coms[ix].threadId}'{rdelim}{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+										id="unarchive-single-topic"
 										class="btn-link tips"
-										title="{$comments_coms[ix].title|escape}:{tr}Unarchive topic{/tr}">
-											{icon name='file-archive-open'}
+										title="{$comments_coms[ix].title|escape}:{tr}Unarchive topic{/tr}"
+										onclick="confirmModal(this,
+												{ldelim}
+													'controller':'forum',
+													'action':'unarchive_topic',
+													'closest':'form',
+													'params':
+														{ldelim}
+															'comments_parentId':'{$comments_coms[ix].threadId}'
+														{rdelim}
+												{rdelim});"
+									>
+										{icon name='file-archive-open'}
 									</span>
 								{else}
 									<span
-										onclick="actionModal(this, {ldelim}'controller':'forum','action':'archive_topic','params':{ldelim}'comments_parentId':'{$comments_coms[ix].threadId}'{rdelim}{rdelim}, 'table#{$ts_tableid}', 'refreshTableRows');"
+										id="archive-single-topic"
 										class="btn-link tips"
-										title="{$comments_coms[ix].title|escape}:{tr}Archive topic{/tr}">
-											{icon name='file-archive'}
+										title="{$comments_coms[ix].title|escape}:{tr}Archive topic{/tr}"
+										onclick="confirmModal(this,
+											{ldelim}
+												'controller':'forum',
+												'action':'archive_topic',
+												'closest':'form',
+												'params':
+													{ldelim}
+														'comments_parentId':'{$comments_coms[ix].threadId}'
+													{rdelim}
+											{rdelim});"
+									>
+										{icon name='file-archive'}
 									</span>
 								{/if}
 							{/if}
 							{if $tiki_p_admin_forum eq 'y'}
 								<span
-									onclick="modalActionModal(this, {ldelim}'data':'service'{rdelim});"
-									data-service="{service controller=forum action=delete_topic params="forumtopic[]={$comments_coms[ix].threadId}&forumId={$forum_info.forumId}&comments_threshold={$comments_threshold}&comments_offset={$comments_offset}&thread_sort_mode={$thread_sort_mode}&comments_per_page={$comments_per_page}"}"
+									id="delete-single-topic"
 									class="btn-link tips"
-									title="{$comments_coms[ix].title|escape}:{tr}Delete topic{/tr}">
-										{icon name='remove'}
+									title="{$comments_coms[ix].title|escape}:{tr}Delete topic{/tr}"
+									onclick="confirmModal(this,
+										{ldelim}
+											'controller':'forum',
+											'action':'delete_topic',
+											'closest':'form',
+											'params':
+												{ldelim}
+													'forumtopic[]':'{$comments_coms[ix].threadId}'
+											{rdelim}
+										{rdelim});"
+								>
+									{icon name='remove'}
 								</span>
 							{/if}
 						</td>

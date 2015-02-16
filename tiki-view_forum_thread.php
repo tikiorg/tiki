@@ -185,11 +185,24 @@ if ($prefs['feature_score'] == 'y' && $user != $thread_info['userName']) {
 	$tikilib->score_event($thread_info['userName'], 'forum_post_is_read', "$score_user:$score_id");
 }
 
-if (empty($thread_info)) {
+if (empty($thread_info) && empty($_POST['ajaxtype'])) {
 	$smarty->assign('msg', tra("Incorrect thread"));
 	$smarty->display("error.tpl");
 	die;
+} elseif (!empty($_POST['ajaxtype']) && empty($thread_info)) {
+	$ajaxpost = array_intersect_key($_POST, [
+		'ajaxtype' => '',
+		'ajaxheading' => '',
+		'ajaxitems' => '',
+		'ajaxmsg' => '',
+		'ajaxtoMsg' => '',
+		'ajaxtoList' => '',
+	]);
+	$keys = array_keys($_POST['ajaxitems']);
+	$_SESSION['ajaxpost' . $keys[0]] = $ajaxpost;
+	header('location: ' . 'tiki-view_forum.php?forumId=' . $_POST['forumId'] . '&deleted_parentId=' . $keys[0]);
 }
+
 if (!empty($thread_info['parentId'])) {
 	$thread_info['topic'] = $commentslib->get_comment($thread_info['parentId'], null, $forum_info);
 }
@@ -318,6 +331,19 @@ if (!empty($_REQUEST['view_atts']) && $_REQUEST['view_atts'] == 'y') {
 	$atts['maxRecords'] = $fa_maxRecords;
 	$smarty->assign_by_ref('atts', $atts);
 	$smarty->assign_by_ref('view_atts', $_REQUEST['view_atts']);
+}
+
+if (isset($_POST['ajaxtype'])) {
+	$smarty->assign('ajaxfeedback', 'y');
+	$ajaxpost = array_intersect_key($_POST, [
+		'ajaxtype' => '',
+		'ajaxheading' => '',
+		'ajaxitems' => '',
+		'ajaxmsg' => '',
+		'ajaxtoMsg' => '',
+		'ajaxtoList' => '',
+	]);
+	$smarty->assign($ajaxpost);
 }
 
 // Display the template

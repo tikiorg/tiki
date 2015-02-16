@@ -76,7 +76,7 @@
 </div>
 
 {if $thread_style != 'commentStyle_headers' and isset($comment.attachments) and count($comment.attachments) > 0}
-<div class="attachments">
+<div class="attachments{$comment.threadId}">
 	{section name=ix loop=$comment.attachments}
 	<a class="tips" href="tiki-download_forum_attachment.php?attId={$comment.attachments[ix].attId}" title=":{tr}Download attachment{/tr}">
 	{icon name='attach' alt="{tr}Attachment{/tr}"}
@@ -84,11 +84,11 @@
 	{if $tiki_p_admin_forum eq 'y'}
 		<span
 			{if $first eq 'y'}
-				data-service="{service controller=forum action=delete_attachment params="topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_find_param}{$topics_threshold_param}&comments_offset={$smarty.request.topics_offset}{$thread_sort_mode_param}&comments_threshold={$smarty.request.topics_threshold}{$comments_find_param}&forumId={$forum_info.forumId}{$comments_per_page_param}&comments_parentId={$comments_parentId}&remove_attachment={$comment.attachments[ix].attId}&filename={$comment.attachments[ix].filename}"}"
+				data-service="{service controller=forum action=delete_attachment params="topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_find_param}{$topics_threshold_param}&comments_offset={$smarty.request.topics_offset}{$thread_sort_mode_param}&comments_threshold={$smarty.request.topics_threshold}{$comments_find_param}&forumId={$forum_info.forumId}{$comments_per_page_param}&comments_parentId={$comments_parentId}&remove_attachment={$comment.attachments[ix].attId}&filename={$comment.attachments[ix].filename}&"}"
 			{else}
 				data-service="{service controller=forum action=delete_attachment params="topics_offset={$smarty.request.topics_offset}&topics_sort_mode={$smarty.request.topics_sort_mode}&topics_find={$smarty.request.topics_find}&topics_threshold={$smarty.request.topics_threshold}&comments_offset={$smarty.request.topics_offset}&thread_sort_mode={$thread_sort_mode}&comments_threshold={$smarty.request.topics_threshold}&comments_find={$smarty.request.topics_find}&forumId={$forum_info.forumId}&comments_per_page={$comments_per_page}&comments_parentId={$comments_parentId}&remove_attachment={$comment.attachments[ix].attId}&filename={$comment.attachments[ix].filename}"}"
 			{/if}
-			onclick="modalActionModal(this, {ldelim}'data':'service'{rdelim});"
+			onclick="confirmModal(this, {ldelim}'data':'service'{rdelim});"
 			class="btn-link tips"
 			title=":{tr}Remove attachment{/tr}">
 				{icon name='remove' alt="{tr}Remove attachment{/tr}"}

@@ -442,6 +442,19 @@ $smarty->assign(
 	)
 );
 
+if (isset($_POST['ajaxtype'])) {
+	$smarty->assign('ajaxfeedback', 'y');
+	$ajaxpost = array_intersect_key($_POST, [
+		'ajaxtype' => '',
+		'ajaxheading' => '',
+		'ajaxitems' => '',
+		'ajaxmsg' => '',
+		'ajaxtoMsg' => '',
+		'ajaxtoList' => '',
+	]);
+	$smarty->assign($ajaxpost);
+}
+
 $sections = $tikilib->get_forum_sections();
 $smarty->assign_by_ref('sections', $sections);
 include_once ('tiki-section_options.php');

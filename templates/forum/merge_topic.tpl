@@ -38,13 +38,20 @@
 				</div>
 			</div>
 				<div class="submit">
-					<button type='submit' id="success" name="success" class="btn btn-primary success">
+					<button
+							id="merge-topics"
+							name="merge-topics"
+							type='button'
+							class="btn btn-primary"
+							onclick="confirmAction(this, {ldelim}'closest':'form'{rdelim});">
 						{tr}Merge{/tr}
 					</button>
 					{$encodedItems = json_encode($items)}
 					<input type='hidden' name='items' value="{$encodedItems|escape}">
 					{$encodedList = json_encode($toList)}
 					<input type='hidden' name='toList' value="{$encodedList|escape}">
+					{$encodedExtra = json_encode($extra)}
+					<input type='hidden' name='extra' value="{$encodedExtra|escape}">
 					<input type='hidden' name='ticket' value="{$ticket}">
 					<input type='hidden' name='daconfirm' value="y">
 				</div>

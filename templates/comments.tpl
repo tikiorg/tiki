@@ -43,17 +43,31 @@
 						{if $topics|@count > 1}
 							<button
 								type="button"
-								onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'merge_topic','closest':'form'{rdelim});"
+								id="merge-topic"
 								class="btn btn-default btn-sm tips"
-								title=":{tr}Merge selected topics{/tr}">
+								title=":{tr}Merge selected topics{/tr}"
+								onclick="confirmModal(this,
+									{ldelim}
+										'controller':'forum',
+										'action':'merge_topic',
+										'closest':'form'
+									{rdelim});"
+							>
 									{icon name="merge"}
 							</button>
 						{/if}
 						<button
-								type="button"
-								onclick="modalActionModal(this, {ldelim}'controller':'forum','action':'delete_topic','closest':'form'{rdelim});"
-								class="btn btn-default btn-sm tips"
-								title=":{tr}Delete selected posts{/tr}">
+							type="button"
+							id="delete-topic"
+							class="btn btn-default btn-sm tips"
+							title=":{tr}Delete selected posts{/tr}"
+							onclick="confirmModal(this,
+								{ldelim}
+									'controller':'forum',
+									'action':'delete_topic',
+									'closest':'form'
+								{rdelim});"
+						>
 							{icon name="remove"}
 						</button>
 					</div>

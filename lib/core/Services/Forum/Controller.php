@@ -54,13 +54,12 @@ class Services_Forum_Controller
 	{
 		parse_str($input->offsetGet('params'), $params);
 		$this->checkPerms($params['forumId']);
-		$access = TikiLib::lib('access');
-		$check = $access->check_authenticity(null, false);
+		$check = Services_Exception_BadRequest::checkAccess();
 		if (!empty($check['ticket'])) {
 			//check number of topics on first pass
 			if (count($params['forumtopic']) > 0) {
 				$items = $this->getTopicTitles($params['forumtopic']);
-				$toList = json_decode($params['comments_coms'], true);
+				$toList = json_decode($params['all_coms'], true);
 				$object = count($items) > 1 ? 'topics' : 'topic';
 				if (isset($params['comments_parentId'])) {
 					unset($toList[$params['comments_parentId']]);
@@ -68,7 +67,7 @@ class Services_Forum_Controller
 				}
 				$diff = array_diff_key($toList, $items);
 				if (count($diff) > 0) {
-					[
+					return [
 						'action' => 'merge_topic',
 						'title' => tr('Merge selected %0 with another topic', $object),
 						'items' => $items,
@@ -78,64 +77,36 @@ class Services_Forum_Controller
 						'modal' => '1',
 					];
 				} else {
-					//oops if all topics were selected
-					return [
-						'FORWARD' => [
-							'controller' => 'utilities',
-							'action' => 'alert',
-							'type' => 'warning',
-							'title' => tra('Topic merge feedback'),
-							'heading' => tra('Oops'),
-							'msg' => tra('All topics or posts were selected, leaving none to merge with. Please make your selection again.'),
-							'modal' => '1'
-						]
-					];
+					throw new Services_Exception(tra('All topics or posts were selected, leaving none to merge with. Please make your selection again.'), 409);
 				}
-				return [
-					'action' => 'merge_topic',
-					'title' => tr('Merge selected %0 with another topic', $object),
-					'items' => $items,
-					'ticket' => $check['ticket'],
-					'toList' => $toList,
-					'object' => $object,
-					'modal' => '1',
-				];
 			} else {
-				//oops if no topics were selected
-				return [
-					'FORWARD' => [
-						'controller' => 'utilities',
-						'action' => 'alert',
-						'type' => 'warning',
-						'title' => tra('Topic merge feedback'),
-						'heading' => tra('Oops'),
-						'msg' => tra('No topics were selected. Please select the topics you wish to merge before clicking the merge button.'),
-						'modal' => '1'
-					]
-				];
+				throw new Services_Exception(tra('No topics were selected. Please select the topics you wish to merge before clicking the merge button.'), 409);
 			}
 		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['toId'])) {
 			$items = json_decode($input->offsetGet('items'), true);
+			$toList = json_decode($input->offsetGet('toList'), true);
 			$toId = $input->toId->int();
 			foreach ($items as $id => $topic) {
 				if ($id !== $toId) {
 					$this->lib->set_parent($id, $toId);
 				}
 			}
-			return true;
- 		} elseif ($check === false) {
+			$toName = $toList[$toId];
+			if (count($items) == 1) {
+				$msg = tr('The following topic has been merged with the %0 topic:', $toName);
+			} else {
+				$msg = tr('The following topics have been merged with the %0 topic:', $toName);
+			}
 			return [
-				'FORWARD' => [
-					'controller' => 'utilities',
-					'action' => 'alert',
-					'type' => 'error',
-					'title' => tra('Topic merge feedback'),
-					'heading' => tra('Error'),
-					'msg' => tra('Sea Surfing (CSRF) detected. Operation blocked.'),
-					'modal' => '1'
+				'extra' => 'post',
+				'feedback' => [
+					'ajaxtype' => 'feedback',
+					'ajaxheading' => tra('Success'),
+					'ajaxitems' => $items,
+					'ajaxmsg' => $msg,
 				]
 			];
-		}
+ 		}
 	}
 
 	/**
@@ -148,15 +119,13 @@ class Services_Forum_Controller
 	{
 		parse_str($input->offsetGet('params'), $params);
 		$this->checkPerms($params['forumId']);
-		$access = TikiLib::lib('access');
-		$check = $access->check_authenticity(null, false);
+		$check = Services_Exception_BadRequest::checkAccess();
 		if (!empty($check['ticket'])) {
 			//check number of topics on first pass
 			if (count($params['forumtopic']) > 0) {
 				$items = $this->getTopicTitles($params['forumtopic']);
 				$toList = json_decode($params['all_forums'], true);
 				return [
-					'action' => 'move_topic',
 					'title' => tra('Move selected topics to another forum'),
 					'items' => $items,
 					'ticket' => $check['ticket'],
@@ -166,21 +135,11 @@ class Services_Forum_Controller
 					'modal' => '1',
 				];
 			} else {
-				//oops if no topics were selected
-				return [
-					'FORWARD' => [
-						'controller' => 'utilities',
-						'action' => 'alert',
-						'type' => 'warning',
-						'title' => tra('Topic move feedback'),
-						'heading' => tra('Oops'),
-						'msg' => tra('No topics were selected. Please select the topics you wish to move before clicking the move button.'),
-						'modal' => '1'
-					]
-				];
+				throw new Services_Exception(tra('No topics were selected. Please select the topics you wish to move before clicking the move button.'), 409);
 			}
 		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['toId'])) {
 			$items = json_decode($input->offsetGet('items'), true);
+			$toList = json_decode($input->offsetGet('toList'), true);
 			$toId = $input->toId->int();
 			$forumId = $input->forumId->int();
 			foreach ($items as $id => $topic) {
@@ -191,17 +150,19 @@ class Services_Forum_Controller
 				$this->lib->forum_prune($forumId);
 				$this->lib->forum_prune($toId);
 			}
-			return true;
-		} elseif ($check === false) {
+			$toName = $toList[$toId];
+			if (count($items) == 1) {
+				$msg = tr('The following topic has been moved to the %0 forum:', $toName);
+			} else {
+				$msg = tr('The following topics have been moved to the %0 forum:', $toName);
+			}
 			return [
-				'FORWARD' => [
-					'controller' => 'utilities',
-					'action' => 'alert',
-					'type' => 'error',
-					'title' => tra('Topic move feedback'),
-					'heading' => tra('Error'),
-					'msg' => tra('Sea Surfing (CSRF) detected. Operation blocked.'),
-					'modal' => '1'
+				'extra' => 'post',
+				'feedback' => [
+					'ajaxtype' => 'feedback',
+					'ajaxheading' => tra('Success'),
+					'ajaxitems' => $items,
+					'ajaxmsg' => $msg,
 				]
 			];
 		}
@@ -218,8 +179,7 @@ class Services_Forum_Controller
 	{
 		parse_str($input->offsetGet('params'), $params);
 		$this->checkPerms($params['forumId']);
-		$access = TikiLib::lib('access');
-		$check = $access->check_authenticity(null, false);
+		$check = Services_Exception_BadRequest::checkAccess();
 		if (!empty($check['ticket'])) {
 			//check number of topics on first pass
 			if (count($params['forumtopic']) > 0) {
@@ -238,26 +198,17 @@ class Services_Forum_Controller
 						'customVerb' => tra('delete'),
 						'customObject' => tr('forum %0', $object),
 						'items' => $items,
+						'extra' => [
+							'forumId' => $params['forumId']
+						],
 						'ticket' => $check['ticket'],
-						'extra' => ['forumId' => $params['forumId']],
 						'modal' => '1',
 					]
 				];
 			} else {
-				//oops if no topics were selected
-				return [
-					'FORWARD' => [
-						'controller' => 'utilities',
-						'action' => 'alert',
-						'type' => 'warning',
-						'title' => tra('Topic delete feedback'),
-						'heading' => tra('Oops'),
-						'msg' => tra('No topics were selected. Please select the topics you wish to delete before clicking the delete button.'),
-						'modal' => '1'
-					]
-				];
+				throw new Services_Exception(tra('No topics were selected. Please select the topics you wish to delete before clicking the delete button.'), 409);
 			}
-		} elseif ($check === true && count($_POST['items']) > 0) {
+		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST' && count($_POST['items']) > 0) {
 			$items = $input->asArray('items');
 			foreach ($items as $id => $name) {
 				if (is_numeric($id)) {
@@ -266,17 +217,19 @@ class Services_Forum_Controller
 			}
 			$extra = $input->asArray('extra');
 			$this->lib->forum_prune((int) $extra['forumId']);
-			return true;
-		} elseif ($check === false) {
+			if (count($items) == 1) {
+				$msg = tra('The following topic has been deleted:');
+			} else {
+				$msg = tra('The following topics have been deleted:');
+			}
 			return [
-				'FORWARD' => [
-					'controller' => 'utilities',
-					'action' => 'alert',
-					'type' => 'error',
-					'title' => tra('Topic delete feedback'),
-					'heading' => tra('Error'),
-					'msg' => tra('Sea Surfing (CSRF) detected. Operation blocked.'),
-					'modal' => '1'
+				'extra' => 'post',
+				'feedback' => [
+					'forumId' => $extra['forumId'],
+					'ajaxtype' => 'feedback',
+					'ajaxheading' => tra('Success'),
+					'ajaxitems' => $items,
+					'ajaxmsg' => $msg,
 				]
 			];
 		}
@@ -293,8 +246,7 @@ class Services_Forum_Controller
 	{
 		parse_str($input->offsetGet('params'), $params);
 		$this->checkPerms($params['forumId']);
-		$access = TikiLib::lib('access');
-		$check = $access->check_authenticity(null, false);
+		$check = Services_Exception_BadRequest::checkAccess();
 		if (!empty($check['ticket'])) {
 			//check number of topics on first pass
 			if (!empty($params['remove_attachment'])) {
@@ -313,18 +265,7 @@ class Services_Forum_Controller
 					]
 				];
 			} else {
-				//oops if no attachments were selected
-				return [
-					'FORWARD' => [
-						'controller' => 'utilities',
-						'action' => 'alert',
-						'type' => 'warning',
-						'title' => tra('Attachment delete feedback'),
-						'heading' => tra('Oops'),
-						'msg' => tra('No attachments were selected. Please select an attachment to delete.'),
-						'modal' => '1'
-					]
-				];
+				throw new Services_Exception(tra('No attachments were selected. Please select an attachment to delete.'), 409);
 			}
 		} elseif ($check === true && count($_POST['items']) > 0) {
 			$items = $input->asArray('items');
@@ -333,17 +274,18 @@ class Services_Forum_Controller
 					$this->lib->remove_thread_attachment($id);
 				}
 			}
-			return true;
-		} elseif ($check === false) {
+			if (count($items) == 1) {
+				$msg = tra('The following attachment has been deleted:');
+			} else {
+				$msg = tra('The following attachments have been deleted:');
+			}
 			return [
-				'FORWARD' => [
-					'controller' => 'utilities',
-					'action' => 'alert',
-					'type' => 'error',
-					'title' => tra('Attachment delete feedback'),
-					'heading' => tra('Error'),
-					'msg' => tra('Sea Surfing (CSRF) detected. Operation blocked.'),
-					'modal' => '1'
+				'extra' => 'post',
+				'feedback' => [
+					'ajaxtype' => 'feedback',
+					'ajaxheading' => tra('Success'),
+					'ajaxitems' => $items,
+					'ajaxmsg' => $msg,
 				]
 			];
 		}
@@ -379,26 +321,14 @@ class Services_Forum_Controller
 	function action_delete_forum($input)
 	{
 		parse_str($input->offsetGet('params'), $params);
-		if (isset($params['batchaction']) && $params['batchaction'] !== 'delete_forum') {
-			//oops if no action is selected
-			return [
-				'FORWARD' => [
-					'controller' => 'utilities',
-					'action' => 'alert',
-					'type' => 'warning',
-					'title' => tra('Forum delete feedback'),
-					'heading' => tra('Oops'),
-					'msg' => tra('No action was selected. Please select an action before clicking the OK button.'),
-					'modal' => '1'
-				]
-			];
+		if (isset($params['batchaction']) && $params['batchaction'] === 'no_action') {
+			throw new Services_Exception(tra('No action was selected. Please select an action before clicking OK.'), 409);
 		}
 		$perms = Perms::get('forum', $params['checked']);
 		if (!$perms->admin_forum) {
 			throw new Services_Exception_Denied(tr('Reserved for forum administrators'));
 		}
-		$access = TikiLib::lib('access');
-		$check = $access->check_authenticity(null, false);
+		$check = Services_Exception_BadRequest::checkAccess();
 		if (!empty($check['ticket'])) {
 			//check number of topics on first pass
 			if (count($params['checked']) > 0) {
@@ -418,18 +348,7 @@ class Services_Forum_Controller
 					]
 				];
 			} else {
-				//oops if no topics were selected
-				return [
-					'FORWARD' => [
-						'controller' => 'utilities',
-						'action' => 'alert',
-						'type' => 'warning',
-						'title' => tra('Forum delete feedback'),
-						'heading' => tra('Oops'),
-						'msg' => tra('No forums were selected. Please select the forums you wish to delete before clicking the OK button.'),
-						'modal' => '1'
-					]
-				];
+				throw new Services_Exception(tra('No forums were selected. Please select a forum to delete.'), 409);
 			}
 		} elseif ($check === true && count($_POST['items']) > 0) {
 			$items = $input->asArray('items');
@@ -438,17 +357,18 @@ class Services_Forum_Controller
 					$this->lib->remove_forum($id);
 				}
 			}
-			return true;
-		} elseif ($check === false) {
+			if (count($items) == 1) {
+				$msg = tra('The following forum has been deleted:');
+			} else {
+				$msg = tra('The following forums have been deleted:');
+			}
 			return [
-				'FORWARD' => [
-					'controller' => 'utilities',
-					'action' => 'alert',
-					'type' => 'error',
-					'title' => tra('Topic delete feedback'),
-					'heading' => tra('Error'),
-					'msg' => tra('Sea Surfing (CSRF) detected. Operation blocked.'),
-					'modal' => '1'
+				'extra' => 'post',
+				'feedback' => [
+					'ajaxtype' => 'feedback',
+					'ajaxheading' => tra('Success'),
+					'ajaxitems' => $items,
+					'ajaxmsg' => $msg,
 				]
 			];
 		}
@@ -517,28 +437,48 @@ class Services_Forum_Controller
 	 */
 	private function lockUnlock($input, $type)
 	{
-		parse_str($input->params->none(), $params);
+		parse_str($input->offsetGet('params'), $params);
 		$this->checkPerms($params['forumId']);
-		$fn = $type . '_comment';
-		if (count($params['forumtopic']) > 0) {
-			check_ticket('view-forum');
-			$items = $this->getTopicTitles($params['forumtopic']);
+		$check = Services_Exception_BadRequest::checkAccess();
+		if (!empty($check['ticket'])) {
+			if (count($params['forumtopic']) > 0) {
+				$items = $this->getTopicTitles($params['forumtopic']);
+				$object = count($items) > 1 ? 'topics' : 'topic';
+				return [
+					'FORWARD' => [
+						'controller' => 'access',
+						'action' => 'confirm',
+						'title' => tr('Please confirm %0', tra($type)),
+						'confirmAction' => 'tiki-forum-' . $type . '_topic',
+						'customVerb' => tra($type),
+						'customObject' => $object,
+						'items' => $items,
+						'ticket' => $check['ticket'],
+						'modal' => '1',
+					]
+				];
+			} else {
+				throw new Services_Exception(tr('No topics were selected. Please select the topics you wish to %0 before clicking the %0 button.', tra($type)), 409);
+			}
+		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST') {
+			$items = $input->asArray('items');
+			$fn = $type . '_comment';
 			foreach ($items as $id => $topic) {
 				$this->lib->$fn($id);
 			}
-			return true;
-		} else {
-			//oops if no topics were selected
+			$typedone = $type == 'lock' ? tra('locked') : tra('unlocked');
+			if (count($items) == 1) {
+				$msg = tr('The following topic has been %0:', $typedone);
+			} else {
+				$msg = tr('The following topics have been %0:', $typedone);
+			}
 			return [
-				'FORWARD' => [
-					'controller' => 'utilities',
-					'action' => 'alert',
-					'type' => 'warning',
-					'title' => tr('Topic %0 feedback', tra($type)),
-					'heading' => tra('Oops'),
-					'msg' => tr('No topics were selected. Please select the topics you wish to %0 before clicking the %1 button.',
-						tra($type), tra($type)),
-					'modal' => '1'
+				'extra' => 'post',
+				'feedback' => [
+					'ajaxtype' => 'feedback',
+					'ajaxheading' => tra('Success'),
+					'ajaxitems' => $items,
+					'ajaxmsg' => $msg,
 				]
 			];
 		}
@@ -553,25 +493,49 @@ class Services_Forum_Controller
 	 */
 	private function archiveUnarchive($input, $type)
 	{
-		$params = $input->asArray('params');
+		parse_str($input->offsetGet('params'), $params);
 		$this->checkPerms($params['forumId']);
-		$fn = $type . '_thread';
-		if (!empty($params['comments_parentId'])) {
-			check_ticket('view-forum');
-			$this->lib->$fn($params['comments_parentId']);
-			return true;
-		} else {
-			//oops if no topics were selected
+		$check = Services_Exception_BadRequest::checkAccess();
+		if (!empty($check['ticket'])) {
+			if (!empty($params['comments_parentId'])) {
+				$items = $this->getTopicTitles([$params['comments_parentId']]);
+				return [
+					'FORWARD' => [
+						'controller' => 'access',
+						'action' => 'confirm',
+						'title' => tr('Please confirm %0', tra($type)),
+						'confirmAction' => 'tiki-forum-' . $type . '_topic',
+						'customVerb' => tra($type),
+						'customObject' => tra('thread'),
+						'items' => $items,
+						'extra' => [
+							'comments_parentId' => $params['comments_parentId']
+						],
+						'ticket' => $check['ticket'],
+						'modal' => '1',
+					]
+				];
+			} else {
+				throw new Services_Exception(tr('No threads were selected. Please select the threads you wish to %0.', tra($type)), 409);
+			}
+		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST') {
+			$items = $input->asArray('items');
+			$extra = $input->asArray('extra');
+			$fn = $type . '_thread';
+			$this->lib->$fn($extra['comments_parentId']);
+			$typedone = $type == 'archive' ? tra('archived') : tra('unarchived');
+			if (count($items) == 1) {
+				$msg = tr('The following thread has been %0:', $typedone);
+			} else {
+				$msg = tr('The following thread have been %0:', $typedone);
+			}
 			return [
-				'FORWARD' => [
-					'controller' => 'utilities',
-					'action' => 'alert',
-					'type' => 'warning',
-					'title' => tr('Topic %0 feedback', tra($type)),
-					'heading' => tra('Oops'),
-					'msg' => tr('No topics were selected. Please select the topics you wish to %0 before clicking the %1 button.',
-						tra($type), tra($type)),
-					'modal' => '1'
+				'extra' => 'post',
+				'feedback' => [
+					'ajaxtype' => 'feedback',
+					'ajaxheading' => tra('Success'),
+					'ajaxitems' => $items,
+					'ajaxmsg' => $msg,
 				]
 			];
 		}
