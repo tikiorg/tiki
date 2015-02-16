@@ -59,6 +59,10 @@ function smarty_function_trackerfields($params, $smarty)
 			$sections[$title][] = $field;
 		}
 		$permName = $field['permName'];
+		
+		$itemId = isset($params['itemId']) ? $params['itemId'] : null;
+		
+		
 		$auto['input'][$permName] = new Tiki_Render_Lazy(function () use ($field, $smarty) {
 			return smarty_function_trackerinput([
 				'field' => $field,
@@ -66,21 +70,28 @@ function smarty_function_trackerfields($params, $smarty)
 				'list_mode' => 'n',
 			], $smarty);
 		});
-		$auto['output'][$permName] = new Tiki_Render_Lazy(function () use ($field, $smarty) {
+		
+		
+		// the item-list field needs the itemId here - passed via the template - otherwise it does not show a value in the template
+		$auto['output'][$permName] = new Tiki_Render_Lazy(function () use ($field, $smarty, $itemId) {
 			return smarty_function_trackeroutput([
 				'field' => $field,
 				'showlinks' => 'n',
 				'list_mode' => 'n',
+				'itemId' => $itemId,
 			], $smarty);
 		});
-		if (isset($params['itemId'])) {
-			$auto['inline'][$permName] = new Tiki_Render_Lazy(function () use ($field, $smarty, $params) {
+		
+		
+		// not sure wether we can always pass itemId bc i do not know wether the key or the value is checked
+		if ($itemId) {
+			$auto['inline'][$permName] = new Tiki_Render_Lazy(function () use ($field, $smarty, $itemId) {
 				return smarty_function_trackeroutput([
 					'field' => $field,
 					'showlinks' => 'n',
 					'list_mode' => 'n',
 					'editable' => 'inline',
-					'itemId' => $params['itemId'],
+					'itemId' => $itemId,
 				], $smarty);
 			});
 		}
@@ -101,6 +112,8 @@ function smarty_function_trackerfields($params, $smarty)
 	}
 	
 	// Compatibility attempt with the legacy $f_X format.
+	// Note: Here we set the the closures for the field, NOT the final values!
+	// The final values are set in trackerlib.php using field_render_value()
 	foreach ($fields as $field) {
 		$id = $field['fieldId'];
 		$permName = $field['permName'];
