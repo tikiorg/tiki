@@ -2485,11 +2485,6 @@ body.tiki.navbar-padding {
   margin-bottom: 0;
   min-height: 32px;
 }
-@media print {
-  body a[href]:after {
-    content: none;
-  }
-}
 /* becomes height using padding (so it's divided by 2) */
 /* url(icons/loading.gif); */
 /* Filter widget transition */
@@ -2751,7 +2746,7 @@ input.tablesorter-filter {
   display: list-item;
 }
 .chosen-container .chosen-results li.highlighted {
-  background-color: #337ab7;
+  background-color: #428bca;
   background-image: none;
   color: white;
 }
@@ -3084,6 +3079,38 @@ input.tablesorter-filter {
     background-image: url("../../../vendor/alxlit/bootstrap-chosen/chosen-sprite@2x.png") !important;
     background-size: 52px 37px !important;
     background-repeat: no-repeat !important;
+  }
+}
+@media print {
+  body a[href]:after {
+    content: none;
+  }
+  body {
+    font-size: 12px;
+  }
+  h1,
+  .h1 {
+    font-size: 26px;
+  }
+  h2,
+  .h2 {
+    font-size: 20px;
+  }
+  h3,
+  .h3 {
+    font-size: 14px;
+  }
+  h4,
+  .h4 {
+    font-size: 14px;
+  }
+  .table > thead > tr > th,
+  .table > tbody > tr > th,
+  .table > tfoot > tr > th,
+  .table > thead > tr > td,
+  .table > tbody > tr > td,
+  .table > tfoot > tr > td {
+    padding: 4px;
   }
 }
 /* End of file */
