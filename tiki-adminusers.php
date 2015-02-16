@@ -370,36 +370,6 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 	}
 
 } elseif (isset($_REQUEST['action'])) {
-	if ($_REQUEST['action'] == 'delete' && isset($_REQUEST['user']) && $_REQUEST['user'] != 'admin') {
-		$access->check_authenticity(tra('Are you sure you want to delete this user?'));
-		$userlib->remove_user($_REQUEST['user']);
-		$tikifeedback = array();
-
-		$tikifeedback[] = array(
-			'num' => 0,
-			'mes' => sprintf(tra('%s %s successfully deleted.'), tra('user'), $_REQUEST['user'])
-		);
-		$logslib->add_log('adminusers', sprintf(tra('Deleted account %s'), $_REQUEST['user']), $user);
-	}
-
-	if ($_REQUEST['action'] == 'removegroup' && isset($_REQUEST['user']) && !empty($_REQUEST['group'])) {
-		if ($tiki_p_admin != 'y' && !array_key_exists($_REQUEST['group'], $userGroups)) {
-			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra('Permission denied') . ' ' . $_REQUEST['group']);
-			$smarty->display('error.tpl');
-			die;
-		}
-		if ($_REQUEST['user'] === 'admin' && $_REQUEST['group'] === 'Admins') {
-			$access->check_authenticity(tra('Are you sure you want to remove the admin user from the Admins group? You may not be able to administer your Tiki any more if you do this!'));
-		} else {
-			$access->check_authenticity(tra('Are you sure you want to remove this user from this group?'));
-		}
-		$userlib->remove_user_from_group($_REQUEST['user'], $_REQUEST['group']);
-		$tikifeedback[] = array(
-			'num' => 0,
-			'mes' => sprintf(tra('%s %s removed from %s %s.'), tra('user'), $_REQUEST['user'], tra('group'), $_REQUEST['group'])
-		);
-	}
 
 	if ($_REQUEST['action'] == 'email_due' && isset($_REQUEST['user'])) {
 		$access->check_authenticity(tra('Are you sure you want to reset email due for this user?'));
@@ -416,161 +386,6 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 	if (isset($tikifeedback[0]['mes'])) {
 		$logslib->add_log('adminusers', $tikifeedback[0]['mes'], $user);
 	}
-//handle "perform action with checked" options
-} elseif (!empty($_REQUEST['submit_mult']) && !empty($_REQUEST['checked'])) {
-	if ($_REQUEST['submit_mult'] == 'remove_users' || $_REQUEST['submit_mult'] == 'remove_users_with_page'
-			|| $_REQUEST['submit_mult'] == 'remove_users_and_ban' || $_REQUEST['submit_mult'] == 'remove_users_with_page_and_ban' ) {
-		$access->check_authenticity(tra('Are you sure you want to delete these users?'));
-
-		foreach ($_REQUEST['checked'] as $deleteuser) {
-			if ($deleteuser != 'admin') {
-				$userlib->remove_user($deleteuser);
-				$logslib->add_log('adminusers', sprintf(tra('Deleted account %s'), $deleteuser), $user);
-
-				if ($_REQUEST['submit_mult'] == 'remove_users_with_page'  || $_REQUEST['submit_mult'] == 'remove_users_with_page_and_ban' )
-					$tikilib->remove_all_versions($prefs['feature_wiki_userpage_prefix'] . $deleteuser);
-
-				$tikifeedback[] = array(
-					'num' => 0,
-					'mes' => sprintf(tra('%s %s successfully deleted.'), tra('user'), $deleteuser)
-				);
-			}
-		}
-	}
-
-	$checked = is_array($_REQUEST['checked']) ? $_REQUEST['checked'] : array($_REQUEST['checked']);
-	// Ban IP adresses of multiple spammers
-	if ($_REQUEST['submit_mult'] == 'ban_ips' || $_REQUEST['submit_mult'] == 'remove_users_and_ban' 
-		|| $_REQUEST['submit_mult'] == 'remove_users_with_page_and_ban' ) {
-			ask_ticket('admin-banning');
-			$mass_ban_ip = implode('|', $checked);
-			header('Location: tiki-admin_banning.php?mass_ban_ip_users=' . $mass_ban_ip);
-			exit;
-	}	
-} elseif (!empty($_REQUEST['group_management']) && $_REQUEST['group_management'] == 'add') {
-	$access->check_authenticity(tra('Are you sure you want to add this user to these groups?'));
-
-	if (!empty($_REQUEST['checked_groups']) && !empty($_REQUEST['checked'])) {
-		foreach ($_REQUEST['checked'] as $assign_user) {
-			foreach ($_REQUEST['checked_groups'] as $group) {
-				if ($tiki_p_admin == 'y' || array_key_exists($group, $userGroups)) {
-					$userlib->assign_user_to_group($assign_user, $group);
-					$msg = sprintf(tra('%s %s assigned to %s %s.'), tra('user'), $assign_user, tra('group'), $group);
-					$tikifeedback[] = array(
-						'num' => 0,
-						'mes' => $msg
-					);
-					$logslib->add_log('adminusers', $msg, $user);
-				}
-			}
-		}
-	}
-
-} elseif (!empty($_REQUEST['group_management']) && $_REQUEST['group_management'] == 'remove') {
-	$access->check_authenticity(tra('Are you sure you want to remove this user from these groups?'));
-
-	if (!empty($_REQUEST['checked_groups']) && !empty($_REQUEST['checked'])) {
-		foreach ($_REQUEST['checked'] as $assign_user) {
-			foreach ($_REQUEST['checked_groups'] as $group) {
-				if ($tiki_p_admin == 'y' || array_key_exists($group, $userGroups)) {
-					$userlib->remove_user_from_group($assign_user, $group);
-					$msg = sprintf(tra('%s %s removed from %s %s.'), tra('user'), $assign_user, tra('group'), $group);
-					$tikifeedback[] = array(
-						'num' => 0,
-						'mes' => sprintf(tra('%s %s removed from %s %s.'), tra('user'), $assign_user, tra('group'), $group)
-					);
-					$logslib->add_log('adminusers', $msg, $user);
-				}
-			}
-		}
-	}
-
-} elseif (!empty($_REQUEST['set_default_groups']) && $_REQUEST['set_default_groups'] == 'y') {
-
-	$access->check_authenticity(tra('Are you sure you want to set the default groups for these users?'));
-
-	if (!empty($_REQUEST['checked_group']) && !empty($_REQUEST['checked'])) {
-		foreach ($_REQUEST['checked'] as $assign_user) {
-			$group = $_REQUEST['checked_group'];
-			if ($tiki_p_admin == 'y' || array_key_exists($group, $userGroups)) {
-				$userlib->set_default_group($assign_user, $group);
-				$msg = sprintf(tra('group %s set as the default group for user %s.'), $group, $assign_user);
-				$tikifeedback[] = array(
-					'num' => 0,
-					'mes' => $msg
-				);
-				$logslib->add_log('adminusers', $msg, $user);
-			}
-		}
-	}
-
-} elseif (!empty($_REQUEST['emailChecked']) && $_REQUEST['emailChecked'] == 'y' && !empty($_REQUEST['checked'])) {
-	$access->check_authenticity(tra('Are you sure you want to send a wiki page as an email to these users?'));
-	if (empty($_REQUEST['wikiTpl']) || !($info = $tikilib->get_page_info($_REQUEST['wikiTpl']))) {
-		$smarty->assign('msg', tra('Page cannot be found'));
-		$smarty->display('error.tpl');
-		die;
-	}
-
-	if (empty($info['description'])) {
-		$smarty->assign('msg', tra('The description is mandatory as it is used as mail subject'));
-		$smarty->display('error.tpl');
-		die;
-	}
-
-	include_once ('lib/webmail/tikimaillib.php');
-	$mail = new TikiMail();
-
-	if (!empty($_REQUEST['bcc'])) {
-		if (!validate_email($_REQUEST['bcc'])) {
-			$smarty->assign('msg', tra('Invalid or unknown email'));
-			$smarty->display('error.tpl');
-			die;
-		}
-		$mail->setBcc($_REQUEST['bcc']);
-		$bccmsg = tr('and blind copied to %0', $_REQUEST['bcc']);
-	}
-
-	$foo = parse_url($_SERVER['REQUEST_URI']);
-	$machine = $tikilib->httpPrefix(true) . dirname($foo['path']);
-	$machine = preg_replace('!/$!', '', $machine); // just incase
-	$smarty->assign_by_ref('mail_machine', $machine);
-
-	foreach ($_REQUEST['checked'] as $mail_user) {
-		$smarty->assign_by_ref('user', $mail_user);
-		$mail->setUser($mail_user);
-		$mail->setSubject($info['description']);
-		$text = $smarty->fetch('wiki:' . $_REQUEST['wikiTpl']);
-		if (empty($text)) {
-			$smarty->assign('msg', tra('The template page has no text or it cannot be extracted.'));
-			$smarty->display('error.tpl');
-			die;
-		}
-		$mail->setHtml($text);
-		if (!$mail->send($userlib->get_user_email($mail_user))) {
-			$msg = tra('Unable to send mail');
-			if ($tiki_p_admin == 'y') {
-				$mailerrors = print_r($mail->errors, true);
-				$msg .= $mailerrors;
-			}
-			$smarty->assign('msg', $msg);
-			$smarty->display('error.tpl');
-			die;
-		} else {
-			if (!empty($_REQUEST['bcc']))
-			$msg = sprintf(tra('Mail sent to user %s'), $mail_user);
-			$msg = !empty($bccmsg) ? $msg . ' ' . $bccmsg : $msg;
-			if (!empty($msg)) {
-				$tikifeedback[] = array(
-					'num' => 0,
-					'mes' => $msg
-				);
-				$logslib->add_log('adminusers', $msg, $user);
-			}
-		}
-	}
-
-	$smarty->assign_by_ref('user', $user);
 }
 
 if (!isset($_REQUEST['sort_mode'])) {
@@ -850,7 +665,20 @@ if (count($errors) > 0) {
 	exit_with_error_messages($errors);
 }
 
+if (isset($_POST['ajaxtype'])) {
+	$smarty->assign('ajaxfeedback', 'y');
+	$ajaxpost = array_intersect_key($_POST, [
+		'ajaxtype' => '',
+		'ajaxheading' => '',
+		'ajaxitems' => '',
+		'ajaxmsg' => '',
+		'ajaxtoMsg' => '',
+		'ajaxtoList' => '',
+	]);
+	$smarty->assign($ajaxpost);
+}
 $smarty->assign_by_ref('all_groups', $all_groups);
+$smarty->assign('all_groups_encoded', json_encode($all_groups));
 $smarty->assign('userinfo', $userinfo);
 $smarty->assign('userId', $_REQUEST['user']);
 $smarty->assign('username', $username);

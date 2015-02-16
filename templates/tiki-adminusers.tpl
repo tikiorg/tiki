@@ -24,7 +24,12 @@
 			{if $prefs.feature_intertiki_import_preferences eq 'y'}{tr}Since this Tiki site is in slave mode and imports preferences, the master user preferences will be automatically reimported at each login{/tr}{/if}
 		{/remarksbox}
 	{/if}
-
+	<div id="ajax-feedback" style="display:none"></div>
+	{if isset($ajaxfeedback) && $ajaxfeedback eq 'y'}
+		<div id="posted-ajax-feedback">
+			{include file="utilities/alert.tpl"}
+		</div>
+	{/if}
 	{if $tikifeedback}
 		{remarksbox type="feedback" title="{tr}Feedback{/tr}"}
 			{section name=n loop=$tikifeedback}
@@ -146,6 +151,7 @@
 				{initials_filter_links}
 			{/if}
 			<form class="form-horizontal" name="checkform" method="post" action="{$smarty.server.PHP_SELF|escape}">
+				<input type="hidden" name="all_groups" value="{$all_groups_encoded|escape}">
 				<div id="{$ts_tableid}-div" {if $tsOn}style="visibility:hidden;"{/if}>
 					<div class="table-responsive user-table ts-wrapperdiv">
 		{/if}
@@ -189,8 +195,11 @@
 
 											<td class="username">
 												{capture name=username}{$users[user].user|username}{/capture}
-												<a class="link tips" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if $prefs.feature_tabs ne 'y'}#2{/if}" title="{tr _0=$users[user].user|username}User %0{/tr}:{tr}Edit account settings{/tr}">
-												{$users[user].user|escape}
+												<a
+													class="link tips"
+													href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if $prefs.feature_tabs ne 'y'}#2{/if}"
+													title="{$username}:{tr}Edit account settings{/tr}">
+														{$users[user].user|escape}
 												</a>
 												{if $prefs.user_show_realnames eq 'y' and $smarty.capture.username ne $users[user].user}
 													<div class="subcomment">
@@ -227,16 +236,36 @@
 													<div style="white-space:nowrap">
 														{if $grs != "Anonymous" and ($tiki_p_admin eq 'y' || in_array($grs, $all_groups))}
 															{if $tiki_p_admin eq 'y'}
-																<a class="link tips" {if isset($link_style)}{$link_style}{/if} href="tiki-admingroups.php?group={$grs|escape:"url"}" title="{$grs|escape}:{if $what eq 'included'}{tr}Edit this included group{/tr}"{else}{tr}Edit group{/tr}"{/if}>{$grs|escape}</a>
+																<a
+																	class="link tips" {if isset($link_style)}{$link_style}{/if}
+																	href="tiki-admingroups.php?group={$grs|escape:"url"}"
+																	title="{$grs|escape}:{if $what eq 'included'}{tr}Edit this included group{/tr}"{else}{tr}Edit group{/tr}"{/if}>
+																		{$grs|escape}
+																</a>
 															{else}
 																{$grs|escape}
 															{/if}
 															{if $what eq 'included'}<span class="label label-info">{tr}Included{/tr}</span>{/if}
 															{if $grs eq $users[user].default_group}<small>({tr}default{/tr})</small>{/if}
 															{if $what ne 'included' and $grs != "Registered"}
-																<a href="{self_link user=$users[user].user action='removegroup' group=$grs _tag="n"}{/self_link}" title="{tr _0=$username}User %0{/tr}:{tr _0=$grs|escape}Remove from group %0{/tr}" class="tips">
+																<span
+																	type="button" id="group-single-user" class="btn-link tips"
+																	title="{$username}:{tr _0="{$grs}"}Remove from group %0{/tr}"
+																	onclick="confirmModal(this,
+																		{ldelim}
+																			'controller':'user',
+																			'action':'manage_groups',
+																			'closest':'form',
+																			'params':
+																				{ldelim}
+																					'checked[]': '{$username}',
+																					'groupremove' : '{$grs}'
+																				{rdelim}
+																		{rdelim}
+																	);"
+																>
 																	{icon name="remove"}
-																</a>
+																</span>
 															{/if}
 															{if !$smarty.foreach.gr.last}<br>{/if}
 														{/if}
@@ -245,21 +274,52 @@
 											</td>
 
 											<td class="action">
-												{icon name="group" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr _0=$username}User %0{/tr}:{tr}Assign to a group{/tr}" class="tips"}
-
-												{icon name="edit" href="{query _type='relative' user=$users[user].userId}" title="{tr _0=$username}User %0{/tr}:{tr}Edit account settings{/tr}" class="tips"}
-
+												<span
+													type="button" id="group-single-user" class="btn-link tips"
+													title="{$username}:{tr}Add or remove from a group{/tr}"
+													onclick="confirmModal(this,
+														{ldelim}
+															'controller':'user',
+															'action':'manage_groups',
+															'closest':'form',
+															'params':
+																{ldelim}
+																	'checked[]': '{$username}'
+																{rdelim}
+														{rdelim});"
+												>
+														{icon name="group"}
+												</span>
+												{icon name="edit" href="{query _type='relative' user=$users[user].userId}" title="{$username}:{tr}Edit account settings{/tr}" class="tips"}
 												{if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
-													{icon name="settings" href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr _0=$username}User %0{/tr}:{tr}Change user preferences{/tr}" class="tips"}
+													{icon name="settings" href="tiki-user_preferences.php?userId={$users[user].userId}" title="{$username}:{tr}Change user preferences{/tr}" class="tips"}
 												{/if}
 												{if $users[user].user eq $user or $users[user].user_information neq 'private' or $tiki_p_admin eq 'y'}
-													<a class="link tips" href="tiki-user_information.php?userId={$users[user].userId}"{if $users[user].user_information eq 'private'} style="opacity:0.5;"{/if} title="{tr _0=$username}User %0{/tr}:{tr}User information{/tr}">
-														{icon name="help"}
+													<a class="link tips"
+														href="tiki-user_information.php?userId={$users[user].userId}"{if $users[user].user_information eq 'private'}
+														style="opacity:0.5;"{/if}
+														title="{$username}:{tr}User information{/tr}">
+															{icon name="help"}
 													</a>
 												{/if}
 
 												{if $users[user].user ne 'admin'}
-													{icon name="remove" href="{$smarty.server.PHP_SELF}?{query action=delete user=$users[user].user}" title="{tr _0=$username}User %0{/tr}:{tr}Delete account{/tr}" class="tips"}
+													<span
+														type="button" id="remove-single-user" class="btn-link tips"
+														title="{$username}:{tr}Delete{/tr}"
+														onclick="confirmModal(this,
+															{ldelim}
+																'controller':'user',
+																'action':'remove_users',
+																'closest':'form',
+																'params':
+																	{ldelim}
+																		'checked[]': '{$username}'
+																	{rdelim}
+															{rdelim});"
+													>
+															{icon name="remove"}
+													</span>
 													{if $users[user].waiting eq 'a'}
 														<a class="link tips" href="tiki-login_validate.php?user={$users[user].user|escape:url}&amp;pass={$users[user].valid|escape:url}" title="{tr _0=$users[user].user|username}Validate user: %0{/tr}">
 															{icon name="ok"}
@@ -299,145 +359,62 @@
 					{if !$tsAjax}
 					</div>
 					{if $users}
-						<div for="submit_multi" class="text-left form-group" id="submit_mult" class="col-lg-5">
-							<label class="col-lg-5">{tr}Perform action with checked{/tr}</label>
-							<div class="col-lg-4 input-group">
-								<select class="submit_mult form-control" name="submit_mult">
-									<option value="" selected="selected">-</option>
-									<option value="remove_users" >{tr}Remove{/tr}</option>
+							<div class="col-lg-9 input-group">
+								<label for="user_action" class="col-lg"></label>
+								<select class="form-control" name="user_action">
+									<option value="no_action" selected="selected">
+										{tr}Select action to perform with checked users...{/tr}
+									</option>
+									<option value="remove_users" >
+										{tr}Remove{/tr}
+									</option>
 									{if $prefs.feature_banning == 'y'}
-										<option value="ban_ips">{tr}Ban IPs{/tr}</option>
-										<option value="remove_users_and_ban">{tr}Remove users and Ban IPs{/tr}</option>
+										<option value="ban_ips">
+											{tr}Ban IPs{/tr}
+										</option>
+										<option value="remove_users_and_ban">
+											{tr}Remove users and ban their IPs{/tr}
+										</option>
 									{/if}
 									{if $prefs.feature_wiki_userpage == 'y'}
-										<option value="remove_users_with_page">{tr}Remove users and their userpages{/tr}</option>
+										<option value="remove_users_with_page">
+											{tr}Remove users and their user pages{/tr}
+										</option>
 										{if $prefs.feature_banning == 'y'}
-											<option value="remove_users_with_page_and_ban">{tr}Remove users, their userpages and Ban IPs{/tr}</option>
+											<option value="remove_users_with_page_and_ban">
+												{tr}Remove users, their user pages and ban their IPs{/tr}
+											</option>
 										{/if}
 									{/if}
-									<option value="assign_groups" >{tr}Change group assignments{/tr}</option>
-									<option value="set_default_groups">{tr}Set default groups{/tr}</option>
+									<option value="manage_groups" >
+										{tr}Change group assignments{/tr}
+									</option>
+									<option value="default_groups">
+										{tr}Set default groups{/tr}
+									</option>
 									{if $prefs.feature_wiki == 'y'}
-										<option value="emailChecked">{tr}Send wiki page content by email{/tr}</option>
+										<option value="email_wikipage">
+											{tr}Send wiki page content by email{/tr}
+										</option>
 									{/if}
 								</select>
 								<span class="input-group-btn">
-									<button type="submit" style="display:none" class="btn btn-primary submit_mult">
+									<button
+										id="adminusers-actions" type="button" class="btn btn-primary"
+										onclick="confirmModal(this,
+												{ldelim}
+													'controller':'user',
+													'action':
+														{ldelim}
+															'selector': 'select[name=user_action]',
+															'fn': 'val'
+														{rdelim},
+													'closest':'form'
+												{rdelim});">
 										{tr}OK{/tr}
 									</button>
 								</span>
 							</div>
-						</div>
-						<div id="gm" style="display:none">
-							<h4>{tr}Change group assignments for selected users{/tr}</h4>
-							<div class="form-group">
-								<label class="control-label col-sm-2">{tr}Action{/tr}</label>
-								<div class="col-sm-4">
-									<select class="gm" name="group_management" disabled="disabled" class="form-control">
-										<option value="add">{tr}Assign selected{/tr}</option>
-										<option value="remove">{tr}Remove selected{/tr}</option>
-									</select>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-sm-2">{tr}Groups{/tr}</label>
-								<div class="col-sm-10">
-									<select name="checked_groups[]" multiple="multiple" size="20" class="form-control">
-										{section name=ix loop=$all_groups}
-											{if $all_groups[ix] != 'Anonymous' && $all_groups[ix] != 'Registered'}
-												<option value="{$all_groups[ix]|escape}">{$all_groups[ix]|escape}</option>
-											{/if}
-										{/section}
-									</select>
-									{if $prefs.jquery_ui_chosen neq 'y'}<div class="help-block">{tr}Use Ctrl+Click to select multiple options{/tr}</div>{/if}
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="submit col-sm-4 col-sm-offset-2">
-									<button type="button" style="display: none" class="btn btn-default cancel-choice">{tr}Cancel{/tr}</button>
-									<button type="submit" class="btn btn-primary gm" disabled="disabled">{tr}OK{/tr}</button>
-								</div>
-							</div>
-						</div>
-						<div id="dg" style="display:none">
-							<h4>{tr}Set default groups for selected users{/tr}</h4>
-							<div class="form-group">
-								<label class="control-label col-sm-2">{tr}Group{/tr}</label>
-								<div class="col-sm-4">
-									<select class="dg" name="checked_group" disabled="disabled" size="20" class="form-control">
-										{section name=ix loop=$all_groups}
-											{if $all_groups[ix] != 'Anonymous'}
-												<option value="{$all_groups[ix]|escape}">{$all_groups[ix]|escape}</option>
-											{/if}
-										{/section}
-									</select>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="submit col-sm-4 col-sm-offset-2">
-									<button type="button" style="display: none" class="btn btn-default cancel-choice">{tr}Cancel{/tr}</button>
-									<button type="submit" disabled="disabled" class="btn btn-primary dg">{tr}OK{/tr}</button>
-									<input type="hidden" class="dg" disabled="disabled" name="set_default_groups" value="y">
-								</div>
-							</div>
-						</div>
-						<div id="emc" style="display:none">
-							<h4>{tr}Send wiki page content by email to selected users{/tr}</h4>
-							<div class="form-group">
-								<label class="control-label col-sm-2">{tr}Email Template{/tr}</label>
-								<div class="col-sm-10">
-									<input class="emc form-control" type="text" disabled="disabled" name="wikiTpl">
-									<div class="help-block">{tr}Template wiki page:
-											The wiki page must have a page description, which is used as the subject of the email.
-											Enable the page descriptions feature at Control Panels &gt; Wiki.{/tr}
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-sm-2">{tr}Bcc{/tr}</label>
-								<div class="col-sm-10">
-									<input class="emc form-control" disabled="disabled" type="text" name="bcc">
-									<div class="help-block">{tr}Enter a valid email to send a blind copy to (optional).{/tr}</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-10 col-sm-offset-2 submit">
-									<button type="button" style="display: none" class="btn btn-default cancel-choice">{tr}Cancel{/tr}</button>
-									<button type="submit" disabled="disabled" class="btn btn-primary emc">{tr}OK{/tr}</button>
-									<input class="emc" disabled="disabled" type="hidden" name="emailChecked" value="y">
-								</div>
-							</div>
-						</div>
-	{jq}
-		$('select.submit_mult').change(function() {
-			if ($.inArray(this.value, ['assign_groups', 'set_default_groups', 'emailChecked']) > -1) {
-				$('div#submit_mult').hide();
-				$('.submit_mult').prop('disabled', true).trigger("chosen:updated");
-				$('button.cancel-choice').show();
-				if (this.value == 'assign_groups') {
-					$('div#gm').show();
-					$('.gm').prop('disabled', false).trigger("chosen:updated");
-				} else if (this.value == 'set_default_groups') {
-					$('div#dg').show();
-					$('.dg').prop('disabled', false).trigger("chosen:updated");
-				} else if (this.value == 'emailChecked') {
-					$('div#emc').show();
-					$('.emc').prop('disabled', false).trigger("chosen:updated");
-				}
-			} else if ($.inArray(this.value, ['ban_ips', 'remove_users', 'remove_users_and_ban', 'remove_users_with_page', 'remove_users_with_page_and_ban']) > -1) {
-				$('button.submit_mult').show();
-			}
-		});
-
-		$('button.cancel-choice').click(function() {
-			$('div#gm, div#dg, div#emc').hide();
-			$('.gm, dg, .emc').prop('disabled', true).trigger("chosen:updated");
-			$('.submit_mult').prop('disabled', false).trigger("chosen:updated");
-			$('select.submit_mult').val('').trigger("chosen:updated");
-			$('div#submit_mult').show();
-			$('button.cancel-choice').hide();
-		});
-	{/jq}
 					{/if}
 				</div>
 				<input type="hidden" name="find" value="{$find|escape}">
