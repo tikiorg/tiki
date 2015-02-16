@@ -1303,8 +1303,9 @@ class Comments extends TikiLib
 			}
 			$result = $sorted;
 		}
-
-		$result = array_slice($result, $offset, $maxRecords);
+		if ($maxRecords > -1) {
+			$result = array_slice($result, $offset, $maxRecords);
+		}
 
 		$retval = array();
 		$retval["data"] = $result;
