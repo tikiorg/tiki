@@ -232,7 +232,7 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 		{if empty($tpl)}
 
 	<tr>
-			{if $checkbox}
+			{if !empty($checkbox)}
 		<td><input type="{$checkbox.type}" name="{$checkbox.name}[]" value="{if $checkbox.ix > -1}{$items[user].field_values[$checkbox.ix].value|escape}{else}{$items[user].itemId}{/if}"></td>
 			{/if}
 			{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $perms.tiki_p_admin_trackers eq 'y'))}
