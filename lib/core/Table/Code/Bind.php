@@ -25,21 +25,23 @@ class Table_Code_Bind extends Table_Code_Manager
 
 	public function setCode()
 	{
+		$jq = [];
 		//make pager controls at bottom of table visible when number of rows is greater than 15
-		$bind = [
-			//tiki popover needs to be re-applied due to late loading of tablesorter html
-			'$(\'' . parent::$tid . '\').tiki_popover();',
-			'if (c.pager.endRow - c.pager.startRow > 15) {',
-			'	$(\'div#' . parent::$s['pager']['controls']['id']
+		if (parent::$pager) {
+			$bind = [
+				//tiki popover needs to be re-applied due to late loading of tablesorter html
+				'$(\'' . parent::$tid . '\').tiki_popover();',
+				'if (c.pager.endRow - c.pager.startRow > 15) {',
+				'	$(\'div#' . parent::$s['pager']['controls']['id']
 				. '.ts-pager-bottom\').css(\'visibility\', \'visible\');',
-			'} else {',
-			'	$(\'div#' . parent::$s['pager']['controls']['id']
+				'} else {',
+				'	$(\'div#' . parent::$s['pager']['controls']['id']
 				. '.ts-pager-bottom\').css(\'visibility\', \'hidden\');',
-			'}',
-		];
-		$jq[] = $this->iterate(
-			$bind, '.bind(\'pagerComplete\', function(e, c){', $this->nt . '})', $this->nt2, '', '');
-
+				'}',
+			];
+			$jq[] = $this->iterate(
+				$bind, '.bind(\'pagerComplete\', function(e, c){', $this->nt . '})', $this->nt2, '', '');
+		}
 		//workaround since the processing formatting is not being applied upon sort (reported as bug #769)
 		if (parent::$ajax) {
 			$bind = ['$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 0.25);'];
