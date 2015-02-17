@@ -785,7 +785,7 @@ function wikiplugin_trackerlist($data, $params)
 
 	$skip_status_perm_check = false;
 
-	if($force_separate_compile == 'y') {
+	if(isset($force_separate_compile) && $force_separate_compile == 'y') {
 		$smarty->assign('force_separate_compile', 'y');
 	}
 
