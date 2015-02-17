@@ -182,9 +182,11 @@ class Table_Code_Other extends Table_Code_Manager
 		//add any reset/disable buttons just above the table
 		if (isset($htmlbefore)) {
 			$allhtmlbefore = $this->iterate($htmlbefore, '', '', '', '', '');
-			$allhtmlafter = $this->iterate($htmlafter, '', '', '', '', '');
+			$allhtmlafter = !empty($htmlafter) && is_array($htmlafter) ?
+				$this->iterate($htmlafter, '', '', '', '', '') : '';
+			$allhtmlafter = !empty($allhtmlafter) ? '.after(\'' . $allhtmlafter . '\'' . $this->nt . ');' : '';
 			array_unshift($jq, '$(\'' . parent::$tid . '\').before(\'' . $allhtmlbefore . '\'' . $this->nt
-				. ').after(\'' . $allhtmlafter . '\'' . $this->nt . ');');
+				. ')' . $allhtmlafter);
 		}
 		if (count($jq) > 0) {
 			$code = $this->iterate($jq, '', '', $this->nt, '', '');
