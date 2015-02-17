@@ -84,9 +84,8 @@ abstract class Table_Settings_Abstract
 		// the columns
 */
 		'usecolselector' => false,
-/*
 		'colselect' => array(
-			'type' => true,
+			'type' => false,
 		),
 /*
 		//Set individual sort and filter settings for each column
