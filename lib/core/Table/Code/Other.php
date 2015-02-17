@@ -70,46 +70,48 @@ class Table_Code_Other extends Table_Code_Manager
 			}
 
 			//external dropdowns
-			$options = array_column($f['external'], 'options');
-			if (count($options) > 0) {
-				foreach($f['external'] as $key => $info) {
-					$xopt[] = ' value="" selected disabled>' . tr('Select a filter');
-					foreach($info['options'] as $label => $val) {
-						$xopt[] = ' value="' . $val . '">' . $label;
+			if (isset($f['external']) && is_array($f['external'])) {
+				$options = array_column($f['external'], 'options');
+				if (count($options) > 0) {
+					foreach($f['external'] as $key => $info) {
+						$xopt[] = ' value="" selected disabled>' . tr('Select a filter');
+						foreach($info['options'] as $label => $val) {
+							$xopt[] = ' value="' . $val . '">' . $label;
+						}
+						//create dropdown
+						$divr[] = $this->iterate(
+							$xopt,
+							'<select id="' . $f['external'][$key]['id'] . '" class="form-control ts-external-select">',
+							'</select>',
+							'<option',
+							'</option>',
+							''
+						);
+						//trigger table update and filter when dropdown value is changed
+						$jq[] = '$(\'#' . $f['external'][$key]['id'] . '\').bind(\'change\', function(e){'
+							. $this->nt2 . '$(\'' . parent::$tid .'\').trigger(\'search\', [ [this.value] ]);'
+							. $this->nt . '});';
+						//filter-reset also clears any external dropdown filter (column filters cleared by tablesorter)
+						if ($f['type'] === 'reset') {
+							$reset[] = 'if ($(\'#' . $f['external'][$key]['id'] . '\').prop(\'selectedIndex\') != 0) {'
+								. $this->nt3 . '$(\'#' . $f['external'][$key]['id'] . ' option\')[0].selected = true;'
+								. $this->nt3 . '$(\'#' . $f['external'][$key]['id'] . '\').change();'
+								. $this->nt2 . '}';
+						}
 					}
-					//create dropdown
-					$divr[] = $this->iterate(
-						$xopt,
-						'<select id="' . $f['external'][$key]['id'] . '" class="form-control ts-external-select">',
-						'</select>',
-						'<option',
-						'</option>',
-						''
-					);
-					//trigger table update and filter when dropdown value is changed
-					$jq[] = '$(\'#' . $f['external'][$key]['id'] . '\').bind(\'change\', function(e){'
-						. $this->nt2 . '$(\'' . parent::$tid .'\').trigger(\'search\', [ [this.value] ]);'
-						. $this->nt . '});';
-					//filter-reset also clears any external dropdown filter (column filters cleared by tablesorter)
-					if ($f['type'] === 'reset') {
-						$reset[] = 'if ($(\'#' . $f['external'][$key]['id'] . '\').prop(\'selectedIndex\') != 0) {'
-							. $this->nt3 . '$(\'#' . $f['external'][$key]['id'] . ' option\')[0].selected = true;'
-							. $this->nt3 . '$(\'#' . $f['external'][$key]['id'] . '\').change();'
-							. $this->nt2 . '}';
+					unset($key, $info);
+					if ($f['type'] === 'reset' && count($reset) > 0) {
+						$jq[] = $this->iterate(
+							$reset,
+							'$(\'#' . $f['reset']['id'] . '\').click(function(){',
+							$this->nt . '});',
+							$this->nt2,
+							'',
+							''
+						);
 					}
+					$htmlbefore[] = $this->iterate($divr, '<div style="float:right">', '</div>', '', '', '');
 				}
-				unset($key, $info);
-				if ($f['type'] === 'reset' && count($reset) > 0) {
-					$jq[] = $this->iterate(
-						$reset,
-						'$(\'#' . $f['reset']['id'] . '\').click(function(){',
-						$this->nt . '});',
-						$this->nt2,
-						'',
-						''
-					);
-				}
-				$htmlbefore[] = $this->iterate($divr, '<div style="float:right">', '</div>', '', '', '');
 			}
 		}
 
