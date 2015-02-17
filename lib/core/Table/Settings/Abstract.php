@@ -82,7 +82,9 @@ abstract class Table_Settings_Abstract
 		//for which columns are shown doesn't need to be recreated for tables with smarty templates where some
 		//columns aren't shown based on logic. For plugins, indexes will generally need to be used since users set
 		// the columns
-		'usecolselector' => true,
+*/
+		'usecolselector' => false,
+/*
 		'colselect' => array(
 			'type' => true,
 		),
