@@ -1328,16 +1328,6 @@ body.tiki_forums .normal {
 #comment-container-below .actions {
   float: right;
 }
-#comment-container ol,
-#comment-container-below ol {
-  list-style: none;
-  margin: 0 0 1em 1em;
-  padding: 0;
-}
-#comment-container ol ol,
-#comment-container-below ol ol {
-  margin: 1em 0 1em 4em;
-}
 #comment-container .avatar,
 #comment-container-below .avatar {
   float: left;
@@ -2746,7 +2736,7 @@ input.tablesorter-filter {
   display: list-item;
 }
 .chosen-container .chosen-results li.highlighted {
-  background-color: #428bca;
+  background-color: #337ab7;
   background-image: none;
   color: white;
 }
