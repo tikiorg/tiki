@@ -17,8 +17,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function module_quickadmin_info()
 {
 	return array(
-		'name' => tra('Quick Admin'),
-		'description' => tra('Some helpful tools for admins.'),
+		'name' => tra('Quick Administration'),
+		'description' => tra('Some helpful tools for administrators.'),
 		'prefs' => array(),
 		'params' => array(
 			'mode' => array(

@@ -16,7 +16,7 @@
 				</ul>
 			</div>
 			<div class="btn-group">
-				<a class="btn btn-link tips" title=":{tr}Quick admin{/tr}" data-toggle="dropdown" href="#">
+				<a class="btn btn-link tips" title=":{tr}Quick administration{/tr}" data-toggle="dropdown" href="#">
 					{icon name="ellipsis"}
 				</a>
 				<ul class="dropdown-menu">
