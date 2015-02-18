@@ -22,7 +22,7 @@
 						{if $prefs.menus_items_icons eq 'y'}
 							<span class="moduleflip moduleflip-vert" id="moduleflip-vert-{$smarty.capture.name}">
 								<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:flip_class('main','minimize-modules-left','maximize-modules');icntoggle('mod-{$smarty.capture.name}','vmodule.png');">
-									{icon name="icnmod-"|cat:$smarty.capture.name class="flipmodimage" _id="trans" alt="[{tr}Toggle Vertically{/tr}]" _defaultdir="img"}
+									{icon id="icnmod-"|cat:$smarty.capture.name class="flipmodimage" _id="trans" alt="[{tr}Toggle Vertically{/tr}]" _defaultdir="img"}
 								</a>
 							</span>
 						{/if}
