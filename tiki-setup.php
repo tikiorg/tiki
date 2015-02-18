@@ -616,6 +616,14 @@ if ( session_id() ) {
 	}
 }
 
+if ( !empty($prefs['access_control_allow_origin']) && !empty($_SERVER['HTTP_ORIGIN']) && $base_host !== $_SERVER['HTTP_ORIGIN']) {
+	$http_origin = $_SERVER['HTTP_ORIGIN'];
+
+	if (in_array($http_origin, preg_split('/[\s,]+/', $prefs['access_control_allow_origin']))) {
+	    header("Access-Control-Allow-Origin: $http_origin");
+	}
+}
+
 if ( isset($token_error) ) {
 	$smarty->assign('token_error', $token_error);
 	$smarty->display('error.tpl');

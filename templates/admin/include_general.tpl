@@ -135,6 +135,7 @@
 				{preference name=http_skip_frameset}
 				{preference name=feature_loadbalancer}
 				{preference name=feature_port_rewriting}
+				{preference name=access_control_allow_origin}
 			</fieldset>
 
 			<fieldset>
