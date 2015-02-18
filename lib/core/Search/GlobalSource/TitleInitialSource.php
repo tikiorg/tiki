@@ -26,12 +26,14 @@ class Search_GlobalSource_TitleInitialSource implements Search_GlobalSource_Inte
 		return array(
 			Search_Query_Facet_Term::fromField('title_initial')
 				->setLabel(tr('Letter')),
+			Search_Query_Facet_Term::fromField('title_firstword')
+				->setLabel(tr('First Word')),
 		);
 	}
 
 	function getProvidedFields()
 	{
-		return array('title_initial');
+		return array('title_initial', 'title_firstword');
 	}
 
 	function getGlobalFields()
@@ -50,8 +52,11 @@ class Search_GlobalSource_TitleInitialSource implements Search_GlobalSource_Inte
 		$first = $substr($title, 0, 1);
 		$first = TikiLib::take_away_accent($first);
 		$letter = $strtoupper($first);
+		
+		$firstword = preg_replace('/^([^:\s]+).*$/u', '$1', $title);
 		return array(
 			'title_initial' => $typeFactory->identifier($letter),
+			'title_firstword' => $typeFactory->identifier($firstword),
 		);
 	}
 
