@@ -2,17 +2,15 @@
 {title help="Blogs" admpage="blogs"}{tr}Blogs{/tr}{/title}
 
 {if $tiki_p_create_blogs eq 'y'}
-	<div class="t_navbar">
-		{button href="tiki-edit_blog.php" _text="{tr}Create New Blog{/tr}" _class="navbar-btn"}
+	<div class="navbar">
+		{button href="tiki-edit_blog.php" _text="{tr}Create Blog{/tr}" _class="navbar-btn"}
 	</div>
 {/if}
 
 <div class="text-center">
-
 	{if $listpages or ($find ne '')}
 		{include file='find.tpl'}
 	{/if}
-
 	<div class="table-responsive">
 		<table class="table table-striped normal">
 			{assign var=numbercol value=0}
@@ -48,13 +46,12 @@
 				{assign var=numbercol value=$numbercol+1}
 				<th>{tr}Action{/tr}</th>
 			</tr>
-
 			{section name=changes loop=$listpages}
 				<tr>
 					{if $prefs.blog_list_title eq 'y' or $prefs.blog_list_description eq 'y'}
 						<td class="text">
 							{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' )}
-								<a class="blogname" href="{$listpages[changes].blogId|sefurl:blog}" title="{$listpages[changes].title|escape}">
+								<a class="blogname" href="{$listpages[changes].blogId|sefurl:blog}">
 							{/if}
 							{if $listpages[changes].title}
 								{$listpages[changes].title|truncate:$prefs.blog_list_title_len:"...":true|escape}
@@ -65,7 +62,7 @@
 								</a>
 							{/if}
 							{if $prefs.blog_list_description eq 'y'}
-								<div class="subcomment">{$listpages[changes].description|escape|nl2br}</div>
+								<div class="help-block">{$listpages[changes].description|escape|nl2br}</div>
 							{/if}
 						</td>
 					{/if}
@@ -86,39 +83,38 @@
 						{/if}
 					{/if}
 					{if $prefs.blog_list_posts eq 'y'}
-						<td class="integer">&nbsp;{$listpages[changes].posts}&nbsp;</td>
+						<td class="integer"><span class="badge">{$listpages[changes].posts}</span></td>
 					{/if}
 					{if $prefs.blog_list_visits eq 'y'}
-						<td class="integer">&nbsp;{$listpages[changes].hits}&nbsp;</td>
+						<td class="integer"><span class="badge">{$listpages[changes].hits}</span></td>
 					{/if}
 					{if $prefs.blog_list_activity eq 'y'}
-						<td class="integer">&nbsp;{$listpages[changes].activity}&nbsp;</td>
+						<td class="integer"><span class="badge">{$listpages[changes].activity}</span></td>
 					{/if}
 					<td class="action">
 						{if ($user and $listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y')}
 							{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_blog_create_blog eq 'y' )}
-								<a class="icon" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}" title="{tr}Edit{/tr}">{icon name="edit"}</a>
+								<a class="tips" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}" title=":{tr}Edit{/tr}">{icon name="edit"}</a>
 							{/if}
 						{/if}
 						{if $tiki_p_blog_post eq 'y'}
 							{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_blog_post eq 'y' )}
 								{if ($user and $listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y') or ($listpages[changes].public eq 'y')}
-									<a class="icon" href="tiki-blog_post.php?blogId={$listpages[changes].blogId}" title="{tr}Post{/tr}">{icon name="post"}</a>
+									<a class="tips" href="tiki-blog_post.php?blogId={$listpages[changes].blogId}" title=":{tr}Post{/tr}">{icon name="post"}</a>
 								{/if}
 							{/if}
 						{/if}
 						{if $tiki_p_blog_admin eq 'y' and $listpages[changes].allow_comments eq 'y'}
-							<a class='icon' href='tiki-list_comments.php?types_section=blogs&amp;blogId={$listpages[changes].blogId}' title="{tr}List all comments{/tr}">{icon name="comments"}</a>
+							<a class='tips' href='tiki-list_comments.php?types_section=blogs&amp;blogId={$listpages[changes].blogId}' title=":{tr}Comments{/tr}">{icon name="comments"}</a>
 						{/if}
 						{if $tiki_p_admin eq 'y' || $tiki_p_assign_perm_blog eq 'y'}
 							{permission_link mode=icon type="blog" permType="blogs" id=$listpages[changes].blogId title=$listpages[changes].title}
 						{/if}
 						{if ($user and $listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y')}
-								{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_blog_create_blog eq 'y' )}
-										&nbsp;&nbsp;<a class="icon" href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].blogId}" title="{tr}Remove{/tr}">{icon name="delete"}</a>
-								{/if}
+							{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_blog_create_blog eq 'y' )}
+								<a class="tips" href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].blogId}" title=":{tr}Delete{/tr}">{icon name="delete"}</a>
+							{/if}
 						{/if}
-
 					</td>
 				</tr>
 			{sectionelse}
@@ -126,6 +122,5 @@
 			{/section}
 		</table>
 	</div>
-
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 </div>
