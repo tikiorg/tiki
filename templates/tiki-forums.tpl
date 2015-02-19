@@ -97,17 +97,14 @@
 
 				<tr>
 					<td class="text">
-						<span style="float:left">
-							{if (isset($channels[user].individual) and $channels[user].individual eq 'n')
-								or ($tiki_p_admin eq 'y') or ($channels[user].individual_tiki_p_forum_read eq 'y')}
-								<a class="forumname" href="{$channels[user].forumId|sefurl:'forum'}">{$channels[user].name|addongroupname|escape}</a>
-							{else}
-								{$channels[user].name|addongroupname|escape}
-							{/if}
-						</span>
+						{if (isset($channels[user].individual) and $channels[user].individual eq 'n')
+							or ($tiki_p_admin eq 'y') or ($channels[user].individual_tiki_p_forum_read eq 'y')}
+							<a class="forumname" href="{$channels[user].forumId|sefurl:'forum'}">{$channels[user].name|addongroupname|escape}</a>
+						{else}
+							{$channels[user].name|addongroupname|escape}
+						{/if}
 						{if $prefs.forum_list_desc eq 'y'}
-							<br>
-							<div class="subcomment">
+							<div class="help-block">
 								{capture name="parsedDesc"}{wiki}{$channels[user].description}{/wiki}{/capture}
 								{if strlen($smarty.capture.parsedDesc) < $prefs.forum_list_description_len}
 									{$smarty.capture.parsedDesc}
@@ -139,17 +136,17 @@
 						<td class="integer"><span class="badge">{$channels[user].hits}<span></td>
 					{/if}
 					<td class="action">
-						{icon name="view" class="tips" title="{$channels[user].name|addongroupname|escape}:{tr}View forum{/tr}" href="{$channels[user].forumId|sefurl:'forum'}"}
+						{icon name="view" class="tips" title=":{tr}View{/tr}" href="{$channels[user].forumId|sefurl:'forum'}"}
 						{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-							{icon name="edit" class="tips" title="{$channels[user].name|addongroupname|escape}:{tr}Configure forum{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}&amp;cookietab=2"}
+							{icon name="edit" class="tips" title=":{tr}Edit{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}&amp;cookietab=2"}
 						{/if}
 					</td>
 				</tr>
 			{sectionelse}
 				{if !$tsOn || ($tsOn && $tsAjax)}
-					{norecords _colspan=$numbercol _text="No forums found"}
+					{norecords _colspan=$numbercol _text="{tr}No forums found{/tr}"}
 				{else}
-					{norecords _colspan=$numbercol _text="Retrieving forums..."}
+					{norecords _colspan=$numbercol _text="{tr}Loading{/tr}..."}
 				{/if}
 			{/section}
 		</tbody>
