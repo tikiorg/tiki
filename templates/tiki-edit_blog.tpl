@@ -104,45 +104,53 @@
 			<div class="form-group">
 				<div class="col-sm-offset-3 col-sm-9">
 					<div class="checkbox">
-						<label for="blogs-title">{tr}Display blog title in posts list page{/tr}
+						<label for="blogs-title">
 							<input type="checkbox" name="use_title" id="blogs-title" {if $use_title eq 'y'}checked='checked'{/if}>
+							{tr}Display blog title in posts list page{/tr}
 						</label>
 					</div>
 					<div class="checkbox">
-						<label for="blogs-title-post">{tr}Display blog title in post page{/tr}
+						<label for="blogs-title-post">
 							<input type="checkbox" name="use_title_in_post" id="blogs-title-post" {if $use_title_in_post eq 'y'}checked='checked'{/if}>
+							{tr}Display blog title in post page{/tr}
 						</label>
 					</div>
 					<div class="checkbox">
-						<label for="blogs-description">{tr}Display blog description{/tr}
+						<label for="blogs-description">
 							<input type="checkbox" name="use_description" id="blogs-description" {if $use_description eq 'y'}checked='checked'{/if}>
+							{tr}Display blog description{/tr}
 						</label>
 					</div>
 					<div class="checkbox">
-						<label for="blogs-breadcrumbs">{tr}Display breadcrumbs{/tr}
+						<label for="blogs-breadcrumbs">
 							<input type="checkbox" name="use_breadcrumbs" id="blogs-breadcrumbs" {if $use_breadcrumbs eq 'y'}checked='checked'{/if}>
+							{tr}Display breadcrumbs{/tr}
 						</label>
 					</div>
 					<div class="checkbox">
-						<label for="blogs-author">{tr}Display author in blog posts{/tr}
+						<label for="blogs-author">
 							<input type="checkbox" name="use_author" id="blogs-author" {if $use_author eq 'y'}checked='checked'{/if}>
+							{tr}Display author in blog posts{/tr}
 						</label>
 					</div>
 					<div class="checkbox">
-						<label for="blogs-date">{tr}Display published date in blog posts{/tr}
+						<label for="blogs-date">
 							<input type="checkbox" name="add_date" id="blogs-date" {if $add_date eq 'y'}checked='checked'{/if}>
+							{tr}Display published date in blog posts{/tr}
 						</label>
 					</div>
 					<div class="checkbox">
-						<label for="blogs-avatar">{tr}Show user profile picture{/tr}
+						<label for="blogs-avatar">
 							<input type="checkbox" name="show_avatar" id="blogs-avatar" {if $show_avatar eq 'y'}checked='checked'{/if}>
+							{tr}Show user profile picture{/tr}
 						</label>
 					</div>
 					<div class="checkbox">
-						<label for="blogs-post-related">{tr}Show post related content{/tr}
+						<label for="blogs-post-related">
 							<input type="checkbox" name="show_related" id="blogs-post-related" {if $show_related eq 'y'}checked='checked'{/if} {if $prefs.feature_freetags ne 'y'}disabled="disabled"{/if}>
+							{tr}Show post related content{/tr}
 							{if $prefs.feature_freetags neq 'y'}
-								<em>{tr}The checkbox is disabled because the tags feature is disabled globally.{/tr}</em>
+								<span class="help-block">{tr}The checkbox is disabled because the tags feature is disabled globally.{/tr}</span>
 							{/if}
 						</label>
 					</div>
