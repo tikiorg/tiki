@@ -11,8 +11,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
-use Tiki\FileGallery\FileWrapper\WrapperInterface as FileWrapper;
 use Tiki\FileGallery\Definition as GalleryDefinition;
+use Tiki\FileGallery\FileWrapper\WrapperInterface as FileWrapper;
 
 class FileGalLib extends TikiLib
 {
@@ -1472,7 +1472,14 @@ class FileGalLib extends TikiLib
 			return '';
 
 		$wrapper = $definition->getFileWrapper($data, $path);
-		return $parseApp($wrapper);
+		try {
+			$content = $parseApp($wrapper);
+		} catch (Exception $e) {
+			TikiLib::lib('errorreport')->report(tr('Processing search text from a "%0" file in gallery #%1', $type, $galleryId) .
+				'<br>' . $e->getMessage());
+			$content = '';
+		}
+		return $content;
 	}
 
 	private function getGalleryDefinition($galleryId)
