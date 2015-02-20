@@ -68,7 +68,7 @@
 			{tr}Email{/tr}
 		</label>
 		<div class="col-sm-9">
-			<input type="text" id='femail' name="email">
+			<input type="text" id="femail" name="email" class="form-control" placeholder="{tr}Email{/tr}...">
 			<div class="help-block">
 				{tr}Note that a user is not notified for his own action{/tr}
 			</div>
