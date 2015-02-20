@@ -11,6 +11,7 @@
 	{if $listpages or ($find ne '')}
 		{include file='find.tpl'}
 	{/if}
+</div>
 	<div class="table-responsive">
 		<table class="table table-striped normal">
 			{assign var=numbercol value=0}
@@ -123,4 +124,3 @@
 		</table>
 	</div>
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
-</div>
