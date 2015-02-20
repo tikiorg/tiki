@@ -4748,9 +4748,4 @@ div.drillshow {
     border-color: lightgrey;
 }
 
-/* Fix for too wide images in jQuery mobile view  */
-.ui-mobile img {
-	max-width: 100%;
-}
-
 /* End of file */

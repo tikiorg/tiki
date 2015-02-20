@@ -21,6 +21,11 @@ body {
 	font-size: 1em;
 }
 
+/* Fix for too wide images in jQuery mobile view  */
+img {
+	max-width: 100%;
+}
+
 /* remarks boxes from layout.css */
 /* also some from design.css */
 
