@@ -2,74 +2,81 @@
 {title help="Mail+Notifications"}{tr}Mail notifications{/tr}{/title}
 
 {if empty($prefs.sender_email)}
-	<div class="alert alert-info alert-dismissable">{icon _id=information style="vertical-align:middle"} {tr}You need to set <a href="tiki-admin.php?page=general">Sender Email</a> before creating email notifications{/tr}.</div>
+	{remarksbox type="warning" title="{tr}Warning{/tr}"}
+		{tr}You need to set <a class="alert-link" href="tiki-admin.php?page=general">Sender Email</a> before creating email notifications{/tr}.
+	{/remarksbox}
 {/if}
 
 <h2>{tr}Add notification{/tr}</h2>
 {if !empty($tikifeedback)}
 	<div class="alert alert-info alert-dismissable">{section name=ix loop=$tikifeedback}{icon _id=delete alt="{tr}Alert{/tr}" style="vertical-align:middle"} {$tikifeedback[ix].mes}.{/section}</div>
 {/if}
-<form action="tiki-admin_notifications.php" method="post">
+<form action="tiki-admin_notifications.php" method="post" class="form-horizontal" role="form">
 	<input type="hidden" name="find" value="{$find|escape}">
 	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 	{if $offset}<input type="hidden" name="offset" value="{$offset|escape}">{/if}
 	{if $numrows ne $prefs.maxRecords and $numrows}<input type="hidden" name="numrows" value="{$numrows|escape}">{/if}
-	<table class="formcolor">
-		<tr>
-			<td><label for="event">{tr}Event:{/tr}</label></td>
-			<td>
-				<select id="event" name="event">
-					{foreach from=$watches key=key item=watch}
-						<option value="{$key}">{$watch.label|escape}</option>
-					{/foreach}
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<td><label for="destination">{tr}Destination:{/tr}</label></td>
-			<td>
-				<select id="destination" name="destination">
-					<option value="login" selected="selected">{tr}User{/tr}</option>
-					<option value="email">{tr}Email{/tr}</option>
-				</select>
-				{jq}
-				$("select[name='destination']").change(function () {
-					$("#loginrow").hide();
-					$("#emailrow").hide();
-					$("input[name='login']").attr("disabled","disabled");
-					$("input[name='email']").attr("disabled","disabled");
-					$("#" + $("select[name='destination']").val() + "row").show();
-					$("input[name='" + $("select[name='destination']").val() + "']").focus();
-					$("input[name='" + $("select[name='destination']").val() + "']").removeAttr("disabled");
-				}
-				);
-				{/jq}
-			</td>
-		</tr>
-		<tr id="loginrow">
-			<td><label for="flogin">{tr}User:{/tr}</label></td>
-			<td>
-				<input type="text" id="flogin" name="login">
-				{autocomplete element='#flogin' type='username'}
-				<a href="#" onclick="javascript:document.getElementById('flogin').value='{$user}'" class="link">{tr}Myself{/tr}</a>
-			</td>
-		</tr>
-		<tr id="emailrow" style="display:none">
-			<td><label for="femail">{tr}Email:{/tr}</label></td>
-			<td>
-				<input type="text" id='femail' name="email">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<div class="help-block">{tr}Note that a user is not notified for his own action{/tr}.</div>
-			</td>
-		</tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" class="btn btn-default btn-sm" name="add" value="{tr}Add{/tr}"></td>
-		</tr>
-	</table>
+	<div class="form-group">
+		<label for="event" class="control-label col-sm-3">
+			{tr}Event{/tr}
+		</label>
+		<div class="col-sm-9">
+			<select id="event" name="event" class="form-control">
+				{foreach from=$watches key=key item=watch}
+					<option value="{$key}">{$watch.label|escape}</option>
+				{/foreach}
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="destination" class="control-label col-sm-3">
+			{tr}Destination{/tr}
+		</label>
+		<div class="col-sm-9">
+			<select id="destination" name="destination" class="form-control">
+				<option value="login" selected="selected">{tr}User{/tr}</option>
+				<option value="email">{tr}Email{/tr}</option>
+			</select>
+			{jq}
+			$("select[name='destination']").change(function () {
+				$("#loginrow").hide();
+				$("#emailrow").hide();
+				$("input[name='login']").attr("disabled","disabled");
+				$("input[name='email']").attr("disabled","disabled");
+				$("#" + $("select[name='destination']").val() + "row").show();
+				$("input[name='" + $("select[name='destination']").val() + "']").focus();
+				$("input[name='" + $("select[name='destination']").val() + "']").removeAttr("disabled");
+			}
+			);
+			{/jq}
+		</div>
+	</div>
+	<div id="loginrow" class="form-group">
+		<label for="flogin" class="control-label col-sm-3">
+			{tr}User{/tr}
+		</label>
+		<div class="col-sm-6">
+			<input type="text" id="flogin" name="login" class="form-control" placeholder="{tr}Username{/tr}...">
+			{autocomplete element='#flogin' type='username'}
+		</div>
+		<div class="col-sm-3">
+			<a href="#" onclick="javascript:document.getElementById('flogin').value='{$user}'" class="link">{tr}Myself{/tr}</a>
+		</div>
+	</div>
+	<div class="form-group" id="emailrow" style="display:none">
+		<label for="femail" class="control-label col-sm-3">
+			{tr}Email{/tr}
+		</label>
+		<div class="col-sm-9">
+			<input type="text" id='femail' name="email">
+			<div class="help-block">
+				{tr}Note that a user is not notified for his own action{/tr}
+			</div>
+		</div>
+	</div>
+	<div class="submit text-center">
+		<input type="submit" class="btn btn-primary btn-sm" name="add" value="{tr}Add{/tr}"></td>
+	</div>
 </form>
 <br>
 <h2>{tr}Mail notifications{/tr}</h2>
@@ -86,7 +93,7 @@
 					{/if}
 				</th>
 				<th>{self_link _sort_arg="sort_mode" _sort_field="event"}{tr}Event{/tr}{/self_link}</th>
-				<th>{self_link _sort_arg="sort_mode" _sort_field="object"}{tr}Object{/tr}{/self_link}</th>
+				<th>{self_link _sort_arg="sort_mode" _sort_field="object"}{tr}Object Id{/tr}{/self_link}</th>
 				<th>{self_link _sort_arg="sort_mode" _sort_field="email"}{tr}Email{/tr}{/self_link}</th>
 				<th>{self_link _sort_arg="sort_mode" _sort_field="user"}{tr}User / Group{/tr}{/self_link}</th>
 				<th>{tr}Action{/tr}</th>
@@ -100,7 +107,7 @@
 					<td class="text">{$channels[user].event}</td>
 					<td class="text">
 						{if $channels[user].url}
-							<a href="{$channels[user].url}" title="{$channels[user].title|escape}">{$channels[user].object|escape}</a>
+							<a href="{$channels[user].url}" class="tips" title=":{$channels[user].title|escape}">{$channels[user].object|escape}</a>
 						{else}
 							{$channels[user].object|escape}
 						{/if}
@@ -114,14 +121,14 @@
 					</td>
 					<td class="text">
 						{if $channels[user].watchtype eq 'group'}
-							{icon _id='group'}
+							{icon name="group"}
 						{else}
-							{icon _id='user'}
+							{icon name="user"}
 						{/if}
 						{$channels[user].user|escape}
 					</td>
 					<td class="action">
-						<a class="link" href="{$smarty.server.PHP_SELF}?{query removeevent=$channels[user].watchId removetype=$channels[user].watchtype}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+						{icon name="delete" class="tips" href="{$smarty.server.PHP_SELF}?{query removeevent=$channels[user].watchId removetype=$channels[user].watchtype}" title=":{tr}Delete{/tr}"}
 					</td>
 				</tr>
 			{sectionelse}
