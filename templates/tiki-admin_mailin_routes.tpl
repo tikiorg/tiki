@@ -5,7 +5,7 @@
 	{tab name="{tr}Structure Routing{/tr}"}
 		<h2>{tr}Structure Routing{/tr}</h2>
 		<p>
-		Routes are edited in the user's: My Tiki / Mail-in panel
+		Routes are edited in the user's: My Account / Mail-in panel
 		</p>
 		{if $prefs.feature_wiki_structure eq 'y'}
 			<table id="table_user_mailin_routing">

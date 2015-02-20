@@ -236,7 +236,7 @@
 			</fieldset>
 
 			<fieldset>
-				<legend>{tr}My Tiki{/tr}</legend>
+				<legend>{tr}My Account{/tr}</legend>
 				{preference name=users_prefs_mytiki_pages}
 				{preference name=users_prefs_mytiki_blogs}
 				{preference name=users_prefs_mytiki_gals}

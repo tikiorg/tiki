@@ -197,8 +197,8 @@
 		{/if}
 		{if $prefs.feature_mytiki eq 'y'}
 			<fieldset>
-				<legend>{tr}My Tiki{/tr}</legend>
-				<div class="userWizardIconright"><img src="img/icons/project.gif" alt="{tr}My Tiki{/tr}" /></div>
+				<legend>{tr}My Account{/tr}</legend>
+				<div class="userWizardIconright"><img src="img/icons/project.gif" alt="{tr}My Account{/tr}" /></div>
 
 				<table class="formcolor">
 

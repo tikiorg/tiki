@@ -372,7 +372,7 @@
 				</div>
 			{/if}
 
-			<h4>{tr}My Tiki{/tr}</h4>
+			<h4>{tr}My Account{/tr}</h4>
 
 			{if $prefs.feature_wiki eq 'y'}
 				<div class="checkbox">
