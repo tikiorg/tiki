@@ -60,7 +60,7 @@
 							<li>{tr}Different home page once the user logs in{/tr}</li>
 							<li>{tr}Random header image from files included in a file gallery{/tr}</li>
 							<li>{tr}Wysiwyg Editor (compatible mode with wiki syntax){/tr}</li>
-							<li>{tr}Wiki, Search, Menu & Freetags{/tr}</li>
+							<li>{tr}Wiki, Search, Menu & Tags{/tr}</li>
 							<li>{tr}Comments moderation & Banning (for anonymous comments to your site){/tr}</li>
 						</ul>
 						{tr}Click to read more{/tr}"

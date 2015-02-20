@@ -25,7 +25,7 @@ tiki-admin-include-anchors.tpl  img/icons/large/metatags.png        Meta Tags
 tiki-admin-include-anchors.tpl  img/icons/large/users.png        Community
 tiki-admin-include-anchors.tpl  img/icons/large/gnome-settings-background.png        Site Identity
 tiki-admin-include-anchors.tpl  img/icons/large/intertiki.png        InterTiki
-tiki-admin-include-anchors.tpl  img/icons/large/vcard.png        Freetags
+tiki-admin-include-anchors.tpl  img/icons/large/vcard.png        Tags
 tiki-admin-include-anchors.tpl  img/icons/large/google_maps.png        Google Maps
 tiki-admin-include-anchors.tpl  img/icons/large/i18n.png        i18n
 tiki-admin-imclude-anchors.tpl	img/icons/large/socialnetworks.png	Social networks
@@ -53,7 +53,7 @@ tiki-admin-include-list-sections.tpl  img/icons/large/metatags48x48.png        M
 tiki-admin-include-list-sections.tpl  img/icons/large/users48x48.png        Community
 tiki-admin-include-list-sections.tpl  img/icons/large/gnome-settings-background48x48.png        Site Identity
 tiki-admin-include-list-sections.tpl  img/icons/large/intertiki48x48.png        InterTiki
-tiki-admin-include-list-sections.tpl  img/icons/large/vcard48x48.png        Freetags
+tiki-admin-include-list-sections.tpl  img/icons/large/vcard48x48.png        Tags
 tiki-admin-include-list-sections.tpl  img/icons/large/google_maps48x48.png        Google Maps
 tiki-admin-include-list-sections.tpl  img/icons/large/i18n48x48.png        i18n
 tiki-admin-include-list-sections.tpl  img/icons/large/socialnetworks.png Social networks

@@ -17,7 +17,7 @@ class Tracker_Field_Freetags extends Tracker_Field_Abstract implements Tracker_F
 	{
 		return array(
 			'F' => array(
-				'name' => tr('Freetags'),
+				'name' => tr('Tags'),
 				'description' => tr('Allows tags to be shown or added for tracker items.'),
 				'prefs' => array('trackerfield_freetags', 'feature_freetags'),
 				'tags' => array('advanced'),

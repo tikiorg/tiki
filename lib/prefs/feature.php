@@ -287,7 +287,7 @@ function prefs_feature_list($partial = false)
 			),
 		),
 		'feature_freetags' => array(
-			'name' => tra('Freetags'),
+			'name' => tra('Tags'),
 			'description' => tra('Allows tags on pages and various objects to be set within the website and generate tag cloud navigation patterns.'),
 			'help' => 'Tags',
 			'type' => 'flag',

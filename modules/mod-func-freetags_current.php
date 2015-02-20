@@ -48,7 +48,7 @@ function module_freetags_current($mod_reference, $module_params)
 			$canTag = false;
 		}
 
-		$smarty->assign('tpl_module_title', tra('Freetags'));
+		$smarty->assign('tpl_module_title', tra('Tags'));
 
 		$currenttags = $freetaglib->get_tags_on_object($page, 'wiki page');
 		if (count($currenttags['data']) || $canTag) {
