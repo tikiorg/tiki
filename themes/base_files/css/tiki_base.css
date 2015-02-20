@@ -2269,7 +2269,6 @@ body > .ui-front {
 }
 .cssmenu_horiz li,
 .cssmenu_vert li {
-  background: transparent;
   white-space: normal;
   -webkit-transition: background .2s;
   transition: background .2s;
