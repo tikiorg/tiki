@@ -157,6 +157,18 @@ function wikiplugin_trackerlist_info()
 					 array('text' => tra('No'), 'value' => 'n')
 				 )
 			 ),
+			 'showlastmodifby' => array(
+				 'required' => false,
+				 'name' => tra('Last Modified By'),
+				 'description' => tra('Shows the last person who edited the tracker'),
+				 'filter' => 'alpha',
+				 'default' => '',
+				 'options' => array(
+					 array('text' => '', 'value' => ''),
+					 array('text' => tra('Yes'), 'value' => 'y'),
+					 array('text' => tra('No'), 'value' => 'n')
+				 )
+			 ),
 			 'showfieldname' => array(
 				 'required' => false,
 				 'name' => tra('Show Field Name'),
@@ -1154,6 +1166,10 @@ function wikiplugin_trackerlist($data, $params)
 			$showlastmodif = $tracker_info['showLastModif'];
 		}
 		$smarty->assign_by_ref('showlastmodif', $showlastmodif);
+		if (!isset($showlastmodifby)) {
+			$showlastmodifby = $tracker_info['showlastmodifby'];
+		}
+		$smarty->assign_by_ref('showlastmodifby', $showlastmodifby);
 		if (!isset($more))
 			$more = 'n';
 		$smarty->assign_by_ref('more', $more);

@@ -98,6 +98,9 @@
 								{if $showlastmodif eq 'y'}
 									<th>{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='lastModif' session_filters='y'}{tr}LastModif{/tr}{/self_link}</th>
 								{/if}
+								{if $showlastmodifby eq 'y'}
+									<th>{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='lastModifBy' session_filters='y'}{tr}Last Modified By{/tr}{/self_link}</th>
+								{/if}
 								{if $tracker_info.useComments eq 'y' and ($tracker_info.showComments eq 'y' || $tracker_info.showLastComment eq 'y') and $perms.tiki_p_tracker_view_comments ne 'n'}
 									<th{if $tracker_info.showLastComment ne 'y'} style="width:5%"{/if}>{tr}Coms{/tr}</th>
 								{/if}
@@ -142,6 +145,7 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 				{/foreach}
 				{if $showcreated eq 'y'}<td></td>{/if}
 				{if $showlastmodif eq 'y'}<td></td>{/if}
+				{if $showlastmodifby eq 'y'}<td></td>{/if}
 				{if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y' and $perms.tiki_p_tracker_view_comments ne 'n'}<td></td>{/if}
 				{if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}<td></td>{/if}
 			</tr>
@@ -271,6 +275,9 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 			{/if}
 			{if $showlastmodif eq 'y'}
 		<td>{if $tracker_info.showLastModifFormat}{$items[user].lastModif|tiki_date_format:$tracker_info.showLastModifFormat}{else}{$items[user].lastModif|tiki_short_datetime}{/if}</td>
+			{/if}
+			{if $showlastmodifby eq 'y'}
+		<td>{$items[user].lastModifBy}</td>
 			{/if}
 			{if $tracker_info.useComments eq 'y' and ($tracker_info.showComments eq 'y' or $tracker_info.showLastComment eq 'y') and $perms.tiki_p_tracker_view_comments ne 'n'}
 		<td style="text-align:center;">{if $tracker_info.showComments eq 'y'}{$items[user].comments}{/if}{if $tracker_info.showComments eq 'y' and $tracker_info.showLastComment eq 'y'}<br>{/if}{if $tracker_info.showLastComment eq 'y' and !empty($items[user].lastComment)}{$items[user].lastComment.userName|escape}-{$items[user].lastComment.commentDate|tiki_short_date}{/if}</td>
