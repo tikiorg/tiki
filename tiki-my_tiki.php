@@ -12,7 +12,7 @@ $section = 'mytiki';
 require_once ('tiki-setup.php');
 $wikilib = TikiLib::lib('wiki');
 include_once ('lib/tasks/tasklib.php');
-//get_strings tra('MyTiki Home');
+//get_strings tra('My Account Home');
 $access->check_user($user);
 $userwatch = $user;
 if (isset($_REQUEST["view_user"])) {

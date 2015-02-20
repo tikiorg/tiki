@@ -778,9 +778,9 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_mytiki' => array(
-			'name' => tra("Display 'MyTiki' in the application menu"),
-			'description' => tra("Display 'MyTiki' in the application menu"),
-			'help' => 'MyTiki',
+			'name' => tra("Display 'My Account' in the application menu"),
+			'description' => tra("Display 'My Account' in the application menu"),
+			'help' => 'My Account',
 			'type' => 'flag',
 			'default' => 'n',
 		),

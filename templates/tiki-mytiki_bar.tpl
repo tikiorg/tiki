@@ -1,7 +1,7 @@
 <div class="t_navbar btn-block form-group spacer-bottom-15px">
 
 	{if $prefs.feature_userPreferences eq 'y'}
-		{button _icon="img/icons/large/mytiki.gif" class="btn btn-default" _text="{tr}MyTiki{/tr}" href="tiki-my_tiki.php" _menu_text="y"}
+		{button _icon="img/icons/large/mytiki.gif" class="btn btn-default" _text="{tr}My Account{/tr}" href="tiki-my_tiki.php" _menu_text="y"}
 	{/if}
 
 	{if $prefs.feature_userPreferences eq 'y' or $prefs.change_password eq 'y'}

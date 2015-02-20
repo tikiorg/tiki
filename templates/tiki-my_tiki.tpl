@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title help="MyTiki"}{tr}My Account{/tr}{/title}
+{title help="My Account"}{tr}My Account{/tr}{/title}
 
 {include file='tiki-mytiki_bar.tpl'}
 <br>
@@ -355,5 +355,5 @@
 
 {$smarty.capture.my}
 {if $smarty.capture.my|strip:'' eq ''}
-	{tr}To display the objects you created or contributed to:{/tr} <a href="tiki-user_preferences.php?tab3#MyTiki">{tr}My Account{/tr}</a>
+	{tr}To display the objects you created or contributed to:{/tr} <a href="tiki-user_preferences.php?tab3#MyAccount">{tr}My Account{/tr}</a>
 {/if}
