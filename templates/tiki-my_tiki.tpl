@@ -355,5 +355,5 @@
 
 {$smarty.capture.my}
 {if $smarty.capture.my|strip:'' eq ''}
-	{tr}To display the objects you created or contributed to:{/tr} <a href="tiki-user_preferences.php?tab3#MyAccount">{tr}My Account{/tr}</a>
+	{tr}To display the objects you created or contributed to:{/tr} <a href="tiki-user_information.php#contentuser_information-2">{tr}My Items{/tr}</a>
 {/if}

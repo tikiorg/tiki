@@ -509,6 +509,8 @@ $headerlib->add_jsfile('vendor/jquery/plugins/async/jquery.async.js', 10);
 $headerlib->add_jsfile('vendor/jquery/plugins/treetable/javascripts/src/jquery.treetable.js');
 $headerlib->add_cssfile('vendor/jquery/plugins/treetable/stylesheets/jquery.treetable.css');
 
+$headerlib->add_jsfile('vendor/cwspear/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js');
+
 if (empty($user) && $prefs['feature_antibot'] == 'y') {
 	$headerlib->add_jsfile('lib/captcha/captchalib.js');
 }
