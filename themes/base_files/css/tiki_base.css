@@ -138,6 +138,11 @@ span.btn-link {
   content: "";
   clear: both;
 }
+.dropdown-title {
+  text-align: center;
+  padding-top: 10px;
+  opacity: .75;
+}
 #top_modules,
 #topbar_modules,
 #pagebottom_modules {

@@ -4,8 +4,14 @@
 	{if $tiki_p_admin == "y"}
 		<div id="quickadmin" class="btn-group">
 			<div class="btn-group">
-				{icon name="sort-down" title=":{tr}Recent preferences{/tr}" class="btn btn-link dropdown-toggle tikihelp" data-toggle="dropdown"}
+				<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
+					{icon name="sort-down"}
+				</a>
 				<ul class="dropdown-menu recent-prefs" role="menu">
+					<li class="dropdown-title">
+						{tr}Recent Preferences{/tr}
+					</li>
+					<li class="divider"></li>
 					{foreach $recent_prefs as $p}
 						<li>
 							<a href="tiki-admin.php?lm_criteria={$p|stringfix:"_":"%20AND%20"}">{$p|stringfix}</a>
@@ -16,10 +22,14 @@
 				</ul>
 			</div>
 			<div class="btn-group">
-				<a class="btn btn-link tips" title=":{tr}Quick administration{/tr}" data-toggle="dropdown" href="#">
+				<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
 					{icon name="ellipsis"}
 				</a>
 				<ul class="dropdown-menu">
+					<li class="dropdown-title">
+						{tr}Quick Administration{/tr}
+					</li>
+					<li class="divider"></li>
 					<li>
 						<a href="tiki-wizard_admin.php?stepNr=0&amp;url=index.php">
 							{icon name="wizard"} {tr}Wizards{/tr}
