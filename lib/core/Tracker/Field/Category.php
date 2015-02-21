@@ -105,8 +105,12 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		$key = 'ins_' . $this->getConfiguration('fieldId');
 		$parentId = $this->getOption('parentId');
 
-		if (isset($requestData[$key]) && is_array($requestData[$key])) {
-			$selected = $requestData[$key];
+		if (isset($requestData[$key])) {
+			if (!is_array($requestData[$key])) {
+				$selected = array($requestData[$key]);
+			} else {
+				$selected = $requestData[$key];
+			}
 		} else if (isset($requestData['cat_managed'])) {
 			$selected = array();
 		} elseif ($this->getItemId() && !isset($requestData[$key])) {
