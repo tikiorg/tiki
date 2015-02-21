@@ -164,7 +164,7 @@ hr {
   color: #555555;
   background-color: #f4e1ff;
   background-image: none;
-  border: 1px solid #f5fb86;
+  border: 1px solid #f9f0ff;
 }
 .navbar-default {
   background-color: transparent;
@@ -635,7 +635,7 @@ header.header .sitesubtitle {
 .chosen-container-multi .chosen-choices {
   background-color: #ffffff;
   color: #555555;
-  border: 1px solid #f5fb86;
+  border: 1px solid #f9f0ff;
 }
 .chosen-container-single .chosen-single,
 .chosen-container-active.chosen-with-drop .chosen-single,
@@ -643,11 +643,11 @@ header.header .sitesubtitle {
 .chosen-container-multi .chosen-choices .search-choice {
   background-color: #f4e1ff;
   color: #555555;
-  border: 1px solid #f5fb86;
+  border: 1px solid #f9f0ff;
 }
 .chosen-container-single .chosen-search input[type="text"] {
   background-color: #f4e1ff;
-  border: 1px solid #f5fb86;
+  border: 1px solid #f9f0ff;
 }
 .chosen-container .chosen-results li.highlighted {
   background-color: #380052;
