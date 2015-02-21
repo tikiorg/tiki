@@ -7533,6 +7533,10 @@ div.drillshow {
   background-color: #ffffff;
   border: 1px solid #e7e7e7;
 }
+.chosen-container .chosen-results li.highlighted {
+  background-color: transparent;
+  color: #333333;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */

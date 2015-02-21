@@ -6530,6 +6530,7 @@ button.close {
     display: none !important;
   }
 }
+@code-bg #f9f2f4;
 .meta-section {
   border-bottom: solid 1px #999999;
 }
@@ -7151,6 +7152,10 @@ div.drillshow {
 .chosen-container-single .chosen-search input[type="text"] {
   background-color: #292929;
   border: 1px solid #696969 #999999 #999999 #696969;
+}
+.chosen-container .chosen-results li.highlighted {
+  background-color: #cccccc;
+  color: #3f3f3f;
 }
 body {
   background-image: url('../images/474747_5e5e5e_40.png');

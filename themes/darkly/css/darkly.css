@@ -7414,6 +7414,10 @@ div.drillshow {
   background-color: #ffffff;
   border: 1px solid #f1f1f1;
 }
+.chosen-container .chosen-results li.highlighted {
+  background-color: #00bc8c;
+  color: #ffffff;
+}
 .cssmenu_horiz a,
 .cssmenu_vert a {
   color: #0ce3ac;

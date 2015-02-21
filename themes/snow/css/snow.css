@@ -7152,6 +7152,10 @@ div.drillshow {
   background-color: #eceef2;
   border: 1px solid #aaaaaa;
 }
+.chosen-container .chosen-results li.highlighted {
+  background-color: url('../images/flakesptn3.jpg') transparent;
+  color: #262626;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */

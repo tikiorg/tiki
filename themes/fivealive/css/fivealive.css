@@ -7153,6 +7153,10 @@ div.drillshow {
   background-color: #ffffff;
   border: 1px solid #cccccc;
 }
+.chosen-container .chosen-results li.highlighted {
+  background-color: #0e567a;
+  color: #e2e2e2;
+}
 .topbar .navbar-default .navbar-nav > li > a,
 .topbar .navbar-default .navbar-nav > li > a:hover,
 .topbar .navbar-default .navbar-nav > li > a:focus {

@@ -7347,6 +7347,10 @@ div.drillshow {
   background-color: #ffffff;
   border: 1px solid #dfd7ca;
 }
+.chosen-container .chosen-results li.highlighted {
+  background-color: #f8f5f0;
+  color: #98978b;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */
