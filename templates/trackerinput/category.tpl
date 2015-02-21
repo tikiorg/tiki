@@ -3,7 +3,7 @@
 {/if}
 {if $field.options_array[1] eq 'd' || $field.options_array[1] eq 'm'}
 	{if $field.options_array[1] eq 'm' and $prefs.jquery_ui_chosen neq 'y'}<small>{tr}Hold "Ctrl" in order to select multiple values{/tr}</small><br>{/if}
-	<select name="{$field.ins_id}[]"{if $field.options_array[1] eq 'm'} multiple="multiple"{/if} class="form-control">
+	<select name="{$field.ins_id}"{if $field.options_array[1] eq 'm'} multiple="multiple"{/if} class="form-control">
 		{if $field.options_array[1] eq 'd' and (empty($field.value[0]) or $field.isMandatory ne 'y')}
 			<option value=""></option>
 		{/if}
