@@ -23,8 +23,15 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 class Table_Settings_TikiViewforum extends Table_Settings_Standard
 {
 	protected $ts = array(
-		'sorts' => array(
-			'imgattr' => 'title',
+		'filters' => array(
+			'external' => array(
+				0 => array(
+					'type' => 'dropdown',
+					'options' => array(
+						'Show archived' => 'show_archived=y',
+					),
+				),
+			),
 		),
 		'ajax' => array(
 			'offset' => 'comments_offset',
