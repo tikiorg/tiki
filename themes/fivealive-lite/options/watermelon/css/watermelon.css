@@ -672,6 +672,27 @@ header.header .sitesubtitle {
   color: #c21e3b;
   text-shadow: none;
 }
+.chosen-container-multi .chosen-choices {
+  background-color: #ffffff;
+  color: #555555;
+  border: 1px solid #fb999e;
+}
+.chosen-container-single .chosen-single,
+.chosen-container-active.chosen-with-drop .chosen-single,
+.chosen-container .chosen-drop,
+.chosen-container-multi .chosen-choices .search-choice {
+  background-color: #f9dfe2;
+  color: #555555;
+  border: 1px solid #fb999e;
+}
+.chosen-container-single .chosen-search input[type="text"] {
+  background-color: #f9dfe2;
+  border: 1px solid #fb999e;
+}
+.chosen-container .chosen-results li.highlighted {
+  background-color: #76142a;
+  color: #f2f2f2;
+}
 header.header .sitetitle,
 header.header .sitesubtitle {
   color: #c21e3b;
