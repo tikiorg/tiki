@@ -28,9 +28,10 @@ class Table_Code_Other extends Table_Code_Manager
 		$smarty = TikiLib::lib('smarty');
 		$smarty->loadPlugin('smarty_function_icon');
 		$jq = array();
+		$buttondiv = '<div style="float:left">';
 		//column selector
 		if (parent::$s['colselect']['type'] === true) {
-			$htmlbefore[] = '<button id="' . parent::$s['colselect']['button']['id']
+			$buttons[] = '<button id="' . parent::$s['colselect']['button']['id']
 				. '" type="button" class="btn btn-default btn-sm" title="' . parent::$s['colselect']['button']['text']
 				. '" style="margin-right:3px">' . smarty_function_icon(['name' => 'columns'], $smarty) . '</button>';
 			$jq[] = '$(\'button#' . parent::$s['colselect']['button']['id'] . '\').popover({'
@@ -54,7 +55,7 @@ class Table_Code_Other extends Table_Code_Manager
 			}
 			$jq[] = '$(\'button#' . $s['reset']['id'] . '\').click(function(){$(\'' . parent::$tid
 				.'\').trigger(\'sortReset\')' . $sr . ';});';
-			$htmlbefore[] = '<button id="' . $s['reset']['id']
+			$buttons[] = '<button id="' . $s['reset']['id']
 				. '" type="button" class="btn btn-default btn-sm tips" title=":' . $s['reset']['text']
 				.  '" style="margin-right:3px">' . smarty_function_icon(['name' => 'sort'], $smarty) . '</button>';
 		}
@@ -64,11 +65,13 @@ class Table_Code_Other extends Table_Code_Manager
 			$f = parent::$s['filters'];
 			//reset button
 			if ($f['type'] === 'reset') {
-				$htmlbefore[] = '<button id="' . $f['reset']['id']
+				$buttons[] = '<button id="' . $f['reset']['id']
 					. '" type="button" class="btn btn-default btn-sm tips" title=":' . $f['reset']['text'] . '">'
-					. smarty_function_icon(['name' => 'filter'], $smarty) . '</button>';
+					. smarty_function_icon(['name' => 'filter'], $smarty) . '</button></div>';
 			}
-
+			if (isset($buttons) && count($buttons) > 0) {
+				$htmlbefore[] = $this->iterate($buttons, '<div style="float:left">', '</div>', '', '', '');
+			}
 			//external dropdowns
 			if (isset($f['external']) && is_array($f['external'])) {
 				$options = array_column($f['external'], 'options');
@@ -112,6 +115,10 @@ class Table_Code_Other extends Table_Code_Manager
 					}
 					$htmlbefore[] = $this->iterate($divr, '<div style="float:right">', '</div>', '', '', '');
 				}
+			}
+		} else {
+			if (isset($buttons) && count($buttons) > 0) {
+				$htmlbefore[] = $this->iterate($buttons, '<div style="float:left">', '</div>', '', '', '');
 			}
 		}
 

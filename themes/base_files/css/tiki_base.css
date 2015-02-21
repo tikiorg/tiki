@@ -2605,7 +2605,7 @@ div.ts-wrapperdiv div.ts-pager {
   margin-bottom: 15px;
   height: 24px;
   float: right;
-  clear: both;
+  clear: right;
 }
 div.ts-wrapperdiv div.ts-pager.ts-pager-bottom {
   visibility: hidden;
