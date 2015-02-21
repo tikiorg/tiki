@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{tr}Set the site timezone and format for displaying dates and times{/tr}.
+{tr}Set the site time zone and format for displaying dates and times{/tr}.
 <img class="pull-right" src="img/icons/large/icon-configuration48x48.png" alt="{tr}Set up your Date and Time{/tr}" />
 <div class="media">
 	<img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Configuration Wizard{/tr}" title="{tr}Configuration Wizard{/tr}" />

@@ -41,7 +41,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 					),
 					'displayMode' => array(
 						'name' => tr('Display Mode'),
-						'description' => tr('Show files as object links or via a wiki plugins (img so far)'),
+						'description' => tr('Show files as object links or via a wiki plugin (img so far)'),
 						'filter' => 'word',
 						'options' => array(
 							'' => tr('Links'),
@@ -54,13 +54,13 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 					),
 					'displayParams' => array(
 						'name' => tr('Display parameters'),
-						'description' => tr('URL encoded params used as in the {img} plugin. e.g.') . ' "max=400&desc=namedesc&stylebox=block"',
+						'description' => tr('URL-encoded parameters used as in the {img} plugin. e.g.') . ' "max=400&desc=namedesc&stylebox=block"',
 						'filter' => 'text',
 						'legacy_index' => 4,
 					),
 					'displayParamsForLists' => array(
 						'name' => tr('Display parameters for lists'),
-						'description' => tr('URL encoded params used as in the {img} plugin. e.g.') . ' "thumb=mouseover&rel="',
+						'description' => tr('URL-encoded parameters used as in the {img} plugin. e.g.') . ' "thumb=mouseover&rel="',
 						'filter' => 'text',
 						'legacy_index' => 5,
 					),
@@ -115,7 +115,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			),
 		);
 		if (isset($prefs['vimeo_upload']) && $prefs['vimeo_upload'] === 'y') {
-			$options['FG']['params']['displayMode']['description'] = tr('Show files as object links or via a wiki plugins (img, vimeo)');
+			$options['FG']['params']['displayMode']['description'] = tr('Show files as object links or via a wiki plugin (img, vimeo)');
 			$options['FG']['params']['displayMode']['options']['vimeo'] = tr('Vimeo');
 		}
 		return $options;

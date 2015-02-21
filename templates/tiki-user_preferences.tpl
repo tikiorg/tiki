@@ -274,7 +274,7 @@
 					{/foreach}
 				</select>
 				{if $warning_site_timezone_set eq 'y'}
-					<br/><strong>{tr}Warning:{/tr}</strong> <i>{tr _0=$display_timezone}Site timezone <strong>%0</strong> is enforced and overrides user preferences{/tr}</i>
+					<br/><strong>{tr}Warning:{/tr}</strong> <i>{tr _0=$display_timezone}Site time zone <strong>%0</strong> is enforced and overrides user preferences{/tr}</i>
 				{/if}
 			</div>
 

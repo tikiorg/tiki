@@ -581,13 +581,13 @@ if ( empty($s) ) {
 	$php_properties['date.timezone'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => $s,
-		'message' => tra('You have no timezone set! While there are a lot of fallbacks in PHP to determine the timezone, the only reliable solution is to set it explicitly in php.ini! Please check the value of date.timezone in php.ini.')
+		'message' => tra('You have no time zone set! While there are a lot of fallbacks in PHP to determine the time zone, the only reliable solution is to set it explicitly in php.ini! Please check the value of date.timezone in php.ini.')
 	);
 } else {
 	$php_properties['date.timezone'] = array(
 		'fitness' => tra('good'),
 		'setting' => $s,
-		'message' => tra('Well done! Having a timezone set protects you from many weird errors.')
+		'message' => tra('Well done! Having a time zone set protects you from many weird errors.')
 	);
 }
 

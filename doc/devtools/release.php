@@ -844,7 +844,7 @@ EOS;
 	foreach ($contributors as $author => $infos) {
 		if (isset($oldContributors[$author])) {
 			if ($oldContributors[$author] != $infos) {
-				// Quickfix to keep old dates which may be different due to which timezone is used
+				// Quickfix to keep old dates which may be different due to which time zone is used
 				if (isset($oldContributors[$author]['First Commit'])) {
 					$infos['First Commit'] = $oldContributors[$author]['First Commit'];
 					if ($oldContributors[$author]['Number of Commits'] == $infos['Number of Commits']) {

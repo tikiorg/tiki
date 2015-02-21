@@ -68,7 +68,7 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 						'legacy_index' => 5,
 					),
 					'thousands' => array(
-						'name' => tr('Thousand separator when displaying data'),
+						'name' => tr('Thousands separator when displaying data'),
 						'description' => tr('Single character,  Use c for comma, d for dot or s for space.  When inserting data no thousands separator is needed.'),
 						'filter' => 'text',
 						'default' => ',',
