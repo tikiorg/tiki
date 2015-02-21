@@ -141,7 +141,32 @@ class Validators
 		$validationjs .= $custom_messages;
 		// remove last comma (not supported in IE7)
 		$validationjs = rtrim($validationjs, ' ,');
-		$validationjs .= '} ';
+		$validationjs .= '}, ';
+		// Add an invalidHandler to scroll the first error into view
+		// works in both modal and full page modes and leaves the focus on the error input
+		$validationjs .= '
+focusInvalid: false,
+invalidHandler: function(event, validator) {
+	var errors = validator.numberOfInvalids();
+	if (errors) {
+		var $container = $(this).parents(".modal");
+		if (!$container.length) {
+			$container = $("html, body");
+		}
+		var containerScrollTop = $container.scrollTop(),
+			$firstError = $(validator.errorList[0].element),
+			$scrollElement = $firstError.parents(".form-group");
+
+		if (! $scrollElement.length) {
+			$scrollElement = $firstError;
+		}
+		$container.animate({
+			scrollTop: containerScrollTop + $scrollElement.offset().top
+		}, 1000, function () {
+			$firstError.focus();
+		});
+	}
+}';
 		return $validationjs;
 	}
 }
