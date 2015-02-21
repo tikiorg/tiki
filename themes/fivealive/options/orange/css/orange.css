@@ -632,3 +632,24 @@ header.header .sitesubtitle {
   color: #c74b23;
   text-shadow: none;
 }
+.chosen-container-multi .chosen-choices {
+  background-color: #ffffff;
+  color: #555555;
+  border: 1px solid #fac5b1;
+}
+.chosen-container-single .chosen-single,
+.chosen-container-active.chosen-with-drop .chosen-single,
+.chosen-container .chosen-drop,
+.chosen-container-multi .chosen-choices .search-choice {
+  background-color: #f8e4dd;
+  color: #555555;
+  border: 1px solid #fac5b1;
+}
+.chosen-container-single .chosen-search input[type="text"] {
+  background-color: #f8e4dd;
+  border: 1px solid #fac5b1;
+}
+.chosen-container .chosen-results li.highlighted {
+  background-color: #ae421f;
+  color: #f2f2f2;
+}
