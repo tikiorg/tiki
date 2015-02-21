@@ -7530,6 +7530,23 @@ h6 a.tiki_anchor:hover {
 div.drillshow {
   border: 1px solid #bbbbbb;
 }
+.chosen-container-multi .chosen-choices {
+  background-color: rgba(26, 26, 26, 0);
+  color: #666666;
+  border: 1px solid transparent;
+}
+.chosen-container-single .chosen-single,
+.chosen-container-active.chosen-with-drop .chosen-single,
+.chosen-container .chosen-drop,
+.chosen-container-multi .chosen-choices .search-choice {
+  background-color: transparent;
+  color: #666666;
+  border: 1px solid transparent;
+}
+.chosen-container-single .chosen-search input[type="text"] {
+  background-color: transparent;
+  border: 1px solid transparent;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */

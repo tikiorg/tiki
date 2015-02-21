@@ -747,9 +747,26 @@ h6 a.tiki_anchor:hover {
 div.drillshow {
   border: 1px solid @gray-light;
 }
+.chosen-container-multi .chosen-choices {
+  background-color: lighten(@input-bg, 10%);
+  color: @input-color;
+  border: 1px solid @input-border;
+}
 
+.chosen-container-single .chosen-single,
+.chosen-container-active.chosen-with-drop .chosen-single,
+.chosen-container .chosen-drop,
+.chosen-container-multi .chosen-choices .search-choice {
+  background-color: @input-bg;
+  color: @input-color;
+  border: 1px solid @input-border;
+}
 
-
+.chosen-container-single .chosen-search input[type="text"] {
+  background-color: @input-bg;
+  border: 1px solid @input-border;
+//  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.071);
+}
 
 
 

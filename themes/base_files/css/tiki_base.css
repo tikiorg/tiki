@@ -323,9 +323,26 @@ div.cvsup {
   font-size: x-small;
   text-align: left;
 }
+@media (max-width: 480px) {
+  .sitetitle {
+    font-size: 2rem;
+  }
+  .sitesubtitle {
+    display: none;
+  }
+}
+@media (min-width: 480px) and (max-width: 768px) {
+  .sitetitle {
+    font-size: 2rem;
+  }
+  .sitesubtitle {
+    display: none;
+  }
+}
 .layout_social .topbar_modules .sitelogo a img,
 .layout_social_modules .topbar_modules .sitelogo a img,
-.layout_moving_headers #top_modules .sitelogo a img {
+.layout_moving_headers #top_modules .sitelogo a img,
+.layout_headers_test .navbar #top_modules .sitelogo a img {
   display: inline;
   margin-bottom: 1em;
   max-height: 34px;
@@ -333,7 +350,8 @@ div.cvsup {
 }
 .layout_social .topbar_modules h1.sitetitle,
 .layout_social_modules .topbar_modules h1.sitetitle,
-.layout_moving_headers #top_modules h1.sitetitle {
+.layout_moving_headers #top_modules h1.sitetitle,
+.layout_headers_test .navbar #top_modules h1.sitetitle {
   display: inline-block;
   font-size: 1.8rem;
   line-height: 2;
@@ -342,12 +360,14 @@ div.cvsup {
 }
 .layout_social .topbar_modules .sitesubtitle,
 .layout_social_modules .topbar_modules .sitesubtitle,
-.layout_moving_headers #top_modules .sitesubtitle {
+.layout_moving_headers #top_modules .sitesubtitle,
+.layout_headers_test .navbar #top_modules .sitesubtitle {
   display: none;
 }
 .layout_social .topbar_modules #topbar_modules,
 .layout_social_modules .topbar_modules #topbar_modules,
-.layout_moving_headers #top_modules #topbar_modules {
+.layout_moving_headers #top_modules #topbar_modules,
+.layout_headers_test .navbar #top_modules #topbar_modules {
   display: inline-block;
 }
 .layout_social_modules #topbar_modules {

@@ -7135,6 +7135,23 @@ h6 a.tiki_anchor:hover {
 div.drillshow {
   border: 1px solid #999999;
 }
+.chosen-container-multi .chosen-choices {
+  background-color: #434343;
+  color: #f5f5f5;
+  border: 1px solid #696969 #999999 #999999 #696969;
+}
+.chosen-container-single .chosen-single,
+.chosen-container-active.chosen-with-drop .chosen-single,
+.chosen-container .chosen-drop,
+.chosen-container-multi .chosen-choices .search-choice {
+  background-color: #292929;
+  color: #f5f5f5;
+  border: 1px solid #696969 #999999 #999999 #696969;
+}
+.chosen-container-single .chosen-search input[type="text"] {
+  background-color: #292929;
+  border: 1px solid #696969 #999999 #999999 #696969;
+}
 body {
   background-image: url('../images/474747_5e5e5e_40.png');
 }

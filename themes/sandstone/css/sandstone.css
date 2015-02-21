@@ -7330,6 +7330,23 @@ h6 a.tiki_anchor:hover {
 div.drillshow {
   border: 1px solid #dfd7ca;
 }
+.chosen-container-multi .chosen-choices {
+  background-color: #ffffff;
+  color: #3e3f3a;
+  border: 1px solid #dfd7ca;
+}
+.chosen-container-single .chosen-single,
+.chosen-container-active.chosen-with-drop .chosen-single,
+.chosen-container .chosen-drop,
+.chosen-container-multi .chosen-choices .search-choice {
+  background-color: #ffffff;
+  color: #3e3f3a;
+  border: 1px solid #dfd7ca;
+}
+.chosen-container-single .chosen-search input[type="text"] {
+  background-color: #ffffff;
+  border: 1px solid #dfd7ca;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */
