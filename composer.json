@@ -14,7 +14,7 @@
 		"ckeditor/ckeditor": "4.4.7",
 		"ckeditor/ckeditor/skins/kama": "4.4.7",
 		"ckeditor/ckeditor/plugins/divarea": "4.4.7",
-		"codemirror/codemirror": "3.24",
+		"codemirror/codemirror": "4.12.0",
 		"cwspear/bootstrap-hover-dropdown": "2.0.11",
 		"dompdf/dompdf": "0.6.1",
 		"ezyang/htmlpurifier": "4.6.0",

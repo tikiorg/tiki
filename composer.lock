@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7f0ae26d2a310c57fd5e9ddfd6b61645",
+    "hash": "4aad62857da5edd822607dfd6ac60663",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -195,12 +195,12 @@
         },
         {
             "name": "codemirror/codemirror",
-            "version": "3.24.0",
+            "version": "4.12.0",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/codemirror-codemirror-3.24.0.zip",
-                "reference": "3.24.0",
-                "shasum": "f69131fd232f661b23656922ebeccc10b0e93bad"
+                "url": "https://composer.tiki.org/dist/codemirror-codemirror-4.12.0.zip",
+                "reference": "4.12.0",
+                "shasum": "4e06c7627cff29f84fc24422f44158308a6bd5fe"
             },
             "type": "library"
         },
