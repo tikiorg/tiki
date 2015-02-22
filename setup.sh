@@ -20,6 +20,9 @@ DEBUG_UNIX=0 # production mode
 #DEBUG_UNIX=1 # debugging mode
 DEBUG_PREFIX='D>'
 ECHOFLAG=1 # one empty line before printing used options in debugging mode
+PATCHCOMPOSERFLAG="0" # patch composer.phar to avoid the warnings
+                      # unfortunately, this file checks its own signature
+                      # and thus does not allow modifications
 
 # part 1 - preliminaries
 # ----------------------
@@ -498,6 +501,8 @@ composer_core()
 		else
 			php -r "eval('?>'.file_get_contents('https://getcomposer.org/installer'));" -- --install-dir=temp
 		fi
+		# if PATCHCOMPOSERFLAG then modify temp/composer.phar to avoid the warnings
+		# this hack is not yet possible because of a self signature check in temp/composer.phar
 	else
 		php temp/composer.phar self-update
 	fi
