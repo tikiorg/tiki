@@ -44,9 +44,11 @@ class TikiLib extends TikiDb_Bridge
 
 	protected static $isExternalContext = false;
 
-	/**
+	/** Gets a library reference
+	 *
 	 * @param $name
-	 * @return \ActivityLib|\AreasLib|array|\AutoSaveLib|\BannerLib|\BigBlueButtonLib|\CalendarLib|\Captcha|\CartLib|\CreditsLib|\CryptLib|\DCSLib|\EditLib|\ErrorReportLib|\FaqLib|\GeoLib|\GoalEventLib|\GoalLib|\GoalRewardLib|\groupAlertLib|\HeaderLib|\KalturaLib|\LoginLib|\MailinLib|\MimeLib|mixed|\ModLib|\MonitorLib|\MonitorMailLib|\OAuthLib|object|\PageContentLib|\ParserLib|\PaymentLib|\PerspectiveLib|\PollLib|\PollLibShared|\PreferencesLib|\QueueLib|\QuizLib|\RatingConfigLib|\ReferencesLib|\RegistrationLib|\RSSLib|\ScormLib|\SearchStatsLib|\SheetLib|\Smarty_Tiki|\SocialLib|\StatsLib|\StoredSearchLib|\ThemeControlLib|\Tiki_Connect_Client|\Tiki_Connect_Server|\TikiAccessLib|\TikiLib|\UnifiedSearchLib|\UserMailinLib|\UserModulesLib|\Validators|\VimeoLib|\WikiLingoTikiEvents|\WizardLib|\WYSIWYGLib|\ZoteroLib
+	 * @return \ActivityLib|\AreasLib|array|\AutoSaveLib|\BannerLib|\BigBlueButtonLib|\CalendarLib|\Captcha|\CartLib|\CreditsLib|\CryptLib|\DCSLib|\EditLib|\ErrorReportLib|\FaqLib|\GeoLib|\GoalEventLib|\GoalLib|\GoalRewardLib|\groupAlertLib|\HeaderLib|\IconsetLib|\KalturaLib|\LoginLib|\MailinLib|\MimeLib|mixed|\ModLib|\MonitorLib|\MonitorMailLib|\OAuthLib|object|\PageContentLib|\ParserLib|\PaymentLib|\PerspectiveLib|\PollLib|\PollLibShared|\PreferencesLib|\QueueLib|\QuizLib|\RatingConfigLib|\ReferencesLib|\RegistrationLib|\RSSLib|\ScormLib|\SearchStatsLib|\SheetLib|\Smarty_Tiki|\SocialLib|\StatsLib|\StoredSearchLib|\ThemeControlLib|\ThemeGenLib|\ThemeLib|\Tiki_Connect_Client|\Tiki_Connect_Server|\TikiAccessLib|\TikiLib|\Tracker\Tabular\Manager|\TrackerLib|\UnifiedSearchLib|\UserMailinLib|\UserModulesLib|\Validators|\VimeoLib|\WikiLingoTikiEvents|\WizardLib|\WYSIWYGLib|\ZoteroLib
+	 * @throws Exception
 	 */
 	public static function lib($name)
 	{
