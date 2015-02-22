@@ -618,7 +618,7 @@
 				"version": "2.5.1",
 				"dist": {
 					"url": "https://github.com/Krinkle/jquery-json/archive/v2.5.1.zip",
-					"type": "file"
+					"type": "zip"
 				}
 			}
 		},
