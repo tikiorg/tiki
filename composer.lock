@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8b64140f18e8d6d9c15ad714d9e2e8f5",
+    "hash": "28bc53f88730cf6577a146d8d42e3467",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -1007,12 +1007,12 @@
         },
         {
             "name": "jquery/plugins/superfish",
-            "version": "1.7.4",
+            "version": "1.7.5",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-superfish-1.7.4.zip",
-                "reference": "1.7.4",
-                "shasum": "b27e1fb4f51d10830c610d83f1e1392ef308007c"
+                "url": "https://composer.tiki.org/dist/jquery-plugins-superfish-1.7.5.zip",
+                "reference": "1.7.5",
+                "shasum": "e1d8a2d97e183593d4f014ff1094df67ad319cd5"
             },
             "type": "library"
         },
