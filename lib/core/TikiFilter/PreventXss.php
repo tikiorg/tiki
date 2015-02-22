@@ -250,6 +250,10 @@ class TikiFilter_PreventXss implements Zend_Filter_Interface
 		}
 		// filter out the hex tags
 		$val = preg_replace($patterns, $replacements, $val);
+
+		if ($val === null) {
+			TikiLib::lib('errorreport')->report(tr('Filter error: "%0"', array_flip(get_defined_constants(true)['pcre'])[preg_last_error()]));
+		}
 		if ($val_before == $val) {
 			// no replacements were made, so exit the loop
 			$found = false;
