@@ -261,6 +261,7 @@ var elfoptions = initElFinder({
 	});
 
 var elFinderInstnce = $(".elFinderDialog").elfinder(elfoptions).elfinder('instance');
+// when changing folders update the buttons in the navebar above
 elFinderInstnce.bind("open", function (data) {
 	$.getJSON($.service('file_finder', 'finder'), {
 		cmd: "tikiFileFromHash",
@@ -269,8 +270,10 @@ elFinderInstnce.bind("open", function (data) {
 		var href = '';
 		$(".t_navbar a").each(function () {
 			href = $(this).attr("href");
-			href = href.replace(/(galleryId|objectId|parentId|watch_object)=\d+/, '$1=' + data.galleryId);
-			$(this).attr("href", href);
+			if (href) {	// avoid chosen select replacements
+				href = href.replace(/(galleryId|objectId|parentId|watch_object)=\d+/, '$1=' + data.galleryId);
+				$(this).attr("href", href);
+			}
 		});
 	});
 });
