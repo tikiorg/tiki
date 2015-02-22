@@ -170,7 +170,7 @@
 								{if isset($email_test_err)}<span class="attention"><em>{$email_test_err}</em></span>
 								{else}<em>{tr}Email address to send test to.{/tr}</em>{/if}
 								<br><br>
-								<input type="checkbox" name="email_test_cc" checked="checked" value="1">
+								<input type="checkbox" name="email_test_cc" value="1">
 								<em>{tr}Copy test mail to {/tr} {$email_test_tw}?</em>
 							</div>
 							<input type="hidden" name="install_step" value="2">
