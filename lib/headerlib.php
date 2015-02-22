@@ -26,7 +26,7 @@ class HeaderLib
 	public $wysiwyg_parsing;
 	public $lockMinifiedJs;
 
-	public $jquery_version = '1.11.0';
+	public $jquery_version = '1.11.2';
 	public $jqueryui_version = '1.10.4';
 	public $jquerymobile_version = '1.3.2';
 

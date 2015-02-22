@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "429b168a9bda0d999ddc05ebd19a7004",
+    "hash": "97c9488859bda373f0b497f478de1fd4",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -540,7 +540,7 @@
                     "name": "Robert Plummer",
                     "email": "rplummer@visop-dev.com",
                     "homepage": "http://visop-dev.com",
-                    "role": "Lead Developer"
+                    "role": "Assistant Developer"
                 },
                 {
                     "name": "Luke Gerhardt",
@@ -699,23 +699,23 @@
         },
         {
             "name": "jquery/jquery",
-            "version": "1.11.0",
+            "version": "1.11.2",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-1.11.0.zip",
-                "reference": "1.11.0",
-                "shasum": "32ecccc68855e17da715ae66129f620b9d218fb6"
+                "url": "https://composer.tiki.org/dist/jquery-jquery-1.11.2.zip",
+                "reference": "1.11.2",
+                "shasum": "8200fc1f8537a6983371b59210188fc5e1f0cc96"
             },
             "type": "library"
         },
         {
             "name": "jquery/jquery-min",
-            "version": "1.11.0",
+            "version": "1.11.2",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-min-1.11.0.zip",
-                "reference": "1.11.0",
-                "shasum": "5aec82e9482beb426bc5ac0273ae29d87f59c34e"
+                "url": "https://composer.tiki.org/dist/jquery-jquery-min-1.11.2.zip",
+                "reference": "1.11.2",
+                "shasum": "009d924477cd1c5740fdedb59dea95b7e0236d30"
             },
             "type": "library"
         },
@@ -1140,12 +1140,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jakiestfu/Medium.js.git",
-                "reference": "eae4f2378189bb0369fc964cc37d403610f4718d"
+                "reference": "bd1fad2779dfe509d91e8a00b41f06a480cf7043"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/eae4f2378189bb0369fc964cc37d403610f4718d",
-                "reference": "eae4f2378189bb0369fc964cc37d403610f4718d",
+                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/bd1fad2779dfe509d91e8a00b41f06a480cf7043",
+                "reference": "bd1fad2779dfe509d91e8a00b41f06a480cf7043",
                 "shasum": ""
             },
             "require": {
@@ -1172,7 +1172,7 @@
                 }
             ],
             "description": "A tiny JavaScript library for making contenteditable beautiful (Like Medium's editor).",
-            "time": "2015-02-03 19:56:28"
+            "time": "2015-02-19 00:47:15"
         },
         {
             "name": "phenx/php-font-lib",
