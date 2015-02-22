@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4aad62857da5edd822607dfd6ac60663",
+    "hash": "4f0a176fbf2aefb0b5f7eac752189d45",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -743,12 +743,12 @@
         },
         {
             "name": "jquery/jquery-timepicker-addon",
-            "version": "1.4.4",
+            "version": "1.5.0",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-timepicker-addon-1.4.4.zip",
-                "reference": "1.4.4",
-                "shasum": "5d13f97c5d1184c6a62265c87f6e9444683270f0"
+                "url": "https://composer.tiki.org/dist/jquery-jquery-timepicker-addon-1.5.0.zip",
+                "reference": "1.5.0",
+                "shasum": "d39e2076c00d42552e0ec67ec744883c4780ced5"
             },
             "type": "library"
         },
