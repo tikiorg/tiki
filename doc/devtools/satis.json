@@ -1070,9 +1070,20 @@
 				"dist": {
 					"url": "https://github.com/Mottie/tablesorter/archive/v2.19.0.zip",
 					"type": "zip"
-		  }
-		}
-	  },
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/tablesorter",
+				"version": "2.20.1",
+				"dist": {
+					"url": "https://github.com/Mottie/tablesorter/archive/v2.20.1.zip",
+					"type": "zip"
+				}
+			}
+		},
 		{
 			"type": "package",
 			"package": {
