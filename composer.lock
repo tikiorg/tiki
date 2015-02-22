@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1f202ea38c45a67ab4d5cce09b7227e2",
+    "hash": "7f0ae26d2a310c57fd5e9ddfd6b61645",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -132,17 +132,17 @@
         },
         {
             "name": "ckeditor/ckeditor",
-            "version": "4.3.4",
+            "version": "4.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ckeditor/ckeditor-releases.git",
-                "reference": "b39eebd5f865fe33e34e33db9a33512655e6e656"
+                "reference": "cc324415302784eb1abe33a3762fbdd3b48c558b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-b39eebd5f865fe33e34e33db9a33512655e6e656-zip-9e41c9.zip",
-                "reference": "4.3.4",
-                "shasum": "813b8283177f450010613288d9a40571e3921318"
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-cc324415302784eb1abe33a3762fbdd3b48c558b-zip-f54d37.zip",
+                "reference": "4.4.7",
+                "shasum": "35b28edbbd269291743bb9affa5e355e7cc26d1b"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -153,7 +153,7 @@
             ],
             "authors": [
                 {
-                    "name": "CKSource - Frederico Knabben",
+                    "name": "CKSource",
                     "homepage": "http://cksource.com"
                 }
             ],
@@ -169,27 +169,27 @@
                 "text",
                 "wysiwyg"
             ],
-            "time": "2014-03-25 14:33:54"
+            "time": "2015-01-27 15:13:53"
         },
         {
             "name": "ckeditor/ckeditor/plugins/divarea",
-            "version": "4.3.4",
+            "version": "4.4.7",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-plugins-divarea-4.3.4.zip",
-                "reference": "4.3.4",
-                "shasum": "ac1a869b2903ff1f5e43b4e44c912b218d2b975e"
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-plugins-divarea-4.4.7.zip",
+                "reference": "4.4.7",
+                "shasum": "ac19c1d99e3a645b3ee83c857b4f6ae6ee4f9893"
             },
             "type": "library"
         },
         {
             "name": "ckeditor/ckeditor/skins/kama",
-            "version": "4.3.4",
+            "version": "4.4.7",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-kama-4.3.4.zip",
-                "reference": "4.3.4",
-                "shasum": "5b92ea821d1e48c50d4a891873a34c30fea0f5cd"
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-kama-4.4.7.zip",
+                "reference": "4.4.7",
+                "shasum": "f03858b1d65157bcab7ff8382f35330e030a2522"
             },
             "type": "library"
         },
