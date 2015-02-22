@@ -422,9 +422,9 @@ if ( $prefs['feature_jquery_ui'] == 'y' ) {
 		$headerlib->add_jsfile_dependancy("//code.jquery.com/ui/$headerlib->jqueryui_version/jquery-ui.min.js");
 	} else {
 		if ( $prefs['tiki_minify_javascript'] === 'y' ) {
-			$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-ui/js/jquery-ui-$headerlib->jqueryui_version.min.js");
+			$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-ui/jquery-ui.min.js");
 		} else {
-			$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-ui/js/jquery-ui-$headerlib->jqueryui_version.js");
+			$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-ui/jquery-ui.js");
 		}
 	}
 

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "97c9488859bda373f0b497f478de1fd4",
+    "hash": "1f202ea38c45a67ab4d5cce09b7227e2",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -754,23 +754,23 @@
         },
         {
             "name": "jquery/jquery-ui",
-            "version": "1.10.4",
+            "version": "1.11.3",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-1.10.4.zip",
-                "reference": "1.10.4",
-                "shasum": "5d6d8ffe7592657356f206f3f56a53ff32964230"
+                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-1.11.3.zip",
+                "reference": "1.11.3",
+                "shasum": "0b492d038d0384a18558a6bd146c7a0b0004edeb"
             },
             "type": "library"
         },
         {
             "name": "jquery/jquery-ui-themes",
-            "version": "1.10.4",
+            "version": "1.11.3",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-themes-1.10.4.zip",
-                "reference": "1.10.4",
-                "shasum": "47b818d17a4cb527a3a3f83a9ce59a027bcbea60"
+                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-themes-1.11.3.zip",
+                "reference": "1.11.3",
+                "shasum": "fbf541452e570b68dbf2b1b851e11982c54e6168"
             },
             "type": "library"
         },
