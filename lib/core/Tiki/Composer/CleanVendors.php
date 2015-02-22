@@ -66,9 +66,40 @@ class CleanVendors
 		$fs->remove($vendors . 'jquery/plugins/superfish/bower.json');
 		$fs->remove($vendors . 'jquery/plugins/superfish/package.json');
 		$fs->remove($vendors . 'jquery/plugins/superfish/superfish.jquery.json');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/addons');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/beta-testing');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/css');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/dist');
 		$fs->remove($vendors . 'jquery/plugins/tablesorter/docs');
-		$fs->remove($vendors . 'jquery/plugins/tablesorter/testing');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/.gitattributes');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/.gitignore');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/bower.json');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/changelog.txt');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/example.json');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/Gruntfile.js');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/package.json');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/tablesorter.jquery.json');
 		$fs->remove($vendors . 'jquery/plugins/tablesorter/test.html');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/js/widgets/widget-alignChar.js');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/js/widgets/widget-build-table.js');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/js/widgets/widget-chart.js');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/js/widgets/widget-columns.js'); //in jquery.tablesorter.widgets.js
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/js/widgets/widget-editable.js');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/js/widgets/widget-filter.js'); //in jquery.tablesorter.widgets.js
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/js/widgets/widget-filter-formatter-html5.js');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/js/widgets/widget-filter-formatter-select2.js');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/js/widgets/widget-headerTitles.js');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/js/widgets/widget-math.js');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/js/widgets/widget-output.js');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/js/widgets/widget-print.js');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/js/widgets/widget-reflow.js');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/js/widgets/widget-repeatheaders.js');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/js/widgets/widget-resizable.js'); //in jquery.tablesorter.widgets.js
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/js/widgets/widget-saveSort.js'); //in jquery.tablesorter.widgets.js
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/js/widgets/widget-scroller.js');
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/js/widgets/widget-stickyHeaders.js'); //in jquery.tablesorter.widgets.js
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/js/widgets/widget-storage.js'); //in jquery.tablesorter.widgets.js
+		$fs->remove($vendors . 'jquery/plugins/tablesorter/js/widgets/widget-uitheme.js'); //in jquery.tablesorter.widgets.js
 		$fs->remove($vendors . 'jquery/plugins/jquery-validation/demo');
 		$fs->remove($vendors . 'jquery/plugins/jquery-validation/lib');
 		$fs->remove($vendors . 'jquery/plugins/jquery-validation/test');
