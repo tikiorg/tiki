@@ -398,10 +398,10 @@ if ($prefs['feature_syntax_highlighter'] == 'y') {
 	codemirrorModes($prefs['tiki_minify_javascript'] === 'y');
 }
 if ($prefs['feature_wikilingo'] == 'y') {
-    $headerlib
-        //flp stuff
-        ->add_cssfile('vendor/jquery/plugins/tablesorter/css/theme.dropbox.css')
-        ->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.js');
+	$headerlib
+		//flp stuff
+		->add_cssfile('vendor/jquery/plugins/tablesorter/css/theme.dropbox.css')
+		->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.js');
 }
 
 if ( $prefs['feature_jquery_carousel'] == 'y' ) {
@@ -467,20 +467,11 @@ if ( $prefs['feature_jquery_media'] == 'y' ) {
 	$headerlib->add_jsfile('vendor/jquery/plugins/media/jquery.media.js');
 }
 if ( $prefs['feature_jquery_tablesorter'] == 'y' ) {
-	if ( $prefs['tiki_minify_javascript'] === 'y' ) {
-		//tablesorter has bad syntax in the non-min file, however the min file seems to work fine when double minned :)
-		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.min.js');
-		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.widgets.min.js');
-		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.widgets-filter-formatter.min.js');
-		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/addons/pager/jquery.tablesorter.pager.min.js');
-	} else {
-		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.js');
-		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/addons/pager/jquery.tablesorter.pager.js');
-		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.widgets.js');
-		$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.widgets-filter-formatter.js');
-	}
-	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-grouping.js');
+	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.js');
+	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.widgets.js');
 	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-pager.js');
+	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-filter-formatter-jui.js');
+	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-grouping.js');
 	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-columnSelector.js');
 	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/parsers/parser-input-select.js');
 }

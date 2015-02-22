@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a52efa0caafde27e453056887925c84c",
+    "hash": "382c536543b8b61d8d0eefe0b3491952",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -540,7 +540,7 @@
                     "name": "Robert Plummer",
                     "email": "rplummer@visop-dev.com",
                     "homepage": "http://visop-dev.com",
-                    "role": "Assistant Developer"
+                    "role": "Lead Developer"
                 },
                 {
                     "name": "Luke Gerhardt",
@@ -1018,12 +1018,12 @@
         },
         {
             "name": "jquery/plugins/tablesorter",
-            "version": "2.19.0",
+            "version": "2.20.1",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-tablesorter-2.19.0.zip",
-                "reference": "2.19.0",
-                "shasum": "6c9cc983b76e70224ed34045597a0c0746340b44"
+                "url": "https://composer.tiki.org/dist/jquery-plugins-tablesorter-2.20.1.zip",
+                "reference": "2.20.1",
+                "shasum": "77bacf2311367e522b416059b6b02c2b7ddb3a1f"
             },
             "type": "library"
         },
