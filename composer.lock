@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4f0a176fbf2aefb0b5f7eac752189d45",
+    "hash": "d37f88ef4eb8fa334773de70cddceea2",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -930,12 +930,12 @@
         },
         {
             "name": "jquery/plugins/jquery-validation",
-            "version": "1.11.1",
+            "version": "1.13.1",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-jquery-validation-1.11.1.zip",
-                "reference": "1.11.1",
-                "shasum": "d213520877538e49c35bf862b24358bf417e495e"
+                "url": "https://composer.tiki.org/dist/jquery-plugins-jquery-validation-1.13.1.zip",
+                "reference": "1.13.1",
+                "shasum": "af63e16cfa83a07ce7a5f02b5711bdfe7b2f65cc"
             },
             "type": "library"
         },
