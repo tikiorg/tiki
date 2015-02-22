@@ -2,15 +2,16 @@
 {** Currently works for the following object types: 'article' and 'wiki page' **}
 <div class="btn-group">
 	{* For all object types: First show the world icon and on hover the language of the current object *}
-	<a class="btn btn-link tips dropdown-toggle" data-toggle="dropdown" title="{if !empty($trads[0].langName)}{tr}Current language{/tr}:{$trads[0].langName|escape} ({$trads[0].lang|escape}){else}:{tr}No translations{/tr}{/if}">
+	<a class="btn btn-link dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
 		{icon name="translate"}
 	</a>
 	{* ..than on hover first show the list of translations including the current language highlighted *}
 	{if empty($trads[0].lang)}
 		<ul class="dropdown-menu dropdown-menu-right" role="menu">
-			<li role="presentation" class="dropdown-header">
-				{tr}No language assigned.{/tr}
+			<li role="presentation" class="dropdown-title">
+				{tr}No language assigned{/tr}
 			</li>
+			<li class="divider"></li>
 			{if $object_type eq 'wiki page' and ($tiki_p_edit eq 'y' or (!$user and $prefs.wiki_encourage_contribution eq 'y')) and !$lock}
 				<li role="presentation">
 					<a role="menuitem" tabindex="-1" href="tiki-edit_translation.php?page={$page|escape}">
@@ -23,15 +24,17 @@
 						{tr}Set article language{/tr}
 					</a>
 				</li>
+				<li class="divider"></li>
 			{/if}
 		</ul>
 	{else}
 		<ul class="dropdown-menu dropdown-menu-right" role="menu">
 			<li>
 			{* First the language of the object *}
-			<li role="presentation" class="dropdown-header">
+			<li role="presentation" class="dropdown-title">
 				{tr}Current language{/tr}
 			</li>
+			<li class="divider"></li>
 			{if $object_type eq 'wiki page'}
 				<li role="presentation">
 					<a role="menuitem" tabindex="-1" href="tiki-index.php?page={$trads[0].objName|escape}&no_bl=y" class="tips" title="{$trads[0].langName|escape} ({$trads[0].lang|escape}): {$trads[0].objName}" class="selected">
@@ -48,7 +51,7 @@
 			{* Than the header for human translations - shown only if there is a translation available *}
 				{if isset($trads) and count($trads) > 1}
 					<li role="presentation" class="divider"></li>
-					<li role="presentation" class="dropdown-header">
+					<li role="presentation" class="dropdown-title">
 						{tr}Translations{/tr}
 					</li>
 				{/if}
@@ -82,7 +85,7 @@
 			{* For wiki pages only: List of machine translation candidates if feature is switched on *}
 				{if $object_type eq 'wiki page' and $prefs.feature_machine_translation eq 'y'}
 					<li role="presentation" class="divider"></li>
-					<li role="presentation" class="dropdown-header">
+					<li role="presentation" class="dropdown-title">
 						{tr}Machine translations{/tr}
 					</li>
 				{* List machine translation candidates for available language of the site *}
