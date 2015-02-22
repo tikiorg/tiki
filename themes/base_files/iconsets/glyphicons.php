@@ -34,6 +34,12 @@ function iconset_glyphicons()
 			'backward_step' => array(
 				'id' => 'step-backward',
 			),
+			'caret-left' => array(
+				'id' => 'triangle-left',
+			),
+			'caret-right' => array(
+				'id' => 'triangle-right',
+			),
 			'check' => array(
 				'id' => 'ok-circle',
 			),

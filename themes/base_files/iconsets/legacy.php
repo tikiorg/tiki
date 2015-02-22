@@ -188,6 +188,12 @@ function iconset_legacy()
 			'cache' => array(
 				'id' => 'database_refresh',
 			),
+			'caret-left' => array(
+				'id' => 'resultset_previous',
+			),
+			'caret-right' => array(
+				'id' => 'resultset_next',
+			),
 			'change' => array(
 				'id' => 'pencil',
 			),
