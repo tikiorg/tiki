@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d37f88ef4eb8fa334773de70cddceea2",
+    "hash": "5ca72be5581a874b9d074734a8f49e64",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -820,12 +820,12 @@
         },
         {
             "name": "jquery/plugins/anythingslider",
-            "version": "1.9.2",
+            "version": "1.9.4",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-anythingslider-1.9.2.zip",
-                "reference": "1.9.2",
-                "shasum": "32843785ddb162ff8c8d2e3efec35c4ac939bfe7"
+                "url": "https://composer.tiki.org/dist/jquery-plugins-anythingslider-1.9.4.zip",
+                "reference": "1.9.4",
+                "shasum": "3e3af8c1fb79a8835cecb2f7d9bf6637f2850210"
             },
             "type": "library"
         },
