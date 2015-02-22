@@ -502,7 +502,7 @@ if (! empty($tiki_p_admin) && $tiki_p_admin === 'y' && !empty($prefs['themegener
 
 if ( $prefs['feature_jquery_validation'] == 'y' ) {
 	$headerlib->add_jsfile('vendor/jquery/plugins/jquery-validation/dist/jquery.validate.js');
-	$headerlib->add_jsfile('lib/validators/validator_required_in_group.js');
+	$headerlib->add_jsfile('lib/validators/validator_tiki.js');
 }
 
 $headerlib->add_jsfile('vendor/jquery/plugins/async/jquery.async.js', 10);
