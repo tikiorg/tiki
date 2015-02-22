@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5ca72be5581a874b9d074734a8f49e64",
+    "hash": "a78cff253587c5df64029d96c35894b6",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -864,12 +864,12 @@
         },
         {
             "name": "jquery/plugins/colorbox",
-            "version": "1.5.8",
+            "version": "1.5.14",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-colorbox-1.5.8.zip",
-                "reference": "1.5.8",
-                "shasum": "a11d483b0da2612869df3d7de8a0a73ca8d0f655"
+                "url": "https://composer.tiki.org/dist/jquery-plugins-colorbox-1.5.14.zip",
+                "reference": "1.5.14",
+                "shasum": "48b990dbca120985488d1c0e27d0f3d9caae9af8"
             },
             "type": "library"
         },
