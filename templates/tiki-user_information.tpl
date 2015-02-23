@@ -148,10 +148,10 @@
 			{if $prefs.feature_friends eq 'y'}
 			<h3>{tr}Friendship Network{/tr}</h3>
 				{if $user eq $userinfo.login}
-			<h4>{tr}Your relation to other users{/tr}</h4>
+			<h4>{tr}Your relationship with other users{/tr}</h4>
 					{module module=friend_list nobox=y}
 				{else}
-			<h4>{tr}Relation of this user to you{/tr}</h4>
+			<h4>{tr}Relationship of this user to you{/tr}</h4>
 			<div id="friendship"></div>
 			<div id="addfriend"></div>
 					{jq}

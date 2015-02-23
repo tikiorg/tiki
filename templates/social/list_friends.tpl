@@ -13,7 +13,7 @@
 			<a class="pull-right remove-friend" href="{service controller=social action=remove_friend friend=$friend.user}" data-confirm="{tr _0=$friend.user}Do you really want to remove %0?{/tr}">{icon _id=cross alt="{tr}Remove Friend{/tr}"}</a>
 		</li>
 	{foreachelse}
-		<li>{tr}You do not have friends.{/tr}</li>
+		<li>{tr}No friends have been added.{/tr}</li>
 	{/foreach}
 </ul>
 {if $incoming|count > 0}
