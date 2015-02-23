@@ -1035,7 +1035,7 @@ function wikiplugin_tracker($data, $params)
 							}
 							$url .= "&ok=y&iTRACKER=$iTRACKER";
 							$url .= "#wikiplugin_tracker$iTRACKER";
-							header("Location: $url");
+							TikiLib::lib('access')->redirect($url);
 							exit;
 						} else {
 							return '';
@@ -1056,7 +1056,7 @@ function wikiplugin_tracker($data, $params)
 								$url[$key] = str_replace('itemId', 'itemId='.$rid, $url[$key]);
 							}
 						}
-						header('Location: '.$url[$key]);
+						TikiLib::lib('access')->redirect($url[$key]);
 						exit;
 					}
 					/* ------------------------------------- end save the item ---------------------------------- */
