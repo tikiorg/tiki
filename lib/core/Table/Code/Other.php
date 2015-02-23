@@ -28,7 +28,6 @@ class Table_Code_Other extends Table_Code_Manager
 		$smarty = TikiLib::lib('smarty');
 		$smarty->loadPlugin('smarty_function_icon');
 		$jq = array();
-		$buttondiv = '<div style="float:left">';
 		//column selector
 		if (parent::$s['colselect']['type'] === true) {
 			$buttons[] = '<button id="' . parent::$s['colselect']['button']['id']
@@ -67,7 +66,7 @@ class Table_Code_Other extends Table_Code_Manager
 			if ($f['type'] === 'reset') {
 				$buttons[] = '<button id="' . $f['reset']['id']
 					. '" type="button" class="btn btn-default btn-sm tips" title=":' . $f['reset']['text'] . '">'
-					. smarty_function_icon(['name' => 'filter'], $smarty) . '</button></div>';
+					. smarty_function_icon(['name' => 'filter'], $smarty) . '</button>';
 			}
 			if (isset($buttons) && count($buttons) > 0) {
 				$htmlbefore[] = $this->iterate($buttons, '<div style="float:left">', '</div>', '', '', '');
