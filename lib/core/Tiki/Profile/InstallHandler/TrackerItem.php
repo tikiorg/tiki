@@ -84,11 +84,19 @@ class Tiki_Profile_InstallHandler_TrackerItem extends Tiki_Profile_InstallHandle
 		foreach ( $data['values'] as $row ) {
 			list( $f, $v) = $row;
 
-			foreach ( $fields['data'] as $key => $entry )
-				if ( $entry['fieldId'] == $f)
-					$fields['data'][$key]['value'] = $v;
+			unset($fieldId);
 
-			$providedfields[] = $f;
+			foreach ( $fields['data'] as $key => $entry ) {
+				if ( $entry['fieldId'] == $f || $entry['permName'] == $f ) {
+					$fields['data'][$key]['value'] = $v;
+					$fieldId = $entry['fieldId'];
+					break;
+				}
+			}
+
+			if ($fieldId) {
+				$providedfields[] = $fieldId;
+			}
 		}
 
 		if ($this->mode == 'update') {
