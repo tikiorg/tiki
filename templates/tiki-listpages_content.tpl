@@ -421,7 +421,7 @@
 					<option value="zip">{tr}Xml Zip{/tr}</option>
 				{/if}
 				{if $tiki_p_admin eq 'y'}
-					<option value="title">{tr}Add page name as a header ! at the beginning of the page content{/tr}</option>
+					<option value="title">{tr}Add page name as an h1-size header at the beginning of the page content{/tr}</option>
 				{/if}
 
 				{* add here e.g. <option value="categorize" >{tr}categorize{/tr}</option> *}
