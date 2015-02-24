@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "382c536543b8b61d8d0eefe0b3491952",
+    "hash": "1d3d4495e89704c23d9e8746602d6f41",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -540,7 +540,7 @@
                     "name": "Robert Plummer",
                     "email": "rplummer@visop-dev.com",
                     "homepage": "http://visop-dev.com",
-                    "role": "Lead Developer"
+                    "role": "Assistant Developer"
                 },
                 {
                     "name": "Luke Gerhardt",
@@ -1210,12 +1210,12 @@
         },
         {
             "name": "phpcas/phpcas",
-            "version": "1.3.2",
+            "version": "1.3.3",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/phpcas-phpcas-1.3.2.zip",
-                "reference": "1.3.2",
-                "shasum": "577d74b5a193fc011d99898f037b1198c93073f3"
+                "url": "https://composer.tiki.org/dist/phpcas-phpcas-1.3.3.zip",
+                "reference": "1.3.3",
+                "shasum": "4b7448986dc8f41e1ce9085f81ec3209de6c8e94"
             },
             "type": "library"
         },
