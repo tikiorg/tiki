@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ec78c482c742b57aadc6227875c44a1f",
+    "hash": "4d56bad17557dade6e078ccad16e7c6c",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -1464,18 +1464,18 @@
         },
         {
             "name": "symfony/config",
-            "version": "v2.4.3",
+            "version": "v2.6.3",
             "target-dir": "Symfony/Component/Config",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Config.git",
-                "reference": "e98693981385224bd31667e56204f311d9e0f98e"
+                "reference": "d94f222eff99a22ce313555b78642b4873418d56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/symfony-config-e98693981385224bd31667e56204f311d9e0f98e-zip-ea9d67.zip",
-                "reference": "v2.4.3",
-                "shasum": "d5127b7dd29dbd6124ebc56e4dcab6f54e0faf6c"
+                "url": "https://composer.tiki.org/dist/symfony-config-d94f222eff99a22ce313555b78642b4873418d56-zip-b272e8.zip",
+                "reference": "v2.6.3",
+                "shasum": "d62ac7ccd4c413f84881ea54481f16f8ef8e5807"
             },
             "require": {
                 "php": ">=5.3.3",
@@ -1484,7 +1484,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4-dev"
+                    "dev-master": "2.6-dev"
                 }
             },
             "autoload": {
@@ -1498,19 +1498,17 @@
             ],
             "authors": [
                 {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
                     "name": "Symfony Community",
                     "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "Symfony Config Component",
             "homepage": "http://symfony.com",
-            "time": "2014-03-26 11:35:33"
+            "time": "2015-01-03 08:01:59"
         },
         {
             "name": "symfony/console",

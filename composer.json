@@ -62,7 +62,6 @@
 		"simile_timeline/simile_timeline": "2.3.0",
 		"smarty/smarty": "3.1.21",
 		"svg-edit/svg-edit": "2.7.1",
-		"symfony/console": "2.6.4",
 		"tijsverkoyen/css-to-inline-styles": "1.2.1",
         "undojs/undojs": "1",
         "wikilingo/wikilingo":"dev-master",
@@ -72,8 +71,9 @@
 		"wikilingo/codemirror": "dev-master",
 		"alvarotrigo/fullpage.js": "1",
 		"jcobb/basic-jquery-slider": "1",
+		"symfony/console": "2.6.4",
 		"symfony/dependency-injection": "2.4.3",
-		"symfony/config": "2.4.3"
+		"symfony/config": "2.6.3"
 	},
 	"require-dev": {
 		"oyejorge/less.php": "1.7.0.2",
