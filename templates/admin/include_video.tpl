@@ -76,68 +76,6 @@
 			</div>
 		{/tab}
 
-		{tab name="{tr}Ustream Watershed{/tr}"}
-			<h2>{tr}Ustream Watershed{/tr}</h2>
-			{remarksbox type="info" title="{tr}Ustream Watershed Registration{/tr}"}
-				{tr}If you don't have a Watershed account, {/tr}<a href="https://watershed.ustream.tv/">{tr}you can find out more about it here{/tr}.</a>
-			{/remarksbox}
-			<fieldset class="table">
-				<legend>{tr}Activate the feature{/tr}</legend>
-				{preference name=feature_watershed}
-			</fieldset>
-			<fieldset class="table">
-				<legend>{tr}Settings{/tr}</legend>
-				{preference name=watershed_log_errors}
-			</fieldset>
-			{remarksbox type="info" title="{tr}Configuration within Watershed{/tr}"}{tr}Set the webservice to point to tiki-watershed_service.php on your site, and turn on Authentication Lock.{/tr}{/remarksbox}
-			{remarksbox type="info" title="{tr}Watershed Wiki plugins{/tr}"}{tr}Use Wiki plugins WatershedBroadcaster, WatershedViewer and WatershedChat to embed your broadcaster, viewer or chat.{/tr}{/remarksbox}
-
-			<fieldset class="table">
-				<legend>{tr}Basic tracker settings{/tr}</legend>
-				{remarksbox type="info" title="{tr}Tracker{/tr}"}
-					{tr}Information for each channel is stored in a tracker. Tracker item view/modify permissions will determine which channels users will be able to view or broadcast to respectively. You can find the Brand Id and Channel Code from the embed codes provided by Watershed, looking for the cid variable which will be "brandId%2Fchannelcode"{/tr}
-				{/remarksbox}
-				{preference name=watershed_channel_trackerId}
-				{preference name=watershed_brand_fieldId}
-				{preference name=watershed_channel_fieldId}
-			</fieldset>
-
-			<fieldset class="table">
-				<legend>{tr}Archive settings{/tr}</legend>
-				{remarksbox type="info" title="{tr}Tracker{/tr}"}
-					{tr}Information on archived clips are stored in a tracker. Tracker item view permissions will determine which archives users will be able to view. Note that recordings set to private in the broadcaster are not added to Tiki. Also, there is a delay for information to be received which could be quite long (30 min).{/tr}
-				{/remarksbox}
-				{preference name=watershed_archive_trackerId}
-				{preference name=watershed_archive_fieldId}
-				{preference name=watershed_archive_brand_fieldId}
-				{preference name=watershed_archive_channel_fieldId}
-				{preference name=watershed_archive_rtmpurl_fieldId}
-				{preference name=watershed_archive_flvurl_fieldId}
-			</fieldset>
-
-			<fieldset class="table">
-				<legend>{tr}Archive settings (optional){/tr}</legend>
-				{preference name=watershed_archive_date_fieldId}
-				{preference name=watershed_archive_duration_fieldId}
-				{preference name=watershed_archive_filesize_fieldId}
-				{preference name=watershed_archive_title_fieldId}
-				{preference name=watershed_archive_desc_fieldId}
-				{preference name=watershed_archive_tags_fieldId}
-			</fieldset>
-
-			<fieldset class="table">
-				<legend>{tr}Flash Media Encoder{/tr}</legend>
-				{remarksbox type="info" title="{tr}Flash Media Encoder{/tr}"}
-					{tr}This is only needed if you are using Flash Media Encoder for higher-quality broadcasting which support only shared secret authentication.{/tr}
-				{/remarksbox}
-				{preference name=watershed_fme_key}
-			</fieldset>
-
-			<div align="center" style="padding:1em;">
-				<input type="submit" class="btn btn-default btn-sm" name="video" value="{tr}Change preferences{/tr}" />
-			</div>
-		{/tab}
-
 	{/tabset}
 
 </form>

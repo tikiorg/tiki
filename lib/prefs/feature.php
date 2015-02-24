@@ -2611,13 +2611,6 @@ function prefs_feature_list($partial = false)
 				'permType' => 'transition',
 			),
 		),
-		'feature_watershed' => array(
-			'name' => tra('Ustream Watershed live video streaming'),
-			'description' => tra('Integration to Ustream Watershed live video streaming.'),
-			'type' => 'flag',
-			'help' => 'Ustream+Watershed',
-			'default' => 'n',
-		),
 		'feature_credits' => array(
 			'name' => tra('Tiki User Credits'),
 			'description' => tra('Tiki User Credits'),

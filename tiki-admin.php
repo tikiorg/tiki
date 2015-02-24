@@ -494,7 +494,7 @@ $admin_icons = array(
 	),
 	"video" => array(
 		'title' => tr('Video'),
-		'disabled' => $prefs['feature_kaltura'] != 'y' && $prefs['feature_watershed'] != 'y',
+		'disabled' => $prefs['feature_kaltura'] != 'y',
 		'description' => tr('Video integration configuration'),
 		'help' => 'Kaltura+Config',
 	),

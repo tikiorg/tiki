@@ -107,7 +107,6 @@
 					{preference name=feature_maps}
 					{preference name=feature_socialnetworks}
 
-					{preference name=feature_watershed}
 					{preference name=feature_kaltura}
 
 					{preference name=zotero_enabled}
