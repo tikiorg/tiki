@@ -32,7 +32,7 @@
 	deny from all
 </FilesMatch>
 
-<FilesMatch "^(changelog.txt|_htaccess)$">
+<FilesMatch "(changelog.txt|_htaccess)$">
 	order deny,allow
 	deny from all
 </FilesMatch>
