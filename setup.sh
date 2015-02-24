@@ -562,6 +562,22 @@ composer_core()
 				N=$((N+1))
 			done
 		fi
+		if [ ${LOGCOMPOSERFLAG} = "2" ] ; then
+			echo "Suppress output lines with 'Warning: Ambiguous class resolution'\n..."
+			until php -dmemory_limit=-1 temp/composer.phar install --prefer-dist | sed '/Warning: Ambiguous class resolution/d'
+			# setting memory_limit here prevents suhosin ALERT - script tried to increase memory_limit to 536870912 bytes
+			do
+				if [ $N -eq 7 ];
+				then
+					#exit
+					return
+				else
+					echo "Composer failed, retrying in 5 seconds, for a few times. Hit Ctrl-C to cancel."
+					sleep 5
+				fi
+				N=$((N+1))
+			done
+		fi
 	fi
 	#exit
 	return
@@ -940,6 +956,7 @@ Composer: If you are installing via a released Tiki package (zip, tar.gz, tar.bz
   
  c run composer (log output on screen) and exit (recommended to be done first)
  C run composer (log output to logfile) and exit (recommended to be done first)
+ N run composer (Not all log warnings output) and exit (recommended to be done first)
 
 For all Tiki instances (via SVN or via a released package):
 
@@ -999,6 +1016,7 @@ tiki_setup_default() {
 			o)	WHAT=${DEFAULT_WHAT} ; command_open ;;
 			c)	WHAT=$WHAT_NEXT_AFTER_c ; LOGCOMPOSERFLAG="0" ; composer ;;
 			C)	WHAT=$WHAT_NEXT_AFTER_c ; LOGCOMPOSERFLAG="1" ; composer ;;
+			N)	WHAT=$WHAT_NEXT_AFTER_c ; LOGCOMPOSERFLAG="2" ; composer ;;
 			q)	echo ""; exit ;;
 			Q)	echo ""; exit ;;
 			x)	echo ""; exit ;;
