@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "382c536543b8b61d8d0eefe0b3491952",
+    "hash": "575f28c7a7b825247ce7158c6d7cdf38",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -75,20 +75,24 @@
         },
         {
             "name": "bombayworks/zendframework1",
-            "version": "v1.12.3",
+            "version": "v1.12.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bombayworks/zendframework1.git",
-                "reference": "v1.12.3"
+                "reference": "64447e39d4c7a08ba17d2087a89caab713804d27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/bombayworks-zendframework1-v1.12.3-v1.12.3-2cceec.zip",
-                "reference": "v1.12.3",
-                "shasum": "ae2001e5c24db10ee1aed63f224b07720327df92"
+                "url": "https://composer.tiki.org/dist/bombayworks-zendframework1-64447e39d4c7a08ba17d2087a89caab713804d27-zip-9bb8b8.zip",
+                "reference": "v1.12.11",
+                "shasum": "a1be51bd5f69d4f7571570206368b65aea775318"
             },
             "require": {
                 "php": ">=5.2.11"
+            },
+            "require-dev": {
+                "phpunit/dbunit": "1.3.*",
+                "phpunit/phpunit": "3.7.*"
             },
             "bin": [
                 "bin/zf.sh",
@@ -97,27 +101,17 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-trunk": "1.12.x-dev",
-                    "dev-release-1.0": "1.0.x-dev",
-                    "dev-release-1.5": "1.5.x-dev",
-                    "dev-release-1.6": "1.6.x-dev",
-                    "dev-release-1.7": "1.7.x-dev",
-                    "dev-release-1.8": "1.8.x-dev",
-                    "dev-release-1.9": "1.9.x-dev",
-                    "dev-release-1.10": "1.10.x-dev",
-                    "dev-release-1.11": "1.11.x-dev"
+                    "dev-master": "1.12.x-dev"
                 }
             },
             "autoload": {
                 "psr-0": {
-                    "Zend_": "library/",
-                    "ZendX_": "extras/library/"
+                    "Zend_": "library/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "include-path": [
-                "library/",
-                "extras/library/"
+                "library/"
             ],
             "license": [
                 "BSD-3-Clause"
@@ -128,7 +122,7 @@
                 "ZF1",
                 "framework"
             ],
-            "time": "2013-03-13 17:09:28"
+            "time": "2015-02-11 16:00:41"
         },
         {
             "name": "ckeditor/ckeditor",
@@ -540,7 +534,7 @@
                     "name": "Robert Plummer",
                     "email": "rplummer@visop-dev.com",
                     "homepage": "http://visop-dev.com",
-                    "role": "Lead Developer"
+                    "role": "Assistant Developer"
                 },
                 {
                     "name": "Luke Gerhardt",
@@ -853,12 +847,12 @@
         },
         {
             "name": "jquery/plugins/chosen",
-            "version": "1.0.0",
+            "version": "1.3.0",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-chosen-1.0.0.zip",
-                "reference": "1.0.0",
-                "shasum": "564d786aa1f9225124e37f4dbf0810c55554df87"
+                "url": "https://composer.tiki.org/dist/jquery-plugins-chosen-1.3.0.zip",
+                "reference": "1.3.0",
+                "shasum": "1a2cedf095ccbc6b739b2e19c4325d289fe070f1"
             },
             "type": "library"
         },
@@ -919,12 +913,12 @@
         },
         {
             "name": "jquery/plugins/jquery-json",
-            "version": "2.4",
+            "version": "2.5.1",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-jquery-json-2.4.zip",
-                "reference": "2.4",
-                "shasum": "0862952c0d2b7b073db97913160709b5542e752e"
+                "url": "https://composer.tiki.org/dist/jquery-plugins-jquery-json-2.5.1.zip",
+                "reference": "2.5.1",
+                "shasum": "09320a9b9d9c0527630449d3d4e0236aad39497c"
             },
             "type": "library"
         },
@@ -1210,12 +1204,12 @@
         },
         {
             "name": "phpcas/phpcas",
-            "version": "1.3.2",
+            "version": "1.3.3",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/phpcas-phpcas-1.3.2.zip",
-                "reference": "1.3.2",
-                "shasum": "577d74b5a193fc011d99898f037b1198c93073f3"
+                "url": "https://composer.tiki.org/dist/phpcas-phpcas-1.3.3.zip",
+                "reference": "1.3.3",
+                "shasum": "4b7448986dc8f41e1ce9085f81ec3209de6c8e94"
             },
             "type": "library"
         },
@@ -1470,18 +1464,18 @@
         },
         {
             "name": "symfony/config",
-            "version": "v2.4.3",
+            "version": "v2.6.4",
             "target-dir": "Symfony/Component/Config",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Config.git",
-                "reference": "e98693981385224bd31667e56204f311d9e0f98e"
+                "reference": "a9f781ba1221067d1f07c8cec0bc50f81b8d7408"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/symfony-config-e98693981385224bd31667e56204f311d9e0f98e-zip-ea9d67.zip",
-                "reference": "v2.4.3",
-                "shasum": "d5127b7dd29dbd6124ebc56e4dcab6f54e0faf6c"
+                "url": "https://composer.tiki.org/dist/symfony-config-a9f781ba1221067d1f07c8cec0bc50f81b8d7408-zip-a2a4ca.zip",
+                "reference": "v2.6.4",
+                "shasum": "e49b66d9f219f8f06b6f708f978946092aad2794"
             },
             "require": {
                 "php": ">=5.3.3",
@@ -1490,7 +1484,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4-dev"
+                    "dev-master": "2.6-dev"
                 }
             },
             "autoload": {
@@ -1504,19 +1498,17 @@
             ],
             "authors": [
                 {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
                     "name": "Symfony Community",
                     "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "Symfony Config Component",
             "homepage": "http://symfony.com",
-            "time": "2014-03-26 11:35:33"
+            "time": "2015-01-21 20:57:55"
         },
         {
             "name": "symfony/console",
@@ -1577,26 +1569,29 @@
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v2.4.3",
+            "version": "v2.6.4",
             "target-dir": "Symfony/Component/DependencyInjection",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/DependencyInjection.git",
-                "reference": "5f17442aaa47610fcff7daeb635c834be71df204"
+                "reference": "42bbb43fab66292a1865dc9616c299904c3d4d14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/symfony-dependency-injection-5f17442aaa47610fcff7daeb635c834be71df204-zip-27a0bb.zip",
-                "reference": "v2.4.3",
-                "shasum": "b5a33769c37c222f5af49fc11ce0e4038dbafbf0"
+                "url": "https://composer.tiki.org/dist/symfony-dependency-injection-42bbb43fab66292a1865dc9616c299904c3d4d14-zip-e260de.zip",
+                "reference": "v2.6.4",
+                "shasum": "de6e63e09106fb257cc2304a07366f31150e815b"
             },
             "require": {
                 "php": ">=5.3.3"
             },
+            "conflict": {
+                "symfony/expression-language": "<2.6"
+            },
             "require-dev": {
                 "symfony/config": "~2.2",
-                "symfony/expression-language": "~2.4",
-                "symfony/yaml": "~2.0"
+                "symfony/expression-language": "~2.6",
+                "symfony/yaml": "~2.1"
             },
             "suggest": {
                 "symfony/config": "",
@@ -1606,7 +1601,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4-dev"
+                    "dev-master": "2.6-dev"
                 }
             },
             "autoload": {
@@ -1620,19 +1615,17 @@
             ],
             "authors": [
                 {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
                     "name": "Symfony Community",
                     "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "http://symfony.com",
-            "time": "2014-03-27 14:53:17"
+            "time": "2015-01-25 04:39:26"
         },
         {
             "name": "symfony/filesystem",

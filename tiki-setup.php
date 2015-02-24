@@ -359,7 +359,7 @@ if (isset($_REQUEST['geo_zoomlevel_to_found_location'])) {
 $headerlib->add_js('var zoomToFoundLocation = "'.$zoomToFoundLocation.'";');	// Set the zoom option after searching for a location
 
 $headerlib->add_jsfile('lib/jquery_tiki/tiki-maps.js');
-$headerlib->add_jsfile('vendor/jquery/plugins/jquery-json/jquery.json-2.4.js');
+$headerlib->add_jsfile('vendor/jquery/plugins/jquery-json/src/jquery.json.js');
 
 if ($prefs['feature_jquery_zoom'] === 'y') {
 	$headerlib->add_jsfile('vendor/jquery/plugins/zoom/jquery.zoom.js')
