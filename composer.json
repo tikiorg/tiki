@@ -72,8 +72,8 @@
 		"alvarotrigo/fullpage.js": "1",
 		"jcobb/basic-jquery-slider": "1",
 		"symfony/console": "2.6.4",
-		"symfony/dependency-injection": "2.4.3",
-		"symfony/config": "2.6.3"
+		"symfony/dependency-injection": "2.6.4",
+		"symfony/config": "2.6.4"
 	},
 	"require-dev": {
 		"oyejorge/less.php": "1.7.0.2",
