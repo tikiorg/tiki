@@ -533,7 +533,8 @@ composer_core()
 	if exists php;
 	then
 		if [ ${LOGCOMPOSERFLAG} = "0" ] ; then
-			until php -dmemory_limit=-1 temp/composer.phar install --prefer-dist
+			#until php -dmemory_limit=-1 temp/composer.phar install --prefer-dist
+			until php -dmemory_limit=-1 temp/composer.phar install --prefer-dist | sed '/Warning: Ambiguous class resolution/d'
 			# setting memory_limit here prevents suhosin ALERT - script tried to increase memory_limit to 536870912 bytes
 			do
 				if [ $N -eq 7 ];
@@ -564,7 +565,8 @@ composer_core()
 		fi
 		if [ ${LOGCOMPOSERFLAG} = "2" ] ; then
 			echo "Suppress output lines with 'Warning: Ambiguous class resolution'\n..."
-			until php -dmemory_limit=-1 temp/composer.phar install --prefer-dist | sed '/Warning: Ambiguous class resolution/d'
+			#until php -dmemory_limit=-1 temp/composer.phar install --prefer-dist | sed '/Warning: Ambiguous class resolution/d'
+			until php -dmemory_limit=-1 temp/composer.phar install --prefer-dist
 			# setting memory_limit here prevents suhosin ALERT - script tried to increase memory_limit to 536870912 bytes
 			do
 				if [ $N -eq 7 ];
@@ -954,9 +956,9 @@ tiki_setup_default_menu() {
 
 Composer: If you are installing via a released Tiki package (zip, tar.gz, tar.bz2, 7z), you can and should skip using Composer. If you are installing and upgrading via SVN, you need to run Composer after 'svn checkout' and 'svn upgrade'. More info at https://dev.tiki.org/Composer
   
- c run composer (log output on screen) and exit (recommended to be done first)
- C run composer (log output to logfile) and exit (recommended to be done first)
- N run composer (Not all log warnings output) and exit (recommended to be done first)
+ c run composer (log output on screen, not all warnings) and exit (recommended to be done first)
+ L run composer (log output to logfile) and exit (recommended to be done first)
+ V run composer (verbose log output on screen) and exit (recommended to be done first)
 
 For all Tiki instances (via SVN or via a released package):
 
@@ -1015,8 +1017,9 @@ tiki_setup_default() {
 			f)	WHAT=$WHAT_NEXT_AFTER_f ; command_fix ;;
 			o)	WHAT=${DEFAULT_WHAT} ; command_open ;;
 			c)	WHAT=$WHAT_NEXT_AFTER_c ; LOGCOMPOSERFLAG="0" ; composer ;;
-			C)	WHAT=$WHAT_NEXT_AFTER_c ; LOGCOMPOSERFLAG="1" ; composer ;;
-			N)	WHAT=$WHAT_NEXT_AFTER_c ; LOGCOMPOSERFLAG="2" ; composer ;;
+			C)	WHAT=$WHAT_NEXT_AFTER_c ; LOGCOMPOSERFLAG="0" ; composer ;;
+			L)	WHAT=$WHAT_NEXT_AFTER_c ; LOGCOMPOSERFLAG="1" ; composer ;;
+			V)	WHAT=$WHAT_NEXT_AFTER_c ; LOGCOMPOSERFLAG="2" ; composer ;;
 			q)	echo ""; exit ;;
 			Q)	echo ""; exit ;;
 			x)	echo ""; exit ;;
