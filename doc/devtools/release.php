@@ -1051,6 +1051,7 @@ UPGRADES
 COPYRIGHT
 
 Copyright (c) 2002-$year, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+Tiki was started under the name tikiwiki by Luis Argerich, Garland Foster, Eduardo Polidor, et. al. 
 All Rights Reserved. See $copyrights_file for details and a complete list of authors.
 Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See $license_file for details.
 
