@@ -10,7 +10,7 @@
 		"adodb/adodb": "5.18",
 		"aFarkas/html5shiv": "3.7.2",
 		"alxlit/bootstrap-chosen": "1.0.0",
-		"bombayworks/zendframework1": "1.12.3",
+		"bombayworks/zendframework1": "1.12.11",
 		"ckeditor/ckeditor": "4.4.7",
 		"ckeditor/ckeditor/skins/kama": "4.4.7",
 		"ckeditor/ckeditor/plugins/divarea": "4.4.7",
