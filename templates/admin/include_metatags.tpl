@@ -27,8 +27,8 @@
 			</div>
 		{/tab}
 
-		{tab name="{tr}Geo URL{/tr}"}
-			<h2>{tr}Geo URL{/tr} {if $prefs.feature_help eq 'y'}<a target="_blank" href="http://geourl.org/">{icon _id='help'}</a>{/if}</h2>
+		{tab name="{tr}Geo Metatags{/tr}"}
+			<h2>{tr}Geo Metatags{/tr} {if $prefs.feature_help eq 'y'}<a target="_blank" href="http://en.wikipedia.org/wiki/Geotagging#HTML_pages">{icon _id='help'}</a>{/if}</h2>
 
 			{preference name=metatag_geoposition}
 			{preference name=metatag_georegion}
