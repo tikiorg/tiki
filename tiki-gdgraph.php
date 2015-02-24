@@ -12,6 +12,8 @@ require_once('tiki-setup.php'); // this seems to be needed ?
 require_once('lib/graph-engine/gd.php');
 require_once('lib/graph-engine/graph.bar.php');
 
+$access->check_feature('wikiplugin_gdgraph');
+
 //Decode the passed array	
 $strencxy2 = $_GET['usexydata'];
 $dataxy = json_decode(urldecode($strencxy2));
