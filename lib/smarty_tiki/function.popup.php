@@ -51,7 +51,6 @@ function smarty_function_popup($params, $smarty)
 						$options['data-trigger'] = 'click';
 						break;
 					default:
-						$options['data-trigger'] = $value;
 						break;
 				}
 				break;
@@ -63,7 +62,7 @@ function smarty_function_popup($params, $smarty)
 				$options[$key] = $value;
 				break;
 			case 'sticky':
-				//$options['data-trigger'] = 'focus'; // doesn't seem to work
+				$options['data-trigger'] = 'click';
 				break;
 			case 'fullhtml':
 				$options['data-html'] = true;
