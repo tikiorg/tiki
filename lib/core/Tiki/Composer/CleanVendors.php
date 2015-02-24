@@ -65,6 +65,7 @@ class CleanVendors
 		'jquery/plugins/superfish',
 		'jquery/plugins/form',
 		'jquery/plugins/jquery-validation',
+		'jquery/plugins/jquery-json',
 		'jquery/plugins/treetable',
 		'jquery/plugins/zoom',
 		'mediumjs/mediumjs',
@@ -160,6 +161,17 @@ class CleanVendors
 				'dist/additional-methods.js',
 				'dist/additional-methods.min.js',
 				'dist/jquery.validate.min.js'
+			]
+		);
+		self::removeMultiple($vendors . 'jquery/plugins/jquery-json',
+			[
+				'dist',
+				'libs',
+				'.jscsrc',
+				'.jshintignore',
+				'.jshintrc',
+				'.travis.yml',
+				'HISTORY.md',
 			]
 		);
 		$fs->remove($vendors . 'jquery/plugins/reflection-jquery/src');
