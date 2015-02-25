@@ -148,29 +148,30 @@
 
 		{tab name="{tr}Listings{/tr}"}
 			<h2>{tr}Listings{/tr}</h2>
+			<span class="help-block">{tr}Configuration for gallery listings{/tr}</span>
 			{remarksbox title="Note"}
 				{tr}Changing these settings will <em>not</em> affect existing file galleries. These changes will apply <em>only</em> to new file galleries{/tr}.
 			{/remarksbox}
 
 			<input type="hidden" name="filegallistprefs" />
-			<div class="adminoptionbox">
-				<div class="adminoptionlabel">
-					<label for="fgal_sortorder">{tr}Default sort order:{/tr}</label>
-					<select name="fgal_sortorder" id="fgal_sortorder">
+			<div class="adminoptionbox clearfix">
+				<label for="fgal_sortorder" class="col-sm-4 control-label">{tr}Default sort order{/tr}:</label>
+				<div class="col-sm-8">
+					<select name="fgal_sortorder" id="fgal_sortorder" class="form-control">
 						{foreach from=$options_sortorder key=key item=item}
 							<option value="{$item|escape}" {if $fgal_sortorder == $item} selected="selected"{/if}>{$key}</option>
 						{/foreach}
 					</select>
-					<div class="adminoptionboxchild">
-						<div class="adminoptionlabel">
+					<span class="help-block">
+						<label class="radio-inline" for="fgal_sortdirection1">
 							<input type="radio" id="fgal_sortdirection1" name="fgal_sortdirection" value="desc" {if $fgal_sortdirection == 'desc'}checked="checked"{/if} />
-							<label for="fgal_sortdirection1">{tr}Descending{/tr}</label>
-						</div>
-						<div class="adminoptionlabel">
+							{tr}Descending{/tr}
+						</label>
+						<label class="radio-inline" for="fgal_sortdirection2">
 							<input type="radio" id="fgal_sortdirection2" name="fgal_sortdirection" value="asc" {if $fgal_sortdirection == 'asc'}checked="checked"{/if} />
-							<label for="fgal_sortdirection2">{tr}Ascending{/tr}</label>
-						</div>
-					</div>
+							{tr}Ascending{/tr}
+						</label>
+					</span>
 				</div>
 			</div>
 			{preference name='fgal_quota_show'}
@@ -185,23 +186,17 @@
 			{preference name='fgal_display_properties'}
 			{preference name='fgal_display_replace'}
 			{preference name='fgal_checked'}
-
 			<fieldset>
-				<legend>{tr}Select which items to display when listing galleries: {/tr}</legend>
-				<table class="table">
-					{include file='fgal_listing_conf.tpl'}
-				</table>
+				{include file='fgal_listing_conf.tpl'}
 			</fieldset>
 		{/tab}
 
 		{if $section eq 'admin'}
 			{tab name="{tr}Admin Listings{/tr}"}
 				<h2>{tr}Admin Listings{/tr}</h2>
+				<span class="help-block">{tr}Configuration for gallery administration listings{/tr}</span>
 				<fieldset>
-					<legend>{tr}Select which items to display when admin galleries: {/tr}</legend>
-					<table class="table">
-						{include file='fgal_listing_conf.tpl' fgal_options='' fgal_listing_conf=$fgal_listing_conf_admin}
-					</table>
+					{include file='fgal_listing_conf.tpl' fgal_options='' fgal_listing_conf=$fgal_listing_conf_admin}
 				</fieldset>
 			{/tab}
 		{/if}
