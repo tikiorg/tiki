@@ -336,9 +336,9 @@ window.handleFinderFile = function (file, elfinder) {
 
 {if $galleryId>0}
 	{if $edited eq 'y'}
-		<div class="wikitext">
-			{tr}You can access the file gallery using the following URL:{/tr} <a class="fgallink" href="{$url}?galleryId={$galleryId}">{$url}?galleryId={$galleryId}</a>
-		</div>
+		{remarksbox type="tip" title="{tr}Information{/tr}"}
+			{tr}You can access the file gallery using the following URL:{/tr} <a class="fgallink alert-link" href="{$url}?galleryId={$galleryId}">{$url}?galleryId={$galleryId}</a>
+		{/remarksbox}
 	{/if}
 {/if}
 
