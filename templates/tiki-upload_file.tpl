@@ -330,7 +330,7 @@
 			{if !$editFileId}
 				<div id="page_bar" class="form-group">
 					<div class="col-sm-10 col-sm-offset-2">
-						<input type="submit" class="btn btn-primary"
+						<input type="submit" class="btn btn-primary btn-sm"
 							onClick="upload_files(); return false"
 							id="btnUpload"
 							name="upload"
@@ -350,7 +350,7 @@
 	<br>
 
 	{if !$editFileId}
-		{remarksbox type="note"}
+		{remarksbox type="note" title="{tr}Information{/tr}"}
 			{tr}Maximum file size is around:{/tr}
 			{if $tiki_p_admin eq 'y'}<a title="{$max_upload_size_comment}">{/if}
 				{$max_upload_size|kbsize:true:0}
