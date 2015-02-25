@@ -126,7 +126,7 @@ class TikiAddons_Utilities extends TikiDb_Bridge
 		} else {
 			$package = str_replace('_', '/', $folder);
 		}
-		$this->table('tiki_addon_profiles')->delete(array('addon' => $package, 'profile' => $profile));
+		$this->table('tiki_addon_profiles')->deleteMultiple(array('addon' => $package, 'profile' => $profile));
 	}
 
 	function forgetProfile($folder, $version, $profile) {
