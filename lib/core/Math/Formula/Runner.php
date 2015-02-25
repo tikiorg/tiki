@@ -142,7 +142,18 @@ class Math_Formula_Runner
 	{
 		return function ($functionName) use ($prefix) {
 			$filter = new Zend_Filter_Word_DashToCamelCase;
+
+			// Workaround Deprecated errors showing from Zend lib
+			if (error_reporting() & E_DEPRECATED) {
+				$old_error_reporting = error_reporting();
+				error_reporting($old_error_reporting - E_DEPRECATED);
+			}
+
 			$ucname = $filter->filter(ucfirst($functionName));
+
+			if (isset($old_error_reporting)) {
+				error_reporting($old_error_reporting);
+			}
 
 			$class = $prefix . $ucname;
 
