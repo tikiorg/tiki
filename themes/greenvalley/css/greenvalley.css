@@ -7145,7 +7145,9 @@ body {
 #pagetop_modules {
   margin-bottom: 2em;
 }
-#middle {
+#middle,
+.row-middle,
+.tiki > .container {
   background: url('../images/page_background_ltr.jpg') repeat;
 }
 .pagetitle {
