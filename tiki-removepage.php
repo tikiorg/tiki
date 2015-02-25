@@ -48,17 +48,19 @@ if (!$tikilib->page_exists($page)) {
 	die;
 }
 if (isset($_REQUEST["remove"])) {
-	check_ticket('remove-page');
 	if (isset($_REQUEST["all"]) && $_REQUEST["all"] == 'on') {
+		$access->check_authenticity(tr('Are you sure you want to completely remove page "%0"', $_REQUEST['page']));
 		$tikilib->remove_all_versions($_REQUEST["page"]);
 		$access->redirect();
 		die;
 	} else {
 		$smarty->loadPlugin('smarty_modifier_sefurl');
 		if ($version == "last") {
+			$access->check_authenticity(tr('Are you sure you want to remove the most recent version of page "%0"', $_REQUEST['page']));
 			$wikilib->remove_last_version($_REQUEST["page"]);
 			$access->redirect(smarty_modifier_sefurl($_REQUEST['page']));
 		} else {
+			$access->check_authenticity(tr('Are you sure you want to remove version %0 of page "%1"', $_REQUEST['version'], $_REQUEST['page']));
 			$histlib->remove_version($_REQUEST['page'], $_REQUEST['version'], $_REQUEST['historyId']);
 			$access->redirect(smarty_modifier_sefurl($_REQUEST['page']));
 		}
