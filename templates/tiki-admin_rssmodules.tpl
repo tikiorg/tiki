@@ -1,11 +1,11 @@
-{title help="Feeds"}{tr}Admin External Feeds{/tr}{/title}
+{title help="Feeds"}{tr}External Feeds{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tips{/tr}"}
 	{tr}This page is to configure settings of external feeds read/imported by Tiki. To generate/export feeds, look for "Feeds" on the admin panel, or{/tr}
-	<a class="rbox-link" href="tiki-admin.php?page=rss">{tr}Click Here{/tr}</a>.
+	<a class="alert-link" href="tiki-admin.php?page=rss">{tr}Click Here{/tr}</a>.
 	<hr/>
-	{tr}To use feeds in a text area (Wiki page, etc), a <a class="rbox-link" href="tiki-admin_modules.php">module</a> or a template, use {literal}{rss id=x}{/literal}, where x is the ID of the feed.{/tr}
-	{tr}To use them to generate articles, use the <a href="https://doc.tiki.org/Article+generator" target="_blank">Article generator <img src="img/icons/newspaper_go.png"></a> for that specific feed{/tr}.
+	{tr}To use feeds in a text area (Wiki page, etc), a <a class="alert-link" href="tiki-admin_modules.php">module</a> or a template, use {literal}{rss id=x}{/literal}, where x is the ID of the feed.{/tr}
+	{tr}To use them to generate articles, use the <a class="alert-link" href="https://doc.tiki.org/Article+generator" target="_blank">Article generator <img src="img/icons/newspaper_go.png"></a> for that specific feed{/tr}.
 {/remarksbox}
 
 {if $preview eq 'y'}
@@ -34,34 +34,36 @@
 					<th>{self_link _sort_arg='sort_mode' _sort_field='rssId'}{tr}ID{/tr}{/self_link}</th>
 					<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
 					<th>{self_link _sort_arg='sort_mode' _sort_field='lastUpdated'}{tr}Last update{/tr}{/self_link}</th>
-					<th>{self_link _sort_arg='sort_mode' _sort_field='showTitle'}{tr}Show Title?{/tr}{/self_link}</th>
-					<th>{self_link _sort_arg='sort_mode' _sort_field='showPubDate'}{tr}Show Date?{/tr}{/self_link}</th>
+					<th>{self_link _sort_arg='sort_mode' _sort_field='showTitle'}{tr}Show Title{/tr}{/self_link}</th>
+					<th>{self_link _sort_arg='sort_mode' _sort_field='showPubDate'}{tr}Show Date{/tr}{/self_link}</th>
 					<th>{tr}Action{/tr}</th>
 				</tr>
 				{section name=chan loop=$channels}
 					<tr>
 						<td class="id">{$channels[chan].rssId|escape}</td>
 						<td class="text">
-							<strong>{$channels[chan].name|escape}</strong><br>
-							{if $channels[chan].description}{$channels[chan].description|escape|nl2br}<br>{/if}
-							{tr}Site:{/tr} <a href="{$channels[chan].siteurl|escape}">{$channels[chan].sitetitle|escape}</a><br>
-							{tr}Feed:{/tr} <a class="link" href="{$channels[chan].url|escape}">{$channels[chan].url|truncate:50:"...":true}</a><br>
+							{$channels[chan].name|escape}
+							<span class="help-block">
+								{if $channels[chan].description}{$channels[chan].description|escape|nl2br}<br>{/if}
+								{tr}Site:{/tr} <a href="{$channels[chan].siteurl|escape}">{$channels[chan].sitetitle|escape}</a><br>
+								{tr}Feed:{/tr} <a class="link" href="{$channels[chan].url|escape}">{$channels[chan].url|truncate:50:"...":true}</a>
+							</span>
 						</td>
 						<td class="text">
-							{if $channels[chan].lastUpdated eq '1000000'}{tr}Never{/tr}{else}{$channels[chan].lastUpdated|tiki_short_datetime}{/if}<br>
-							{tr}Refresh rate:{/tr} {$channels[chan].refresh|duration}
+							{if $channels[chan].lastUpdated eq '1000000'}{tr}Never{/tr}{else}{$channels[chan].lastUpdated|tiki_short_datetime}{/if}
+							<span class="help-block">{tr}Refresh rate:{/tr} {$channels[chan].refresh|duration}</span>
 						</td>
 						<td class="text">{$channels[chan].showTitle|escape}</td>
 						<td class="text">{$channels[chan].showPubDate|escape}</td>
 						<td class="action">
-							<a class="link" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;rssId={$channels[chan].rssId|escape}" title="{tr}Edit{/tr}">{icon _id=page_edit}</a>
-							<a class="link" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;view={$channels[chan].rssId|escape}" title="{tr}View{/tr}">{icon _id=feed alt="{tr}View feed{/tr}"}</a>
-							<a class="link" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;clear={$channels[chan].rssId|escape}" title="{tr}Clear{/tr}">{icon _id=bin alt="{tr}Clear{/tr}"}</a>
-							<a class="link" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;refresh={$channels[chan].rssId|escape}" title="{tr}Refresh{/tr}">{icon _id=arrow_refresh alt="{tr}Refresh{/tr}"}</a>
+							<a class="tips" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;rssId={$channels[chan].rssId|escape}" title=":{tr}Edit{/tr}">{icon name="edit"}</a>
+							<a class="tips" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;view={$channels[chan].rssId|escape}" title=":{tr}View{/tr}">{icon name="rss"}</a>
+							<a class="tips" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;clear={$channels[chan].rssId|escape}" title=":{tr}Clear{/tr}">{icon name="trash"}</a>
+							<a class="tips" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;refresh={$channels[chan].rssId|escape}" title=":{tr}Refresh{/tr}">{icon name="refresh"}</a>
 							{if $prefs.feature_articles eq 'y'}
-								<a class="link" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;article={$channels[chan].rssId|escape}" title="{tr}Article Generator{/tr}">{icon _id=newspaper_go alt="{tr}Article Generator{/tr}"}</a>
+								<a class="tips" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;article={$channels[chan].rssId|escape}" title=":{tr}Article Generator{/tr}">{icon _id=newspaper_go alt="{tr}Article Generator{/tr}"}</a>
 							{/if}
-							<a class="link" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;remove={$channels[chan].rssId|escape}" title="{tr}Delete{/tr}">{icon _id=cross alt="{tr}Delete{/tr}"}</a>
+							<a class="tips" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;remove={$channels[chan].rssId|escape}" title=":{tr}Delete{/tr}">{icon name="delete"}</a>
 						</td>
 					</tr>
 				{sectionelse}
