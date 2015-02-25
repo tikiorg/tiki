@@ -142,6 +142,19 @@ header.header {
   //  }
 }
 
+.searchresults blockquote em,
+.highlight,
+.btn-default.highlight a,
+.btn-default a.highlight {
+  background: @state-danger-bg;
+  color: @state-danger-text;
+  border-color: @state-danger-border;
+}
+
+.btn-default.highlight:hover {
+  background: darken(@state-danger-bg, 15%);
+}
+
 .chosen-container-multi .chosen-choices {
   background-color: lighten(@input-bg, 10%);
   color: @input-color;

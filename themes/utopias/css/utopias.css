@@ -6762,12 +6762,13 @@ table.treetable.objectperms td.removed {
 }
 .searchresults blockquote em,
 .highlight,
-.button.highlight a,
-.button a.highlight {
+.btn-default.highlight a,
+.btn-default a.highlight {
   background: #f2dede;
   color: #a94442;
+  border-color: #ebccd1;
 }
-.button a.highlight:hover {
+.btn-default.highlight:hover {
   background: #dca7a7;
 }
 #ajaxLoadingBG {

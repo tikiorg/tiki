@@ -672,6 +672,17 @@ header.header .sitesubtitle {
   color: #7a04b5;
   text-shadow: none;
 }
+.searchresults blockquote em,
+.highlight,
+.btn-default.highlight a,
+.btn-default a.highlight {
+  background: #f2dede;
+  color: #a94442;
+  border-color: #ebccd1;
+}
+.btn-default.highlight:hover {
+  background: #dca7a7;
+}
 .chosen-container-multi .chosen-choices {
   background-color: #ffffff;
   color: #555555;
