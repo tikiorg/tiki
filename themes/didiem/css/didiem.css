@@ -6565,7 +6565,7 @@ header.header .module.secondary_site_menu {
   background: none;
 }
 .middle_outer {
-  background: url('../../../img/icons/topbar.jpg') repeat-x;
+  background: url('../../../img/topbar.jpg') repeat-x;
 }
 .page-header {
   margin-top: 0;
@@ -6652,12 +6652,12 @@ header.header .sitesubtitle {
 }
 h1 {
   font-size: 1.6em;
-  background: url('../../../img/icons/h_bullet.jpg') no-repeat 0 50%;
+  background: url('../../../img/h_bullet.jpg') no-repeat 0 50%;
   padding-left: 19px;
 }
 h2 {
   font-size: 1.6em;
-  background: url('../../../img/icons/h_bullet.jpg') no-repeat 0 50%;
+  background: url('../../../img/h_bullet.jpg') no-repeat 0 50%;
   padding-left: 19px;
 }
 h1.sitetitle {
@@ -6896,7 +6896,7 @@ div #metadata div.tabs {
   background-color: transparent;
 }
 .openid_url {
-  background: #ffffff url('../../../img/icons/login-OpenID-bg.gif') 1px 1px no-repeat;
+  background: #ffffff url('../../../img/login-OpenID-bg.gif') 1px 1px no-repeat;
 }
 input:-webkit-autofill {
   background-color: #f8f9d4 !important;

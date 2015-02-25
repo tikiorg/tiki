@@ -6564,7 +6564,7 @@ a.fc-event:hover {
   border-left: 3px double #8a6d3b;
 }
 .post-approved-r .content * {
-  background: url('../images/dots.gif');
+  background: url('../images/icons/dots.gif');
 }
 .cssmenu_horiz ul li,
 .cssmenu_vert ul li,
@@ -6671,11 +6671,11 @@ table.treetable.objectperms td.removed {
   background: #dca7a7;
 }
 #ajaxLoadingBG {
-  background: transparent url('../../../img/overlay-light.png');
+  background: transparent url('../images/overlay-light.png');
 }
 #ajaxLoading {
   color: #eeeeee;
-  background: transparent url('../../../img/loading-light.gif') no-repeat 50% 50%;
+  background: transparent url('../images/loading-light.gif') no-repeat 50% 50%;
 }
 #cookie_consent_div {
   padding: 15px;
@@ -6736,7 +6736,7 @@ input:-webkit-autofill {
   border: 1px solid #dddddd;
 }
 form.simple label.error {
-  background: url('../images/error.png') no-repeat 0 4px;
+  background: url('../images/icons/error.png') no-repeat 0 4px;
   color: #a94442;
 }
 form.simple label .warning {
@@ -6989,14 +6989,14 @@ body.wikitext {
   color: #333333;
 }
 .editable-inline {
-  background: transparent url('../images/database_lightning.png') no-repeat top right;
+  background: transparent url('../images/icons/database_lightning.png') no-repeat top right;
   padding-right: 20px;
 }
 .editable-inline.loaded {
   background: transparent;
 }
 .editable-inline.failure {
-  background: transparent url('../images/lock_gray.png') no-repeat top right;
+  background: transparent url('../images/icons/lock_gray.png') no-repeat top right;
 }
 .editable-inline.modified {
   border: solid 2px #d43f3a;
@@ -7024,7 +7024,7 @@ body.wikitext {
 }
 #autosave_preview_grippy {
   background-color: #eeeeee;
-  background-image: url('../images/shading.png');
+  background-image: url('../images/icons/shading.png');
 }
 h1:hover a.tiki_anchor,
 h2:hover a.tiki_anchor,
