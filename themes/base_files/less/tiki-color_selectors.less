@@ -1,7 +1,7 @@
 // $Id$
 // This file contains rules for colors, consolidated from the tiki_base less files. They're moved here so that theme variables can provide values for them.
-@imagePathToImgDir: ~"../../img/";
-@imagePath: ~"../../img/icons/";
+//@imagePathToImgDir: ~"../../../img/";
+@imagePath: ~"../../../img/";
 
 // tiki-admin.less
 .meta-section {
@@ -50,7 +50,7 @@ a.fc-event:hover {
 }
 
 .post-approved-r .content * {
-  background: url('@{imagePath}dots.gif');
+  background: url('@{imagePath}/icons/dots.gif');
 }
 
 // tiki-cssmenus.less
@@ -247,7 +247,7 @@ div #metadata fieldset.tabcontent, div #metadata div.tabs {
   background-color: transparent;
 }
 .openid_url {
-  background: #fff url('@{imagePath}icons/login-OpenID-bg.gif') 1px 1px no-repeat;
+  background: #fff url('@{imagePath}login-OpenID-bg.gif') 1px 1px no-repeat;
 }
 // Input fields auto-fill/
 // Webkit-based browser specific (Google Chrome, Chromium, etc.)
@@ -268,7 +268,7 @@ input:-webkit-autofill {
 
 // tiki-modal_and_managestream.less
 form.simple label.error {
-  background: url('@{imagePath}error.png') no-repeat 0 4px;
+  background: url('@{imagePath}/icons/error.png') no-repeat 0 4px;
   color: @state-danger-text;
 }
 form.simple label .warning {
@@ -567,7 +567,7 @@ body.wikitext {
   color: @text-color;
 }
 .editable-inline {
-  background: transparent url('@{imagePath}database_lightning.png') no-repeat top right;
+  background: transparent url('@{imagePath}/icons/database_lightning.png') no-repeat top right;
   padding-right: 20px;
 }
 
@@ -576,7 +576,7 @@ body.wikitext {
 }
 
 .editable-inline.failure {
-  background: transparent url('@{imagePath}lock_gray.png') no-repeat top right;
+  background: transparent url('@{imagePath}/icons/lock_gray.png') no-repeat top right;
 }
 
 .editable-inline.modified {
@@ -610,7 +610,7 @@ body.wikitext {
 
 #autosave_preview_grippy {
   background-color: @gray-lighter;
-  background-image: url('@{imagePath}shading.png');
+  background-image: url('@{imagePath}/icons/shading.png');
 }
 h1:hover a.tiki_anchor,
 h2:hover a.tiki_anchor,

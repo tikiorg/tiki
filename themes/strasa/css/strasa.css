@@ -6587,11 +6587,11 @@ table.treetable.objectperms td.removed {
   background: #dca7a7;
 }
 #ajaxLoadingBG {
-  background: transparent url('../../img/overlay-light.png');
+  background: transparent url('../../../img/overlay-light.png');
 }
 #ajaxLoading {
   color: #eeeeee;
-  background: transparent url('../../img/loading-light.gif') no-repeat 50% 50%;
+  background: transparent url('../../../img/loading-light.gif') no-repeat 50% 50%;
 }
 #cookie_consent_div {
   padding: 15px;
@@ -6636,7 +6636,7 @@ div #metadata div.tabs {
   background-color: transparent;
 }
 .openid_url {
-  background: #ffffff url('../images/icons/login-OpenID-bg.gif') 1px 1px no-repeat;
+  background: #ffffff url('../images/login-OpenID-bg.gif') 1px 1px no-repeat;
 }
 input:-webkit-autofill {
   background-color: #f3fcfe !important;

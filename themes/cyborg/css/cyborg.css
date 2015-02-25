@@ -6714,7 +6714,7 @@ a.fc-event:hover {
   border-left: 3px double #ffffff;
 }
 .post-approved-r .content * {
-  background: url('../../img/icons/dots.gif');
+  background: url('../../../img/icons/dots.gif');
 }
 .cssmenu_horiz ul li,
 .cssmenu_vert ul li,
@@ -6821,11 +6821,11 @@ table.treetable.objectperms td.removed {
   background: #800000;
 }
 #ajaxLoadingBG {
-  background: transparent url('../../img/overlay-light.png');
+  background: transparent url('../../../img/overlay-light.png');
 }
 #ajaxLoading {
   color: #adafae;
-  background: transparent url('../../img/loading-light.gif') no-repeat 50% 50%;
+  background: transparent url('../../../img/loading-light.gif') no-repeat 50% 50%;
 }
 #cookie_consent_div {
   padding: 15px;
@@ -6870,7 +6870,7 @@ div #metadata div.tabs {
   background-color: transparent;
 }
 .openid_url {
-  background: #ffffff url('../../img/icons/icons/login-OpenID-bg.gif') 1px 1px no-repeat;
+  background: #ffffff url('../../../img/icons/login-OpenID-bg.gif') 1px 1px no-repeat;
 }
 input:-webkit-autofill {
   background-color: #ffffff !important;
@@ -6886,7 +6886,7 @@ input:-webkit-autofill {
   border: 1px solid #282828;
 }
 form.simple label.error {
-  background: url('../../img/icons/error.png') no-repeat 0 4px;
+  background: url('../../../img/icons/error.png') no-repeat 0 4px;
   color: #ffffff;
 }
 form.simple label .warning {
@@ -7139,14 +7139,14 @@ body.wikitext {
   color: #888888;
 }
 .editable-inline {
-  background: transparent url('../../img/icons/database_lightning.png') no-repeat top right;
+  background: transparent url('../../../img/icons/database_lightning.png') no-repeat top right;
   padding-right: 20px;
 }
 .editable-inline.loaded {
   background: transparent;
 }
 .editable-inline.failure {
-  background: transparent url('../../img/icons/lock_gray.png') no-repeat top right;
+  background: transparent url('../../../img/icons/lock_gray.png') no-repeat top right;
 }
 .editable-inline.modified {
   border: solid 2px #cc0000;
@@ -7174,7 +7174,7 @@ body.wikitext {
 }
 #autosave_preview_grippy {
   background-color: #adafae;
-  background-image: url('../../img/icons/shading.png');
+  background-image: url('../../../img/icons/shading.png');
 }
 h1:hover a.tiki_anchor,
 h2:hover a.tiki_anchor,

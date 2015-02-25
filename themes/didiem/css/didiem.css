@@ -6565,7 +6565,7 @@ header.header .module.secondary_site_menu {
   background: none;
 }
 .middle_outer {
-  background: url('../../img/icons/topbar.jpg') repeat-x;
+  background: url('../../../img/icons/topbar.jpg') repeat-x;
 }
 .page-header {
   margin-top: 0;
@@ -6652,12 +6652,12 @@ header.header .sitesubtitle {
 }
 h1 {
   font-size: 1.6em;
-  background: url('../../img/icons/h_bullet.jpg') no-repeat 0 50%;
+  background: url('../../../img/icons/h_bullet.jpg') no-repeat 0 50%;
   padding-left: 19px;
 }
 h2 {
   font-size: 1.6em;
-  background: url('../../img/icons/h_bullet.jpg') no-repeat 0 50%;
+  background: url('../../../img/icons/h_bullet.jpg') no-repeat 0 50%;
   padding-left: 19px;
 }
 h1.sitetitle {
@@ -6740,7 +6740,7 @@ a.fc-event:hover {
   border-left: 3px double #8a6d3b;
 }
 .post-approved-r .content * {
-  background: url('../../img/icons/dots.gif');
+  background: url('../../../img/icons/dots.gif');
 }
 .cssmenu_horiz ul li,
 .cssmenu_vert ul li,
@@ -6847,11 +6847,11 @@ table.treetable.objectperms td.removed {
   background: #dca7a7;
 }
 #ajaxLoadingBG {
-  background: transparent url('../../img/overlay-light.png');
+  background: transparent url('../../../img/overlay-light.png');
 }
 #ajaxLoading {
   color: #eeeeee;
-  background: transparent url('../../img/loading-light.gif') no-repeat 50% 50%;
+  background: transparent url('../../../img/loading-light.gif') no-repeat 50% 50%;
 }
 #cookie_consent_div {
   padding: 15px;
@@ -6896,7 +6896,7 @@ div #metadata div.tabs {
   background-color: transparent;
 }
 .openid_url {
-  background: #ffffff url('../../img/icons/icons/login-OpenID-bg.gif') 1px 1px no-repeat;
+  background: #ffffff url('../../../img/icons/login-OpenID-bg.gif') 1px 1px no-repeat;
 }
 input:-webkit-autofill {
   background-color: #f8f9d4 !important;
@@ -6912,7 +6912,7 @@ input:-webkit-autofill {
   border: 1px solid #dddddd;
 }
 form.simple label.error {
-  background: url('../../img/icons/error.png') no-repeat 0 4px;
+  background: url('../../../img/icons/error.png') no-repeat 0 4px;
   color: #a94442;
 }
 form.simple label .warning {
@@ -7165,14 +7165,14 @@ body.wikitext {
   color: #363636;
 }
 .editable-inline {
-  background: transparent url('../../img/icons/database_lightning.png') no-repeat top right;
+  background: transparent url('../../../img/icons/database_lightning.png') no-repeat top right;
   padding-right: 20px;
 }
 .editable-inline.loaded {
   background: transparent;
 }
 .editable-inline.failure {
-  background: transparent url('../../img/icons/lock_gray.png') no-repeat top right;
+  background: transparent url('../../../img/icons/lock_gray.png') no-repeat top right;
 }
 .editable-inline.modified {
   border: solid 2px #d43f3a;
@@ -7200,7 +7200,7 @@ body.wikitext {
 }
 #autosave_preview_grippy {
   background-color: #eeeeee;
-  background-image: url('../../img/icons/shading.png');
+  background-image: url('../../../img/icons/shading.png');
 }
 h1:hover a.tiki_anchor,
 h2:hover a.tiki_anchor,
