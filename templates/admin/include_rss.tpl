@@ -32,7 +32,6 @@
 			{preference name=feed_img}
 			{preference name=feed_language}
 			{preference name=feed_cache_time}
-
 			{preference name=feed_basic_auth}
 		{/tab}
 
@@ -40,7 +39,11 @@
 			<h2>{tr}Feeds{/tr}</h2>
 			{preference name=feed_articles}
 			<div class="adminoptionboxchild" id="feed_articles_childcontainer">
-				<a href="tiki-articles_rss.php" title="{tr}Feed for articles{/tr}"> {icon _id=feed}</a>
+				<div class="form-group col-sm-8 col-sm-offset-4">
+					<a class="btn btn-default btn-sm tips" href="tiki-articles_rss.php" title=":{tr}Feed for articles{/tr}">
+						{icon name="rss"} {tr}View{/tr}
+					</a>
+				</div>
 				{preference name=feed_articles_title}
 				{preference name=feed_articles_desc}
 				{preference name=feed_articles_max}
@@ -50,7 +53,11 @@
 
 			{preference name=feed_blogs}
 			<div class="adminoptionboxchild" id="feed_blogs_childcontainer">
-				<a href="tiki-blogs_rss.php" title="{tr}Feed for blogs{/tr}"> {icon _id=feed}</a>
+				<div class="form-group col-sm-8 col-sm-offset-4">
+					<a class="btn btn-default btn-sm tips" href="tiki-blogs_rss.php" title=":{tr}Feed for blogs{/tr}">
+						{icon name="rss"} {tr}View{/tr}
+					</a>
+				</div>
 				{preference name=feed_blogs_title}
 				{preference name=feed_blogs_desc}
 				{preference name=feed_blogs_max}
@@ -60,7 +67,11 @@
 
 			{preference name=feed_blog}
 			<div class="adminoptionboxchild" id="feed_blog_childcontainer">
-				<a href="tiki-list_blogs.php" title="{tr}Feed for individual blogs{/tr}"> {icon _id=feed}</a>
+				<div class="form-group col-sm-8 col-sm-offset-4">
+					<a class="btn btn-default btn-sm tips" href="tiki-list_blogs.php" title=":{tr}Feed for individual blogs{/tr}">
+						{icon name="rss"} {tr}View{/tr}
+					</a>
+				</div>
 				{preference name=feed_blog_title}
 				{preference name=feed_blog_desc}
 				{preference name=feed_blog_max}
@@ -70,7 +81,11 @@
 
 			{preference name=feed_image_galleries}
 			<div class="adminoptionboxchild" id="feed_image_galleries_childcontainer">
-				<a href="tiki-image_galleries_rss.php" title="{tr}Feed for image galleries{/tr}"> {icon _id=feed}</a>
+				<div class="form-group col-sm-8 col-sm-offset-4">
+					<a class="btn btn-default btn-sm tips" href="tiki-image_galleries_rss.php" title=":{tr}Feed for image galleries{/tr}">
+						{icon name="rss"} {tr}View{/tr}
+					</a>
+				</div>
 				{preference name=feed_image_galleries_title}
 				{preference name=feed_image_galleries_desc}
 				{preference name=feed_image_galleries_max}
@@ -80,7 +95,11 @@
 
 			{preference name=feed_image_gallery}
 			<div class="adminoptionboxchild" id="feed_image_gallery_childcontainer">
-				<a href="tiki-galleries.php" title="{tr}Feed for individual image galleries{/tr}"> {icon _id=feed}</a>
+				<div class="form-group col-sm-8 col-sm-offset-4">
+					<a class="btn btn-default btn-sm tips" href="tiki-galleries.php" title=":{tr}Feed for individual image galleries{/tr}">
+						{icon name="rss"} {tr}View{/tr}
+					</a>
+				</div>
 				{preference name=feed_image_gallery_title}
 				{preference name=feed_image_gallery_desc}
 				{preference name=feed_image_gallery_max}
@@ -90,7 +109,11 @@
 
 			{preference name=feed_file_galleries}
 			<div class="adminoptionboxchild" id="feed_file_galleries_childcontainer">
-				<a href="tiki-file_galleries_rss.php" title="{tr}Feed for file galleries{/tr}"> {icon _id=feed}</a>
+				<div class="form-group col-sm-8 col-sm-offset-4">
+					<a class="btn btn-default btn-sm tips" href="tiki-file_galleries_rss.php" title=":{tr}Feed for file galleries{/tr}">
+						{icon name="rss"} {tr}View{/tr}
+					</a>
+				</div>
 				{preference name=feed_file_galleries_title}
 				{preference name=feed_file_galleries_desc}
 				{preference name=feed_file_galleries_max}
@@ -100,7 +123,11 @@
 
 			{preference name=feed_file_gallery}
 			<div class="adminoptionboxchild" id="feed_file_gallery_childcontainer">
-				<a href="tiki-list_file_gallery.php" title="{tr}Feed for individual file galleries{/tr}"> {icon _id=feed}</a>
+				<div class="form-group col-sm-8 col-sm-offset-4">				
+					<a class="btn btn-default btn-sm tips" href="tiki-list_file_gallery.php" title="{tr}Feed for individual file galleries{/tr}">
+						{icon name="rss"} {tr}View{/tr}
+					</a>
+				</div>
 				{preference name=feed_file_gallery_title}
 				{preference name=feed_file_gallery_desc}
 				{preference name=feed_file_gallery_max}
@@ -110,8 +137,14 @@
 
 			{preference name=feed_wiki}
 			<div class="adminoptionboxchild" id="feed_wiki_childcontainer">
-				<a href="tiki-wiki_rss.php" title="{tr}Feed for wiki pages (with diff){/tr}"> {icon _id=feed}</a>
-				<a href="tiki-wiki_rss_no_diff.php" title="{tr}Feed for wiki pages (no diff){/tr}"> {icon _id=feed}</a>
+				<div class="form-group col-sm-8 col-sm-offset-4">
+					<a class="btn btn-default btn-sm tips" href="tiki-wiki_rss.php" title=":{tr}Feed for wiki pages (with diff){/tr}">
+						{icon name="rss"} {tr}View{/tr} ({tr}with diff{/tr})
+					</a>
+					<a class="btn btn-default btn-sm tips" href="tiki-wiki_rss_no_diff.php" title=":{tr}Feed for wiki pages (no diff){/tr}">
+						{icon name="rss"} {tr}View{/tr} ({tr}no diff{/tr})
+					</a>
+				</div>
 				{preference name=feed_wiki_title}
 				{preference name=feed_wiki_desc}
 				{preference name=feed_wiki_max}
@@ -121,7 +154,11 @@
 
 			{preference name=feed_forums}
 			<div class="adminoptionboxchild" id="feed_forums_childcontainer">
-				<a href="tiki-forums_rss.php" title="{tr}Feed for forums{/tr}"> {icon _id=feed}</a>
+				<div class="form-group col-sm-8 col-sm-offset-4">
+					<a class="btn btn-default btn-sm tips" href="tiki-forums_rss.php" title=":{tr}Feed for forums{/tr}">
+						{icon name="rss"} {tr}View{/tr}
+					</a>
+				</div>
 				{preference name=feed_forums_title}
 				{preference name=feed_forums_desc}
 				{preference name=feed_forums_max}
@@ -131,7 +168,11 @@
 
 			{preference name=feed_forum}
 			<div class="adminoptionboxchild" id="feed_forum_childcontainer">
-				<a href="tiki-forums.php" title="{tr}Feed for individual forums{/tr}"> {icon _id=feed}</a>
+				<div class="form-group col-sm-8 col-sm-offset-4">
+					<a class="btn btn-default btn-sm tips" href="tiki-forums.php" title=":{tr}Feed for individual forums{/tr}">
+						{icon name="rss"} {tr}View{/tr}
+					</a>
+				</div>
 				{preference name=feed_forum_title}
 				{preference name=feed_forum_desc}
 				{preference name=feed_forum_max}
@@ -141,7 +182,11 @@
 
 			{preference name=feed_tracker}
 			<div class="adminoptionboxchild" id="feed_tracker_childcontainer">
-				<a href="tiki-list_trackers.php" title="{tr}Feed for trackers{/tr}"> {icon _id=feed}</a>
+				<div class="form-group col-sm-8 col-sm-offset-4">
+					<a class="btn btn-default btn-sm tips" href="tiki-list_trackers.php" title=":{tr}Feed for trackers{/tr}">
+						{icon name="rss"} {tr}View{/tr}
+					</a>
+				</div>
 				{preference name=feed_tracker_title}
 				{preference name=feed_tracker_desc}
 				{preference name=feed_tracker_max}
@@ -152,7 +197,11 @@
 
 			{preference name=feed_calendar}
 			<div class="adminoptionboxchild" id="feed_calendar_childcontainer">
-				<a href="tiki-calendars_rss.php" title="{tr}Feed for calendars{/tr}"> {icon _id=feed}</a>
+				<div class="form-group col-sm-8 col-sm-offset-4">
+					<a class="btn btn-default btn-sm tips" href="tiki-calendars_rss.php" title=":{tr}Feed for calendars{/tr}">
+						{icon name="rss"} {tr}View{/tr}
+					</a>
+				</div>
 				{preference name=feed_calendar_title}
 				{preference name=feed_calendar_desc}
 				{preference name=feed_calendar_max}
@@ -162,7 +211,11 @@
 
 			{preference name=feed_directories}
 			<div class="adminoptionboxchild" id="feed_directories_childcontainer">
-				<a href="tiki-directories_rss.php" title="{tr}Feed for directories{/tr}"> {icon _id=feed}</a>
+				<div class="form-group col-sm-8 col-sm-offset-4">
+					<a class="btn btn-default btn-sm tips" href="tiki-directories_rss.php" title=":{tr}Feed for directories{/tr}">
+						{icon name="rss"} {tr}View{/tr}
+					</a>
+				</div>				
 				{preference name=feed_directories_title}
 				{preference name=feed_directories_desc}
 				{preference name=feed_directories_max}
@@ -172,7 +225,11 @@
 
 			{preference name=feed_shoutbox}
 			<div class="adminoptionboxchild" id="feed_shoutbox_childcontainer">
-				<a href="tiki-shoutbox_rss.php" title="{tr}Feed for shoutbox{/tr}"> {icon _id=feed}</a>
+				<div class="form-group col-sm-8 col-sm-offset-4">
+					<a class="btn btn-default btn-sm tips" href="tiki-shoutbox_rss.php" title=":{tr}Feed for shoutbox{/tr}">
+						{icon name="rss"} {tr}View{/tr}
+					</a>
+				</div>
 				{preference name=feed_shoutbox_title}
 				{preference name=feed_shoutbox_desc}
 				{preference name=feed_shoutbox_max}
