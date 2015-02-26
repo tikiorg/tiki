@@ -1,21 +1,14 @@
 {* $Id$ *}
 {if $tiki_p_create_file_galleries eq 'y' or ($user eq $gal_info.user and $gal_info.type eq 'user' and $tiki_p_userfiles)}
 	{if isset($individual) and $individual eq 'y'}
-		{permission_link mode=button type="file gallery" permType="file galleries" id=$galleryId title=$name label="{tr}There are individual permissions set for this file gallery{/tr}"}
+		{remarksbox type="tip" title="{tr}Permissions{/tr}"}
+			{tr}There are individual permissions set for this file gallery{/tr}. {permission_link mode=icon type="file gallery" permType="file galleries" id=$galleryId title=$name label="{tr}Manage Permissions{/tr}"}
+		{/remarksbox}
 	{/if}
 	<form class="form-horizontal" role="form" action="{$smarty.server.PHP_SELF}?{query}" method="post">
 		<input type="hidden" name="galleryId" value="{$galleryId|escape}">
 		<input type="hidden" name="filegals_manager" {if isset($filegals_manager)}value="{$filegals_manager}"{/if}>
 
-		<div class="row"> {* 100% width, padding: 0 -15px *}
-			<div class="form-group col-lg-12 clearfix"> {* bottom margin: 20px; padding: 0 15px; clear float *}
-				<div class="pull-right"> {* float: right; *}
-					<input type="submit" class="btn btn-primary" value="{tr}Save{/tr}" name="edit">
-					&nbsp;
-					<input type="checkbox" name="viewitem" checked="checked"> {tr}View inserted gallery{/tr}
-				</div>
-			</div>
-		</div>
 		{tabset name="list_file_gallery"}
 			{tab name="{tr}Properties{/tr}"}
 				<h2>{tr}Properties{/tr}</h2>
@@ -25,9 +18,9 @@
 						<p class="form-control-static">
 							{if $galleryId eq $treeRootId or $gal_info.type eq 'user'}
 								<b>{tr}{$gal_info.name}{/tr}</b>
-								<input type="hidden" name="name" value="{$gal_info.name|escape}">
+								<input type="hidden" name="name" value="{$gal_info.name|escape}" class="form-control">
 							{else}
-								<input type="text" size="50" id="name" name="name" value="{$gal_info.name|escape}">
+								<input type="text" id="name" name="name" value="{$gal_info.name|escape}" class="form-control">
 								<span class="help-block">{tr}Required for podcasts{/tr}.</span>
 							{/if}
 						</p>
@@ -88,7 +81,7 @@ if ($(this).val() != '') {
 				<div class="form-group">
 					<label for="description" class="col-sm-4 control-label">{tr}Description{/tr}</label>
 					<div class="col-sm-8">
-						<textarea rows="5" cols="40" id="description" name="description" style="width:100%">{$gal_info.description|escape}</textarea>
+						<textarea rows="3" id="description" name="description" class="form-control">{$gal_info.description|escape}</textarea>
 						<span class="help-block">{tr}Required for podcasts{/tr}.</span>
 					</div>
 				</div>
@@ -129,9 +122,8 @@ if ($(this).val() != '') {
 					<div class="form-group">
 						<label for="archives" class="col-sm-4 text-right">{tr}Maximum number of archives for each file{/tr}</label>
 						<div class="col-sm-8">
-							<input size="5" type="text" id="archives" name="archives" value="{$gal_info.archives|escape}">
-							<br>
-							<em>{tr}Use{/tr} 0={tr}unlimited{/tr}, -1={tr}none{/tr}.</em>
+							<input type="text" id="archives" name="archives" value="{$gal_info.archives|escape}" class="form-control">
+							<span class="help-block">{tr}Use{/tr}: 0={tr}unlimited{/tr}, -1={tr}none{/tr}.</span>
 
 							{if $galleryId neq $treeRootId}
 						</div>
@@ -205,23 +197,27 @@ if ($(this).val() != '') {
 				<div class="form-group">
 					<label for="image_max_size_x" class="col-sm-4 text-right">{tr}Maximum width for images in gallery{/tr}</label>
 					<div class="col-sm-8">
-						<input size="5" type="text" name="image_max_size_x" id="image_max_size_x" value="{$gal_info.image_max_size_x|escape}"> px
-						<br>
+						<div class="input-group col-sm-4">
+							<input type="text" name="image_max_size_x" id="image_max_size_x" value="{$gal_info.image_max_size_x|escape}" class="form-control text-right">
+							<span class="input-group-addon"> px</span>
+						</div>
 						<span class="help-block">{tr}If an image is wider than this, it will be resized.{/tr} {tr}Attention: In this case, the original image will be lost.{/tr} (0={tr}unlimited{/tr})</span>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="image_max_size_y" class="col-sm-4 text-right">{tr}Maximum height for images in gallery{/tr}</label>
 					<div class="col-sm-8">
-						<input size="5" type="text" name="image_max_size_y" id="image_max_size_y" value="{$gal_info.image_max_size_y|escape}"> px
+						<div class="input-group col-sm-4">
+							<input type="text" name="image_max_size_y" id="image_max_size_y" value="{$gal_info.image_max_size_y|escape}" class="form-control text-right">
+							<span class="input-group-addon"> px</span>
+						</div>
 						<span class="help-block">{tr}If an image is higher than this, it will be resized.{/tr} {tr}Attention: In this case, the original image will be lost.{/tr} (0={tr}unlimited{/tr})</span>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="wiki_syntax" class="col-sm-4 text-right">{tr}Wiki markup to enter when image selected from "file gallery manager"{/tr}</label>
 					<div class="col-sm-8">
-						<input size="80" type="text" name="wiki_syntax" id="wiki_syntax" value="{$gal_info.wiki_syntax|escape}">
-						<br>
+						<input size="80" type="text" name="wiki_syntax" id="wiki_syntax" value="{$gal_info.wiki_syntax|escape}" class="form-control">
 						<span class="help-block">{tr}The default is {/tr}"{literal}{img fileId="%fileId%" thumb="y" rel="box[g]"}{/literal}")</span>
 						<span class="help-block">{tr}Field names will be replaced when enclosed in % chars. e.g. %fileId%, %name%, %filename%, %description%{/tr}</span>
 						<span class="help-block">{tr}Attributes will be replaced when enclosed in % chars. e.g. %tiki.content.url% for remote file URLs{/tr}</span>
@@ -253,13 +249,13 @@ if ($(this).val() != '') {
 				<div class="form-group">
 					<label for="max_desc" class="col-sm-4 text-right">{tr}Max description display size{/tr}</label>
 					<div class="col-sm-8">
-						<input type="text" id="max_desc" name="max_desc" value="{$max_desc|escape}">
+						<input type="text" id="max_desc" name="max_desc" value="{$max_desc|escape}" class="form-control">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="maxRows" class="col-sm-4 text-right">{tr}Max rows per page{/tr}</label>
 					<div class="col-sm-8">
-						<input type="text" id="maxRows" name="maxRows" value="{$maxRows|escape}">
+						<input type="text" id="maxRows" name="maxRows" value="{$maxRows|escape}" class="form-control">
 					</div>
 				</div>
 				<div class="form-group">
@@ -268,10 +264,9 @@ if ($(this).val() != '') {
 				</div>
 			{/tab}
 		{/tabset}
-		<div class="form-group">
-			<div class="pull-right">
-				<input type="submit" class="btn btn-primary" value="{tr}Save{/tr}" name="edit">
-			</div>
+		<div class="form-group text-center">
+			<input type="submit" class="btn btn-primary" value="{tr}Save{/tr}" name="edit">
+			<input type="checkbox" name="viewitem" checked="checked"> {tr}View inserted gallery{/tr}
 		</div>
 	</form>
 {/if}
