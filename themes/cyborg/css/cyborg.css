@@ -6870,7 +6870,7 @@ div #metadata div.tabs {
   background-color: transparent;
 }
 .openid_url {
-  background: #ffffff url('../../../img/login-OpenID-bg.gif') 1px 1px no-repeat;
+  background: #ffffff url('../../../img/icons/login-OpenID-bg.gif') 1px 1px no-repeat;
 }
 input:-webkit-autofill {
   background-color: #ffffff !important;
