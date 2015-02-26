@@ -1,1 +1,0 @@
-ALTER TABLE `tiki_mailin_accounts` add COLUMN `admin` CHAR(1) NOT NULL default 'y';

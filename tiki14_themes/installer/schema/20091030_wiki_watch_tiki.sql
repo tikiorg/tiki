@@ -1,1 +1,0 @@
-update `tiki_user_watches` set `type`='wiki page' where `type`='wiki'; 

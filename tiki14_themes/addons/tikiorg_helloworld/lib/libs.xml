@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<container xmlns="http://symfony.com/schema/dic/services">
-	<services>
-		<service id="tikiaddon.tikiorg.helloworld.foo" class="tikiaddon\tikiorg\helloworld\Foo">
-			<file>%kernel.root_dir%/addons/tikiorg_helloworld/lib/HelloWorld.php</file>
-		</service>
-	</services>
-</container>

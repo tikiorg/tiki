@@ -1,6 +1,0 @@
-{
-	"remove": [
- 		{"type":"wiki_page", "ref":"page_about", "profile":"02_content"}
-	]
-}
-

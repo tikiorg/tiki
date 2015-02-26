@@ -1,1 +1,0 @@
-alter table tiki_actionlog modify comment varchar(255);

@@ -1,1 +1,0 @@
-update tiki_modules set name='top_images', params='content=thumbnails' where name='top_images_th';

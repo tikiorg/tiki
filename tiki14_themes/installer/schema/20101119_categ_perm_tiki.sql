@@ -1,2 +1,0 @@
-update `users_permissions` set `permDesc`='Can add objects to the category (needs tiki_p_modify_object_categories)' where `permName`='tiki_p_add_object';
-update `users_permissions` set `permDesc`='Can remove objects from the category (needs tiki_p_modify_object_categories)' where `permName`='tiki_p_remove_object';
