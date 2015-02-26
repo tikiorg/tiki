@@ -148,7 +148,11 @@
 					<td class="text"><a href="tiki-download_forum_attachment.php?attId={$att.attId}" title="{tr}Download{/tr}">{$att.filename|escape}</a></td>
 					<td class="integer">{$att.filesize|kbsize}</td>
 					<td class="date">{$att.created|tiki_short_datetime}</td>
-					<td class="action"><a href="tiki-download_forum_attachment.php?attId={$att.attId}" title="{tr}Download{/tr}">{icon _id='disk' alt="{tr}Download{/tr}"}</a></td>
+					<td class="action">
+						<a href="tiki-download_forum_attachment.php?attId={$att.attId}" class="tips" title=":{tr}Download{/tr}">
+							{icon name='floppy'}
+						</a>
+					</td>
 				</tr>
 			{/foreach}
 		</table>
