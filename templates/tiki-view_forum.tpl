@@ -571,24 +571,42 @@
 							{/if}
 						</td>
 						{if $forum_info.topics_list_replies eq 'y'}
-							<td class="integer"><span class="badge">{$comments_coms[ix].replies}</span></td>
+							<td class="integer">
+								<span class="badge">
+									{$comments_coms[ix].replies}
+								</span>
+							</td>
 						{/if}
 						{if $forum_info.topics_list_reads eq 'y'}
-							<td class="integer"><span class="badge">{$comments_coms[ix].hits}</span></td>
+							<td class="integer">
+								<span class="badge">
+									{$comments_coms[ix].hits}
+								</span>
+							</td>
 						{/if}
 						{if $forum_info.vote_threads eq 'y' and ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
-							<td class="integer">{rating_result_avg type=comment id=$comments_coms[ix].threadId }&nbsp;&nbsp;&nbsp;</td>
+							<td class="integer">
+								{rating_result_avg type=comment id=$comments_coms[ix].threadId }&nbsp;&nbsp;&nbsp;
+							</td>
 							{if $prefs.rating_results_detailed eq 'y'}
-								<td class="text">{rating_result type=comment id=$comments_coms[ix].threadId }</td>
+								<td class="text">
+									{rating_result type=comment id=$comments_coms[ix].threadId }
+								</td>
 							{/if}
 						{/if}
 						{if $forum_info.topics_list_pts eq 'y'}
-							<td class="integer"><span class="badge">{$comments_coms[ix].average|string_format:"%.2f"}</span></td>
+							<td class="integer">
+								<span class="badge">
+									{$comments_coms[ix].average|string_format:"%.2f"}
+								</span>
+							</td>
 						{/if}
 						{if $forum_info.topics_list_lastpost eq 'y'}
 							<td class="text">
 								{if $forum_info.topics_list_lastpost_avatar eq 'y' and $prefs.feature_userPreferences eq 'y'}
-									<div style="float:left;padding-right:2px">{$comments_coms[ix].lastPostData.userName|avatarize}</div>
+									<div style="float:left;padding-right:2px">
+										{$comments_coms[ix].lastPostData.userName|avatarize}
+									</div>
 								{/if}
 								<div style="float:left;">
 									{$comments_coms[ix].lastPost|tiki_short_datetime} {* date_format:"%b %d [%H:%M]" *}
@@ -621,9 +639,15 @@
 
 						{if $forum_info.att_list_nb eq 'y'}
 							<td style="text-align:center;">
-								{if !empty($comments_coms[ix].nb_attachments)}<a href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}&amp;view_atts=y#attachments" title="{tr}Attachments{/tr}">{/if}
-								<span class="badge">{$comments_coms[ix].nb_attachments}</span>
-								{if !empty($comments_coms[ix].nb_attachments)}</a>{/if}
+								{if !empty($comments_coms[ix].nb_attachments)}
+									<a href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}&amp;view_atts=y#attachments" class="tips" title="{$comments_coms[ix].title|escape}:{tr}View attachments{/tr}">
+								{/if}
+								<span>
+									{$comments_coms[ix].nb_attachments}
+								</span>
+								{if !empty($comments_coms[ix].nb_attachments)}
+									</a>
+								{/if}
 							</td>
 						{/if}
 
@@ -634,7 +658,9 @@
 						{/if}
 
 						{if $prefs.forum_category_selector_in_list eq 'y'}
-							<td>{categoryselector type="forum post" object=$comments_coms[ix].threadId categories=$prefs.forum_available_categories}</td>
+							<td>
+								{categoryselector type="forum post" object=$comments_coms[ix].threadId categories=$prefs.forum_available_categories}
+							</td>
 						{/if}
 
 						<td class="text" nowrap="nowrap">
@@ -648,7 +674,9 @@
 							{/if}
 
 							{if ( $tiki_p_admin_forum eq 'y' or ($comments_coms[ix].userName == $user && $tiki_p_forum_post eq 'y') ) and $forum_info.is_locked neq 'y' and $comments_coms[ix].locked neq 'y'}
-								<a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink tips" title="{$comments_coms[ix].title|escape}:{tr}Edit topic{/tr}">{icon name='edit'}</a>
+								<a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink tips" title="{$comments_coms[ix].title|escape}:{tr}Edit topic{/tr}">
+									{icon name='edit'}
+								</a>
 							{/if}
 
 							{if $prefs.feature_forum_topics_archiving eq 'y' && $tiki_p_admin_forum eq 'y'}
