@@ -341,7 +341,7 @@ div.cvsup {
 .layout_social .topbar_modules h1.sitetitle,
 .layout_social_modules .topbar_modules h1.sitetitle,
 .layout_moving_headers #top_modules h1.sitetitle {
-  display: inline-block;
+  float: left;
   font-size: 1.8rem;
   line-height: 2;
   margin-bottom: 0;
@@ -350,7 +350,9 @@ div.cvsup {
 .layout_social .topbar_modules .sitesubtitle,
 .layout_social_modules .topbar_modules .sitesubtitle,
 .layout_moving_headers #top_modules .sitesubtitle {
-  display: none;
+  float: left;
+  font-size: 1.4rem;
+  margin-left: 1.5rem;
 }
 .layout_social .topbar_modules #topbar_modules,
 .layout_social_modules .topbar_modules #topbar_modules,
