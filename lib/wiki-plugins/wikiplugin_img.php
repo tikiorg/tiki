@@ -1021,17 +1021,12 @@ function wikiplugin_img( $data, $params )
 			if ($imgdata['thumb'] == 'mousesticky') {
 				$popup_params['sticky'] = true;
 			}
+			$smarty->loadPlugin('smarty_function_popup');
 			
-			if ($imgdata['thumb'] == 'mouseover') {
-				$popup_params['trigger'] = 'hover';
-			} 
-			// avoid big images will not be closeable on hover. Fallback to require a click to open and a second click somewhere to close.
 			if ($fwidth > 400 || $fheight > 400) {
 				$popup_params['trigger'] = 'focus';
 			}
-			
-			$smarty->loadPlugin('smarty_function_popup');
-			
+
 			$mouseover = ' ' . smarty_function_popup($popup_params, $smarty);
 		} else {
 			if (!empty($imgdata['fileId']) && $imgdata['thumb'] != 'download' && empty($urldisp)) {

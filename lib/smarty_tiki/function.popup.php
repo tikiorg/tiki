@@ -25,9 +25,8 @@
  * params still relevant:
  *
  *     text        Required: the text/html to display in the popup window
- *     trigger     'onClick' and native bootstrap params: 'click', 'hover', 'focus', 'manual' ('hover' default)
- *     sticky      false/true - this is currently an alias for trigger['click'] which is wrong. 
- *     							Sticky should define wether the popup should stay until clicked, not how it is triggered. 
+ *     trigger     'onMouseOver' or 'onClick' (onMouseOver default)
+ *     sticky      false/true
  *     width       in pixels?
  *     fullhtml
  */
@@ -47,17 +46,9 @@ function smarty_function_popup($params, $smarty)
 				break;
 			case 'trigger':
 				switch ($value) {
-					// is this legacy? should not be used anywhere
 					case 'onclick':
 					case 'onClick':
 						$options['data-trigger'] = 'click';
-						break;
-					// support native bootstrap params - could be moved to default but not sure wether it breaks something
-					case 'click':
-					case 'hover':
-					case 'focus':
-					case 'manual':
-						$options['data-trigger'] = $value;
 						break;
 					default:
 						break;
