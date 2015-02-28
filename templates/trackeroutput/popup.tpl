@@ -7,4 +7,4 @@
 		</table>
 	</div>
 {/capture}
-{popup text=$smarty.capture.popup|escape:"javascript"|escape:"html" fullhtml="1" hauto=true vauto=true sticky=$stickypopup|default:null}
+{popup text=$smarty.capture.popup|escape:"javascript"|escape:"html" fullhtml="1" hauto=true vauto=true trigger="hover"}
