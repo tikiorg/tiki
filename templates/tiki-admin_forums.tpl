@@ -207,7 +207,7 @@
 							</div>
 						</div>
 
-						{include file='categorize.tpl'}
+						{include file='categorize.tpl' labelcol='4' inputcol='8'}
 						{if $prefs.feature_multilingual eq 'y'}
 							<div class="form-group">
 								<label class="col-sm-4 control-label" for="forumLanguage">{tr}Language{/tr}</label>
