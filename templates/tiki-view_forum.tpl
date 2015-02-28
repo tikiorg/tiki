@@ -634,7 +634,9 @@
 						{if $forum_info.att_list_nb eq 'y'}
 							<td style="text-align:center;">
 								{if !empty($comments_coms[ix].nb_attachments)}<a href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}&amp;view_atts=y#attachments" title="{tr}Attachments{/tr}">{/if}
-								<span class="badge">{$comments_coms[ix].nb_attachments}</span>
+								<span>
+									{$comments_coms[ix].nb_attachments}
+								</span>
 								{if !empty($comments_coms[ix].nb_attachments)}</a>{/if}
 							</td>
 						{/if}
