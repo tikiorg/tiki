@@ -25,35 +25,47 @@
 		{/if}
 
 		{if $prefs.feed_forum eq 'y'}
-			<a href="tiki-forum_rss.php?forumId={$forumId}" class="tips" title=":{tr}RSS feed{/tr}">{icon name="rss"}</a>
+			<a href="tiki-forum_rss.php?forumId={$forumId}" class="tips" title=":{tr}RSS feed{/tr}">
+				{icon name="rss"}
+			</a>
 		{/if}
 
 		{if !empty($tiki_p_forum_lock) and $tiki_p_forum_lock eq 'y'}
 			{if $forum_info.is_locked eq 'y'}
-				{self_link lock='n' _icon='lock_break' _alt="{tr}Unlock{/tr}"}{/self_link}
+				{self_link lock='n' _icon_name='unlock' _alt="{tr}Unlock{/tr}"}{/self_link}
 			{else}
-				{self_link lock='y' _icon='lock_add' _alt="{tr}Lock{/tr}"}{/self_link}
+				{self_link lock='y' _icon_name='lock' _alt="{tr}Lock{/tr}"}{/self_link}
 			{/if}
 		{/if}
 
 		{if $user and $prefs.feature_user_watches eq 'y'}
 			{if $user_watching_forum eq 'n'}
-				<a class="pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title="{$forum_info.name|escape}:{tr}Monitor topics{/tr}">{icon name="watch"}</a>
+				<a class="pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title="{$forum_info.name|escape}:{tr}Monitor topics{/tr}">
+					{icon name="watch"}
+				</a>
 			{else}
-				<a class="pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove" title="{$forum_info.name|escape}:{tr}Stop monitoring topics{/tr}">{icon name="stop-watching"}</a>
+				<a class="pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove" title="{$forum_info.name|escape}:{tr}Stop monitoring topics{/tr}">
+					{icon name="stop-watching"}
+				</a>
 			{/if}
 		{/if}
 
 		{if $user and $prefs.feature_user_watches eq 'y'}
 			{if $user_watching_forum_topic_and_thread eq 'n'}
-				<a class="pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title="{$forum_info.name|escape}:{tr}Monitor topics and threads{/tr}">{icon name="watch"}</a>
+				<a class="pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title="{$forum_info.name|escape}:{tr}Monitor topics and threads{/tr}">
+					{icon name="watch"}
+				</a>
 			{else}
-				<a class="pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title="{$forum_info.name|escape}:{tr}Stop monitoring topics and threads{/tr}">{icon name="stop-watching"}</a>
+				<a class="pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title="{$forum_info.name|escape}:{tr}Stop monitoring topics and threads{/tr}">
+					{icon name="stop-watching"}
+				</a>
 			{/if}
 		{/if}
 
 		{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-			<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="pull-right tips" title="{$forum_info.name|escape}:{tr}Group monitor topics and threads{/tr}">{icon name="watch-group"}</a>
+			<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="pull-right tips" title="{$forum_info.name|escape}:{tr}Group monitor topics and threads{/tr}">
+				{icon name="watch-group"}
+			</a>
 		{/if}
 
 		<div class="categbar" align="right" >
@@ -648,7 +660,9 @@
 							{/if}
 
 							{if ( $tiki_p_admin_forum eq 'y' or ($comments_coms[ix].userName == $user && $tiki_p_forum_post eq 'y') ) and $forum_info.is_locked neq 'y' and $comments_coms[ix].locked neq 'y'}
-								<a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink tips" title="{$comments_coms[ix].title|escape}:{tr}Edit topic{/tr}">{icon name='edit'}</a>
+								<a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink tips" title="{$comments_coms[ix].title|escape}:{tr}Edit topic{/tr}">
+									{icon name='edit'}
+								</a>
 							{/if}
 
 							{if $prefs.feature_forum_topics_archiving eq 'y' && $tiki_p_admin_forum eq 'y'}
