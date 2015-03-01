@@ -191,6 +191,9 @@ function iconset_legacy()
 			'cache' => array(
 				'id' => 'database_refresh',
 			),
+			'calendar' => array(
+				'id' => 'calendar',
+			),
 			'caret-left' => array(
 				'id' => 'resultset_previous',
 			),
@@ -211,8 +214,7 @@ function iconset_legacy()
 				'id' => 'comments',
 			),
 			'copy' => array(
-				'id' => 'ico_copy',
-				'append' => '.gif'
+				'id' => 'page_copy',
 			),
 			'create' => array(
 				'id' => 'add',
