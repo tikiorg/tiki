@@ -197,6 +197,9 @@ function iconset_default()
 			'change' => array(
 				'id' => 'edit',
 			),
+			'chart' => array(
+				'id' => 'area-chart',
+			),
 			'check' => array(
 				'id' => 'check-square-o',
 			),

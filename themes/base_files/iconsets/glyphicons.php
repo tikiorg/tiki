@@ -40,11 +40,17 @@ function iconset_glyphicons()
 			'backward_step' => array(
 				'id' => 'step-backward',
 			),
+			'ban' => array(
+				'id' => 'ban-circle',
+			),
 			'caret-left' => array(
 				'id' => 'triangle-left',
 			),
 			'caret-right' => array(
 				'id' => 'triangle-right',
+			),
+			'chart' => array(
+				'id' => 'object-align-bottom',
 			),
 			'check' => array(
 				'id' => 'ok-circle',

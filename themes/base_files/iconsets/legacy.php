@@ -188,6 +188,9 @@ function iconset_legacy()
 			'backward_step' => array(
 				'id' => 'control_start',
 			),
+			'ban' => array(
+				'id' => 'cancel',
+			),
 			'bug' => array(
 				'id' => 'bug',
 			),
@@ -205,6 +208,9 @@ function iconset_legacy()
 			),
 			'change' => array(
 				'id' => 'pencil',
+			),
+			'chart' => array(
+				'id' => 'chart_curve',
 			),
 			'check' => array(
 				'id' => 'select',
