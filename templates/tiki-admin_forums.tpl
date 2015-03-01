@@ -4,19 +4,19 @@
 
 	<div class="t_navbar form-group">
 		{if $tiki_p_admin_forum eq 'y' && $forumId > 0 or (isset($dup_mode) and $dup_mode eq 'y')}
-			{button class="btn btn-default" href="?" _icon_name="add" _text=" {tr}Create Forum{/tr}"}
+			{button class="btn btn-default" href="?" _icon_name="add" _text="{tr}Create Forum{/tr}"}
 		{/if}
 		{if $tiki_p_admin_forum eq 'y' && (!isset($dup_mode) or $dup_mode ne 'y')}
-			{button class="btn btn-default" href="tiki-admin_forums.php?dup_mode=y" _icon_name="copy" _text=" {tr}Duplicate{/tr}"}
+			{button class="btn btn-default" href="tiki-admin_forums.php?dup_mode=y" _icon_name="copy" _text="{tr}Duplicate{/tr}"}
 		{/if}
 		{if $forumId > 0}
-			{button class="btn btn-default" href="tiki-view_forum.php?forumId=$forumId" _icon_name="view" _text=" {tr}View{/tr}"}
+			{button class="btn btn-default" href="tiki-view_forum.php?forumId=$forumId" _icon_name="view" _text="{tr}View{/tr}"}
 		{/if}
 		{if $tiki_p_admin_forum eq 'y'}
-			{button class="btn btn-default" href="tiki-forum_import.php" _icon_name="import" _text=" {tr}Import{/tr}"}
+			{button class="btn btn-default" href="tiki-forum_import.php" _icon_name="import" _text="{tr}Import{/tr}"}
 		{/if}
 		{if $tiki_p_forum_read eq 'y'}
-			{button class="btn btn-default" href="tiki-forums.php" _icon_name="list" _text=" {tr}List{/tr}"}
+			{button class="btn btn-default" href="tiki-forums.php" _icon_name="list" _text="{tr}List{/tr}"}
 		{/if}
 	</div>
 {/if}

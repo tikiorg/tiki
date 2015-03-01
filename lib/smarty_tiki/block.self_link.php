@@ -137,7 +137,7 @@ function smarty_block_self_link($params, $content, $smarty, &$repeat = false)
 				$content = smarty_function_icon($icon_params, $smarty);
 
 				if (isset($params['_text'])) {
-					$content .= $params['_text'];
+					$content .= ' ' . $params['_text'];
 				}
 			}
 

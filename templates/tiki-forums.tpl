@@ -3,7 +3,7 @@
 	{title help="forums" admpage="forums"}{tr}Forums{/tr}{/title}
 	<div class="t_navbar form-group">
 		{if $tiki_p_admin_forum eq 'y'}
-			{button href="tiki-admin_forums.php" class="btn btn-default" _icon_name="wrench" _text=" {tr}Admin{/tr}"}
+			{button href="tiki-admin_forums.php" class="btn btn-default" _icon_name="wrench" _text="{tr}Admin{/tr}"}
 		{/if}
 		{if $tiki_p_forum_read eq 'y' and $prefs.feature_forum_rankings eq 'y'}
 			{button href="tiki-forum_rankings.php" class="btn btn-default" _icon_name="ranking" _text="{tr}Rankings{/tr}"}
