@@ -142,6 +142,9 @@ function iconset_glyphicons()
 			'previous' => array(
 				'id' => 'arrow-left',
 			),
+			'ranking' => array(
+				'id' => 'sort-by-order',
+			),
 			'rss' => array(
 				'id' => 'bullhorn',
 			),

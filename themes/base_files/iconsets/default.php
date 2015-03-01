@@ -330,6 +330,9 @@ function iconset_default()
 			'previous' => array(
 				'id' => 'arrow-left',
 			),
+			'ranking' => array(
+				'id' => 'sort-numeric-asc',
+			),
 			'redo' => array(
 				'id' => 'repeat',
 			),
