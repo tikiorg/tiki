@@ -176,6 +176,9 @@ function iconset_legacy()
 			'attach' => array(
 				'id' => 'attach',
 			),
+			'back' => array(
+				'id' => 'arrow_left',
+			),
 			'backlink' => array(
 				'id' => 'arrow_turn_left',
 			),

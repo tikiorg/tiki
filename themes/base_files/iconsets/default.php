@@ -182,6 +182,9 @@ function iconset_default()
 			'audio' => array(
 				'id' => 'file-audio-o',
 			),
+			'back' => array(
+				'id' => 'arrow-left',
+			),
 			'backlink' => array(
 				'id' => 'reply',
 			),
