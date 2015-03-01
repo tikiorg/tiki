@@ -118,13 +118,13 @@ class Iconset
 
 		foreach ($iconset->icons() as $name => $icon) {
 			if (! isset($this->icons[$name]) || $over) {
-				if ($tag && $this->tag !== $tag) {
+				if (empty($icon['tag']) && $tag && $this->tag !== $tag) {
 					$icon['tag'] = $tag;
 				}
-				if ($prepend && $this->prepend !== $prepend) {
+				if (empty($icon['prepend']) && $prepend && $this->prepend !== $prepend) {
 					$icon['prepend'] = $prepend;
 				}
-				if ($append && $this->append !== $append) {
+				if (empty($icon['append']) && $append && $this->append !== $append) {
 					$icon['append'] = $append;
 				}
 				$this->icons[$name] = $icon;
