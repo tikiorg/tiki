@@ -73,7 +73,13 @@
 						{$tracker.trackerId|escape}
 					</td>
 					<td class="text">
-						<a class="tablename" href="tiki-view_tracker.php?trackerId={$tracker.trackerId}" title="{tr}View{/tr}">{$tracker.name|escape}</a>
+						<a
+							class="tips"
+							title="{$tracker.name|escape}:{tr}View{/tr}"
+							href="tiki-view_tracker.php?trackerId={$tracker.trackerId}"
+						>
+							{$tracker.name|escape}
+						</a>
 						<div class="description help-block">
 							{if $tracker.descriptionIsParsed eq 'y'}
 								{wiki}{$tracker.description}{/wiki}
@@ -84,46 +90,137 @@
 					</td>
 					<td class="date">{$tracker.created|tiki_short_date}</td>
 					<td class="date">{$tracker.lastModif|tiki_short_datetime}</td>
-					<td class="text-center"><a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$tracker.trackerId}"><span class="badge">{$tracker.items|escape}</span></a></td>
+					<td class="text-center">
+						<a
+							class="tips"
+							title="{$tracker.name|escape}:{tr}View{/tr}"
+							href="tiki-view_tracker.php?trackerId={$tracker.trackerId}"
+						>
+							<span class="badge">
+								{$tracker.items|escape}
+							</span>
+						</a>
+					</td>
 					<td class="action">
 						{if $tracker.permissions->export_tracker}
-							<a title="{tr _0=$tracker.name|escape}Export %0{/tr}" data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=tracker action=export trackerId=$tracker.trackerId modal=1}">{icon name=export}</a>
+							<a
+								class="tips"
+								title="{$tracker.name|escape}:{tr}Export{/tr}"
+								data-toggle="modal"
+								data-target="#bootstrap-modal"
+								href="{service controller=tracker action=export trackerId=$tracker.trackerId modal=1}"
+							>
+								{icon name=export}
+							</a>
 						{/if}
 						{if $tracker.permissions->admin_trackers}
-							<a title="{tr _0=$tracker.name|escape}Import in %0{/tr}" data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=tracker action=import_items trackerId=$tracker.trackerId modal=1}">{icon name=import}</a>
-							<a title="{tr _0=$tracker.name|escape}Events{/tr}" data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=tracker_todo action=view trackerId=$tracker.trackerId modal=1}">{icon _id='clock' alt="{tr}Events{/tr}"}</a>
+							<a
+								class="tips"
+								title="{$tracker.name|escape}:{tr}Import{/tr}"
+								data-toggle="modal"
+								data-target="#bootstrap-modal"
+								href="{service controller=tracker action=import_items trackerId=$tracker.trackerId modal=1}"
+							>
+								{icon name=import}
+							</a>
+							<a
+								class="tips"
+								title="{$tracker.name|escape}:{tr}Events{/tr}"
+								data-toggle="modal"
+								data-target="#bootstrap-modal"
+								href="{service controller=tracker_todo action=view trackerId=$tracker.trackerId modal=1}"
+							>
+								{icon name='calendar'}
+							</a>
 						{/if}
-						<a title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$tracker.trackerId}">{icon name='list' alt="{tr}View{/tr}"}</a>
-
+						<a
+							class="tips"
+							title="{$tracker.name|escape}:{tr}View{/tr}"
+							href="tiki-view_tracker.php?trackerId={$tracker.trackerId}"
+						>
+							{icon name='view'}
+						</a>
 						{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-							<a href="tiki-object_watches.php?objectId={$tracker.trackerId}&amp;watch_event=tracker_modified&amp;objectType=tracker&amp;objectName={$tracker.name|escape:"url"}&amp;objectHref={'tiki-view_tracker.php?trackerId='|cat:$tracker.trackerId|escape:"url"}" class="icon">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}"}</a>
+							<a
+								class="tips"
+								title="{$tracker.name|escape}:{tr}Group monitor{/tr}"
+								href="tiki-object_watches.php?objectId={$tracker.trackerId}&amp;watch_event=tracker_modified&amp;objectType=tracker&amp;objectName={$tracker.name|escape:"url"}&amp;objectHref={'tiki-view_tracker.php?trackerId='|cat:$tracker.trackerId|escape:"url"}"
+							>
+								{icon name='watch-group'}
+							</a>
 						{/if}
 						{if $prefs.feature_user_watches eq 'y' and $tracker.permissions->watch_trackers and $user}
 							{if $tracker.watched}
-								<a href="tiki-view_tracker.php?trackerId={$tracker.trackerId}&amp;watch=stop" title="{tr}Stop Monitor{/tr}">{icon _id='no_eye' alt="{tr}Stop Monitor{/tr}"}</a>
+								<a
+									class="tips"
+									title="{$tracker.name|escape}:{tr}Stop monitoring{/tr}"
+									href="tiki-view_tracker.php?trackerId={$tracker.trackerId}&amp;watch=stop"
+								>
+									{icon name='stop-watching'}
+								</a>
 							{else}
-								<a href="tiki-view_tracker.php?trackerId={$tracker.trackerId}&amp;watch=add" title="{tr}Monitor{/tr}">{icon _id='eye' alt="{tr}Monitor{/tr}"}</a>
+								<a
+									class="tips"
+									title="{$tracker.name|escape}:{tr}Monitor{/tr}"
+									href="tiki-view_tracker.php?trackerId={$tracker.trackerId}&amp;watch=add"
+								>
+									{icon name='watch'}
+								</a>
 							{/if}
 						{/if}
-
 						{if $prefs.feed_tracker eq "y"}
-							<a href="tiki-tracker_rss.php?trackerId={$tracker.trackerId}">{icon _id='feed' alt="{tr}Feed{/tr}"}</a>
+							<a
+								class="tips"
+								title="{$tracker.name|escape}:{tr}Feed{/tr}"
+								href="tiki-tracker_rss.php?trackerId={$tracker.trackerId}"
+							>
+								{icon name='rss' alt="{tr}Feed{/tr}"}
+							</a>
 						{/if}
-
 						{if $prefs.feature_search eq 'y'}
-							<a href="tiki-searchindex.php?filter~tracker_id={$tracker.trackerId|escape}" title="{tr}Search{/tr}">{icon name=search}</a>
+							<a
+								class="tips"
+								title="{$tracker.name|escape}:{tr}Search{/tr}"
+								href="tiki-searchindex.php?filter~tracker_id={$tracker.trackerId|escape}"
+							>
+								{icon name=search}
+							</a>
 						{/if}
 
 						{if $tracker.permissions->admin_trackers}
-							<a title="{tr}Fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$tracker.trackerId}">{icon name=trackerfields}</a>
-							<a title="{tr}Edit{/tr}" class="edit" data-toggle="modal" data-target="#bootstrap-modal" href="{service controller=tracker action=replace trackerId=$tracker.trackerId modal=true}">{icon name=settings}</a>
-							{permission_link mode=icon type=tracker permType=trackers id=$tracker.trackerId title=$tracker.name}
+							<a
+								class="tips"
+								title="{$tracker.name|escape}:{tr}Fields{/tr}"
+								href="tiki-admin_tracker_fields.php?trackerId={$tracker.trackerId}"
+							>
+								{icon name=trackerfields}
+							</a>
+							<a
+								class="tips"
+								title="{$tracker.name|escape}:{tr}Edit{/tr}"
+								data-toggle="modal"
+								data-target="#bootstrap-modal"
+								href="{service controller=tracker action=replace trackerId=$tracker.trackerId modal=true}"
+							>
+								{icon name=settings}
+							</a>
+							{permission_link mode=glyph type=tracker permType=trackers id=$tracker.trackerId addclass="tips" label="{$tracker.name|escape}:{tr}Permissions{/tr}"}
 							{if $tracker.items > 0}
-								<a title="{tr}Clear{/tr}" class="link clear confirm-prompt" href="{service controller=tracker action=clear trackerId=$tracker.trackerId}">{icon _id='bin' alt="{tr}Clear{/tr}"}</a>
-							{else}
-								{icon _id='bin_empty' alt="{tr}Clear{/tr}"}
+								<a
+									class="link clear tips confirm-prompt"
+									title="{$tracker.name|escape}:{tr}Clear{/tr}"
+									href="{service controller=tracker action=clear trackerId=$tracker.trackerId}"
+								>
+									{icon name='trash'}
+								</a>
 							{/if}
-							<a title="{tr}Delete{/tr}" class="link remove confirm-prompt" href="{service controller=tracker action=remove trackerId=$tracker.trackerId}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+							<a
+								class="link remove confirm-prompt tips"
+								title="{$tracker.name|escape}:{tr}Delete{/tr}"
+								href="{service controller=tracker action=remove trackerId=$tracker.trackerId}"
+							>
+								{icon name='remove'}
+							</a>
 						{/if}
 					</td>
 				</tr>
