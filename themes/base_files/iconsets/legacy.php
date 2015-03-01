@@ -409,6 +409,9 @@ function iconset_legacy()
 			'three-d' => array(
 				'id' => 'application_side_tree',
 			),
+			'thumbs-up' => array(
+				'id' => 'thumb_up',
+			),
 			'toggle-off' => array(
 				'id' => 'accept',
 			),

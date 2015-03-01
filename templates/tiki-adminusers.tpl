@@ -8,14 +8,14 @@
 		{/if}
 		{if $tiki_p_admin eq 'y'}
 			<button class="btn btn-default">
-				{permission_link mode=text label="{tr}Manage permissions{/tr}"}
+				{permission_link mode=text}
 			</button>
 		{/if}
 		{if isset($userinfo.userId)}
 			{button href="?add=1" class="btn btn-default" _text="{tr}Add a New User{/tr}"}
 		{/if}
 		{if $prefs.feature_invite eq 'y' and $tiki_p_invite eq 'y'}
-			{button href="tiki-list_invite.php" class="btn btn-default" _text="{tr}Invitation List{/tr}"}
+			{button href="tiki-list_invite.php" class="btn btn-default" _icon_name="thumbs-up" _text="{tr}Invitation List{/tr}"}
 		{/if}
 	</div>
 
