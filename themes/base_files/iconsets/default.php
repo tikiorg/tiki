@@ -179,6 +179,9 @@ function iconset_default()
 			'attach' => array(
 				'id' => 'paperclip',
 			),
+			'audio' => array(
+				'id' => 'file-audio-o',
+			),
 			'backlink' => array(
 				'id' => 'reply',
 			),
@@ -196,6 +199,9 @@ function iconset_default()
 			),
 			'clone' => array(
 				'id' => 'clipboard',
+			),
+			'code_file' => array(
+				'id' => 'file',
 			),
 			'comments' => array(
 				'id' => 'comments-o',
@@ -233,6 +239,12 @@ function iconset_default()
 			'export' => array(
 				'id' => 'upload',
 			),
+			'excel' => array(
+				'id' => 'file-excel-o',
+			),
+			'file' => array(
+				'id' => 'file-o',
+			),
 			'forward_step' => array(
 				'id' => 'step-forward',
 			),
@@ -247,6 +259,9 @@ function iconset_default()
 			),
 			'help' => array(
 				'id' => 'question-circle',
+			),
+			'image' => array(
+				'id' => 'file-image-o',
 			),
 			'import' => array(
 				'id' => 'download',
@@ -309,6 +324,9 @@ function iconset_default()
 			'post' => array(
 				'id' => 'pencil',
 			),
+			'powerpoint' => array(
+				'id' => 'file-powerpoint-o',
+			),
 			'previous' => array(
 				'id' => 'arrow-left',
 			),
@@ -338,6 +356,9 @@ function iconset_default()
 			),
 			'success' => array(
 				'id' => 'check',
+			),
+			'textfile' => array(
+				'id' => 'file-text-o',
 			),
 			'theme' => array(
 				'id' => 'image',
@@ -375,6 +396,9 @@ function iconset_default()
 			'up' => array(
 				'id' => 'sort-asc',
 			),
+			'video' => array(
+				'id' => 'file-video-o',
+			),
 			'view' => array(
 				'id' => 'search-plus',
 			),
@@ -389,6 +413,12 @@ function iconset_default()
 			),
 			'wizard' => array(
 				'id' => 'magic',
+			),
+			'word' => array(
+				'id' => 'file-word-o',
+			),
+			'zip' => array(
+				'id' => 'file-zip-o',
 			),
 		),
 		/*
