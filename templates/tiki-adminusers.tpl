@@ -4,17 +4,18 @@
 
 	<div class="t_navbar form-group">
 		{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
-			{button href="tiki-admingroups.php" class="btn btn-default" _text="{tr}Admin Groups{/tr}"}
+			{button href="tiki-admingroups.php" class="btn btn-default" _icon_name="group" _text="{tr}Admin Groups{/tr}"}
 		{/if}
-		{button class="btn btn-default" _text="{tr}Admin Users{/tr}"}
 		{if $tiki_p_admin eq 'y'}
-		{permission_link mode=button label="{tr}Manage permissions{/tr}"}
+			<button class="btn btn-default">
+				{permission_link mode=text}
+			</button>
 		{/if}
 		{if isset($userinfo.userId)}
 			{button href="?add=1" class="btn btn-default" _text="{tr}Add a New User{/tr}"}
 		{/if}
 		{if $prefs.feature_invite eq 'y' and $tiki_p_invite eq 'y'}
-			{button href="tiki-list_invite.php" class="btn btn-default" _text="{tr}Invitation List{/tr}"}
+			{button href="tiki-list_invite.php" class="btn btn-default" _icon_name="thumbs-up" _text="{tr}Invitation List{/tr}"}
 		{/if}
 	</div>
 
