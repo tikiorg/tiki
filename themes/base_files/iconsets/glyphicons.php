@@ -31,6 +31,9 @@ function iconset_glyphicons()
 			'attach' => array(
 				'id' => 'paperclip',
 			),
+			'audio' => array(
+				'id' => 'volume-up',
+			),
 			'backward_step' => array(
 				'id' => 'step-backward',
 			),
@@ -42,6 +45,9 @@ function iconset_glyphicons()
 			),
 			'check' => array(
 				'id' => 'ok-circle',
+			),
+			'code_file' => array(
+				'id' => 'file-code-o',
 			),
 			'columns' => array(
 				'id' => 'th-large',
@@ -73,6 +79,12 @@ function iconset_glyphicons()
 			'error' => array(
 				'id' => 'exclamation-sign',
 			),
+			'excel' => array(
+				'id' => 'file',
+			),
+			'file' => array(
+				'id' => 'file',
+			),
 			'forward_step' => array(
 				'id' => 'step-forward',
 			),
@@ -90,6 +102,9 @@ function iconset_glyphicons()
 			),
 			'history' => array(
 				'id' => 'time',
+			),
+			'image' => array(
+				'id' => 'picture',
 			),
 			'information' => array(
 				'id' => 'info-sign',
@@ -121,6 +136,9 @@ function iconset_glyphicons()
 			'post' => array(
 				'id' => 'pencil',
 			),
+			'powerpoint' => array(
+				'id' => 'blackboard',
+			),
 			'previous' => array(
 				'id' => 'arrow-left',
 			),
@@ -145,18 +163,24 @@ function iconset_glyphicons()
 			'success' => array(
 				'id' => 'ok',
 			),
-			//use a better unlock icon when available
+			'textfile' => array(
+				'id' => 'file',
+			),
 			'three-d' => array(
 				'id' => 'road',
 			),
 			'translate' => array(
 				'id' => 'globe',
 			),
+			//use a better unlock icon when available
 			'unlock' => array(
 				'id' => 'folder-open',
 			),
 			'up' => array(
 				'id' => 'arrow-up',
+			),
+			'video' => array(
+				'id' => 'facetime-video',
 			),
 			'view' => array(
 				'id' => 'zoom-in',
@@ -166,6 +190,12 @@ function iconset_glyphicons()
 			),
 			'watch' => array(
 				'id' => 'eye-open',
+			),
+			'word' => array(
+				'id' => 'file',
+			),
+			'zip' => array(
+				'id' => 'compressed',
 			),
 		),
 		'defaults' => array(

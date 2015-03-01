@@ -23,6 +23,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 function smarty_modifier_iconify($string, $filetype = null, $fileId = null)
 {
 	$smarty = TikiLib::lib('smarty');
+	global $prefs;
 
 	$smarty->loadPlugin('smarty_function_icon');
 	$icon = '';
@@ -36,32 +37,78 @@ function smarty_modifier_iconify($string, $filetype = null, $fileId = null)
 		$icon = smarty_modifier_escape($icon);
 
 		return "<img src=\"$icon\" width=\"16\"/>";
-	} elseif (file_exists("img/icons/mime/$ext.png")) {
-		$icon = $ext;
-	} elseif (file_exists('img/icons/mime/' . substr($ext, 0, 3) . '.png')) {
-		$icon = substr($ext, 0, 3);
 	} else {
 		include_once ('lib/mime/mimetypes.php');
 		global $mimetypes;
-
 		$mimes = array_keys($mimetypes, $filetype);
-		foreach ($mimes as $m) {
-			if (file_exists("img/icons/mime/$m.png")) {
-				$icon = $m;
+		if ($prefs['theme_iconset'] === 'legacy') {
+			if (file_exists("img/icons/mime/$ext.png")) {
+				$icon = $ext;
+			} elseif (file_exists('img/icons/mime/' . substr($ext, 0, 3) . '.png')) {
+				$icon = substr($ext, 0, 3);
+			} else {
+				foreach ($mimes as $m) {
+					if (file_exists("img/icons/mime/$m.png")) {
+						$icon = $m;
+					}
+				}
+				if (empty($icon)) {
+					$icon = 'default';
+				}
 			}
-		}
-		if (empty($icon)) {
-			$icon = 'default';
+			return smarty_function_icon(
+				array(
+					'_id' => 'img/icons/mime/'.$icon.'.png',
+					'alt' => ( $filetype === null ? $icon : $filetype ),
+					'class' => ''
+				),
+				$smarty
+			);
+		//iconsets introduced with Tiki14
+		} else {
+			if (!empty($filetype)) {
+				$type = $filetype;
+			} elseif (!empty($mimetypes[$ext])) {
+				$type = $mimetypes[$ext];
+			} else {
+				$type = 'file';
+			}
+			switch ($type) {
+				case $type === 'application/msword'
+					|| strpos($type, 'application/vnd.openxmlformats-officedocument.wordprocessingml') === 0:
+					$iconname = 'word';
+					break;
+				case $type === 'application/pdf':
+					$iconname = 'pdf';
+					break;
+				case $type === 'application/vnd.ms-excel'
+					|| strpos($type, 'application/vnd.openxmlformats-officedocument.spreadsheetml') === 0:
+					$iconname = 'excel';
+					break;
+				case $type === 'application/vnd.ms-powerpoint'
+					|| strpos($type, 'application/vnd.openxmlformats-officedocument.presentationml') === 0:
+					$iconname = 'powerpoint';
+					break;
+				case strpos($type,'audio/') === 0:
+					$iconname = 'audio';
+					break;
+				case strpos($type,'image/') === 0:
+					$iconname = 'image';
+					break;
+				case strpos($type,'text/') === 0:
+					$iconname = 'textfile';
+					break;
+				case strpos($type,'video/') === 0:
+					$iconname = 'video';
+					break;
+				case strpos($type,'application/') === 0:
+					$iconname = 'code_file';
+					break;
+				default:
+					$iconname = 'file';
+					break;
+			}
+			return smarty_function_icon(['name' => $iconname], $smarty);
 		}
 	}
-
-	return smarty_function_icon(
-		array(
-			'_id' => 'img/icons/mime/'.$icon.'.png',
-			'alt' => ( $filetype === null ? $icon : $filetype ),
-			'width' => $width,
-			'class' => ''
-		),
-		$smarty
-	);
 }
