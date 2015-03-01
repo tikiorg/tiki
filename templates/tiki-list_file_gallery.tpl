@@ -18,64 +18,99 @@
 {/if}
 
 {* admin icons on the right side of the top navigation bar under the title *}
-<div class="t_navbar form-group"{if $prefs.mobile_mode eq 'y'} data-role="controlgroup" data-type="horizontal"{/if}>
+<div class="btn-group"{if $prefs.mobile_mode eq 'y'} data-role="controlgroup" data-type="horizontal"{/if}>
 	{if $galleryId gt 0}
-		{if $prefs.mobile_mode eq 'y'}<div class="navbar" align="right" data-role="controlgroup" data-type="horizontal">{/if} {* mobile *}
-			{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-				<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="tiki-object_watches.php?objectId={$galleryId|escape:"url"}&amp;watch_event=file_gallery_changed&amp;objectType=File+Gallery&amp;objectName={$gal_info.name|escape:"url"}&amp;objectHref={'tiki-list_file_gallery.php?galleryId='|cat:$galleryId|escape:"url"}" class="icon">
-					{icon _id='eye_group' alt="{tr}Group monitor{/tr}" align='right' hspace="1"}
-				</a>
-			{/if}
-			{if $user and $prefs.feature_user_watches eq 'y'}
-				{if !isset($user_watching_file_gallery) or $user_watching_file_gallery eq 'n'}
-					<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' galleryName=$name watch_event='file_gallery_changed' watch_object=$galleryId watch_action='add'}" title="{tr}Monitor this gallery{/tr}">{icon _id=eye align='right' hspace="1" alt="{tr}Monitor this gallery{/tr}"}</a> {* mobile *}
-				{else}
-
-					<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' galleryName=$name watch_event='file_gallery_changed' watch_object=$galleryId watch_action='remove'}" title="{tr}Stop monitoring this gallery{/tr}">{icon _id=no_eye align='right' hspace="1" alt="{tr}Stop monitoring this gallery{/tr}"}</a> {* mobile *}
-				{/if}
-			{/if}
-		{if $prefs.feed_file_gallery eq 'y'}
-			{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}
-				<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="tiki-file_gallery_rss.php?galleryId={$galleryId}&amp;ver=PODCAST">
-					<img src='img/rss_podcast_80_15.png' alt="{tr}RSS feed{/tr}" title="{tr}RSS feed{/tr}" align='right'>
-				</a>
-			{else}
-				<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="tiki-file_gallery_rss.php?galleryId={$galleryId}">
-					{icon _id='feed' alt="{tr}RSS feed{/tr}" title="{tr}RSS feed{/tr}" align='right'}
-				</a>
-			{/if}
-		{/if}
-		{if $view eq 'browse'}
-			{if $show_details eq 'y'}
-				<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' show_details='n'}" title="{tr}Hide file information from list view{/tr}">{icon _id=no_information align='right' alt="{tr}Hide file information from list view{/tr}"}</a> {* mobile *}
-			{else}
-				<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' show_details='y'}" title="{tr}Show file information from list view{/tr}">{icon _id=information align='right' alt="{tr}Show file information from list view{/tr}"}</a> {* mobile *}
-			{/if}
-		{/if}
-		{if $prefs.mobile_mode eq 'y'}</div>{/if} {* mobile *}
-{* main navigation buttons under the page title *}
+		<div class="btn-group pull-right">
+			<a
+					class="btn btn-link"
+					data-toggle="dropdown"
+					{if $prefs.mobile_mode eq 'y'}
+						data-role="button"
+					{else}
+						data-hover="dropdown"
+					{/if}
+					href="#"
+					>
+				{icon name="ellipsis"}
+			</a>
+			<ul class="dropdown-menu dropdown-menu-right">
+				<li class="dropdown-title">
+					{tr}Gallery actions{/tr}
+				</li>
+				<li class="divider"></li>
+				{if $prefs.mobile_mode eq 'y'}<div class="navbar" align="right" data-role="controlgroup" data-type="horizontal">{/if} {* mobile *}
+					{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+						<li>
+							<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="tiki-object_watches.php?objectId={$galleryId|escape:"url"}&amp;watch_event=file_gallery_changed&amp;objectType=File+Gallery&amp;objectName={$gal_info.name|escape:"url"}&amp;objectHref={'tiki-list_file_gallery.php?galleryId='|cat:$galleryId|escape:"url"}" class="icon">
+								{icon name='watch-group'} {tr}Group monitor{/tr}
+							</a>
+						</li>
+					{/if}
+					{if $user and $prefs.feature_user_watches eq 'y'}
+						<li>
+							{if !isset($user_watching_file_gallery) or $user_watching_file_gallery eq 'n'}
+								<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' galleryName=$name watch_event='file_gallery_changed' watch_object=$galleryId watch_action='add'}" title="{tr}Monitor this gallery{/tr}">
+									{icon name='watch'} {tr}Monitor{/tr}
+								</a> {* mobile *}
+							{else}
+								<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' galleryName=$name watch_event='file_gallery_changed' watch_object=$galleryId watch_action='remove'}" title="{tr}Stop monitoring this gallery{/tr}">
+									{icon name='stop-watching'} {tr}Stop monitoring{/tr}
+								</a> {* mobile *}
+							{/if}
+						</li>
+					{/if}
+					{if $prefs.feed_file_gallery eq 'y'}
+						<li>
+							{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}
+								<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="tiki-file_gallery_rss.php?galleryId={$galleryId}&amp;ver=PODCAST">
+									{icon name='rss'} {tr}RSS feed{/tr}
+								</a>
+							{else}
+								<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="tiki-file_gallery_rss.php?galleryId={$galleryId}">
+									{icon name='rss'} {tr}RSS feed{/tr}
+								</a>
+							{/if}
+						</li>
+					{/if}
+					{if $view eq 'browse'}
+						<li>
+							{if $show_details eq 'y'}
+								<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' show_details='n'}" title="{tr}Hide file information from list view{/tr}">
+									{icon name='ban' align='right' alt="{tr}Hide file information from list view{/tr}"} {tr}Hide list view information{/tr}
+								</a> {* mobile *}
+							{else}
+								<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' show_details='y'}" title="{tr}Show file information from list view{/tr}">
+									{icon name='view' align='right' alt="{tr}Show file information from list view{/tr}"} {tr}Show list view information{/tr}
+								</a> {* mobile *}
+							{/if}
+						</li>
+					{/if}
+					{if $prefs.mobile_mode eq 'y'}</div>{/if} {* mobile *}
+			</ul>
+		</div>
+	{* main navigation buttons under the page title *}
 		{if $treeRootId eq $prefs.fgal_root_id && ( $tiki_p_list_file_galleries eq 'y'
 			or (!isset($tiki_p_list_file_galleries) and $tiki_p_view_file_gallery eq 'y') )}
-			{button _text="{tr}List Galleries{/tr}" href="?"}
+			{button _icon_name="list" _text="{tr}List{/tr}" href="?"}
 		{/if}
 		{if $tiki_p_create_file_galleries eq 'y' and $edit_mode ne 'y'}
-			{button _keepall='y' _text="{tr}Create a gallery{/tr}" edit_mode=1 parentId=$galleryId cookietab=1}
+			{button _keepall='y' _icon_name="create" _text="{tr}Create{/tr}" edit_mode=1 parentId=$galleryId cookietab=1}
 		{/if}
 		{if $tiki_p_create_file_galleries eq 'y' and $dup_mode ne 'y' and $gal_info.type neq 'user'}
-			{button _text="{tr}Duplicate Gallery{/tr}" dup_mode=1 galleryId=$galleryId}
+			{button  _icon_name="copy" _text="{tr}Duplicate{/tr}" dup_mode=1 galleryId=$galleryId}
 		{/if}
 		{if $tiki_p_admin_file_galleries eq 'y' or ($user eq $gal_info.user and $gal_info.type eq 'user' and $tiki_p_userfiles)}
 			{if $edit_mode eq 'y' or $dup_mode eq 'y'}
-				{button _keepall='y' _text="{tr}Browse Gallery{/tr}" galleryId=$galleryId}
+				{button _keepall='y'  _icon_name="view" _text="{tr}Browse{/tr}" galleryId=$galleryId}
 			{else}
-				{button _keepall='y' _text="{tr}Edit Gallery{/tr}" edit_mode="1" galleryId=$galleryId}
+				{button _keepall='y'  _icon_name="edit" _text="{tr}Edit{/tr}" edit_mode="1" galleryId=$galleryId}
 			{/if}
 		{/if}
 		{if $edit_mode neq 'y' and $dup_mode neq 'y'}
 			{if $prefs.javascript_enabled eq 'y'}
 				<div style="float:right;margin-top:0;width: 120px;"><select id="viewSwitcher" class="form-control">
 					<option value="list"{if $view eq 'list'} selected="selected"{/if}>
-						{tr}List Gallery{/tr}
+						{tr}List View{/tr}
 					</option>
 					<option value="browse"{if $view eq 'browse'} selected="selected"{/if}>
 						{tr}Browse Images{/tr}
@@ -110,47 +145,49 @@ $("#viewSwitcher").change(function() {
 				{/jq}
 			{else}
 				{if $view neq 'list'}
-					{button _keepall='y' _text="{tr}List Gallery{/tr}" view="list" galleryId=$galleryId}
+					{button _icon_name="list" _keepall='y' _text="{tr}List View{/tr}" view="list" galleryId=$galleryId}
 				{/if}
 				{if $view neq 'browse'}
-					{button _text="{tr}Browse Images{/tr}" view="browse" galleryId=$galleryId}
+					{button _icon_name="view" _text="{tr}Browse Images{/tr}" view="browse" galleryId=$galleryId}
 				{/if}
 				{if $view neq 'page' and $filescount gt 0}
-					{button _text="{tr}Page View{/tr}" view="page" galleryId=$galleryId maxRecords=1}
+					{button _icon_name="file" _text="{tr}Page View{/tr}" view="page" galleryId=$galleryId maxRecords=1}
 				{/if}
 				{if $view neq 'admin' and $tiki_p_admin_file_galleries eq 'y'}
-					{button _keepall='y' _text="{tr}Admin View{/tr}" view="admin" galleryId=$galleryId}
+					{button _icon_name="wrench" _keepall='y' _text="{tr}Admin View{/tr}" view="admin" galleryId=$galleryId}
 				{/if}
 			{/if}
 		{/if}
 		{if $tiki_p_assign_perm_file_gallery eq 'y'}
-			{permission_link mode=button type="file gallery" permType="file galleries" id=$galleryId title=$name}
+			<button class="btn btn-default">
+				{permission_link mode=text type="file gallery" permType="file galleries" id=$galleryId}
+			</button>
 		{/if}
 		{if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user or $gal_info.public eq 'y'}
 			{if $tiki_p_upload_files eq 'y'}
-				{button _keepall='y' _text="{tr}Upload File{/tr}" href="tiki-upload_file.php" galleryId=$galleryId}
+				{button _keepall='y' _icon_name="export" _text="{tr}Upload{/tr}" href="tiki-upload_file.php" galleryId=$galleryId}
 			{/if}
 			{if $tiki_p_upload_files eq 'y' and $prefs.feature_draw eq 'y'}
-				{button _keepall='y' _text="{tr}Create Drawing{/tr}" href="tiki-edit_draw.php" galleryId=$galleryId}
+				{button _keepall='y' _icon_name="post" _text="{tr}Create Drawing{/tr}" href="tiki-edit_draw.php" galleryId=$galleryId}
 			{/if}
 			{if $prefs.feature_file_galleries_batch eq "y" and $tiki_p_batch_upload_file_dir eq 'y'}
-				{button _keepall='y' _text="{tr}Directory Batch{/tr}" href="tiki-batch_upload_files.php" galleryId=$galleryId}
+				{button _keepall='y' _icon_name="file-archive" _text="{tr}Batch{/tr}" href="tiki-batch_upload_files.php" galleryId=$galleryId}
 			{/if}
 		{/if}
 	{else}
 		{if $treeRootId eq $prefs.fgal_root_id && ( $edit_mode eq 'y' or $dup_mode eq 'y')}
-			{button _text="{tr}List Galleries{/tr}" href='?'}
+			{button _icon_name="list" _text="{tr}List{/tr}" href='?'}
 		{/if}
 		{if $tiki_p_create_file_galleries eq 'y' and $edit_mode ne 'y'}
-			{button _keepall='y' _text="{tr}Create a gallery{/tr}" edit_mode="1" parentId="-1" galleryId="0"}
+			{button _icon_name="create" _keepall='y' _text="{tr}Create{/tr}" edit_mode="1" parentId="-1" galleryId="0"}
 		{/if}
 		{if $tiki_p_upload_files eq 'y'}
-			{button _text="{tr}Upload File{/tr}" href="tiki-upload_file.php"}
+			{button _icon_name="export" _text="{tr}Upload{/tr}" href="tiki-upload_file.php"}
 		{/if}
 	{/if}
 
 	{if $edit_mode neq 'y' and $prefs.fgal_show_slideshow eq 'y' and $gal_info.show_slideshow eq 'y'}
-		{button _text="{tr}SlideShow{/tr}" href="#" _onclick="javascript:window.open('tiki-list_file_gallery.php?galleryId=$galleryId&amp;slideshow','','menubar=no,width=600,height=500,resizable=yes');return false;"}
+		{button _icon_name="chart" _text="{tr}SlideShow{/tr}" href="#" _onclick="javascript:window.open('tiki-list_file_gallery.php?galleryId=$galleryId&amp;slideshow','','menubar=no,width=600,height=500,resizable=yes');return false;"}
 	{/if}
 </div>
 
@@ -167,7 +204,7 @@ $("#viewSwitcher").change(function() {
 			<input type="hidden" name="galleryId" value="{$galleryId|escape}">
 			<input type="hidden" name="fileId" value="{$fileId|escape}">
 			{tr}Your comment{/tr} ({tr}optional{/tr}): <input type="text" name="comment" size="40">
-			{icon _id='accept' _tag='input_image'}
+			{icon name='ok' _tag='input_image'}
 		</form>
 	{/remarksbox}
 {/if}
