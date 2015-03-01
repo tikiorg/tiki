@@ -25,11 +25,18 @@
 {/if}
 
 <div class="breadcrumb">
-	<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a>
+	<a class="link" href="tiki-forums.php">
+		{tr}Forums{/tr}
+	</a>
 	{$prefs.site_crumb_seper}
-	<a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name|addongroupname|escape}</a>{if isset($thread_info.topic.threadId) and $thread_info.topic.threadId}
-	{$prefs.site_crumb_seper}
-	<a class="link" href="tiki-view_forum_thread.php?comments_parentId={$thread_info.topic.threadId}{if $smarty.request.topics_offset}&amp;topics_offset={$smarty.request.topics_offset}{/if}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}">{$thread_info.topic.title}</a>{/if}
+	<a class="link" href="tiki-view_forum.php?forumId={$forumId}">
+		{$forum_info.name|addongroupname|escape}
+	</a>{if isset($thread_info.topic.threadId) and $thread_info.topic.threadId}
+		{$prefs.site_crumb_seper}
+		<a class="link" href="tiki-view_forum_thread.php?comments_parentId={$thread_info.topic.threadId}{if $smarty.request.topics_offset}&amp;topics_offset={$smarty.request.topics_offset}{/if}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}">
+			{$thread_info.topic.title}
+		</a>
+	{/if}
 	{$prefs.site_crumb_seper}
 	{$thread_info.title|escape}
 </div>
@@ -46,27 +53,104 @@
 		</span>
 	{/if}
 	<span style="margin-left:10px;">
-		{if $prefs.mobile_mode eq 'y'}<div class="navbar" data-role="controlgroup" data-type="horizontal">{/if} {* mobile *}
-			{if $pdf_export eq 'y'}<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{$smarty.server.PHP_SELF}?{query display="pdf"}" class="tips" title=":{tr}PDF{/tr}">{icon name="pdf"}</a>{/if} {* mobile *}
-			<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{$smarty.server.PHP_SELF}?{query display="print"}" class="tips" title=":{tr}Print this page only{/tr}">{icon name="print"}</a> {* mobile *}
-			<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{$smarty.server.PHP_SELF}?{query display="print_all"}" class="tips" title=":{tr}Print all pages{/tr}">{icon name="print"}</a> {* mobile *}
-			{if $prefs.feature_forum_topics_archiving eq 'y' && $tiki_p_admin_forum eq 'y'}
-				{if $thread_info.archived eq 'y'}
-					<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{$smarty.server.PHP_SELF}?{query archive="n"}" class="tips" title=":{tr}Unarchive{/tr}">{icon name="file-archive-open"}</a> {* mobile *}
+		<div class="btn-group">
+			<a
+				class="btn btn-link"
+				data-toggle="dropdown"
+				{if $prefs.mobile_mode eq 'y'}
+					data-role="button"
 				{else}
-					<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{$smarty.server.PHP_SELF}?{query archive="y"}" class="tips" title=":{tr}Archive{/tr}">{icon name="file-archive"}</a> {* mobile *}
+					data-hover="dropdown"
 				{/if}
-			{/if}
-
-			{if isset($tiki_p_forum_lock) and $tiki_p_forum_lock eq 'y'}
-				{if $thread_info.locked eq 'y'}
-					<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' lock='n'}" class="tips" title=":{tr}Unlock{/tr}">{icon name="unlock"}</a> {* mobile *}
-				{else}
-					<a {if $prefs.mobile_mode eq 'y'} data-role="button"{/if} href="{query _type='relative' lock='y'}" class="tips" title=":{tr}Lock{/tr}">{icon name="lock"}</a> {* mobile *}
+				href="#"
+			>
+				{icon name="ellipsis"}
+			</a>
+			<ul class="dropdown-menu dropdown-menu-right">
+				<li class="dropdown-title">
+					{tr}Thread actions{/tr}
+				</li>
+				<li class="divider"></li>
+				<li>
+					{if $pdf_export eq 'y'}
+						<a
+							{if $prefs.mobile_mode eq 'y'}
+								data-role="button"
+							{/if}
+							href="{$smarty.server.PHP_SELF}?{query display="pdf"}"
+						>
+							{icon name="pdf"} {tr}PDF{/tr}
+						</a>
+					{/if} {* mobile *}
+				</li>
+				<li>
+					<a
+						{if $prefs.mobile_mode eq 'y'}
+							data-role="button"
+						{/if}
+						href="{$smarty.server.PHP_SELF}?{query display="print"}"
+					>
+						{icon name="print"} {tr}Print this page only{/tr}
+					</a> {* mobile *}
+				</li>
+				<li>
+					<a
+						{if $prefs.mobile_mode eq 'y'}
+							data-role="button"
+						{/if}
+							href="{$smarty.server.PHP_SELF}?{query display="print_all"}"
+					>
+						{icon name="print"} {tr}Print all pages{/tr}
+					</a> {* mobile *}
+				</li>
+				{if $prefs.feature_forum_topics_archiving eq 'y' && $tiki_p_admin_forum eq 'y'}
+					<li>
+						{if $thread_info.archived eq 'y'}
+							<a
+								{if $prefs.mobile_mode eq 'y'}
+									data-role="button"
+								{/if}
+								href="{$smarty.server.PHP_SELF}?{query archive="n"}"
+							>
+								{icon name="file-archive-open"} {tr}Unarchive{/tr}
+							</a> {* mobile *}
+						{else}
+							<a
+								{if $prefs.mobile_mode eq 'y'}
+									data-role="button"
+								{/if}
+								href="{$smarty.server.PHP_SELF}?{query archive="y"}"
+							>
+								{icon name="file-archive"} {tr}Archive{/tr}
+							</a> {* mobile *}
+						{/if}
+					</li>
 				{/if}
-			{/if}
-		{if $prefs.mobile_mode eq 'y'}</div>{/if} {* mobile *}
-
+				{if isset($tiki_p_forum_lock) and $tiki_p_forum_lock eq 'y'}
+					<li>
+						{if $thread_info.locked eq 'y'}
+							<a
+								{if $prefs.mobile_mode eq 'y'}
+									data-role="button"
+								{/if}
+								href="{query _type='relative' lock='n'}"
+							>
+								{icon name="unlock"} {tr}Unlock{/tr}
+							</a> {* mobile *}
+						{else}
+							<a
+								{if $prefs.mobile_mode eq 'y'}
+									data-role="button"
+								{/if}
+								href="{query _type='relative' lock='y'}"
+							>
+								{icon name="lock"} {tr}Lock{/tr}
+							</a> {* mobile *}
+						{/if}
+					</li>
+				{/if}
+			</ul>
+		</div>
 	</span>
 </div>
 
@@ -78,9 +162,12 @@
 {/if}
 
 <article class="top_post">
-	{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and $prefs.freetags_show_middle eq 'y' and !$thread_info.topic.threadId}
+	{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and $prefs.freetags_show_middle eq 'y'
+		and !$thread_info.topic.threadId}
 		{include file='freetag_list.tpl'}
-		<div style="text-align:right">{wikiplugin _name="addfreetag" object="forum post:$comments_parentId"}{/wikiplugin}</div>
+		<div style="text-align:right">
+			{wikiplugin _name="addfreetag" object="forum post:$comments_parentId"}{/wikiplugin}
+		</div>
 	{/if}
 
 	{include file='comment.tpl' first='y' comment=$thread_info thread_style='commentStyle_plain'}
@@ -104,10 +191,18 @@
 		<label class="col-sm-2 control-label" for="userfile1">{tr}Show posts:{/tr}</label>
 		<div class="col-sm-3">
 			<select class="form-control" name="time_control" onchange="javascript:document.getElementById('time_control').submit();">
-				<option value="" {if empty($smarty.request.time_control)}selected="selected"{/if}>{tr}All posts{/tr}</option>
-				<option value="3600" {if isset($smarty.request.time_control) and $smarty.request.time_control eq 3600}selected="selected"{/if}>{tr}Last hour{/tr}</option>
-				<option value="86400" {if isset($smarty.request.time_control) and $smarty.request.time_control eq 86400}selected="selected"{/if}>{tr}Last 24 hours{/tr}</option>
-				<option value="172800" {if isset($smarty.request.time_control) and $smarty.request.time_control eq 172800}selected="selected"{/if}>{tr}Last 48 hours{/tr}</option>
+				<option value="" {if empty($smarty.request.time_control)}selected="selected"{/if}>
+					{tr}All posts{/tr}
+				</option>
+				<option value="3600" {if isset($smarty.request.time_control) and $smarty.request.time_control eq 3600}selected="selected"{/if}>
+					{tr}Last hour{/tr}
+				</option>
+				<option value="86400" {if isset($smarty.request.time_control) and $smarty.request.time_control eq 86400}selected="selected"{/if}>
+					{tr}Last 24 hours{/tr}
+				</option>
+				<option value="172800" {if isset($smarty.request.time_control) and $smarty.request.time_control eq 172800}selected="selected"{/if}>
+					{tr}Last 48 hours{/tr}
+				</option>
 			</select>
 		</div>
 	</form>
@@ -120,7 +215,9 @@
 			<div class="col-sm-6">
 				<select id="forumId" class="form-control" name="forumId" onchange="javascript:document.getElementById('quick').submit();">
 					{section name=ix loop=$all_forums}
-						<option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $forumId}selected="selected"{/if}>{$all_forums[ix].name}</option>
+						<option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $forumId}selected="selected"{/if}>
+							{$all_forums[ix].name}
+						</option>
 					{/section}
 				</select>
 			</div>
