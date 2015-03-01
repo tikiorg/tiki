@@ -34,6 +34,9 @@ function iconset_glyphicons()
 			'audio' => array(
 				'id' => 'volume-up',
 			),
+			'back' => array(
+				'id' => 'arrow-left',
+			),
 			'backward_step' => array(
 				'id' => 'step-backward',
 			),
