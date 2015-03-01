@@ -355,8 +355,8 @@ function iconset_legacy()
 			'print' => array(
 				'id' => 'printer',
 			),
-			'redo' => array(
-				'id' => 'arrow_redo',
+			'ranking' => array(
+				'id' => 'star',
 			),
 			'refresh' => array(
 				'id' => 'arrow_refresh',

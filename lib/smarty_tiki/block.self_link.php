@@ -135,6 +135,10 @@ function smarty_block_self_link($params, $content, $smarty, &$repeat = false)
 				if ( isset($params['_height']) ) $icon_params['height'] = $params['_height'];
 
 				$content = smarty_function_icon($icon_params, $smarty);
+
+				if (isset($params['_text'])) {
+					$content .= $params['_text'];
+				}
 			}
 
 			$link = ( !empty($params['_class']) ? 'class="'.$params['_class'].'" ' : '' )
