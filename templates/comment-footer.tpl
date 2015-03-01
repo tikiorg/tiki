@@ -33,9 +33,15 @@
 	{/if}
 
 	{if isset($first) and $first eq 'y'}
-		<span class="post_reads"><b>{tr}Reads{/tr}</b>: {$comment.hits}</span>
+		<span class="post_reads">
+			<b>{tr}Reads{/tr}</b>: {$comment.hits}
+		</span>
 	{else}
-		<span class="back_to_top"><a href="#tiki-top" title="{tr}top of page{/tr}">{icon _id='resultset_up' alt="{tr}top of page{/tr}"}</a></span>
+		<span class="back_to_top">
+			<a href="#thread-breadcrumb" class="tips" title=":{tr}top of page{/tr}">
+				{icon name='arrow-up'}
+			</a>
+		</span>
 	{/if}
 
 	</div>

@@ -170,6 +170,9 @@ function iconset_legacy()
 			'administer' => array(
 				'id' => 'wrench',
 			),
+			'arrow-up' => array(
+				'id' => 'arrow-up',
+			),
 			'attach' => array(
 				'id' => 'attach',
 			),

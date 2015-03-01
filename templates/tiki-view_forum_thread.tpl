@@ -24,7 +24,7 @@
 	{remarksbox type=warning title="{tr}The post has been reported and will be reviewed by a moderator.{/tr}"}{/remarksbox}
 {/if}
 
-<div class="breadcrumb">
+<div id="thread-breadcrumb" class="breadcrumb">
 	<a class="link" href="tiki-forums.php">
 		{tr}Forums{/tr}
 	</a>
