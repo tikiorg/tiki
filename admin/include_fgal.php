@@ -136,6 +136,11 @@ if (isset($_REQUEST["filegalhandlers"])) {
 if (isset($_REQUEST["filegalredosearch"])) {
 	$filegallib->reindex_all_files_for_search_text();
 }
+
+if (isset($_REQUEST["filegalfixvndmsfiles"])) {
+	$filegallib->fix_vnd_ms_files();
+}
+
 if (!empty($prefs['fgal_sort_mode']) && preg_match('/(.*)_(asc|desc)/', $prefs['fgal_sort_mode'], $matches)) {
 	$smarty->assign('fgal_sortorder', $matches[1]);
 	$smarty->assign('fgal_sortdirection', $matches[2]);
@@ -158,13 +163,18 @@ ksort($handlers);
 $smarty->assign("fgal_handlers", $handlers);
 $usedTypes = $filegallib->getFiletype();
 $missingHandlers = array();
+$vnd_ms_files_exist = false;
 
 foreach ($usedTypes as $type) {
 	if (! $filegallib->get_parse_app($type, true)) {
 		$missingHandlers[] = $type;
+		if (strpos($type, '/vnd.ms-') !== false) {
+			$vnd_ms_files_exist = true;
+		}
 	}
 }
 
 $smarty->assign_by_ref('missingHandlers', $missingHandlers);
+$smarty->assign('vnd_ms_files_exist', $vnd_ms_files_exist);
 include_once ('fgal_listing_conf.php');
 ask_ticket('admin-inc-fgal');

@@ -148,6 +148,9 @@ function wikiplugin_colorbox($data, $params)
 		if (!is_array($filter['fileId'])) {
 			$filter['fileId'] = explode(':', $filter['fileId']);
 		}
+        if (!array_filter($filter["fileId"])) {
+            $filter='';
+        }
 
 		$filegallib = TikiLib::lib('filegal');
 		$files = $filegallib->get_files(0, -1, $params['sort_mode'], '', $params['fgalId'], false, false, false, true, false, false, false, false, '', true, false, false, $filter);

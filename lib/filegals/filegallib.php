@@ -1482,6 +1482,14 @@ class FileGalLib extends TikiLib
 		return $content;
 	}
 
+	function fix_vnd_ms_files() {
+		$files = $this->table('tiki_files');
+		$files->update(
+			array('filetype' => $files->expr("REPLACE(`filetype`, 'application/vnd.ms-', 'application/ms')")),
+			array('filetype' => $files->like('application/vnd.ms-%'))
+		);
+	}
+
 	private function getGalleryDefinition($galleryId)
 	{
 		static $loaded = [];
