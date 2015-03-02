@@ -1493,6 +1493,11 @@ $fcts = array(
 			'safe' =>  tra('Proc_open is similar to exec.').' '.tra('Tiki does not need it, you are wise to have it disabled. However, Composer may need it (If you are running Tiki from SVN)')
 		),
 		array (
+			'function' => 'popen',
+			'risky' => tra('popen is similar to exec.').' '.tra('Tiki needs it for file search indexing in file galleries. If you need this and trust the other PHP software on your server, you should enable it.'),
+			'safe' =>  tra('popen is similar to exec.').' '.tra('Tiki needs it for file search indexing in file galleries. If you need this and trust the other PHP software on your server, you should enable it.')
+		),
+		array (
 			'function' => 'curl_exec',
 			'risky' => tra('Curl_exec can potentially be abused to write malicious code.').' '.tra('Tiki needs it to run features like Kaltura, CAS login, CClite and the myspace and sf wiki-plugins. If you need these and trust the other PHP software on your server, you should enable it.'),
 			'safe' => tra('Curl_exec can potentially be abused to write malicious code.').' '.tra('Tiki needs it to run features like Kaltura, CAS login, CClite and the myspace and sf wiki-plugins. If you need these and trust the other PHP software on your server, you should enable it.')
