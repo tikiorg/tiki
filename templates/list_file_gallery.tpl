@@ -14,20 +14,36 @@
 			&& $fgal_options.show_explorer.value eq 'y' && $tiki_p_view_fgal_explorer eq 'y'}
 			{if $prefs.javascript_enabled eq 'y'}
 				<div id="fgalexplorer_close" style="float:left; vertical-align:middle; display:{if ! isset($smarty.session.tiki_cookie_jar.show_fgalexplorer) or $smarty.session.tiki_cookie_jar.show_fgalexplorer eq 'y'}none{else}inline{/if};">
-					<a href="#" onclick="flip('fgalexplorer','');hide('fgalexplorer_close',false);show('fgalexplorer_open',false);return false;">{icon _id='application_side_tree' alt="{tr}Show Tree{/tr}"}</a>
+					<a
+						href="#"
+						class="tips"
+						title=":{tr}Show Tree{/tr}"
+						onclick="flip('fgalexplorer','');hide('fgalexplorer_close',false);show('fgalexplorer_open',false);return false;"
+					>
+						{icon name='file-archive'}
+					</a>
 				</div>
 
 				<div id="fgalexplorer_open" style="float:left; vertical-align:middle; display:{if isset($smarty.session.tiki_cookie_jar.show_fgalexplorer) and $smarty.session.tiki_cookie_jar.show_fgalexplorer neq 'y'}none{else}inline{/if};">
-					<a href="#" onclick="flip('fgalexplorer','');hide('fgalexplorer_open',false);show('fgalexplorer_close',false);return false;">{icon _id='application_side_contract' alt="{tr}Hide Tree{/tr}"}</a>
+					<a
+						href="#"
+						class="tips"
+						title=":{tr}Hide Tree{/tr}"
+						onclick="flip('fgalexplorer','');hide('fgalexplorer_open',false);show('fgalexplorer_close',false);return false;"
+					>
+						{icon name='file-archive-open'}
+					</a>
 				</div>
 
 			{else}
 
 				<div style="float:left; vertical-align:middle">
 					{if isset($smarty.request.show_fgalexplorer) and $smarty.request.show_fgalexplorer eq 'y'}
-						{self_link _icon='application_side_contract' show_fgalexplorer='n'}{tr}Hide Tree{/tr}{/self_link}
+						{self_link _icon_name='file-archive-open' _class="tips" _title=":{tr}Hide Tree{/tr}" show_fgalexplorer='n'}
+						{/self_link}
 					{else}
-						{self_link _icon='application_side_tree' show_fgalexplorer='y'}{tr}Show Tree{/tr}{/self_link}
+						{self_link _icon_name='file-archive' show_fgalexplorer='y' _class="tips" _title=":{tr}Show Tree{/tr}"}
+						{/self_link}
 					{/if}
 				</div>
 			{/if}
