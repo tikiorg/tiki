@@ -86,9 +86,9 @@
 						or $gal_info.show_name neq 'n')}
 						{assign var=nbCols value=$nbCols+1}
 						<th{$td_args}>
-							{self_link _sort_arg=$sort_arg _sort_field=$propname _title=$link_title}
+							{self_link _sort_arg=$sort_arg _sort_field=$propname _title=":$link_title" _class='tips'}
 								{if !empty($propicon)}
-									{icon _id=$propicon alt=$link_title}
+									{icon name=$propicon alt=$link_title}
 								{else}
 									{$propval}
 								{/if}
@@ -133,7 +133,7 @@
 					{if !empty($other_columns)}
 						<a href='#' {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.over_other_columns|escape:"javascript"|escape:"html"} title="{tr}Other Sorts{/tr}">
 					{/if}
-					{icon _id='timeline_marker' alt="{tr}Other Sorts{/tr}" title=''}
+					{icon name='ranking' alt="{tr}Other Sorts{/tr}" title=''}
 					{if !empty($other_columns)}
 						</a>
 					{/if}
@@ -260,7 +260,9 @@
 				{if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' )
 					and (!isset($gal_info.show_action) or $gal_info.show_action neq 'n') and $prefs.javascript_enabled eq 'y'}
 					<td style="white-space: nowrap">
-						<a class="fgalname tips" title="{tr}Actions{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" center=true text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">{icon _id='wrench' alt="{tr}Actions{/tr}"}</a>
+						<a class="fgalname tips" title="{tr}Actions{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" center=true text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">
+							{icon name='wrench' alt="{tr}Actions{/tr}"}
+						</a>
 					</td>
 				{/if}
 
@@ -352,7 +354,7 @@
 							{assign var=propval value=$propval|kbsize:true}
 						{elseif $propname eq 'type'}
 							{if $files[changes].isgal eq 1}
-								{capture assign=propval}{icon _id='folder' class=''}{/capture}
+								{capture assign=propval}{icon name='file-archive-open' class=''}{/capture}
 							{else}
 								{assign var=propval value=$files[changes].filename|iconify:$files[changes].type}
 							{/if}
@@ -363,7 +365,7 @@
 						{elseif $propname eq 'lockedby' and $propval neq ''}
 							{if $gal_info.show_lockedby eq 'i' or $gal_info.show_lockedby eq 'a'}
 								{assign var=propval value=$propval|username}
-								{capture assign=propval}{icon _id='lock_gray' class='' alt="{tr}Locked by:{/tr} "|cat:$propval}{/capture}
+								{capture assign=propval}{icon name='lock' class='tips' title=":{tr}Locked by-{/tr} "|cat:$propval}{/capture}
 							{else}
 								{assign var=propval value=$propval|userlink}
 							{/if}
@@ -389,7 +391,7 @@
 								{capture assign=share_capture}
 									{strip}
 										<a class='fgalname tips' title="{tr}Share{/tr}" href='#' {popup fullhtml=1 text=$over_share|escape:'javascript'|escape:'html' left=true} style='cursor:help'>
-											{icon _id='group_link' alt=''}
+											{icon name='group' alt=''}
 										</a> ({$share_nb}) {$share_string}
 									{/strip}
 								{/capture}
@@ -444,9 +446,11 @@
 					<td>
 						{if $show_infos eq 'y'}
 							{if $over_infos eq ''}
-								{icon _id='information_gray' class='' alt="{tr}No information{/tr}"}
+								{icon name='minus' class='tips' title=":{tr}No information{/tr}"}
 							{else}
-								<a class="fgalname tips left" href="#" title="{tr}Information{/tr}" {popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html" left=true} style="cursor:help">{icon _id='information' class='' title=''}</a>
+								<a class="fgalname tips left" href="#" title="{tr}Information{/tr}" {popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html" left=true} style="cursor:help">
+									{icon name='information' class='' title=''}
+								</a>
 							{/if}
 						{/if}
 					</td>
