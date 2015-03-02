@@ -6,9 +6,15 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: tiki-tracker_http_request.php 48614 2013-11-21 05:48:54Z nkoth $
+// $Id: tiki-tracker_http_request_itemslist.php 48614 2013-11-21 05:48:54Z nkoth $
 
 // TODO - refactor to ajax-services then KILME
+
+
+/**
+ * Handler for (XHR) requests from the trackerfield type itemslist.
+ * @see lib/core/Tracker/Field/ItemsList.php for furher details. 
+ */
 
 require_once ('tiki-setup.php');
 include_once ('lib/trackers/trackerlib.php');

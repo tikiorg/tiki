@@ -263,20 +263,22 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 	}
 
 	/**
-	 * return the html for the output of a field without link, preprend...
-	 * @param array $context - key 'list_mode' defines weher to output for a list or a simple value
+	 * return the html for the output of a field without link, prepend...
+	 * @param array $context - key 'list_mode' defines wether to output for a list or a simple value
 	 * @return string $html
 	 */
 	protected function renderInnerOutput($context = array())
 	{
+		$value = $this->getConfiguration('value');
+		$pvalue = $this->getConfiguration('pvalue', $value);
+
 		if (isset($context['list_mode']) && $context['list_mode'] === 'csv') {
-			$val = $this->getConfiguration('value');
 			$default = array('CR'=>'%%%', 'delimitorL'=>'"', 'delimitorR'=>'"');
 			$context = array_merge($default, $context);
-			$val = str_replace(array("\r\n", "\n", '<br />', $context['delimitorL'], $context['delimitorR']), array($context['CR'], $context['CR'], $context['CR'], $context['delimitorL'].$context['delimitorL'], $context['delimitorR'].$context['delimitorR']), $val);
-			return $val;
+			$value = str_replace(array("\r\n", "\n", '<br />', $context['delimitorL'], $context['delimitorR']), array($context['CR'], $context['CR'], $context['CR'], $context['delimitorL'].$context['delimitorL'], $context['delimitorR'].$context['delimitorR']), $value);
+			return $value;
 		} else {
-			return $this->getConfiguration('pvalue', $this->getConfiguration('value'));
+			return $pvalue;
 		}
 	}
 
@@ -302,8 +304,11 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 	}
 
 	/**
-	 * Return the value for this item field
-	 *
+	 * Return the value for this item field. Depending on fieldtype that could be the itemId of a linked field.
+	 * Value is looked for in:
+	 * $this->itemData[fieldNumber]
+	 * $this->definition['value']
+	 * $this->itemData['fields'][permName]
 	 * @param mixed $default the field value used if none is set
 	 * @return mixed field value
 	 */
@@ -346,14 +351,15 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 	}
 
 	/**
-	 * Returns an option from the options array based on the numeric position.
+	 * Return option from the options array.
 	 * For the list of options for a particular field check its getTypes() method.
-	 *
-	 * @param int $number
-	 * @param bool $default
+	 * Note: This function should be public, as long as certain low-level trackerlib functions need to be accessed directly.
+	 * Otherwise one would be forced to get the options from fields like this: $myField['options_array'][0] ...  
+	 * @param int $number | string $key.  depending on type: based on the numeric array position, or by name.
+	 * @param mixed $default - defaultValue to return if nothing found
 	 * @return mixed
 	 */
-	protected function getOption($key, $default = false)
+	public function getOption($key, $default = false)
 	{
 		if (is_numeric($key)) {
 			return $this->options->getParamFromIndex($key, $default);
