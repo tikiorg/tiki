@@ -230,6 +230,16 @@
 								<br>
 							{/foreach}
 						{/remarksbox}
+						{if $vnd_ms_files_exist}
+							<div class="adminoptionbox">
+								{remarksbox type=info title="{tr}Mime Types{/tr}"}
+									<p>
+										{tr}Previous versions of Tiki may have assigned alternative mime-types to Microsoft Office files, such as "application/vnd.ms-word" and these need to be changed to be "application/msword" for the default file indexing to function properly.{/tr}
+									</p>
+									<input type="submit" class="btn btn-default btn-sm" name="filegalfixvndmsfiles" value="{tr}Fix vnd.ms-* mime type files{/tr}"/>
+								{/remarksbox}
+							</div>
+						{/if}
 					{/if}
 
 					<div class="adminoptionbox">
