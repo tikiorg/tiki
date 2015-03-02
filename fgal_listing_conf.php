@@ -31,7 +31,7 @@ $fgal_listing_conf = array(
 	'files' => array('name' => tra('Files')),
 	'hits' => array('name' => tra('Hits')),
 	'lastDownload' => array('name' => tra('Last download')),
-	'lockedby' => array('name' => tra('Locked by'), 'icon' => 'lock_gray'),
+	'lockedby' => array('name' => tra('Locked by'), 'icon' => 'lock'),
 	'backlinks' => array('name' => tra('Backlinks')),
 	'deleteAfter' => array('name'=>tra('Delete After')),
 	'share' => array('name'=>tra('Share with')),
