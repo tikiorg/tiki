@@ -436,10 +436,6 @@ class ParserLib extends TikiDb_Bridge
 				continue;
 			}
 
-			//suppress plugin edit icons for plugins within includes since edit doesn't work for these yet
-			$this->option['suppress_icons'] = $plugin_name != 'include' && $plugin_parent && $plugin_parent == 'include' ?
-				true : $this->option['suppress_icons'];
-
 			$plugin_data = $match->getBody();
 			$arguments = $argumentParser->parse($match->getArguments());
 			$start = $match->getStart();
@@ -471,7 +467,15 @@ class ParserLib extends TikiDb_Bridge
 					} else if (isset($this->option['noparseplugins']) && $this->option['noparseplugins']) {
 						$ret = '~np~' . (string) $match . '~/np~';
 					} else {
+						//suppress plugin edit icons for plugins within includes since edit doesn't work for these yet
+						$suppress_icons = $this->option['suppress_icons'];
+						$this->option['suppress_icons'] = $plugin_name != 'include' && $plugin_parent && $plugin_parent == 'include' ?
+							true : $this->option['suppress_icons'];
+
 						$ret = $this->plugin_execute($plugin_name, $plugin_data, $arguments, $start, false);
+
+						// restore previous suppress_icons state
+						$this->option['suppress_icons'] = $suppress_icons;
 					}
 				} else {
 
