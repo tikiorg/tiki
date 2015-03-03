@@ -51,8 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			header('Location: ' . $target);
             exit;
 		} else {
-			if (count($installer->getFeedback()) > 0) {
-				$smarty->assign_by_ref('profilefeedback', $installer->getFeedback());
+			$profilefeedback = $installer->getFeedback();
+			if (count($profilefeedback) > 0) {
+				$smarty->assign_by_ref('profilefeedback', $profilefeedback);
 			}
 			// need to reload sources as cache is cleared after install
 			$sources = $list->getSources();
@@ -79,8 +80,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			header('Location: ' . $target);
             exit;
 		} else {
-			if (count($installer->getFeedback()) > 0) {
-				$smarty->assign_by_ref('profilefeedback', $installer->getFeedback());
+			$profilefeedback = $installer->getFeedback();
+			if (count($profilefeedback) > 0) {
+				$smarty->assign_by_ref('profilefeedback', $profilefeedback);
 			}
 			// need to reload sources as cache is cleared after install
 			$sources = $list->getSources();
@@ -112,8 +114,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			header('Location: ' . $target);
             exit;
 		} else {
-			if (count($installer->getFeedback()) > 0) {
-				$smarty->assign_by_ref('profilefeedback', $installer->getFeedback());
+			$profilefeedback = $installer->getFeedback();
+			if (count($profilefeedback) > 0) {
+				$smarty->assign_by_ref('profilefeedback', $profilefeedback);
 			}
 		}
 	} // }}}
