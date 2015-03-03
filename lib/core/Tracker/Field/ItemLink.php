@@ -211,11 +211,17 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 	{
 		if ($this->useSelector()) {
 			$value = $this->getValue();
-			return $this->renderTemplate('trackerinput/itemlink_selector.tpl', $context, [
-				'placeholder' => tr(TikiLib::lib('object')->get_title('tracker', $this->getOption('trackerId'))),
-				'status' => implode(' OR ', str_split($this->getOption('status', 'opc'), 1)),
-				'selector_value' => $value ? "trackeritem:$value" : null,
+			$placeholder =  tr(TikiLib::lib('object')->get_title('tracker', $this->getOption('trackerId')));
+			$status = implode(' OR ', str_split($this->getOption('status', 'opc'), 1));
+			$value = $value ? "trackeritem:$value" : null;
+			
+			$template = $this->renderTemplate('trackerinput/itemlink_selector.tpl', $context, [
+				'placeholder' => $placeholder,
+				'status' => $status,
+				'selector_value' => $value,
 			]);
+			
+			return $template;
 		}
 
 		$data = array(
