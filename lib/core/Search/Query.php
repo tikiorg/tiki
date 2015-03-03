@@ -118,7 +118,7 @@ class Search_Query implements Search_Query_Interface
 		if ($user) {
 			$sub = $this->getSubQuery('permissions');
 			$sub->filterMultivalue($or, 'allowed_groups');
-			$sub->filterMultivalue($user, 'allowed_users');
+			$sub->filterMultivalue(new Search_Expr_Token($user), 'allowed_users');
 		} else {
 			$this->addPart($or, 'multivalue', 'allowed_groups');
 		}
