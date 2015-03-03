@@ -53,6 +53,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "alxlit/bootstrap-chosen",
+				"version": "1.0.1",
+				"dist": {
+					"url": "https://github.com/alxlit/bootstrap-chosen/archive/v1.0.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "ckeditor/ckeditor",
 				"version": "4.1.1",
 				"dist": {
