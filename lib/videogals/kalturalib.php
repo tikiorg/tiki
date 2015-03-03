@@ -145,7 +145,7 @@ class KalturaLib
 		if ($client = $this->getClient()) {
 			$filter = new KalturaUiConfFilter();
 			$filter->objTypeEqual = 1; // 1 denotes Players
-			$filter->orderBy = +createdAt;
+			$filter->orderBy = '-createdAt';
 			$uiConfs = $client->uiConf->listAction($filter);
 			
 			if (is_null($client->error)) {

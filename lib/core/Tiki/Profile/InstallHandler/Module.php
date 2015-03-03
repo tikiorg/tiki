@@ -18,6 +18,7 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler
 			'custom' => null,
 			'groups' => array(),
 			'params' => array(),
+			'parse' => null,
 		);
 
 		$data = array_merge($defaults, $this->obj->getData());

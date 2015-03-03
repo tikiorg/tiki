@@ -166,7 +166,7 @@ class Tiki_Connect_Client extends Tiki_Connect_Abstract
 	{
 		$votes = $this->getVotes();
 		if (isset($votes->$pref)) {
-			return $votes->$pref;
+			return (array) $votes->$pref;
 		} else {
 			return array();
 		}
