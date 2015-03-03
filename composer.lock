@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "575f28c7a7b825247ce7158c6d7cdf38",
+    "hash": "f7e2ae727c1980ffc2433f819cbd031f",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -64,12 +64,12 @@
         },
         {
             "name": "alxlit/bootstrap-chosen",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/alxlit-bootstrap-chosen-1.0.0.zip",
-                "reference": "1.0.0",
-                "shasum": "c0ae82b09ec16f7cc2170cfcc211bd8b00e09651"
+                "url": "https://composer.tiki.org/dist/alxlit-bootstrap-chosen-1.0.1.zip",
+                "reference": "1.0.1",
+                "shasum": "4210e2ecf5ccc36c2fafcae8befe1d0de3bedc06"
             },
             "type": "library"
         },
@@ -310,17 +310,17 @@
         },
         {
             "name": "cwspear/bootstrap-hover-dropdown",
-            "version": "2.0.11",
+            "version": "2.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CWSpear/bootstrap-hover-dropdown.git",
-                "reference": "ace10bf06c3a81447625faa4937733d2ff12163c"
+                "reference": "e8bc99836b5ab50816786bbaba2dd2c4d6a0d094"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/cwspear-bootstrap-hover-dropdown-ace10bf06c3a81447625faa4937733d2ff12163c-zip-7b4cff.zip",
-                "reference": "2.0.11",
-                "shasum": "3d8a98a327a3487fd3b687b51f78f5becd0a6e5a"
+                "url": "https://composer.tiki.org/dist/cwspear-bootstrap-hover-dropdown-e8bc99836b5ab50816786bbaba2dd2c4d6a0d094-zip-868000.zip",
+                "reference": "2.1.3",
+                "shasum": "be9af015d16fd8edad110cff37c480e14187cd76"
             },
             "require": {
                 "components/bootstrap": "~3.0",
@@ -354,7 +354,7 @@
                 "hover",
                 "twitter"
             ],
-            "time": "2014-08-22 17:08:08"
+            "time": "2015-02-08 02:43:16"
         },
         {
             "name": "dompdf/dompdf",
@@ -1134,12 +1134,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jakiestfu/Medium.js.git",
-                "reference": "bd1fad2779dfe509d91e8a00b41f06a480cf7043"
+                "reference": "ac7207bfd22a6af8c5aa7fce50331ffb01a92e4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/bd1fad2779dfe509d91e8a00b41f06a480cf7043",
-                "reference": "bd1fad2779dfe509d91e8a00b41f06a480cf7043",
+                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/ac7207bfd22a6af8c5aa7fce50331ffb01a92e4a",
+                "reference": "ac7207bfd22a6af8c5aa7fce50331ffb01a92e4a",
                 "shasum": ""
             },
             "require": {
@@ -1166,7 +1166,7 @@
                 }
             ],
             "description": "A tiny JavaScript library for making contenteditable beautiful (Like Medium's editor).",
-            "time": "2015-02-19 00:47:15"
+            "time": "2015-02-26 13:51:46"
         },
         {
             "name": "phenx/php-font-lib",
