@@ -867,6 +867,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "jquery/plugins/fitvidjs",
+				"version": "1.1.0",
+				"dist": {
+					"url": "https://github.com/davatron5000/FitVids.js/archive/v1.1.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "jquery/plugins/form",
 				"version": "3.25.0",
 				"dist": {
