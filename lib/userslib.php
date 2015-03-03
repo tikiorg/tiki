@@ -6710,6 +6710,7 @@ class UsersLib extends TikiLib
 			$query[] = 'update `tiki_group_inclusion` set `groupName`=? where `groupName`=?';
 			$query[] = 'update `tiki_group_inclusion` set `includeGroup`=? where `includeGroup`=?';
 			$query[] = 'update `tiki_newsletter_groups` set `groupName`=? where `groupName`=?';
+            $query[] = 'update `tiki_group_watches` set `group`=? where `group`=?';
 
 			foreach ( $query as $q ) {
 				$this->query($q, array($group, $olgroup));
