@@ -279,9 +279,7 @@ class HeaderLib
 		if (count($this->jsfiles)) {
 
 			if ( $prefs['tiki_minify_javascript'] == 'y' ) {
-
 				$jsfiles = $this->getMinifiedJs();
-
 			} else {
 				$jsfiles = $this->jsfiles;
 			}
@@ -338,26 +336,46 @@ class HeaderLib
 			unset( $this->jsfiles['late'] );
 		}
 
-		$minified_files = array();
+		// order important - seperate minified files and failed minifys so the they can bee added in the correct order.
+		// this might not be necessary - but you never know.
+		// no reason to not minify the dependancy files
+		$minify_dependancy_failed = array();
+		$minify_dependancy_ok = array();
+		$minify_dependancy_ok[] = $this->minifyJSFiles(array($dependancy), $minify_dependancy_failed);
+		
+		// rest of the files array that is not unset.
+		$minify_other_failed = array();
+		$minify_other_ok = array();
+		$minify_other_ok[] = $this->minifyJSFiles($this->jsfiles, $minify_other_failed);
 
-		$minified_files[] = $this->minifyJSFiles($this->jsfiles, $external);
 
+		$minify_late_failed = array();
+		$minify_late_ok = array();
 		if ($prefs['tiki_minify_late_js_files'] === 'y') {
-			$minified_files[] = $this->minifyJSFiles(array($late), $external);
+			// will create its own cache file 
+			$minify_late_ok[] = $this->minifyJSFiles(array($late), $minify_late_failed);
 		} else {
-			$external = array_merge($external, $late);
+			$minify_late_failed = $late;
 		}
+		
+		
 		return array(
-			'dependancy'=> $dependancy,
+			'dependancy_min'=> $minify_dependancy_ok,
+			'dependancy_full'=> $minify_dependancy_failed,
+			// no minify attempt on external stuff
 			'external' => $external,
+			'other_min'=> $minify_other_ok,
+			'other_full'=> $minify_other_failed,
 			'dynamic' => $dynamic,
-			$minified_files,
+			'late_min'=> $minify_ok_late,
+			'late_full'=> $minify_failed_late, 
 		);
 	}
 
 	/**
+	 * Minify multiple js files into one single file.
 	 * @param $files	array of file paths
-	 * @param $external	array to put uniminifyable files into
+	 * @param $external	array ref to put unminifyable files into. i.e acts as return value
 	 * @return string	path of minified js file
 	 */
 
