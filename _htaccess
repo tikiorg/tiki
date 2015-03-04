@@ -66,9 +66,18 @@
 # but, be aware of the possible disadvantages!
 # http://httpd.apache.org/docs/current/en/mod/core.html#keepalive
 
-# <IfModule mod_headers.c>
-#    Header set Connection Keep-Alive
-# </IfModule>
+<IfModule mod_headers.c>
+    #Header set Connection Keep-Alive
+
+    # When to update client cache
+    # Google suggests to use Expires in favour of Cache-Control
+    #Header unset Expires
+    Header unset Cache-Control
+    
+    # How to figure out if client cache needs an update
+    # Google wants either Last-Modified or ETag
+    #Header unset ETag
+</IfModule>
 
 
 # Using ETags will improve the YSlow scores
@@ -76,7 +85,11 @@ FileETag none
 
 # Expires headers: If the site is in active development, you may want to comment out this section.
 <IfModule mod_expires.c>
-	<FilesMatch "\.(js|png|gif|jpg|css|ico)$">
+	<FilesMatch "\.(png|gif|jpg|ico)$">
+		ExpiresActive on
+		ExpiresDefault "access plus 1 month"
+	</FilesMatch>
+	<FilesMatch "\.(js|css)$">
 		ExpiresActive on
 		ExpiresDefault "access plus 1 month"
 	</FilesMatch>
