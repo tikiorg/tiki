@@ -8,6 +8,15 @@
 define('SVN_MIN_VERSION', 1.3);
 define('TIKISVN', 'https://svn.code.sf.net/p/tikiwiki/code');
 
+
+if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+	define('DEV_NULL', 'NUL');
+} else {
+	define('DEV_NULL', '/dev/null');
+}
+
+
+
 /**
  * @param $relative
  * @return string
@@ -75,7 +84,7 @@ function important($message)
  */
 function check_svn_version()
 {
-	return (float)trim(`svn --version --quiet 2> /dev/null`) > SVN_MIN_VERSION;
+	return (float)trim(`svn --version --quiet 2> DEV_NULL`) > SVN_MIN_VERSION;
 }
 
 /**
@@ -85,7 +94,7 @@ function check_svn_version()
 function get_info($path)
 {
 	$esc = escapeshellarg($path);
-	$info = @simplexml_load_string(`svn info --xml $esc 2> /dev/null`);
+	$info = @simplexml_load_string(`svn info --xml $esc 2> DEV_NULL`);
 
 	return $info;
 }
