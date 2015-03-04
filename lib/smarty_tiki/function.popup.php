@@ -103,7 +103,7 @@ function smarty_function_popup($params, $smarty)
 	$retval = '';
 
 	foreach ($options as $k => $v) {
-		$retval .= $k . '=' . json_encode($v, JSON_UNESCAPED_SLASHES) . ' ';
+		$retval .= $k . '=' . json_encode($v, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ' ';
 	}
 
 	return $retval;
