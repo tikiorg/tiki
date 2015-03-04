@@ -166,7 +166,7 @@ $("input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFieldI
 		'
 		); // add_jq_onready
 
-		return '<select name="' . $insertId . '"></select>';
+		return '<select class="form-control" name="' . $insertId . '"></select>';
 
 	}
 	
