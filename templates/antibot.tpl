@@ -38,7 +38,7 @@ if($("#antibotcode").parents('form').data("validator")) {
 			}
 		}
 	});
-} else {
+} else if (jqueryTiki.validate) {
 	$("#antibotcode").parents('form').validate({
 		rules: {
 			"captcha[input]": {
