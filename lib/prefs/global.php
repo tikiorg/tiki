@@ -309,6 +309,7 @@ function prefs_global_list($partial = false)
 			'hint' => tra("The group will be named identical to the user's username"),
 			'help' => 'Groups',
 			'default' => 'n',
+			'keywords' => 'eponymous groups',
 		),
 		'syncGroupsWithDirectory' => array(
 			'name' => tra('Synchronize Tiki groups with a directory'),
