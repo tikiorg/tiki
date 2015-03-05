@@ -99,7 +99,15 @@ FileETag none
 #AuthType Basic
 #AuthName "Restricted Access"
 #AuthUserFile /etc/httpd/passwords
-#Require valid-user 
+#Require valid-user
+#
+# ...or if you want to only restrict access to GET requests then use "Limit" like this
+# (allows jcapture and other services that POST back to Tiki to work but will be less secure)
+#
+#<Limit GET>
+#	Require valid-user
+#</Limit>
+
 
 # Handling in Tiki errors caught by Apache
 # Tiki can catch some errors and deal with them by redirecting to a similar page, sending you to the search, etc. However, some errors do not reach Tiki and are only caught by Apache (ex.: filenameThatDoesntExist.php). 
