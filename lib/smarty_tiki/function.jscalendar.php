@@ -110,7 +110,7 @@ function smarty_function_jscalendar($params, $smarty)
 	$datepicker_options .= $datepicker_options_common;
 
 	$html = '<input type="hidden" id="' . $params['id'] . '"' . $name  . ' value="'.$params['date'].'" />';
-	$html .= '<input type="text" id="' . $params['id'] . '_dptxt" value="" />';	// text version of datepicker date
+	$html .= '<input type="text" class="form-control" id="' . $params['id'] . '_dptxt" value="" />';	// text version of datepicker date
 
 	$display_tz = $tikilib->get_display_timezone();
 	if ( $display_tz == '' ) {
