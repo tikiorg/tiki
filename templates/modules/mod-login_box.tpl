@@ -225,7 +225,7 @@ if (jqueryTiki.no_cookie) {
 		{if $module_params.show_forgot eq 'y' or $module_params.show_register eq 'y'}
 			<div {if $mode eq 'header'}class="text-right" style="display:inline;"{/if}>
 				{strip}
-					<div><ul {if $mode eq 'popup'}class="list-unstyled"{/if}>
+					<div><ul {if $mode eq 'popup'}class="list-unstyled nav"{/if}>
 						{if $module_params.show_forgot eq 'y' && $prefs.forgotPass eq 'y'}
 							<li class="pass"><a href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a></li>
 						{/if}
