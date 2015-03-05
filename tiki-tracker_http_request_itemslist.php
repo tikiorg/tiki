@@ -17,7 +17,7 @@
  */
 
 require_once ('tiki-setup.php');
-include_once ('lib/trackers/trackerlib.php');
+$trklib = TikiLib::lib('trk');
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	if (!is_object($categlib)) {
@@ -50,7 +50,7 @@ for ($index = 0, $count_arrayTrackerId = count($arrayTrackerId); $index < $count
 		if (!$filtervalue) {
 			$otherField = $trklib->get_tracker_field($arrayFilterfield[$index]);
 			if ($otherField['type'] == 'r') {		// filterFieldIdThere is itemlink, so get the filtervalue from what that links to
-				$filtervalue = $trklib-> get_item_value($otherField['options_array'][0], $arrayItem[$index], $otherField['options_array'][1]);
+				$filtervalue = $trklib->get_item_value($otherField['options_array'][0], $arrayItem[$index], $otherField['options_array'][1]);
 			} else if ($otherField['type'] == 'u') {
 				$exactvalue = $arrayItem[$index]; 
 			}
@@ -83,22 +83,31 @@ for ($index = 0, $count_arrayTrackerId = count($arrayTrackerId); $index < $count
 
 		foreach ($items['data'] as $item) {
 			//$field = $item['field_values'][0];
+			$valueField = $item['itemId'];
+			$labelField = '';
+			$context = array('showlinks' => 'n');
+			$prefix = '';
+			// if multiple display fields are selected, we do not want them listed as separate entries like multiple items.
+			// only items should be separate entries. thus multiple displayfields need to get merged.
 			foreach ($item['field_values'] as $field ) {
 				if ($field['type'] === 'e' && !empty($field['list'])) {		// for category fields get the label not the value
 																			// possibly required for other field types after 11.0?
-					$label = $trklib->get_field_handler($field, $item)->renderOutput();
+					$label = $trklib->get_field_handler($field, $item)->renderOutput($context);
 					$label = str_replace('<br/>', ',', $label);				// categories can be many so replace html
-					//$json_return[] = array($field['value'], $label);
-					$json_return[] = array($field['fieldId'], $label);
 				} else if ($field['type'] == 'r') {
-					$label = $trklib->get_field_handler($field, $item)->renderOutput(array('list_mode' => 'csv'));
-					//$json_return[] = array($field['value'], $label);
-					$json_return[] = array($field['fieldId'], $label);
+					$label = $trklib->get_field_handler($field, $item)->renderOutput($context);
 				} else {
-					//$json_return[] = array($field['value'], $field['value']);
-					$json_return[] = array($field['fieldId'], $field['value']);
+					$label = $trklib->get_field_handler($field, $item)->renderOutput($context);
+
 				}
+				
+				$labelField .= $prefix. $label; 
+				if (!$prefix) {
+					$prefix = ' ';
+				}
+				
 			}
+			$json_return[] = array($valueField, $labelField);
 		}
 
 	}
