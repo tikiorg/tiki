@@ -147,7 +147,7 @@
 			<fieldset class="table clearfix featurelist">
 				<legend> {tr}Ajax{/tr} </legend>
 				{preference name=feature_ajax}
-				<div class="adminoptionboxchild half_width" id="feature_ajax_childcontainer">
+				<div class="adminoptionboxchild" id="feature_ajax_childcontainer">
 					{preference name=ajax_autosave}
 				</div>
 			</fieldset>
