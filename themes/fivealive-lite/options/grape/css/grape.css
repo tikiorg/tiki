@@ -164,7 +164,7 @@ hr {
   border: 1px solid #e4afd3;
 }
 .navbar-default {
-  background-color: transparent;
+  background-color: #a82a76;
   border-color: none;
 }
 .navbar-default .navbar-brand {
@@ -594,6 +594,7 @@ hr {
   padding-bottom: 4px;
   line-height: 1;
   color: #ffffff;
+  background: #a82a76;
 }
 #col2 .panel,
 #col3 .panel,
