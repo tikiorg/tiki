@@ -16,7 +16,7 @@
 		{/if}
 
 		{if $captchalib->type eq 'default'}
-			{button _id='captchaRegenerate' _class='' href='#antibot' _text='{tr}Try another code{/tr} {icon name="refresh"}' _onclick="generateCaptcha()"}
+			{button _id='captchaRegenerate' _class='' href='#antibot' _text='{tr}Try another code{/tr}' _icon_name="refresh" _onclick="generateCaptcha()"}
 		{/if}
 	</div>
 {/if}
@@ -38,7 +38,7 @@ if($("#antibotcode").parents('form').data("validator")) {
 			}
 		}
 	});
-} else {
+} else if (jqueryTiki.validate) {
 	$("#antibotcode").parents('form').validate({
 		rules: {
 			"captcha[input]": {

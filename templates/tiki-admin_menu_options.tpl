@@ -311,7 +311,8 @@
 								<tr>
 									<td>{tr}URL:{/tr}</td>
 									<td colspan="3">
-										{autocomplete element="#menu_url" type='pagename' options="select:function(event,ui){ldelim}ui.item.value='(('+ui.item.value+'))';{rdelim}"}
+										{capture name='options'}select:function(event,ui){ldelim}ui.item.value='(('+ui.item.value+'))';{rdelim}{/capture}
+										{autocomplete element="#menu_url" type='pagename' options=$smarty.capture.options}
 										<input id="menu_url" type="text" name="url" value="{$url|escape}" size="34">
 										<br><em>{tr}For wiki page, use ((PageName)).{/tr}</em>
 									</td>
