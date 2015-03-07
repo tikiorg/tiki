@@ -176,7 +176,7 @@ if ($(this).val() != '') {
 						<div class="form-group">
 							<label for="groupforAlert" class="col-sm-4 control-label">{tr}Group of users alerted when file gallery is modified{/tr}</label>
 							<div class="col-sm-8">
-								<select id="groupforAlert" name="groupforAlert">
+								<select id="groupforAlert" name="groupforAlert" class="form-control">
 									<option value="">&nbsp;</option>
 									{foreach key=k item=i from=$groupforAlertList}
 										<option value="{$k}" {$i}>{$k}</option>
@@ -233,7 +233,7 @@ if ($(this).val() != '') {
 				<div class="form-group">
 					<label for="sortorder" class="col-sm-4 text-right">{tr}Default sort order{/tr}</label>
 					<div class="col-sm-8">
-						<select name="sortorder" id="sortorder">
+						<select name="sortorder" id="sortorder" class="form-control">
 							{foreach from=$options_sortorder key=key item=item}
 								<option value="{$item|escape}" {if $sortorder == $item} selected="selected"{/if}>{$key}</option>
 							{/foreach}
