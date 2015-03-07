@@ -404,15 +404,7 @@ class UnifiedSearchLib
 			$types['comment'] = tra('comment');
 		}
 
-		if (in_array($prefs['user_in_search_result'], array('all', 'public'))) {
-			$types['user'] = tra('user');
-		} else {
-			// Check for fresh install in which case index admin user otherwise initial indexing will not work with no content
-			if (TikiLib::lib('tiki')->getOne("select count(*) from users_users") === '1' && !TikiLib::lib('tiki')->page_exists('HomePage')) {
-				$prefs['user_in_search_result'] = 'all';
-				$types['user'] = tra('user');
-			}
-		}
+		$types['user'] = tra('user');
 
 		return $types;
 	}
@@ -592,6 +584,7 @@ class UnifiedSearchLib
 		}
 
 		$aggregator->addGlobalSource(new Search_GlobalSource_TitleInitialSource);
+		$aggregator->addGlobalSource(new Search_GlobalSource_SearchableSource);
 	}
 
     /**
