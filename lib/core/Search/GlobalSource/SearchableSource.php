@@ -22,7 +22,7 @@ class Search_GlobalSource_SearchableSource implements Search_GlobalSource_Interf
 		// Unless specified by content source explicitly, everything is searchable
 
 		if (isset($data['searchable'])) {
-			return [];
+			return array();
 		}
 
 		return array(
