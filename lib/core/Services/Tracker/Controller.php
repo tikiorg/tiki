@@ -792,6 +792,7 @@ class Services_Tracker_Controller
 	function action_fetch_item_field($input)
 	{
 		$trackerId = $input->trackerId->int();
+		$mode = $input->mode->word();						// output|input (default input)
 		$definition = Tracker_Definition::get($trackerId);
 
 		if (! $definition) {
@@ -818,6 +819,7 @@ class Services_Tracker_Controller
 
 		return array(
 			'field' => $processed,
+			'mode' => $mode,
 		);
 	}
 

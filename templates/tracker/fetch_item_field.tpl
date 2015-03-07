@@ -5,5 +5,9 @@
 {/block}
 
 {block name="content"}
-{trackerinput field=$field}
+	{if $mode eq 'output'}
+		{trackeroutput field=$field}
+	{else}
+		{trackerinput field=$field}
+	{/if}
 {/block}
