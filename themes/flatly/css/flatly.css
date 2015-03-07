@@ -7231,6 +7231,7 @@ body.wikitext {
 .editable-inline {
   background: transparent url('../../../img/icons/database_lightning.png') no-repeat top right;
   padding-right: 20px;
+  display: inline-block;
 }
 .editable-inline.loaded {
   background: transparent;
@@ -7240,6 +7241,7 @@ body.wikitext {
 }
 .editable-inline.modified {
   border: solid 2px #e74c3c;
+  padding: 2px;
 }
 .editable-inline.unsaved {
   border: solid 2px #e74c3c;

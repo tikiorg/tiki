@@ -112,7 +112,7 @@ function smarty_function_user_selector($params, $smarty)
 				$users[] = $usr['login'];
 			}
 		}
-		$ret .= '<select name="' . $params['name'] . '" id="' . $params['id'] . '"' . $sz . $ed . ' style="'.$params['style'].'">';
+		$ret .= '<select name="' . $params['name'] . '" id="' . $params['id'] . '"' . $sz . $ed . ' style="'.$params['style'].'" class="form-control">';
 		if ($params['allowNone'] === 'y') {
 			$ret .= '<option value=""' . (empty($params['user']) ? ' selected="selected"' : '') . ' >' . tra('None') .'</option>';
 		}
