@@ -871,7 +871,7 @@ function wikiplugin_img( $data, $params )
 	} else {
 		$tagName = 'img';
 		$replimg = '<img src="' . $src . '" ';
-		$imgdata['class'] .= ' regImage pluginImg img-responsive' . $imgdata['fileId'];
+		$imgdata['class'] .= ' regImage pluginImg img-responsive ' . $imgdata['fileId'];
 		$imgdata['class'] = trim($imgdata['class']);
 	}
 

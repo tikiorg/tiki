@@ -320,7 +320,7 @@
 								<tr>
 									<td>{tr}Type:{/tr}</td>
 									<td>
-										<select name="type">
+										<select name="type" class="form-control">
 											<option value="o" {if $type eq 'o'}selected="selected"{/if}>{tr}option{/tr}</option>
 											<option value="s" {if $type eq 's'}selected="selected"{/if}>{tr}section level 0{/tr}</option>
 											<option value='1' {if $type eq '1'}selected="selected"{/if}>{tr}section level 1{/tr}</option>

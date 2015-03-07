@@ -655,7 +655,7 @@ textarea,
 }
 #footer {
   background: black;
-  color: #696969;
+  color: #ffffff;
   padding: 1px 0 2px 0;
   width: 100%;
 }
@@ -663,14 +663,9 @@ textarea,
   border-top: 1px solid #7a04b5;
   border-bottom: 1px solid #7a04b5;
 }
-.footer_liner h3.panel-title {
+.footer_liner .panel-title {
   color: #fff;
   border-bottom: 1px dotted #7a04b5;
-}
-.footer_liner legend,
-.footer_liner a,
-.footer_liner a:visited {
-  color: #ce57df;
 }
 .postbody-title {
   background: url('../images/siteheader.jpg') no-repeat -480px -200px;
