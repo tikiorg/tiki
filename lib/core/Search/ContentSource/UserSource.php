@@ -26,18 +26,7 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 
 	function getDocuments()
 	{
-		if ($this->visibility == 'all') {
-			return $this->db->table('users_users')->fetchColumn('login', array());
-		} else {
-			return array_map(
-				function ($row) {
-					return $row['login'];
-				},
-				$this->db->fetchAll(
-					'SELECT login FROM users_users u INNER JOIN tiki_user_preferences p ON u.login = p.user WHERE prefName = ? AND value = ?', array('user_information', 'public')
-				)
-			);
-		}
+		return $this->db->table('users_users')->fetchColumn('login', array());
 	}
 
 	function getDocument($objectId, Search_Type_Factory_Interface $typeFactory)
@@ -45,10 +34,6 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 		global $prefs;
 
 		$detail = $this->user->get_user_details($objectId, false);
-
-		if (! $this->userIsIndexed($detail)) {
-			return false;
-		}
 
 		$name = $objectId;
 		if (! empty($detail['preferences']['realName'])) {
@@ -71,6 +56,7 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 			'user_country' => $typeFactory->sortable($detail['preferences']['country']),
 			'geo_located' => $typeFactory->identifier(empty($loc) ? 'n' : 'y'),
 			'geo_location' => $typeFactory->identifier($loc),
+			'searchable' => $typeFactory->identifier($this->userIsIndexed($detail) ? 'y' : 'n'),
 			'_extra_groups' => array('Registered'), // Add all registered to allowed groups
 		);
 
@@ -83,8 +69,10 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 	{
 		if ($this->visibility == 'all') {
 			return true;
-		} else {
+		} elseif (isset($detail['preferences']['user_information'])) {
 			return $detail['preferences']['user_information'] == 'public';
+		} else {
+			return false;
 		}
 	}
 
@@ -103,6 +91,8 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 			'geo_located',
 			'geo_location',
 			'user_country',
+
+			'searchable',
 		);
 
 		foreach ($this->getAllIndexableHandlers() as $baseKey => $handler) {
