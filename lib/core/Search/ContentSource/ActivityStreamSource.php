@@ -37,6 +37,8 @@ class Search_ContentSource_ActivityStreamSource implements Search_ContentSource_
 		$document = array(
 			'event_type' => $typeFactory->identifier($info['eventType']),
 			'modification_date' => $typeFactory->timestamp($info['eventDate']),
+
+			'searchable' => $typeFactory->identifier('n'),
 		);
 
 		foreach ($info['arguments'] as $key => $value) {
