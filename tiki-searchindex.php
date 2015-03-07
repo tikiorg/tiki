@@ -169,9 +169,6 @@ function tiki_searchindex_get_results($filter, $offset, $maxRecords)
 	$query = $unifiedsearchlib->buildQuery($filter);
 	$query->setRange($offset, $maxRecords);
 
-	$query = new Search_Query;
-	$unifiedsearchlib->initQueryBase($query);
-	$query = $unifiedsearchlib->buildQuery($filter, $query);
 	$query->filterContent('y', 'searchable');
 
 	if (isset($_REQUEST['sort_mode']) && $order = Search_Query_Order::parse($_REQUEST['sort_mode'])) {
