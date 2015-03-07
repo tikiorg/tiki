@@ -192,7 +192,7 @@
 							<div class="form-group">
 								<label for="galleryId" class="col-sm-2">{tr}File gallery{/tr}</label>
 								<div class="col-sm-10">
-									<select id="galleryId" name="galleryId[]">
+									<select id="galleryId" name="galleryId[]" class="form-control">
 										<option value="{$treeRootId}" {if $treeRootId eq $galleryId}selected="selected"{/if} style="font-style:italic; border-bottom:1px dashed #666;">{tr}Root{/tr}</option>
 										{section name=idx loop=$galleries}
 											{if $galleries[idx].id neq $treeRootId and ($galleries[idx].perms.tiki_p_upload_files eq 'y' or $tiki_p_userfiles eq 'y')}
