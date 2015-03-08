@@ -11,7 +11,10 @@
 @imagePath:  ~"../images/";
 
 .middle_outer {
-  background: url('@{imagePath}middletopbg.png') repeat-x;
+//  background: url('@{imagePath}middletopbg.png') repeat-x;
+  -webkit-box-shadow: inset 0 24px 0 0 @navbar-default-bg;
+  -moz-box-shadow: inset 0 24px 0 0 @navbar-default-bg;
+  box-shadow: inset 0 24px 0 0 @navbar-default-bg;
 }
 
 .topbar_container {
@@ -130,7 +133,7 @@ header.header .module.secondary_site_menu {
   border-bottom: none;
 }
 
-.sitelogo img {max-height: 34px; width: auto; margin-bottom: 1em;}
+#top_modules .sitelogo img {max-height: 34px; width: auto; margin-bottom: 1em;}
 
 .form-control,
 select,

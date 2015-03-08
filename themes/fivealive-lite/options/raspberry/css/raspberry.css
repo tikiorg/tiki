@@ -538,7 +538,9 @@ hr {
   background-color: #c9302c;
 }
 .middle_outer {
-  background: url('../images/middletopbg.png') repeat-x;
+  -webkit-box-shadow: inset 0 24px 0 0 #e60b7f;
+  -moz-box-shadow: inset 0 24px 0 0 #e60b7f;
+  box-shadow: inset 0 24px 0 0 #e60b7f;
 }
 .topbar_container {
   background: #e60b7f;
@@ -630,7 +632,7 @@ header.header .module.secondary_site_menu {
   margin-bottom: 0;
   border-bottom: none;
 }
-.sitelogo img {
+#top_modules .sitelogo img {
   max-height: 34px;
   width: auto;
   margin-bottom: 1em;

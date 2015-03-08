@@ -6532,7 +6532,9 @@ button.close {
   }
 }
 .middle_outer {
-  background: url('../images/middletopbg.png') repeat-x;
+  -webkit-box-shadow: inset 0 24px 0 0 #28a7de;
+  -moz-box-shadow: inset 0 24px 0 0 #28a7de;
+  box-shadow: inset 0 24px 0 0 #28a7de;
   border-top: 2px solid #fff;
 }
 .layout_h_tb_m_f_containers_3-6-3 .middle_outer {
