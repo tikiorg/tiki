@@ -71,7 +71,7 @@
 							{$calendar.name|escape}<br>{tr}or{/tr}&nbsp;
 							<input type="submit" class="btn btn-default btn-sm" name="changeCal" value="{tr}Go to{/tr}">
 						{/if}
-						<select name="save[calendarId]" id="calid" onchange="javascript:needToConfirm=false;document.getElementById('editcalitem').submit();" class="form-control">
+						<select name="save[calendarId]" id="calid" onchange="needToConfirm=false;document.getElementById('editcalitem').submit();" class="form-control">
 							{foreach item=it key=itid from=$listcals}
 								{if $it.tiki_p_add_events eq 'y'}
 									{$calstyle = ''}
@@ -135,10 +135,19 @@
 							{else}
 								<div class="checkbox">
 									<label>
-										<input type="checkbox" id="id_recurrent" name="recurrent" value="1" onclick="toggle('recurrenceRules');toggle('startdate');toggle('enddate');togglereminderforrecurrence();"
-										{if $calitem.recurrenceId gt 0 or $recurrent eq 1} checked="checked" {/if}
-										>
+										<input type="checkbox" id="id_recurrent" name="recurrent" value="1"{if $calitem.recurrenceId gt 0 or $recurrent eq 1} checked="checked" {/if}>
 										{tr}This event depends on a recurrence rule{/tr}
+										{jq}
+$("#id_recurrent").click(function () {
+	if ($(this).prop("checked")) {
+		$("#recurrenceRules").show();
+		$(".date").css("visibility", "hidden");
+	} else {
+		$("#recurrenceRules").hide();
+		$(".date").css("visibility", "visible");
+	}
+});
+										{/jq}
 									</label>
 								</div>
 							{/if}
@@ -379,7 +388,7 @@
 			<div class="form-group col-md-12">
 				<label class="control-label col-md-3">{tr}Start{/tr}</label>
 				{if $edit}
-					<div class="col-md-4 start">
+					<div class="col-md-4 start date">
 						{if $prefs.feature_jscalendar eq 'y' and $prefs.javascript_enabled eq 'y'}
 							{jscalendar id="start" date=$calitem.start fieldname="save[date_start]" align="Bc" showtime='n'}
 						{else}
@@ -411,7 +420,7 @@
 				<label class="control-label col-md-3">{tr}End{/tr}</label>
 				{if $edit}
 					<input type="hidden" name="save[end_or_duration]" value="end" id="end_or_duration">
-					<div class="col-md-4 end">
+					<div class="col-md-4 end date">
 							{if $prefs.feature_jscalendar eq 'y' and $prefs.javascript_enabled eq 'y'}
 								{jscalendar id="end" date=$calitem.end fieldname="save[date_end]" align="Bc" showtime='n'}
 							{else}
