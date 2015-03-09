@@ -4,8 +4,10 @@
 		<div class="power">
 			{if !isset($module_params.tiki) or $module_params.tiki neq 'n'}
 				{tr}Powered by{/tr} <a href="http://tiki.org" title="&#169; 2002&#8211;{$smarty.now|date_format:"%Y"} {tr}The Tiki Community{/tr}">{tr}Tiki Wiki CMS Groupware{/tr}</a>
-				{if !isset($module_params.version) or $module_params.version neq 'n'} v{$tiki_version} {if $tiki_uses_svn eq 'y'} (SVN){/if} &quot;{$tiki_star}&quot; {/if}
 			{/if}
+            {if !isset($module_params.version) or $module_params.version neq 'n'}
+                v{$tiki_version} {if $tiki_uses_svn eq 'y'} (SVN){/if} &quot;{$tiki_star}&quot;
+            {/if}
 			{if !isset($module_params.credits) or $module_params.credits neq 'n'}
 				<span id="credits">
 					&nbsp;| {include file='credits.tpl'}
