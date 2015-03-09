@@ -198,6 +198,7 @@
 				},
 				eventClick: function(event) {
 					if (event.url && event.editable) {
+						var $this = $(this).tikiModal(" ");
 						$.ajax({
 							dataType: 'html',
 							url: event.url + '&isModal=1',
@@ -208,6 +209,7 @@
 								$( "#calendar_dialog .modal-title" ).html(event.title);
 								$( "#calendar_dialog" ).modal();
 								//$( "#calendar_dialog" ).dialog({ modal: true, title: event.title, width: 'auto', height: 'auto', position: 'center' });
+								$this.tikiModal();
 							}
 						});
 			//						$('#calendar_dialog').load(event.url + ' .wikitext');
