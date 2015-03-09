@@ -164,7 +164,7 @@
 							{if !$tsAjax}
 								<thead>
 									<tr>
-										<th id="checkbox" {if $prefs.mobile_mode eq "y"}style="width:40px;"{else}class="auto"{/if}>
+										<th id="checkbox">
 											{if $users}
 												{select_all checkbox_names='checked[]'}
 											{/if}
@@ -344,7 +344,6 @@
 														{icon name="link"}
 													</a>
 												{/if}
-												{if $prefs.mobile_mode eq "y"}</div>{/if} {* mobile *}
 											</td>
 										</tr>
 									{/if}

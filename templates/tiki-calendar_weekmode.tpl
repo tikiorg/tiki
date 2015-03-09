@@ -70,7 +70,7 @@
 									{popup vauto=true hauto=true sticky=false fullhtml="1" text=$over}
 								{/if}>
 								<span style="padding-top:4px;float:right">
-									<a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" data-mini="true" {/if}style="padding:0 3px;"
+									<a style="padding:0 3px;"
 										{if $event.modifiable eq "y" || $event.visible eq 'y'}
 											{if $prefs.calendar_sticky_popup eq "y"}
 												href="#"
@@ -78,8 +78,7 @@
 												href="tiki-calendar_edit_item.php?viewcalitemId={$event.calitemId}"
 											{/if}
 										{/if}
-									>
-										<img src="img/icons/more_info.gif" alt="{tr}Details{/tr}">
+									   title='{tr}Details{/tr}'>{icon name='info'}
 									</a>
 								</span>
 								<abbr class="dtstart" title="{if $event.result.allday eq '1'}{tr}All day{/tr}{else}{$event.startTimeStamp|isodate}{/if}" style="{if $event.status eq '2'}text-decoration:line-through;{/if}{if isset($infocals.$cellcalendarId.customfgcolor)}color:#{$infocals.$cellcalendarId.customfgcolor};{/if}">

@@ -54,16 +54,7 @@
 	{/if}
 	<span style="margin-left:10px;">
 		<div class="btn-group">
-			<a
-				class="btn btn-link"
-				data-toggle="dropdown"
-				{if $prefs.mobile_mode eq 'y'}
-					data-role="button"
-				{else}
-					data-hover="dropdown"
-				{/if}
-				href="#"
-			>
+			<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
 				{icon name="ellipsis"}
 			</a>
 			<ul class="dropdown-menu dropdown-menu-right">
@@ -73,79 +64,44 @@
 				<li class="divider"></li>
 				<li>
 					{if $pdf_export eq 'y'}
-						<a
-							{if $prefs.mobile_mode eq 'y'}
-								data-role="button"
-							{/if}
-							href="{$smarty.server.PHP_SELF}?{query display="pdf"}"
-						>
+						<a href="{$smarty.server.PHP_SELF}?{query display='pdf'}">
 							{icon name="pdf"} {tr}PDF{/tr}
 						</a>
-					{/if} {* mobile *}
+					{/if}
 				</li>
 				<li>
-					<a
-						{if $prefs.mobile_mode eq 'y'}
-							data-role="button"
-						{/if}
-						href="{$smarty.server.PHP_SELF}?{query display="print"}"
-					>
+					<a href="{$smarty.server.PHP_SELF}?{query display='print'}">
 						{icon name="print"} {tr}Print this page only{/tr}
-					</a> {* mobile *}
+					</a>
 				</li>
 				<li>
-					<a
-						{if $prefs.mobile_mode eq 'y'}
-							data-role="button"
-						{/if}
-							href="{$smarty.server.PHP_SELF}?{query display="print_all"}"
-					>
+					<a href="{$smarty.server.PHP_SELF}?{query display='print_all'}">
 						{icon name="print"} {tr}Print all pages{/tr}
-					</a> {* mobile *}
+					</a>
 				</li>
 				{if $prefs.feature_forum_topics_archiving eq 'y' && $tiki_p_admin_forum eq 'y'}
 					<li>
 						{if $thread_info.archived eq 'y'}
-							<a
-								{if $prefs.mobile_mode eq 'y'}
-									data-role="button"
-								{/if}
-								href="{$smarty.server.PHP_SELF}?{query archive="n"}"
-							>
+							<a href="{$smarty.server.PHP_SELF}?{query archive="n"}">
 								{icon name="file-archive-open"} {tr}Unarchive{/tr}
-							</a> {* mobile *}
+							</a>
 						{else}
-							<a
-								{if $prefs.mobile_mode eq 'y'}
-									data-role="button"
-								{/if}
-								href="{$smarty.server.PHP_SELF}?{query archive="y"}"
-							>
+							<a href="{$smarty.server.PHP_SELF}?{query archive='y'}">
 								{icon name="file-archive"} {tr}Archive{/tr}
-							</a> {* mobile *}
+							</a>
 						{/if}
 					</li>
 				{/if}
 				{if isset($tiki_p_forum_lock) and $tiki_p_forum_lock eq 'y'}
 					<li>
 						{if $thread_info.locked eq 'y'}
-							<a
-								{if $prefs.mobile_mode eq 'y'}
-									data-role="button"
-								{/if}
-								href="{query _type='relative' lock='n'}"
-							>
+							<a href="{query _type='relative' lock='n'}">
 								{icon name="unlock"} {tr}Unlock{/tr}
-							</a> {* mobile *}
+							</a>
 						{else}
-							<a
-								{if $prefs.mobile_mode eq 'y'}
-									data-role="button"
-								{/if}
-								href="{query _type='relative' lock='y'}"
-							>
+							<a href="{query _type='relative' lock='y'}">
 								{icon name="lock"} {tr}Lock{/tr}
-							</a> {* mobile *}
+							</a>
 						{/if}
 					</li>
 				{/if}

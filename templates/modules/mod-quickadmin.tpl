@@ -4,16 +4,7 @@
 	{if $tiki_p_admin == "y"}
 		<div id="quickadmin" class="btn-group">
 			<div class="btn-group">
-				<a
-					class="btn btn-link"
-					data-toggle="dropdown"
-					{if $prefs.mobile_mode eq 'y'}
-						data-role="button"
-					{else}
-						data-hover="dropdown"
-					{/if}
-					href="#"
-				>
+				<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
 					{icon name="sort-down"}
 				</a>
 				<ul class="dropdown-menu recent-prefs" role="menu">

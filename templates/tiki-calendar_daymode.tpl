@@ -27,16 +27,18 @@
 						{else}
 							{popup vauto=true hauto=true sticky=false fullhtml="1" text=$over|escape:"javascript"|escape:"html"}
 						{/if}>
-						<span style="padding-top:4px;padding-right:4px;float:right"><a {if $prefs.mobile_mode eq "y"}data-role="button" data-inline="true" data-mini="true" {/if}style="padding:0 3px;"
-						{if $event.modifiable eq "y" || $event.visible eq 'y'}
-							{if $prefs.calendar_sticky_popup eq "y"}
-								href="#"
-							{else}
-								href="tiki-calendar_edit_item.php?viewcalitemId={$event.calitemId}"
-							{/if}
-						{/if}
-
-					><img src="img/icons/more_info.gif" alt="{tr}Details{/tr}"></a></span>
+						<span style="padding-top:4px;padding-right:4px;float:right">
+							<a style="padding:0 3px;"
+									{if $event.modifiable eq "y" || $event.visible eq 'y'}
+										{if $prefs.calendar_sticky_popup eq "y"}
+											href="#"
+										{else}
+											href="tiki-calendar_edit_item.php?viewcalitemId={$event.calitemId}"
+										{/if}
+									{/if}
+							   title='{tr}Details{/tr}'>{icon name='info'}
+							</a>
+						</span>
 					{if $myurl eq "tiki-action_calendar.php"}
 						<a href="{$event.url}" class="url" title="{$event.web|escape}" class="linkmenu summary" style="color:#{$infocals.$calendarId.customfgcolor};{if $event.status eq '2'}text-decoration:line-through{/if}">{$event.name}</a>
 					{else}

@@ -99,22 +99,20 @@
 							<a class="tablename" href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1" title="{tr}Subscribe to Newsletter{/tr}">{$channels[user].name|escape}</a>
 							<div class="subcomment">{$channels[user].description|escape|nl2br}</div>
 						</td>
-						<td class="action"{if $prefs.mobile_mode eq "y"} style="width:250px"{/if}> {* mobile *}
-							{if $prefs.mobile_mode eq "y"}<div data-role="controlgroup" data-type="horizontal">{/if} {* mobile *}
+						<td class="action">
 							{if $channels[user].tiki_p_subscribe_newsletters eq 'y'}
-								<a {if $prefs.mobile_mode eq "y"}data-role="button" {/if}class="link" href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1" title="{tr}Subscribe to Newsletter{/tr}">{icon _id='newspaper_add' alt="{tr}Subscribe to Newsletter{/tr}"}</a> {* mobile *}
+								<a class="link" href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1" title="{tr}Subscribe to Newsletter{/tr}">{icon _id='newspaper_add' alt="{tr}Subscribe to Newsletter{/tr}"}</a>
 							{/if}
 							{if $channels[user].tiki_p_send_newsletters eq 'y'}
-								<a {if $prefs.mobile_mode eq "y"}data-role="button" {/if}class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}" title="{tr}Send Newsletter{/tr}">{icon _id='email' alt="{tr}Send Newsletter{/tr}"}</a> {* mobile *}
+								<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}" title="{tr}Send Newsletter{/tr}">{icon _id='email' alt="{tr}Send Newsletter{/tr}"}</a>
 							{/if}
 							{if $tiki_p_view_newsletter eq 'y'}
-								<a {if $prefs.mobile_mode eq "y"}data-role="button" {/if}class="link" href="tiki-newsletter_archives.php?nlId={$channels[user].nlId}" title="{tr}Archives{/tr}">{icon _id='database' alt="{tr}Archives{/tr}"}</a> {* mobile *}
+								<a class="link" href="tiki-newsletter_archives.php?nlId={$channels[user].nlId}" title="{tr}Archives{/tr}">{icon _id='database' alt="{tr}Archives{/tr}"}</a>
 							{/if}
 							{if $channels[user].tiki_p_admin_newsletters eq 'y'}
-								<a {if $prefs.mobile_mode eq "y"}data-role="button" {/if}class="link" href="tiki-admin_newsletters.php?nlId={$channels[user].nlId}&amp;cookietab=2#anchor2"
-								title="{tr}Admin{/tr}">{icon _id='wrench' alt="{tr}Admin{/tr}"}</a> {* mobile *}
+								<a class="link" href="tiki-admin_newsletters.php?nlId={$channels[user].nlId}&amp;cookietab=2#anchor2"
+								title="{tr}Admin{/tr}">{icon _id='wrench' alt="{tr}Admin{/tr}"}</a>
 							{/if}
-							{if $prefs.mobile_mode eq "y"}</div>{/if} {* mobile *}
 						</td>
 					</tr>
 				{/if}
