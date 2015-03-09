@@ -6792,9 +6792,6 @@ textarea:focus {
 .panel-default > .panel-heading {
   background-color: #464545;
 }
-.meta-section {
-  border-bottom: solid 1px #999999;
-}
 .warning a,
 .warning a:link,
 .warning a:visited {
@@ -6806,7 +6803,6 @@ textarea:focus {
 a.fc-event:hover {
   color: #ffffff;
 }
-/* Fancy filter */
 .filter .fancyfilter {
   border: thin solid #464545 /*black*/;
 }
@@ -6815,9 +6811,7 @@ a.fc-event:hover {
 }
 .note-list .postbody-title {
   background: #303030;
-  /*#ccc*/
   color: #ffffff;
-  /*#000*/
 }
 .post-approved-n {
   border-left: 3px dotted #ffffff;
@@ -6880,17 +6874,17 @@ table.treetable.objectperms td.removed {
 .thumbnailcontener {
   border: solid 1px #464545;
 }
-.progressBarInProgress,
-.progressBarComplete,
-.progressBarError {
+.progressBarInProgress {
   background-color: #ffffff;
-  color: white;
+  color: #3498db;
 }
 .progressBarComplete {
   background-color: #ffffff;
+  color: #00bc8c;
 }
 .progressBarError {
   background-color: #ffffff;
+  color: #f39c12;
 }
 .progressContainer {
   border: solid 1px rgba(0, 0, 0, 0.2);
@@ -6901,7 +6895,7 @@ table.treetable.objectperms td.removed {
 }
 .olControlMousePosition {
   background: rgba(0, 0, 0, 0.75);
-  color: #FFF;
+  color: #222222;
 }
 .olControlScaleLineTop,
 .olControlScaleLineBottom {
@@ -7071,7 +7065,7 @@ div.cvsup {
   background: #ebebeb;
 }
 .readlink {
-  color: black;
+  color: #ffffff;
 }
 .webmail_item {
   border: 1px solid #464545;
@@ -7242,9 +7236,6 @@ div#outerToc * {
   background: #222222;
   color: #ffffff;
   border: solid 2px #ffffff;
-}
-.backlinks_button .cssmenu_horiz ul li {
-  border: 1px solid #ebebeb;
 }
 body.wikitext {
   background: #222222;

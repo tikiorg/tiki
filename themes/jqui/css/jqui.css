@@ -6552,9 +6552,6 @@ button.close {
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffeeeeee', endColorstr='#fff2f2f2', GradientType=0);
 }
-.meta-section {
-  border-bottom: solid 1px #999999;
-}
 .warning a,
 .warning a:link,
 .warning a:visited {
@@ -6566,7 +6563,6 @@ button.close {
 a.fc-event:hover {
   color: #ffffff;
 }
-/* Fancy filter */
 .filter .fancyfilter {
   border: thin solid #cccccc /*black*/;
 }
@@ -6575,9 +6571,7 @@ a.fc-event:hover {
 }
 .note-list .postbody-title {
   background: #ffffff;
-  /*#ccc*/
   color: #333333;
-  /*#000*/
 }
 .post-approved-n {
   border-left: 3px dotted #3c763d;
@@ -6640,17 +6634,17 @@ table.treetable.objectperms td.removed {
 .thumbnailcontener {
   border: solid 1px #dddddd;
 }
-.progressBarInProgress,
-.progressBarComplete,
-.progressBarError {
+.progressBarInProgress {
   background-color: #31708f;
-  color: white;
+  color: #d9edf7;
 }
 .progressBarComplete {
   background-color: #3c763d;
+  color: #dff0d8;
 }
 .progressBarError {
   background-color: #8a6d3b;
+  color: #fcf8e3;
 }
 .progressContainer {
   border: solid 1px rgba(0, 0, 0, 0.2);
@@ -6661,7 +6655,7 @@ table.treetable.objectperms td.removed {
 }
 .olControlMousePosition {
   background: rgba(0, 0, 0, 0.75);
-  color: #FFF;
+  color: #ffffff;
 }
 .olControlScaleLineTop,
 .olControlScaleLineBottom {
@@ -6831,7 +6825,7 @@ div.cvsup {
   background: #eeeeee;
 }
 .readlink {
-  color: black;
+  color: #000000;
 }
 .webmail_item {
   border: 1px solid #999999;
@@ -7002,9 +6996,6 @@ div#outerToc * {
   background: #ffffff;
   color: #000000;
   border: solid 2px #000000;
-}
-.backlinks_button .cssmenu_horiz ul li {
-  border: 1px solid #eeeeee;
 }
 body.wikitext {
   background: #ffffff;
