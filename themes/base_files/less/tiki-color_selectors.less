@@ -3,10 +3,7 @@
 //@imagePathToImgDir: ~"../../../img/";
 @imagePath: ~"../../../img/";
 
-// tiki-admin.less
-.meta-section {
-  border-bottom: solid 1px @gray-light;
-}
+// @import "../../../vendor/twitter/bootstrap/less/variables.less";
 
 // tiki-boxes_and_panels.less
 .warning a,
@@ -15,16 +12,17 @@
   color: @alert-warning-text; // #b93c2e
 }
 
-// tiki-calendar.less
+// tiki-calendar.less - tiki-calendar_calmode.tpl, mod-calendar_new.tpl
 .calhighlight {
   background: @state-info-bg;
 }
+//fullcalendar.js
 a.fc-event:hover {
   color: @tooltip-color;
 }
 
-// tiki-categories.less
-/* Fancy filter */
+// tiki-categories.less - tiki-jquery.js
+// /* Fancy filter */
 .filter {
   .fancyfilter {
     border: thin solid @btn-default-border/*black*/;
@@ -34,13 +32,13 @@ a.fc-event:hover {
   }
 }
 
-// tiki-comments.less
+// tiki-comments.less - tiki-jquery.js
 .note-list .postbody-title {
-  background: @panel-bg;/*#ccc*/
-  color: @panel-default-text;/*#000*/
+  background: @panel-bg;// /*#ccc*/
+  color: @panel-default-text;// /*#000*/
 }
 
-// Comments moderation
+// Comments moderation - comment.tpl, tiki-list_comments.tpl
 .post-approved-n {
   border-left: 3px dotted @alert-success-text;// blue
 }
@@ -104,30 +102,31 @@ a.fc-event:hover {
 }
 
 table.treetable.objectperms td.added {
-  background-color: @state-success-bg// #dfd
+  background-color: @state-success-bg; // #dfd
 }
 
 table.treetable.objectperms td.removed {
   background-color: @state-warning-bg; // #fdd
 }
 
+// tiki-js.js, browse_file_gallery.tpl
 .thumbnailcontener {
   border: solid 1px @thumbnail-border; // #d3d3d3
 }
-
-.progressBarInProgress,
-.progressBarComplete,
-.progressBarError {
+// jquery-tiki/files.js
+.progressBarInProgress {
   background-color: @state-info-text;
-  color: white;
+  color: @state-info-bg;
 }
 
 .progressBarComplete {
   background-color: @state-success-text;
+  color: @state-success-bg;
 }
 
 .progressBarError {
   background-color: @state-warning-text;
+  color: @state-warning-bg;
 }
 
 .progressContainer {
@@ -144,7 +143,7 @@ table.treetable.objectperms td.removed {
 // tiki-maps.less
 .olControlMousePosition {
   background: rgba(0, 0, 0, 0.75);
-  color: #FFF;
+  color: @body-bg; // #fff
 }
 .olControlScaleLineTop,
 .olControlScaleLineBottom {
@@ -344,7 +343,7 @@ div.cvsup {
   background: @gray-lighter;
 }
 .readlink {
-  color: black;
+  color: @text-color; // black;
 }
 
 // /* webmail & groupmail */
@@ -558,9 +557,7 @@ div#outerToc * {
   color: @text-color;
   border: solid 2px @text-color;
 }
-.backlinks_button .cssmenu_horiz ul li {
-  border: 1px solid @gray-lighter;
-}
+
 // /* CKeditor contrast */
 body.wikitext {
   background: @body-bg;
@@ -657,7 +654,7 @@ h6 a.tiki_anchor:hover {
   color: @gray-dark;
 }
 
-// /* img plugin */
+// /* img plugin */ wikiplugin_img.php, article.tpl
 .imgbox {
   border: 1px solid @popover-border-color;
   background-color: @popover-bg;

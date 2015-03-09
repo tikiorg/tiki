@@ -444,10 +444,9 @@ if ( $prefs['feature_jquery_ui'] == 'y' ) {
 	if ( $prefs['jquery_ui_chosen'] == 'y' ) {
 		$headerlib->add_jsfile('vendor/jquery/plugins/chosen/chosen.jquery.js');
 	//	$headerlib->add_cssfile('vendor/jquery/plugins/chosen/chosen.css'); Replaced by github.com/alxlit/bootstrap-chosen
-	//	$headerlib->add_css(
-	//		'.chosen-container .chosen-drop, .chosen-results li { z-index: 10000; color: #444 }
-//.chosen-container-multi .chosen-choices li.search-field input[type="text"] { height: inherit; }'
-//		);
+		$headerlib->add_css(
+			'select { font-size: 16px; padding: 4px; border-color:#fff; /* this forces chrome to apply the font-size */ }'
+		);
 	}
 	$headerlib->add_jsfile('vendor/jquery/jquery-timepicker-addon/dist/jquery-ui-timepicker-addon.js');
 	$headerlib->add_cssfile('vendor/jquery/jquery-timepicker-addon/dist/jquery-ui-timepicker-addon.css');

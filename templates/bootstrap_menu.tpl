@@ -15,7 +15,7 @@
 				</ul>
 			</li>
 		{else}
-			<li class="{$item.class|escape|default:null}{if !empty($item.selected)}active{/if}"><a href="{$item.sefurl|escape}">{tr}{$item.name|escape}{/tr}</a></li>
+			<li class="{$item.class|escape|default:null}{if !empty($item.selected)}active{/if}"><a href="{$item.sefurl|escape}">{tr}{$item.name}{/tr}</a></li>
 		{/if}
 	{/foreach}
 </ul>

@@ -6576,9 +6576,7 @@ h3.panel-title {
   color: black;
   font: 90% "Arial", "Helvetica", sans-serif;
   font-weight: bold;
-  /*  height: 18px;
-  margin: 0px 0px 7px 1em;
-  padding: 0px;*/
+  /*  height: 18px;  margin: 0px 0px 7px 1em;  padding: 0px;*/
   text-transform: uppercase;
 }
 #col2 .panel-default,
@@ -6591,9 +6589,6 @@ h3.panel-title {
 #col3 .panel-heading {
   padding: 10px 15px 0 10px;
 }
-.meta-section {
-  border-bottom: solid 1px #999999;
-}
 .warning a,
 .warning a:link,
 .warning a:visited {
@@ -6605,7 +6600,6 @@ h3.panel-title {
 a.fc-event:hover {
   color: #ffffff;
 }
-/* Fancy filter */
 .filter .fancyfilter {
   border: thin solid #cccccc /*black*/;
 }
@@ -6614,9 +6608,7 @@ a.fc-event:hover {
 }
 .note-list .postbody-title {
   background: #ffffff;
-  /*#ccc*/
   color: #333333;
-  /*#000*/
 }
 .post-approved-n {
   border-left: 3px dotted #3c763d;
@@ -6679,17 +6671,17 @@ table.treetable.objectperms td.removed {
 .thumbnailcontener {
   border: solid 1px #dddddd;
 }
-.progressBarInProgress,
-.progressBarComplete,
-.progressBarError {
+.progressBarInProgress {
   background-color: #31708f;
-  color: white;
+  color: #d9edf7;
 }
 .progressBarComplete {
   background-color: #3c763d;
+  color: #dff0d8;
 }
 .progressBarError {
   background-color: #8a6d3b;
+  color: #fcf8e3;
 }
 .progressContainer {
   border: solid 1px rgba(0, 0, 0, 0.2);
@@ -6700,7 +6692,7 @@ table.treetable.objectperms td.removed {
 }
 .olControlMousePosition {
   background: rgba(0, 0, 0, 0.75);
-  color: #FFF;
+  color: #f4f4f4;
 }
 .olControlScaleLineTop,
 .olControlScaleLineBottom {
@@ -6870,7 +6862,7 @@ div.cvsup {
   background: #eeeeee;
 }
 .readlink {
-  color: black;
+  color: #333333;
 }
 .webmail_item {
   border: 1px solid #dddddd;
@@ -7041,9 +7033,6 @@ div#outerToc * {
   background: #f4f4f4;
   color: #333333;
   border: solid 2px #333333;
-}
-.backlinks_button .cssmenu_horiz ul li {
-  border: 1px solid #eeeeee;
 }
 body.wikitext {
   background: #f4f4f4;
