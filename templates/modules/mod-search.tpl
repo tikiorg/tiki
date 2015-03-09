@@ -73,7 +73,7 @@
 								{icon name="search"}
 							</button>
 							{* {icon _id="magnifier" class="search_mod_magnifier icon"}*}
-							{if $prefs.mobile_mode neq "y"}<div class="btn-group search_mod_buttons box" style="display:none; position: absolute; right: 24px; top: 24px; padding: 0 1em; z-index: 2; white-space: nowrap;">{/if} {* mobile *}
+							<div class="btn-group search_mod_buttons box" style="display:none; position: absolute; right: 24px; top: 24px; padding: 0 1em; z-index: 2; white-space: nowrap;">
 						{/if}
 						{foreach $smod_params.additional_filters as $key => $filter}
 							<input type="hidden" name="filter~{$key|escape}" value="{$filter|escape}"/>
@@ -109,24 +109,22 @@
 							/>
 						{/if}
 						{if $smod_params.compact eq "y"}
-							{if $prefs.mobile_mode neq "y"} {* mobile *}
-								</div> 
-								{jq}
-									$(".search_mod_magnifier").mouseover( function () {
-										$(".search_mod_buttons", $(this).parent())
-										.show('fast')
-										.mouseleave( function () {
-											$(this).hide('fast');
-										});
-									}).click( function () {
-										$(this).parents("form").submit();
-									});
-									$("#search_mod_input_{{$search_mod_usage_counter}}")
-									.keydown( function () { 
-										$(".search_mod_magnifier", $(this).parent()).mouseover();}
-									);
-								{/jq}
-							{/if} {* mobile *}
+							</div>
+							{jq}
+$(".search_mod_magnifier").mouseover( function () {
+	$(".search_mod_buttons", $(this).parent())
+	.show('fast')
+	.mouseleave( function () {
+		$(this).hide('fast');
+	});
+}).click( function () {
+	$(this).parents("form").submit();
+});
+$("#search_mod_input_{{$search_mod_usage_counter}}")
+.keydown( function () {
+	$(".search_mod_magnifier", $(this).parent()).mouseover();}
+);
+							{/jq}
 						{/if}
 					</div>
 				</form>

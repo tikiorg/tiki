@@ -28,9 +28,9 @@
 
 	{*previous*}
 				<div>
-					<a {if $prefs.mobile_mode eq "y"}data-role="button" data-mini="true" data-inline="true" {/if}class="tips" href="{query _type='relative' _ajax=$ajax _class='prev' todate=$focus_prev}" title=":{tr}Previous {$viewmode}{/tr}">
+					<a class="tips" href="{query _type='relative' _ajax=$ajax _class='prev' todate=$focus_prev}" title=":{tr}Previous {$viewmode}{/tr}">
 						{icon name="caret-left"}
-					</a> {* mobile *}
+					</a>
 				</div>
 
 	{*viewmodes*}
@@ -57,9 +57,9 @@
 
 	{*next*}
 				<div>
-					<a {if $prefs.mobile_mode eq "y"}data-role="button" data-mini="true" data-inline="true" {/if}class="tips" href="{query _type='relative' _ajax=$ajax _class='next' todate=$focus_next}" title=":{tr}Next {$viewmode}{/tr}">
+					<a class="tips" href="{query _type='relative' _ajax=$ajax _class='next' todate=$focus_next}" title=":{tr}Next {$viewmode}{/tr}">
 						{icon name="caret-right"}
-					</a> {* mobile *}
+					</a>
 				</div>
 			{/strip}</span>
 		</div>

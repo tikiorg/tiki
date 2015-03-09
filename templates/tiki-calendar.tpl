@@ -10,18 +10,16 @@
 
 <div id="calscreen">
 	<div class="t_navbar form-group">
-		{if $prefs.mobile_mode eq "y"}<div data-role="controlgroup" data-type="horizontal" style="float:right">{/if} {* mobile *}
-			{if $displayedcals|@count eq 1 and $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-				<a {if $prefs.mobile_mode eq "y"}data-role="button" data-mini="true" data-inline="true" {/if}href="tiki-object_watches.php?objectId={$displayedcals[0]|escape:"url"}&amp;watch_event=calendar_changed&amp;objectType=calendar&amp;objectName={$infocals[$x].name|escape:"url"}&amp;objectHref={'tiki-calendar.php?calIds[]='|cat:$displayedcals[0]|escape:"url"}" class="icon" alt="{tr}Group Monitor{/tr}" align='right' hspace="1">{icon name="eye_group"}</a> {* mobile *}
+		{if $displayedcals|@count eq 1 and $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+			<a href="tiki-object_watches.php?objectId={$displayedcals[0]|escape:"url"}&amp;watch_event=calendar_changed&amp;objectType=calendar&amp;objectName={$infocals[$x].name|escape:"url"}&amp;objectHref={'tiki-calendar.php?calIds[]='|cat:$displayedcals[0]|escape:"url"}" class="icon" alt="{tr}Group Monitor{/tr}" align='right' hspace="1">{icon name="eye_group"}</a>
+		{/if}
+		{if $displayedcals|@count eq 1 and $user and $prefs.feature_user_watches eq 'y'}
+			{if $user_watching eq 'y'}
+				<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=remove" class="icon" alt="{tr}Stop Monitoring this Page{/tr}" align="right" hspace="1">{icon name="stop-watching"}</a>
+			{else}
+				<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=add" class="icon" alt="{tr}Monitor this Page{/tr}" align="right" hspace="1">{icon name="watch"}</a>
 			{/if}
-			{if $displayedcals|@count eq 1 and $user and $prefs.feature_user_watches eq 'y'}
-				{if $user_watching eq 'y'}
-					<a {if $prefs.mobile_mode eq "y"}data-role="button" data-mini="true" data-inline="true" {/if}href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=remove" class="icon" alt="{tr}Stop Monitoring this Page{/tr}" align="right" hspace="1">{icon name="stop-watching"}</a> {* mobile *}
-				{else}
-					<a {if $prefs.mobile_mode eq "y"}data-role="button" data-mini="true" data-inline="true" {/if}href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=add" class="icon" alt="{tr}Monitor this Page{/tr}" align="right" hspace="1">{icon name="watch"}</a> {* mobile *}
-				{/if}
-			{/if}
-		{if $prefs.mobile_mode eq "y"}</div>{/if} {* mobile *}
+		{/if}
 
 		{if $tiki_p_admin_calendar eq 'y' or $tiki_p_admin eq 'y'}
 			{if $displayedcals|@count eq 1}
@@ -147,7 +145,6 @@
 	{else}
 		{assign var="timeFormat" value="HH:mm"}
 	{/if}
-
 	{if $prefs.calendar_fullcalendar neq 'y' or $viewlist eq 'list'}
 		{include file='tiki-calendar_nav.tpl'}
 		{if $viewlist eq 'list'}

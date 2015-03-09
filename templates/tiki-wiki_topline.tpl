@@ -88,16 +88,7 @@
 
 				{* all single-action icons under one dropdown*}
 				<div class="btn-group page_actions">
-					<a
-						class="btn btn-link"
-						data-toggle="dropdown"
-						{if $prefs.mobile_mode eq 'y'}
-							data-role="button"
-						{else}
-							data-hover="dropdown"
-						{/if}
-						href="#"
-					>
+					<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
 						{icon name="ellipsis"}
 					</a>
 					<ul class="dropdown-menu dropdown-menu-right">
