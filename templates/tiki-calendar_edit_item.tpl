@@ -71,7 +71,7 @@
 							{$calendar.name|escape}<br>{tr}or{/tr}&nbsp;
 							<input type="submit" class="btn btn-default btn-sm" name="changeCal" value="{tr}Go to{/tr}">
 						{/if}
-						<select name="save[calendarId]" id="calid" onchange="javascript:needToConfirm=false;document.getElementById('editcalitem').submit();" class="form-control">
+						<select name="save[calendarId]" id="calid" onchange="needToConfirm=false;document.getElementById('editcalitem').submit();" class="form-control">
 							{foreach item=it key=itid from=$listcals}
 								{if $it.tiki_p_add_events eq 'y'}
 									{$calstyle = ''}
@@ -135,10 +135,19 @@
 							{else}
 								<div class="checkbox">
 									<label>
-										<input type="checkbox" id="id_recurrent" name="recurrent" value="1" onclick="toggle('recurrenceRules');toggle('startdate');toggle('enddate');togglereminderforrecurrence();"
-										{if $calitem.recurrenceId gt 0 or $recurrent eq 1} checked="checked" {/if}
-										>
+										<input type="checkbox" id="id_recurrent" name="recurrent" value="1"{if $calitem.recurrenceId gt 0 or $recurrent eq 1} checked="checked" {/if}>
 										{tr}This event depends on a recurrence rule{/tr}
+										{jq}
+$("#id_recurrent").click(function () {
+	if ($(this).prop("checked")) {
+		$("#recurrenceRules").show();
+		$(".date").css("visibility", "hidden");
+	} else {
+		$("#recurrenceRules").hide();
+		$(".date").css("visibility", "visible");
+	}
+});
+										{/jq}
 									</label>
 								</div>
 							{/if}
@@ -378,99 +387,23 @@
 			{/if}{* end recurrence *}
 			<div class="form-group col-md-12">
 				<label class="control-label col-md-3">{tr}Start{/tr}</label>
-				<div class="col-md-9">
-					{if $edit}
-						<table>
-							<tr>
-								<td>
-									{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
-										<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);return false;">
-											{icon _id='plus_small' align='left' width='11' height='8'}
-										</a>
-									{/if}
-								</td>
-								<td rowspan="2">
-									<div id="startdate">
-										{if $prefs.feature_jscalendar eq 'y' and $prefs.javascript_enabled eq 'y'}
-											{jscalendar id="start" date=$calitem.start fieldname="save[date_start]" align="Bc" showtime='n'}
-										{else}
-											{html_select_date prefix="start_date_" time=$calitem.start field_order=$prefs.display_field_order start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year}
-										{/if}
-									</div>
-								</td>
-								<td>
-									<span id="starttimehourplus"{$hidden_if_all_day}>
-										<a href="#" onclick="document.f.start_Hour.selectedIndex=(document.f.start_Hour.selectedIndex+1);return false;">
-											{icon _id='plus_small' align='left' width='11' height='8'}
-										</a>
-									</span>
-								</td>
-								<td rowspan="2" class="html_select_time">
-									<span id="starttime"{$hidden_if_all_day}>
-										{html_select_time prefix="start_" display_seconds=false time=$calitem.start minute_interval=$prefs.calendar_timespan
-										hour_minmax=$hour_minmax use_24_hours=$use_24hr_clock}
-									</span>
-								</td>
-								<td style="border:0;padding-top:2px;vertical-align:middle">
-									<span id="starttimeminplus"{$hidden_if_all_day}>
-										<a href="#" onclick="document.f.start_Minute.selectedIndex=(document.f.start_Minute.selectedIndex+1);return false;">
-										{icon _id='plus_small' align='left' width='11' height='8'}
-										</a>
-									</span>
-								</td>
-								<td style="border:0;padding-top:2px;vertical-align:middle;" rowspan="2">
-									<label for="alldayid">
-										<input type="checkbox" id="alldayid" name="allday"
-										onclick="toggleSpan('starttimehourplus');
-										toggleSpan('starttimehourminus');
-										toggleSpan('starttime');
-										toggleSpan('starttimeminplus');
-										toggleSpan('starttimeminminus');
-										toggleSpan('endtimehourplus');
-										toggleSpan('endtimehourminus');
-										toggleSpan('endtime');
-										toggleSpan('endtimeminplus');
-										toggleSpan('endtimeminminus');
-										toggleSpan('durhourplus');
-										toggleSpan('durhourminus');
-										toggleSpan('duration');
-										toggleSpan('duratione');
-										toggleSpan('durminplus');
-										toggleSpan('durminminus');"
-										value="true"
-										{if $calitem.allday}
-											checked="checked"
-										{/if}
-										>
-										{tr}All day{/tr}
-									</label>
-								</td>
-							</tr>
-							<tr>
-								<td style="border:0;vertical-align:middle">
-									{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
-										<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex-1);return false;">
-											{icon _id='minus_small' align='left' width='11' height='8'}
-										</a>
-									{/if}
-								</td>
-								<td style="border:0;vertical-align:middle">
-									<span id="starttimehourminus"{$hidden_if_all_day}>
-										<a href="#" onclick="document.f.start_Hour.selectedIndex=(document.f.start_Hour.selectedIndex-1);return false;">
-											{icon _id='minus_small' align='left' width='11' height='8'}
-										</a>
-									</span>
-								</td>
-								<td style="border:0;vertical-align:middle">
-									<span id="starttimeminminus"{$hidden_if_all_day}>
-										<a href="#" onclick="document.f.start_Minute.selectedIndex=(document.f.start_Minute.selectedIndex-1);return false;">
-											{icon _id='minus_small' align='left' width='11' height='8'}
-										</a>
-									</span>
-								</td>
-							</tr>
-						</table>
-					{else}
+				{if $edit}
+					<div class="col-md-4 start date">
+						{if $prefs.feature_jscalendar eq 'y' and $prefs.javascript_enabled eq 'y'}
+							{jscalendar id="start" date=$calitem.start fieldname="save[date_start]" align="Bc" showtime='n'}
+						{else}
+							{html_select_date prefix="start_date_" time=$calitem.start field_order=$prefs.display_field_order start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year}
+						{/if}
+					</div>
+					<div class="col-md-3 start time">
+						{html_select_time prefix="start_" display_seconds=false time=$calitem.start minute_interval=$prefs.calendar_timespan use_24_hours=$use_24hr_clock}
+					</div>
+					<label class="col-md-2">
+						<input type="checkbox" name="allday" id="allday" value="true" {if $calitem.allday} checked="checked"{/if}>
+						{tr}All day{/tr}
+					</label>
+				{else}
+					<div class="col-md-9">
 						{if $calitem.allday}
 							<abbr class="dtstart" title="{$calitem.start|tiki_short_date}">
 								{$calitem.start|tiki_long_date}
@@ -480,134 +413,33 @@
 								{$calitem.start|tiki_long_datetime}
 							</abbr>
 						{/if}
-					{/if}
-				</div>
+					</div>
+				{/if}
 			</div> <!-- / .form-group -->
-			<div class="form-group">
+			<div class="form-group col-md-12">
 				<label class="control-label col-md-3">{tr}End{/tr}</label>
-				<div class="col-md-9">
-					{if $edit}
-						<input type="hidden" name="save[end_or_duration]" value="end" id="end_or_duration">
-						<div id="end_date">
-							{* the display:block inline style used here is needed to make toggle() function work properly *}
-							<table cellpadding="0" cellspacing="0" border="0">
-								<tr>
-									<td style="border:0;padding-top:2px;vertical-align:middle">
-										{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
-											<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);return false;">
-												{icon _id='plus_small' align='left' width='11' height='8'}
-											</a>
-										{/if}
-									</td>
-									<td rowspan="2" style="border:0;vertical-align:middle">
-										<div id="enddate">
-											{if $prefs.feature_jscalendar eq 'y' and $prefs.javascript_enabled eq 'y'}
-												{jscalendar id="end" date=$calitem.end fieldname="save[date_end]" align="Bc" showtime='n'}
-											{else}
-												{html_select_date prefix="end_date_" time=$calitem.end field_order=$prefs.display_field_order start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year}
-											{/if}
-										</div>
-									</td>
-									<td style="border:0;padding-top:2px;vertical-align:middle">
-										<span id="endtimehourplus"{$hidden_if_all_day}>
-											<a href="#" onclick="document.f.end_Hour.selectedIndex=(document.f.end_Hour.selectedIndex+1);return false;">
-												{icon _id='plus_small' align='left' width='11' height='8'}
-											</a>
-										</span>
-									</td>
-									<td rowspan="2" style="border:0;vertical-align:middle" class="html_select_time">
-										<span id="endtime"{$hidden_if_all_day}>
-											{html_select_time prefix="end_" display_seconds=false time=$calitem.end minute_interval=$prefs.calendar_timespan
-											hour_minmax=$hour_minmax use_24_hours=$use_24hr_clock}
-										</span>
-									</td>
-									<td style="border:0;padding-top:2px;vertical-align:middle">
-										<span id="endtimeminplus"{$hidden_if_all_day}>
-											<a href="#" onclick="document.f.end_Minute.selectedIndex=(document.f.end_Minute.selectedIndex+1);return false;">
-												{icon _id='plus_small' align='left' width='11' height='8'}
-											</a>
-										</span>
-									</td>
-									<td rowspan="2" style="border:0;padding-top:2px;vertical-align:middle">
-										<span id="duration"{$hidden_if_all_day}>
-											<a href="#" onclick="document.getElementById('end_or_duration').value='duration';flip('end_duration');flip('end_date');return false;return false;">
-												{tr}Show duration{/tr}
-											</a>
-										</span>
-									</td>
-								</tr>
-								<tr>
-									<td style="border:0;vertical-align:middle">
-										{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
-											<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex-1);return false;">
-												{icon _id='minus_small' align='left' width='11' height='8'}
-											</a>
-										{/if}
-									</td>
-									<td style="border:0;vertical-align:middle">
-										<span id="endtimehourminus"{$hidden_if_all_day}>
-											<a href="#" onclick="document.f.end_Hour.selectedIndex=(document.f.end_Hour.selectedIndex-1);return false;">
-												{icon _id='minus_small' align='left' width='11' height='8'}
-											</a>
-										</span>
-									</td>
-									<td style="border:0;vertical-align:middle">
-										<span id="endtimeminminus"{$hidden_if_all_day}>
-											<a href="#" onclick="document.f.end_Minute.selectedIndex=(document.f.end_Minute.selectedIndex-1);return false;">
-												{icon _id='minus_small' align='left' width='11' height='8'}
-											</a>
-										</span>
-									</td>
-								</tr>
-							</table>
-						</div>
-						<div id="end_duration" style="display:none;">
-							<table cellpadding="0" cellspacing="0" border="0">
-								<tr>
-									<td style="border:0;padding-top:2px;vertical-align:middle">
-										<span id="durhourplus"{$hidden_if_all_day}>
-											<a href="#" onclick="document.f.duration_Hour.selectedIndex=(document.f.duration_Hour.selectedIndex+1);return false;">
-												{icon _id='plus_small' align='left' width='11' height='8'}
-											</a>
-										</span>
-									</td>
-									<td style="border:0;vertical-align:middle" rowspan="2" class="html_select_time">
-										<span id="duratione"{$hidden_if_all_day}>
-											{html_select_time prefix="duration_" display_seconds=false time=$calitem.duration|default:'01:00' minute_interval=$prefs.calendar_timespan}
-										</span>
-									</td>
-									<td style="border:0;padding-top:2px;vertical-align:middle">
-										<span id="durminplus"{$hidden_if_all_day}>
-											<a href="#" onclick="document.f.duration_Minute.selectedIndex=(document.f.duration_Minute.selectedIndex+1);return false;">
-												{icon _id='plus_small' align='left' width='11' height='8'}
-											</a>
-										</span>
-									</td>
-									<td rowspan="2" style="border:0;padding-top:2px;vertical-align:middle">
-										<a href="#" onclick="document.getElementById('end_or_duration').value='end';flip('end_date');flip('end_duration');return false;">
-											{tr}Show end date and time{/tr}
-										</a>
-									</td>
-								</tr>
-								<tr>
-									<td style="border:0;vertical-align:middle">
-										<span id="durhourminus"{$hidden_if_all_day}>
-											<a href="#" onclick="document.f.duration_Hour.selectedIndex=(document.f.duration_Hour.selectedIndex-1);return false;">
-												{icon _id='minus_small' align='left' width='11' height='8'}
-											</a>
-										</span>
-									</td>
-									<td style="border:0;vertical-align:middle">
-										<span id="durminminus"{$hidden_if_all_day}>
-											<a href="#" onclick="document.f.duration_Minute.selectedIndex=(document.f.duration_Minute.selectedIndex-1);return false;">
-												{icon _id='minus_small' align='left' width='11' height='8'}
-											</a>
-										</span>
-									</td>
-								</tr>
-							</table>
-						</div>
-					{else}
+				{if $edit}
+					<input type="hidden" name="save[end_or_duration]" value="end" id="end_or_duration">
+					<div class="col-md-4 end date">
+							{if $prefs.feature_jscalendar eq 'y' and $prefs.javascript_enabled eq 'y'}
+								{jscalendar id="end" date=$calitem.end fieldname="save[date_end]" align="Bc" showtime='n'}
+							{else}
+								{html_select_date prefix="end_date_" time=$calitem.end field_order=$prefs.display_field_order start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year}
+							{/if}
+					</div>
+					<div class="col-md-3 end time">
+						{html_select_time prefix="end_" display_seconds=false time=$calitem.end minute_interval=$prefs.calendar_timespan use_24_hours=$use_24hr_clock}
+					</div>
+					<div class="col-md-3 duration time" style="display:none;">
+						{html_select_time prefix="duration_" display_seconds=false time=$calitem.duration|default:'01:00' minute_interval=$prefs.calendar_timespan}
+					</div>
+					<div class="col-md-2 time">
+						<a href="#" id="durationBtn" class="btn btn-xs">
+							{tr}Show duration{/tr}
+						</a>
+					</div>
+				{else}
+					<div class="col-md-9">
 						{if $calitem.allday}
 							{if $calitem.end}
 								<abbr class="dtend" title="{$calitem.end|tiki_short_date}">
@@ -625,15 +457,83 @@
 								</abbr>
 							{/if}
 						{/if}
-					{/if}
-					{if $impossibleDates}
-						<br>
-						<span style="color:#900;">
-							{tr}Events cannot end before they start{/tr}
-						</span>
-					{/if}
-				</div>
+					</div>
+				{/if}
+				{if $impossibleDates}
+					<br>
+					<span style="color:#900;">
+						{tr}Events cannot end before they start{/tr}
+					</span>
+				{/if}
 			</div> <!-- / .form-group -->
+			{jq}
+$("#allday").click(function () {
+	if ($(this).prop("checked")) {
+		$(".time").css("visibility", "hidden");
+	} else {
+		$(".time").css("visibility", "visible");
+	}
+});
+$("#durationBtn").click(function () {
+	if ($(".duration.time:visible").length) {
+		$(".duration.time").hide();
+		$(".end.time").show();
+		$(this).text("{tr}Show duration{/tr}");
+		$("#end_or_duration").val("end");
+	} else {
+		$(".duration.time").show();
+		$(".end.time").hide();
+		$(this).text("{tr}Show end time{/tr}");
+		$("#end_or_duration").val("duration");
+	}
+	return false;
+});
+
+var getEventTimes = function() {
+	var out = {};
+	out.start = new Date($("#start").val() * 1000);
+	out.start.setHours($("select[name=start_Hour]").val());
+	out.start.setMinutes($("select[name=start_Minute]").val());
+	out.end = new Date($("#end").val() * 1000);
+	out.end.setHours($("select[name=end_Hour]").val());
+	out.end.setMinutes($("select[name=end_Minute]").val());
+	out.duration = new Date(0);
+	out.duration.setHours($("select[name=duration_Hour]").val());
+	out.duration.setMinutes($("select[name=duration_Minute]").val());
+
+	return out;
+};
+var fNum = function (num) {
+	var str = "0" + num;
+	return str.substring(str.length - 2);
+};
+
+$(".start.time select, .duration.time select, #start").change(function () {
+	var times = getEventTimes();
+	times.end = new Date(times.start.getTime() + times.duration.getTime());
+	$("select[name=end_Hour]").val(fNum(times.end.getHours())).trigger("chosen:updated");
+	$("select[name=end_Minute]").val(fNum(times.end.getMinutes())).trigger("chosen:updated");
+	$("#end").next()
+		.datepicker("setDate", $.datepicker.formatDate($("#end").next().datepicker("option", "dateFormat"), times.end))
+		.datepicker("show").datepicker("hide");
+});
+$(".end.time select, #end").change(function () {
+	var times = getEventTimes(),
+		s = times.start.getTime(),
+		e = times.end.getTime();
+	if (e <= s) {
+		$("select[name=start_Hour]").val(fNum(times.end.getHours())).trigger("chosen:updated");
+		$("select[name=start_Minute]").val(fNum(times.end.getMinutes())).trigger("chosen:updated");
+		$("#start").next()
+			.datepicker("setDate", $.datepicker.formatDate($("#start").next().datepicker("option", "dateFormat"), times.end))
+			.datepicker("show").datepicker("hide");
+		s = e;
+	}
+	times.duration = new Date(e - s);
+	$("select[name=duration_Hour]").val(fNum(times.duration.getHours())).trigger("chosen:updated");
+	$("select[name=duration_Minute]").val(fNum(times.duration.getMinutes())).trigger("chosen:updated");
+}).change();	// set duration on load
+			{/jq}
 			{if $edit or !empty($calitem.parsed)}
 				<div class="form-group">
 					<label class="control-label col-md-3">{tr}Description{/tr}</label>
