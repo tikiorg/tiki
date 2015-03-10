@@ -15,4 +15,7 @@
 		</li>
 	{/foreach}
 </ul>
+{if isset($more) && $more eq 'y'}
+	<a class="freetagged" href="{$moreurl}">{tr}{$moretext|escape}{/tr}…</a>
+{/if}
 {/if}

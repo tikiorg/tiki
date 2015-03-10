@@ -128,7 +128,35 @@ function wikiplugin_freetagged_info()
 				'description' => tra('Height or width in pixels. Default = 0 (no maximum)'),
 				'filter' => 'text',
 				'default' => 0
-			)
+			),
+			'more' => array(
+				'required' => false,
+				'name' => tra('More'),
+				'description' => tra('Show a \'more\' link that links to the full list of tagged objects (not shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
+			'moreurl' => array(
+				'required' => false,
+				'name' => tra('More URL'),
+				'description' => tra('Alternate "more" link pointing to specified URL instead of default full list of tagged objects'),
+				'filter' => 'url',
+				'default' => 'tiki-browse_freetags.php',
+				'parent' => array('name' => 'more', 'value' => 'y'),
+			),
+			'moretext' => array(
+				'required' => false,
+				'name' => tra('More label'),
+				'description' => tra('Alternate text to display on the "more" link (default is "more")'),
+				'filter' => 'raw',
+				'default' => 'more',
+				'parent' => array('name' => 'more', 'value' => 'y'),
+			),
 		)
 	);
 }
@@ -151,6 +179,9 @@ function wikiplugin_freetagged($data, $params)
 		'h_level' => '3',
 		'titles_only' => 'n',
 		'max_image_size' => 0,
+		'more' => 'n',
+		'moreurl' => 'tiki-browse_freetags.php',
+		'moretext' => 'more',
 	);
 	
 	$params = array_merge($defaults, $params);
@@ -162,6 +193,14 @@ function wikiplugin_freetagged($data, $params)
 	
 	$sort_mode = str_replace('created', 'o.`created`', $sort_mode);
 	
+	// We only display the "more" link if the number of displayed values is limited and there are more values than displayed
+	// so we might need one more item just to know if there are more values than displayed
+	if ( $maxRecords > 0 && $more == 'y' ) {
+		$maxReturned = $maxRecords + 1;
+	} else {
+		$maxReturned = $maxRecords;
+	}
+
 	if ( !$tags && $object = current_object() ) {
 		$tagArray = array();
 		$ta = $freetaglib->get_tags_on_object($object['object'], $object['type']);
@@ -173,14 +212,35 @@ function wikiplugin_freetagged($data, $params)
 			$type = $object['type'];
 		}
 		
-		$objects = $freetaglib->get_similar($object['type'], $object['object'], $maxRecords, $type);
+		$objects = $freetaglib->get_similar($object['type'], $object['object'], $maxReturned, $type);
 		
 	} else {
 		$tagArray = $freetaglib->_parse_tag($tags);
-		$objects = $freetaglib->get_objects_with_tag_combo($tagArray, $type, '', 0, $maxRecords, $sort_mode, $find, $broaden);
+		$objects = $freetaglib->get_objects_with_tag_combo($tagArray, $type, '', 0, $maxReturned, $sort_mode, $find, $broaden);
 		$objects = $objects['data'];
 	}
 	
+	if ( $more == 'y' && count($objects) == $maxReturned ) {
+		array_pop($objects);
+		$smarty->assign('more','y');
+	} else {
+		$smarty->assign('more','n');
+	}
+
+	$moreurlparams = 'tag='.$tags.'&old_type='.urlencode($type).'&sort_mode='.urlencode($params['sort_mode']).'&find='.urlencode($find).'&broaden='.urlencode($broaden);
+	if ( strpos($moreurl,'?') === FALSE ) {
+		$moreurl = $moreurl . '?' . $moreurlparams;
+	} else {
+		$moreurl = $moreurl . '&' . $moreurlparams;
+	}
+	$smarty->assign_by_ref('moreurl', $moreurl);
+
+	if ( isset($moretext) ) {
+		$smarty->assign_by_ref('moretext', $moretext);
+	} else {
+		$smarty->assign('moretext', 'more');
+	}
+
 	foreach ($objects as &$obj) {
 		if ($titles_only == 'n') {
 			switch ($obj['type']) {
