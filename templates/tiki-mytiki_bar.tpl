@@ -8,7 +8,7 @@
 		{button _icon_name="administer" class="btn btn-default" _text="{tr}Preferences{/tr}" href="tiki-user_preferences.php"}
 	{/if}
 
-	{button _icon_name="info" class="btn btn-default" _text="{tr}MyInfo{/tr}" href="tiki-user_information.php"}
+	{button _icon_name="info" class="btn btn-default" _text="{tr}My Info{/tr}" href="tiki-user_information.php"}
 
 	{if $prefs.feature_user_watches eq 'y'}
 		{button _icon_name="watch" _text="{tr}My Watches{/tr}" href="tiki-user_watches.php"}
