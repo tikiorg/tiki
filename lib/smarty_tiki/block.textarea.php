@@ -115,9 +115,9 @@ JS
 		$remrepeat = false;
 		$html .= smarty_block_remarksbox(
 			array( 'type'=>'warning', 'title'=>tra('Warning')),
-			tra('This edit session will expire in') .
+			'<p>' . tra('This edit session will expire in') .
 			' <span id="edittimeout">' . (ini_get('session.gc_maxlifetime') / 60) .'</span> '. tra('minutes') . '. ' .
-			tra('<strong>Preview</strong> (if available) or <strong>Save</strong> your work to restart the edit session timer'),
+			tra('<strong>Preview</strong> (if available) or <strong>Save</strong> your work to restart the edit session timer') . '</p>',
 			$smarty,
 			$remrepeat
 		)."\n";
@@ -342,7 +342,7 @@ function editTimerTick() {
 			minutes = seconds / 60;
 			edittimeout.text( minutes );
 		} else if ( seconds <= 0 ) {
-			edittimeout.parents('.rbox-data:first').text('".addslashes(tra('Your edit session has expired'))."');
+			edittimeout.parents('.alert:first p').text('".addslashes(tra('Your edit session has expired'))."');
 		}
 	}
 
