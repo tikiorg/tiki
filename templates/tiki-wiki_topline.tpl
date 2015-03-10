@@ -60,12 +60,12 @@
 						</a>
 						<ul class="dropdown-menu dropdown-menu-right" role="menu">
 							<li class="dropdown-title">
-								{tr}Structures this page is included in{/tr}
+								{tr}Structures{/tr}
 							</li>
 							<li class="divider"></li>
 							<li role="presentation">
 								{section name=struct loop=$showstructs}
-									<a href="tiki-index.php?page={$page}&structure={$showstructs[struct].pageName|escape}" {if $showstructs[struct].pageName eq $structure_path[0].pageName} title="Current structure: {$showstructs[struct].pageName|escape}" class="selected" {else} title="{tr}Move to structure{/tr}: {$showstructs[struct].pageName|escape}"{/if}>
+									<a href="tiki-index.php?page={$page}&structure={$showstructs[struct].pageName|escape}" {if $showstructs[struct].pageName eq $structure_path[0].pageName} title="Current structure: {$showstructs[struct].pageName|escape}" class="selected tips" {else} class="tips" title="{tr}Show structure{/tr}: {$showstructs[struct].pageName|escape}"{/if}>
 										{if $showstructs[struct].page_alias}
 											{$showstructs[struct].page_alias}
 										{else}
@@ -76,7 +76,7 @@
 								{if $showstructs[struct].pageName neq $structure_path[0].pageName}
 							<li role="presentation" class="divider"></li>
 							<li role="presentation">
-								<a href="tiki-index.php?page={$page|escape:url}" title="{tr}Hide structure bar and any toc{/tr}">
+								<a href="tiki-index.php?page={$page|escape:url}" class="tips" title=":{tr}Hide structure bar and any toc{/tr}">
 									{tr}Hide structure{/tr}
 								</a>
 							</li>
