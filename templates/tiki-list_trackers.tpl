@@ -107,6 +107,7 @@
 								class="tips"
 								title="{$tracker.name|escape}:{tr}Export{/tr}"
 								data-toggle="modal"
+								data-backdrop="static"
 								data-target="#bootstrap-modal"
 								href="{service controller=tracker action=export trackerId=$tracker.trackerId modal=1}"
 							>
@@ -118,6 +119,7 @@
 								class="tips"
 								title="{$tracker.name|escape}:{tr}Import{/tr}"
 								data-toggle="modal"
+								data-backdrop="static"
 								data-target="#bootstrap-modal"
 								href="{service controller=tracker action=import_items trackerId=$tracker.trackerId modal=1}"
 							>
@@ -127,6 +129,7 @@
 								class="tips"
 								title="{$tracker.name|escape}:{tr}Events{/tr}"
 								data-toggle="modal"
+								data-backdrop="static"
 								data-target="#bootstrap-modal"
 								href="{service controller=tracker_todo action=view trackerId=$tracker.trackerId modal=1}"
 							>
@@ -199,6 +202,7 @@
 								class="tips"
 								title="{$tracker.name|escape}:{tr}Edit{/tr}"
 								data-toggle="modal"
+								data-backdrop="static"
 								data-target="#bootstrap-modal"
 								href="{service controller=tracker action=replace trackerId=$tracker.trackerId modal=true}"
 							>
