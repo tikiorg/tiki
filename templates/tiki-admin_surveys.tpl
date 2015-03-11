@@ -93,7 +93,7 @@
 					{textarea name="description" rows="6" id="description" class="form-control" _toolbars='y' _simple='y' comments='y'}{$info.description}{/textarea}
 				</div>
 			</div>
-			<div class=" table spacer-bottom-15px">
+			<div class="margin-bottom-md">
 				{include file='categorize.tpl'}
 			</div>
 			<div class="form-group">

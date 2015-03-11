@@ -3,7 +3,7 @@
 {strip}
 {title help="Modules" admpage="module"}{tr}Admin Modules{/tr}{/title}
 
-<div class="t_navbar form-group spacer-bottom-15px">
+<div class="t_navbar margin-bottom-md">
 	{button href="tiki-admin_modules.php?clear_cache=1" class="btn btn-default" _text="{tr}Clear Cache{/tr}"}
 	{if $tiki_p_edit_menu eq 'y'}
 		{button href="tiki-admin_menus.php" class="btn btn-default" _text="{tr}Admin Menus{/tr}"}
@@ -52,7 +52,7 @@
 			</legend>
 		{/if}
 		<h2>{tr}Assigned Modules{/tr}</h2>
-		<div class="form-group spacer-bottom-15px">
+		<div class="margin-bottom-md">
 			{button edit_assign=0 cookietab=2 _auto_args="edit_assign,cookietab" _text="{tr}Add module{/tr}"}
 		</div>
 

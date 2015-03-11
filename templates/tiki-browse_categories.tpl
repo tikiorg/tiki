@@ -11,7 +11,7 @@
 	{/if}
 </div>
 
-<div class="t_navbar form-group spacer-bottom-15px">
+<div class="t_navbar margin-bottom-md">
 	{tr}Browse in:{/tr}
 	<div class="btn-group">
 		<a class="btn btn-default" {if $type eq ''} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep}&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}All{/tr}</a>

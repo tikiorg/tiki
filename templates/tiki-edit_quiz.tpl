@@ -6,7 +6,7 @@
 
 {title help="Quiz"}{tr}Admin Quizzes{/tr}{/title}
 
-<div class="t_navbar form-group spacer-bottom-15px">
+<div class="t_navbar margin-bottom-md">
 	{button href="tiki-list_quizzes.php" class="btn btn-default" _text="{tr}List Quizzes{/tr}"}
 	{button href="tiki-quiz_stats.php" class="btn btn-default" _text="{tr}Quiz Stats{/tr}"}
 </div>

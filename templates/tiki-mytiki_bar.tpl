@@ -1,4 +1,4 @@
-<div class="t_navbar btn-block form-group spacer-bottom-15px">
+<div class="t_navbar btn-block margin-bottom-md">
 
 	{if $prefs.feature_userPreferences eq 'y'}
 		{button _icon_name="home" class="btn btn-default" _text="{tr}My Account{/tr}" href="tiki-my_tiki.php"}
