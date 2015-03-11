@@ -412,6 +412,7 @@ function wikiplugin_img( $data, $params )
 	$imgdata['title'] = '';
 	$imgdata['metadata'] = '';
 	$imgdata['alt'] = '';
+	$imgdata['responsive'] = 'y';
 	$imgdata['default'] = '';
 	$imgdata['mandatory'] = '';
 	$imgdata['fromFieldId'] = 0;		// "private" params set by Tracker_Field_Files
