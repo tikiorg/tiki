@@ -7266,6 +7266,10 @@ h6 a.tiki_anchor:hover {
 .wp-cookie-consent-required {
   color: #ffffff;
 }
+.wp-sign {
+  color: #ffffff;
+  background-color: #3e3f3a;
+}
 .toc {
   border-top: 1px dotted #dfd7ca;
   border-bottom: 1px dotted #dfd7ca;

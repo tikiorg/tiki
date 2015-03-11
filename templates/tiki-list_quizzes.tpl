@@ -1,7 +1,7 @@
 {* $Id$ *}
 {title help="Quiz"}{tr}Quizzes{/tr}{/title}
 
-<div class="t_navbar form-group spacer-bottom-15px">
+<div class="t_navbar margin-bottom-md">
 	{if $tiki_p_admin_quizzes eq 'y'}
 			{button href="tiki-edit_quiz.php" class="btn btn-default" _text="{tr}Admin Quizzes{/tr}"}
 	{/if}

@@ -36,13 +36,9 @@
 
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
-			<a role="button" class="btn btn-default btn-sm" href="tiki-listpages.php" title="{tr}List{/tr}">
-				{icon name="list"} {tr}Wiki Pages{/tr}
-			</a>
+			{button _icon_name='admin_wiki' _text='{tr}Pages{/tr}' class='btn btn-default btn-sm' _script='tiki-listpages.php' _title='{tr}List wiki pages{/tr}'}
 			{if $prefs.feature_wiki_structure eq "y" and $tiki_p_view eq "y"}
-				<a role="button" class="btn btn-default btn-sm" href="tiki-admin_structures.php" title="{tr}List{/tr}">
-					{icon name="admin"} {tr}Wiki Structures{/tr}
-				</a>
+				{button _icon_name='structure' _text='{tr}Structures{/tr}' class='btn btn-default btn-sm' _script='tiki-admin_structures.php' _title='{tr}List structures{/tr}'}
 			{/if}
 			<div class="pull-right">
 				<input type="submit" class="btn btn-primary btn-sm" name="wikisetprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />

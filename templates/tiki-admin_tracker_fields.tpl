@@ -67,12 +67,14 @@
 			}
 
 			if ($(form.action).val() === 'export_fields') {
-				$.openModal({
-					remote: $.service('tracker', 'export_fields') + '?' + $(form).serialize() + '&modal=1',
-					open: function () {
-						$('textarea', this).select();
-					}
+				var url = $.serviceUrl({ controller: 'tracker', action: 'export_fields' });
+				var target = $('.modal.fade:not(.in)').first();
+				$.post(url, $(form).serialize() + '&modal=1', function (data) {
+					$(".modal-content", target).html(data);
+					target.modal();
 				});
+				return false;
+
 			} else {
 				$.ajax($(form).attr('action'), {
 					type: 'POST',

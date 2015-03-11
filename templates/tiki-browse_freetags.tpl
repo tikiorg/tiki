@@ -46,7 +46,7 @@
 			<input type="submit" class="btn btn-default" value="{tr}Go{/tr}">
 		</div>
 	</div>
-	<div class="row table spacer-bottom-15px">
+	<div class="row margin-bottom-md">
 		<div class="col-sm-10 col-sm-offset-2 radio">
 			<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 			<input type="radio" name="broaden" class="radio" id="stopb1" value="n"{if $broaden eq 'n'} checked="checked"{/if}>
@@ -69,7 +69,7 @@
 				}
 		{/jq}
 
-		<div class="freetaglist table spacer-bottom-15px">
+		<div class="freetaglist margin-bottom-md">
 			{foreach from=$most_popular_tags item=popular_tag}
 				{capture name=tagurl}{if (strstr($popular_tag.tag, ' '))}"{$popular_tag.tag}"{else}{$popular_tag.tag}{/if}{/capture}
 				<a class="freetag_{$popular_tag.size}{if $tag eq $popular_tag.tag|escape} selectedtag{/if}" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}" onclick="javascript:addTag('{$popular_tag.tag|escape:'javascript'}');return false;" ondblclick="location.href=this.href;"{if $popular_tag.color} style="color:{$popular_tag.color}"{/if}>{$popular_tag.tag|escape}</a>

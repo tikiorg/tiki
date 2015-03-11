@@ -1,6 +1,12 @@
 // $Id$
-// Values are specified here to be used in the tiki.less (and tiki.css) files.
+// Values are specified here to be used in the tiki_base.less imported files, etc.
 //
+
+// These can be used in div class="row" or others that don't have a bottom margin but need one.
+.margin-bottom-xs {margin-bottom: ceil(@line-height-computed / 4);}
+.margin-bottom-sm {margin-bottom: ceil(@line-height-computed / 2);}
+.margin-bottom-md {margin-bottom: @line-height-computed;}
+.margin-bottom-lg {margin-bottom: ceil(@line-height-computed * 2);}
 
 @chosen-background: @input-bg;
 @chosen-border: 1px solid @input-border;

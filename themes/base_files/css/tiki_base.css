@@ -1,6 +1,18 @@
 /* $Id: tiki.css 51153 2014-05-05 09:25:28Z chibaguy $
 	This Tiki Wiki CMS Groupware file contains global design
 	and layout properties. */
+.margin-bottom-xs {
+  margin-bottom: 5px;
+}
+.margin-bottom-sm {
+  margin-bottom: 10px;
+}
+.margin-bottom-md {
+  margin-bottom: 20px;
+}
+.margin-bottom-lg {
+  margin-bottom: 40px;
+}
 .warning a,
 .warning a:link,
 .warning a:visited {
@@ -541,6 +553,10 @@ h6 a.tiki_anchor:hover {
 }
 .wp-cookie-consent-required {
   color: #a94442;
+}
+.wp-sign {
+  color: #ffffff;
+  background-color: #000000;
 }
 .toc {
   border-top: 1px dotted #777777;

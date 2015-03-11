@@ -288,6 +288,9 @@ function iconset_legacy()
 			'history' => array(
 				'id' => 'clock',
 			),
+			'home' => array(
+				'id' => 'house',
+			),
 			'import' => array(
 				'id' => 'upload',
 			),
@@ -407,6 +410,9 @@ function iconset_legacy()
 				'id' => 'tick',
 			),
 			'tag' => array(
+				'id' => 'tag_blue',
+			),
+			'tags' => array(
 				'id' => 'tag_blue',
 			),
 			'theme' => array(

@@ -95,7 +95,7 @@ function wikiplugin_bigbluebutton( $data, $params )
 
 		if ( ! $bigbluebuttonlib->roomExists($meeting) ) {
 			if ( ! isset($_POST['bbb']) || $_POST['bbb'] != $meeting || ! $perms->bigbluebutton_create ) {
-				if ($perms->bigbluebutton_view_rec && $params['recording']) {
+				if ($perms->bigbluebutton_view_rec) {
 					$smarty->assign('bbb_recordings', $bigbluebuttonlib->getRecordings($meeting));
 				} else {
 					$smarty->assign('bbb_recordings', null);
@@ -104,7 +104,7 @@ function wikiplugin_bigbluebutton( $data, $params )
 			}
 		}
 
-		if ($perms->bigbluebutton_view_rec && $params['recording']) {
+		if ($perms->bigbluebutton_view_rec) {
 			$smarty->assign('bbb_recordings', $bigbluebuttonlib->getRecordings($meeting));
 		} else {
 			$smarty->assign('bbb_recordings', null);
