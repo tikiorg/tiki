@@ -320,6 +320,18 @@ function wikiplugin_img_info()
 				'description' => tra('Alternate text that displays when image does not load. Set to "Image" by default.'),
 				'default' => 'Image',
 			),
+			'responsive' => array(
+				'required' => false,
+				'name' => tra('Responsive image'),
+				'filter' => 'text',
+				'description' => tra('Determines whether the image has the img-responsive class: y/n '),
+				'advanced' => false,
+				'default' => 'y',				
+				'options' => array(
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n'),
+				),
+			),	
 			'default' => array(
 				'required' => false,
 				'name' => tra('Default config settings'),
@@ -871,7 +883,11 @@ function wikiplugin_img( $data, $params )
 	} else {
 		$tagName = 'img';
 		$replimg = '<img src="' . $src . '" ';
-		$imgdata['class'] .= ' regImage pluginImg img-responsive ' . $imgdata['fileId'];
+		if ($imgdata['responsive'] == 'y') {
+			$imgdata['class'] .= ' regImage pluginImg img-responsive ' . $imgdata['fileId'];
+		} else {
+			$imgdata['class'] .= ' regImage pluginImg ' . $imgdata['fileId'];
+		}
 		$imgdata['class'] = trim($imgdata['class']);
 	}
 
