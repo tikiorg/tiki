@@ -73,15 +73,15 @@
 										{/if}
 									</a>
 								{/section}
-								{if $showstructs[struct].pageName neq $structure_path[0].pageName}
-							<li role="presentation" class="divider"></li>
-							<li role="presentation">
-								<a href="tiki-index.php?page={$page|escape:url}" class="tips" title=":{tr}Hide structure bar and any toc{/tr}">
-									{tr}Hide structure{/tr}
-								</a>
 							</li>
+							{if $showstructs[struct].pageName neq $structure_path[0].pageName}
+								<li role="presentation" class="divider"></li>
+								<li role="presentation">
+									<a href="tiki-index.php?page={$page|escape:url}" class="tips" title=":{tr}Hide structure bar and any toc{/tr}">
+										{tr}Hide structure{/tr}
+									</a>
+								</li>
 							{/if}
-							</li>
 						</ul>
 					</div>
 				{/if}
