@@ -74,7 +74,7 @@ if ($output["data"]=="EMPTY") {
 		$_REQUEST['page'] = $data["pageName"];
 
 
-		$curr_page_p = $tikilib->parse_data($curr_page[$descId], array('print'=>true));
+		$curr_page_p = $tikilib->parse_data($curr_page[$descId], array('print'=>true, 'is_html' => $curr_page['is_html']));
 		//	$prev_page_p = $tikilib->parse_data($prev_page[$descId], array('print'=>true));
 
 		// do a diff between both pages
