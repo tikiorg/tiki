@@ -74,7 +74,7 @@
 									</a>
 								{/section}
 							</li>
-							{if $showstructs[struct].pageName neq $structure_path[0].pageName}
+							{if $showstructs[struct].pageName neq $structure_path[0].pageName and $prefs.feature_wiki_open_as_structure neq 'y'}
 								<li role="presentation" class="divider"></li>
 								<li role="presentation">
 									<a href="tiki-index.php?page={$page|escape:url}" class="tips" title=":{tr}Hide structure bar and any toc{/tr}">
