@@ -5066,7 +5066,7 @@ class TrackerLib extends TikiLib
 				$context['list_mode'] = 'n';
 			}
 
-			if (! empty($params['editable'])) {
+			if (! empty($params['editable']) && $params['field']['type'] !== 'STARS') {
 				if ($params['editable'] === true) {
 					// Some callers pass true/false instead of an actual mode, default to block
 					$params['editable'] = 'block';
