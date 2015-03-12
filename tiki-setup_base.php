@@ -162,7 +162,8 @@ if ($prefs['cookie_consent_feature'] === 'y' && empty($_COOKIE[$prefs['cookie_co
 }
 
 $start_session = true;
-if ( ($prefs['session_silent'] == 'y' || $feature_no_cookie) && empty($_COOKIE[session_name()]) ) {
+$extra_cookie_name = session_name() . 'CV';
+if ( ($prefs['session_silent'] == 'y' || $feature_no_cookie) && empty($_COOKIE[session_name()]) && empty($_COOKIE[$extra_cookie_name]) ) {
 	$start_session = false;
 }
 
@@ -196,7 +197,6 @@ if (isset($_SERVER["REQUEST_URI"])) {
 			 * Effectively, in the occurence of a collision, both users are kicked out.
 			 * This is an extremely rare occurence that is hard to reproduce by nature.
 			 */ 
-			$extra_cookie_name = session_name() . 'CV';
 			if (isset($_SESSION['extra_validation'])) {
 				$cookie = isset($_COOKIE[$extra_cookie_name]) ? $_COOKIE[$extra_cookie_name] : null;
 
