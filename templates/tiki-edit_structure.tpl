@@ -1,4 +1,4 @@
-{title url="tiki-edit_structure.php?page_ref_id=$page_ref_id"}{if $editable == 'y'}{tr}Modify Structure{/tr}{else}{tr}Structure{/tr}{/if}: {$structure_name}{/title}
+{title url="tiki-edit_structure.php?page_ref_id=$page_ref_id"}{if $editable == 'y'}{tr}Manage Structure{/tr}{else}{tr}Structure{/tr}{/if}: {$structure_name}{/title}
 
 <div class="t_navbar">
 	{button href="tiki-admin_structures.php" _text="{tr}Structures{/tr}"}

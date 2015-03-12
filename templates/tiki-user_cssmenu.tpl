@@ -10,11 +10,22 @@
 			{assign var="menuClass" value="nav cssmenu{if $menu_type}_{$menu_type}{/if} menu{$menu_info.menuId}"}
 		{else}
 			{assign var="menuId" value="drilldownmenu{$idCssmenu}"}
-			{assign var="menuClass" value="drilldownmenu{if $menu_type}_{$menu_type}{/if} menu{$menu_info.menuId}"}
+			{assign var="menuClass" value="nav drilldownmenu cssmenu{if $menu_type}_{$menu_type}{/if} menu{$menu_info.menuId}"}
 		{/if}
 
 		<ul id="{$menuId}" class="{$menuClass}">
-
+			{if $drilldownmenu eq 'y'}
+				<li>
+					<a href="tiki-index.php?page={$home_info.pageName|urlencode}&structure={$home_info.pageName|urlencode}&page_ref_id={$home_info.page_ref_id}">
+						{if $home_info.page_alias}
+							{$home_info.page_alias}
+						{else}
+							{$home_info.pageName}
+						{/if}
+					</a>	
+				</li>
+				<li class="divider">
+			{/if}
 			{foreach key=pos item=chdata from=$menu_channels}
 
 				{* ----------------------------- section *}

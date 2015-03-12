@@ -2,7 +2,18 @@
 	<div class="clearfix">
 		<div class="pull-left breadcrumb">
 			{if $home_info}{if $home_info.page_alias}{assign var=icon_title value=$home_info.page_alias}{else}{assign var=icon_title value=$home_info.pageName}{/if}
-				{self_link page=$home_info.pageName structure=$home_info.pageName page_ref_id=$home_info.page_ref_id _title="{tr}Structure{/tr}:$icon_title" _class="tips"}{icon name="home"}{/self_link}
+				{if $prefs.feature_wiki_structure_drilldownmenu eq 'y'}
+					<span class="dropdown">
+						<a class="btn dropdown-toggle structure-home" role="button" id="dropdownStructure" data-toggle="dropdown" data-hover="dropdown">
+							{icon name="home"}
+						</a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownStructure">
+							{menu structureId=$page_info.structure_id page_id=$page_info.page_id page_name=$page_info.pageName drilldown="y" bootstrap="n" css="y"}
+						</ul>
+					</span>
+				{else}
+					{self_link page=$home_info.pageName structure=$home_info.pageName page_ref_id=$home_info.page_ref_id _title="{tr}Structure{/tr}:$icon_title" _class="tips"}{icon name="home"}{/self_link}
+				{/if}
 			{/if}
 			{if $prev_info and $prev_info.page_ref_id}{if $prev_info.page_alias}{assign var=icon_title value=$prev_info.page_alias}{else}{assign var=icon_title value=$prev_info.pageName}{/if}
 				<a href="{sefurl page=$prev_info.pageName structure=$home_info.pageName page_ref_id=$prev_info.page_ref_id}" class="tips" title="{tr}Previous page{/tr}:{$icon_title}">
@@ -36,7 +47,7 @@
 					<div class="form-group">
 						<input type="hidden" name="current_page_id" value="{$page_info.page_ref_id}">
 						<div class="input-group">
-							<span class="input-group-addon">{self_link _script="tiki-edit_structure.php" page_ref_id=$home_info.page_ref_id _class="tips" _title="{tr}Modify Stucture{/tr}:{$home_info.pageName} ($cur_pos)"}{icon name="structure"}{/self_link}</span>
+							<span class="input-group-addon">{self_link _script="tiki-edit_structure.php" page_ref_id=$home_info.page_ref_id _class="tips" _title="{tr}Manage Stucture{/tr}:{$home_info.pageName} ($cur_pos)"}{icon name="structure"}{/self_link}</span>
 							<input type="text" id="structure_add_page" name="page" class="form-control input-sm">
 							{autocomplete element='#structure_add_page' type='pagename'}
 							<div class="input-group-btn">
@@ -54,9 +65,6 @@
 					</div>
 				</form>
 			</div>
-		{/if}
-		{if $prefs.feature_wiki_structure_drilldownmenu eq 'y'}
-			{menu structureId=$page_info.structure_id page_id=$page_info.page_id page_name=$page_info.pageName drilldown='y'}
 		{/if}
 	</div>
 </div>
