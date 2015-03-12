@@ -1,7 +1,7 @@
-<ol class="media-list">
+<ol class="media media-list">
 	{foreach from=$comments item=comment}
 		<li class="media comment{if $comment.archived eq 'y'} archived well well-sm{/if} {if $allow_moderate}{if $comment.approved eq 'n'} pending bg-warning{elseif $comment.approved eq 'r'} rejected bg-danger{/if}{/if}{if ! $parentId && $prefs.feature_wiki_paragraph_formatting eq 'y'} inline{/if}" data-comment-thread-id="{$comment.threadId|escape}">
-			<div class="pull-left">
+			<div class="media-left">
 				<span class="avatar">{$comment.userName|avatarize:'':'img/noavatar.png'}</span>
 			</div>
 			<div class="media-body">

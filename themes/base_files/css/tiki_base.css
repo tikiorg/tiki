@@ -1958,11 +1958,6 @@ body.tiki_forums .normal {
 #comment-container-below .actions {
   float: right;
 }
-#comment-container .avatar,
-#comment-container-below .avatar {
-  float: left;
-  margin-right: .7em;
-}
 #comment-container .author_info,
 #comment-container-below .author_info {
   padding: 0;
