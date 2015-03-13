@@ -57,7 +57,7 @@ function smarty_function_menu($params, $smarty)
 	if (!isset($css)) {
 		$css = 'y';
 	}
-	if ($css !== 'n' && $prefs['feature_cssmenus'] == 'y' && $drilldown != 'y') {
+	if ($css !== 'n' && $prefs['feature_cssmenus'] == 'y') {
 		static $idCssmenu = 0;
 		if (empty($type)) {
 			$type = 'vert';
@@ -71,8 +71,9 @@ function smarty_function_menu($params, $smarty)
 		} else {
 			$smarty->assign('idCssmenu', $css_id);
 		}
-	} elseif ($drilldown == 'y') {
-		$tpl = 'tiki-user_drilldownmenu.tpl';
+		if ($drilldown == 'y') {
+			$smarty->assign('drilldownmenu', $drilldown);
+		}
 	} else {
 		$tpl = 'tiki-user_menu.tpl';
 	}

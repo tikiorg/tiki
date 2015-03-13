@@ -280,14 +280,14 @@
 
 			<div class="checkbox">
 				<label>
-					{tr}Use 12-hour clock in time selectors{/tr} <input type="checkbox" name="display_12hr_clock" {if $user_prefs.display_12hr_clock eq 'y'}checked="checked"{/if}>
+					<input type="checkbox" name="display_12hr_clock" {if $user_prefs.display_12hr_clock eq 'y'}checked="checked"{/if}>{tr}Use 12-hour clock in time selectors{/tr}
 				</label>
 			</div>
 
 			{if 1 eq 1 || $prefs.feature_community_mouseover eq 'y'}
 			<div class="checkbox">
 				<label>
-					<input type="checkbox" name="show_mouseover_user_info" {if $show_mouseover_user_info eq 'y'}checked="checked"{/if}> {tr}Display info tooltip on mouseover for every user who allows his/her information to be public{/tr}
+					<input type="checkbox" name="show_mouseover_user_info" {if $show_mouseover_user_info eq 'y'}checked="checked"{/if}>{tr}Display info tooltip on mouseover for every user who allows his/her information to be public{/tr}
 				</label>
 			</div>
 			{/if}
@@ -295,7 +295,7 @@
 			{if $prefs.feature_wiki eq 'y'}
 				<div class="checkbox">
 					<label>
-						{tr}Use double-click to edit pages{/tr}<input type="checkbox" name="user_dbl" {if $user_prefs.user_dbl eq 'y'}checked="checked"{/if}>
+						<input type="checkbox" name="user_dbl" {if $user_prefs.user_dbl eq 'y'}checked="checked"{/if}>{tr}Use double-click to edit pages{/tr}
 					</label>
 				</div>
 			{/if}
@@ -377,7 +377,7 @@
 			{if $prefs.feature_wiki eq 'y'}
 				<div class="checkbox">
 					<label>
-						{tr}My pages{/tr}<input type="checkbox" name="mytiki_pages" {if $user_prefs.mytiki_pages eq 'y'}checked="checked"{/if}>
+						<input type="checkbox" name="mytiki_pages" {if $user_prefs.mytiki_pages eq 'y'}checked="checked"{/if}>{tr}My pages{/tr}
 					</label>
 				</div>
 			{/if}
@@ -385,7 +385,7 @@
 			{if $prefs.feature_blogs eq 'y'}
 				<div class="checkbox">
 					<label>
-						{tr}My blogs{/tr}<input type="checkbox" name="mytiki_blogs" {if $user_prefs.mytiki_blogs eq 'y'}checked="checked"{/if}>
+						<input type="checkbox" name="mytiki_blogs" {if $user_prefs.mytiki_blogs eq 'y'}checked="checked"{/if}>{tr}My blogs{/tr}
 					</label>
 				</div>
 			{/if}
@@ -393,7 +393,7 @@
 			{if $prefs.feature_galleries eq 'y'}
 				<div class="checkbox">
 					<label>
-						{tr}My galleries{/tr}<input type="checkbox" name="mytiki_gals" {if $user_prefs.mytiki_gals eq 'y'}checked="checked"{/if}>
+						<input type="checkbox" name="mytiki_gals" {if $user_prefs.mytiki_gals eq 'y'}checked="checked"{/if}>{tr}My galleries{/tr}
 					</label>
 				</div>
 			{/if}
@@ -401,7 +401,7 @@
 			{if $prefs.feature_messages eq 'y'and $tiki_p_messages eq 'y'}
 				<div class="checkbox">
 					<label>
-						{tr}My messages{/tr}<input type="checkbox" name="mytiki_msgs" {if $user_prefs.mytiki_msgs eq 'y'}checked="checked"{/if}>
+						<input type="checkbox" name="mytiki_msgs" {if $user_prefs.mytiki_msgs eq 'y'}checked="checked"{/if}>{tr}My messages{/tr}
 					</label>
 				</div>
 			{/if}
@@ -409,7 +409,7 @@
 			{if $prefs.feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}
 				<div class="checkbox">
 					<label>
-						{tr}My tasks{/tr}<input type="checkbox" name="mytiki_tasks" {if $user_prefs.mytiki_tasks eq 'y'}checked="checked"{/if}>
+						<input type="checkbox" name="mytiki_tasks" {if $user_prefs.mytiki_tasks eq 'y'}checked="checked"{/if}>{tr}My tasks{/tr}
 					</label>
 				</div>
 			{/if}
@@ -417,12 +417,12 @@
 			{if $prefs.feature_forums eq 'y' and $tiki_p_forum_read eq 'y'}
 				<div class="checkbox">
 					<label>
-						{tr}My forum topics{/tr}<input type="checkbox" name="mytiki_forum_topics" {if $user_prefs.mytiki_forum_topics eq 'y'}checked="checked"{/if}>
+						<input type="checkbox" name="mytiki_forum_topics" {if $user_prefs.mytiki_forum_topics eq 'y'}checked="checked"{/if}>{tr}My forum topics{/tr}
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
-						{tr}My forum replies{/tr}<input type="checkbox" name="mytiki_forum_replies" {if $user_prefs.mytiki_forum_replies eq 'y'}checked="checked"{/if}>
+						<input type="checkbox" name="mytiki_forum_replies" {if $user_prefs.mytiki_forum_replies eq 'y'}checked="checked"{/if}>{tr}My forum replies{/tr}
 					</label>
 				</div>
 			{/if}
@@ -430,7 +430,7 @@
 			{if $prefs.feature_trackers eq 'y'}
 				<div class="checkbox">
 					<label>
-						{tr}My user items{/tr}<input type="checkbox" name="mytiki_items" {if $user_prefs.mytiki_items eq 'y'}checked="checked"{/if}>
+						<input type="checkbox" name="mytiki_items" {if $user_prefs.mytiki_items eq 'y'}checked="checked"{/if}>{tr}My user items{/tr}
 					</label>
 				</div>
 			{/if}
@@ -438,7 +438,7 @@
 			{if $prefs.feature_articles eq 'y'}
 				<div class="checkbox">
 					<label>
-						{tr}My Articles{/tr}<input type="checkbox" name="mytiki_articles" {if $user_prefs.mytiki_articles eq 'y'}checked="checked"{/if}>
+						<input type="checkbox" name="mytiki_articles" {if $user_prefs.mytiki_articles eq 'y'}checked="checked"{/if}>{tr}My Articles{/tr}
 					</label>
 				</div>
 			{/if}
@@ -453,7 +453,6 @@
 					</select>
 				</div>
 			{/if}
-			<br>
 			<div class="form-group">
 				{tr}Reset remark boxes visibility{/tr}&nbsp;&nbsp;
 				{button _text='{tr}Reset{/tr}' _onclick="if (confirm('{tr}This will reset the visibility of all the tips, notices and warning remarks boxes you have closed.{/tr}')) {ldelim}deleteCookie('rbox');{rdelim}return false;"}
@@ -473,9 +472,9 @@
 
 					{if $prefs.auth_method neq 'cas' || ($prefs.cas_skip_admin eq 'y' && $user eq 'admin')}
 						{if $prefs.change_password neq 'n' and ($prefs.login_is_email ne 'y' or $userinfo.login eq 'admin')}
-							<div class="form-group">
-								<div>{tr}Leave "New password" and "Confirm new password" fields blank to keep current password{/tr}</div>
-							</div>
+							{remarksbox type="tip" title="{tr}Information{/tr}" close="n"}
+								{tr}Leave "New password" and "Confirm new password" fields blank to keep current password{/tr}
+							{/remarksbox}
 						{/if}
 					{/if}
 

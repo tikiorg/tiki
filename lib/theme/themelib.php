@@ -278,6 +278,7 @@ class ThemeLib extends TikiLib
 			foreach ($prefs['available_themes'] as $available_theme){
 				$theme = $this->extract_theme_and_option($available_theme)[0];
 				$available_themes[$theme] = $theme;
+				$available_themes['default'] = tr('Default Bootstrap');
 			}
 		}
 		else {

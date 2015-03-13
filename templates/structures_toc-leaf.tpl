@@ -4,17 +4,17 @@
 			{if $toc_type eq 'admin'}
 				<div class="actions">
 					<input type="text" class="page-alias-input" value="{$structure_tree.page_alias|escape}" placeholder="{tr}Page alias...{/tr}">
-					{self_link _script='tiki-index.php' page=$structure_tree.pageName structure=$structure_name _title="{tr}View{/tr}" _noauto="y"}
-						{icon _id='magnifier' alt="{tr}View{/tr}"}
+					{self_link _script='tiki-index.php' page=$structure_tree.pageName structure=$structure_name _class="tips" _title=":{tr}View{/tr}" _noauto="y"}
+						{icon name="view"}
 					{/self_link}
 					{if $tiki_p_watch_structure eq 'y'}
 						{if !$structure_tree.event}
-							{self_link page_ref_id=$structure_tree.page_ref_id watch_object=$structure_tree.page_ref_id watch_action=add page=$structure_tree.pageName}
-								{icon _id='eye_arrow_down' alt="{tr}Monitor the Sub-Structure{/tr}"}
+							{self_link page_ref_id=$structure_tree.page_ref_id watch_object=$structure_tree.page_ref_id watch_action=add page=$structure_tree.pageName _class="tips" _title=":{tr}Monitor the Sub-Structure{/tr}"}
+								{icon name="watch"}
 							{/self_link}
 						{else}
-							{self_link page_ref_id=$structure_tree.page_ref_id watch_object=$structure_tree.page_ref_id watch_action=remove}
-								{icon _id='no_eye_arrow_down' alt="{tr}Stop Monitoring the Sub-Structure{/tr}"}
+							{self_link page_ref_id=$structure_tree.page_ref_id watch_object=$structure_tree.page_ref_id watch_action=remove _class="tips" _title=":{tr}Stop Monitoring the Sub-Structure{/tr}"}
+								{icon name="stop-watching"}
 							{/self_link}
 						{/if}
 					{/if}
@@ -23,19 +23,19 @@
 							{capture assign=title}{tr _0=$structure_tree.user}locked by %0{/tr}{/capture}
 							{icon _id='lock' alt="{tr}Locked{/tr}" title=$title}
 						{else}
-							{self_link _script='tiki-editpage.php' page=$structure_tree.pageName}
-								{icon _id='page_edit' alt='{tr}Edit page{/tr}'}
+							{self_link _script='tiki-editpage.php' page=$structure_tree.pageName _class='tips' _title=':{tr}Edit page{/tr}'}
+								{icon name="edit"}
 							{/self_link}
 						{/if}
 						{if empty($page)}
-							{self_link _onclick="addNewPage(this);return false;"}
-								{icon _id='add' alt='{tr}Add new child page{/tr}'}
+							{self_link _onclick="addNewPage(this);return false;" _class="tips" _title=":{tr}Add new child page{/tr}"}
+								{icon name="add"}
 							{/self_link}
-							{self_link _onclick="movePageToStructure(this);return false;"}
-								{icon _id='arrow_right' alt='{tr}Move{/tr}'}
+							{self_link _onclick="movePageToStructure(this);return false;" _class="tips" _title=":{tr}Move{/tr}"}
+								{icon name="caret-right"}
 							{/self_link}
-							{self_link page_ref_id=$structure_tree.page_ref_id remove=$structure_tree.page_ref_id}
-								{icon _id='cross' alt='{tr}Delete{/tr}' page_ref_id=$structure_tree.page_ref_id remove=$structure_tree.page_ref_id}
+							{self_link page_ref_id=$structure_tree.page_ref_id remove=$structure_tree.page_ref_id _class="tips" _title=":{tr}Delete{/tr}"}
+								{icon name="delete"}
 							{/self_link}
 						{/if}
 					{/if}

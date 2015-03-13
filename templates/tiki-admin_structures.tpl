@@ -97,28 +97,28 @@
 								</a>
 							</td>
 							<td class="action">
-								<a class="tablename" href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}" title="{tr}View structure{/tr}">{icon _id='information' alt="{tr}View structure{/tr}"}</a>
-								<a class='link' href='{sefurl page=$channels[ix].pageName structure=$channels[ix].pageName page_ref_id=$channels[ix].page_ref_id}' title="{tr}View page{/tr}">{icon _id='magnifier' alt="{tr}View page{/tr}"}</a>
+								<a class="tips" href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}" title=":{tr}View structure{/tr}">{icon name="information"}</a>
+								<a class='tips' href='{sefurl page=$channels[ix].pageName structure=$channels[ix].pageName page_ref_id=$channels[ix].page_ref_id}' title=":{tr}View page{/tr}">{icon name="view"}</a>
 
 								{if $prefs.feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
-									<a title="{tr}Export Pages{/tr}" class="link" href="tiki-admin_structures.php?export={$channels[ix].page_ref_id|escape:"url"}">{icon _id='disk' alt="{tr}Export Pages{/tr}"}</a>
+									<a title=":{tr}Export Pages{/tr}" class="tips" href="tiki-admin_structures.php?export={$channels[ix].page_ref_id|escape:"url"}">{icon name="export"}</a>
 								{/if}
 
 								{if $pdf_export eq 'y'}<a href="tiki-print_multi_pages.php?printstructures=a%3A1%3A%7Bi%3A0%3Bs%3A1%3A%22{$channels[ix].page_ref_id}%22%3B%7D&amp;display=pdf" title="{tr}PDF{/tr}">{icon _id='page_white_acrobat' alt="{tr}PDF{/tr}"}</a>
 								{/if}
 
-								{if $tiki_p_edit_structures == 'y'}<a title="{tr}Dump Tree{/tr}" class="link" href="tiki-admin_structures.php?export_tree={$channels[ix].page_ref_id|escape:"url"}">{icon _id='chart_organisation' alt="{tr}Dump Tree{/tr}"}</a>{/if}
+								{if $tiki_p_edit_structures == 'y'}<a title=":{tr}Dump Tree{/tr}" class="tips" href="tiki-admin_structures.php?export_tree={$channels[ix].page_ref_id|escape:"url"}">{icon name="structure"}</a>{/if}
 
-								{if $tiki_p_edit_structures == 'y' and $channels[ix].editable == 'y'}<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_structures.php?remove={$channels[ix].page_ref_id|escape:"url"}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>{/if}
+								{if $tiki_p_edit_structures == 'y' and $channels[ix].editable == 'y'}<a title=":{tr}Delete{/tr}" class="tips" href="tiki-admin_structures.php?remove={$channels[ix].page_ref_id|escape:"url"}">{icon name="delete"}</a>{/if}
 
-								{if $prefs.feature_create_webhelp == 'y' && $tiki_p_edit_structures == 'y'}<a title="{tr}Create WebHelp{/tr}" class="link" href="tiki-create_webhelp.php?struct={$channels[ix].page_ref_id|escape:"url"}">{icon _id='help' alt="{tr}Create WebHelp{/tr}"}</a>{/if}
+								{if $prefs.feature_create_webhelp == 'y' && $tiki_p_edit_structures == 'y'}<a title=":{tr}Create WebHelp{/tr}" class="tips" href="tiki-create_webhelp.php?struct={$channels[ix].page_ref_id|escape:"url"}">{icon name="help"}</a>{/if}
 
 								{if $prefs.feature_create_webhelp == 'y' && $channels[ix].webhelp eq 'y'}
-									<a title="{tr}View WebHelp{/tr}" class="link" href="whelp/{$channels[ix].pageName}/index.html">{icon _id='book_open' alt="{tr}View WebHelp{/tr}"}</a>
+									<a title=":{tr}View WebHelp{/tr}" class="tips" href="whelp/{$channels[ix].pageName}/index.html">{icon name="documentation"}</a>
 								{/if}
 
 								{if $tiki_p_admin eq 'y'}
-									<a title="{tr}XML Zip{/tr}" class="link" href="tiki-admin_structures.php?zip={$channels[ix].page_ref_id|escape:"url"}">{icon _id='img/icons/mime/zip.png' alt="{tr}XML Zip{/tr}"}</a>
+									<a title=":{tr}XML Zip{/tr}" class="tips" href="tiki-admin_structures.php?zip={$channels[ix].page_ref_id|escape:"url"}">{icon name="zip"}</a>
 								{/if}
 							</td>
 						</tr>

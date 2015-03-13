@@ -9,8 +9,11 @@ function prefs_available_list($partial = false)
 {
 	global $tikilib;
 	$themelib = TikiLib::lib('theme');
-	$map = array();
-	$themes = array('' => tra('All'));
+	$map = array();	
+	$themes = [
+		'' => tra('All'),
+		'default' => tr('Default Bootstrap'),
+	];
 	
 	if (! $partial) {
 		$languages = $tikilib->list_languages(false, null, true);

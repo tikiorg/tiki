@@ -72,25 +72,29 @@ if ($output["data"]=="EMPTY") {
 		}
 		$_REQUEST['redirectpage'] = 'y';//block the redirect interpretation
 		$_REQUEST['page'] = $data["pageName"];
-		$curr_page_p = $tikilib->parse_data($curr_page[$descId], array('print'=>true));
-		$prev_page_p = $tikilib->parse_data($prev_page[$descId], array('print'=>true));
+		$curr_page_p = $tikilib->parse_data($curr_page[$descId], array('print' => true, 'is_html' => $curr_page['is_html']));
+		$prev_page_p = $tikilib->parse_data($prev_page[$descId], array('print' => true, 'is_html' => $curr_page['is_html']));
 
 		// do a diff between both pages
 		require_once('lib/diff/difflib.php');
-		$diff = diff2($prev_page_p, $curr_page_p, "unidiff");
+		$diff = diff2($prev_page_p, $curr_page_p, $curr_page['is_html'] ? 'htmldiff' : 'unidiff');
 
 
-		foreach ($diff as $part) {
-			if ($part["type"]=="diffdeleted") {
-				foreach ($part["data"] as $chunk) {
-					$result.="<blockquote>- $chunk</blockquote>";
+		if (is_array($diff)) {
+			foreach ($diff as $part) {
+				if ($part["type"] == "diffdeleted") {
+					foreach ($part["data"] as $chunk) {
+						$result .= "<blockquote>- $chunk</blockquote>";
+					}
+				}
+				if ($part["type"] == "diffadded") {
+					foreach ($part["data"] as $chunk) {
+						$result .= "<blockquote>+ $chunk</blockquote>";
+					}
 				}
 			}
-			if ($part["type"]=="diffadded") {
-				foreach ($part["data"] as $chunk) {
-					$result.="<blockquote>+ $chunk</blockquote>";
-				}
-			}
+		} else {
+			$result = strpos($diff, '<tr>') === 0 ? '<table>' . $diff . '</table>' : $diff;
 		}
 
 		$data["$descId"] = $result;
