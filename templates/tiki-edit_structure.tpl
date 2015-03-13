@@ -67,12 +67,14 @@
 	<big>{tr}Top{/tr}</big>
 	{if $structure_id eq $page_ref_id}</strong>{/if}
 {/self_link}
-<form action="tiki-edit_structure.php" method="post" style="display: inline-block; margin-left: 1em;">
-	<input type="hidden" name="page_ref_id" value="{$structure_id}">
-	<label for="pageAlias">{tr}Alias:{/tr}</label>
-	<input type="text" name="pageAlias" id="pageAlias" value="{$topPageAlias}">
-	<small><input type="submit" class="btn btn-default btn-sm" name="create" value="{tr}Update{/tr}"></small>
-</form>
+{if $tiki_p_edit_structures eq 'y'}
+	<form action="tiki-edit_structure.php" method="post" style="display: inline-block; margin-left: 1em;">
+		<input type="hidden" name="page_ref_id" value="{$structure_id}">
+		<label for="pageAlias">{tr}Alias:{/tr}</label>
+		<input type="text" name="pageAlias" id="pageAlias" value="{$topPageAlias}">
+		<small><input type="submit" class="btn btn-default btn-sm" name="create" value="{tr}Update{/tr}"></small>
+	</form>
+{/if}
 <div class="structure-container">
 	{$nodelist}
 </div>
