@@ -77,10 +77,10 @@ if($("#antibotcode").parents('form').data("validator")) {
 			data: {
 				validator: "captcha",
 				parameter: function() {
-					return $jq("#captchaId").val();
+					return $("#captchaId").val();
 				},
 				input: function() {
-					return $jq("#antibotcode").val();
+					return $("#antibotcode").val();
 				} 
 			} 
 		}
@@ -96,10 +96,10 @@ if($("#antibotcode").parents('form').data("validator")) {
 					data: {
 						validator: "captcha",
 						parameter: function() {
-							return $jq("#captchaId").val();
+							return $("#captchaId").val();
 						},
 						input: function() {
-							return $jq("#antibotcode").val();
+							return $("#antibotcode").val();
 						} 
 					} 
 				}

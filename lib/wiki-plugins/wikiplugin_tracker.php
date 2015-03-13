@@ -1278,10 +1278,10 @@ function wikiplugin_tracker($data, $params)
 						$customvalidation .= 'data: { ';
 						$customvalidation .= 'validator: "captcha", ';
 						$customvalidation .= 'parameter: function() { ';
-						$customvalidation .= 'return $jq("#captchaId").val(); ';
+						$customvalidation .= 'return $("#captchaId").val(); ';
 						$customvalidation .= '}, ';
 						$customvalidation .= 'input: function() { ';
-						$customvalidation .= 'return $jq("#antibotcode").val(); ';
+						$customvalidation .= 'return $("#antibotcode").val(); ';
 						$customvalidation .= '} } } ';
 						$customvalidation .= '}, ';
 						$customvalidation_m .= '"captcha[input]": { required: "' . tra("This field is required") . '"}, ';
