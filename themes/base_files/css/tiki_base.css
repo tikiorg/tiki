@@ -2933,6 +2933,9 @@ body > .ui-front {
   margin-top: -5px;
   margin-right: -3px;
 }
+a.structure-home {
+  padding: 0;
+}
 .s5-slide * {
   line-height: 1.3em;
 }
@@ -3727,4 +3730,3 @@ input.tablesorter-filter {
     padding: 4px;
   }
 }
-/* End of file */
