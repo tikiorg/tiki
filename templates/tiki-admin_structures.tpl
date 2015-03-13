@@ -89,7 +89,7 @@
 								</td>
 							{/if}
 							<td class="text">
-								<a class="tips" href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}" title=":{tr}Manage Structure{/tr}">
+								<a class="tips" href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}" title=":{tr}View Structure{/tr}">
 									{$channels[ix].pageName}
 									{if $channels[ix].page_alias}
 										({$channels[ix].page_alias})
