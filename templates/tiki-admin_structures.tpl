@@ -8,8 +8,8 @@
 {/if}
 
 {if $just_created neq 'n' && $tiki_p_edit_structures == 'y'}
-	{remarksbox type='feedback' title="{tr}Feedback{/tr}"}
-		{tr}The structure{/tr} <a class='tablename' href='tiki-edit_structure.php?page_ref_id={$just_created}'>{$just_created_name|escape}</a>&nbsp;&nbsp;<a class='link' href='tiki-index.php?page={$just_created_name|escape:"url"}' title="{tr}View{/tr}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>&nbsp;&nbsp;{tr}has just been created.{/tr}
+	{remarksbox type="feedback" title="{tr}Feedback{/tr}"}
+		{tr}Structure created{/tr}: <a class='alert-link' href='tiki-edit_structure.php?page_ref_id={$just_created}'>{$just_created_name|escape}</a> <a class='alert-link tips' href='tiki-index.php?page={$just_created_name|escape:"url"}' title=":{tr}View Page{/tr}">{icon name="view"}</a>
 	{/remarksbox}
 {/if}
 
@@ -72,12 +72,12 @@
 			{include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'}
 		{/if}
 		<br>
-		<form>
+		<form class="form" role="form">
 			<div class="table-responsive">
 				<table class="table normal">
 					<tr>
 						{if $tiki_p_admin eq 'y'}<th width="15">{select_all checkbox_names='action[]'}</th>{/if}
-						<th>{tr}Structure ID{/tr}</th>
+						<th>{tr}Structure{/tr}</th>
 						<th>{tr}Action{/tr}</th>
 					</tr>
 
@@ -89,7 +89,7 @@
 								</td>
 							{/if}
 							<td class="text">
-								<a class="tablename" href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}" title="{tr}Edit structure{/tr}">
+								<a class="tips" href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}" title=":{tr}Manage Structure{/tr}">
 									{$channels[ix].pageName}
 									{if $channels[ix].page_alias}
 										({$channels[ix].page_alias})
@@ -130,7 +130,7 @@
 
 			{if $tiki_p_admin eq 'y'}
 				<div style="form-group">
-					<label for="batchaction" class="control-label">{tr}Perform action with checked{/tr}</label>
+					<label for="batchaction" class="control-label">{tr}Perform action with selected{/tr}</label>
 					<div class="input-group col-sm-6">
 						<select name="batchaction" class="form-control">
 							<option value="">{tr}...{/tr}</option>
@@ -149,11 +149,11 @@
 	{/tab}
 
 	{if $tiki_p_edit_structures == 'y'}
-		{tab name="{tr}Create New Structure{/tr}"}
-			<h2>{tr}Create New Structure{/tr}</h2>
+		{tab name="{tr}Create Structure{/tr}"}
+			<h2>{tr}Create Structure{/tr}</h2>
 			<form class="form-horizontal" action="tiki-admin_structures.php" method="post">
 				<div class="form-group">
-					<label class="control-label col-md-3">{tr}Structure ID{/tr}</label>
+					<label class="control-label col-md-3">{tr}Structure{/tr}</label>
 					<div class="col-md-9">
 						<input type="text" name="name" id="name" class="form-control">
 					</div>
