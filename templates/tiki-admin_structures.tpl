@@ -129,14 +129,18 @@
 			</div>
 
 			{if $tiki_p_admin eq 'y'}
-				<div style="text-align:left">
-					{tr}Perform action with checked:{/tr}
-					<select name="batchaction">
-						<option value="">{tr}...{/tr}</option>
-						<option value="delete">{tr}Delete{/tr}</option>
-						<option value="delete_with_page">{tr}Delete with the pages{/tr}</option>
-					</select>
-					<input type="submit" class="btn btn-default btn-sm" name="act" value="{tr}OK{/tr}">
+				<div style="form-group">
+					<label for="batchaction" class="control-label">{tr}Perform action with checked{/tr}</label>
+					<div class="input-group col-sm-6">
+						<select name="batchaction" class="form-control">
+							<option value="">{tr}...{/tr}</option>
+							<option value="delete">{tr}Delete{/tr}</option>
+							<option value="delete_with_page">{tr}Delete with the pages{/tr}</option>
+						</select>
+						<div class="input-group-btn">
+							<input type="submit" class="btn btn-default" name="act" value="{tr}OK{/tr}">
+						</div>
+					</div>
 				</form>
 			</div>
 		{/if}
