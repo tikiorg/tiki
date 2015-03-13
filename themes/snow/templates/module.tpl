@@ -1,4 +1,4 @@
-{* $Id: module.tpl 48757 2013-11-26 09:57:23Z gezzzan $ *}
+{* $Id$ *}
 {* Module layout with controls *}
 {if !isset($module_position)}{assign var=module_position value=''}{/if}
 {if !isset($module_ord)}{assign var=module_ord value=''}{/if}

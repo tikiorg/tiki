@@ -1,4 +1,4 @@
-/* $Id: tiki.css 51153 2014-05-05 09:25:28Z chibaguy $
+/* $Id$
 	This Tiki Wiki CMS Groupware file contains global design
 	and layout properties. */
 .margin-bottom-xs {
@@ -319,9 +319,6 @@ div.cvsup {
 }
 .tiki_sheet table td {
   border: 1px solid #dddddd;
-}
-.table-responsive {
-  box-shadow: -5rem 0 9rem -9rem rgba(0, 0, 0, 0.75) inset;
 }
 .odd {
   background: transparent;
@@ -3030,7 +3027,6 @@ body.tiki.navbar-padding {
     -ms-overflow-style: -ms-autohiding-scrollbar;
     border: 1px solid #dddddd;
     -webkit-overflow-scrolling: touch;
-    box-shadow: -5rem 0 9rem -9rem rgba(0, 0, 0, 0.75) inset;
   }
   .tiki .table-responsive > .table {
     margin-bottom: 0;
