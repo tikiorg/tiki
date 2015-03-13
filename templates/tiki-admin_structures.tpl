@@ -138,7 +138,7 @@
 							<option value="delete_with_page">{tr}Delete with the pages{/tr}</option>
 						</select>
 						<div class="input-group-btn">
-							<input type="submit" class="btn btn-default" name="act" value="{tr}OK{/tr}">
+							<input type="submit" class="btn btn-primary" name="act" value="{tr}Ok{/tr}">
 						</div>
 					</div>
 				</form>
