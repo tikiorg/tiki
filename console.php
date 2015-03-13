@@ -41,6 +41,10 @@ if (false !== $site = $input->getParameterOption(array('--site'))) {
 
 $local_php = TikiInit::getCredentialsFile();
 
+if (! is_readable($local_php)) {
+	die("Credentials file local.php not found. See http://doc.tiki.org/Installation for more information.\n");
+}
+
 $console = new Tiki\Command\Application;
 
 $console->add(new Tiki\Command\ConfigureCommand);
