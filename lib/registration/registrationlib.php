@@ -608,8 +608,8 @@ class RegistrationLib extends TikiLib
 					type: "post",
 					data: {
 						validator: "captcha",
-						parameter: function() { return $jq("#captchaId").val(); },
-						input: function() { return $jq("#antibotcode").val(); }
+						parameter: function() { return $("#captchaId").val(); },
+						input: function() { return $("#antibotcode").val(); }
 					}
 				}
 			}
