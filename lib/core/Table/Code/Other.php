@@ -34,7 +34,7 @@ class Table_Code_Other extends Table_Code_Manager
 				. '" type="button" class="btn btn-default btn-sm" title="' . parent::$s['colselect']['button']['text']
 				. '" style="margin-right:3px">' . smarty_function_icon(['name' => 'columns'], $smarty) . '</button>';
 			$jq[] = '$(\'button#' . parent::$s['colselect']['button']['id'] . '\').popover({'
-				. $this->nt2 . 'placement: \'auto right\','
+				. $this->nt2 . 'placement: \'right\','
 				. $this->nt2 . 'html: true,'
 				. $this->nt2 . 'content: \'<div id="' . parent::$s['colselect']['div']['id'] . '"></div>\''
 				. $this->nt . '}).on(\'shown.bs.popover\', function () {'
