@@ -31,7 +31,7 @@ function wikiplugin_gdgraph_info()
 				'filter' => 'word',
 				'options' => array(
 					array('text' => tra('Vertical Bar'), 'value' => 'barvert'),
-					array('text' => tra('Horizonatal Bar'), 'value' => 'barhoriz'),
+					array('text' => tra('Horizontal Bar'), 'value' => 'barhoriz'),
 					array('text' => tra('Multiline'), 'value' => 'multiline'),
 					array('text' => tra('Pie'), 'value' => 'pie'),
 				),
@@ -119,7 +119,7 @@ function wikiplugin_gdgraph($data, $params)
 	foreach ($data as $line) {
 		$pair = explode(',', $line);
 		if (count($pair) !== 2) {
-			return "<span class='error'>gdgraph plugin: ERROR: xy data count mismatch - odd dnumber of values</span>";
+			return "<span class='error'>gdgraph plugin: ERROR: xy data count mismatch - odd number of values</span>";
 		}
 		$xy[] = $pair;
 	}
