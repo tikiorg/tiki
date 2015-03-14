@@ -6530,63 +6530,6 @@ button.close {
     display: none !important;
   }
 }
-body > .container {
-  border: 1px solid #aaa;
-  border-size: 0 1px;
-  background: #fff;
-}
-.header_container > .container {
-  border: solid #aaa;
-  border-width: 1px 1px 0 1px;
-}
-.middle_outer > .container {
-  border: solid #aaa;
-  border-width: 0 1px;
-}
-.footer_liner > .container {
-  border: solid #aaa;
-  border-width: 0 1px 1px 1px;
-}
-#top_modules,
-#topbar_modules,
-#pagebottom_modules {
-  margin-left: -10px;
-  margin-right: -10px;
-}
-header.container {
-  margin-top: 20px;
-  background: #e9ecef;
-}
-.middle > .row {
-  margin-top: 5px;
-  border-right: 6px solid #fff;
-}
-#col1 {
-  background: #f3f6f9;
-  padding-top: 10px;
-  border: 1px solid #8cacbb;
-  margin-bottom: 10px;
-}
-#topbar_modules {
-  background: #c7d0d9;
-}
-#topbar_modules .navbar {
-  margin-bottom: none;
-}
-#topbar_modules .navbar-default {
-  border: none;
-}
-#topbar_modules .box-search .form-group {
-  margin-bottom: 0;
-}
-#topbar_modules .navbar {
-  margin-bottom: 0;
-}
-.footerbgtrap {
-  background: #c7d0d9;
-  border: solid #8cacbb;
-  border-width: 0 1px 1px 1px;
-}
 .warning a,
 .warning a:link,
 .warning a:visited {
@@ -6656,6 +6599,78 @@ a.fc-event:hover {
 .cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
 .cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
   border-left-color: #404040;
+}
+.cssmenu_horiz li:hover,
+.cssmenu_horiz li.sfHover,
+.topbar .nav > li > a:hover,
+.topbar .nav > li > a:focus {
+  background: transparent;
+}
+.cssmenu_horiz ul,
+.cssmenu_vert ul {
+  border: rgba(0, 0, 0, 0.15);
+}
+.cssmenu_horiz ul li a,
+.cssmenu_vert ul li a {
+  background: #ffffff;
+  color: #4d4d4d;
+}
+.cssmenu_horiz ul li:hover a,
+.cssmenu_vert ul li:hover a {
+  color: #404040;
+  background: #f5f5f5;
+}
+.topbar,
+.topbar .cssmenu_horiz ul,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li {
+  background: #c7d0d9;
+  color: #181d23;
+}
+.topbar > a,
+.topbar .cssmenu_horiz ul > a,
+.topbar .navbar-default .navbar-nav > li > a,
+.topbar .nav > li > a {
+  color: #181d23;
+  padding-top: 8.5px;
+  padding-bottom: 8.5px;
+}
+.topbar > a:hover,
+.topbar .cssmenu_horiz ul > a:hover,
+.topbar .navbar-default .navbar-nav > li > a:hover,
+.topbar .nav > li > a:hover,
+.topbar > a:focus,
+.topbar .cssmenu_horiz ul > a:focus,
+.topbar .navbar-default .navbar-nav > li > a:focus,
+.topbar .nav > li > a:focus {
+  color: #333333;
+}
+.topbar .sf-arrows .sf-with-ul:after {
+  /* order of following 3 rules important for fallbacks to work */
+  border: 5px solid transparent;
+  border-top-color: #fff;
+  /* edit this to suit design (no rgba in IE8) */
+  border-top-color: rgba(24, 29, 35, 0.5);
+}
+.sf-arrows > li > .sf-with-ul:focus:after,
+.sf-arrows > li:hover > .sf-with-ul:after,
+.sf-arrows > .sfHover > .sf-with-ul:after {
+  border-top-color: white;
+  /* IE8 fallback colour */
+}
+/* styling for right-facing arrows */
+.sf-arrows ul .sf-with-ul:after {
+  margin-top: -5px;
+  margin-right: -3px;
+  border-color: transparent;
+  border-left-color: #dFeEFF;
+  /* edit this to suit design (no rgba in IE8) */
+  border-left-color: rgba(45, 55, 65, 0.5);
+}
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+  border-left-color: rgba(42, 84, 123, 0.5);
 }
 .thumbinfosothers {
   color: #eeeeee;
@@ -7207,6 +7222,75 @@ div.drillshow {
 .chosen-container .chosen-results li.highlighted {
   background-color: #f5f5f5;
   color: #404040;
+}
+.margin-bottom-xs {
+  margin-bottom: 5px;
+}
+.margin-bottom-sm {
+  margin-bottom: 9px;
+}
+.margin-bottom-md {
+  margin-bottom: 17px;
+}
+.margin-bottom-lg {
+  margin-bottom: 34px;
+}
+body > .container {
+  border: 1px solid #aaa;
+  border-size: 0 1px;
+  background: #fff;
+}
+.header_container > .container {
+  border: solid #aaa;
+  border-width: 1px 1px 0 1px;
+}
+.middle_outer > .container {
+  border: solid #aaa;
+  border-width: 0 1px;
+}
+.footer_liner > .container {
+  border: solid #aaa;
+  border-width: 0 1px 1px 1px;
+}
+#top_modules,
+#topbar_modules,
+#pagebottom_modules {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+header.container {
+  margin-top: 20px;
+  background: #e9ecef;
+}
+.middle > .row {
+  margin-top: 5px;
+  border-right: 6px solid #fff;
+}
+#col1 {
+  background: #f3f6f9;
+  padding-top: 10px;
+  border: 1px solid #8cacbb;
+  margin-bottom: 10px;
+}
+#topbar_modules {
+  background: #c7d0d9;
+}
+#topbar_modules .navbar {
+  margin-bottom: none;
+}
+#topbar_modules .navbar-default {
+  border: none;
+}
+#topbar_modules .box-search .form-group {
+  margin-bottom: 0;
+}
+#topbar_modules .navbar {
+  margin-bottom: 0;
+}
+.footerbgtrap {
+  background: #c7d0d9;
+  border: solid #8cacbb;
+  border-width: 0 1px 1px 1px;
 }
 /* black */
 /* white */

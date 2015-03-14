@@ -6574,6 +6574,18 @@ header.page-header::before,
   background-color: #2a9fd6;
   color: #ffffff;
 }
+.margin-bottom-xs {
+  margin-bottom: 5px;
+}
+.margin-bottom-sm {
+  margin-bottom: 10px;
+}
+.margin-bottom-md {
+  margin-bottom: 20px;
+}
+.margin-bottom-lg {
+  margin-bottom: 40px;
+}
 .navbar {
   border-bottom: 1px solid #282828;
 }
@@ -6679,18 +6691,6 @@ a.thumbnail.active {
 .jumbotron h5,
 .jumbotron h6 {
   color: #fff;
-}
-.margin-bottom-xs {
-  margin-bottom: 5px;
-}
-.margin-bottom-sm {
-  margin-bottom: 10px;
-}
-.margin-bottom-md {
-  margin-bottom: 20px;
-}
-.margin-bottom-lg {
-  margin-bottom: 40px;
 }
 .warning a,
 .warning a:link,

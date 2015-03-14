@@ -1,3 +1,15 @@
+.margin-bottom-xs {
+  margin-bottom: 5px;
+}
+.margin-bottom-sm {
+  margin-bottom: 10px;
+}
+.margin-bottom-md {
+  margin-bottom: 20px;
+}
+.margin-bottom-lg {
+  margin-bottom: 40px;
+}
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -6528,16 +6540,4 @@ button.close {
   .hidden-print {
     display: none !important;
   }
-}
-.margin-bottom-xs {
-  margin-bottom: 5px;
-}
-.margin-bottom-sm {
-  margin-bottom: 10px;
-}
-.margin-bottom-md {
-  margin-bottom: 20px;
-}
-.margin-bottom-lg {
-  margin-bottom: 40px;
 }

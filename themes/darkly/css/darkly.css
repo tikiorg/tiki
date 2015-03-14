@@ -6574,6 +6574,18 @@ header.page-header::before,
   background-color: #00bc8c;
   color: #ffffff;
 }
+.margin-bottom-xs {
+  margin-bottom: 6px;
+}
+.margin-bottom-sm {
+  margin-bottom: 11px;
+}
+.margin-bottom-md {
+  margin-bottom: 21px;
+}
+.margin-bottom-lg {
+  margin-bottom: 42px;
+}
 .navbar {
   border-width: 0;
 }
@@ -6791,18 +6803,6 @@ textarea:focus {
 }
 .panel-default > .panel-heading {
   background-color: #464545;
-}
-.margin-bottom-xs {
-  margin-bottom: 6px;
-}
-.margin-bottom-sm {
-  margin-bottom: 11px;
-}
-.margin-bottom-md {
-  margin-bottom: 21px;
-}
-.margin-bottom-lg {
-  margin-bottom: 42px;
 }
 .warning a,
 .warning a:link,

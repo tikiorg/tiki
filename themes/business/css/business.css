@@ -7238,8 +7238,10 @@ h2.sitesubtitle {
   font-weight: 700;
   font-size: 12px;
 }
-.container.middle > .row {
-  margin-top: 1em;
+#col1,
+#col2,
+#col3 {
+  padding-top: 1em;
 }
 #col1 {
   background: #fbfbfb url('../images/image1.jpg') no-repeat;

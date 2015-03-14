@@ -6530,182 +6530,6 @@ button.close {
     display: none !important;
   }
 }
-.navbar-fixed-top,
-.navbar-fixed-bottom {
-  left: 0;
-  position: fixed !important;
-  right: 0;
-  z-index: 1030;
-}
-#col2 .panel,
-#col3 .panel,
-#bottom_modules .panel {
-  border: none;
-}
-#col2 .panel-heading,
-#col3 .panel-heading,
-#bottom_modules .panel-heading {
-  background: #f2f2f2;
-  border-bottom: none;
-}
-.header_outer {
-  /* whole width div containing the header strip */
-  background: transparent;
-}
-.header_container > .header {
-  /* inner <header> element that gets .fixedwidth class applied */
-  background: transparent;
-}
-header.header .module.secondary_site_menu {
-  background: none;
-}
-.secondary_site_menu .navbar-default .navbar-collapse,
-.secondary_site_menu .navbar-default .navbar-form,
-.secondary_site_menu .navbar-default {
-  background: none;
-}
-.middle_outer {
-  background: url('../images/topbar.jpg') repeat-x;
-}
-.page-header {
-  margin-top: 0;
-  margin-bottom: 0;
-  border-bottom: none;
-}
-.form-control,
-select,
-input[type="text"],
-input[type="password"],
-input[type="file"],
-input[type="email"],
-input[type="file"],
-input[type="search"],
-input[type="number"],
-input#login-pass,
-textarea,
-.adminoptionbox option {
-  background-color: #ffffff;
-  border-color: #e0e0e0;
-}
-.navbar-collapse {
-  border: none;
-}
-#footer {
-  background: #ebebeb;
-  color: #696969;
-  padding: 1px 0 2px 0;
-  width: 100%;
-}
-.footer_liner {
-  border-top: 1px solid transparent;
-  border-bottom: 1px solid transparent;
-}
-.footer_liner h3.panel-title {
-  color: #fff;
-  border-bottom: 1px dotted transparent;
-}
-.footer_liner legend,
-.footer_liner a,
-.footer_liner a:visited {
-  color: #ffffff;
-}
-.navbar-nav .open .dropdown-menu,
-.navbar-nav .open .dropdown-menu li,
-.navbar-default .navbar-nav > li > a {
-  background: #e7e7e7;
-}
-.navbar-default .navbar-nav li a:hover {
-  background: linear-gradient(to bottom, #93c44f 0%, #6d9f26 100%);
-}
-.postbody-title {
-  background: #f0f0f0;
-}
-.secondary_site_menu .navbar {
-  margin-bottom: 0;
-}
-.secondary_site_menu .navbar-nav {
-  float: right;
-}
-.secondary_site_menu .navbar-default .navbar-nav > li > a,
-.secondary_site_menu .navbar-default .navbar-nav > li > a:hover,
-.secondary_site_menu .navbar-default .navbar-nav > li > a:focus,
-.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
-  background: transparent;
-  color: #8bbb47;
-}
-.secondary_site_menu .navbar-default .navbar-nav li ul li a {
-  background: #e7e7e7;
-  color: #fff;
-}
-.secondary_site_menu .navbar-default .navbar-nav li ul li a:hover,
-.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
-  background: #e7e7e7;
-  color: #fff;
-}
-.siteloginbar_popup .dropdown-menu > li > a {
-  color: #fff;
-}
-header.header .sitetitle,
-header.header .sitesubtitle {
-  color: #8bbb47;
-  text-shadow: none;
-}
-h1 {
-  font-size: 1.6em;
-  background: url('../images/h_bullet.jpg') no-repeat 0 50%;
-  padding-left: 19px;
-}
-h2 {
-  font-size: 1.6em;
-  background: url('../images/h_bullet.jpg') no-repeat 0 50%;
-  padding-left: 19px;
-}
-h1.sitetitle {
-  background: none;
-}
-h2.sitesubtitle {
-  background: none;
-}
-.btn,
-.btn-default,
-input[type="reset"],
-input[type="submit"],
-.button input {
-  background: linear-gradient(to bottom, #a1bb87 0%, #8fa872 50%, #a1bb87 100%);
-  text-transform: uppercase;
-}
-.btn.btn-link,
-input[type="submit"].btn-link {
-  background: none;
-}
-.btn:hover,
-.btn-default:hover,
-input[type="reset"]:hover,
-input[type="submit"]:hover,
-.button input:hover {
-  background: linear-gradient(to bottom, #8fa872 50%, #8fa872 50%, #a1bb87 100%);
-}
-#topbar_modules .panel-heading,
-#topbar_modules .navbar-default .navbar-collapse,
-#topbar_modules .navbar-default .navbar-form {
-  background: none;
-  border-width: 0;
-}
-#topbar_modules .navbar {
-  border: none;
-}
-#topbar_modules .navbar-nav > li > a {
-  padding-top: 8px;
-  padding-bottom: 8px;
-}
-/*.navbar-nav > li > a {
-  padding-top: none;
-  padding-bottom: none;}
-
-.navbar-nav > li > a {
-  padding-bottom: 0;
-  padding-top: 0;
-}*/
 .warning a,
 .warning a:link,
 .warning a:visited {
@@ -6775,6 +6599,78 @@ a.fc-event:hover {
 .cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
 .cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
   border-left-color: #f2f2f2;
+}
+.cssmenu_horiz li:hover,
+.cssmenu_horiz li.sfHover,
+.topbar .nav > li > a:hover,
+.topbar .nav > li > a:focus {
+  background: transparent;
+}
+.cssmenu_horiz ul,
+.cssmenu_vert ul {
+  border: rgba(0, 0, 0, 0.15);
+}
+.cssmenu_horiz ul li a,
+.cssmenu_vert ul li a {
+  background: #aaaaaa;
+  color: #ffffff;
+}
+.cssmenu_horiz ul li:hover a,
+.cssmenu_vert ul li:hover a {
+  color: #f2f2f2;
+  background: #6d9f26;
+}
+.topbar,
+.topbar .cssmenu_horiz ul,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li {
+  background: #eeeeee;
+  color: #000000;
+}
+.topbar > a,
+.topbar .cssmenu_horiz ul > a,
+.topbar .navbar-default .navbar-nav > li > a,
+.topbar .nav > li > a {
+  color: #000000;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+.topbar > a:hover,
+.topbar .cssmenu_horiz ul > a:hover,
+.topbar .navbar-default .navbar-nav > li > a:hover,
+.topbar .nav > li > a:hover,
+.topbar > a:focus,
+.topbar .cssmenu_horiz ul > a:focus,
+.topbar .navbar-default .navbar-nav > li > a:focus,
+.topbar .nav > li > a:focus {
+  color: #ffffff;
+}
+.topbar .sf-arrows .sf-with-ul:after {
+  /* order of following 3 rules important for fallbacks to work */
+  border: 5px solid transparent;
+  border-top-color: #fff;
+  /* edit this to suit design (no rgba in IE8) */
+  border-top-color: rgba(0, 0, 0, 0.5);
+}
+.sf-arrows > li > .sf-with-ul:focus:after,
+.sf-arrows > li:hover > .sf-with-ul:after,
+.sf-arrows > .sfHover > .sf-with-ul:after {
+  border-top-color: white;
+  /* IE8 fallback colour */
+}
+/* styling for right-facing arrows */
+.sf-arrows ul .sf-with-ul:after {
+  margin-top: -5px;
+  margin-right: -3px;
+  border-color: transparent;
+  border-left-color: #dFeEFF;
+  /* edit this to suit design (no rgba in IE8) */
+  border-left-color: rgba(139, 187, 71, 0.5);
+}
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+  border-left-color: rgba(139, 187, 71, 0.5);
 }
 .thumbinfosothers {
   color: #eeeeee;
@@ -7327,6 +7223,194 @@ div.drillshow {
   background-color: #6d9f26;
   color: #f2f2f2;
 }
+.margin-bottom-xs {
+  margin-bottom: 5px;
+}
+.margin-bottom-sm {
+  margin-bottom: 10px;
+}
+.margin-bottom-md {
+  margin-bottom: 20px;
+}
+.margin-bottom-lg {
+  margin-bottom: 40px;
+}
+.navbar-fixed-top,
+.navbar-fixed-bottom {
+  left: 0;
+  position: fixed !important;
+  right: 0;
+  z-index: 1030;
+}
+#col2 .panel,
+#col3 .panel,
+#bottom_modules .panel {
+  border: none;
+}
+#col2 .panel-heading,
+#col3 .panel-heading,
+#bottom_modules .panel-heading {
+  background: #f2f2f2;
+  border-bottom: none;
+}
+.header_outer {
+  /* whole width div containing the header strip */
+  background: transparent;
+}
+.header_container > .header {
+  /* inner <header> element that gets .fixedwidth class applied */
+  background: transparent;
+}
+header.header .module.secondary_site_menu {
+  background: none;
+}
+.secondary_site_menu .navbar-default .navbar-collapse,
+.secondary_site_menu .navbar-default .navbar-form,
+.secondary_site_menu .navbar-default {
+  background: none;
+}
+.middle_outer {
+  background: url('../images/topbar.jpg') repeat-x;
+}
+.page-header {
+  margin-top: 0;
+  margin-bottom: 0;
+  border-bottom: none;
+}
+.form-control,
+select,
+input[type="text"],
+input[type="password"],
+input[type="file"],
+input[type="email"],
+input[type="file"],
+input[type="search"],
+input[type="number"],
+input#login-pass,
+textarea,
+.adminoptionbox option {
+  background-color: #ffffff;
+  border-color: #e0e0e0;
+}
+.navbar-collapse {
+  border: none;
+}
+#footer {
+  background: #ebebeb;
+  color: #696969;
+  padding: 1px 0 2px 0;
+  width: 100%;
+}
+.footer_liner {
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+}
+.footer_liner h3.panel-title {
+  color: #fff;
+  border-bottom: 1px dotted transparent;
+}
+.footer_liner legend,
+.footer_liner a,
+.footer_liner a:visited {
+  color: #ffffff;
+}
+.navbar-nav .open .dropdown-menu,
+.navbar-nav .open .dropdown-menu li,
+.navbar-default .navbar-nav > li > a {
+  background: #e7e7e7;
+}
+.navbar-default .navbar-nav li a:hover {
+  background: linear-gradient(to bottom, #93c44f 0%, #6d9f26 100%);
+}
+.postbody-title {
+  background: #f0f0f0;
+}
+.secondary_site_menu .navbar {
+  margin-bottom: 0;
+}
+.secondary_site_menu .navbar-nav {
+  float: right;
+}
+.secondary_site_menu .navbar-default .navbar-nav > li > a,
+.secondary_site_menu .navbar-default .navbar-nav > li > a:hover,
+.secondary_site_menu .navbar-default .navbar-nav > li > a:focus,
+.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
+  background: transparent;
+  color: #8bbb47;
+}
+.secondary_site_menu .navbar-default .navbar-nav li ul li a {
+  background: #e7e7e7;
+  color: #fff;
+}
+.secondary_site_menu .navbar-default .navbar-nav li ul li a:hover,
+.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
+  background: #e7e7e7;
+  color: #fff;
+}
+.siteloginbar_popup .dropdown-menu > li > a {
+  color: #fff;
+}
+header.header .sitetitle,
+header.header .sitesubtitle {
+  color: #8bbb47;
+  text-shadow: none;
+}
+h1 {
+  font-size: 1.6em;
+  background: url('../images/h_bullet.jpg') no-repeat 0 50%;
+  padding-left: 19px;
+}
+h2 {
+  font-size: 1.6em;
+  background: url('../images/h_bullet.jpg') no-repeat 0 50%;
+  padding-left: 19px;
+}
+h1.sitetitle {
+  background: none;
+}
+h2.sitesubtitle {
+  background: none;
+}
+.btn,
+.btn-default,
+input[type="reset"],
+input[type="submit"],
+.button input {
+  background: linear-gradient(to bottom, #a1bb87 0%, #8fa872 50%, #a1bb87 100%);
+  text-transform: uppercase;
+}
+.btn.btn-link,
+input[type="submit"].btn-link {
+  background: none;
+}
+.btn:hover,
+.btn-default:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.button input:hover {
+  background: linear-gradient(to bottom, #8fa872 50%, #8fa872 50%, #a1bb87 100%);
+}
+#topbar_modules .panel-heading,
+#topbar_modules .navbar-default .navbar-collapse,
+#topbar_modules .navbar-default .navbar-form {
+  background: none;
+  border-width: 0;
+}
+#topbar_modules .navbar {
+  border: none;
+}
+#topbar_modules .navbar-nav > li > a {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+/*.navbar-nav > li > a {
+  padding-top: none;
+  padding-bottom: none;}
+
+.navbar-nav > li > a {
+  padding-bottom: 0;
+  padding-top: 0;
+}*/
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */
