@@ -1,4 +1,4 @@
-/* The Newtheme theme for Tiki Wiki CMS Groupware */
+/* The Business theme for Tiki Wiki CMS Groupware */
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -6446,6 +6446,711 @@ button.close {
     display: none !important;
   }
 }
+.warning a,
+.warning a:link,
+.warning a:visited {
+  color: #8a6d3b;
+}
+.calhighlight {
+  background: #d9edf7;
+}
+a.fc-event:hover {
+  color: #ffffff;
+}
+.filter .fancyfilter {
+  border: thin solid #3676c4 /*black*/;
+}
+.filter .fancyfilter .token {
+  background: #ffffff;
+}
+.note-list .postbody-title {
+  background: #ffffff;
+  color: #ffffff;
+}
+.post-approved-n {
+  border-left: 3px dotted #3c763d;
+}
+.post-approved-r {
+  border-left: 3px double #8a6d3b;
+}
+.post-approved-r .content * {
+  background: url('../../../img/icons/dots.gif');
+}
+.cssmenu_horiz ul li,
+.cssmenu_vert ul li,
+.cssmenu_horiz ul ul li,
+.cssmenu_vert ul ul li {
+  background: #ffffff;
+}
+.cssmenu_horiz li:hover,
+.cssmenu_horiz li.sfHover,
+.cssmenu_vert li:hover,
+.cssmenu_vert li.sfHover {
+  background: #f5f5f5;
+  /* only transition out, not in */
+  -webkit-transition: none;
+  transition: none;
+}
+/* styling for both css and generated arrows */
+.sf-arrows .sf-with-ul:after {
+  border: 5px solid transparent;
+  border-top-color: #7d7d7d;
+  /* edit this to suit design (no rgba in IE8) */
+}
+/* styling for right-facing arrows */
+.sf-arrows ul .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #7d7d7d;
+}
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+  border-left-color: #707070;
+}
+.cssmenu_vert.sf-arrows > li > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #7d7d7d;
+}
+.cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
+.cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
+.cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
+  border-left-color: #707070;
+}
+.cssmenu_horiz li:hover,
+.cssmenu_horiz li.sfHover,
+.topbar .nav > li > a:hover,
+.topbar .nav > li > a:focus {
+  background: transparent;
+}
+.cssmenu_horiz ul,
+.cssmenu_vert ul {
+  border: rgba(0, 0, 0, 0.15);
+}
+.cssmenu_horiz ul li a,
+.cssmenu_vert ul li a {
+  background: #ffffff;
+  color: #7d7d7d;
+}
+.cssmenu_horiz ul li:hover a,
+.cssmenu_vert ul li:hover a {
+  color: #707070;
+  background: #f5f5f5;
+}
+.topbar,
+.topbar .cssmenu_horiz ul,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li {
+  background: #1f5daa;
+  color: #ffffff;
+}
+.topbar > a,
+.topbar .cssmenu_horiz ul > a,
+.topbar .navbar-default .navbar-nav > li > a,
+.topbar .nav > li > a {
+  color: #ffffff;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.topbar > a:hover,
+.topbar .cssmenu_horiz ul > a:hover,
+.topbar .navbar-default .navbar-nav > li > a:hover,
+.topbar .nav > li > a:hover,
+.topbar > a:focus,
+.topbar .cssmenu_horiz ul > a:focus,
+.topbar .navbar-default .navbar-nav > li > a:focus,
+.topbar .nav > li > a:focus {
+  color: #e6e6e6;
+}
+.topbar .sf-arrows .sf-with-ul:after {
+  /* order of following 3 rules important for fallbacks to work */
+  border: 5px solid transparent;
+  border-top-color: #fff;
+  /* edit this to suit design (no rgba in IE8) */
+  border-top-color: rgba(255, 255, 255, 0.5);
+}
+.sf-arrows > li > .sf-with-ul:focus:after,
+.sf-arrows > li:hover > .sf-with-ul:after,
+.sf-arrows > .sfHover > .sf-with-ul:after {
+  border-top-color: white;
+  /* IE8 fallback colour */
+}
+/* styling for right-facing arrows */
+.sf-arrows ul .sf-with-ul:after {
+  margin-top: -5px;
+  margin-right: -3px;
+  border-color: transparent;
+  border-left-color: #dFeEFF;
+  /* edit this to suit design (no rgba in IE8) */
+  border-left-color: rgba(0, 130, 224, 0.5);
+}
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+  border-left-color: rgba(0, 86, 147, 0.5);
+}
+.thumbinfosothers {
+  color: #ffffff;
+}
+table.treetable.objectperms td.added {
+  background-color: #dff0d8;
+}
+table.treetable.objectperms td.removed {
+  background-color: #fcf8e3;
+}
+.thumbnailcontener {
+  border: solid 1px #dddddd;
+}
+.progressBarInProgress {
+  background-color: #31708f;
+  color: #d9edf7;
+}
+.progressBarComplete {
+  background-color: #3c763d;
+  color: #dff0d8;
+}
+.progressBarError {
+  background-color: #8a6d3b;
+  color: #fcf8e3;
+}
+.progressContainer {
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+}
+.filter-panel-heading a:after {
+  color: #9f9f9f;
+}
+.olControlMousePosition {
+  background: rgba(0, 0, 0, 0.75);
+  color: #ffffff;
+}
+.olControlScaleLineTop,
+.olControlScaleLineBottom {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.ui-selectmenu-icon {
+  background-color: inherit;
+  border: solid 5px transparent !important;
+  box-shadow: -5px 0 5px 2px rgba(0, 0, 0, 0.1), -1px 0 0 rgba(0, 0, 0, 0.1), -2px 0 0 rgba(255, 255, 255, 0.25);
+}
+.dirsitetrail {
+  color: #f5f5f5;
+}
+.dirsitecats {
+  color: #f5f5f5;
+}
+#resultzone > div:hover {
+  background: #dff0d8;
+}
+.searchresults blockquote em,
+.highlight,
+.btn-default.highlight a,
+.btn-default a.highlight {
+  background: #f2dede;
+  color: #a94442;
+  border-color: #ebccd1;
+}
+.btn-default.highlight:hover {
+  background: #dca7a7;
+}
+#ajaxLoadingBG {
+  background: transparent url('../../../img/overlay-light.png');
+}
+#ajaxLoading {
+  color: #ffffff;
+  background: transparent url('../../../img/loading-light.gif') no-repeat 50% 50%;
+}
+#cookie_consent_div {
+  padding: 15px;
+  border: 1px solid #bce8f1;
+  color: #31708f;
+  background-color: #d9edf7;
+}
+#cookie_consent_div.banner {
+  padding: 15px;
+  border: 1px solid #bce8f1;
+}
+html#print {
+  background: #fff;
+  color: #000;
+}
+body.fullscreen {
+  background: #fff;
+}
+.attention {
+  color: #a94442;
+}
+#debugconsole {
+  background: #222222;
+  color: #e7e7e7;
+  border: 2px solid #080808;
+}
+#debugconsole form {
+  color: #e7e7e7;
+}
+#debugconsole a {
+  color: #ffffff;
+}
+#debugconsole a.btn {
+  color: #ffffff;
+}
+a.icon,
+img.icon {
+  background: transparent;
+}
+div #metadata fieldset.tabcontent,
+div #metadata div.tabs {
+  background-color: transparent;
+}
+.openid_url {
+  background: #ffffff url('../../../img/icons/login-OpenID-bg.gif') 1px 1px no-repeat;
+}
+input:-webkit-autofill {
+  background-color: #ffffff !important;
+  /* needs important because Chrome has it already important */
+  background-image: none !important;
+  color: #9f9f9f !important;
+  /* the Google guys forgot the number-one rule... when they specify background they should specify forgeround color too ;) */
+}
+#cboxTitle {
+  background-color: #ffffff;
+}
+#captchaImg {
+  border: 1px solid #dddddd;
+}
+form.simple label.error {
+  background: url('../../../img/icons/error.png') no-repeat 0 4px;
+  color: #a94442;
+}
+form.simple label .warning {
+  color: #a94442;
+}
+.tiki-modal .mask {
+  background-color: #ffffff;
+}
+.ui-dialog {
+  background: #ffffff;
+  color: #9f9f9f;
+}
+.box-quickadmin .cssmenu_horiz ul li {
+  background-color: #ffffff;
+}
+.box-switch_lang .box-data img.highlight {
+  border: 0.1em solid #ebccd1;
+}
+.box-switch_lang .box-data .highlight {
+  border: 0.1em solid #ebccd1;
+}
+div.cvsup {
+  color: #c1c1c1;
+}
+.layout_social .topbar_modules h1.sitetitle,
+.layout_social_modules .topbar_modules h1.sitetitle,
+.layout_moving_headers #top_modules h1.sitetitle {
+  color: #ffffff;
+}
+.layout_social .topbar_modules .navbar-inverse .navbar-collapse,
+.layout_social_modules .topbar_modules .navbar-inverse .navbar-collapse,
+.layout_moving_headers #top_modules .navbar-inverse .navbar-collapse,
+.layout_social .topbar_modules .navbar-inverse .navbar-form,
+.layout_social_modules .topbar_modules .navbar-inverse .navbar-form,
+.layout_moving_headers #top_modules .navbar-inverse .navbar-form,
+.layout_social .topbar_modules .navbar-inverse,
+.layout_social_modules .topbar_modules .navbar-inverse,
+.layout_moving_headers #top_modules .navbar-inverse {
+  border-color: transparent;
+}
+.prio1,
+.prio2,
+.prio3,
+.prio4,
+.prio5 {
+  border: 1px solid #dddddd;
+}
+.prio1 {
+  background: #f2dede;
+}
+.prio2 {
+  background: #fcf8e3;
+}
+.prio3 {
+  background: #dff0d8;
+}
+.prio4 {
+  background: #d9edf7;
+}
+.prio5 {
+  background: #386dbb;
+}
+.messureadflag {
+  background: #9f9f9f;
+}
+.messureadhead {
+  background: #c1c1c1;
+}
+.messureadbody {
+  background: #ffffff;
+}
+.readlink {
+  color: #9f9f9f;
+}
+.webmail_item {
+  border: 1px solid #dddddd;
+}
+.webmail_list .odd {
+  background: #f9f9f9;
+}
+.webmail_list .button {
+  background: #ffffff;
+  border: 1px solid #0082e0;
+}
+.webmail_list .webmail_read {
+  background: #d9edf7;
+}
+.webmail_list .webmail_replied {
+  background: #dff0d8;
+}
+.webmail_list .webmail_taken {
+  border: #faebcc;
+  color: #8a6d3b;
+}
+.webmail_message {
+  background: #ffffff;
+}
+.webmail_message_headers {
+  background: #ffffff;
+}
+.webmail_message_headers th {
+  background: transparent;
+}
+.tiki_sheet table td {
+  border: 1px solid #dddddd;
+}
+.odd {
+  background: transparent;
+  color: #9f9f9f;
+}
+.even {
+  background: #f9f9f9;
+  color: #9f9f9f;
+}
+.helptool-admin {
+  border-left: medium double #c1c1c1;
+}
+.toolbar-list {
+  border-left: medium double #c1c1c1;
+}
+.toolbars-picker {
+  background: #ffffff;
+  border: thin solid #9f9f9f;
+  color: #9f9f9f;
+}
+.toolbars-picker a {
+  border: 1px solid #ffffff;
+  color: #9f9f9f;
+}
+.toolbars-picker a:hover {
+  border: 1px solid #a94442;
+  background: #c1c1c1;
+  color: #9f9f9f;
+}
+.textarea-toolbar > div {
+  background-color: #ffffff;
+  border: outset 1px #ffffff;
+}
+#intertrans-indicator {
+  background-color: #dff0d8;
+  color: #3c763d;
+}
+#intertrans-form {
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  color: #ffffff;
+}
+#edit_translations tr.last {
+  border-bottom: 2px solid #d6e9c6;
+}
+ul.all_languages > li {
+  border: 1px solid #d6e9c6;
+}
+.convene-ok {
+  color: #3c763d;
+  background-color: #dff0d8;
+}
+.convene-no {
+  color: #a94442;
+  background-color: #f2dede;
+}
+.plugin-mouseover {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.mandatory_note {
+  color: #a94442;
+}
+.author0 {
+  color: #3c763d;
+}
+.author1 {
+  color: #31708f;
+}
+.author2 {
+  color: #8a6d3b;
+}
+.author3 {
+  color: #a94442;
+}
+.author4 {
+  color: #3c766d;
+}
+.author5 {
+  color: #60318f;
+}
+.author6 {
+  color: #658a3b;
+}
+.author7 {
+  color: #a99a42;
+}
+.author8 {
+  color: #3c4e76;
+}
+.author9 {
+  color: #8f318f;
+}
+.author10 {
+  color: #3b8a53;
+}
+.author11 {
+  color: #62a942;
+}
+.author12 {
+  color: #6d3c76;
+}
+.author13 {
+  color: #8f3151;
+}
+.author14 {
+  color: #3b728a;
+}
+.author15 {
+  color: #42a989;
+}
+.structuremenu .menuSection {
+  border-left: 1px dotted #9f9f9f;
+}
+.cke_editable:hover {
+  outline: #9f9f9f dotted 1px;
+}
+.tiki_plugin {
+  background-color: transparent;
+  border: 1px solid #c1c1c1;
+}
+.unsavedChangesInEditor {
+  border: 1px solid;
+  border-color: #faebcc;
+}
+div#outerToc {
+  background: #ffffff;
+}
+div#outerToc * {
+  color: #9f9f9f;
+}
+.plugin-form-float {
+  background: #ffffff;
+  color: #9f9f9f;
+  border: solid 2px #9f9f9f;
+}
+body.wikitext {
+  background: #ffffff;
+  color: #9f9f9f;
+}
+.editable-inline {
+  background: transparent url('../../../img/icons/database_lightning.png') no-repeat top right;
+  padding-right: 20px;
+  display: inline-block;
+}
+.editable-inline.loaded {
+  background: transparent;
+}
+.editable-inline.failure {
+  background: transparent url('../../../img/icons/lock_gray.png') no-repeat top right;
+}
+.editable-inline.modified {
+  border: solid 2px #d43f3a;
+  padding: 2px;
+}
+.editable-inline.unsaved {
+  border: solid 2px #d43f3a;
+}
+.structure_select .cssmenu_horiz ul li {
+  border: 1px solid #9f9f9f;
+}
+.admintoclevel .actions input {
+  border: solid 1px #9f9f9f;
+}
+.TextArea-fullscreen {
+  background-color: #9f9f9f;
+}
+.TextArea-fullscreen .actions,
+.CodeMirror-fullscreen .actions {
+  background-color: #ffffff;
+  border-top: #ffffff 1px solid;
+}
+#autosave_preview {
+  background-color: #ffffff;
+  color: #9f9f9f;
+}
+#autosave_preview_grippy {
+  background-color: #ffffff;
+  background-image: url('../../../img/icons/shading.png');
+}
+h1:hover a.tiki_anchor,
+h2:hover a.tiki_anchor,
+h3:hover a.tiki_anchor,
+h4:hover a.tiki_anchor,
+h5:hover a.tiki_anchor,
+h6:hover a.tiki_anchor {
+  color: #ffffff;
+}
+h1 a.tiki_anchor:hover,
+h2 a.tiki_anchor:hover,
+h3 a.tiki_anchor:hover,
+h4 a.tiki_anchor:hover,
+h5 a.tiki_anchor:hover,
+h6 a.tiki_anchor:hover {
+  color: #9f9f9f;
+}
+.wiki .namespace {
+  background: #ffffff;
+}
+.site_report a {
+  border-left: 1px solid #9f9f9f;
+  border-right: 1px solid #9f9f9f;
+}
+.quotebody {
+  border-left: 2px solid #c1c1c1;
+}
+.mandatory_star {
+  color: #ebccd1;
+}
+.trackerplugindesc {
+  color: #7d7d7d;
+}
+.charCount {
+  color: #7d7d7d;
+}
+.imgbox {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+}
+.ic_button {
+  border: 2px solid #dddddd;
+}
+.ic_active {
+  border: 2px solid #0082e0;
+}
+.ic_caption {
+  background: #222222;
+  color: #e7e7e7;
+}
+.wp-cookie-consent-required {
+  color: #a94442;
+}
+.wp-sign {
+  color: #ffffff;
+  background-color: #000000;
+}
+.toc {
+  border-top: 1px dotted #c1c1c1;
+  border-bottom: 1px dotted #c1c1c1;
+}
+.diff td {
+  border: 1px solid #7d7d7d;
+}
+.diff div {
+  border-top: 1px solid #c1c1c1;
+}
+.diffadded {
+  background: #dff0d8;
+  color: #3c763d;
+}
+.diffdeleted {
+  background: #f2dede;
+  color: #a94442;
+}
+.diffinldel {
+  background: #fcf8e3;
+}
+.diffbody {
+  background: #ffffff;
+  color: #6c6c6c;
+}
+.diffchar {
+  color: #c0605e;
+}
+.diffadded .diffchar {
+  color: #4d984e;
+}
+.morcego_embedded {
+  border: 1px solid;
+}
+.highlight_word_0 {
+  color: #3c763d;
+  background: #dff0d8;
+}
+.highlight_word_1 {
+  color: #31708f;
+  background: #d9edf7;
+}
+.highlight_word_2 {
+  color: #8a6d3b;
+  background: #fcf8e3;
+}
+.highlight_word_3 {
+  color: #a94442;
+  background: #f2dede;
+}
+.highlight_word_4 {
+  color: #a96642;
+  background: #f2e5de;
+}
+/* Structures drill-down menu */
+div.drillshow {
+  border: 1px solid #c1c1c1;
+}
+.chosen-container-multi .chosen-choices {
+  background-color: #ffffff;
+  color: #9f9f9f;
+  border: 1px solid #dddddd;
+}
+.chosen-container-single .chosen-single,
+.chosen-container-active.chosen-with-drop .chosen-single,
+.chosen-container .chosen-drop,
+.chosen-container-multi .chosen-choices .search-choice {
+  background-color: #ffffff;
+  color: #9f9f9f;
+  border: 1px solid #dddddd;
+}
+.chosen-container-single .chosen-search input[type="text"] {
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+}
+.chosen-container .chosen-results li.highlighted {
+  background-color: #f5f5f5;
+  color: #707070;
+}
+.margin-bottom-xs {
+  margin-bottom: 5px;
+}
+.margin-bottom-sm {
+  margin-bottom: 10px;
+}
+.margin-bottom-md {
+  margin-bottom: 20px;
+}
+.margin-bottom-lg {
+  margin-bottom: 40px;
+}
 .row.page-header,
 header.page-header {
   background: #8ba8c8;
@@ -6479,8 +7184,11 @@ h2.sitesubtitle {
   color: #91BEF5;
   font-style: italic;
 }
-#topbar_modules,
-.navbar-default {
+.navbar-default,
+.topbar,
+.topbar .cssmenu_horiz ul,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li {
   background: #1f5daa;
   /* Old browsers */
   background: -moz-linear-gradient(top, #1f5daa 0%, #3977c4 2%, #3b7ac7 3%, #3877c6 5%, #3a7cca 7%, #3778c8 9%, #3674c7 19%, #2c6abf 43%, #1c5cb3 69%, #1454ac 93%, #1455a9 97%, #1a57a8 98%, #346dba 100%);
@@ -6522,21 +7230,18 @@ h2.sitesubtitle {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3270bd', endColorstr='#205ea9', GradientType=0);
   /* IE6-9 */
 }
-.topbar .navbar {
-  margin-bottom: 0;
-  border: none;
-}
 .topbar .cssmenu_horiz > li > a,
 .topbar .navbar-default .navbar-nav > li > a {
-  color: #fff;
   text-transform: uppercase;
   padding-bottom: 15px;
   padding-top: 15px;
   font-weight: 700;
   font-size: 12px;
 }
-.container.middle > .row {
-  margin-top: 1em;
+#col1,
+#col2,
+#col3 {
+  padding-top: 1em;
 }
 #col1 {
   background: #fbfbfb url('../images/image1.jpg') no-repeat;
@@ -6611,6 +7316,7 @@ h3.panel-title {
 }
 /* styling for right-facing arrows */
 .sf-arrows ul .sf-with-ul:after {
+  border-color: transparent;
   border-left-color: #dFeEFF;
   /* edit this to suit design (no rgba in IE8) */
   border-left-color: rgba(255, 255, 255, 0.5);
@@ -6619,13 +7325,6 @@ h3.panel-title {
 .sf-arrows ul li:hover > .sf-with-ul:after,
 .sf-arrows ul .sfHover > .sf-with-ul:after {
   border-left-color: white;
-}
-.cssmenu_horiz li:hover,
-.cssmenu_horiz li.sfHover,
-.cssmenu_vert li:hover,
-.cssmenu_vert li.sfHover {
-  color: #707070;
-  background: #f5f5f5;
 }
 /* black */
 /* white */

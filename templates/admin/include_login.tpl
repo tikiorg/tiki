@@ -170,7 +170,7 @@
 				{if $prefs.feature_clear_passwords eq 'y'} {* deprecated *}
 					{preference name='feature_clear_passwords'}
 					<div class="adminoptionboxchild" id='feature_clear_passwords_childcontainer'>
-						{remarksbox type='warning' title='Security risk'}{tr}Store passwords in plain text is activated. You should never set this unless you know what you are doing.{/tr}{/remarksbox}
+						{remarksbox type='warning' title="{tr}Security risk{/tr}"}{tr}Store passwords in plain text is activated. You should never set this unless you know what you are doing.{/tr}{/remarksbox}
 					</div>
 				{/if}
 

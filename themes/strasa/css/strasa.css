@@ -1,4 +1,4 @@
-/* The Newtheme theme for Tiki Wiki CMS Groupware */
+/* strasa.css, the Strasa theme for Tiki Wiki CMS Groupware */
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -6516,6 +6516,78 @@ a.fc-event:hover {
 .cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
   border-left-color: #262626;
 }
+.cssmenu_horiz li:hover,
+.cssmenu_horiz li.sfHover,
+.topbar .nav > li > a:hover,
+.topbar .nav > li > a:focus {
+  background: transparent;
+}
+.cssmenu_horiz ul,
+.cssmenu_vert ul {
+  border: rgba(0, 0, 0, 0.15);
+}
+.cssmenu_horiz ul li a,
+.cssmenu_vert ul li a {
+  background: #ffffff;
+  color: #333333;
+}
+.cssmenu_horiz ul li:hover a,
+.cssmenu_vert ul li:hover a {
+  color: #262626;
+  background: #f5f5f5;
+}
+.topbar,
+.topbar .cssmenu_horiz ul,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li {
+  background: #f8f8f8;
+  color: #777777;
+}
+.topbar > a,
+.topbar .cssmenu_horiz ul > a,
+.topbar .navbar-default .navbar-nav > li > a,
+.topbar .nav > li > a {
+  color: #ffffff;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+.topbar > a:hover,
+.topbar .cssmenu_horiz ul > a:hover,
+.topbar .navbar-default .navbar-nav > li > a:hover,
+.topbar .nav > li > a:hover,
+.topbar > a:focus,
+.topbar .cssmenu_horiz ul > a:focus,
+.topbar .navbar-default .navbar-nav > li > a:focus,
+.topbar .nav > li > a:focus {
+  color: #d9d9d9;
+}
+.topbar .sf-arrows .sf-with-ul:after {
+  /* order of following 3 rules important for fallbacks to work */
+  border: 5px solid transparent;
+  border-top-color: #fff;
+  /* edit this to suit design (no rgba in IE8) */
+  border-top-color: rgba(255, 255, 255, 0.5);
+}
+.sf-arrows > li > .sf-with-ul:focus:after,
+.sf-arrows > li:hover > .sf-with-ul:after,
+.sf-arrows > .sfHover > .sf-with-ul:after {
+  border-top-color: white;
+  /* IE8 fallback colour */
+}
+/* styling for right-facing arrows */
+.sf-arrows ul .sf-with-ul:after {
+  margin-top: -5px;
+  margin-right: -3px;
+  border-color: transparent;
+  border-left-color: #dFeEFF;
+  /* edit this to suit design (no rgba in IE8) */
+  border-left-color: rgba(0, 102, 153, 0.5);
+}
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+  border-left-color: rgba(0, 51, 77, 0.5);
+}
 .thumbinfosothers {
   color: #eeeeee;
 }
@@ -7067,6 +7139,145 @@ div.drillshow {
   background-color: #f5f5f5;
   color: #262626;
 }
+.margin-bottom-xs {
+  margin-bottom: 5px;
+}
+.margin-bottom-sm {
+  margin-bottom: 10px;
+}
+.margin-bottom-md {
+  margin-bottom: 20px;
+}
+.margin-bottom-lg {
+  margin-bottom: 40px;
+}
+body {
+  background: url('../images/body-bg_fw.png') repeat-x #214d68;
+}
+.container {
+  background: #fff;
+}
+.btn-default {
+  border-color: #41cbe7 #223845 #223845 #41cbe7;
+}
+.navbar-default,
+.topbar,
+.topbar .cssmenu_horiz ul,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li {
+  background: #2498c7;
+  background: -moz-linear-gradient(top, #2498c7 0%, #047aa8 4%, #1b98c6 39%, #32b5e1 65%, #32bbe9 70%, #44d1fe 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #2498c7), color-stop(4%, #047aa8), color-stop(39%, #1b98c6), color-stop(65%, #32b5e1), color-stop(70%, #32bbe9), color-stop(100%, #44d1fe));
+  background: -webkit-linear-gradient(top, #2498c7 0%, #047aa8 4%, #1b98c6 39%, #32b5e1 65%, #32bbe9 70%, #44d1fe 100%);
+  background: -o-linear-gradient(top, #2498c7 0%, #047aa8 4%, #1b98c6 39%, #32b5e1 65%, #32bbe9 70%, #44d1fe 100%);
+  background: -ms-linear-gradient(top, #2498c7 0%, #047aa8 4%, #1b98c6 39%, #32b5e1 65%, #32bbe9 70%, #44d1fe 100%);
+  background: linear-gradient(to bottom, #2498c7 0%, #047aa8 4%, #1b98c6 39%, #32b5e1 65%, #32bbe9 70%, #44d1fe 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2498c7', endColorstr='#44d1fe', GradientType=0);
+}
+.navbar-inverse {
+  background: #006699;
+}
+input,
+.jumbotron {
+  border: 1px solid;
+  border-color: #223845 #4d7b9b #4d7b9b #223845;
+}
+.wikitext h1 {
+  color: #000;
+  line-height: .9em;
+}
+.wikitext h2 {
+  color: #309FC0;
+  line-height: .9em;
+  border-bottom: solid 1px #3090C0;
+  text-transform: uppercase;
+}
+.wikitext h3 {
+  color: #303030;
+  font-style: italic;
+}
+.wikitext h3.panel-title {
+  font-style: normal;
+}
+.wikitext h4 {
+  border-bottom: dashed 1px #CCF0FF;
+  color: #3F3F3F;
+}
+.wikitext h5 {
+  color: #6F6F6F;
+  font-style: italic;
+}
+.wikitext h6 {
+  color: #909090;
+}
+.wikitext.nopagetitle h1 {
+  color: #309FC0;
+  border-bottom: solid 1px #3090C0;
+  text-transform: uppercase;
+}
+.wikitext.nopagetitle h2 {
+  color: #303030;
+  font-style: italic;
+  border-bottom: none;
+  text-transform: none;
+}
+.wikitext.nopagetitle h3 {
+  border-bottom: dashed 1px #CCF0FF;
+  color: #3F3F3F;
+  font-style: normal;
+}
+.wikitext.nopagetitle h4 {
+  color: #6F6F6F;
+  font-style: italic;
+  border-bottom: none;
+}
+.wikitext.nopagetitle h5 {
+  color: #909090;
+}
+h1.pagetitle a,
+h1.pagetitle a:visited,
+h1.pagetitle a:hover,
+a.pagetitle,
+a.pagetitle:visited,
+a.pagetitle:hover {
+  color: #000;
+  text-decoration: none;
+}
+#col2 {
+  background: #8de1fd;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.footerbgtrap {
+  color: #999;
+  background: #2e3035;
+}
+.page-header {
+  color: #fff;
+  background: #214d68 url('../images/headerbg.jpg') repeat-x 0 100%;
+}
+.page-header a {
+  color: #fff;
+}
+.panel-default.module,
+.panel-default.module > .panel-heading,
+.panel-default.module > .panel-body,
+.panel-default.module > .panel-footer {
+  border: none;
+  background: transparent;
+}
+th,
+td.heading {
+  color: #5ae0ff;
+  background: #1b3a50;
+}
+th a:link,
+th a:visited,
+td.heading a:link,
+td.heading a:visited {
+  color: #5ae0ff;
+  text-decoration: none;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */
@@ -7185,127 +7396,4 @@ input.tablesorter-filter {
 }
 .affix {
   position: fixed;
-}
-body {
-  background: url('../images/body-bg_fw.png') repeat-x #214d68;
-}
-.container {
-  background: #fff;
-}
-.btn-default {
-  border-color: #41cbe7 #223845 #223845 #41cbe7;
-}
-.navbar {
-  background: #2498c7;
-  background: -moz-linear-gradient(top, #2498c7 0%, #047aa8 4%, #1b98c6 39%, #32b5e1 65%, #32bbe9 70%, #44d1fe 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #2498c7), color-stop(4%, #047aa8), color-stop(39%, #1b98c6), color-stop(65%, #32b5e1), color-stop(70%, #32bbe9), color-stop(100%, #44d1fe));
-  background: -webkit-linear-gradient(top, #2498c7 0%, #047aa8 4%, #1b98c6 39%, #32b5e1 65%, #32bbe9 70%, #44d1fe 100%);
-  background: -o-linear-gradient(top, #2498c7 0%, #047aa8 4%, #1b98c6 39%, #32b5e1 65%, #32bbe9 70%, #44d1fe 100%);
-  background: -ms-linear-gradient(top, #2498c7 0%, #047aa8 4%, #1b98c6 39%, #32b5e1 65%, #32bbe9 70%, #44d1fe 100%);
-  background: linear-gradient(to bottom, #2498c7 0%, #047aa8 4%, #1b98c6 39%, #32b5e1 65%, #32bbe9 70%, #44d1fe 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2498c7', endColorstr='#44d1fe', GradientType=0);
-}
-.navbar-inverse {
-  background: #006699;
-}
-input,
-.jumbotron {
-  border: 1px solid;
-  border-color: #223845 #4d7b9b #4d7b9b #223845;
-}
-.wikitext h1 {
-  color: #000;
-  line-height: .9em;
-}
-.wikitext h2 {
-  color: #309FC0;
-  line-height: .9em;
-  border-bottom: solid 1px #3090C0;
-  text-transform: uppercase;
-}
-.wikitext h3 {
-  color: #303030;
-  font-style: italic;
-}
-.wikitext h3.panel-title {
-  font-style: normal;
-}
-.wikitext h4 {
-  border-bottom: dashed 1px #CCF0FF;
-  color: #3F3F3F;
-}
-.wikitext h5 {
-  color: #6F6F6F;
-  font-style: italic;
-}
-.wikitext h6 {
-  color: #909090;
-}
-.wikitext.nopagetitle h1 {
-  color: #309FC0;
-  border-bottom: solid 1px #3090C0;
-  text-transform: uppercase;
-}
-.wikitext.nopagetitle h2 {
-  color: #303030;
-  font-style: italic;
-  border-bottom: none;
-  text-transform: none;
-}
-.wikitext.nopagetitle h3 {
-  border-bottom: dashed 1px #CCF0FF;
-  color: #3F3F3F;
-  font-style: normal;
-}
-.wikitext.nopagetitle h4 {
-  color: #6F6F6F;
-  font-style: italic;
-  border-bottom: none;
-}
-.wikitext.nopagetitle h5 {
-  color: #909090;
-}
-h1.pagetitle a,
-h1.pagetitle a:visited,
-h1.pagetitle a:hover,
-a.pagetitle,
-a.pagetitle:visited,
-a.pagetitle:hover {
-  color: #000;
-  text-decoration: none;
-}
-#col2 {
-  background: #8de1fd;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-.footerbgtrap {
-  color: #999;
-  background: #2e3035;
-}
-.page-header {
-  color: #fff;
-  background: #214d68 url('../images/headerbg.jpg') repeat-x 0 100%;
-}
-.page-header a {
-  color: #fff;
-}
-.panel-default.module,
-.panel-default.module > .panel-heading,
-.panel-default.module > .panel-body,
-.panel-default.module > .panel-footer {
-  border: none;
-  background: transparent;
-}
-th,
-td.heading {
-  color: #5ae0ff;
-  background: #1b3a50;
-}
-th a:link,
-th a:visited,
-td.heading a:link,
-td.heading a:visited {
-  color: #5ae0ff;
-  text-decoration: none;
 }

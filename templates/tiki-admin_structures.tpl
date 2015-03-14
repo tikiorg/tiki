@@ -129,7 +129,7 @@
 			</div>
 
 			{if $tiki_p_admin eq 'y'}
-				<div style="form-group">
+				<div class="form-group">
 					<label for="batchaction" class="control-label">{tr}Perform action with selected{/tr}</label>
 					<div class="input-group col-sm-6">
 						<select name="batchaction" class="form-control">
@@ -141,8 +141,8 @@
 							<input type="submit" class="btn btn-primary" name="act" value="{tr}Ok{/tr}">
 						</div>
 					</div>
-				</form>
-			</div>
+				</div>
+			</form>
 		{/if}
 
 		{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}

@@ -6237,6 +6237,90 @@ button.close {
     bottom: 20px;
   }
 }
+.clearfix:before,
+.clearfix:after,
+.dl-horizontal dd:before,
+.dl-horizontal dd:after,
+.container:before,
+.container:after,
+.container-fluid:before,
+.container-fluid:after,
+.row:before,
+.row:after,
+.form-horizontal .form-group:before,
+.form-horizontal .form-group:after,
+.btn-toolbar:before,
+.btn-toolbar:after,
+.btn-group-vertical > .btn-group:before,
+.btn-group-vertical > .btn-group:after,
+.nav:before,
+.nav:after,
+.navbar:before,
+.navbar:after,
+.navbar-header:before,
+.navbar-header:after,
+.navbar-collapse:before,
+.navbar-collapse:after,
+.pager:before,
+.pager:after,
+.panel-body:before,
+.panel-body:after,
+.modal-footer:before,
+.modal-footer:after {
+  content: " ";
+  display: table;
+}
+.clearfix:after,
+.dl-horizontal dd:after,
+.container:after,
+.container-fluid:after,
+.row:after,
+.form-horizontal .form-group:after,
+.btn-toolbar:after,
+.btn-group-vertical > .btn-group:after,
+.nav:after,
+.navbar:after,
+.navbar-header:after,
+.navbar-collapse:after,
+.pager:after,
+.panel-body:after,
+.modal-footer:after {
+  clear: both;
+}
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.pull-right {
+  float: right !important;
+}
+.pull-left {
+  float: left !important;
+}
+.hide {
+  display: none !important;
+}
+.show {
+  display: block !important;
+}
+.invisible {
+  visibility: hidden;
+}
+.text-hide {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+.hidden {
+  display: none !important;
+  visibility: hidden !important;
+}
+.affix {
+  position: fixed;
+}
 @-ms-viewport {
   width: device-width;
 }
@@ -6516,6 +6600,78 @@ a.fc-event:hover {
 .cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
 .cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
   border-left-color: #444444;
+}
+.cssmenu_horiz li:hover,
+.cssmenu_horiz li.sfHover,
+.topbar .nav > li > a:hover,
+.topbar .nav > li > a:focus {
+  background: transparent;
+}
+.cssmenu_horiz ul,
+.cssmenu_vert ul {
+  border: rgba(0, 0, 0, 0.15);
+}
+.cssmenu_horiz ul li a,
+.cssmenu_vert ul li a {
+  background: #ffffff;
+  color: #515151;
+}
+.cssmenu_horiz ul li:hover a,
+.cssmenu_vert ul li:hover a {
+  color: #444444;
+  background: #f5f5f5;
+}
+.topbar,
+.topbar .cssmenu_horiz ul,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li {
+  background: #f8f8f8;
+  color: #e0d6cc;
+}
+.topbar > a,
+.topbar .cssmenu_horiz ul > a,
+.topbar .navbar-default .navbar-nav > li > a,
+.topbar .nav > li > a {
+  color: #e0d6cc;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.topbar > a:hover,
+.topbar .cssmenu_horiz ul > a:hover,
+.topbar .navbar-default .navbar-nav > li > a:hover,
+.topbar .nav > li > a:hover,
+.topbar > a:focus,
+.topbar .cssmenu_horiz ul > a:focus,
+.topbar .navbar-default .navbar-nav > li > a:focus,
+.topbar .nav > li > a:focus {
+  color: #cda256;
+}
+.topbar .sf-arrows .sf-with-ul:after {
+  /* order of following 3 rules important for fallbacks to work */
+  border: 5px solid transparent;
+  border-top-color: #fff;
+  /* edit this to suit design (no rgba in IE8) */
+  border-top-color: rgba(224, 214, 204, 0.5);
+}
+.sf-arrows > li > .sf-with-ul:focus:after,
+.sf-arrows > li:hover > .sf-with-ul:after,
+.sf-arrows > .sfHover > .sf-with-ul:after {
+  border-top-color: white;
+  /* IE8 fallback colour */
+}
+/* styling for right-facing arrows */
+.sf-arrows ul .sf-with-ul:after {
+  margin-top: -5px;
+  margin-right: -3px;
+  border-color: transparent;
+  border-left-color: #dFeEFF;
+  /* edit this to suit design (no rgba in IE8) */
+  border-left-color: rgba(218, 56, 143, 0.5);
+}
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+  border-left-color: rgba(230, 121, 179, 0.5);
 }
 .thumbinfosothers {
   color: #ffffff;
@@ -7068,6 +7224,18 @@ div.drillshow {
   background-color: #f5f5f5;
   color: #444444;
 }
+.margin-bottom-xs {
+  margin-bottom: 5px;
+}
+.margin-bottom-sm {
+  margin-bottom: 10px;
+}
+.margin-bottom-md {
+  margin-bottom: 20px;
+}
+.margin-bottom-lg {
+  margin-bottom: 40px;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */
@@ -7111,6 +7279,7 @@ body {
   background: url('../images/header_background_ltr.jpg') 50% 0 no-repeat;
   background-size: cover;
 }
+.topbar,
 .navbar-default {
   background: #473119 url('../images/menubar-wood.jpg') 50% 50% no-repeat;
   background-size: cover;
@@ -7119,6 +7288,12 @@ body {
   box-shadow: inset 0 -3px 10px #331a00;
   border: none;
   border-radius: 0;
+}
+.topbar .navbar-default,
+.topbar .cssmenu_horiz ul,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li {
+  background: transparent;
 }
 #topbar_modules {
   background: #473119 url('../images/menubar-wood.jpg') 50% 50% no-repeat;
@@ -7200,88 +7375,4 @@ input[type="submit"]:hover {
 .articletitle .titleb {
   color: #996633;
   font-size: 0.9em;
-}
-.clearfix:before,
-.clearfix:after,
-.dl-horizontal dd:before,
-.dl-horizontal dd:after,
-.container:before,
-.container:after,
-.container-fluid:before,
-.container-fluid:after,
-.row:before,
-.row:after,
-.form-horizontal .form-group:before,
-.form-horizontal .form-group:after,
-.btn-toolbar:before,
-.btn-toolbar:after,
-.btn-group-vertical > .btn-group:before,
-.btn-group-vertical > .btn-group:after,
-.nav:before,
-.nav:after,
-.navbar:before,
-.navbar:after,
-.navbar-header:before,
-.navbar-header:after,
-.navbar-collapse:before,
-.navbar-collapse:after,
-.pager:before,
-.pager:after,
-.panel-body:before,
-.panel-body:after,
-.modal-footer:before,
-.modal-footer:after {
-  content: " ";
-  display: table;
-}
-.clearfix:after,
-.dl-horizontal dd:after,
-.container:after,
-.container-fluid:after,
-.row:after,
-.form-horizontal .form-group:after,
-.btn-toolbar:after,
-.btn-group-vertical > .btn-group:after,
-.nav:after,
-.navbar:after,
-.navbar-header:after,
-.navbar-collapse:after,
-.pager:after,
-.panel-body:after,
-.modal-footer:after {
-  clear: both;
-}
-.center-block {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-.pull-right {
-  float: right !important;
-}
-.pull-left {
-  float: left !important;
-}
-.hide {
-  display: none !important;
-}
-.show {
-  display: block !important;
-}
-.invisible {
-  visibility: hidden;
-}
-.text-hide {
-  font: 0/0 a;
-  color: transparent;
-  text-shadow: none;
-  background-color: transparent;
-  border: 0;
-}
-.hidden {
-  display: none !important;
-  visibility: hidden !important;
-}
-.affix {
-  position: fixed;
 }
