@@ -26,7 +26,10 @@
 		{/remarksbox}
 
 		<div class="media">
-			<img class="pull-left" src="img/icons/large/wizard_profiles48x48.png" alt="{tr}Configuration Profiles Wizard{/tr}" title="{tr}Configuration Profiles Wizard{/tr}" />
+			<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Configuration Profiles Wizard{/tr}" title="{tr}Configuration Profiles Wizard{/tr}" >
+				<i class="fa fa-cubes fa-stack-2x"></i>
+				<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
+			</span>
 			<div class="media-body">
 				<p>{tr}You may start by applying some of our configuration templates through the <b>Configuration Profiles Wizard</b>{/tr}. {tr}They are like the <b>Macros</b> from many computer languages{/tr}.
 					<a href="http://doc.tiki.org/Profiles+Wizard" target="tikihelp" class="tikihelp" title="{tr}Configuration Profiles:{/tr}
@@ -42,7 +45,10 @@
 			</div>
 		</div>
 		<div class="media">
-			<img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Configuration Walkthrough{/tr}" title="Configuration Walkthrough" />
+			<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Configuration Walkthrough{/tr}" title="Configuration Walkthrough">
+				<i class="fa fa-gear fa-stack-2x"></i>
+				<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
+			</span>
 			<div class="media-body">
 				<p>
 					{tr}Alternatively, you may use the <b>Configuration Wizard</b>{/tr}.
@@ -57,7 +63,10 @@
 			</div>
 		</div>
 		<div class="media">
-			<img class="pull-left" src="img/icons/large/wizard_upgrade48x48.png" alt="{tr}Upgrade Wizard{/tr}" title="Upgrade Wizard" />
+			<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Upgrade Wizard{/tr}" title="Upgrade Wizard">
+				<i class="fa fa-arrow-circle-down fa-stack-2x"></i>
+				<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
+			</span>
 			<div class="media-body">
 				<p>
 					{tr}Or you may use the <b>Upgrade Wizard</b>{/tr}.
@@ -76,7 +85,7 @@
 			</div>
 		</div>
 		<div class="media">
-			<img class="pull-left" src="img/icons/large/admin_panel48x48.png" alt="{tr}Control Panels{/tr}" />
+			<img class="pull-left" src="img/icons/large/controlpanels48x48.png" alt="{tr}Control Panels{/tr}" />
 			<div class="media-body">
 				<p>{tr}Use the <b>Control Panels</b> to manually browse through the full list of preferences{/tr}.</p>
 
