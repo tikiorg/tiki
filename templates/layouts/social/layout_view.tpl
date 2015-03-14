@@ -78,7 +78,7 @@
 			<footer class="main-footer">
 				<div class="container">
 					<!-- content modules col-md-3 -->
-					{modulelist zone=bottom}
+					{modulelist zone=bottom class=row}
 				</div>
 			</footer>
 		</div>

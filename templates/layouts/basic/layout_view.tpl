@@ -12,15 +12,13 @@
 		{/if}
 
 		<div class="container">
-			<div class="row page-header">
-				<div class="col-md-12">
-					{modulelist zone=top}
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					{modulelist zone=topbar}
-				</div>
+			<div class="page-header">
+                <div class="top_modules">
+    				{modulelist zone=top class=row}
+                </div>
+                <div class="topbar">
+    				{modulelist zone=topbar class=row}
+                </div>
 			</div>
 
 			<div class="row row-middle">
@@ -95,11 +93,11 @@
 				{/if}
 			</div>
 
-			<div class="row">
-				<div class="col-md-12 well">
-					{modulelist zone=bottom}
-				</div>
-			</div>
+			<footer>
+                <div class="bottom_modules">
+				    {modulelist zone=bottom class=row}
+                </div>
+			</footer>
 		</div>
 
 		{include file='footer.tpl'}

@@ -14,23 +14,15 @@
 		<div class="header_outer">
 			<div class="header_container">
 				<header class="container header page-header">
-					<div class="row">
-						<div class="col-md-12">
-							{modulelist zone=top}
-						</div>
-					</div>
+					{modulelist zone=top class=row}
 				</header>
 			</div>
 		</div>
 		<div class="middle_outer">
 			<div class="container clearfix middle" id="middle">
-				<div id="tiki-top" class="topbar">
-					<div class="row">
-						<div class="col-md-12">
-							{modulelist zone=topbar}
-						</div>
-					</div>
-				</div>
+			{*	<div id="tiki-top" class="topbar"> *}
+                    {modulelist zone=topbar class='row topbar tiki-top' id='tiki-top'}
+			{*	</div> *}
 				<div class="row">
 					{if zone_is_empty('left') and zone_is_empty('right')}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
@@ -90,7 +82,7 @@
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
 							<div class="col-md-8 col-md-push-2" id="col1">
 								{if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
-									{modulelist zone=pagetop}
+									{modulelist zone=pagetop class=row}
 								{/if}
 									{error_report}
 									<div class="pull-right">{block name=quicknav}{/block}</div>
@@ -98,7 +90,7 @@
 									{block name=navigation}{/block}
 									{block name=content}{/block}
 								{if $prefs.module_zones_pagebottom eq 'fixed' or ($prefs.module_zones_pagebottom ne 'n' && ! zone_is_empty('pagebottom'))}
-									{modulelist zone=pagebottom}
+									{modulelist zone=pagebottom class=row}
 								{/if}
 							</div>
 						{if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.center_shadow_end}</div>{/if}
@@ -115,11 +107,7 @@
 		<footer class="footer" id="footer">
 			<div class="footer_liner">
 				<div class="footerbgtrap container">
-					<div class="row">
-						<div class="col-md-12">
-							{modulelist zone=bottom}
-						</div>
-					</div>
+					{modulelist zone=bottom class=row}
 				</div>
 			</div>
 		</footer>

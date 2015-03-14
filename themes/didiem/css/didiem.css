@@ -6565,7 +6565,7 @@ header.header .module.secondary_site_menu {
   background: none;
 }
 .middle_outer {
-  background: url('../../../img/topbar.jpg') repeat-x;
+  background: url('../images/topbar.jpg') repeat-x;
 }
 .page-header {
   margin-top: 0;
@@ -6652,12 +6652,12 @@ header.header .sitesubtitle {
 }
 h1 {
   font-size: 1.6em;
-  background: url('../../../img/h_bullet.jpg') no-repeat 0 50%;
+  background: url('../images/h_bullet.jpg') no-repeat 0 50%;
   padding-left: 19px;
 }
 h2 {
   font-size: 1.6em;
-  background: url('../../../img/h_bullet.jpg') no-repeat 0 50%;
+  background: url('../images/h_bullet.jpg') no-repeat 0 50%;
   padding-left: 19px;
 }
 h1.sitetitle {
@@ -7012,9 +7012,6 @@ div.cvsup {
 }
 .tiki_sheet table td {
   border: 1px solid #dddddd;
-}
-.table-responsive {
-  box-shadow: -5rem 0 9rem -9rem rgba(0, 0, 0, 0.75) inset;
 }
 .odd {
   background: transparent;

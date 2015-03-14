@@ -44,7 +44,7 @@ close();
 						{/section}
 					</ul>
 				{else}
-					{remarksbox}
+					{remarksbox type="tip" title="{tr}Information{/tr}"}
 						{tr}There are no wiki pages similar to '{$page|escape}'{/tr}
 					{/remarksbox}
 				{/if}
