@@ -367,7 +367,7 @@ class HeaderLib
 			'other_min'=> $minify_other_ok,
 			'other_full'=> $minify_other_failed,
 			'dynamic' => $dynamic,
-			'late_min'=> $minify_ok_late,
+			'late_min'=> $minify_late_ok,
 			'late_full'=> $minify_failed_late, 
 		);
 	}
