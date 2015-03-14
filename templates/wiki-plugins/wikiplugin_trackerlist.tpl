@@ -11,7 +11,7 @@
 		</div>
 	{/if}
 	{if $nonPublicFieldsWarning}
-		{remarksbox type='errors' title='{tr}Field error{/tr}'}{$nonPublicFieldsWarning}{/remarksbox}
+		{remarksbox type='errors' title="{tr}Field error{/tr}"}{$nonPublicFieldsWarning}{/remarksbox}
 	{/if}
 	{if isset($user_watching_tracker)}
 		{if $user_watching_tracker eq 'n'}

@@ -58,7 +58,7 @@
 									{$last = $filter.opts[io].name}
 								{/section}
 							</select>
-							{if $filter.format eq 'm' and $prefs.jquery_ui_chosen neq 'y'}{remarksbox type='tip' title='{tr}Tip{/tr}'}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}{/if}
+							{if $filter.format eq 'm' and $prefs.jquery_ui_chosen neq 'y'}{remarksbox type='tip' title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}{/if}
 	{*------<,> operator *}
 						{elseif $filter.format eq '<' or $filter.format eq '>' or $filter.format eq '<=' or $filter.format eq '>='or $filter.format eq 'f' or $filter.format eq 'j'}
 							{if $filter.field.type eq 'f' or $filter.field.type eq 'j'}
