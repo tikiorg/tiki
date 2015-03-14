@@ -6530,28 +6530,6 @@ button.close {
     display: none !important;
   }
 }
-.panel-heading,
-.navbar-default .navbar-collapse,
-.navbar-default .navbar-form {
-  background-image: -webkit-linear-gradient(top, #e3e3e3 0%, #cccccc 100%);
-  background-image: -o-linear-gradient(top, #e3e3e3 0%, #cccccc 100%);
-  background-image: linear-gradient(to bottom, #e3e3e3 0%, #cccccc 100%);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe3e3e3', endColorstr='#ffcccccc', GradientType=0);
-}
-.panel-heading {
-  margin: 3px;
-}
-.panel-title {
-  font-weight: bold;
-}
-.btn-default {
-  background-image: -webkit-linear-gradient(top, #eeeeee 0%, #f2f2f2 100%);
-  background-image: -o-linear-gradient(top, #eeeeee 0%, #f2f2f2 100%);
-  background-image: linear-gradient(to bottom, #eeeeee 0%, #f2f2f2 100%);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffeeeeee', endColorstr='#fff2f2f2', GradientType=0);
-}
 .warning a,
 .warning a:link,
 .warning a:visited {
@@ -7256,6 +7234,33 @@ div.drillshow {
 }
 .margin-bottom-lg {
   margin-bottom: 36px;
+}
+.navbar-default,
+.topbar,
+.topbar .cssmenu_horiz ul,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li,
+.panel-heading,
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  background-image: -webkit-linear-gradient(top, #e3e3e3 0%, #cccccc 100%);
+  background-image: -o-linear-gradient(top, #e3e3e3 0%, #cccccc 100%);
+  background-image: linear-gradient(to bottom, #e3e3e3 0%, #cccccc 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe3e3e3', endColorstr='#ffcccccc', GradientType=0);
+}
+.panel-heading {
+  margin: 3px;
+}
+.panel-title {
+  font-weight: bold;
+}
+.btn-default {
+  background-image: -webkit-linear-gradient(top, #eeeeee 0%, #f2f2f2 100%);
+  background-image: -o-linear-gradient(top, #eeeeee 0%, #f2f2f2 100%);
+  background-image: linear-gradient(to bottom, #eeeeee 0%, #f2f2f2 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffeeeeee', endColorstr='#fff2f2f2', GradientType=0);
 }
 /* black */
 /* white */
