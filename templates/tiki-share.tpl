@@ -91,7 +91,7 @@
 					{tr}Send via email{/tr}
 				</td>
 				<td>
-					{if $report !='y' && !$twitterRegistered && !$facebookRegistered && !$prefs.feature_forums}
+					{if $report !='y'}
 						<input type="radio" name="do_email" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('emailtable')" {/if}>
 						{tr}Yes{/tr}
 						<input type="radio" name="do_email" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('emailtable')" {/if}>
@@ -103,7 +103,7 @@
 			</tr>
 			<tr id="emailrow">
 				<td>
-					<table class="formcolor" id="emailtable">
+					<table class="formcolor" id="emailtable" style="display: none;">
 						{if $report!='y'}
 							<tr>
 								<td>{tr}Recipient(s){/tr}</td>
@@ -157,9 +157,9 @@
 					</td>
 					<td>
 						{if $twitter}
-							<input type="radio" name="do_tweet" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('twittertable')" {/if}>
+							<input type="radio" name="do_tweet" value="1" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('twittertable')" {/if}>
 							{tr}Yes{/tr}
-							<input type="radio" name="do_tweet" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('twittertable')" {/if}>
+							<input type="radio" name="do_tweet" value="0" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('twittertable')" {/if}>
 							{tr}No{/tr}
 						{else}
 							{remarksbox type="note" title="{tr}Note{/tr}"}
@@ -171,7 +171,7 @@
 				<tr id="twitterrow">
 					<td>
 						{if $twitter}
-							<table class="formcolor" id="twittertable">
+							<table class="formcolor" id="twittertable" style="display: none;">
 								<tr>
 									<td>{tr}Tweet{/tr}</td>
 									<td>
@@ -195,9 +195,9 @@
 					</td>
 					<td>
 						{if $facebook}
-							<input type="radio" name="do_fb" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('fbtable')" {/if}>
+							<input type="radio" name="do_fb" value="1" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('fbtable')" {/if}>
 							{tr}Yes{/tr}
-							<input type="radio" name="do_fb" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('fbtable')" {/if}>
+							<input type="radio" name="do_fb" value="0" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('fbtable')" {/if}>
 							{tr}No{/tr}
 						{else}
 							{remarksbox type="note" title="{tr}Note{/tr}"}
@@ -209,7 +209,7 @@
 				<tr id="fbrow">
 					<td>
 						{if $facebook}
-							<table class="formcolor" id="fbtable">
+							<table class="formcolor" id="fbtable" style="display: none;">
 								<tr>
 									<td>{tr}Link text{/tr}</td>
 									<td>
@@ -235,31 +235,6 @@
 				</tr>
 			{/if}
 
-			{if $prefs.share_token_notification eq 'y'}
-				<tr>
-					<td>{tr}Subscribe notification{/tr}</td>
-					<td><input type="checkbox" value="y" name="share_token_notification" {if $share_token_notification eq 'y'}checked="checked" {/if}></td>
-				</tr>
-			{/if}
-
-			{if $prefs.share_can_choose_how_much_time_access eq 'y' && $prefs.auth_token_access eq 'y'}
-				<tr>
-					<td>{tr}How much time recipients can access to this page{/tr}</td>
-					<td>
-						{if $prefs.share_max_access_time eq -1}
-							<input type="text" name="how_much_time_access" value="{$how_much_time_access|default:1}">
-						{else}
-							<select id="how_much_time_access" name="how_much_time_access">
-								{section name=share_max_access start=1 loop=$prefs.share_max_access_time+1}
-									{html_options values=$smarty.section.share_max_access.index output=$smarty.section.share_max_access.index}
-								{/section}
-							</select>
-						{/if}
-						&nbsp;{tr}time{/tr}
-					</td>
-				</tr>
-			{/if}
-
 			{if $prefs.feature_messages eq 'y' && $report != 'y'}
 				<tr>
 					<td rowspan="2">
@@ -269,9 +244,9 @@
 					</td>
 					<td>
 						{if $send_msg=='y'}
-							<input type="radio" name="do_message" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('messagetable')" {/if}>
+							<input type="radio" name="do_message" value="1" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('messagetable')" {/if}>
 							{tr}Yes{/tr}
-							<input type="radio" name="do_message" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('messagetable')" {/if}>
+							<input type="radio" name="do_message" value="0" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('messagetable')" {/if}>
 							{tr}No{/tr}
 						{else}
 							{remarksbox type="note" title="{tr}Note{/tr}"}
@@ -283,7 +258,7 @@
 				<tr id="messagerow">
 					<td>
 						{if $send_msg}
-							<table class="formcolor" id="messagetable">
+							<table class="formcolor" id="messagetable" style="display: none;">
 								<tr>
 									<td>{tr}Recipient(s){/tr}</td>
 									<td>
@@ -324,9 +299,9 @@
 					</td>
 					<td>
 						{if count($forums)>0}
-							<input type="radio" name="do_forum" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('forumtable')" {/if}>
+							<input type="radio" name="do_forum" value="1" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('forumtable')" {/if}>
 							{tr}Yes{/tr}
-							<input type="radio" name="do_forum" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('forumtable')" {/if}>
+							<input type="radio" name="do_forum" value="0" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('forumtable')" {/if}>
 							{tr}No{/tr}
 						{else}
 							{remarksbox type="note" title="{tr}Note{/tr}"}
@@ -338,7 +313,7 @@
 				<tr id="forumrow">
 					<td>
 						{if count($forums)>0}
-							<table class="formcolor" id="forumtable">
+							<table class="formcolor" id="forumtable" style="display: none;">
 								<tr>
 									<td>{tr}Forum{/tr}</td>
 									<td>
@@ -367,6 +342,7 @@
 					</td>
 				</tr>
 			{/if}
+
 			{if $prefs.feature_antibot eq 'y' && $user eq ''}
 				{include file='antibot.tpl' td_style="formcolor"}
 			{/if}
@@ -383,6 +359,32 @@
 					{/if}
 				</td>
 			</tr>
+			{if $prefs.share_token_notification eq 'y'}
+				<tr><td colspan="2"><hr></td> </tr>
+				<tr>
+					<td>{tr}Subscribe notification{/tr}</td>
+					<td><input type="checkbox" value="y" name="share_token_notification" {if $share_token_notification eq 'y'}checked="checked" {/if}></td>
+				</tr>
+			{/if}
+
+			{if $prefs.share_can_choose_how_much_time_access eq 'y' && $prefs.auth_token_access eq 'y'}
+				<tr>
+					<td>{tr}How many times recipients can access this page{/tr}</td>
+					<td>
+						{if $prefs.share_max_access_time eq -1}
+							<input type="text" name="how_much_time_access" value="{$how_much_time_access|default:1}">
+						{else}
+							<select id="how_much_time_access" name="how_much_time_access">
+								{section name=share_max_access start=1 loop=$prefs.share_max_access_time+1}
+									{html_options values=$smarty.section.share_max_access.index output=$smarty.section.share_max_access.index}
+								{/section}
+							</select>
+						{/if}
+						&nbsp;{tr}time{/tr}
+					</td>
+				</tr>
+			{/if}
+
 		</table>
 	</form>
 {else}
