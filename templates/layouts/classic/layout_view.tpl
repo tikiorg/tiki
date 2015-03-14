@@ -17,11 +17,7 @@
 			<div class="header_outer">
 				<div class="header_container">
 					<header class="container header page-header">
-						<div class="row">
-							<div class="col-md-12">
-								{modulelist zone=top}
-							</div>
-						</div>
+						{modulelist zone=top class=row}
 					</header>
 				</div>
 			</div>
@@ -29,14 +25,8 @@
 
 		<div class="middle_outer">
 			<div class="container clearfix middle" id="middle">
-				<div id="tiki-top" class="topbar">
-					<div class="row">
-						<div class="col-md-12">
-							{modulelist zone=topbar}
-						</div>
-					</div>
-				</div>
-				<div class="row">
+ 				{modulelist zone=topbar class='row topbar tiki-top'}
+			<div class="row">
 					{if zone_is_empty('left') and zone_is_empty('right')}
 						<div class="col-md-12" id="col1">
 
@@ -124,11 +114,7 @@
 			<footer class="footer" id="footer">
 				<div class="footer_liner">
 					<div class="footerbgtrap container">
-						<div class="row">
-							<div class="col-md-12">
-								{modulelist zone=bottom}
-							</div>
-						</div>
+						{modulelist zone=bottom}
 					</div>
 				</div>
 			</footer>
