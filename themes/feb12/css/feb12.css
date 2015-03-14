@@ -7280,6 +7280,11 @@ header.container {
 .page-header {
   background: url('../images/header.jpg') repeat-x bottom;
 }
+.navbar-default,
+.topbar,
+.topbar .cssmenu_horiz ul,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li,
 .navbar-inverse.navbar-fixed-top,
 .navbar-inverse.navbar-fixed-top .navbar-collapse,
 .navbar-inverse.navbar-fixed-top .navbar-form,
@@ -7302,6 +7307,13 @@ header.container {
   font-size: 10px;
   margin-top: 4px;
 }
+.topbar .nav > li > a:hover,
+.topbar .nav > li > a:focus,
+.topbar .cssmenu_horiz > li > a:hover,
+.topbar .cssmenu_horiz > li:hover,
+.topbar .cssmenu_horiz li.sfHover:hover,
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus,
 #topbar_modules .navbar-default .navbar-nav > .active > a,
 #topbar_modules .navbar-default .navbar-nav > .active > a:hover,
 #topbar_modules .navbar-default .navbar-nav > .active > a:focus {
