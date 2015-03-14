@@ -318,13 +318,15 @@
 				{if 1 eq 1 || $prefs.allowmsg_is_optional eq 'y'}
 					<div class="checkbox">
 						<label>
-							{tr}Allow messages from other users{/tr}<input type="checkbox" name="allowMsgs" {if $user_prefs.allowMsgs eq 'y'}checked="checked"{/if}>
+							<input type="checkbox" name="allowMsgs" {if $user_prefs.allowMsgs eq 'y'}checked="checked"{/if}>
+							{tr}Allow messages from other users{/tr}
 						</label>
 					</div>
 				{/if}
 				<div class="checkbox">
 					<label>
-						{tr}Notify sender when reading his mail{/tr}<input type="checkbox" name="mess_sendReadStatus" {if $user_prefs.mess_sendReadStatus eq 'y'}checked="checked"{/if}>
+						<input type="checkbox" name="mess_sendReadStatus" {if $user_prefs.mess_sendReadStatus eq 'y'}checked="checked"{/if}>
+						{tr}Notify sender when reading his mail{/tr}
 					</label>
 				</div>
 				<div class="form-group">
