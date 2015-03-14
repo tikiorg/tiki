@@ -7279,6 +7279,7 @@ body {
   background: url('../images/header_background_ltr.jpg') 50% 0 no-repeat;
   background-size: cover;
 }
+.topbar,
 .navbar-default {
   background: #473119 url('../images/menubar-wood.jpg') 50% 50% no-repeat;
   background-size: cover;
@@ -7287,6 +7288,12 @@ body {
   box-shadow: inset 0 -3px 10px #331a00;
   border: none;
   border-radius: 0;
+}
+.topbar .navbar-default,
+.topbar .cssmenu_horiz ul,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li {
+  background: transparent;
 }
 #topbar_modules {
   background: #473119 url('../images/menubar-wood.jpg') 50% 50% no-repeat;
