@@ -7160,7 +7160,11 @@ body {
 .btn-default {
   border-color: #41cbe7 #223845 #223845 #41cbe7;
 }
-.navbar {
+.navbar-default,
+.topbar,
+.topbar .cssmenu_horiz ul,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li {
   background: #2498c7;
   background: -moz-linear-gradient(top, #2498c7 0%, #047aa8 4%, #1b98c6 39%, #32b5e1 65%, #32bbe9 70%, #44d1fe 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #2498c7), color-stop(4%, #047aa8), color-stop(39%, #1b98c6), color-stop(65%, #32b5e1), color-stop(70%, #32bbe9), color-stop(100%, #44d1fe));
