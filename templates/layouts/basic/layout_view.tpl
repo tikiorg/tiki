@@ -13,8 +13,12 @@
 
 		<div class="container">
 			<div class="page-header">
-				{modulelist zone=top class='row top_modules'}
-				{modulelist zone=topbar class='row topbar'}
+                <div class="top_modules">
+    				{modulelist zone=top class=row}
+                </div>
+                <div class="topbar">
+    				{modulelist zone=topbar class=row}
+                </div>
 			</div>
 
 			<div class="row row-middle">
@@ -90,7 +94,9 @@
 			</div>
 
 			<footer>
-				{modulelist zone=bottom class='row bottom_modules'}
+                <div class="bottom_modules">
+				    {modulelist zone=bottom class=row}
+                </div>
 			</footer>
 		</div>
 
