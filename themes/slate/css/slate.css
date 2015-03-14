@@ -7262,9 +7262,6 @@ div.cvsup {
 .tiki_sheet table td {
   border: 1px solid rgba(0, 0, 0, 0.6);
 }
-.table-responsive {
-  box-shadow: -5rem 0 9rem -9rem rgba(0, 0, 0, 0.75) inset;
-}
 .odd {
   background: #2e3338;
   color: #c8c8c8;
