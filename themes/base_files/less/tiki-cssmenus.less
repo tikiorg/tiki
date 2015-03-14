@@ -1,3 +1,7 @@
+// $Id$ tiki-cssmenus.less - imported by tiki_base.less to produce tiki_base.css
+// CSS selectors for the topbar div (legacy Tiki navbar container) and Superfish menus.
+// Variables here are defined by themes/base_files/less/tiki-variables.less and by themes/<themename>/less/tiki-variables.less .
+
 /*** ESSENTIAL STYLES ***/
 .cssmenu_horiz,
 .cssmenu_horiz * ,
@@ -57,7 +61,7 @@
 //  border-left: 1px solid #fff;
 //  border-top: 1px solid #dFeEFF; /* fallback colour must use full shorthand */
 //  border-top: 1px solid rgba(255,255,255,.5);
-  padding: .75em 1em;
+  padding: 3px 20px; // match Bootstrap dropdown-menu li.
   text-decoration: none;
 }
 // .cssmenu_horiz a,
@@ -156,4 +160,15 @@
 
 a.structure-home {
   padding: 0;
+}
+
+// The purpose here is to map legacy Tiki topbar menu classes to Bootstrap classes.
+
+.topbar {
+  .navbar {
+    margin-bottom: 0;
+  }
+  .navbar-default {
+    border: none;
+  }
 }
