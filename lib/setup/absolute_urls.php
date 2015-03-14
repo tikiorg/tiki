@@ -82,6 +82,9 @@ if (!$reverse_proxy) {
 		$https_mode = true;
 	}
 	
+
+	// when doing a database update via console.php $_SERVER['SERVER_PORT'] is not set. So define a default to avoid notice.
+	$_SERVER['SERVER_PORT'] = isset($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : 80;
 	// adjust in case the current port is not 80 or 443
 	if ($https_mode) {
 		$prefs['https_port'] = (int) $_SERVER['SERVER_PORT'];
