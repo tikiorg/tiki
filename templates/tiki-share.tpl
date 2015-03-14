@@ -103,7 +103,7 @@
 			</tr>
 			<tr id="emailrow">
 				<td>
-					<table class="formcolor" id="emailtable" style="display: none;">
+					<table class="formcolor" id="emailtable">
 						{if $report!='y'}
 							<tr>
 								<td>{tr}Recipient(s){/tr}</td>
