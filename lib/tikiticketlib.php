@@ -54,7 +54,7 @@ function check_ticket($area)
 function key_get($area = null, $confirmation_text = '', $confirmaction = '',  $returnHtml = true)
 {
 	global $prefs;
-	if ($prefs['feature_ticketlib2'] == 'y') {
+	if ($prefs['feature_ticketlib2'] == 'y' || $returnHtml === false) {
 		$ticket = md5(uniqid(rand()));
 		$_SESSION['tickets'][$ticket] = time();
 		if ($returnHtml) {
@@ -86,7 +86,7 @@ function key_get($area = null, $confirmation_text = '', $confirmaction = '',  $r
 function key_check($area = null, $returnHtml = true)
 {
 	global $prefs;
-	if ($prefs['feature_ticketlib2'] == 'y') {
+	if ($prefs['feature_ticketlib2'] == 'y' || $returnHtml === false) {
 		if (isset($_REQUEST['ticket']) && isset($_SESSION['tickets'][$_REQUEST['ticket']])) {
 			$time = $_SESSION['tickets'][$_REQUEST['ticket']];
 			if ($time < time() && $time > (time()-(60*15))) {
