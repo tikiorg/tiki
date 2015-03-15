@@ -3,7 +3,7 @@
 	{title}{$title|escape}{/title}
 {/block}
 {block name="content"}
-	<form method="post" action="{service controller=user action=email_wikipage}">
+	<form method="post" action="{$confirmAction}">
 		<fieldset>
 			<div class="form-group">
 				<label for="userlist" class="control-label">

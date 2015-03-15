@@ -69,6 +69,7 @@ class Services_Forum_Controller
 				if (count($diff) > 0) {
 					return [
 						'action' => 'merge_topic',
+						'confirmAction' => 'tiki-forum-merge_topic',
 						'title' => tr('Merge selected %0 with another topic', $object),
 						'items' => $items,
 						'ticket' => $check['ticket'],
@@ -127,6 +128,7 @@ class Services_Forum_Controller
 				$toList = json_decode($params['all_forums'], true);
 				return [
 					'title' => tra('Move selected topics to another forum'),
+					'confirmAction' => 'tiki-forum-move_topic',
 					'items' => $items,
 					'ticket' => $check['ticket'],
 					'toList' => $toList,
