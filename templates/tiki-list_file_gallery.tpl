@@ -23,9 +23,9 @@
 				{tr}Views{/tr}
 			</li>
 			<li class="divider"></li>
-			{if $view neq 'list'}
+			{if $view neq 'admin' and $tiki_p_admin_file_galleries eq 'y'}
 				<li>
-					{self_link _icon_name="list" _text="{tr}List{/tr}" view="list" galleryId=$galleryId}{/self_link}
+					{self_link _icon_name="wrench" _text="{tr}Admin{/tr}" view="admin" galleryId=$galleryId}{/self_link}
 				</li>
 			{/if}
 			{if $view neq 'browse'}
@@ -33,14 +33,19 @@
 					{self_link _icon_name="view" _text="{tr}Browse{/tr}" view="browse" galleryId=$galleryId}{/self_link}
 				</li>
 			{/if}
-			{if $view neq 'page'}
+			{if $view neq 'finder' and $prefs.fgal_elfinder_feature eq 'y'}
 				<li>
-					{self_link _icon_name="textfile" _text="{tr}Page{/tr}" view="page" galleryId=$galleryId}{/self_link}
+					{self_link _icon_name="file-archive-open" _text="{tr}Finder{/tr}" view="finder" galleryId=$galleryId}{/self_link}
 				</li>
 			{/if}
-			{if $view neq 'admin' and $tiki_p_admin_file_galleries eq 'y'}
+			{if $view neq 'list'}
 				<li>
-					{self_link _icon_name="wrench" _text="{tr}Admin{/tr}" view="admin" galleryId=$galleryId}{/self_link}
+					{self_link _icon_name="list" _text="{tr}List{/tr}" view="list" galleryId=$galleryId}{/self_link}
+				</li>
+			{/if}
+			{if $view neq 'page' and $filescount gt 0}
+				<li>
+					{self_link _icon_name="textfile" _text="{tr}Page{/tr}" view="page" galleryId=$galleryId}{/self_link}
 				</li>
 			{/if}
 		{/if}
@@ -104,7 +109,6 @@
 	</div>
 {/if}
 
-{* admin icons on the right side of the top navigation bar under the title *}
 <div class="btn-group">
 	{if $galleryId gt 0}
 	{* main navigation buttons under the page title *}
@@ -253,7 +257,7 @@
 			{/if}
 		</div>
 	{/if}
-	{if $prefs.fgal_elfinder_feature eq 'y' and $view eq 'finder'}
+	{if $prefs.fgal_elfinder_feature eq 'y' and $view eq 'finder'}<br>
 		<div class="elFinderDialog" style="height: 100%"></div>
 		{jq}
 
