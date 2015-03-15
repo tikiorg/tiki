@@ -152,7 +152,7 @@
 					{if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' )
 					and $prefs.javascript_enabled eq 'y'}
 						<a class="fgalname tips" title="{tr}Actions{/tr}" href="#" {popup trigger="onclick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"}>
-							{icon _id='wrench' alt="{tr}Actions{/tr}"}
+							{icon name='wrench' alt="{tr}Actions{/tr}"}
 						</a>
 						{else}
 					{include file='fgal_context_menu.tpl'}

@@ -31,7 +31,7 @@
 		{if $prefs.feature_webdav eq 'y'}
 			{assign var=virtual_path value=$files[$changes].id|virtual_path:'filegal'}
 			<a style="behavior: url(#default#AnchorClick);" href="{$virtual_path}" folder="{$virtual_path}">
-				{icon _id="tree_folder_open"}{tr}Open as WebFolder{/tr}
+				{icon name="file-archive-open"}{tr}Open as WebFolder{/tr}
 			</a>
 		{/if}
 
@@ -67,22 +67,22 @@
 					$files[$changes].type eq 'image/tiff'
 				}
 					<a class="draw dialog" data-name="{$files[$changes].filename}" title="{tr}Edit: {/tr}{$files[$changes].filename}" href="tiki-edit_draw.php?fileId={$files[$changes].id}&galleryId={$files[$changes].galleryId}" data-fileid='{$files[$changes].id}' data-galleryid='{$files[$changes].galleryId}' onclick='$(document).trigger("hideCluetip"); return $(this).ajaxEditDraw();'>
-						{icon _id='page_edit' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Edit{/tr}"}
+						{icon name='edit' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Edit{/tr}"}
 					</a>
 				{/if}
 			{/if}
 		{elseif $files[$changes].type eq 'text/csv' and $prefs.feature_sheet eq 'y'}
 			<a href="tiki-view_sheets.php?fileId={$files[$changes].id}">
-				{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
+				{icon name='view' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
 			</a>
 		{elseif ($files[$changes].type eq 'application/vnd.oasis.opendocument.text'
 			or $files[$changes].type eq 'application/octet-stream') and $prefs.feature_docs eq 'y'}
 			<a href="tiki-edit_docs.php?fileId={$files[$changes].id}">
-				{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
+				{icon name='view' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
 			</a>
 			{if $files[$changes].perms.tiki_p_upload_files eq 'y'}
 				<a href="tiki-edit_docs.php?fileId={$files[$changes].id}&edit">
-					{icon _id='page_edit' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Edit{/tr}"}
+					{icon name='edit' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Edit{/tr}"}
 				</a>
 			{/if}
 		{/if}
@@ -99,7 +99,7 @@
 				{else}
 					{assign var=download_action_title value="{tr}Download{/tr}"}
 				{/if}
-				{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk' alt="$download_action_title"}
+				{icon _menu_text=$menu_text _menu_icon=$menu_icon name='floppy' alt="$download_action_title"}
 			</a>
 		{/if}
 
