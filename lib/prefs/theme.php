@@ -10,8 +10,9 @@ function prefs_theme_list($partial = false)
 	global $prefs;
 	$themelib = TikiLib::lib('theme');
 	
-	//get list of themes and related theme options
-	$themes = $themelib->list_themes();
+	//get list of themes and make the first character of array values uppercase
+	$themes = array_map('ucfirst', $themelib->list_themes());
+	//get list of theme options
 	$theme_options = [
 		'' => tr('None'),
 	];

@@ -23,6 +23,7 @@ function prefs_available_list($partial = false)
 
 		$themes = $themes + $themelib->list_themes_and_options();
 		unset($themes['custom_url']); //make sure Custom URL is removed from the list
+		$themes = array_map('ucfirst', $themes); //make first character of array values uppercase
 	}
 
 	return array(
