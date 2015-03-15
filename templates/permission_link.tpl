@@ -28,7 +28,7 @@
 	</a>
 {elseif $permission_link.mode eq 'icon'}
 	{strip}
-	<a class="link btn {if $permission_link.active}btn-warning {else} btn-link{/if} btn-sm{if !empty($permission_link.addclass)} {$permission_link.addclass}{/if}" href="{$permission_link.url|escape}" title="{$permission_link.label}">
+	<a class="tips btn {if $permission_link.active}btn-warning {else} btn-link{/if} btn-sm{if !empty($permission_link.addclass)} {$permission_link.addclass}{/if}" href="{$permission_link.url|escape}" title=":{$permission_link.label}">
 		{icon name="permission"}
 		<span class="sr-only">{$permission_link.label|escape}</span>
 		{if $permission_link.count}
