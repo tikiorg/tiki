@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title help="Blogs"}{if isset($blogTitle)}{tr _0=$blogTitle}Blog: %0{/tr}{else}{tr}Blog{/tr}{/if}{/title}
+{title help="Blogs"}{if isset($blogTitle)}{tr _0=$blogTitle}Blog: %0{/tr}{else}{tr}Blog Posts{/tr}{/if}{/title}
 
 <div class="t_navbar form-group">
 	{button href="tiki-edit_blog.php" class="btn btn-default" _text="{tr}Create Blog{/tr}"}
@@ -13,7 +13,7 @@
 {/if}
 
 {if $posts and $tiki_p_blog_admin eq 'y'}
-	<form name="checkboxes_on" method="post" action="tiki-list_posts.php">
+	<form name="checkboxes_on" method="post" action="tiki-list_posts.php" role="form" class="form">
 	{query _type='form_input'}
 {/if}
 <div class="table-responsive">
@@ -56,8 +56,8 @@
 				<td class="integer">&nbsp;{$posts[changes].size}&nbsp;</td>
 				<td>&nbsp;{$posts[changes].user}&nbsp;</td>
 				<td class="action">
-					<a class="link" href="tiki-blog_post.php?blogId={$posts[changes].blogId}&postId={$posts[changes].postId}">{icon _id='page_edit'}</a>
-					<a class="link" href="tiki-list_posts.php?{if isset($blogId)}blogId={$blogId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$posts[changes].postId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+					<a class="tips" href="tiki-blog_post.php?blogId={$posts[changes].blogId}&postId={$posts[changes].postId}" title=":{tr}Edit{/tr}">{icon name="edit"}</a>
+					<a class="tips" href="tiki-list_posts.php?{if isset($blogId)}blogId={$blogId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$posts[changes].postId}" title=":{tr}Delete{/tr}">{icon name="delete"}</a>
 				</td>
 			</tr>
 		{sectionelse}
@@ -67,10 +67,17 @@
 </div>
 
 {if $posts and $tiki_p_blog_admin eq 'y'}
-	<div class="formcolor">
-		{tr}Perform action with checked:{/tr}
-		{icon _id='cross' _tag='input_image' name='remove' value='y' alt="{tr}Delete{/tr}"}
-	</div>
+		<div class="form-group">
+			<label for="remove" class="control-label">{tr}Perform action with selected{/tr}</label>
+			<div class="input-group col-sm-4">
+				<select name="remove" class="form-control">
+					<option value="y">{tr}Delete{/tr}</option>
+				</select>
+				<div class="input-group-btn">
+					<input type="submit" class="btn btn-default" name="remove" value="{tr}Ok{/tr}">
+				</div>
+			</div>
+		</div>
 	</form>
 {/if}
 
