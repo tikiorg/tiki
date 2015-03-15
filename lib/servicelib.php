@@ -46,7 +46,7 @@ class ServiceLib
 	{
 		global $prefs;
 
-		if ($prefs['feature_sefurl'] == 'y' || $params['modal'] == '1') {
+		if ($prefs['feature_sefurl'] == 'y') {
 			$url = "tiki-{$params['controller']}";
 
 			if (isset($params['action'])) {
