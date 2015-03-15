@@ -15,13 +15,7 @@
 		<div class="container clearfix middle" id="middle">
             <div class="topbar_wrapper">
                 <div class="container">
-    				<div id="tiki-top" class="topbar">
-	    				<div class="row">
-		    				<div class="col-md-12">
-			    				{modulelist zone=topbar}
-                            </div>
-						</div>
-					</div>
+    				{modulelist zone=topbar class='topbar row row-sidemargins-zero' id='tiki-top'}
 				</div>
             </div>
 
@@ -90,7 +84,7 @@
 			<footer class="main-footer">
 				<div class="container">
 					<!-- content modules col-md-3 -->
-					{modulelist zone=bottom}
+					{modulelist zone=bottom class='row row-sidemargins-zero'}
 				</div>
 			</footer>
 		</div>

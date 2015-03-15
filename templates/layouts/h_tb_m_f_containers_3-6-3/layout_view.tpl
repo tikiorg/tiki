@@ -14,21 +14,13 @@
 		<div class="header_outer">
 			<div class="header_container">
 				<header class="container header page-header">
-					<div class="row">
-						<div class="col-md-12">
-							{modulelist zone=top}
-						</div>
-					</div>
+					{modulelist zone=top class='row row-sidemargins-zero'}
 				</header>
 			</div>
 		</div>
 		<div class="topbar_container">
-			<div class="container topbar" id="tiki-top">
-				<div class="row">
-					<div class="col-md-12">
-						{modulelist zone=topbar}
-					</div>
-				</div>
+			<div class="container">
+				{modulelist zone=topbar class='row row-sidemargins-zero topbar' id='tiki-top'}
             </div>
         </div>
         <div class="middle_outer">
@@ -117,11 +109,7 @@
 		<footer class="footer" id="footer">
 			<div class="footer_liner">
 				<div class="footerbgtrap container">
-					<div class="row">
-						<div class="col-md-12">
-							{modulelist zone=bottom}
-						</div>
-					</div>
+					{modulelist zone=bottom class='row row-sidemargins-zero'}
 				</div>
 			</div>
 		</footer>

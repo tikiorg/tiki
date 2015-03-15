@@ -1,9 +1,12 @@
 {* $Id$ *}
 {title help="Blogs" admpage="blogs"}{tr}Blogs{/tr}{/title}
 
-{if $tiki_p_create_blogs eq 'y'}
+{if $tiki_p_create_blogs eq 'y' or $tiki_p_blog_admin eq 'y'}
 	<div class="navbar">
 		{button href="tiki-edit_blog.php" _text="{tr}Create Blog{/tr}" _class="navbar-btn"}
+		{if $tiki_p_read_blog eq 'y' and $tiki_p_blog_admin eq 'y'}
+			{button href="tiki-list_posts.php" class="btn btn-default" _text="{tr}List Blog Posts{/tr}"}
+		{/if}
 	</div>
 {/if}
 
@@ -45,7 +48,7 @@
 				<th><a href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'activity_desc'}activity_asc{else}activity_desc{/if}">{tr}Activity{/tr}</a></th>
 			{/if}
 			{assign var=numbercol value=$numbercol+1}
-			<th>{tr}Action{/tr}</th>
+			<th>{tr}Actions{/tr}</th>
 		</tr>
 		{section name=changes loop=$listpages}
 			<tr>
@@ -93,6 +96,9 @@
 					<td class="integer"><span class="badge">{$listpages[changes].activity}</span></td>
 				{/if}
 				<td class="action">
+					{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' )}
+						<a class="tips" href="{$listpages[changes].blogId|sefurl:blog}" title=":{tr}View{/tr}">{icon name="view"}</a>
+					{/if}
 					{if ($user and $listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y')}
 						{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_blog_create_blog eq 'y' )}
 							<a class="tips" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}" title=":{tr}Edit{/tr}">{icon name="edit"}</a>

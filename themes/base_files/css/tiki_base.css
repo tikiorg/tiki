@@ -1,4 +1,3 @@
-util.print: Use console.log instead
 /* $Id$
 	This Tiki Wiki CMS Groupware file contains global design
 	and layout properties. */
@@ -2754,6 +2753,12 @@ img.pref_dependency {
   font-size: inherit;
   width: 375px;
 }
+.margin-left-9em {
+  margin-left: .9em;
+}
+.margin-right-18em {
+  margin-right: 1.8em;
+}
 .userWizardIconleft {
   float: left;
   margin-right: 10px;
@@ -3056,6 +3061,10 @@ div.form-group label.error {
   border-bottom: 1px solid #eeeeee;
   margin: 40px 0 20px;
   padding-bottom: 9px;
+}
+.tiki .row-sidemargins-zero {
+  margin-left: 0;
+  margin-right: 0;
 }
 .topbar .navbar {
   margin-bottom: 0;
