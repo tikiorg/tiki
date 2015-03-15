@@ -6533,6 +6533,9 @@ header.page-header::before,
 .layout_social > .container:before {
   content: none;
 }
+.topbar {
+  margin-bottom: 20px;
+}
 .cssmenu_horiz li ul,
 .cssmenu_vert li ul {
   padding: 5px 0;
