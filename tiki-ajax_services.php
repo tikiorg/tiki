@@ -25,9 +25,21 @@ $inputConfiguration = array(array(
 		'guid' => 'text',
 		'captcha' => 'alnum',
 		'status' => 'word',
+		// confirm modals
+		'title' => 'xss',
+		'customAction' => 'xss',
+		'customVerb' => 'xss',
+		'customObject' => 'xss',
+		'customMsg' => 'xss',
+		'ticket' => 'alnum',
+		'modal' => 'digit',
 	),
 	'staticKeyFiltersForArrays' => array(
 		'connect_data' => 'xss',
+		// confirm modals
+		'items' => 'xss',
+		'rows' => 'xss',
+		'extra' => 'xss',
 	) ,
 ));
 
