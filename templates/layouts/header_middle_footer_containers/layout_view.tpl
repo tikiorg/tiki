@@ -14,15 +14,13 @@
 		<div class="header_outer">
 			<div class="header_container">
 				<header class="container header page-header">
-					{modulelist zone=top class=row}
+					{modulelist zone=top class='row row-sidemargins-zero'}
 				</header>
 			</div>
 		</div>
 		<div class="middle_outer">
 			<div class="container clearfix middle" id="middle">
-			{*	<div id="tiki-top" class="topbar"> *}
-                    {modulelist zone=topbar class='row topbar tiki-top' id='tiki-top'}
-			{*	</div> *}
+                {modulelist zone=topbar class='row row-sidemargins-zero topbar tiki-top' id='tiki-top'}
 				<div class="row">
 					{if zone_is_empty('left') and zone_is_empty('right')}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
@@ -107,7 +105,7 @@
 		<footer class="footer" id="footer">
 			<div class="footer_liner">
 				<div class="footerbgtrap container">
-					{modulelist zone=bottom class=row}
+					{modulelist zone=bottom class='row row-sidemargins-zero'}
 				</div>
 			</div>
 		</footer>

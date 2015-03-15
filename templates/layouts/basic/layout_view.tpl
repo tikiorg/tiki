@@ -14,10 +14,10 @@
 		<div class="container">
 			<div class="page-header">
                 <div class="top_modules">
-    				{modulelist zone=top class=row}
+    				{modulelist zone=top class='row row-sidemargins-zero'}
                 </div>
                 <div class="topbar">
-    				{modulelist zone=topbar class=row}
+    				{modulelist zone=topbar class='row row-sidemargins-zero'}
                 </div>
 			</div>
 
@@ -95,7 +95,7 @@
 
 			<footer>
                 <div class="bottom_modules">
-				    {modulelist zone=bottom class=row}
+				    {modulelist zone=bottom class='row row-sidemargins-zero'}
                 </div>
 			</footer>
 		</div>
