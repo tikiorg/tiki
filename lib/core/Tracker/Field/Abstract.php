@@ -138,7 +138,9 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 
 			// add the html / js for the mouseover popup
 			if (isset($context['showpopup']) && $context['showpopup'] == 'y') {
-				$popup = $this->renderPopup();
+				// check if trackerplugin has set popup fields using the popup parameter
+				$pluginPopupFields = isset($context['popupfields']) ? $context['popupfields'] : null;
+				$popup = $this->renderPopup($pluginPopupFields);
 
 				if ($popup) {
 					$popup = preg_replace('/<\!--.*?-->/', '', $popup);	// remove comments added by log_tpl
@@ -222,16 +224,25 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 	/**
 	 * Create the html/js to show a popupwindow on mouseover when the trackeritem has a field with link enabled.
 	 * The formatting is done via smarty based on 'trackeroutput/popup.tpl'
+	 * @param array $pluginPopupFields - array with fieldids set by trackerlist plugin. if not set the tracker defaults will be used.
 	 * @return NULL|string $popupHtml
 	 */
-	private function renderPopup()
+	private function renderPopup($pluginPopupFields = null)
 	{
-		$fields = $this->trackerDefinition->getPopupFields();
+		// support of trackerlist plugin popup field - if popup is set and has fields - show the fields as defined and in their order
+		// if parameter popup is set but without fields show no popup
+		// note: the popup template code in wikiplugin_trackerlist.tpl does not seem to be used at all - only the flag $showpopup
+		if ($pluginPopupFields && is_array($pluginPopupFields)) {
+			$fields = $pluginPopupFields;
+		} else {
+			// plugin trackerlist not involved
+			$fields = $this->trackerDefinition->getPopupFields();
+		}
 
 		if (empty($fields)) {
 			return null;
 		}
-
+				
 		$factory = $this->trackerDefinition->getFieldFactory();
 
 		$popupFields = array();

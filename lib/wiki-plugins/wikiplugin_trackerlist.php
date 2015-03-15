@@ -838,6 +838,9 @@ function wikiplugin_trackerlist($data, $params)
 		if (!empty($filterfield) && !empty($limit)) {
 			$limit = array_unique(array_merge($limit, $filterfield));
 		}
+		
+		// for some reason if param popup is set but empty, the array contains 2 empty elements. We filter them out. 
+		$popup = array_filter($popup);
 		if (!empty($popup)) {
 			$limit = array_unique(array_merge($limit, $popup));
 		}
