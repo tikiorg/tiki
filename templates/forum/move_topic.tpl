@@ -3,7 +3,7 @@
 	{title}{$title|escape}{/title}
 {/block}
 {block name="content"}
-	<form id="move_topic" method="post" action="{service controller=forum action=move_topic}">
+	<form id="move_topic" method="post" action="{$confirmAction}">
 		<fieldset>
 			<div class="form-group">
 				<label for="movefrom" class="control-label">
