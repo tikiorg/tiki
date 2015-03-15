@@ -11,7 +11,7 @@
 
 		{tabset name="list_file_gallery"}
 			{tab name="{tr}Properties{/tr}"}
-				<h2>{tr}Properties{/tr}</h2>
+				<h2>{tr}Properties{/tr}</h2><br>
 				<div class="form-group">
 					<label for="name" class="col-sm-4 control-label">{tr}Name{/tr}</label>
 					<div class="col-sm-8">
@@ -30,7 +30,7 @@
 					<div class="form-group">
 						<label for="fgal_template" class="col-sm-4 control-label">{tr}Template{/tr}</label>
 						<div class="col-sm-8">
-							<select name="fgal_template" id="fgal_template">
+							<select name="fgal_template" id="fgal_template" class="form-control">
 								<option value=""{if !isset($templateId) or $templateId eq ""} selected="selected"{/if}>{tr}None{/tr}</option>
 								{foreach from=$all_templates key=key item=item}
 									<option value="{$item.id}"{if $gal_info.template eq $item.id} selected="selected"{/if}>{$item.label|escape}</option>
@@ -69,7 +69,7 @@ if ($(this).val() != '') {
 								{/if}
 								<input type="hidden" name="fgal_type" value="{$gal_info.type}">
 							{else}
-								<select name="fgal_type" id="fgal_type">
+								<select name="fgal_type" id="fgal_type" class="form-control">
 									<option value="default" {if $gal_info.type eq 'default'}selected="selected"{/if}>{tr}Any file{/tr}</option>
 									<option value="podcast" {if $gal_info.type eq 'podcast'}selected="selected"{/if}>{tr}Podcast (audio){/tr}</option>
 									<option value="vidcast" {if $gal_info.type eq 'vidcast'}selected="selected"{/if}>{tr}Podcast (video){/tr}</option>
@@ -86,37 +86,29 @@ if ($(this).val() != '') {
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="visible" class="col-sm-4 control-label">{tr}Gallery is visible to non-admin users{/tr}.</label>
+					<label for="visible" class="col-sm-4 control-label">{tr}Gallery is visible to non-admin users{/tr}</label>
 					<div class="col-sm-8">
-						<div class="checkbox">
-							<input type="checkbox" id="visible" name="visible" {if $gal_info.visible eq 'y'}checked="checked"{/if}>
-						</div>
+						<input type="checkbox" id="visible" name="visible" {if $gal_info.visible eq 'y'}checked="checked"{/if}>
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="public" class="col-sm-4 control-label">{tr}Gallery is unlocked{/tr}.</label>
+					<label for="public" class="col-sm-4 control-label">{tr}Gallery is unlocked{/tr}</label>
 					<div class="col-sm-8">
-						<div class="checkbox">
-							<input type="checkbox" id="public" name="public" {if isset($gal_info.public) and $gal_info.public eq 'y'}checked="checked"{/if}>
-						</div>
-						<span class="help-block">{tr}Unless this option is checked the Gallery is locked and only the owner can upload - if it is checked other users with upload permission can add files to the gallery{/tr}.</span>
+						<input type="checkbox" id="public" name="public" {if isset($gal_info.public) and $gal_info.public eq 'y'}checked="checked"{/if}>
+						<span class="help-block">{tr}Users with upload permission can add files to the gallery (not just the gallery owner){/tr}</span>
 					</div>
 				</div>
 				{if $tiki_p_admin_file_galleries eq 'y' or $gal_info.type neq 'user'}
 					<div class="form-group">
-						<label for="backlinkPerms" class="col-sm-4 control-label">{tr}Perms of the backlinks are checked to view a file{/tr}</label>
+						<label for="backlinkPerms" class="col-sm-4 control-label">{tr}Respect permissions for backlinks to view a file{/tr}</label>
 						<div class="col-sm-8">
-							<div class="checkbox">
-								<input type="checkbox" id="backlinkPerms" name="backlinkPerms" {if $gal_info.backlinkPerms eq 'y'}checked="checked"{/if}>
-							</div>
+							<input type="checkbox" id="backlinkPerms" name="backlinkPerms" {if $gal_info.backlinkPerms eq 'y'}checked="checked"{/if}>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="lockable" class="col-sm-4 control-label">{tr}Files can be locked at download{/tr}.</label>
 						<div class="col-sm-8">
-							<div class="checkbox">
-								<input type="checkbox" id="lockable" name="lockable" {if $gal_info.lockable eq 'y'}checked="checked"{/if}>
-							</div>
+							<input type="checkbox" id="lockable" name="lockable" {if $gal_info.lockable eq 'y'}checked="checked"{/if}>
 						</div>
 					</div>
 					<div class="form-group">
@@ -131,7 +123,7 @@ if ($(this).val() != '') {
 					<div class="form-group">
 						<label for="parentId" class="col-sm-4 control-label">{tr}Parent gallery{/tr}</label>
 						<div class="col-sm-8">
-							<select name="parentId" id="parentId">
+							<select name="parentId" id="parentId" class="form-control">
 								<option value="{$treeRootId}"{if $parentId eq $treeRootId} selected="selected"{/if}>{tr}none{/tr}</option>
 								{foreach from=$all_galleries key=key item=item}
 									{if $galleryId neq $item.id}
@@ -224,12 +216,13 @@ if ($(this).val() != '') {
 					</div>
 				</div>
 
-				{include file='categorize.tpl'}
+				{include file='categorize.tpl' labelcol='4' inputcol='8'}
 
 			{/tab}
 
 <!-- display properties -->
-			{tab name="{tr}Display Properties{/tr}"}
+			{tab name="{tr}Display Settings{/tr}"}
+				<h2>{tr}Display Settings{/tr}</h2><br>
 				<div class="form-group">
 					<label for="sortorder" class="col-sm-4 text-right">{tr}Default sort order{/tr}</label>
 					<div class="col-sm-8">
@@ -264,9 +257,18 @@ if ($(this).val() != '') {
 				</div>
 			{/tab}
 		{/tabset}
-		<div class="form-group text-center">
-			<input type="submit" class="btn btn-primary" value="{tr}Save{/tr}" name="edit">
-			<input type="checkbox" name="viewitem" checked="checked"> {tr}View inserted gallery{/tr}
+		<div class="form-group">
+			<label for="viewitem" class="col-sm-4 control-label">
+				{tr}View inserted gallery after save{/tr}
+			</label>
+			<div class="col-sm-8">
+				<input type="checkbox" name="viewitem" checked="checked">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-8 col-md-offset-4">
+				<input type="submit" class="btn btn-primary" value="{tr}Save{/tr}" name="edit">
+			</div>
 		</div>
 	</form>
 {/if}

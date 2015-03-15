@@ -218,7 +218,7 @@ $("#viewSwitcher").change(function() {
 {/if}
 
 {if $edit_mode eq 'y'}
-	{include file='edit_file_gallery.tpl'}
+	<br>{include file='edit_file_gallery.tpl'}
 {elseif $dup_mode eq 'y'}
 	{include file='duplicate_file_gallery.tpl'}
 {else}
