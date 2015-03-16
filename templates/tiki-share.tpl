@@ -145,6 +145,32 @@
 									</td>
 								</tr>
 						{/if}
+
+						{if $prefs.share_token_notification eq 'y'}
+							<tr><td colspan="2"><hr></td> </tr>
+							<tr>
+								<td>{tr}Subscribe notification{/tr}</td>
+								<td><input type="checkbox" value="y" name="share_token_notification" {if $share_token_notification eq 'y'}checked="checked" {/if}></td>
+							</tr>
+						{/if}
+
+						{if $prefs.share_can_choose_how_much_time_access eq 'y' && $prefs.auth_token_access eq 'y'}
+							<tr>
+								<td>{tr}How many times recipients can access this page{/tr}</td>
+								<td>
+									{if $prefs.share_max_access_time eq -1}
+										<input type="text" name="how_much_time_access" value="{$how_much_time_access|default:1}">
+									{else}
+										<select id="how_much_time_access" name="how_much_time_access">
+											{section name=share_max_access start=1 loop=$prefs.share_max_access_time+1}
+												{html_options values=$smarty.section.share_max_access.index output=$smarty.section.share_max_access.index}
+											{/section}
+										</select>
+									{/if}
+									&nbsp;{tr}time{/tr}
+								</td>
+							</tr>
+						{/if}
 					</table>
 				</td>
 			</tr>
@@ -359,31 +385,6 @@
 					{/if}
 				</td>
 			</tr>
-			{if $prefs.share_token_notification eq 'y'}
-				<tr><td colspan="2"><hr></td> </tr>
-				<tr>
-					<td>{tr}Subscribe notification{/tr}</td>
-					<td><input type="checkbox" value="y" name="share_token_notification" {if $share_token_notification eq 'y'}checked="checked" {/if}></td>
-				</tr>
-			{/if}
-
-			{if $prefs.share_can_choose_how_much_time_access eq 'y' && $prefs.auth_token_access eq 'y'}
-				<tr>
-					<td>{tr}How many times recipients can access this page{/tr}</td>
-					<td>
-						{if $prefs.share_max_access_time eq -1}
-							<input type="text" name="how_much_time_access" value="{$how_much_time_access|default:1}">
-						{else}
-							<select id="how_much_time_access" name="how_much_time_access">
-								{section name=share_max_access start=1 loop=$prefs.share_max_access_time+1}
-									{html_options values=$smarty.section.share_max_access.index output=$smarty.section.share_max_access.index}
-								{/section}
-							</select>
-						{/if}
-						&nbsp;{tr}time{/tr}
-					</td>
-				</tr>
-			{/if}
 
 		</table>
 	</form>
@@ -392,7 +393,7 @@
 {/if}
 {jq}
 	$('#share-form').submit(function(e){
-			if($('#addresses').val() !='') {
+			if($('#addresses').val() !='' || ! $('#emailtable:visible').length) {
 					$(this).tikiModal("Please wait....");
 					var postData = $(this).serializeArray();
 					var formURL = 'tiki-share.php?send=share';
