@@ -2290,6 +2290,17 @@ table.treetable tr.expanded span.indenter a {
 .tracker-help-block {
   margin-top: -15px;
 }
+.panel-accordian .panel-heading {
+  padding: 0;
+}
+.panel-accordian .panel-heading h4.panel-title {
+  padding: 0;
+  margin: 0;
+}
+.panel-accordian .panel-heading h4.panel-title a {
+  display: block;
+  padding: 10px 15px;
+}
 .catlists .catitems {
   display: inline-block;
 }
