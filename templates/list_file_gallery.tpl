@@ -115,20 +115,20 @@
 							<div class="input-group col-sm-10">
 								<select name="fgal_actions" class="form-control">
 									<option value="" selected="selected">
-										{tr}Select action to perform with checked files or galleries...{/tr}
+										{tr}Select action to perform with checked...{/tr}
 									</option>
 									{if $tiki_p_assign_perm_file_gallery eq 'y'}
-										<option value="permsel_x" class="btn btn-link">
+										<option value="permsel_x">
 											{tr}Assign permissions to file galleries{/tr}
 										</option>
 									{/if}
 									{if $tiki_p_admin_file_galleries eq 'y' or $tiki_p_remove_files eq 'y'}
-										<option value="delsel_x" class="btn btn-link">
+										<option value="delsel_x">
 											{tr}Delete{/tr}
 										</option>
 									{/if}
 									{if $prefs.fgal_display_zip_option eq 'y'}
-										<option value="zipsel_x" class="btn btn-link">
+										<option value="zipsel_x">
 											{tr}Download zip version{/tr}
 										</option>
 									{/if}
@@ -137,15 +137,15 @@
 											<input type="hidden" name="offset" value="{$offset}">
 										{/if}
 										{if $tiki_p_admin_file_galleries eq 'y' or $tiki_p_remove_files eq 'y'}
-											<option value="movesel_x" class="btn btn-link">
+											<option value="movesel_x">
 												{tr}Move{/tr}
 											</option>
 										{/if}
-										<option value="refresh_metadata_x" class="btn btn-link">
+										<option value="refresh_metadata_x">
 											{tr}Refresh metadata{/tr}
 										</option>
 										{if $tiki_p_admin_file_galleries eq 'y'}
-											<option value="defaultsel_x" class="btn btn-link">
+											<option value="defaultsel_x">
 												{tr}Reset to default list view settings{/tr}
 											</option>
 										{/if}
