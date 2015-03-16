@@ -21,10 +21,6 @@ $inputConfiguration = array(array(
 	'staticKeyFilters' => array(
 		'action' => 'word',
 		'controller' => 'text',
-		// for tiki connect
-		'guid' => 'text',
-		'captcha' => 'alnum',
-		'status' => 'word',
 		// confirm modals
 		'title' => 'xss',
 		'customAction' => 'xss',
@@ -35,7 +31,6 @@ $inputConfiguration = array(array(
 		'modal' => 'digit',
 	),
 	'staticKeyFiltersForArrays' => array(
-		'connect_data' => 'xss',
 		// confirm modals
 		'items' => 'xss',
 		'rows' => 'xss',

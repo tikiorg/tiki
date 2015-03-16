@@ -143,7 +143,7 @@ class Services_Connect_Client
 
 	function action_cancel($input)
 	{
-		$guid = $input->guid->filter();
+		$guid = $input->guid->text();
 		if ($guid) {
 			$this->connectlib->removeGuid($guid);
 			$r = $this->remote->cancel(array('connect_data' => array('guid' => $guid)));

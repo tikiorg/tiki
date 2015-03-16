@@ -52,7 +52,7 @@ class Services_Connect_Server
 		$rdata = array();
 
 
-		$connectData = $input->connect_data->filter();
+		$connectData = $input->connect_data->xss();
 
 		if (!empty($connectData)) {
 			$caplib = $this->getCaptcha();
@@ -98,7 +98,7 @@ class Services_Connect_Server
 	{
 		$rdata = array();
 
-		$connectData = $input->connect_data->filter();
+		$connectData = $input->connect_data->xss();
 		if (!empty($connectData)) {
 
 			$guid = $connectData['guid'];
@@ -129,7 +129,7 @@ class Services_Connect_Server
 	function action_cancel($input) 
 	{
 
-		$connectData = $input->connect_data->filter();
+		$connectData = $input->connect_data->xss();
 		$guid = $connectData['guid'];
 		$isPending = $this->connectlib->isPendingGuid($guid);
 		
