@@ -7276,6 +7276,10 @@ div.drillshow {
 .layout_moving_headers .navbar {
   margin-bottom: 0;
 }
+.topbar,
+.topbar .cssmenu_horiz ul,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li,
 .topbar .navbar,
 .topbar .navbar-default .navbar-collapse,
 .topbar .navbar-default .navbar-form {
