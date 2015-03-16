@@ -5,7 +5,7 @@
 	{if $prefs.feature_forum_topics_archiving eq 'y' && $thread_info.archived eq 'y'}({tr}Archived{/tr}){/if}
 {/title}
 
-<div class="t_navbar btn-group form-group">
+<div class="t_navbar btn-group margin-bottom-md">
 	{if $tiki_p_admin_forum eq "y"}
 		{button href="tiki-admin_forums.php?forumId=$forumId" class="btn btn-default" _text="{tr}Edit Forum{/tr}"}
 	{/if}
@@ -23,7 +23,7 @@
 {if $post_reported eq 'y'}
 	{remarksbox type=warning title="{tr}The post has been reported and will be reviewed by a moderator.{/tr}"}{/remarksbox}
 {/if}
-
+<br>
 <div id="thread-breadcrumb" class="breadcrumb">
 	<a class="link" href="tiki-forums.php">
 		{tr}Forums{/tr}
@@ -41,7 +41,7 @@
 	{$thread_info.title|escape}
 </div>
 
-<div style="text-align: right; margin-bottom: 15px;">
+<div class="text-right margin-bottom-md">
 	{if empty($thread_info.topic.threadId)}
 		<span>
 			{if ($prev_topic and $prev_topic ne $comments_parentId) or $next_topic}[ {if $prev_topic and $prev_topic ne $comments_parentId}<a href="tiki-view_forum_thread.php?comments_parentId={$prev_topic}&amp;topics_offset={$topics_prev_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}{$comments_per_page_param}{$thread_style_param}{$thread_sort_mode_param}{$comments_threshold_param}" class="link">{tr}prev topic{/tr}</a>{if $next_topic} | {/if}{/if}
@@ -52,7 +52,7 @@
 			{tr}You are viewing a reply to{/tr} <a class="link" href="tiki-view_forum_thread.php?comments_parentId={$thread_info.topic.threadId}{if $smarty.request.topics_offset}&amp;topics_offset={$smarty.request.topics_offset}{/if}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}">{$thread_info.topic.title}</a>
 		</span>
 	{/if}
-	<span style="margin-left:10px;">
+	        &nbsp;
 		<div class="btn-group">
 			<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
 				{icon name="ellipsis"}
@@ -107,7 +107,7 @@
 				{/if}
 			</ul>
 		</div>
-	</span>
+
 </div>
 
 
