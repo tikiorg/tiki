@@ -363,7 +363,8 @@
 		</div> <!-- end forumpost -->
 	{/if}
 	{if $prefs.feature_forum_content_search eq 'y' and $prefs.feature_search eq 'y'}
-		<div class="text-center form-group">
+        <div class="row margin-bottom-md">
+		<div class="col-md-5 col-md-offset-7">
 			<form id="search-form" class="form" role="form" method="get" action="tiki-search{if $prefs.feature_forum_local_tiki_search eq 'y'}index{else}results{/if}.php">
 				<div class="form-group">
 					<div class="input-group">
@@ -380,6 +381,7 @@
 				</div>
 			</form>
 		</div>
+        </div>
 	{/if}
 {/if}
 <form id="view_forum" method="post" action="tiki-view_forum.php">

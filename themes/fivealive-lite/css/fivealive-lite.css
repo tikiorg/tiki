@@ -7242,9 +7242,6 @@ div.drillshow {
   box-shadow: inset 0 24px 0 0 #28a7de;
   border-top: 2px solid #fff;
 }
-.layout_h_tb_m_f_containers_3-6-3 .middle_outer {
-  background: #ffffff;
-}
 #top_modules {
   max-height: 54px;
 }
@@ -7276,7 +7273,6 @@ div.drillshow {
 .topbar_container {
   background: #28aae1;
 }
-.layout_h_tb_m_f_containers_3-6-3 .navbar,
 .layout_moving_headers .navbar {
   margin-bottom: 0;
 }
