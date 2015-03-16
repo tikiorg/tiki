@@ -1677,7 +1677,8 @@ body.tiki_wiki #comments {
   padding: 0;
 }
 .wikitext .fancylist li {
-  font: italic 2em Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 2em;
+  font-style: italic;
   line-height: 27px;
   list-style-position: inside;
   margin-left: 10px;
