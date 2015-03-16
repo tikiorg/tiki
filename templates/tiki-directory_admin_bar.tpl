@@ -1,4 +1,4 @@
-<div class="t_navbar form-group">
+<div class="t_navbar margin-bottom-md">
 	{button href="tiki-directory_browse.php" class="btn btn-default" _text="{tr}Browse{/tr}"}
 	{button href="tiki-directory_admin.php" class="btn btn-default" _text="{tr}Admin{/tr}"}
 

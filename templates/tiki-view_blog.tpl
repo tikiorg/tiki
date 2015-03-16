@@ -6,7 +6,7 @@
 		{include file='blog_heading.tpl'}
 	{/if}
 
-	<div class="blogactions clearfix">
+	<div class="blogactions clearfix margin-bottom-md">
 		<div class="btn-group">
 			{if $tiki_p_blog_post eq "y"}
 				{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y" or $public eq "y"}

@@ -2,7 +2,7 @@
 
 {title help="Metrics" admpage="metrics"}{tr}Admin Metrics{/tr}{/title}
 
-<div class="t_navbar form-group">
+<div class="t_navbar margin-bottom-md">
 	{button href="#metrics" class="btn btn-default" _text="{tr}Metrics{/tr}"}
 	{button href="#tabs" class="btn btn-default" _text="{tr}Tabs{/tr}"}
 	{button href="#assign" class="btn btn-default" _text="{tr}Assign Metrics{/tr}"}

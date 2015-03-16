@@ -1,6 +1,6 @@
 {title}{tr}Admin FAQ:{/tr} {$faq_info.title}{/title}
 
-<div class="t_navbar form-group">
+<div class="t_navbar margin-bottom-md">
 	{button href="tiki-list_faqs.php" class="btn btn-default" _text="{tr}List FAQs{/tr}"}
 	{button href="tiki-view_faq.php?faqId=$faqId" class="btn btn-default" _text="{tr}View FAQ{/tr}"}
 	{button href="tiki-list_faqs.php?faqId=$faqId" class="btn btn-default" _text="{tr}Edit this FAQ{/tr}"}

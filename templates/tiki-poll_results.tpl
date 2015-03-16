@@ -2,7 +2,7 @@
 
 {title help="polls" admpage="polls"}{tr}Poll Results{/tr}{/title}
 
-<div class="t_navbar form-group">
+<div class="t_navbar margin-bottom-md">
 	{button href="tiki-old_polls.php" class="btn btn-default" _text="{tr}Polls{/tr}"}
 	{button href="tiki-poll_results.php" class="btn btn-default" _text="{tr}Top Voted Polls{/tr}"}
 	{if $tiki_p_admin_polls eq 'y'}

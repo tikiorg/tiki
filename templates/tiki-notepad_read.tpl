@@ -2,7 +2,7 @@
 
 {include file='tiki-mytiki_bar.tpl'}
 
-<div class="t_navbar form-group">
+<div class="t_navbar margin-bottom-md">
 	{button href="tiki-notepad_list.php" _class="btn btn-default" _text="{tr}List notes{/tr}"}
 	{button href="tiki-notepad_write.php" _class="btn btn-default" _text="{tr}Write note{/tr}"}
 </div>

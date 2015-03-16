@@ -2,7 +2,7 @@
 
 {title help="Forums" admpage="forums"}{tr}Forum Importer{/tr}{/title}
 
-<div class="t_navbar form-group form-group">
+<div class="t_navbar margin-bottom-md form-group">
 	{button href="tiki-admin_forums.php" class="btn btn-default" _icon_name="wrench" _text="{tr}Admin{/tr}"}
 	{button href="tiki-forums.php" class="btn btn-default" _icon_name="list" _text="{tr}List{/tr}"}
 </div>

@@ -11,7 +11,7 @@
 	{title help="Edit+Templates"}{tr}Edit templates{/tr}{/title}
 {/if}
 
-<div class="t_navbar form-group">
+<div class="t_navbar margin-bottom-md">
 	{if $prefs.feature_editcss eq 'y'}
 		{button href="tiki-edit_css.php" _text="{tr}Edit CSS{/tr}"}
 	{/if}

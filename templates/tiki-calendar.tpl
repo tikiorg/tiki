@@ -9,7 +9,7 @@
 {/title}
 
 <div id="calscreen">
-	<div class="t_navbar form-group">
+	<div class="t_navbar margin-bottom-md">
 		{if $displayedcals|@count eq 1 and $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
 			<a href="tiki-object_watches.php?objectId={$displayedcals[0]|escape:"url"}&amp;watch_event=calendar_changed&amp;objectType=calendar&amp;objectName={$infocals[$x].name|escape:"url"}&amp;objectHref={'tiki-calendar.php?calIds[]='|cat:$displayedcals[0]|escape:"url"}" class="icon" alt="{tr}Group Monitor{/tr}" align='right' hspace="1">{icon name="watch-group"}</a>
 		{/if}

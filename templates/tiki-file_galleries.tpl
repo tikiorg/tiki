@@ -15,7 +15,7 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Be careful to set the right permissions on the files you link to{/tr}.{/remarksbox}
 {/if}
 
-<div class="t_navbar form-group">
+<div class="t_navbar margin-bottom-md">
 {if $edit_mode eq 'y' or $dup_mode eq 'y'}
 <a href="tiki-list_file_gallery.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}" class="btn btn-default">{tr}List Galleries{/tr}</a>
 {if $galleryId}<a href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}" class="btn btn-default">{tr}Browse Gallery{/tr}</a>{/if}

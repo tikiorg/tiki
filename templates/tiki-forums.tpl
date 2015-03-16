@@ -1,7 +1,7 @@
 {* $Id$ *}
 {if !$tsAjax}
 	{title help="forums" admpage="forums"}{tr}Forums{/tr}{/title}
-	<div class="t_navbar form-group">
+	<div class="t_navbar margin-bottom-md">
 		{if $tiki_p_admin_forum eq 'y'}
 			{button href="tiki-admin_forums.php" class="btn btn-default" _icon_name="wrench" _text="{tr}Admin{/tr}"}
 		{/if}

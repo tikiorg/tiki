@@ -2,7 +2,7 @@
 {if !$tsAjax}
 	{title help="Forums" admpage="forums" url='tiki-admin_forums.php'}{tr}Admin Forums{/tr}{/title}
 
-	<div class="t_navbar form-group">
+	<div class="t_navbar margin-bottom-md">
 		{if $tiki_p_admin_forum eq 'y' && $forumId > 0 or (isset($dup_mode) and $dup_mode eq 'y')}
 			{button class="btn btn-default" href="?" _icon_name="add" _text="{tr}Create Forum{/tr}"}
 		{/if}
