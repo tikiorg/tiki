@@ -33,7 +33,6 @@ function smarty_function_icon($params, $smarty)
 	}
 
 	global $prefs, $tc_theme, $tc_theme_option, $url_path, $base_url, $tikipath, $iconset;
-	$tikilib = TikiLib::lib('tiki');
 	$cachelib = TikiLib::lib('cache');
 
 	if (empty($tc_theme)) {
@@ -89,8 +88,8 @@ function smarty_function_icon($params, $smarty)
 
 		$name = $params['name'];
 		$html = $iconset->getHtml($name);
-		
-		if (!empty($params['href']) || !empty($params['title'])) {
+		$menu_text = (isset($params['_menu_text']) && $params['_menu_text'] == 'y');
+		if (!empty($params['href']) || !empty($params['title']) || $menu_text) {
 			/* Generate a link for the icon if href or title (for tips) parameter is set.
 			 * This will produce a link element (<a>) around the icon.
 			 * If you want a button element (<button>), use the {button} smarty_tiki function */
@@ -98,10 +97,16 @@ function smarty_function_icon($params, $smarty)
 			//collect link components
 			if (!empty($params['title'])) { //add title if not empty
 				$a_title = $params['title'];
+			} elseif (!empty($params['alt'])) {
+				$a_title = $params['alt'];
 			} else {
 				$a_title = '';
 			}
-
+			if (!empty($a_title)) {
+				$title_attr = $menu_text ? '' : 'title="' . $a_title . '"';
+			} else {
+				$title_attr = '';
+			}
 			if (isset($params['class'])) { //if set, use these classes instead of the default bootstrap
 				$a_class = $params['class'];
 			} else {
@@ -127,9 +132,13 @@ function smarty_function_icon($params, $smarty)
 			}
 
 			//assemble the link from the components
-			$html = "<a class='$a_class' title='$a_title' $a_href $a_datatoggle $a_onclick>$html</a>";
+			if ($menu_text) {
+				$icon = isset($params['_menu_icon']) && $params['_menu_icon'] === 'y' ? $html : '';
+				$html = '<div class="iconmenu">' . $icon . '<span class="iconmenutext"> ' . $a_title . '</span></div>';
+			} else {
+				$html = "<a class='$a_class' $title_attr $a_href $a_datatoggle $a_onclick>$html</a>";
+			}
 		}
-		
 		//return the icon
 		return $html;
 		
