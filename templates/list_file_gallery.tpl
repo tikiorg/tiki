@@ -105,77 +105,123 @@
 					and $view neq 'page'
 				)}
 					<div id="sel">
-						<div>
-							{if $tiki_p_admin_file_galleries eq 'y'
-								or $tiki_p_remove_files eq 'y'
-								or !isset($file_info)
-								or $tiki_p_admin_file_galleries eq 'y'
-								or $prefs.fgal_display_zip_option eq 'y'
-								or $tiki_p_assign_perm_file_gallery eq 'y'
-							}
-								{tr}Perform action with checked:{/tr}
-							{/if}
-							{if !isset($file_info)}
-								{if $offset}<input type="hidden" name="offset" value="{$offset}">{/if}
-								{if $tiki_p_admin_file_galleries eq 'y' or $tiki_p_remove_files eq 'y'}
-									{icon _id='arrow_right' _tag='input_image' name='movesel' alt="{tr}Move{/tr}" title="{tr}Move Selected Files{/tr}" style='vertical-align: middle;'}
-								{/if}
-							{/if}
-
-							{if $tiki_p_admin_file_galleries eq 'y' or $tiki_p_remove_files eq 'y'}
-								{icon _id='cross' _tag='input_image' _confirm="{tr}Are you sure you want to delete the selected files?{/tr}" name='delsel' alt="{tr}Delete{/tr}" style='vertical-align: middle;'}
-							{/if}
-
-							{icon _id='tag_green' _tag='input_image' name='refresh_metadata' alt="{tr}Refresh Metadata{/tr}" style='vertical-align: middle;'}
-
-							{if $tiki_p_admin_file_galleries eq 'y'}
-								{icon _id='arrow_refresh' _tag='input_image' _confirm="{tr}Are you sure you want to reset the default gallery list table settings?{/tr}" name='defaultsel' alt="{tr}Reset to default gallery list table settings{/tr}" style='vertical-align: middle;'}
-							{/if}
-
-							{if $prefs.fgal_display_zip_option eq 'y'}
-								{icon _id='img/icons/mime/zip.png' _tag='input_image' name='zipsel' alt="{tr}Download the zip{/tr}" style='vertical-align: middle;'}
-							{/if}
-
-							{if $tiki_p_assign_perm_file_gallery eq 'y'}
-								{icon _id='key' _tag='input_image' name='permsel' alt="{tr}Assign permissions to file galleries{/tr}" title="{tr}Assign permissions to file galleries{/tr}" style='vertical-align: middle;'}
-							{/if}
-
-						</div>
-
-						{if !empty($smarty.request.movesel_x) and !isset($file_info)}
-							<div>
-								{tr}Move to:{/tr}
-								<select name="moveto">
-									{section name=ix loop=$all_galleries}
-										{if $all_galleries[ix].id ne $galleryId and $all_galleries[ix].perms.tiki_p_upload_files eq 'y' and
-													($all_galleries[ix].public eq 'y' or $all_galleries[ix].user eq $user)}
-											<option value="{$all_galleries[ix].id}">
-												{$all_galleries[ix].label|escape}
+						{if $tiki_p_admin_file_galleries eq 'y'
+							or $tiki_p_remove_files eq 'y'
+							or !isset($file_info)
+							or $tiki_p_admin_file_galleries eq 'y'
+							or $prefs.fgal_display_zip_option eq 'y'
+							or $tiki_p_assign_perm_file_gallery eq 'y'
+						}
+							<div class="input-group col-sm-10">
+								<select name="fgal_actions" class="form-control">
+									<option value="" selected="selected">
+										{tr}Select action to perform with checked files or galleries...{/tr}
+									</option>
+									{if $tiki_p_assign_perm_file_gallery eq 'y'}
+										<option value="permsel_x" class="btn btn-link">
+											{tr}Assign permissions to file galleries{/tr}
+										</option>
+									{/if}
+									{if $tiki_p_admin_file_galleries eq 'y' or $tiki_p_remove_files eq 'y'}
+										<option value="delsel_x" class="btn btn-link">
+											{tr}Delete{/tr}
+										</option>
+									{/if}
+									{if $prefs.fgal_display_zip_option eq 'y'}
+										<option value="zipsel_x" class="btn btn-link">
+											{tr}Download zip version{/tr}
+										</option>
+									{/if}
+									{if !isset($file_info)}
+										{if $offset}
+											<input type="hidden" name="offset" value="{$offset}">
+										{/if}
+										{if $tiki_p_admin_file_galleries eq 'y' or $tiki_p_remove_files eq 'y'}
+											<option value="movesel_x" class="btn btn-link">
+												{tr}Move{/tr}
 											</option>
 										{/if}
-									{/section}
+										<option value="refresh_metadata_x" class="btn btn-link">
+											{tr}Refresh metadata{/tr}
+										</option>
+										{if $tiki_p_admin_file_galleries eq 'y'}
+											<option value="defaultsel_x" class="btn btn-link">
+												{tr}Reset to default list view settings{/tr}
+											</option>
+										{/if}
+									{/if}
 								</select>
-								<input type='submit' name='movesel' value="{tr}Move{/tr}">
+								<span class="input-group-btn">
+									<button class="btn btn-primary" form="fgalform" type="submit">
+										{tr}OK{/tr}
+									</button>
+								</span>
+							</div>
+						{/if}
+						{if !empty($movesel_x) and !isset($file_info)}
+							<div class="panel panel-primary">
+								<div class="panel-heading">
+									{tr}Move selected file or gallery{/tr}
+								</div>
+								<div class="panel-body">
+									<div class="form-group">
+										<label for="moveto" class="col-sm-2">
+											{tr}Move to:{/tr}
+										</label>
+										<div class="col-sm-8">
+											<select name="moveto" class="form-control">
+												{section name=ix loop=$all_galleries}
+													{if $all_galleries[ix].id ne $galleryId and $all_galleries[ix].perms.tiki_p_upload_files eq 'y' and
+													($all_galleries[ix].public eq 'y' or $all_galleries[ix].user eq $user)}
+														<option value="{$all_galleries[ix].id}">
+															{$all_galleries[ix].label|escape}
+														</option>
+													{/if}
+												{/section}
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="panel-footer">
+									<input type='submit' class="btn btn-primary" form="fgalform" name='movesel' value="{tr}Move{/tr}">
+								</div>
 							</div>
 						{/if}
 					</div>
 					{if !empty($perms)}
-						<div>
-							{tr}Assign permissions to file galleries{/tr}
-							<select name="perms[]" multiple="multiple" size="5">
-								<option value="" />
-								{foreach from=$perms item=perm}
-									<option value="{$perm.permName|escape}">{$perm.permName|escape}</option>
-								{/foreach}
-							</select>
-							<select name="groups[]" multiple="multiple" size="5">
-								{section name=grp loop=$groups}
-									<option value="{$groups[grp].groupName|escape}" {if $groupName eq $groups[grp].groupName}selected="selected"{/if}>
-										{$groups[grp].groupName|escape}
-									</option>
-								{/section}
-							</select>
-							<input class="btn btn-default" type="submit" name="permsel" value="{tr}Assign{/tr}">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								{tr}Assign file gallery permissions to groups{/tr}
+							</div>
+							<div class="panel-body">
+								<div class="form-group">
+									<div class="col-sm-6">
+										<span class="help-block">
+											{tr}Permissions{/tr}
+										</span>
+										<select name="perms[]" multiple="multiple" size="12" class="form-control">
+											{foreach from=$perms item=perm}
+												<option value="{$perm.permName|escape}">{$perm.permName|escape}</option>
+											{/foreach}
+										</select>
+									</div>
+									<div class="col-sm-6">
+										<span class="help-block">
+											{tr}Groups{/tr}
+										</span>
+										<select name="groups[]" multiple="multiple" size="12" class="form-control">
+											{section name=grp loop=$groups}
+												<option value="{$groups[grp].groupName|escape}" {if $groupName eq $groups[grp].groupName}selected="selected"{/if}>
+													{$groups[grp].groupName|escape}
+												</option>
+											{/section}
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="panel-footer">
+								<input class="btn btn-primary" type="submit" name="permsel" value="{tr}Assign{/tr}">
+							</div>
 						</div>
 					{/if}
 					<br style="clear:both"/>
