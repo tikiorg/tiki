@@ -7332,7 +7332,9 @@ textarea,
 .footer_liner a:visited {
   color: #a9a9a9;
 }
-/*header.header .sitetitles {  font-family: Paneuropa, "Bitstream Vera Sans", Arial, Helvetica, sans-serif;}*/
+/*header.header .sitetitles {
+  font-family: Paneuropa, "Bitstream Vera Sans", Arial, Helvetica, sans-serif;
+}*/
 header.header .sitetitles {
   font-family: Paneuropa, "Bitstream Vera Sans", Arial, Helvetica, sans-serif;
 }
