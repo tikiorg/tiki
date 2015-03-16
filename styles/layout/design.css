@@ -3363,8 +3363,15 @@ td.italiclabel {
 }
 
 .normal,
+.wikitable,
 .admin {
 	border-collapse: collapse;
+}
+
+.normal, .wikicell, .wikitable {
+	background-color: #fff;
+	border: 1px solid #ccc;
+	color: #000;
 }
 
 .normal td,
