@@ -19,8 +19,8 @@ class Tiki_Connect_Client extends Tiki_Connect_Abstract
 
 	function buildConnectData()
 	{
-		global $prefs;
-		$info = array('version' => $prefs['tiki_release']);
+		global $prefs, $TWV;
+		$info = array('version' => $TWV->version);
 
 		if ($prefs['connect_send_anonymous_info'] === 'y') {
 			$cachelib = TikiLib::lib('cache');
