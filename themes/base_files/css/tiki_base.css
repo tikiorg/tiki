@@ -1860,9 +1860,10 @@ span.posthead {
 .postbody-title .panel-title {
   font-size: 1.4em;
 }
-.breadcrumbs {
+.breadcrumb {
   font-size: 90%;
   font-style: italic;
+  display: inline-block;
 }
 small.description {
   display: block;

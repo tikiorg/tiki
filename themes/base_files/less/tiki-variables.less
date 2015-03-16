@@ -1,18 +1,24 @@
 // $Id$
-// Values are specified here to be used in the tiki_base.less imported files, etc.
-//
-@cssmenu_horiz_li_hover_bg : transparent;
-@cssmenu_ul_border: @dropdown-border;
-@cssmenu_ul_li_a_bg : @dropdown-bg;
-@cssmenu_ul_li_a_color : @dropdown-link-color;
-@cssmenu_ul_li_hover_a_color : @dropdown-link-hover-color;
-@cssmenu_ul_li_hover_a_bg : @dropdown-link-hover-bg;
-@topbar_bg: @navbar-default-bg;
-@topbar_color : @navbar-default-color;
-@topbar_link_color: @navbar-default-link-color;
-@topbar_link_padding_top : @navbar-padding-vertical;
-@topbar_link_padding_bottom : @navbar-padding-vertical;
-@topbar_link_hover_color : @navbar-default-link-hover-color;
+// Values are specified here to be used in the files imported by tiki_base.less and theme style sheets.
+
+// Add Tiki legacy breadcrumb styles as variables.
+@breadcrumb-font-style:                   italic;
+@breadcrumb-font-size:                    90%;
+@breadcrumb-display:                      inline-block;
+
+// These rules are to map Bootstrap variables to superfish menus and topbar div styling.
+@cssmenu_horiz_li_hover_bg:               transparent;
+@cssmenu_ul_border:                       @dropdown-border;
+@cssmenu_ul_li_a_bg:                      @dropdown-bg;
+@cssmenu_ul_li_a_color:                   @dropdown-link-color;
+@cssmenu_ul_li_hover_a_color:             @dropdown-link-hover-color;
+@cssmenu_ul_li_hover_a_bg:                @dropdown-link-hover-bg;
+@topbar_bg:                               @navbar-default-bg;
+@topbar_color:                            @navbar-default-color;
+@topbar_link_color:                       @navbar-default-link-color;
+@topbar_link_padding_top:                 @navbar-padding-vertical;
+@topbar_link_padding_bottom:              @navbar-padding-vertical;
+@topbar_link_hover_color:                 @navbar-default-link-hover-color;
 
 // These can be used in div class="row" or others that don't have a bottom margin but need one.
 .margin-bottom-xs {margin-bottom: ceil(@line-height-computed / 4);}
@@ -20,6 +26,7 @@
 .margin-bottom-md {margin-bottom: @line-height-computed;}
 .margin-bottom-lg {margin-bottom: ceil(@line-height-computed * 2);}
 
+// Map Bootstrap variables to Chosen selectors
 @chosen-background: @input-bg;
 @chosen-border: 1px solid @input-border;
 @chosen-border-radius: @input-border-radius;
