@@ -10,11 +10,11 @@
 	</div>
 {/if}
 
-<div class="text-center">
+
 	{if $listpages or ($find ne '')}
 		{include file='find.tpl'}
 	{/if}
-</div>
+
 <div class="table-responsive">
 	<table class="table table-striped normal">
 		{assign var=numbercol value=0}
