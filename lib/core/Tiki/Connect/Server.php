@@ -96,7 +96,7 @@ class Tiki_Connect_Server extends Tiki_Connect_Abstract
 			$index = Zend_Search_Lucene::create($this->indexFile);
 
 			foreach ($this->getReceivedDataLatest() as $connection) {
-				$data = unserialize($connection['data']);
+				$data = json_decode($connection['data'], true);
 
 				if ($data) {
 					$doc = $this->indexConnection($connection['created'], $data);
