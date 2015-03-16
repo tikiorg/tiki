@@ -2,7 +2,7 @@
 
 {title help="Integrator"}{tr}Edit Rules for Repository:{/tr} {$name}{/title}
 
-<div class="t_navbar form-group">
+<div class="t_navbar margin-bottom-md">
 	{button href="tiki-admin_integrator.php" class="btn btn-default" _text="{tr}Configure Repositories{/tr}"}
 	{button href="tiki-list_integrator_repositories.php" class="btn btn-default" _text="{tr}List Repositories{/tr}</a>"}
 	{assign var=thisrepID value=$repID|escape}

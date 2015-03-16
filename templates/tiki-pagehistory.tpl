@@ -2,7 +2,7 @@
 
 {title admpage="wiki"}{tr}History:{/tr} {$page}{/title}
 
-<div class="t_navbar form-group">
+<div class="t_navbar margin-bottom-md">
 	{assign var=thispage value=$page|escape:url}
 	{button href="tiki-index.php?page=$thispage" class="btn btn-default" _text="{tr}View page{/tr}"}
 	{if !isset($noHistory)}

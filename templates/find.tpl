@@ -32,7 +32,7 @@
 
 <div class="find container-fluid">
     <div class="row">
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-md-5 col-md-offset-7">
 	<form method="post" class="form-horizontal" role="form">
 	{if !isset($map_only) or $map_only ne 'y'}
 		{if !empty($filegals_manager)}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}">{/if}

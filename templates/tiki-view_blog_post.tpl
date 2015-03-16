@@ -5,7 +5,7 @@
 {/if}
 
 {* Blog comment mail *}
-<div class="blogactions clearfix">
+<div class="blogactions clearfix margin-bottom-md">
     <div class="btn-group">
 {if $user and $prefs['feature_blogs'] eq 'y'}
 	{if $user_watching_blog eq 'n'}

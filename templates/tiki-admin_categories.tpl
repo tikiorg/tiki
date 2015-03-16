@@ -1,7 +1,7 @@
 {* $Id$ *}
 {title help="Categories" admpage="category"}{tr}Admin Categories{/tr}{/title}
 
-<div class="t_navbar form-group">
+<div class="t_navbar margin-bottom-md">
 	{button href="tiki-browse_categories.php?parentId=$parentId" class="btn btn-default" _text="{tr}Browse Categories{/tr}" _title="{tr}Browse the category system{/tr}"}
 	{button href="tiki-edit_categories.php" class="btn btn-default" _text="{tr}Organize Objects{/tr}" _title="{tr}Organize Objects{/tr}"}
 </div>

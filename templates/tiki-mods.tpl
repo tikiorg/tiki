@@ -1,7 +1,7 @@
 {* $Id$ *}
 {strip}
 {title help="mods"}{tr}Tiki Mods{/tr}{/title}
-<div class="t_navbar form-group">
+<div class="t_navbar margin-bottom-md">
 	{button href="tiki-mods_admin.php" class="btn btn-default" _text="{tr}Mods Configuration{/tr}"}
 	{button href="tiki-mods.php?reload=1$findarg$typearg$versionarg" class="btn btn-default" _text="{tr}Update remote index{/tr}"}
 	{button href="tiki-mods.php?rebuild=1$findarg$typearg$versionarg" class="btn btn-default" _text="{tr}Rebuild local list{/tr}"}

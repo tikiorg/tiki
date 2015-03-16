@@ -4,7 +4,7 @@
 	{$description}
 </div>
 
-<div class="t_navbar form-group">
+<div class="t_navbar margin-bottom-md">
 	{if $system eq 'n'}
 		{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
 			{button href="tiki-galleries.php?edit_mode=1&galleryId=$galleryId" class="btn btn-default" _text="{tr}Edit Gallery{/tr}"}

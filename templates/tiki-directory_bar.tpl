@@ -1,4 +1,4 @@
-<div class="t_navbar form-group">
+<div class="t_navbar margin-bottom-md">
 	{self_link print='y'}{icon _id='printer' hspace='1' align='right' alt="{tr}Print{/tr}"}{/self_link}
 
 	{if $mid ne "tiki-directory_browse.tpl"}

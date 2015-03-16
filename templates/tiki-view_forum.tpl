@@ -7,7 +7,7 @@
 		<div class="description help-block">{wiki}{$forum_info.description}{/wiki}</div>
 	{/if}
 
-	<div class="t_navbar form-group">
+	<div class="t_navbar margin-bottom-md">
 		{assign var=thisforum_info value=$forum_info.forumId}
 		{if ($tiki_p_forum_post_topic eq 'y' and ($prefs.feature_wiki_discuss ne 'y' or $prefs.$forumId ne $prefs.wiki_forum_id)) or $tiki_p_admin_forum eq 'y'}
 			{if !isset($comments_threadId) or $comments_threadId eq 0}

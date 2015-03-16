@@ -2,7 +2,7 @@
 
 {include file='tiki-mytiki_bar.tpl'}
 
-<div class="t_navbar form-group">
+<div class="t_navbar margin-bottom-md">
 	{button href="tiki-minical.php#add" class="btn btn-default" _text="{tr}Add{/tr} "}
 	{button href="tiki-minical_prefs.php" class="btn btn-default" _text="{tr}Prefs{/tr}"}
 	{button href="tiki-minical.php?view=daily" class="btn btn-default" _text="{tr}Daily{/tr}"}
