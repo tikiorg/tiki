@@ -1146,18 +1146,18 @@ class ToolbarDialog extends Toolbar
 			$label = tra('Wiki Link');
 			$icon = tra('img/icons/page_link.png');
 			$wysiwyg = '';	// cke link dialog now adapted for wiki links
-			$list = array('Wiki Link',
-						'<label for="tbWLinkDesc">Show this text</label>',
+			$list = array(tra("Wiki Link"),
+						'<label for="tbWLinkDesc">' . tra("Show this text") . '</label>',
 						'<input type="text" id="tbWLinkDesc" class="ui-widget-content ui-corner-all" style="width: 98%" />',
-						'<label for="tbWLinkPage">Link to this page</label>',
+						'<label for="tbWLinkPage">' . tra("Link to this page") . '</label>',
 						'<input type="text" id="tbWLinkPage" class="ui-widget-content ui-corner-all" style="width: 98%" />',
-						$prefs['wikiplugin_alink'] == 'y' ? '<label for="tbWLinkAnchor">Anchor:</label>' : '',
+						$prefs['wikiplugin_alink'] == 'y' ? '<label for="tbWLinkAnchor">' . tra("Anchor") . ':</label>' : '',
 						$prefs['wikiplugin_alink'] == 'y' ? '<input type="text" id="tbWLinkAnchor" class="ui-widget-content ui-corner-all" style="width: 98%" />' : '',
-						$prefs['feature_semantic'] == 'y' ? '<label for="tbWLinkRel">Semantic relation:</label>' : '',
+						$prefs['feature_semantic'] == 'y' ? '<label for="tbWLinkRel">' . tra("Semantic relation") . ':</label>' : '',
 						$prefs['feature_semantic'] == 'y' ? '<input type="text" id="tbWLinkRel" class="ui-widget-content ui-corner-all" style="width: 98%" />' : '',
 						'{"open": function () { dialogInternalLinkOpen(area_id); },
-						"buttons": { "Cancel": function() { dialogSharedClose(area_id,this); },'.
-									'"Insert": function() { dialogInternalLinkInsert(area_id,this); }}}'
+						"buttons": { "' . tra("Cancel") . '": function() { dialogSharedClose(area_id,this); },'.
+									'"' . tra("Insert") . '": function() { dialogInternalLinkInsert(area_id,this); }}}'
 					);
 
 			break;
@@ -1170,19 +1170,19 @@ class ToolbarDialog extends Toolbar
 			$label = tra('Object Link');
 			$icon = tra('img/icons/page_link.png');
 			$wysiwyg = 'Object Link';
-			$list = array('Object Link',
-						'<label for="tbOLinkDesc">Show this text</label>',
+			$list = array(tra('Object Link'),
+						'<label for="tbOLinkDesc">' . tra("Show this text") . '</label>',
 						'<input type="text" id="tbOLinkDesc" />',
-						'<label for="tbOLinkObjectType">Types of object</label>',
+						'<label for="tbOLinkObjectType">' . tra("Types of object") . '</label>',
 						'<select id="tbOLinkObjectType" class="ui-widget-content ui-corner-all" style="width: 98%">' .
 							'<option value="">' . tra('All') . '</option>' .
 							$options .
 						'</select>',
-						'<label for="tbOLinkObjectSelector">Link to this object</label>',
+						'<label for="tbOLinkObjectSelector">' . tra("Link to this object") . '</label>',
 						'<input type="text" id="tbOLinkObjectSelector" class="ui-widget-content ui-corner-all" style="width: 98%" />',
 						'{"open": function () { dialogObjectLinkOpen(area_id); },
-						"buttons": { "Cancel": function() { dialogSharedClose(area_id,this); },'.
-									'"Insert": function() { dialogObjectLinkInsert(area_id,this); }}}'
+						"buttons": { "' . tra("Cancel") . '": function() { dialogSharedClose(area_id,this); },'.
+									'"' . tra("Insert") . '": function() { dialogObjectLinkInsert(area_id,this); }}}'
 					);
 
 			break;
@@ -1190,18 +1190,18 @@ class ToolbarDialog extends Toolbar
 			$wysiwyg = 'Link';
 			$label = tra('External Link');
 			$icon = tra('img/icons/world_link.png');
-			$list = array('External Link',
-						'<label for="tbLinkDesc">Show this text</label>',
+			$list = array(tra('External Link'),
+						'<label for="tbLinkDesc">' . tra("Show this text") . '</label>',
 						'<input type="text" id="tbLinkDesc" class="ui-widget-content ui-corner-all" style="width: 98%" />',
-						'<label for="tbLinkURL">link to this URL</label>',
+						'<label for="tbLinkURL">' . tra("link to this URL") . '</label>',
 						'<input type="text" id="tbLinkURL" class="ui-widget-content ui-corner-all" style="width: 98%" />',
-						'<label for="tbLinkRel">Relation:</label>',
+						'<label for="tbLinkRel">' . tra("Relation") . ':</label>',
 						'<input type="text" id="tbLinkRel" class="ui-widget-content ui-corner-all" style="width: 98%" />',
-						$prefs['cachepages'] == 'y' ? '<br /><label for="tbLinkNoCache" style="display:inline;">No cache:</label>' : '',
+						$prefs['cachepages'] == 'y' ? '<br /><label for="tbLinkNoCache" style="display:inline;">' . tra("No cache") . ':</label>' : '',
 						$prefs['cachepages'] == 'y' ? '<input type="checkbox" id="tbLinkNoCache" class="ui-widget-content ui-corner-all" />' : '',
 						'{"width": 300, "open": function () { dialogExternalLinkOpen( area_id ) },
-						"buttons": { "Cancel": function() { dialogSharedClose(area_id,this); },'.
-									'"Insert": function() { dialogExternalLinkInsert(area_id,this) }}}'
+						"buttons": { "' . tra("Cancel") . '": function() { dialogSharedClose(area_id,this); },'.
+									'"' . tra("Insert") . '": function() { dialogExternalLinkInsert(area_id,this) }}}'
 					);
 			break;
 
@@ -1209,10 +1209,10 @@ class ToolbarDialog extends Toolbar
 			$icon = tra('img/icons/table.png');
 			$wysiwyg = 'Table';
 			$label = tra('Table Builder');
-			$list = array('Table Builder',
+			$list = array(tra('Table Builder'),
 						'{"open": function () { dialogTableOpen(area_id,this); },
-						"width": 320, "buttons": { "Cancel": function() { dialogSharedClose(area_id,this); },'.
-												  '"Insert": function() { dialogTableInsert(area_id,this); }}}'
+						"width": 320, "buttons": { "' . tra("Cancel") . '": function() { dialogSharedClose(area_id,this); },'.
+												  '"' . tra("Insert") . '": function() { dialogTableInsert(area_id,this); }}}'
 					);
 			break;
 
@@ -1220,15 +1220,15 @@ class ToolbarDialog extends Toolbar
 			$icon = tra('img/icons/find.png');
 			$wysiwyg = 'Find';
 			$label = tra('Find Text');
-			$list = array('Find Text',
-						'<label>Search:</label>',
+			$list = array(tra('Find Text'),
+						'<label>' . tra("Search") . ':</label>',
 						'<input type="text" id="tbFindSearch" class="ui-widget-content ui-corner-all" />',
-						'<label for="tbFindCase" style="display:inline;">Case Insensitivity:</label>',
+						'<label for="tbFindCase" style="display:inline;">' . tra("Case Insensitivity") . ':</label>',
 						'<input type="checkbox" id="tbFindCase" checked="checked" class="ui-widget-content ui-corner-all" />',
-						'<p class="description">Note: Uses regular expressions</p>',	// TODO add option to not
+						'<p class="description">' . tra("Note: Uses regular expressions") . '</p>',	// TODO add option to not
 						'{"open": function() { dialogFindOpen(area_id); },'.
-						 '"buttons": { "Close": function() { dialogSharedClose(area_id,this); },'.
-									  '"Find": function() { dialogFindFind(area_id); }}}'
+						 '"buttons": { "' . tra("Close") . '": function() { dialogSharedClose(area_id,this); },'.
+									  '"' . tra("Find") . '": function() { dialogFindFind(area_id); }}}'
 					);
 
 			break;
@@ -1239,19 +1239,19 @@ class ToolbarDialog extends Toolbar
 			$label = tra('Text Replace');
 			$tool_prefs[] = 'feature_wiki_replace';
 
-			$list = array('Text Replace',
-						'<label for="tbReplaceSearch">Search:</label>',
+			$list = array(tra('Text Replace'),
+						'<label for="tbReplaceSearch">' . tra("Search") . ':</label>',
 						'<input type="text" id="tbReplaceSearch" class="ui-widget-content ui-corner-all" />',
-						'<label for="tbReplaceReplace">Replace:</label>',
+						'<label for="tbReplaceReplace">' . tra("Replace") . ':</label>',
 						'<input type="text" id="tbReplaceReplace" class="ui-widget-content ui-corner-all clearfix" />',
-						'<label for="tbReplaceCase" style="display:inline;">Case Insensitivity:</label>',
+						'<label for="tbReplaceCase" style="display:inline;">' . tra("Case Insensitivity") . ':</label>',
 						'<input type="checkbox" id="tbReplaceCase" checked="checked" class="ui-widget-content ui-corner-all" />',
-						'<br /><label for="tbReplaceAll" style="display:inline;">Replace All:</label>',
+						'<br /><label for="tbReplaceAll" style="display:inline;">' . tra("Replace All") . ':</label>',
 						'<input type="checkbox" id="tbReplaceAll" checked="checked" class="ui-widget-content ui-corner-all" />',
-						'<p class="description">Note: Uses regular expressions</p>',	// TODO add option to not
+						'<p class="description">' . tra("Note: Uses regular expressions") . '</p>',	// TODO add option to not
 						'{"open": function() { dialogReplaceOpen(area_id); },'.
-						 '"buttons": { "Close": function() { dialogSharedClose(area_id,this); },'.
-									  '"Replace": function() { dialogReplaceReplace(area_id); }}}'
+						 '"buttons": { "' . tra("Close") . '": function() { dialogSharedClose(area_id,this); },'.
+									  '"' . tra("Replace") . '": function() { dialogReplaceReplace(area_id); }}}'
 					);
 
 			break;
