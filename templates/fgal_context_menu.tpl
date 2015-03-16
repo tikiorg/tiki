@@ -2,13 +2,13 @@
 {strip}
 	{if $files[$changes].isgal eq 1}
 		{if $files[$changes].perms.tiki_p_view_file_gallery eq 'y'}
-			{self_link _icon='folder_go' _menu_text=$menu_text _menu_icon=$menu_icon galleryId=$files[$changes].id}
-				{tr}Go to{/tr}
+			{self_link _icon_name='file-archive-open' _menu_text=$menu_text _menu_icon=$menu_icon galleryId=$files[$changes].id}
+				{tr}Open{/tr}
 			{/self_link}
 		{/if}
 
 		{if $files[$changes].perms.tiki_p_create_file_galleries eq 'y'}
-			{self_link _icon='page_edit' _menu_text=$menu_text _menu_icon=$menu_icon edit_mode=1 galleryId=$files[$changes].id}
+			{self_link _icon_name='edit' _menu_text=$menu_text _menu_icon=$menu_icon edit_mode=1 galleryId=$files[$changes].id}
 				{tr}Properties{/tr}
 			{/self_link}
 		{/if}
@@ -17,7 +17,7 @@
 			and ( $files[$changes].perms.tiki_p_admin_file_galleries eq 'y' or ($user and $files[$changes].user eq $user)
 			or $files[$changes].public eq 'y' )}
 			<a href="tiki-upload_file.php?galleryId={$files[$changes].id}{if !empty($filegals_manager)}&amp;filegals_manager={$filegals_manager|escape}{/if}">
-				{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='upload'}
+				{icon _menu_text=$menu_text _menu_icon=$menu_icon name='export'}
 			</a>
 		{/if}
 
@@ -36,7 +36,7 @@
 		{/if}
 
 		{if $files[$changes].perms.tiki_p_create_file_galleries eq 'y'}
-			{self_link _icon='cross' _menu_text=$menu_text _menu_icon=$menu_icon removegal=$files[$changes].id}
+			{self_link _icon_name='remove' _menu_text=$menu_text _menu_icon=$menu_icon removegal=$files[$changes].id}
 				{tr}Delete{/tr}
 			{/self_link}
 		{/if}
@@ -56,7 +56,7 @@
 
 		{if $files[$changes].type|truncate:6:'':true eq 'image/'}
 			<a href="{$files[$changes].id|sefurl:display}">
-				{icon _id='magnifier' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
+				{icon name='view' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
 			</a>
 			{if $files[$changes].perms.tiki_p_upload_files eq 'y' and $prefs.feature_draw eq 'y'}
 				{if
@@ -107,10 +107,10 @@
 			{if isset($files[$changes].nbArchives) and $files[$changes].nbArchives gt 0}
 				{assign var=nb_archives value=$files[$changes].nbArchives}
 				<a href="tiki-file_archives.php?fileId={$files[$changes].fileId}{if !empty($filegals_manager)}&amp;filegals_manager={$filegals_manager|escape}{/if}">
-					{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_multiple' alt="{tr}Archives{/tr} ($nb_archives)"}
+					{icon _menu_text=$menu_text _menu_icon=$menu_icon name='file-archive' alt="{tr}Archives{/tr} ($nb_archives)"}
 				</a>
 			{else}
-				{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_multiple_gray' alt="{tr}Archives{/tr}"}
+				{icon _menu_text=$menu_text _menu_icon=$menu_icon name='file-archive' alt="{tr}Archives{/tr}"}
 			{/if}
 			{assign var=replace_action_title value="{tr}Upload New Version{/tr}"}
 		{else}
@@ -131,10 +131,10 @@
 			or $files[$changes].perms.tiki_p_edit_gallery_file eq 'y'))}
 			{if $files[$changes].archiveId == 0}
 				{if $prefs.feature_file_galleries_save_draft eq 'y' and $files[$changes].nbDraft gt 0}
-					{self_link _icon='accept' _menu_text=$menu_text _menu_icon=$menu_icon validate=$files[$changes].fileId galleryId=$files[$changes].galleryId}
+					{self_link _icon_name='ok' _menu_text=$menu_text _menu_icon=$menu_icon validate=$files[$changes].fileId galleryId=$files[$changes].galleryId}
 						{tr}Validate your draft{/tr}
 					{/self_link}
-					{self_link _icon='cross' _menu_text=$menu_text _menu_icon=$menu_icon draft=remove remove=$files[$changes].fileId galleryId=$files[$changes].galleryId}
+					{self_link _icon_name='remove' _menu_text=$menu_text _menu_icon=$menu_icon draft=remove remove=$files[$changes].fileId galleryId=$files[$changes].galleryId}
 						{tr}Delete your draft{/tr}
 					{/self_link}
 				{/if}
@@ -152,14 +152,14 @@
 								<input type="file" style="position:absolute; z-index:1001; right:0; top:0; font-size:600px; opacity:0; -moz-opacity:0; filter:alpha(opacity=0); cursor:pointer; margin: 0; padding: 0" name="upfile{$files[$changes].id}" onchange="this.form.submit(); return false;">
 								<input type="hidden" name="fileId" value="{$files[$changes].fileId}">
 								<a href="#">
-									{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt=$replace_action_title}
+									{icon _menu_text=$menu_text _menu_icon=$menu_icon name='export' alt=$replace_action_title}
 								</a>
 							</div>
 
 							{if $menu_text eq 'y'}
 								{* the line above is used to give enough space to the real 'Upload New Version' button *}
 								<a style="visibility: hidden">
-									{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt=$replace_action_title}
+									{icon _menu_text=$menu_text _menu_icon=$menu_icon name='export' alt=$replace_action_title}
 								</a>
 							{/if}
 						{/if}
@@ -167,27 +167,27 @@
 					{else}
 						{* for the moment, no-javascript version is simply a link to the edit page where you can also upload *}
 						<a href="tiki-upload_file.php?galleryId={$files[$changes].galleryId}&amp;fileId={$files[$changes].id}{if !empty($filegals_manager)}&amp;filegals_manager={$filegals_manager|escape}{/if}">
-							{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt="{tr}Upload New Version{/tr}"}
+							{icon _menu_text=$menu_text _menu_icon=$menu_icon name='export' alt="{tr}Upload New Version{/tr}"}
 						</a>
 					{/if}
 
 					{if $prefs.fgal_display_properties eq 'y'}
 						<a href="tiki-list_file_gallery.php?galleryId={$files[$changes].galleryId}&fileId={$files[$changes].id}&view=page">
-							{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='table' alt="{tr}Page View{/tr}"}
+							{icon _menu_text=$menu_text _menu_icon=$menu_icon name='textfile' alt="{tr}Page View{/tr}"}
 						</a>
 						<a href="tiki-upload_file.php?galleryId={$files[$changes].galleryId}&amp;fileId={$files[$changes].id}{if !empty($filegals_manager)}&amp;filegals_manager={$filegals_manager|escape}{/if}">
-							{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='page_edit' alt="{tr}Edit Properties{/tr}"}
+							{icon _menu_text=$menu_text _menu_icon=$menu_icon name='edit' alt="{tr}Edit Properties{/tr}"}
 						</a>
 						{* using &amp; causes an error for some reason - therefore using plain & *}
 						<a href="tiki-list_file_gallery.php?galleryId={$files[$changes].galleryId}&fileId={$files[$changes].id}&action=refresh_metadata{if isset($view)}&view={$view}{/if}">
-							{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='tag_green' alt="{tr}Refresh Metadata{/tr}"}
+							{icon _menu_text=$menu_text _menu_icon=$menu_icon name='tag' alt="{tr}Refresh Metadata{/tr}"}
 						</a>
 					{/if}
 				{/if}
 
 				{if $gal_info.lockable eq 'y' and $files[$changes].isgal neq 1}
 					{if $files[$changes].lockedby}
-						{self_link _icon='lock_delete' _menu_text=$menu_text _menu_icon=$menu_icon lock='n' fileId=$files[$changes].fileId galleryId=$files[$changes].galleryId}
+						{self_link _icon_name='unlock' _menu_text=$menu_text _menu_icon=$menu_icon lock='n' fileId=$files[$changes].fileId galleryId=$files[$changes].galleryId}
 							{tr}Unlock{/tr}
 						{/self_link}
 					{else}
@@ -196,16 +196,16 @@
 							{if $prefs.javascript_enabled eq 'y'}
 								{* with javascript, the main page will be reloaded to lock the file and change it's lockedby informations *}
 								<a href="#" onclick="window.open('{$files[$changes].fileId|sefurl:file:with_next}lock=y'); document.location.href = '{self_link _type='absolute_uri' _tag='n' fileId=$files[$changes].fileId lock=y galleryId=$files[$changes].galleryId}{/self_link}'; return false;">
-									{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_lock' alt="{tr}Download and lock{/tr}"}
+									{icon _menu_text=$menu_text _menu_icon=$menu_icon name='import' alt="{tr}Download and lock{/tr}"}
 								</a>
 							{else}
 								{* without javascript, the lockedby information won't be refreshed until the user do it itself *}
 								<a href="{$files[$changes].fileId|sefurl:file:with_next}lock=y">
-									{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_lock' alt="{tr}Download and lock{/tr}"}
+									{icon _menu_text=$menu_text _menu_icon=$menu_icon name='import' alt="{tr}Download and lock{/tr}"}
 								</a>
 							{/if}
 						{/if}
-						{self_link _icon='lock_add' _menu_text=$menu_text _menu_icon=$menu_icon lock='y' fileId=$files[$changes].fileId galleryId=$files[$changes].galleryId}
+						{self_link _icon_name='lock' _menu_text=$menu_text _menu_icon=$menu_icon lock='y' fileId=$files[$changes].fileId galleryId=$files[$changes].galleryId}
 							{tr}Lock{/tr}
 						{/self_link}
 					{/if}
@@ -217,11 +217,11 @@
 			{assign var=virtual_path value=$files[$changes].fileId|virtual_path}
 
 			{if $prefs.feature_file_galleries_save_draft eq 'y'}
-				{self_link _icon="tree_folder_open" _menu_text=$menu_text _menu_icon=$menu_icon _script="javascript:open_webdav('$virtual_path')" _noauto="y" _ajax="n"}
+				{self_link _icon_name="file-archive-open" _menu_text=$menu_text _menu_icon=$menu_icon _script="javascript:open_webdav('$virtual_path')" _noauto="y" _ajax="n"}
 					{tr}Open your draft in WebDAV{/tr}
 				{/self_link}
 			{else}
-				{self_link _icon="tree_folder_open" _menu_text=$menu_text _menu_icon=$menu_icon _script="javascript:open_webdav('$virtual_path')" _noauto="y" _ajax="n"}
+				{self_link _icon_name="file-archive-open" _menu_text=$menu_text _menu_icon=$menu_icon _script="javascript:open_webdav('$virtual_path')" _noauto="y" _ajax="n"}
 					{tr}Open in WebDAV{/tr}
 				{/self_link}
 			{/if}
@@ -229,12 +229,12 @@
 
 		{if $prefs.feature_share eq 'y' and $tiki_p_share eq 'y'}
 			<a href="tiki-share.php?url={$tikiroot}{$files[$changes].id|sefurl:file|escape:'url'}">
-				{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='share_link' alt="{tr}Share a link to this file{/tr}"}
+				{icon _menu_text=$menu_text _menu_icon=$menu_icon name='share' alt="{tr}Share a link to this file{/tr}"}
 			</a>
 		{/if}
 		{if $prefs.feature_tell_a_friend eq 'y' and $tiki_p_tell_a_friend eq 'y'}
 			<a href="tiki-tell_a_friend.php?url={$tikiroot}{$files[$changes].id|sefurl:file|escape:'url'}">
-				{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='email_go' alt="{tr}Email a link to this file{/tr}"}
+				{icon _menu_text=$menu_text _menu_icon=$menu_icon name='envelope' alt="{tr}Email a link to this file{/tr}"}
 			</a>
 		{/if}
 
@@ -243,7 +243,7 @@
 			or ($files[$changes].perms.tiki_p_edit_gallery_file eq 'y'
 			and $files[$changes].perms.tiki_p_remove_files eq 'y')))}
 				<a href="tiki-list_file_gallery.php?remove={$files[$changes].fileId}&galleryId={$files[$changes].galleryId}">
-					{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='cross' alt="{tr}Delete{/tr}"}
+					{icon _menu_text=$menu_text _menu_icon=$menu_icon name='remove' alt="{tr}Delete{/tr}"}
 				</a>
 		{/if}
 
