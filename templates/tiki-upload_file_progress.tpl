@@ -11,12 +11,22 @@
 {/if}
 <table border="0" cellspacing="4" cellpadding="4">
 	<tr>
+		{if $key_type eq 'image/png' or $key_type eq 'image/jpeg'
+		or $key_type eq 'image/jpg' or $key_type eq 'image/gif'}
+			{$imagetypes = 'y'}
+		{else}
+			{$imagetypes = 'n'}
+		{/if}
 		{if $view neq 'page'}
 			<td style="text-align: center">
-				{if !empty($filegals_manager)}
-					<a {$alink}><img src="{$fileId|sefurl:thumbnail}"><br><span class="thumbcaption">{tr}Click here to use the file{/tr}</span></a>
+				{if $imagetypes eq 'y' or $prefs.theme_iconset eq 'legacy'}
+					{if !empty($filegals_manager)}
+						<a {$alink}><img src="{$fileId|sefurl:thumbnail}"><br><span class="thumbcaption">{tr}Click here to use the file{/tr}</span></a>
+					{else}
+						<img src="{$fileId|sefurl:thumbnail}">
+					{/if}
 				{else}
-					<img src="{$fileId|sefurl:thumbnail}">
+					{$name|iconify:$key_type:null:3}
 				{/if}
 			</td>
 			<td>
