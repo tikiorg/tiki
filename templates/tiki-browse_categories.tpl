@@ -99,7 +99,7 @@
 	</div>
 </div>
 
-<form method="post" action="tiki-browse_categories.php" class="form-inline form-horizontal" role="form">
+<form method="post" action="tiki-browse_categories.php" class="form-inline form-horizontal margin-bottom-sm" role="form">
 	<div class="form-group">
 		<label class="col-sm-2 control-label" for="find">{tr}Find{/tr} {if $parentId ne 0}{$p_info.name|escape} {/if}</label>
 		<div class="col-sm-9">
