@@ -9,7 +9,11 @@
 </div>
 
 {if $posts or ($find ne '')}
-	{include file='find.tpl'}
+    <div class="row row-sidemargins-zero">
+        <div class="col-md-6">
+	        {include file='find.tpl'}
+        </div>
+    </div>
 {/if}
 
 {if $posts and $tiki_p_blog_admin eq 'y'}
