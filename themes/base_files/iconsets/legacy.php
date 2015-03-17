@@ -432,6 +432,9 @@ function iconset_legacy()
 			'tags' => array(
 				'id' => 'tag_blue',
 			),
+			'textfile' => array(
+				'id' => 'page',
+			),
 			'theme' => array(
 				'id' => 'image',
 			),
