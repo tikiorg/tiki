@@ -9,7 +9,7 @@
 		{$name}
 	{/if}
 {/title}
-<div class="t_navbar">
+<div class="t_navbar margin-bottom-md">
 	<div class="btn-group pull-right">
 		<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
 			{icon name="ellipsis"}
