@@ -166,7 +166,7 @@ class Iconset
 		return $this->append;
 	}
 
-	public function getHtml($name) {
+	public function getHtml($name, array $params = []) {
 
 		global $prefs;
 
@@ -176,14 +176,23 @@ class Iconset
 			$prepend = isset($icon['prepend']) ? $icon['prepend'] : $this->prepend;
 			$append = isset($icon['append']) ? $icon['append'] : $this->append;
 			$icon_class = '';
+			$size = isset($params['size']) && $params['size'] < 10 ? $params['size'] : 1;
+			$custom_class = isset($params['iclass']) ? $params['iclass'] : '';
 
 			if ($tag == 'img') { //manage legacy image icons (eg: png, gif, etc)
-				$src = TikiLib::lib('theme')->get_theme_path($prefs['theme'], $prefs['theme_option'], $icon['id'] . $append, 'icons/');
+				//some ability to use larger legacy icons based on size setting
+				// 1 = 16px x 16px; 2 = 32px x 32px; 3 = 48px x 48px
+				if ($size > 1 && isset($icon['size']) && $icon['size'] != $size && !empty($icon['sizes'][$size])) {
+					$id = $icon['sizes'][$size];
+				} else {
+					$id = $icon['id'];
+				}
+				$src = TikiLib::lib('theme')->get_theme_path($prefs['theme'], $prefs['theme_option'], $id . $append, 'icons/');
 				if (empty($src)) {
-					$src = $prepend . $icon['id'] . $append;
+					$src = $prepend . $id . $append;
 				}
 				$alt = $name;  //use icon name as alternate text
-				$html = "<span class=\"icon icon-$name $icon_class\"><img src=\"$src\" alt=\"$alt\"></span>";
+				$html = "<span class=\"icon icon-$name $icon_class $custom_class\"><img src=\"$src\" alt=\"$alt\"></span>";
 			} else {
 				if (isset($icon['id'])) { //use class defined for the icon if set
 					$icon_class = $prepend . $icon['id'] . $append;
@@ -191,7 +200,8 @@ class Iconset
 					TikiLib::lib('errorreport')->report(tr('Iconset: Class not defined for icon %0', $name));
 				}
 
-				$html = "<$tag class=\"icon icon-$name $icon_class\"></$tag>";
+				$style = $size > 1 ? 'style="font-size:' . $size . '00%"' : '';
+				$html = "<$tag class=\"icon icon-$name $icon_class $custom_class\" $style></$tag>";
 			}
 
 			return $html;

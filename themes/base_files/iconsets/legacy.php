@@ -9,6 +9,15 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	header('location: index.php');
 	exit;
 }
+/*
+ * Note on sizing:
+ * Some ability to use larger legacy icons based on size parameter in smarty icon function
+ * Indicate size of main id using size => X
+ * Add paths to additional sizes (usually just size 3) by using sizes => array(3 => iconname)
+ * Regular size is 16px by 16px, so size 2 is 32px by 32px and size 3 is 48px by 48px
+ * See admin_fgal below for an example
+ */
+
 
 function iconset_legacy()
 {
@@ -63,6 +72,10 @@ function iconset_legacy()
 			),
 			'admin_fgal' => array(
 				'id' => 'large/file-manager',
+				'size' => 2,
+				'sizes' => array(
+					3 => 'large/fileopen48x48'
+				)
 			),
 			'admin_forums' => array(
 				'id' => 'large/stock_index',
@@ -160,6 +173,10 @@ function iconset_legacy()
 			),
 			'admin_wiki' => array(
 				'id' => 'large/wikipages',
+				'size' => 2,
+				'sizes' => array(
+					3 => 'large/wikipages48x48'
+				)
 			),
 			'admin_workspace' => array(
 				'id' => 'large/areas',
@@ -465,6 +482,10 @@ function iconset_legacy()
 			),
 			'wizard' => array(
 				'id' => 'wizard16x16',
+			),
+			'wizard_admin' => array(
+				'id' => 'large/wizard48x48',
+				'size' => 3
 			),
 		),
 	);
