@@ -12,7 +12,11 @@
 
 
 	{if $listpages or ($find ne '')}
-		{include file='find.tpl'}
+        <div class="row row-sidemargins-zero">
+            <div class="col-md-5 col-md-offset-7">
+		        {include file='find.tpl'}
+            </div>
+        </div>
 	{/if}
 
 <div class="table-responsive">

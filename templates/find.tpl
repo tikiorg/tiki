@@ -30,9 +30,7 @@
 	*                  {include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'}
 *}
 
-<div class="find container-fluid">
-    <div class="row">
-    <div class="col-md-5 col-md-offset-7">
+<div class="find">
 	<form method="post" class="form-horizontal" role="form">
 	{if !isset($map_only) or $map_only ne 'y'}
 		{if !empty($filegals_manager)}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}">{/if}
@@ -276,6 +274,5 @@
 			});
 		{/jq}
 	</form>
-        </div>
-    </div>
-</div><!-- End of find -->
+</div>
+<!-- End of find -->
