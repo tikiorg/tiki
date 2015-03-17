@@ -7211,14 +7211,6 @@ div.cvsup {
 ul.all_languages > li {
   border: 1px solid #18bc9c;
 }
-.convene-ok {
-  color: #ffffff;
-  background-color: #18bc9c;
-}
-.convene-no {
-  color: #ffffff;
-  background-color: #e74c3c;
-}
 .plugin-mouseover {
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.2);
