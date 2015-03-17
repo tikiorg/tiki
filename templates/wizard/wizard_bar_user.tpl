@@ -3,7 +3,7 @@
 <table style="width:100%">
 	<tr>
 		<td colspan="3" style="text-align:left; width:270px">
-			<div style="float:left; width:20px"><img src="img/icons/wizard16x16.png" alt="{tr}Tiki User Wizard{/tr}" /></div>
+			<div style="float:left; width:20px">{icon name=wizard}</div>
 			<input type="submit" class="btn btn-warning btn-sm" name="close" value="{tr}Close{/tr}" />
 			&nbsp;&nbsp;&nbsp;
 			{if !isset($firstWizardPage)}<input type="submit" class="btn btn-default btn-sm" name="back" value="{tr}Back{/tr}" />{/if}

@@ -169,7 +169,7 @@
 								{if $files[changes].isgal eq 1}
 									<a {$link}>
 										{if empty($files[changes].icon_fileId)}
-											{icon _id="img/icons/large/fileopen48x48.png" width="48" height="48"}
+											{icon name="admin_fgal" size=3}
 										{else}
 											<img src="{$files[changes].icon_fileId|sefurl:thumbnail}" alt="">
 										{/if}
