@@ -251,8 +251,8 @@ if ($(this).val() != '') {
 						<input type="text" id="maxRows" name="maxRows" value="{$maxRows|escape}" class="form-control">
 					</div>
 				</div>
-				<div class="form-group">
-					<label for="">{tr}Select which items to display when listing galleries{/tr}</label>
+				<div class="">
+					<label for="" class="control-label">{tr}Select which items to display when listing galleries{/tr}</label>
 					{include file='fgal_listing_conf.tpl'}
 				</div>
 			{/tab}
@@ -262,9 +262,10 @@ if ($(this).val() != '') {
 				{tr}View inserted gallery after save{/tr}
 			</label>
 			<div class="col-sm-8">
-				<input type="checkbox" name="viewitem" checked="checked">
+				<input type="checkbox" name="viewitem" id="viewitem" checked="checked">
 			</div>
 		</div>
+
 		<div class="form-group">
 			<div class="col-md-8 col-md-offset-4">
 				<input type="submit" class="btn btn-primary" value="{tr}Save{/tr}" name="edit">
