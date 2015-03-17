@@ -12,7 +12,7 @@
 
 
 	{if $listpages or ($find ne '')}
-        <div class="row">
+        <div class="row row-sidemargins-zero">
             <div class="col-md-5 col-md-offset-7">
 		        {include file='find.tpl'}
             </div>

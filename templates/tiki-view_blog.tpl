@@ -43,7 +43,7 @@
 		</div>
 	</div>
 	{if $use_find eq 'y'}
-        <div class="row">
+        <div class="row row-sidemargins-zero">
             <div class="col-md-5 col-md-offset-7">
     	        {include file='find.tpl' find_show_num_rows='y'}
             </div>
