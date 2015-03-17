@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-<img class="pull-right" src="img/icons/large/fileopen48x48.png" alt="{tr}File storage setup{/tr}" />
+{icon name="admin_fgal" size=3 iclass="pull-right"}
 <div class="media">
 	<img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Configuration Wizard{/tr}" title="{tr}Configuration Wizard{/tr}" />
 	<div class="media-body">

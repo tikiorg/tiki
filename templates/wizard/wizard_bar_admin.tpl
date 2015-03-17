@@ -2,7 +2,7 @@
 
 <div class="row form-group">
 	{if !isset($showOnLoginDisplayed) or $showOnLoginDisplayed neq 'y'}
-		<div class="col-sm-1"><img src="img/icons/wizard16x16.png" alt="{tr}Wizard{/tr}" title="{tr}Wizard{/tr}" /></div>
+		<div class="col-sm-1">{icon name=wizard}</div>
 		<input type="checkbox" name="showOnLogin" {if isset($showOnLogin) AND $showOnLogin eq true}checked="checked"{/if} /> {tr}Show on admin login{/tr}
 		{assign var="showOnLoginDisplayed" value="y" scope="root"}
 	{else}

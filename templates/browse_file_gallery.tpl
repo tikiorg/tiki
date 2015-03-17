@@ -169,16 +169,21 @@
 								{if $files[changes].isgal eq 1}
 									<a {$link}>
 										{if empty($files[changes].icon_fileId)}
-											{icon _id="img/icons/large/fileopen48x48.png" width="48" height="48"}
+											{icon name="admin_fgal" size=3}
 										{else}
 											<img src="{$files[changes].icon_fileId|sefurl:thumbnail}" alt="">
 										{/if}
 									</a>
 								{else}
+									{if $key_type eq 'image/png' or $key_type eq 'image/jpeg'
+									or $key_type eq 'image/jpg' or $key_type eq 'image/gif'}
+										{$imagetypes = 'y'}
+									{else}
+										{$imagetypes = 'n'}
+									{/if}
 									<a {$link}
 										{if $prefs.feature_shadowbox eq 'y' && empty($filegals_manager)}
-											{if $key_type eq 'image/png' or $key_type eq 'image/jpeg'
-											or $key_type eq 'image/jpg' or $key_type eq 'image/gif'}
+											{if $imagetypes eq 'y' }
 													rel="box[g]"
 											{elseif $key_type eq 'text/html'}
 													rel="shadowbox[gallery];type=iframe"
@@ -192,10 +197,14 @@
 											title="{if $files[changes].name neq ''}{$files[changes].name|escape}{/if}{if $files[changes].description neq ''}{$files[changes].description|escape}{/if}"
 										{/if}>
 										{if $key_type neq 'image/svg' and $key_type neq 'image/svg+xml'}
-											{if $view eq 'page'}
-												<img src="tiki-download_file.php?fileId={$files[changes].id}&preview" alt="" style="max-width:{$maxWidth}">
+											{if $imagetypes eq 'y' or $prefs.theme_iconset eq 'legacy'}
+												{if $view eq 'page'}
+													<img src="tiki-download_file.php?fileId={$files[changes].id}&preview" alt="" style="max-width:{$maxWidth}">
+												{else}
+													<img src="{$files[changes].id|sefurl:thumbnail}" alt="" style="max-height:{$thumbnailcontener_size}px">
+												{/if}
 											{else}
-												<img src="{$files[changes].id|sefurl:thumbnail}" alt="" style="max-height:{$thumbnailcontener_size}px">
+												{$files[changes].filename|iconify:$key_type:null:3}
 											{/if}
 										{else}
 											<object data="{$files[changes].id|sefurl:thumbnail}" alt="" style="width:{$thumbnail_size}px;height:{$thumbnailcontener_size}px;" type="{$key_type}"></object>
@@ -293,7 +302,7 @@
 					</div>
 					<br clear="all">
 					<div>
-						{include file='tiki-upload_file_progress.tpl' fileId=$files[changes].id name=$files[changes].filename}
+						{include file='tiki-upload_file_progress.tpl' fileId=$files[changes].id name=$files[changes].filename filetype=$key_type}
 					</div>
 					{if isset($metarray) and $metarray|count gt 0}
 						<br>

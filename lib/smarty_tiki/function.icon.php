@@ -15,7 +15,13 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * smarty_function_icon: Display a Tiki icon, using theme icons if they exists
  *
  * params will be used as params for the HTML tag (e.g. border, class, ...), except special params starting with '_' :
- *  - _id: short name (i.e. 'page_edit') or relative file path (i.e. 'img/icons/page_edit.png'). [required]
+ *  - _id: [deprecated] short name (i.e. 'page_edit') or relative file path (i.e. 'img/icons/page_edit.png').
+ *          Will not work with iconsets.
+ *  - name: name of icon from themes/base_files/iconsets file, which allows for choosing different iconsets.
+ *          Use instead of _id.
+ *  - class set custom class (otherwise default classes are applied). When using icon sets, this class will apply to
+ *          anchor element
+ *  - iclass set custom class for the icon itself (not the link)
  *  - _type: type of URL to use (e.g. 'absolute_uri', 'absolute_path'). Defaults to a relative URL.
  *  - _tag: type of HTML tag to use (e.g. 'img', 'input_image'). Defaults to 'img' tag.
  *  - _notag: if set to 'y', will only return the URL (which also handles theme icons).
@@ -87,7 +93,7 @@ function smarty_function_icon($params, $smarty)
 	if (!empty($params['name']) && empty($params['_tag']) && !empty($iconset)) {
 
 		$name = $params['name'];
-		$html = $iconset->getHtml($name);
+		$html = $iconset->getHtml($name, $params);
 		$menu_text = (isset($params['_menu_text']) && $params['_menu_text'] == 'y');
 		if (!empty($params['href']) || !empty($params['title']) || $menu_text) {
 			/* Generate a link for the icon if href or title (for tips) parameter is set.
