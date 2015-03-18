@@ -1,6 +1,6 @@
 {title admpage="articles" help="Articles"}{tr}Submissions{/tr}{/title}
 
-<div class="t_navbar">
+<div class="t_navbar margin-bottom-md">
 	{button href="tiki-edit_submission.php" class="btn btn-default" _text="{tr}New Submission{/tr}"}
 	{if $tiki_p_read_article eq 'y'}
 		{button href="tiki-list_articles.php" class="btn btn-default" _text="{tr}List Articles{/tr}"}
@@ -8,7 +8,11 @@
 </div>
 
 {if $listpages or ($find ne '') or ($types ne '') or ($topics ne '') or ($lang ne '') or ($categId ne '')}
-	{include file='find.tpl' find_show_languages='y' find_show_num_rows='y'}
+    <div class="row row-sidemargins-zero">
+        <div class="col-md-6">
+            {include file='find.tpl' find_show_languages='y' find_show_num_rows='y'}
+        </div>
+    </div>
 {/if}
 <form name="checkform" method="post">
 	<input type="hidden" name="maxRecords" value="{$maxRecords|escape}">

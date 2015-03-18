@@ -9,7 +9,7 @@
 		{$name}
 	{/if}
 {/title}
-<div class="t_navbar">
+<div class="t_navbar margin-bottom-md">
 	<div class="btn-group pull-right">
 		<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
 			{icon name="ellipsis"}
@@ -202,8 +202,12 @@
 	{include file='duplicate_file_gallery.tpl'}
 {else}
 	{if $prefs.fgal_elfinder_feature neq 'y' or $view neq 'finder'}
-		{if $prefs.fgal_search eq 'y' and $view neq 'page'}<br>
-			{include file='find.tpl' find_show_num_rows = 'y' find_show_categories_multi='y' find_durations=$find_durations find_show_sub='y' find_other="{tr}Gallery of this fileId{/tr}" find_in="<ul><li>{tr}Name{/tr}</li><li>{tr}Filename{/tr}</li><li>{tr}Description{/tr}</li></ul>"}
+		{if $prefs.fgal_search eq 'y' and $view neq 'page'}
+            <div class="row row-sidemargins-zero">
+                <div class="col-md-6">
+        			{include file='find.tpl' find_show_num_rows = 'y' find_show_categories_multi='y' find_durations=$find_durations find_show_sub='y' find_other="{tr}Gallery of this fileId{/tr}" find_in="<ul><li>{tr}Name{/tr}</li><li>{tr}Filename{/tr}</li><li>{tr}Description{/tr}</li></ul>"}
+                </div>
+            </div>
 		{/if}
 		{if $prefs.fgal_search_in_content eq 'y' and $galleryId > 0}
 			{if $view neq 'page'}
