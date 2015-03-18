@@ -6576,7 +6576,9 @@ h3.panel-title {
   color: black;
   font: 90% "Arial", "Helvetica", sans-serif;
   font-weight: bold;
-  /*  height: 18px;  margin: 0px 0px 7px 1em;  padding: 0px;*/
+  /*  height: 18px;
+  margin: 0px 0px 7px 1em;
+  padding: 0px;*/
   text-transform: uppercase;
 }
 #col2 .panel-default,
@@ -6816,18 +6818,18 @@ div.cvsup {
 }
 .layout_social .topbar_modules h1.sitetitle,
 .layout_social_modules .topbar_modules h1.sitetitle,
-.layout_moving_headers #top_modules h1.sitetitle {
+.layout_fixed_top_modules #top_modules h1.sitetitle {
   color: #777777;
 }
 .layout_social .topbar_modules .navbar-inverse .navbar-collapse,
 .layout_social_modules .topbar_modules .navbar-inverse .navbar-collapse,
-.layout_moving_headers #top_modules .navbar-inverse .navbar-collapse,
+.layout_fixed_top_modules #top_modules .navbar-inverse .navbar-collapse,
 .layout_social .topbar_modules .navbar-inverse .navbar-form,
 .layout_social_modules .topbar_modules .navbar-inverse .navbar-form,
-.layout_moving_headers #top_modules .navbar-inverse .navbar-form,
+.layout_fixed_top_modules #top_modules .navbar-inverse .navbar-form,
 .layout_social .topbar_modules .navbar-inverse,
 .layout_social_modules .topbar_modules .navbar-inverse,
-.layout_moving_headers #top_modules .navbar-inverse {
+.layout_fixed_top_modules #top_modules .navbar-inverse {
   border-color: transparent;
 }
 .prio1,
