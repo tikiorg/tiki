@@ -56,7 +56,7 @@
 							{capture name=shared_title}
 								{tr}ShareThis{/tr}
 							{/capture}
-							{literal}<script language="javascript" type="text/javascript">
+							{literal}<script type="text/javascript">
 								//Create your sharelet with desired properties and set button element to false
 								var object{/literal}{$articleId}{literal} = SHARETHIS.addEntry({},
 										{button:false});

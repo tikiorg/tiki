@@ -20,7 +20,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * -------------------------------------------------------------
  */
 
-function smarty_modifier_iconify($string, $filetype = null, $fileId = null, $size = 1)
+function smarty_modifier_iconify($string, $filetype = null, $fileId = null, $size = 1, $return = 'icon')
 {
 	$smarty = TikiLib::lib('smarty');
 	global $prefs;
@@ -109,7 +109,12 @@ function smarty_modifier_iconify($string, $filetype = null, $fileId = null, $siz
 					$iconname = 'file';
 					break;
 			}
-			return smarty_function_icon(['name' => $iconname, 'size' => $size], $smarty);
+			if ($return === 'filetype') {
+				return $type;
+			} else  {
+				return smarty_function_icon(['name' => $iconname, 'size' => $size], $smarty);
+			}
+
 		}
 	}
 }

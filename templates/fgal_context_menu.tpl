@@ -17,16 +17,20 @@
 			and ( $files[$changes].perms.tiki_p_admin_file_galleries eq 'y' or ($user and $files[$changes].user eq $user)
 			or $files[$changes].public eq 'y' )}
 			<a href="tiki-upload_file.php?galleryId={$files[$changes].id}{if !empty($filegals_manager)}&amp;filegals_manager={$filegals_manager|escape}{/if}">
-				{icon _menu_text=$menu_text _menu_icon=$menu_icon name='export'}
+				<div class="iconmenu">
+					{icon name='export'} {tr}Export{/tr}
+				</div>
 			</a>
 		{/if}
 
 		{if $files[$changes].perms.tiki_p_assign_perm_file_gallery eq 'y'}
-			{if $files[$changes].public neq 'y'}
-				{permission_link mode=private_icon type="file gallery" permType="file galleries" id=$files[$changes].id title=$files[$changes].name}
-			{else}
-				{permission_link mode=icon type="file gallery" permType="file galleries" id=$files[$changes].id title=$files[$changes].name}
-			{/if}
+			<div class="iconmenu">
+				{if $files[$changes].public neq 'y'}
+					{permission_link mode=text type="file gallery" permType="file galleries" id=$files[$changes].id title=$files[$changes].name}
+				{else}
+					{permission_link mode=text type="file gallery" permType="file galleries" id=$files[$changes].id title=$files[$changes].name}
+				{/if}
+			</div>
 		{/if}
 		{if $prefs.feature_webdav eq 'y'}
 			{assign var=virtual_path value=$files[$changes].id|virtual_path:'filegal'}
@@ -112,16 +116,16 @@
 			{else}
 				{icon _menu_text=$menu_text _menu_icon=$menu_icon name='file-archive' alt="{tr}Archives{/tr}"}
 			{/if}
-			{assign var=replace_action_title value="{tr}Upload New Version{/tr}"}
+			{assign var=replace_action_title value="{tr}Upload new version{/tr}"}
 		{else}
 			{assign var=replace_action_title value="{tr}Replace{/tr}"}
 		{/if}
 
 		{if $prefs.feature_file_galleries_save_draft eq 'y'}
 			{if $files[$changes].nbDraft gt 0}
-				{assign var=replace_action_title value="{tr}Replace your draft{/tr}"}
+				{assign var=replace_action_title value="{tr}Replace draft{/tr}"}
 			{else}
-				{assign var=replace_action_title value="{tr}Upload your draft{/tr}"}
+				{assign var=replace_action_title value="{tr}Upload draft{/tr}"}
 			{/if}
 		{/if}
 		{* can edit if I am admin or the owner of the file or the locker of the file or if I have the perm to edit file on this gallery *}
@@ -167,20 +171,20 @@
 					{else}
 						{* for the moment, no-javascript version is simply a link to the edit page where you can also upload *}
 						<a href="tiki-upload_file.php?galleryId={$files[$changes].galleryId}&amp;fileId={$files[$changes].id}{if !empty($filegals_manager)}&amp;filegals_manager={$filegals_manager|escape}{/if}">
-							{icon _menu_text=$menu_text _menu_icon=$menu_icon name='export' alt="{tr}Upload New Version{/tr}"}
+							{icon _menu_text=$menu_text _menu_icon=$menu_icon name='export' alt="{tr}Upload new version{/tr}"}
 						</a>
 					{/if}
 
 					{if $prefs.fgal_display_properties eq 'y'}
 						<a href="tiki-list_file_gallery.php?galleryId={$files[$changes].galleryId}&fileId={$files[$changes].id}&view=page">
-							{icon _menu_text=$menu_text _menu_icon=$menu_icon name='textfile' alt="{tr}Page View{/tr}"}
+							{icon _menu_text=$menu_text _menu_icon=$menu_icon name='textfile' alt="{tr}Page view{/tr}"}
 						</a>
 						<a href="tiki-upload_file.php?galleryId={$files[$changes].galleryId}&amp;fileId={$files[$changes].id}{if !empty($filegals_manager)}&amp;filegals_manager={$filegals_manager|escape}{/if}">
-							{icon _menu_text=$menu_text _menu_icon=$menu_icon name='edit' alt="{tr}Edit Properties{/tr}"}
+							{icon _menu_text=$menu_text _menu_icon=$menu_icon name='edit' alt="{tr}Edit properties{/tr}"}
 						</a>
 						{* using &amp; causes an error for some reason - therefore using plain & *}
 						<a href="tiki-list_file_gallery.php?galleryId={$files[$changes].galleryId}&fileId={$files[$changes].id}&action=refresh_metadata{if isset($view)}&view={$view}{/if}">
-							{icon _menu_text=$menu_text _menu_icon=$menu_icon name='tag' alt="{tr}Refresh Metadata{/tr}"}
+							{icon _menu_text=$menu_text _menu_icon=$menu_icon name='tag' alt="{tr}Refresh metadata{/tr}"}
 						</a>
 					{/if}
 				{/if}
