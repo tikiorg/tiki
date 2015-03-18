@@ -20,7 +20,7 @@
 	{if $mandatory_category >= 0 or $prefs.javascript_enabled neq 'y' or (isset($auto) and $auto eq 'y')}
 		<div id="categorizator">
 	{else}
-		{if !isset($notable) || $notable neq 'y'} <div class="col-sm-{$inputcol}">{button href="#" _flip_id='categorizator' _class='link' _text="{tr}Select Categories{/tr}" _flip_default_open='n'}</div>{/if}
+		{if !isset($notable) || $notable neq 'y'} <div class="col-sm-{$inputcol}">{button href="#" _flip_id='categorizator' _class='btn btn-default btn-sm tips' _text="{tr}Select Categories{/tr}" _flip_default_open='n'}</div>{/if}
 		<div id="categorizator" class="col-sm-{$inputcol} col-sm-offset-{$labelcol}" style="display:{if isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y' or (isset($notable) && $notable eq 'y')}block{else}none{/if};">
 	{/if}
 	<div class="multiselect">
@@ -30,8 +30,8 @@
 			<div class="clearfix">
 				{if $tiki_p_admin_categories eq 'y'}
 					<div class="pull-right">
-						<a class="btn btn-default btn-sm" href="tiki-admin_categories.php">
-							{icon name="administer"} {tr}Admin Categories{/tr}
+						<a class="btn btn-default btn-sm tips" href="tiki-admin_categories.php" title=":{tr}Admin Categories{/tr}">
+							{icon name="administer"} {tr}Categories{/tr}
 						</a>
 					</div>
 				{/if}
@@ -43,8 +43,8 @@
 			<div class="clearfix">
 				{if $tiki_p_admin_categories eq 'y'}
 					<div class="pull-right">
-						<a class="btn btn-default btn-sm" href="tiki-admin_categories.php">
-							{icon name="administer"} {tr}Admin Categories{/tr}
+						<a class="btn btn-default btn-sm tips" href="tiki-admin_categories.php" title=":{tr}Admin Categories{/tr}">
+							{icon name="administer"} {tr}Categories{/tr}
 						</a>
 					</div>
 				{/if}

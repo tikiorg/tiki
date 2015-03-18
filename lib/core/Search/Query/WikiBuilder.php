@@ -309,6 +309,11 @@ class Search_Query_WikiBuilder
 		$this->paginationArguments['offset_arg'] = $value;
 	}
 
+	function wpquery_pagination_sort_jsvar($query, $value)
+	{
+		$this->paginationArguments['sort_jsvar'] = $value;
+	}
+
 	function wpquery_pagination_sort_arg($query, $value)
 	{
 		$this->paginationArguments['sort_arg'] = $value;

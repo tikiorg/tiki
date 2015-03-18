@@ -150,7 +150,11 @@ if ($(this).val() != '') {
 						<div class="form-group">
 							<label for="quota" class="col-sm-4 control-label">{tr}Quota{/tr}</label>
 							<div class="col-sm-8">
-								<input type="text" id="quota" name="quota" value="{$gal_info.quota}" size="5">{tr}Mb{/tr} <span class="help-block">{tr}(0 for unlimited){/tr}</span>
+								<div class="input-group col-sm-4">
+									<input type="text" class="form-control" id="quota" name="quota" value="{$gal_info.quota}" size="5">
+									<span class="input-group-addon"> {tr}Mb{/tr}</span>
+								</div>
+								<span class="help-block">{tr}0 for unlimited{/tr}</span>
 								{if $gal_info.usedSize}<br>{tr}Used:{/tr} {$gal_info.usedSize|kbsize}{/if}
 								{if !empty($gal_info.quota)}
 									{capture name='use'}

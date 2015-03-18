@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
-	{tr}Look under "<a href="tiki-admin_rssmodules.php" target="_blank">External Feeds</a>" on the application menu if you are searching for the <a href="https://doc.tiki.org/Article+generator" target="_blank">"Article Generator" on RSS feeds</a>{/tr}.
+	{tr}Look under "<a href="tiki-admin_rssmodules.php" target="_blank" class="alert-link">External Feeds</a>" on the application menu if you are searching for the <a href="https://doc.tiki.org/Article+generator" target="_blank" class="alert-link">"Article Generator" on RSS feeds</a>{/tr}.
 {/remarksbox}
 
 {if !empty($msgs)}
@@ -15,15 +15,20 @@
 <form method="post" action="tiki-admin.php?page=articles">
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
-			<a role="button" class="btn btn-default btn-sm" href="tiki-list_articles.php" title="{tr}List{/tr}">
+			<a role="button" class="btn btn-default btn-sm tips" href="tiki-list_articles.php" title=":{tr}List{/tr}">
 				{icon name="list"} {tr}Articles{/tr}
 			</a>
-			<a role="button" class="btn btn-default btn-sm" href="tiki-article_types.php" title="{tr}List{/tr}">
+			<a role="button" class="btn btn-default btn-sm tips" href="tiki-article_types.php" title=":{tr}List{/tr}">
 				{icon name="list"} {tr}Article Types{/tr}
 			</a>
-			<a role="button" class="btn btn-default btn-sm" href="tiki-admin_topics.php" title="{tr}List{/tr}">
+			<a role="button" class="btn btn-default btn-sm tips" href="tiki-admin_topics.php" title=":{tr}List{/tr}">
 				{icon name="list"} {tr}Article Topics{/tr}
 			</a>
+			{if $prefs.feature_submissions eq "y"}
+				<a role="button" class="btn btn-default btn-sm tips" href="tiki-list_submissions.php" title=":{tr}List{/tr}">
+					{icon name="list"} {tr}Submissions{/tr}
+				</a>
+			{/if}
 			<div class="pull-right">
 				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
@@ -90,21 +95,12 @@
 
 			<fieldset>
 				<legend>
-					{tr}Article properties{/tr}
+					{tr}Default maximum dimensions of custom images{/tr}
 				</legend>
-				<fieldset>
-					<legend>{tr}Default maximum dimensions of custom images{/tr}</legend>
-					<fieldset>
-						<legend>{tr}General (view mode){/tr}</legend>
-						{preference name=article_image_size_x}
-						{preference name=article_image_size_y}
-					</fieldset>
-					<fieldset>
-						<legend>{tr}List mode{/tr}</legend>
-						{preference name=article_default_list_image_size_x}
-						{preference name=article_default_list_image_size_y}
-					</fieldset>
-				</fieldset>
+				{preference name=article_image_size_x}
+				{preference name=article_image_size_y}
+				{preference name=article_default_list_image_size_x}
+				{preference name=article_default_list_image_size_y}
 			</fieldset>
 
 			<fieldset>
@@ -120,11 +116,10 @@
 			<fieldset>
 				<legend>{tr}Import CSV file{/tr}</legend>
 				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						<label for="csvlist">{tr}Batch upload (CSV file):{/tr}</label>
+					<label for="csvlist" class="control-label col-sm-4">{tr}Batch upload (CSV file){/tr}</label>
+					<div class="col-sm-8">
 						<input type="file" name="csvlist" id="csvlist" />
-						<br>
-						<em>{tr}File format: title,authorName,heading,body,lang,user{/tr}....</em>
+						<span class="help-block">{tr}File format: title,authorName,heading,body,lang,user{/tr}....</span>
 						<div align="center">
 							<input type="submit" class="btn btn-default btn-sm" name="import" value="{tr}Import{/tr}" />
 						</div>
@@ -137,14 +132,8 @@
 			<h2>{tr}Articles Listing{/tr}</h2>
 			<fieldset>
 				<legend>{tr}List Articles{/tr}</legend>
-				<div class="adminoptionbox">
-					{tr}Select which items to display when listing articles:{/tr}
-					<a class="rbox-link" href="tiki-list_articles.php">tiki-list_articles.php</a>
-				</div>
 				<input type="hidden" name="artlist" />
-
 				{preference name=art_sort_mode}
-
 				{preference name=art_list_title}
 				<div class="adminoptionboxchild" id="art_list_title_childcontainer">
 					{preference name=art_list_title_len}
@@ -164,7 +153,6 @@
 				{preference name=art_list_size}
 				{preference name=art_list_img}
 				{preference name=art_list_ispublished}
-
 				{preference name=gmap_article_list}
 			</fieldset>
 			<fieldset>

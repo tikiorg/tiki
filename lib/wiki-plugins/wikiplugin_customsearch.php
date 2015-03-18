@@ -109,7 +109,7 @@ function wikiplugin_customsearch_info()
 					array('text' => tra('Yes'), 'value' => '1'),
 				),
 				'filter' => 'digits',
-				'default' => '0',
+				'default' => '1',
 			),
 		),
 	);
@@ -142,7 +142,7 @@ function wikiplugin_customsearch($data, $params)
 		$params['requireinput'] = 0;
 	}
 	if (!isset($params['forcesortmode'])) {
-		$params['forcesortmode'] = 0;
+		$params['forcesortmode'] = 1;
 	}
 	if (!isset($_REQUEST["offset"])) {
 		$offset = 0;
@@ -178,15 +178,17 @@ function wikiplugin_customsearch($data, $params)
 	$builder = new Search_Query_WikiBuilder($query);
 	$builder->apply($matches);
 
-	// Use maxRecords set in LIST parameters rather then global default if set. 
+	$paginationArguments = $builder->getPaginationArguments();
+
+	// Use maxRecords set in LIST parameters rather then global default if set.
 	if (isset($maxDefault) && $maxDefault) {
-		$paginationArgs = $builder->getPaginationArguments();
-		if (!empty($paginationArgs['max'])) {
-			$maxRecords = $paginationArgs['max'];
+		if (!empty($paginationArguments['max'])) {
+			$maxRecords = $paginationArguments['max'];
 		}
 	}
 	
 	$builder = new Search_Formatter_Builder;
+	$builder->setPaginationArguments($paginationArguments);
 	$builder->apply($matches);
 	$formatter = $builder->getFormatter();
 

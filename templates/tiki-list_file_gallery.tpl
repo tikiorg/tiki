@@ -52,6 +52,11 @@
 				{tr}Gallery actions{/tr}
 			</li>
 			<li class="divider"></li>
+			{if $edit_mode neq 'y' or $dup_mode neq 'y'}
+				<li>
+					<a href="tiki-list_file_gallery.php?edit_mode=1&galleryId={$galleryId}">{icon name="edit"} {tr}Edit{/tr}</a>
+				</li>
+			{/if}
 			{if $tiki_p_create_file_galleries eq 'y' and $dup_mode ne 'y' and $gal_info.type neq 'user'}
 				<li>
 					<a href="tiki-list_file_gallery.php?dup_mode=1&galleryId={$galleryId}">{icon name="copy"} {tr}Duplicate{/tr}</a>
@@ -122,8 +127,6 @@
 		{if $tiki_p_admin_file_galleries eq 'y' or ($user eq $gal_info.user and $gal_info.type eq 'user' and $tiki_p_userfiles)}
 			{if $edit_mode eq 'y' or $dup_mode eq 'y'}
 				{button _keepall='y'  _icon_name="view" _text="{tr}Browse{/tr}" galleryId=$galleryId}
-			{else}
-				{button _keepall='y'  _icon_name="edit" _text="{tr}Edit{/tr}" edit_mode="1" galleryId=$galleryId}
 			{/if}
 		{/if}
 		{if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user or $gal_info.public eq 'y'}
@@ -202,32 +205,35 @@
 	{include file='duplicate_file_gallery.tpl'}
 {else}
 	{if $prefs.fgal_elfinder_feature neq 'y' or $view neq 'finder'}
+		<div class="row">
 		{if $prefs.fgal_search eq 'y' and $view neq 'page'}
-            <div class="row row-sidemargins-zero">
-                <div class="col-md-6">
-        			{include file='find.tpl' find_show_num_rows = 'y' find_show_categories_multi='y' find_durations=$find_durations find_show_sub='y' find_other="{tr}Gallery of this fileId{/tr}" find_in="<ul><li>{tr}Name{/tr}</li><li>{tr}Filename{/tr}</li><li>{tr}Description{/tr}</li></ul>"}
-                </div>
-            </div>
+			<div class="col-sm-6">
+				{include file='find.tpl' find_show_num_rows = 'y' find_show_categories_multi='y' find_durations=$find_durations find_show_sub='y' find_other="{tr}Gallery of this fileId{/tr}" find_in="<ul><li>{tr}Name{/tr}</li><li>{tr}Filename{/tr}</li><li>{tr}Description{/tr}</li></ul>"}
+			</div>
 		{/if}
 		{if $prefs.fgal_search_in_content eq 'y' and $galleryId > 0}
 			{if $view neq 'page'}
-				<div class="text-center">
-					<form id="search-form" class="forms" method="get" action="tiki-search{if $prefs.feature_forum_local_tiki_search eq 'y'}index{else}results{/if}.php">
+				<div class="col-sm-6">
+					<form id="search-form" class="form" role="form" method="get" action="tiki-search{if $prefs.feature_forum_local_tiki_search eq 'y'}index{else}results{/if}.php">
 						<input type="hidden" name="where" value="files">
 						<input type="hidden" name="galleryId" value="{$galleryId}">
-						<label class="find_content">{tr}Search in content{/tr}
-							<input name="highlight" size="30" type="text">
-						</label>
-						<input type="submit" class="wikiaction btn btn-default" name="search" value="{tr}Go{/tr}">
+						<label for="highlight" class="find_content sr-only">{tr}Search in content{/tr}</label>
+						<div class="input-group">
+							<input name="highlight" size="30" type="text" placeholder="{tr}Search in content{/tr}..." class="form-control">
+							<div class="input-group-btn">
+								<input type="submit" class="wikiaction btn btn-default" name="search" value="{tr}Go{/tr}">
+							</div>
+						</div>
 					</form>
 				</div>
 			{/if}
 		{/if}
+		</div>
 	{/if}
 
 	{if $view eq 'page'}
 		<div class="pageview">
-			<form id="size-form" class="forms" action="tiki-list_file_gallery.php">
+			<form id="size-form" class="form" role="form" action="tiki-list_file_gallery.php">
 				<input type="hidden" name="view" value="page">
 				<input type="hidden" name="galleryId" value="{$galleryId}">
 				<input type="hidden" name="maxRecords" value=1>
@@ -328,12 +334,10 @@ window.handleFinderFile = function (file, elfinder) {
 		|| $tiki_p_post_comments == 'y'
 		|| $tiki_p_edit_comments == 'y')}
 
-		<div id="page-bar" class="btn-group">
-			<span class="button btn-default">
-				<a id="comment-toggle" href="{service controller=comment action=list type="file gallery" objectId=$galleryId}#comment-container">
-					{tr}Comments{/tr}
-				</a>
-			</span>
+		<div id="page-bar">
+			<a id="comment-toggle" href="{service controller=comment action=list type="file gallery" objectId=$galleryId}#comment-container" class="btn btn-default btn-sm">
+				{icon name="comments"} {tr}Comments{/tr}
+			</a>
 			{jq}
 				$('#comment-toggle').comment_toggle();
 			{/jq}
