@@ -1,4 +1,4 @@
-<article class="article media">
+<article class="article">
 	{if $show_topline eq 'y' and $topline}
 		<div class="articletopline">{$topline|escape}</div>
 	{/if}
@@ -25,10 +25,10 @@
 		<div class="articleheading">
 			{tr}Rating:{/tr}
 			{repeat count=$rating}
-				{icon _id='star' alt="{tr}star{/tr}"}
+				{icon name='star'}
 			{/repeat}
 			{if $rating > $entrating}
-				{icon _id='star_half' alt="{tr}half star{/tr}"}
+				{icon name='star-half'}
 			{/if}
 			({$rating}/10)
 		</div>
@@ -120,15 +120,23 @@
 
 		{if $prefs.article_paginate eq 'y' and $pages > 1}
 			<div align="center">
-				<a href="{$articleId|sefurl:article:with_next}page={$first_page}"><img src='img/icons/resultset_first.png' alt="{tr}First page{/tr}" title="{tr}First page{/tr}" width='16' height='16'></a>
+				<a href="{$articleId|sefurl:article:with_next}page={$first_page}" class="tips" title=":{tr}First page{/tr}">
+					{icon name="backward_step"}
+				</a>
 
-				<a href="{$articleId|sefurl:article:with_next}page={$prev_page}">{icon _id='resultset_previous' alt="{tr}Previous page{/tr}"}</a>
+				<a href="{$articleId|sefurl:article:with_next}page={$prev_page}" class="tips" title=":{tr}Previous page{/tr}">
+					{icon name='backward'}
+				</a>
 
 				<small>{tr}page:{/tr}{$pagenum}/{$pages}</small>
 
-				<a href="{$articleId|sefurl:article:with_next}page={$next_page}">{icon _id='resultset_next' alt="{tr}Next page{/tr}"}</a>
+				<a href="{$articleId|sefurl:article:with_next}page={$next_page}" class="tips" title=":{tr}Next page{/tr}">
+					{icon name='forward'}
+				</a>
 
-				<a href="{$articleId|sefurl:article:with_next}page={$last_page}"><img src='img/icons/resultset_last.png' alt="{tr}Last page{/tr}" title="{tr}Last page{/tr}" width='16' height='16'></a>
+				<a href="{$articleId|sefurl:article:with_next}page={$last_page}" class="tips" title=":{tr}Last page{/tr}">
+					{icon name='forward_step'}
+				</a>
 			</div>
 		{/if}
 	</div>

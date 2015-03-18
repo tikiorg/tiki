@@ -163,11 +163,17 @@ function iconset_glyphicons()
 			'settings' => array(
 				'id' => 'wrench',
 			),
+			'sharethis' => array(
+				'id' => 'share-alt',
+			),
 			'sort-up' => array(
 				'id' => 'sort-by-alphabet',
 			),
 			'sort-down' => array(
 				'id' => 'sort-by-alphabet-alt',
+			),
+			'star-half' => array(
+				'id' => 'star-empty',
 			),
 			'stop-watching' => array(
 				'id' => 'eye-close',

@@ -351,6 +351,9 @@ function iconset_default()
 			'settings' => array(
 				'id' => 'wrench',
 			),
+			'sharethis' => array(
+				'id' => 'share-alt',
+			),
 			'sort-down' => array(
 				'id' => 'sort-desc',
 			),

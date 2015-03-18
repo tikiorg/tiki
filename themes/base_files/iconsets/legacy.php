@@ -406,6 +406,9 @@ function iconset_legacy()
 				'id' => 'wrench',
 			),
 			'share' => array(
+				'id' => 'share_link',
+			),
+			'sharethis' => array(
 				'id' => 'sharethis',
 			),
 			'sort' => array(
@@ -416,6 +419,12 @@ function iconset_legacy()
 			),
 			'sort-up' => array(
 				'id' => 'resultset_up',
+			),
+			'star' => array(
+				'id' => 'star',
+			),
+			'star-half' => array(
+				'id' => 'star_half',
 			),
 			'stop-watching' => array(
 				'id' => 'no_eye',
