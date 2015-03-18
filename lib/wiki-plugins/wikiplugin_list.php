@@ -47,9 +47,10 @@ function wikiplugin_list($data, $params)
 	$builder = new Search_Query_WikiBuilder($query);
 	$builder->enableAggregate();
 	$builder->apply($matches);
+	$paginationArguments = $builder->getPaginationArguments();
 
-	if (!empty($_REQUEST['sort_mode']) && $params[allow_sort_replace] != "y") {
-		$query->setOrder($_REQUEST['sort_mode']);
+	if (!empty($_REQUEST[$paginationArguments['sort_arg']]) && $params[allow_sort_replace] != "y") {
+		$query->setOrder($_REQUEST[$paginationArguments['sort_arg']]);
 	}
 
 	if (! $index = $unifiedsearchlib->getIndex()) {
@@ -58,7 +59,6 @@ function wikiplugin_list($data, $params)
 
 	$result = $query->search($index);
 
-	$paginationArguments = $builder->getPaginationArguments();
 
 	$resultBuilder = new Search_ResultSet_WikiBuilder($result);
 	$resultBuilder->setPaginationArguments($paginationArguments);

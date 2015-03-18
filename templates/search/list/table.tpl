@@ -13,7 +13,7 @@
 			{foreach from=$column item=col}
 				<th>
 					{if $col.sort}
-						{self_link _sort_arg='sort_mode' _sort_field=$col.sort}{$col.label|escape}{/self_link}
+						{self_link _sort_arg=$sort_arg _sort_field=$col.sort}{$col.label|escape}{/self_link}
 					{else}
 						{$col.label|escape}
 					{/if}
@@ -36,4 +36,3 @@
 	{/foreach}
 	</tbody>
 </table>
-{pagination_links resultset=$results}{/pagination_links}

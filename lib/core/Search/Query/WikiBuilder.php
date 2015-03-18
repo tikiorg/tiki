@@ -24,6 +24,7 @@ class Search_Query_WikiBuilder
 		$this->query = $query;
 		$this->paginationArguments = array(
 			'offset_arg' => 'offset',
+			'sort_arg' => 'sort_mode',
 			'max' => $max,
 		);
 	}
@@ -306,6 +307,11 @@ class Search_Query_WikiBuilder
 	function wpquery_pagination_offset_arg($query, $value)
 	{
 		$this->paginationArguments['offset_arg'] = $value;
+	}
+
+	function wpquery_pagination_sort_arg($query, $value)
+	{
+		$this->paginationArguments['sort_arg'] = $value;
 	}
 
 	function wpquery_pagination_max($query, $value)
