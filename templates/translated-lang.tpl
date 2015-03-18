@@ -1,10 +1,16 @@
 {* Display the list of available translations for an object and manage its translations *}
 {** Currently works for the following object types: 'article' and 'wiki page' **}
-<div class="btn-group">
-	{* For all object types: First show the world icon and on hover the language of the current object *}
-	<a class="btn btn-link dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
-		{icon name="translate"}
+{if empty($submenu) || $submenu neq 'y'}
+	<div class="btn-group">
+		{* For all object types: First show the world icon and on hover the language of the current object *}
+		<a class="btn btn-link dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+			{icon name="translate"}
+		</a>
+{else}
+	<a tabindex="-1" href="#">
+		{icon name="translate"} {tr}Translation...{/tr}
 	</a>
+{/if}
 	{* ..than on hover first show the list of translations including the current language highlighted *}
 	{if empty($trads[0].lang)}
 		<ul class="dropdown-menu dropdown-menu-right" role="menu">
@@ -128,4 +134,6 @@
 			</li>
 		</ul>
 	{/if}
-</div>
+{if empty($submenu) || $submenu neq 'y'}
+	</div>
+{/if}

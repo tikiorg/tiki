@@ -14,7 +14,7 @@
 	{/if}
 </div>
 {if $ispublished eq 'n' && $tiki_p_edit_article eq 'y'}
-	{remarksbox type='errors' title="{tr}Not Published{/tr}"}
+	{remarksbox type='warning' title="{tr}Not Published{/tr}"}
 	{tr}This article is currently unpublished and visible only to editors.{/tr}
 	{/remarksbox}
 {/if}
