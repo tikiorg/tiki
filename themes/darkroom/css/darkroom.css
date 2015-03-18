@@ -7343,6 +7343,10 @@ input {
 .box-quickadmin .cssmenu_horiz ul li {
   background-color: #474747;
 }
+#admin-navbar-collapse-1 {
+  border: 8px solid #292929;
+  border-bottom: none;
+}
 .cssmenu_horiz a,
 .cssmenu_vert a {
   color: #d8d8d8;
