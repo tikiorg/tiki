@@ -166,6 +166,7 @@
 					<div class="thumbnailframe" style="width:100%;height:{$thumbnailcontener_size}px{if $show_infos neq 'y'};margin-bottom:4px{/if}">
 						<div class="thumbimage">
 							<div class="thumbimagesub">{assign var=key_type value=$files[changes].type}
+								{$imagetypes = 'n'}
 								{if $files[changes].isgal eq 1}
 									<a {$link}>
 										{if empty($files[changes].icon_fileId)}
@@ -176,10 +177,9 @@
 									</a>
 								{else}
 									{if $key_type eq 'image/png' or $key_type eq 'image/jpeg'
-									or $key_type eq 'image/jpg' or $key_type eq 'image/gif'}
+										or $key_type eq 'image/jpg' or $key_type eq 'image/gif'
+										or $filetype eq 'image/x-ms-bmp'}
 										{$imagetypes = 'y'}
-									{else}
-										{$imagetypes = 'n'}
 									{/if}
 									<a {$link}
 										{if $prefs.feature_shadowbox eq 'y' && empty($filegals_manager)}
@@ -302,7 +302,7 @@
 					</div>
 					<br clear="all">
 					<div>
-						{include file='tiki-upload_file_progress.tpl' fileId=$files[changes].id name=$files[changes].filename filetype=$key_type}
+						{include file='tiki-upload_file_progress.tpl' fileId=$files[changes].id name=$files[changes].filename}
 					</div>
 					{if isset($metarray) and $metarray|count gt 0}
 						<br>
