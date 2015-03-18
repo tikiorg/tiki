@@ -294,6 +294,9 @@ function iconset_default()
 			'merge' => array(
 				'id' => 'random',
 			),
+			'more' => array(
+				'id' => 'ellipsis-h',
+			),
 			'module' => array(
 				'id' => 'cogs',
 			),

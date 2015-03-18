@@ -348,6 +348,9 @@ function iconset_legacy()
 			'module' => array(
 				'id' => 'module',
 			),
+			'more' => array(
+				'id' => 'resultset_down',
+			),
 			'move' => array(
 				'id' => 'task_submitted',
 			),

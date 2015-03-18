@@ -26,7 +26,7 @@
 			{/if}
 			<div class="btn-group pull-right">
 				<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
-					{icon name="ellipsis"}
+					{icon name="more"}
 				</a>
 				<ul class="dropdown-menu dropdown-menu-right">
 					<li class="dropdown-title">
@@ -253,7 +253,7 @@
 				{if !isset($actions) or $actions eq "y"}
 					<div class="btn-group actions pull-right">
 						<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
-							{icon name="ellipsis"}
+							{icon name="more"}
 						</a>
 						<ul class="dropdown-menu dropdown-menu-right">
 							<li class="dropdown-title">
