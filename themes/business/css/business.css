@@ -7210,6 +7210,12 @@ h2.sitesubtitle {
   /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1f5daa', endColorstr='#346dba', GradientType=0);
   /* IE6-9 */
+  border-left: 1px solid #3676C4;
+  border-right: 1px solid #1957AA;
+}
+.navbar li.dropdown {
+  border-left: 1px solid #3676C4;
+  border-right: 1px solid #1957AA;
 }
 .topbar .nav > li > a:hover,
 .topbar .nav > li > a:focus,
