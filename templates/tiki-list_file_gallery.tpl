@@ -52,6 +52,11 @@
 				{tr}Gallery actions{/tr}
 			</li>
 			<li class="divider"></li>
+			{if $edit_mode neq 'y' or $dup_mode neq 'y'}
+				<li>
+					<a href="tiki-list_file_gallery.php?edit_mode=1&galleryId={$galleryId}">{icon name="edit"} {tr}Edit{/tr}</a>
+				</li>
+			{/if}
 			{if $tiki_p_create_file_galleries eq 'y' and $dup_mode ne 'y' and $gal_info.type neq 'user'}
 				<li>
 					<a href="tiki-list_file_gallery.php?dup_mode=1&galleryId={$galleryId}">{icon name="copy"} {tr}Duplicate{/tr}</a>
@@ -122,8 +127,6 @@
 		{if $tiki_p_admin_file_galleries eq 'y' or ($user eq $gal_info.user and $gal_info.type eq 'user' and $tiki_p_userfiles)}
 			{if $edit_mode eq 'y' or $dup_mode eq 'y'}
 				{button _keepall='y'  _icon_name="view" _text="{tr}Browse{/tr}" galleryId=$galleryId}
-			{else}
-				{button _keepall='y'  _icon_name="edit" _text="{tr}Edit{/tr}" edit_mode="1" galleryId=$galleryId}
 			{/if}
 		{/if}
 		{if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user or $gal_info.public eq 'y'}
