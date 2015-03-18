@@ -109,7 +109,7 @@ function wikiplugin_customsearch_info()
 					array('text' => tra('Yes'), 'value' => '1'),
 				),
 				'filter' => 'digits',
-				'default' => '0',
+				'default' => '1',
 			),
 		),
 	);
@@ -142,7 +142,7 @@ function wikiplugin_customsearch($data, $params)
 		$params['requireinput'] = 0;
 	}
 	if (!isset($params['forcesortmode'])) {
-		$params['forcesortmode'] = 0;
+		$params['forcesortmode'] = 1;
 	}
 	if (!isset($_REQUEST["offset"])) {
 		$offset = 0;
