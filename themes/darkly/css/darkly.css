@@ -7496,6 +7496,15 @@ div.drillshow {
   background-color: #00bc8c;
   color: #ffffff;
 }
+.tiki .row.top_modules {
+  margin-left: 0;
+  margin-right: 0;
+}
+.tiki .row.topbar {
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 15px;
+}
 .cssmenu_horiz a,
 .cssmenu_vert a {
   color: #0ce3ac;

@@ -7219,6 +7219,15 @@ div.drillshow {
   background-color: #cccccc;
   color: #3f3f3f;
 }
+.tiki .row.top_modules {
+  margin-left: 0;
+  margin-right: 0;
+}
+.tiki .row.topbar {
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 15px;
+}
 .margin-bottom-xs {
   margin-bottom: 6px;
 }
@@ -7333,6 +7342,10 @@ input {
 }
 .box-quickadmin .cssmenu_horiz ul li {
   background-color: #474747;
+}
+#admin-navbar-collapse-1 {
+  border: 8px solid #292929;
+  border-bottom: none;
 }
 .cssmenu_horiz a,
 .cssmenu_vert a {

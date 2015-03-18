@@ -7388,6 +7388,15 @@ div.drillshow {
   background-color: #d9230f;
   color: #ffffff;
 }
+.tiki .row.top_modules {
+  margin-left: 0;
+  margin-right: 0;
+}
+.tiki .row.topbar {
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 15px;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */

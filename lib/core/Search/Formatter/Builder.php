@@ -98,6 +98,7 @@ class Search_Formatter_Builder
 		if (isset($arguments['template'])) {
 			if ($arguments['template'] == 'table') {
 				$arguments['template'] = dirname(__FILE__) . '/../../../../templates/search/list/table.tpl';
+				$arguments['pagination'] = true;
 			} elseif ($arguments['template'] == 'medialist') {
 				$arguments['template'] = dirname(__FILE__) . '/../../../../templates/search/list/medialist.tpl';
 			} elseif ($arguments['template'] == 'carousel') {
@@ -112,12 +113,15 @@ class Search_Formatter_Builder
 			}
 			$abuilder = new Search_Formatter_ArrayBuilder;
 			$outputData = $abuilder->getData($output->getBody());
-			$templateData = $templateData = file_get_contents($arguments['template']); 
+			foreach ($this->paginationArguments as $k => $v) {
+				$outputData[$k] = $this->paginationArguments[$k];
+			}
+			$templateData = file_get_contents($arguments['template']);
 
 			$plugin = new Search_Formatter_Plugin_SmartyTemplate($arguments['template']);
 			$plugin->setData($outputData);
 			$plugin->setFields($this->findFields($outputData, $templateData));
-		} elseif (isset($arguments['wiki']) && TikiLib::lib('tiki')->page_exists($arguments['wiki'])) {	
+		} elseif (isset($arguments['wiki']) && TikiLib::lib('tiki')->page_exists($arguments['wiki'])) {
 			$wikitpl = "tplwiki:" . $arguments['wiki'];
 			$wikicontent = $smarty->fetch($wikitpl);
 			$plugin = new Search_Formatter_Plugin_WikiTemplate($wikicontent);

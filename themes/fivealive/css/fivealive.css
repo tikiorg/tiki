@@ -7220,6 +7220,15 @@ div.drillshow {
   background-color: #0e567a;
   color: #e2e2e2;
 }
+.tiki .row.top_modules {
+  margin-left: 0;
+  margin-right: 0;
+}
+.tiki .row.topbar {
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 15px;
+}
 .margin-bottom-xs {
   margin-bottom: 5px;
 }

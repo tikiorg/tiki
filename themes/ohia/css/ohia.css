@@ -7219,6 +7219,15 @@ div.drillshow {
   background-color: transparent;
   color: #eeeeee;
 }
+.tiki .row.top_modules {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+.tiki .row.topbar {
+  margin-left: -15px;
+  margin-right: -15px;
+  margin-bottom: 15px;
+}
 .margin-bottom-xs {
   margin-bottom: 5px;
 }
@@ -7265,6 +7274,14 @@ input.tablesorter-filter {
 .tablesorter input.dateTo {
   border: none;
   background-color: #313131;
+}
+.tiki .row.top_modules {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+.tiki .row.topbar {
+  margin-left: -15px;
+  margin-right: -15px;
 }
 button,
 input,

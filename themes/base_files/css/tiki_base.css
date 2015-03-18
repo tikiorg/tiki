@@ -702,6 +702,15 @@ div.drillshow {
   background-color: #f5f5f5;
   color: #262626;
 }
+.tiki .row.top_modules {
+  margin-left: 0;
+  margin-right: 0;
+}
+.tiki .row.topbar {
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 15px;
+}
 .button.highlight {
   background: inherit;
 }
@@ -3069,10 +3078,6 @@ div.form-group label.error {
   border-bottom: 1px solid #eeeeee;
   margin: 40px 0 20px;
   padding-bottom: 9px;
-}
-.tiki .row-sidemargins-zero {
-  margin-left: 0;
-  margin-right: 0;
 }
 .topbar .navbar {
   margin-bottom: 0;
