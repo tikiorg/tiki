@@ -162,7 +162,7 @@ function wikiplugin_div($data, $params)
 	global $prefs;
 
 	extract($params, EXTR_SKIP);
-	if ($prefs['wiki_plugindiv_approvable'] != 'y') {
+	if ($prefs['wiki_plugindiv_approvable'] != 'y' || !isset($style)) {
 		// If any other unsafe parameters are created, unset them here
 		$style = '';
 	}
