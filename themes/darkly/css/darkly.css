@@ -6949,6 +6949,10 @@ a.fc-event:hover {
 .sf-arrows ul .sfHover > .sf-with-ul:after {
   border-left-color: rgba(12, 227, 172, 0.5);
 }
+.dropdown-menu .dropdown-title,
+.dropdown-menu li label {
+  color: #375a7f;
+}
 .thumbinfosothers {
   color: #ebebeb;
 }

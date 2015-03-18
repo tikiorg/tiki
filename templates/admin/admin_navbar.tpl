@@ -14,7 +14,7 @@
 				<ul class="dropdown-menu" role="menu">
 					<li>
 						<form method="post" action="" class="form" role="form">
-							<strong>{tr}Preference Filters{/tr}</strong>
+							<span class="dropdown-title">{tr}Preference Filters{/tr}</span>
 							{foreach from=$pref_filters key=name item=info}
 								<div class="checkbox">
 									<label>
