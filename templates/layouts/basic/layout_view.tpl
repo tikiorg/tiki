@@ -14,10 +14,10 @@
 		<div class="container">
 			<div class="page-header">
                 <div class="top_modules">
-    				{modulelist zone=top class='row row-sidemargins-zero'}
+    				{modulelist zone=top class='row top_modules'}
                 </div>
                 <div class="topbar">
-    				{modulelist zone=topbar class='row row-sidemargins-zero'}
+    				{modulelist zone=topbar class='row topbar'}
                 </div>
 			</div>
 

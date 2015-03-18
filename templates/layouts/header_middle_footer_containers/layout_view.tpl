@@ -14,13 +14,13 @@
 		<div class="header_outer">
 			<div class="header_container">
 				<header class="container header page-header">
-					{modulelist zone=top class='row row-sidemargins-zero'}
+					{modulelist zone=top class='row top_modules'}
 				</header>
 			</div>
 		</div>
 		<div class="middle_outer">
 			<div class="container clearfix middle" id="middle">
-                {modulelist zone=topbar class='row row-sidemargins-zero topbar tiki-top' id='tiki-top'}
+                {modulelist zone=topbar class='row row topbar tiki-top' id='tiki-top'}
 				<div class="row">
 					{if zone_is_empty('left') and zone_is_empty('right')}
 						{if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{eval var=$prefs.center_shadow_start}{/if}
