@@ -29,6 +29,7 @@
  *   _menu_text : (see smarty icon function)
  *   _menu_icon : (see smarty icon function)
  *   _title : tooltip to display when the mouse is over the link. Use $content when _icon is used.
+ *   _text : show text as part of the link (for instance, after the icon for a menu item)
  *   _alt : alt attribute for the icon's IMG tag (use _title if _alt is not specified).
  *   _script : specify another script than the current one (this disable AJAX for this link when the current script is different).
  *   _on* : specify values of on* (e.g. onclick) HTML attributes used for javascript events
