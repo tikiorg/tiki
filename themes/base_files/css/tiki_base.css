@@ -312,18 +312,18 @@ div.cvsup {
 }
 .layout_social .topbar_modules h1.sitetitle,
 .layout_social_modules .topbar_modules h1.sitetitle,
-.layout_moving_headers #top_modules h1.sitetitle {
+.layout_fixed_top_modules #top_modules h1.sitetitle {
   color: #777777;
 }
 .layout_social .topbar_modules .navbar-inverse .navbar-collapse,
 .layout_social_modules .topbar_modules .navbar-inverse .navbar-collapse,
-.layout_moving_headers #top_modules .navbar-inverse .navbar-collapse,
+.layout_fixed_top_modules #top_modules .navbar-inverse .navbar-collapse,
 .layout_social .topbar_modules .navbar-inverse .navbar-form,
 .layout_social_modules .topbar_modules .navbar-inverse .navbar-form,
-.layout_moving_headers #top_modules .navbar-inverse .navbar-form,
+.layout_fixed_top_modules #top_modules .navbar-inverse .navbar-form,
 .layout_social .topbar_modules .navbar-inverse,
 .layout_social_modules .topbar_modules .navbar-inverse,
-.layout_moving_headers #top_modules .navbar-inverse {
+.layout_fixed_top_modules #top_modules .navbar-inverse {
   border-color: transparent;
 }
 .prio1,
@@ -1029,7 +1029,7 @@ div.cvsup {
 }
 .layout_social .topbar_modules .sitelogo a img,
 .layout_social_modules .topbar_modules .sitelogo a img,
-.layout_moving_headers #top_modules .sitelogo a img {
+.layout_fixed_top_modules #top_modules .sitelogo a img {
   display: inline;
   margin-bottom: 1em;
   max-height: 34px;
@@ -1037,7 +1037,7 @@ div.cvsup {
 }
 .layout_social .topbar_modules h1.sitetitle,
 .layout_social_modules .topbar_modules h1.sitetitle,
-.layout_moving_headers #top_modules h1.sitetitle {
+.layout_fixed_top_modules #top_modules h1.sitetitle {
   float: left;
   font-size: 1.8rem;
   line-height: 2;
@@ -1046,14 +1046,14 @@ div.cvsup {
 }
 .layout_social .topbar_modules .sitesubtitle,
 .layout_social_modules .topbar_modules .sitesubtitle,
-.layout_moving_headers #top_modules .sitesubtitle {
+.layout_fixed_top_modules #top_modules .sitesubtitle {
   float: left;
   font-size: 1.4rem;
   margin-left: 1.5rem;
 }
 .layout_social .topbar_modules #topbar_modules,
 .layout_social_modules .topbar_modules #topbar_modules,
-.layout_moving_headers #top_modules #topbar_modules {
+.layout_fixed_top_modules #top_modules #topbar_modules {
   display: inline-block;
 }
 .layout_social_modules #topbar_modules {
@@ -3133,53 +3133,53 @@ body.tiki.navbar-padding {
 }
 .layout_social a.navbar-brand img,
 .layout_social_modules a.navbar-brand img,
-.layout_moving_headers a.navbar-brand img {
+.layout_fixed_top_modules a.navbar-brand img {
   display: inline;
 }
 .layout_social .navbar-inverse a,
 .layout_social_modules .navbar-inverse a,
-.layout_moving_headers .navbar-inverse a {
+.layout_fixed_top_modules .navbar-inverse a {
   color: #9d9d9d;
 }
 .layout_social .navbar-inverse a:hover,
 .layout_social_modules .navbar-inverse a:hover,
-.layout_moving_headers .navbar-inverse a:hover {
+.layout_fixed_top_modules .navbar-inverse a:hover {
   color: #ffffff;
   text-decoration: none;
 }
 .layout_social .navbar-inverse .sitetitle a,
 .layout_social_modules .navbar-inverse .sitetitle a,
-.layout_moving_headers .navbar-inverse .sitetitle a {
+.layout_fixed_top_modules .navbar-inverse .sitetitle a {
   color: #9d9d9d;
 }
 .layout_social .navbar-inverse .sitetitle a:hover,
 .layout_social_modules .navbar-inverse .sitetitle a:hover,
-.layout_moving_headers .navbar-inverse .sitetitle a:hover {
+.layout_fixed_top_modules .navbar-inverse .sitetitle a:hover {
   color: #ffffff;
   text-decoration: none;
 }
 .layout_social h1.sitetitle,
 .layout_social_modules h1.sitetitle,
-.layout_moving_headers h1.sitetitle {
+.layout_fixed_top_modules h1.sitetitle {
   font-size: 1.8rem;
   margin-top: 10px;
   margin-bottom: 0;
 }
 .layout_social h1.sitetitle,
 .layout_social_modules h1.sitetitle,
-.layout_moving_headers h1.sitetitle,
+.layout_fixed_top_modules h1.sitetitle,
 .layout_social .sitesubtitle,
 .layout_social_modules .sitesubtitle,
-.layout_moving_headers .sitesubtitle {
+.layout_fixed_top_modules .sitesubtitle {
   display: inline-block;
 }
 .layout_social #topbar_modules,
 .layout_social_modules #topbar_modules,
-.layout_moving_headers #topbar_modules {
+.layout_fixed_top_modules #topbar_modules {
   display: inline-block;
 }
 .layout_social_modules #topbar_modules,
-.layout_moving_headers #topbar_modules {
+.layout_fixed_top_modules #topbar_modules {
   display: block;
 }
 .header_outer.navbar {
