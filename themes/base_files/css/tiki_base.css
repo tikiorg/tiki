@@ -1771,6 +1771,7 @@ div.drillshow {
   padding: 3px;
 }
 .article {
+  margin-top: 15px;
   margin-bottom: 40px;
 }
 .article .avatar {
@@ -3102,6 +3103,10 @@ body.tiki.navbar-padding {
 }
 .tiki .popover {
   max-width: inherit;
+}
+.tiki .media-overflow-visible,
+.tiki .media-overflow-visible .media-body {
+  overflow: visible;
 }
 @media (min-width: 992px) {
   .tiki .col-md-3 .table-responsive,
