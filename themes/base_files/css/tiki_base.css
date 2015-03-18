@@ -155,6 +155,10 @@ a.fc-event:hover {
 .sf-arrows ul .sfHover > .sf-with-ul:after {
   border-left-color: rgba(35, 82, 124, 0.5);
 }
+.dropdown-menu .dropdown-title,
+.dropdown-menu li label {
+  color: #333333;
+}
 .thumbinfosothers {
   color: #eeeeee;
 }
@@ -1801,11 +1805,6 @@ img.articleimagefloat {
 img.articleimage {
   clear: right;
 }
-.articletrailer {
-  position: relative;
-  text-align: center;
-  margin-top: 1.1em;
-}
 .articletrailer span {
   display: inline-block;
   margin: auto;
@@ -2736,6 +2735,9 @@ img.pref_dependency {
 }
 .adminanchors .nav li {
   display: inline-block;
+}
+.admbox .icon img {
+  margin-top: 18px;
 }
 .meta-col1 {
   text-align: right;

@@ -15,6 +15,7 @@
 .calhighlight {
   background: @state-info-bg;
 }
+
 //fullcalendar.js
 a.fc-event:hover {
   color: @tooltip-color;
@@ -24,7 +25,7 @@ a.fc-event:hover {
 // /* Fancy filter */
 .filter {
   .fancyfilter {
-    border: thin solid @btn-default-border/*black*/;
+    border: thin solid @btn-default-border /*black*/;
     .token {
       background: @body-bg;
     }
@@ -33,13 +34,13 @@ a.fc-event:hover {
 
 // tiki-comments.less - tiki-jquery.js
 .note-list .postbody-title {
-  background: @panel-bg;// /*#ccc*/
-  color: @panel-default-text;// /*#000*/
+  background: @panel-bg; // /*#ccc*/
+  color: @panel-default-text; // /*#000*/
 }
 
 // Comments moderation - comment.tpl, tiki-list_comments.tpl
 .post-approved-n {
-  border-left: 3px dotted @alert-success-text;// blue
+  border-left: 3px dotted @alert-success-text; // blue
 }
 
 .post-approved-r {
@@ -79,6 +80,7 @@ a.fc-event:hover {
   border-color: transparent;
   border-left-color: @dropdown-link-color; // @link-color; /* edit this to suit design (no rgba in IE8) */
 }
+
 .sf-arrows ul li > .sf-with-ul:focus:after,
 .sf-arrows ul li:hover > .sf-with-ul:after,
 .sf-arrows ul .sfHover > .sf-with-ul:after {
@@ -89,6 +91,7 @@ a.fc-event:hover {
   border-color: transparent;
   border-left-color: @dropdown-link-color;
 }
+
 .cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
 .cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
 .cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
@@ -98,7 +101,11 @@ a.fc-event:hover {
 .cssmenu_horiz li:hover,
 .cssmenu_horiz li.sfHover,
 .topbar .nav > li > a:hover,
-.topbar .nav > li > a:focus {background: @cssmenu_horiz_li_hover_bg;} //  transparent;
+.topbar .nav > li > a:focus {
+  background: @cssmenu_horiz_li_hover_bg;
+}
+
+//  transparent;
 
 .cssmenu_horiz ul,
 .cssmenu_vert ul {
@@ -141,13 +148,15 @@ a.fc-event:hover {
   /* order of following 3 rules important for fallbacks to work */
   border: 5px solid transparent;
   border-top-color: #fff; /* edit this to suit design (no rgba in IE8) */
-  border-top-color: fade(@topbar_link_color, 50%);//rgba(255,255,255,.5);
+  border-top-color: fade(@topbar_link_color, 50%); //rgba(255,255,255,.5);
 }
+
 .sf-arrows > li > .sf-with-ul:focus:after,
 .sf-arrows > li:hover > .sf-with-ul:after,
 .sf-arrows > .sfHover > .sf-with-ul:after {
   border-top-color: white; /* IE8 fallback colour */
 }
+
 /* styling for right-facing arrows */
 .sf-arrows ul .sf-with-ul:after {
   margin-top: -5px;
@@ -156,13 +165,12 @@ a.fc-event:hover {
   border-left-color: #dFeEFF; /* edit this to suit design (no rgba in IE8) */
   border-left-color: fade(@link-color, 50%); //rgba(255,255,255,.5);
 }
+
 .sf-arrows ul li > .sf-with-ul:focus:after,
 .sf-arrows ul li:hover > .sf-with-ul:after,
 .sf-arrows ul .sfHover > .sf-with-ul:after {
   border-left-color: fade(@link-hover-color, 50%);
 }
-
-
 
 // To do: maybe there's an elegant way to specify gradients and image backgrounds here, but for now
 // it can stay in theme less files. The problem is they are defined in various ways.
@@ -174,11 +182,15 @@ a.fc-event:hover {
 //.topbar .navbar-default .navbar-nav > li,
 //.navbar-default .navbar-form {#gradient > .vertical(@topbar-gradient-start-color; @topbar-gradient-end-color);}
 
-
+// Used for action icons dropdown
+.dropdown-menu .dropdown-title,
+.dropdown-menu li label {
+  color: @dropdown-title-color;
+}
 
 // tiki-file_galleries.less
 .thumbinfosothers {
-  color: @gray-lighter;// #888
+  color: @gray-lighter; // #888
 }
 
 table.treetable.objectperms td.added {
@@ -193,6 +205,7 @@ table.treetable.objectperms td.removed {
 .thumbnailcontener {
   border: solid 1px @thumbnail-border; // #d3d3d3
 }
+
 // jquery-tiki/files.js
 .progressBarInProgress {
   background-color: @state-info-text;
@@ -225,14 +238,16 @@ table.treetable.objectperms td.removed {
   background: rgba(0, 0, 0, 0.75);
   color: @body-bg; // #fff
 }
+
 .olControlScaleLineTop,
 .olControlScaleLineBottom {
   background-color: rgba(255, 255, 255, 0.5);
 }
+
 .ui-selectmenu-icon {
   background-color: inherit;
   border: solid 5px transparent !important;
-  box-shadow: -5px 0 5px 2px rgba(0,0,0,.1), -1px 0 0 rgba(0,0,0,.1), -2px 0 0 rgba(255,255,255,.25);
+  box-shadow: -5px 0 5px 2px rgba(0, 0, 0, .1), -1px 0 0 rgba(0, 0, 0, .1), -2px 0 0 rgba(255, 255, 255, .25);
 }
 
 // tiki-minor_features.less
@@ -241,7 +256,7 @@ table.treetable.objectperms td.removed {
 }
 
 .dirsitecats {
-  color: @breadcrumb-bg;// lightgray
+  color: @breadcrumb-bg; // lightgray
 }
 
 #resultzone > div:hover {
@@ -267,10 +282,12 @@ table.treetable.objectperms td.removed {
 #ajaxLoadingBG {
   background: transparent url('@{imagePathToImgDir}overlay-light.png');
 }
+
 #ajaxLoading {
   color: @gray-lighter;
   background: transparent url('@{imagePathToImgDir}loading-light.gif') no-repeat 50% 50%;
 }
+
 // cookie consent style
 #cookie_consent_div {
   padding: @alert-padding;
@@ -284,12 +301,12 @@ table.treetable.objectperms td.removed {
   border: 1px solid @alert-info-border;
 }
 
-
 // print mode only - to make sure print templates will use and print on seamless white bg color
 html#print {
   background: #fff;
   color: #000;
 }
+
 body.fullscreen {
   background: #fff;
 }
@@ -325,9 +342,11 @@ img.icon {
 div #metadata fieldset.tabcontent, div #metadata div.tabs {
   background-color: transparent;
 }
+
 .openid_url {
   background: #fff url('@{imagePathToImgDir}icons/login-OpenID-bg.gif') 1px 1px no-repeat;
 }
+
 // Input fields auto-fill/
 // Webkit-based browser specific (Google Chrome, Chromium, etc.)
 input:-webkit-autofill {
@@ -350,12 +369,15 @@ form.simple label.error {
   background: url('@{imagePathToImgDir}icons/error.png') no-repeat 0 4px;
   color: @state-danger-text;
 }
+
 form.simple label .warning {
   color: @state-danger-text;
 }
+
 .tiki-modal .mask {
   background-color: @body-bg;
 }
+
 .ui-dialog {
   background: @body-bg;
   color: @text-color;
@@ -365,6 +387,7 @@ form.simple label .warning {
 .box-quickadmin .cssmenu_horiz ul li {
   background-color: @body-bg;
 }
+
 .box-switch_lang .box-data img.highlight {
   border: .1em solid @alert-danger-border;
 }
@@ -372,6 +395,7 @@ form.simple label .warning {
 .box-switch_lang .box-data .highlight {
   border: .1em solid @alert-danger-border;
 }
+
 div.cvsup {
   color: @gray-light;
 }
@@ -379,8 +403,8 @@ div.cvsup {
 .layout_social .topbar_modules,
 .layout_social_modules .topbar_modules,
 .layout_fixed_top_modules #top_modules {
-   h1.sitetitle {
-     color: @navbar-default-brand-color;
+  h1.sitetitle {
+    color: @navbar-default-brand-color;
   }
   .navbar-inverse .navbar-collapse,
   .navbar-inverse .navbar-form,
@@ -398,30 +422,39 @@ div.cvsup {
 .prio5 {
   border: 1px solid @panel-default-border;
 }
+
 .prio1 {
   background: @panel-danger-heading-bg;
 }
+
 .prio2 {
   background: @panel-warning-heading-bg;
 }
+
 .prio3 {
   background: @panel-success-heading-bg;
 }
+
 .prio4 {
   background: @panel-info-heading-bg;
 }
+
 .prio5 {
   background: @panel-default-heading-bg;
 }
+
 .messureadflag {
   background: @gray;
 }
+
 .messureadhead {
   background: @gray-light;
 }
+
 .messureadbody {
   background: @gray-lighter;
 }
+
 .readlink {
   color: @text-color; // black;
 }
@@ -430,35 +463,44 @@ div.cvsup {
 .webmail_item {
   border: 1px solid @panel-default-border;
 }
+
 .webmail_list .odd {
   background: @table-bg-accent;
 }
+
 .webmail_list .button {
   background: @body-bg;
   border: 1px solid @panel-primary-border;
 }
+
 .webmail_list .webmail_read {
   background: @state-info-bg;
 }
+
 .webmail_list .webmail_replied {
   background: @state-success-bg;
 }
+
 .webmail_list .webmail_taken {
   border: @state-warning-border;
   color: @state-warning-text;
 }
+
 .webmail_message {
   background: @body-bg;
 }
+
 .webmail_message_headers {
   background: @body-bg;
 }
+
 .webmail_message_headers th {
   background: transparent;
 }
 
 // tiki-sheets.less
-.tiki_sheet table td { // /* override .tabcontent table td */
+.tiki_sheet table td {
+  // /* override .tabcontent table td */
   border: 1px solid @panel-default-border;
 }
 
@@ -474,27 +516,33 @@ div.cvsup {
 }
 
 // tiki-toolbars.less
-.helptool-admin {	// /* right justified section of toolbars */
+.helptool-admin {
+  // /* right justified section of toolbars */
   border-left: medium double @gray-light;
 }
 
 .toolbar-list {
   border-left: medium double @gray-light;
 }
-.toolbars-picker { //	/* colours, smilies etc */
+
+.toolbars-picker {
+  //	/* colours, smilies etc */
   background: @body-bg;
   border: thin solid @text-color;
   color: @text-color;
 }
+
 .toolbars-picker a {
   border: 1px solid @body-bg;
   color: @text-color;
 }
+
 .toolbars-picker a:hover {
   border: 1px solid @state-danger-text;
   background: @gray-light;
   color: @text-color;
 }
+
 // /* New Toolbars */
 .textarea-toolbar > div {
   background-color: @gray-lighter;
@@ -506,14 +554,17 @@ div.cvsup {
   background-color: @alert-success-bg;
   color: @alert-success-text;
 }
+
 #intertrans-form {
   background-color: @panel-bg;
   border: 1px solid @panel-default-border;
   color: @panel-default-text;
 }
+
 #edit_translations tr.last {
   border-bottom: 2px solid @alert-success-border;
 }
+
 ul.all_languages > li {
   border: 1px solid @alert-success-border;
 }
@@ -534,10 +585,12 @@ ul.all_languages > li {
   background: @popover-bg;
   border: 1px solid @popover-border-color;
 }
+
 // /* wikiplugin_tracker */
 .mandatory_note {
   color: @state-danger-text;
 }
+
 // /* page contribution by author / wikiplugin_author */
 .author0 {
   color: @panel-success-text;
@@ -606,6 +659,7 @@ ul.all_languages > li {
 .structuremenu .menuSection {
   border-left: 1px dotted @gray;
 }
+
 // /* Inline CkEditor */
 .cke_editable:hover {
   outline: @gray dotted 1px;
@@ -615,10 +669,12 @@ ul.all_languages > li {
   background-color: transparent; // /* was #f8f8f8; */
   border: 1px solid @gray-light;
 }
+
 .unsavedChangesInEditor {
   border: 1px solid;
   border-color: @alert-warning-border;
 }
+
 // /* Auto TOC */
 div#outerToc {
   background: @gray-lighter;
@@ -627,6 +683,7 @@ div#outerToc {
 div#outerToc * {
   color: @text-color;
 }
+
 .plugin-form-float {
   background: @body-bg;
   color: @text-color;
@@ -638,6 +695,7 @@ body.wikitext {
   background: @body-bg;
   color: @text-color;
 }
+
 .editable-inline {
   background: transparent url('@{imagePathToImgDir}icons/database_lightning.png') no-repeat top right;
   padding-right: 20px;
@@ -664,18 +722,22 @@ body.wikitext {
 .structure_select .cssmenu_horiz ul li {
   border: 1px solid @gray;
 }
+
 .admintoclevel .actions input {
   border: solid 1px @gray;
 }
+
 // /* Fullscreen textareas */
 .TextArea-fullscreen {
   background-color: @gray;
 }
+
 .TextArea-fullscreen .actions,
 .CodeMirror-fullscreen .actions {
   background-color: @body-bg;
   border-top: @gray-lighter 1px solid;
 }
+
 // /* Autosave Preview handle */
 #autosave_preview {
   background-color: @body-bg;
@@ -686,6 +748,7 @@ body.wikitext {
   background-color: @gray-lighter;
   background-image: url('@{imagePathToImgDir}icons/shading.png');
 }
+
 h1:hover a.tiki_anchor,
 h2:hover a.tiki_anchor,
 h3:hover a.tiki_anchor,
@@ -693,7 +756,7 @@ h4:hover a.tiki_anchor,
 h5:hover a.tiki_anchor,
 h6:hover a.tiki_anchor {
   color: @gray-lighter;
-//  display: inline;
+  //  display: inline;
 }
 
 h1 a.tiki_anchor:hover,
@@ -709,13 +772,16 @@ h6 a.tiki_anchor:hover {
 .wiki .namespace {
   background: @gray-lighter;
 }
+
 .site_report a {
   border-left: 1px solid @gray;
   border-right: 1px solid @gray;
 }
+
 .quotebody {
   border-left: 2px solid @gray-light;
 }
+
 // /* wikiplugin tracker */
 .mandatory_star {
   color: @alert-danger-border;
@@ -734,6 +800,7 @@ h6 a.tiki_anchor:hover {
   border: 1px solid @popover-border-color;
   background-color: @popover-bg;
 }
+
 // /* wikiplugin_carousel v3 */
 .ic_button {
   border: 2px solid @pagination-border;
@@ -747,6 +814,7 @@ h6 a.tiki_anchor:hover {
   background: @navbar-inverse-bg;
   color: @navbar-inverse-color;
 }
+
 .wp-cookie-consent-required {
   color: @alert-danger-text;
 }
@@ -755,15 +823,18 @@ h6 a.tiki_anchor:hover {
   color: @tooltip-color;
   background-color: @tooltip-bg;
 }
+
 // /* TOC */
 .toc {
   border-top: 1px dotted @gray-light;
   border-bottom: 1px dotted @gray-light;
 }
+
 // /* Wiki diff styles */
 .diff td {
   border: 1px solid @gray-dark;
 }
+
 .diff div {
   border-top: 1px solid @gray-light;
 }
@@ -823,10 +894,12 @@ h6 a.tiki_anchor:hover {
   color: spin(@panel-danger-text, 20);
   background: spin(@panel-danger-heading-bg, 20);
 }
+
 /* Structures drill-down menu */
 div.drillshow {
   border: 1px solid @gray-light;
 }
+
 .chosen-container-multi .chosen-choices {
   background-color: lighten(@input-bg, 10%);
   color: @input-color;
@@ -845,7 +918,7 @@ div.drillshow {
 .chosen-container-single .chosen-search input[type="text"] {
   background-color: @input-bg;
   border: 1px solid @input-border;
-//  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.071);
+  //  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.071);
 }
 
 .chosen-container .chosen-results li.highlighted {
@@ -853,6 +926,7 @@ div.drillshow {
   //  background-image: none;
   color: @dropdown-link-hover-color;
 }
+
 
 
 

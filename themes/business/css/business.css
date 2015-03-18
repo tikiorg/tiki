@@ -6588,6 +6588,10 @@ a.fc-event:hover {
 .sf-arrows ul .sfHover > .sf-with-ul:after {
   border-left-color: rgba(0, 86, 147, 0.5);
 }
+.dropdown-menu .dropdown-title,
+.dropdown-menu li label {
+  color: #7d7d7d;
+}
 .thumbinfosothers {
   color: #ffffff;
 }
