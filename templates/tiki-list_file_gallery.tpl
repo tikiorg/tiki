@@ -328,12 +328,10 @@ window.handleFinderFile = function (file, elfinder) {
 		|| $tiki_p_post_comments == 'y'
 		|| $tiki_p_edit_comments == 'y')}
 
-		<div id="page-bar" class="btn-group">
-			<span class="button btn-default">
-				<a id="comment-toggle" href="{service controller=comment action=list type="file gallery" objectId=$galleryId}#comment-container">
-					{tr}Comments{/tr}
-				</a>
-			</span>
+		<div id="page-bar">
+			<a id="comment-toggle" href="{service controller=comment action=list type="file gallery" objectId=$galleryId}#comment-container" class="btn btn-default btn-sm">
+				{icon name="comments"} {tr}Comments{/tr}
+			</a>
 			{jq}
 				$('#comment-toggle').comment_toggle();
 			{/jq}
