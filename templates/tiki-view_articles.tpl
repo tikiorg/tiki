@@ -9,7 +9,7 @@
 		{/title}
 	{/if}
 	{if $headerLinks eq "y"}
-		<div class="t_navbar">
+		<div class="t_navbar margin-bottom-md">
 			{if $tiki_p_edit_article eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
 				{button href="tiki-edit_article.php" class="btn btn-default" _icon_name="create" _text="{tr}New Article{/tr}"}
 			{/if}
@@ -80,7 +80,7 @@
 				{/foreach}
 			</div>
 		{/if}
-		<article class="clearfix article{if !empty($container_class)} {$container_class}{/if} article{$smarty.section.ix.index}">
+		<article class="clearfix article media media-overflow-visible{if !empty($container_class)} {$container_class}{/if} article{$smarty.section.ix.index}">
 			{if ($listpages[ix].show_avatar eq 'y')}
 				<div class="avatar">
 					{$listpages[ix].author|avatarize}
