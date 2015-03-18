@@ -178,15 +178,17 @@ function wikiplugin_customsearch($data, $params)
 	$builder = new Search_Query_WikiBuilder($query);
 	$builder->apply($matches);
 
-	// Use maxRecords set in LIST parameters rather then global default if set. 
+	$paginationArguments = $builder->getPaginationArguments();
+
+	// Use maxRecords set in LIST parameters rather then global default if set.
 	if (isset($maxDefault) && $maxDefault) {
-		$paginationArgs = $builder->getPaginationArguments();
-		if (!empty($paginationArgs['max'])) {
-			$maxRecords = $paginationArgs['max'];
+		if (!empty($paginationArguments['max'])) {
+			$maxRecords = $paginationArguments['max'];
 		}
 	}
 	
 	$builder = new Search_Formatter_Builder;
+	$builder->setPaginationArguments($paginationArguments);
 	$builder->apply($matches);
 	$formatter = $builder->getFormatter();
 
