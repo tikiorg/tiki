@@ -23,7 +23,7 @@
 			</div>
 			<div class="btn-group">
 				<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
-					{icon name="ellipsis"}
+					{icon name="more"}
 				</a>
 				<ul class="dropdown-menu">
 					<li class="dropdown-title">

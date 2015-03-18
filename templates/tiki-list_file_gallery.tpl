@@ -12,7 +12,7 @@
 <div class="t_navbar margin-bottom-md">
 	<div class="btn-group pull-right">
 		<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
-			{icon name="ellipsis"}
+			{icon name="more"}
 		</a>
 		<ul class="dropdown-menu dropdown-menu-right">
 			{if $edit_mode neq 'y' and $dup_mode neq 'y'}

@@ -124,6 +124,9 @@ function iconset_glyphicons()
 			'merge' => array(
 				'id' => 'random',
 			),
+			'more' => array(
+				'id' => 'option-horizontal',
+			),
 			'next' => array(
 				'id' => 'arrow-right',
 			),
