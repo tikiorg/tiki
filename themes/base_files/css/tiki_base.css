@@ -2736,6 +2736,9 @@ img.pref_dependency {
 .adminanchors .nav li {
   display: inline-block;
 }
+.admbox .icon img {
+  margin-top: 18px;
+}
 .meta-col1 {
   text-align: right;
   font-weight: bold;
