@@ -64,7 +64,7 @@
 				<th>{self_link _sort_arg='sort_mode' _sort_field='created'}{tr}Created{/tr}{/self_link}</th>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='lastModif'}{tr}Last Modified{/tr}{/self_link}</th>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='items'}{tr}Items{/tr}{/self_link}</th>
-				<th>{tr}Actions{/tr}</th>
+				<th></th>
 			</tr>
 
 			{foreach from=$trackers item=tracker}
@@ -102,130 +102,102 @@
 						</a>
 					</td>
 					<td class="action">
-						{if $tracker.permissions->export_tracker}
-							<a
-								class="tips"
-								title="{$tracker.name|escape}:{tr}Export{/tr}"
-								data-toggle="modal"
-								data-backdrop="static"
-								data-target="#bootstrap-modal"
-								href="{service controller=tracker action=export trackerId=$tracker.trackerId modal=1}"
-							>
-								{icon name=export}
-							</a>
-						{/if}
-						{if $tracker.permissions->admin_trackers}
-							<a
-								class="tips"
-								title="{$tracker.name|escape}:{tr}Import{/tr}"
-								data-toggle="modal"
-								data-backdrop="static"
-								data-target="#bootstrap-modal"
-								href="{service controller=tracker action=import_items trackerId=$tracker.trackerId modal=1}"
-							>
-								{icon name=import}
-							</a>
-							<a
-								class="tips"
-								title="{$tracker.name|escape}:{tr}Events{/tr}"
-								data-toggle="modal"
-								data-backdrop="static"
-								data-target="#bootstrap-modal"
-								href="{service controller=tracker_todo action=view trackerId=$tracker.trackerId modal=1}"
-							>
-								{icon name='calendar'}
-							</a>
-						{/if}
-						<a
-							class="tips"
-							title="{$tracker.name|escape}:{tr}View{/tr}"
-							href="tiki-view_tracker.php?trackerId={$tracker.trackerId}"
-						>
-							{icon name='view'}
-						</a>
-						{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-							<a
-								class="tips"
-								title="{$tracker.name|escape}:{tr}Group monitor{/tr}"
-								href="tiki-object_watches.php?objectId={$tracker.trackerId}&amp;watch_event=tracker_modified&amp;objectType=tracker&amp;objectName={$tracker.name|escape:"url"}&amp;objectHref={'tiki-view_tracker.php?trackerId='|cat:$tracker.trackerId|escape:"url"}"
-							>
-								{icon name='watch-group'}
-							</a>
-						{/if}
-						{if $prefs.feature_user_watches eq 'y' and $tracker.permissions->watch_trackers and $user}
-							{if $tracker.watched}
-								<a
-									class="tips"
-									title="{$tracker.name|escape}:{tr}Stop monitoring{/tr}"
-									href="tiki-view_tracker.php?trackerId={$tracker.trackerId}&amp;watch=stop"
-								>
-									{icon name='stop-watching'}
+						{capture name=tracker_actions}
+							{strip}
+								{if $tracker.permissions->export_tracker}
+									<a onclick="$('[data-toggle=popover]').popover('hide');"
+										data-toggle="modal"
+										data-backdrop="static"
+										data-target="#bootstrap-modal"
+										href="{service controller=tracker action=export trackerId=$tracker.trackerId modal=1}"
+									>
+										{icon name='export' _menu_text='y' _menu_icon='y' alt="{tr}Export{/tr}"}
+									</a>
+								{/if}
+								{if $tracker.permissions->admin_trackers}
+									<a onclick="$('[data-toggle=popover]').popover('hide');"
+										data-toggle="modal"
+										data-backdrop="static"
+										data-target="#bootstrap-modal"
+										href="{service controller=tracker action=import_items trackerId=$tracker.trackerId modal=1}"
+									>
+										{icon name='import' _menu_text='y' _menu_icon='y' alt="{tr}Import{/tr}"}
+									</a>
+									<a onclick="$('[data-toggle=popover]').popover('hide');"
+										data-toggle="modal"
+										data-backdrop="static"
+										data-target="#bootstrap-modal"
+										href="{service controller=tracker_todo action=view trackerId=$tracker.trackerId modal=1}"
+									>
+										{icon name='calendar' _menu_text='y' _menu_icon='y' alt="{tr}Events{/tr}"}
+									</a>
+								{/if}
+								<a href="tiki-view_tracker.php?trackerId={$tracker.trackerId}">
+									{icon name='view' _menu_text='y' _menu_icon='y' alt="{tr}View{/tr}"}
 								</a>
-							{else}
-								<a
-									class="tips"
-									title="{$tracker.name|escape}:{tr}Monitor{/tr}"
-									href="tiki-view_tracker.php?trackerId={$tracker.trackerId}&amp;watch=add"
-								>
-									{icon name='watch'}
-								</a>
-							{/if}
-						{/if}
-						{if $prefs.feed_tracker eq "y"}
-							<a
-								class="tips"
-								title="{$tracker.name|escape}:{tr}Feed{/tr}"
-								href="tiki-tracker_rss.php?trackerId={$tracker.trackerId}"
-							>
-								{icon name='rss' alt="{tr}Feed{/tr}"}
-							</a>
-						{/if}
-						{if $prefs.feature_search eq 'y'}
-							<a
-								class="tips"
-								title="{$tracker.name|escape}:{tr}Search{/tr}"
-								href="tiki-searchindex.php?filter~tracker_id={$tracker.trackerId|escape}"
-							>
-								{icon name=search}
-							</a>
-						{/if}
+								{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+									<a href="tiki-object_watches.php?objectId={$tracker.trackerId}&amp;watch_event=tracker_modified&amp;objectType=tracker&amp;objectName={$tracker.name|escape:"url"}&amp;objectHref={'tiki-view_tracker.php?trackerId='|cat:$tracker.trackerId|escape:"url"}">
+										{icon name='watch-group' _menu_text='y' _menu_icon='y' alt="{tr}Group monitor{/tr}"}
+									</a>
+								{/if}
+								{if $prefs.feature_user_watches eq 'y' and $tracker.permissions->watch_trackers and $user}
+									{if $tracker.watched}
+										<a href="tiki-view_tracker.php?trackerId={$tracker.trackerId}&amp;watch=stop">
+											{icon name='stop-watching' _menu_text='y' _menu_icon='y' alt="{tr}Stop monitoring{/tr}"}
+										</a>
+									{else}
+										<a href="tiki-view_tracker.php?trackerId={$tracker.trackerId}&amp;watch=add">
+											{icon name='watch' _menu_text='y' _menu_icon='y' alt="{tr}Monitor{/tr}"}
+										</a>
+									{/if}
+								{/if}
+								{if $prefs.feed_tracker eq "y"}
+									<a href="tiki-tracker_rss.php?trackerId={$tracker.trackerId}">
+										{icon name='rss' _menu_text='y' _menu_icon='y' alt="{tr}Feed{/tr}"}
+									</a>
+								{/if}
+								{if $prefs.feature_search eq 'y'}
+									<a href="tiki-searchindex.php?filter~tracker_id={$tracker.trackerId|escape}">
+										{icon name='search' _menu_text='y' _menu_icon='y' alt="{tr}Search{/tr}"}
+									</a>
+								{/if}
 
-						{if $tracker.permissions->admin_trackers}
-							<a
-								class="tips"
-								title="{$tracker.name|escape}:{tr}Fields{/tr}"
-								href="tiki-admin_tracker_fields.php?trackerId={$tracker.trackerId}"
-							>
-								{icon name=trackerfields}
-							</a>
-							<a
-								class="tips"
-								title="{$tracker.name|escape}:{tr}Edit{/tr}"
-								data-toggle="modal"
-								data-backdrop="static"
-								data-target="#bootstrap-modal"
-								href="{service controller=tracker action=replace trackerId=$tracker.trackerId modal=true}"
-							>
-								{icon name=settings}
-							</a>
-							{permission_link mode=glyph type=tracker permType=trackers id=$tracker.trackerId addclass="tips" label="{$tracker.name|escape}:{tr}Permissions{/tr}"}
-							{if $tracker.items > 0}
-								<a
-									class="link clear tips confirm-prompt"
-									title="{$tracker.name|escape}:{tr}Clear{/tr}"
-									href="{service controller=tracker action=clear trackerId=$tracker.trackerId}"
+								{if $tracker.permissions->admin_trackers}
+									<a href="tiki-admin_tracker_fields.php?trackerId={$tracker.trackerId}">
+										{icon name='trackerfields' _menu_text='y' _menu_icon='y' alt="{tr}Fields{/tr}"}
+									</a>
+									<a href="{service controller=tracker action=replace trackerId=$tracker.trackerId modal=true}"
+										data-toggle="modal"
+										data-backdrop="static"
+										data-target="#bootstrap-modal"
+										onclick="$('[data-toggle=popover]').popover('hide');"
+									>
+										{icon name='settings' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+									</a>
+									{permission_link mode=text type=tracker permType=trackers id=$tracker.trackerId}
+									{* can't get this to work properly for some reason. the remove one just below it works fine
+										items can be deleted from the item listing of the tracker itself until this is fixed
+									{if $tracker.items > 0}
+										<a href="{service controller=tracker action=clear trackerId=$tracker.trackerId}" class="clear confirm-prompt">
+											{icon name='trash' _menu_text='y' _menu_icon='y' alt="{tr}Clear{/tr}"}
+										</a>
+									{/if}
+									*}
+									<a href="{service controller=tracker action=remove trackerId=$tracker.trackerId}"
+										class="remove confirm-prompt"
+									>
+										{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Delete{/tr}"}
+									</a>
+								{/if}
+							{/strip}
+						{/capture}
+						<a class="tips"
+						   title="{tr _0=$tracker.name|escape}Actions for tracker %0{/tr}"
+						   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.tracker_actions|escape:"javascript"|escape:"html"}
+						   style="padding:0; margin:0; border:0"
 								>
-									{icon name='trash'}
-								</a>
-							{/if}
-							<a
-								class="link remove confirm-prompt tips"
-								title="{$tracker.name|escape}:{tr}Delete{/tr}"
-								href="{service controller=tracker action=remove trackerId=$tracker.trackerId}"
-							>
-								{icon name='remove'}
-							</a>
-						{/if}
+							{icon name='wrench'}
+						</a>
 					</td>
 				</tr>
 			{foreachelse}
@@ -239,19 +211,19 @@
 	</div>
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 
-	{jq}
-		$('.remove.confirm-prompt').requireConfirm({
-			message: "{tr}Do you really remove this tracker?{/tr}",
-			success: function (data) {
-				$(this).closest('tr').remove();
-			}
-		});
-		$('.clear.confirm-prompt').requireConfirm({
-			message: "{tr}Do you really want to clear all the items from this tracker? (N.B. there is no undo and notifications will not be sent){/tr}",
-			success: function (data) {
-				history.go(0);	// reload
-			}
-		});
-	{/jq}
+{jq}
+$('.remove.confirm-prompt').requireConfirm({
+	message: "{tr}Do you really remove this tracker?{/tr}",
+	success: function (data) {
+		$(this).closest('tr').remove();
+	}
+});
+$('.clear.confirm-prompt').requireConfirm({
+	message: "{tr}Do you really want to clear all the items from this tracker? (N.B. there is no undo and notifications will not be sent){/tr}",
+	success: function (data) {
+		history.go(0);	// reload
+	}
+});
+{/jq}
 
 {/block}
