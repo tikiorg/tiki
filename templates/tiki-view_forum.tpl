@@ -23,52 +23,71 @@
 			{* No need for users to go to forum list if they are already looking at the only forum BUT note that all_forums only defined with quickjump feature *}
 			{button href="tiki-forums.php" _icon_name="list" _text="{tr}Forum List{/tr}"}
 		{/if}
-
-		{if $prefs.feed_forum eq 'y'}
-			<a href="tiki-forum_rss.php?forumId={$forumId}" class="tips" title=":{tr}RSS feed{/tr}">
-				{icon name="rss"}
+		<div class="btn-group pull-right">
+			<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
+				{icon name="more"}
 			</a>
-		{/if}
-
-		{if !empty($tiki_p_forum_lock) and $tiki_p_forum_lock eq 'y'}
-			{if $forum_info.is_locked eq 'y'}
-				{self_link lock='n' _icon_name='unlock' _alt="{tr}Unlock{/tr}"}{/self_link}
-			{else}
-				{self_link lock='y' _icon_name='lock' _alt="{tr}Lock{/tr}"}{/self_link}
-			{/if}
-		{/if}
-
-		{if $user and $prefs.feature_user_watches eq 'y'}
-			{if $user_watching_forum eq 'n'}
-				<a class="pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title="{$forum_info.name|escape}:{tr}Monitor topics{/tr}">
-					{icon name="watch"}
-				</a>
-			{else}
-				<a class="pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove" title="{$forum_info.name|escape}:{tr}Stop monitoring topics{/tr}">
-					{icon name="stop-watching"}
-				</a>
-			{/if}
-		{/if}
-
-		{if $user and $prefs.feature_user_watches eq 'y'}
-			{if $user_watching_forum_topic_and_thread eq 'n'}
-				<a class="pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add" title="{$forum_info.name|escape}:{tr}Monitor topics and threads{/tr}">
-					{icon name="watch"}
-				</a>
-			{else}
-				<a class="pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title="{$forum_info.name|escape}:{tr}Stop monitoring topics and threads{/tr}">
-					{icon name="stop-watching"}
-				</a>
-			{/if}
-		{/if}
-
-		{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-			<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="pull-right tips" title="{$forum_info.name|escape}:{tr}Group monitor topics and threads{/tr}">
-				{icon name="watch-group"}
-			</a>
-		{/if}
-
-		<div class="categbar" align="right" >
+			<ul class="dropdown-menu dropdown-menu-right">
+				<li class="dropdown-title">
+					{tr}Forum actions{/tr}
+				</li>
+				<li class="divider"></li>
+				{if $user and $prefs.feature_user_watches eq 'y'}
+					<li>
+						{if $user_watching_forum eq 'n'}
+							<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add">
+								{icon name="watch"} {tr}Monitor topics{/tr}
+							</a>
+						{else}
+							<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=remove">
+								{icon name="stop-watching"} {tr}Stop monitoring topics{/tr}
+							</a>
+						{/if}
+					</li>
+				{/if}
+				{if $user and $prefs.feature_user_watches eq 'y'}
+					<li>
+						{if $user_watching_forum_topic_and_thread eq 'n'}
+							<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=add">
+								{icon name="watch"} {tr}Monitor topics and threads{/tr}
+							</a>
+						{else}
+							<a class="pull-right tips" href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove">
+								{icon name="stop-watching"} {tr}Stop monitoring topics and threads{/tr}
+							</a>
+						{/if}
+					</li>
+				{/if}
+				{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+					<li>
+						<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}">
+							{icon name="watch-group"} {tr}Group monitor topics and threads{/tr}
+						</a>
+					</li>
+				{/if}
+				{if !empty($tiki_p_forum_lock) and $tiki_p_forum_lock eq 'y'}
+					<li>
+						{if $forum_info.is_locked eq 'y'}
+							{self_link lock='n' _icon_name='unlock' _menu_text='y' _menu_icon='y'}
+								{tr}Unlock{/tr}
+							{/self_link}
+						{else}
+							{self_link lock='y' _icon_name='lock'  _menu_text='y' _menu_icon='y'}
+								{tr}Lock{/tr}
+							{/self_link}
+						{/if}
+					</li>
+				{/if}
+				{if $prefs.feed_forum eq 'y'}
+					<li>
+						<a href="tiki-forum_rss.php?forumId={$forumId}">
+							{icon name="rss"} {tr}RSS feed{/tr}
+						</a>
+					</li>
+				{/if}
+			</ul>
+		</div>
+		<div class="categbar" align="right">
 			{if $user and $prefs.feature_user_watches eq 'y'}
 				{if isset($category_watched) and $category_watched eq 'y'}
 					{tr}Watched by categories:{/tr}
