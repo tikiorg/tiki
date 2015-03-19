@@ -32,7 +32,7 @@
 						<img src="{$fileId|sefurl:thumbnail}">
 					{/if}
 				{else}
-					{$name|iconify:$key_type:null:3}
+					{$name|iconify:$type:null:3}
 				{/if}
 			</td>
 			<td>
