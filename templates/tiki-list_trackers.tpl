@@ -192,7 +192,7 @@
 							{/strip}
 						{/capture}
 						<a class="tips"
-						   title="{tr _0=$tracker.name|escape}Actions for tracker %0{/tr}"
+						   title="{tr}Actions{/tr}"
 						   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.tracker_actions|escape:"javascript"|escape:"html"}
 						   style="padding:0; margin:0; border:0"
 								>

@@ -80,7 +80,7 @@
 			{/strip}
 		{/capture}
 		<a class="tips"
-		   title="{tr _0=$comment.title|escape}Actions for %0{/tr}"
+		   title="{tr}Actions{/tr}"
 		   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.comment_actions|escape:"javascript"|escape:"html"}
 		   style="padding:0; margin:0; border:0"
 				>

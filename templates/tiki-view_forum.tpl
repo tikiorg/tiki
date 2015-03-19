@@ -713,7 +713,7 @@
 								{/strip}
 							{/capture}
 							<a class="tips"
-							   title="{tr _0=$comments_coms[ix].title|escape}Actions for topic %0{/tr}"
+							   title="{tr}Actions{/tr}"
 							   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.view_forum_actions|escape:"javascript"|escape:"html"}
 							   style="padding:0; margin:0; border:0"
 									>

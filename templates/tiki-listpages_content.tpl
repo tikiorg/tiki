@@ -377,7 +377,7 @@
 								{/strip}
 							{/capture}
 							<a class="tips"
-							   title="{tr _0=$listpages[changes].pageName|escape}Actions for %0{/tr}"
+							   title="{tr}Actions{/tr}"
 							   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.page_actions|escape:"javascript"|escape:"html"}
 							   style="padding:0; margin:0; border:0"
 									>
