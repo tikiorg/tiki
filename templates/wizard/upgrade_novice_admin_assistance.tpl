@@ -1,10 +1,13 @@
 {* $Id$ *}
-<img class="pull-right" src="img/icons/large/admin_assistance48x48.png" alt="{tr}Novice Admin Assistance{/tr}" title="{tr}Novice Admin Assistance{/tr}"/>
 <div class="media">
-	<img class="pull-left" src="img/icons/large/wizard_upgrade48x48.png" alt="{tr}Upgrade Wizard{/tr}" title="{tr}Upgrade Wizard{/tr}"/>
+	<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Upgrade Wizard{/tr}" title="Upgrade Wizard">
+		<i class="fa fa-arrow-circle-down fa-stack-2x"></i>
+		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
+	</span>
+    {icon name="user-plus" size=3 iclass="pull-right"}
+    {tr}Improvements that can help novice admins to set up their tiki sites more easily and improve their usability{/tr}.
+    <br/><br/>
 	<div class="media-body">
-		{tr}Improvements that can help novice admins to set up their tiki sites more easily and improve their usability{/tr}.
-		<br/><br/>
 		<fieldset>
 			<legend>{tr}Basic Information about Wizards{/tr}</legend>
 			<p>
@@ -14,13 +17,13 @@
 					<br/><br/>
 					{tr}The User Wizard comes disabled by default, and you have the option to enable it and configure it for your site{/tr}.
 				">
-					<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+                    {icon name="help" size=1}
 				</a>
 			</p>
 		</fieldset>
 		<fieldset class="table clearfix featurelist">
+            {icon name="magic" size=3 iclass="pull-right"}
 			<legend> {tr}Wizards settings{/tr} </legend>
-			<div class="adminWizardIconright"><img src="img/icons/large/wizard48x48.png" alt="{tr}Wizards{/tr}" title="{tr}Wizards{/tr}"/></div>
 			{preference name=feature_wizard_user}
 			{preference name=userTracker}
 			<div class="adminoptionboxchild" id="userTracker_childcontainer">
@@ -31,9 +34,9 @@
 			</div>
 			{preference name=wizard_admin_hide_on_login}
 		</fieldset>
-		<fieldset class="table clearfix featurelist">
+        <fieldset class="table clearfix featurelist">
+            {icon name="envelope-o" size=3 iclass="pull-right"}
 			<legend> {tr}Email{/tr} </legend>
-			<div class="adminWizardIconright"><img src="img/icons/large/stock_mail48x48.png" alt="{tr}Email{/tr}" title="{tr}Email{/tr}"/></div>
 			{preference name=email_footer}
 			{preference name=messu_truncate_internal_message}
 		</fieldset>

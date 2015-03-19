@@ -1,13 +1,16 @@
 {* $Id$ *}
 
-<img class="pull-right" src="img/icons/large/gnome-camera-video-48.png" alt="{tr}jCapture setup{/tr}" />
 <div class="media">
-	<img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Configuration Wizard{/tr}" title="{tr}Configuration Wizard{/tr}" />
+	<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Configuration Wizard{/tr}" title="Configuration Wizard">
+		<i class="fa fa-gear fa-stack-2x"></i>
+		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
+	</span>
+    <p>
+        {tr}When activating jCapture <img src="img/icons/camera.png" />, token access is also activated. It is required to use jCapture.{/tr}<br>
+        {tr}Learn more about <a href="https://doc.tiki.org/Token%20Access" target="_blank">Token Access at doc.tiki.org</a>{/tr}.<br>
+    </p></br>
 	<div class="media-body">
-		<p>
-			{tr}When activating jCapture <img src="img/icons/camera.png" />, token access is also activated. It is required to use jCapture.{/tr}<br>
-			{tr}Learn more about <a href="https://doc.tiki.org/Token%20Access" target="_blank">Token Access at doc.tiki.org</a>{/tr}.<br>
-		</p>
+        {icon name="camera" size=3 iclass="pull-right"}
 		<fieldset>
 			<legend>{tr}jCapture options and related features{/tr}</legend>
 			{tr}Choose the file gallery that jCapture will use to store its images in{/tr}.<br><br>

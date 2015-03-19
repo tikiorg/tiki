@@ -1,10 +1,14 @@
 {* $Id$ *}
 
-<img class="pull-right" src="img/icons/large/users48x48.png" alt="{tr}Set up your User & Community features{/tr}">
-{tr}Configure general user & community features and settings related to sharing and social networks{/tr}.
 <div class="media">
-	<img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Configuration Wizard{/tr}" title="{tr}Configuration Wizard{/tr}" />
+	<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Configuration Wizard{/tr}" title="Configuration Wizard">
+		<i class="fa fa-gear fa-stack-2x"></i>
+		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
+	</span>
+	{tr}Configure general user & community features and settings related to sharing and social networks{/tr}.
+	</br></br></br>
 	<div class="media-body">
+        {icon name="user" size=3 iclass="pull-right"}
 		<fieldset>
 			<legend>{tr}User Features{/tr}</legend>
 			<div class="row">
@@ -13,7 +17,6 @@
 					{preference name=feature_messages}
 				</div>
 				<div class="col-lg-6">
-					<img class="pull-right" src="img/icons/large/user.png" width="32" alt="{tr}Users{/tr}">
 					{preference name=feature_userPreferences}
 					{preference name=feature_wizard_user}
 				</div>
@@ -36,7 +39,9 @@
 			</em>
 			<br/><br/>
 			<em>{tr}To set up the <strong>User Watches</strong> and their associated settings, visit the page to {/tr} <a href="tiki-wizard_admin.php?&stepNr=15&url={$homepageUrl}">{tr}Set up Main features{/tr}</a></em>
+            </br></br>
 		</fieldset>
+        {icon name="users" size=3 iclass="pull-right"}
 		<fieldset>
 			<legend>{tr}Community General Settings{/tr}</legend>
 			<div class="row">
@@ -61,7 +66,6 @@
 					</div>
 				</div>
 				<div class="col-lg-6">
-					<div class="adminWizardIconright"><img src="img/icons/large/users.png" alt="{tr}Community{/tr}"></div>
 					{preference name=users_prefs_user_information}
 					{preference name=users_prefs_mailCharset}
 					<div class="adminoptionbox preference clearfix all"></div>
@@ -75,6 +79,7 @@
 				<em>{tr}See also{/tr} {tr}Community{/tr} <a href="tiki-admin.php?page=community&amp;cookietab=1" target="_blank">{tr}admin panel{/tr}</a> & <a href="https://doc.tiki.org/Community" target="_blank">{tr}in doc.tiki.org{/tr}</a></em>
 			</div>
 		</fieldset>
+        {icon name="admin_share" size=3 iclass="pull-right"}
 		<fieldset>
 			<legend>{tr}Sharing & Networking{/tr}</legend>
 			<div class="row">
@@ -92,7 +97,6 @@
 					<em>{tr}See also{/tr} "{tr}Community{/tr} <a href="tiki-admin.php?page=community&cookietab=2" target="_blank">{tr}admin panel{/tr}</a> > {tr}Social Network{/tr} > {tr}Friendship and Followers{/tr}" & <a href="https://doc.tiki.org/Friendship+Network" target="_blank">{tr}in doc.tiki.org{/tr}</a></em>.
 				</div>
 				<div class="col-lg-3">
-					<div class="adminWizardIconright"><img src="img/icons/large/socialnetworks.png" alt="{tr}Social networks{/tr}"></div>
 					{preference name=feature_socialnetworks}
 					<br>
 					<em>{tr}See also{/tr} {tr}Social networks{/tr} <a href="tiki-admin.php?page=socialnetworks&amp;cookietab=1" target="_blank">{tr}admin panel{/tr}</a> & <a href="https://doc.tiki.org/Social+Networks" target="_blank">{tr}in doc.tiki.org{/tr}</a></em>

@@ -1,9 +1,12 @@
 {* $Id$ *}
-{tr}Configure the Tiki theme and other look & feel preferences{/tr}.
-<img class="pull-right" src="img/icons/large/gnome-settings-background48x48.png" alt="{tr}Set up Look & Feel{/tr}" />
 <div class="media">
-	<img class="pull-left" img src="img/icons/large/wizard_admin48x48.png" alt="{tr}Configuration Wizard{/tr}" title="{tr}Configuration Wizard{/tr}" />
+	<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Configuration Wizard{/tr}" title="Configuration Wizard">
+		<i class="fa fa-gear fa-stack-2x"></i>
+		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
+	</span>
+    {tr}Configure the Tiki theme and other look & feel preferences{/tr}.</br></br></br>
 	<div class="media-body">
+        {icon name="admin_look" size=3 iclass="adminWizardIconright"}
 		<fieldset>
 			<legend>{tr}Look & Feel options{/tr}</legend>
 			<div class="row">
@@ -39,6 +42,7 @@
 -->
 			<br>
 			<em>{tr}See also{/tr} <a href="tiki-admin.php?page=look&amp;alt=Look+%26+Feel" target="_blank">{tr}Look & Feel admin panel{/tr}</a></em>
+            </br></br>
 		</fieldset>
 
 		<fieldset>

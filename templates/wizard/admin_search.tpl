@@ -1,11 +1,14 @@
 {* $Id$ *}
 
-<img class="pull-right" src="img/icons/large/xfce4-appfinder48x48.png" alt="{tr}Set up your Search features{/tr}">
 <div class="media">
-	<img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Configuration Wizard{/tr}" title="{tr}Configuration Wizard{/tr}" />
+	<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Configuration Wizard{/tr}" title="Configuration Wizard">
+		<i class="fa fa-gear fa-stack-2x"></i>
+		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
+	</span>
+    {icon name="admin_search" size=3 iclass="pull-right"}
+    {tr}There are two search systems in Tiki that use different search engines: <strong>Basic Search</strong> and <strong>Advanced Search</strong>{/tr}.
+    {tr}The Advanced Search generally provides better results, but is more demanding on the server (it creates a search index, updated either incrementally or based on a cron job configured elsewhere){/tr}.
 	<div class="media-body">
-		{tr}There are two search systems in Tiki that use different search engines: <strong>Basic Search</strong> and <strong>Advanced Search</strong>{/tr}.
-		{tr}The Advanced Search generally provides better results, but is more demanding on the server (it creates a search index, updated either incrementally or based on a cron job configured elsewhere){/tr}.
 		<br/><br/>
 		<div class="row">
 			<div class="col-md-6">

@@ -1,10 +1,13 @@
 {* $Id$ *}
 
-{tr}Set up the main Tiki features. The wiki and file gallery features are always enabled.{/tr}
-<img class="pull-right" src="img/icons/large/boot48x48.png" alt="{tr}Main features setup{/tr}" />
 <div class="media">
-	<img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Configuration Wizard{/tr}" title="{tr}Configuration Wizard{/tr}" />
+	<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Configuration Wizard{/tr}" title="Configuration Wizard">
+		<i class="fa fa-gear fa-stack-2x"></i>
+		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
+	</span>
+    {tr}Set up the main Tiki features. The wiki and file gallery features are always enabled.{/tr}</br></br></br>
 	<div class="media-body">
+        {icon name="admin_features" size=3 iclass="pull-right"}
 		<fieldset>
 			<legend>{tr}Main Tiki features{/tr}</legend>
 			{* preference name=feature_wiki *}
@@ -27,7 +30,7 @@
 		</fieldset>
 		<fieldset>
 			<legend>{tr}Watches{/tr}</legend>
-			<img src="img/icons/large/mywatches.gif" class="adminWizardIconright" />
+            {icon name="envelope-o" size=2 iclass="pull-right"}
 			{tr}Enable email notifications to users when changes in the content of specific items (pages, posts, trackers, etc.) are made{/tr}.
 			<div class="admin clearfix featurelist">
 				{preference name=feature_user_watches}

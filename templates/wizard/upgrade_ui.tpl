@@ -1,17 +1,21 @@
 {* $Id$ *}
 
-<img class="pull-right" src="img/icons/large/ui48x48.png" alt="{tr}User Interface{/tr}" title="{tr}User Interface{/tr}"/>
 <div class="media">
-	<img class="pull-left" src="img/icons/large/wizard_upgrade48x48.png" alt="{tr}Upgrade Wizard{/tr}" title="{tr}Upgrade Wizard{/tr}"/>
-	<div class="media-body">
-		{tr}Some User Interface (UI) improvements which usually come disabled in new Tiki installations{/tr}.
-		<a href="http://doc.tiki.org/Interface" target="tikihelp" class="tikihelp" title="{tr}User Interface:{/tr}
-			{tr}They are proven to be useful enhancements in some production environments{/tr}.
+	<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Upgrade Wizard{/tr}" title="Upgrade Wizard">
+		<i class="fa fa-arrow-circle-down fa-stack-2x"></i>
+		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
+	</span>
+    {icon name="desktop" size=3 iclass="pull-right"}
+	{tr}Some User Interface (UI) improvements which usually come disabled in new Tiki installations{/tr}.
+	<a href="http://doc.tiki.org/Interface" target="tikihelp" class="tikihelp" title="{tr}User Interface:{/tr}
+					{tr}They are proven to be useful enhancements in some production environments{/tr}.
 			<br/><br/>
 			{tr}The ones still tagged as <em>experimental</em> <img src=img/icons/error.png> might have failed to work under some environments, but they are very likely to work as-is in your environment also, so you might like to give them a try{/tr}.
 		">
-			<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
-		</a>
+		{icon name="help" size=1}
+	</a>
+	</br></br>
+	<div class="media-body">
 		<fieldset class="table clearfix featurelist">
 			<legend> {tr}Icons and Profile Pictures{/tr} </legend>
 			{preference name=menus_items_icons}

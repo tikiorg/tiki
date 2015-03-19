@@ -1,9 +1,12 @@
 {* $Id$ *}
 
 <div class="media">
-	<img class="pull-left" src="img/icons/large/wizard_profiles48x48.png" alt="{tr}Configuration Profiles Wizard{/tr}" title="{tr}Configuration Profiles Wizard{/tr}" />
+	<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Configuration Profiles Wizard{/tr}" title="{tr}Configuration Profiles Wizard{/tr}" >
+		<i class="fa fa-cubes fa-stack-2x"></i>
+		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
+	</span>
+    {tr}Initialize Tiki as an application, e.g. a blog., by means of applying one of the 4 featured configuration profiles{/tr}. </br></br>
 	<div class="media-body">
-		{tr}Initialize Tiki as an application, e.g. a blog., by means of applying one of the 4 featured configuration profiles{/tr}. </br></br>
 		<fieldset>
 			<legend>{tr}Profiles:{/tr}</legend>
 			<div class="row">

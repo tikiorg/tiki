@@ -1,5 +1,5 @@
 {* $Id$ *}
-{title}{if $parentId ne 0}{tr}Category{/tr} {$p_info.name}{else}{tr}Categories{/tr}{/if}{/title}
+{title}{if $parentId ne 0}{tr}Category{/tr}: {$p_info.name}{else}{tr}Categories{/tr}{/if}{/title}
 
 {if $parentId and $p_info.description}
 	<div class="description help-block">{$p_info.description|escape|nl2br}</div>
@@ -99,21 +99,28 @@
 	</div>
 </div>
 
-<form method="post" action="tiki-browse_categories.php" class="form-inline form-horizontal margin-bottom-sm" role="form">
+<form method="post" action="tiki-browse_categories.php" class="form-inline" role="form">
 	<div class="form-group">
-		<label class="col-sm-2 control-label" for="find">{tr}Find{/tr} {if $parentId ne 0}{$p_info.name|escape} {/if}</label>
-		<div class="col-sm-9">
-			<input class="form-control" type="text" name="find" id="find" value="{$find|escape}">
+		<label class="control-label sr-only" for="find">{tr}Find{/tr}</label>
+		<div class="input-group">
+			<span class="input-group-addon">
+				{icon name="search"} {if $parentId ne 0}{$p_info.name|escape} {/if}
+			</span>
+			<input class="form-control input-sm" type="text" name="find" id="find" value="{$find|escape}">
+			<div class="input-group-btn">
+				<input type="submit" class="btn btn-default btn-sm" value="{tr}Find{/tr}" name="search">
+			</div>
+		</div>
+		<span class="help-block">{help url="#" desc="{tr}Find in:{/tr} <ul><li>{tr}Name{/tr}</li><li>{tr}Description{/tr}</li></ul>"}</span>
+	</div>
+	<div class="form-group">
+		<div class="checkbox">
+			<label><input type="checkbox" name="deep" {if $deep eq 'on'}checked="checked"{/if}>{tr}in the current category - and its subcategories{/tr}</label>
 		</div>
 	</div>
-	<div class="form-group">
-		{help url="#" desc="{tr}Find in:{/tr} <ul><li>{tr}Name{/tr}</li><li>{tr}Description{/tr}</li></ul>"}
-		<input type="submit" class="btn btn-default btn-sm" value="{tr}Find{/tr}" name="search">
-		<label>{tr}in the current category - and its subcategories: {/tr}<input type="checkbox" name="deep" {if $deep eq 'on'}checked="checked"{/if}></label>
-		<input type="hidden" name="parentId" value="{$parentId|escape}">
-		<input type="hidden" name="type" value="{$type|escape}">
-		<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
-	</div>
+	<input type="hidden" name="parentId" value="{$parentId|escape}">
+	<input type="hidden" name="type" value="{$type|escape}">
+	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 </form>
 
 {if $deep eq 'on'}
@@ -125,7 +132,7 @@
 <br><br>
 
 {if isset($p_info)}
-	<div class="treetitle">{tr}Current category:{/tr}
+	<div class="breadcrumb treetitle">{tr}Current category:{/tr}
 		<a href="tiki-browse_categories.php?parentId=0&amp;deep={$deep|escape:"url"}&amp;type={$type|escape:"url"}" class="categpath">{tr}Top{/tr}</a>
 		{foreach $p_info.tepath as $id=>$name}
 			&nbsp;{$prefs.site_crumb_seper}&nbsp;

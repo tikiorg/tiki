@@ -1,8 +1,11 @@
 {* $Id$ *}
 
 <div class="media">
-	<img class="pull-left" src="img/icons/large/wizard_profiles48x48.png" alt="{tr}Configuration Profiles Wizard{/tr}" title="{tr}Configuration Profiles Wizard{/tr}" />
-	{tr}Check out some commonly used configurations in Tiki sites{/tr}. </br></br>
+    <span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Configuration Profiles Wizard{/tr}" title="{tr}Configuration Profiles Wizard{/tr}" >
+		<i class="fa fa-cubes fa-stack-2x"></i>
+		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
+	</span>
+	{tr}Check out some commonly used configurations in Tiki sites{/tr}. </br></br></br>
 	<div class="media-body">
 		<fieldset>
 			<legend>{tr}Profiles:{/tr}</legend>

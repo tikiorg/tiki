@@ -1,9 +1,8 @@
 {* $Id$ *}
 
 <div class="media">
-	<img class="pull-left" src="img/icons/large/wizard_user48x48.png" alt="{tr}Wizard completed{/tr}" />
 	<div class="media-body">
-		<img src="img/icons/tick.png" alt="{tr}Ok{/tr}" /> {tr}Congratulations{/tr}. {tr}You are done with the user wizard{/tr}.<br>
+        {icon name="check" size=2} {tr}Congratulations{/tr}. {tr}You are done with the user wizard{/tr}.<br>
 		<fieldset>
 			<legend>{tr}Next?{/tr}</legend>
 			<ul>

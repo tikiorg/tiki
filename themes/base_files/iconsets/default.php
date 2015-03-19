@@ -45,7 +45,7 @@ function iconset_default()
 				'id' => 'calendar',
 			),
 			'admin_category' => array(
-				'id' => 'sitemap',
+				'id' => 'sitemap fa-rotate-270',
 			),
 			'admin_comments' => array(
 				'id' => 'comment',
@@ -84,7 +84,7 @@ function iconset_default()
 				'id' => 'cog',
 			),
 			'admin_i18n' => array(
-				'id' => 'globe',
+				'id' => 'language',
 			),
 			'admin_intertiki' => array(
 				'id' => 'exchange',
@@ -403,7 +403,7 @@ function iconset_default()
 				'id' => 'th-list',
 			),
 			'translate' => array(
-				'id' => 'globe',
+				'id' => 'language',
 			),
 			'trash' => array(
 				'id' => 'trash-o',
@@ -963,6 +963,7 @@ function iconset_default()
 			'usd',
 			'user',
 			'user-md',
+			'user-plus',
 			'users',
 			'video-camera',
 			'vimeo-square',

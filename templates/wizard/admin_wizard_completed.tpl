@@ -1,10 +1,9 @@
 {* $Id$ *}
 
 <div class="media">
-	<img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Wizard completed{/tr}" />
+    {icon name="check" size=2} {tr}Congratulations{/tr}. {tr}You are done with the admin wizard{/tr}.<br>
+    </br></br>
 	<div class="media-body">
-		<img src="img/icons/tick.png" alt="{tr}Ok{/tr}" /> {tr}Congratulations{/tr}. {tr}You are done with the admin wizard{/tr}.<br>
-
 		<fieldset>
 			<legend>{tr}Next?{/tr}</legend>
 			<ul>

@@ -1,10 +1,14 @@
 {* $Id$ *}
-<img class="pull-right" src="img/icons/large/wikipages48x48.png" alt="{tr}Set up the Wiki environment{/tr}" />{tr}Set up the Wiki environment{/tr}
 <div class="media">
-	<img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Configuration Wizard{/tr}" title="{tr}Configuration Wizard{/tr}" />
+	<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Configuration Wizard{/tr}" title="Configuration Wizard">
+		<i class="fa fa-gear fa-stack-2x"></i>
+		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
+	</span>
 	<div class="media-content">
+        {tr}Set up the Wiki environment{/tr}</br></br></br>
+        {icon name="file-text-o" size=3 iclass="adminWizardIconright"}
 		<fieldset>
-			<legend>{tr}Wiki environment{/tr}</legend>
+            <legend>{tr}Wiki environment{/tr}</legend>
 
 			<div class="admin clearfix featurelist">
 				{preference name=feature_categories}
