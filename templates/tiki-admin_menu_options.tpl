@@ -1,7 +1,7 @@
 {* $Id$ *}
 {title help="Menus" url="tiki-admin_menu_options.php?menuId=$menuId" admpage="general&amp;cookietab=3"}{tr}Menu{/tr}: {$editable_menu_info.name}{/title}
 
-<div class="navbar">
+<div class="t_navbar margin-bottom-md">
 	<a class="btn btn-default" href="tiki-admin_menus.php">
 		{tr}List Menus{/tr}
 	</a>

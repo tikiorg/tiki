@@ -259,7 +259,7 @@
 			{/if}
 		</div><!-- End of find-parameters -->
 		{/if}
-		<div class="find-map form-group col-sm-12">
+		<div class="find-map form-group">
 			{if (isset($gmapbuttons) && $gmapbuttons) and (isset($mapview) && $mapview)}
 				<input class="btn btn-default btn-sm" type="submit" name="searchlist" value="{tr}Hide Map{/tr}">
 				<input type="hidden" name="mapview" value="y">
