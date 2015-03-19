@@ -45,7 +45,7 @@ function iconset_default()
 				'id' => 'calendar',
 			),
 			'admin_category' => array(
-				'id' => 'sitemap',
+				'id' => 'sitemap fa-rotate-270',
 			),
 			'admin_comments' => array(
 				'id' => 'comment',
