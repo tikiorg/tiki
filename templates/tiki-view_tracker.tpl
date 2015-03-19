@@ -8,63 +8,92 @@
 	{/if}
 {/if}
 <div class="t_navbar">
-	{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-		<a class="btn btn-default" href="tiki-object_watches.php?objectId={$trackerId|escape:"url"}&amp;watch_event=tracker_modified&amp;objectType=tracker&amp;objectName={$tracker_info.name|escape:"url"}&amp;objectHref={'tiki-view_tracker.php?trackerId='|cat:$trackerId|escape:"url"}" title="{tr}Group Watch{/tr}">{icon name="watch-group"}</a>
-	{/if}
-	{if $prefs.feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y' and $user}
-		{if $user_watching_tracker ne 'y'}
-			<a class="btn btn-default" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;watch=add" title="{tr}Watch{/tr}">{icon name="watch"}</a>
-		{else}
-			<a class="btn btn-default" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;watch=stop" title="{tr}Stop Watching{/tr}">{icon name="stop-watching"}</a>
-		{/if}
-	{/if}
-
-	{if $prefs.feed_tracker eq "y"}
-		<a class="btn btn-default" href="tiki-tracker_rss.php?trackerId={$trackerId}" title="{tr}RSS{/tr}">{icon name="rss"}</a>
-	{/if}
-	{if $tiki_p_admin_trackers eq "y"}
-		<a class="btn btn-default" title="{tr}Import{/tr}" class="import dialog" href="{service controller=tracker action=import_items trackerId=$trackerId}">{icon name="import"}</a>
-		{jq}
-			$('.import.dialog').click(function () {
-				var link = this;
-				$(this).serviceDialog({
-					title: '{tr}Import{/tr}',
-					data: {
-						controller: 'tracker',
-						action: 'import_items',
-						trackerId: {{$trackerId}}
-					}
-				});
-				return false;
-			});
-		{/jq}
-	{/if}
-	{if $tiki_p_export_tracker eq "y"}
-		<a class="btn btn-default" title="{tr}Export{/tr}" class="export dialog" href="{service controller=tracker action=export trackerId=$trackerId}">{icon name="export"}</a>
-		{jq}
-			$('.export.dialog').click(function () {
-				var link = this;
-				$(this).serviceDialog({
-					title: '{tr}Export{/tr}',
-					data: {
-						controller: 'tracker',
-						action: 'export',
-						trackerId: {{$trackerId}}
-					}
-				});
-				return false;
-			});
-		{/jq}
-	{/if}
-
 	{if $tiki_p_create_tracker_items eq 'y' && $prefs.tracker_legacy_insert neq 'y'}
 		<a class="btn btn-default" href="{bootstrap_modal controller=tracker action=insert_item trackerId=$trackerId}">
-			{icon name="create"}
-			{tr}Create Item{/tr}
+			{icon name="create"} {tr}Create Item{/tr}
 		</a>
 	{/if}
-
-	{include file="tracker_actions.tpl"}
+	{include file="tracker_actions.tpl" showitems="n"}
+	<div class="btn-group pull-right">
+		<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
+			{icon name="more"}
+		</a>
+		<ul class="dropdown-menu dropdown-menu-right">
+			<li class="dropdown-title">
+				{tr}Tracker actions{/tr}
+			</li>
+			<li class="divider"></li>
+			{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+				<li>
+					<a href="tiki-object_watches.php?objectId={$trackerId|escape:"url"}&amp;watch_event=tracker_modified&amp;objectType=tracker&amp;objectName={$tracker_info.name|escape:"url"}&amp;objectHref={'tiki-view_tracker.php?trackerId='|cat:$trackerId|escape:"url"}">
+						{icon name="watch-group"} {tr}Group Monitoring{/tr}
+					</a>
+				</li>
+			{/if}
+			{if $prefs.feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y' and $user}
+				<li>
+					{if $user_watching_tracker ne 'y'}
+						<a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;watch=add">
+							{icon name="watch"} {tr}Monitor{/tr}
+						</a>
+					{else}
+						<a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;watch=stop">
+							{icon name="stop-watching"} {tr}Stop Watching{/tr}
+						</a>
+					{/if}
+				</li>
+			{/if}
+			{if $prefs.feed_tracker eq "y"}
+				<li>
+					<a href="tiki-tracker_rss.php?trackerId={$trackerId}">
+						{icon name="rss"} {tr}RSS{/tr}
+					</a>
+				</li>
+			{/if}
+			{if $tiki_p_admin_trackers eq "y"}
+				<li>
+					<a class="import dialog" href="{service controller=tracker action=import_items trackerId=$trackerId}">
+						{icon name="import"} {tr}Import{/tr}
+					</a>
+				</li>
+				{jq}
+					$('.import.dialog').click(function () {
+						var link = this;
+						$(this).serviceDialog({
+							title: '{tr}Import{/tr}',
+							data: {
+								controller: 'tracker',
+								action: 'import_items',
+								trackerId: {{$trackerId}}
+							}
+						});
+						return false;
+					});
+				{/jq}
+			{/if}
+			{if $tiki_p_export_tracker eq "y"}
+				<li>
+					<a class="export dialog" href="{service controller=tracker action=export trackerId=$trackerId}">
+						{icon name="export"} {tr}Export{/tr}
+					</a>
+				</li>
+				{jq}
+					$('.export.dialog').click(function () {
+						var link = this;
+						$(this).serviceDialog({
+							title: '{tr}Export{/tr}',
+							data: {
+								controller: 'tracker',
+								action: 'export',
+								trackerId: {{$trackerId}}
+							}
+						});
+						return false;
+					});
+				{/jq}
+			{/if}
+		</ul>
+	</div>
 </div>
 
 <div class="categbar" align="right">
@@ -136,7 +165,7 @@
 									{if $tiki_p_admin_trackers eq 'y'}<th style="width:5%">{tr}dls{/tr}</th>{/if}
 								{/if}
 								{if $tiki_p_admin_trackers eq 'y' or $tiki_p_remove_tracker_items eq 'y' or $tiki_p_remove_tracker_items_pending eq 'y' or $tiki_p_remove_tracker_items_closed eq 'y'}
-									<th style="width:20px">{tr}Action{/tr}</th>
+									<th style="width:20px"></th>
 								{/if}
 							</tr>
 
@@ -187,16 +216,42 @@
 									{/if}
 									{if $tiki_p_admin_trackers eq 'y' or ($tiki_p_remove_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or ($tiki_p_remove_tracker_items_pending eq 'y' and $items[user].status eq 'p') or ($tiki_p_remove_tracker_items_closed eq 'y' and $items[user].status eq 'c')}
 										<td class="action">
-
-											{if $prefs.tracker_legacy_insert neq 'y'}
-												{icon name="edit" href="{bootstrap_modal controller=tracker action=update_item trackerId=$trackerId itemId=$items[user].itemId}" title=":{tr}Edit{/tr}" class="tips"}
-											{else}
-												{icon name="post" href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=mod" title="{tr}View/Edit{/tr}" class="tips"}
-											{/if}
-											{icon name="delete" href="{bootstrap_modal controller=tracker action=remove_item trackerId=$trackerId itemId=$items[user].itemId}" title=":{tr}Delete{/tr}" class="tips"}
-											{if $tiki_p_admin_trackers eq 'y'}
-												{icon name="history" href="tiki-tracker_view_history.php?itemId={$items[user].itemId}" title=":{tr}History{/tr}" class="tips"}
-											{/if}
+											{capture name=view_tracker_actions}
+												{strip}
+													{if $prefs.tracker_legacy_insert neq 'y'}
+														<a href="{bootstrap_modal controller=tracker action=update_item trackerId=$trackerId itemId=$items[user].itemId}"
+															onclick="$('[data-toggle=popover]').popover('hide');"
+														>
+															{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+														</a>
+													{else}
+														<a href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=mod"
+															onclick="$('[data-toggle=popover]').popover('hide');"
+														>
+															{icon name="post" _menu_text='y' _menu_icon='y' alt="{tr}View/Edit{/tr}"}
+														</a>
+													{/if}
+													<a href="{bootstrap_modal controller=tracker action=remove_item trackerId=$trackerId itemId=$items[user].itemId}"
+													   onclick="$('[data-toggle=popover]').popover('hide');"
+													>
+														{icon name="delete" _menu_text='y' _menu_icon='y' alt="{tr}Delete{/tr}"}
+													</a>
+													{if $tiki_p_admin_trackers eq 'y'}
+														<a href="tiki-tracker_view_history.php?itemId={$items[user].itemId}"
+														   onclick="$('[data-toggle=popover]').popover('hide');"
+														>
+															{icon name="history" _menu_text='y' _menu_icon='y' alt="{tr}History{/tr}"}
+														</a>
+													{/if}
+												{/strip}
+											{/capture}
+											<a class="tips"
+											   title="{tr}Actions{/tr}"
+											   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.view_tracker_actions|escape:"javascript"|escape:"html"}
+											   style="padding:0; margin:0; border:0"
+											>
+												{icon name='wrench'}
+											</a>
 										</td>
 									{/if}
 								</tr>
@@ -218,7 +273,7 @@
 								</select>
 								<span class="input-group-btn">
 									<input type="hidden" name="trackerId" value="{$trackerId}">
-									<input type="submit" class="btn btn-primary" name="act" value="{tr}Ok{/tr}">
+									<input type="submit" class="btn btn-primary" name="act" value="{tr}OK{/tr}">
 								</span>
 							</div>
 						</div>
