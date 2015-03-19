@@ -26,7 +26,7 @@ function iconset_glyphicons()
 				'id' => 'plus-sign',
 			),
 			'admin_i18n' => array(
-				'id' => 'globe',
+				'id' => 'language',
 			),
 			'attach' => array(
 				'id' => 'paperclip',
@@ -191,7 +191,7 @@ function iconset_glyphicons()
 				'id' => 'road',
 			),
 			'translate' => array(
-				'id' => 'globe',
+				'id' => 'language',
 			),
 			//use a better unlock icon when available
 			'unlock' => array(
@@ -297,7 +297,7 @@ function iconset_glyphicons()
 			'gbp',
 			'gift',
 			'glass',
-			'globe',
+			'language',
 			'hand-down',
 			'hand-left',
 			'hand-right',

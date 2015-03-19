@@ -84,7 +84,7 @@ function iconset_default()
 				'id' => 'cog',
 			),
 			'admin_i18n' => array(
-				'id' => 'globe',
+				'id' => 'language',
 			),
 			'admin_intertiki' => array(
 				'id' => 'exchange',
@@ -403,7 +403,7 @@ function iconset_default()
 				'id' => 'th-list',
 			),
 			'translate' => array(
-				'id' => 'globe',
+				'id' => 'language',
 			),
 			'trash' => array(
 				'id' => 'trash-o',
@@ -681,7 +681,7 @@ function iconset_default()
 			'github-square',
 			'gittip',
 			'glass',
-			'globe',
+			'language',
 			'google',
 			'google-plus',
 			'google-plus-square',
