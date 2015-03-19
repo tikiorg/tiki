@@ -179,7 +179,7 @@
 										<th id="lastlogin">{self_link _sort_arg='sort_mode' _sort_field='currentLogin'}{tr}Last login{/tr}{/self_link}</th>
 										<th id="registered">{self_link _sort_arg='sort_mode' _sort_field='created'}{tr}Registered{/tr}{/self_link}</th>
 										<th id="groups">{tr}Groups{/tr}</th>
-										<th id="actions">{tr}Actions{/tr}</th>
+										<th id="actions"></th>
 									</tr>
 								</thead>
 							{/if}
@@ -275,75 +275,88 @@
 											</td>
 
 											<td class="action">
-												<span
-													type="button" id="group-single-user" class="btn-link tips"
-													title="{$username}:{tr}Add or remove from a group{/tr}"
-													onclick="confirmModal(this,
-														{ldelim}
-															'controller':'user',
-															'action':'manage_groups',
-															'closest':'form',
-															'params':
+												{capture name=user_actions}
+													{strip}
+														<a href="#"
+															onclick="confirmModal(this,
 																{ldelim}
-																	'checked[]': '{$username}'
-																{rdelim}
-														{rdelim});"
-												>
-														{icon name="group"}
-												</span>
-												{icon name="edit" href="{query _type='relative' user=$users[user].userId}" title="{$username}:{tr}Edit account settings{/tr}" class="tips"}
-												{if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
-													{icon name="settings" href="tiki-user_preferences.php?userId={$users[user].userId}" title="{$username}:{tr}Change user preferences{/tr}" class="tips"}
-												{/if}
-												{if $users[user].user eq $user or $users[user].user_information neq 'private' or $tiki_p_admin eq 'y'}
-													<a class="link tips"
-														href="tiki-user_information.php?userId={$users[user].userId}"{if $users[user].user_information eq 'private'}
-														style="opacity:0.5;"{/if}
-														title="{$username}:{tr}User information{/tr}">
-															{icon name="help"}
-													</a>
-												{/if}
-
-												{if $users[user].user ne 'admin'}
-													<span
-														type="button" id="remove-single-user" class="btn-link tips"
-														title="{$username}:{tr}Delete{/tr}"
-														onclick="confirmModal(this,
-															{ldelim}
-																'controller':'user',
-																'action':'remove_users',
-																'closest':'form',
-																'params':
+																	'controller':'user',
+																	'action':'manage_groups',
+																	'closest':'form',
+																	'params':
 																	{ldelim}
 																		'checked[]': '{$username}'
-																	{rdelim}
-															{rdelim});"
-													>
-															{icon name="remove"}
-													</span>
-													{if $users[user].waiting eq 'a'}
-														<a class="link tips" href="tiki-login_validate.php?user={$users[user].user|escape:url}&amp;pass={$users[user].valid|escape:url}" title="{tr _0=$users[user].user|username}Validate user: %0{/tr}">
-															{icon name="ok"}
+																{rdelim}
+															{rdelim});$('[data-toggle=popover]').popover('hide');"
+														>
+															{icon name="group" _menu_text='y' _menu_icon='y' alt="{tr}Add or remove from a group{/tr}"}
 														</a>
-													{/if}
-													{if $users[user].waiting eq 'u'}
-														<a class="link tips" href="tiki-confirm_user_email.php?user={$users[user].user|escape:url}&amp;pass={$users[user].provpass|md5|escape:url}" title="{tr _0=$users[user].user|username}Confirm user email: %0{/tr}">
-															{icon name="envelope"}
+														<a href="{query _type='relative' user=$users[user].userId}#contenttabs_adminuers-2">
+															{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit account settings{/tr}"}
 														</a>
-													{/if}
-													{if $prefs.email_due > 0 and $users[user].waiting ne 'u' and $users[user].waiting ne 'a'}
-														<a class="link tips" href="tiki-adminusers.php?user={$users[user].user|escape:url}&amp;action=email_due" title="{tr _0=$users[user].user|username}User %0{/tr}:{tr}Invalidate email{/tr}">
-															{icon name="trash"}
-														</a>
-													{/if}
-												{/if}
-												{if !empty($users[user].openid_url)}
-													{self_link userId=$users[user].userId action='remove_openid' _title="{tr}Remove link with OpenID account{/tr}" _icon="img/icons/openid_remove"}{/self_link}
+														{if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
+															<a href="tiki-user_preferences.php?userId={$users[user].userId}">
+																{icon name="settings" _menu_text='y' _menu_icon='y' alt="{tr}Change user preferences{/tr}" }
+															</a>
+														{/if}
+														{if $users[user].user eq $user or $users[user].user_information neq 'private' or $tiki_p_admin eq 'y'}
+															<a href="tiki-user_information.php?userId={$users[user].userId}"{if $users[user].user_information eq 'private'}
+																style="opacity:0.5;"{/if}
+															>
+																{icon name="help" _menu_text='y' _menu_icon='y' alt="{tr}User information{/tr}"}
+															</a>
+														{/if}
 
-													<a class="link tips" href="{self_link userId=$users[user].userId action='remove_openid' _tag="n"}{/self_link}" title="{tr _0=$users[user].user|username}User %0{/tr}:{tr}Remove link with OpenID account{/tr}">
-														{icon name="link"}
-													</a>
-												{/if}
+														{if $users[user].user ne 'admin'}
+															<a href="#"
+																onclick="confirmModal(this,
+																	{ldelim}
+																		'controller':'user',
+																		'action':'remove_users',
+																		'closest':'form',
+																		'params':
+																		{ldelim}
+																			'checked[]': '{$username}'
+																		{rdelim}
+																	{rdelim}
+																); $('[data-toggle=popover]').popover('hide'); "
+															>
+																{icon name="remove" _menu_text='y' _menu_icon='y' alt="{tr}Delete{/tr}"}
+															</a>
+															{if $users[user].waiting eq 'a'}
+																<a href="tiki-login_validate.php?user={$users[user].user|escape:url}&amp;pass={$users[user].valid|escape:url}">
+																	{icon name="ok" _menu_text='y' _menu_icon='y' alt="{tr}Validate user{/tr}"}
+																</a>
+															{/if}
+															{if $users[user].waiting eq 'u'}
+																<a href="tiki-confirm_user_email.php?user={$users[user].user|escape:url}&amp;pass={$users[user].provpass|md5|escape:url}" title="{tr _0=$users[user].user|username}Confirm user email: %0{/tr}">
+																	{icon name="envelope" _menu_text='y' _menu_icon='y' alt="{tr}Confirm user email{/tr}"}
+																</a>
+															{/if}
+															{if $prefs.email_due > 0 and $users[user].waiting ne 'u' and $users[user].waiting ne 'a'}
+																<a href="tiki-adminusers.php?user={$users[user].user|escape:url}&amp;action=email_due">
+																	{icon name="trash"  _menu_text='y' _menu_icon='y' alt="{tr}Invalidate email{/tr}"}
+																</a>
+															{/if}
+														{/if}
+														{if !empty($users[user].openid_url)}
+															{self_link _menu_text='y' _menu_icon='y' userId=$users[user].userId action='remove_openid' _icon_name="trash"}
+																{tr}Remove link with OpenID account{/tr}
+															{/self_link}
+
+															<a class="link" href="{self_link userId=$users[user].userId action='remove_openid' _tag="n"}{/self_link}" title="{tr _0=$users[user].user|username}User %0{/tr}:">
+																{icon name="link" _menu_text='y' _menu_icon='y' alt="{tr}Remove link with OpenID account{/tr}"}
+															</a>
+														{/if}
+													{/strip}
+												{/capture}
+												<a class="tips"
+												   title="{tr _0=$users[user].user|username}Actions for user %0{/tr}"
+												   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.user_actions|escape:"javascript"|escape:"html"}
+												   style="padding:0; margin:0; border:0"
+												>
+													{icon name='wrench'}
+												</a>
 											</td>
 										</tr>
 									{/if}
