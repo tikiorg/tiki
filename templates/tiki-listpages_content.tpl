@@ -163,7 +163,7 @@
 
 				{if $show_actions eq 'y'}
 					{assign var='cntcol' value=$cntcol+1}
-					<th id="actions">{tr}Actions{/tr}</th>
+					<th id="actions"></th>
 				{/if}
 			</tr>
 		</thead>
@@ -349,30 +349,40 @@
 
 					{if $show_actions eq 'y'}
 						<td class="action">
-							{if $listpages[changes].perms.tiki_p_edit eq 'y'}
-								<a class="link tips" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}" title="{$listpages[changes].pageName|escape}:{tr}Edit{/tr}">
-									{icon name='edit'}
-								</a>
-								<a class="link tips" href="tiki-copypage.php?page={$listpages[changes].pageName|escape:"url"}&amp;version=last" title="{$listpages[changes].pageName|escape}:{tr}Copy{/tr}">
-									{icon name='copy'}
-								</a>
-							{/if}
+							{capture name=page_actions}
+								{strip}
+									{if $listpages[changes].perms.tiki_p_edit eq 'y'}
+										<a href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">
+											{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+										</a>
+										<a href="tiki-copypage.php?page={$listpages[changes].pageName|escape:"url"}&amp;version=last">
+											{icon name='copy' _menu_text='y' _menu_icon='y' alt="{tr}Copy{/tr}"}
+										</a>
+									{/if}
+									{if $prefs.feature_history eq 'y' and $listpages[changes].perms.tiki_p_wiki_view_history eq 'y'}
+										<a href="tiki-pagehistory.php?page={$listpages[changes].pageName|escape:"url"}">
+											{icon name='history' _menu_text='y' _menu_icon='y' alt="{tr}History{/tr}"}
+										</a>
+									{/if}
 
-							{if $prefs.feature_history eq 'y' and $listpages[changes].perms.tiki_p_wiki_view_history eq 'y'}
-								<a class="link tips" href="tiki-pagehistory.php?page={$listpages[changes].pageName|escape:"url"}" title="{$listpages[changes].pageName|escape}:{tr}History{/tr}">
-									{icon name='history'}
-								</a>
-							{/if}
+									{if $listpages[changes].perms.tiki_p_assign_perm_wiki_page eq 'y'}
+										{permission_link mode=text type="wiki page" permType=wiki id=$listpages[changes].pageName}
+									{/if}
 
-							{if $listpages[changes].perms.tiki_p_assign_perm_wiki_page eq 'y'}
-								{permission_link {*mode=icon*} addclass="tips" type="wiki page" permType=wiki id=$listpages[changes].pageName label="{$listpages[changes].pageName}:{tr}Permissions{/tr}"}
-							{/if}
-
-							{if $listpages[changes].perms.tiki_p_remove eq 'y'}
-								<a class="link tips" href="tiki-removepage.php?page={$listpages[changes].pageName|escape:"url"}&amp;version=last" title="{$listpages[changes].pageName|escape}:{tr}Remove{/tr}">
-									{icon name='remove'}
-								</a>
-							{/if}
+									{if $listpages[changes].perms.tiki_p_remove eq 'y'}
+										<a href="tiki-removepage.php?page={$listpages[changes].pageName|escape:"url"}&amp;version=last">
+											{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+										</a>
+									{/if}
+								{/strip}
+							{/capture}
+							<a class="tips"
+							   title="{tr _0=$listpages[changes].pageName|escape}Actions for %0{/tr}"
+							   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.page_actions|escape:"javascript"|escape:"html"}
+							   style="padding:0; margin:0; border:0"
+									>
+								{icon name='wrench'}
+							</a>
 						</td>
 					{/if}
 				</tr>
