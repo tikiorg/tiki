@@ -681,7 +681,7 @@ function iconset_default()
 			'github-square',
 			'gittip',
 			'glass',
-			'language',
+			'globe',
 			'google',
 			'google-plus',
 			'google-plus-square',
