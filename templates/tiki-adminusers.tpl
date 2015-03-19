@@ -351,7 +351,7 @@
 													{/strip}
 												{/capture}
 												<a class="tips"
-												   title="{tr _0=$users[user].user|username}Actions for user %0{/tr}"
+												   title="{tr}Actions{/tr}"
 												   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.user_actions|escape:"javascript"|escape:"html"}
 												   style="padding:0; margin:0; border:0"
 												>
