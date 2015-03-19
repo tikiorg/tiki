@@ -1,13 +1,17 @@
 {* $Id$ *}
 
-<img class="pull-right" src="img/icons/large/gnome-settings-font48x48.png" alt="{tr}Trackers{/tr}" title="{tr}Trackers{/tr}"/>
 <div class="media">
-	<img class="pull-left" src="img/icons/large/wizard_upgrade48x48.png" alt="{tr}Upgrade Wizard{/tr}" title="{tr}Upgrade Wizard{/tr}"/>
+	<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Upgrade Wizard{/tr}" title="Upgrade Wizard">
+		<i class="fa fa-arrow-circle-down fa-stack-2x"></i>
+		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
+	</span>
+	<p>
+		{tr}Here you can set up a few options and features related to Trackers which were added across several versions of Tiki{/tr}.
+		{tr}You might have not specially noticed when they appeared but you should know about these enhancements since you might be interested in using some of them in your site{/tr}.
+	</p>
+	{icon name="admin_trackers" size=3 iclass="pull-right"}
+	</br>
 	<div class="media-body">
-		<p>
-			{tr}Here you can set up a few options and features related to Trackers which were added across several versions of Tiki{/tr}.
-			{tr}You might have not specially noticed when they appeared but you should know about these enhancements since you might be interested in using some of them in your site{/tr}.
-		</p>
 		<fieldset>
 			<legend>{tr}Tracker settings{/tr}</legend>
 			<div class="admin clearfix featurelist">
@@ -26,9 +30,9 @@
 			<legend>{tr}Tracker Field Types{/tr}</legend>
 			<div class="admin clearfix featurelist">
 				<ul>
-	                <li>
-	                    {tr}Some field types may now come <b>pre-disabled</b>: <a href="tiki-admin.php?page=trackers&cookietab=3" target="_blank">re-check the list</a>{/tr}
-	                </li>
+					<li>
+						{tr}Some field types may now come <b>pre-disabled</b>: <a href="tiki-admin.php?page=trackers&cookietab=3" target="_blank">re-check the list</a>{/tr}
+					</li>
 					<li>
 						{tr}Former ways to manage ratings in trackers are <b>deprecated</b>{/tr}
 						<a href="http://doc.tiki.org/Ratings" target="tikihelp" class="tikihelp" title="{tr}Deprecated Rating Systems in Trackers:{/tr}
@@ -38,7 +42,7 @@
 								<li>{tr}edit Tracker{/tr} > {tr}Features{/tr} > {tr}Allow ratings (deprecated, use rating field){/tr}</li>
 							</ul>
 						">
-							<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+							{icon name="help" size=1}
 						</a>
 					</li>
 				</ul>
@@ -61,7 +65,7 @@
 						</ul>
 						{tr}The profile will enable the feature 'Trackers' for you and a few other settings required. Once the profile is applied, you will be provided with instructions about further steps that you need to perform manually.{/tr}
 					">
-						<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+						{icon name="help" size=1}
 					</a> :
 					<a href="tiki-admin.php?profile=User_Trackers&show_details_for=User_Trackers&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a> ({tr}new window{/tr})
 				</li>
@@ -72,7 +76,7 @@
 						<br/><br/>
 						{tr}You can set it in{/tr} <em>'{tr}tracker edition{/tr} > {tr}Features{/tr} > {tr}Allow comments{/tr} > {tr}Display last comment author and date{/tr}'</em>.
 					">
-						<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+						{icon name="help" size=1}
 					</a>
 				</li>
 				<li>{tr}User can see his own items{/tr}
@@ -81,7 +85,7 @@
 						<br/><br/>
 						{tr}You can set it in{/tr} <em>'{tr}tracker edition{/tr} > {tr}Permissions{/tr} > {tr}User can see his own items{/tr}'</em>.
 					">
-						<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+						{icon name="help" size=1}
 					</a>
 				</li>
 			</ul>

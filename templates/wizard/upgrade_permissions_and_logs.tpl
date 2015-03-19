@@ -1,13 +1,16 @@
 {* $Id$ *}
 
 <div class="media">
-	<img class="pull-left" src="img/icons/large/wizard_upgrade48x48.png" alt="{tr}Upgrade Wizard{/tr}" title="{tr}Upgrade Wizard{/tr}"/>
+	<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Upgrade Wizard{/tr}" title="Upgrade Wizard">
+		<i class="fa fa-arrow-circle-down fa-stack-2x"></i>
+		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
+	</span>
+	{tr}New permissions and action log settings{/tr}.
+	<br/><br/><br/>
 	<div class="media-body">
-		{tr}New permissions and action log settings{/tr}.
-		<br/><br/>
+		{icon name="key" size=3 iclass="pull-right"}
 		<fieldset>
 			<legend>{tr}Permissions{/tr}</legend>
-			<img class="pull-right" src="img/icons/large/permissions48x48.png" alt="{tr}Permissions{/tr}" title="{tr}Permissions{/tr}"/>
 			<b>{tr}Wiki{/tr}</b>:
 			<ul>
 				<li>
@@ -17,7 +20,7 @@
 						<br/><br/>
 						{tr}The editor can be quickly turned on/off. All processing is done client side{/tr}
 					">
-						<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+						{icon name="help" size=1}
 					</a>
 				</li>
 			</ul>
@@ -28,7 +31,7 @@
 					<a href="http://doc.tiki.org/Ratings" target="tikihelp" class="tikihelp" title="{tr}Ratings:{/tr}
 						{tr}Starting in Tiki12, Rating results can be selectively shown to just some user groups, as well as a few other new settings were introduced to fine tune the information shown{/tr}.
 					">
-						<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+						{icon name="help" size=1}
 					</a>
 				</li>
 			</ul>
@@ -41,7 +44,7 @@
 						<br/><br/>
 						{tr}tiki_p_bigbluebutton_view_rec is no longer implicit if tiki_p_bigbluebutton_join is granted{/tr}
 					">
-						<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+						{icon name="help" size=1}
 					</a>
 				</li>
 			</ul>
@@ -52,15 +55,15 @@
 					<a href="http://doc.tiki.org/Wysiwyg" target="tikihelp" class="tikihelp" title="{tr}Switch editor:{/tr}
 						{tr}Starting in Tiki7, Tiki offers the option to allow users to switch the editor from plain text to wysiwyg and viceversa, provided that the user belongs to a group with this required permission granted{/tr}
 					">
-						<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+						{icon name="help" size=1}
 					</a>
 				</li>
 			</ul>
 		</fieldset>
 		<br/>
+		{icon name="book" size=3 iclass="pull-right"}
 		<fieldset>
 			<legend>{tr}Action log settings{/tr}</legend>
-			<div class="adminWizardIconright"><img src="img/icons/large/logs48x48.png" alt="{tr}Logs{/tr}" title="{tr}Logs{/tr}"/></div>
 			<b>{tr}BigBlueButton{/tr}</b>:
 			<ul>
 				<li>{tr}Joined Room{/tr}</li>

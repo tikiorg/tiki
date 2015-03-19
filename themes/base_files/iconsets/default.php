@@ -963,6 +963,7 @@ function iconset_default()
 			'usd',
 			'user',
 			'user-md',
+			'user-plus',
 			'users',
 			'video-camera',
 			'vimeo-square',

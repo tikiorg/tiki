@@ -1,19 +1,22 @@
 {* $Id$ *}
 
 <div class="media">
-	<img class="pull-left" src="img/icons/large/wizard_profiles48x48.png" alt="{tr}Configuration Profiles Wizard{/tr}" title="{tr}Configuration Profiles Wizard{/tr}" />
-	<div class="media-box">
-		{tr}Each of these profiles create a working instance of some features, such as wiki structures, forums, trackers and wiki pages, customized for specific purposes{/tr}. <br><br>
-		{remarksbox type="warning" title="{tr}Warning{/tr}"}
-			<a target="tikihelp" class="tikihelp" style="float:right" title="{tr}Demo Profiles:{/tr}
+	<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Configuration Profiles Wizard{/tr}" title="{tr}Configuration Profiles Wizard{/tr}" >
+		<i class="fa fa-cubes fa-stack-2x"></i>
+		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
+	</span>
+    {tr}Each of these profiles create a working instance of some features, such as wiki structures, forums, trackers and wiki pages, customized for specific purposes{/tr}. <br><br>
+    {remarksbox type="warning" title="{tr}Warning{/tr}"}
+        <a target="tikihelp" class="tikihelp" style="float:right" title="{tr}Demo Profiles:{/tr}
 				{tr}They are initially intended for testing environments, so that, after you have played with the feature, you don't have to deal with removing the created objects, nor with restoring the potentially changed settings in your site{/tr}.
 				<br/><br/>
 				{tr}Once you know what they do, you can also apply them in your production site, in order to have working templates of the underlying features, that you can further adapt to your site later on{/tr}."
-			>
-				{icon name="help"}
-			</a>
-			{tr}They are not to be initially applied in production environments since they cannot be easily reverted and changes and new objects in your site are created for real{/tr}
-		{/remarksbox}
+                >
+            {icon name="help"}
+        </a>
+    {tr}They are not to be initially applied in production environments since they cannot be easily reverted and changes and new objects in your site are created for real{/tr}
+    {/remarksbox}
+	<div class="media-box">
 		<fieldset>
 			<legend>{tr}Profiles:{/tr}</legend>
 			<div class="row">

@@ -1,10 +1,12 @@
 {* $Id$ *}
-
-<img class="pull-right" src="img/icons/large/categories48x48.png" alt="{tr}Set up Categories{/tr}" />
 <div class="media">
-	<img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Configuration Wizard{/tr}" title="{tr}Configuration Wizard{/tr}" />
+	<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Configuration Wizard{/tr}" title="Configuration Wizard">
+		<i class="fa fa-gear fa-stack-2x"></i>
+		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
+	</span>
+	{tr}Global content category system. Items of different types (wiki pages, articles, tracker items, etc) can be added to one or more categories. Permissions set for a category will apply to all items in that category, allowing access to be restricted to certain groups, users, etc{/tr}.</br></br>
 	<div class="media-body">
-		{tr}Global content category system. Items of different types (wiki pages, articles, tracker items, etc) can be added to one or more categories. Permissions set for a category will apply to all items in that category, allowing access to be restricted to certain groups, users, etc{/tr}.
+		{icon name="admin_category" size=3 iclass="pull-right"}
 		<fieldset>
 			<legend>{tr}Categories{/tr}</legend>
 			<br>

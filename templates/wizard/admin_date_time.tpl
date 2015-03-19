@@ -1,13 +1,16 @@
 {* $Id$ *}
 
-{tr}Set the site time zone and format for displaying dates and times{/tr}.
-<img class="pull-right" src="img/icons/large/icon-configuration48x48.png" alt="{tr}Set up your Date and Time{/tr}" />
+<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Configuration Wizard{/tr}" title="Configuration Wizard">
+	<i class="fa fa-gear fa-stack-2x"></i>
+	<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
+</span>
+{tr}Set the site time zone and format for displaying dates and times{/tr}.</br></br>
 <div class="media">
-	<img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Configuration Wizard{/tr}" title="{tr}Configuration Wizard{/tr}" />
+    {icon name="admin_general" size=3 iclass="adminWizardIconright"}
 	<div class="media-content">
 		<fieldset>
 			<legend>{tr}Date and Time setup{/tr}</legend>
-			<img src="img/icons/large/admin.gif" class="pull-right"/>
+            {icon name="clock-o" size=2 iclass="adminWizardIconright"}
 			<div class="admin clearfix featurelist">
 				{preference name=server_timezone}
 				{preference name=users_prefs_display_12hr_clock}

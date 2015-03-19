@@ -1,13 +1,15 @@
 {* $Id$ *}
 
 <div class="media">
-	<img class="pull-left" src="img/icons/large/wizard_upgrade48x48.png" alt="{tr}Upgrade Wizard{/tr}" title="{tr}Upgrade Wizard{/tr}"/>
-	<div class="media-body">
-		{tr}You are reaching the end of the <em>Upgrade Wizard</em>{/tr}.
-		{tr}Since you are upgrading, you probably had a previous installation of Tiki for a while, and you may already have some experience using a few Tiki features, at least{/tr}.
-		<br/><br/>
-		{tr}That's why we would like to <strong>ask you to send us some feedback about your usage of Tiki</strong>, while having the chance to connect in the future with other Tiki Admins near you in the Tiki Community{/tr}.
-		<a href="http://doc.tiki.org/Connect" target="tikihelp" class="tikihelp" title="{tr}Send feedback & Connect:{/tr}
+	<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Upgrade Wizard{/tr}" title="Upgrade Wizard">
+		<i class="fa fa-arrow-circle-down fa-stack-2x"></i>
+		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
+	</span>
+    {tr}You are reaching the end of the <em>Upgrade Wizard</em>{/tr}.
+    {tr}Since you are upgrading, you probably had a previous installation of Tiki for a while, and you may already have some experience using a few Tiki features, at least{/tr}.
+    <br/><br/>
+    {tr}That's why we would like to <strong>ask you to send us some feedback about your usage of Tiki</strong>, while having the chance to connect in the future with other Tiki Admins near you in the Tiki Community{/tr}.
+    <a href="http://doc.tiki.org/Connect" target="tikihelp" class="tikihelp" title="{tr}Send feedback & Connect:{/tr}
 			<p>{tr}Tiki Connect is a way to let the Tiki project know how it is being used, and which parts people like or would like fixing (or explaining).{/tr}
 			<br/><br/>
 			{tr}Once '<em>Tiki Connect</em>' is enabled, when you click the '<strong>Send Info</strong>' button below you will be connected with <em>mother.tiki.org</em>, which is where the data will be collected.{/tr}
@@ -17,12 +19,13 @@
 			<br/><br/>
 			{tr}Click to read more{/tr}
 		">
-			<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
-		</a>
-		<br/><br/>
+        {icon name="help" size=1}
+    </a>
+    <br/><br/>
+	<div class="media-body">
 		<fieldset>
 			<legend>{tr}Connect{/tr}</legend>
-			<img class="pull-right" src="img/icons/large/gnome-globe48x48.png" alt="{tr}Connect{/tr}" title="{tr}Connect{/tr}"/>
+            {icon name="admin_connect" size=3 iclass="pull-right"}
 			{preference name="connect_feature"}
 			<div class="adminoptionboxchild" id="connect_feature_childcontainer">
 				<div class="t_navbar btn-group form-group">

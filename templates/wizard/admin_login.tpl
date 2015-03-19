@@ -1,10 +1,12 @@
 {* $Id$ *}
-
-<img class="pull-right" src="img/icons/large/stock_quit48x48.png" alt="{tr}Set up Login{/tr}" />
 <div class="media">
-	<img class="pull-left" src="img/icons/large/wizard_admin48x48.png" alt="{tr}Configuration Wizard{/tr}" title="{tr}Configuration Wizard{/tr}" />
+	<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Configuration Wizard{/tr}" title="Configuration Wizard">
+		<i class="fa fa-gear fa-stack-2x"></i>
+		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
+	</span>
+    {tr}Configure the login, registration and validation preferences for the new accounts{/tr}.<br/></br></br>
 	<div class="media-body">
-		{tr}Configure the login, registration and validation preferences for the new accounts{/tr}.
+        {icon name="admin_login" size=3 iclass="adminWizardIconright"}
 		<fieldset>
 			<legend>{tr}Registration & Log in options{/tr}</legend>
 			<div style="position:relative;">
@@ -18,7 +20,7 @@
 						{preference name=registerPasscode}
 						{preference name=showRegisterPasscode}
 					</div>
- 				</div>
+				</div>
 			</div>
 			<br/>
 			<em>

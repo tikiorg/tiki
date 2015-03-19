@@ -1,13 +1,16 @@
 {* $Id$ *}
 
 <div class="media">
-	<img class="pull-left" src="img/icons/large/wizard_upgrade48x48.png" alt="{tr}Upgrade Wizard{/tr}" title="{tr}Upgrade Wizard{/tr}"/>
+	<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Upgrade Wizard{/tr}" title="Upgrade Wizard">
+		<i class="fa fa-arrow-circle-down fa-stack-2x"></i>
+		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
+	</span>
+	{tr}Here you can see listed other features and settings that were not included in the previous sections{/tr}.
+	<br/><br/><br/>
 	<div class="media-body">
-		{tr}Here you can see listed other features and settings that were not included in the previous sections{/tr}.
-		<br/><br/>
 		<fieldset>
 			<legend>{tr}Ratings in Forums{/tr}</legend>
-			<div class="adminWizardIconright"><img src="img/icons/large/rating48x48.png" alt="{tr}Ratings{/tr}" title="{tr}Ratings{/tr}"/></div>
+			{icon name="admin_rating" size=3 iclass="pull-right"}
 			<ul>
 				<li>
 					{tr}New option per forum: "User information display > <strong>Topic Rating</strong>" by each user{/tr}
@@ -18,14 +21,14 @@
 						<br/><br/>
 						{tr}Click to read more{/tr}
 					">
-						<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+						{icon name="help" size=1}
 					</a>
 				</li>
 			</ul>
 		</fieldset>
 		<fieldset>
 			<legend>{tr}Sysadmin Tasks{/tr}</legend>
-			<div class="adminWizardIconright"><img src="img/icons/large/xfce4-appfinder48x48.png" alt="{tr}Search{/tr}" title="{tr}Search{/tr}"/></div>
+			{icon name="admin_search" size=3 iclass="pull-right"}
 			<b>{tr}Search Index{/tr}</b>:
 			<ul>
 				<li>
@@ -38,11 +41,11 @@
 						<pre>0 0 * * * cd /path_to_tiki;php console.php index:rebuild</pre>
 						{tr}Click to read more{/tr}
 					">
-						<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+						{icon name="help" size=1}
 					</a>
 				</li>
 			</ul>
-			<img class="pull-right" src="img/icons/large/console.png" alt="{tr}Console{/tr}" title="{tr}Console{/tr}"/>
+			{icon name="terminal" size=3 iclass="pull-right"}
 			<b>{tr}Console{/tr}</b>:
 			<ul>
 				<li>
@@ -60,11 +63,12 @@
 						<br/><br/>
 						{tr}Click to read more{/tr}
 					">
-						<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+						{icon name="help" size=1}
 					</a>
 				</li>
 			</ul>
-			<img class="pull-right" src="img/icons/large/mail_queue48x48.png" alt="{tr}Mail Queue{/tr}" title="{tr}Mail Queue{/tr}"/>
+			{icon name="envelope-o" size=2 iclass="pull-right"}
+			{icon name="clock-o" size=2 iclass="pull-right"}
 			<b>{tr}Mail Queue{/tr}</b> & <b>{tr}Daily Reports for User Watches{/tr}</b>:
 			<ul>
 				<li>
@@ -82,7 +86,7 @@
 						<br/><br/>
 						{tr}Click to read more{/tr}
 					">
-						<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+						{icon name="help" size=1}
 					</a>
 				</li>
 				<li>
@@ -99,7 +103,7 @@
 						<br/><br/>
 						{tr}Click to read more{/tr}
 					">
-						<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+						{icon name="help" size=1}
 					</a>
 				</li>
 			</ul>
