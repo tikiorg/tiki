@@ -162,7 +162,7 @@
 			{/if}
 		{/capture}
 			<div id="{$checkname}_{$files[changes].id}" class="clearfix thumbnailcontener{if $is_checked eq 'y'} thumbnailcontenerchecked{/if}{if $files[changes].isgal eq 1} subgallery{/if}" {if $view eq 'page'}style="float:left"{else}style="width:{$thumbnailcontener_size}px"{/if}>
-				<div class="thumbnail" style="float:left; {if $view neq 'page'}width:{$thumbnailcontener_size}px"{/if}>
+				<div class="thumbnail" style="float:left; {if $view neq 'page'}width:{$thumbnailcontener_size}px{/if}">
 					<div class="thumbnailframe" style="width:100%;height:{$thumbnailcontener_size}px{if $show_infos neq 'y'};margin-bottom:4px{/if}">
 						<div class="thumbimage">
 							<div class="thumbimagesub">{assign var=key_type value=$files[changes].type}
@@ -270,28 +270,23 @@
 												</div>
 											</div>
 										</div>
-
-										<div class="thumbinfosothers">
-
 									{elseif $propval neq '' and $propname neq 'name' and $propname neq 'type' and $view neq 'page'}
-
-											<div class="thumbinfo{if $propname eq 'description'} thumbdescription{/if}"{if $show_details eq 'n' and $propname neq 'description'} style="display:none"{/if}>
-												{if $propname neq 'description'}
-													<span class="thumbinfoname">
-														{$item.name}:
-													</span>
-												{/if}
-												<span class="thumbinfoval"{if $propname neq 'description'} style="white-space: nowrap"{/if}>
-													{$propval}
+										<div class="thumbinfo{if $propname eq 'description'} thumbdescription{/if}"{if $show_details eq 'n' and $propname neq 'description'} style="display:none"{/if}>
+											{if $propname neq 'description'}
+												<span class="thumbinfoname">
+													{$item.name}:
 												</span>
-											</div>
+											{/if}
+											<span class="thumbinfoval"{if $propname neq 'description'} style="white-space: nowrap"{/if}>
+												{$propval}
+											</span>
+										</div>
 									{/if}
 								{/if}
 							{/foreach}
 							{if $view eq 'page'}
 								{$smarty.capture.thumbactions}
 							{/if}
-										</div> {* thumbinfosothers *}
 						</div> {* thumbinfos *}
 					{/if}
 				</div> {* thumbnail *}
@@ -306,8 +301,8 @@
 					</div>
 					{if isset($metarray) and $metarray|count gt 0}
 						<br>
-						<div >
-						{include file='metadata/meta_view_tabs.tpl'}
+						<div>
+							{include file='metadata/meta_view_tabs.tpl'}
 						</div>
 					{/if}
 				{/if}
