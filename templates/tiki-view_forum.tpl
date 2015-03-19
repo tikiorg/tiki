@@ -17,7 +17,7 @@
 			{/if}
 		{/if}
 		{if $tiki_p_admin_forum eq 'y'}
-			{button href="tiki-admin_forums.php?forumId=$thisforum_info&amp;cookietab=2" _icon_name="edit" _text="{tr}Edit Forum{/tr}"}
+			{button href="tiki-admin_forums.php?forumId=$thisforum_info&amp;cookietab=2#content_admin_forums1-2" _icon_name="edit" _text="{tr}Edit Forum{/tr}"}
 		{/if}
 		{if $tiki_p_admin_forum eq 'y' or !isset($all_forums) or $all_forums|@count > 1}
 			{* No need for users to go to forum list if they are already looking at the only forum BUT note that all_forums only defined with quickjump feature *}
@@ -522,7 +522,7 @@
 						<th id="category">{tr}Category{/tr}</th>
 						{$cntcol = $cntcol + 1}
 					{/if}
-					<th id="actions">{tr}Actions{/tr}</th>
+					<th id="actions"></th>
 					{$cntcol = $cntcol + 1}
 				</tr>
 			</thead>
@@ -654,79 +654,71 @@
 						{/if}
 
 						<td class="text" nowrap="nowrap">
-							{if (isset($comments_coms[ix].attachments) and count($comments_coms[ix].attachments))
-								or $tiki_p_admin_forum eq 'y'}
-								{if isset($comments_coms[ix].attachments) and count($comments_coms[ix].attachments)}
-									{icon name="attach"}
-								{/if}
-							{else}
-								&nbsp;
-							{/if}
-
-							{if ( $tiki_p_admin_forum eq 'y' or ($comments_coms[ix].userName == $user && $tiki_p_forum_post eq 'y') ) and $forum_info.is_locked neq 'y' and $comments_coms[ix].locked neq 'y'}
-								<a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink tips" title="{$comments_coms[ix].title|escape}:{tr}Edit topic{/tr}">
-									{icon name='edit'}
-								</a>
-							{/if}
-
-							{if $prefs.feature_forum_topics_archiving eq 'y' && $tiki_p_admin_forum eq 'y'}
-								{if $comments_coms[ix].archived eq 'y'}
-									<span
-										id="unarchive-single-topic"
-										class="btn-link tips"
-										title="{$comments_coms[ix].title|escape}:{tr}Unarchive topic{/tr}"
-										onclick="confirmModal(this,
-												{ldelim}
-													'controller':'forum',
-													'action':'unarchive_topic',
-													'closest':'form',
-													'params':
+							{capture name=view_forum_actions}
+								{strip}
+									{if ( $tiki_p_admin_forum eq 'y' or ($comments_coms[ix].userName == $user && $tiki_p_forum_post eq 'y') ) and $forum_info.is_locked neq 'y' and $comments_coms[ix].locked neq 'y'}
+										<a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}">
+											{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+										</a>
+									{/if}
+									{if $prefs.feature_forum_topics_archiving eq 'y' && $tiki_p_admin_forum eq 'y'}
+										{if $comments_coms[ix].archived eq 'y'}
+											<a href="#"
+												onclick="confirmModal(this,
+													{ldelim}
+														'controller':'forum',
+														'action':'unarchive_topic',
+														'closest':'form',
+														'params':
 														{ldelim}
 															'comments_parentId':'{$comments_coms[ix].threadId}'
 														{rdelim}
-												{rdelim});"
-									>
-										{icon name='file-archive-open'}
-									</span>
-								{else}
-									<span
-										id="archive-single-topic"
-										class="btn-link tips"
-										title="{$comments_coms[ix].title|escape}:{tr}Archive topic{/tr}"
-										onclick="confirmModal(this,
-											{ldelim}
-												'controller':'forum',
-												'action':'archive_topic',
-												'closest':'form',
-												'params':
+													{rdelim});$('[data-toggle=popover]').popover('hide');"
+											>
+												{icon name='file-archive-open' _menu_text='y' _menu_icon='y' alt="{tr}Unarchive{/tr}"}
+											</a>
+										{else}
+											<a href="#"
+												onclick="confirmModal(this,
 													{ldelim}
-														'comments_parentId':'{$comments_coms[ix].threadId}'
-													{rdelim}
-											{rdelim});"
-									>
-										{icon name='file-archive'}
-									</span>
-								{/if}
-							{/if}
-							{if $tiki_p_admin_forum eq 'y'}
-								<span
-									id="delete-single-topic"
-									class="btn-link tips"
-									title="{$comments_coms[ix].title|escape}:{tr}Delete topic{/tr}"
-									onclick="confirmModal(this,
-										{ldelim}
-											'controller':'forum',
-											'action':'delete_topic',
-											'closest':'form',
-											'params':
+														'controller':'forum',
+														'action':'archive_topic',
+														'closest':'form',
+														'params':
+														{ldelim}
+															'comments_parentId':'{$comments_coms[ix].threadId}'
+														{rdelim}
+													{rdelim});$('[data-toggle=popover]').popover('hide');"
+											>
+												{icon name='file-archive' _menu_text='y' _menu_icon='y' alt="{tr}Archive{/tr}"}
+											</a>
+										{/if}
+									{/if}
+									{if $tiki_p_admin_forum eq 'y'}
+										<a href="#"
+											onclick="confirmModal(this,
 												{ldelim}
-													'forumtopic[]':'{$comments_coms[ix].threadId}'
-											{rdelim}
-										{rdelim});"
-								>
-									{icon name='remove'}
-								</span>
-							{/if}
+													'controller':'forum',
+													'action':'delete_topic',
+													'closest':'form',
+													'params':
+													{ldelim}
+														'forumtopic[]':'{$comments_coms[ix].threadId}'
+													{rdelim}
+												{rdelim});$('[data-toggle=popover]').popover('hide');"
+										>
+											{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Delete{/tr}"}
+										</a>
+									{/if}
+								{/strip}
+							{/capture}
+							<a class="tips"
+							   title="{tr _0=$comments_coms[ix].title|escape}Actions for topic %0{/tr}"
+							   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.view_forum_actions|escape:"javascript"|escape:"html"}
+							   style="padding:0; margin:0; border:0"
+									>
+								{icon name='wrench'}
+							</a>
 						</td>
 					</tr>
 				{sectionelse}

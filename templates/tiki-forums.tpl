@@ -86,7 +86,7 @@
 					<th id="hits">{self_link _sort_arg='sort_mode' _sort_field='hits'}{tr}Visits{/tr}{/self_link}</th>
 				{/if}
 				{$numbercol = $numbercol + 1}
-				<th id="actions">{tr}Actions{/tr}</th>
+				<th id="actions"></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -139,10 +139,25 @@
 						<td class="integer"><span class="badge">{$channels[user].hits}<span></td>
 					{/if}
 					<td class="action">
-						{icon name="view" class="tips" title=":{tr}View{/tr}" href="{$channels[user].forumId|sefurl:'forum'}"}
-						{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-							{icon name="edit" class="tips" title=":{tr}Edit{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}&amp;cookietab=2"}
-						{/if}
+						{capture name=forum_actions}
+							{strip}
+								<a href="{$channels[user].forumId|sefurl:'forum'}">
+									{icon name="view" _menu_text='y' _menu_icon='y' alt="{tr}View{/tr}"}
+								</a>
+								{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
+									<a href="tiki-admin_forums.php?forumId={$channels[user].forumId}&amp;cookietab=2#content_admin_forums1-2">
+										{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+									</a>
+								{/if}
+							{/strip}
+						{/capture}
+						<a class="tips"
+						   title="{tr _0=$channels[user].name|addongroupname|escape}Actions for %0{/tr}"
+						   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.forum_actions|escape:"javascript"|escape:"html"}
+						   style="padding:0; margin:0; border:0"
+								>
+							{icon name='wrench'}
+						</a>
 					</td>
 				</tr>
 			{sectionelse}
