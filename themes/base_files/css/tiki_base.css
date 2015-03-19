@@ -3115,33 +3115,31 @@ body.tiki.navbar-padding {
 .tiki .media-overflow-visible .media-body {
   overflow: visible;
 }
-@media (min-width: 992px) {
-  .tiki .col-md-3 .table-responsive,
-  .tiki .col-md-4 .table-responsive,
-  .tiki .col-md-5 .table-responsive,
-  .tiki .col-md-6 .table-responsive,
-  .tiki .col-md-7 .table-responsive,
-  .tiki .col-md-8 .table-responsive,
-  .tiki .col-md-9 .table-responsive {
-    width: 100%;
-    margin-bottom: 15px;
-    overflow-y: hidden;
-    overflow-x: auto;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
-    border: 1px solid #dddddd;
-    -webkit-overflow-scrolling: touch;
-  }
-  .tiki .table-responsive > .table {
-    margin-bottom: 0;
-  }
-  .tiki .table-responsive > .table > thead > tr > th,
-  .tiki .table-responsive > .table > tbody > tr > th,
-  .tiki .table-responsive > .table > tfoot > tr > th,
-  .tiki .table-responsive > .table > thead > tr > td,
-  .tiki .table-responsive > .table > tbody > tr > td,
-  .tiki .table-responsive > .table > tfoot > tr > td {
-    white-space: normal;
-  }
+.tiki .col-md-3 .table-responsive,
+.tiki .col-md-4 .table-responsive,
+.tiki .col-md-5 .table-responsive,
+.tiki .col-md-6 .table-responsive,
+.tiki .col-md-7 .table-responsive,
+.tiki .col-md-8 .table-responsive,
+.tiki .col-md-9 .table-responsive {
+  width: 100%;
+  margin-bottom: 15px;
+  overflow-y: hidden;
+  overflow-x: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  border: 1px solid #dddddd;
+  -webkit-overflow-scrolling: touch;
+}
+.tiki .table-responsive > .table {
+  margin-bottom: 0;
+}
+.tiki .table-responsive > .table > thead > tr > th,
+.tiki .table-responsive > .table > tbody > tr > th,
+.tiki .table-responsive > .table > tfoot > tr > th,
+.tiki .table-responsive > .table > thead > tr > td,
+.tiki .table-responsive > .table > tbody > tr > td,
+.tiki .table-responsive > .table > tfoot > tr > td {
+  white-space: normal;
 }
 .layout_social a.navbar-brand img,
 .layout_social_modules a.navbar-brand img,
