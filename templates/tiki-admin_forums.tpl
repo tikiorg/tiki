@@ -71,7 +71,7 @@
 								{self_link _sort_arg='sort_mode' _sort_field='hits'}{tr}Hits{/tr}{/self_link}
 								{$numbercol = $numbercol+1}
 							</th>
-							<th id="actions">{tr}Action{/tr}</th>
+							<th id="actions"></th>
 							{$numbercol = $numbercol+1}
 						</tr>
 					</thead>
@@ -91,32 +91,50 @@
 								<td class="integer"><span class="badge">{$channels[user].posts_per_day|string_format:"%.2f"}<span></td>
 								<td class="integer"><span class="badge">{$channels[user].hits}<span></td>
 								<td class="action">
-									<a class="tips" href="{$channels[user].forumId|sefurl:'forum'}" title="{$channels[user].name|escape}:{tr}View{/tr}">{icon name='view' alt="{tr}View{/tr}"}</a>
-									{* the tiki_p_forum_lock permission has not been implemented *}
-									{if isset($tiki_p_forum_lock) and $tiki_p_forum_lock eq 'y'}
-										{if $channels[user].is_locked eq 'y'}
-											{self_link _icon_name='unlock' _class="tips" _alt="{tr}Unlock{/tr}" lock='n' forumId=$channels[user].forumId}{/self_link}
-										{else}
-											{self_link _icon_name='lock' _class="tips" _alt="{tr}Lock{/tr}" lock='y' forumId=$channels[user].forumId}{/self_link}
-										{/if}
-									{/if}
+									{capture name=admin_forum_actions}
+										{strip}
+											<a href="{$channels[user].forumId|sefurl:'forum'}">
+												{icon name='view' _menu_text='y' _menu_icon='y' alt="{tr}View{/tr}"}
+											</a>
+											{* the tiki_p_forum_lock permission has not been implemented *}
+											{if isset($tiki_p_forum_lock) and $tiki_p_forum_lock eq 'y'}
+												{if $channels[user].is_locked eq 'y'}
+													{self_link _icon_name='unlock' _menu_text='y' _menu_icon='y' lock='n' forumId=$channels[user].forumId}
+														{tr}Unlock{/tr}
+													{/self_link}
+												{else}
+													{self_link _icon_name='lock' _menu_text='y' _menu_icon='y' lock='y' forumId=$channels[user].forumId}
+														{tr}Lock{/tr}
+													{/self_link}
+												{/if}
+											{/if}
 
-									{if ($tiki_p_admin eq 'y')
-										or ((isset($channels[user].individual) and $channels[user].individual eq 'n')
-										and ($tiki_p_admin_forum eq 'y'))
-										or ($channels[user].individual_tiki_p_admin_forum eq 'y')
-									}
-										{self_link _icon_name='edit' _class="tips" cookietab='2' _anchor='anchor2' forumId=$channels[user].forumId}{$channels[user].name|escape}:{tr}Edit{/tr}{/self_link}
-										{permission_link mode=glyph addclass="tips" type=forum permType=forums id=$channels[user].forumId title=$channels[user].name label="{$channels[user].name|escape}:{tr}Permissions{/tr}"}
-										{* go ahead and set action to delete_forum since that is the only action available in the multi selct dropdown *}
-										<span
-											onclick="confirmModal(this, {ldelim}'data':'service'{rdelim});"
-											data-service="{service controller=forum action=delete_forum params="checked[]={$channels[user].forumId}"}"
-											class="btn-link tips"
-											title="{$channels[user].name|escape}:{tr}Delete{/tr}">
-												{icon name='remove'}
-										</span>
-									{/if}
+											{if ($tiki_p_admin eq 'y')
+											or ((isset($channels[user].individual) and $channels[user].individual eq 'n')
+											and ($tiki_p_admin_forum eq 'y'))
+											or ($channels[user].individual_tiki_p_admin_forum eq 'y')
+											}
+												{self_link _icon_name='edit' _menu_text='y' _menu_icon='y' cookietab='2' _anchor='anchor2' forumId=$channels[user].forumId}
+													{tr}Edit{/tr}
+												{/self_link}
+												{permission_link mode=text type=forum permType=forums id=$channels[user].forumId title=$channels[user].name}
+												{* go ahead and set action to delete_forum since that is the only action available in the multi selct dropdown *}
+												<a href="#"
+													onclick="confirmModal(this, {ldelim}'data':'service'{rdelim});$('[data-toggle=popover]').popover('hide');"
+													data-service="{service controller=forum action=delete_forum params="checked[]={$channels[user].forumId}"}"
+												>
+													{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Delete{/tr}"}
+												</a>
+											{/if}
+										{/strip}
+									{/capture}
+									<a class="tips"
+									   title="{tr _0=$channels[user].name|escape}Actions for %0{/tr}"
+									   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.admin_forum_actions|escape:"javascript"|escape:"html"}
+									   style="padding:0; margin:0; border:0"
+											>
+										{icon name='wrench'}
+									</a>
 								</td>
 							</tr>
 						{sectionelse}
