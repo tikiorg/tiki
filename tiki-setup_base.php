@@ -163,7 +163,7 @@ if ($prefs['cookie_consent_feature'] === 'y' && empty($_COOKIE[$prefs['cookie_co
 
 $start_session = true;
 $extra_cookie_name = session_name() . 'CV';
-if ( ($prefs['session_silent'] == 'y' || $feature_no_cookie) && empty($_COOKIE[session_name()]) && empty($_COOKIE[$extra_cookie_name]) ) {
+if ( $prefs['session_silent'] == 'y' && empty($_COOKIE[session_name()]) && empty($_COOKIE[$extra_cookie_name]) ) {
 	$start_session = false;
 }
 

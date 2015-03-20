@@ -34,7 +34,7 @@ html[dir="rtl"] * {
 /* Hebrew and Arabic characters display smaller than latin characters */
 /* set here a different font size for RTL only - Note that latin char will look bigger than hebrew if mixed (numbers) */
 body {
-    font: 102% !important;
+    font-size: 102% !important;
 }
 
 /***** Layout *****/
@@ -80,11 +80,11 @@ ul li div.image {
 
 /** header banner comment or set to none both if you customise theme **/
 #header {
-    background: url('../fivealive/options/blueberry/rtl/siteheader_rtl.jpg') 50% 0 no-repeat !important;
+    background: url('../../../fivealive/options/blueberry/rtl/siteheader_rtl.jpg') 50% 0 no-repeat !important;
 }
 
 .header_container {
-    background: url("../fivealive/header_left.png") no-repeat scroll 100% 0px transparent !important;
+    background: url("../../../fivealive/images/header_left.png") no-repeat scroll 100% 0 transparent !important;
 }
 
 /** Logo position **/
@@ -187,7 +187,7 @@ ul.sf-shadow ul {background-image:none}
 /* Menu adjustment Fivealive theme - Could require editing depending the theme you are using */
 /* moving away menu item from indicator and keep text in the center */
 #tiki-top .cssmenu_horiz li a {
-	background-position: 0% 50% !important;
+	background-position: 0 50% !important;
 }
 
 /** Vertical Menu **/
@@ -247,7 +247,7 @@ ul.sf-shadow ul {background-image:none}
 	left:-13em !important;
 	padding: 0 8px 9px 0;
 	width: 13em !important;
-	background: url(../../img/superfish/shadow.png) no-repeat bottom right;
+	background: url(../../../../img/superfish/shadow.png) no-repeat bottom right;
 }
 
 /***** My Account User Preferences *****/
@@ -456,7 +456,7 @@ table.normal th.auto {
 
 /* Toolbars items */
 .toolbars-admin ul#full-list-w.full, .toolbars-admin ul#full-list-p.full, .toolbars-admin ul#full-list-c.full {
-    padding-right: 0px;
+    padding-right: 0;
 }
 
 /***** Admin *****/
@@ -479,12 +479,12 @@ table.normal th.auto {
 .userWizardIconleft {
     float:right;
     margin-left: 10px;
-    margin-right: 0px;
+    margin-right: 0;
 }
 
 .userWizardIconright {
     float: left;
-    margin-left: 0px;
+    margin-left: 0;
     margin-right: 10px;
 }
 
@@ -492,17 +492,17 @@ table.normal th.auto {
 #wizardBody .adminWizardIconleft {
     float:right;
     margin-left: 10px;
-    margin-right: 0px;
+    margin-right: 0;
 }
 
 #wizardBody .adminWizardIconright {
     float:left;
     margin-right: 10px;
-    margin-left: 0px;
+    margin-left: 0;
 }
 
 .adminWizardtable {
-    padding-left:0px !important;
+    padding-left:0 !important;
     padding-right:20px;
 }
 

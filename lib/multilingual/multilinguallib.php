@@ -1232,12 +1232,10 @@ class MultilingualLib extends TikiLib
 			// Some languages need BiDi support. Add their code names here ...
 			if (Language::isRTL()) {
 				$prefs['feature_bidi'] =  'y';
-				TikiLib::lib('header')->add_cssfile('styles/BiDi/BiDi.css');
-				setCookieSection('rtl','y');
+				TikiLib::lib('header')->add_cssfile('themes/base_files/other/BiDi/BiDi.css');
 			} else {
 				$prefs['feature_bidi'] =  'n';
-				TikiLib::lib('header')->drop_cssfile('styles/BiDi/BiDi.css');
-				setCookieSection('rtl','n');
+				TikiLib::lib('header')->drop_cssfile('themes/base_files/other/BiDi/BiDi.css');
 			}
 		}
 	}

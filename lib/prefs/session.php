@@ -34,6 +34,7 @@ function prefs_session_list()
 			'name' => tra('Silent session'),
 			'description' => tra('Do not automatically start sessions.'),
 			'hint' => tra('Users will only have a session if they log in. So anonymous users will lose the capacity to have things like Switch Language or Switch Theme (a session is needed for this)'),
+			'warning' => tra('Can cause problems when combined with cookie consent and javascript disabled browsers.'),
 			'perspective' => false,
 			'type' => 'flag',
 			'default' => 'n',
