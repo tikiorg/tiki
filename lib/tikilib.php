@@ -3569,6 +3569,8 @@ class TikiLib extends TikiDb_Bridge
 					$gal_info = TikiLib::lib('filegal')->get_file_gallery_info($info['galleryId']);
 					if ($gal_info['user'] === $user) {
 						$info['type'] = 'user';			// show my files as mine
+					} else {
+						$info['type'] = '';
 					}
 				}
 				if ($prefs['feature_use_fgal_for_user_files'] === 'y' &&
