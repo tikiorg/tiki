@@ -6,7 +6,6 @@
 	{if $blog_post_context ne 'excerpt'}
 		{if $blog_post_context ne 'print'}
 			<footer class="postfooter panel-footer">
-				{include file='blog_post_author_actions.tpl'}
 				{include file='blog_post_actions.tpl'}
 				{* Copyright display is being turned off if being called through the "BLOG" plugin with "simple" mode turned off and a max character count supplied (preview mode). If in preview mode end user most likely is wanting to conserve space with a smaller display of information *}
 				{if $blog_post_context neq 'plugin_preview'}
