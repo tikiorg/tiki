@@ -15,6 +15,8 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * smarty_function_button: Display a Tiki button
  *
  * params will be used as params for as smarty self_link params, except those special params specific to smarty button :
+ *  - _icon: DEPRECATED previously used for file path for legacy icons
+ *  - _icon_name: use icon name to show appropriate icon regardless of iconset chosen
  *	- _text: Text that will be shown in the button
  *	- _auto_args: comma separated list of URL arguments that will be kept from _REQUEST (like $auto_query_args) (in addition of course of those you can specify in the href param)
  *                    You can also use _auto_args='*' to specify that every arguments listed in the global var $auto_query_args has to be kept from URL

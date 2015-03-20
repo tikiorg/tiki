@@ -1,9 +1,9 @@
 {title admpage="articles" help="Articles"}{tr}Submissions{/tr}{/title}
 
 <div class="t_navbar margin-bottom-md">
-	{button href="tiki-edit_submission.php" class="btn btn-default" _text="{tr}New Submission{/tr}"}
+	{button href="tiki-edit_submission.php" class="btn btn-default" _icon_name="create" _text="{tr}New Submission{/tr}"}
 	{if $tiki_p_read_article eq 'y'}
-		{button href="tiki-list_articles.php" class="btn btn-default" _text="{tr}List Articles{/tr}"}
+		{button href="tiki-list_articles.php" class="btn btn-default" _icon_name="list" _text="{tr}List Articles{/tr}"}
 	{/if}
 </div>
 
