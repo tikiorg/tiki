@@ -4,20 +4,20 @@
 
 <div class="t_navbar margin-bottom-md">
 	{if $tiki_p_edit_article eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
-		{button href="tiki-edit_article.php" class="btn btn-default" _text="{tr}New Article{/tr}"}
+		{button href="tiki-edit_article.php" class="btn btn-default" _icon_name="create" _text="{tr}New Article{/tr}"}
 	{/if}
 	{if $prefs.feature_submissions == 'y' && $tiki_p_edit_submission == "y" && $tiki_p_edit_article neq 'y' && $tiki_p_admin neq 'y' && $tiki_p_admin_cms neq 'y'}
-		{button href="tiki-edit_submission.php" class="btn btn-default" _text="{tr}New Submission{/tr}"}
+		{button href="tiki-edit_submission.php" class="btn btn-default" _icon_name="create" _text="{tr}New Submission{/tr}"}
 	{/if}
 	{if $tiki_p_read_article eq 'y' or $tiki_p_articles_read_heading eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
-		{button href="tiki-view_articles.php" class="btn btn-default" _text="{tr}View Articles{/tr}"}
+		{button href="tiki-view_articles.php" class="btn btn-default" _icon_name="view" _text="{tr}View Articles{/tr}"}
 	{/if}
 	{if $prefs.feature_submissions == 'y' && ($tiki_p_approve_submission == "y" || $tiki_p_remove_submission == "y" || $tiki_p_edit_submission == "y")}
-		{button href="tiki-list_submissions.php" class="btn btn-default" _text="{tr}View Submissions{/tr}"}
+		{button href="tiki-list_submissions.php" class="btn btn-default" _icon_name="view" _text="{tr}View Submissions{/tr}"}
 	{/if}
 	{if $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
-		{button href="tiki-admin_topics.php" class="btn btn-default btn-sm" _text="{tr}Article Topics{/tr}"}
-		{button href="tiki-article_types.php" class="btn btn-default btn-sm" _text="{tr}Article Types{/tr}"}
+		{button href="tiki-admin_topics.php" class="btn btn-default btn-sm" _icon_name="structure" _text="{tr}Article Topics{/tr}"}
+		{button href="tiki-article_types.php" class="btn btn-default btn-sm" _icon_name="structure" _text="{tr}Article Types{/tr}"}
 	{/if}
 </div>
 
@@ -115,7 +115,7 @@
 				{/if}
 				{if $tiki_p_edit_article eq 'y' or $tiki_p_remove_article eq 'y' or isset($oneEditPage) or $tiki_p_read_article}
 					{assign var=numbercol value=$numbercol+1}
-					<th>{tr}Actions{/tr}</th>
+					<th></th>
 				{/if}
 			</tr>
 
@@ -186,42 +186,59 @@
 						<td style="text-align:center;">{$listpages[changes].ispublished}</td>
 					{/if}
 					<td class="action">
-						{if $tiki_p_read_article eq 'y'}
-							{icon name="view" href="{$listpages[changes].articleId|sefurl:article}" title="{tr}View{/tr}"}
-						{/if}
-						{if $tiki_p_edit_article eq 'y' or (!empty($user) and $listpages[changes].author eq $user and $listpages[changes].creator_edit eq 'y')}
-							{icon name="edit" href="tiki-edit_article.php?articleId={$listpages[changes].articleId}" title="{tr}Edit{/tr}"}
-						{/if}
-						{if $tiki_p_admin_cms eq 'y' or $tiki_p_assign_perm_cms eq 'y'}
-							{permission_link mode=icon type=article permType=articles id=$listpages[changes].articleId title=$listpages[changes].title}
-						{/if}
-						{if $tiki_p_remove_article eq 'y'}
-							{self_link _title="{tr}Delete{/tr}" remove=$listpages[changes].articleId}{icon name="delete"}{/self_link}
-						{/if}
+						{capture name=articles_actions}
+							{strip}
+								{if $tiki_p_read_article eq 'y'}
+									<a href="{$listpages[changes].articleId|sefurl:article}">
+										{icon name="view" _menu_text='y' _menu_icon='y' alt="{tr}View{/tr}"}
+									</a>
+								{/if}
+								{if $tiki_p_edit_article eq 'y' or (!empty($user) and $listpages[changes].author eq $user and $listpages[changes].creator_edit eq 'y')}
+									<a href="tiki-edit_article.php?articleId={$listpages[changes].articleId}">
+										{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+									</a>
+								{/if}
+								{if $tiki_p_admin_cms eq 'y' or $tiki_p_assign_perm_cms eq 'y'}
+									{permission_link mode=text type=article permType=articles id=$listpages[changes].articleId}
+								{/if}
+								{if $tiki_p_remove_article eq 'y'}
+									{self_link _menu_text='y' _menu_icon='y' remove=$listpages[changes].articleId _icon_name="remove"}
+										{tr}Remove{/tr}
+									{/self_link}
+								{/if}
+							{/strip}
+						{/capture}
+						<a class="tips"
+						   title="{tr}Actions{/tr}"
+						   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.articles_actions|escape:"javascript"|escape:"html"}
+						   style="padding:0; margin:0; border:0"
+								>
+							{icon name='wrench'}
+						</a>
 					</td>
 				</tr>
 			{sectionelse}
 				{norecords _colspan=$numbercol}
 			{/section}
-			{if $listpages and $tiki_p_remove_article eq 'y'}
-				<tr>
-				{assign var=numbercol value=$numbercol+1}
-					<td colspan="{$numbercol}">
-						<p align="left"> {*on the left to have it close to the checkboxes*}
-							{button _text="{tr}Select Duplicates{/tr}" _onclick="checkDuplicateRows(this,'td:not(:eq(2))'); return false;"}
-							<label>{tr}Perform action with checked:{/tr}
-								<select name="submit_mult">
-									<option value=""></option>
-									<option value="remove_articles" >{tr}Remove{/tr}</option>
-								</select>
-							</label>
-							<input type="submit" class="btn btn-default btn-sm" value="{tr}OK{/tr}">
-						</p>
-					</td>
-				</tr>
-			{/if}
 		</table>
 	</div>
+	{if $listpages and $tiki_p_remove_article eq 'y'}
+		<div>
+			{button _text="{tr}Select Duplicates{/tr}" _onclick="checkDuplicateRows(this,'td:not(:eq(2))'); return false;"}
+			<br><br>
+			<div class="col-lg-9 input-group">
+				<label for="submit_mult" class="col-lg"></label>
+					<select name="submit_mult" class="form-control">
+						<option value="">{tr}Select action to perform with checked...{/tr}</option>
+						<option value="remove_articles">{tr}Remove{/tr}</option>
+					</select>
+				</label>
+				<span class="input-group-btn">
+				<input type="submit" class="btn btn-primary" value="{tr}OK{/tr}">
+				</span>
+			</div>
+		</div>
+	{/if}
 
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 </form>
