@@ -7,9 +7,6 @@
 		</span>
 		<div class="actions pull-right">
 			<div class="btn-group">
-				{if $prefs.feature_multilingual eq 'y' and $lang and $prefs.show_available_translations eq 'y'}
-					{include file='translated-lang.tpl' object_type='article'}
-				{/if}
 				<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
 					{icon name="more"}
 				</a>
@@ -73,6 +70,11 @@
 							</a>
 						{/if}
 					</li>
+					{if $prefs.feature_multilingual eq 'y' and $lang and $prefs.show_available_translations eq 'y'}
+						<li class="dropdown-submenu">
+							{include file='translated-lang.tpl' submenu='y' object_type='article'}
+						</li>
+					{/if}
 				</ul>
 			</div>
 		</div>
