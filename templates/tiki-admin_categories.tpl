@@ -2,8 +2,8 @@
 {title help="Categories" admpage="category"}{tr}Admin Categories{/tr}{/title}
 
 <div class="t_navbar margin-bottom-md">
-	{button href="tiki-browse_categories.php?parentId=$parentId" class="btn btn-default" _text="{tr}Browse Categories{/tr}" _title="{tr}Browse the category system{/tr}"}
-	{button href="tiki-edit_categories.php" class="btn btn-default" _text="{tr}Organize Objects{/tr}" _title="{tr}Organize Objects{/tr}"}
+	{button href="tiki-browse_categories.php?parentId=$parentId" class="btn btn-default" _icon_name="view" _text="{tr}Browse Categories{/tr}" _title="{tr}Browse the category system{/tr}"}
+	{button href="tiki-edit_categories.php" class="btn btn-default" _text="{tr}Organize Objects{/tr}" _icon_name="structure" _title="{tr}Organize Objects{/tr}"}
 </div>
 
 {if !empty($errors)}
@@ -121,20 +121,28 @@ potato,,vegetable
 					<tr>
 						<th>&nbsp;</th>
 						<th>
-							<a href="tiki-admin_categories.php?parentId={$parentId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}#objects">{tr}Name{/tr}</a>
+							<a href="tiki-admin_categories.php?parentId={$parentId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}#objects">
+								{tr}Name{/tr}
+							</a>
 						</th>
 						<th>
-							<a href="tiki-admin_categories.php?parentId={$parentId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}#objects">{tr}Type{/tr}</a>
+							<a href="tiki-admin_categories.php?parentId={$parentId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}#objects">
+								{tr}Type{/tr}
+							</a>
 						</th>
 					</tr>
 
 					{section name=ix loop=$objects}
 						<tr>
 							<td class="icon">
-								<a href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}" title="{tr}Remove from this Category{/tr}">{icon _id='link_delete' alt="{tr}Remove from this Category{/tr}"}</a>
+								<a href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}" class="tips" title=":{tr}Remove from this category{/tr}">
+									{icon name='remove'}
+								</a>
 							</td>
 							<td class="text">
-								<a href="{$objects[ix].href}" title="{$objects[ix].name}">{$objects[ix].name|truncate:80:"(...)":true|escape}</a>
+								<a href="{$objects[ix].href}" title="{$objects[ix].name}">
+									{$objects[ix].name|truncate:80:"(...)":true|escape}
+								</a>
 							</td>
 							<td class="text">{tr}{$objects[ix].type}{/tr}</td>
 						</tr>
@@ -149,35 +157,72 @@ potato,,vegetable
 
 		{tab name="{tr}Moving objects between categories{/tr}"}
 			<h2>{tr}Moving objects between categories{/tr}</h2>
-			<form method="get" action="tiki-admin_categories.php" name="move">
-				<input type="hidden" name="parentId" value="{$parentId|escape}">
-				<input type="submit" class="btn btn-default btn-sm" name="unassign" value="{tr}Unassign all objects from this category{/tr}">
-				<hr>
-				<select name="toId">
-					{foreach $categories as $category}
-						<option value="{$category.categId}" {if $category.categId eq $parentId}selected="selected"{/if}>{$category.categpath|escape}</option>
-					{/foreach}
-				</select>
-				<input type="submit" class="btn btn-default btn-sm" name="move_to" value="{tr}Move all the objects from this category to this one{/tr}">
-				<hr>
-				<select name="to">
-					{foreach $categories as $category}
-						<option value="{$category.categId}" {if $category.categId eq $parentId}selected="selected"{/if}>{$category.categpath|escape}</option>
-					{/foreach}
-				</select>
-				<input type="submit" class="btn btn-default btn-sm" name="copy_from" value="{tr}Assign all objects of this category to this one{/tr}">
+			<h4>{tr}Current category:{/tr} {$categ_name|escape}</h4><br>
+			<form method="get" action="tiki-admin_categories.php" name="move" class="form-horizontal" role="form">
+				<fieldset>
+					<legend>{tr}Perform an action on all objects in the current category:{/tr}</legend>
+					<input type="hidden" name="parentId" value="{$parentId|escape}">
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="unassign">
+							{tr}Unassign{/tr}
+						</label>
+						<div class="col-sm-6 input-group">
+							<input type="submit" class="btn btn-default btn-sm" name="unassign" value="{tr}OK{/tr}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="toId">
+							{tr}Move to selected category{/tr}
+						</label>
+						<div class="col-sm-6 input-group">
+							<select name="toId" class="form-control">
+								{foreach $categories as $category}
+									{if $category.name !== $categ_name}
+										<option value="{$category.categId}" {if $category.categId eq $parentId}selected="selected"{/if}>
+											{$category.categpath|escape}
+										</option>
+									{/if}
+								{/foreach}
+							</select>
+							<span class="input-group-btn">
+								<input type="submit" class="btn btn-default" name="move_to" value="{tr}OK{/tr}">
+							</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="to">
+							{tr}Copy to selected category{/tr}
+						</label>
+						<div class="col-sm-6 input-group">
+							<select name="to" class="form-control">
+								{foreach $categories as $category}
+									{if $category.name !== $categ_name}
+										<option value="{$category.categId}" {if $category.categId eq $parentId}selected="selected"{/if}>
+											{$category.categpath|escape}
+										</option>
+									{/if}
+								{/foreach}
+							</select>
+							<span class="input-group-btn">
+								<input type="submit" class="btn btn-default" name="copy_from" value="{tr}OK{/tr}">
+							</span>
+						</div>
+					</div>
+				</fieldset>
 			</form>
 		{/tab}
 
 		{tab name="{tr}Add objects to category{/tr}"}
 			<h2>{tr}Add objects to category:{/tr} <b>{$categ_name|escape}</b></h2>
 			{if $prefs.feature_search eq 'y' and $prefs.unified_add_to_categ_search eq 'y'}
-				<form id="add_object_form" method="post" action="{service controller=category action=categorize}">
+				<form id="add_object_form" method="post" action="{service controller=category action=categorize}" class="form-horizontal" role="form">
 					<label>Types of object
 						<select id="add_object_type">
 							<option value="">{tr}All{/tr}</option>
 							{foreach $types as $type => $title}
-								<option value="{$type|escape}">{$title|escape}</option>
+								<option value="{$type|escape}">
+									{$title|escape}
+								</option>
 							{/foreach}
 						</select>
 					</label>
@@ -208,7 +253,7 @@ $("#add_object_form").unbind("submit").submit(function (e) {
 			$row.append("<td class=\"icon\">" +
 						"<a href=\"tiki-admin_categories.php?parentId=" + data.categId +
 								"&amp;removeObject=" + data.objects[0].catObjectId + "&amp;fromCateg=" + data.categId + "\">"+
-							"<img width=\"16\" height=\"16\" class=\"icon\" src=\"img/icons/link_delete.png\">"+
+							"{{icon name="remove"}}"+
 						"</a></td>" +
 						"<td class=\"text\">"+
 							"<a href=\"#\">" + data.objects[0].id + "</a></td>" +
@@ -239,10 +284,19 @@ $("#add_object_type").change(function () {
 				{/jq}
 			{else}{* feature_search=n (not unified search) *}
 
-				<form method="get" action="tiki-admin_categories.php">
-					<label for="find_objects">{tr}Find:{/tr}<input type="text" name="find_objects" id="find_objects"></label>
+				<form method="get" action="tiki-admin_categories.php" class="form-horizontal" role="form">
+					<div class="form-group">
+						<label class="col-sm-3 control-label" for="find_objects">
+							{tr}Find{/tr}
+						</label>
+						<div class="col-sm-6 input-group">
+							<input type="text" name="find_objects" id="find_objects" class="form-control">
+							<span class="input-group-btn">
+								<input type="submit" class="btn btn-default" value="{tr}Filter{/tr}" name="search_objects">
+							</span>
+						</div>
+					</div>
 					<input type="hidden" name="parentId" value="{$parentId|escape}">
-					<input type="submit" class="btn btn-default btn-sm" value="{tr}Filter{/tr}" name="search_objects">
 					<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 					<input type="hidden" name="offset" value="{$offset|escape}">
 					<input type="hidden" name="find" value="{$find|escape}">
@@ -250,182 +304,227 @@ $("#add_object_type").change(function () {
 				{pagination_links cant=$maximum step=$maxRecords offset=$offset}{/pagination_links}
 				<form action="tiki-admin_categories.php" method="post" class="form-horizontal" role="form">
 					<input type="hidden" name="parentId" value="{$parentId|escape}">
-					{if $prefs.feature_wiki eq 'y' and $pages}
-						<div class="form-group">
-							<label class="col-sm-3" for="pageName">{tr}Page{/tr}</label>
-							<div class="col-sm-7">
-								<select name="pageName[]" id="pageName" class="form-control" multiple="multiple" size="5">
-									{section name=ix loop=$pages}
-										<option value="{$pages[ix].pageName|escape}">{$pages[ix].pageName|truncate:80:"(...)":true|escape}</option>
-									{/section}
-								</select>
+					<fieldset>
+						{if $prefs.feature_wiki eq 'y' and $pages}
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="pageName">
+									{tr}Page{/tr}
+								</label>
+								<div class="col-sm-6 input-group">
+									<select name="pageName[]" id="pageName" class="form-control" multiple="multiple" size="5">
+										{section name=ix loop=$pages}
+											<option value="{$pages[ix].pageName|escape}">
+												{$pages[ix].pageName|truncate:80:"(...)":true|escape}
+											</option>
+										{/section}
+									</select>
+									<div>
+										<input type="submit" class="btn btn-default" name="addpage" value="{tr}Add{/tr}">
+									</div>
+								</div>
 							</div>
-							<div class="col-sm-2">
-								<input type="submit" class="btn btn-default" name="addpage" value="{tr}Add{/tr}">
-							</div>
-						</div>
-					{/if}
+						{/if}
 
-					{if $prefs.feature_articles eq 'y' and $articles}
-						<div class="form-group">
-							<label class="col-sm-3" for="articleId">{tr}Article{/tr}</label>
-							<div class="col-sm-7">
-								<select name="articleId" id="articleId">
-									{section name=ix loop=$articles}
-										<option value="{$articles[ix].articleId|escape}">{$articles[ix].title|truncate:80:"(...)":true|escape}</option>
-									{/section}
-								</select>
+						{if $prefs.feature_articles eq 'y' and $articles}
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="articleId">
+									{tr}Article{/tr}
+								</label>
+								<div class="col-lg-6 input-group">
+									<select name="articleId" id="articleId" class="form-control">
+										{section name=ix loop=$articles}
+											<option value="{$articles[ix].articleId|escape}">
+												{$articles[ix].title|truncate:80:"(...)":true|escape}
+											</option>
+										{/section}
+									</select>
+									<span class="input-group-btn">
+										<input type="submit" class="btn btn-default" name="addarticle" value="{tr}Add{/tr}"></td>
+									</span>
+								</div>
 							</div>
-							<div class="col-sm-2">
-								<input type="submit" class="btn btn-default" name="addarticle" value="{tr}Add{/tr}"></td>
-							</div>
-						</div>
-					{/if}
+						{/if}
 
-					{if $prefs.feature_blogs eq 'y' and $blogs}
-						<div class="form-group">
-							<label class="col-sm-3" for="blogId">{tr}Blog{/tr}</label>
-							<div class="col-sm-7">
-								<select name="blogId" id="blogId">
-									{section name=ix loop=$blogs}
-										<option value="{$blogs[ix].blogId|escape}">{$blogs[ix].title|truncate:80:"(...)":true|escape}</option>
-									{/section}
-								</select>
+						{if $prefs.feature_blogs eq 'y' and $blogs}
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="blogId">
+									{tr}Blog{/tr}
+								</label>
+								<div class="col-sm-6 input-group">
+									<select name="blogId" id="blogId" class="form-control">
+										{section name=ix loop=$blogs}
+											<option value="{$blogs[ix].blogId|escape}">
+												{$blogs[ix].title|truncate:80:"(...)":true|escape}
+											</option>
+										{/section}
+									</select>
+									<span class="input-group-btn">
+										<input type="submit" class="btn btn-default" name="addblog" value="{tr}Add{/tr}">
+									</span>
+								</div>
 							</div>
-							<div class="col-sm-2">
-								<input type="submit" class="btn btn-default btn-sm" name="addblog" value="{tr}Add{/tr}">
-							</div>
-						</div>
-					{/if}
+						{/if}
 
-					{if $prefs.feature_directory eq 'y'and $directories}
-						<div class="form-group">
-							<label class="col-sm-3" for="directoryId">{tr}Directory{/tr}</label>
-							<div class="col-sm-7">
-								<select name="directoryId" id="directoryId">
-									{section name=ix loop=$directories}
-										<option value="{$directories[ix].categId|escape}">{$directories[ix].name|truncate:40:"(...)":true|escape}</option>
-									{/section}
-								</select>
+						{if $prefs.feature_directory eq 'y'and $directories}
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="directoryId">
+									{tr}Directory{/tr}
+								</label>
+								<div class="col-sm-6 input-group">
+									<select name="directoryId" id="directoryId" class="form-control">
+										{section name=ix loop=$directories}
+											<option value="{$directories[ix].categId|escape}">
+												{$directories[ix].name|truncate:40:"(...)":true|escape}
+											</option>
+										{/section}
+									</select>
+									<span class="input-group-btn">
+										<input type="submit" class="btn btn-default" name="adddirectory" value="{tr}Add{/tr}">
+									</span>
+								</div>
 							</div>
-							<div class="col-sm-2">
-								<input type="submit" class="btn btn-default btn-sm" name="adddirectory" value="{tr}Add{/tr}">
-							</div>
-						</div>
-					{/if}
+						{/if}
 
-					{if $prefs.feature_galleries eq 'y' and $galleries}
-						<div class="form-group">
-							<label class="col-sm-3" for="galleryId">{tr}image gal{/tr}</label>
-							<div class="col-sm-7">
-								<select name="galleryId" id="galleryId">
-									{section name=ix loop=$galleries}
-										<option value="{$galleries[ix].galleryId|escape}">{$galleries[ix].name|truncate:80:"(...)":true|escape}</option>
-									{/section}
-								</select>
+						{if $prefs.feature_galleries eq 'y' and $galleries}
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="galleryId">
+									{tr}Image gallery{/tr}
+								</label>
+								<div class="col-sm-6 input-group">
+									<select name="galleryId" id="galleryId" class="form-control">
+										{section name=ix loop=$galleries}
+											<option value="{$galleries[ix].galleryId|escape}">
+												{$galleries[ix].name|truncate:80:"(...)":true|escape}
+											</option>
+										{/section}
+									</select>
+									<span class="input-group-btn">
+										<input type="submit" class="btn btn-default" name="addgallery" value="{tr}Add{/tr}">
+									</span>
+								</div>
 							</div>
-							<div class="col-sm-2">
-								<input type="submit" class="btn btn-default btn-sm" name="addgallery" value="{tr}Add{/tr}">
-							</div>
-						</div>
-					{/if}
+						{/if}
 
-					{if $prefs.feature_file_galleries eq 'y' and $file_galleries}
-						<div class="form-group">
-							<label class="col-sm-3" for="file_galleryId">{tr}File gal{/tr}</label>
-							<div class="col-sm-7">
-								<select name="file_galleryId" id="file_galleryId">
-									{section name=ix loop=$file_galleries}
-										<option value="{$file_galleries[ix].id|escape}">{$file_galleries[ix].name|truncate:80:"(...)":true|escape}</option>
-									{/section}
-								</select>
+						{if $prefs.feature_file_galleries eq 'y' and $file_galleries}
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="file_galleryId">
+									{tr}File gallery{/tr}
+								</label>
+								<div class="col-sm-6 input-group">
+									<select name="file_galleryId" id="file_galleryId" class="form-control">
+										{section name=ix loop=$file_galleries}
+											<option value="{$file_galleries[ix].id|escape}">
+												{$file_galleries[ix].name|truncate:80:"(...)":true|escape}
+											</option>
+										{/section}
+									</select>
+									<span class="input-group-btn">
+										<input type="submit" class="btn btn-default" name="addfilegallery" value="{tr}Add{/tr}">
+									</span>
+								</div>
 							</div>
-							<div class="col-sm-2">
-								<input type="submit" class="btn btn-default btn-sm" name="addfilegallery" value="{tr}Add{/tr}">
-							</div>
-						</div>
-					{/if}
+						{/if}
 
-					{if $prefs.feature_forums eq 'y' and $forums}
-						<div class="form-group">
-							<label class="col-sm-3" for="forumId">{tr}Forum{/tr}</label>
-							<div class="col-sm-7">
-								<select name="forumId" id="forumId">
-									{section name=ix loop=$forums}
-										<option value="{$forums[ix].forumId|escape}">{$forums[ix].name|truncate:80:"(...)":true|escape}</option>
-									{/section}
-								</select>
+						{if $prefs.feature_forums eq 'y' and $forums}
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="forumId">
+									{tr}Forum{/tr}
+								</label>
+								<div class="col-sm-6 input-group">
+									<select name="forumId" id="forumId" class="form-control">
+										{section name=ix loop=$forums}
+											<option value="{$forums[ix].forumId|escape}">
+												{$forums[ix].name|truncate:80:"(...)":true|escape}
+											</option>
+										{/section}
+									</select>
+									<span class="input-group-btn">
+										<input type="submit" class="btn btn-default" name="addforum" value="{tr}Add{/tr}">
+									</span>
+								</div>
 							</div>
-							<div class="col-sm-2">
-								<input type="submit" class="btn btn-default btn-sm" name="addforum" value="{tr}Add{/tr}">
-							</div>
-						</div>
-					{/if}
+						{/if}
 
-					{if $prefs.feature_polls eq 'y' and $polls}
-						<div class="form-group">
-							<label class="col-sm-3" for="pollId">{tr}Poll{/tr}</label>
-							<div class="col-sm-7">
-								<select name="pollId" id="pollId">
-									{section name=ix loop=$polls}
-										<option value="{$polls[ix].pollId|escape}">{$polls[ix].title|truncate:80:"(...)":true|escape}</option>
-									{/section}
-								</select>
+						{if $prefs.feature_polls eq 'y' and $polls}
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="pollId">
+									{tr}Poll{/tr}
+								</label>
+								<div class="col-sm-6 input-group">
+									<select name="pollId" id="pollId" class="form-control">
+										{section name=ix loop=$polls}
+											<option value="{$polls[ix].pollId|escape}">
+												{$polls[ix].title|truncate:80:"(...)":true|escape}
+											</option>
+										{/section}
+									</select>
+									<span class="input-group-btn">
+										<input type="submit" class="btn btn-default" name="addpoll" value="{tr}Add{/tr}">
+									</span>
+								</div>
 							</div>
-							<div class="col-sm-2">
-								<input type="submit" class="btn btn-default btn-sm" name="addpoll" value="{tr}Add{/tr}">
-							</div>
-						</div>
-					{/if}
+						{/if}
 
-					{if $prefs.feature_faqs eq 'y and $faqs'}
-						<div class="form-group">
-						<label class="col-sm-3" for="faqId">{tr}FAQ{/tr}</label>
-							<div class="col-sm-7">
-								<select name="faqId" id="faqId">
-									{section name=ix loop=$faqs}
-										<option value="{$faqs[ix].faqId|escape}">{$faqs[ix].title|truncate:80:"(...)":true|escape}</option>
-									{/section}
-								</select>
+						{if $prefs.feature_faqs eq 'y' and $faqs}
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="faqId">
+									{tr}FAQ{/tr}
+								</label>
+								<div class="col-sm-6 input-group">
+									<select name="faqId" id="faqId" class="form-control">
+										{section name=ix loop=$faqs}
+											<option value="{$faqs[ix].faqId|escape}">
+												{$faqs[ix].title|truncate:80:"(...)":true|escape}
+											</option>
+										{/section}
+									</select>
+									<span class="input-group-btn">
+										<input type="submit" class="btn btn-default" name="addfaq" value="{tr}Add{/tr}">
+									</span>
+								</div>
 							</div>
-							<div class="col-sm-2">
-								<input type="submit" class="btn btn-default btn-sm" name="addfaq" value="{tr}Add{/tr}">
-							</div>
-						</div>
-					{/if}
+						{/if}
 
-					{if $prefs.feature_trackers eq 'y' and $trackers}
-						<div class="form-group">
-						<label class="col-sm-3" for="trackerId">{tr}Tracker{/tr}</label>
-							<div class="col-sm-7">
-								<select name="trackerId" id="trackerId">
-									{section name=ix loop=$trackers}
-										<option value="{$trackers[ix].trackerId|escape}">{$trackers[ix].name|truncate:80:"(...)":true|escape}</option>
-									{/section}
-								</select>
+						{if $prefs.feature_trackers eq 'y' and $trackers}
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="trackerId">
+									{tr}Tracker{/tr}
+								</label>
+								<div class="col-sm-6 input-group">
+									<select name="trackerId" id="trackerId" class="form-control">
+										{section name=ix loop=$trackers}
+											<option value="{$trackers[ix].trackerId|escape}">
+												{$trackers[ix].name|truncate:80:"(...)":true|escape}
+											</option>
+										{/section}
+									</select>
+									<span class="input-group-btn">
+										<input type="submit"  class="btn btn-default" name="addtracker" value="{tr}Add{/tr}">
+									</span>
+								</div>
 							</div>
-							<div class="col-sm-2">
-								<input type="submit" name="addtracker" value="{tr}Add{/tr}">
-							</div>
-						</div>
-					{/if}
+						{/if}
 
-					{if $prefs.feature_quizzes eq 'y' and $quizzes}
-						<div class="form-group">
-							<label class="col-sm-3" for="quizId">{tr}quiz{/tr}</label>
-							<div class="col-sm-7">
-								<select name="quizId" id="quizId">
-									{section name=ix loop=$quizzes}
-										<option value="{$quizzes[ix].quizId|escape}">{$quizzes[ix].name|truncate:80:"(...)":true|escape}</option>
-									{/section}
-								</select>
+						{if $prefs.feature_quizzes eq 'y' and $quizzes}
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="quizId">
+									{tr}Quiz{/tr}
+								</label>
+								<div class="col-sm-6 input-group">
+									<select name="quizId" id="quizId" class="form-control">
+										{section name=ix loop=$quizzes}
+											<option value="{$quizzes[ix].quizId|escape}">
+												{$quizzes[ix].name|truncate:80:"(...)":true|escape}
+											</option>
+										{/section}
+									</select>
+									<span class="input-group-btn">
+										<input type="submit" class="btn btn-default" name="addquiz" value="{tr}Add{/tr}">
+									</span>
+								</div>
 							</div>
-							<div class="col-sm-2">
-								<input type="submit" class="btn btn-default btn-sm" name="addquiz" value="{tr}Add{/tr}">
-							</div>
-						</div>
-					{/if}
-
+						{/if}
+					</fieldset>
 				</form>
 				{pagination_links cant=$maximum step=$maxRecords offset=$offset}{/pagination_links}
 			{/if}

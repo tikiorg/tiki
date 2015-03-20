@@ -5,9 +5,9 @@
 	<div class="description help-block">{$p_info.description|escape|nl2br}</div>
 {/if}
 <div class="form-group categbar">
-	{button href="tiki-edit_categories.php" _text="{tr}Organize Objects{/tr}" _title="{tr}Organize Objects{/tr}"}
+	{button href="tiki-edit_categories.php" _text="{tr}Organize Objects{/tr}" _icon_name="structure" _title="{tr}Organize Objects{/tr}"}
 	{if $tiki_p_admin_categories eq 'y'}
-		{button href="tiki-admin_categories.php?parentId=$parentId" _text="{tr}Admin Categories{/tr}" _title="{tr}Admin the Category System{/tr}"}
+		{button href="tiki-admin_categories.php?parentId=$parentId" _icon_name="administer" _text="{tr}Admin Categories{/tr}" _title="{tr}Admin the Category System{/tr}"}
 	{/if}
 </div>
 
@@ -23,76 +23,108 @@
 		<ul class="dropdown-menu" role="menu">
 			{if $prefs.feature_wiki eq 'y'}
 				<li>
-					<a class="btn btn-link" {if $type eq 'wiki page'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=wiki+page&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}Wiki pages{/tr}</a>
+					<a {if $type eq 'wiki page'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=wiki+page&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">
+						{tr}Wiki pages{/tr}
+					</a>
 				</li>
 			{/if}
 			{if $prefs.feature_galleries eq 'y'}
 				<li>
-					<a class="btn btn-link" {if $type eq 'image gallery'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=image+gallery&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}Image galleries{/tr}</a>
+					<a {if $type eq 'image gallery'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=image+gallery&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">
+						{tr}Image galleries{/tr}
+					</a>
 				</li>
 				<li>
-					<a class="btn btn-link" {if $type eq 'image'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=image&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}Images{/tr}</a>
+					<a {if $type eq 'image'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=image&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">
+						{tr}Images{/tr}
+					</a>
 				</li>
 			{/if}
 			{if $prefs.feature_file_galleries eq 'y'}
 				<li>
-					<a class="btn btn-link" {if $type eq 'file gallery'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=file+gallery&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}File Galleries{/tr}</a>
+					<a {if $type eq 'file gallery'}id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=file+gallery&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">
+						{tr}File Galleries{/tr}
+					</a>
 				</li>
 				<li>
-					<a class="btn btn-link" {if $type eq 'file'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=file&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}Files{/tr}</a>
+					<a {if $type eq 'file'}id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=file&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">
+						{tr}Files{/tr}
+					</a>
 				</li>
 			{/if}
 			{if $prefs.feature_blogs eq 'y'}
 				<li>
-					<a class="btn btn-link" {if $type eq 'blog'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=blog&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}Blogs{/tr}</a>
+					<a {if $type eq 'blog'}id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=blog&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">
+						{tr}Blogs{/tr}
+					</a>
 				</li>
 			{/if}
 			{if $prefs.feature_trackers eq 'y'}
 				<li>
-					<a class="btn btn-link" {if $type eq 'tracker'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=tracker&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}Trackers{/tr}</a>
+					<a {if $type eq 'tracker'}id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=tracker&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">
+						{tr}Trackers{/tr}
+					</a>
 				</li>
 				<li>
-					<a class="btn btn-link" {if $type eq 'trackeritem'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=trackeritem&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}Trackers Items{/tr}</a>
+					<a {if $type eq 'trackeritem'}id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=trackeritem&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">
+						{tr}Trackers Items{/tr}
+					</a>
 				</li>
 			{/if}
 			{if $prefs.feature_quizzes eq 'y'}
 				<li>
-					<a class="btn btn-link" {if $type eq 'quiz'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=quiz&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}Quizzes{/tr}</a>
+					<a {if $type eq 'quiz'}id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=quiz&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">
+						{tr}Quizzes{/tr}
+					</a>
 				</li>
 			{/if}
 			{if $prefs.feature_polls eq 'y'}
 				<li>
-					<a class="btn btn-link" {if $type eq 'poll'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=poll&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}Polls{/tr}</a>
+					<a {if $type eq 'poll'}id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=poll&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">
+						{tr}Polls{/tr}
+					</a>
 				</li>
 			{/if}
 			{if $prefs.feature_surveys eq 'y'}
 				<li>
-					<a class="btn btn-link" {if $type eq 'survey'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=survey&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}Surveys{/tr}</a>
+					<a {if $type eq 'survey'}id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=survey&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">
+						{tr}Surveys{/tr}
+					</a>
 				</li>
 			{/if}
 			{if $prefs.feature_directory eq 'y'}
 				<li>
-					<a class="btn btn-link" {if $type eq 'directory'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=directory&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}Directory{/tr}</a>
+					<a {if $type eq 'directory'}id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=directory&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">
+						{tr}Directory{/tr}
+					</a>
 				</li>
 			{/if}
 			{if $prefs.feature_faqs eq 'y'}
 				<li>
-					<a class="btn btn-link" {if $type eq 'faq'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=faq&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}FAQs{/tr}</a>
+					<a {if $type eq 'faq'}id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=faq&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">
+						{tr}FAQs{/tr}
+					</a>
 				</li>
 			{/if}
 			{if $prefs.feature_sheet eq 'y'}
 				<li>
-					<a class="btn btn-link" {if $type eq 'sheet'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=sheet&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}Sheets{/tr}</a>
+					<a {if $type eq 'sheet'}id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=sheet&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">
+						{tr}Sheets{/tr}
+					</a>
 				</li>
 			{/if}
 			{if $prefs.feature_articles eq 'y'}
 				<li>
-					<a class="btn btn-link" {if $type eq 'article'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=article&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}Articles{/tr}</a>
+					<a {if $type eq 'article'}id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=article&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">
+						{tr}Articles{/tr}
+					</a>
 				</li>
 			{/if}
 			{if $prefs.feature_forums eq 'y'}
 				<li>
-					<a class="btn btn-link" {if $type eq 'forum'} id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=forum&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}Forums{/tr}</a>
+					<a {if $type eq 'forum'}id="highlight"{/if} href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type=forum&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">
+						{tr}Forums{/tr}
+					</a>
 				</li>
 			{/if}
 		</ul>
@@ -115,7 +147,7 @@
 	</div>
 	<div class="form-group">
 		<div class="checkbox">
-			<label><input type="checkbox" name="deep" {if $deep eq 'on'}checked="checked"{/if}>{tr}in the current category - and its subcategories{/tr}</label>
+			<label><input type="checkbox" name="deep" {if $deep eq 'on'}checked="checked"{/if}>{tr} in the current category and its subcategories{/tr}</label>
 		</div>
 	</div>
 	<input type="hidden" name="parentId" value="{$parentId|escape}">
@@ -124,7 +156,9 @@
 </form>
 
 {if $deep eq 'on'}
-	<a class="link" href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;type={$type|escape:"url"}&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}Hide subcategories objects{/tr}</a>
+	<a class="link" href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;type={$type|escape:"url"}&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">
+		{tr}Hide subcategories objects{/tr}
+	</a>
 {else}
 	<a class="link" href="tiki-browse_categories.php?find={$find|escape:"url"}&amp;type={$type|escape:"url"}&amp;deep=on&amp;parentId={$parentId|escape:"url"}&amp;sort_mode={$sort_mode|escape:"url"}">{tr}Show subcategories objects{/tr}</a>
 {/if}
@@ -138,12 +172,14 @@
 			&nbsp;{$prefs.site_crumb_seper}&nbsp;
 			<a class="categpath" href="tiki-browse_categories.php?parentId={$id}&amp;deep={$deep|escape:"url"}&amp;type={$type|escape:"url"}">{$name|escape}</a>
 		{/foreach}
-			{$eyes_curr}
+		{$eyes_curr}
 	</div>
 
 	{if $parentId ne '0'}
 		<div>
-			<a class="catname" href="tiki-browse_categories.php?parentId={$father|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type={$type|escape:"url"}" title="{tr}Upper level{/tr}">..</a>
+			<a class="catname tips" href="tiki-browse_categories.php?parentId={$father|escape:"url"}&amp;deep={$deep|escape:"url"}&amp;type={$type|escape:"url"}" title=":{tr}Up one level{/tr}">
+				..
+			</a>
 		</div>
 	{/if}
 {/if}
@@ -170,7 +206,9 @@
 				{section name=ix loop=$objects}
 					<tr>
 						<td class="text">
-							<a class="catname" href="{if empty($objects[ix].sefurl)}{$objects[ix].href}{else}{$objects[ix].sefurl}{/if}">{$objects[ix].name|escape|default:'&nbsp;'}</a>
+							<a class="catname" href="{if empty($objects[ix].sefurl)}{$objects[ix].href}{else}{$objects[ix].sefurl}{/if}">
+								{$objects[ix].name|escape|default:'&nbsp;'}
+							</a>
 							{if $objects[ix].type ne 'blog post'}<div class="subcomment">{$objects[ix].description|escape|nl2br}</div>{/if}
 						</td>
 						<td class="text">
