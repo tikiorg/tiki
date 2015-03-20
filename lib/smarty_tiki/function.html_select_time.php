@@ -119,7 +119,7 @@ function smarty_function_html_select_time($params, $smarty)
 			$selected = $time == '--' ? $hour_empty : TikiLib::date_format($hour_fmt, $time);
 		}
 
-		$html_result .= '<select name=';
+		$html_result .= '<select class="form-control date" name=';
 
 		if (null !== $field_array) {
 			$html_result .= '"' . $field_array . '[' . $prefix . 'Hour]"';
@@ -201,7 +201,7 @@ function smarty_function_html_select_time($params, $smarty)
 			$selected = '0'.$selected;
 		}
 
-		$html_result .= '<select name=';
+		$html_result .= '<select class="form-control date" name=';
 		if (null !== $field_array) {
 			$html_result .= '"' . $field_array . '[' . $prefix . 'Minute]"';
 		} else {
@@ -247,7 +247,7 @@ function smarty_function_html_select_time($params, $smarty)
 			$selected = $time =='--'?$second_empty:intval(floor(strftime('%S', $time) / $second_interval) * $second_interval);
 		}
 
-		$html_result .= '<select name=';
+		$html_result .= '<select class="form-control date" name=';
 
 		if (null !== $field_array) {
 			$html_result .= '"' . $field_array . '[' . $prefix . 'Second]"';
@@ -282,7 +282,7 @@ function smarty_function_html_select_time($params, $smarty)
 	}
 
 	if (!$use_24_hours) {
-		$html_result .= '<select name=';
+		$html_result .= '<select class="form-control date" name=';
 		if (null !== $field_array) {
 			$html_result .= '"' . $field_array . '[' . $prefix . 'Meridian]"';
 		} else {
