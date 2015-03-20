@@ -28,35 +28,52 @@
 		<table class="table normal">
 			<tr>
 				<th>
-					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'calendarId_desc'}calendarId_asc{else}calendarId_desc{/if}">{tr}ID{/tr}</a>
+					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'calendarId_desc'}calendarId_asc{else}calendarId_desc{/if}">
+						{tr}ID{/tr}
+					</a>
 				</th>
 				<th>
-					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a>
+					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">
+						{tr}Name{/tr}
+					</a>
 				</th>
 				<th>
-					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customlocations_desc'}customlocations_asc{else}customlocations_desc{/if}">{tr}Loc{/tr}</a>
+					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customlocations_desc'}customlocations_asc{else}customlocations_desc{/if}">
+						{tr}Loc{/tr}
+					</a>
 				</th>
 				<th>
-					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customparticipants_desc'}customparticipants_asc{else}customparticipants_desc{/if}">{tr}Participants{/tr}</a>
+					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customparticipants_desc'}customparticipants_asc{else}customparticipants_desc{/if}">
+						{tr}Participants{/tr}
+					</a>
 				</th>
 				<th>
-					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customcategories_desc'}customcategories_asc{else}customcategories_desc{/if}">{tr}Cat{/tr}</a>
+					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customcategories_desc'}customcategories_asc{else}customcategories_desc{/if}">
+						{tr}Cat{/tr}
+					</a>
 				</th>
 				<th>
-					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customlanguages_desc'}customlanguages_asc{else}customlanguages_desc{/if}">{tr}Lang{/tr}</a>
+					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customlanguages_desc'}customlanguages_asc{else}customlanguages_desc{/if}">
+						{tr}Lang{/tr}
+					</a>
 				</th>
 				<th>{tr}Url{/tr}</th>
 				<th>
-					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'custompriorities_desc'}custompriorities_asc{else}custompriorities_desc{/if}">{tr}Prio{/tr}</a>
+					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'custompriorities_desc'}custompriorities_asc{else}custompriorities_desc{/if}">
+						{tr}Prio{/tr}
+					</a>
 				</th>
 				<th>
-					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customsubscription_desc'}customsubscription_asc{else}customsubscription_desc{/if}">{tr}Subscription{/tr}</a>
+					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customsubscription_desc'}customsubscription_asc{else}customsubscription_desc{/if}">
+						{tr}Subscription{/tr}
+					</a>
 				</th>
 				<th>
-					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'personal_desc'}personal_asc{else}personal_desc{/if}">{tr}Perso{/tr}</a>
+					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'personal_desc'}personal_asc{else}personal_desc{/if}">
+						{tr}Perso{/tr}
+					</a>
 				</th>
-				<th>{tr}Perms{/tr}</th>
-				<th>{tr}Action{/tr}</th>
+				<th></th>
 			</tr>
 
 			{foreach key=id item=cal from=$calendars}
@@ -84,12 +101,31 @@
 					<td class="text">{$cal.custompriorities|yesno}</td>
 					<td class="text">{$cal.customsubscription|yesno}</td>
 					<td class="text">{$cal.personal|yesno}</td>
-					<td class="text">{permission_link mode=glyph type=calendar id=$id title=$cal.name}</td>
 					<td class="action">
-						<a title="{$cal.name|escape}:{tr}Edit{/tr}" class="link tips" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;calendarId={$id}&cookietab=2">{icon name='edit'}</a>
-						<a title="{$cal.name|escape}:{tr}View{/tr}" class="link tips" href="tiki-calendar.php?calIds[]={$id}">{icon name='view' alt="{tr}View{/tr}"}</a>
-						<a title="{$cal.name|escape}:{tr}Delete{/tr}" class="link tips" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;drop={$id}&amp;calendarId={$id}" title="{tr}Delete{/tr}">{icon name='remove' alt="{tr}Delete{/tr}"}</a>
-						<a title="{$cal.name|escape}:{tr}Add event{/tr}" class="link tips" href="tiki-calendar_edit_item.php?calendarId={$id}">{icon name='add' alt="{tr}Add Event{/tr}"}</a>
+						{capture name=admin_calendar_actions}
+							{strip}
+								<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;calendarId={$id}&cookietab=2">
+									{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+								</a>
+								<a href="tiki-calendar.php?calIds[]={$id}">
+									{icon name='view' _menu_text='y' _menu_icon='y' alt="{tr}View{/tr}"}
+								</a>
+								<a href="tiki-calendar_edit_item.php?calendarId={$id}">
+									{icon name='create' _menu_text='y' _menu_icon='y' alt="{tr}Add event{/tr}"}
+								</a>
+								{permission_link mode=text type=calendar id=$id title=$cal.name}
+								<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;drop={$id}&amp;calendarId={$id}">
+									{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Delete{/tr}"}
+								</a>
+							{/strip}
+						{/capture}
+						<a class="tips"
+						   title="{tr}Actions{/tr}"
+						   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.admin_calendar_actions|escape:"javascript"|escape:"html"}
+						   style="padding:0; margin:0; border:0"
+								>
+							{icon name='wrench'}
+						</a>
 					</td>
 				</tr>
 			{foreachelse}
@@ -109,6 +145,7 @@
 		<h2>{$edtab}</h2>
 
 		<form action="tiki-admin_calendars.php" method="post" class="form-horizontal" role="form">
+			<fieldset>
 			<input type="hidden" name="calendarId" value="{$calendarId|escape}">
 			{if $tiki_p_modify_object_categories eq 'y'}
 				<div class="form-group">
@@ -296,9 +333,11 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label" for="customcategories">{tr}Standard Colors{/tr}</label>
-				<div class="col-sm-9 checkbox-inline">
-					<select name="options[customcolors]" onChange="javascript:document.getElementById('fgColorField').disabled=(this.options[this.selectedIndex].value != 0);document.getElementById('bgColorField').disabled=(this.options[this.selectedIndex].value != 0);">
+				<label class="col-sm-3 control-label" for="customcategories">
+					{tr}Standard Colors{/tr}
+				</label>
+				<div class="col-sm-2">
+					<select class="form-control" name="options[customcolors]" onChange="javascript:document.getElementById('fgColorField').disabled=(this.options[this.selectedIndex].value != 0);document.getElementById('bgColorField').disabled=(this.options[this.selectedIndex].value != 0);">
 						<option value="" />
 						<option value="008400-99fa99" style="background-color:#99fa99;color:#008400" {if ($customColors) eq '008400-99fa99'}selected{/if}>{tr}Green{/tr}</option>
 						<option value="3333ff-aaccff" style="background-color:#aaccff;color:#3333ff" {if ($customColors) eq '3333ff-aaccff'}selected{/if}>{tr}Blue{/tr}</option>
@@ -310,46 +349,63 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label" for="customcategories">{tr}Custom foreground color{/tr}</label>
+				<label class="col-sm-3 control-label" for="customcategories">
+					{tr}Custom foreground color{/tr}
+				</label>
 				<div class="col-sm-9 checkbox-inline">
 					<input id="fgColorField" type="text" name="options[customfgcolor]" value="{$customfgcolor}" size="6"> <i>{tr}Ex:{/tr} FFFFFF</i>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label" for="customcategories">{tr}Custom background color{/tr}</label>
+				<label class="col-sm-3 control-label" for="customcategories">
+					{tr}Custom background color{/tr}
+				</label>
 				<div class="col-sm-9 checkbox-inline">
 					<input id="bgColorField" type="text" name="options[custombgcolor]" value="{$custombgcolor}" size="6"> <i>{tr}Ex:{/tr} 000000</i>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label" for="customcategories">{tr}Status{/tr}</label>
-				<div class="col-sm-9 checkbox-inline">
-					<select name="customstatus">
+				<label class="col-sm-3 control-label" for="customcategories">
+					{tr}Status{/tr}
+				</label>
+				<div class="col-sm-2">
+					<select name="customstatus" class="form-control">
 						<option value='y' {if $info.customstatus ne 'n'}selected="selected"{/if}>{tr}Yes{/tr}</option>
 						<option value='n' {if $info.customstatus eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
 					</select>
-					<br>
-					<div class="checkbox-inline">
-					<label class="control-label">{tr}Default event status:{/tr}</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">
+					{tr}Default event status:{/tr}
+				</label>
+				<div class="col-sm-2">
 					{html_options name='options[defaulteventstatus]' options=$eventstatus selected=$defaulteventstatus}<br>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="checkbox col-sm-3 col-sm-offset-3">
 					<label class="control-label">
 						<input type="checkbox" name="show[status]" value="on"{if $info.show_status eq 'y'} checked="checked"{/if}>
 						{tr}Show in popup view{/tr}
 					</label>
-					</div><br>
-					<div class="checkbox-inline">
-						<label class="control-label">
-							<input type="checkbox" name="show[status_calview]" value="on"{if $info.show_status_calview ne 'n'} checked="checked"{/if}>
-							{tr}Show in calendar view{/tr}
-						</label>
-					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="checkbox col-sm-3 col-sm-offset-3">
+					<label class="control-label">
+						<input type="checkbox" name="show[status_calview]" value="on"{if $info.show_status_calview ne 'n'} checked="checked"{/if}>
+						{tr}Show in calendar view{/tr}
+					</label>
 				</div>
 			</div>
 			{if $prefs.feature_groupalert eq 'y'}
 				<div class="form-group">
-					<label class="col-sm-2 control-label" for="customcategories">{tr}Group of users alerted when calendar event is modified{/tr}</label>
-					<div class="col-sm-10 checkbox-inline">
-						<select id="groupforAlert" name="groupforAlert">
+					<label class="col-sm-3 control-label" for="customcategories">
+						{tr}Group of users alerted when calendar event is modified{/tr}
+					</label>
+					<div class="col-sm-2">
+						<select id="groupforAlert" name="groupforAlert" class="form-control">
 							<option value="">&nbsp;</option>
 							{foreach key=k item=i from=$groupforAlertList}
 								<option value="{$k|escape}" {$i}>{$k|escape}</option>
@@ -358,30 +414,44 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label" for="customcategories">{tr}Allows each user to be selected for small groups{/tr}</label>
-					<div class="col-sm-10 checkbox-inline">
+					<label class="col-sm-3 control-label" for="customcategories">
+						{tr}Allows each user to be selected for small groups{/tr}
+					</label>
+					<div class="col-sm-2">
 						<input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if}>
 					</div>
 				</div>
 			{/if}
 			<div class="form-group">
-				<label class="col-sm-3 control-label" for="customcategories">{tr}Default event to all day{/tr}</label>
-				<div class="col-sm-9 checkbox-inline">
+				<label class="col-sm-3 control-label" for="customcategories">
+					{tr}Default event to all day{/tr}
+				</label>
+				<div class="col-sm-9">
 					<input type="checkbox" name="allday"{if $info.allday eq 'y'} checked="checked"{/if}>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label" for="customcategories">{tr}Event name on each day in calendar view{/tr}</label>
-				<div class="col-sm-9 checkbox-inline">
+				<label class="col-sm-3 control-label" for="customcategories">
+					{tr}Event name on each day in calendar view{/tr}
+				</label>
+				<div class="col-sm-9">
 					<input type="checkbox" name="nameoneachday"{if $info.nameoneachday eq 'y'} checked="checked"{/if}>
 				</div>
 			</div>
 			<div class="form-group">
 				<input type="submit" class="btn btn-primary col-sm-offset-4" name="save" value="{tr}Save{/tr}">
 			</div>
-
-			{if $calendarId ne 0}{$name|escape} : {/if}
-			{tr}Delete events older than:{/tr} <input type="text" name="days" value="0"> {tr}days{/tr} <input type="submit" class="btn btn-warning btn-sm" name="clean" value="{tr}Delete{/tr}">
+			</fieldset>
+			<fieldset>
+				<legend>Delete old events</legend>
+				<div class="form-group">
+					<label class="col-sm-3 control-label" for="days">
+						{tr}Delete events older than:{/tr}
+					</label>
+					<div class="col-sm-9">
+						<input type="text" name="days" value="0"> {tr}days{/tr} <input type="submit" class="btn btn-warning btn-sm" name="clean" value="{tr}Delete{/tr}">				</div>
+				</div>
+			</fieldset>
 		</form>
 	{/tab}
 {/tabset}
