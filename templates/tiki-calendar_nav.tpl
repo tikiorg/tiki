@@ -29,7 +29,7 @@
 	{*previous*}
 				<div>
 					<a class="tips" href="{query _type='relative' _ajax=$ajax _class='prev' todate=$focus_prev}" title=":{tr}Previous {$viewmode}{/tr}">
-						{icon name="caret-left"}
+						{icon name="previous"}
 					</a>
 				</div>
 
@@ -58,7 +58,7 @@
 	{*next*}
 				<div>
 					<a class="tips" href="{query _type='relative' _ajax=$ajax _class='next' todate=$focus_next}" title=":{tr}Next {$viewmode}{/tr}">
-						{icon name="caret-right"}
+						{icon name="next"}
 					</a>
 				</div>
 			{/strip}</span>
@@ -71,7 +71,7 @@
 	<div class="calnavigation">
 {*previous*}
 		{if !empty($module_params.viewnavbar) && $module_params.viewnavbar eq 'partial'}
-			{self_link _ajax=$ajax _class="prev tips" todate=$focus_prev _title=":{tr}Previous {$viewmode}{/tr}" _icon_name="caret-left"}{/self_link}
+			{self_link _ajax=$ajax _class="prev tips" todate=$focus_prev _title=":{tr}Previous {$viewmode}{/tr}" _icon_name="previous"}{/self_link}
 		{/if}
 
 		{if $viewlist ne 'list' or $prefs.calendar_list_begins_focus ne 'y'}
@@ -93,7 +93,7 @@
 
 {*next*}
 		{if !empty($module_params.viewnavbar) && $module_params.viewnavbar eq 'partial'}
-			{self_link _ajax=$ajax _class="next" todate=$focus_next _title=":{tr}Next {$viewmode}{/tr}" _icon_name="caret-right"}{/self_link}
+			{self_link _ajax=$ajax _class="next" todate=$focus_next _title=":{tr}Next {$viewmode}{/tr}" _icon_name="next"}{/self_link}
 		{/if}
 	</div>
 {/if}

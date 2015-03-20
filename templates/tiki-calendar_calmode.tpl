@@ -26,18 +26,26 @@
 									<td class="focus {if $cell[w][d].day eq $today}calhighlight{/if}" style="width:50%;text-align:left">
 										{* test display_field_order and use %d/%m or %m/%d on each day 'cell' *}
 										{if ($prefs.display_field_order eq 'DMY') || ($prefs.display_field_order eq 'DYM') || ($prefs.display_field_order eq 'YDM')}
-											<a href="{$myurl}?focus={$cell[w][d].day}" title="{tr}Change Focus{/tr}" style="font-size:11px">{$cell[w][d].day|tiki_date_format:"%d/%m"}</a>
+											<a href="{$myurl}?focus={$cell[w][d].day}" title="{tr}Change Focus{/tr}" style="font-size:11px">
+												{$cell[w][d].day|tiki_date_format:"%d/%m"}
+											</a>
 										{else}
-											<a href="{$myurl}?focus={$cell[w][d].day}" title="{tr}Change Focus{/tr}" style="font-size:11px">{$cell[w][d].day|tiki_date_format:"%m/%d"}</a>
+											<a href="{$myurl}?focus={$cell[w][d].day}" title="{tr}Change Focus{/tr}" style="font-size:11px">
+												{$cell[w][d].day|tiki_date_format:"%m/%d"}
+											</a>
 										{/if}
 									</td>
 									{if $myurl neq "tiki-action_calendar.php"}
-										<td class="focus {if $cell[w][d].day eq $today}calhighlight{/if}" style="width:50%;text-align:right">
+										<td class="focus {if $cell[w][d].day eq $today}calhighlight{/if}" style="width:50%;text-align:right;font-size:75%">
 											{* add additional check to NOT show add event icon if no calendar displayed *}
 											{if $tiki_p_add_events eq 'y' and count($listcals) > 0 and $displayedcals|@count > 0}
-												<a href="tiki-calendar_edit_item.php?todate={$cell[w][d].day}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}" title="{tr}Add Event{/tr}" class="addevent">{icon _id='calendar_add' alt="{tr}+{/tr}" title="{tr}Add Event{/tr}"}</a>
+												<a href="tiki-calendar_edit_item.php?todate={$cell[w][d].day}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}" title=":{tr}Add event{/tr}" class="addevent tips">
+													{icon name='create'}
+												</a>
 											{/if}
-											<a class="viewthisday" href="tiki-calendar.php?viewmode=day&amp;todate={$cell[w][d].day}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}" title="{tr}View this Day{/tr}">{icon _id='img/icons/external_link.gif' width=7 height=8 alt="{tr}o{/tr}" title="{tr}View this Day{/tr}"}</a>
+											<a class="viewthisday tips" href="tiki-calendar.php?viewmode=day&amp;todate={$cell[w][d].day}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}" title=":{tr}View this Day{/tr}">
+												{icon name='calendar'}
+											</a>
 										</td>
 									{/if}
 								</tr>
