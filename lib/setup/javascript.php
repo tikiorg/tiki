@@ -16,25 +16,27 @@ $js_cookie = getCookie('javascript_enabled');
 
 if ($prefs['disableJavascript'] == 'y' ) {
 	$prefs['javascript_enabled'] = 'n';
-} elseif ($js_cookie) {
+} elseif (!empty($js_cookie)) {
 	// Update the pref with the cookie value
 	$prefs['javascript_enabled'] = $js_cookie;
 } else {
-	$prefs['javascript_enabled'] = 'y';
+	$prefs['javascript_enabled'] = 'n';
 }
 
-if ( $prefs['javascript_enabled'] != 'y' && $prefs['disableJavascript'] != 'y' ) {
-	// Set the cookie to 'y', through javascript (will override the above cookie set to 'n' and sent by PHP / HTTP headers) - duration: approx. 1 year
-	$headerlib->add_js("setCookie('javascript_enabled', 'y');", 0);
+// the first and second time, we should not trust the absence of javascript_enabled cookie yet,
+// as it could be a redirection and the js will not get a chance to run yet, so we wait until the third run,
+// assuming that js is on before then
+$runs_before_js_detect = getCookie('runs_before_js_detect');
 
-	// the first and second time, we should not trust the absence of javascript_enabled cookie yet, as it could be a redirection and the js will not get a chance to run yet, so we wait until the third run, assuming that js is on before then
-	$runs_before_js_detect = getCookie('runs_before_js_detect');
-	if ( $runs_before_js_detect === null ) {
-		$prefs['javascript_enabled'] = 'y';
-		setCookieSection('runs_before_js_detect', '1', null, $tikilib->now + 365 * 24 * 3600);
-	} elseif ( $runs_before_js_detect > 0 ) {
-		$prefs['javascript_enabled'] = 'y';
-		setCookieSection('runs_before_js_detect', $runs_before_js_detect - 1, null, $tikilib->now + 365 * 24 * 3600);
+if ( $prefs['javascript_enabled'] != 'y' && $prefs['disableJavascript'] != 'y' && empty($runs_before_js_detect)) {
+	// Set the cookie to 'y', through javascript (will override the above cookie set to 'n' and sent by PHP / HTTP headers) - duration: approx. 1 year
+	$prefs['javascript_enabled'] = 'y';											// temporarily enable to we output the test js
+	$headerlib->add_js("setCookieBrowser('javascript_enabled', 'y');", 0);		// setCookieBrowser does not use the tiki_cookie_jar
+
+	if ( empty($runs_before_js_detect) ) {
+		setCookieSection('runs_before_js_detect', '1', '', $tikilib->now + 365 * 24 * 3600);
+	} elseif ( !empty($runs_before_js_detect) ) {
+		$prefs['javascript_enabled'] = 'n';
 	}
 }
 
