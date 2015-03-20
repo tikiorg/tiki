@@ -308,7 +308,7 @@
 				<label class="col-sm-3 control-label" for="customcategories">
 					{tr}Start of day{/tr}
 				</label>
-				<div class="col-sm-2 checkbox-inline">
+				<div class="col-sm-2">
 					{html_select_time prefix="startday_" time=$info.startday display_minutes=false display_seconds=false use_24_hours=$use_24hr_clock}
 				</div>
 			</div>
@@ -316,7 +316,7 @@
 				<label class="col-sm-3 control-label" for="customcategories">
 					{tr}End of day{/tr}
 				</label>
-				<div class="col-sm-9 checkbox-inline">
+				<div class="col-sm-9">
 					{html_select_time prefix="endday_" time=$info.endday display_minutes=false display_seconds=false use_24_hours=$use_24hr_clock}
 				</div>
 			</div>
@@ -327,7 +327,9 @@
 				<div class="col-sm-9">
 					{section name="viewdays" start=0 loop=7}
 					<div class="checkbox-inline">
-						<label class="control-label"><input type="checkbox" name="viewdays[]" value="{$smarty.section.viewdays.index}" {if !empty($info.viewdays) && in_array($smarty.section.viewdays.index,$info.viewdays)} checked="checked" {/if}>{$days_names[$smarty.section.viewdays.index]}</label>
+						<label class="control-label"><input type="checkbox" name="viewdays[]" value="{$smarty.section.viewdays.index}" {if !empty($info.viewdays) && in_array($smarty.section.viewdays.index,$info.viewdays)} checked="checked" {/if}>
+							{$days_names[$smarty.section.viewdays.index]}
+						</label>
 					</div>
 					{/section}
 				</div>
@@ -352,7 +354,7 @@
 				<label class="col-sm-3 control-label" for="customcategories">
 					{tr}Custom foreground color{/tr}
 				</label>
-				<div class="col-sm-9 checkbox-inline">
+				<div class="col-sm-9">
 					<input id="fgColorField" type="text" name="options[customfgcolor]" value="{$customfgcolor}" size="6"> <i>{tr}Ex:{/tr} FFFFFF</i>
 				</div>
 			</div>
@@ -360,7 +362,7 @@
 				<label class="col-sm-3 control-label" for="customcategories">
 					{tr}Custom background color{/tr}
 				</label>
-				<div class="col-sm-9 checkbox-inline">
+				<div class="col-sm-9">
 					<input id="bgColorField" type="text" name="options[custombgcolor]" value="{$custombgcolor}" size="6"> <i>{tr}Ex:{/tr} 000000</i>
 				</div>
 			</div>

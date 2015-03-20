@@ -130,9 +130,8 @@
 			</div>
 			<div class="form-group {if $types.$type.show_pubdate neq 'y' and $types.$type.show_pre_publ eq 'y'}hidden{/if}">
 				<label>{tr}Publish Date{/tr}</label>
-				<div class="form-group">
-					{html_select_date prefix="publish_" time=$publishDate start_year="-10" end_year="+10" field_order=$prefs.display_field_order}
-					{tr}at{/tr}
+				<div class="col-sm-12">
+					{html_select_date prefix="publish_" time=$publishDate start_year="-10" end_year="+10" field_order=$prefs.display_field_order} {tr}at{/tr}
 					<span dir="ltr">
 						{html_select_time prefix="publish_" time=$publishDate display_seconds=false use_24_hours=$use_24hr_clock}
 						&nbsp;
@@ -142,7 +141,7 @@
 			</div>
 			<div class="form-group {if $types.$type.show_expdate neq 'y' and $types.$type.show_post_expire eq 'y'}hidden{/if}">
 				<label>{tr}Exiration Date{/tr}</label>
-				<div class="form-group">
+				<div class="col-sm-12">
 					{html_select_date prefix="expire_" time=$expireDate start_year="-10" end_year="+10" field_order=$prefs.display_field_order}
 					{tr}at{/tr}
 					<span dir="ltr">
@@ -370,10 +369,12 @@
 		{/tab}
 	{/tabset}
 
-	<div class="article-buttons text-center">
-		<input type="submit" class="wikiaction btn btn-default" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
-		<input type="submit" class="wikiaction btn btn-primary" name="save" value="{tr}Save{/tr}" onclick="this.form.saving=true;needToConfirm=false;">
-		{if $articleId}<input type="submit" class="wikiaction tips btn btn-link" title="{tr}Cancel{/tr}|{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}" onclick="needToConfirm=false;">{/if}
+	<div class="form-group"><br><br>
+		<div class="col-sm-offset-4">
+			<input type="submit" class="wikiaction btn btn-default" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
+			<input type="submit" class="wikiaction btn btn-primary" name="save" value="{tr}Save{/tr}" onclick="this.form.saving=true;needToConfirm=false;">
+			{if $articleId}<input type="submit" class="wikiaction tips btn btn-link" title="{tr}Cancel{/tr}|{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}" onclick="needToConfirm=false;">{/if}
+		</div>
 	</div>
 	{if $smarty.session.wysiwyg neq 'y'}
 		{jq}
