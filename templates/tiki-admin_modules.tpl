@@ -13,7 +13,7 @@
 	{else}
 		{button show_hidden_modules="" class="btn btn-default" _text="{tr}Hide hidden modules{/tr}"}
 	{/if}
-	{button href="./" _class="btn btn-warning" _text="{tr}Exit Modules{/tr}"}
+	{button href="./" _class="btn btn-default" _text="{tr}Exit Modules{/tr}"}
 	{button _text="{tr}Save{/tr}" _type="primary" class="btn btn-default" _id="save_modules" _ajax="n"}
 </div>
 
