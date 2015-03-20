@@ -15,8 +15,8 @@ function smarty_prefilter_log_tpl($source, $smarty)
 {
 	global $prefs;
 
-	if ($prefs['log_tpl'] != 'y' || $smarty->template_resource == 'evaluated template' ||
-			in_array($smarty->template_resource, array('tiki.tpl', 'error.tpl'))) {	// suppress log comment for templates that generate a DOCTYPE which must be output first
+	if ($prefs['log_tpl'] != 'y' || strpos($smarty->template_resource, 'eval:') === 0 || strpos($source, '<!DOCTYPE ') === 0) {
+		// suppress log comment for templates that generate a DOCTYPE which must be output first, or evaluated templates
 		return $source;
 	}
 	return '<!-- TPL: ' . $smarty->_current_file . ' -->' . $source . '<!-- /TPL: ' . $smarty->_current_file . ' -->';
