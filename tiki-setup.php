@@ -137,6 +137,7 @@ $cookie_consent_html = '';
 if ($prefs['cookie_consent_feature'] === 'y') {
 	if (!empty($_REQUEST['cookie_consent_checkbox']) || $prefs['site_closed'] === 'y') {
 		// js disabled
+		setCookieSection($prefs['cookie_consent_name'], 'y');	// set both real cookie and tiki_cookie_jar
 		$feature_no_cookie = false;
 		setCookieSection($prefs['cookie_consent_name'], 'y');
 	}
@@ -148,7 +149,9 @@ if ($prefs['cookie_consent_feature'] === 'y') {
 			$headerlib->add_js('jqueryTiki.no_cookie = true; jqueryTiki.cookie_consent_alert = "' . addslashes($prefs['cookie_consent_alert']) . '";');
 		}
 		foreach ($_COOKIE as $k => $v) {
-			setcookie($k, '', time() - 3600);		// unset any previously existing cookies
+			if (strpos($k, session_name()) === false) {
+				setcookie($k, '', time() - 3600);        // unset any previously existing cookies except the session
+			}
 		}
 		$cookie_consent_html = $smarty->fetch('cookie_consent.tpl');
 	} else {
