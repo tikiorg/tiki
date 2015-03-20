@@ -159,7 +159,7 @@
 				});
 			{/jq}
 		{/if}
-		<a href="{bootstrap_modal controller=search action=help}">{tr}Search Help{/tr} {icon _id=help}</a>
+		<a href="{bootstrap_modal controller=search action=help}">{tr}Search Help{/tr} {icon name='help'}</a>
 	</div>
 </form>
 {jq}

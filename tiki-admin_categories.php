@@ -298,16 +298,17 @@ $smarty->assign('categories', $categories);
 
 $treeNodes = array();
 $smarty->loadPlugin('smarty_function_icon');
+$smarty->loadPlugin('smarty_function_popup');
 $smarty->loadPlugin('smarty_function_permission_link');
 foreach ($categories as $category) {
 	$perms = Perms::get(array('type' => 'category', 'object' => $category['categId']));
 	if ($perms->admin_categories == 'y') {
-		$data = '<a class="tips" title="' . htmlspecialchars($category['name']) . ':' . tra('Edit')
-			. '" href="tiki-admin_categories.php?parentId=' . $category['parentId'] . '&amp;categId='
-			. $category['categId'] . '">' . smarty_function_icon(array('name'=>'edit'), $smarty) . '</a>';
-		$data .= '<a class="tips" title="' . htmlspecialchars($category['name']) . ':' . tra('Delete')
-			. '"href="tiki-admin_categories.php?parentId=' . $category['parentId'] . '&amp;removeCat='
-			. $category['categId'] . '">' . smarty_function_icon(array('name'=>'remove'), $smarty) . '</a>';
+		$data = '<a href="tiki-admin_categories.php?parentId=' . $category['parentId'] . '&amp;categId='
+			. $category['categId'] . '">' . smarty_function_icon(array('name'=>'edit', '_menu_text' => 'y',
+				'_menu_icon' => 'y', 'alt' =>  tra('Edit')), $smarty) . '</a>';
+		$data .= '<a href="tiki-admin_categories.php?parentId=' . $category['parentId'] . '&amp;removeCat='
+			. $category['categId'] . '">' . smarty_function_icon(array('name'=>'remove', '_menu_text' => 'y',
+				'_menu_icon' => 'y', 'alt' =>  tra('Delete')), $smarty) . '</a>';
 
 		if ($userlib->object_has_one_permission($category['categId'], 'category')) {
 			$title = tra('Edit permissions for this category');
@@ -317,17 +318,20 @@ foreach ($categories as $category) {
 		$data .= smarty_function_permission_link([
 			'id'=> $category['categId'],
 			'type' => 'category',
-			'title' => $category['name'],
-			'addclass' => 'tips',
-			'mode' => 'glyph',
-			'label' => htmlspecialchars($category['name']) . ':' . $title
+			'mode' => 'text',
 		], $smarty);
-		$data .= '<a class="catname" href="tiki-admin_categories.php?parentId=' . $category["categId"] . '">'
-			. htmlspecialchars($category['name']) .'</a> ';
+		$escapeddata = htmlspecialchars(strtr($data, array("\\" => "\\\\", "'" => "\\'", "\"" => "\\\"", "\r" => "\\r",
+			"\n" => "\\n", "</" => "<\/" )), ENT_QUOTES, 'UTF-8', true);
+		$popupparams = ['trigger' => 'click', 'fullhtml' => 1, 'center' => true, 'text' =>  $escapeddata];
+		$newdata =  '<a class="tips" title="' . tra('Actions') . '" href="#" '. smarty_function_popup( $popupparams, $smarty)
+		. 'style="padding:0; margin:0; border:0">' . smarty_function_icon(['name'=> 'wrench'], $smarty) . '</a>';
+
+		$catlink = '<a class="catname" href="tiki-admin_categories.php?parentId=' . $category["categId"] .
+			'" style="margin-left:5px">' . htmlspecialchars($category['name']) .'</a> ';
 		$treeNodes[] = array(
 			'id' => $category['categId'],
 			'parent' => $category['parentId'],
-			'data' => $data
+			'data' => $newdata . $catlink
 		);
 	}
 }
