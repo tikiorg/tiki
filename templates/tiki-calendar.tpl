@@ -10,43 +10,63 @@
 
 <div id="calscreen">
 	<div class="t_navbar margin-bottom-md">
-		{if $displayedcals|@count eq 1 and $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-			<a href="tiki-object_watches.php?objectId={$displayedcals[0]|escape:"url"}&amp;watch_event=calendar_changed&amp;objectType=calendar&amp;objectName={$infocals[$x].name|escape:"url"}&amp;objectHref={'tiki-calendar.php?calIds[]='|cat:$displayedcals[0]|escape:"url"}" class="icon" alt="{tr}Group Monitor{/tr}" align='right' hspace="1">{icon name="watch-group"}</a>
-		{/if}
-		{if $displayedcals|@count eq 1 and $user and $prefs.feature_user_watches eq 'y'}
-			{if $user_watching eq 'y'}
-				<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=remove" class="icon" alt="{tr}Stop Monitoring this Page{/tr}" align="right" hspace="1">{icon name="stop-watching"}</a>
-			{else}
-				<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=add" class="icon" alt="{tr}Monitor this Page{/tr}" align="right" hspace="1">{icon name="watch"}</a>
-			{/if}
-		{/if}
-
+		<div class="btn-group pull-right">
+			<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
+				{icon name="more"}
+			</a>
+			<ul class="dropdown-menu dropdown-menu-right">
+				<li class="dropdown-title">
+					{tr}Monitoring{/tr}
+				</li>
+				<li class="divider"></li>
+				{if $displayedcals|@count eq 1 and $user and $prefs.feature_user_watches eq 'y'}
+					<li>
+						{if $user_watching eq 'y'}
+							<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=remove" hspace="1">
+								{icon name="stop-watching"} {tr}Stop monitoring{/tr}
+							</a>
+						{else}
+							<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=add" hspace="1">
+								{icon name="watch"} {tr}Monitor{/tr}
+							</a>
+						{/if}
+					</li>
+				{/if}
+				{if $displayedcals|@count eq 1 and $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+					<li>
+						<a href="tiki-object_watches.php?objectId={$displayedcals[0]|escape:"url"}&amp;watch_event=calendar_changed&amp;objectType=calendar&amp;objectName={$infocals[$x].name|escape:"url"}&amp;objectHref={'tiki-calendar.php?calIds[]='|cat:$displayedcals[0]|escape:"url"}" hspace="1">
+							{icon name="watch-group"} {tr}Group Monitor{/tr}
+						</a>
+					</li>
+				{/if}
+			</ul>
+		</div>
 		{if $tiki_p_admin_calendar eq 'y' or $tiki_p_admin eq 'y'}
 			{if $displayedcals|@count eq 1}
-				{button href="tiki-admin_calendars.php?calendarId={$displayedcals[0]}" _text="{tr}Edit Calendar{/tr}"}
+				{button href="tiki-admin_calendars.php?calendarId={$displayedcals[0]}" _text="{tr}Edit{/tr}" _icon_name="edit"}
 			{/if}
-			{button href="tiki-admin_calendars.php?cookietab=1" _text="{tr}Admin Calendars{/tr}"}
+			{button href="tiki-admin_calendars.php?cookietab=1" _text="{tr}Admin{/tr}" _icon_name="administer"}
 		{/if}
 
 {* avoid Add Event being shown if no calendar is displayed *}
 		{if $tiki_p_add_events eq 'y'}
-			{button href="tiki-calendar_edit_item.php" _text="{tr}Add Event{/tr}"}
+			{button href="tiki-calendar_edit_item.php" _text="{tr}Add Event{/tr}" _icon_name="create"}
 		{/if}
 
 		{if $tiki_p_view_events eq 'y' and $prefs.calendar_export eq 'y'}
-			{button href="#" _onclick="toggle('exportcal');return false;" _text="{tr}Export Calendars{/tr}" _title="{tr}Click to export calendars{/tr}"}
+			{button href="#" _onclick="toggle('exportcal');return false;" _text="{tr}Export{/tr}" _icon_name="import"}
 		{/if}
 
 		{if $viewlist eq 'list'}
 			{capture name=href}?viewlist=table{if $smarty.request.todate}&amp;todate={$smarty.request.todate}{/if}{/capture}
-			{button href=$smarty.capture.href _text="{tr}Calendar View{/tr}"}
+			{button href=$smarty.capture.href _text="{tr}Calendar View{/tr}" _icon_name="calendar"}
 		{else}
 			{capture name=href}?viewlist=list{if $smarty.request.todate}&amp;todate={$smarty.request.todate}{/if}{/capture}
-			{button href=$smarty.capture.href _text="{tr}List View{/tr}"}
+			{button href=$smarty.capture.href _text="{tr}List View{/tr}" _icon_name="list"}
 		{/if}
 
 		{if count($listcals) >= 1}
-			{button href="#" _onclick="toggle('filtercal');return false;" _text="{tr}Visible Calendars{/tr}" _title="{tr}Click to select visible calendars{/tr}"}
+			{button href="#" _onclick="toggle('filtercal');return false;" _text="{tr}Visible Calendars{/tr}" _icon_name="eye"}
 
 			{if count($thiscal)}
 				<div id="configlinks" class="form-group text-right">
