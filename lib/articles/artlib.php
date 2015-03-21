@@ -1445,9 +1445,9 @@ class ArtLib extends TikiLib
 
 		$text = $check_heading ? $article['heading'] : $article['body'];
 
-		return $prefs['feature_wysiwyg'] === 'y' &&
-				($prefs['wysiwyg_htmltowiki'] !== 'y' ||
-						preg_match('/(<\/p>|<\/span>|<\/div>|<\/?br>)/', $text));
+		return ($prefs['feature_wysiwyg'] === 'y' || $prefs['mobile_mode'] === 'y') &&	// this now assumes that if in mobile mode any html in articles should not be encoded
+				$prefs['wysiwyg_htmltowiki'] !== 'y' ||
+						preg_match('/(<\/p>|<\/span>|<\/div>|<\/?br>)/', $text);
 	}
 
 	function list_submissions($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $type = '', $topicId = '', $lang = '')
