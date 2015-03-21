@@ -91,16 +91,16 @@
 					{/section}
 				</table>
 			</div>
-			<div class="form-group col-lg-10" >
-				<div class="col-lg-9 input-group">
-					<label for="submit_mult" class="col-lg"></label>
+			<div class="form-group" >
+				<div class="input-group col-sm-6">
+					<label for="submit_mult" class="control-label sr-only">{tr}Select action to perform with checked{/tr}</label>
 						<select name="submit_mult" class="form-control">
-							<option value="" selected="selected">{tr}Select action to perform with checked groups...{/tr}</option>
+							<option value="" selected="selected">{tr}Select action to perform with checked{/tr}...</option>
 							<option value="remove_groups" >{tr}Remove{/tr}</option>
 						</select>
-					<span class="input-group-btn">
+					<div class="input-group-btn">
 						<input type="submit" class="btn btn-primary" value="{tr}OK{/tr}">
-					</span>
+					</div>
 				</div>
 			</div>
 		</form>

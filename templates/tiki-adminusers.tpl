@@ -372,62 +372,62 @@
 					{if !$tsAjax}
 					</div>
 					{if $users}
-							<div class="col-lg-9 input-group">
-								<label for="user_action" class="col-lg"></label>
-								<select class="form-control" name="user_action">
-									<option value="no_action" selected="selected">
-										{tr}Select action to perform with checked users...{/tr}
+						<div class="input-group col-sm-6">
+							<label for="user_action" class="control-label sr-only">{tr}Select action to perform with checked{/tr}</label>
+							<select class="form-control" name="user_action">
+								<option value="no_action" selected="selected">
+									{tr}Select action to perform with checked{/tr}...
+								</option>
+								<option value="remove_users" >
+									{tr}Remove{/tr}
+								</option>
+								{if $prefs.feature_banning == 'y'}
+									<option value="ban_ips">
+										{tr}Ban IPs{/tr}
 									</option>
-									<option value="remove_users" >
-										{tr}Remove{/tr}
+									<option value="remove_users_and_ban">
+										{tr}Remove users and ban their IPs{/tr}
+									</option>
+								{/if}
+								{if $prefs.feature_wiki_userpage == 'y'}
+									<option value="remove_users_with_page">
+										{tr}Remove users and their user pages{/tr}
 									</option>
 									{if $prefs.feature_banning == 'y'}
-										<option value="ban_ips">
-											{tr}Ban IPs{/tr}
-										</option>
-										<option value="remove_users_and_ban">
-											{tr}Remove users and ban their IPs{/tr}
+										<option value="remove_users_with_page_and_ban">
+											{tr}Remove users, their user pages and ban their IPs{/tr}
 										</option>
 									{/if}
-									{if $prefs.feature_wiki_userpage == 'y'}
-										<option value="remove_users_with_page">
-											{tr}Remove users and their user pages{/tr}
-										</option>
-										{if $prefs.feature_banning == 'y'}
-											<option value="remove_users_with_page_and_ban">
-												{tr}Remove users, their user pages and ban their IPs{/tr}
-											</option>
-										{/if}
-									{/if}
-									<option value="manage_groups" >
-										{tr}Change group assignments{/tr}
+								{/if}
+								<option value="manage_groups" >
+									{tr}Change group assignments{/tr}
+								</option>
+								<option value="default_groups">
+									{tr}Set default groups{/tr}
+								</option>
+								{if $prefs.feature_wiki == 'y'}
+									<option value="email_wikipage">
+										{tr}Send wiki page content by email{/tr}
 									</option>
-									<option value="default_groups">
-										{tr}Set default groups{/tr}
-									</option>
-									{if $prefs.feature_wiki == 'y'}
-										<option value="email_wikipage">
-											{tr}Send wiki page content by email{/tr}
-										</option>
-									{/if}
-								</select>
-								<span class="input-group-btn">
-									<button
-										id="adminusers-actions" type="button" class="btn btn-primary"
-										onclick="confirmModal(this,
-												{ldelim}
-													'controller':'user',
-													'action':
-														{ldelim}
-															'selector': 'select[name=user_action]',
-															'fn': 'val'
-														{rdelim},
-													'closest':'form'
-												{rdelim});">
-										{tr}OK{/tr}
-									</button>
-								</span>
-							</div>
+								{/if}
+							</select>
+							<span class="input-group-btn">
+								<button
+									id="adminusers-actions" type="button" class="btn btn-primary"
+									onclick="confirmModal(this,
+											{ldelim}
+												'controller':'user',
+												'action':
+													{ldelim}
+														'selector': 'select[name=user_action]',
+														'fn': 'val'
+													{rdelim},
+												'closest':'form'
+											{rdelim});">
+									{tr}OK{/tr}
+								</button>
+							</span>
+						</div>
 					{/if}
 				</div>
 				<input type="hidden" name="find" value="{$find|escape}">
