@@ -23,8 +23,12 @@
 					});
 				});
 			{/jq}
-			{self_link _icon="arrow_left" _ajax="n" _onclick="ajax_preview( 'editwiki', autoSaveId );$('#autosave_preview').hide();return false;"}{tr}Popup preview{/tr}{/self_link}
-			{self_link _icon="close" _ajax="n" _onclick="$('#autosave_preview').hide();return false;"}{tr}Close preview{/tr}{/self_link}
+			{self_link _icon_name="back" _ajax="n" _onclick="ajax_preview( 'editwiki', autoSaveId );$('#autosave_preview').hide();return false;"}
+				{tr}Popup preview{/tr}
+			{/self_link}
+			{self_link _icon_name="remove" _ajax="n" _onclick="$('#autosave_preview').hide();return false;"}
+				{tr}Close preview{/tr}
+			{/self_link}
 		</div>
 	{/if}
 	{if $prefs.feature_jquery_ui eq "y"}
@@ -43,7 +47,9 @@
 	{if $prefs.feature_wiki_description eq 'y'}
 		<small>{$description}</small>
 	{/if}
-	<div align="center" class="attention" style="font-weight:bold">{tr}Note: Remember that this is only a preview, and has not yet been saved!{/tr}</div>
+	<div align="center" class="attention" style="font-weight:bold">
+		{tr}Note: Remember that this is only a preview, and has not yet been saved!{/tr}
+	</div>
 	<div class="preview_contents">
 		<div class="wikitext">
 			{$parsed}
