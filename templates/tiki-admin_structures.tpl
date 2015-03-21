@@ -78,7 +78,7 @@
 					<tr>
 						{if $tiki_p_admin eq 'y'}<th width="15">{select_all checkbox_names='action[]'}</th>{/if}
 						<th>{tr}Structure{/tr}</th>
-						<th>{tr}Action{/tr}</th>
+						<th></th>
 					</tr>
 
 					{section loop=$channels name=ix}
@@ -97,29 +97,65 @@
 								</a>
 							</td>
 							<td class="action">
-								<a class="tips" href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}" title=":{tr}View structure{/tr}">{icon name="information"}</a>
-								<a class='tips' href='{sefurl page=$channels[ix].pageName structure=$channels[ix].pageName page_ref_id=$channels[ix].page_ref_id}' title=":{tr}View page{/tr}">{icon name="view"}</a>
+								{capture name=admin_structure_actions}
+									{strip}
+										<a href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}">
+											{icon name="information" _menu_text='y' _menu_icon='y' alt="{tr}View structure{/tr}"}
+										</a>
+										<a href='{sefurl page=$channels[ix].pageName structure=$channels[ix].pageName page_ref_id=$channels[ix].page_ref_id}'>
+											{icon name="view" _menu_text='y' _menu_icon='y' alt="{tr}View page{/tr}"}
+										</a>
 
-								{if $prefs.feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
-									<a title=":{tr}Export Pages{/tr}" class="tips" href="tiki-admin_structures.php?export={$channels[ix].page_ref_id|escape:"url"}">{icon name="export"}</a>
-								{/if}
+										{if $prefs.feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
+											<a href="tiki-admin_structures.php?export={$channels[ix].page_ref_id|escape:"url"}">
+												{icon name="export" _menu_text='y' _menu_icon='y' alt="{tr}Export pages{/tr}"}
+											</a>
+										{/if}
 
-								{if $pdf_export eq 'y'}<a href="tiki-print_multi_pages.php?printstructures=a%3A1%3A%7Bi%3A0%3Bs%3A1%3A%22{$channels[ix].page_ref_id}%22%3B%7D&amp;display=pdf" title="{tr}PDF{/tr}">{icon _id='page_white_acrobat' alt="{tr}PDF{/tr}"}</a>
-								{/if}
+										{if $pdf_export eq 'y'}
+											<a href="tiki-print_multi_pages.php?printstructures=a%3A1%3A%7Bi%3A0%3Bs%3A1%3A%22{$channels[ix].page_ref_id}%22%3B%7D&amp;display=pdf">
+												{icon name='pdf' _menu_text='y' _menu_icon='y' alt="{tr}PDF{/tr}"}
+											</a>
+										{/if}
 
-								{if $tiki_p_edit_structures == 'y'}<a title=":{tr}Dump Tree{/tr}" class="tips" href="tiki-admin_structures.php?export_tree={$channels[ix].page_ref_id|escape:"url"}">{icon name="structure"}</a>{/if}
+										{if $tiki_p_edit_structures == 'y'}
+											<a href="tiki-admin_structures.php?export_tree={$channels[ix].page_ref_id|escape:"url"}">
+												{icon name="structure" _menu_text='y' _menu_icon='y' alt="{tr}Dump tree{/tr}"}
+											</a>
+										{/if}
 
-								{if $tiki_p_edit_structures == 'y' and $channels[ix].editable == 'y'}<a title=":{tr}Delete{/tr}" class="tips" href="tiki-admin_structures.php?remove={$channels[ix].page_ref_id|escape:"url"}">{icon name="delete"}</a>{/if}
+										{if $tiki_p_edit_structures == 'y' and $channels[ix].editable == 'y'}
+											<a href="tiki-admin_structures.php?remove={$channels[ix].page_ref_id|escape:"url"}">
+												{icon name="remove" _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+											</a>
+										{/if}
 
-								{if $prefs.feature_create_webhelp == 'y' && $tiki_p_edit_structures == 'y'}<a title=":{tr}Create WebHelp{/tr}" class="tips" href="tiki-create_webhelp.php?struct={$channels[ix].page_ref_id|escape:"url"}">{icon name="help"}</a>{/if}
+										{if $prefs.feature_create_webhelp == 'y' && $tiki_p_edit_structures == 'y'}
+											<a href="tiki-create_webhelp.php?struct={$channels[ix].page_ref_id|escape:"url"}">
+												{icon name="help" _menu_text='y' _menu_icon='y' alt="{tr}Create WebHelp{/tr}"}
+											</a>
+										{/if}
 
-								{if $prefs.feature_create_webhelp == 'y' && $channels[ix].webhelp eq 'y'}
-									<a title=":{tr}View WebHelp{/tr}" class="tips" href="whelp/{$channels[ix].pageName}/index.html">{icon name="documentation"}</a>
-								{/if}
+										{if $prefs.feature_create_webhelp == 'y' && $channels[ix].webhelp eq 'y'}
+											<a href="whelp/{$channels[ix].pageName}/index.html">
+												{icon name="documentation" _menu_text='y' _menu_icon='y' alt="{tr}View WebHelp{/tr}"}
+											</a>
+										{/if}
 
-								{if $tiki_p_admin eq 'y'}
-									<a title=":{tr}XML Zip{/tr}" class="tips" href="tiki-admin_structures.php?zip={$channels[ix].page_ref_id|escape:"url"}">{icon name="zip"}</a>
-								{/if}
+										{if $tiki_p_admin eq 'y'}
+											<a href="tiki-admin_structures.php?zip={$channels[ix].page_ref_id|escape:"url"}">
+												{icon name="zip" _menu_text='y' _menu_icon='y' alt="{tr}XML Zip{/tr}"}
+											</a>
+										{/if}
+									{/strip}
+								{/capture}
+								<a class="tips"
+								   title="{tr}Actions{/tr}"
+								   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.admin_structure_actions|escape:"javascript"|escape:"html"}
+								   style="padding:0; margin:0; border:0"
+										>
+									{icon name='wrench'}
+								</a>
 							</td>
 						</tr>
 					{sectionelse}
