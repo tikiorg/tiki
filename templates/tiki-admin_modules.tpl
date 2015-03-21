@@ -53,7 +53,7 @@
 		{/if}
 		<h2>{tr}Assigned Modules{/tr}</h2>
 		<div class="margin-bottom-md">
-			{button edit_assign=0 cookietab=2 _auto_args="edit_assign,cookietab" _text="{tr}Add module{/tr}"}
+			{button href="tiki-admin_modules.php?edit_assign=0#content_admin_modules1-2" _text="{tr}Add module{/tr}"}
 		</div>
 
 		<div id="assigned_modules">
@@ -62,7 +62,7 @@
 					{tab name=$zone_info.name|capitalize}
 						<div id="{$zone_info.id}_modules" class="table-responsive">
 							<div>
-								<table class="table normal" id="assigned_zone_{$zone_initial}">
+								<table class="table normal table-striped table-hover" id="assigned_zone_{$zone_initial}">
 									<tr>
 										<th>{tr}Name{/tr}</th>
 										<th>{tr}Order{/tr}</th>
@@ -70,7 +70,7 @@
 										<th>{tr}Rows{/tr}</th>
 										<th>{tr}Parameters{/tr}</th>
 										<th>{tr}Groups{/tr}</th>
-										<th>{tr}Action{/tr}</th>
+										<th></th>
 									</tr>
 
 									{foreach from=$assigned_modules[$zone_initial] item=module name=assigned_foreach}
@@ -82,14 +82,33 @@
 											<td style="font-size:smaller;">{$module.params_presentable}</td>
 											<td style="font-size:smaller;">{$module.module_groups}</td>
 											<td>
-												<a class="tips" href="tiki-admin_modules.php?edit_assign={$module.moduleId}&cookietab=2#content_admin_modules1-2" title="{$module.name|escape}:{tr}Edit{/tr}">{icon name='edit'}</a>
-												{if !$smarty.foreach.assigned_foreach.first}
-													<a class="tips" href="tiki-admin_modules.php?modup={$module.moduleId}" title="{$module.name|escape}:{tr}Move up{/tr}">{icon name='up'}</a>
-												{/if}
-												{if !$smarty.foreach.assigned_foreach.last}
-													<a class="tips" href="tiki-admin_modules.php?moddown={$module.moduleId}" title="{$module.name|escape}:{tr}Move down{/tr}">{icon name='down'}</a>
-												{/if}
-												<a class="tips" href="tiki-admin_modules.php?unassign={$module.moduleId}" title="{$module.name|escape}:{tr}Unassign{/tr}">{icon name='remove' alt="{tr}x{/tr}"}</a>
+												{capture name=module_actions}
+													{strip}
+														{if !$smarty.section.user.first}
+															<a href="tiki-admin_modules.php?modup={$module.moduleId}">
+																{icon name="up" _menu_text='y' _menu_icon='y' alt="{tr}Move up{/tr}"}
+															</a>
+														{/if}
+														{if !$smarty.section.user.last}
+															<a href="tiki-admin_modules.php?moddown={$module.moduleId}">
+																{icon name="down" _menu_text='y' _menu_icon='y' alt="{tr}Move down{/tr}"}
+															</a>
+														{/if}
+														<a href="tiki-admin_modules.php?edit_assign={$module.moduleId}&cookietab=2#content_admin_modules1-2">
+															{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+														</a>
+														<a href="tiki-admin_modules.php?unassign={$module.moduleId}">
+															{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Unassign{/tr}"}
+														</a>
+													{/strip}
+												{/capture}
+												<a class="tips"
+												   title="{tr}Actions{/tr}"
+												   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.module_actions|escape:"javascript"|escape:"html"}
+												   style="padding:0; margin:0; border:0"
+														>
+													{icon name='wrench'}
+												</a>
 											</td>
 										</tr>
 									{foreachelse}
@@ -119,7 +138,7 @@
 				<h3>{tr}Preview{/tr}</h3>
 				{$preview_data}
 			{/if}
-			<form method="post" action="tiki-admin_modules.php{if empty($assign_name)}?cookietab=2#assign{/if}">
+			<form method="post" action="tiki-admin_modules.php#content_admin_modules1-2">
 				{* on the initial selection of a new module, reload the page to the #assign anchor *}
 				{if !empty($info.moduleId)}
 					<input type="hidden" name="moduleId" value="{$info.moduleId}">
@@ -153,7 +172,7 @@
 			<tr>
 				<th>{tr}Name{/tr}</th>
 				<th>{tr}Title{/tr}</th>
-				<th>{tr}Action{/tr}</th>
+				<th></th>
 			</tr>
 
 			{section name=user loop=$user_modules}
@@ -161,9 +180,26 @@
 					<td class="text"><a class="tips" href="tiki-admin_modules.php?um_edit={$user_modules[user].name|escape:'url'}&amp;cookietab=2#editcreate" title="{tr}Edit{/tr}">{$user_modules[user].name|escape}</a></td>
 					<td class="text">{$user_modules[user].title|escape}</td>
 					<td class="action">
-						<a class="tips" href="tiki-admin_modules.php?um_edit={$user_modules[user].name|escape:'url'}&amp;cookietab=2#editcreate" title="{$user_modules[user].name|escape}:{tr}Edit{/tr}">{icon name='edit'}</a>
-						<a class="tips" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name|escape:'url'}&amp;cookietab=2#assign" title="{$user_modules[user].name|escape}:{tr}Assign{/tr}">{icon name='add' alt="{tr}Assign{/tr}"}</a>
-						<a class="tips" href="tiki-admin_modules.php?um_remove={$user_modules[user].name|escape:'url'}&amp;cookietab=2" title="{$user_modules[user].name|escape}:{tr}Delete{/tr}">{icon name='remove' alt="{tr}Delete{/tr}"}</a>
+						{capture name=custom_module_actions}
+							{strip}
+								<a href="tiki-admin_modules.php?um_edit={$user_modules[user].name|escape:'url'}&amp;cookietab=2#editcreate">
+									{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+								</a>
+								<a href="tiki-admin_modules.php?edit_assign={$user_modules[user].name|escape:'url'}&amp;cookietab=2#assign">
+									{icon name='ok' _menu_text='y' _menu_icon='y' alt="{tr}Assign{/tr}"}
+								</a>
+								<a href="tiki-admin_modules.php?um_remove={$user_modules[user].name|escape:'url'}&amp;cookietab=2" title="{$user_modules[user].name|escape}:{tr}Delete{/tr}">
+									{icon name='remove' _menu_text='y' _menu_icon='y' Falt="{tr}Delete{/tr}"}
+								</a>
+							{/strip}
+						{/capture}
+						<a class="tips"
+						   title="{tr}Actions{/tr}"
+						   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.custom_module_actions|escape:"javascript"|escape:"html"}
+						   style="padding:0; margin:0; border:0"
+								>
+							{icon name='wrench'}
+						</a>
 					</td>
 				</tr>
 			{sectionelse}
