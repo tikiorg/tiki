@@ -18,7 +18,7 @@
 				{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}
 			</th>
 			<th>{tr}Questions{/tr}</th>
-			<th>{tr}Actions{/tr}</th>
+			<th></th>
 		</tr>
 
 		{section name=user loop=$channels}
@@ -39,26 +39,37 @@
 						</div>
 					</td>
 					<td class="text">
-						{$channels[user].questions}
+						<span class="badge">{$channels[user].questions}</span>
 					</td>
 					<td class="action">
-						{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_admin_surveys eq 'y') or ($channels[user].individual_tiki_p_admin_surveys eq 'y')}
-							<a href="tiki-admin_surveys.php?surveyId={$channels[user].surveyId}">
-								{icon _id='page_edit' alt="{tr}Edit this Survey{/tr}"}
-							</a>
-						{/if}
+						{capture name=list_survey_actions}
+							{strip}
+								{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_admin_surveys eq 'y') or ($channels[user].individual_tiki_p_admin_surveys eq 'y')}
+									<a href="tiki-admin_surveys.php?surveyId={$channels[user].surveyId}">
+										{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+									</a>
+								{/if}
 
-						{if ($tiki_p_admin_surveys eq 'y') or ($channels[user].status eq 'o' and $channels[user].taken_survey eq 'n')}
-							<a href="{$channels[user].surveyId|sefurl:survey}">
-								{icon _id='control_play' alt="{tr}Take Survey{/tr}"}
-							</a>
-						{/if}
+								{if ($tiki_p_admin_surveys eq 'y') or ($channels[user].status eq 'o' and $channels[user].taken_survey eq 'n')}
+									<a href="{$channels[user].surveyId|sefurl:survey}">
+										{icon name='post' _menu_text='y' _menu_icon='y' alt="{tr}Take survey{/tr}"}
+									</a>
+								{/if}
 
-						{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_survey_stats eq 'y') or ($channels[user].individual_tiki_p_view_survey_stats eq 'y')}
-							<a href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">
-								{icon _id='chart_curve' alt="{tr}Stats{/tr}"}
-							</a>
-						{/if}
+								{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_survey_stats eq 'y') or ($channels[user].individual_tiki_p_view_survey_stats eq 'y')}
+									<a href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">
+										{icon name='chart' _menu_text='y' _menu_icon='y' alt="{tr}Stats{/tr}"}
+									</a>
+								{/if}
+							{/strip}
+						{/capture}
+						<a class="tips"
+						   title="{tr}Actions{/tr}"
+						   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.list_survey_actions|escape:"javascript"|escape:"html"}
+						   style="padding:0; margin:0; border:0"
+								>
+							{icon name='wrench'}
+						</a>
 					</td>
 				</tr>
 			{/if}

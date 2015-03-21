@@ -31,9 +31,7 @@
 			</th>
 			{if ($tiki_p_admin eq 'y' or $tiki_p_admin_quizzes eq 'y' or $tiki_p_view_quiz_stats eq 'y')}
 				{assign var=numbercol value=$numbercol+1}
-				<th>
-					{tr}Actions{/tr}
-				</th>
+				<th></th>
 			{/if}
 		</tr>
 
@@ -50,16 +48,31 @@
 						{$channels[user].timeLimited} {if $channels[user].timeLimited eq 'y'}({$channels[user].timeLimit} mins){/if}
 					</td>
 					<td class="integer">
-						{$channels[user].questions}
+						<span class="badge">{$channels[user].questions}</span>
 					</td>
 					{if ($tiki_p_admin eq 'y' or $tiki_p_admin_quizzes eq 'y' or $tiki_p_view_quiz_stats eq 'y')}
 						<td class="action">
-							{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_admin_quizzes eq 'y') or ($channels[user].individual_tiki_p_admin_quizzes eq 'y')}
-								<a class="link" href="tiki-edit_quiz.php?quizId={$channels[user].quizId}">{icon _id='page_edit' alt="{tr}Edit{/tr}"}</a>
-							{/if}
-							{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_quiz_stats eq 'y') or ($channels[user].individual_tiki_p_view_quiz_stats eq 'y')}
-								<a class="link" href="tiki-quiz_stats_quiz.php?quizId={$channels[user].quizId}">{icon _id='chart_curve' alt="{tr}Stats{/tr}"}</a>
-							{/if}
+							{capture name=quiz_actions}
+								{strip}
+									{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_admin_quizzes eq 'y') or ($channels[user].individual_tiki_p_admin_quizzes eq 'y')}
+										<a href="tiki-edit_quiz.php?quizId={$channels[user].quizId}">
+											{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+										</a>
+									{/if}
+									{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_quiz_stats eq 'y') or ($channels[user].individual_tiki_p_view_quiz_stats eq 'y')}
+										<a href="tiki-quiz_stats_quiz.php?quizId={$channels[user].quizId}">
+											{icon name='chart' _menu_text='y' _menu_icon='y' alt="{tr}Stats{/tr}"}
+										</a>
+									{/if}
+								{/strip}
+							{/capture}
+							<a class="tips"
+							   title="{tr}Actions{/tr}"
+							   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.quiz_actions|escape:"javascript"|escape:"html"}
+							   style="padding:0; margin:0; border:0"
+									>
+								{icon name='wrench'}
+							</a>
 						</td>
 					{/if}
 				</tr>

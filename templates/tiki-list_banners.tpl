@@ -27,7 +27,7 @@
 			<th>{self_link _sort_arg='sort_mode' _sort_field='impressions'}{tr}Impressions{/tr}{/self_link}</th>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='maxClicks'}{tr}Max Clicks{/tr}{/self_link}</th>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='clicks'}{tr}Clicks{/tr}{/self_link}</th>
-			<th>{tr}Action{/tr}</th>
+			<th></th>
 		</tr>
 
 		{section name=changes loop=$listpages}
@@ -38,17 +38,34 @@
 			<td class="text">{$listpages[changes].zone|escape}</td>
 			<td class="date">{$listpages[changes].created|tiki_short_date}</td>
 			<td class="text">{$listpages[changes].which}</td>
-			<td class="integer">{$listpages[changes].useDates}</td>
-			<td class="integer">{$listpages[changes].maxImpressions}</td>
-			<td class="integer">{$listpages[changes].impressions}</td>
-			<td class="integer">{$listpages[changes].maxClicks}</td>
-			<td class="integer">{$listpages[changes].clicks}</td>
+			<td class="text">{$listpages[changes].useDates}</td>
+			<td class="integer"><span class="badge">{$listpages[changes].maxImpressions}</span></td>
+			<td class="integer"><span class="badge">{$listpages[changes].impressions}</span></td>
+			<td class="integer"><span class="badge">{$listpages[changes].maxClicks}</span></td>
+			<td class="integer"><span class="badge">{$listpages[changes].clicks}</span></td>
 			<td class="action">
-			{if $tiki_p_admin_banners eq 'y'}
-				<a class="link" href="tiki-edit_banner.php?bannerId={$listpages[changes].bannerId}">{icon _id='page_edit'}</a>
-				<a class="link" href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].bannerId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
-			{/if}
-			<a class="link" href="tiki-view_banner.php?bannerId={$listpages[changes].bannerId}">{icon _id='chart_curve' alt="{tr}Stats{/tr}"}</a>
+				{capture name=banner_actions}
+					{strip}
+						<a href="tiki-view_banner.php?bannerId={$listpages[changes].bannerId}">
+							{icon name='chart' _menu_text='y' _menu_icon='y' alt="{tr}Stats{/tr}"}
+						</a>
+						{if $tiki_p_admin_banners eq 'y'}
+							<a href="tiki-edit_banner.php?bannerId={$listpages[changes].bannerId}">
+								{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+							</a>
+							<a href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].bannerId}">
+								{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+							</a>
+						{/if}
+					{/strip}
+				{/capture}
+				<a class="tips"
+				   title="{tr}Actions{/tr}"
+				   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.banner_actions|escape:"javascript"|escape:"html"}
+				   style="padding:0; margin:0; border:0"
+						>
+					{icon name='wrench'}
+				</a>
 			</td>
 		</tr>
 		{sectionelse}

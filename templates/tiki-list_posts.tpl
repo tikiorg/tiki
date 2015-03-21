@@ -43,7 +43,7 @@
 			<th>
 				<a href="tiki-list_posts.php?{if isset($blogId)}blogId={$blogId}&amp;{/if}offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}Author{/tr}</a>
 			</th>
-			<th>{tr}Actions{/tr}</th>
+			<th></th>
 		</tr>
 
 
@@ -57,11 +57,26 @@
 					</td>
 				{/if}
 				<td class="date">&nbsp;{$posts[changes].created|tiki_short_date}&nbsp;</td>
-				<td class="integer">&nbsp;{$posts[changes].size}&nbsp;</td>
+				<td class="integer"><span class="badge">{$posts[changes].size}</span></td>
 				<td>&nbsp;{$posts[changes].user}&nbsp;</td>
 				<td class="action">
-					<a class="tips" href="tiki-blog_post.php?blogId={$posts[changes].blogId}&postId={$posts[changes].postId}" title=":{tr}Edit{/tr}">{icon name="edit"}</a>
-					<a class="tips" href="tiki-list_posts.php?{if isset($blogId)}blogId={$blogId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$posts[changes].postId}" title=":{tr}Delete{/tr}">{icon name="delete"}</a>
+					{capture name=post_actions}
+						{strip}
+							<a href="tiki-blog_post.php?blogId={$posts[changes].blogId}&postId={$posts[changes].postId}">
+								{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+							</a>
+							<a href="tiki-list_posts.php?{if isset($blogId)}blogId={$blogId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$posts[changes].postId}" title=":{tr}Delete{/tr}">
+								{icon name="remove" _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+							</a>
+						{/strip}
+					{/capture}
+					<a class="tips"
+					   title="{tr}Actions{/tr}"
+					   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.post_actions|escape:"javascript"|escape:"html"}
+					   style="padding:0; margin:0; border:0"
+							>
+						{icon name='wrench'}
+					</a>
 				</td>
 			</tr>
 		{sectionelse}

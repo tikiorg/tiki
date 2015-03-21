@@ -17,7 +17,7 @@
 					<th>{self_link _sort_arg='sort_mode' _sort_field='actual'}{tr}Current ver{/tr}{/self_link}</th>
 					<th>{self_link _sort_arg='sort_mode' _sort_field='next'}{tr}Next ver{/tr}{/self_link}</th>
 					<th>{self_link _sort_arg='sort_mode' _sort_field='future'}{tr}Future vers{/tr}{/self_link}</th>
-					<th>{tr}Action{/tr}</th>
+					<th></th>
 				</tr>
 
 				{section name=changes loop=$listpages}
@@ -36,9 +36,26 @@
 						<td class="date">{$listpages[changes].next|tiki_short_datetime}</td>
 						<td class="text">{$listpages[changes].future}</td>
 						<td class="action">
-							{self_link _class='link' _icon='page_edit' edit=$listpages[changes].contentId cookietab=2}{tr}Edit{/tr}{/self_link}
-							<a class="link" href="tiki-edit_programmed_content.php?contentId={$listpages[changes].contentId}" title="{tr}Program{/tr}">{icon _id=wrench alt="{tr}Program{/tr}"}</a>
-							{self_link _class='link' _icon='cross' _template='confirm.tpl' remove=$listpages[changes].contentId}{tr}Remove{/tr}{/self_link}
+							{capture name=content_actions}
+								{strip}
+									{self_link _icon_name='edit' _menu_text='y' _menu_icon='y' edit=$listpages[changes].contentId cookietab=2}
+										{tr}Edit{/tr}
+									{/self_link}
+									<a href="tiki-edit_programmed_content.php?contentId={$listpages[changes].contentId}" title="{tr}Program{/tr}">
+										{icon name='cog' _menu_text='y' _menu_icon='y' alt="{tr}Program{/tr}"}
+									</a>
+									{self_link _icon_name='remove' _menu_text='y' _menu_icon='y' _template='confirm.tpl' remove=$listpages[changes].contentId}
+										{tr}Remove{/tr}
+									{/self_link}
+								{/strip}
+							{/capture}
+							<a class="tips"
+							   title="{tr}Actions{/tr}"
+							   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.content_actions|escape:"javascript"|escape:"html"}
+							   style="padding:0; margin:0; border:0"
+									>
+								{icon name='wrench'}
+							</a>
 						</td>
 					</tr>
 				{sectionelse}

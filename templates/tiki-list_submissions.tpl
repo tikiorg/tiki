@@ -74,7 +74,7 @@
 					</th>
 				{/if}
 				{assign var=numbercol value=$numbercol+1}
-				<th>{tr}Actions{/tr}</th>
+				<th></th>
 			</tr>
 
 			{section name=changes loop=$listpages}
@@ -111,15 +111,32 @@
 							<td class="text">{$listpages[changes].authorName|escape}</td>
 					{/if}
 					<td class="action">
-						{if $tiki_p_edit_submission eq 'y' or ($listpages[changes].author eq $user and $user)}
-							<a class="link" href="tiki-edit_submission.php?subId={$listpages[changes].subId}">{icon _id='page_edit'}</a>
-						{/if}
-						{if $tiki_p_approve_submission eq 'y'}
-							{self_link approve=$listpages[changes].subId}{icon _id='accept' alt="{tr}Approve{/tr}"}{/self_link}
-						{/if}
-						{if $tiki_p_remove_submission eq 'y'}
-							{self_link remove=$listpages[changes].subId}{icon _id='cross' alt="{tr}Remove{/tr}"}{/self_link}
-						{/if}
+						{capture name=submission_actions}
+							{strip}
+								{if $tiki_p_edit_submission eq 'y' or ($listpages[changes].author eq $user and $user)}
+									<a href="tiki-edit_submission.php?subId={$listpages[changes].subId}">
+										{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+									</a>
+								{/if}
+								{if $tiki_p_approve_submission eq 'y'}
+									{self_link approve=$listpages[changes].subId _icon_name="ok" _menu_text='y' _menu_icon='y'}
+										{tr}Approve{/tr}
+									{/self_link}
+								{/if}
+								{if $tiki_p_remove_submission eq 'y'}
+									{self_link remove=$listpages[changes].subId _icon_name="remove" _menu_text='y' _menu_icon='y'}
+										{tr}Remove{/tr}
+									{/self_link}
+								{/if}
+							{/strip}
+						{/capture}
+						<a class="tips"
+						   title="{tr}Actions{/tr}"
+						   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.submission_actions|escape:"javascript"|escape:"html"}
+						   style="padding:0; margin:0; border:0"
+								>
+							{icon name='wrench'}
+						</a>
 					</td>
 				</tr>
 			{sectionelse}
