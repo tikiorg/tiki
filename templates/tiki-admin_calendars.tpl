@@ -382,7 +382,7 @@
 					{tr}Default event status:{/tr}
 				</label>
 				<div class="col-sm-2">
-					{html_options name='options[defaulteventstatus]' options=$eventstatus selected=$defaulteventstatus}<br>
+					{html_options class="form-control" name='options[defaulteventstatus]' options=$eventstatus selected=$defaulteventstatus}
 				</div>
 			</div>
 			<div class="form-group">
@@ -441,7 +441,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<input type="submit" class="btn btn-primary col-sm-offset-4" name="save" value="{tr}Save{/tr}">
+				<input type="submit" class="btn btn-primary col-sm-offset-3" name="save" value="{tr}Save{/tr}">
 			</div>
 			</fieldset>
 			<fieldset>
@@ -450,9 +450,15 @@
 					<label class="col-sm-3 control-label" for="days">
 						{tr}Delete events older than:{/tr}
 					</label>
-					<div class="col-sm-9">
-						<input type="text" name="days" value="0"> {tr}days{/tr} <input type="submit" class="btn btn-warning btn-sm" name="clean" value="{tr}Delete{/tr}">				</div>
+					<div class="col-sm-2 input-group">
+						<input type="text" name="days" value="0" class="form-control">
+						<span class="input-group-addon">
+							{tr}days{/tr}
+						</span>
+					</div>
 				</div>
+				<div class="form-group">
+					<input type="submit" class="btn btn-warning col-sm-offset-3" name="clean" value="{tr}Delete{/tr}">				</div>
 			</fieldset>
 		</form>
 	{/tab}
