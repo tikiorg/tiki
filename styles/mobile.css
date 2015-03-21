@@ -25,6 +25,15 @@ img {
 	max-width: 100%;
 }
 
+/* lists */
+ul, ol {
+	padding-left: 1em;
+}
+
+hr, form, footer {
+	clear: both;
+}
+
 /* remarks boxes from layout.css */
 /* also some from design.css */
 
@@ -93,6 +102,22 @@ img {
 	border-bottom-right-radius: 		.6em;
 }
 
+/* titlebars (in wiki syntax) */
+.titlebar {
+	background: linear-gradient(#6facd5, #497bae) repeat scroll 0 0 #5e87b0;
+	border: 1px solid #456f9a;
+	color: #fff;
+	clear: both;
+	font-size: 16px;
+	font-weight: bold;
+	display: block;
+	margin: 0;
+	overflow: hidden;
+	padding: 0.4em 15px;
+	position: relative;
+	text-shadow: 0 1px 0 #3e6790;
+}
+
 /* popups */
 
 .ui-popup {
@@ -116,14 +141,26 @@ img {
 	background-color: #fff;
 	border: 1px solid #ccc;
 	color: #000;
-	-moz-border-radius: 	.6em;
-	-webkit-border-radius: 	.6em;
-	border-radius: 		.6em;
 	border-collapse:	collapse;
 }
 
-.normal td, .normal th {
+.codelisting, .normal td, .normal th, .wikicell, .simplebox {
 	padding: 0.2em 0.4em;
+}
+
+/* simplebox and codelisting */
+.codelisting,
+.simplebox
+{
+	background-color: #f0f0f0;
+	color: #000;
+	border: solid 1px #ccc;
+}
+
+/* quote plugin */
+.quotebody {
+	border-left: 3px solid #ccc;
+	padding-left: 1em;
 }
 
 /* odd and even classes for tr, td, and li */
