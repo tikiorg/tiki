@@ -1,9 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
-    "hash": "f7e2ae727c1980ffc2433f819cbd031f",
+    "hash": "b0e6267c04ceb7f313faa4987921a0ea",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -199,20 +200,20 @@
         },
         {
             "name": "components/bootstrap",
-            "version": "3.3.2",
+            "version": "3.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/bootstrap.git",
-                "reference": "bffd83f39eb2679850482410b9bdd39a8cc456e5"
+                "reference": "699ecb616573d899e4c26f8735b0df7245719f87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/components/bootstrap/zipball/bffd83f39eb2679850482410b9bdd39a8cc456e5",
-                "reference": "bffd83f39eb2679850482410b9bdd39a8cc456e5",
+                "url": "https://api.github.com/repos/components/bootstrap/zipball/699ecb616573d899e4c26f8735b0df7245719f87",
+                "reference": "699ecb616573d899e4c26f8735b0df7245719f87",
                 "shasum": ""
             },
             "require": {
-                "components/jquery": ">=1.9.1"
+                "components/jquery": ">=1.9.1 <3.0"
             },
             "suggest": {
                 "components/bootstrap-default": "Provide a theme for Bootstrap as components/bootstrap only provides the CSS as file assets"
@@ -263,7 +264,7 @@
                 "responsive",
                 "web"
             ],
-            "time": "2015-01-22 12:14:01"
+            "time": "2015-03-17 07:36:54"
         },
         {
             "name": "components/jquery",
@@ -1011,12 +1012,12 @@
         },
         {
             "name": "jquery/plugins/tablesorter",
-            "version": "2.20.1",
+            "version": "2.21.2",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-tablesorter-2.20.1.zip",
-                "reference": "2.20.1",
-                "shasum": "77bacf2311367e522b416059b6b02c2b7ddb3a1f"
+                "url": "https://composer.tiki.org/dist/jquery-plugins-tablesorter-2.21.2.zip",
+                "reference": "2.21.2",
+                "shasum": "015451ce2f71f00ae798e0b5ddeaf3b6d8c8ae7c"
             },
             "type": "library"
         },
@@ -1628,21 +1629,24 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.6.4",
+            "version": "v2.6.5",
             "target-dir": "Symfony/Component/Filesystem",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Filesystem.git",
-                "reference": "a1f566d1f92e142fa1593f4555d6d89e3044a9b7"
+                "reference": "fdc5f151bc2db066b51870d5bea3773d915ced0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/a1f566d1f92e142fa1593f4555d6d89e3044a9b7",
-                "reference": "a1f566d1f92e142fa1593f4555d6d89e3044a9b7",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/fdc5f151bc2db066b51870d5bea3773d915ced0b",
+                "reference": "fdc5f151bc2db066b51870d5bea3773d915ced0b",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "~2.7"
             },
             "type": "library",
             "extra": {
@@ -1671,25 +1675,28 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "http://symfony.com",
-            "time": "2015-01-03 21:13:09"
+            "time": "2015-03-12 10:28:44"
         },
         {
             "name": "symfony/process",
-            "version": "v2.6.4",
+            "version": "v2.6.5",
             "target-dir": "Symfony/Component/Process",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Process.git",
-                "reference": "ecfc23e89d9967999fa5f60a1e9af7384396e9ae"
+                "reference": "4d717f34f3d1d6ab30fbe79f7132960a27f4a0dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/ecfc23e89d9967999fa5f60a1e9af7384396e9ae",
-                "reference": "ecfc23e89d9967999fa5f60a1e9af7384396e9ae",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/4d717f34f3d1d6ab30fbe79f7132960a27f4a0dc",
+                "reference": "4d717f34f3d1d6ab30fbe79f7132960a27f4a0dc",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "~2.7"
             },
             "type": "library",
             "extra": {
@@ -1718,7 +1725,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "http://symfony.com",
-            "time": "2015-01-25 04:39:26"
+            "time": "2015-03-12 10:28:44"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -1761,16 +1768,16 @@
         },
         {
             "name": "twitter/bootstrap",
-            "version": "v3.3.2",
+            "version": "v3.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "bcf7dd38b5ab180256e2e4fb5da0369551b3f082"
+                "reference": "a10eb60bc0b07b747fa0c4ebd8821eb7307bd07f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/bcf7dd38b5ab180256e2e4fb5da0369551b3f082",
-                "reference": "bcf7dd38b5ab180256e2e4fb5da0369551b3f082",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/a10eb60bc0b07b747fa0c4ebd8821eb7307bd07f",
+                "reference": "a10eb60bc0b07b747fa0c4ebd8821eb7307bd07f",
                 "shasum": ""
             },
             "replace": {
@@ -1808,7 +1815,7 @@
                 "responsive",
                 "web"
             ],
-            "time": "2015-01-19 17:03:09"
+            "time": "2015-03-16 15:44:41"
         },
         {
             "name": "undojs/undojs",
@@ -2142,9 +2149,7 @@
             "time": "2014-06-05 16:09:50"
         }
     ],
-    "aliases": [
-
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
         "jcapture-applet/jcapture-applet": 20,
@@ -2155,10 +2160,8 @@
         "wikilingo/codemirror": 20,
         "bafs/testify": 20
     },
-    "platform": [
-
-    ],
-    "platform-dev": [
-
-    ]
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
 }
