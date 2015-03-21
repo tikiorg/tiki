@@ -16,7 +16,7 @@
 		<th>
 			<a href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'refresh_desc'}refresh_asc{else}refresh_desc{/if}">{tr}Last updated{/tr}</a>
 		</th>
-		<th>{tr}Action{/tr}</th>
+		<th></th>
 	</tr>
 	{section name=changes loop=$listpages}
 		<tr>
@@ -27,9 +27,26 @@
 				{$listpages[changes].refresh|tiki_short_datetime}
 			</td>
 			<td class="action">
-				<a class="link" target="_blank" href="tiki-view_cache.php?cacheId={$listpages[changes].cacheId}" title="{tr}View{/tr}"><img src="img/icons/magnifier.png" width="16" height="16" alt="{tr}View{/tr}"></a>
-				<a class="link" href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].cacheId}" title="{tr}Remove{/tr}"><img src="img/icons/cross.png" height="16" width="16" alt="{tr}Remove{/tr}"></a>
-				<a class="link" href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;refresh={$listpages[changes].cacheId}" title="{tr}Refresh{/tr}"><img src="img/icons/arrow_refresh.png" height="16" width="16" alt="{tr}Refresh{/tr}"></a>
+				{capture name=cache_actions}
+					{strip}
+						<a target="_blank" href="tiki-view_cache.php?cacheId={$listpages[changes].cacheId}">
+							{icon name="view" _menu_text='y' _menu_icon='y' alt="{tr}View{/tr}"}
+						</a>
+						<a href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;refresh={$listpages[changes].cacheId}"">
+							{icon name="refresh" _menu_text='y' _menu_icon='y' alt="{tr}Refresh{/tr}"}
+						</a>
+						<a href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].cacheId}">
+							{icon name="remove" _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+						</a>
+					{/strip}
+				{/capture}
+				<a class="tips"
+				   title="{tr}Actions{/tr}"
+				   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.cache_actions|escape:"javascript"|escape:"html"}
+				   style="padding:0; margin:0; border:0"
+						>
+					{icon name='wrench'}
+				</a>
 			</td>
 		</tr>
 	{sectionelse}

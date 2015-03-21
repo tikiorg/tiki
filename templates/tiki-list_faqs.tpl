@@ -18,10 +18,10 @@
 						<a href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Visits{/tr}</a>
 					</th>
 					<th style="text-align:right;">
-						<a href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'questions_desc'}questions_asc{else}questions_desc{/if}">{tr}Questions{/tr}</a>
+						<a href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'questions_desc'}questions_asc{else}questions_desc{/if}">{tr}Questions / Suggested{/tr}</a>
 					</th>
 					{if $tiki_p_admin_faqs eq 'y'}
-						<th>{tr}Action{/tr}</th>
+						<th></th>
 					{/if}
 				</tr>
 
@@ -34,16 +34,33 @@
 							</div>
 						</td>
 						<td class="integer">
-							{$channels[user].hits}
+							<span class="badge">{$channels[user].hits}</span>
 						</td>
 						<td class="integer">
-							{$channels[user].questions} ({$channels[user].suggested})
+							<span class="badge">{$channels[user].questions}</span> /  <span class="badge">{$channels[user].suggested}</span>
 						</td>
 						{if $tiki_p_admin_faqs eq 'y'}
 							<td class="action">
-								<a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;faqId={$channels[user].faqId}">{icon _id='page_edit'}</a>
-								<a class="link" href="tiki-faq_questions.php?faqId={$channels[user].faqId}">{icon _id='help' alt="{tr}Questions{/tr}"}</a>
-								<a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].faqId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+								{capture name=faq_actions}
+									{strip}
+										<a href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;faqId={$channels[user].faqId}">
+											{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+										</a>
+										<a href="tiki-faq_questions.php?faqId={$channels[user].faqId}">
+											{icon name='help' _menu_text='y' _menu_icon='y' alt="{tr}Questions{/tr}"}
+										</a>
+										<a href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].faqId}">
+											{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+										</a>
+									{/strip}
+								{/capture}
+								<a class="tips"
+								   title="{tr}Actions{/tr}"
+								   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.faq_actions|escape:"javascript"|escape:"html"}
+								   style="padding:0; margin:0; border:0"
+										>
+									{icon name='wrench'}
+								</a>
 							</td>
 						{/if}
 					</tr>
