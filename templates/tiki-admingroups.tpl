@@ -46,7 +46,7 @@
 						{/if}
 
 						<th>{self_link _sort_arg='sort_mode' _sort_field='userChoice'}{tr}User Choice{/tr}{/self_link}</th>
-						<th>{tr}Actions{/tr}</th>
+						<th></th>
 					</tr>
 
 					{section name=user loop=$users}
@@ -81,11 +81,26 @@
 
 							<td class="text">{tr}{$users[user].userChoice}{/tr}</td>
 							<td class="action">
-								<a class="link tips" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" title="{$users[user].groupName|escape}:{tr}Edit{/tr}">{icon name="edit"} <span class="sr-only">{tr}Edit{/tr}</span></a>
-								{permission_link mode=glyph addclass="tips" group=$users[user].groupName count=$users[user].permcant label="{$users[user].groupName|escape}:{tr}Permissions{/tr}"}
-								{if $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered' and $users[user].groupName ne 'Admins'}
-									<a class="link text-danger tips" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}" title="{$users[user].groupName|escape}:{tr}Delete{/tr}">{icon name="remove"} <span class="sr-only">{tr}Remove{/tr}"}</span></a>
-								{/if}
+								{capture name=group_actions}
+									{strip}
+										<a href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}">
+											{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+										</a>
+										{permission_link mode=text group=$users[user].groupName count=$users[user].permcant}
+										{if $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered' and $users[user].groupName ne 'Admins'}
+											<a href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}">
+												{icon name="remove" _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+											</a>
+										{/if}
+									{/strip}
+								{/capture}
+								<a class="tips"
+								   title="{tr}Actions{/tr}"
+								   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.group_actions|escape:"javascript"|escape:"html"}
+								   style="padding:0; margin:0; border:0"
+										>
+									{icon name='wrench'}
+								</a>
 							</td>
 						</tr>
 					{/section}
