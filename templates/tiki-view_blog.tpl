@@ -78,14 +78,14 @@
 				{/if}
 			{/if}
 		</div>
+		{if $use_find eq 'y'}
+			<div class="row row-sidemargins-zero">
+				<div class="col-md-6">
+					{include file='find.tpl' find_show_num_rows='y'}
+				</div>
+			</div>
+		{/if}
 	</div>
-	{if $use_find eq 'y'}
-        <div class="row row-sidemargins-zero">
-            <div class="col-md-5 col-md-offset-7">
-    	        {include file='find.tpl' find_show_num_rows='y'}
-            </div>
-        </div>
-	{/if}
 {/if}
 
 {if $excerpt eq 'y'}
