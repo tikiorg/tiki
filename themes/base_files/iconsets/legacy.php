@@ -287,6 +287,9 @@ function iconset_legacy()
 			'filter' => array(
 				'id' => 'find',
 			),
+			'flag' => array(
+				'id' => 'flag_blue',
+			),
 			'floppy' => array(
 				'id' => 'disk',
 			),

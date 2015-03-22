@@ -1,7 +1,7 @@
 {* $Id$ *}
 {if !empty($errors)}
 	<div class="alert alert-warning">
-		{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}
+		{icon name='error' alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}
 		{foreach from=$errors item=m name=errors}
 			{$m}
 			{if !$smarty.foreach.errors.last}<br>{/if}
@@ -35,7 +35,9 @@
 						<td>
 							{if $element.bookClosed=='y'}{tr}closed{/tr}{else}{tr}open{/tr}
 								{if $canCreate}
-									<a class="icon" href="tiki-accounting_books.php?action=close&bookId={$element.bookId}">{icon _id="book_key" _confirm="{tr}Are you sure, you want to close this book{/tr}" alt="{tr}close book{/tr}"}</a>
+									<a class="icon" href="tiki-accounting_books.php?action=close&bookId={$element.bookId}">
+										{icon name="file-archive" _confirm="{tr}Are you sure, you want to close this book{/tr}" alt="{tr}close book{/tr}"}
+									</a>
 								{/if}
 							{/if}
 						</td>

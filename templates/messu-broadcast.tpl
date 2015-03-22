@@ -6,11 +6,11 @@
 {if $message}
 	<div class="alert alert-warning">
 		{if $preview eq '1'}
-			{icon _id=exclamation style="vertical-align:middle" alt="{tr}Confirmation{/tr}"}
+			{icon name='help' style="vertical-align:middle" alt="{tr}Confirmation{/tr}"}
 		{elseif $sent eq '1'}
-			{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle;"}
+			{icon name='ok' alt="{tr}OK{/tr}" style="vertical-align:middle;"}
 		{else}
-			{icon _id=exclamation style="vertical-align:middle" alt="{tr}Error{/tr}"}
+			{icon name='error' style="vertical-align:middle" alt="{tr}Error{/tr}"}
 		{/if}
 		{$message}
 		{if $preview eq '1'}

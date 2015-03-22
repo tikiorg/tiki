@@ -16,13 +16,13 @@
 					{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
 						<span class="moduleflip" id="moduleflip-{$smarty.capture.name}">
 							<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle close" href="javascript:icntoggle('mod-{$smarty.capture.name}','module.png');">
-								{icon id="icnmod-"|cat:$smarty.capture.name class="flipmodimage" _id="module" alt="[{tr}Toggle{/tr}]"}
+								{icon id="icnmod-"|cat:$smarty.capture.name class="flipmodimage" name="module" alt="[{tr}Toggle{/tr}]"}
 							</a>
 						</span>
 						{if $prefs.menus_items_icons eq 'y'}
 							<span class="moduleflip moduleflip-vert" id="moduleflip-vert-{$smarty.capture.name}">
 								<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:flip_class('main','minimize-modules-left','maximize-modules');icntoggle('mod-{$smarty.capture.name}','vmodule.png');">
-									{icon id="icnmod-"|cat:$smarty.capture.name class="flipmodimage" _id="trans" alt="[{tr}Toggle Vertically{/tr}]" _defaultdir="img"}
+									{icon id="icnmod-"|cat:$smarty.capture.name class="flipmodimage" name="move" alt="[{tr}Toggle Vertically{/tr}]" _defaultdir="img"}
 								</a>
 							</span>
 						{/if}
@@ -39,7 +39,7 @@
 			{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
 				<span class="moduleflip" id="moduleflip-{$smarty.capture.name}">
 					<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$smarty.capture.name}','module.png');">
-						{icon name="icnmod-"|cat:$smarty.capture.name class="flipmodimage" _id="module" alt="[{tr}Toggle{/tr}]"}
+						{icon id="icnmod-"|cat:$smarty.capture.name class="flipmodimage" name="module" alt="[{tr}Toggle{/tr}]"}
 					</a>
 				</span>
 			{/if}
@@ -61,17 +61,17 @@
 		{if $user and $prefs.user_assigned_modules == 'y' and $prefs.feature_modulecontrols eq 'y'}
 			<div class="panel-footer">
 				<span class="modcontrols">
-					<a title="{tr}Move module up{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_up={$module_name}">
-						{icon _id="resultset_up" alt="{tr}Up{/tr}"}
+					<a class="tips" title=":{tr}Move module up{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_up={$module_name}">
+						{icon name="up" alt="{tr}Up{/tr}"}
 					</a>
-					<a title="{tr}Move module down{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_down={$module_name}">
-						{icon _id="resultset_down" alt="{tr}Down{/tr}"}
+					<a clas="tips" title=":{tr}Move module down{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_down={$module_name}">
+						{icon name="down" alt="{tr}Down{/tr}"}
 					</a>
-					<a title="{tr}Move module to opposite side{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_move={$module_name}">
-						{icon _id="arrow_right-left" alt="{tr}Move to opposite side{/tr}"}
+					<a class="tips" title=":{tr}Move module to opposite side{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_move={$module_name}">
+						{icon name="move" alt="{tr}Move to opposite side{/tr}"}
 					</a>
-					<a title="{tr}Unassign this module{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_unassign={$module_name}" onclick='return confirmTheLink(this,"{tr}Are you sure you want to unassign this module?{/tr}")'>
-						{icon _id="cross" alt="{tr}Unassign{/tr}"}
+					<a class="tips" title=":{tr}Unassign this module{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_unassign={$module_name}" onclick='return confirmTheLink(this,"{tr}Are you sure you want to unassign this module?{/tr}")'>
+						{icon name="remove" alt="{tr}Unassign{/tr}"}
 					</a>
 				</span>
 			</div>

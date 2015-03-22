@@ -15,9 +15,9 @@
 {if $sent}
 	<div class="alert alert-warning">
 		{if (strstr($message, "{tr}ERROR{/tr}")) or (strstr($message, "{tr}Invalid{/tr}"))}
-			{icon _id=delete alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}
+			{icon name='remove' alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}
 		{else}
-			{icon _id=accept alt="{tr}Send{/tr}" style="vertical-align:middle"}
+			{icon name='ok' alt="{tr}Send{/tr}" style="vertical-align:middle"}
 		{/if}
 		{$message}
 	</div>

@@ -7,7 +7,9 @@
 			{else}
 				<a class="label label-default" href="tiki-browse_freetags.php?tag={$smarty.capture.tagurl|escape:'url'}">{$taginfo.tag|escape}</a>
 				{if isset($deleteTag) and $tiki_p_admin eq 'y'}
-					<a title="{tr}Untag{/tr} {$taginfo.tag|escape}" href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}delTag={$taginfo.tag|escape:'url'}">{icon _id=cross alt="{tr}Untag{/tr}"}</a>&nbsp;
+					<a class="tips" title=":{tr}Untag{/tr} {$taginfo.tag|escape}" href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}delTag={$taginfo.tag|escape:'url'}">
+						{icon name='remove' alt="{tr}Untag{/tr}"}
+					</a>&nbsp;
 				{/if}
 			{/if}
 		{/foreach}

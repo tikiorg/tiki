@@ -1,6 +1,10 @@
 {* $Id$ *}
-<a class="icon" href="tiki-accounting_export.php?action=print&what=journal&bookId={$bookId}{if isset($account.accountId)}&accountId={$account.accountId}{/if}" target="new">{icon _id="printer" alt="{tr}printable version{/tr}"}</a>
-<a class="icon" href="tiki-accounting_export.php?action=settings&what=journal&bookId={$bookId}{if isset($account.accountId)}&accountId={$account.accountId}{/if}">{icon _id="table" alt="{tr}export table{/tr}"}</a>
+<a class="icon" href="tiki-accounting_export.php?action=print&what=journal&bookId={$bookId}{if isset($account.accountId)}&accountId={$account.accountId}{/if}" target="new">
+	{icon name="print" alt="{tr}printable version{/tr}"}
+</a>
+<a class="icon" href="tiki-accounting_export.php?action=settings&what=journal&bookId={$bookId}{if isset($account.accountId)}&accountId={$account.accountId}{/if}">
+	{icon name="export" alt="{tr}export table{/tr}"}
+</a>
 <div class="table-responsive">
 	<table class="table normal">
 		<tr>
@@ -36,7 +40,9 @@
 							<td rowspan="{$j.maxcount}">
 								{if $j.journalCancelled==1}&nbsp;
 								{else}
-									<a class="icon" href="tiki-accounting_cancel.php?bookId={$bookId}&journalId={$j.journalId}">{icon _id="delete" alt="{tr}cancel this transaction{/tr}" _confirm="{tr}Are you sure you want to cancel this transaction{/tr}"}</a>
+									<a class="icon" href="tiki-accounting_cancel.php?bookId={$bookId}&journalId={$j.journalId}">
+										{icon name="remove" alt="{tr}cancel this transaction{/tr}" _confirm="{tr}Are you sure you want to cancel this transaction{/tr}"}
+									</a>
 								{/if}
 							</td>
 						{/if}

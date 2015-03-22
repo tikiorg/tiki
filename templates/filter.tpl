@@ -18,9 +18,9 @@
 				</select>
 			</div>
 			{if preg_match('/desc$/',$sort_mode)}
-				{icon _id='arrow_up' width='16' height='16' class='icon sort_invert' title="{tr}Sort direction{/tr}" href='#'}
+				{icon name='sort-up' class='icon sort_invert' title="{tr}Sort direction{/tr}" href='#'}
 			{else}
-				{icon _id='arrow_down' width='16' height='16' class='icon sort_invert' title="{tr}Sort direction{/tr}" href='#'}
+				{icon name='sort-down' class='icon sort_invert' title="{tr}Sort direction{/tr}" href='#'}
 			{/if}
 		</div>
 	{else}

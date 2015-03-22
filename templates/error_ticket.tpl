@@ -23,7 +23,7 @@
 						<td id="centercolumn"><div id="tiki-center">
 							<br>
 							<div class="panel panel-default">
-								<div class="panel-heading">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"} {$errortitle|default:"{tr}Error{/tr}"}
+								<div class="panel-heading">{icon name='error' alt="{tr}Error{/tr}" style="vertical-align:middle"} {$errortitle|default:"{tr}Error{/tr}"}
 								</div>
 								<div class="panel-body">
 									<br>{$msg}
