@@ -50,7 +50,7 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 					$colpointer =  parent::$usecolselector ? (string) '\'' . $col . '\'' : (int) $col;
 					switch($info['type']) {
 						case 'dropdown' :
-							$o = '';
+							$o = [];
 							if (array_key_exists('options', $info)) {
 								foreach ($info['options'] as $key => $val) {
 									$label =  addcslashes(is_numeric($key) ? $val : $key,"'/");
@@ -61,8 +61,10 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 											. '/.test(e);}';
 									}
 								}
-								$options = $this->iterate($o, '{', $this->nt4 . '}', $this->nt5, '', ',');
-								$ffunc[] = $colpointer . ' : ' . $options;
+								if (count($o) > 0) {
+									$options = $this->iterate($o, '{', $this->nt4 . '}', $this->nt5, '', ',');
+									$ffunc[] = $colpointer . ' : ' . $options;
+								}
 							} elseif (!parent::$ajax) {
 								$ffunc[] = $colpointer . ' : true';
 							}
