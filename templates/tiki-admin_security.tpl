@@ -21,17 +21,9 @@
 				<td class="text">{$key}</td>
 				<td class="text">{$item.setting}</td>
 				<td class="text">
-					{if $item.risk eq 'safe'}
-						{icon _id=accept alt="$item.risk" style="vertical-align:middle"}
-					{elseif $item.risk eq 'risky'}
-						{icon _id=exclamation alt="$item.risk" style="vertical-align:middle"}
-					{elseif $item.risk eq 'unsafe'}
-						{icon _id=exclamation alt="$item.risk" style="vertical-align:middle"}
-					{elseif $item.risk eq 'unknown'}
-						{icon _id=error alt="$item.risk" style="vertical-align:middle"}
-					{/if}
-					{$item.risk}
-				</td>
+					<span class="text-{$fmap[$item.risk]['class']}">
+						{icon name="{$fmap[$item.risk]['icon']}"} {$item.risk}
+					</span>
 				<td class="text">{$item.message}</td>
 			</tr>
 		{/foreach}

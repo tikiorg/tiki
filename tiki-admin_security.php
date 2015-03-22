@@ -206,6 +206,19 @@ if (!file_exists('db/'.$tikidomainslash.'lock')) {
 	);
 }
 
+$fmap = [
+	'good' => ['icon' => 'ok', 'class' => 'success'],
+	'safe' => ['icon' => 'ok', 'class' => 'success'],
+	'bad' => ['icon' => 'ban', 'class' => 'danger'],
+	'unsafe' => ['icon' => 'ban', 'class' => 'danger'],
+	'risky' => ['icon' => 'warning', 'class' => 'warning'],
+	'ugly' => ['icon' => 'warning', 'class' => 'warning'],
+	'info' => ['icon' => 'information', 'class' => 'info'],
+	'unknown' => ['icon' => 'help', 'class' => 'muted'],
+];
+$smarty->assign('fmap', $fmap);
+
+
 ksort($tikisettings);
 $smarty->assign_by_ref('tikisettings', $tikisettings);
 // array for severity in tiki_secdb table. This can go into a extra table if
