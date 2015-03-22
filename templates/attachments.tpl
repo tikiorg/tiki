@@ -28,7 +28,7 @@
 			{$offsetparam = ''}
 		{/if}
 		<div class="table-responsive">
-			<table class="table normal">
+			<table class="table normal table-striped table-hover">
 				<h3>{tr}Attached files{/tr}</h3>
 				<tr>
 					<th>
@@ -49,7 +49,7 @@
 					<th>
 						<a href="tiki-index.php?page={$page|escape:"url"}&amp;{$offsetparam}sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}&amp;atts_show=y#attachments">{tr}Downloads{/tr}</a>
 					</th>
-					<th>{tr}Actions{/tr}</th>
+					<th></th>
 				</tr>
 				{cycle values="odd,even" print=false advance=false}
 				{section name=ix loop=$atts}
@@ -66,12 +66,28 @@
 						<td class="integer"><small>{$atts[ix].filesize|kbsize}</small></td>
 						<td class="integer"><small>{$atts[ix].hits}</small></td>
 						<td class="action">
-							<a title="{tr}View{/tr}" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}" target="_blank">{icon _id='monitor' alt="{tr}View{/tr}"}</a>
-							<a title="{tr}Download{/tr}" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}&amp;download=y">{icon _id='disk' alt="{tr}Download{/tr}"}</a>
-							&nbsp;
-							{if ($tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))) and $editable}
-								<a title="{tr}Delete{/tr}" class="link" href="tiki-index.php?page={$page|escape:"url"}&amp;removeattach={$atts[ix].attId}&amp;{$offsetparam}{if !empty($sort_mode)}sort_mode={$sort_mode}{/if}"{if !empty($target)} target="{$target}"{/if}>{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
-							{/if}
+							{capture name=att_actions}
+								{strip}
+									<a href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}" target="_blank">
+										{icon name='view' _menu_text='y' _menu_icon='y' alt="{tr}View{/tr}"}
+									</a>
+									<a href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}&amp;download=y">
+										{icon name='floppy' _menu_text='y' _menu_icon='y' alt="{tr}Download{/tr}"}
+									</a>
+									{if ($tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))) and $editable}
+										<a href="tiki-index.php?page={$page|escape:"url"}&amp;removeattach={$atts[ix].attId}&amp;{$offsetparam}{if !empty($sort_mode)}sort_mode={$sort_mode}{/if}"{if !empty($target)} target="{$target}"{/if}>
+											{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+										</a>
+									{/if}
+								{/strip}
+							{/capture}
+							<a class="tips"
+							   title="{tr}Actions{/tr}"
+							   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.att_actions|escape:"javascript"|escape:"html"}
+							   style="padding:0; margin:0; border:0"
+									>
+								{icon name='wrench'}
+							</a>
 						</td>
 					</tr>
 				{/section}
