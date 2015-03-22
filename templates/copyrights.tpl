@@ -34,9 +34,15 @@
 			<div class="col-sm-9 col-sm-offset-3">
 				<input type="submit" class="btn btn-default btn-sm" name="editcopyright" value="{tr}Edit{/tr}">
 
-				<a title="{tr}Delete{/tr}" href="copyrights.php?page={$page|escape:"url"}&amp;action=delete&amp;copyrightId={$copyrights[i].copyrightId}" >{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
-				<a href="copyrights.php?page={$page|escape:"url"}&amp;action=up&amp;copyrightId={$copyrights[i].copyrightId}">{icon _id='resultset_up'}</a>
-				<a href="copyrights.php?page={$page|escape:"url"}&amp;action=down&amp;copyrightId={$copyrights[i].copyrightId}">{icon _id='resultset_down'}</a>
+				<a class="tips" title=":{tr}Delete{/tr}" href="copyrights.php?page={$page|escape:"url"}&amp;action=delete&amp;copyrightId={$copyrights[i].copyrightId}" >
+					{icon name='remove' alt="{tr}Remove{/tr}"}
+				</a>
+				<a class="tips" title=":{tr}Up{/tr}" href="copyrights.php?page={$page|escape:"url"}&amp;action=up&amp;copyrightId={$copyrights[i].copyrightId}">
+					{icon name='up'}
+				</a>
+				<a class="tips" title=":{tr}Down{/tr}" href="copyrights.php?page={$page|escape:"url"}&amp;action=down&amp;copyrightId={$copyrights[i].copyrightId}">
+					{icon name='down'}
+				</a>
 			</div>
 		</div>
 	</form>

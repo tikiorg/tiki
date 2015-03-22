@@ -35,7 +35,7 @@
 	</table>
 	<div class="messureadflag">
 		{if $msg.isFlagged eq 'y'}
-			{icon _id='flag_blue' alt="flag"}<a class="link" href="messu-read_archive.php?offset={$offset}&amp;action=isFlagged&amp;actionval=n&amp;msgId={$msgId}&amp;sort_mode={$sort_mode}&amp;find={$find|escape:"url"}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}">{tr}Unflag{/tr}</a>
+			{icon name='flag' alt="flag"}<a class="link" href="messu-read_archive.php?offset={$offset}&amp;action=isFlagged&amp;actionval=n&amp;msgId={$msgId}&amp;sort_mode={$sort_mode}&amp;find={$find|escape:"url"}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}">{tr}Unflag{/tr}</a>
 		{else}
 			<a class="link" href="messu-read_archive.php?offset={$offset}&amp;action=isFlagged&amp;actionval=y&amp;msgId={$msgId}&amp;sort_mode={$sort_mode}&amp;find={$find|escape:"url"}&amp;flag={$flag|escape:"url"}&amp;priority={$priority}&amp;flagval={$flagval}">{tr}Flag this message{/tr}</a>
 		{/if}

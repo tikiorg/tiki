@@ -1,7 +1,9 @@
 {* $Id$ *}
 <div class="panel panel-default">
 	{if !empty($confirmation_text)}
-		<div class="panel-heading">{icon _id=information style="vertical-align:middle"} {$confirmation_text|escape}</div>
+		<div class="panel-heading">
+			{icon name='information' style="vertical-align:middle"} {$confirmation_text|escape}
+		</div>
 	{/if}
 	{if !empty($confirm_detail)}
 		{$confirm_detail}

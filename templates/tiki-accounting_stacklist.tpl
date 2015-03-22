@@ -1,6 +1,10 @@
 {* $Id$ *}
-<a class="icon" href="tiki-accounting_export.php?action=print&what=stack&bookId={$bookId}" target="new">{icon _id="printer" alt="{tr}printable version{/tr}"}</a>
-<a class="icon" href="tiki-accounting_export.php?action=settings&what=stack&bookId={$bookId}">{icon _id="table" alt="{tr}export table{/tr}"}</a>
+<a class="icon" href="tiki-accounting_export.php?action=print&what=stack&bookId={$bookId}" target="new">
+	{icon name="print" alt="{tr}printable version{/tr}"}
+</a>
+<a class="icon" href="tiki-accounting_export.php?action=settings&what=stack&bookId={$bookId}">
+	{icon name="export" alt="{tr}export table{/tr}"}
+</a>
 <table class="table normal">
 	<tr>
 		<th rowspan="2">{tr}Id{/tr}</th>
@@ -47,8 +51,14 @@
 				<td class="journal">{if $i<$j.creditcount}{$j.credit[$i].stackItemText|escape}{/if}&nbsp;</td>
 				{if $smarty.section.posts.first}
 					<td rowspan="{$s.maxcount}">
-						<a class="icon" href="tiki-accounting_stack.php?action=delete&bookId={$bookId}&stackId={$s.stackId}">{icon _id="delete" alt="{tr}delete this transaction from the stack{/tr}" _confirm="{tr}Are you sure you want to delete this transaction from stack?{/tr}"}</a><br>
-						{if $canBook}<a class="icon" href="tiki-accounting_stack.php?action=confirm&bookId={$bookId}&stackId={$s.stackId}">{icon _id="arrow_right" alt="{tr}confirm this transaction{/tr}" _confirm="{tr}Are you sure you want to confirm this transaction?{/tr}"}</a><br>{/if}
+						<a class="icon" href="tiki-accounting_stack.php?action=delete&bookId={$bookId}&stackId={$s.stackId}">
+							{icon name="remove" alt="{tr}delete this transaction from the stack{/tr}" _confirm="{tr}Are you sure you want to delete this transaction from stack?{/tr}"}
+						</a><br>
+						{if $canBook}
+							<a class="icon" href="tiki-accounting_stack.php?action=confirm&bookId={$bookId}&stackId={$s.stackId}">
+								{icon name="help" alt="{tr}confirm this transaction{/tr}" _confirm="{tr}Are you sure you want to confirm this transaction?{/tr}"}
+							</a><br>
+						{/if}
 					</td>
 				{/if}
 			</tr>

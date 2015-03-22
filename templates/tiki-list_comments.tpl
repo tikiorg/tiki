@@ -48,9 +48,15 @@
 	{section name=ix loop=$comments}{assign var=id value=$comments[ix].threadId}
 		{capture name=over_actions}
 			{strip}
-				<a href="{$comments[ix].href}">{icon _id='magnifier' alt="{tr}Display{/tr}"}</a>
-				<a href="{$comments[ix].href|cat:"&amp;comments_threadId=$id&amp;edit_reply=1#form"}">{icon _id='page_edit' alt="{tr}Edit{/tr}"}</a>
-				{self_link remove=1 checked=$id _icon='cross'}{tr}Delete{/tr}{/self_link}
+				<a href="{$comments[ix].href}">
+					{icon name='view' _menu_text='y' _menu_icon='y' alt="{tr}Display{/tr}"}
+				</a>
+				<a href="{$comments[ix].href|cat:"&amp;comments_threadId=$id&amp;edit_reply=1#form"}">
+					{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+				</a>
+				{self_link remove=1 checked=$id _menu_text='y' _menu_icon='y' _icon_name='remove'}
+					{tr}Delete{/tr}
+				{/self_link}
 			{/strip}
 		{/capture}
 
