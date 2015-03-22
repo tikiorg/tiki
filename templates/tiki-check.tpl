@@ -5,7 +5,7 @@
 <form method="post" action="tiki-check.php">
 <input class="registerSubmit" type="submit" class="btn btn-default" name="acknowledge" value="{tr}Acknowledge{/tr}">
 <div class="table-responsive">
-	<table class="table normal">
+	<table class="table normal table-striped table-hover">
 		<tr>
 			<th>{tr}Property{/tr}</th>
 			<th>{tr}Value{/tr}</th>
@@ -19,18 +19,9 @@
 				<td class="text">{$key}</td>
 				<td class="text">{$item.setting}</td>
 				<td class="text">
-					{if $item.fitness eq 'good'}
-						{icon _id=accept alt="" style="vertical-align:middle"}
-					{elseif $item.fitness eq 'bad'}
-						{icon _id=exclamation alt="" style="vertical-align:middle"}
-					{elseif $item.fitness eq 'ugly'}
-						{icon _id=error alt="" style="vertical-align:middle"}
-					{elseif $item.fitness eq 'info'}
-						{icon _id=information alt="" style="vertical-align:middle"}
-					{elseif $item.fitness eq 'unknown'}
-						{icon _id=no_information alt="" style="vertical-align:middle"}
-					{/if}
-					{$item.fitness}
+					<span class="text-{$fmap[$item.fitness]['class']}">
+						{icon name="{$fmap[$item.fitness]['icon']}"} {$item.fitness}
+					</span>
 				</td>
 				<td class="text"><input type="checkbox" name="{$key}" {if $item.fitness eq 'good'}disabled{/if} {if $item.ack}checked{/if} /></td>
 				<td class="text">{$item.message}</td>
@@ -99,18 +90,9 @@
 				<td class="text">{$key}</td>
 				<td class="text">{$item.value}</td>
 				<td class="text">
-					{if $item.fitness eq 'good'}
-						{icon _id=accept alt="" style="vertical-align:middle"}
-					{elseif $item.fitness eq 'bad'}
-						{icon _id=exclamation alt="" style="vertical-align:middle"}
-					{elseif $item.fitness eq 'ugly'}
-						{icon _id=error alt="" style="vertical-align:middle"}
-					{elseif $item.fitness eq 'info'}
-						{icon _id=information alt="" style="vertical-align:middle"}
-					{elseif $item.fitness eq 'unknown'}
-						{icon _id=no_information alt="" style="vertical-align:middle"}
-					{/if}
-					{$item.fitness}
+					<span class="text-{$fmap[$item.fitness]['class']}">
+						{icon name="{$fmap[$item.fitness]['icon']}"} {$item.fitness}
+					</span>
 				</td>
 				<td class="test"><input type="checkbox" name="{$key}" {if $item.fitness eq 'good'}disabled{/if} {if $item.ack}checked{/if} /></td>
 				<td class="text">{$item.message}</td>
@@ -137,9 +119,9 @@
 					<td class="text">{$d|escape}</td>
 					<td class="text">
 						{if $dirsWritable[$k]}
-							{icon _id=accept alt="" style="vertical-align:middle"}
+							{icon name='ok' iclass='text-success'}
 						{else}
-							{icon _id=exclamation alt="" style="vertical-align:middle"}
+							{icon name='remove' iclass='text-danger'}
 						{/if}
 					</td>
 					<td>
@@ -173,18 +155,9 @@
 					<td class="text">{$key}</td>
 					<td class="text">{$item.setting}</td>
 					<td class="text">
-						{if $item.fitness eq 'good'}
-							{icon _id=accept alt="" style="vertical-align:middle"}
-						{elseif $item.fitness eq 'bad'}
-							{icon _id=exclamation alt="" style="vertical-align:middle"}
-						{elseif $item.fitness eq 'ugly'}
-							{icon _id=error alt="" style="vertical-align:middle"}
-						{elseif $item.fitness eq 'info'}
-							{icon _id=information alt="" style="vertical-align:middle"}
-						{elseif $item.fitness eq 'unknown'}
-							{icon _id=no_information alt="" style="vertical-align:middle"}
-						{/if}
-						{$item.fitness}
+					<span class="text-{$fmap[$item.fitness]['class']}">
+						{icon name="{$fmap[$item.fitness]['icon']}"} {$item.fitness}
+					</span>
 					</td>
 					<td class="test"><input type="checkbox" name="{$key}" {if $item.fitness eq 'good'}disabled{/if} {if $item.ack}checked{/if} /></td>
 					<td class="text">{$item.message}</td>
@@ -215,18 +188,9 @@
 					<td class="text">{$key}</td>
 					<td class="text">{$item.setting}</td>
 					<td class="text">
-						{if $item.fitness eq 'good'}
-							{icon _id=accept alt="" style="vertical-align:middle"}
-						{elseif $item.fitness eq 'bad'}
-							{icon _id=exclamation alt="" style="vertical-align:middle"}
-						{elseif $item.fitness eq 'ugly'}
-							{icon _id=error alt="" style="vertical-align:middle"}
-						{elseif $item.fitness eq 'info'}
-							{icon _id=information alt="" style="vertical-align:middle"}
-						{elseif $item.fitness eq 'unknown'}
-							{icon _id=no_information alt="" style="vertical-align:middle"}
-						{/if}
-						{$item.fitness}
+					<span class="text-{$fmap[$item.fitness]['class']}">
+						{icon name="{$fmap[$item.fitness]['icon']}"} {$item.fitness}
+					</span>
 					</td>
 					<td class="test"><input type="checkbox" name="{$key}" {if $item.fitness eq 'good'}disabled{/if} {if $item.ack}checked{/if} /></td>
 					<td class="text">{$item.message}</td>
@@ -256,18 +220,9 @@
 				<td class="text">{$key}</td>
 				<td class="text">{$item.setting}</td>
 				<td class="text">
-					{if $item.fitness eq 'good'}
-						{icon _id=accept alt="" style="vertical-align:middle"}
-					{elseif $item.fitness eq 'bad'}
-						{icon _id=exclamation alt="" style="vertical-align:middle"}
-					{elseif $item.fitness eq 'ugly'}
-						{icon _id=error alt="" style="vertical-align:middle"}
-					{elseif $item.fitness eq 'info'}
-						{icon _id=information alt="" style="vertical-align:middle"}
-					{elseif $item.fitness eq 'unknown'}
-						{icon _id=no_information alt="" style="vertical-align:middle"}
-					{/if}
-					{$item.fitness}
+					<span class="text-{$fmap[$item.fitness]['class']}">
+						{icon name="{$fmap[$item.fitness]['icon']}"} {$item.fitness}
+					</span>
 				</td>
 				<td class="test"><input type="checkbox" name="{$key}" {if $item.fitness eq 'good'}disabled{/if} {if $item.ack}checked{/if} /></td>
 				<td class="text">{$item.message}</td>
@@ -295,18 +250,9 @@
 				<td class="text">{$key}</td>
 				<td class="text">{$item.setting}</td>
 				<td class="text">
-					{if $item.fitness eq 'good' or $item.fitness eq 'safe'}
-						{icon _id=accept alt="" style="vertical-align:middle"}
-					{elseif $item.fitness eq 'bad' or $item.fitness eq 'risky'}
-						{icon _id=exclamation alt="" style="vertical-align:middle"}
-					{elseif $item.fitness eq 'ugly'}
-						{icon _id=error alt="" style="vertical-align:middle"}
-					{elseif $item.fitness eq 'info'}
-						{icon _id=information alt="" style="vertical-align:middle"}
-					{elseif $item.fitness eq 'unknown'}
-						{icon _id=no_information alt="" style="vertical-align:middle"}
-					{/if}
-					{$item.fitness}
+					<span class="text-{$fmap[$item.fitness]['class']}">
+						{icon name="{$fmap[$item.fitness]['icon']}"} {$item.fitness}
+					</span>
 				</td>
 				<td class="test"><input type="checkbox" name="{$key}" {if $item.fitness eq 'safe'}disabled{/if} {if $item.ack}checked{/if} /></td>
 				<td class="text">{$item.message}</td>

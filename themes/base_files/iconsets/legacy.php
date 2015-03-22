@@ -233,6 +233,9 @@ function iconset_legacy()
 				'id' => 'select',
 				'append' => '.gif'
 			),
+			'cog' => array(
+				'id' => 'wrench',
+			),
 			'columns' => array(
 				'id' => 'text_columns',
 			),
