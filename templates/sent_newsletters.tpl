@@ -2,7 +2,7 @@
 <div align="center">
 	{include file='find.tpl'}
 
-	<table class="table normal">
+	<table class="table normal table-striped table-hover">
 		<tr>
 			<th>
 				<a href="{$url}?nlId={$nlId}&amp;{$cur}_offset={$offset}&amp;{$bak}_offset={$offset_bak}&amp;{$cur}_sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}&amp;{$bak}_sort_mode={$sort_mode_bak}&amp;cookietab={$tab}">{tr}Newsletter{/tr}</a>
@@ -19,7 +19,7 @@
 				</th>
 			{/if}
 			<th>{tr}Errors{/tr}</th>
-			<th>{tr}Action{/tr}</th>
+			<th></th>
 		</tr>
 
 		{section name=user loop=$channels}
@@ -44,23 +44,42 @@
 					{/if}
 				</td>
 				<td class="action">
-					{if $url == "tiki-newsletter_archives.php"}
-						<a class="link" href="{$url}?{if $nl_info}nlId={$channels[user].nlId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
-					{/if}
-					{if ($channels[user].tiki_p_send_newsletters eq 'y') or ($channels[user].tiki_p_admin_newsletters eq 'y')}
-						{if $view_editions eq 'y'}
-							<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}&amp;editionId={$channels[user].editionId}&amp;resend=1">{icon _id='email_edit' alt="{tr}Resend Newsletter{/tr}"}</a>
-						{else}
-							<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}&amp;editionId={$channels[user].editionId}">{icon _id='email' alt="{tr}Send Newsletter{/tr}"}</a>
-						{/if}
-					{else}
-						&nbsp;
-					{/if}
-					{if $channels[user].tiki_p_admin_newsletters eq 'y'}
-						<a class="link" href="{$url}?nlId={$channels[user].nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].editionId}" title="{tr}Remove{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
-					{else}
-						&nbsp;
-					{/if}
+					{capture name=sent_actions}
+						{strip}
+							{if $url == "tiki-newsletter_archives.php"}
+								<a href="{$url}?{if $nl_info}nlId={$channels[user].nlId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}">
+									{icon name='view' _menu_text='y' _menu_icon='y' alt="{tr}View{/tr}"}
+								</a>
+							{/if}
+							{if ($channels[user].tiki_p_send_newsletters eq 'y') or ($channels[user].tiki_p_admin_newsletters eq 'y')}
+								{if $view_editions eq 'y'}
+									<a href="tiki-send_newsletters.php?nlId={$channels[user].nlId}&amp;editionId={$channels[user].editionId}&amp;resend=1">
+										{icon name='redo' _menu_text='y' _menu_icon='y' alt="{tr}Resend newsletter{/tr}"}
+									</a>
+								{else}
+									<a class="tips" title="{tr}Send Newsletter{/tr}" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}&amp;editionId={$channels[user].editionId}">
+										{icon name='envelope' _menu_text='y' _menu_icon='y' alt="{tr}Send newsletter{/tr}"}
+									</a>
+								{/if}
+							{else}
+								&nbsp;
+							{/if}
+							{if $channels[user].tiki_p_admin_newsletters eq 'y'}
+								<a class="link" href="{$url}?nlId={$channels[user].nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].editionId}" title="{tr}Remove{/tr}">
+									{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+								</a>
+							{else}
+								&nbsp;
+							{/if}
+						{/strip}
+					{/capture}
+					<a class="tips"
+					   title="{tr}Actions{/tr}"
+					   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.sent_actions|escape:"javascript"|escape:"html"}
+					   style="padding:0; margin:0; border:0"
+							>
+						{icon name='wrench'}
+					</a>
 				</td>
 			</tr>
 		{/section}

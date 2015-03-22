@@ -169,7 +169,7 @@ $('#source-form').each(function () {
 			var row = $('<tr/>');
 			row.append($('<td/>').text(name));
 			row.append($('<td/>').text(value));
-			row.append($('<td>{{icon _id=cross}}</td>').css('cursor', 'pointer').click(function () {
+			row.append($('<td>{{icon name=remove}}</td>').css('cursor', 'pointer').click(function () {
 				$(this).closest('tr').remove();
 				return false;
 			}));

@@ -21,7 +21,7 @@
 		<h3>{tr}{$types[user].type|escape}{/tr}</h3>
 		<a class="link" href="tiki-view_articles.php?type={$types[user].type|escape:url}">{tr}View articles with this type{/tr}</a>
 			<div class="table-responsive article-types">
-				<table class="table normal">
+				<table class="table normal table-striped table-hover">
 				<tr>
 					<th>{tr}Articles{/tr}</th>
 					<th>{tr}Author rating{/tr}</th>
@@ -78,7 +78,7 @@
 					<th>{tr}Show source{/tr}</th>
 					<th>{tr}Show image caption{/tr}</th>
 					<th>{tr}Creator can edit{/tr}</th>
-					<th colspan="2">{tr}Action{/tr}</th>
+					<th colspan="2"></th>
 				</tr>
 				<tr>
 					<td class="checkbox-cell">
@@ -106,30 +106,30 @@
 						<input type="checkbox" name="creator_edit[{$types[user].type|escape}]" {if $types[user].creator_edit eq 'y'}checked="checked"{/if}>
 					</td>
 					<td class="action" colspan="2">
-						<center>
-							{if $types[user].article_cnt eq 0}
-								<a class="link" href="tiki-article_types.php?remove_type={$types[user].type|escape:url}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
-							{else}
-								&nbsp;
-							{/if}
-						</center>
+						{if $types[user].article_cnt eq 0}
+							<a class="tips" title=":{tr}Remove{/tr}" href="tiki-article_types.php?remove_type={$types[user].type|escape:url}">
+								{icon name='remove'}
+							</a>
+						{else}
+							&nbsp;
+						{/if}
 					</td>
 				</tr>
 			</table>
 		</div>
 		{if $prefs.article_custom_attributes eq 'y'}
 			<div class="table-responsive article-types">
-				<table class="table normal">
+				<table class="table normal table-striped table-hover">
 					<tr>
 						<th>{tr}Custom attribute{/tr}</th>
-						<th>{tr}Action{/tr}</th>
+						<th></th>
 					</tr>
 					{foreach from=$types[user].attributes item=att key=attname}
 						<tr>
 							<td>{$attname|escape}</td>
 							<td class="action">
-								<a class="link" href="tiki-article_types.php?att_type={$types[user].type|escape:url}&att_remove={$att.relationId|escape:url}">
-									{icon _id='cross' alt="{tr}Remove{/tr}"}
+								<a class="tips" title=":{tr}Remove{/tr}" href="tiki-article_types.php?att_type={$types[user].type|escape:url}&att_remove={$att.relationId|escape:url}">
+									{icon name='remove' alt="{tr}Remove{/tr}"}
 								</a>
 							</td>
 						</tr>

@@ -36,7 +36,7 @@
 							<li>
 								<input type="hidden" name="groups[]" value="{$state|escape}">
 								{$state|escape}
-								{icon _id=cross class="removeitem"}
+								{icon name='remove' class="removeitem"}
 							</li>
 						{/foreach}
 					{/if}
@@ -79,7 +79,7 @@
 					$('#transition-group-list').append(
 						$('<li/>').text( $(this).val() )
 							.append( $('<input type="hidden" name="groups[]">').val( $(this).val() ) )
-							.append( $('{{icon _id=cross class="removeitem"}}') )
+							.append( $('{{icon name=remove class=removeitem}}') )
 					);
 					$(this).val('');
 				} );
@@ -103,14 +103,14 @@
 			} );
 			{/jq}
 			<div class="table-responsive">
-				<table class="table normal">
+				<table class="table normal table-striped table-hover">
 					<thead>
 						<tr>
 							<th>{tr}Label{/tr}</th>
 							<th>{tr}From{/tr}</th>
 							<th>{tr}To{/tr}</th>
 							<th>{tr}Guards{/tr}</th>
-							<th>{tr}Actions{/tr}</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -121,9 +121,24 @@
 								<td class="text">{$trans.to_label|escape}</td>
 								<td class="integer">{self_link transitionId=$trans.transitionId action=edit cookietab=4}{$trans.guards|@count|escape}{/self_link}</td>
 								<td class="action">
-									{self_link transitionId=$trans.transitionId action=edit cookietab=3}{icon _id=page_edit alt="{tr}Edit{/tr}"}{/self_link}
-									{self_link transitionId=$trans.transitionId action=remove}{icon _id=cross alt="{tr}Remove{/tr}"}{/self_link}
-									{permission_link mode=icon type=transition id=$trans.transitionId title=$trans.name}
+									{capture name=transition_actions}
+										{strip}
+											{permission_link mode=text type=transition id=$trans.transitionId title=$trans.name}
+											{self_link transitionId=$trans.transitionId action=edit cookietab=3 _menu_text='y' _menu_icon='y' _icon_name='edit'}
+												{tr}Edit{/tr}
+											{/self_link}
+											{self_link transitionId=$trans.transitionId action=remove _icon_name="remove" _menu_text='y' _menu_icon='y'}
+												{tr}Remove{/tr}
+											{/self_link}
+										{/strip}
+									{/capture}
+									<a class="tips"
+									   title="{tr}Actions{/tr}"
+									   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.transition_actions|escape:"javascript"|escape:"html"}
+									   style="padding:0; margin:0; border:0"
+											>
+										{icon name='wrench'}
+									</a>
 								</td>
 							</tr>
 						{foreachelse}

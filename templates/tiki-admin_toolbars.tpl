@@ -125,7 +125,7 @@
 			</form>
 			{autocomplete element='#tool_icon' type='icon'}
 		</div>
-		<label for="full-list-c">{tr}Custom Tools:{/tr}</label>{icon _id="add" title="{tr}Add a new custom tool{/tr}" id="toolbar_add_custom"}<br/>
+		<label for="full-list-c">{tr}Custom Tools:{/tr}</label>{icon name="add" title="{tr}Add a new custom tool{/tr}" id="toolbar_add_custom"}<br/>
 		<ul id="full-list-c" class="full">
 		{foreach from=$display_c item=tool}
 			<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>

@@ -95,7 +95,7 @@
 			{include file='find.tpl'}
 		{/if}
 		<div class="table-responsive poll-table">
-			<table class="table normal">
+			<table class="table normal table-striped table-hover">
 				{assign var=numbercol value=8}
 				<tr>
 					<th>{self_link _sort_arg='sort_mode' _sort_field='pollId' title="{tr}ID{/tr}"}{tr}ID{/tr}{/self_link}</th>
@@ -107,7 +107,7 @@
 					<th>{self_link _sort_arg='sort_mode' _sort_field='publishDate' title="{tr}Publish{/tr}"}{tr}Publish{/tr}{/self_link}</th>
 					<th>{self_link _sort_arg='sort_mode' _sort_field='voteConsiderationSpan' title="{tr}Span{/tr}"}{tr}Span{/tr}{/self_link}</th>
 					<th>{tr}Options{/tr}</th>
-					<th>{tr}Action{/tr}</th>
+					<th></th>
 				</tr>
 
 				{section name=user loop=$channels}
@@ -142,10 +142,29 @@
 						<td class="integer">{$channels[user].voteConsiderationSpan|escape}</td>
 						<td class="integer">{$channels[user].options}</td>
 						<td class="action">
-							{self_link pollId=$channels[user].pollId}{icon _id=page_edit}{/self_link}
-							<a class="link" href="tiki-admin_poll_options.php?pollId={$channels[user].pollId}" title="{tr}Options{/tr}">{icon _id=table alt="{tr}Options{/tr}"}</a>
-							<a class="link" href="tiki-poll_results.php?pollId={$channels[user].pollId}">{icon _id="chart_curve" alt="{tr}Results{/tr}"}</a>
-							<a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pollId}" title="{tr}Delete{/tr}">{icon _id=cross alt="{tr}Delete{/tr}"}</a>
+							{capture name=admin_poll_actions}
+								{strip}
+									<a href="tiki-admin_poll_options.php?pollId={$channels[user].pollId}">
+										{icon name='list' _menu_text='y' _menu_icon='y' alt="{tr}Options{/tr}"}
+									</a>
+									<a class="link" href="tiki-poll_results.php?pollId={$channels[user].pollId}">
+										{icon name="chart" _menu_text='y' _menu_icon='y' alt="{tr}Results{/tr}"}
+									</a>
+									{self_link pollId=$channels[user].pollId _menu_text='y' _menu_icon='y' _icon_name="edit"}
+										{tr}Edit{/tr}
+									{/self_link}
+									<a href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pollId}">
+										{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+									</a>
+								{/strip}
+							{/capture}
+							<a class="tips"
+							   title="{tr}Actions{/tr}"
+							   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.admin_poll_actions|escape:"javascript"|escape:"html"}
+							   style="padding:0; margin:0; border:0"
+									>
+								{icon name='wrench'}
+							</a>
 						</td>
 					</tr>
 				{sectionelse}

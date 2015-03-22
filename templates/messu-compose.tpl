@@ -6,7 +6,7 @@
 {if $allowMsgs ne 'y'}
 	<div class="panel panel-default">
 		<div class="panel-body">
-			{icon _id=information style="vertical-align:middle" align="left"} {tr}If you want people to be able to reply to you, enable <a href='tiki-user_preferences.php'>Allow messages from other users</a> in your preferences.{/tr}
+			{icon name='information' style="vertical-align:middle" align="left"} {tr}If you want people to be able to reply to you, enable <a href='tiki-user_preferences.php'>Allow messages from other users</a> in your preferences.{/tr}
 		</div>
 	</div>
 {/if}

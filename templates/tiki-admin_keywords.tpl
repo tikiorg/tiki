@@ -70,8 +70,6 @@
 									>
 								{icon name='wrench'}
 							</a>
-							<a class="link" href="tiki-admin_keywords.php?page={$existing_keywords[i].page|escape:"url"}">{icon _id=page_edit}</a>
-							<a class="link" href="tiki-admin_keywords.php?page={$existing_keywords[i].page|escape:"url"}&amp;remove_keywords=1">{icon _id=cross}</a>
 						</td>
 					</tr>
 				{/section}
