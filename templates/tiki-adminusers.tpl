@@ -94,7 +94,9 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-8 col-sm-offset-4">
-							<a href="javascript:toggleBlock('search')" class="link">{icon _id='add' alt="{tr}more{/tr}"}&nbsp;{tr}More Criteria{/tr}</a>
+							<a href="javascript:toggleBlock('search')" class="link">
+								{icon name='add' alt="{tr}more{/tr}"}&nbsp;{tr}More Criteria{/tr}
+							</a>
 						</div>
 					</div>
 					{autocomplete element='#find' type='username'}
@@ -482,7 +484,7 @@
 								{/if}
 								{if isset($userinfo.userId) && $userinfo.userId}
 									<p>
-										{icon _id='exclamation' alt="{tr}Warning{/tr}" style="vertical-align:middle"}
+										{icon name='warning' alt="{tr}Warning{/tr}" style="vertical-align:middle"}
 										<em>{tr}Warning: changing the username could require the user to change his password (for user registered with an old Tiki&lt;=1.8){/tr}</em>
 										{if $prefs.feature_intertiki_server eq 'y'}
 											<br>
