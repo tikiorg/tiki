@@ -40,26 +40,30 @@
 
 			{if isset($comment.userName) and not empty($comment.user_exists)}
 			<span class="icons">
-			<span class="actions">
-			{if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
-				<a class="admlink" href="messu-compose.php?to={$comment.userName}&amp;subject={tr}Re:{/tr}%20{$comment.title|escape:"htmlall"}">{icon _id='user_go' alt="{tr}private message{/tr}"}</a>
-			{/if}
-			{if $forum_info.ui_email eq 'y' and strlen($comment.user_email) > 0 and $display eq ''}
-				<a href="mailto:{$comment.user_email|escape:'hex'}">{icon _id='email' alt="{tr}Send eMail to User{/tr}"}</a>
-			{/if}
-			</span>
-			<span class="infos">
-			{if $forum_info.ui_online eq 'y'}
-				{if $comment.user_online eq 'y'}
-				{icon _id='user_red' alt="{tr}user online{/tr}"}
-				{elseif $comment.user_online eq 'n'}
-					{icon _id='user_gray' alt="{tr}user offline{/tr}"}
-				{/if}
-			{/if}
-			{if $forum_info.ui_flag eq 'y' and $comment.userName|countryflag}
-				{$comment.userName|countryflag}
-			{/if}
-			</span>
+				<span class="actions">
+					{if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
+						<a class="tips" title=":{tr}Private message{/tr}" href="messu-compose.php?to={$comment.userName}&amp;subject={tr}Re:{/tr}%20{$comment.title|escape:"htmlall"}">
+							{icon name='user' alt="{tr}private message{/tr}"}
+						</a>
+					{/if}
+					{if $forum_info.ui_email eq 'y' and strlen($comment.user_email) > 0 and $display eq ''}
+						<a class="tips" title=":{tr}Send eMail to user{/tr}" href="mailto:{$comment.user_email|escape:'hex'}">
+							{icon name='envelope'}
+						</a>
+					{/if}
+				</span>
+				<span class="infos">
+					{if $forum_info.ui_online eq 'y'}
+						{if $comment.user_online eq 'y'}
+							{icon name='ok' class="tips" title=":{tr}User online{/tr}"}
+						{elseif $comment.user_online eq 'n'}
+							{icon name='ban' class="tips" title=":{tr}User offline{/tr}"}
+						{/if}
+					{/if}
+					{if $forum_info.ui_flag eq 'y' and $comment.userName|countryflag}
+						{$comment.userName|countryflag}
+					{/if}
+				</span>
 			</span>
 			{/if}
 		{/if}

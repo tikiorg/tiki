@@ -64,12 +64,12 @@
 		<td nowrap="nowrap" class="auto">
 		{if $attextra eq 'y'}
 			{assign var=link value='tiki-view_tracker_more_info.php?attId='|cat:$atts[ix].attId}
-			<a class="tablename" href="#" title="{tr}more info{/tr}" onclick="javascript:window.open('{$link}','','menubar=no,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,width=450,height=600');">
-				{icon _id="information" alt="{tr}more info{/tr}"}
+			<a class="tablename tips" href="#" title=":{tr}more info{/tr}" onclick="javascript:window.open('{$link}','','menubar=no,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,width=450,height=600');">
+				{icon name="information" alt="{tr}more info{/tr}"}
 			</a>
 		{/if}
-		<a class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId}" title="{tr}Download{/tr}">
-			{icon _id='disk' alt="{tr}Download{/tr}"}
+		<a class="tablename tips" href="tiki-download_item_attachment.php?attId={$atts[ix].attId}" title=":{tr}Download{/tr}">
+			{icon name='disk' alt="{tr}Download{/tr}"}
 		</a>
 		</td>
 		{foreach key=k item=x from=$attfields}
@@ -85,11 +85,11 @@
 		{/foreach}
 		<td>
 		{if $tiki_p_admin_trackers eq 'y' or ($user and ($atts[ix].user eq $user))}
-			<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}" title="{tr}Delete{/tr}">
-				{icon _id='cross' alt="{tr}Delete{/tr}"}
+			<a class="tips" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}" title=":{tr}Delete{/tr}">
+				{icon name='remove' alt="{tr}Delete{/tr}"}
 			</a>
-			<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;editattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}" title="{tr}Edit{/tr}">
-				{icon _id='page_edit' alt="{tr}Edit{/tr}"}
+			<a class="tips" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;editattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}" title=":{tr}Edit{/tr}">
+				{icon name='edit' alt="{tr}Edit{/tr}"}
 			</a>
 		{/if}
 		</td>
