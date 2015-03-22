@@ -1857,6 +1857,17 @@ if ($standalone && !$nagios) {
 	$smarty->assign_by_ref('mysql_variables', $mysql_variables);
 	$smarty->assign_by_ref('mysql_crashed_tables', $mysql_crashed_tables);
 	// disallow robots to index page:
+
+	$fmap = [
+		'good' => ['icon' => 'ok', 'class' => 'success'],
+		'safe' => ['icon' => 'ok', 'class' => 'success'],
+		'bad' => ['icon' => 'ban', 'class' => 'danger'],
+		'risky' => ['icon' => 'ban', 'class' => 'danger'],
+		'ugly' => ['icon' => 'warning', 'class' => 'warning'],
+		'info' => ['icon' => 'information', 'class' => 'info'],
+		'unknown' => ['icon' => 'help', 'class' => 'muted'],
+	];
+	$smarty->assign('fmap', $fmap);
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 	$smarty->assign('mid', 'tiki-check.tpl');
 	$smarty->display('tiki.tpl');
