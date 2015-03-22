@@ -356,7 +356,7 @@
 											{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
 										</a>
 										<a href="tiki-copypage.php?page={$listpages[changes].pageName|escape:"url"}&amp;version=last">
-											{icon name='copy' _menu_text='y' _menu_icon='y' alt="{tr}Copy{/tr}"}
+											{icon name='copy'  table-striped table-hoveralt="{tr}Copy{/tr}"}
 										</a>
 									{/if}
 									{if $prefs.feature_history eq 'y' and $listpages[changes].perms.tiki_p_wiki_view_history eq 'y'}

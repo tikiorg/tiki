@@ -1,12 +1,12 @@
 {title url="tiki-admin_survey_questions.php?surveyId=$surveyId"}{tr}Edit survey questions:{/tr} {$survey_info.name}{/title}
 
 <div class="t_navbar btn-group form-group">
-	{button href="tiki-admin_survey_questions.php?surveyId=$surveyId" class="btn btn-default" _text="{tr}Add a New Question{/tr}"}
-	{button href="tiki-list_surveys.php" class="btn btn-default" _text="{tr}List surveys{/tr}"}
-	{button href="tiki-survey_stats.php" class="btn btn-default" _text="{tr}Survey Stats{/tr}"}
-	{button href="tiki-survey_stats_survey.php?surveyId=$surveyId" class="btn btn-default" _text="{tr}This survey stats{/tr}"}
-	{button href="tiki-admin_surveys.php?surveyId=$surveyId" class="btn btn-default" _text="{tr}Edit this Survey{/tr}"}
-	{button href="tiki-admin_surveys.php" class="btn btn-default" _text="{tr}Admin Surveys{/tr}"}
+	{button href="tiki-admin_survey_questions.php?surveyId=$surveyId" class="btn btn-default" _icon_name='create' _text="{tr}Add a New Question{/tr}"}
+	{button href="tiki-list_surveys.php" class="btn btn-default" _icon_name='list' _text="{tr}List Surveys{/tr}"}
+	{button href="tiki-survey_stats.php" class="btn btn-default" _icon_name='chart' _text="{tr}Survey Stats{/tr}"}
+	{button href="tiki-survey_stats_survey.php?surveyId=$surveyId" class="btn btn-default" _icon_name='chart' _text="{tr}This survey stats{/tr}"}
+	{button href="tiki-admin_surveys.php?surveyId=$surveyId" class="btn btn-default" _icon_name='edit' _text="{tr}Edit this Survey{/tr}"}
+	{button href="tiki-admin_surveys.php" class="btn btn-default" _icon_name='cog' _text="{tr}Admin Surveys{/tr}"}
 </div>
 
 {if !empty($questionId)}{$tablabel='Edit Survey Question'|tr_if}{else}{$tablabel='Add a New Question to this survey'|tr_if}{/if}
@@ -18,7 +18,7 @@
 			<input type="hidden" name="surveyId" value="{$surveyId|escape}">
 			<input type="hidden" name="questionIds" value="">
 		</form>
-		<table class="table normal surveyquestions">
+		<table class="table normal surveyquestions table-striped table-hover">
 			<tr>
 				<th>
 					{self_link _sort_arg='sort_mode' _sort_field='questionId'}{tr}ID{/tr}{/self_link}
@@ -35,7 +35,7 @@
 				<th>
 					{self_link _sort_arg='sort_mode' _sort_field='options'}{tr}Options{/tr}{/self_link}
 				</th>
-				<th>{tr}Action{/tr}</th>
+				<th></th>
 			</tr>
 			{cycle print=false values="odd,even"}
 			{section name=user loop=$channels}
@@ -46,8 +46,23 @@
 					<td class="text">{$types[$channels[user].type]}</td>
 					<td class="text">{$channels[user].options}</td>
 					<td class="action">
-						{self_link _icon='page_edit' questionId=$channels[user].questionId}{tr}Edit{/tr}{/self_link}
-						{self_link _icon='cross' remove=$channels[user].questionId}{tr}Delete{/tr}{/self_link}
+						{capture name=question_actions}
+							{strip}
+								{self_link _icon_name='edit' _menu_text='y' _menu_icon='y' questionId=$channels[user].questionId}
+									{tr}Edit{/tr}
+								{/self_link}
+								{self_link _icon_name='remove' _menu_text='y' _menu_icon='y' remove=$channels[user].questionId}
+									{tr}Delete{/tr}
+								{/self_link}
+							{/strip}
+						{/capture}
+						<a class="tips"
+						   title="{tr}Actions{/tr}"
+						   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.question_actions|escape:"javascript"|escape:"html"}
+						   style="padding:0; margin:0; border:0"
+								>
+							{icon name='wrench'}
+						</a>
 					</td>
 				</tr>
 				{sectionelse}

@@ -29,14 +29,14 @@
 			{if $channels or ($find ne '')}
 				{include file='find.tpl'}
 			{/if}
-			<table class="table normal">
+			<table class="table normal table-striped table-hover">
 				<tr>
 					<th>{self_link _sort_arg='sort_mode' _sort_field='rssId'}{tr}ID{/tr}{/self_link}</th>
 					<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
 					<th>{self_link _sort_arg='sort_mode' _sort_field='lastUpdated'}{tr}Last update{/tr}{/self_link}</th>
 					<th>{self_link _sort_arg='sort_mode' _sort_field='showTitle'}{tr}Show Title{/tr}{/self_link}</th>
 					<th>{self_link _sort_arg='sort_mode' _sort_field='showPubDate'}{tr}Show Date{/tr}{/self_link}</th>
-					<th>{tr}Action{/tr}</th>
+					<th></th>
 				</tr>
 				{section name=chan loop=$channels}
 					<tr>
@@ -56,14 +56,37 @@
 						<td class="text">{$channels[chan].showTitle|escape}</td>
 						<td class="text">{$channels[chan].showPubDate|escape}</td>
 						<td class="action">
-							<a class="tips" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;rssId={$channels[chan].rssId|escape}" title=":{tr}Edit{/tr}">{icon name="edit"}</a>
-							<a class="tips" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;view={$channels[chan].rssId|escape}" title=":{tr}View{/tr}">{icon name="rss"}</a>
-							<a class="tips" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;clear={$channels[chan].rssId|escape}" title=":{tr}Clear{/tr}">{icon name="trash"}</a>
-							<a class="tips" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;refresh={$channels[chan].rssId|escape}" title=":{tr}Refresh{/tr}">{icon name="refresh"}</a>
-							{if $prefs.feature_articles eq 'y'}
-								<a class="tips" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;article={$channels[chan].rssId|escape}" title=":{tr}Article Generator{/tr}">{icon _id=newspaper_go alt="{tr}Article Generator{/tr}"}</a>
-							{/if}
-							<a class="tips" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;remove={$channels[chan].rssId|escape}" title=":{tr}Delete{/tr}">{icon name="delete"}</a>
+							{capture name=rss_actions}
+								{strip}
+									<a href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;view={$channels[chan].rssId|escape}">
+										{icon name="rss" _menu_text='y' _menu_icon='y' alt="{tr}View{/tr}"}
+									</a>
+									<a href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;refresh={$channels[chan].rssId|escape}">
+										{icon name="refresh" _menu_text='y' _menu_icon='y' alt="{tr}Refresh{/tr}"}
+									</a>
+									<a href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;rssId={$channels[chan].rssId|escape}">
+										{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+									</a>
+									{if $prefs.feature_articles eq 'y'}
+										<a href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;article={$channels[chan].rssId|escape}">
+											{icon name='textfile' _menu_text='y' _menu_icon='y' alt="{tr}Article generator{/tr}"}
+										</a>
+									{/if}
+									<a href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;clear={$channels[chan].rssId|escape}">
+										{icon name='trash' _menu_text='y' _menu_icon='y' alt="{tr}Clear{/tr}"}
+									</a>
+									<a href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;remove={$channels[chan].rssId|escape}">
+										{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+									</a>
+								{/strip}
+							{/capture}
+							<a class="tips"
+							   title="{tr}Actions{/tr}"
+							   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.rss_actions|escape:"javascript"|escape:"html"}
+							   style="padding:0; margin:0; border:0"
+									>
+								{icon name='wrench'}
+							</a>
 						</td>
 					</tr>
 				{sectionelse}
@@ -85,7 +108,7 @@
 		<h2>{$feedEditLabel}
 		{if $rssId > 0}
 			{$name|escape}</h2>
-			{button href="tiki-admin_rssmodules.php" cookietab="2" _keepall="y" _text="{tr}Create new external feed{/tr}"}
+			{button href="tiki-admin_rssmodules.php" cookietab="2" _keepall="y" _icon_name="create" _text="{tr}Create new external feed{/tr}"}
 		{else}
 			</h2>
 		{/if}

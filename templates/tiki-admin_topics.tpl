@@ -2,8 +2,8 @@
 {title admpage="articles" help="Articles"}{tr}Article Topics{/tr}{/title}
 <div class="t_navbar margin-bottom-md">
 	{if $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
-		{button href="tiki-list_articles.php" class="btn btn-default btn-sm" _text="{tr}List Articles{/tr}"}
-		{button href="tiki-article_types.php" class="btn btn-default btn-sm" _text="{tr}Article Types{/tr}"}
+		{button href="tiki-list_articles.php" class="btn btn-default btn-sm" _icon_name="list" _text="{tr}List Articles{/tr}"}
+		{button href="tiki-article_types.php" class="btn btn-default btn-sm" _icon_name="structure" _text="{tr}Article Types{/tr}"}
 	{/if}
 </div>
 <form enctype="multipart/form-data" action="tiki-admin_topics.php" method="post" class="form-horizontal" role="form">
@@ -37,7 +37,7 @@
 </form>
 <h2>{tr}Topics{/tr}</h2>
 <div class="table-responsive">
-	<table class="table normal">
+	<table class="table normal table-striped table-hover">
 		<tr>
 			<th>{tr}ID{/tr}</th>
 			<th>{tr}Name{/tr}</th>
@@ -45,7 +45,7 @@
 			<th>{tr}Active{/tr}</th>
 			<th>{tr}Articles{/tr}</th>
 			{if $prefs.feature_submissions eq 'y'}<th>{tr}Submissions{/tr}</th>{/if}
-			<th>{tr}Actions{/tr}</th>
+			<th></th>
 		</tr>
 		{section name=user loop=$topics}
 			<tr>
@@ -64,15 +64,36 @@
 				<td class="integer">{$topics[user].arts}</td>
 				{if $prefs.feature_submissions eq 'y'}<td>{$topics[user].subs}</td>{/if}
 				<td class="action">
-					{icon name="edit" href="tiki-edit_topic.php?topicid={$topics[user].topicId}" title="{tr}Edit{/tr}"}
-					{permission_link mode=icon type=topic permType=articles id=$topics[user].topicId title=$topics[user].name}
-					{if $topics[user].active eq 'n'}
-						{icon name="toggle-off" href="tiki-admin_topics.php?activate={$topics[user].topicId}" title="{tr}Inactive - Click to Activate{/tr}"}
-					{else}
-						{icon name="toggle-on" href="tiki-admin_topics.php?deactivate={$topics[user].topicId}" title="{tr}Active - Click to Deactivate{/tr}"}
-					{/if}
-					{icon name="delete" href="tiki-admin_topics.php?remove={$topics[user].topicId}" class="btn btn-warning btn-sm" title="{tr}Delete{/tr}"}
-					{icon name="delete" href="tiki-admin_topics.php?removeall={$topics[user].topicId}" class="btn btn-danger btn-sm" title="{tr}Delete with articles{/tr}"}
+					{capture name=topic_actions}
+						{strip}
+							{permission_link mode=text type=topic permType=articles id=$topics[user].topicId title=$topics[user].name}
+							{if $topics[user].active eq 'n'}
+								<a href="tiki-admin_topics.php?activate={$topics[user].topicId}">
+									{icon name="toggle-off" _menu_text='y' _menu_icon='y' alt="{tr}De-activate{/tr}"}
+								</a>
+							{else}
+								<a href="tiki-admin_topics.php?deactivate={$topics[user].topicId}">
+									{icon name="toggle-on" _menu_text='y' _menu_icon='y' alt="{tr}Activate{/tr}"}
+								</a>
+							{/if}
+							<a href="tiki-edit_topic.php?topicid={$topics[user].topicId}">
+								{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+							</a>
+							<a href="tiki-admin_topics.php?remove={$topics[user].topicId}">
+								{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+							</a>
+							<a href="tiki-admin_topics.php?removeall={$topics[user].topicId}">
+								{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove with articles{/tr}"}
+							</a>
+						{/strip}
+					{/capture}
+					<a class="tips"
+					   title="{tr}Actions{/tr}"
+					   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.topic_actions|escape:"javascript"|escape:"html"}
+					   style="padding:0; margin:0; border:0"
+							>
+						{icon name='wrench'}
+					</a>
 				</td>
 			</tr>
 		{sectionelse}

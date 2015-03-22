@@ -11,7 +11,7 @@
 							{assign var="help" value=$help|cat:$contributions[ix].name|cat:": "|cat:$contributions[ix].description|cat:"<br>"}
 						{/section}
 					</select>
-					<a title="{tr}Help{/tr}" {popup text=$help|replace:'"':"'" width=500}>{icon _id='help'}</a>
+					<a title="{tr}Help{/tr}" {popup text=$help|replace:'"':"'" width=500}>{icon name='help'}</a>
 			</td>
 		</tr>
 		{if $prefs.feature_contributor_wiki eq 'y' and $section eq 'wiki page' and empty($in_comment)}

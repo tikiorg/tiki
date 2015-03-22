@@ -4,17 +4,17 @@
 {title help="Modules" admpage="module"}{tr}Admin Modules{/tr}{/title}
 
 <div class="t_navbar margin-bottom-md">
-	{button href="tiki-admin_modules.php?clear_cache=1" class="btn btn-default" _text="{tr}Clear Cache{/tr}"}
+	{button href="tiki-admin_modules.php?clear_cache=1" class="btn btn-default" _icon_name="trash" _text="{tr}Clear Cache{/tr}"}
 	{if $tiki_p_edit_menu eq 'y'}
-		{button href="tiki-admin_menus.php" class="btn btn-default" _text="{tr}Admin Menus{/tr}"}
+		{button href="tiki-admin_menus.php" class="btn btn-default" _icon_name="menu" _text="{tr}Admin Menus{/tr}"}
 	{/if}
 	{if empty($smarty.request.show_hidden_modules)}
-		{button show_hidden_modules="y" class="btn btn-default" _text="{tr}Show hidden modules{/tr}"}
+		{button show_hidden_modules="y" class="btn btn-default" _icon_name="enable" _text="{tr}Show hidden modules{/tr}"}
 	{else}
-		{button show_hidden_modules="" class="btn btn-default" _text="{tr}Hide hidden modules{/tr}"}
+		{button show_hidden_modules="" class="btn btn-default" _icon_name="disable" _text="{tr}Hide hidden modules{/tr}"}
 	{/if}
-	{button href="./" _class="btn btn-default" _text="{tr}Exit Modules{/tr}"}
-	{button _text="{tr}Save{/tr}" _type="primary" class="btn btn-default" _id="save_modules" _ajax="n"}
+	{button href="./" _class="btn btn-default" _icon_name="disable" _text="{tr}Exit Modules{/tr}"}
+	{button _text="{tr}Save{/tr}" _type="primary" class="btn btn-default" _icon_name="floppy" _id="save_modules" _ajax="n"}
 </div>
 
 {if !empty($missing_params)}

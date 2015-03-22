@@ -3,9 +3,9 @@
 {title url='tiki-admin_surveys.php' help="Surveys"}{tr}Admin surveys{/tr}{/title}
 
 <div class="t_navbar btn-group form-group">
-	{button href="tiki-list_surveys.php" class="btn btn-default" _text="{tr}List Surveys{/tr}"}
-	{button href="tiki-survey_stats.php" class="btn btn-default" _text="{tr}Survey Stats{/tr}"}
-	{button surveyId=0 cookietab=2 _auto_args="surveyId,cookietab" class="btn btn-default" _text="{tr}Create Survey{/tr}"}
+	{button href="tiki-list_surveys.php" class="btn btn-default" _icon_name="list" _text="{tr}List{/tr}"}
+	{button href="tiki-survey_stats.php" class="btn btn-default" _icon_name="chart" _text="{tr}Stats{/tr}"}
+	{button surveyId=0 _anchor='content_admin_surveys1-2' _auto_args="surveyId" class="btn btn-default" _icon_name="create" _text="{tr}Create{/tr}"}
 </div>
 
 {tabset}
@@ -17,7 +17,7 @@
 		{/if}
 
 		<div class="table-responsive">
-			<table class="table normal">
+			<table class="table normal table-striped table-hover">
 				<tr>
 					<th>
 						{self_link _sort_arg='sort_mode' _sort_field='surveyId'}{tr}ID{/tr}{/self_link}
@@ -29,7 +29,7 @@
 						{self_link _sort_arg='sort_mode' _sort_field='status'}{tr}Status{/tr}{/self_link}
 					</th>
 					<th>{tr}Questions{/tr}</th>
-					<th style="width:120px;">{tr}Action{/tr}</th>
+					<th></th>
 				</tr>
 
 				{section name=user loop=$channels}
@@ -43,20 +43,39 @@
 						</td>
 						<td class="icon">
 							{if $channels[user].status eq 'o'}
-								{icon _id=ofolder alt="Open"}
+								{icon name='unlock' class='tips' title=":{tr}Open{/tr}"}
 							{else}
-								{icon _id=folder alt="closed"}
+								{icon name='lock' class='tips' title=":{tr}Closed{/tr}"}
 							{/if}
 						</td>
-						<td class="integer">{$channels[user].questions}</td>
+						<td class="integer"><span class="badge">{$channels[user].questions}</span></td>
 						<td class="action">
-							{self_link _icon='page_edit' cookietab='2' _anchor='anchor2' surveyId=$channels[user].surveyId}{tr}Edit{/tr}{/self_link}
-							<a class="link" href="tiki-admin_survey_questions.php?surveyId={$channels[user].surveyId}">{icon _id='application_view_list' alt="{tr}Questions{/tr}" title="{tr}Questions{/tr}"}</a>
-							<a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].surveyId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
-							{permission_link mode=icon type=survey permType=surveys id=$channels[user].surveyId title=$channels[user].name}
-							{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_survey_stats eq 'y') or ($channels[user].individual_tiki_p_view_survey_stats eq 'y')}
-								<a class="link" href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">{icon _id='chart_curve' alt="{tr}Stats{/tr}"}</a>
-							{/if}
+							{capture name=survey_actions}
+								{strip}
+									<a href="tiki-admin_survey_questions.php?surveyId={$channels[user].surveyId}">
+										{icon name='list' _menu_text='y' _menu_icon='y' alt="{tr}Questions{/tr}"}
+									</a>
+									{permission_link mode=text type=survey permType=surveys id=$channels[user].surveyId title=$channels[user].name}
+									{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_survey_stats eq 'y') or ($channels[user].individual_tiki_p_view_survey_stats eq 'y')}
+										<a href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">
+											{icon name='chart' _menu_text='y' _menu_icon='y' alt="{tr}Stats{/tr}"}
+										</a>
+									{/if}
+									{self_link _icon_name='edit' _anchor='content_admin_surveys1-2' _menu_text='y' _menu_icon='y' surveyId=$channels[user].surveyId}
+										{tr}Edit{/tr}
+									{/self_link}
+									<a href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].surveyId}">
+										{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+									</a>
+								{/strip}
+							{/capture}
+							<a class="tips"
+							   title="{tr}Actions{/tr}"
+							   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.survey_actions|escape:"javascript"|escape:"html"}
+							   style="padding:0; margin:0; border:0"
+									>
+								{icon name='wrench'}
+							</a>
 						</td>
 					</tr>
 				{sectionelse}
@@ -94,7 +113,7 @@
 				</div>
 			</div>
 			<div class="margin-bottom-md">
-				{include file='categorize.tpl'}
+				{include file='categorize.tpl' labelcol='2' inputcol='10'}
 			</div>
 			<div class="form-group">
 				<label for="status" class="col-sm-2 control-label">{tr}Status{/tr}</label>
@@ -106,7 +125,9 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<input type="submit" class="btn btn-default" name="save" value="{tr}Save{/tr}">
+				<div class="col-sm-10 col-sm-offset-2">
+					<input type="submit" class="btn btn-primary" name="save" value="{tr}Save{/tr}">
+				</div>
 			</div>
 		</form>
 	{/tab}

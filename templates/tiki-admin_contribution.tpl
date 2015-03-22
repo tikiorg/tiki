@@ -103,11 +103,11 @@
 
 <h2>{tr}List of contributions{/tr}</h2>
 <div class="table-responsive">
-	<table class="table normal">
+	<table class="table normal table-striped table-hover">
 		<tr>
 			<th>{tr}Name{/tr}</th>
 			<th>{tr}Description{/tr}</th>
-			<th>{tr}Actions{/tr}</th>
+			<th></th>
 		</tr>
 
 		{section name=ix loop=$contributions}
@@ -115,8 +115,23 @@
 				<td class="text">{$contributions[ix].name|escape}</td>
 				<td class="text">{$contributions[ix].description|truncate|escape}</td>
 				<td class="action">
-					<a class="link" href="tiki-admin_contribution.php?contributionId={$contributions[ix].contributionId}">{icon _id='shape_square_edit'}</a> &nbsp;
-					<a class="link" href="tiki-admin_contribution.php?remove={$contributions[ix].contributionId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+					{capture name=contribution_actions}
+						{strip}
+							<a href="tiki-admin_contribution.php?contributionId={$contributions[ix].contributionId}">
+								{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+							</a>
+							<a href="tiki-admin_contribution.php?remove={$contributions[ix].contributionId}">
+								{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+							</a>
+						{/strip}
+					{/capture}
+					<a class="tips"
+					   title="{tr}Actions{/tr}"
+					   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.contribution_actions|escape:"javascript"|escape:"html"}
+					   style="padding:0; margin:0; border:0"
+							>
+						{icon name='wrench'}
+					</a>
 				</td>
 			</tr>
 		{sectionelse}

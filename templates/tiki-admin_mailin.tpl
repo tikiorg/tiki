@@ -6,14 +6,14 @@
 {/block}
 
 {block name="content"}
-	<table class="table">
+	<table class="table normal table-striped table-hover">
 		<tr>
 			<th>{tr}Account{/tr}</th>
 			<th>{tr}Allow{/tr}</th>
 			<th>{tr}Attach{/tr}</th>
 			<th>{tr}HTML{/tr}</th>
 			<th>{tr}Leave{/tr}</th>
-			<th>{tr}Action{/tr}</th>
+			<th></th>
 		</tr>
 
 		{foreach $accounts as $account}
@@ -46,13 +46,30 @@
 				<td>{if $account.leave_email eq 'y'}{icon name="ok"}{/if}</td>
 
 				<td class="action">
-					<a class="btn btn-default btn-sm" href="{bootstrap_modal controller=mailin action=replace_account accountId=$account.accountId}" title="{tr}Edit{/tr}">{icon name="edit"} <span class="sr-only">{tr}Edit{/tr}</span></a>
-					<a class="btn btn-default btn-sm" href="{bootstrap_modal controller=mailin action=remove_account accountId=$account.accountId}" title="{tr}Remove{/tr}">{icon name="remove"} <span class="sr-only">{tr}Remove{/tr}</span></a>
+					{capture name=mailin_actions}
+						{strip}
+							<a href="{bootstrap_modal controller=mailin action=replace_account accountId=$account.accountId}"
+									onclick="$('[data-toggle=popover]').popover('hide');">
+								{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+							</a>
+							<a href="{bootstrap_modal controller=mailin action=remove_account accountId=$account.accountId}"
+									onclick="$('[data-toggle=popover]').popover('hide');">
+								{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+							</a>
+						{/strip}
+					{/capture}
+					<a class="tips"
+					   title="{tr}Actions{/tr}"
+					   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.mailin_actions|escape:"javascript"|escape:"html"}
+					   style="padding:0; margin:0; border:0"
+							>
+						{icon name='wrench'}
+					</a>
 				</td>
 			</tr>
 		{/foreach}
 	</table>
-	{button _icon="img/icons/large/messages.gif" _text="{tr}Admin Mail-in Routes{/tr}" href="tiki-admin_mailin_routes.php" _menu_text="y"}
+	{button _icon_name="cog" _text="{tr}Admin Mail-in Routes{/tr}" href="tiki-admin_mailin_routes.php" _menu_text="y"}
 	<a href="{bootstrap_modal controller=mailin action=replace_account}" class="btn btn-default">{icon name="add"} {tr}Add Account{/tr}</a>
 	{if $tikifeedback}
 		{section name=n loop=$tikifeedback}<div class="alert {if $tikifeedback[n].num > 0} alert-warning{/if}">{$tikifeedback[n].mes}</div>{/section}

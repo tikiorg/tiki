@@ -85,7 +85,7 @@
 {/if}
 <form method="get" action="tiki-admin_notifications.php">
 	<div class="table-responsive notifications-table">
-		<table class="table normal">
+		<table class="table normal table-striped table-hover">
 			<tr>
 				<th>
 					{if $channels}
@@ -96,7 +96,7 @@
 				<th>{self_link _sort_arg="sort_mode" _sort_field="object"}{tr}Object Id{/tr}{/self_link}</th>
 				<th>{self_link _sort_arg="sort_mode" _sort_field="email"}{tr}Email{/tr}{/self_link}</th>
 				<th>{self_link _sort_arg="sort_mode" _sort_field="user"}{tr}User / Group{/tr}{/self_link}</th>
-				<th>{tr}Action{/tr}</th>
+				<th></th>
 			</tr>
 
 			{section name=user loop=$channels}

@@ -40,12 +40,12 @@
 
 {if $existing_keywords}
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table normal table-striped table-hover">
 			<tbody>
 				<tr>
 					<th>{tr}Page{/tr}</th>
 					<th>{tr}Keywords{/tr}</th>
-					<th>{tr}Actions{/tr}</th>
+					<th></th>
 				</tr>
 
 				{section name=i loop=$existing_keywords}
@@ -53,6 +53,23 @@
 						<td class="text"><a href="{$existing_keywords[i].page|sefurl}">{$existing_keywords[i].page|escape}</a></td>
 						<td class="text">{$existing_keywords[i].keywords|escape}</td>
 						<td class="action">
+							{capture name=keywords_actions}
+								{strip}
+									<a href="tiki-admin_keywords.php?page={$existing_keywords[i].page|escape:"url"}">
+										{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+									</a>
+									<a href="tiki-admin_keywords.php?page={$existing_keywords[i].page|escape:"url"}&amp;remove_keywords=1">
+										{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+									</a>
+								{/strip}
+							{/capture}
+							<a class="tips"
+							   title="{tr}Actions{/tr}"
+							   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.keywords_actions|escape:"javascript"|escape:"html"}
+							   style="padding:0; margin:0; border:0"
+									>
+								{icon name='wrench'}
+							</a>
 							<a class="link" href="tiki-admin_keywords.php?page={$existing_keywords[i].page|escape:"url"}">{icon _id=page_edit}</a>
 							<a class="link" href="tiki-admin_keywords.php?page={$existing_keywords[i].page|escape:"url"}&amp;remove_keywords=1">{icon _id=cross}</a>
 						</td>

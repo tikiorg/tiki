@@ -8,7 +8,7 @@
 		Routes are edited in the user's: My Account / Mail-in panel
 		</p>
 		{if $prefs.feature_wiki_structure eq 'y'}
-			<table id="table_user_mailin_routing">
+			<table id="table_user_mailin_routing" class="table normal table-striped table-hover">
 				<tr>
 				<th>Username</th>
 				<th>Email</th>

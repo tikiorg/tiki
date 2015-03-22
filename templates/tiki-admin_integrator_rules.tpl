@@ -3,14 +3,14 @@
 {title help="Integrator"}{tr}Edit Rules for Repository:{/tr} {$name}{/title}
 
 <div class="t_navbar margin-bottom-md">
-	{button href="tiki-admin_integrator.php" class="btn btn-default" _text="{tr}Configure Repositories{/tr}"}
-	{button href="tiki-list_integrator_repositories.php" class="btn btn-default" _text="{tr}List Repositories{/tr}</a>"}
+	{button href="tiki-admin_integrator.php" class="btn btn-default" _icon_name="cog" _text="{tr}Configure Repositories{/tr}"}
+	{button href="tiki-list_integrator_repositories.php" class="btn btn-default" _icon_name="list" _text="{tr}List Repositories{/tr}</a>"}
 	{assign var=thisrepID value=$repID|escape}
-	{button href="tiki-admin_integrator.php?action=edit&amp;repID=$thisrepID" class="btn btn-default" _text="{tr}Configure this Repository{/tr}"}
-	{button href="tiki-integrator.php?repID=$thisrepID" _text="{tr}View this Repository{/tr}" class="btn btn-default"}
-	{button href="tiki-admin_integrator_rules.php?repID=$thisrepID" _text="{tr}New Rule{/tr}" class="btn btn-default"}
+	{button href="tiki-admin_integrator.php?action=edit&amp;repID=$thisrepID" class="btn btn-default" _icon_name="wrench" _text="{tr}Configure this Repository{/tr}"}
+	{button href="tiki-integrator.php?repID=$thisrepID" _text="{tr}View this Repository{/tr}" _icon_name="view" class="btn btn-default"}
+	{button href="tiki-admin_integrator_rules.php?repID=$thisrepID" _text="{tr}New Rule{/tr}" _icon_name="create" class="btn btn-default"}
 	{if count($reps) gt 0}
-		{button _onclick="javascript:flip('rules-copy-panel');" _text="{tr}Copy Rules{/tr}" _title="{tr}view/hide copy rules dialog{/tr}"}
+		{button _onclick="javascript:flip('rules-copy-panel');" _text="{tr}Copy Rules{/tr}" _icon_name="copy" _title="{tr}view/hide copy rules dialog{/tr}"}
 	{/if}
 </div>
 
@@ -105,14 +105,14 @@
 
 {* Table with list of repositories *}
 <div class="table-responsive">
-	<table class="table normal" id="integrator_rules">
+	<table class="table normal table-striped table-hover" id="integrator_rules">
 		<tr>
 			<th rowspan="2"><span title="{tr}Rule order{/tr}">#</span></th>
 			<th>{tr}Search{/tr}</th>
 			<th>{tr}Replace{/tr}</th>
 			<th>{tr}Regex{/tr}</th>
 			<th>{tr}Case{/tr}</th>
-			<th>{tr}Actions{/tr}</th>
+			<th></th>
 		</tr><tr>
 			<th colspan="5">{tr}Description{/tr}</th>
 		</tr>
@@ -129,9 +129,23 @@
 				<td class="text">{$rules[rule].type|escape}</td>
 				<td class="text">{$rules[rule].casesense|escape}</td>
 				<td class="action">
-					<a href="tiki-admin_integrator_rules.php?action=edit&amp;repID={$repID|escape}&amp;ruleID={$rules[rule].ruleID|escape}" title="{tr}Edit{/tr}">{icon _id='wrench' alt="{tr}Configure/Options{/tr}"}</a>
-					<a href="tiki-admin_integrator_rules.php?action=rm&amp;repID={$repID|escape}&amp;ruleID={$rules[rule].ruleID|escape}"
-						title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+					{capture name=integrator_rules_actions}
+						{strip}
+							<a href="tiki-admin_integrator_rules.php?action=edit&amp;repID={$repID|escape}&amp;ruleID={$rules[rule].ruleID|escape}">
+								{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+							</a>
+							<a href="tiki-admin_integrator_rules.php?action=rm&amp;repID={$repID|escape}&amp;ruleID={$rules[rule].ruleID|escape}">
+								{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+							</a>
+						{/strip}
+					{/capture}
+					<a class="tips"
+					   title="{tr}Actions{/tr}"
+					   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.integrator_rules_actions|escape:"javascript"|escape:"html"}
+					   style="padding:0; margin:0; border:0"
+							>
+						{icon name='wrench'}
+					</a>
 				</td>
 
 				{* Show description as colspaned row if it is not an empty *}

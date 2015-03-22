@@ -3,7 +3,7 @@
 
 <div class="t_navbar margin-bottom-md">
 	<a class="btn btn-default" href="tiki-admin_menus.php">
-		{tr}List Menus{/tr}
+		{icon name="list"} {tr}List Menus{/tr}
 	</a>
 	{if $tiki_p_edit_menu eq 'y'}
 		<a class="btn btn-default" href="{bootstrap_modal controller=menu action=manage_menu menuId=$menuId}">
@@ -35,7 +35,7 @@
 						<input type="hidden" name="menuId" value="{$menuId}">
 						<input type="hidden" name="offset" value="{$offset}">
 						<div class="table-responsive">
-							<table class="table normal">
+							<table class="table normal table-striped table-hover">
 								{assign var=numbercol value=0}
 								<tr>
 									<th>
@@ -57,7 +57,7 @@
 										<th>{self_link _sort_arg='sort_mode' _sort_field='userlevel'}{tr}Level{/tr}{/self_link}</th>
 									{/if}
 									{assign var=numbercol value=$numbercol+1}
-									<th>{tr}Action{/tr}</th>
+									<th></th>
 								</tr>
 
 								{section name=user loop=$channels}
@@ -87,14 +87,33 @@
 										{/if}
 
 										<td class="action">
-											<a class="tips" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}&amp;maxRecords={$maxRecords}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}" title=":{tr}Edit{/tr}">{icon name="edit"}</a>
-											{if !$smarty.section.user.first}
-												<a class="tips" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;up={$channels[user].optionId}&amp;maxRecords={$maxRecords}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}#options" title=":{tr}switch with previous option{/tr}">{icon name="up"}</a>
-											{/if}
-											{if !$smarty.section.user.last}
-												<a class="tips" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;down={$channels[user].optionId}&amp;maxRecords={$maxRecords}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}#options" title=":{tr}switch with next option{/tr}">{icon name="down"}</a>
-											{/if}
-											<a class="tips" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}&amp;maxRecords={$maxRecords}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}" title=":{tr}Delete{/tr}">{icon name="delete"}</a>
+											{capture name=menu_options_actions}
+												{strip}
+													{if !$smarty.section.user.first}
+														<a href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;up={$channels[user].optionId}&amp;maxRecords={$maxRecords}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}#options">
+															{icon name="up" _menu_text='y' _menu_icon='y' alt="{tr}Switch with previous option{/tr}"}
+														</a>
+													{/if}
+													{if !$smarty.section.user.last}
+														<a href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;down={$channels[user].optionId}&amp;maxRecords={$maxRecords}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}#options">
+															{icon name="down" _menu_text='y' _menu_icon='y' alt="{tr}Switch with next option{/tr}"}
+														</a>
+													{/if}
+													<a href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}&amp;maxRecords={$maxRecords}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}#contentadmin_menu_options-2">
+														{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+													</a>
+													<a href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}&amp;maxRecords={$maxRecords}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">
+														{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+													</a>
+												{/strip}
+											{/capture}
+											<a class="tips"
+											   title="{tr}Actions{/tr}"
+											   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.menu_options_actions|escape:"javascript"|escape:"html"}
+											   style="padding:0; margin:0; border:0"
+													>
+												{icon name='wrench'}
+											</a>
 										</td>
 									</tr>
 								{sectionelse}
@@ -125,7 +144,7 @@
 	{/if}
 	{tab name=$editname}
 		<div class="table-responsive">
-			<table class="table normal">
+			<table class="table normal table-striped table-hover">
 				<tr>
 					<td valign="top" class="odd">
 						<h2>{$editname}</h2>

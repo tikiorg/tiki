@@ -204,7 +204,7 @@
 			<form name="checkboxes_on" method="post" action="tiki-admin_actionlog.php">
 				{query _type='form_input'}
 				<div class="table-responsive">
-					<table class="table normal">
+					<table class="table normal table-striped table-hover">
 						<tr>
 							{if $prefs.feature_banning eq 'y'}
 								<th>
@@ -230,7 +230,7 @@
 								<th>{tr}contributor{/tr}</th>
 							{/if}
 							{if $tiki_p_admin eq 'y' and ($prefs.feature_contribution eq 'y' or $prefs.feature_categories eq 'y')}
-								<th>{tr}Action{/tr}</th>
+								<th></th>
 							{/if}
 						</tr>
 
@@ -278,8 +278,23 @@
 								{if $tiki_p_admin eq 'y' and ($prefs.feature_contribution eq 'y' or $prefs.feature_categories eq 'y')}
 									<td class="action">
 										{if $actionlog.actionId}
-											<a class="link" href="tiki-admin_actionlog.php?actionId={$actionlog.actionId}&amp;startDate={$startDate}&amp;endDate={$endDate}#action" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-											{self_link _class='link' remove='y' actionId=$actionlog.actionId _icon='cross' _title="{tr}Remove{/tr}"}{/self_link}
+											{capture name=log_actions}
+												{strip}
+													<a href="tiki-admin_actionlog.php?actionId={$actionlog.actionId}&amp;startDate={$startDate}&amp;endDate={$endDate}#action">
+														{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+													</a>
+													{self_link remove='y' _menu_text='y' _menu_icon='y' actionId=$actionlog.actionId _icon_name='remove' _title=""}
+														{tr}Remove{/tr}
+													{/self_link}
+												{/strip}
+											{/capture}
+											<a class="tips"
+											   title="{tr}Actions{/tr}"
+											   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.log_actions|escape:"javascript"|escape:"html"}
+											   style="padding:0; margin:0; border:0"
+													>
+												{icon name='wrench'}
+											</a>
 										{/if}
 									</td>
 								{/if}
@@ -357,7 +372,7 @@
 
 			{if $showLogin eq 'y' and $logTimes|@count ne 0}
 				<div class="table-responsive">
-				<table class="table normal">
+				<table class="table normal table-striped table-hover">
 					<caption>{tr}Log in{/tr}</caption>
 					<tr>
 						{if $selectedUsers|@count gt 0}<th>{tr}User{/tr}</th>{/if}
@@ -383,7 +398,7 @@
 
 			{if $showCateg eq 'y' and $volCateg|@count ne 0 and $tiki_p_admin eq 'y'}
 				<div class="table-responsive">
-					<table class="table normal">
+					<table class="table normal table-striped table-hover">
 						<caption>{tr}Volume per category{/tr}</caption>
 						<tr>
 							<th>{tr}Category{/tr}</th>
@@ -409,7 +424,7 @@
 
 			{if $showCateg eq 'y' and $volUserCateg|@count ne 0}
 				<div class="table-responsive">
-					<table class="table normal">
+					<table class="table normal table-striped table-hover">
 						<caption>{tr}Volume per category and per user{/tr}</caption>
 						<tr>
 							<th>{tr}Category{/tr}</th>
@@ -437,7 +452,7 @@
 
 			{if $userActions|@count ne 0}
 				<div class="table-responsive">
-					<table class="table normal">
+					<table class="table normal table-striped table-hover">
 						<caption>{tr}Number of actions per user{/tr}</caption>
 						<tr>
 							<th>{tr}User{/tr}</th>
@@ -461,7 +476,7 @@
 
 			{if $objectActions|@count ne 0}
 				<div class="table-responsive">
-					<table class="table normal">
+					<table class="table normal table-striped table-hover">
 						<caption>{tr}Number of actions per object{/tr}</caption>
 						<tr>
 							<th>{tr}Object{/tr}</th>
@@ -487,7 +502,7 @@
 
 			{if $showbigbluebutton eq 'y' and $stay_in_big_Times|@count ne 0}
 				<div class="table-responsive">
-					<table class="table normal">
+					<table class="table normal table-striped table-hover">
 						<caption>{tr}Bigbluebutton{/tr}</caption>
 						<tr>
 							<th>{tr}User{/tr}</th>
@@ -523,7 +538,7 @@
 
 			{if $showCateg eq 'y' and $tiki_p_admin eq 'y'}
 				<div class="table-responsive">
-					<table class="table normal">
+					<table class="table normal table-striped table-hover">
 						<caption>{tr}Number of actions per category{/tr}</caption>
 						<tr>
 							<th>{tr}Category{/tr}</th>
@@ -546,7 +561,7 @@
 
 			{if $showCateg eq 'y' && $statUserCateg|@count ne 0}
 				<div class="table-responsive">
-					<table class="table normal">
+					<table class="table normal table-striped table-hover">
 						<caption>{tr}Number of actions per category and per user{/tr}</caption>
 						<tr>
 							<th>{tr}Category{/tr}</th>
@@ -572,7 +587,7 @@
 
 			{if $prefs.feature_contribution eq 'y' && isset($groupContributions) && $groupContributions|@count >= 1}
 				<div class="table-responsive">
-					<table class="table">
+					<table class="table normal table-striped table-hover">
 						<caption>
 							{if $selectedUsers}
 								{tr}Volume per the users' group and per contribution{/tr}
@@ -602,7 +617,7 @@
 
 			{if $prefs.feature_contribution eq 'y' && isset($userContributions) && $userContributions|@count >= 1}
 				<div class="table-responsive">
-					<table class="table">
+					<table class="table normal table-striped table-hover">
 						<caption>{tr}Volume per user and per contribution{/tr}</caption>
 						<tr>
 							<th>{tr}User{/tr}</th>
@@ -626,7 +641,7 @@
 
 			{if $prefs.feature_contribution eq 'y' && isset($contributionStat)}
 				<div class="table-responsive">
-					<table class="table">
+					<table class="table normal table-striped table-hover">
 						<caption>{if $selectedUsers}{tr}Volume per users' contribution and time{/tr}{else}{tr}Volume per contribution and time{/tr}{/if}</caption>
 						<tr>
 							<th>{tr}Contribution{/tr}</th>

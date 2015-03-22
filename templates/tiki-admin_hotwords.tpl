@@ -28,7 +28,7 @@
 	{include file='find.tpl'}
 {/if}
 <div class="table-responsive">
-<table class="table normal">
+<table class="table normal table-striped table-hover">
 	<tr>
 		<th>
 			<a href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'word_desc'}word_asc{else}word_desc{/if}">{tr}Word{/tr}</a>
@@ -44,7 +44,9 @@
 			<td class="text">{$words[user].word}</td>
 			<td class="text">{$words[user].url}</td>
 			<td class="action">
-				<a class="link" href="tiki-admin_hotwords.php?remove={$words[user].word|escape:"url"}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+				<a class="tips" href="tiki-admin_hotwords.php?remove={$words[user].word|escape:"url"}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}" title=":{tr}Delete{/tr}">
+					{icon name='remove'}
+				</a>
 			</td>
 		</tr>
 	{sectionelse}
