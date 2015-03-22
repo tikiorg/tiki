@@ -25,7 +25,7 @@
 		<h2>{tr}List of Calendars{/tr}</h2>
 
 		{include file='find.tpl' find_in="<ul><li>{tr}Calendar name{/tr}</li></ul>"}
-		<table class="table normal">
+		<table class="table normal table-striped table-hover">
 			<tr>
 				<th>
 					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'calendarId_desc'}calendarId_asc{else}calendarId_desc{/if}">

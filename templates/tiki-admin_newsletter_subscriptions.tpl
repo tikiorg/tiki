@@ -3,15 +3,15 @@
 {title url="tiki-admin_newsletter_subscriptions.php?nlId=$nlId_urlencoded"}{tr}Admin newsletter subscriptions{/tr}{/title}
 
 <div class="t_navbar btn-group form-group">
-	{button href="tiki-newsletters.php" class="btn btn-default" _text="{tr}List Newsletters{/tr}"}
+	{button href="tiki-newsletters.php" class="btn btn-default" _icon_name="list" _text="{tr}List{/tr}"}
 	{assign var="nlid_encod" value=$nlId|urlencode}
-	{button href="tiki-admin_newsletters.php?nlId=$nlid_encod" class="btn btn-default" _text="{tr}Edit Newsletter{/tr}"}
-	{button href="tiki-admin_newsletters.php" class="btn btn-default" _text="{tr}Admin Newsletters{/tr}"}
-	{button href="tiki-send_newsletters.php?nlId=$nlid_encod" class="btn btn-default" _text="{tr}Send Newsletters{/tr}"}
+	{button href="tiki-admin_newsletters.php?nlId=$nlid_encod" class="btn btn-default" _icon_name="edit" _text="{tr}Edit{/tr}"}
+	{button href="tiki-admin_newsletters.php" class="btn btn-default" _icon_name="cog" _text="{tr}Admin{/tr}"}
+	{button href="tiki-send_newsletters.php?nlId=$nlid_encod" class="btn btn-default" _icon_name="envelope" _text="{tr}Send{/tr}"}
 </div>
 
 <div class="table-responsive">
-	<table class="table normal">
+	<table class="table normal table-striped table-hover">
 		<tr>
 			<th colspan="2">{tr}Newsletter{/tr}</th>
 		</tr>
@@ -33,12 +33,14 @@
 		{* groups------------------------------------ *}
 		{if $nb_groups > 0}
 			<div class="table-responsive">
-				<table class="table normal">
+				<table class="table normal table-striped table-hover">
 					<tr>
 						<th>
-							<a href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset_g|urlencode}&amp;sort_mode_g={if $sort_mode_g eq 'groupName_asc'}groupName_desc{else}groupName_asc{/if}">{tr}Group{/tr}</a>
+							<a href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset_g|urlencode}&amp;sort_mode_g={if $sort_mode_g eq 'groupName_asc'}groupName_desc{else}groupName_asc{/if}">
+								{tr}Group{/tr}
+							</a>
 						</th>
-						<th>{tr}Action{/tr}</th>
+						<th></th>
 					</tr>
 
 					{section name=ix loop=$groups_g}
@@ -55,7 +57,9 @@
 								{/if}
 							</td>
 							<td class="action">
-								<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;remove={$groups_g[ix].nlId|urlencode}&amp;group={$groups_g[ix].groupName|urlencode}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+								<a class="tips" title=":{tr}Remove{/tr}" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;remove={$groups_g[ix].nlId|urlencode}&amp;group={$groups_g[ix].groupName|urlencode}">
+									{icon name='remove'}
+								</a>
 							</td>
 						</tr>
 					{/section}
@@ -67,12 +71,12 @@
 		{* included------------------------------------ *}
 		{if $nb_included > 0}
 			<div class="table-responsive">
-				<table class="table normal">
+				<table class="table normal table-striped table-hover">
 					<tr>
 						<th>
 							<a href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset_g|urlencode}&amp;sort_mode_i={if $sort_mode_i eq 'name_asc'}name_desc{else}name_asc{/if}">{tr}Newsletter{/tr}</a>
 						</th>
-						<th>{tr}Action{/tr}</th>
+						<th></th>
 					</tr>
 
 					{foreach key=incId item=incName from=$included_n}
@@ -81,7 +85,9 @@
 								<a href="tiki-admin_newsletter_subscriptions.php?nlId={$incId|urlencode}">{$incName|escape}</a>
 							</td>
 							<td class="action">
-								<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;remove={$nlId|urlencode}&amp;included={$incId|urlencode}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+								<a class="tips" title=":{tr}Remove{/tr}" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;remove={$nlId|urlencode}&amp;included={$incId|urlencode}">
+									{icon name='remove'}
+								</a>
 							</td>
 						</tr>
 					{/foreach}
@@ -93,12 +99,12 @@
 		{* pages------------------------------------ *}
 		{if $nb_pages > 0}
 			<div class="table-responsive">
-				<table class="table normal">
+				<table class="table normal table-striped table-hover">
 					<tr>
 						<th>{tr}Wiki Page Name{/tr}</th>
 						<th>{tr}Validate Addresses{/tr}</th>
 						<th>{tr}Add To List{/tr}</th>
-						<th>{tr}Action{/tr}</th>
+						<th></th>
 					</tr>
 
 					{section name=ix loop=$pages}
@@ -107,7 +113,9 @@
 							<td class="text">{$pages[ix].validateAddrs|escape}</td>
 							<td class="text">{$pages[ix].addToList|escape}</td>
 							<td class="action">
-								<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;remove={$pages[ix].nlId|urlencode}&amp;page={$pages[ix].wikiPageName|urlencode}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+								<a class="tips" title=":{tr}Remove{/tr}" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;remove={$pages[ix].nlId|urlencode}&amp;page={$pages[ix].wikiPageName|urlencode}">
+									{icon name='remove'}
+								</a>
 							</td>
 						</tr>
 					{/section}
@@ -121,7 +129,7 @@
 		<form method="post" action="tiki-admin_newsletter_subscriptions.php">
 			<input type="hidden" name="nlId" value="{$nlId|escape}">
 		<div class="table-responsive">
-			<table class="table normal">
+			<table class="table normal table-striped table-hover">
 				<tr>
 					<th>
 						{select_all checkbox_names='checked[]'}
@@ -135,7 +143,7 @@
 					<th>
 						<a href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={if $sort_mode eq 'subscribed_desc'}subscribed_asc{else}subscribed_desc{/if}">{tr}Subscribed{/tr}</a>
 					</th>
-					<th>{tr}Action{/tr}</th>
+					<th></th>
 				</tr>
 
 				{section name=user loop=$channels}
@@ -161,7 +169,9 @@
 						</td>
 						<td class="date">{$channels[user].subscribed|tiki_short_datetime}</td>
 						<td class="action">
-							<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;remove={$channels[user].nlId|urlencode}&amp;{if $channels[user].isUser eq "y"}subuser{else}email{/if}={$channels[user].email|escape:"url"}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+							<a class="tips" title=":{tr}Remove{/tr}" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;remove={$channels[user].nlId|urlencode}&amp;{if $channels[user].isUser eq "y"}subuser{else}email{/if}={$channels[user].email|escape:"url"}">
+								{icon name='remove'}
+							</a>
 						</td>
 					</tr>
 				{sectionelse}

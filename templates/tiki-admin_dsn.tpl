@@ -26,7 +26,7 @@
 
 <h2>{tr}DSN{/tr}</h2>
 <div class="table-responsive">
-	<table class="table normal">
+	<table class="table normal table-striped table-hover">
 		<tr>
 			<th>
 				<a href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a>
@@ -34,7 +34,7 @@
 			<th>
 				<a href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'dsn_desc'}dsn_asc{else}dsn_desc{/if}">{tr}DSN{/tr}</a>
 			</th>
-			<th>{tr}Action{/tr}</th>
+			<th></th>
 		</tr>
 
 		<tr>
@@ -50,10 +50,24 @@
 				<td class="text">{$channels[user].name}</td>
 				<td class="text">{$channels[user].dsn}</td>
 				<td class="action">
-					&nbsp;&nbsp;
-					<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;dsnId={$channels[user].dsnId}">{icon _id='page_edit'}</a> &nbsp;
-					<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].dsnId}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
-					{permission_link mode=icon type=dsn id=$channels[user].name title=$channels[user].name}
+					{capture name=dsn_actions}
+						{strip}
+							<a href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;dsnId={$channels[user].dsnId}">
+								{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+							</a>
+							{permission_link mode=text type=dsn id=$channels[user].name title=$channels[user].name}
+							<a href="tiki-admin_dsn.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].dsnId}">
+								{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+							</a>
+						{/strip}
+					{/capture}
+					<a class="tips"
+					   title="{tr}Actions{/tr}"
+					   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.dsn_actions|escape:"javascript"|escape:"html"}
+					   style="padding:0; margin:0; border:0"
+							>
+						{icon name='wrench'}
+					</a>
 				</td>
 			</tr>
 		{/section}

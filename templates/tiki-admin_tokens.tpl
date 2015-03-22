@@ -5,7 +5,7 @@
 	{tab name="{tr}List tokens{/tr}"}
 		<h2>{tr}List tokens{/tr}</h2>
 		<div class="table-responsive">
-			<table class="table normal">
+			<table class="table normal table-striped table-hover">
 				<tr>
 					<th>{tr}Id{/tr}</th>
 					<th>{tr}Entry{/tr}</th>
@@ -17,7 +17,7 @@
 					<th>{tr}Email{/tr}</th>
 					<th>{tr}Parameters{/tr}</th>
 					<th>{tr}Groups{/tr}</th>
-					<th>{tr}Actions{/tr}</th>
+					<th></th>
 				</tr>
 
 				{foreach $tokens as $token}
@@ -36,7 +36,11 @@
 							{/foreach}
 						</td>
 						<td>{$token.groups}</td>
-						<td>{self_link tokenId=$token.tokenId action='delete' _icon='cross'}{tr}Delete{/tr}{/self_link}</td>
+						<td>
+							{self_link tokenId=$token.tokenId action='delete' _menu_text='y' _menu_icon='y' _icon_name='remove'}
+								{tr}Delete{/tr}
+							{/self_link}
+						</td>
 					</tr>
 				{foreachelse}
 					{norecords _colspan=10}

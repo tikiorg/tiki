@@ -3,7 +3,7 @@
 
 {if $tiki_p_admin eq 'y'}
 	<div class="t_navbar">
-		{button href='tiki-import_xml_zip.php' _text="{tr}XML Zip Import{/tr}"}
+		{button href='tiki-import_xml_zip.php' _icon_name="zip" _text="{tr}XML Zip Import{/tr}"}
 	</div>
 {/if}
 
@@ -74,7 +74,7 @@
 		<br>
 		<form class="form" role="form">
 			<div class="table-responsive">
-				<table class="table normal">
+				<table class="table normal table-striped table-hover">
 					<tr>
 						{if $tiki_p_admin eq 'y'}<th width="15">{select_all checkbox_names='action[]'}</th>{/if}
 						<th>{tr}Structure{/tr}</th>

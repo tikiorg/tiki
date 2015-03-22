@@ -3,19 +3,19 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To use these links, you must assign the featured_links <a class="rbox-link" href="tiki-admin_modules.php">module</a>.{/tr}{/remarksbox}
 
 <div class="t_navbar">
-	{button href="tiki-admin_links.php?generate=1" _text="{tr}Generate positions by hits{/tr}"}
+	{button href="tiki-admin_links.php?generate=1" _icon_name="ranking" _text="{tr}Generate positions by hits{/tr}"}
 </div>
 
 <h2>{tr}List of featured links{/tr}</h2>
 <div class="table-responsive">
-<table class="table normal">
+<table class="table normal table-striped table-hover">
 	<tr>
 		<th>{tr}URL{/tr}</th>
 		<th>{tr}Title{/tr}</th>
 		<th>{tr}Hits{/tr}</th>
 		<th>{tr}Position{/tr}</th>
 		<th>{tr}Type{/tr}</th>
-		<th>{tr}Action{/tr}</th>
+		<th></th>
 	</tr>
 
 	{section name=user loop=$links}
@@ -26,8 +26,23 @@
 			<td class="id">{$links[user].position}</td>
 			<td class="text">{$links[user].type}</td>
 			<td class="action">
-				<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_links.php?editurl={$links[user].url|escape:"url"}">{icon _id='page_edit'}</a>
-				<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_links.php?remove={$links[user].url|escape:"url"}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+				{capture name=links_actions}
+					{strip}
+						<a href="tiki-admin_links.php?editurl={$links[user].url|escape:"url"}">
+							{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+						</a>
+						<a href="tiki-admin_links.php?remove={$links[user].url|escape:"url"}">
+							{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+						</a>
+					{/strip}
+				{/capture}
+				<a class="tips"
+				   title="{tr}Actions{/tr}"
+				   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.links_actions|escape:"javascript"|escape:"html"}
+				   style="padding:0; margin:0; border:0"
+						>
+					{icon name='wrench'}
+				</a>
 			</td>
 		</tr>
 	{sectionelse}

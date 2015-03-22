@@ -2,9 +2,9 @@
 {title help="Newsletters"}{tr}Admin newsletters{/tr}{/title}
 
 <div class="t_navbar btn-group form-group">
-	{button href="tiki-admin_newsletters.php?cookietab=2" _class="btn btn-default" _text="{tr}Create Newsletter{/tr}"}
-	{button href="tiki-newsletters.php" _class="btn btn-default" _text="{tr}List Newsletters{/tr}"}
-	{button href="tiki-send_newsletters.php" _class="btn btn-default" _text="{tr}Send Newsletters{/tr}"}
+	{button href="tiki-admin_newsletters.php?cookietab=2" _class="btn btn-default" _icon_name="create" _text="{tr}Create{/tr}"}
+	{button href="tiki-newsletters.php" _class="btn btn-default" _icon_name="list" _text="{tr}List{/tr}"}
+	{button href="tiki-send_newsletters.php" _class="btn btn-default" _icon_name="envelope" _text="{tr}Send{/tr}"}
 </div>
 
 {tabset}
@@ -26,7 +26,7 @@
 					<th>{self_link _sort_arg='sort_mode' _sort_field='editions'}{tr}Editions{/tr}{/self_link}</th>
 					<th>{tr}Drafts{/tr}</th>
 					<th>{self_link _sort_arg='sort_mode' _sort_field='lastSent'}{tr}Last Sent{/tr}{/self_link}</th>
-					<th>{tr}Action{/tr}</th>
+					<th></th>
 				</tr>
 
 				{section name=user loop=$channels}
@@ -42,12 +42,33 @@
 						<td class="integer">{$channels[user].drafts}</td>
 						<td class="date">{$channels[user].lastSent|tiki_short_datetime}</td>
 						<td class="action">
-							{permission_link mode=icon type=newsletter permType=newsletters id=$channels[user].nlId title=$channels[user].name}
-							{self_link _icon='page_edit' cookietab='2' _anchor='anchor2' nlId=$channels[user].nlId}{tr}Edit{/tr}{/self_link}
-							<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$channels[user].nlId}" title="{tr}Subscriptions{/tr}">{icon _id='group' alt="{tr}Subscriptions{/tr}"}</a>
-							<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}" title="{tr}Send Newsletter{/tr}">{icon _id='email' alt="{tr}Send Newsletter{/tr}"}</a>
-							<a class="link" href="tiki-newsletter_archives.php?nlId={$channels[user].nlId}" title="{tr}Archives{/tr}">{icon _id='database' alt="{tr}Archives{/tr}"}</a>
-							{self_link _icon='cross' remove=$channels[user].nlId}{tr}Remove{/tr}{/self_link}
+							{capture name=newsletters_actions}
+								{strip}
+									{permission_link mode=text type=newsletter permType=newsletters id=$channels[user].nlId title=$channels[user].name}
+									<a href="tiki-admin_newsletter_subscriptions.php?nlId={$channels[user].nlId}">
+										{icon name='group' _menu_text='y' _menu_icon='y' alt="{tr}Subscriptions{/tr}"}
+									</a>
+									<a href="tiki-send_newsletters.php?nlId={$channels[user].nlId}">
+										{icon name='envelope' _menu_text='y' _menu_icon='y' alt="{tr}Send newsletter{/tr}"}
+									</a>
+									<a href="tiki-newsletter_archives.php?nlId={$channels[user].nlId}">
+										{icon name='file-archive' _menu_text='y' _menu_icon='y' alt="{tr}Archives{/tr}"}
+									</a>
+									{self_link _icon_name='edit' _menu_text='y' _menu_icon='y' cookietab='2' _anchor='anchor2' nlId=$channels[user].nlId}
+										{tr}Edit{/tr}
+									{/self_link}
+									{self_link _icon_name='remove' _menu_text='y' _menu_icon='y' remove=$channels[user].nlId}
+										{tr}Remove{/tr}
+									{/self_link}
+								{/strip}
+							{/capture}
+							<a class="tips"
+							   title="{tr}Actions{/tr}"
+							   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.newsletters_actions|escape:"javascript"|escape:"html"}
+							   style="padding:0; margin:0; border:0"
+									>
+								{icon name='wrench'}
+							</a>
 						</td>
 					</tr>
 				{sectionelse}

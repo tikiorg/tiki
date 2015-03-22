@@ -44,8 +44,10 @@
 <div class="t_navbar" xmlns="http://www.w3.org/1999/html">
 	<form action="tiki-admin_banning.php" method="post">
 	<input type="hidden" name="export" value="y">
-		<input type="submit" class="btn btn-default" name="csv" value="{tr}Export as CSV{/tr}">
-		{button _text="{tr}Import as CSV{/tr}" href="#Import_rules_as_CSV" class="btn btn-default"}
+		<button name="csv" type="submit" class="btn btn-default">
+			{icon name="export"} {tr}Export as CSV{/tr}
+		</button>
+		{button _text="{tr}Import as CSV{/tr}" _icon_name="import" href="#Import_rules_as_CSV" class="btn btn-default"}
 	</form>
 </div>
 
@@ -184,7 +186,7 @@
 	<input type="hidden" name="find" value="{$find|escape}">
 	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table normal table-striped table-hover">
 			<tr>
 				<th>
 					{if $items|count > 0}
@@ -194,38 +196,49 @@
 				<th>{tr}Title{/tr}</th>
 				<th>{tr}User/IP{/tr}</th>
 				<th>{tr}Sections{/tr}</th>
-				<th>{tr}Action{/tr}</th>
+				<th></th>
 			</tr>
 
 			{section name=user loop=$items}
-				<div class="form-inline">
-					<div class="form-group">
+				<tr>
+					<td>
 						<input type="checkbox" name="delsec[{$items[user].banId}]">
-					</div>
-					<div class="text">
+					</td>
+					<td class="text">
 						<a href="tiki-admin_banning.php?banId={$items[user].banId}" class="link">{$items[user].title|escape}</a>
-					</div>
-					<div class="form-group">
+					</td>
+					<td>
 						{if $items[user].mode eq 'user'}
 							{$items[user].user|escape}
 						{else}
 							{$items[user].ip1}.{$items[user].ip2}.{$items[user].ip3}.{$items[user].ip4}
 						{/if}
-					</div>
-					<div class="form-group">
+					</td>
+					<td>
 						{section name=ix loop=$items[user].sections}
 							{$items[user].sections[ix].section}{if not $smarty.section.ix.last},{/if}
 						{/section}
-					</div>
-					<div class="form-group">
-						&nbsp;&nbsp;<a title="{tr}Edit{/tr}" href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;banId={$items[user].banId}" class="link tips">
-							{icon name='edit' alt="{tr}Edit{/tr}"}
+					</td>
+					<td>
+						{capture name=banning_actions}
+							{strip}
+								<a href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;banId={$items[user].banId}">
+									{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+								</a>
+								<a href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}">
+									{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+								</a>
+							{/strip}
+						{/capture}
+						<a class="tips"
+						   title="{tr}Actions{/tr}"
+						   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.banning_actions|escape:"javascript"|escape:"html"}
+						   style="padding:0; margin:0; border:0"
+								>
+							{icon name='wrench'}
 						</a>
-						<a title="{tr}Delete{/tr}" href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link tips">
-							{icon name='remove' alt="{tr}Delete{/tr}"}
-						</a>
-					</div>
-				</div>
+					</td>
+				</tr>
 			{sectionelse}
 				{norecords _colspan=5 _text="{tr}No rules found{/tr}"}
 			{/section}

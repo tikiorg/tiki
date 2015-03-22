@@ -3,23 +3,23 @@
 {title help="Metrics" admpage="metrics"}{tr}Admin Metrics{/tr}{/title}
 
 <div class="t_navbar margin-bottom-md">
-	{button href="#metrics" class="btn btn-default" _text="{tr}Metrics{/tr}"}
-	{button href="#tabs" class="btn btn-default" _text="{tr}Tabs{/tr}"}
-	{button href="#assign" class="btn btn-default" _text="{tr}Assign Metrics{/tr}"}
-	{button href="#assigned" class="btn btn-default" _text="{tr}Assigned Metrics{/tr}"}
-	{button href="#editcreate" class="btn btn-default" _text="{tr}Edit/Create Metrics{/tr}"}
-	{button href="#editcreatetab" class="btn btn-default" _text="{tr}Edit/Create Tab{/tr}"}
+	{button href="#metrics" class="btn btn-default" _icon_name="chart" _text="{tr}Metrics{/tr}"}
+	{button href="#tabs" class="btn btn-default"  _icon_name="menu" _text="{tr}Tabs{/tr}"}
+	{button href="#assign" class="btn btn-default"  _icon_name="ok" _text="{tr}Assign Metrics{/tr}"}
+	{button href="#assigned" class="btn btn-default"  _icon_name="list" _text="{tr}Assigned Metrics{/tr}"}
+	{button href="#editcreate" class="btn btn-default"  _icon_name="edit" _text="{tr}Edit/Create Metrics{/tr}"}
+	{button href="#editcreatetab" class="btn btn-default"  _icon_name="edit" _text="{tr}Edit/Create Tab{/tr}"}
 </div>
 
 <h2>{tr}Metrics{/tr}</h2>
 <div class="table-responsive">
-<table class="table normal" id="metrics">
+<table class="table normal table-striped table-hover" id="metrics">
 	<tr class="first">
 		<th>{tr}Name{/tr}</th>
 		<th>{tr}Range{/tr}</th>
 		<th>{tr}Data Type{/tr}</th>
 		<th>{tr}Query{/tr}</th>
-		<th>{tr}Action{/tr}</th>
+		<th></th>
 	</tr>
 	{if !empty($metrics_list)}
 		{cycle print=false values="odd,even"}
@@ -30,9 +30,26 @@
 				<td class="text">{$metric.metric_datatype|escape}</td>
 				<td class="text">{$metric.metric_query|escape}</td>
 				<td class="action">
-					<a class="link" href="tiki-admin_metrics.php?metric_edit={$i|escape:'url'}#editcreate" title="{tr}Edit{/tr}"><img src="img/icons/page_edit.png" width="16" height="16" alt="{tr}Edit{/tr}"></a>
-					<a class="link" href="tiki-admin_metrics.php?assign_metric_new={$i|escape:'url'}#assign" title="{tr}Assign{/tr}"><img src="img/icons/accept.png" width="16" height="16" alt="{tr}Assign{/tr}"></a>
-					<a class="link" href="tiki-admin_metrics.php?metric_remove={$i|escape:'url'}" title="{tr}Delete{/tr}"><img src="img/icons/cross.png" width="16" height="16" alt="{tr}Delete{/tr}"></a>
+					{capture name=metrics_actions}
+						{strip}
+							<a href="tiki-admin_metrics.php?assign_metric_new={$i|escape:'url'}#assign">
+								{icon name='ok' _menu_text='y' _menu_icon='y' alt="{tr}Assign{/tr}"}
+							</a>
+							<a href="tiki-admin_metrics.php?metric_edit={$i|escape:'url'}#editcreate">
+								{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+							</a>
+							<a href="tiki-admin_metrics.php?metric_remove={$i|escape:'url'}">
+								{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+							</a>
+						{/strip}
+					{/capture}
+					<a class="tips"
+					   title="{tr}Actions{/tr}"
+					   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.metrics_actions|escape:"javascript"|escape:"html"}
+					   style="padding:0; margin:0; border:0"
+							>
+						{icon name='wrench'}
+					</a>
 				</td>
 			</tr>
 		{/foreach}
@@ -44,11 +61,11 @@
 
 <h2>{tr}Tabs{/tr}</h2>
 <div class="table-responsive">
-<table class="table normal" id="tabs">
+<table class="table normal table-striped table-hover" id="tabs">
 	<tr class="first">
 		<th>{tr}Name{/tr}</th>
 		<th>{tr}Weight{/tr}</th>
-		<th>{tr}Action{/tr}</th>
+		<th></th>
 	</tr>
 	{if !empty($tabs_list)}
 		{cycle print=false values="odd,even"}
@@ -57,8 +74,23 @@
 				<td class="text">{$tab.tab_name|escape}</td>
 				<td class="integer">{$tab.tab_order|escape}</td>
 				<td class="action">
-					<a class="link" href="tiki-admin_metrics.php?tab_edit={$i|escape:'url'}#editcreatetab" title="{tr}Edit{/tr}"><img src="img/icons/page_edit.png" width="16" height="16" alt="{tr}Edit{/tr}"></a>
-					<a class="link" href="tiki-admin_metrics.php?tab_remove={$i|escape:'url'}" title="{tr}Delete{/tr}"><img src="img/icons/cross.png" width="16" height="16" alt="{tr}Delete{/tr}"></a>
+					{capture name=metrics_tabs_actions}
+						{strip}
+							<a href="tiki-admin_metrics.php?tab_edit={$i|escape:'url'}#editcreatetab">
+								{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+							</a>
+							<a href="tiki-admin_metrics.php?tab_remove={$i|escape:'url'}">
+								{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+							</a>
+						{/strip}
+					{/capture}
+					<a class="tips"
+					   title="{tr}Actions{/tr}"
+					   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.metrics_tabs_actions|escape:"javascript"|escape:"html"}
+					   style="padding:0; margin:0; border:0"
+							>
+						{icon name='wrench'}
+					</a>
 				</td>
 			</tr>
 		{/foreach}
@@ -69,7 +101,7 @@
 </div>
 <h2>{tr}Assigned Metrics{/tr}</h2>
 <div class="table-responsive">
-<table class="table normal" id="assigned_metrics">
+<table class="table normal table-striped table-hover" id="assigned_metrics">
 	<tr class="first">
 		<th>{tr}Metric Name{/tr}</th>
 		<th>{tr}Tab Name{/tr}</th>

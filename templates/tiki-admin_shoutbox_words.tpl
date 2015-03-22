@@ -3,7 +3,7 @@
 <h2>{tr}Add Banned Word{/tr}</h2>
 
 <div class="t_navbar">
-	{button href="tiki-shoutbox.php" _text="{tr}Shoutbox{/tr}"}
+	{button href="tiki-shoutbox.php" _icon_name="comments" _text="{tr}Shoutbox{/tr}"}
 </div>
 
 <form method="post" action="tiki-admin_shoutbox_words.php">
@@ -22,21 +22,21 @@
 {include file='find.tpl'}
 
 <div class="table-responsive">
-<table class="table normal">
+<table class="table normal table-striped table-hover">
 	<tr>
 		<th>
 			<a href="tiki-admin_shoutbox_words.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'word_desc'}word_asc{else}word_desc{/if}">{tr}Word{/tr}</a>
 		</th>
-		<th>{tr}Action{/tr}</th>
+		<th></th>
 	</tr>
 
 	{section name=user loop=$words}
 		<tr>
 			<td class="text">{$words[user].word|escape}</td>
 			<td class="action">
-				&nbsp;&nbsp;
-				<a class="link" href="tiki-admin_shoutbox_words.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$words[user].word|escape:"url"}" onclick="return confirmTheLink(this,"{tr}Are you sure you want to delete this word?{/tr}")" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
-				&nbsp;&nbsp;
+				<a class="tips" href="tiki-admin_shoutbox_words.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$words[user].word|escape:"url"}" onclick="return confirmTheLink(this,"{tr}Are you sure you want to delete this word?{/tr}")" title=":{tr}Delete{/tr}">
+					{icon name='remove'}
+				</a>
 			</td>
 		</tr>
 	{sectionelse}

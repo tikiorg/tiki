@@ -151,7 +151,7 @@
 <h1>{tr}Manage Credit Types{/tr}</h1>
 <form method="post" action="tiki-admin_credits.php">
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table normal table-striped table-hover">
 			<tr>
 				<td></td>
 				<td><b>{tr}Type{/tr}</b></td>

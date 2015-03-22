@@ -13,11 +13,11 @@
 {/if}
 
 <div class="t_navbar btn-group form-group">
-	{button href="tiki-list_integrator_repositories.php" class="btn btn-default" _text="{tr}List Repositories{/tr}"}
-	{button href="tiki-admin_integrator.php" class="btn btn-default" _text="{tr}New Repository{/tr}"}
+	{button href="tiki-list_integrator_repositories.php" class="btn btn-default" _icon_name="list" _text="{tr}List{/tr}"}
+	{button href="tiki-admin_integrator.php" class="btn btn-default" _icon_name="create" _text="{tr}New{/tr}"}
 	{if isset($repID) and $repID ne '0'}
 		{assign var=thisrepID value=$repID|escape}
-		{button href="tiki-integrator.php?repID=$thisrepID" class="btn btn-default" _text="{tr}View Repository{/tr}"}
+		{button href="tiki-integrator.php?repID=$thisrepID" class="btn btn-default" _icon_name="view" _text="{tr}View{/tr}"}
 	{/if}
 </div>
 
@@ -69,13 +69,13 @@
 
 {* Table with list of repositories *}
 <div class="table-responsive">
-	<table class="table normal" id="integrator-repositories">
+	<table class="table normal table-striped table-hover" id="integrator-repositories">
 		<tr>
 			<th rowspan="2">{tr}Name{/tr}</th>
 			<th>{tr}Path{/tr}</th>
 			<th>{tr}Start{/tr}</th>
 			<th>{tr}CSS File{/tr}</th>
-			<th>{tr}Actions{/tr}</th>
+			<th></th>
 		</tr><tr>
 			<th colspan="4">{tr}Description{/tr}</th>
 		</tr>
@@ -91,11 +91,23 @@
 				<td class="text">{$repositories[rep].start_page}</td>
 				<td class="text">{$repositories[rep].css_file}</td>
 				<td class="action">
-					<a href="tiki-admin_integrator.php?action=edit&amp;repID={$repositories[rep].repID|escape}" title="{tr}Edit{/tr}">
-							{icon _id='wrench' alt="{tr}Edit{/tr}"}
+					{capture name=integrator_actions}
+						{strip}
+							<a href="tiki-admin_integrator.php?action=edit&amp;repID={$repositories[rep].repID|escape}">
+								{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+							</a>
+							<a href="tiki-admin_integrator.php?action=rm&amp;repID={$repositories[rep].repID|escape}">
+								{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+							</a>
+						{/strip}
+					{/capture}
+					<a class="tips"
+					   title="{tr}Actions{/tr}"
+					   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.integrator_actions|escape:"javascript"|escape:"html"}
+					   style="padding:0; margin:0; border:0"
+							>
+						{icon name='wrench'}
 					</a>
-					&nbsp;&nbsp;<a href="tiki-admin_integrator.php?action=rm&amp;repID={$repositories[rep].repID|escape}"
-						title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>&nbsp;&nbsp;
 				</td>
 
 				{* Show description as colspaned row if it is not an empty *}

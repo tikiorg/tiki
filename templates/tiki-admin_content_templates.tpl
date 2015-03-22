@@ -9,7 +9,7 @@
 
 {if $templateId > 0}
 	<h2>{tr}Edit this template:{/tr} {$info.name|escape}</h2>
-	{button href="tiki-admin_content_templates.php" _text="{tr}Create new template{/tr}"}
+	{button href="tiki-admin_content_templates.php" _icon_name="create" _text="{tr}Create{/tr}"}
 {else}
 	<h2>{tr}Create new template{/tr}</h2>
 {/if}
@@ -131,7 +131,7 @@
 	{include file='find.tpl'}
 {/if}
 
-<table class="table normal">
+<table class="table normal table-striped table-hover">
 	<tr>
 		<th>
 			<a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a>
@@ -140,7 +140,7 @@
 			<a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Last Modified{/tr}</a>
 		</th>
 		<th>{tr}Sections{/tr}</th>
-		<th>{tr}Action{/tr}</th>
+		<th></th>
 	</tr>
 	{cycle values="odd,even" print=false advance=false}
 	{section name=user loop=$channels}
@@ -157,11 +157,22 @@
 				{/section}
 			</td>
 			<td class="action">
-				<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}">
-					{icon _id='page_edit'}
-				</a>
-				<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" >
-					{icon _id='cross' alt="{tr}Delete{/tr}"}
+				{capture name=template_actions}
+					{strip}
+						<a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}">
+							{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+						</a>
+						<a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" >
+							{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+						</a>
+					{/strip}
+				{/capture}
+				<a class="tips"
+				   title="{tr}Actions{/tr}"
+				   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.template_actions|escape:"javascript"|escape:"html"}
+				   style="padding:0; margin:0; border:0"
+						>
+					{icon name='wrench'}
 				</a>
 			</td>
 		</tr>

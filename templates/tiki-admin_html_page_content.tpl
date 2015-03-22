@@ -3,10 +3,10 @@
 <h2>{tr}Page:{/tr} {$pageName}</h2>
 
 <div class="t_navbar btn-group">
-	{button href="tiki-admin_html_pages.php" class="btn btn-default" _text="{tr}Admin HTML pages{/tr}"}
+	{button href="tiki-admin_html_pages.php" class="btn btn-default" _icon_name="cog" _text="{tr}Admin HTML pages{/tr}"}
 	{assign var='pname' value=$pageName|escape:"url" class="btn btn-default"}
-	{button href="tiki-admin_html_pages.php?pageName=$pname" class="btn btn-default" _text="{tr}Edit this page{/tr}"}
-	{button href="tiki-page.php?pageName=$pname" class="btn btn-default" _text="{tr}View page{/tr}"}
+	{button href="tiki-admin_html_pages.php?pageName=$pname" class="btn btn-default" _icon_name="edit" _text="{tr}Edit this page{/tr}"}
+	{button href="tiki-page.php?pageName=$pname" class="btn btn-default" _icon_name="view" _text="{tr}View page{/tr}"}
 </div>
 
 {if $zone}
@@ -44,7 +44,7 @@
 <form action="tiki-admin_html_page_content.php" method="post">
 	<input type="hidden" name="pageName" value="{$pageName|escape}">
 	<input type="hidden" name="zone" value="{$zone|escape}">
-	<table class="table normal">
+	<table class="table normal table-striped table-hover">
 		<tr>
 			<th>
 				<a href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'zone_desc'}zone_asc{else}zone_desc{/if}">{tr}zone{/tr}</a>
@@ -52,7 +52,7 @@
 			<th>
 				<a href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'content_desc'}content_asc{else}content_desc{/if}">{tr}content{/tr}</a>
 			</th>
-			<th>{tr}Action{/tr}</th>
+			<th></th>
 		</tr>
 
 		{section name=user loop=$channels}
@@ -66,7 +66,9 @@
 					{/if}
 				</td>
 				<td class="action">
-					<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;zone={$channels[user].zone}">{icon _id='page_edit'}</a>
+					<a title=":{tr}Edit{/tr}" class="tips" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;zone={$channels[user].zone}">
+						{icon name='edit'}
+					</a>
 				</td>
 			</tr>
 		{/section}

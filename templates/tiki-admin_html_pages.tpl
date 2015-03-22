@@ -2,7 +2,7 @@
 
 {if $pageName ne ''}
 	<div class="navt_bar">
-		{button _text="{tr}Create new HTML page{/tr}"}
+		{button _icon_name="create" _text="{tr}Create{/tr}"}
 	</div>
 {/if}
 
@@ -83,7 +83,7 @@
 	{include file='find.tpl'}
 {/if}
 <div class="table-responsive">
-<table class="table normal">
+<table class="table normal table-striped table-hover">
 	<tr>
 		<th>
 			<a href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a>
@@ -94,7 +94,7 @@
 		<th>
 			<a href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Last Modif{/tr}</a>
 		</th>
-		<th style="width:100px;">{tr}Action{/tr}</th>
+		<th style="width:100px;"></th>
 	</tr>
 
 
@@ -104,13 +104,29 @@
 			<td class="text">{$channels[user].type} {if $channels[user].type eq 'd'}({$channels[user].refresh} secs){/if}</td>
 			<td class="date">{$channels[user].created|tiki_short_datetime}</td>
 			<td class="action">
-				<a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName|escape:"url"}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-
-				<a class="link" href="tiki-page.php?pageName={$channels[user].pageName|escape:"url"}" title="View">{icon _id='monitor' alt="{tr}View{/tr}"}</a>
-
-				<a class="link" href="tiki-admin_html_page_content.php?pageName={$channels[user].pageName|escape:"url"}" title="{tr}Admin dynamic zones{/tr}">{icon _id='page_gear' alt="{tr}Admin dynamic zones{/tr}"}</a>
-
-				<a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pageName|escape:"url"}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+				{capture name=html_actions}
+					{strip}
+						<a href="tiki-page.php?pageName={$channels[user].pageName|escape:"url"}" title="View">
+							{icon name='view' _menu_text='y' _menu_icon='y' alt="{tr}View{/tr}"}
+						</a>
+						<a href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName|escape:"url"}">
+							{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+						</a>
+						<a href="tiki-admin_html_page_content.php?pageName={$channels[user].pageName|escape:"url"}" title="{tr}Admin dynamic zones{/tr}">
+							{icon name='cog' _menu_text='y' _menu_icon='y' alt="{tr}Admin dynamic zones{/tr}"}
+						</a>
+						<a href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pageName|escape:"url"}">
+							{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+						</a>
+					{/strip}
+				{/capture}
+				<a class="tips"
+				   title="{tr}Actions{/tr}"
+				   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.html_actions|escape:"javascript"|escape:"html"}
+				   style="padding:0; margin:0; border:0"
+						>
+					{icon name='wrench'}
+				</a>
 			</td>
 		</tr>
 	{sectionelse}

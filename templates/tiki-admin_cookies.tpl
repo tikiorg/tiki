@@ -35,7 +35,7 @@
 <h2>{tr}Cookies{/tr}</h2>
 {if $channels}
 	<div class="t_navbar">
-		{button href="?removeall=1" _text="{tr}Remove all cookies{/tr}"}
+		{button href="?removeall=1" _icon_name="trash" _text="{tr}Remove all cookies{/tr}"}
 	</div>
 {/if}
 
@@ -44,7 +44,7 @@
 {/if}
 
 <div class="table-responsive">
-<table class="table normal">
+<table class="table normal table-striped table-hover">
 	<tr>
 		<th>
 			<a href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'cookieId_desc'}cookieId_asc{else}cookieId_desc{/if}">{tr}ID{/tr}</a>
@@ -52,7 +52,7 @@
 		<th>
 			<a href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'cookie_desc'}cookie_asc{else}cookie_desc{/if}">{tr}cookie{/tr}</a>
 		</th>
-		<th width="15%">{tr}Action{/tr}</th>
+		<th width="15%"></th>
 	</tr>
 	{cycle values="odd,even" print=false advance=false}
 	{section name=user loop=$channels}
@@ -60,10 +60,23 @@
 			<td class="id">{$channels[user].cookieId}</td>
 			<td class="text">{$channels[user].cookie|escape}</td>
 			<td class="action">
-				&nbsp;&nbsp;
-				<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}">{icon _id='page_edit'}</a>
-				&nbsp;
-				<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].cookieId}" >{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+				{capture name=cookies_actions}
+					{strip}
+						<a href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}">
+							{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+						</a>
+						<a href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].cookieId}">
+							{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+						</a>
+					{/strip}
+				{/capture}
+				<a class="tips"
+				   title="{tr}Actions{/tr}"
+				   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.coookies_actions|escape:"javascript"|escape:"html"}
+				   style="padding:0; margin:0; border:0"
+						>
+					{icon name='wrench'}
+				</a>
 			</td>
 		</tr>
 	{sectionelse}
