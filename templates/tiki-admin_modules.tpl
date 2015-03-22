@@ -53,7 +53,7 @@
 		{/if}
 		<h2>{tr}Assigned Modules{/tr}</h2>
 		<div class="margin-bottom-md">
-			{button href="tiki-admin_modules.php?edit_assign=0#content_admin_modules1-2" _text="{tr}Add module{/tr}"}
+			{button edit_assign=0 cookietab=2 _auto_args="edit_assign,cookietab" _text="{tr}Add module{/tr}"}
 		</div>
 
 		<div id="assigned_modules">
@@ -138,7 +138,7 @@
 				<h3>{tr}Preview{/tr}</h3>
 				{$preview_data}
 			{/if}
-			<form method="post" action="tiki-admin_modules.php#content_admin_modules1-2">
+			<form method="post" action="tiki-admin_modules.php{if empty($assign_name)}?cookietab=2#assign{/if}">
 				{* on the initial selection of a new module, reload the page to the #assign anchor *}
 				{if !empty($info.moduleId)}
 					<input type="hidden" name="moduleId" value="{$info.moduleId}">
