@@ -9,25 +9,54 @@
 	{* --------- navigation ------ *}
 	<div class="t_navbar">
 		<div class="pull-right btn-group">
-			{if $viewItemPretty.override}
-				{self_link print='y' vi_tpl={$viewItemPretty.value} _class="btn btn-default"}{icon name="print"}{/self_link}
-			{else}
-				{self_link print='y' _class="btn btn-default"}{icon name="print"}{/self_link}
-			{/if}
-			{if $item_info.logs.cant|default:null}
-				<a class="btn btn-default" class="link" href="tiki-tracker_view_history.php?itemId={$itemId}" title="{tr}History{/tr}">{icon name="history"}</a>
-			{/if}
-			{monitor_link type=trackeritem object=$itemId}
-			{if $prefs.feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y'}
-				{if $user_watching_tracker ne 'y'}
-					<a class="btn btn-default" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;watch=add" title="{tr}Monitor{/tr}">{icon name="watch"}</a>
-				{else}
-					<a class="btn btn-default" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;watch=stop" title="{tr}Stop Monitor{/tr}">{icon name="stop-watching"}</a>
+			<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
+				{icon name="more"}
+			</a>
+			<ul class="dropdown-menu dropdown-menu-right">
+				<li class="dropdown-title">
+					{tr}Tracker item actions{/tr}
+				</li>
+				<li class="divider"></li>
+				<li>
+					{if $viewItemPretty.override}
+						{self_link print='y' vi_tpl={$viewItemPretty.value}}
+							{icon name="print"} {tr}Print{/tr}
+						{/self_link}
+					{else}
+						{self_link print='y'}
+							{icon name="print"} {tr}Print{/tr}
+						{/self_link}
+					{/if}
+				</li>
+				{if $item_info.logs.cant|default:null}
+					<a href="tiki-tracker_view_history.php?itemId={$itemId}">
+						{icon name="history"} {tr}History{/tr}
+					</a>
 				{/if}
-			{/if}
-			{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-				<a class="btn btn-default" href="tiki-object_watches.php?objectId={$itemId|escape:"url"}&amp;watch_event=tracker_item_modified&amp;objectType=tracker+{$trackerId}&amp;objectName={$tracker_info.name|escape:"url"}&amp;objectHref={'tiki-view_tracker_item.php?trackerId='|cat:$trackerId|cat:'&itemId='|cat:$itemId|escape:"url"}" title="{tr}Group Monitor{/tr}">{icon name="watch-group"}</a>
-			{/if}
+				<li>
+					{monitor_link type=trackeritem object=$itemId linktext="{tr}Notification{/tr}" class="link" title=""}
+				</li>
+				{if $prefs.feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y'}
+					<li>
+						{if $user_watching_tracker ne 'y'}
+							<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;watch=add">
+								{icon name="watch"} {tr}Monitor{/tr}
+							</a>
+						{else}
+							<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;watch=stop">
+								{icon name="stop-watching"} {tr}Stop monitoring{/tr}
+							</a>
+						{/if}
+					</li>
+					{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+						<li>
+							<a href="tiki-object_watches.php?objectId={$itemId|escape:"url"}&amp;watch_event=tracker_item_modified&amp;objectType=tracker+{$trackerId}&amp;objectName={$tracker_info.name|escape:"url"}&amp;objectHref={'tiki-view_tracker_item.php?trackerId='|cat:$trackerId|cat:'&itemId='|cat:$itemId|escape:"url"}">
+								{icon name="watch-group"} {tr}Group monitor{/tr}
+							</a>
+						</li>
+					{/if}
+				{/if}
+			</ul>
 		</div>
 		{if $canModify && $prefs.tracker_legacy_insert neq 'y'}
 			<a class="btn btn-default" href="{bootstrap_modal controller=tracker action=update_item trackerId=$trackerId itemId=$itemId}">{icon name="edit"} {tr}Edit{/tr}</a>
