@@ -26,7 +26,8 @@
 
 	{if $prefs.ajax_autosave eq "y"}
 		<div class="pull-right">
-			{self_link _icon="magnifier" _class="previewBtn" _ajax="n"}{tr}Preview your changes.{/tr}{/self_link}
+			{self_link _icon_name="view" _class="previewBtn tips" _ajax="n" _title=":{tr}Preview your changes{/tr}"}
+			{/self_link}
 		</div>
 		{if $prefs.feature_wikilingo eq "y" && $useWikiLingo eq TRUE}
 			{if $wysiwyg eq 'y'}
@@ -133,7 +134,7 @@
 									{tr}Version:{/tr} {$diff.version|escape} - {$diff.comment|escape|default:"<em>{tr}No comment{/tr}</em>"}
 									{if count($diff_summaries) gt 1}
 										{assign var=diff_version value=$diff.version}
-										{icon _id="arrow_right" onclick="\$('input[name=oldver]').val($diff_version);\$('#editpageform').submit();return false;" _text="{tr}View{/tr}" style="cursor: pointer"}
+										{icon name="next" onclick="\$('input[name=oldver]').val($diff_version);\$('#editpageform').submit();return false;" title=":{tr}View{/tr}" style="cursor: pointer"}
 									{/if}
 								</li>
 							{/foreach}
@@ -289,7 +290,9 @@
 										</select>
 									</div>
 									{if $tiki_p_edit_content_templates eq 'y'}
-										<a href="tiki-admin_content_templates.php" class="btn btn-default" onclick="needToConfirm = true;">{icon name="administer"} {tr}Admin Content Templates{/tr}</a>
+										<a href="tiki-admin_content_templates.php" class="btn btn-default" onclick="needToConfirm = true;">
+											{icon name="administer"} {tr}Admin Content Templates{/tr}
+										</a>
 									{/if}
 								</div>
 							</div>
@@ -483,7 +486,9 @@
 										{/if}
 
 										{if $tiki_p_edit_structures eq 'y'}
-											<a href="tiki-admin_structures.php" class="btn btn-default">{icon name="administer"} {tr}Manage structures{/tr}</a>
+											<a href="tiki-admin_structures.php" class="btn btn-default">
+												{icon name="administer"} {tr}Manage structures{/tr}
+											</a>
 										{/if}
 									</div>
 								</div>
@@ -685,7 +690,9 @@
 							<div class="form-group">
 								<label for="" class="col-sm-2 control-label">{tr}Wiki preferences{/tr}</label>
 								<div class="col-sm-10">
-									<a href="tiki-admin.php?page=wiki" class="btn btn-default">{icon name="administer"} {tr}Admin Wiki Preferences{/tr}</a>
+									<a href="tiki-admin.php?page=wiki" class="btn btn-default">
+										{icon name="administer"} {tr}Admin Wiki Preferences{/tr}
+									</a>
 								</div>
 							</div>
 						{/if}

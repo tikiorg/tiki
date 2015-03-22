@@ -2,28 +2,28 @@
 	<a class="{if $permission_link.active}tips bg-warning{/if}{if !empty($permission_link.addclass)} {$permission_link.addclass}{/if}" href="{$permission_link.url|escape}"{if $permission_link.active} title=":{tr}Individual permissions{/tr}"{/if}>
 		{icon name="permission"} {$permission_link.label|escape}
 		{if $permission_link.count}
-			<span class="badge">{$permission_link.count|escape}</span>
+			 <span class="badge">{$permission_link.count|escape}</span>
 		{/if}
 	</a>
 {elseif $permission_link.mode eq 'button'}
 	<a class="{if $permission_link.active and $permission_link.type ne 'file gallery'}btn btn-warning{else}btn btn-default{/if}{if !empty($permission_link.addclass)} {$permission_link.addclass}{/if}" href="{$permission_link.url|escape}">
 		{$permission_link.label|escape}
 		{if $permission_link.count}
-			<span class="badge">{$permission_link.count|escape}</span>
+			 <span class="badge">{$permission_link.count|escape}</span>
 		{/if}
 	</a>
 {elseif $permission_link.mode eq 'button_link'}
 	<a class="btn btn-link{if !empty($permission_link.addclass)} {$permission_link.addclass}{/if}" href="{$permission_link.url|escape}">
 		{$permission_link.label|escape}
 		{if $permission_link.count}
-			<span class="badge">{$permission_link.count|escape}</span>
+			 <span class="badge">{$permission_link.count|escape}</span>
 		{/if}
 	</a>
 {elseif $permission_link.mode eq 'link'}
 	<a class="link{if !empty($permission_link.addclass)} {$permission_link.addclass}{/if}" href="{$permission_link.url|escape}">
 		{$permission_link.label|escape}
 		{if $permission_link.count}
-			<span class="badge">{$permission_link.count|escape}</span>
+			 <span class="badge">{$permission_link.count|escape}</span>
 		{/if}
 	</a>
 {elseif $permission_link.mode eq 'icon'}
@@ -32,7 +32,7 @@
 		{icon name="permission"}
 		<span class="sr-only">{$permission_link.label|escape}</span>
 		{if $permission_link.count}
-			<span class="badge">{$permission_link.count|escape}</span>
+			 <span class="badge">{$permission_link.count|escape}</span>
 		{/if}
 	</a>
 	{/strip}
@@ -41,7 +41,7 @@
 		{icon name="permission"}
 		<span class="sr-only">{$permission_link.label|escape}</span>
 		{if $permission_link.count}
-			<span class="badge">{$permission_link.count|escape}</span>
+			 <span class="badge">{$permission_link.count|escape}</span>
 		{/if}
 	</a>
 {/if}
