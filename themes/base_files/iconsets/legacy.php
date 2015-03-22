@@ -435,6 +435,9 @@ function iconset_legacy()
 			'star-half' => array(
 				'id' => 'star_half',
 			),
+			'stop' => array(
+				'id' => 'control_stop',
+			),
 			'stop-watching' => array(
 				'id' => 'no_eye',
 			),
