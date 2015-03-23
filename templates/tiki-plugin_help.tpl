@@ -5,13 +5,18 @@
 
 {if $prefs.javascript_enabled eq 'y' && $area_id}
 	<a href="javascript:void(0);" onclick="needToConfirm=false;$.closeModal();popup_plugin_form(''+{$area_id}+'','{$plugin_name|lower|@addslashes}');return false;">
-		{icon _id=$plugin.icon|default:"plugin_add" _text="{tr}Insert{/tr}"}
+		{if !empty($plugin.iconname)}
+			{icon name=$plugin.iconname _text="{tr}Insert{/tr}"}
+		{else}
+			{icon _id=$plugin.icon|default:"plugin_add" _text="{tr}Insert{/tr}"}
+		{/if}
 	</a>
 {/if}
-
 {if $prefs.feature_help eq 'y'}
 	{if !empty($plugin.documentation)}
-		<a href="{$plugin.documentation|escape}" onclick="needToConfirm=false;" target="tikihelp" class="tikihelp">{icon _id=help}</a>
+		<a href="{$plugin.documentation|escape}" onclick="needToConfirm=false;" target="tikihelp" class="tikihelp">
+			{icon name='help'}
+		</a>
 	{/if}
 {/if}
 

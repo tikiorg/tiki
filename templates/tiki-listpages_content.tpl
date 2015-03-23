@@ -274,9 +274,9 @@
 					{if $prefs.wiki_list_status eq 'y'}
 						<td class="icon">
 							{if $listpages[changes].flag eq 'locked'}
-								{icon _id='lock' alt="{tr}Locked{/tr}"}
+								{icon name='lock' alt="{tr}Locked{/tr}"}
 							{else}
-								{icon _id='lock_break' alt="{tr}unlocked{/tr}"}
+								{icon name='unlock' alt="{tr}unlocked{/tr}"}
 							{/if}
 						</td>
 					{/if}

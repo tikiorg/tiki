@@ -86,7 +86,7 @@
 {/if}
 
 <div class="table-responsive">
-	<table class="table normal">
+	<table class="table normal table-striped table-hover">
 		<tr>
 			<th>
 				<a href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'questionId_desc'}questionId_asc{else}questionId_desc{/if}">{tr}ID{/tr}</a>
@@ -102,8 +102,23 @@
 			<td class="id">{$channels[user].questionId}</td>
 			<td class="text">{$channels[user].question|escape}</td>
 			<td class="action">
-				<a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}">{icon _id='page_edit'}</a>
-				<a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+				{capture name=faq_actions}
+					{strip}
+						<a href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}">
+							{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+						</a>
+						<a href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}">
+							{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+						</a>
+					{/strip}
+				{/capture}
+				<a class="tips"
+				   title="{tr}Actions{/tr}"
+				   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.faq_actions|escape:"javascript"|escape:"html"}
+				   style="padding:0; margin:0; border:0"
+						>
+					{icon name='wrench'}
+				</a>
 			</td>
 		</tr>
 		{sectionelse}
@@ -118,11 +133,11 @@
 
 	<h2>{tr}Suggested questions{/tr}</h2>
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table normal table-striped table-hover">
 			<tr>
 				<th>{tr}Question{/tr}</th>
 				<th>{tr}Answer{/tr}</th>
-				<th>{tr}Action{/tr}</th>
+				<th></th>
 			</tr>
 
 			{section name=ix loop=$suggested}
@@ -130,8 +145,23 @@
 					<td class="text">{$suggested[ix].question|escape} </td>
 					<td class="text">{$suggested[ix].answer|escape}</td>
 					<td class="action">
-						<a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;approve_suggested={$suggested[ix].sfqId}" alt="{tr}Approve{/tr}">{icon _id=accept alt="{tr}Approve{/tr}"}</a>
-						<a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove_suggested={$suggested[ix].sfqId}">{icon _id=cross alt="{tr}Remove{/tr}"}</a>
+						{capture name=faq2_actions}
+							{strip}
+								<a href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;approve_suggested={$suggested[ix].sfqId}">
+									{icon name='ok' _menu_text='y' _menu_icon='y' alt="{tr}Approve{/tr}"}
+								</a>
+								<a href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove_suggested={$suggested[ix].sfqId}">
+									{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+								</a>
+							{/strip}
+						{/capture}
+						<a class="tips"
+						   title="{tr}Actions{/tr}"
+						   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.faq2_actions|escape:"javascript"|escape:"html"}
+						   style="padding:0; margin:0; border:0"
+								>
+							{icon name='wrench'}
+						</a>
 					</td>
 				</tr>
 			{/section}

@@ -82,7 +82,7 @@
 {include file='find.tpl'}
 
 <div class="table-responsive">
-	<table class="table normal">
+	<table class="table normal table-striped table-hover">
 		<tr>
 			<th>
 				<a href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'questionId_desc'}questionId_asc{else}questionId_desc{/if}">{tr}ID{/tr}</a>
@@ -96,7 +96,7 @@
 
 			<th>{tr}Options{/tr}</th>
 			<th>{tr}maxScore{/tr}</th>
-			<th>{tr}Action{/tr}</th>
+			<th></th>
 		</tr>
 
 		{section name=user loop=$channels}
@@ -107,9 +107,26 @@
 				<td class="integer">{$channels[user].options}</td>
 				<td class="integer">{$channels[user].maxPoints}</td>
 				<td class="action">
-					<a class="link" href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}">{icon _id='page_edit' alt="{tr}Edit{/tr}"}</a>
-					<a class="link" href="tiki-edit_question_options.php?quizId={$quizId}&amp;questionId={$channels[user].questionId}">{icon _id='bricks' alt="{tr}Options{/tr}"}</a>
-					<a class="link" href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+					{capture name=edit_questions_actions}
+						{strip}
+							<a href="tiki-edit_question_options.php?quizId={$quizId}&amp;questionId={$channels[user].questionId}">
+								{icon name='list' _menu_text='y' _menu_icon='y' alt="{tr}Options{/tr}"}
+							</a>
+							<a href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}">
+								{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+							</a>
+							<a href="tiki-edit_quiz_questions.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}">
+								{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+							</a>
+						{/strip}
+					{/capture}
+					<a class="tips"
+					   title="{tr}Actions{/tr}"
+					   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.edit_questions_actions|escape:"javascript"|escape:"html"}
+					   style="padding:0; margin:0; border:0"
+							>
+						{icon name='wrench'}
+					</a>
 				</td>
 			</tr>
 		{sectionelse}

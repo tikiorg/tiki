@@ -268,17 +268,19 @@
 		<div class="panel-body">
 			<h2>{tr}Remove Zones (you lose entered info for the banner){/tr}</h2>
 			<div class="table-responsive">
-				<table class="table normal">
+				<table class="table normal table-striped table-hover">
 					<tr>
 						<th>{tr}Name{/tr}</th>
-						<th>{tr}Action{/tr}</th>
+						<th></th>
 					</tr>
 
 					{section name=ix loop=$zones}
 						<tr>
 							<td class="text">{$zones[ix].zone|escape}</td>
 							<td class="action">
-								<a class="link" href="tiki-edit_banner.php?removeZone={$zones[ix].zone|escape:url}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+								<a class="tips" title=":{tr}Remove{/tr}" href="tiki-edit_banner.php?removeZone={$zones[ix].zone|escape:url}">
+									{icon name='remove'}
+								</a>
 							</td>
 						</tr>
 					{/section}
