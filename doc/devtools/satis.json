@@ -460,6 +460,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "jquery/jquery-mobile",
+				"version": "1.4.0",
+				"dist": {
+					"url": "http://jquerymobile.com/resources/download/jquery.mobile-1.4.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "jquery/jquery-ui",
 				"version": "1.10.2",
 				"dist": {
