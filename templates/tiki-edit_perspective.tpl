@@ -5,26 +5,43 @@
 		<h2>{tr}List{/tr}</h2>
 		<a href="tiki-switch_perspective.php">{tr}Return to default perspective{/tr}</a>
 		<div class="table-responsive">
-			<table class="table normal">
+			<table class="table normal table-striped table-hover">
 				<tr>
 					<th>{tr}Perspective{/tr}</th>
-					<th>{tr}Actions{/tr}</th>
+					<th></th>
 				</tr>
 
 				{foreach from=$perspectives item=persp}
 					<tr>
 						<td class="text">{$persp.name|escape}</td>
 						<td class="action">
-							<a href="tiki-switch_perspective.php?perspective={$persp.perspectiveId|escape:url}">{icon _id=arrow_right alt="{tr}Switch to{/tr}"}</a>
-							{if $persp.can_edit}
-								{self_link _icon=page_edit action=edit _ajax='y' id=$persp.perspectiveId cookietab=3}{tr}Edit{/tr}{/self_link}
-							{/if}
-							{if $persp.can_remove}
-								{self_link action=remove id=$persp.perspectiveId}{icon _id=cross alt="{tr}Delete{/tr}"}{/self_link}
-							{/if}
-							{if $persp.can_perms}
-								{permission_link mode=icon type="perspective" id=$persp.perspectiveId title=$persp.name}
-							{/if}
+							{capture name=perspective_actions}
+								{strip}
+									<a href="tiki-switch_perspective.php?perspective={$persp.perspectiveId|escape:url}">
+										{icon name='move' _menu_text='y' _menu_icon='y' alt="{tr}Switch to{/tr}"}
+									</a>
+									{if $persp.can_perms}
+										{permission_link mode=text type="perspective" id=$persp.perspectiveId title=$persp.name}
+									{/if}
+									{if $persp.can_edit}
+										{self_link _icon_name='edit' action=edit _ajax='y' _menu_text='y' _menu_icon='y' id=$persp.perspectiveId cookietab=3}
+											{tr}Edit{/tr}
+										{/self_link}
+									{/if}
+									{if $persp.can_remove}
+										{self_link action=remove id=$persp.perspectiveId _menu_text='y' _menu_icon='y' _icon_name='remove'}
+											{tr}Delete{/tr}
+										{/self_link}
+									{/if}
+								{/strip}
+							{/capture}
+							<a class="tips"
+							   title="{tr}Actions{/tr}"
+							   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.perspective_actions|escape:"javascript"|escape:"html"}
+							   style="padding:0; margin:0; border:0"
+									>
+								{icon name='wrench'}
+							</a>
 						</td>
 					</tr>
 				{/foreach}
