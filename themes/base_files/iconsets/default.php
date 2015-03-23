@@ -171,7 +171,7 @@ function iconset_default()
 				'id' => 'desktop',
 			),
 			'admin_wysiwyg' => array(
-				'id' => 'align-center',
+				'id' => 'file-text',
 			),
 			'administer' => array(
 				'id' => 'cog',
