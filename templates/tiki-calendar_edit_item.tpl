@@ -741,7 +741,7 @@ $(".end.time select, #end").change(function () {
 				<div class="col-md-9">
 					{if $edit}
 						<a href="#" onclick="flip('calparthelp');return false;">
-							{icon _id='help'}
+							{icon name='help'}
 						</a>
 					{/if}
 					{if isset($calitem.participants)}
