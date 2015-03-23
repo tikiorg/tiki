@@ -77,7 +77,7 @@
 
 {initials_filter_links}
 <div class="table-responsive">
-<table class="table normal">
+<table class="table normal table-striped table-hover">
 	<tr>
 		{assign var=numbercol value=4}
 		<th>
@@ -107,7 +107,7 @@
 		{/if}
 
 		{assign var=numbercol value=$numbercol+1}
-		<th>{tr}Action{/tr}</th>
+		<th></th>
 	</tr>
 
 
@@ -161,14 +161,27 @@
 					{/if}
 
 					<td class="action">
-						{if $channels[user].user eq $user}
-							<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}" title="{tr}Edit{/tr}">
-								{icon _id='page_edit'}
-							</a>
-							<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" style="margin-left:20px;" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
-						{elseif $tiki_p_admin eq 'y'}
-							<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" style="margin-left:36px;" title="{tr}Delete{/tr}">{icon _id='cross_admin' alt="{tr}Delete{/tr}"}</a>
-						{/if}
+						{capture name=contact_actions}
+							{strip}
+								{if $channels[user].user eq $user or $tiki_p_admin eq 'y'}
+									{if $channels[user].user eq $user}
+										<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">
+											{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+										</a>
+									{/if}
+									<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}">
+										{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+									</a>
+								{/if}
+							{/strip}
+						{/capture}
+						<a class="tips"
+						   title="{tr}Actions{/tr}"
+						   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.contact_actions|escape:"javascript"|escape:"html"}
+						   style="padding:0; margin:0; border:0"
+								>
+							{icon name='wrench'}
+						</a>
 					</td>
 				</tr>
 			{/section}
