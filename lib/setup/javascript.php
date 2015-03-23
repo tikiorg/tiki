@@ -18,26 +18,29 @@ if ($prefs['disableJavascript'] == 'y' ) {
 	$prefs['javascript_enabled'] = 'n';
 } elseif (!empty($js_cookie)) {
 	// Update the pref with the cookie value
-	$prefs['javascript_enabled'] = $js_cookie;
+	$prefs['javascript_enabled'] = 'y';
+	setCookieSection('runs_before_js_detect', '', '', time() - 3600);	// remove the test cookie
 } else {
-	$prefs['javascript_enabled'] = 'n';
+	$prefs['javascript_enabled'] = '';
 }
 
 // the first and second time, we should not trust the absence of javascript_enabled cookie yet,
 // as it could be a redirection and the js will not get a chance to run yet, so we wait until the third run,
 // assuming that js is on before then
-$runs_before_js_detect = getCookie('runs_before_js_detect');
+$runs_before_js_detect = getCookie('runs_before_js_detect', '', '0');
 
-if ( $prefs['javascript_enabled'] != 'y' && $prefs['disableJavascript'] != 'y' && empty($runs_before_js_detect)) {
-	// Set the cookie to 'y', through javascript (will override the above cookie set to 'n' and sent by PHP / HTTP headers) - duration: approx. 1 year
+if ( $prefs['javascript_enabled'] === '' && $prefs['disableJavascript'] != 'y' && $runs_before_js_detect < 2) {
+	// Set the cookie to 'y', through javascript - expires: approx. 1 year
 	$prefs['javascript_enabled'] = 'y';											// temporarily enable to we output the test js
 	$headerlib->add_js("setCookieBrowser('javascript_enabled', 'y');", 0);		// setCookieBrowser does not use the tiki_cookie_jar
 
 	if ( empty($runs_before_js_detect) ) {
 		setCookieSection('runs_before_js_detect', '1', '', $tikilib->now + 365 * 24 * 3600);
-	} elseif ( !empty($runs_before_js_detect) ) {
-		$prefs['javascript_enabled'] = 'n';
+	} elseif ( $runs_before_js_detect == 1 ) {
+		setCookieSection('runs_before_js_detect', '2', '', $tikilib->now + 365 * 24 * 3600);
 	}
+} else {
+	$prefs['javascript_enabled'] = 'n';
 }
 
 if ($prefs['javascript_enabled'] == 'n') {
