@@ -334,3 +334,26 @@ table.normal tr:nth-child(2n) {
 .conveneFooter, .conveneHeader {
 	text-align: center;
 }
+
+/* Prevent custom inline style in article tag from breaking the layout */
+article [style]:not(img) {
+	box-sizing: border-box;
+	float: none !important;
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+	max-width: 100%;
+	overflow: auto;
+}
+
+/* Prevent tables other than .normal or .wikitable from breaking the layout by making the table elements to display as block */
+article table:not(.normal):not(.wikitable),
+article table:not(.normal):not(.wikitable) tbody,
+article table:not(.normal):not(.wikitable) tfoot,
+article table:not(.normal):not(.wikitable) thead,
+article table:not(.normal):not(.wikitable) tr,
+article table:not(.normal):not(.wikitable) td,
+article table:not(.normal):not(.wikitable) th
+{
+	display: block;
+}
+
