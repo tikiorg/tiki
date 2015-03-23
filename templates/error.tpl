@@ -79,12 +79,14 @@ close();
 				{remarksbox type='errors' title=$errortitle}
 					{$msg}
 					{if !empty($required_preferences)}
-						{remarksbox type='note' title="{tr}Change them here{/tr}"}
-						<form method="post" action="tiki-admin.php">
+						{remarksbox type='note' title="{tr}Settings{/tr}" close="n"}
+						<form method="post" action="tiki-admin.php" role="form" class="form">
 							{foreach from=$required_preferences item=pref}
 								{preference name=$pref}
 							{/foreach}
-							<input type="submit" class="btn btn-default btn-sm" value="{tr}Set{/tr}">
+							<div class="text-center">
+								<input type="submit" class="btn btn-primary btn-sm" value="{tr}Apply{/tr}">
+							</div>
 						</form>
 						{/remarksbox}
 					{/if}
