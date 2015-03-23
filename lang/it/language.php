@@ -1981,7 +1981,7 @@ $lang = array(
 "Last modified" => "Ultima modifica",
 "Disabled" => "Disabilitato",
 "Link to user information" => "Link to user information",
-"User profile pic"User profile picture"r avatar",
+//"User profile picture" => "User profile picture",
 "Posts" => "Messaggi",
 "Visits" => "Visite",
 "Activity" => "Attivit�",
