@@ -301,6 +301,9 @@
 								{autocomplete element="#menu_url" type='pagename' options="select:function(event,ui){ldelim}ui.item.value='(('+ui.item.value+'))';{rdelim}"}
 								<input id="menu_url" type="text" name="url" value="{$url|escape}" size="34">
 								<br><em>{tr}For wiki page, use ((PageName)).{/tr}</em>
+								{if $prefs.mobile_feature eq 'y' and (empty($optionId) or ($type neq 'o' and $type neq '-'))}
+									<br><em>{tr}N.B. URLs on section items with child items will be removed in mobile mode as they prevent jQuery Mobile menus operating properly.{/tr}</em>
+								{/if}
 							</td>
 						</tr>
 						<tr>

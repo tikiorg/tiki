@@ -752,6 +752,11 @@ class MenuLib extends TikiLib
 			$data = preg_replace('/<ul ([^>]*)>/Umi', '<ul $1 data-role="listview" data-theme="'.$prefs['mobile_theme_menus'].'">', $data, 1);
 			// crude but effective hack for loading menu items via ajax - hopefully to be replaced by something more elegant soon
 			$data = preg_replace('/<a ([^>]*)>/Umi', '<a $1 rel="external">', $data);
+			// remove unnecessary spans
+			$data = strip_tags($data, '<ul><li><ol><a>');
+			// remove links from parent items as these don't work in jqm
+			$data = preg_replace('/(<li.*? menuSection\d [^>]*?>)<a[^>]*>([^<]*)<\/a>(<ul><li)/mi', '$1$2$3', $data);
+
 			return $data;
 		}
 	}
