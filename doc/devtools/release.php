@@ -263,6 +263,18 @@ function write_secdb($file, $root, $version)
 function md5_check_dir($root, $dir, $version, &$queries)
 {
 	$d = dir($dir);
+	$link = mysqli_connect();
+
+	if (mysqli_connect_errno()) {
+		global $phpCommand, $phpCommandArguments;
+		error(
+			"SecDB step failed because some filenames need escaping but no MySQL connection has been found (" . mysqli_connect_error() . ")."
+			. "\nTry this command line instead (replace HOST, USER and PASS by a valid MySQL host, user and password) :"
+			. "\n\n\t" . $phpCommand
+			. " -d mysqli.default_host=HOST -d mysqli.default_user=USER -d mysqli.default_pw=PASS "
+			. $phpCommandArguments . "\n"
+		);
+	}
 	while (false !== ($e = $d->read())) {
 		$entry = $dir . '/' . $e;
 		if (is_dir($entry)) {
@@ -274,17 +286,8 @@ function md5_check_dir($root, $dir, $version, &$queries)
 			if (preg_match('/\.(sql|css|tpl|js|php)$/', $e) && realpath($entry) != __FILE__ && $entry != './db/local.php') {
 				$file = '.' . substr($entry, strlen($root));
 
-				if (! preg_match('/^[a-zA-Z0-9\/ _+.-]+$/', $file)
-					&& (! function_exists('mysql_real_escape_string') || ! ($file = @mysql_real_escape_string($file)))
-				) {
-					global $phpCommand, $phpCommandArguments;
-					error(
-						"SecDB step failed because some filenames need escaping but no MySQL connection has been found."
-						. "\nTry this command line instead (replace HOST, USER and PASS by a valid MySQL host, user and password) :"
-						. "\n\n\t" . $phpCommand
-						. " -d mysql.default_host=HOST -d mysql.default_user=USER -d mysql.default_password=PASS "
-						. $phpCommandArguments . "\n"
-					);
+				if (! preg_match('/^[a-zA-Z0-9\/ _+.-]+$/', $file) ) {
+					$file = @mysqli_real_escape_string($link,$file);
 				}
 
 				$hash = md5_file($entry);
