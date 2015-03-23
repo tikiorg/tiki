@@ -172,7 +172,7 @@ if (! $options['no-check-php'] && important_step("Check syntax of all PHP files"
 
 if (! $options['no-check-smarty'] && important_step("Check syntax of all Smarty templates")) {
 	$error_msg = '';
-	check_smarty_syntax($error_msg) or error($error_msg);
+	check_smarty_syntax($error_msg);
 	info('>> Current Smarty code successfully passed the syntax check.');
 }
 
@@ -391,41 +391,10 @@ function check_smarty_syntax(&$error_msg)
 	require_once 'lib/smarty_tiki/prefilter.log_tpl.php';
 	$smarty = new Smarty_Tiki();
 	set_error_handler('check_smarty_syntax_error_handler');
-	$smarty->smarty->compile_locking = false;
 
-	error_reporting(0);
+	$templates_dir = TIKI_PATH . '/templates';
 
-	$smarty->compileAllTemplates('.tpl', true);
-}
-
-/**
- * @param $error_msg
- * @return bool
- */
-function check_smarty_syntax2(&$error_msg)
-{
-	global $tikidomain, $prefs;
-	$tikidomain = '';
-	$smarty = TikiLib::lib('smarty');
-	// Initialize $prefs with some variables needed by the tra() function and smarty autosave plugin
-	$prefs = array(
-		'lang_use_db' => 'n',
-		'language' => 'en',
-		'site_language' => 'en',
-		'feature_ajax' => 'n'
-	);
-
-	// Load Tiki Smarty
-	require_once 'lib/init/smarty.php';
-	set_error_handler('check_smarty_syntax_error_handler');
-
-	$templates_dir = $smarty->template_dir;
-	$templates_dir_length = strlen($templates_dir);
-	if ($templates_dir_length > 1 && $templates_dir{$templates_dir_length - 1} == '/') {
-		$templates_dir = substr($templates_dir, 0, --$templates_dir_length);
-	}
-	$temp_compile_file = TEMP_DIR . 'smarty_compiled_content';
-
+	$errors_found = false;
 	$entries = array();
 	get_files_list($templates_dir, $entries, '/\.tpl$/');
 
@@ -433,48 +402,28 @@ function check_smarty_syntax2(&$error_msg)
 	for ($i = 0; $i < $nbEntries; $i++) {
 		display_progress_percentage($i, $nbEntries, '%d%% of files passed the Smarty syntax check');
 
-		//		try {
 		if (strpos($entries[$i], 'tiki-mods.tpl') === false) {
-			ob_start();
-			$template_file = substr($entries[$i], $templates_dir_length + 1);
-			$smarty->_compile_resource($template_file, $temp_compile_file);
-			$compilation_output = ob_get_clean();
 
-			unlink($temp_compile_file);
-		}
-		//		} catch (Exception $e) {
-		//			$msg = $e->getMessage();
-		//			if (0 or strpos($msg, 'tiki-mods.tpl') !== false && strpos($msg, 'revision_compare') !== false) {
-		//				print(color("\nNote: ignoring error in tiki-mods.tpl:\n        $msg", 'yellow'));
-		//			} else {
-		//				$compilation_output = "\n*** " . $e->getMessage();
-		//			}
-		//		}
+			$template_file = substr($entries[$i], strlen($templates_dir) + 1);
 
-		/* This is most odd (jonnyb aug 2010 tiki 5.1)
-		 *
-		 * There is an "error" in tiki-mods.tpl that causes an error that the existing code (pre r28273) couldn't trap
-		 * I added an Exception which works fine in the debugger but dies in the commend line (unless you supply all
-		 * the "skip" params --no-check-php --no-check-php-warnings etc), when it works as expected.
-		 *
-		 * Nasty fix now by not checking that file
-		 * Better fix (or TODO KIL mods) required so leaving commented code behond - excuse the mess ;)
-		 */
+			try {
+				$_tpl = $smarty->createTemplate($template_file, null, null, null, false);
+				$_tpl->compileTemplateSource();
+			} catch (Exception $e) {
+				echo color("\nError: " . $e->getMessage(), 'red') . "\n";
+				$errors_found = true;
+			}
 
-		if (! empty($compilation_output)) {
-			$error_msg = "\nError while compiling {$entries[$i]}."
-				. "\nThis may happen if one of the tiki smarty plugins (located in lib/smarty_tiki)"
-				. " used in the template outputs something when loaded (using php include)."
-				. "\nFor example, a white space after the PHP closing TAG of a smarty plugin can cause this.\n"
-				. trim($compilation_output);
-			return false;
 		}
 	}
 	restore_error_handler();
 
+	if ($errors_found) {
+		die('Fix the Smarty errors and try again please.');
+	}
 	echo "\n";
-	return true;
 }
+
 
 /**
  * @param $errno
