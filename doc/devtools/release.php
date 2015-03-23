@@ -329,7 +329,7 @@ function get_files_list($dir, &$entries, $regexp_pattern)
 		$entry = $dir . '/' . $e;
 		if (is_dir($entry)) {
 			// do not descend and no CVS/Subversion files
-			if ($e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry != './templates_c') {
+			if ($e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry != './templates_c' && $entry != './vendor') {
 				if (! get_files_list($entry, $entries, $regexp_pattern)) {
 					return false;
 				}
