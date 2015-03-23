@@ -54,7 +54,7 @@
 			{/capture}
 			{$smarty.capture.notices}
 			<hr>
-			<h2>{if $objectType eq 'global'}{tr}Assign global permissions{/tr}{elseif $objectType eq 'category'}{tr}Assign permissions to this category{/tr}{else}{tr}Assign permissions to this object{/tr}{/if} {icon _id="img/loading-light.gif" id="perms_busy" style="vertical-align:top; display:none;"}</h2>
+			<h2>{if $objectType eq 'global'}{tr}Assign global permissions{/tr}{elseif $objectType eq 'category'}{tr}Assign permissions to this category{/tr}{else}{tr}Assign permissions to this object{/tr}{/if} {icon name="cog" id="perms_busy" style="vertical-align:top; display:none;"}</h2>
 
 			<div>
 				<input type="hidden" name="referer" value="{$referer|escape}">

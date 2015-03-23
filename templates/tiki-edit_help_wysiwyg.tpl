@@ -7,16 +7,16 @@
 {if $prefs.feature_help eq 'y'}
 <p>{tr}For more information, please see{/tr}
 	<a href="{$prefs.helpurl}Wysiwyg+Editor" target="tikihelp" class="tikihelp" title="{tr}Wysiwyg Editor:{/tr} {tr}More help on wysiwyg editing{/tr}">
-		{tr}Wysiwyg Editor{/tr} {icon _id='help' style="vertical-align:middle"}
+		{tr}Wysiwyg Editor{/tr} {icon name='help' style="vertical-align:middle"}
 	</a>
 </p>
 {/if}
 
 <hr>
 <p>
-	{icon _id="star"} {tr}The WYSIWYG editor in Tiki is <a href="http://ckeditor.com">CKEditor</a>{/tr}</p>
+	{icon name="star"} {tr}The WYSIWYG editor in Tiki is <a href="http://ckeditor.com">CKEditor</a>{/tr}</p>
 <p>
-	{tr}To switch modes between WYSIWYG and Wiki edit modes click the {icon _id="pencil_go"} button on the toolbar.{/tr}</p>
+	{tr}To switch modes between WYSIWYG and Wiki edit modes click the {icon name="pencil_go"} button on the toolbar.{/tr}</p>
 <p style="margin-left: 2em; ">
 {if $prefs.wysiwyg_htmltowiki ne 'y'}
 	{tr}<strong>N.B. </strong>Using this button converts the page source from wiki to HTML, or vice versa.
@@ -27,12 +27,12 @@
 		{tr}<strong>N.B. </strong>Using this button changes the editor between WYSIWYG and the usual wiki editor, but leaves the page source in wiki syntax.{/tr}</p>
 	{/if}
 <p>
-	{icon _id="plugin"} {tr}Wiki plugins can be used and edited in WYSIWYG mode, double click the plugin to bring up the plugin edit popup form.<br>
+	{icon name="plugin"} {tr}Wiki plugins can be used and edited in WYSIWYG mode, double click the plugin to bring up the plugin edit popup form.<br>
 	Here is an example of the {ldelim}BOX{rdelim} plugin:{/tr}</p>
 <div style="background-color: #fff; padding: 1em;">
 	<div class="tiki_plugin" plugin="box" style="position:relative; background-color: #eee; border: 1px solid #666;">
 		<div contenteditable="false">
-			<img src="img/icons/wiki_plugin_edit.png" width="16" height="16" style="float:left;position:absolute;z-index:10001">
+			<span style="float:left;position:absolute;z-index:10001">{icon name'edit'}</span>
 			<table align="center" width="80%">
 				<tr><td>
 					<div class='cbox ' style=' background:#fffff0'><div class='cbox-data' style=" background:#fffff0">
@@ -44,7 +44,7 @@
 	</div>
 </div>
 <p style="margin-left: 2em;">
-	{icon _id="error"} {tr}<strong>Caution:</strong> There are still limitations regarding use of plugins in the WYSIWYG editor.<br>
+	{icon name="error"} {tr}<strong>Caution:</strong> There are still limitations regarding use of plugins in the WYSIWYG editor.<br>
 	If you intend to use plugins extensively in a page consider editing that page in wiki mode only.<br>
 	Currently, cutting and pasting, or drag and drop of plugins in WYSIWYG will cause problems. Use source mode or the plain wiki editor if you need to move plugins around.{/tr}</p>
 

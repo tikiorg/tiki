@@ -31,7 +31,7 @@
 		</tr>
 		<tr>
 			<td>
-				<strong>{tr}Notification Email{/tr}&nbsp;<a href="tiki-admin_notifications.php" title="{tr}Admin notifications{/tr}"></strong>{icon _id='wrench' alt="{tr}Admin notifications{/tr}"}</a>
+				<strong>{tr}Notification Email{/tr}&nbsp;<a href="tiki-admin_notifications.php" title="{tr}Admin notifications{/tr}"></strong>{icon name='wrench' alt="{tr}Admin notifications{/tr}"}</a>
 			</td>
 			<td>
 				<input type="text" name="email" class="form-control" value="{$email|escape}" placeholder="{tr}Enter email addresses {/tr}">

@@ -8,7 +8,7 @@
 		<th width="100"><a href="tiki-list_kaltura_entries.php?list={$entryType}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq '-created_at'}asc_createdAt{else}desc_createdAt{/if}">{tr}Created{/tr}</a></th>
 		<th>{tr}Added by{/tr}</th>
 		<th>{tr}Tags{/tr}</th>
-		<th width="50"><a href='#'{popup trigger="onclick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.other_sorts|escape:"javascript"|escape:"html"} title="{tr}Other Sorts{/tr}">{icon _id='timeline_marker' alt="{tr}Other Sorts{/tr}"}</a></th>
+		<th width="50"><a href='#'{popup trigger="onclick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.other_sorts|escape:"javascript"|escape:"html"} title="{tr}Other Sorts{/tr}">{icon name='list' alt="{tr}Other Sorts{/tr}"}</a></th>
 	</tr>
 	{foreach from=$klist key=key item=item}
 		{if $item->id ne ''}
@@ -21,7 +21,7 @@
 		<td class="text">{$item->userId}</td>
 		<td class="text">{$item->tags}</td>
 			{include file='tiki-list_kaltura_entries_add_info.tpl'}
-		<td class="text"><a href="#" title="{tr}Information{/tr}" {popup trigger="onmouseover" fullhtml="1" sticky=true text=$smarty.capture.add_info|escape:"javascript"|escape:"html" left=true}>{icon _id='information' class='' title='{tr}More Information{/tr}'}</a><a href="#" title="{tr}Actions{/tr}" {popup trigger="onclick" sticky=1 fullhtml="1" text=$smarty.capture.actions|escape:"javascript"|escape:"html"}>{icon _id='wrench' class='' title='{tr}Actions{/tr}'}</a></td>
+		<td class="text"><a href="#" title="{tr}Information{/tr}" {popup trigger="onmouseover" fullhtml="1" sticky=true text=$smarty.capture.add_info|escape:"javascript"|escape:"html" left=true}>{icon name='information' class='' title='{tr}More Information{/tr}'}</a><a href="#" title="{tr}Actions{/tr}" {popup trigger="onclick" sticky=1 fullhtml="1" text=$smarty.capture.actions|escape:"javascript"|escape:"html"}>{icon name='wrench' class='' title='{tr}Actions{/tr}'}</a></td>
 	</tr>
 		{/if}
 	{/foreach}
