@@ -17,7 +17,7 @@
 	{include file='find.tpl'}
 	<form action="tiki-notepad_list.php" method="post">
 		<div class="table-responsive">
-			<table class="table normal">
+			<table class="table normal table-striped table-hover">
 				<tr>
 					<th style="text-align:center;">
 						<input type="submit" class="btn btn-default btn-sm" name="delete" value="{tr}x{/tr} ">
@@ -37,7 +37,7 @@
 					<th style="text-align:right;">
 						<a href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}Size{/tr}</a>
 					</th>
-					<th style="text-align:center;">{tr}Actions{/tr}</th>
+					<th></th>
 				</tr>
 
 				{section name=user loop=$channels}
@@ -53,10 +53,29 @@
 						<td class="date">{$channels[user].lastModif|tiki_short_datetime}</td>
 						<td class="integer">{$channels[user].size|kbsize}</td>
 						<td class="action">
-							<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}" class="link">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
-							<a href="tiki-notepad_write.php?noteId={$channels[user].noteId}" class="link">{icon _id='page_edit'}</a>
-							<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}&amp;save=1" class="link">{icon _id='disk' alt="{tr}Save{/tr}"}</a>
-							<a style="margin-left:10px;" class="link" href="tiki-notepad_read.php?noteId={$channels[user].noteId}&amp;remove=1">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+							{capture name=notepad_actions}
+								{strip}
+									<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}">
+										{icon name='view' _menu_text='y' _menu_icon='y' alt="{tr}View{/tr}"}
+									</a>
+									<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}&amp;save=1">
+										{icon name='floppy' _menu_text='y' _menu_icon='y' alt="{tr}Save{/tr}"}
+									</a>
+									<a href="tiki-notepad_write.php?noteId={$channels[user].noteId}">
+										{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+									</a>
+									<a href="tiki-notepad_read.php?noteId={$channels[user].noteId}&amp;remove=1">
+										{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+									</a>
+								{/strip}
+							{/capture}
+							<a class="tips"
+							   title="{tr}Actions{/tr}"
+							   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.notepad_actions|escape:"javascript"|escape:"html"}
+							   style="padding:0; margin:0; border:0"
+									>
+								{icon name='wrench'}
+							</a>
 						</td>
 					</tr>
 				{sectionelse}

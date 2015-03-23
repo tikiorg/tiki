@@ -86,10 +86,10 @@
 	{/if}
 
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table normal table-striped table-hover">
 			<tr>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Newsletter{/tr}{/self_link}</th>
-				<th style="width:100px">{tr}Action{/tr}</th>
+				<th style="width:100px"></th>
 			</tr>
 
 			{section name=user loop=$channels}
@@ -100,19 +100,37 @@
 							<div class="subcomment">{$channels[user].description|escape|nl2br}</div>
 						</td>
 						<td class="action">
-							{if $channels[user].tiki_p_subscribe_newsletters eq 'y'}
-								<a class="link" href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1" title="{tr}Subscribe to Newsletter{/tr}">{icon _id='newspaper_add' alt="{tr}Subscribe to Newsletter{/tr}"}</a>
-							{/if}
-							{if $channels[user].tiki_p_send_newsletters eq 'y'}
-								<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}" title="{tr}Send Newsletter{/tr}">{icon _id='email' alt="{tr}Send Newsletter{/tr}"}</a>
-							{/if}
-							{if $tiki_p_view_newsletter eq 'y'}
-								<a class="link" href="tiki-newsletter_archives.php?nlId={$channels[user].nlId}" title="{tr}Archives{/tr}">{icon _id='database' alt="{tr}Archives{/tr}"}</a>
-							{/if}
-							{if $channels[user].tiki_p_admin_newsletters eq 'y'}
-								<a class="link" href="tiki-admin_newsletters.php?nlId={$channels[user].nlId}&amp;cookietab=2#anchor2"
-								title="{tr}Admin{/tr}">{icon _id='wrench' alt="{tr}Admin{/tr}"}</a>
-							{/if}
+							{capture name=newsletter_actions}
+								{strip}
+									{if $channels[user].tiki_p_subscribe_newsletters eq 'y'}
+										<a href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1">
+											{icon name='add' _menu_text='y' _menu_icon='y' alt="{tr}Subscribe{/tr}"}
+										</a>
+									{/if}
+									{if $channels[user].tiki_p_send_newsletters eq 'y'}
+										<a href="tiki-send_newsletters.php?nlId={$channels[user].nlId}"">
+											{icon name='envelope' _menu_text='y' _menu_icon='y' alt="{tr}Send{/tr}"}
+										</a>
+									{/if}
+									{if $tiki_p_view_newsletter eq 'y'}
+										<a href="tiki-newsletter_archives.php?nlId={$channels[user].nlId}">
+											{icon name='file-archive'_menu_text='y' _menu_icon='y' alt="{tr}Archives{/tr}"}
+										</a>
+									{/if}
+									{if $channels[user].tiki_p_admin_newsletters eq 'y'}
+										<a href="tiki-admin_newsletters.php?nlId={$channels[user].nlId}&amp;cookietab=2#anchor2">
+											{icon name='cog' _menu_text='y' _menu_icon='y' alt="{tr}Admin{/tr}"}
+										</a>
+									{/if}
+								{/strip}
+							{/capture}
+							<a class="tips"
+							   title="{tr}Actions{/tr}"
+							   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.newsletter_actions|escape:"javascript"|escape:"html"}
+							   style="padding:0; margin:0; border:0"
+									>
+								{icon name='wrench'}
+							</a>
 						</td>
 					</tr>
 				{/if}
