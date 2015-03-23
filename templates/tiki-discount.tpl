@@ -12,14 +12,14 @@
 
 {tab name="{tr}List{/tr}"}
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table normaltable-striped table-hover">
 			<tr>
 				<th>{tr}Code{/tr}</th>
 				<th>{tr}Value{/tr}</th>
 				<th>{tr}Created{/tr}</th>
 				<th>{tr}Max{/tr}</th>
 				<th>{tr}Comment{/tr}</th>
-				<th>{tr}Actions{/tr}</th>
+				<th></th>
 			</tr>
 
 			{foreach from=$discounts.data item=discount}
@@ -30,8 +30,23 @@
 					<td class="integer">{$discount.max|escape}</td>
 					<td class="text">{$discount.comment|escape}</td>
 					<td class="action">
-						{self_link id=$discount.id cookietab=2}{icon _id=page_edit class=tips title="{tr}Edit{/tr}" alt="{tr}Edit{/tr}"}{/self_link}
-						{self_link del=$discount.id}{icon _id=cross class=tips title="{tr}Delete{/tr}" alt="{tr}Delete{/tr}"}{/self_link}
+						{capture name=discount_actions}
+							{strip}
+								{self_link id=$discount.id cookietab=2 _icon_name='edit' _menu_text='y' _menu_icon='y'}
+									{tr}Edit{/tr}
+								{/self_link}
+								{self_link del=$discount.id _icon_name='edit' _menu_text='y' _menu_icon='y'}
+									{tr}Delete{/tr}
+								{/self_link}
+							{/strip}
+						{/capture}
+						<a class="tips"
+						   title="{tr}Actions{/tr}"
+						   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.discount_actions|escape:"javascript"|escape:"html"}
+						   style="padding:0; margin:0; border:0"
+								>
+							{icon name='wrench'}
+						</a>
 					</td>
 				</tr>
 			{foreachelse}
