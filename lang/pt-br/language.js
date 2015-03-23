@@ -26,5 +26,5 @@ lang = {
 	"Do not match" : "Diferente",
 	"Advanced options" : "Opções avançadas",
 	"Pick a file." : "Escolha um arquivo",
-	"You appear to be using HTML in your article but have not selected \"Allow full HTML\".\nThis will result in HTML tags being removed.\nDo you want to save your edits anyway?" : "Aparentemente você está usando HTML mas não seleciounou o checkbox \"Usar HTML\".\n Isso significa que as tags HTML serão removidas.\nVocê quer continuar mesmo assim?",
+	"You appear to be using HTML in your article but have not selected \"Allow full HTML\".\nThis will result in HTML tags being removed.\nDo you want to save your edits anyway?" : "Aparentemente você está usando HTML mas não seleciounou o checkbox \"Usar HTML\".\n Isso significa que as tags HTML serão removidas.\nVocê quer continuar mesmo assim?"
 };
