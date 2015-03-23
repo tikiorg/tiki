@@ -356,14 +356,17 @@ function display_progress_percentage($alreadyDone, $toDo, $message)
 	}
 }
 
+function zone_is_empty() {
+	// dummy function to keep smarty happy
+}
+
 /**
  * @param $error_msg
  */
 function check_smarty_syntax(&$error_msg)
 {
-	global $tikidomain, $prefs;
+	global $tikidomain, $prefs, $smarty;
 	$tikidomain = '';
-	$smarty = TikiLib::lib('smarty');
 	// Initialize $prefs with some variables needed by the tra() function and smarty autosave plugin
 	$prefs = array(
 		'lang_use_db' => 'n',
@@ -378,9 +381,19 @@ function check_smarty_syntax(&$error_msg)
 	$prefs['maxRecords'] = 25;
 	$prefs['log_tpl'] = 'y';
 	$prefs['feature_sefurl_filter'] = 'y';
-	require_once 'vendor/smarty/smarty/distribution/libs/Smarty.class.php';
+	require_once 'vendor/smarty/smarty/libs/Smarty.class.php';
 	require_once 'lib/init/smarty.php';
+	// needed in Smarty_Tiki
+	define('TIKI_PATH', getcwd());
+	require_once 'lib/core/TikiAddons.php';
+	require_once 'lib/smarty_tiki/prefilter.tr.php';
+	require_once 'lib/smarty_tiki/prefilter.jq.php';
+	require_once 'lib/smarty_tiki/prefilter.log_tpl.php';
+	$smarty = new Smarty_Tiki();
 	set_error_handler('check_smarty_syntax_error_handler');
+	$smarty->smarty->compile_locking = false;
+
+	error_reporting(0);
 
 	$smarty->compileAllTemplates('.tpl', true);
 }
@@ -472,8 +485,9 @@ function check_smarty_syntax2(&$error_msg)
  */
 function check_smarty_syntax_error_handler($errno, $errstr, $errfile = '', $errline = 0, $errcontext = array())
 {
-	//	throw new Exception($errstr);
-	error($errstr);
+	if (strpos($errstr, 'filemtime(): stat failed for') === false) {	// smarty seems to emit these for every file
+		echo "\n" . color($errstr, 'red') . "\n";
+	}
 }
 
 /**
