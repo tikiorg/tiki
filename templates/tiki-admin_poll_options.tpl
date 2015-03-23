@@ -67,9 +67,9 @@
 						{/strip}
 					{/capture}
 					<a class="tips"
-					   title="{tr}Actions{/tr}"
-					   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.poll_actions|escape:"javascript"|escape:"html"}
-					   style="padding:0; margin:0; border:0"
+						title="{tr}Actions{/tr}"
+						href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.poll_actions|escape:"javascript"|escape:"html"}
+						style="padding:0; margin:0; border:0"
 							>
 						{icon name='wrench'}
 					</a>

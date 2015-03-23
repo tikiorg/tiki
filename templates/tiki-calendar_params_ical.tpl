@@ -30,7 +30,7 @@
 						<tr>
 							<td style="border:0;padding-top:2px;vertical-align:middle">
 								{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
-									<a href="#" onclick="document.f.tstart.selectedIndex=(document.f.tstart.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a>
+									<a href="#" onclick="document.f.tstart.selectedIndex=(document.f.tstart.selectedIndex+1);">{icon name='add' align='left'}</a>
 								{/if}
 							</td>
 							<td style="border:0;padding-top:2px;vertical-align:middle">
@@ -51,7 +51,7 @@
 						<tr>
 							<td style="border:0;padding-top:2px;vertical-align:middle">
 								{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
-									<a href="#" onclick="document.f.tstop.selectedIndex=(document.f.tstop.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a>
+									<a href="#" onclick="document.f.tstop.selectedIndex=(document.f.tstop.selectedIndex+1);">{icon name='add' align='left'}</a>
 								{/if}
 							</td>
 							<td style="border:0;padding-top:2px;vertical-align:middle">

@@ -31,7 +31,9 @@
 			{foreach from=$user_info.groups item=what key=grp name=groups}
 				{if $what eq 'included'}<i>{/if}{$grp|escape}{if $what eq 'included'}</i>{/if}
 				{if $grp != "Anonymous" && $grp != "Registered" and $what neq 'included'}
-					<a class="link" href="tiki-assignuser.php?{if $offset}offset={$offset}&amp;{/if}maxRecords={$prefs.maxRecords}&amp;sort_mode={$sort_mode}{if $assign_user}&amp;assign_user={$assign_user|escape:url}{/if}&amp;action=removegroup&amp;group={$grp|escape:url}" title="Remove">{icon _id='cross' alt="{tr}Remove{/tr}" style="vertical-align:middle"}</a>
+					<a class="tips" href="tiki-assignuser.php?{if $offset}offset={$offset}&amp;{/if}maxRecords={$prefs.maxRecords}&amp;sort_mode={$sort_mode}{if $assign_user}&amp;assign_user={$assign_user|escape:url}{/if}&amp;action=removegroup&amp;group={$grp|escape:url}" title=":{tr}Remove{/tr}">
+						{icon name='remove' style="vertical-align:middle"}
+					</a>
 				{/if}{if !$smarty.foreach.groups.last},{/if}&nbsp;&nbsp;
 			{/foreach}
 		</td>
@@ -62,12 +64,12 @@
 
 <form method="post" action="tiki-assignuser.php{if $assign_user}?assign_user={$assign_user|escape:'url'}{/if}">
 <div class="table-responsive">
-<table class="table normal">
+<table class="table normal table-striped table-hover">
 	<tr>
 		<th><a href="tiki-assignuser.php?{if $assign_user}assign_user={$assign_user|escape:url}&amp;{/if}offset={$offset}&amp;maxRecords={$prefs.maxRecords}&amp;sort_mode={if $sort_mode eq 'groupName_desc'}groupName_asc{else}groupName_desc{/if}">{tr}Name{/tr}</a></th>
 		<th><a href="tiki-assignuser.php?{if $assign_user}assign_user={$assign_user|escape:url}&amp;{/if}offset={$offset}&amp;maxRecords={$prefs.maxRecords}&amp;sort_mode={if $sort_mode eq 'groupDesc_desc'}groupDesc_asc{else}groupDesc_desc{/if}">{tr}Description{/tr}</a></th>
 		<th>{tr}Expiration{/tr}</th>
-		<th>{tr}Action{/tr}</th>
+		<th></th>
 	</tr>
 
 	{section name=user loop=$users}
@@ -89,11 +91,26 @@
 
 				{/if}</td>
 				<td class="action">
-					{if $users[user].what ne 'real'}
-						<a class="link" href="tiki-assignuser.php?{if $offset}offset={$offset}&amp;{/if}maxRecords={$prefs.maxRecords}&amp;sort_mode={$sort_mode}&amp;action=assign&amp;group={$users[user].groupName|escape:url}{if $assign_user}&amp;assign_user={$assign_user|escape:url}{/if}" title="{tr}Assign User to Group{/tr}">{icon _id='add' alt="{tr}Assign{/tr}"}</a>
-					{elseif $users[user].groupName ne "Registered"}
-						<a class="link" href="tiki-assignuser.php?{if $offset}offset={$offset}&amp;{/if}maxRecords={$prefs.maxRecords}&amp;sort_mode={$sort_mode}{if $assign_user}&amp;assign_user={$assign_user|escape:url}{/if}&amp;action=removegroup&amp;group={$users[user].groupName|escape:url}" title="unassign">{icon _id='cross' alt="{tr}Unassign{/tr}"}</a>
-					{/if}
+					{capture name=assign_user_actions}
+						{strip}
+							{if $users[user].what ne 'real'}
+								<a href="tiki-assignuser.php?{if $offset}offset={$offset}&amp;{/if}maxRecords={$prefs.maxRecords}&amp;sort_mode={$sort_mode}&amp;action=assign&amp;group={$users[user].groupName|escape:url}{if $assign_user}&amp;assign_user={$assign_user|escape:url}{/if}">
+									{icon name='add' _menu_text='y' _menu_icon='y' alt="{tr}Assign{/tr}"}
+								</a>
+							{elseif $users[user].groupName ne "Registered"}
+								<a href="tiki-assignuser.php?{if $offset}offset={$offset}&amp;{/if}maxRecords={$prefs.maxRecords}&amp;sort_mode={$sort_mode}{if $assign_user}&amp;assign_user={$assign_user|escape:url}{/if}&amp;action=removegroup&amp;group={$users[user].groupName|escape:url}">
+									{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Unassign{/tr}"}
+								</a>
+							{/if}
+						{/strip}
+					{/capture}
+					<a class="tips"
+					   title="{tr}Actions{/tr}"
+					   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.assign_user_actions|escape:"javascript"|escape:"html"}
+					   style="padding:0; margin:0; border:0"
+							>
+						{icon name='wrench'}
+					</a>
 				</td>
 			</tr>
 		{/if}

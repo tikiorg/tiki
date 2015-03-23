@@ -30,8 +30,8 @@
 						{/if}
 						{* add additional check to NOT show add event icon if no calendar displayed *}
 						{if $tiki_p_add_events eq 'y' and count($listcals) > 0 and $displayedcals|@count > 0}
-							<a href="tiki-calendar_edit_item.php?todate={$viewWeekDays[dn]}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}">
-								{icon _id='calendar_add' alt="{tr}Add Event{/tr}"}
+							<a class="tips" title=":{tr}Add Event{/tr}" href="tiki-calendar_edit_item.php?todate={$viewWeekDays[dn]}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}">
+								{icon name='add'}
 							</a>
 						{/if}
 					</td>

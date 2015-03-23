@@ -12,9 +12,9 @@
 	{title}{tr}Browsing Image:{/tr} {$name}{/title}
 <div id="{$rootid}browse_image">
 	<div class="t_navbar">
-		{button href="tiki-browse_gallery.php?galleryId=$galleryId&amp;offset=$offset" class="btn btn-default" _text="{tr}Return to Gallery{/tr}"}
+		{button href="tiki-browse_gallery.php?galleryId=$galleryId&amp;offset=$offset" class="btn btn-default" _icon_name="previous" _text="{tr}Return to Gallery{/tr}"}
 		{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
-			{button href="tiki-edit_image.php?galleryId=$galleryId&amp;edit=$imageId&amp;sort_mode=$sort_mode" class="btn btn-default" _text="{tr}Edit Image{/tr}"}
+			{button href="tiki-edit_image.php?galleryId=$galleryId&amp;edit=$imageId&amp;sort_mode=$sort_mode" class="btn btn-default" _icon_name="edit" _text="{tr}Edit Image{/tr}"}
 		{/if}
 	</div>
 {/if}
@@ -25,52 +25,76 @@
 	<div align="center" class="noslideshow">
 
 {* --- first image --- *}
-		<a href="{$url_base}{$firstId}{$same_scale}" class="gallink"{if $imageId eq $firstId} style="display: none;"{/if}>{icon _id='resultset_first' alt="{tr}First Image{/tr}"}</a>
+		<a class="tips" title=":{tr}First{/tr}" href="{$url_base}{$firstId}{$same_scale}" {if $imageId eq $firstId} style="display: none;"{/if}>
+			{icon name='backward_step'}
+		</a>
 
 {* --- previous image --- *}
-		<a href="{$url_base}{$previmg}{$same_scale}" class="gallink" style="padding-right:6px;{if !$previmg} display: none;{/if}">{icon _id='resultset_previous' alt="{tr}Prev Image{/tr}"}</a>
+		<a class="tips" title=":{tr}Previous{/tr}" href="{$url_base}{$previmg}{$same_scale}" style="padding-right:6px;{if !$previmg} display: none;{/if}">
+			{icon name='backward'}
+		</a>
 
 {* --- previous scale --- *}
 		{if $scaleinfo.prevscale}
-			<a href="{$url_base}{$imageId}&amp;scalesize={$scaleinfo.prevscale}" class="gallink">{html_image file='img/icons/zoom-.gif' border='none' alt="{tr}Smaller{/tr}" title="{tr}Smaller{/tr}"}</a>
+			<a class="tips" title=":{tr}Smaller{/tr}"  href="{$url_base}{$imageId}&amp;scalesize={$scaleinfo.prevscale}">
+				{icon name='view'}
+			</a>
 		{/if}
 
 {* --- original size --- *}
 		{if $resultscale}
-			<a href="{$url_base}{$imageId}&amp;scalesize=0" class="gallink">{html_image file='img/icons/zoom_equal.gif' border='none' alt="{tr}Original Size{/tr}" title="{tr}Original Size{/tr}"}</a>
+			<a class="tips" title=":{tr}Original size{/tr}" href="{$url_base}{$imageId}&amp;scalesize=0">
+				{icon name='image'}
+			</a>
 		{/if}
 
 {* --- next scale --- *}
 		{if $scaleinfo.nextscale}
-			<a href="{$url_base}{$imageId}&amp;scalesize={$scaleinfo.nextscale}" class="gallink">{html_image file='img/icons/zoom+.gif' border='none' alt="{tr}Bigger{/tr}" title="{tr}Bigger{/tr}"}</a>
+			<a class="tips" title=":{tr}Bigger{/tr}" href="{$url_base}{$imageId}&amp;scalesize={$scaleinfo.nextscale}">
+				{icon name='view'}
+			</a>
 		{/if}
 
 {* --- popup launch --- *}
 		{if !$popup}
-			<a {jspopup height="$winy" width="$winx" href="$url_base$imageId&amp;popup=1&amp;scalesize=$defaultscale"} class="gallink">{icon _id='layers' alt="{tr}Popup window{/tr}"}</a>
+			<a {jspopup height="$winy" width="$winx" href="$url_base$imageId&amp;popup=1&amp;scalesize=$defaultscale"} class="tips" title=":{tr}Popup{/tr}" >
+				{icon name='popup'}
+			</a>
 		{/if}
 
 {* --- next image --- *}
-		<a href="{$url_base}{$nextimg}{$same_scale}" class="gallink" style="padding-left:6px;{if !$nextimg} display: none;{/if}">{icon _id='resultset_next' alt="{tr}Next Image{/tr}"}</a>
+		<a class="tips" title=":{tr}Next{/tr}" href="{$url_base}{$nextimg}{$same_scale}" style="padding-left:6px;{if !$nextimg} display: none;{/if}">
+			{icon name='forward'}
+		</a>
 
 {* --- launch slideshow --- *}
 		{if $listImgId}
-			<a href="javascript:thepix.toggle('start')">{html_image file='img/icons/cycle_next.gif' border='none' alt="{tr}Slideshow Forward{/tr}" title="{tr}Slideshow Forward{/tr}"}</a>
+			<a class="tips" title=":{tr}Slideshow forward{/tr}" href="javascript:thepix.toggle('start')">
+				{icon name='next'}
+			</a>
 		{/if}
 
 {* --- last image --- *}
-		<a href="{$url_base}{$lastId}{$same_scale}" class="gallink"{if $imageId eq $lastId} style="display: none;"{/if}>{icon _id='resultset_last' alt="{tr}Last Image{/tr}"}</a>
+		<a class="tips" title=":{tr}Last{/tr}" href="{$url_base}{$lastId}{$same_scale}" class="gallink"{if $imageId eq $lastId} style="display: none;"{/if}>
+			{icon name='forward_step' alt="{tr}Last{/tr}"}
+		</a>
 	</div>
 
 {***** when sliding buttons *****}
 	<div class="slideshow" style="display: none;" align="center">
 
 {* --- stop --- *}
-		<a href="javascript:thepix.toggle('stop')">{html_image file='img/icons/admin_delete.gif' border='none' alt="{tr}Stop{/tr}" title="{tr}Stop{/tr}"}</a>
+		<a class="tips" title=":{tr}Stop{/tr}" href="javascript:thepix.toggle('stop')">
+			{icon name='stop'}
+		</a>
 {* --- toggle cyclic --- *}
-		<a href="javascript:thepix.toggle('toTheEnd')">{html_image file='img/icons/ico_redo.gif' border='none' alt="{tr}Cyclic{/tr}" title="{tr}Cyclic{/tr}"}</a>
+		<a class="tips" title=":{tr}Repeat{/tr}" href="javascript:thepix.toggle('toTheEnd')">
+			{icon name='redo'}
+		</a>
 {* --- toggle back/forward --- *}
-		<a href="javascript:thepix.toggle('backward')">{html_image file='img/icons/ico_mode.gif' border='none' alt="{tr}Direction{/tr}" title="{tr}Direction{/tr}"}</a>
+		<a class="tips" title=":{tr}Direction{/tr}" href="javascript:thepix.toggle('backward')">
+			{icon name='move'}
+		</a>
 	</div>
 {/capture}
 {$smarty.capture.buttons}

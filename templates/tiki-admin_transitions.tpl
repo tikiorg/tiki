@@ -235,7 +235,9 @@
 										</ul>
 									</td>
 									<td>
-										{self_link transitionId=$selected_transition.transitionId action=removeguard guard=$key cookietab=4}{icon _id=cross}{/self_link}
+										{self_link transitionId=$selected_transition.transitionId action=removeguard guard=$key cookietab=4}
+											{icon name='remove'}
+										{/self_link}
 									</td>
 								</tr>
 							{foreachelse}

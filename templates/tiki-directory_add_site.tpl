@@ -3,14 +3,14 @@
 {include file='tiki-directory_bar.tpl'}
 
 {if $categs[0] eq ''}
-	{icon _id=exclamation style="vertical-align:middle" alt="{tr}Error{/tr}"} {tr}You cannot add sites until Directory Categories are setup.{/tr} <br>
+	{icon name='error' style="vertical-align:middle" alt="{tr}Error{/tr}"} {tr}You cannot add sites until Directory Categories are setup.{/tr} <br>
 	{if $tiki_p_admin_directory_cats ne 'y'}
 		{tr}Please contact the Site Administrator{/tr}{else}{tr}<a href="tiki-directory_admin_categories.php">Add a directory category now</a>.{/tr}
 	{/if}
 {else}
 	{if $save eq 'y'}
 		<h2>{tr}Site added{/tr}</h2>
-		{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle" align="left"} {tr}The following site was added, but may require validation by the admin before appearing on the lists.{/tr}
+		{icon name='ok' alt="{tr}OK{/tr}" style="vertical-align:middle" align="left"} {tr}The following site was added, but may require validation by the admin before appearing on the lists.{/tr}
 		<table class="formcolor">
 			<tr>
 				<td>{tr}Name:{/tr}</td>
@@ -33,7 +33,7 @@
 		</table>
 	{else}
 		{if $msg}
-			<div class="alert alert-warning">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"} {tr}{$msg}{/tr}</div>
+			<div class="alert alert-warning">{icon name='warning' alt="{tr}Error{/tr}" style="vertical-align:middle"} {tr}{$msg}{/tr}</div>
 		{/if}
 
 		{* Display a form to add or edit a site *}

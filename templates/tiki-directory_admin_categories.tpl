@@ -89,7 +89,7 @@
 {* Display the list of categories (items) using pagination *}
 {* Links to edit, remove, browse the categories *}
 <div class="table-responsive">
-	<table class="table normal">
+	<table class="table normal table-striped table-hover">
 		<tr>
 			<th><a href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></th>
 			<th><a href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'childrenType_desc'}childrenType_asc{else}childrenType_desc{/if}">{tr}cType{/tr}</a></th>
@@ -97,7 +97,7 @@
 			<th><a href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'allowSites_desc'}allowSites_asc{else}allowSites_desc{/if}">{tr}allow{/tr}</a></th>
 			<th><a href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'showCount_desc'}showCount_asc{else}showCount_desc{/if}">{tr}count{/tr}</a></th>
 			<th><a href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'editorGroup_desc'}editorGroup_asc{else}editorGroup_desc{/if}">{tr}editor{/tr}</a></th>
-			<th>{tr}Action{/tr}</th>
+			<th></th>
 		</tr>
 
 		{section name=user loop=$items}
@@ -109,9 +109,26 @@
 				<td class="text">{$items[user].showCount}</td>
 				<td class="text">{$items[user].editorGroup}</td>
 				<td class="action">
-					<a class="link" href="tiki-directory_admin_related.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;categId={$items[user].categId}"><img src='img/icons/admin_move.gif' alt="{tr}relate{/tr}" title="{tr}relate{/tr}"></a>
-					<a class="link" href="tiki-directory_admin_categories.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;parent={$parent}&amp;categId={$items[user].categId}">{icon _id='page_edit'}</a>
-					<a class="link" href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].categId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+					{capture name=directory_actions}
+						{strip}
+							<a href="tiki-directory_admin_related.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;categId={$items[user].categId}">
+								{icon name='move' _menu_text='y' _menu_icon='y' alt="{tr}Relate{/tr}"}
+							</a>
+							<a href="tiki-directory_admin_categories.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;parent={$parent}&amp;categId={$items[user].categId}">
+								{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+							</a>
+							<a href="tiki-directory_admin_categories.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].categId}">
+								{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+							</a>
+						{/strip}
+					{/capture}
+					<a class="tips"
+					   title="{tr}Actions{/tr}"
+					   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.directory_actions|escape:"javascript"|escape:"html"}
+					   style="padding:0; margin:0; border:0"
+							>
+						{icon name='wrench'}
+					</a>
 				</td>
 			</tr>
 		{sectionelse}

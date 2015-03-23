@@ -1,9 +1,9 @@
-<table cellpadding="0" cellspacing="0" border="0" class="table normal">
+<table cellpadding="0" cellspacing="0" border="0" class="table normal table-striped table-hover">
 	<tr>
 		<th style="width:20%"><a href="{$myurl}?sort_mode={if $sort_mode eq 'start_desc'}start_asc{else}start_desc{/if}">{tr}Start{/tr}</a></th>
 		<th style="width:20%"><a href="{$myurl}?sort_mode={if $sort_mode eq 'end_desc'}end_asc{else}end_desc{/if}">{tr}End{/tr}</a></th>
 		<th><a href="{$myurl}?sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></th>
-		<th>{tr}Action{/tr}</th>
+		<th></th>
 	</tr>
 	{if $listevents|@count eq 0}{norecords _colspan=4}{/if}
 
@@ -32,8 +32,23 @@
 			</td>
 			<td class="action">
 				{if $event.modifiable eq "y"}
-					<a class="link" href="tiki-calendar_edit_item.php?calitemId={$event.calitemId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-					<a class="link" href="tiki-calendar_edit_item.php?calitemId={$event.calitemId}&amp;delete=1" title="{tr}Remove{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+					{capture name=calendar_actions}
+						{strip}
+							<a href="tiki-calendar_edit_item.php?calitemId={$event.calitemId}">
+								{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+							</a>
+							<a href="tiki-calendar_edit_item.php?calitemId={$event.calitemId}&amp;delete=1">
+								{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+							</a>
+						{/strip}
+					{/capture}
+					<a class="tips"
+					   title="{tr}Actions{/tr}"
+					   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.calendar_actions|escape:"javascript"|escape:"html"}
+					   style="padding:0; margin:0; border:0"
+							>
+						{icon name='wrench'}
+					</a>
 				{/if}
 			</td>
 		</tr>

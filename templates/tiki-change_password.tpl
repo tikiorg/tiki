@@ -46,7 +46,7 @@
 		<input type="hidden" name="actpass" value="{$smarty.request.actpass|escape}">
 	{/if}
 	<fieldset>{if $new_user_validation neq 'y'}<legend>{tr}Change your password{/tr}</legend>{/if}
-		<div class="alert alert-warning" id="divRegCapson" style="visibility:hidden">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
+		<div class="alert alert-warning" id="divRegCapson" style="visibility:hidden">{icon name='error' style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
 	</fieldset>
 	<div class="form-group">
 		<label class="col-sm-3 col-md-2 control-label" for="user">{tr}Username{/tr}</label>

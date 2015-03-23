@@ -3,51 +3,71 @@
 {title}{tr}Browsing Gallery:{/tr} {$name}{/title}
 
 <div class="t_navbar margin-bottom-md">
+	<div class="btn-group pull-right">
+		<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
+			{icon name="more"}
+		</a>
+		<ul class="dropdown-menu dropdown-menu-right">
+			<li class="dropdown-title">
+				{tr}Gallery actions{/tr}
+			</li>
+			<li class="divider"></li>
+			{if $user and $prefs.feature_user_watches eq 'y'}
+				<li>
+					{if $user_watching_gal eq 'n'}
+						<a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;watch_event=image_gallery_changed&amp;watch_object={$galleryId}&amp;watch_action=add">
+							{icon name='watch'} {tr}Monitor{/tr}
+						</a>
+					{else}
+						<a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;watch_event=image_gallery_changed&amp;watch_object={$galleryId}&amp;watch_action=remove">
+							{icon name='stop-watching'} {tr}Stop monitoring{/tr}
+						</a>
+					{/if}
+				</li>
+			{/if}
+			{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+				<li>
+					<a href="tiki-object_watches.php?objectId={$galleryId|escape:"url"}&amp;watch_event=image_gallery_changed&amp;objectType=image+gallery&amp;objectName={$name|escape:"url"}&amp;objectHref={'tiki-browse_gallery.php?galleryId='|cat:$galleryId|escape:"url"}">
+						{icon name='group'} {tr}Group Monitor{/tr}
+					</a>
+				</li>
+			{/if}
+		</ul>
+	</div>
 	{if $tiki_p_list_image_galleries eq 'y'}
-		{button href="tiki-galleries.php" class="btn btn-default" _text="{tr}List Galleries{/tr}"}
+		{button href="tiki-galleries.php" class="btn btn-default" _icon_name='list' _text="{tr}List Galleries{/tr}"}
 	{/if}
 	{if $system eq 'n'}
 		{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
-			{button href="tiki-galleries.php?edit_mode=1&amp;galleryId=$galleryId" class="btn btn-default" _text="{tr}Edit Gallery{/tr}"}
-			{button href="tiki-browse_gallery.php?galleryId=$galleryId&amp;rebuild=$galleryId" class="btn btn-default" _text="{tr}Rebuild Thumbnails{/tr}"}
+			{button href="tiki-galleries.php?edit_mode=1&amp;galleryId=$galleryId" class="btn btn-default" _icon_name='edit' _text="{tr}Edit Gallery{/tr}"}
+			{button href="tiki-browse_gallery.php?galleryId=$galleryId&amp;rebuild=$galleryId" class="btn btn-default" _icon_name='cog' _text="{tr}Rebuild Thumbnails{/tr}"}
 		{/if}
 
 		{if $tiki_p_upload_images eq 'y'}
 			{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
-				{button href="tiki-upload_image.php?galleryId=$galleryId" class="btn btn-default" _text="{tr}Upload Image{/tr}"}
+				{button href="tiki-upload_image.php?galleryId=$galleryId" class="btn btn-default" _icon_name='upload' _text="{tr}Upload Image{/tr}"}
 			{/if}
 		{/if}
 
 		{if $prefs.feature_gal_batch eq "y" and $tiki_p_batch_upload_image_dir eq 'y'}
 			{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
-				{button href="tiki-batch_upload.php?galleryId=$galleryId" class="btn btn-default" _text="{tr}Directory Batch{/tr}"}
+				{button href="tiki-batch_upload.php?galleryId=$galleryId" class="btn btn-default" _icon_name='file-archive' _text="{tr}Directory Batch{/tr}"}
 			{/if}
 		{/if}
 
 		{if $tiki_p_assign_perm_image_gallery eq 'y'}
 			{assign var=thisname value=$name|escape:"url"}
-			{permission_link mode=button type="image gallery" permType="image galleries" id=$galleryId title=$thisname}
+			{permission_link mode=text type="image gallery" permType="image galleries" addclass="btn btn-default" id=$galleryId title=$thisname}
 		{/if}
 	{/if}
 
 	{if $tiki_p_admin_galleries eq 'y'}
-		{button href="tiki-list_gallery.php?galleryId=$galleryId" class="btn btn-default" _text="{tr}List Gallery{/tr}"}
-		{button href="tiki-show_all_images.php?id=$galleryId" class="btn btn-default" _text="{tr}All Images{/tr}"}
+		{button href="tiki-list_gallery.php?galleryId=$galleryId" class="btn btn-default" _icon_name='list' _text="{tr}List Gallery{/tr}"}
+		{button href="tiki-show_all_images.php?id=$galleryId" class="btn btn-default" _icon_name='image' _text="{tr}All Images{/tr}"}
 	{/if}
 
 	{if $prefs.feed_image_gallery eq 'y'}
-		{button href="tiki-image_gallery_rss.php?galleryId=$galleryId" class="btn btn-default" _text="{tr}RSS{/tr}"}
-	{/if}
-
-	{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-		<a href="tiki-object_watches.php?objectId={$galleryId|escape:"url"}&amp;watch_event=image_gallery_changed&amp;objectType=image+gallery&amp;objectName={$name|escape:"url"}&amp;objectHref={'tiki-browse_gallery.php?galleryId='|cat:$galleryId|escape:"url"}" class="icon btn btn-default">{icon _id='eye_group' alt="{tr}Group Monitor{/tr}" align='right' hspace="1"}</a>
-	{/if}
-	{if $user and $prefs.feature_user_watches eq 'y'}
-		{if $user_watching_gal eq 'n'}
-			<a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;watch_event=image_gallery_changed&amp;watch_object={$galleryId}&amp;watch_action=add" title="{tr}Monitor this Gallery{/tr}" class="icon btn btn-default">{icon _id='eye' alt="{tr}Monitor this Gallery{/tr}" align='right' hspace="1"}</a>
-		{else}
-			<a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;watch_event=image_gallery_changed&amp;watch_object={$galleryId}&amp;watch_action=remove" title="{tr}Stop Monitoring this Gallery{/tr}" class="icon btn btn-default">{icon _id='no_eye' alt="{tr}Stop Monitoring this Gallery{/tr}" align='right' hspace="1"}</a>
-		{/if}
+		{button href="tiki-image_gallery_rss.php?galleryId=$galleryId" class="btn btn-default" _icon_name='rss' _text="{tr}RSS{/tr}"}
 	{/if}
 </div>
 
@@ -147,21 +167,40 @@
 								{if $showname=='y' and $item.name neq ''}{$item.name}{else}{$item.filename}{/if}
 							{/if}
 							<br>
-							{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
-								{if $nextx!=0}
-									<a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize=0" title="{tr}Original Size{/tr}"><img src='img/icons/nav_dot.gif' width='8' height='11' alt="{tr}Original Size{/tr}" title="{tr}Original Size{/tr}"></a>
-								{/if}
-								{if $imagerotate}
-									<a class="gallink" href="{$galleryId|sefurl:gallery:with_next}rotateright={$item.imageId}" title="{tr}rotate right{/tr}"><img src='img/icons/admin_rotate.gif' width='11' height='11' alt="{tr}rotate{/tr}" title="{tr}rotate{/tr}"></a>
-								{/if}
-								<a class="gallink" href="{$galleryId|sefurl:gallery:with_next}remove={$item.imageId}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
-								<a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$item.imageId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-							{/if}
-							<a class="gallink tips" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize={$defaultscale}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if}>
-								{icon _id='magnifier' alt="{tr}Details{/tr}"}
-							</a>
-							<a {jspopup href="tiki-browse_image.php?galleryId=$galleryId&amp;sort_mode=$sort_mode&amp;imageId="|cat:$item.imageId|cat:"&amp;scalesize=$defaultscale&amp;popup=1"} class="gallink">
-								{icon _id='layers' alt="{tr}popup{/tr}"}
+							{capture name=image_actions}
+								{strip}
+									<a {jspopup href="tiki-browse_image.php?galleryId=$galleryId&amp;sort_mode=$sort_mode&amp;imageId="|cat:$item.imageId|cat:"&amp;scalesize=$defaultscale&amp;popup=1"} class="gallink">
+										{icon name='view' _menu_text='y' _menu_icon='y' alt="{tr}Popup{/tr}"}
+									</a>
+									<a class="gallink tips" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize={$defaultscale}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if}>
+										{icon name='list' _menu_text='y' _menu_icon='y' alt="{tr}Details{/tr}"}
+									</a>
+									{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
+										{if $nextx!=0}
+											<a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize=0">
+												{icon name='image' _menu_text='y' _menu_icon='y' alt="{tr}Original size{/tr}"}
+											</a>
+										{/if}
+										{if $imagerotate}
+											<a class="gallink" href="{$galleryId|sefurl:gallery:with_next}rotateright={$item.imageId}" title="{tr}rotate right{/tr}">
+												{icon name='redo' _menu_text='y' _menu_icon='y' alt="{tr}Rotate{/tr}"}
+											</a>
+										{/if}
+										<a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$item.imageId}">
+											{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+										</a>
+										<a class="gallink" href="{$galleryId|sefurl:gallery:with_next}remove={$item.imageId}">
+											{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+										</a>
+									{/if}
+								{/strip}
+							{/capture}
+							<a class="tips"
+							   title="{tr}Actions{/tr}"
+							   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.image_actions|escape:"javascript"|escape:"html"}
+							   style="padding:0; margin:0; border:0"
+									>
+								{icon name='wrench'}
 							</a>
 							<br>
 						</small>

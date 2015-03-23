@@ -73,7 +73,7 @@
 {* Links to edit, remove, browse the categories *}
 <form action="tiki-directory_admin_sites.php" method="post">
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table normal table-striped table-hover">
 			<tr>
 				<th> </th>
 				<th> <a href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a> </th>
@@ -83,7 +83,7 @@
 				{/if}
 				<th> <a href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a> </th>
 				<th> <a href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'isValid_desc'}isValid_asc{else}isValid_desc{/if}">{tr}Valid{/tr}</a> </th>
-				<th>{tr}Action{/tr}</th>
+				<th></th>
 			</tr>
 
 			{section name=user loop=$items}
@@ -96,7 +96,25 @@
 				{/if}
 				<td class="integer">{$items[user].hits}</td>
 				<td class="text">{$items[user].isValid}</td>
-				<td class="action"><a class="link" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;siteId={$items[user].siteId}">{icon _id='page_edit'}</a> <a class="link" href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].siteId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a> </td>
+				<td class="action">
+					{capture name=site_actions}
+						{strip}
+							<a href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;siteId={$items[user].siteId}">
+								{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+							</a>
+							<a href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$items[user].siteId}">
+								{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+							</a>
+						{/strip}
+					{/capture}
+					<a class="tips"
+						title="{tr}Actions{/tr}"
+						href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.site_actions|escape:"javascript"|escape:"html"}
+						style="padding:0; margin:0; border:0"
+							>
+						{icon name='wrench'}
+					</a>
+				</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
