@@ -461,9 +461,9 @@
 			"type": "package",
 			"package": {
 				"name": "jquery/jquery-mobile",
-				"version": "1.4.0",
+				"version": "1.4.5",
 				"dist": {
-					"url": "http://jquerymobile.com/resources/download/jquery.mobile-1.4.0.zip",
+					"url": "http://jquerymobile.com/resources/download/jquery.mobile-1.4.5.zip",
 					"type": "zip"
 				}
 			}
