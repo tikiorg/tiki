@@ -418,10 +418,11 @@ function check_smarty_syntax(&$error_msg)
 	}
 	restore_error_handler();
 
+	echo "\n";
+
 	if ($errors_found) {
 		die('Fix the Smarty errors and try again please.');
 	}
-	echo "\n";
 }
 
 
