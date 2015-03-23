@@ -361,7 +361,8 @@ if ($prefs['feature_warn_on_edit'] === 'y') {
 	}
 	if ($editpageconflict === 'y' && !isset($_REQUEST["conflictoverride"]) ) {
 		include_once('lib/smarty_tiki/modifier.userlink.php');
-		$msg = tr("This page is being edited by %0. Please check with the user before editing the page,	otherwise the changes will be stored as two separate versions in the history and you will have to manually merge them later.", $semUser);
+        include_once('lib/smarty_tiki/modifier.username.php');
+		$msg = tr("This page is being edited by %0. Please check with the user before editing the page,	otherwise the changes will be stored as two separate versions in the history and you will have to manually merge them later.", smarty_modifier_username($semUser));
 		$msg .= '<br /><br /><a href="tiki-editpage.php?page=';
 		$msg .= urlencode($page);
 		$msg .= '&conflictoverride=y">' . tra('Override lock and carry on with edit') . '</a>';
