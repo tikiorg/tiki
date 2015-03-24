@@ -2,7 +2,7 @@
 
 <div class="media">
 	<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Upgrade Wizard{/tr}" title="Upgrade Wizard">
-		<i class="fa fa-arrow-circle-down fa-stack-2x"></i>
+		<i class="fa fa-arrow-circle-up fa-stack-2x"></i>
 		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
 	</span>
 	{tr}Main new features and settings in Tiki 13{/tr}.
