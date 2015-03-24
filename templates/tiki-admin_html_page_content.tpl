@@ -4,7 +4,7 @@
 
 <div class="t_navbar btn-group">
 	{button href="tiki-admin_html_pages.php" class="btn btn-default" _icon_name="cog" _text="{tr}Admin HTML pages{/tr}"}
-	{assign var='pname' value=$pageName|escape:"url" class="btn btn-default"}
+	{assign var='pname' value=$pageName|escape:"url"}
 	{button href="tiki-admin_html_pages.php?pageName=$pname" class="btn btn-default" _icon_name="edit" _text="{tr}Edit this page{/tr}"}
 	{button href="tiki-page.php?pageName=$pname" class="btn btn-default" _icon_name="view" _text="{tr}View page{/tr}"}
 </div>

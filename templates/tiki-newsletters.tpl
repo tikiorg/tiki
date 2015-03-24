@@ -114,7 +114,7 @@
 									{/if}
 									{if $tiki_p_view_newsletter eq 'y'}
 										<a href="tiki-newsletter_archives.php?nlId={$channels[user].nlId}">
-											{icon name='file-archive'_menu_text='y' _menu_icon='y' alt="{tr}Archives{/tr}"}
+											{icon name='file-archive' _menu_text='y' _menu_icon='y' alt="{tr}Archives{/tr}"}
 										</a>
 									{/if}
 									{if $channels[user].tiki_p_admin_newsletters eq 'y'}

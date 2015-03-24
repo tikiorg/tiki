@@ -102,7 +102,7 @@ class CleanVendors
 		self::removeMultiple($vendors . 'cwspear/bootstrap-hover-dropdown', ['bootstrap-hover-dropdown.min.js', 'demo.html']);
 		$fs->remove($vendors . 'jcapture-applet/jcapture-applet/src');
 		$fs->remove($vendors . 'jquery/jquery-s5/lib/dompdf/www');
-		self::removeMultiple($vendors . 'jquery/jquery-sheet', ['jquery-1.10.2.min.js', 'jquery-ui', 'parser.php']);
+		self::removeMultiple($vendors . 'jquery/jquery-sheet', ['jquery-1.10.2.min.js', 'jquery-ui', 'parser.php', 'parser/formula/formula.php']);
 		self::removeMultiple($vendors . 'jquery/jquery-timepicker-addon',
 			[
 				'lib',

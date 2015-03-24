@@ -74,7 +74,8 @@ class TWVersion
 				21=>'Sun',			// 10.x
 				22=>'Vega',			// 11.x
 				23=>'Altair',		// 12.x
-				24=>'Fomalhaut'		// 13.x
+				24=>'Fomalhaut',	// 13.x
+				25=>'Peony',		// 14.x
 		);
 	}
 
@@ -214,6 +215,7 @@ class TWVersion
 				'13.0beta',
 				'13.0',
 				'13.1',
+				'14.0beta',
 			);
 	}
 
