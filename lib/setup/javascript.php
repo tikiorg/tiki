@@ -39,7 +39,7 @@ if ( $prefs['javascript_enabled'] === '' && $prefs['disableJavascript'] != 'y' &
 	} elseif ( $runs_before_js_detect == 1 ) {
 		setCookieSection('runs_before_js_detect', '2', '', $tikilib->now + 365 * 24 * 3600);
 	}
-} else {
+} else if ($js_cookie !== 'y') {	// no js cookie detected
 	$prefs['javascript_enabled'] = 'n';
 }
 
