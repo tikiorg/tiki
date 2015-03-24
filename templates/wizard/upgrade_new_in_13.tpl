@@ -20,18 +20,9 @@
 	<div class="media-body">
 		<fieldset class="table clearfix featurelist">
 			<legend>{tr}New Themes{/tr} & {tr}Site layouts (based on 'Bootstrap'){/tr}</legend>
-			{preference name=theme}
-			<div class="adminoptionbox theme_childcontainer custom">
-				{preference name=theme_custom}
-			</div>
-			<div class="adminoptionbox theme_childcontainer legacy">
-				{preference name=style}
-				{preference name=style_option}
-				{preference name=style_admin}
-				{preference name=style_admin_option}
-			</div>
-			{preference name=site_layout}
-			{preference name=site_layout_per_object}
+			<em>{tr}The changes in this area were refactored in Tiki 14{/tr}.</em>
+			<em>{tr}See{/tr} <a href="tiki-admin.php?page=look&amp;alt=Look+%26+Feel" target="_blank">{tr}Look & Feel admin panel{/tr}</a></em>
+
 		</fieldset>
 		<fieldset class="table clearfix featurelist">
 			<legend>{tr}Goal, Recognition and Rewards{/tr}</legend>

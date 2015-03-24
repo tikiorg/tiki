@@ -243,7 +243,7 @@ function iconset_default()
 				'id' => 'clock-o',
 			),
 			'export' => array(
-				'id' => 'upload',
+				'id' => 'download',
 			),
 			'excel' => array(
 				'id' => 'file-excel-o',
@@ -270,7 +270,7 @@ function iconset_default()
 				'id' => 'file-image-o',
 			),
 			'import' => array(
-				'id' => 'download',
+				'id' => 'upload',
 			),
 			'index' => array(
 				'id' => 'spinner',

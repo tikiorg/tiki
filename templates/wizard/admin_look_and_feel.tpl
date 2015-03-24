@@ -4,32 +4,39 @@
 		<i class="fa fa-gear fa-stack-2x"></i>
 		<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
 	</span>
-    {tr}Configure the Tiki theme and other look & feel preferences{/tr}.</br></br></br>
+	{tr}Configure the Tiki theme and other look & feel preferences{/tr}.</br></br></br>
 	<div class="media-body">
-        {icon name="admin_look" size=3 iclass="adminWizardIconright"}
+		{icon name="admin_look" size=3 iclass="adminWizardIconright"}
 		<fieldset>
 			<legend>{tr}Look & Feel options{/tr}</legend>
-			<div class="row">
-				<div class="col-md-3 col-md-push-9">
-					<div class="thumbnail">
-						<img src="{$thumbfile}" alt="{tr}Theme Screenshot{/tr}" id="style_thumb">
+				<div class="row">
+					<div class="col-md-3 col-md-push-9">
+{*
+						<div class="thumbnail">
+							{if $thumbfile}
+								<img src="{$thumbfile}" alt="{tr}Theme Screenshot{/tr}" id="theme_thumb">
+							{else}
+								<span>{icon name="image"}</span>
+							{/if}
+						</div>
+*}
+					</div>
+					<div class="col-md-9 col-md-pull-3 adminoptionbox">
+						{preference name=theme}
+						<div class="adminoptionbox theme_childcontainer custom_url">
+							{preference name=theme_custom_url}
+						</div>
+						{preference name=theme_option}
+						<div class="adminoptionbox theme_childcontainer legacy">
+							{preference name=style}
+							{preference name=style_option}
+							{preference name=style_admin}
+							{preference name=style_admin_option}
+						</div>
+						{preference name=site_layout}
+						{preference name=site_layout_per_object}
 					</div>
 				</div>
-				<div class="col-md-9 col-md-pull-3 adminoptionbox">
-					{preference name=theme}
-					<div class="adminoptionbox theme_childcontainer custom">
-						{preference name=theme_custom}
-					</div>
-					<div class="adminoptionbox theme_childcontainer legacy">
-						{preference name=style}
-						{preference name=style_option}
-						{preference name=style_admin}
-						{preference name=style_admin_option}
-					</div>
-					{preference name=site_layout}
-					{preference name=site_layout_per_object}
-				</div>
-			</div>
 <!--
 			<div style="position:relative;">
 				<div class="adminoptionbox">
@@ -42,7 +49,7 @@
 -->
 			<br>
 			<em>{tr}See also{/tr} <a href="tiki-admin.php?page=look&amp;alt=Look+%26+Feel" target="_blank">{tr}Look & Feel admin panel{/tr}</a></em>
-            </br></br>
+			</br></br>
 		</fieldset>
 
 		<fieldset>
