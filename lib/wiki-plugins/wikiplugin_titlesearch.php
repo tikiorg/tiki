@@ -64,7 +64,7 @@ class WikiPluginTitleSearch extends PluginsLib
 	}
 	function getDefaultArguments()
 	{
-		return array('exclude' => '' ,
+		return array('exclude' => '',
 			'noheader' => 0,
 			'info' => false,
 			'search' => false,
@@ -84,6 +84,7 @@ class WikiPluginTitleSearch extends PluginsLib
 		$wikilib = TikiLib::lib('wiki');
 		$tikilib = TikiLib::lib('tiki');
 		$aInfoPreset = array_keys($this->aInfoPresetNames);
+		$exclude = $params['exclude'];
 		$params = $this->getParams($params, true);
 		extract($params, EXTR_SKIP);
 		if (!$search) {
