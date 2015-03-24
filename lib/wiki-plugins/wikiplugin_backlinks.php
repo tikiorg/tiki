@@ -37,6 +37,7 @@ class WikiPluginBackLinks extends PluginsLib
 	function run ($data, $params)
 	{
 		global $wikilib; include_once('lib/wiki/wikilib.php');
+		$exclude = $params['exclude'];
 		$params = $this->getParams($params, true);
 		$aInfoPreset = array_keys($this->aInfoPresetNames);
 		extract($params, EXTR_SKIP);
@@ -167,6 +168,6 @@ function wikiplugin_backlinks_info()
 
 function wikiplugin_backlinks($data, $params)
 {
-    $plugin = new wikipluginbacklinks();
-    return $plugin->run($data, $params);
+	$plugin = new wikipluginbacklinks();
+	return $plugin->run($data, $params);
 }
