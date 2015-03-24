@@ -53,9 +53,9 @@
 		{/remarksbox}
 	{/if}
 	{remarksbox type=tip title="{tr}Command Line Utilities{/tr}"}
-		<kbd>php console.php index:optimize</kbd><br>
-		<kbd>php console.php index:rebuild</kbd><br>
-		<kbd>php console.php index:rebuild --log</kbd><br>
+		<kbd>php console.php{if not empty($tikidomain)} --site={$tikidomain|replace:'/':''}{/if} index:optimize</kbd><br>
+		<kbd>php console.php{if not empty($tikidomain)} --site={$tikidomain|replace:'/':''}{/if} index:rebuild</kbd><br>
+		<kbd>php console.php{if not empty($tikidomain)} --site={$tikidomain|replace:'/':''}{/if} index:rebuild --log</kbd><br>
 		<p>{tr}Log file is saved as temp/Search_Indexer_console.log{/tr}</p>
 	{/remarksbox}
 {/block}
