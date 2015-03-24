@@ -46,6 +46,10 @@
 			{/foreach}
 		</fieldset>
 		<fieldset class="table clearfix featurelist">
+			<legend>{tr}Look & Feel options{/tr}</legend>
+			{preference name=theme_iconset}
+		</fieldset>
+		<fieldset class="table clearfix featurelist">
 			<legend>{tr}Other new features{/tr}</legend>
 				{preference name=tracker_tabular_enabled}
 				{preference name=mustread_enabled}
