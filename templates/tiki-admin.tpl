@@ -19,10 +19,11 @@
 		{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}
 	{/if}
 	*}
-	{if $db_requires_update}
+	{if 1 or $db_requires_update}
 		{remarksbox type="error" title="{tr}Database Version Problem{/tr}"}
-		{tr}Your database requires an update to match the current Tiki version. Please proceed to <a class="alert-link" href="tiki-install.php">the installer</a>. Using Tiki with an incorrect database version usually provokes errors.{/tr}
-		{tr}If you have shell (SSH) access, you can also use the following, on the command line, from the root of your Tiki installation:{/tr} php console.php database:update
+			{tr}Your database requires an update to match the current Tiki version. Please proceed to <a class="alert-link" href="tiki-install.php">the installer</a>. Using Tiki with an incorrect database version usually provokes errors.{/tr}
+			{tr}If you have shell (SSH) access, you can also use the following, on the command line, from the root of your Tiki installation:{/tr}
+			<kbd>php console.php{if not empty($tikidomain)} --site={$tikidomain|replace:'/':''}{/if} database:update</kbd>
 		{/remarksbox}
 	{/if}
 	{*{tr}{$description}{/tr}*}
