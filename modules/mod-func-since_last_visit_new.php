@@ -102,6 +102,8 @@ function module_since_last_visit_new($mod_reference, $params = null)
 	$resultCount = $mod_reference['rows'];
 
 	global $tikilib, $userlib, $prefs;
+	$smarty->loadPlugin('smarty_modifier_username');
+
 	$ret = array();
 	if ($params == null) {
 		$params = array();
@@ -195,7 +197,6 @@ function module_since_last_visit_new($mod_reference, $params = null)
 		}
 
 		if ($visible) {
-			require_once('lib/smarty_tiki/modifier.username.php');
 			$ret['items']['comments']['list'][$count]['title'] = $tikilib->get_short_datetime($res['commentDate']) .' '. tra('by') .' '. smarty_modifier_username($res['userName']);
 			$ret['items']['comments']['list'][$count]['label'] = TikiLib::lib('comments')->process_comment_title($res, $params['commentlength']);;
 
