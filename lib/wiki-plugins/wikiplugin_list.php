@@ -18,18 +18,6 @@ function wikiplugin_list_info()
 		'icon' => 'img/icons/text_list_bullets.png',
 		'tags' => array( 'basic' ),
 		'params' => array(
-			'allow_sort_replace' => array(
-				'required' => false,
-				'filter' => 'alpha',
-				'name' => tra('Allow Sort Replace'),
-				'description' => tra('Replace the default sort'),
-				'default' => '',
-				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
-					array('text' => tra('No'), 'value' => ''), 
-				),
-			),
 		),
 	);
 }
@@ -49,7 +37,7 @@ function wikiplugin_list($data, $params)
 	$builder->apply($matches);
 	$paginationArguments = $builder->getPaginationArguments();
 
-	if (!empty($_REQUEST[$paginationArguments['sort_arg']]) && $params[allow_sort_replace] != "y") {
+	if (!empty($_REQUEST[$paginationArguments['sort_arg']])) {
 		$query->setOrder($_REQUEST[$paginationArguments['sort_arg']]);
 	}
 
