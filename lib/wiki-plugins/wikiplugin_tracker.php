@@ -39,6 +39,13 @@ function wikiplugin_tracker_info()
 				'separator' => ':',
 				'default' => 'Save'
 			),
+            'action_style' => array(
+                'required' => false,
+                'name' => tra('Action Style'),
+                'description' => tra('Sets button style classes for action buttons. Must be same count as action. Ex: "btn btn-primary:btn btn-success:btn btn-default pull-right"'),
+                'separator' => ':',
+                'default' => 'btn btn-default'
+            ),
 			'showtitle' => array(
 				'required' => false,
 				'name' => tra('Show Title'),
@@ -465,17 +472,24 @@ function wikiplugin_tracker($data, $params)
 		}
 	}
 
-	if (!isset($action)) {
-		$action = array('Save');
-	}
-	if (!is_array($action)) {
-		$action = array( $action );
-	}
+    if (!isset($action)) {
+        $action = array('Save');
+    }
+    if (!is_array($action)) {
+        $action = array( $action );
+    }
 
 	$dynamicSave = false;
 	if (count($action) == 1 && reset($action) == 'NONE') {
 		$action = array();
 		$dynamicSave = true;
+	}
+
+	if (!isset($action_style)) {
+		$action_style = array();
+		foreach ($action as $ac){
+			$action_style[] = 'btn btn-default';
+		}
 	}
 
 	if (isset($preview)) {
@@ -1568,9 +1582,9 @@ FILL;
 				if (!empty($preview)) {
 					$back .= '<input class="btn btn-default button submit preview" type="submit" name="tr_preview" value="'.tra($preview).'" />';
 				}
-				foreach ($action as $key=>$act) {
-					$back .= '<input class="btn btn-default button submit" type="submit" name="action'.$key.'" value="'.tra($act).'" onclick="needToConfirm=false" />';
-				}
+                foreach ($action as $key=>$act) {
+                    $back .= '<input class="button submit '.$action_style[$key].'" type="submit" name="action'.$key.'" value="'.tra($act).'" onclick="needToConfirm=false" />';
+                }
 				$back .= '</div></div>';
 			}
 			if ($showmandatory == 'y' and $onemandatory) {
