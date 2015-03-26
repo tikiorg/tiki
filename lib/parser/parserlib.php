@@ -2461,7 +2461,7 @@ if ( \$('#$id') ) {
 
 				//
 				$line = trim($line);
-				$line = '<div class="titlebar"' . $align . '>' . substr($line, 2, strlen($line) - 4). '</div>';
+				$line = '<div class="titlebar well well-sm"' . $align . '>' . substr($line, 2, strlen($line) - 4). '</div>';
 				$data .= $line . "\n";
 				// TODO: Case is handled ...  no need to check other conditions
 				//	   (it is apriori known that they are all false, moreover sometimes
