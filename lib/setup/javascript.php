@@ -61,31 +61,35 @@ if ($prefs['javascript_enabled'] == 'y') {	// we have JavaScript
 	if (file_exists('lang/' . $prefs['language'] . '/language.js')) {
 		// after the usual lib includes (up to 10) but before custom.js (50)
 		$headerlib
-			->add_jsfile('lang/' . $prefs['language'] . '/language.js', 25)
+			->add_jsfile('lang/' . $prefs['language'] . '/language.js')
 			->add_js("$.lang = '" . $prefs['language'] . "';");
 	}
 
+	
+	/** Use custom.js in lang dir if there **/
+	$language = $prefs['language'];
+	if (is_file("lang/$language/custom.js")) {
+		TikiLib::lib('header')->add_jsfile("lang/$language/custom.js");	// before styles custom.js
+	}
+	
+	if (!empty($tikidomain) && is_file("lang/$language/$tikidomain/custom.js")) {		// Note: lang tikidomain dirs not created automatically
+		TikiLib::lib('header')->add_jsfile("lang/$language/$tikidomain/custom.js");
+	}
+	
+	
 	/** Use custom.js in themes or options dir if there **/
 	$themelib = TikiLib::lib('theme');
 	$custom_js = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], 'custom.js');
 	if (!empty($custom_js)) {
-		$headerlib->add_jsfile($custom_js, 50);
+		$headerlib->add_jsfile($custom_js);
 	} else {															// there's no custom.js in the current theme or option
 		$custom_js = $themelib->get_theme_path('', '', 'custom.js');		// so use one in the root of /themes if there
 		if (!empty($custom_js)) {
-			$headerlib->add_jsfile($custom_js, 50);
+			$headerlib->add_jsfile($custom_js);
 		}
 	}
 
-	/** Use custom.js in lang dir if there **/
-	$language = $prefs['language'];
-	if (is_file("lang/$language/custom.js")) {
-		TikiLib::lib('header')->add_jsfile("lang/$language/custom.js", 40);	// before styles custom.js
-	}
 
-	if (!empty($tikidomain) && is_file("lang/$language/$tikidomain/custom.js")) {		// Note: lang tikidomain dirs not created automatically
-		TikiLib::lib('header')->add_jsfile("lang/$language/$tikidomain/custom.js", 40);
-	}
 
 	// setup timezone array
 	$tz = TikiDate::getTimezoneAbbreviations();
@@ -220,7 +224,7 @@ var syntaxHighlighter = {
 				$fixondom = "DD_belatedPNG.fixPng($fixondom); // list of HTMLDomElements to fix separated by commas (default is none)";
 			}
 			$scriptpath = 'lib/iepngfix/DD_belatedPNG-min.js';
-			$headerlib->add_jsfile($scriptpath, 200);
+			$headerlib->add_jsfile($scriptpath, true);
 			$headerlib->add_js(
 <<<JS
 DD_belatedPNG.fix('$fixoncss'); // list of CSS selectors to fix separated by commas (default is set to fix sitelogo)

@@ -73,8 +73,8 @@ function wikiplugin_contributionsdashboard($data, $params)
 
 	$types = explode(',', $types);
 
-	$headerlib->add_jsfile("vendor/jquery/jquery-sheet/plugins/raphael-min.js", "external");
-	$headerlib->add_jsfile("vendor/jquery/jquery-sheet/plugins/g.raphael-min.js", "external");
+	$headerlib->add_jsfile_external("vendor/jquery/jquery-sheet/plugins/raphael-min.js", true);
+	$headerlib->add_jsfile_external("vendor/jquery/jquery-sheet/plugins/g.raphael-min.js", true);
 	$headerlib->add_jq_onready("$('.cDashDate').datepicker();");
 
 	$usersTrackerItems = array();

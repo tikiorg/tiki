@@ -5467,9 +5467,11 @@ class TikiLib extends TikiDb_Bridge
 
 
 	/**
-	 * @return string
+	 * Get URL Scheme (http / https)
+	 * Considers the use of a reverse proxy / ssl offloader. I.e If request is https -> ssl offloader -> http tiki, then it will correctly return https 
+	 * @return string http | https
 	 */
-	function httpScheme()
+	static function httpScheme()
 	{
 		global $url_scheme;
 		return $url_scheme;

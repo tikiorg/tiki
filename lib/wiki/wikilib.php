@@ -509,13 +509,13 @@ class WikiLib extends TikiLib
 
 				$canBeRefreshed = true;
 			} else {
-				$jsFile1 = $headerlib->getJsfiles();
+				$jsFile1 = $headerlib->getJsFilesWithScriptTags();
 				$js1 = $headerlib->getJs();
-                $info['outputType'] = $tikilib->getOne ("SELECT `outputType` FROM `tiki_output` WHERE `entityId` = ? AND `objectType` = ? AND `version` = ?", array($info['pageName'], 'wikiPage', $info['version']));
-                $content = (new WikiLibOutput($info, $info['data'],$parse_options))->parsedValue;
+				$info['outputType'] = $tikilib->getOne ("SELECT `outputType` FROM `tiki_output` WHERE `entityId` = ? AND `objectType` = ? AND `version` = ?", array($info['pageName'], 'wikiPage', $info['version']));
+				$content = (new WikiLibOutput($info, $info['data'],$parse_options))->parsedValue;
 
 				// get any JS added to headerlib during parse_data and add to the bottom of the data to cache
-				$jsFile2 = $headerlib->getJsfiles();
+				$jsFile2 = $headerlib->getJsFilesWithScriptTags();
 				$js2 = $headerlib->getJs();
 
 				$jsFile = array_diff($jsFile2, $jsFile1);

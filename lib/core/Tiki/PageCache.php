@@ -111,10 +111,11 @@ class Tiki_PageCache
 
 				if ( $cachedOutput && $cachedOutput['output'] ) {
 					$headerlib = TikiLib::lib('header');
-					if (is_array($cachedOutput['jsiles'])) {
-						foreach ($cachedOutput['jsiles'] as $rank => $files) {
+					if (is_array($cachedOutput['jsfiles'])) {
+						foreach ($cachedOutput['jsfiles'] as $rank => $files) {
 							foreach ($files as $file) {
-								$headerlib->add_jsfile($file, $rank);
+								$skip_minify = isset($cachedOutput['skip_minify']) ? true : false;
+								$headerlib->add_jsfile_by_rank($file, $rank, $skip_minify);
 							}
 						}
 					}
@@ -174,7 +175,8 @@ class Tiki_PageCache
 
 			if ($this->headerLibCopy) {
 				$headerlib = TikiLib::lib('header');
-				$cachedOutput['jsiles']     = array_diff($headerlib->jsfiles, $this->headerLibCopy->jsfiles);
+				$cachedOutput['jsfiles']    = array_diff($headerlib->jsfiles, $this->headerLibCopy->jsfiles);
+				$cachedOutput['skip_minify']= array_diff($headerlib->skip_minify, $this->headerLibCopy->skip_minify);
 				$cachedOutput['jq_onready'] = array_diff($headerlib->jq_onready, $this->headerLibCopy->jq_onready);
 				$cachedOutput['js']         = array_diff($headerlib->js, $this->headerLibCopy->js);
 				$cachedOutput['css']        = array_diff($headerlib->css, $this->headerLibCopy->css);

@@ -800,7 +800,7 @@ ask_ticket('calendar');
 
 if (!empty($prefs['calendar_fullcalendar']) && $prefs['calendar_fullcalendar'] === 'y') {
 	$headerlib->add_cssfile('vendor_extra/fullcalendar-resourceviews/fullcalendar/fullcalendar.css');
-	$headerlib->add_jsfile('vendor_extra/fullcalendar-resourceviews/fullcalendar/fullcalendar.min.js');
+	$headerlib->add_jsfile('vendor_extra/fullcalendar-resourceviews/fullcalendar/fullcalendar.min.js', true);
 	$smarty->assign('minHourOfDay', $minHourOfDay);
 	$smarty->assign('maxHourOfDay', $maxHourOfDay);
 	if ($prefs['feature_wysiwyg'] == 'y' && $prefs['wysiwyg_default'] == 'y') {

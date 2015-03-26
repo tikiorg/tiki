@@ -596,11 +596,6 @@ class WikiPlugin_Negotiator_Wiki
 				}
 			}
 
-			$headerlib->add_jsfile('tiki-jsplugin.php?language='.$this->prefs['language'], 'dynamic');
-			if ($this->prefs['wikiplugin_module'] === 'y' && $this->prefs['wikiplugininline_module'] === 'n') {
-				$headerlib->add_jsfile('tiki-jsmodule.php?language='.$this->prefs['language'], 'dynamic');
-			}
-
 			$headerlib->add_jq_onready(
 				'$("#' . $id . '")
 					.click( function(event) {'

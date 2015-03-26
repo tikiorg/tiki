@@ -203,7 +203,7 @@ function wikiplugin_trackercalendar($data, $params)
 	static $id = 0;
 	$headerlib = TikiLib::lib('header');
 	$headerlib->add_cssfile('vendor_extra/fullcalendar-resourceviews/fullcalendar/fullcalendar.css');
-	$headerlib->add_jsfile('vendor_extra/fullcalendar-resourceviews/fullcalendar/fullcalendar.min.js');
+	$headerlib->add_jsfile('vendor_extra/fullcalendar-resourceviews/fullcalendar/fullcalendar.min.js', true);
 
 	$jit = new JitFilter($params);
 	$definition = Tracker_Definition::get($jit->trackerId->int());

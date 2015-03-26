@@ -151,7 +151,7 @@ function wikiplugin_vimeo($data, $params)
 	$instance++;
 
 	if ($params['useFroogaloopApi']) { 
-		TikiLib::lib('header')->add_jsfile('vendor_extra/vimeo/froogaloop.min.js');
+		TikiLib::lib('header')->add_jsfile('vendor_extra/vimeo/froogaloop.min.js', true);
 		TikiLib::lib('header')->add_jsfile('vendor_extra/vimeo/vimeo.js');
 	}
 

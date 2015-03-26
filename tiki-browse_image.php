@@ -93,7 +93,7 @@ $smarty->assign('offset', $maxgal ? $offset - ($offset % $maxgal) : 0);
 //$smarty->assign_by_ref('theme',$gal_info["theme"]);
 //$smarty->assign('use_theme','y');
 if ($prefs['feature_gal_slideshow'] != 'n') {
-	$headerlib->add_jsfile('lib/imagegals/imagegallib.js', 50);
+	$headerlib->add_jsfile('lib/imagegals/imagegallib.js');
 	$listImgId = implode(',', $listImgId);
 	$smarty->assign('listImgId', $listImgId);
 }
