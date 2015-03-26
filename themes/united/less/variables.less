@@ -8,11 +8,11 @@
 //## Gray and brand colors for use across Bootstrap.
 
 @gray-base:              #000;
-@gray-darker:            lighten(#000, 13.5%); // #222
+@gray-darker:            lighten(@gray-base, 13.5%); // #222
 @gray-dark:              #333;   // #333
 @gray:                   #777; // #555
 @gray-light:             #AEA79F;   // #999
-@gray-lighter:           lighten(#000, 93.5%); // #eee
+@gray-lighter:           lighten(@gray-base, 93.5%); // #eee
 
 @brand-primary:         #DD4814;
 @brand-success:         #38B44A;
@@ -265,7 +265,8 @@
 @zindex-popover:           1060;
 @zindex-tooltip:           1070;
 @zindex-navbar-fixed:      1030;
-@zindex-modal:             1040;
+@zindex-modal-background:  1040;
+@zindex-modal:             1050;
 
 
 //== Media queries breakpoints
