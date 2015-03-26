@@ -282,6 +282,10 @@ class Tiki_Profile_Installer
 		// Build the list of dependencies for each profile
 		$short = array();
 		foreach ( $dependencies as $key => $prf ) {
+			if ( empty( $prf ) ) {
+				throw new Exception("Unknown objects are referenced: " . $key);
+			}
+
 			$short[$key] = array();
 			foreach ( $prf->getRequiredProfiles() as $k => $p )
 				$short[$key][] = $k;
