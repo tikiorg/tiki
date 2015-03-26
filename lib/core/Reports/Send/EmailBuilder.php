@@ -26,16 +26,19 @@ class Reports_Send_EmailBuilder
 
     public function emailBody($user_data, $report_preferences, $report_cache)
     {
+        global $prefs;
+        include_once('lib/smarty_tiki/modifier.username.php');
+
         if (isset($report_cache[0])) {
             $base_url = $report_cache[0]['data']['base_url'];
         } else {
-            $base_url = "";
+            $base_url = "http://" . $prefs['cookie_domain'] . "/"; // TODO: better handling for https and such
         }
 
         $smarty = TikiLib::lib('smarty');
 
         $smarty->assign('report_preferences', $report_preferences);
-        $smarty->assign('report_user', ucfirst($user_data['login']));
+        $smarty->assign('report_user', ucfirst(smarty_modifier_username($user_data['login'])));
         $smarty->assign('report_interval', ucfirst($report_preferences['interval']));
         $smarty->assign('report_date', date("l d.m.Y"));
         $smarty->assign('report_site', $this->tikilib->get_preference('browsertitle'));
@@ -131,7 +134,8 @@ class Reports_Send_EmailBuilder
                     $body .= $this->tikilib->get_short_datetime(strtotime($change['time'])) . ": ";
 
                     if (isset($change['data']['user'])) {
-                        $change['data']['user'] = $userlib->clean_user($change['data']['user']);
+                        include_once('lib/smarty_tiki/modifier.username.php');
+                        $change['data']['user'] = smarty_modifier_username($change['data']['user']);
                     }
 
                     $body .= $eventObject->getOutput($change);
