@@ -43,6 +43,9 @@ a.fc-event:hover {
 .post-approved-r .content * {
   background: url('../../../img/icons/dots.gif');
 }
+.dropdown-menu {
+  color: #777777;
+}
 .cssmenu_horiz ul li,
 .cssmenu_vert ul li,
 .cssmenu_horiz ul ul li,
