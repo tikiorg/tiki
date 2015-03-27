@@ -97,6 +97,14 @@ function module_users_list_info()
 				'required' => false,
 				'default' => 'y'
 			),
+			'sort_mode' => array(
+				'name' => tra('Sort Mode'),
+				'description' => tra('Sort users in ascending or descending order using these values: ') .
+					'login_asc, login_desc, email_asc, email_desc.',
+				'filter' => 'word',
+				'required' => false,
+				'default' => 'login_asc'
+			),
 		),
 		'common_params' => array('nonums', 'rows')
 	);
@@ -120,7 +128,14 @@ function module_users_list($module_params)
 	 } else {
 		$group = '';
 	 }
-	$users = $userlib->get_users(0, -1, 'login_asc', '',!empty($module_params['initial'])? $module_params['initial']:'', isset($module_params['groups'])?true: false, $group);
+
+	if (!isset($module_params['params']['sort_mode'])) {
+		$sort_mode = 'login_asc';
+	} else {
+		$sort_mode = $module_params['params']['sort_mode'];
+	}
+
+	$users = $userlib->get_users(0, -1, $sort_mode, '',!empty($module_params['initial'])? $module_params['initial']:'', isset($module_params['groups'])?true: false, $group);
 	if (isset($_REQUEST["realName"]) && ($prefs['auth_ldap_nameattr'] == '' || $prefs['auth_method'] != 'ldap')) {
 		$tikilib->set_user_preference($userwatch, 'realName', $_REQUEST["realName"]);
 		if ( $prefs['user_show_realnames'] == 'y' ) {
