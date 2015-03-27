@@ -40,7 +40,7 @@ $smarty->assign('allow_comments', 'y');
 $smarty->assign('show_avatar', 'n');
 $smarty->assign('show_related', 'n');
 $smarty->assign('related_max', 5);
-$smarty->assign('maxPosts', 10);
+$smarty->assign('maxPosts', 25);
 $smarty->assign('use_excerpt', 'n');
 $smarty->assign('creator', $user);
 
