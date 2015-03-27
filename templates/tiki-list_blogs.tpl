@@ -1,23 +1,21 @@
 {* $Id$ *}
 {title help="Blogs" admpage="blogs"}{tr}Blogs{/tr}{/title}
 
-{if $tiki_p_create_blogs eq 'y' or $tiki_p_blog_admin eq 'y'}
-	<div class="navbar">
-		{button href="tiki-edit_blog.php" _icon_name="create" _text="{tr}Create Blog{/tr}" _class="navbar-btn"}
-		{if $tiki_p_read_blog eq 'y' and $tiki_p_blog_admin eq 'y'}
-			{button href="tiki-list_posts.php" class="btn btn-default" _icon_name="list" _text="{tr}List Posts{/tr}"}
-		{/if}
-	</div>
-{/if}
-
-
-	{if $listpages or ($find ne '')}
-        <div class="row row-sidemargins-zero">
-            <div class="col-md-5 col-md-offset-7">
-		        {include file='find.tpl'}
-            </div>
-        </div>
+<div class="t_navbar margin-bottom-md">
+	{if $tiki_p_create_blogs eq 'y' or $tiki_p_blog_admin eq 'y'}
+		<div class="pull-left">
+			{button href="tiki-edit_blog.php" _icon_name="create" _text="{tr}Create Blog{/tr}" _class="navbar-btn"}
+			{if $tiki_p_read_blog eq 'y' and $tiki_p_blog_admin eq 'y'}
+				{button href="tiki-list_posts.php" class="btn btn-default" _icon_name="list" _text="{tr}List Posts{/tr}"}
+			{/if}
+		</div>
 	{/if}
+	{if $listpages or ($find ne '')}
+		<div class="col-sm-5 pull-right">
+			{include file='find.tpl'}
+		</div>
+	{/if}
+</div>
 
 <div class="table-responsive">
 	<table class="table table-striped normal">
