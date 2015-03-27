@@ -75,6 +75,8 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 		$defaults['sort_default_field'] = '';
 		$defaults['restrict_start'] = '';
 		$defaults['restrict_end'] = '';
+		$defaults['popup_fields'] = '';
+		$defaults['section_format'] = 'flat';
 		return $defaults;
 	} // }}}
 
