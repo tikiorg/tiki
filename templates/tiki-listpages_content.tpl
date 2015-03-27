@@ -67,7 +67,7 @@
 					{assign var='cntcol' value=$cntcol+1}
 					<th id="lastmodif">
 						{assign var='lastmod_sortfield' value='lastModif'}
-						{assign var='lastmod_shorttitle' value="{tr}Last mod{/tr}"}
+						{assign var='lastmod_shorttitle' value="{tr}Last modification{/tr}"}
 						{if $prefs.wiki_list_lastmodif eq 'y' and $prefs.wiki_list_comment eq 'y'}
 							{assign var='lastmod_title' value="{tr}Last modification{/tr} / {tr}Comment{/tr}"}
 						{elseif $prefs.wiki_list_lastmodif eq 'y'}
@@ -98,7 +98,7 @@
 				{if $prefs.wiki_list_lastver eq 'y'}
 					{assign var='cntcol' value=$cntcol+1}
 					<th id="version">
-						{self_link _sort_arg='sort_mode' _sort_field='version' _title="{tr}Last version{/tr}"}{tr}Last ver.{/tr}{/self_link}
+						{self_link _sort_arg='sort_mode' _sort_field='version' _title="{tr}Last version{/tr}"}{tr}Last version{/tr}{/self_link}
 					</th>
 				{/if}
 
@@ -112,7 +112,7 @@
 				{if $prefs.wiki_list_versions eq 'y'}
 					{assign var='cntcol' value=$cntcol+1}
 					<th id="versions">
-						{self_link _sort_arg='sort_mode' _sort_field='versions' _title="{tr}Versions{/tr}"}{tr}Vers.{/tr}{/self_link}
+						{self_link _sort_arg='sort_mode' _sort_field='versions' _title="{tr}Versions{/tr}"}{tr}Version{/tr}{/self_link}
 					</th>
 				{/if}
 
