@@ -57,8 +57,14 @@ function smarty_function_object_selector( $params, $smarty )
 	}
 
 	if ($prefs['feature_search'] !== 'y') {
-		if ($arguments['simplename'] && $arguments['simplevalue']) {
-			return "<input type='text' name='{$arguments['simplename']}' value='{$arguments['simplevalue']}'>";
+		if ($arguments['simplename'] && isset($arguments['simplevalue'])) {
+			if ($params['type'] === 'trackerfield' && $arguments['separator'] === ',') {
+				$help = tra('Comma-separated list of field IDs');
+			} else {
+				$help = tr('%0 list separated with "%1"', ucfirst($params['type']), $arguments['separator']);
+			}
+			return "<input type='text' name='{$arguments['simplename']}' value='{$arguments['simplevalue']}' size='50'>" .
+					"<div class='help-block'>" . $help . "</div>";
 		} else {
 			return tra('Object selector requires Unified Index to be enabled.');
 		}

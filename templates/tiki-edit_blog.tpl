@@ -4,9 +4,8 @@
 	{title help="Blogs"}{tr}Create Blog{/tr}{/title}
 {/if}
 
-<div class="t_navbar btn-group form-group">
+<div class="t_navbar margin-bottom-md">
 	{button href="tiki-list_blogs.php" class="btn btn-default" _text="{tr}List Blogs{/tr}"}
-
 	{if $blogId > 0}
 		{assign var=thisblogId value=$blogId|sefurl:blog}
 		{button href=$thisblogId class="btn btn-default" _text="{tr}View Blog{/tr}"}
@@ -26,7 +25,6 @@
 <form method="post" action="tiki-edit_blog.php" id="blog-edit-form" class="form-horizontal" role="form">
 	<input type="hidden" name="blogId" value="{$blogId|escape}">
 	{tabset name='tabs_editblog'}
-
 		{tab name="{tr}General Settings{/tr}"}
 			<h2>{tr}General Settings{/tr}</h2>
 			<div class="form-group">
@@ -92,14 +90,14 @@
 			</div>
 			{include file='categorize.tpl'}
 		{/tab}
-
 		{tab name="{tr}Display Options{/tr}"}
 			<h2>{tr}Display Options{/tr}</h2>
 			<div class="form-group">
-				<label class="col-sm-5 control-label" for="blogs-number">{tr}Number of posts to show per page{/tr}</label>
+				<label class="col-sm-3 control-label" for="blogs-number">{tr}Displayed posts{/tr}</label>
 				<div class="col-sm-2">
 					<input type="text" name="maxPosts" id="blogs-number" class="form-control" value="{$maxPosts|escape}">
 				</div>
+				<div class="help-block">{tr}Number of posts to show per page{/tr}</div>
 			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-3 col-sm-9">
@@ -154,11 +152,14 @@
 							{/if}
 						</label>
 					</div>
-					<label class="col-sm-5 control-label" for="blogs-post-max-related">{tr}Maximum number of related posts to display{/tr}</label>
-					<div class="col-sm-2">
-						<input type="text" name="related_max" id="blogs-post-max-related" class="form-control" value="{$related_max|escape}">
-					</div>
 				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label" for="blogs-post-max-related">{tr}Related posts{/tr}</label>
+				<div class="col-sm-2">
+					<input type="text" name="related_max" id="blogs-post-max-related" class="form-control" value="{$related_max|escape}">
+				</div>
+				<div class="help-block">{tr}Maximum number of related posts to display{/tr}</div>
 			</div>
 			{if $prefs.feature_blog_heading eq 'y' and $tiki_p_edit_templates eq 'y'}
 				<div class="form-group">
@@ -181,7 +182,6 @@
 				</div>
 			{/if}
 		{/tab}
-
 	{/tabset}
 	{if $prefs.feature_blog_heading eq 'y' and $tiki_p_edit_templates eq 'y'}
 		<input type="submit" class="wikiaction btn btn-default" name="preview" value="{tr}Heading preview{/tr}">
