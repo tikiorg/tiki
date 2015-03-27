@@ -475,6 +475,7 @@ class Tracker_Item
 			'itemId' => $this->isNew() ? null : $this->info['itemId'],
 			'status' => $this->isNew() ? 'o' : $this->info['status'],
 			'creation_date' => $this->info['created'],
+			'trackerId' => $this->isNew() ? null : $this->info['trackeId'],
 			'fields' => $out,
 		);
 	}
