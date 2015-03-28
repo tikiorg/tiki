@@ -5,6 +5,24 @@
 		<div id="quickadmin" class="btn-group">
 			<div class="btn-group">
 				<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
+					{icon name="sort-down"}
+				</a>
+				<ul class="dropdown-menu recent-prefs" role="menu">
+					<li class="dropdown-title">
+						{tr}Recent Preferences{/tr}
+					</li>
+					<li class="divider"></li>
+					{foreach $recent_prefs as $p}
+						<li>
+							<a href="tiki-admin.php?lm_criteria={$p|stringfix:"_":"%20AND%20"}">{$p|stringfix}</a>
+						</li>
+					{foreachelse}
+						<li>{tr}None{/tr}</li>
+					{/foreach}
+				</ul>
+			</div>
+			<div class="btn-group">
+				<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
 					{icon name="more"}
 				</a>
 				<ul class="dropdown-menu">
@@ -107,24 +125,6 @@
 							</a>
 						</li>
 					{/if}
-					<li class="dropdown-submenu">
-						<a tabindex="-1" href="#">
-							{icon name="wrench"} {tr}Recent preferences...{/tr}
-						</a>
-						<ul class="dropdown-menu recent-prefs" role="menu">
-							<li class="dropdown-title">
-								{tr}Recent Preferences{/tr}
-							</li>
-							<li class="divider"></li>
-							{foreach $recent_prefs as $p}
-								<li>
-									<a href="tiki-admin.php?lm_criteria={$p|stringfix:"_":"%20AND%20"}">{$p|stringfix}</a>
-								</li>
-								{foreachelse}
-								<li>{tr}None{/tr}</li>
-							{/foreach}
-						</ul>
-					</li>
 				</ul>
 			</div>
 		</div>

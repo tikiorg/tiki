@@ -26,6 +26,67 @@
 	<div class="wikiactions_wrapper clearfix">
 		<div class="wikiactions icons btn-group pull-right">
 			<div class="btn-group">
+				{* languages and structures are separate dropdowns*}
+				{if $prefs.feature_multilingual eq 'y' && $prefs.show_available_translations eq 'y' && $machine_translate_to_lang eq ''}
+					<!--span class="btn-i18n" -->
+					{include file='translated-lang.tpl' object_type='wiki page'}
+					<!--/span -->
+				{/if}
+
+				{if $prefs.feature_backlinks eq 'y' and $backlinks|default:null and $tiki_p_view_backlink eq 'y'}
+					<div class="btn-group backlinks">
+						<a role="button" data-toggle="dropdown" data-hover="dropdown" class="btn btn-link dropdown-toggle">
+							{icon name="backlink"}
+						</a>
+						<ul class="dropdown-menu" role="menu">
+							<li class="dropdown-title">
+								{tr}Backlinks{/tr}
+							</li>
+							<li class="divider"></li>
+							<li role="presentation">
+								{section name=back loop=$backlinks}
+									<a role="menuitem" tabindex="-1" href="{$backlinks[back].fromPage|sefurl:'wiki'}" title="{$backlinks[back].fromPage|escape}">
+										{if $prefs.wiki_backlinks_name_len ge '1'}{$backlinks[back].fromPage|truncate:$prefs.wiki_backlinks_name_len:"...":true|escape}{else}{$backlinks[back].fromPage|escape}{/if}
+									</a>
+								{/section}
+							</li>
+						</ul>
+					</div>
+				{/if}
+				{if $structure eq 'y' or ( $structure eq 'n' and count($showstructs) neq 0 )}
+					<div class="btn-group structures">
+						<a class="btn btn-link dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+							{icon name="structure"}
+						</a>
+						<ul class="dropdown-menu dropdown-menu-right" role="menu">
+							<li class="dropdown-title">
+								{tr}Structures{/tr}
+							</li>
+							<li class="divider"></li>
+							<li role="presentation">
+								{section name=struct loop=$showstructs}
+									<a href="tiki-index.php?page={$page}&structure={$showstructs[struct].pageName|escape}" {if $showstructs[struct].pageName eq $structure_path[0].pageName} title="Current structure: {$showstructs[struct].pageName|escape}" class="selected tips" {else} class="tips" title="{tr}Show structure{/tr}: {$showstructs[struct].pageName|escape}"{/if}>
+										{if $showstructs[struct].page_alias}
+											{$showstructs[struct].page_alias}
+										{else}
+											{$showstructs[struct].pageName}
+										{/if}
+									</a>
+								{/section}
+							</li>
+							{if $showstructs[struct].pageName neq $structure_path[0].pageName and $prefs.feature_wiki_open_as_structure neq 'y'}
+								<li role="presentation" class="divider"></li>
+								<li role="presentation">
+									<a href="tiki-index.php?page={$page|escape:url}" class="tips" title=":{tr}Hide structure bar and any toc{/tr}">
+										{tr}Hide structure{/tr}
+									</a>
+								</li>
+							{/if}
+						</ul>
+					</div>
+				{/if}
+
+				{* all single-action icons under one dropdown*}
 				<div class="btn-group page_actions">
 					<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
 						{icon name="more"}
@@ -191,63 +252,6 @@
 						{if $prefs.user_favorites eq 'y'}
 							<li>
 								{favorite type="wiki page" object=$page button_classes="icon"}
-							</li>
-						{/if}
-						{if $prefs.feature_backlinks eq 'y' and $backlinks|default:null and $tiki_p_view_backlink eq 'y'}
-							<li class="dropdown-submenu dropup">
-								<a tabindex="-1" href="#">
-									{icon name="backlink"} {tr}Backlinks{/tr}...
-								</a>
-								<ul class="dropdown-menu">
-									<li class="dropdown-title">
-										{tr}Backlinks{/tr}
-									</li>
-									<li class="divider"></li>
-									<li role="presentation">
-										{section name=back loop=$backlinks}
-											<a role="menuitem" tabindex="-1" href="{$backlinks[back].fromPage|sefurl:'wiki'}" title="{$backlinks[back].fromPage|escape}">
-												{if $prefs.wiki_backlinks_name_len ge '1'}{$backlinks[back].fromPage|truncate:$prefs.wiki_backlinks_name_len:"...":true|escape}{else}{$backlinks[back].fromPage|escape}{/if}
-											</a>
-										{/section}
-									</li>
-								</ul>
-							</li>
-						{/if}
-						{if $structure eq 'y' or ( $structure eq 'n' and count($showstructs) neq 0 )}
-							<li class="dropdown-submenu dropup">
-								<a tabindex="-1" href="#">
-									{icon name="structure"} {tr}Structures...{/tr}
-								</a>
-								<ul class="dropdown-menu">
-									<li class="dropdown-title">
-										{tr}Structures{/tr}
-									</li>
-									<li class="divider"></li>
-									<li role="presentation">
-										{section name=struct loop=$showstructs}
-											<a href="tiki-index.php?page={$page}&structure={$showstructs[struct].pageName|escape}" {if $showstructs[struct].pageName eq $structure_path[0].pageName} title="Current structure: {$showstructs[struct].pageName|escape}" class="selected tips" {else} class="tips" title="{tr}Show structure{/tr}: {$showstructs[struct].pageName|escape}"{/if}>
-												{if $showstructs[struct].page_alias}
-													{$showstructs[struct].page_alias}
-												{else}
-													{$showstructs[struct].pageName}
-												{/if}
-											</a>
-										{/section}
-									</li>
-									{if $showstructs[struct].pageName neq $structure_path[0].pageName and $prefs.feature_wiki_open_as_structure neq 'y'}
-										<li role="presentation" class="divider"></li>
-										<li role="presentation">
-											<a href="tiki-index.php?page={$page|escape:url}" class="tips" title=":{tr}Hide structure bar and any toc{/tr}">
-												{tr}Hide structure{/tr}
-											</a>
-										</li>
-									{/if}
-								</ul>
-							</li>
-						{/if}
-						{if $prefs.feature_multilingual eq 'y' && $prefs.show_available_translations eq 'y' && $machine_translate_to_lang eq ''}
-							<li class="dropdown dropdown-submenu">
-								{include file='translated-lang.tpl' submenu='y' object_type='wiki page'}
 							</li>
 						{/if}
 					</ul>

@@ -252,6 +252,9 @@
 				{/if}
 				{if !isset($actions) or $actions eq "y"}
 					<div class="btn-group actions pull-right">
+						{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit_article eq 'y'}
+							{include file='translated-lang.tpl' object_type='article' trads=$listpages[ix].translations articleId=$listpages[ix].articleId}
+						{/if}
 						<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
 							{icon name="wrench"}
 						</a>
@@ -280,11 +283,6 @@
 									<a href="tiki-list_articles.php?remove={$listpages[ix].articleId}">
 										{icon name='remove'} {tr}Remove{/tr}
 									</a>
-								</li>
-							{/if}
-							{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit_article eq 'y'}
-								<li class="dropdown-submenu">
-									{include file='translated-lang.tpl' object_type='article' submenu="y" trads=$listpages[ix].translations articleId=$listpages[ix].articleId}
 								</li>
 							{/if}
 						</ul>
