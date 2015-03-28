@@ -111,7 +111,8 @@ class Table_Plugin
 					. '<br> <b>Text - </b>type:text;placeholder:xxxx<br>' .
 					tra('(For PluginTrackerlist this will be an exact search, for other plugins partial values will work.)') . '<br>
 					<b>Dropdown - </b>type:dropdown;placeholder:****;option:****;option:****;option:**** <br>' .
-					tra('(options generated automatically if not set and the server parameter is not \'y\')') . '<br>
+					tra('Options generated automatically if not set and the server parameter is not \'y\'.') . '<br>' .
+					tra('Use \'value=Display label\' to have the option value be different than the displayed label in the dropdown.') . '<br>
 					<b>' . tra('Date range - ') . '</b>type:date;format:yyyy-mm-dd;from:2013-06-30;to:2013-12-31<br>' .
 					tra('(from and to values set defaults for these fields when user clicks on the input field)') . '<br>
 					<b>' . tra('Numeric range - ') . '</b>type:range;from:0;to:50<br>
@@ -274,6 +275,12 @@ class Table_Plugin
 					$tsf = $this->parseParam($tsfilters);
 					if (is_array($tsf)) {
 						foreach ($tsf as $col => $filterinfo) {
+							if (isset($filterinfo) && $filterinfo['type'] === 'dropdown'
+								&& !empty($filterinfo['options'])) {
+								foreach ($filterinfo['options'] as $key => $value) {
+									$filterinfo['options'][$key] = str_replace('=', '|', $value);
+								}
+							}
 							if (isset($s['columns'][$col]['filter'])) {
 								$s['columns'][$col]['filter'] = $s['columns'][$col]['filter'] + $filterinfo;
 							} else {
