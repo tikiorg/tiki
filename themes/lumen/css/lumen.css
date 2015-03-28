@@ -7038,14 +7038,12 @@ a.fc-event:hover {
   background: transparent;
 }
 .topbar,
-.topbar .cssmenu_horiz ul,
 .topbar .navbar-default .navbar-nav > li,
 .topbar .nav > li {
   background: #f8f8f8;
   color: #555555;
 }
 .topbar > a,
-.topbar .cssmenu_horiz ul > a,
 .topbar .navbar-default .navbar-nav > li > a,
 .topbar .nav > li > a {
   color: #999999;
@@ -7053,14 +7051,15 @@ a.fc-event:hover {
   padding-bottom: 15px;
 }
 .topbar > a:hover,
-.topbar .cssmenu_horiz ul > a:hover,
 .topbar .navbar-default .navbar-nav > li > a:hover,
 .topbar .nav > li > a:hover,
 .topbar > a:focus,
-.topbar .cssmenu_horiz ul > a:focus,
 .topbar .navbar-default .navbar-nav > li > a:focus,
 .topbar .nav > li > a:focus {
   color: #333333;
+}
+.topbar .cssmenu_horiz ul {
+  background: #ffffff;
 }
 .topbar .sf-arrows .sf-with-ul:after {
   /* order of following 3 rules important for fallbacks to work */

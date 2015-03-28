@@ -6662,6 +6662,9 @@ a.fc-event:hover {
 .topbar .nav > li > a:focus {
   color: #6c7b8c;
 }
+.topbar .cssmenu_horiz ul {
+  background: url('../images/flakesptn2.jpg');
+}
 .topbar .sf-arrows .sf-with-ul:after {
   /* order of following 3 rules important for fallbacks to work */
   border: 5px solid transparent;
