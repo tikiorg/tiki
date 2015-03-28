@@ -6663,6 +6663,9 @@ a.fc-event:hover {
 .topbar .nav > li > a:focus {
   color: #cda256;
 }
+.topbar .cssmenu_horiz ul {
+  background: #ffffff;
+}
 .topbar .sf-arrows .sf-with-ul:after {
   /* order of following 3 rules important for fallbacks to work */
   border: 5px solid transparent;
