@@ -1005,15 +1005,13 @@ if ( \$('#$id') ) {
 			}
 		}
 
-		//This is the class name for new simplified plugin system, if object does exist, it will use it, if not it uses old plugins
-		$classExists = false;
 		$func_name = 'wikiplugin_' . $name;
 
 		if ( ! $validationPerformed && ! $this->option['ck_editor'] ) {
 			$this->plugin_apply_filters($name, $data, $args);
 		}
 
-		if ( function_exists($func_name) || $classExists == true) {
+		if ( function_exists($func_name) ) {
 			$pluginFormat = 'wiki';
 
 			$info = $this->plugin_info($name, $args);
@@ -1028,11 +1026,9 @@ if ( \$('#$id') ) {
 			}
 
 			$saved_options = $this->option;	// save current options (but do not reset)
-			if ($classExists == true) {
-				$output = $class->exec($data, $args, $offset, $this);
-			} else {
-				$output = $func_name($data, $args, $offset);
-			}
+
+			$output = $func_name($data, $args, $offset);
+
 			$this->option = $saved_options; // restore parsing options after plugin has executed
 
 			//This was added to remove the table of contents sometimes returned by other plugins, to use, simply have global $killtoc, and $killtoc = true;
