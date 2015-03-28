@@ -21,11 +21,11 @@ class Tracker_field_Image extends Tracker_Field_File
 		return array(
 			'i' => array(
 				'name' => tr('Image'),
-				'description' => tr('Allow users to upload images on the tracker item.'),
+				'description' => tr('Deprecated in favor of the Files field.'),
 				'help' => 'Image Tracker Field',
 				'prefs' => array('trackerfield_image'),
 				'tags' => array('basic'),
-				'default' => 'y',
+				'default' => 'n',
 				'params' => array(
 					'xListSize' => array(
 						'name' => tr('List image width'),

@@ -131,7 +131,7 @@ a.fc-event:hover {
 }
 
 .topbar,
-.topbar .cssmenu_horiz ul,
+//.topbar .cssmenu_horiz ul,
 .topbar .navbar-default .navbar-nav > li,
 .topbar .nav > li {
   background: @topbar_bg; //  @navbar-default-bg;
@@ -146,6 +146,10 @@ a.fc-event:hover {
   > a:focus {
     color: @topbar_link_hover_color; //  @navbar-default-link-hover-color;
   }
+}
+
+.topbar .cssmenu_horiz ul {
+  background: @dropdown-menu-bg;
 }
 
 .topbar .sf-arrows .sf-with-ul:after {

@@ -100,6 +100,11 @@ function smarty_function_menu($params, $smarty)
 				} else {
 					$structured[] = $element;
 				}
+			} elseif($element['type'] == '-') {
+				if ($activeSection) {
+					$structured[] = $activeSection;
+				}
+				$activeSection = null;
 			}
 		}
 

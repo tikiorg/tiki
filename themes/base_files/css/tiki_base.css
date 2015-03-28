@@ -854,7 +854,6 @@ span.btn-link {
 }
 .dropdown-title {
   text-align: center;
-  padding-top: 10px;
   padding-right: 5px;
   padding-left: 5px;
   opacity: .75;
@@ -3101,20 +3100,12 @@ body.tiki.navbar-padding {
 .tiki.dropdown-menu {
   padding: 0;
 }
-.tiki .dropdown-menu li:first-of-type,
-.menuSection ul li:first-of-type {
-  margin-top: -5px;
-}
-.tiki .dropdown-menu li:first-of-type > a,
-.menuSection ul li:first-of-type > a {
+.tiki .dropdown-menu,
+.menuSection ul {
   padding-top: 10px;
 }
-.tiki .dropdown-menu li:last-of-type,
-.menuSection ul li:last-of-type {
-  margin-bottom: -5px;
-}
-.tiki .dropdown-menu li:last-of-type > a,
-.menuSection ul li:last-of-type > a {
+.tiki .dropdown-menu,
+.menuSection ul {
   padding-bottom: 10px;
 }
 .tiki .popover {

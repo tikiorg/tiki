@@ -68,7 +68,7 @@
 				<label>
 					<input type="checkbox" name="useAttachments" value="1"
 						{if $info.useAttachments eq 'y'} checked="checked"{/if}>
-					{tr}Allow attachments{/tr}
+					{tr}Allow attachments (deprecated, use files field){/tr}
 				</label>
 			</div>
 			<div class="checkbox depends" data-on="useAttachments">

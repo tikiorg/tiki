@@ -6642,14 +6642,12 @@ a.fc-event:hover {
   background: #5bacd7;
 }
 .topbar,
-.topbar .cssmenu_horiz ul,
 .topbar .navbar-default .navbar-nav > li,
 .topbar .nav > li {
   background: #426d95;
   color: #ffffff;
 }
 .topbar > a,
-.topbar .cssmenu_horiz ul > a,
 .topbar .navbar-default .navbar-nav > li > a,
 .topbar .nav > li > a {
   color: #ffffff;
@@ -6657,11 +6655,9 @@ a.fc-event:hover {
   padding-bottom: 7px;
 }
 .topbar > a:hover,
-.topbar .cssmenu_horiz ul > a:hover,
 .topbar .navbar-default .navbar-nav > li > a:hover,
 .topbar .nav > li > a:hover,
 .topbar > a:focus,
-.topbar .cssmenu_horiz ul > a:focus,
 .topbar .navbar-default .navbar-nav > li > a:focus,
 .topbar .nav > li > a:focus {
   color: #ffffff;

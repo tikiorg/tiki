@@ -147,7 +147,7 @@ class MonitorMailLib
 		unset($context);
 	}
 
-	private function send($email, $title, $html, $args)
+	private function send($email, $title, $html, $args = [])
 	{
 		global $prefs;
 
