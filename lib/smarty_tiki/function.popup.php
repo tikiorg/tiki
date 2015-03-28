@@ -38,7 +38,7 @@ function smarty_function_popup($params, $smarty)
 	$options = array(
 		'data-toggle' => 'popover',
 		'data-container' => 'body',
-		'data-trigger' => 'hover',
+		'data-trigger' => 'hover focus',
 		'data-content' => '',
 	);
 
@@ -55,6 +55,8 @@ function smarty_function_popup($params, $smarty)
 						$options['data-trigger'] = 'click';
 						break;
 					// support native bootstrap params - could be moved to default but not sure whether it breaks something
+					case 'hover focus':
+					case 'focus hover':
 					case 'click':
 					case 'hover':
 					case 'focus':
