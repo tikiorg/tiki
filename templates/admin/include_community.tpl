@@ -110,9 +110,11 @@
 				{preference name=activity_custom_events}
 
 				<div class="adminoptionboxchild" id="activity_custom_events_childcontainer">
-
-					{$headerlib->add_dracula()}
-					{$headerlib->add_jsfile('lib/jquery_tiki/activity.js', 'external')}
+					{* former add_dracula() *}
+					{$headerlib->add_jsfile('lib/dracula/raphael-min.js', true)}
+					{$headerlib->add_jsfile('lib/dracula/graffle.js', true)}
+					{$headerlib->add_jsfile('lib/dracula/graph.js', true)}
+					{$headerlib->add_jsfile('lib/jquery_tiki/activity.js', true)}
 					<div id="graph-canvas" class="graph-canvas" data-graph-nodes="{$event_graph.nodes|@json_encode|escape}" data-graph-edges="{$event_graph.edges|@json_encode|escape}"></div>
 					<div><button href="#" id="graph-draw" class="button">{tr}Draw Event Diagram{/tr}</button></div>
 					<div><button href="{service controller=managestream action=list}" id="show-rules">{tr}Show Rules{/tr}</button></div>

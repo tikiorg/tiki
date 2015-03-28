@@ -245,7 +245,6 @@ class HeaderLib
 	 * Adds a js file to load after external. That file must not be loaded from an external source.
 	 * Depending on prefs, it could be minified and also put into a single js file
 	 * @param string $file -  path relative to tiki dir
-	 * @param integer $rank optional, default = 0 -  order of loading - lower number gets loaded first
 	 * @param boolean $skip_minify optional, default = false - true if the file must not be minified
 	 * @return object $HeaderLib
 	 */
@@ -1125,16 +1124,6 @@ class HeaderLib
 		return $this;
 	}
 
-	function add_dracula()
-	{
-		// Because they are only used in this file, they are marked as external so they
-		// are not included in the minify
-		$this->add_jsfile_external('lib/dracula/raphael-min.js', true);
-		$this->add_jsfile_external('lib/dracula/graffle.js', true);
-		$this->add_jsfile_external('lib/dracula/graph.js', true);
-
-		return $this;
-	}
 
 	function __toString()
 	{
