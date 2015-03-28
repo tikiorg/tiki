@@ -1005,15 +1005,13 @@ if ( \$('#$id') ) {
 			}
 		}
 
-		//This is the class name for new simplified plugin system, if object does exist, it will use it, if not it uses old plugins
-		$classExists = false;
 		$func_name = 'wikiplugin_' . $name;
 
 		if ( ! $validationPerformed && ! $this->option['ck_editor'] ) {
 			$this->plugin_apply_filters($name, $data, $args);
 		}
 
-		if ( function_exists($func_name) || $classExists == true) {
+		if ( function_exists($func_name) ) {
 			$pluginFormat = 'wiki';
 
 			$info = $this->plugin_info($name, $args);
@@ -1028,11 +1026,9 @@ if ( \$('#$id') ) {
 			}
 
 			$saved_options = $this->option;	// save current options (but do not reset)
-			if ($classExists == true) {
-				$output = $class->exec($data, $args, $offset, $this);
-			} else {
-				$output = $func_name($data, $args, $offset);
-			}
+
+			$output = $func_name($data, $args, $offset);
+
 			$this->option = $saved_options; // restore parsing options after plugin has executed
 
 			//This was added to remove the table of contents sometimes returned by other plugins, to use, simply have global $killtoc, and $killtoc = true;
@@ -2854,13 +2850,15 @@ if ( \$('#$id') ) {
 						// May be special signs present after '!'s?
 						$divstate = substr($line, $hdrlevel, 1);
 						if (($divstate == '+' || $divstate == '-') && !$this->option['ck_editor']) {
-							// OK. Must insert flipper after HEADER, and then open new div...
-							$thisid = 'id' . preg_replace('/[^a-zA-z0-9]/', '', urlencode($this->option['page'])) .$nb_hdrs;
-							$aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
-							$aclose2 = '<div id="' . $thisid . '" class="showhide_heading" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
-							$headerlib = TikiLib::lib('header');
-							$headerlib->add_jq_onready("setheadingstate('$thisid');");
-							array_unshift($divdepth, $hdrlevel);
+							if ($this->option['print'] !== 'y') {
+								// OK. Must insert flipper after HEADER, and then open new div...
+								$thisid = 'id' . preg_replace('/[^a-zA-z0-9]/', '', urlencode($this->option['page'])) . $nb_hdrs;
+								$aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
+								$aclose2 = '<div id="' . $thisid . '" class="showhide_heading" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
+								$headerlib = TikiLib::lib('header');
+								$headerlib->add_jq_onready("setheadingstate('$thisid');");
+								array_unshift($divdepth, $hdrlevel);
+							}
 							$addremove += 1;
 						}
 
