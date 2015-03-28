@@ -36,10 +36,6 @@ header.header .module.secondary_site_menu {
   background: none;
 }
 
-.secondary_site_menu .navbar-default .navbar-collapse,
-.secondary_site_menu .navbar-default .navbar-form,
-.secondary_site_menu .navbar-default {background: @secondary_site_menu_navbar_background;}
-
 .middle_outer {
   background: @middle_outer_background;
 }
@@ -97,37 +93,15 @@ textarea,
   background: @navbar-default-navbar-nav-li-a-background; // #cdbe23;
 }
 
+.topbar .navbar-default .navbar-nav > li a:hover,
+.topbar .nav > li:hover,
+.topbar .cssmenu_horiz li:hover,
 .navbar-default .navbar-nav  li  a:hover {
   background: @navbar-default-navbar-nav-li-a-hover-background;
 }
 
 .postbody-title {
   background: @postbody-title-background; //url('@{imagePath}siteheader.png') no-repeat -480px -200px;
-}
-
-.secondary_site_menu .navbar {margin-bottom: 0;}
-.secondary_site_menu .navbar-nav {float: right;}
-
-.secondary_site_menu .navbar-default .navbar-nav > li > a, // sets link color
-.secondary_site_menu .navbar-default .navbar-nav > li > a:hover,
-.secondary_site_menu .navbar-default .navbar-nav > li > a:focus,
-.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover //,
-//.secondary_site_menu .navbar-nav .open .dropdown-menu,
-//.secondary_site_menu .navbar-nav .open .dropdown-menu li
-{
-  background: transparent;
-  color: @brand-primary-of-option;
-}
-
-.secondary_site_menu .navbar-default .navbar-nav li ul li a {
-  background: @navbar-default-navbar-nav-li-a-background;
-  color: #fff;
-}
-
-.secondary_site_menu .navbar-default .navbar-nav li ul li a:hover,
-.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
-  background: @navbar-default-navbar-nav-li-a-background;//darken(@navbar-default-navbar-nav-li-a-background, 6%);
-  color: #fff;
 }
 
 .siteloginbar_popup .dropdown-menu > li > a {color: #fff;}
@@ -175,7 +149,7 @@ input[type="submit"]:hover,
 .button input:hover {
   background: @button-hover-background-gradient;}
 
-#topbar_modules {
+.topbar {
   .panel-heading,
   .navbar-default .navbar-collapse,
   .navbar-default .navbar-form {
@@ -188,11 +162,3 @@ input[type="submit"]:hover,
     padding-bottom: 8px;
   }
 }
-/*.navbar-nav > li > a {
-  padding-top: none;
-  padding-bottom: none;}
-
-.navbar-nav > li > a {
-  padding-bottom: 0;
-  padding-top: 0;
-}*/
