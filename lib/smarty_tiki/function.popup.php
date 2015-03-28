@@ -27,9 +27,11 @@
  *     text        Required: the text/html to display in the popup window
  *     trigger     'onClick' and native bootstrap params: 'click', 'hover', 'focus', 'manual' ('hover' default)
  *     sticky      false/true - this is currently an alias for trigger['click'] which is wrong. 
- *     							Sticky should define wether the popup should stay until clicked, not how it is triggered. 
+ *     							Sticky should define whether the popup should stay until clicked, not how it is triggered.
  *     width       in pixels?
  *     fullhtml
+ *     delay       number of miliseconds to delay showing or hiding of popover. If just one number, then it will apply to both
+ *                 show and hide, or use "500|1000" to have a 500 ms show delay and a 1000 ms hide delay
  */
 function smarty_function_popup($params, $smarty)
 {
@@ -52,7 +54,7 @@ function smarty_function_popup($params, $smarty)
 					case 'onClick':
 						$options['data-trigger'] = 'click';
 						break;
-					// support native bootstrap params - could be moved to default but not sure wether it breaks something
+					// support native bootstrap params - could be moved to default but not sure whether it breaks something
 					case 'click':
 					case 'hover':
 					case 'focus':
@@ -95,6 +97,7 @@ function smarty_function_popup($params, $smarty)
         return false;
 	}
 
+
 	$options['data-content'] = preg_replace(array('/\\\\r\n/','/\\\\n/','/\\\\r/', '/\\t/'), '', $options['data-content']);
 	$options['data-content'] = str_replace('\&#039;', '&#039;', $options['data-content']);	// unescape previous js escapes
 	$options['data-content'] = str_replace('\&quot;', '&quot;', $options['data-content']);
@@ -105,6 +108,18 @@ function smarty_function_popup($params, $smarty)
 	foreach ($options as $k => $v) {
 		$retval .= $k . '=' . json_encode($v, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . ' ';
 	}
+
+	//handle delay param here since slashes added by the above break the code
+	if (!empty($params['delay'])) {
+		$explode = explode('|', $params['delay']);
+		if (count($explode) == 1) {
+			$delay = (int) $explode[0];
+		} else {
+			$delay = '{"show":"'. (int) $explode[0] . '", "hide":"' . (int) $explode[1] . '"}';
+		}
+	}
+
+	$retval .= ' data-delay=\'' . $delay . '\'';
 
 	return $retval;
 }
