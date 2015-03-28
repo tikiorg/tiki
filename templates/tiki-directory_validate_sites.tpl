@@ -50,7 +50,7 @@ var CHECKBOX_LIST = [{{section name=user loop=$items}'sites[{$items[user].siteId
 						{/capture}
 						<a class="tips"
 						   title="{tr}Actions{/tr}"
-						   href="#" {popup trigger="click" fullhtml="1" center=true text=$smarty.capture.validate_actions|escape:"javascript"|escape:"html"}
+						   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.validate_actions|escape:"javascript"|escape:"html"}
 						   style="padding:0; margin:0; border:0"
 								>
 							{icon name='wrench'}

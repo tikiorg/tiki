@@ -131,7 +131,7 @@
 				{assign var=nbCols value=$nbCols+1}
 				<th style="width:1%">
 					{if !empty($other_columns)}
-						<a href='#' {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.over_other_columns|escape:"javascript"|escape:"html"} title="{tr}Other Sorts{/tr}">
+						<a href='#' {popup delay="0|2000" fullhtml="1" text=$smarty.capture.over_other_columns|escape:"javascript"|escape:"html"} title="{tr}Other Sorts{/tr}">
 					{/if}
 					{icon name='ranking' alt="{tr}Other Sorts{/tr}" title=''}
 					{if !empty($other_columns)}
@@ -260,7 +260,7 @@
 				{if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' )
 					and (!isset($gal_info.show_action) or $gal_info.show_action neq 'n') and $prefs.javascript_enabled eq 'y'}
 					<td style="white-space: nowrap">
-						<a class="fgalname tips" title="{tr}Actions{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" center=true text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">
+						<a class="fgalname tips" title="{tr}Actions{/tr}" href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">
 							{icon name='wrench' alt="{tr}Actions{/tr}"}
 						</a>
 					</td>
