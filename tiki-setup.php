@@ -342,7 +342,9 @@ if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
 
 if ( isset($prefs['fgal_elfinder_feature']) && $prefs['fgal_elfinder_feature'] === 'y' ) {
 	$str = $prefs['tiki_minify_javascript'] === 'y' ? 'min' : 'full';
-	$headerlib->add_jsfile('vendor_extra/elfinder/js/elfinder.' . $str . '.js')
+	// elfinder is sensible to js compression - problem is inside elfinder
+	// see http://stackoverflow.com/questions/11174170/js-invalid-left-hand-side-expression-in-postfix-operation for more general details
+	$headerlib->add_jsfile('vendor_extra/elfinder/js/elfinder.' . $str . '.js', true)
 			->add_cssfile('vendor_extra/elfinder/css/elfinder.' . $str . '.css')
 			->add_jsfile('lib/jquery_tiki/elfinder/tiki-elfinder.js');
 
