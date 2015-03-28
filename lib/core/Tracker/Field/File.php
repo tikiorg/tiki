@@ -18,7 +18,7 @@ class Tracker_Field_File extends Tracker_Field_Abstract
 		return array(
 			'A' => array(
 				'name' => tr('Attachment'),
-				'description' => tr('Allows a file to be attached to the tracker item.'),
+				'description' => tr('Deprecated in favor of the Files field.'),
 				'help' => 'Attachment Field',
 				'prefs' => array('trackerfield_file'),
 				'tags' => array('basic'),
