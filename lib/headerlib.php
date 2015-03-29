@@ -592,7 +592,8 @@ class HeaderLib
 		// $jsfiles contains only those keys defined in $ranks
 		$jsfiles = array_intersect_key($allJsfiles, array_flip($ranks));
 		$hash = md5(serialize($jsfiles));
-		$file = 'temp/public/' . $tikidomainslash . "minified_$hash.js";
+		$tempDir = 'temp/public/' . $tikidomainslash;
+		$file = $tempDir . "min_main_". $hash. ".js";
 		$cdnFile = $this->convert_cdn($file);
 		
 		// check if we are on a user defined CDN. 
@@ -618,19 +619,31 @@ class HeaderLib
 				// this is bad practise and that causes issues when putting them all in one file! 
 				$minified = ';';
 				$msg = '';
-				$content = file_get_contents($f);
 				// if the name contains not  'min' and that file is not blacklisted for minification assume it is minified
 				// preferable is to set $skip_minify proper
 				if (!preg_match('/min\.f$/', $f) && $this->skip_minify[$f] !== true) {
 					set_time_limit(600);
 					try {
 						$msg .= "\n/* rank:$rank - minify:ok. $f */\n";
-						$temp = JSMin::minify($content);
+						// to optimize processing time for changed js requirements, cache the minified version of each file
+						$hash = md5($f);
+						// filename without extension - makes it easier to identify the compressed files if needed.
+						$prefix = basename($f, '.js');
+						$minifyFile = $tempDir. "min_s_". $prefix. "_". $hash. ".js";
+						if (file_exists($minifyFile)) {
+							$temp = file_get_contents($minifyFile);
+						} else {
+							$content = file_get_contents($f);
+							$temp = JSMin::minify($content);
+							file_put_contents($minifyFile, $temp);
+							chmod($file, 0644);
+						}
 						// need to use temp bc if there is a failure we would run into catch and a prepended message would be wrong
 						$topMsg .= $msg;
 						$minified .= $msg;
 						$minified .= $temp;
 					} catch (JSMinException $e) {
+						$content = file_get_contents($f);
 						$error = $e->getMessage();
 						$msg .= "\n\* rank:$rank - minify:error ($error) - adding raw file. $f */\n";
 						$topMsg .= $msg;
@@ -638,6 +651,7 @@ class HeaderLib
 						$minified .= $content;
 					}
 				} else {
+					$content = file_get_contents($f);
 					$msg .= "\n/* rank:$rank - minify:disabled - adding raw file. $f */\n";
 					$topMsg .= $msg;
 					$minified .= $msg;
