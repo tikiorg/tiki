@@ -16,13 +16,13 @@
 
 		{listfilter selectors='#plugins_list tr.odd,#plugins_list tr.even'}
 		<div class="table-responsive">
-			<table class="table normal" id="plugins_list">
+			<table class="table normal table-hover table-striped" id="plugins_list">
 				<tr>
 					<th>{select_all checkbox_names='clear[]'}</th>
 					<th>{tr}Plugin{/tr} </th>
 					<th>{tr}Location{/tr} </th>
 					<th>{tr}Added By{/tr} </th>
-					<th>{tr}Actions{/tr} </th>
+					<th></th>
 				</tr>
 				{foreach name=foo from=$plugin_list item=plugin}
 					<tr>
@@ -37,10 +37,14 @@
 						</td>
 						<td class="text">{if $plugin.added_by}{$plugin.added_by|userlink}{else}{tr}Unknown{/tr}{/if}</td>
 						<td class="action">
-							<a href="tiki-plugins.php?approveone={$plugin.fingerprint}">{icon _id='accept' alt="{tr}Approve{/tr}"}</a>
-							<a href="tiki-plugins.php?clearone={$plugin.fingerprint}">{icon _id='delete' alt="{tr}Clear{/tr}"}</a>
+							<a href="tiki-plugins.php?approveone={$plugin.fingerprint}" class="tips" title=":{tr}Approve{/tr}">
+								{icon name='ok'}
+							</a>
+							<a href="tiki-plugins.php?clearone={$plugin.fingerprint}" class="tips" title=":{tr}Clear{/tr}">
+								{icon name='trash'}
+							</a>
 							{if $plugin.last_objectType eq 'wiki page'}
-								{tr _0=$plugin.last_objectId|sefurl:'wiki page' _1=$plugin.last_objectId|escape _2=$plugin.fingerprint}<a href="%0#%2" title="View this page.">{icon _id='page'}</a>{/tr}
+								{tr _0=$plugin.last_objectId|sefurl:'wiki page' _1=$plugin.last_objectId|escape _2=$plugin.fingerprint}<a href="%0#%2" class="tips" title=":{tr}View this page{/tr}">{icon name='textfile'}</a>{/tr}
 							{/if}
 						</td>
 					</tr>

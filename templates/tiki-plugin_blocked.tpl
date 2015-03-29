@@ -1,6 +1,6 @@
 <div class="panel panel-danger" id="{$plugin_fingerprint|escape}">
 	<div class="panel-heading">
-		{icon _id=error style="vertical-align:middle"}
+		{icon name='error' style="vertical-align:middle"}
 		{if $plugin_status eq 'rejected'}
 			{tr}Plugin execution was denied{/tr}
 		{else}

@@ -3,9 +3,9 @@
 
 {if $showmsg ne 'n'}
 	{if $showmsg eq 'e'}
-		<span class="warn">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle;align:left;"}
+		<span class="warn tips" title=":{tr}Error{/tr}">{icon name='error' style="vertical-align:middle;align:left;"}
 	{else}
-		{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle;align:left;"}
+		{icon name='ok' alt="{tr}OK{/tr}" style="vertical-align:middle;align:left;"}
 	{/if}
 	{if $prefs.login_is_email ne 'y'}
 		{$msg|escape:'html'|@default:"{tr}Enter your username or email.{/tr}"}

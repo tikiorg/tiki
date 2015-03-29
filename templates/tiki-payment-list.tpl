@@ -16,12 +16,14 @@
 			<td class="date">{$payment.request_date|tiki_short_date|escape}</td>
 			{if $tiki_p_admin eq 'y'}<td class="text">{$payment.user|userlink}</td>{/if}
 			<td class="action">
-				{self_link invoice=$payment.paymentRequestId}{icon _id=page class=tips title="{tr}View payment request{/tr}" alt="{tr}Invoice{/tr}"}{/self_link}
+				{self_link invoice=$payment.paymentRequestId _icon_name='textfile' _class=tips _title=":{tr}View payment request{/tr}"}
+				{/self_link}
 				{permission type=payment object=$payment.paymentRequestId name=payment_admin}
-					{permission_link mode=icon type="payment" id=$payment.paymentRequestId title=$payment.description}
+					{permission_link type="payment" id=$payment.paymentRequestId title=$payment.description}
 				{/permission}
 				{if $cancel and ($payment.user eq $user or $tiki_p_payment_admin)}
-					{self_link _ajax=n cancel=$payment.paymentRequestId}{icon _id=cross class=tips title="{tr}Cancel this payment request{/tr}" alt="{tr}Cancel{/tr}"}{/self_link}
+					{self_link _ajax=n cancel=$payment.paymentRequestId _icon_name='remove' _class='tips' _title=":{tr}Cancel this payment request{/tr}"}
+					{/self_link}
 				{/if}
 			</td>
 		</tr>

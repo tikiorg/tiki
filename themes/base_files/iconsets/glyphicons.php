@@ -91,6 +91,9 @@ function iconset_glyphicons()
 			'excel' => array(
 				'id' => 'file',
 			),
+			'facebook' => array(
+				'id' => 'thumbs-up',
+			),
 			'file' => array(
 				'id' => 'file',
 			),
@@ -192,6 +195,9 @@ function iconset_glyphicons()
 			),
 			'translate' => array(
 				'id' => 'globe',
+			),
+			'twitter' => array(
+				'id' => 'retweet',
 			),
 			//use a better unlock icon when available
 			'unlock' => array(

@@ -175,7 +175,7 @@
 		{include file='find.tpl'}
 	{/if}
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table normal table-striped table-hover">
 			<tr>
 				<th>
 					<a href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedArticleId_desc'}receivedArticleId_asc{else}receivedArticleId_desc{/if}">{tr}ID{/tr}</a>
@@ -192,7 +192,7 @@
 				<th>
 					<a href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedFromUser_desc'}receivedFromUser_asc{else}receivedFromUser_desc{/if}">{tr}User{/tr}</a>
 				</th>
-				<th>{tr}Action{/tr}</th>
+				<th></th>
 			</tr>
 
 			{section name=user loop=$channels}
@@ -205,9 +205,13 @@
 					<td class="text">{$channels[user].receivedFromSite}</td>
 					<td class="text">{$channels[user].receivedFromUser|escape}</td>
 					<td class="action">
-						<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedArticleId={$channels[user].receivedArticleId}">{icon _id='page_edit'}</a>
+						<a class="tips" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedArticleId={$channels[user].receivedArticleId}" title=":{tr}Edit{/tr}">
+							{icon name='edit'}
+						</a>
 						&nbsp;
-						<a class="link" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedArticleId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+						<a class="tips" href="tiki-received_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedArticleId}" title=":{tr}Remove{/tr}">
+							{icon name='remove'}
+						</a>
 					</td>
 				</tr>
 			{sectionelse}

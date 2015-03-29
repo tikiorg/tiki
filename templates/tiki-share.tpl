@@ -5,7 +5,7 @@
 
 {if isset($sent) && empty($errors)}
 	<div id="success" class="alert alert-warning">
-		{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle" align="left"}
+		{icon name='ok' alt="{tr}OK{/tr}" style="vertical-align:middle" align="left"}
 		{tr}Page shared:{/tr}<br>
 		{if isset($emailSent)}
 			<div>
@@ -14,13 +14,13 @@
 		{/if}
 		{if isset($tweetId)}
 			<div>
-				<a href="http://www.twitter.com/"><img src="img/icons/twitter_t_logo_32.png"></a>
+				<a href="http://www.twitter.com/">{icon name='twitter' size='2'}</a>
 				{tr}The link was sent via Twitter{/tr}
 			</div>
 		{/if}
 		{if isset($facebookId) and $facebookId!=false}
 			<div>
-				<img src="img/icons/facebook-logo_32.png">{tr}The link was posted on your Facebook wall{/tr}
+				{icon name='facebook' size='2'}{tr}The link was posted on your Facebook wall{/tr}
 			</div>
 		{/if}
 		{if isset($messageSent)}
@@ -41,7 +41,7 @@
 
 {if !empty($errors)}
 	<div id="shareerror" class="alert alert-warning">
-		{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}
+		{icon name='error' alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}
 		{foreach from=$errors item=m name=errors}
 			{$m}
 			{if !$smarty.foreach.errors.last}<br>{/if}
@@ -86,7 +86,7 @@
 
 			<tr>
 				<td rowspan="2">
-					<img src="img/icons/large/evolution48x48.png" alt="{tr}email{/tr}">
+					{icon name='envelope' size='3' alt="{tr}email{/tr}"}
 					<br>
 					{tr}Send via email{/tr}
 				</td>
@@ -177,7 +177,7 @@
 			{if $twitterRegistered}
 				<tr>
 					<td rowspan="2">
-						<img src="img/icons/twitter_t_logo_32.png" alt="Twitter">
+						{icon name='twitter' size='2'}
 						<br>
 						{tr}Tweet via Twitter{/tr}
 					</td>
@@ -215,7 +215,7 @@
 			{if $facebookRegistered}
 				<tr>
 					<td rowspan="2">
-						<img src="img/icons/facebook-logo_32.png" alt="Facebook">
+						{icon name='facebook' size='2' alt="Facebook"}
 						<br>
 							{tr}Put on my Facebook wall{/tr}
 					</td>
@@ -264,7 +264,7 @@
 			{if $prefs.feature_messages eq 'y' && $report != 'y'}
 				<tr>
 					<td rowspan="2">
-						<img src="img/icons/large/messages48x48.png" alt="{tr}Messages{/tr}">
+						{icon name='send' size='3' alt="{tr}Messages{/tr}"}
 						<br>
 						{tr}Send message{/tr}
 					</td>
@@ -319,7 +319,7 @@
 			{if $prefs.feature_forums eq 'y' && $report != 'y'}
 				<tr>
 					<td rowspan="2">
-						<img src="img/icons/large/stock_index48x48.png" alt="{tr}Forums{/tr}">
+						{icon name='comments' size='3' alt="{tr}Forums{/tr}"}
 						<br>
 						{tr}Post on forum{/tr}
 					</td>
