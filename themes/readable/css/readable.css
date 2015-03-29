@@ -7464,3 +7464,10 @@ input.tablesorter-filter {
   border: none;
   background-color: #f7f7f7;
 }
+.topbar,
+.cssmenu_horiz {
+  font-family: Raleway, sans-serif;
+}
+.topbar .cssmenu_horiz > li > a {
+  margin: 12px 6px;
+}
