@@ -6574,6 +6574,11 @@ header.page-header::before,
   line-height: 1.42857143;
   color: #333333;
 }
+.cssmenu_horiz li ul {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin: 0;
+}
 .cssmenu_horiz > li > a:hover,
 .cssmenu_vert > li > a:hover,
 .cssmenu_horiz ul > li > a:hover,
