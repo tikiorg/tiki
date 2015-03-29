@@ -34,7 +34,9 @@
 {/if}
 
 {if sizeof($avatars) eq 0 and $avatar}
-	<a class="link" href="tiki-pick_avatar.php?reset=y&amp;view_user{$userwatch|escape}" title="{tr}reset{/tr}">{icon _id='cross' alt="{tr}reset{/tr}"}</a>
+	<a class="link tips" href="tiki-pick_avatar.php?reset=y&amp;view_user{$userwatch|escape}" title=":{tr}Reset{/tr}">
+		{icon name='remove'}
+	</a>
 {/if}
 
 {if sizeof($avatars) > 0}

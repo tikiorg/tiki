@@ -60,7 +60,7 @@
 		</p>
 	{/if}
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table normal table-striped table-hover">
 			<tr>
 				<th>
 					<a href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedPageId_desc'}receivedPageId_asc{else}receivedPageId_desc{/if}">{tr}ID{/tr}</a>
@@ -77,7 +77,7 @@
 				<th>
 					<a href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedFromUser_desc'}receivedFromUser_asc{else}receivedFromUser_desc{/if}">{tr}User{/tr}</a>
 				</th>
-				<th>{tr}Action{/tr}</th>
+				<th></th>
 			</tr>
 
 			{section name=user loop=$channels}
@@ -94,10 +94,18 @@
 					<td class="text">{$channels[user].receivedFromSite}</td>
 					<td class="text">{$channels[user].receivedFromUser}</td>
 					<td class="action">
-						<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedPageId={$channels[user].receivedPageId}">{icon _id='page_edit'}</a>
-						<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedPageId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
-						<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedPageId}">{icon _id='accept'}</a> &nbsp;
-						<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedPageId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+						<a class="tips" title=":{tr}Edit{/tr}" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedPageId={$channels[user].receivedPageId}">
+							{icon name='edit'}
+						</a>
+						<a class="tips" title=":{tr}View{/tr}" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedPageId}">
+							{icon name='view'}
+						</a>
+						<a class="tips" title=":{tr}Accept{/tr}" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedPageId}">
+							{icon name='ok'}
+						</a> &nbsp;
+						<a class="tips" title=":{tr}Remove{/tr}" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedPageId}">
+							{icon name='remove'}
+						</a>
 					</td>
 				</tr>
 			{sectionelse}
@@ -116,7 +124,7 @@
 {/if}
 <form action="tiki-received_pages.php" method="post">
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table normal table-striped table-hover">
 			<tr>
 				<th>&nbsp;</th>
 				<th>
@@ -135,7 +143,7 @@
 				<th>
 					<a href="tiki-received_pages.php?offset={$offset}&amp;sort_modes={if $sort_modes eq 'receivedFromUser_desc'}receivedFromUser_asc{else}receivedFromUser_desc{/if}">{tr}User{/tr}</a>
 				</th>
-				<th>{tr}Action{/tr}</th>
+				<th></th>
 			</tr>
 
 			{section name=user loop=$structures}
@@ -149,9 +157,13 @@
 						<td class="text">{$structures[user].receivedFromSite}</td>
 						<td class="text">{$structures[user].receivedFromUser}</td>
 						<td class="action">
-							<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$structures[user].receivedPageId}">{icon _id='accept'}</a>
+							<a class="tips" title=":{tr}Accept{/tr}" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$structures[user].receivedPageId}">
+								{icon name='ok'}
+							</a>
 							&nbsp;
-							<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$structures[user].receivedPageId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+							<a class="tips" title=":{tr}Remove{/tr}" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$structures[user].receivedPageId}">
+								{icon name='remove'}
+							</a>
 						</td>
 					</tr>
 					{section name=ix loop=$structures}
@@ -173,8 +185,12 @@
 								<td class="text">{$structures[ix].receivedFromSite}</td>
 								<td class="text">{$structures[ix].receivedFromUser}</td>
 								<td class="action">
-									<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedPageId={$structures[ix].receivedPageId}">{icon _id='page_edit'}</a>
-									<a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$structures[ix].receivedPageId}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
+									<a class="tips" title=":{tr}Edit{/tr}" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedPageId={$structures[ix].receivedPageId}">
+										{icon name='edit'}
+									</a>
+									<a class="tips" title=":{tr}View{/tr}" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$structures[ix].receivedPageId}">
+										{icon name='view'}
+									</a>
 								</td>
 							</tr>
 						{/if}

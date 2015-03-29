@@ -29,7 +29,7 @@
 					<label class="searchboolean control-label" for="boolean">
 						{tr}Advanced search:{/tr} <input type="checkbox" name="boolean" id="boolean" {if $boolean eq 'y'} checked="checked"{/if}>
 					</label>
-					<a href="{bootstrap_modal controller=search action=help}">{tr}Search Help{/tr} {icon _id=help}</a>
+					<a href="{bootstrap_modal controller=search action=help}">{tr}Search Help{/tr} {icon name='help'}</a>
 				</div>
 
 				{if $prefs.feature_search_show_last_modification eq 'y'}
@@ -83,14 +83,14 @@
 								{$cat_tree}
 								<div class="clearfix">
 									{if $tiki_p_admin_categories eq 'y'}
-										<div class="pull-right"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
+										<div class="pull-right"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon name='wrench'}</a></div>
 									{/if}
 									{select_all checkbox_names='cat_categories[]' label="{tr}Select/deselect all categories{/tr}"}
 								</div>
 							{else}
 								<div class="clearfix">
 									{if $tiki_p_admin_categories eq 'y'}
-										<div class="pull-right"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
+										<div class="pull-right"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon name='wrench'}</a></div>
 									{/if}
 									{tr}No categories defined{/tr}
 								</div>

@@ -1,5 +1,5 @@
 <div class="table-responsive">
-<table class="table normal">
+<table class="table normal table-striped table-hover">
 	<tr>
 		<th>{tr}ID{/tr}</th>
 		<th>{tr}Description{/tr}</th>
@@ -8,7 +8,7 @@
 		<th>{tr}Payment Type{/tr}</th>
 		{if $tiki_p_admin eq 'y'}<th>{tr}User{/tr}</th>{/if}
 		{if $tiki_p_admin eq 'y'}<th>{tr}Payer{/tr}</th>{/if}
-		<th>{tr}Actions{/tr}</th>
+		<th></th>
 	</tr>
 	{foreach from=$payments.data item=payment}
 		<tr>
@@ -20,12 +20,14 @@
 			{if $tiki_p_admin eq 'y'}<td class="text">{$payment.user|userlink}</td>{/if}
 			{if $tiki_p_admin eq 'y'}<td class="text">{$payment.payer|userlink}</td>{/if}
 			<td class="action">
-				{self_link invoice=$payment.paymentRequestId}{icon _id=page class=tips title="{tr}View payment info{/tr}" alt="{tr}Invoice{/tr}"}{/self_link}
+				{self_link invoice=$payment.paymentRequestId _icon_name="textfile" _class=tips _title=":{tr}View payment info{/tr}"}
+				{/self_link}
 				{permission type=payment object=$payment.paymentRequestId name=payment_admin}
-					{permission_link mode=icon type=payment id=$payment.paymentRequestId title=$payment.description}
+					{permission_link type=payment id=$payment.paymentRequestId title=$payment.description}
 				{/permission}
 				{if $cancel and ($payment.user eq $user or $tiki_p_payment_admin)}
-					{self_link _ajax=n cancel=$payment.paymentRequestId}{icon _id=cross class=tips title="{tr}Cancel this payment request{/tr}" alt="{tr}Cancel{/tr}"}{/self_link}
+					{self_link _ajax=n cancel=$payment.paymentRequestId _icon_name='remove' _class=tips _title=":{tr}Cancel this payment request{/tr}"}
+					{/self_link}
 				{/if}
 			</td>
 		</tr>

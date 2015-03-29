@@ -70,7 +70,9 @@
 						</table>
 					<td align="right">
 						<input type="submit" class="btn btn-default btn-sm" name="editreference" value="{tr}Save{/tr}" style="color:#ffffff!important;" id="save_{$references[i].ref_id|escape}" disabled="disabled">
-						<a title="{tr}Delete{/tr}" href="tiki-references.php?action=delete&amp;referenceId={$references[i].ref_id}" >{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+						<a title=":{tr}Delete{/tr}" class="tips" href="tiki-references.php?action=delete&amp;referenceId={$references[i].ref_id}" >
+							{icon name='remove'}
+						</a>
 					</form>
 				</td>
 		</tr>

@@ -42,7 +42,7 @@
 				<!-- sort results -->
 				<a href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'resultId_desc'}resultId_asc{else}resultId_desc{/if}">{tr}Result{/tr}</a>
 			</th>
-			<th>{tr}P/F{/tr}</th>
+			<th>{tr}Pass/Fail{/tr}</th>
 		</tr>
 
 		{section name=user loop=$channels}
@@ -53,12 +53,16 @@
 				<td class="integer">{$channels[user].points} ({$channels[user].avgavg|string_format:"%.2f"}%)</td>
 				<td class="action">
 					{if $tiki_p_view_user_results eq 'y'}
-						<a class="link" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;resultId={$channels[user].resultId}&amp;userResultId={$channels[user].userResultId}">{icon _id='application_form_magnify' alt="{tr}Results{/tr}" title="{tr}Results{/tr}"}</a>
+						<a class="tips" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;resultId={$channels[user].resultId}&amp;userResultId={$channels[user].userResultId}" title=":{tr}Results{/tr}">
+							{icon name='chart'}
+						</a>
 						{if $channels[user].hasDetails eq 'y'}({tr}Details{/tr}){/if}
 					{/if}
 
 					{if $tiki_p_admin_quizzes eq 'y'}
-						<a class="link" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;remove={$channels[user].userResultId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+						<a class="tips" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;remove={$channels[user].userResultId}" title=":{tr}Remove{/tr}">
+							{icon name='remove'}
+						</a>
 					{/if}
 				</td>
 				<td>{if $channels[user].ispassing}{tr}Passed{/tr}{else}{tr}Failed{/tr}{/if}</td>
