@@ -241,6 +241,10 @@ function iconset_legacy()
 			),
 			'comments' => array(
 				'id' => 'comments',
+				'size' => 1,
+				'sizes' => array(
+					3 => 'large/comments48x48'
+				)
 			),
 			'copy' => array(
 				'id' => 'page_copy',
@@ -271,12 +275,23 @@ function iconset_legacy()
 			),
 			'envelope' => array(
 				'id' => 'email',
+				'size' => 1,
+				'sizes' => array(
+					3 => 'large/evolution48x48'
+				)
 			),
 			'error' => array(
 				'id' => 'exclamation',
 			),
 			'export' => array(
 				'id' => 'disk',
+			),
+			'facebook' => array(
+				'id' => 'thumb_up',
+				'size' => 1,
+				'sizes' => array(
+					2 => 'facebook-logo_32'
+				)
 			),
 			'file-archive' => array(
 				'id' => 'folder',
@@ -411,6 +426,13 @@ function iconset_legacy()
 			'search' => array(
 				'id' => 'magnifier',
 			),
+			'send' => array(
+				'id' => 'email_go',
+				'size' => 1,
+				'sizes' => array(
+					3 => 'messages48x48'
+				)
+			),
 			'settings' => array(
 				'id' => 'wrench',
 			),
@@ -479,6 +501,13 @@ function iconset_legacy()
 			),
 			'trash' => array(
 				'id' => 'bin',
+			),
+			'twitter' => array(
+				'id' => 'twitter',
+				'size' => 1,
+				'sizes' => array(
+					2 => 'twitter_t_logo_32'
+				)
 			),
 			'undo' => array(
 				'id' => 'arrow_undo',
