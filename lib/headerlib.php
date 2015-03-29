@@ -624,7 +624,6 @@ class HeaderLib
 				if (!preg_match('/min\.f$/', $f) && $this->skip_minify[$f] !== true) {
 					set_time_limit(600);
 					try {
-						$msg .= "\n/* rank:$rank - minify:ok. $f */\n";
 						// to optimize processing time for changed js requirements, cache the minified version of each file
 						$hash = md5($f);
 						// filename without extension - makes it easier to identify the compressed files if needed.
@@ -638,14 +637,14 @@ class HeaderLib
 							file_put_contents($minifyFile, $temp);
 							chmod($file, 0644);
 						}
-						// need to use temp bc if there is a failure we would run into catch and a prepended message would be wrong
+						$msg .= "\n/* rank:$rank - minify:ok. $f */\n";
 						$topMsg .= $msg;
 						$minified .= $msg;
 						$minified .= $temp;
 					} catch (JSMinException $e) {
 						$content = file_get_contents($f);
 						$error = $e->getMessage();
-						$msg .= "\n\* rank:$rank - minify:error ($error) - adding raw file. $f */\n";
+						$msg .= "\n/* rank:$rank - minify:error ($error) - adding raw file. $f */\n";
 						$topMsg .= $msg;
 						$minified .= $msg;
 						$minified .= $content;
@@ -1126,7 +1125,7 @@ class HeaderLib
 		}
 		*/
 
-		$this->add_jsfile_external('lib/openlayers/OpenLayers.js');
+		$this->add_jsfile_external('lib/openlayers/OpenLayers.js', true);
 		$this->add_js(
 		    '$(".map-container:not(.done)")
 		        .addClass("done")
