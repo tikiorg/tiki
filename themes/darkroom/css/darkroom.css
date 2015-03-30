@@ -7283,11 +7283,11 @@ h3.panel-title {
   border: solid #292929;
   border-width: 0 8px 8px 8px;
 }
+.navbar-fixed-top .container,
 .navbar-default,
 .topbar,
 .topbar .navbar-default .navbar-nav > li,
 .topbar .nav > li,
-.btn,
 .btn-default,
 .nav-tabs > li > a,
 .input-group-addon {

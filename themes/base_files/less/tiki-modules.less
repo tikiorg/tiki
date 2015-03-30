@@ -249,14 +249,15 @@ div.cvsup {
 //	color: @gray-light; (moved to tiki-color_selectors.less)
 }
 
-
+.navbar-fixed-top,
 .layout_social .topbar_modules,
 .layout_social_modules .topbar_modules,
 .layout_fixed_top_modules #top_modules {
   .sitelogo a img {
     display: inline;
-    margin-bottom: 1em;
-    max-height: 34px;
+    margin-top: @navbar-fixed-height / 10;
+    margin-bottom: @navbar-fixed-height / 10;
+    max-height: @navbar-fixed-height;
     width: auto !important;
   }
   h1.sitetitle {
@@ -274,6 +275,15 @@ div.cvsup {
   }
   #topbar_modules {
     display: inline-block;
+  }
+  select.form-control {
+    margin-top: @navbar-fixed-height / 4;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  a.btn,
+  a.btn-link {
+    margin-top: @navbar-fixed-height / 4.5;
   }
 //  .navbar-inverse .navbar-collapse,
 //  .navbar-inverse .navbar-form,

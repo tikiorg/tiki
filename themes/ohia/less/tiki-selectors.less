@@ -36,6 +36,8 @@ header.page-header {
 .layout_social .navbar-inverse .navbar-form,
 .layout_social .navbar-inverse  .container {background: #5e0000; border-color: transparent;}
 
+.navbar-default.navbar-fixed-top > .container {border: none;margin-bottom: 0;}
+
 header.container,
 .middle_outer > .container {margin-bottom: 0;}
 
@@ -43,11 +45,14 @@ header.container,
   background: @navbar-default-bg;
 }
 
-#top_modules {
+#top_modules,
+.navbar-default.navbar-fixed-top {
   background-image: url('@{imagePath}header.png');
   a, a:visited {color: #f4f4f4;
   }
 }
+
+
 .box-quickadmin .cssmenu_horiz ul li {
   background-color: #4c4c4c;
 }

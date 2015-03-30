@@ -73,7 +73,7 @@ if (jqueryTiki.no_cookie) {
 			<span style="white-space: nowrap">{$user|userlink}</span> <a href="tiki-logout.php" title="{tr}Log out{/tr}">{tr}Log out{/tr}</a>
 		{elseif $mode eq "popup"}
 			<div class="siteloginbar_popup dropdown pull-right">
-				<a href="tiki-logout.php" class="dropdown-toggle login_link" data-toggle="dropdown">
+				<a href="tiki-logout.php" class="dropdown-toggle login_link btn-link" data-toggle="dropdown">
 					{tr}Log out{/tr}
 					<span class="caret"></span>
 				</a>

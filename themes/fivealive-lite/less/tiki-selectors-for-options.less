@@ -18,33 +18,42 @@
 }
 
 .topbar_container {
-//  background: url('@{imagePath}siteheadertile.png') repeat-x 0 -376px;
   background: @topbar_container_background;
-//  border-top: 2px solid #fff;
 }
 
-// Layout template removed
-//.layout_h_tb_m_f_containers_3-6-3 .middle_outer {
-//  background: #ffffff;
-//}
+.top_modules {
+  a {
+    color: #fff;
+  }
+}
 
-// @navbar-default-link-background: #bfbd23;
+
 .navbar-nav .open .dropdown-menu,
 .navbar-nav .open .dropdown-menu li,
 .navbar-default .navbar-nav > li > a {
   background: @navbar-default-navbar-nav-li-a-background; // #cdbe23;
 }
 
-//.navbar-default .navbar-nav > li > a:hover {
-//  background: lighten(@navbar-default-navbar-nav-li-a-background, 5%);
-//}
+/*.topbar,
+.topbar .cssmenu_horiz ul,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li,
+.topbar .navbar,
+.topbar .navbar-default .navbar-collapse,
+.topbar .navbar-default .navbar-form {
+  background: @navbar-default-bg;
+}*/
+
+.topbar .cssmenu_horiz ul {
+  background: @navbar-default-bg;
+}
 
 .cssmenu_horiz li ul,
 .cssmenu_vert li ul {
   padding: 5px 0;
   margin: 2px 0 0; // override default ul
 //  font-size: @font-size-base;
-  background-color: @navbar-default-navbar-nav-li-a-background;
+  background-color: @dropdown-bg; // @navbar-default-navbar-nav-li-a-background;
   border: 1px solid @dropdown-fallback-border; // IE8 fallback
   border: 1px solid @dropdown-border;
 //  border-radius: @border-radius-base;
@@ -87,7 +96,7 @@
   padding-bottom: 4px;
   line-height: 1;
   color: @navbar-default-link-color;
-  background: @navbar-default-navbar-nav-li-a-background;
+  background: @dropdown-bg; // @navbar-default-navbar-nav-li-a-background;
 }
 
 

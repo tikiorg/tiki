@@ -545,16 +545,31 @@ hr {
 .topbar_container {
   background: #cdbe23;
 }
+.top_modules a {
+  color: #fff;
+}
 .navbar-nav .open .dropdown-menu,
 .navbar-nav .open .dropdown-menu li,
 .navbar-default .navbar-nav > li > a {
+  background: #e9db15;
+}
+/*.topbar,
+.topbar .cssmenu_horiz ul,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li,
+.topbar .navbar,
+.topbar .navbar-default .navbar-collapse,
+.topbar .navbar-default .navbar-form {
+  background: @navbar-default-bg;
+}*/
+.topbar .cssmenu_horiz ul {
   background: #e9db15;
 }
 .cssmenu_horiz li ul,
 .cssmenu_vert li ul {
   padding: 5px 0;
   margin: 2px 0 0;
-  background-color: #e9db15;
+  background-color: #658838;
   border: 1px solid #cccccc;
   border: 1px solid rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
@@ -593,7 +608,7 @@ hr {
   padding-bottom: 4px;
   line-height: 1;
   color: #ffffff;
-  background: #e9db15;
+  background: #658838;
 }
 #col2 .panel,
 #col3 .panel,

@@ -1047,14 +1047,17 @@ div.cvsup {
   font-size: x-small;
   text-align: left;
 }
+.navbar-fixed-top .sitelogo a img,
 .layout_social .topbar_modules .sitelogo a img,
 .layout_social_modules .topbar_modules .sitelogo a img,
 .layout_fixed_top_modules #top_modules .sitelogo a img {
   display: inline;
-  margin-bottom: 1em;
-  max-height: 34px;
+  margin-top: 4.6px;
+  margin-bottom: 4.6px;
+  max-height: 46px;
   width: auto !important;
 }
+.navbar-fixed-top h1.sitetitle,
 .layout_social .topbar_modules h1.sitetitle,
 .layout_social_modules .topbar_modules h1.sitetitle,
 .layout_fixed_top_modules #top_modules h1.sitetitle {
@@ -1064,6 +1067,7 @@ div.cvsup {
   margin-bottom: 0;
   margin-left: 1rem;
 }
+.navbar-fixed-top .sitesubtitle,
 .layout_social .topbar_modules .sitesubtitle,
 .layout_social_modules .topbar_modules .sitesubtitle,
 .layout_fixed_top_modules #top_modules .sitesubtitle {
@@ -1071,10 +1075,29 @@ div.cvsup {
   font-size: 1.4rem;
   margin-left: 1.5rem;
 }
+.navbar-fixed-top #topbar_modules,
 .layout_social .topbar_modules #topbar_modules,
 .layout_social_modules .topbar_modules #topbar_modules,
 .layout_fixed_top_modules #top_modules #topbar_modules {
   display: inline-block;
+}
+.navbar-fixed-top select.form-control,
+.layout_social .topbar_modules select.form-control,
+.layout_social_modules .topbar_modules select.form-control,
+.layout_fixed_top_modules #top_modules select.form-control {
+  margin-top: 11.5px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+.navbar-fixed-top a.btn,
+.layout_social .topbar_modules a.btn,
+.layout_social_modules .topbar_modules a.btn,
+.layout_fixed_top_modules #top_modules a.btn,
+.navbar-fixed-top a.btn-link,
+.layout_social .topbar_modules a.btn-link,
+.layout_social_modules .topbar_modules a.btn-link,
+.layout_fixed_top_modules #top_modules a.btn-link {
+  margin-top: 10.22222222px;
 }
 .layout_social_modules #topbar_modules {
   display: block;
