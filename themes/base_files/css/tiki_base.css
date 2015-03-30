@@ -1092,7 +1092,11 @@ div.cvsup {
 .navbar-fixed-top a.btn,
 .layout_social .topbar_modules a.btn,
 .layout_social_modules .topbar_modules a.btn,
-.layout_fixed_top_modules #top_modules a.btn {
+.layout_fixed_top_modules #top_modules a.btn,
+.navbar-fixed-top a.btn-link,
+.layout_social .topbar_modules a.btn-link,
+.layout_social_modules .topbar_modules a.btn-link,
+.layout_fixed_top_modules #top_modules a.btn-link {
   margin-top: 10.22222222px;
 }
 .layout_social_modules #topbar_modules {
