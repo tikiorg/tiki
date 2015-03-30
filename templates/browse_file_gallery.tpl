@@ -87,11 +87,11 @@
 											)
 									}
 										<tr>
-											<td>
-												<b>{$fgal_listing_conf.$propname.name}</b>:
+											<td class="pull-right">
+												<b>{$fgal_listing_conf.$propname.name}</b>
 											</td>
-											<td>
-												{$propval}
+											<td style="padding-left:5px">
+												<span class="pull-left">{$propval}</span>
 											</td>
 										</tr>
 										{assign var=nb_over_infos value=$nb_over_infos+1}
@@ -163,7 +163,7 @@
 		{/capture}
 			<div id="{$checkname}_{$files[changes].id}" class="clearfix thumbnailcontener{if $is_checked eq 'y'} thumbnailcontenerchecked{/if}{if $files[changes].isgal eq 1} subgallery{/if}" {if $view eq 'page'}style="float:left"{else}style="width:{$thumbnailcontener_size}px"{/if}>
 				<div class="thumbnail" style="float:left; {if $view neq 'page'}width:{$thumbnailcontener_size}px{/if}">
-					<div class="thumbnailframe" style="width:100%;height:{$thumbnailcontener_size}px{if $show_infos neq 'y'};margin-bottom:4px{/if}">
+					<div class="thumbnailframe" style="width:100%;height:{if $view != 'page'}{$thumbnailcontener_size}px{else}100%{/if}{if $show_infos neq 'y'};margin-bottom:4px{/if}">
 						<div class="thumbimage">
 							<div class="thumbimagesub">{assign var=key_type value=$files[changes].type}
 								{$imagetypes = 'n'}

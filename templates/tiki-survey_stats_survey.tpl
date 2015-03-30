@@ -1,20 +1,21 @@
 {title}{tr}Stats for survey:{/tr} {$survey_info.name}{/title}
 
 <div class="t_navbar margin-bottom-md">
-	{self_link print='y'}{icon _id='printer' align='right' hspace='1' alt="{tr}Print{/tr}"}{/self_link}
-	{button href="tiki-list_surveys.php" class="btn btn-default" _text="{tr}List Surveys{/tr}"}
-	{button href="tiki-survey_stats.php" class="btn btn-default" _text="{tr}Survey Stats{/tr}"}
+	{self_link print='y' _icon_name='print' hspace='1' _class='tips pull-right' _title=":{tr}Print{/tr}"}
+	{/self_link}
+	{button href="tiki-list_surveys.php" class="btn btn-default" _icon_name='list' _text="{tr}List Surveys{/tr}"}
+	{button href="tiki-survey_stats.php" class="btn btn-default" _icon_name='chart' _text="{tr}Survey Stats{/tr}"}
 	{if $tiki_p_admin_surveys eq 'y'}
-		{button _keepall='y' href="tiki-admin_surveys.php" surveyId=$surveyId class="btn btn-default" _text="{tr}Edit this Survey{/tr}"}
-		{button _keepall='y' href="tiki-survey_stats_survey.php" surveyId=$surveyId clear=$surveyId class="btn btn-default" _text="{tr}Clear Stats{/tr}"}
-		{button href="tiki-admin_surveys.php" class="btn btn-default" _text="{tr}Admin Surveys{/tr}"}
+		{button _keepall='y' href="tiki-admin_surveys.php" surveyId=$surveyId class="btn btn-default" _icon_name='edit' _text="{tr}Edit this Survey{/tr}"}
+		{button _keepall='y' href="tiki-survey_stats_survey.php" surveyId=$surveyId clear=$surveyId class="btn btn-default" _icon_name='trash' _text="{tr}Clear Stats{/tr}"}
+		{button href="tiki-admin_surveys.php" class="btn btn-default" _icon_name='cog' _text="{tr}Admin Surveys{/tr}"}
 	{/if}
 </div>
 <br>
 
 <div>
 <form method="post" action="tiki-survey_stats_survey.php">
-{tr}Select a user's responses{/tr} {tr}to be marked as{/tr} {icon _id="user" alt="{tr}User voted{/tr}"}
+{tr}Select a user's responses{/tr} {tr}to be marked as{/tr} {icon name="user" alt="{tr}User voted{/tr}"}
 	<select name="uservoted">
 		<option value="" {if empty($uservoted)}selected="selected"{/if}></option>
 		{foreach from=$usersthatvoted item=usr}
@@ -53,7 +54,7 @@
 			{section name=jx loop=$channels[ix].qoptions}
 				<tr>
 					<td class="odd">
-						{if $channels[ix].qoptions[jx].uservoted}{icon _id='user' alt="{tr}User voted{/tr}"}{/if}
+						{if $channels[ix].qoptions[jx].uservoted}{icon name='user' alt="{tr}User voted{/tr}"}{/if}
 						{if $channels[ix].type eq 'g'}
 							<div style="float:left">
 								{thumb _id=$channels[ix].qoptions[jx].qoption _max=40 name='thumb' style='margin:3px;'}

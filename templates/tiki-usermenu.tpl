@@ -43,7 +43,7 @@
 
 <form action="tiki-usermenu.php" method="post">
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table normal table-striped table-hover">
 			<tr>
 				<th><input type="submit" class="btn btn-warning btn-sm" name="delete" value="x " title="{tr}Delete Selected{/tr}"></th>
 				<th><a href="tiki-usermenu.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'position_desc'}position_asc{else}position_desc{/if}">{tr}Pos{/tr}</a></th>
@@ -70,7 +70,7 @@
 				{norecords _colspan=5}
 			{/section}
 		</table>
-	</div<
+	</div>
 </form>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

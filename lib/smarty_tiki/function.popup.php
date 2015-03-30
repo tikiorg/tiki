@@ -119,9 +119,8 @@ function smarty_function_popup($params, $smarty)
 		} else {
 			$delay = '{"show":"'. (int) $explode[0] . '", "hide":"' . (int) $explode[1] . '"}';
 		}
+		$retval .= ' data-delay=\'' . $delay . '\'';
 	}
-
-	$retval .= ' data-delay=\'' . $delay . '\'';
 
 	return $retval;
 }

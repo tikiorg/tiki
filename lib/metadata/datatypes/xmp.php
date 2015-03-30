@@ -301,7 +301,7 @@ class Xmp
 								//in case a list item (li) has children - images tested so far don't seem to have this
 								//situation, so untested
 								$xmparray[$nodeitem->prefix][$nodeitem->localName] =
-									$nodeitem->xmpDomToArray($nodeitem->childNodes);
+									$this->xmpDomToArray($nodeitem->childNodes);
 							}
 						//fields like ['exif']['Flash'] go here, ie multiple items but not a list (li) inside of
 						//another element (like Seq, Bag or Alt)

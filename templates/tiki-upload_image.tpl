@@ -32,11 +32,11 @@
 					<td>{$batchRes[ix].filename}</td>
 					{if $batchRes[ix].msg}
 						<td colspan="3">
-							{icon _id=exclamation alt="{tr}Errors detected{/tr}" style="vertical-align:middle"} {$batchRes[ix].msg}
+							{icon name='error' alt="{tr}Errors detected{/tr}" style="vertical-align:middle"} {$batchRes[ix].msg}
 						</td>
 					{else}
 						<td>
-							{icon _id=accept alt="{tr}Upload successful!{/tr}" style="vertical-align:middle"}{tr}Upload successful!{/tr}</td><td>{$batchRes[ix].imageId}</td><td><img src="{$url_show}?id={$batchRes[ix].imageId}&amp;thumb=1" alt="{$batchRes[ix].filename}">
+							{icon name='ok' alt="{tr}Upload successful!{/tr}" style="vertical-align:middle"}{tr}Upload successful!{/tr}</td><td>{$batchRes[ix].imageId}</td><td><img src="{$url_show}?id={$batchRes[ix].imageId}&amp;thumb=1" alt="{$batchRes[ix].filename}">
 						</td>
 					{/if}
 				</tr>
@@ -170,7 +170,7 @@
 		</form>
 	</div>
 {else}
-	{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle;"} {tr}No gallery available.{/tr} {tr}You have to create a gallery first!{/tr}
+	{icon name='error' alt="{tr}Error{/tr}" style="vertical-align:middle;"} {tr}No gallery available.{/tr} {tr}You have to create a gallery first!{/tr}
 	<p><a href="tiki-galleries.php?edit_mode=1&galleryId=0">{tr}Create New Gallery{/tr}</a></p>
 {/if}
 

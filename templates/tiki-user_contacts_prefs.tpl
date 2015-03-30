@@ -42,34 +42,48 @@
 							<tr>
 								<th colspan="2">{tr}Order{/tr}</th>
 								<th>{tr}Field{/tr}</th>
-								<th>{tr}Action{/tr}</th>
+								<th></th>
 							</tr>
 
 							{foreach from=$exts item=ext key=k name=e}
 								<tr>
 									<td width="2%">
 										{if not $smarty.foreach.e.first}
-											<a href="?ext_up={$ext.fieldId}" title="{tr}Up{/tr}">{icon _id='resultset_up'}</a>
+											<a href="?ext_up={$ext.fieldId}" class="tips" title=":{tr}Up{/tr}">
+												{icon name='up'}<
+												/a>
 										{/if}
 									</td>
 									<td width="2%">
 										{if not $smarty.foreach.e.last}
-											<a href="?ext_down={$ext.fieldId}" title="{tr}Down{/tr}">{icon _id='resultset_down'}</a>
+											<a href="?ext_down={$ext.fieldId}" class="tips" title=":{tr}Down{/tr}">
+												{icon name='down'}
+											</a>
 										{/if}
 									</td>
 									<td>{tr}{$ext.fieldname|escape}{/tr}</td>
 									<td class="action">
 										{if $ext.flagsPublic eq 'y'}
-											<a href="?ext_private={$ext.fieldId}" style="margin-left:20px;" title="{tr}Private{/tr}">{icon _id='user' alt="{tr}Private{/tr}"}</a>
+											<a href="?ext_private={$ext.fieldId}" style="margin-left:20px;" class="tips" title=":{tr}Private{/tr}">
+												{icon name='user'}
+											</a>
 										{else}
-											<a href="?ext_public={$ext.fieldId}" style="margin-left:20px;" title="{tr}Public{/tr}">{icon _id='group' alt="{tr}Public{/tr}"}</a>
+											<a href="?ext_public={$ext.fieldId}" style="margin-left:20px;" class="tips" title=":{tr}Public{/tr}">
+												{icon name='group'}
+											</a>
 										{/if}
 										{if $ext.show eq 'y'}
-											<a href="?ext_hide={$ext.fieldId}" style="margin-left:20px;" title="{tr}Hide{/tr}">{icon _id='no_eye' alt="{tr}Hide{/tr}"}</a>
+											<a href="?ext_hide={$ext.fieldId}" style="margin-left:20px;" class="tips" title=":{tr}Hide{/tr}">
+												{icon name='ban'}
+											</a>
 										{else}
-											<a href="?ext_show={$ext.fieldId}" style="margin-left:20px;" title="{tr}Show{/tr}">{icon _id='eye' alt="{tr}Show{/tr}"}</a>
+											<a href="?ext_show={$ext.fieldId}" style="margin-left:20px;" class="tips" title=":{tr}Show{/tr}">
+												{icon name='view'}
+											</a>
 										{/if}
-										<a href="?ext_remove={$ext.fieldId}" style="margin-left:20px;" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+										<a href="?ext_remove={$ext.fieldId}" style="margin-left:20px;" class="tips" title=":{tr}Remove{/tr}">
+											{icon name='remove'}
+										</a>
 									</td>
 								</tr>
 							{/foreach}

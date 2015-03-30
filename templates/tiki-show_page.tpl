@@ -74,8 +74,8 @@ Note: The show content block must be defined at root level to use the include. A
 								</a>
 								({$translation_alert[i][j].lang})
 								{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y'}
-									<a href="tiki-editpage.php?page={$page|escape:'url'}&amp;source_page={$translation_alert[i][j].page|escape:'url'}&amp;oldver={$translation_alert[i][j].last_update|escape:'url'}&amp;newver={$translation_alert[i][j].current_version|escape:'url'}&amp;diff_style=htmldiff" title="{tr}update from it{/tr}">
-										{icon _id=arrow_refresh alt="{tr}update from it{/tr}" style="vertical-align:middle"}
+									<a href="tiki-editpage.php?page={$page|escape:'url'}&amp;source_page={$translation_alert[i][j].page|escape:'url'}&amp;oldver={$translation_alert[i][j].last_update|escape:'url'}&amp;newver={$translation_alert[i][j].current_version|escape:'url'}&amp;diff_style=htmldiff" class="tips" title=":{tr}Update from it{/tr}">
+										{icon name='refresh' style="vertical-align:middle"}
 									</a>
 								{/if}
 							</li>
@@ -94,15 +94,23 @@ Note: The show content block must be defined at root level to use the include. A
 
 			{if $pages > 1 and $prefs.wiki_page_navigation_bar neq 'bottom'}
 				<div class="text-center navigation_bar pagination position_top">
-					<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$first_page}">{icon _id='resultset_first' alt="{tr}First page{/tr}"}</a>
+					<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$first_page}" class="tips" title=":{tr}First{/tr}">
+						{icon name='backward_step'}
+					</a>
 
-					<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$prev_page}">{icon _id='resultset_previous' alt="{tr}Previous page{/tr}"}</a>
+					<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$prev_page}" class="tips" title=":{tr}Previous{/tr}">
+						{icon name='backward'}
+					</a>
 
 					<small>{tr _0=$pagenum _1=$pages}page: %0/%1{/tr}</small>
 
-					<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$next_page}">{icon _id='resultset_next' alt="{tr}Next page{/tr}"}</a>
+					<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$next_page}" class="tips" title=":{tr}Next{/tr}">
+						{icon name='forward'}
+					</a>
 
-					<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$last_page}">{icon _id='resultset_last' alt="{tr}Last page{/tr}"}</a>
+					<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$last_page}" class="tips" title=":{tr}Last{/tr}">
+						{icon name='forward_step'}
+					</a>
 				</div>
 			{/if}
 
@@ -138,15 +146,23 @@ Note: The show content block must be defined at root level to use the include. A
 		{if $pages > 1 and $prefs.wiki_page_navigation_bar neq 'top'}
 			<br>
 			<div class="text-center navigation_bar pagination position_bottom">
-				<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$first_page}">{icon _id='resultset_first' alt="{tr}First page{/tr}"}</a>
+				<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$first_page}" class="tips" title=":{tr}First{/tr}">
+					{icon name='backward_step'}
+				</a>
 
-				<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$prev_page}">{icon _id='resultset_previous' alt="{tr}Previous page{/tr}"}</a>
+				<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$prev_page}" class="tips" title=":{tr}Previous{/tr}">
+					{icon name='backward'}
+				</a>
 
 				<small>{tr _0=$pagenum _1=$pages}page: %0/%1{/tr}</small>
 
-				<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$next_page}">{icon _id='resultset_next' alt="{tr}Next page{/tr}"}</a>
+				<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$next_page}" class="tips" title=":{tr}Next{/tr}">
+					{icon name='forward'}
+				</a>
 
-				<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$last_page}">{icon _id='resultset_last' alt="{tr}Last page{/tr}"}</a>
+				<a href="tiki-index.php?{if $page_info}page_ref_id={$page_info.page_ref_id}{else}page={$page|escape:"url"}{/if}&amp;pagenum={$last_page}" class="tips" title=":{tr}Last{/tr}">
+					{icon name='forward_step'}
+				</a>
 			</div>
 		{/if}
 	</article> {* End of main wiki page *}
