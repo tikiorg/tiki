@@ -168,6 +168,8 @@ class ActivityLib
 						return new Tiki_Event_Function_EventTrigger($manager);
 					case 'event-record':
 						return new Tiki_Event_Function_EventRecord($self);
+					case 'event-notify':
+						return new Tiki_Event_Function_EventNotify($self);
 					case 'event-sample':
 						return new Tiki_Event_Function_EventSample($self);
 					}

@@ -62,5 +62,12 @@ function prefs_activity_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'activity_notifications' => array(
+			'name' => tr('Enable Notifications through Activities'),
+			'description' => tr('Allows to users to develop notifications using activities.'),
+			'help' => 'Activity+Notifications',
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);
 }

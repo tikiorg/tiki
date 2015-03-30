@@ -91,12 +91,20 @@ class Services_ActivityStream_ManageController
 	function action_record(JitFilter $request)
 	{
 		$id = $request->ruleId->int();
+		$priority = $request['priority'];
+		$user = $request['user'];
+
+		if ($request['is_notification'] != "on"){
+			$rule = '(event-record event args)';
+		}else{
+			$rule = "(event-notify event args (str $priority) (str $user))";
+		}
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$id = $this->replaceRule(
 				$id,
 				array(
-					'rule' => '(event-record event args)',
+					'rule' => $rule,
 					'ruleType' => 'record',
 					'notes' => $request->notes->text(),
 					'eventType' => $request->event->attribute_type(),

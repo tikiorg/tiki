@@ -108,6 +108,7 @@
 					{preference name=activity_basic_user_friend_add}
 				</div>
 				{preference name=activity_custom_events}
+                {preference name=activity_notifications}
 
 				<div class="adminoptionboxchild" id="activity_custom_events_childcontainer">
 					{* former add_dracula() *}
