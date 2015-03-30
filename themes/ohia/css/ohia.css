@@ -7325,6 +7325,10 @@ header.page-header {
   background: #5e0000;
   border-color: transparent;
 }
+.navbar-default.navbar-fixed-top > .container {
+  border: none;
+  margin-bottom: 0;
+}
 header.container,
 .middle_outer > .container {
   margin-bottom: 0;
@@ -7332,11 +7336,14 @@ header.container,
 .navbar-collapse {
   background: #030511;
 }
-#top_modules {
+#top_modules,
+.navbar-default.navbar-fixed-top {
   background-image: url('../images/header.png');
 }
 #top_modules a,
-#top_modules a:visited {
+.navbar-default.navbar-fixed-top a,
+#top_modules a:visited,
+.navbar-default.navbar-fixed-top a:visited {
   color: #f4f4f4;
 }
 .box-quickadmin .cssmenu_horiz ul li {

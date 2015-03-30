@@ -550,11 +550,23 @@ hr {
 .navbar-default .navbar-nav > li > a {
   background: #19a5be;
 }
+/*.topbar,
+.topbar .cssmenu_horiz ul,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li,
+.topbar .navbar,
+.topbar .navbar-default .navbar-collapse,
+.topbar .navbar-default .navbar-form {
+  background: @navbar-default-bg;
+}*/
+.topbar .cssmenu_horiz ul {
+  background: #18a3bb;
+}
 .cssmenu_horiz li ul,
 .cssmenu_vert li ul {
   padding: 5px 0;
   margin: 2px 0 0;
-  background-color: #19a5be;
+  background-color: #18a3bb;
   border: 1px solid #cccccc;
   border: 1px solid rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
@@ -593,7 +605,7 @@ hr {
   padding-bottom: 4px;
   line-height: 1;
   color: #ffffff;
-  background: #19a5be;
+  background: #18a3bb;
 }
 #col2 .panel,
 #col3 .panel,

@@ -545,9 +545,24 @@ hr {
 .topbar_container {
   background: #a82a76;
 }
+.top_modules a {
+  color: #fff;
+}
 .navbar-nav .open .dropdown-menu,
 .navbar-nav .open .dropdown-menu li,
 .navbar-default .navbar-nav > li > a {
+  background: #a82a76;
+}
+/*.topbar,
+.topbar .cssmenu_horiz ul,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li,
+.topbar .navbar,
+.topbar .navbar-default .navbar-collapse,
+.topbar .navbar-default .navbar-form {
+  background: @navbar-default-bg;
+}*/
+.topbar .cssmenu_horiz ul {
   background: #a82a76;
 }
 .cssmenu_horiz li ul,
