@@ -34,6 +34,11 @@ hr, form, footer {
 	clear: both;
 }
 
+footer .mobileswitch {
+	display: block;
+	padding: .7em 15px;
+}
+
 /* remarks boxes from layout.css */
 /* also some from design.css */
 
