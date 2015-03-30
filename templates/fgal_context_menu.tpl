@@ -176,9 +176,12 @@
 					{/if}
 
 					{if $prefs.fgal_display_properties eq 'y'}
-						<a href="tiki-list_file_gallery.php?galleryId={$files[$changes].galleryId}&fileId={$files[$changes].id}&view=page">
-							{icon _menu_text=$menu_text _menu_icon=$menu_icon name='textfile' alt="{tr}Page view{/tr}"}
-						</a>
+						{if $view != 'page'}
+							{$pageoffset = $changes - $subcount + $offset}
+							<a href="tiki-list_file_gallery.php?galleryId={$files[$changes].galleryId}&offset={$pageoffset}&fileId={$files[$changes].id}&view=page">
+								{icon _menu_text=$menu_text _menu_icon=$menu_icon name='textfile' alt="{tr}Page view{/tr}"}
+							</a>
+						{/if}
 						<a href="tiki-upload_file.php?galleryId={$files[$changes].galleryId}&amp;fileId={$files[$changes].id}{if !empty($filegals_manager)}&amp;filegals_manager={$filegals_manager|escape}{/if}">
 							{icon _menu_text=$menu_text _menu_icon=$menu_icon name='edit' alt="{tr}Edit properties{/tr}"}
 						</a>

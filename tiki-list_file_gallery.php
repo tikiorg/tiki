@@ -916,7 +916,6 @@ if (isset($_GET['slideshow'])) {
 				$filesrecords = array_values($files['data']);
 				foreach ($filesrecords as $key => $file) {
 					if ($file['fileId'] == $_REQUEST['fileId']) {
-						$smarty->assign('offset', $key);
 						$files['data'] = array($file);
 						$smarty->assign('metarray', json_decode($files['data'][0]['metadata'], true));
 						break;
@@ -940,6 +939,10 @@ if (isset($_GET['slideshow'])) {
 		}
 		$smarty->assign('filescount', $files['cant'] - $subs);
 	}
+	//for page view to get offset in pagination right since subgalleries are not included
+	$subgals = $filegallib->getSubGalleries($_REQUEST['galleryId']);
+	$smarty->assign('subcount', count($subgals) - 1);
+
 	$smarty->assign('mid', 'tiki-list_file_gallery.tpl');
 }
 
