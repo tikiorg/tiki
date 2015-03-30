@@ -314,7 +314,7 @@
 				{/if}
 			</div>
 			{if $prefs.javascript_enabled eq 'y' and !$editFileId}
-				{include file='categorize.tpl' notable='y'}<br/>
+				{include file='categorize.tpl'}<br/>
 			{/if}
 		{else}
 			<input type="hidden" name="galleryId" value="{$galleryId}">
@@ -348,7 +348,7 @@
 	{$upload_str}
 
 	{if $editFileId}
-		{include file='categorize.tpl' notable='y'}<br>
+		{include file='categorize.tpl'}<br>
 		<hr class="clear">
 		<div id="page_bar">
 			<input name="upload" type="submit" class="btn btn-default" value="{tr}Save{/tr}">
@@ -356,7 +356,7 @@
 	{elseif $prefs.javascript_enabled neq 'y'}
 		{$upload_str}
 		{$upload_str}
-		{include file='categorize.tpl' notable='y'}<br>
+		{include file='categorize.tpl'}<br>
 		<hr class="clear">
 		<div id="page_bar">
 			<input type="submit" class="btn btn-default" name="upload" value="{tr}Upload{/tr}">
