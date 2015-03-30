@@ -542,7 +542,8 @@ hr {
   -moz-box-shadow: inset 0 24px 0 0 #ec6223;
   box-shadow: inset 0 24px 0 0 #ec6223;
 }
-.topbar_container {
+.topbar_container,
+.page-header > .topbar {
   background: #c74323;
 }
 .top_modules a {
@@ -629,7 +630,8 @@ hr {
 }
 .header_outer,
 .layout_fixed_top_modules .navbar-fixed-top,
-.layout_social_modules .navbar-fixed-top {
+.layout_social_modules .navbar-fixed-top,
+.page-header > .top_modules {
   background: #a53723;
   border-bottom: 5px solid #000;
 }
