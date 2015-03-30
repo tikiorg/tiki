@@ -194,9 +194,17 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 			}
 		}
 
-		if (!empty($this->structure)) {
+		// only create a new structure or add a new page to a structure if the structure parameter has been set AND mode is 'create'
+		if (isset($this->structure) && $this->mode == 'create') {
 			global $structlib; include_once 'lib/structures/structlib.php';
-			$structlib->s_create_page($this->structure, 0, $finalName, '', $this->structure);
+			if ($this->structure == 0) {
+			// create a new structure with just the new wiki page if the profile structure: parameter is set to zero
+			$structlib->s_create_page(null, null, $finalName, '', 0);
+			} else {
+			// add the page to an existing structure when the profile structure: parameter is non-zero
+			// where the parameter is set to a page_ref_id and the new page is inserted after this page ref in the structure hierarchy
+			$structlib->s_create_page($this->structure, $this->structure, $finalName, '', $this->structure);
+			}
 		}
 
 		return $finalName;
