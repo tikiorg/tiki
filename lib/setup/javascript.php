@@ -19,7 +19,7 @@ if ($prefs['disableJavascript'] == 'y' ) {
 } elseif (!empty($js_cookie)) {
 	// Update the pref with the cookie value
 	$prefs['javascript_enabled'] = 'y';
-	setCookieSection('runs_before_js_detect', '', '', time() - 3600);	// remove the test cookie
+	setCookieSection('javascript_enabled_detect', '', '', time() - 3600);	// remove the test cookie
 } else {
 	$prefs['javascript_enabled'] = '';
 }
@@ -27,17 +27,18 @@ if ($prefs['disableJavascript'] == 'y' ) {
 // the first and second time, we should not trust the absence of javascript_enabled cookie yet,
 // as it could be a redirection and the js will not get a chance to run yet, so we wait until the third run,
 // assuming that js is on before then
-$runs_before_js_detect = getCookie('runs_before_js_detect', '', '0');
+$javascript_enabled_detect = getCookie('javascript_enabled_detect', '', '0');
 
-if ( $prefs['javascript_enabled'] === '' && $prefs['disableJavascript'] != 'y' && $runs_before_js_detect < 2) {
+if ( $prefs['javascript_enabled'] === '' && $prefs['disableJavascript'] != 'y' && $javascript_enabled_detect < 2) {
 	// Set the cookie to 'y', through javascript - expires: approx. 1 year
 	$prefs['javascript_enabled'] = 'y';											// temporarily enable to we output the test js
-	$headerlib->add_js("setCookieBrowser('javascript_enabled', 'y');", 0);		// setCookieBrowser does not use the tiki_cookie_jar
+	$plus_one_year = $tikilib->now + 365 * 24 * 3600;
+	$headerlib->add_js("setCookieBrowser('javascript_enabled', 'y', '', new Date({$plus_one_year}000));", 0);		// setCookieBrowser does not use the tiki_cookie_jar
 
-	if ( empty($runs_before_js_detect) ) {
-		setCookieSection('runs_before_js_detect', '1', '', $tikilib->now + 365 * 24 * 3600);
-	} elseif ( $runs_before_js_detect == 1 ) {
-		setCookieSection('runs_before_js_detect', '2', '', $tikilib->now + 365 * 24 * 3600);
+	if ( empty($javascript_enabled_detect) ) {
+		setCookieSection('javascript_enabled_detect', '1', '', $plus_one_year);
+	} elseif ( $javascript_enabled_detect == 1 ) {
+		setCookieSection('javascript_enabled_detect', '2', '', $plus_one_year);
 	}
 } else if ($js_cookie !== 'y') {	// no js cookie detected
 	$prefs['javascript_enabled'] = 'n';
