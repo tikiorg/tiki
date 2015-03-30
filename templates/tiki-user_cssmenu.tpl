@@ -63,7 +63,7 @@
 							{if $menu_type eq 'vert' and $prefs.menus_items_icons eq 'y' and $menu_info.use_items_icons eq 'y' and $opensec eq 0}
 								{icon _id=$chdata.icon alt='' _defaultdir=$prefs.menus_items_icons_path}
 							{elseif isset($icon) and $icon}
-								{icon _id='folder' align="left"}
+								{icon name='file-archive' align="left"}
 							{/if}
 							<span class="menuText">
 								{if $translate eq 'n'}

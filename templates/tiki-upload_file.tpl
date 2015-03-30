@@ -344,7 +344,7 @@
 	</div>
 
 	{if !empty($fileInfo.lockedby) and $user ne $fileInfo.lockedby}
-		{icon _id="lock" class="" alt=""}
+		{icon name="lock"}
 		<span class="attention">{tr}The file is locked by {$fileInfo.lockedby}{/tr}</span>
 	{/if}
 	<br>

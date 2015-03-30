@@ -2,14 +2,14 @@
 <div id="tiki-test-topbar" style="background-color:red;" class="clearfix" style="width:100%">
 	<table width="100%">
 		<tr>
-			<td>{icon _id='bell'}</td>
+			<td>{icon name='notification'}</td>
 			<td><b>TikiTest</b>&nbsp;{$tikitest_filename}</td>
 			<td width="30%" align="right">
-				<span id="tikitest_pause" style="vertical-align:middle;">{tr}Recording to pause press the pause button{/tr}<span style="vertical-align:middle;" onclick="javascript:tikitest_state('2');">&nbsp;{icon _id='control_pause' alt="{tr}Pause the recording{/tr}"}</span></span>
-				<span id="tikitest_play" style="vertical-align:middle;">{tr}Paused to resume press the play button{/tr}<span style="vertical-align:middle;" onclick="javascript:tikitest_state('1');">&nbsp;{icon _id='control_play' alt="{tr}Resume the recording{/tr}"}</span></span>
-				<span id="tikitest_stop" style="vertical-align:middle;" onclick="javascript:tikitest_state('3');">{icon _id='control_stop' alt="{tr}Stop the recording{/tr}"}</span>
+				<span id="tikitest_pause" style="vertical-align:middle;">{tr}Recording to pause press the pause button{/tr}<span style="vertical-align:middle;" onclick="javascript:tikitest_state('2');">&nbsp;{icon name='pause' alt="{tr}Pause the recording{/tr}"}</span></span>
+				<span id="tikitest_play" style="vertical-align:middle;">{tr}Paused to resume press the play button{/tr}<span style="vertical-align:middle;" onclick="javascript:tikitest_state('1');">&nbsp;{icon name='play' alt="{tr}Resume the recording{/tr}"}</span></span>
+				<span id="tikitest_stop" style="vertical-align:middle;" onclick="javascript:tikitest_state('3');">{icon name='stop' alt="{tr}Stop the recording{/tr}"}</span>
 			</td>
-			<td>{icon _id='bell'}</td>
+			<td>{icon name='notification'}</td>
 		</tr>
 	</table>
 </div>

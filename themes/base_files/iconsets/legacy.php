@@ -387,11 +387,17 @@ function iconset_legacy()
 			'ok' => array(
 				'id' => 'accept',
 			),
+			'pause' => array(
+				'id' => 'control_pause',
+			),
 			'pdf' => array(
 				'id' => 'page_white_acrobat',
 			),
 			'permission' => array(
 				'id' => 'key',
+			),
+			'play' => array(
+				'id' => 'control_play',
 			),
 			'plugin' => array(
 				'id' => 'plugin',

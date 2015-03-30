@@ -5,23 +5,23 @@
 {if $parentId>0}[<a class="link" href="tiki-user_bookmarks.php">{tr}top{/tr}</a>] {/if}{tr}Current folder:{/tr} {$path}<br>
 <h2>{tr}Folders{/tr}</h2>
 <div class="table-responsive">
-<table class="table normal">
+<table class="table normal table-striped table-hover">
 	<tr>
 		<th>{tr}Name{/tr}</th>
-		<th>{tr}Action{/tr}</th>
+		<th></th>
 	</tr>
 
 	{section name=ix loop=$folders}
 		<tr>
-			<td class="text"><a href="tiki-user_bookmarks.php?parentId={$folders[ix].folderId}">
-				{icon _id='folder' alt="{tr}Folder in{/tr}"}</a>&nbsp;{$folders[ix].name|escape} ({$folders[ix].urls})
+			<td class="text"><a class="tips" title=":{tr}Folder in{/tr}" href="tiki-user_bookmarks.php?parentId={$folders[ix].folderId}">
+				{icon name='file-archive' }</a>&nbsp;{$folders[ix].name|escape} ({$folders[ix].urls})
 			</td>
 			<td class="action">
-				<a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editfolder={$folders[ix].folderId}">
-					{icon _id='page_edit'}
+				<a class="tips" title=":{tr}Edit{/tr}" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editfolder={$folders[ix].folderId}">
+					{icon name='edit'}
 				</a> &nbsp;
-				<a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;removefolder={$folders[ix].folderId}">
-					{icon _id='cross' alt="{tr}Remove{/tr}" title="{tr}Remove Folder{/tr}"}
+				<a class="tips" title=":{tr}Remove{/tr}" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;removefolder={$folders[ix].folderId}">
+					{icon name='remove'}
 				</a>
 			</td>
 		</tr>
@@ -33,11 +33,11 @@
 
 <h2>{tr}Bookmarks{/tr}</h2>
 <div class="table-responsive">
-<table class="table normal">
+	<table class="table normal table-striped table-hover">
 	<tr>
 		<th>{tr}Name{/tr}</th>
 		<th>{tr}Url{/tr}</th>
-		<th>{tr}Action{/tr}</th>
+		<th></th>
 	</tr>
 
 	{section name=ix loop=$urls}
@@ -49,13 +49,17 @@
 			</td>
 			<td class="text">{textformat wrap="60" wrap_cut=true wrap_char="<br>"}{$urls[ix].url}{/textformat}</td>
 			<td class="action">
-				<a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editurl={$urls[ix].urlId}">{icon _id='page_edit'}</a>
+				<a class="tips" title=":{tr}Edit{/tr}" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editurl={$urls[ix].urlId}">
+					{icon name='edit'}
+				</a>
 				{if $tiki_p_cache_bookmarks eq 'y' and $urls[ix].datalen > 0}
-					<a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;refreshurl={$urls[ix].urlId}">
-						{icon _id='arrow_refresh' alt="{tr}Refresh Cache{/tr}"}
+					<a class="tips" title=":{tr}Refresh cache{/tr}" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;refreshurl={$urls[ix].urlId}">
+						{icon name='refresh'}
 					</a>
 				{/if}
-				&nbsp; <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;removeurl={$urls[ix].urlId}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>
+				&nbsp; <a class="tips" title=":{tr}Remove{/tr}" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;removeurl={$urls[ix].urlId}">
+					{icon name='remove'}
+				</a>
 			</td>
 		</tr>
 	{sectionelse}
