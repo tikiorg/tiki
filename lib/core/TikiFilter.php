@@ -28,8 +28,6 @@ class TikiFilter
 			return new Zend_Filter_Alnum;
 		case 'digits':
 			return new Zend_Filter_Digits;
-		case 'digit':
-			return new Zend_Filter_Digits;
 		case 'int':
 			return new Zend_Filter_Int;
 		case 'isodate':

@@ -1,92 +1,64 @@
-<div class="col-xs-12 files-field uninitialized {if $data.replaceFile}replace{/if}" data-galleryid="{$field.galleryId|escape}" data-firstfile="{$field.firstfile|escape}" data-filter="{$field.filter|escape}" data-limit="{$field.limit|escape}">
-    {if $field.limit}
-        {remarksbox _type=info title="{tr}Attached files limitation{/tr}"}
-        {tr _0=$field.limit}The amount of files that can be attached is limited to <strong>%0</strong>. The latest files will be preserved.{/tr}
-        {/remarksbox}
-    {/if}
+<div class="files-field uninitialized {if $data.replaceFile}replace{/if}" data-galleryid="{$field.galleryId|escape}" data-firstfile="{$field.firstfile|escape}" data-filter="{$field.filter|escape}" data-limit="{$field.limit|escape}">
+	{if $field.limit}
+		{remarksbox _type=info title="{tr}Attached files limitation{/tr}"}
+			{tr _0=$field.limit}The amount of files that can be attached is limited to <strong>%0</strong>. The latest files will be preserved.{/tr}
+		{/remarksbox}
+	{/if}
+	<ol class="tracker-item-files current-list">
+		{foreach from=$field.files item=info}
+			<li data-file-id="{$info.fileId|escape}">
+				{if $prefs.vimeo_upload eq 'y' and $field.options_map.displayMode eq 'vimeo'}
+					<img src="img/icons/vimeo.png" width="16" height="16">
+				{elseif $field.options_map.displayMode eq 'img'}
+					<img src="tiki-download_file.php?fileId={$info.fileId|escape}&display&y=24" height="24">
+				{else}
+					<img src="tiki-download_file.php?fileId={$info.fileId|escape}&icon" width="32" height="32">
+				{/if}
+				{$info.name|escape}
+				<label>
+					{icon _id=cross alt="{tr}Remove{/tr}"}
+				</label>
+			</li>
+		{/foreach}
+	</ol>
 	<input class="input" type="text" name="{$field.ins_id|escape}" value="{$field.value|escape}">
-
-    {if $field.canUpload}
-        <div class="row">
-            <div class="col-xs-12">
-                <fieldset>
-                {if $field.options_map.displayMode eq 'vimeo'}
-                        <label>Upload a video from your Computer</label><br>
-                        {wikiplugin _name='vimeo' fromFieldId=$field.fieldId|escape fromItemId=$item.itemId|escape galleryId=$field.galleryId|escape}{/wikiplugin}
-                {else}
-                    <div class="files-group">
-                        <label>Upload a file from your Computer</label><br>
-                        <a href="{service controller=file action=uploader galleryId=$field.galleryId limit=$limit|default:100 type=$field.filter}" class="btn btn-default upload-files">{tr}Upload File{/tr}</a>
-                    </div>
-                {/if}
-                </fieldset>
-            </div>
-        </div>
+	{if $field.canUpload}
+		{if $field.options_map.displayMode eq 'vimeo'}
+			<fieldset>
+				<legend>{tr}Upload files{/tr}</legend>
+				{wikiplugin _name='vimeo' fromFieldId=$field.fieldId|escape fromItemId=$item.itemId|escape galleryId=$field.galleryId|escape}{/wikiplugin}
+			</fieldset>
+		{else}
+			<a href="{service controller=file action=uploader galleryId=$field.galleryId limit=$limit|default:100 type=$field.filter}" class="btn btn-default upload-files">{tr}Upload Files{/tr}</a>
+		{/if}
 	{/if}
 	{if $prefs.fgal_tracker_existing_search eq 'y'}
-        <div class="files-group">
-            <label>{tr}Upload a file from the File Gallery{/tr}</label><br>
-            {if $prefs.fgal_elfinder_feature eq 'y'}
-                {button href='tiki-list_file_gallery.php' _text="{tr}Browse files{/tr}"
-                    _onclick="return openElFinderDialog(this, {ldelim}defaultGalleryId:{if !isset($field.options_array[8]) or $field.options_array[8] eq ''}{if empty($field.options_array[0])}0{else}{$field.options_array[0]|escape}{/if}{else}{$field.options_array[8]|escape}{/if},deepGallerySearch:{if empty($field.options_array[6])}0{else}{$field.options_array[6]|escape}{/if},getFileCallback:function(file,elfinder){ldelim}window.handleFinderFile(file,elfinder){rdelim},eventOrigin:this{rdelim});"
-                    title="{tr}Browse files{/tr}"}
-            {else}
-                <a href="{service controller=file action=browse galleryId=$galleryId limit=$limit|default:100 type=$field.filter}" class="btn btn-default browse-files">{tr}Browse Files{/tr}</a>
-            {/if}
-        </div>
+		{if $prefs.fgal_elfinder_feature eq 'y'}
+			{button href='tiki-list_file_gallery.php' _text="{tr}Browse files{/tr}"
+				_onclick="return openElFinderDialog(this, {ldelim}defaultGalleryId:{if !isset($field.options_array[8]) or $field.options_array[8] eq ''}{if empty($field.options_array[0])}0{else}{$field.options_array[0]|escape}{/if}{else}{$field.options_array[8]|escape}{/if},deepGallerySearch:{if empty($field.options_array[6])}0{else}{$field.options_array[6]|escape}{/if},getFileCallback:function(file,elfinder){ldelim}window.handleFinderFile(file,elfinder){rdelim},eventOrigin:this{rdelim});"
+				title="{tr}Browse files{/tr}"}
+		{else}
+			<a href="{service controller=file action=browse galleryId=$galleryId limit=$limit|default:100 type=$field.filter}" class="btn btn-default browse-files">{tr}Browse Files{/tr}</a>
+		{/if}
 	{/if}
 	{if $prefs.fgal_upload_from_source eq 'y' and $field.canUpload}
-        <div class="row">
-            <div class="col-xs-12">
-                <fieldset>
-                    {if $prefs.vimeo_upload eq 'y' and $field.options_map.displayMode eq 'vimeo'}
-                        <div class="files-group">
-                            <label>{tr}Link to existing Vimeo URL{/tr}</label>
-                            <div class="input-group url-group">
-                                <input class="url vimeourl form-control" name="vimeourl" placeholder="https://vimeo.com/..." data-mode="vimeo">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button">{tr}Fetch Video{/tr}</button>
-                                </span>
-                            </div>
-                            <input type="hidden" class="reference" name="reference" value="1">
-                        </div>
-                    {else}
-                        <div class="files-group">
-                            <label>{tr}Upload from URL{/tr}</label>
-                            <div class="input-group url-group">
-                                <input class="url form-control" name="url" placeholder="http://">
-							<span class="input-group-btn">
-								<button class="btn btn-default" type="button">{tr}Fetch File{/tr}</button>
-							</span>
-                            </div>
-                            <input type="hidden" class="reference" name="reference" value="0">
-                        </div>
-                    {/if}
-                    <p class="help-block">{tr}Type or paste the URL and <strong>press ENTER</strong>{/tr}</p>
-                </fieldset>
-            </div>
-        </div>
+		<fieldset>
+			{if $prefs.vimeo_upload eq 'y' and $field.options_map.displayMode eq 'vimeo'}
+				<legend>{tr}Link to existing Vimeo URL{/tr}</legend>
+				<label>
+					{tr}URL:{/tr} <input class="url vimeourl" name="vimeourl" placeholder="http://vimeo.com/..." data-mode="vimeo">
+					<input type="hidden" class="reference" name="reference" value="1">
+				</label>
+			{else}
+				<legend>{tr}Upload from URL{/tr}</legend>
+				<label>
+					{tr}URL:{/tr} <input class="url" name="url" placeholder="http://">
+					<input type="hidden" class="reference" name="reference" value="0">
+				</label>
+			{/if}
+			{tr}Type or paste the URL and press ENTER{/tr}
+		</fieldset>
 	{/if}
-
-
-    <ol class="tracker-item-files current-list">
-        {foreach from=$field.files item=info}
-            <li data-file-id="{$info.fileId|escape}">
-                {if $prefs.vimeo_upload eq 'y' and $field.options_map.displayMode eq 'vimeo'}
-                    <img src="img/icons/vimeo.png" width="16" height="16">
-                {elseif $field.options_map.displayMode eq 'img'}
-                    <img src="tiki-download_file.php?fileId={$info.fileId|escape}&display&y=24" height="24">
-                {else}
-                    <img src="tiki-download_file.php?fileId={$info.fileId|escape}&icon" width="32" height="32">
-                {/if}
-                {$info.name|escape}
-                <label>
-                    {icon _id=cross alt="{tr}Remove{/tr}"}
-                </label>
-            </li>
-        {/foreach}
-    </ol>
-
 </div>
 {jq}
 	$('.files-field.uninitialized').removeClass('uninitialized').each(function () {

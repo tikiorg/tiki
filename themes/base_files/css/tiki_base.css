@@ -2288,14 +2288,6 @@ table.treetable tr.expanded span.indenter a {
   margin: 0;
   padding: 0;
 }
-.files-field {
-  background-color: #eeeeee;
-  border: #bbbbbb;
-  border-radius: 4px;
-}
-.files-field .files-group {
-  margin: 10px 0;
-}
 .tracker-item-files li {
   clear: right;
   padding-right: 1em;
