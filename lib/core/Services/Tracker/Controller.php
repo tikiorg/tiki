@@ -32,10 +32,7 @@ class Services_Tracker_Controller
 
 		$defintion = $item->getDefinition();
 
-		$fields = $item->prepareInput(new JitFilter(array()));
-		$fields = array_filter($fields, function ($field) use ($item) {
-			return $item->canViewField($field['fieldId']);
-		});
+		$fields = $item->prepareOutput(new JitFilter(array()));
 
 		return array(
 			'title' => TikiLib::lib('object')->get_title('trackeritem', $itemId),
