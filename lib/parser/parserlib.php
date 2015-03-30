@@ -3009,7 +3009,7 @@ if ( \$('#$id') ) {
 								$tocentry_link = $_SERVER['PHP_SELF'].'?page='.$this->option['page'].'&pagenum='.$tocentry['pagenum'].$tocentry_link;
 							}
 							if ( $maketoc_args['nolinks'] != 'y' ) {
-								$tocentry_title = "<a href='$tocentry_link' class='link'>".$tocentry_title.'</a>';
+								$tocentry_title = "<a href='$tocentry_link' class='link' data-ajax='false'>".$tocentry_title.'</a>'; /* data-ajax='false' is to make anchor links work in jQuery-UI mobile */
 							}
 
 							if ( $maketoc != '' ) $maketoc.= "\n";
