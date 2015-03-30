@@ -29,9 +29,11 @@
 					{/if}
 				</li>
 				{if $item_info.logs.cant|default:null}
-					<a href="tiki-tracker_view_history.php?itemId={$itemId}">
-						{icon name="history"} {tr}History{/tr}
-					</a>
+					<li>
+						<a href="tiki-tracker_view_history.php?itemId={$itemId}">
+							{icon name="history"} {tr}History{/tr}
+						</a>
+					</li>
 				{/if}
 				<li>
 					{monitor_link type=trackeritem object=$itemId linktext="{tr}Notification{/tr}" class="link" title=""}
