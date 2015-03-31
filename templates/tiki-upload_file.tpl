@@ -116,8 +116,8 @@
 			<div class="fgal_file_c1">
 				{if $simpleMode neq 'y'}
 					<div class="form-group">
-						<label for="name" class="col-sm-2 control-label">{tr}File title{/tr}</label>
-						<div class="col-sm-10">
+						<label for="name" class="col-sm-3 control-label">{tr}File title{/tr}</label>
+						<div class="col-sm-9">
 							<input class="form-control" type="text" id="name" name="name[]"
 								{if isset($fileInfo) and $fileInfo.name}
 									value="{$fileInfo.name|escape}"
@@ -130,8 +130,8 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="description" class="col-sm-2 control-label">{tr}File description{/tr}</label>
-						<div class="col-sm-10">
+						<label for="description" class="col-sm-3 control-label">{tr}File description{/tr}</label>
+						<div class="col-sm-9">
 							<textarea class="form-control" rows="2" cols="40" id="description" name="description[]">{if isset($fileInfo.description)}{$fileInfo.description|escape}{/if}</textarea>
 							{if isset($gal_info.type) and ($gal_info.type eq "podcast" or $gal_info.type eq "vidcast")}
 								<br><em>{tr}Required for podcasts{/tr}.</em>
@@ -141,8 +141,8 @@
 				{/if}
 				{if $prefs.javascript_enabled neq 'y' || !$editFileId}
 					<div class="form-group">
-						<label for="userfile" class="col-sm-2 control-label">{tr}Upload from disk{/tr}</label>
-						<div class="col-sm-10">
+						<label for="userfile" class="col-sm-3 control-label">{tr}Upload from disk{/tr}</label>
+						<div class="col-sm-9">
 							{if $editFileId}
 								{$fileInfo.filename|escape}
 							{/if}
@@ -157,7 +157,7 @@
 				<div class="fgal_file_c2">
 					{if !$editFileId and $tiki_p_batch_upload_files eq 'y'}
 						<div class="form-group">
-							<label for="isbatch" class="col-sm-10 col-sm-offset-2">
+							<label for="isbatch" class="col-sm-9 col-sm-offset-3">
 								<input type="checkbox" id="isbatch" name="isbatch[]">
 								{tr}Unzip zip files{/tr}
 							</label>
@@ -166,8 +166,8 @@
 
 					{if $prefs.fgal_delete_after eq 'y'}
 						<div class="form-group">
-							<label for="deleteAfter" class="col-sm-2 control-label">{tr}File can be deleted after{/tr}</label>
-							<div class="col-sm-10">
+							<label for="deleteAfter" class="col-sm-3 control-label">{tr}File can be deleted after{/tr}</label>
+							<div class="col-sm-9">
 								{if $editFileId}
 									{html_select_duration prefix='deleteAfter' default_value=$fileInfo.deleteAfter}
 								{else}
@@ -190,8 +190,8 @@
 							<input type="hidden" name="galleryId" value="{$galleryId}">
 						{elseif empty($groupforalert)}
 							<div class="form-group">
-								<label for="galleryId" class="col-sm-2">{tr}File gallery{/tr}</label>
-								<div class="col-sm-10">
+								<label for="galleryId" class="col-sm-3">{tr}File gallery{/tr}</label>
+								<div class="col-sm-9">
 									<select id="galleryId" name="galleryId[]" class="form-control">
 										<option value="{$treeRootId}" {if $treeRootId eq $galleryId}selected="selected"{/if} style="font-style:italic; border-bottom:1px dashed #666;">{tr}Root{/tr}</option>
 										{section name=idx loop=$galleries}
@@ -208,16 +208,16 @@
 					{/if}
 
 					<div class="form-group">
-						<label for="user" class="col-sm-2 control-label">{tr}Uploaded by{/tr}</label>
-						<div class="col-sm-10">
+						<label for="user" class="col-sm-3 control-label">{tr}Uploaded by{/tr}</label>
+						<div class="col-sm-9">
 							{user_selector id='user' name='user[]' select=$fileInfo.user editable=$tiki_p_admin_file_galleries}
 						</div>
 					</div>
 
 					{if $prefs.feature_file_galleries_author eq 'y'}
 						<div class="form-group">
-							<label for="author" class="col-sm-2 control-label">{tr}Creator{/tr}</label>
-							<div class="col-sm-10">
+							<label for="author" class="col-sm-3 control-label">{tr}Creator{/tr}</label>
+							<div class="col-sm-9">
 								<input type="text" id="author"name="author[]" value="{$fileInfo.author|escape}"><br>
 								<span class="description">{tr}Creator of file, if different from the 'Uploaded by' user{/tr}</span>
 							</div>
@@ -226,8 +226,8 @@
 					{if !empty($groupforalert)}
 						{if $showeachuser eq 'y'}
 							<div class="form-group">
-								<label class="col-sm-2 control-label">{tr}Choose users to alert{/tr}</label>
-								<div class="col-sm-10">
+								<label class="col-sm-3 control-label">{tr}Choose users to alert{/tr}</label>
+								<div class="col-sm-9">
 									{section name=idx loop=$listusertoalert}
 										<label>
 											<input type="checkbox" name="listtoalert[]" value="{$listusertoalert[idx].user|escape}"> {$listusertoalert[idx].user|escape}
@@ -243,8 +243,8 @@
 					{/if}
 					{if $editFileId}
 						<div class="form-group">
-							<label for="filetype" class="col-sm-2 control-label">{tr}File Type{/tr}</label>
-							<div class="col-sm-10">
+							<label for="filetype" class="col-sm-3 control-label">{tr}File Type{/tr}</label>
+							<div class="col-sm-9">
 								<select id="filetype" name="filetype[]">
 									{foreach $mimetypes as $type}
 										<option value="{$type}"{if $fileInfo.filetype eq $type} selected="selected"{/if}>{$type|truncate:60} (*.{$type@key})</option>
@@ -257,8 +257,8 @@
 				<div class="fgal_file_c3">
 					{if $prefs.fgal_limit_hits_per_file eq 'y'}
 						<div class="form-group">
-							<label for="hit_limit" class="col-sm-2 form-label">{tr}Maximum number of downloads{/tr}</label>
-							<div class="col-sm-10">
+							<label for="hit_limit" class="col-sm-3 form-label">{tr}Maximum number of downloads{/tr}</label>
+							<div class="col-sm-9">
 								<input type="text" id="hit_limit" name="hit_limit[]" value="{$hit_limit|default:0}">
 								<br><em>{tr}Use{/tr} {tr}-1 for no limit{/tr}.</em>
 							</div>
@@ -270,15 +270,15 @@
 					{* We want comments only on updated files *}
 					{if $prefs.javascript_enabled neq 'y' && $editFileId}
 						<div class="form-group">
-							<label for="comment" class="col-sm-2 form-label">{tr}Comment{/tr}</label>
-							<div class="col-sm-10">
+							<label for="comment" class="col-sm-3 form-label">{tr}Comment{/tr}</label>
+							<div class="col-sm-9">
 								<input type="text" id="comment" name="comment[]" value="" size="40">
 							</div>
 						</div>
 					{/if}
 				</div>
 				{if $prefs.javascript_enabled eq 'y' and !$editFileId}
-					{include file='categorize.tpl' notable='y'}<br/>
+					{include file='categorize.tpl'}<br/>
 				{/if}
 			{else}
 				<input type="hidden" name="galleryId" value="{$galleryId}">
@@ -310,18 +310,18 @@
 			{$upload_str}
 
 			{if $editFileId}
-				{include file='categorize.tpl' notable='y'}<br>
+				{include file='categorize.tpl'}<br>
 				<div id="page_bar" class="form-group">
-					<div class="col-sm-10 col-sm-offset-2">
+					<div class="col-sm-9 col-sm-offset-3">
 						<input name="upload" type="submit" class="btn btn-default" value="{tr}Save{/tr}">
 					</div>
 				</div>
 			{elseif $prefs.javascript_enabled neq 'y'}
 				{$upload_str}
 				{$upload_str}
-				{include file='categorize.tpl' notable='y'}<br>
+				{include file='categorize.tpl'}<br>
 				<div id="page_bar" class="form-group">
-					<div class="col-sm-10 col-sm-offset-2">
+					<div class="col-sm-9 col-sm-offset-3">
 						<input type="submit" class="btn btn-default btn-sm" name="upload" value="{tr}Upload{/tr}">
 					</div>
 				</div>
@@ -329,7 +329,7 @@
 
 			{if !$editFileId}
 				<div id="page_bar" class="form-group">
-					<div class="col-sm-10 col-sm-offset-2">
+					<div class="col-sm-9 col-sm-offset-3">
 						<input type="submit" class="btn btn-primary btn-sm"
 							onClick="upload_files(); return false"
 							id="btnUpload"
