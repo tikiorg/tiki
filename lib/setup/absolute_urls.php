@@ -56,7 +56,14 @@ if (isset($prefs['feature_port_rewriting']) && $prefs['feature_port_rewriting'] 
 		$prefs['http_port'] = $_SERVER['SERVER_PORT'];
 		$https_mode = false;
 	} else if($_SERVER['HTTP_X_FORWARDED_PROTO'] == "https") {
-		$prefs['https_port'] = $_SERVER['SERVER_PORT'];
+		// for whatever reason it can happen, that $_SERVER['SERVER_PORT'] is still set to a default 80, although the request is made to the default 443.
+		// the only way to detect this seem to be to look for the HTTP_X_FORWARDED_PROTO == 'https'.
+		// this impacts in particular the creation of the login url.
+		if ($_SERVER['SERVER_PORT'] == 80) {
+			// do nothing - keep the default as set in prefs.
+		} else {
+			$prefs['https_port'] = $_SERVER['SERVER_PORT'];
+		}
 		$https_mode = true;
 	}
 }
@@ -104,7 +111,9 @@ if ( $prefs['http_port'] == 80 ) {
 
 
 // create $base_url_http and $base_url_https etc.
+// Note: $url_scheme becomes a globally used var - even headerlib provides a method for it - so do not rename!
 $url_scheme = $https_mode ? 'https' : 'http';
+
 // depends on reverse proxy - could also use $reverse_proxy
 $url_host = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST']  : $_SERVER['SERVER_NAME'];
 list($url_host,)=preg_split('/:/', $url_host);	// Strip url port
