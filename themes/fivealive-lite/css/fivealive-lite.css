@@ -7373,11 +7373,6 @@ header.header .module.secondary_site_menu {
   margin-bottom: 0;
   border-bottom: none;
 }
-.sitelogo img {
-  max-height: 34px;
-  width: auto;
-  margin-bottom: 1em;
-}
 .form-control,
 select,
 input[type="text"],
