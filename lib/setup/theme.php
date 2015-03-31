@@ -51,7 +51,7 @@ $headerlib->add_jsfile('lib/jquery_tiki/tiki-bootstrapmodalfix.js');
 
 if ($prefs['feature_fixed_width'] === 'y') {
 	$headerlib->add_css(
-		'@media (min-width: 1200px) { .container { min-width:' .
+		'@media (min-width: 1200px) { .container { width:' .
 		(!empty($prefs['layout_fixed_width']) ? $prefs['layout_fixed_width'] : '1170px') .
 		'; } }'
 	);
