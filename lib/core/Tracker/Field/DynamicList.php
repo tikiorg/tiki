@@ -109,7 +109,7 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 var dilIsInit_'. $insertId. ' = false;
 
 $("input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFieldIdHere . ']").change(function(e, val) {
-	if (val && dilIsInit_'. $insertId. ') {
+	if (val && val == "' . $insertId . '" && dilIsInit_'. $insertId. ') {
 		return; // on init, only fire one time per select trigger eventhandler. otherwise each init would trigger all prev. registered handlers
 	}
 	dilIsInit_'. $insertId. ' = true;
