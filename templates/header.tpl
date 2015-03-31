@@ -30,7 +30,7 @@
 	{else}
 	<meta name="description" content="{$post_info.title|escape} - {$blog_data.title|escape}">
 	{/if}
-{elseif $prefs.metatag_pagedesc eq 'y' and $description ne ''}
+{elseif $prefs.metatag_pagedesc eq 'y' and isset($description) and $description ne ''}
 	<meta name="description" content="{$description|escape}">
 {elseif $prefs.metatag_description ne '' or (isset($description) and $description eq '')}
 	<meta name="description" content="{$prefs.metatag_description|escape}">

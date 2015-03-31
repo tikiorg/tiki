@@ -120,7 +120,7 @@
 					{/if}
 					{if $prefs.feature_jcapture eq "y"}
 						<li>
-							<a href="#" onclick="openJCaptureDialog('none', '{$page}', event);return false;">
+							<a href="#" onclick="openJCaptureDialog('none', '{$page|default:null}', event);return false;">
 								{icon name="screencapture"} {tr}Screen capture{/tr}
 							</a>
 						</li>
