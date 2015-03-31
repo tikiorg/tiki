@@ -1059,7 +1059,7 @@ div.cvsup {
   display: inline;
   margin-top: 4.6px;
   margin-bottom: 4.6px;
-  max-height: 46px;
+  max-height: 36.8px;
   width: auto !important;
 }
 .navbar-fixed-top h1.sitetitle,
@@ -1090,7 +1090,7 @@ div.cvsup {
 .layout_social .topbar_modules select.form-control,
 .layout_social_modules .topbar_modules select.form-control,
 .layout_fixed_top_modules #top_modules select.form-control {
-  margin-top: 11.5px;
+  margin-top: 7.66666667px;
   padding-top: 4px;
   padding-bottom: 4px;
 }
@@ -1102,7 +1102,7 @@ div.cvsup {
 .layout_social .topbar_modules a.btn-link,
 .layout_social_modules .topbar_modules a.btn-link,
 .layout_fixed_top_modules #top_modules a.btn-link {
-  margin-top: 10.22222222px;
+  margin-top: 6.57142857px;
 }
 .layout_social_modules #topbar_modules {
   display: block;
@@ -3129,7 +3129,7 @@ div.form-group label.error {
   border: none;
 }
 body.tiki.navbar-padding {
-  padding-top: 70px;
+  padding-top: 46px;
 }
 .panel-body ul.nav {
   overflow: visible;

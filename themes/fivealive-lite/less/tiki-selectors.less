@@ -28,7 +28,7 @@ body.tiki.navbar-padding,
 //.layout_fixed_top_modules .navbar-fixed-top,
 .layout_fixed_top_modules,
 .layout_social_modules {
-  padding-top: @navbar-fixed-height + 8px;
+  padding-top: @navbar-fixed-height;
   h1.sitetitle {
     line-height: normal;
   }
@@ -42,8 +42,10 @@ body.tiki.navbar-padding,
   line-height: @navbar-fixed-height; //
 }
 
-#top_modules {
-  max-height: 54px;
+//#top_modules,
+.layout_fixed_top_modules .top_modules,
+.navbar-fixed-top {
+  height: @navbar-fixed-height;
 //  overflow: hidden;
   .sitelogo img {
     width: auto !important;

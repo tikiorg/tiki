@@ -7275,7 +7275,7 @@ div.drillshow {
 body.tiki.navbar-padding,
 .layout_fixed_top_modules,
 .layout_social_modules {
-  padding-top: 54px;
+  padding-top: 46px;
 }
 body.tiki.navbar-padding h1.sitetitle,
 .layout_fixed_top_modules h1.sitetitle,
@@ -7289,25 +7289,31 @@ body.tiki.navbar-padding h1.sitetitle,
   font-size: 1.8rem;
   line-height: 46px;
 }
-#top_modules {
-  max-height: 54px;
+.layout_fixed_top_modules .top_modules,
+.navbar-fixed-top {
+  height: 46px;
 }
-#top_modules .sitelogo img {
+.layout_fixed_top_modules .top_modules .sitelogo img,
+.navbar-fixed-top .sitelogo img {
   width: auto !important;
   margin-right: 1.5em;
 }
-#top_modules h1.sitetitle {
+.layout_fixed_top_modules .top_modules h1.sitetitle,
+.navbar-fixed-top h1.sitetitle {
   font-size: 2em;
   margin: 0 0 0 1rem;
   float: left;
 }
-#top_modules h1.sitetitle a {
+.layout_fixed_top_modules .top_modules h1.sitetitle a,
+.navbar-fixed-top h1.sitetitle a {
   color: #fff;
 }
-#top_modules h1.sitetitle a:hover {
+.layout_fixed_top_modules .top_modules h1.sitetitle a:hover,
+.navbar-fixed-top h1.sitetitle a:hover {
   text-decoration: none;
 }
-#top_modules h2.sitesubtitle {
+.layout_fixed_top_modules .top_modules h2.sitesubtitle,
+.navbar-fixed-top h2.sitesubtitle {
   float: left;
   font-size: 1.5em;
   margin: 0 0 0 1.5em;
