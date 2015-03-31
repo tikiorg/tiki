@@ -7663,6 +7663,11 @@ div.drillshow {
   margin-right: 0;
   margin-bottom: 15px;
 }
+.breadcrumb {
+  font-style: normal;
+  font-size: 90%;
+  display: block;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */

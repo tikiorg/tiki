@@ -7165,6 +7165,11 @@ div.drillshow {
   margin-right: 0;
   margin-bottom: 15px;
 }
+.breadcrumb {
+  font-style: normal;
+  font-size: 90%;
+  display: block;
+}
 body {
   background: url('../images/body-bg_fw.png') repeat-x #214d68;
 }

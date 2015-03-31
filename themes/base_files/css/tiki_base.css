@@ -713,6 +713,11 @@ div.drillshow {
   margin-right: 0;
   margin-bottom: 15px;
 }
+.breadcrumb {
+  font-style: normal;
+  font-size: 90%;
+  display: block;
+}
 .button.highlight {
   background: inherit;
 }
@@ -1894,8 +1899,8 @@ span.posthead {
 }
 .breadcrumb {
   font-size: 90%;
-  font-style: italic;
-  display: inline-block;
+  font-style: normal;
+  display: block;
 }
 small.description {
   display: block;

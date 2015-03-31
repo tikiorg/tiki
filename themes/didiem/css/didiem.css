@@ -7397,6 +7397,11 @@ div.drillshow {
   margin-right: 0;
   margin-bottom: 15px;
 }
+.breadcrumb {
+  font-style: normal;
+  font-size: 90%;
+  display: block;
+}
 .navbar-fixed-top,
 .navbar-fixed-bottom {
   left: 0;
