@@ -257,8 +257,8 @@ th {
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot');
-  src: url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url('../../../vendor/vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot');
+  src: url('../../../vendor/vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../../vendor/vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../../../vendor/vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../../../vendor/vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../../../vendor/vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 .glyphicon {
   position: relative;
@@ -7272,6 +7272,9 @@ div.drillshow {
   box-shadow: inset 0 24px 0 0 #28a7de;
   border-top: 2px solid #fff;
 }
+.navbar {
+  min-height: 24px;
+}
 body.tiki.navbar-padding,
 .layout_fixed_top_modules,
 .layout_social_modules {
@@ -7325,6 +7328,8 @@ body.tiki.navbar-padding h1.sitetitle,
 .layout_basic .page-header > .topbar {
   background: #28aae1;
 }
+.layout_basic .topbar,
+.layout_basic.tiki .row.topbar,
 .layout_fixed_top_modules .navbar {
   margin-bottom: 0;
 }
@@ -7378,6 +7383,12 @@ header.header .module.secondary_site_menu {
   margin-top: 0;
   margin-bottom: 0;
   border-bottom: none;
+}
+.layout_basic .page-header > .topbar {
+  margin-top: 1px;
+}
+.layout_basic .page-header > .topbar > div {
+  margin-bottom: -3px !important;
 }
 .form-control,
 select,

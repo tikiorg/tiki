@@ -3119,6 +3119,21 @@ div.form-group label.error {
 .layout_basic.fixed_width .row-middle {
   margin-top: 190px;
 }
+body:not(.fixed_width) .page-header > div > div {
+  width: auto !important;
+}
+body:not(.fixed_width) .container {
+  padding-left: 0;
+  padding-right: 0;
+  width: auto;
+}
+body:not(.fixed_width) .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+body:not(.fixed_width) .row-middle {
+  margin-top: 0 !important;
+}
 .tiki .page-header {
   border-bottom: none;
   margin: auto;

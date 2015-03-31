@@ -24,6 +24,11 @@
 //  }
 //}
 
+// override Bootstrap default because we can have slimmer navbars in fivealive-lite
+.navbar {
+  min-height: 24px;
+}
+
 body.tiki.navbar-padding,
 //.layout_fixed_top_modules .navbar-fixed-top,
 .layout_fixed_top_modules,
@@ -85,6 +90,8 @@ body.tiki.navbar-padding,
 }
 
 // .layout_h_tb_m_f_containers_3-6-3 .navbar,
+.layout_basic .topbar,
+.layout_basic.tiki .row.topbar,
 .layout_fixed_top_modules .navbar {
 //  min-height: ;
   margin-bottom: 0;
@@ -150,6 +157,16 @@ header.header .module.secondary_site_menu {
   margin-top: 0;
   margin-bottom: 0;
   border-bottom: none;
+}
+
+// Little gap (line) between the topbar and top
+.layout_basic .page-header > .topbar {
+  margin-top: 1px;
+}
+
+// When it displays as inline-block for some reason there is some little padding on the bottom of the element which needs to be removed
+.layout_basic .page-header > .topbar > div {
+  margin-bottom: -3px !important;
 }
 
 //.sitelogo img {max-height: 34px; width: auto; margin-bottom: 1em;}
