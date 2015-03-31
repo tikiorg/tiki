@@ -7285,6 +7285,18 @@ body.tiki.navbar-padding h1.sitetitle,
 .layout_social_modules h1.sitetitle {
   line-height: normal;
 }
+body:not(.fixed_width) .page-header > div > div {
+  width: auto !important;
+}
+body:not(.fixed_width) .container {
+  padding-left: 0;
+  padding-right: 0;
+  width: auto;
+}
+body:not(.fixed_width) .row {
+  margin-left: 0;
+  margin-right: 0;
+}
 .layout_social .topbar_modules h1.sitetitle,
 .layout_social_modules .topbar_modules h1.sitetitle,
 .layout_fixed_top_modules #top_modules h1.sitetitle {
