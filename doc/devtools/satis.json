@@ -1275,14 +1275,14 @@
 			"type": "svn",
 			"url": "http://svn.code.sf.net/p/jcapture-applet/code/trunk@47"
 		},
-		{
+	  	{
 			"type": "package",
 			"package": {
-				"name": "jquery/jquery-s5",
-				"version": "1.0.1",
+				"name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
+				"version": "1.0.0",
 				"dist": {
-					"url": "https://github.com/robertleeplummerjr/jQuery.s5/archive/1.0.1.zip",
-					"type": "zip"
+				  "url": "https://github.com/Sam152/Javascript-Equal-Height-Responsive-Rows/archive/master.zip",
+				  "type": "zip"
 				}
 			}
 		}
@@ -1343,6 +1343,7 @@
 		"player/flv": "1.0",
 		"player/mp3": "1.0",
 		"rangy/rangy": "1.2.3",
+		"Sam152/Javascript-Equal-Height-Responsive-Rows" : "1.0.0",
 		"simile_timeline/simile_timeline": "2.3.0",
 		"smarty/smarty": ">=3.1.14",
 		"svg-edit/svg-edit": ">=2.6",
