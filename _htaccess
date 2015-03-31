@@ -49,6 +49,7 @@
 	#DirectoryIndex tiki-index.php index.php
 </IfModule>
 
+# Note in some distributions of Apache (e.g. Wampserver 2.5) you may also need to enable mod_filter as well as mod_deflate for this to work
 <IfModule mod_deflate.c>
 	<IfModule mod_headers.c>
 		# Make sure proxies don't deliver the wrong content
