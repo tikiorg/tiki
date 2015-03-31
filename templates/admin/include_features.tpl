@@ -92,6 +92,7 @@
 					{preference name=fgal_for_jcapture}
 				</div>
 				{preference name=feature_reports}
+				{preference name=feature_htmlfeed}
 			</div>
 		</fieldset>
 
