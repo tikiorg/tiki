@@ -7272,6 +7272,9 @@ div.drillshow {
   box-shadow: inset 0 24px 0 0 #28a7de;
   border-top: 2px solid #fff;
 }
+.navbar {
+  min-height: 24px;
+}
 body.tiki.navbar-padding,
 .layout_fixed_top_modules,
 .layout_social_modules {
@@ -7385,7 +7388,7 @@ header.header .module.secondary_site_menu {
   margin-top: 1px;
 }
 .layout_basic .page-header > .topbar > div {
-  margin-bottom: -4px !important;
+  margin-bottom: -3px !important;
 }
 .form-control,
 select,
