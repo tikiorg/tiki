@@ -168,7 +168,7 @@ function wikiplugin_htmlfeedlink($data, $params)
 		switch($type) {
 			case "":
 			case "replace":
-				$data = "~np~" . $item->description . "~/np~";
+				$data = "~np~" . $item->data . "~/np~";
     			break;
 				//moderate isn't yet working
 				if ($moderate == 'y') {
