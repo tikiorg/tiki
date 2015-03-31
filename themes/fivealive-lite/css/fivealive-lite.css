@@ -257,8 +257,8 @@ th {
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url('../../../vendor/vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot');
-  src: url('../../../vendor/vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../../vendor/vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../../../vendor/vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../../../vendor/vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../../../vendor/vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot');
+  src: url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 .glyphicon {
   position: relative;
@@ -7249,6 +7249,11 @@ div.drillshow {
   margin-right: 0;
   margin-bottom: 15px;
 }
+.breadcrumb {
+  font-style: normal;
+  font-size: 90%;
+  display: block;
+}
 .margin-bottom-xs {
   margin-bottom: 5px;
 }
@@ -7270,7 +7275,7 @@ div.drillshow {
 body.tiki.navbar-padding,
 .layout_fixed_top_modules,
 .layout_social_modules {
-  padding-top: 54px;
+  padding-top: 46px;
 }
 body.tiki.navbar-padding h1.sitetitle,
 .layout_fixed_top_modules h1.sitetitle,
@@ -7284,25 +7289,31 @@ body.tiki.navbar-padding h1.sitetitle,
   font-size: 1.8rem;
   line-height: 46px;
 }
-#top_modules {
-  max-height: 54px;
+.layout_fixed_top_modules .top_modules,
+.navbar-fixed-top {
+  height: 46px;
 }
-#top_modules .sitelogo img {
+.layout_fixed_top_modules .top_modules .sitelogo img,
+.navbar-fixed-top .sitelogo img {
   width: auto !important;
   margin-right: 1.5em;
 }
-#top_modules h1.sitetitle {
+.layout_fixed_top_modules .top_modules h1.sitetitle,
+.navbar-fixed-top h1.sitetitle {
   font-size: 2em;
   margin: 0 0 0 1rem;
   float: left;
 }
-#top_modules h1.sitetitle a {
+.layout_fixed_top_modules .top_modules h1.sitetitle a,
+.navbar-fixed-top h1.sitetitle a {
   color: #fff;
 }
-#top_modules h1.sitetitle a:hover {
+.layout_fixed_top_modules .top_modules h1.sitetitle a:hover,
+.navbar-fixed-top h1.sitetitle a:hover {
   text-decoration: none;
 }
-#top_modules h2.sitesubtitle {
+.layout_fixed_top_modules .top_modules h2.sitesubtitle,
+.navbar-fixed-top h2.sitesubtitle {
   float: left;
   font-size: 1.5em;
   margin: 0 0 0 1.5em;
@@ -7367,11 +7378,6 @@ header.header .module.secondary_site_menu {
   margin-top: 0;
   margin-bottom: 0;
   border-bottom: none;
-}
-.sitelogo img {
-  max-height: 34px;
-  width: auto;
-  margin-bottom: 1em;
 }
 .form-control,
 select,

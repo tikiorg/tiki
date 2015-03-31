@@ -121,6 +121,7 @@
 					</div>
 
 				</div>
+				{preference name=feature_htmlfeed}
 			</fieldset>
 
 

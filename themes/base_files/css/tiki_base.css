@@ -713,6 +713,11 @@ div.drillshow {
   margin-right: 0;
   margin-bottom: 15px;
 }
+.breadcrumb {
+  font-style: normal;
+  font-size: 90%;
+  display: block;
+}
 .button.highlight {
   background: inherit;
 }
@@ -1054,7 +1059,7 @@ div.cvsup {
   display: inline;
   margin-top: 4.6px;
   margin-bottom: 4.6px;
-  max-height: 46px;
+  max-height: 36.8px;
   width: auto !important;
 }
 .navbar-fixed-top h1.sitetitle,
@@ -1085,7 +1090,7 @@ div.cvsup {
 .layout_social .topbar_modules select.form-control,
 .layout_social_modules .topbar_modules select.form-control,
 .layout_fixed_top_modules #top_modules select.form-control {
-  margin-top: 11.5px;
+  margin-top: 7.66666667px;
   padding-top: 4px;
   padding-bottom: 4px;
 }
@@ -1097,7 +1102,7 @@ div.cvsup {
 .layout_social .topbar_modules a.btn-link,
 .layout_social_modules .topbar_modules a.btn-link,
 .layout_fixed_top_modules #top_modules a.btn-link {
-  margin-top: 10.22222222px;
+  margin-top: 6.57142857px;
 }
 .layout_social_modules #topbar_modules {
   display: block;
@@ -1894,8 +1899,8 @@ span.posthead {
 }
 .breadcrumb {
   font-size: 90%;
-  font-style: italic;
-  display: inline-block;
+  font-style: normal;
+  display: block;
 }
 small.description {
   display: block;
@@ -3124,7 +3129,7 @@ div.form-group label.error {
   border: none;
 }
 body.tiki.navbar-padding {
-  padding-top: 70px;
+  padding-top: 46px;
 }
 .panel-body ul.nav {
   overflow: visible;
@@ -3246,7 +3251,7 @@ body.tiki.navbar-padding {
   width: 100%;
   margin-bottom: 2px;
   /* style header */
-  /* table processing indicator - indeterminate spinner */
+  /* table processing indicator - decrease opacity of table rows */
   /* filter widget */
   /* hidden filter row */
   /*no formatting on filter row when filter-false*/
@@ -3301,11 +3306,67 @@ table.tablesorter-processing tbody tr td {
   -moz-transition: line-height 0.1s ease;
   -o-transition: line-height 0.1s ease;
   transition: line-height 0.1s ease;
+  /* Add tooltips to slider handles */
 }
 .tablesorter-filter-row td label {
   float: left;
   clear: both;
   font-size: 70%;
+}
+.tablesorter-filter-row td .ui-slider {
+  width: 90%;
+  margin: 13px auto 2px auto;
+  /* add enough top margin so the tooltips will fit */
+  font-size: 0.9em;
+}
+.tablesorter-filter-row td .ui-slider .ui-slider-handle {
+  width: 0.9em;
+  height: 0.9em;
+}
+.tablesorter-filter-row td .ui-datepicker {
+  font-size: 0.8em;
+}
+.tablesorter-filter-row td span.currange {
+  font-size: smaller;
+  font-weight: normal;
+}
+.tablesorter-filter-row td .value-popup:after {
+  content: attr(data-value);
+  position: absolute;
+  bottom: 15px;
+  left: -3px;
+  min-width: 14px;
+  height: 12px;
+  background-color: #444;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#444444), to(#999999));
+  background-image: -webkit-linear-gradient(top, #444444, #999999);
+  background-image: -moz-linear-gradient(top, #444444, #999999);
+  background-image: -o-linear-gradient(top, #444444, #999999);
+  background-image: linear-gradient(to bottom, #444444, #999999);
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  -webkit-box-shadow: 0px 0px 4px 0px #777;
+  box-shadow: 0px 0px 4px 0px #777;
+  border: #444 1px solid;
+  color: #fff;
+  font: bold 0.9em/1em Arial;
+  padding: 1px;
+  text-align: center;
+}
+.tablesorter-filter-row td .value-popup:before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-top: 8px solid #777;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  top: -8px;
+  left: 50%;
+  margin-left: -8px;
+  margin-top: -1px;
 }
 .tablesorter-filter-row.hideme td {
   padding: 2px;
@@ -3364,7 +3425,6 @@ div.ts-wrapperdiv div.ts-pager {
 }
 div.ts-wrapperdiv div.ts-pager.ts-pager-bottom {
   visibility: hidden;
-  isibility: hidden;
 }
 div.ts-wrapperdiv div.ts-pager div.btn-group {
   margin-top: 2px;

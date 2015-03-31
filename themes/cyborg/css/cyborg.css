@@ -7335,6 +7335,11 @@ div.drillshow {
   margin-right: 0;
   margin-bottom: 15px;
 }
+.breadcrumb {
+  font-style: normal;
+  font-size: 90%;
+  display: block;
+}
 .margin-bottom-xs {
   margin-bottom: 5px;
 }
