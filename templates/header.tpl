@@ -32,7 +32,7 @@
 	{/if}
 {elseif $prefs.metatag_pagedesc eq 'y' and not empty($description)}
 	<meta name="description" content="{$description|escape}">
-{elseif $prefs.metatag_description ne '' or empty($description))}
+{elseif $prefs.metatag_description ne '' or empty($description)}
 	<meta name="description" content="{$prefs.metatag_description|escape}">
 {/if}
 {if $prefs.metatag_geoposition neq ''}
