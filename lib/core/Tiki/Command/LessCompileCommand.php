@@ -72,6 +72,13 @@ class LessCompileCommand  extends Command
                     if (file_exists($css_file && filemtime($css_file) >= filemtime($less_file))) {
                         continue;
                     }
+                    $css_dir_name = "themes/$dirname/css/";
+                    if (! file_exists($css_dir_name) {
+                        $ok = mkdir($css_dir_name, 0755);
+                        if (! $ok) {
+                            // pass
+                        }
+                    }
 					$command = "./vendor/bin/lessc $less_file $css_file";
 					$output->writeln($command);
 					$result = shell_exec($command);
@@ -80,9 +87,9 @@ class LessCompileCommand  extends Command
 				}
 				break;
 			case '':
-				return $output->writeln('Missing parameter.');
+				return $output->writeln('Missing parameter. Try: php -f console.php less:compile themes');
 			default:
-				$output->writeln('<error>Invalid location for less files requested.</error>');
+				$output->writeln('<error>Invalid location for less files requested. Try: php -f console.php less:compile themes</error>');
 		}
 
 		$output->writeln('Clearing all caches');
