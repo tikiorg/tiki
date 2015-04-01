@@ -73,7 +73,7 @@ class LessCompileCommand  extends Command
                         continue;
                     }
                     $css_dir_name = "themes/$dirname/css/";
-                    if (! file_exists($css_dir_name) {
+                    if (! file_exists($css_dir_name)) {
                         $ok = mkdir($css_dir_name, 0755);
                         if (! $ok) {
                             // pass
