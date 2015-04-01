@@ -48,6 +48,13 @@ function wikiplugin_youtube_info()
 				'filter' => 'digits',
 				'default' => 350,
 			),
+			'start' => array(
+				'required' => false,
+				'name' => tra('Start time'),
+				'description' => tra('Start time offset in seconds'),
+				'filter' => 'digits',
+				'default' => 0,
+			),
 			'quality' => array(
 				'required' => false,
 				'name' => tra('Quality'),
@@ -154,6 +161,9 @@ function wikiplugin_youtube($data, $params)
 		} else {
 			$params['movie'] .= '&fs=0';
 		}
+	}
+	if (!empty($params['start'])) {
+		$params['movie'] .= '&start=' . $params['start'];
 	}
 	if (isset($params['related']) && $params['related'] == 'n') {
 		$params['movie'] .= '&rel=0';
