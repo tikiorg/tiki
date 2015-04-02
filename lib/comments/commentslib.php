@@ -2957,6 +2957,8 @@ class Comments extends TikiLib
 				$parent_title = '';
 			}
 
+			$forum_info = $this->get_forum($object[1]);
+
 			TikiLib::events()->trigger(
 				$finalEvent,
 				array(
@@ -2964,6 +2966,7 @@ class Comments extends TikiLib
 					'object' => $threadId,
 					'parent_id' => $parentId,
 					'forum_id' => $object[1],
+					'forum_section' => $forum_info['section'],
 					'user' => $GLOBALS['user'],
 					'title' => $title,
 					'parent_title' => $parent_title,
