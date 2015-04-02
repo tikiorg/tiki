@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2015 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -63,6 +63,7 @@ function wikiplugin_mediaplayer_info()
 				'required' => false,
 				'name'=> tra('File type'),
 				'description' => tra('File type for source URL, e.g. mp4. Specify one of the supported file types when the URL of the file is missing the file extension. This is the case for File Gallery files which have a URL such as tiki-download_file.php?fileId=4&display or display4 if you have Clean URLs enabled.'),
+				'filter' => 'url',
 				'default' => '',
 			),
 			'width' => array(
@@ -80,7 +81,7 @@ function wikiplugin_mediaplayer_info()
 			'style' => array(
 				'required' => false,
 				'name' => tra('Style'),
-				'description' => tra('One of:').'mini|normal|maxi|multi',
+				'description' => tra('One of:').' mini|normal|maxi|multi|native',
 				'filter' => 'alpha',
 				'options' => array(
 					array(
@@ -97,6 +98,26 @@ function wikiplugin_mediaplayer_info()
 					),
 					array(
 						'text' => 'Multi', 'value' => 'multi'
+					),
+					array(
+						'text' => 'Native (HTML5)', 'value' => 'native'
+					)
+				)
+			),
+			'mediatype' => array(
+				'required' => false,
+				'name' => tra('Media Type (for HTML5 style only)'),
+				'description' => tra('One of:').' audio|video',
+				'filter' => 'alpha',
+				'options' => array(
+					array(
+						'text' => '', 'value' => ''
+					),
+					array(
+						'text' => tra('Audio'), 'value' => 'audio'
+					),
+					array(
+						'text' => tra('Video'), 'value' => 'video'
 					)
 				)
 			),
@@ -129,14 +150,15 @@ function wikiplugin_mediaplayer_info()
 }
 function wikiplugin_mediaplayer($data, $params)
 {
-	global $prefs, $access;
+	global $prefs;
+	$access = TikiLib::lib('access');
 	static $iMEDIAPLAYER = 0;
 	$id = 'mediaplayer'.++$iMEDIAPLAYER;
 
 	if (empty($params['mp3']) && empty($params['flv']) && empty($params['src'])) {
 		return;
 	}
-	if (!empty($params['src'])) {
+	if (!empty($params['src']) && $params['style'] != 'native') {
 		$access->check_feature('feature_jquery_media');
 	}
 	$defaults_mp3 = array(
@@ -162,8 +184,8 @@ function wikiplugin_mediaplayer($data, $params)
 	} else {
 		$params = array_merge($defaults, $params);
 	}
-	if (!empty($params['src'])) {
-		global $headerlib; include_once('lib/headerlib.php');
+	if (!empty($params['src']) && $params['style'] != 'native') {
+		$headerlib = TikiLib::lib('header');
 		$js = "\n var media_$id = $('#$id').media( {";
 		foreach ($params as $param => $value) {
 			if ($param == 'src') {
@@ -189,13 +211,33 @@ function wikiplugin_mediaplayer($data, $params)
 		$headerlib->add_jq_onready($js);
 		return "<a href=\"".$params['src']."\" id=\"$id\"></a>";
 	}
-	$styles = array('normal', 'mini', 'maxi', 'multi');
+	
+	// Check the style of the player
+	$styles = array('normal', 'mini', 'maxi', 'multi', 'native');
 	if (empty($params['style']) || $params['style'] == 'normal' || !in_array($params['style'], $styles)) {
 		$player = $params['player'];
+ 	} elseif ($params['style'] == 'native') {
+		$player = '';
 	} else {
 		$params['where'] = str_replace('_default', '_'.$params['style'], $params['where']);
 		$player = str_replace('.swf', '_'.$params['style'].'.swf', $params['player']);
 	}
+	
+	// check if native native HTML5 video object is requested
+
+	if ($params['style'] == 'native') {
+		if ($params['mediatype'] == 'audio') {
+			$mediatype = 'audio';
+		} else {
+			$mediatype = 'video';
+		}
+		$code = '<' . $mediatype . ' height="' . $params['height'] . '" width="' . $params['width'] . '" controls>';
+		$code .= '	<source src="' . $params['src'] . '" type=\'' . $params['type'] . '\'>'; // type can be e.g. 'video/webm; codecs="vp8, vorbis"'
+		$code .= '</' . $mediatype . '>';
+	} else {
+
+	// else use flash
+
 	$code = '<object type="application/x-shockwave-flash" data="'.$params['where'].$player.'" width="'.$params['width'].'" height="'.$params['height'].'">';
 	$code .= '<param name="movie" value="'.$params['where'].$player.'" />';
 	if (!empty($params['fullscreen'])) {
@@ -220,6 +262,8 @@ function wikiplugin_mediaplayer($data, $params)
 	}
 	$code .= '" />';
 	$code .= '</object>';
+
+	} // end of else use flash
 
 	return "~np~$code~/np~";
 }
