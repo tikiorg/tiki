@@ -2819,6 +2819,14 @@ function prefs_feature_list($partial = false)
 			'default' => 'y',
 			'tags' => array('advanced'),
 		),
+		'feature_equal_height_rows_js' => array(
+			'name' => tra('Enable Equal Height Rows JS Pugin'),
+			'description' => tra('This allows responsive rows to be set so that each contained element has the same height '),
+			'type' => 'flag',
+			'default' => 'n',
+			'help' => "https://github.com/Sam152/Javascript-Equal-Height-Responsive-Rows",
+			'tags' => array('advanced'),
+		),
 		'feature_theme_control_savesession' => array(
 			'name' => tra('Store session variable for current theme'),
 			'description' => tra('Store a session variable for current theme so that it can  be used for auto-selecting a category when categorizing'),

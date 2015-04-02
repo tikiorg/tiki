@@ -203,6 +203,7 @@
 					</div>
 					{preference name=feature_jscalendar}
 					{preference name=feature_hidden_links}
+                    {preference name=feature_equal_height_rows_js}
 				</div>
 			</fieldset>
 		{/tab}

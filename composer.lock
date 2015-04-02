@@ -4,8 +4,19 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b0e6267c04ceb7f313faa4987921a0ea",
+    "hash": "8c8939ef7314613be052910e7f0403ed",
     "packages": [
+        {
+            "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
+            "version": "1.0.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/sam152-javascript-equal-height-responsive-rows-1.0.0.zip",
+                "reference": "1.0.0",
+                "shasum": "fd52c7dafa7ef233d005dceff8212add2d4a7136"
+            },
+            "type": "library"
+        },
         {
             "name": "adodb/adodb",
             "version": "5.18",
