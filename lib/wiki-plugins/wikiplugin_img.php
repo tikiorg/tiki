@@ -425,7 +425,7 @@ function wikiplugin_img( $data, $params )
 	$set = !empty($imgdata['fileId']) + !empty($imgdata['id']) + !empty($imgdata['src']) + !empty($imgdata['attId'])
 		+ !empty($imgdata['randomGalleryId']) + !empty($imgdata['fgalId']);
 	if ($set == 0) {
-		return tra("''No image specified. One of the following parameters must be set: fileId, randomGalleryId, fgalId, attId, id.''");
+		return tra("''No image specified. One of the following parameters must be set: fileId, randomGalleryId, fgalId, attId, id, or src.''");
 	} elseif ($set >1) {
 		return tra("''Use one and only one of the following parameters: fileId, randomGalleryId, fgalId, attId, id, or src.''");
 	}
