@@ -173,6 +173,10 @@ function wikiplugin_mediaplayer($data, $params)
 		'player' => 'player_flv.swf',
 		'where' => 'vendor/player/flv/template_default/'
 	);
+	$defaults_html5 = array(
+		'width' => '',
+		'height' => '',
+	);
 	$defaults = array(
 		'width' => 320,
 		'height' => 240,
@@ -181,6 +185,8 @@ function wikiplugin_mediaplayer($data, $params)
 		$params = array_merge($defaults_flv, $params);
 	} elseif (!empty($params['mp3'])) {
 		$params = array_merge($defaults_mp3, $params);
+	} elseif (!empty($params['style']) && $params['style'] == 'native') {
+		$params = array_merge($defaults_html5, $params);
 	} else {
 		$params = array_merge($defaults, $params);
 	}
@@ -231,7 +237,14 @@ function wikiplugin_mediaplayer($data, $params)
 		} else {
 			$mediatype = 'video';
 		}
-		$code = '<' . $mediatype . ' height="' . $params['height'] . '" width="' . $params['width'] . '" controls>';
+		$code = '<' . $mediatype;
+		if (!empty( $params['height'] )) { 
+			$code .= ' height="' . $params['height'] . '"';
+		}
+		if (!empty( $params['width'] )) { 
+			$code .= ' width="' . $params['width'] . '"';
+		}
+		$code .= ' style="max-width: 100%" controls>';
 		$code .= '	<source src="' . $params['src'] . '" type=\'' . $params['type'] . '\'>'; // type can be e.g. 'video/webm; codecs="vp8, vorbis"'
 		$code .= '</' . $mediatype . '>';
 	} else {
