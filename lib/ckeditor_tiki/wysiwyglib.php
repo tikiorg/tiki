@@ -111,26 +111,22 @@ window.CKEDITOR.config.toolbar = ' .$cktools.';
 
 	function setUpEditor($is_html, $dom_id, $params = array(), $auto_save_referrer = '', $full_page = true)
 	{
-        static $notallreadyloaded =true;
-
 		global $tikiroot, $prefs;
 		$headerlib = TikiLib::lib('header');
 
 		$headerlib->add_js('window.CKEDITOR.config.extraPlugins = "' . $prefs['wysiwyg_extra_plugins'] . '";');
-        if ($notallreadyloaded) {
-			$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'vendor/ckeditor/ckeditor/";')
-				//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
-				//// note, this breaks ajax page load via wikitopline edit icon
-				->add_jsfile('vendor/ckeditor/ckeditor/ckeditor.js', 0, true)
-				->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1);
+		$headerlib->add_js_config('window.CKEDITOR_BASEPATH = "'. $tikiroot . 'vendor/ckeditor/ckeditor/";')
+			//// for js debugging - copy _source from ckeditor distribution to libs/ckeditor to use
+			//// note, this breaks ajax page load via wikitopline edit icon
+			->add_jsfile('vendor/ckeditor/ckeditor/ckeditor.js', 0, true)
+			->add_js('window.CKEDITOR.config._TikiRoot = "'.$tikiroot.'";', 1);
 
-			$headerlib->add_js(
-				'window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",divarea" : "divarea" );',
-				5
-			);
-		}
+		$headerlib->add_js(
+			'window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",divarea" : "divarea" );',
+			5
+		);
 
-		if ($notallreadyloaded && $full_page) {
+		if ($full_page) {
 			$headerlib->add_jsfile('lib/ckeditor_tiki/tikilink_dialog.js');
 			$headerlib->add_js(
 				'window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",tikiplugin" : "tikiplugin" );
@@ -139,7 +135,7 @@ window.CKEDITOR.config.toolbar = ' .$cktools.';
 			);
 			$headerlib->add_css('.ui-front {z-index: 9999;}');	// so the plugin edit dialogs show up
 		}
-		if ($notallreadyloaded && !$is_html && $full_page) {
+		if (!$is_html && $full_page) {
 			$headerlib->add_js(
 				'window.CKEDITOR.config.extraPlugins += (window.CKEDITOR.config.extraPlugins ? ",tikiwiki" : "tikiwiki" );
 				window.CKEDITOR.plugins.addExternal( "tikiwiki", "'.$tikiroot.'lib/ckeditor_tiki/plugins/tikiwiki/");',
@@ -202,7 +198,6 @@ ajaxLoadingShow("'.$dom_id.'");
 //		}
 //	}
 
-        $notallreadyloaded=false;
 		return $ckoptions;
 	}
 }

@@ -443,7 +443,6 @@ if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$na
 			var command = editor.addCommand( '{$name}', new window.CKEDITOR.command( editor , {
 				modes: { wysiwyg:1 },
 				exec: function (elem, editor, data) {
-				    CurrentEditorName=editor.name;
 					{$js}
 				},
 				canUndo: false
@@ -2043,16 +2042,16 @@ class ToolbarsList
 			foreach ( $line as $bit ) {
 				foreach ( $bit as $group) {
 					$group_count = 0;
-                    if ($isHtml) {
-					        foreach ( $group as $tag ) {
-								if ( $token = $tag->getWysiwygToken($areaId) ) {
-								    $lineOut[] = $token; $group_count++;
-							    }
-                            }
-					} else {
-                        foreach ( $group as $tag ) {
-							if ( $token = $tag->getWysiwygWikiToken($areaId) ) {
-								$lineOut[] = $token; $group_count++;
+					foreach ($group as $tag) {
+						if ($isHtml) {
+							if ($token = $tag->getWysiwygToken($areaId)) {
+								$lineOut[] = $token;
+								$group_count++;
+							}
+						} else {
+							if ($token = $tag->getWysiwygWikiToken($areaId)) {
+								$lineOut[] = $token;
+								$group_count++;
 							}
 						}
 					}
