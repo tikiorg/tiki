@@ -2628,65 +2628,73 @@ class UsersLib extends TikiLib
 		if (!$body) {
 			$body = $realn;
 		}
-		if ($this->get_user_preference($auser, 'user_information', 'public') == 'public' || $prefs['feature_friends'] == 'y') {
-			$id = $this->get_user_id($auser);
-			if ($id == -1 ) {
-				return $body;
-			}
-			include_once('tiki-sefurl.php');
-			$url = "tiki-user_information.php?userId=$id";
-			$url = filter_out_sefurl($url);
-			$extra = '';
-			if ($prefs['feature_community_mouseover'] == 'y' && ($this->get_user_preference($auser, 'show_mouseover_user_info', 'y') == 'y' || $prefs['feature_friends'] == 'y')) {
-				$rel = TikiLib::lib('service')->getUrl(array(
-					'controller' => 'user',
-					'action' => 'info',
-					'username' => $auser,
-				));
-				$extra .= ' rel="' . htmlspecialchars($rel, ENT_QUOTES) . '"';
-				$class .= ' ajaxtips';
-
-				if ($auser === $user) {
-					$title = tra('Your Information');
-				} else {
-					$title = tra('User Information');
-				}
-			} else if ($prefs['user_show_realnames'] == 'y') {
-				$title = $realn;
-			} else {
-				$title = $auser;
-			}
-
-			if (empty($prefs['urlOnUsername'])) {
-				$url = 'tiki-user_information.php?userId='.$id;
-				if ($prefs['feature_sefurl'] == 'y') {
-					include_once('tiki-sefurl.php');
-					$url = filter_out_sefurl($url);
-				}
-			} else {
-				$url = preg_replace(
-								array('/%userId%/', '/%user%/'),
-								array($id, $auser),
-								$prefs['urlOnUsername']
-				);
-			}
-
-			$lat = $this->get_user_preference($auser, 'lat');
-			$lon = $this->get_user_preference($auser, 'lon');
-			$zoom = $this->get_user_preference($auser, 'zoom');
-
-			if (! ($lat == 0 && $lon == 0)) {
-				$class .= " geolocated";
-				$extra .= " data-geo-lat='$lat' data-geo-lon='$lon'";
-
-				if ($zoom) {
-					$extra .= " data-geo-zoom='$zoom'";
-				}
-			}
-
-			$body = "<a title=\"" . htmlspecialchars($title, ENT_QUOTES) . "\" href=\"$url\" class=\"$class\"$extra>" . $body . '</a>';
+		
+		$isSelf = ($auser == $user) ? true : false;
+		// Only process if feature_friends enabled, user_information public or we query ourselfs
+		if ( ($this->get_user_preference($auser, 'user_information', 'public') != 'public') && ($prefs['feature_friends'] != 'y') && !$isSelf) {
 			return $body;
 		}
+
+
+		$id = $this->get_user_id($auser);
+		if ($id == -1 ) {
+			return $body;
+		}
+		
+		
+		include_once('tiki-sefurl.php');
+		$url = "tiki-user_information.php?userId=$id";
+		$url = filter_out_sefurl($url);
+		$extra = '';
+		if ($prefs['feature_community_mouseover'] == 'y' && ($this->get_user_preference($auser, 'show_mouseover_user_info', 'y') == 'y' || $prefs['feature_friends'] == 'y')) {
+			$rel = TikiLib::lib('service')->getUrl(array(
+				'controller' => 'user',
+				'action' => 'info',
+				'username' => $auser,
+			));
+			$extra .= ' rel="' . htmlspecialchars($rel, ENT_QUOTES) . '"';
+			$class .= ' ajaxtips';
+
+			if ($auser === $user) {
+				$title = tra('Your Information');
+			} else {
+				$title = tra('User Information');
+			}
+		} else if ($prefs['user_show_realnames'] == 'y') {
+			$title = $realn;
+		} else {
+			$title = $auser;
+		}
+
+		if (empty($prefs['urlOnUsername'])) {
+			$url = 'tiki-user_information.php?userId='.$id;
+			if ($prefs['feature_sefurl'] == 'y') {
+				include_once('tiki-sefurl.php');
+				$url = filter_out_sefurl($url);
+			}
+		} else {
+			$url = preg_replace(
+							array('/%userId%/', '/%user%/'),
+							array($id, $auser),
+							$prefs['urlOnUsername']
+			);
+		}
+
+		$lat = $this->get_user_preference($auser, 'lat');
+		$lon = $this->get_user_preference($auser, 'lon');
+		$zoom = $this->get_user_preference($auser, 'zoom');
+
+		if (! ($lat == 0 && $lon == 0)) {
+			$class .= " geolocated";
+			$extra .= " data-geo-lat='$lat' data-geo-lon='$lon'";
+
+			if ($zoom) {
+				$extra .= " data-geo-zoom='$zoom'";
+			}
+		}
+
+		$body = "<a title=\"" . htmlspecialchars($title, ENT_QUOTES) . "\" href=\"$url\" class=\"$class\"$extra>" . $body . '</a>';
+
 		return $body;
 	}
 
