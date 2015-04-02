@@ -1413,16 +1413,18 @@ class ToolbarHelptool extends Toolbar
 		$params = ['controller' => 'edit', 'action' => 'help', 'modal' => 1];
 		$params['wysiwyg'] = 1;
 		$params['plugins'] = 1;
-		$params['areaId'] = $areaId;
 
 		if ($section == 'sheet') {
 			$params['sheet'] = 1;
 		}
 
+		// multiple ckeditors share the same toolbar commands, so area_id (editor.name) must be added when clicked
+		$params['areaId'] = '';	// this must be last param
+
 		$this->setLabel(tra('Wysiwyg Help'));
 		$name = 'tikihelp';
 
-		$js = '$("#bootstrap-modal").modal({show: true, remote: "' . $servicelib->getUrl($params) . '"});';
+		$js = '$("#bootstrap-modal").modal({show: true, remote: "' . $servicelib->getUrl($params) . '" + editor.name});';
 
 		$this->setupCKEditorTool($js, $name, $this->label, $this->icon);
 
