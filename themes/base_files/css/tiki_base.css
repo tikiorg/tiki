@@ -3104,21 +3104,6 @@ div.form-group label.error {
 .chosen-container-single {
   max-width: 100%;
 }
-.layout_basic.fixed_width .page-header {
-  left: 0;
-  position: absolute;
-  text-align: center;
-  width: 100%;
-}
-.layout_basic.fixed_width .page-header > div > div {
-  display: inline-block;
-  max-width: 100%;
-  width: 1170px;
-  text-align: left;
-}
-.layout_basic.fixed_width .row-middle {
-  margin-top: 190px;
-}
 body:not(.fixed_width) .page-header > div > div {
   width: auto !important;
 }

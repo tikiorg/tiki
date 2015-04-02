@@ -279,11 +279,6 @@
 									</td>
 								</tr>
 							{/if}
-
-							{if $tiki_p_admin_group_webmail eq 'y'}
-								{include file='categorize.tpl'}
-							{/if}
-
 							<tr>
 								<td>{tr}Auto-refresh page time{/tr}</td>
 								<td colspan="3">
@@ -298,6 +293,9 @@
 								</td>
 							</tr>
 						</table>
+							{if $tiki_p_admin_group_webmail eq 'y'}
+								{include file='categorize.tpl'}
+							{/if}                        
 					</form>
 				</div>
 			{else}

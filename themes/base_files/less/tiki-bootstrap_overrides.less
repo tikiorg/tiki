@@ -1,27 +1,6 @@
 // $Id$
 // Override or add to specific default Bootstrap styles
 
-// fixed width layout_basic definitions to allow 100% width bg header but fixed width top and top_bar module containers
-.layout_basic.fixed_width .page-header {
-  left: 0;
-  position: absolute;
-  text-align: center;
-  width: 100%;
-}
-
-// this is for the .page-header > .top_modules > div and .page-header > .topbar > div containers
-.layout_basic.fixed_width .page-header > div > div {
-  display: inline-block;
-  max-width: 100%;
-  width: 1170px;
-  text-align: left;
-}
-
-// default top margin (when JS off - otherwise JS will compute it from the header height)
-.layout_basic.fixed_width .row-middle {
-  margin-top: 190px;
-}
-
 // Obey the non-fixed width!
 body:not(.fixed_width) .page-header > div > div {
   width: auto !important;
