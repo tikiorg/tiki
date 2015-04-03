@@ -55,6 +55,7 @@ class Services_Access_Controller
 		return [
 			'items' => $input->asArray('items'),
 			'confirmAction' => $input->offsetGet('confirmAction'),
+			'confirmController' => $input->offsetGet('confirmController'),
 			'extra' => $input->asArray('extra'),
 			'ticket' => $input->offsetGet('ticket'),
 			'title' => $title,

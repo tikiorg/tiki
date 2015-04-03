@@ -121,6 +121,15 @@ function iconset_glyphicons()
 			'information' => array(
 				'id' => 'info-sign',
 			),
+			'log' => array(
+				'id' => 'list-alt',
+			),
+			'login' => array(
+				'id' => 'log-in',
+			),
+			'logout' => array(
+				'id' => 'log-out',
+			),
 			'menuitem' => array(
 				'id' => 'chevron-right',
 			),

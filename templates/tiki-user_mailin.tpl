@@ -94,7 +94,9 @@
 				{tr}Wiki structures feature is not enabled{/tr}
 				{if $tiki_p_admin eq 'y'}
 					<blockquote>
-						<a href="tiki-admin.php?page=wiki&highlight=feature_wiki_structure&cookietab=2">{tr}Go to wiki structure setting{/tr} {icon _id='wrench'}</a>
+						<a href="tiki-admin.php?page=wiki&highlight=feature_wiki_structure&cookietab=2">
+							{tr}Go to wiki structure setting{/tr} {icon name='structure'}
+						</a>
 					</blockquote>
 				{/if}
 			</p>

@@ -443,7 +443,6 @@ if (typeof window.CKEDITOR !== "undefined" && !window.CKEDITOR.plugins.get("{$na
 			var command = editor.addCommand( '{$name}', new window.CKEDITOR.command( editor , {
 				modes: { wysiwyg:1 },
 				exec: function (elem, editor, data) {
-				    CurrentEditorName=editor.name;
 					{$js}
 				},
 				canUndo: false
@@ -1414,16 +1413,18 @@ class ToolbarHelptool extends Toolbar
 		$params = ['controller' => 'edit', 'action' => 'help', 'modal' => 1];
 		$params['wysiwyg'] = 1;
 		$params['plugins'] = 1;
-		$params['areaId'] = $areaId;
 
 		if ($section == 'sheet') {
 			$params['sheet'] = 1;
 		}
 
+		// multiple ckeditors share the same toolbar commands, so area_id (editor.name) must be added when clicked
+		$params['areaId'] = '';	// this must be last param
+
 		$this->setLabel(tra('Wysiwyg Help'));
 		$name = 'tikihelp';
 
-		$js = '$("#bootstrap-modal").modal({show: true, remote: "' . $servicelib->getUrl($params) . '"});';
+		$js = '$("#bootstrap-modal").modal({show: true, remote: "' . $servicelib->getUrl($params) . '" + editor.name});';
 
 		$this->setupCKEditorTool($js, $name, $this->label, $this->icon);
 
@@ -2043,16 +2044,16 @@ class ToolbarsList
 			foreach ( $line as $bit ) {
 				foreach ( $bit as $group) {
 					$group_count = 0;
-                    if ($isHtml) {
-					        foreach ( $group as $tag ) {
-								if ( $token = $tag->getWysiwygToken($areaId) ) {
-								    $lineOut[] = $token; $group_count++;
-							    }
-                            }
-					} else {
-                        foreach ( $group as $tag ) {
-							if ( $token = $tag->getWysiwygWikiToken($areaId) ) {
-								$lineOut[] = $token; $group_count++;
+					foreach ($group as $tag) {
+						if ($isHtml) {
+							if ($token = $tag->getWysiwygToken($areaId)) {
+								$lineOut[] = $token;
+								$group_count++;
+							}
+						} else {
+							if ($token = $tag->getWysiwygWikiToken($areaId)) {
+								$lineOut[] = $token;
+								$group_count++;
 							}
 						}
 					}

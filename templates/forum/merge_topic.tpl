@@ -3,7 +3,7 @@
 	{title}{$title|escape}{/title}
 {/block}
 {block name="content"}
-	<form id="merge_topic" method="post" action="{$confirmAction}">
+	<form id="merge_topic" method="post" action="{service controller=$confirmController action=$confirmAction}">
 		<fieldset>
 			<div class="form-group">
 				<label for="mergefrom" class="control-label">

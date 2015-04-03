@@ -31,27 +31,13 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function smarty_block_textarea($params, $content, $smarty, $repeat)
 {
-    static $included=false;
 	global $prefs, $is_html, $tiki_p_admin;
 	$headerlib = TikiLib::lib('header');
 
 	if ( $repeat ) {
 		return;
 	}
-    if (!$included) {
-        $headerlib->add_js(
-            <<<JS
-                function GetCurrentEditorAreaId(ob){
-        var p;
-        p=ob.parentNode;
-        while(p.className != "edit-zone"){p=p.parentNode;}
-        areaid=p.id.substring(10);
-        //alert ("areaid="+areaid);
-        return areaid;
-    }
-JS
-        );
-    }
+
 	// some defaults
 	$params['_toolbars'] = isset($params['_toolbars']) ? $params['_toolbars'] : 'y';
 	if ( $prefs['javascript_enabled'] != 'y') {
@@ -102,7 +88,7 @@ JS
 		$params['section'] = $section ? $section: 'wiki page';
 	}
 	$html = '';
-    if (!$included) $html .= '<input type="hidden" name="mode_wysiwyg" value="" /><input type="hidden" name="mode_normal" value="" />';
+    $html .= '<input type="hidden" name="mode_wysiwyg" value="" /><input type="hidden" name="mode_normal" value="" />';
 
 	$auto_save_referrer = '';
 	$auto_save_warning = '';
@@ -172,9 +158,7 @@ JS
 
             $ckoptions = $wysiwyglib->setUpEditor($params['_is_html'], $as_id, $params, $auto_save_referrer);
 
-            if (!$included) {
-                $html .= '<input type="hidden" name="wysiwyg" value="y" />';
-            }
+			$html .= '<input type="hidden" name="wysiwyg" value="y" />';
             $html .= '<textarea class="wikiedit" name="'.$params['name'].'" id="'.$as_id.'" style="visibility:hidden;';	// missing closing quotes, closed in condition
 
             if (empty($params['cols'])) {
@@ -307,8 +291,7 @@ JS
 		$smarty->assignByRef('textareadata', $content);
 		$html .= $smarty->fetch('wiki_edit.tpl');
 
-        if (!$included)
-            $html .= "\n".'<input type="hidden" name="wysiwyg" value="n" />';
+		$html .= "\n".'<input type="hidden" name="wysiwyg" value="n" />';
 
 	}	// wiki or wysiwyg
 
@@ -437,7 +420,6 @@ function admintoolbar() {
 		}
 		$headerlib->add_js($js_editconfirm);
 	}	// end if ($params['_simple'] == 'n')
-    $included=true;
 
 	return $auto_save_warning.$html;
 }

@@ -27,7 +27,11 @@ $inputConfiguration = array(array(
 		'customVerb' => 'xss',
 		'customObject' => 'xss',
 		'customMsg' => 'xss',
+		'toId' => 'digit',
+		'toList' => 'xss',
+		'forumId' => 'digit',
 		'ticket' => 'alnum',
+		'daconfirm' => 'alnum',
 		'modal' => 'digit',
 	),
 	'staticKeyFiltersForArrays' => array(

@@ -21,7 +21,7 @@
 			{/if}
 		{/if}<br>
 	</div>
-	<form id='confirm' action="{$confirmAction}" method="post">
+	<form id='confirm' action="{service controller="$confirmController" action="$confirmAction"}" method="post">
 		<fieldset>
 			{* the below query function returns the $items and $extra and $ticket variables *}
 			{query _type='form_input'}

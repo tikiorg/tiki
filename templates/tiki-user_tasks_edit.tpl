@@ -19,24 +19,24 @@
 	{if ($info.creator eq $user or $info.user eq $user or $admin_mode) and ($info.task_version eq $info.last_version)}
 		{if ($info.taskId > 0 and $info.creator ne $info.user)}
 			<span class="tabbut">
-				{icon _id='accept' title="{tr}Accept{/tr}" alt="{tr}Accept{/tr}"}
+				{icon name='ok' title="{tr}Accept{/tr}"}
 				<a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_accept=on" class="tablink">{tr}Accept{/tr}</a>
 			</span>
 			<span class="tabbut">
-				{icon _id='delete' title="{tr}Reject{/tr}" alt="{tr}Reject{/tr}"}
-				<a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_not_accept=on" class="tablink">{tr}NOT accept{/tr}</a>
+				{icon name='remove' title="{tr}Reject{/tr}"}
+				<a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;tas_not_accept=on" class="tablink">{tr}NOT accept{/tr}</a>
 			</span>
 		{/if}
 		{if $info.deleted}
 			<span class="tabbut">
 				<a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;remove_from_trash=on" class="tablink">
-					{icon _id='basket_remove' title="{tr}Remove from Trash{/tr}" alt="{tr}Remove from Trash{/tr}"} {tr}Remove from Trash{/tr}
+					{icon name='undo' title="{tr}Remove from Trash{/tr}"} {tr}Remove from Trash{/tr}
 				</a>
 			</span>
 		{else}
 			<span class="tabbut">
 				<a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;move_into_trash=on" class="tablink">
-					{icon _id='basket_put' title="{tr}Move to trash{/tr}" alt="{tr}Move to trash{/tr}"} {tr}Move to Trash{/tr}
+					{icon name='trash' title="{tr}Move to trash{/tr}"} {tr}Move to Trash{/tr}
 				</a>
 			</span>
 		{/if}
@@ -73,13 +73,13 @@
 				&nbsp;&nbsp;
 				{if ($info.task_version > 0)}
 					<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.task_version-1}">
-						{icon _id='resultset_previous' align="middle"}
+						{icon name='backward' align="middle"}
 					</a>
 					{/if}
 				{tr}Version:{/tr} <b>{$info.task_version+1}</b>
 				{if $info.task_version < $info.last_version}
 					<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;show_history={$info.task_version+1}">
-						{icon _id='resultset_next' align="middle"}
+						{icon name='forward' align="middle"}
 					</a>
 				{/if}
 
