@@ -36,9 +36,11 @@ div.highlight {
 input:-webkit-autofill {
   background-color: #FAFFBD !important;
   /* needs important because Chrome has it already important */
+
   background-image: none !important;
   color: #000 !important;
   /* the Google guys forgot the number-one rule... when they specify background they should specify forgeround color too ;) */
+
 }
 #attzone,
 #bottom_modules .box-rsslist br,
@@ -1013,6 +1015,7 @@ body.wikitext {
 .TextArea-fullscreen .actions input,
 .CodeMirror-fullscreen .actions input {
   /*margin: 1px !important;*/
+
 }
 .TextArea-fullscreen .cm-remove,
 .CodeMirror-fullscreen .cm-remove {
@@ -1138,6 +1141,7 @@ body.tiki_wiki #comments {
 .codelisting .CodeMirror-vscrollbar {
   display: none !important;
   /* we do not need to display vertical scrollbars in code listings - workaround for the "wrongly computed height with scrollbar" bug in CodeMirror */
+
 }
 .wpfade-hidden {
   background-repeat: no-repeat;
@@ -1616,8 +1620,10 @@ dl.note-list {
 .note-list .postbody-title {
   background: #ffffff;
   /*#ccc*/
+
   color: #333333;
   /*#000*/
+
 }
 .post-approved-n {
   border-left: 3px dotted #3c763d;
@@ -1733,7 +1739,7 @@ table.treetable tr.expanded span.indenter a {
   background-image: url(../../img/toggle-collapse-dark.png);
 }
 table.treetable.objectperms td.added {
-  background-color: #dff0d8;
+  background-color: #dff0d8 // #dfd;
 }
 table.treetable.objectperms td.removed {
   background-color: #fcf8e3;
@@ -2497,6 +2503,7 @@ form.simple textarea.export {
 }
 body > .ui-front {
   /* bs .modal has z-index: 1050, need body specified so as to override jquery-ui.css */
+
   z-index: 2000;
 }
 .olControlNavToolbar {
@@ -2650,6 +2657,9 @@ body.tiki.navbar-padding {
 .tiki.dropdown-menu {
   padding: 0;
 }
+.tiki .popover {
+  max-width: inherit;
+}
 @media (min-width: 992px) {
   .tiki .col-md-8 .table-responsive,
   .tiki .col-md-9 .table-responsive,
@@ -2689,11 +2699,17 @@ body.tiki.navbar-padding {
   width: 100%;
   margin-bottom: 2px;
   /* style header */
+
   /* table processing indicator - indeterminate spinner */
+
   /* filter widget */
+
   /* hidden filter row */
+
   /*no formatting on filter row when filter-false*/
+
   /* rows hidden by filtering (needed for child rows) */
+
 }
 .tablesorter-header {
   background-repeat: no-repeat;
@@ -2707,6 +2723,7 @@ body.tiki.navbar-padding {
   top: 50%;
   margin-top: -7px;
   /* half the icon height; older IE doesn't like this */
+
   width: 14px;
   height: 14px;
   background-repeat: no-repeat;
@@ -2745,6 +2762,7 @@ body.tiki.navbar-padding {
   -o-transition: line-height 0.1s ease;
   transition: line-height 0.1s ease;
   /* Add tooltips to slider handles */
+
 }
 .tablesorter-filter-row td label {
   float: left;
@@ -2755,6 +2773,7 @@ body.tiki.navbar-padding {
   width: 90%;
   margin: 13px auto 2px auto;
   /* add enough top margin so the tooltips will fit */
+
   font-size: 0.9em;
 }
 .tablesorter-filter-row td .ui-slider .ui-slider-handle {
@@ -2819,6 +2838,7 @@ body.tiki.navbar-padding {
   padding: 0;
   margin: 0;
   /* don't use visibility: hidden because it disables tabbing */
+
   opacity: 0;
   filter: alpha(opacity=0);
 }
@@ -2873,6 +2893,7 @@ div.ts-pager-top {
 }
 .tablesorter {
   /* style header */
+
 }
 .tablesorter-header {
   background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
