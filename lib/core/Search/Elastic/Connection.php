@@ -256,22 +256,8 @@ class Search_Elastic_Connection
 		return $this->get($path);
 	}
 
-	private function aliasExists($index)
-	{
-		try {
-			$this->put("/_alias/$index", "");
-		} catch (Search_Elastic_Exception $e) {
-			return false;
-		}
-		return true;
-	}
-
 	private function createIndex($index, callable $getIndex)
 	{
-		if ($this->aliasExists($index)) {
-			return;
-		}
-
 		try {
 			$this->put(
 				"/$index", json_encode($getIndex())
