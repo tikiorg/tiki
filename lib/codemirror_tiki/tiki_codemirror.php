@@ -42,11 +42,14 @@ test = { mode: function () {}, indentation: function() {} }
 			$css .= @file_get_contents($cssFile);
 		}
 
-		file_put_contents($jsModes, $js);
+		// race condition when minify is active and cache was just cleared - need to set exclusive access
+		file_put_contents($jsModes, $js, LOCK_EX);
 		chmod($jsModes, 0644);
 
-		file_put_contents($cssModes, $css);
+		// race condition when minify is active and cache was just cleared - need to set exclusive access
+		file_put_contents($cssModes, $css, LOCK_EX);
 		chmod($cssModes, 0644);
+		
 	}
 
 	TikiLib::lib("header")
