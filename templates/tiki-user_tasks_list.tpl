@@ -43,9 +43,9 @@
 					<input {if $tasklist[task_i].disabled} disabled = "disabled" {/if} type="checkbox" name="task[{$tasklist[task_i].taskId}]">
 					{if $tasklist[task_i].deleted}
 						{if $tasklist[task_i].creator ne $user}
-							{icon _id='cross'}
+							{icon name='remove' class='tips' title=":{tr}Deleted{/tr}"}
 						{else}
-							{icon _id='basket' title="{tr}In the trash{/tr}" alt="{tr}In the trash{/tr}"}
+							{icon name='trash' class='tips' title=":{tr}In the trash{/tr}"}
 						{/if}
 					{/if}
 					{if (($tasklist[task_i].creator eq $tasklist[task_i].user) and ($tasklist[task_i].user eq $user))}
@@ -53,43 +53,43 @@
 					{else}
 						{if ($tasklist[task_i].user eq $user)}
 							{*received task*}
-							{icon _id='task_received' title="{tr}Task received{/tr}" alt="{tr}Task received{/tr}"}
+							{icon name='login' title="{tr}Task received{/tr}"}
 							{if (($tasklist[task_i].accepted_creator eq 'n') or ($tasklist[task_i].accepted_user eq 'n'))}
-								{icon _id='delete' title="{tr}Rejected by a user{/tr}" alt="{tr}Rejected by a user{/tr}"}
+								{icon name='remove' class='tips' title=":{tr}Rejected by a user{/tr}"}
 							{else}
 								{if ($tasklist[task_i].accepted_user eq '')}
-									{icon _id='hourglass' title="{tr}Waiting for me{/tr}" alt="{tr}Waiting for me{/tr}"}
+									{icon name='history' class='tips' title=":{tr}Waiting for me{/tr}"}
 								{else}
 									{if ($tasklist[task_i].accepted_creator eq 'y')}
-										{icon _id='accept' title="{tr}Accepted by task user and creator{/tr}" alt="{tr}Accepted by task user and creator{/tr}"}
+										{icon name='ok' class='tips' title=":{tr}Accepted by task user and creator{/tr}"}
 									{else}
-										{icon _id='user_comment' title="{tr}Waiting for other user{/tr}" alt="{tr}Waiting for other user{/tr}"}
+										{icon name='user' class='tips' title=":{tr}Waiting for other user{/tr}"}
 									{/if}
 								{/if}
 							{/if}
 						{elseif ($tasklist[task_i].creator eq $user)}
 							{*submitted task*}
-							{icon _id='task_submitted' title="{tr}Task sent{/tr}" alt="{tr}Task sent{/tr}"}
+							{icon name='logout' class='tips' title=":{tr}Task sent{/tr}"}
 							{if (($tasklist[task_i].accepted_creator eq 'n') or ($tasklist[task_i].accepted_user eq 'n'))}
 								<img src="{$img_not_accepted}" height="{$img_not_accepted_height}" width="{$img_not_accepted_width}" title="{tr}Not Accepted by One User{/tr}" alt="{tr}Not Accepted User{/tr}">
 							{else}
 								{if ($tasklist[task_i].accepted_user eq '')}
 									{if ($tasklist[task_i].accepted_creator eq 'y')}
-										{icon _id='user_comment' title="{tr}Waiting for other user{/tr}" alt="{tr}Waiting for other user{/tr}"}
+										{icon name='user' class='tips' title=":{tr}Waiting for other user{/tr}"}
 									{else}
-										{icon _id='hourglass' title="{tr}Waiting for me{/tr}" alt="{tr}Waiting for me{/tr}"}
+										{icon name='history' class='tips' title=":{tr}Waiting for me{/tr}"}
 									{/if}
 								{else}
 									{if ($tasklist[task_i].accepted_creator eq 'y')}
-										{icon _id='accept' title="{tr}Accepted by task user and creator{/tr}" alt="{tr}Accepted by task user and creator{/tr}"}
+										{icon name='ok' class='tips' title=":{tr}Accepted by task user and creator{/tr}"}
 									{else}
-										{icon _id='hourglass' title="{tr}Waiting for me{/tr}" alt="{tr}Waiting for me{/tr}"}
+										{icon name='history' class='tips' title=":{tr}Waiting for me{/tr}" }
 									{/if}
 								{/if}
 							{/if}
 						{else}
 							{*shared task*}
-							{icon _id='group' title="{tr}Task shared by a group{/tr}" alt="{tr}Task shared by a group{/tr}"}
+							{icon name='group' class='tips' title=":{tr}Task shared by a group{/tr}"}
 						{/if}
 					{/if}
 				</td>
@@ -127,7 +127,7 @@
 		{/section}
 		<tr>
 			<td colspan="3" style="text-align:left; vertical-align:bottom;">
-				{icon _id='arrow_turn_down_right' title="{tr}Select{/tr}" alt="{tr}Select{/tr}" style="margin-bottom:8px; margin-left:5px"}
+				{icon name='ok' class='tips' title=":{tr}Select{/tr}" style="margin-bottom:8px; margin-left:5px"}
 				<select name="action" style="vertical-align:bottom;">
 					<option value="" >{tr}Select One{/tr}</option>
 					<option value="waiting_marked" >{tr}Waiting{/tr}</option>
@@ -140,7 +140,7 @@
 			</td>
 			<td colspan="3" style="text-align:right;">
 				<input type="submit" class="btn btn-primary btn-sm" name="update_percentage" value="{tr}Go{/tr}" style="vertical-align:bottom;">
-				{icon _id='arrow_turn_down_left' title="{tr}Go{/tr}" alt="{tr}Go{/tr}" style="margin-bottom:8px; margin-right:8px"}
+				{icon name='next' class='tips' title="{tr}Go{/tr}" style="margin-bottom:8px; margin-right:8px"}
 			</td>
 		</tr>
 		<tr>

@@ -285,6 +285,12 @@ function iconset_default()
 			'log' => array(
 				'id' => 'history',
 			),
+			'login' => array(
+				'id' => 'sign-in',
+			),
+			'logout' => array(
+				'id' => 'sign-out',
+			),
 			'menu' => array(
 				'id' => 'bars',
 			),

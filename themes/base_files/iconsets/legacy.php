@@ -354,6 +354,12 @@ function iconset_legacy()
 			'log' => array(
 				'id' => 'book',
 			),
+			'login' => array(
+				'id' => 'task_received',
+			),
+			'logout' => array(
+				'id' => 'task_submitted',
+			),
 			'menu' => array(
 				'id' => 'application_side_tree',
 			),
