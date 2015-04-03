@@ -251,8 +251,8 @@
 															{if $what eq 'included'}<span class="label label-info">{tr}Included{/tr}</span>{/if}
 															{if $grs eq $users[user].default_group}<small>({tr}default{/tr})</small>{/if}
 															{if $what ne 'included' and $grs != "Registered"}
-																<span
-																	type="button" id="group-single-user" class="btn-link tips"
+																<a href="#"
+																	class="btn-link tips"
 																	title="{$username}:{tr _0="{$grs}"}Remove from group %0{/tr}"
 																	onclick="confirmModal(this,
 																		{ldelim}
@@ -268,7 +268,7 @@
 																	);"
 																>
 																	{icon name="remove"}
-																</span>
+																</a>
 															{/if}
 															{if !$smarty.foreach.gr.last}<br>{/if}
 														{/if}
@@ -287,7 +287,8 @@
 																	'closest':'form',
 																	'params':
 																	{ldelim}
-																		'checked[]': '{$username}'
+																		'checked[]': '{$username}',
+																		'all_groups': '{$all_groups_encoded|escape}'
 																{rdelim}
 															{rdelim});$('[data-toggle=popover]').popover('hide');"
 														>

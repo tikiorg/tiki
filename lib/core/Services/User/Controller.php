@@ -305,7 +305,8 @@ class Services_User_Controller
 						'controller' => 'access',
 						'action' => 'confirm',
 						'title' => tra('Please confirm deletion'),
-						'confirmAction' => 'tiki-user-' . $input->offsetGet('action'),
+						'confirmAction' => $input->action->word(),
+						'confirmController' => 'user',
 						'customMsg' => $msg,
 						'items' => $items,
 						'ticket' => $check['ticket'],
@@ -365,7 +366,8 @@ class Services_User_Controller
 						'controller' => 'access',
 						'action' => 'confirm',
 						'title' => tra('Please confirm deletion'),
-						'confirmAction' => 'tiki-user-' . $input->offsetGet('action'),
+						'confirmAction' => $input->action->word(),
+						'confirmController' => 'user',
 						'customMsg' => $msg,
 						'items' => $items,
 						'ticket' => $check['ticket'],
@@ -428,7 +430,8 @@ class Services_User_Controller
 						'controller' => 'access',
 						'action' => 'confirm',
 						'title' => tra('Please confirm deletion'),
-						'confirmAction' => 'tiki-user-' . $input->offsetGet('action'),
+						'confirmAction' => $input->action->word(),
+						'confirmController' => 'user',
 						'customMsg' => $msg,
 						'items' => $items,
 						'ticket' => $check['ticket'],
@@ -499,7 +502,8 @@ class Services_User_Controller
 						'controller' => 'access',
 						'action' => 'confirm',
 						'title' => tra('Please confirm deletion'),
-						'confirmAction' => 'tiki-user-' . $input->offsetGet('action'),
+						'confirmAction' => $input->action->word(),
+						'confirmController' => 'user',
 						'customMsg' => $msg,
 						'items' => $items,
 						'ticket' => $check['ticket'],
@@ -567,7 +571,8 @@ class Services_User_Controller
 						'controller' => 'access',
 						'action' => 'confirm',
 						'title' => tra('Please confirm ban'),
-						'confirmAction' => 'tiki-user-' . $input->offsetGet('action'),
+						'confirmAction' => $input->action->word(),
+						'confirmController' => 'user',
 						'customMsg' => $msg,
 						'items' => $items,
 						'ticket' => $check['ticket'],
@@ -628,7 +633,8 @@ class Services_User_Controller
 							'controller' => 'access',
 							'action' => 'confirm',
 							'title' => tra('Please confirm removal from group'),
-							'confirmAction' => 'tiki-user-' . $input->offsetGet('action'),
+							'confirmAction' => $input->action->word(),
+							'confirmController' => 'user',
 							'customMsg' => tr('Are you sure you want to remove user %0 from the following group:',
 								$params['checked'][0]),
 							'items' => $items,
@@ -649,7 +655,8 @@ class Services_User_Controller
 					$chosenpref = $prefs['jquery_ui_chosen'];
 					return [
 						'title' => tra('Change group assignments for selected users'),
-						'confirmAction' => 'tiki-user-' . $input->offsetGet('action'),
+						'confirmAction' => $input->action->word(),
+						'confirmController' => 'user',
 						'all_groups' => $all_groups,
 						'countgrps' => $countgrps,
 						'chosenpref' => $chosenpref,
@@ -707,9 +714,16 @@ class Services_User_Controller
 					}
 				}
 				$msg = count($users) === 1 ? tra('The following user:') : tra('The following users:');
+				if (count($users) === 1) {
+					$msg = tra('The following user:');
+					$helper = 'Has';
+				} else {
+					$msg = tra('The following users:');
+					$helper = 'Have';
+				}
 				$verb = $add_remove == 'add' ? 'added to' : 'removed from';
 				$grpcnt = count($groups) === 1 ? 'group' : 'groups';
-				$toMsg = tr('Have been %0 the following %1:', tra($verb), tra($grpcnt));
+				$toMsg = tr('%0 been %1 the following %2:', tra($helper), tra($verb), tra($grpcnt));
 				return [
 					'extra' => 'post',
 					'feedback' => [
@@ -741,7 +755,8 @@ class Services_User_Controller
 				$rows = ceil(count($params['checked']) / 8);
 				return [
 					'title' => tra('Set default group for selected users'),
-					'confirmAction' => 'tiki-user-' . $input->offsetGet('action'),
+					'confirmAction' => $input->action->word(),
+					'confirmController' => 'user',
 					'all_groups' => $all_groups,
 					'users' => $params['checked'],
 					'rows' => $rows,
@@ -804,7 +819,8 @@ class Services_User_Controller
 				$rows = ceil(count($params['checked']) / 8);
 				return [
 					'title' => tra('Send wiki page content by email to selected users'),
-					'confirmAction' => 'tiki-user-' . $input->offsetGet('action'),
+					'confirmAction' => $input->action->word(),
+					'confirmController' => 'user',
 					'users' => $params['checked'],
 					'rows' => $rows,
 					'ticket' => $check['ticket'],
