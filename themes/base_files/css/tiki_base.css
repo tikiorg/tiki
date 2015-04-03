@@ -3109,6 +3109,9 @@ body:not(.fixed_width) .container {
   padding-right: 15px;
   width: auto;
 }
+legend + p {
+  margin-top: 20px;
+}
 .tiki .page-header {
   border-bottom: none;
   margin: auto;
