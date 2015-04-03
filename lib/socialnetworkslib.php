@@ -168,7 +168,7 @@ class SocialNetworksLib extends LogsLib
 			$url = preg_replace('/\?.*/', '', $url);
 		}
 		$url = urlencode($url.'?request_facebook');
-		$url = 'https://graph.facebook.com/oauth/authorize?client_id=' . $prefs['socialnetworks_facebook_application_id'] .
+		$url = 'https://www.facebook.com/v2.0/dialog/oauth?client_id=' . $prefs['socialnetworks_facebook_application_id'] .
 			'&scope=' . $scope . '&redirect_uri='.$url;
 		header("Location: $url");
 		die();
@@ -190,7 +190,7 @@ class SocialNetworksLib extends LogsLib
 			return false;
 		}
 
-		$url = '/oauth/access_token?client_id=' . $prefs['socialnetworks_facebook_application_id'] .
+		$url = '/v2.0/oauth/access_token?client_id=' . $prefs['socialnetworks_facebook_application_id'] .
 			'&redirect_uri=' . $this->getURL() .'&client_secret=' . $prefs['socialnetworks_facebook_application_secr']; // code is already in the url
 
 
@@ -403,7 +403,7 @@ class SocialNetworksLib extends LogsLib
 			$action .= "?$data";
 		}
 
-		$request = "$method /$action HTTP/1.1\r\n".
+		$request = "$method /v2.0/$action HTTP/1.1\r\n".
 			"Host: graph.facebook.com\r\n".
 			"Accept: */*\r\n".
 			"Expect: 100-continue\r\n".
@@ -644,7 +644,7 @@ class SocialNetworksLib extends LogsLib
 
 		}
 
-			$request="GET /me/feed".$getdata." HTTP/1.1\r\n".
+			$request="GET /v2.0/me/feed".$getdata." HTTP/1.1\r\n".
 			 "Host: graph.facebook.com\r\n".
 			 "Accept:*/*\r\n".
 			 "Accept-Charset:ISO-8859-1,utf-8;q=0.7,*;q=0.3\r\n".

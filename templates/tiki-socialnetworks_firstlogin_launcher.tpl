@@ -1,5 +1,5 @@
 {jq}
-{{if $mid != 'tiki-socialnetworks_firstlogin.tpl'}}
+{{if not $smarty.server.REQUEST_URI|stristr:'tiki-socialnetworks_firstlogin.php'}}
 if ($("form > input[name=origin]:hidden").length === 0) {	// lightweight fix to avoid clash of user_conditions and fb 1st login
 	setTimeout(function () {
 		$("body").colorbox({
