@@ -22,7 +22,8 @@
 button, input, optgroup, select, textarea {background: #242424;color: #cfcfcf;}
 
 header.page-header {
-  background: url('@{imagePath}header.png') cover;
+  background: url('@{imagePath}header.png');
+  background-size: cover;
 }
 
 .container {
@@ -78,7 +79,7 @@ header.container,
 
 @nav-tabs-active-link-hover-color: #fff;
 
-.nav-tabs > li > a {border: 1px solid @gray; border-size: 1px 1px 0 1px;}
+.nav-tabs > li > a {border: 1px solid @gray; border-width: 1px 1px 0 1px;}
 
 .footerbgtrap {
   background-image: url('@{imagePath}header.png');

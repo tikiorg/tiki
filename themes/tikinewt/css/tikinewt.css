@@ -7266,8 +7266,8 @@ div.drillshow {
   margin-bottom: 34px;
 }
 body > .container {
-  border: 1px solid #aaa;
-  border-size: 0 1px;
+  border: solid #aaa;
+  border-width: 0 1px;
   background: #fff;
 }
 .header_container > .container {
@@ -7306,7 +7306,7 @@ header.container {
   background: #c7d0d9;
 }
 #topbar_modules .navbar {
-  margin-bottom: none;
+  margin-bottom: 0;
 }
 #topbar_modules .navbar-default {
   border: none;
