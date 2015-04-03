@@ -7317,7 +7317,8 @@ textarea {
   color: #cfcfcf;
 }
 header.page-header {
-  background: url('../images/header.png') cover;
+  background: url('../images/header.png');
+  background-size: cover;
 }
 .container {
   border: 1px solid #4c4c4c;
@@ -7377,7 +7378,7 @@ header.container,
 }
 .nav-tabs > li > a {
   border: 1px solid #555555;
-  border-size: 1px 1px 0 1px;
+  border-width: 1px 1px 0 1px;
 }
 .footerbgtrap {
   background-image: url('../images/header.png');
