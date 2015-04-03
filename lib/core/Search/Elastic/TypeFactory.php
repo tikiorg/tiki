@@ -9,6 +9,10 @@ class Search_Elastic_TypeFactory implements Search_Type_Factory_Interface
 {
 	function plaintext($value)
 	{
+		// Elasticsearch does not like boolean values
+		if (is_bool($value)) {
+			$value = (int) $value;
+		}
 		return new Search_Type_PlainText($value);
 	}
 
