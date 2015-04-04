@@ -229,7 +229,7 @@
 			</div>
 
 			{preference name=feature_wiki_export}
-			<div class="adminoptionboxchild" id="feature_wiki_export_childcontainer">
+			<div class="adminoptionboxchild col-md-8 col-md-push-4" id="feature_wiki_export_childcontainer">
 				{permission_link mode=button permType=wiki textFilter=export showDisabled=y}
 				{permission_link mode=icon permType=wiki textFilter=picture showDisabled=y}
 				{button href="tiki-export_wiki_pages.php" _text="{tr}Export Wiki Pages{/tr}"}
@@ -276,7 +276,9 @@
 			{preference name=feature_backlinks}
 			<div class="adminoptionboxchild" id="feature_backlinks_childcontainer">
 				{preference name=wiki_backlinks_name_len}
-				{permission_link mode=button permType=wiki textFilter=backlinks showDisabled=y}
+				<div class="col-md-8 col-md-push-4">
+					{permission_link mode=button permType=wiki textFilter=backlinks showDisabled=y}
+				</div>
 			</div>
 
 			{preference name=feature_semantic}
@@ -318,7 +320,7 @@
 			</div>
 
 			{preference name=feature_wiki_usrlock}
-			<div class="adminoptionboxchild" id="feature_wiki_usrlock_childcontainer">
+			<div class="adminoptionboxchild col-md-8 col-md-push-4" id="feature_wiki_usrlock_childcontainer">
 				{permission_link mode=button permType=wiki textFilter=lock showDisabled=y}
 			</div>
 
