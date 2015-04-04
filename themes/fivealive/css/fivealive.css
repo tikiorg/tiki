@@ -7386,8 +7386,11 @@ header.header a:visited {
 }
 @media (min-width: 992px) {
   .navbar-default .navbar-nav > li > a {
-    border-radius: none;
+    border-radius: 0;
     background: transparent !important;
+  }
+  .topbar {
+    min-height: 34px;
   }
 }
 .calhighlight {
