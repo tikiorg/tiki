@@ -38,22 +38,21 @@
 				{preference name=freetags_show_middle}
 
 				<div class="adminoptionbox">
-					<div class="adminoptionlabel">
-						<label for="freetags_cloud_colors">{tr}Random tag cloud colors:{/tr}</label>
-						<input type="text" name="freetags_cloud_colors" id="freetags_cloud_colors" value="{foreach from=$prefs.freetags_cloud_colors item=color name=colors}{$color}{if !$smarty.foreach.colors.last},{/if}{/foreach}" />
-						<br>
-						<em>{tr}Separate colors with a comma (,){/tr}.</em>
+					<label for="freetags_cloud_colors" class="control-label col-md-4">{tr}Random tag cloud colors:{/tr}</label>
+					<div class="col-md-8">
+						<input type="text" class="form-control" name="freetags_cloud_colors" id="freetags_cloud_colors" value="{foreach from=$prefs.freetags_cloud_colors item=color name=colors}{$color}{if !$smarty.foreach.colors.last},{/if}{/foreach}" />
+						<span class="help-block">{tr}Separate colors with a comma (,){/tr}</span>
 					</div>
 				</div>
 
 				{preference name=freetags_browse_amount_tags_suggestion}
 				{preference name=freetags_normalized_valid_chars}
-				<div class="adminoptionboxchild">
+				<span class="help-block col-md-8 col-md-push-4">
 					<a class="button" href='#Browsing' onclick="$('input[name=freetags_normalized_valid_chars]').val('a-zA-Z0-9');return false;">{tr}Alphanumeric ASCII characters only{/tr}</a>
 					({tr}No accents or special characters{/tr}.)
 					<br>
 					<a class="button" href='#Browsing' onclick="$('input[name=freetags_normalized_valid_chars]').val('');return false;">{tr}Accept all characters{/tr}</a>
-				</div>
+				</span>
 				{preference name=freetags_lowercase_only}
 				{preference name=freetags_multilingual}
 				{preference name=morelikethis_algorithm}
@@ -64,7 +63,7 @@
 				<legend>{tr}Freetag search page{/tr}</legend>
 				{preference name=freetags_sort_mode}
 				{preference name=freetags_preload_random_search}
-				<em>{tr}When arriving on <a href="tiki-browse_freetags.php">freetag search page</a>{/tr}.</em>
+				<span class="help-block col-md-8 col-md-push-4">{tr}When arriving on <a href="tiki-browse_freetags.php">freetag search page</a>{/tr}.</span>
 			</fieldset>
 
 			<fieldset>

@@ -1,9 +1,7 @@
 {* $Id$ *}
-
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
 	{tr}See also{/tr} <a class="alert-link" class="rbox-link" href="tiki-admin.php?page=metatags">{tr}Meta tags{/tr}</a>.
 {/remarksbox}
-
 <form class="admin" method="post" action="tiki-admin.php?page=sefurl">
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
@@ -12,11 +10,9 @@
 			</div>
 		</div>
 	</div>
-
-	<fieldset class="table">
+	<fieldset>
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_sefurl visible="always"}
-
 		{if $httpd eq 'IIS' and !$IIS_UrlRewriteModule}
 			{remarksbox type="warning" title="{tr}Warning{/tr}"}
 				{tr}SEFURL requires the <strong>URL Rewrite module</strong> for IIS. You do not seem to have this module installed.{/tr}
@@ -53,22 +49,17 @@
 				{/remarksbox}
 			{/if}
 		{/if}
-
 		{preference name=feature_canonical_url}
 		<div id="feature_canonical_url_childcontainer">
 			{preference name=feature_canonical_domain}
-			<em>{tr}For example, if the field is left blank, the canonical URL domain is:{/tr}</em> {$base_url_canonical_default}
+			<span class="help-block col-md-8 col-md-push-4">{tr}For example, if the field is left blank, the canonical URL domain is:{/tr} {$base_url_canonical_default}</span>
 		</div>
-
 	</fieldset>
-
-	<fieldset class="table">
-
+	<fieldset>
 		<legend>{tr}Settings{/tr}</legend>
 		{preference name=feature_sefurl_filter}
-
-		<div style="padding:0.5em;clear:both">
-			<label for="feature_sefurl_paths">
+		<div class="adminoptionbox">
+			<label for="feature_sefurl_paths" class="control-label col-md-4">
 				{tr}List of Url Parameters that should go in the path{/tr}
 			</label>
 			{strip}
@@ -79,15 +70,15 @@
 					{/foreach}
 				{/capture}
 			{/strip}
-			<input type="text" id="feature_sefurl_paths" name="feature_sefurl_paths" value="{$smarty.capture.paths|escape}" />
+			<div class="col-md-8">
+				<input type="text" class="form-control" id="feature_sefurl_paths" name="feature_sefurl_paths" value="{$smarty.capture.paths|escape}" />
+			</div>
 		</div>
-
 		{preference name=feature_sefurl_title_article}
 		{preference name=feature_sefurl_title_blog}
 		{preference name=feature_sefurl_tracker_prefixalias}
 	</fieldset>
 	<br>{* I cheated. *}
-
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="text-center">
