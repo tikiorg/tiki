@@ -899,9 +899,11 @@ function wikiplugin_trackerlist($data, $params)
 			//convert tablesorter filter syntax to tiki syntax
 			if (!empty($_REQUEST['filter'])) {
 				$i = 0;
+				// if status is enabled, need to adjust field index by -1 - need to check both - tracker config and plugin config
+				$adjustCol = (isset($showstatus) && $showstatus == 'y' && $definition->isEnabled('showStatus')) ? -1:0;
 				foreach ($_REQUEST['filter'] as $col => $ajaxfilter) {
-					$filterfield[$i] = $allfields['data'][$col]['fieldId'];
-					$exactvalue[$i] = $ajaxfilter;
+					$filterfield[$i] = $allfields['data'][$col + $adjustCol]['fieldId'];
+					$filtervalue[$i] = $ajaxfilter;
 					$i++;
 				}
 			}
