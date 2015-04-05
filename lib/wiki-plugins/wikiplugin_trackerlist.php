@@ -742,7 +742,6 @@ function wikiplugin_trackerlist_info()
 		'prefs' => array( 'feature_trackers', 'wikiplugin_trackerlist' ),
 		'tags' => array( 'basic' ),
 		'body' => '<br>' . tr('Additional information when using tablesorter:') . '<br>' .
-			'<b>tsortcolumns</b> - '. tr('When server=y, the status column cannot be sorted.') . '<br>' .
 			'<b>tsfilters</b> - '. tr('When server=y, the status column must be filtered using o (open), p (pending) and c (closed).')
 			. '<br><br>' . tra('Notice')
 	,
@@ -909,7 +908,10 @@ function wikiplugin_trackerlist($data, $params)
 					} elseif ($ajaxsort == '1') {
 						$dir = '_desc';
 					}
-					$sort_mode = 'f_' . $allfields['data'][$sortcol + $adjustCol]['fieldId'] . $dir;
+					//avoid setting sort_mode based on status field - will return error. Handle later once records are retrieved
+					if ($adjustCol !== -1 || $sortcol !== 0) {
+						$sort_mode = 'f_' . $allfields['data'][$sortcol + $adjustCol]['fieldId'] . $dir;
+					}
 				}
 			}
 			//set max records
@@ -1692,15 +1694,11 @@ function wikiplugin_trackerlist($data, $params)
 					$ts->settings['ajax']['offset'] = 'tr_offset' . $iTRACKERLIST;
 					$ts->settings['ajax']['servercount']['id'] = $ts_countid;
 					$ts->settings['ajax']['serveroffset']['id'] = $ts_offsetid;
-					//the status column is not a field and can't be sorted by the function so set to false
-					if ($showstatus === 'y') {
-						$ts->settings['sort']['columns'][0]['type'] = false;
-					}
 					Table_Factory::build('pluginTrackerlist', $ts->settings);
 				}
 			}
-			//convert categoryId sort to category name sort when tablesorter server side sorting is used
 			if (isset($sortcol) && $items['cant'] > 1) {
+				//convert categoryId sort to category name sort when tablesorter server side sorting is used
 				if ($items['data'][0]['field_values'][$sortcol + $adjustCol]['type'] === 'e') {
 					$i = 0;
 					$catname = '';
@@ -1720,6 +1718,14 @@ function wikiplugin_trackerlist($data, $params)
 						krsort($sitems);
 					}
 					$items['data'] = array_values($sitems);
+				//sort status
+				} elseif ($adjustCol === -1 && $sortcol === 0) {
+					$statuses = array_column($items['data'], 'status');
+					if ($dir == '_asc') {
+						array_multisort($statuses, $items['data']);
+					} else {
+						array_multisort($statuses, SORT_DESC, $items['data']);
+					}
 				}
 			}
 			/*** end second tablesorter section ***/
