@@ -17,11 +17,12 @@ function wikiplugin_catorphans_info()
 			'objects' => array(
 				'required' => false,
 				'name' => tra('Object'),
-				'description' => tra('Currently, only works with wiki pages (set to wiki (Wiki Pages) by default)'),
+				'description' => tra('Currently, only works with wiki pages, file galleries and trackers (set to wiki (Wiki Pages) by default)'),
 				'default' => 'wiki',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
 					array('text' => tra('Wiki Pages'), 'value' => 'wiki'),
+					array('text' => tra('File Galleries'), 'value' => 'file gallery'),
+					array('text' => tra('Trackers'), 'value' => 'tracker'),
 				) 
 			),
 			'max' => array(
