@@ -588,6 +588,73 @@ class CategLib extends ObjectLib
 		return $this->filter_object_list($result, $count, $offset, $maxRecords);
 	}
 
+	// get specific object types that are not categorised	
+	function get_catorphan_object_type($offset, $maxRecords, $object_type, $object_table, $object_ref, $sort_mode)
+	{
+	$orderClause = $this->convertSortMode($sort_mode); // sort_mode not being used yet and may never be used?
+	
+	// 1st query to get objects that are definitely not categorised if they are not in tiki_objects
+		$common1 = "
+			FROM tiki_".$object_table." 
+			WHERE ".$object_ref." NOT IN 
+			(SELECT itemId FROM tiki_objects WHERE type='".$object_type."')
+			";
+
+	// 2nd query to get objects that have been categorised before so are in tiki_objects but are no longer categorised			
+		$common2 = "
+			FROM
+				tiki_objects
+				LEFT JOIN tiki_category_objects ON objectId = catObjectId
+			WHERE
+				(catObjectId IS NULL and type='".$object_type."')
+			";
+
+	//create the full queries for the results and to get the counts
+		$query1 = "SELECT ".$object_ref." as dataId,tiki_".$object_table.".name,tiki_".$object_table.".description $common1";
+		$queryCount1 = "SELECT COUNT(*) $common1";
+		
+		$query2 = "SELECT itemId as dataId,name,description $common2";
+		$queryCount2 = "SELECT COUNT(*) $common2";		
+		
+	// get results for 1st query
+		$result1 = $this->fetchAll($query1, array());
+		$count1 = $this->getOne($queryCount1);
+		
+	// get results for 2nd query
+		$result2 = $this->fetchAll($query2, array());
+		$count2 = $this->getOne($queryCount2);	
+		
+	//merge the results for the two queries	
+		$result = array_merge($result1, $result2);
+		$count = $count1 + $count2;
+
+	// sort out the maxRecord and offset
+		if ( $maxRecords == -1 ) {
+			$requiredResult = $result;
+		} else {
+			$requiredResult = array_slice($result, $offset, $maxRecords);
+		}
+
+		if ($maxRecords != -1) {	// if filtered result is less than what's there look for more
+			while (count($requiredResult) < $maxRecords && count($requiredResult) < $cant) {
+				$nextResults = array_slice($result, $maxRecords, $maxRecords - count($requiredResult));
+				if (empty($nextResults)) {
+					break;
+				}
+				$requiredResult = array_merge($requiredResult, $nextResults);
+			}
+		} else {
+			$cant = count($requiredResult);
+		}
+		$result = $requiredResult;
+		
+	// return the data result and data count as a single array
+		return array(
+			"data" => $result,
+			"cant" => $count,
+		);
+	}	
+	
 	// get the parent categories of an object
 	function get_object_categories($type, $itemId, $parentId=-1, $jailed = true)
 	{
