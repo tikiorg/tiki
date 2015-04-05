@@ -903,13 +903,13 @@ function wikiplugin_trackerlist($data, $params)
 			}
 			//convert tablesorter sort syntax to tiki syntax
 			if (!empty($_REQUEST['sort'])) {
-				foreach ($_REQUEST['sort'] as $col => $ajaxsort) {
+				foreach ($_REQUEST['sort'] as $sortcol => $ajaxsort) {
 					if ($ajaxsort == '0') {
 						$dir = '_asc';
 					} elseif ($ajaxsort == '1') {
 						$dir = '_desc';
 					}
-					$sort_mode = 'f_' . $allfields['data'][$col + $adjustCol]['fieldId'] . $dir;
+					$sort_mode = 'f_' . $allfields['data'][$sortcol + $adjustCol]['fieldId'] . $dir;
 				}
 			}
 			//set max records
@@ -1697,6 +1697,29 @@ function wikiplugin_trackerlist($data, $params)
 						$ts->settings['sort']['columns'][0]['type'] = false;
 					}
 					Table_Factory::build('pluginTrackerlist', $ts->settings);
+				}
+			}
+			//convert categoryId sort to category name sort when tablesorter server side sorting is used
+			if (isset($sortcol) && $items['cant'] > 1) {
+				if ($items['data'][0]['field_values'][$sortcol + $adjustCol]['type'] === 'e') {
+					$i = 0;
+					$catname = '';
+					foreach ($items['data'] as $key => $record) {
+						$catfield = $record['field_values'][$sortcol + $adjustCol];
+						$catuse = $catfield['list'][$catfield['value']]['name'];
+						if ($catname == $catfield['list'][$catfield['value']]['name']) {
+							$catuse = $catuse . $i;
+						}
+						$sitems[$catuse] = $record;
+						$catname = $catfield['list'][$catfield['value']]['name'];
+						$i++;
+					}
+					if ($dir == '_asc') {
+						ksort($sitems);
+					} else {
+						krsort($sitems);
+					}
+					$items['data'] = array_values($sitems);
 				}
 			}
 			/*** end second tablesorter section ***/
