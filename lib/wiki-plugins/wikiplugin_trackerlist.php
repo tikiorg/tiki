@@ -753,7 +753,10 @@ function wikiplugin_trackerlist_info()
 		'description' => tra('List, filter and sort the items in a tracker'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_trackerlist' ),
 		'tags' => array( 'basic' ),
-		'body' => tra('Notice'),
+		'body' => '<br>' . tr('Additional information when using tablesorter:') . '<br>' .
+			 '<b>tsortcolumns</b> - '. tr('When server=y, the status column cannot be sorted.') .
+			'<br><br>' . tra('Notice')
+		,
 		'format' => 'html',
 		'icon' => 'img/icons/database_table.png',
 		'filter' => 'text',
@@ -896,14 +899,19 @@ function wikiplugin_trackerlist($data, $params)
 		$smarty->assign('tsAjax', $tsAjax);
 
 		if ($tsAjax) {
+			// if status is enabled, need to adjust field index by -1 - need to check both - tracker config and plugin config
+			$adjustCol = (isset($showstatus) && $showstatus == 'y' && $definition->isEnabled('showStatus')) ? -1 : 0;
 			//convert tablesorter filter syntax to tiki syntax
 			if (!empty($_REQUEST['filter'])) {
 				$i = 0;
-				// if status is enabled, need to adjust field index by -1 - need to check both - tracker config and plugin config
-				$adjustCol = (isset($showstatus) && $showstatus == 'y' && $definition->isEnabled('showStatus')) ? -1:0;
 				foreach ($_REQUEST['filter'] as $col => $ajaxfilter) {
-					$filterfield[$i] = $allfields['data'][$col + $adjustCol]['fieldId'];
-					$filtervalue[$i] = $ajaxfilter;
+					//handle status filter
+					if ($adjustCol === -1 && $col === 0 && in_array($ajaxfilter, ['o','p','c'])) {
+						$status = $ajaxfilter;
+					} else {
+						$filterfield[$i] = $allfields['data'][$col + $adjustCol]['fieldId'];
+						$filtervalue[$i] = $ajaxfilter;
+					}
 					$i++;
 				}
 			}
@@ -915,7 +923,7 @@ function wikiplugin_trackerlist($data, $params)
 					} elseif ($ajaxsort == '1') {
 						$dir = '_desc';
 					}
-					$sort_mode = 'f_' . $allfields['data'][$col]['fieldId'] . $dir;
+					$sort_mode = 'f_' . $allfields['data'][$col + $adjustCol]['fieldId'] . $dir;
 				}
 			}
 			//set max records
@@ -1703,6 +1711,10 @@ function wikiplugin_trackerlist($data, $params)
 					$ts->settings['ajax']['offset'] = 'tr_offset' . $iTRACKERLIST;
 					$ts->settings['ajax']['servercount']['id'] = $ts_countid;
 					$ts->settings['ajax']['serveroffset']['id'] = $ts_offsetid;
+					//the status column is not a field and can't be sorted by the function so set to false
+					if ($showstatus === 'y') {
+						$ts->settings['columns'][0]['sort']['type'] = false;
+					}
 					Table_Factory::build('pluginTrackerlist', $ts->settings);
 				}
 			}
