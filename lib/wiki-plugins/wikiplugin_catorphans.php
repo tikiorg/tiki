@@ -52,52 +52,28 @@ function wikiplugin_catorphans($data, $params)
 	$default = array('offset'=>0, 'max'=>$prefs['maxRecords'], 'objects'=>'wiki');
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
+	// check required objects parameter
+	if ($params['objects'] !== 'wiki' && $params['objects'] !== 'file gallery' && $params['objects'] !== 'tracker') {
+		return ("<span class='error'>Wrong objects parameter - only wiki, file gallery and tracker allowed at present</span>");
+	}
 
-	// array for converting long type names (as in database) to short names (as used in plugin)
-	$typetokens = array(
-		"article" => "article",
-		"blog" => "blog",
-		"faq" => "faq",
-		"file gallery" => "fgal",
-		"image gallery" => "igal",
-		"newsletter" => "newsletter",
-		"poll" => "poll",
-		"quiz" => "quiz",
-		"survey" => "survey",
-		"tracker" => "tracker",
-		"wiki page" => "wiki"
-	);
-
-	// TODO: move this array to a lib
-	// array for converting long type names to translatable headers (same strings as in application menu)
-	$typetitles = array(
-		"article" => "Articles",
-		"blog" => "Blogs",
-		"directory" => "Directory",
-		"faq" => "FAQs",
-		"file gallery" => "File Galleries",
-		"forum" => "Forums",
-		"image gallery" => "Image Gals",
-		"newsletter" => "Newsletters",
-		"poll" => "Polls",
-		"quiz" => "Quizzes",
-		"survey" => "Surveys",
-		"tracker" => "Trackers",
-		"wiki page" => "Wiki"
-	);
 	if (!empty($_REQUEST['offset'])) {
 		$offset = $_REQUEST['offset'];
 	}
 
-	// currently only supports display of wiki pages
+	// currently only supports display of wiki pages, file galleries and trackers
+	$smarty->assign('objecttype', $objects);
 	if ($objects == 'wiki') {
-		$listpages = $tikilib->list_pages($offset, $max, 'pageName_asc', '', '', true, true, false, false, array('noCateg' => true));
-		$smarty->assign_by_ref('orphans', $listpages['data']);
-		$smarty->assign('pagination', array('cant'=>$listpages['cant'], 'step'=>$max, 'offset'=>$offset));
-		$out = '~np~' . $smarty->fetch('wiki-plugins/wikiplugin_catorphans.tpl') . '~/np~';
-		$smarty->assign('pagination', null);
-		return $out;
+		$listobjects = $tikilib->list_pages($offset, $max, 'pageName_asc', '', '', true, true, false, false, array('noCateg' => true));
+	} elseif ($objects == 'file gallery') {
+		$listobjects = $categlib->get_catorphan_object_type($offset, $max, 'file gallery','file_galleries','galleryId');
+	} elseif ($objects == 'tracker') {
+		$listobjects = $categlib->get_catorphan_object_type($offset, $max, 'tracker','trackers','trackerId');
 	}
-	return '';
+	$smarty->assign_by_ref('orphans', $listobjects['data']);
+	$smarty->assign('pagination', array('cant'=>$listobjects['cant'], 'step'=>$max, 'offset'=>$offset));
+	$out = '~np~' . $smarty->fetch('wiki-plugins/wikiplugin_catorphans.tpl') . '~/np~';	
+	$smarty->assign('pagination', null);
+	return $out;
 
 }
