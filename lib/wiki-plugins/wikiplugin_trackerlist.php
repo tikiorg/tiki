@@ -1700,6 +1700,40 @@ function wikiplugin_trackerlist($data, $params)
 				$trkritems = $tikilib->table('tiki_tracker_items');
 				$itemcount = $trkritems->fetchCount(array('trackerId' => $trackerId));
 				$ts = new Table_Plugin;
+				
+				
+				// when using serverside filtering check wether a dropdown is in use 
+				// and we must take params from tracker definition because no explicit options have been defined
+				if ($tsServer) {
+					//format from plugin: type:text|type:dropdown;option:1=Open;option:2=Closed|type:text|type:nofilter|type:nofilter|type:nofilter
+					if (!empty($tsfilters) && strpos($tsfilters, 'dropdown') !== false) {
+						$tsfiltersArray = explode('|', $tsfilters);
+						$adjustCol = (isset($showstatus) && $showstatus == 'y' && $definition->isEnabled('showStatus')) ? -1 : 0;
+						foreach ($tsfiltersArray as $col => &$tsfilterField) {
+								
+							// only consider dropdown definitions without explicit option
+							if (strpos($tsfilterField, 'dropdown') !== false && strpos($tsfilterField, 'option') === false ) {
+								//content from options (json object): {"options":["1=Open"," 2=Closed]} - note there can be whitespaces - it should not but there can be - yet another fix required
+								$options =  $allfields['data'][$col + $adjustCol]['options'];
+								$options = json_decode($options);
+								$options = $options->options;
+								// construct the new dropdown filterfield entry from the trackerfield definition
+								$newTsfilterField = 'type:dropdown';
+								foreach ($options as $option) {
+									$newTsfilterField .= ";option:". trim($option);
+								}
+								// update field - note that we used a ref
+								$tsfilterField = $newTsfilterField;
+							}
+						}
+						// update tsfilters
+						$tsfilters = implode('|', $tsfiltersArray);
+					}
+				}
+
+				
+				
+				
 				$ts->setSettings(
 					$ts_id,
 					isset($server) ? $server : null,
