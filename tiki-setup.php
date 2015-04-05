@@ -398,7 +398,7 @@ if ($prefs['feature_syntax_highlighter'] == 'y') {
 		->add_jsfile('lib/codemirror_tiki/codemirror_tiki.js', 5);
 
 	require_once("lib/codemirror_tiki/tiki_codemirror.php");
-	codemirrorModes($prefs['tiki_minify_javascript'] === 'y');
+	createCodemirrorModes();
 }
 if ($prefs['feature_wikilingo'] == 'y') {
 	$headerlib

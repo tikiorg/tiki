@@ -8,6 +8,12 @@
 //this script may only be included - so its better to die if called directly.
 $access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
+
+// need to rebuild because they were created in tiki-setup and just removed due to clear cache
+// we need to create upfront in case codemirror is used later on. 
+require_once("lib/codemirror_tiki/tiki_codemirror.php");
+createCodemirrorModes();
+
 // Javascript auto-detection
 //   (to be able to generate non-javascript code if there is no javascript, when noscript tag is not useful enough)
 //   It uses cookies instead of session vars to keep the correct value after a session timeout
@@ -202,7 +208,7 @@ var syntaxHighlighter = {
 	}
 
 	$headerlib->add_js($js);
-
+	
 	if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
 
 		$smarty->assign('ie6', true);
