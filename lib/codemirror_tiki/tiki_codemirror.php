@@ -5,7 +5,11 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-function codemirrorModes($minify = true)
+
+/**
+ * Create codemirror modes in temp - put wiki language upfront.
+ */
+function createCodemirrorModes()
 {
 	global $prefs, $tikidomainslash;
 	$js = '';
@@ -42,12 +46,10 @@ test = { mode: function () {}, indentation: function() {} }
 			$css .= @file_get_contents($cssFile);
 		}
 
-		// race condition when minify is active and cache was just cleared - need to set exclusive access
-		file_put_contents($jsModes, $js, LOCK_EX);
+		file_put_contents($jsModes, $js);
 		chmod($jsModes, 0644);
 
-		// race condition when minify is active and cache was just cleared - need to set exclusive access
-		file_put_contents($cssModes, $css, LOCK_EX);
+		file_put_contents($cssModes, $css);
 		chmod($cssModes, 0644);
 		
 	}

@@ -27,6 +27,10 @@ if (isset($_GET['do'])) {
 		include('lib/setup/javascript.php');
 		include('lib/setup/theme.php');
 	}
+	// codemirror modes are created in /temp/public -- need to restore them 
+	if ($_GET['do'] === 'temp_public') {
+		include('lib/setup/javascript.php');
+	}
 }
 if (isset($_GET['compiletemplates'])) {
 	$ctempl = 'templates';
