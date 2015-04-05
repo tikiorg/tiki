@@ -1166,6 +1166,7 @@ function wikiplugin_trackerlist($data, $params)
 		}
 		$tr_status = $status;
 		$smarty->assign_by_ref('tr_status', $tr_status);
+		
 		if (!isset($list_mode)) {
 			$list_mode = 'y';
 		}
@@ -1175,23 +1176,29 @@ function wikiplugin_trackerlist($data, $params)
 			$showcreated = $tracker_info['showCreated'];
 		}
 		$smarty->assign_by_ref('showcreated', $showcreated);
+		
 		if (!isset($showlastmodif)) {
 			$showlastmodif = $tracker_info['showLastModif'];
 		}
 		$smarty->assign_by_ref('showlastmodif', $showlastmodif);
+		
 		if (!isset($showlastmodifby)) {
-			$showlastmodifby = $tracker_info['showlastmodifby'];
+			$showlastmodifby = $tracker_info['showLastModifBy'];
 		}
 		$smarty->assign_by_ref('showlastmodifby', $showlastmodifby);
+		
 		if (!isset($more))
 			$more = 'n';
 		$smarty->assign_by_ref('more', $more);
+		
 		if (!isset($moreurl))
 			$moreurl = 'tiki-view_tracker.php';
 		$smarty->assign_by_ref('moreurl', $moreurl);
+		
 		if (!isset($url))
 			$url = '';
 		$smarty->assign_by_ref('url', $url);
+		
 		if (!isset($export))
 			$export = 'n';
 		$smarty->assign_by_ref('export', $export);
@@ -1761,7 +1768,8 @@ function wikiplugin_trackerlist($data, $params)
 					$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker.".$trackerId.'.'.$items['data'][$f]['itemId'], $user);
 				}
 			}
-			if ($definition->isEnabled('useComments') && $definition->isEnabled('showComments') || $definition->isEnabled('showLastComment') ) {
+			
+			if (!empty($items['data']) && ($definition->isEnabled('useComments') && $definition->isEnabled('showComments') || $definition->isEnabled('showLastComment') )) {
 				foreach ($items['data'] as $itkey=>$oneitem) {
 					if ($definition->isEnabled('showComments')) {
 						$items['data'][$itkey]['comments'] = $trklib->get_item_nb_comments($items['data'][$itkey]['itemId']);
@@ -1772,12 +1780,14 @@ function wikiplugin_trackerlist($data, $params)
 					}
 				}
 			}
-			if ($definition->isEnabled('useAttachments') && $definition->isEnabled('showAttachments')) {
+			
+			if (!empty($items['data']) && ($definition->isEnabled('useAttachments') && $definition->isEnabled('showAttachments'))) {
 				foreach ($items["data"] as $itkey=>$oneitem) {
 					$res = $trklib->get_item_nb_attachments($items["data"][$itkey]['itemId']);
 					$items["data"][$itkey]['attachments']  = $res['attachments'];
 				}
 			}
+			
 			if (!empty($compute) && !empty($items['data'])) {
 				$fs = preg_split('/ *: */', $compute);
 				foreach ($fs as $fieldId) {
