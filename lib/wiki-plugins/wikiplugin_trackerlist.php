@@ -1710,20 +1710,21 @@ function wikiplugin_trackerlist($data, $params)
 						$tsfiltersArray = explode('|', $tsfilters);
 						$adjustCol = (isset($showstatus) && $showstatus == 'y' && $definition->isEnabled('showStatus')) ? -1 : 0;
 						foreach ($tsfiltersArray as $col => &$tsfilterField) {
-								
 							// only consider dropdown definitions without explicit option
 							if (strpos($tsfilterField, 'dropdown') !== false && strpos($tsfilterField, 'option') === false ) {
 								//content from options (json object): {"options":["1=Open"," 2=Closed]} - note there can be whitespaces - it should not but there can be - yet another fix required
-								$options =  $allfields['data'][$col + $adjustCol]['options'];
-								$options = json_decode($options);
-								$options = $options->options;
-								// construct the new dropdown filterfield entry from the trackerfield definition
-								$newTsfilterField = 'type:dropdown';
-								foreach ($options as $option) {
-									$newTsfilterField .= ";option:". trim($option);
+								if ( $allfields['data'][$col + $adjustCol]['type'] == 'd') { 
+									$options =  $allfields['data'][$col + $adjustCol]['options'];
+									$options = json_decode($options);
+									$options = $options->options;
+									// construct the new dropdown filterfield entry from the trackerfield definition
+									$newTsfilterField = 'type:dropdown';
+									foreach ($options as $option) {
+										$newTsfilterField .= ";option:". trim($option);
+									}
+									// update field - note that we used a ref
+									$tsfilterField = $newTsfilterField;
 								}
-								// update field - note that we used a ref
-								$tsfilterField = $newTsfilterField;
 							}
 						}
 						// update tsfilters
