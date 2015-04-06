@@ -25,7 +25,11 @@ class ThemeLib extends TikiLib
 	function get_themes($theme_base_path = '')
 	{
 		$themes = array();
-		foreach (glob("{$theme_base_path}themes/*/css/*.css") as $css) {
+		$list_css = glob("{$theme_base_path}themes/*/css/*.css");
+		if( $list_css == FALSE ) {
+			return array();
+		}
+		foreach ($list_css as $css) {
 			$css = dirname(dirname($css));
 			$theme = basename($css);
 			$themes[$theme] = tr($theme);
@@ -79,7 +83,11 @@ class ThemeLib extends TikiLib
 		$theme_options = array();
 		if (isset($theme) and $theme != 'custom_url') { //don't consider custom URL themes to have options
 			$option_base_path = $this->get_theme_path($theme);
-			foreach (glob("$option_base_path/options/*/css/*.css") as $css) {
+			$list_css = glob("{$option_base_path}/options/*/css/*.css");
+			if( $list_css == FALSE ) {
+				return array();
+			}
+			foreach ($list_css as $css) {
 				$css = dirname(dirname($css));
 				$option = basename($css);
 				$theme_options[$option] = tr($option);
