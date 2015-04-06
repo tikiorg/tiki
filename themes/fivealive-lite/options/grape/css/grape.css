@@ -554,15 +554,6 @@ hr {
 .navbar-default .navbar-nav > li > a {
   background: #a82a76;
 }
-/*.topbar,
-.topbar .cssmenu_horiz ul,
-.topbar .navbar-default .navbar-nav > li,
-.topbar .nav > li,
-.topbar .navbar,
-.topbar .navbar-default .navbar-collapse,
-.topbar .navbar-default .navbar-form {
-  background: @navbar-default-bg;
-}*/
 .topbar .cssmenu_horiz ul {
   background: #a82a76;
 }
@@ -594,10 +585,7 @@ hr {
 .cssmenu_vert ul > li > a:focus {
   text-decoration: none;
   color: #f2f2f2;
-  background-color: #2e1f39;
-}
-.topbar .navbar {
-  margin-bottom: 0;
+  background-color: #a82a76;
 }
 .topbar .cssmenu_horiz li a:hover {
   background: #8d2363;
@@ -609,24 +597,9 @@ hr {
   padding-bottom: 4px;
   line-height: 1;
   color: #ffffff;
-  background: #a82a76;
 }
-#col2 .panel,
-#col3 .panel,
-#bottom_modules .panel {
-  border: none;
-}
-#col2 .panel-default > .panel-heading,
-#col3 .panel-default > .panel-heading,
-#bottom_modules .panel-heading {
-  background: #ffffff;
-  border-width: 0 0 1px 0;
-  border-style: solid;
-  border-color: #bc2f84;
-}
-#col2 .panel-title,
-#col3 .panel-title {
-  color: #bc2f84;
+.topbar .navbar {
+  margin-bottom: 0;
 }
 .header_outer,
 .layout_fixed_top_modules .navbar-fixed-top,
@@ -664,6 +637,23 @@ textarea,
 .navbar-collapse {
   border: none;
 }
+#col2 .panel,
+#col3 .panel,
+#bottom_modules .panel {
+  border: none;
+}
+#col2 .panel-default > .panel-heading,
+#col3 .panel-default > .panel-heading,
+#bottom_modules .panel-heading {
+  background: #ffffff;
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  border-color: #bc2f84;
+}
+#col2 .panel-title,
+#col3 .panel-title {
+  color: #bc2f84;
+}
 #footer {
   background: black;
   color: #ffffff;
@@ -680,28 +670,6 @@ textarea,
 }
 .postbody-title {
   background: url('../images/siteheader.png') no-repeat -480px -200px;
-}
-.secondary_site_menu .navbar {
-  margin-bottom: 0;
-}
-.secondary_site_menu .navbar-nav {
-  float: right;
-}
-.secondary_site_menu .navbar-default .navbar-nav > li > a,
-.secondary_site_menu .navbar-default .navbar-nav > li > a:hover,
-.secondary_site_menu .navbar-default .navbar-nav > li > a:focus,
-.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
-  background: transparent;
-  color: #8e286a;
-}
-.secondary_site_menu .navbar-default .navbar-nav li ul li a {
-  background: #a82a76;
-  color: #fff;
-}
-.secondary_site_menu .navbar-default .navbar-nav li ul li a:hover,
-.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
-  background: #902465;
-  color: #fff;
 }
 .siteloginbar_popup .dropdown-menu > li > a {
   color: #fff;

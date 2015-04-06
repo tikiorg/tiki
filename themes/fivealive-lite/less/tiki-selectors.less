@@ -15,16 +15,6 @@
   border-top: 2px solid #fff;
 }
 
-// Layout template removed.
-//.layout_h_tb_m_f_containers_3-6-3 .middle_outer/*,
-//.layout_fixed_top_modules .middle_outer*/ {
-//  background: #ffffff;
-//  .navbar {
-// //    min-height: 1;
-//  }
-//}
-
-// override Bootstrap default because we can have slimmer navbars in fivealive-lite
 .navbar {
   min-height: 24px;
 }
@@ -44,7 +34,7 @@ body.tiki.navbar-padding,
 .layout_fixed_top_modules #top_modules h1.sitetitle {
   float: left;
   font-size: 1.8rem;
-  line-height: @navbar-fixed-height; //
+  line-height: @navbar-fixed-height;
 }
 
 //#top_modules,
@@ -84,16 +74,13 @@ body.tiki.navbar-padding,
 
 .topbar_container,
 .layout_basic .page-header > .topbar {
-// .layout_h_tb_m_f_containers_3-6-3 .topbar_container,
-// .layout_fixed_top_modules .topbar_container {
   background: @topbar_container_background;
 }
 
-// .layout_h_tb_m_f_containers_3-6-3 .navbar,
+
 .layout_basic .topbar,
 .layout_basic.tiki .row.topbar,
 .layout_fixed_top_modules .navbar {
-//  min-height: ;
   margin-bottom: 0;
 }
 
@@ -120,7 +107,6 @@ body.tiki.navbar-padding,
 #col2 .panel,
 #col3 .panel,
 #bottom_modules .panel {
-//  background: url('@{imagePath}options/plum/siteheader.jpg') -1000px -200px no-repeat #1C0029;
   border: @side-column-border; // none;
 }
 
@@ -227,20 +213,12 @@ textarea,
   .form-group {
     margin-bottom: 0;
   }
-//  .btn {
-//    font-size: 12px;
-//    height: 24px;
-//    padding-to
-//  }
 }
 
-
-
-// @navbar-default-link-background: #bfbd23;
 .navbar-nav .open .dropdown-menu,
 .navbar-nav .open .dropdown-menu li,
 .navbar-default .navbar-nav > li > a {
-  background: @navbar-default-navbar-nav-li-a-background; // #cdbe23;
+//  background: @navbar-default-navbar-nav-li-a-background; // #cdbe23;
 }
 
 .navbar-default .navbar-nav > li > a:hover {
@@ -251,31 +229,6 @@ textarea,
   background: @postbody-title-background; //url('@{imagePath}siteheader.png') no-repeat -480px -200px;
 }
 
-.secondary_site_menu .navbar {margin-bottom: 0;}
-.secondary_site_menu .navbar-nav {float: right;}
-
-.secondary_site_menu .navbar-default .navbar-nav > li > a, // sets link color
-.secondary_site_menu .navbar-default .navbar-nav > li > a:hover,
-.secondary_site_menu .navbar-default .navbar-nav > li > a:focus,
-.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover //,
-//.secondary_site_menu .navbar-nav .open .dropdown-menu,
-//.secondary_site_menu .navbar-nav .open .dropdown-menu li
-{
-  background: transparent;
-  color: @brand-primary-of-option;
-}
-
-.secondary_site_menu .navbar-default .navbar-nav li ul li a {
-  background: @navbar-default-navbar-nav-li-a-background;
-  color: #fff;
-}
-
-.secondary_site_menu .navbar-default .navbar-nav li ul li a:hover,
-.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
-  background: darken(@navbar-default-navbar-nav-li-a-background, 6%);
-  color: #fff;
-}
-
 .siteloginbar_popup .dropdown-menu > li > a {color: #fff;}
 
 // This comes last to enable site title color of theme options under FiveAlive-lite to have priority over the default set by FiveAlive.
@@ -284,7 +237,4 @@ header.header {
   .sitesubtitle {
     color: @brand-primary;
     text-shadow: none;}
-  //  a,
-  //  a:visited {color: @brand-primary;
-  //  }
 }
