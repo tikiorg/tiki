@@ -49,6 +49,7 @@ if (! $trackerDefinition) {
 }
 
 $tracker_info = $trackerDefinition->getInformation();
+$fields['data'] = array();
 
 $tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker', $tracker_info);
 if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'view') {
