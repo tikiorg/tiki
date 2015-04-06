@@ -54,7 +54,10 @@ test = { mode: function () {}, indentation: function() {} }
 		
 	}
 
-	TikiLib::lib("header")
-		->add_jsfile($jsModes)
-		->add_cssfile($cssModes);
+	// creation upfront is ok, but only include them if the feature is enabled. Otherwise we would get js errors bc codemirror itself would be missing
+	if (isset($prefs['feature_syntax_highlighter']) && $prefs['feature_syntax_highlighter'] == 'y') {
+		TikiLib::lib("header")
+			->add_jsfile($jsModes)
+			->add_cssfile($cssModes);
+	}
 }
