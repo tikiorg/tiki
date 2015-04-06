@@ -46,7 +46,7 @@ Note: The show content block must be defined at root level to use the include. A
 	{/if}
 
 	{if isset($saved_msg) && $saved_msg neq ''}
-		{remarksbox type="note" title="{tr}Note{/tr}"}{$saved_msg}{/remarksbox}
+		<div class="col-md-12">{remarksbox type="note" title="{tr}Note{/tr}"}{$saved_msg}{/remarksbox}</div>
 	{/if}
 
 	{if $user and $prefs.feature_user_watches eq 'y' and (isset($category_watched) and $category_watched eq 'y')}
