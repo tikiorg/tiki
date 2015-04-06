@@ -119,7 +119,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 
 		return array(
 			'value' => $value,
-			'selected' => $value === '' ? [] : explode(',', $value),
+			'selected' => explode(',', $value),
 			'possibilities' => $this->getPossibilities(),
 		);
 	}

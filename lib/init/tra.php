@@ -126,7 +126,7 @@ function tra_impl($content, $lg = '', $args = array())
 {
 	global $prefs, $tikilib;
 
-	if (empty($content) && $content !== '0') {
+	if (empty($content)) {
 		return '';
 	}
 
