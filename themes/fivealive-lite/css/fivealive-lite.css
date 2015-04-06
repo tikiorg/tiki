@@ -257,8 +257,8 @@ th {
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url('../../../vendor/vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot');
-  src: url('../../../vendor/vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../../vendor/vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../../../vendor/vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../../../vendor/vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../../../vendor/vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot');
+  src: url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 .glyphicon {
   position: relative;
@@ -7442,38 +7442,11 @@ textarea,
 .topbar .form-group {
   margin-bottom: 0;
 }
-.navbar-nav .open .dropdown-menu,
-.navbar-nav .open .dropdown-menu li,
-.navbar-default .navbar-nav > li > a {
-  background: #28aae1;
-}
 .navbar-default .navbar-nav > li > a:hover {
   background: #3eb3e4;
 }
 .postbody-title {
-  background: url('../images/siteheader.png') no-repeat -480px -200px;
-}
-.secondary_site_menu .navbar {
-  margin-bottom: 0;
-}
-.secondary_site_menu .navbar-nav {
-  float: right;
-}
-.secondary_site_menu .navbar-default .navbar-nav > li > a,
-.secondary_site_menu .navbar-default .navbar-nav > li > a:hover,
-.secondary_site_menu .navbar-default .navbar-nav > li > a:focus,
-.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
-  background: transparent;
-  color: #1174a5;
-}
-.secondary_site_menu .navbar-default .navbar-nav li ul li a {
-  background: #28aae1;
-  color: #fff;
-}
-.secondary_site_menu .navbar-default .navbar-nav li ul li a:hover,
-.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
-  background: #1d99ce;
-  color: #fff;
+  background: #1a8cbc;
 }
 .siteloginbar_popup .dropdown-menu > li > a {
   color: #fff;

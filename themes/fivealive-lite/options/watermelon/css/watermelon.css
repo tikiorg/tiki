@@ -554,17 +554,8 @@ hr {
 .navbar-default .navbar-nav > li > a {
   background: #e71e40;
 }
-/*.topbar,
-.topbar .cssmenu_horiz ul,
-.topbar .navbar-default .navbar-nav > li,
-.topbar .nav > li,
-.topbar .navbar,
-.topbar .navbar-default .navbar-collapse,
-.topbar .navbar-default .navbar-form {
-  background: @navbar-default-bg;
-}*/
 .topbar .cssmenu_horiz ul {
-  background: #e71e40;
+  background: #8c1832;
 }
 .cssmenu_horiz li ul,
 .cssmenu_vert li ul {
@@ -594,10 +585,7 @@ hr {
 .cssmenu_vert ul > li > a:focus {
   text-decoration: none;
   color: #f2f2f2;
-  background-color: #76142a;
-}
-.topbar .navbar {
-  margin-bottom: 0;
+  background-color: #c31e3b;
 }
 .topbar .cssmenu_horiz li a:hover {
   background: #a61a32;
@@ -609,24 +597,9 @@ hr {
   padding-bottom: 4px;
   line-height: 1;
   color: #ffffff;
-  background: #8c1832;
 }
-#col2 .panel,
-#col3 .panel,
-#bottom_modules .panel {
-  border: none;
-}
-#col2 .panel-default > .panel-heading,
-#col3 .panel-default > .panel-heading,
-#bottom_modules .panel-heading {
-  background: #ffffff;
-  border-width: 0 0 1px 0;
-  border-style: solid;
-  border-color: #c31e3b;
-}
-#col2 .panel-title,
-#col3 .panel-title {
-  color: #c31e3b;
+.topbar .navbar {
+  margin-bottom: 0;
 }
 .header_outer,
 .layout_fixed_top_modules .navbar-fixed-top,
@@ -664,6 +637,23 @@ textarea,
 .navbar-collapse {
   border: none;
 }
+#col2 .panel,
+#col3 .panel,
+#bottom_modules .panel {
+  border: none;
+}
+#col2 .panel-default > .panel-heading,
+#col3 .panel-default > .panel-heading,
+#bottom_modules .panel-heading {
+  background: #ffffff;
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  border-color: #c31e3b;
+}
+#col2 .panel-title,
+#col3 .panel-title {
+  color: #c31e3b;
+}
 #footer {
   background: black;
   color: #ffffff;
@@ -680,28 +670,6 @@ textarea,
 }
 .postbody-title {
   background: url('../images/siteheader.png') no-repeat -480px -200px;
-}
-.secondary_site_menu .navbar {
-  margin-bottom: 0;
-}
-.secondary_site_menu .navbar-nav {
-  float: right;
-}
-.secondary_site_menu .navbar-default .navbar-nav > li > a,
-.secondary_site_menu .navbar-default .navbar-nav > li > a:hover,
-.secondary_site_menu .navbar-default .navbar-nav > li > a:focus,
-.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
-  background: transparent;
-  color: #c21e3b;
-}
-.secondary_site_menu .navbar-default .navbar-nav li ul li a {
-  background: #e71e40;
-  color: #fff;
-}
-.secondary_site_menu .navbar-default .navbar-nav li ul li a:hover,
-.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
-  background: #d01636;
-  color: #fff;
 }
 .siteloginbar_popup .dropdown-menu > li > a {
   color: #fff;
