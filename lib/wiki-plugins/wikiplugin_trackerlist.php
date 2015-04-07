@@ -877,7 +877,7 @@ function wikiplugin_trackerlist($data, $params)
 				$tsfiltersArray = explode('|', $tsfilters);
 				foreach ($_REQUEST['filter'] as $col => $ajaxfilter) {
 					//handle status filter
-					if ($adjustCol === -1 && $col === 0 && in_array($ajaxfilter, ['o','p','c'])) {
+					if ($adjustCol === -1 && $col === 0 && in_array($ajaxfilter, array('o','p','c'))) {
 						$status = $ajaxfilter;
 					//handle date filter later after records have been retrieved
 					} elseif (strpos($tsfiltersArray[$col], 'type:date') !== false) {
@@ -1720,7 +1720,7 @@ function wikiplugin_trackerlist($data, $params)
 				 */
 				if (in_array($fieldtype, array('f', 'j')) && $tsServer && isset($tsdatefilter) && $tsdatefilter === true) {
 					$tsfilter = explode(' - ', $ajaxfilter);
-					$filtered = [];
+					$filtered = array();
 					foreach ($items['data'] as $record) {
 						$dateval = (int) $record['field_values'][$col + $adjustCol]['value'];
 						/*
