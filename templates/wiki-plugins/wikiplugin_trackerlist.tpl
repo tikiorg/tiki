@@ -37,7 +37,13 @@
 	</div>
 {/if}
 
-	{if $shownbitems eq 'y'}<div class="nbitems">{tr}Items found:{/tr} {$count_item}</div>{/if}
+{if !$tsOn}
+	{if $shownbitems eq 'y'}
+		<div class="nbitems">
+			{tr}Items found:{/tr} <span class='badge'>{$count_item}</span>
+		</div>
+	{/if}
+{/if}
 
 	{if (isset($cant_pages) && $cant_pages > 1 && !tsOn) or $tr_initial or $showinitials eq 'y'}
 		{initials_filter_links _initial='tr_initial'}
