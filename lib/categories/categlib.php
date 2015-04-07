@@ -591,29 +591,61 @@ class CategLib extends ObjectLib
 	// get specific object types that are not categorised	
 	function get_catorphan_object_type($offset, $maxRecords, $object_type, $object_table, $object_ref, $sort_mode)
 	{
-	$orderClause = $this->convertSortMode($sort_mode); // sort_mode not being used yet and may never be used?
+	// $orderClause = $this->convertSortMode($sort_mode); // sort_mode not being used yet and may never be used?
 	
-	// 1st query to get objects that are definitely not categorised if they are not in tiki_objects
+	// 1st query 'common' element to get objects that are definitely not categorised if they are not in tiki_objects - needs to be modified for wiki pages using the new method
+		if ( $object_type == "wiki page" ) {
+		$common1 = "
+			FROM tiki_".$object_table." 
+			WHERE pageName NOT IN 
+			(SELECT itemId FROM tiki_objects WHERE type='".$object_type."')
+			";
+		} else {
 		$common1 = "
 			FROM tiki_".$object_table." 
 			WHERE ".$object_ref." NOT IN 
 			(SELECT itemId FROM tiki_objects WHERE type='".$object_type."')
 			";
+		}
 
-	// 2nd query to get objects that have been categorised before so are in tiki_objects but are no longer categorised			
-		$common2 = "
+	// 2nd query 'common' element to get objects that have been categorised before so are in tiki_objects but are no longer categorised plus an additional check that the object is still in the main object table and hasn't been deleted without deleting the entries in the categorisation tables	
+		if ( $object_type == "wiki page" ) {
+			$common2 = "
 			FROM
 				tiki_objects
 				LEFT JOIN tiki_category_objects ON objectId = catObjectId
 			WHERE
-				(catObjectId IS NULL and type='".$object_type."')
+				(catObjectId IS NULL and type='wiki page' and itemId IN (SELECT pageName as itemId FROM tiki_pages))
 			";
-
-	//create the full queries for the results and to get the counts
-		$query1 = "SELECT ".$object_ref." as dataId,tiki_".$object_table.".name,tiki_".$object_table.".description $common1";
-		$queryCount1 = "SELECT COUNT(*) $common1";
+		} else {
+			$common2 = "
+			FROM
+				tiki_objects
+				LEFT JOIN tiki_category_objects ON objectId = catObjectId
+			WHERE
+				(catObjectId IS NULL and type='".$object_type."' and itemId IN (SELECT ".$object_ref." as itemId FROM tiki_".$object_table."))
+			";
+		}
 		
-		$query2 = "SELECT itemId as dataId,name,description $common2";
+
+	//create the full queries for the results and to get the counts - modify how the query is formed dependent upon the DB field names for the different object types
+		if ( $object_type == "article" ) {
+			$query1 = "SELECT tiki_".$object_table.".title as name,".$object_ref." as dataId,tiki_".$object_table.".subtitle $common1";
+		} elseif ( $object_type == "blog" ) {
+			$query1 = "SELECT tiki_".$object_table.".title as name,".$object_ref." as dataId,tiki_".$object_table.".description $common1";
+		} elseif ( $object_type == "wiki page" ) {
+			$query1 = "SELECT tiki_".$object_table.".pageName,".$object_ref." as dataId,tiki_".$object_table.".description $common1";		
+		} else {
+			$query1 = "SELECT tiki_".$object_table.".name,".$object_ref." as dataId,tiki_".$object_table.".description $common1";
+		}
+	//	
+		if ( $object_type == "wiki page" ) {
+			$query2 = "SELECT name as pageName,itemId as dataId,description $common2";
+		} else {
+			$query2 = "SELECT name,itemId as dataId,description $common2";
+		}
+		
+		$queryCount1 = "SELECT COUNT(*) $common1";
 		$queryCount2 = "SELECT COUNT(*) $common2";		
 		
 	// get results for 1st query
@@ -625,10 +657,14 @@ class CategLib extends ObjectLib
 		$count2 = $this->getOne($queryCount2);	
 		
 	//merge the results for the two queries	
-		$result = array_merge($result1, $result2);
+		$result = array_merge($result1, $result2);	
 		$count = $count1 + $count2;
+		$countall = $count;
+		
+	// do a simple sort on the data
+		sort($result); 
 
-	// sort out the maxRecord and offset
+	// apply the maxRecord and offset if not displaying all the results
 		if ( $maxRecords == -1 ) {
 			$requiredResult = $result;
 		} else {
@@ -648,10 +684,11 @@ class CategLib extends ObjectLib
 		}
 		$result = $requiredResult;
 		
-	// return the data result and data count as a single array
+	// return the maxRecord data result and data count plus the actual total count as a single array
 		return array(
 			"data" => $result,
 			"cant" => $count,
+			"countall" => $countall,
 		);
 	}	
 	
