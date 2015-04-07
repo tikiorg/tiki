@@ -6868,7 +6868,7 @@ select.form-control {
 .progress-bar:last-child {
   border-radius: 0 3px 3px 0;
 }
-.progress-bar:last-child.progress-bar:before {
+.progress-bar:last-child .progress-bar:before {
   display: block;
   content: 'div::before';
   position: absolute;
@@ -6879,16 +6879,16 @@ select.form-control {
   z-index: -1;
   background-color: #cae6fc;
 }
-.progress-bar-success:last-child.progress-bar:before {
+.progress-bar-success:last-child .progress-bar:before {
   background-color: #c7e7c8;
 }
-.progress-bar-info:last-child.progress-bar:before {
+.progress-bar-info:last-child .progress-bar:before {
   background-color: #edc9f3;
 }
-.progress-bar-warning:last-child.progress-bar:before {
+.progress-bar-warning:last-child .progress-bar:before {
   background-color: #ffe0b3;
 }
-.progress-bar-danger:last-child.progress-bar:before {
+.progress-bar-danger:last-child .progress-bar:before {
   background-color: #f28e92;
 }
 .close {

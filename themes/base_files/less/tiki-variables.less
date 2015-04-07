@@ -1,38 +1,49 @@
 // $Id$
 // Values are specified here to be used in the files imported by tiki_base.less and theme style sheets.
 
-@topmodules-row-sidemargins:              0;
-@topbar-row-sidemargins:                  0;
-@topbar-row-margin-bottom:                15px;
-@panel-heading-padding:                   10px 15px;
-@navbar-fixed-height:                     46px;
+@topmodules-row-sidemargins: 0;
+@topbar-row-sidemargins: 0;
+@topbar-row-margin-bottom: 15px;
+@panel-heading-padding: 10px 15px;
+@navbar-fixed-height: 46px;
 
 // Add Tiki legacy breadcrumb styles as variables.
-@breadcrumb-font-style:                   normal;
-@breadcrumb-font-size:                    90%;
-@breadcrumb-display:                      block;
+@breadcrumb-font-style: normal;
+@breadcrumb-font-size: 90%;
+@breadcrumb-display: block;
 
 // These rules are to map Bootstrap variables to superfish menus and topbar div styling.
-@cssmenu_horiz_li_hover_bg:               transparent;
-@cssmenu_ul_border:                       @dropdown-border;
-@cssmenu_ul_li_a_bg:                      @dropdown-bg;
-@cssmenu_ul_li_a_color:                   @dropdown-link-color;
-@cssmenu_ul_li_hover_a_color:             @dropdown-link-hover-color;
-@cssmenu_ul_li_hover_a_bg:                @dropdown-link-hover-bg;
-@topbar_bg:                               @navbar-default-bg;
-@topbar_color:                            @navbar-default-color;
-@topbar_link_color:                       @navbar-default-link-color;
-@topbar_link_padding_top:                 @navbar-padding-vertical;
-@topbar_link_padding_bottom:              @navbar-padding-vertical;
-@topbar_link_hover_color:                 @navbar-default-link-hover-color;
+@cssmenu_horiz_li_hover_bg: transparent;
+@cssmenu_ul_border: @dropdown-border;
+@cssmenu_ul_li_a_bg: @dropdown-bg;
+@cssmenu_ul_li_a_color: @dropdown-link-color;
+@cssmenu_ul_li_hover_a_color: @dropdown-link-hover-color;
+@cssmenu_ul_li_hover_a_bg: @dropdown-link-hover-bg;
+@topbar_bg: @navbar-default-bg;
+@topbar_color: @navbar-default-color;
+@topbar_link_color: @navbar-default-link-color;
+@topbar_link_padding_top: @navbar-padding-vertical;
+@topbar_link_padding_bottom: @navbar-padding-vertical;
+@topbar_link_hover_color: @navbar-default-link-hover-color;
 
-@dropdown-title-color:                    @dropdown-link-color;
+@dropdown-title-color: @dropdown-link-color;
 
 // These can be used in div class="row" or others that don't have a bottom margin but need one.
-.margin-bottom-xs {margin-bottom: ceil(@line-height-computed / 4);}
-.margin-bottom-sm {margin-bottom: ceil(@line-height-computed / 2);}
-.margin-bottom-md {margin-bottom: @line-height-computed;}
-.margin-bottom-lg {margin-bottom: ceil(@line-height-computed * 2);}
+.margin-bottom-xs {
+	margin-bottom: ceil(@line-height-computed / 4);
+}
+
+.margin-bottom-sm {
+	margin-bottom: ceil(@line-height-computed / 2);
+}
+
+.margin-bottom-md {
+	margin-bottom: @line-height-computed;
+}
+
+.margin-bottom-lg {
+	margin-bottom: ceil(@line-height-computed * 2);
+}
 
 // Map Bootstrap variables to Chosen selectors
 @chosen-background: @input-bg;

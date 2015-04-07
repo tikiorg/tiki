@@ -6,10 +6,11 @@
 //  width: auto !important;
 //}
 body:not(.fixed_width) .container {
-  padding-left: 15px;
-  padding-right: 15px;
-  width: auto;
+	padding-left: 15px;
+	padding-right: 15px;
+	width: auto;
 }
+
 //body:not(.fixed_width) .row {
 //  margin-left: 0;
 //  margin-right: 0;
@@ -19,127 +20,135 @@ body:not(.fixed_width) .container {
 //}
 
 legend + p {
-  margin-top: 20px;
+	margin-top: 20px;
 }
 
 .tiki .page-header {
-  border-bottom: none;
-  margin: auto;
-  padding-bottom: 0;
+	border-bottom: none;
+	margin: auto;
+	padding-bottom: 0;
 }
 
 .topbar .navbar {
-  margin-bottom: 0;
-  border: none;
+	margin-bottom: 0;
+	border: none;
 }
 
 body.tiki.navbar-padding {
-  padding-top: @navbar-fixed-height;
+	padding-top: @navbar-fixed-height;
 }
 
-.panel-body ul.nav {overflow: visible;}
+.panel-body ul.nav {
+	overflow: visible;
+}
 
-.tiki.dropdown-menu {padding: 0}
+.tiki.dropdown-menu {
+	padding: 0
+}
 
 .tiki .dropdown-menu,
 .menuSection ul {
-  padding-top: 10px;
+	padding-top: 10px;
 }
 
 .tiki .dropdown-menu,
 .menuSection ul {
-  padding-bottom: 10px;
+	padding-bottom: 10px;
 }
 
 .tiki .popover {
-  max-width: inherit;
+	max-width: inherit;
 }
 
 .tiki .media-overflow-visible,
 .tiki .media-overflow-visible .media-body {
-    overflow: visible;
+	overflow: visible;
 }
 
-
 //@media (min-width: @screen-md-min) {
-  .tiki .col-md-3 .table-responsive,
-  .tiki .col-md-4 .table-responsive,
-  .tiki .col-md-5 .table-responsive,
-  .tiki .col-md-6 .table-responsive,
-  .tiki .col-md-7 .table-responsive,
-  .tiki .col-md-8 .table-responsive,
-  .tiki .col-md-9 .table-responsive {
-    width: 100%;
-    margin-bottom: 15px;
-    overflow-y: hidden;
-    overflow-x: auto;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
-    border: 1px solid @panel-default-border;
-    -webkit-overflow-scrolling: touch;
-  }
-  .tiki .table-responsive > .table {
-    margin-bottom: 0;
-    // Ensure the content doesn't wrap
-    > thead,
-    > tbody,
-    > tfoot {
-      > tr {
-        > th,
-        > td {
-          white-space: normal;
-        }
-      }
-    }
-  }
+.tiki .col-md-3 .table-responsive,
+.tiki .col-md-4 .table-responsive,
+.tiki .col-md-5 .table-responsive,
+.tiki .col-md-6 .table-responsive,
+.tiki .col-md-7 .table-responsive,
+.tiki .col-md-8 .table-responsive,
+.tiki .col-md-9 .table-responsive {
+	width: 100%;
+	margin-bottom: 15px;
+	overflow-y: hidden;
+	overflow-x: auto;
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+	border: 1px solid @panel-default-border;
+	-webkit-overflow-scrolling: touch;
+}
+
+.tiki .table-responsive > .table {
+	margin-bottom: 0;
+	// Ensure the content doesn't wrap
+	> thead,
+	> tbody,
+	> tfoot {
+		> tr {
+			> th,
+			> td {
+				white-space: normal;
+			}
+		}
+	}
+}
+
 //}
 
 .layout_social,
 .layout_social_modules,
 .layout_fixed_top_modules {
-  a.navbar-brand img {
-    display: inline;
-  }
-  .navbar-inverse a {
-  color: @navbar-inverse-link-color;
-  &:hover {
-    color: @navbar-inverse-link-hover-color;
-    text-decoration: none;
-    }
-  }
-  .navbar-inverse .sitetitle a {
-    color: @navbar-inverse-brand-color;
-    &:hover {
-    color: @navbar-inverse-brand-hover-color;
-    text-decoration: none;
-    }
-  }
-  h1.sitetitle {
-    font-size: 1.8rem;
-    margin-top: 10px;
-    margin-bottom: 0;
-  }
-  h1.sitetitle,
-  .sitesubtitle {
-    display: inline-block}
+	a.navbar-brand img {
+		display: inline;
+	}
+	.navbar-inverse a {
+		color: @navbar-inverse-link-color;
+		&:hover {
+			color: @navbar-inverse-link-hover-color;
+			text-decoration: none;
+		}
+	}
+	.navbar-inverse .sitetitle a {
+		color: @navbar-inverse-brand-color;
+		&:hover {
+			color: @navbar-inverse-brand-hover-color;
+			text-decoration: none;
+		}
+	}
+	h1.sitetitle {
+		font-size: 1.8rem;
+		margin-top: 10px;
+		margin-bottom: 0;
+	}
+	h1.sitetitle,
+	.sitesubtitle {
+		display: inline-block
+	}
 
-  #topbar_modules {
-    display: inline-block;
-  }
+	#topbar_modules {
+		display: inline-block;
+	}
 }
 
 .layout_social_modules,
 .layout_fixed_top_modules {
-  #topbar_modules {
-    display: block;
-  }
+	#topbar_modules {
+		display: block;
+	}
 }
 
-.header_outer.navbar {margin-bottom: 0;}
+.header_outer.navbar {
+	margin-bottom: 0;
+}
 
 .navbar-fixed-top,
 #navbar-collapse-social {
-  .navbar {
-    margin-bottom: 0;
-    min-height: 32px;
-  }
+	.navbar {
+		margin-bottom: 0;
+		min-height: 32px;
+	}
 }

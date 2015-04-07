@@ -9,15 +9,17 @@
 // If Glyphicons should be rendered in a color other than the Bootstrap default or the theme default, uncomment and specify the color.
 // .glyphicon {color: @gray-lighter;}
 
-@topmodules-row-sidemargins:              0;
-@topbar-row-sidemargins:                  -15px;
+@topmodules-row-sidemargins: 0;
+@topbar-row-sidemargins: -15px;
 
 body {
-  background:  url('@{imagePath}flakesptn2.jpg');
-  background-attachment: fixed;
+	background: url('@{imagePath}flakesptn2.jpg');
+	background-attachment: fixed;
 }
 
-header.container {margin-top: 20px;}
+header.container {
+	margin-top: 20px;
+}
 
 .layout_social .navbar-fixed-top,
 .layout_social .navbar-fixed-top .container,
@@ -26,81 +28,83 @@ header.container {margin-top: 20px;}
 .topbar .cssmenu_horiz > ul,
 .topbar .navbar-default .navbar-nav > li,
 .topbar .nav > li,
-
 .layout_social .navbar-inverse .navbar-form,
-.layout_social .navbar-inverse  .container {
-  background: url('@{imagePath}flakesptn3.jpg');
-  border: none;
+.layout_social .navbar-inverse .container {
+	background: url('@{imagePath}flakesptn3.jpg');
+	border: none;
 }
 
 .layout_classic header.container,
 .layout_classic .middle.container,
 .layout_classic .footerbgtrap.container,
-
 .layout_header_middle_footer_containers header.container,
 .layout_header_middle_footer_containers .middle.container,
 .layout_header_middle_footer_containers .footerbgtrap.container,
-
 .layout_header_middle_footer_containers_3-6-3 header.container,
 .layout_header_middle_footer_containers_3-6-3 .middle.container,
 .layout_header_middle_footer_containers_3-6-3 .footerbgtrap.container,
-
 .layout_social > .container,
-
 .layout_basic > .container,
 .layout_fixed_top_modules .container.middle {
-  background: lighten(#d7e5f3, 5%);
-  -webkit-box-shadow: 0 0 70px 72px rgba(255,255,255,1);
-  -moz-box-shadow: 0 0 70px 72px rgba(255,255,255,1);
-  box-shadow: 0 0 100px 100px rgba(235,242,249,1);
+	background: lighten(#d7e5f3, 5%);
+	-webkit-box-shadow: 0 0 70px 72px rgba(255, 255, 255, 1);
+	-moz-box-shadow: 0 0 70px 72px rgba(255, 255, 255, 1);
+	box-shadow: 0 0 100px 100px rgba(235, 242, 249, 1);
 }
 
-.layout_social .navbar-inverse {border-bottom: 1px solid #6c7b8c;}
+.layout_social .navbar-inverse {
+	border-bottom: 1px solid #6c7b8c;
+}
 
 // Some of this at least should be set in bootstrap-variables.less.
 .navbar-inverse .navbar-brand,
 .navbar-inverse a,
-.navbar-inverse .navbar-nav > li > a{
-  color: #1C1329;
+.navbar-inverse .navbar-nav > li > a {
+	color: #1C1329;
 }
 
-.layout_social > .container {margin-top: @navbar-fixed-height;}
+.layout_social > .container {
+	margin-top: @navbar-fixed-height;
+}
 
 .well,
 .jumbotron,
 .adminanchors {
-  background: url('@{imagePath}flakesptn4.jpg')
+	background: url('@{imagePath}flakesptn4.jpg')
 }
 
 .panel {
-  background: #D7E5F3; // url('@{imagePath}flakesptn2.jpg');
+	background: #D7E5F3; // url('@{imagePath}flakesptn2.jpg');
 }
 
 .panel-heading,
-.panel-footer {background: url('@{imagePath}flakesptn3.jpg')}
+.panel-footer {
+	background: url('@{imagePath}flakesptn3.jpg')
+}
 
 #col2,
 #col3 {
-  .panel,
-  .panel-default {
-    background: none;
-    border: none;
-  }
-  .panel-footer {
-    display: none;
-  }
+	.panel,
+	.panel-default {
+		background: none;
+		border: none;
+	}
+	.panel-footer {
+		display: none;
+	}
 
 }
 
 .topbar {
-  .navbar-default {
-    background: transparent;
-    border: none;
-  }
-  .form-group {
-    margin-bottom: 0;
-  }
+	.navbar-default {
+		background: transparent;
+		border: none;
+	}
+	.form-group {
+		margin-bottom: 0;
+	}
 }
+
 /*
 .topbar .nav > li > a:hover,
 .topbar .nav > li > a:focus,
@@ -131,20 +135,23 @@ header.container {margin-top: 20px;}
 .btn-default,
 .nav-tabs > li > a,
 .input-group-addon {
-  background: url('@{imagePath}pagetitle-bg.jpg');
-  background-size: cover;
-  &:hover {background: url('@{imagePath}pagetitle-bg.jpg') 0 100% cover;}
+	background: url('@{imagePath}pagetitle-bg.jpg');
+	background-size: cover;
+	&:hover {
+		background: url('@{imagePath}pagetitle-bg.jpg') 0 100% cover;
+	}
 }
 
 .btn:not(btn-link),
 .nav-tabs > li > a {
-  border-width: 2px;
+	border-width: 2px;
 }
 
 .btn-link {
-  border: none;
-  background: none;
+	border: none;
+	background: none;
 }
+
 /*
 .table-striped > tbody > tr:nth-child(2n+1) > td,
 .table-striped > tbody > tr:nth-child(2n+1) > th {background: transparent url('@{imagePath}flakesptn3.jpg') }
@@ -163,34 +170,35 @@ header.container {margin-top: 20px;}
 
 .cssmenu_horiz li ul,
 .cssmenu_vert li ul {
-  padding: 5px 0;
-  margin: 2px 0 0; // override default ul
-  //  font-size: @font-size-base;
-  background: url('@{imagePath}flakesptn2.jpg');
-  border: 1px solid @dropdown-fallback-border; // IE8 fallback
-  border: 1px solid @dropdown-border;
-  border-radius: @border-radius-base;
-  .box-shadow(0 6px 12px rgba(0,0,0,.175));
-  background-clip: padding-box;
+	padding: 5px 0;
+	margin: 2px 0 0; // override default ul
+	//  font-size: @font-size-base;
+	background: url('@{imagePath}flakesptn2.jpg');
+	border: 1px solid @dropdown-fallback-border; // IE8 fallback
+	border: 1px solid @dropdown-border;
+	border-radius: @border-radius-base;
+	.box-shadow(0 6px 12px rgba(0, 0, 0, .175));
+	background-clip: padding-box;
 
-  // Links within the dropdown menu
-  > li > a {
-    padding: 3px 20px;
-    font-weight: normal;
-    line-height: @line-height-base;
-    color: @dropdown-link-color;
-//    background: url('@{imagePath}flakesptn2.jpg');
-  }
+	// Links within the dropdown menu
+	> li > a {
+		padding: 3px 20px;
+		font-weight: normal;
+		line-height: @line-height-base;
+		color: @dropdown-link-color;
+		//    background: url('@{imagePath}flakesptn2.jpg');
+	}
 }
+
 // Hover/Focus state
 .cssmenu_horiz > li > a,
 .cssmenu_vert > li > a,
 .cssmenu_horiz ul > li > a,
 .cssmenu_vert ul > li > a {
-  &:hover,
-  &:focus {
-    text-decoration: none;
-    color: @dropdown-link-hover-color;
-//    background: url('@{imagePath}flakesptn3.jpg');;
-  }
+	&:hover,
+	&:focus {
+		text-decoration: none;
+		color: @dropdown-link-hover-color;
+		//    background: url('@{imagePath}flakesptn3.jpg');;
+	}
 }
