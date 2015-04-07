@@ -730,9 +730,11 @@ function wikiplugin_trackerlist_info()
 		'prefs' => array( 'feature_trackers', 'wikiplugin_trackerlist' ),
 		'tags' => array( 'basic' ),
 		'body' => '<br>' . tr('Additional information when using tablesorter:') . '<br>' .
-			'<b>tsfilters</b> - '. tr('When server=y, the status column must be filtered using o (open), p (pending) and c (closed).')
+			tr('When server=y, filtering and sorting on some field types (e.g., items list), may behave unexpectedly.') . '<br>' .
+			'<b>tsfilters</b> - '. tr('When server=y, the status column must be filtered using o (open), p (pending) and c (closed);')
+			. ' ' . tra('also , for best results the date filter should only be applied to date field types.')
 			. '<br><br>' . tra('Notice')
-	,
+		,
 		'format' => 'html',
 		'icon' => 'img/icons/database_table.png',
 		'filter' => 'text',
@@ -870,10 +872,14 @@ function wikiplugin_trackerlist($data, $params)
 			//convert tablesorter filter syntax to tiki syntax
 			if (!empty($_REQUEST['filter'])) {
 				$i = 0;
+				$tsfiltersArray = explode('|', $tsfilters);
 				foreach ($_REQUEST['filter'] as $col => $ajaxfilter) {
 					//handle status filter
 					if ($adjustCol === -1 && $col === 0 && in_array($ajaxfilter, ['o','p','c'])) {
 						$status = $ajaxfilter;
+					//handle date filter later after records have been retrieved
+					} elseif (strpos($tsfiltersArray[$col], 'type:date') !== false) {
+						$tsdatefilter = true;
 					} else {
 						$filterfield[$i] = $allfields['data'][$col + $adjustCol]['fieldId'];
 						$filtervalue[$i] = $ajaxfilter;
@@ -1679,37 +1685,73 @@ function wikiplugin_trackerlist($data, $params)
 					Table_Factory::build('pluginTrackerlist', $ts->settings);
 				}
 			}
+			//handle certain tablesorter sorts
 			if (isset($sortcol) && $items['cant'] > 1) {
+				$fieldtype = $items['data'][0]['field_values'][$sortcol + $adjustCol]['type'];
 				//convert categoryId sort to category name sort when tablesorter server side sorting is used
-				if ($items['data'][0]['field_values'][$sortcol + $adjustCol]['type'] === 'e') {
-					$i = 0;
-					$catname = '';
+				if ($fieldtype === 'e') {
 					foreach ($items['data'] as $key => $record) {
 						$catfield = $record['field_values'][$sortcol + $adjustCol];
-						$catuse = $catfield['list'][$catfield['value']]['name'];
-						if ($catname == $catfield['list'][$catfield['value']]['name']) {
-							$catuse = $catuse . $i;
-						}
-						$sitems[$catuse] = $record;
-						$catname = $catfield['list'][$catfield['value']]['name'];
-						$i++;
+						$sortarray[$key] = $catfield['list'][$catfield['value']]['name'];
 					}
-					if ($dir == '_asc') {
-						ksort($sitems);
-					} else {
-						krsort($sitems);
-					}
-					$items['data'] = array_values($sitems);
 				//sort status
 				} elseif ($adjustCol === -1 && $sortcol === 0) {
 					foreach ($items['data'] as $key => $record) {
-						$statuses[$key] = $record['status'];
+						$sortarray[$key] = $record['status'];
 					}
-					if ($dir == '_asc') {
-						array_multisort($statuses, $items['data']);
-					} else {
-						array_multisort($statuses, SORT_DESC, $items['data']);
+					$sortarray = array_column($items['data'], 'status');
+				}
+				array_multisort($sortarray, $dir == '_desc' ? SORT_DESC : SORT_ASC, $items['data']);
+			}
+			//handle certain tablesorter filters
+			if (isset($col) && $items['cant'] > 0) {
+				$fieldtype = $items['data'][0]['field_values'][$col + $adjustCol]['type'];
+				/*
+				 * date filter - these are always one filter, in the form of:
+				 * from: >=1427389832000; to: <=1427389832000; both from and to: 1427389832000 - 1427880000000
+				 * which is unix time in milliseconds
+				 */
+				if (in_array($fieldtype, array('f', 'j')) && $tsServer && isset($tsdatefilter) && $tsdatefilter === true) {
+					$tsfilter = explode(' - ', $ajaxfilter);
+					$filtered = [];
+					foreach ($items['data'] as $record) {
+						$dateval = (int) $record['field_values'][$col + $adjustCol]['value'];
+						/*
+						 * a range (from and to filters) will have 2 items in the array
+						 * add one day (86400 seconds) to the to date to include it in the filtered items
+						 * - consistent with later versions of tablesorter which then don't need the day added
+						 */
+						if (count($tsfilter) == 2) {
+							//use substr to leave off milliseconds since date is stored in seconds in the database
+							if ($dateval >= (int) substr($tsfilter[0], 0, 10)
+								&& $dateval <= ((int) substr($tsfilter[1], 0, 10) + 86400))
+							{
+								$filtered[] = $record;
+							}
+							//either from or to filter
+						} else {
+							//use substr to leave off milliseconds since date is stored in seconds in the database
+							$filterdate = (int) substr($tsfilter[0], 2, 10);
+							$compare = substr($tsfilter[0], 0, 2);
+							//to date
+							/*
+							 * a range (from and to filters) will have 2 items in the array
+							 * add one day (86400 seconds) to the to date to include it in the filtered items
+							 * - consistent with later versions of tablesorter which then don't need the day added
+							 */
+							if ($compare === '<=') {
+								if ($dateval <= $filterdate + 86400) {
+									$filtered[] = $record;
+								}
+								//from
+							} elseif ($compare === '>=') {
+								if ($dateval >= $filterdate) {
+									$filtered[] = $record;
+								}
+							}
+						}
 					}
+					$items['data'] = $filtered;
 				}
 			}
 			/*** end second tablesorter section ***/
