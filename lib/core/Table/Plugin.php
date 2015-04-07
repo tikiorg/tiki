@@ -113,7 +113,7 @@ class Table_Plugin
 					<b>Dropdown - </b>type:dropdown;placeholder:****;option:****;option:****;option:**** <br>' .
 					tra('Options generated automatically if not set and the server parameter is not \'y\'.') . '<br>' .
 					tra('Use \'value=Display label\' to have the option value be different than the displayed label in the dropdown.') . '<br>
-					<b>' . tra('Date range - ') . '</b>type:date;format:yyyy-mm-dd;from:2013-06-30;to:2013-12-31<br>' .
+					<b>' . tra('Date range - ') . '</b>type:date;format:yy-mm-dd;from:2013-06-30;to:2020-12-31<br>' .
 					tra('(from and to values set defaults for these fields when user clicks on the input field)') . '<br>
 					<b>' . tra('Numeric range - ') . '</b>type:range;from:0;to:50<br>
 					<b>' . tra('No filter - ') . '</b>type:nofilter<br>' .
