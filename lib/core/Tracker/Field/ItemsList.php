@@ -215,42 +215,62 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 
 	private function getItemIds()
 	{
+		$trklib = TikiLib::lib('trk');
 		$trackerId = (int) $this->getOption('trackerId');
-		$remoteField = (int) $this->getOption('fieldIdThere');
-		$localField = (int) $this->getOption('fieldIdHere');
-		$localFieldDef = $this->getTrackerDefinition()->getField($localField);
-		$displayFields = $this->getOption('displayFieldIdThere');
+		
+		$filterFieldIdHere = (int) $this->getOption('fieldIdHere');
+		$filterFieldIdThere = (int) $this->getOption('fieldIdThere');
+		
+		$filterFieldHere = $this->getTrackerDefinition()->getField($filterFieldIdHere); 
+		$filterFieldThere = $trklib->get_tracker_field($filterFieldIdThere);
+		
+		$displayFieldIds = $this->getOption('displayFieldIdThere');
 		$status = $this->getOption('status', 'opc');
-
 		$tracker = Tracker_Definition::get($trackerId);
+
+		// note: if itemlink or dynamic item list is used, than the final value to compare with must be calculated based on the current itemid
+
 		$technique = 'value';
 
-		if ($tracker && ($field = $tracker->getField($remoteField)) && (!$localField || $field['type'] === 'r')) {
-			if ($field['type'] == 'r') {
+		// not sure this is working
+		// r = item link
+		if ($tracker && $filterFieldThere && (!$filterFieldIdHere || $filterFieldThere['type'] === 'r')) {
+			if ($filterFieldThere['type'] == 'r') {
 				$technique = 'id';
 			}
 		}
-		if ($localFieldDef['type'] == 'q' && isset($localFieldDef['options_array'][3]) && $localFieldDef['options_array'][3] == 'itemId') {		
+		
+		// not sure this is working
+		// q = Autoincrement
+		if ($filterFieldHere['type'] == 'q' && isset($filterFieldHere['options_array'][3]) && $filterFieldHere['options_array'][3] == 'itemId') {
 			$technique = 'id';
 		}
 
-		$trklib = TikiLib::lib('trk');
 		if ($technique == 'id') {
-			$items = $trklib->get_items_list($trackerId, $remoteField, $this->getItemId(), $status);
+			$itemId = $this->getItemId(); 
+			$items = $trklib->get_items_list($trackerId, $filterFieldIdThere, $itemId, $status);
 		} else {
-			$localValue = $this->getData($localField);
+			// when this is an item link or dynamic item list field, localvalue contains the target itemId
+			$localValue = $this->getData($filterFieldIdHere); 
 			if (!$localValue) {
-				// in some cases e.g. pretty tracker $this->getData($localField) is not reliable as the info is not there
+				// in some cases e.g. pretty tracker $this->getData($filterFieldIdHere) is not reliable as the info is not there
 				// Note: this fix only works if the itemId is passed via the template
 				$itemId = $this->getItemId();
-				$localValue = $trklib->get_item_value($trackerId, $itemId, $localField);
+				$localValue = $trklib->get_item_value($trackerId, $itemId, $filterFieldIdHere);
 			}
-			if ($localFieldDef['type'] == 'r' && isset($localFieldDef['options_array'][0]) && isset($localFieldDef['options_array'][1])) {
-				$localValue = $trklib->get_item_value($localFieldDef['options_array'][0], $localValue, $localFieldDef['options_array'][1]);
+			
+			// r = item link - not sure this is working 
+			if ($filterFieldHere['type'] == 'r' && isset($filterFieldHere['options_array'][0]) && isset($filterFieldHere['options_array'][1])) {
+				$localValue = $trklib->get_item_value($filterFieldHere['options_array'][0], $localValue, $filterFieldHere['options_array'][1]);
+			}
+			
+			// w = dynamic item list - localvalue is the itemid of the target item. so rewrite.
+			if ($filterFieldHere['type'] == 'w') {
+				$localValue = $trklib->get_item_value($trackerId, $localValue, $filterFieldIdThere);
 			}
 			// Skip nulls
 			if ($localValue) {
-				$items = $trklib->get_items_list($trackerId, $remoteField, $localValue, $status);
+				$items = $trklib->get_items_list($trackerId, $filterFieldIdThere, $localValue, $status);
 			} else {
 				$items = array();
 			}
@@ -259,6 +279,12 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 		return $items;
 	}
 
+	/**
+	 * Get value of displayfields from given array of itemIds
+	 * @param array $items
+	 * @param array $context
+	 * @return array array of values by itemId
+	 */
 	private function getItemLabels($items, $context = array('list_mode' => ''))
 	{
 		$displayFields = $this->getOption('displayFieldIdThere');
