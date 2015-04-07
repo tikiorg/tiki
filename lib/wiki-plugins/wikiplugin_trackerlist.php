@@ -741,10 +741,12 @@ function wikiplugin_trackerlist_info()
 		'description' => tra('List, filter and sort the items in a tracker'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_trackerlist' ),
 		'tags' => array( 'basic' ),
-		'body' => '<br>' . tr('Additional information when using tablesorter:') . '<br>' .
-			tr('When server=y, filtering and sorting on some field types (e.g., items list), may behave unexpectedly.') . '<br>' .
-			'<b>tsfilters</b> - '. tr('When server=y, the status column must be filtered using o (open), p (pending) and c (closed);')
-			. ' ' . tra('also , for best results the date filter should only be applied to date field types.')
+		'body' => '<br>' . tr('Additional information when using tablesorter and the server parameter (Server Side Processing) is set to y:') . '<ul>'
+			. '<li>' . tra('Filtering and sorting on some field types (e.g., items list), may behave unexpectedly') . '</li>'
+			. '<li>' . tra('The status column must be filtered using o (open), p (pending) and c (closed)')
+			. '<li>' . tra('For best results the date filter should only be applied to date field types') . '</li>'
+			. '<li>' . tra('To filter the category field type, the exact category name or id needs to be entered') . '</li>'
+			. '</ul>'
 			. '<br><br>' . tra('Notice')
 		,
 		'format' => 'html',
@@ -901,6 +903,11 @@ function wikiplugin_trackerlist($data, $params)
 						$tsdatefilter = true;
 					} else {
 						$filterfield[$i] = $allfields['data'][$col + $adjustCol]['fieldId'];
+						//convert category filters entered as text
+						if ($allfields['data'][$col + $adjustCol]['type'] === 'e' && !is_numeric($ajaxfilter)) {
+							$categlib = TikiLib::lib('categ');
+							$ajaxfilter = $categlib->get_category_id($ajaxfilter);
+						}
 						$filtervalue[$i] = $ajaxfilter;
 					}
 					$i++;
