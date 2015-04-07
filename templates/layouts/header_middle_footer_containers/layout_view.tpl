@@ -28,7 +28,9 @@
                         {modulelist zone=pagetop}
                     {/if}
                     {error_report}
-                    <div class="pull-right">{block name=quicknav}{/block}</div>
+                    <div class="clearfix">
+                        <div class="pull-right">{block name=quicknav}{/block}</div>
+                    </div>
                     {block name=title}{/block}
                     {block name=navigation}{/block}
                     {block name=content}{/block}
@@ -42,7 +44,9 @@
                         {modulelist zone=pagetop}
                     {/if}
                     {error_report}
-                    <div class="pull-right">{block name=quicknav}{/block}</div>
+                    <div class="clearfix">
+                        <div class="pull-right">{block name=quicknav}{/block}</div>
+                    </div>
                     {block name=title}{/block}
                     {block name=navigation}{/block}
                     {block name=content}{/block}
@@ -59,7 +63,9 @@
                         {modulelist zone=pagetop}
                     {/if}
                     {error_report}
-                    <div class="pull-right">{block name=quicknav}{/block}</div>
+                    <div class="clearfix">
+                        <div class="pull-right">{block name=quicknav}{/block}</div>
+                    </div>
                     {block name=title}{/block}
                     {block name=navigation}{/block}
                     {block name=content}{/block}
@@ -76,7 +82,9 @@
                         {modulelist zone=pagetop class=row}
                     {/if}
                     {error_report}
-                    <div class="pull-right">{block name=quicknav}{/block}</div>
+                    <div class="clearfix">
+                        <div class="pull-right">{block name=quicknav}{/block}</div>
+                    </div>
                     {block name=title}{/block}
                     {block name=navigation}{/block}
                     {block name=content}{/block}
