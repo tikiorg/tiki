@@ -150,7 +150,7 @@
 		{include file='tiki-edit-page-include-prompt_for_edit_or_translate.tpl'}
 	{/if}
 
-	<form enctype="multipart/form-data" method="post" action="tiki-editpage.php?page={$page|escape:'url'}" id='editpageform' name='editpageform'>
+	<form enctype="multipart/form-data" method="post" action="tiki-editpage.php?page={$page|escape:'url'}" class="form-horizontal" id='editpageform' name='editpageform'>
 
 		<input type="hidden" name="no_bl" value="y">
 		{if !empty($smarty.request.returnto)}<input type="hidden" name="returnto" value="{$smarty.request.returnto}">{/if}
@@ -628,7 +628,7 @@
 							</div>
 						{/if}
 						{if $prefs.wiki_auto_toc eq 'y' or $prefs.wiki_page_hide_title eq 'y'}
-							<div class="form-group">
+							<div class="form-group clearfix">
 								<label for="" class="col-sm-2 control-label">{tr}Page display options{/tr}</label>
 								<div class="col-sm-10">
 									<ul class="list-unstyled">
