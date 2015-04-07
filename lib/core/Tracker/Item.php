@@ -371,7 +371,7 @@ class Tracker_Item
 
 			$factory = $this->definition->getFieldFactory();
 			$handler = $factory->getHandler($field, $this->info);
-			return array_merge($field, $handler->getFieldData([]));
+			return array_merge($field, $handler->getFieldData(array()));
 		}
 	}
 
