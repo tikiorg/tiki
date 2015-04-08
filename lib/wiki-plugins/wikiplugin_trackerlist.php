@@ -909,16 +909,40 @@ function wikiplugin_trackerlist($data, $params)
 				$i = 0;
 				$tsfiltersArray = explode('|', $tsfilters);
 				foreach ($_REQUEST['filter'] as $col => $ajaxfilter) {
+					$fieldtype = $allfields['data'][$col + $adjustCol]['type'];
+					$id = $allfields['data'][$col + $adjustCol]['fieldId'];
 					//handle status filter
 					if ($adjustCol === -1 && $col === 0 && in_array($ajaxfilter, ['o','p','c'])) {
 						$status = $ajaxfilter;
-					//handle date filter later after records have been retrieved
-					} elseif (strpos($tsfiltersArray[$col], 'type:date') !== false) {
-						$tsdatefilter = true;
+					/*
+					 * handle date filter - these are always one filter, in the form of:
+					 * from: >=1427389832000; to: <=1427389832000; both from and to: 1427389832000 - 1427880000000
+					 * which is unix timestamp in milliseconds
+					 */
+					} elseif (strpos($tsfiltersArray[$col], 'type:date') !== false && in_array($fieldtype, ['f', 'j'])) {
+						$datefilter = explode(' - ', $ajaxfilter);
+						$filterfield[$i] = $id;
+						//a range (from and to filters) will have 2 items in the array
+						if (count($datefilter) == 2) {
+							$filterfield[$i + 1] = $id;
+							//use substr to leave off milliseconds since date is stored in seconds in the database
+							$exactvalue[$i] = 'greaterequal(@' . substr($datefilter[0], 0, 10) . ')';
+							$exactvalue[$i + 1] = 'lessequal(@' . substr($datefilter[1], 0, 10) . ')';
+						} else {
+							//use substr to leave off milliseconds since date is stored in seconds in the database
+							$stamp = '(@' . substr($datefilter[0], 2, 10) . ')';
+							$symbol = substr($datefilter[0], 0, 2);
+							if ($symbol === '<=') {
+								$compare = 'lessequal';
+							} elseif ($symbol === '>=') {
+								$compare = 'greaterequal';
+							}
+							$exactvalue[$i] = $compare . $stamp;
+						}
 					} else {
-						$filterfield[$i] = $allfields['data'][$col + $adjustCol]['fieldId'];
+						$filterfield[$i] = $id;
 						//convert category filters entered as text
-						if ($allfields['data'][$col + $adjustCol]['type'] === 'e' && !is_numeric($ajaxfilter)) {
+						if ($fieldtype === 'e' && !is_numeric($ajaxfilter)) {
 							$categlib = TikiLib::lib('categ');
 							$ajaxfilter = $categlib->get_category_id($ajaxfilter);
 						}
@@ -1750,46 +1774,6 @@ function wikiplugin_trackerlist($data, $params)
 					$sortarray = array_column($items['data'], 'status');
 				}
 				array_multisort($sortarray, $dir == '_desc' ? SORT_DESC : SORT_ASC, $items['data']);
-			}
-			//handle certain tablesorter filters
-			if (isset($col) && $items['cant'] > 1) {
-				$fieldtype = $items['data'][0]['field_values'][$col + $adjustCol]['type'];
-				/*
-				 * date filter - these are always one filter, in the form of:
-				 * from: >=1427389832000; to: <=1427389832000; both from and to: 1427389832000 - 1427880000000
-				 * which is unix time in milliseconds
-				 */
-				if (in_array($fieldtype, ['f', 'j']) && $tsServer && isset($tsdatefilter) && $tsdatefilter === true) {
-					$tsfilter = explode(' - ', $ajaxfilter);
-					$filtered = [];
-					foreach ($items['data'] as $record) {
-						$dateval = (int) $record['field_values'][$col + $adjustCol]['value'];
-						//a range (from and to filters) will have 2 items in the array
-						if (count($tsfilter) == 2) {
-							//use substr to leave off milliseconds since date is stored in seconds in the database
-							if ($dateval >= (int) substr($tsfilter[0], 0, 10)
-								&& $dateval <= (int) substr($tsfilter[1], 0, 10))
-							{
-								$filtered[] = $record;
-							}
-							//either from or to filter
-						} else {
-							//use substr to leave off milliseconds since date is stored in seconds in the database
-							$filterdate = (int) substr($tsfilter[0], 2, 10);
-							$compare = substr($tsfilter[0], 0, 2);
-							if ($compare === '<=') {
-								if ($dateval <= $filterdate) {
-									$filtered[] = $record;
-								}
-							} elseif ($compare === '>=') {
-								if ($dateval >= $filterdate) {
-									$filtered[] = $record;
-								}
-							}
-						}
-					}
-					$items['data'] = $filtered;
-				}
 			}
 			/*** end second tablesorter section ***/
 
