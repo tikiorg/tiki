@@ -8,51 +8,51 @@
 .warning a,
 .warning a:link,
 .warning a:visited {
-  color: @alert-warning-text; // #b93c2e
+	color: @alert-warning-text; // #b93c2e
 }
 
 // tiki-calendar.less - tiki-calendar_calmode.tpl, mod-calendar_new.tpl
 .calhighlight {
-  background: @state-info-bg;
+	background: @state-info-bg;
 }
 
 //fullcalendar.js
 a.fc-event:hover {
-  color: @tooltip-color;
+	color: @tooltip-color;
 }
 
 // tiki-categories.less - tiki-jquery.js
 // /* Fancy filter */
 .filter {
-  .fancyfilter {
-    border: thin solid @btn-default-border /*black*/;
-    .token {
-      background: @body-bg;
-    }
-  }
+	.fancyfilter {
+		border: thin solid @btn-default-border /*black*/;
+		.token {
+			background: @body-bg;
+		}
+	}
 }
 
 // tiki-comments.less - tiki-jquery.js
 .note-list .postbody-title {
-  background: @panel-bg; // /*#ccc*/
-  color: @panel-default-text; // /*#000*/
+	background: @panel-bg; // /*#ccc*/
+	color: @panel-default-text; // /*#000*/
 }
 
 // Comments moderation - comment.tpl, tiki-list_comments.tpl
 .post-approved-n {
-  border-left: 3px dotted @alert-success-text; // blue
+	border-left: 3px dotted @alert-success-text; // blue
 }
 
 .post-approved-r {
-  border-left: 3px double @alert-warning-text; // red
+	border-left: 3px double @alert-warning-text; // red
 }
 
 .post-approved-r .content * {
-  background: url('@{imagePathToImgDir}icons/dots.gif');
+	background: url('@{imagePathToImgDir}icons/dots.gif');
 }
 
 .dropdown-menu {
-  color: @dropdown-header-color;
+	color: @dropdown-header-color;
 }
 
 // tiki-cssmenus.less
@@ -60,124 +60,124 @@ a.fc-event:hover {
 .cssmenu_vert ul li,
 .cssmenu_horiz ul ul li,
 .cssmenu_vert ul ul li {
-  background: @dropdown-bg;
+	background: @dropdown-bg;
 }
 
 .cssmenu_horiz li:hover,
 .cssmenu_horiz li.sfHover,
 .cssmenu_vert li:hover,
 .cssmenu_vert li.sfHover {
-  background: @dropdown-link-hover-bg;
-  /* only transition out, not in */
-  -webkit-transition: none;
-  transition: none;
+	background: @dropdown-link-hover-bg;
+	/* only transition out, not in */
+	-webkit-transition: none;
+	transition: none;
 }
 
 /* styling for both css and generated arrows */
 .sf-arrows .sf-with-ul:after {
-  border: 5px solid transparent;
-  border-top-color: @dropdown-link-color; /* edit this to suit design (no rgba in IE8) */
+	border: 5px solid transparent;
+	border-top-color: @dropdown-link-color; /* edit this to suit design (no rgba in IE8) */
 }
 
 /* styling for right-facing arrows */
 .sf-arrows ul .sf-with-ul:after {
-  border-color: transparent;
-  border-left-color: @dropdown-link-color; // @link-color; /* edit this to suit design (no rgba in IE8) */
+	border-color: transparent;
+	border-left-color: @dropdown-link-color; // @link-color; /* edit this to suit design (no rgba in IE8) */
 }
 
 .sf-arrows ul li > .sf-with-ul:focus:after,
 .sf-arrows ul li:hover > .sf-with-ul:after,
 .sf-arrows ul .sfHover > .sf-with-ul:after {
-  border-left-color: @dropdown-link-hover-color;
+	border-left-color: @dropdown-link-hover-color;
 }
 
 .cssmenu_vert.sf-arrows > li > .sf-with-ul:after {
-  border-color: transparent;
-  border-left-color: @dropdown-link-color;
+	border-color: transparent;
+	border-left-color: @dropdown-link-color;
 }
 
 .cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
 .cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
 .cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
-  border-left-color: @dropdown-link-hover-color; // white;
+	border-left-color: @dropdown-link-hover-color; // white;
 }
 
 .cssmenu_horiz li:hover,
 .cssmenu_horiz li.sfHover,
 .topbar .nav > li > a:hover,
 .topbar .nav > li > a:focus {
-  background: @cssmenu_horiz_li_hover_bg;
+	background: @cssmenu_horiz_li_hover_bg;
 }
 
 //  transparent;
 
 .cssmenu_horiz ul,
 .cssmenu_vert ul {
-  border: @cssmenu_ul_border; //  @dropdown-border;
+	border: @cssmenu_ul_border; //  @dropdown-border;
 }
 
 .cssmenu_horiz ul li a,
 .cssmenu_vert ul li a {
-  background: @cssmenu_ul_li_a_bg; //   @dropdown-bg;
-  color: @cssmenu_ul_li_a_color; //  @dropdown-link-color;
-  //  padding-top: ; (tiki-cssmenus.less edited to conform to BS dropdown-link top and bottom padding - 3px.)
-  //  padding-bottom: ;
+	background: @cssmenu_ul_li_a_bg; //   @dropdown-bg;
+	color: @cssmenu_ul_li_a_color; //  @dropdown-link-color;
+	//  padding-top: ; (tiki-cssmenus.less edited to conform to BS dropdown-link top and bottom padding - 3px.)
+	//  padding-bottom: ;
 }
 
 .cssmenu_horiz ul li:hover a,
 .cssmenu_vert ul li:hover a {
-  color: @cssmenu_ul_li_hover_a_color; //  @dropdown-link-hover-color;
-  background: @cssmenu_ul_li_hover_a_bg; //  @dropdown-link-hover-bg;
+	color: @cssmenu_ul_li_hover_a_color; //  @dropdown-link-hover-color;
+	background: @cssmenu_ul_li_hover_a_bg; //  @dropdown-link-hover-bg;
 }
 
 .topbar,
-//.topbar .cssmenu_horiz ul,
+	//.topbar .cssmenu_horiz ul,
 .topbar .navbar-default .navbar-nav > li,
 .topbar .nav > li {
-  background: @topbar_bg; //  @navbar-default-bg;
-  color: @topbar_color; //  @navbar-default-color;
-  > a {
-    color: @topbar_link_color; // @navbar-default-link-color;
-    //    background: @navbar-default-link-bg;
-    padding-top: @topbar_link_padding_top; //  @navbar-padding-vertical;
-    padding-bottom: @topbar_link_padding_bottom; // @navbar-padding-vertical;
-  }
-  > a:hover,
-  > a:focus {
-    color: @topbar_link_hover_color; //  @navbar-default-link-hover-color;
-  }
+	background: @topbar_bg; //  @navbar-default-bg;
+	color: @topbar_color; //  @navbar-default-color;
+	> a {
+		color: @topbar_link_color; // @navbar-default-link-color;
+		//    background: @navbar-default-link-bg;
+		padding-top: @topbar_link_padding_top; //  @navbar-padding-vertical;
+		padding-bottom: @topbar_link_padding_bottom; // @navbar-padding-vertical;
+	}
+	> a:hover,
+	> a:focus {
+		color: @topbar_link_hover_color; //  @navbar-default-link-hover-color;
+	}
 }
 
 .topbar .cssmenu_horiz ul {
-  background: @dropdown-bg;
+	background: @dropdown-bg;
 }
 
 .topbar .sf-arrows .sf-with-ul:after {
-  /* order of following 3 rules important for fallbacks to work */
-  border: 5px solid transparent;
-  border-top-color: #fff; /* edit this to suit design (no rgba in IE8) */
-  border-top-color: fade(@topbar_link_color, 50%); //rgba(255,255,255,.5);
+	/* order of following 3 rules important for fallbacks to work */
+	border: 5px solid transparent;
+	border-top-color: #fff; /* edit this to suit design (no rgba in IE8) */
+	border-top-color: fade(@topbar_link_color, 50%); //rgba(255,255,255,.5);
 }
 
 .sf-arrows > li > .sf-with-ul:focus:after,
 .sf-arrows > li:hover > .sf-with-ul:after,
 .sf-arrows > .sfHover > .sf-with-ul:after {
-  border-top-color: white; /* IE8 fallback colour */
+	border-top-color: white; /* IE8 fallback colour */
 }
 
 /* styling for right-facing arrows */
 .sf-arrows ul .sf-with-ul:after {
-  margin-top: -5px;
-  margin-right: -3px;
-  border-color: transparent;
-  border-left-color: #dFeEFF; /* edit this to suit design (no rgba in IE8) */
-  border-left-color: fade(@link-color, 50%); //rgba(255,255,255,.5);
+	margin-top: -5px;
+	margin-right: -3px;
+	border-color: transparent;
+	border-left-color: #dFeEFF; /* edit this to suit design (no rgba in IE8) */
+	border-left-color: fade(@link-color, 50%); //rgba(255,255,255,.5);
 }
 
 .sf-arrows ul li > .sf-with-ul:focus:after,
 .sf-arrows ul li:hover > .sf-with-ul:after,
 .sf-arrows ul .sfHover > .sf-with-ul:after {
-  border-left-color: fade(@link-hover-color, 50%);
+	border-left-color: fade(@link-hover-color, 50%);
 }
 
 // To do: maybe there's an elegant way to specify gradients and image backgrounds here, but for now
@@ -193,82 +193,82 @@ a.fc-event:hover {
 // Used for action icons dropdown
 .dropdown-menu .dropdown-title,
 .dropdown-menu li label {
-  color: @dropdown-title-color;
+	color: @dropdown-title-color;
 }
 
 // tiki-file_galleries.less
 .thumbinfosothers {
-  color: @gray-lighter; // #888
+	color: @gray-lighter; // #888
 }
 
 table.treetable.objectperms td.added {
-  background-color: @state-success-bg; // #dfd
+	background-color: @state-success-bg; // #dfd
 }
 
 table.treetable.objectperms td.removed {
-  background-color: @state-warning-bg; // #fdd
+	background-color: @state-warning-bg; // #fdd
 }
 
 // tiki-js.js, browse_file_gallery.tpl
 .thumbnailcontener {
-  border: solid 1px @thumbnail-border; // #d3d3d3
+	border: solid 1px @thumbnail-border; // #d3d3d3
 }
 
 // jquery-tiki/files.js
 .progressBarInProgress {
-  background-color: @state-info-text;
-  color: @state-info-bg;
+	background-color: @state-info-text;
+	color: @state-info-bg;
 }
 
 .progressBarComplete {
-  background-color: @state-success-text;
-  color: @state-success-bg;
+	background-color: @state-success-text;
+	color: @state-success-bg;
 }
 
 .progressBarError {
-  background-color: @state-warning-text;
-  color: @state-warning-bg;
+	background-color: @state-warning-text;
+	color: @state-warning-bg;
 }
 
 .progressContainer {
-  border: solid 1px @modal-content-border-color;
-  background-color: @modal-content-bg;
+	border: solid 1px @modal-content-border-color;
+	background-color: @modal-content-bg;
 }
 
 // tiki-forums.less
 //* Forum filter collapsible panel. Adds +/-*/
 .filter-panel-heading a:after {
-  color: @gray;
+	color: @gray;
 }
 
 // tiki-maps.less
 .olControlMousePosition {
-  background: rgba(0, 0, 0, 0.75);
-  color: @body-bg; // #fff
+	background: rgba(0, 0, 0, 0.75);
+	color: @body-bg; // #fff
 }
 
 .olControlScaleLineTop,
 .olControlScaleLineBottom {
-  background-color: rgba(255, 255, 255, 0.5);
+	background-color: rgba(255, 255, 255, 0.5);
 }
 
 .ui-selectmenu-icon {
-  background-color: inherit;
-  border: solid 5px transparent !important;
-  box-shadow: -5px 0 5px 2px rgba(0, 0, 0, .1), -1px 0 0 rgba(0, 0, 0, .1), -2px 0 0 rgba(255, 255, 255, .25);
+	background-color: inherit;
+	border: solid 5px transparent !important;
+	box-shadow: -5px 0 5px 2px rgba(0, 0, 0, .1), -1px 0 0 rgba(0, 0, 0, .1), -2px 0 0 rgba(255, 255, 255, .25);
 }
 
 // tiki-minor_features.less
 .dirsitetrail {
-  color: @breadcrumb-bg; // lightgray
+	color: @breadcrumb-bg; // lightgray
 }
 
 .dirsitecats {
-  color: @breadcrumb-bg; // lightgray
+	color: @breadcrumb-bg; // lightgray
 }
 
 #resultzone > div:hover {
-  background: @panel-success-heading-bg;
+	background: @panel-success-heading-bg;
 }
 
 // tiki-miscellaneous_global.less
@@ -276,149 +276,149 @@ table.treetable.objectperms td.removed {
 .highlight,
 .btn-default.highlight a,
 .btn-default a.highlight {
-  background: @state-danger-bg;
-  color: @state-danger-text;
-  border-color: @state-danger-border;
+	background: @state-danger-bg;
+	color: @state-danger-text;
+	border-color: @state-danger-border;
 }
 
 .btn-default.highlight:hover {
-  background: darken(@state-danger-bg, 15%);
+	background: darken(@state-danger-bg, 15%);
 }
 
 // Ajax, jquery. etc.
 // Ajax Loading Overlay
 #ajaxLoadingBG {
-  background: transparent url('@{imagePathToImgDir}overlay-light.png');
+	background: transparent url('@{imagePathToImgDir}overlay-light.png');
 }
 
 #ajaxLoading {
-  color: @gray-lighter;
-  background: transparent url('@{imagePathToImgDir}loading-light.gif') no-repeat 50% 50%;
+	color: @gray-lighter;
+	background: transparent url('@{imagePathToImgDir}loading-light.gif') no-repeat 50% 50%;
 }
 
 // cookie consent style
 #cookie_consent_div {
-  padding: @alert-padding;
-  border: 1px solid @alert-info-border;
-  color: @alert-info-text;
-  background-color: @alert-info-bg;
+	padding: @alert-padding;
+	border: 1px solid @alert-info-border;
+	color: @alert-info-text;
+	background-color: @alert-info-bg;
 }
 
 #cookie_consent_div.banner {
-  padding: @alert-padding;
-  border: 1px solid @alert-info-border;
+	padding: @alert-padding;
+	border: 1px solid @alert-info-border;
 }
 
 // print mode only - to make sure print templates will use and print on seamless white bg color
 html#print {
-  background: #fff;
-  color: #000;
+	background: #fff;
+	color: #000;
 }
 
 body.fullscreen {
-  background: #fff;
+	background: #fff;
 }
 
 .attention {
-  color: @alert-danger-text;
+	color: @alert-danger-text;
 }
 
 #debugconsole {
-  background: @navbar-inverse-bg;
-  color: @navbar-inverse-link-color;
-  border: 2px solid @navbar-inverse-border;
+	background: @navbar-inverse-bg;
+	color: @navbar-inverse-link-color;
+	border: 2px solid @navbar-inverse-border;
 }
 
 #debugconsole form {
-  color: @navbar-inverse-color;
+	color: @navbar-inverse-color;
 }
 
 #debugconsole a {
-  color: @navbar-inverse-link-active-color;
+	color: @navbar-inverse-link-active-color;
 }
 
 #debugconsole a.btn {
-  color: @navbar-default-link-color;
+	color: @navbar-default-link-color;
 }
 
 // /* Icons */
 a.icon,
 img.icon {
-  background: transparent;
+	background: transparent;
 }
 
 div #metadata fieldset.tabcontent, div #metadata div.tabs {
-  background-color: transparent;
+	background-color: transparent;
 }
 
 .openid_url {
-  background: #fff url('@{imagePathToImgDir}icons/login-OpenID-bg.gif') 1px 1px no-repeat;
+	background: #fff url('@{imagePathToImgDir}icons/login-OpenID-bg.gif') 1px 1px no-repeat;
 }
 
 // Input fields auto-fill/
 // Webkit-based browser specific (Google Chrome, Chromium, etc.)
 input:-webkit-autofill {
-  background-color: @input-bg !important; /* needs important because Chrome has it already important */
-  background-image: none !important;
-  color: @input-color !important; /* the Google guys forgot the number-one rule... when they specify background they should specify forgeround color too ;) */
+	background-color: @input-bg !important; /* needs important because Chrome has it already important */
+	background-image: none !important;
+	color: @input-color !important; /* the Google guys forgot the number-one rule... when they specify background they should specify forgeround color too ;) */
 }
 
 // ColorBox
 #cboxTitle {
-  background-color: @body-bg;
+	background-color: @body-bg;
 }
 
 #captchaImg {
-  border: 1px solid @panel-default-border;
+	border: 1px solid @panel-default-border;
 }
 
 // tiki-modal_and_managestream.less
 form.simple label.error {
-  background: url('@{imagePathToImgDir}icons/error.png') no-repeat 0 4px;
-  color: @state-danger-text;
+	background: url('@{imagePathToImgDir}icons/error.png') no-repeat 0 4px;
+	color: @state-danger-text;
 }
 
 form.simple label .warning {
-  color: @state-danger-text;
+	color: @state-danger-text;
 }
 
 .tiki-modal .mask {
-  background-color: @body-bg;
+	background-color: @body-bg;
 }
 
 .ui-dialog {
-  background: @body-bg;
-  color: @text-color;
+	background: @body-bg;
+	color: @text-color;
 }
 
 // tiki-modules.less
 .box-quickadmin .cssmenu_horiz ul li {
-  background-color: @body-bg;
+	background-color: @body-bg;
 }
 
 .box-switch_lang .box-data img.highlight {
-  border: .1em solid @alert-danger-border;
+	border: .1em solid @alert-danger-border;
 }
 
 .box-switch_lang .box-data .highlight {
-  border: .1em solid @alert-danger-border;
+	border: .1em solid @alert-danger-border;
 }
 
 div.cvsup {
-  color: @gray-light;
+	color: @gray-light;
 }
 
 .layout_social .topbar_modules,
 .layout_social_modules .topbar_modules,
 .layout_fixed_top_modules #top_modules {
-  h1.sitetitle {
-    color: @navbar-default-brand-color;
-  }
-  .navbar-inverse .navbar-collapse,
-  .navbar-inverse .navbar-form,
-  .navbar-inverse {
-    border-color: transparent;
-  }
+	h1.sitetitle {
+		color: @navbar-default-brand-color;
+	}
+	.navbar-inverse .navbar-collapse,
+	.navbar-inverse .navbar-form,
+	.navbar-inverse {
+		border-color: transparent;
+	}
 }
 
 // tiki-mytiki.less
@@ -428,153 +428,153 @@ div.cvsup {
 .prio3,
 .prio4,
 .prio5 {
-  border: 1px solid @panel-default-border;
+	border: 1px solid @panel-default-border;
 }
 
 .prio1 {
-  background: @panel-danger-heading-bg;
+	background: @panel-danger-heading-bg;
 }
 
 .prio2 {
-  background: @panel-warning-heading-bg;
+	background: @panel-warning-heading-bg;
 }
 
 .prio3 {
-  background: @panel-success-heading-bg;
+	background: @panel-success-heading-bg;
 }
 
 .prio4 {
-  background: @panel-info-heading-bg;
+	background: @panel-info-heading-bg;
 }
 
 .prio5 {
-  background: @panel-default-heading-bg;
+	background: @panel-default-heading-bg;
 }
 
 .messureadflag {
-  background: @gray;
+	background: @gray;
 }
 
 .messureadhead {
-  background: @gray-light;
+	background: @gray-light;
 }
 
 .messureadbody {
-  background: @gray-lighter;
+	background: @gray-lighter;
 }
 
 .readlink {
-  color: @text-color; // black;
+	color: @text-color; // black;
 }
 
 // /* webmail & groupmail */
 .webmail_item {
-  border: 1px solid @panel-default-border;
+	border: 1px solid @panel-default-border;
 }
 
 .webmail_list .odd {
-  background: @table-bg-accent;
+	background: @table-bg-accent;
 }
 
 .webmail_list .button {
-  background: @body-bg;
-  border: 1px solid @panel-primary-border;
+	background: @body-bg;
+	border: 1px solid @panel-primary-border;
 }
 
 .webmail_list .webmail_read {
-  background: @state-info-bg;
+	background: @state-info-bg;
 }
 
 .webmail_list .webmail_replied {
-  background: @state-success-bg;
+	background: @state-success-bg;
 }
 
 .webmail_list .webmail_taken {
-  border: @state-warning-border;
-  color: @state-warning-text;
+	border: @state-warning-border;
+	color: @state-warning-text;
 }
 
 .webmail_message {
-  background: @body-bg;
+	background: @body-bg;
 }
 
 .webmail_message_headers {
-  background: @body-bg;
+	background: @body-bg;
 }
 
 .webmail_message_headers th {
-  background: transparent;
+	background: transparent;
 }
 
 // tiki-sheets.less
 .tiki_sheet table td {
-  // /* override .tabcontent table td */
-  border: 1px solid @panel-default-border;
+	// /* override .tabcontent table td */
+	border: 1px solid @panel-default-border;
 }
 
 // /* odd and even classes for tr, td, and li */
 .odd {
-  background: @table-bg;
-  color: @text-color;
+	background: @table-bg;
+	color: @text-color;
 }
 
 .even {
-  background: @table-bg-accent;
-  color: @text-color;
+	background: @table-bg-accent;
+	color: @text-color;
 }
 
 // tiki-toolbars.less
 .helptool-admin {
-  // /* right justified section of toolbars */
-  border-left: medium double @gray-light;
+	// /* right justified section of toolbars */
+	border-left: medium double @gray-light;
 }
 
 .toolbar-list {
-  border-left: medium double @gray-light;
+	border-left: medium double @gray-light;
 }
 
 .toolbars-picker {
-  //	/* colours, smilies etc */
-  background: @body-bg;
-  border: thin solid @text-color;
-  color: @text-color;
+	//	/* colours, smilies etc */
+	background: @body-bg;
+	border: thin solid @text-color;
+	color: @text-color;
 }
 
 .toolbars-picker a {
-  border: 1px solid @body-bg;
-  color: @text-color;
+	border: 1px solid @body-bg;
+	color: @text-color;
 }
 
 .toolbars-picker a:hover {
-  border: 1px solid @state-danger-text;
-  background: @gray-light;
-  color: @text-color;
+	border: 1px solid @state-danger-text;
+	background: @gray-light;
+	color: @text-color;
 }
 
 // /* New Toolbars */
 .textarea-toolbar > div {
-  background-color: @gray-lighter;
-  border: outset 1px @gray-lighter;
+	background-color: @gray-lighter;
+	border: outset 1px @gray-lighter;
 }
 
 // tiki-translation.less
 #intertrans-indicator {
-  background-color: @alert-success-bg;
-  color: @alert-success-text;
+	background-color: @alert-success-bg;
+	color: @alert-success-text;
 }
 
 #intertrans-form {
-  background-color: @panel-bg;
-  border: 1px solid @panel-default-border;
-  color: @panel-default-text;
+	background-color: @panel-bg;
+	border: 1px solid @panel-default-border;
+	color: @panel-default-text;
 }
 
 #edit_translations tr.last {
-  border-bottom: 2px solid @alert-success-border;
+	border-bottom: 2px solid @alert-success-border;
 }
 
 ul.all_languages > li {
-  border: 1px solid @alert-success-border;
+	border: 1px solid @alert-success-border;
 }
 
 // tiki-wikipages_and_plugins.less
@@ -590,171 +590,171 @@ ul.all_languages > li {
 
 // /* mouseover plugin */
 .plugin-mouseover {
-  background: @popover-bg;
-  border: 1px solid @popover-border-color;
+	background: @popover-bg;
+	border: 1px solid @popover-border-color;
 }
 
 // /* wikiplugin_tracker */
 .mandatory_note {
-  color: @state-danger-text;
+	color: @state-danger-text;
 }
 
 // /* page contribution by author / wikiplugin_author */
 .author0 {
-  color: @panel-success-text;
+	color: @panel-success-text;
 }
 
 .author1 {
-  color: @panel-info-text;
+	color: @panel-info-text;
 }
 
 .author2 {
-  color: @panel-warning-text;
+	color: @panel-warning-text;
 }
 
 .author3 {
-  color: @panel-danger-text;
+	color: @panel-danger-text;
 }
 
 .author4 {
-  color: spin(@panel-success-text, 50);
+	color: spin(@panel-success-text, 50);
 }
 
 .author5 {
-  color: spin(@panel-info-text, 70);
+	color: spin(@panel-info-text, 70);
 }
 
 .author6 {
-  color: spin(@panel-warning-text, 50);
+	color: spin(@panel-warning-text, 50);
 }
 
 .author7 {
-  color: spin(@panel-danger-text, 50);
+	color: spin(@panel-danger-text, 50);
 }
 
 .author8 {
-  color: spin(@panel-success-text, 100);
+	color: spin(@panel-success-text, 100);
 }
 
 .author9 {
-  color: spin(@panel-info-text, 100);
+	color: spin(@panel-info-text, 100);
 }
 
 .author10 {
-  color: spin(@panel-warning-text, 100);
+	color: spin(@panel-warning-text, 100);
 }
 
 .author11 {
-  color: spin(@panel-danger-text, 100);
+	color: spin(@panel-danger-text, 100);
 }
 
 .author12 {
-  color: spin(@panel-success-text, 170);
+	color: spin(@panel-success-text, 170);
 }
 
 .author13 {
-  color: spin(@panel-info-text, 140);
+	color: spin(@panel-info-text, 140);
 }
 
 .author14 {
-  color: spin(@panel-warning-text, 160);
+	color: spin(@panel-warning-text, 160);
 }
 
 .author15 {
-  color: spin(@panel-danger-text, 160);
+	color: spin(@panel-danger-text, 160);
 }
 
 .structuremenu .menuSection {
-  border-left: 1px dotted @gray;
+	border-left: 1px dotted @gray;
 }
 
 // /* Inline CkEditor */
 .cke_editable:hover {
-  outline: @gray dotted 1px;
+	outline: @gray dotted 1px;
 }
 
 .tiki_plugin {
-  background-color: transparent; // /* was #f8f8f8; */
-  border: 1px solid @gray-light;
+	background-color: transparent; // /* was #f8f8f8; */
+	border: 1px solid @gray-light;
 }
 
 .unsavedChangesInEditor {
-  border: 1px solid;
-  border-color: @alert-warning-border;
+	border: 1px solid;
+	border-color: @alert-warning-border;
 }
 
 // /* Auto TOC */
 div#outerToc {
-  background: @gray-lighter;
+	background: @gray-lighter;
 }
 
 div#outerToc * {
-  color: @text-color;
+	color: @text-color;
 }
 
 .plugin-form-float {
-  background: @body-bg;
-  color: @text-color;
-  border: solid 2px @text-color;
+	background: @body-bg;
+	color: @text-color;
+	border: solid 2px @text-color;
 }
 
 // /* CKeditor contrast */
 body.wikitext {
-  background: @body-bg;
-  color: @text-color;
+	background: @body-bg;
+	color: @text-color;
 }
 
 .editable-inline {
-  background: transparent url('@{imagePathToImgDir}icons/database_lightning.png') no-repeat top right;
-  padding-right: 20px;
-  display: inline-block;
+	background: transparent url('@{imagePathToImgDir}icons/database_lightning.png') no-repeat top right;
+	padding-right: 20px;
+	display: inline-block;
 }
 
 .editable-inline.loaded {
-  background: transparent;
+	background: transparent;
 }
 
 .editable-inline.failure {
-  background: transparent url('@{imagePathToImgDir}icons/lock_gray.png') no-repeat top right;
+	background: transparent url('@{imagePathToImgDir}icons/lock_gray.png') no-repeat top right;
 }
 
 .editable-inline.modified {
-  border: solid 2px @btn-danger-border;
-  padding: 2px;
+	border: solid 2px @btn-danger-border;
+	padding: 2px;
 }
 
 .editable-inline.unsaved {
-  border: solid 2px @btn-danger-border;
+	border: solid 2px @btn-danger-border;
 }
 
 .structure_select .cssmenu_horiz ul li {
-  border: 1px solid @gray;
+	border: 1px solid @gray;
 }
 
 .admintoclevel .actions input {
-  border: solid 1px @gray;
+	border: solid 1px @gray;
 }
 
 // /* Fullscreen textareas */
 .TextArea-fullscreen {
-  background-color: @gray;
+	background-color: @gray;
 }
 
 .TextArea-fullscreen .actions,
 .CodeMirror-fullscreen .actions {
-  background-color: @body-bg;
-  border-top: @gray-lighter 1px solid;
+	background-color: @body-bg;
+	border-top: @gray-lighter 1px solid;
 }
 
 // /* Autosave Preview handle */
 #autosave_preview {
-  background-color: @body-bg;
-  color: @text-color;
+	background-color: @body-bg;
+	color: @text-color;
 }
 
 #autosave_preview_grippy {
-  background-color: @gray-lighter;
-  background-image: url('@{imagePathToImgDir}icons/shading.png');
+	background-color: @gray-lighter;
+	background-image: url('@{imagePathToImgDir}icons/shading.png');
 }
 
 h1:hover a.tiki_anchor,
@@ -763,8 +763,8 @@ h3:hover a.tiki_anchor,
 h4:hover a.tiki_anchor,
 h5:hover a.tiki_anchor,
 h6:hover a.tiki_anchor {
-  color: @gray-lighter;
-  //  display: inline;
+	color: @gray-lighter;
+	//  display: inline;
 }
 
 h1 a.tiki_anchor:hover,
@@ -773,185 +773,184 @@ h3 a.tiki_anchor:hover,
 h4 a.tiki_anchor:hover,
 h5 a.tiki_anchor:hover,
 h6 a.tiki_anchor:hover {
-  color: @gray;
+	color: @gray;
 }
 
 // /* Namespace styling */
 .wiki .namespace {
-  background: @gray-lighter;
+	background: @gray-lighter;
 }
 
 .site_report a {
-  border-left: 1px solid @gray;
-  border-right: 1px solid @gray;
+	border-left: 1px solid @gray;
+	border-right: 1px solid @gray;
 }
 
 .quotebody {
-  border-left: 2px solid @gray-light;
+	border-left: 2px solid @gray-light;
 }
 
 // /* wikiplugin tracker */
 .mandatory_star {
-  color: @alert-danger-border;
+	color: @alert-danger-border;
 }
 
 .trackerplugindesc {
-  color: @gray-dark;
+	color: @gray-dark;
 }
 
 .charCount {
-  color: @gray-dark;
+	color: @gray-dark;
 }
 
 // /* img plugin */ wikiplugin_img.php, article.tpl
 .imgbox {
-  border: 1px solid @popover-border-color;
-  background-color: @popover-bg;
+	border: 1px solid @popover-border-color;
+	background-color: @popover-bg;
 }
 
 // /* wikiplugin_carousel v3 */
 .ic_button {
-  border: 2px solid @pagination-border;
+	border: 2px solid @pagination-border;
 }
 
 .ic_active {
-  border: 2px solid @pagination-active-border;
+	border: 2px solid @pagination-active-border;
 }
 
 .ic_caption {
-  background: @navbar-inverse-bg;
-  color: @navbar-inverse-color;
+	background: @navbar-inverse-bg;
+	color: @navbar-inverse-color;
 }
 
 .wp-cookie-consent-required {
-  color: @alert-danger-text;
+	color: @alert-danger-text;
 }
 
 .wp-sign {
-  color: @tooltip-color;
-  background-color: @tooltip-bg;
+	color: @tooltip-color;
+	background-color: @tooltip-bg;
 }
 
 // /* TOC */
 .toc {
-  border-top: 1px dotted @gray-light;
-  border-bottom: 1px dotted @gray-light;
+	border-top: 1px dotted @gray-light;
+	border-bottom: 1px dotted @gray-light;
 }
 
 // /* Wiki diff styles */
 .diff td {
-  border: 1px solid @gray-dark;
+	border: 1px solid @gray-dark;
 }
 
 .diff div {
-  border-top: 1px solid @gray-light;
+	border-top: 1px solid @gray-light;
 }
 
 .diffadded {
-  background: @state-success-bg;
-  color: @state-success-text;
+	background: @state-success-bg;
+	color: @state-success-text;
 }
 
 .diffdeleted {
-  background: @state-danger-bg;
-  color: @state-danger-text;
+	background: @state-danger-bg;
+	color: @state-danger-text;
 }
 
 .diffinldel {
-  background: @state-warning-bg;
+	background: @state-warning-bg;
 }
 
 .diffbody {
-  background: @gray-lighter;
-  color: @gray-darker;
+	background: @gray-lighter;
+	color: @gray-darker;
 }
 
 .diffchar {
-  color: lighten(@state-danger-text, 10%);
+	color: lighten(@state-danger-text, 10%);
 }
 
 .diffadded .diffchar {
-  color: lighten(@state-success-text, 10%);
+	color: lighten(@state-success-text, 10%);
 }
 
 .morcego_embedded {
-  border: 1px solid;
+	border: 1px solid;
 }
 
 .highlight_word_0 {
-  color: @panel-success-text;
-  background: @panel-success-heading-bg;
+	color: @panel-success-text;
+	background: @panel-success-heading-bg;
 }
 
 .highlight_word_1 {
-  color: @panel-info-text;
-  background: @panel-info-heading-bg;
+	color: @panel-info-text;
+	background: @panel-info-heading-bg;
 }
 
 .highlight_word_2 {
-  color: @panel-warning-text;
-  background: @panel-warning-heading-bg;
+	color: @panel-warning-text;
+	background: @panel-warning-heading-bg;
 }
 
 .highlight_word_3 {
-  color: @panel-danger-text;
-  background: @panel-danger-heading-bg;
+	color: @panel-danger-text;
+	background: @panel-danger-heading-bg;
 }
 
 .highlight_word_4 {
-  color: spin(@panel-danger-text, 20);
-  background: spin(@panel-danger-heading-bg, 20);
+	color: spin(@panel-danger-text, 20);
+	background: spin(@panel-danger-heading-bg, 20);
 }
 
 /* Structures drill-down menu */
 div.drillshow {
-  border: 1px solid @gray-light;
+	border: 1px solid @gray-light;
 }
 
 .chosen-container-multi .chosen-choices {
-  background-color: lighten(@input-bg, 10%);
-  color: @input-color;
-  border: 1px solid @input-border;
+	background-color: lighten(@input-bg, 10%);
+	color: @input-color;
+	border: 1px solid @input-border;
 }
 
 .chosen-container-single .chosen-single,
 .chosen-container-active.chosen-with-drop .chosen-single,
 .chosen-container .chosen-drop,
 .chosen-container-multi .chosen-choices .search-choice {
-  background-color: @input-bg;
-  color: @input-color;
-  border: 1px solid @input-border;
+	background-color: @input-bg;
+	color: @input-color;
+	border: 1px solid @input-border;
 }
 
 .chosen-container-single .chosen-search input[type="text"] {
-  background-color: @input-bg;
-  border: 1px solid @input-border;
-  //  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.071);
+	background-color: @input-bg;
+	border: 1px solid @input-border;
+	//  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.071);
 }
 
 .chosen-container .chosen-results li.highlighted {
-  background-color: @dropdown-link-hover-bg;
-  //  background-image: none;
-  color: @dropdown-link-hover-color;
+	background-color: @dropdown-link-hover-bg;
+	//  background-image: none;
+	color: @dropdown-link-hover-color;
 }
 
-
 .tiki .row.top_modules {
-  margin-left: @topmodules-row-sidemargins;
-  margin-right: @topmodules-row-sidemargins;
+	margin-left: @topmodules-row-sidemargins;
+	margin-right: @topmodules-row-sidemargins;
 }
 
 .tiki .row.topbar {
-  margin-left: @topbar-row-sidemargins;
-  margin-right: @topbar-row-sidemargins;
-  margin-bottom: @topbar-row-margin-bottom;
+	margin-left: @topbar-row-sidemargins;
+	margin-right: @topbar-row-sidemargins;
+	margin-bottom: @topbar-row-margin-bottom;
 }
 
 // Breadcrumb
 .breadcrumb {
-  font-style:  @breadcrumb-font-style; // italic;
-  font-size: @breadcrumb-font-size;// 90%;
-  display: @breadcrumb-display; // block;
+	font-style: @breadcrumb-font-style; // italic;
+	font-size: @breadcrumb-font-size; // 90%;
+	display: @breadcrumb-display; // block;
 }
 
 

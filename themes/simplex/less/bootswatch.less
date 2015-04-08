@@ -3,130 +3,130 @@
 // -----------------------------------------------------
 
 .btn-shadow(@color) {
-  #gradient > .vertical-three-colors(lighten(@color, 3%), @color, 6%, darken(@color, 3%));
-  filter: none;
-  border: 1px solid darken(@color, 10%);
+	#gradient > .vertical-three-colors(lighten(@color, 3%), @color, 6%, darken(@color, 3%));
+	filter: none;
+	border: 1px solid darken(@color, 10%);
 }
 
 // Navbar =====================================================================
 
 .navbar {
 
-  &-inverse {
+	&-inverse {
 
-    .badge {
-      background-color: #fff;
-      color: @brand-primary;
-    }
-  }
+		.badge {
+			background-color: #fff;
+			color: @brand-primary;
+		}
+	}
 }
 
 // Buttons ====================================================================
 
 .btn {
-  font-family: @headings-font-family;
+	font-family: @headings-font-family;
 }
 
 .btn-default,
 .btn-default:hover {
-  .btn-shadow(@btn-default-bg);
+	.btn-shadow(@btn-default-bg);
 }
 
 .btn-primary,
 .btn-primary:hover {
-  .btn-shadow(@btn-primary-bg);
+	.btn-shadow(@btn-primary-bg);
 }
 
 .btn-success,
 .btn-success:hover {
-  .btn-shadow(@btn-success-bg);
+	.btn-shadow(@btn-success-bg);
 }
 
 .btn-info,
 .btn-info:hover {
-  .btn-shadow(@btn-info-bg);
+	.btn-shadow(@btn-info-bg);
 }
 
 .btn-warning,
 .btn-warning:hover {
-  .btn-shadow(@btn-warning-bg);
+	.btn-shadow(@btn-warning-bg);
 }
 
 .btn-danger,
 .btn-danger:hover {
-  .btn-shadow(@btn-danger-bg);
+	.btn-shadow(@btn-danger-bg);
 }
 
 // Typography =================================================================
 
 body {
-  font-weight: 200;
+	font-weight: 200;
 }
 
 // Tables =====================================================================
 
 th {
-  color: @headings-color;
+	color: @headings-color;
 }
 
 // Forms ======================================================================
 
 legend {
-  color: @headings-color;
+	color: @headings-color;
 }
 
 .has-warning {
-  .help-block,
-  .control-label {
-    color: @brand-danger;
-  }
+	.help-block,
+	.control-label {
+		color: @brand-danger;
+	}
 
-  .form-control,
-  .form-control:focus {
-    border-color: @brand-danger;
-  }
+	.form-control,
+	.form-control:focus {
+		border-color: @brand-danger;
+	}
 }
 
 .has-error {
-  .help-block,
-  .control-label {
-    color: @brand-primary;
-  }
+	.help-block,
+	.control-label {
+		color: @brand-primary;
+	}
 
-  .form-control,
-  .form-control:focus {
-    border-color: @brand-primary;
-  }
+	.form-control,
+	.form-control:focus {
+		border-color: @brand-primary;
+	}
 }
 
 .has-success {
-  .help-block,
-  .control-label {
-    color: @brand-success;
-  }
+	.help-block,
+	.control-label {
+		color: @brand-success;
+	}
 
-  .form-control,
-  .form-control:focus {
-    border-color: @brand-success;
-  }
+	.form-control,
+	.form-control:focus {
+		border-color: @brand-success;
+	}
 }
 
 // Navs =======================================================================
 
 .pager {
-  a {
-    color: @headings-color;
-  }
+	a {
+		color: @headings-color;
+	}
 
-  a:hover,
-  .active > a, {
-    border-color: @brand-primary;
-    color: #fff;
-  }
+	a:hover,
+	.active > a, {
+		border-color: @brand-primary;
+		color: #fff;
+	}
 
-  .disabled > a {
-    border-color: @pager-border;
-  }
+	.disabled > a {
+		border-color: @pager-border;
+	}
 }
 
 // Indicators =================================================================
