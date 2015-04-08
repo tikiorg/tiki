@@ -1648,6 +1648,28 @@ if (!$standalone) {
 	}
 	deack_on_state_change($php_properties, 'PHP');
 	deack_on_state_change($security, 'PHP Security');
+
+	// borrowed from admin/include_fgal.php
+	$filegallib = TikiLib::lib('filegal');
+	$handlers = $filegallib->get_file_handlers(true);
+	ksort($handlers);
+	$smarty->assign("fgal_handlers", $handlers);
+	$usedTypes = $filegallib->getFiletype();
+	$missingHandlers = array();
+	$vnd_ms_files_exist = false;
+
+	foreach ($usedTypes as $type) {
+		if (! $filegallib->get_parse_app($type, true)) {
+			$missingHandlers[] = $type;
+			if (strpos($type, '/vnd.ms-') !== false) {
+				$vnd_ms_files_exist = true;
+			}
+		}
+	}
+
+	$smarty->assign_by_ref('missingHandlers', $missingHandlers);
+	$smarty->assign('vnd_ms_files_exist', $vnd_ms_files_exist);
+	// end borrowed from admin/include_fgal.php
 }
 
 if ($standalone && !$nagios) {
