@@ -150,7 +150,7 @@
 		{include file='tiki-edit-page-include-prompt_for_edit_or_translate.tpl'}
 	{/if}
 
-	<form enctype="multipart/form-data" method="post" action="tiki-editpage.php?page={$page|escape:'url'}" class="form-horizontal" id='editpageform' name='editpageform'>
+	<form enctype="multipart/form-data" method="post" action="tiki-editpage.php?page={$page|escape:'url'}" class="form-horizontal form-horizontal-side-margins" id='editpageform' name='editpageform'>
 
 		<input type="hidden" name="no_bl" value="y">
 		{if !empty($smarty.request.returnto)}<input type="hidden" name="returnto" value="{$smarty.request.returnto}">{/if}

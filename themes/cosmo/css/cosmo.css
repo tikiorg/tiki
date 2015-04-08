@@ -6732,6 +6732,10 @@ table .info a,
 .margin-bottom-lg {
   margin-bottom: 42px;
 }
+.form-horizontal-side-margins {
+  margin-left: 15px;
+  margin-right: 15px;
+}
 .warning a,
 .warning a:link,
 .warning a:visited {

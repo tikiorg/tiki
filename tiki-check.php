@@ -321,26 +321,26 @@ if (function_exists('disk_free_space')) {
 	if ( $bytes < 200 * 1024 * 1024 ) {
 		$server_properties['Disk Space'] = array(
 			'fitness' => 'bad',
-			'value' => $free_space,
+			'setting' => $free_space,
 			'message' => tra('You have less than 200 megs of free disk space. Tiki will not fit on this disk drive.')
 		);
 	} elseif ( $bytes < 250 * 1024 * 1024 ) {
 		$server_properties['Disk Space'] = array(
 			'fitness' => 'ugly',
-			'value' => $free_space,
+			'setting' => $free_space,
 			'message' => tra('You have less than 250 megs of free disk space. This is quite tight. Tiki needs disk space for compiling templates and for uploading files.').' '.tra('When the disk runs full you will not be able to log into your Tiki any more.').' '.tra('We can not reliably check for quotas, so be warned that if your server makes use of them you might have less disk space available.')
 		);
 	} else {
 		$server_properties['Disk Space'] = array(
 			'fitness' => 'good',
-			'value' => $free_space,
+			'setting' => $free_space,
 			'message' => tra('You have more than 251 megs of free disk space. Tiki will run nicely, but you may run into issues when your site grows (e.g. file uploads)').' '.tra('When the disk runs full you will not be able to log into your Tiki any more.').' '.tra('We can not reliably check for quotas, so be warned that if your server makes use of them you might have less disk space available.')
 		);
 	}
 } else {
 		$server_properties['Disk Space'] = array(
 			'fitness' => 'N/A',
-			'value' => 'N/A',
+			'setting' => 'N/A',
 			'message' => tra('The PHP function disk_free_space is not available on your server, so we can\'t check for this.')
 		);
 }
@@ -1648,6 +1648,28 @@ if (!$standalone) {
 	}
 	deack_on_state_change($php_properties, 'PHP');
 	deack_on_state_change($security, 'PHP Security');
+
+	// borrowed from admin/include_fgal.php
+	$filegallib = TikiLib::lib('filegal');
+	$handlers = $filegallib->get_file_handlers(true);
+	ksort($handlers);
+	$smarty->assign("fgal_handlers", $handlers);
+	$usedTypes = $filegallib->getFiletype();
+	$missingHandlers = array();
+	$vnd_ms_files_exist = false;
+
+	foreach ($usedTypes as $type) {
+		if (! $filegallib->get_parse_app($type, true)) {
+			$missingHandlers[] = $type;
+			if (strpos($type, '/vnd.ms-') !== false) {
+				$vnd_ms_files_exist = true;
+			}
+		}
+	}
+
+	$smarty->assign_by_ref('missingHandlers', $missingHandlers);
+	$smarty->assign('vnd_ms_files_exist', $vnd_ms_files_exist);
+	// end borrowed from admin/include_fgal.php
 }
 
 if ($standalone && !$nagios) {
@@ -1761,6 +1783,7 @@ if ($standalone && !$nagios) {
 	function update_overall_status($check_group, $check_group_name) {
 		global $monitoring_info;
 		$state = 0;
+		$message = '';
 
 		foreach ($check_group as $property => $values) {
 			if ($values['ack'] != true) {

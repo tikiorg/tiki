@@ -283,5 +283,42 @@
 	</table>
 </div>
 
+<h2>{tr}File Gallery Search Indexing Information{/tr}</h2>
+<h3>{tr}Available Handlers{/tr}</h3>
+<div class="table-responsive">
+	<table class="table normal">
+		<tr>
+			<th>{tr}Mimetype{/tr}</th>
+			<th>{tr}Command{/tr}</th>
+		</tr>
+
+		{foreach from=$fgal_handlers key=key item=item}
+			<tr>
+				<td class="text">{$key}</td>
+				<td class="text">{$item|escape}</td>
+			</tr>
+		{foreachelse}
+			{norecords _colspan=1}
+		{/foreach}
+	</table>
+</div>
+
+<h3>{tr}Missing Handlers{/tr}</h3>
+<div class="table-responsive">
+	<table class="table normal">
+		<tr>
+			<th>{tr}Mimetype{/tr}</th>
+		</tr>
+
+		{foreach from=$missingHandlers item=item}
+			<tr>
+				<td class="text">{$item|escape}</td>
+			</tr>
+		{foreachelse}
+			{norecords _colspan=1}
+		{/foreach}
+	</table>
+</div>
+
 <h2>{tr}PHP Info{/tr}</h2>
 {tr}For more detailed information about your PHP installation see <a href="tiki-phpinfo.php">Admin->phpinfo</a>{/tr}.
