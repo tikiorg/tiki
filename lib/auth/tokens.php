@@ -73,11 +73,32 @@ class AuthTokens
 			array( $token )
 		)->fetchRow();
 
-		if ( $data['entry'] != $entry ) {
+		global $prefs, $full;		// $full defined in route.php
+		if ( $data['entry'] != $entry && ($prefs['feature_sefurl'] !== 'y' || $data['entry']  !== urldecode($full)) ) {
 			return null;
 		}
 
 		$registered = (array) json_decode($data['parameters'], true);
+
+		if ($prefs['feature_sefurl'] === 'y') {    // filter out the usual sefurl parameters that would be missing from the URI
+			$usedInRequest = [
+				'page',
+				'articleId',
+				'blogId', 'postId',
+				'parentId',
+				'fileId', 'galleryId',
+				'forumId',
+				'nlId',
+				'trackerId', 'itemId',
+				'sheetId',
+				'userId',
+				'calIds',
+			];
+
+			$usedInRequest = array_diff($usedInRequest, array_keys($registered));       // params that are actually used and need to be checked
+			$parameters = array_diff_key($parameters, array_flip($usedInRequest));					// remove params that aren't used
+		}
+
 		if ( ! $this->allPresent($registered, $parameters)
 				|| ! $this->allPresent($parameters, $registered)
 		) {
