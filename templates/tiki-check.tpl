@@ -264,6 +264,31 @@
 </div>
 </form>
 
+<h2>{tr}File Gallery Search Indexing{/tr}</h2>
+<div class="table-responsive">
+	<table class="table normal">
+		<tr>
+			<th>{tr}Mimetype{/tr}</th>
+			<th>{tr}Tiki Fitness{/tr}</th>
+			<th>{tr}Explanation{/tr}</th>
+		</tr>
+
+		{foreach from=$file_handlers key=key item=item}
+			<tr>
+				<td class="text">{$key}</td>
+				<td class="text">
+					<span class="text-{$fmap[$item.fitness]['class']}">
+						{icon name="{$fmap[$item.fitness]['icon']}"} {$item.fitness}
+					</span>
+				</td>
+				<td class="text">{$item.message|escape}</td>
+			</tr>
+		{foreachelse}
+			{norecords _colspan=3}
+		{/foreach}
+	</table>
+</div>
+
 <h2>{tr}MySQL Variable Information{/tr}</h2>
 <div class="table-responsive">
 	<table class="table normal">
@@ -279,43 +304,6 @@
 			</tr>
 		{foreachelse}
 			{norecords _colspan=2}
-		{/foreach}
-	</table>
-</div>
-
-<h2>{tr}File Gallery Search Indexing Information{/tr}</h2>
-<h3>{tr}Available Handlers{/tr}</h3>
-<div class="table-responsive">
-	<table class="table normal">
-		<tr>
-			<th>{tr}Mimetype{/tr}</th>
-			<th>{tr}Command{/tr}</th>
-		</tr>
-
-		{foreach from=$fgal_handlers key=key item=item}
-			<tr>
-				<td class="text">{$key}</td>
-				<td class="text">{$item|escape}</td>
-			</tr>
-		{foreachelse}
-			{norecords _colspan=1}
-		{/foreach}
-	</table>
-</div>
-
-<h3>{tr}Missing Handlers{/tr}</h3>
-<div class="table-responsive">
-	<table class="table normal">
-		<tr>
-			<th>{tr}Mimetype{/tr}</th>
-		</tr>
-
-		{foreach from=$missingHandlers item=item}
-			<tr>
-				<td class="text">{$item|escape}</td>
-			</tr>
-		{foreachelse}
-			{norecords _colspan=1}
 		{/foreach}
 	</table>
 </div>
