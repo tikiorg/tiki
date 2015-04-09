@@ -1581,6 +1581,63 @@ if ($s == 1) {
 	);
 }
 
+	// adapted from \FileGalLib::get_file_handlers
+	$fh_possibilities = array(
+		'application/ms-excel' => array('xls2csv %1'),
+		// vnd.openxmlformats are handled natively in Zend
+		//'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => array('xlsx2csv.py %1'),
+		'application/ms-powerpoint' => array('catppt %1'),
+		//'application/vnd.openxmlformats-officedocument.presentationml.presentation' => array('pptx2txt.pl %1 -'),
+		'application/msword' => array('catdoc %1', 'strings %1'),
+		//'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => array('docx2txt.pl %1 -'),
+		'application/pdf' => array('pstotext %1', 'pdftotext %1 -'),
+		'application/postscript' => array('pstotext %1'),
+		'application/ps' => array('pstotext %1'),
+		'application/rtf' => array('catdoc %1'),
+		'application/sgml' => array('col -b %1', 'strings %1'),
+		'application/vnd.ms-excel' => array('xls2csv %1'),
+		'application/vnd.ms-powerpoint' => array('catppt %1'),
+		'application/x-msexcel' => array('xls2csv %1'),
+		'application/x-pdf' => array('pstotext %1'),
+		'application/x-troff-man' => array('man -l %1'),
+		'text/enriched' => array('col -b %1', 'strings %1'),
+		'text/html' => array('elinks -dump -no-home %1'),
+		'text/richtext' => array('col -b %1', 'strings %1'),
+		'text/sgml' => array('col -b %1', 'strings %1'),
+		'text/tab-separated-values' => array('col -b %1', 'strings %1'),
+	);
+
+	$file_handlers = array();
+	foreach ($fh_possibilities as $type => $options) {
+		$file_handler = array(
+			'fitness' => '',
+			'message' => '',
+		);
+		foreach ($options as $opt) {
+			$optArray = explode(' ', $opt, 2);
+			$exec = reset($optArray);
+
+			$which_exec = `which $exec`;
+			if ($which_exec) {
+				$file_handler['fitness'] = 'good';
+				$file_handler['message'] = "will be handled by $which_exec";
+				break;
+			}
+		}
+		if (! $file_handler['fitness']) {
+			$file_handler['fitness'] = 'ugly';
+			$fh_commands = '';
+			foreach ($options as $opt) {
+				$fh_commands .= $fh_commands ? ' or ' : '';
+				$fh_commands .= '"' . substr($opt, 0, strpos($opt, ' ')) . '"';
+			}
+			$file_handler['message'] = 'You need to install ' . $fh_commands . ' to index this type of file';
+		}
+		$file_handlers[$type] = $file_handler;
+	}
+
+
+
 if (!$standalone) {
 	// The following is borrowed from tiki-admin_system.php
 	if ($prefs['feature_forums'] == 'y') {
@@ -1648,28 +1705,6 @@ if (!$standalone) {
 	}
 	deack_on_state_change($php_properties, 'PHP');
 	deack_on_state_change($security, 'PHP Security');
-
-	// borrowed from admin/include_fgal.php
-	$filegallib = TikiLib::lib('filegal');
-	$handlers = $filegallib->get_file_handlers(true);
-	ksort($handlers);
-	$smarty->assign("fgal_handlers", $handlers);
-	$usedTypes = $filegallib->getFiletype();
-	$missingHandlers = array();
-	$vnd_ms_files_exist = false;
-
-	foreach ($usedTypes as $type) {
-		if (! $filegallib->get_parse_app($type, true)) {
-			$missingHandlers[] = $type;
-			if (strpos($type, '/vnd.ms-') !== false) {
-				$vnd_ms_files_exist = true;
-			}
-		}
-	}
-
-	$smarty->assign_by_ref('missingHandlers', $missingHandlers);
-	$smarty->assign('vnd_ms_files_exist', $vnd_ms_files_exist);
-	// end borrowed from admin/include_fgal.php
 }
 
 if ($standalone && !$nagios) {
@@ -1760,6 +1795,10 @@ if ($standalone && !$nagios) {
 	renderTable($security);
 	$render .= '<h2>MySQL Variables</h2>';
 	renderTable($mysql_variables);
+
+	$render .= '<h2>File Gallery Search Indexing</h2>';
+	renderTable($file_handlers);
+
 	$render .= '<h2>PHP Info</h2>';
 	if ( isset($_REQUEST['phpinfo']) && $_REQUEST['phpinfo'] == 'y' ) {
 		ob_start();
@@ -1879,6 +1918,7 @@ if ($standalone && !$nagios) {
 	$smarty->assign_by_ref('security', $security);
 	$smarty->assign_by_ref('mysql_variables', $mysql_variables);
 	$smarty->assign_by_ref('mysql_crashed_tables', $mysql_crashed_tables);
+	$smarty->assign_by_ref('file_handlers', $file_handlers);
 	// disallow robots to index page:
 
 	$fmap = [

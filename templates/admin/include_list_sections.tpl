@@ -14,9 +14,9 @@
 <div class="clearfix">
 	{foreach from=$admin_icons key=page item=info}
 			{if $info.disabled}
-				{assign var=class value="admbox off advanced"}
+				{assign var=class value="admbox off advanced btn btn-primary"}
 			{else}
-				{assign var=class value="admbox basic"}
+				{assign var=class value="admbox basic btn btn-primary"}
 			{/if}
 				<a href="tiki-admin.php?page={$page}" alt="{$info.title}" class="{$class} tips" title="{$info.title|escape}{if $info.disabled} ({tr}Disabled{/tr}){/if}|{$info.description}">
 					{icon name="admin_$page"}

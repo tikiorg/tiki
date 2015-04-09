@@ -7406,6 +7406,16 @@ div.drillshow {
   font-size: 90%;
   display: block;
 }
+a.admbox.off {
+  border: 1px solid #28301e;
+  color: #999999;
+}
+a.admbox.off:hover,
+a.admbox.off:focus,
+a.admbox.off:active {
+  border: 1px solid #28301e;
+  color: #999999;
+}
 .navbar-fixed-top,
 .navbar-fixed-bottom {
   left: 0;

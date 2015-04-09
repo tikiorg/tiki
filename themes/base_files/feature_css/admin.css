@@ -9,28 +9,17 @@ a.admbox:visited {
 	overflow: hidden;
 	float: left;
 	margin: .4em;
-	border: 1px #666 solid;
-	background-color: #ccc;
 	background-repeat: no-repeat;
 	background-position: center;
 	padding: 0;
 	position: relative;
 	text-decoration: none;
-	color: #333;
-}
-
-a.admbox:hover,
-a.admbox:focus,
-a.admbox:active {
-	border: 1px solid #333;
-	background-color: #aaa;
-	color: #fff;
 }
 
 a.admbox .icon {
-	font-size:30px;
-	margin-top:10px;
-	margin-bottom:10px;
+	font-size: 30px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 a.admbox span.title {
 	position: absolute;
@@ -41,21 +30,9 @@ a.admbox span.title {
 	margin: .1em;
 }
 
-a.admbox.off {
-	border: 1px solid #a9a9a9;
-	color: #9f9f9f;
-}
-
-a.admbox.off:hover,
-a.admbox.off:focus,
-a.admbox.off:active {
-	border: 1px solid #a9a9a9;
-	color: #666;
-}
-
 a.admbox.off img {
 	border: none;
-	background-image: url('../img/overlay-disabled_item.png');
+	background-image: url('../../../img/overlay-disabled_item.png');
 }
 /* Look & feel thumbnail */
 
@@ -348,8 +325,8 @@ a.admbox.off img {
 
 .ui-droppable.modules, .ui-sortable.modules {
 	min-height: 10ex;
-	-webkit-box-shadow: inset 0px 0px 5px 5px rgba(0, 0, 0, .1);
-	box-shadow: inset 0px 0px 5px 5px rgba(0, 0, 0, .1);
+	-webkit-box-shadow: inset 0 0 5px 5px rgba(0, 0, 0, .1);
+	box-shadow: inset 0 0 5px 5px rgba(0, 0, 0, .1);
 }
 
 #right_left.ui-sortable, #right_modules.ui-sortable {
@@ -391,7 +368,7 @@ a.admbox.off img {
 
 .tgItems > li > div > * {
 	float:left;
-	margin: 3px 6px 0px 0px;
+	margin: 3px 6px 0 0;
 }
 
 .tgItems > li > * {

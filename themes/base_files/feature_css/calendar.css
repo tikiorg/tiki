@@ -29,11 +29,11 @@
 	text-align: center;
 }
 
-.calDay {
+/*.calDay {
 	padding: 0;
 	border-width: 0 1px 1px 1px;
 	border-style: solid;
-}
+}*/
 
 /* Table that contains the week view */
 .calendarweek {
@@ -42,62 +42,11 @@
 	margin: 0;
 	width: 100%;
 	border-collapse: collapse;
-	border-bottom: 1px solid #ccc;
 }
 
 #calprio {
 	margin-left: 7px;
 	padding: 0 5px;
-	color: black;
-}
-
-.calprio1 {
-	background: #DAE0E0;
-}
-
-.calprio2 {
-	background: #DADCDC;
-}
-
-.calprio3 {
-	background: #DAD0D0;
-}
-
-.calprio4 {
-	background: #DACACA;
-}
-
-.calprio5 {
-	background: #DAC0D0;
-}
-
-.calprio6 {
-	background: #DABABA;
-}
-
-.calprio7 {
-	background: #DAB0B0;
-}
-
-.calprio8 {
-	background: #DAAAAA;
-}
-
-.calprio9 {
-	background: #DA9A9A;
-}
-
-.calprio1 a,
-.calprio2 a,
-.calprio3 a,
-.calprio4 a,
-.calprio5 a,
-.calprio6 a,
-.calprio7 a,
-.calprio8 a,
-.calprio9 a {
-	color: #000000;
-	font-weight: normal;
 }
 
 .calnavigation {
@@ -192,24 +141,6 @@
 	font-weight: bold;
 }
 
-.status0 {
-	background: #FF6;
-	border: 1px solid #000;
-	color: #000;
-}
-
-.status1 {
-	background: #6F6;
-	border: 1px solid #000;
-	color: #000;
-}
-
-.status2 {
-	background: #F66;
-	border: 1px solid #000;
-	color: #000;
-}
-
 select[name=start_Hour],
 select[name=start_Minute],
 select[name=end_Hour],
@@ -261,7 +192,4 @@ select[name=end_Minute] {
 a.prev img,
 a.next img {
 	vertical-align: middle;
-}
-.calhighlight{
-  background: #ddf4ef;
 }

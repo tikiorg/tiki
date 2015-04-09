@@ -116,6 +116,12 @@ function smarty_function_menu($params, $smarty)
 		switch ($params['bootstrap']) {
 		case 'navbar':
 			return $smarty->fetch('bootstrap_menu_navbar.tpl');
+			break;
+		case  'y':
+			if($params['type'] == "horiz"){
+			 return $smarty->fetch('bootstrap_menu_navbar.tpl');
+			}
+		    break;
 		default:
 			return $smarty->fetch('bootstrap_menu.tpl');
 		}
