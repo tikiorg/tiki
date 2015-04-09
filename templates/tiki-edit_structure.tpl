@@ -1,22 +1,19 @@
 {title url="tiki-edit_structure.php?page_ref_id=$page_ref_id"}{tr}Structure{/tr}: {$structure_name}{/title}
 
-<div class="t_navbar">
+<div class="t_navbar margin-bottom-md">
 	{button href="tiki-admin_structures.php" _text="{tr}Structures{/tr}"}
 </div>
 
 {if $remove eq 'y'}
-	{tr}You will remove{/tr} '{$removePageName}' {if $page_removable == 'y'}{tr}and its subpages from the structure, now you have two options:{/tr}{else}{tr}and its subpages from the structure{/tr}{/if}
-	<ul>
-		<li>
-			<a class="link" href="tiki-edit_structure.php?page_ref_id={$structure_id}&amp;rremove={$removepage}&amp;page={$removePageName|escape:"url"}">{tr}Remove only from structure{/tr}</a>
-		</li>
-		{if $page_removable == 'y'}
-			<li>
-				<a class="link" href="tiki-edit_structure.php?page_ref_id={$structure_id}&amp;sremove={$removepage}&amp;page={$removePageName|escape:"url"}">{tr}Remove from structure and remove page too{/tr}</a>
-			</li>
-		{/if}
-	</ul>
-	<br/>
+	{remarksbox type="warning" title="{tr}Warning{/tr}"}
+		{tr}You will remove{/tr} '{$removePageName}' {if $page_removable == 'y'}{tr}and its subpages from the structure, now you have two options:{/tr}{else}{tr}and its subpages from the structure{/tr}{/if}
+		<div class="text-center">
+			<a class="btn btn-warning btn-sm" href="tiki-edit_structure.php?page_ref_id={$structure_id}&amp;rremove={$removepage}&amp;page={$removePageName|escape:"url"}">{icon name="remove"} {tr}Remove from structure{/tr}</a>
+			{if $page_removable == 'y'}
+				<a class="btn btn-warning btn-sm" href="tiki-edit_structure.php?page_ref_id={$structure_id}&amp;sremove={$removepage}&amp;page={$removePageName|escape:"url"}">{icon name="delete"} {tr}Remove from structure and remove page too{/tr}</a>
+			{/if}
+		</div>
+	{/remarksbox}
 {/if}
 
 {if $alert_exists eq 'y'}
