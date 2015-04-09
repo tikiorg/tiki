@@ -958,6 +958,32 @@ div.drillshow {
 	display: @breadcrumb-display; // block;
 }
 
+// Admin
+a.admbox {
+	&,
+	&:visited {
+//		border: 1px solid @admbox-border; //#ccc
+//		background-color: @admbox-bg; // #ccc;
+//		color: @admbox-color; // #333;
+	}
+	&:hover,
+	&:focus,
+	&:active {
+//		border: 1px solid @admbox-hover-border; // #333;
+//		background-color: @admbox-hover-bg; // #aaa;
+//		color: @admbox-hover-color; //#fff;
+	}
+	&.off {
+		border: 1px solid @admbox-off-border; // #a9a9a9;
+		color: @admbox-off-color; // #9f9f9f;
+		&:hover,
+		&:focus,
+		&:active {
+			border: 1px solid @admbox-off-hover-border; // #a9a9a9;
+			color: @admbox-off-hover-color; // #666;
+		}
+	}
+}
 
 
 

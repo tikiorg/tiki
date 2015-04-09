@@ -722,6 +722,16 @@ div.drillshow {
   font-size: 90%;
   display: block;
 }
+a.admbox.off {
+  border: 1px solid #010304;
+  color: #999999;
+}
+a.admbox.off:hover,
+a.admbox.off:focus,
+a.admbox.off:active {
+  border: 1px solid #010304;
+  color: #999999;
+}
 .button.highlight {
   background: inherit;
 }
@@ -2470,11 +2480,77 @@ label.aclabel {
   padding: 4px;
   text-align: center;
 }
+.calhighlight {
+  background: #d9edf7;
+}
+a.fc-event:hover {
+  color: #ffffff;
+}
 @media (min-width: 768px) {
   #calendar_dialog .modal-dialog {
     min-width: 750px;
     width: 80%;
   }
+}
+.calendarweek {
+  border-bottom: 1px solid #dddddd;
+}
+#calprio {
+  color: #333333;
+}
+.calprio1 {
+  background: #dae0e0;
+}
+.calprio2 {
+  background: #dadcdc;
+}
+.calprio3 {
+  background: #dad0d0;
+}
+.calprio4 {
+  background: #dacaca;
+}
+.calprio5 {
+  background: #dac0d0;
+}
+.calprio6 {
+  background: #dababa;
+}
+.calprio7 {
+  background: #dab0b0;
+}
+.calprio8 {
+  background: #daaaaa;
+}
+.calprio9 {
+  background: #da9a9a;
+}
+.calprio1 a,
+.calprio2 a,
+.calprio3 a,
+.calprio4 a,
+.calprio5 a,
+.calprio6 a,
+.calprio7 a,
+.calprio8 a,
+.calprio9 a {
+  color: #333333;
+  font-weight: normal;
+}
+.status0,
+.status1,
+.status2 {
+  border: 1px solid #333333;
+  color: #333333;
+}
+.status0 {
+  background: #d9edf7;
+}
+.status1 {
+  background: #dff0d8;
+}
+.status2 {
+  background: #f2dede;
 }
 #intertrans-indicator {
   position: fixed;
