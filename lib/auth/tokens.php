@@ -165,7 +165,17 @@ class AuthTokens
 		return $this->db->getOne('SELECT token FROM tiki_auth_tokens WHERE tokenId = ?', array( $max ));
 	}
 
-	function includeToken( $url, array $groups = array(), $email = '' )
+	/**
+	 * This is a function that includes a security token into a provided URL
+	 * @param $url The URL where the token is valid.
+	 * @param array $groups The groups from which the person using the token will have permissions for.
+	 * @param string $email The email that the token was sent to, for recording purpose. If there are multiple
+	 * emails, it currently saves as comma separated list but exploding will need to trim spaces.
+	 * @param int $timeout Timeout to set in seconds. If not included, will use default as set in prefs.
+	 * @param int $hits Number of hits allowed before token expires. If not included, will use default as set in prefs.
+	 * @return string A URL that has the security token included.
+	 */
+	function includeToken( $url, array $groups = array(), $email = '', $timeout = 0, $hits = 0)
 	{
 		$data = parse_url($url);
 
@@ -176,7 +186,15 @@ class AuthTokens
 			$args = array();
 		}
 
-		$token = $this->createToken($data['path'], $args, $groups, array('email'=>$email));
+		$settings = array('email'=>$email);
+		if (!empty($timeout)) {
+			$settings['timeout'] = $timeout;
+		}
+		if (!empty($hits)) {
+			$settings['hits'] = $hits;
+		}
+
+		$token = $this->createToken($data['path'], $args, $groups, $settings);
 		$args['TOKEN'] = $token;
 
 		$query = '?' . http_build_query($args, '', '&');

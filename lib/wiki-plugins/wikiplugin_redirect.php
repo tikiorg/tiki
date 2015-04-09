@@ -39,6 +39,13 @@ function wikiplugin_redirect_info()
 				'default' => '',
 				'profile_reference' => 'perspective',
 			),
+			'autologin_remotetiki' => array(
+				'required' => false,
+				'name' => tra('Auto login remote Tiki and redirect to page there.'),
+				'description' => tra('Base URL where remote Tiki is located, to auto login to prior to redirection to page there, e.g. https://othertiki.com.'),
+				'filter' => 'url',
+				'default' => '',
+			),
 		),
 	);
 }
@@ -102,6 +109,25 @@ function wikiplugin_redirect($data, $params)
 		// Do not redirect if the page is being edited
 		$isEditMode = (strpos($_SERVER['SCRIPT_NAME'], 'tiki-editpage.php') !== false) || (isset($_REQUEST['controller']) && $_REQUEST['controller'] == 'edit');
 		if ($isEditMode == false) {
+			// Auto login to remote Tiki functionality
+			if (!empty($autologin_remotetiki)) {
+				if (substr($autologin_remotetiki, -1) == '/') {
+					$autologin_remotetiki = rtrim($autologin_remotetiki, '/');
+				}
+				if (!empty($page)) {
+					$redirect_page = $page;
+				} else {
+					$redirect_page = '';
+				}
+				$remotetikiurl = get_remotetikiurl($autologin_remotetiki, $redirect_page);
+				if (filter_var($remotetikiurl, FILTER_VALIDATE_URL)) {
+					header("Location: $remotetikiurl");
+					die;
+				} else {
+					TikiLib::lib('access')->display_error('', tra('Remote system error'), "500");
+					die;
+				}
+			}
 
 			/* SEO: Redirect with HTTP status 301 - Moved Permanently than default 302 - Found */
 			if (isset($page)) {
@@ -129,4 +155,35 @@ function wikiplugin_redirect($data, $params)
 		}
 	}
 	return $areturn;
+}
+
+/**
+ * This function gets a URL with a token in it so that the user can be redirected that to actually login
+ * @param $autologin_remotetiki The remote Tiki base url, e.g. https://remotetiki.com
+ * @param $redirect_page The pagename of the page on the remote Tiki to redirect to.
+ * If not set, user will end up on the default home page on remote Tiki.
+ * @return string The URL with the token in it.
+ */
+function get_remotetikiurl($autologin_remotetiki, $redirect_page) {
+	// Get URL for user to login into remote Tiki
+	global $user, $base_url;
+	$email = TikiLib::lib('user')->get_user_email($user);
+	$realName = trim(TikiLib::lib('tiki')->get_user_preference($user, 'realName', ''));
+	$remotetikiurl = $autologin_remotetiki . '/tiki-autologin.php';
+	$client = TikiLib::lib('tiki')->get_http_client( $remotetikiurl );
+	$groups = TikiLib::lib('user')->get_user_groups($user);
+	$remotelogout_url = $base_url . 'tiki-logout.php';
+	$base = array( 'uname' => $user, 'email' => $email, 'realName' => $realName, 'page' => $redirect_page, 'remotelogout_url' => $remotelogout_url, 'groups' => $groups );
+	try {
+		$client->setParameterPost( $base );
+		$response = $client->request( 'POST' );
+		if ($response->isSuccessful()) {
+			return $response->getBody();
+		} else {
+			TikiLib::lib('access')->display_error('', $response->getMessage(), $response->getStatus());
+			die;
+		}
+	} catch ( Zend_Http_Exception $e ) {
+		throw new Exception($e->getMessage());
+	}
 }

@@ -42,6 +42,60 @@ function prefs_login_list()
 			'default' => 'n',
 			'tags' => array('advanced'),			
 		),
+		'login_autologin' => array(
+			'name' => tr('Enable autologin from remote Tiki'),
+			'description' => tr('Used with autologin_remotetiki in the redirect plugin'),
+			'type' => 'flag',
+			'default' => 'n',
+			'tags' => array('advanced'),
+			'dependencies' => array(
+				'login_autologin_user',
+				'login_autologin_group',
+				'auth_token_access',
+			),
+		),
+		'login_autologin_user' => array(
+			'name' => tr('System username to use to initiate autologin from remote Tiki'),
+			'description' => tr('Specified user must exist and be configured in Settings...Tools...DSN/Content Authentication on remote Tiki. Used with autologin_remotetiki in the redirect plugin.'),
+			'type' => 'text',
+			'default' => '',
+			'tags' => array('advanced'),
+		),
+		'login_autologin_group' => array(
+			'name' => tr('System groupname to use for auto login token'),
+			'description' => tr('For security, please create a group that has no users and no permissions and specify its name here.'),
+			'type' => 'text',
+			'default' => '',
+			'tags' => array('advanced'),
+		),
+		'login_autologin_createnew' => array(
+			'name' => tr('Create user account if autologin user does not exist'),
+			'description' => tr('Create a new user account if the user that is trying to autologin does not exist on this Tiki.'),
+			'type' => 'flag',
+			'default' => 'y',
+			'tags' => array('advanced'),
+		),
+		'login_autologin_allowedgroups' => array(
+			'name' => tr('Allowed groups from remote Tiki to autologin.'),
+			'description' => tr('Comma separated list of groups to allow autologin from remote Tiki. If empty, will allow everyone.'),
+			'type' => 'text',
+			'default' => '',
+			'tags' => array('advanced'),
+		),
+		'login_autologin_syncgroups' => array(
+			'name' => tr('Sync these groups from remote Tiki on autologin.'),
+			'description' => tr('Comma separated list of groups to sync from remote Tiki on autologin. Group membership will be added or removed accordingly.'),
+			'type' => 'text',
+			'default' => '',
+			'tags' => array('advanced'),
+		),
+		'login_autologin_logoutremote' => array(
+			'name' => tr('Automatically logout remote Tiki after logout.'),
+			'description' => tr('When the user logs out of this Tiki, redirect the user to logout of the other Tiki as well.'),
+			'type' => 'flag',
+			'default' => 'y',
+			'tags' => array('advanced'),
+		),
 	);
 }
 

@@ -188,6 +188,19 @@
 			{button href="?page=login&amp;refresh_email_group=y" _text="{tr}Assign users to group function of email pattern{/tr}"}
 		{/tab}
 
+    {tab name="{tr}Remote Tiki Autologin{/tr}"}
+      <h2>{tr}Remote Tiki Autologin{/tr}</h2>
+        <fieldset>
+          {preference name=login_autologin}
+          {preference name=login_autologin_user}
+          {preference name=login_autologin_group}
+          {preference name=login_autologin_createnew}
+          {preference name=login_autologin_allowedgroups}
+          {preference name=login_autologin_syncgroups}
+          {preference name=login_autologin_logoutremote}
+        </fieldset>
+    {/tab}
+
 		{tab name="{tr}LDAP{/tr}"}
 			<h2>{tr}LDAP{/tr}</h2>
 			<input type="hidden" name="auth_ldap" />
