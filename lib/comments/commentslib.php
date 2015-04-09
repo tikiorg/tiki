@@ -3427,8 +3427,18 @@ class Comments extends TikiLib
 		if ($prefs['feature_contribution'] == 'y' && $prefs['feature_contribution_mandatory_forum'] == 'y' && empty($params['contributions'])) {
 			$errors[] = tra('A contribution is mandatory');
 		}
-		if (($prefs['comments_notitle'] != 'y' && empty($params['comments_title'])) || (empty($params['comments_data']) && $prefs['feature_forums_allow_thread_titles'] != 'y')) {
-			$errors[] = tra('You have to enter a title and text');
+		//if original post, comment title is necessary. Message is also necessary unless, pref says message is not.
+		if (empty($params['comments_reply_threadId'])){
+			if(empty($params['comments_title']) || (empty($params['comments_data']) && $prefs['feature_forums_allow_thread_titles'] != 'y')){
+				$errors[] = tra('Please enter a Title and Message for your new forum topic.');
+			}
+		}else{
+			//if comments require title and no title is given, or if message is empty
+			if ($prefs['comments_notitle'] != 'y' && (empty($params['comments_title']) || empty($params['comments_data']))){
+				$errors[] = tra('Please enter a Title and Message for your forum reply.');
+			}elseif (empty($params['comments_data'])){ //if comments do not require title but message is empty
+				$errors[] = tra('Please enter a Message for your forum reply.');
+			}
 		}
 		if (!empty($params['anonymous_email']) && !validate_email($params['anonymous_email'], $prefs['validateEmail'])) {
 			$errors[] = tra('Invalid Email');
