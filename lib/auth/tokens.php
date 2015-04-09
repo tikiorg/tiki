@@ -81,7 +81,7 @@ class AuthTokens
 		$registered = (array) json_decode($data['parameters'], true);
 
 		if ($prefs['feature_sefurl'] === 'y') {    // filter out the usual sefurl parameters that would be missing from the URI
-			$usedInRequest = [
+			$usedInRequest = array(
 				'page',
 				'articleId',
 				'blogId', 'postId',
@@ -93,7 +93,7 @@ class AuthTokens
 				'sheetId',
 				'userId',
 				'calIds',
-			];
+			);
 
 			$usedInRequest = array_diff($usedInRequest, array_keys($registered));       // params that are actually used and need to be checked
 			$parameters = array_diff_key($parameters, array_flip($usedInRequest));					// remove params that aren't used
