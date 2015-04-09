@@ -132,7 +132,7 @@
 			</div>
 		</div>
 	</form>
-	{if $prefs.feature_wiki_categorize_structure == 'y' && $all_editable == 'y'}
+	{if $prefs.feature_categories eq 'y' && $prefs.feature_wiki_categorize_structure == 'y' && $all_editable == 'y'}
 		<form action="tiki-edit_structure.php" method="post">
 			<div class="panel panel-default">
 				<div class="panel-heading">
