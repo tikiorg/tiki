@@ -7388,6 +7388,16 @@ div.drillshow {
   font-size: 90%;
   display: block;
 }
+a.admbox.off {
+  border: 1px solid #74120f;
+  color: #999999;
+}
+a.admbox.off:hover,
+a.admbox.off:focus,
+a.admbox.off:active {
+  border: 1px solid #74120f;
+  color: #999999;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */
