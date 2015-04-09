@@ -879,14 +879,14 @@ function wikiplugin_trackerlist($data, $params)
 					$fieldtype = $allfields['data'][$col + $adjustCol]['type'];
 					$id = $allfields['data'][$col + $adjustCol]['fieldId'];
 					//handle status filter
-					if ($adjustCol === -1 && $col === 0 && in_array($ajaxfilter, ['o','p','c'])) {
+					if ($adjustCol === -1 && $col === 0 && in_array($ajaxfilter, array('o','p','c'))) {
 						$status = $ajaxfilter;
 					/*
 					 * handle date filter - these are always one filter, in the form of:
 					 * from: >=1427389832000; to: <=1427389832000; both from and to: 1427389832000 - 1427880000000
 					 * which is unix timestamp in milliseconds
 					 */
-					} elseif (strpos($tsfiltersArray[$col], 'type:date') !== false && in_array($fieldtype, ['f', 'j'])) {
+					} elseif (strpos($tsfiltersArray[$col], 'type:date') !== false && in_array($fieldtype, array('f', 'j'))) {
 						$datefilter = explode(' - ', $ajaxfilter);
 						$filterfield[$i] = $id;
 						//a range (from and to filters) will have 2 items in the array
