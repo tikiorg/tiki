@@ -103,7 +103,7 @@
     </div>
 </footer>
 
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
             {if $module_params.navbar_toggle neq 'n'}
