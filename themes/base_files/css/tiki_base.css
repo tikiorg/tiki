@@ -1209,6 +1209,9 @@ h3.panel-title {
   right: 1%;
   top: 0;
 }
+a.flipmodtitle .icon {
+  font-size: 80%;
+}
 .panel:hover .moduleflip,
 .panel:hover .moduleflip img {
   display: block;
