@@ -45,10 +45,11 @@ if (!empty($_REQUEST['page'])) {
 	$page = '';
 }
 
-if (!empty($_REQUEST['remotelogout_url'])) {
-	$remotelogout_url = $_REQUEST['remotelogout_url'];
+if (!empty($_REQUEST['base_url'])) {
+	$autologin_base_url = $_REQUEST['base_url'];
 } else {
-	$remotelogout_url = '';
+	$access->display_error('', tra('Base URL not received from remote system'), "500");
+	die;
 }
 
 if ($user == $prefs['login_autologin_user']) {
@@ -94,7 +95,7 @@ if ($user == $prefs['login_autologin_user']) {
 	$tokenlib = AuthTokens::build( $prefs );
 	$params['uname'] = $uname;
 	$params['page'] = $page;
-	$params['remotelogout_url'] = $remotelogout_url;
+	$params['base_url'] = $autologin_base_url;
 	$url = $base_url . 'tiki-autologin.php' . '?' . http_build_query( $params, '', '&' );
 	$url = $tokenlib->includeToken( $url, array($prefs['login_autologin_group']), '', 30, 1);
 	echo $url;
@@ -105,8 +106,8 @@ if ($user == $prefs['login_autologin_user']) {
 		die;
 	}
 	if ($user || TikiLib::lib('user')->autologin_user($uname)) {
-		if (!empty($remotelogout_url)) {
-			$_SESSION['autologin_remotelogout_url'] = $remotelogout_url;
+		if (!empty($autologin_base_url)) {
+			$_SESSION['autologin_base_url'] = $autologin_base_url;
 		}
 		if (!empty($page)) {
 			$sefurl = TikiLib::lib('wiki')->sefurl($page);

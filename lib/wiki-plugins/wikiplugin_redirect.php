@@ -172,8 +172,7 @@ function get_remotetikiurl($autologin_remotetiki, $redirect_page) {
 	$remotetikiurl = $autologin_remotetiki . '/tiki-autologin.php';
 	$client = TikiLib::lib('tiki')->get_http_client( $remotetikiurl );
 	$groups = TikiLib::lib('user')->get_user_groups($user);
-	$remotelogout_url = $base_url . 'tiki-logout.php';
-	$base = array( 'uname' => $user, 'email' => $email, 'realName' => $realName, 'page' => $redirect_page, 'remotelogout_url' => $remotelogout_url, 'groups' => $groups );
+	$base = array( 'uname' => $user, 'email' => $email, 'realName' => $realName, 'page' => $redirect_page, 'base_url' => $base_url, 'groups' => $groups );
 	try {
 		$client->setParameterPost( $base );
 		$response = $client->request( 'POST' );

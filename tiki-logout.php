@@ -28,8 +28,8 @@ if (!empty($_REQUEST['page'])) {
 	$out_page = '';
 }
 
-if ($prefs['login_autologin'] == 'y' && $prefs['login_autologin_logoutremote'] == 'y' && !empty($_SESSION['autologin_remotelogout_url'])) {
-	$out_page = $_SESSION['autologin_remotelogout_url'];
+if ($prefs['login_autologin'] == 'y' && $prefs['login_autologin_logoutremote'] == 'y' && !empty($_SESSION['autologin_base_url'])) {
+	$out_page = $_SESSION['autologin_base_url'] . 'tiki-logout.php';
 }
 
 $userlib->user_logout($user, false, $out_page);
