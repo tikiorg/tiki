@@ -1078,7 +1078,7 @@ body {
   font-size: 14px;
   line-height: 1.42857143;
   color: #515151;
-  background-color: #ffffff;
+  background-color: #addd63;
 }
 input,
 button,
@@ -1123,7 +1123,7 @@ img {
 .img-thumbnail {
   padding: 4px;
   line-height: 1.42857143;
-  background-color: #ffffff;
+  background-color: #addd63;
   border: 1px solid #dddddd;
   border-radius: 4px;
   -webkit-transition: all 0.2s ease-in-out;
@@ -2273,7 +2273,7 @@ th {
   border-top: 2px solid #dddddd;
 }
 .table .table {
-  background-color: #ffffff;
+  background-color: #addd63;
 }
 .table-condensed > thead > tr > th,
 .table-condensed > tbody > tr > th,
@@ -3919,7 +3919,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
   color: #737373;
-  background-color: #ffffff;
+  background-color: #addd63;
   border: 1px solid #dddddd;
   border-bottom-color: transparent;
   cursor: default;
@@ -3965,7 +3965,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .nav-tabs.nav-justified > .active > a,
   .nav-tabs.nav-justified > .active > a:hover,
   .nav-tabs.nav-justified > .active > a:focus {
-    border-bottom-color: #ffffff;
+    border-bottom-color: #addd63;
   }
 }
 .nav-pills > li {
@@ -4033,7 +4033,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .nav-tabs-justified > .active > a,
   .nav-tabs-justified > .active > a:hover,
   .nav-tabs-justified > .active > a:focus {
-    border-bottom-color: #ffffff;
+    border-bottom-color: #addd63;
   }
 }
 .tab-content > .tab-pane {
@@ -4877,7 +4877,7 @@ a.badge:focus {
   padding: 4px;
   margin-bottom: 20px;
   line-height: 1.42857143;
-  background-color: #ffffff;
+  background-color: #addd63;
   border: 1px solid #dddddd;
   border-radius: 4px;
   -webkit-transition: border 0.2s ease-in-out;
@@ -6569,7 +6569,7 @@ a.fc-event:hover {
   border: thin solid rgba(84, 60, 27, 0.64) /*black*/;
 }
 .filter .fancyfilter .token {
-  background: #ffffff;
+  background: #addd63;
 }
 .note-list .postbody-title {
   background: #e6ffb2;
@@ -6735,7 +6735,7 @@ table.treetable.objectperms td.removed {
 }
 .olControlMousePosition {
   background: rgba(0, 0, 0, 0.75);
-  color: #ffffff;
+  color: #addd63;
 }
 .olControlScaleLineTop,
 .olControlScaleLineBottom {
@@ -6826,7 +6826,7 @@ input:-webkit-autofill {
   /* the Google guys forgot the number-one rule... when they specify background they should specify forgeround color too ;) */
 }
 #cboxTitle {
-  background-color: #ffffff;
+  background-color: #addd63;
 }
 #captchaImg {
   border: 1px solid #53b042;
@@ -6839,14 +6839,14 @@ form.simple label .warning {
   color: #a94442;
 }
 .tiki-modal .mask {
-  background-color: #ffffff;
+  background-color: #addd63;
 }
 .ui-dialog {
-  background: #ffffff;
+  background: #addd63;
   color: #515151;
 }
 .box-quickadmin .cssmenu_horiz ul li {
-  background-color: #ffffff;
+  background-color: #addd63;
 }
 .box-switch_lang .box-data img.highlight {
   border: 0.1em solid #ebccd1;
@@ -6914,7 +6914,7 @@ div.cvsup {
   background: #f9f9f9;
 }
 .webmail_list .button {
-  background: #ffffff;
+  background: #addd63;
   border: 1px solid #53b042;
 }
 .webmail_list .webmail_read {
@@ -6928,10 +6928,10 @@ div.cvsup {
   color: #8a6d3b;
 }
 .webmail_message {
-  background: #ffffff;
+  background: #addd63;
 }
 .webmail_message_headers {
-  background: #ffffff;
+  background: #addd63;
 }
 .webmail_message_headers th {
   background: transparent;
@@ -6954,12 +6954,12 @@ div.cvsup {
   border-left: medium double #959595;
 }
 .toolbars-picker {
-  background: #ffffff;
+  background: #addd63;
   border: thin solid #515151;
   color: #515151;
 }
 .toolbars-picker a {
-  border: 1px solid #ffffff;
+  border: 1px solid #addd63;
   color: #515151;
 }
 .toolbars-picker a:hover {
@@ -7062,12 +7062,12 @@ div#outerToc * {
   color: #515151;
 }
 .plugin-form-float {
-  background: #ffffff;
+  background: #addd63;
   color: #515151;
   border: solid 2px #515151;
 }
 body.wikitext {
-  background: #ffffff;
+  background: #addd63;
   color: #515151;
 }
 .editable-inline {
@@ -7099,11 +7099,11 @@ body.wikitext {
 }
 .TextArea-fullscreen .actions,
 .CodeMirror-fullscreen .actions {
-  background-color: #ffffff;
+  background-color: #addd63;
   border-top: #ffffff 1px solid;
 }
 #autosave_preview {
-  background-color: #ffffff;
+  background-color: #addd63;
   color: #515151;
 }
 #autosave_preview_grippy {
@@ -7286,7 +7286,7 @@ a.admbox.off:active {
 /* automatically choose the correct arrow/text color */
 .tsFilterInput {
   border: none;
-  background-color: #f7f7f7;
+  background-color: #b1da56;
 }
 .tablesorter {
   /* style header */
@@ -7296,7 +7296,7 @@ a.admbox.off:active {
 }
 tr.tablesorter-headerRow,
 tr.tablesorter-filter-row {
-  background-color: #ffffff;
+  background-color: #addd63;
 }
 .tablesorter .bootstrap-icon-unsorted {
   background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
@@ -7309,20 +7309,22 @@ tr.tablesorter-filter-row {
 }
 input.tablesorter-filter {
   border: none;
-  background-color: #f7f7f7;
+  background-color: #b1da56;
 }
 .tablesorter input.dateFrom,
 .tablesorter input.dateTo {
   border: none;
-  background-color: #f7f7f7;
+  background-color: #b1da56;
 }
-body {
-  background: url('../images/background.jpg');
+.header_outer {
+  margin-top: 24px;
 }
 .header_container > .page-header {
   min-height: 175px;
   background: url('../images/header_background_ltr.jpg') 50% 0 no-repeat;
   background-size: cover;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 .topbar,
 .navbar-default {

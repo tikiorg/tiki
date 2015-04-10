@@ -12,8 +12,12 @@
 @topmodules-row-sidemargins: 0;
 @topbar-row-sidemargins: -15px;
 
-body {
-	background: url('@{imagePath}background.jpg');
+//body {
+//	background: url('@{imagePath}background.jpg');
+//}
+
+.header_outer {
+	margin-top: 24px;
 }
 
 // add media query for medium and large displays
@@ -21,6 +25,8 @@ body {
 	min-height: 175px;
 	background: url('@{imagePath}header_background_ltr.jpg') 50% 0 no-repeat;
 	background-size: cover;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
 }
 
 .topbar,
