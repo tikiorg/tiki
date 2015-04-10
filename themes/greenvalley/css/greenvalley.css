@@ -7397,6 +7397,9 @@ input[type="submit"]:hover {
   box-shadow: 1px 1px 2px 1px rgba(84, 60, 27, 0.64);
   text-shadow: #2b2b2b 0 1px 1px;
 }
+footer.footer {
+  margin-bottom: 20px;
+}
 .footerbgtrap {
   background: url('../images/footer_bck.jpg');
   background-size: contain;
