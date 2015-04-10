@@ -265,6 +265,7 @@
 </form>
 
 <h2>{tr}File Gallery Search Indexing{/tr}</h2>
+<em>More info <a href="https://doc.tiki.org/Search+within+files">here</a></em>
 <div class="table-responsive">
 	<table class="table normal">
 		<tr>
