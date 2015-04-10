@@ -321,26 +321,26 @@ if (function_exists('disk_free_space')) {
 	if ( $bytes < 200 * 1024 * 1024 ) {
 		$server_properties['Disk Space'] = array(
 			'fitness' => 'bad',
-			'value' => $free_space,
+			'setting' => $free_space,
 			'message' => tra('You have less than 200 megs of free disk space. Tiki will not fit on this disk drive.')
 		);
 	} elseif ( $bytes < 250 * 1024 * 1024 ) {
 		$server_properties['Disk Space'] = array(
 			'fitness' => 'ugly',
-			'value' => $free_space,
+			'setting' => $free_space,
 			'message' => tra('You have less than 250 megs of free disk space. This is quite tight. Tiki needs disk space for compiling templates and for uploading files.').' '.tra('When the disk runs full you will not be able to log into your Tiki any more.').' '.tra('We can not reliably check for quotas, so be warned that if your server makes use of them you might have less disk space available.')
 		);
 	} else {
 		$server_properties['Disk Space'] = array(
 			'fitness' => 'good',
-			'value' => $free_space,
+			'setting' => $free_space,
 			'message' => tra('You have more than 251 megs of free disk space. Tiki will run nicely, but you may run into issues when your site grows (e.g. file uploads)').' '.tra('When the disk runs full you will not be able to log into your Tiki any more.').' '.tra('We can not reliably check for quotas, so be warned that if your server makes use of them you might have less disk space available.')
 		);
 	}
 } else {
 		$server_properties['Disk Space'] = array(
 			'fitness' => 'N/A',
-			'value' => 'N/A',
+			'setting' => 'N/A',
 			'message' => tra('The PHP function disk_free_space is not available on your server, so we can\'t check for this.')
 		);
 }
@@ -1565,6 +1565,63 @@ if ($s == 1) {
 	);
 }
 
+	// adapted from \FileGalLib::get_file_handlers
+	$fh_possibilities = array(
+		'application/ms-excel' => array('xls2csv %1'),
+		// vnd.openxmlformats are handled natively in Zend
+		//'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => array('xlsx2csv.py %1'),
+		'application/ms-powerpoint' => array('catppt %1'),
+		//'application/vnd.openxmlformats-officedocument.presentationml.presentation' => array('pptx2txt.pl %1 -'),
+		'application/msword' => array('catdoc %1', 'strings %1'),
+		//'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => array('docx2txt.pl %1 -'),
+		'application/pdf' => array('pstotext %1', 'pdftotext %1 -'),
+		'application/postscript' => array('pstotext %1'),
+		'application/ps' => array('pstotext %1'),
+		'application/rtf' => array('catdoc %1'),
+		'application/sgml' => array('col -b %1', 'strings %1'),
+		'application/vnd.ms-excel' => array('xls2csv %1'),
+		'application/vnd.ms-powerpoint' => array('catppt %1'),
+		'application/x-msexcel' => array('xls2csv %1'),
+		'application/x-pdf' => array('pstotext %1', 'pdftotext %1 -'),
+		'application/x-troff-man' => array('man -l %1'),
+		'text/enriched' => array('col -b %1', 'strings %1'),
+		'text/html' => array('elinks -dump -no-home %1'),
+		'text/richtext' => array('col -b %1', 'strings %1'),
+		'text/sgml' => array('col -b %1', 'strings %1'),
+		'text/tab-separated-values' => array('col -b %1', 'strings %1'),
+	);
+
+	$file_handlers = array();
+	foreach ($fh_possibilities as $type => $options) {
+		$file_handler = array(
+			'fitness' => '',
+			'message' => '',
+		);
+		foreach ($options as $opt) {
+			$optArray = explode(' ', $opt, 2);
+			$exec = reset($optArray);
+
+			$which_exec = `which $exec`;
+			if ($which_exec) {
+				$file_handler['fitness'] = 'good';
+				$file_handler['message'] = "will be handled by $which_exec";
+				break;
+			}
+		}
+		if (! $file_handler['fitness']) {
+			$file_handler['fitness'] = 'ugly';
+			$fh_commands = '';
+			foreach ($options as $opt) {
+				$fh_commands .= $fh_commands ? ' or ' : '';
+				$fh_commands .= '"' . substr($opt, 0, strpos($opt, ' ')) . '"';
+			}
+			$file_handler['message'] = 'You need to install ' . $fh_commands . ' to index this type of file';
+		}
+		$file_handlers[$type] = $file_handler;
+	}
+
+
+
 if (!$standalone) {
 	// The following is borrowed from tiki-admin_system.php
 	if ($prefs['feature_forums'] == 'y') {
@@ -1604,10 +1661,10 @@ if (!$standalone) {
 	}
 	$smarty->assign_by_ref('dirs', $dirs);
 	$smarty->assign_by_ref('dirsWritable', $dirsWritable);
-}
+				}
 
 if ($standalone && !$nagios) {
-	$render .= '<style type="text/css">td, th { border: 1px solid #000000; vertical-align: baseline;}</style>';
+	$render .= '<style type="text/css">td, th { border: 1px solid #000000; vertical-align: baseline; padding: .5em; }</style>';
 //	$render .= '<h1>Tiki Server Compatibility</h1>';
 	if (!$locked) {
 		$render .= '<h2>MySQL or MariaBD Database Properties</h2>';
@@ -1694,6 +1751,12 @@ if ($standalone && !$nagios) {
 	renderTable($security);
 	$render .= '<h2>MySQL Variables</h2>';
 	renderTable($mysql_variables);
+
+	$render .= '<h2>File Gallery Search Indexing</h2>';
+	$render .= '<em>More info <a href="https://doc.tiki.org/Search+within+files">here</a></em>
+	';
+	renderTable($file_handlers);
+
 	$render .= '<h2>PHP Info</h2>';
 	if ( isset($_REQUEST['phpinfo']) && $_REQUEST['phpinfo'] == 'y' ) {
 		ob_start();
@@ -1717,6 +1780,7 @@ if ($standalone && !$nagios) {
 	function update_overall_status($check_group, $check_group_name) {
 		global $monitoring_info;
 		$state = 0;
+		$message = '';
 
 		foreach ($check_group as $property => $values) {
 			switch($values['fitness']) {
@@ -1774,6 +1838,7 @@ if ($standalone && !$nagios) {
 	$smarty->assign_by_ref('security', $security);
 	$smarty->assign_by_ref('mysql_variables', $mysql_variables);
 	$smarty->assign_by_ref('mysql_crashed_tables', $mysql_crashed_tables);
+	$smarty->assign_by_ref('file_handlers', $file_handlers);
 	// disallow robots to index page:
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 	$smarty->assign('mid', 'tiki-check.tpl');
@@ -1801,11 +1866,12 @@ function createPage($title, $content)
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link type="text/css" rel="stylesheet" href="http://dev.tiki.org/styles/fivealive.css" />
+		<link type="text/css" rel="stylesheet" href="http://dev.tiki.org/styles/fivealive-lite.css" />
 		<title>$title</title>
 		<style type="text/css">
 			table { border-collapse: collapse;}
-			#middle { padding-top: 20px; }
+			#fixedwidth {   width: 1024px; margin: 1em auto; }
+			#middle {  margin: 0 auto; }
 			.button {
 				border-radius: 3px 3px 3px 3px;
 				font-size: 12.05px;

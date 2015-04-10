@@ -285,6 +285,41 @@
 	{/foreach}
 </table>
 
+<h2>{tr}File Gallery Search Indexing{/tr}</h2>
+<em>More info <a href="https://doc.tiki.org/Search+within+files">here</a></em>
+<div class="table-responsive">
+	<table class="table normal">
+		<tr>
+			<th>{tr}Mimetype{/tr}</th>
+			<th>{tr}Tiki Fitness{/tr}</th>
+			<th>{tr}Explanation{/tr}</th>
+		</tr>
+
+		{foreach from=$file_handlers key=key item=item}
+			<tr>
+				<td class="text">{$key}</td>
+				<td class="text">
+					{if $item.fitness eq 'good' or $item.fitness eq 'safe'}
+						{icon _id=accept alt="" style="vertical-align:middle"}
+					{elseif $item.fitness eq 'bad' or $item.fitness eq 'risky'}
+						{icon _id=exclamation alt="" style="vertical-align:middle"}
+					{elseif $item.fitness eq 'ugly'}
+						{icon _id=error alt="" style="vertical-align:middle"}
+					{elseif $item.fitness eq 'info'}
+						{icon _id=information alt="" style="vertical-align:middle"}
+					{elseif $item.fitness eq 'unknown'}
+						{icon _id=no_information alt="" style="vertical-align:middle"}
+					{/if}
+					{$item.fitness}
+				</td>
+				<td class="text">{$item.message|escape}</td>
+			</tr>
+		{foreachelse}
+			{norecords _colspan=3}
+		{/foreach}
+	</table>
+</div>
+
 <h2>{tr}MySQL Variable Information{/tr}</h2>
 <table class="table normal">
 	<tr>
