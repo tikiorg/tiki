@@ -1598,7 +1598,7 @@ if ($s == 1) {
 		'application/vnd.ms-excel' => array('xls2csv %1'),
 		'application/vnd.ms-powerpoint' => array('catppt %1'),
 		'application/x-msexcel' => array('xls2csv %1'),
-		'application/x-pdf' => array('pstotext %1'),
+		'application/x-pdf' => array('pstotext %1', 'pdftotext %1 -'),
 		'application/x-troff-man' => array('man -l %1'),
 		'text/enriched' => array('col -b %1', 'strings %1'),
 		'text/html' => array('elinks -dump -no-home %1'),
