@@ -1598,7 +1598,7 @@ if ($s == 1) {
 		'application/vnd.ms-excel' => array('xls2csv %1'),
 		'application/vnd.ms-powerpoint' => array('catppt %1'),
 		'application/x-msexcel' => array('xls2csv %1'),
-		'application/x-pdf' => array('pstotext %1'),
+		'application/x-pdf' => array('pstotext %1', 'pdftotext %1 -'),
 		'application/x-troff-man' => array('man -l %1'),
 		'text/enriched' => array('col -b %1', 'strings %1'),
 		'text/html' => array('elinks -dump -no-home %1'),
@@ -1708,7 +1708,7 @@ if (!$standalone) {
 }
 
 if ($standalone && !$nagios) {
-	$render .= '<style type="text/css">td, th { border: 1px solid #000000; vertical-align: baseline;}</style>';
+	$render .= '<style type="text/css">td, th { border: 1px solid #000000; vertical-align: baseline; padding: .5em; }</style>';
 //	$render .= '<h1>Tiki Server Compatibility</h1>';
 	if (!$locked) {
 		$render .= '<h2>MySQL or MariaDB Database Properties</h2>';
@@ -1797,6 +1797,8 @@ if ($standalone && !$nagios) {
 	renderTable($mysql_variables);
 
 	$render .= '<h2>File Gallery Search Indexing</h2>';
+	$render .= '<em>More info <a href="https://doc.tiki.org/Search+within+files">here</a></em>
+	';
 	renderTable($file_handlers);
 
 	$render .= '<h2>PHP Info</h2>';
@@ -1921,16 +1923,16 @@ if ($standalone && !$nagios) {
 	$smarty->assign_by_ref('file_handlers', $file_handlers);
 	// disallow robots to index page:
 
-	$fmap = [
-		'good' => ['icon' => 'ok', 'class' => 'success'],
-		'safe' => ['icon' => 'ok', 'class' => 'success'],
-		'bad' => ['icon' => 'ban', 'class' => 'danger'],
-		'unsafe' => ['icon' => 'ban', 'class' => 'danger'],
-		'risky' => ['icon' => 'warning', 'class' => 'warning'],
-		'ugly' => ['icon' => 'warning', 'class' => 'warning'],
-		'info' => ['icon' => 'information', 'class' => 'info'],
-		'unknown' => ['icon' => 'help', 'class' => 'muted'],
-	];
+	$fmap = array(
+		'good' => array('icon' => 'ok', 'class' => 'success'),
+		'safe' => array('icon' => 'ok', 'class' => 'success'),
+		'bad' => array('icon' => 'ban', 'class' => 'danger'),
+		'unsafe' => array('icon' => 'ban', 'class' => 'danger'),
+		'risky' => array('icon' => 'warning', 'class' => 'warning'),
+		'ugly' => array('icon' => 'warning', 'class' => 'warning'),
+		'info' => array('icon' => 'information', 'class' => 'info'),
+		'unknown' => array('icon' => 'help', 'class' => 'muted'),
+	);
 	$smarty->assign('fmap', $fmap);
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 	$smarty->assign('mid', 'tiki-check.tpl');
@@ -1958,11 +1960,12 @@ function createPage($title, $content)
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link type="text/css" rel="stylesheet" href="http://dev.tiki.org/styles/fivealive.css" />
+		<link type="text/css" rel="stylesheet" href="http://dev.tiki.org/styles/fivealive-lite.css" />
 		<title>$title</title>
 		<style type="text/css">
 			table { border-collapse: collapse;}
-			#middle { padding-top: 20px; }
+			#fixedwidth {   width: 1024px; margin: 1em auto; }
+			#middle {  margin: 0 auto; }
 			.button {
 				border-radius: 3px 3px 3px 3px;
 				font-size: 12.05px;

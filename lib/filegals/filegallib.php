@@ -1327,6 +1327,7 @@ class FileGalLib extends TikiLib
 		$cachelib = TikiLib::lib('cache');
 
 		if ($for_execution && ! $default = $cachelib->getSerialized('file_handlers')) {
+			// n.b. this array is partially duplicated in tiki-check.php for standalone mode checks
 			$possibilities = array(
 				'application/ms-excel' => array('xls2csv %1'),
 				'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => array('xlsx2csv.py %1'),
@@ -1342,7 +1343,7 @@ class FileGalLib extends TikiLib
 				'application/vnd.ms-excel' => array('xls2csv %1'),
 				'application/vnd.ms-powerpoint' => array('catppt %1'),
 				'application/x-msexcel' => array('xls2csv %1'),
-				'application/x-pdf' => array('pstotext %1'),
+				'application/x-pdf' => array('pstotext %1', 'pdftotext %1 -'),
 				'application/x-troff-man' => array('man -l %1'),
 				'text/enriched' => array('col -b %1', 'strings %1'),
 				'text/html' => array('elinks -dump -no-home %1'),

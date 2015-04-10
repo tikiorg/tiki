@@ -2,7 +2,7 @@
 {title help="Structures"}{tr}Structures{/tr}{/title}
 
 {if $tiki_p_admin eq 'y'}
-	<div class="t_navbar">
+	<div class="t_navbar margin-bottom-md">
 		{button href='tiki-import_xml_zip.php' _icon_name="zip" _text="{tr}XML Zip Import{/tr}"}
 	</div>
 {/if}
@@ -207,7 +207,9 @@
 						<div class="help-block">{tr}Use single spaces to indent structure levels{/tr}</div>
 					</div>
 				</div>
-				{include file='categorize.tpl'}
+				{if $prefs.feature_categories eq 'y'}
+					{include file='categorize.tpl'}
+				{/if}
 				<div class="form-group">
 					<div class="submit col-md-9 col-md-push-3">
 						<input type="submit" class="btn btn-primary" value="{tr}Create New Structure{/tr}" name="create">

@@ -12,8 +12,12 @@
 @topmodules-row-sidemargins: 0;
 @topbar-row-sidemargins: -15px;
 
-body {
-	background: url('@{imagePath}background.jpg');
+//body {
+//	background: url('@{imagePath}background.jpg');
+//}
+
+.header_outer {
+	margin-top: 24px;
 }
 
 // add media query for medium and large displays
@@ -21,6 +25,8 @@ body {
 	min-height: 175px;
 	background: url('@{imagePath}header_background_ltr.jpg') 50% 0 no-repeat;
 	background-size: cover;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
 }
 
 .topbar,
@@ -58,10 +64,6 @@ body {
 	}
 }
 
-#pagetop_modules {
-	margin-bottom: 2em;
-}
-
 #middle,
 .row-middle,
 .tiki > .container {
@@ -69,7 +71,7 @@ body {
 }
 
 .pagetitle {
-	text-shadow: #666666 0px 1px 1px;
+	text-shadow: #666666 0 1px 1px;
 }
 
 #page-data {
@@ -103,7 +105,7 @@ body {
 	color: #a99278;
 	background: url('@{imagePath}button_bck_hover.jpg') 100% 50% repeat;
 	box-shadow: 1px 1px 2px 1px rgba(84, 60, 27, 0.64);
-	text-shadow: #2b2b2b 0px 1px 1px;
+	text-shadow: #2b2b2b 0 1px 1px;
 }
 
 .footerbgtrap {

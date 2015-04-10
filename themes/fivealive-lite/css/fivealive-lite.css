@@ -6559,6 +6559,7 @@ button.close {
   color: #8a6d3b;
 }
 .calhighlight {
+  color: #31708f;
   background: #d9edf7;
 }
 a.fc-event:hover {
@@ -7344,7 +7345,7 @@ body.tiki.navbar-padding h1.sitetitle,
 }
 .layout_basic .topbar,
 .layout_basic.tiki .row.topbar,
-.layout_fixed_top_modules .navbar {
+.layout_fixed_top_modules .navbar-fixed-top .navbar {
   margin-bottom: 0;
 }
 .topbar,
