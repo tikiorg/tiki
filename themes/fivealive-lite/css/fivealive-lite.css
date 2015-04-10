@@ -7344,7 +7344,7 @@ body.tiki.navbar-padding h1.sitetitle,
 }
 .layout_basic .topbar,
 .layout_basic.tiki .row.topbar,
-.layout_fixed_top_modules .navbar {
+.layout_fixed_top_modules .navbar-fixed-top .navbar {
   margin-bottom: 0;
 }
 .topbar,
