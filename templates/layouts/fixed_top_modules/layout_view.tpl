@@ -103,14 +103,14 @@
     </div>
 </div>
 
-<div class="">
-    <footer class="main-footer">
-        <div class="container">
-            <!-- content modules col-md-3 -->
-            {modulelist zone=bottom class='row row-sidemargins-zero'}
+    <footer class="footer" id="footer">
+        <div class="footer_liner">
+            <div class="container">
+                {modulelist zone=bottom class='row row-sidemargins-zero'}
+            </div>
         </div>
     </footer>
-</div>
+
 
 <nav class="navbar {* navbar-inverse *}navbar-default navbar-fixed-top" role="navigation">
     <div class="container">

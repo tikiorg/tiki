@@ -104,7 +104,7 @@
 </div>
 <footer class="footer" id="footer">
     <div class="footer_liner">
-        <div class="footerbgtrap container">
+        <div class="container">
             {modulelist zone=bottom class='row row-sidemargins-zero'}
         </div>
     </div>

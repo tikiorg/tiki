@@ -105,8 +105,8 @@
         {/if}
     </div>
 
-    <footer>
-        <div class="bottom_modules">
+    <footer class="footer" id="footer">
+        <div class="footer_liner">
             {modulelist zone=bottom class='row row-sidemargins-zero'}
         </div>
     </footer>

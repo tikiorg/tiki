@@ -128,7 +128,7 @@
     <div id="footer-shadow">{eval var=$prefs.footer_shadow_start}{/if}
         <footer class="footer" id="footer">
             <div class="footer_liner">
-                <div class="footerbgtrap container">
+                <div class="container" style="padding-left: 0; padding-right: 0;">
                     {modulelist zone=bottom class='row-sidemargins-zero'}
                 </div>
             </div>

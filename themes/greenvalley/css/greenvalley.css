@@ -7400,7 +7400,7 @@ input[type="submit"]:hover {
 footer.footer {
   margin-bottom: 20px;
 }
-.footerbgtrap {
+.footer .modules {
   background: url('../images/footer_bck.jpg');
   background-size: contain;
   color: #E0D6CC;
@@ -7412,11 +7412,11 @@ footer.footer {
   -moz-border-radius-bottomright: 8px;
   padding-top: 20px;
 }
-.footerbgtrap h3 a,
-.footerbgtrap h3 a:visited {
+.footer .modules h3 a,
+.footer .modules h3 a:visited {
   color: #B29980;
 }
-.footerbgtrap h3:hover {
+.footer .modules h3:hover {
   color: #c48054;
 }
 .articletitle .titleb {
