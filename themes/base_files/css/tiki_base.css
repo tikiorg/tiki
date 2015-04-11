@@ -3194,7 +3194,8 @@ body:not(.fixed_width) .container {
   padding-right: 15px;
   width: auto;
 }
-legend + p {
+legend + p,
+legend + .form-group {
   margin-top: 20px;
 }
 .tiki .page-header {
