@@ -12,8 +12,8 @@
 {/if}
 
 <div class="header_outer">
-    <div class="header_container">
-        <header class="container header page-header">
+    <div class="header_container container">
+        <header class="header page-header">
             {modulelist zone=top class='row top_modules'}
         </header>
     </div>

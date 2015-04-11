@@ -22,11 +22,6 @@ button, input, optgroup, select, textarea {
 	color: #cfcfcf;
 }
 
-header.page-header {
-	background: url('@{imagePath}header.png');
-	background-size: cover;
-}
-
 .container {
 	border: 1px solid #4c4c4c;
 	margin-bottom: 5px;
@@ -55,9 +50,10 @@ header.container,
 	background: @navbar-default-bg;
 }
 
-#top_modules,
+.top_modules,
 .navbar-default.navbar-fixed-top {
-	background-image: url('@{imagePath}header.png');
+	background: url('@{imagePath}header.png');
+//	background-size: cover;
 	a, a:visited {
 		color: #f4f4f4;
 	}

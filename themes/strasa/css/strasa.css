@@ -7161,15 +7161,6 @@ div.drillshow {
   background-color: #f5f5f5;
   color: #262626;
 }
-.tiki .row.top_modules {
-  margin-left: 0;
-  margin-right: 0;
-}
-.tiki .row.topbar {
-  margin-left: 0;
-  margin-right: 0;
-  margin-bottom: 15px;
-}
 .breadcrumb {
   font-style: normal;
   font-size: 90%;
@@ -7285,11 +7276,11 @@ a.pagetitle:hover {
   color: #999;
   background: #2e3035;
 }
-.page-header {
+.top_modules {
   color: #fff;
   background: #214d68 url('../images/headerbg.jpg') repeat-x 0 100%;
 }
-.page-header a {
+.top_modules a {
   color: #fff;
 }
 .panel-default.module,

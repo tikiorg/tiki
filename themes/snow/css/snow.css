@@ -7245,15 +7245,6 @@ div.drillshow {
   background-color: url('../images/flakesptn3.jpg') transparent;
   color: #262626;
 }
-.tiki .row.top_modules {
-  margin-left: 0;
-  margin-right: 0;
-}
-.tiki .row.topbar {
-  margin-left: -15px;
-  margin-right: -15px;
-  margin-bottom: 15px;
-}
 .breadcrumb {
   font-style: normal;
   font-size: 90%;

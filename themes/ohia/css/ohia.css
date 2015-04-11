@@ -7244,15 +7244,6 @@ div.drillshow {
   background-color: transparent;
   color: #eeeeee;
 }
-.tiki .row.top_modules {
-  margin-left: -15px;
-  margin-right: -15px;
-}
-.tiki .row.topbar {
-  margin-left: -15px;
-  margin-right: -15px;
-  margin-bottom: 15px;
-}
 .breadcrumb {
   font-style: normal;
   font-size: 90%;
@@ -7331,10 +7322,6 @@ textarea {
   background: #242424;
   color: #cfcfcf;
 }
-header.page-header {
-  background: url('../images/header.png');
-  background-size: cover;
-}
 .container {
   border: 1px solid #4c4c4c;
   margin-bottom: 5px;
@@ -7357,13 +7344,13 @@ header.container,
 .navbar-collapse {
   background: #030511;
 }
-#top_modules,
+.top_modules,
 .navbar-default.navbar-fixed-top {
-  background-image: url('../images/header.png');
+  background: url('../images/header.png');
 }
-#top_modules a,
+.top_modules a,
 .navbar-default.navbar-fixed-top a,
-#top_modules a:visited,
+.top_modules a:visited,
 .navbar-default.navbar-fixed-top a:visited {
   color: #f4f4f4;
 }
