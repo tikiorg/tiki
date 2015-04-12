@@ -13,9 +13,7 @@
 
 <div class="container">
     <div class="page-header">
-        <div class="top_modules">
             {modulelist zone=top class='row top_modules'}
-        </div>
         <div class="topbar">
             {modulelist zone=topbar class='row topbar'}
         </div>
@@ -105,8 +103,8 @@
         {/if}
     </div>
 
-    <footer>
-        <div class="bottom_modules">
+    <footer class="footer" id="footer">
+        <div class="footer_liner">
             {modulelist zone=bottom class='row row-sidemargins-zero'}
         </div>
     </footer>

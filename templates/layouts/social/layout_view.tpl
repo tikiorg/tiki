@@ -95,16 +95,15 @@
     </div>
 </div>
 
-<div class="">
-    <footer class="main-footer">
-        <div class="container">
-            <!-- content modules col-md-3 -->
-            {modulelist zone=bottom class=row}
+<footer class="footer main-footer" id="footer">
+    <div class="container">
+        <div class="footer_liner">
+            {modulelist zone=bottom class=row} <!-- div.modules -->
         </div>
-    </footer>
-</div>
+    </div>
+</footer>
 
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
             {if $module_params.navbar_toggle neq 'n'}

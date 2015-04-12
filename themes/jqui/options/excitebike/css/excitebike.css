@@ -101,7 +101,7 @@ background: transparent;
 	background-color: #E69700;	
 }
 
-.footerbgtrap {
+.footer_liner {
 	display: block;
 	border: 1px solid #1484e6;
 	color: #fff;
@@ -406,7 +406,7 @@ a.admbox.off {
 	color: #333;
 }
 
-.footerbgtrap,
+.footer_liner,
 .wikitext,
 h1.pagetitle,
 h1 a.pagetitle,

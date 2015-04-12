@@ -202,7 +202,7 @@ body.cke_show_borders {
 	background: #9fda58 url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) repeat-x;
 }
 
-.footerbgtrap {
+.footer_liner {
 	background: #000 url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png) 50% 50% repeat-x;
 	color: #c6e99c;
 }

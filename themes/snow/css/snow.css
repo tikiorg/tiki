@@ -7245,15 +7245,6 @@ div.drillshow {
   background-color: url('../images/flakesptn3.jpg') transparent;
   color: #262626;
 }
-.tiki .row.top_modules {
-  margin-left: 0;
-  margin-right: 0;
-}
-.tiki .row.topbar {
-  margin-left: -15px;
-  margin-right: -15px;
-  margin-bottom: 15px;
-}
 .breadcrumb {
   font-style: normal;
   font-size: 90%;
@@ -7337,13 +7328,13 @@ header.container {
 }
 .layout_classic header.container,
 .layout_classic .middle.container,
-.layout_classic .footerbgtrap.container,
+.layout_classic .footer_liner,
 .layout_header_middle_footer_containers header.container,
 .layout_header_middle_footer_containers .middle.container,
-.layout_header_middle_footer_containers .footerbgtrap.container,
+.layout_header_middle_footer_containers .footer_liner,
 .layout_header_middle_footer_containers_3-6-3 header.container,
 .layout_header_middle_footer_containers_3-6-3 .middle.container,
-.layout_header_middle_footer_containers_3-6-3 .footerbgtrap.container,
+.layout_header_middle_footer_containers_3-6-3 .footer_liner,
 .layout_social > .container,
 .layout_basic > .container,
 .layout_fixed_top_modules .container.middle {

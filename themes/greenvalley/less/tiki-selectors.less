@@ -21,7 +21,7 @@
 }
 
 // add media query for medium and large displays
-.header_container > .page-header {
+.page-header .top_modules {
 	min-height: 175px;
 	background: url('@{imagePath}header_background_ltr.jpg') 50% 0 no-repeat;
 	background-size: cover;
@@ -30,7 +30,8 @@
 }
 
 .topbar,
-.navbar-default {
+.navbar-default,
+.navbar-fixed-top {
 	background: #473119 url('@{imagePath}menubar-wood.jpg') 50% 50% no-repeat;
 	background-size: cover;
 	-moz-box-shadow: inset 0 -3px 10px #331A00;
@@ -108,7 +109,11 @@
 	text-shadow: #2b2b2b 0 1px 1px;
 }
 
-.footerbgtrap {
+footer.footer {
+	margin-bottom: 20px;
+}
+
+.footer .modules {
 	background: url('@{imagePath}footer_bck.jpg');
 	background-size: contain;
 	color: #E0D6CC;

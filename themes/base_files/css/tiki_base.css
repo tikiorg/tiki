@@ -709,15 +709,6 @@ div.drillshow {
   background-color: #f5f5f5;
   color: #262626;
 }
-.tiki .row.top_modules {
-  margin-left: 0;
-  margin-right: 0;
-}
-.tiki .row.topbar {
-  margin-left: 0;
-  margin-right: 0;
-  margin-bottom: 15px;
-}
 .breadcrumb {
   font-style: normal;
   font-size: 90%;
@@ -883,8 +874,8 @@ span.btn-link {
   margin-right: 2px;
 }
 select.form-control.date {
-  padding: 0px;
-  margin-left: 0px;
+  padding: 0;
+  margin-left: 0;
   width: auto;
   display: inline;
 }
@@ -3194,7 +3185,8 @@ body:not(.fixed_width) .container {
   padding-right: 15px;
   width: auto;
 }
-legend + p {
+legend + p,
+legend + .form-group {
   margin-top: 20px;
 }
 .tiki .page-header {
@@ -3211,6 +3203,14 @@ body.tiki.navbar-padding {
 }
 .panel-body ul.nav {
   overflow: visible;
+}
+.panel.panel-nocolor,
+.panel-nocolor,
+.panel-nocolor > .panel-heading,
+.panel-nocolor > .panel-body,
+.panel-nocolor > .panel-footer {
+  border: none;
+  background: transparent;
 }
 .tiki.dropdown-menu {
   padding: 0;
@@ -3492,8 +3492,8 @@ div.ts-wrapperdiv select.form-control,
 div.ts-wrapperdiv input.form-control {
   font-size: smaller;
   height: 22px;
-  padding: 0px;
-  margin-left: 0px;
+  padding: 0;
+  margin-left: 0;
 }
 div.ts-wrapperdiv div.ts-pager {
   margin-bottom: 15px;

@@ -542,6 +542,7 @@ hr {
   -moz-box-shadow: inset 0 24px 0 0 #cdbe23;
   box-shadow: inset 0 24px 0 0 #cdbe23;
 }
+.topbar,
 .topbar_container,
 .layout_basic .page-header > .topbar {
   background: #cdbe23;

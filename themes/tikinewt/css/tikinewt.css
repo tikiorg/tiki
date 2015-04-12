@@ -7244,15 +7244,6 @@ div.drillshow {
   background-color: #f5f5f5;
   color: #404040;
 }
-.tiki .row.top_modules {
-  margin-left: 0;
-  margin-right: 0;
-}
-.tiki .row.topbar {
-  margin-left: 0;
-  margin-right: 0;
-  margin-bottom: 15px;
-}
 .breadcrumb {
   font-style: normal;
   font-size: 90%;
@@ -7332,7 +7323,7 @@ header.container {
 #topbar_modules .navbar {
   margin-bottom: 0;
 }
-.footerbgtrap {
+.footer_liner {
   background: #c7d0d9;
   border: solid #8cacbb;
   border-width: 0 1px 1px 1px;

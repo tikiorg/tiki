@@ -12,8 +12,8 @@
 {/if}
 
 <div class="header_outer {if $prefs.site_layout eq 'moving_headers'}navbar navbar-default{/if}">
-    <div class="header_container">
-        <header class="container header page-header">
+    <div class="header_container container">
+        <header class="header page-header">
             {modulelist zone=top class='row top_modules'}
         </header>
     </div>
@@ -104,7 +104,7 @@
 </div>
 <footer class="footer" id="footer">
     <div class="footer_liner">
-        <div class="footerbgtrap container">
+        <div class="container">
             {modulelist zone=bottom class='row row-sidemargins-zero'}
         </div>
     </div>

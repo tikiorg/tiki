@@ -17,8 +17,8 @@
     {if $prefs.feature_layoutshadows eq 'y'}
     <div id="header-shadow">{eval var=$prefs.header_shadow_start}{/if}
         <div class="header_outer">
-            <div class="header_container">
-                <header class="container header page-header">
+            <div class="header_container container">
+                <header class="header page-header">
                     {modulelist zone=top class='row top_modules'}
                 </header>
             </div>
@@ -128,7 +128,7 @@
     <div id="footer-shadow">{eval var=$prefs.footer_shadow_start}{/if}
         <footer class="footer" id="footer">
             <div class="footer_liner">
-                <div class="footerbgtrap container">
+                <div class="container" style="padding-left: 0; padding-right: 0;">
                     {modulelist zone=bottom class='row-sidemargins-zero'}
                 </div>
             </div>
