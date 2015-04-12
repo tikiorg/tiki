@@ -7,7 +7,18 @@
 
 class Tracker_Item
 {
+	/**
+	 * includes itemId, trackerId and fields using the fieldId as key
+	 * @var array - plain from database. 
+	 */
 	private $info;
+	
+
+	/**
+	 * object with tracker definition. includes itemId, items (nr of items for that tracker).
+	 * other important attributes: trackerInfo array, factory null, fields array,  perms Perms_Accessor
+	 * @var object Tracker_Definition - 
+	 */
 	private $definition;
 
 	private $owner;
@@ -326,6 +337,12 @@ class Tracker_Item
 		return count($commonGroups) != 0;
 	}
 
+	
+	/**
+	 * Return raw value of a field. Raw means, value as saved in database. 
+	 * @param integer $fieldId
+	 * @return string - note: all values are saved as a string.
+	 */
 	private function getValue($fieldId)
 	{
 		if (isset($this->info[$fieldId])) {
@@ -390,7 +407,7 @@ class Tracker_Item
 
 			$factory = $this->definition->getFieldFactory();
 			$handler = $factory->getHandler($field, $this->info);
-			return array_merge($field, $handler->getFieldData([]));
+			return array_merge($field, $handler->getFieldData(array()));
 		}
 	}
 
@@ -475,7 +492,7 @@ class Tracker_Item
 			'itemId' => $this->isNew() ? null : $this->info['itemId'],
 			'status' => $this->isNew() ? 'o' : $this->info['status'],
 			'creation_date' => $this->info['created'],
-			'trackerId' => $this->isNew() ? null : $this->info['trackeId'],
+			'trackerId' => $this->isNew() ? null : $this->info['trackerId'],
 			'fields' => $out,
 		);
 	}
