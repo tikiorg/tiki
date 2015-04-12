@@ -161,6 +161,7 @@
 			<h2>{tr}Pagination{/tr}</h2>
 			{preference name=user_selector_threshold}
 			{preference name=maxRecords}
+			{preference name=tiki_object_selector_threshold}
 			{preference name=nextprev_pagination}
 			{preference name=direct_pagination}
 			<div class="adminoptionboxchild" id="direct_pagination_childcontainer">

@@ -23,6 +23,7 @@
 				<legend>{tr}Tracker settings{/tr}</legend>
 				{preference name=user_selector_threshold}
 				{preference name=user_selector_realnames_tracker}
+				{preference name=tiki_object_selector_threshold}
 				{preference name=feature_reports}
 				{preference name="tracker_remote_sync"}
 				{preference name="tracker_tabular_enabled"}
