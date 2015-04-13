@@ -108,6 +108,15 @@ class Tracker_Field_Factory
 			return $this->infoMap[$type];
 		}
 	}
+	
+	/**
+	 * Get a list of field types by their letter type and the corresponding class name
+	 * @Example 'q' => 'Tracker_Field_AutoIncrement', ... 
+	 * @return array letterType => classname
+	 */
+	function getTypeMap() {
+		return $this->typeMap;
+	}
 
 	function getHandler($field_info, $itemData = array())
 	{

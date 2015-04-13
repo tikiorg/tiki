@@ -8,7 +8,7 @@
 /**
  * Handler class for dropdown
  * 
- * Letter key: ~d~ ~D~
+ * Letter key: ~d~ ~D~ ~R~ ~M~
  *
  */
 class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Search_FacetProvider_Interface, Tracker_Field_Exportable, Tracker_Field_Filterable
@@ -119,7 +119,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 
 		return array(
 			'value' => $value,
-			'selected' => $value === '' ? [] : explode(',', $value),
+			'selected' => $value === '' ? array() : explode(',', $value),
 			'possibilities' => $this->getPossibilities(),
 		);
 	}
