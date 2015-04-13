@@ -1063,6 +1063,8 @@ class Comments extends TikiLib
 			$forumLanguage = ''
 	)
 	{
+		global $prefs;
+
 		if (!$forumId && empty($att_store_dir)) {
 			// Set new default location for forum attachments (only affect new forums for backward compatibility))
 			$att_store_dir = 'files/forums/';
@@ -1131,6 +1133,7 @@ class Comments extends TikiLib
 		$forums = $this->table('tiki_forums');
 
 		if ($forumId) {
+			$oldData = $forums->fetchRow(array(), array('forumId' => (int) $forumId));
 			$forums->update($data, array('forumId' => (int) $forumId));
 			$event = 'tiki.forum.update';
 		} else {
@@ -1147,6 +1150,11 @@ class Comments extends TikiLib
 			'description' => $description,
 			'forum_section' => $section,
 		]);
+
+		//if the section changes, re-index forum posts to change section there as well
+		if ($prefs['feature_forum_post_index'] == 'y' && $oldData && $oldData['section'] != $section){
+			$this->index_posts_by_forum($forumId);
+		}
 
 		return $forumId;
 	}
@@ -3774,6 +3782,23 @@ class Comments extends TikiLib
 		} else {
 			refresh_index('comments', $threadId);
 			return $type.' comment';
+		}
+	}
+
+	/**
+	 * Re-indexes the forum posts within a specified forum
+	 * @param $forumId
+	 */
+	private function index_posts_by_forum($forumId)
+	{
+		$topics = $this->get_forum_topics($forumId);
+
+		foreach($topics as $topic) {
+			if ($element === end($array)){ //if element is the last in the array, then run the process.
+				refresh_index('forum post', $topic['threadId'], true);
+			}else{
+				refresh_index('forum post', $topic['threadId'], false); //don't run the process right away (re: false), wait until last element
+			}
 		}
 	}
 

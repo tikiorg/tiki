@@ -77,6 +77,8 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 			'contributors' => $typeFactory->multivalue(array_unique($author)),
 
 			'forum_id' => $typeFactory->identifier($comment['object']),
+			'forum_section' => $typeFactory->identifier($forum_info['section']),
+
 			'post_content' => $typeFactory->wikitext($content),
 			'post_snippet' => $typeFactory->plaintext($snippet),
 			'parent_thread_id' => $typeFactory->identifier($comment['parentId']),
@@ -102,6 +104,7 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 			'post_content',
 			'post_snippet',
 			'forum_id',
+			'forum_section',
 			'parent_thread_id',
 
 			'parent_view_permission',

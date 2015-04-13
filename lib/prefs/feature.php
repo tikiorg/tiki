@@ -1679,6 +1679,12 @@ function prefs_feature_list($partial = false)
 				'feature_search_fulltext',
 			),
 		),
+		'feature_forum_post_index' => array(
+			'name' => tra('Index posts on forum section change.'),
+			'description' => tra('Re-indexes forum posts to match the parent section when the section is changed'),
+			'type' => 'flag',
+			'default' => 'y',
+		),
 		'feature_clear_passwords' => array(
 			'name' => tra('Store password as plain text'),
             'description' => tra(''),

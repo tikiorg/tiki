@@ -72,6 +72,7 @@
 					{preference name=feature_forum_local_tiki_search}
 					{preference name=feature_forum_local_search}
 				</div>
+				{preference name=feature_forum_post_index}
 			</fieldset>
 		{/tab}
 
