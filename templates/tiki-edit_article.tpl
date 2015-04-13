@@ -11,14 +11,13 @@
 	{/if}
 {/title}
 
-<div class="t_navbar btn-group form-group">
+<div class="t_navbar margin-bottom-md">
 	{button href="tiki-list_articles.php" class="btn btn-default" _text="{tr}List Articles{/tr}"}
 	{button href="tiki-view_articles.php" class="btn btn-default" _text="{tr}View Articles{/tr}"}
 </div>
 
 {if $preview}
 	<h2>{tr}Preview{/tr}</h2>
-
 	{include file='article.tpl'}
 {/if}
 
@@ -33,7 +32,7 @@
 	</div>
 {/if}
 
-<form enctype="multipart/form-data" method="post" action="tiki-edit_article.php" id='editpageform' role="form">
+<form enctype="multipart/form-data" method="post" action="tiki-edit_article.php" id='editpageform' role="form" class="form">
 	<input type="hidden" name="articleId" value="{$articleId|escape}">
 	<input type="hidden" name="previewId" value="{$previewId|escape}">
 	<input type="hidden" name="imageIsChanged" value="{$imageIsChanged|escape}">
@@ -55,9 +54,9 @@
 			<div class="form-group">
 				<label for="heading">{tr}Heading{/tr}</label>
 				{if $types.$type.heading_only eq 'y'}
-					{textarea name="heading" rows="5" class="form-control" Height="200px" id="subheading"}{$heading}{/textarea}
+					{textarea name="heading" rows="5" class="form-control" id="subheading"}{$heading}{/textarea}
 				{else}
-					{textarea _simple="y" name="heading" class="form-control" rows="5" Height="200px" id="subheading" comments="y"}{$heading}{/textarea}
+					{textarea _simple="y" name="heading" class="form-control" rows="5" id="subheading" comments="y"}{$heading}{/textarea}
 				{/if}
 			</div>
 			<div class="form-group {if $types.$type.heading_only eq 'y'}hidden{/if}">
