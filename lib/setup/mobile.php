@@ -33,8 +33,9 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 
 				$prefs['mobile_mode'] = 'y';
 
-				// hard-wire a few incompatible prefs shut to speed development
-				$prefs['feature_jquery_ui'] = 'n';
+				// pre-tiki14/bootstrap these prefs were disabled by default
+				// they can still be disabled via the mobile perspective if needed
+				/*$prefs['feature_jquery_ui'] = 'n';
 				$prefs['feature_jquery_reflection'] = 'n';
 				$prefs['feature_fullscreen'] = 'n';
 				$prefs['feature_syntax_highlighter'] = 'n';
@@ -53,7 +54,7 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 				$prefs['feature_jcapture'] = 'n';
 				$prefs['calendar_fullcalendar'] = 'n';
 				$prefs['feature_inline_comments'] = 'n';
-				$prefs['feature_jquery_tablesorter'] = 'n';
+				$prefs['feature_jquery_tablesorter'] = 'n';*/
 
 				$headerlib = TikiLib::lib('header');
 
