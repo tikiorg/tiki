@@ -96,9 +96,9 @@
 </div>
 
 <footer class="footer main-footer" id="footer">
-    <div class="container">
-        <div class="footer_liner">
-            {modulelist zone=bottom class=row} <!-- div.modules -->
+    <div class="container footer_liner">
+        <div class="row">
+            {modulelist zone=bottom class="col-md-12"} <!-- div.modules -->
         </div>
     </div>
 </footer>
