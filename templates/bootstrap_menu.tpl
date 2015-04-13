@@ -4,7 +4,7 @@
 			<li class="{$item.class|escape|default:null}{if !empty($item.selected)} active{/if}">
 				<a href="#menu_option{$item.optionId|escape}" class="collapse-toggle" data-toggle="collapse">
 					{tr}{$item.name}{/tr}
-					<b class="caret"></b>
+					<span class="caret"></span>
 				</a>
 				<ul id="menu_option{$item.optionId|escape}" class="nav collapse">
 					{foreach from=$item.children item=sub}

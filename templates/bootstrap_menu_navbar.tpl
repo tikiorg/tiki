@@ -4,7 +4,7 @@
 			<li class="dropdown{if $item.selected|default:null} active{/if} {$item.class|escape}">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 					{tr}{$item.name}{/tr}
-					<b class="caret"></b>
+					<span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu">
 					{foreach from=$item.children item=sub}
