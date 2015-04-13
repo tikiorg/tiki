@@ -2,7 +2,7 @@
 {title help="Menus" admpage="general&amp;cookietab=3"}{tr}Menus{/tr}{/title}
 
 {if $tiki_p_admin eq 'y'}
-	<div class="t_navbar  margin-bottom-md">
+	<div class="t_navbar margin-bottom-md">
 		<a class="btn btn-default" href="{bootstrap_modal controller=menu action=manage_menu}">
 			{icon name="create"} {tr}Create Menu{/tr}
 		</a>

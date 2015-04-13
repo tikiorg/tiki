@@ -24,7 +24,7 @@
 						{/if}
 					</a>	
 				</li>
-				<li class="divider">
+				<li class="divider"></li>
 			{/if}
 			{foreach key=pos item=chdata from=$menu_channels}
 

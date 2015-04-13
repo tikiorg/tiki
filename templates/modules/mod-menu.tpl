@@ -4,7 +4,7 @@
 	{if $module_params.bootstrap|default:null neq 'n'}
 		{if $module_params.type|default:null eq 'horiz'}
 			<nav class="{if !empty($module_params.navbar_class)}{$module_params.navbar_class}{else}navbar navbar-default{/if}" role="navigation">
-				{if isset($module_params.navbar_toggle) and $module_params.navbar_toggle neq 'n'}
+				{if empty($module_params.navbar_toggle) or $module_params.navbar_toggle neq 'n'}
 					<div class="navbar-header">
 						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mod-menu{$module_position}{$module_ord} .navbar-collapse">
 							<span class="sr-only">Toggle navigation</span>
