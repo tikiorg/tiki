@@ -10,8 +10,8 @@ function wikiplugin_includetpl_info()
 	return array(
 		'name' => tra('Include TPL files to the wiki page'),
 		'description' => tra('Include tpl files to all the wiki pages.'),
-		'default' => 'y',
 		'format' => 'html',
+		'validate' => 'all',
 		'filter' => 'wikicontent',
 		'tags' => array('advanced'),
 		'params' => array(
