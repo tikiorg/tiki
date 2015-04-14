@@ -118,24 +118,25 @@
 					</label>
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="authorName">{tr}Author Name (as displayed){/tr}</label>
-				<input type="text" name="authorName" value="{$authorName|escape}" class="form-control">
+			<div class="form-group clearfix">
+				<label for="authorName" class="control-label col-sm-2">{tr}Author Name (as displayed){/tr}</label>
+				<div class="col-sm-4">
+					<input type="text" name="authorName" value="{$authorName|escape}" class="form-control">
+				</div>
 			</div>
-			<div class="form-group {if $tiki_p_edit_article_user neq 'y'}hidden{/if}">
-				<label for="author">{tr}User (article owner){/tr}</label>
-				<input id="author" type="text" name="author" value="{$author|escape}" class="form-control">
-				{autocomplete element='#author' type='username'}
+			<div class="form-group {if $tiki_p_edit_article_user neq 'y'}hidden{/if} clearfix">
+				<label for="author" class="control-label col-sm-2">{tr}User (article owner){/tr}</label>
+				<div class="col-sm-4">
+					<input id="author" type="text" name="author" value="{$author|escape}" class="form-control">
+					{autocomplete element='#author' type='username'}
+				</div>
 			</div>
-			<div class="form-group {if $types.$type.show_pubdate neq 'y' and $types.$type.show_pre_publ eq 'y'}hidden{/if}">
-				<label>{tr}Publish Date{/tr}</label>
-				<div class="col-sm-12">
-					{html_select_date prefix="publish_" time=$publishDate start_year="-10" end_year="+10" field_order=$prefs.display_field_order} {tr}at{/tr}
-					<span dir="ltr">
-						{html_select_time prefix="publish_" time=$publishDate display_seconds=false use_24_hours=$use_24hr_clock}
-						&nbsp;
-						{$siteTimeZone}
-					</span>
+			<div class="form-group {if $types.$type.show_pubdate neq 'y' and $types.$type.show_pre_publ eq 'y'}hidden{/if} clearfix">
+				<label class="control-label col-sm-2">{tr}Publish Date{/tr}</label>
+				<div class="col-sm-10 clearfix">
+					{html_select_date prefix="publish_" time=$publishDate start_year="-10" end_year="+10" field_order=$prefs.display_field_order}
+					{html_select_time prefix="publish_" time=$publishDate display_seconds=false use_24_hours=$use_24hr_clock}
+					<span class="help-block">{$siteTimeZone}</span>
 				</div>
 			</div>
 			<div class="form-group {if $types.$type.show_expdate neq 'y' and $types.$type.show_post_expire eq 'y'}hidden{/if}">
@@ -153,45 +154,57 @@
 		{/tab}
 		{tab name="{tr}Classification{/tr}"}
 			<h2>{tr}Classification{/tr}</h2>
-			<div class="form-group">
-				<label for="topicId">{tr}Topic{/tr}</label>
-				<div>
-					<select name="topicId">
+			<div class="form-group clearfix">
+				<label for="topicId" class="control-label col-sm-2">{tr}Topic{/tr}</label>
+				<div class="col-sm-6">
+					<select name="topicId" class="form-control">
 						{foreach $topics as $topic}
 							<option value="{$topic.topicId|escape}" {if $topicId eq $topic.topicId}selected="selected"{/if}>{$topic.name|escape}</option>
 						{/foreach}
 						<option value="" {if $topicId eq 0}selected="selected"{/if}>{tr}None{/tr}</option>
 					</select>
-					{if $tiki_p_admin_cms eq 'y'}
-						<a href="tiki-admin_topics.php" class="btn btn-link">{tr}Admin Topics{/tr}</a>
-					{/if}
 				</div>
+				{if $tiki_p_admin_cms eq 'y'}
+					<span class="col-sm-2">
+						<a href="tiki-admin_topics.php" class="btn btn-default">
+							{icon name="administer"} {tr}Article Topics{/tr}
+						</a>
+					</span>
+				{/if}
 			</div>
-			<div class="form-group">
-				<label for="type">{tr}Type{/tr}</label>
-				<div>
-					<select name="type">
+			<div class="form-group clearfix">
+				<label for="type" class="control-label col-sm-2">{tr}Type{/tr}</label>
+				<div class="col-sm-6">
+					<select name="type" class="form-control">
 						{foreach $types as $typei => $prop}
 							<option value="{$typei|escape}" {if $type eq $typei}selected="selected"{/if}>{tr}{$typei|escape}{/tr}</option>
 						{/foreach}
 					</select>
-					{if $tiki_p_admin_cms eq 'y'}
-						<a href="tiki-article_types.php" class="btn btn-link">{tr}Admin Types{/tr}</a>
-					{/if}
 				</div>
+				{if $tiki_p_admin_cms eq 'y'}
+					<span class="col-sm-2">
+						<a href="tiki-article_types.php" class="btn btn-default">
+							{icon name="administer"} {tr}Article Types{/tr}
+						</a>
+					</span>
+				{/if}
 			</div>
-			{include file='categorize.tpl'}
-			{include file='freetag.tpl'}
+			<div class="form-group clearfix">
+				{include file='categorize.tpl'}
+			</div>
+			<div class="form-group clearfix">
+				{include file='freetag.tpl'}
+			</div>
 		{/tab}
 		{tab name="{tr}Image{/tr}"}
 			<h2>{tr}Image{/tr}</h2>
-			<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 			<div class="form-group {if $types.$type.show_image neq 'y'}hidden{/if}">
-				<label for="userfile1">{tr}Own Image{/tr}</label>
-				<input name="userfile1" type="file" onchange="document.getElementById('useImage').checked = true;">
-				<div class="help-block">
-					{tr}If not the topic image{/tr}
+				<label for="userfile1" class="control-label col-sm-2">{tr}Own Image{/tr}</label>
+				<div class="col-sm-10">
+					<input name="userfile1" type="file" onchange="document.getElementById('useImage').checked = true;">
+					<span class="help-block">{tr}If not the topic image{/tr}</span>
 				</div>
+				<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 			</div>
 			{if $hasImage eq 'y'}
 				<div class="form-group">
@@ -210,13 +223,13 @@
 				<input type="text" class="form-control" name="image_caption" value="{$image_caption|escape}" >
 				<div class="help-block">{tr}Default will use the topic name{/tr}</div>
 			</div>
-			<div class="checkbox {if $types.$type.show_image neq 'y'}hidden{/if}">
+			<div class="checkbox {if $types.$type.show_image neq 'y'}hidden{/if} col-sm-push-2">
 				<label>
 					<input type="checkbox" name="useImage" id="useImage" {if $useImage eq 'y'}checked='checked'{/if} >
 					{tr}Use own image{/tr}
 				</label>
 			</div>
-			<div class="checkbox {if $types.$type.show_image neq 'y'}hidden{/if}">
+			<div class="checkbox {if $types.$type.show_image neq 'y'}hidden{/if} col-sm-push-2">
 				<label>
 					<input type="checkbox" name="isfloat" {if $isfloat eq 'y'}checked='checked'{/if}>
 					{tr}Float text around image{/tr}
@@ -224,37 +237,37 @@
 			</div>
 			<fieldset class="{if $types.$type.show_image neq 'y'}hidden{/if} form-horizontal">
 				<legend>{tr}Read Article{/tr}</legend>
-				<p>{tr}Maximum dimensions of custom image in view mode{/tr}</p>
+				<span class="help-block">{tr}Maximum dimensions of custom image in view mode{/tr}</span>
 				<div class="form-group">
 					<label for="image_x" class="control-label col-sm-2">{tr}Width{/tr}</label>
-					<div class="col-sm-10">
+					<div class="input-group col-sm-2">
 						<input type="text" class="form-control" name="image_x"{if $image_x > 0} value="{$image_x|escape}"{/if}>
-						<div class="help-block">{tr}pixels{/tr}</div>
+						<span class="input-group-addon">{tr}pixels{/tr}</span>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="image_y" class="control-label col-sm-2">{tr}Height{/tr}</label>
-					<div class="col-sm-10">
+					<div class="input-group col-sm-2">
 						<input type="text" class="form-control" name="image_y"{if $image_y > 0} value="{$image_y|escape}"{/if}>
-						<div class="help-block">{tr}pixels{/tr}</div>
+						<span class="input-group-addon">{tr}pixels{/tr}</span>
 					</div>
 				</div>
 			</fieldset>
 			<fieldset class="{if $types.$type.show_image neq 'y'}hidden{/if} form-horizontal">
 				<legend>{tr}View Articles{/tr}</legend>
-				<p>{tr}Maximum dimensions of custom image in list mode{/tr}</p>
+				<span class="help-block">{tr}Maximum dimensions of custom image in list mode{/tr}</span>
 				<div class="form-group">
 					<label for="list_image_x" class="control-label col-sm-2">{tr}Width{/tr}</label>
-					<div class="col-sm-10">
+					<div class="input-group col-sm-2">
 						<input type="text" class="form-control" name="list_image_x"{if $list_image_x > 0} value="{$list_image_x|escape}"{/if}>
-						<div class="help-block">{tr}pixels{/tr}</div>
+						<span class="input-group-addon">{tr}pixels{/tr}</span>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="list_image_y" class="control-label col-sm-2">{tr}Height{/tr}</label>
-					<div class="col-sm-10">
+					<div class="input-group col-sm-2">
 						<input type="text" class="form-control" name="list_image_y"{if $list_image_y > 0} value="{$list_image_y|escape}"{/if}>
-						<div class="help-block">{tr}pixels{/tr}</div>
+						<span class="input-group-addon">{tr}pixels{/tr}</span>
 					</div>
 				</div>
 			</fieldset>
@@ -262,9 +275,13 @@
 		{tab name="{tr}Advanced{/tr}"}
 			<h2>{tr}Advanced{/tr}</h2>
 			{if $prefs.feature_multilingual eq 'y' and empty($translationOf)}
-				<div class="form-group">
-					<label for="translationOf">{tr}Attach existing article ID as translation{/tr}</label>
-					<input name="translationOf" type="text" size="4" class="form-control">
+				<div class="form-group clearfix">
+					<label for="translationOf" class="control-label col-sm-2">
+						{tr}Attach existing article ID as translation{/tr}
+					</label>
+					<div class="col-sm-6">
+						<input name="translationOf" type="text" size="4" class="form-control">
+					</div>
 				</div>
 			{/if}
 			<div class="form-group {if $types.$type.show_topline neq 'y'}hidden{/if}">
@@ -372,7 +389,7 @@
 		<div class="col-sm-offset-4">
 			<input type="submit" class="wikiaction btn btn-default" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
 			<input type="submit" class="wikiaction btn btn-primary" name="save" value="{tr}Save{/tr}" onclick="this.form.saving=true;needToConfirm=false;">
-			{if $articleId}<input type="submit" class="wikiaction tips btn btn-link" title="{tr}Cancel{/tr}|{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}" onclick="needToConfirm=false;">{/if}
+			{if $articleId}<input type="submit" class="wikiaction tips btn btn-default" title="{tr}Cancel{/tr}|{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}" onclick="needToConfirm=false;">{/if}
 		</div>
 	</div>
 	{if $smarty.session.wysiwyg neq 'y'}
