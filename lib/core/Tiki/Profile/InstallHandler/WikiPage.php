@@ -15,6 +15,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 	private $translations = array();
 	private $message;
 	private $structure;
+	private $structure_as_sibling;
 	private $wysiwyg;
 	private $wiki_authors_style;
 	private $geolocation;
@@ -50,6 +51,8 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 			$this->translations = $data['translations'];
 		if ( array_key_exists('structure', $data) )
 			$this->structure = $data['structure'];
+		if ( array_key_exists('structure_as_sibling', $data) )
+			$this->structure_as_sibling = $data['structure_as_sibling'];
 		if ( array_key_exists('wysiwyg', $data) )
 			$this->wysiwyg = $data['wysiwyg'];
 		if ( array_key_exists('wiki_authors_style', $data) )
@@ -115,6 +118,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 		$this->replaceReferences($this->translations);
 		$this->replaceReferences($this->message);
 		$this->replaceReferences($this->structure);
+		$this->replaceReferences($this->structure_as_sibling);
 		$this->replaceReferences($this->wysiwyg);
 		$this->replaceReferences($this->wiki_authors_style);
 		$this->replaceReferences($this->geolocation);
@@ -193,9 +197,31 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler
 			}
 		}
 
-		if (!empty($this->structure)) {
+		// only create a new structure or add a new page to a structure if the structure parameter has been set AND mode is 'create'
+		if (isset($this->structure) && $this->mode == 'create') {
 			$structlib = TikiLib::lib('struct');
-			$structlib->s_create_page($this->structure, 0, $finalName, '', $this->structure);
+			if ($this->structure === 0) {
+				$page_ref_id = 0;
+				// create a new structure with just the new wiki page if the profile structure: parameter is set to zero
+				$structlib->s_create_page(null, null, $finalName, '', 0);
+			} elseif (ctype_digit($this->structure)) {
+				$page_ref_id = $this->structure;
+			} else {
+				$page_ref_id = (int) $structlib->get_struct_ref_id($this->structure);
+			}
+			if ($page_ref_id > 0) {
+				// add the page to an existing structure when the profile structure: parameter is non-zero
+				// where the parameter is set to a page_ref_id and the new page is inserted after this page ref in the structure hierarchy
+				// In addition, if structure_as_sibling is set to 'y', then the new page is created as sibling rather than child.
+				$pageinfo = $structlib->s_get_page_info($page_ref_id);
+				$structure_id = $pageinfo['structure_id'];
+				if ($this->structure_as_sibling == 'y' && $pageinfo['parent_id'] > 0) {
+					$structure_parent = $pageinfo['parent_id'];
+				} else {
+					$structure_parent = $page_ref_id;
+				}
+				$structlib->s_create_page($structure_parent, $page_ref_id, $finalName, '', $structure_id);
+			}
 		}
 
 		return $finalName;
