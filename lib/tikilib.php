@@ -6670,7 +6670,7 @@ JS;
 	function check_alias($edit, $page) {
 		$smarty = TikiLib::lib('smarty');
 		foreach ($this->get_pages($edit, true) as $pointedPage => $types) {
-			if($types[0] == 'alias'){
+			if (isset($types[0]) && $types[0] == 'alias') {
 				$alias = $this->table('tiki_object_relations')->fetchColumn('source_itemId', array('target_itemId' => $pointedPage));
 				if(($key = array_search($page, $alias)) !== false) { unset($alias[$key]); }
 				if(isset($alias) && count($alias) > 0) {

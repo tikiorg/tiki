@@ -3038,7 +3038,7 @@ CREATE TABLE `tiki_profile_symbols` (
   `profile` VARCHAR(100) NOT NULL,
   `object` VARCHAR(150) NOT NULL,
   `type` VARCHAR(20) NOT NULL,
-  `value` VARCHAR(50) NOT NULL,
+  `value` VARCHAR(160) NOT NULL,
   `named` ENUM('y','n') NOT NULL,
   `creation_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY ( `domain`, `profile`, `object` ),
