@@ -449,7 +449,7 @@ class Tiki_Profile_Installer
 					$value = explode($pinfo['separator'], $value);
 				}
 
-				if ($prefs[$pref] != $value) {
+				if (!isset($prefs[$pref]) || $prefs[$pref] != $value) {
 					$this->setFeedback(tra('Preference set').': '.$pref.'='.$value);
 				}
 				$tikilib->set_preference($pref, $value);
