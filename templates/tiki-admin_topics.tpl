@@ -69,11 +69,11 @@
 							{permission_link mode=text type=topic permType=articles id=$topics[user].topicId title=$topics[user].name}
 							{if $topics[user].active eq 'n'}
 								<a href="tiki-admin_topics.php?activate={$topics[user].topicId}">
-									{icon name="toggle-off" _menu_text='y' _menu_icon='y' alt="{tr}De-activate{/tr}"}
+									{icon name="toggle-off" _menu_text='y' _menu_icon='y' alt="{tr}Activate{/tr}"}
 								</a>
 							{else}
 								<a href="tiki-admin_topics.php?deactivate={$topics[user].topicId}">
-									{icon name="toggle-on" _menu_text='y' _menu_icon='y' alt="{tr}Activate{/tr}"}
+									{icon name="toggle-on" _menu_text='y' _menu_icon='y' alt="{tr}De-activate{/tr}"}
 								</a>
 							{/if}
 							<a href="tiki-edit_topic.php?topicid={$topics[user].topicId}">
