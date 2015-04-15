@@ -46,7 +46,7 @@
 
 	<div class="articleheading">
 
-		<div class="media-left">
+		<div class="{if $useImage eq 'y' and $hasImage eq 'n'}well well-sm{else}media-left{/if}">
 			{capture name=imgTitle}{if $show_image_caption eq 'y' and $image_caption}{$image_caption|escape}{elseif isset($topicName)}{tr}{$topicName}{/tr}{/if}{/capture}
 			{assign var="big_image" value=$prefs.art_header_text_pos eq 'below' && $list_image_x > 0}
 			{if $big_image}
@@ -55,17 +55,21 @@
 
 			{* Show either a topic name, image OR a custom image (if there is a custom image or a topic). If a topic is set, link to it even if we show a custom image. *}
 			{if $topicId}
-				<a href="tiki-view_articles.php?topic={$topicId}" class="thumbnail{if $big_image} cboxElement{/if}" {if $isfloat eq 'y'} style="margin-right:4px;float:left;"{/if} title="{if $show_image_caption and $image_caption}{$image_caption|escape}{else}{tr}List all articles of this same topic:{/tr} {tr}{$topicName|escape}{/tr}{/if}">
+				<a href="tiki-view_articles.php?topic={$topicId}" class="{if $useImage eq 'y' and $hasImage neq 'y'}{else}thumbnail{/if}{if $big_image} cboxElement{/if}" {if $isfloat eq 'y'} style="margin-right:4px;float:left;"{/if} title="{if $show_image_caption and $image_caption}{$image_caption|escape}{else}{tr}List all articles of this same topic:{/tr} {tr}{$topicName|escape}{/tr}{/if}">
 			{/if}
-			{if $useImage eq 'y' and $hasImage eq 'y'}
-				{* display article image *}{$style=''}
+			{if $useImage eq 'y'}
+				{if $hasImage eq 'y'}
+				{* display own article image *}{$style=''}
 				<img
-					{*{if $big_image}class="cboxElement"{elseif $isfloat eq 'y'}{$style="margin-right:4px;float:left;"}{else}*}class="art icleimage"{*{/if}*}
 					alt="{$smarty.capture.imgTitle}"
 					src="article_image.php?image_type={if isset($preview) and $imageIsChanged eq 'y'}preview&amp;id={$previewId}{elseif isset($preview) and $subId}submission&amp;id={$subId}{else}article&amp;id={$articleId}{/if}"
 					{if $image_x > 0}{$style=$style|cat:"max-width:"|cat:$image_x|cat:"px;"}{/if}
 					{if $image_y > 0}{$style=$style|cat:"max-height:"|cat:$image_y|cat:"px;"}{/if} style="{$style}"
 				>
+				{else}
+				{* display just the topic name *}
+				{$topicName|escape}
+				{/if}
 			{elseif $topicId}
 				{if $topics[$topicId].image_size > 0}
 					<img

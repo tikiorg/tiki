@@ -209,7 +209,7 @@
 			{if $hasImage eq 'y'}
 				<div class="form-group">
 					<label>{tr}Current Image{/tr}</label>
-					<div class="form-control">
+					<div class="thumbnail">
 						{if $imageIsChanged eq 'y'}
 							<img alt="{tr}Article image{/tr}" src="article_image.php?image_type=preview&amp;id={$previewId}">
 						{else}
