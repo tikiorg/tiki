@@ -58,14 +58,19 @@
 				{if $topicId}
 					<a href="tiki-view_articles.php?topic={$topicId}" title="{if $show_image_caption and $image_caption}{$image_caption|escape}{else}{tr}List all articles of this same topic:{/tr} {tr}{$topicName|escape}{/tr}{/if}">
 				{/if}
-				{if $useImage eq 'y' and $hasImage eq 'y'}
-					{* display article image *}{$style=''}
+				{if $useImage eq 'y'}
+					{if $hasImage eq 'y'}
+					{* display own article image *}{$style=''}
 					<img 
 						 {if $big_image}class="cboxElement"{elseif $isfloat eq 'y'}{$style="margin-right:4px;float:left;"}{else}class="articleimage"{/if}
 						 alt="{$smarty.capture.imgTitle}"
 						 src="article_image.php?image_type={if isset($preview) and $imageIsChanged eq 'y'}preview&amp;id={$previewId}{elseif isset($preview) and $subId}submission&amp;id={$subId}{else}article&amp;id={$articleId}{/if}"
 						 {if $image_x > 0}{$style=$style|cat:"max-width:"|cat:$image_x|cat:"px;"}{/if}
 						 {if $image_y > 0}{$style=$style|cat:"max-height:"|cat:$image_y|cat:"px;"}{/if} style="{$style}">
+					{else}
+					{* display just the topic name *}
+					{$topicName|escape}
+					{/if}
 				{elseif $topicId}
 						{if $topics[$topicId].image_size > 0}
 							<img 
@@ -87,7 +92,7 @@
 					{/if}
 					</div>
 				{/if}
-				{if  $prefs.art_header_text_pos eq 'below' && $list_image_x > 0}
+				{if ($useImage eq 'y' and $hasImage neq 'y') or ($prefs.art_header_text_pos eq 'below' && $list_image_x > 0)}
 					 </td></tr><tr><td valign="top">
 				{elseif $isfloat eq 'n' and $topics[$topicId].image_size > 0}
 					</td>
