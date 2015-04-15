@@ -27,8 +27,9 @@
 	{/if}
 
 	{if $list}
+<ul>
 		{foreach key=ix item=online_user from=$online_users}
-
+	<li>
 			{if $user and $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 				{if $online_user.allowMsgs eq 'n'}
 	{icon name='envelope' title='{tr}User does not accept messages{/tr}' class='icon'}
@@ -44,9 +45,10 @@
 	{$online_user.user|escape}
 			{/if}
 
-			{if $cluster}({$online_user.tikihost}){/if}
-<br>
+			{if $cluster}<br>({$online_user.tikihost}){/if}
+	</li>
 		{/foreach}
+</ul>
 	{/if}
 {/tikimodule}
 
