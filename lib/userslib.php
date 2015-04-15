@@ -723,8 +723,10 @@ class UsersLib extends TikiLib
 				if ($ldap_create_tiki) {
 					// need to make this better! *********************************************************
 					//$userinfo = $this->get_ldap_user_info($user,$pass);
-					$result = $this->add_user($user, $pass, '');
-					$this->disable_tiki_auth($user); //disable password in tiki - use ldap
+					$ldap_user_attr = $this->ldap->get_user_attributes();
+					$email = $ldap_user_attr["mail"];
+					$result = $this->add_user($user, $pass, $email);
+					$this->disable_tiki_auth($user); //disable that user's password in tiki - since we use ldap
 
 					// if it worked ok, just log in
 					if ($result == USER_VALID) {
