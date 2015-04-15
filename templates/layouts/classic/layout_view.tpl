@@ -127,9 +127,9 @@
     {if $prefs.feature_layoutshadows eq 'y'}
     <div id="footer-shadow">{eval var=$prefs.footer_shadow_start}{/if}
         <footer class="footer" id="footer">
-            <div class="container footer_liner">
-                <div class="row row-sidemargins-zero">
-                    {modulelist zone=bottom class='col-md-12'}
+            <div class="footer_liner">
+                <div class="container" style="padding-left: 0; padding-right: 0;">
+                    {modulelist zone=bottom class='row-sidemargins-zero'}
                 </div>
             </div>
         </footer>
