@@ -173,10 +173,10 @@
 						{if $listpages[ix].useImage eq 'y'}
 							{if $listpages[ix].hasImage eq 'y'}
 								<a
-									href="{$smarty.capture.href}" class="thumbnail" {if $listpages[ix].isfloat eq 'y'}{$style="margin-right:4px;float:left;"}{/if}
+									href="{$smarty.capture.href}" class="thumbnail" {if $listpages[ix].isfloat eq 'y'} style="margin-right:20px; float:left;"{/if}
 									title="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption|escape}{elseif $listpages[ix].topicName}{tr}{$listpages[ix].topicName}{/tr}{else}{tr}Read More{/tr}{/if}">
 									{$style=''}
-									<img {*{if $listpages[ix].isfloat eq 'y'}{$style="margin-right:4px;float:left;"}{else}*}{*class="articleimage"*}{*{/if}*}
+									<img
 										alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption|escape}{elseif $listpages[ix].topicName}{tr}{$listpages[ix].topicName}{/tr}{/if}"
 										{strip}src="article_image.php?image_type=article&amp;id={$listpages[ix].articleId}
 										{if $listpages[ix].list_image_x > 0 and ($largefirstimage neq 'y' or not $smarty.section.ix.first)}
@@ -198,25 +198,21 @@
 							{/if}
 						{else}
 							{if isset($topics[$listpages[ix].topicId].image_size) and $topics[$listpages[ix].topicId].image_size > 0}
-								<a href="{$smarty.capture.href}" class="thumbnail" {if $listpages[ix].isfloat eq 'y'} style="margin-right:4px;float:left;"{/if}
+								<a href="{$smarty.capture.href}" class="thumbnail" {if $listpages[ix].isfloat eq 'y'} style="margin-right:20px; float:left;"{/if}
 										title="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption|escape}{else}{tr}{$listpages[ix].topicName}{/tr}{/if}">
-									<img {if $listpages[ix].isfloat eq 'y'}{*style="margin-right:4px;float:left;*}"{else}class="art icleimage"{/if}
+									<img
 											alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption|escape}{else}{tr}{$listpages[ix].topicName}{/tr}{/if}"
 											src="article_image.php?image_type=topic&amp;id={$listpages[ix].topicId}">
 								</a>
 							{/if}
 						{/if}
 					{/if}
-					{if $listpages[ix].isfloat eq 'n'}
 				</div>
-				<div style="display:table-cell; vertical-align: top">
-					{/if}
-					<div class="articleheadingtext media-body">{$listpages[ix].parsed_heading}</div>
-					{if isset($fullbody) and $fullbody eq "y"}
-						<div class="articlebody">{$listpages[ix].parsed_body}</div>
-					{/if}
-				</div>
+				<div class="articleheadingtext{if $listpages[ix].isfloat eq 'n'} media-body{/if}">{$listpages[ix].parsed_heading}</div>
 			</div>
+					{if isset($fullbody) and $fullbody eq "y"}
+			<div class="articlebody">{$listpages[ix].parsed_body}</div>
+					{/if}
 
 			<div class="articletrailer">
 				{if ($listpages[ix].size > 0) or (($prefs.feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y'))}
