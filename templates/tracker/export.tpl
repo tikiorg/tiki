@@ -126,10 +126,10 @@
 	<form class="simple" action="" method="post">
 		<div class="form-group">
 			<label for="export">{tr}Tracker Export{/tr}</label>
-			<textarea name="export" class="form-control" >{$export|escape}</textarea>
+			<textarea name="export" class="form-control" rows="20">{$export|escape}</textarea>
 		</div>
-		<div>
-			<input type="submit" class="btn btn-default" value="{tr}Export{/tr}">
+		<div class="description">
+			{tr}Copy the definition text above and paste into the Import Structure box for a new tracker.{/tr}
 		</div>
 	</form>
 	{/accordion_group}

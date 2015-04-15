@@ -90,13 +90,13 @@
 							{remarksbox type=tip title="{tr}Tip{/tr}"}
 								{tr _0="tiki-edit_article.php?translationOf=$articleId"}To translate, do not change the language and the content. Instead, <a class="alert-link" href="%0">create a new translation</a> in the new language.{/tr}
 							{/remarksbox}
-							{if $translations}
+							{if $translations and $translations[1].objId}
 								{remarksbox type=tip title="{tr}Translations{/tr}"}
 									<ul>
 										<li>
-										{section loop=$translations name=t}
-											{if $articleId != $translations[t].objId}
-												{$translations[t].lang|escape}: <a href="tiki-edit_article.php?articleId={$translations[t].objId|escape}">{$translations[t].objName|escape}</a><br>
+											{section loop=$translations name=t}
+												{if $articleId != $translations[t].objId}
+													{$translations[t].lang|escape}: <a href="tiki-edit_article.php?articleId={$translations[t].objId|escape}">{$translations[t].objName|escape}</a><br>
 												{/if}
 											{/section}
 										</li>
@@ -110,7 +110,7 @@
 		{/tab}
 		{tab name="{tr}Publication{/tr}"}
 			<h2>{tr}Publication{/tr}</h2>
-			<div class="well">
+			<div class="well well-sm">
 				<div class="checkbox">
 					<label>
 						<input type="checkbox" name="ispublished" {if $ispublished eq 'y' || !$articleId}checked="checked"{/if}>
