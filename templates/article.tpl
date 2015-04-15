@@ -55,7 +55,7 @@
 
 			{* Show either a topic name, image OR a custom image (if there is a custom image or a topic). If a topic is set, link to it even if we show a custom image. *}
 			{if $topicId}
-				<a href="tiki-view_articles.php?topic={$topicId}" class="{if $useImage eq 'y' and $hasImage neq 'y'}{else}thumbnail{/if}{if $big_image} cboxElement{/if}" {if $isfloat eq 'y'} style="margin-right:4px;float:left;"{/if} title="{if $show_image_caption and $image_caption}{$image_caption|escape}{else}{tr}List all articles of this same topic:{/tr} {tr}{$topicName|escape}{/tr}{/if}">
+				<a href="tiki-view_articles.php?topic={$topicId}" class="{if $useImage eq 'y' and $hasImage neq 'y'}{else}thumbnail{/if}{if $big_image} cboxElement{/if}" {if $isfloat eq 'y'} style="margin-right:20px; float:left;"{/if} title="{if $show_image_caption and $image_caption}{$image_caption|escape}{else}{tr}List all articles of this same topic:{/tr} {tr}{$topicName|escape}{/tr}{/if}">
 			{/if}
 			{if $useImage eq 'y'}
 				{if $hasImage eq 'y'}
@@ -73,7 +73,7 @@
 			{elseif $topicId}
 				{if $topics[$topicId].image_size > 0}
 					<img
-						{if $big_image}class="cboxElement"{*{elseif $isfloat eq 'y'}style="margin-right:4px;float:left;"*}{else}class="art icleimage"{/if}
+						{if $big_image}class="cboxElement"{/if}
 						alt="{tr}{$topicName}{/tr}"
 						src="article_image.php?image_type=topic&amp;id={$topicId}"
 					>

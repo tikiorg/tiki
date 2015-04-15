@@ -344,7 +344,11 @@ class Search_Elastic_Connection
 		$full = "{$this->dsn}$path";
 
 		$tikilib = TikiLib::lib('tiki');
-		return $tikilib->get_http_client($full);
+		try {
+			return $tikilib->get_http_client($full);
+		} catch (Zend_Exception $e) {
+			throw new Search_Elastic_TransportException($e->getMessage());
+		}
 	}
 
 	private function simplifyType($type)
