@@ -104,9 +104,9 @@
 </div>
 
     <footer class="footer" id="footer">
-        <div class="container footer_liner">
-            <div class="row row-sidemargins-zero">
-                {modulelist zone=bottom class='col-md-12'}
+        <div class="footer_liner">
+            <div class="container">
+                {modulelist zone=bottom class='row row-sidemargins-zero'}
             </div>
         </div>
     </footer>

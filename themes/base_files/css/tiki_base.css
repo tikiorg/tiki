@@ -1014,9 +1014,9 @@ a.flip:hover,
 #rss small {
   font-size: 1em;
 }
-#footer .rsslist {
-  text-align: left;
-  margin: auto;
+footer.footer .modules > .module {
+  padding-left: 15px;
+  padding-right: 15px;
 }
 .alphafilter {
   display: block;
