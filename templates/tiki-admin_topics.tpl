@@ -60,20 +60,20 @@
 						&nbsp;
 					{/if}
 				</td>
-				<td class="text">{$topics[user].active}</td>
-				<td class="integer">{$topics[user].arts}</td>
-				{if $prefs.feature_submissions eq 'y'}<td>{$topics[user].subs}</td>{/if}
+				<td class="text">{if $topics[user].active eq 'y'}{icon name="toggle-on"}{else}{icon name="toggle-off"}{/if}</td>
+				<td><span class="badge">{$topics[user].arts}</span></td>
+				{if $prefs.feature_submissions eq 'y'}<td><span class="badge">{$topics[user].subs}</span></td>{/if}
 				<td class="action">
 					{capture name=topic_actions}
 						{strip}
 							{permission_link mode=text type=topic permType=articles id=$topics[user].topicId title=$topics[user].name}
 							{if $topics[user].active eq 'n'}
 								<a href="tiki-admin_topics.php?activate={$topics[user].topicId}">
-									{icon name="toggle-off" _menu_text='y' _menu_icon='y' alt="{tr}Activate{/tr}"}
+									{icon name="toggle-on" _menu_text='y' _menu_icon='y' alt="{tr}Activate{/tr}"}
 								</a>
 							{else}
 								<a href="tiki-admin_topics.php?deactivate={$topics[user].topicId}">
-									{icon name="toggle-on" _menu_text='y' _menu_icon='y' alt="{tr}De-activate{/tr}"}
+									{icon name="toggle-off" _menu_text='y' _menu_icon='y' alt="{tr}De-activate{/tr}"}
 								</a>
 							{/if}
 							<a href="tiki-edit_topic.php?topicid={$topics[user].topicId}">
