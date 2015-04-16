@@ -1061,6 +1061,18 @@ div.cvsup {
   font-size: x-small;
   text-align: left;
 }
+.topbar .form-group {
+  margin-bottom: 0;
+}
+.topbar .form-control,
+.topbar .btn {
+  max-height: 26.5px;
+  margin-top: 6px;
+  margin-bottom: 5px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  font-size: 14px;
+}
 .navbar-fixed-top .sitelogo a img,
 .layout_social .topbar_modules .sitelogo a img,
 .layout_social_modules .topbar_modules .sitelogo a img,
