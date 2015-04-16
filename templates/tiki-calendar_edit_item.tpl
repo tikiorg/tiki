@@ -631,7 +631,7 @@ $(".end.time select, #end").change(function () {
 							</select>
 							{tr}or new{/tr}
 						{/if}
-						<input type="text" name="save[newcat]" value="">
+						<input class="form-control" type="text" name="save[newcat]" value="">
 					{else}
 						<span class="category">
 							{$calitem.categoryName|escape}
@@ -655,7 +655,7 @@ $(".end.time select, #end").change(function () {
 							</select>
 							{tr}or new{/tr}
 						{/if}
-						<input type="text" name="save[newloc]" value="">
+						<input class="form-control" type="text" name="save[newloc]" value="">
 					{else}
 						<span class="location">
 							{$calitem.locationName|escape}
@@ -681,7 +681,7 @@ $(".end.time select, #end").change(function () {
 				<label class="control-label col-md-3">{tr}Language{/tr}</label>
 				<div class="col-md-9">
 					{if $edit}
-						<select name="save[lang]">
+						<select name="save[lang]" class="form-control">
 							<option value="">
 							</option>
 							{foreach item=it from=$listlanguages}
@@ -739,11 +739,6 @@ $(".end.time select, #end").change(function () {
 			<div class="form-group" style="display:{if $calendar.customparticipants eq 'y'}block{else}none{/if};" id="calpart">
 				<label class="control-label col-md-3">{tr}Participants{/tr}</label>
 				<div class="col-md-9">
-					{if $edit}
-						<a href="#" onclick="flip('calparthelp');return false;">
-							{icon name='help'}
-						</a>
-					{/if}
 					{if isset($calitem.participants)}
 						{if $edit}
 							{if $preview or $changeCal}
@@ -792,6 +787,11 @@ $(".end.time select, #end").change(function () {
 								*}
 							{/if}
 						{/if}
+					{/if}
+					{if $edit}
+						<a href="#" onclick="flip('calparthelp');return false;">
+							{icon name='help'}
+						</a>
 					{/if}
 				</div>
 			</div> <!-- / .form-group -->
