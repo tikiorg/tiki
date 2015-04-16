@@ -550,6 +550,9 @@ hr {
 .top_modules a {
   color: #fff;
 }
+.navbar-collapse.collapse.in {
+  background: #18a3bb;
+}
 .navbar-nav .open .dropdown-menu,
 .navbar-nav .open .dropdown-menu li,
 .navbar-default .navbar-nav > li > a {

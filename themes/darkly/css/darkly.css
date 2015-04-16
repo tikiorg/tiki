@@ -6830,6 +6830,9 @@ textarea:focus {
 .panel-default > .panel-heading {
   background-color: #464545;
 }
+.navbar-collapse.collapse.in {
+  background: #375a7f;
+}
 .form-horizontal-side-margins {
   margin-left: 15px;
   margin-right: 15px;

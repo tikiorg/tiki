@@ -6963,6 +6963,9 @@ select.form-control {
 .margin-bottom-lg {
   margin-bottom: 46px;
 }
+.navbar-collapse.collapse.in {
+  background: #ffffff;
+}
 .form-horizontal-side-margins {
   margin-left: 15px;
   margin-right: 15px;

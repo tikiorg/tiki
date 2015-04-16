@@ -6635,6 +6635,9 @@ input.tablesorter-filter {
   border: none;
   background-color: #252525;
 }
+.navbar-collapse.collapse.in {
+  background: #060606;
+}
 .form-horizontal-side-margins {
   margin-left: 15px;
   margin-right: 15px;

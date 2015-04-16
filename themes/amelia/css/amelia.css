@@ -6707,6 +6707,9 @@ a.thumbnail.active {
 .popover {
   color: #444444;
 }
+.navbar-collapse.collapse.in {
+  background: #ad1d28;
+}
 .form-horizontal-side-margins {
   margin-left: 15px;
   margin-right: 15px;

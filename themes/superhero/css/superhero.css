@@ -6796,6 +6796,9 @@ label,
 .margin-bottom-lg {
   margin-bottom: 42px;
 }
+.navbar-collapse.collapse.in {
+  background: #4e5d6c;
+}
 .form-horizontal-side-margins {
   margin-left: 15px;
   margin-right: 15px;
