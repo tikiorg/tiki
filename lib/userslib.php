@@ -719,10 +719,9 @@ class UsersLib extends TikiLib
 				// if the user was logged into Auth but not found in Tiki
 				// see if we are allowed to create a new account
 				if ($ldap_create_tiki) {
-					// need to make this better! *********************************************************
-					//$userinfo = $this->get_ldap_user_info($user,$pass);
 					$ldap_user_attr = $this->ldap->get_user_attributes();
-					$email = $ldap_user_attr["mail"];
+					// Use what was configured in ldap admin config, otherwise assume the attribute name is "mail" as is usual
+					$email = $ldap_user_attr[empty($prefs['auth_ldap_emailattr'])?'mail':$prefs['auth_ldap_emailattr']];
 					$result = $this->add_user($user, $pass, $email);
 					$this->disable_tiki_auth($user); //disable that user's password in tiki - since we use ldap
 
