@@ -42,11 +42,18 @@ class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 			return array( 'value' => $value);
 		} else {
 			$value = $this->getValue();
+			if (!$value) {
+				$value = '0#';		// default to unlimited
+			}
 		}
 		$current_field_ins = $this->parseUsers($value);
 		if (isset($requestData['user_subscribe'])) { // TODO: do only one time
 			$found = false;
-			$nb =  min($current_field_ins['maxsubscriptions'], intval($requestData['user_friends']));
+			if ($current_field_ins['maxsubscriptions']) {
+				$nb = min($current_field_ins['maxsubscriptions'], intval($requestData['user_friends']));
+			} else {
+				$nb = intval($requestData['user_friends']);
+			}
 			foreach ($current_field_ins['users_array'] as $i=>$U) {
 				if ($U['login'] == $user) {
 					$current_field_ins['users_array'][$i]['friends'] = $nb;
