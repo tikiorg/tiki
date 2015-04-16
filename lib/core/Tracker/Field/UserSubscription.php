@@ -21,7 +21,6 @@ class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 				'description' => tr('Allows registered users to subscribe themselves to a tracker item. The item should ideally only be editable by the creator or administrators. Prepend the maximum amount of subscribers to the field value foloowed by # if such a limit is desired. E.g. 50# means that 50 subscriptions will be allowed for this item.'),
 				'help' => 'Subscription Tracker Field',
 				'prefs' => array('trackerfield_subscription'),
-				'tags' => array('experimental'),
 				'default' => 'n',
 				'params' => array(
 				),
@@ -42,11 +41,18 @@ class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 			return array( 'value' => $value);
 		} else {
 			$value = $this->getValue();
+			if (!$value) {
+				$value = '0#';		// default to unlimited
+			}
 		}
 		$current_field_ins = $this->parseUsers($value);
 		if (isset($requestData['user_subscribe'])) { // TODO: do only one time
 			$found = false;
-			$nb =  min($current_field_ins['maxsubscriptions'], intval($requestData['user_friends']));
+			if ($current_field_ins['maxsubscriptions']) {
+				$nb = min($current_field_ins['maxsubscriptions'], intval($requestData['user_friends']));
+			} else {
+				$nb = intval($requestData['user_friends']);
+			}
 			foreach ($current_field_ins['users_array'] as $i=>$U) {
 				if ($U['login'] == $user) {
 					$current_field_ins['users_array'][$i]['friends'] = $nb;
