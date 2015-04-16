@@ -7188,8 +7188,16 @@ body {
 .btn-default {
   border-color: #41cbe7 #223845 #223845 #41cbe7;
 }
+.top_modules {
+  color: #fff;
+  background: #214d68 url('../images/headerbg.jpg') repeat-x 0 100%;
+}
+.top_modules a {
+  color: #fff;
+}
 .navbar-default,
 .topbar,
+.layout_fixed_top_modules #top_modules,
 .topbar .navbar-default .navbar-nav > li,
 .topbar .nav > li {
   background: #2498c7;
@@ -7278,13 +7286,6 @@ a.pagetitle:hover {
 .footer_liner {
   color: #999;
   background: #2e3035;
-}
-.top_modules {
-  color: #fff;
-  background: #214d68 url('../images/headerbg.jpg') repeat-x 0 100%;
-}
-.top_modules a {
-  color: #fff;
 }
 .panel-default.module,
 .panel-default.module > .panel-heading,
