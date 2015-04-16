@@ -6620,6 +6620,9 @@ header.page-header::before,
 .margin-bottom-lg {
   margin-bottom: 40px;
 }
+.navbar-collapse.collapse.in {
+  background: #dd4814;
+}
 .form-horizontal-side-margins {
   margin-left: 15px;
   margin-right: 15px;

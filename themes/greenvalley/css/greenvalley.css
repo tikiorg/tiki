@@ -6549,6 +6549,9 @@ button.close {
     display: none !important;
   }
 }
+.navbar-collapse.collapse.in {
+  background: #f8f8f8;
+}
 .form-horizontal-side-margins {
   margin-left: 15px;
   margin-right: 15px;

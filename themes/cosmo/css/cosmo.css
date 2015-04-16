@@ -6732,6 +6732,9 @@ table .info a,
 .margin-bottom-lg {
   margin-bottom: 42px;
 }
+.navbar-collapse.collapse.in {
+  background: #222222;
+}
 .form-horizontal-side-margins {
   margin-left: 15px;
   margin-right: 15px;

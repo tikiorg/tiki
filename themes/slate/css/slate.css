@@ -6981,6 +6981,9 @@ a.thumbnail.active {
 .panel-info .panel-heading {
   border-color: #000;
 }
+.navbar-collapse.collapse.in {
+  background: #3a3f44;
+}
 .form-horizontal-side-margins {
   margin-left: 15px;
   margin-right: 15px;
