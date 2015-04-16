@@ -116,8 +116,8 @@ function smarty_function_menu($params, $smarty)
 		case 'navbar':
 			return $smarty->fetch('bootstrap_menu_navbar.tpl');
 		case  'y':
-			if($params['type'] == "horiz"){
-			 return $smarty->fetch('bootstrap_menu_navbar.tpl');
+			if(isset($params['type']) && $params['type'] == "horiz"){
+				return $smarty->fetch('bootstrap_menu_navbar.tpl');
 			}else{
 				return $smarty->fetch('bootstrap_menu.tpl');
 			}
