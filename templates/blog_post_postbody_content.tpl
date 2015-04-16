@@ -4,7 +4,7 @@
 		{include file='blog_post_author_info.tpl'}
 		{$post_info.parsed_excerpt}
 	</div>
-	{self_link _script=$post_info.postId|sefurl:blogpost _noauto='y'}{tr}Read more{/tr}{/self_link}
+	{self_link _script=$post_info.postId|sefurl:blogpost _noauto='y' _class="btn btn-link"}{tr}Read more{/tr}{/self_link}
 {else}
 	<div class="postbody-content panel-body">
 		{include file='blog_post_author_info.tpl'}
