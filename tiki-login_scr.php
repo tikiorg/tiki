@@ -10,6 +10,11 @@
 
 $section_class = 'tiki_login';	// This will be body class instead of $section
 include_once ("tiki-setup.php");
+
+if ($prefs['login_autologin'] == 'y' && $prefs['login_autologin_redirectlogin'] == 'y' && !empty($prefs['login_autologin_redirectlogin_url'])) {
+	$access->redirect($prefs['login_autologin_redirectlogin_url']);
+}
+
 if (isset($_REQUEST['clearmenucache'])) {
 	TikiLib::lib('menu')->empty_menu_cache();
 }

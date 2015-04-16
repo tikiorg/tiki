@@ -109,7 +109,9 @@ if ($user == $prefs['login_autologin_user']) {
 		if (!empty($autologin_base_url)) {
 			$_SESSION['autologin_base_url'] = $autologin_base_url;
 		}
-		if (!empty($page)) {
+		if (!empty($_SESSION['loginfrom'])) {
+			TikiLib::lib('access')->redirect($_SESSION['loginfrom']);
+		} elseif (!empty($page)) {
 			$sefurl = TikiLib::lib('wiki')->sefurl($page);
 			TikiLib::lib('access')->redirect($sefurl);
 		} else {

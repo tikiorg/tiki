@@ -167,6 +167,7 @@ function wikiplugin_redirect($data, $params)
 function get_remotetikiurl($autologin_remotetiki, $redirect_page) {
 	// Get URL for user to login into remote Tiki
 	global $user, $base_url;
+	TikiLib::lib('access')->check_user($user);
 	$email = TikiLib::lib('user')->get_user_email($user);
 	$realName = trim(TikiLib::lib('tiki')->get_user_preference($user, 'realName', ''));
 	$remotetikiurl = $autologin_remotetiki . '/tiki-autologin.php';

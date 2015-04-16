@@ -198,6 +198,8 @@
           {preference name=login_autologin_allowedgroups}
           {preference name=login_autologin_syncgroups}
           {preference name=login_autologin_logoutremote}
+          {preference name=login_autologin_redirectlogin}
+          {preference name=login_autologin_redirectlogin_url}
         </fieldset>
     {/tab}
 

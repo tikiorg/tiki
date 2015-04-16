@@ -97,6 +97,24 @@ function prefs_login_list()
 			'default' => 'y',
 			'tags' => array('advanced'),
 		),
+		'login_autologin_redirectlogin' => array(
+			'name' => tr('Redirect direct logins to this site to remote Tiki'),
+			'description' => tr('Redirect direct logins to this site to remote Tiki'),
+			'type' => 'flag',
+			'default' => 'n',
+			'dependencies' => array(
+				'login_autologin_redirectlogin_baseurl',
+				'permission_denied_login_box',
+			),
+			'tags' => array('advanced'),
+		),
+		'login_autologin_redirectlogin_url' => array(
+			'name' => tr('URL of autologin page on remote Tiki to redirect user to login'),
+			'description' => tr('URL of autologin page on remote Tiki to redirect user to login, e.g. https://www.remotetiki.com/PageWithRedirectPlugin'),
+			'type' => 'text',
+			'default' => '',
+			'tags' => array('advanced'),
+		),
 	);
 }
 
