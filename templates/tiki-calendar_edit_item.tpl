@@ -594,11 +594,11 @@ $(".end.time select, #end").change(function () {
 				</div> <!-- / .form-group -->
 			{/if}
 			{if $calendar.custompriorities eq 'y'}
-				<div class="form-group">
-					<label for="control-label col-md-3">{tr}Priority{/tr}</label>
-					<div class="col-md-9">
+				<div class="form-group clearfix">
+					<label class="control-label col-md-3">{tr}Priority{/tr}</label>
+					<div class="col-md-2">
 						{if $edit}
-							<select name="save[priority]" style="background-color:#{$listprioritycolors[$calitem.priority]};font-size:150%;" onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;" >
+							<select name="save[priority]" style="background-color:#{$listprioritycolors[$calitem.priority]};" onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;" class="form-control">
 								{foreach item=it from=$listpriorities}
 									<option value="{$it}" style="background-color:#{$listprioritycolors[$it]};" {if $calitem.priority eq $it} selected="selected" {/if} >
 										{$it}
