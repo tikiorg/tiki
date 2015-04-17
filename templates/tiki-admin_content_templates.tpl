@@ -1,4 +1,4 @@
-{title help="Content+Templates"}{tr}Admin templates{/tr}{/title}
+{title help="Content+Templates"}{tr}Content templates{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use the Administration page of each enabled feature to allow the use of content templates.{/tr}{/remarksbox}
 
@@ -8,10 +8,10 @@
 {/if}
 
 {if $templateId > 0}
-	<h2>{tr}Edit this template:{/tr} {$info.name|escape}</h2>
+	<h2>{tr}Edit template:{/tr} {$info.name|escape}</h2>
 	{button href="tiki-admin_content_templates.php" _icon_name="create" _text="{tr}Create{/tr}"}
 {else}
-	<h2>{tr}Create new template{/tr}</h2>
+	<h2>{tr}Create template{/tr}</h2>
 {/if}
 <form action="tiki-admin_content_templates.php" method="post" class="form-horizontal" role="form">
 	<input type="hidden" name="templateId" value="{$templateId|escape}">
@@ -25,34 +25,43 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label" for="section_css">{tr}Use in{/tr}</label>
+		<label class="col-sm-3 control-label" for="section_css">{tr}Sections{/tr}</label>
 		<div class="col-sm-9">
 			{$toolbar_section='admin'}
 			{if $prefs.feature_cms_templates eq 'y'}
 				<div class="col-sm-3 checkbox-inline">
-					<label for="section_cms">{tr}CMS{/tr} ({tr}Articles{/tr})</label>
-					<input type="checkbox" name="section_cms" id="section_cms" {if $info.section_cms eq 'y'}checked="checked"{/if}>
-					{if $info.section_cms eq 'y'}{$toolbar_section='cms'}{/if}
+					<label for="section_cms">
+						<input type="checkbox" name="section_cms" id="section_cms" {if $info.section_cms eq 'y'}checked="checked"{/if}>
+						{if $info.section_cms eq 'y'}{$toolbar_section='cms'}{/if}
+						{tr}Articles{/tr}
+					</label>
 				</div>
 			{/if}
 			{if $prefs.feature_wiki_templates eq 'y'}
 				<div class="col-sm-3 checkbox-inline">
-					<label for="section_wiki">{tr}Wiki{/tr}</label>
-					<input type="checkbox" name="section_wiki" id="section_wiki" {if $info.section_wiki eq 'y'}checked="checked"{/if}>
-					{if $info.section_wiki eq 'y'}{$toolbar_section='wiki page'}{/if}
+					<label for="section_wiki">
+						<input type="checkbox" name="section_wiki" id="section_wiki" {if $info.section_wiki eq 'y'}checked="checked"{/if}>
+						{if $info.section_wiki eq 'y'}{$toolbar_section='wiki page'}{/if}
+						{tr}Wiki{/tr}
+					</label>
 				</div>
 			{/if}
 			{if $prefs.feature_file_galleries_templates eq 'y'}
 				<div class="col-sm-3 checkbox-inline">
-					<label for="section_file_galleries">{tr}File Galleries{/tr}</label>
-					<input type="checkbox" name="section_file_galleries" id="section_file_galleries" {if $info.section_file_galleries eq 'y'}checked="checked"{/if}>
-					{if $info.section_file_galleries eq 'y'}{$toolbar_section='admin'}{/if}
+					<label for="section_file_galleries">
+						<input type="checkbox" name="section_file_galleries" id="section_file_galleries" {if $info.section_file_galleries eq 'y'}checked="checked"{/if}>
+						{if $info.section_file_galleries eq 'y'}{$toolbar_section='admin'}{/if}
+						{tr}File Galleries{/tr}
+					</label>
 				</div>
 			{/if}
 			{if $prefs.feature_newsletters eq 'y'}
 				<div class="col-sm-3 checkbox-inline">
-					<label for="section_newsletters" >{tr}Newsletters{/tr}</label><input type="checkbox" name="section_newsletters" id="section_newsletters" {if $info.section_newsletters eq 'y'}checked="checked"{/if}>
-					{if $info.section_newsletters eq 'y'}{$toolbar_section='newsletters'}{/if}
+					<label for="section_newsletters" >
+						<input type="checkbox" name="section_newsletters" id="section_newsletters" {if $info.section_newsletters eq 'y'}checked="checked"{/if}>
+						{if $info.section_newsletters eq 'y'}{$toolbar_section='newsletters'}{/if}
+						{tr}Newsletters{/tr}
+					</label>
 				</div>
 			{/if}
 			{if $prefs.feature_events eq 'y'}
@@ -82,7 +91,7 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label" for="is_html">{tr}Is HTML{/tr}</label>
+		<label class="col-sm-3 control-label" for="is_html">{tr}HTML{/tr}</label>
 		<div class="col-sm-9 checkbox-inline">
 			<input type="checkbox" name="section_wiki_html" id="is_html" class="form=control" {if $info.section_wiki_html eq 'y'}checked="checked"{/if}>
 		</div>
@@ -90,7 +99,7 @@
 	<div class="form-group type-cond for-page">
 		<label class="col-sm-3 control-label" for="page_name">{tr}Page Name{/tr}</label>
 		<div class="col-sm-9">
-			<input type="text" name="page_name" id="page_name" value="{$info.page_name}">
+			<input class="form-control" type="text" name="page_name" id="page_name" value="{$info.page_name}" placeholder="{tr}Find{/tr}...">
 			{autocomplete element='input[name=page_name]' type='pagename'}
 		</div>
 	</div>
@@ -111,7 +120,7 @@
 	</div>
 	<div class="form-group text-center">
 		<input type="submit" name="preview" class="btn btn-default" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
-		<input type="submit" name="save" class="btn btn-default" value="{tr}Save{/tr}" onclick="needToConfirm=false;">
+		<input type="submit" name="save" class="btn btn-primary" value="{tr}Save{/tr}" onclick="needToConfirm=false;">
 	</div>
 
 	{jq}
@@ -133,6 +142,7 @@
 
 <table class="table normal table-striped table-hover">
 	<tr>
+		<th>{tr}Id{/tr}</th>
 		<th>
 			<a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a>
 		</th>
@@ -145,6 +155,7 @@
 	{cycle values="odd,even" print=false advance=false}
 	{section name=user loop=$channels}
 		<tr>
+			<td class="text">{$channels[user].templateId}</td>
 			<td class="text">{$channels[user].name|escape}</td>
 			<td class="date">{$channels[user].created|tiki_short_datetime}</td>
 			<td class="text">

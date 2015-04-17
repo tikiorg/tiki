@@ -27,6 +27,11 @@ if ($prefs['disableJavascript'] == 'y' ) {
 	$prefs['javascript_enabled'] = 'y';
 	setCookieSection('javascript_enabled_detect', '', '', time() - 3600);	// remove the test cookie
 } else {
+	if (isset($_COOKIE['runs_before_js_detect'])) {	// pre-tiki 14 method detected, delete both tests and reload
+		setcookie('runs_before_js_detect', '', time() - 3600);
+		setcookie('javascript_enabled_detect', '', time() - 3600);
+		$access->redirect();
+	}
 	$prefs['javascript_enabled'] = '';
 }
 
@@ -41,10 +46,13 @@ if ( $prefs['javascript_enabled'] === '' && $prefs['disableJavascript'] != 'y' &
 	$plus_one_year = $tikilib->now + 365 * 24 * 3600;
 	$headerlib->add_js("setCookieBrowser('javascript_enabled', 'y', '', new Date({$plus_one_year}000));", 0);		// setCookieBrowser does not use the tiki_cookie_jar
 
-	if ( empty($javascript_enabled_detect) ) {
-		setCookieSection('javascript_enabled_detect', '1', '', $plus_one_year);
-	} elseif ( $javascript_enabled_detect == 1 ) {
-		setCookieSection('javascript_enabled_detect', '2', '', $plus_one_year);
+	if ( strpos($_SERVER['PHP_SELF'], 'tiki-download') === false &&
+			strpos($_SERVER['PHP_SELF'], 'tiki-ajax_services.php') === false &&
+			strpos($_SERVER['PHP_SELF'], 'tiki-jsmodule.php') === false &&
+			strpos($_SERVER['PHP_SELF'], 'tiki-jsplugin.php') === false) {
+
+		$javascript_enabled_detect++;
+		setCookieSection('javascript_enabled_detect', $javascript_enabled_detect, '', $plus_one_year);
 	}
 } else if ($js_cookie !== 'y') {	// no js cookie detected
 	$prefs['javascript_enabled'] = 'n';

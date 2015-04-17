@@ -119,21 +119,21 @@
 				</div>
 			</div>
 			<div class="form-group clearfix">
-				<label for="authorName" class="control-label col-sm-2">{tr}Author Name (as displayed){/tr}</label>
+				<label for="authorName" class="control-label col-sm-3">{tr}Author Name (as displayed){/tr}</label>
 				<div class="col-sm-4">
 					<input type="text" name="authorName" value="{$authorName|escape}" class="form-control">
 				</div>
 			</div>
 			<div class="form-group {if $tiki_p_edit_article_user neq 'y'}hidden{/if} clearfix">
-				<label for="author" class="control-label col-sm-2">{tr}User (article owner){/tr}</label>
+				<label for="author" class="control-label col-sm-3">{tr}User (article owner){/tr}</label>
 				<div class="col-sm-4">
 					<input id="author" type="text" name="author" value="{$author|escape}" class="form-control">
 					{autocomplete element='#author' type='username'}
 				</div>
 			</div>
 			<div class="form-group {if $types.$type.show_pubdate neq 'y' and $types.$type.show_pre_publ eq 'y'}hidden{/if} clearfix">
-				<label class="control-label col-sm-2">{tr}Publish Date{/tr}</label>
-				<div class="col-sm-10 clearfix">
+				<label class="control-label col-sm-3">{tr}Publish Date{/tr}</label>
+				<div class="col-sm-9 clearfix">
 					{html_select_date prefix="publish_" time=$publishDate start_year="-10" end_year="+10" field_order=$prefs.display_field_order}
 					{html_select_time prefix="publish_" time=$publishDate display_seconds=false use_24_hours=$use_24hr_clock}
 					<span class="help-block">{$siteTimeZone}</span>
@@ -155,7 +155,7 @@
 		{tab name="{tr}Classification{/tr}"}
 			<h2>{tr}Classification{/tr}</h2>
 			<div class="form-group clearfix">
-				<label for="topicId" class="control-label col-sm-2">{tr}Topic{/tr}</label>
+				<label for="topicId" class="control-label col-sm-3">{tr}Topic{/tr}</label>
 				<div class="col-sm-6">
 					<select name="topicId" class="form-control">
 						{foreach $topics as $topic}
@@ -165,7 +165,7 @@
 					</select>
 				</div>
 				{if $tiki_p_admin_cms eq 'y'}
-					<span class="col-sm-2">
+					<span class="col-sm-3">
 						<a href="tiki-admin_topics.php" class="btn btn-default">
 							{icon name="administer"} {tr}Article Topics{/tr}
 						</a>
@@ -173,7 +173,7 @@
 				{/if}
 			</div>
 			<div class="form-group clearfix">
-				<label for="type" class="control-label col-sm-2">{tr}Type{/tr}</label>
+				<label for="type" class="control-label col-sm-3">{tr}Type{/tr}</label>
 				<div class="col-sm-6">
 					<select name="type" class="form-control">
 						{foreach $types as $typei => $prop}
@@ -182,7 +182,7 @@
 					</select>
 				</div>
 				{if $tiki_p_admin_cms eq 'y'}
-					<span class="col-sm-2">
+					<span class="col-sm-3">
 						<a href="tiki-article_types.php" class="btn btn-default">
 							{icon name="administer"} {tr}Article Types{/tr}
 						</a>
@@ -199,17 +199,17 @@
 		{tab name="{tr}Image{/tr}"}
 			<h2>{tr}Image{/tr}</h2>
 			<div class="form-group {if $types.$type.show_image neq 'y'}hidden{/if}">
-				<label for="userfile1" class="control-label col-sm-2">{tr}Own Image{/tr}</label>
-				<div class="col-sm-10">
+				<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+				<label for="userfile1" class="control-label col-sm-3">{tr}Own Image{/tr}</label>
+				<div class="col-sm-9">
 					<input name="userfile1" type="file" onchange="document.getElementById('useImage').checked = true;">
 					<span class="help-block">{tr}If not the topic image{/tr}</span>
 				</div>
-				<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 			</div>
 			{if $hasImage eq 'y'}
 				<div class="form-group">
-					<label>{tr}Current Image{/tr}</label>
-					<div class="thumbnail">
+					<label class="col-sm-3">{tr}Current Image{/tr}</label>
+					<div class="thumbnail col-sm-9">
 						{if $imageIsChanged eq 'y'}
 							<img alt="{tr}Article image{/tr}" src="article_image.php?image_type=preview&amp;id={$previewId}">
 						{else}
@@ -223,13 +223,13 @@
 				<input type="text" class="form-control" name="image_caption" value="{$image_caption|escape}" >
 				<div class="help-block">{tr}Default will use the topic name{/tr}</div>
 			</div>
-			<div class="checkbox {if $types.$type.show_image neq 'y'}hidden{/if} col-sm-push-2">
+			<div class="checkbox {if $types.$type.show_image neq 'y'}hidden{/if} col-sm-push-3">
 				<label>
 					<input type="checkbox" name="useImage" id="useImage" {if $useImage eq 'y'}checked='checked'{/if} >
 					{tr}Use own image{/tr}
 				</label>
 			</div>
-			<div class="checkbox {if $types.$type.show_image neq 'y'}hidden{/if} col-sm-push-2">
+			<div class="checkbox {if $types.$type.show_image neq 'y'}hidden{/if} col-sm-push-3">
 				<label>
 					<input type="checkbox" name="isfloat" {if $isfloat eq 'y'}checked='checked'{/if}>
 					{tr}Float text around image{/tr}
@@ -239,15 +239,15 @@
 				<legend>{tr}Read Article{/tr}</legend>
 				<span class="help-block">{tr}Maximum dimensions of custom image in view mode{/tr}</span>
 				<div class="form-group">
-					<label for="image_x" class="control-label col-sm-2">{tr}Width{/tr}</label>
-					<div class="input-group col-sm-2">
+					<label for="image_x" class="control-label col-sm-3">{tr}Width{/tr}</label>
+					<div class="input-group col-sm-3">
 						<input type="text" class="form-control" name="image_x"{if $image_x > 0} value="{$image_x|escape}"{/if}>
 						<span class="input-group-addon">{tr}pixels{/tr}</span>
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="image_y" class="control-label col-sm-2">{tr}Height{/tr}</label>
-					<div class="input-group col-sm-2">
+					<label for="image_y" class="control-label col-sm-3">{tr}Height{/tr}</label>
+					<div class="input-group col-sm-3">
 						<input type="text" class="form-control" name="image_y"{if $image_y > 0} value="{$image_y|escape}"{/if}>
 						<span class="input-group-addon">{tr}pixels{/tr}</span>
 					</div>
@@ -257,15 +257,15 @@
 				<legend>{tr}View Articles{/tr}</legend>
 				<span class="help-block">{tr}Maximum dimensions of custom image in list mode{/tr}</span>
 				<div class="form-group">
-					<label for="list_image_x" class="control-label col-sm-2">{tr}Width{/tr}</label>
-					<div class="input-group col-sm-2">
+					<label for="list_image_x" class="control-label col-sm-3">{tr}Width{/tr}</label>
+					<div class="input-group col-sm-3">
 						<input type="text" class="form-control" name="list_image_x"{if $list_image_x > 0} value="{$list_image_x|escape}"{/if}>
 						<span class="input-group-addon">{tr}pixels{/tr}</span>
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="list_image_y" class="control-label col-sm-2">{tr}Height{/tr}</label>
-					<div class="input-group col-sm-2">
+					<label for="list_image_y" class="control-label col-sm-3">{tr}Height{/tr}</label>
+					<div class="input-group col-sm-3">
 						<input type="text" class="form-control" name="list_image_y"{if $list_image_y > 0} value="{$list_image_y|escape}"{/if}>
 						<span class="input-group-addon">{tr}pixels{/tr}</span>
 					</div>
@@ -276,11 +276,11 @@
 			<h2>{tr}Advanced{/tr}</h2>
 			{if $prefs.feature_multilingual eq 'y' and empty($translationOf)}
 				<div class="form-group clearfix">
-					<label for="translationOf" class="control-label col-sm-2">
+					<label for="translationOf" class="control-label col-sm-3">
 						{tr}Attach existing article ID as translation{/tr}
 					</label>
-					<div class="col-sm-6">
-						<input name="translationOf" type="text" size="4" class="form-control">
+					<div class="col-sm-3">
+						<input name="translationOf" type="text" class="form-control">
 					</div>
 				</div>
 			{/if}
@@ -329,32 +329,35 @@
 				</select>
 			</div>
 			{if $prefs.geo_locate_article eq 'y'}
-				<div class="form-group">
-					<label>{tr}Location{/tr}</label>
-					<div class="map-container" data-geo-center="{defaultmapcenter}" data-target-field="geolocation" style="height: 250px; width: 250px;"></div>
-					<input type="hidden" name="geolocation" value="{$geolocation_string|escape}">
-					{$headerlib->add_map()}
+				<div class="form-group clearfix">
+					<label class="col-sm-3">{tr}Location{/tr}</label>
+					<div class="col-sm-9">
+						<div class="map-container" data-geo-center="{defaultmapcenter}" data-target-field="geolocation" style="height: 250px; width: 250px;"></div>
+						<input type="hidden" name="geolocation" value="{$geolocation_string|escape}">
+						{$headerlib->add_map()}
+					</div>
 				</div>
 			{/if}
 			{if $prefs.feature_cms_templates eq 'y' and $tiki_p_use_content_templates eq 'y' and $templates|@count ne 0}
-				<div class="form-group">
-					<label for="templateId">{tr}Apply template{/tr}</label>
-					<select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();">
-						<option value="0">{tr}none{/tr}</option>
-						{foreach $templates as $template}
-							<option value="{$template.templateId|escape}">{tr}{$template.name|escape}{/tr}</option>
-						{/foreach}
-					</select>
+				<div class="form-group clearfix">
+					<label for="templateId" class="control-label col-sm-3">{tr}Apply template{/tr}</label>
+					<div class="col-sm-9">
+						<select class="form-control" name="templateId" onchange="javascript:document.getElementById('editpageform').submit();">
+							<option value="0">{tr}none{/tr}</option>
+							{foreach $templates as $template}
+								<option value="{$template.templateId|escape}">{tr}{$template.name|escape}{/tr}</option>
+							{/foreach}
+						</select>
+					</div>
 				</div>
 			{/if}
-
-
 			{if $prefs.feature_cms_emails eq 'y'}
 				<div class="form-group">
-					<label for="emails">{tr}Emails to be notified (separated with commas){/tr}</label>
-					<div>
+					<label for="emails" class="col-sm-3">{tr}Email{/tr}</label>
+					<div class="col-sm-9">
 						<input type="text" name="emails" value="{$emails|escape}" size="60" class="form-control">
-						{if !empty($userEmail) and $userEmail ne $prefs.sender_email}
+						<span class="help-block">{tr}Emails to be notified (separated with commas){/tr}</span>
+						{if !empty($userEmail) and $userEmail neq $prefs.sender_email}
 							{tr}From:{/tr}
 							<label>
 								<input type="radio" name="from" value="{$userEmail|escape}"{if empty($from) or $from eq $userEmail} checked="checked"{/if}>
@@ -368,7 +371,6 @@
 					</div>
 				</div>
 			{/if}
-
 			{if ! empty($all_attributes)}
 				<fieldset>
 					<legend>{tr}Attributes{/tr}</legend>
@@ -384,13 +386,10 @@
 			{/if}
 		{/tab}
 	{/tabset}
-
-	<div class="form-group"><br><br>
-		<div class="col-sm-offset-4">
-			<input type="submit" class="wikiaction btn btn-default" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
-			<input type="submit" class="wikiaction btn btn-primary" name="save" value="{tr}Save{/tr}" onclick="this.form.saving=true;needToConfirm=false;">
-			{if $articleId}<input type="submit" class="wikiaction tips btn btn-default" title="{tr}Cancel{/tr}|{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}" onclick="needToConfirm=false;">{/if}
-		</div>
+	<div class="form-group clearfix text-center">
+		<input type="submit" class="wikiaction btn btn-default" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
+		<input type="submit" class="wikiaction btn btn-primary" name="save" value="{tr}Save{/tr}" onclick="this.form.saving=true;needToConfirm=false;">
+		{if $articleId}<input type="submit" class="wikiaction tips btn btn-default" title="{tr}Cancel{/tr}|{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}" onclick="needToConfirm=false;">{/if}
 	</div>
 	{if $smarty.session.wysiwyg neq 'y'}
 		{jq}
