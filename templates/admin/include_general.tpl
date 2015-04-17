@@ -108,6 +108,7 @@
 					</div>
 				</div>
 				{preference name=disableJavascript}
+				{preference name=javascript_disabled_shows_all_menus}
 
 				{preference name=log_mail}
 				{preference name=log_sql}

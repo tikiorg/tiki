@@ -192,6 +192,7 @@
 				{preference name=feature_debug_console}
 				{preference name=feature_tikitests}
 				{preference name=disableJavascript}
+				{preference name=javascript_disabled_shows_all_menus}
 				{preference name=smarty_compilation}
 				{preference name=feature_webservices}
 				{preference name=feature_dummy}

@@ -20,5 +20,11 @@ function prefs_javascript_list()
 			'default' => 'none',
 			'tags' => array('basic'),
 		),
+		'javascript_disabled_shows_all_menus' => array(
+			'name' => tra('Show hidden menus if JavaScript is disabled.'),
+            'description' => tra('Makes the site more accessible if JavaScript is disabled but can make complex sites look confusing.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);
 }

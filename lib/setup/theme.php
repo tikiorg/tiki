@@ -57,7 +57,7 @@ if ($prefs['feature_fixed_width'] === 'y') {
 	);
 }
 
-if ($prefs['javascript_enabled'] !== 'y') {
+if ($prefs['javascript_enabled'] !== 'y' && $prefs['javascript_disabled_shows_all_menus'] === 'y') {
 	$headerlib->add_css('.collapse, .dropdown-menu { display: inherit; position: inherit; }');
 }
 
