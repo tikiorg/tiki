@@ -117,7 +117,7 @@ function iconset_default()
 				'id' => 'tasks',
 			),
 			'admin_profiles' => array(
-				'id' => 'cubes',
+				'id' => 'cube',
 			),
 			'admin_rating' => array(
 				'id' => 'check-square',
