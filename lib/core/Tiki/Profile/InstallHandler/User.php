@@ -25,6 +25,7 @@
 # add new user with email and initial password defaulting to username
 # doesn't need to change password on first login (defaults to y)
 # finally assigned to Test Group
+# and default Group set as Test Group (Tiki 15 addition)
  -
   type: user 
   data: 
@@ -32,6 +33,7 @@
     email: tester@example.com
     change: n
     groups: [ Test Group ]
+	defaultgroup: Test Group	
 
  * =====================================
  * 
@@ -78,6 +80,10 @@ class Tiki_Profile_InstallHandler_User extends Tiki_Profile_InstallHandler
 					$userlib->assign_user_to_group($user['name'], $group);
 				}
 			}
+			
+			if (isset($user['defaultgroup'])) {
+				$userlib->set_default_group($user['name'], $user['defaultgroup']);
+			}			
 				
 			return $userlib->get_user_id($user['name']);
 		}
