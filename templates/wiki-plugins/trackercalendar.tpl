@@ -56,8 +56,7 @@
 			slotMinutes: {{$prefs.calendar_timespan}},
 			defaultView: data.dView,
 			eventAfterRender : function( event, element, view ) {
-				$('.fc-view').css('overflow','visible');
-				element.popover({trigger: 'hover focus', title: event.title, content: event.description, html: true});
+				element.popover({trigger: 'hover focus', title: event.title, content: event.description, html: true, container: 'body'});
 			},
 			eventClick: function(event) {
 				if (data.url) {
