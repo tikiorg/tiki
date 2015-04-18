@@ -26,7 +26,7 @@
 				right: data.views
 			},
 			editable: true,
-			timezone: 'America/Boise',
+			timezone: '{{$prefs.server_timezone}}',
 			events: $.service('tracker_calendar', 'list', {
                            	     	trackerId: data.trackerId,
                                 	beginField: data.begin,
