@@ -732,7 +732,17 @@ END;
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 if ($_REQUEST['locSection'] == 'compose') {
-	$current = $webmaillib->get_current_webmail_account($user);
+// check if current has been set in the url	
+	if (isset($_REQUEST['current']) && !empty($_REQUEST['current'])) {
+		$current = $webmaillib->get_webmail_account($user, $_REQUEST['current']);
+	} else {
+		$current = $webmaillib->get_current_webmail_account($user);	
+	}
+// assign accountId and sending email so they are available to the smarty template and 
+// the accountId can be passed back from template so that different accounts can be used
+// 'on the fly' by using a 'current' identifier in the url
+	$smarty->assign('curacctId', $current['accountId']);
+	$smarty->assign('sendFrom', $current['fromEmail']);
 
 	if (!$current) {
 		handleWebmailRedirect('locSection=settings');

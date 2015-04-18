@@ -545,6 +545,7 @@
 		{if $sent eq 'n'}
 			<form action="tiki-webmail.php" method="post">
 				<input type="hidden" name="locSection" value="compose">
+                <input type="hidden" name="current" value="{$curacctId|escape}">
 				<input type="hidden" name="attach1" value="{$attach1|escape}">
 				<input type="hidden" name="attach2" value="{$attach2|escape}">
 				<input type="hidden" name="attach3" value="{$attach3|escape}">
@@ -556,6 +557,11 @@
 				<input type="hidden" name="attach3type" value="{$attach3type|escape}">
 				<input type="submit" class="btn btn-primary btn-sm" name="send" value="{tr}Send{/tr}">
 				<table class="formcolor">
+					<tr>
+                    	<td colspan="4">
+                        	{tr}Sending from webmail account:{/tr} {$sendFrom}
+                           </td>
+                    </tr                 
 					<tr>
 						<td>
 							<a title="{tr}Select from address book{/tr}" class="link" href="#" onclick="javascript:window.open('tiki-webmail_contacts.php?element=to','','menubar=no,width=452,height=550');">{tr}To{/tr}</a>:
@@ -662,6 +668,7 @@
 	{else}
 		<form enctype="multipart/form-data" action="tiki-webmail.php" method="post">
 			<input type="hidden" name="locSection" value="compose">
+            <input type="hidden" name="current" value="{$curacctId|escape}">
 			<input type="hidden" name="to" value="{$to|escape}">
 			<input type="hidden" name="cc" value="{$cc|escape}">
 			<input type="hidden" name="bcc" value="{$bcc|escape}">
