@@ -772,7 +772,7 @@ if ($_REQUEST['locSection'] == 'compose') {
 
 		if ($_REQUEST['attach1']) {
 			check_ticket('webmail');
-			$a1 = $mail->getFile('temp/mail_attachs/' . $_REQUEST['attach1file']);
+			$a1 = file_get_contents('temp/mail_attachs/' . $_REQUEST['attach1file']);
 
 			$mail->addAttachment($a1, $_REQUEST['attach1'], $_REQUEST['attach1type']);
 			@unlink('temp/mail_attachs/' . $_REQUEST['attach1file']);
@@ -780,7 +780,7 @@ if ($_REQUEST['locSection'] == 'compose') {
 
 		if ($_REQUEST['attach2']) {
 			check_ticket('webmail');
-			$a2 = $mail->getFile('temp/mail_attachs/' . $_REQUEST['attach2file']);
+			$a2 = file_get_contents('temp/mail_attachs/' . $_REQUEST['attach2file']);
 
 			$mail->addAttachment($a2, $_REQUEST['attach2'], $_REQUEST['attach2type']);
 			@unlink('temp/mail_attachs/' . $_REQUEST['attach2file']);
@@ -788,7 +788,7 @@ if ($_REQUEST['locSection'] == 'compose') {
 
 		if ($_REQUEST['attach3']) {
 			check_ticket('webmail');
-			$a3 = $mail->getFile('temp/mail_attachs/' . $_REQUEST['attach3file']);
+			$a3 = file_get_contents('temp/mail_attachs/' . $_REQUEST['attach3file']);
 
 			$mail->addAttachment($a3, $_REQUEST['attach3'], $_REQUEST['attach3type']);
 			@unlink('temp/mail_attachs/' . $_REQUEST['attach3file']);
