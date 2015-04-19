@@ -13,8 +13,20 @@
 {if $listpages or ($find ne '')}
 	{include file='find.tpl'}
 {/if}
-<div class="table-responsive">
-	<table class="table normal">
+
+{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+{if $prefs.javascript_enabled !== 'y'}
+	{$js = 'n'}
+	{$libeg = '<li>'}
+	{$liend = '</li>'}
+{else}
+	{$js = 'y'}
+	{$libeg = ''}
+	{$liend = ''}
+{/if}
+
+<div class="{if $js === 'y'}table-responsive{/if}"> {*the table-responsive class cuts off dropdown menus *}
+	<table class="table normal table-striped table-hover">
 		<tr>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='bannerId'}{tr}Id{/tr}{/self_link}</th>
 			<th>{self_link _sort_arg='sort_mode' _sort_field='client'}{tr}Client{/tr}{/self_link}</th>
@@ -46,26 +58,32 @@
 			<td class="action">
 				{capture name=banner_actions}
 					{strip}
-						<a href="tiki-view_banner.php?bannerId={$listpages[changes].bannerId}">
+						{$libeg}<a href="tiki-view_banner.php?bannerId={$listpages[changes].bannerId}">
 							{icon name='chart' _menu_text='y' _menu_icon='y' alt="{tr}Stats{/tr}"}
-						</a>
+						</a>{$liend}
 						{if $tiki_p_admin_banners eq 'y'}
-							<a href="tiki-edit_banner.php?bannerId={$listpages[changes].bannerId}">
+							{$libeg}<a href="tiki-edit_banner.php?bannerId={$listpages[changes].bannerId}">
 								{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-							</a>
-							<a href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].bannerId}">
+							</a>{$liend}
+							{$libeg}<a href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].bannerId}">
 								{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
-							</a>
+							</a>{$liend}
 						{/if}
 					{/strip}
 				{/capture}
-				<a class="tips"
-				   title="{tr}Actions{/tr}"
-				   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.banner_actions|escape:"javascript"|escape:"html"}
-				   style="padding:0; margin:0; border:0"
-						>
+				{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+				<a
+					class="tips"
+					title="{tr}Actions{/tr}"
+					href="#"
+					{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.banner_actions|escape:"javascript"|escape:"html"}{/if}
+					style="padding:0; margin:0; border:0"
+				>
 					{icon name='wrench'}
 				</a>
+				{if $js === 'n'}
+					<ul class="dropdown-menu" role="menu">{$smarty.capture.banner_actions}</ul></li></ul>
+				{/if}
 			</td>
 		</tr>
 		{sectionelse}

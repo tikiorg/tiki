@@ -485,7 +485,17 @@
 		</div>
 		<div id="ajax-feedback" style="display:none"></div>
 	{/if}
-	<div id="{$ts_tableid}-div" class="table-responsive ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}>
+	{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+	{if $prefs.javascript_enabled !== 'y'}
+		{$js = 'n'}
+		{$libeg = '<li>'}
+		{$liend = '</li>'}
+	{else}
+		{$js = 'y'}
+		{$libeg = ''}
+		{$liend = ''}
+	{/if}
+	<div id="{$ts_tableid}-div" class="{if $js === 'y'}table-responsive{/if} ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}>
 		<table id="{$ts_tableid}" class="table normal table-striped table-hover">
 			<input type="hidden" {if $tsOn}id="{$ts_offsetid|escape}" {/if}name="offset" value="{$comments_offset|escape}">
 			<input type="hidden" {if $tsOn}id="{$ts_countid|escape}" {/if}name="count" value="{$comments_cant}">
@@ -684,13 +694,13 @@
 							{capture name=view_forum_actions}
 								{strip}
 									{if ( $tiki_p_admin_forum eq 'y' or ($comments_coms[ix].userName == $user && $tiki_p_forum_post eq 'y') ) and $forum_info.is_locked neq 'y' and $comments_coms[ix].locked neq 'y'}
-										<a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}">
+										{$libeg}<a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}">
 											{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-										</a>
+										</a>{$liend}
 									{/if}
 									{if $prefs.feature_forum_topics_archiving eq 'y' && $tiki_p_admin_forum eq 'y'}
 										{if $comments_coms[ix].archived eq 'y'}
-											<a href="#"
+											{$libeg}<a href="#"
 												onclick="confirmModal(this,
 													{ldelim}
 														'controller':'forum',
@@ -703,9 +713,9 @@
 													{rdelim});$('[data-toggle=popover]').popover('hide');"
 											>
 												{icon name='file-archive-open' _menu_text='y' _menu_icon='y' alt="{tr}Unarchive{/tr}"}
-											</a>
+											</a>{$liend}
 										{else}
-											<a href="#"
+											{$libeg}<a href="#"
 												onclick="confirmModal(this,
 													{ldelim}
 														'controller':'forum',
@@ -718,11 +728,11 @@
 													{rdelim});$('[data-toggle=popover]').popover('hide');"
 											>
 												{icon name='file-archive' _menu_text='y' _menu_icon='y' alt="{tr}Archive{/tr}"}
-											</a>
+											</a>{$liend}
 										{/if}
 									{/if}
 									{if $tiki_p_admin_forum eq 'y'}
-										<a href="#"
+										{$libeg}<a href="#"
 											onclick="confirmModal(this,
 												{ldelim}
 													'controller':'forum',
@@ -735,17 +745,23 @@
 												{rdelim});$('[data-toggle=popover]').popover('hide');"
 										>
 											{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Delete{/tr}"}
-										</a>
+										</a>{$liend}
 									{/if}
 								{/strip}
 							{/capture}
-							<a class="tips"
-							   title="{tr}Actions{/tr}"
-							   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.view_forum_actions|escape:"javascript"|escape:"html"}
-							   style="padding:0; margin:0; border:0"
-									>
+							{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+							<a
+								class="tips"
+								title="{tr}Actions{/tr}"
+								href="#"
+								{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.view_forum_actions|escape:"javascript"|escape:"html"}{/if}
+								style="padding:0; margin:0; border:0"
+							>
 								{icon name='wrench'}
 							</a>
+							{if $js === 'n'}
+								<ul class="dropdown-menu" role="menu">{$smarty.capture.view_forum_actions}</ul></li></ul>
+							{/if}
 						</td>
 					</tr>
 				{sectionelse}

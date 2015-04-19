@@ -61,9 +61,19 @@
 <div align="left"><h2>{tr _0=$assign_user|escape}Assign User %0 to Groups{/tr}</h2></div>
 
 {include file='find.tpl' find_show_num_rows='y'}
+{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+{if $prefs.javascript_enabled !== 'y'}
+	{$js = 'n'}
+	{$libeg = '<li>'}
+	{$liend = '</li>'}
+{else}
+	{$js = 'y'}
+	{$libeg = ''}
+	{$liend = ''}
+{/if}
 
 <form method="post" action="tiki-assignuser.php{if $assign_user}?assign_user={$assign_user|escape:'url'}{/if}">
-<div class="table-responsive">
+	<div class="{if $js === 'y'}table-responsive{/if}"> {*the table-responsive class cuts off dropdown menus *}
 <table class="table normal table-striped table-hover">
 	<tr>
 		<th><a href="tiki-assignuser.php?{if $assign_user}assign_user={$assign_user|escape:url}&amp;{/if}offset={$offset}&amp;maxRecords={$prefs.maxRecords}&amp;sort_mode={if $sort_mode eq 'groupName_desc'}groupName_asc{else}groupName_desc{/if}">{tr}Name{/tr}</a></th>
@@ -94,23 +104,29 @@
 					{capture name=assign_user_actions}
 						{strip}
 							{if $users[user].what ne 'real'}
-								<a href="tiki-assignuser.php?{if $offset}offset={$offset}&amp;{/if}maxRecords={$prefs.maxRecords}&amp;sort_mode={$sort_mode}&amp;action=assign&amp;group={$users[user].groupName|escape:url}{if $assign_user}&amp;assign_user={$assign_user|escape:url}{/if}">
+								{$libeg}<a href="tiki-assignuser.php?{if $offset}offset={$offset}&amp;{/if}maxRecords={$prefs.maxRecords}&amp;sort_mode={$sort_mode}&amp;action=assign&amp;group={$users[user].groupName|escape:url}{if $assign_user}&amp;assign_user={$assign_user|escape:url}{/if}">
 									{icon name='add' _menu_text='y' _menu_icon='y' alt="{tr}Assign{/tr}"}
-								</a>
+								</a>{$liend}
 							{elseif $users[user].groupName ne "Registered"}
-								<a href="tiki-assignuser.php?{if $offset}offset={$offset}&amp;{/if}maxRecords={$prefs.maxRecords}&amp;sort_mode={$sort_mode}{if $assign_user}&amp;assign_user={$assign_user|escape:url}{/if}&amp;action=removegroup&amp;group={$users[user].groupName|escape:url}">
+								{$libeg}<a href="tiki-assignuser.php?{if $offset}offset={$offset}&amp;{/if}maxRecords={$prefs.maxRecords}&amp;sort_mode={$sort_mode}{if $assign_user}&amp;assign_user={$assign_user|escape:url}{/if}&amp;action=removegroup&amp;group={$users[user].groupName|escape:url}">
 									{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Unassign{/tr}"}
-								</a>
+								</a>{$liend}
 							{/if}
 						{/strip}
 					{/capture}
-					<a class="tips"
-					   title="{tr}Actions{/tr}"
-					   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.assign_user_actions|escape:"javascript"|escape:"html"}
-					   style="padding:0; margin:0; border:0"
-							>
+					{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+					<a
+						class="tips"
+						title="{tr}Actions{/tr}"
+						href="#"
+						{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.assign_user_actions|escape:"javascript"|escape:"html"}{/if}
+						style="padding:0; margin:0; border:0"
+					>
 						{icon name='wrench'}
 					</a>
+					{if $js === 'n'}
+						<ul class="dropdown-menu" role="menu">{$smarty.capture.assign_user_actions}</ul></li></ul>
+					{/if}
 				</td>
 			</tr>
 		{/if}

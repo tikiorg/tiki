@@ -33,10 +33,21 @@
 	{wikiplugin _name="map" scope=".listarticlesmap .geolocated" width="400" height="400"}{/wikiplugin}
 {/if}
 
+{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+{if $prefs.javascript_enabled !== 'y'}
+	{$js = 'n'}
+	{$libeg = '<li>'}
+	{$liend = '</li>'}
+{else}
+	{$js = 'y'}
+	{$libeg = ''}
+	{$liend = ''}
+{/if}
+
 <form name="checkform" method="get">
 	<input type="hidden" name="maxRecords" value="{$maxRecords|escape}">
 	{assign var=numbercol value=1}
-	<div class="table-responsive">
+	<div class="{if $js === 'y'}table-responsive{/if}"> {*the table-responsive class cuts off dropdown menus *}
 		<table class="table normal">
 			<tr>
 				{if $listpages and $tiki_p_remove_article eq 'y'}
@@ -189,32 +200,38 @@
 						{capture name=articles_actions}
 							{strip}
 								{if $tiki_p_read_article eq 'y'}
-									<a href="{$listpages[changes].articleId|sefurl:article}">
+									{$libeg}<a href="{$listpages[changes].articleId|sefurl:article}">
 										{icon name="view" _menu_text='y' _menu_icon='y' alt="{tr}View{/tr}"}
-									</a>
+									</a>{$liend}
 								{/if}
 								{if $tiki_p_edit_article eq 'y' or (!empty($user) and $listpages[changes].author eq $user and $listpages[changes].creator_edit eq 'y')}
-									<a href="tiki-edit_article.php?articleId={$listpages[changes].articleId}">
+									{$libeg}<a href="tiki-edit_article.php?articleId={$listpages[changes].articleId}">
 										{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-									</a>
+									</a>{$liend}
 								{/if}
 								{if $tiki_p_admin_cms eq 'y' or $tiki_p_assign_perm_cms eq 'y'}
-									{permission_link mode=text type=article permType=articles id=$listpages[changes].articleId}
+									{$libeg}{permission_link mode=text type=article permType=articles id=$listpages[changes].articleId}{$liend}
 								{/if}
 								{if $tiki_p_remove_article eq 'y'}
-									{self_link _menu_text='y' _menu_icon='y' remove=$listpages[changes].articleId _icon_name="remove"}
+									{$libeg}{self_link _menu_text='y' _menu_icon='y' remove=$listpages[changes].articleId _icon_name="remove"}
 										{tr}Remove{/tr}
-									{/self_link}
+									{/self_link}{$liend}
 								{/if}
 							{/strip}
 						{/capture}
-						<a class="tips"
-						   title="{tr}Actions{/tr}"
-						   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.articles_actions|escape:"javascript"|escape:"html"}
-						   style="padding:0; margin:0; border:0"
-								>
+						{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+						<a
+							class="tips"
+							title="{tr}Actions{/tr}"
+							href="#"
+							{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.articles_actions|escape:"javascript"|escape:"html"}{/if}
+							style="padding:0; margin:0; border:0"
+						>
 							{icon name='wrench'}
 						</a>
+						{if $js === 'n'}
+							<ul class="dropdown-menu" role="menu">{$smarty.capture.articles_actions}</ul></li></ul>
+						{/if}
 					</td>
 				</tr>
 			{sectionelse}

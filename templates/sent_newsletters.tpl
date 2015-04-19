@@ -1,4 +1,15 @@
 
+{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+{if $prefs.javascript_enabled !== 'y'}
+	{$js = 'n'}
+	{$libeg = '<li>'}
+	{$liend = '</li>'}
+{else}
+	{$js = 'y'}
+	{$libeg = ''}
+	{$liend = ''}
+{/if}
+
 <div align="center">
 	{include file='find.tpl'}
 
@@ -47,39 +58,45 @@
 					{capture name=sent_actions}
 						{strip}
 							{if $url == "tiki-newsletter_archives.php"}
-								<a href="{$url}?{if $nl_info}nlId={$channels[user].nlId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}">
+								{$libeg}<a href="{$url}?{if $nl_info}nlId={$channels[user].nlId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}">
 									{icon name='view' _menu_text='y' _menu_icon='y' alt="{tr}View{/tr}"}
-								</a>
+								</a>{$liend}
 							{/if}
 							{if ($channels[user].tiki_p_send_newsletters eq 'y') or ($channels[user].tiki_p_admin_newsletters eq 'y')}
 								{if $view_editions eq 'y'}
-									<a href="tiki-send_newsletters.php?nlId={$channels[user].nlId}&amp;editionId={$channels[user].editionId}&amp;resend=1">
+									{$libeg}<a href="tiki-send_newsletters.php?nlId={$channels[user].nlId}&amp;editionId={$channels[user].editionId}&amp;resend=1">
 										{icon name='redo' _menu_text='y' _menu_icon='y' alt="{tr}Resend newsletter{/tr}"}
-									</a>
+									</a>{$liend}
 								{else}
-									<a class="tips" title="{tr}Send Newsletter{/tr}" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}&amp;editionId={$channels[user].editionId}">
+									{$libeg}<a class="tips" title="{tr}Send Newsletter{/tr}" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}&amp;editionId={$channels[user].editionId}">
 										{icon name='envelope' _menu_text='y' _menu_icon='y' alt="{tr}Send newsletter{/tr}"}
-									</a>
+									</a>{$liend}
 								{/if}
 							{else}
 								&nbsp;
 							{/if}
 							{if $channels[user].tiki_p_admin_newsletters eq 'y'}
-								<a class="link" href="{$url}?nlId={$channels[user].nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].editionId}" title="{tr}Remove{/tr}">
+								{$libeg}<a class="link" href="{$url}?nlId={$channels[user].nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].editionId}" title="{tr}Remove{/tr}">
 									{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
-								</a>
+								</a>{$liend}
 							{else}
 								&nbsp;
 							{/if}
 						{/strip}
 					{/capture}
-					<a class="tips"
-					   title="{tr}Actions{/tr}"
-					   href="#" {popup delay="0|2000" center=true text=$smarty.capture.sent_actions|escape:"javascript"|escape:"html"}
-					   style="padding:0; margin:0; border:0"
-							>
+					{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+					<a
+						class="tips"
+						title="{tr}Actions{/tr}"
+						href="#"
+						{if $js === 'y'}{popup delay="0|2000" center=true text=$smarty.capture.sent_actions|escape:"javascript"|escape:"html"}{/if}
+						style="padding:0; margin:0; border:0"
+					>
 						{icon name='wrench'}
 					</a>
+					{if $js === 'n'}
+						<ul class="dropdown-menu" role="menu">{$smarty.capture.sent_actions}</ul></li></ul>
+					{/if}
 				</td>
 			</tr>
 		{/section}

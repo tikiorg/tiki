@@ -17,7 +17,18 @@
 	{/if}
 </div>
 
-<div class="table-responsive">
+{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+{if $prefs.javascript_enabled !== 'y'}
+	{$js = 'n'}
+	{$libeg = '<li>'}
+	{$liend = '</li>'}
+{else}
+	{$js = 'y'}
+	{$libeg = ''}
+	{$liend = ''}
+{/if}
+
+<div class="{if $js === 'y'}table-responsive{/if}"> {*the table-responsive class cuts off dropdown menus *}
 	<table class="table table-striped normal">
 		{assign var=numbercol value=0}
 		<tr>
@@ -101,50 +112,56 @@
 					{capture name=blog_actions}
 						{strip}
 							{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' )}
-								<a href="{$listpages[changes].blogId|sefurl:blog}">
+								{$libeg}<a href="{$listpages[changes].blogId|sefurl:blog}">
 									{icon name="view" _menu_text='y' _menu_icon='y' alt="{tr}View{/tr}"}
-								</a>
+								</a>{$liend}
 							{/if}
 							{if ($user and $listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y')}
 								{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_blog_create_blog eq 'y' )}
-									<a href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}">
+									{$libeg}<a href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}">
 										{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-									</a>
+									</a>{$liend}
 								{/if}
 							{/if}
 							{if $tiki_p_blog_post eq 'y'}
 								{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_blog_post eq 'y' )}
 									{if ($user and $listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y') or ($listpages[changes].public eq 'y')}
-										<a href="tiki-blog_post.php?blogId={$listpages[changes].blogId}">
+										{$libeg}<a href="tiki-blog_post.php?blogId={$listpages[changes].blogId}">
 											{icon name="post" _menu_text='y' _menu_icon='y' alt="{tr}Post{/tr}"}
-										</a>
+										</a>{$liend}
 									{/if}
 								{/if}
 							{/if}
 							{if $tiki_p_blog_admin eq 'y' and $listpages[changes].allow_comments eq 'y'}
-								<a href='tiki-list_comments.php?types_section=blogs&amp;blogId={$listpages[changes].blogId}'>
+								{$libeg}<a href='tiki-list_comments.php?types_section=blogs&amp;blogId={$listpages[changes].blogId}'>
 									{icon name="comments" _menu_text='y' _menu_icon='y' alt="{tr}Comments{/tr}"}
-								</a>
+								</a>{$liend}
 							{/if}
 							{if $tiki_p_admin eq 'y' || $tiki_p_assign_perm_blog eq 'y'}
-								{permission_link mode=text type="blog" permType="blogs" id=$listpages[changes].blogId}
+								{$libeg}{permission_link mode=text type="blog" permType="blogs" id=$listpages[changes].blogId}{$liend}
 							{/if}
 							{if ($user and $listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y')}
 								{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_blog_create_blog eq 'y' )}
-									<a href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].blogId}">
+									{$libeg}<a href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].blogId}">
 										{icon name="delete" _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
-									</a>
+									</a>{$liend}
 								{/if}
 							{/if}
 						{/strip}
 					{/capture}
-					<a class="tips"
-					   title="{tr}Actions{/tr}"
-					   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.blog_actions|escape:"javascript"|escape:"html"}
-					   style="padding:0; margin:0; border:0"
-							>
+					{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+					<a
+						class="tips"
+						title="{tr}Actions{/tr}"
+						href="#"
+						{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.blog_actions|escape:"javascript"|escape:"html"}{/if}
+						style="padding:0; margin:0; border:0"
+					>
 						{icon name='wrench'}
 					</a>
+					{if $js === 'n'}
+						<ul class="dropdown-menu" role="menu">{$smarty.capture.blog_actions}</ul></li></ul>
+					{/if}
 				</td>
 			</tr>
 		{sectionelse}

@@ -105,6 +105,16 @@
 | <span class="sortoption"><a class="gallink" href="{$galleryId|sefurl:gallery:with_next}offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></span>
 | <span class="sortoption"><a class="gallink" href="{$galleryId|sefurl:gallery:with_next}offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></span>
 | <span class="sortoption"><a class="gallink" href="{$galleryId|sefurl:gallery:with_next}offset={$offset}&amp;sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}">{tr}Size{/tr}</a></span> ]
+{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+{if $prefs.javascript_enabled !== 'y'}
+	{$js = 'n'}
+	{$libeg = '<li>'}
+	{$liend = '</li>'}
+{else}
+	{$js = 'y'}
+	{$libeg = ''}
+	{$liend = ''}
+{/if}
 
 <div class="thumbnails">
 	<table class="galtable" cellpadding="0" cellspacing="0">
@@ -176,39 +186,45 @@
 							<br>
 							{capture name=image_actions}
 								{strip}
-									<a {jspopup href="tiki-browse_image.php?galleryId=$galleryId&amp;sort_mode=$sort_mode&amp;imageId="|cat:$item.imageId|cat:"&amp;scalesize=$defaultscale&amp;popup=1"} class="gallink">
+									{$libeg}<a {jspopup href="tiki-browse_image.php?galleryId=$galleryId&amp;sort_mode=$sort_mode&amp;imageId="|cat:$item.imageId|cat:"&amp;scalesize=$defaultscale&amp;popup=1"} class="gallink">
 										{icon name='view' _menu_text='y' _menu_icon='y' alt="{tr}Popup{/tr}"}
-									</a>
-									<a class="gallink tips" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize={$defaultscale}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if}>
+									</a>{$liend}
+									{$libeg}<a class="gallink tips" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize={$defaultscale}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if}>
 										{icon name='list' _menu_text='y' _menu_icon='y' alt="{tr}Details{/tr}"}
-									</a>
+									</a>{$liend}
 									{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
 										{if $nextx!=0}
-											<a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize=0">
+											{$libeg}<a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize=0">
 												{icon name='image' _menu_text='y' _menu_icon='y' alt="{tr}Original size{/tr}"}
-											</a>
+											</a>{$liend}
 										{/if}
 										{if $imagerotate}
-											<a class="gallink" href="{$galleryId|sefurl:gallery:with_next}rotateright={$item.imageId}" title="{tr}rotate right{/tr}">
+											{$libeg}<a class="gallink" href="{$galleryId|sefurl:gallery:with_next}rotateright={$item.imageId}" title="{tr}rotate right{/tr}">
 												{icon name='redo' _menu_text='y' _menu_icon='y' alt="{tr}Rotate{/tr}"}
-											</a>
+											</a>{$liend}
 										{/if}
-										<a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$item.imageId}">
+										{$libeg}<a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$item.imageId}">
 											{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-										</a>
-										<a class="gallink" href="{$galleryId|sefurl:gallery:with_next}remove={$item.imageId}">
+										</a>{$liend}
+										{$libeg}<a class="gallink" href="{$galleryId|sefurl:gallery:with_next}remove={$item.imageId}">
 											{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
-										</a>
+										</a>{$liend}
 									{/if}
 								{/strip}
 							{/capture}
-							<a class="tips"
-							   title="{tr}Actions{/tr}"
-							   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.image_actions|escape:"javascript"|escape:"html"}
-							   style="padding:0; margin:0; border:0"
-									>
+							{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+							<a
+								class="tips"
+								title="{tr}Actions{/tr}"
+								href="#"
+								{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.image_actions|escape:"javascript"|escape:"html"}{/if}
+								style="padding:0; margin:0; border:0"
+							>
 								{icon name='wrench'}
 							</a>
+							{if $js === 'n'}
+								<ul class="dropdown-menu" role="menu">{$smarty.capture.image_actions}</ul></li></ul>
+							{/if}
 							<br>
 						</small>
 					</td>

@@ -56,8 +56,20 @@
 			<h4 class="find-results">{tr}Results{/tr} <span class="label label-default">{$trackers|@count}</span></h4>
 		{/if}
 	{/if}
-	<div class="table-responsive">
-		<table class="table table-condensed table-hover">
+
+	{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+	{if $prefs.javascript_enabled !== 'y'}
+		{$js = 'n'}
+		{$libeg = '<li>'}
+		{$liend = '</li>'}
+	{else}
+		{$js = 'y'}
+		{$libeg = ''}
+		{$liend = ''}
+	{/if}
+
+	<div class="{if $js === 'y'}table-responsive{/if}"> {*the table-responsive class cuts off dropdown menus *}
+		<table class="table table-condensed table-hover table-striped">
 			<tr>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='trackerId'}{tr}Id{/tr}{/self_link}</th>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
@@ -105,99 +117,105 @@
 						{capture name=tracker_actions}
 							{strip}
 								{if $tracker.permissions->export_tracker}
-									<a onclick="$('[data-toggle=popover]').popover('hide');"
+									{$libeg}<a onclick="$('[data-toggle=popover]').popover('hide');"
 										data-toggle="modal"
 										data-backdrop="static"
 										data-target="#bootstrap-modal"
 										href="{service controller=tracker action=export trackerId=$tracker.trackerId modal=1}"
 									>
 										{icon name='export' _menu_text='y' _menu_icon='y' alt="{tr}Export{/tr}"}
-									</a>
+									</a>{$liend}
 								{/if}
 								{if $tracker.permissions->admin_trackers}
-									<a onclick="$('[data-toggle=popover]').popover('hide');"
+									{$libeg}<a onclick="$('[data-toggle=popover]').popover('hide');"
 										data-toggle="modal"
 										data-backdrop="static"
 										data-target="#bootstrap-modal"
 										href="{service controller=tracker action=import_items trackerId=$tracker.trackerId modal=1}"
 									>
 										{icon name='import' _menu_text='y' _menu_icon='y' alt="{tr}Import{/tr}"}
-									</a>
-									<a onclick="$('[data-toggle=popover]').popover('hide');"
+									</a>{$liend}
+									{$libeg}<a onclick="$('[data-toggle=popover]').popover('hide');"
 										data-toggle="modal"
 										data-backdrop="static"
 										data-target="#bootstrap-modal"
 										href="{service controller=tracker_todo action=view trackerId=$tracker.trackerId modal=1}"
 									>
 										{icon name='calendar' _menu_text='y' _menu_icon='y' alt="{tr}Events{/tr}"}
-									</a>
+									</a>{$liend}
 								{/if}
-								<a href="tiki-view_tracker.php?trackerId={$tracker.trackerId}">
+								{$libeg}<a href="tiki-view_tracker.php?trackerId={$tracker.trackerId}">
 									{icon name='view' _menu_text='y' _menu_icon='y' alt="{tr}View{/tr}"}
-								</a>
+								</a>{$liend}
 								{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-									<a href="tiki-object_watches.php?objectId={$tracker.trackerId}&amp;watch_event=tracker_modified&amp;objectType=tracker&amp;objectName={$tracker.name|escape:"url"}&amp;objectHref={'tiki-view_tracker.php?trackerId='|cat:$tracker.trackerId|escape:"url"}">
+									{$libeg}<a href="tiki-object_watches.php?objectId={$tracker.trackerId}&amp;watch_event=tracker_modified&amp;objectType=tracker&amp;objectName={$tracker.name|escape:"url"}&amp;objectHref={'tiki-view_tracker.php?trackerId='|cat:$tracker.trackerId|escape:"url"}">
 										{icon name='watch-group' _menu_text='y' _menu_icon='y' alt="{tr}Group monitor{/tr}"}
-									</a>
+									</a>{$liend}
 								{/if}
 								{if $prefs.feature_user_watches eq 'y' and $tracker.permissions->watch_trackers and $user}
 									{if $tracker.watched}
-										<a href="tiki-view_tracker.php?trackerId={$tracker.trackerId}&amp;watch=stop">
+										{$libeg}<a href="tiki-view_tracker.php?trackerId={$tracker.trackerId}&amp;watch=stop">
 											{icon name='stop-watching' _menu_text='y' _menu_icon='y' alt="{tr}Stop monitoring{/tr}"}
-										</a>
+										</a>{$liend}
 									{else}
-										<a href="tiki-view_tracker.php?trackerId={$tracker.trackerId}&amp;watch=add">
+										{$libeg}<a href="tiki-view_tracker.php?trackerId={$tracker.trackerId}&amp;watch=add">
 											{icon name='watch' _menu_text='y' _menu_icon='y' alt="{tr}Monitor{/tr}"}
-										</a>
+										</a>{$liend}
 									{/if}
 								{/if}
 								{if $prefs.feed_tracker eq "y"}
-									<a href="tiki-tracker_rss.php?trackerId={$tracker.trackerId}">
+									{$libeg}<a href="tiki-tracker_rss.php?trackerId={$tracker.trackerId}">
 										{icon name='rss' _menu_text='y' _menu_icon='y' alt="{tr}Feed{/tr}"}
-									</a>
+									</a>{$liend}
 								{/if}
 								{if $prefs.feature_search eq 'y'}
-									<a href="tiki-searchindex.php?filter~tracker_id={$tracker.trackerId|escape}">
+									{$libeg}<a href="tiki-searchindex.php?filter~tracker_id={$tracker.trackerId|escape}">
 										{icon name='search' _menu_text='y' _menu_icon='y' alt="{tr}Search{/tr}"}
-									</a>
+									</a>{$liend}
 								{/if}
 
 								{if $tracker.permissions->admin_trackers}
-									<a href="tiki-admin_tracker_fields.php?trackerId={$tracker.trackerId}">
+									{$libeg}<a href="tiki-admin_tracker_fields.php?trackerId={$tracker.trackerId}">
 										{icon name='trackerfields' _menu_text='y' _menu_icon='y' alt="{tr}Fields{/tr}"}
-									</a>
-									<a href="{service controller=tracker action=replace trackerId=$tracker.trackerId modal=true}"
+									</a>{$liend}
+									{$libeg}<a href="{service controller=tracker action=replace trackerId=$tracker.trackerId modal=true}"
 										data-toggle="modal"
 										data-backdrop="static"
 										data-target="#bootstrap-modal"
 										onclick="$('[data-toggle=popover]').popover('hide');"
 									>
 										{icon name='settings' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-									</a>
-									{permission_link mode=text type=tracker permType=trackers id=$tracker.trackerId}
+									</a>{$liend}
+									{$libeg}{permission_link mode=text type=tracker permType=trackers id=$tracker.trackerId}{$liend}
 									{* can't get this to work properly for some reason. the remove one just below it works fine
 										items can be deleted from the item listing of the tracker itself until this is fixed
 									{if $tracker.items > 0}
-										<a href="{service controller=tracker action=clear trackerId=$tracker.trackerId}" class="clear confirm-prompt">
+										{$libeg}<a href="{service controller=tracker action=clear trackerId=$tracker.trackerId}" class="clear confirm-prompt">
 											{icon name='trash' _menu_text='y' _menu_icon='y' alt="{tr}Clear{/tr}"}
-										</a>
+										</a>{$liend}
 									{/if}
 									*}
-									<a href="{service controller=tracker action=remove trackerId=$tracker.trackerId}"
+									{$libeg}<a href="{service controller=tracker action=remove trackerId=$tracker.trackerId}"
 										class="remove confirm-prompt"
 									>
 										{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Delete{/tr}"}
-									</a>
+									</a>{$liend}
 								{/if}
 							{/strip}
 						{/capture}
-						<a class="tips"
-						   title="{tr}Actions{/tr}"
-						   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.tracker_actions|escape:"javascript"|escape:"html"}
-						   style="padding:0; margin:0; border:0"
-								>
+						{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+						<a
+							class="tips"
+							title="{tr}Actions{/tr}"
+							href="#"
+							{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.tracker_actions|escape:"javascript"|escape:"html"}{/if}
+							style="padding:0; margin:0; border:0"
+						>
 							{icon name='wrench'}
 						</a>
+						{if $js === 'n'}
+							<ul class="dropdown-menu" role="menu">{$smarty.capture.tracker_actions}</ul></li></ul>
+						{/if}
 					</td>
 				</tr>
 			{foreachelse}

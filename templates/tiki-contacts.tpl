@@ -76,7 +76,17 @@
 {include file='find.tpl'}
 
 {initials_filter_links}
-<div class="table-responsive">
+{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+{if $prefs.javascript_enabled !== 'y'}
+	{$js = 'n'}
+	{$libeg = '<li>'}
+	{$liend = '</li>'}
+{else}
+	{$js = 'y'}
+	{$libeg = ''}
+	{$liend = ''}
+{/if}
+<div class="{if $js === 'y'}table-responsive{/if}"> {*the table-responsive class cuts off dropdown menus *}
 <table class="table normal table-striped table-hover">
 	<tr>
 		{assign var=numbercol value=4}
@@ -165,23 +175,29 @@
 							{strip}
 								{if $channels[user].user eq $user or $tiki_p_admin eq 'y'}
 									{if $channels[user].user eq $user}
-										<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">
+										{$libeg}<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">
 											{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-										</a>
+										</a>{$liend}
 									{/if}
-									<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}">
+									{$libeg}<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}">
 										{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
-									</a>
+									</a>{$liend}
 								{/if}
 							{/strip}
 						{/capture}
-						<a class="tips"
-						   title="{tr}Actions{/tr}"
-						   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.contact_actions|escape:"javascript"|escape:"html"}
-						   style="padding:0; margin:0; border:0"
-								>
+						{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+						<a
+							class="tips"
+							title="{tr}Actions{/tr}"
+							href="#"
+							{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.contact_actions|escape:"javascript"|escape:"html"}{/if}
+							style="padding:0; margin:0; border:0"
+						>
 							{icon name='wrench'}
 						</a>
+						{if $js === 'n'}
+							<ul class="dropdown-menu" role="menu">{$smarty.capture.contact_actions}</ul></li></ul>
+						{/if}
 					</td>
 				</tr>
 			{/section}

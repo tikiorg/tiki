@@ -11,7 +11,17 @@
 {tabset}
 
 {tab name="{tr}List{/tr}"}
-	<div class="table-responsive">
+	{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+	{if $prefs.javascript_enabled !== 'y'}
+		{$js = 'n'}
+		{$libeg = '<li>'}
+		{$liend = '</li>'}
+	{else}
+		{$js = 'y'}
+		{$libeg = ''}
+		{$liend = ''}
+	{/if}
+	<div class="{if $js === 'y'}table-responsive{/if}"> {*the table-responsive class cuts off dropdown menus *}
 		<table class="table normaltable-striped table-hover">
 			<tr>
 				<th>{tr}Code{/tr}</th>
@@ -32,21 +42,27 @@
 					<td class="action">
 						{capture name=discount_actions}
 							{strip}
-								{self_link id=$discount.id cookietab=2 _icon_name='edit' _menu_text='y' _menu_icon='y'}
+								{$libeg}{self_link id=$discount.id cookietab=2 _icon_name='edit' _menu_text='y' _menu_icon='y'}
 									{tr}Edit{/tr}
-								{/self_link}
-								{self_link del=$discount.id _icon_name='edit' _menu_text='y' _menu_icon='y'}
+								{/self_link}{$liend}
+								{$libeg}{self_link del=$discount.id _icon_name='edit' _menu_text='y' _menu_icon='y'}
 									{tr}Delete{/tr}
-								{/self_link}
+								{/self_link}{$liend}
 							{/strip}
 						{/capture}
-						<a class="tips"
-						   title="{tr}Actions{/tr}"
-						   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.discount_actions|escape:"javascript"|escape:"html"}
-						   style="padding:0; margin:0; border:0"
-								>
+						{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+						<a
+							class="tips"
+							title="{tr}Actions{/tr}"
+							href="#"
+							{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.discount_actions|escape:"javascript"|escape:"html"}{/if}
+							style="padding:0; margin:0; border:0"
+						>
 							{icon name='wrench'}
 						</a>
+						{if $js === 'n'}
+							<ul class="dropdown-menu" role="menu">{$smarty.capture.discount_actions}</ul></li></ul>
+						{/if}
 					</td>
 				</tr>
 			{foreachelse}

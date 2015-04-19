@@ -52,7 +52,17 @@
 		{/if}
 	{/if}
 {/if}
-<div id="{$ts_tableid}-div" class="table-responsive ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}>
+{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+{if $prefs.javascript_enabled !== 'y'}
+	{$js = 'n'}
+	{$libeg = '<li>'}
+	{$liend = '</li>'}
+{else}
+	{$js = 'y'}
+	{$libeg = ''}
+	{$liend = ''}
+{/if}
+<div id="{$ts_tableid}-div" class="{if $js === 'y'}table-responsive{/if} ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}> {*the table-responsive class cuts off dropdown menus *}
 	<table id="{$ts_tableid}" class="table table-striped table-hover normal">
 		<input type="hidden" {if $tsOn}id="{$ts_offsetid|escape}" {/if}name="offset" value="{$offset|escape}">
 		<input type="hidden" {if $tsOn}id="{$ts_countid|escape}" {/if}name="count" value="{$cant|escape}">
@@ -141,23 +151,29 @@
 					<td class="action">
 						{capture name=forum_actions}
 							{strip}
-								<a href="{$channels[user].forumId|sefurl:'forum'}">
+								{$libeg}<a href="{$channels[user].forumId|sefurl:'forum'}">
 									{icon name="view" _menu_text='y' _menu_icon='y' alt="{tr}View{/tr}"}
-								</a>
+								</a>{$liend}
 								{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-									<a href="tiki-admin_forums.php?forumId={$channels[user].forumId}&amp;cookietab=2#content_admin_forums1-2">
+									{$libeg}<a href="tiki-admin_forums.php?forumId={$channels[user].forumId}&amp;cookietab=2#content_admin_forums1-2">
 										{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-									</a>
+									</a>{$liend}
 								{/if}
 							{/strip}
 						{/capture}
-						<a class="tips"
-						   title="{tr}Actions{/tr}"
-						   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.forum_actions|escape:"javascript"|escape:"html"}
-						   style="padding:0; margin:0; border:0"
-								>
+						{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+						<a
+							class="tips"
+							title="{tr}Actions{/tr}"
+							href="#"
+							{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.forum_actions|escape:"javascript"|escape:"html"}{/if}
+							style="padding:0; margin:0; border:0"
+						>
 							{icon name='wrench'}
 						</a>
+						{if $js === 'n'}
+							<ul class="dropdown-menu" role="menu">{$smarty.capture.forum_actions}</ul></li></ul>
+						{/if}
 					</td>
 				</tr>
 			{sectionelse}

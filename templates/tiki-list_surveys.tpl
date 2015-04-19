@@ -10,9 +10,19 @@
 		{button href="tiki-admin_surveys.php?cookietab=1" class="btn btn-default" _text="{tr}Admin Surveys{/tr}"}
 	{/if}
 </div>
+{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+{if $prefs.javascript_enabled !== 'y'}
+	{$js = 'n'}
+	{$libeg = '<li>'}
+	{$liend = '</li>'}
+{else}
+	{$js = 'y'}
+	{$libeg = ''}
+	{$liend = ''}
+{/if}
 
-<div class="table-responsive">
-	<table class="table normal">
+<div class="{if $js === 'y'}table-responsive{/if}"> {*the table-responsive class cuts off dropdown menus *}
+	<table class="table normal table-striped table-hover">
 		<tr>
 			<th>
 				{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}
@@ -45,31 +55,37 @@
 						{capture name=list_survey_actions}
 							{strip}
 								{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_admin_surveys eq 'y') or ($channels[user].individual_tiki_p_admin_surveys eq 'y')}
-									<a href="tiki-admin_surveys.php?surveyId={$channels[user].surveyId}">
+									{$libeg}<a href="tiki-admin_surveys.php?surveyId={$channels[user].surveyId}">
 										{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-									</a>
+									</a>{$liend}
 								{/if}
 
 								{if ($tiki_p_admin_surveys eq 'y') or ($channels[user].status eq 'o' and $channels[user].taken_survey eq 'n')}
-									<a href="{$channels[user].surveyId|sefurl:survey}">
+									{$libeg}<a href="{$channels[user].surveyId|sefurl:survey}">
 										{icon name='post' _menu_text='y' _menu_icon='y' alt="{tr}Take survey{/tr}"}
-									</a>
+									</a>{$liend}
 								{/if}
 
 								{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_survey_stats eq 'y') or ($channels[user].individual_tiki_p_view_survey_stats eq 'y')}
-									<a href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">
+									{$libeg}<a href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">
 										{icon name='chart' _menu_text='y' _menu_icon='y' alt="{tr}Stats{/tr}"}
-									</a>
+									</a>{$liend}
 								{/if}
 							{/strip}
 						{/capture}
-						<a class="tips"
-						   title="{tr}Actions{/tr}"
-						   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.list_survey_actions|escape:"javascript"|escape:"html"}
-						   style="padding:0; margin:0; border:0"
-								>
+						{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+						<a
+							class="tips"
+							title="{tr}Actions{/tr}"
+							href="#"
+							{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.list_survey_actions|escape:"javascript"|escape:"html"}{/if}
+							style="padding:0; margin:0; border:0"
+						>
 							{icon name='wrench'}
 						</a>
+						{if $js === 'n'}
+							<ul class="dropdown-menu" role="menu">{$smarty.capture.list_survey_actions}</ul></li></ul>
+						{/if}
 					</td>
 				</tr>
 			{/if}
