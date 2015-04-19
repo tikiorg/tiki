@@ -779,7 +779,7 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 	 * Return new file path or false.
 	 *
 	 * @param  string  $source  source file path
-	 * @param  string  $target  target dir path
+	 * @param  string  $targetDir  target dir path
 	 * @param  string  $name    file name
 	 * @return string|bool
 	 **/
@@ -819,6 +819,10 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 					array('galleryId' => $srcDirId)
 				);
 				if ($result) {
+					TikiLib::events()->trigger('tiki.filegallery.update', [
+						'type' => 'file gallery',
+						'object' => $srcDirId,
+					]);
 					return 'd_' . $srcDirId;
 				}
 			}
@@ -832,6 +836,10 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 					array('fileId' => $this->pathToId($source))
 				);
 				if ($result) {
+					TikiLib::events()->trigger('tiki.file.update', [
+							'type' => 'file',
+							'object' => $this->pathToId($source),
+					]);
 					return 'f_' . $this->pathToId($source);
 				}
 			}
