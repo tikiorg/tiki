@@ -23,7 +23,7 @@
 </div> {* div.wikitopline *}
 
 {if !isset($versioned) and $print_page ne 'y' and (!isset($hide_page_header) or !$hide_page_header)}
-	{if isset($prefs.disableJavascript) && $prefs.disableJavascript == 'y'}
+	{if $prefs.javascript_enabled != 'y'}
 		{$js = 'n'}
 	{else}
 		{$js = 'y'}
