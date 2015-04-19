@@ -1,12 +1,20 @@
 {* Display the list of available translations for an object and manage its translations *}
 {** Currently works for the following object types: 'article' and 'wiki page' **}
+{if isset($prefs.disableJavascript) && $prefs.disableJavascript == 'y'}
+	{$js = 'n'}
+{else}
+	{$js = 'y'}
+{/if}
+
 {if empty($submenu) || $submenu neq 'y'}
 	<div class="btn-group">
-		{* For all object types: First show the world icon and on hover the language of the current object *}
+		{* For all object types: First show the translate icon and on hover the language of the current object *}
+		{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
 		<a class="btn btn-link dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
 			{icon name="translate"}
 		</a>
 {else}
+	{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
 	<a tabindex="-1" href="#">
 		{icon name="translate"} {tr}Translation...{/tr}
 	</a>
@@ -134,6 +142,7 @@
 			{/if}
 		</ul>
 	{/if}
+	{if $js == 'n'}</li></ul>{/if}
 {if empty($submenu) || $submenu neq 'y'}
 	</div>
 {/if}

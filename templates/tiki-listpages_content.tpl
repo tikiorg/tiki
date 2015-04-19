@@ -1,5 +1,16 @@
 {* $Id$ *}
 
+{* Use css menus for action dropdowns if javascript is disabled *}
+{if isset($prefs.disableJavascript) && $prefs.disableJavascript == 'y'}
+	{$js = 'n'}
+	{$libeg = '<li>'}
+	{$liend = '</li>'}
+{else}
+	{$js = 'y'}
+	{$libeg = ''}
+	{$liend = ''}
+{/if}
+
 {if !$tsOn && ($cant_pages > 1 or $initial or $find)}
 	{initials_filter_links}
 {/if}
@@ -24,7 +35,7 @@
 {/if}
 
 {assign var='pagefound' value='n'}
-<div id="{$ts_tableid}-div" class="table-responsive ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}>
+<div id="{$ts_tableid}-div" class="{if $js == 'y'}table-responsive{/if} ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}>
 	<table id="{$ts_tableid}" class="table normal table-striped table-hover">
 		<input type="hidden" {if $tsOn}id="{$ts_offsetid|escape}" {/if}name="offset" value="{$offset|escape}">
 		<input type="hidden" {if $tsOn}id="{$ts_countid|escape}" {/if}name="count" value="{$cant}">
@@ -352,37 +363,41 @@
 							{capture name=page_actions}
 								{strip}
 									{if $listpages[changes].perms.tiki_p_edit eq 'y'}
-										<a href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">
+										{$libeg}<a href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">
 											{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-										</a>
-										<a href="tiki-copypage.php?page={$listpages[changes].pageName|escape:"url"}&amp;version=last">
+										</a>{$liend}
+										{$libeg}<a href="tiki-copypage.php?page={$listpages[changes].pageName|escape:"url"}&amp;version=last">
 											{icon name='copy' _menu_text='y' _menu_icon='y' alt="{tr}Copy{/tr}"}
-										</a>
+										</a>{$liend}
 									{/if}
 									{if $prefs.feature_history eq 'y' and $listpages[changes].perms.tiki_p_wiki_view_history eq 'y'}
-										<a href="tiki-pagehistory.php?page={$listpages[changes].pageName|escape:"url"}">
+										{$libeg}<a href="tiki-pagehistory.php?page={$listpages[changes].pageName|escape:"url"}">
 											{icon name='history' _menu_text='y' _menu_icon='y' alt="{tr}History{/tr}"}
-										</a>
+										</a>{$liend}
 									{/if}
 
 									{if $listpages[changes].perms.tiki_p_assign_perm_wiki_page eq 'y'}
-										{permission_link mode=text type="wiki page" permType=wiki id=$listpages[changes].pageName}
+										{$libeg}{permission_link mode=text type="wiki page" permType=wiki id=$listpages[changes].pageName}{$liend}
 									{/if}
 
 									{if $listpages[changes].perms.tiki_p_remove eq 'y'}
-										<a href="tiki-removepage.php?page={$listpages[changes].pageName|escape:"url"}&amp;version=last">
+										{$libeg}<a href="tiki-removepage.php?page={$listpages[changes].pageName|escape:"url"}&amp;version=last">
 											{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
-										</a>
+										</a>{$liend}
 									{/if}
 								{/strip}
 							{/capture}
+							{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
 							<a class="tips"
 							   title="{tr}Actions{/tr}"
-							   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.page_actions|escape:"javascript"|escape:"html"}
+							   href="#" {if $js == 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.page_actions|escape:"javascript"|escape:"html"}{/if}
 							   style="padding:0; margin:0; border:0"
 									>
 								{icon name='wrench'}
 							</a>
+							{if $js == 'n'}
+								<ul class="dropdown-menu" role="menu">{$smarty.capture.page_actions}</ul></li></ul>
+							{/if}
 						</td>
 					{/if}
 				</tr>
