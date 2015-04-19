@@ -20,6 +20,7 @@ class Tiki_Profile_InstallHandler_Webmail extends Tiki_Profile_InstallHandler
 			'bcc' => '',
 			'subject' => '',
 			'body' => '',
+			'fattId' => null,         // add a File Gallery file as an attachment
 			'html' => 'y',
 			'reload' => 'y',		// reload the profile to update external refs
 		);
@@ -90,7 +91,21 @@ class Tiki_Profile_InstallHandler_Webmail extends Tiki_Profile_InstallHandler
 		$data['bcc']     = trim(str_replace(array("\n","\r"), "", html_entity_decode(strip_tags($data['bcc']))), ' ,');
 		$data['subject'] = trim(str_replace(array("\n","\r"), "", html_entity_decode(strip_tags($data['subject']))));
 		
-		$webmailUrl = $tikilib->tikiUrl(
+		if (isset($data['fattId'])) {
+			$webmailUrl = $tikilib->tikiUrl(
+						'tiki-webmail.php',
+						array(
+							'locSection' => 'compose',
+							'to' => $data['to'],
+							'cc' => $data['cc'],
+							'bcc' => $data['bcc'],
+							'subject' => $data['subject'],
+							'body' => $data['body'],
+							'fattId' => $data['fattId'],
+							'useHTML' => $data['html'] ? 'y' : 'n'
+						));
+		} else {
+			$webmailUrl = $tikilib->tikiUrl(
 						'tiki-webmail.php',
 						array(
 							'locSection' => 'compose',
@@ -100,8 +115,8 @@ class Tiki_Profile_InstallHandler_Webmail extends Tiki_Profile_InstallHandler
 							'subject' => $data['subject'],
 							'body' => $data['body'],
 							'useHTML' => $data['html'] ? 'y' : 'n'
-						)
-		);
+						));
+		}
 
 		header('Location: ' . $webmailUrl);
 		exit;	// means this profile never gets "remembered" - a good thing?
