@@ -2419,6 +2419,7 @@ class FileGalLib extends TikiLib
 			'show_slideshow' => $prefs['fgal_show_slideshow'],
 			'default_view' => $prefs['fgal_default_view'],
 			'icon_fileId' => !empty($prefs['fgal_icon_fileId']) ? $prefs['fgal_icon_fileId'] : '',
+			'show_source' => $prefs['fgal_list_source'],
 		);
 
 		$galleries = $this->table('tiki_file_galleries');
