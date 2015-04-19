@@ -555,6 +555,7 @@
 				<input type="hidden" name="attach1type" value="{$attach1type|escape}">
 				<input type="hidden" name="attach2type" value="{$attach2type|escape}">
 				<input type="hidden" name="attach3type" value="{$attach3type|escape}">
+                <input type="hidden" name="fattId" value="{$fattId|escape}">
 				<input type="submit" class="btn btn-primary btn-sm" name="send" value="{tr}Send{/tr}">
 				<table class="formcolor">
 					<tr>
@@ -562,7 +563,7 @@
                         	{tr}Sending from webmail account:{/tr} {$sendFrom}
                            </td>
                     </tr                 
-					<tr>
+					><tr>
 						<td>
 							<a title="{tr}Select from address book{/tr}" class="link" href="#" onclick="javascript:window.open('tiki-webmail_contacts.php?element=to','','menubar=no,width=452,height=550');">{tr}To{/tr}</a>:
 						</td>
@@ -600,6 +601,9 @@
 							{/if}
 							{if $attach3}
 								({$attach3})
+							{/if}
+                            {if $fattId}
+								(File Gallery file: {$fattId})
 							{/if}
 							<input type="submit" class="btn btn-primary btn-sm" name="attach" value="{tr}Add{/tr}">
 						</td>
@@ -683,6 +687,7 @@
 			<input type="hidden" name="attach1type" value="{$attach1type|escape}">
 			<input type="hidden" name="attach2type" value="{$attach2type|escape}">
 			<input type="hidden" name="attach3type" value="{$attach3type|escape}">
+            <input type="hidden" name="fattId" value="{$fattId|escape}">
 			<table class="formcolor">
 				{if $attach1}
 					<tr>
@@ -730,6 +735,12 @@
 						</td>
 					</tr>
 				{/if}
+                <tr>
+					<td>{tr}Attach a File Gallery file{/tr}</td>
+					<td>
+						<input size="10" type="text" id="fattId" name="fattId" value="{$fattId|escape}"> :FileId
+					</td>
+				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td>
