@@ -85,7 +85,18 @@
 		{include file='find.tpl'}
 	{/if}
 
-	<div class="table-responsive">
+	{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+	{if $prefs.javascript_enabled !== 'y'}
+		{$js = 'n'}
+		{$libeg = '<li>'}
+		{$liend = '</li>'}
+	{else}
+		{$js = 'y'}
+		{$libeg = ''}
+		{$liend = ''}
+	{/if}
+
+	<div class="{if $js === 'y'}table-responsive{/if}"> {*the table-responsive class cuts off dropdown menus *}
 		<table class="table normal table-striped table-hover">
 			<tr>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Newsletter{/tr}{/self_link}</th>
@@ -103,34 +114,40 @@
 							{capture name=newsletter_actions}
 								{strip}
 									{if $channels[user].tiki_p_subscribe_newsletters eq 'y'}
-										<a href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1">
+										{$libeg}<a href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1">
 											{icon name='add' _menu_text='y' _menu_icon='y' alt="{tr}Subscribe{/tr}"}
-										</a>
+										</a>{$liend}
 									{/if}
 									{if $channels[user].tiki_p_send_newsletters eq 'y'}
-										<a href="tiki-send_newsletters.php?nlId={$channels[user].nlId}"">
+										{$libeg}<a href="tiki-send_newsletters.php?nlId={$channels[user].nlId}"">
 											{icon name='envelope' _menu_text='y' _menu_icon='y' alt="{tr}Send{/tr}"}
-										</a>
+										</a>{$liend}
 									{/if}
 									{if $tiki_p_view_newsletter eq 'y'}
-										<a href="tiki-newsletter_archives.php?nlId={$channels[user].nlId}">
+										{$libeg}<a href="tiki-newsletter_archives.php?nlId={$channels[user].nlId}">
 											{icon name='file-archive' _menu_text='y' _menu_icon='y' alt="{tr}Archives{/tr}"}
-										</a>
+										</a>{$liend}
 									{/if}
 									{if $channels[user].tiki_p_admin_newsletters eq 'y'}
-										<a href="tiki-admin_newsletters.php?nlId={$channels[user].nlId}&amp;cookietab=2#anchor2">
+										{$libeg}<a href="tiki-admin_newsletters.php?nlId={$channels[user].nlId}&amp;cookietab=2#anchor2">
 											{icon name='cog' _menu_text='y' _menu_icon='y' alt="{tr}Admin{/tr}"}
-										</a>
+										</a>{$liend}
 									{/if}
 								{/strip}
 							{/capture}
-							<a class="tips"
-							   title="{tr}Actions{/tr}"
-							   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.newsletter_actions|escape:"javascript"|escape:"html"}
-							   style="padding:0; margin:0; border:0"
-									>
+							{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+							<a
+								class="tips"
+								title="{tr}Actions{/tr}"
+								href="#"
+								{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.newsletter_actions|escape:"javascript"|escape:"html"}{/if}
+								style="padding:0; margin:0; border:0"
+							>
 								{icon name='wrench'}
 							</a>
+							{if $js === 'n'}
+								<ul class="dropdown-menu" role="menu">{$smarty.capture.newsletter_actions}</ul></li></ul>
+							{/if}
 						</td>
 					</tr>
 				{/if}

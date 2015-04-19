@@ -14,10 +14,22 @@
         </div>
     </div>
 {/if}
+
+{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+{if $prefs.javascript_enabled !== 'y'}
+	{$js = 'n'}
+	{$libeg = '<li>'}
+	{$liend = '</li>'}
+{else}
+	{$js = 'y'}
+	{$libeg = ''}
+	{$liend = ''}
+{/if}
+
 <form name="checkform" method="post">
 	<input type="hidden" name="maxRecords" value="{$maxRecords|escape}">
-	<div class="table-responsive">
-		<table class="table normal">
+	<div class="{if $js === 'y'}table-responsive{/if}"> {*the table-responsive class cuts off dropdown menus *}
+		<table class="table normal table-striped table-hover">
 			{assign var=numbercol value=0}
 			<tr>
 				{if $tiki_p_remove_submission eq 'y' or $tiki_p_approve_submission eq 'y'}
@@ -114,29 +126,35 @@
 						{capture name=submission_actions}
 							{strip}
 								{if $tiki_p_edit_submission eq 'y' or ($listpages[changes].author eq $user and $user)}
-									<a href="tiki-edit_submission.php?subId={$listpages[changes].subId}">
+									{$libeg}<a href="tiki-edit_submission.php?subId={$listpages[changes].subId}">
 										{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-									</a>
+									</a>{$liend}
 								{/if}
 								{if $tiki_p_approve_submission eq 'y'}
-									{self_link approve=$listpages[changes].subId _icon_name="ok" _menu_text='y' _menu_icon='y'}
+									{$libeg}{self_link approve=$listpages[changes].subId _icon_name="ok" _menu_text='y' _menu_icon='y'}
 										{tr}Approve{/tr}
-									{/self_link}
+									{/self_link}{$liend}
 								{/if}
 								{if $tiki_p_remove_submission eq 'y'}
-									{self_link remove=$listpages[changes].subId _icon_name="remove" _menu_text='y' _menu_icon='y'}
+									{$libeg}{self_link remove=$listpages[changes].subId _icon_name="remove" _menu_text='y' _menu_icon='y'}
 										{tr}Remove{/tr}
-									{/self_link}
+									{/self_link}{$liend}
 								{/if}
 							{/strip}
 						{/capture}
-						<a class="tips"
-						   title="{tr}Actions{/tr}"
-						   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.submission_actions|escape:"javascript"|escape:"html"}
-						   style="padding:0; margin:0; border:0"
-								>
+						{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+						<a
+							class="tips"
+							title="{tr}Actions{/tr}"
+							href="#"
+							{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.submission_actions|escape:"javascript"|escape:"html"}{/if}
+							style="padding:0; margin:0; border:0"
+						>
 							{icon name='wrench'}
 						</a>
+						{if $js === 'n'}
+							<ul class="dropdown-menu" role="menu">{$smarty.capture.submission_actions}</ul></li></ul>
+						{/if}
 					</td>
 				</tr>
 			{sectionelse}

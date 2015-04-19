@@ -186,7 +186,18 @@
 		</div>
 	{/if}
 
-	<div class="table-responsive">
+	{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+	{if $prefs.javascript_enabled !== 'y'}
+		{$js = 'n'}
+		{$libeg = '<li>'}
+		{$liend = '</li>'}
+	{else}
+		{$js = 'y'}
+		{$libeg = ''}
+		{$liend = ''}
+	{/if}
+
+	<div class="{if $js === 'y'}table-responsive{/if}"> {*the table-responsive class cuts off dropdown menus *}
 	<table class="table normal table-hover table-striped">
 		<tr>
 			{if $prefs.gal_list_name eq 'y'}
@@ -269,50 +280,56 @@
 							{capture name=gallery_actions}
 								{strip}
 									{if $tiki_p_admin eq 'y' or $galleries[changes].perms.tiki_p_view_image_gallery eq 'y'}
-										<a href="tiki-list_gallery.php?galleryId={$galleries[changes].galleryId}">
+										{$libeg}<a href="tiki-list_gallery.php?galleryId={$galleries[changes].galleryId}">
 											{icon name='list' _menu_text='y' _menu_icon='y' alt="{tr}List{/tr}"}
-										</a>
+										</a>{$liend}
 									{/if}
 									{if ($tiki_p_admin eq 'y') or ($galleries[changes].perms.tiki_p_assign_perm_image_gallery eq 'y' )}
-										{permission_link mode=text type="image gallery" permType="image galleries" id=$galleries[changes].galleryId title=$galleries[changes].name}
+										{$libeg}{permission_link mode=text type="image gallery" permType="image galleries" id=$galleries[changes].galleryId title=$galleries[changes].name}{$liend}
 									{/if}
 									{if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
 										{if $tiki_p_admin eq 'y' or $galleries[changes].perms.tiki_p_create_galleries eq 'y'}
-											<a href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].galleryId}">
+											{$libeg}<a href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].galleryId}">
 												{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-											</a>
+											</a>{$liend}
 										{/if}
 									{/if}
 									{if $galleries[changes].perms.tiki_p_upload_images eq 'y'}
 										{if $tiki_p_admin eq 'y' or $galleries[changes].perms.tiki_p_upload_images eq 'y'}
 											{if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user) or $galleries[changes].public eq 'y'}
-												<a href="tiki-upload_image.php?galleryId={$galleries[changes].galleryId}">
+												{$libeg}<a href="tiki-upload_image.php?galleryId={$galleries[changes].galleryId}">
 													{icon name='export' _menu_text='y' _menu_icon='y' alt="{tr}Upload{/tr}"}
-												</a>
+												</a>{$liend}
 												{if ($galleries[changes].geographic eq 'y')}
-													<a href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;make_map=1&amp;galleryId={$galleries[changes].galleryId}">
+													{$libeg}<a href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;make_map=1&amp;galleryId={$galleries[changes].galleryId}">
 														{icon name='wrench' alt="{tr}Make map{/tr}" _menu_text='y' _menu_icon='y' }
-													</a>
+													</a>{$liend}
 												{/if}
 											{/if}
 										{/if}
 									{/if}
 									{if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
 										{if ($tiki_p_admin eq 'y') or ($galleries[changes].perms.has_special_perms eq 'n') or ($galleries[changes].perms.tiki_p_create_galleries eq 'y' )}
-											<a href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].galleryId}">
+											{$libeg}<a href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].galleryId}">
 												{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Delete{/tr}"}
-											</a>
+											</a>{$liend}
 										{/if}
 									{/if}
 								{/strip}
 							{/capture}
-							<a class="tips"
-							   title="{tr}Actions{/tr}"
-							   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.gallery_actions|escape:"javascript"|escape:"html"}
-							   style="padding:0; margin:0; border:0"
-									>
+							{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+							<a
+								class="tips"
+								title="{tr}Actions{/tr}"
+								href="#"
+								{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.gallery_actions|escape:"javascript"|escape:"html"}{/if}
+								style="padding:0; margin:0; border:0"
+							>
 								{icon name='wrench'}
 							</a>
+							{if $js === 'n'}
+								<ul class="dropdown-menu" role="menu">{$smarty.capture.gallery_actions}</ul></li></ul>
+							{/if}
 						</td>
 					</tr>
 				{/if}

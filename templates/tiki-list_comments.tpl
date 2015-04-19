@@ -11,8 +11,19 @@
 {/if}
 
 {assign var=numbercol value=2}
-<div class="table-responsive comment-table">
-<table class="table normal">
+
+{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+{if $prefs.javascript_enabled !== 'y'}
+	{$js = 'n'}
+	{$libeg = '<li>'}
+	{$liend = '</li>'}
+{else}
+	{$js = 'y'}
+	{$libeg = ''}
+	{$liend = ''}
+{/if}
+		<div class="{if $js === 'y'}table-responsive{/if} comment-table"> {*the table-responsive class cuts off dropdown menus *}
+<table class="table normal table-striped table-hover">
 	<tr>
 		{if $comments}
 			<th>
@@ -48,15 +59,15 @@
 	{section name=ix loop=$comments}{assign var=id value=$comments[ix].threadId}
 		{capture name=over_actions}
 			{strip}
-				<a href="{$comments[ix].href}">
+				{$libeg}<a href="{$comments[ix].href}">
 					{icon name='view' _menu_text='y' _menu_icon='y' alt="{tr}Display{/tr}"}
-				</a>
-				<a href="{$comments[ix].href|cat:"&amp;comments_threadId=$id&amp;edit_reply=1#form"}">
+				</a>{$liend}
+				{$libeg}<a href="{$comments[ix].href|cat:"&amp;comments_threadId=$id&amp;edit_reply=1#form"}">
 					{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-				</a>
-				{self_link remove=1 checked=$id _menu_text='y' _menu_icon='y' _icon_name='remove'}
+				</a>{$liend}
+				{$libeg}{self_link remove=1 checked=$id _menu_text='y' _menu_icon='y' _icon_name='remove'}
 					{tr}Delete{/tr}
-				{/self_link}
+				{/self_link}{$liend}
 			{/strip}
 		{/capture}
 
@@ -65,8 +76,7 @@
 				{foreach from=$more_info_headers key=headerKey item=headerName}
 					{if (isset($comments[ix].$headerKey))}
 						{assign var=val value=$comments[ix].$headerKey}
-						<b>{tr}{$headerName}{/tr}</b>: {$val}
-						<br>
+						{$libeg}<b>{tr}{$headerName}{/tr}</b>: {$val}{$liend}
 					{/if}
 				{/foreach}
 			{/strip}
@@ -75,9 +85,19 @@
 		<tr class="{cycle}{if $prefs.feature_comments_moderation eq 'y'} post-approved-{$comments[ix].approved}{/if}">
 			<td class="checkbox-cell"><input type="checkbox" name="checked[]" value="{$id}" {if isset($rejected[$id]) }checked="checked"{/if}></td>
 			<td class="action">
-				<a class="tips" title="{tr}Actions{/tr}" href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">
+				{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+				<a
+					class="tips"
+					title="{tr}Actions{/tr}"
+					href="#"
+					{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"}{/if}
+					style="padding:0; margin:0; border:0"
+				>
 					{icon name="wrench"}
 				</a>
+				{if $js === 'n'}
+					<ul class="dropdown-menu" role="menu">{$smarty.capture.over_actions}</ul></li></ul>
+				{/if}
 			</td>
 
 			{foreach key=headerKey item=headerName from=$headers}{assign var=val value=$comments[ix].$headerKey}
@@ -132,7 +152,19 @@
 			{/if}
 
 			<td>
-				<a class="tips" title="{tr}More information{/tr}" href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.over_more_info|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">{icon name="information"}</a>
+				{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+				<a
+					class="tips"
+					title="{tr}More information{/tr}"
+					href="#"
+					{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.over_more_info|escape:"javascript"|escape:"html"}{/if}
+					style="padding:0; margin:0; border:0"
+				>
+					{icon name="information"}
+				</a>
+				{if $js === 'n'}
+					<ul class="dropdown-menu" role="menu">{$smarty.capture.over_more_info}</ul></li></ul>
+				{/if}
 			</td>
 		</tr>
 	{sectionelse}

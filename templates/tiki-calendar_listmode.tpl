@@ -1,3 +1,14 @@
+{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+{if $prefs.javascript_enabled !== 'y'}
+	{$js = 'n'}
+	{$libeg = '<li>'}
+	{$liend = '</li>'}
+{else}
+	{$js = 'y'}
+	{$libeg = ''}
+	{$liend = ''}
+{/if}
+
 <table cellpadding="0" cellspacing="0" border="0" class="table normal table-striped table-hover">
 	<tr>
 		<th style="width:20%"><a href="{$myurl}?sort_mode={if $sort_mode eq 'start_desc'}start_asc{else}start_desc{/if}">{tr}Start{/tr}</a></th>
@@ -34,21 +45,27 @@
 				{if $event.modifiable eq "y"}
 					{capture name=calendar_actions}
 						{strip}
-							<a href="tiki-calendar_edit_item.php?calitemId={$event.calitemId}">
+							{$libeg}<a href="tiki-calendar_edit_item.php?calitemId={$event.calitemId}">
 								{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-							</a>
-							<a href="tiki-calendar_edit_item.php?calitemId={$event.calitemId}&amp;delete=1">
+							</a>{$liend}
+							{$libeg}<a href="tiki-calendar_edit_item.php?calitemId={$event.calitemId}&amp;delete=1">
 								{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
-							</a>
+							</a>{$liend}
 						{/strip}
 					{/capture}
-					<a class="tips"
-					   title="{tr}Actions{/tr}"
-					   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.calendar_actions|escape:"javascript"|escape:"html"}
-					   style="padding:0; margin:0; border:0"
-							>
+					{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+					<a
+						class="tips"
+						title="{tr}Actions{/tr}"
+						href="#"
+						{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.calendar_actions|escape:"javascript"|escape:"html"}{/if}
+						style="padding:0; margin:0; border:0"
+					>
 						{icon name='wrench'}
 					</a>
+					{if $js === 'n'}
+						<ul class="dropdown-menu" role="menu">{$smarty.capture.calendar_actions}</ul></li></ul>
+					{/if}
 				{/if}
 			</td>
 		</tr>

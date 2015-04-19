@@ -13,10 +13,21 @@
 	<small>{tr}quota{/tr}&nbsp;{$percentage}%</small>
 </div>
 
+{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+{if $prefs.javascript_enabled !== 'y'}
+	{$js = 'n'}
+	{$libeg = '<li>'}
+	{$liend = '</li>'}
+{else}
+	{$js = 'y'}
+	{$libeg = ''}
+	{$liend = ''}
+{/if}
+
 {if count($channels) > 0 or $find ne ''}
 	{include file='find.tpl'}
 	<form action="tiki-notepad_list.php" method="post">
-		<div class="table-responsive">
+		<div class="{if $js === 'y'}table-responsive{/if}"> {*the table-responsive class cuts off dropdown menus *}
 			<table class="table normal table-striped table-hover">
 				<tr>
 					<th style="text-align:center;">
@@ -55,27 +66,33 @@
 						<td class="action">
 							{capture name=notepad_actions}
 								{strip}
-									<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}">
+									{$libeg}<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}">
 										{icon name='view' _menu_text='y' _menu_icon='y' alt="{tr}View{/tr}"}
-									</a>
-									<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}&amp;save=1">
+									</a>{$liend}
+									{$libeg}<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}&amp;save=1">
 										{icon name='floppy' _menu_text='y' _menu_icon='y' alt="{tr}Save{/tr}"}
-									</a>
-									<a href="tiki-notepad_write.php?noteId={$channels[user].noteId}">
+									</a>{$liend}
+									{$libeg}<a href="tiki-notepad_write.php?noteId={$channels[user].noteId}">
 										{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-									</a>
-									<a href="tiki-notepad_read.php?noteId={$channels[user].noteId}&amp;remove=1">
+									</a>{$liend}
+									{$libeg}<a href="tiki-notepad_read.php?noteId={$channels[user].noteId}&amp;remove=1">
 										{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
-									</a>
+									</a>{$liend}
 								{/strip}
 							{/capture}
-							<a class="tips"
-							   title="{tr}Actions{/tr}"
-							   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.notepad_actions|escape:"javascript"|escape:"html"}
-							   style="padding:0; margin:0; border:0"
-									>
+							{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+							<a
+								class="tips"
+								title="{tr}Actions{/tr}"
+								href="#"
+								{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.notepad_actions|escape:"javascript"|escape:"html"}{/if}
+								style="padding:0; margin:0; border:0"
+							>
 								{icon name='wrench'}
 							</a>
+							{if $js === 'n'}
+								<ul class="dropdown-menu" role="menu">{$smarty.capture.notepad_actions}</ul></li></ul>
+							{/if}
 						</td>
 					</tr>
 				{sectionelse}
