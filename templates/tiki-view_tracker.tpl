@@ -14,7 +14,13 @@
 		</a>
 	{/if}
 	{include file="tracker_actions.tpl" showitems="n"}
+	{if $prefs.javascript_enabled != 'y'}
+		{$js = 'n'}
+	{else}
+		{$js = 'y'}
+	{/if}
 	<div class="btn-group pull-right">
+		{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
 		<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
 			{icon name="more"}
 		</a>
@@ -93,6 +99,7 @@
 				{/jq}
 			{/if}
 		</ul>
+		{if $js == 'n'}</li></ul>{/if}
 	</div>
 </div>
 

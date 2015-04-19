@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {tikimodule error=$module_params.error title=$tpl_module_title name="quickadmin" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
-{if isset($prefs.disableJavascript) && $prefs.disableJavascript == 'y'}
+{if $prefs.javascript_enabled != 'y'}
 	{$js = 'n'}
 {else}
 	{$js = 'y'}

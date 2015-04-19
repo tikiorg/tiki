@@ -23,7 +23,14 @@
 			{* No need for users to go to forum list if they are already looking at the only forum BUT note that all_forums only defined with quickjump feature *}
 			{button href="tiki-forums.php" _icon_name="list" _text="{tr}Forum List{/tr}"}
 		{/if}
+
+		{if $prefs.javascript_enabled != 'y'}
+			{$js = 'n'}
+		{else}
+			{$js = 'y'}
+		{/if}
 		<div class="btn-group pull-right">
+			{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
 			<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
 				{icon name="more"}
 			</a>
@@ -86,6 +93,7 @@
 					</li>
 				{/if}
 			</ul>
+			{if $js == 'n'}</li></ul>{/if}
 		</div>
 		<div class="categbar" align="right">
 			{if $user and $prefs.feature_user_watches eq 'y'}

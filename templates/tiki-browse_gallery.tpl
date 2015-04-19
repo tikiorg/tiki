@@ -1,9 +1,15 @@
 {* $Id$ *}
 
 {title}{tr}Browsing Gallery:{/tr} {$name}{/title}
+{if $prefs.javascript_enabled != 'y'}
+	{$js = 'n'}
+{else}
+	{$js = 'y'}
+{/if}
 
 <div class="t_navbar margin-bottom-md">
 	<div class="btn-group pull-right">
+		{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
 		<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
 			{icon name="more"}
 		</a>
@@ -33,6 +39,7 @@
 				</li>
 			{/if}
 		</ul>
+		{if $js == 'n'}</li></ul>{/if}
 	</div>
 	{if $tiki_p_list_image_galleries eq 'y'}
 		{button href="tiki-galleries.php" class="btn btn-default" _icon_name='list' _text="{tr}List Galleries{/tr}"}

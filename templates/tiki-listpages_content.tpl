@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {* Use css menus for action dropdowns if javascript is disabled *}
-{if isset($prefs.disableJavascript) && $prefs.disableJavascript == 'y'}
+{if $prefs.javascript_enabled != 'y'}
 	{$js = 'n'}
 	{$libeg = '<li>'}
 	{$liend = '</li>'}

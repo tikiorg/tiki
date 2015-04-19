@@ -7,8 +7,14 @@
 {if ! isset($print_page) || $print_page ne 'y'}
 
 	{* --------- navigation ------ *}
+	{if $prefs.javascript_enabled != 'y'}
+		{$js = 'n'}
+	{else}
+		{$js = 'y'}
+	{/if}
 	<div class="t_navbar">
 		<div class="pull-right btn-group">
+			{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
 			<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
 				{icon name="more"}
 			</a>
@@ -59,6 +65,7 @@
 					{/if}
 				{/if}
 			</ul>
+			{if $js == 'n'}</li></ul>{/if}
 		</div>
 		{if $canModify && $prefs.tracker_legacy_insert neq 'y'}
 			<a class="btn btn-default" href="{bootstrap_modal controller=tracker action=update_item trackerId=$trackerId itemId=$itemId}">{icon name="edit"} {tr}Edit{/tr}</a>

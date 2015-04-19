@@ -1,6 +1,6 @@
 {* Display the list of available translations for an object and manage its translations *}
 {** Currently works for the following object types: 'article' and 'wiki page' **}
-{if isset($prefs.disableJavascript) && $prefs.disableJavascript == 'y'}
+{if $prefs.javascript_enabled != 'y'}
 	{$js = 'n'}
 {else}
 	{$js = 'y'}
