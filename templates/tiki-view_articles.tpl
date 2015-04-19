@@ -24,7 +24,13 @@
 			|| $tiki_p_remove_submission == "y" || $tiki_p_edit_submission == "y")}
 				{button href="tiki-list_submissions.php" class="btn btn-default" _icon_name="view" _text="{tr}View Submissions{/tr}"}
 			{/if}
+			{if $prefs.javascript_enabled != 'y'}
+				{$js = 'n'}
+			{else}
+				{$js = 'y'}
+			{/if}
 			<div class="btn-group pull-right">
+				{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
 				<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
 					{icon name="more"}
 				</a>
@@ -50,6 +56,7 @@
 						{/if}
 					</li>
 				</ul>
+				{if $js == 'n'}</li></ul>{/if}
 			</div>
 		</div>
 	{/if}

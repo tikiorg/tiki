@@ -53,7 +53,13 @@
 		</span>
 	{/if}
 	        &nbsp;
+	{if $prefs.javascript_enabled != 'y'}
+		{$js = 'n'}
+	{else}
+		{$js = 'y'}
+	{/if}
 		<div class="btn-group">
+			{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
 			<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
 				{icon name="more"}
 			</a>
@@ -71,7 +77,7 @@
 				</li>
 				<li>
 					<a href="{$smarty.server.PHP_SELF}?{query display='print'}">
-						{icon name="print"} {tr}Print this page only{/tr}
+						{icon name="print"} {tr}Print this page{/tr}
 					</a>
 				</li>
 				<li>
@@ -106,6 +112,7 @@
 					</li>
 				{/if}
 			</ul>
+			{if $js == 'n'}</li></ul>{/if}
 		</div>
 
 </div>

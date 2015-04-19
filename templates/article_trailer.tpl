@@ -1,4 +1,9 @@
 {if !isset($preview)}
+	{if $prefs.javascript_enabled != 'y'}
+		{$js = 'n'}
+	{else}
+		{$js = 'y'}
+	{/if}
 	<div class="clearfix articletrailer">
 		<span>
 			{if $show_size eq 'y'}
@@ -10,6 +15,7 @@
 				{if $prefs.feature_multilingual eq 'y' and $lang and $prefs.show_available_translations eq 'y'}
 					{include file='translated-lang.tpl' object_type='article'}
 				{/if}
+				{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
 				<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
 					{icon name="more"}
 				</a>
@@ -74,6 +80,7 @@
 						{/if}
 					</li>
 				</ul>
+				{if $js == 'n'}</li></ul>{/if}
 			</div>
 		</div>
 	</div>
