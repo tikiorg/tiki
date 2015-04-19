@@ -62,6 +62,7 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 					$headerlib
 						->add_jsfile('vendor/jquery/photoswipe/lib/klass.min.js', 'external')
 						->add_jsfile('vendor/jquery/photoswipe/code.photoswipe.jquery-3.0.5.min.js', 'external')
+						->add_js('$("a[rel*=\'box\'][rel*=\'type=img\'], a[rel*=\'box\'][rel!=\'type=\']:not(.external)").photoSwipe();')
 						->add_cssfile('vendor/jquery/photoswipe/photoswipe.css');
 				}
 
