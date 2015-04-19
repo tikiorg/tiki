@@ -69,9 +69,10 @@
 	{tab name="{tr}Structures{/tr}"}
 		<h2>{tr}Structures{/tr}</h2>
 		{if $channels or ($find ne '')}
-			{include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'}
+			<div class="clearfix">
+				{include file='find.tpl' find_show_languages='y' find_show_categories='y' find_show_num_rows='y'}
+			</div>
 		{/if}
-		<br>
 		<form class="form" role="form">
 			<div class="table-responsive">
 				<table class="table normal table-striped table-hover">

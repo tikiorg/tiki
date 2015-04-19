@@ -26,7 +26,7 @@
 				right: data.views
 			},
 			editable: true,
-			timezone: 'America/Boise',
+			timezone: '{{$prefs.server_timezone}}',
 			events: $.service('tracker_calendar', 'list', {
                            	     	trackerId: data.trackerId,
                                 	beginField: data.begin,
@@ -56,8 +56,7 @@
 			slotMinutes: {{$prefs.calendar_timespan}},
 			defaultView: data.dView,
 			eventAfterRender : function( event, element, view ) {
-				element.attr('title',event.title +'|'+event.description);
-				element.cluetip({arrows: true, splitTitle: '|', clickThrough: true});
+				element.popover({trigger: 'hover focus', title: event.title, content: event.description, html: true, container: 'body'});
 			},
 			eventClick: function(event) {
 				if (data.url) {
