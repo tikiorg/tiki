@@ -1,13 +1,19 @@
 {* $Id$ *}
 
 {tikimodule error=$module_params.error title=$tpl_module_title name="quickadmin" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
+{if isset($prefs.disableJavascript) && $prefs.disableJavascript == 'y'}
+	{$js = 'n'}
+{else}
+	{$js = 'y'}
+{/if}
 	{if $tiki_p_admin == "y"}
 		<div id="quickadmin" class="btn-group">
 			<div class="btn-group">
+				{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
 				<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
 					{icon name="sort-down"}
 				</a>
-				<ul class="dropdown-menu recent-prefs" role="menu">
+				<ul class="dropdown-menu" role="menu">
 					<li class="dropdown-title">
 						{tr}Recent Preferences{/tr}
 					</li>
@@ -16,12 +22,14 @@
 						<li>
 							<a href="tiki-admin.php?lm_criteria={$p|escape}&exact">{$p|stringfix}</a>
 						</li>
-					{foreachelse}
+						{foreachelse}
 						<li>{tr}None{/tr}</li>
 					{/foreach}
 				</ul>
+				{if $js == 'n'}</li></ul>{/if}
 			</div>
 			<div class="btn-group">
+				{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
 				<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
 					{icon name="more"}
 				</a>
@@ -126,6 +134,7 @@
 						</li>
 					{/if}
 				</ul>
+				{if $js == 'n'}</li></ul>{/if}
 			</div>
 		</div>
 	{/if}
