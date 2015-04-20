@@ -3127,7 +3127,10 @@ body > .ui-front {
   margin-top: -5px;
   margin-right: -3px;
 }
-.panel-body ul.cssmenu_vert {
+.panel-body ul.cssmenu_vert,
+.panel-body ul.cssmenu_horiz,
+.cssmenu_vert li ul,
+.cssmenu_horiz li ul {
   overflow: visible;
 }
 .cssmenu_vert ul {

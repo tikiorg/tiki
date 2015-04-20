@@ -345,7 +345,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			"{$baseKey}_text" => $typeFactory->sortable($label),
 		);
 
-		$indexRemote = array_filter($this->getOption('indexRemote'));
+		$indexRemote = array_filter($this->getOption('indexRemote', []));
 
 		if (count($indexRemote) && is_numeric($item)) {
 			$trklib = TikiLib::lib('trk');
