@@ -51,7 +51,7 @@
 					{/capture}
 					<a class="tips"
 					   title="{tr}Actions{/tr}"
-					   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.qustion_option_actions|escape:"javascript"|escape:"html"}
+					   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.question_option_actions|escape:"javascript"|escape:"html"}
 					   style="padding:0; margin:0; border:0"
 							>
 						{icon name='wrench'}
