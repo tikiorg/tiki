@@ -256,8 +256,12 @@ function wikiplugin_trackercalendar($data, $params)
 			$dDay = (int) date('j');
 		}
 
+		global $prefs;
+
 		if (!empty($params['fDayofWeek']) and $params['fDayofWeek'] > -1 and $params['fDayofWeek'] < 7) {
 			$firstDayofWeek = $params['fDayofWeek'];
+		} elseif ($prefs['calendar_firstDayofWeek'] !== 'user') {
+			$firstDayofWeek = $prefs['calendar_firstDayofWeek'];
 		} else {
 			$firstDayofWeek = 0;
 		}
@@ -286,6 +290,7 @@ function wikiplugin_trackercalendar($data, $params)
 			'canInsert' => $itemObject->canModify(),
 			'dView' => $dView,
 			'body' => $data,
+			'timeFormat' => $prefs['display_12hr_clock'] === 'y' ? 'h(:mm)TT' : 'HH:mm',
 		)
 	);
 	return $smarty->fetch('wiki-plugins/trackercalendar.tpl');

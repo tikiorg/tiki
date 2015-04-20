@@ -20,12 +20,16 @@
 		};
 
 		$(this).fullCalendar({
+			timeFormat: {
+				'': data.timeFormat
+			},
 			header: {
 				left: 'prevYear,prev,next,nextYear today',
 				center: 'title',
 				right: data.views
 			},
 			editable: true,
+			timezone: '{{$prefs.server_timezone}}',
 			events: $.service('tracker_calendar', 'list', {
 				trackerId: data.trackerId,
 				beginField: data.begin,
