@@ -23,7 +23,7 @@ class Tiki_Profile_InstallHandler_TrackerItem extends Tiki_Profile_InstallHandle
 	{
 		return array(
 			'tracker' => 0,
-			'status' => 'o',
+			'status' => '',
 			'values' => array(),
 		);
 	} // }}}
@@ -39,17 +39,24 @@ class Tiki_Profile_InstallHandler_TrackerItem extends Tiki_Profile_InstallHandle
 	{
 		$data = $this->getData();
 
-		if ( ! isset( $data['tracker'], $data['values'] ) )
+		if ( ! isset($data['tracker']) ) {
 			return false;
+		}
 
-		if ( ! is_array($data['values']) )
-			return false;
-
-		foreach ( $data['values'] as $row )
-			if ( ! is_array($row) || count($row) != 2 )
+		if ( $this->convertMode($data) ) {
+			if ( $this->mode == 'create' && ! is_array($data['values']) ) {
 				return false;
-
-		return $this->convertMode($data);
+			}
+			if ( is_array($data['values']) ) {
+				foreach ( $data['values'] as $row ) {
+					if ( ! is_array($row) || count($row) != 2 ) {
+						return false;
+					}
+				}
+			}
+		}
+		
+		return true;
 	}
 
 	function convertMode( $data )

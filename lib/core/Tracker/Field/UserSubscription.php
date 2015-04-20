@@ -22,6 +22,7 @@ class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 				'help' => 'Subscription Tracker Field',
 				'prefs' => array('trackerfield_subscription'),
 				'default' => 'n',
+				'tags' => array('advanced'),
 				'params' => array(
 				),
 			),

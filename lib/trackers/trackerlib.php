@@ -1563,8 +1563,8 @@ class TrackerLib extends TikiLib
 			}
 
 			if (method_exists($handler, 'handleSave')) {
-				$array = array_merge($array, $handler->handleSave($array['value'], $old_value));
-				$value = $array['value'];
+				$array = array_merge($array, $handler->handleSave(!isset($array['value']) ? null : $array['value'], $old_value));
+				$value = !isset($array['value']) ? null : $array['value']; 
 
 				if ($value !== false) {
 					$this->modify_field($currentItemId, $array['fieldId'], $value);
