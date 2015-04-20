@@ -38,6 +38,12 @@ function smarty_function_menu($params, $smarty)
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
 
+	if ($prefs['javascript_enabled'] !== 'y') {
+		$params['css'] = 'y';
+		$params['bootstrap'] = 'n';
+		$params['type'] = 'horiz';
+	}
+
 	if (empty($link_on_section) || $link_on_section == 'y') {
 		$smarty->assign('link_on_section', 'y');
 	} else {
@@ -54,18 +60,14 @@ function smarty_function_menu($params, $smarty)
 	if (empty($drilldown)) {
 		$drilldown = 'n';
 	}
-	if (!isset($css)) {
-		$css = 'y';
-	}
-	if ($css !== 'n' && $prefs['feature_cssmenus'] == 'y') {
+	if ($params['css'] !== 'n' && $prefs['feature_cssmenus'] == 'y') {
 		static $idCssmenu = 0;
-		if (empty($type)) {
-			$type = 'vert';
+		if (empty($params['type'])) {
+			$params['type'] = 'vert';
 		}
-		$css = "cssmenu_$type.css";
 		$headerlib->add_jsfile('lib/menubuilder/menu.js');
 		$tpl = 'tiki-user_cssmenu.tpl';
-		$smarty->assign('menu_type', $type);
+		$smarty->assign('menu_type', $params['type']);
 		if (! isset($css_id)) {//adding $css_id parameter to customize menu id and prevent automatic id renaming when a menu is removed
 			$smarty->assign('idCssmenu', $idCssmenu++);
 		} else {

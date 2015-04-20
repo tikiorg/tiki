@@ -57,10 +57,6 @@ if ($prefs['feature_fixed_width'] === 'y') {
 	);
 }
 
-if ($prefs['javascript_enabled'] !== 'y' && $prefs['javascript_disabled_shows_all_menus'] === 'y') {
-	$headerlib->add_css('.collapse, .dropdown-menu { display: inherit; position: inherit; }');
-}
-
 //2) Always add tiki_base.css. Add it first, so that it can be overriden in the custom themes
 $headerlib->add_cssfile("themes/base_files/css/tiki_base.css");
 
