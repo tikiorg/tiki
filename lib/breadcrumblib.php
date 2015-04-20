@@ -376,9 +376,6 @@ function _breadcrumb_getTitle($crumbs, $loc)
 		$ret .= ' <img src="img/icons/lock.png" height="16" width="16" alt="' .
 							tra('locked') . '" title="' . tra('locked by') . ' ' . $info['user'] . '" />';
 	}
-	if ( $prefs['feature_breadcrumbs'] == 'n' || $prefs['feature_sitetitle'] == 'title' ) {
-		$ret .= '</strong>';
-	}
 	return $ret;
 }
 
