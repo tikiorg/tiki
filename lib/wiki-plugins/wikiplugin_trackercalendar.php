@@ -289,6 +289,8 @@ function wikiplugin_trackercalendar($data, $params)
 			$dDay = (int) date('j');
 		}
 
+		global $prefs;
+
 		if (!empty($params['fDayofWeek']) and $params['fDayofWeek'] > -1 and $params['fDayofWeek'] < 7) {
 			$firstDayofWeek = $params['fDayofWeek'];
 		} elseif ($prefs['calendar_firstDayofWeek'] !== 'user') {
