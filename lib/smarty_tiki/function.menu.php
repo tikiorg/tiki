@@ -62,12 +62,12 @@ function smarty_function_menu($params, $smarty)
 	}
 	if ($params['css'] !== 'n' && $prefs['feature_cssmenus'] == 'y') {
 		static $idCssmenu = 0;
-		if (empty($type)) {
-			$type = 'vert';
+		if (empty($params['type'])) {
+			$params['type'] = 'vert';
 		}
 		$headerlib->add_jsfile('lib/menubuilder/menu.js');
 		$tpl = 'tiki-user_cssmenu.tpl';
-		$smarty->assign('menu_type', $type);
+		$smarty->assign('menu_type', $params['type']);
 		if (! isset($css_id)) {//adding $css_id parameter to customize menu id and prevent automatic id renaming when a menu is removed
 			$smarty->assign('idCssmenu', $idCssmenu++);
 		} else {
