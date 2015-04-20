@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2015 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -23,7 +23,7 @@ class Tiki_Profile_InstallHandler_TrackerItem extends Tiki_Profile_InstallHandle
 	{
 		return array(
 			'tracker' => 0,
-			'status' => 'o',
+			'status' => '',
 			'values' => array(),
 		);
 	} // }}}
@@ -39,17 +39,24 @@ class Tiki_Profile_InstallHandler_TrackerItem extends Tiki_Profile_InstallHandle
 	{
 		$data = $this->getData();
 
-		if ( ! isset( $data['tracker'], $data['values'] ) )
+		if ( ! isset($data['tracker']) ) {
 			return false;
+		}
 
-		if ( ! is_array($data['values']) )
-			return false;
-
-		foreach ( $data['values'] as $row )
-			if ( ! is_array($row) || count($row) != 2 )
+		if ( $this->convertMode($data) ) {
+			if ( $this->mode == 'create' && ! is_array($data['values']) ) {
 				return false;
-
-		return $this->convertMode($data);
+			}
+			if ( is_array($data['values']) ) {
+				foreach ( $data['values'] as $row ) {
+					if ( ! is_array($row) || count($row) != 2 ) {
+						return false;
+					}
+				}
+			}
+		}
+		
+		return true;
 	}
 
 	function convertMode( $data )
@@ -77,20 +84,26 @@ class Tiki_Profile_InstallHandler_TrackerItem extends Tiki_Profile_InstallHandle
 
 		$data = array_merge($this->getDefaultValues(), $data);
 
-		global $trklib;
-		if ( ! $trklib )
-			require_once 'lib/trackers/trackerlib.php';
+		$trklib = TikiLib::lib('trk');
 
 		$fields = $trklib->list_tracker_fields($data['tracker']);
 		$providedfields = array();
 		foreach ( $data['values'] as $row ) {
 			list( $f, $v) = $row;
 
-			foreach ( $fields['data'] as $key => $entry )
-				if ( $entry['fieldId'] == $f)
-					$fields['data'][$key]['value'] = $v;
+			unset($fieldId);
 
-			$providedfields[] = $f;
+			foreach ( $fields['data'] as $key => $entry ) {
+				if ( $entry['fieldId'] == $f || $entry['permName'] == $f ) {
+					$fields['data'][$key]['value'] = $v;
+					$fieldId = $entry['fieldId'];
+					break;
+				}
+			}
+
+			if ($fieldId) {
+				$providedfields[] = $fieldId;
+			}
 		}
 
 		if ($this->mode == 'update') {
