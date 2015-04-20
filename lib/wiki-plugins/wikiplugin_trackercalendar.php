@@ -325,6 +325,7 @@ function wikiplugin_trackercalendar($data, $params)
 			'body' => $data,
 			'url' => $params['url'],
 			'trkitemid' => $params['trkitemid'],
+			'timeFormat' => $prefs['display_12hr_clock'] === 'y' ? 'h(:mm)TT' : 'HH:mm',
 		)
 	);
 	return $smarty->fetch('wiki-plugins/trackercalendar.tpl');

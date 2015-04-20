@@ -20,6 +20,9 @@
 		};
 
 		$(this).fullCalendar({
+			timeFormat: {
+				'': data.timeFormat
+			},
 			header: {
 				left: 'prevYear,prev,next,nextYear today',
 				center: 'title',
