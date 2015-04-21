@@ -7444,9 +7444,10 @@ textarea,
 .topbar .btn {
   font-size: 12px;
   height: 20px;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  margin-top: 2px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  margin-top: 1px;
+  margin-bottom: 2px;
 }
 .topbar .form-group {
   margin-bottom: 0;
