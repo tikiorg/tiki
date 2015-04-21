@@ -992,6 +992,7 @@ if ($_REQUEST['locSection'] == 'compose') {
 	$smarty->assign('attach2type', $_REQUEST['attach2type']);
 	$smarty->assign('attach3type', $_REQUEST['attach3type']);
 	$smarty->assign('fattId', $_REQUEST['fattId']);
+	$smarty->assign('pageaftersend', $_REQUEST['pageaftersend']);
 }
 
 include_once ('tiki-mytiki_shared.php');

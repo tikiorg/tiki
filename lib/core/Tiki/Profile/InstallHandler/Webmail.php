@@ -21,6 +21,7 @@ class Tiki_Profile_InstallHandler_Webmail extends Tiki_Profile_InstallHandler
 			'subject' => '',
 			'body' => '',
 			'fattId' => null,         // add a File Gallery file as an attachment
+			'pageaftersend' => null,  // defines wiki page to go to after webmail is sent
 			'html' => 'y',
 			'reload' => 'y',		// reload the profile to update external refs
 		);
@@ -91,32 +92,20 @@ class Tiki_Profile_InstallHandler_Webmail extends Tiki_Profile_InstallHandler
 		$data['bcc']     = trim(str_replace(array("\n","\r"), "", html_entity_decode(strip_tags($data['bcc']))), ' ,');
 		$data['subject'] = trim(str_replace(array("\n","\r"), "", html_entity_decode(strip_tags($data['subject']))));
 		
-		if (isset($data['fattId'])) {
-			$webmailUrl = $tikilib->tikiUrl(
-						'tiki-webmail.php',
-						array(
-							'locSection' => 'compose',
-							'to' => $data['to'],
-							'cc' => $data['cc'],
-							'bcc' => $data['bcc'],
-							'subject' => $data['subject'],
-							'body' => $data['body'],
-							'fattId' => $data['fattId'],
-							'useHTML' => $data['html'] ? 'y' : 'n'
-						));
-		} else {
-			$webmailUrl = $tikilib->tikiUrl(
-						'tiki-webmail.php',
-						array(
-							'locSection' => 'compose',
-							'to' => $data['to'],
-							'cc' => $data['cc'],
-							'bcc' => $data['bcc'],
-							'subject' => $data['subject'],
-							'body' => $data['body'],
-							'useHTML' => $data['html'] ? 'y' : 'n'
-						));
-		}
+		$webmailUrl = $tikilib->tikiUrl(
+					'tiki-webmail.php',
+					array(
+						'locSection' => 'compose',
+						'to' => $data['to'],
+						'cc' => $data['cc'],
+						'bcc' => $data['bcc'],
+						'subject' => $data['subject'],
+						'body' => $data['body'],
+						'fattId' => $data['fattId'],
+						'pageaftersend' => $data['pageaftersend'],
+						'useHTML' => $data['html'] ? 'y' : 'n'
+					)
+		);
 
 		header('Location: ' . $webmailUrl);
 		exit;	// means this profile never gets "remembered" - a good thing?

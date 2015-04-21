@@ -562,8 +562,14 @@
                     	<td colspan="4">
                         	{tr}Sending from webmail account:{/tr} {$sendFrom}
                            </td>
-                    </tr                 
-					><tr>
+                    </tr>
+                    <tr>
+						<td>{tr}Wiki page after send{/tr}</td>
+						<td colspan="3">
+							<input size="69" type="text" name="pageaftersend" value="{$pageaftersend|escape}">
+						</td>
+					</tr>
+                    <tr>
 						<td>
 							<a title="{tr}Select from address book{/tr}" class="link" href="#" onclick="javascript:window.open('tiki-webmail_contacts.php?element=to','','menubar=no,width=452,height=550');">{tr}To{/tr}</a>:
 						</td>
@@ -624,6 +630,12 @@
 					</tr>
 				</table>
 			</form>
+         {elseif $pageaftersend ne ''}
+        	{$msg}
+            <br><br>
+            <form action="tiki-index.php?page={$pageaftersend}" method="post">
+            {tr}Click to go to:{/tr} {$pageaftersend} <input type="submit" class="btn btn-default btn-sm" name="pageafter" value="{tr}Go to page{/tr}">
+            </form>
 		{else}
 			{$msg}
 			<br><br>
@@ -688,6 +700,7 @@
 			<input type="hidden" name="attach2type" value="{$attach2type|escape}">
 			<input type="hidden" name="attach3type" value="{$attach3type|escape}">
             <input type="hidden" name="fattId" value="{$fattId|escape}">
+            <input type="hidden" name="pageaftersend" value="{$pageaftersend|escape}">
 			<table class="formcolor">
 				{if $attach1}
 					<tr>
