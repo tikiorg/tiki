@@ -5726,7 +5726,7 @@ button.close {
 }
 .modal-content {
   position: relative;
-  background-color: #ffffff;
+  background-color: #242424;
   border: 1px solid #999999;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 6px;
@@ -5742,7 +5742,7 @@ button.close {
   bottom: 0;
   left: 0;
   z-index: 1040;
-  background-color: #000000;
+  background-color: #761c19;
 }
 .modal-backdrop.fade {
   opacity: 0;
@@ -6730,7 +6730,7 @@ table.treetable.objectperms td.removed {
 }
 .progressContainer {
   border: solid 1px rgba(0, 0, 0, 0.2);
-  background-color: #ffffff;
+  background-color: #242424;
 }
 .filter-panel-heading a:after {
   color: #555555;
@@ -7263,17 +7263,17 @@ a.admbox.off:active {
   color: #310001;
 }
 .tiki .ui-widget-content {
-  background: #ffffff;
+  background: #242424;
   color: #eeeeee;
   border: 1px solid rgba(0, 0, 0, 0.2);
 }
 .tiki .ui-widget-header {
-  background: #ffffff;
+  background: #242424;
   color: #eeeeee;
   border: 1px solid rgba(0, 0, 0, 0.2);
 }
 .tiki .ui-dialog-content {
-  background: #ffffff;
+  background: #242424;
   color: #eeeeee;
 }
 .tiki .ui-dialog-content select,
