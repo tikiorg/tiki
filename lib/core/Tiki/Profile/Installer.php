@@ -134,6 +134,7 @@ class Tiki_Profile_Installer
 		'calendar' => 'Tiki_Profile_InstallHandler_Calendar',
 		'extwiki' => 'Tiki_Profile_InstallHandler_ExtWiki',
 		'webmail_account' => 'Tiki_Profile_InstallHandler_WebmailAccount',
+		'webmail' => 'Tiki_Profile_InstallHandler_Webmail',
 		'sheet' => 'Tiki_Profile_InstallHandler_Sheet',
 		'rating_config' => 'Tiki_Profile_InstallHandler_RatingConfig',
 		'rating_config_set' => 'Tiki_Profile_InstallHandler_RatingConfigSet',
