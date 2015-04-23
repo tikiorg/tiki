@@ -545,6 +545,7 @@
 		{if $sent eq 'n'}
 			<form action="tiki-webmail.php" method="post">
 				<input type="hidden" name="locSection" value="compose">
+                <input type="hidden" name="current" value="{$curacctId|escape}">
 				<input type="hidden" name="attach1" value="{$attach1|escape}">
 				<input type="hidden" name="attach2" value="{$attach2|escape}">
 				<input type="hidden" name="attach3" value="{$attach3|escape}">
@@ -554,9 +555,21 @@
 				<input type="hidden" name="attach1type" value="{$attach1type|escape}">
 				<input type="hidden" name="attach2type" value="{$attach2type|escape}">
 				<input type="hidden" name="attach3type" value="{$attach3type|escape}">
+                <input type="hidden" name="fattId" value="{$fattId|escape}">
 				<input type="submit" class="btn btn-primary btn-sm" name="send" value="{tr}Send{/tr}">
 				<table class="formcolor">
 					<tr>
+                    	<td colspan="4">
+                        	{tr}Sending from webmail account:{/tr} {$sendFrom}
+                           </td>
+                    </tr>
+                    <tr>
+						<td>{tr}Wiki page after send{/tr}</td>
+						<td colspan="3">
+							<input size="69" type="text" name="pageaftersend" value="{$pageaftersend|escape}">
+						</td>
+					</tr>
+                    <tr>
 						<td>
 							<a title="{tr}Select from address book{/tr}" class="link" href="#" onclick="javascript:window.open('tiki-webmail_contacts.php?element=to','','menubar=no,width=452,height=550');">{tr}To{/tr}</a>:
 						</td>
@@ -595,6 +608,9 @@
 							{if $attach3}
 								({$attach3})
 							{/if}
+                            {if $fattId}
+								(File Gallery file: {$fattId})
+							{/if}
 							<input type="submit" class="btn btn-primary btn-sm" name="attach" value="{tr}Add{/tr}">
 						</td>
 					</tr>
@@ -614,7 +630,13 @@
 					</tr>
 				</table>
 			</form>
-		{else}
+		{elseif $pageaftersend ne ''}
+        	{$msg}
+            <br><br>
+            <form action="tiki-index.php?page={$pageaftersend}" method="post">
+            {tr}Click to go to:{/tr} {$pageaftersend} <input type="submit" class="btn btn-default btn-sm" name="pageafter" value="{tr}Go to page{/tr}">
+            </form> 
+        {else}
 			{$msg}
 			<br><br>
 			{if $notcon eq 'y'}
@@ -662,6 +684,7 @@
 	{else}
 		<form enctype="multipart/form-data" action="tiki-webmail.php" method="post">
 			<input type="hidden" name="locSection" value="compose">
+            <input type="hidden" name="current" value="{$curacctId|escape}">
 			<input type="hidden" name="to" value="{$to|escape}">
 			<input type="hidden" name="cc" value="{$cc|escape}">
 			<input type="hidden" name="bcc" value="{$bcc|escape}">
@@ -676,6 +699,8 @@
 			<input type="hidden" name="attach1type" value="{$attach1type|escape}">
 			<input type="hidden" name="attach2type" value="{$attach2type|escape}">
 			<input type="hidden" name="attach3type" value="{$attach3type|escape}">
+            <input type="hidden" name="fattId" value="{$fattId|escape}">
+            <input type="hidden" name="pageaftersend" value="{$pageaftersend|escape}">
 			<table class="formcolor">
 				{if $attach1}
 					<tr>
@@ -724,6 +749,12 @@
 					</tr>
 				{/if}
 				<tr>
+					<td>{tr}Attach a File Gallery file{/tr}</td>
+					<td>
+						<input size="10" type="text" id="fattId" name="fattId" value="{$fattId|escape}"> :FileId
+					</td>
+				</tr>
+                <tr>
 					<td>&nbsp;</td>
 					<td>
 						<input type="submit" class="btn btn-default btn-sm" name="attached" value="{tr}Done{/tr}">
