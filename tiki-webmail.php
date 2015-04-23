@@ -19,6 +19,7 @@ $access->check_permission_either(array('tiki_p_use_webmail', 'tiki_p_use_group_w
 require_once ('lib/webmail/net_pop3.php');
 require_once ('lib/mail/mimelib.php');
 include_once ('lib/webmail/tikimaillib.php');
+require_once ('lib/filegals/filegallib.php');
 
 // AJAX_TODO
 /**
@@ -732,7 +733,17 @@ END;
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 if ($_REQUEST['locSection'] == 'compose') {
-	$current = $webmaillib->get_current_webmail_account($user);
+// check if current has been set in the url	
+	if (isset($_REQUEST['current']) && !empty($_REQUEST['current'])) {
+		$current = $webmaillib->get_webmail_account($user, $_REQUEST['current']);
+	} else {
+		$current = $webmaillib->get_current_webmail_account($user);	
+	}
+// assign accountId and sending email so they are available to the smarty template and 
+// the accountId can be passed back from template so that different accounts can be used
+// 'on the fly' by using a 'current' identifier in the url
+	$smarty->assign('curacctId', $current['accountId']);
+	$smarty->assign('sendFrom', $current['fromEmail']);
 
 	if (!$current) {
 		handleWebmailRedirect('locSection=settings');
@@ -783,8 +794,16 @@ if ($_REQUEST['locSection'] == 'compose') {
 			$mail->addAttachment($a3, $_REQUEST['attach3'], $_REQUEST['attach3type']);
 			@unlink('temp/mail_attachs/' . $_REQUEST['attach3file']);
 		}
+		
+		if ($_REQUEST['fattId']) {			
+			$filegallib = TikiLib::lib('filegal');
+			$filedata = $filegallib->get_file_info($_REQUEST['fattId']);
+			$a4 = file_get_contents($prefs['fgal_use_dir'].$filedata['path']);
+			
+			$mail->addAttachment($a4, $filedata['filename'], $filedata['filetype']);
+		}
 
-		$mail->setSMTPParams($current['smtp'], $current['smtpPort'], '', $current['useAuth'], $current['username'], $current['pass']);
+	//	$mail->setSMTPParams($current['smtp'], $current['smtpPort'], '', $current['useAuth'], $current['username'], $current['pass']);   // commented out as a temporary fix - might need to do more later
 
 		if (isset($_REQUEST['useHTML']) && $_REQUEST['useHTML'] == 'on') {
 			$mail->setHTML($_REQUEST['body'], strip_tags($_REQUEST['body']));
@@ -972,6 +991,8 @@ if ($_REQUEST['locSection'] == 'compose') {
 	$smarty->assign('attach1type', $_REQUEST['attach1type']);
 	$smarty->assign('attach2type', $_REQUEST['attach2type']);
 	$smarty->assign('attach3type', $_REQUEST['attach3type']);
+	$smarty->assign('fattId', $_REQUEST['fattId']);
+	$smarty->assign('pageaftersend', $_REQUEST['pageaftersend']);
 }
 
 include_once ('tiki-mytiki_shared.php');
