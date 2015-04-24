@@ -743,7 +743,12 @@ if ($_REQUEST['locSection'] == 'compose') {
 // the accountId can be passed back from template so that different accounts can be used
 // 'on the fly' by using a 'current' identifier in the url
 	$smarty->assign('curacctId', $current['accountId']);
-	$smarty->assign('sendFrom', $current['fromEmail']);
+// check if current fromEmail is not set and use login email instead
+	if ( $current['fromEmail'] != '' ) {
+		$smarty->assign('sendFrom', $current['fromEmail']);
+	} else {
+		$smarty->assign('sendFrom', trim($userlib->get_user_email($user)));
+	}
 
 	if (!$current) {
 		handleWebmailRedirect('locSection=settings');
