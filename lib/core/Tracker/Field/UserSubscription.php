@@ -30,7 +30,7 @@ class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 
 	function getFieldData(array $requestData = array())
 	{
-		global $user;
+		global $user, $jitPost;
 		$userlib = TikiLib::lib('user');
 		$smarty = TikiLib::lib('smarty');
 
@@ -46,12 +46,13 @@ class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 			}
 		}
 		$current_field_ins = $this->parseUsers($value);
-		if (isset($requestData['user_subscribe'])) { // TODO: do only one time
+
+		if (isset($requestData['user_subscribe']) || $jitPost->user_subscribe->word()) { // check jitPost too which is used for trackerlist etc
 			$found = false;
 			if ($current_field_ins['maxsubscriptions']) {
 				$nb = min($current_field_ins['maxsubscriptions'], intval($requestData['user_friends']));
 			} else {
-				$nb = intval($requestData['user_friends']);
+				$nb = isset($requestData['user_friends']) ? intval($requestData['user_friends']) : $jitPost->user_friends->int();
 			}
 			foreach ($current_field_ins['users_array'] as $i=>$U) {
 				if ($U['login'] == $user) {
@@ -70,14 +71,13 @@ class Tracker_Field_UserSubscription extends Tracker_Field_Abstract
 			$this->save($value);
 			$current_field_ins = $this->parseUsers($value);
 		}
-		if (isset($requestData['user_unsubscribe'])) { // TODO: do only one time
+		if (isset($requestData['user_unsubscribe']) || $jitPost->user_unsubscribe->word()) {
 			foreach ($current_field_ins['users_array'] as $i=>$U) {
 				if ($U['login'] == $user) {
 					unset($current_field_ins['users_array'][$i]);
 					$value = $this->encodeUsers($current_field_ins);
 					$this->save($value);
 					$current_field_ins = $this->parseUsers($value);
-					$current_field_ins['user_subscription'] = true;
 					break;
 				}
 			}
