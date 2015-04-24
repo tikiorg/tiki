@@ -7411,6 +7411,31 @@ a.admbox.off:active {
   border: 1px solid #28301e;
   color: #999999;
 }
+.tiki .ui-widget-content {
+  background: #ffffff;
+  color: #363636;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.tiki .ui-widget-header {
+  background: #ffffff;
+  color: #363636;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.tiki .ui-dialog-content {
+  background: #ffffff;
+  color: #363636;
+}
+.tiki .ui-dialog-content select,
+.tiki .ui-dialog-content input,
+.tiki .ui-dialog-content optgroup,
+.tiki .ui-dialog-content textarea {
+  background: #f8f9d4;
+  color: #363636;
+}
+.tiki .ui-widget button {
+  background: #a1bb87;
+  color: #ffffff;
+}
 .navbar-fixed-top,
 .navbar-fixed-bottom {
   left: 0;

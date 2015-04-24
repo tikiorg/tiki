@@ -25,7 +25,7 @@
 # add new user with email and initial password defaulting to username
 # doesn't need to change password on first login (defaults to y)
 # finally assigned to Test Group
-# and default Group set as Test Group (Tiki 15 addition)
+# and default Group set as Test Group (Tiki 15 addition and backported to 12 & 14)
  -
   type: user 
   data: 
@@ -33,7 +33,7 @@
     email: tester@example.com
     change: n
     groups: [ Test Group ]
-	defaultgroup: Test Group	
+	defaultgroup: Test Group
 
  * =====================================
  * 

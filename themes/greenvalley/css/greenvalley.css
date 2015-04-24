@@ -7263,6 +7263,31 @@ a.admbox.off:active {
   border: 1px solid #260717;
   color: #999999;
 }
+.tiki .ui-widget-content {
+  background: #ffffff;
+  color: #515151;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.tiki .ui-widget-header {
+  background: #ffffff;
+  color: #515151;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.tiki .ui-dialog-content {
+  background: #ffffff;
+  color: #515151;
+}
+.tiki .ui-dialog-content select,
+.tiki .ui-dialog-content input,
+.tiki .ui-dialog-content optgroup,
+.tiki .ui-dialog-content textarea {
+  background: #ffffff;
+  color: #737373;
+}
+.tiki .ui-widget button {
+  background: #ffffff;
+  color: #42281d;
+}
 .margin-bottom-xs {
   margin-bottom: 5px;
 }

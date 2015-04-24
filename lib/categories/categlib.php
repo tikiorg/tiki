@@ -690,7 +690,7 @@ class CategLib extends ObjectLib
 			"cant" => $count,
 			"countall" => $countall,
 		);
-	}	
+	}
 	
 	// get the parent categories of an object
 	function get_object_categories($type, $itemId, $parentId=-1, $jailed = true)

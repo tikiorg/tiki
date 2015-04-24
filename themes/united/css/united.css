@@ -7334,6 +7334,31 @@ a.admbox.off:active {
   border: 1px solid #220b03;
   color: #999999;
 }
+.tiki .ui-widget-content {
+  background: #ffffff;
+  color: #333333;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.tiki .ui-widget-header {
+  background: #ffffff;
+  color: #333333;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.tiki .ui-dialog-content {
+  background: #ffffff;
+  color: #333333;
+}
+.tiki .ui-dialog-content select,
+.tiki .ui-dialog-content input,
+.tiki .ui-dialog-content optgroup,
+.tiki .ui-dialog-content textarea {
+  background: #ffffff;
+  color: #333333;
+}
+.tiki .ui-widget button {
+  background: #aea79f;
+  color: #ffffff;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */

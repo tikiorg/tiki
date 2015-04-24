@@ -808,6 +808,14 @@ if ($_REQUEST['locSection'] == 'compose') {
 			$mail->addAttachment($a4, $filedata['filename'], $filedata['filetype']);
 		}		
 
+		if ($_REQUEST['fattId']) {			
+			$filegallib = TikiLib::lib('filegal');
+			$filedata = $filegallib->get_file_info($_REQUEST['fattId']);
+			$a4 = file_get_contents($prefs['fgal_use_dir'].$filedata['path']);
+			
+			$mail->addAttachment($a4, $filedata['filename'], $filedata['filetype']);
+		}		
+
 	//	$mail->setSMTPParams($current['smtp'], $current['smtpPort'], '', $current['useAuth'], $current['username'], $current['pass']);   // commented out as a temporary fix - might need to do more later
 
 		if (isset($_REQUEST['useHTML']) && $_REQUEST['useHTML'] == 'on') {

@@ -7544,6 +7544,31 @@ a.admbox.off:active {
   border: 1px solid #000000;
   color: #999999;
 }
+.tiki .ui-widget-content {
+  background: #303030;
+  color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.tiki .ui-widget-header {
+  background: #303030;
+  color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.tiki .ui-dialog-content {
+  background: #303030;
+  color: #ffffff;
+}
+.tiki .ui-dialog-content select,
+.tiki .ui-dialog-content input,
+.tiki .ui-dialog-content optgroup,
+.tiki .ui-dialog-content textarea {
+  background: #ffffff;
+  color: #464545;
+}
+.tiki .ui-widget button {
+  background: #464545;
+  color: #ffffff;
+}
 .cssmenu_horiz a,
 .cssmenu_vert a {
   color: #0ce3ac;

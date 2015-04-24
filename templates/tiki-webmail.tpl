@@ -630,13 +630,13 @@
 					</tr>
 				</table>
 			</form>
-         {elseif $pageaftersend ne ''}
+		{elseif $pageaftersend ne ''}
         	{$msg}
             <br><br>
             <form action="tiki-index.php?page={$pageaftersend}" method="post">
             {tr}Click to go to:{/tr} {$pageaftersend} <input type="submit" class="btn btn-default btn-sm" name="pageafter" value="{tr}Go to page{/tr}">
-            </form>
-		{else}
+            </form> 
+        {else}
 			{$msg}
 			<br><br>
 			{if $notcon eq 'y'}
@@ -755,6 +755,12 @@
 					</td>
 				</tr>
 				<tr>
+					<td>{tr}Attach a File Gallery file{/tr}</td>
+					<td>
+						<input size="10" type="text" id="fattId" name="fattId" value="{$fattId|escape}"> :FileId
+					</td>
+				</tr>
+                <tr>
 					<td>&nbsp;</td>
 					<td>
 						<input type="submit" class="btn btn-default btn-sm" name="attached" value="{tr}Done{/tr}">
