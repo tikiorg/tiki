@@ -3109,6 +3109,14 @@ body > .ui-front {
   padding: 3px 20px;
   text-decoration: none;
 }
+.cssmenu_horiz a:first-of-type,
+.cssmenu_vert a:first-of-type {
+  padding-top: 7px;
+}
+.cssmenu_horiz a:last-of-type,
+.cssmenu_vert a:last-of-type {
+  padding-bottom: 7px;
+}
 .cssmenu_horiz li,
 .cssmenu_vert li {
   white-space: normal;
