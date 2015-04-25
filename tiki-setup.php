@@ -324,11 +324,12 @@ $headerlib->add_jsfile('lib/tiki-js.js');
 // using jquery-migrate-1.2.1.js plugin for tiki 11, still required in tiki 12 LTS to support some 3rd party plugins
 
 if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
-	$headerlib->add_jsfile_dependancy("$url_scheme://ajax.googleapis.com/ajax/libs/jquery/$headerlib->jquery_version/jquery.min.js");
+	$headerlib->add_jsfile_cdn("$url_scheme://ajax.googleapis.com/ajax/libs/jquery/$headerlib->jquery_version/jquery.min.js");
+	// Goggle does not provide this file via a cdn - load local
 	$headerlib->add_jsfile_dependancy("vendor/jquery/plugins/migrate-min/jquery-migrate-1.2.1.min.js");
 } else if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
-	$headerlib->add_jsfile_dependancy("//code.jquery.com/jquery-$headerlib->jquery_version.min.js");
-	$headerlib->add_jsfile_dependancy("//code.jquery.com/jquery-migrate-1.2.1.min.js");
+	$headerlib->add_jsfile_cdn("$url_scheme://code.jquery.com/jquery-$headerlib->jquery_version.min.js");
+	$headerlib->add_jsfile_cdn("$url_scheme://code.jquery.com/jquery-migrate-1.2.1.min.js");
 } else {
 	if ( $prefs['tiki_minify_javascript'] === 'y' ) {
 		$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-min/jquery-$headerlib->jquery_version.min.js");
@@ -420,9 +421,9 @@ if ( $prefs['feature_ajax'] === 'y' ) {
 
 if ( $prefs['feature_jquery_ui'] == 'y' ) {
 	if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
-		$headerlib->add_jsfile_dependancy("$url_scheme://ajax.googleapis.com/ajax/libs/jqueryui/$headerlib->jqueryui_version/jquery-ui.min.js");
+		$headerlib->add_jsfile_cdn("$url_scheme://ajax.googleapis.com/ajax/libs/jqueryui/$headerlib->jqueryui_version/jquery-ui.min.js");
 	} else if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
-		$headerlib->add_jsfile_dependancy("//code.jquery.com/ui/$headerlib->jqueryui_version/jquery-ui.min.js");
+		$headerlib->add_jsfile_cdn("$url_scheme://code.jquery.com/ui/$headerlib->jqueryui_version/jquery-ui.min.js");
 	} else {
 		if ( $prefs['tiki_minify_javascript'] === 'y' ) {
 			$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-ui/jquery-ui.min.js");
@@ -433,7 +434,9 @@ if ( $prefs['feature_jquery_ui'] == 'y' ) {
 
 	if ( $prefs['feature_jquery_ui_theme'] !== 'none' ) {
 		if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
-			$headerlib->add_cssfile("//code.jquery.com/ui/$headerlib->jqueryui_version/themes/{$prefs['feature_jquery_ui_theme']}/jquery-ui.css");
+			// cdn for css not working - this is the only css from a cdn anyway - so use local version
+			//$headerlib->add_cssfile("//code.jquery.com/ui/$headerlib->jqueryui_version/themes/{$prefs['feature_jquery_ui_theme']}/jquery-ui.css");
+			$headerlib->add_cssfile('vendor/jquery/jquery-ui-themes/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css');
 		} else {
 			$headerlib->add_cssfile('vendor/jquery/jquery-ui-themes/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css');
 		}

@@ -81,6 +81,11 @@ class HeaderLib
 		$this->add_jsfile($file, -1);
 		return $this;
 	}
+	
+	function add_jsfile_cdn($file) {
+		$this->add_jsfile($file, '-2');
+		return $this;
+	}
 
 	function add_jsfile($file,$rank=0,$minified=false)
 	{
@@ -300,6 +305,13 @@ class HeaderLib
 	{
 		global $prefs;
 
+
+		$cdn = array();
+		if ( isset( $this->jsfiles['-2'] ) ) {
+			$cdn = $this->jsfiles['-2'];
+			unset( $this->jsfiles['-2'] );
+		}
+		
 		$dependancy = array();
 		if ( isset( $this->jsfiles[-1] ) ) {
 			$dependancy = $this->jsfiles[-1];
@@ -348,6 +360,8 @@ class HeaderLib
 		
 		
 		return array(
+			// no minify attempt on cdns
+			'cdn'=> $cdn,
 			'dependancy_min'=> $minify_dependancy_ok,
 			'dependancy_full'=> $minify_dependancy_failed,
 			// no minify attempt on external stuff
