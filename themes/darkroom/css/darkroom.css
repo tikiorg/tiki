@@ -6595,42 +6595,16 @@ a.fc-event:hover {
 .cssmenu_vert ul ul li {
   background: #474747;
 }
-.cssmenu_horiz li:hover,
-.cssmenu_horiz li.sfHover,
-.cssmenu_vert li:hover,
-.cssmenu_vert li.sfHover {
+.cssmenu_horiz > li:hover,
+.cssmenu_horiz > li.sfHover,
+.cssmenu_vert > li:hover,
+.cssmenu_vert > li.sfHover {
   background: #cccccc;
-  /* only transition out, not in */
   -webkit-transition: none;
   transition: none;
 }
-/* styling for both css and generated arrows */
-.sf-arrows .sf-with-ul:after {
-  border: 5px solid transparent;
-  border-top-color: #d8d8d8;
-  /* edit this to suit design (no rgba in IE8) */
-}
-/* styling for right-facing arrows */
-.sf-arrows ul .sf-with-ul:after {
-  border-color: transparent;
-  border-left-color: #d8d8d8;
-}
-.sf-arrows ul li > .sf-with-ul:focus:after,
-.sf-arrows ul li:hover > .sf-with-ul:after,
-.sf-arrows ul .sfHover > .sf-with-ul:after {
-  border-left-color: #3f3f3f;
-}
-.cssmenu_vert.sf-arrows > li > .sf-with-ul:after {
-  border-color: transparent;
-  border-left-color: #d8d8d8;
-}
-.cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
-.cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
-.cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
-  border-left-color: #3f3f3f;
-}
-.cssmenu_horiz li:hover,
-.cssmenu_horiz li.sfHover,
+.cssmenu_horiz > li:hover,
+.cssmenu_horiz > li.sfHover,
 .topbar .nav > li > a:hover,
 .topbar .nav > li > a:focus {
   background: transparent;
@@ -6644,10 +6618,37 @@ a.fc-event:hover {
   background: #474747;
   color: #d8d8d8;
 }
-.cssmenu_horiz ul li:hover a,
-.cssmenu_vert ul li:hover a {
+.cssmenu_horiz > ul > li:hover > a,
+.cssmenu_vert > ul > li:hover > a {
   color: #3f3f3f;
   background: #cccccc;
+}
+.sf-arrows .sf-with-ul:after {
+  border: 5px solid transparent;
+  border-top-color: #ababab;
+}
+.cssmenu_vert.sf-arrows li > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #ababab;
+  /* edit this to suit design (no rgba in IE8) */
+}
+.sf-arrows ul .sf-with-ul:after,
+.cssmenu_vert.sf-arrows ul > li > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #d8d8d8;
+  /* edit this to suit design (no rgba in IE8) */
+}
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #3f3f3f;
+}
+.cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
+.cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
+.cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #3f3f3f;
 }
 .topbar,
 .topbar .navbar-default .navbar-nav > li,
@@ -6673,33 +6674,15 @@ a.fc-event:hover {
 .topbar .cssmenu_horiz ul {
   background: #474747;
 }
-.topbar .sf-arrows .sf-with-ul:after {
-  /* order of following 3 rules important for fallbacks to work */
+.topbar .cssmenu_horiz.sf-arrows > .menuSection0 > .sf-with-ul:after {
   border: 5px solid transparent;
-  border-top-color: #fff;
-  /* edit this to suit design (no rgba in IE8) */
-  border-top-color: rgba(166, 166, 141, 0.5);
+  border-top-color: #a6a68d;
 }
-.sf-arrows > li > .sf-with-ul:focus:after,
-.sf-arrows > li:hover > .sf-with-ul:after,
-.sf-arrows > .sfHover > .sf-with-ul:after {
-  border-top-color: white;
-  /* IE8 fallback colour */
+.topbar .cssmenu_horiz.sf-arrows > .menuSection0:hover > .sf-with-ul:after,
+.topbar .cssmenu_horiz.sf-arrows > .menuSection0.sfhover > .sf-with-ul:after {
+  border-top-color: #333333;
 }
-/* styling for right-facing arrows */
-.sf-arrows ul .sf-with-ul:after {
-  margin-top: -5px;
-  margin-right: -3px;
-  border-color: transparent;
-  border-left-color: #dFeEFF;
-  /* edit this to suit design (no rgba in IE8) */
-  border-left-color: rgba(171, 171, 171, 0.5);
-}
-.sf-arrows ul li > .sf-with-ul:focus:after,
-.sf-arrows ul li:hover > .sf-with-ul:after,
-.sf-arrows ul .sfHover > .sf-with-ul:after {
-  border-left-color: rgba(133, 133, 133, 0.5);
-}
+/* order of following 3 rules important for fallbacks to work */
 .dropdown-menu .dropdown-title,
 .dropdown-menu li label {
   color: #d8d8d8;

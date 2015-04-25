@@ -6556,7 +6556,7 @@ header.page-header::before,
 }
 .cssmenu_horiz li ul,
 .cssmenu_vert li ul {
-  padding: 5px 0;
+  padding: 0;
   margin: 2px 0 0;
   background-color: #3a3f44;
   border: 1px solid #272b30;
@@ -6573,7 +6573,7 @@ header.page-header::before,
   line-height: 1.42857143;
   color: #c8c8c8;
 }
-.cssmenu_horiz li ul {
+.cssmenu_horiz > li > ul {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   margin: 0;
@@ -6589,6 +6589,27 @@ header.page-header::before,
   text-decoration: none;
   color: #ffffff;
   background-color: #272b30;
+}
+.sf-arrows .sf-with-ul:after {
+  border: 5px solid transparent;
+  border-top-color: #c8c8c8;
+}
+.sf-arrows ul .sf-with-ul:after,
+.cssmenu_vert.sf-arrows > li > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #c8c8c8;
+}
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #ffffff;
+}
+.cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
+.cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
+.cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #ffffff;
 }
 .dropdown-menu li {
   background-color: #3a3f44;
@@ -7028,42 +7049,16 @@ a.fc-event:hover {
 .cssmenu_vert ul ul li {
   background: #3a3f44;
 }
-.cssmenu_horiz li:hover,
-.cssmenu_horiz li.sfHover,
-.cssmenu_vert li:hover,
-.cssmenu_vert li.sfHover {
+.cssmenu_horiz > li:hover,
+.cssmenu_horiz > li.sfHover,
+.cssmenu_vert > li:hover,
+.cssmenu_vert > li.sfHover {
   background: #272b30;
-  /* only transition out, not in */
   -webkit-transition: none;
   transition: none;
 }
-/* styling for both css and generated arrows */
-.sf-arrows .sf-with-ul:after {
-  border: 5px solid transparent;
-  border-top-color: #c8c8c8;
-  /* edit this to suit design (no rgba in IE8) */
-}
-/* styling for right-facing arrows */
-.sf-arrows ul .sf-with-ul:after {
-  border-color: transparent;
-  border-left-color: #c8c8c8;
-}
-.sf-arrows ul li > .sf-with-ul:focus:after,
-.sf-arrows ul li:hover > .sf-with-ul:after,
-.sf-arrows ul .sfHover > .sf-with-ul:after {
-  border-left-color: #ffffff;
-}
-.cssmenu_vert.sf-arrows > li > .sf-with-ul:after {
-  border-color: transparent;
-  border-left-color: #c8c8c8;
-}
-.cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
-.cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
-.cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
-  border-left-color: #ffffff;
-}
-.cssmenu_horiz li:hover,
-.cssmenu_horiz li.sfHover,
+.cssmenu_horiz > li:hover,
+.cssmenu_horiz > li.sfHover,
 .topbar .nav > li > a:hover,
 .topbar .nav > li > a:focus {
   background: transparent;
@@ -7077,10 +7072,37 @@ a.fc-event:hover {
   background: #3a3f44;
   color: #c8c8c8;
 }
-.cssmenu_horiz ul li:hover a,
-.cssmenu_vert ul li:hover a {
+.cssmenu_horiz > ul > li:hover > a,
+.cssmenu_vert > ul > li:hover > a {
   color: #ffffff;
   background: #272b30;
+}
+.sf-arrows .sf-with-ul:after {
+  border: 5px solid transparent;
+  border-top-color: #ffffff;
+}
+.cssmenu_vert.sf-arrows li > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #ffffff;
+  /* edit this to suit design (no rgba in IE8) */
+}
+.sf-arrows ul .sf-with-ul:after,
+.cssmenu_vert.sf-arrows ul > li > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #c8c8c8;
+  /* edit this to suit design (no rgba in IE8) */
+}
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #ffffff;
+}
+.cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
+.cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
+.cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #ffffff;
 }
 .topbar,
 .topbar .navbar-default .navbar-nav > li,
@@ -7106,33 +7128,15 @@ a.fc-event:hover {
 .topbar .cssmenu_horiz ul {
   background: #3a3f44;
 }
-.topbar .sf-arrows .sf-with-ul:after {
-  /* order of following 3 rules important for fallbacks to work */
+.topbar .cssmenu_horiz.sf-arrows > .menuSection0 > .sf-with-ul:after {
   border: 5px solid transparent;
-  border-top-color: #fff;
-  /* edit this to suit design (no rgba in IE8) */
-  border-top-color: rgba(200, 200, 200, 0.5);
+  border-top-color: #c8c8c8;
 }
-.sf-arrows > li > .sf-with-ul:focus:after,
-.sf-arrows > li:hover > .sf-with-ul:after,
-.sf-arrows > .sfHover > .sf-with-ul:after {
-  border-top-color: white;
-  /* IE8 fallback colour */
+.topbar .cssmenu_horiz.sf-arrows > .menuSection0:hover > .sf-with-ul:after,
+.topbar .cssmenu_horiz.sf-arrows > .menuSection0.sfhover > .sf-with-ul:after {
+  border-top-color: #ffffff;
 }
-/* styling for right-facing arrows */
-.sf-arrows ul .sf-with-ul:after {
-  margin-top: -5px;
-  margin-right: -3px;
-  border-color: transparent;
-  border-left-color: #dFeEFF;
-  /* edit this to suit design (no rgba in IE8) */
-  border-left-color: rgba(255, 255, 255, 0.5);
-}
-.sf-arrows ul li > .sf-with-ul:focus:after,
-.sf-arrows ul li:hover > .sf-with-ul:after,
-.sf-arrows ul .sfHover > .sf-with-ul:after {
-  border-left-color: rgba(255, 255, 255, 0.5);
-}
+/* order of following 3 rules important for fallbacks to work */
 .dropdown-menu .dropdown-title,
 .dropdown-menu li label {
   color: #c8c8c8;
