@@ -7397,7 +7397,7 @@ input {
 }
 .cssmenu_horiz li ul,
 .cssmenu_vert li ul {
-  padding: 5px 0;
+  padding: 0;
   margin: 2px 0 0;
   background-color: #474747;
   border: 1px solid #cccccc;
