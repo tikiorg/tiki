@@ -6568,7 +6568,7 @@ header.page-header::before,
 }
 .cssmenu_horiz li ul,
 .cssmenu_vert li ul {
-  padding: 5px 0;
+  padding: 0;
   margin: 2px 0 0;
   background-color: #ffffff;
   border: 1px solid #cccccc;
@@ -6585,7 +6585,7 @@ header.page-header::before,
   line-height: 1.42857143;
   color: #333333;
 }
-.cssmenu_horiz li ul {
+.cssmenu_horiz > li > ul {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   margin: 0;
@@ -6601,6 +6601,27 @@ header.page-header::before,
   text-decoration: none;
   color: #262626;
   background-color: #f5f5f5;
+}
+.sf-arrows .sf-with-ul:after {
+  border: 5px solid transparent;
+  border-top-color: #333333;
+}
+.sf-arrows ul .sf-with-ul:after,
+.cssmenu_vert.sf-arrows > li > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #333333;
+}
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #262626;
+}
+.cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
+.cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
+.cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #262626;
 }
 .dropdown-menu li {
   background-color: #ffffff;
