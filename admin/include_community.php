@@ -19,6 +19,7 @@ $smarty->assign('event_graph', TikiLib::events()->getEventGraph());
 
 $command_parts = [
 	realpath(__DIR__ . '/../console.php'),
+	'notification:digest',
 	$url_host,
 	7,
 ];
