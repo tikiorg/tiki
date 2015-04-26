@@ -11,7 +11,7 @@ function wikiplugin_invite_info()
 		'name' => tra('Invite'),
 		'documentation' => 'PluginInvite',
 		'description' => tra('Invite a user to join your groups'),
-		'prefs' => array( 'wikiplugin_invite' ),
+		'prefs' => array( 'wikiplugin_invite', 'feature_invite' ),
 		'body' => tra('Confirmation message after posting form'),
 		'icon' => 'img/icons/group.png',
 		'params' => array(
@@ -117,7 +117,7 @@ function wikiplugin_invite( $data, $params)
 	}
 	if (!empty($params['itemId'])) {
 		$item = Tracker_Item::fromId($params['itemId']);
-		$params['defaultgroup'] = $item->getItemGroupOwner();
+		$params['defaultgroup'] = $item->getOwnerGroup();
 	}
 	$smarty->assign_by_ref('params', $params);
 	$smarty->assign_by_ref('userGroups', $userGroups);
