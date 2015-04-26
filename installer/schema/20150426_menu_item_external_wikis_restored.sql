@@ -1,0 +1,2 @@
+INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','External Wikis','tiki-admin_external_wikis.php',1102,'','tiki_p_admin','',0);
+DELETE n1 FROM  `tiki_menu_options` n1, `tiki_menu_options` n2 WHERE n1.optionId > n2.optionId AND n1.name = n2.name;
