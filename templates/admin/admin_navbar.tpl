@@ -172,6 +172,7 @@
 				<input class="btn btn-primary" type="submit" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 			<input type="hidden" name="lm_criteria" value="{$lm_criteria|escape}">
+			<input type="hidden" name="ticket" value="{$ticket|escape}">
 		</form>
 	</div>
 	{jq}
