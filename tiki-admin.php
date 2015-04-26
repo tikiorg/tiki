@@ -178,8 +178,6 @@ $smarty->assign('pref_filters', $prefslib->getFilters($temp_filters));
 
 if ( isset( $_REQUEST['lm_preference'] ) ) {
 
-	key_check();
-
 	$changes = $prefslib->applyChanges((array) $_REQUEST['lm_preference'], $_REQUEST);
 	foreach ( $changes as $pref => $val ) {
 		if ($val['type'] == 'reset') {
@@ -217,9 +215,6 @@ if ( isset( $_REQUEST['lm_preference'] ) ) {
 }
 
 if ( isset( $_REQUEST['lm_criteria'] ) ) {
-	$ticket = key_get(null, '', '', false);
-	$smarty->assign('ticket', $ticket['ticket']);
-
 	set_time_limit(0);
 	try {
 		$smarty->assign('lm_criteria', $_REQUEST['lm_criteria']);
