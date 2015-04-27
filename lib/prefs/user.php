@@ -122,13 +122,6 @@ function prefs_user_list($partial = false)
 			'options' => $partial ? array() : UserListOrder(),
 			'default' => 'score_desc',
 		),
-		'user_selector_threshold' => array(
-			'name' => tra('Maximum number of users to show in drop down lists'),
-			'description' => tra('Prevents out of memory and performance issues when user list is very large by using a jQuery autocomplete text input box.'),
-			'type' => 'text',
-			'size' => '5',
-			'dependencies' => array('feature_jquery_autocomplete'),
-		),
 		'user_register_prettytracker' => array(
 			'name' => tra('Use pretty trackers for registration form'),
 			'help' => 'User+Tracker',
