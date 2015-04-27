@@ -293,9 +293,14 @@ class TikiAccessLib extends TikiLib
 	 */
 	function check_authenticity($confirmation_text = '', $returnHtml = true)
 	{
-		global $prefs;
+		global $prefs, $jitRequest;
+		if (isset($_REQUEST['daconfirm'])) {
+			$daconfirm = $_REQUEST['daconfirm'];
+		} elseif (isset($jitRequest['daconfirm'])) {
+			$daconfirm = $jitRequest->daconfirm->alpha();
+		}
 		if ($prefs['feature_ticketlib2'] == 'y' || $returnHtml === false) {
-			if (isset($_REQUEST['daconfirm'])) {
+			if (isset($daconfirm)) {
 				if ($returnHtml) {
 					key_check();
 				} else {
