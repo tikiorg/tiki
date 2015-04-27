@@ -245,7 +245,7 @@
 						<div class="form-group">
 							<label for="filetype" class="col-sm-3 control-label">{tr}File Type{/tr}</label>
 							<div class="col-sm-9">
-								<select id="filetype" name="filetype[]">
+								<select id="filetype" class="form-control" name="filetype[]">
 									{foreach $mimetypes as $type}
 										<option value="{$type}"{if $fileInfo.filetype eq $type} selected="selected"{/if}>{$type|truncate:60} (*.{$type@key})</option>
 									{/foreach}
