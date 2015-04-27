@@ -30,9 +30,15 @@ $smarty->assign_by_ref('cookie', $_COOKIE);
 
 function getCookie($name, $section = null, $default = null)
 {
-	global $feature_no_cookie;
+	global $feature_no_cookie, $jitCookie;
 
-	if ($feature_no_cookie || (empty($section) && !isset($_COOKIE[$name]) && isset($_SESSION['tiki_cookie_jar'][$name]))) {
+	if (isset($_COOKIE[$name])) {
+		$cookie = $_COOKIE[$name];
+	} elseif(isset($jitCookie[$name])) {
+		$cookie = $jitCookie[$name];
+	}
+
+	if ($feature_no_cookie || (empty($section) && !isset($cookie) && isset($_SESSION['tiki_cookie_jar'][$name]))) {
 		if (isset($_SESSION['tiki_cookie_jar'][$name])) {
 			return $_SESSION['tiki_cookie_jar'][$name];
 		} else {
@@ -47,8 +53,8 @@ function getCookie($name, $section = null, $default = null)
 		} else
 			return $default;
 	} else {
-		if (isset($_COOKIE[$name]))
-			return $_COOKIE[$name];
+		if (isset($cookie))
+			return $cookie;
 		else
 			return $default;
 	}
