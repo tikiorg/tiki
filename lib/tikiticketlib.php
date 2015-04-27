@@ -85,10 +85,15 @@ function key_get($area = null, $confirmation_text = '', $confirmaction = '',  $r
 // * @param string $area is not used any longer
 function key_check($area = null, $returnHtml = true)
 {
-	global $prefs;
+	global $prefs, $jitRequest;
 	if ($prefs['feature_ticketlib2'] == 'y' || $returnHtml === false) {
-		if (isset($_REQUEST['ticket']) && isset($_SESSION['tickets'][$_REQUEST['ticket']])) {
-			$time = $_SESSION['tickets'][$_REQUEST['ticket']];
+		if (isset($_REQUEST['ticket'])) {
+			$ticket = $_REQUEST['ticket'];
+		} elseif (isset($jitRequest['ticket'])) {
+			$ticket = $jitRequest->ticket->alnum();
+		}
+		if (isset($ticket) && isset($_SESSION['tickets'][$ticket])) {
+			$time = $_SESSION['tickets'][$ticket];
 			if ($time < time() && $time > (time()-(60*15))) {
 				return true;
 			}
