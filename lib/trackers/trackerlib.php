@@ -68,8 +68,8 @@ class TrackerLib extends TikiLib
 	{
 		if (isset($this->sectionFormats[$layout][$mode])) {
 			return $this->sectionFormats[$layout][$mode]['template'];
-		} elseif ($layout == 'config') {
-			// Special handling for config, fallback to default flat
+		} elseif ($layout == 'config' || $layout === 'n') {
+			// Special handling for config, fallback to default flat (also for when sectionFormat gets saved as "n" in legacy trackers)
 			return $this->getSectionFormatTemplate('flat', $mode);
 		} else {
 			throw new Exception(tr('No template available for %0 - %1', $layout, $mode));
