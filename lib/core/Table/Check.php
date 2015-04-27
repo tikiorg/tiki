@@ -29,9 +29,9 @@ class Table_Check
 	static public function isEnabled($ajax = false)
 	{
 		global $prefs;
-		if ($prefs['disableJavascript'] == 'n' && $prefs['feature_jquery_tablesorter'] == 'y') {
+		if ($prefs['javascript_enabled'] === 'y' && $prefs['feature_jquery_tablesorter'] === 'y') {
 			if ($ajax === true) {
-				if ($prefs['feature_ajax'] == 'y') {
+				if ($prefs['feature_ajax'] === 'y') {
 					return true;
 				} else {
 					return false;
