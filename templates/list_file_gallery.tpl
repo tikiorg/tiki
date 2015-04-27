@@ -133,9 +133,6 @@
 										</option>
 									{/if}
 									{if !isset($file_info)}
-										{if $offset}
-											<input type="hidden" name="offset" value="{$offset}">
-										{/if}
 										{if $tiki_p_admin_file_galleries eq 'y' or $tiki_p_remove_files eq 'y'}
 											<option value="movesel_x">
 												{tr}Move{/tr}
@@ -149,7 +146,11 @@
 												{tr}Reset to default list view settings{/tr}
 											</option>
 										{/if}
-									{/if}
+                                        {if $offset}
+                                            <input type="hidden" name="offset" value="{$offset}">
+                                        {/if}
+
+                                    {/if}
 								</select>
 								<span class="input-group-btn">
 									<button class="btn btn-primary" form="fgalform" type="submit">
