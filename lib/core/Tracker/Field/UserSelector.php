@@ -71,7 +71,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 	function getFieldData(array $requestData = array())
 	{
-		global $tiki_p_admin_trackers, $user;
+		global $tiki_p_admin_trackers, $user, $prefs;
 
 		$ins_id = $this->getInsertId();
 
@@ -82,11 +82,20 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		if ( isset($requestData[$ins_id])) {
 			if ($autoassign == 0 || $tiki_p_admin_trackers === 'y') {
 				$auser = $requestData[$ins_id];
-				if (! $auser || TikiLib::lib('user')->user_exists($auser)) {
+				$userlib = TikiLib::lib('user');
+				if (! $auser || $userlib->user_exists($auser)) {
 					$data['value'] = $auser;
 				} else {
-					$data['value'] = $this->getValue();
-					TikiLib::lib('errorreport')->report(tr('User "%0" not found', $auser));
+					if ($prefs['user_selector_realnames_tracker'] == 'y' && $this->getOption('showRealname')) {
+						$finalusers = $userlib->find_best_user(array($auser), '', 'login');
+						if (!empty($finalusers[0])) {
+							$data['value'] = $finalusers[0];
+						}
+					}
+					if (empty($data['value'])) {
+						$data['value'] = $this->getValue();
+						TikiLib::lib('errorreport')->report(tr('User "%0" not found', $auser));
+					}
 				}
 			} else {
 				if ($autoassign == 2) {
@@ -111,7 +120,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 	function renderInput($context = array())
 	{
-		global $tiki_p_admin_trackers, $user;
+		global $tiki_p_admin_trackers, $user, $prefs;
 		$smarty = TikiLib::lib('smarty');
 
 		$value = $this->getConfiguration('value');
@@ -122,16 +131,26 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		if ($autoassign == 0 || $tiki_p_admin_trackers === 'y') {
 			$groupIds = $this->getOption('groupIds', '');
 
+			if ($prefs['user_selector_realnames_tracker'] === 'y' && $this->getOption('showRealname')) {
+				$smarty->loadPlugin('smarty_modifier_username');
+				$name = smarty_modifier_username($value);
+				$realnames = 'y';
+			} else {
+				$name = $value;
+				$realnames = 'n';
+			}
+
 			$smarty->loadPlugin('smarty_function_user_selector');
 			return smarty_function_user_selector(
 				array(
-					'user' => $value,
+					'user' => $name,
 					'id'  => 'user_selector_' . $this->getConfiguration('fieldId'),
 					'select' => $value,
 					'name' => $this->getConfiguration('ins_id'),
 					'editable' => 'y',
 					'allowNone' => $this->getConfiguration('isMandatory') === 'y' ? 'n' : 'y',
 					'groupIds' => $groupIds,
+					'realnames' => $realnames,
 				),
 				$smarty
 			);

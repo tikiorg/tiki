@@ -646,7 +646,11 @@ class PreferencesLib
 		$name = $info['preference'];
 
 		if (isset($data[$name])) {
-			$value = explode($info['separator'], $data[$name]);
+			if (! is_array($data[$name])) {
+				$value = explode($info['separator'], $data[$name]);
+			} else {
+				$value = $data[$name];
+			}
 		} else {
 			$value = array();
 		}

@@ -48,6 +48,11 @@ class Search_ContentSource_TrackerItemSource implements Search_ContentSource_Int
 		}
 
 		$itemObject = Tracker_Item::fromInfo($item);
+
+		if (empty($itemObject) || ! $itemObject->getDefinition()) {	// ignore corrupted items, e.g. where trackerId == 0
+			return false;
+		}
+
 		$permNeeded = $itemObject->getViewPermission();
 		$specialUsers = $itemObject->getSpecialPermissionUsers($objectId, 'Modify');
 

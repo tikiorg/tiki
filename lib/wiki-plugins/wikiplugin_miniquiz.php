@@ -93,7 +93,7 @@ function wikiplugin_miniquiz($data, $params)
 				$out.= "user : $user\n";
 				$out.= "group : $group\n";
 				foreach ($_REQUEST['answer'] as $q=>$a) {
-					if ($info["$q"]['Answer'] == $a) {
+					if ($info["$q"]['answer'] == $a) {
 						$out.= "$q : $a --> yeah !\n";
 						$info["$q"]['qresult'] = 'y';
 					} else {
@@ -124,15 +124,15 @@ function wikiplugin_miniquiz($data, $params)
 					if (!isset($_POST["$id"])) {
 						$back.= '<b>'.$success_mess[array_rand($success_mess)].'</b> '. $success_comment[array_rand($success_comment)].'<br />';
 					}
-					$back.= 'The answer was: <b>'.$item['Answer'].'</b></div><br />';
-					$back.= '<input type="hidden" name="answer['.$id.']" value="'. htmlspecialchars($item['Answer']).'" />';
+					$back.= 'The answer was: <b>'.$item['answer'].'</b></div><br />';
+					$back.= '<input type="hidden" name="answer['.$id.']" value="'. htmlspecialchars($item['answer']).'" />';
 					$back.= '<input type="hidden" name="'.$id.'" value="1" />';
 				} else {
 					if ($item['qresult'] == 'b') {
 						$back.= '<div class="wikitext" style="background-color:#ffcccc;">';
 						$back.= '<b>'.$failed_mess[array_rand($failed_mess)].'</b> '. $failed_comment[array_rand($failed_comment)].'</div>';
 					}
-					$answers = array($item['Answer'],$item['option a'],$item['option b'],$item['option c']);
+					$answers = array($item['answer'],$item['option a'],$item['option b'],$item['option c']);
 					shuf($answers);
 					$back.= '<div class="wikitext">';
 					$i = 1;
