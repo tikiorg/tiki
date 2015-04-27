@@ -17,6 +17,7 @@
  *     multiple = 'false'
  *     editable = $tiki_p_admin
  * 	   allowNone = 'n'
+ *     realnames = 'y'
  *  }
  *
  * Display a drop down menu of all users or
@@ -47,6 +48,7 @@ function smarty_function_user_selector($params, $smarty)
 			'editable' => $tiki_p_admin,
 			'user_selector_threshold' => $prefs['user_selector_threshold'],
 			'allowNone' => 'n',
+			'realnames' => 'y',
 	);
 	$params = array_merge($defaults, $params);
 	if (isset($params['size'])) {
@@ -80,6 +82,8 @@ function smarty_function_user_selector($params, $smarty)
 		}
 	}
 
+	$ucant = 0;
+
 	if ($params['group'] == 'all') {
 		$ucant = $tikilib->list_users(0, 0, 'login_asc');
 		$ucant = $ucant['cant'];
@@ -103,11 +107,18 @@ function smarty_function_user_selector($params, $smarty)
 	
 	if ($prefs['feature_jquery_autocomplete'] == 'y' && ($ucant > $prefs['user_selector_threshold'] or $ucant > $params['user_selector_threshold'])) {
 		$ret .= '<input id="' . $params['id'] . '" type="text" name="' . $params['name'] . '" value="' . htmlspecialchars($params['user']) . '"' . $sz . $ed . ' style="'.$params['style'].'" />';
-		$headerlib->add_jq_onready('$("#' . $params['id'] . '").tiki("autocomplete", "'.(($params['contact'] == 'true')?('usersandcontacts'):('username')).'", {mustMatch: '.$params['mustmatch'].', multiple: '.$params['multiple'].' });');
+		if (($params['contact'] == 'true')) {
+			$mode = ('usersandcontacts');
+		} else if ($prefs['user_show_realnames'] === 'y' && $params['realnames'] === 'y') {
+			$mode = ('userrealname');
+		} else {
+			$mode = ('username');
+		}
+		$headerlib->add_jq_onready('$("#' . $params['id'] . '").tiki("autocomplete", "'. $mode .'", {mustMatch: '.$params['mustmatch'].', multiple: '.$params['multiple'].' });');
 	} else {
+		$users = array();
 		if ($params['group'] == 'all' && empty($params['groupIds'])) {
 			$usrs = $tikilib->list_users(0, -1, 'login_asc');
-			$users = array();
 			foreach ($usrs['data'] as $usr) {
 				$users[] = $usr['login'];
 			}
@@ -117,11 +128,12 @@ function smarty_function_user_selector($params, $smarty)
 			$ret .= '<option value=""' . (empty($params['user']) ? ' selected="selected"' : '') . ' >' . tra('None') .'</option>';
 		}
 		foreach ($users as $usr) {
-			if ($params['editable'] == 'y' || $usr == $params['user']) {
+			if ($params['editable'] == 'y' || $usr == $params['user'] || (isset($params['select']) && $params['select'] === $usr)) {
+				$usersname = $params['realnames'] === 'y' ? smarty_modifier_username($usr) : $usr;
 				if (isset($params['select'])) {
-					$ret .= '<option value="' . htmlspecialchars($usr) . '"' . ($usr == $params['select'] ? ' selected="selected"' : '') . ' >' . smarty_modifier_username($usr) .'</option>';
+					$ret .= '<option value="' . htmlspecialchars($usr) . '"' . ($usr == $params['select'] ? ' selected="selected"' : '') . ' >' . $usersname .'</option>';
 				} else {
-					$ret .= '<option value="' . htmlspecialchars($usr) . '"' . ($usr == $params['user'] ? ' selected="selected"' : '') . ' >' . smarty_modifier_username($usr) .'</option>';
+					$ret .= '<option value="' . htmlspecialchars($usr) . '"' . ($usr == $params['user'] ? ' selected="selected"' : '') . ' >' . $usersname .'</option>';
 				}
 			}
 		}
