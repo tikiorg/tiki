@@ -12,8 +12,8 @@
 {/title}
 
 <div class="t_navbar margin-bottom-md">
-	{button href="tiki-list_articles.php" class="btn btn-default" _text="{tr}List Articles{/tr}"}
-	{button href="tiki-view_articles.php" class="btn btn-default" _text="{tr}View Articles{/tr}"}
+	{button href="tiki-list_articles.php" class="btn btn-default" _icon_name="list" _text="{tr}List Articles{/tr}"}
+	{button href="tiki-view_articles.php" class="btn btn-default" _icon_name="articles" _text="{tr}View Articles{/tr}"}
 </div>
 
 {if $preview}

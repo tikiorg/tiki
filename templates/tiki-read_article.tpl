@@ -7,7 +7,7 @@
 		{button href="tiki-edit_submission.php" _icon_name="create" _text="{tr}New Submission{/tr}"}
 	{/if}
 	{if $tiki_p_read_article eq 'y' or $tiki_p_articles_read_heading eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
-	{button href="tiki-view_articles.php" _icon_name="view" _text="{tr}View Articles{/tr}"}
+	{button href="tiki-view_articles.php" _icon_name="articles" _text="{tr}View Articles{/tr}"}
 	{/if}
 	{if $prefs.feature_submissions == 'y' && ($tiki_p_approve_submission == "y" || $tiki_p_remove_submission == "y" || $tiki_p_edit_submission == "y")}
 		{button href="tiki-list_submissions.php" _icon_name="view" _text="{tr}View Submissions{/tr}"}
