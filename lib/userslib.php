@@ -1977,7 +1977,7 @@ class UsersLib extends TikiLib
 		}
 	}
 
-	function remove_user_from_group($user, $group)
+	function remove_user_from_group($user, $group, $bulk = false)
 	{
 		global $prefs;
 
@@ -2027,6 +2027,7 @@ class UsersLib extends TikiLib
 			'is_organic' => ($api->isOrganicGroup($group) ? 1 : 0),
 			'is_private' => ($api->organicGroupIsPrivate($group) ? 1 : 0),
 			'addongroupid' => $api->getItemIdFromToken($group),
+			'bulk_import' => $bulk,
 		));
 
 		$_SESSION['u_info']['group'] = 'Registered';
@@ -5979,7 +5980,7 @@ class UsersLib extends TikiLib
 		return $res;
 	}
 
-	function assign_user_to_group($user, $group)
+	function assign_user_to_group($user, $group, $bulk = false)
 	{
 		global $prefs, $tiki_p_admin, $page;
 		$cachelib = TikiLib::lib('cache');
@@ -6060,6 +6061,7 @@ class UsersLib extends TikiLib
 				'is_organic' => ($api->isOrganicGroup($group) ? 1 : 0),
 				'is_private' => ($api->organicGroupIsPrivate($group) ? 1 : 0),
 				'addongroupid' => $api->getItemIdFromToken($group),
+				'bulk_import' => $bulk,
 			));
 		}
 
@@ -6076,8 +6078,9 @@ class UsersLib extends TikiLib
 		$query = 'delete from `users_usergroups` where `userId`=?';
 		$this->query($query, array($userid));
 
-		foreach ($groups as $grp) {
-			$this->assign_user_to_group($user, $grp);
+		$lastkey = end($groups);
+		foreach ($groups as $k => $grp) {
+			$this->assign_user_to_group($user, $grp, $k != $lastkey);
 		}
 
 	}
