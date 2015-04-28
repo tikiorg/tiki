@@ -3205,7 +3205,9 @@ div.form-group label.error {
   font-weight: normal !important;
 }
 .tiki .chosen-choices .search-field input.default,
-.tiki .chosen-container-multi {
+.tiki .chosen-container-multi,
+.tiki .chosen-container,
+.tiki .chosen-container-single .tiki .chosen-container-active {
   width: auto !important;
 }
 .tiki #assign_order_chosen.chosen-container {

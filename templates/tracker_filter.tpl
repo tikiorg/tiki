@@ -1,23 +1,21 @@
-<form action="#" method="get">
+<form action="#" method="get" class="form-inline">
 	<input type="hidden" name="trackerId" value="{$trackerId|escape}">
 	{if $status}<input type="hidden" name="status" value="{$status}">{/if}
 	{if $sort_mode}<input type="hidden" name="sort_mode" value="{$sort_mode}">{/if}
-	<div class="table-responsive"{if $prefs.jquery_ui_chosen eq 'y'}style="overflow-y: visible;"{/if}>
-		<table class="table">
-			<tr>
-				{if ($tracker_info.showStatus|default:null eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')) and $showstatus|default:null ne 'n'}
-					{foreach key=st item=stdata from=$status_types}
-						<td>
-							<div class="{$stdata.class}">
-								<a href="tiki-view_tracker.php?trackerId={$trackerId}{if $filtervalue and !$filtervalue|is_array}&amp;filtervalue={$filtervalue|escape:"url"}{/if}{if $filtervalue|is_array}{$filtervalueencoded}{/if}{if $filterfield}&amp;filterfield={$filterfield|escape:"url"}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}&amp;status={$stdata.statuslink}" class="statusimg">
-									<img src="{$stdata.image}" title="{$stdata.label}" alt="{$stdata.label}" align="top" width="12px" height="12px">
-								</a>
-							</div>
-						</td>
-					{/foreach}
-				{/if}
+    <div class="search_container margin-bottom-sm">
+		{if ($tracker_info.showStatus|default:null eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')) and $showstatus|default:null ne 'n'}
+			{foreach key=st item=stdata from=$status_types}
+				<div style="display:inline-block;">
+					<div class="{$stdata.class}">
+						<a href="tiki-view_tracker.php?trackerId={$trackerId}{if $filtervalue and !$filtervalue|is_array}&amp;filtervalue={$filtervalue|escape:"url"}{/if}{if $filtervalue|is_array}{$filtervalueencoded}{/if}{if $filterfield}&amp;filterfield={$filterfield|escape:"url"}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}&amp;status={$stdata.statuslink}" class="statusimg">
+							<img src="{$stdata.image}" title="{$stdata.label}" alt="{$stdata.label}" align="top" width="12px" height="12px">
+						</a>
+					</div>
+				</div>
+				{/foreach}
+		{/if}
 
-				<td style="width:100%;text-align:right;">
+				<div style="display:inline-block;padding: 4px 10px;">
 					{if $show_filters eq 'y'}
 						{jq}
 							fields = [];
@@ -41,28 +39,28 @@
 							{/foreach}
 						</select>
 					{/if}
-				</td>
-				<td>
+				</div>
+				<div style="display:inline-block" class="form-group">
 					{assign var=cnt value=0}
 					{foreach key=fid item=field from=$listfields}
 						{if $field.isSearchable eq 'y' and $field.type ne 'f' and $field.type ne 'j' and $field.type ne 'i'}
 							{if $field.type eq 'c'}
 								<div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}">
-									<select name="filtervalue[{$fid}]">
+									<select name="filtervalue[{$fid}]" class="form-control">
 										<option value="y"{if $filtervalue eq 'y'} selected="selected"{/if}>{tr}Yes{/tr}</option>
 										<option value="n"{if $filtervalue eq 'n'} selected="selected"{/if}>{tr}No{/tr}</option>
 									</select>
 								</div>
 							{elseif $field.type eq 'd' or $field.type eq 'D'}
 								<div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}">
-									<select name="filtervalue[{$fid}]">
+									<select name="filtervalue[{$fid}]" class="form-control">
 										{if $field.type eq 'D'}<option value="" />{/if}
 										{section name=jx loop=$field.options_array}
 											<option value="{$field.options_array[jx]|escape}" {if $fid == $filterfield}{if $filtervalue eq $field.options_array[jx]}{assign var=gotit value=y}selected="selected"{/if}{/if}>{$field.options_array[jx]|tr_if}</option>
 										{/section}
 									</select>
 									{if $field.type eq 'D'}
-										<input type="text" name="filtervalue_other"{if $gotit ne 'y'} value="{if $fid == $filterfield}{$filtervalue}{/if}"{/if}>
+										<input class="form-control" type="text" name="filtervalue_other"{if $gotit ne 'y'} value="{if $fid == $filterfield}{$filtervalue}{/if}"{/if}>
 									{/if}
 								</div>
 
@@ -74,8 +72,8 @@
 								</div>
 
 							{elseif $field.type eq 'e'}{* category *}
-								<div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}">
-									<table>
+								<div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}" class="table-responsive">
+									<table class="table">
 										<tr>
 											{cycle name=rows values=",</tr><tr>" advance=false print=false}
 											{foreach key=ku item=iu from=$field.list name=eforeach}
@@ -98,24 +96,22 @@
 								</div>
 							{elseif $field.type eq 'u'}{* user with autocomplete *}
 								<div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}">
-									<input type="text" name="filtervalue[{$fid}]" value="{if $fid == $filterfield}{$filtervalue}{/if}" id="filter-username">
+									<input type="text" class="form-control" name="filtervalue[{$fid}]" value="{if $fid == $filterfield}{$filtervalue}{/if}" id="filter-username">
 								</div>
 								{autocomplete element='#filter-username' type='username'}
 							{else}
 								<div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}">
-									<input type="text" name="filtervalue[{$fid}]" value="{if $fid == $filterfield}{$filtervalue}{/if}">
+									<input type="text" class="form-control" name="filtervalue[{$fid}]" value="{if $fid == $filterfield}{$filtervalue}{/if}">
 								</div>
 							{/if}
 							{assign var=cnt value=$cnt+1}
 						{/if}
 					{/foreach}
-				</td>
+				</div>
 				{if isset($filter_button) && $filter_button eq 'y'}
-					<td>
+					<div style="display:inline-block"  class="form-group">
 						<input id="filterbutton" type="submit" class="btn btn-default" name="filter" value="{tr}Filter{/tr}" style="display:{if $filterfield}inline{else}none{/if}">
-					</td>
+					</div>
 				{/if}
-			</tr>
-		</table>
-	</div>
+        </div>
 </form>
