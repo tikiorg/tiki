@@ -72,27 +72,16 @@
 								</div>
 
 							{elseif $field.type eq 'e'}{* category *}
-								<div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}" class="table-responsive">
-									<table class="table">
-										<tr>
-											{cycle name=rows values=",</tr><tr>" advance=false print=false}
-											{foreach key=ku item=iu from=$field.list name=eforeach}
-												<td width="50%" nowrap="nowrap">
-													<input type="checkbox" name="filtervalue[{$fid}][]" value="{$iu.categId}" id="cat{$iu.categId}"
-															{if $fid == $filterfield && is_array($filtervalue) && in_array($iu.categId,$filtervalue)} checked="checked"{/if}>
-													<label for="cat{$iu.categId}">{$iu.name|escape}</label>
-												</td>
-												{if !$smarty.foreach.eforeach.last}
-													{cycle name=rows}
-												{else}
-													{if $fields[ix].categories|@count%2}
-														<td>
-														</td>
-													{/if}
-												{/if}
-											{/foreach}
-										</tr>
-									</table>
+								<div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}" class="panel-body">
+                                    <ul class="list-inline">
+								    	{foreach key=ku item=iu from=$field.list name=eforeach}
+											<li>
+												<input type="checkbox" name="filtervalue[{$fid}][]" value="{$iu.categId}" id="cat{$iu.categId}"
+													{if $fid == $filterfield && is_array($filtervalue) && in_array($iu.categId,$filtervalue)} checked="checked"{/if}>
+												<label for="cat{$iu.categId}">{$iu.name|escape}</label>
+											</li>
+										{/foreach}
+								    </ul>
 								</div>
 							{elseif $field.type eq 'u'}{* user with autocomplete *}
 								<div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}">
