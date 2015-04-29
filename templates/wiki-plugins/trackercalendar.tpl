@@ -65,11 +65,13 @@
 				if (data.url) {
 					var lOp='';
 					var actualURL = '';
-					var html = $.parseHTML( event.description );
+					var html = $.parseHTML( event.description ) || [];
 
 					// Store useful data values to the URL for Wiki Argument Variable 
 					// use and to javascript session storage for JQuery use
-					actualURL = data.url + "&trackerid=" + event.trackerId;
+					actualURL = data.url;
+					actualURL += actualURL.indexOf("?") === -1 ? "?" : "&";
+					actualURL += "trackerid=" + event.trackerId;
 					if( data.trkitemid == 'y' ) {
 						actualURL = actualURL + "&itemId=" + event.id;
 					}
