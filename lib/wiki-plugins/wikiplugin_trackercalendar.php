@@ -323,8 +323,8 @@ function wikiplugin_trackercalendar($data, $params)
 			'canInsert' => $itemObject->canModify(),
 			'dView' => $dView,
 			'body' => $data,
-			'url' => $params['url'],
-			'trkitemid' => $params['trkitemid'],
+			'url' => $params['external'] === 'y' ? $params['url'] : '',
+			'trkitemid' => $params['external'] === 'y' ? $params['trkitemid'] : '',
 			'timeFormat' => $prefs['display_12hr_clock'] === 'y' ? 'h(:mm)TT' : 'HH:mm',
 		)
 	);
