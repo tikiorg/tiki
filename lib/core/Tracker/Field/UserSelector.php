@@ -148,7 +148,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 					'select' => $value,
 					'name' => $this->getConfiguration('ins_id'),
 					'editable' => 'y',
-					'allowNone' => $this->getConfiguration('isMandatory') === 'y' ? 'n' : 'y',
+					'allowNone' => 'y',
 					'groupIds' => $groupIds,
 					'realnames' => $realnames,
 				),
