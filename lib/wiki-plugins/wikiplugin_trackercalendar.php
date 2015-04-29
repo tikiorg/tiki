@@ -45,37 +45,37 @@ function wikiplugin_trackercalendar_info()
 				'required' => false,
 				'filter' => 'word',
 			),
-                        'external' => array(
-                                'required' => false,
-                                'name' => tra('External Link'),
-                                'description' => tra('Follow external link when event item is clicked. Useful for supporting links to pretty tracker supported pages.'),
-                                'filter' => 'alpha',
-                                'default' => 'n',
-                                'options' => array(
-                                        array('text' => '', 'value' => ''),
-                                        array('text' => tra('Yes'), 'value' => 'y'),
-                                        array('text' => tra('No'), 'value' => 'n')
-                                )
-                        ),
-                        'url' => array(
-                                'required' => false,
-                                'name' => tra('URL'),
-                                'description' => tra('Complete URL, internal or external.'),
-                                'filter' => 'url',
-                                'default' => '',
+			'external' => array(
+				'required' => false,
+				'name' => tra('External Link'),
+				'description' => tra('Follow external link when event item is clicked. Useful for supporting links to pretty tracker supported pages.'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
+			'url' => array(
+				'required' => false,
+				'name' => tra('URL'),
+				'description' => tra('Complete URL, internal or external.'),
+				'filter' => 'url',
+				'default' => '',
 				'parent' => array('name' => 'external', 'value' => 'y'),
 			),
-                        'trkitemid' => array(
-                                'required' => false,
-                                'name' => tra('Tracker Item Id'),
-                                'description' => tra('If "yes" the item id will be passed as "itemId" meaningful to Tracker plugins. Will be passed as "itemid" if "no"'),
-                                'filter' => 'alpha',
-                                'default' => 'n',
-                                'options' => array(
-                                        array('text' => '', 'value' => ''),
-                                        array('text' => tra('Yes'), 'value' => 'y'),
-                                        array('text' => tra('No'), 'value' => 'n')
-                                ),
+			'trkitemid' => array(
+				'required' => false,
+				'name' => tra('Tracker Item Id'),
+				'description' => tra('If "yes" the item id will be passed as "itemId" meaningful to Tracker plugins. Will be passed as "itemid" if "no"'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				),
 				'parent' => array('name' => 'external', 'value' => 'y'),
 			),
 			'amonth' => array(
@@ -323,8 +323,8 @@ function wikiplugin_trackercalendar($data, $params)
 			'canInsert' => $itemObject->canModify(),
 			'dView' => $dView,
 			'body' => $data,
-			'url' => $params['url'],
-			'trkitemid' => $params['trkitemid'],
+			'url' => $params['external'] === 'y' ? $params['url'] : '',
+			'trkitemid' => $params['external'] === 'y' ? $params['trkitemid'] : '',
 			'timeFormat' => $prefs['display_12hr_clock'] === 'y' ? 'h(:mm)TT' : 'HH:mm',
 		)
 	);

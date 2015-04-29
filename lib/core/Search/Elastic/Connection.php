@@ -145,6 +145,11 @@ class Search_Elastic_Connection
 			$actions[] = ['remove' => ['index' => $index, 'alias' => $alias]];
 		}
 
+		// Before assigning new alias, check there is not already an index matching alias name.
+		if (isset($current->$alias) && !$this->aliasExists($alias)) {
+			$this->deleteIndex($alias);
+		}
+
 		$this->post('/_aliases', json_encode([
 			'actions' => $actions,
 		]));
@@ -256,8 +261,22 @@ class Search_Elastic_Connection
 		return $this->get($path);
 	}
 
+	private function aliasExists($index)
+	{
+		try {
+			$this->get("/_alias/$index", "");
+		} catch (Search_Elastic_Exception $e) {
+			return false;
+		}
+		return true;
+	}
+
 	private function createIndex($index, callable $getIndex)
 	{
+		if ($this->aliasExists($index)) {
+			return;
+		}
+
 		try {
 			$this->put(
 				"/$index", json_encode($getIndex())
