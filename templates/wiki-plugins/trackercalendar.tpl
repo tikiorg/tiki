@@ -31,13 +31,13 @@
 			editable: true,
 			timezone: '{{$prefs.server_timezone}}',
 			events: $.service('tracker_calendar', 'list', {
-                           	     	trackerId: data.trackerId,
-                                	beginField: data.begin,
-                                	endField: data.end,
-                                	resourceField: data.resource,
-                                	coloringField: data.coloring,
-                                	filters: data.body,
-	                        }),
+				trackerId: data.trackerId,
+				beginField: data.begin,
+				endField: data.end,
+				resourceField: data.resource,
+				coloringField: data.coloring,
+				filters: data.body,
+			}),
 			resources: data.resourceList,
 			year: data.viewyear,
 			month: data.viewmonth-1,
@@ -65,7 +65,7 @@
 				if (data.url) {
 					var lOp='';
 					var actualURL = '';
-                                        var html = $.parseHTML( event.description );
+					var html = $.parseHTML( event.description );
 
 					// Store useful data values to the URL for Wiki Argument Variable 
 					// use and to javascript session storage for JQuery use
@@ -147,5 +147,5 @@
 		$(this).fullCalendar( 'gotoDate', data.viewyear, data.viewmonth-1, data.viewday );
 	});
 
-        function isEven(x) { return (x%2)==0; }
+	function isEven(x) { return (x%2)==0; }
 {/jq}
