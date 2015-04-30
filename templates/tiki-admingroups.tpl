@@ -165,7 +165,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="groups_inc" class="control-label col-md-3">{tr}Inheritence{/tr}</label>
+				<label for="groups_inc" class="control-label col-md-3">{tr}Inheritance{/tr}</label>
 				<div class="col-md-9">
 					{if $inc|@count > 20 and $hasOneIncludedGroup eq "y"}
 						<ul>

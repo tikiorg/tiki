@@ -1,9 +1,9 @@
 /* 
- * Javascript translation definition
- * Example to help translation of some English strings in some js files
- * 
- * $Id: language.js 30343 2010-10-27 12:50:51Z xavidp $
- */
+* Javascript translation definition
+* Example to help translation of some English strings in some js files
+*
+* $Id: language.js 30343 2010-10-27 12:50:51Z xavidp $
+*/
 
 lang = {
 "Very Secure" : "מאובטח מאוד",
@@ -34,7 +34,7 @@ lang = {
 "Unassign module" : "ביטול הקצאת מודול",
 "Edit module" : "ערוך מודול",
 "Edit module:" : "ערוך מודול:",
-"Favorite" : "מועדף",
+"Favorite" : "הוסף למועדפים"
 "What address are you looking for?" : "מה כתובת שאתה מחפש?",
 "Filter:" : "סנן:",
 "Please enter a page name" : "אנא הכנס שם דף",
@@ -42,5 +42,5 @@ lang = {
 "Toggle Highlighter" : "החלף מצב כלי הדגשה",
 "Are you sure you want to unassign this module?" : "האם אתה בטוח שאתה רוצה לבטל את הקצאת מודול זה?",
 "Select an Option" : "בחר אפשרות"
-	// remember the IE does not support ending comma on last item
+// remember the IE does not support ending comma on last item
 };
