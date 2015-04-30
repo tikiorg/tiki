@@ -90,7 +90,7 @@ class Services_Tracker_CalendarController
 				'editable' => $item->canModify(),
 				'color' => $this->getColor(isset($row[$coloring]) ? $row[$coloring] : ''),
 				'textColor' => '#000',
-				'resource' => ($resource && isset($row[$resource])) ? $row[$resource] : '',
+				'resource' => ($resource && isset($row[$resource])) ? strtolower($row[$resource]) : '',
 			);
 		}
 
