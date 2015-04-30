@@ -303,7 +303,7 @@
 					</div>
 					{if isset($metarray) and $metarray|count gt 0}
 						<br>
-						<div class="panel panel-default">
+						<div class="panel panel-default panel-file_metadata">
                             <div class="panel-heading">
                                 <h3 class="panel-title">
                                     Metadata
