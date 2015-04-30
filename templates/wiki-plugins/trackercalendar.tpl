@@ -6,7 +6,7 @@
 		var storeEvent = function(event) {
 			var request = {
 				itemId: event.id,
-				trackerId: data.trackerId,
+				trackerId: data.trackerId
 			}, end = event.end;
 
 			if (! end) {
@@ -37,7 +37,7 @@
 				endField: data.end,
 				resourceField: data.resource,
 				coloringField: data.coloring,
-				filters: data.body,
+				filters: data.body
 			}),
 			resources: data.resourceList,
 			year: data.viewyear,
@@ -136,7 +136,7 @@
 			dayClick: function(date, allDay, jsEvent, view) {
 				if (data.canInsert) {
 					var info = {
-						trackerId: data.trackerId,
+						trackerId: data.trackerId
 					};
 					info[data.beginFieldName] = date.getTime() / 1000;
 					info[data.endFieldName] = date.getTime() / 1000 + 3600;
