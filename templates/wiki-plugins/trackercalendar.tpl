@@ -30,6 +30,7 @@
 			},
 			editable: true,
 			timezone: '{{$prefs.server_timezone}}',
+			//theme: true, TODO: add support of jQuery UI theme to the plugin's PHP
 			events: $.service('tracker_calendar', 'list', {
 				trackerId: data.trackerId,
 				beginField: data.begin,
@@ -49,6 +50,9 @@
 			dayNames: ["{tr}Sunday{/tr}", "{tr}Monday{/tr}", "{tr}Tuesday{/tr}", "{tr}Wednesday{/tr}", "{tr}Thursday{/tr}", "{tr}Friday{/tr}", "{tr}Saturday{/tr}"],
 			dayNamesShort: ["{tr}Sun{/tr}", "{tr}Mon{/tr}", "{tr}Tue{/tr}", "{tr}Wed{/tr}", "{tr}Thu{/tr}", "{tr}Fri{/tr}", "{tr}Sat{/tr}"],
 			buttonText: {
+				resourceDay:    "{tr}resource day{/tr}",
+				resourceMonth:    "{tr}resource month{/tr}",
+				resourceWeek:    "{tr}resource week{/tr}",
 				today:    "{tr}today{/tr}",
 				month:    "{tr}month{/tr}",
 				week:     "{tr}week{/tr}",
