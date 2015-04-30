@@ -303,16 +303,11 @@
 					</div>
 					{if isset($metarray) and $metarray|count gt 0}
 						<br>
-						<div class="panel panel-default panel-file_metadata">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">
-                                    Metadata
-                                </h3>
-                            </div>
-                            <div class="panel-body">
-    							{include file='metadata/meta_view_tabs.tpl'}
-                            </div>
-						</div>
+						<div class="text-left">
+                            {remarksbox type="tip" title="{tr}Metadata{/tr}"}
+                                {include file='metadata/meta_view_tabs.tpl'}
+                            {/remarksbox}
+                        </div>
 					{/if}
 				{/if}
 			</div> {* thumbnailcontener *}
