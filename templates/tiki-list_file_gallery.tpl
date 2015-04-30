@@ -246,9 +246,9 @@
 				<input type="hidden" name="maxRecords" value=1>
 				<input type="hidden" name="offset" value="{$offset}">
 				<label for="maxWidth">
-					{tr}Max width{/tr}&nbsp;<input id="maxWidth" class="form-control" type="text" name="maxWidth" value="{$maxWidth}">
+					{tr}Maximum width{/tr}&nbsp;<input id="maxWidth" class="form-control" type="text" name="maxWidth" value="{$maxWidth}">
 				</label>
-				<input type="submit" class="wikiaction btn btn-default" name="setSize" value="{tr}Go{/tr}">
+				<input type="submit" class="wikiaction btn btn-default" name="setSize" value="{tr}Submit{/tr}">
 			</form>
 		</div><br>
 		{pagination_links cant=$cant step=$maxRecords offset=$offset}
