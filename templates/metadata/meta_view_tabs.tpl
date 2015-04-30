@@ -17,10 +17,10 @@
 			{tab name=$tabtitle}
 				{foreach $subtypes as $fields}
 					{if $fields|count gt 0}
-						<fieldset>
-							<legend>
+						<div>
+							<h4>
 								{tr}{$fields@key|lower|capitalize|escape}{/tr}
-							</legend>
+							</h4>
 							<table>
 								{foreach $fields as $fieldarray}
 									<tr>
@@ -47,7 +47,7 @@
 									</tr>
 								{/foreach}
 							</table>
-						</fieldset>
+						</div>
 					{/if}
 				{/foreach}
 			{/tab}

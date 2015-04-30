@@ -303,8 +303,15 @@
 					</div>
 					{if isset($metarray) and $metarray|count gt 0}
 						<br>
-						<div>
-							{include file='metadata/meta_view_tabs.tpl'}
+						<div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    Metadata
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+    							{include file='metadata/meta_view_tabs.tpl'}
+                            </div>
 						</div>
 					{/if}
 				{/if}
