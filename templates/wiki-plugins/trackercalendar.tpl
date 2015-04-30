@@ -67,43 +67,50 @@
 			},
 			eventClick: function(event) {
 				if (data.url) {
-					var lOp='';
-					var actualURL = '';
-					var html = $.parseHTML( event.description ) || [];
-
-					// Store useful data values to the URL for Wiki Argument Variable 
-					// use and to javascript session storage for JQuery use
-					actualURL = data.url;
+					var actualURL = data.url;
 					actualURL += actualURL.indexOf("?") === -1 ? "?" : "&";
-					actualURL += "trackerid=" + event.trackerId;
-					if( data.trkitemid == 'y' ) {
-						actualURL = actualURL + "&itemId=" + event.id;
-					}
-					else {
-						actualURL = actualURL + "&itemid=" + event.id;
-					}
-					actualURL = actualURL + "&title=" + event.title;
-					actualURL = actualURL + "&end=" + event.end;
-					actualURL = actualURL + "&start=" + event.start;
-					sessionStorage.setItem( "trackerid", event.trackerId);
-					sessionStorage.setItem( "title", event.title);
-					sessionStorage.setItem( "start", event.start);
-					sessionStorage.setItem( "itemid", event.id);
-					sessionStorage.setItem( "end", event.end);
-					sessionStorage.setItem( "eventColor", event.color);
 
-					// Capture the description HTML as variables
-					// with the label being the variable name
-					$.each( html, function( i, el ) {
-						if( isEven( i ) == true ) {
-							lOp = el.textContent.replace( ' ', '_' );
+					if (data.trkitemid === "y" && data.addAllFields === "n") {	// "simple" mode
+						actualURL +=  "itemId=" + event.id;
+					} else {
+						var lOp='';
+						var html = $.parseHTML( event.description ) || [];
+
+						// Store useful data values to the URL for Wiki Argument Variable
+						// use and to javascript session storage for JQuery use
+						actualURL += "trackerid=" + event.trackerId;
+						if( data.trkitemid == 'y' ) {
+							actualURL = actualURL + "&itemId=" + event.id;
 						}
 						else {
-							actualURL = actualURL + "&" + lOp + "=" + el.textContent;
-							sessionStorage.setItem( lOp, el.textContent);
+							actualURL = actualURL + "&itemid=" + event.id;
 						}
-					});
-					// alert( "We're where we want to be\n" + event.color + "\n" + event.url + "\n" + data.url + "\n" + actualURL );
+						actualURL = actualURL + "&title=" + event.title;
+						actualURL = actualURL + "&end=" + event.end;
+						actualURL = actualURL + "&start=" + event.start;
+						if (data.useSessionStorage) {
+							sessionStorage.setItem( "trackerid", event.trackerId);
+							sessionStorage.setItem( "title", event.title);
+							sessionStorage.setItem( "start", event.start);
+							sessionStorage.setItem( "itemid", event.id);
+							sessionStorage.setItem( "end", event.end);
+							sessionStorage.setItem( "eventColor", event.color);
+						}
+
+						// Capture the description HTML as variables
+						// with the label being the variable name
+						$.each( html, function( i, el ) {
+							if( isEven( i ) == true ) {
+								lOp = el.textContent.replace( ' ', '_' );
+							}
+							else {
+								actualURL = actualURL + "&" + lOp + "=" + el.textContent;
+								if (data.useSessionStorage) {
+									sessionStorage.setItem( lOp, el.textContent);
+								}
+							}
+						});
+					}
 
 					location.href=actualURL;
 					return false;
