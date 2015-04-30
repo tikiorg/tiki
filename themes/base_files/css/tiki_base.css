@@ -161,9 +161,6 @@ table.treetable.objectperms td.added {
 table.treetable.objectperms td.removed {
   background-color: #fcf8e3;
 }
-.thumbnailcontener {
-  border: solid 1px #dddddd;
-}
 .progressBarInProgress {
   background-color: #31708f;
   color: #d9edf7;
@@ -2225,7 +2222,6 @@ table.treetable tr.expanded span.indenter a {
 }
 .thumbnailcontener {
   margin: 1px;
-  padding: 2px;
   text-align: center;
   display: inline-block;
   vertical-align: top;

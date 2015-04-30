@@ -138,7 +138,7 @@
 		{* thumbnail actions wrench *}
 		{capture name="thumbactions"}
 			{if ($prefs.fgal_show_thumbactions eq 'y' or $show_details eq 'y')}
-					<div class="thumbactions" style="float:{if $view neq 'page'}right; width:{$thumbnail_size}px"{else}none"{/if}>
+					<div class="thumbactions">
 				{if $prefs.fgal_checked neq 'n' and $tiki_p_admin_file_galleries eq 'y' and $view neq 'page'}
 					<label style="float:left">
 						<input type="checkbox" onclick="flip_thumbnail_status('{$checkname}_{$files[changes].id}')" name="{$checkname}[]" value="{$files[changes].id|escape}" {if $is_checked eq 'y'}checked="checked"{/if}>
@@ -288,6 +288,9 @@
 							{/if}
 						</div> {* thumbinfos *}
 					{/if}
+                    {if $view neq 'page'}
+                        {$smarty.capture.thumbactions}
+                    {/if}
 				</div> {* thumbnail *}
 				{* property table in page file view *}
 				{if $view eq 'page'}
@@ -304,9 +307,6 @@
 							{include file='metadata/meta_view_tabs.tpl'}
 						</div>
 					{/if}
-				{/if}
-				{if $view neq 'page'}
-					{$smarty.capture.thumbactions}
 				{/if}
 			</div> {* thumbnailcontener *}
 		{/if} {* if 1*}

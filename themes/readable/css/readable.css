@@ -6898,9 +6898,6 @@ table.treetable.objectperms td.added {
 table.treetable.objectperms td.removed {
   background-color: #fcf8e3;
 }
-.thumbnailcontener {
-  border: solid 1px #dddddd;
-}
 .progressBarInProgress {
   background-color: #5bc0de;
   color: #d9edf7;
