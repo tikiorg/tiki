@@ -957,9 +957,6 @@ li.archivedate {
 .box-since_last_visit_new .ui-tabs .ui-tabs-nav li a {
   padding: .3em .2em;
 }
-.box-since_last_visit_new {
-  min-height: 10em;
-}
 .TwitName {
   font-weight: bold;
 }
