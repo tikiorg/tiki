@@ -49,7 +49,7 @@
 								{$groups_g[ix].groupName|escape}
 								{if count($groups_g[ix].additional_groups)}
 									<div>
-										{tr}Groups included through inheritence:{/tr}
+										{tr}Groups included through inheritance:{/tr}
 										{foreach from=$groups_g[ix].additional_groups item=groupName}
 											{$groupName|escape}
 										{/foreach}
@@ -353,7 +353,7 @@
 						</select>
 						<label>
 							<input type="checkbox" name="include_groups" value="y"/>
-							{tr}Including group inheritence{/tr}
+							{tr}Including group inheritance{/tr}
 						</label>
 						<div>
 							<i>{tr}Including group, group users and emails will be refreshed at each newsletter sending{/tr}</i>
