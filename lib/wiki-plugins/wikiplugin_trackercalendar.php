@@ -45,6 +45,65 @@ function wikiplugin_trackercalendar_info()
 				'required' => false,
 				'filter' => 'word',
 			),
+			'external' => array(
+				'required' => false,
+				'name' => tra('External Link'),
+				'description' => tra('Follow external link when event item is clicked. Useful for supporting links to pretty tracker supported pages.'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
+			'url' => array(
+				'required' => false,
+				'name' => tra('URL'),
+				'description' => tra('Complete URL, internal or external.'),
+				'filter' => 'url',
+				'default' => '',
+				'parent' => array('name' => 'external', 'value' => 'y'),
+			),
+			'trkitemid' => array(
+				'required' => false,
+				'name' => tra('Tracker Item Id'),
+				'description' => tra('If "yes" the item id will be passed as "itemId" meaningful to Tracker plugins. Will be passed as "itemid" if "no"'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				),
+				'parent' => array('name' => 'external', 'value' => 'y'),
+			),
+			'addAllFields' => array(
+				'required' => false,
+				'name' => tra('Add All Fields'),
+				'description' => tra('If "yes" all fields in the tracker will be added to the URL, not just the itemId'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				),
+				'parent' => array('name' => 'external', 'value' => 'y'),
+			),
+			'useSessionStorage' => array(
+				'required' => false,
+				'name' => tra('Use Session Storage'),
+				'description' => tra('If "yes" copy all the field values into window.sessionStorage so it can be accessed via JavaScript.'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				),
+				'parent' => array('name' => 'addAllFields', 'value' => 'y'),
+			),
 			'amonth' => array(
 				'required' => false,
 				'name' => tra('Agenda by Months'),
@@ -266,6 +325,9 @@ function wikiplugin_trackercalendar($data, $params)
 			$firstDayofWeek = 0;
 		}
 
+	$params['addAllFields'] = empty($params['addAllFields']) ? 'y' : $params['addAllFields'];
+	$params['useSessionStorage'] = empty($params['useSessionStorage']) ? 'y' : $params['useSessionStorage'];
+
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign(
 		'trackercalendar',
@@ -290,6 +352,10 @@ function wikiplugin_trackercalendar($data, $params)
 			'canInsert' => $itemObject->canModify(),
 			'dView' => $dView,
 			'body' => $data,
+			'url' => $params['external'] === 'y' ? $params['url'] : '',
+			'trkitemid' => $params['external'] === 'y' ? $params['trkitemid'] : '',
+			'addAllFields' => $params['external'] === 'y' ? $params['addAllFields'] : '',
+			'useSessionStorage' => $params['external'] === 'y' ? $params['useSessionStorage'] : '',
 			'timeFormat' => $prefs['display_12hr_clock'] === 'y' ? 'h(:mm)TT' : 'HH:mm',
 		)
 	);
