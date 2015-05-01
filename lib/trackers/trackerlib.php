@@ -1302,6 +1302,11 @@ class TrackerLib extends TikiLib
 			}
 		}
 		if (!empty($filterfield)) {
+			// fix: could be that there is just one field. in this case it might be a scalar, 
+			// not an array due to not handle $filterfield proper somewhere else in the code
+			if (!is_array($filterfield)) {
+				$filterfield = array($filterfield);
+			}
 			foreach ($filterfield as $f) {
 				if (!in_array($f, $fieldIds)) {
 					$fieldIds[] = $f;
@@ -1327,72 +1332,136 @@ class TrackerLib extends TikiLib
 		}
 		//echo htmlentities($query); print_r($bindvars);
 		$query_cant = 'SELECT count(DISTINCT ttif.`itemId`) FROM '.$base_tables.$sort_tables.$cat_table.$mid;
-
-		$ret1 = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
-		$cant = $this->getOne($query_cant, $bindvars);
-		$type = '';
+		
+		// save the result
 		$ret = array();
 
-		foreach ($ret1 as $res) {
-			$mem = TikiLib::lib('tiki')->get_memory_avail();
-			if ($mem < 1048576 * 10) {	// Less than 10MB left?
-				// post an error even though it doesn't get displayed when using export as the output goes into the output file
-				TikiLib::lib('errorreport')->report(tr('Tracker list_items ran out of memory after %0 items.', count($ret)));
-				break;
-			}
+// Start loop to get the required number of items if permissions / filters are in use. 
+// The problem: If $maxItems and $offset are given, 
+// but the sql query returns items the user has no permissions or the filter criteria does not match, 
+// then only a subset of what is available  would be returned. 
 
-			$res['itemUser'] = '';
-			if ($listfields !== null) {
-				$res['field_values'] = $this->get_item_fields($trackerId, $res['itemId'], $listfields, $res['itemUser']);
+		
+		// original requested number of items
+		$maxRecordsRequested = $maxRecords;
+		// original page (from pagination)
+		$offsetRequested = $offset;
+		// outer loop - grab more records bc it might be we must filter out records. 
+		// 300 seems to be ok, bc paganination offers this as well as the size of the resultset
+		// NOTE: This value is important with respect to memory usage and performance - especially when lots of items (like 10k+) are in use.
+		$maxRecords = 300;
+		// offset used for sql query
+		$offset = 0;
+		// offset calculated on  $offsetRequested
+		$currentOffset = 0; 
+		// set to true when we have enough records or no records left.
+		$finished = false;
+		// used internaly - one time query that returns the total number of records without taking into account filter or permissions
+		$cant = $this->getOne($query_cant, $bindvars);
+		// $cant will be modified bc its used otherwise. so save the totalCount value
+		$totalCount = $cant;
+		// total number of records read so far
+		$currentCount = 0;
+		// number of records in the result set
+		$resultCount = 0;
+		
+		while (!$finished) {
+			$ret1 = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
+			// add. security - should not be necessary bc of check at the end. no records left - end outer loop
+			if (count($ret1) == 0) {
+				$finished = true;
 			}
-
-			if (! $skip_permission_check) {
-				$itemObject = Tracker_Item::fromInfo($res);
-				if (! $itemObject->canView()) {
-					$cant--;
-					continue;
+			
+			foreach ($ret1 as $res) {
+				$mem = TikiLib::lib('tiki')->get_memory_avail();
+				if ($mem < 1048576 * 10) {	// Less than 10MB left?
+					// post an error even though it doesn't get displayed when using export as the output goes into the output file
+					TikiLib::lib('errorreport')->report(tr('Tracker list_items ran out of memory after %0 items.', count($ret)));
+					break;
 				}
-			}
-
-			if (!empty($asort_mode)) {
-				foreach ($res['field_values'] as $i => $field) {
-					if ($field['fieldId'] == $asort_mode ) {
-						$kx = $field['value'].'.'.$res['itemId'];
+	
+				$res['itemUser'] = '';
+				if ($listfields !== null) {
+					$res['field_values'] = $this->get_item_fields($trackerId, $res['itemId'], $listfields, $res['itemUser']);
+				}
+	
+				if (! $skip_permission_check) {
+					$itemObject = Tracker_Item::fromInfo($res);
+					if (! $itemObject->canView()) {
+						$cant--;
+						// skipped record bc of permissions - need to count for outer loop
+						$currentCount++;
+						continue;
 					}
 				}
-			}
-			if (isset($linkfilter) && $linkfilter) {
-				$filterout = false;
-				// NOTE: This implies filterfield if is link field has to be in fields set
-				foreach ($res['field_values'] as $i => $field) {
-					foreach ($linkfilter as $lf) {
-						if ($field['fieldId'] == $lf["filterfield"]) {
-							// extra comma at the front and back of filtervalue to avoid ambiguity in partial match
-							if ($lf["filtervalue"] && strpos(',' . implode(',', $field['items']) . ',', $lf["filtervalue"]) === false) {
-								$filterout = true;
-								break 2;
-							} elseif ($lf["exactvalue"] && !in_array($lf['exactvalue'], $field['items'])) {
-								$filterout = true;
-								break 2;
-							}
+	
+				if (!empty($asort_mode)) {
+					foreach ($res['field_values'] as $i => $field) {
+						if ($field['fieldId'] == $asort_mode ) {
+							$kx = $field['value'].'.'.$res['itemId'];
 						}
 					}
 				}
-				if ($filterout) {
-					$cant--;
-					continue;
+				if (isset($linkfilter) && $linkfilter) {
+					$filterout = false;
+					// NOTE: This implies filterfield if is link field has to be in fields set
+					foreach ($res['field_values'] as $i => $field) {
+						foreach ($linkfilter as $lf) {
+							if ($field['fieldId'] == $lf["filterfield"]) {
+								// extra comma at the front and back of filtervalue to avoid ambiguity in partial match
+								if ($lf["filtervalue"] && strpos(',' . implode(',', $field['items']) . ',', $lf["filtervalue"]) === false) {
+									$filterout = true;
+									break 2;
+								} elseif ($lf["exactvalue"] && !in_array($lf['exactvalue'], $field['items'])) {
+									$filterout = true;
+									break 2;
+								}
+							}
+						}
+					}
+					if ($filterout) {
+						$cant--;
+						// skipped record bc of filter criteria - need to count for outer loop
+						$currentCount++;
+						continue;
+					}
 				}
-			}
+	
+				$res['geolocation'] = TikiLib::lib('geo')->get_coordinates('trackeritem', $res['itemId']);
+	
+				// have a field, adjust counter and check if we have enough items
+				$currentCount++;
+				$currentOffset++;
+				
+				// field is stored in $res. See wether we can add it to the resultset, based on the requested offset
+				if ($currentOffset > $offsetRequested) {
+					$resultCount++;
+					if (empty($kx)) {
+						// ex: if the sort field is non visible, $kx is null
+						$ret[] = $res;
+					} else {
+						$ret[$kx] = $res;
+					}
+				} 
 
-			$res['geolocation'] = TikiLib::lib('geo')->get_coordinates('trackeritem', $res['itemId']);
+				// enough items - need to leave the foreach loop
+				if ($resultCount == $maxRecordsRequested) {
+					$finished = true;
+					break;
+				}
 
-			if (empty($kx)) {
-				// ex: if the sort field is non visible, $kx is null
-				$ret[] = $res;
+			} // foreach
+			
+			// items left?
+			if ($currentCount == $totalCount) {
+				$finished = true;
 			} else {
-				$ret[$kx] = $res;
+				$offset = $maxRecords;
 			}
-		}
+			
+		} // while
+		
+// End loop to get the required number of items if permissions / filters are in use
 		$retval = array();
 		$retval['data'] = array_values($ret);
 		$retval['cant'] = $cant;
