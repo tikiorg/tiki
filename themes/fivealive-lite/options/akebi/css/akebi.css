@@ -1,9 +1,12 @@
 /*  The Akebi theme option file for the FiveAlive-lite theme of Tiki Wiki CMS Groupware. */
-a {
+a,
+a.btn-link {
   color: #0b8a98;
 }
 a:hover,
-a:focus {
+a.btn-link:hover,
+a:focus,
+a.btn-link:focus {
   color: #18a3bb;
 }
 .btn-default {
@@ -674,6 +677,10 @@ textarea,
 }
 .postbody-title {
   background: url('../images/siteheader.png') no-repeat -480px -200px;
+  color: #ffffff;
+}
+.postbody-title .title > .panel-title a.link {
+  color: #ffffff;
 }
 .siteloginbar_popup .dropdown-menu > li > a {
   color: #fff;
