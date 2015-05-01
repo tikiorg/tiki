@@ -151,6 +151,18 @@ function smarty_function_trackerfields($params, $smarty)
 
 	$trklib->unregisterSectionFormat('config');
 
-	return $smarty->fetch($template);
+	try {
+		$result = $smarty->fetch($template);
+	} catch (Exception $e) {
+		// catch any exception probably casued by a pretty tracker template issue
+		TikiLib::lib('errorreport')->report(
+			tr('Tracker rendering error (section="%0" mode="%1")', $sectionFormat, $params['mode']) . '<br><br>' .
+			htmlentities($e->getMessage())
+		);
+		// try again with the default section format "flat"
+		$template = $trklib->getSectionFormatTemplate('flat', $params['mode']);
+		$result = $smarty->fetch($template);
+	}
+	return $result;
 }
 
