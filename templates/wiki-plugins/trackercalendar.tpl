@@ -60,7 +60,6 @@
 			},
 			allDayText: "{tr}all-day{/tr}",
 			firstDay: data.firstDayofWeek,
-			weekends: data.weekends,
 			slotMinutes: {{$prefs.calendar_timespan}},
 			defaultView: data.dView,
 			eventAfterRender : function( event, element, view ) {
