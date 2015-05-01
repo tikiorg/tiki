@@ -220,6 +220,18 @@ function wikiplugin_trackercalendar_info()
 				'default' => 0,
 				'filter' => 'int',
 			),
+			'weekends' => array(
+				'required' => false,
+				'name' => tra('Show Weekends'),
+				'description' => tra('Display Saturdays and Sundays (shown by default)'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
 		),
 	);
 }
@@ -327,6 +339,7 @@ function wikiplugin_trackercalendar($data, $params)
 
 	$params['addAllFields'] = empty($params['addAllFields']) ? 'y' : $params['addAllFields'];
 	$params['useSessionStorage'] = empty($params['useSessionStorage']) ? 'y' : $params['useSessionStorage'];
+	$params['weekends'] = empty($params['weekends']) ? 'y' : $params['weekends'];
 
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign(
@@ -357,6 +370,7 @@ function wikiplugin_trackercalendar($data, $params)
 			'addAllFields' => $params['external'] === 'y' ? $params['addAllFields'] : '',
 			'useSessionStorage' => $params['external'] === 'y' ? $params['useSessionStorage'] : '',
 			'timeFormat' => $prefs['display_12hr_clock'] === 'y' ? 'h(:mm)TT' : 'HH:mm',
+			'weekends' => $params['weekends'] === 'y' ? 1 : 0,
 		)
 	);
 	return $smarty->fetch('wiki-plugins/trackercalendar.tpl');
