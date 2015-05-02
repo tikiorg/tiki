@@ -2193,6 +2193,10 @@ body.filegal_popup #tiki-center {
   overflow: auto;
   margin: 3px 100px 0;
 }
+#cboxContent,
+#cboxLoadedContent {
+  min-width: 1.4%;
+}
 table.treetable {
   padding-left: 19px;
   width: 100%;
