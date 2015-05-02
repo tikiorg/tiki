@@ -43,14 +43,10 @@ div.form-group label.error {
 	width: auto !important;
 }
 
+// Chosen is calculating the widths wrong (too narrow) so this is a crude workaround.
 .tiki .chosen-container-single,
-.tiki .chosen-choices .search-field input.default,
-.tiki .chosen-container-multi {
-	width: auto !important;
-}
-
 .tiki #assign_order_chosen.chosen-container {
-	min-width: 60px;
+	min-width: 5em;
 }
 
 .chosen-container-single {
