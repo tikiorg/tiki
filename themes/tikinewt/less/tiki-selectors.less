@@ -17,9 +17,17 @@ body > .container {
 	background: #fff;
 }
 
-.header_container > .container {
+body > .container, // basic layout (bootstrap)
+.header_container > .container,
+.header_container.container {
 	border: solid #aaa;
 	border-width: 1px 1px 0 1px;
+	margin-top: 20px;
+}
+
+body > .container {
+	.topbar {
+		margin-bottom: 20px;}
 }
 
 .middle_outer > .container {
@@ -44,6 +52,20 @@ header.container {
 	background: #e9ecef;
 }
 
+// Hover/Focus state
+.cssmenu_horiz > li > a,
+.cssmenu_vert > li > a,
+.cssmenu_horiz ul > li > a,
+.cssmenu_vert ul > li > a {
+	&:hover,
+	&:focus {
+		text-decoration: none;
+		color: @navbar-default-link-hover-color;
+		background-color: @navbar-default-link-hover-bg;
+	}
+}
+
+
 .middle {
 	& > .row {
 		margin-top: 5px;
@@ -55,6 +77,7 @@ header.container {
 	background: #f3f6f9;
 	//  margin: 8px 3px 0;
 	padding-top: 10px;
+	padding-bottom: 10px;
 	border: 1px solid #8cacbb;
 	margin-bottom: 10px;
 }
@@ -76,7 +99,7 @@ header.container {
 	margin-bottom: 0;
 }
 
-.footer_liner {
+footer .container {
 	background: #c7d0d9;
 	border: solid #8cacbb;
 	border-width: 0 1px 1px 1px;

@@ -1641,6 +1641,9 @@ div#outerToc-static ul {
 a.tiki_anchor:before {
   content: "¶";
 }
+.tiki_blogs a.tiki_anchor:before {
+  content: none;
+}
 a.tiki_anchor {
   display: none;
   font-size: 85%;
@@ -2189,6 +2192,10 @@ body.filegal_popup #tiki-center {
 #cboxTitle div {
   overflow: auto;
   margin: 3px 100px 0;
+}
+#cboxContent,
+#cboxLoadedContent {
+  min-width: 1.4%;
 }
 table.treetable {
   padding-left: 19px;
@@ -3197,12 +3204,12 @@ h4.ui-accordion-header {
 div.form-group label.error {
   font-weight: normal !important;
 }
-.tiki .chosen-choices .search-field input.default,
-.tiki .chosen-container-multi {
+.tiki .chosen-container .active-result {
   width: auto !important;
 }
+.tiki .chosen-container-single,
 .tiki #assign_order_chosen.chosen-container {
-  min-width: 60px;
+  min-width: 5em;
 }
 .chosen-container-single {
   max-width: 100%;

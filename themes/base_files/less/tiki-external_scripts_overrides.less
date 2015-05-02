@@ -39,14 +39,14 @@ h4.ui-accordion-header {
 div.form-group label.error {
 	font-weight: normal !important;
 }
-
-.tiki .chosen-choices .search-field input.default,
-.tiki .chosen-container-multi {
+.tiki .chosen-container .active-result {
 	width: auto !important;
 }
 
+// Chosen is calculating the widths wrong (too narrow) so this is a crude workaround.
+.tiki .chosen-container-single,
 .tiki #assign_order_chosen.chosen-container {
-	min-width: 60px;
+	min-width: 5em;
 }
 
 .chosen-container-single {
