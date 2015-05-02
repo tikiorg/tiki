@@ -4393,7 +4393,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
   color: #333333;
-  background-color: transparent;
+  background-color: #e9ecef;
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
@@ -4434,7 +4434,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
     color: #333333;
-    background-color: transparent;
+    background-color: #e9ecef;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
@@ -7284,9 +7284,15 @@ body > .container {
   border-width: 0 1px;
   background: #fff;
 }
-.header_container > .container {
+body > .container,
+.header_container > .container,
+.header_container.container {
   border: solid #aaa;
   border-width: 1px 1px 0 1px;
+  margin-top: 20px;
+}
+body > .container .topbar {
+  margin-bottom: 20px;
 }
 .middle_outer > .container {
   border: solid #aaa;
@@ -7306,6 +7312,18 @@ header.container {
   margin-top: 20px;
   background: #e9ecef;
 }
+.cssmenu_horiz > li > a:hover,
+.cssmenu_vert > li > a:hover,
+.cssmenu_horiz ul > li > a:hover,
+.cssmenu_vert ul > li > a:hover,
+.cssmenu_horiz > li > a:focus,
+.cssmenu_vert > li > a:focus,
+.cssmenu_horiz ul > li > a:focus,
+.cssmenu_vert ul > li > a:focus {
+  text-decoration: none;
+  color: #333333;
+  background-color: #e9ecef;
+}
 .middle > .row {
   margin-top: 5px;
   border-right: 6px solid #fff;
@@ -7313,6 +7331,7 @@ header.container {
 #col1 {
   background: #f3f6f9;
   padding-top: 10px;
+  padding-bottom: 10px;
   border: 1px solid #8cacbb;
   margin-bottom: 10px;
 }
@@ -7331,7 +7350,7 @@ header.container {
 #topbar_modules .navbar {
   margin-bottom: 0;
 }
-.footer_liner {
+footer .container {
   background: #c7d0d9;
   border: solid #8cacbb;
   border-width: 0 1px 1px 1px;
