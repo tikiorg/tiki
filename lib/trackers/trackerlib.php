@@ -1379,7 +1379,7 @@ class TrackerLib extends TikiLib
 					TikiLib::lib('errorreport')->report(tr('Tracker list_items ran out of memory after %0 items.', count($ret)));
 					break;
 				}
-	
+
 				$res['itemUser'] = '';
 				if ($listfields !== null) {
 					$res['field_values'] = $this->get_item_fields($trackerId, $res['itemId'], $listfields, $res['itemUser']);
@@ -1394,7 +1394,7 @@ class TrackerLib extends TikiLib
 						continue;
 					}
 				}
-	
+
 				if (!empty($asort_mode)) {
 					foreach ($res['field_values'] as $i => $field) {
 						if ($field['fieldId'] == $asort_mode ) {
@@ -1456,7 +1456,7 @@ class TrackerLib extends TikiLib
 			if ($currentCount == $totalCount) {
 				$finished = true;
 			} else {
-				$offset = $maxRecords;
+				$offset += $maxRecords;
 			}
 			
 		} // while
