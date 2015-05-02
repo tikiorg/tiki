@@ -1641,6 +1641,9 @@ div#outerToc-static ul {
 a.tiki_anchor:before {
   content: "¶";
 }
+.tiki_blogs a.tiki_anchor:before {
+  content: none;
+}
 a.tiki_anchor {
   display: none;
   font-size: 85%;
@@ -3197,6 +3200,10 @@ h4.ui-accordion-header {
 div.form-group label.error {
   font-weight: normal !important;
 }
+.tiki .chosen-container .active-result {
+  width: auto !important;
+}
+.tiki .chosen-container-single,
 .tiki .chosen-choices .search-field input.default,
 .tiki .chosen-container-multi {
   width: auto !important;
