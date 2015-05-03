@@ -1336,24 +1336,30 @@ class TrackerLib extends TikiLib
 		// save the result
 		$ret = array();
 
-// Start loop to get the required number of items if permissions / filters are in use. 
-// The problem: If $maxItems and $offset are given, 
-// but the sql query returns items the user has no permissions or the filter criteria does not match, 
-// then only a subset of what is available  would be returned. 
+		// Start loop to get the required number of items if permissions / filters are in use. 
+		// The problem: If $maxItems and $offset are given, 
+		// but the sql query returns items the user has no permissions or the filter criteria does not match, 
+		// then only a subset of what is available  would be returned. 
 
 		
+		// Due to performance issues with trackers having more than 5k items, we make it optional
+		// $exactPaging true : slow on large tracker, check each item for permission and filtering
+		// 				false: pass offset directly to sql, could lead to wrong pagination if perms / filter are used on items 
+		
+		// Need to get this into tracker setup, so one can decide for each tracker how $exactPaging should work.
+		// $definition = Tracker_Definition::get($trackerId);
+		
+		
+		// default is old behaviour as of tiki14 - get offset directly from sql without taking permissions or filter into account.
+		$exactPaging =false;
+		
+		// defaults for $exactPaging == false
 		// original requested number of items
 		$maxRecordsRequested = $maxRecords;
 		// original page (from pagination)
 		$offsetRequested = $offset;
-		// outer loop - grab more records bc it might be we must filter out records. 
-		// 300 seems to be ok, bc paganination offers this as well as the size of the resultset
-		// NOTE: This value is important with respect to memory usage and performance - especially when lots of items (like 10k+) are in use.
-		$maxRecords = 300;
-		// offset used for sql query
-		$offset = 0;
 		// offset calculated on  $offsetRequested
-		$currentOffset = 0; 
+		$currentOffset = 0;
 		// set to true when we have enough records or no records left.
 		$finished = false;
 		// used internaly - one time query that returns the total number of records without taking into account filter or permissions
@@ -1364,6 +1370,17 @@ class TrackerLib extends TikiLib
 		$currentCount = 0;
 		// number of records in the result set
 		$resultCount = 0;
+				
+		// settings for $exactPaging == true
+		if ($exactPaging == true) {
+			// outer loop - grab more records bc it might be we must filter out records.
+			// 300 seems to be ok, bc paganination offers this as well as the size of the resultset
+			// NOTE: This value is important with respect to memory usage and performance - especially when lots of items (like 10k+) are in use.
+			$maxRecords = 300;
+			// offset used for sql query
+			$offset = 0;
+		}
+		 
 		
 		while (!$finished) {
 			$ret1 = $this->fetchAll($query, $bindvars, $maxRecords, $offset);
@@ -1434,7 +1451,8 @@ class TrackerLib extends TikiLib
 				$currentOffset++;
 				
 				// field is stored in $res. See wether we can add it to the resultset, based on the requested offset
-				if ($currentOffset > $offsetRequested) {
+				// if clause logic mainly for $exactPaging == true
+				if (($currentOffset > $offsetRequested) || ($exactPaging == false)) {
 					$resultCount++;
 					if (empty($kx)) {
 						// ex: if the sort field is non visible, $kx is null
@@ -1444,7 +1462,7 @@ class TrackerLib extends TikiLib
 					}
 				} 
 
-				// enough items - need to leave the foreach loop
+				// logic for $exactPaging == true. enough items - need to leave the foreach loop
 				if ($resultCount == $maxRecordsRequested) {
 					$finished = true;
 					break;
@@ -1452,7 +1470,12 @@ class TrackerLib extends TikiLib
 
 			} // foreach
 			
-			// items left?
+			// foreach loop done - depending on $exactPaging we finish or might need to go ahead
+			if ($exactPaging == false) {
+				$finished = true;
+			} 
+			
+			// are items left? - this part is only relevant when $exactPaging == true
 			if ($currentCount == $totalCount) {
 				$finished = true;
 			} else {
