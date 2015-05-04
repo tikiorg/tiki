@@ -14,6 +14,7 @@
 <fieldset class="table">
 	<legend>{tr}Home Gallery{/tr}</legend>
 	<form action="tiki-admin.php?page=gal" method="post">
+		<input type="hidden" name="ticket" value="{$ticket|escape}">
 		{preference name=home_gallery}
 		<input type="submit" class="btn btn-default btn-sm" name="galset" value="{tr}OK{/tr}" />
 	</form>
@@ -22,6 +23,7 @@
 <fieldset class="table">
 	<legend>{tr}Galleries features{/tr}</legend>
 	<form action="tiki-admin.php?page=gal" method="post">
+		<input type="hidden" name="ticket" value="{$ticket|escape}">
 		<table class="table">
 			<tr>
 				<td><label>{tr}Rankings:{/tr}</label></td>
@@ -176,6 +178,7 @@
 <fieldset class="table">
 	<legend>{tr}Exterminator{/tr}</legend>
 	<form action="tiki-admin.php?page=gal" method="post">
+		<input type="hidden" name="ticket" value="{$ticket|escape}">
 		<table class="table">
 			<tr>
 				<td>
@@ -193,6 +196,7 @@
 <fieldset class="table">
 	<legend>{tr}Mover{/tr}</legend>
 		<form action="tiki-admin.php?page=gal" method="post">
+		<input type="hidden" name="ticket" value="{$ticket|escape}">
 		<table class="table">
 			<tr>
 				<td>
@@ -238,6 +242,7 @@
 <fieldset class="table">
 	<legend>{tr}Gallery listing configuration{/tr}</legend>
 	<form method="post" action="tiki-admin.php?page=gal">
+		<input type="hidden" name="ticket" value="{$ticket|escape}">
 		<table class="table">
 			<tr>
 				<td><label>{tr}Name{/tr}</label></td>
@@ -281,6 +286,7 @@
 <fieldset class="table">
 	<legend>{tr}Image galleries comments settings{/tr}</legend>
 	<form method="post" action="tiki-admin.php?page=gal">
+		<input type="hidden" name="ticket" value="{$ticket|escape}">
 		<table class="table">
 			<tr>
 				<td><label>{tr}Default number of comments per page:{/tr} </label></td>

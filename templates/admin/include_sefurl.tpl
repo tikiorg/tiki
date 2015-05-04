@@ -3,6 +3,7 @@
 	{tr}See also{/tr} <a class="alert-link" class="rbox-link" href="tiki-admin.php?page=metatags">{tr}Meta tags{/tr}</a>.
 {/remarksbox}
 <form class="admin" method="post" action="tiki-admin.php?page=sefurl">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="pull-right">

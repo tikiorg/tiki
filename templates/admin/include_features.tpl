@@ -5,6 +5,7 @@
 {/remarksbox}
 
 <form class="admin" id="features" name="features" action="tiki-admin.php?page=features" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<div class="pull-right">
