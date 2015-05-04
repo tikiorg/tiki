@@ -9,27 +9,6 @@
 // If Glyphicons should be rendered in a color other than the Bootstrap default or the theme default, uncomment and specify the color.
 // .glyphicon {color: @gray-lighter;}
 
-// #col2 .panel,
-// #col3 .panel,
-//#bottom_modules .panel {
-//  background: url('@{imagePath}options/plum/siteheader.jpg') -1000px -200px no-repeat #1C0029;
-//  border: @side-column-border; // none;
-// }
-
-//#col2 .panel-default > .panel-heading,
-//#col3 .panel-default > .panel-heading,
-//#bottom_modules .panel-heading {
-//  background: @side-column-panel-heading-background; // #e1d518 url('@{imagePath}siteheader.png') no-repeat -1000px -200px;
-//  border-width: @side-column-panel-heading-border-width;
-//  border-style: solid;
-//  border-color: @side-column-panel-heading-border-color;
-//}
-
-// #col2 .panel-title,
-// #col3 .panel-title {
-//  color: @side-column-panel-title-color;
-// }
-
 // Header graphics
 .header_outer {
 	// whole width div containing the header strip
@@ -45,10 +24,14 @@ header.header .module.secondary_site_menu {
 	background: none;
 }
 
-.page-header {
+header.page-header {
 	margin-top: 0;
 	margin-bottom: 0;
 	border-bottom: none;
+	a,
+	a.btn-link {
+		color: #fff !important;
+	}
 }
 
 .form-control,
@@ -112,34 +95,6 @@ textarea,
 	background: @postbody-title-background; //url('@{imagePath}siteheader.png') no-repeat -480px -200px;
 }
 
-.secondary_site_menu .navbar {
-	margin-bottom: 0;
-}
-
-.secondary_site_menu .navbar-nav {
-	float: right;
-}
-
-.secondary_site_menu .navbar-default .navbar-nav > li > a, // sets link color
-.secondary_site_menu .navbar-default .navbar-nav > li > a:hover,
-.secondary_site_menu .navbar-default .navbar-nav > li > a:focus,
-.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover //,
-{
-	background: transparent;
-	color: @brand-primary-of-option;
-}
-
-.secondary_site_menu .navbar-default .navbar-nav li ul li a {
-	background: @navbar-default-navbar-nav-li-a-background;
-	color: #fff;
-}
-
-.secondary_site_menu .navbar-default .navbar-nav li ul li a:hover,
-.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
-	background: darken(@navbar-default-navbar-nav-li-a-background, 6%);
-	color: #fff;
-}
-
 .siteloginbar_popup .dropdown-menu > li > a {
 	color: #fff;
 }
@@ -167,6 +122,84 @@ header.header {
 
 .btn-default.highlight:hover {
 	background: darken(@state-danger-bg, 15%);
+}
+
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {
+	//	padding: 5px 0;
+	//	margin: 2px 0 0; // override default ul
+	background-color: @dropdown-bg; // @navbar-default-navbar-nav-li-a-background;
+	border: 1px solid @dropdown-fallback-border; // IE8 fallback
+	border: 1px solid @dropdown-border;
+	.box-shadow(0 6px 12px rgba(0, 0, 0, .175));
+	background-clip: padding-box;
+	// Links within the dropdown menu
+	> li > a {
+		padding: 3px 20px;
+		font-weight: normal;
+		//    line-height: @line-height-base;
+		color: @dropdown-link-color;
+		background: @dropdown-bg;
+	}
+}
+
+// Hover/Focus state
+.cssmenu_horiz > li > a,
+.cssmenu_vert > li > a,
+.cssmenu_horiz ul > li > a,
+.cssmenu_vert ul > li > a {
+	&:hover,
+	&:focus {
+		text-decoration: none;
+		color: @dropdown-link-hover-color;
+		background-color: @dropdown-bg ;
+	}
+}
+.topbar .cssmenu_horiz li a:hover {
+	background: @navbar-default-link-hover-bg;
+}
+
+.topbar .navbar-nav > li > a,
+.topbar .navbar > li > a,
+.topbar .cssmenu_horiz > li > a {
+//	padding-top: 4px;
+//	padding-bottom: 4px;
+//	line-height: 1;
+	color: @navbar-default-link-color;
+	//  background: @topbar_container_background; // @dropdown-bg; // @navbar-default-navbar-nav-li-a-background;
+}
+
+
+// styling for both css and generated arrows
+.sf-arrows .sf-with-ul:after {
+	border: 5px solid transparent;
+	border-top-color: @link-color; // @dropdown-link-color; // /* edit this to suit design (no rgba in IE8) */
+}
+
+// styling for right-facing arrows
+.cssmenu_vert.sf-arrows li > .sf-with-ul:after {
+	border-color: transparent;
+	border-left-color: @link-color; /* edit this to suit design (no rgba in IE8) */
+}
+
+.sf-arrows ul .sf-with-ul:after,
+.cssmenu_vert.sf-arrows ul > li > .sf-with-ul:after {
+	border-color: transparent;
+	border-left-color: @dropdown-link-color; /* edit this to suit design (no rgba in IE8) */
+}
+
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+	border-color: transparent;
+	border-left-color: @dropdown-link-hover-color;
+}
+
+.cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
+.cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
+.cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
+	border-color: transparent;
+	border-left-color: @dropdown-link-hover-color; // white;
 }
 
 .chosen-container-multi .chosen-choices {
