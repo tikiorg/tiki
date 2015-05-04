@@ -603,6 +603,33 @@ hr {
   line-height: 1;
   color: #ffffff;
 }
+.sf-arrows .sf-with-ul:after {
+  border: 5px solid transparent;
+  border-top-color: #c21e3b;
+}
+.cssmenu_vert.sf-arrows li > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #c21e3b;
+  /* edit this to suit design (no rgba in IE8) */
+}
+.sf-arrows ul .sf-with-ul:after,
+.cssmenu_vert.sf-arrows ul > li > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #ffffff;
+  /* edit this to suit design (no rgba in IE8) */
+}
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #f2f2f2;
+}
+.cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
+.cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
+.cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #f2f2f2;
+}
 .topbar .navbar {
   margin-bottom: 0;
 }
