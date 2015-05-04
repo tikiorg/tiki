@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8c8939ef7314613be052910e7f0403ed",
+    "hash": "08da97572c88504465da694169f86573",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -545,7 +545,7 @@
                     "name": "Robert Plummer",
                     "email": "rplummer@visop-dev.com",
                     "homepage": "http://visop-dev.com",
-                    "role": "Assistant Developer"
+                    "role": "Lead Developer"
                 },
                 {
                     "name": "Luke Gerhardt",
@@ -608,46 +608,44 @@
         },
         {
             "name": "gabordemooij/redbean",
-            "version": "v3.5.1",
+            "version": "v4.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/gabordemooij/redbean.git",
-                "reference": "41bb293e2bc744c150e4ae30e30fb5083e047f53"
+                "reference": "840a2e0d856042e75a701453f37896c597c6fbc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gabordemooij/redbean/zipball/41bb293e2bc744c150e4ae30e30fb5083e047f53",
-                "reference": "41bb293e2bc744c150e4ae30e30fb5083e047f53",
+                "url": "https://api.github.com/repos/gabordemooij/redbean/zipball/840a2e0d856042e75a701453f37896c597c6fbc2",
+                "reference": "840a2e0d856042e75a701453f37896c597c6fbc2",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.2.0"
+                "php": ">=5.3.4"
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "RedBean_": ""
+                "psr-4": {
+                    "RedBeanPHP\\": "RedBeanPHP"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD"
+                "New BSD and GPLv2"
             ],
             "authors": [
                 {
                     "name": "Gabor de Mooij",
-                    "email": "gabordemooij@gmail.com",
-                    "homepage": "http://www.redbeanphp.com",
-                    "role": "Developer"
+                    "email": "gabor@redbeanphp.com",
+                    "homepage": "http://redbeanphp.com"
                 }
             ],
-            "description": "Easy ORM for PHP",
-            "homepage": "http://github.com/gabordemooij/redbean",
+            "description": "RedBeanPHP ORM",
+            "homepage": "http://redbeanphp.com/",
             "keywords": [
-                "Object Relational Mapping",
                 "orm"
             ],
-            "time": "2013-10-30 22:13:02"
+            "time": "2015-04-01 19:03:42"
         },
         {
             "name": "jcapture-applet/jcapture-applet",
@@ -1180,6 +1178,17 @@
             "time": "2015-02-26 13:51:46"
         },
         {
+            "name": "morteza/bootstrap-rtl",
+            "version": "3.3.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/morteza-bootstrap-rtl-3.3.2.zip",
+                "reference": "3.3.2",
+                "shasum": "36bb6a0ce365d171516c17f9cca6268d0c9b5ee7"
+            },
+            "type": "library"
+        },
+        {
             "name": "phenx/php-font-lib",
             "version": "0.2.2",
             "source": {
@@ -1640,17 +1649,17 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.6.5",
+            "version": "v2.6.6",
             "target-dir": "Symfony/Component/Filesystem",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Filesystem.git",
-                "reference": "fdc5f151bc2db066b51870d5bea3773d915ced0b"
+                "reference": "4983964b3693e4f13449cb3800c64a9112c301b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/fdc5f151bc2db066b51870d5bea3773d915ced0b",
-                "reference": "fdc5f151bc2db066b51870d5bea3773d915ced0b",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/4983964b3693e4f13449cb3800c64a9112c301b4",
+                "reference": "4983964b3693e4f13449cb3800c64a9112c301b4",
                 "shasum": ""
             },
             "require": {
@@ -1686,21 +1695,21 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "http://symfony.com",
-            "time": "2015-03-12 10:28:44"
+            "time": "2015-03-22 16:55:57"
         },
         {
             "name": "symfony/process",
-            "version": "v2.6.5",
+            "version": "v2.6.6",
             "target-dir": "Symfony/Component/Process",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Process.git",
-                "reference": "4d717f34f3d1d6ab30fbe79f7132960a27f4a0dc"
+                "reference": "a8bebaec1a9dc6cde53e0250e32917579b0be552"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/4d717f34f3d1d6ab30fbe79f7132960a27f4a0dc",
-                "reference": "4d717f34f3d1d6ab30fbe79f7132960a27f4a0dc",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/a8bebaec1a9dc6cde53e0250e32917579b0be552",
+                "reference": "a8bebaec1a9dc6cde53e0250e32917579b0be552",
                 "shasum": ""
             },
             "require": {
@@ -1736,7 +1745,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "http://symfony.com",
-            "time": "2015-03-12 10:28:44"
+            "time": "2015-03-30 15:54:10"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -1845,12 +1854,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikiLingo/CodeMirror.git",
-                "reference": "6d010c763e2073915bd6beb468a6d4197cad1f58"
+                "reference": "673b79717b2cfacdebf86edc3d940c6e6adb4568"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/CodeMirror/zipball/6d010c763e2073915bd6beb468a6d4197cad1f58",
-                "reference": "6d010c763e2073915bd6beb468a6d4197cad1f58",
+                "url": "https://api.github.com/repos/wikiLingo/CodeMirror/zipball/673b79717b2cfacdebf86edc3d940c6e6adb4568",
+                "reference": "673b79717b2cfacdebf86edc3d940c6e6adb4568",
                 "shasum": ""
             },
             "require": {
@@ -1859,7 +1868,7 @@
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
             "description": "Syntax highlighter for wikiLingo",
-            "time": "2014-12-08 13:32:16"
+            "time": "2015-04-18 00:49:03"
         },
         {
             "name": "wikilingo/wikilingo",
@@ -1867,12 +1876,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikiLingo/wikiLingo.git",
-                "reference": "d8a23c89ce0dd7c47be7f16fb0e9a2dfce065ab1"
+                "reference": "73e70cf22cd51a92773cdcfd8794be2df63dda89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/d8a23c89ce0dd7c47be7f16fb0e9a2dfce065ab1",
-                "reference": "d8a23c89ce0dd7c47be7f16fb0e9a2dfce065ab1",
+                "url": "https://api.github.com/repos/wikiLingo/wikiLingo/zipball/73e70cf22cd51a92773cdcfd8794be2df63dda89",
+                "reference": "73e70cf22cd51a92773cdcfd8794be2df63dda89",
                 "shasum": ""
             },
             "require": {
@@ -1911,7 +1920,7 @@
                     "role": "Lead Developer"
                 }
             ],
-            "time": "2014-12-03 16:19:02"
+            "time": "2015-04-08 16:58:04"
         },
         {
             "name": "zetacomponents/base",

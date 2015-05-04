@@ -54,6 +54,7 @@
 		"jquery/plugins/zoom": "1.7.13",
         "md5/md5": ">=1.1.0",
         "mediumjs/mediumjs": "dev-master",
+		"morteza/bootstrap-rtl": "3.3.2",
 		"phpcas/phpcas": "1.3.3",
 		"phpseclib/phpseclib": "0.3.6",
 		"player/flv": "1.0",
