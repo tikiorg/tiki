@@ -281,7 +281,7 @@
 							<div class="form-group">
 								<label for="templateId" class="col-sm-2 control-label">{tr}Apply template{/tr}</label>
 								<div class="col-sm-10 form-inline">
-									<div class="col-sm-4">
+									<div class="col-sm-7">
 										<select class="form-control" id="templateId" name="templateId" onchange="needToConfirm=false;$('#editpageform').submit();">
 											<option value="0">{tr}none{/tr}</option>
 												{section name=ix loop=$templates}
