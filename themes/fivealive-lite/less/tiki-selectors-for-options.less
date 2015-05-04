@@ -44,8 +44,8 @@
 
 .cssmenu_horiz li ul,
 .cssmenu_vert li ul {
-	padding: 5px 0;
-	margin: 2px 0 0; // override default ul
+//	padding: 5px 0;
+//	margin: 2px 0 0; // override default ul
 	background-color: @dropdown-bg; // @navbar-default-navbar-nav-li-a-background;
 	border: 1px solid @dropdown-fallback-border; // IE8 fallback
 	border: 1px solid @dropdown-border;
@@ -60,6 +60,11 @@
 		background: @dropdown-bg;
 	}
 }
+
+.cssmenu_horiz > li:hover,
+.cssmenu_horiz > li.sfHover,
+.cssmenu_vert > li:hover,
+.cssmenu_vert > li.sfHover {}
 
 // Hover/Focus state
 .cssmenu_horiz > li > a,

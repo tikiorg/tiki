@@ -6858,22 +6858,13 @@ a.fc-event:hover {
 .dropdown-menu {
   color: #2b3e50;
 }
-.cssmenu_horiz ul li,
-.cssmenu_vert ul li,
-.cssmenu_horiz ul ul li,
-.cssmenu_vert ul ul li {
-  background: #4e5d6c;
-}
 .cssmenu_horiz > li:hover,
 .cssmenu_horiz > li.sfHover,
 .cssmenu_vert > li:hover,
 .cssmenu_vert > li.sfHover {
-  background: #485563;
   -webkit-transition: none;
   transition: none;
 }
-.cssmenu_horiz > li:hover,
-.cssmenu_horiz > li.sfHover,
 .topbar .nav > li > a:hover,
 .topbar .nav > li > a:focus {
   background: transparent;

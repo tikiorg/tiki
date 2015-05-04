@@ -566,8 +566,6 @@ hr {
 }
 .cssmenu_horiz li ul,
 .cssmenu_vert li ul {
-  padding: 5px 0;
-  margin: 2px 0 0;
   background-color: #c75a29;
   border: 1px solid #cccccc;
   border: 1px solid rgba(0, 0, 0, 0.15);
