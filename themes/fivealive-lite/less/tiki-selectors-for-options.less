@@ -44,8 +44,8 @@
 
 .cssmenu_horiz li ul,
 .cssmenu_vert li ul {
-	padding: 5px 0;
-	margin: 2px 0 0; // override default ul
+//	padding: 5px 0;
+//	margin: 2px 0 0; // override default ul
 	background-color: @dropdown-bg; // @navbar-default-navbar-nav-li-a-background;
 	border: 1px solid @dropdown-fallback-border; // IE8 fallback
 	border: 1px solid @dropdown-border;
@@ -87,6 +87,39 @@
 	color: @navbar-default-link-color;
 	//  background: @topbar_container_background; // @dropdown-bg; // @navbar-default-navbar-nav-li-a-background;
 }
+
+// styling for both css and generated arrows
+.sf-arrows .sf-with-ul:after {
+	border: 5px solid transparent;
+	border-top-color: @link-color; // @dropdown-link-color; // /* edit this to suit design (no rgba in IE8) */
+}
+
+// styling for right-facing arrows
+.cssmenu_vert.sf-arrows li > .sf-with-ul:after {
+	border-color: transparent;
+	border-left-color: @link-color; /* edit this to suit design (no rgba in IE8) */
+}
+
+.sf-arrows ul .sf-with-ul:after,
+.cssmenu_vert.sf-arrows ul > li > .sf-with-ul:after {
+	border-color: transparent;
+	border-left-color: @dropdown-link-color; /* edit this to suit design (no rgba in IE8) */
+}
+
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+	border-color: transparent;
+	border-left-color: @dropdown-link-hover-color;
+}
+
+.cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
+.cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
+.cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
+	border-color: transparent;
+	border-left-color: @dropdown-link-hover-color; // white;
+}
+
 
 .topbar .navbar {
 	margin-bottom: 0;

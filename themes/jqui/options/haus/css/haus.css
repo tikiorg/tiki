@@ -23,7 +23,7 @@
 a, a:visited {
 	color: #666;
 }
- 
+
 a:active,
 a:hover {
 	color: #aaa;
@@ -75,6 +75,12 @@ input[type="submit"]:hover,
     font-weight: bold;
     color: #212121;
 	background-color: #ea6;
+}
+
+.btn-primary {
+  color: #212121;
+  background-color: #eee;
+  border-color: #666;
 }
     
 #tiki-top,

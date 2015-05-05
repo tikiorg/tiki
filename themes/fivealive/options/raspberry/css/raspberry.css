@@ -2,11 +2,14 @@
 .navbar-nav > li.dropdown {
   border-bottom: 1px solid #e60b7f;
 }
-a {
+a,
+a.btn-link {
   color: #b51360;
 }
 a:hover,
-a:focus {
+a.btn-link:hover,
+a:focus,
+a.btn-link:focus {
   color: #e10c7c;
 }
 .btn-default {
@@ -549,10 +552,14 @@ hr {
 header.header .module.secondary_site_menu {
   background: none;
 }
-.page-header {
+header.page-header {
   margin-top: 0;
   margin-bottom: 0;
   border-bottom: none;
+}
+header.page-header a,
+header.page-header a.btn-link {
+  color: #fff !important;
 }
 .form-control,
 select,
@@ -602,28 +609,6 @@ textarea,
 .postbody-title {
   background: url('../images/siteheader.png') no-repeat -480px -200px;
 }
-.secondary_site_menu .navbar {
-  margin-bottom: 0;
-}
-.secondary_site_menu .navbar-nav {
-  float: right;
-}
-.secondary_site_menu .navbar-default .navbar-nav > li > a,
-.secondary_site_menu .navbar-default .navbar-nav > li > a:hover,
-.secondary_site_menu .navbar-default .navbar-nav > li > a:focus,
-.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
-  background: transparent;
-  color: #b51360;
-}
-.secondary_site_menu .navbar-default .navbar-nav li ul li a {
-  background: #e60b7f;
-  color: #fff;
-}
-.secondary_site_menu .navbar-default .navbar-nav li ul li a:hover,
-.secondary_site_menu .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
-  background: #c90a6f;
-  color: #fff;
-}
 .siteloginbar_popup .dropdown-menu > li > a {
   color: #fff;
 }
@@ -642,6 +627,69 @@ header.header .sitesubtitle {
 }
 .btn-default.highlight:hover {
   background: #dca7a7;
+}
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {
+  background-color: #771437;
+  border: 1px solid #cccccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  background-clip: padding-box;
+}
+.cssmenu_horiz li ul > li > a,
+.cssmenu_vert li ul > li > a {
+  padding: 3px 20px;
+  font-weight: normal;
+  color: #ffffff;
+  background: #771437;
+}
+.cssmenu_horiz > li > a:hover,
+.cssmenu_vert > li > a:hover,
+.cssmenu_horiz ul > li > a:hover,
+.cssmenu_vert ul > li > a:hover,
+.cssmenu_horiz > li > a:focus,
+.cssmenu_vert > li > a:focus,
+.cssmenu_horiz ul > li > a:focus,
+.cssmenu_vert ul > li > a:focus {
+  text-decoration: none;
+  color: #f2f2f2;
+  background-color: #771437;
+}
+.topbar .cssmenu_horiz li a:hover {
+  background: #c6096e;
+}
+.topbar .navbar-nav > li > a,
+.topbar .navbar > li > a,
+.topbar .cssmenu_horiz > li > a {
+  color: #ffffff;
+}
+.sf-arrows .sf-with-ul:after {
+  border: 5px solid transparent;
+  border-top-color: #b51360;
+}
+.cssmenu_vert.sf-arrows li > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #b51360;
+  /* edit this to suit design (no rgba in IE8) */
+}
+.sf-arrows ul .sf-with-ul:after,
+.cssmenu_vert.sf-arrows ul > li > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #ffffff;
+  /* edit this to suit design (no rgba in IE8) */
+}
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #f2f2f2;
+}
+.cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
+.cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
+.cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #f2f2f2;
 }
 .chosen-container-multi .chosen-choices {
   background-color: #ffffff;
