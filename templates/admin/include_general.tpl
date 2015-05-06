@@ -83,9 +83,11 @@
 					{preference name=zend_mail_smtp_helo}
 					{preference name=zend_mail_queue}
 				</div>
-				<div class="adminoptionbox">
-					<label for="testMail">{tr}Email to send a test mail{/tr}</label>
-					<input type="text" name="testMail" id="testMail" />
+				<div class="adminoptionbox form-group clearfix">
+					<label for="testMail" class="col-md-4">{tr}Email to send a test mail{/tr}</label>
+					<div class="col-md-8">
+						<input type="text" name="testMail" id="testMail" class="form-control">
+					</div>
 				</div>
 				{preference name=email_footer}
 			</fieldset>
