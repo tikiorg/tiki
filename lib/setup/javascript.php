@@ -40,7 +40,7 @@ if ($prefs['disableJavascript'] == 'y' ) {
 // assuming that js is on before then
 $javascript_enabled_detect = getCookie('javascript_enabled_detect', '', '0');
 
-if ( $prefs['javascript_enabled'] === '' && $prefs['disableJavascript'] != 'y' && $javascript_enabled_detect < 2) {
+if ( $prefs['javascript_enabled'] === '' && $prefs['disableJavascript'] != 'y' && $javascript_enabled_detect < 3) {
 	// Set the cookie to 'y', through javascript - expires: approx. 1 year
 	$prefs['javascript_enabled'] = 'y';											// temporarily enable to we output the test js
 	$plus_one_year = $tikilib->now + 365 * 24 * 3600;
@@ -49,7 +49,8 @@ if ( $prefs['javascript_enabled'] === '' && $prefs['disableJavascript'] != 'y' &
 	if ( strpos($_SERVER['PHP_SELF'], 'tiki-download') === false &&
 			strpos($_SERVER['PHP_SELF'], 'tiki-ajax_services.php') === false &&
 			strpos($_SERVER['PHP_SELF'], 'tiki-jsmodule.php') === false &&
-			strpos($_SERVER['PHP_SELF'], 'tiki-jsplugin.php') === false) {
+			strpos($_SERVER['PHP_SELF'], 'tiki-jsplugin.php') === false &&
+			strpos($_SERVER['PHP_SELF'], 'tiki-install.php') === false) {
 
 		$javascript_enabled_detect++;
 		setCookieSection('javascript_enabled_detect', $javascript_enabled_detect, '', $plus_one_year);

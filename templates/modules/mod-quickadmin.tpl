@@ -86,7 +86,9 @@
 						{/if}
 					{if $prefs.themegenerator_feature eq "y" and !empty($prefs.themegenerator_theme)}
 						<li>
-							{icon name="themegenerator" class="btn btn-link tikihelp" title=":{tr}Theme generator{/tr}" href="#" onclick="openThemeGenDialog();return false;"}
+							<a href="#" onclick="openThemeGenDialog();return false;">
+								{icon name="themegenerator"} {tr}Theme Generator{/tr}
+							</a>
 						</li>
 					{/if}
 					{if $prefs.feature_comments_moderation eq "y"}

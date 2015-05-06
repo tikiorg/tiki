@@ -82,6 +82,17 @@ input[type="submit"]:hover,
   background-color: #eee;
   border-color: #666;
 }
+
+.btn-link, .btn-link:hover, .btn-link:focus, .btn-link:active {
+  border-color: transparent;
+}
+
+.navbar-default .navbar-nav > li > a,
+.topbar > a,
+.topbar .navbar-default .navbar-nav > li > a,
+.topbar .nav > li > a {
+  color: #666;
+}
     
 #tiki-top,
 .navbar-default .navbar-collapse,

@@ -305,7 +305,6 @@
 				{preference name=feature_wiki_no_inherit_perms_structure}
 				{preference name=wiki_structure_bar_position}
 				{preference name=wikiplugin_toc}
-				{preference name=namespace_indicator_in_structure}
 			</div>
 
 			{preference name=feature_wiki_import_html}
@@ -346,18 +345,19 @@
 			</div>
 			{preference name=wiki_keywords}
 			{preference name=geo_locate_wiki}
+			<fieldset>
+				<legend>{tr}Namespaces{/tr}{help url="Namespaces"}</legend>
+				{preference name=namespace_enabled}
+				<div class="adminoptionboxchild" id="namespace_enabled_childcontainer">
+					{tr}The namespace separator should not{/tr}
+					<ul>
+						<li>{tr}contain any of the characters not allowed in wiki page names, typically{/tr} /?#[]@$&amp;+;=&lt;&gt;</li>
+						<li>{tr}conflict with wiki syntax tagging{/tr}</li>
+					</ul>
+					{preference name=namespace_separator}
+					{preference name=namespace_indicator_in_structure}
 
-			{preference name=namespace_enabled}
-			<div class="adminoptionboxchild" id="namespace_enabled_childcontainer">
-				{tr}The namespace separator should not{/tr}
-				<ul>
-				<li>{tr}contain any of the characters not allowed in wiki page names, typically{/tr} /?#[]@$&amp;+;=&lt;&gt;</li>
-				<li>{tr}conflict with wiki syntax tagging{/tr}</li>
-				</ul>
-				{preference name=namespace_separator}
-				{preference name=namespace_indicator_in_structure}
-				<fieldset>
-					<legend>{tr}Settings that may be affected by the namespace separator{/tr}{help url="Watch"}</legend>
+					<p><strong>{tr}Settings that may be affected by the namespace separator{/tr}</strong></p>
 
 					{tr}To use :: as a separator, you should also use ::: as the wiki center tag syntax{/tr}.<br/>
 					{tr}Note: a conversion of :: to ::: for existing pages must be done manually{/tr}
@@ -365,9 +365,9 @@
 
 					{tr}If the page name display stripper conflicts with the namespace separator, the namespace is used and the page name display is not stripped.{/tr}
 					{preference name=wiki_pagename_strip}
-				</fieldset>
-				{preference name=namespace_force_links}
-			</div>
+					{preference name=namespace_force_links}
+				</div>
+			</fieldset>
 		{/tab}
 
 		{tab name="{tr}Flagged Revision{/tr}"}
