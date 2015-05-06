@@ -350,6 +350,8 @@ class Search_Elastic_Connection
 			$message = $content->error;
 			if (preg_match('/^MapperParsingException\[No handler for type \[(?P<type>.*)\].*\[(?P<field>.*)\]\]$/', $message, $parts)) {
 				throw new Search_Elastic_MappingException($parts['type'], $parts['field']);
+			} elseif (preg_match('/No mapping found for \[(\S+)\] in order to sort on/', $message, $parts)) {
+				throw new Search_Elastic_SortException($parts[1]);
 			} else {
 				throw new Search_Elastic_Exception($message, $content->status);
 			}

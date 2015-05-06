@@ -288,7 +288,15 @@ class Search_Query implements Search_Query_Interface
 	function search(Search_Index_Interface $index)
 	{
 		$this->finalize();
-		$resultset = $index->find($this, $this->start, $this->count);
+
+		try {
+			$resultset = $index->find($this, $this->start, $this->count);
+		} catch(Search_Elastic_SortException $e) {
+			//on sort exception, try again without the sort field
+			$this->sortOrder = null;
+			$resultset = $index->find($this, $this->start, $this->count);
+		}
+
 		$resultset->applyTransform(function ($entry) {
 			if (! isset($entry['_index']) || ! isset($this->foreignQueries[$entry['_index']])) {
 				foreach ($this->transformations as $trans) {
