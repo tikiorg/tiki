@@ -18,7 +18,8 @@
 				<span class="formunit">{$field.options_map.prepend}&nbsp;</span>
 			{/if}
 
-			<input type="text" id="{$ling.id|escape}" name="{$field.ins_id}[{$ling.lang}]" value="{$ling.value|escape}" {if $field.options_map.size}size="{$field.options_map.size}"{/if} {if $field.options_map.max}maxlength="{$field.options_map.max}"{/if}> {*@@ missing value*}
+			<input type="text" id="{$ling.id|escape}" name="{$field.ins_id}[{$ling.lang}]" value="{$ling.value|escape}" class="form-control"
+				   {if $field.options_map.size}size="{$field.options_map.size}"{/if} {if $field.options_map.max}maxlength="{$field.options_map.max}"{/if}> {*@@ missing value*}
 
 			{if $field.options_map.append}
 				<span class="formunit">&nbsp;{$field.options_map.append}</span>
