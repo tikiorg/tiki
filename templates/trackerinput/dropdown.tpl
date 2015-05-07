@@ -9,15 +9,15 @@
 		{/foreach}
 		</div>
 	{elseif $field.type eq 'M'}
-		<div class="input-group">
 		{if empty($field.options_map.inputtype)}
-			{foreach from=$field.possibilities key=value item=label}
-				<label class="checkbox-inline">
-					<input type="checkbox" name="{$field.ins_id|escape}[]" value="{$value|escape}" {if in_array("$value", $field.selected)}checked="checked"{/if}>
-					{$label|tr_if|escape}
-				</label>
-			{/foreach}
-		</div>
+			<div class="input-group">
+				{foreach from=$field.possibilities key=value item=label}
+					<label class="checkbox-inline">
+						<input type="checkbox" name="{$field.ins_id|escape}[]" value="{$value|escape}" {if in_array("$value", $field.selected)}checked="checked"{/if}>
+						{$label|tr_if|escape}
+					</label>
+				{/foreach}
+			</div>
 		{elseif $field.options_map.inputtype eq 'm'}
 			{if $prefs.jquery_ui_chosen neq 'y'}<small>{tr}Hold "Ctrl" in order to select multiple values{/tr}</small><br>{/if}
 			<select name="{$field.ins_id}[]" multiple="multiple" class="form-control">
