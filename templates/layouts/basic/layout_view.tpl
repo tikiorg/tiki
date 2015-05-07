@@ -14,8 +14,8 @@
 <div class="container">
     <div class="page-header">
             {modulelist zone=top class='row top_modules'}
-        <div class="topbar">
-            {modulelist zone=topbar class='row topbar'}
+        <div class="topbar row">
+            {modulelist zone=topbar class='tiki-top' id='tiki-top'}
         </div>
     </div>
 
