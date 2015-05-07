@@ -250,7 +250,15 @@ class Search_Query implements Search_Query_Interface
 			);
 		}
 
-		return $index->find($this, $this->start, $this->count);
+		try {
+			$resultset = $index->find($this, $this->start, $this->count);
+		} catch(Search_Elastic_SortException $e) {
+			//on sort exception, try again without the sort field
+			$this->sortOrder = null;
+			$resultset = $index->find($this, $this->start, $this->count);
+		}
+
+		return $resultset;
 	}
 
 	function getExpr()

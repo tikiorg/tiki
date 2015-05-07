@@ -262,6 +262,15 @@ class Search_Elastic_Connection
 			return $content;
 		} elseif (isset($content->exists) && $content->exists === false) {
 			throw new Search_Elastic_NotFoundException($content->_type, $content->_id);
+		} elseif (isset($content->error)) {
+			$message = $content->error;
+			if (preg_match('/^MapperParsingException\[No handler for type \[(?P<type>.*)\].*\[(?P<field>.*)\]\]$/', $message, $parts)) {
+				throw new Search_Elastic_MappingException($parts['type'], $parts['field']);
+			} elseif (preg_match('/No mapping found for \[(\S+)\] in order to sort on/', $message, $parts)) {
+				throw new Search_Elastic_SortException($parts[1]);
+			} else {
+				throw new Search_Elastic_Exception($message, $content->status);
+			}
 		} else {
 			throw new Search_Elastic_Exception($content->error, $content->status);
 		}
