@@ -71,6 +71,25 @@
 									{/section}
 								</div>
 
+							{elseif $field.type eq 'M'}
+								<div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}">
+									{if empty($field.options_map.inputtype)}
+										{foreach from=$field.possibilities key=value item=label}
+											<label class="checkbox-inline">
+												<input type="checkbox" name="filtervalue[{$fid}][]" value="{$value|escape}" {if $fid == $filterfield and in_array($value, $filtervalue)}checked="checked"{/if}>
+												{$label|tr_if|escape}
+											</label>
+										{/foreach}
+									{elseif $field.options_map.inputtype eq 'm'}
+										{if $prefs.jquery_ui_chosen neq 'y'}<small>{tr}Hold "Ctrl" in order to select multiple values{/tr}</small><br>{/if}
+										<select name="filtervalue[{$fid}][]" multiple="multiple" class="form-control">
+											{foreach key=ku from=$field.possibilities key=value item=label}
+												<option value="{$value|escape}" {if in_array($value, $filtervalue)}selected="selected"{/if}>{$label|escape}</option>
+											{/foreach}
+										</select>
+									{/if}
+								</div>
+
 							{elseif $field.type eq 'e'}{* category *}
 								<div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}" class="panel-body">
                                     <ul class="list-inline">

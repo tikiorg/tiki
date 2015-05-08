@@ -240,7 +240,12 @@ class UsersLib extends TikiLib
 		$logslib->add_log('login', 'logged out');
 
 		$userInfo = $this->get_user_info($user);
-		$this->delete_user_cookie($userInfo['userId']);
+		if ($prefs['login_multiple_forbidden'] === 'y') {
+			$this->delete_user_cookie($userInfo['userId']);
+		} else {
+			$secret = explode('.', $_COOKIE[$user_cookie_site]);
+			$this->delete_user_cookie($userInfo['userId'], $secret[0]);
+		}
 
 		if ($remote && $prefs['feature_intertiki'] == 'y' and $prefs['feature_intertiki_sharedcookie'] == 'y' and !empty($prefs['feature_intertiki_mymaster'])) {
 			include_once('XML/RPC.php');
@@ -6396,7 +6401,9 @@ class UsersLib extends TikiLib
 		if (!$secret) {
 			$secret = $this->get_cookie_check();
 		}
-		$this->delete_user_cookie($user);
+		if ($prefs['login_multiple_forbidden'] === 'y') {
+			$this->delete_user_cookie($user);
+		}
 
 		$query = 'insert into `tiki_user_login_cookies`(`userId`, `secret`, `expiration`) values(?, ?, FROM_UNIXTIME(?))';
 		$result = $this->query($query, array($user, $secret, $this->now + $prefs['remembertime']));
@@ -6404,10 +6411,15 @@ class UsersLib extends TikiLib
 		return $secret;
 	}
 
-	function delete_user_cookie($user)
+	function delete_user_cookie($user, $secret = '')
 	{
 		$query = 'delete from `tiki_user_login_cookies` where `userId`=?';
-		$this->query($query, array($user));
+		$vars = array((int) $user);
+		if ($secret) {
+			$query .= ' and `secret`=?';
+			$vars[] = $secret;
+		}
+		$this->query($query, $vars);
 	}
 
 	function get_cookie_check()
