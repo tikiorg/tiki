@@ -444,7 +444,6 @@ class RegistrationLib extends TikiLib
 	{
 		global $prefs;
 
-		include_once('XML/RPC.php');
 		$remote = $prefs['interlist'][$prefs['feature_intertiki_mymaster']];
 		$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
 		$client->setDebug(0);
@@ -678,7 +677,6 @@ class RegistrationLib extends TikiLib
 			}
 
 			if ($prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster'])) {
-				include_once('XML/RPC.php');
 				$remote = $prefs['interlist'][$prefs['feature_intertiki_mymaster']];
 				$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
 				$client->setDebug(0);

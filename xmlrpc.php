@@ -6,7 +6,6 @@
 // $Id$
 
 include_once('tiki-setup.php');
-require_once('XML/Server.php');
 $bloglib = TikiLib::lib('blog');
 
 if ($prefs['feature_xmlrpc'] != 'y') {

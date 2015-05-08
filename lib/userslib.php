@@ -248,7 +248,6 @@ class UsersLib extends TikiLib
 		}
 
 		if ($remote && $prefs['feature_intertiki'] == 'y' and $prefs['feature_intertiki_sharedcookie'] == 'y' and !empty($prefs['feature_intertiki_mymaster'])) {
-			include_once('XML/RPC.php');
 			$remote = $prefs['interlist'][$prefs['feature_intertiki_mymaster']];
 			$remote['path'] = preg_replace('/^\/?/', '/', $remote['path']);
 			$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
@@ -7214,7 +7213,6 @@ class UsersLib extends TikiLib
 	function intervalidate($remote, $user, $pass, $get_info = false)
 	{
 		global $prefs;
-		include_once('XML/RPC.php');
 		$hashkey = $this->get_cookie_check() . '.'. ($this->now + $prefs['remembertime']);
 		$remote['path'] = preg_replace('/^\/?/', '/', $remote['path']);
 		$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
@@ -7239,7 +7237,6 @@ class UsersLib extends TikiLib
 	function interGetUserInfo($remote, $user, $email)
 	{
 		global $prefs;
-		include_once('XML/RPC.php');
 		$remote['path'] = preg_replace('/^\/?/', '/', $remote['path']);
 		$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
 		$client->setDebug(0);
@@ -7275,7 +7272,6 @@ class UsersLib extends TikiLib
 	{
 		global $prefs;
 		$userlib = TikiLib::lib('user');
-		include_once('XML/RPC.php');
 		$remote['path'] = preg_replace('/^\/?/', '/', $remote['path']);
 		$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
 		$client->setDebug(0);
@@ -7334,7 +7330,6 @@ class UsersLib extends TikiLib
 	function get_remote_user_by_cookie($hash)
 	{
 		global $prefs;
-		include_once('XML/RPC.php');
 
 		$prefs['interlist'] = unserialize($prefs['interlist']);
 		$remote = $prefs['interlist'][$prefs['feature_intertiki_mymaster']];

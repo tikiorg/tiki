@@ -9,7 +9,6 @@
 // $Id$
 
 include_once('tiki-setup.php');
-require_once("XML/Server.php");
 
 $access->check_feature('feature_freetags', 'freetags_feature_3d');
 

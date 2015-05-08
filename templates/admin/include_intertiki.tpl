@@ -6,6 +6,10 @@
 			<input type="hidden" name="ticket" value="{$ticket|escape}">
 			<table class="formcolor">
 				<tr>
+					<td>{tr}Feature{/tr}</td>
+					<td>{preference name=feature_intertiki}</td>
+				</tr>
+				<tr>
 					<td>{tr}Tiki Unique key{/tr}</td>
 					<td><input type="text" name="tiki_key" value="{$prefs.tiki_key}" size="32" /></td>
 				</tr>
