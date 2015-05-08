@@ -1262,10 +1262,10 @@ class UsersLib extends TikiLib
 	 */
 	function ldap_sync_user_data($user, $attributes)
 	{
-		global $prefs, $logslibs;
+		global $prefs;
 
 		if ($prefs['auth_ldap_debug'] == 'y') {
-			$logslib->add_log('ldap', 'UsersLib::ldap_sync_user_data()');
+			TikiLib::lib('logs')->add_log('ldap', 'UsersLib::ldap_sync_user_data()');
 		}
 		$u = array('login' => $user);
 
