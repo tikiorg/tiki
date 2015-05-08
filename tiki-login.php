@@ -162,7 +162,9 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 				$user = $requestedUser;
 				if ($prefs['feature_userPreferences'] == 'y' && $prefs['feature_intertiki_import_preferences'] == 'y') {
 					$userprefslib = TikiLib::lib('userprefs');
-					$userprefslib->set_user_avatar($user, 'u', '', $user_details['avatarName'], $user_details['avatarSize'], $user_details['avatarFileType'], $avatarData);
+					if (!empty($avatarData)) {
+						$userprefslib->set_user_avatar($user, 'u', '', $user_details['info']['avatarName'], $user_details['info']['avatarSize'], $user_details['info']['avatarFileType'], $avatarData, false);
+					}
 					$userlib->set_user_preferences($user, $user_details['preferences']);
 				}
 				if ($prefs['feature_intertiki_import_groups'] == 'y') {
