@@ -248,7 +248,6 @@ class UsersLib extends TikiLib
 		}
 
 		if ($remote && $prefs['feature_intertiki'] == 'y' and $prefs['feature_intertiki_sharedcookie'] == 'y' and !empty($prefs['feature_intertiki_mymaster'])) {
-			include_once('XML/RPC.php');
 			$remote = $prefs['interlist'][$prefs['feature_intertiki_mymaster']];
 			$remote['path'] = preg_replace('/^\/?/', '/', $remote['path']);
 			$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
@@ -1263,10 +1262,10 @@ class UsersLib extends TikiLib
 	 */
 	function ldap_sync_user_data($user, $attributes)
 	{
-		global $prefs, $logslibs;
+		global $prefs;
 
 		if ($prefs['auth_ldap_debug'] == 'y') {
-			$logslib->add_log('ldap', 'UsersLib::ldap_sync_user_data()');
+			TikiLib::lib('logs')->add_log('ldap', 'UsersLib::ldap_sync_user_data()');
 		}
 		$u = array('login' => $user);
 
@@ -7214,7 +7213,6 @@ class UsersLib extends TikiLib
 	function intervalidate($remote, $user, $pass, $get_info = false)
 	{
 		global $prefs;
-		include_once('XML/RPC.php');
 		$hashkey = $this->get_cookie_check() . '.'. ($this->now + $prefs['remembertime']);
 		$remote['path'] = preg_replace('/^\/?/', '/', $remote['path']);
 		$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
@@ -7239,7 +7237,6 @@ class UsersLib extends TikiLib
 	function interGetUserInfo($remote, $user, $email)
 	{
 		global $prefs;
-		include_once('XML/RPC.php');
 		$remote['path'] = preg_replace('/^\/?/', '/', $remote['path']);
 		$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
 		$client->setDebug(0);
@@ -7275,7 +7272,6 @@ class UsersLib extends TikiLib
 	{
 		global $prefs;
 		$userlib = TikiLib::lib('user');
-		include_once('XML/RPC.php');
 		$remote['path'] = preg_replace('/^\/?/', '/', $remote['path']);
 		$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
 		$client->setDebug(0);
@@ -7317,16 +7313,17 @@ class UsersLib extends TikiLib
 		$userlib->set_user_fields($user_details['info']);
 		$tikilib->set_user_preferences($user, $user_details['preferences']);
 
-		if (isset($avatarData)) {
+		if (!empty($avatarData)) {
 			$userprefslib = TikiLib::lib('userprefs');
 			$userprefslib->set_user_avatar(
 				$user,
 				'u',
 				'',
-				$user_details['avatarName'],
-				$user_details['avatarSize'],
-				$user_details['avatarFileType'],
-				$avatarData
+				$user_details['info']['avatarName'],
+				$user_details['info']['avatarSize'],
+				$user_details['info']['avatarFileType'],
+				$avatarData,
+				false
 			);
 		}
 	}
@@ -7334,7 +7331,6 @@ class UsersLib extends TikiLib
 	function get_remote_user_by_cookie($hash)
 	{
 		global $prefs;
-		include_once('XML/RPC.php');
 
 		$prefs['interlist'] = unserialize($prefs['interlist']);
 		$remote = $prefs['interlist'][$prefs['feature_intertiki_mymaster']];

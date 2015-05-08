@@ -11,7 +11,6 @@
 $version = '0.2';
 
 include 'tiki-setup.php';
-require_once('XML/Server.php');
 
 if ($prefs['feature_intertiki'] != 'y' || $prefs['feature_intertiki_server'] != 'y' || $prefs['feature_intertiki_mymaster']) {
 

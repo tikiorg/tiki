@@ -13,7 +13,6 @@ if ($prefs['feature_xmlrpc'] != 'y' || $prefs['wiki_feature_3d'] != 'y') {
   die;  
 }
 
-require_once("XML/Server.php");
 $wikilib = TikiLib::lib('wiki');
 
 $map = array ("getSubGraph" => array( "function" => "getSubGraph" ) );
