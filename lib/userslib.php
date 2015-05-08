@@ -7281,6 +7281,9 @@ class UsersLib extends TikiLib
 		$user_details = $userlib->get_user_details($user);
 		$user_info = $userlib->get_user_info($user);
 		$ret['avatarData'] = new XML_RPC_Value($user_info['avatarData'], 'base64');
+		$user_info['avatarName'] = new XML_RPC_Value($user_info['avatarName'], 'string');
+		$user_info['avatarSize'] = new XML_RPC_Value($user_info['avatarSize'], 'string');
+		$user_info['avatarFileType'] = new XML_RPC_Value($user_info['avatarFileType'], 'string');
 		$ret['user_details'] = new XML_RPC_Value(serialize($user_details), 'string');
 		$params[] = new XML_RPC_Value($ret, 'struct');
 		$msg = new XML_RPC_Message('intertiki.setUserInfo', $params);
@@ -7313,15 +7316,15 @@ class UsersLib extends TikiLib
 		$userlib->set_user_fields($user_details['info']);
 		$tikilib->set_user_preferences($user, $user_details['preferences']);
 
-		if (isset($avatarData)) {
+		if (!empty($avatarData)) {
 			$userprefslib = TikiLib::lib('userprefs');
 			$userprefslib->set_user_avatar(
 				$user,
 				'u',
 				'',
-				$user_details['avatarName'],
-				$user_details['avatarSize'],
-				$user_details['avatarFileType'],
+				$user_details['info']['avatarName'],
+				$user_details['info']['avatarSize'],
+				$user_details['info']['avatarFileType'],
 				$avatarData
 			);
 		}
