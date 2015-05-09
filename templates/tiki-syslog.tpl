@@ -1,7 +1,7 @@
 {* $Id$ *}
 {title help="System+Log"}{tr}Tiki Logs{/tr}{/title}
 
-<div class="t_navbar">
+<div class="t_navbar margin-bottom-md">
 	{button class="btn btn-default" _text="{tr}Log SQL{/tr}" href="tiki-sqllog.php"}
 	{button class="btn btn-default" _text="{tr}Export through Action Log{/tr}" href="tiki-admin_actionlog.php#Report"}
 </div>
@@ -12,8 +12,6 @@
 		<div class="alert {if $tikifeedback[n].num > 0} alert-warning{/if}">{$tikifeedback[n].mes}</div>
 	{/section}
 {/if}
-
-<br><br>
 
 <form method="get" action="tiki-syslog.php">
 	<label>{tr}Clean logs older than{/tr}&nbsp;
