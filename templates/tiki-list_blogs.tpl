@@ -100,13 +100,13 @@
 					{/if}
 				{/if}
 				{if $prefs.blog_list_posts eq 'y'}
-					<td class="integer"><span class="badge">{$listpages[changes].posts}</span></td>
+					<td class="integer">{$listpages[changes].posts}</td>
 				{/if}
 				{if $prefs.blog_list_visits eq 'y'}
-					<td class="integer"><span class="badge">{$listpages[changes].hits}</span></td>
+					<td class="integer">{$listpages[changes].hits}</td>
 				{/if}
 				{if $prefs.blog_list_activity eq 'y'}
-					<td class="integer"><span class="badge">{$listpages[changes].activity}</span></td>
+					<td class="integer">{$listpages[changes].activity}</td>
 				{/if}
 				<td class="action">
 					{capture name=blog_actions}

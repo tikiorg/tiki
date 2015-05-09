@@ -108,9 +108,9 @@
 							title="{$tracker.name|escape}:{tr}View{/tr}"
 							href="tiki-view_tracker.php?trackerId={$tracker.trackerId}"
 						>
-							<span class="badge">
+
 								{$tracker.items|escape}
-							</span>
+
 						</a>
 					</td>
 					<td class="action">
