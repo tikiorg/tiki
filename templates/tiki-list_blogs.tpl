@@ -50,11 +50,11 @@
 			{/if}
 			{if $prefs.blog_list_posts eq 'y'}
 				{assign var=numbercol value=$numbercol+1}
-				<th><a href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'posts_desc'}posts_asc{else}posts_desc{/if}">{tr}Posts{/tr}</a></th>
+				<th class="text-right"><a href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'posts_desc'}posts_asc{else}posts_desc{/if}">{tr}Posts{/tr}</a></th>
 			{/if}
 			{if $prefs.blog_list_visits eq 'y'}
 				{assign var=numbercol value=$numbercol+1}
-				<th><a href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Visits{/tr}</a></th>
+				<th class="text-right"><a href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Visits{/tr}</a></th>
 			{/if}
 			{if $prefs.blog_list_activity eq 'y'}
 				{assign var=numbercol value=$numbercol+1}

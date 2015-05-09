@@ -73,12 +73,12 @@
 
 				{if $prefs.forum_list_topics eq 'y'}
 					{$numbercol = $numbercol + 1}
-					<th id="threads">{self_link _sort_arg='sort_mode' _sort_field='threads'}{tr}Topics{/tr}{/self_link}</th>
+					<th id="threads" class="text-right">{self_link _sort_arg='sort_mode' _sort_field='threads'}{tr}Topics{/tr}{/self_link}</th>
 				{/if}
 
 				{if $prefs.forum_list_posts eq 'y'}
 					{$numbercol = $numbercol + 1}
-					<th id="comments">{self_link _sort_arg='sort_mode' _sort_field='comments'}{tr}Posts{/tr}{/self_link}</th>
+					<th id="comments" class="text-right">{self_link _sort_arg='sort_mode' _sort_field='comments'}{tr}Posts{/tr}{/self_link}</th>
 				{/if}
 
 				{if $prefs.forum_list_ppd eq 'y'}
@@ -93,7 +93,7 @@
 
 				{if $prefs.forum_list_visits eq 'y'}
 					{$numbercol = $numbercol + 1}
-					<th id="hits">{self_link _sort_arg='sort_mode' _sort_field='hits'}{tr}Visits{/tr}{/self_link}</th>
+					<th id="hits" class="text-right">{self_link _sort_arg='sort_mode' _sort_field='hits'}{tr}Visits{/tr}{/self_link}</th>
 				{/if}
 				{$numbercol = $numbercol + 1}
 				<th id="actions"></th>
