@@ -5,7 +5,7 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To use a banner in a <a class="rbox-link" href="tiki-admin_modules.php">module</a> or a template, use {literal}{banner zone=ABC}{/literal}, where ABC is the name of the zone.{/tr}{/remarksbox}
 
 {if $tiki_p_admin_banners eq 'y'}
-	<div class="t_navbar">
+	<div class="t_navbar margin-bottom-md">
 		{button href="tiki-edit_banner.php" class="btn btn-default" _text="{tr}Create banner{/tr}"}
 	</div>
 {/if}

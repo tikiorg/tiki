@@ -12,7 +12,7 @@
 	{else}
 		{$js = 'y'}
 	{/if}
-	<div class="t_navbar">
+	<div class="t_navbar margin-bottom-md">
 		<div class="pull-right btn-group">
 			{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
 			<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">

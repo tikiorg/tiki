@@ -97,25 +97,25 @@
 				{/if}
 				{if $prefs.art_list_rating eq 'y'}
 					{assign var=numbercol value=$numbercol+1}
-					<th style="text-align:right;">
+					<th class="text-right">
 						{self_link _sort_arg='sort_mode' _sort_field='rating'}{tr}Rating{/tr}{/self_link}
 					</th>
 				{/if}
 				{if $prefs.art_list_usersRating eq 'y'}
 					{assign var=numbercol value=$numbercol+1}
-					<th style="text-align:right;">
+					<th class="text-right">
 						{self_link _sort_arg='sort_mode' _sort_field='usersRating'}{tr}Users Rating{/tr}{/self_link}
 					</th>
 				{/if}
 				{if $prefs.art_list_reads eq 'y'}
 					{assign var=numbercol value=$numbercol+1}
-					<th style="text-align:right;">
+					<th class="text-right">
 						{self_link _sort_arg='sort_mode' _sort_field='nbreads'}{tr}Reads{/tr}{/self_link}
 					</th>
 				{/if}
 				{if $prefs.art_list_size eq 'y'}
 					{assign var=numbercol value=$numbercol+1}
-					<th style="text-align:right;">{self_link _sort_arg='sort_mode' _sort_field='size'}{tr}Size{/tr}{/self_link}</th>
+					<th class="text-right">{self_link _sort_arg='sort_mode' _sort_field='size'}{tr}Size{/tr}{/self_link}</th>
 				{/if}
 				{if $prefs.art_list_img eq 'y'}
 					{assign var=numbercol value=$numbercol+1}

@@ -75,7 +75,7 @@
 				<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='created'}{tr}Created{/tr}{/self_link}</th>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='lastModif'}{tr}Last Modified{/tr}{/self_link}</th>
-				<th>{self_link _sort_arg='sort_mode' _sort_field='items'}{tr}Items{/tr}{/self_link}</th>
+				<th class="text-right">{self_link _sort_arg='sort_mode' _sort_field='items'}{tr}Items{/tr}{/self_link}</th>
 				<th></th>
 			</tr>
 
@@ -102,15 +102,15 @@
 					</td>
 					<td class="date">{$tracker.created|tiki_short_date}</td>
 					<td class="date">{$tracker.lastModif|tiki_short_datetime}</td>
-					<td class="text-center">
+					<td class="integer">
 						<a
 							class="tips"
 							title="{$tracker.name|escape}:{tr}View{/tr}"
 							href="tiki-view_tracker.php?trackerId={$tracker.trackerId}"
 						>
-							<span class="badge">
+
 								{$tracker.items|escape}
-							</span>
+
 						</a>
 					</td>
 					<td class="action">

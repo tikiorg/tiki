@@ -214,8 +214,8 @@ body.cke_show_borders {
 
 .cssmenu_horiz a,
 .cssmenu_vert a,
-#tiki-top .cssmenu_horiz li ul li a,
-#tiki-top .cssmenu_horiz li:hover ul li a {
+.topbar .cssmenu_horiz li ul li a,
+.topbar .cssmenu_horiz li:hover ul li a {
 	background: none;
 }
 
@@ -236,8 +236,8 @@ body.cke_show_borders {
 	color: #9fda58;
 }
 
-#tiki-top .cssmenu_horiz li:hover ul ul,
-#tiki-top .cssmenu_horiz li.sfHover ul ul,
+.topbar .cssmenu_horiz li:hover ul ul,
+.topbar .cssmenu_horiz li.sfHover ul ul,
 #secondary_site_menu .cssmenu_horiz li:hover ul ul,
 #secondary_site_menu .cssmenu_horiz li.sfHover ul ul {
 	top: 0;
@@ -252,9 +252,9 @@ body.cke_show_borders {
 	background: url(trontastic/arrows-000000.png) no-repeat -10px -100px;
 }
 
-#tiki-top .cssmenu_horiz li a .sf-sub-indicator {top: 1.2em}
+.topbar .cssmenu_horiz li a .sf-sub-indicator {top: 1.2em}
 
-#tiki-top .cssmenu_horiz li ul li  a .sf-sub-indicator {
+.topbar .cssmenu_horiz li ul li  a .sf-sub-indicator {
 	background: url(trontastic/arrows-000000.png) no-repeat;
 	top: 0.5em;
 }
@@ -439,7 +439,7 @@ table.normal tr:nth-child(2n),
 
 .adminoptionbox fieldset.table legend {padding-top: 28px;}
 
-#tiki-top .cssmenu_horiz li {
+.topbar .cssmenu_horiz li {
 	background:#9fda58 url(../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png) 50% 50% repeat-x;
 	margin-right: 5px;
 }
@@ -505,7 +505,7 @@ a.admbox.off {
 .cssmenu_horiz li ul li,
 .cssmenu_vert li ul li,
 .wikitext,
-#tiki-top .cssmenu_horiz li {
+.topbar .cssmenu_horiz li {
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;

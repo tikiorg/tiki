@@ -64,7 +64,7 @@ function createPage($title, $content)
 			</div>
 			<div class="middle_outer">
 				<div name="middle" class="fixedwidth">
-					<div id="tiki-top" class="clearfix">
+					<div class="topbar clearfix">
 						<h1 style="font-size: 30px; line-height: 30px; text-shadow: 3px 2px 0 #ccccff; margin: 8px 0 0 10px; padding: 0;">
 							$title
 						</h1>

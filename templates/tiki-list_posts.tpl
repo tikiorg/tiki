@@ -39,7 +39,7 @@
 			<th>
 				<a href="tiki-list_posts.php?{if isset($blogId)}blogId={$blogId}&amp;{/if}offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a>
 			</th>
-			<th>{tr}Size{/tr}</th>
+			<th class="text-right">{tr}Size{/tr} {tr}(bytes){/tr}</th>
 			<th>
 				<a href="tiki-list_posts.php?{if isset($blogId)}blogId={$blogId}&amp;{/if}offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}Author{/tr}</a>
 			</th>
@@ -57,7 +57,7 @@
 					</td>
 				{/if}
 				<td class="date">&nbsp;{$posts[changes].created|tiki_short_date}&nbsp;</td>
-				<td class="integer"><span class="badge">{$posts[changes].size}</span></td>
+				<td class="integer">{$posts[changes].size}</td>
 				<td>&nbsp;{$posts[changes].user}&nbsp;</td>
 				<td class="action">
 					{capture name=post_actions}

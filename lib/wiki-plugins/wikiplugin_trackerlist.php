@@ -838,6 +838,11 @@ function wikiplugin_trackerlist($data, $params)
 		} else {
 			$limit = '';
 		}
+		// Make sure limit is an array
+		if (!is_array($limit)) {
+			$limit = explode(':', $limit);
+		}
+
 		if ($editableall=='y') {
 			$editable = $fields;
 		}
@@ -845,17 +850,20 @@ function wikiplugin_trackerlist($data, $params)
 			$limit = array_unique(array_merge($limit, $filterfield));
 		}
 		
-		// for some reason if param popup is set but empty, the array contains 2 empty elements. We filter them out. 
-		$popup = array_filter($popup);
-		if (!empty($popup)) {
-			$limit = array_unique(array_merge($limit, $popup));
+		// for some reason if param popup is set but empty, the array contains 2 empty elements. We filter them out.
+		if (isset($popup)) {
+			$popup = array_filter($popup);
+			if (!empty($popup)) {
+				$limit = array_unique(array_merge($limit, $popup));
+			}
 		}
 		if (!empty($calendarfielddate)) {
 			$limit = array_unique(array_merge($limit, $calendarfielddate));
 		}
 		if (!empty($limit) && $trklib->test_field_type($limit, array('C'))) {
-			$limit = '';
+			$limit = array();
 		}
+
 		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '', true, '', $trklib->flaten($limit));
 		if (!empty($fields)) {
 			$listfields = $fields;
@@ -1532,6 +1540,10 @@ function wikiplugin_trackerlist($data, $params)
 				if ($refField['type'] == 'u') {
 					$allfields["data"][$i]['type'] = $refField['type'];
 				}
+			}
+			// If listfields is a colon separated string, convert it to an array
+			if (!is_array($listfields)) {
+				$listfields = explode(':', $listfields);
 			}
 			if ((in_array($allfields["data"][$i]['fieldId'], $listfields) or in_array($allfields["data"][$i]['fieldId'], $popupfields))and $allfields["data"][$i]['isPublic'] == 'y') {
 				$passfields["{$allfields["data"][$i]['fieldId']}"] = $allfields["data"][$i];

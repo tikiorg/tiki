@@ -2,7 +2,7 @@
 
 <h2>{tr}Add Banned Word{/tr}</h2>
 
-<div class="t_navbar">
+<div class="t_navbar margin-bottom-md">
 	{button href="tiki-shoutbox.php" _icon_name="comments" _text="{tr}Shoutbox{/tr}"}
 </div>
 

@@ -73,12 +73,12 @@
 
 				{if $prefs.forum_list_topics eq 'y'}
 					{$numbercol = $numbercol + 1}
-					<th id="threads">{self_link _sort_arg='sort_mode' _sort_field='threads'}{tr}Topics{/tr}{/self_link}</th>
+					<th id="threads" class="text-right">{self_link _sort_arg='sort_mode' _sort_field='threads'}{tr}Topics{/tr}{/self_link}</th>
 				{/if}
 
 				{if $prefs.forum_list_posts eq 'y'}
 					{$numbercol = $numbercol + 1}
-					<th id="comments">{self_link _sort_arg='sort_mode' _sort_field='comments'}{tr}Posts{/tr}{/self_link}</th>
+					<th id="comments" class="text-right">{self_link _sort_arg='sort_mode' _sort_field='comments'}{tr}Posts{/tr}{/self_link}</th>
 				{/if}
 
 				{if $prefs.forum_list_ppd eq 'y'}
@@ -93,7 +93,7 @@
 
 				{if $prefs.forum_list_visits eq 'y'}
 					{$numbercol = $numbercol + 1}
-					<th id="hits">{self_link _sort_arg='sort_mode' _sort_field='hits'}{tr}Visits{/tr}{/self_link}</th>
+					<th id="hits" class="text-right">{self_link _sort_arg='sort_mode' _sort_field='hits'}{tr}Visits{/tr}{/self_link}</th>
 				{/if}
 				{$numbercol = $numbercol + 1}
 				<th id="actions"></th>
@@ -128,13 +128,13 @@
 						{/if}
 					</td>
 					{if $prefs.forum_list_topics eq 'y'}
-						<td class="integer"><span class="badge">{$channels[user].threads}<span></td>
+						<td class="integer">{$channels[user].threads}</td>
 					{/if}
 					{if $prefs.forum_list_posts eq 'y'}
-						<td class="integer"><span class="badge">{$channels[user].comments}<span></td>
+						<td class="integer">{$channels[user].comments}</td>
 					{/if}
 					{if $prefs.forum_list_ppd eq 'y'}
-						<td class="integer"><span class="badge">{$channels[user].posts_per_day|string_format:"%.2f"}<span></td>
+						<td class="integer">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
 					{/if}
 					{if $prefs.forum_list_lastpost eq 'y'}
 						<td class="text">
@@ -146,7 +146,7 @@
 						</td>
 					{/if}
 					{if $prefs.forum_list_visits eq 'y'}
-						<td class="integer"><span class="badge">{$channels[user].hits}<span></td>
+						<td class="integer">{$channels[user].hits}</td>
 					{/if}
 					<td class="action">
 						{capture name=forum_actions}
