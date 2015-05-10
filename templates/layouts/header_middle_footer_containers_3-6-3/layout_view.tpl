@@ -20,8 +20,8 @@
 </div>
 <div class="middle_outer">
     <div class="container clearfix middle" id="middle">
-		<div class="topbar row" id="tiki-top">
-			{modulelist zone=topbar class='tiki-top'}
+		<div class="topbar row">
+			{modulelist zone=topbar}
         </div>
         <div class="row">
             {if zone_is_empty('left') and zone_is_empty('right')}

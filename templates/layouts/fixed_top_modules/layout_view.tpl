@@ -14,8 +14,8 @@
     <div class="fixed-topbar"></div>
     <div class="container clearfix middle" id="middle">
         <div class="topbar_wrapper">
-			<div class="topbar row" id="tiki-top">
-				{modulelist zone=topbar class='tiki-top'}
+			<div class="topbar row">
+				{modulelist zone=topbar}
             </div>
         </div>
 

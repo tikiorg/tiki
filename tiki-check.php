@@ -2004,7 +2004,7 @@ echo tikiLogo();
 		</div>
 		<div class="middle_outer">
 			<div id="middle" class="fixedwidth">
-				<div id="tiki-top" class="clearfix">
+				<div class="topbar clearfix">
 					<h1 style="font-size: 30px; line-height: 30px; color: #fff; text-shadow: 3px 2px 0 #781437; margin: 8px 0 0 10px; padding: 0;">
 					</h1>
 				</div>

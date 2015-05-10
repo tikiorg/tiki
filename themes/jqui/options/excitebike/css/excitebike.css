@@ -64,7 +64,7 @@ body.cke_show_borders {
 .panel-heading,
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form/*,
-#tiki-top*/ {
+.topbar */ {
 	border: 1px solid #E69700;
 	font-weight: bold;
 	color: #fff;
@@ -118,13 +118,13 @@ background: transparent;
 
 .cssmenu_horiz a,
 .cssmenu_vert a,
-#tiki-top .cssmenu_horiz li ul li a,
-#tiki-top .cssmenu_horiz li:hover ul li a {
+.topbar .cssmenu_horiz li ul li a,
+.topbar .cssmenu_horiz li:hover ul li a {
 	background: none;
 }
 
-#tiki-top .cssmenu_horiz li:hover a,
-#tiki-top .cssmenu_horiz li ul li a:hover,
+.topbar .cssmenu_horiz li:hover a,
+.topbar .cssmenu_horiz li ul li a:hover,
 #secondary_site_menu .cssmenu_horiz li:hover a,
 #secondary_site_menu .cssmenu_horiz li:hover ul li a:hover {
 	text-decoration: underline;
@@ -149,8 +149,8 @@ background: transparent;
 	color: #fff;
 }
 
-#tiki-top .cssmenu_horiz li:hover ul ul,
-#tiki-top .cssmenu_horiz li.sfHover ul ul,
+.topbar .cssmenu_horiz li:hover ul ul,
+.topbar .cssmenu_horiz li.sfHover ul ul,
 #secondary_site_menu .cssmenu_horiz li:hover ul ul,
 #secondary_site_menu .cssmenu_horiz li.sfHover ul ul {
 	top: 0;

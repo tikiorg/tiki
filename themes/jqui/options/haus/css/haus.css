@@ -94,7 +94,7 @@ input[type="submit"]:hover,
   color: #666;
 }
     
-#tiki-top .cssmenu_horiz {
+.topbar .cssmenu_horiz {
     line-height: 0;
 }
 

@@ -186,7 +186,7 @@ ul.sf-shadow ul {background-image:none}
 
 /* Menu adjustment Fivealive theme - Could require editing depending the theme you are using */
 /* moving away menu item from indicator and keep text in the center */
-#tiki-top .cssmenu_horiz li a {
+.topbar .cssmenu_horiz li a {
 	background-position: 0 50% !important;
 }
 
@@ -198,7 +198,7 @@ ul.sf-shadow ul {background-image:none}
 }
 
 /* Reseting the position for sub item without indicator  */
-#tiki-top .cssmenu_horiz li ul li a {
+.topbar .cssmenu_horiz li ul li a {
     padding-right: 0.5em !important;
 }
 
