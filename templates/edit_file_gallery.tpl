@@ -186,7 +186,7 @@ $('#fgal_template').change( function() {
 											{quotabar length='100' value=$smarty.capture.use}
 										{/if}
 										{if !empty($gal_info.maxQuota)}<br>{tr}Max:{/tr} {$gal_info.maxQuota} {tr}Mb{/tr}{/if}
-										{if !empty($gal_info.minQuota)}<br>{tr}Min:{/tr} {$gal_info.minQuota} {tr}Mb{/tr}{/if}
+										{if !empty($gal_info.minQuota)}<br>{tr}Min:{/tr} {$gal_info.minQuota|string_format:"%.2f"} {tr}Mb{/tr}{/if}
 									</td>
 								</tr>
 							{/if}
