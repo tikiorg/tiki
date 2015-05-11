@@ -3244,9 +3244,6 @@ body.tiki.navbar-padding {
 .tiki .media-overflow-visible .media-body {
   overflow: visible;
 }
-.popover-content > div {
-  background-size: 96% !important;
-}
 .tiki .col-md-3 .table-responsive,
 .tiki .col-md-4 .table-responsive,
 .tiki .col-md-5 .table-responsive,
