@@ -1863,18 +1863,36 @@ class FileGalLib extends TikiLib
 		}
 		return $quota;
 	}
-	// get the max quota in M of the children of a fgal
+
+	/**
+	 * get the max quota in MB of the children of a fgal,
+	 * or total contents size where no quota is set
+	 *
+	 * @param int $galleryId
+	 * @return float
+	 */
+
 	function getMaxQuotaDescendants($galleryId=0)
 	{
 		if (empty($galleryId)) {
 			return 0;
 		}
 		$this->getGalleryChildrenIds($subtree, $galleryId, 'list');
-		if (is_array($subtree)) {
+		if (is_array($subtree) && !empty($subtree)) {
 			$files = $this->table('tiki_files');
-			return $files->fetchOne($files->max('filesize'), array('galleryId' => $files->in($subtree)));
+			$gals = $this->table('tiki_file_galleries');
+			$size = 0;
+			foreach ($subtree as $subGalleryId) {
+				$quota = $gals->fetchOne('quota', array('galleryId' => $subGalleryId));
+				if ($quota) {
+					$size += $quota;
+				} else {
+					$size += $files->fetchOne($files->sum('filesize'), array('galleryId' => $subGalleryId)) / (1024 * 1024);
+				}
+			}
+			return $size;
 		} else {
-			return 0;
+			return 0.0;
 		}
 	}
 	// check quota is smaller than parent quotas and bigger than children quotas
@@ -1889,11 +1907,8 @@ class FileGalLib extends TikiLib
 			return 1;// too big
 		}
 		if (!empty($galleryId)) {
-			// getMaxQuotaDescendants doesn't seem to do the right calculations at least for this need - as it seems to return the size of the largest file in the set of 'child' galleries, ignoring Archives and then also returns the value in bytes not Mb
-			// a new function getTotalQuotaDescendants is needed that gives the sum of any/all quotas set in the sub-galleries
 			$limit = $this->getMaxQuotaDescendants($galleryId);
-			// but at least correct the byte/Mb error for now
-			if (!empty($limit) && $quota < $limit/(1024*1024)) {
+			if (!empty($limit) && $quota < $limit) {
 				return -1;//too small
 			}
 		}
