@@ -100,8 +100,7 @@ if ( empty($_REQUEST['galleryId']) && isset($_REQUEST['parentId']) ) {
 	}
 	$gal_info['usedSize'] = $filegallib->getUsedSize($_REQUEST['galleryId']);
 	$gal_info['maxQuota'] = $filegallib->getQuota($gal_info['parentId']);
-	// quick and dirty fix to Mb byte mismatch with minQuota
-	$gal_info['minQuota'] = $filegallib->getMaxQuotaDescendants($_REQUEST['galleryId'])/(1024*1024);
+	$gal_info['minQuota'] = $filegallib->getMaxQuotaDescendants($_REQUEST['galleryId']);
 
 	if ($_REQUEST['galleryId'] == $prefs['fgal_root_user_id'] && $tiki_p_admin_file_galleries !== 'y') {
 		include_once('tiki-sefurl.php');
