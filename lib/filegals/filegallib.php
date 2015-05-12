@@ -1957,11 +1957,8 @@ class FileGalLib extends TikiLib
 			return 1;// too big
 		}
 		if (!empty($galleryId)) {
-			// getMaxQuotaDescendants doesn't seem to do the right calculations at least for this need - as it seems to return the size of the largest file in the set of 'child' galleries, ignoring Archives and then also returns the value in bytes not Mb
-			// a new function getTotalQuotaDescendants is needed that gives the sum of any/all quotas set in the sub-galleries
 			$limit = $this->getMaxQuotaDescendants($galleryId);
-			// but at least correct the byte/Mb error for now
-			if (!empty($limit) && $quota < $limit/(1024*1024)) {
+			if (!empty($limit) && $quota < $limit) {
 				return -1;//too small
 			}
 		}
