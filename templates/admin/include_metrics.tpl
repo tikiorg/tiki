@@ -1,4 +1,5 @@
 <form action="tiki-admin.php?page=metrics" onreset="return(confirm("{tr}Cancel Edit{/tr}"))" class="admin" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" value="{tr}Change preferences{/tr}" />
 	</div>

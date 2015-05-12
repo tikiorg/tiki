@@ -11,6 +11,7 @@
 {/if}
 
 <form action="tiki-admin.php?page=category" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<input type="hidden" name="categorysetup" />
 	<div class="input_submit_container clear" style="text-align: right;">
 		<input type="submit" value="{tr}Change preferences{/tr}" />

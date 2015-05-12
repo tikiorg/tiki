@@ -1,6 +1,7 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}You can see users rank by score in the module users_rank, for that go to{/tr} "<a class="rbox-link" href="tiki-admin_modules.php">{tr}Admin modules{/tr}</a>".{/remarksbox}
 
 <form action="tiki-admin.php?page=score" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" name="scoreevents" value="{tr}Save{/tr}" />
 	</div>

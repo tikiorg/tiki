@@ -7,6 +7,7 @@
 </div>
 
 <form action="tiki-admin.php?page=community" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="input_submit_container clear" style="text-align: right;">
 		<input type="submit" value="{tr}Change preferences{/tr}" />
 	</div>

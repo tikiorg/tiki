@@ -1,5 +1,6 @@
 {* $Id$ *}
 <form action="tiki-admin.php?page=look" id="look" name="look" class="labelColumns" onreset="return(confirm("{tr}Cancel Edit{/tr}"))" class="admin" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" name="looksetup" value="{tr}Apply{/tr}" />
 		<input type="reset" name="looksetupreset" value="{tr}Reset{/tr}" />

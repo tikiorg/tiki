@@ -1,6 +1,7 @@
 {* $Id$ *}
 
 <form class="admin" id="performance" name="performance" action="tiki-admin.php?page=rating" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" value="{tr}Apply{/tr}" />
 		<input type="reset" value="{tr}Reset{/tr}" />
@@ -40,6 +41,7 @@
 <div id="rating_advanced_childcontainer">
 	{foreach from=$configurations item=config}
 		<form class="config" method="post" action="">
+			<input type="hidden" name="ticket" value="{$ticket|escape}">
 			<fieldset>
 				<legend>{$config.name|escape}</legend>
 				<input type="hidden" name="config" value="{$config.ratingConfigId|escape}"/>

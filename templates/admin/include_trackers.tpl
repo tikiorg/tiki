@@ -1,6 +1,7 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To configure your trackers, select "Trackers" in the application menu, or{/tr} <a class="rbox-link" href="tiki-list_trackers.php">{tr}Click Here{/tr}</a>.{/remarksbox}
 
 <form action="tiki-admin.php?page=trackers" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" name="trkset" value="{tr}Change preferences{/tr}" />
 	</div>

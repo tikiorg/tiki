@@ -48,6 +48,7 @@
 		</fieldset>
 	{/tab}
 	{tab name="{tr}Settings{/tr}"}
+		<input type="hidden" name="ticket" value="{$ticket|escape}">
 		<form class="admin" id="connect" name="connect" action="tiki-admin.php?page=connect" method="post">
 			<fieldset>
 				<legend>{tr}Tiki Connect{/tr}</legend>
@@ -110,6 +111,7 @@
 		{tab name="{tr}Connections received{/tr}"}
 			<h2>{tr}Recent connections{/tr}</h2>
 			<form class="admin" name="cserver_form" action="tiki-admin.php?page=connect" method="post">
+				<input type="hidden" name="ticket" value="{$ticket|escape}">
 				<input name="cserver_search" type="text" value="{$cserver_search_text}" />
 				<input name="cserver" type="submit" value="{tr}Search{/tr}" />
 				{button cserver="rebuild" _auto_args="cserver,page" _text="{tr}Rebuild Index{/tr}" _title="{tr}Rebuild received connections index{/tr}"}

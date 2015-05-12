@@ -1,6 +1,7 @@
 {tabset}
 	{tab name="{tr}Settings{/tr}"}
 <form action="tiki-admin.php?page=areas" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 				{preference name=feature_areas visible="always"}
 		<div class="adminoptionboxchild" id="feature_areas_childcontainer">
 				{preference name=areas_root visible="always"}

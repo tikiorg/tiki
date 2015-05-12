@@ -14,7 +14,8 @@
 
 
 <form action="tiki-admin.php?page=search" method="post">
-	<input type="hidden" name="searchprefs" />
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
+	<input type="hidden" name="searchprefs">
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" value="{tr}Change preferences{/tr}" />
 	</div>

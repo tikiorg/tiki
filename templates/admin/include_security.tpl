@@ -12,6 +12,7 @@
 {/remarksbox}
 
 <form class="admin" id="security" name="security" action="tiki-admin.php?page=security" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" name="security" value="{tr}Apply{/tr}" />
 		<input type="reset" name="securityreset" value="{tr}Reset{/tr}" />

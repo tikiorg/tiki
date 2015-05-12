@@ -80,6 +80,11 @@
 		<input type="hidden" name="filters"/>
 	</p>
 </form>
+{if isset($csrferror)}
+	{remarksbox type="error" title="{tr}Potential Cross-Site Request Forgery{/tr}"}
+		{$csrferror}
+	{/remarksbox}
+{/if}
 {if $lm_error}
 	{remarksbox type="warning" title="{tr}Search error{/tr}"}{$lm_error}{/remarksbox}
 {elseif $lm_searchresults}
@@ -91,6 +96,8 @@
 		{/foreach}
 		<input type="submit" value="{tr}Change{/tr}" class="clear"/>
 		<input type="hidden" name="lm_criteria" value="{$lm_criteria|escape}"/>
+		<input type="hidden" name="daconfirm" value="y">
+		<input type="hidden" name="ticket" value="{$ticket|escape}">
 	</form>
 </fieldset>
 {elseif $lm_criteria}

@@ -3,6 +3,7 @@
 {/remarksbox}
 
 <form action="tiki-admin.php?page=metatags" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" name="metatags" value="{tr}Change preferences{/tr}" />
 	</div>

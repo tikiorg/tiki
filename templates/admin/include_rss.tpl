@@ -3,6 +3,7 @@
 {/remarksbox}
 
 <form action="tiki-admin.php?page=rss" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<input type="hidden" name="rss" />
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" value="{tr}Change preferences{/tr}" />

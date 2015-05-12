@@ -1,6 +1,7 @@
 {* $Id$ *}
 
 <form action="tiki-admin.php?page=general" class="admin" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<input type="hidden" name="new_prefs" />
 	<div class="heading input_submit_container" style="text-align: right;">
 		<input type="submit" value="{tr}Change preferences{/tr}" />

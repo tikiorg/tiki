@@ -25,6 +25,7 @@
 {/remarksbox}
 
 <form action="tiki-admin.php?page=fgal" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" name="filegalhandlers" value="{tr}Change preferences{/tr}" />
 	</div>

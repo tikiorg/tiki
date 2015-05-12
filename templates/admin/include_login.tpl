@@ -26,6 +26,7 @@
 {/if}
 
 <form action="tiki-admin.php?page=login" class="admin" method="post" name="LogForm">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<input type="hidden" name="loginprefs" />
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" value="{tr}Change preferences{/tr}" />
