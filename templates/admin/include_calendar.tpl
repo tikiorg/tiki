@@ -3,6 +3,7 @@
 {/remarksbox}
 
 <form action="tiki-admin.php?page=calendar" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="input_submit_container clear" style="text-align: right;">
 		<input type="submit" class="btn btn-default" name="calprefs" value="{tr}Change settings{/tr}" />
 	</div>

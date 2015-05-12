@@ -246,6 +246,7 @@ function showDetails( id, domain, profile ) { // {{{
 					
 				<fieldset><legend>{tr}Profiles{/tr}</legend>
 				<form method="get" action="tiki-admin.php">
+					<input type="hidden" name="ticket" value="{$ticket|escape}">
 					<div class="adminoptionbox">
 						<b>{tr}Step 1: Use the Quick or Manual Filter option to see a list of Configuration Profiles you can apply{/tr}</b>
 						<table class="normal">
@@ -401,6 +402,7 @@ $("#repository, #categories").change(function(){
 {/tab}
 {tab name="{tr}Export{/tr}"}
 	<form action="tiki-admin.php?page=profiles" method="post">
+		<input type="hidden" name="ticket" value="{$ticket|escape}">
 		<fieldset id="export_to_yaml">
 			<legend>{tr}Export YAML{/tr}</legend>
 			{if !empty($export_yaml)}
@@ -509,6 +511,7 @@ $("#export_type").change(function(){
 
 	<fieldset><legend>{tr}Profile tester{/tr}</legend>
 		<form action="tiki-admin.php?page=profiles" method="post">
+		<input type="hidden" name="ticket" value="{$ticket|escape}">
 		{remarksbox type="warning" title="{tr}Warning{/tr}"}
 			{tr}Paste or type wiki markup and YAML (with or without the {literal}{CODE}{/literal} tags) into the text area below{/tr}<br>
 			<em><strong>{tr}This will run the profile and make potentially unrecoverable changes in your database!{/tr}</strong></em>

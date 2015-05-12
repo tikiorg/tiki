@@ -1,4 +1,5 @@
 <form method="post" action="tiki-admin.php?page=webservices">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 
 	<fieldset class="admin">
 		<legend>{tr}Activate the feature{/tr}</legend>

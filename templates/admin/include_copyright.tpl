@@ -3,6 +3,7 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Copyright allows a copyright to be determined for all the objects of tiki{/tr}.{/remarksbox}
 
 <form action="tiki-admin.php?page=copyright" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="input_submit_container clear" style="text-align: right;">
 		<input type="submit" class="btn btn-default" value="{tr}Change preferences{/tr}" />
 	</div>

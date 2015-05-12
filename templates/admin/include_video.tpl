@@ -1,4 +1,5 @@
 <form action="tiki-admin.php?page=video" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 
 {tabset name="admin_video"}
 {tab name="{tr}Kaltura{/tr}"}

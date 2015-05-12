@@ -2,6 +2,7 @@
 {tabset name="admin_interwiki"}
 	{tab name="{tr}Intertiki client{/tr}"}
 		<form action="tiki-admin.php?page=intertiki" method="post" name="intertiki">
+			<input type="hidden" name="ticket" value="{$ticket|escape}">
 			<table class="formcolor">
 				<tr>
 					<td>{tr}Tiki Unique key{/tr}</td>
@@ -120,6 +121,7 @@
 	{if $prefs.feature_intertiki_mymaster eq ''}
 		{tab name="{tr}Intertiki server{/tr}"}
 			<form action="tiki-admin.php?page=intertiki" method="post" name="intertiki">
+				<input type="hidden" name="ticket" value="{$ticket|escape}">
 				<table class="admin">
 					<tr>
 						<td>

@@ -3,6 +3,7 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Please see the <a class='rbox-link' target='tikihelp' href='http://doc.tiki.org/Features'>evaluation of each feature</a> on Tiki's developer site.{/tr}{/remarksbox}
 
 	<form class="admin" id="features" name="features" action="tiki-admin.php?page=features" method="post">
+		<input type="hidden" name="ticket" value="{$ticket|escape}">
 		<div class="heading input_submit_container" style="text-align: right">
 			<input type="submit" class="btn btn-default" name="features" value="{tr}Apply{/tr}" />
 			<input type="reset" class="btn btn-warning" name="featuresreset" value="{tr}Reset{/tr}" />

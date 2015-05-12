@@ -1,5 +1,6 @@
 <h2>{tr}Settings{/tr}</h2>
 <form action="tiki-admin.php?page=semantic" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<fieldset class="admin">
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_semantic visible="always"}
@@ -14,6 +15,7 @@
 		<td>
 			<h2>{tr}Known Types{/tr}</h2>
 			<form method="post" action="{$smarty.server.REQUEST_URI|escape}">
+				<input type="hidden" name="ticket" value="{$ticket|escape}">
 
 			<table width="100%">
 				<tr>
@@ -40,6 +42,7 @@
 
 			{if $selected_token}
 			<form method="post" action="{$smarty.server.REQUEST_URI}">
+				<input type="hidden" name="ticket" value="{$ticket|escape}">
 				<div>{$save_message|escape}</div>
 				<div>
 					<label for="token">{tr}Token{/tr} :</label>
@@ -92,6 +95,7 @@
 			</table>
 			{if $rename}
 			<form method="post" action="{$smarty.server.REQUEST_URI}">
+				<input type="hidden" name="ticket" value="{$ticket|escape}">
 				<div>
 					<label for="token">{tr}Token{/tr} :</label>
 					<input id="token" type="text" name="token" value="{$rename|escape}"/>

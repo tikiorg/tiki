@@ -1,5 +1,6 @@
 {* $Id$ *}
 <form action="tiki-admin.php?page=payment" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="navbar">
 		{button href="tiki-payment.php" _text="{tr}Payments{/tr}"}
 		<input type="submit" class="btn btn-default" name="paymentprefs" value="{tr}Change settings{/tr}" style="float:right;" />

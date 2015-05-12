@@ -4,6 +4,7 @@
 {/remarksbox}
 
 <form action="tiki-admin.php?page=module" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<input type="hidden" name="modulesetup" />
 	<div class="heading input_submit_container" style="text-align: right">
 		<input type="submit" class="btn btn-default" value="{tr}Change preferences{/tr}" />
