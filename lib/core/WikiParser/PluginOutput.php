@@ -83,6 +83,8 @@ class WikiParser_PluginOutput
 			foreach ( $preferences as $pref ) {
 				$content .= smarty_function_preference(array('name' => $pref), $smarty);
 			}
+			$check = key_get(null, null, null, false);
+			$content .= '<input type="hidden" name="ticket" value="' . $check['ticket'] . '">';
 			$content .= '<input type="submit" value="' . smarty_modifier_escape(tra('Set')) . '"/>';
 			$content .= '</form>';
 		}
