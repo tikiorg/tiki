@@ -13,6 +13,7 @@
 {/if}
 
 <form method="post" action="tiki-admin.php?page=articles">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
     <div class="row">
         <div class="form-group col-lg-12 clearfix">
 			<a role="button" class="btn btn-default btn-sm" href="tiki-list_articles.php" title="{tr}List{/tr}">

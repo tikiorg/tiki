@@ -1,5 +1,6 @@
 {* $Id$ *}
 <form method="post" action="tiki-admin.php?page=forums">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
     <div class="row">
         <div class="form-group col-lg-12 clearfix">
 			<a role="button" class="btn btn-default btn-sm" href="tiki-admin_forums.php" title="{tr}List{/tr}">

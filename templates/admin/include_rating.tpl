@@ -1,6 +1,7 @@
 {* $Id$ *}
 
 <form class="admin" id="performance" name="performance" action="tiki-admin.php?page=rating" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="row">
         <div class="form-group col-lg-12 clearfix">
             <div class="pull-right">
@@ -167,6 +168,7 @@
 <div id="rating_advanced_childcontainer">
 	{foreach from=$configurations item=config}
 		<form class="config" method="post" action="">
+			<input type="hidden" name="ticket" value="{$ticket|escape}">
 			<fieldset>
 				<legend>{$config.name|escape} (ID: {$config.ratingConfigId|escape}, Search Field: <em>adv_rating_{$config.ratingConfigId|escape}</em>)</legend>
 				<input type="hidden" name="config" value="{$config.ratingConfigId|escape}"/>

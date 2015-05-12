@@ -153,6 +153,11 @@
 		</ul>
 	{/remarksbox}
 {/if}
+{if isset($csrferror)}
+	{remarksbox type="error" title="{tr}Potential Cross-Site Request Forgery{/tr}"}
+		{$csrferror}
+	{/remarksbox}
+{/if}
 {if $lm_error}
 	{remarksbox type="warning" title="{tr}Search error{/tr}"}
 		{$lm_error}
@@ -172,6 +177,8 @@
 				<input class="btn btn-primary" type="submit" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 			</div>
 			<input type="hidden" name="lm_criteria" value="{$lm_criteria|escape}">
+			<input type="hidden" name="daconfirm" value="y">
+			<input type="hidden" name="ticket" value="{$ticket|escape}">
 		</form>
 	</div>
 	{jq}

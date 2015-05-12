@@ -1,4 +1,5 @@
 <form method="post" action="tiki-admin.php?page=polls">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="row">
         <div class="form-group col-lg-12 clearfix">
 			{if $prefs.feature_polls eq "y" and $tiki_p_admin_polls eq "y"}

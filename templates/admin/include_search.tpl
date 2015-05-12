@@ -14,7 +14,8 @@
 
 
 <form action="tiki-admin.php?page=search" method="post">
-	<input type="hidden" name="searchprefs" />
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
+	<input type="hidden" name="searchprefs">
 
 	{if $prefs.feature_search eq 'y'}
 		{remarksbox type=tip title="{tr}Index maintenance{/tr}"}

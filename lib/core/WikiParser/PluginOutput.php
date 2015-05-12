@@ -83,7 +83,9 @@ class WikiParser_PluginOutput
 			foreach ( $preferences as $pref ) {
 				$content .= smarty_function_preference(array('name' => $pref), $smarty);
 			}
-			$content .= '<input type="submit" class="btn btn-default btn-sm" value="' . smarty_modifier_escape(tra('Set')) . '"/>';
+			$check = key_get(null, null, null, false);
+			$content .= '<input type="hidden" name="ticket" value="' . $check['ticket'] . '">';
+			$content .= '<input type="submit" class="btn btn-default btn-sm" value="' . smarty_modifier_escape(tra('Set')) . '">';
 			$content .= '</form>';
 		}
 		return self::error(tra('Plugin disabled'), $content);

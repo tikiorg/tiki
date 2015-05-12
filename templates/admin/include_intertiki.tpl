@@ -3,6 +3,7 @@
 	{tab name="{tr}Intertiki client{/tr}"}
         <h2>{tr}Intertiki client{/tr}</h2>
 		<form action="tiki-admin.php?page=intertiki" method="post" name="intertiki">
+			<input type="hidden" name="ticket" value="{$ticket|escape}">
 			<table class="formcolor">
 				<tr>
 					<td>{tr}Tiki Unique key{/tr}</td>
@@ -122,6 +123,7 @@
 		{tab name="{tr}Intertiki server{/tr}"}
             <h2>{tr}Intertiki server{/tr}</h2>
 			<form action="tiki-admin.php?page=intertiki" method="post" name="intertiki">
+				<input type="hidden" name="ticket" value="{$ticket|escape}">
 				<table class="table">
 					<tr>
 						<td>

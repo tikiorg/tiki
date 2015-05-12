@@ -4,6 +4,7 @@
 {/remarksbox}
 
 <form action="tiki-admin.php?page=module" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<input type="hidden" name="modulesetup" />
 
     <div class="row">

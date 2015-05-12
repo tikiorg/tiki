@@ -1,5 +1,6 @@
 {* $Id$ *}
 <form action="tiki-admin.php?page=ads" onreset="return(confirm("{tr}Cancel Edit{/tr}"))" class="admin" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
     <div class="row">
         <div class="form-group col-lg-12 clearfix">
          	<a role="button" class="btn btn-default btn-sm" href="tiki-list_banners.php" title="{tr}List{/tr}">

@@ -173,41 +173,47 @@ $temp_filters = isset($_REQUEST['filters']) ? explode(' ', $_REQUEST['filters'])
 $smarty->assign('pref_filters', $prefslib->getFilters($temp_filters));
 
 if ( isset( $_REQUEST['lm_preference'] ) ) {
-
-	$changes = $prefslib->applyChanges((array) $_REQUEST['lm_preference'], $_REQUEST);
-	foreach ( $changes as $pref => $val ) {
-		if ($val['type'] == 'reset') {
-			add_feedback($pref, tr('%0 reset', $pref), 4);
-			$logslib->add_action('feature', $pref, 'system', 'reset');
-		} else {
-			$value = $val['new'];
-			if ( $value == 'y' ) {
-				add_feedback($pref, tr('%0 enabled', $pref), 1, 1);
-				$logslib->add_action('feature', $pref, 'system', 'enabled');
-			} elseif ( $value == 'n' ) {
-				add_feedback($pref, tr('%0 disabled', $pref), 0, 1);
-				$logslib->add_action('feature', $pref, 'system', 'disabled');
+	$check = key_check(null, false);
+	if ($check === true) {
+		$changes = $prefslib->applyChanges((array) $_REQUEST['lm_preference'], $_REQUEST);
+		foreach ( $changes as $pref => $val ) {
+			if ($val['type'] == 'reset') {
+				add_feedback($pref, tr('%0 reset', $pref), 4);
+				$logslib->add_action('feature', $pref, 'system', 'reset');
 			} else {
-				add_feedback($pref, tr('%0 set', $pref), 1, 1);
-				$logslib->add_action('feature', $pref, 'system', (is_array($val['old'])?implode($val['old'], ','):$val['old']).'=>'.(is_array($value)?implode($value, ','):$value));
-			}
-			/*
-				Enable/disable addreference/showreference plugins alognwith references feature.
-			*/
-			if ($pref == 'feature_references') {
-				$tikilib->set_preference('wikiplugin_addreference', $value);
-				$tikilib->set_preference('wikiplugin_showreference', $value);
+				$value = $val['new'];
+				if ( $value == 'y' ) {
+					add_feedback($pref, tr('%0 enabled', $pref), 1, 1);
+					$logslib->add_action('feature', $pref, 'system', 'enabled');
+				} elseif ( $value == 'n' ) {
+					add_feedback($pref, tr('%0 disabled', $pref), 0, 1);
+					$logslib->add_action('feature', $pref, 'system', 'disabled');
+				} else {
+					add_feedback($pref, tr('%0 set', $pref), 1, 1);
+					$logslib->add_action('feature', $pref, 'system', (is_array($val['old'])?implode($val['old'], ','):$val['old']).'=>'.(is_array($value)?implode($value, ','):$value));
+				}
+				/*
+					Enable/disable addreference/showreference plugins alognwith references feature.
+				*/
+				if ($pref == 'feature_references') {
+					$tikilib->set_preference('wikiplugin_addreference', $value);
+					$tikilib->set_preference('wikiplugin_showreference', $value);
 
-				/* Add/Remove the plugin toolbars from the editor */
-				$toolbars = array('wikiplugin_addreference', 'wikiplugin_showreference');
-				$t_action = ($value=='y') ? 'add' : 'remove';
-				$tikilib->saveEditorToolbars($toolbars, 'global', $t_action);
+					/* Add/Remove the plugin toolbars from the editor */
+					$toolbars = array('wikiplugin_addreference', 'wikiplugin_showreference');
+					$t_action = ($value=='y') ? 'add' : 'remove';
+					$tikilib->saveEditorToolbars($toolbars, 'global', $t_action);
+				}
 			}
 		}
+	} else {
+		$smarty->assign('csrferror', tra('Bad request - potential cross-site request forgery (CSRF) detected. Operation blocked'));
 	}
 }
 
 if ( isset( $_REQUEST['lm_criteria'] ) ) {
+	$check = key_get(null, null, null, false);
+	$smarty->assign('ticket', $check['ticket']);
 	set_time_limit(0);
 	try {
 		$smarty->assign('lm_criteria', $_REQUEST['lm_criteria']);
@@ -606,6 +612,8 @@ $icons = array(
 if (isset($_REQUEST['page'])) {
 	$adminPage = $_REQUEST['page'];
 	if (file_exists("admin/include_$adminPage.php")) {
+		$check = key_get(null, null, null, false);
+		$smarty->assign('ticket', $check['ticket']);
 		include_once ("admin/include_$adminPage.php");
 		$url = 'tiki-admin.php' . '?page=' . $adminPage;
 	}

@@ -1,6 +1,7 @@
 <fieldset class="table">
 	<legend>{tr}Wiki attachments{/tr}</legend>
 			<form action="tiki-admin.php?page=wikiatt" method="post">
+				<input type="hidden" name="ticket" value="{$ticket|escape}">
 				<input type="text" name="find" value="{$find|escape}" />
 				<input type="submit" class="btn btn-default btn-sm" name="action" value="{tr}Find{/tr}"/>
 			</form>

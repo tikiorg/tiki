@@ -25,6 +25,7 @@
 {/remarksbox}
 
 <form action="tiki-admin.php?page=fgal" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 
     <div class="row">
         <div class="form-group col-lg-12 clearfix">

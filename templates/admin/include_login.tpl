@@ -19,6 +19,7 @@
 {/if}
 
 <form action="tiki-admin.php?page=login" class="admin" method="post" name="LogForm">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<input type="hidden" name="loginprefs" />
     <div class="row">
         <div class="form-group col-lg-12 clearfix">

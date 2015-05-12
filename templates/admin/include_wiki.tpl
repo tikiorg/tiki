@@ -30,6 +30,7 @@
 {/remarksbox}
 
 <form action="tiki-admin.php?page=wiki" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="heading input_submit_container" style="text-align: right">
 
 	</div>

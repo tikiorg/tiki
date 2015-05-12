@@ -1,6 +1,7 @@
 {* $Id$ *}
 
 <form action="tiki-admin.php?page=general" class="admin" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<input type="hidden" name="new_prefs" />
     <div class="row">
         <div class="form-group col-lg-12 clearfix">

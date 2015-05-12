@@ -1,5 +1,6 @@
 {* $Id$ *}
 <form action="tiki-admin.php?page=look" id="look" name="look" class="form-horizontal labelColumns" class="admin" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="row">
 		<div class="form-group col-lg-12">
 			<div class="pull-right">

@@ -6,6 +6,7 @@
 {/if}
 
 <form action="tiki-admin.php?page=category" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<input type="hidden" name="categorysetup" />
     <div class="row">
         <div class="form-group col-lg-12 clearfix">
