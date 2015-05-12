@@ -76,7 +76,7 @@
 									{if empty($field.options_map.inputtype)}
 										{foreach from=$field.possibilities key=value item=label}
 											<label class="checkbox-inline">
-												<input type="checkbox" name="filtervalue[{$fid}][]" value="{$value|escape}" {if $fid == $filterfield and in_array($value, $filtervalue)}checked="checked"{/if}>
+												<input type="checkbox" name="filtervalue[{$fid}][]" value="{$value|escape}" {if $fid == $filterfield and is_array($filtervalue) and in_array($value, $filtervalue)}checked="checked"{/if}>
 												{$label|tr_if|escape}
 											</label>
 										{/foreach}
@@ -84,7 +84,7 @@
 										{if $prefs.jquery_ui_chosen neq 'y'}<small>{tr}Hold "Ctrl" in order to select multiple values{/tr}</small><br>{/if}
 										<select name="filtervalue[{$fid}][]" multiple="multiple" class="form-control">
 											{foreach key=ku from=$field.possibilities key=value item=label}
-												<option value="{$value|escape}" {if in_array($value, $filtervalue)}selected="selected"{/if}>{$label|escape}</option>
+												<option value="{$value|escape}" {if is_array($filtervalue) and in_array($value, $filtervalue)}selected="selected"{/if}>{$label|escape}</option>
 											{/foreach}
 										</select>
 									{/if}

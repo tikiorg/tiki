@@ -167,7 +167,7 @@ class Search_MySql_Index implements Search_Index_Interface
 		$factory = new Search_Type_Factory_Direct;
 		$expr->walk(
 			function ($node) use (& $words, $factory) {
-				if ($node instanceof Search_Expr_Token) {
+				if ($node instanceof Search_Expr_Token && $node->getField() !== 'searchable') {
 					$word = $node->getValue($factory)->getValue();
 					if (is_string($word)) {
 						$words[] = $word;
