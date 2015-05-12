@@ -223,20 +223,22 @@
 
 			<div class="articletrailer">
 				{if ($listpages[ix].size > 0) or (($prefs.feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y'))}
+                <ul class="list-inline pull-left">
 					{if ($tiki_p_read_article eq 'y' and $listpages[ix].heading_only ne 'y' and (!isset($fullbody) or $fullbody ne "y"))}
 						{if ($listpages[ix].size > 0 and !empty($listpages[ix].body))}
-							<div class="pull-left status"> {* named to be similar to forum/blog item *}
+
+							<li class="status"> {* named to be similar to for<um/blog item *}
 								<a href="{$smarty.capture.href}" class="more">{tr}Read More{/tr}</a>
-							</div>
+							</li>
 							{if ($listpages[ix].show_size eq 'y')}
-								<span>
+								<li>
 									({$listpages[ix].size} {tr}bytes{/tr})
-								</span>
+								</li>
 							{/if}
 						{/if}
 					{/if}
 					{if ($prefs.feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y') and ($listpages[ix].allow_comments eq 'y')}
-						<span>
+						<li>
 							<a href="{$listpages[ix].articleId|sefurl:article:with_next}{if $prefs.feature_sefurl neq 'y'}&amp;{/if}show_comzone=y{if !empty($urlparam)}&amp;{$urlparam}{/if}#comments"{if $listpages[ix].comments_cant > 0} class="highlight"{/if}>
 								{if $listpages[ix].comments_cant == 0 and $tiki_p_post_comments == 'y'}
 									{if !isset($actions) or $actions eq "y"}
@@ -250,8 +252,9 @@
 									{/if}
 								{/if}
 							</a>
-						</span>
+						</li>
 					{/if}
+                    </ul>
 				{/if}
 				{if !isset($actions) or $actions eq "y"}
 					<div class="btn-group actions pull-right">
