@@ -15,6 +15,13 @@ function wikiplugin_usercount_info()
 		'body' => tra('Group name'),
 		'icon' => 'img/icons/group_gear.png',
 		'params' => array(
+			'groups' => array(
+				'required' => false,
+				'name' => tra('Groups'),
+				'description' => tra('List of colon separated groups where a consolidated user count for multiple groups is needed.'),
+				'separator' => ':',
+				'default' => '',
+			),		
 		),
 	);
 }
@@ -25,7 +32,12 @@ function wikiplugin_usercount($data, $params)
 
 	extract($params, EXTR_SKIP);
 
-	$numusers = $userlib->count_users($data);
+	if ( isset( $params['groups'] ) ) {
+		$groups = $params['groups'];
+		$numusers = $userlib->count_users_consolidated($groups);
+	} else {
+		$numusers = $userlib->count_users($data);
+	}
 
 	return $numusers;
 }
