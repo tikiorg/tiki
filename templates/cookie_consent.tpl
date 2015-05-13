@@ -8,7 +8,7 @@
 		{if $prefs.javascript_enabled neq 'y'}
 			<form method="POST">
 		{/if}
-		<div class="description help-block">
+		<div class="description">
 			{wiki}{tr}{$prefs.cookie_consent_description}{/tr}{/wiki}
 		</div>
 		{if !empty($prefs.cookie_consent_question)}
