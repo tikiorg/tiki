@@ -77,7 +77,7 @@ function key_get($area = null, $confirmation_text = '', $confirmaction = '',  $r
 			$smarty->display('tiki.tpl');
 			die();
 		} else {
-			return ['ticket' => $ticket];
+			return array('ticket' => $ticket);
 		}
 	}
 }
