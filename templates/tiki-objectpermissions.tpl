@@ -225,19 +225,21 @@
 			</tr>
 
 			{section name=grp loop=$groups}
-			<tr>
-				<td>
-				{$groups[grp].groupName|escape}
-				</td>
-				{foreach item=permgroup from=$quickperms}
-				<td>
-					<input type="radio" name="perm_{$groups[grp].groupName|escape:url}" value="{$permgroup.name}" {if $groups[grp].groupSumm eq $permgroup.name}checked{/if}>
-				</td>
-				{/foreach}
-				<td>
-					<input type="radio" name="perm_{$groups[grp].groupName|escape:url}" value="userdefined" {if $groups[grp].groupSumm eq 'userdefined'}checked{/if} disabled>
-				</td>
-			</tr>
+				{if $groups[grp].groupName neq 'Admins'}
+					<tr>
+						<td>
+						{$groups[grp].groupName|escape}
+						</td>
+						{foreach item=permgroup from=$quickperms}
+						<td>
+							<input type="radio" name="perm_{$groups[grp].groupName|escape:url}" value="{$permgroup.name}" {if $groups[grp].groupSumm eq $permgroup.name}checked{/if}>
+						</td>
+						{/foreach}
+						<td>
+							<input type="radio" name="perm_{$groups[grp].groupName|escape:url}" value="userdefined" {if $groups[grp].groupSumm eq 'userdefined'}checked{/if} disabled>
+						</td>
+					</tr>
+				{/if}
 			{/section}
 		</table>
 
