@@ -3047,7 +3047,7 @@ class UsersLib extends TikiLib
 			array(
 				'name' => 'tiki_p_acct_book',
 				'description' => tra('Create a new transaction'),
-				'level' => 'editor',
+				'level' => 'editors',
 				'type' => 'accounting',
 				'admin' => false,
 				'prefs' => array('feature_accounting'),
@@ -3065,7 +3065,7 @@ class UsersLib extends TikiLib
 			array(
 				'name' => 'tiki_p_acct_book_stack',
 				'description' => tra('Can book into the stack where statements can be changed'),
-				'level' => 'editor',
+				'level' => 'editors',
 				'type' => 'accounting',
 				'admin' => false,
 				'prefs' => array('feature_accounting'),
@@ -3074,7 +3074,7 @@ class UsersLib extends TikiLib
 			array(
 				'name' => 'tiki_p_acct_book_import',
 				'description' => tra('Can import statements from external accounts'),
-				'level' => 'editor',
+				'level' => 'editors',
 				'type' => 'accounting',
 				'admin' => false,
 				'prefs' => array('feature_accounting' ),
@@ -3083,7 +3083,7 @@ class UsersLib extends TikiLib
 			array(
 				'name' => 'tiki_p_acct_manage_template',
 				'description' => tra('Can manage templates for recurring transactions'),
-				'level' => 'editor',
+				'level' => 'editors',
 				'type' => 'accounting',
 				'admin' => false,
 				'prefs' => array('feature_accounting'),
@@ -5348,7 +5348,7 @@ class UsersLib extends TikiLib
 			array(
 				'name' => 'tiki_p_wiki_approve',
 				'description' => tra('Can approve revisions of pages'),
-				'level' => 'editor',
+				'level' => 'editors',
 				'type' => 'wiki',
 				'admin' => false,
 				'prefs' => array('flaggedrev_approval'),
@@ -5738,7 +5738,7 @@ class UsersLib extends TikiLib
 			array(
 				'name' => 'tiki_p_edit_switch_mode',
 				'description' => tra('Can switch between wiki and WYSIWYG modes while editing'),
-				'level' => 'editor',
+				'level' => 'editors',
 				'type' => 'tiki',
 				'admin' => false,
 				'prefs' => array('feature_wysiwyg'),
