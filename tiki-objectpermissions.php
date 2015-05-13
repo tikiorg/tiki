@@ -282,9 +282,10 @@ if ( $prefs['feature_quick_object_perms'] == 'y' ) {
 
 		$userInput = array();
 		foreach ($groups['data'] as $group) {
-			if (isset($_REQUEST['perm_' . $group['groupName']])) {
+			$groupNameEncoded = rawurlencode($group['groupName']);
+			if (isset($_REQUEST['perm_' . $groupNameEncoded])) {
 				$group = $group['groupName'];
-				$permission = $_REQUEST['perm_' . $group];
+				$permission = $_REQUEST['perm_' . $groupNameEncoded];
 
 				$userInput[$group] = $permission;
 			}
