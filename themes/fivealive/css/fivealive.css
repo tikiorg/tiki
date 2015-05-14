@@ -7271,6 +7271,9 @@ a.admbox.off:active {
 .margin-bottom-lg {
   margin-bottom: 40px;
 }
+.topbar {
+  margin-bottom: 20px;
+}
 .topbar .navbar-default .navbar-nav > li > a,
 .topbar .navbar-default .navbar-nav > li > a:hover,
 .topbar .navbar-default .navbar-nav > li > a:focus {
@@ -7303,14 +7306,6 @@ a.admbox.off:active {
 .header_container > .header {
   /* inner <header> element that gets .fixedwidth class applied */
   background: url('../images/siteheader.jpg') 0 0 no-repeat;
-}
-header.header .secondary_site_menu .navbar-default {
-  background: none;
-  float: right;
-}
-header.header .secondary_site_menu .navbar-default .navbar-nav > li > a {
-  padding-bottom: 4px;
-  padding-top: 4px;
 }
 .page-header {
   margin-top: 0;
