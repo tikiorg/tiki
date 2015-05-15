@@ -1089,13 +1089,13 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #402b5d;
+  color: #613b8d;
   text-decoration: none;
 }
 a:hover,
 a:focus {
-  color: #1c1329;
-  text-decoration: none;
+  color: #3c2457;
+  text-decoration: underline;
 }
 a:focus {
   outline: thin dotted;
@@ -3296,7 +3296,7 @@ fieldset[disabled] .btn-danger.active {
   background-color: #b52b27;
 }
 .btn-link {
-  color: #402b5d;
+  color: #613b8d;
   font-weight: normal;
   border-radius: 0;
 }
@@ -3317,8 +3317,8 @@ fieldset[disabled] .btn-link {
 }
 .btn-link:hover,
 .btn-link:focus {
-  color: #1c1329;
-  text-decoration: none;
+  color: #3c2457;
+  text-decoration: underline;
   background-color: transparent;
 }
 .btn-link[disabled]:hover,
@@ -3888,7 +3888,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav .open > a:hover,
 .nav .open > a:focus {
   background-color: url('../images/flakesptn3.jpg');
-  border-color: #402b5d;
+  border-color: #613b8d;
 }
 .nav .nav-divider {
   height: 1px;
@@ -4605,7 +4605,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   padding: 6px 12px;
   line-height: 1.42857143;
   text-decoration: none;
-  color: #402b5d;
+  color: #613b8d;
   background-color: #ffffff;
   border: 1px solid #dddddd;
   margin-left: -1px;
@@ -4625,7 +4625,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .pagination > li > span:hover,
 .pagination > li > a:focus,
 .pagination > li > span:focus {
-  color: #1c1329;
+  color: #3c2457;
   background-color: #eeeeee;
   border-color: #dddddd;
 }
@@ -4821,7 +4821,7 @@ a.badge:focus {
 }
 .list-group-item.active > .badge,
 .nav-pills > .active > a > .badge {
-  color: #402b5d;
+  color: #613b8d;
   background-color: #ffffff;
 }
 .list-group-item > .badge {
@@ -4892,7 +4892,7 @@ a.badge:focus {
 a.thumbnail:hover,
 a.thumbnail:focus,
 a.thumbnail.active {
-  border-color: #402b5d;
+  border-color: #613b8d;
 }
 .thumbnail .caption {
   padding: 9px;
@@ -6617,11 +6617,11 @@ a.fc-event:hover {
 }
 .sf-arrows .sf-with-ul:after {
   border: 5px solid transparent;
-  border-top-color: #402b5d;
+  border-top-color: #613b8d;
 }
 .cssmenu_vert.sf-arrows li > .sf-with-ul:after {
   border-color: transparent;
-  border-left-color: #402b5d;
+  border-left-color: #613b8d;
   /* edit this to suit design (no rgba in IE8) */
 }
 .sf-arrows ul .sf-with-ul:after,
