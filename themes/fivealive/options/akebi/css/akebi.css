@@ -173,7 +173,7 @@ hr {
   border: 1px solid #b4f3fb;
 }
 .navbar-default {
-  background-color: transparent;
+  background-color: #000000;
   border-color: none;
 }
 .navbar-default .navbar-brand {
@@ -549,7 +549,7 @@ hr {
 .header_outer {
   background: url('../images/siteheadertile.jpg') 0 0 no-repeat;
 }
-.header_container > .header {
+.header_container > .container {
   background: url('../images/siteheader.png') -248px 0 no-repeat;
 }
 header.header .module.secondary_site_menu {
