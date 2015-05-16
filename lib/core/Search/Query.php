@@ -295,6 +295,9 @@ class Search_Query implements Search_Query_Interface
 			//on sort exception, try again without the sort field
 			$this->sortOrder = null;
 			$resultset = $index->find($this, $this->start, $this->count);
+		} catch(Exception $e) {
+			TikiLib::lib('errorreport')->report($e->getMessage());
+			return Search_ResultSet::create([]);
 		}
 
 		$resultset->applyTransform(function ($entry) {
