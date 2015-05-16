@@ -193,9 +193,9 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
-			'admin' => 'polls',
-			'module' => 'poll',
-			'view' => 'tiki-admin_polls',
+			'admin' => 'tiki-admin_polls.php',
+			'module' => '',
+			'view' => '',
 			'permission' => array(
 				'textFilter' => 'poll',
 			),
