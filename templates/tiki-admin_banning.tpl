@@ -68,7 +68,7 @@
         <label class="col-sm-4 control-label" for="banning-userregex">{tr}Username regex matching{/tr}</label>
         <div class="col-sm-8">
 				<input type="radio" name="mode" value="user" {if $info.mode eq 'user'}checked="checked"{/if}>
-				<input type="text" name="userreg" id="banning-userregex" value="{$info.user|escape}">
+				<input type="text" name="userreg" id="banning-userregex" value="{$info.user|escape}" onfocus="$('input[name=mode]').val(['user']);">
 			</div>
 		</div>
 		{if isset($mass_ban_ip)}
@@ -94,7 +94,7 @@
             <label class="col-sm-4 control-label" for="banning-ipregex">{tr}IP regex matching{/tr}</label></label>
             <div class="col-sm-8">
 				<input type="radio" name="mode" value="ip" {if $info.mode eq 'ip'}checked="checked"{/if}>
-				<input type="text" name="ip1" id="banning-ipregex" value="{$info.ip1|escape}" size="3">.
+				<input type="text" name="ip1" id="banning-ipregex" value="{$info.ip1|escape}" size="3" onfocus="$('input[name=mode]').val(['ip']);">.
 				<input type="text" name="ip2" value="{$info.ip2|escape}" size="3">.
 				<input type="text" name="ip3" value="{$info.ip3|escape}" size="3">.
 				<input type="text" name="ip4" value="{$info.ip4|escape}" size="3">
