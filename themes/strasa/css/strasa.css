@@ -7191,6 +7191,9 @@ body {
 .top_modules a {
   color: #fff;
 }
+.topbar {
+  margin-bottom: 20px;
+}
 .navbar-default,
 .topbar,
 .layout_fixed_top_modules #top_modules,
@@ -7278,6 +7281,9 @@ a.pagetitle:hover {
   background: #8de1fd;
   padding-top: 5px;
   padding-bottom: 5px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  margin-bottom: 20px;
 }
 .footer_liner {
   color: #999;

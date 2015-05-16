@@ -37,7 +37,7 @@ class WikiPluginBackLinks extends PluginsLib
 	function run ($data, $params)
 	{
 		$wikilib = TikiLib::lib('wiki');
-		$exclude = $params['exclude'];
+		$exclude = isset($params['exclude']) ? $params['exclude'] : '';
 		$params = $this->getParams($params, true);
 		$aInfoPreset = array_keys($this->aInfoPresetNames);
 		extract($params, EXTR_SKIP);

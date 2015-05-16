@@ -17,10 +17,12 @@
     {if $prefs.feature_layoutshadows eq 'y'}
     <div id="header-shadow">{eval var=$prefs.header_shadow_start}{/if}
         <div class="header_outer">
-            <div class="header_container container">
-                <header class="header page-header">
-                    {modulelist zone=top class='row top_modules'}
-                </header>
+            <div class="header_container">
+                <div class="container">
+                    <header class="header page-header">
+                        {modulelist zone=top class='row top_modules'}
+                    </header>
+                </div>
             </div>
         </div>
         {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.header_shadow_end}</div>{/if}

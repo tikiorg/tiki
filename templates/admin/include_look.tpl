@@ -1,7 +1,7 @@
 {* $Id$ *}
 <form action="tiki-admin.php?page=look" id="look" name="look" class="form-horizontal labelColumns" class="admin" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
-	<div class="form-group col-lg-12">
+	<div class="clearfix margin-bottom-md">
 		{if $prefs.feature_theme_control eq y}
 			{button _text="{tr}Theme Control{/tr}" href="tiki-theme_control.php" _class="btn-sm tikihelp" }
 		{/if}

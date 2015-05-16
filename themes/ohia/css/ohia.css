@@ -7305,6 +7305,9 @@ input.tablesorter-filter {
   border: none;
   background-color: #313131;
 }
+.topbar {
+  margin-bottom: 20px;
+}
 .tiki .row.top_modules {
   margin-left: -15px;
   margin-right: -15px;

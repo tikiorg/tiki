@@ -7316,6 +7316,9 @@ input.tablesorter-filter {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
+.topbar {
+  margin-bottom: 20px;
+}
 .topbar,
 .navbar-default,
 .navbar-fixed-top {

@@ -6672,6 +6672,9 @@ input[type="submit"]:hover,
 .button input:hover {
   background: linear-gradient(to bottom, #8fa872 50%, #8fa872 50%, #a1bb87 100%);
 }
+.topbar {
+  margin-bottom: 20px;
+}
 .topbar .panel-heading,
 .topbar .navbar-default .navbar-collapse,
 .topbar .navbar-default .navbar-form {

@@ -9,8 +9,11 @@
 // If Glyphicons should be rendered in a color other than the Bootstrap default or the theme default, uncomment and specify the color.
 // .glyphicon {color: @gray-lighter;}
 
-// #col2 .panel-title,
-// #col3 .panel-title,
+
+.topbar {
+	margin-bottom: 20px;
+}
+
 .topbar .navbar-default .navbar-nav > li > a,
 .topbar .navbar-default .navbar-nav > li > a:hover,
 .topbar .navbar-default .navbar-nav > li > a:focus {
@@ -47,20 +50,9 @@
 	background: url('@{imagePath}header_left.png') 0 100% no-repeat;
 }
 
-.header_container > .header {
+.header_container {
 	/* inner <header> element that gets .fixedwidth class applied */
 	background: url('@{imagePath}siteheader.jpg') 0 0 no-repeat;
-}
-
-header.header .secondary_site_menu .navbar-default {
-	background: none;
-	float: right;
-}
-
-header.header .secondary_site_menu .navbar-default .navbar-nav > li > a {
-	//  line-height: 20px;
-	padding-bottom: 4px;
-	padding-top: 4px;
 }
 
 .page-header {
