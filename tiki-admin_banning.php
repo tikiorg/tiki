@@ -42,32 +42,39 @@ if (isset($_REQUEST["import"]) && isset($_FILES["fileCSV"])) {
 
 if (isset($_REQUEST['save'])) {
 	check_ticket('admin-banning');
-	$_REQUEST['use_dates'] = isset($_REQUEST['use_dates']) ? 'y' : 'n';
-	$_REQUEST['date_from'] = $tikilib->make_time(0, 0, 0, $_REQUEST['date_fromMonth'], $_REQUEST['date_fromDay'], $_REQUEST['date_fromYear']);
-	$_REQUEST['date_to'] = $tikilib->make_time(0, 0, 0, $_REQUEST['date_toMonth'], $_REQUEST['date_toDay'], $_REQUEST['date_toYear']);
-	$sections = isset($_REQUEST['section']) ? array_keys($_REQUEST['section']) : array();
-	// Handle case when many IPs are banned
-	if ($_REQUEST['mode'] == 'mass_ban_ip') {
-		foreach ($_REQUEST['multi_banned_ip'] as $ip => $value) {
-			list($ip1,$ip2,$ip3,$ip4) = explode('.', $ip);
-			$banlib->replace_rule($_REQUEST['banId'], 'ip', $_REQUEST['title'], $ip1, $ip2, $ip3, $ip4, $_REQUEST['userreg'], $_REQUEST['date_from'], $_REQUEST['date_to'], $_REQUEST['use_dates'], $_REQUEST['message'], $sections);
-		}
+	if ($_REQUEST['mode'] === 'user' && empty($_REQUEST['userreg'])) {
+		TikiLib::lib('errorreport')->report(tra("Not saved:") . ' ' . tra("Username pattern empty"));
+	} else if ($_REQUEST['mode'] === 'ip' && $_REQUEST['ip1'] == 255 && $_REQUEST['ip2'] == 255 && $_REQUEST['ip3'] == 255 && $_REQUEST['ip4'] == 255) {
+		TikiLib::lib('errorreport')->report(tra("Not saved:") . ' ' . tra("Default IP pattern still set"));
 	} else {
-		$banlib->replace_rule($_REQUEST['banId'], $_REQUEST['mode'], $_REQUEST['title'], $_REQUEST['ip1'], $_REQUEST['ip2'], $_REQUEST['ip3'], $_REQUEST['ip4'], $_REQUEST['userreg'], $_REQUEST['date_from'], $_REQUEST['date_to'], $_REQUEST['use_dates'], $_REQUEST['message'], $sections);
+
+		$_REQUEST['use_dates'] = isset($_REQUEST['use_dates']) ? 'y' : 'n';
+		$_REQUEST['date_from'] = $tikilib->make_time(0, 0, 0, $_REQUEST['date_fromMonth'], $_REQUEST['date_fromDay'], $_REQUEST['date_fromYear']);
+		$_REQUEST['date_to'] = $tikilib->make_time(0, 0, 0, $_REQUEST['date_toMonth'], $_REQUEST['date_toDay'], $_REQUEST['date_toYear']);
+		$sections = isset($_REQUEST['section']) ? array_keys($_REQUEST['section']) : array();
+		// Handle case when many IPs are banned
+		if ($_REQUEST['mode'] == 'mass_ban_ip') {
+			foreach ($_REQUEST['multi_banned_ip'] as $ip => $value) {
+				list($ip1,$ip2,$ip3,$ip4) = explode('.', $ip);
+				$banlib->replace_rule($_REQUEST['banId'], 'ip', $_REQUEST['title'], $ip1, $ip2, $ip3, $ip4, $_REQUEST['userreg'], $_REQUEST['date_from'], $_REQUEST['date_to'], $_REQUEST['use_dates'], $_REQUEST['message'], $sections);
+			}
+		} else {
+			$banlib->replace_rule($_REQUEST['banId'], $_REQUEST['mode'], $_REQUEST['title'], $_REQUEST['ip1'], $_REQUEST['ip2'], $_REQUEST['ip3'], $_REQUEST['ip4'], $_REQUEST['userreg'], $_REQUEST['date_from'], $_REQUEST['date_to'], $_REQUEST['use_dates'], $_REQUEST['message'], $sections);
+		}
+		$info['sections'] = array();
+		$info['title'] = '';
+		$info['mode'] = 'user';
+		$info['ip1'] = 255;
+		$info['ip2'] = 255;
+		$info['ip3'] = 255;
+		$info['ip4'] = 255;
+		$info['use_dates'] = 'n';
+		$info['date_from'] = $tikilib->now;
+		$info['date_to'] = $tikilib->now + 7 * 24 * 3600;
+		$info['message'] = '';
+		$smarty->assign_by_ref('info', $info);
+		unset($_REQUEST['banId']);
 	}
-	$info['sections'] = array();
-	$info['title'] = '';
-	$info['mode'] = 'user';
-	$info['ip1'] = 255;
-	$info['ip2'] = 255;
-	$info['ip3'] = 255;
-	$info['ip4'] = 255;
-	$info['use_dates'] = 'n';
-	$info['date_from'] = $tikilib->now;
-	$info['date_to'] = $tikilib->now + 7 * 24 * 3600;
-	$info['message'] = '';
-	$smarty->assign_by_ref('info', $info);
-	unset($_REQUEST['banId']);
 }
 
 if ( !empty($_REQUEST['export']) ) {
