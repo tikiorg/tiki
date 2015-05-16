@@ -353,6 +353,8 @@ class TikiAccessLib extends TikiLib
 			$smarty->assign('errortitle', $detail['errortitle']);
 			$smarty->assign('msg', $detail['message']);
 			$smarty->assign('errortype', $detail['code']);
+			$check = key_get(null, null, null, false);
+			$smarty->assign('ticket', $check['ticket']);
 			if ( isset( $detail['page'] ) )
 				$smarty->assign('page', $page);
 			$smarty->display("error.tpl");

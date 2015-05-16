@@ -78,6 +78,7 @@ close();
 					{if !empty($required_preferences)}
 						{remarksbox type='note' title="{tr}Change them here{/tr}"}
 						<form method="post" action="tiki-admin.php">
+							<input type="hidden" name="ticket" value="{$ticket|escape}">
 							{foreach from=$required_preferences item=pref}
 								{preference name=$pref}
 							{/foreach}
