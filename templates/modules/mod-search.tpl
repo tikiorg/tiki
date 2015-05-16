@@ -5,7 +5,7 @@
 			{if $smod_params.tiki_search neq 'none'}
 				<form id="search-module-form{$search_mod_usage_counter}" method="get" action="{$smod_params.search_action}"{if $smod_params.use_autocomplete eq 'y'} onsubmit="return submitSearch{$search_mod_usage_counter}()"{/if}>
 					<div style="position: relative">
-						<div class="form-group col-sm-8">
+						<div class="form-group{if $smod_params.compact eq "y"} col-sm-10{/if}">
 							<input class="form-control" id="search_mod_input_{$search_mod_usage_counter}" name="{if $smod_params.search_action eq 'tiki-searchindex.php'}filter~content{else}find{/if}" {if !empty($smod_params.input_size)}size="{$smod_params.input_size}" style="width: auto"{/if} type="text" accesskey="s" value="{$smod_params.input_value|escape}" />
 						</div>
 						{if $smod_params.show_object_filter eq 'y'}
@@ -73,7 +73,7 @@
 								{icon name="search"}
 							</button>
 							{* {icon _id="magnifier" class="search_mod_magnifier icon"}*}
-							<div class="btn-group search_mod_buttons box" style="display:none; position: absolute; right: 24px; top: 24px; padding: 0 1em; z-index: 2; white-space: nowrap;">
+							<div class="btn-group search_mod_buttons box" style="display:none;position:absolute;right:1em;top:1em;z-index:2;white-space:nowrap;">
 						{/if}
 						{foreach $smod_params.additional_filters as $key => $filter}
 							<input type="hidden" name="filter~{$key|escape}" value="{$filter|escape}"/>
@@ -82,15 +82,15 @@
 							<input type = "submit" class="btn btn-default tips{if $smod_params.default_button eq 'search'} button_default{/if}"
 								name = "search" value = "{$smod_params.search_submit|escape}"
 								title="{tr}Search{/tr}|{tr}Search for text throughout the site.{/tr}"
-								data-placement="bottom"
+								{if $smod_params.compact eq "y"}data-placement="bottom"{/if}
 								onclick = "$('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.search_action|escape:javascript}').attr('page_selected','');"
 							/>
 						{/if}
 						{if $smod_params.show_go_button eq 'y'}
-							<input type = "submit" class="btn btn-default tips{if $smod_params.default_button eq 'go'} button_default{/if}"
+							<input type = "submit" class="btn btn-default tips{if $smod_params.compact eq "y"} bottom{/if}{if $smod_params.default_button eq 'go'} button_default{/if}"
 								name = "go" value = "{$smod_params.go_submit|escape}"
 								title="{tr}Search{/tr}|{tr}Go directly to a page, or search in page titles if exact match is not found.{/tr}"
-								data-placement="bottom"
+								{if $smod_params.compact eq "y"}data-placement="bottom"{/if}
 								onclick = "$('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.go_action|escape:javascript}').attr('page_selected','');
 								{if $smod_params.search_action eq 'tiki-searchindex.php'}
 									$('#search-module-form{$search_mod_usage_counter} input[name=\'filter~content\']').attr('name', 'find');
@@ -99,10 +99,10 @@
 								<input type="hidden" name="exact_match" value="" />
 						{/if}
 						{if $smod_params.show_edit_button eq 'y' and $tiki_p_edit eq 'y'}
-							<input type = "submit" class = "btn btn-default tips{if $smod_params.default_button eq 'edit'} button_default{/if}"
+							<input type = "submit" class = "btn btn-default tips{if $smod_params.compact eq "y"} bottom{/if}{if $smod_params.default_button eq 'edit'} button_default{/if}"
 								name = "edit" value = "{$smod_params.edit_submit|escape}"
 								title="{tr}Search{/tr}|{tr}Edit existing page or create a new one.{/tr}"
-								data-placement="bottom"
+								{if $smod_params.compact eq "y"}data-placement="bottom"{/if}
 								onclick = "$('#search-module-form{$search_mod_usage_counter} input[name!={if $smod_params.search_action eq 'tiki-searchindex.php'}\'filter~content\'{else}\'find\'{/if}]').attr('name', '');
 								$('#search-module-form{$search_mod_usage_counter} input[name={if $smod_params.search_action eq 'tiki-searchindex.php'}\'filter~content\'{else}\'find\'{/if}]').attr('name', 'page');
 								$('#search-module-form{$search_mod_usage_counter}').attr('action', '{$smod_params.edit_action|escape:javascript}').attr('page_selected','');"
