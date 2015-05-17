@@ -3201,6 +3201,9 @@ div.form-group label.error {
 .chosen-container-single {
   max-width: 100%;
 }
+.chosen-container + .alert {
+  margin-top: 20px;
+}
 body:not(.fixed_width) .container {
   padding-left: 15px;
   padding-right: 15px;
