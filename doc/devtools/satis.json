@@ -218,6 +218,39 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "ckeditor/ckeditor/skins/office2013",
+				"version": "1.04",
+				"dist": {
+					"url": "http://download.ckeditor.com/office2013/releases/office2013_1.04.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor/skins/bootstrapck",
+				"version": "1.0",
+				"dist": {
+					"url": "http://download.ckeditor.com/bootstrapck/releases/bootstrapck_1.0_0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor/skins/minimalist",
+				"version": "1.0",
+				"dist": {
+					"url": "http://download.ckeditor.com/minimalist/releases/minimalist_1.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "ckeditor/ckeditor/plugins/divarea",
 				"version": "4.4.7",
 				"dist": {
