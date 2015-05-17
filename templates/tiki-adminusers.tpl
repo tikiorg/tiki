@@ -200,7 +200,7 @@
 												{capture name=username}{$users[user].user|username}{/capture}
 												<a
 													class="link tips"
-													href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if $prefs.feature_tabs ne 'y'}#2{/if}"
+													href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if $prefs.feature_tabs ne 'y'}#2{else}&cookietab=2{/if}"
 													title="{$username}:{tr}Edit account settings{/tr}">
 														{$users[user].user|escape}
 												</a>
@@ -294,7 +294,7 @@
 														>
 															{icon name="group" _menu_text='y' _menu_icon='y' alt="{tr}Add or remove from a group{/tr}"}
 														</a>
-														<a href="{query _type='relative' user=$users[user].userId}#contenttabs_adminuers-2">
+														<a href="{query _type='relative' user=$users[user].userId cookietab='2'}">
 															{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit account settings{/tr}"}
 														</a>
 														{if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
@@ -524,7 +524,7 @@
 								<div id="mypassword_text"></div>
 								<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div>
 							</div>
-							<p class="col-md-4 col-sm-10 help-block">{tr}Minimum 5 characters long.{/tr}</p>
+							<div class="col-md-4 col-sm-10 help-block">{include file='password_help.tpl'}</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-3 col-md-2 control-label" for="pass2">{tr}Repeat Password{/tr}</label>

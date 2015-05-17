@@ -584,19 +584,20 @@
 								<div class="form-group">
 									<label for="" class="col-sm-2 control-label">{tr}Language{/tr}</label>
 									<div class="col-sm-10">
-									<select name="lang" id="lang" class="form-control">
-										<option value=""{if empty($lang)} selected="selected"{/if}>{tr}Unknown{/tr}</option>
-										{section name=ix loop=$languages}
-											<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
-										{/section}
-									</select>
-									{remarksbox type=tip title="{tr}Tip{/tr}"}
-										{tr _0="tiki-edit_translation.php?no_bl=y&amp;page={$page|escape:url}"}To translate, do not change the language and the content.
-										Instead, <a class="alert-link" href="%0">create a new translation</a> in the new language.{/tr}
-									{/remarksbox}
-									{if $translationOf}
-										<input type="hidden" name="translationOf" value="{$translationOf|escape}">
-									{/if}
+									    <select name="lang" id="lang" class="form-control">
+										    <option value=""{if empty($lang)} selected="selected"{/if}>{tr}Unknown{/tr}</option>
+										    {section name=ix loop=$languages}
+											    <option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
+										    {/section}
+									    </select>
+									    {remarksbox type=tip title="{tr}Tip{/tr}"}
+										    {tr _0="tiki-edit_translation.php?no_bl=y&amp;page={$page|escape:url}"}To translate, do not change the language and the content.
+										    Instead, <a class="alert-link" href="%0">create a new translation</a> in the new language.{/tr}
+									    {/remarksbox}
+									    {if $translationOf}
+										    <input type="hidden" name="translationOf" value="{$translationOf|escape}">
+									    {/if}
+                                    </div
 								</div>
 							</fieldset>
 							{if $trads|@count > 1 and $urgent_allowed}

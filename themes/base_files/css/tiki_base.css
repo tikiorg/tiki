@@ -16,10 +16,6 @@
 .navbar-collapse.collapse.in {
   background: #f8f8f8;
 }
-.form-horizontal-side-margins {
-  margin-left: 15px;
-  margin-right: 15px;
-}
 .warning a,
 .warning a:link,
 .warning a:visited {
@@ -3205,6 +3201,9 @@ div.form-group label.error {
 .chosen-container-single {
   max-width: 100%;
 }
+.chosen-container + .alert {
+  margin-top: 20px;
+}
 body:not(.fixed_width) .container {
   padding-left: 15px;
   padding-right: 15px;
@@ -3243,6 +3242,10 @@ body.tiki.navbar-padding {
 .tiki .media-overflow-visible,
 .tiki .media-overflow-visible .media-body {
   overflow: visible;
+}
+.padding-side-md {
+  padding-left: 15px;
+  padding-right: 15px;
 }
 .tiki .col-md-3 .table-responsive,
 .tiki .col-md-4 .table-responsive,
