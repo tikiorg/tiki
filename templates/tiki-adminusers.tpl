@@ -200,7 +200,7 @@
 												{capture name=username}{$users[user].user|username}{/capture}
 												<a
 													class="link tips"
-													href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if $prefs.feature_tabs ne 'y'}#2{/if}"
+													href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if $prefs.feature_tabs ne 'y'}#2{else}&cookietab=2{/if}"
 													title="{$username}:{tr}Edit account settings{/tr}">
 														{$users[user].user|escape}
 												</a>
@@ -294,7 +294,7 @@
 														>
 															{icon name="group" _menu_text='y' _menu_icon='y' alt="{tr}Add or remove from a group{/tr}"}
 														</a>
-														<a href="{query _type='relative' user=$users[user].userId}#contenttabs_adminuers-2">
+														<a href="{query _type='relative' user=$users[user].userId cookietab='2'}">
 															{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit account settings{/tr}"}
 														</a>
 														{if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
