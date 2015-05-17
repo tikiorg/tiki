@@ -39,8 +39,8 @@
 			<fieldset>
 				<legend>{tr}Registration{/tr} &amp; {tr}Log in{/tr}</legend>
 				{preference name=allowRegister}
+				{preference name=validateUsers}
 				<div class="adminoptionboxchild" id="allowRegister_childcontainer">
-					{preference name=validateUsers}
 					{preference name=validateEmail}
 					{preference name=validateRegistration}
 					<div class="adminoptionboxchild" id="validateRegistration_childcontainer">
