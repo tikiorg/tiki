@@ -6832,10 +6832,6 @@ input:focus {
 .navbar-collapse.collapse.in {
   background: #2c3e50;
 }
-.form-horizontal-side-margins {
-  margin-left: 15px;
-  margin-right: 15px;
-}
 .warning a,
 .warning a:link,
 .warning a:visited {
