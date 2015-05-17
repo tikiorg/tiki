@@ -524,7 +524,7 @@
 								<div id="mypassword_text"></div>
 								<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div>
 							</div>
-							<p class="col-md-4 col-sm-10 help-block">{tr}Minimum 5 characters long.{/tr}</p>
+							<div class="col-md-4 col-sm-10 help-block">{include file='password_help.tpl'}</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-3 col-md-2 control-label" for="pass2">{tr}Repeat Password{/tr}</label>
