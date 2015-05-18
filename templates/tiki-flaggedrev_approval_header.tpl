@@ -2,7 +2,7 @@
 {if $prefs.flaggedrev_approval eq 'y' and $revision_approval}
 	{if ($revision_approved or $revision_displayed) and $revision_approved neq $lastVersion and $tiki_p_wiki_view_latest eq 'y'}
 		{if $lastVersion eq $revision_displayed}
-			{remarksbox type=comment title="{tr}Content waiting for approval{/tr}"}
+			{remarksbox type=warning title="{tr}Content waiting for approval{/tr}"}
 				<p>
 					{tr}You are currently viewing the latest version of the page.{/tr}
 					{if $revision_approved}
