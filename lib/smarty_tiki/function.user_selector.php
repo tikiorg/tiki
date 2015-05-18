@@ -83,6 +83,7 @@ function smarty_function_user_selector($params, $smarty)
 	}
 
 	$ucant = 0;
+	$users = array();
 
 	if ($params['group'] == 'all') {
 		$ucant = $tikilib->list_users(0, 0, 'login_asc');
@@ -94,7 +95,6 @@ function smarty_function_user_selector($params, $smarty)
 	// NOTE: if groupIds are present, the list of users is limited to those groups regardless of group == 'all'
 	if (!empty($groupNames)) {
 		$groupNames = array_unique($groupNames);
-		$users = array();
 		foreach ($groupNames as $groupName) {
 			$group_users = $userlib->get_group_users($groupName);
 			$users = array_merge($users, $group_users);
@@ -116,7 +116,6 @@ function smarty_function_user_selector($params, $smarty)
 		}
 		$headerlib->add_jq_onready('$("#' . $params['id'] . '").tiki("autocomplete", "'. $mode .'", {mustMatch: '.$params['mustmatch'].', multiple: '.$params['multiple'].' });');
 	} else {
-		$users = array();
 		if ($params['group'] == 'all' && empty($params['groupIds'])) {
 			$usrs = $tikilib->list_users(0, -1, 'login_asc');
 			foreach ($usrs['data'] as $usr) {
