@@ -50,8 +50,7 @@
 									<td width="2%">
 										{if not $smarty.foreach.e.first}
 											<a href="?ext_up={$ext.fieldId}" class="tips" title=":{tr}Up{/tr}">
-												{icon name='up'}<
-												/a>
+												{icon name='up'}</a>
 										{/if}
 									</td>
 									<td width="2%">

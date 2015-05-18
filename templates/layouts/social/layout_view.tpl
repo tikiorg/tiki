@@ -25,7 +25,6 @@
                 </div>
                 {block name=title}{/block}
                 {block name=navigation}{/block}
-                {error_report}
                 {block name=content}{/block}
                 {if $prefs.module_zones_pagebottom eq 'fixed' or ($prefs.module_zones_pagebottom ne 'n' && ! zone_is_empty('pagebottom'))}
                     {modulelist zone=pagebottom}
