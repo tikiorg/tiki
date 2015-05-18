@@ -28,7 +28,7 @@ class Tracker_Field_Header extends Tracker_Field_Abstract implements Tracker_Fie
 					'level' => array(
 						'name' => tr('Header Level'),
 						'description' => tr('Level of the header to use for complex tracker structures needing multiple heading levels.'),
-						'default' => 1,
+						'default' => 3,
 						'filter' => 'int',
 						'legacy_index' => 0,
 					),
@@ -69,9 +69,9 @@ class Tracker_Field_Header extends Tracker_Field_Abstract implements Tracker_Fie
 		$headerlib = TikiLib::lib('header');
 
 		$class = null;
-		$level = intval($this->getOption('level', 2));
+		$level = intval($this->getOption('level', 3));
 		if ($level <= 0) {
-			$level = 2;
+			$level = 3;
 		}
 		$toggle = $this->getOption('toggle');
 		$inTable = isset($context['inTable']) ? $context['inTable'] : '';
