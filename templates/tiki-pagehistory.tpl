@@ -51,6 +51,19 @@
 			</form>
 		{/remarksbox}
 	{/if}
+        
+        {if (isset($flaggedrev_approval) and $flaggedrev_approval)}
+            {remarksbox type=warning title="{tr}History view{/tr}"}
+                <p>
+                    {if $flaggedrev_preview_approved}
+                            {tr}This revision may not be the latest approved revision{/tr}!
+                    {else}
+                            {tr}This revision has not been approved.{/tr}
+                    {/if}
+                </p>
+            {/remarksbox}
+	{/if}
+        
 	<div class="wikitext" id="page-data">
 		{$previewd}
 	</div>
