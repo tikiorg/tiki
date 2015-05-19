@@ -1542,9 +1542,6 @@ FILL;
 					$back .= '<span class="alert-warning">' . tr('Missing wiki template page "%0"', htmlspecialchars($wiki)) . '</span>';
 				}
 			}
-			include_once('lib/smarty_tiki/function.trackerheader.php');
-			$back .= smarty_function_trackerheader(array('level'=>-1, 'title'=>'', 'inTable' => '' ), $smarty);
-
 
 			$smarty->assign('showmandatory', $showmandatory);
 
