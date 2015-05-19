@@ -115,7 +115,6 @@
 		{* --- tab with view ------------------------------------------------------------------------- *}
 		{* In most cases one will not want this header when viewing an item *}
 		{* <h3>{$tracker_info.name|escape}</h3> *}
-		<h3></h3>
 		{if $tracker_is_multilingual}
 			<div class="translations">
 				<a href="{service controller=translation action=manage type=trackeritem source=$itemId}">{tr}Translations{/tr}</a>

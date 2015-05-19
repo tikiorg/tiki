@@ -28,16 +28,17 @@ class Tracker_Field_Header extends Tracker_Field_Abstract implements Tracker_Fie
 					'level' => array(
 						'name' => tr('Header Level'),
 						'description' => tr('Level of the header to use for complex tracker structures needing multiple heading levels.'),
-						'default' => 1,
+						'default' => 3,
 						'filter' => 'int',
 						'legacy_index' => 0,
 					),
 					'toggle' => array(
-						'name' => tr('Default State'),
-						'description' => tr('Controls the section toggles'),
+						'name' => tr('Section Toggle'),
+						'description' => tr('Default State'),
 						'filter' => 'alpha',
 						'default' => 'o',
 						'options' => array(
+							'' => tr('No toggle'),
 							'o' => tr('Open'),
 							'c' => tr('Closed'),
 						),
@@ -69,9 +70,9 @@ class Tracker_Field_Header extends Tracker_Field_Abstract implements Tracker_Fie
 		$headerlib = TikiLib::lib('header');
 
 		$class = null;
-		$level = intval($this->getOption('level', 2));
+		$level = intval($this->getOption('level', 3));
 		if ($level <= 0) {
-			$level = 2;
+			$level = 3;
 		}
 		$toggle = $this->getOption('toggle');
 		$inTable = isset($context['inTable']) ? $context['inTable'] : '';
@@ -87,50 +88,39 @@ class Tracker_Field_Header extends Tracker_Field_Abstract implements Tracker_Fie
 		if ($inTable) {
 			$js = '
 (function() {
-	var processTableForHeaders = function( $table ) {
-		var $hdr, $descdiv, $newtable = $("<table>").attr("class", $table.attr("class"));
-		$("tr", $table).each(function() {	// step through each row
-			if ($(".hdrField", this).length) {	// chop the table...
-				var $this = $(this);
-				var $sibs = $this.nextAll("tr");
-				var level = $(".hdrField:first", this).data("level");
-				var name = $(".hdrField:first", this).data("name");
-				$hdr = $("<h" + level + ">").text($.trim(name));
-				$descdiv = $("div.' . $desclass . '", this);
-				var toggle = $(".hdrField:first", this).data("toggle");
-				if (toggle) {
-					$hdr.click(function(){
-						$newtable.toggle();
-						if (typeof $descdiv != \'undefined\') {
-							$descdiv.toggle();
-						}
-						$(this).toggleClass("trackerHeaderClose")
-								.toggleClass("trackerHeaderOpen");
-					}).addClass(toggle === "c" ? "trackerHeaderClose" : "trackerHeaderOpen");
-					if (toggle === "c") {
-						$newtable.hide();
-						if (typeof $descdiv != \'undefined\') {
-							$descdiv.hide();
-						}
+	var processTrackerPageForHeaders = function( $div ) {
+		if ($(".hdrField", $div).length) {	// check
+			var $hdrField = $(".hdrField:first", $div);
+			var level = $hdrField.data("level");
+			var name = $hdrField.data("name");
+			var toggle = $hdrField.data("toggle");
+
+			$hdr = $("<h" + level + ">").text($.trim(name));
+
+			if (toggle) {
+				var $section = $div.nextUntil(":not(div)");
+				$hdr.click(function(){
+					$section.toggle();
+					var $i = $("i", this);
+					if ($i.hasClass("fa-chevron-right")) {
+						$i.replaceWith("<i class=\"fa fa-chevron-down\"></i>");
+					} else {
+						$i.replaceWith("<i class=\"fa fa-chevron-right\"></i>");
 					}
-				}
-				$sibs.each(function(){
-					$newtable.append(this);
-					$this.remove();
 				});
-				return false;
+				if (toggle === "c") {
+					$hdr.append("<small> <i class=\"fa fa-chevron-right\"></i></small>");
+					$section.hide();
+				} else {
+					$hdr.append("<small> <i class=\"fa fa-chevron-down\"></i></small>");
+				}
 			}
-		});
-		$table.after($newtable).after($hdr);
-		if (typeof $descdiv != \'undefined\' && $("tr", $newtable).length > 0){
-			$newtable.before($descdiv);
-		}
-		if ($("tr", $newtable).length) {
-			processTableForHeaders($newtable);	// recurse until done
+			$div.replaceWith($hdr);
+			return false;
 		}
 	}
-	$(".hdrField").parents("table").each(function() {
-		processTableForHeaders($(this));
+	$(".hdrField").parents(".form-group").each(function() {
+		processTrackerPageForHeaders($(this));
 	});
 })();';
 		} else {
@@ -139,7 +129,7 @@ class Tracker_Field_Header extends Tracker_Field_Abstract implements Tracker_Fie
 		$headerlib->add_jq_onready($js);
 		
 		// just a marker for jQ to find
-		$html = '<span class="hdrField' . $class . '" data-level="' . $level . '" ' . '" data-name="' . $name . '" '
+		$html = '<span class="hdrField' . $class . '" data-level="' . $level . '" ' . ' data-name="' . $name . '" '
 			. $data_toggle .' style="display:none;"></span>';
 		
 		return $html;

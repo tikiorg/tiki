@@ -1851,16 +1851,6 @@ table.treetable.objectperms td.removed {
   -webkit-column-count: 2;
   -webkit-column-gap: 30px;
 }
-.trackerHeaderOpen {
-  background-repeat: no-repeat;
-  background-position: right;
-  background-image: url(img/icons/resultset_down.png);
-}
-.trackerHeaderClose {
-  background-repeat: no-repeat;
-  background-position: right;
-  background-image: url(img/icons/resultset_next.png);
-}
 .file-drop {
   min-height: 100px;
 }

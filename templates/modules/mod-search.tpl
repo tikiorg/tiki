@@ -69,7 +69,7 @@
 							{/if}
 						{/if}
 						{if $smod_params.compact eq "y"}
-							<button type="submit" class="btn btn-default search_mod_magnifier" id="magnifier">
+							<button type="submit" class="btn btn-default search_mod_magnifier">
 								{icon name="search"}
 							</button>
 							{* {icon _id="magnifier" class="search_mod_magnifier icon"}*}
