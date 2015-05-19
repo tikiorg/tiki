@@ -1339,7 +1339,7 @@ function wikiplugin_tracker($data, $params)
 			if (isset($_REQUEST['register']))
 				$back.= '<input type="hidden" name="register" value="'.$_REQUEST["register"].'" />';
 			if ($showtitle == 'y') {
-				$back.= '<div class="titlebar">'.$tracker["name"].'</div>';
+				$back.= '<div class="h1">'.$tracker["name"].'</div>';
 			}
 			if ($showdesc == 'y' && $tracker['description']) {
 
@@ -1596,7 +1596,7 @@ FILL;
 			$smarty->assign('wikiplugin_tracker', $trackerId);//used in vote plugin
 		$id = ' id="wikiplugin_tracker'.$iTRACKER.'"';
 		if ($showtitle == 'y') {
-			$back.= '<div class="titlebar"'.$id.'>'.$tracker["name"].'</div>';
+			$back.= '<div class="h1"'.$id.'>'.$tracker["name"].'</div>';
 			$id = '';
 		}
 		if ($showdesc == 'y') {
