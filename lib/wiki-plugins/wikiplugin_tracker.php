@@ -1465,9 +1465,6 @@ function wikiplugin_tracker($data, $params)
 							}
 							break;
 						}
-						if (!$isTextOnSameRow) {
-							 $back.= " colspan='2'";
-						}
 
 						if (!empty($colwidth)) {
 							$back .= " width='".$colwidth."'";
@@ -1486,7 +1483,11 @@ function wikiplugin_tracker($data, $params)
 							$back.= '<div class="col-md-9 tracker_input_value tracker_field' . $f['fieldId'] . '">'; // '</td><td class="tracker_input_value">';
 						}
 
-						$back .= wikiplugin_tracker_render_input($f, $item, $dynamicSave)."</div></div>"; // chibaguy added /divs
+						$back .= wikiplugin_tracker_render_input($f, $item, $dynamicSave)."</div>"; // chibaguy added /divs
+
+						if ($isTextOnSameRow) {
+							$back .= '</div>';
+						}
 					}
 
 					if ($f['type'] != 'S' && empty($tpl) && empty($wiki)) {
