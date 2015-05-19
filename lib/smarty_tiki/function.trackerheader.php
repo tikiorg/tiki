@@ -25,7 +25,7 @@ function smarty_function_trackerheader($params, $smarty)
 	static $trackerheaderStack = array();
 	static $iTrackerHeader = 0;
 	$last = count($trackerheaderStack);
-	$default = array('level'=>2, 'inTable'=>'');
+	$default = array('level'=>3, 'inTable'=>'');
 	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
 
