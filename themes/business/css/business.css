@@ -7052,6 +7052,15 @@ h6 a.tiki_anchor:hover {
   color: #ffffff;
   background-color: #000000;
 }
+.wp-sign a,
+.wp-sign a:visited {
+  color: #ffffff;
+}
+.wp-sign a:hover,
+.wp-sign a:visited:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
 .toc {
   border-top: 1px dotted #c1c1c1;
   border-bottom: 1px dotted #c1c1c1;
