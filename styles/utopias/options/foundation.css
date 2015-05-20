@@ -16,7 +16,7 @@ hr {
 
 .wikitext ul {}
 
-.wikitext li {
+.wikitext ul li {
 	list-style-image: url(foundation/bullet-brown.gif);
 }
 

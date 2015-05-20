@@ -33,7 +33,7 @@ a:hover {
 .wikitext ul {
 }
 
-.wikitext li {
+.wikitext ul li {
 	list-style-image: url(attainable/bullet.gif);
 }
 

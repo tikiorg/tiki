@@ -149,7 +149,7 @@ img.flipmodimage {
 	float: right;
 }
 
-.wikitext li {
+.wikitext ul li {
 	list-style-image: url(attainable/bullet.gif);
 }
 
