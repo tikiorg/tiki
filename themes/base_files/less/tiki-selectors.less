@@ -825,6 +825,14 @@ h6 a.tiki_anchor:hover {
 .wp-sign {
 	color: @tooltip-color;
 	background-color: @tooltip-bg;
+	a,
+	a:visited {
+		color: spin(@tooltip-color, 30%);
+		&:hover {
+			color: spin(@tooltip-color, 45%);
+			text-decoration: none;
+		}
+	}
 }
 
 // /* TOC */

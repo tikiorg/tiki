@@ -13,7 +13,6 @@ require_once ('tiki-setup.php');
 $categlib = TikiLib::lib('categ');
 include_once ('lib/tree/BrowseTreeMaker.php');
 $access->check_feature('feature_categories');
-$access->check_permission('tiki_p_view_category');
 
 $prefsgroups = $prefs['feature_group_watches'];
 global $prefsgroups, $tiki_p_admin_users, $tiki_p_admin;
@@ -23,6 +22,9 @@ $auto_query_args = array('deep', 'sort_mode', 'offset', 'find', 'type', 'parentI
 // Check for parent category or set to 0 if not present
 if (!isset($_REQUEST['parentId'])) {
 	$_REQUEST['parentId'] = 0;
+	$access->check_permission('tiki_p_view_category');
+} else {
+	$access->check_permission('tiki_p_view_category', '', 'category', $_REQUEST['parentId']);
 }
 $smarty->assign('parentId', $_REQUEST['parentId']);
 if (isset($_REQUEST['maxRecords']) && ($_REQUEST['maxRecords'] >= 1 || $_REQUEST['maxRecords'] == -1)) {

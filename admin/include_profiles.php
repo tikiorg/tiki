@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 		foreach ($_POST as $key => $value) {
 			if ($key != 'url' && $key != 'forget') {
-				$data[str_replace('_', ' ', $key) ] = $value;
+				$data[$key] = $value;
 			}
 		}
 		set_time_limit(0);
