@@ -23,7 +23,7 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 				'help' => 'Webservice+tracker+field',				
 				'prefs' => array('trackerfield_webservice', 'feature_webservices'),
 				'tags' => array('advanced'),
-				'default' => 'y',
+				'default' => 'n',
 				'params' => array(
 					'service' => array(
 						'name' => tr('Service Name'),
