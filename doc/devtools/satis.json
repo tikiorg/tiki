@@ -1175,6 +1175,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "jquery/plugins/tagcanvas",
+				"version": "2.6.1",
+				"dist": {
+					"url": "http://www.goat1000.com/jquery.tagcanvas.js?2.6.1.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "jquery/plugins/treetable",
 				"version": "3.0.1",
 				"dist": {
