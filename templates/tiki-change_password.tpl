@@ -59,7 +59,7 @@
 			{/if}
 		</div>
 	</div>
-	{if empty($smarty.request.actpass) and $new_user_validation neq 'y' or empty($oldpass)}
+	{if empty($smarty.request.actpass) and ($new_user_validation neq 'y' or empty($oldpass))}
 	<div class="form-group">
 		<label class="col-sm-3 col-md-2 control-label" for="oldpass">{tr}Old Password{/tr}</label>
 		<div class="col-sm-7 col-md-6">
