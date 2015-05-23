@@ -213,7 +213,8 @@ if ($isPre) {
 
 	if (! $options['no-packaging'] && important_step("Build packages files (based on the '$tag' tag)")) {
 		build_packages($packageVersion, $tag);
-		echo color("\nUpload the files on SourceForge.\nInstructions can be found here: http://sourceforge.net/p/forge/documentation/Files/\n\n", 'cyan');
+		echo color("\nUpload the files on SourceForge.\nInstructions can be found here: http://sourceforge.net/p/forge/documentation/Files/\n", 'cyan');
+		echo color("\nAlternately, do it by hand after replacing SF_LOGIN with your sf.net login\nand after replacing PATH according to https://sourceforge.net/projects/tikiwiki/files/\ncd ~/tikipack/$packageVersion; scp tiki-$packageVersion.* SF_LOGIN@frs.sourceforge.net:/home/frs/project/t/ti/tikiwiki/Tiki_PATH/$packageVersion \n\n", 'cyan');
 	} else {
 		echo color("This was the last step.\n", 'cyan');
 	}
@@ -814,7 +815,7 @@ EOS;
 				// Quickfix to keep old dates which may be different due to which time zone is used
 				if (isset($oldContributors[$author]['First Commit'])) {
 					$infos['First Commit'] = $oldContributors[$author]['First Commit'];
-					if ($oldContributors[$author]['Number of Commits'] == $infos['Number of Commits']) {
+					if (isset($oldContributors[$author]['Number of Commits']) && $oldContributors[$author]['Number of Commits'] == $infos['Number of Commits']) {
 						$infos['Last Commit'] = $oldContributors[$author]['Last Commit'];
 					}
 				}
