@@ -53,8 +53,12 @@
 	{if $tiki_p_perspective_create eq 'y'}
 		{tab name="{tr}Create{/tr}"}
 			<h2>{tr}Create{/tr}</h2>
-			<form method="post" action="tiki-edit_perspective.php">
-				<p>{tr}Name:{/tr} <input type="text" name="name"/> <input type="submit" class="btn btn-default btn-sm" name="create" value="{tr}Create{/tr}"></p>
+			<form method="post" action="tiki-edit_perspective.php" class="form-inline">
+                <div class="form-group">
+				    <label>{tr}Name:{/tr} </label>
+                        <input type="text" name="name" class="form-control">
+                </div>
+                <input type="submit" class="btn btn-default" name="create" value="{tr}Create{/tr}">
 			</form>
 		{/tab}
 	{/if}
@@ -62,10 +66,10 @@
 	{if $perspective_info && $perspective_info.can_edit}
 		{tab name="{tr}Edit{/tr}"}
 			<h2>{tr}Edit{/tr}</h2>
-			<form method="post" action="tiki-edit_perspective.php">
+			<form method="post" action="tiki-edit_perspective.php" class="form-horizontal">
 				<div class="form-group clearfix">
-					<label for="name" class="col-sm-4 control-label">{tr}Name{/tr}</label>
-					<div class="col-sm-8">
+					<label for="name" class="col-sm-2 control-label">{tr}Name{/tr}</label>
+					<div class="col-sm-10">
                         <input type="text" name="name" id="name" value="{$perspective_info.name|escape}" class="form-control">
                     </div>
     					<input type="hidden" name="id" value="{$perspective_info.perspectiveId|escape}">
@@ -80,14 +84,11 @@
 					<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
 				</p>
 			</form>
-			<form method="post" id="searchform" action="tiki-edit_perspective.php">
+			<form method="post" id="searchform" action="tiki-edit_perspective.php" class="form-inline">
 				{remarksbox type="info" title="{tr}Hint{/tr}"}{tr}Search for configurations below and drag them in to the configuration section above.{/tr}{/remarksbox}
-				<p>
-					<input type="hidden" name="id" value="{$perspective_info.perspectiveId|escape}">
-					<input id="criteria" type="text" name="criteria">
+					<input id="criteria" type="text" name="criteria" class="form-control">
 					<input type="submit" class="btn btn-default btn-sm" value="{tr}Search{/tr}">
-				</p>
-				<fieldset id="resultzone" class="dropzone" style="text-align: left;"></fieldset>
+					<fieldset id="resultzone" class="dropzone" style="text-align: left;"></fieldset>
 			</form>
 			{jq}
 				$('#preferences')

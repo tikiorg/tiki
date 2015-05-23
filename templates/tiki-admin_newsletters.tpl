@@ -86,93 +86,90 @@
 			{permission_link mode=link type=newsletter permType=newsletters id=$info.nlId title=$info.name label="{tr}There are individual permissions set for this newsletter{/tr}"}
 		{/if}
 
-		<form action="tiki-admin_newsletters.php" method="post">
+		<form action="tiki-admin_newsletters.php" method="post" class="form-horizontal">
 			<input type="hidden" name="nlId" value="{$info.nlId|escape}">
 			<input type="hidden" name="author" value="{$user|escape}">
-			<table class="formcolor">
-				<tr>
-					<td>{tr}Name:{/tr}</td>
-					<td>
-						<input type="text" name="name" value="{$info.name|escape}">
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Description:{/tr}</td>
-					<td>
-						<textarea name="description" rows="4" cols="40">{$info.description|escape}</textarea>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Users can subscribe/unsubscribe to this list{/tr}</td>
-					<td>
-						<input type="checkbox" name="allowUserSub" {if $info.allowUserSub eq 'y'}checked="checked"{/if}>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Users can subscribe any email address{/tr}</td>
-					<td>
-						<input type="checkbox" name="allowAnySub" {if $info.allowAnySub eq 'y'}checked="checked"{/if}>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Add unsubscribe instructions to each newsletter{/tr}</td>
-					<td>
-						<input type="checkbox" name="unsubMsg" {if $info.unsubMsg eq 'y'}checked="checked"{/if}>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Validate email addresses{/tr}</td>
-					<td>
-						<input type="checkbox" name="validateAddr" {if $info.validateAddr eq 'y'}checked="checked"{/if}>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Allow customized text message to be sent with the HTML version{/tr}</td>
-					<td>
-						<input type="checkbox" name="allowTxt" {if $info.allowTxt eq 'y'}checked="checked"{/if}>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Allow clipping of articles into newsletter{/tr}</td>
-					<td>
-						<input type="checkbox" name="allowArticleClip" {if $info.allowArticleClip eq 'y'}checked="checked"{/if}>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Automatically clip articles into newsletter{/tr}</td>
-					<td>
-						<input type="checkbox" name="autoArticleClip" {if $info.autoArticleClip eq 'y'}checked="checked"{/if}>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Do not send newsletter if clip is empty{/tr}</td>
-					<td>
-						<input type="checkbox" name="emptyClipBlocksSend" {if $info.emptyClipBlocksSend eq 'y'}checked="checked"{/if}>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Clip articles published in the past number of days{/tr}</td>
-					<td>
-						<input type="text" size="4" name="articleClipRangeDays" value="{$info.articleClipRangeDays|escape}">
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Article types to clip{/tr}</td>
-					<td>
-						<select name="articleClipTypes[]" size="5" multiple="multiple">
-							{section name=type loop=$articleTypes}
-								<option value="{$articleTypes[type]}" {if in_array($articleTypes[type], $info.articleClipTypes)}selected="selected"{/if}>{$articleTypes[type]|escape}</option>
-							{/section}
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td>
+			<div class="form-group">
+                <label class="col-md-2 control-label"> {tr}Name:{/tr} </label>
+                <div class="col-md-10">
+						<input class="form-control" type="text" name="name" value="{$info.name|escape}">
+                </div>
+			</div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">{tr}Description:{/tr}</label>
+                <div class="col-md-10">
+                    <textarea class="form-control" name="description">{$info.description|escape}</textarea>
+				</div>
+			</div>
+            <div class="checkbox col-md-offset-2">
+                <label>
+                    <input type="checkbox" name="allowUserSub" {if $info.allowUserSub eq 'y'}checked="checked"{/if}>
+                        {tr}Users can subscribe/unsubscribe to this list{/tr}
+                </label>
+			</div>
+            <div class="checkbox col-md-offset-2">
+                <label>
+                    <input type="checkbox" name="allowAnySub" {if $info.allowAnySub eq 'y'}checked="checked"{/if}>
+                    {tr}Users can subscribe any email address{/tr}
+                </label>
+			</div>
+            <div class="checkbox col-md-offset-2">
+                <label>
+                    <input type="checkbox" name="unsubMsg" {if $info.unsubMsg eq 'y'}checked="checked"{/if}>
+                    {tr}Add unsubscribe instructions to each newsletter{/tr}
+                </label>
+            </div>
+            <div class="checkbox col-md-offset-2">
+                <label>
+                    <input type="checkbox" name="validateAddr" {if $info.validateAddr eq 'y'}checked="checked"{/if}>
+                    {tr}Validate email addresses{/tr}
+                </label>
+            </div>
+            <div class="checkbox col-md-offset-2">
+                <label>
+                    <input type="checkbox" name="allowTxt" {if $info.allowTxt eq 'y'}checked="checked"{/if}>
+                    {tr}Allow customized text message to be sent with the HTML version{/tr}
+                </label>
+            </div>
+            <div class="checkbox col-md-offset-2">
+                <label>
+                    <input type="checkbox" name="allowArticleClip" {if $info.allowArticleClip eq 'y'}checked="checked"{/if}>
+                    {tr}Allow clipping of articles into newsletter{/tr}
+                </label>
+            </div>
+            <div class="checkbox col-md-offset-2">
+                <label>
+                    <input type="checkbox" name="autoArticleClip" {if $info.autoArticleClip eq 'y'}checked="checked"{/if}>
+                    {tr}Automatically clip articles into newsletter{/tr}
+                </label>
+            </div>
+            <div class="checkbox col-md-offset-2" style="margin-bottom: 15px;">
+                <label>
+                    <input type="checkbox" name="emptyClipBlocksSend" {if $info.emptyClipBlocksSend eq 'y'}checked="checked"{/if}>
+                    {tr}Do not send newsletter if clip is empty{/tr}
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="col-md-5 control-label">
+                    {tr}Clip articles published in the past number of days{/tr}</label>
+                <div class="col-md-4">
+				    <input type="text" class="form-control" name="articleClipRangeDays" value="{$info.articleClipRangeDays|escape}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-5 control-label">
+				    {tr}Article types to clip{/tr}</label>
+                <div class="col-md-4">
+					<select name="articleClipTypes[]" class="form-control" multiple="multiple">
+						{section name=type loop=$articleTypes}
+							<option value="{$articleTypes[type]}" {if in_array($articleTypes[type], $info.articleClipTypes)}selected="selected"{/if}>{$articleTypes[type]|escape}</option>
+						{/section}
+					</select>
+                </div>
+            </div>
+			<div class="text-center">
 						<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-					</td>
-				</tr>
-			</table>
+            </div>
 		</form>
 	{/tab}
 

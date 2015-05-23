@@ -8,22 +8,17 @@
 	</div>
 
 	<h2>{tr}Change shoutbox general settings{/tr}</h2>
-	<form action="tiki-shoutbox.php" method="post">
-		<table class="formcolor">
-			<tr>
-				<td class="odd">{tr}auto-link urls{/tr}</td>
-				<td class="odd">
-					<input type="checkbox" name="shoutbox_autolink" value="on"{if $prefs.shoutbox_autolink eq 'y'} checked="checked"{/if}>
-				</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>
-					<input type="submit" class="btn btn-default btn-sm" name="shoutbox_admin" value="{tr}Save{/tr}">
-				</td>
-			</tr>
-		</table>
-	</form>
+	<form action="tiki-shoutbox.php" method="post" class="form-horizontal">
+		<div class="checkbox">
+            <label class="control-label col-md-offset-3">
+                <input type="checkbox" name="shoutbox_autolink" value="on"{if $prefs.shoutbox_autolink eq 'y'} checked="checked"{/if}>
+                {tr}auto-link urls{/tr}
+            </label>
+		</div>
+        <div class="text-center">
+			<input type="submit" class="btn btn-default btn-sm" name="shoutbox_admin" value="{tr}Save{/tr}">
+        </div>
+    </form>
 {/if}
 
 {if $tiki_p_post_shoutbox eq 'y'}
@@ -32,33 +27,34 @@
 		<div class="simplebox highlight">{$msg}</div>
 	{/if}
 	{js_maxlength textarea=message maxlength=255}
-	<form action="tiki-shoutbox.php" method="post" onsubmit="return verifyForm(this);">
+	<form class="form-horizontal" action="tiki-shoutbox.php" method="post" onsubmit="return verifyForm(this);">
 		<input type="hidden" name="msgId" value="{$msgId|escape}">
-		<table class="formcolor">
-			<tr>
-				<td>{tr}Message:{/tr}</td>
-				<td>
-					<textarea rows="4" cols="60" name="message">{$message|escape}</textarea>
-					{if $prefs.feature_socialnetworks eq 'y' && $user neq ''}
-						{if $prefs.socialnetworks_twitter_consumer_key neq ''}
-							<div><input type="checkbox" name="tweet" id="tweet" value='1'> {tr}Tweet with Twitter{/tr}<br></div>
-						{/if}
-						{if $prefs.socialnetworks_facebook_application_id neq ''}
-							<div><input type="checkbox" name="facebook" id="facebook" value='1'> {tr}Post on my Facebook wall{/tr}</div>
-						{/if}
+		<div class="form-group">
+            <label class="control-label col-md-3">{tr}Message:{/tr}</label>
+			<div class="col-md-9">
+				<textarea class="form-control" name="message">{$message|escape}</textarea>
+				{if $prefs.feature_socialnetworks eq 'y' && $user neq ''}
+					{if $prefs.socialnetworks_twitter_consumer_key neq ''}
+						<div class="checkbox">
+                            <input type="checkbox" name="tweet" id="tweet" value='1'>
+                            {tr}Tweet with Twitter{/tr}
+                        </div>
 					{/if}
-				</td>
-			</tr>
-			{if $prefs.feature_antibot eq 'y' && $user eq ''}
-				{include file='antibot.tpl'}
-			{/if}
-			<tr>
-				<td>&nbsp;</td>
-				<td>
-					<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-				</td>
-			</tr>
-		</table>
+					{if $prefs.socialnetworks_facebook_application_id neq ''}
+						<div class="checkbox">
+                            <input type="checkbox" name="facebook" id="facebook" value='1'>
+                            {tr}Post on my Facebook wall{/tr}
+                        </div>
+					{/if}
+				{/if}
+            </div>
+        </div>
+		{if $prefs.feature_antibot eq 'y' && $user eq ''}
+			{include file='antibot.tpl'}
+		{/if}
+		<div class="text-center">
+			<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+        </div>
 	</form>
 {/if}
 
