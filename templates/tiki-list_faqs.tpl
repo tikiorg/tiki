@@ -108,7 +108,7 @@
                         {tr}Title:{/tr}
                     </label>
                     <div class="col-md-9">
-							<input type="text" name="title" value="{$title|escape}">
+							<input type="text" class="form-control" name="title" value="{$title|escape}">
                     </div>
 				</div>
                 <div class="form-group">
@@ -116,7 +116,7 @@
                         {tr}Description:{/tr}
                     </label>
                     <div class="col-md-9">
-					    <textarea name="description" rows="4" cols="40">{$description|escape}</textarea>
+					    <textarea name="description" class="form-control">{$description|escape}</textarea>
 					</div>
 				</div>
 				{include file='categorize.tpl'}
