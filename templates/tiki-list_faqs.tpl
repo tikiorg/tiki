@@ -101,35 +101,31 @@
 				<h2>{tr}Create New FAQ:{/tr}</h2>
 			{/if}
 
-			<form action="tiki-list_faqs.php" method="post">
+			<form action="tiki-list_faqs.php" method="post" class="form-horizontal">
 				<input type="hidden" name="faqId" value="{$faqId|escape}">
-				<table class="formcolor">
-					<tr>
-						<td>
-							{tr}Title:{/tr}
-						</td>
-						<td>
+				<div class="form-group">
+                    <label class="control-label col-md-3">
+                        {tr}Title:{/tr}
+                    </label>
+                    <div class="col-md-9">
 							<input type="text" name="title" value="{$title|escape}">
-						</td>
-					</tr>
-					<tr>
-						<td>
-							{tr}Description:{/tr}
-						</td>
-						<td>
-							<textarea name="description" rows="4" cols="40">{$description|escape}</textarea>
-						</td>
-					</tr>
-					{include file='categorize.tpl'}
-					<tr>
-						<td>
-							{tr}Users can suggest questions:{/tr}
-						</td>
-						<td>
-							<input type="checkbox" name="canSuggest" {if $canSuggest eq 'y'}checked="checked"{/if}>
-						</td>
-					</tr>
-					<tr>
+                    </div>
+				</div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">
+                        {tr}Description:{/tr}
+                    </label>
+                    <div class="col-md-9">
+					    <textarea name="description" rows="4" cols="40">{$description|escape}</textarea>
+					</div>
+				</div>
+				{include file='categorize.tpl'}
+				<div class="checkbox">
+                    <label class="control-label col-md-offset-3">
+                        <input type="checkbox" name="canSuggest" {if $canSuggest eq 'y'}checked="checked"{/if}>
+                        {tr}Users can suggest questions:{/tr}
+                    </label>
+                </div>
 						<td>&nbsp;
 
 						</td>
