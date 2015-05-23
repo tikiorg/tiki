@@ -24,10 +24,10 @@ class TWVersion
 		//   stable   : Represents stable releases.
 		//   unstable : Represents candidate and test/development releases.
 		//   trunk     : Represents next generation development version.
-		$this->branch 	= 'unstable';
+		$this->branch 	= 'stable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '14.0beta';	// needs to have no spaces for releases
+		$this->version 	= '14.0';	// needs to have no spaces for releases
 		$this->star	= 'Peony';
 		$this->releases	= array();
 
@@ -216,6 +216,7 @@ class TWVersion
 				'13.0',
 				'13.1',
 				'14.0beta',
+				'14.0',
 			);
 	}
 
