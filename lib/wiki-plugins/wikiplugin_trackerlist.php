@@ -746,18 +746,16 @@ function wikiplugin_trackerlist($data, $params)
 			$sort = 'n';
 		}
 
-		if ($tiki_p_admin_trackers != 'y') {
-			$perms = $tikilib->get_perm_object($trackerId, 'tracker', $tracker_info, false);
-			if ($perms['tiki_p_view_trackers'] != 'y' && !$user) {
-				return;
-			}
-			$userCreatorFieldId = $trklib->get_field_id_from_type($trackerId, 'u', '1%');
-			$groupCreatorFieldId = $trklib->get_field_id_from_type($trackerId, 'g', '1%');
-			if ($perms['tiki_p_view_trackers'] != 'y' && $tracker_info['writerCanModify'] != 'y' && empty($userCreatorFieldId) && empty($groupCreatorFieldId)) {
-				return;
-			}
-			$smarty->assign_by_ref('perms', $perms);
+		$perms = $tikilib->get_perm_object($trackerId, 'tracker', $tracker_info, false);
+		if ($perms['tiki_p_view_trackers'] != 'y' && !$user) {
+			return;
 		}
+		$userCreatorFieldId = $trklib->get_field_id_from_type($trackerId, 'u', '1%');
+		$groupCreatorFieldId = $trklib->get_field_id_from_type($trackerId, 'g', '1%');
+		if ($perms['tiki_p_view_trackers'] != 'y' && $tracker_info['writerCanModify'] != 'y' && empty($userCreatorFieldId) && empty($groupCreatorFieldId)) {
+			return;
+		}
+		$smarty->assign_by_ref('perms', $perms);
 
 		global $trklib; require_once("lib/trackers/trackerlib.php");
 		if (!empty($fields)) {
@@ -1502,13 +1500,16 @@ function wikiplugin_trackerlist($data, $params)
 								$exactvalue[$i] = '';
 							}
 						} 
-					} 
-					if (array_key_exists('not', array($exactvalue[$k]))) {
-						$catfilternotfield[0] = $ff;
-						$catfilternotvalue[] = array($exactvalue[$k]);
+					}
+					if (!is_array($exactvalue[$k])) {
+						$exactvalue[$k] = array($exactvalue[$k]);
+					}
+					if (array_key_exists('not', $exactvalue[$k])) {
+						$catfilternotfield[] = $ff;
+						$catfilternotvalue[] = $exactvalue[$k];
 					} else {
-						$catfilterfield[0] = $ff;
-						$catfiltervalue[] = array($exactvalue[$k]);
+						$catfilterfield[] = $ff;
+						$catfiltervalue[] = $exactvalue[$k];
 					}
 				}
 			}
@@ -1517,11 +1518,13 @@ function wikiplugin_trackerlist($data, $params)
 				foreach ($catfilters as $cf) {
 					unset($filterfield[$cf]);
 					unset($exactvalue[$cf]);
+					unset($filtervalue[$cf]);
 				}
 				if ($catfiltervalue) {
 					// array_merge is used because it reindexes
 					$filterfield = array_merge($filterfield, $catfilterfield);
-					$exactvalue = array_merge($exactvalue, array($catfiltervalue));
+					$exactvalue = array_merge($exactvalue, $catfiltervalue);
+					$filtervalue = array_merge($filtervalue, array(''));
 				}
 				if ($catfilternotvalue) {
 					$filterfield = array_merge($filterfield, $catfilternotfield);
