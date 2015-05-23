@@ -435,6 +435,14 @@ if (($prefs['rememberme'] != 'disabled') and (isset($_COOKIE["$user_cookie_site"
 	}
 	if (isset($user) && $user) {
 		$_SESSION["$user_cookie_site"] = $user;
+		if ($prefs['cookie_refresh_rememberme'] === 'y') {
+			if (empty($userId)) {    // for intertiki
+				$userId = $userlib->get_user_id($user);
+			}
+			$secret = $userlib->create_user_cookie($userId);
+			setcookie($user_cookie_site, $secret . '.' . $userId, $tikilib->now + $prefs['remembertime'], $prefs['cookie_path'], $prefs['cookie_domain']);
+			$logslib->add_log('login', 'refreshed a cookie for ' . $prefs['remembertime'] . ' seconds');
+		}
 	}
 }
 // if the auth method is 'web site', look for the username in $_SERVER
