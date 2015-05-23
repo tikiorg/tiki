@@ -105,5 +105,15 @@ function prefs_cookie_list()
 			'size' => 35,
 			'default' => 'cookie_consent_div',
 		),
+		'cookie_refresh_rememberme' => array(
+			'name' => tr('Refresh the Remember Me Cookie Expiry'),
+			'description' => tr('Each time a user is logged in from a cookie set in a previous session, the cookie expiry date is updated.'),
+			'type' => 'flag',
+			'default' => 'n',
+			'tags' => array('advanced'),
+			'dependencies' => array(
+				'rememberme',
+			),
+		),
 	);
 }

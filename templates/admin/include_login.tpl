@@ -130,6 +130,7 @@
 				{preference name=rememberme}
 				<div class="adminoptionboxchild rememberme_childcontainer all always">
 					{preference name=remembertime}
+					{preference name=cookie_refresh_rememberme}
 				</div>
 
 				<fieldset>

@@ -355,8 +355,14 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 					);
 				}
 
-				$cookietab = '1';
-				$_REQUEST['find'] = $_REQUEST['login'];
+				if ($prefs['userTracker'] === 'y' && !empty($_REQUEST['insert_user_tracker_item'])) {
+					TikiLib::lib('header')->add_jq_onready('setTimeout(function () { $(".insert-usertracker").click(); });');
+					$_REQUEST['user'] = $_REQUEST['login'];
+					$cookietab = '2';
+				} else {
+					$cookietab = '1';
+					$_REQUEST['find'] = $_REQUEST['login'];
+				}
 			} else {
 				$errors[] = array(
 					'num' => 1,
@@ -557,8 +563,15 @@ if (isset($_REQUEST['user']) and $_REQUEST['user']) {
 			if (isset($re['usersFieldId']) and $re['usersFieldId']) {
 				$usersfieldid = $re['usersFieldId'];
 				$smarty->assign('usersfieldid', $usersfieldid);
+
 				$usersitemid = $trklib->get_item_id($userstrackerid, $usersfieldid, $re['user']);
 				$smarty->assign('usersitemid', $usersitemid);
+
+				if (empty($usersitemid)) {	// calculate the user field forced value for item insert dialog
+					$usersfield = $trklib->get_tracker_field($usersfieldid);
+					$usersTrackerForced = [$usersfield['permName'] => $userinfo['login']];
+					$smarty->assign('usersTrackerForced', $usersTrackerForced);
+				}
 			}
 		}
 	}

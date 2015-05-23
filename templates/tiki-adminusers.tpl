@@ -200,7 +200,7 @@
 												{capture name=username}{$users[user].user|username}{/capture}
 												<a
 													class="link tips"
-													href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if $prefs.feature_tabs ne 'y'}#2{else}&cookietab=2{/if}"
+													href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if $prefs.feature_tabs ne 'y'}#2{/if}"
 													title="{$username}:{tr}Edit account settings{/tr}">
 														{$users[user].user|escape}
 												</a>
@@ -294,7 +294,7 @@
 														>
 															{icon name="group" _menu_text='y' _menu_icon='y' alt="{tr}Add or remove from a group{/tr}"}
 														</a>
-														<a href="{query _type='relative' user=$users[user].userId cookietab='2'}">
+														<a href="{query _type='relative' user=$users[user].userId}">
 															{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit account settings{/tr}"}
 														</a>
 														{if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
@@ -594,6 +594,55 @@
 							</div>
 						</div>
 					{/if}
+					{if $prefs.userTracker eq 'y' and $userinfo.login eq ''}
+						<div class="form-group">
+							<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="insert_user_tracker_item">
+										{tr}Add a user tracker item for this user{/tr}
+									</label>
+								</div>
+							</div>
+						</div>
+					{/if}
+
+					{if $prefs.userTracker eq 'y' and $userstrackerid}
+						<div class="form-group">
+							<label class="col-md-2 control-label">
+								{tr}User tracker{/tr}
+							</label>
+
+							<div class="col-md-10">
+								{if $usersitemid}
+									<a href="{bootstrap_modal controller=tracker action=update_item trackerId=$userstrackerid itemId=$usersitemid}"
+									   onclick="$('[data-toggle=popover]').popover('hide');" class="btn btn-default edit-usertracker">
+										{tr}Edit Item{/tr}
+									</a>
+									<a href="{$usersitemid|sefurl:trackeritem}" class="btn btn-info">
+										{tr}View item{/tr}
+									<a>
+								{else}
+									<a href="{bootstrap_modal controller=tracker action=insert_item trackerId=$userstrackerid forced=$usersTrackerForced}"
+									   onclick="$('[data-toggle=popover]').popover('hide');" class="btn btn-default insert-usertracker">
+										{tr}Create Item{/tr}
+									</a>
+								{/if}
+							</div>
+						</div>
+					{/if}
+
+					<div class="form-group">
+						<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+							{if isset($userinfo.userId) && $userinfo.userId}
+								<input type="hidden" name="user" value="{$userinfo.userId|escape}">
+								<input type="hidden" name="edituser" value="1">
+								<input type="submit" class="btn btn-primary" name="save" value="{tr}Save{/tr}">
+							{else}
+								<input type="submit" class="btn btn-primary" name="newuser" value="{tr}Add{/tr}">
+							{/if}
+						</div>
+					</div>
 					{if isset($userinfo.userId) && $userinfo.userId != 0}
 						<table class="table table-striped table-condensed small">
 
@@ -633,24 +682,6 @@
 						</table>
 					{/if}
 
-					<div class="form-group">
-						<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
-							{if isset($userinfo.userId) && $userinfo.userId}
-								<input type="hidden" name="user" value="{$userinfo.userId|escape}">
-								<input type="hidden" name="edituser" value="1">
-								<input type="submit" class="btn btn-primary" name="save" value="{tr}Save{/tr}">
-							{else}
-								<input type="submit" class="btn btn-primary" name="newuser" value="{tr}Add{/tr}">
-							{/if}
-						</div>
-					</div>
-
-					{if $prefs.userTracker eq 'y'}
-						{if $userstrackerid and $usersitemid}
-							{tr}User tracker item : {$usersitemid}{/tr}
-							{button href="tiki-view_tracker_item.php?trackerId=$userstrackerid&amp;itemId=$usersitemid&amp;show=mod" _text="{tr}Edit Item{/tr}"}
-						{/if}
-					{/if}
 				</form>
 			{else}
 				{tr}You do not have permission to edit this user{/tr}
