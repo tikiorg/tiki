@@ -528,12 +528,6 @@
 							</div>
 						{/if}
 
-						{if isset($htaccess_error) and $htaccess_error eq 'y'}
-							<h3>{tr}.htaccess File{/tr} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/Installation" target="help">{icon name="help"}</a></h3>
-							{tr}We recommend enabling the <strong>.htaccess</strong> file for your Tiki{/tr}. {tr}This will enable you to use SEFURLs (search engine friendly URLs) and help improve site security{/tr}.
-							<p>{tr _0="<strong>_htaccess</strong>" _1="<strong>.htaccess</strong>"}To enable this file, simply copy the %0 file (located in the main directory of your Tiki installation) to %1.{/tr}</p>
-						{/if}
-
 						<p>&nbsp;</p>
 						<div align="center">
 							<input type="hidden" name="install_step" value="6">
@@ -640,6 +634,21 @@
 									<br><em>{tr}This is the email address for your administrator account.{/tr}</em></div>
 								</div>
 							</fieldset>
+							{if not empty($htaccess_options)}
+								<br>
+								<fieldset><legend>{tr}Set up htaccess file{/tr}</legend>
+									<div style="padding:5px">
+										<label for="htaccess_process">{tr}Method:{/tr}</label>
+										<select name="htaccess_process" id="htaccess_process">
+											{foreach $htaccess_options as $k => $v}
+												<option value="{$k}">{$v}</option>
+											{/foreach}
+										</select>
+										<br><em>{tr}Select how to set up your htaccess file..{/tr}</em>
+									</div>
+								</fieldset>
+							{/if}
+
 							{if $upgradefix eq 'y' && $install_type eq 'update'}
 								<fieldset>
 									<legend><span class="text-warning">{icon name="warning"}</span>{tr}Upgrade fix{/tr}</legend>
@@ -689,6 +698,15 @@
 					{remarksbox type='tip' title="{tr}Stay up-to-date{/tr}" close="n"}
 						{tr}Subscribe to the <a href="http://tiki.org/Newsletter" title="Subscribe" target="_blank" class="alert-link">Tiki newsletter</a> or <a href="http://info.tiki.org/tiki-articles_rss.php" title="RSS" target="_blank" class="alert-link">RSS feed</a> to learn about new releases, security updates, and community news.{/tr}
 					{/remarksbox}
+
+					{if isset($htaccess_error) and $htaccess_error eq 'y'}
+						<h3>{tr}.htaccess File{/tr} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/Installation" target="help">{icon name="help"}</a></h3>
+						{tr}We recommend enabling the <strong>.htaccess</strong> file for your Tiki{/tr}. {tr}This will enable you to use SEFURLs (search engine friendly URLs) and help improve site security{/tr}.
+						<p>{tr _0="<strong>_htaccess</strong>" _1="<strong>.htaccess</strong>"}To enable this file, simply copy the %0 file (located in the main directory of your Tiki installation) to %1.{/tr}</p>
+					{elseif not empty($htaccess_feedback)}
+						<p>{tr _0=$htaccess_feedback}Your .htaccess file has been set up (%0){/tr}</p>
+					{/if}
+
 					<p>
 						{if isset($smarty.post.scratch)}
 							{tr}If this is your first install, your admin password is <strong>admin</strong>.{/tr}
