@@ -49,6 +49,7 @@
 	#DirectoryIndex tiki-index.php index.php
 </IfModule>
 
+# Note in some distributions of Apache (e.g. Wampserver 2.5) you may also need to enable mod_filter as well as mod_deflate for this to work
 <IfModule mod_deflate.c>
 	<IfModule mod_headers.c>
 		# Make sure proxies don't deliver the wrong content
@@ -86,7 +87,15 @@ FileETag none
 #AuthType Basic
 #AuthName "Restricted Access"
 #AuthUserFile /etc/httpd/passwords
-#Require valid-user 
+#Require valid-user
+#
+# ...or if you want to only restrict access to GET requests then use "Limit" like this
+# (allows jcapture and other services that POST back to Tiki to work but will be less secure)
+#
+#<Limit GET>
+#	Require valid-user
+#</Limit>
+
 
 # Handling in Tiki errors caught by Apache
 # Tiki can catch some errors and deal with them by redirecting to a similar page, sending you to the search, etc. However, some errors do not reach Tiki and are only caught by Apache (ex.: filenameThatDoesntExist.php). 
