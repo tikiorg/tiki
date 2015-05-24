@@ -3495,7 +3495,7 @@ tbody.collapse.in {
   padding: 3px 20px;
   font-size: 12px;
   line-height: 1.42857143;
-  color: #999999;
+  color: #333333;
   white-space: nowrap;
 }
 .dropdown-backdrop {
@@ -6500,7 +6500,7 @@ a.fc-event:hover {
   background: url('../../../img/icons/dots.gif');
 }
 .dropdown-menu {
-  color: #999999;
+  color: #333333;
 }
 .cssmenu_horiz > li:hover,
 .cssmenu_horiz > li.sfHover,
@@ -7193,7 +7193,8 @@ body {
   color: #fff;
   background: #214d68 url('../images/headerbg.jpg') repeat-x 0 100%;
 }
-.top_modules a {
+.top_modules a,
+.top_modules .btn-link {
   color: #fff;
 }
 .topbar {
@@ -7203,7 +7204,8 @@ body {
 .topbar,
 .layout_fixed_top_modules #top_modules,
 .topbar .navbar-default .navbar-nav > li,
-.topbar .nav > li {
+.topbar .nav > li,
+.siteloginbar_popup .dropdown-menu {
   background: #2498c7;
   background: -moz-linear-gradient(top, #2498c7 0%, #047aa8 4%, #1b98c6 39%, #32b5e1 65%, #32bbe9 70%, #44d1fe 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #2498c7), color-stop(4%, #047aa8), color-stop(39%, #1b98c6), color-stop(65%, #32b5e1), color-stop(70%, #32bbe9), color-stop(100%, #44d1fe));
