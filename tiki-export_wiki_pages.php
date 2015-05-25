@@ -11,7 +11,9 @@ include_once ("lib/ziplib.php");
 include_once ('lib/wiki/exportlib.php');
 
 $access->check_feature('feature_wiki_export');
-$access->check_permission('tiki_p_export_wiki');
+if (empty($_REQUEST['page'])) {
+	$access->check_permission('tiki_p_export_wiki');
+}
 
 if (!isset($_REQUEST["page"])) {
 	$exportlib->MakeWikiZip();
