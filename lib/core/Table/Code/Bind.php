@@ -29,7 +29,7 @@ class Table_Code_Bind extends Table_Code_Manager
 		//make pager controls at bottom of table visible when number of rows is greater than 15
 		if (parent::$pager) {
 			$bind = [
-				//tiki popover needs to be re-applied due to late loading of tablesorter html
+				//re-binding in some cases since ajax tbody refresh disconnects binding
 				'$(\'' . parent::$tid . '\').tiki_popover();',
 				'if (c.pager.endRow - c.pager.startRow > 15) {',
 				'	$(\'div#' . parent::$s['pager']['controls']['id']
@@ -38,6 +38,16 @@ class Table_Code_Bind extends Table_Code_Manager
 				'	$(\'div#' . parent::$s['pager']['controls']['id']
 				. '.ts-pager-bottom\').css(\'visibility\', \'hidden\');',
 				'}',
+				'$(\'[data-toggle=popover]\').on(\'shown.bs.popover\', function() {',
+				'	$(\'.confirm-click\').click(function() {',
+				'		confirmClick(this, \'href\');',
+				'		return false;',
+				'	});',
+				'});',
+				'$(\'.confirm-click\').click(function() {',
+				'	confirmClick(this, \'href\');',
+				'	return false;',
+				'});',
 			];
 			$jq[] = $this->iterate(
 				$bind, '.bind(\'pagerComplete\', function(e, c){', $this->nt . '})', $this->nt2, '', '');

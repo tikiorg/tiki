@@ -153,11 +153,21 @@
 			{if ($cant > $numrows or !empty($initial)) && !$tsOn}
 				{initials_filter_links}
 			{/if}
-			<form class="form-horizontal" name="checkform" method="post" action="{$smarty.server.PHP_SELF|escape}">
-				<input type="hidden" name="all_groups" value="{$all_groups_encoded|escape}">
+			{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+			{if $prefs.javascript_enabled !== 'y'}
+				{$js = 'n'}
+				{$libeg = '<li>'}
+				{$liend = '</li>'}
+			{else}
+				{$js = 'y'}
+				{$libeg = ''}
+				{$liend = ''}
+			{/if}
+			<form class="form-horizontal confirm-form" name="checkform" id="checkform" method="post" action="{service controller=user}">
 				<div id="{$ts_tableid}-div" {if $tsOn}style="visibility:hidden;"{/if}>
-					<div class="table-responsive user-table ts-wrapperdiv">
+					<div class="{if $js === 'y'}table-responsive{/if} user-table ts-wrapperdiv">
 		{/if}
+						{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
 						<table id="{$ts_tableid}" class="table normal table-striped table-hover">
 							{* Note: th element ids here need to match those at /lib/core/Table/Settings/TikiAdminusers.php
 							for tablesorter to work properly *}
@@ -251,22 +261,7 @@
 															{if $what eq 'included'}<span class="label label-info">{tr}Included{/tr}</span>{/if}
 															{if $grs eq $users[user].default_group}<small>({tr}default{/tr})</small>{/if}
 															{if $what ne 'included' and $grs != "Registered"}
-																<a href="#"
-																	class="btn-link tips"
-																	title="{$username}:{tr _0="{$grs}"}Remove from group %0{/tr}"
-																	onclick="confirmModal(this,
-																		{ldelim}
-																			'controller':'user',
-																			'action':'manage_groups',
-																			'closest':'form',
-																			'params':
-																				{ldelim}
-																					'checked[]': '{$username}',
-																					'groupremove' : '{$grs}'
-																				{rdelim}
-																		{rdelim}
-																	);"
-																>
+																<a href="{service controller=user action=manage_groups checked=$username groupremove=$grs offset=$offset sort_mode=$sort_mode numrows=$numrows}" class="confirm-click">
 																	{icon name="remove"}
 																</a>
 															{/if}
@@ -279,87 +274,70 @@
 											<td class="action">
 												{capture name=user_actions}
 													{strip}
-														<a href="#"
-															onclick="confirmModal(this,
-																{ldelim}
-																	'controller':'user',
-																	'action':'manage_groups',
-																	'closest':'form',
-																	'params':
-																	{ldelim}
-																		'checked[]': '{$username}',
-																		'all_groups': '{$all_groups_encoded|escape}'
-																{rdelim}
-															{rdelim});$('[data-toggle=popover]').popover('hide');"
+														{$libeg}<a href="{service controller=user action=manage_groups checked=$username all_groups=$all_groups offset=$offset sort_mode=$sort_mode numrows=$numrows}"
+														   class="confirm-click"
 														>
 															{icon name="group" _menu_text='y' _menu_icon='y' alt="{tr}Add or remove from a group{/tr}"}
-														</a>
-														<a href="{query _type='relative' user=$users[user].userId}">
+														</a>{$liend}
+														{$libeg}<a href="{query _type='relative' user=$users[user].userId}">
 															{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit account settings{/tr}"}
-														</a>
+														</a>{$liend}
 														{if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
-															<a href="tiki-user_preferences.php?userId={$users[user].userId}">
+															{$libeg}<a href="tiki-user_preferences.php?userId={$users[user].userId}">
 																{icon name="settings" _menu_text='y' _menu_icon='y' alt="{tr}Change user preferences{/tr}" }
-															</a>
+															</a>{$liend}
 														{/if}
 														{if $users[user].user eq $user or $users[user].user_information neq 'private' or $tiki_p_admin eq 'y'}
-															<a href="tiki-user_information.php?userId={$users[user].userId}"{if $users[user].user_information eq 'private'}
+															{$libeg}<a href="tiki-user_information.php?userId={$users[user].userId}"{if $users[user].user_information eq 'private'}
 																style="opacity:0.5;"{/if}
 															>
 																{icon name="help" _menu_text='y' _menu_icon='y' alt="{tr}User information{/tr}"}
-															</a>
+															</a>{$liend}
 														{/if}
 
 														{if $users[user].user ne 'admin'}
-															<a href="#"
-																onclick="confirmModal(this,
-																	{ldelim}
-																		'controller':'user',
-																		'action':'remove_users',
-																		'closest':'form',
-																		'params':
-																		{ldelim}
-																			'checked[]': '{$username}'
-																		{rdelim}
-																	{rdelim}
-																); $('[data-toggle=popover]').popover('hide'); "
-															>
+															{$libeg}<a href="{service controller=user action=remove_users checked=$username offset=$offset sort_mode=$sort_mode numrows=$numrows}"  class="confirm-click">
 																{icon name="remove" _menu_text='y' _menu_icon='y' alt="{tr}Delete{/tr}"}
-															</a>
+															</a>{$liend}
 															{if $users[user].waiting eq 'a'}
-																<a href="tiki-login_validate.php?user={$users[user].user|escape:url}&amp;pass={$users[user].valid|escape:url}">
+																{$libeg}<a href="tiki-login_validate.php?user={$users[user].user|escape:url}&amp;pass={$users[user].valid|escape:url}">
 																	{icon name="ok" _menu_text='y' _menu_icon='y' alt="{tr}Validate user{/tr}"}
-																</a>
+																</a>{$liend}
 															{/if}
 															{if $users[user].waiting eq 'u'}
-																<a href="tiki-confirm_user_email.php?user={$users[user].user|escape:url}&amp;pass={$users[user].provpass|md5|escape:url}" title="{tr _0=$users[user].user|username}Confirm user email: %0{/tr}">
+																{$libeg}<a href="tiki-confirm_user_email.php?user={$users[user].user|escape:url}&amp;pass={$users[user].provpass|md5|escape:url}" title="{tr _0=$users[user].user|username}Confirm user email: %0{/tr}">
 																	{icon name="envelope" _menu_text='y' _menu_icon='y' alt="{tr}Confirm user email{/tr}"}
 																</a>
 															{/if}
 															{if $prefs.email_due > 0 and $users[user].waiting ne 'u' and $users[user].waiting ne 'a'}
-																<a href="tiki-adminusers.php?user={$users[user].user|escape:url}&amp;action=email_due">
+																{$libeg}<a href="tiki-adminusers.php?user={$users[user].user|escape:url}&amp;action=email_due">
 																	{icon name="trash"  _menu_text='y' _menu_icon='y' alt="{tr}Invalidate email{/tr}"}
-																</a>
+																</a>{$liend}
 															{/if}
 														{/if}
 														{if !empty($users[user].openid_url)}
-															{self_link _menu_text='y' _menu_icon='y' userId=$users[user].userId action='remove_openid' _icon_name="trash"}
+															{$libeg}{self_link _menu_text='y' _menu_icon='y' userId=$users[user].userId action='remove_openid' _icon_name="trash"}
 																{tr}Remove link with OpenID account{/tr}
-															{/self_link}
+															{/self_link}{$liend}
 
-															<a class="link" href="{self_link userId=$users[user].userId action='remove_openid' _tag="n"}{/self_link}" title="{tr _0=$users[user].user|username}User %0{/tr}:">
+															{$libeg}<a class="link" href="{self_link userId=$users[user].userId action='remove_openid' _tag="n"}{/self_link}" title="{tr _0=$users[user].user|username}User %0{/tr}:">
 																{icon name="link" _menu_text='y' _menu_icon='y' alt="{tr}Remove link with OpenID account{/tr}"}
-															</a>
+															</a>{$liend}
 														{/if}
 													{/strip}
 												{/capture}
-												<a class="tips"
-												   title="{tr}Actions{/tr}"
-												   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.user_actions|escape:"javascript"|escape:"html"}
-												   style="padding:0; margin:0; border:0"
+												{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+												<a
+													class="tips"
+													title="{tr}Actions{/tr}" href="#"
+													{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.user_actions|escape:"javascript"|escape:"html"}{/if}
+													style="padding:0; margin:0; border:0"
 												>
 													{icon name='wrench'}
 												</a>
+												{if $js === 'n'}
+													<ul class="dropdown-menu" role="menu">{$smarty.capture.user_actions}</ul></li></ul>
+												{/if}
 											</td>
 										</tr>
 									{/if}
@@ -377,7 +355,7 @@
 					{if $users}
 						<div class="input-group col-sm-6">
 							<label for="user_action" class="control-label sr-only">{tr}Select action to perform with checked{/tr}</label>
-							<select class="form-control" name="user_action">
+							<select class="form-control" name="action">
 								<option value="no_action" selected="selected">
 									{tr}Select action to perform with checked{/tr}...
 								</option>
@@ -415,18 +393,7 @@
 								{/if}
 							</select>
 							<span class="input-group-btn">
-								<button
-									id="adminusers-actions" type="button" class="btn btn-primary"
-									onclick="confirmModal(this,
-											{ldelim}
-												'controller':'user',
-												'action':
-													{ldelim}
-														'selector': 'select[name=user_action]',
-														'fn': 'val'
-													{rdelim},
-												'closest':'form'
-											{rdelim});">
+								<button type="submit" form="checkform" class="btn btn-primary">
 									{tr}OK{/tr}
 								</button>
 							</span>
@@ -770,3 +737,9 @@
 		{/tab}
 	{/if}
 {/tabset}
+{jq}
+	$('form.confirm-form').submit(function() {
+		confirmForm(this);
+		return false;
+	});
+{/jq}

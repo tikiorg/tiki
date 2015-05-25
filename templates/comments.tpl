@@ -10,10 +10,12 @@
 	{* WARNING: when previewing a new reply to a forum post, $parent_com is also set *}
 
 	{if $comments_cant gt 0}
-		<form method="get" action="{$comments_father}" class="comments">
+		<form method="get" id="comment-form" action="{$comments_father}" class="comments">
 			{section name=i loop=$comments_request_data}
 				<input type="hidden" name="{$comments_request_data[i].name|escape}" value="{$comments_request_data[i].value|escape}">
 			{/section}
+			{*for the forum service button when js is not enabled*}
+			<input type="hidden" name="controller" value="forum">
 			<input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}">
 			<input type="hidden" name="comments_grandParentId" value="{$comments_grandParentId|escape}">
 			<input type="hidden" name="comments_reply_threadId" value="{$comments_reply_threadId|escape}">
@@ -29,7 +31,7 @@
 			{if $tiki_p_admin_forum eq 'y'}
 				<div class="panel panel-primary form-group">
 					<div class="panel-heading">
-						{tr}Moderator actions{/tr}
+						{tr}Moderator actions for selected topics{/tr}
 					</div>
 					<div class="panel-body form-inline">
 						<span class="infos pull-right">
@@ -42,31 +44,17 @@
 						</span>
 						{if $topics|@count > 1}
 							<button
-								type="button"
-								id="merge-topic"
-								class="btn btn-default btn-sm tips"
-								title=":{tr}Merge selected topics{/tr}"
-								onclick="confirmModal(this,
-									{ldelim}
-										'controller':'forum',
-										'action':'merge_topic',
-										'closest':'form'
-									{rdelim});"
+								type="submit" name="action" value="merge_topic" title=":{tr}Merge{/tr}"
+								form="comment-form" formaction="{service controller=forum}"
+								class="btn btn-default btn-sm tips confirm-form"
 							>
-									{icon name="merge"}
+								{icon name="merge"}
 							</button>
 						{/if}
 						<button
-							type="button"
-							id="delete-topic"
-							class="btn btn-default btn-sm tips"
-							title=":{tr}Delete selected posts{/tr}"
-							onclick="confirmModal(this,
-								{ldelim}
-									'controller':'forum',
-									'action':'delete_topic',
-									'closest':'form'
-								{rdelim});"
+							type="submit" name="action" value="delete_topic" title=":{tr}Delete{/tr}"
+							form="comment-form" formaction="{service controller=forum}"
+							class="btn btn-default btn-sm tips confirm-form"
 						>
 							{icon name="remove"}
 						</button>
@@ -189,6 +177,24 @@
 		{/foreach}
 	{/remarksbox}
 {/if}
+{jq}
+	$('.confirm-form').click(function() {
+		var formId = $(this).attr('form'), form = $('form#' + formId), action = this.value;
+		$(form).attr('action', 'tiki-forum-' + action);
+		confirmForm(form);
+		return false;
+	});
+{/jq}
+
+{jq}
+$('.confirm-click').click(function() {
+		var form = this.closest('form'), action = this.value;
+		$(form).attr('action', 'tiki-forum-' + action);
+		confirmForm(form);
+		return false;
+	});
+{/jq}
+
 
 {* Post dialog *}
 {if $tiki_p_forum_post eq 'y'}

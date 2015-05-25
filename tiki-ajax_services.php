@@ -21,25 +21,7 @@ $inputConfiguration = array(array(
 	'staticKeyFilters' => array(
 		'action' => 'word',
 		'controller' => 'text',
-		// confirm modals
-		'title' => 'xss',
-		'customAction' => 'xss',
-		'customVerb' => 'xss',
-		'customObject' => 'xss',
-		'customMsg' => 'xss',
-		'toId' => 'digits',
-		'toList' => 'xss',
-		'forumId' => 'digits',
-		'ticket' => 'alnum',
-		'daconfirm' => 'alnum',
-		'modal' => 'digits',
 	),
-	'staticKeyFiltersForArrays' => array(
-		// confirm modals
-		'items' => 'xss',
-		'rows' => 'xss',
-		'extra' => 'xss',
-	) ,
 ));
 
 if (isset($_REQUEST['controller'], $_REQUEST['action'])) {

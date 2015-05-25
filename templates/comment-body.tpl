@@ -86,17 +86,17 @@
 	{icon name='attach' alt="{tr}Attachment{/tr}"}
 	{$comment.attachments[ix].filename} ({$comment.attachments[ix].filesize|kbsize})</a>
 	{if $tiki_p_admin_forum eq 'y'}
-		<span
+		<a
 			{if $first eq 'y'}
-				data-service="{service controller=forum action=delete_attachment params="topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_find_param}{$topics_threshold_param}&comments_offset={$smarty.request.topics_offset}{$thread_sort_mode_param}&comments_threshold={$smarty.request.topics_threshold}{$comments_find_param}&forumId={$forum_info.forumId}{$comments_per_page_param}&comments_parentId={$comments_parentId}&remove_attachment={$comment.attachments[ix].attId}&filename={$comment.attachments[ix].filename}&"}"
+				href="{service controller=forum action=delete_attachment topics_offset={$smarty.request.topics_offset} topics_sort_mode={$smarty.request.topics_sort_mode} topics_find={$smarty.request.topics_find} topics_threshold={$smarty.request.topics_threshold} comments_threshold={$smarty.request.topics_threshold} comments_find={$smarty.request.topics_find} forumId={$forum_info.forumId} comments_per_page={$comments_per_page} comments_parentId={$comments_parentId} remove_attachment={$comment.attachments[ix].attId} filename={$comment.attachments[ix].filename}}"
 			{else}
-				data-service="{service controller=forum action=delete_attachment params="topics_offset={$smarty.request.topics_offset}&topics_sort_mode={$smarty.request.topics_sort_mode}&topics_find={$smarty.request.topics_find}&topics_threshold={$smarty.request.topics_threshold}&comments_offset={$smarty.request.topics_offset}&thread_sort_mode={$thread_sort_mode}&comments_threshold={$smarty.request.topics_threshold}&comments_find={$smarty.request.topics_find}&forumId={$forum_info.forumId}&comments_per_page={$comments_per_page}&comments_parentId={$comments_parentId}&remove_attachment={$comment.attachments[ix].attId}&filename={$comment.attachments[ix].filename}"}"
+				href="{service controller=forum action=delete_attachment topics_offset={$smarty.request.topics_offset} topics_sort_mode={$smarty.request.topics_sort_mode} topics_find={$smarty.request.topics_find} topics_threshold={$smarty.request.topics_threshold} comments_threshold={$smarty.request.topics_threshold} comments_find={$smarty.request.topics_find} forumId={$forum_info.forumId} comments_per_page={$comments_per_page} comments_parentId={$comments_parentId} remove_attachment={$comment.attachments[ix].attId} filename={$comment.attachments[ix].filename} comments_offset={$smarty.request.topics_offset} thread_sort_mode={$thread_sort_mode}}"
 			{/if}
-			onclick="confirmModal(this, {ldelim}'data':'service'{rdelim});"
-			class="btn-link tips"
-			title=":{tr}Remove attachment{/tr}">
+			class="btn-link tips confirm-click"
+			title=":{tr}Remove attachment{/tr}"
+		>
 				{icon name='remove' alt="{tr}Remove attachment{/tr}"}
-		</span>
+		</a>
 	{/if}
 	<br>
 	{/section}

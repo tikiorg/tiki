@@ -39,13 +39,9 @@
 						</a>{$liend}
 					{/if}
 					{if $tiki_p_admin_forum eq 'y'}
-						{$libeg}<a href="#"
-							{if $first eq 'y'}
-								data-service="{service controller=forum action=delete_topic params="comments_offset={$smarty.request.topics_offset}{if isset($thread_sort_mode_param)}{$thread_sort_mode_param}{/if}&comments_threshold={$smarty.request.topics_threshold}{if isset($comments_find_param)}{$comments_find_param}{/if}&forumtopic[]={$comment.threadId}&forumId={$forum_info.forumId}{if isset($comments_per_page_param)}{$comments_per_page_param}{/if}"}"
-							{else}
-								data-service="{service controller=forum action=delete_topic params="forumId={$forum_info.forumId}&comments_threshold={$comments_threshold}&forumtopic[]={$comment.threadId}&comments_offset={$comments_offset}&thread_sort_mode={$thread_sort_mode}&comments_per_page={$comments_per_page}&comments_parentId={$comments_parentId}&thread_style={$thread_style}"}"
-							{/if}
-							onclick="confirmModal(this, {ldelim}'data':'service'{rdelim});$('[data-toggle=popover]').popover('hide');"
+						<a {if $first eq 'y'} href="{service controller=forum action=delete_topic forumId={$forum_info.forumId} comments_threshold={$comments_threshold} forumtopic={$comment.threadId} comments_offset={$comments_offset} thread_sort_mode={$thread_sort_mode} comments_find={$smarty.request.topics_find} comments_per_page={$comments_per_page}}"
+							{else} href="{service controller=forum action=delete_topic forumId={$forum_info.forumId} comments_threshold={$comments_threshold} forumtopic={$comment.threadId} comments_offset={$comments_offset} thread_sort_mode={$thread_sort_mode} comments_per_page={$comments_per_page} comments_parentId={$comments_parentId} thread_style={$thread_style}}"
+							{/if} class="confirm-click"
 						>
 							{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Delete post{/tr}"}
 						</a>{$liend}

@@ -1,4 +1,9 @@
 {* $Id: layout_view.tpl 48366 2013-11-08 16:12:24Z lphuberdeau $ *}<!DOCTYPE html>
+{if isset($confirm) && $confirm === 'y'}
+	{$confirm = true}
+{else}
+	{$confirm = false}
+{/if}
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 	<h4 class="modal-title" id="myModalLabel">{$title|escape}{block name=subtitle}{/block}</h4>
@@ -15,5 +20,16 @@
 	{/if}
 </div>
 <div class="modal-footer">
-	<button type="button" class="btn btn-default" data-dismiss="modal">{tr}Close{/tr}</button>
+	{block name=buttons}
+		<button type="button" class="btn btn-default" data-dismiss="modal">{tr}Close{/tr}</button>
+		{if $confirm}
+			<button type='submit' form="confirm-action" class="btn btn-primary">
+				{if !empty($confirmButton)}
+					{$confirmButton}
+				{else}
+					{tr}OK{/tr}
+				{/if}
+			</button>
+		{/if}
+	{/block}
 </div>

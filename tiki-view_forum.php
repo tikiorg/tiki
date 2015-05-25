@@ -57,9 +57,7 @@ $tikilib->get_perm_object($_REQUEST['forumId'], 'forum', $forum_info, true);
 
 // Now if the user is the moderator then give him forum admin privs -. SHOULD BE IN get_perm_object
 if ($tiki_p_admin_forum != 'y' && $user) {
-	if ($forum_info['moderator'] == $user
-		|| in_array($forum_info['moderator_group'], $userlib->get_user_groups($user))
-		|| Perms::get('forum', $_REQUEST['forumId'])->admin_forum)
+	if ($commentslib->admin_forum($_REQUEST['forumId']))
 	{
 		$tiki_p_admin_forum = 'y';
 	}
@@ -387,10 +385,6 @@ $smarty->assign('comments_cant', $comments_cant);
 $comments_maxRecords = $_REQUEST["comments_per_page"];
 $smarty->assign_by_ref('comments_coms', $comments_coms);
 
-$all_coms = $commentslib->get_forum_topics($_REQUEST['forumId'], 0, -1);
-$all_coms = array_column($all_coms, 'title', 'threadId');
-$smarty->assign('all_coms_encoded', json_encode($all_coms));
-
 $cat_type = 'forum';
 $cat_objid = $_REQUEST["forumId"];
 
@@ -460,8 +454,6 @@ if ($tiki_p_admin_forum == 'y' || $prefs['feature_forum_quickjump'] == 'y') {
 		}
 	}
 	$smarty->assign('all_forums', $all_forums['data']);
-	$all_names = array_column($all_forums['data'], 'name', 'forumId');
-	$smarty->assign('all_forums_encoded', json_encode($all_names));
 }
 
 $smarty->assign('unread', 0);
@@ -499,10 +491,13 @@ if ($prefs['feature_forum_parse'] == 'y') {
 	$smarty->assign_by_ref('plugins', $plugins);
 }
 
-if (isset($_POST['ajaxtype']) || !empty($_SESSION['ajaxpost' . $_GET['deleted_parentId']])) {
+$session = isset($_GET['deleted_parentId']) && !empty($_SESSION['ajaxpost' . $_GET['deleted_parentId']]) ?: false;
+if (isset($_POST['ajaxtype']) || $session) {
 	$smarty->assign('ajaxfeedback', 'y');
 	$posted = isset($_POST['ajaxtype']) ? $_POST : $_SESSION['ajaxpost' . $_GET['deleted_parentId']];
-	unset($_SESSION['ajaxpost' . $_GET['deleted_parentId']]);
+	if ($session) {
+		unset($_SESSION['ajaxpost' . $_GET['deleted_parentId']]);
+	}
 	$ajaxpost = array_intersect_key($posted, [
 		'ajaxtype' => '',
 		'ajaxheading' => '',

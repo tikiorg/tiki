@@ -46,5 +46,15 @@ class Services_Utilities_Controller
 		];
 	}
 
-
+	static function noJsPath ()
+	{
+		global $prefs;
+		if ($prefs['javascript_enabled'] !== 'y') {
+			global $base_url;
+			$referer = substr($_SERVER['HTTP_REFERER'], strlen($base_url));
+		} else {
+			$referer = '';
+		}
+		return $referer;
+	}
 }

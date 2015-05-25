@@ -229,3 +229,11 @@
 	</div>
 	{pagination_links cant=$atts.cant offset=$atts.offset offset_arg='fa_offset' step=$atts.maxRecords _anchor='attachments'}{/pagination_links}
 {/if}
+{jq}
+	$('[data-toggle=popover]').on('shown.bs.popover', function() {
+		$('.confirm-click').click(function() {
+			confirmClick(this, 'href');
+			return false;
+		});
+	});
+{/jq}
