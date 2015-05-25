@@ -15,12 +15,22 @@ function smarty_function_error_report($params, $smarty)
 
 	$repeat = false;
 	$legacy = $smarty->getTemplateVars('display_msg');
+	$type = $smarty->getTemplateVars('display_msgtype');
+	$type = empty($type) ? 'note' : $type;
+	$titles = [
+		'confirm' => tra('Success'),
+		'feedback' => tra('Success'),
+		'error' => tra('Error'),
+		'errors' => tra('Errors'),
+		'warning' => tra('Warning'),
+		'note' => tra('Notice')
+	];
 	if ($legacy) {
 		// Handle reporting ofthe display_msg smarty variable
 		$smarty->loadPlugin('smarty_block_remarksbox');
 		$post .= smarty_block_remarksbox(array(
-			'type' => 'note',
-			'title' => tr('Notice'),
+			'type' => $type,
+			'title' => $titles[$type],
 		), $legacy, $smarty, $repeat);
 	}
 

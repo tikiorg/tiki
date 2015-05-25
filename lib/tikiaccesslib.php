@@ -466,11 +466,13 @@ class TikiAccessLib extends TikiLib
 
 	/**
 	 * Utility function redirect the browser location to another url
-	 *
-	 * @param string The target web address
-	 * @param string an optional message to display
+
+	 * @param string $url       The target web address
+	 * @param string $msg       An optional message to display
+	 * @param int $code         HTTP code
+	 * @param string $msgtype   Type of message which determines styling (e.g., success, error, warning, etc.)
 	 */
-	function redirect( $url = '', $msg = '', $code = 302 )
+	function redirect( $url = '', $msg = '', $code = 302, $msgtype = '')
 	{
 		global $prefs;
 
@@ -484,13 +486,11 @@ class TikiAccessLib extends TikiLib
 		if (trim($msg)) {
 			$session = session_id();
 			if ( empty($session) ) {
-				if (strpos($url, '?')) {
-					$url .= '&msg=' . urlencode($msg);
-				} else {
-					$url .= '?msg=' . urlencode($msg);
-				}
+				$start = strpos($url, '?') ? '&' : '?';
+				$url = $start . 'msg=' . urlencode($msg) . '&msgtype=' . urlencode($msgtype);
 			} else {
 				$_SESSION['msg'] = $msg;
+				$_SESSION['msgtype'] = $msgtype;
 			}
 		}
 

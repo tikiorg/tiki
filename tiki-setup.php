@@ -312,6 +312,15 @@ if ( isset( $_GET['msg'] ) ) {
 	$smarty->assign('display_msg', '');
 }
 
+if ( isset( $_GET['msgtype'] ) ) {
+	$smarty->assign('display_msgtype', $_GET['msgtype']);
+} elseif ( isset( $_SESSION['msgtype'] ) ) {
+	$smarty->assign('display_msgtype', $_SESSION['msgtype']);
+	unset($_SESSION['msgtype']);
+} else {
+	$smarty->assign('display_msgtype', '');
+}
+
 require_once 'lib/setup/events.php';
 
 if ( $prefs['rating_advanced'] == 'y' && $prefs['rating_recalculation'] == 'randomload' ) {
