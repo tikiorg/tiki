@@ -27,40 +27,48 @@ class Services_Access_Controller
 	 */
 	function action_confirm($input)
 	{
-		$input->replaceFilters(
-			[
-				'customVerb' => new Zend_Filter_Alpha(true),
-				'customObject' => new Zend_Filter_Alpha(true),
-				'confirmButton' => new Zend_Filter_Alpha(true),
-				'ticket' => 'alnum',
-			]
-		);
-		$title = !empty($input->offsetGet('title')) ? $input->offsetGet('title') : tra('Please confirm');
-		$confirmButton = !empty($input->offsetGet('confirmButton')) ? $input->offsetGet('confirmButton') : tra('Yes');
+		$ret = $this->prepareReturn($input);
+		return $ret;
+	}
+
+	function action_confirm_select($input)
+	{
+		$ret = $this->prepareReturn($input);
+		return $ret;
+	}
+
+	private function prepareReturn($input) {
+		$title = !empty($input['title']) ? $input['title'] : tra('Please confirm');
+		$confirmButton = !empty($input['confirmButton']) ? $input['confirmButton'] : tra('OK');
+		$items = $input->asArray('items');
 
 		/*** confirm message ***/
-		$customMsg = $input->offsetGet('customMsg');
-		$customVerb = $input->offsetGet('customVerb');
-		$customObject = $input->offsetGet('customObject');
+		$customMsg = !empty($input['customMsg']) ? $input['customMsg'] : '';
+		$customVerb = !empty($input['customVerb']) ? $input['customVerb'] : '';
+		$customObject = !empty($input['customObject']) ? $input['customObject'] : '';
 		if (empty($customMsg)) {
 			if (!empty($customVerb) && !empty($customObject)) {
 				$customMsg = tr('Are you sure you want to %0 the following %1?', $customVerb, $customObject);
 			} else {
-				$customMsg = tra('Please confirm your action for the following items:');
+				if (count($items) === 1) {
+					$customMsg = tra('Please confirm your action for the following item:');
+				} else {
+					$customMsg = tra('Please confirm your action for the following items:');
+				}
 			}
 		}
-
-		global $auto_query_args;
-		$auto_query_args = ['items', 'extra', 'ticket'];
 		return [
-			'items' => $input->asArray('items'),
-			'confirmAction' => $input->offsetGet('confirmAction'),
-			'confirmController' => $input->offsetGet('confirmController'),
+			'items' => $items,
+			'confirmAction' => $input->confirmAction->word(),
+			'confirmController' => $input->confirmController->word(),
 			'extra' => $input->asArray('extra'),
-			'ticket' => $input->offsetGet('ticket'),
+			'toMsg' => $input->toMsg->xss(),
+			'toList' => $input->asArray('toList'),
+			'ticket' => $input->ticket->alnum(),
 			'title' => $title,
 			'customMsg' => $customMsg,
 			'confirmButton' => $confirmButton,
+			'confirm' => 'y',
 		];
 	}
 }
