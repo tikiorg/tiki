@@ -3816,6 +3816,34 @@ class Comments extends TikiLib
 			return $threadId;
 		}
 	}
+
+	/**
+	 * Utlity to check whether a user can admin a form, either through permissions or as moderator
+	 *
+	 * @param $forumId
+	 * @return bool
+	 * @throws Exception
+	 */
+	function admin_forum($forumId)
+	{
+		$perms = Perms::get('forum', $forumId);
+		if (!$perms->admin_forum) {
+			$info = $this->get_forum($forumId);
+			global $user;
+			if ($info['moderator'] !== $user) {
+				$userlib = TikiLib::lib('user');
+				if (!in_array($info['moderator_group'], $userlib->get_user_groups($user))) {
+					return false;
+				} else {
+					return true;
+				}
+			} else {
+				return true;
+			}
+		} else {
+			return true;
+		}
+	}
 }
 
 /**
