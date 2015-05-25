@@ -42,47 +42,62 @@
 {if $channels or ($find ne '')}
 	{include file='find.tpl'}
 {/if}
-
-<div class="table-responsive">
-<table class="table normal table-striped table-hover">
-	<tr>
-		<th>
-			<a href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'cookieId_desc'}cookieId_asc{else}cookieId_desc{/if}">{tr}ID{/tr}</a>
-		</th>
-		<th>
-			<a href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'cookie_desc'}cookie_asc{else}cookie_desc{/if}">{tr}cookie{/tr}</a>
-		</th>
-		<th width="15%"></th>
-	</tr>
-	{cycle values="odd,even" print=false advance=false}
-	{section name=user loop=$channels}
+{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+{if $prefs.javascript_enabled !== 'y'}
+	{$js = 'n'}
+	{$libeg = '<li>'}
+	{$liend = '</li>'}
+{else}
+	{$js = 'y'}
+	{$libeg = ''}
+	{$liend = ''}
+{/if}
+<div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
+	<table class="table normal table-striped table-hover">
 		<tr>
-			<td class="id">{$channels[user].cookieId}</td>
-			<td class="text">{$channels[user].cookie|escape}</td>
-			<td class="action">
-				{capture name=cookies_actions}
-					{strip}
-						<a href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}">
-							{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-						</a>
-						<a href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].cookieId}">
-							{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
-						</a>
-					{/strip}
-				{/capture}
-				<a class="tips"
-				   title="{tr}Actions{/tr}"
-				   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.coookies_actions|escape:"javascript"|escape:"html"}
-				   style="padding:0; margin:0; border:0"
-						>
-					{icon name='wrench'}
-				</a>
-			</td>
+			<th>
+				<a href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'cookieId_desc'}cookieId_asc{else}cookieId_desc{/if}">{tr}ID{/tr}</a>
+			</th>
+			<th>
+				<a href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'cookie_desc'}cookie_asc{else}cookie_desc{/if}">{tr}cookie{/tr}</a>
+			</th>
+			<th width="15%"></th>
 		</tr>
-	{sectionelse}
-		{norecords _colspan=3}
-	{/section}
-</table>
+		{cycle values="odd,even" print=false advance=false}
+		{section name=user loop=$channels}
+			<tr>
+				<td class="id">{$channels[user].cookieId}</td>
+				<td class="text">{$channels[user].cookie|escape}</td>
+				<td class="action">
+					{capture name=cookies_actions}
+						{strip}
+							{$libeg}<a href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}">
+								{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+							</a>{$liend}
+							{$libeg}<a href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].cookieId}">
+								{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+							</a>{$liend}
+						{/strip}
+					{/capture}
+					{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+					<a
+						class="tips"
+						title="{tr}Actions{/tr}"
+						href="#"
+						{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.coookies_actions|escape:"javascript"|escape:"html"}{/if}
+						style="padding:0; margin:0; border:0"
+					>
+						{icon name='wrench'}
+					</a>
+					{if $js === 'n'}
+						<ul class="dropdown-menu" role="menu">{$smarty.capture.coookies_actions}</ul></li></ul>
+					{/if}
+				</td>
+			</tr>
+		{sectionelse}
+			{norecords _colspan=3}
+		{/section}
+	</table>
 </div>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

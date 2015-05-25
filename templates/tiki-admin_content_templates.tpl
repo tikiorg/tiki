@@ -139,6 +139,16 @@
 {if $channels or ($find ne '')}
 	{include file='find.tpl'}
 {/if}
+{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+{if $prefs.javascript_enabled !== 'y'}
+	{$js = 'n'}
+	{$libeg = '<li>'}
+	{$liend = '</li>'}
+{else}
+	{$js = 'y'}
+	{$libeg = ''}
+	{$liend = ''}
+{/if}
 
 <table class="table normal table-striped table-hover">
 	<tr>
@@ -170,21 +180,27 @@
 			<td class="action">
 				{capture name=template_actions}
 					{strip}
-						<a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}">
+						{$libeg}<a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}">
 							{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-						</a>
-						<a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" >
+						</a>{$liend}
+						{$libeg}<a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" >
 							{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
-						</a>
+						</a>{$liend}
 					{/strip}
 				{/capture}
-				<a class="tips"
-				   title="{tr}Actions{/tr}"
-				   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.template_actions|escape:"javascript"|escape:"html"}
-				   style="padding:0; margin:0; border:0"
-						>
+				{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+				<a
+					class="tips"
+					title="{tr}Actions{/tr}"
+					href="#"
+					{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.template_actions|escape:"javascript"|escape:"html"}{/if}
+					style="padding:0; margin:0; border:0"
+				>
 					{icon name='wrench'}
 				</a>
+				{if $js === 'n'}
+					<ul class="dropdown-menu" role="menu">{$smarty.capture.template_actions}</ul></li></ul>
+				{/if}
 			</td>
 		</tr>
 	{sectionelse}

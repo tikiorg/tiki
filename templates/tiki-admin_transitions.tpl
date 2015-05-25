@@ -105,7 +105,17 @@
 				return false;
 			} );
 			{/jq}
-			<div class="table-responsive">
+			{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+			{if $prefs.javascript_enabled !== 'y'}
+				{$js = 'n'}
+				{$libeg = '<li>'}
+				{$liend = '</li>'}
+			{else}
+				{$js = 'y'}
+				{$libeg = ''}
+				{$liend = ''}
+			{/if}
+			<div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
 				<table class="table normal table-striped table-hover">
 					<thead>
 						<tr>
@@ -126,22 +136,28 @@
 								<td class="action">
 									{capture name=transition_actions}
 										{strip}
-											{permission_link mode=text type=transition id=$trans.transitionId title=$trans.name}
-											{self_link transitionId=$trans.transitionId action=edit cookietab=3 _menu_text='y' _menu_icon='y' _icon_name='edit'}
+											{$libeg}{permission_link mode=text type=transition id=$trans.transitionId title=$trans.name}{$liend}
+											{$libeg}{self_link transitionId=$trans.transitionId action=edit cookietab=3 _menu_text='y' _menu_icon='y' _icon_name='edit'}
 												{tr}Edit{/tr}
-											{/self_link}
-											{self_link transitionId=$trans.transitionId action=remove _icon_name="remove" _menu_text='y' _menu_icon='y'}
+											{/self_link}{$liend}
+											{$libeg}{self_link transitionId=$trans.transitionId action=remove _icon_name="remove" _menu_text='y' _menu_icon='y'}
 												{tr}Remove{/tr}
-											{/self_link}
+											{/self_link}{$liend}
 										{/strip}
 									{/capture}
-									<a class="tips"
-									   title="{tr}Actions{/tr}"
-									   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.transition_actions|escape:"javascript"|escape:"html"}
-									   style="padding:0; margin:0; border:0"
-											>
+									{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+									<a
+										class="tips"
+										title="{tr}Actions{/tr}"
+										href="#"
+										{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.transition_actions|escape:"javascript"|escape:"html"}{/if}
+										style="padding:0; margin:0; border:0"
+									>
 										{icon name='wrench'}
 									</a>
+									{if $js === 'n'}
+										<ul class="dropdown-menu" role="menu">{$smarty.capture.transition_actions}</ul></li></ul>
+									{/if}
 								</td>
 							</tr>
 						{foreachelse}

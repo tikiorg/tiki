@@ -60,7 +60,17 @@
 			{tabset}
 				{foreach from=$module_zone_list key=zone_initial item=zone_info}
 					{tab name=$zone_info.name|capitalize}
-						<div id="{$zone_info.id}_modules" class="table-responsive">
+						{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+						{if $prefs.javascript_enabled !== 'y'}
+							{$js = 'n'}
+							{$libeg = '<li>'}
+							{$liend = '</li>'}
+						{else}
+							{$js = 'y'}
+							{$libeg = ''}
+							{$liend = ''}
+						{/if}
+						<div id="{$zone_info.id}_modules" class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
 							<div>
 								<table class="table normal table-striped table-hover" id="assigned_zone_{$zone_initial}">
 									<tr>
@@ -85,30 +95,36 @@
 												{capture name=module_actions}
 													{strip}
 														{if !$smarty.section.user.first}
-															<a href="tiki-admin_modules.php?modup={$module.moduleId}">
+															{$libeg}<a href="tiki-admin_modules.php?modup={$module.moduleId}">
 																{icon name="up" _menu_text='y' _menu_icon='y' alt="{tr}Move up{/tr}"}
-															</a>
+															</a>{$liend}
 														{/if}
 														{if !$smarty.section.user.last}
-															<a href="tiki-admin_modules.php?moddown={$module.moduleId}">
+															{$libeg}<a href="tiki-admin_modules.php?moddown={$module.moduleId}">
 																{icon name="down" _menu_text='y' _menu_icon='y' alt="{tr}Move down{/tr}"}
-															</a>
+															</a>{$liend}
 														{/if}
-														<a href="tiki-admin_modules.php?edit_assign={$module.moduleId}&cookietab=2#content_admin_modules1-2">
+														{$libeg}<a href="tiki-admin_modules.php?edit_assign={$module.moduleId}&cookietab=2#content_admin_modules1-2">
 															{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-														</a>
-														<a href="tiki-admin_modules.php?unassign={$module.moduleId}">
+														</a>{$liend}
+														{$libeg}<a href="tiki-admin_modules.php?unassign={$module.moduleId}">
 															{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Unassign{/tr}"}
-														</a>
+														</a>{$liend}
 													{/strip}
 												{/capture}
-												<a class="tips"
-												   title="{tr}Actions{/tr}"
-												   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.module_actions|escape:"javascript"|escape:"html"}
-												   style="padding:0; margin:0; border:0"
-														>
+												{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+												<a
+													class="tips"
+													title="{tr}Actions{/tr}"
+													href="#"
+													{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.module_actions|escape:"javascript"|escape:"html"}{/if}
+													style="padding:0; margin:0; border:0"
+												>
 													{icon name='wrench'}
 												</a>
+												{if $js === 'n'}
+													<ul class="dropdown-menu" role="menu">{$smarty.capture.module_actions}</ul></li></ul>
+												{/if}
 											</td>
 										</tr>
 									{foreachelse}
@@ -167,45 +183,61 @@
 			</legend>
 		{/if}
 		<h2>{tr}Custom Modules{/tr}</h2>
-		<div class="table-responsive">
-		<table class="table normal">
-			<tr>
-				<th>{tr}Name{/tr}</th>
-				<th>{tr}Title{/tr}</th>
-				<th></th>
-			</tr>
-
-			{section name=user loop=$user_modules}
+		{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+		{if $prefs.javascript_enabled !== 'y'}
+			{$js = 'n'}
+			{$libeg = '<li>'}
+			{$liend = '</li>'}
+		{else}
+			{$js = 'y'}
+			{$libeg = ''}
+			{$liend = ''}
+		{/if}
+		<div class="{if $js === 'y'}table-responsive{/if}">
+			<table class="table normal">
 				<tr>
-					<td class="text"><a class="tips" href="tiki-admin_modules.php?um_edit={$user_modules[user].name|escape:'url'}&amp;cookietab=2#editcreate" title="{tr}Edit{/tr}">{$user_modules[user].name|escape}</a></td>
-					<td class="text">{$user_modules[user].title|escape}</td>
-					<td class="action">
-						{capture name=custom_module_actions}
-							{strip}
-								<a href="tiki-admin_modules.php?um_edit={$user_modules[user].name|escape:'url'}&amp;cookietab=2#editcreate">
-									{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-								</a>
-								<a href="tiki-admin_modules.php?edit_assign={$user_modules[user].name|escape:'url'}&amp;cookietab=2#assign">
-									{icon name='ok' _menu_text='y' _menu_icon='y' alt="{tr}Assign{/tr}"}
-								</a>
-								<a href="tiki-admin_modules.php?um_remove={$user_modules[user].name|escape:'url'}&amp;cookietab=2" title="{$user_modules[user].name|escape}:{tr}Delete{/tr}">
-									{icon name='remove' _menu_text='y' _menu_icon='y' Falt="{tr}Delete{/tr}"}
-								</a>
-							{/strip}
-						{/capture}
-						<a class="tips"
-						   title="{tr}Actions{/tr}"
-						   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.custom_module_actions|escape:"javascript"|escape:"html"}
-						   style="padding:0; margin:0; border:0"
-								>
-							{icon name='wrench'}
-						</a>
-					</td>
+					<th>{tr}Name{/tr}</th>
+					<th>{tr}Title{/tr}</th>
+					<th></th>
 				</tr>
-			{sectionelse}
-			{norecords _colspan=3}
-			{/section}
-		</table>
+
+				{section name=user loop=$user_modules}
+					<tr>
+						<td class="text"><a class="tips" href="tiki-admin_modules.php?um_edit={$user_modules[user].name|escape:'url'}&amp;cookietab=2#editcreate" title="{tr}Edit{/tr}">{$user_modules[user].name|escape}</a></td>
+						<td class="text">{$user_modules[user].title|escape}</td>
+						<td class="action">
+							{capture name=custom_module_actions}
+								{strip}
+									{$libeg}<a href="tiki-admin_modules.php?um_edit={$user_modules[user].name|escape:'url'}&amp;cookietab=2#editcreate">
+										{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+									</a>{$liend}
+									{$libeg}<a href="tiki-admin_modules.php?edit_assign={$user_modules[user].name|escape:'url'}&amp;cookietab=2#assign">
+										{icon name='ok' _menu_text='y' _menu_icon='y' alt="{tr}Assign{/tr}"}
+									</a>{$liend}
+									{$libeg}<a href="tiki-admin_modules.php?um_remove={$user_modules[user].name|escape:'url'}&amp;cookietab=2" title="{$user_modules[user].name|escape}:{tr}Delete{/tr}">
+										{icon name='remove' _menu_text='y' _menu_icon='y' Falt="{tr}Delete{/tr}"}
+									</a>{$liend}
+								{/strip}
+							{/capture}
+							{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+							<a
+								class="tips"
+								title="{tr}Actions{/tr}"
+								href="#"
+								{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.custom_module_actions|escape:"javascript"|escape:"html"}{/if}
+								style="padding:0; margin:0; border:0"
+							>
+								{icon name='wrench'}
+							</a>
+							{if $js === 'n'}
+								<ul class="dropdown-menu" role="menu">{$smarty.capture.custom_module_actions}</ul></li></ul>
+							{/if}
+						</td>
+					</tr>
+				{sectionelse}
+				{norecords _colspan=3}
+				{/section}
+			</table>
 		</div>
 		<br>
 		{if $um_name eq ''}

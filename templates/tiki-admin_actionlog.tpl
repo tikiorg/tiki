@@ -201,9 +201,19 @@
 			{/if}
 			{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 			{tr}Records:{/tr} {$cant}
+			{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+			{if $prefs.javascript_enabled !== 'y'}
+				{$js = 'n'}
+				{$libeg = '<li>'}
+				{$liend = '</li>'}
+			{else}
+				{$js = 'y'}
+				{$libeg = ''}
+				{$liend = ''}
+			{/if}
 			<form name="checkboxes_on" method="post" action="tiki-admin_actionlog.php">
 				{query _type='form_input'}
-				<div class="table-responsive">
+				<div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
 					<table class="table normal table-striped table-hover">
 						<tr>
 							{if $prefs.feature_banning eq 'y'}
@@ -280,21 +290,27 @@
 										{if $actionlog.actionId}
 											{capture name=log_actions}
 												{strip}
-													<a href="tiki-admin_actionlog.php?actionId={$actionlog.actionId}&amp;startDate={$startDate}&amp;endDate={$endDate}#action">
+													{$libeg}<a href="tiki-admin_actionlog.php?actionId={$actionlog.actionId}&amp;startDate={$startDate}&amp;endDate={$endDate}#action">
 														{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-													</a>
-													{self_link remove='y' _menu_text='y' _menu_icon='y' actionId=$actionlog.actionId _icon_name='remove' _title=""}
+													</a>{$liend}
+													{$libeg}{self_link remove='y' _menu_text='y' _menu_icon='y' actionId=$actionlog.actionId _icon_name='remove' _title=""}
 														{tr}Remove{/tr}
-													{/self_link}
+													{/self_link}{$liend}
 												{/strip}
 											{/capture}
-											<a class="tips"
-											   title="{tr}Actions{/tr}"
-											   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.log_actions|escape:"javascript"|escape:"html"}
-											   style="padding:0; margin:0; border:0"
-													>
+											{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+											<a
+												class="tips"
+												title="{tr}Actions{/tr}"
+												href="#"
+												{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.log_actions|escape:"javascript"|escape:"html"}{/if}
+												style="padding:0; margin:0; border:0"
+											>
 												{icon name='wrench'}
 											</a>
+											{if $js === 'n'}
+												<ul class="dropdown-menu" role="menu">{$smarty.capture.log_actions}</ul></li></ul>
+											{/if}
 										{/if}
 									</td>
 								{/if}

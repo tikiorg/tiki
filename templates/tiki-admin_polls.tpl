@@ -94,7 +94,17 @@
 		{if $channels or ($find ne '')}
 			{include file='find.tpl'}
 		{/if}
-		<div class="table-responsive poll-table">
+		{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+		{if $prefs.javascript_enabled !== 'y'}
+			{$js = 'n'}
+			{$libeg = '<li>'}
+			{$liend = '</li>'}
+		{else}
+			{$js = 'y'}
+			{$libeg = ''}
+			{$liend = ''}
+		{/if}
+		<div class="{if $js === 'y'}table-responsive{/if} poll-table"> {* table-responsive class cuts off css drop-down menus *}
 			<table class="table normal table-striped table-hover">
 				{assign var=numbercol value=8}
 				<tr>
@@ -144,27 +154,33 @@
 						<td class="action">
 							{capture name=admin_poll_actions}
 								{strip}
-									<a href="tiki-admin_poll_options.php?pollId={$channels[user].pollId}">
+									{$libeg}<a href="tiki-admin_poll_options.php?pollId={$channels[user].pollId}">
 										{icon name='list' _menu_text='y' _menu_icon='y' alt="{tr}Options{/tr}"}
-									</a>
-									<a class="link" href="tiki-poll_results.php?pollId={$channels[user].pollId}">
+									</a>{$liend}
+									{$libeg}<a class="link" href="tiki-poll_results.php?pollId={$channels[user].pollId}">
 										{icon name="chart" _menu_text='y' _menu_icon='y' alt="{tr}Results{/tr}"}
-									</a>
-									{self_link pollId=$channels[user].pollId _menu_text='y' _menu_icon='y' _icon_name="edit"}
+									</a>{$liend}
+									{$libeg}{self_link pollId=$channels[user].pollId _menu_text='y' _menu_icon='y' _icon_name="edit"}
 										{tr}Edit{/tr}
-									{/self_link}
-									<a href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pollId}">
+									{/self_link}{$liend}
+									{$libeg}<a href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pollId}">
 										{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
-									</a>
+									</a>{$liend}
 								{/strip}
 							{/capture}
-							<a class="tips"
-							   title="{tr}Actions{/tr}"
-							   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.admin_poll_actions|escape:"javascript"|escape:"html"}
-							   style="padding:0; margin:0; border:0"
-									>
+							{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+							<a
+								class="tips"
+								title="{tr}Actions{/tr}"
+								href="#"
+								{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.admin_poll_actions|escape:"javascript"|escape:"html"}{/if}
+								style="padding:0; margin:0; border:0"
+							>
 								{icon name='wrench'}
 							</a>
+							{if $js === 'n'}
+								<ul class="dropdown-menu" role="menu">{$smarty.capture.admin_poll_actions}</ul></li></ul>
+							{/if}
 						</td>
 					</tr>
 				{sectionelse}

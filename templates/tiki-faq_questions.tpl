@@ -85,7 +85,17 @@
 	{include file='find.tpl'}
 {/if}
 
-<div class="table-responsive">
+{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+{if $prefs.javascript_enabled !== 'y'}
+	{$js = 'n'}
+	{$libeg = '<li>'}
+	{$liend = '</li>'}
+{else}
+	{$js = 'y'}
+	{$libeg = ''}
+	{$liend = ''}
+{/if}
+<div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
 	<table class="table normal table-striped table-hover">
 		<tr>
 			<th>
@@ -104,21 +114,27 @@
 			<td class="action">
 				{capture name=faq_actions}
 					{strip}
-						<a href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}">
+						{$libeg}<a href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}">
 							{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-						</a>
-						<a href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}">
+						</a>{$liend}
+						{$libeg}<a href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}">
 							{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
-						</a>
+						</a>{$liend}
 					{/strip}
 				{/capture}
-				<a class="tips"
-				   title="{tr}Actions{/tr}"
-				   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.faq_actions|escape:"javascript"|escape:"html"}
-				   style="padding:0; margin:0; border:0"
-						>
+				{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+				<a
+					class="tips"
+					title="{tr}Actions{/tr}"
+					href="#"
+					{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.faq_actions|escape:"javascript"|escape:"html"}{/if}
+					style="padding:0; margin:0; border:0"
+				>
 					{icon name='wrench'}
 				</a>
+				{if $js === 'n'}
+					<ul class="dropdown-menu" role="menu">{$smarty.capture.faq_actions}</ul></li></ul>
+				{/if}
 			</td>
 		</tr>
 		{sectionelse}
@@ -132,7 +148,7 @@
 {if count($suggested) > 0}
 
 	<h2>{tr}Suggested questions{/tr}</h2>
-	<div class="table-responsive">
+	<div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
 		<table class="table normal table-striped table-hover">
 			<tr>
 				<th>{tr}Question{/tr}</th>
@@ -147,21 +163,27 @@
 					<td class="action">
 						{capture name=faq2_actions}
 							{strip}
-								<a href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;approve_suggested={$suggested[ix].sfqId}">
+								{$libeg}<a href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;approve_suggested={$suggested[ix].sfqId}">
 									{icon name='ok' _menu_text='y' _menu_icon='y' alt="{tr}Approve{/tr}"}
-								</a>
-								<a href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove_suggested={$suggested[ix].sfqId}">
+								</a>{$liend}
+								{$libeg}<a href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove_suggested={$suggested[ix].sfqId}">
 									{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
-								</a>
+								</a>{$liend}
 							{/strip}
 						{/capture}
-						<a class="tips"
-						   title="{tr}Actions{/tr}"
-						   href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.faq2_actions|escape:"javascript"|escape:"html"}
-						   style="padding:0; margin:0; border:0"
-								>
+						{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+						<a
+							class="tips"
+							title="{tr}Actions{/tr}"
+							href="#"
+							{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.faq2_actions|escape:"javascript"|escape:"html"}{/if}
+							style="padding:0; margin:0; border:0"
+						>
 							{icon name='wrench'}
 						</a>
+						{if $js === 'n'}
+							<ul class="dropdown-menu" role="menu">{$smarty.capture.faq2_actions}</ul></li></ul>
+						{/if}
 					</td>
 				</tr>
 			{/section}
