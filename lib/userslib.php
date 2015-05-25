@@ -5986,6 +5986,12 @@ class UsersLib extends TikiLib
 
 	function assign_user_to_group($user, $group, $bulk = false)
 	{
+		if (!$this->group_exists($group)) {
+			throw new Exception(tr('Cannot add user %0 to nonexistent group %1', $user, $group));
+		}
+		if (!$this->user_exists($user)) {
+			throw new Exception(tr('Cannot add nonexistent user %0 to group %1', $user, $group));
+		}
 		global $prefs, $tiki_p_admin, $page;
 		$cachelib = TikiLib::lib('cache');
 		$tikilib = TikiLib::lib('tiki');
