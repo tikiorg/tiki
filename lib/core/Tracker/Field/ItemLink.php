@@ -216,9 +216,9 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			} else {
 				$displayFieldId = $this->getOption('fieldId');
 			}
-
+			$selectbox_id ="'".$this->getInsertId()."[]'";
 			TikiLib::lib('header')->add_jq_onready(
-				'$("select[name=' . $this->getInsertId() . ']").change(function(e, val) {
+				'$("select[name=' . $selectbox_id . ']").change(function(e, val) {
 	var $select = $(this);
 	if ($select.val() == -1) {
 		var $d = $("<div id=\'add_dialog_' . $this->getInsertId() . '\' style=\'display:none\'/>")
