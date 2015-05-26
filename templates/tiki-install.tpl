@@ -4,7 +4,7 @@
 			<img alt="{tr}Tiki Wiki CMS Groupware{/tr}" src="{if isset($ie6)}img/tiki/tikisitelogo.gif{else}img/tiki/Tiki_WCG.png{/if}">
 		</div>
 		<div class="col-md-9">
-			<h1>{tr}Tiki installer{/tr} <small>{$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/Installation" target="help">{icon name="help"}</a></small></h1>
+			<h1>{tr}Tiki installer{/tr} <small>{$tiki_version_name} <a title="{tr}Help{/tr}" href="https://doc.tiki.org/Installation" target="help">{icon name="help"}</a></small></h1>
 		</div>
 	</div><!-- End of install-header -->
 	<div class="row install-body">
@@ -72,9 +72,9 @@
 				</div>
 				<div class="panel-body">
 					<ul class="nav nav-pills nav-stacked">
-						<li><a href="http://tiki.org" target="_blank"><img src="favicon.png" alt="{tr}Tiki Icon{/tr}"> {tr}Tiki Project Web Site{/tr}</a></li>
-						<li><a href="http://doc.tiki.org" target="_blank" title="{tr}Documentation{/tr}">{icon name="documentation"} {tr}Documentation{/tr}</a></li>
-						<li><a href="http://tiki.org/forums" target="_blank" title="{tr}Forums{/tr}">{icon name="admin_forums"} {tr}Support Forums{/tr}</a></li>
+						<li><a href="https://tiki.org" target="_blank"><img src="favicon.png" alt="{tr}Tiki Icon{/tr}"> {tr}Tiki Project Web Site{/tr}</a></li>
+						<li><a href="https://doc.tiki.org" target="_blank" title="{tr}Documentation{/tr}">{icon name="documentation"} {tr}Documentation{/tr}</a></li>
+						<li><a href="https://tiki.org/forums" target="_blank" title="{tr}Forums{/tr}">{icon name="admin_forums"} {tr}Support Forums{/tr}</a></li>
 					</ul>
 				</div>
 			</div><!-- End of install-help -->
@@ -87,9 +87,9 @@
 					<h1 class="pagetitle">{tr}Welcome{/tr}</h1>
 					<p>{tr}Welcome to the Tiki installation and upgrade script.{/tr} {tr}Use this script to install a new Tiki database or upgrade your existing database to release{/tr} <strong>{$tiki_version_name}</strong></p>
 					<ul>
-						<li>{tr}For the latest information about this release, please read the{/tr} <a href="http://tiki.org/tiki-index.php?page=ReleaseNotes{$tiki_version_name|urlencode}" target="_blank">{tr}Release Notes{/tr}</a>.</li>
-						<li>{tr}For complete documentation, please visit{/tr} <a href="http://doc.tiki.org" target="_blank">doc.tiki.org</a>.</li>
-						<li>{tr}For more information about Tiki, please visit{/tr} <a href="http://tiki.org" target="_blank">tiki.org</a>.</li>
+						<li>{tr}For the latest information about this release, please read the{/tr} <a href="https://tiki.org/tiki-index.php?page=ReleaseNotes{$tiki_version_name|urlencode}" target="_blank">{tr}Release Notes{/tr}</a>.</li>
+						<li>{tr}For complete documentation, please visit{/tr} <a href="https://doc.tiki.org" target="_blank">doc.tiki.org</a>.</li>
+						<li>{tr}For more information about Tiki, please visit{/tr} <a href="https://tiki.org" target="_blank">tiki.org</a>.</li>
 					</ul>
 					<form action="tiki-install.php" method="post" role="form">
 						<div class="form-group">
@@ -140,7 +140,7 @@
 				<div class="install-step2">
 					<h1>{tr}Review the System Requirements{/tr}</h1>
 					{remarksbox type=tip title="{tr}Tip{/tr}" close="n"}
-						{tr}Before installing Tiki, <a href="http://doc.tiki.org/Requirements" target="_blank" class="alert-link">review the documentation</a> and confirm that your system meets the minimum requirements.{/tr}
+						{tr}Before installing Tiki, <a href="https://doc.tiki.org/Requirements" target="_blank" class="alert-link">review the documentation</a> and confirm that your system meets the minimum requirements.{/tr}
 					{/remarksbox}
 					<p>{tr}This installer will perform some basic checks automatically.{/tr} {tr}Please see: {/tr}<a href="tiki-check.php" target="_blank">{tr}a detailed report about your server.{/tr}</a></p>
 					<h2>{tr}Memory{/tr}</h2>
@@ -263,7 +263,7 @@
 						{/section}
 					{/if}
 					<div id="installer_3_new_db_form"{if $dbcon eq 'y'} style="display:none;"{/if}>
-						<p>{tr}Use this page to create a new database connection, or use the <a href="http://doc.tiki.org/Manual+Installation" target="_blank" title="manual installation">manual installation process</a>.{/tr} <a href="http://doc.tiki.org/Manual+Installation" target="_blank" title="{tr}Help{/tr}">{icon name="help"}</a></p>
+						<p>{tr}Use this page to create a new database connection, or use the <a href="https://doc.tiki.org/Manual+Installation" target="_blank" title="manual installation">manual installation process</a>.{/tr} <a href="https://doc.tiki.org/Manual+Installation" target="_blank" title="{tr}Help{/tr}">{icon name="help"}</a></p>
 						<form action="tiki-install.php" method="post" role="form">
 							<input type="hidden" name="install_step" value="4">
 							{if $multi}
@@ -344,7 +344,7 @@
 								<p>{tr}Highly recommended for new installations. However, if you are upgrading or migrating a previous tiki database, you are recommended to uncheck this box{/tr}</p>
 								<input type="checkbox" name="force_utf8" id="force_utf8" value="y" checked="checked">
 								<label for="force_utf8">{tr}Always force connection to use UTF-8{/tr}</label>
-								<p><a href="http://doc.tiki.org/Understanding+Encoding" onclick="window.open(this.href); return false;">{tr}More information{/tr}</a></p>
+								<p><a href="https://doc.tiki.org/Understanding+Encoding" onclick="window.open(this.href); return false;">{tr}More information{/tr}</a></p>
 							</fieldset>
 							<div class="form-group text-center">
 								<input type="submit" class="btn btn-primary" name="dbinfo" value="{tr}Continue{/tr}">
@@ -364,7 +364,7 @@
 					{if $tikidb_created}
 						{tr}This install will populate (or upgrade) the database.{/tr}<br><br>
 						{remarksbox type=tip title="{tr}Tip{/tr}" close="n"}
-							{tr}If you want to upgrade from a previous Tiki release, ensure that you have read and understood the <a href="http://doc.tiki.org/Upgrade" target="_blank" class="alert-link">Upgrade instructions</a>.{/tr}
+							{tr}If you want to upgrade from a previous Tiki release, ensure that you have read and understood the <a href="https://doc.tiki.org/Upgrade" target="_blank" class="alert-link">Upgrade instructions</a>.{/tr}
 						{/remarksbox}
 					{else}
 						{tr}A new install will populate the database.{/tr}
@@ -376,7 +376,7 @@
 							{else}
 								{tr _0=$database_charset}<p>Your database encoding is <strong>not</strong> in UTF-8.</p><p>Current encoding is <em>%0</em>. The languages that will be available for content on the site will be limited. If you plan on using languages not covered by the character set, you should re-create or alter the database so the default encoding is <em>utf8</em>.</p>{/tr}
 							{/if}
-							<p><a href="http://doc.tiki.org/Understanding+Encoding" class="alert-link">{tr}More information{/tr}</a></p>
+							<p><a href="https://doc.tiki.org/Understanding+Encoding" class="alert-link">{tr}More information{/tr}</a></p>
 							<form method="post" action="" role="form">
 								<fieldset>
 									<legend>{tr}Character Set Conversion{/tr}</legend>
@@ -546,11 +546,11 @@
 						<div class="clearfix">
 							<p>{tr}Complete these fields to configure common, general settings for your site.{/tr} {tr}The information you enter here can be changed later.{/tr}</p>
 							{remarksbox type=info title="{tr}Tip{/tr}" close="n"}
-								{tr}Refer to the <a href="http://doc.tiki.org/Admin+home" target="_blank" class="alert-link">documentation</a> for complete information on these, and other, settings.{/tr}
+								{tr}Refer to the <a href="https://doc.tiki.org/Admin+home" target="_blank" class="alert-link">documentation</a> for complete information on these, and other, settings.{/tr}
 							{/remarksbox}
 							<br>
 							<fieldset>
-								<legend>{tr}General{/tr} <a href="http://doc.tiki.org/general+admin" target="_blank" title="{tr}Help{/tr}">{icon name="help"}</a></legend>
+								<legend>{tr}General{/tr} <a href="https://doc.tiki.org/general+admin" target="_blank" title="{tr}Help{/tr}">{icon name="help"}</a></legend>
 								<div style="padding:5px; clear:both">
 									<label for="browsertitle">{tr}Browser title:{/tr}</label>
 									<div style="margin-left:1em"><input class="form-control" type="text" size="40" name="browsertitle" id="browsertitle" onclick="if (this.value=='{tr}My Tiki{/tr}') this.value='';" onfocus="origval=this.value;" onblur="if (this.value=='') this.value=origval;" value="{if $prefs.browsertitle eq ''}{tr}My Tiki{/tr}{else}{$prefs.browsertitle|escape}{/if}">
@@ -566,7 +566,7 @@
 							<br>
 							<fieldset>
 								<legend>{tr}Secure Log in{/tr}
-									<a href="http://doc.tiki.org/login+config" target="_blank" title="{tr}Help{/tr}">
+									<a href="https://doc.tiki.org/login+config" target="_blank" title="{tr}Help{/tr}">
 										{icon name="help"}
 									</a>
 								</legend>
@@ -693,14 +693,14 @@
 					<h1 class="pagetitle">{tr}Enter Your Tiki{/tr}</h1>
 					<p>{tr}The installation is complete!{/tr} {tr}Your database has been configured and Tiki is ready to run.{/tr} </p>
 					{remarksbox type='tip' title="{tr}Join us!{/tr}" close="n"}
-						{tr}Tiki is an open source project, you can <a href='http://info.tiki.org/Join+the+Community' target='_blank' class="alert-link">join the community</a> and help <a href='http://info.tiki.org/Develop+Tiki' target='_blank' class="alert-link">develop Tiki</a>.{/tr}
+						{tr}Tiki is an open source project, you can <a href='https://info.tiki.org/Join+the+Community' target='_blank' class="alert-link">join the community</a> and help <a href='https://info.tiki.org/Develop+Tiki' target='_blank' class="alert-link">develop Tiki</a>.{/tr}
 					{/remarksbox}
 					{remarksbox type='tip' title="{tr}Stay up-to-date{/tr}" close="n"}
-						{tr}Subscribe to the <a href="http://tiki.org/Newsletter" title="Subscribe" target="_blank" class="alert-link">Tiki newsletter</a> or <a href="http://info.tiki.org/tiki-articles_rss.php" title="RSS" target="_blank" class="alert-link">RSS feed</a> to learn about new releases, security updates, and community news.{/tr}
+						{tr}Subscribe to the <a href="https://tiki.org/Newsletter" title="Subscribe" target="_blank" class="alert-link">Tiki newsletter</a> or <a href="https://info.tiki.org/tiki-articles_rss.php" title="RSS" target="_blank" class="alert-link">RSS feed</a> to learn about new releases, security updates, and community news.{/tr}
 					{/remarksbox}
 
 					{if isset($htaccess_error) and $htaccess_error eq 'y'}
-						<h3>{tr}.htaccess File{/tr} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/Installation" target="help">{icon name="help"}</a></h3>
+						<h3>{tr}.htaccess File{/tr} <a title="{tr}Help{/tr}" href="https://doc.tiki.org/Installation" target="help">{icon name="help"}</a></h3>
 						{tr}We recommend enabling the <strong>.htaccess</strong> file for your Tiki{/tr}. {tr}This will enable you to use SEFURLs (search engine friendly URLs) and help improve site security{/tr}.
 						<p>{tr _0="<strong>_htaccess</strong>" _1="<strong>.htaccess</strong>"}To enable this file, simply copy the %0 file (located in the main directory of your Tiki installation) to %1.{/tr}</p>
 					{elseif not empty($htaccess_feedback)}
@@ -808,7 +808,7 @@
 				{if $virt}
 					<div class="box-shadow">
 						<div class="box">
-							<h3 class="box-title">{tr}MultiTiki Setup{/tr} <a title="{tr}Help{/tr}" href="http://doc.tiki.org/MultiTiki" target="help"><img style="border:0" src="img/icons/help.png" alt="{tr}Help{/tr}"></a></h3>
+							<h3 class="box-title">{tr}MultiTiki Setup{/tr} <a title="{tr}Help{/tr}" href="https://doc.tiki.org/MultiTiki" target="help"><img style="border:0" src="img/icons/help.png" alt="{tr}Help{/tr}"></a></h3>
 							<div class="clearfix box-data">
 								{if !empty({$multi})}
 									<div><a href="#" onclick="$('#multi').submit();return false;">{tr}Default Installation{/tr}</a></div>
@@ -856,6 +856,6 @@
 
 	<div class="row install-footer text-center">
 		<hr>
-		<a href="http://tiki.org" target="_blank" title="{tr}Powered by{/tr} {tr}Tiki Wiki CMS Groupware{/tr} &#169; 2002&#8211;{$smarty.now|date_format:"%Y"} " class="btn"><img src="img/tiki/tikibutton.png" alt="{tr}Powered by Tiki Wiki CMS Groupware{/tr}"></a>
+		<a href="https://tiki.org" target="_blank" title="{tr}Powered by{/tr} {tr}Tiki Wiki CMS Groupware{/tr} &#169; 2002&#8211;{$smarty.now|date_format:"%Y"} " class="btn"><img src="img/tiki/tikibutton.png" alt="{tr}Powered by Tiki Wiki CMS Groupware{/tr}"></a>
 	</div><!-- End of install-footer -->
 </div><!-- End of tiki-install container -->
