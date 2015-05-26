@@ -88,7 +88,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 					),
 					'doNotInheritCategories' => array(
 						'name' => tr('Do not Inherit Categories'),
-						'description' => tr("New tracker items will inherit the parent tracker's categories by default, unless you set this option."),
+						'description' => tr("Tracker items will inherit the parent tracker's categories by default, unless you set this option."),
 						'filter' => 'int',
 						'options' => array(
 							0 => tr('Inherit (default)'),
@@ -118,13 +118,15 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 			$selected = $this->getCategories($this->getItemId());
 		} else {
 			$selected = TikiLib::lib('categ')->get_default_categories();
+		}
 
-			if (! $this->getOption('doNotInheritCategories')) {
-				// use the parent tracker categories by default for new items
-				$trackerCategories = TikiLib::lib('categ')->get_object_categories('tracker', $this->getConfiguration('trackerId'));
-				// for now just merge these, category jail will get enforced later
-				$selected = array_merge($selected, $trackerCategories);
-			}
+		$tracker_categories = array();
+
+		if (! $this->getOption('doNotInheritCategories')) {
+			// use the parent tracker categories by default for new items
+			$tracker_categories = TikiLib::lib('categ')->get_object_categories('tracker', $this->getConfiguration('trackerId'));
+			// for now just merge these, category jail will get enforced later
+			$selected = array_unique(array_merge($selected, $tracker_categories));
 		}
 
 		$categories = $this->getApplicableCategories();
@@ -133,6 +135,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		$data = array(
 			'value' => implode(',', $selected),
 			'selected_categories' => $selected,
+			'tracker_categories' => $tracker_categories,
 			'list' => $categories,
 		);
 
@@ -145,9 +148,18 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		$smarty->assign('cat_tree', array());
 		if ($this->getOption('descendants') > 0 && $this->getOption('inputtype') === 'checkbox') {
 			$categories = $this->getConfiguration('list');
+			$tracker_categories = $this->getConfiguration('tracker_categories');
+			if (is_array($tracker_categories) && !empty($tracker_categories)) {
+				foreach ($categories as & $cat) {
+					$cat['canchange'] = ! in_array($cat['categId'], $tracker_categories);
+				}
+				$changeall = false;
+			} else {
+				$changeall = true;
+			}
 			$selected_categories = $this->getConfiguration('selected_categories');
 			$smarty->assign_by_ref('categories', $categories);
-			$cat_tree = TikiLib::lib('categ')->generate_cat_tree($categories, true, $selected_categories);
+			$cat_tree = TikiLib::lib('categ')->generate_cat_tree($categories, $changeall, $selected_categories);
 			$cat_tree = str_replace('name="cat_categories[]"', 'name="' . $this->getInsertId() . '[]"', $cat_tree);
 			$smarty->assign('cat_tree', $cat_tree);
 		}
