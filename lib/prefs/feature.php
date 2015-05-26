@@ -77,7 +77,7 @@ function prefs_feature_list($partial = false)
 			'view' => 'tiki-list_blogs.php',
 			'module' => 'blog',
 			'permission' => array(
-				'permType' => 'blog',
+				'permType' => 'blogs',
 			),
 		),
 		'feature_galleries' => array(
