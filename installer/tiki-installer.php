@@ -577,7 +577,7 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 	if (isset($dbTiki)) {
 		TikiDb::set($dbTiki);
 	}
-	
+
 	return $dbcon;
 }
 
@@ -960,10 +960,54 @@ if (
 	//   - there is already an existing .htaccess (that is not necessarily the one that comes from Tiki),
 	//   - the copy does not work (e.g. due to filesystem permissions)
 	//
-	// TODO: Perform up-to-date check as in the SEFURL admin panel
 	// TODO: Equivalent for IIS
-	if ( strpos($_SERVER['SERVER_SOFTWARE'], 'Apache') !== false && !file_exists('.htaccess') && function_exists('symlink') && !@symlink('_htaccess', '.htaccess') && ! @copy('_htaccess', '.htaccess')) {
-		$smarty->assign('htaccess_error', 'y');
+
+
+	if ($install_step == '6' || $install_step == '7') {
+		if (strpos($_SERVER['SERVER_SOFTWARE'], 'Apache') !== false) {
+			if (!file_exists('.htaccess')) {
+				if (!isset($_REQUEST['htaccess_process'])) {
+
+					$htaccess_options = array('auto' => tra('Automatic'));
+					if (function_exists('symlink')) {
+						$htaccess_options['symlink'] = tra('Make a symlink');
+					}
+					if (function_exists('copy')) {
+						$htaccess_options['copy'] = tra('Make a copy');
+					}
+					$htaccess_options[''] = tra('Do nothing');
+					$smarty->assign('htaccess_options', $htaccess_options);
+				} else {
+
+					$htaccess_feedback = '';
+
+					if ($_REQUEST['htaccess_process'] === 'auto') {
+
+						if (function_exists('symlink') && symlink('_htaccess', '.htaccess')) {
+							$htaccess_feedback = tra('symlink created');
+						} else {
+							copy('_htaccess', '.htaccess');
+							$htaccess_feedback = tra('copy created');
+						}
+
+					} else if ($_REQUEST['htaccess_process'] === 'symlink') {
+						@symlink('_htaccess', '.htaccess');
+						$htaccess_feedback = tra('symlink created');
+					} else if ($_REQUEST['htaccess_process'] === 'copy') {
+						@copy('_htaccess', '.htaccess');
+						$htaccess_feedback = tra('copy created');
+					}
+					if (file_exists('.htaccess')) {
+						$smarty->assign('htaccess_feedback', $htaccess_feedback);
+					} else {
+						$smarty->assign('htaccess_error', 'y');
+					}
+				}
+
+			} else {
+				// TODO: Perform up-to-date check as in the SEFURL admin panel
+			}
+		}
 	}
 }
 
