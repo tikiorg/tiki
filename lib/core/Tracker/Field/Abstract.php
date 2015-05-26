@@ -294,7 +294,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 	}
 
 	/**
-	 * Return the HTML id of input tag for this
+	 * Return the HTML id/name of input tag for this
 	 * field in the item form
 	 *
 	 * @return string
@@ -309,6 +309,15 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 		return 'filter_' . $this->definition['fieldId'];
 	}
 
+	/**
+	 * Gets data from the field's configuration
+	 *
+	 * i.e. from the field definition in the database plus what is returned by the field's getFieldData() function
+	 *
+	 * @param string $key
+	 * @param mixed $default
+	 * @return mixed
+	 */
 	protected function getConfiguration($key, $default = false)
 	{
 		return isset($this->definition[$key]) ? $this->definition[$key] : $default;
