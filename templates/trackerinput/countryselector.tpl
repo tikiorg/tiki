@@ -1,4 +1,4 @@
-<select name="{$field.ins_id}">
+<select name="{$field.ins_id}" class="form-control">
 	{if $field.isMandatory ne 'y' || empty($field.value)}
 		<option value=""{if $field.value eq '' or $field.value eq 'None'} selected="selected"{/if}>&nbsp;</option>
 	{/if}
