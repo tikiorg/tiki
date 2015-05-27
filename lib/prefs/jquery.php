@@ -121,5 +121,11 @@ function prefs_jquery_list($partial = false)
 				'feature_shadowbox',
 			),
 		),
+		'jquery_fitvidjs' => array(
+			'name' => tra('FitVids.js'),
+			'description' => tra('jQuery plugin for fluid width video embeds.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);
 }
