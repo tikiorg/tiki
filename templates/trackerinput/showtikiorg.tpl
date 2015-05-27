@@ -55,7 +55,7 @@
 			<p>To help developers solve the bug, we kindly request that you demonstrate your bug on a show.tiki.org instance. To start, simply select a version and click on "Create show.tiki.org instance". Once the instance is ready (in a minute or two), as indicated in the status window below, you can then access that instance, login (the initial admin username/password is "admin") and configure the Tiki to demonstrate your bug. Priority will be given to bugs that have been demonstrated on show.tiki.org.</p>
 		{/remarksbox}
 		Version: 
-		<select name="svntag">
+		<select name="svntag" class="form-control">
 			<option selected="selected">trunk</option>
             <option>14.x</option>
 			<option>13.x</option>

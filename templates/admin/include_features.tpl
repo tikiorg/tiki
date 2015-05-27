@@ -164,12 +164,13 @@
 				{preference name=feature_jquery_ui}
 				{preference name=feature_jquery_validation}
 				{preference name=feature_jquery_zoom}
+				{preference name=jquery_ui_chosen}
+				{preference name=jquery_fitvidjs}
 				<div class="adminoptionboxchild">
 					<fieldset>
 						<legend> {tr}Experimental:{/tr} {icon _id=bug_error}</legend>
 						{preference name=feature_jquery_carousel}
 						{preference name=feature_jquery_tablesorter}
-						{preference name=jquery_ui_chosen}
 					</fieldset>
 				</div>
 			</fieldset>

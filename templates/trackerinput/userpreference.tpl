@@ -4,7 +4,7 @@
 		<br><i>Leave empty if password is to remain unchanged</i>
 	{/if}
 {elseif $field.options_array[0] eq 'language'}
-	<select name="{$field.ins_id}">
+	<select name="{$field.ins_id}" class="form-control">
 		{section name=ix loop=$languages}
 			<option value="{$languages[ix].value|escape}" {if $field.value eq $languages[ix].value}selected="selected"{/if}>
 				{$languages[ix].name}
