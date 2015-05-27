@@ -47,7 +47,7 @@ function wikiplugin_vimeo_info()
 				'name' => tra('Quality'),
 				'description' => tra('Quality of the video'),
 				'filter' => 'alpha',
-    			'options' => array(
+				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('High'), 'value' => 'high'),
 					array('text' => tra('Medium'), 'value' => 'medium'),
@@ -61,7 +61,7 @@ function wikiplugin_vimeo_info()
 				'name' => tra('Full screen'),
 				'description' => tra('Expand to full screen'),
 				'filter' => 'alpha',
-    			'options' => array(
+				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 'true'),
 					array('text' => tra('No'), 'value' => 'false'),
@@ -100,8 +100,48 @@ function wikiplugin_vimeo_info()
 				'filter' => 'int',
 				'advanced' => true
 			),
+			'useFroogaloopApi' => array(
+                                'required' => false,
+                                'name' => tra('Use Vimeo Froogaloop API'),
+                                'description' => tra('Use Vimeo Froogaloop API'),
+                                'filter' => 'alpha',
+                                'options' => array(
+                                        array('text' => '', 'value' => ''),
+                                        array('text' => tra('Yes'), 'value' => 'true'),
+                                        array('text' => tra('No'), 'value' => 'false'),
+                                ),
+                                'default' => '',
+                                'advanced' => true
+                        ),
 		),
 	);
+}
+
+function vimeo_iframe($data, $params) {
+	if (!empty($params['height'])) {
+		$height = $params['height'];
+	} else {
+		$height = '350';
+	}	
+	if (!empty($params['height'])) {
+		$width = $params['width'];
+	} else {
+		$width = '425';
+	}
+
+	$urlparts = explode('/', $params['vimeo']);
+	foreach ($urlparts as $urlpart) {
+		if (ctype_digit($urlpart)) {
+			$vimeoId = $urlpart;
+		}
+	}	
+	if (!isset($vimeoId)) {
+		return '';
+	}
+	$url = '//player.vimeo.com/video/' . $vimeoId; 
+
+	$output = '<iframe data-fileid="' . $params['vimeo_fileId'] . '" id="' . $params['player_id'] . '" src="' . $url . '" width="' . $width . '" height="' . $height . '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+	return $output;
 }
 
 function wikiplugin_vimeo($data, $params)
@@ -110,10 +150,20 @@ function wikiplugin_vimeo($data, $params)
 	static $instance = 0;
 	$instance++;
 
+	if ($params['useFroogaloopApi']) { 
+		TikiLib::lib('header')->add_jsfile('vendor_extra/vimeo/froogaloop.min.js');
+		TikiLib::lib('header')->add_jsfile('vendor_extra/vimeo/vimeo.js');
+	}
+
 	if (isset($params['url'])) {
 		$params['vimeo'] = $params['url'];
+		$params['player_id'] = "pid_".uniqid(); 
+		$params['vimeo_fileId'] = 0;
 		unset($params['url']);
-		return wikiplugin_flash($data, $params);
+		if ($params['useFroogaloopApi']) {
+			$params['vimeo'] .= "?api=1&player_id=".$params['player_id'];
+		}
+		return vimeo_iframe($data, $params);
 	} elseif (isset($params['fileId'])) {
 		$fileIds = preg_split('/\D+/', $params['fileId'], -1, PREG_SPLIT_NO_EMPTY);
 		unset($params['fileId']);
@@ -124,7 +174,12 @@ function wikiplugin_vimeo($data, $params)
 			$attributes = $attributelib->get_attributes('file', $fileId);
 			if (!empty($attributes['tiki.content.url'])) {
 				$params['vimeo'] = $attributes['tiki.content.url'];
-				$out .= wikiplugin_flash($data, $params);
+				$params['player_id'] = "pid_".uniqid(); 
+				$params['vimeo_fileId'] = $fileId;
+				if ($params['useFroogaloopApi']) {
+					$params['vimeo'] .= "?api=1&player_id=".$params['player_id'];
+				}
+				$out .= vimeo_iframe($data, $params);
 			} else {
 				TikiLib::lib('errorreport')->report(tr('Vimeo video not found for file #%0', $fileId));
 			}
