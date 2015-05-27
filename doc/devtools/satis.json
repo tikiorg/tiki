@@ -1402,6 +1402,7 @@
 		"jquery/plugins/cluetip": "*",
 		"jquery/plugins/colorbox": "*",
 		"jquery/plugins/colorpicker": "0.5",
+		"jquery/plugins/fitvidjs": ">=1.1.0",
 		"jquery/plugins/form": ">=3.25.0",
 		"jquery/plugins/galleriffic": "2.0.1",
 		"jquery/plugins/infinitecarousel": "3.0.3",
