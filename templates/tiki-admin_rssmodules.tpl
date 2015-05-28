@@ -73,7 +73,7 @@
 										</a>
 									{/if}
 									<a href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;clear={$channels[chan].rssId|escape}">
-										{icon name='trash' _menu_text='y' _menu_icon='y' alt="{tr}Clear{/tr}"}
+										{icon name='trash' _menu_text='y' _menu_icon='y' alt="{tr}Clear Cache{/tr}"}
 									</a>
 									<a href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;remove={$channels[chan].rssId|escape}">
 										{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
