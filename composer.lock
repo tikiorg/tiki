@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "83ff07fe3e985c7959c558f762896e85",
+    "hash": "c469aff51a0e37807c1387f3b6bad8e0",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -177,6 +177,17 @@
             "type": "library"
         },
         {
+            "name": "ckeditor/ckeditor/skins/bootstrapck",
+            "version": "1.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-bootstrapck-1.0.zip",
+                "reference": "1.0",
+                "shasum": "ece9ff3abcb9beec529ccafc88a657da17dd0293"
+            },
+            "type": "library"
+        },
+        {
             "name": "ckeditor/ckeditor/skins/kama",
             "version": "4.4.7",
             "dist": {
@@ -184,6 +195,28 @@
                 "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-kama-4.4.7.zip",
                 "reference": "4.4.7",
                 "shasum": "f03858b1d65157bcab7ff8382f35330e030a2522"
+            },
+            "type": "library"
+        },
+        {
+            "name": "ckeditor/ckeditor/skins/minimalist",
+            "version": "1.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-minimalist-1.0.zip",
+                "reference": "1.0",
+                "shasum": "24d8fca34d1cc72ee26898547e09a892db35e648"
+            },
+            "type": "library"
+        },
+        {
+            "name": "ckeditor/ckeditor/skins/office2013",
+            "version": "1.04",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-office2013-1.04.zip",
+                "reference": "1.04",
+                "shasum": "7d7fdf6d27b67ad82b4141fd24031237d51112e9"
             },
             "type": "library"
         },
