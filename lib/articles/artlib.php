@@ -187,6 +187,30 @@ class ArtLib extends TikiLib
 		}
 	}
 
+	function delete_expired_submissions()
+	{
+		$tiki_submissions = TikiDb::get()->table('tiki_submissions');
+
+		$expired = $tiki_submissions->fetchColumn(
+			'subId',
+			array('expireDate' => $tiki_submissions->lesserThan($this->now))
+		);
+
+		$transaction = $this->begin();
+
+		foreach ($expired as $subId) {
+
+			$tiki_submissions->delete(array('subId' => $subId));
+
+			$this->remove_object('submission', $subId);
+		}
+
+		$transaction->commit();
+
+
+		return true;
+	}
+
 	function replace_submission($title
 														, $authorName
 														, $topicId

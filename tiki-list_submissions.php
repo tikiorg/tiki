@@ -52,6 +52,11 @@ if (isset($_REQUEST['submit_mult']) && count($_REQUEST["checked"]) > 0) {
 		}
 	}
 }
+if (isset($_REQUEST["deleteexpired"])) {
+	$access->check_permission('tiki_p_remove_submission');
+	$access->check_authenticity(tr('Are you sure you want to permanently remove all expired submitted articles?'));
+	$artlib->delete_expired_submissions();
+}
 // This script can receive the threshold
 // for the information as the number of
 // days to get in the log 1,3,4,etc
