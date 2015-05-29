@@ -122,12 +122,12 @@ class WikiParser_OutputLink
 			);
 		} else {
 			$page = $this->getTargetPage($page);
-			return $description . $this->outputLink(
-				'?',
+			return $this->outputLink(
+				$description,
 				array(
 					'href' => $this->getEditLink($page),
 					'title' => tra('Create page:') . ' ' . $page,
-					'class' => 'wiki wikinew',
+					'class' => 'wiki wikinew tips',
 				)
 			);
 		}
