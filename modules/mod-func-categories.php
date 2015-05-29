@@ -70,7 +70,7 @@ function module_categories($mod_reference, &$module_params)
 	$categlib = TikiLib::lib('categ');
 	if (isset($module_params['type'])) {
 		$type = $module_params['type'];
-		$urlEnd = 'type='.urlencode($type);
+		$urlEnd = '&amp;type='.urlencode($type);
 	} else {
 		$type = '';
 		$urlEnd = '';
@@ -81,10 +81,7 @@ function module_categories($mod_reference, &$module_params)
 		$deep= 'on';
 	}
 	if ($deep === 'on') {
-		if (!empty($urlEnd)) {
-			$urlEnd .= '&amp;';
-		}
-		$urlEnd .= "deep=$deep";
+		$urlEnd .= "&amp;deep=$deep";
 	}
 	$name = "";
 
