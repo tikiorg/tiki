@@ -28,7 +28,7 @@
 						{self_link _sort_arg='sort_mode' _sort_field='canRepeat'}{tr}Quiz can be repeated{/tr}{/self_link}
 					</th>
 					<th>
-						{self_link _sort_arg='sort_mode' _sort_field='timeLimit'}{tr}Maximum time{/tr}{/self_link}
+						{self_link _sort_arg='sort_mode' _sort_field='timeLimit'}{tr}Time Limit{/tr}{/self_link}
 					</th>
 					<th>{tr}Questions{/tr}</th>
 					<th>{tr}Results{/tr}</th>

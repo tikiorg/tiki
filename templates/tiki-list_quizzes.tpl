@@ -33,7 +33,7 @@
 			</th>
 			{assign var=numbercol value=$numbercol+1}
 			<th>
-				<a href="tiki-list_quizzes.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'timeLimit_desc'}timeLimit_asc{else}timeLimit_desc{/if}">{tr}timeLimit{/tr}</a>
+				<a href="tiki-list_quizzes.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'timeLimit_desc'}timeLimit_asc{else}timeLimit_desc{/if}">{tr}Time Limit{/tr}</a>
 			</th>
 			{assign var=numbercol value=$numbercol+1}
 			<th>
@@ -50,9 +50,9 @@
 				<tr>
 					<td class="text">
 						<a class="tablename" href="tiki-take_quiz.php?quizId={$channels[user].quizId}">{$channels[user].name|escape}</a>
-						<div class="subcomment">
+						<span class="help-block">
 							{$channels[user].description|escape|nl2br}
-						</div>
+						</span>
 					</td>
 					<td class="integer">
 						{$channels[user].timeLimited} {if $channels[user].timeLimited eq 'y'}({$channels[user].timeLimit} mins){/if}
