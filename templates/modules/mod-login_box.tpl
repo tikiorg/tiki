@@ -123,7 +123,7 @@ if (jqueryTiki.no_cookie) {
 					{capture assign="close_tags"}</div></div></div>{$close_tags}{/capture}
 		{/if}
 
-		<form name="loginbox" class="form" id="loginbox-{$module_logo_instance}" action="{$login_module.login_url|escape}"
+		<form name="loginbox" class="form{if $mode eq "header"} form-inline{/if}" id="loginbox-{$module_logo_instance}" action="{$login_module.login_url|escape}"
 				method="post" {if $prefs.feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}
 				{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}
 		>
@@ -225,7 +225,7 @@ if (jqueryTiki.no_cookie) {
 		{if $module_params.show_forgot eq 'y' or $module_params.show_register eq 'y'}
 			<div {if $mode eq 'header'}class="text-right" style="display:inline;"{/if}>
 				{strip}
-					<div><ul {if $mode eq 'popup'}class="list-unstyled nav"{/if}>
+					<div {if $mode eq 'header'}style="display: inline-block"{/if}><ul class="{if $mode neq 'header'}list-unstyled nav"{else}list-inline"{/if}>
 						{if $module_params.show_forgot eq 'y' && $prefs.forgotPass eq 'y'}
 							<li class="pass"><a href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a></li>
 						{/if}

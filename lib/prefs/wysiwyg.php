@@ -61,6 +61,9 @@ function prefs_wysiwyg_list()
 			'options' => array(
 				'moono' => tra('Moono (Default)'),
 				'kama' => tra('Kama'),
+				'bootstrapck' => tra('Bootstrap CK'),
+				'minimalist' => tra('Minimalist'),
+				'office2013' => tra('Office 2013'),
 			),
 			'default' => 'moono',
 		),

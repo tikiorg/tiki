@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "aaf1ef5f362ea2ac60fa1bd116523c94",
+    "hash": "b0f377f7e0d92d01adbeca60b6e16076",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -188,6 +188,17 @@
             "type": "library"
         },
         {
+            "name": "ckeditor/ckeditor/skins/bootstrapck",
+            "version": "1.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-bootstrapck-1.0.zip",
+                "reference": "1.0",
+                "shasum": "ece9ff3abcb9beec529ccafc88a657da17dd0293"
+            },
+            "type": "library"
+        },
+        {
             "name": "ckeditor/ckeditor/skins/kama",
             "version": "4.4.7",
             "dist": {
@@ -195,6 +206,28 @@
                 "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-kama-4.4.7.zip",
                 "reference": "4.4.7",
                 "shasum": "f03858b1d65157bcab7ff8382f35330e030a2522"
+            },
+            "type": "library"
+        },
+        {
+            "name": "ckeditor/ckeditor/skins/minimalist",
+            "version": "1.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-minimalist-1.0.zip",
+                "reference": "1.0",
+                "shasum": "24d8fca34d1cc72ee26898547e09a892db35e648"
+            },
+            "type": "library"
+        },
+        {
+            "name": "ckeditor/ckeditor/skins/office2013",
+            "version": "1.04",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-office2013-1.04.zip",
+                "reference": "1.04",
+                "shasum": "7d7fdf6d27b67ad82b4141fd24031237d51112e9"
             },
             "type": "library"
         },
@@ -1374,16 +1407,16 @@
         },
         {
             "name": "robloach/component-installer",
-            "version": "0.1.0",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RobLoach/component-installer.git",
-                "reference": "319597e78604a86379af0359944290d226b0d416"
+                "reference": "f249264ea72390ea68f480984ab705cb68c92148"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RobLoach/component-installer/zipball/319597e78604a86379af0359944290d226b0d416",
-                "reference": "319597e78604a86379af0359944290d226b0d416",
+                "url": "https://api.github.com/repos/RobLoach/component-installer/zipball/f249264ea72390ea68f480984ab705cb68c92148",
+                "reference": "f249264ea72390ea68f480984ab705cb68c92148",
                 "shasum": ""
             },
             "require": {
@@ -1418,7 +1451,7 @@
                 }
             ],
             "description": "Allows installation of Components via Composer.",
-            "time": "2015-05-26 14:53:36"
+            "time": "2015-05-29 20:57:02"
         },
         {
             "name": "simile_timeline/simile_timeline",
@@ -1664,7 +1697,7 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.6.8",
+            "version": "v2.6.9",
             "target-dir": "Symfony/Component/Filesystem",
             "source": {
                 "type": "git",
@@ -1714,7 +1747,7 @@
         },
         {
             "name": "symfony/process",
-            "version": "v2.6.8",
+            "version": "v2.6.9",
             "target-dir": "Symfony/Component/Process",
             "source": {
                 "type": "git",
