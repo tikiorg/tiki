@@ -1113,14 +1113,14 @@ div.cvsup {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-.navbar-fixed-top a.btn,
-.layout_social .topbar_modules a.btn,
-.layout_social_modules .topbar_modules a.btn,
-.layout_fixed_top_modules #top_modules a.btn,
-.navbar-fixed-top a.btn-link,
-.layout_social .topbar_modules a.btn-link,
-.layout_social_modules .topbar_modules a.btn-link,
-.layout_fixed_top_modules #top_modules a.btn-link {
+.navbar-fixed-top .btn,
+.layout_social .topbar_modules .btn,
+.layout_social_modules .topbar_modules .btn,
+.layout_fixed_top_modules #top_modules .btn,
+.navbar-fixed-top .btn-link,
+.layout_social .topbar_modules .btn-link,
+.layout_social_modules .topbar_modules .btn-link,
+.layout_fixed_top_modules #top_modules .btn-link {
   margin-top: 6.57142857px;
 }
 .layout_social_modules #topbar_modules {
@@ -3242,9 +3242,9 @@ body.tiki.navbar-padding {
 .tiki .media-overflow-visible .media-body {
   overflow: visible;
 }
-.padding-side-md {
-  padding-left: 15px;
-  padding-right: 15px;
+.tiki .form-horizontal .margin-side-0 {
+  margin-left: 0;
+  margin-right: 0;
 }
 .tiki .col-md-3 .table-responsive,
 .tiki .col-md-4 .table-responsive,
