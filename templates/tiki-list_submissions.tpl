@@ -2,6 +2,7 @@
 
 <div class="navbar">
 	{button href="tiki-edit_submission.php" _text="{tr}New Submission{/tr}"}
+	{button href="tiki-list_submissions.php?deleteexpired=y" _icon_name="delete" _text="{tr}Delete Expired Submissions{/tr}"}
 	{if $tiki_p_read_article eq 'y'}
 		{button href="tiki-list_articles.php" _text="{tr}List Articles{/tr}"}
 	{/if}
