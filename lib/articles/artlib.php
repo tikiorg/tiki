@@ -193,7 +193,8 @@ class ArtLib extends TikiLib
 
 		$expired = $tiki_submissions->fetchColumn(
 			'subId',
-			array('expireDate' => $tiki_submissions->lesserThan($this->now))
+			array('expireDate' => $tiki_submissions->lesserThan($this->now)),
+			10000
 		);
 
 		$transaction = $this->begin();
