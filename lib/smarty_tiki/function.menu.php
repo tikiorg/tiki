@@ -150,7 +150,7 @@ function get_menu_with_selections($params)
 	extract($params, EXTR_SKIP);
 
 	if (isset($structureId)) {
-		$cacheType = 'structure_'.$structureId;
+		$cacheType = 'structure_'.$structureId . '_';
 	} else {
 		$cacheType = 'menu_'. $id .'_';
 	}
