@@ -281,6 +281,7 @@ if (!empty($_REQUEST['remove'])) {
 	}
 } elseif (isset($_REQUEST["batchaction"]) and $_REQUEST["batchaction"] == 'delete') {
 	check_ticket('view-trackers');
+	$access->check_authenticity(tr('Are you sure you want to delete the selected items?'));
 	$transaction = $tikilib->begin();
 
 	foreach ($_REQUEST['action'] as $batchid) {
