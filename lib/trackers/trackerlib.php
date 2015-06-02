@@ -3712,7 +3712,7 @@ class TrackerLib extends TikiLib
 		$res = $this->get_item_values_by_type($itemId, 'u');
 		if (is_array($res)) {
 			foreach ($res as $f) {
-				if (isset($f['options_array'][1]) && $f['options_array'][1] != 0) {
+				if (isset($f['options_array'][1]) && $f['options_array'][1] != 0 && !empty($f['value'])) {
 					if ($f['options_array'][1] == 2 && array_key_exists($f['value'], $user_preferences)) {
 						// Don't send email to oneself
 						continue;
