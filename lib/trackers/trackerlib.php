@@ -4490,6 +4490,10 @@ class TrackerLib extends TikiLib
 
 		$the_data = $this->generate_watch_data($old_values, $new_values, $trackerId, $itemId, $args['version']);
 
+		if (empty($the_data) && $prefs['tracker_always_notify'] !== 'y') {
+			return;
+		}
+
 		$tracker_definition = Tracker_Definition::get($trackerId);
 		if (! $tracker_definition) {
 			return;
@@ -4626,13 +4630,16 @@ class TrackerLib extends TikiLib
 
 	private function generate_watch_data($old, $new, $trackerId, $itemId, $version)
 	{
+		global $prefs;
+
 		$tracker_definition = Tracker_Definition::get($trackerId);
 		if (! $tracker_definition) {
-			return;
+			return '';
 		}
 
 		$oldStatus = $old['status'];
 		$newStatus = $new['status'];
+		$changed = false;
 
 		$the_data = '';
 		if (!empty($oldStatus) || !empty($newStatus)) {
@@ -4643,6 +4650,7 @@ class TrackerLib extends TikiLib
 			$statusTypes = $this->status_types();
 			if (isset($oldStatus) && $oldStatus != $newStatus) {
 				$the_data .= isset($statusTypes[$oldStatus]['label'] ) ? $statusTypes[$oldStatus]['label'] . ' -> ' : '';
+				$changed = true;
 			}
 
 			if (!empty($newStatus)) {
@@ -4668,9 +4676,14 @@ class TrackerLib extends TikiLib
 				$the_data .= tr('Tracker field not enabled: fieldId=%0 type=%1', $field['fieldId'], $field['type']) . "\n";
 			}
 			$the_data .= "\n----------\n";
+			$changed = true;
 		}
 
-		return $the_data;
+		if ($changed || $prefs['tracker_always_notify'] === 'y') {
+			return $the_data;
+		} else {
+			return '';
+		}
 	}
 
 	private function tracker_is_syncable($trackerId)

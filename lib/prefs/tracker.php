@@ -96,5 +96,12 @@ function prefs_tracker_list()
 			'tags' => ['advanced', 'experimental'],
             'help' => 'Tracker+Tabular',
 		),
+		'tracker_always_notify' => array(
+			'name' => tr('Always Notify Watchers'),
+			'description' => tr('Send item updated notifications to watchers even if nothing has changed.'),
+			'type' => 'flag',
+			'default' => 'y',
+			'dependencies' => ['feature_trackers'],
+		),
 	);
 }
