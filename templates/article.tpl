@@ -11,9 +11,15 @@
 		{/if}
 
 		<span class="titleb">
-			{if $show_author eq 'y' && ($authorName or $author)}{tr}Author:{/tr} {if $authorName}{$authorName|escape}{else}{$author|username}{/if} - {/if}
-			{if $show_pubdate eq 'y' && $publishDate}{$publishDate|tiki_short_datetime:'Published At:'} - {/if}
-			{if $show_expdate eq 'y' && $expireDate}{tr}Expires At:{/tr} {$expireDate|tiki_short_datetime} - {/if}
+			{if $show_author eq 'y' && ($authorName or $author)}{tr}Author:{/tr} {if $authorName}{$authorName|escape}{else}{$author|username}{/if} - 
+				{if $show_pubdate eq 'y' || $show_expdate eq 'y' || $show_reads eq 'y'} - {/if}
+			{/if}
+			{if $show_pubdate eq 'y' && $publishDate}{$publishDate|tiki_short_datetime:'Published At:'} - 
+				{if $show_expdate eq 'y' || $show_reads eq 'y'} - {/if}
+			{/if}
+			{if $show_expdate eq 'y' && $expireDate}{tr}Expires At:{/tr} {$expireDate|tiki_short_datetime} - 
+				{if $show_reads eq 'y'} - {/if}
+			{/if}
 			{if $show_reads eq 'y'}({$reads} {tr}Reads{/tr}){/if}
 		</span>
 		{if $comment_can_rate_article eq 'y' and $prefs.article_user_rating eq 'y' && ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
