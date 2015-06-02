@@ -61,10 +61,10 @@ body.tiki.navbar-padding {
 	overflow: visible;
 }
 
-// Not an override per se, but useful to counteract the negative margins on form.form-horizontal and so provide side whitespace (emulates a .col grid div and the only instance so far is on tiki-editpage.tpl).
-.padding-side-md {
-	padding-left: 15px;
-	padding-right: 15px;
+// Counteract the negative side margins that form.form-horizontal imposes on a "not horizontal" .form-group when there is a mix of form-group types; the only instance so far is on tiki-editpage.tpl.
+.tiki .form-horizontal .margin-side-0 {
+	margin-left: 0;
+	margin-right: 0;
 }
 
 //@media (min-width: @screen-md-min) {

@@ -2215,7 +2215,7 @@ if ( \$('#$id') ) {
 							$flaggedrevisionlib = TikiLib::lib('flaggedrevision');
 
 							if ($flaggedrevisionlib->page_requires_approval($this->option['page'])) {
-								if ($version_info === $flaggedrevisionlib->get_version_with($this->option['page'], 'moderation', 'OK')) {
+								if ($version_info = $flaggedrevisionlib->get_version_with($this->option['page'], 'moderation', 'OK')) {
 									if ($this->content_to_render === null) {
 										$revision_displayed = $version_info['version'];
 										$approval = $flaggedrevisionlib->find_approval_information($this->option['page'], $revision_displayed);
@@ -2244,7 +2244,7 @@ if ( \$('#$id') ) {
 							$flaggedrevisionlib = TikiLib::lib('flaggedrevision');
 
 							if ($flaggedrevisionlib->page_requires_approval($this->option['page'])) {
-								if ($version_info === $flaggedrevisionlib->get_version_with($this->option['page'], 'moderation', 'OK')) {
+								if ($version_info = $flaggedrevisionlib->get_version_with($this->option['page'], 'moderation', 'OK')) {
 									if ($this->content_to_render === null) {
 										$revision_displayed = $version_info['version'];
 										$approval = $flaggedrevisionlib->find_approval_information($this->option['page'], $revision_displayed);
@@ -2314,24 +2314,26 @@ if ( \$('#$id') ) {
 
 						if ($prefs['flaggedrev_approval'] == 'y') {
 							$flaggedrevisionlib = TikiLib::lib('flaggedrevision');
-
 							if ($flaggedrevisionlib->page_requires_approval($this->option['page'])) {
-								if ($versions_info === $flaggedrevisionlib->get_versions_with($this->option['page'], 'moderation', 'OK')) {
+								if ($versions_info = $flaggedrevisionlib->get_versions_with($this->option['page'], 'moderation', 'OK')) {
 									if (isset($_REQUEST['preview'])) {
 										$revision_displayed = (int)$_REQUEST["preview"];
 									} elseif (isset($_REQUEST['version'])) {
 										$revision_displayed = (int)$_REQUEST["version"];
+									} elseif (isset($_REQUEST['latest'])) {
+										$revision_displayed = NULL;								
 									} else {
-										$revision_displayed = NULL;
+										$versions_info = $flaggedrevisionlib->get_versions_with($this->option['page'], 'moderation', 'OK');
+										$revision_displayed = $versions_info[0];
 									}
-
+									
 									if ($this->content_to_render === null) {
 										$approval = $flaggedrevisionlib->find_approval_information($this->option['page'], $revision_displayed);
 									}
 								}
 							}
 						}
-
+						
 						if ($approval['user'] != null ) {
 							if ($prefs['user_show_realnames']== 'y') {
 								$value = TikiLib::lib('user')->clean_user($approval['user']);
@@ -2352,13 +2354,16 @@ if ( \$('#$id') ) {
 							$flaggedrevisionlib = TikiLib::lib('flaggedrevision');
 
 							if ($flaggedrevisionlib->page_requires_approval($this->option['page'])) {
-								if ($versions_info === $flaggedrevisionlib->get_versions_with($this->option['page'], 'moderation', 'OK')) {
+								if ($versions_info = $flaggedrevisionlib->get_versions_with($this->option['page'], 'moderation', 'OK')) {
 									if (isset($_REQUEST['preview'])) {
 										$revision_displayed = (int)$_REQUEST["preview"];
 									} elseif (isset($_REQUEST['version'])) {
 										$revision_displayed = (int)$_REQUEST["version"];
+									} elseif (isset($_REQUEST['latest'])) {
+										$revision_displayed = NULL;								
 									} else {
-										$revision_displayed = NULL;
+										$versions_info = $flaggedrevisionlib->get_versions_with($this->option['page'], 'moderation', 'OK');
+										$revision_displayed = $versions_info[0];
 									}
 
 									if ($this->content_to_render === null) {
@@ -2383,13 +2388,16 @@ if ( \$('#$id') ) {
 							$flaggedrevisionlib = TikiLib::lib('flaggedrevision');
 
 							if ($flaggedrevisionlib->page_requires_approval($this->option['page'])) {
-								$versions_info === $flaggedrevisionlib->get_versions_with($this->option['page'], 'moderation', 'OK');
+								//$versions_info = $flaggedrevisionlib->get_versions_with($this->option['page'], 'moderation', 'OK');
 								if (isset($_REQUEST['preview'])) {
 									$revision_displayed = (int)$_REQUEST["preview"];
 								} elseif (isset($_REQUEST['version'])) {
 									$revision_displayed = (int)$_REQUEST["version"];
-								} else {
+								} elseif (isset($_REQUEST['latest'])) {
 									$revision_displayed = NULL;
+								} else {
+									$versions_info = $flaggedrevisionlib->get_versions_with($this->option['page'], 'moderation', 'OK');
+									$revision_displayed = $versions_info[0];
 								}
 							}
 						}

@@ -12,8 +12,11 @@
 		{elseif $datachannel_inputfields.$name eq "hidden"}
 			<input type="hidden" name="{$name|escape}" value="{$label}">
 		{else}
-			<div>
-				{$label|escape}: <input type="text" name="{$name|escape}">
+			<div class="form-group">
+				<label>{$label|escape}:</label>
+				<div>
+					<input type="text" name="{$name|escape}" class="form-control">
+				</div>
 			</div>
 		{/if}
 	{/foreach}

@@ -42,27 +42,34 @@
 		</select>
 
 		{if $field.type eq 'D'}
-			&nbsp;
-			<label>
-				{tr}Other:{/tr}
-				<input type="text" class="group_{$field.ins_id|escape} form-control" name="other_{$field.ins_id}" value="{if !isset($field.possibilities[$field.value])}{$field.value|escape}{/if}">
-			</label>
+			<div class="col-md-offset-1">
+				<label{if !isset($field.possibilities[$field.value]) && $field.value} style="display:inherit;"{else} style="display:none;"{/if}>
+					{tr}Other:{/tr}
+					<input type="text" class="group_{$field.ins_id|escape} form-control" name="other_{$field.ins_id}" value="{if !isset($field.possibilities[$field.value])}{$field.value|escape}{/if}">
+				</label>
+			</div>
 			{jq}
+			$(function () {
+				var $select = $('select[name="{{$field.ins_id|escape}}"]'),
+					$other = $('input[name="other_{{$field.ins_id|escape}}"]');
 				{{if !isset($field.possibilities[$field.value]) && $field.value}}
-				if (!$('select[name="{{$field.ins_id|escape}}"] > [selected]').length) {
-					$('select[name="{{$field.ins_id|escape}}"]').val('{tr}other{/tr}').trigger('chosen:updated');
+				if (!$('> [selected]', $select).length) {
+					$select.val('{tr}other{/tr}').trigger('chosen:updated');
 				}
 				{{/if}}
-				$('select[name="{{$field.ins_id|escape}}"]').change(function() {
-					if ($('select[name="{{$field.ins_id|escape}}"]').val() != '{tr}other{/tr}') {
-						$('input[name="other_{{$field.ins_id|escape}}"]').val('');
+				$select.change(function() {
+					if ($select.val() != '{tr}other{/tr}') {
+						$other.val('').parent().hide();
+					} else {
+						$other.parent().show();
 					}
 				});
-				$('input[name="other_{{$field.ins_id|escape}}"]').change(function(){
+				$other.change(function(){
 					if ($(this).val()) {
-						$('select[name="{{$field.ins_id|escape}}"]').val(tr('other')).trigger('chosen:updated');
+						$select.val(tr('other')).trigger('chosen:updated');
 					}
 				});
+			});
 			{/jq}
 		{/if}
 

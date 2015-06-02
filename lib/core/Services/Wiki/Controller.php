@@ -36,6 +36,16 @@ class Services_Wiki_Controller
 				$params->maxdepth,
 				$params->structurePageName
 			);
+			
+			//Empty structure caches to refresh structure data in menu module. Seems better to empty cache for any possible subnodes, might make it a bit slow
+			$cachelib = TikiLib::lib('cache');
+			$structurePages = array();
+			$structurePages = $structlib->s_get_structure_pages($params->page_ref_id);
+			foreach($structurePages as &$value) {
+				$cachetype = 'structure_'.$value["page_ref_id"].'_';
+				$cachelib->empty_type_cache($cachetype);
+			}
+			unset($value);
 		}
 		return array('html' => $html);
 	}

@@ -287,7 +287,7 @@ if ($_REQUEST['locSection'] == 'mailbox') {
 		handleWebmailRedirect('locSection=settings');
 	}
 
-	$autoRefresh = $current['autoRefresh'];
+	$autorefresh = $current['autoRefresh'];
 	$js = <<< END
 function submit_form(msgname,flg)
 {
@@ -298,7 +298,7 @@ function submit_form(msgname,flg)
 END;
 
 	if ($autorefresh > 0) {
-		$js .= 'webmailTimeoutId = window.setTimeout("window.location.reload(true);",$autoRefresh*1000);';
+		$js .= 'webmailTimeoutId = window.setTimeout("window.location.reload(true);",$autorefresh*1000);';
 	}
 	$headerlib->add_js($js, 0);
 
@@ -988,6 +988,12 @@ if ($_REQUEST['locSection'] == 'compose') {
 
 	if (!isset($_REQUEST['useHTML']))
 		$_REQUEST['useHTML'] = 'n';
+
+	if (!isset($_REQUEST['fattId']))
+		$_REQUEST['fattId'] = '';
+		
+	if (!isset($_REQUEST['pageaftersend']))
+		$_REQUEST['pageaftersend'] = '';
 
 	$smarty->assign('cc', $_REQUEST['cc']);
 	$smarty->assign('to', $_REQUEST['to']);

@@ -589,7 +589,7 @@ class CategLib extends ObjectLib
 	}
 
 	// get specific object types that are not categorised	
-	function get_catorphan_object_type($offset, $maxRecords, $object_type, $object_table, $object_ref, $sort_mode)
+	function get_catorphan_object_type($offset, $maxRecords, $object_type, $object_table, $object_ref, $sort_mode=null)
 	{
 	// $orderClause = $this->convertSortMode($sort_mode); // sort_mode not being used yet and may never be used?
 	

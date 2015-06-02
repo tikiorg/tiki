@@ -3941,9 +3941,10 @@ class TrackerLib extends TikiLib
 			}
 			foreach ($matches[2] as $i => $val) {
 				if (!empty($val)) {
-					if (ctype_digit($val)) {
-						$outputPretty[] = $matches[1][$i];
-					} elseif ($fieldId = $this->table('tiki_tracker_fields')->fetchOne('fieldId', array('permName' => $matches[1][$i], 'trackerId' => $trackerId))) {
+					$v = $matches[1][$i];
+					if (ctype_digit($v)) {
+						$outputPretty[] = $v;
+					} elseif ($fieldId = $this->table('tiki_tracker_fields')->fetchOne('fieldId', array('permName' => $v, 'trackerId' => $trackerId))) {
 						$outputPretty[] = $fieldId;
 					}
 				}

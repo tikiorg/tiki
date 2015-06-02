@@ -113,23 +113,32 @@
 						{if $listpages[ix].show_author eq 'y'}
 							{if $listpages[ix].authorName}
 								<span class="author">
-									{tr}Author:{/tr} {$listpages[ix].authorName|escape}&nbsp;-
+									{tr}Author:{/tr} {$listpages[ix].authorName|escape}
 								</span>
 							{else}
 								<span class="author">
-								{tr}Author:{/tr} {$listpages[ix].author|username}&nbsp;-
-							</span>
+									{tr}Author:{/tr} {$listpages[ix].author|username}
+								</span>
+							{/if}
+							{if $listpages[ix].show_pubdate eq 'y' or $listpages[ix].show_expdate eq 'y' or $listpages[ix].show_reads eq 'y'}
+								-
 							{/if}
 						{/if}
 						{if $listpages[ix].show_pubdate eq 'y'}
 							<span class="pubdate">
-								{tr}Published At:{/tr} {$listpages[ix].publishDate|tiki_short_datetime}&nbsp;-
+								{tr}Published At:{/tr} {$listpages[ix].publishDate|tiki_short_datetime}
 							</span>
+							{if $listpages[ix].show_expdate eq 'y' or $listpages[ix].show_reads eq 'y'}
+								-
+							{/if}
 						{/if}
 						{if $listpages[ix].show_expdate eq 'y'}
 							<span class="expdate">
-								{tr}Expires At:{/tr} {$listpages[ix].expireDate|tiki_short_datetime}&nbsp;-
+								{tr}Expires At:{/tr} {$listpages[ix].expireDate|tiki_short_datetime}
 							</span>
+							{if $listpages[ix].show_reads eq 'y'}
+								-
+							{/if}
 						{/if}
 						{if $listpages[ix].show_reads eq 'y'}
 							<span class="reads">
