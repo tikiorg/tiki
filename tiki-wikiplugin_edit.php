@@ -58,13 +58,12 @@ foreach ( $matches as $match ) {
 			$params = $_POST['params'];
 		}
 
+		if ($prefs['wysiwyg_htmltowiki'] == 'y' && $plugin === 'wysiwyg') {
+			$content = TikiLib::lib('edit')->parseToWiki($content);
+		}
 		$match->replaceWithPlugin($plugin, $params, $content);
 
-		if ($prefs['wysiwyg_htmltowiki'] == 'y' && $plugin === 'wysiwyg') {
-			$parsed = TikiLib::lib('edit')->parseToWiki($matches->getText());
-		} else {
-			$parsed = $matches->getText();
-		}
+		$parsed = $matches->getText();
 
 		$tikilib->update_page($page, $parsed, $_POST['message'], $user, $tikilib->get_ip_address());
 		break;
