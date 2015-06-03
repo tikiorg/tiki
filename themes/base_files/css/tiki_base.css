@@ -2355,6 +2355,9 @@ table.treetable tr.expanded span.indenter a {
   display: block;
   padding: 10px 15px;
 }
+.tracker-field-h a {
+  font-weight: bold;
+}
 .catlists .catitems {
   display: inline-block;
 }
