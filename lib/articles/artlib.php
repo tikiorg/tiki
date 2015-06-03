@@ -187,14 +187,14 @@ class ArtLib extends TikiLib
 		}
 	}
 
-	function delete_expired_submissions()
+	function delete_expired_submissions($maxrows = 5000)
 	{
 		$tiki_submissions = TikiDb::get()->table('tiki_submissions');
 
 		$expired = $tiki_submissions->fetchColumn(
 			'subId',
 			array('expireDate' => $tiki_submissions->lesserThan($this->now)),
-			10000
+			$maxrows
 		);
 
 		$transaction = $this->begin();
