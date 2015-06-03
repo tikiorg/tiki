@@ -42,6 +42,7 @@ class UsersLib extends TikiLib
 	public $userobjectperm_cache; // used to cache queries in object_has_one_permission()
 	public $get_object_permissions_for_user_cache;
 	static $cas_initialized = false;
+	static $userexists_cache = array();
 
 	function __construct()
 	{
@@ -207,13 +208,12 @@ class UsersLib extends TikiLib
 
 	function user_exists($user)
 	{
-		static $rv = array();
-		if (!isset($rv[$user])) {
+		if (!isset($userexists_cache[$user])) {
 			$query = 'select count(*) from `users_users` where upper(`login`) = ?';
 			$result = $this->getOne($query, array(TikiLib::strtoupper($user)));
-			$rv[$user] = $result;
+			$userexists_cache[$user] = $result;
 		}
-		return $rv[$user];
+		return $userexists_cache[$user];
 	}
 	function get_user_real_case($user)
 	{
@@ -2187,6 +2187,8 @@ class UsersLib extends TikiLib
 
 		if ( $user == 'admin' ) return false;
 
+		$userexists_cache[$user] = NULL;
+
 		$userId = $this->getOne('select `userId` from `users_users` where `login` = ?', array($user));
 
 		$groupTracker = $this->get_tracker_usergroup($user);
@@ -2234,6 +2236,8 @@ class UsersLib extends TikiLib
 		$cachelib = TikiLib::lib('cache');
 
 		if ( $from == 'admin' ) return false;
+
+		$userexists_cache[$user] = NULL;
 
 		$userId = $this->getOne('select `userId` from `users_users` where `login` = ?', array($from));
 
@@ -6231,6 +6235,8 @@ class UsersLib extends TikiLib
 		) {
 			return false;
 		}
+
+		$userexists_cache[$user] = NULL;
 
 		// Generate a unique hash; this is also done below in set_user_fields()
 		$lastLogin = null;
