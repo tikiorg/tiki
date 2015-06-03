@@ -6894,15 +6894,6 @@ class UsersLib extends TikiLib
 		return count($resultcons);
 	}	
 
-	function count_users_consolidated($groups)
-	{
-		$groupset = implode("','",$groups);
-		$query = "select userId from `users_usergroups` where `groupName` in ('".$groupset."')";
-		$result = $this->fetchAll($query, array());
-		$resultcons = array_unique(array_column($result, 'userId'));
-		return count($resultcons);
-	}
-
 	function related_users($user, $max = 10, $type = 'wiki')
 	{
 		if (!isset($user) || empty($user)) {
