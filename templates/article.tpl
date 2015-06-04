@@ -1,4 +1,5 @@
 <article class="article">
+    {if $prefs.art_trailer_pos ne 'between'}{include file='article_trailer.tpl'}{/if}
 	{if $show_topline eq 'y' and $topline}
 		<div class="articletopline">{$topline|escape}</div>
 	{/if}
@@ -48,7 +49,7 @@
 		{rating_result id=$articleId type=article}
 	{/if}
 
-	{if $prefs.art_trailer_pos ne 'between'}{include file='article_trailer.tpl'}{/if}
+{*	{if $prefs.art_trailer_pos ne 'between'}{include file='article_trailer.tpl'}{/if} *}
 
 	<div class="articleheading">
 
