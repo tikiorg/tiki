@@ -90,6 +90,7 @@
         </div>
         <div class=" col-sm-10 col-sm-offset-2">
             <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 {tr}Hint: Click "Preview" after selecting article type to have appropriate edit form fields.{/tr}
             </div>
         </div>
