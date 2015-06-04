@@ -158,7 +158,7 @@ if (jqueryTiki.tooltips) {
 		{assign var='close_tags' value=''}
 		{if $mode eq "popup"}
 			<div class="siteloginbar_popup">
-				<ul class="clearfix{if $prefs.feature_jquery_tooltips ne 'y'} cssmenu_horiz{/if}">
+				<ul class="clearfix{if $prefs.feature_jquery_tooltips ne 'y'} cssmenu_horiz{/if} sf-arrows">
 					<li id="logout_link_{$module_logo_instance}"><div class="tabmark"><a href="tiki-login.php" class="login_link sf-with-ul" onclick="return false;" rel=".siteloginbar_poppedup">{tr}Log in{/tr}</a></div>
 						<ul class="siteloginbar_poppedup cbox">
 							<li class="tabcontent">
