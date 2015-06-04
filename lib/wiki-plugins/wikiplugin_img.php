@@ -1100,7 +1100,8 @@ function wikiplugin_img( $data, $params )
 		$link = filter_out_sefurl($link);
 
 		// For ImgPlugin alignment 
-		$position = "";
+		$position = '';
+		$style = '';
 		if($imgdata['imalign'] == "right"){
 			$style ='style="float: right;"';
 		}elseif($imgdata['imalign'] == "center"){

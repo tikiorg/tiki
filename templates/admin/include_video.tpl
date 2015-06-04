@@ -32,6 +32,11 @@
 			</fieldset>
 
 			<fieldset class="table">
+				<legend>{tr}Enable related Tracker field types{/tr}</legend>
+				{preference name=trackerfield_kaltura}
+			</fieldset>
+
+			<fieldset class="table">
 				<legend>{tr}Kaltura / Tiki config{/tr}</legend>
 				{preference name=kaltura_kServiceUrl}
 			</fieldset>
