@@ -45,7 +45,56 @@
 		<input type="hidden" name="translationOf" value="{$translationOf|escape}">
 	{/if}
 	{tabset}
-		{tab name="{tr}General{/tr}"}
+    {tab name="{tr}Classification{/tr}"}
+        <h2>{tr}Classification{/tr}</h2>
+        <div class="form-group clearfix">
+            <label for="topicId" class="control-label col-sm-3">{tr}Topic{/tr}</label>
+            <div class="col-sm-6">
+                <select name="topicId" class="form-control">
+                    {foreach $topics as $topic}
+                        <option value="{$topic.topicId|escape}" {if $topicId eq $topic.topicId}selected="selected"{/if}>{$topic.name|escape}</option>
+                    {/foreach}
+                    <option value="" {if $topicId eq 0}selected="selected"{/if}>{tr}None{/tr}</option>
+                </select>
+            </div>
+            {if $tiki_p_admin_cms eq 'y'}
+                <span class="col-sm-3">
+						<a href="tiki-admin_topics.php" class="btn btn-default">
+                            {icon name="administer"} {tr}Article Topics{/tr}
+                        </a>
+					</span>
+            {/if}
+        </div>
+        <div class="form-group clearfix">
+            <label for="type" class="control-label col-sm-3">{tr}Type{/tr}</label>
+            <div class="col-sm-6">
+                <select name="type" class="form-control">
+                    {foreach $types as $typei => $prop}
+                        <option value="{$typei|escape}" {if $type eq $typei}selected="selected"{/if}>{tr}{$typei|escape}{/tr}</option>
+                    {/foreach}
+                </select>
+            </div>
+            {if $tiki_p_admin_cms eq 'y'}
+                <span class="col-sm-3">
+						<a href="tiki-article_types.php" class="btn btn-default">
+                            {icon name="administer"} {tr}Article Types{/tr}
+                        </a>
+					</span>
+            {/if}
+        </div>
+        <div class="form-group clearfix">
+            {include file='categorize.tpl'}
+        </div>
+        <div class="form-group clearfix">
+            {include file='freetag.tpl'}
+        </div>
+        <div class=" col-sm-10 col-sm-offset-2">
+            <div class="alert alert-info alert-dismissible" role="alert">
+                {tr}Hint: Click "Preview" after selecting article type to have appropriate edit form fields.{/tr}
+            </div>
+        </div>
+    {/tab}
+    {tab name="{tr}General{/tr}"}
 			<h2>{tr}General{/tr}</h2>
 			<div class="form-group">
 				<label for="title">{tr}Title{/tr}</label>
@@ -150,50 +199,6 @@
 						{$siteTimeZone}
 					</span>
 				</div>
-			</div>
-		{/tab}
-		{tab name="{tr}Classification{/tr}"}
-			<h2>{tr}Classification{/tr}</h2>
-			<div class="form-group clearfix">
-				<label for="topicId" class="control-label col-sm-3">{tr}Topic{/tr}</label>
-				<div class="col-sm-6">
-					<select name="topicId" class="form-control">
-						{foreach $topics as $topic}
-							<option value="{$topic.topicId|escape}" {if $topicId eq $topic.topicId}selected="selected"{/if}>{$topic.name|escape}</option>
-						{/foreach}
-						<option value="" {if $topicId eq 0}selected="selected"{/if}>{tr}None{/tr}</option>
-					</select>
-				</div>
-				{if $tiki_p_admin_cms eq 'y'}
-					<span class="col-sm-3">
-						<a href="tiki-admin_topics.php" class="btn btn-default">
-							{icon name="administer"} {tr}Article Topics{/tr}
-						</a>
-					</span>
-				{/if}
-			</div>
-			<div class="form-group clearfix">
-				<label for="type" class="control-label col-sm-3">{tr}Type{/tr}</label>
-				<div class="col-sm-6">
-					<select name="type" class="form-control">
-						{foreach $types as $typei => $prop}
-							<option value="{$typei|escape}" {if $type eq $typei}selected="selected"{/if}>{tr}{$typei|escape}{/tr}</option>
-						{/foreach}
-					</select>
-				</div>
-				{if $tiki_p_admin_cms eq 'y'}
-					<span class="col-sm-3">
-						<a href="tiki-article_types.php" class="btn btn-default">
-							{icon name="administer"} {tr}Article Types{/tr}
-						</a>
-					</span>
-				{/if}
-			</div>
-			<div class="form-group clearfix">
-				{include file='categorize.tpl'}
-			</div>
-			<div class="form-group clearfix">
-				{include file='freetag.tpl'}
 			</div>
 		{/tab}
 		{tab name="{tr}Image{/tr}"}
