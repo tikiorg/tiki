@@ -207,11 +207,6 @@ li#register_link {
 	margin-right: 5px;
 }
 
-.tabmark a.register_link,
-.tabmark a.login_link {
-	padding-right: 26px !important;
-}
-
 .siteloginbar_popup ul, ul.siteloginbar_poppedup {
 	list-style: none;
 }
@@ -4417,17 +4412,6 @@ form.simple textarea.export {
 }
 .siteloginbar_popup .tabmark a:focus {
 	outline: none;
-}
-.siteloginbar_popup .tabmark a:after {
-	content: "";
-	position: absolute;
-	top: 100%;
-	right: 8px;
-	border-top: 5px solid black;
-	border-top-color: #ccc;
-	border-left: 5px solid transparent;
-	border-right: 5px solid transparent;
-	margin-top: -15px;
 }
 .siteloginbar_popup .tabmark a:hover:after {
 	border-top-color: #fff;

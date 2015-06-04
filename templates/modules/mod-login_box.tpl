@@ -120,7 +120,7 @@ if (jqueryTiki.tooltips) {
 		{elseif $mode eq "popup"}
 			<div class="siteloginbar_popup">
 				<ul class="clearfix cssmenu_horiz">
-					<li id="logout_link_{$module_logo_instance}"><div class="tabmark"><a href="tiki-logout.php" class="login_link">{tr}Log out{/tr}</a></div>
+					<li id="logout_link_{$module_logo_instance}"><div class="tabmark"><a href="tiki-logout.php" class="login_link sf-with-ul">{tr}Log out{/tr}</a></div>
 						<ul class="siteloginbar_poppedup">
 							<li class="tabcontent">
 								{*<div class="cbox">*}{$user|userlink} <a href="tiki-logout.php" title="{tr}Log out{/tr}">{tr}Log out{/tr}</a>{*</div>*}
@@ -159,7 +159,7 @@ if (jqueryTiki.tooltips) {
 		{if $mode eq "popup"}
 			<div class="siteloginbar_popup">
 				<ul class="clearfix{if $prefs.feature_jquery_tooltips ne 'y'} cssmenu_horiz{/if}">
-					<li id="logout_link_{$module_logo_instance}"><div class="tabmark"><a href="tiki-login.php" class="login_link" onclick="return false;" rel=".siteloginbar_poppedup">{tr}Log in{/tr}</a></div>
+					<li id="logout_link_{$module_logo_instance}"><div class="tabmark"><a href="tiki-login.php" class="login_link sf-with-ul" onclick="return false;" rel=".siteloginbar_poppedup">{tr}Log in{/tr}</a></div>
 						<ul class="siteloginbar_poppedup cbox">
 							<li class="tabcontent">
 								{capture assign="close_tags"}</li></ul></li></ul></div>{$close_tags}{/capture}
