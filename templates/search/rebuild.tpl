@@ -20,7 +20,7 @@
 			</ul>
 		{/remarksbox}
 	{else}
-		<form method="post" class="no-ajax" action="{service controller=search action=rebuild}">
+		<form method="post" class="no-ajax" action="{service controller=search action=rebuild}" onsubmit="$(this).parent().tikiModal('{tr}Rebuilding index...{/tr}')">
 			<div class="form-group">
 				<div class="checkbox">
 					<label>
