@@ -131,6 +131,8 @@ class Services_Tracker_Controller
 
 	function action_list_fields($input)
 	{
+		global $prefs;
+
 		$trackerId = $input->trackerId->int();
 		$perms = Perms::get('tracker', $trackerId);
 
@@ -153,10 +155,38 @@ class Services_Tracker_Controller
 		}
 
 		$missing = array();
+		$duplicates = array();
 
 		foreach ($fields as $field) {
 			if (! array_key_exists($field['type'], $types) && ! in_array($field['type'], $missing)) {
 				$missing[] = $field['type'];
+			}
+			if ($prefs['unified_engine'] === 'elastic') {
+				$tracker_fields = TikiLib::lib('tiki')->table('tiki_tracker_fields');
+				$dupeFields = $tracker_fields->fetchAll(
+					array(
+						'fieldId',
+						'trackerId',
+						'name',
+						'permName',
+						'type',
+					),
+					array(
+						'fieldId'  => $tracker_fields->not($field['fieldId']),
+						'type'     => $tracker_fields->not($field['type']),
+						'permName' => $field['permName'],
+					)
+				);
+				if ($dupeFields) {
+					foreach($dupeFields as & $df) {
+						$df['message'] = tr('Warning: Permanent name conflict which can cause indexing errors.') .
+							'<br><a href="tiki-admin_tracker_fields.php?trackerId=' . $df['trackerId'] . '">' .
+							tr('Field #%0 "%1" of type "%2" also found in tracker #%3 with perm name %4',
+								$df['fieldId'], $df['name'], $types[$df['type']]['name'], $df['trackerId'], $df['permName']) .
+							'</a>';
+					}
+					$duplicates[$field['fieldId']] = $dupeFields;
+				}
 			}
 		}
 		if (!empty($missing)) {
@@ -166,7 +196,8 @@ class Services_Tracker_Controller
 		return array(
 			'fields' => $fields,
 			'types' => $types,
-			'typesDisabled' => $typesDisabled
+			'typesDisabled' => $typesDisabled,
+			'duplicates' => $duplicates,
 		);
 	}
 
