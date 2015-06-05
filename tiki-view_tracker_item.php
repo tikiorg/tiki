@@ -400,7 +400,9 @@ if (! $itemObject->canView()) {
 if ($itemObject->canRemove()) {
 	if (isset($_REQUEST["remove"])) {
 		check_ticket('view-trackers-items');
+		$access->check_authenticity(tr('Are you sure you want to permantently delete this item?'));
 		$trklib->remove_tracker_item($_REQUEST["remove"]);
+		$access->redirect(filter_out_sefurl('tiki-view_tracker.php?trackerId=' . $_REQUEST['trackerId']));
 	}
 }
 $rateFieldId = $definition->getRateField();

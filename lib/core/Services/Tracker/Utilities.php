@@ -12,6 +12,7 @@ class Services_Tracker_Utilities
 		$newItem = $this->replaceItem($definition, 0, $item['status'], $item['fields'], [
 			'validate' => true,
 			'skip_categories' => false,
+			'bulk_import' => false,
 		]);
 
 		return $newItem;
@@ -22,6 +23,7 @@ class Services_Tracker_Utilities
 		return $this->replaceItem($definition, $item['itemId'], $item['status'], $item['fields'], [
 			'validate' => true,
 			'skip_categories' => false,
+			'bulk_import' => false,
 		]);
 	}
 
@@ -32,6 +34,7 @@ class Services_Tracker_Utilities
 		$this->replaceItem($definition, $itemId, null, array(), [
 			'validate' => false,
 			'skip_categories' => true,
+			'bulk_import' => true,
 		]);
 	}
 
@@ -82,10 +85,10 @@ class Services_Tracker_Utilities
 		}
 
 		if (count($errors['err_mandatory']) == 0 && count($errors['err_value']) == 0) {
-			$newItem = $trklib->replace_item($trackerId, $itemId, array('data' => $fields), $status, 0, true);
+			$newItem = $trklib->replace_item($trackerId, $itemId, array('data' => $fields), $status, 0, $options['bluk_import']);
 			return $newItem;
 		} elseif (! $options['validate']) {
-			$newItem = $trklib->replace_item($trackerId, $itemId, array('data' => $fields), $status, 0, true);
+			$newItem = $trklib->replace_item($trackerId, $itemId, array('data' => $fields), $status, 0, $options['bluk_import']);
 			return $newItem;
 		}
 

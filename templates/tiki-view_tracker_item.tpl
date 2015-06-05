@@ -41,6 +41,13 @@
 						</a>
 					</li>
 				{/if}
+				{if $canRemove}
+					<li>
+						{self_link remove=$itemId}
+							{icon name="delete"} {tr}Delete{/tr}
+						{/self_link}
+					</li>
+				{/if}
 				<li>
 					{monitor_link type=trackeritem object=$itemId linktext="{tr}Notification{/tr}" class="link" title=""}
 				</li>
