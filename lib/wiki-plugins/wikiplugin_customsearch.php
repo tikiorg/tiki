@@ -655,11 +655,26 @@ function cs_design_select($id, $fieldname, $fieldid, $arguments, $default, &$scr
 	{
 		$definition = Tracker_Definition::get($arguments['_trackerId']);
 		$field = $definition->getFieldFromPermName(str_replace('tracker_field_', '', $arguments['_field']));
-		if ($field['type'] === 'r') {
-			$handler = TikiLib::lib('trk')->get_field_handler($field);
+		$handler = TikiLib::lib('trk')->get_field_handler($field);
+		if ($field['type'] === 'r') {    // Item Link
 			$labels = $handler->getItemList();
 			$options = array_keys($labels);
 			$labels = array_values($labels);
+
+		} else if ($field['type'] === 'u') {	// User Selector (only when in dropdown list mode)
+
+			$html = $handler->renderInput();
+			$html = preg_replace('/id=[\'"].*?[\'"]/', 'id="' . $fieldid . '"', $html);
+			$script .= "
+$('#$fieldid').change(function() {
+	customsearch.add('$fieldid', {
+		config: " . json_encode($arguments) . ",
+		name: 'select',
+		value: $(this).val()
+	});
+});
+";
+			return $html;
 		}
 	}
 	if (isset($arguments['_mandatory']) && $arguments['_mandatory'] == 'y') {
