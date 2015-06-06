@@ -24,7 +24,7 @@ class LessCompileCommand  extends Command
 				'location',
 				InputArgument::OPTIONAL,
 				'Location of less files to compile (themes)',
-				'private'
+				'themes'
 			)
 			->addOption(
 				'all',
