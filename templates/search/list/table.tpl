@@ -1,5 +1,5 @@
 {* $Id$ *}
-<table class="table">
+<table id="{$id}" class="table normal table-hover table-striped">
 	<thead>
 	{$header=false}
 	{foreach from=$column item=col}

@@ -46,6 +46,7 @@ function wikiplugin_list($data, $params)
 	}
 
 	$result = $query->search($index);
+	$result->setId('wplist');
 
 
 	$resultBuilder = new Search_ResultSet_WikiBuilder($result);

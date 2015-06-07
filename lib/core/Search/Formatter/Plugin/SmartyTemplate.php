@@ -78,6 +78,7 @@ class Search_Formatter_Plugin_SmartyTemplate implements Search_Formatter_Plugin_
 		$smarty->assign('offsetplusone', $entries->getOffset() + 1);
 		$smarty->assign('offsetplusmaxRecords', $entries->getOffset() + $entries->getMaxRecords());
 		$smarty->assign('maxRecords', $entries->getMaxRecords());
+		$smarty->assign('id', $entries->getId());
 
 		return $smarty->fetch($this->templateFile);
 	}

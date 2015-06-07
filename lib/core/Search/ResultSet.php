@@ -14,6 +14,7 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 
 	private $highlightHelper;
 	private $filters = array();
+	private $id;
 
 	public static function create($list)
 	{
@@ -40,6 +41,7 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 		$return->estimate = $this->estimate;
 		$return->filters = $this->filters;
 		$return->highlightHelper = $this->highlightHelper;
+		$return->id = $this->id;
 
 		return $return;
 	}
@@ -52,6 +54,19 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 	function setEstimate($estimate)
 	{
 		$this->estimate = (int) $estimate;
+	}
+
+	function setId($id = 'searchid')
+	{
+		static $i = 0;
+		++$i;
+		$id = TikiFilter::get('alnum')->filter($id);
+		$this->id = $id . '-' . $i;
+	}
+
+	function getId()
+	{
+		return $this->id;
 	}
 
 	function getEstimate()
