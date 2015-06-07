@@ -1,4 +1,14 @@
 {* $Id$ *}
+{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+{if $prefs.javascript_enabled !== 'y'}
+	{$js = 'n'}
+	{$libeg = '<li>'}
+	{$liend = '</li>'}
+{else}
+	{$js = 'y'}
+	{$libeg = ''}
+	{$liend = ''}
+{/if}
 {if !$tsAjax}
 	{title help="Users+Management" admpage="login" url="tiki-adminusers.php"}{tr}Admin Users{/tr}{/title}
 
@@ -152,16 +162,6 @@
 			{/if}
 			{if ($cant > $numrows or !empty($initial)) && !$tsOn}
 				{initials_filter_links}
-			{/if}
-			{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
-			{if $prefs.javascript_enabled !== 'y'}
-				{$js = 'n'}
-				{$libeg = '<li>'}
-				{$liend = '</li>'}
-			{else}
-				{$js = 'y'}
-				{$libeg = ''}
-				{$liend = ''}
 			{/if}
 			<form class="form-horizontal confirm-form" name="checkform" id="checkform" method="post" action="{service controller=user}">
 				<div id="{$ts_tableid}-div" {if $tsOn}style="visibility:hidden;"{/if}>
