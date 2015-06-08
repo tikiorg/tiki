@@ -24,7 +24,7 @@ class LessCompileCommand  extends Command
 				'location',
 				InputArgument::OPTIONAL,
 				'Location of less files to compile (themes)',
-				'private'
+				'themes'
 			)
 			->addOption(
 				'all',
@@ -44,12 +44,13 @@ class LessCompileCommand  extends Command
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		$all = $input->getOption('all');
-		$only = explode(',', $input->getOption('only'));
+		$only = array_filter(explode(',', $input->getOption('only')));
+		if (empty($only)) {
+			$all = true;
+		}
 		$type = $input->getArgument('location');
 
 		$cachelib = \TikiLib::lib('cache');
-        $excluded = array("cyborg", "fivealive-lite", "lumen", "simplex", "thenews", "amelia", "darkly", "flatly", "ohia", "slate", "tikinewt", "cerulean", "darkroom", "readable", "snow", "united", "cosmo", "feb12", "journal", "spacelab", "yeti", "cupid", "fivealive", "jqui", "shamrock", "superhero");
-		$excluded = array_diff($excluded, $only);
 
 		switch ($type)
 		{
@@ -61,10 +62,14 @@ class LessCompileCommand  extends Command
 						continue;
 					}
 					$dirname = $fileInfo->getFilename();
-                    if (in_array($dirname, $excluded) && ! $all) {
+                    if (!empty($only) && ! in_array($dirname, $only) && ! $all) {
                         continue;
                     }
-                    $less_file = "themes/$dirname/less/tiki.less";
+					if ($dirname === 'base_files') {
+						$less_file = "themes/$dirname/less/tiki_base.less";
+					} else {
+						$less_file = "themes/$dirname/less/$dirname.less";
+					}
                     if (! file_exists($less_file)) {
                         continue;
                     }

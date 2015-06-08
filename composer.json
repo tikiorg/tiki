@@ -82,7 +82,7 @@
 		"symfony/config": "2.6.4"
 	},
 	"require-dev": {
-		"oyejorge/less.php": "1.7.0.2",
+		"oyejorge/less.php": "1.7.0.4",
 		"mikey179/vfsStream": "1.1.0",
         "bafs/testify": "dev-master"
 	},
