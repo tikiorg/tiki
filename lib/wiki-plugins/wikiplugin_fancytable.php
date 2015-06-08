@@ -113,7 +113,7 @@ function wikiplugin_fancytable($data, $params)
 			if ($prefs['feature_jquery_tablesorter'] === 'n') {
 				$msg = '<em>' . tra('The jQuery Sortable Tables feature must be activated for the sort feature to work.')
 					. '</em>';
-			} elseif ($prefs['disableJavascript'] === 'y') {
+			} elseif ($prefs['javascript_enabled'] !== 'y') {
 				$msg =  '<em>' . tra('Javascript must be enabled for the sort feature to work.') . '</em>';
 			} else {
 				$msg = '<em>' . tra('Unable to load the jQuery Sortable Tables feature.') . '</em>';
