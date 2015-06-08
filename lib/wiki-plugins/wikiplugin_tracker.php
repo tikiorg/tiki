@@ -458,7 +458,7 @@ function wikiplugin_tracker($data, $params)
 	++$iTRACKER;
 	if (isset($params['itemId']) && empty($params['itemId']))
 		return;
-	$default = array('overwrite' => 'n', 'embedded' => 'n', 'showtitle' => 'n', 'showdesc' => 'n', 'showfieldsdesc' => 'y', 'sort' => 'n', 'showmandatory'=>'y', 'status' => '', 'transactionName' => '', 'transactionFinalStep' => 'y', 'registration' => 'n', 'chosenGroup' => 'Registered', 'validateusers' => '', 'emailformat' => 'text');
+	$default = array('overwrite' => 'n', 'embedded' => 'n', 'showtitle' => 'n', 'showdesc' => 'n', 'showfieldsdesc' => 'y', 'sort' => 'n', 'showmandatory'=>'y', 'status' => '', 'transactionFinalStep' => 'y', 'registration' => 'n', 'chosenGroup' => 'Registered', 'validateusers' => '', 'emailformat' => 'text');
 	$params = array_merge($default, $params);
 	$item = array();
 
