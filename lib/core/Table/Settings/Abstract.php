@@ -225,14 +225,6 @@ abstract class Table_Settings_Abstract
 				'id' => '-pager',
 			),
 		),
-		'ajax' => array(
-			'servercount' => array(
-				'id' => '-count',
-			),
-			'serveroffset' => array(
-				'id' => '-offset',
-			),
-		),
 		'colselect' => array(
 			'button' => array(
 				'id' => '-colselectbtn',

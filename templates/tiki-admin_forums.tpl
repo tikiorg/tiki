@@ -45,9 +45,7 @@
 		{/if}
 		<form method='post' id="admin_forums" class="confirm-form" action="{service controller=forum}">
 			<div id="{$ts_tableid}-div" class="{if $js === 'y'}table-responsive{/if} ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}>
-				<table  id="{$ts_tableid}" class="table table-striped table-hover ">
-					<input type="hidden" {if $tsOn}id="{$ts_offsetid|escape}" {/if}name="offset" value="{$offset|escape}">
-					<input type="hidden" {if $tsOn}id="{$ts_countid|escape}" {/if}name="count" value="{$cant|escape}">
+				<table  id="{$ts_tableid}" class="table table-striped table-hover" data-count="{$cant|escape}">
 					{$numbercol = 0}
 					<thead>
 						<tr>

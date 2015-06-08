@@ -86,12 +86,6 @@ static $iid = 0;
 ++$iid;
 $ts_tableid = 'viewforum' . $_REQUEST['forumId'] . '-' . $iid;
 $smarty->assign('ts_tableid', $ts_tableid);
-if ($tsOn) {
-	$ts_countid = $ts_tableid . '-count';
-	$ts_offsetid = $ts_tableid . '-offset';
-	$smarty->assign('ts_countid', $ts_countid);
-	$smarty->assign('ts_offsetid', $ts_offsetid);
-}
 
 if (!$tsOn || ($tsOn && $tsAjax)) {
 	$commentslib->forum_add_hit($_REQUEST["forumId"]);
@@ -365,12 +359,6 @@ if ($tsOn && !$tsAjax) {
 			'ajax' => array(
 				'requiredparams' => array(
 					'forumId' => $_REQUEST['forumId'],
-				),
-				'servercount' => array(
-					'id' => $ts_countid,
-				),
-				'serveroffset' => array(
-					'id' => $ts_offsetid,
 				),
 			),
 		)

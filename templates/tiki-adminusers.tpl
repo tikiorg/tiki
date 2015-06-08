@@ -168,11 +168,9 @@
 					<div class="{if $js === 'y'}table-responsive{/if} user-table ts-wrapperdiv">
 		{/if}
 						{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
-						<table id="{$ts_tableid}" class="table normal table-striped table-hover">
+						<table id="{$ts_tableid}" class="table normal table-striped table-hover" data-count="{$cant|escape}">
 							{* Note: th element ids here need to match those at /lib/core/Table/Settings/TikiAdminusers.php
 							for tablesorter to work properly *}
-							<input type="hidden" {if $tsOn}id="{$ts_offsetid|escape}" {/if}name="offset" value="{$offset|escape}">
-							<input type="hidden" {if $tsOn}id="{$ts_countid|escape}" {/if}name="count" value="{$cant|escape}">
 							{if !$tsAjax}
 								<thead>
 									<tr>

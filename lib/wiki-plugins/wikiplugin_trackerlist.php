@@ -1722,10 +1722,6 @@ function wikiplugin_trackerlist($data, $params)
 
 			if ($tsOn) {
 				$ts_id = 'wptrackerlist' . $trackerId . '-' . $iTRACKERLIST;
-				$ts_countid = $ts_id . '-count';
-				$ts_offsetid = $ts_id . '-offset';
-				$smarty->assign('ts_countid', $ts_countid);
-				$smarty->assign('ts_offsetid', $ts_offsetid);
 			}
 
 			if ($tsAjax || !$tsOn || !$tsServer) {
@@ -1802,8 +1798,6 @@ function wikiplugin_trackerlist($data, $params)
 				//loads the jquery tablesorter code
 				if (is_array($ts->settings)) {
 					$ts->settings['ajax']['offset'] = 'tr_offset' . $iTRACKERLIST;
-					$ts->settings['ajax']['servercount']['id'] = $ts_countid;
-					$ts->settings['ajax']['serveroffset']['id'] = $ts_offsetid;
 					Table_Factory::build('pluginTrackerlist', $ts->settings);
 				}
 			}

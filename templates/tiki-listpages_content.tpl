@@ -36,9 +36,7 @@
 
 {assign var='pagefound' value='n'}
 <div id="{$ts_tableid}-div" class="{if $js === 'y'}table-responsive{/if} ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}> {*the table-responsive class cuts off dropdown menus *}
-	<table id="{$ts_tableid}" class="table normal table-striped table-hover">
-		<input type="hidden" {if $tsOn}id="{$ts_offsetid|escape}" {/if}name="offset" value="{$offset|escape}">
-		<input type="hidden" {if $tsOn}id="{$ts_countid|escape}" {/if}name="count" value="{$cant}">
+	<table id="{$ts_tableid}" class="table normal table-striped table-hover" data-count="{$cant|escape}">
 		<thead>
 			<tr>
 				{if isset($checkboxes_on) and $checkboxes_on eq 'y'}

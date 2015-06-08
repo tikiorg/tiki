@@ -614,12 +614,6 @@ static $iid = 0;
 $ts_tableid = 'adminusers' . $iid;
 $smarty->assign('ts_tableid', $ts_tableid);
 
-if ($tsOn) {
-	$ts_countid = $ts_tableid . '-count';
-	$ts_offsetid = $ts_tableid . '-offset';
-	$smarty->assign('ts_countid', $ts_countid);
-	$smarty->assign('ts_offsetid', $ts_offsetid);
-}
 if (!$tsOn || ($tsOn && $tsAjax)) {
 	$users = $userlib->get_users(
 		$offset,
@@ -655,14 +649,6 @@ if ($tsOn && !$tsAjax) {
 				 	)
 				)
 			 ),
-			'ajax' => array(
-				'servercount' => array(
-					'id' => $ts_countid,
-				),
-				'serveroffset' => array(
-					'id' => $ts_offsetid,
-				),
-			),
 		)
 	);
 }

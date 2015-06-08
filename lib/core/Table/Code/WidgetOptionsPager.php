@@ -49,13 +49,13 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 			//ajax processing - this part grabs the html, usually from the smarty template file
 			$ap = array(
 				//parse HTML string from entire page
-				'var parsedpage = $.parseHTML(data), r = {};',
+				'var parsedpage = $.parseHTML(data), table = $(parsedpage).find(\'' . parent::$tid . '\'), r = {};',
 				//extract table body rows from html returned by smarty template file
-				'r.rows = $(parsedpage).find(\'' . parent::$tid . ' tbody tr\');',
-				//tablesorter needs total rows returned
+				'r.rows = $(table).find(\'tbody tr\');',
+				//tablesorter needs total rows
 				'r.total = \'' . parent::$s['total'] . '\';',
 				//extract number of filtered rows for use in row count display
-				'r.filteredRows = parseInt($(parsedpage).find(\'#' . parent::$s['ajax']['servercount']['id'] . '\').val());',
+				'r.filteredRows = $(table).data(\'count\');',
 				'r.headers = null;',
 				//return object
 				'return r;'

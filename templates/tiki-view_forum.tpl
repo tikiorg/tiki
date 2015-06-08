@@ -490,9 +490,7 @@
 	<input type="hidden" name="forumId" value="{$forumId|escape}">
 	{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
 	<div id="{$ts_tableid}-div" class="{if $js === 'y'}table-responsive{/if} ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}>
-		<table id="{$ts_tableid}" class="table normal table-striped table-hover">
-			<input type="hidden" {if $tsOn}id="{$ts_offsetid|escape}" {/if}name="offset" value="{$comments_offset|escape}">
-			<input type="hidden" {if $tsOn}id="{$ts_countid|escape}" {/if}name="count" value="{$comments_cant}">
+		<table id="{$ts_tableid}" class="table normal table-striped table-hover" data-count="{$comments_cant|escape}">
 			<thead>
 				<tr>
 					{$cntcol = 0}
