@@ -155,10 +155,10 @@
 					</select>
 				</div>
 				<div class="form-group">
-					<label class="control-label">Last login</label>
+					<label class="control-label">{tr}Last login{/tr}</label>
 					<p class="form-control-static">{$userinfo.lastLogin|tiki_long_datetime}</p>
 				</div>
-				<input type="submit" class="btn btn-primary" name="new_prefs" value="Save changes">
+				<input type="submit" class="btn btn-primary" name="new_prefs" value="{tr}Save changes{/tr}">
 			</form>
 		{/tab}
 
@@ -256,7 +256,7 @@
 				</select>
 			</div>
 			<div class="form-group">
-				<label class="control-label" for="display_timezone">Displayed timezone</label>
+				<label class="control-label" for="display_timezone">{tr}Displayed timezone{/tr}</label>
 				<select name="display_timezone" class="form-control" id="display_timezone"{if $warning_site_timezone_set eq 'y'} disabled{/if}>
 					<option value="" style="font-style:italic;">
 						{tr}Detect user time zone if browser allows, otherwise site default{/tr}
