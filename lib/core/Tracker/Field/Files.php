@@ -111,6 +111,17 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 						),
 						'legacy_index' => 10,
 					),
+					'uploadInModal' => array(
+						'name' => tr('Upload In Modal'),
+						'description' => tr('Upload files in a new modal window.'),
+						'filter' => 'alpha',
+						'default' => 'y',
+						'options' => array(
+							'n' => tr('No'),
+							'y' => tr('Yes'),
+						),
+						'legacy_index' => 11,
+					)
 				),
 			),
 		);
