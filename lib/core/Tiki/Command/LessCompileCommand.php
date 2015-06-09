@@ -77,7 +77,7 @@ class LessCompileCommand  extends Command
                     if (file_exists($css_file && filemtime($css_file) >= filemtime($less_file))) {
                         continue;
                     }
-					$command = "php vendor/bin/lessc $less_file $css_file";
+					$command = "php vendor/oyejorge/less.php/bin/lessc $less_file $css_file";
 					$output->writeln($command);
 					$result = shell_exec($command);
                     $result = str_replace(array("\r", "\n"), '', $result);
