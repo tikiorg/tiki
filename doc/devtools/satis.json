@@ -713,6 +713,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "openlayers/ol3",
+				"version": "3.6.0",
+				"dist": {
+					"url": "https://github.com/openlayers/ol3/releases/download/v3.6.0/v3.6.0-dist.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "phpcas/phpcas",
 				"version": "1.3.2",
 				"dist": {
@@ -1421,6 +1432,7 @@
 		"jquery/plugins/sparkline": "2.1.1",
 		"jquery/plugins/zoom": "*",
 		"morteza/bootstrap-rtl": ">=3.3.2",
+		"openlayers/ol3": ">=3.6.0",
 		"phpcas/phpcas": ">=1.3.2",
 		"phpseclib/phpseclib": ">=0.3.1",
 		"player/flv": "1.0",
