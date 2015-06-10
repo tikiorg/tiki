@@ -839,7 +839,7 @@ function wikiplugin_trackerlist($data, $params)
 			$limit = '';
 		}
 		// Make sure limit is an array
-		if (!is_array($limit)) {
+		if (!is_array($limit) && !empty($limit)) {
 			$limit = explode(':', $limit);
 		}
 
