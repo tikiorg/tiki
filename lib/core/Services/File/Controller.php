@@ -30,6 +30,7 @@ class Services_File_Controller
 			'galleryId' => $gal_info['galleryId'],
 			'limit' => abs($input->limit->int()),
 			'typeFilter' => $input->type->text(),
+			'uploadInModal' => $input->uploadInModal->int(),
 			'files' => $this->getFilesInfo((array) $input->file->int()),
 		);
 	}
