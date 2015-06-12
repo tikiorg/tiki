@@ -1204,7 +1204,7 @@ if ($connection || !$standalone) {
 		$s = tra('OFF');
 	} else {
 		$msg = tra('MySQL Server does not have SSL activated');
-		$s = '';
+		$s = 'OFF';
 	}
 	$fitness = tra('info');
 	if ($s == tra('ON')) {
