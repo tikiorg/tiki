@@ -1687,7 +1687,10 @@ if (!$standalone) {
 	function deack_on_state_change(&$check_group, $check_group_name) {
 		global $last_state;
 		foreach ( $check_group as $key => $value ) {
-			if ($last_state["$check_group_name"]["$key"] !== NULL) {
+			if ($last_state["$check_group_name"]["$key"] !== NULL &&
+				isset($check_group["$key"]['setting']) &&
+				isset($last_state["$check_group_name"]["$key"]['setting'])
+			) {
 				$check_group["$key"]['ack'] = $last_state["$check_group_name"]["$key"]['ack'];
 				if ($check_group["$key"]['setting'] != $last_state["$check_group_name"]["$key"]['setting']) {
 					$check_group["$key"]['ack'] = false;
