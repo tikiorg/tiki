@@ -55,9 +55,12 @@ function wikiplugin_list($data, $params)
 
 	$builder = new Search_Formatter_Builder;
 	$builder->setPaginationArguments($paginationArguments);
+	$builder->setId($result->getId());
 	$builder->apply($matches);
 
 	$formatter = $builder->getFormatter();
+
+	$result->setTsOn($builder->getTsOn());
 	$out = $formatter->format($result);
 
 	return $out;

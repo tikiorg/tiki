@@ -1,5 +1,5 @@
 {* $Id$ *}
-<div id="{$id}-div" class="table-responsive ts-wrapperdiv">
+<div id="{$id}-div" class="table-responsive ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}>
 	<table id="{$id}" class="table normal table-hover table-striped" data-count="{$count}">
 		<thead>
 		{$header=false}

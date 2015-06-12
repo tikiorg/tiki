@@ -13,6 +13,8 @@ class Search_Formatter_Builder
 	private $formatterPlugin;
 	private $subFormatters = array();
 	private $alternateOutput;
+	private $id;
+	private $tsOn;
 
 	function __construct()
 	{
@@ -49,6 +51,11 @@ class Search_Formatter_Builder
 			if ($name == 'alternate') {
 				$this->handleAlternate($match);
 			}
+
+			if ($name == 'tablesorter') {
+				$this->handleTablesorter($match);
+			}
+
 		}
 	}
 
@@ -137,6 +144,31 @@ class Search_Formatter_Builder
 		$this->formatterPlugin = $plugin;
 	}
 
+	private function handleTablesorter($match)
+	{
+		$args = $this->parser->parse($match->getArguments());
+		$ajax = !empty($args['server']) && $args['server'] === 'y';
+		$this->tsOn = Table_Check::isEnabled($ajax);
+		if (!$this->tsOn) {
+			return false;
+		}
+		$ts = new Table_Plugin;
+		$ts->setSettings(
+			$this->id,
+			isset($args['server']) ? $args['server'] : 'n',
+			isset($args['sortable']) ? $args['sortable'] : 'y',
+			isset($args['sortList']) ? $args['sortList'] : null,
+			isset($args['tsortcolumns']) ? $args['tsortcolumns'] : null,
+			isset($args['tsfilters']) ? $args['tsfilters'] : null,
+			isset($args['tsfilteroptions']) ? $args['tsfilteroptions'] : null,
+			isset($args['tspaginate']) ? $args['tspaginate'] : null,
+			isset($args['tscolselect']) ? $args['tscolselect'] : null
+		);
+		if (is_array($ts->settings)) {
+			Table_Factory::build('plugin', $ts->settings);
+		}
+	}
+
 	private function findFields($outputData, $templateData)
 	{
 		$outputData = TikiLib::array_flat($outputData);
@@ -155,6 +187,16 @@ class Search_Formatter_Builder
 		$fields = array_fill_keys(array_unique($fields), null);
 
 		return $fields;
+	}
+
+	public function setId($id)
+	{
+		$this->id = $id;
+	}
+
+	public function getTsOn()
+	{
+		return $this->tsOn;
 	}
 }
 

@@ -15,6 +15,7 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 	private $highlightHelper;
 	private $filters = array();
 	private $id;
+	private $tsOn;
 
 	public static function create($list)
 	{
@@ -42,6 +43,7 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 		$return->filters = $this->filters;
 		$return->highlightHelper = $this->highlightHelper;
 		$return->id = $this->id;
+		$return->tsOn = $this->tsOn;
 
 		return $return;
 	}
@@ -67,6 +69,16 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 	function getId()
 	{
 		return $this->id;
+	}
+
+	function setTsOn($tsOn)
+	{
+		$this->tsOn = $tsOn;
+	}
+
+	function getTsOn()
+	{
+		return $this->tsOn;
 	}
 
 	function getEstimate()
