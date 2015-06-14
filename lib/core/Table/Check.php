@@ -20,6 +20,8 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 class Table_Check
 {
+	public static $dir = [0 => 'asc', 1 => 'desc'];
+
 	/**
 	 * Checks to see if necessary preferences are set to allow tablesorter to be used either with or without ajax
 	 *
@@ -56,4 +58,91 @@ class Table_Check
 			return false;
 		}
 	}
+
+	/**
+	 * Checks to see whether the file has been accessed through a tablesorter ajax call with a sort or filter
+	 * @return bool
+	 */
+	static public function isFilterOrSort()
+	{
+		if (self::isAjaxCall() && ((!empty($_GET['filter']) && is_array($_GET['filter'])
+				|| (!empty($_GET['sort']) && is_array($_GET['sort']))))) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Checks to see whether the file has been accessed through a tablesorter ajax call with a filter
+	 * @return bool
+	 */
+	static public function isFilter()
+	{
+		if (self::isAjaxCall() && !empty($_GET['filter']) && is_array($_GET['filter'])) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Checks to see whether the file has been accessed through a tablesorter ajax call with a sort
+	 * @return bool
+	 */
+	static public function isSort()
+	{
+		if (self::isAjaxCall() && !empty($_GET['sort']) && is_array($_GET['sort'])) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Utility to convert string entered by user for a parameter setting to an array
+	 *
+	 * @param $param
+	 *
+	 * @return array
+	 */
+	static public function parseParam ($paramstr)
+	{
+		if (!empty($paramstr)) {
+			$ret = explode('|', $paramstr);
+			foreach ($ret as $key => $pipe) {
+				$ret[$key] = strpos($pipe, ';') !== false ? explode(';', $pipe) : $pipe;
+				if (!is_array($ret[$key])) {
+					if (strpos($ret[$key], ':') !== false) {
+						$colon = explode(':', $ret[$key]);
+						unset($ret[$key]);
+						if ($colon[1] == 'nofilter') {
+							$colon[1] = false;
+						}
+						$ret[$key][$colon[0]] = $colon[1];
+					}
+				} elseif (is_array($ret[$key])) {
+					foreach ($ret[$key] as $key2 => $subparam) {
+						if (strpos($subparam, ':') !== false) {
+							$colon = explode(':', $subparam);
+							unset($ret[$key][$key2]);
+							if ($colon[0] == 'expand' || $colon[0] == 'option') {
+								if ($colon[0] == 'option') {
+									$colon[0] = 'options';
+								}
+								$ret[$key][$colon[0]][] = $colon[1];
+							} else {
+								$ret[$key][$colon[0]] = $colon[1];
+							}
+						}
+					}
+				}
+			}
+			ksort($ret);
+			return $ret;
+		} else {
+			return $paramstr;
+		}
+	}
+
 }

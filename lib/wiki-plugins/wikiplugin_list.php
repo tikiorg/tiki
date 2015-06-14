@@ -24,6 +24,9 @@ function wikiplugin_list_info()
 
 function wikiplugin_list($data, $params)
 {
+	static $i;
+	$i++;
+
 	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 
 	$query = new Search_Query;
@@ -32,8 +35,13 @@ function wikiplugin_list($data, $params)
 
 	$matches = WikiParser_PluginMatcher::match($data);
 
+	$tsret = applyTablesorter($matches, $query);
+
 	$builder = new Search_Query_WikiBuilder($query);
 	$builder->enableAggregate();
+	if ($tsret['max']) {
+		$builder->wpquery_pagination_max($query, $tsret['max']);
+	}
 	$builder->apply($matches);
 	$paginationArguments = $builder->getPaginationArguments();
 
@@ -46,7 +54,7 @@ function wikiplugin_list($data, $params)
 	}
 
 	$result = $query->search($index);
-	$result->setId('wplist');
+	$result->setId('wplist-' . $i);
 
 
 	$resultBuilder = new Search_ResultSet_WikiBuilder($result);
@@ -55,14 +63,80 @@ function wikiplugin_list($data, $params)
 
 	$builder = new Search_Formatter_Builder;
 	$builder->setPaginationArguments($paginationArguments);
-	$builder->setId($result->getId());
+	$builder->setId('wplist-' . $i);
+	$builder->setCount($result->count());
+	$builder->setTsOn($tsret['tsOn']);
 	$builder->apply($matches);
 
 	$formatter = $builder->getFormatter();
 
-	$result->setTsOn($builder->getTsOn());
+	$result->setTsOn($tsret['tsOn']);
 	$out = $formatter->format($result);
 
 	return $out;
 }
 
+/**
+ * Apply tablesorter is enabled
+ *
+ * @param WikiParser_PluginMatcher $matches
+ * @param Search_Query $query
+ * @return array
+ */
+function applyTablesorter(WikiParser_PluginMatcher $matches, Search_Query $query)
+{
+	$ret = ['max' => false, 'tsOn' => false];
+	$parser = new WikiParser_PluginArgumentParser;
+	foreach ($matches as $match) {
+		$name = $match->getName();
+		if ($name == 'tablesorter') {
+			$tsargs = $parser->parse($match->getArguments());
+			$ajax = !empty($tsargs['server']) && $tsargs['server'] === 'y';
+			$ret['tsOn'] = Table_Check::isEnabled($ajax);
+			if (!$ret['tsOn']) {
+				return $ret;
+			}
+			if (isset($tsargs['tsortcolumns'])) {
+				$tsc = Table_Check::parseParam($tsargs['tsortcolumns']);
+			}
+			if (isset($tsargs['tspaginate'])) {
+				$tsp = Table_Check::parseParam($tsargs['tspaginate']);
+				if (isset($tsp[0]['max']) && $ajax) {
+					$ret['max'] = (int) $tsp[0]['max'];
+				}
+			}
+		}
+	}
+
+		foreach ($matches as $match) {
+		$name = $match->getName();
+		if ($name == 'column') {
+			$cols[] = $match;
+			$args[] = $parser->parse($match->getArguments());
+		}
+	}
+
+	if (Table_Check::isSort()) {
+		foreach ($_GET['sort'] as $key => $dir) {
+			$n = '';
+			switch ($tsc[$key]['type']) {
+				case 'digit':
+				case 'currency':
+				case 'percent':
+				case 'time':
+				case strpos($tsc[$key]['type'], 'date') !== false:
+					$n = 'n';
+					break;
+			}
+			$query->setOrder($args[$key]['field'] . '_' . $n . Table_Check::$dir[$dir]);
+		}
+	}
+
+	if (Table_Check::isFilter()) {
+		foreach ($_GET['filter'] as $key => $filter) {
+			$query->filterContent($filter, $args[$key]['field']);
+		}
+	}
+
+	return $ret;
+}

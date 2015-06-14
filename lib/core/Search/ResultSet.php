@@ -44,6 +44,7 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 		$return->highlightHelper = $this->highlightHelper;
 		$return->id = $this->id;
 		$return->tsOn = $this->tsOn;
+		$return->count = $this->count;
 
 		return $return;
 	}
@@ -58,12 +59,9 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 		$this->estimate = (int) $estimate;
 	}
 
-	function setId($id = 'searchid')
+	function setId($id)
 	{
-		static $i = 0;
-		++$i;
-		$id = TikiFilter::get('alnum')->filter($id);
-		$this->id = $id . '-' . $i;
+		$this->id = $id;
 	}
 
 	function getId()

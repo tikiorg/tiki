@@ -261,6 +261,13 @@ class Search_Query implements Search_Query_Interface
 		}
 	}
 
+	function setCount($count = null)
+	{
+		if ($count) {
+			$this->count = (int) $count;
+		}
+	}
+
 	/**
 	 * Affects the range from a numeric value
 	 * @param $pageNumber int Page number from 1 to n

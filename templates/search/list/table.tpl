@@ -1,6 +1,6 @@
 {* $Id$ *}
-<div id="{$id}-div" class="table-responsive ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}>
-	<table id="{$id}" class="table normal table-hover table-striped" data-count="{$count}">
+<div {if $id}id="{$id}-div" {/if}class="table-responsive ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}>
+	<table {if $id}id="{$id}" {/if}class="table normal table-hover table-striped" data-count="{$count}">
 		<thead>
 		{$header=false}
 		{foreach from=$column item=col}

@@ -14,6 +14,7 @@ class Search_Formatter_Builder
 	private $subFormatters = array();
 	private $alternateOutput;
 	private $id;
+	private $count;
 	private $tsOn;
 
 	function __construct()
@@ -147,25 +148,28 @@ class Search_Formatter_Builder
 	private function handleTablesorter($match)
 	{
 		$args = $this->parser->parse($match->getArguments());
-		$ajax = !empty($args['server']) && $args['server'] === 'y';
-		$this->tsOn = Table_Check::isEnabled($ajax);
 		if (!$this->tsOn) {
 			return false;
 		}
-		$ts = new Table_Plugin;
-		$ts->setSettings(
-			$this->id,
-			isset($args['server']) ? $args['server'] : 'n',
-			isset($args['sortable']) ? $args['sortable'] : 'y',
-			isset($args['sortList']) ? $args['sortList'] : null,
-			isset($args['tsortcolumns']) ? $args['tsortcolumns'] : null,
-			isset($args['tsfilters']) ? $args['tsfilters'] : null,
-			isset($args['tsfilteroptions']) ? $args['tsfilteroptions'] : null,
-			isset($args['tspaginate']) ? $args['tspaginate'] : null,
-			isset($args['tscolselect']) ? $args['tscolselect'] : null
-		);
-		if (is_array($ts->settings)) {
-			Table_Factory::build('plugin', $ts->settings);
+		if (!Table_Check::isAjaxCall()) {
+			$ts = new Table_Plugin;
+			$ts->setSettings(
+				$this->id,
+				isset($args['server']) ? $args['server'] : 'n',
+				isset($args['sortable']) ? $args['sortable'] : 'y',
+				isset($args['sortList']) ? $args['sortList'] : null,
+				isset($args['tsortcolumns']) ? $args['tsortcolumns'] : null,
+				isset($args['tsfilters']) ? $args['tsfilters'] : null,
+				isset($args['tsfilteroptions']) ? $args['tsfilteroptions'] : null,
+				isset($args['tspaginate']) ? $args['tspaginate'] : null,
+				isset($args['tscolselect']) ? $args['tscolselect'] : null,
+				$GLOBALS['requestUri'],
+				$this->count
+			);
+			if (is_array($ts->settings)) {
+				$ts->settings['ajax']['offset'] = 'offset';
+				Table_Factory::build('PluginTrackerlist', $ts->settings);
+			}
 		}
 	}
 
@@ -194,9 +198,14 @@ class Search_Formatter_Builder
 		$this->id = $id;
 	}
 
-	public function getTsOn()
+	public function setCount($count)
 	{
-		return $this->tsOn;
+		$this->count = $count;
+	}
+
+	public function setTsOn($tsOn)
+	{
+		$this->tsOn = $tsOn;
 	}
 }
 
