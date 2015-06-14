@@ -1,5 +1,5 @@
 <div class="t_navbar margin-bottom-md">
-	{self_link print='y'}{icon name='print' hspace='1' align='right' alt="{tr}Print{/tr}"}{/self_link}
+    <button class='btn btn-default'>{self_link print='y'}{icon name='print' text="{tr}Print{/tr}"}{/self_link}</button>
 
 	{if $mid ne "tiki-directory_browse.tpl"}
 		{button href="tiki-directory_browse.php" class="btn btn-default" _icon_name="view" _text="{tr}Browse{/tr}"}
@@ -8,7 +8,6 @@
 	{if $tiki_p_admin_directory_cats eq 'y' or $tiki_p_admin_directory_sites eq 'y' or $tiki_p_validate_links eq 'y'}
 		{button href="tiki-directory_admin.php" class="btn btn-default" _icon_name="cog" _text="{tr}Admin{/tr}"}
 	{/if}
-
 	{button href="tiki-directory_ranking.php?sort_mode=created_desc" class="btn btn-default" _icon_name="star" _text="{tr}New Sites{/tr}"}
 
 	{if $prefs.directory_cool_sites eq "y"}
