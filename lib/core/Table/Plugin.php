@@ -201,7 +201,7 @@ class Table_Plugin
 				$s['sorts']['type'] = false;
 				break;
 			default:
-				$sp = $this->parseParam($sortable);
+				$sp = Table_Check::parseParam($sortable);
 				if (isset($sp[0]['type'])) {
 					$s['sorts']['type'] = $sp[0]['type'];
 				}
@@ -247,7 +247,7 @@ class Table_Plugin
 		}
 
 		if (!empty($tsortcolumns)) {
-			$tsc = $this->parseParam($tsortcolumns);
+			$tsc = Table_Check::parseParam($tsortcolumns);
 			if (is_array($tsc)) {
 				foreach ($tsc as $col => $sortinfo) {
 					if (isset($s['columns'][$col]['sort'])) {
@@ -272,7 +272,7 @@ class Table_Plugin
 					$s['filters']['type'] = false;
 					break;
 				default:
-					$tsf = $this->parseParam($tsfilters);
+					$tsf = Table_Check::parseParam($tsfilters);
 					if (is_array($tsf)) {
 						foreach ($tsf as $col => $filterinfo) {
 							if (isset($filterinfo) && $filterinfo['type'] === 'dropdown'
@@ -293,7 +293,7 @@ class Table_Plugin
 
 		//tsfilteroptions
 		if (!empty($tsfilteroptions) && !empty($s['filters']['type'])) {
-			$tsfo = $this->parseParam($tsfilteroptions);
+			$tsfo = Table_Check::parseParam($tsfilteroptions);
 			switch ($tsfo[0]['type']) {
 				case 'reset':
 					$s['filters']['type'] = 'reset';
@@ -306,7 +306,7 @@ class Table_Plugin
 
 		//tspaginate
 		if (!empty($tspaginate)) {
-			$tsp = $this->parseParam($tspaginate);
+			$tsp = Table_Check::parseParam($tspaginate);
 			//pagination must be on if server side processing is on ($server == 'y')
 			if (is_array($tsp[0]) || $tsp[0] !== 'n' || ($tsp[0] === 'n' && $server === 'y')) {
 				if (is_array($tsp[0])) {
@@ -329,7 +329,7 @@ class Table_Plugin
 
 		//tscolselect
 		if (!empty($tscolselect)) {
-			$tscs = $this->parseParam($tscolselect);
+			$tscs = Table_Check::parseParam($tscolselect);
 			if (is_array($tscs)) {
 				$s['colselect']['type'] = true;
 				foreach ($tscs as $col => $priority) {
@@ -355,52 +355,6 @@ class Table_Plugin
 
 		$this->settings = $s;
 
-	}
-
-	/**
-	 * Utility to convert string entered by user for a parameter setting to an array
-	 *
-	 * @param $param
-	 *
-	 * @return array
-	 */
-	function parseParam ($param)
-	{
-		if (!empty($param)) {
-			$ret = explode('|', $param);
-			foreach ($ret as $key => $pipe) {
-				$ret[$key] = strpos($pipe, ';') !== false ? explode(';', $pipe) : $pipe;
-				if (!is_array($ret[$key])) {
-					if (strpos($ret[$key], ':') !== false) {
-						$colon = explode(':', $ret[$key]);
-						unset($ret[$key]);
-						if ($colon[1] == 'nofilter') {
-							$colon[1] = false;
-						}
-						$ret[$key][$colon[0]] = $colon[1];
-					}
-				} elseif (is_array($ret[$key])) {
-					foreach ($ret[$key] as $key2 => $subparam) {
-						if (strpos($subparam, ':') !== false) {
-							$colon = explode(':', $subparam);
-							unset($ret[$key][$key2]);
-							if ($colon[0] == 'expand' || $colon[0] == 'option') {
-								if ($colon[0] == 'option') {
-									$colon[0] = 'options';
-								}
-								$ret[$key][$colon[0]][] = $colon[1];
-							} else {
-								$ret[$key][$colon[0]] = $colon[1];
-							}
-						}
-					}
-				}
-			}
-			ksort($ret);
-			return $ret;
-		} else {
-			return $param;
-		}
 	}
 
 	/**
