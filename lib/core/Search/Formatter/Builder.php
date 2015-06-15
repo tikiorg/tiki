@@ -168,7 +168,7 @@ class Search_Formatter_Builder
 			);
 			if (is_array($ts->settings)) {
 				$ts->settings['ajax']['offset'] = 'offset';
-				Table_Factory::build('PluginTrackerlist', $ts->settings);
+				Table_Factory::build('PluginWithAjax', $ts->settings);
 			}
 		}
 	}

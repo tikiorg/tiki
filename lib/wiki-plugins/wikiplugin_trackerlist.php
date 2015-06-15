@@ -1798,7 +1798,7 @@ function wikiplugin_trackerlist($data, $params)
 				//loads the jquery tablesorter code
 				if (is_array($ts->settings)) {
 					$ts->settings['ajax']['offset'] = 'tr_offset' . $iTRACKERLIST;
-					Table_Factory::build('pluginTrackerlist', $ts->settings);
+					Table_Factory::build('PluginWithAjax', $ts->settings);
 				}
 			}
 			//handle certain tablesorter sorts

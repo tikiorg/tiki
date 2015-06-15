@@ -12,11 +12,11 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 }
 
 /**
- * Class Table_Settings_PluginTrackerlist
+ * Class Table_Settings_PluginWithAjax
  *
- * Adds settings specific to PluginTrackerlist tables
+ * Standard settings for tables used in plugins when ajax may be used (e.g., tracker list or list)
  */
-class Table_Settings_PluginTrackerlist extends Table_Settings_Plugin
+class Table_Settings_PluginWithAjax extends Table_Settings_Plugin
 {
 	protected $ts = array(
 		'selflinks' => true,
