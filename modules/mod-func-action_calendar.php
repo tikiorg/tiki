@@ -36,9 +36,9 @@ function module_action_calendar_info()
 function module_action_calendar($mod_reference, &$module_params)
 {
 	global $prefs, $tiki_p_view_tiki_calendar;
-	$smarty->assign('show_calendar_module', 'n');
 	$tikilib = TikiLib::lib('tiki');
 	$smarty = TikiLib::lib('smarty');
+	$smarty->assign('show_calendar_module', 'n');
 	if ($tiki_p_view_tiki_calendar == 'y') {
 		$smarty->assign('show_calendar_module', 'y');	
 		$tikicalendarlib = TikiLib::lib('tikicalendar');
