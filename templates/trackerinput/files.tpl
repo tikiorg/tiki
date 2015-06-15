@@ -29,7 +29,7 @@
 				{wikiplugin _name='vimeo' fromFieldId=$field.fieldId|escape fromItemId=$item.itemId|escape galleryId=$field.galleryId|escape}{/wikiplugin}
 			</fieldset>
 		{else}
-			{if $field.options_map.uploadInModal eq 'y'}
+			{if $field.options_map.uploadInModal neq 'n'}
 			<a href="{service controller=file action=uploader uploadInModal=1 galleryId=$field.galleryId limit=$limit|default:100 type=$field.filter}" class="btn btn-default upload-files">{tr}Upload Files{/tr}</a>
 			{else}
 						<div class="upload-files-inline-form"></div>
