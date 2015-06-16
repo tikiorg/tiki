@@ -359,6 +359,9 @@
 			{preference name=short_time_format}
 			<em>{tr}Sample:{/tr} {$now|tiki_short_time}</em>
 
+			{preference name=short_date_format_js}
+			{preference name=short_time_format_js}
+
 			<fieldset>
 				<legend>{tr}Date/time selectors{/tr}</legend>
 				{preference name=display_field_order}

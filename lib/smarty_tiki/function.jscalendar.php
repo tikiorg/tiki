@@ -127,7 +127,8 @@ function smarty_function_jscalendar($params, $smarty)
 	if (!isset($params['showtime']) || $params['showtime'] === 'n') {
 
 		$command = 'datepicker';
-		$js_val = empty($params['date']) ? '""' : '$.datepicker.formatDate( "yy-mm-dd", new Date('.$params['date'].'* 1000))';
+		$js_val = empty($params['date']) ? '""' : '$.datepicker.formatDate( "' .
+			$prefs['short_date_format_js'] . '", new Date('.$params['date'].'* 1000))';
 		$headerlib->add_jq_onready(
 			'$("#' . $params['id'] . '_dptxt").val(' . $js_val . ').tiki("' .
 			$command . '", "jscalendar", ' . $datepicker_options . ');'
@@ -144,7 +145,10 @@ function smarty_function_jscalendar($params, $smarty)
 var dt = new Date('.$params['date'].'* 1000);
 var tm = { hour: dt.getHours(), minute: dt.getMinutes(), second: dt.getSeconds() };
 ';
-		$js_val2 = empty($params['date']) ? '""' : '$.datepicker.formatDate( "yy-mm-dd", dt) + " " + $.datepicker.formatTime("HH:mm", tm)';
+		$js_val2 = empty($params['date']) ? '""' : '$.datepicker.formatDate( "' .
+					$prefs['short_date_format_js'] . '", dt) + " " + $.datepicker.formatTime("' .
+					$prefs['short_time_format_js'] . '", tm)';
+
 		$headerlib->add_jq_onready(
 			$js_val1 . '$("#' . $params['id'] . '_dptxt").val(' . $js_val2 . ').tiki("' . 
 			$command . '", "jscalendar", ' . $datepicker_options . ');'

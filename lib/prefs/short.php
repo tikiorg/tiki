@@ -24,6 +24,24 @@ function prefs_short_list()
 			//get_strings tra("%H:%M");
 			'tags' => array('basic'),
 		),
+		'short_date_format_js' => array(
+			'name' => tra('Short JavaScript date format'),
+			'description' => tra('Used in jQuery-UI date picker fields'),
+			'help' => 'http://api.jqueryui.com/datepicker/#utility-formatDate',
+			'type' => 'text',
+			'size' => '30',
+			'default' => 'yy-mm-dd',
+			//get_strings tra("yy-mm-dd");
+		),
+		'short_time_format_js' => array(
+			'name' => tra('Short JavaScript time format'),
+			'description' => tra('Used in jQuery-UI datetime picker fields'),
+			'help' => 'http://trentrichardson.com/examples/timepicker/#tp-formatting',
+			'type' => 'text',
+			'size' => '30',
+			'default' => 'HH:mm',
+			//get_strings tra("HH:mm");
+		),
 		//get_strings tra("%Y-%m-%d %H:%M");
 	);
 }
