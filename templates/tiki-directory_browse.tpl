@@ -24,14 +24,14 @@
 <div class="description help-block">{$parent_info.description|escape}</div>
 {if count($items) > 0}
 	<div class="text-center">
-		<form action="tiki-directory_search.php" method="post">
+		<form action="tiki-directory_search.php" method="post" class="form-inline">
 			<input type="hidden" name="parent" value="{$parent|escape}">
 			{tr}Find:{/tr}
 			<select name="how">
 				<option value="or">{tr}any{/tr}</option>
-				<option value="and">{tr}All{/tr}</option>
+				<option value="and">{tr}all{/tr}</option>
 			</select>
-			<input type="text" name="words" size="30">
+			<input type="text" name="words" class="form-control">
 			<select name="where">
 				<option value="all">{tr}in entire directory{/tr}</option>
 				<option value="cat">{tr}in current directory category{/tr}</option>

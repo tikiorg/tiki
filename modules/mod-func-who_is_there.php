@@ -29,7 +29,11 @@ function module_who_is_there_info()
 			'cluster' => array(
 				'name' => tra('Cluster Mode'),
 				'description' => tra('If set to "1", separate users based on which host/server they logged on.')
-			)
+			),
+			'silent' => array(
+				'name' => tra('Silent Mode'),
+				'description' => tra('If set to "1" hides the module, which allows another "who is there" module to include users that should not see it.')
+			),
 		)
 	);
 }
