@@ -194,7 +194,9 @@ jqueryTiki.no_cookie = false;
 jqueryTiki.language = "' . $prefs['language'] . '";
 jqueryTiki.useInlineComment = '.($prefs['feature_inline_comments'] === 'y' ? 'true' : 'false') . ';
 jqueryTiki.helpurl = "' . ($prefs['feature_help'] === 'y' ? $prefs['helpurl'] : '') . '";
-';	// NB replace "normal" speeds with int to workaround issue with jQuery 1.4.2
+jqueryTiki.shortDateFormat = "'.$prefs['short_date_format_js'].'";
+jqueryTiki.shortTimeFormat = "'.$prefs['short_time_format_js'].'";
+';
 
 	if ($prefs['feature_calendar'] === 'y') {
 		$calendarlib = TikiLib::lib('calendar');
