@@ -187,7 +187,11 @@
 						<input type="hidden" name="lockedby" value="{$fileInfo.lockedby|escape}">
 					{else}
 						{if count($galleries) eq 0}
+							{if !empty($galleryId)}
 							<input type="hidden" name="galleryId" value="{$galleryId}">
+							{else}
+							<input type="hidden" name="galleryId" value="{$treeRootId}">
+							{/if}
 						{elseif empty($groupforalert)}
 							<div class="form-group">
 								<label for="galleryId" class="col-sm-3">{tr}File gallery{/tr}</label>
