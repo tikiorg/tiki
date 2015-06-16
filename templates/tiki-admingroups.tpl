@@ -386,6 +386,16 @@
 				</div>
 			</div>
 
+			{if $group ne ''and $groupname neq 'Anonymous'}
+				<div class="form-group">
+					<label for="groups_group" class="control-label col-md-6">{tr}Assign group <em>management</em> permissions{/tr}</label>
+					<div class="col-md-6">
+						{self_link _script="tiki-objectpermissions.php" objectType="group" objectId=$groupname objectName=$groupname permType="group"}
+							{icon _text="{tr}Assign Permissions{/tr}" name="key"}
+						{/self_link}
+					</div>
+				</div>
+			{/if}
 
 			<div class="submit form-group">
 				<div class="col-md-9 col-md-offset-3">
