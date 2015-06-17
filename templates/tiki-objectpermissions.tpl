@@ -10,6 +10,9 @@
 	{if $tiki_p_admin_users eq 'y'}
 		{button href="tiki-adminusers.php" class="btn btn-default" _icon_name="user" _text="{tr}Admin users{/tr}"}
 	{/if}
+	{if $tiki_p_admin_categories eq 'y'}
+		{button href="tiki-admin_categories.php" class="btn btn-default" _icon_name="admin_category" _text="{tr}Admin Categories{/tr}"}
+	{/if}
 	{button href="tiki-list_object_permissions.php" class="btn btn-default" _icon_name="permission" _text="{tr}Object Permissions List{/tr}"}
 </div>
 
