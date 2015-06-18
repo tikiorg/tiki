@@ -1090,8 +1090,6 @@ class HeaderLib
 		$tikilib = TikiLib::lib('tiki');
 		$enabled = $tikilib->get_preference('geo_tilesets', array('openstreetmap'), true);
 
-		$enalbed = $tikilib->get_preference('geo_tilesets', array('openstreetmap'));
-
 		$google = array_intersect(array('google_street', 'google_physical', 'google_satellite', 'google_hybrid'), $enabled);
 		if (count($google) > 0 || $prefs['geo_google_streetview'] == 'y') {
 			$args = array(
@@ -1113,7 +1111,16 @@ class HeaderLib
 		}
 		*/
 
-		$this->add_jsfile_external('lib/openlayers/OpenLayers.js', true);
+		if ($prefs['geo_openlayers_version'] === 'ol3') {
+//			$this->add_jsfile_external('vendor/openlayers/ol3/ol.js', true);
+			$this->add_jsfile_external('vendor/openlayers/ol3/ol-debug.js', true);
+			$this->add_js(
+			    ''
+	        );
+		} else {
+			$this->add_jsfile_external('lib/openlayers/OpenLayers.js', true);
+		}
+
 		$this->add_js(
 		    '$(".map-container:not(.done)")
 		        .addClass("done")

@@ -373,7 +373,11 @@ if (isset($_REQUEST['geo_zoomlevel_to_found_location'])) {
 }
 $headerlib->add_js('var zoomToFoundLocation = "'.$zoomToFoundLocation.'";');	// Set the zoom option after searching for a location
 
-$headerlib->add_jsfile('lib/jquery_tiki/tiki-maps.js');
+if ($prefs['geo_openlayers_version'] === 'ol3') {
+	$headerlib->add_jsfile('lib/jquery_tiki/tiki-maps-ol3.js');
+} else {
+	$headerlib->add_jsfile('lib/jquery_tiki/tiki-maps.js');
+}
 $headerlib->add_jsfile('vendor/jquery/plugins/jquery-json/src/jquery.json.js');
 
 if ($prefs['feature_jquery_zoom'] === 'y') {

@@ -12,6 +12,8 @@
 	<fieldset class="table">
 		<legend>{tr}Settings{/tr}</legend>
 
+		{preference name=geo_openlayers_version}
+
 		{preference name=geo_tilesets}
 		{preference name=geo_google_streetview}
 		<div class="adminoptionboxchild" id="geo_google_streetview_childcontainer">

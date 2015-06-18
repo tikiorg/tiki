@@ -96,6 +96,16 @@ function prefs_geo_list()
 				),
 			'default' => 'street',
 		),
+		'geo_openlayers_version' => array(
+			'name' => tr('OpenLayers Version'),
+			'description' => tr(''),
+			'type' => 'list',
+			'options' => array(
+					'ol2' => tra('OpenLayers 2.x (pre-Tiki 15.x legacy)'),
+					'ol3' => tra('OpenLayers 3.x (experimental)'),
+				),
+			'default' => 'ol2',
+		),
 	);
 }
 
