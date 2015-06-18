@@ -45,57 +45,57 @@
 		<input type="hidden" name="translationOf" value="{$translationOf|escape}">
 	{/if}
 	{tabset}
-    {tab name="{tr}Classification{/tr}"}
-        <h2>{tr}Classification{/tr}</h2>
-        <div class="form-group clearfix">
-            <label for="topicId" class="control-label col-sm-3">{tr}Topic{/tr}</label>
-            <div class="col-sm-6">
-                <select name="topicId" class="form-control">
-                    {foreach $topics as $topic}
-                        <option value="{$topic.topicId|escape}" {if $topicId eq $topic.topicId}selected="selected"{/if}>{$topic.name|escape}</option>
-                    {/foreach}
-                    <option value="" {if $topicId eq 0}selected="selected"{/if}>{tr}None{/tr}</option>
-                </select>
-            </div>
-            {if $tiki_p_admin_cms eq 'y'}
-                <span class="col-sm-3">
+	{tab name="{tr}Classification{/tr}"}
+		<h2>{tr}Classification{/tr}</h2>
+		<div class="form-group clearfix">
+			<label for="topicId" class="control-label col-sm-3">{tr}Topic{/tr}</label>
+			<div class="col-sm-6">
+				<select name="topicId" class="form-control">
+					{foreach $topics as $topic}
+						<option value="{$topic.topicId|escape}" {if $topicId eq $topic.topicId}selected="selected"{/if}>{$topic.name|escape}</option>
+					{/foreach}
+					<option value="" {if $topicId eq 0}selected="selected"{/if}>{tr}None{/tr}</option>
+				</select>
+			</div>
+			{if $tiki_p_admin_cms eq 'y'}
+				<span class="col-sm-3">
 						<a href="tiki-admin_topics.php" class="btn btn-default">
-                            {icon name="administer"} {tr}Article Topics{/tr}
-                        </a>
+							{icon name="administer"} {tr}Article Topics{/tr}
+						</a>
 					</span>
-            {/if}
-        </div>
-        <div class="form-group clearfix">
-            <label for="type" class="control-label col-sm-3">{tr}Type{/tr}</label>
-            <div class="col-sm-6">
-                <select name="type" class="form-control">
-                    {foreach $types as $typei => $prop}
-                        <option value="{$typei|escape}" {if $type eq $typei}selected="selected"{/if}>{tr}{$typei|escape}{/tr}</option>
-                    {/foreach}
-                </select>
-            </div>
-            {if $tiki_p_admin_cms eq 'y'}
-                <span class="col-sm-3">
+			{/if}
+		</div>
+		<div class="form-group clearfix">
+			<label for="type" class="control-label col-sm-3">{tr}Type{/tr}</label>
+			<div class="col-sm-6">
+				<select name="type" class="form-control">
+					{foreach $types as $typei => $prop}
+						<option value="{$typei|escape}" {if $type eq $typei}selected="selected"{/if}>{tr}{$typei|escape}{/tr}</option>
+					{/foreach}
+				</select>
+			</div>
+			{if $tiki_p_admin_cms eq 'y'}
+				<span class="col-sm-3">
 						<a href="tiki-article_types.php" class="btn btn-default">
-                            {icon name="administer"} {tr}Article Types{/tr}
-                        </a>
+							{icon name="administer"} {tr}Article Types{/tr}
+						</a>
 					</span>
-            {/if}
-        </div>
-        <div class="form-group clearfix">
-            {include file='categorize.tpl'}
-        </div>
-        <div class="form-group clearfix">
-            {include file='freetag.tpl'}
-        </div>
-        <div class=" col-sm-10 col-sm-offset-2">
-            <div class="alert alert-info alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                {tr}Hint: Click "Preview" after selecting article type to have appropriate edit form fields.{/tr}
-            </div>
-        </div>
-    {/tab}
-    {tab name="{tr}General{/tr}"}
+			{/if}
+		</div>
+		<div class="form-group clearfix">
+			{include file='categorize.tpl'}
+		</div>
+		<div class="form-group clearfix">
+			{include file='freetag.tpl'}
+		</div>
+		<div class=" col-sm-10 col-sm-offset-2">
+			<div class="alert alert-info alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				{tr}Hint: Click "Preview" after selecting article type to have appropriate edit form fields.{/tr}
+			</div>
+		</div>
+	{/tab}
+	{tab name="{tr}General{/tr}"}
 			<h2>{tr}General{/tr}</h2>
 			<div class="form-group  margin-side-0">
 				<label for="title">{tr}Title{/tr}</label>
@@ -129,13 +129,13 @@
 			{if $prefs.feature_multilingual eq 'y'}
 				<div class="form-group">
 					<label class="col-sm-2 control-label" for="lang">{tr}Language{/tr}</label>
-                    <div class="col-sm-10">
-    					<select name="lang" id="lang" class="form-control">
-	    					<option value="">{tr}All{/tr}</option>
-		    				{section name=ix loop=$languages}
-			    				<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
-				    		{/section}
-					    </select>
+					<div class="col-sm-10">
+						<select name="lang" id="lang" class="form-control">
+							<option value="">{tr}All{/tr}</option>
+							{section name=ix loop=$languages}
+								<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
+							{/section}
+						</select>
 
 
 						{if $articleId != 0}
@@ -156,7 +156,7 @@
 								{/remarksbox}
 							{/if}
 						{/if}
-                    </div>
+					</div>
 				</div>
 			{/if}
 		{/tab}
@@ -183,7 +183,7 @@
 					{autocomplete element='#author' type='username'}
 				</div>
 			</div>
-			<div class="form-group {if $types.$type.show_pubdate neq 'y' and $types.$type.show_pre_publ eq 'y'}hidden{/if} clearfix">
+			<div class="form-group clearfix">
 				<label class="control-label col-sm-3">{tr}Publish Date{/tr}</label>
 				<div class="col-sm-9 clearfix">
 					{html_select_date prefix="publish_" time=$publishDate start_year="-10" end_year="+10" field_order=$prefs.display_field_order}
@@ -191,7 +191,7 @@
 					<span class="help-block">{$siteTimeZone}</span>
 				</div>
 			</div>
-			<div class="form-group {if $types.$type.show_expdate neq 'y' and $types.$type.show_post_expire eq 'y'}hidden{/if}">
+			<div class="form-group">
 				<label class="control-label col-sm-3">{tr}Expiration Date{/tr}</label>
 				<div class="col-sm-9">
 					{html_select_date prefix="expire_" time=$expireDate start_year="-10" end_year="+10" field_order=$prefs.display_field_order}
@@ -228,10 +228,10 @@
 			{/if}
 			<div class="form-group {if $types.$type.show_image_caption neq 'y'}hidden{/if}">
 				<label class="col-sm-3 control-label" for="image_caption">{tr}Image caption{/tr}</label>
-                <div class="col-sm-9">
-    				<input type="text" class="form-control" name="image_caption" value="{$image_caption|escape}" >
-	    			<div class="help-block">{tr}Default will use the topic name{/tr}</div>
-                </div>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" name="image_caption" value="{$image_caption|escape}" >
+					<div class="help-block">{tr}Default will use the topic name{/tr}</div>
+				</div>
 			</div>
 			<div class="checkbox {if $types.$type.show_image neq 'y'}hidden{/if} col-sm-offset-3">
 				<label>
@@ -296,31 +296,31 @@
 			{/if}
 			<div class="form-group {if $types.$type.show_topline neq 'y'}hidden{/if}">
 				<label for="topline" class="control-label col-sm-3">{tr}Topline{/tr}</label>
-                <div class="col-sm-9">
-    				<input type="text" name="topline" value="{$topline|escape}" class="form-control">
-                </div>
+				<div class="col-sm-9">
+					<input type="text" name="topline" value="{$topline|escape}" class="form-control">
+				</div>
 			</div>
 			<div class="form-group {if $types.$type.show_subtitle neq 'y'}hidden{/if}">
 				<label for="subtitle"  class="control-label col-sm-3">{tr}Subtitle{/tr}</label>
-                <div class="col-sm-9">
-		    		<input type="text" name="subtitle" value="{$subtitle|escape}" class="form-control">
-			    </div>
-            </div>
+				<div class="col-sm-9">
+					<input type="text" name="subtitle" value="{$subtitle|escape}" class="form-control">
+				</div>
+			</div>
 			<div class="form-group {if $types.$type.show_linkto neq 'y'}hidden{/if}">
 				<label for="linkto"  class="control-label col-sm-3">{tr}Source{/tr}</label>
-                <div class="col-sm-9">
-			    	<input type="url" name="linkto" value="{$linkto|escape}" class="form-control" placeholder="{tr}http://...{/tr}">
-				    {if $linkto neq ''}
-					    <div class="help-block">
-						    {tr}Test your link: {/tr}
-						    <a href="{$linkto|escape}" target="_blank">{tr}View{/tr}</a>
-				    	</div>
-				    {/if}
-                </div>
+				<div class="col-sm-9">
+					<input type="url" name="linkto" value="{$linkto|escape}" class="form-control" placeholder="{tr}http://...{/tr}">
+					{if $linkto neq ''}
+						<div class="help-block">
+							{tr}Test your link: {/tr}
+							<a href="{$linkto|escape}" target="_blank">{tr}View{/tr}</a>
+						</div>
+					{/if}
+				</div>
 			</div>
 			<div class="form-group {if $types.$type.use_ratings neq 'y'}hidden{/if}">
 				<label for="rating" class="col-sm-3 control-label">{tr}Author Rating{/tr}</label>
-                <div class="col-sm-3 col-sm-offet-6">
+				<div class="col-sm-3 col-sm-offet-6">
 				<select name='rating' class="form-control">
 					<option value="10" {if $rating eq 10}selected="selected"{/if}>10</option>
 					<option value="9.5" {if $rating eq "9.5"}selected="selected"{/if}>9.5</option>
@@ -344,7 +344,7 @@
 					<option value="0.5" {if $rating eq "0.5"}selected="selected"{/if}>0.5</option>
 					<option value="0" {if $rating eq "0"}selected="selected"{/if}>0</option>
 				</select>
-                </div>
+				</div>
 			</div>
 			{if $prefs.geo_locate_article eq 'y'}
 				<div class="form-group clearfix">
@@ -397,10 +397,10 @@
 						{assign var='attfullname' value=$att.itemId}
 						<div class="form-group" id={$attid} {if $types.$type.$attid eq 'y'}style="display:;"{else}style="display:none;"{/if}>
 							<label class="control-label col-sm-3" for="{$attfullname|escape}">{$attname|escape}</label>
-                            <div class="col-sm-9">
-    							<input type="text" name="{$attfullname|escape}" value="{$article_attributes.$attfullname|escape}" maxlength="255" class="form-control">
-						    </div>
-                        </div>
+							<div class="col-sm-9">
+								<input type="text" name="{$attfullname|escape}" value="{$article_attributes.$attfullname|escape}" maxlength="255" class="form-control">
+							</div>
+						</div>
 					{/foreach}
 				</fieldset>
 			{/if}
