@@ -21,23 +21,23 @@
 	<form class="form-horizontal col-md-10" action="tiki-remind_password.php" method="post">
 		{if $prefs.login_is_email ne 'y'}
 			<div class="form-group">
-				<label class="col-sm-3 col-md-2 control-label" for="name">Username</label>
+				<label class="col-sm-3 col-md-2 control-label" for="name">{tr}Username{/tr}</label>
 				<div class="col-sm-6">
-					<input type="text" class="form-control" placeholder="Username" name="name" id="name">
+					<input type="text" class="form-control" placeholder="{tr}Username{/tr}" name="name" id="name">
 				</div>
 			</div>
 			<div class="col-sm-offset-3 col-md-offset-2 col-sm-10">
-				<p><strong>OR</strong></p>
+				<p><strong>{tr}OR{/tr}</strong></p>
 			</div>
 
 		{/if}
 		<div class="form-group">
-			<label class="col-sm-3 col-md-2 control-label" for="email">Email</label>
+			<label class="col-sm-3 col-md-2 control-label" for="email">{tr}Email{/tr}</label>
 			<div class="col-sm-6">
 				{if $prefs.login_is_email ne 'y'}
-					<input type="email" class="form-control" placeholder="Email" name="email" id="email">
+					<input type="email" class="form-control" placeholder="{tr}Email{/tr}" name="email" id="email">
 				{else}
-					<input type="email" class="form-control" placeholder="Email" name="name" id="name">
+					<input type="email" class="form-control" placeholder="{tr}Email{/tr}" name="name" id="name">
 				{/if}
 			</div>
 		</div>
