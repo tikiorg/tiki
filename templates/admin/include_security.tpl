@@ -116,6 +116,10 @@
 						{preference name=recaptcha_privkey}
 						{preference name=recaptcha_theme}
 					</div>
+					{preference name=captcha_questions_active}
+					<div class="adminoptionboxchild" id="captcha_questions_active_childcontainer">
+						{preference name=captcha_questions}
+					</div>
 				</div>
 			</fieldset>
 			{preference name=feature_wiki_protect_email}
