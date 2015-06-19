@@ -36,9 +36,9 @@ class Captcha
 
 	/**
 	 * Class constructor: decides whether to create an instance of
-	 * Zend_Captcha_Image or Zend_Captcha_ReCaptcha
+	 * Zend_Captcha_Image or Zend_Captcha_ReCaptcha or Captcha_Question
 	 *
-	 * @return null
+	 * @param string $type recaptcha|questions|default|dumb
 	 */
 	function __construct( $type = '' )
 	{
@@ -47,6 +47,8 @@ class Captcha
 		if (empty($type)) {
 			if ($prefs['recaptcha_enabled'] == 'y' && !empty($prefs['recaptcha_privkey']) && !empty($prefs['recaptcha_pubkey'])) {
 				$type = 'recaptcha';
+			} else if ($prefs['captcha_questions_active'] == 'y' && !empty($prefs['captcha_questions'])) {
+				$type = 'questions';
 			} else if (extension_loaded('gd') && function_exists('imagepng') && function_exists('imageftbbox')) {
 				$type = 'default';
 			} else {
@@ -81,6 +83,25 @@ class Captcha
 				)
 			);
 			$this->type = 'default';
+		} else if ($type === 'questions') {
+
+			$this->type = 'questions';
+
+			$questions = array();
+			$lines = explode("\n", $prefs['captcha_questions']);
+
+			foreach ($lines as $line) {
+				$line = explode(':', $line, 2);
+				if (count($line) === 2) {
+					$questions[] = array(trim($line[0]), trim($line[1]));
+				}
+			}
+
+			include_once('lib/captcha/Captcha_Questions.php');
+			$this->captcha = new Captcha_Questions($questions);
+
+
+
 		} else {		// implied $type==='dumb'
 			$this->captcha = new Zend_Captcha_Dumb;
 			$this->captcha->setWordlen($prefs['captcha_wordLen']);
@@ -94,22 +115,23 @@ class Captcha
 	/**
 	 * Create the default captcha
 	 *
-	 * @return void
+	 * @return string
 	 */
 	function generate()
 	{
+		$key = '';
 		try {
 			$key = $this->captcha->generate();
-			if ($this->type == 'default') {
+			if ($this->type == 'default' || $this->type == 'questions') {
 				// the following needed to keep session active for ajax checking
 				$session = $this->captcha->getSession();
 				$session->setExpirationHops(2, null, true);
 				$this->captcha->setSession($session);
 				$this->captcha->setKeepSession(false);
 			}
-			return $key;
 		} catch (Zend_Exception $e) {
 		}
+		return $key;
 	}
 
 	/** Return captcha ID

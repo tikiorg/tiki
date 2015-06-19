@@ -3,6 +3,15 @@
 	<div class="form-group">
 		{if $captchalib->type eq 'recaptcha'}
 			{$captchalib->render()}
+		{elseif $captchalib->type eq 'questions'}
+			<input type="hidden" name="captcha[id]" id="captchaId" value="{$captchalib->generate()}">
+			<label class="col-md-4 col-sm-3 control-label">
+				{$captchalib->render()}
+				{if $showmandatory eq 'y'}<span class="mandatory_star"> *</span>{/if}
+			</label>
+			<div class="col-md-8 col-sm-9">
+				<input class="form-control" type="text" maxlength="8" size="22" name="captcha[input]" id="antibotcode">
+			</div>
 		{else}
 			<input type="hidden" name="captcha[id]" id="captchaId" value="{$captchalib->generate()}">
 			<label class="control-label" for="antibotcode">{tr}Enter what you see{/tr}{if $showmandatory eq 'y'}<span class="attention"> *</span>{/if}</label>

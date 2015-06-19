@@ -318,11 +318,12 @@ class Installer extends TikiDb_Bridge
 		}
 
 		$files = glob(dirname(__FILE__) . '/schema/*_*.yml');
-		foreach ( $files as $file ) {
-			$filename = basename($file);
-			$this->patches[] = substr($filename, 0, -4);
+		if($files != false){
+			foreach ( $files as $file ) {
+				$filename = basename($file);
+				$this->patches[] = substr($filename, 0, -4);
+			}
 		}
-
 		// Add standalone PHP scripts
 		$files = glob(dirname(__FILE__) . '/schema/*_*.php');
 		foreach ( $files as $file ) {

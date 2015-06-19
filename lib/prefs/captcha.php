@@ -26,5 +26,25 @@ function prefs_captcha_list()
             'type' => 'text',
             'default' => 100,
 		),
+		'captcha_questions_active' => array(
+			'name' => tra('CAPTCHA Questions'),
+			'description' => tra('Requires anonymous visitors to enter the answer to a question .'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_antibot',
+			),
+			'default' => 'n',
+		),
+		'captcha_questions' => array(
+			'name' => tra('CAPTCHA Questions and answers'),
+			'description' => tra('Add some simple questions that only humans should be able to answer, in the format: "Question?: Answer" with one per line'),
+			'hint' => tra('One question per line with a colon separating the question and answer'),
+			'type' => 'textarea',
+			'size' => 6,
+			'dependencies' => array(
+				'captcha_questions_active',
+			),
+			'default' => '',
+		),
 	);
 }

@@ -31,13 +31,17 @@ test = { mode: function () {}, indentation: function() {} }
  		$css .= @file_get_contents("lib/codemirror_tiki/mode/tiki/tiki.css");
 
 		foreach (glob('vendor/codemirror/codemirror/mode/*', GLOB_ONLYDIR) as $dir) {
-			foreach (glob($dir.'/*.js') as $jsFile) {
-				$js .= "//" . $jsFile . "\n";
-				$js .= "try {\n" . @file_get_contents($jsFile) . "\n} catch (e) { };\n";
+			foreach (glob($dir.'/*.js', GLOB_NOCHECK) as $jsFile) {
+				if(is_file($jsFile)){
+					$js .= "//" . $jsFile . "\n";
+					$js .= "try {\n" . @file_get_contents($jsFile) . "\n} catch (e) { };\n";
+				}
 			}
-			foreach (glob($dir.'/*.css') as $cssFile) {
-				$css .= "/*" . $cssFile . "*/\n";
-				$css .= @file_get_contents($cssFile);
+			foreach (glob($dir.'/*.css', GLOB_NOCHECK) as $cssFile) {
+				if(is_file($cssFile)){
+					$css .= "/*" . $cssFile . "*/\n";
+					$css .= @file_get_contents($cssFile);
+				}
 			}
 		}
 

@@ -106,15 +106,19 @@
 			<fieldset>
 				<legend>{tr}Captcha{/tr}</legend>
 				{preference name=feature_antibot}
-				{preference name=captcha_wordLen}
-				{preference name=captcha_width}
-				{preference name=captcha_noise}
 				<div class="adminoptionboxchild" id="feature_antibot_childcontainer">
+					{preference name=captcha_wordLen}
+					{preference name=captcha_width}
+					{preference name=captcha_noise}
 					{preference name=recaptcha_enabled}
 					<div class="adminoptionboxchild" id="recaptcha_enabled_childcontainer">
 						{preference name=recaptcha_pubkey}
 						{preference name=recaptcha_privkey}
 						{preference name=recaptcha_theme}
+					</div>
+					{preference name=captcha_questions_active}
+					<div class="adminoptionboxchild" id="captcha_questions_active_childcontainer">
+						{preference name=captcha_questions}
 					</div>
 				</div>
 			</fieldset>
