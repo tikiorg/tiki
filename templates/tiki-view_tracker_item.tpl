@@ -184,11 +184,11 @@
 		{tab name=$editTitle}
 			<h2>{tr}Edit Item{/tr}</h2>
 
-			<div class="nohighlight">
+			<div class="nohighlight"><table style="width: 100%;"><tr><td> {* Added this table tag as a nasty kludge because (after Bootstrappification) the page is breaking without it. *}
 				{include file="tracker_validator.tpl"}
 
 				{if $tiki_p_admin_trackers eq 'y' and !empty($trackers)}
-					<form>
+					<form role="form">
 						<input type="hidden" name="itemId" value="{$itemId}">
 						<select name="moveto">
 							{foreach from=$trackers item=tracker}
@@ -201,7 +201,7 @@
 					</form>
 				{/if}
 
-				<form enctype="multipart/form-data" action="tiki-view_tracker_item.php" method="post" id="editItemForm">
+				<form class="form form-horizontal" enctype="multipart/form-data" action="tiki-view_tracker_item.php" method="post" id="editItemForm">
 					{if $special}
 						<input type="hidden" name="view" value=" {$special}">
 					{else}
@@ -222,29 +222,26 @@
 
 					{remarksbox type="warning" title="{tr}Warning{/tr}"}<em class='mandatory_note'>{tr}Fields marked with an * are mandatory.{/tr}</em>{/remarksbox}
 
-					<table class="formcolor">
-						<tr>
-							<td colspan="2">
+					<div class="form-group">
 								{if count($fields) >= 5}
 									<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false">
 									{* --------------------------- to return to tracker list after saving --------- *}
 									{if $canView}
 										<input type="submit" class="btn btn-default btn-sm" name="save_return" value="{tr}Save{/tr} &amp; {tr}Back to Items list{/tr}" onclick="needToConfirm=false">
 										{if $canRemove}
-											<a class="link" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;remove={$itemId}" title="{tr}Delete{/tr}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+                                            <a class="btn btn-default btn-sm" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;remove={$itemId}" title="{tr}Delete{/tr}">{icon name='delete' alt="{tr}Delete{/tr}"}</a>
 										{/if}
 									{/if}
 								{/if}
-							</td>
-						</tr>
-						{* ------------------- *}
+                    </div>
+																	{* ------------------- *}
 						{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
-							<tr>
-								<td class="formlabel">{tr}Status{/tr}</td>
-								<td class="formcontent">
+							<div class="form-group">
+								<label class="form-label col-sm-3">{tr}Status{/tr}</label>
+								<div class="col-sm-9">
 									{include file='tracker_status_input.tpl' item=$item_info form_status=edstatus}
-								</td>
-							</tr>
+								</div>
+							</div>
 						{/if}
 
 						
@@ -252,17 +249,17 @@
 						{if empty($editItemPretty.value)}
 
 							{foreach from=$ins_fields key=ix item=cur_field}
-								<tr>
-									<td>
+								<div class="form-group">
+									<label class="control-label col-sm-3">
 										{$cur_field.name|tra}
 										{if $cur_field.isMandatory eq 'y'}
 											<em class='mandatory_star'>*</em>
 										{/if}
-									</td>
-									<td>
+									</label>
+									<div class="col-sm-9">
 										{trackerinput field=$cur_field item=$item_info inTable=formcolor showDescription=y}
-									</td>
-								</tr>
+									</div>
+								</div>
 							{/foreach}
 
 							{trackerheader level=-1 title='' inTable='formcolor'}
@@ -270,22 +267,22 @@
 						{else}
 						{* we have a preset template: it could be a wiki:myPage or a tpl:MyTpl.tpl *}
 						{* Note: tracker plugin usally consumes a pagename or a tpl filename without a prefix of tpl: or wiki: as the tracker definition does *}
-							<tr>
-								<td colspan="4">
+							<div class="form-group">
+
 								{if $editItemPretty.type eq 'wiki'}
 									{wikiplugin _name=tracker trackerId=$trackerId itemId=$itemId view=page wiki=$editItemPretty.value formtag='n'}{/wikiplugin}
 								{else}
 									{wikiplugin _name=tracker trackerId=$trackerId itemId=$itemId view=page tpl=$editItemPretty.value formtag='n'}{/wikiplugin}
 								{/if}
-								</td>
-							</tr>
+
+							</div>
 						{/if}
 
 						{if $groupforalert ne ''}
 
-							<tr>
-								<td>{tr}Choose users to alert{/tr}</td>
-								<td>
+							<div class="form-group">
+								<div class="col-sm-3">{tr}Choose users to alert{/tr}</div>
+								<div class="col-sm-9">
 									{section name=idx loop=$listusertoalert}
 										{if $showeachuser eq ''}
 											<input type="hidden" name="listtoalert[]" value="{$listusertoalert[idx].user}">
@@ -293,8 +290,9 @@
 											<input type="checkbox" name="listtoalert[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}
 										{/if}
 									{/section}
-								</td>
-							</tr>
+                                </div>
+
+                            </div>
 						{/if}
 
 
@@ -302,8 +300,8 @@
 						{if $prefs.feature_antibot eq 'y' && $user eq ''}
 							{include file='antibot.tpl'}
 						{/if}
-						<tr>
-							<td colspan="2">
+						<div class="form-group">
+
 								<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false">
 								{* --------------------------- to return to tracker list after saving --------- *}
 								{if $canView}
@@ -318,9 +316,9 @@
 								{if $tiki_p_admin_trackers eq 'y' && empty($trackers)}
 									<a class="link" href="tiki-view_tracker_item.php?itemId={$itemId}&moveto" title="{tr}Move to another tracker{/tr}">{icon _id='arrow_right' alt="{tr}Move to another tracker{/tr}"}</a>
 								{/if}
-							</td>
-						</tr>
-					</table>
+
+						</div>
+
 
 					{* ------------------- *}
 				</form>
@@ -338,12 +336,14 @@
 										<input type="hidden" name="{$cur_field.options_array[tl]|regex_replace:"/:.*$/":""|escape}" value="{$info.$valvar|escape}">
 									{/if}
 								{/section}
-								<table class="formcolor">
-									<tr>
-										<td>{$cur_field.name|tra}</td>
-										<td><input type="submit" class="btn btn-default btn-sm" name="trck_act" value="{$cur_field.options_array[0]|escape}" ></td>
-									<tr>
-								</table>
+								<div class="form-group">
+										<div class="col-sm-6">
+                                            {$cur_field.name|tra}
+                                        </div>
+										<div class="col-sm-6">
+                                            <input type="submit" class="btn btn-default btn-sm" name="trck_act" value="{$cur_field.options_array[0]|escape}" >
+                                        </div>
+                                </div>
 							</form>
 						{/capture}
 						{assign var=trkact value=$trkact|cat:$smarty.capture.trkaction}
@@ -353,7 +353,7 @@
 					<h2>{tr}Special Operations{/tr}</h2>
 					{$trkact}
 				{/if}
-			</div><!--nohighlight-->{*important comment to delimit the zone not to highlight in a search result*}
+                        </td></tr></table></div><!--nohighlight-->{*important comment to delimit the zone not to highlight in a search result*}
 		{/tab}
 	{/if}
 
