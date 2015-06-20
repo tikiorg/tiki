@@ -193,7 +193,7 @@
 										{if $over_infos neq ''}
 											{popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html"}
 										{else}
-											title="{if $files[changes].name neq ''}{$files[changes].name|escape}{/if} - {if $files[changes].description neq ''}{$files[changes].description|escape}{/if}"
+											title="{if $files[changes].name neq ''}{$files[changes].name|escape}{/if}{if $files[changes].description neq ''} - {$files[changes].description|escape}{/if}"
 										{/if}>
 										{if $key_type neq 'image/svg' and $key_type neq 'image/svg+xml'}
 											{if $imagetypes eq 'y' or $prefs.theme_iconset eq 'legacy'}
