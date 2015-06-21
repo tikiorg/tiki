@@ -6,7 +6,7 @@
 {if $email_ok eq 'n'}
 	{remarksbox type="warning" title="{tr}Warning{/tr}"}
 		{tr}You need to set your email to receive email notifications.{/tr}
-		{icon _id="arrow_right" href="tiki-user_preferences.php"}
+		<a href="tiki-user_preferences.php" class="tips" title=":{tr}User preferences{/tr}">{icon name="next"}</a>
 	{/remarksbox}
 {/if}
 

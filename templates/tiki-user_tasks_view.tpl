@@ -4,17 +4,17 @@
 <h2>{$info.title|escape}</h2>&nbsp;
 
 {if ($info.user eq $user) or ($info.creator eq $user) or ($admin_mode)}
-	<a href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=edit" class="tablink">
-		{icon _id='page_edit'}
+	<a href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=edit" class="tablink tips" title=":{tr}Edit{/tr}">
+		{icon name='edit'}
 	</a>&nbsp;
-	<a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_accept=on" class="tablink">
-		{icon _id='accept' title="{tr}Accept{/tr}" alt="{tr}Accept{/tr}"}
+	<a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_accept=on" class="tablink tips"  title=":{tr}Accept{/tr}">
+		{icon name='ok'}
 	</a>&nbsp;
-	<a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_not_accept=on" class="tablink">
-		{icon _id='delete' title="{tr}Reject{/tr}" alt="{tr}Reject{/tr}"}
+	<a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;task_not_accept=on" class="tablink tips" title=":{tr}Reject{/tr}">
+		{icon name='remove'}
 	</a>&nbsp;
-	<a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;move_into_trash=on" class="tablink">
-		{icon _id='basket_put' title="{tr}Move to trash{/tr}" alt="{tr}Move to trash{/tr}"}
+	<a href="tiki-user_tasks.php?taskId={$taskId}&amp;save=on&amp;move_into_trash=on" class="tablink tips" title=":{tr}Move to trash{/tr}">
+		{icon name='trash'}
 	</a>&nbsp;
 {/if}
 <br><br>
@@ -28,12 +28,12 @@
 	{if ($tiki_view_mode eq 'view')}
 		<div style="text-align:right;">
 		{if ($info.task_version > 0)}
-			<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=view&amp;show_history={$info.task_version-1}">{icon _id='resultset_previous' align="middle"}</a>
+			<a class="link tips" title=":{tr}Previous version{/tr}" href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=view&amp;show_history={$info.task_version-1}">{icon name='previous'}</a>
 		{/if}
 			{tr}version:{/tr} <b>{$info.task_version+1}</b>
 			{if $info.task_version < $info.last_version}
-				<a class="link" href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=view&amp;show_history={$info.task_version+1}">
-					{icon _id='resultset_next' align="middle"}
+				<a class="link tips" title=":{tr}Next version{/tr}" href="tiki-user_tasks.php?taskId={$taskId}&amp;tiki_view_mode=view&amp;show_history={$info.task_version+1}">
+					{icon name='next'}
 				</a>
 		{/if}
 		</div>

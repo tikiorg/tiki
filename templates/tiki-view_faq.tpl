@@ -2,7 +2,7 @@
 <div class="description help-block">{$faq_info.description|escape}</div>
 
 <div class="t_navbar btn-group form-group">
-	{self_link print='y'}{icon _id='printer' align='right' hspace='1' alt="{tr}Print{/tr}"}{/self_link}
+	{self_link print='y'}{icon name='print' align='right' hspace='1' alt="{tr}Print{/tr}"}{/self_link}
 	{button href="tiki-list_faqs.php" class="btn btn-default" _text="{tr}List FAQs{/tr}"}
 
 	{if $tiki_p_admin_faqs eq 'y'}
@@ -72,7 +72,7 @@
 	<div class="faq_suggestions" id="faqsugg" style="display:{if !empty($error)}block{else}none{/if};">
 		{if !empty($error)}
 			<br>
-			<div class="alert alert-warning">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"} {$error}</div>
+			<div class="alert alert-warning">{icon name="error" alt="{tr}Error{/tr}" style="vertical-align:middle"} {$error}</div>
 		{/if}
 		<br>
 		<form action="tiki-view_faq.php" method="post">

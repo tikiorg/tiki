@@ -174,10 +174,10 @@
 				<div class="articleheading">
 					{tr}Rating:{/tr}
 					{repeat count=$listpages[ix].rating}
-						{icon _id='star' alt="{tr}star{/tr}"}
+						{icon name='star'}
 					{/repeat}
 					{if $listpages[ix].rating > $listpages[ix].entrating}
-						{icon _id='star_half' alt="{tr}half star{/tr}"}
+						{icon name='star-half'}
 					{/if}
 					({$listpages[ix].rating}/10)
 				</div>
