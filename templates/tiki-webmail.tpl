@@ -58,9 +58,13 @@
 							<tr>
 								<td class="icon">
 									{if !$active}
-										{self_link _icon='star_grey' current=$accounts[ix].accountId}{tr}Activate{/tr}{/self_link}
+										<span style="color:gray">
+											{self_link current=$accounts[ix].accountId _icon_name='star' _menu_text='y' _menu_icon='y'}
+												{tr}Activate{/tr}
+											{/self_link}
+										</span>
 									{else}
-										{icon _id='star' alt="{tr}This is the active account.{/tr}"}
+										{icon name='star'}
 									{/if}
 								</td>
 								<td class="username">
@@ -80,10 +84,16 @@
 									{$accounts[ix].username}
 								</td>
 								<td class="action">
-									{self_link _icon='page_edit' accountId=$accounts[ix].accountId}{tr}Edit{/tr}{/self_link}
-									{self_link _icon='cross' remove=$accounts[ix].accountId}{tr}Delete{/tr}{/self_link}
+									{self_link accountId=$accounts[ix].accountId _icon_name='edit' _menu_text='y' _menu_icon='y'}
+										{tr}Edit{/tr}
+									{/self_link}
+									{self_link remove=$accounts[ix].accountId _icon_name='remove' _menu_text='y' _menu_icon='y'}
+										{tr}Delete{/tr}
+									{/self_link}
 									{if !$active}
-										{self_link _icon='accept' current=$accounts[ix].accountId}{tr}Activate{/tr}{/self_link}
+										{self_link current=$accounts[ix].accountId _icon_name='ok' _menu_text='y' _menu_icon='y'}
+											{tr}Activate{/tr}
+									{/self_link}
 									{/if}
 								</td>
 							</tr>

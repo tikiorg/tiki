@@ -55,7 +55,7 @@
 							</span>
 						{/if}
 					{else}
-						<a class='separator' href="#" onclick="icontoggle('menu{$cname}', this);" title="{tr}Toggle options{/tr}" id="sep{$cname}">{if empty($menu_info.icon)}<span class="toggle-open" style="display:{$open}">{icon name="$expanded" alt='Toggle'}</span><span class="toggle-closed" style="display:{$closed}">{icon name="$collapsed" alt='Toggle'}</span>{else}<span class="toggle-open" style="display:{$open}"><img src="{$menu_info.oicon|escape}" alt="{tr}Toggle{/tr}"></span><span class="toggle-closed" style="display:{$closed}"><img src="{$menu_info.icon|escape}" alt="{tr}Toggle{/tr}"></span>{/if}</a>
+						<a class='separator' href="#" onclick="icontoggle('menu{$cname}', this); return false;" title="{tr}Toggle options{/tr}" id="sep{$cname}">{if empty($menu_info.icon)}<span class="toggle-open" style="display:{$open}">{icon name="$expanded" alt='Toggle'}</span><span class="toggle-closed" style="display:{$closed}">{icon name="$collapsed" alt='Toggle'}</span>{else}<span class="toggle-open" style="display:{$open}"><img src="{$menu_info.oicon|escape}" alt="{tr}Toggle{/tr}"></span><span class="toggle-closed" style="display:{$closed}"><img src="{$menu_info.icon|escape}" alt="{tr}Toggle{/tr}"></span>{/if}</a>
 					{/if}
 				{else}
 					{if empty($menu_info.icon)}
@@ -67,7 +67,7 @@
 				{if $chdata.url and $link_on_section eq 'y'}
 					<a href="{if $prefs.feature_sefurl eq 'y' and !empty($chdata.sefurl)}{$chdata.sefurl|escape}{else}{if $prefs.menus_item_names_raw eq 'n'}{$chdata.url|escape}{else}{$chdata.url}{/if}{/if}" class="separator">
 				{else}
-					<a href="javascript:icontoggle('menu{$cname}', this);" class="separator" id="sep{$cname}">
+					<a href="#" onclick="icontoggle('menu{$cname}', this); return false;" class="separator" id="sep{$cname}">
 				{/if}
 					<span class="menuText">
 						{if $translate eq 'n'}
