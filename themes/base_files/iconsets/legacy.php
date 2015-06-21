@@ -239,6 +239,9 @@ function iconset_legacy()
 			'columns' => array(
 				'id' => 'text_columns',
 			),
+			'collapsed' => array(
+				'id' => 'bullet_toggle_plus',
+			),
 			'comments' => array(
 				'id' => 'comments',
 				'size' => 1,
@@ -282,6 +285,9 @@ function iconset_legacy()
 			),
 			'error' => array(
 				'id' => 'exclamation',
+			),
+			'expanded' => array(
+				'id' => 'bullet_toggle_minus',
 			),
 			'export' => array(
 				'id' => 'disk',

@@ -466,8 +466,12 @@ class MenuLib extends TikiLib
 				if (empty($params['id']) && !empty($params['structureId'])) {
 					$params['id'] = $params['structureId'];
 				}
-				$ck = getCookie('menu'.$params['id'].'__'.$option['position'], 'menu', 'o');
-				$option['open'] = ($prefs['javascript_enabled'] == 'n' || $ck == 'o');
+				$ck = getCookie('menu'.$params['id'].'__'.$option['position'], 'menu');
+				if ($prefs['javascript_enabled'] === 'n') {
+					$option['open'] = 'o';
+				} elseif ($ck === 'o' || $ck === 'c') {
+					$option['open'] = $ck;
+				}
 			}
 		}
 		return $channels;

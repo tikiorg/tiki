@@ -212,6 +212,9 @@ function iconset_default()
 			'code_file' => array(
 				'id' => 'file',
 			),
+			'collapsed' => array(
+				'id' => 'plus-square-o',
+			),
 			'comments' => array(
 				'id' => 'comments-o',
 			),
@@ -244,6 +247,9 @@ function iconset_default()
 			),
 			'events' => array(
 				'id' => 'clock-o',
+			),
+			'expanded' => array(
+				'id' => 'minus-square-o',
 			),
 			'export' => array(
 				'id' => 'download',

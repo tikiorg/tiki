@@ -58,6 +58,9 @@ function iconset_glyphicons()
 			'code_file' => array(
 				'id' => 'file-code-o',
 			),
+			'collapsed' => array(
+				'id' => 'expand',
+			),
 			'columns' => array(
 				'id' => 'th-large',
 			),
@@ -90,6 +93,9 @@ function iconset_glyphicons()
 			),
 			'excel' => array(
 				'id' => 'file',
+			),
+			'expanded' => array(
+				'id' => 'collapse-down',
 			),
 			'facebook' => array(
 				'id' => 'thumbs-up',
