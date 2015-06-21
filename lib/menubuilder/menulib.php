@@ -457,7 +457,6 @@ class MenuLib extends TikiLib
 		// set sections open/close according to cookie
 		global $prefs;
 		foreach ($channels['data'] as $position => &$option) {
-			$option['open'] = false;
 			if (!empty($params['menu_cookie']) && $params['menu_cookie'] == 'n') {
 				if (!empty($option['selected']) || !empty($option['selectedAscendant'])) {
 					$option['open'] = true;
@@ -468,9 +467,11 @@ class MenuLib extends TikiLib
 				}
 				$ck = getCookie('menu'.$params['id'].'__'.$option['position'], 'menu');
 				if ($prefs['javascript_enabled'] === 'n') {
-					$option['open'] = 'o';
-				} elseif ($ck === 'o' || $ck === 'c') {
-					$option['open'] = $ck;
+					$option['open'] = true;
+				} elseif ($ck === 'o') {
+					$option['open'] = true;
+				} elseif ($ck === 'c') {
+					$option['open'] = false;
 				}
 			}
 		}
