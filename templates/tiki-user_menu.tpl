@@ -26,6 +26,13 @@
 				{if $sep eq 'line'}
 					{assign var=sep value=''}
 				{/if}
+				{if (isset($chdata.open) && $chdata.open) || (!isset($chdata.open) && $menu_info.type !== 'd')}
+					{$open = 'inline'}
+					{$closed = 'none'}
+				{else}
+					{$open = 'none'}
+					{$closed = 'inline'}
+				{/if}
 				{if $menu_info.type eq 'e' or $menu_info.type eq 'd'}
 					{if $prefs.menus_items_icons eq 'y' and $menu_info.use_items_icons eq 'y'}
 						<span class="separatoricon-toggle" style="display:inline">
@@ -41,38 +48,22 @@
 							</span>
 						{/if}
 					{elseif $prefs.feature_menusfolderstyle eq 'y'}
-						{assign var="icon_name" value="icnmenu$cname"}
-						<a class='separator' href="javascript:icntoggle('menu{$cname}');" title="{tr}Toggle options{/tr}">
-							{if $menu_info.type ne 'd'}
-								{if empty($menu_info.icon)}
-									{icon _id="ofolder" alt='Toggle' name="$icon_name" id="$icon_name"}
-								{else}
-									<img src="{$menu_info.oicon|escape}" alt="{tr}Toggle{/tr}" name="{$icon_name}" id="$icon_name">
-								{/if}
-							{else}
-								{if empty($menu_info.icon)}
-									{if isset($chdata.open) and $chdata.open}
-										{icon _id="ofolder" alt='Toggle' name="$icon_name" id="$icon_name"}
-									{else}
-										{icon _id="folder" alt='Toggle' name="$icon_name" id="$icon_name"}
-									{/if}
-								{else}
-									{if isset($chdata.open) and $chdata.open}
-										<img src="{$menu_info.oicon|escape}" alt="{tr}Toggle{/tr}" name="{$icon_name}" id="$icon_name">
-									{else}
-										<img src="{$menu_info.icon|escape}" alt="{tr}Toggle{/tr}" name="{$icon_name}" id="$icon_name">
-									{/if}
-								{/if}
-							{/if}
-						</a>
+						{* these anchor tags need to be in a single long line to avoid stray underlining upon hover *}
+						<a class='separator' href="#" onclick="icontoggle('menu{$cname}', this); return false;" title="{tr}Toggle options{/tr}" id="sep{$cname}">{if empty($menu_info.icon)}<span class="toggle-open" style="display:{$open}">{icon _id="ofolder" alt='Toggle'}</span><span class="toggle-closed" style="display:{$closed}">{icon _id="folder" alt='Toggle'}</span>{else}<span class="toggle-open" style="display:{$open}"><img src="{$menu_info.oicon|escape}" alt="{tr}Toggle{/tr}"></span><span class="toggle-closed" style="display:{$closed}"><img src="{$menu_info.icon|escape}" alt="{tr}Toggle{/tr}"></span>{/if}</a>
 					{else}
-						<a class='separator' href="javascript:toggle('menu{$cname}');">[-]</a>
+						<a class='separator' href="#" onclick="icontoggle('menu{$cname}', this); return false;" title="{tr}Toggle options{/tr}" id="sep{$cname}"><span class="toggle-open" style="display:{$open}">[-]</span><span class="toggle-closed" style="display:{$closed}">[+]</span>
 					{/if}
-				{/if} 
+				{else}
+					{if empty($menu_info.icon)}
+						{icon _id="ofolder" alt='Toggle'}
+					{else}
+						<img src="{$menu_info.oicon|escape}" alt="{tr}Toggle{/tr}">
+					{/if}
+				{/if}
 				{if $chdata.url and $link_on_section eq 'y'}
 					<a href="{if $prefs.feature_sefurl eq 'y' and !empty($chdata.sefurl)}{$chdata.sefurl|escape}{else}{if $prefs.menus_item_names_raw eq 'n'}{$chdata.url|escape}{else}{$chdata.url}{/if}{/if}" class="separator">
 				{else}
-					<a href="javascript:icntoggle('menu{$cname}');" class="separator">
+					<a href="#" onclick="icontoggle('menu{$cname}', this); return false;" class="separator" id="sep{$cname}">
 				{/if}
 					<span class="menuText">
 						{if $translate eq 'n'}
@@ -82,14 +73,11 @@
 						{/if}
 					</span>
 				</a>
-				{if ($menu_info.type eq 'e' or $menu_info.type eq 'd') and $prefs.feature_menusfolderstyle ne 'y'}
-					<a class='separator' href="javascript:toggle('menu{$cname}');">[+]</a>
-				{/if} 
 			</div> {* separator *}
-			
+
 			{assign var=opensec value=$opensec+1}
 			{if $menu_info.type eq 'e' or $menu_info.type eq 'd'}
-				<div class="menuSection" {if !isset($chdata.open) || !$chdata.open}style="display:none;"{else}style="display:block;"{/if} id='menu{$cname}'>
+				<div class="menuSection" style="display:{if $open === 'inline'}block{else}none{/if}" id='menu{$cname}'>
 			{else}
 				<div class="menuSection">
 			{/if}
