@@ -33,7 +33,7 @@
 					{$expanded = 'expanded'}
 					{$collapsed = 'collapsed'}
 				{/if}
-				{if $chdata.open === 'o' || ($chdata.open !== 'c' && $menu_info.type !== 'd')}
+				{if (isset($chdata.open) && $chdata.open) || (!isset($chdata.open) && $menu_info.type !== 'd')}
 					{$open = 'inline'}
 					{$closed = 'none'}
 				{else}

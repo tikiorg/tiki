@@ -86,11 +86,11 @@ FileETag none
 
 # Expires headers: If the site is in active development, you may want to comment out this section.
 <IfModule mod_expires.c>
-	<FilesMatch "\.(png|gif|jpg|ico)$">
+	<FilesMatch "(?i)\.(png|gif|jpg|ico)$">
 		ExpiresActive on
 		ExpiresDefault "access plus 1 month"
 	</FilesMatch>
-	<FilesMatch "\.(js|css)$">
+	<FilesMatch "(?i)\.(js|css)$">
 		ExpiresActive on
 		ExpiresDefault "access plus 1 month"
 	</FilesMatch>
