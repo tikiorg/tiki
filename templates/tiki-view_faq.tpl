@@ -2,7 +2,9 @@
 <div class="description help-block">{$faq_info.description|escape}</div>
 
 <div class="t_navbar btn-group form-group">
-	{self_link print='y'}{icon name='print' align='right' hspace='1' alt="{tr}Print{/tr}"}{/self_link}
+	{self_link print='y' _icon_name='print' _menu_text='y' _menu_icon='y'}
+		{tr}Print{/tr}
+	{/self_link}
 	{button href="tiki-list_faqs.php" class="btn btn-default" _text="{tr}List FAQs{/tr}"}
 
 	{if $tiki_p_admin_faqs eq 'y'}
