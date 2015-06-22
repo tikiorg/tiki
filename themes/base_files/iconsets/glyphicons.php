@@ -107,7 +107,7 @@ function iconset_glyphicons()
 				'id' => 'step-forward',
 			),
 			'file-archive' => array(
-				'id' => 'folder',
+				'id' => 'folder-close',
 			),
 			'file-archive-open' => array(
 				'id' => 'folder-open',
