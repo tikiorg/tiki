@@ -43,8 +43,18 @@
 		{tab name="{tr}List{/tr}"}
 			{if count($accounts) != 0}
 				<h2>{tr}Personal email accounts{/tr}</h2>
-				<div class="table-responsive">
-					<table class="table normal">
+				{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+				{if $prefs.javascript_enabled !== 'y'}
+					{$js = 'n'}
+					{$libeg = '<li>'}
+					{$liend = '</li>'}
+				{else}
+					{$js = 'y'}
+					{$libeg = ''}
+					{$liend = ''}
+				{/if}
+				<div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
+					<table class="table normal table-striped table-hover">
 						<tr>
 							<th>{tr}Active{/tr}</th>
 							<th>{tr}Account{/tr}</th>
@@ -84,17 +94,34 @@
 									{$accounts[ix].username}
 								</td>
 								<td class="action">
-									{self_link accountId=$accounts[ix].accountId _icon_name='edit' _menu_text='y' _menu_icon='y'}
-										{tr}Edit{/tr}
-									{/self_link}
-									{self_link remove=$accounts[ix].accountId _icon_name='remove' _menu_text='y' _menu_icon='y'}
-										{tr}Delete{/tr}
-									{/self_link}
-									{if !$active}
-										{self_link current=$accounts[ix].accountId _icon_name='ok' _menu_text='y' _menu_icon='y'}
-											{tr}Activate{/tr}
-									{/self_link}
-									{/if}
+									{capture name=webmail_actions}
+										{strip}
+											{$libeg}{self_link accountId=$accounts[ix].accountId _icon_name='edit' _menu_text='y' _menu_icon='y'}
+												{tr}Edit{/tr}
+											{/self_link}{$liend}
+											{$libeg}{self_link remove=$accounts[ix].accountId _icon_name='remove' _menu_text='y' _menu_icon='y'}
+												{tr}Delete{/tr}
+											{/self_link}{$liend}
+											{if !$active}
+												{$libeg}{self_link current=$accounts[ix].accountId _icon_name='ok' _menu_text='y' _menu_icon='y'}
+													{tr}Activate{/tr}
+												{/self_link}{$liend}
+											{/if}
+										{/strip}
+									{/capture}
+									{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+										<a
+											class="tips"
+											title="{tr}Actions{/tr}"
+											href="#"
+											{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.webmail_actions|escape:"javascript"|escape:"html"}{/if}
+											style="padding:0; margin:0; border:0"
+										>
+											{icon name='wrench'}
+										</a>
+										{if $js === 'n'}
+											<ul class="dropdown-menu" role="menu">{$smarty.capture.webmail_actions}</ul></li></ul>
+										{/if}
 								</td>
 							</tr>
 						{sectionelse}
