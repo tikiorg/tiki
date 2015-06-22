@@ -10,14 +10,14 @@ function wikiplugin_include_info()
 	return array(
 		'name' => tra('Include'),
 		'documentation' => 'PluginInclude',
-		'description' => tra('Include content from a wiki page'),
+		'description' => tra('Include content from a wiki page or a URL'),
 		'prefs' => array('wikiplugin_include'),
 		'icon' => 'img/icons/page_copy.png',
 		'tags' => array( 'basic' ),
 		'format' => 'html',
 		'params' => array(
 			'page' => array(
-				'required' => true,
+				'required' => false,
 				'name' => tra('Page Name'),
 				'description' => tra('Wiki page name to include.'),
 				'filter' => 'pagename',
@@ -53,15 +53,72 @@ function wikiplugin_include_info()
 				'name' => tra('Show the page edit icon'),
 				'description' => tra('y/n option to show the edit icon for the included page.'),
 				'default' => 'y',
-			),			
+			),
+			'url' => array(
+				'required' => false,
+				'name' => tra('URL'),
+				'description' => tra('URL to external file to include.'),
+				'default' => '',
+			),
 		),
 	);
 }
 
 function wikiplugin_include($dataIn, $params)
 {
-	global $user, $killtoc;
-    static $included_pages, $data;
+	global $killtoc, $page, $max_times;
+
+	if(empty($params['page'])) {
+		$page = null;
+		if(!empty($params['url'])) {
+			$url = $params['url'];
+		} else {
+			$url = null;
+		}
+	} else {
+		$page = $params['page'];
+	}
+
+	$killtoc = true;
+	$max_times = 5;
+	$params = array_merge(array( 'nopage_text' => '', 'pagedenied_text' => '', 'page_edit_icon' => 'y', 'url' => '' ), $params);
+	extract($params, EXTR_SKIP);
+
+	// Validate that either "page" or "url" is set.
+	//	If both are set "page" takes precedence
+	if (isset($page)) {
+		return includeWikiPage($params);
+	} else if (isset($url)) {
+		return includeURL($params, $url);
+	} else {
+		return ("<b>{tr}Missing page or url for plugin INCLUDE{/tr}</b><br />");
+	}
+}
+function includeURL($params, $url)
+{
+	$html = file_get_contents($url);
+
+	// Only include the body part of the html file
+	$matches = array();
+	if (preg_match("/<body.*\/body>/s", $html, $matches)) {
+		// Find and strip the body
+		$taggedBody = $matches[0];
+		$bodyEndIdx = strpos($taggedBody,'>');
+		if ($bodyEndIdx > 0) {
+			$taggedBody = substr($taggedBody, $bodyEndIdx+1);
+		}
+		$body = substr($taggedBody, 0, -7);
+	} else {
+		// No body tag. Return whole html
+		$body = $html;
+	}
+	return $body;
+}
+
+function includeWikiPage($params)
+{
+	static $included_pages, $data, $includeOnce;
+	global $page, $max_times, $pagedenied_text, $nopage_text, $page_edit_icon;
 	$userlib = TikiLib::lib('user');
 	$tikilib = TikiLib::lib('tiki');
 
