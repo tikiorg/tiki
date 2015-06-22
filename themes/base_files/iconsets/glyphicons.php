@@ -25,10 +25,7 @@ function iconset_glyphicons()
 			'add' => array(
 				'id' => 'plus-sign',
 			),
-			'admin_i18n' => array(
-				'id' => 'globe',
-			),
-			'attach' => array(
+ 			'attach' => array(
 				'id' => 'paperclip',
 			),
 			'audio' => array(
@@ -58,6 +55,9 @@ function iconset_glyphicons()
 			'code_file' => array(
 				'id' => 'file-code-o',
 			),
+            'cog' => array(
+                'id' => 'cog',
+            ),
 			'collapsed' => array(
 				'id' => 'expand',
 			),
@@ -145,6 +145,9 @@ function iconset_glyphicons()
 			'merge' => array(
 				'id' => 'random',
 			),
+            'module' => array(
+                'id' => 'cog',
+            ),
 			'more' => array(
 				'id' => 'option-horizontal',
 			),
