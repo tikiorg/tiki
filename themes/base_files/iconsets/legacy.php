@@ -237,6 +237,9 @@ function iconset_legacy()
 				'id' => 'select',
 				'append' => '.gif'
 			),
+			'code' => array(
+				'id' => 'page_white_code',
+			),
 			'cog' => array(
 				'id' => 'wrench',
 			),
