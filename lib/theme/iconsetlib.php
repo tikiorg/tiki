@@ -183,7 +183,11 @@ class Iconset
 				//some ability to use larger legacy icons based on size setting
 				// 1 = 16px x 16px; 2 = 32px x 32px; 3 = 48px x 48px
 				if ($size > 1 && isset($icon['size']) && $icon['size'] != $size && !empty($icon['sizes'][$size])) {
-					$id = $icon['sizes'][$size];
+					$id = $icon['sizes'][$size]['id'];
+					if (isset($icon['sizes'][$size]['prepend'])) {
+						$prepend = $icon['sizes'][$size]['prepend'];
+						$append = $icon['sizes'][$size]['append'];
+					}
 				} else {
 					$id = $icon['id'];
 				}

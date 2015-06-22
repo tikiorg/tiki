@@ -26,6 +26,7 @@
  *   _icon : file name of the icon to use (e.g. 'page_edit', 'cross', ...) - only works with legacy icons
  *   _icon_name : name of the icon to use in order to use iconsets
  *   _icon_class : CSS class to use for the icon's IMG tag
+ *   _icon_size : size of icon when _icon_name is used
  *   _menu_text : (see smarty icon function)
  *   _menu_icon : (see smarty icon function)
  *   _title : tooltip to display when the mouse is over the link. Use $content when _icon is used.
@@ -131,6 +132,7 @@ function smarty_block_self_link($params, $content, $smarty, &$repeat = false)
 				}
 				if ( isset($params['_menu_icon']) ) $icon_params['_menu_icon'] = $params['_menu_icon'];
 				if ( isset($params['_icon_class']) ) $icon_params['class'] = $params['_icon_class'];
+				if ( isset($params['_icon_size']) ) $icon_params['size'] = $params['_icon_size'];
 
 				if ( isset($params['_width']) ) $icon_params['width'] = $params['_width'];
 				if ( isset($params['_height']) ) $icon_params['height'] = $params['_height'];

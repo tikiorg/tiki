@@ -300,6 +300,9 @@ function iconset_default()
 			'logout' => array(
 				'id' => 'sign-out',
 			),
+			'mailbox' => array(
+				'id' => 'inbox',
+			),
 			'menu' => array(
 				'id' => 'bars',
 			),
