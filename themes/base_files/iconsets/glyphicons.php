@@ -136,6 +136,9 @@ function iconset_glyphicons()
 			'logout' => array(
 				'id' => 'log-out',
 			),
+			'mailbox' => array(
+				'id' => 'inbox',
+			),
 			'menuitem' => array(
 				'id' => 'chevron-right',
 			),

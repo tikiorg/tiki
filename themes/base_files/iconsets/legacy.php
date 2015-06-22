@@ -74,7 +74,9 @@ function iconset_legacy()
 				'id' => 'large/file-manager',
 				'size' => 2,
 				'sizes' => array(
-					3 => 'large/fileopen48x48'
+					3 => array(
+						'id' => 'large/fileopen48x48'
+					)
 				)
 			),
 			'admin_forums' => array(
@@ -175,7 +177,9 @@ function iconset_legacy()
 				'id' => 'large/wikipages',
 				'size' => 2,
 				'sizes' => array(
-					3 => 'large/wikipages48x48'
+					3 => array(
+						'id' => 'large/wikipages48x48'
+					)
 				)
 			),
 			'admin_workspace' => array(
@@ -246,7 +250,9 @@ function iconset_legacy()
 				'id' => 'comments',
 				'size' => 1,
 				'sizes' => array(
-					3 => 'large/comments48x48'
+					3 => array(
+						'id' => 'large/comments48x48'
+					)
 				)
 			),
 			'copy' => array(
@@ -280,7 +286,9 @@ function iconset_legacy()
 				'id' => 'email',
 				'size' => 1,
 				'sizes' => array(
-					3 => 'large/evolution48x48'
+					3 => array(
+						'id' => 'large/evolution48x48'
+					)
 				)
 			),
 			'error' => array(
@@ -296,7 +304,9 @@ function iconset_legacy()
 				'id' => 'thumb_up',
 				'size' => 1,
 				'sizes' => array(
-					2 => 'facebook-logo_32'
+					2 => array(
+						'id' => 'facebook-logo_32'
+					)
 				)
 			),
 			'file-archive' => array(
@@ -365,6 +375,17 @@ function iconset_legacy()
 			),
 			'logout' => array(
 				'id' => 'task_submitted',
+			),
+			'mailbox' => array(
+				'id' => 'email',
+				'size' => 1,
+				'sizes' => array(
+					3 => array(
+						'id' => 'webmail/mailbox',
+						'prepend' => 'img/',
+						'append' => '.gif'
+					)
+				)
 			),
 			'menu' => array(
 				'id' => 'application_side_tree',
@@ -448,7 +469,9 @@ function iconset_legacy()
 				'id' => 'email_go',
 				'size' => 1,
 				'sizes' => array(
-					3 => 'messages48x48'
+					3 => array(
+						'id' => 'messages48x48'
+					)
 				)
 			),
 			'settings' => array(
@@ -524,7 +547,9 @@ function iconset_legacy()
 				'id' => 'twitter',
 				'size' => 1,
 				'sizes' => array(
-					2 => 'twitter_t_logo_32'
+					2 => array(
+						'id' => 'twitter_t_logo_32'
+					)
 				)
 			),
 			'undo' => array(
