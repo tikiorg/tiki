@@ -6,25 +6,25 @@
 <table width="100%" border="0">
 	<tr>
 		<td>
-			{self_link _icon='img/webmail/mailbox.gif' locSection='mailbox' _width='48' _height='48'}{tr}Mailbox{/tr}{/self_link}
+			{self_link _icon_name='mailbox' _icon_size='3' locSection='mailbox'}{tr}Mailbox{/tr}{/self_link}
 			<br>
 			{self_link locSection='mailbox'}{tr}Mailbox{/tr}{/self_link}
 		</td>
 		<td>
-			{self_link _icon='img/webmail/compose.gif' locSection='compose' _width='48' _height='48'}{tr}Compose{/tr}{/self_link}
+			{self_link _icon_name='compose' _icon_size='3' locSection='compose' _width='48' _height='48'}{tr}Compose{/tr}{/self_link}
 			<br>
 			{self_link locSection='compose'}{tr}Compose{/tr}{/self_link}
 		</td>
 		{if $prefs.feature_contacts eq 'y'}
 			<td>
-				{self_link _icon='img/webmail/contact.gif' _script='tiki-contacts.php' _width='48' _height='48'}{tr}Contacts{/tr}{/self_link}
+				{self_link _icon_name='contacts' _icon_size='3' _script='tiki-contacts.php' _width='48' _height='48'}{tr}Contacts{/tr}{/self_link}
 				<br>
 				{self_link _script='tiki-contacts.php'}{tr}Contacts{/tr}{/self_link}
 			</td>
 		{/if}
 		<td width="50%"></td>
 		<td>
-			{self_link _icon='img/webmail/settings.gif' locSection='settings' _width='48' _height='48'}{tr}Settings{/tr}{/self_link}
+			{self_link _icon_name='settings' _icon_size='3' locSection='settings' _width='48' _height='48'}{tr}Settings{/tr}{/self_link}
 			<br>
 			{self_link locSection='settings'}{tr}Settings{/tr}{/self_link}
 		</td>

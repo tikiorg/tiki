@@ -176,16 +176,8 @@ if (jqueryTiki.chosen) {
 					<input type="submit" class="btn btn-default btn-sm" name="compare" value="{tr}Compare{/tr}">
 				</div>
 			{/if}
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<b>{tr}Legend:{/tr}</b> {tr}v=view{/tr}
-					{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}, {tr}s=source{/tr} {/if}
-					{if $prefs.default_wiki_diff_style eq "old"}, {tr}c=compare{/tr}, {tr}d=diff{/tr}{/if}
-					{if $tiki_p_rollback eq 'y'}, {tr}b=rollback{/tr}{/if}
-				</div>
-			</div>
 			<div class="table-responsive">
-				<table class="table">
+				<table class="table table-condensed table-hover">
 					<tr>
 						{if $tiki_p_remove eq 'y'}<th><input type="submit" class="btn btn-warning btn-sm" name="delete" value="{tr}Delete{/tr}"></th>{/if}
 						<th>{tr}Information{/tr}</th>
@@ -200,14 +192,14 @@ if (jqueryTiki.chosen) {
 							</th>
 						{/if}
 					</tr>
-					<tr class="odd">
+					<tr class="active">
 						{if $history_offset eq 1}
 							{if $tiki_p_remove eq 'y'}
 								<td>&nbsp;</td>
 							{/if}
 							<td class="text-left">
 								{$info.lastModif|tiki_short_datetime}
-								{tr _0=$info.user|userlink}by %0{/tr}
+								{icon name="user"}{$info.user|userlink}
 								{if $prefs.feature_wiki_history_ip ne 'n'}{tr _0=$info.ip}from %0{/tr}{/if}
 
 								{if (isset($flaggedrev_approval) and $flaggedrev_approval) and $tiki_p_wiki_view_latest eq 'y'
@@ -240,9 +232,9 @@ if (jqueryTiki.chosen) {
 							{/if}
 							<td class="button_container">{if $current eq $info.version}<strong>{/if}{$info.version}<br>{tr}Current{/tr}{if $current eq $info.version}</strong>{/if}</td>
 							<td class="button_container">{if $info.is_html}{icon _id='html'}{elseif $info.wysiwyg eq "y"}{icon _id='text_dropcaps' title='{tr}Wiki Wysiwyg{/tr}'}{/if}</td>
-							<td class="button_container">{self_link page=$page preview=$info.version _title="{tr}View{/tr}"}v{/self_link}
+							<td class="button_container">{self_link page=$page preview=$info.version _title=":{tr}View{/tr}" _class="tips" _icon_name="view"}v{/self_link}
 							{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
-								&nbsp;{self_link page=$page source=$info.version _title="{tr}Source{/tr}"}s{/self_link}
+								{self_link page=$page source=$info.version _title=":{tr}Source{/tr}" _class="tips" _icon_name="code"}{/self_link}
 							{/if}
 							</td>
 							{if $prefs.default_wiki_diff_style ne "old" and $history}
@@ -266,10 +258,10 @@ if (jqueryTiki.chosen) {
 							{/if}
 							<td class="text-left">
 								{$element.lastModif|tiki_short_datetime}
-								{tr _0=$element.user|userlink}by %0{/tr}
+								{icon name="user"}{$element.user|userlink}
 								{if $prefs.feature_wiki_history_ip ne 'n'}{tr _0=$element.ip}from %0{/tr}{/if}
 
-								{if $element.comment}<div>{$element.comment|escape}</div>{/if}
+								{if $element.comment}<span class="help-block">{$element.comment|escape}</span>{/if}
 
 								{if (isset($flaggedrev_approval) and $flaggedrev_approval) and $tiki_p_wiki_view_latest eq 'y' and $element.approved}<strong>({tr}approved{/tr})</strong>{/if}
 
@@ -309,16 +301,16 @@ if (jqueryTiki.chosen) {
 							</td>
 							<td class="button_container">{if $element.is_html eq "1"}{icon _id="html"}{/if}</td>
 							<td class="button_container">
-								{self_link page=$page preview=$element.version _title="{tr}View{/tr}"}v{/self_link}
+								{self_link page=$page preview=$element.version _title=":{tr}View{/tr}" _class="tips" _icon_name="view"}{/self_link}
 								{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
-									&nbsp;{self_link page=$page source=$element.version _title="{tr}Source{/tr}"}s{/self_link}
+									{self_link page=$page source=$element.version _title=":{tr}Source{/tr}" _class="tips" _icon_name="code"}{/self_link}
 								{/if}
 								{if $prefs.default_wiki_diff_style eq "old"}
 									&nbsp;{self_link page=$page diff2=$element.version diff_style="sideview" _title="{tr}Compare{/tr}"}c{/self_link}
 									&nbsp;{self_link page=$page diff2=$element.version diff_style="unidiff" _title="{tr}Diff{/tr}"}d{/self_link}
 								{/if}
 								{if $tiki_p_rollback eq 'y' && $lock neq true}
-									&nbsp;{self_link _script="tiki-rollback.php" page=$page version=$element.version _title="{tr}Rollback{/tr}"}b{/self_link}
+									{self_link _script="tiki-rollback.php" page=$page version=$element.version _title=":{tr}Rollback{/tr}" _class="tips" _icon_name="back"}{/self_link}
 								{/if}
 							</td>
 							{if $prefs.default_wiki_diff_style ne "old"}

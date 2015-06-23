@@ -897,8 +897,8 @@ function wikiplugin_img( $data, $params )
 	//Create style attribute allowing for shortcut inputs
 	//First set alignment string
 	$center = 'display:block; margin-left:auto; margin-right:auto;';	//used to center image and box
+	$imalign = '';
 	if (!empty($imgdata['imalign'])) {
-		$imalign = '';
 		if ($imgdata['imalign'] == 'center') {
 			$imalign = $center;
 		} else {
@@ -908,9 +908,9 @@ function wikiplugin_img( $data, $params )
 		$imalign = $center;
 	}
 	//set entire style string
+	$style = '';
 	if ( !empty($imgdata['styleimage']) || !empty($imalign) ) {
 		$border = '';
-		$style = '';
 		$borderdef = 'border:1px solid darkgray;';   //default border when styleimage set to border
 		if ( !empty($imgdata['styleimage'])) {
 			if (!empty($imalign)) {

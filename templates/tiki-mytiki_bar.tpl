@@ -5,7 +5,7 @@
 	{/if}
 
 	{if $prefs.feature_userPreferences eq 'y' or $prefs.change_password eq 'y'}
-		{button _icon_name="administer" class="btn btn-default" _text="{tr}Preferences{/tr}" href="tiki-user_preferences.php"}
+		{button _icon_name="cog" class="btn btn-default" _text="{tr}Preferences{/tr}" href="tiki-user_preferences.php"}
 	{/if}
 
 	{button _icon_name="information" class="btn btn-default" _text="{tr}My Info{/tr}" href="tiki-user_information.php"}

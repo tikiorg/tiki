@@ -54,7 +54,7 @@ class Captcha_Questions extends Zend_Captcha_Word
 	{
 		$question = $this->_questions[$this->_current];
 
-		return $question[0];
+		return tra($question[0]);
 	}
 
 	/**

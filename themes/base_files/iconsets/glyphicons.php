@@ -25,10 +25,7 @@ function iconset_glyphicons()
 			'add' => array(
 				'id' => 'plus-sign',
 			),
-			'admin_i18n' => array(
-				'id' => 'globe',
-			),
-			'attach' => array(
+ 			'attach' => array(
 				'id' => 'paperclip',
 			),
 			'audio' => array(
@@ -66,6 +63,12 @@ function iconset_glyphicons()
 			),
 			'comments' => array(
 				'id' => 'comment',
+			),
+			'compose' => array(
+				'id' => 'pencil',
+			),
+			'contacts' => array(
+				'id' => 'user',
 			),
 			'create' => array(
 				'id' => 'plus',
@@ -107,7 +110,7 @@ function iconset_glyphicons()
 				'id' => 'step-forward',
 			),
 			'file-archive' => array(
-				'id' => 'folder',
+				'id' => 'folder-close',
 			),
 			'file-archive-open' => array(
 				'id' => 'folder-open',
@@ -145,6 +148,9 @@ function iconset_glyphicons()
 			'merge' => array(
 				'id' => 'random',
 			),
+            'module' => array(
+                'id' => 'cog',
+            ),
 			'more' => array(
 				'id' => 'option-horizontal',
 			),
