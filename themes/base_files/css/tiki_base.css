@@ -1759,7 +1759,7 @@ body.tiki_wiki #comments {
   margin-left: -3px;
 }
 .quoteheader {
-  background: url('../../img/icons/quoteleft.gif') no-repeat;
+  background: url('../../../img/icons/quoteleft.gif') no-repeat;
   padding-left: 50px;
   height: 35px;
 }
