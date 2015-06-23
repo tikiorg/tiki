@@ -55,9 +55,6 @@ function iconset_glyphicons()
 			'code_file' => array(
 				'id' => 'file-code-o',
 			),
-            'cog' => array(
-                'id' => 'cog',
-            ),
 			'collapsed' => array(
 				'id' => 'expand',
 			),
