@@ -218,6 +218,12 @@ function iconset_default()
 			'comments' => array(
 				'id' => 'comments-o',
 			),
+			'compose' => array(
+				'id' => 'pencil',
+			),
+			'contacts' => array(
+				'id' => 'group',
+			),
 			'create' => array(
 				'id' => 'plus',
 			),

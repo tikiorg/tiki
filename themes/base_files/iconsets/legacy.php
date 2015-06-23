@@ -258,6 +258,28 @@ function iconset_legacy()
 					)
 				)
 			),
+			'compose' => array(
+				'id' => 'pencil_add',
+				'size' => 1,
+				'sizes' => array(
+					3 => array(
+						'id' => 'webmail/compose',
+						'prepend' => 'img/',
+						'append' => '.gif'
+					)
+				)
+			),
+			'contacts' => array(
+				'id' => 'group',
+				'size' => 1,
+				'sizes' => array(
+					3 => array(
+						'id' => 'webmail/contact',
+						'prepend' => 'img/',
+						'append' => '.gif'
+					)
+				)
+			),
 			'copy' => array(
 				'id' => 'page_copy',
 			),
@@ -479,6 +501,14 @@ function iconset_legacy()
 			),
 			'settings' => array(
 				'id' => 'wrench',
+				'size' => 1,
+				'sizes' => array(
+					3 => array(
+						'id' => 'webmail/settings',
+						'prepend' => 'img/',
+						'append' => '.gif'
+					)
+				)
 			),
 			'share' => array(
 				'id' => 'share_link',

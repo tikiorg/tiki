@@ -67,6 +67,12 @@ function iconset_glyphicons()
 			'comments' => array(
 				'id' => 'comment',
 			),
+			'compose' => array(
+				'id' => 'pencil',
+			),
+			'contacts' => array(
+				'id' => 'user',
+			),
 			'create' => array(
 				'id' => 'plus',
 			),
