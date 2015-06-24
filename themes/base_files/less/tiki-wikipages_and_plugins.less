@@ -1,7 +1,7 @@
 // $Id$
 // /***** Wiki *****/
-@imagePathToImg: ~"../../img/";
-@imagePath: ~"../../img/icons/";
+@imagePath: ~"../../../img/";
+@imagePathToIcons: ~"../../../img/icons/";
 
 // form.simple label.error {
 //  background: url('@{imagePath}error.png') no-repeat 0 4px;
@@ -528,7 +528,7 @@ div#outerToc-static ul {
 
 #autosave_preview_grippy {
 	//  background-color: @gray-lighter;
-	//  background-image: url('@{imagePath}shading.png');
+	//  background-image: url('@{imagePathToIcons}shading.png');
 	z-index: 3;
 }
 
@@ -651,15 +651,13 @@ body.tiki_wiki #comments {
 
 // /* wikiplugin_fade */
 .wpfade-hidden {
-	background-repeat: no-repeat;
-	background-image: url('@{imagePathToImg}toggle-expand-dark.png');
+	background: url('@{imagePath}toggle-expand-dark.png') no-repeat;
 	margin-left: -19px;
 	padding-left: 19px;
 }
 
 .wpfade-shown {
-	background-repeat: no-repeat;
-	background-image: url('@{imagePathToImg}toggle-collapse-dark.png');
+	background: url('@{imagePath}toggle-collapse-dark.png') no-repeat;
 	margin-left: -19px;
 	padding-left: 19px;
 }
@@ -706,7 +704,7 @@ body.tiki_wiki #comments {
 
 // /* wikiplugin quote */
 .quoteheader {
-	background: url('@{imagePath}quoteleft.gif') no-repeat;
+	background: url('@{imagePathToIcons}quoteleft.gif') no-repeat;
 	padding-left: 50px;
 	height: 35px;
 }
@@ -780,7 +778,7 @@ body.tiki_wiki #comments {
 	overflow: hidden;
 	position: absolute;
 	z-index: 1;
-	background-image: url('@{imagePath}text_signature.png');
+	background-image: url('@{imagePathToIcons}text_signature.png');
 	background-repeat: no-repeat;
 	padding: 0.3em;
 	vertical-align: bottom;
