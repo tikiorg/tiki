@@ -96,6 +96,7 @@
 				{/if}
 
 				{* all single-action icons under one dropdown*}
+				{assign var="hasTopLineAction" value="0"}
 				<div class="btn-group page_actions">
 					{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
 					<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
@@ -110,6 +111,7 @@
 							{if $pdf_export eq 'y'}
 								<a href="tiki-print.php?{query display="pdf" page=$page}">
 									{icon name="pdf"} {tr}PDF{/tr}
+									{assign var="hasTopLineAction" value="1"}
 								</a>
 							{/if}
 						</li>
@@ -118,6 +120,7 @@
 								<li>
 									<a {ajax_href template="tiki-editpage.tpl"}tiki-editpage.php?page={$page|escape:"url"}{if !empty($page_ref_id) and $needsStaging neq 'y'}&amp;page_ref_id={$page_ref_id}{/if}{/ajax_href}>
 										{icon name="edit"} {tr}Edit{/tr}
+										{assign var="hasTopLineAction" value="1"}
 									</a>
 								</li>
 								{if $prefs.wiki_edit_icons_toggle eq 'y' and ($prefs.wiki_edit_plugin eq 'y' or $prefs.wiki_edit_section eq 'y')}
@@ -140,6 +143,7 @@
 									<li>
 										<a href="#" id="wiki_plugin_edit_view">
 											{icon name='plugin'} {tr}Edit icons{/tr}
+											{assign var="hasTopLineAction" value="1"}
 										</a>
 									</li>
 								{/if}
@@ -165,6 +169,7 @@
 									<li>
 										<a href="#" id="wysiwyg_inline_edit">
 											{icon name='edit'} {tr}Inline edit{/tr}
+											{assign var="hasTopLineAction" value="1"}
 										</a>
 									</li>
 								{/if}
@@ -174,6 +179,7 @@
 							<li>
 								<a href="javascript:wiki3d_open('{$page|escape}',{$prefs.wiki_3d_width}, {$prefs.wiki_3d_height})">
 									{icon name="three-d"} {tr}3d browser{/tr}
+									{assign var="hasTopLineAction" value="1"}
 								</a>
 							</li>
 						{/if}
@@ -181,6 +187,7 @@
 							<li>
 								<a href="{$page|sefurl:'wiki':'with_next'}refresh=1">
 									{icon name="refresh"} {tr}Refresh{/tr}
+									{assign var="hasTopLineAction" value="1"}
 								</a>
 							</li>
 						{/if}
@@ -188,6 +195,7 @@
 							<li>
 								<a href="tiki-print.php?{query _keepall='y'}">
 									{icon name="print"} {tr}Print{/tr}
+									{assign var="hasTopLineAction" value="1"}
 								</a>
 							</li>
 						{/if}
@@ -195,6 +203,7 @@
 							<li>
 								<a href="tiki-share.php?url={$smarty.server.REQUEST_URI|escape:'url'}">
 									{icon name="share"} {tr}Share{/tr}
+									{assign var="hasTopLineAction" value="1"}
 								</a>
 							</li>
 						{/if}
@@ -202,6 +211,7 @@
 							<li>
 								<a href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">
 									{icon name="envelope"} {tr}Send link{/tr}
+									{assign var="hasTopLineAction" value="1"}
 								</a>
 							</li>
 						{/if}
@@ -209,6 +219,7 @@
 							<li>
 								<a href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1{if !empty($page_ref_id)}&amp;page_ref_id={$page_ref_id}{/if}">
 									{icon name="notepad"} {tr}Save to notepad{/tr}
+									{assign var="hasTopLineAction" value="1"}
 								</a>
 							</li>
 						{/if}
@@ -219,12 +230,14 @@
 								<li>
 									<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add{if $structure eq 'y'}&amp;structure={$home_info.pageName|escape:'url'}{/if}" class="icon">
 										{icon name="watch"} {tr}Monitor page{/tr}
+										{assign var="hasTopLineAction" value="1"}
 									</a>
 								</li>
 							{else}
 								<li>
 									<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove{if $structure eq 'y'}&amp;structure={$home_info.pageName|escape:'url'}{/if}" class="icon">
 										{icon name="stop-watching"} {tr}Stop monitoring page{/tr}
+										{assign var="hasTopLineAction" value="1"}
 									</a>
 								</li>
 							{/if}
@@ -233,12 +246,14 @@
 									<li>
 										<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=structure_changed&amp;watch_object={$page_info.page_ref_id}&amp;watch_action=add_desc&amp;structure={$home_info.pageName|escape:'url'}">
 											{icon name="watch"} {tr}Monitor sub-structure{/tr}
+											{assign var="hasTopLineAction" value="1"}
 										</a>
 									</li>
 								{else}
 									<li>
 										<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=structure_changed&amp;watch_object={$page_info.page_ref_id}&amp;watch_action=remove_desc&amp;structure={$home_info.pageName|escape:'url'}">
 											{icon name="stop-watching"} {tr}Stop monitoring sub-structure{/tr}
+											{assign var="hasTopLineAction" value="1"}
 										</a>
 									</li>
 								{/if}
@@ -249,12 +264,14 @@
 							<li>
 								<a href="tiki-object_watches.php?objectId={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;objectType=wiki+page&amp;objectName={$page|escape:"url"}&amp;objectHref={'tiki-index.php?page='|cat:$page|escape:"url"}" class="icon">
 									{icon name="watch-group"} {tr}Group monitor{/tr}
+									{assign var="hasTopLineAction" value="1"}
 								</a>
 							</li>
 							{if $structure eq 'y'}
 								<li>
 									<a href="tiki-object_watches.php?objectId={$page_info.page_ref_id|escape:"url"}&amp;watch_event=structure_changed&amp;objectType=structure&amp;objectName={$page|escape:"url"}&amp;objectHref={'tiki-index.php?page_ref_id='|cat:$page_ref_id|escape:"url"}" class="icon">
 										{icon name="watch-group"} {tr}Group monitor structure{/tr}
+										{assign var="hasTopLineAction" value="1"}
 									</a>
 								</li>
 							{/if}
@@ -262,12 +279,19 @@
 						{if $prefs.user_favorites eq 'y'}
 							<li>
 								{favorite type="wiki page" object=$page button_classes="icon"}
+								{assign var="hasTopLineAction" value="1"}
 							</li>
 						{/if}
 					</ul>
 					{if $js == 'n'}</li></ul>{/if}
 				</div>
 			</div>
+			{* If no page actions have been assigned, hide the dropdown menu *}
+			{if $hasTopLineAction eq '0'}
+				{jq}
+					$(".page_actions").hide();
+				{/jq}
+			{/if}
 		</div> {* END of wikiactions *}
 	</div>
 {/if}
