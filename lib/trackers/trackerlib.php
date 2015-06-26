@@ -3911,9 +3911,9 @@ class TrackerLib extends TikiLib
 	}
 
 	/* get the fields from the pretty tracker template
-	 * return a list of fieldIds
-	 */
-	public function get_pretty_fieldIds($resource, $type='wiki', &$outputPretty, $trackerId = 0)
+		 * return a list of fieldIds
+		 */
+	public function get_pretty_fieldIds($resource, $type='wiki', &$prettyModifier, $trackerId = 0)
 	{
 		$tikilib = TikiLib::lib('tiki');
 		$smarty = TikiLib::lib('smarty');
@@ -3930,7 +3930,11 @@ class TrackerLib extends TikiLib
 			$f = file_get_contents($resource_name);
 		}
 		if (!empty($f)) {
-			preg_match_all('/\$f_(\w+)(\|output)?/', $f, $matches);
+			//matches[1] = field name
+			//matches[2] = trailing modifier text
+			//matches[3] = modifier name ('output' or 'template')
+			//matches[4] = modifier parameter (template name in this case)
+			preg_match_all('/\$f_(\w+)(\|(output|template):?(.*))?}/', $f, $matches);
 			$ret = array();
 			foreach ($matches[1] as $i => $val) {
 				if (ctype_digit($val)) {
@@ -3939,13 +3943,28 @@ class TrackerLib extends TikiLib
 					$ret[] = $fieldId;
 				}
 			}
-			foreach ($matches[2] as $i => $val) {
-				if (!empty($val)) {
+
+			/*
+			 * Check through modifiers in the pretty tracker template.
+			 * If |output, store modifier as output. In wikiplugin_tracker, this will make it such that the field is output only
+			 * If |template, it will check to see if a template is specified (e.g. $f_title|template:"title.tpl"). If not, default to tracker_input_field tpl
+			 */
+			foreach ($matches[3] as $i => $val) {
+				if ($val == 'output') {
 					$v = $matches[1][$i];
 					if (ctype_digit($v)) {
-						$outputPretty[] = $v;
+						$prettyModifier[$v] = "output";
 					} elseif ($fieldId = $this->table('tiki_tracker_fields')->fetchOne('fieldId', array('permName' => $v, 'trackerId' => $trackerId))) {
-						$outputPretty[] = $fieldId;
+						$prettyModifier[$fieldId] = "output";
+					}
+				} elseif($val == "template") {
+					$v = $matches[1][$i];
+					$tpl = !empty($matches[4][$i]) ? $matches[4][$i] : "tracker_input_field.tpl"; //fetches template from pretty tracker template. if none, set to default
+					$tpl = trim($tpl,'"\''); //trim quotations from template name
+					if (ctype_digit($v)) {
+						$prettyModifier[$v] = $tpl;
+					} elseif ($fieldId = $this->table('tiki_tracker_fields')->fetchOne('fieldId', array('permName' => $v, 'trackerId' => $trackerId))) {
+						$prettyModifier[$fieldId] = $tpl;
 					}
 				}
 			}

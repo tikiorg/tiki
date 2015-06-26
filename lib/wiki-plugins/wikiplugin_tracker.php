@@ -464,7 +464,7 @@ function wikiplugin_tracker($data, $params)
 
 	extract($params, EXTR_SKIP);
 
-	if (isset($transactionName) xor isset($transactionStep)) {
+	if (empty($transactionName) xor empty($transactionStep)) {
 		return '<b>'.tra("You need to define both transaction name and transaction step, or none of the two.").'</b>';
 	} else {
 		if (isset($transactionName) && !isset($_SESSION[$transactionName])) {
@@ -664,12 +664,16 @@ function wikiplugin_tracker($data, $params)
 					$smarty->assign('showantibot', true);
 					$smarty->assign('register_antibot', $smarty->fetch('antibot.tpl'));
 				}
-				$wiki = $prefs["user_register_prettytracker_tpl"];
+				if (substr($registrationlib->merged_prefs["user_register_prettytracker_tpl"], -4) == ".tpl") {
+					$tpl = $prefs["user_register_prettytracker_tpl"];
+				}else{
+					$wiki = $prefs["user_register_prettytracker_tpl"];
+				}
 			}
 			if (!empty($wiki)) {
-				$outf = $trklib->get_pretty_fieldIds($wiki, 'wiki', $outputPretty, $trackerId);
+				$outf = $trklib->get_pretty_fieldIds($wiki, 'wiki', $prettyModifier, $trackerId);
 			} elseif (!empty($tpl)) {
-				$outf = $trklib->get_pretty_fieldIds($tpl, 'tpl', $outputPretty, $trackerId);
+				$outf = $trklib->get_pretty_fieldIds($tpl, 'tpl', $prettyModifier, $trackerId);
 			} elseif (!empty($fields)) {
 				$outf = $fields;
 			}
@@ -980,7 +984,7 @@ function wikiplugin_tracker($data, $params)
 					// note that values will be raw - that is the limit of the capability of this feature for now
 					$newpageinfo = $tikilib->get_page_info($outputwiki);
 					$wikioutput = $newpageinfo["data"];
-					$newpagefields = $trklib->get_pretty_fieldIds($outputwiki, 'wiki', $outputPretty, $trackerId);
+					$newpagefields = $trklib->get_pretty_fieldIds($outputwiki, 'wiki', $prettyModifier, $trackerId);
 					$tracker_definition = Tracker_Definition::get($trackerId);
 					foreach($newpagefields as $lf) {
 						$field = $tracker_definition->getField($lf);
@@ -1496,7 +1500,7 @@ function wikiplugin_tracker($data, $params)
 					$smarty->assign_by_ref('tiki_p_attach_trackers', $perms['tiki_p_attach_trackers']);
 				}
 				if (!empty($tpl) || !empty($wiki)) {
-					if (!empty($outputPretty) && in_array($f['fieldId'], $outputPretty)) {
+					if ($prettyModifier[$f['fieldId']] == "output") { //check if modifier is set to "output" ( set in getPrettyFieldIds() in trackerlib )
 						$prettyout = '<span class="outputPretty" id="track_'.$f['fieldId'].'" name="track_'.$f['fieldId'].'">'. wikiplugin_tracker_render_value($f, $item) . '</span>';
 						$smarty->assign('f_'.$f['fieldId'], $prettyout);
 						$smarty->assign('f_'.$f['permName'], $prettyout);
@@ -1507,8 +1511,19 @@ function wikiplugin_tracker($data, $params)
 							$desc = '<div class="trackerplugindesc">' . $desc . '</div>';
 						} else {
 							$desc = '';
-					}
-						$prettyout = wikiplugin_tracker_render_input($f, $item, $dynamicSave) . $mand . $desc;
+						}
+						if (!empty($prettyModifier[$f['fieldId']])) { // check if a template was specified in prettyModifier
+							$smarty->assign("field_name", $f['name']);
+							$smarty->assign("field_id", $f['fieldId']);
+							$smarty->assign("permname", $f['permName']);
+							$smarty->assign("mandatory_sym", $mand);
+							$smarty->assign("field_input", wikiplugin_tracker_render_input($f, $item, $dynamicSave));
+							$smarty->assign("description", $desc);
+							$smarty->assign("field_type", $f['type']);
+							$prettyout = $smarty->fetch($prettyModifier[$f['fieldId']]); //fetch template identified in prettyModifier
+						} else {
+							$prettyout = wikiplugin_tracker_render_input($f, $item, $dynamicSave) . $mand . $desc;
+						}
 						$smarty->assign('f_'.$f['fieldId'], $prettyout);
 						$smarty->assign('f_'.$f['permName'], $prettyout);
 					}

@@ -881,11 +881,11 @@ function wikiplugin_trackerlist($data, $params)
 			}
 		} elseif (!empty($wiki) || !empty($tpl) || !empty($tplwiki)) {
 				if (!empty($wiki)) {
-					$listfields = $trklib->get_pretty_fieldIds($wiki, 'wiki', $outputPretty, $trackerId);
+					$listfields = $trklib->get_pretty_fieldIds($wiki, 'wiki', $prettyModifier, $trackerId);
 				} elseif (!empty($tplwiki)) {
-					$listfields = $trklib->get_pretty_fieldIds($tplwiki, 'wiki', $outputPretty, $trackerId);
+					$listfields = $trklib->get_pretty_fieldIds($tplwiki, 'wiki', $prettyModifier, $trackerId);
 				} else {
-					$listfields = $trklib->get_pretty_fieldIds($tpl, 'tpl', $outputPretty, $trackerId);
+					$listfields = $trklib->get_pretty_fieldIds($tpl, 'tpl', $prettyModifier, $trackerId);
 				}
 		} else {
 			$listfields = '';
