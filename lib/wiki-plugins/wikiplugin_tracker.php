@@ -1393,7 +1393,9 @@ function wikiplugin_tracker($data, $params)
 			}
 		}
 		if ($params['formtag'] == 'y') {
-			$back .= '<form class="form-horizontal" name="editItemForm' . $iTRACKER . '" id="editItemForm' . $iTRACKER . '" enctype="multipart/form-data" method="post"'.(isset($target)?' target="'.$target.'"':'').' action="'. $_SERVER['REQUEST_URI'] .'"><input type="hidden" name="trackit" value="'.$trackerId.'" />';
+			//check if tracker has custom form classes, else default to form-horizontal
+			$formClasses = $tracker['useFormClasses'] == 'y' ? $tracker['formClasses'] : "form-horizontal";
+			$back .= '<form class="'.$formClasses.'" name="editItemForm' . $iTRACKER . '" id="editItemForm' . $iTRACKER . '" enctype="multipart/form-data" method="post"'.(isset($target)?' target="'.$target.'"':'').' action="'. $_SERVER['REQUEST_URI'] .'"><input type="hidden" name="trackit" value="'.$trackerId.'" />';
 			$back .= '<input type="hidden" name="refresh" value="1" />';
 		}
 		$back .= '<input type="hidden" name="iTRACKER" value="'.$iTRACKER.'" />';
@@ -1634,7 +1636,11 @@ FILL;
 		$back .= '</div>';
 		
 		if ($params['formtag'] == 'y') {
-			$back .= '<div class="form-group"><div class="col-md-3"></div><div class="input_submit_container col-md-9 btn-bar">';
+			if (empty($wiki) && empty($tpl)){
+				$back .= '<div class="form-group"><div class="col-md-3"></div><div class="input_submit_container col-md-9 btn-bar">';
+			}else{
+				$back .= '<div class="form-group"><div class="input_submit_container btn-bar">';
+			};
 
 			if (!empty($reset)) {
 					$back .= '<input class="button submit preview" type="reset" name="tr_reset" value="'.tra($reset).'" />';
@@ -1648,7 +1654,11 @@ FILL;
 			$back .= '</div></div>';
 		}
 		if ($showmandatory == 'y' and $onemandatory) {
-			$back.= "<div class='form-group'><div class='col-md-3'></div><div class='col-md-9'><div class='text-center alert alert-danger'><em>".tra("Fields marked with an * are mandatory.")."</em></div></div></div>";
+			if (empty($wiki) && empty($tpl)){
+				$back.= "<div class='form-group'><div class='col-md-3'></div><div class='col-md-9'><div class='text-center alert alert-danger'><em>".tra("Fields marked with an * are mandatory.")."</em></div></div></div>";
+			}else{
+				$back.= "<div class='form-group'><div class='text-center alert alert-danger'><em>".tra("Fields marked with an * are mandatory.")."</em></div></div>";
+			}
 		}
 		if ($params['formtag'] == 'y') {
 			$back.= '</form>';

@@ -110,6 +110,20 @@
 					<p>{tr}Set to <em>Configured</em> to use the two following fields.{/tr}</p>
 				</div>
 			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="useFormClasses" value="1"
+							{if $info.useFormClasses eq 'y'} checked="checked"{/if}>
+					{tr}Use Form Classes{/tr}
+				</label>
+			</div>
+			<div class="form-group">
+				<label for="formClasses">{tr}Input Form Classes{/tr}</label>
+				<input class="form-control" type="text" name="formClasses" value="{$info.formClasses|escape}">
+				<div class="help-block">
+					<p>{tr}Sets classes for form to be used in Tracker Plugin (e.g. form-horizontal or col-md-9).{/tr}</p>
+				</div>
+			</div>
 			<div class="form-group">
 				<label for="viewItemPretty">{tr}Template to display an item{/tr}</label>
 				<input class="form-control" type="text" name="viewItemPretty" value="{$info.viewItemPretty|escape}">

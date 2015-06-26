@@ -1133,6 +1133,8 @@ class Services_Tracker_Controller
 				'sectionFormat' => $input->sectionFormat->word(),
 				'adminOnlyViewEditItem' => $input->adminOnlyViewEditItem->int() ? 'y' : 'n',
 				'logo' => $input->logo->text(),
+				'useFormClasses' => $input->useFormClasses->int() ? 'y' : 'n',
+				'formClasses' => $input->formClasses->text(),
 			);
 
 			$trackerId = $this->utilities->updateTracker($trackerId, $data);
