@@ -6384,6 +6384,36 @@ JS;
 	}
 
 	/**
+	 * This checks the modifier array and scans the template directory for templates
+	 * that match the modifiers.
+	 * Example: if we are looking at modifier "blog" for the articles.tpl, this function
+	 * looks for the existence of articles--blog.tpl to use before using the standard articles.tpl
+	 *
+	 * @param $basetpl
+	 * @param $modifier_arr
+	 * @return string
+	 * @throws Exception
+	 */
+	public static function custom_template($basetpl,$modifier_arr){
+		//if it's an item passed and not an array, put the item in an array
+		if (!is_array($modifier_arr)) {
+			$modifier_arr = [$modifier_arr];
+		}
+		//strip the .tpl
+		$temp = explode('.', $basetpl);
+		$ext  = array_pop($temp);
+		$base = implode('.', $temp);
+
+		$smarty = TikiLib::lib('smarty');
+		foreach ($modifier_arr as $modifier){
+			if ($smarty->templateExists("$base--$modifier.tpl")) {
+				return "$base--$modifier.tpl";
+			}
+		}
+		return "$base.tpl";
+	}
+
+	/**
 	 * @param $theme
 	 * @return array
 	 */

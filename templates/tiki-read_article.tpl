@@ -27,7 +27,7 @@
 	{include file='freetag_list.tpl'}
 {/if}
 
-{include file='article.tpl'}
+{include file="{custom_template basetpl='article.tpl' modifiers=[$type,$articleId]}"}
 
 {if $prefs.feature_article_comments == 'y' &&
 		($tiki_p_read_comments == 'y' || $tiki_p_post_comments == 'y' || $tiki_p_edit_comments == 'y')}

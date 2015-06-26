@@ -61,6 +61,7 @@
 				</legend>
 
 				{preference name=feature_submissions}
+				{preference name=article_use_new_list_articles}
 				{preference name=article_remembers_creator}
 				{preference name=feature_cms_rankings}
 				{preference name=article_user_rating}
