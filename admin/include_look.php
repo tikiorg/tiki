@@ -12,6 +12,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 }
 global $prefs;
 $themelib = TikiLib::lib('theme');
+$csslib = TikiLib::lib('css');
 
 //handle case when changing the themes in the Look and Feel settings panel
 $a_theme = $prefs['theme'];
@@ -66,6 +67,22 @@ if ($prefs['feature_jquery'] == 'y') {
 	}
 	$js = substr($js, 0, strlen($js) - 1);
 	$js.= '};';
+
+	//Setup theme layouts array matching themes and theme:options with their respective layouts
+	$js .= 'var theme_layouts = ';
+	foreach ($themes as $theme => $value) {
+		$theme_layouts[$theme] = $csslib->list_user_selectable_layouts($theme);
+		$options = $themelib->list_theme_options($theme);
+		if ($options) {
+			foreach ($options as $option) {
+				$theme_layouts[$theme.':'.$option] = $csslib->list_user_selectable_layouts($theme,$option);
+			}
+		}
+	}
+	//encode $theme_layouts into json to allow js below to fetch layouts based on theme selected by user
+	$theme_layouts_js = json_encode($theme_layouts);
+	$js .= $theme_layouts_js . ";";
+
 	// JS to handle theme/option changes client-side
 	// the var (theme_options) has to be declared in the same block for AJAX call scope
 	$none = json_encode(tr('None'));
@@ -90,6 +107,10 @@ $js
 				});
 			}
 			optionDropDown.val(current);
+			if (!optionDropDown.val()){
+				optionDropDown.val('');
+			}
+
 			if (none) {
 				optionDropDown.attr('disabled',true);
 			}
@@ -119,6 +140,38 @@ $js
 
 	setupThemeSelects(\$('.tab-content select[name=theme]'), \$('.tab-content select[name=theme_option]'), true);
 	setupThemeSelects(\$('.tab-content select[name=theme_admin]'), \$('.tab-content select[name=theme_option_admin]'));
+
+	var setupThemeLayouts = function (themeDropDown, optionDropDown, layoutDropDown) {
+		themeDropDown,optionDropDown.change( function() {
+			var theme_name = themeDropDown.val();
+			if (optionDropDown.val()){
+				theme_name += ":" + optionDropDown.val();
+			}
+			var layouts = theme_layouts[theme_name];
+			var current = layoutDropDown.val();
+			layoutDropDown.empty();
+			if (!theme_name){
+				layoutDropDown.append(\$('<option/>').attr('value','').text('Site layout'));
+				layoutDropDown.attr('disabled',true);
+			} else {
+				layoutDropDown.attr('disabled',false);
+				\$.each(layouts, function(i, val) {
+					layoutDropDown.append(\$('<option/>').attr('value',i).text(val));
+				});
+
+				//try setting the option to the previously selected option and if no layout matched, set to 'basic'
+				layoutDropDown.val(current);
+				if (!layoutDropDown.val()){
+					layoutDropDown.val('basic');
+				}
+			}
+			layoutDropDown.change();
+
+		}).change();
+	};
+
+	setupThemeLayouts(\$('.tab-content select[name=theme]'), \$('.tab-content select[name=theme_option]'), \$('.tab-content select[name=site_layout]') );
+	setupThemeLayouts(\$('.tab-content select[name=theme_admin]'), \$('.tab-content select[name=theme_option_admin]'), \$('.tab-content select[name=site_layout_admin]') );
 });
 JS
 	);

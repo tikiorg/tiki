@@ -448,7 +448,7 @@ class Smarty_Tiki extends Smarty
 	*/
 	function initializePaths()
 	{
-		global $prefs, $tikidomainslash;
+		global $prefs, $tikidomainslash, $section;
 
 		if (! $this->main_template_dir) {
 			// First run only
@@ -469,9 +469,22 @@ class Smarty_Tiki extends Smarty
 		if (! in_array($prefs['theme'], ['custom_url'])) {
 			$theme_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], '', 'templates'); // path to the theme options
 			$this->addTemplateDir(TIKI_PATH . "/$theme_path/");
+			//if theme_admin is empty, use main theme and site_layout instead of site_layout_admin
+			if ($section != "admin" || empty($prefs['theme_admin'])){
+				$this->addTemplateDir(TIKI_PATH . "/$theme_path/".'layouts/' . $prefs['site_layout'].'/');
+			} else {
+				$this->addTemplateDir(TIKI_PATH . "/$theme_path/" . 'layouts/' . $prefs['site_layout_admin'] . '/');
+			}
+			$this->addTemplateDir(TIKI_PATH . "/$theme_path/".'layouts/');
 
 			$main_theme_path = $themelib->get_theme_path($prefs['theme'], '', '', 'templates'); // path to the main theme
 			$this->addTemplateDir(TIKI_PATH . "/$main_theme_path/");
+			//if theme_admin is empty, use main theme and site_layout instead of site_layout_admin
+			if ($section != "admin" || empty($prefs['theme_admin'])){
+				$this->addTemplateDir(TIKI_PATH . "/$main_theme_path/".'layouts/'.$prefs['site_layout'].'/');
+			} else {
+				$this->addTemplateDir(TIKI_PATH . "/$main_theme_path/" . 'layouts/' . $prefs['site_layout_admin'] . '/');
+			}
 		}
 		// Tikidomain main template folder
 		if ( ! empty($tikidomainslash) ) {
@@ -487,7 +500,11 @@ class Smarty_Tiki extends Smarty
 		}
 		
 		//Layout templates
-		$this->addTemplateDir($this->main_template_dir.'/layouts/'.$prefs['site_layout'].'/');
+		if ($section != "admin" || empty($prefs['theme_admin'])){ //use the admin layout if in the admin section
+			$this->addTemplateDir($this->main_template_dir . '/layouts/' . $prefs['site_layout'] . '/');
+		} else {
+			$this->addTemplateDir($this->main_template_dir . '/layouts/' . $prefs['site_layout_admin'] . '/');
+		}
 		$this->addTemplateDir($this->main_template_dir.'/layouts/');
 		$this->addTemplateDir($this->main_template_dir);
 	}

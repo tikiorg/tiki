@@ -41,6 +41,7 @@
 				{preference name=theme_option_admin}
 			</div>
 			{preference name=site_layout}
+			{preference name=site_layout_admin}
 			{preference name=site_layout_per_object}
 			{preference name=theme_iconset}
 			{if $prefs.javascript_enabled eq 'n' or $prefs.feature_jquery eq 'n'}

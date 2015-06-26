@@ -13,8 +13,17 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 
 class cssLib extends TikiLib
 {
-	function list_layouts()
+	function list_layouts($theme = null, $theme_option = null)
 	{
+		global $prefs;
+
+		if (empty($theme) && empty($theme_option)){ // if you submit no parameters, return the current theme/theme option
+			$theme = $prefs['site_theme'];
+			$theme_option = $prefs['theme_option'];
+		}
+
+		$themelib = TikiLib::lib('theme');
+
 		$available_layouts = array();
 		foreach (scandir(TIKI_PATH . '/templates/layouts/') as $layoutName) {
 			if ($layoutName[0] != '.' && $layoutName != 'index.php') {
@@ -30,13 +39,39 @@ class cssLib extends TikiLib
 				}
 			}
                 }
+
+		$main_theme_path = $themelib->get_theme_path($theme, '', '', 'templates'); // path to the main site theme
+
+		foreach (scandir(TIKI_PATH ."/". $main_theme_path . '/layouts/') as $layoutName) {
+			if ($layoutName[0] != '.' && $layoutName != 'index.php') {
+				$available_layouts[$layoutName] = ucfirst($layoutName);
+			}
+		}
+
+		if ($theme_option) {
+			$theme_path = $themelib->get_theme_path($theme, $theme_option, '', 'templates'); // path to the site theme options
+
+			foreach (scandir(TIKI_PATH . "/" . $theme_path . '/layouts/') as $layoutName) {
+				if ($layoutName[0] != '.' && $layoutName != 'index.php') {
+					$available_layouts[$layoutName] = ucfirst($layoutName);
+				}
+			}
+		}
 		return $available_layouts;
 	}
 
-	function list_user_selectable_layouts()
+	function list_user_selectable_layouts($theme = null, $theme_option = null)
 	{
+		global $prefs;
+
+		if (empty($theme) && empty($theme_option)){ // if you submit no parameters, return the current theme/theme option
+			$theme = $prefs['site_theme'];
+			$theme_option = $prefs['theme_option'];
+		}
+
 		$selectable_layouts = array();
-		$available_layouts = $this->list_layouts();
+		$available_layouts = $this->list_layouts($theme,$theme_option);
+
 		foreach ($available_layouts as $layoutName => $layoutLabel) {
 			if ($layoutName == 'mobile'
 				|| $layoutName == 'layout_plain.tpl'

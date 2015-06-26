@@ -27,6 +27,8 @@ class AdminWizardLookAndFeel extends Wizard
 		$smarty = TikiLib::lib('smarty');
 		$tikilib = TikiLib::lib('tiki');
 		$themelib = TikiLib::lib('theme');
+		$csslib = TikiLib::lib('css');
+		$headerlib = TikiLib::lib('header');
 		// Run the parent first
 		parent::onSetupPage($homepageUrl);
 
@@ -54,6 +56,9 @@ class AdminWizardLookAndFeel extends Wizard
 		$smarty->assign_by_ref('themes', $themes);
 		$theme_options = $themelib->list_theme_options($a_theme);
 		$smarty->assign('theme_options', $theme_options);
+
+		$theme_layouts = TikiLib::lib('css')->list_layouts();
+		$smarty->assign('theme_layouts', $theme_layouts);
 
 // get thumbnail if there is one
 		$thumbfile = $themelib->get_thumbnail_file($prefs['site_theme'], $prefs['site_theme_option']);
@@ -83,10 +88,20 @@ class AdminWizardLookAndFeel extends Wizard
 			}
 			$js = substr($js, 0, strlen($js) - 1);
 			$js.= '};';
+
+			$js .= 'var theme_layouts = ';
+			foreach ($themes as $theme => $value) {
+				$theme_layouts[$theme] = $csslib->list_user_selectable_layouts($theme);
+				$options = $themelib->list_theme_options($theme);
+				if ($options) {
+					foreach ($options as $option) {
+						$theme_layouts[$theme.':'.$option] = $csslib->list_user_selectable_layouts($theme,$option);
+					}
+				}
+			}
 			// JS to handle theme/option changes client-side
 			// the var (theme_options) has to be declared in the same block for AJAX call scope
 			$none = json_encode(tr('None'));
-			$headerlib = TikiLib::lib('header');
 			$headerlib->add_cssfile('themes/base_files/feature_css/admin.css');
 			$headerlib->add_js(
 				<<<JS
@@ -136,8 +151,43 @@ class AdminWizardLookAndFeel extends Wizard
 		});
 	};
 
-	setupThemeSelects(\$('.tab-content select[name=theme]'), \$('.tab-content select[name=theme_option]'), true);
-	setupThemeSelects(\$('.tab-content select[name=theme_admin]'), \$('.tab-content select[name=theme_option_admin]'));
+	setupThemeSelects(\$('#wizardBody select[name=theme]'), \$('#wizardBody select[name=theme_option]'), true);
+	setupThemeSelects(\$('#wizardBody select[name=theme_admin]'), \$('#wizardBody select[name=theme_option_admin]'));
+
+	var setupThemeLayouts = function (themeDropDown, optionDropDown, layoutDropDown) {
+		themeDropDown,optionDropDown.change( function() {
+			var theme_name = themeDropDown.val();
+			if (optionDropDown.val()){
+				theme_name += ":" + optionDropDown.val();
+			}
+			var layouts = theme_layouts[theme_name];
+			var current = layoutDropDown.val();
+			layoutDropDown.empty();
+			//if no theme, it means it's the admin dropdown and is set to site theme. default to site layout
+			if (!theme_name){
+				layoutDropDown.append(\$('<option/>').attr('value','site_layout').text('Site layout'));
+				layoutDropDown.attr('disabled',true);
+				layoutDropDown.val('site_layout');
+			} else {
+				layoutDropDown.attr('disabled',false);
+				\$.each(layouts, function(i, val) {
+					layoutDropDown.append(\$('<option/>').attr('value',i).text(val));
+				});
+
+				//try setting the option to the previously selected option and if no layout matched, set to 'basic'
+				layoutDropDown.val(current);
+				if (!layoutDropDown.val()){
+					layoutDropDown.val('basic');
+				}
+			}
+
+			layoutDropDown.change();
+
+		}).change();
+	};
+
+	setupThemeLayouts(\$('#wizardBody select[name=theme]'), \$('#wizardBody select[name=theme_option]'), \$('#wizardBody select[name=site_layout]') );
+	setupThemeLayouts(\$('#wizardBody select[name=theme_admin]'), \$('#wizardBody select[name=theme_option_admin]'), \$('#wizardBody select[name=site_layout_admin]') );
 });
 JS
 			);
