@@ -95,73 +95,101 @@
 
 {if !isset($noHistory)}
 	{if $preview || $source || $diff_style}<h2>{tr}History{/tr}</h2>{/if}
-	<form id="pagehistory" action="tiki-pagehistory.php?page={$page}" method="post">
+	<form id="pagehistory" class="form-horizontal" action="tiki-pagehistory.php?page={$page}" method="post">
 		<input type="hidden" name="page" value="{$page|escape}">
 		<input type="hidden" name="history_offset" value="{$history_offset}">
-		<div style="text-align:center;">
+		<div>
 			{if ($prefs.default_wiki_diff_style ne "old") and $history}
-				<div style=" text-align:right;">
-					{if $prefs.javascript_enabled eq "y"}{button _text="{tr}Advanced{/tr}" _id="toggle_diffs" _ajax="n"}
-						{jq}
-$("a#toggle_diffs").click(function(e){
-	e.preventDefault();
-	if ($(this).text() == "{tr}Advanced{/tr}") {
-		$(this).text("{tr}Simple{/tr}");
-		if (jqueryTiki.chosen) {
-			$("#diff_style_all").next(".chosen-container").show();
-			$("#diff_style_simple").next(".chosen-container").hide();
-			$("#diff_style_all").attr("name", "diff_style");
-			$("#diff_style_simple").attr("name", "");
-		} else {
-			$("#diff_style_all").show().attr("name", "diff_style");
-			$("#diff_style_simple").hide().attr("name", "");
-		}
-	} else {
-		$(this).text("{tr}Advanced{/tr}");
-		if (jqueryTiki.chosen) {
-			$("#diff_style_all").next(".chosen-container").hide();
-			$("#diff_style_simple").next(".chosen-container").show();
-			$("#diff_style_all").attr("name", "");
-			$("#diff_style_simple").attr("name", "diff_style");
-		} else {
-			$("#diff_style_all").hide().attr("name", "");
-			$("#diff_style_simple").show().attr("name", "diff_style");
-		}
-	}
-	return false;
-});
-if (jqueryTiki.chosen) {
-	if ($("#diff_style_simple").html().indexOf("{{$diff_style}}") > -1) {
-		$("#diff_style_all").next(".chosen-container").hide().attr("name", "");
-	} else {
-		$("#diff_style_simple").next(".chosen-container").hide();
-	}
-}
-{{if $diff_style neq "htmldiff" and $diff_style neq "sidediff"}$("#toggle_diffs a").click();{/if}}
-						{/jq}
-					{/if}
-					<select name="diff_style" id="diff_style_all"{if $prefs.javascript_enabled eq "y"} style="display: none"{/if}>
-						<option value="htmldiff" {if $diff_style == "htmldiff"}selected="selected"{/if}>{tr}HTML diff{/tr}</option>
-						<option value="sidediff" {if $diff_style == "sidediff"}selected="selected"{/if}>{tr}Side-by-side diff{/tr}</option>
-						<option value="sidediff-char" {if $diff_style == "sidediff-char"}selected="selected"{/if}>{tr}Side-by-side diff by characters{/tr}</option>
-						<option value="inlinediff" {if $diff_style == "inlinediff"}selected="selected"{/if}>{tr}Inline diff{/tr}</option>
-						<option value="inlinediff-char" {if $diff_style == "inlinediff-char"}selected="selected"{/if}>{tr}Inline diff by characters{/tr}</option>
-						<option value="sidediff-full" {if $diff_style == "sidediff-full"}selected="selected"{/if}>{tr}Full side-by-side diff{/tr}</option>
-						<option value="sidediff-full-char" {if $diff_style == "sidediff-full-char"}selected="selected"{/if}>{tr}Full side-by-side diff by characters{/tr}</option>
-						<option value="inlinediff-full" {if $diff_style == "inlinediff-full"}selected="selected"{/if}>{tr}Full inline diff{/tr}</option>
-						<option value="inlinediff-full-char" {if $diff_style == "inlinediff-full-char"}selected="selected"{/if}>{tr}Full inline diff by characters{/tr}</option>
-						<option value="unidiff" {if $diff_style == "unidiff"}selected="selected"{/if}>{tr}Unified diff{/tr}</option>
-						<option value="sideview" {if $diff_style == "sideview"}selected="selected"{/if}>{tr}Side-by-side view{/tr}</option>
+				<div class="input-group col-sm-5" style="float:right">
+					<select class="form-control" name="diff_style" id="diff_style_all"{if $prefs.javascript_enabled eq "y"} style="display: none"{/if}>
+						<option value="htmldiff" {if $diff_style == "htmldiff"}selected="selected"{/if}>
+							{tr}HTML diff{/tr}
+						</option>
+						<option value="sidediff" {if $diff_style == "sidediff"}selected="selected"{/if}>
+							{tr}Side-by-side diff{/tr}
+						</option>
+						<option value="sidediff-char" {if $diff_style == "sidediff-char"}selected="selected"{/if}>
+							{tr}Side-by-side diff by characters{/tr}
+						</option>
+						<option value="inlinediff" {if $diff_style == "inlinediff"}selected="selected"{/if}>
+							{tr}Inline diff{/tr}
+						</option>
+						<option value="inlinediff-char" {if $diff_style == "inlinediff-char"}selected="selected"{/if}>
+							{tr}Inline diff by characters{/tr}
+						</option>
+						<option value="sidediff-full" {if $diff_style == "sidediff-full"}selected="selected"{/if}>
+							{tr}Full side-by-side diff{/tr}
+						</option>
+						<option value="sidediff-full-char" {if $diff_style == "sidediff-full-char"}selected="selected"{/if}>
+							{tr}Full side-by-side diff by characters{/tr}
+						</option>
+						<option value="inlinediff-full" {if $diff_style == "inlinediff-full"}selected="selected"{/if}>
+							{tr}Full inline diff{/tr}
+						</option>
+						<option value="inlinediff-full-char" {if $diff_style == "inlinediff-full-char"}selected="selected"{/if}>
+							{tr}Full inline diff by characters{/tr}
+						</option>
+						<option value="unidiff" {if $diff_style == "unidiff"}selected="selected"{/if}>
+							{tr}Unified diff{/tr}
+						</option>
+						<option value="sideview" {if $diff_style == "sideview"}selected="selected"{/if}>
+							{tr}Side-by-side view{/tr}
+						</option>
 					</select>
 					{if $prefs.javascript_enabled eq "y"}
-						<select name="diff_style" id="diff_style_simple">
-							<option value="htmldiff" {if $diff_style == "htmldiff"}selected="selected"{/if}>{tr}HTML diff{/tr}</option>
-							<option value="sidediff" {if $diff_style == "sidediff"}selected="selected"{/if}>{tr}Side-by-side diff{/tr}</option>
+						<select class="form-control" name="diff_style" id="diff_style_simple" style="float:right">
+							<option value="htmldiff" {if $diff_style == "htmldiff"}selected="selected"{/if}>
+								{tr}HTML diff{/tr}
+							</option>
+							<option value="sidediff" {if $diff_style == "sidediff"}selected="selected"{/if}>
+								{tr}Side-by-side diff{/tr}
+							</option>
 						</select>
 					{/if}
-					<input type="hidden" name="show_all_versions" value="{$show_all_versions}">
-					<input type="submit" class="btn btn-default btn-sm" name="compare" value="{tr}Compare{/tr}">
+					{if $prefs.javascript_enabled eq "y"}
+						<span class="input-group-btn">
+							{button _text="{tr}Advanced{/tr}" _id="toggle_diffs" _ajax="n"}
+						</span>
+						{jq}
+	$("a#toggle_diffs").click(function(e){
+		e.preventDefault();
+		if ($(this).text() == "{tr}Advanced{/tr}") {
+			$(this).text("{tr}Simple{/tr}");
+			if (jqueryTiki.chosen) {
+				$("#diff_style_all").next(".chosen-container").show();
+				$("#diff_style_simple").next(".chosen-container").hide();
+				$("#diff_style_all").attr("name", "diff_style");
+				$("#diff_style_simple").attr("name", "");
+			} else {
+				$("#diff_style_all").show().attr("name", "diff_style");
+				$("#diff_style_simple").hide().attr("name", "");
+			}
+		} else {
+			$(this).text("{tr}Advanced{/tr}");
+			if (jqueryTiki.chosen) {
+				$("#diff_style_all").next(".chosen-container").hide();
+				$("#diff_style_simple").next(".chosen-container").show();
+				$("#diff_style_all").attr("name", "");
+				$("#diff_style_simple").attr("name", "diff_style");
+			} else {
+				$("#diff_style_all").hide().attr("name", "");
+				$("#diff_style_simple").show().attr("name", "diff_style");
+			}
+		}
+		return false;
+	});
+	if (jqueryTiki.chosen) {
+		if ($("#diff_style_simple").html().indexOf("{{$diff_style}}") > -1) {
+			$("#diff_style_all").next(".chosen-container").hide().attr("name", "");
+		} else {
+			$("#diff_style_simple").next(".chosen-container").hide();
+		}
+	}
+	{{if $diff_style neq "htmldiff" and $diff_style neq "sidediff"}$("#toggle_diffs a").click();{/if}}
+						{/jq}
+					{/if}
 				</div>
+				<input type="hidden" name="show_all_versions" value="{$show_all_versions}">
 			{/if}
 			<div class="table-responsive">
 				<table class="table table-condensed table-hover">
@@ -171,7 +199,7 @@ if (jqueryTiki.chosen) {
 						{if $prefs.feature_contribution eq 'y'}<th>{tr}Contribution{/tr}</th>{/if}
 						{if $prefs.feature_contribution eq 'y' and $prefs.feature_contributor_wiki eq 'y'}<th>{tr}Contributors{/tr}</th>{/if}
 						<th>{tr}Version{/tr}</th>
-						<th>{icon _id="html"}</th>
+						<th>{icon name="pencil" iclass="tips" ititle=':{tr}HTML or WYSIWYG{/tr}'}</th>
 						<th>{tr}Action{/tr}</th>
 						{if $prefs.default_wiki_diff_style != "old" and $history}
 							<th colspan="2">
@@ -217,11 +245,22 @@ if (jqueryTiki.chosen) {
 									{section name=ix loop=$contributors}{if !$smarty.section.ix.first},{/if}{$contributors[ix].login|username}{/section}
 								</td>
 							{/if}
-							<td class="button_container">{if $current eq $info.version}<strong>{/if}{$info.version}<br>{tr}Current{/tr}{if $current eq $info.version}</strong>{/if}</td>
-							<td class="button_container">{if $info.is_html}{icon _id='html'}{elseif $info.wysiwyg eq "y"}{icon _id='text_dropcaps' title='{tr}Wiki Wysiwyg{/tr}'}{/if}</td>
-							<td class="button_container">{self_link page=$page preview=$info.version _title=":{tr}View{/tr}" _class="tips" _icon_name="view"}v{/self_link}
+							<td class="button_container">
+								{if $current eq $info.version}
+									<strong>{/if}{$info.version}<br>{tr}Current{/tr}{if $current eq $info.version}</strong>
+								{/if}
+							</td>
+							<td class="button_container">
+								{if $info.is_html}
+									{icon name='html' iclass='tips' ititle='HTML'}
+								{elseif $info.wysiwyg eq "y"}
+									{icon name='wysiwyg' iclass='tips' ititle=':{tr}Wiki Wysiwyg{/tr}'}
+								{/if}
+							</td>
+							<td class="button_container">
+								{self_link page=$page preview=$info.version _title=':{tr}View{/tr}' _class="tips" _icon_name="view"}v{/self_link}
 							{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
-								{self_link page=$page source=$info.version _title=":{tr}Source{/tr}" _class="tips" _icon_name="code"}{/self_link}
+								{self_link page=$page source=$info.version _title=':{tr}Source{/tr}' _class="tips" _icon_name="code"}{/self_link}
 							{/if}
 							</td>
 							{if $prefs.default_wiki_diff_style ne "old" and $history}
@@ -286,18 +325,22 @@ if (jqueryTiki.chosen) {
 								{/if}
 								{if $current eq $element.version}</strong>{/if}
 							</td>
-							<td class="button_container">{if $element.is_html eq "1"}{icon _id="html"}{/if}</td>
 							<td class="button_container">
-								{self_link page=$page preview=$element.version _title=":{tr}View{/tr}" _class="tips" _icon_name="view"}{/self_link}
+								{if $element.is_html eq "1"}
+									{icon name='html' iclass='tips' ititle='HTML'}
+								{/if}
+							</td>
+							<td class="button_container">
+								{self_link page=$page preview=$element.version _title=':{tr}View{/tr}' _class="tips" _icon_name="view"}{/self_link}
 								{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
-									{self_link page=$page source=$element.version _title=":{tr}Source{/tr}" _class="tips" _icon_name="code"}{/self_link}
+									{self_link page=$page source=$element.version _title=':{tr}Source{/tr}' _class="tips" _icon_name="code"}{/self_link}
 								{/if}
 								{if $prefs.default_wiki_diff_style eq "old"}
-									&nbsp;{self_link page=$page diff2=$element.version diff_style="sideview" _title="{tr}Compare{/tr}"}c{/self_link}
-									&nbsp;{self_link page=$page diff2=$element.version diff_style="unidiff" _title="{tr}Diff{/tr}"}d{/self_link}
+									&nbsp;{self_link page=$page diff2=$element.version diff_style="sideview" _title='{tr}Compare{/tr}'}c{/self_link}
+									&nbsp;{self_link page=$page diff2=$element.version diff_style="unidiff" _title='{tr}Diff{/tr}'}d{/self_link}
 								{/if}
 								{if $tiki_p_rollback eq 'y' && $lock neq true}
-									{self_link _script="tiki-rollback.php" page=$page version=$element.version _title=":{tr}Rollback{/tr}" _class="tips" _icon_name="back"}{/self_link}
+									{self_link _script="tiki-rollback.php" page=$page version=$element.version _title=':{tr}Rollback{/tr}' _class="tips" _icon_name="back"}{/self_link}
 								{/if}
 							</td>
 							{if $prefs.default_wiki_diff_style ne "old"}
@@ -324,18 +367,20 @@ if (jqueryTiki.chosen) {
 					{/foreach}
 					{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit eq 'y'}
 					<tr>
-						<td colspan="9" class="text-right">
-							<select name="tra_lang">
-								{section name=ix loop=$languages}
-									<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
-								{/section}
-							</select>
+						<td colspan="9">
+							<div class="input-group-sm col-sm-5" style="float:left">
+								<select name="tra_lang" class="form-control">
+									{section name=ix loop=$languages}
+										<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
+									{/section}
+								</select>
+							</div>
 							<input type="submit" class="btn btn-default btn-sm" name="update_translation" value="{tr}Update Translation{/tr}"/>
 							{if $show_translation_history}
 								<input type="hidden" name="show_translation_history" value="1">
-								{button show_translation_history=0 _text="{tr}Hide translation history{/tr}" _auto_args="*" _class="btn btn-default btn-sm"}
+								{button show_translation_history=0 _text='{tr}Hide translation history{/tr}' _auto_args="*" _class="btn btn-default btn-sm"}
 							{else}
-								{button show_translation_history=1 _text="{tr}Show translation history{/tr}" _auto_args="*" _class="btn btn-default btn-sm"}
+								{button show_translation_history=1 _text='{tr}Show translation history{/tr}' _auto_args="*" _class="btn btn-default btn-sm"}
 							{/if}
 						</td>
 					</tr>
