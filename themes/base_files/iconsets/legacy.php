@@ -248,7 +248,7 @@ function iconset_legacy()
 				)
 			),
 			'compose' => array(
-				'id' => 'pencil_add',
+				'id' => 'pencil',
 				'size' => 1,
 				'sizes' => array(
 					3 => array(
@@ -351,6 +351,7 @@ function iconset_legacy()
 			'home' => array(
 				'id' => 'house',
 			),
+			//html in defaults
 			//image in defaults
 			'import' => array(
 				'id' => 'upload',
@@ -358,12 +359,8 @@ function iconset_legacy()
 			'index' => array(
 				'id' => 'table_refresh',
 			),
-			'information' => array(
-				'id' => 'information',
-			),
-			'link' => array(
-				'id' => 'link',
-			),
+			//information in defaults
+			//link in defaults
 			'link-external' => array(
 				'id' => 'external_link',
 				'append' => '.gif'
@@ -502,9 +499,7 @@ function iconset_legacy()
 			'share' => array(
 				'id' => 'share_link',
 			),
-			'sharethis' => array(
-				'id' => 'sharethis',
-			),
+			//sharethis in defaults
 			'sort' => array(
 				'id' => 'resultset',
 			),
@@ -514,9 +509,7 @@ function iconset_legacy()
 			'sort-up' => array(
 				'id' => 'resultset_up',
 			),
-			'star' => array(
-				'id' => 'star',
-			),
+			//star in defaults
 			'star-half' => array(
 				'id' => 'star_half',
 			),
@@ -607,6 +600,9 @@ function iconset_legacy()
 			'word' => array(
 				'id' => 'mime/doc',
 			),
+			'wysiwyg' => array(
+				'id' => 'text-dropcaps',
+			),
 			'zip' => array(
 				'id' => 'mime/zip',
 			),
@@ -616,8 +612,14 @@ function iconset_legacy()
 			'calendar',
 			'group',
 			'help',
+			'html',
 			'image',
+			'information',
+			'link',
+			'pencil',
 			'plugin',
+			'sharethis',
+			'star',
 			'user',
 			'wrench',
 		)
