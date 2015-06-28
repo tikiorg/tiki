@@ -89,7 +89,7 @@
 		</a>
 {* --- toggle cyclic --- *}
 		<a class="tips" title=":{tr}Repeat{/tr}" href="javascript:thepix.toggle('toTheEnd')">
-			{icon name='redo'}
+			{icon name='repeat'}
 		</a>
 {* --- toggle back/forward --- *}
 		<a class="tips" title=":{tr}Direction{/tr}" href="javascript:thepix.toggle('backward')">

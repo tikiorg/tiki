@@ -65,7 +65,7 @@
 							{if ($channels[user].tiki_p_send_newsletters eq 'y') or ($channels[user].tiki_p_admin_newsletters eq 'y')}
 								{if $view_editions eq 'y'}
 									{$libeg}<a href="tiki-send_newsletters.php?nlId={$channels[user].nlId}&amp;editionId={$channels[user].editionId}&amp;resend=1">
-										{icon name='redo' _menu_text='y' _menu_icon='y' alt="{tr}Resend newsletter{/tr}"}
+										{icon name='repeat' _menu_text='y' _menu_icon='y' alt="{tr}Resend newsletter{/tr}"}
 									</a>{$liend}
 								{else}
 									{$libeg}<a class="tips" title="{tr}Send Newsletter{/tr}" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}&amp;editionId={$channels[user].editionId}">

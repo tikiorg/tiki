@@ -45,12 +45,12 @@
 					</li>
 					<li>
 						<a href="tiki-admin.php">
-							{icon name="administer"} {tr}Control panels{/tr}
+							{icon name="cog"} {tr}Control panels{/tr}
 						</a>
 					</li>
 					<li>
 						<a href="tiki-admin.php?page=look">
-							{icon name="theme"} {tr}Themes{/tr}
+							{icon name="image"} {tr}Themes{/tr}
 						</a>
 					</li>
 					<li>

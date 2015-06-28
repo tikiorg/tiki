@@ -173,12 +173,7 @@ function iconset_default()
 			'admin_wysiwyg' => array(
 				'id' => 'file-text',
 			),
-			'administer' => array(
-				'id' => 'cog',
-			),
-			'articles' => array(
-				'id' => 'newspaper-o',
-			),
+			//arrow-up in defaults
 			'attach' => array(
 				'id' => 'paperclip',
 			),
@@ -191,23 +186,17 @@ function iconset_default()
 			'backlink' => array(
 				'id' => 'reply',
 			),
+			//backward in defaults
 			'backward_step' => array(
 				'id' => 'step-backward',
 			),
-			'cache' => array(
-				'id' => 'trash-o',
-			),
-			'change' => array(
-				'id' => 'edit',
-			),
+			//ban in defaults
+			//caret-left & caret-right in defaults
 			'chart' => array(
 				'id' => 'area-chart',
 			),
 			'check' => array(
 				'id' => 'check-square-o',
-			),
-			'clone' => array(
-				'id' => 'clipboard',
 			),
 			'code_file' => array(
 				'id' => 'file',
@@ -215,6 +204,7 @@ function iconset_default()
 			'collapsed' => array(
 				'id' => 'plus-square-o',
 			),
+			//columns in defaults
 			'comments' => array(
 				'id' => 'comments-o',
 			),
@@ -224,6 +214,7 @@ function iconset_default()
 			'contacts' => array(
 				'id' => 'group',
 			),
+			//copy in defaults
 			'create' => array(
 				'id' => 'plus',
 			),
@@ -239,20 +230,15 @@ function iconset_default()
 			'down' => array(
 				'id' => 'sort-desc',
 			),
-			'ellipsis' => array(
-				'id' => 'ellipsis-h',
-			),
-			'enable' => array(
-				'id' => 'check-square',
-			),
+			//edit in defaults
 			'envelope' => array(
 				'id' => 'envelope-o',
 			),
 			'error' => array(
 				'id' => 'exclamation-circle',
 			),
-			'events' => array(
-				'id' => 'clock-o',
+			'excel' => array(
+				'id' => 'file-excel-o',
 			),
 			'expanded' => array(
 				'id' => 'minus-square-o',
@@ -260,14 +246,9 @@ function iconset_default()
 			'export' => array(
 				'id' => 'download',
 			),
-			'excel' => array(
-				'id' => 'file-excel-o',
-			),
+			//facebook in defaults
 			'file' => array(
 				'id' => 'file-o',
-			),
-			'forward_step' => array(
-				'id' => 'step-forward',
 			),
 			'file-archive' => array(
 				'id' => 'folder',
@@ -275,12 +256,19 @@ function iconset_default()
 			'file-archive-open' => array(
 				'id' => 'folder-open',
 			),
+			//filter in defaults
+			//flag in defaults
 			'floppy' => array(
 				'id' => 'floppy-o',
+			),
+			//forward in defaults
+			'forward_step' => array(
+				'id' => 'step-forward',
 			),
 			'help' => array(
 				'id' => 'question-circle',
 			),
+			//history in defaults
 			'image' => array(
 				'id' => 'file-image-o',
 			),
@@ -293,9 +281,12 @@ function iconset_default()
 			'information' => array(
 				'id' => 'info-circle',
 			),
+			//link in defaults
 			'link-external' => array(
 				'id' => 'external-link',
 			),
+			//list in defaults
+			//lock in defaults
 			//same fa icon used for admin_security, but not the same in other icon sets
 			'log' => array(
 				'id' => 'history',
@@ -318,11 +309,12 @@ function iconset_default()
 			'merge' => array(
 				'id' => 'random',
 			),
-			'more' => array(
-				'id' => 'ellipsis-h',
-			),
+			//minus in defaults
 			'module' => array(
 				'id' => 'cogs',
+			),
+			'more' => array(
+				'id' => 'ellipsis-h',
 			),
 			'move' => array(
 				'id' => 'exchange',
@@ -342,12 +334,14 @@ function iconset_default()
 			'ok' => array(
 				'id' => 'check-circle',
 			),
+			//pause in defaults
 			'pdf' => array(
 				'id' => 'file-pdf-o',
 			),
 			'permission' => array(
 				'id' => 'key',
 			),
+			//play in defaults
 			'plugin' => array(
 				'id' => 'puzzle-piece',
 			),
@@ -363,30 +357,36 @@ function iconset_default()
 			'previous' => array(
 				'id' => 'arrow-left',
 			),
+			//print in defaults
 			'ranking' => array(
 				'id' => 'sort-numeric-asc',
 			),
-			'redo' => array(
-				'id' => 'repeat',
-			),
-			'remove' => array(
-				'id' => 'times',
-			),
+			//refresh in defaults
+			//remove in defaults
+			//repeat in defaults
+			//rss in defaults
 			'screencapture' => array(
 				'id' => 'camera',
 			),
+			//search in defaults
+			//send in defaults
 			'settings' => array(
 				'id' => 'wrench',
 			),
+			//share in defaults
 			'sharethis' => array(
 				'id' => 'share-alt',
 			),
+			//sort in defaults
 			'sort-down' => array(
 				'id' => 'sort-desc',
 			),
 			'sort-up' => array(
 				'id' => 'sort-asc',
 			),
+			//star in defaults
+			//star-half in defaults
+			//stop in defaults
 			'stop-watching' => array(
 				'id' => 'eye-slash',
 			),
@@ -396,35 +396,27 @@ function iconset_default()
 			'success' => array(
 				'id' => 'check',
 			),
+			//tag in defaults
+			//tags in defaults
 			'textfile' => array(
 				'id' => 'file-text-o',
 			),
-			'theme' => array(
-				'id' => 'image',
-			),
+			//th-list in defaults
 			'themegenerator' => array(
 				'id' => 'paint-brush',
 			),
 			'three-d' => array(
 				'id' => 'cube',
 			),
-			'toggle-down' => array(
-				'id' => 'toggle-down',
+			//thumbs-up in defaults
+			'toggle-off' => array(
+				'id' => 'toggle-off',
 			),
 			'toggle-on' => array(
 				'id' => 'toggle-on',
 			),
-			'toggle-off' => array(
-				'id' => 'toggle-off',
-			),
-			'toggle-right' => array(
-				'id' => 'toggle-right',
-			),
 			'trackers' => array(
 				'id' => 'database',
-			),
-			'trackerfields' => array(
-				'id' => 'th-list',
 			),
 			'translate' => array(
 				'id' => 'language',
@@ -432,6 +424,9 @@ function iconset_default()
 			'trash' => array(
 				'id' => 'trash-o',
 			),
+			//twitter in defaults
+			//undo in defaults
+			//unlock in defaults
 			'up' => array(
 				'id' => 'sort-asc',
 			),

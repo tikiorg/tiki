@@ -7,7 +7,7 @@
 		{icon name="settings"} {tr}Properties{/tr}
 	</a>
 	<a class="btn btn-default" href="tiki-admin_tracker_fields.php?trackerId={$trackerId|escape}">
-		{icon name="trackerfields"} {tr}Fields{/tr}
+		{icon name="th-list"} {tr}Fields{/tr}
 	</a>
 {/if}
 

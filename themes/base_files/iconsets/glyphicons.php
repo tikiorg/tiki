@@ -25,6 +25,7 @@ function iconset_glyphicons()
 			'add' => array(
 				'id' => 'plus-sign',
 			),
+			//arrow-up in defaults
  			'attach' => array(
 				'id' => 'paperclip',
 			),
@@ -34,11 +35,18 @@ function iconset_glyphicons()
 			'back' => array(
 				'id' => 'arrow-left',
 			),
+			'backlink' => array(
+				'id' => 'new-window',
+			),
+			//backward in defaults
 			'backward_step' => array(
 				'id' => 'step-backward',
 			),
 			'ban' => array(
 				'id' => 'ban-circle',
+			),
+			'bug' => array(
+				'id' => 'alert',
 			),
 			'caret-left' => array(
 				'id' => 'triangle-left',
@@ -70,6 +78,9 @@ function iconset_glyphicons()
 			'contacts' => array(
 				'id' => 'user',
 			),
+			'copy' => array(
+				'id' => 'duplicate',
+			),
 			'create' => array(
 				'id' => 'plus',
 			),
@@ -85,12 +96,8 @@ function iconset_glyphicons()
 			'down' => array(
 				'id' => 'arrow-down',
 			),
-			'ellipsis' => array(
-				'id' => 'option-horizontal',
-			),
-			'enable' => array(
-				'id' => 'ok-sign',
-			),
+			//edit in defaults
+			//envelope in defaults
 			'error' => array(
 				'id' => 'exclamation-sign',
 			),
@@ -100,23 +107,28 @@ function iconset_glyphicons()
 			'expanded' => array(
 				'id' => 'collapse-down',
 			),
+			//export in defaults
 			'facebook' => array(
 				'id' => 'thumbs-up',
 			),
-			'file' => array(
-				'id' => 'file',
-			),
-			'forward_step' => array(
-				'id' => 'step-forward',
-			),
+			//file in defaults
 			'file-archive' => array(
 				'id' => 'folder-close',
 			),
 			'file-archive-open' => array(
 				'id' => 'folder-open',
 			),
+			//filter in defaults
+			//flag in defaults
 			'floppy' => array(
 				'id' => 'floppy-save',
+			),
+			//forward in defaults
+			'forward_step' => array(
+				'id' => 'step-forward',
+			),
+			'group' => array(
+				'id' => 'user',
 			),
 			'help' => array(
 				'id' => 'question-sign',
@@ -127,9 +139,19 @@ function iconset_glyphicons()
 			'image' => array(
 				'id' => 'picture',
 			),
+			//import in defaults
+			'index' => array(
+				'id' => 'refresh',
+			),
 			'information' => array(
 				'id' => 'info-sign',
 			),
+			//link in defaults
+			'link-external' => array(
+				'id' => 'share',
+			),
+			//list in defaults
+			//lock in defaults
 			'log' => array(
 				'id' => 'list-alt',
 			),
@@ -142,32 +164,46 @@ function iconset_glyphicons()
 			'mailbox' => array(
 				'id' => 'inbox',
 			),
+			'menu' => array(
+				'id' => 'menu-hamburger',
+			),
 			'menuitem' => array(
 				'id' => 'chevron-right',
 			),
 			'merge' => array(
 				'id' => 'random',
 			),
-            'module' => array(
+			//minus in defaults
+			'module' => array(
                 'id' => 'cog',
             ),
 			'more' => array(
 				'id' => 'option-horizontal',
 			),
+			//move in defaults
 			'next' => array(
 				'id' => 'arrow-right',
+			),
+			'notepad' => array(
+				'id' => 'file',
 			),
 			'notification' => array(
 				'id' => 'bell',
 			),
+			//off in defaults
 			'ok' => array(
 				'id' => 'ok-sign',
 			),
+			//pause in defaults
 			'pdf' => array(
 				'id' => 'file',
 			),
 			'permission' => array(
 				'id' => 'lock',
+			),
+			//play in defaults
+			'plugin' => array(
+				'id' => 'briefcase',
 			),
 			'popup' => array(
 				'id' => 'list-alt',
@@ -181,47 +217,80 @@ function iconset_glyphicons()
 			'previous' => array(
 				'id' => 'arrow-left',
 			),
+			//print in defaults
 			'ranking' => array(
 				'id' => 'sort-by-order',
 			),
+			//refresh in defaults
+			//remove in defaults
+			//repeat in defaults
 			'rss' => array(
 				'id' => 'bullhorn',
 			),
 			'screencapture' => array(
 				'id' => 'camera',
 			),
+			//search in defaults
+			//send in defaults
 			'settings' => array(
 				'id' => 'wrench',
 			),
+			//share in defaults
 			'sharethis' => array(
 				'id' => 'share-alt',
+			),
+			//sort in defaults
+			'sort-down' => array(
+				'id' => 'sort-by-alphabet-alt',
 			),
 			'sort-up' => array(
 				'id' => 'sort-by-alphabet',
 			),
-			'sort-down' => array(
-				'id' => 'sort-by-alphabet-alt',
-			),
+			//star in defaults
 			'star-half' => array(
 				'id' => 'star-empty',
 			),
+			//stop in defaults
 			'stop-watching' => array(
 				'id' => 'eye-close',
+			),
+			'structure' => array(
+				'id' => 'tree-conifer',
 			),
 			'success' => array(
 				'id' => 'ok',
 			),
+			//tag in defaults
+			//tags in defaults
 			'textfile' => array(
 				'id' => 'file',
+			),
+			//th-list in defaults
+			'themegenerator' => array(
+				'id' => 'picture',
 			),
 			'three-d' => array(
 				'id' => 'road',
 			),
+			//thumbs-up in defaults
+			'toggle-off' => array(
+				'id' => 'stop',
+			),
+			'toggle-on' => array(
+				'id' => 'play',
+			),
+			'trackers' => array(
+				'id' => 'tasks',
+			),
 			'translate' => array(
 				'id' => 'globe',
 			),
+			//trash in defaults
 			'twitter' => array(
 				'id' => 'retweet',
+			),
+			'undo' => array(
+				'id' => 'arrow-left',
 			),
 			//use a better unlock icon when available
 			'unlock' => array(
@@ -241,6 +310,12 @@ function iconset_glyphicons()
 			),
 			'watch' => array(
 				'id' => 'eye-open',
+			),
+			'watch-group' => array(
+				'id' => 'eye-open',
+			),
+			'wizard' => array(
+				'id' => 'flash',
 			),
 			'word' => array(
 				'id' => 'file',

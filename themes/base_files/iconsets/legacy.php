@@ -188,14 +188,14 @@ function iconset_legacy()
 			'admin_wysiwyg' => array(
 				'id' => 'large/wysiwyg',
 			),
-			'administer' => array(
-				'id' => 'wrench',
-			),
 			'arrow-up' => array(
 				'id' => 'arrow-up',
 			),
 			'attach' => array(
 				'id' => 'attach',
+			),
+			'audio' => array(
+				'id' => 'bell',
 			),
 			'back' => array(
 				'id' => 'arrow_left',
@@ -212,23 +212,12 @@ function iconset_legacy()
 			'ban' => array(
 				'id' => 'cancel',
 			),
-			'bug' => array(
-				'id' => 'bug',
-			),
-			'cache' => array(
-				'id' => 'database_refresh',
-			),
-			'calendar' => array(
-				'id' => 'calendar',
-			),
+			//bug in defaults
 			'caret-left' => array(
 				'id' => 'resultset_previous',
 			),
 			'caret-right' => array(
 				'id' => 'resultset_next',
-			),
-			'change' => array(
-				'id' => 'pencil',
 			),
 			'chart' => array(
 				'id' => 'chart_curve',
@@ -237,17 +226,17 @@ function iconset_legacy()
 				'id' => 'select',
 				'append' => '.gif'
 			),
-			'code' => array(
+			'code_file' => array(
 				'id' => 'page_white_code',
 			),
 			'cog' => array(
 				'id' => 'wrench',
 			),
-			'columns' => array(
-				'id' => 'text_columns',
-			),
 			'collapsed' => array(
 				'id' => 'bullet_toggle_plus',
+			),
+			'columns' => array(
+				'id' => 'text_columns',
 			),
 			'comments' => array(
 				'id' => 'comments',
@@ -301,12 +290,6 @@ function iconset_legacy()
 			'edit' => array(
 				'id' => 'page_edit',
 			),
-			'ellipsis' => array(
-				'id' => 'resultset_down',
-			),
-			'enable' => array(
-				'id' => 'accept',
-			),
 			'envelope' => array(
 				'id' => 'email',
 				'size' => 1,
@@ -318,6 +301,9 @@ function iconset_legacy()
 			),
 			'error' => array(
 				'id' => 'exclamation',
+			),
+			'excel' => array(
+				'id' => 'mime/xls',
 			),
 			'expanded' => array(
 				'id' => 'bullet_toggle_minus',
@@ -333,6 +319,9 @@ function iconset_legacy()
 						'id' => 'facebook-logo_32'
 					)
 				)
+			),
+			'file' => array(
+				'id' => 'page',
 			),
 			'file-archive' => array(
 				'id' => 'folder',
@@ -355,21 +344,14 @@ function iconset_legacy()
 			'forward_step' => array(
 				'id' => 'control_end',
 			),
-			'group' => array(
-				'id' => 'group',
-			),
-			'group-watch' => array(
-				'id' => 'eye_group',
-			),
-			'help' => array(
-				'id' => 'help',
-			),
+			//help in defaults
 			'history' => array(
 				'id' => 'clock',
 			),
 			'home' => array(
 				'id' => 'house',
 			),
+			//image in defaults
 			'import' => array(
 				'id' => 'upload',
 			),
@@ -442,6 +424,9 @@ function iconset_legacy()
 			'notification' => array(
 				'id' => 'announce',
 			),
+			'off' => array(
+				'id' => 'delete',
+			),
 			'ok' => array(
 				'id' => 'accept',
 			),
@@ -457,14 +442,15 @@ function iconset_legacy()
 			'play' => array(
 				'id' => 'control_play',
 			),
-			'plugin' => array(
-				'id' => 'plugin',
-			),
+			//plugin in defaults
 			'popup' => array(
 				'id' => 'application_view_columns',
 			),
 			'post' => array(
 				'id' => 'pencil_add',
+			),
+			'powerpoint' => array(
+				'id' => 'mime/ppt',
 			),
 			'previous' => array(
 				'id' => 'arrow_left',
@@ -480,6 +466,9 @@ function iconset_legacy()
 			),
 			'remove' => array(
 				'id' => 'cross',
+			),
+			'repeat' => array(
+				'id' => 'arrow_redo',
 			),
 			'rss' => array(
 				'id' => 'feed',
@@ -552,8 +541,8 @@ function iconset_legacy()
 			'textfile' => array(
 				'id' => 'page',
 			),
-			'theme' => array(
-				'id' => 'image',
+			'th-list' => array(
+				'id' => 'text_list_bullets',
 			),
 			'themegenerator' => array(
 				'id' => 'palette',
@@ -569,6 +558,9 @@ function iconset_legacy()
 			),
 			'toggle-on' => array(
 				'id' => 'delete',
+			),
+			'trackers' => array(
+				'id' => 'database',
 			),
 			'translate' => array(
 				'id' => 'world_edit',
@@ -594,8 +586,8 @@ function iconset_legacy()
 			'up' => array(
 				'id' => 'resultset_up',
 			),
-			'user' => array(
-				'id' => 'user',
+			'video' => array(
+				'id' => 'mime/mpg',
 			),
 			'view' => array(
 				'id' => 'magnifier',
@@ -612,10 +604,22 @@ function iconset_legacy()
 			'wizard' => array(
 				'id' => 'wizard16x16',
 			),
-			'wizard_admin' => array(
-				'id' => 'large/wizard48x48',
-				'size' => 3
+			'word' => array(
+				'id' => 'mime/doc',
+			),
+			'zip' => array(
+				'id' => 'mime/zip',
 			),
 		),
+		'defaults' => array(
+			'bug',
+			'calendar',
+			'group',
+			'help',
+			'image',
+			'plugin',
+			'user',
+			'wrench',
+		)
 	);
 }

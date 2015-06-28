@@ -31,7 +31,7 @@
 				{if $tiki_p_admin_categories eq 'y'}
 					<div class="pull-right">
 						<a class="btn btn-default btn-sm tips" href="tiki-admin_categories.php" title=":{tr}Admin Categories{/tr}">
-							{icon name="administer"} {tr}Categories{/tr}
+							{icon name="cog"} {tr}Categories{/tr}
 						</a>
 					</div>
 				{/if}
@@ -44,7 +44,7 @@
 				{if $tiki_p_admin_categories eq 'y'}
 					<div class="pull-right">
 						<a class="btn btn-default btn-sm tips" href="tiki-admin_categories.php" title=":{tr}Admin Categories{/tr}">
-							{icon name="administer"} {tr}Categories{/tr}
+							{icon name="cog"} {tr}Categories{/tr}
 						</a>
 					</div>
 				{/if}
