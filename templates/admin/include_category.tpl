@@ -14,7 +14,7 @@
 				{icon name="list"} {tr}Browse Categories{/tr}
 			</a>
 			<a role="button" class="btn btn-default btn-sm" href="tiki-admin_categories.php" title="{tr}Administration{/tr}">
-				{icon name="administer"} {tr}Administer Categories{/tr}
+				{icon name="cog"} {tr}Administer Categories{/tr}
 			</a>
 			<a role="button" class="btn btn-default btn-sm" href="tiki-edit_categories.php" title="{tr}Organize Objects{/tr}">
 				{icon name="sort"} {tr}Organize Objects{/tr}

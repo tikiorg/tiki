@@ -200,7 +200,7 @@
 										{/if}
 										{if $imagerotate}
 											{$libeg}<a class="gallink" href="{$galleryId|sefurl:gallery:with_next}rotateright={$item.imageId}" title="{tr}rotate right{/tr}">
-												{icon name='redo' _menu_text='y' _menu_icon='y' alt="{tr}Rotate{/tr}"}
+												{icon name='repeat' _menu_text='y' _menu_icon='y' alt="{tr}Rotate{/tr}"}
 											</a>{$liend}
 										{/if}
 										{$libeg}<a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$item.imageId}">

@@ -135,9 +135,9 @@
 			{if $tikifeedback[n].st eq 0}
 				{icon name="disable"}
 			{elseif $tikifeedback[n].st eq 1}
-				{icon name="enable"}
+				{icon name="ok"}
 			{elseif $tikifeedback[n].st eq 2}
-				{icon name="change"}
+				{icon name="edit"}
 			{elseif $tikifeedback[n].st eq 4}
 				{icon name="undo"}
 			{else}
