@@ -87,6 +87,9 @@ function iconset_glyphicons()
 			'delete' => array(
 				'id' => 'remove',
 			),
+			'difference' => array(
+				'id' => 'text-color',
+			),
 			'disable' => array(
 				'id' => 'minus-sign',
 			),

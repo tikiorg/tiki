@@ -278,6 +278,9 @@ function iconset_legacy()
 			'delete' => array(
 				'id' => 'cross',
 			),
+			'difference' => array(
+				'id' => 'text_strikethrough',
+			),
 			'disable' => array(
 				'id' => 'delete',
 			),

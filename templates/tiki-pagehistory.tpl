@@ -204,8 +204,18 @@
 				</div>
 				<input type="hidden" name="show_all_versions" value="{$show_all_versions}">
 			{/if}
-			<div class="table-responsive">
-				<table class="table table-condensed table-hover">
+			{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+			{if $prefs.javascript_enabled !== 'y'}
+				{$js = 'n'}
+				{$libeg = '<li>'}
+				{$liend = '</li>'}
+			{else}
+				{$js = 'y'}
+				{$libeg = ''}
+				{$liend = ''}
+			{/if}
+			<div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
+				<table class="table table-condensed table-hover table-striped">
 					<tr>
 						{if $tiki_p_remove eq 'y'}<th><input type="submit" class="btn btn-warning btn-sm" name="delete" value="{tr}Delete{/tr}"></th>{/if}
 						<th>{tr}Information{/tr}</th>
@@ -213,7 +223,7 @@
 						{if $prefs.feature_contribution eq 'y' and $prefs.feature_contributor_wiki eq 'y'}<th>{tr}Contributors{/tr}</th>{/if}
 						<th>{tr}Version{/tr}</th>
 						<th>{icon name="pencil" iclass="tips" ititle=':{tr}HTML or WYSIWYG{/tr}'}</th>
-						<th>{tr}Action{/tr}</th>
+						<th></th>
 						{if $prefs.default_wiki_diff_style != "old" and $history}
 							<th colspan="2">
 								<input type="submit" class="btn btn-default btn-sm" name="compare" value="{tr}Compare{/tr}">
@@ -271,10 +281,31 @@
 								{/if}
 							</td>
 							<td class="button_container">
-								{self_link page=$page preview=$info.version _title=':{tr}View{/tr}' _class="tips" _icon_name="view"}v{/self_link}
-							{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
-								{self_link page=$page source=$info.version _title=':{tr}Source{/tr}' _class="tips" _icon_name="code"}{/self_link}
-							{/if}
+								{capture name='current_actions'}
+									{strip}
+										{$libeg}{self_link page=$page preview=$info.version _icon_name="view" _menu_text='y' _menu_icon='y'}
+											{tr}View{/tr}
+										{/self_link}{$liend}
+										{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
+											{$libeg}{self_link page=$page source=$info.version _icon_name="code" _menu_text='y' _menu_icon='y'}
+												{tr}Source{/tr}
+											{/self_link}{$liend}
+										{/if}
+									{/strip}
+								{/capture}
+								{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+								<a
+									class="tips"
+									title="{tr}Actions{/tr}"
+									href="#"
+									{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.current_actions|escape:"javascript"|escape:"html"}{/if}
+									style="padding:0; margin:0; border:0"
+								>
+									{icon name='settings'}
+								</a>
+								{if $js === 'n'}
+									<ul class="dropdown-menu" role="menu">{$smarty.capture.current_actions}</ul></li></ul>
+								{/if}
 							</td>
 							{if $prefs.default_wiki_diff_style ne "old" and $history}
 								<td class="button_container">
@@ -344,16 +375,43 @@
 								{/if}
 							</td>
 							<td class="button_container">
-								{self_link page=$page preview=$element.version _title=':{tr}View{/tr}' _class="tips" _icon_name="view"}{/self_link}
-								{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
-									{self_link page=$page source=$element.version _title=':{tr}Source{/tr}' _class="tips" _icon_name="code"}{/self_link}
-								{/if}
-								{if $prefs.default_wiki_diff_style eq "old"}
-									&nbsp;{self_link page=$page diff2=$element.version diff_style="sideview" _title='{tr}Compare{/tr}'}c{/self_link}
-									&nbsp;{self_link page=$page diff2=$element.version diff_style="unidiff" _title='{tr}Diff{/tr}'}d{/self_link}
-								{/if}
-								{if $tiki_p_rollback eq 'y' && $lock neq true}
-									{self_link _script="tiki-rollback.php" page=$page version=$element.version _title=':{tr}Rollback{/tr}' _class="tips" _icon_name="back"}{/self_link}
+								{capture name='history_actions'}
+									{strip}
+										{$libeg}{self_link page=$page preview=$element.version _icon_name="view" _menu_text='y' _menu_icon='y'}
+											{tr}View{/tr}
+										{/self_link}{$liend}
+										{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
+											{$libeg}{self_link page=$page source=$element.version _icon_name="code" _menu_text='y' _menu_icon='y'}
+												{tr}Source{/tr}
+											{/self_link}{$liend}
+										{/if}
+										{if $prefs.default_wiki_diff_style eq "old"}
+											{$libeg}{self_link page=$page diff2=$element.version diff_style="sideview" _icon_name="copy" _menu_text='y' _menu_icon='y'}
+												{tr}Compare{/tr}
+											{/self_link}{$liend}
+											{$libeg}{self_link page=$page diff2=$element.version diff_style="unidiff" _icon_name="difference" _menu_text='y' _menu_icon='y'}
+												{tr}Difference{/tr}
+											{/self_link}{$liend}
+										{/if}
+										{if $tiki_p_rollback eq 'y' && $lock neq true}
+											{$libeg}{self_link _script="tiki-rollback.php" page=$page version=$element.version _icon_name="undo" _menu_text='y' _menu_icon='y'}
+												{tr}Rollback{/tr}
+											{/self_link}
+										{/if}
+									{/strip}
+								{/capture}
+								{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+								<a
+									class="tips"
+									title="{tr}Actions{/tr}"
+									href="#"
+									{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.history_actions|escape:"javascript"|escape:"html"}{/if}
+									style="padding:0; margin:0; border:0"
+								>
+									{icon name='settings'}
+								</a>
+								{if $js === 'n'}
+									<ul class="dropdown-menu" role="menu">{$smarty.capture.history_actions}</ul></li></ul>
 								{/if}
 							</td>
 							{if $prefs.default_wiki_diff_style ne "old"}

@@ -221,6 +221,9 @@ function iconset_default()
 			'delete' => array(
 				'id' => 'times',
 			),
+			'difference' => array(
+				'id' => 'strikethrough',
+			),
 			'disable' => array(
 				'id' => 'minus-square',
 			),
