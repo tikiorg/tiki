@@ -41,18 +41,18 @@
 	{tabset name='tabs_webmail_settings'}
 
 		{tab name="{tr}List{/tr}"}
+			{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
+			{if $prefs.javascript_enabled !== 'y'}
+				{$js = 'n'}
+				{$libeg = '<li>'}
+				{$liend = '</li>'}
+			{else}
+				{$js = 'y'}
+				{$libeg = ''}
+				{$liend = ''}
+			{/if}
 			{if count($accounts) != 0}
 				<h2>{tr}Personal email accounts{/tr}</h2>
-				{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
-				{if $prefs.javascript_enabled !== 'y'}
-					{$js = 'n'}
-					{$libeg = '<li>'}
-					{$liend = '</li>'}
-				{else}
-					{$js = 'y'}
-					{$libeg = ''}
-					{$liend = ''}
-				{/if}
 				<div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
 					<table class="table normal table-striped table-hover">
 						<tr>
@@ -60,7 +60,7 @@
 							<th>{tr}Account{/tr}</th>
 							<th>{tr}Server{/tr}</th>
 							<th>{tr}Username{/tr}</th>
-							<th>{tr}Action{/tr}</th>
+							<th></th>
 						</tr>
 
 						{section name=ix loop=$accounts}
@@ -117,7 +117,7 @@
 											{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.webmail_actions|escape:"javascript"|escape:"html"}{/if}
 											style="padding:0; margin:0; border:0"
 										>
-											{icon name='wrench'}
+											{icon name='settings'}
 										</a>
 										{if $js === 'n'}
 											<ul class="dropdown-menu" role="menu">{$smarty.capture.webmail_actions}</ul></li></ul>
@@ -134,14 +134,14 @@
 			{if $tiki_p_use_group_webmail eq 'y'}
 				{if count($pubAccounts) != 0}
 					<h2>{tr}Group email accounts{/tr}</h2>
-					<div class="table-responsive">
-						<table class="table normal">
+					<div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
+						<table class="table normal table-striped table-hover">
 							<tr>
 								<th>{tr}Active{/tr}</th>
 								<th>{tr}Account{/tr}</th>
 								<th>{tr}Server{/tr}</th>
 								<th>{tr}Username{/tr}</th>
-								<th>{tr}Action{/tr}</th>
+								<th></th>
 							</tr>
 
 							{section name=ixp loop=$pubAccounts}
@@ -174,12 +174,35 @@
 									</td>
 									<td class="username">{$pubAccounts[ixp].username}</td>
 									<td class="action">
-										{if $tiki_p_admin_group_webmail eq 'y'or $tiki_p_admin eq 'y'}
-											{self_link _icon='page_edit' accountId=$pubAccounts[ixp].accountId}{tr}Edit{/tr}{/self_link}
-											{self_link _icon='cross' remove=$pubAccounts[ixp].accountId}{tr}Delete{/tr}{/self_link}
-										{/if}
-										{if !$active}
-											{self_link _icon='accept' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
+										{capture name=webmail_group_actions}
+											{strip}
+												{if $tiki_p_admin_group_webmail eq 'y'or $tiki_p_admin eq 'y'}
+													{$libeg}{self_link _icon_name='edit' accountId=$pubAccounts[ixp].accountId _menu_text='y' _menu_icon='y'}
+												{tr}Edit{/tr}
+												{/self_link}{$liend}
+													{$libeg}{self_link _icon_name='delete' remove=$pubAccounts[ixp].accountId _menu_text='y' _menu_icon='y'}
+												{tr}Delete{/tr}
+												{/self_link}{$liend}
+												{/if}
+												{if !$active}
+													{$libeg}{self_link _icon_name='ok' current=$pubAccounts[ixp].accountId _menu_text='y' _menu_icon='y'}
+												{tr}Activate{/tr}
+												{/self_link}{$liend}
+												{/if}
+											{/strip}
+										{/capture}
+										{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+										<a
+											class="tips"
+											title="{tr}Actions{/tr}"
+											href="#"
+											{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.webmail_group_actions|escape:"javascript"|escape:"html"}{/if}
+											style="padding:0; margin:0; border:0"
+										>
+											{icon name='settings'}
+										</a>
+										{if $js === 'n'}
+											<ul class="dropdown-menu" role="menu">{$smarty.capture.webmail_group_actions}</ul></li></ul>
 										{/if}
 									</td>
 								</tr>
