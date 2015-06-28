@@ -175,8 +175,8 @@ function iconset_glyphicons()
 			),
 			//minus in defaults
 			'module' => array(
-                'id' => 'cog',
-            ),
+				'id' => 'cog',
+			),
 			'more' => array(
 				'id' => 'option-horizontal',
 			),
