@@ -130,6 +130,18 @@ class Iconset
 				$this->icons[$name] = $icon;
 			}
 		}
+
+		if (isset($iconset->defaults) && count($iconset->defaults > 0)) {
+			foreach ($iconset->defaults as $defname) {
+				if (! isset($this->icons[$defname]) || $over) {
+					$deficon['id'] = $defname;
+					$deficon['tag'] = $tag;
+					$deficon['prepend'] = $prepend;
+					$deficon['append'] = $append;
+					$this->icons[$defname] = $deficon;
+				}
+			}
+		}
 	}
 
 	function getIcon($name) {
