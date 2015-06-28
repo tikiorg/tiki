@@ -61,7 +61,7 @@ function iconset_glyphicons()
 				'id' => 'ok-circle',
 			),
 			'code_file' => array(
-				'id' => 'file-code-o',
+				'id' => 'file',
 			),
 			'collapsed' => array(
 				'id' => 'expand',
@@ -135,6 +135,9 @@ function iconset_glyphicons()
 			),
 			'history' => array(
 				'id' => 'time',
+			),
+			'html' => array(
+				'id' => 'console',
 			),
 			'image' => array(
 				'id' => 'picture',
@@ -319,6 +322,9 @@ function iconset_glyphicons()
 			),
 			'word' => array(
 				'id' => 'file',
+			),
+			'wysiwyg' => array(
+				'id' => 'text-background',
 			),
 			'zip' => array(
 				'id' => 'compressed',

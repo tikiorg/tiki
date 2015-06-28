@@ -407,11 +407,13 @@ class WikiPlugin_Negotiator_Wiki
 		}
 
 		//Check for existence of Zend wiki plugins
-		foreach ( glob('lib/core/WikiPlugin/*.php') as $file ) {
-			$base = basename($file);
-			if (strtolower($base) == $base) { //the zend plugins all have lower case names
-				$plugin = substr($base, 0, -4);
-				$real[] = $plugin;
+		foreach ( glob('lib/core/WikiPlugin/*.php', GLOB_NOCHECK) as $file ) {
+			if(is_file($file)){
+				$base = basename($file);
+				if (strtolower($base) == $base) { //the zend plugins all have lower case names
+					$plugin = substr($base, 0, -4);
+					$real[] = $plugin;
+				}
 			}
 		}
 

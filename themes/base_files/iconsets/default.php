@@ -199,7 +199,7 @@ function iconset_default()
 				'id' => 'check-square-o',
 			),
 			'code_file' => array(
-				'id' => 'file',
+				'id' => 'file-code-o',
 			),
 			'collapsed' => array(
 				'id' => 'plus-square-o',
@@ -269,6 +269,9 @@ function iconset_default()
 				'id' => 'question-circle',
 			),
 			//history in defaults
+			'html' => array(
+				'id' => 'html5',
+			),
 			'image' => array(
 				'id' => 'file-image-o',
 			),
@@ -450,6 +453,9 @@ function iconset_default()
 			),
 			'word' => array(
 				'id' => 'file-word-o',
+			),
+			'wysiwyg' => array(
+				'id' => 'file-text-o',
 			),
 			'zip' => array(
 				'id' => 'file-zip-o',

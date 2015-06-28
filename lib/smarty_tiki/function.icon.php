@@ -19,9 +19,11 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  *          Will not work with iconsets.
  *  - name: name of icon from themes/base_files/iconsets file, which allows for choosing different iconsets.
  *          Use instead of _id.
- *  - class set custom class (otherwise default classes are applied). When using icon sets, this class will apply to
+ *  - size:  size of icon when name is used
+ *  - class: set custom class (otherwise default classes are applied). When using icon sets, this class will apply to
  *          anchor element
- *  - iclass set custom class for the icon itself (not the link)
+ *  - iclass: set custom class for the icon itself (not the link)
+ *  - ititle: set custom title for the icon itself (not the link)
  *  - _type: type of URL to use (e.g. 'absolute_uri', 'absolute_path'). Defaults to a relative URL.
  *  - _tag: type of HTML tag to use (e.g. 'img', 'input_image'). Defaults to 'img' tag.
  *  - _notag: if set to 'y', will only return the URL (which also handles theme icons).
