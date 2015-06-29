@@ -191,6 +191,7 @@ class Iconset
 			$size = isset($params['size']) && $params['size'] < 10 ? $params['size'] : 1;
 			$custom_class = isset($params['iclass']) ? $params['iclass'] : '';
 			$title = isset($params['ititle']) ? 'title="' . $params['ititle'] . '"' : '';
+			$id = isset($params['id']) ? 'id="' . $params['id'] . '"' : '';
 
 			if ($tag == 'img') { //manage legacy image icons (eg: png, gif, etc)
 				//some ability to use larger legacy icons based on size setting
@@ -209,7 +210,7 @@ class Iconset
 					$src = $prepend . $id . $append;
 				}
 				$alt = $name;  //use icon name as alternate text
-				$html = "<span class=\"icon icon-$name $icon_class $custom_class\" $title><img src=\"$src\" alt=\"$alt\"></span>";
+				$html = "<span class=\"icon icon-$name $icon_class $custom_class\" $title $id><img src=\"$src\" alt=\"$alt\"></span>";
 			} else {
 				if (isset($icon['id'])) { //use class defined for the icon if set
 					$icon_class = $prepend . $icon['id'] . $append;
@@ -218,7 +219,7 @@ class Iconset
 				}
 
 				$style = $size > 1 ? 'style="font-size:' . $size . '00%"' : '';
-				$html = "<$tag class=\"icon icon-$name $icon_class $custom_class\" $style $title></$tag>";
+				$html = "<$tag class=\"icon icon-$name $icon_class $custom_class\" $style $title $id></$tag>";
 			}
 
 			return $html;
