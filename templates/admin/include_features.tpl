@@ -168,7 +168,7 @@
 				{preference name=jquery_fitvidjs}
 				<div class="adminoptionboxchild">
 					<fieldset>
-						<legend> {tr}Experimental:{/tr} {icon _id=bug_error}</legend>
+						<legend> {tr}Experimental:{/tr} {icon name='bug'}</legend>
 						{preference name=feature_jquery_carousel}
 						{preference name=feature_jquery_tablesorter}
 					</fieldset>
