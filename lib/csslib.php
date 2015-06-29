@@ -42,18 +42,22 @@ class cssLib extends TikiLib
 
 		$main_theme_path = $themelib->get_theme_path($theme, '', '', 'templates'); // path to the main site theme
 
-		foreach (scandir(TIKI_PATH ."/". $main_theme_path . '/layouts/') as $layoutName) {
-			if ($layoutName[0] != '.' && $layoutName != 'index.php') {
-				$available_layouts[$layoutName] = ucfirst($layoutName);
+		if (file_exists(TIKI_PATH ."/". $main_theme_path . '/layouts/') ){
+			foreach (scandir(TIKI_PATH ."/". $main_theme_path . '/layouts/') as $layoutName) {
+				if ($layoutName[0] != '.' && $layoutName != 'index.php') {
+					$available_layouts[$layoutName] = ucfirst($layoutName);
+				}
 			}
 		}
 
 		if ($theme_option) {
 			$theme_path = $themelib->get_theme_path($theme, $theme_option, '', 'templates'); // path to the site theme options
 
-			foreach (scandir(TIKI_PATH . "/" . $theme_path . '/layouts/') as $layoutName) {
-				if ($layoutName[0] != '.' && $layoutName != 'index.php') {
-					$available_layouts[$layoutName] = ucfirst($layoutName);
+			if (file_exists(TIKI_PATH ."/". $theme_path . '/layouts/') ) {
+				foreach (scandir(TIKI_PATH . "/" . $theme_path . '/layouts/') as $layoutName) {
+					if ($layoutName[0] != '.' && $layoutName != 'index.php') {
+						$available_layouts[$layoutName] = ucfirst($layoutName);
+					}
 				}
 			}
 		}
