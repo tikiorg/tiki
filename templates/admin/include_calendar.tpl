@@ -75,7 +75,7 @@
 			</div>
 		</div>
 		<div id="usejscalendar" style="display:{if $prefs.feature_jscalendar eq 'y'}none{else}block{/if}">
-			{icon _id=information} {tr}Year selection is valid when the JS Calendar <strong>is not</strong> enabled{/tr}.
+			{icon name='information'} {tr}Year selection is valid when the JS Calendar <strong>is not</strong> enabled{/tr}.
 			{preference name=calendar_start_year}
 			{preference name=calendar_end_year}
 		</div>

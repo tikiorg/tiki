@@ -149,9 +149,9 @@
 								<tr>
 									<td class="icon">
 										{if !$active}
-											{self_link _icon='star_grey' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
+											{self_link _icon_name='star-half' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
 										{else}
-											{icon _id='star' alt="{tr}This is the active account.{/tr}"}
+											{icon name='star' iclass='tips' ititle=':{tr}This is the active account.{/tr}'}
 										{/if}
 									</td>
 									<td class="username">
@@ -295,7 +295,7 @@
 									<input type="text" name="fromEmail" value="{$info.fromEmail}">
 								</td>
 								<td>
-									<em>{tr}Uses the user's login email address if empty{/tr} ({if !empty($userEmail)}{$userEmail}{else}<strong>{tr}No email set:{/tr}</strong> {icon _id="arrow_right" href="tiki-user_preferences.php?cookietab=2"}{/if})</em>
+									<em>{tr}Uses the user's login email address if empty{/tr} ({if !empty($userEmail)}{$userEmail}{else}<strong>{tr}No email set:{/tr}</strong> {icon name="next" href="tiki-user_preferences.php?cookietab=2"}{/if})</em>
 								</td>
 							</tr>
 							<tr><td colspan="4">

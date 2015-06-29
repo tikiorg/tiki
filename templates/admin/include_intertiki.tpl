@@ -65,7 +65,7 @@
 					{foreach key=k item=i from=$prefs.interlist}
 						<tr>
 							<td colspan="2">
-								<a href="tiki-admin.php?page=intertiki&amp;del={$k|escape:'url'}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+								<a href="tiki-admin.php?page=intertiki&amp;del={$k|escape:'url'}" class="tips" title=":{tr}Delete{/tr}">{icon name='delete'}</a>
 								{tr}InterTiki Server{/tr} <b>{$k}</b>
 							</td>
 						</tr>
@@ -180,7 +180,7 @@
 									{foreach key=k item=i from=$prefs.known_hosts}
 										<tr>
 											<td>
-												<a href="tiki-admin.php?page=intertiki&amp;delk={$k|escape:'url'}">{icon _id='cross' alt="{tr}Delete{/tr}"}</a>
+												<a href="tiki-admin.php?page=intertiki&amp;delk={$k|escape:'url'}" class="tips" title=":{tr}Delete{/tr}">{icon name='delete'}</a>
 											</td>
 											<td>
 												<input type="text" name="known_hosts[{$k}][name]" value="{$i.name}" size="12" />

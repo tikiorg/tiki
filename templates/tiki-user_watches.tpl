@@ -56,7 +56,7 @@
 	{tab name="{tr}My watches{/tr}"}
 		<h2>{tr}My watches{/tr}</h2>
 
-		{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use "watches" to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon _id=eye} button on specific pages.{/tr}{/remarksbox}
+		{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use "watches" to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon name='watch'} button on specific pages.{/tr}{/remarksbox}
 
 		{if $add_options|@count > 0}
 			<h3>{tr}Add Watch{/tr}</h3>

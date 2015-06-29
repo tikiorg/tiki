@@ -59,7 +59,7 @@
 
 					{if $gd_lib_found neq 'y'}
 						<div class="highlight">
-							{icon _id=information} {tr}Requires PHP GD library{/tr}.
+							{icon name='information'} {tr}Requires PHP GD library{/tr}.
 						</div>
 					{/if}
 					{preference name=generate_password}
@@ -212,7 +212,7 @@
 				<legend>LDAP {help url="Login+Authentication+Methods"}</legend>
 				{if $prefs.auth_method ne 'ldap'}
 					<div class="alert alert-warning">
-						<div>{icon _id=information} {tr}You must change the Authentication Method to LDAP for these changes to take effect{/tr}.</div>
+						<div>{icon name='information'} {tr}You must change the Authentication Method to LDAP for these changes to take effect{/tr}.</div>
 					</div>
 				{/if}
 
@@ -319,7 +319,7 @@
 				{if $prefs.auth_method ne 'pam'}
 					<div class="alert alert-warning">
 						<div>
-							{icon _id=information} {tr}You must change the Authentication Method to PAM for these changes to take effect{/tr}.
+							{icon name='information'} {tr}You must change the Authentication Method to PAM for these changes to take effect{/tr}.
 						</div>
 					</div>
 				{/if}
@@ -337,7 +337,7 @@
 				<input type="hidden" name="auth_shib" />
 				{if $prefs.auth_method ne 'shib'}
 					<div class="alert alert-warning">
-						<div>{icon _id=information} {tr}You must change the Authentication Method to Shibboleth for these changes to take effect{/tr}.</div>
+						<div>{icon name='information'} {tr}You must change the Authentication Method to Shibboleth for these changes to take effect{/tr}.</div>
 					</div>
 				{/if}
 
@@ -360,7 +360,7 @@
 				{if $prefs.auth_method ne 'cas'}
 					<div class="alert alert-warning">
 						<div>
-							{icon _id=information} {tr}You must change the Authentication Method to CAS for these changes to take effect{/tr}.
+							{icon name='information'} {tr}You must change the Authentication Method to CAS for these changes to take effect{/tr}.
 						</div>
 					</div>
 				{/if}
@@ -395,7 +395,7 @@
 				{/if}
 				{if $prefs.allowRegister ne 'n'}
 					<div class="alert alert-warning">
-						<div>{icon _id=information} {tr}You must turn Users can register off for phpBB Authentication to function properly{/tr}.</div>
+						<div>{icon name='information'} {tr}You must turn Users can register off for phpBB Authentication to function properly{/tr}.</div>
 					</div>
 				{/if}
 				{preference name=auth_phpbb_create_tiki}
@@ -421,7 +421,7 @@
 				{if $prefs.auth_method ne 'ws'}
 					<div class="alert alert-warning">
 						<div>
-							{icon _id=information} {tr}You must change the Authentication Method to Web Server for these changes to take effect{/tr}.
+							{icon name='information'} {tr}You must change the Authentication Method to Web Server for these changes to take effect{/tr}.
 						</div>
 					</div>
 				{/if}

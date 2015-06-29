@@ -55,7 +55,7 @@
 		<h1>{tr}Your OpenID identity is valid{/tr}</h1>
 		<p>{tr}However, no account is associated to the OpenID identifier.{/tr}</p>
 	{/if}
-	<div class="alert alert-warning" id="divRegCapson" style="display: none;">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
+	<div class="alert alert-warning" id="divRegCapson" style="display: none;">{icon name='error' style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
 	{if $allowRegister eq 'y'}
 		<div class="row">
 			{if $userTrackerData}
