@@ -6,16 +6,12 @@
 	{button href="tiki-edit_blog.php" class="btn btn-default" _text="{tr}Create Blog{/tr}"}
 	{button href="tiki-blog_post.php" class="btn btn-default" _text="{tr}New Blog Post{/tr}"}
 	{button href="tiki-list_blogs.php" class="btn btn-default" _text="{tr}List Blogs{/tr}"}
+	{if $posts or ($find ne '')}
+		<div class="col-md-6 row-sidemargins-zero pull-right">
+			{include file='find.tpl'}
+		</div>
+	{/if}
 </div>
-
-{if $posts or ($find ne '')}
-    <div class="row row-sidemargins-zero">
-        <div class="col-md-6">
-	        {include file='find.tpl'}
-        </div>
-    </div>
-{/if}
-
 {if $posts and $tiki_p_blog_admin eq 'y'}
 	<form name="checkboxes_on" method="post" action="tiki-list_posts.php" role="form" class="form">
 	{query _type='form_input'}

@@ -4,7 +4,7 @@
 {/title}
 
 {if isset($sent) && empty($errors)}
-	<div id="success" class="alert alert-warning">
+	<div id="success" class="alert alert-success">
 		{icon name='ok' alt="{tr}OK{/tr}" style="vertical-align:middle" align="left"}
 		{tr}Page shared:{/tr}<br>
 		{if isset($emailSent)}
@@ -51,130 +51,137 @@
 
 {if !isset($sent) && empty($errors)}
 	<div id="ajaxmsg"></div>
-	<form method="post" action="tiki-share.php?url={$url|escape:url}" id="share-form">
-		<input type="hidden" name="url" value="{$url|escape:url}">
-		<input type="hidden" name="report" value="{$report}">
-		<table class="formcolor">
-			{if $prefs.share_display_links eq 'y'}
-				<tr>
-					<td>{tr}Link{/tr}</td>
-					<td><a href="{$prefix}{$url}">{$prefix}{$url}</a></td>
-				</tr>
-				{if $report != 'y'}
-					<tr>
-						<td>{tr}Short link{/tr}</td>
-						<td>{$shorturl}</td>
-					</tr>
-				{/if}
-			{/if}
-			<tr>
-				<td>{tr}Subject{/tr}</td>
-				<td>
-					<input style="width:95%;" type="text" name="subject" value="{$subject|escape|default:"{tr}Have a look at this page{/tr}"}">
-				</td>
-			</tr>
-
-			<tr>
-				<td>
-					{tr}Your message{/tr}
-				</td>
-
-				<td>
-					<textarea name="comment" style="width:95%;" rows="10" id='comment'>{$comment|escape|@default:"{tr}I found an interesting page that I thought you would like.{/tr}"}</textarea>
-				</td>
-			</tr>
-
-			<tr>
-				<td rowspan="2">
-					{icon name='envelope' size='3' alt="{tr}email{/tr}"}
-					<br>
-					{tr}Send via email{/tr}
-				</td>
-				<td>
-					{if $report !='y'}
-						<input type="radio" name="do_email" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('emailtable')" {/if}>
-						{tr}Yes{/tr}
-						<input type="radio" name="do_email" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('emailtable')" {/if}>
-						{tr}No{/tr}
-					{else}
-						<input type="hidden" name="do_email" value="1">&nbsp;
+	<form method="post" action="tiki-share.php?url={$url|escape:url}" id="share-form" class="form-horizontal" role="form">
+		<div class="form-group">
+			<label class="control-label col-sm-3">
+				{tr}Subject{/tr}
+			</label>
+			<div class="col-sm-9">
+				<input class="form-control" type="text" name="subject" value="{$subject|escape|default:"{tr}Have a look at this page{/tr}"}">
+			</div>
+		</div>
+		<div class="form-group clearfix">
+			<label class="control-label col-sm-3">
+				{tr}Text{/tr}
+			</label>
+			<div class="col-sm-9">
+				<textarea name="comment" class="form-control" rows="5" id='comment'>{$comment|escape|@default:"{tr}I found an interesting page that I thought you would like.{/tr}"}</textarea>
+			</div>
+		</div>
+		{if $prefs.share_display_links eq 'y'}
+			<div class="form-group">
+				<label for="url" class="control-label col-sm-3">
+					{tr}Link{/tr}
+				</label>
+				<div class="col-sm-9">
+					<a href="{$prefix}{$url}">{$prefix}{$url}</a>
+					{if $report != 'y'}
+						<span class="help-block">
+							{tr}Short link{/tr}:{$shorturl}
+						</span>
 					{/if}
-				</td>
-			</tr>
-			<tr id="emailrow">
-				<td>
-					<table class="formcolor" id="emailtable">
-						{if $report!='y'}
-							<tr>
-								<td>{tr}Recipient(s){/tr}</td>
-								<td>
-									{if $prefs.feature_jquery_autocomplete == 'y'}
-										{user_selector contact='true' user = '' multiple='true' editable='y' mustmatch='false' group='all' name='addresses' id='addresses' style='width:95%' user_selector_threshold=0}
-										<br>
-										<em>{tr}Separate multiple email addresses with a comma and a space{/tr}</em>
-									{else}
-										<input style="width:95%;" type="text" size="60" name="addresses" value="{$addresses|escape}">
-										<br>
-										<em>{tr}Separate multiple email addresses with a comma.{/tr}</em>
-									{/if}
-								</td>
-							</tr>
-						{/if}
-						{if $prefs.share_display_name_and_email eq 'y'}
-								<tr>
-									<td>{tr}Your name{/tr}</td>
-									<td>
-										<input style="width:95%;" type="text" name="name" value="{$name|username:false:true}">
-									</td>
-								</tr>
-								<tr>
-									<td>
-										{tr}Your email{/tr}{if empty($email)} <strong class="mandatory_star">*</strong>{/if}
-									</td>
-									<td>
-										<div class="mandatory_field">
-											<input style="width:95%;" type="text" name="email" value="{$email}">
-										</div>
-									</td>
-								</tr>
-						{else}
-								<tr>
-									<td colspan="2">
-										<input type="hidden" value="{$name}" name="name">
-										<input type="hidden" value="{$email}" name="email">
-									</td>
-								</tr>
-						{/if}
-
-						{if $prefs.share_token_notification eq 'y'}
-							<tr><td colspan="2"><hr></td> </tr>
-							<tr>
-								<td>{tr}Subscribe notification{/tr}</td>
-								<td><input type="checkbox" value="y" name="share_token_notification" {if $share_token_notification eq 'y'}checked="checked" {/if}></td>
-							</tr>
-						{/if}
-
-						{if $prefs.share_can_choose_how_much_time_access eq 'y' && $prefs.auth_token_access eq 'y'}
-							<tr>
-								<td>{tr}How many times recipients can access this page{/tr}</td>
-								<td>
-									{if $prefs.share_max_access_time eq -1}
-										<input type="text" name="how_much_time_access" value="{$how_much_time_access|default:1}">
-									{else}
-										<select id="how_much_time_access" name="how_much_time_access">
-											{section name=share_max_access start=1 loop=$prefs.share_max_access_time+1}
-												{html_options values=$smarty.section.share_max_access.index output=$smarty.section.share_max_access.index}
-											{/section}
-										</select>
-									{/if}
-									&nbsp;{tr}time{/tr}
-								</td>
-							</tr>
-						{/if}
-					</table>
-				</td>
-			</tr>
-			{if $twitterRegistered}
+				</div>
+			</div>
+		{/if}
+		<div class="panel panel-default">
+			<div class="panel-heading radio">
+				<label for="do_email" class="control-label col-sm-3 pull-left">
+					{icon name="admin_webmail"} {tr}Send email{/tr}
+				</label>
+				{if $report !='y'}
+					<label class="radio-inline">					
+						<input class="share-email-show" type="radio" name="do_email" value="1" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('emailtable')" {/if} class="share-email-toggle">
+						{tr}Yes{/tr}
+					</label>
+					<label class="radio-inline">
+						<input class="share-email-hide" type="radio" name="do_email" value="0" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('emailtable')" {/if}>
+						{tr}No{/tr}
+					</label>
+				{else}
+					<input type="hidden" name="do_email" value="1">
+				{/if}
+			</div>
+			<div class="panel-body share-email-details">
+				{if $report!='y'}
+					<div class="form-group">
+						<label for="addresses" class="control-label col-sm-3">
+							{tr}Recipient(s){/tr}
+						</label>
+						<div class="col-sm-9">
+							{if $prefs.feature_jquery_autocomplete == 'y'}
+								{user_selector contact='true' user = '' multiple='true' editable='y' mustmatch='false' group='all' name='addresses' id='addresses' user_selector_threshold=0 style='width:99%'}
+								<span class="help-block">
+									{tr}Separate multiple email addresses with a comma and a space{/tr}
+								</span>
+							{else}
+								<input class="form-control" type="text" size="60" name="addresses" value="{$addresses|escape}">
+								<span class="help-block">
+									{tr}Separate multiple email addresses with a comma.{/tr}
+								</span>
+							{/if}
+						</div>
+					</div>
+				{/if}
+				{if $prefs.share_display_name_and_email eq 'y'}
+					<div class="form-group">
+						<label for="name" class="control-label col-sm-3">
+							{tr}Your name{/tr}
+						</label>
+						<div class="col-sm-9">
+							<input class="form-control" type="text" name="name" value="{$name|username:false:true}">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="email" class="control-label col-sm-3">
+							{tr}Your email{/tr}{if empty($email)} <strong class="mandatory_star">*</strong>{/if}
+						</label>
+						<div class="mandatory_field col-sm-9">
+							<input class="form-control" type="text" name="email" value="{$email}">
+						</div>
+					</div>
+				{else}
+					<input type="hidden" value="{$name}" name="name">
+					<input type="hidden" value="{$email}" name="email">
+				{/if}
+				{if $prefs.share_token_notification eq 'y'}
+					<div class="form-group">
+						<div class="col-sm-offset-3 col-sm-9">
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" value="y" name="share_token_notification" {if $share_token_notification eq 'y'}checked="checked" {/if}> {tr}Subscribe{/tr}
+								</label>
+								<span class="help-block">
+									{tr}Recipients can subscribe to token notifications{/tr}
+								</span>
+							</div>
+						</div>
+					</div>
+				{/if}
+				{if $prefs.share_can_choose_how_much_time_access eq 'y' && $prefs.auth_token_access eq 'y'}
+					<div class="form-group">
+						<label for="how_much_time_access" class="control-label col-sm-3">
+							{tr}Token Access Limit{/tr}
+						</label>
+						<div class="col-sm-2">
+							{if $prefs.share_max_access_time eq -1}
+								<input type="text" name="how_much_time_access" value="{$how_much_time_access|default:1}" class="form-control">
+							{else}
+								<select id="how_much_time_access" name="how_much_time_access" class="form-control">
+									{section name=share_max_access start=1 loop=$prefs.share_max_access_time+1}
+										{html_options values=$smarty.section.share_max_access.index output=$smarty.section.share_max_access.index}
+									{/section}
+								</select>
+							{/if}
+						</div>
+						<div class="help-block col-sm-9 col-sm-offset-3">
+							{tr}How many times recipients can access this page{/tr}
+						</div>
+					</div>
+				{/if}
+			</div>
+		</div>
+		{if $twitterRegistered}
+			<div class="panel panel-default">
 				<tr>
 					<td rowspan="2">
 						{icon name='twitter' size='2'}
@@ -210,9 +217,10 @@
 						{/if}
 					</td>
 				</tr>
-			{/if}
-
-			{if $facebookRegistered}
+			</div>
+		{/if}
+		{if $facebookRegistered}
+			<div class="panel panel-default">
 				<tr>
 					<td rowspan="2">
 						{icon name='facebook' size='2' alt="Facebook"}
@@ -259,134 +267,135 @@
 						{/if}
 					</td>
 				</tr>
-			{/if}
-
-			{if $prefs.feature_messages eq 'y' && $report != 'y'}
-				<tr>
-					<td rowspan="2">
-						{icon name='send' size='3' alt="{tr}Messages{/tr}"}
-						<br>
-						{tr}Send message{/tr}
-					</td>
-					<td>
-						{if $send_msg=='y'}
-							<input type="radio" name="do_message" value="1" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('messagetable')" {/if}>
+			</div>
+		{/if}
+		{if $prefs.feature_messages eq 'y' && $report != 'y'}
+			<div class="panel panel-default">
+				<div class="panel-heading radio">
+					{if $send_msg=='y'}
+						<label for="do_message" class="control-label col-sm-3">
+							{icon name="admin_messages"} {tr}Send message{/tr}
+						</label>
+						<label class="radio-inline">
+							<input class="share-message-show" type="radio" name="do_message" value="1" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('messagetable')" {/if}>
 							{tr}Yes{/tr}
-							<input type="radio" name="do_message" value="0" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('messagetable')" {/if}>
+						</label>
+						<label class="radio-inline">
+							<input class="share-message-hide" type="radio" name="do_message" value="0" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('messagetable')" {/if}>
 							{tr}No{/tr}
-						{else}
-							{remarksbox type="note" title="{tr}Note{/tr}"}
-								<p>{tr}You do not have the permission to send messages or you did not allow other users to send you messages.{/tr}</p>
-							{/remarksbox}
-						{/if}
-					</td>
-				</tr>
-				<tr id="messagerow">
-					<td>
-						{if $send_msg}
-							<table class="formcolor" id="messagetable" style="display: none;">
-								<tr>
-									<td>{tr}Recipient(s){/tr}</td>
-									<td>
-										{if $prefs.feature_jquery_autocomplete == 'y'}
-											{user_selector user = '' editable='y' multiple='true' name='messageto' style='width:95%' user_selector_threshold=0}
-										{else}
-											<input style="width:95%;" type="text" size="60" name="messageto" value="{$messageto|escape}">
-										{/if}
-										<br>
-										<em>{tr}Separate multiple recipients with a semicolon.{/tr}</em>
-									</td>
-								</tr>
-								<tr>
-									<td>{tr}Priority{/tr}</td>
-									<td>
-										<select name="priority" id="mess-prio">
-											<option value="1" {if $priority eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
-											<option value="2" {if $priority eq 2}selected="selected"{/if}>2 -{tr}Low{/tr}-</option>
-											<option value="3" {if $priority eq 3}selected="selected"{/if}>3 -{tr}Normal{/tr}-</option>
-											<option value="4" {if $priority eq 4}selected="selected"{/if}>4 -{tr}High{/tr}-</option>
-											<option value="5" {if $priority eq 5}selected="selected"{/if}>5 -{tr}Very High{/tr}-</option>
-										</select>
-									</td>
-								</tr>
-							</table>
-						{else}
-							&nbsp;
-						{/if}
-					</td>
-				</tr>
-			{/if}
-			{if $prefs.feature_forums eq 'y' && $report != 'y'}
-				<tr>
-					<td rowspan="2">
-						{icon name='comments' size='3' alt="{tr}Forums{/tr}"}
-						<br>
-						{tr}Post on forum{/tr}
-					</td>
-					<td>
-						{if count($forums)>0}
-							<input type="radio" name="do_forum" value="1" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('forumtable')" {/if}>
+						</label>
+					{else}
+						{remarksbox type="note" title="{tr}Send message{/tr}" close="n"}
+							{tr}You do not have the permission to send messages or you did not allow other users to send you messages.{/tr}
+						{/remarksbox}
+					{/if}
+				</div>
+				<div class="panel-body share-message-details hidden">
+				{if $send_msg}
+					<div class="form-group clearfix">
+						<label for="messageto" class="control-label col-sm-3">
+							{tr}User(s){/tr}
+						</label>
+						<div class="col-sm-9">
+							{if $prefs.feature_jquery_autocomplete == 'y'}
+								{user_selector user = '' editable='y' multiple='true' name='messageto' style='width:99%' user_selector_threshold=0}
+							{else}
+								<input class="form-control" type="text" class="form-control" name="messageto" value="{$messageto|escape}">
+							{/if}
+							<span class="help-block">
+								{tr}Separate multiple recipients with a semicolon.{/tr}
+							</span>
+						</div>
+					</div>
+					<div class="form-group clearfix">
+						<label for="priority" class="control-label col-sm-3">
+							{tr}Priority{/tr}
+						</label>
+						<div class="col-sm-9">
+							<select name="priority" id="mess-prio" class="form-control">
+								<option value="1" {if $priority eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
+								<option value="2" {if $priority eq 2}selected="selected"{/if}>2 -{tr}Low{/tr}-</option>
+								<option value="3" {if $priority eq 3}selected="selected"{/if}>3 -{tr}Normal{/tr}-</option>
+								<option value="4" {if $priority eq 4}selected="selected"{/if}>4 -{tr}High{/tr}-</option>
+								<option value="5" {if $priority eq 5}selected="selected"{/if}>5 -{tr}Very High{/tr}-</option>
+							</select>
+						</div>
+					</div>
+				{else}
+					&nbsp;
+				{/if}
+				</div>
+			</div>
+		{/if}
+		{if $prefs.feature_forums eq 'y' && $report != 'y'}
+			<div class="panel panel-default">
+				<div class="panel-heading radio">
+					{if count($forums)>0}
+						<label for="do_forum" class="control-label col-sm-3">
+							{icon name="admin_forums"} {tr}Post on forum{/tr}
+						</label>
+						<label class="radio-inline">
+							<input class="share-forum-show" type="radio" name="do_forum" value="1" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('forumtable')" {/if}>
 							{tr}Yes{/tr}
-							<input type="radio" name="do_forum" value="0" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('forumtable')" {/if}>
+						</label>
+						<label class="radio-inline">
+							<input class="share-forum-hide" type="radio" name="do_forum" value="0" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('forumtable')" {/if}>
 							{tr}No{/tr}
-						{else}
-							{remarksbox type="note" title="{tr}Note{/tr}"}
-								<p>{tr}There is no forum where you can post a message.{/tr}</p>
-							{/remarksbox}
-						{/if}
-					</td>
-				</tr>
-				<tr id="forumrow">
-					<td>
-						{if count($forums)>0}
-							<table class="formcolor" id="forumtable" style="display: none;">
-								<tr>
-									<td>{tr}Forum{/tr}</td>
-									<td>
-										<select name="forumId" id="forumId" style="width:95%;">
-											{foreach from=$forums item="forum"}
-												<option value="{$forum.forumId}"{if $forum.forumId==$forumId} selected="selected"{/if}>
-													{$forum.name}{if $forum.forum_use_password!='n'} ({tr}password-protected{/tr}){/if}
-												</option>
-											{/foreach}
-										</select>
-									</td>
-								</tr>
-								<tr>
-									<td>{tr}Password{/tr}</td>
-									<td>
-										<input type="password" name="forum_password" style="width:95%;">
-									</td>
-								</tr>
-								{if $prefs.feature_contribution eq 'y'}
-									{include file='contribution.tpl'}
-								{/if}
-							</table>
-						{else}
-							&nbsp;
-						{/if}
-					</td>
-				</tr>
-			{/if}
-
-			{if $prefs.feature_antibot eq 'y' && $user eq ''}
-				{include file='antibot.tpl' td_style="formcolor"}
-			{/if}
-			<tr>
-				<td></td>
-				<td>
-					<input type="submit" class="button btn btn-default" name="send" value="{tr}Share{/tr}">
-					{if $share_access}
-						<input type="hidden" name="share_access" value="1">
+						</radio>
+					{else}
+						{remarksbox type="note" title="{tr}Post on forum{/tr}" close="n"}
+							{tr}There is no forum where you can post a message.{/tr}
+						{/remarksbox}
 					{/if}
-					{if $prefs.auth_tokens_share eq 'y' and $user!='' and $report !='y'}
-						<input type="checkbox" name="share_access" value="1" id="share_access" {if $share_access}checked="checked" {/if}>
-						<label for="share_access">{tr}Share access rights{/tr}</label>
+				</div>
+				<div class="panel-body share-forum-details hidden">
+					{if count($forums)>0}
+						<div class="form-group">
+							<label class="control-label col-sm-3">
+								{tr}Forum{/tr}
+							</label>
+							<div class="col-sm-9">
+								<select name="forumId" id="forumId" class="form-control">
+									{foreach from=$forums item="forum"}
+										<option value="{$forum.forumId}"{if $forum.forumId==$forumId} selected="selected"{/if}>
+											{$forum.name}{if $forum.forum_use_password!='n'} ({tr}password-protected{/tr}){/if}
+										</option>
+									{/foreach}
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-3">
+								{tr}Password{/tr}
+							</label>
+							<div class="col-sm-9">
+								<input class="form-control" type="password" name="forum_password">
+							</div>
+							{if $prefs.feature_contribution eq 'y'}
+								{include file='contribution.tpl'}
+							{/if}
+						</div>
 					{/if}
-				</td>
-			</tr>
-
-		</table>
+				</div>
+			</div>
+		{/if}
+		{if $prefs.feature_antibot eq 'y' && $user eq ''}
+			{include file='antibot.tpl'}
+		{/if}
+		<div class="submit text-center">
+			<input type="hidden" name="url" value="{$url|escape:url}">
+			<input type="hidden" name="report" value="{$report}">
+			<button type="submit" class="btn btn-primary" name="send">
+				{icon name="share"} {tr}Share{/tr}
+			</button>
+			{if $share_access}
+				<input type="hidden" name="share_access" value="1">
+			{/if}
+			{if $prefs.auth_tokens_share eq 'y' and $user!='' and $report !='y'}
+				<input type="checkbox" name="share_access" value="1" id="share_access" {if $share_access}checked="checked" {/if}>
+				<label for="share_access">{tr}Share access rights{/tr}</label>
+			{/if}
+		</div>
 	</form>
 {else}
 	<p><a href="javascript:window.history.go(-2);">{tr}Return to previous page{/tr}</a></p>
@@ -421,5 +430,23 @@
 			}
 			e.preventDefault();
 			return false;
+	});
+	$(".share-email-hide").click(function(){
+		$(".share-email-details").addClass('hidden');
+	});
+	$(".share-email-show").click(function(){
+		$(".share-email-details").removeClass('hidden');
+	});
+	$(".share-message-hide").click(function(){
+		$(".share-message-details").addClass('hidden');
+	});
+	$(".share-message-show").click(function(){
+		$(".share-message-details").removeClass('hidden');
+	});
+	$(".share-forum-hide").click(function(){
+		$(".share-forum-details").addClass('hidden');
+	});
+	$(".share-forum-show").click(function(){
+		$(".share-forum-details").removeClass('hidden');
 	});
 {/jq}
