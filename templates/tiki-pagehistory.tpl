@@ -98,9 +98,9 @@
 	<form id="pagehistory" class="form-horizontal" action="tiki-pagehistory.php?page={$page}" method="post">
 		<input type="hidden" name="page" value="{$page|escape}">
 		<input type="hidden" name="history_offset" value="{$history_offset}">
-		<div>
+		<div class="clearfix">
 			{if ($prefs.default_wiki_diff_style ne "old") and $history}
-				<div class="input-group col-sm-5 pull-right">
+				<div class="input-group input-group-sm col-sm-5 pull-right">
 					<select class="form-control" name="diff_style" id="diff_style_all"{if $prefs.javascript_enabled eq "y"} style="display: none"{/if}>
 						<option value="htmldiff" {if $diff_style == "htmldiff"}selected="selected"{/if}>
 							{tr}HTML diff{/tr}
@@ -137,7 +137,7 @@
 						</option>
 					</select>
 					{if $prefs.javascript_enabled eq "y"}
-						<select class="form-control" name="diff_style" id="diff_style_simple" style="float:right">
+						<select class="form-control" name="diff_style" id="diff_style_simple">
 							<option value="htmldiff" {if $diff_style == "htmldiff"}selected="selected"{/if}>
 								{tr}HTML diff{/tr}
 							</option>
