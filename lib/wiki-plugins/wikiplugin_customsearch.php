@@ -334,9 +334,9 @@ window.customsearch_$id = customsearch;
 			$match->replaceWith('');
 			continue;
 		}
-		if (!empty($arguments['_field']) && $arguments['_filter'] == 'content') {
+		if (!empty($arguments['_field']) && !empty($arguments['_filter']) && $arguments['_filter'] == 'content') {
 			$filter = $arguments['_field'];
-		} elseif (!empty($arguments['_field']) && $arguments['_filter'] == 'content') {
+		} elseif (empty($arguments['_field']) && !empty($arguments['_filter']) && $arguments['_filter'] == 'content') {
 			$filter = 'content';
 		} else {
 			$filter = '';
