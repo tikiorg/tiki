@@ -147,15 +147,23 @@ if (count($history) > 0) {
 	$lasttime = 0;		// secs
 	$idletime = 1800; 	// max gap between edits in sessions 30 mins? Maybe should use a pref?
 	for ($i = 0, $cnt = count($history); $i < $cnt; $i++) {
-
-		if ($history[$i]['user'] != $lastuser || $lasttime - $history[$i]['lastModif'] > $idletime) {
+		if ((isset($history[$i]['user']) && $history[$i]['user'] != $lastuser) || (isset($history[$i]['lastModif']) && $lasttime - $history[$i]['lastModif'] > $idletime)) {
 			$sessions[] = $history[$i];
 			//$history[$i]['session'] = $history[$i]['version'];
 		} else if (count($sessions) > 0) {
 			$history[$i]['session'] = $sessions[count($sessions)-1]['version'];
 		}
-		$lastuser = $history[$i]['user'];
-		$lasttime = $history[$i]['lastModif'];
+		if(isset($history[$i]['user'])){
+			$lastuser = $history[$i]['user'];
+		}
+		else {
+			$lastuser = '';
+		}
+		if(isset($history[$i]['lastModif'])){
+			$lasttime = $history[$i]['lastModif'];
+		} else {
+			$lasttime = 0;
+		}
 	}
 	$csesh = count($sessions) + 1;
 	foreach ($history as &$h) {	// move ending 'version' into starting 'session'
