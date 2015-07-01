@@ -47,6 +47,11 @@ function module_menu_info()
 				'description' => tra('Used in Bootstrap navbar menus when viewport is too narrow for menu items').' ( y / n )',
 				'default' => 'y',
 			),
+			'navbar_brand' => array(
+				'name' => tra('The URL of the navbar brand(logo)'),
+				'description' => tra('Used in Bootstrap navbar menus, if there is a Brand logo to be attached to the menu').' ( y / n )',
+				'default' => '',
+			),
 			'navbar_class' => array(
 				'name' => tra('CSS class for the menu nav element'),
 				'description' => tra(''),
