@@ -185,6 +185,8 @@
 			{preference name=user_who_viewed_my_stuff_show_others}
 
 			{preference name=user_store_file_gallery_picture}
+			{preference name=user_small_avatar_size}
+			{preference name=user_small_avatar_square_crop}
 			{preference name=user_picture_gallery_id}
 			{preference name=user_default_picture_id}
 

@@ -69,6 +69,19 @@ function prefs_user_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'user_small_avatar_size' => array(
+			'name' => tra('Size of the small avatar stored for users.'),
+			'help' => 'User+Preferences',
+			'type' => 'text',
+			'filter' => 'digits',
+			'default' => '45',
+		),
+		'user_small_avatar_square_crop' => array(
+			'name' => tra('Sets whether the image avatar thumbnail should be cropped to a square'),
+			'help' => 'User+Preferences',
+			'type' => 'flag',
+			'default' => 'n',
+		),
 		'user_picture_gallery_id' => array(
 			'name' => tra('File gallery in which to store full-size copy of profile picture'),
 			'description' => tra('Enter the gallery id here. Please create a dedicated gallery that is admin-only for security, or make sure gallery permissions are set so that only admins can edit.'),

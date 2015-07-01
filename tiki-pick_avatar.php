@@ -51,15 +51,29 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 		$fgImageId = $userprefslib->set_file_gallery_image($userwatch, $name, $size, $itype, $data);
 	}
 	// Store small avatar
-	if (($iwidth == 45 and $iheight <= 45) || ($iwidth <= 45 and $iheight == 45)) {
+	if ($prefs['user_small_avatar_size']) {
+		$avsize = $prefs['user_small_avatar_size'];
+	} else {
+		$avsize = "45"; //default
+	}
+	if (($iwidth == $avsize and $iheight <= $avsize) || ($iwidth <= $avsize and $iheight == $avsize)) {
 		$userprefslib->set_user_avatar($userwatch, 'u', '', $name, $size, $itype, $data);
 	} else {
 		if (function_exists("ImageCreateFromString") && (!strstr($type, "gif"))) {
 			$img = imagecreatefromstring($data);
 			$size_x = imagesx($img);
 			$size_y = imagesy($img);
-			if ($size_x > $size_y) $tscale = ((int)$size_x / 45);
-			else $tscale = ((int)$size_y / 45);
+			/* if the square crop is set, crop the image before resizing */
+			if ($prefs['user_small_avatar_square_crop']){
+				$crop_size = min ($size_x, $size_y);
+				$offset_x = ($size_x - $crop_size)/2;
+				$offset_y = ($size_y - $crop_size)/2;
+				$crop_array = array('x' =>$offset_x , 'y' => $offset_y, 'width' => $crop_size, 'height'=> $crop_size);
+				$img = imagecrop($img,$crop_array);
+				$size_x = $size_y = $crop_size;
+			}
+			if ($size_x > $size_y) $tscale = ((int)$size_x / $avsize);
+			else $tscale = ((int)$size_y / $avsize);
 			$tw = ((int)($size_x / $tscale));
 			$ty = ((int)($size_y / $tscale));
 			if ($tw > $size_x) $tw = $size_x;
