@@ -111,9 +111,9 @@
 	<form id="pagehistory" class="form-horizontal" action="tiki-pagehistory.php?page={$page}" method="post">
 		<input type="hidden" name="page" value="{$page|escape}">
 		<input type="hidden" name="history_offset" value="{$history_offset}">
-		<div>
+		<div class="clearfix">
 			{if ($prefs.default_wiki_diff_style ne "old") and $history}
-				<div class="input-group col-sm-5" style="float:right">
+				<div class="input-group input-group-sm col-sm-5 pull-right">
 					<select class="form-control" name="diff_style" id="diff_style_all"{if $prefs.javascript_enabled eq "y"} style="display: none"{/if}>
 						<option value="htmldiff" {if $diff_style == "htmldiff"}selected="selected"{/if}>
 							{tr}HTML diff{/tr}
@@ -150,7 +150,7 @@
 						</option>
 					</select>
 					{if $prefs.javascript_enabled eq "y"}
-						<select class="form-control" name="diff_style" id="diff_style_simple" style="float:right">
+						<select class="form-control" name="diff_style" id="diff_style_simple">
 							<option value="htmldiff" {if $diff_style == "htmldiff"}selected="selected"{/if}>
 								{tr}HTML diff{/tr}
 							</option>
@@ -436,41 +436,48 @@
 							{/if}
 						</tr>
 					{/foreach}
-					{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit eq 'y'}
 					<tr>
 						<td colspan="9">
-							<div class="input-group-sm col-sm-5" style="float:left">
-								<select name="tra_lang" class="form-control">
-									{section name=ix loop=$languages}
-										<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
-									{/section}
-								</select>
-							</div>
-							<input type="submit" class="btn btn-default btn-sm" name="update_translation" value="{tr}Update Translation{/tr}"/>
-							{if $show_translation_history}
-								<input type="hidden" name="show_translation_history" value="1">
-								{button show_translation_history=0 _text='{tr}Hide translation history{/tr}' _auto_args="*" _class="btn btn-default btn-sm"}
-							{else}
-								{button show_translation_history=1 _text='{tr}Show translation history{/tr}' _auto_args="*" _class="btn btn-default btn-sm"}
+							{if $paginate}
+								{if isset($smarty.request.history_offset)}
+									{pagination_links cant=$history_cant offset=$smarty.request.history_offset offset_arg="history_offset" step=$maxRecords}{/pagination_links}
+								{else}
+									{pagination_links cant=$history_cant offset_arg="history_offset" step=$maxRecords}{/pagination_links}
+								{/if}
+							{/if}
+							<input type="checkbox" name="paginate" id="paginate"{if $paginate} checked="checked"{/if}>
+							<label for="paginate">{tr}Enable pagination{/tr}</label>
+							{if $paginate}
+								<input type="text" name="history_pagesize" id="history_pagesize" value="{$history_pagesize}" size="5">
+								<label for="history_pagesize">{tr}per page{/tr}</label>
+							{/if}
+							{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit eq 'y'}
+								<div class="form-inline pull-right">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon">
+											{icon name="admin_i18n" class="tips" title=":{tr}Translation{/tr}"}
+										</span>
+										<select name="tra_lang" class="form-control">
+											{section name=ix loop=$languages}
+												<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
+											{/section}
+										</select>
+										<div class="input-group-btn">
+											<input type="submit" class="btn btn-primary btn-sm" name="update_translation" value="{tr}Update Translation{/tr}"/>
+										</div>
+									</div>
+									{if $show_translation_history}
+										<input type="hidden" name="show_translation_history" value="1">
+										{button show_translation_history=0 _text='{tr}Hide translation history{/tr}' _auto_args="*" _class="btn btn-default btn-sm"}
+									{else}
+										{button show_translation_history=1 _text='{tr}Show translation history{/tr}' _auto_args="*" _class="btn btn-default btn-sm"}
+									{/if}
+								</div>
 							{/if}
 						</td>
 					</tr>
-					{/if}
 				</table>
 			</div>
-			{if $paginate}
-				{if isset($smarty.request.history_offset)}
-					{pagination_links cant=$history_cant offset=$smarty.request.history_offset offset_arg="history_offset" step=$maxRecords}{/pagination_links}
-				{else}
-					{pagination_links cant=$history_cant offset_arg="history_offset" step=$maxRecords}{/pagination_links}
-				{/if}
-			{/if}
-			<input type="checkbox" name="paginate" id="paginate"{if $paginate} checked="checked"{/if}>
-			<label for="paginate">{tr}Enable pagination{/tr}</label>
-			{if $paginate}
-				<input type="text" name="history_pagesize" id="history_pagesize" value="{$history_pagesize}" size="5">
-				<label for="history_pagesize">{tr}per page{/tr}</label>
-			{/if}
 		</div>
 	</form>
 {/if}

@@ -26,7 +26,6 @@ if ($prefs['feature_categories'] == 'y') {
 }
 
 $access->check_feature('feature_articles');
-$access->check_permission_either(array('tiki_p_read_article', 'tiki_p_articles_read_heading'));
 
 if (isset($_REQUEST["remove"])) {
 	$access->check_permission('tiki_p_remove_article');
