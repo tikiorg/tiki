@@ -14,7 +14,7 @@
 
 {$totimg} {tr}available images{/tr} {$dirsize} <br><br>
 <form method="post" action="tiki-batch_upload.php" name="f">
-	<table border="0" class="table normal" id="imagelist" width="100%">
+	<table class="table normal" id="imagelist">
 		<tr>
 			<th style="width:42px">{select_all checkbox_names='imgs[]'}</th>
 			<th><a href="javascript:void(0);">{tr}Filename{/tr}</a></th>

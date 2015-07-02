@@ -13,16 +13,16 @@
 		{preference name=feature_backlinks}
 	</fieldset>
 </form>
-<table width="100%">
-	<col width="50%">
-	<col width="50%">
+<table class="table">
+	<col style="width:50%">
+	<col style="width:50%">
 	<tr>
 		<td>
 			<h2>{tr}Known Types{/tr}</h2>
 			<form method="post" action="{$smarty.server.REQUEST_URI|escape}">
 				<input type="hidden" name="ticket" value="{$ticket|escape}">
 
-				<table width="100%">
+				<table class="table">
 					<tr>
 						<th></th>
 						<th>{tr}Token{/tr}</th>
@@ -75,7 +75,7 @@
 		</td>
 		<td>
 			<h2>{tr}New Types{/tr}</h2>
-			<table width="100%">
+			<table class="table">
 				<tr>
 					<th>{tr}Token{/tr}</th>
 					<th>{tr}Actions{/tr}</th>

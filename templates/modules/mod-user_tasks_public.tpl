@@ -5,7 +5,7 @@
 		<div class="table-responsive">
 			<table class="table normal">
 				<tr>
-					<td width="100%">
+					<td style="width:100%">
 						<form class="forms" method="post" action="{$ownurl}">
 							<select name="user_group">
 								<option value="">{tr}select{/tr}</option>
