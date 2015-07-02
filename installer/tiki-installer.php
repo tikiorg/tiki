@@ -192,6 +192,7 @@ function write_local_php($dbb_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tik
 			$filetowrite .= "\$client_charset='$client_charset';\n";
 		}
 		$filetowrite .= "// \$dbfail_url = '';\n";
+		$filetowrite .= "// \$noroute_url = './';\n";
 		$filetowrite .= "// If you experience text encoding issues after updating (e.g. apostrophes etc showing up as strange characters) \n";
 		$filetowrite .= "// \$client_charset='latin1';\n";
 		$filetowrite .= "// \$client_charset='utf8';\n";
