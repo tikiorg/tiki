@@ -25,7 +25,7 @@
          </div>
         <div class="row">
             {if zone_is_empty('left') and zone_is_empty('right')}
-                <div class="col-md-12" id="col1">
+                <div class="col-md-12 col1" id="col1">
                     {if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
                         {modulelist zone=pagetop}
                     {/if}
@@ -41,7 +41,7 @@
                     {/if}
                 </div>
             {elseif zone_is_empty('left')}
-                <div class="col-md-9" id="col1">
+                <div class="col-md-9 col1" id="col1">
                     {if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
                         {modulelist zone=pagetop}
                     {/if}
@@ -60,7 +60,7 @@
                     {modulelist zone=right}
                 </div>
             {elseif zone_is_empty('right')}
-                <div class="col-md-9 col-md-push-3" id="col1">
+                <div class="col-md-9 col-md-push-3 col1" id="col1">
                     {if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
                         {modulelist zone=pagetop}
                     {/if}
@@ -79,7 +79,7 @@
                     {modulelist zone=left}
                 </div>
             {else}
-                <div class="col-md-8 col-md-push-2" id="col1">
+                <div class="col-md-8 col-md-push-2 col1" id="col1">
                     {if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
                         {modulelist zone=pagetop class=row}
                     {/if}
