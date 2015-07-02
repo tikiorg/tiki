@@ -218,7 +218,7 @@
 
 		<h2>{tr}Assign Quick-Permissions to this object{/tr}</h2>
 
-		<table width="100%">
+		<table class="table">
 			<tr>
 				<th>{tr}Groups{/tr}</th>
 			{foreach item=permgroup from=$quickperms}

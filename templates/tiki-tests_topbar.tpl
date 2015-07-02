@@ -1,6 +1,6 @@
 <!-- StartTikiTestRemoveMe -->
-<div id="tiki-test-topbar" style="background-color:red;" class="clearfix" style="width:100%">
-	<table width="100%">
+<div id="tiki-test-topbar" style="background-color:red;width:100%" class="clearfix">
+	<table class="table">
 		<tr>
 			<td>{icon name='notification'}</td>
 			<td><b>TikiTest</b>&nbsp;{$tikitest_filename}</td>

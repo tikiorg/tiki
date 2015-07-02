@@ -54,7 +54,7 @@
 		<a class="link" href="tiki-minical.php?view={$view}&amp;day={$tomorrow|tiki_date_format:"%d"}&amp;mon={$tomorrow|tiki_date_format:"%m"}&amp;year={$tomorrow|tiki_date_format:"%Y"}">{icon name='forward' style="vertical-align:middle"}</a>
 	</b>
 
-	<table clas="normal" width="100%">
+	<table class="table">
 		{section name=ix loop=$slots}
 			<tr>
 				<td>
