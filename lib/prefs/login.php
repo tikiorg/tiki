@@ -42,6 +42,16 @@ function prefs_login_list()
 			'default' => 'n',
 			'tags' => array('advanced'),			
 		),
+		'login_grab_session' => array(
+			'name' => tr('Grab session if already logged in'),
+			'description' => tr('If users are blocked from logging in simultaneously, grab the session. Will force existing user to be logged out'),
+			'type' => 'flag',
+			'default' => 'n',
+			'dependencies' => array(
+				'login_multiple_forbidden',
+			),
+			'tags' => array('advanced'),
+		),
 		'login_autologin' => array(
 			'name' => tr('Enable autologin from remote Tiki'),
 			'description' => tr('Used with autologin_remotetiki in the redirect plugin'),

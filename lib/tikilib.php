@@ -2422,8 +2422,9 @@ class TikiLib extends TikiDb_Bridge
 					$logslib->add_log("login", "back", $user, '', '', $this->now);
 				} else {
 					// Prevent multiple sessions for same user
-					$query = "SELECT count(*) FROM `tiki_sessions` WHERE `timestamp`<? AND user = ?";
-					$cant = $this->getOne($query, array($oldy,$user));
+					// Must check any user session, not only timed out ones
+					$query = "SELECT count(*) FROM `tiki_sessions` WHERE user = ?";
+					$cant = $this->getOne($query, array($user));
 					if ($cant == 0) {
 						// Recover after timeout (no other session)
 						$logslib->add_log("login", "back", $user, '', '', $this->now);

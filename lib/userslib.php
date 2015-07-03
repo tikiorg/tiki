@@ -342,6 +342,23 @@ class UsersLib extends TikiLib
 		);
 	}
 
+	/**
+	 * Force a logout for the specified user
+	 * @param $user
+	 */
+	function force_logout($user)
+	{
+		if (!empty($user)) {
+			// Clear the timestamp for the existing session,
+			//	which will force a logout next time the user accesses the session
+			$this->query('delete from `tiki_sessions` where `user`=?', array($user));
+
+			// Add a log entry
+			$logslib = TikiLib::lib('logs');
+			$logslib->add_log("login", "logged out", $user, '', '', $this->now);
+		}
+	}
+
 	// For each auth method, validate user in auth, if valid, verify tiki user exists and create if necessary (as configured)
 	// Once complete, update_lastlogin and return result, username and login message.
 	function validate_user($user, $pass, $challenge = '', $response = '', $validate_phase=false)
@@ -400,9 +417,15 @@ class UsersLib extends TikiLib
 		// If preference login_multiple_forbidden is set, don't let user login if already logged in
 		if ($result == USER_VALID && $prefs['login_multiple_forbidden'] == 'y' && $user != 'admin' ) {
 			$tikilib = TikiLib::lib('tiki');
-			$tikilib->update_session();
-			if ( $tikilib->is_user_online($user) ) {
-				$result = USER_ALREADY_LOGGED;
+			$grabSessionOnAlreadyLoggedIn = !empty($prefs['login_grab_session']) ? $prefs['login_grab_session'] : 'n';
+			if ($grabSessionOnAlreadyLoggedIn === 'y') {
+				// Log out first, then proceed to log in again
+				$this->force_logout($user);
+			} else {
+				$tikilib->update_session();
+				if ( $tikilib->is_user_online($user) ) {
+					$result = USER_ALREADY_LOGGED;
+				}
 			}
 		}
 

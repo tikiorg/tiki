@@ -115,6 +115,7 @@
 				{preference name=feature_challenge}
 
 				{preference name=login_multiple_forbidden}
+				{preference name=login_grab_session}
 				{preference name=session_protected}
 				{preference name=https_login}
 				{preference name=login_http_basic}
