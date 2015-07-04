@@ -181,6 +181,7 @@ class Iconset
 	public function getHtml($name, array $params = []) {
 
 		global $prefs;
+		$params = new JitFilter($params);
 
 		if ($icon = $this->getIcon($name)) {
 
@@ -188,10 +189,11 @@ class Iconset
 			$prepend = isset($icon['prepend']) ? $icon['prepend'] : $this->prepend;
 			$append = isset($icon['append']) ? $icon['append'] : $this->append;
 			$icon_class = '';
-			$size = isset($params['size']) && $params['size'] < 10 ? $params['size'] : 1;
-			$custom_class = isset($params['iclass']) ? $params['iclass'] : '';
-			$title = isset($params['ititle']) ? 'title="' . $params['ititle'] . '"' : '';
-			$id = isset($params['id']) ? 'id="' . $params['id'] . '"' : '';
+			$size = isset($params['size']) && $params['size'] < 10 ? $params->size->int() : 1;
+			$custom_class = isset($params['iclass']) ? $params->iclass->striptags() : '';
+			$title = isset($params['ititle']) ? 'title="' . $params->ititle->striptags() . '"' : '';
+			$id = isset($params['id']) ? 'id="' . $params->id->striptags() . '"' : '';
+			$styleparam = isset($params['istyle']) ? $params->istyle->striptags() : '';
 
 			if ($tag == 'img') { //manage legacy image icons (eg: png, gif, etc)
 				//some ability to use larger legacy icons based on size setting
@@ -210,15 +212,25 @@ class Iconset
 					$src = $prepend . $id . $append;
 				}
 				$alt = $name;  //use icon name as alternate text
-				$html = "<span class=\"icon icon-$name $icon_class $custom_class\" $title $id><img src=\"$src\" alt=\"$alt\"></span>";
+				$style = !empty($styleparam) ? 'style="' . $styleparam . '"' : '';
+				$html = "<span class=\"icon icon-$name $icon_class $custom_class\" $title $id $style><img src=\"$src\" alt=\"$alt\"></span>";
 			} else {
 				if (isset($icon['id'])) { //use class defined for the icon if set
 					$icon_class = $prepend . $icon['id'] . $append;
 				} else {
 					TikiLib::lib('errorreport')->report(tr('Iconset: Class not defined for icon %0', $name));
 				}
-
-				$style = $size > 1 ? 'style="font-size:' . $size . '00%"' : '';
+				if ($size > 1 || !empty($styleparam)) {
+					$styleparams[] = $size > 1 ? 'font-size:' . $size . '00%' : '';
+					$styleparams[] = !empty($styleparam) ? $styleparam  : '';
+					$style = 'style="';
+					foreach ($styleparams as $sparam) {
+						$style .= $sparam . ';';
+					}
+					$style .= '"';
+				} else {
+					$style = '';
+				}
 				$html = "<$tag class=\"icon icon-$name $icon_class $custom_class\" $style $title $id></$tag>";
 			}
 

@@ -24,6 +24,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  *          anchor element
  *  - iclass: set custom class for the icon itself (not the link)
  *  - ititle: set custom title for the icon itself (not the link)
+ *  - istyle: set custom style for the icon itself (not the link)
  *  - _type: type of URL to use (e.g. 'absolute_uri', 'absolute_path'). Defaults to a relative URL.
  *  - _tag: type of HTML tag to use (e.g. 'img', 'input_image'). Defaults to 'img' tag.
  *  - _notag: if set to 'y', will only return the URL (which also handles theme icons).
