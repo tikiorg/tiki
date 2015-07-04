@@ -257,7 +257,7 @@
 			{if $plugins_alias|@count}
 				<fieldset id="pluginalias_available">
 					<legend>
-						<strong>{tr}Available Alias{/tr}</strong>{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle'}{icon name="add" id="pluginalias_add" iclass='stayopen'}
+						<strong>{tr}Available Alias{/tr}</strong>{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle' istyle='display:none'}{icon name="add" id="pluginalias_add" iclass='stayopen'}
 					</legend>
 					<div class="input_submit_container">
 						{foreach from=$plugins_alias item=name}
@@ -279,7 +279,7 @@
 
 			<fieldset id="pluginalias_general">
 				<legend>
-					{tr}General Information{/tr}{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle'}
+					{tr}General Information{/tr}{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle' istyle='display:none'}
 				</legend>
 
 				<div class="adminoptionbox form-group">
@@ -390,7 +390,9 @@
 			</fieldset><br>
 
 			<fieldset id="pluginalias_simple_args">
-				<legend>{tr}Simple Plugin Arguments{/tr}{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle'}{icon name="add" iclass='stayopen' id="pluginalias_simple_add"}</legend>
+				<legend>
+					{tr}Simple Plugin Arguments{/tr}{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle' istyle='display:none'}{icon name="add" iclass='stayopen' id="pluginalias_simple_add"}
+				</legend>
 				{jq}
 					$('#pluginalias_simple_add').click(function() {
 							var me = $('#pluginalias_simple_new'), clone = me.clone(), index = me.parent().children().size();
@@ -413,7 +415,6 @@
 					$('#pluginalias_simple_new').hide();
 					{{/if}}
 				{/jq}
-				{if !empty($plugin_admin.params)}
 				<div class="adminoptionbox">
 					<div class="form-group">
 						<label class="control-label col-sm-4">
@@ -427,23 +428,24 @@
 						</label>
 					</div>
 				</div><br>
-				{foreach from=$plugin_admin.params key=token item=value}
-						{if ! $value|is_array}
-							<div class="adminoptionbox">
-								<div class="form-group">
-									<div class="col-sm-4">
-										<input class="form-control" type="text" name="sparams[{$token|escape}][token]" id="sparams_{$token|escape}_token" value="{$token|escape}">
+				{if !empty($plugin_admin.params)}
+					{foreach from=$plugin_admin.params key=token item=value}
+							{if ! $value|is_array}
+								<div class="adminoptionbox">
+									<div class="form-group">
+										<div class="col-sm-4">
+											<input class="form-control" type="text" name="sparams[{$token|escape}][token]" id="sparams_{$token|escape}_token" value="{$token|escape}">
+										</div>
 									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-sm-1" for="sparams_{$token|escape}_default"></label>
-									<div class="col-sm-4">
-										<input class="form-control" type="text" name="sparams[{$token|escape}][default]" id="sparams_{$token|escape}_default" value="{$value|escape}">
+									<div class="form-group">
+										<label class="control-label col-sm-1" for="sparams_{$token|escape}_default"></label>
+										<div class="col-sm-4">
+											<input class="form-control" type="text" name="sparams[{$token|escape}][default]" id="sparams_{$token|escape}_default" value="{$value|escape}">
+										</div>
 									</div>
-								</div>
-							</div><br>
-						{/if}
-					{/foreach}
+								</div><br>
+							{/if}
+						{/foreach}
 				{/if}
 				<div class="adminoptionbox hidefirst" id="pluginalias_simple_new">
 					<div class="adminoptionlabel">
@@ -464,7 +466,7 @@
 
 			<fieldset id="pluginalias_doc">
 				<legend>
-					{tr}Plugin Parameter Documentation{/tr}{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle'}{icon name="add" id="pluginalias_doc_add" iclass='stayopen'}
+					{tr}Plugin Parameter Documentation{/tr}{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle' istyle='display:none'}{icon name="add" id="pluginalias_doc_add" iclass='stayopen'}
 				</legend>
 				{jq}$('#pluginalias_doc_add').click(function() { $('#pluginalias_doc_new').toggle(); return false; });{/jq}
 
@@ -530,7 +532,7 @@
 			<div id="pluginalias_body">
 				<fieldset>
 					<legend>
-						{tr}Plugin Body{/tr}{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle'}
+						{tr}Plugin Body{/tr}{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle' istyle='display:none'}
 					</legend>
 
 					<div class="adminoptionbox">
@@ -553,7 +555,7 @@
 					</div>
 					<div style="clear:both; margin-left:60px">
 						<fieldset class="stayopen">
-							<legend style="font-size:125%">{tr}Parameters{/tr}{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle'}{icon name="add" id="pluginalias_body_add" iclass='stayopen'}</legend>
+							<legend style="font-size:125%">{tr}Parameters{/tr}{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle' istyle='display:none'}{icon name="add" id="pluginalias_body_add" iclass='stayopen'}</legend>
 							{jq}$('#pluginalias_body_add').click(function() { $('#pluginalias_body_new').toggle("fast"); return false; });{/jq}
 
 							{if !empty($plugin_admin.body.params)}
@@ -607,7 +609,7 @@
 
 			<fieldset id="pluginalias_composed_args">
 				<legend>
-					{tr}Composed Plugin Arguments{/tr}{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle'}{icon name="add" id="pluginalias_composed_add" iclass='stayopen'}
+					{tr}Composed Plugin Arguments{/tr}{icon name='expanded' iclass='expanded toggle'}{icon name='collapsed' iclass='collapsed toggle' istyle='display:none'}{icon name="add" id="pluginalias_composed_add" iclass='stayopen'}
 				</legend>
 				{jq}$('#pluginalias_composed_add').click(function() { $('#pluginalias_composed_new').toggle("fast"); return false; });{/jq}
 
