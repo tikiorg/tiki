@@ -17,25 +17,25 @@
 					<div class="pull-right">
 						{*icon _id='resultset_first' class=''*}
 						{if isset($prevstart) and $prevstart}
-							<a href="#" onclick="doRefreshWebmail({$prevstart});return false;">{icon _id='resultset_previous' class=''}</a>
+							<a href="#" onclick="doRefreshWebmail({$prevstart});return false;">{icon name='caret-left'}</a>
 						{else}
-							{icon _id='img/trans.png' class=''}
+							{icon name='stop'}
 						{/if}
 						{if isset($nextstart) and $nextstart}
-							<a href="#" onclick="doRefreshWebmail({$nextstart});return false;">{icon _id='resultset_next' class=''}</a>
+							<a href="#" onclick="doRefreshWebmail({$nextstart});return false;">{icon name='caret-right'}</a>
 						{else}
-							{icon _id='img/trans.png' class=''}
+							{icon name='stop'}
 						{/if}
 						{*icon _id='resultset_last' class=''*}
 					</div>
 					{if 0 and $prefs.feature_ajax}{* AJAX_TODO *}
 						<a title="{tr}Refresh{/tr}" onclick="doRefreshWebmail(0, true);return false;">
-							{icon _id='arrow_refresh' class='webmail_refresh_icon icon'}
-							{icon _id='img/spinner.gif' class='webmail_refresh_busy icon' style='display:none'}
+							{icon name='refresh' iclass='webmail_refresh_icon icon'}
+							{icon name='index' iclass='webmail_refresh_busy icon' istyle='display:none'}
 						</a>
 						&nbsp;<span class='webmail_refresh_message' style='display:none'></span>
 					{else}
-						<a title="{tr}Refresh (non-ajax){/tr}" href="{$request_uri}refresh_mail=1">{icon _id='arrow_refresh'}</a>
+						<a title=":{tr}Refresh (non-ajax){/tr}" href="{$request_uri}refresh_mail=1" class="tips">{icon name='refresh'}</a>
 					{/if}
 				</div>
 				<div class="webmail_list">

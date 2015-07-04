@@ -10,7 +10,9 @@
 	{foreach from=$rules item=rule}
 		<li>
 			<span style="float: right">
-				<a class="rule-delete" href="{service controller=managestream action=delete id=$rule.ruleId}" data-rule-id="{$rule.ruleId|escape}">{icon _id=cross alt="{tr}Delete{/tr}"}</a>
+				<a class="rule-delete tips" title=":{tr}Delete{/tr}" href="{service controller=managestream action=delete id=$rule.ruleId}" data-rule-id="{$rule.ruleId|escape}">
+					{icon name='delete'}
+				</a>
 			</span>
 			<strong>{$ruleTypes[$rule.ruleType]|escape}:</strong> {$rule.eventType|escape}
 			<div>{$rule.notes|escape}</div>

@@ -25,7 +25,7 @@
 	</div>
 
 	{if $storedName}
-		<p><strong>{$storedName|escape}</strong>: {$url|escape}<input type="hidden" name="name" value="{$storedName|escape}"/> <a href="tiki-admin.php?page=webservices&amp;name={$storedName|escape}&amp;delete">{icon _id='cross'}</a></p>
+		<p><strong>{$storedName|escape}</strong>: {$url|escape}<input type="hidden" name="name" value="{$storedName|escape}"/> <a href="tiki-admin.php?page=webservices&amp;name={$storedName|escape}&amp;delete">{icon name='delete' iclass='tips' title=":{tr}Delete{/tr}"}</a></p>
 	{else}
 		{remarksbox type="tip" title="{tr}Tip{/tr}"}
 			{tr}Enter the URL of a web services returning either JSON or YAML. Parameters can be specified by enclosing a name between percentage signs. For example: %name%. %service% and %template% are reserved keywords and cannot be used.{/tr}
@@ -128,7 +128,7 @@
 						<tr>
 							<td>
 								<input type="submit" class="btn btn-default btn-sm" name="loadtemplate" value="{$template->name|escape}"/>
-								<a href="tiki-admin.php?page=webservices&amp;name={$storedName|escape}&amp;delete={$template->name|escape}">{icon _id='cross'}</a>
+								<a href="tiki-admin.php?page=webservices&amp;name={$storedName|escape}&amp;delete={$template->name|escape}">{icon name='delete' iclass='tips' title=":{tr}Delete{/tr}"}</a>
 							</td>
 							<td>{$template->engine|escape}</td>
 							<td>{$template->output|escape}</td>

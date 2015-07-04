@@ -35,7 +35,7 @@
 			);
 
 			item.append(
-				$('{{icon _id=cross}}')
+				$('{{icon name='delete'}}')
 					.css('cursor', 'pointer')
 					.click(function () {
 						$(this).closest('li').remove();

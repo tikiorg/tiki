@@ -10,7 +10,7 @@
 	{foreach from=$friends item=friend}
 		<li>
 			{$friend.user|userlink}
-			<a class="pull-right remove-friend" href="{service controller=social action=remove_friend friend=$friend.user}" data-confirm="{tr _0=$friend.user}Do you really want to remove %0?{/tr}">{icon _id=cross alt="{tr}Remove Friend{/tr}"}</a>
+			<a class="pull-right remove-friend tips" href="{service controller=social action=remove_friend friend=$friend.user}" data-confirm="{tr _0=$friend.user}Do you really want to remove %0?{/tr}" title=":{tr}Remove Friend{/tr}">{icon name='delete'}</a>
 		</li>
 	{foreachelse}
 		<li>{tr}No friends have been added.{/tr}</li>
@@ -22,10 +22,10 @@
 		{foreach from=$incoming item=candidate}
 			<li>
 				{$candidate.user|userlink}
-				<a class="pull-right remove-friend" href="{service controller=social action=remove_friend friend=$candidate.user}" data-confirm="{tr _0=$candidate.user}Do you really want to remove %0?{/tr}">{icon _id=cross alt="{tr}Reject{/tr}"}</a>
-				<a class="pull-right add-friend" href="{service controller=social action=add_friend username=$candidate.user}">{icon _id=add alt="{tr}Accept &amp; Add{/tr}"}</a>
+				<a class="pull-right remove-friend tips" href="{service controller=social action=remove_friend friend=$candidate.user}" data-confirm="{tr _0=$candidate.user}Do you really want to remove %0?{/tr}" title=":{tr}Remove Friend{/tr}">{icon name='delete'}</a>
+				<a class="pull-right add-friend tips" href="{service controller=social action=add_friend username=$candidate.user}" title=":{tr}Accept and add{/tr}">{icon name='add'}</a>
 				{if $prefs.social_network_type eq 'follow_approval'}
-					<a class="pull-right approve-friend" href="{service controller=social action=approve_friend friend=$candidate.user}">{icon _id=accept alt="{tr}Accept Request{/tr}"}</a>
+					<a class="pull-right approve-friend tips" href="{service controller=social action=approve_friend friend=$candidate.user}" title="{tr}Accept Request{/tr}">{icon name='ok'}</a>
 				{/if}
 			</li>
 		{/foreach}
@@ -37,7 +37,7 @@
 		{foreach from=$outgoing item=candidate}
 			<li>
 				{$candidate.user|userlink}
-				<a class="pull-right remove-friend" href="{service controller=social action=remove_friend friend=$candidate.user}" data-confirm="{tr _0=$candidate.user}Do you really want to cancel request for %0?{/tr}">{icon _id=cross alt="{tr}Cancel{/tr}"}</a>
+				<a class="pull-right remove-friend tips" href="{service controller=social action=remove_friend friend=$candidate.user}" data-confirm="{tr _0=$candidate.user}Do you really want to cancel request for %0?{/tr}" title=":{tr}Cancel{/tr}">{icon name='delete'}</a>
 			</li>
 		{/foreach}
 	</ul>

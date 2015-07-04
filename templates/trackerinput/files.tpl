@@ -16,7 +16,7 @@
 				{/if}
 				{$info.name|escape}
 				<label>
-					{icon _id=cross alt="{tr}Remove{/tr}"}
+					{icon name='delete'}
 				</label>
 			</li>
 		{/foreach}
@@ -96,7 +96,7 @@
 			$field.input_csv('add', ',', fileId);
 
 			li.prepend($.fileTypeIcon(fileId, { type: type, name: name }));
-			li.append($('<label>{{icon _id=cross alt="{tr}Remove{/tr}"}}</label>'));
+			li.append($('<label>{{icon name='delete'}}</label>'));
 			li.find('img.icon').click(function () {
 				$field.input_csv('delete', ',', fileId);
 				$(this).closest('li').remove();

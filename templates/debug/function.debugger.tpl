@@ -6,7 +6,11 @@
 		{* Command prompt form *}
 		<form method="post" action="{$console_father|escape}">
 			<b>{tr}Debugger Console{/tr}</b>
-			<span style="float: right">{icon _id='img/icons/close.png' onclick="toggle('debugconsole');" _title="{tr}Close{/tr}" width=13 height=13}</span>
+			<span style="float: right">
+				<a href='#' onclick="toggle('debugconsole');" title=":{tr}Close{/tr}" class="tips">
+					{icon name='delete'}
+				</a>
+			</span>
 			<table class="table">
 				<tr>
 					<td><small>{tr}Current URL:{/tr}</small></td>

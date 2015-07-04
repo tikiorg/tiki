@@ -65,7 +65,7 @@
 							{/if}
 							<input type="hidden" name="boolean_last" value="{$smod_params.advanced_search}" />
 							{if $smod_params.advanced_search_help eq 'y'}
-								<a href="{bootstrap_modal controller=search action=help}">{tr}Search Help{/tr} {icon _id=help}</a>
+								<a href="{bootstrap_modal controller=search action=help}">{tr}Search Help{/tr} {icon name='help'}</a>
 							{/if}
 						{/if}
 						{if $smod_params.compact eq "y"}
