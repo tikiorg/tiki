@@ -847,7 +847,7 @@ img.icon {
 a .icon {
   font-size: 1.2em;
 }
-nav a .icon {
+.nav a .icon {
   font-size: 0.8em;
 }
 span.btn-link {
