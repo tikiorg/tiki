@@ -179,7 +179,7 @@ if (jqueryTiki.no_cookie) {
 			<label for="login-pass_{$module_logo_instance}">{tr}Password:{/tr}</label>
 			<input onkeypress="capLock(event, this)" type="password" name="pass" class="form-control" id="login-pass_{$module_logo_instance}" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
 			<div class="divCapson" style="display:none;">
-				{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}
+				{icon name='error' istyle="vertical-align:middle"} {tr}CapsLock is on.{/tr}
 			</div>
 		</div>
 		{if $prefs.rememberme ne 'disabled' and (empty($module_params.remember) or $module_params.remember neq 'n')}

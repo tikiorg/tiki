@@ -375,7 +375,7 @@
 				<input type="hidden" name="auth_phpbb" />
 				{if $prefs.auth_method ne 'phpbb'}
 					<div class="alert alert-warning">
-						<div>{icon _id=information} {tr}You must change the Authentication Method to phpBB for these changes to take effect{/tr}.</div>
+						<div>{icon name='information'} {tr}You must change the Authentication Method to phpBB for these changes to take effect{/tr}.</div>
 					</div>
 				{/if}
 				{if $prefs.allowRegister ne 'n'}
@@ -389,7 +389,7 @@
 				{preference name=auth_phpbb_version}
 
 				<div class="alert alert-warning">
-					<div>{icon _id=information} {tr}MySql only (for now){/tr}.</div>
+					<div>{icon name='information'} {tr}MySql only (for now){/tr}.</div>
 				</div>
 				{preference name=auth_phpbb_dbhost}
 				{preference name=auth_phpbb_dbuser}

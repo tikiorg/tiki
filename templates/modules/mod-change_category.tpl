@@ -29,7 +29,7 @@
 									</td>
 									{if !isset($module_params.del) or $module_params.del eq 'y'}
 										<td>
-											{self_link remove=$i.categId}{icon _id=cross alt="{tr}Delete{/tr}"}{/self_link}
+											{self_link remove=$i.categId _class='tips' _title=":{tr}Delete{/tr}"}{icon name='delete'}{/self_link}
 										</td>
 									{/if}
 								</tr>

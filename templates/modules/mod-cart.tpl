@@ -13,7 +13,9 @@
 					<tr>
 						<td>
 							{if $item.href}
-								<a href="{$item.href|escape}">{$item.description|escape}</a>
+								<a href="{$item.href|escape}">
+									{$item.description|escape}
+								</a>
 							{else}
 								{$item.description|escape}
 							{/if}
@@ -21,15 +23,19 @@
 								{tr}for{/tr} {$item.onbehalf|escape|truncate:16}
 							{/if}
 						</td>
-						<td style="width:5em;" align="right">{$item.price|escape}</td>
+						<td style="width:5em;" align="right">
+							{$item.price|escape}
+						</td>
 						{if $module_params.showItemButtons eq 'n'}
-							<td style="width:2em;"><input type="text" name="cart[{$item.code|escape}]" style="width:2em;text-align:right;" value="{$item.quantity|escape}"></td>
+							<td style="width:2em;">
+								<input type="text" name="cart[{$item.code|escape}]" style="width:2em;text-align:right;" value="{$item.quantity|escape}">
+							</td>
 						{else}
 							<td style="white-space: nowrap">
-								{icon _id='bin' class='icon item_remove' onclick='$(this).nextAll("input").val("").parents("form:first").submit();return false;'}
-								{icon _id='add' class='icon item_plus' onclick='var $input = $(this).nextAll("input:first");$input.val(parseInt($input.val()) + 1).parents("form:first").submit();return false;'}
+								<a href="#" onclick="$(this).nextAll('input').val('').parents('form:first').submit();return false;" class="icon item_remove">{icon name='trash'}</a>
+								<a href="#" onclick="var $input = $(this).nextAll('input:first');$input.val(parseInt($input.val()) + 1).parents('form:first').submit();return false;" class="icon item_plus">{icon name='add'}</a>
 								<input type="text" name="cart[{$item.code|escape}]" style="width:2em;text-align: right;" value="{$item.quantity|escape}">
-								{icon _id='delete' class='icon item_minus' onclick='var $input = $(this).prevAll("input:first");$input.val(parseInt($input.val()) - 1).parents("form:first").submit();return false;'}
+								<a href="'#" class='icon item_minus' onclick="var $input = $(this).prevAll('input:first');$input.val(parseInt($input.val()) - 1).parents('form:first').submit();return false;">{icon name='minus'}</a>
 							</td>
 							{if $module_params.ajax eq 'n'}<input type="hidden" name="update" value="1">{/if}
 						{/if}
@@ -39,8 +45,12 @@
 							<td colspan="3">
 								{tr}Bundled Product{/tr} - {$child_item.description|escape} {if $child_item.quantity > 1}(x{$child_item.quantity|escape}){/if}
 							</td>
-							<td style="width:5em;" align="right">{$item.price|escape}</td>
-							<td style="width:2em;"><input type="text" name="cart[{$item.code|escape}]" style="width:2em;text-align:right;" value="{$item.quantity|escape}"></td>
+							<td style="width:5em;" align="right">
+								{$item.price|escape}
+							</td>
+							<td style="width:2em;">
+								<input type="text" name="cart[{$item.code|escape}]" style="width:2em;text-align:right;" value="{$item.quantity|escape}">
+							</td>
 						</tr>
 					{/foreach}
 			{/foreach}
