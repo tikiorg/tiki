@@ -30,7 +30,7 @@
 				{$info.description|escape}
 				{if $info.help}
 					<a href="{$prefs.helpurl|escape}{$info.help|escape:'url'}" target="tikihelp" class="tikihelp" title="{$info.name|escape}">
-						{icon _id=help alt=''}
+						{icon name='help'}
 					</a>
 				{/if}
 			</div>

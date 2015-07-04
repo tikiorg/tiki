@@ -35,7 +35,7 @@
 					{/foreach}
 				{/foreach}
 			</td>
-			<td><a class="confirm-prompt" data-confirm="{tr}Do you really want to remove the scheduled event?{/tr}" href="{service controller=tracker_todo action=delete todoId=$todo.todoId trackerId=$trackerId}">{icon _id=cross}</a></td>
+			<td><a class="confirm-prompt tips" data-confirm="{tr}Do you really want to remove the scheduled event?{/tr}" href="{service controller=tracker_todo action=delete todoId=$todo.todoId trackerId=$trackerId}" title=":{tr}Remove event{/tr}">{icon name='delete'}</a></td>
 		</tr>
 	{foreachelse}
 		<tr>
