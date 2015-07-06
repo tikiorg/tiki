@@ -72,6 +72,7 @@ function prefs_wiki_list($partial = false)
 				'controller' => 'wiki',
 				'action' => 'regenerate_slugs',
 			]),
+			'keywords' => 'slug manager',
 		),
 		'wiki_show_version' => array(
 			'name' => tra('Display page version'),
