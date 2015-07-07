@@ -9,8 +9,8 @@ function prefs_site_list()
 {
 	global $prefs;
 
-	$available_layouts = TikiLib::lib('css')->list_user_selectable_layouts($prefs['site_theme'],$prefs['theme_option']);
-	$available_admin_layouts = TikiLib::lib('css')->list_user_selectable_layouts($prefs['site_theme_admin'],$prefs['theme_option_admin']);
+	$available_layouts = TikiLib::lib('css')->list_user_selectable_layouts(isset($prefs['site_theme']) ? $prefs['site_theme'] : '', isset($prefs['theme_option']) ? $prefs['theme_option'] : '');
+	$available_admin_layouts = TikiLib::lib('css')->list_user_selectable_layouts(isset($prefs['site_theme_admin']) ? $prefs['site_theme_admin'] : '', isset($prefs['theme_option_admin']) ? $prefs['theme_option_admin'] : '');
 
 	return array (
 		'site_closed' => array(

@@ -18,8 +18,12 @@ class cssLib extends TikiLib
 		global $prefs;
 
 		if (empty($theme) && empty($theme_option)){ // if you submit no parameters, return the current theme/theme option
-			$theme = $prefs['site_theme'];
-			$theme_option = $prefs['theme_option'];
+			if (isset($prefs['site_theme'])) {
+				$theme = $prefs['site_theme'];
+			}
+			if (isset($prefs['theme_option'])) {
+				$theme_option = $prefs['theme_option'];
+			}
 		}
 
 		$themelib = TikiLib::lib('theme');
@@ -69,8 +73,12 @@ class cssLib extends TikiLib
 		global $prefs;
 
 		if (empty($theme) && empty($theme_option)){ // if you submit no parameters, return the current theme/theme option
-			$theme = $prefs['site_theme'];
-			$theme_option = $prefs['theme_option'];
+			if (isset($prefs['site_theme'])) {
+				$theme = $prefs['site_theme'];
+			}
+			if (isset($prefs['theme_option'])) {
+				$theme_option = $prefs['theme_option'];
+			}
 		}
 
 		$selectable_layouts = array();
