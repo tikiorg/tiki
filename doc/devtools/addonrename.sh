@@ -2,8 +2,14 @@
 # This is meant to be run from within the folder of the addon
 # It is useful when forking git repositories
 
-FROM=oldvendorname
-TO=newvendorname
+if [ $# -eq 0 ]
+  then
+    echo "Please specify from and to vendornames"
+    exit
+fi
+
+FROM=$1
+TO=$2
 
 Q=$(find . -type f -name "*.php" -o -name "*.js" -o -name "*.css" -o -name "*.yml" -o -name "*.wiki" -o -name "*.tpl" -o -name "*.json")
 for FILE in $Q; do
