@@ -103,7 +103,7 @@
 							{if $tiki_p_edit eq 'y'}
 								<a href="tiki-editpage.php?page={$worst.page|escape:'url'}&amp;source_page={$page|escape:'url'}&amp;oldver={$worst.last_update|escape:'url'}&amp;newver={$pageVersion|escape:'url'}&amp;diff_style={$default_diff_style}" class="tips" title=":{tr}update it{/tr}">{icon name='login' istyle="vertical-align:middle"}</a>
 							{/if}
-							<a href="tiki-index.php?page={$worst.page|escape:'url'}&amp;no_bl=y" class="tips" title=":{tr}View{/tr}">{icon name='view'istyle="vertical-align:middle"}</a>
+							<a href="tiki-index.php?page={$worst.page|escape:'url'}&amp;no_bl=y" class="tips" title=":{tr}View{/tr}">{icon name='view' style="vertical-align:middle"}</a>
 							<a href="tiki-index.php?page={$worst.page|escape:'url'}&amp;no_bl=y" title="{$worst.page|escape}">
 							{if $show_language eq 'y'}
 							{$worst.lang|langname}</a>
