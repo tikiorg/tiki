@@ -27,13 +27,10 @@ function wikiplugin_together_info()
 function wikiplugin_together($data, $params)
 {
 
-	extract($params, EXTR_SKIP);
-	
-	if (!isset($buttonname)) {
-		$buttonname = "CoWrite with TogetherJS";
+	if (!isset($params['buttonname'])) {
+		$params['buttonname'] = tra('CoWrite with TogetherJS');
 	}
-	$ret = "<script type=\"text/javascript\" src=\"https://togetherjs.com/togetherjs-min.js\"></script>";
-	$ret.= "<button onclick=\"TogetherJS(this); return false;\">$buttonname</button>";
-	
-	return $ret;
+	TikiLib::lib('header')->add_jsfile('https://togetherjs.com/togetherjs-min.js');
+
+	return '<button onclick="TogetherJS(this); return false;" class="btn btn-default">' . $params['buttonname'] . '</button>';
 }
