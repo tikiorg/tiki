@@ -194,7 +194,7 @@ jqueryTiki.shortDateFormat = "'.$prefs['short_date_format_js'].'";
 jqueryTiki.shortTimeFormat = "'.$prefs['short_time_format_js'].'";
 jqueryTiki.username = "' . $user . '";
 jqueryTiki.userRealName = "' . TikiLib::lib('user')->clean_user($user) . '";
-jqueryTiki.userAvatar = "' . TikiLib::lib('userprefs')->get_public_avatar_path($user) . '";
+jqueryTiki.userAvatar = "' . $base_url . TikiLib::lib('userprefs')->get_public_avatar_path($user) . '";
 ';
 
 	if ($prefs['feature_calendar'] === 'y') {
