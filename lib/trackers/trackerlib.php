@@ -1921,10 +1921,10 @@ class TrackerLib extends TikiLib
 					}
 				} elseif ($header[$i] == 'itemId') {
 					$itemId = $data[$i];
-				} elseif ($header[$i] == 'created' && is_numeric($data[$i])) {
-					$created = $data[$i];
-				} elseif ($header[$i] == 'lastModif' && is_numeric($data[$i])) {
-					$lastModif = $data[$i];
+				} elseif ($header[$i] == 'created') {
+					$created = $this->parse_imported_date($data[$i], $dateFormat);;
+				} elseif ($header[$i] == 'lastModif') {
+					$lastModif = $this->parse_imported_date($data[$i], $dateFormat);
 				} elseif ($header[$i] == 'categs') { // for old compatibility
 					$cats = preg_split('/,/', trim($data[$i]));
 				}
@@ -2022,19 +2022,7 @@ class TrackerLib extends TikiLib
 								break;
 							case 'f':
 							case 'j':
-								if ($dateFormat == 'mm/dd/yyyy') {
-									list($m, $d, $y) = preg_split('#/#', $data[$i]);
-									$data[$i] = $tikilib->make_time(0, 0, 0, $m, $d, $y);
-								} elseif ($dateFormat == 'dd/mm/yyyy') {
-									list($d, $m, $y) = preg_split('#/#', $data[$i]);
-									$data[$i] = $tikilib->make_time(0, 0, 0, $m, $d, $y);
-								} elseif ($dateFormat == 'yyyy-mm-dd') {
-									list($y, $m, $d) = preg_split('#-#', $data[$i]);
-									$data[$i] = $tikilib->make_time(0, 0, 0, $m, $d, $y);
-								} elseif (!is_numeric($data[$i])) {
-									// timestamp but not numeric
-									$data[$i] = '';
-								}
+							$data[$i] = $this->parse_imported_date($data[$i], $dateFormat);
 								break;
 							case 'r':
 								if ($convertItemLinkValues && $data[$i]) {
@@ -2121,6 +2109,38 @@ class TrackerLib extends TikiLib
 		}
 
 		return $total;
+	}
+
+	function parse_imported_date($dateString, $dateFormat)
+	{
+
+		$tikilib = TikiLib::lib('tiki');
+		$date = 0;
+
+		if (is_numeric($dateString)) {
+			$date = (int)$dateString;
+		} elseif ($dateFormat == 'mm/dd/yyyy') {
+			list($m, $d, $y) = preg_split('#/#', $dateString);
+			if ($y && $m && $d) {
+				$date = $tikilib->make_time(0, 0, 0, $m, $d, $y);
+			}
+		} elseif ($dateFormat == 'dd/mm/yyyy') {
+			list($d, $m, $y) = preg_split('#/#', $dateString);
+			if ($y && $m && $d) {
+				$date = $tikilib->make_time(0, 0, 0, $m, $d, $y);
+			}
+		} elseif ($dateFormat == 'yyyy-mm-dd') {
+			list($y, $m, $d) = preg_split('#-#', $dateString);
+			if ($y && $m && $d) {
+				$date = $tikilib->make_time(0, 0, 0, $m, $d, $y);
+			}
+		}
+
+		if (!$date) {    // previous attempts failed, try a more flexible approach
+			$date = strtotime($dateString);
+		}
+
+		return $date;
 	}
 
 	public function dump_tracker_csv($trackerId)
