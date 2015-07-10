@@ -1,5 +1,5 @@
 {* $Id$ *}
-<div class="postfooter panel-footer">
+<div class="postfooter panel-footer clearfix">
 	<div class="status pull-right">
 	{if $prefs.feature_contribution eq 'y' and $prefs.feature_contribution_display_in_comment eq 'y'}
 		<span class="contributions">

@@ -64,7 +64,7 @@ function prefs_wiki_list($partial = false)
 		'wiki_url_scheme' => array(
 			'name' => tr('Wiki URL Scheme'),
 			'description' => tr('Alter the SEFURL pattern for page names.'),
-			'hint' => tr('Use the action to regenerate your URLs after changing this setting.'),
+			'hint' => tr('Use the "View" action to regenerate your URLs after changing this setting.'),
 			'type' => 'list',
 			'default' => 'urlencode',
 			'options' => TikiLib::lib('slugmanager')->getOptions(),
@@ -72,6 +72,7 @@ function prefs_wiki_list($partial = false)
 				'controller' => 'wiki',
 				'action' => 'regenerate_slugs',
 			]),
+			'keywords' => 'slug manager',
 		),
 		'wiki_show_version' => array(
 			'name' => tra('Display page version'),

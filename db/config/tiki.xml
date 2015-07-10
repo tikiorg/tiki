@@ -329,6 +329,9 @@
 			<file>%kernel.root_dir%/lib/zoterolib.php</file>
 		</service>
 
+		<service id="tiki.wiki.slug.dash" class="Tiki\Wiki\SlugManager\DashGenerator">
+			<tag name="tiki.wiki.slug.generator"/>
+		</service>
 		<service id="tiki.wiki.slug.underscore" class="Tiki\Wiki\SlugManager\UnderscoreGenerator">
 			<tag name="tiki.wiki.slug.generator"/>
 		</service>

@@ -27,13 +27,26 @@ function wikiplugin_together_info()
 function wikiplugin_together($data, $params)
 {
 
-	extract($params, EXTR_SKIP);
-	
-	if (!isset($buttonname)) {
-		$buttonname = "CoWrite with TogetherJS";
+	if (!isset($params['buttonname'])) {
+		$params['buttonname'] = tra('CoWrite with TogetherJS');
 	}
-	$ret = "<script type=\"text/javascript\" src=\"https://togetherjs.com/togetherjs-min.js\"></script>";
-	$ret.= "<button onclick=\"TogetherJS(this); return false;\">$buttonname</button>";
-	
-	return $ret;
+	TikiLib::lib('header')->add_jsfile('https://togetherjs.com/togetherjs-min.js')
+		->add_jq_onready('
+TogetherJS.on("ready", function () {
+	$(".page_actions a[href^=\'tiki-editpage.php?page=\'], #page-bar a[href^=\'tiki-editpage.php?page=\']").each(function () {
+		var href = $(this).attr("href");
+		$(this).attr("href", href + "&conflictoverride=y");	// add the conflictoverride param so the second user doesnt get the usual warning
+	});
+});
+
+TogetherJS.config("getUserName", function () {
+	return jqueryTiki.userRealName || jqueryTiki.username;
+});
+
+TogetherJS.config("getUserAvatar", function () {
+	return jqueryTiki.userAvatar;
+});
+		');
+
+	return '<button onclick="TogetherJS(this); return false;" class="btn btn-default">' . $params['buttonname'] . '</button>';
 }
