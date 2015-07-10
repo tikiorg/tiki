@@ -383,7 +383,7 @@ class Smarty_Tiki extends Smarty
 	 */
 	function get_filename($template)
 	{
-		if (strpos($template, 'extends:') === 0 || file_exists($template)) {
+		if (preg_match('/^[a-z]+\:/', $template) || file_exists($template)) {
 			return $template;
 		}
         //get the list of template directories
