@@ -197,20 +197,28 @@ function smarty_function_treetable($params, $smarty)
 
 	if ($_openall == 'y') {
 		$smarty->loadPlugin('smarty_function_icon');
-		$html .= '&nbsp;<label id="' . $id . '_openall">' . smarty_function_icon(
-			array(
-				'_id' => 'folder',
-				'title' => tra('Toggle sections')
-			),
-			$smarty
-		) . ' ' . tra('Toggle sections') . '</label>';
+		$html .= '&nbsp;<label id="' . $id . '_openall" style="cursor:pointer">'
+			. smarty_function_icon(
+				array(
+					'name' => 'file-archive',
+				),
+				$smarty
+			)
+			. smarty_function_icon(
+				array(
+					'name' => 'file-archive-open',
+					'istyle' => 'display:none'
+				),
+				$smarty
+			)
+			. ' ' . tra('Toggle sections') . '</label>';
 
 		$headerlib->add_jq_onready(
 			'
 $("#'.$id.'_openall").click( function () {
 	$this = $(this).tikiModal(" ");
-	var img = $("img:first", this)[0];
-	if (img.src.indexOf("ofolder.png") > -1) {
+	var visible = $(this).find(".icon:visible")
+	if ($(visible).hasClass("icon-file-archive-open")) {
 
 		$(".expanded .indenter", "#'.$id.'").eachAsync({
 			delay: 20,
@@ -222,7 +230,8 @@ $("#'.$id.'_openall").click( function () {
 				$this.tikiModal();
 			}
 		});
-		img.src = img.src.replace("ofolder", "folder");
+		$(this).find(".icon-file-archive-open").hide();
+		$(this).find(".icon-file-archive").show();
 	} else {
 		$(".collapsed .indenter", "#'.$id.'").eachAsync({
 			delay: 20,
@@ -234,7 +243,8 @@ $("#'.$id.'_openall").click( function () {
 				$this.tikiModal();
 			}
 		});
-		img.src = img.src.replace("folder", "ofolder");
+		$(this).find(".icon-file-archive").hide();
+		$(this).find(".icon-file-archive-open").show();
 	}
 	return false;
 });'
