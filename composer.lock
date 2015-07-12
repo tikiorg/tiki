@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
     "hash": "33fdaf1c985614bdc6564229f77d34ba",
@@ -2049,7 +2049,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zetacomponents/Webdav/zipball/2057c2870cc735893520ce418bd080c1c9f0f72c",
+                "url": "https://github.com/zetacomponents/Webdav/zipball/1.1.3",
                 "reference": "1.1.3",
                 "shasum": ""
             },
@@ -2141,12 +2141,12 @@
             "version": "v1.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/mikey179/vfsStream.git",
+                "url": "https://github.com/mikey179/vfsStream",
                 "reference": "v1.1.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mikey179/vfsStream/zipball/fc0fe8f4d0b527254a2dc45f0c265567c881d07e",
+                "url": "https://github.com/mikey179/vfsStream/zipball/v1.1.0",
                 "reference": "v1.1.0",
                 "shasum": ""
             },
