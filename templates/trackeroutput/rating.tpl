@@ -18,49 +18,64 @@
 		<span class="rating">
 		<span style="white-space:nowrap">
 		{section name=i loop=$field.rating_options}
-			{if ($tiki_p_tracker_vote_ratings eq 'y' && (!isset($field.my_rate) || $field.my_rate === false)) ||
-				($tiki_p_tracker_revote_ratings eq 'y' && isset($field.my_rate) && $field.my_rate !== false)}
-				{capture name=thisvote}{tr}Click to vote for this value:{/tr} {$field.rating_options[i]}{/capture}
-				<a href="{$smarty.server.REQUEST_URI}" onclick="sendVote(this,{$item.itemId},{$field.fieldId},{$field.rating_options[i]});return false;">
-			{/if}
+			{if $field.mode eq 'radio'}{tr}{$field.labels[i]}{/tr}: {/if}
+			{$star = 'display:none'}
+			{$starselected = 'display:none'}
+			{$starhalf = 'display:none'}
+			{$starhalfselected = 'display:none'}
+			{$starempty = 'display:none'}
+			{$staremptyselected = 'display:none'}
 			{if $field.numvotes && $field.voteavg >= $field.rating_options[i]}
-				{if $field.mode eq 'radio'}{tr}{$field.labels[i]}{/tr}: {/if}
-				{if $field.mode eq 'radio'}
-					{if $field.my_rate !== false && $field.my_rate == $field.rating_options[i]}
-						{icon _id='star_grey_selected' alt=$field.rating_options[i] title=$smarty.capture.thisvote}
-					{else}
-						{icon _id='star_grey' alt=$field.rating_options[i] title=$smarty.capture.thisvote}
-					{/if}
+				{if $field.my_rate !== false && $field.my_rate == $field.rating_options[i]}
+					{$starselected = 'display:inline'}
 				{else}
-					{if $field.my_rate !== false && $field.my_rate == $field.rating_options[i]}
-						{icon _id='star_selected' alt=$field.rating_options[i] title=$smarty.capture.thisvote}
-					{else}
-						{icon _id='star' alt=$field.rating_options[i] title=$smarty.capture.thisvote}
-					{/if}
+					{$star = 'display:inline'}
+				{/if}
+			{* showing half stars only works with the default iconset so far *}
+			{elseif $field.rating_options[i] - $field.voteavg <= 0.5}
+				{if $field.my_rate !== false && $field.my_rate == $field.rating_options[i]}
+					{$starhalfselected = 'display:inline'}
+				{else}
+					{$starhalf = 'display:inline'}
 				{/if}
 			{else}
-				{if $field.mode eq 'radio'}{tr}{$field.labels[i]}{/tr}: {/if}
 				{if $field.my_rate !== false && $field.my_rate == $field.rating_options[i]}
-					{icon _id='star_grey_selected' alt=$field.rating_options[i] title=$smarty.capture.thisvote}
+					{$staremptyselected = 'display:inline'}
 				{else}
-					{icon _id='star_grey' alt=$field.rating_options[i] title=$smarty.capture.thisvote}
+					{$starempty = 'display:inline'}
 				{/if}
 			{/if}
 			{if ($tiki_p_tracker_vote_ratings eq 'y' && (!isset($field.my_rate) || $field.my_rate === false)) ||
-				($tiki_p_tracker_revote_ratings eq 'y' && isset($field.my_rate) && $field.my_rate !== false)}
-				</a>
-			{/if}
+			($tiki_p_tracker_revote_ratings eq 'y' && isset($field.my_rate) && $field.my_rate !== false)}
+				{$endtag = '</a>'}
+				{capture name=thisvote}{tr}Click to vote for this value:{/tr} {$field.rating_options[i]}{/capture}
+				<a
+				href="{$smarty.server.REQUEST_URI}"
+				data-vote="{$field.rating_options[i]}"
+				onclick="sendVote(this,{$item.itemId},{$field.fieldId},{$field.rating_options[i]});return false;"
+				class="tips" title=":{$smarty.capture.thisvote}"
+				>{/if}
+					{icon name='star-selected' istyle="{$starselected}"}
+					{icon name='star' istyle="{$star}"}
+					{icon name='star-half-rating' istyle="{$starhalf}"}
+					{icon name='star-half-selected' istyle="{$starhalfselected}"}
+					{icon name='star-empty-selected' istyle="{$staremptyselected}"}
+					{icon name='star-empty' istyle="{$starempty}"}{$endtag}
 			{assign var='previousvote' value=$field.rating_options[i]}
 		{/section}
 		</span>
 		{if $item.itemId}
-			<small title="{tr}Votes{/tr}">
+			<small class="tips" title=":{tr}Votes{/tr}">
 				({$field.numvotes})
 			</small>
-			{icon _id='help' title=$smarty.capture.stat}
+			{icon name='help' ititle="{$smarty.capture.stat}"}
 		{/if}
 		{if $tiki_p_tracker_revote_ratings eq 'y'}
-			<a href="{$smarty.server.REQUEST_URI}" onclick="sendVote(this,{$item.itemId},{$field.fieldId},'NULL');return false;" {if empty($field.my_rate) or not in_array($field.my_rate, $field.rating_options)} style="display:none;"{/if}>x</a>
+			<a
+				href="{$smarty.server.REQUEST_URI}"
+				data-vote="0" onclick="sendVote(this,{$item.itemId},{$field.fieldId},'NULL');return false;"
+				{if empty($field.my_rate) or not in_array($field.my_rate, $field.rating_options)} style="display:none;"{/if}
+			>{icon name='delete' iclass='tips unvote' ititle=":{tr}Remove your rating{/tr}"}</a>
 		{/if}
 		</span>
 	{/if}

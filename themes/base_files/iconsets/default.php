@@ -391,7 +391,24 @@ function iconset_default()
 				'id' => 'sort-asc',
 			),
 			//star in defaults
-			//star-half in defaults
+			'star-empty' => array(
+				'id' => 'star-o',
+			),
+			'star-empty-selected' => array(
+				'id' => 'star-o',
+				'class' => 'text-success'
+			),
+			'star-half-rating' => array(
+				'id' => 'star-half-full',
+			),
+			'star-half-selected' => array(
+				'id' => 'star-half-full',
+				'class' => 'text-success'
+			),
+			'star-selected' => array(
+				'id' => 'star',
+				'class' => 'text-success'
+			),
 			//stop in defaults
 			'stop-watching' => array(
 				'id' => 'eye-slash',

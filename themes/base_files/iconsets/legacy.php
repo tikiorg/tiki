@@ -513,8 +513,24 @@ function iconset_legacy()
 				'id' => 'resultset_up',
 			),
 			//star in defaults
+			'star-empty' => array(
+				'id' => 'star_grey',
+			),
+			'star-empty-selected' => array(
+				'id' => 'star_grey_selected',
+			),
 			'star-half' => array(
 				'id' => 'star_half',
+			),
+			//don't use half star for rating.tpl since there is no selected half star
+			'star-half-rating' => array(
+				'id' => 'star_grey',
+			),
+			'star-half-selected' => array(
+				'id' => 'star_grey_selected',
+			),
+			'star-selected' => array(
+				'id' => 'star_selected',
 			),
 			'stop' => array(
 				'id' => 'control_stop',
