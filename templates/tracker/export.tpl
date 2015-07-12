@@ -6,17 +6,6 @@
 
 {block name="content"}
 {accordion}
-	{accordion_group title="{tr}Quick Export{/tr}"}
-	<form method="post" class="simple no-ajax form-horizontal" action="{service controller=tracker action=dump_items trackerId=$trackerId}">
-		<p>{tr}Produce a CSV with basic formatting.{/tr}</p>
-        {remarksbox type="info" title="{tr}Note{/tr}" icon="bricks"}
-            <p>{tr}If you use field types such as 'User Preference', 'Relations' or 'Items list/Item link', please export your items through the next section below 'Export Tracker Items'{/tr}</p>
-        {/remarksbox}
-		<div>
-			<input type="submit" class="btn btn-default" value="{tr}Export{/tr}">
-		</div>
-	</form>
-	{/accordion_group}
 	{accordion_group title="{tr}Export Tracker Items{/tr}"}
 	<form class="simple no-ajax" action="{service controller=tracker action=export_items trackerId=$trackerId}" method="post">
 		<div class="form-group">
@@ -121,6 +110,17 @@
 		</div>
 	</form>
 	{/accordion_group}
+{accordion_group title="{tr}Quick Export{/tr}"}
+	<form method="post" class="simple no-ajax form-horizontal" action="{service controller=tracker action=dump_items trackerId=$trackerId}">
+		<p>{tr}Produce a CSV with basic formatting.{/tr}</p>
+		{remarksbox type="info" title="{tr}Note{/tr}" icon="bricks"}
+			<p>{tr}If you use field types such as 'User Preference', 'Relations' or 'Items list/Item link', please export your items through the next section below 'Export Tracker Items'{/tr}</p>
+		{/remarksbox}
+		<div>
+			<input type="submit" class="btn btn-default" value="{tr}Export{/tr}">
+		</div>
+	</form>
+{/accordion_group}
 	{if isset($export)}
 	{accordion_group title="{tr}Structure{/tr}"}
 	<form class="simple" action="" method="post">
