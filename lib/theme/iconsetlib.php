@@ -86,6 +86,7 @@ class Iconset
 	private $tag;
 	private $prepend;
 	private $append;
+	private $class;
 
 	private $icons;
 	private $defaults;
@@ -101,6 +102,7 @@ class Iconset
 		$this->tag = $data['tag'];
 		$this->prepend = isset($data['prepend']) ? $data['prepend'] : null;
 		$this->append = isset($data['append']) ? $data['append'] : null;
+		$this->class = isset($data['class']) ? $data['class'] : null;
 		$this->icons = isset($data['icons']) ? $data['icons'] : [];
 		$this->defaults = isset($data['defaults']) ? $data['defaults'] : [];
 
@@ -115,6 +117,7 @@ class Iconset
 		$tag = $iconset->tag();
 		$prepend = $iconset->prepend();
 		$append = $iconset->append();
+		$class = $iconset->getClass();
 
 		foreach ($iconset->icons() as $name => $icon) {
 			if (! isset($this->icons[$name]) || $over) {
@@ -126,6 +129,9 @@ class Iconset
 				}
 				if (empty($icon['append']) && $append && $this->append !== $append) {
 					$icon['append'] = $append;
+				}
+				if (empty($icon['class']) && $class && $this->class !== $class) {
+					$icon['clas'] = $class;
 				}
 				$this->icons[$name] = $icon;
 			}
@@ -178,6 +184,12 @@ class Iconset
 		return $this->append;
 	}
 
+	public function getClass()
+	{
+		return $this->class;
+	}
+
+
 	public function getHtml($name, array $params = []) {
 
 		global $prefs;
@@ -188,9 +200,9 @@ class Iconset
 			$tag = isset($icon['tag']) ? $icon['tag'] : $this->tag;
 			$prepend = isset($icon['prepend']) ? $icon['prepend'] : $this->prepend;
 			$append = isset($icon['append']) ? $icon['append'] : $this->append;
-			$icon_class = '';
+			$icon_class = isset($icon['class']) ? ' ' . $icon['class'] : '';
 			$size = isset($params['size']) && $params['size'] < 10 ? $params->size->int() : 1;
-			$custom_class = isset($params['iclass']) ? $params->iclass->striptags() : '';
+			$custom_class = isset($params['iclass']) ? ' ' . $params->iclass->striptags() : '';
 			$title = isset($params['ititle']) ? 'title="' . $params->ititle->striptags() . '"' : '';
 			$id = isset($params['id']) ? 'id="' . $params->id->striptags() . '"' : '';
 			$styleparam = isset($params['istyle']) ? $params->istyle->striptags() : '';
@@ -213,10 +225,11 @@ class Iconset
 				}
 				$alt = $name;  //use icon name as alternate text
 				$style = !empty($styleparam) ? 'style="' . $styleparam . '"' : '';
-				$html = "<span class=\"icon icon-$name $icon_class $custom_class\" $title $id $style><img src=\"$src\" alt=\"$alt\"></span>";
+				$html = "<span class=\"icon icon-$name$icon_class$custom_class $id\" $title $style><img src=\"$src\" alt=\"$alt\"></span>";
 			} else {
 				if (isset($icon['id'])) { //use class defined for the icon if set
-					$icon_class = $prepend . $icon['id'] . $append;
+					$space = !empty($icon_class) ? ' ' : '';
+					$icon_class .= $space . $prepend . $icon['id'] . $append;
 				} else {
 					TikiLib::lib('errorreport')->report(tr('Iconset: Class not defined for icon %0', $name));
 				}

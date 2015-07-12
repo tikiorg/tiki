@@ -250,8 +250,21 @@ function iconset_glyphicons()
 				'id' => 'sort-by-alphabet',
 			),
 			//star in defaults
-			'star-half' => array(
+			//star-empty in defaults
+			'star-empty-selected' => array(
 				'id' => 'star-empty',
+				'class' => 'text-success'
+			),
+			'star-half-rating' => array(
+				'id' => 'star-empty',
+			),
+			'star-half-selected' => array(
+				'id' => 'star-empty',
+				'class' => 'text-success'
+			),
+			'star-selected' => array(
+				'id' => 'star',
+				'class' => 'text-success'
 			),
 			//stop in defaults
 			'stop-watching' => array(
