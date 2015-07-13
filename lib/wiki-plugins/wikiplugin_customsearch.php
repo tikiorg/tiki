@@ -111,6 +111,17 @@ function wikiplugin_customsearch_info()
 				'filter' => 'digits',
 				'default' => '1',
 			),
+			'trimlinefeeds' => array(
+				'required' => false,
+				'name' => tra('Trim linefeeds'),
+				'description' => tra('Remove the linefeeds added after each input which casues the wiki parser to add extra paragraphs.'),
+				'options' => array(
+					array('text' => tra('No'), 'value' => '0'),
+					array('text' => tra('Yes'), 'value' => '1'),
+				),
+				'filter' => 'digits',
+				'default' => '0',
+			),
 		),
 	);
 }
@@ -371,7 +382,11 @@ window.customsearch_$id = customsearch;
 			} else {
 				$fieldname = $fieldid;
 			}
-			$match->replaceWith($function($id, $fieldname, $fieldid, $arguments, $default, $script));
+			$html = $function($id, $fieldname, $fieldid, $arguments, $default, $script);
+			if ($params['trimlinefeeds']) {
+				$html = trim($html);
+			}
+			$match->replaceWith($html);
 		}
 	}
 
