@@ -794,7 +794,7 @@ class Services_Tracker_Controller
 		$fields = array();
 		foreach ($processedFields as $k => $f) {
 			$permName = $f['permName'];
-			$fields[$permName] = $f['value'];
+			$fields[$permName] = isset($f['value']) ? $f['value'] : '';
 		}
 
 		$userInput = $input->fields->none();
