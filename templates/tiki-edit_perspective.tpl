@@ -33,7 +33,7 @@
 											{tr}Delete{/tr}
 										{/self_link}
 									{/if}
-								{/strip}
+								{/strip}	
 							{/capture}
 							<a class="tips"
 							   title="{tr}Actions{/tr}"
@@ -72,23 +72,42 @@
 					<div class="col-sm-10">
                         <input type="text" name="name" id="name" value="{$perspective_info.name|escape}" class="form-control">
                     </div>
-    					<input type="hidden" name="id" value="{$perspective_info.perspectiveId|escape}">
+    				<input type="hidden" name="id" value="{$perspective_info.perspectiveId|escape}">
 				</div>
-				<fieldset id="preferences" class="panel panel-default dropzone" style="text-align: left;">
-					<p class="panel-heading">{tr}Configurations:{/tr}</p>
-					{foreach from=$perspective_info.preferences key=name item=val}
-						{preference name=$name source=$perspective_info.preferences}
-					{/foreach}
-				</fieldset>
-				<p>
+				<div class="col-sm-offset-2">
+					<fieldset id="preferences" class="panel panel-default dropzone">
+						<div class="panel-heading">{tr}Preference List{/tr}</div>
+						<div class="panel-body">
+							{foreach from=$perspective_info.preferences key=name item=val}
+								{preference name=$name source=$perspective_info.preferences}
+							{/foreach}
+					</fieldset>
+				</div>
+				<div class="text-center">
 					<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-				</p>
+				</div>
 			</form>
-			<form method="post" id="searchform" action="tiki-edit_perspective.php" class="form-inline">
-				{remarksbox type="info" title="{tr}Hint{/tr}"}{tr}Search for configurations below and drag them in to the configuration section above.{/tr}{/remarksbox}
-					<input id="criteria" type="text" name="criteria" class="form-control">
-					<input type="submit" class="btn btn-default btn-sm" value="{tr}Search{/tr}">
-					<fieldset id="resultzone" class="dropzone" style="text-align: left;"></fieldset>
+			<form method="post" id="searchform" action="tiki-edit_perspective.php" class="form col-sm-offset-2 clearfix" role="form">
+				{remarksbox type="info" title="{tr}Hint{/tr}"}
+					{tr}Search preferences below and drag them into the preference list above.{/tr}
+				{/remarksbox}
+				<div class="panel panel-default">
+					<input type="hidden" name="id" value="{$perspective_info.perspectiveId|escape}">
+					<div class="panel-body clearfix">
+						<div class="input-group">
+							<span class="input-group-addon">
+								{icon name="search"}
+							</span>
+							<input id="criteria" type="text" name="criteria" class="form-control" placeholder="{tr}Search preferences{/tr}...">
+							<div class="input-group-btn">
+								<input type="submit" class="btn btn-default" value="{tr}Search{/tr}">
+							</div>
+						</div>
+					</div>
+					<div class="panel-footer">
+						<fieldset id="resultzone" class="dropzone"></fieldset>
+					</div>
+				</div>
 			</form>
 			{jq}
 				$('#preferences')
@@ -121,8 +140,8 @@
 					if (typeof ajaxLoadingShow == 'function') { ajaxLoadingShow('resultzone'); }
 					$('#resultzone').load( this.action, $(this).serialize(), function() {
 						$('#resultzone div.adminoptionbox').draggable( {
-							handle: 'label',
-							axis: 'y',
+							scroll: true,
+							cursor: 'move',
 							helper: 'clone'
 						} );
 						$(this).tiki_popover();
