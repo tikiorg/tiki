@@ -134,7 +134,6 @@
 								<a href="{if $prefs.feature_sefurl eq 'y'}logout{else}tiki-logout.php{/if}">{tr}Log out{/tr}</a>
 							</li>
 {else}
-<!--<li><a href="{if $prefs.feature_sefurl eq 'y'}login{else}tiki-login_scr.php{/if}">{tr}Log in{/tr}</a></li>-->
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">{tr}Log in{/tr} <span
 								class="caret"></span></a>
@@ -163,18 +162,6 @@
 	{/if}
 {/if}
 						</ul>
-{*
-	{if $prefs.feature_search_show_search_box eq 'y'}
-	<form class="navbar-form navbar-right" role="search" action="tiki-searchindex.php">
-		<div class="input-group">
-		<input name="filter~content" type="search" class="form-control" placeholder="{tr}Search{/tr}">
-		<span class="input-group-btn">
-		<button type="submit" class="btn btn-default">{icon name="search"}</button>
-		</span>
-		</div>
-		</form>
-		{/if}
-	*}
 					</div>
 				</div> {* navbar-collapse-social *}
 			</div> {* container *}
