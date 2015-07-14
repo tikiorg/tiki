@@ -87,6 +87,7 @@ function wikiplugin_wysiwyg($data, $params)
 		$params['section'] = empty($params['section']) ? 'wysiwyg_plugin' : $params['section'];
 		$params['_wysiwyg'] = 'y';
 		$params['is_html'] = $is_html;
+		$params['_is_html'] = $is_html;    // needed for toolbars
 		//$params['comments'] = true;
 		$ckoption = TikiLib::lib('wysiwyg')->setUpEditor($is_html, $exec_key, $params, '');
 
