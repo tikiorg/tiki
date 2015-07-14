@@ -7,6 +7,8 @@
 
 function wikiplugin_wysiwyg_info()
 {
+	global $prefs;
+
 	return array(
 		'name' => 'WYSIWYG',
 		'documentation' => 'PluginWYSIWYG',
@@ -33,6 +35,18 @@ function wikiplugin_wysiwyg_info()
 				'filter' => 'text',
 				'default' => '300px',
 			),
+			'use_html' => array(
+				'required' => false,
+				'name' => tra('Use HTML'),
+				'description' => tra('Overrides the "wysiwyg_htmltowiki" preference if needed. Defaults to "n" if wysiwyg_htmltowiki is set to "y".'),
+				'filter' => 'alpha',
+				'default' => $prefs['wysiwyg_htmltowiki'] == 'y' ? 'n' : 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
 		),
 	);
 } // wikiplugin_wysiwyg_info()
@@ -58,7 +72,7 @@ function wikiplugin_wysiwyg($data, $params)
 		$sourcepage = $page;
 	}
 
-	if ($prefs['wysiwyg_htmltowiki'] == 'y') {
+	if ($params['use_html'] !== 'y') {
 		$is_html = false;
 	} else {
 		$is_html = true;
@@ -74,7 +88,7 @@ function wikiplugin_wysiwyg($data, $params)
 		$params['_wysiwyg'] = 'y';
 		$params['is_html'] = $is_html;
 		//$params['comments'] = true;
-		$ckoption = TikiLib::lib('wysiwyg')->setUpEditor(true, $exec_key, $params, '', false);
+		$ckoption = TikiLib::lib('wysiwyg')->setUpEditor($is_html, $exec_key, $params, '');
 
 		if ($prefs['namespace_enabled'] == 'y' && $prefs['namespace_force_links'] == 'y') {
 			$namespace = TikiLib::lib('wiki')->get_namespace($sourcepage);
@@ -86,7 +100,7 @@ function wikiplugin_wysiwyg($data, $params)
 		}
 		$namespace = htmlspecialchars($namespace);
 
-		$html = "<div id='$exec_key' class='{$class}'$style data-initial='$namespace'>" . $html . '</div>';
+		$html = "<div id='$exec_key' class='{$class}'$style data-initial='$namespace' data-html='{$params['use_html']}'>" . $html . '</div>';
 
 		$js = '$("#' . $exec_key . '").wysiwygPlugin("' . $execution . '", "' . $sourcepage . '", ' . $ckoption . ')';
 
