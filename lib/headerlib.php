@@ -1101,7 +1101,20 @@ class HeaderLib
 				$args['key'] = $prefs['gmap_key'];
 			}
 
-			$this->add_jsfile_cdn($tikilib->httpScheme() . '://maps.google.com/maps/api/js?' . http_build_query($args, '', '&'));
+			$url = $tikilib->httpScheme() . '://maps.googleapis.com/maps/api/js?' . http_build_query($args, '', '&');
+
+			if (TikiLib::lib('access')->is_xml_http_request()) {
+				$this->add_js('function loadScript() {
+var script = document.createElement("script");
+	script.type = "text/javascript";
+	script.src = "' . $url . '";
+	document.body.appendChild(script);
+}
+
+window.onload = loadScript;');
+			} else {
+				$this->add_jsfile($url, 'external');
+			}
 		}
 
 		/* Needs additional testing

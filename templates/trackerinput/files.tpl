@@ -15,9 +15,7 @@
 					<img src="tiki-download_file.php?fileId={$info.fileId|escape}&icon" width="32" height="32">
 				{/if}
 				{$info.name|escape}
-				<label>
-					{icon name='delete'}
-				</label>
+				{icon name='delete'}
 			</li>
 		{/foreach}
 	</ol>
@@ -41,7 +39,7 @@
 	{if $prefs.fgal_tracker_existing_search eq 'y'}
 		{if $prefs.fgal_elfinder_feature eq 'y'}
 			{button href='tiki-list_file_gallery.php' _text="{tr}Browse files{/tr}"
-				_onclick="return openElFinderDialog(this, {ldelim}defaultGalleryId:{if !isset($field.options_array[8]) or $field.options_array[8] eq ''}{if empty($field.options_array[0])}0{else}{$field.options_array[0]|escape}{/if}{else}{$field.options_array[8]|escape}{/if},deepGallerySearch:{if empty($field.options_array[6])}0{else}{$field.options_array[6]|escape}{/if},getFileCallback:function(file,elfinder){ldelim}window.handleFinderFile(file,elfinder){rdelim},eventOrigin:this{rdelim});"
+			_onclick=$context.onclick
 				title="{tr}Browse files{/tr}"}
 		{else}
 			<a href="{service controller=file action=browse galleryId=$galleryId limit=$limit|default:100 type=$field.filter}" class="btn btn-default browse-files">{tr}Browse Files{/tr}</a>
@@ -95,11 +93,9 @@
 
 			$field.input_csv('add', ',', fileId);
 
-			li.prepend($.fileTypeIcon(fileId, { type: type, name: name }));
-			li.append($('<label>{{icon name='delete'}}</label>'));
-			li.find('img.icon').click(function () {
-				$field.input_csv('delete', ',', fileId);
-				$(this).closest('li').remove();
+			li.prepend($.fileTypeIcon(fileId, { type: type, name: name })); li.append($('{{icon name='delete'}}'));
+	$('body').on('click', li.find('img.icon, span.icon-delete'), function (e) {
+				$field.input_csv('delete', ',', fileId); $(e.target).closest('li').remove();
 				toggleWarning();
 			});
 
@@ -158,12 +154,9 @@
 		});
 
 		// Delete for previously existing files
-		$files.find('input').hide();
-		$files.find('img.icon').click(function () {
-			var fileId = $(this).closest('li').data('file-id');
-			$field.input_csv('delete', ',', fileId);
-			$(this).closest('li').remove();
-			toggleWarning();
+		$files.find('input').hide(); $('body').on('click', $files.find('img.icon, span.icon-delete'), function (e) { var
+	fileId = $(e.target).closest('li').data('file-id'); if (fileId) { $field.input_csv('delete', ',', fileId);
+	$(e.target).closest('li').remove(); toggleWarning(); }
 		});
 
 		$url.keypress(function (e) {
@@ -224,7 +217,7 @@
 						$files = $(".current-list", $ff);
 					}
 
-					addFile(data.fileId, data.type, data.name);
+	addFile(data.fileId, data.filetype, data.name);
 				},
 				error: function (jqxhr) {
 				},
@@ -244,7 +237,7 @@
 				$files = $(".current-list", $ff);
 			}
 
-			addFile(data.fileId, data.type, data.name);
+	addFile(data.fileId, data.filetype, data.name);
 		};
 	});
 {/jq}

@@ -176,7 +176,7 @@
 
 								{if $tracker.permissions->admin_trackers}
 									{$libeg}<a href="tiki-admin_tracker_fields.php?trackerId={$tracker.trackerId}">
-										{icon name='trackerfields' _menu_text='y' _menu_icon='y' alt="{tr}Fields{/tr}"}
+									{icon name='th-list' _menu_text='y' _menu_icon='y' alt="{tr}Fields{/tr}"}
 									</a>{$liend}
 									{$libeg}<a href="{service controller=tracker action=replace trackerId=$tracker.trackerId modal=true}"
 										data-toggle="modal"

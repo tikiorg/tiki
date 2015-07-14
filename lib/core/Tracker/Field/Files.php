@@ -227,6 +227,26 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 
 	function renderInput($context = array())
 	{
+		global $prefs;
+
+		if ($prefs['fgal_tracker_existing_search']) {
+			if ($this->getOption('browseGalleryId')) {
+				$defaultGalleryId = $this->getOption('browseGalleryId');
+			} else if ($this->getOption('galleryId')) {
+				$defaultGalleryId = $this->getOption('galleryId');
+			} else {
+				$defaultGalleryId = 0;
+			}
+			$deepGallerySearch = $this->getOption('galleryId');
+
+			$context['onclick'] = 'return openElFinderDialog(this, {
+	defaultGalleryId:' . $defaultGalleryId . ',
+	deepGallerySearch: ' . $deepGallerySearch . ',
+	getFileCallback: function(file,elfinder){ window.handleFinderFile(file,elfinder); },
+	eventOrigin:this
+});';
+		}
+
 		return $this->renderTemplate('trackerinput/files.tpl', $context, array(
 			'replaceFile' => 'y' == $this->getOption('replace', 'n'),
 		));

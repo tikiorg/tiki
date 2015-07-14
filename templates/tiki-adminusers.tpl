@@ -82,7 +82,7 @@
 		{/remarksbox}
 	{/if}
 {/if}
-{tabset name='tabs_adminuers'}
+{tabset name='tabs_adminusers'}
 
 	{* ---------------------- tab with list -------------------- *}
 	{tab name="{tr}Users{/tr}"}

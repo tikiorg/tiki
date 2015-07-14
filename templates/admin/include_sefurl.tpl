@@ -1,14 +1,12 @@
 {* $Id$ *}
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
-	{tr}See also{/tr} <a class="alert-link" class="rbox-link" href="tiki-admin.php?page=metatags">{tr}Meta tags{/tr}</a>.
+	{tr}See also{/tr} <a class="alert-link" href="tiki-admin.php?page=metatags">{tr}Meta tags{/tr}</a>.
 {/remarksbox}
-<form class="admin" method="post" action="tiki-admin.php?page=sefurl">
+<form class="admin" method="post" action="tiki-admin.php?page=sefurl" role="form" class="form">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm" name="save" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
+	<div class="t_navbar clearfix">
+		<div class="pull-right">
+			<input type="submit" class="btn btn-primary btn-sm" name="save" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 		</div>
 	</div>
 	<fieldset>
@@ -53,16 +51,18 @@
 		{preference name=feature_canonical_url}
 		<div id="feature_canonical_url_childcontainer" class="clearfix">
 			{preference name=feature_canonical_domain}
-			<span class="help-block col-md-8 col-md-push-4">{tr}For example, if the field is left blank, the canonical URL domain is:{/tr} {$base_url_canonical_default}</span>
+			<span class="help-block col-md-8 col-md-push-4">
+				{tr}For example, if the field is left blank, the canonical URL domain is:{/tr} {$base_url_canonical_default}
+			</span>
 		</div>
 		{preference name=wiki_url_scheme}
 	</fieldset>
 	<fieldset>
 		<legend>{tr}Settings{/tr}</legend>
 		{preference name=feature_sefurl_filter}
-		<div class="adminoptionbox">
+		<div class="adminoptionbox clearfix">
 			<label for="feature_sefurl_paths" class="control-label col-md-4">
-				{tr}List of Url Parameters that should go in the path{/tr}
+				{tr}URL Parameters{/tr}
 			</label>
 			{strip}
 				{capture name=paths}
@@ -74,18 +74,16 @@
 			{/strip}
 			<div class="col-md-8">
 				<input type="text" class="form-control" id="feature_sefurl_paths" name="feature_sefurl_paths" value="{$smarty.capture.paths|escape}" />
+				<span class="help-block">
+					{tr}List of Url Parameters that should go in the path{/tr}
+				</span>
 			</div>
 		</div>
 		{preference name=feature_sefurl_title_article}
 		{preference name=feature_sefurl_title_blog}
 		{preference name=feature_sefurl_tracker_prefixalias}
 	</fieldset>
-	<br>{* I cheated. *}
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm" name="save" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
-		</div>
+	<div class="text-center">
+		<input type="submit" class="btn btn-primary btn-sm" name="save" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 	</div>
 </form>
