@@ -64,7 +64,6 @@
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="container">
 				<div class="navbar-header">
-{if $module_params.navbar_toggle neq 'n'}
 					<button type="button" class="navbar-toggle" data-toggle="collapse"
 					data-target="#navbar-collapse-social">
 						<span class="sr-only">Toggle navigation</span>
@@ -72,21 +71,12 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-{/if}
-					<a class="navbar-brand" href="./">
-{if $prefs.sitelogo_icon}
-						<img src="{$prefs.sitelogo_icon}">
-{/if}
-{$prefs.sitetitle|escape}
-					</a>
+					<a class="navbar-brand" href="./">{if $prefs.sitelogo_icon}<img src="{$prefs.sitelogo_icon}">{/if} {$prefs.sitetitle|escape}</a>
 				</div> {* navbar-header *}
 
 				<div class="collapse navbar-collapse" id="navbar-collapse-social">
-					<div style="display:inline">
-						{modulelist zone="topbar" nobox="y" navbar="y" menuclass="navbar-inverse collapse navbar-collapse noclearfix" class="context modules noclearfix"}
-					</div>
+						{modulelist zone="topbar" class="navbar-left" id="topbar_modules_social"}
 
-					<div style="display:inline">
 						<ul class="nav navbar-nav navbar-right">
 {if $user}
 							<li>
@@ -121,7 +111,6 @@
 	{/if}
 {/if}
 						</ul>
-					</div>
 				</div> {* navbar-collapse-social *}
 			</div> {* container *}
 
