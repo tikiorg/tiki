@@ -14,8 +14,10 @@
 		<div class="container">
 
 			<div class="row">
-{if zone_is_empty('left') and zone_is_empty('right')}
-				<div class="col-md-12 col1" id="col1">
+
+				<div class="{if	zone_is_empty('left') and zone_is_empty('right')}col-md-12 {elseif 
+						zone_is_empty('left')}col-md-9 {elseif 
+						zone_is_empty('right')}col-md-9 col-md-push-3 {else}col-md-8 col-md-push-2 {/if}col1" id="col1">
 	{if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
 		{modulelist zone=pagetop}
 	{/if}
@@ -29,70 +31,27 @@
 	{if $prefs.module_zones_pagebottom eq 'fixed' or ($prefs.module_zones_pagebottom ne 'n' && ! zone_is_empty('pagebottom'))}
 		{modulelist zone=pagebottom}
 	{/if}
-				</div>
-{elseif zone_is_empty('left')}
-				<div class="col-md-9 col1" id="col1">
-	{if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
-		{modulelist zone=pagetop}
-	{/if}
-	{error_report}
-					<div class="clearfix">
-						<div class="pull-right">{block name=quicknav}{/block}</div>
-					</div>
-	{block name=title}{/block}
-	{block name=navigation}{/block}
-	{block name=content}{/block}
-	{if $prefs.module_zones_pagebottom eq 'fixed' or ($prefs.module_zones_pagebottom ne 'n' && ! zone_is_empty('pagebottom'))}
-		{modulelist zone=pagebottom}
-	{/if}
-				</div>
+				</div> {* col1 *}
+	{if zone_is_empty('left') and zone_is_empty('right')}
+		{* show nothing *}
+	{elseif zone_is_empty('left')}
 				<div class="col-md-3" id="col3">
-	{modulelist zone=right}
+		{modulelist zone=right}
 				</div>
-{elseif zone_is_empty('right')}
-				<div class="col-md-9 col-md-push-3 col1" id="col1">
-	{if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
-		{modulelist zone=pagetop}
-	{/if}
-	{error_report}
-					<div class="clearfix">
-						<div class="pull-right">{block name=quicknav}{/block}</div>
-					</div>
-	{block name=title}{/block}
-	{block name=navigation}{/block}
-	{block name=content}{/block}
-	{if $prefs.module_zones_pagebottom eq 'fixed' or ($prefs.module_zones_pagebottom ne 'n' && ! zone_is_empty('pagebottom'))}
-		{modulelist zone=pagebottom}
-	{/if}
-				</div>
+	{elseif zone_is_empty('right')}
 				<div class="col-md-3 col-md-pull-9" id="col2">
-	{modulelist zone=left}
+		{modulelist zone=left}
 				</div>
-{else}
-				<div class="col-md-8 col-md-push-2 col1" id="col1">
-	{if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
-		{modulelist zone=pagetop}
-	{/if}
-	{error_report}
-					<div class="clearfix">
-						<div class="pull-right">{block name=quicknav}{/block}</div>
-					</div>
-	{block name=title}{/block}
-	{block name=navigation}{/block}
-	{block name=content}{/block}
-	{if $prefs.module_zones_pagebottom eq 'fixed' or ($prefs.module_zones_pagebottom ne 'n' && ! zone_is_empty('pagebottom'))}
-		{modulelist zone=pagebottom}
-	{/if}
-				</div>
+	{else}
 				<div class="col-md-2 col-md-pull-8" id="col2">
-	{modulelist zone=left}
+		{modulelist zone=left}
 				</div>
 				<div class="col-md-2" id="col3">
-	{modulelist zone=right}
+		{modulelist zone=right}
 				</div>
-{/if}
-			</div>
-		</div>
+	{/if} 
+			</div> {* row *}
+		</div> {* container *}
 
 		<footer class="footer main-footer" id="footer">
 			<div class="container">
