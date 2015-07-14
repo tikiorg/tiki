@@ -19,7 +19,7 @@
 						{if $avatarHtml}
 							{$avatarHtml}
 						{else}
-							{icon _id='img/noavatar.png' title=$fullname}
+							{icon name='user'}
 						{/if}
 					</td>
 					<td>
@@ -63,23 +63,34 @@
 						<td>
 							<ul class="friendship list-unstyled">
 								{foreach from=$friendship item=relation}
+									{if $relation.type == 'incoming'}
+										{$icon = 'login'}
+									{elseif $relation.type == 'outgoing'}
+										{$icon = 'logout'}
+									{elseif $relation.type == 'friend'}
+										{$icon = 'group'}
+									{elseif $relation.type == 'following'}
+										{$icon = 'share'}
+									{elseif $relation.type == 'follower'}
+										{$icon = 'backlink'}
+									{/if}
 									<li>
-										{icon _id='social_'|cat:$relation.type _title=$relation.label|escape}<span class="small"> {$relation.label|escape}</span>
+										{icon name=$icon}<span class="small"> {$relation.label|escape}</span>
 										<div class="friendship-actions pull-right">
 											{if !empty($relation.remove)}
 												<a class="pull-right remove-friend btn btn-default" href="{service controller=social action=remove_friend friend=$other_user}"
 															title="{$relation.remove}" data-confirm="{tr _0=$other_user}Do you really want to remove %0?{/tr}">
-													{icon _id=cross alt="{$relation.remove}"}
+													{icon name='delete'}
 												</a>
 											{/if}
 											{if !empty($relation.add)}
 												<a class="pull-right add-friend btn btn-default" title="{$relation.add}" href="{service controller=social action=add_friend username=$other_user}">
-													{icon _id=add alt="{$relation.add}"}
+													{icon name='add'}
 												</a>
 											{/if}
 											{if !empty($relation.approve)}
 												<a class="pull-right approve-friend btn btn-default" title="{$relation.approve}" href="{service controller=social action=approve_friend friend=$other_user}">
-													{icon _id=accept alt="{$relation.approve}"}
+													{icon name='ok'}
 												</a>
 											{/if}
 										</div>
