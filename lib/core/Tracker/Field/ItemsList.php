@@ -11,7 +11,7 @@
  * Letter key: ~l~
  *
  */
-class Tracker_Field_ItemsList extends Tracker_Field_Abstract
+class Tracker_Field_ItemsList extends Tracker_Field_Abstract implements Tracker_Field_Exportable
 {
 	public static function getTypes()
 	{
@@ -176,6 +176,39 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract
 	{
 		return array();
 	}
+
+	function getTabularSchema()
+	{
+		$schema = new Tracker\Tabular\Schema($this->getTrackerDefinition());
+		$permName = $this->getConfiguration('permName');
+		$name = $this->getConfiguration('name');
+
+		$schema->addNew($permName, 'multi-id')
+			->setLabel($name)
+			->setReadOnly(true)
+			->setRenderTransform(function ($value) {
+				return implode(';', $value);
+			})
+			->setParseIntoTransform(function (& $info, $value) use ($permName) {
+				$info['fields'][$permName] = $value;
+			});
+
+		$schema->addNew($permName, 'multi-name')
+			->setLabel($name)
+			->setReadOnly(true)
+			->setRenderTransform(function ($value) {
+				$labels = $this->getItemLabels($value, ['list_mode' => 'y']);
+				return implode(';', $labels);
+			})
+			->setParseIntoTransform(function (& $info, $value) use ($permName) {
+				$info['fields'][$permName] = $value;
+			});
+
+
+		return $schema;
+	}
+
+
 
 	private function getItemIds()
 	{
