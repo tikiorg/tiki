@@ -788,7 +788,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		if (count($indexRemote)) {
 			$trklib = TikiLib::lib('trk');
 			$trackerId = $this->getOption('trackerId');
-			$item = $trklib->get_tracker_item($item);
+			$item = $trklib->get_tracker_item($this->getItemId());
 
 			$definition = Tracker_Definition::get($trackerId);
 			$factory = $definition->getFieldFactory();
