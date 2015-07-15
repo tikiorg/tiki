@@ -755,6 +755,13 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 					})
 					;
 			}
+			$schema->addNew($permName, 'name')
+				->setLabel($name)
+				->setReadOnly(true)
+				->setRenderTransform(function ($value) {
+					return $this->getItemLabel($value, ['list_mode' => 'csv']);
+				});
+
 		}
 
 		return $schema;
