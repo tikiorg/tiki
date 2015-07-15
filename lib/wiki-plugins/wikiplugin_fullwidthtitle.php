@@ -8,8 +8,8 @@
 function wikiplugin_fullwidthtitle_info()
 {
 	return array(
-		'name' => tra('Set a Synergiq Page Title'),
-		'description' => tra('Sets a consistent page title for Synergiq'),
+		'name' => tra('Set a Full-Width Page Title'),
+		'description' => tra('Allows for the setting of a Page Title that bleeds to the edges of the screen'),
 		'documentation' => tra('PluginFullWidthTitle'),
 		'default' => 'y',
 		'format' => 'html',
@@ -19,7 +19,7 @@ function wikiplugin_fullwidthtitle_info()
 			'title' => array(
 				'name' => tr('Page title'),
 				'description' => tr('If you need to include tpl files.'),
-				'required' => false,
+				'required' => true,
 				'filter' => 'text'
 			),
 			'iconsrc' => array(
