@@ -1013,6 +1013,90 @@ class Services_Tracker_Controller
 		);
 	}
 
+	//Function to just change the status of the tracker item
+	function action_update_item_status($input)
+	{
+		if ($input->status->word() == 'DONE') {
+			return array(
+				'status' => 'DONE',
+				'redirect' => $input->redirect->word(),
+			);
+		}
+
+		$trackerId = $input->trackerId->int();
+		$definition = Tracker_Definition::get($trackerId);
+
+		if (! $definition) {
+			throw new Services_Exception_NotFound;
+		}
+
+		if (! $itemId = $input->itemId->int()) {
+			throw new Services_Exception_MissingValue('itemId');
+		}
+
+		$itemInfo = TikiLib::lib('trk')->get_tracker_item($itemId);
+		if (! $itemInfo || $itemInfo['trackerId'] != $trackerId) {
+			throw new Services_Exception_NotFound;
+		}
+
+		if (empty($input->item_label->text())){
+			$item_label = "item";
+		}else{
+			$item_label = $input->item_label->text();
+		}
+
+		if (empty($input->title->text())){
+			$title = "Change item status";
+		}else{
+			$title = $input->title->text();
+		}
+
+		if (empty($input->button_label->text())){
+			$button_label = "Update ". $item_label;
+		}else{
+			$button_label = $input->button_label->text();
+		}
+
+		$itemObject = Tracker_Item::fromInfo($itemInfo);
+		if (! $itemObject->canModify()) {
+			throw new Services_Exception_Denied;
+		}
+
+		if ($input->confirm->int()) {
+			$result = $this->utilities->updateItem(
+				$definition,
+				array(
+					'itemId' => $itemId,
+					'trackerId' => $trackerId,
+					'status' => $input->status->text(),
+				)
+			);
+
+			return array(
+				'FORWARD' => array(
+					'controller' => 'tracker',
+					'action' => 'update_item_status',
+					'status' => 'DONE',
+					'redirect' => $input->redirect->text(),
+				)
+			);
+		} else {
+			return array(
+				'trackerId' => $trackerId,
+				'itemId' => $itemId,
+				'item_label' => $item_label,
+				'status' => $input->status->text(),
+				'redirect' => $input->redirect->text(),
+				'confirmation_message' => $input->confirmation_message->text(),
+				'title' => $title,
+				'button_label' => $button_label,
+			);
+		}
+		if (false === $result) {
+			throw new Services_Exception(tr('Validation error'), 406);
+		}
+	}
+
 	function action_clear($input)
 	{
 
