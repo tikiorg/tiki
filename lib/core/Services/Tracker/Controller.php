@@ -1376,7 +1376,12 @@ class Services_Tracker_Controller
 						} elseif ( ($dateFormatUnixTimestamp) && ($val['type'] == 'j') ) {
 							$toDisplay[] = $val['value'];
 						} else {
-							$toDisplay[] = $trklib->get_field_handler($val, $row)->renderOutput(array('list_mode' => 'csv'));
+							$toDisplay[] = $trklib->get_field_handler($val, $row)->renderOutput(array(
+								'list_mode' => 'csv',
+								'CR' => $cr,
+								'delimitorL' => $delimitorL,
+								'delimitorR' => $delimitorR,
+							));
 						}
 					}
 
