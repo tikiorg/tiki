@@ -881,7 +881,7 @@ class TrackerLib extends TikiLib
 
 			$rendered = $this->field_render_value(array('field' => $field, 'process' => 'y'));
 
-			$ret2[$k] = trim(strip_tags($rendered));
+			$ret2[$k] = trim(strip_tags($rendered), " \t\n\r\0\x0B\xC2\xA0");
 		}
 		return $ret2;
 	}
