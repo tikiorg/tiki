@@ -156,6 +156,8 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 
 	function getTabularSchema()
 	{
+		global $prefs;
+
 		$permName = $this->getConfiguration('permName');
 		$type = $this->getOption('datetime');
 
@@ -165,10 +167,15 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 		$helper = new Tracker\Tabular\Schema\DateHelper($label);
 		$helper->setupUnix($schema->addNew($permName, 'unix'));
 
+		$tikidate = TikiLib::lib('tikidate');
 		if ($type == 'd') {
 			$helper->setupFormat('Y-m-d', $schema->addNew($permName, 'yyyy-mm-dd'));
+			$helper->setupFormat(str_replace($tikidate->search, $tikidate->replace, $prefs['short_date_format']), $schema->addNew($permName, 'short date format'));
+			$helper->setupFormat(str_replace($tikidate->search, $tikidate->replace, $prefs['long_date_format']), $schema->addNew($permName, 'long date format'));
 		} else {
 			$helper->setupFormat('Y-m-d H:i:s', $schema->addNew($permName, 'yyyy-mm-dd hh:mm:ss'));
+			$helper->setupFormat(str_replace($tikidate->search, $tikidate->replace, $prefs['short_date_format'] . ' ' . $prefs['short_time_format']), $schema->addNew($permName, 'short datetime format'));
+			$helper->setupFormat(str_replace($tikidate->search, $tikidate->replace, $prefs['long_date_format'] . ' ' . $prefs['long_time_format']), $schema->addNew($permName, 'long datetime format'));
 		}
 
 		return $schema;
