@@ -97,7 +97,7 @@ function wikiplugin_kaltura_info()
 				'required' => false,
 				'name' => tra('Player type'),
 				'description' => tra('"kdp" or "html5"'),
-				'default' => 'kdp',
+				'default' => 'html5',
 				'filter' => 'word',
 				'options' => array(
 					array('text' => tra('KDP'), 'value' => 'kdp'),
