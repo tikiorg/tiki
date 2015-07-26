@@ -15,7 +15,7 @@
 					<legend>{tr}Date{/tr}</legend>
 					<div class="form-group">
 						<label class="col-sm-2 control-label" for="">{tr}Start{/tr}</label>
-						<div class="col-sm-6">
+						<div class="col-sm-8">
 							<div class="">
 								{html_select_date time=$startDate prefix="startDate_" start_year="-10" field_order=$prefs.display_field_order} {html_select_time use_24_hours=true time=$startDate}
 							</div>
@@ -23,7 +23,7 @@
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label" for="">{tr}End{/tr}</label>
-						<div class="col-sm-6">
+						<div class="col-sm-8">
 							<div class="">
 								{html_select_date time=$endDate prefix="endDate_" start_year="-10" field_order=$prefs.display_field_order} {html_select_time use_24_hours=true time=$endDate prefix="end_"}
 							</div>
@@ -283,7 +283,7 @@
 													<a href="tiki-admin_actionlog.php?actionId={$actionlog.actionId}&amp;startDate={$startDate}&amp;endDate={$endDate}#action">
 														{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
 													</a>
-													{self_link remove='y' _menu_text='y' _menu_icon='y' actionId=$actionlog.actionId _icon_name='remove' _title=""}
+													{self_link remove='y' _menu_text='y' _menu_icon='y' actionId=$actionlog.actionId _icon_name='delete'}
 														{tr}Remove{/tr}
 													{/self_link}
 												{/strip}
@@ -304,9 +304,18 @@
 				</div>
 				{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 				{if $prefs.feature_banning eq 'y'}
-					<div class="formcolor">
-						{tr}Perform action with checked:{/tr}
-						{icon _id='lock_red' _tag='input_image' name='ban' value='y' alt="{tr}Ban{/tr}"}
+					<div class="input-group col-sm-6">
+						<select class="form-control" name="action">
+							<option value="no_action" selected="selected">
+								{tr}Select action to perform with checked{/tr}...
+							</option>
+							<option value="ban">
+								{tr}Ban{/tr}
+							</option>
+						</select>
+						<span class="input-group-btn">
+							<button type="submit" class="btn btn-primary">{tr}OK{/tr}</button>
+						</span>
 					</div>
 				{/if}
 			</form>
