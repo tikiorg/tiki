@@ -14,8 +14,9 @@
 				{else}
 					<img src="tiki-download_file.php?fileId={$info.fileId|escape}&icon" width="32" height="32">
 				{/if}
-				{$info.name|escape}
-				{icon name='delete'}
+				{$info.name|escape} <label class="file-delete-icon">
+					{icon name='delete'}
+				</label>
 			</li>
 		{/foreach}
 	</ol>
@@ -81,17 +82,13 @@
 			}
 		}
 
-		function addFile(fileId, type, name) {
-			var li = $('<li>').appendTo($files);
-			li.text(name);
+		function addFile(fileId, type, name) {			var li = $('
+<li>').appendTo($files); li.text(name).data('file-id', fileId);
 
 			$field.input_csv('add', ',', fileId);
 
-			li.prepend($.fileTypeIcon(fileId, { type: type, name: name })); li.append($('{{icon name='delete'}}'));
-	$('body').on('click', li.find('img.icon, span.icon-delete'), function (e) {
-				$field.input_csv('delete', ',', fileId); $(e.target).closest('li').remove();
-				toggleWarning();
-			});
+	li.prepend($.fileTypeIcon(fileId, { type: type, name: name }));
+	li.append($('<label class="file-delete-icon">{{icon name='delete'}}</label>'));
 
 			if (replaceFile && $self.data('firstfile') > 0) {
 				li.prev('li').remove();
@@ -139,10 +136,9 @@
 			}
 		});
 
-		// Delete for previously existing files
-		$files.find('input').hide(); $('body').on('click', $files.find('img.icon, span.icon-delete'), function (e) { var
-	fileId = $(e.target).closest('li').data('file-id'); if (fileId) { $field.input_csv('delete', ',', fileId);
-	$(e.target).closest('li').remove(); toggleWarning(); }
+	$files.find('input').hide(); // Delete for previously existing and to be added files $files.parent().on('click',
+	'.file-delete-icon', function (e) { var fileId = $(e.target).closest('li').data('file-id'); if (fileId) {
+	$field.input_csv('delete', ',', fileId); $(e.target).closest('li').remove(); toggleWarning(); }
 		});
 
 		$url.keypress(function (e) {
