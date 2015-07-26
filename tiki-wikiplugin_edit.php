@@ -58,9 +58,6 @@ foreach ( $matches as $match ) {
 			$params = $_POST['params'];
 		}
 
-		if ($prefs['wysiwyg_htmltowiki'] == 'y' && $plugin === 'wysiwyg' && $params['use_html'] !== 'y') {
-			$content = TikiLib::lib('edit')->parseToWiki($content);
-		}
 		$match->replaceWithPlugin($plugin, $params, $content);
 
 		$parsed = $matches->getText();
