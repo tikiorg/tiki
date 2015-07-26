@@ -6,9 +6,9 @@
 				{if $entry.report_status eq 'none'}
 					<input type="checkbox" name="objects[]" value="{$entry.object_type|escape}:{$entry.object_id|escape}">
 				{elseif $entry.report_status eq 'success'}
-					{icon _id=accept}
+					{icon name='ok'}
 				{else}
-					{icon _id=sticky alt="{tr}Error{/tr}"}
+					{icon name='error'}
 				{/if}
 				{object_link type=$entry.object_type id=$entry.object_id backuptitle=$entry.title}
 			</li>
