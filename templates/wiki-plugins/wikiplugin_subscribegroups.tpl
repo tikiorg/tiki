@@ -13,7 +13,7 @@
 		{elseif $type eq 'leader'}{$gr|escape} <i>{tr}(You are a leader){/tr}</i>
 		{else}{$gr|escape}{/if}
 		{if !empty($allGroups.$gr.groupHome)}</a>{/if}
-		{if $showdefault eq 'y' and $default_group eq $gr}{icon _id='group' alt="{tr}Your default group{/tr}"}{/if}
+		{if $showdefault eq 'y' and $default_group eq $gr}{icon name='group' class='tips' title=":{tr}Your default group{/tr}"}{/if}
 		{if $showgroupdescription eq 'y'}<div>{$allGroups.$gr.groupDesc|escape}</div>{/if}
 	</td>
 	<td>
@@ -24,7 +24,7 @@
 			<a class="button" href="{$managementpages.$gr|sefurl:wiki}">{tr}Manage Group{/tr}</a>
 		{/if}
 		{if $showdefault eq 'y' and ($default_group ne $gr or !empty($defaulturl))}
-			<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}default={$gr|escape:'url'}" title="{tr}Change default group{/tr}">{icon _id='group' alt="{tr}Change default group{/tr}"}</a>
+			<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}default={$gr|escape:'url'}" class="tips" title=":{tr}Change default group{/tr}">{icon name='group'}</a>
 		{/if}
 	</td>
 	</tr>

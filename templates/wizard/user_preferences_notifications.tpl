@@ -1,13 +1,13 @@
 {* $Id$ *}
 
 <div class="userWizardIconleft"><img src="img/icons/large/wizard_user48x48.png" alt="{tr}User Wizard{/tr}" /></div>
-{tr}Use 'watches' to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon _id=eye} button on specific pages.{/tr}<br/>
+{tr}Use 'watches' to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon name='watch'} button on specific pages.{/tr}<br/>
 {tr}Set up below preferences related to receiving notifications by email about changes in the site{/tr}.<br/><br/><br/>
 
 {if $email_ok eq 'n'}
 	{remarksbox type="warning" title="{tr}Warning{/tr}"}
 		{tr}You need to set your email to receive email notifications.{/tr}
-		{icon _id="arrow_right" href="tiki-user_preferences.php"}
+		<a href="tiki-user_preferences.php">{icon name="next"}</a>
 	{/remarksbox}
 {/if}
 

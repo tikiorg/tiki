@@ -148,11 +148,11 @@
 									<td class="username">{$pubAccounts[ixp].username}</td>
 									<td class="action">
 										{if $tiki_p_admin_group_webmail eq 'y'or $tiki_p_admin eq 'y'}
-											{self_link _icon='page_edit' accountId=$pubAccounts[ixp].accountId}{tr}Edit{/tr}{/self_link}
-											{self_link _icon='cross' remove=$pubAccounts[ixp].accountId}{tr}Delete{/tr}{/self_link}
+											{self_link _icon_name='edit' accountId=$pubAccounts[ixp].accountId}{tr}Edit{/tr}{/self_link}
+											{self_link _icon_name='delete' remove=$pubAccounts[ixp].accountId}{tr}Delete{/tr}{/self_link}
 										{/if}
 										{if !$active}
-											{self_link _icon='accept' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
+											{self_link _icon_name='ok' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
 										{/if}
 									</td>
 								</tr>

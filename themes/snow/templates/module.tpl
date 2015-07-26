@@ -56,17 +56,17 @@
         <div class="panel-footer">
 		{if $user and $prefs.user_assigned_modules == 'y' and $prefs.feature_modulecontrols eq 'y'}
 			<span class="modcontrols">
-				<a title="{tr}Move module up{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_up={$module_name}">
-					{icon _id="resultset_up" alt="{tr}Up{/tr}"}
+				<a title=":{tr}Move module up{/tr}" class="tips" href="{$current_location|escape}{$mpchar|escape}mc_up={$module_name}">
+					{icon name="up"}
 				</a>
-				<a title="{tr}Move module down{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_down={$module_name}">
-					{icon _id="resultset_down" alt="{tr}Down{/tr}"}
+				<a title=":{tr}Move module down{/tr}" class="tips" href="{$current_location|escape}{$mpchar|escape}mc_down={$module_name}">
+					{icon name="down"}
 				</a>
-				<a title="{tr}Move module to opposite side{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_move={$module_name}">
-					{icon _id="arrow_right-left" alt="{tr}Move to opposite side{/tr}"}
+				<a title=":{tr}Move module to opposite side{/tr}" class="tips" href="{$current_location|escape}{$mpchar|escape}mc_move={$module_name}">
+					{icon name="move"}
 				</a>
-				<a title="{tr}Unassign this module{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_unassign={$module_name}" onclick='return confirmTheLink(this,"{tr}Are you sure you want to unassign this module?{/tr}")'>
-					{icon _id="cross" alt="{tr}Unassign{/tr}"}
+				<a title=":{tr}Unassign this module{/tr}" class="tips" href="{$current_location|escape}{$mpchar|escape}mc_unassign={$module_name}" onclick='return confirmTheLink(this,"{tr}Are you sure you want to unassign this module?{/tr}")'>
+					{icon name="delete"}
 				 </a>
 			</span>
 		{/if}

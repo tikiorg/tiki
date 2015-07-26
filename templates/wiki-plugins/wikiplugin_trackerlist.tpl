@@ -16,16 +16,16 @@
 	{if isset($user_watching_tracker)}
 		{if $user_watching_tracker eq 'n'}
 			<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}trackerId={$listTrackerId}&amp;watch=add" title="{tr}Monitor{/tr}" class="trackerlistwatch">
-				{icon _id='eye' align="right" hspace="1" alt="{tr}Monitor{/tr}"}
+				{icon name='watch' align="right" hspace="1" class='tips' title=":{tr}Monitor{/tr}"}
 			</a>
 		{elseif $user_watching_tracker eq 'y'}
 			<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}trackerId={$listTrackerId}&amp;watch=stop" title="{tr}Stop Monitor{/tr}" class="trackerlistwatch">
-				{icon _id='no_eye' align="right" hspace="1" alt="{tr}Stop Monitor{/tr}"}
+				{icon name='stop-watching' align="right" hspace="1" class='tips' title=":{tr}Stop monitoring{/tr}"}
 			</a>
 		{/if}
 	{/if}
 	{if $showrss eq 'y'}
-		<a href="tiki-tracker_rss.php?trackerId={$listTrackerId}">{icon _id='feed' align="right" hspace="1" alt="{tr}RSS feed{/tr}"}</a>
+		<a href="tiki-tracker_rss.php?trackerId={$listTrackerId}">{icon name='rss' align="right" hspace="1" class='tips' title=":{tr}RSS feed{/tr}"}</a>
 	{/if}
 
 	{if !empty($sortchoice)}
@@ -296,7 +296,7 @@ link="{tr}List Attachments{/tr}">{icon name="attach"}</a>{$items[user].attachmen
 			{if ($showdelete eq 'y' || $showpenditem eq 'y' || $showopenitem eq 'y' || $showcloseitem eq 'y') && ($perms.tiki_p_admin_trackers eq 'y' or $perms.tiki_p_remove_tracker_items eq 'y' or $perms.tiki_p_remove_tracker_items_pending eq 'y' or $perms.tiki_p_remove_tracker_items_closed eq 'y')}
 		<td>
 				{if $showdelete eq 'y' && ($perms.tiki_p_admin_trackers eq 'y' or ($perms.tiki_p_remove_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or ($perms.tiki_p_remove_tracker_items_pending eq 'y' and $items[user].status eq 'p') or ($perms.tiki_p_remove_tracker_items_closed eq 'y' and $items[user].status eq 'c'))}
-					{self_link delete=$items[user].itemId}{icon _id=cross alt="{tr}Remove{/tr}"}{/self_link}
+					{self_link delete=$items[user].itemId _class='tips' _title=":{tr}Remove{/tr}"}{icon name='delete'}{/self_link}
 				{/if}
 				{if $showcloseitem eq 'y' && $items[user].status neq 'c' && ($perms.tiki_p_admin_trackers eq 'y' or ($perms.tiki_p_modify_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or ($perms.tiki_p_modify_tracker_items_pending eq 'y' and $items[user].status eq 'p') or ($perms.tiki_p_modify_tracker_items_closed eq 'y' and $items[user].status eq 'c'))}
 					{self_link closeitem=$items[user].itemId}{tr}Close item{/tr}{/self_link}
