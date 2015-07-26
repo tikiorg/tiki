@@ -197,7 +197,12 @@ function wikiplugin_customsearch($data, $params)
 			$maxRecords = $paginationArguments['max'];
 		}
 	}
-	
+
+	// setup AJAX pagination
+	$paginationArguments['offset_jsvar'] = "customsearch_$id.offset";
+	$paginationArguments['sort_jsvar'] = "customsearch_$id.sort_mode";
+	$paginationArguments['_onclick'] = "$('#customsearch_$id').submit();return false;";
+
 	$builder = new Search_Formatter_Builder;
 	$builder->setPaginationArguments($paginationArguments);
 	$builder->apply($matches);
