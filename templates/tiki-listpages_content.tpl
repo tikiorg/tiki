@@ -114,7 +114,7 @@
 				{if $prefs.wiki_list_status eq 'y'}
 					{assign var='cntcol' value=$cntcol+1}
 					<th id="status" style="text-align:center;">
-						{self_link _sort_arg='sort_mode' _sort_field='flag' _icon='lock_gray'}{tr}Status of the page{/tr}{/self_link}
+						{self_link _sort_arg='sort_mode' _sort_field='flag' _icon_name='lock'}{tr}Status of the page{/tr}{/self_link}
 					</th>
 				{/if}
 

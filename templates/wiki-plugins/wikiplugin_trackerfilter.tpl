@@ -78,7 +78,7 @@
 							<input id="f_{$filter.fieldId}" type="text" name="f_{$filter.fieldId}" value="{$filter.selected}">
 	{*------sqlsearch *}
 						{elseif $filter.format eq 'sqlsearch'}
-							<a href="{bootstrap_modal controller=tracker action=search_help}">{icon _id=help}</a>
+							<a href="{bootstrap_modal controller=tracker action=search_help}">{icon name='help'}</a>
 	{*------rating *}
 						{elseif $filter.format eq '*'}
 							<select id="f_{$filter.fieldId}" name="f_{$filter.fieldId}">

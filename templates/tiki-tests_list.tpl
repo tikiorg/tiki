@@ -15,9 +15,9 @@
 <tr>
 	<td class="text">{$file}</td>
 	<td class="action">
-		{self_link action={tr}Remove{/tr} filename="$file" _ajax='n' _icon='cross'}{tr}Remove{/tr}{/self_link}
-		{self_link _script='tiki_tests/tiki-tests_replay.php' action={tr}Config{/tr} filename="$file" _ajax='n' _icon='resultset_next'}{tr}Replay{/tr}{/self_link}
-		{self_link _script='tiki_tests/tiki-tests_edit.php' action={tr}Show{/tr} filename="$file" _ajax='n' _icon='pencil'}{tr}Edit{/tr}{/self_link}
+		{self_link action={tr}Remove{/tr} filename="$file" _ajax='n' _icon_name='delete'}{tr}Remove{/tr}{/self_link}
+		{self_link _script='tiki_tests/tiki-tests_replay.php' action="{tr}Config{/tr}" filename="$file" _ajax='n' _icon_name='next'}{tr}Replay{/tr}{/self_link}
+		{self_link _script='tiki_tests/tiki-tests_edit.php' action="{tr}Show{/tr}" filename="$file" _ajax='n' _icon_next='edit'}{tr}Edit{/tr}{/self_link}
 	</td>
 </tr>
 {/foreach}

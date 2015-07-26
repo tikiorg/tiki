@@ -31,7 +31,7 @@
 			{menu params=$module_params bootstrap=basic}
 		{/if}
 	{else}{* non bootstrap legacy menus *}
-		<div class="clearfix {$module_params.menu_class}"{if !empty($module_params.menu_id)} id="{$module_params.menu_id}"{/if}>
+		<div class="clearfix {if !empty($module_params.menu_class)}{$module_params.menu_class}{/if}"{if !empty($module_params.menu_id)} id="{$module_params.menu_id}"{/if}>
 			{menu params=$module_params}
 		</div>
 	{/if}

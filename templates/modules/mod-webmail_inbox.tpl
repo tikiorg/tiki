@@ -84,7 +84,7 @@
 									{else}
 										{self_link _script='tiki-contacts.php' contactId=$sender.contactId _class="mod_webmail_from"}{$sender.email|truncate:17:"...":true}{/self_link}
 									{/if}
-									<div style="float: right;">{self_link _script='tiki-contacts.php' contactId=$sender.contactId _icon='user_gray' _width=12 _height=12}{tr}View contact{/tr}{/self_link}</div>
+									<div style="float: right;">{self_link _script='tiki-contacts.php' contactId=$sender.contactId _icon_name='user' _width=12 _height=12}{tr}View contact{/tr}{/self_link}</div>
 								{else}
 									<span class="mod_webmail_from">{$sender.email|truncate:20:"...":true}</span>
 								{/if}

@@ -16,10 +16,18 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * -------------------------------------------------------------
  * Type:     modifier
  * Name:     iconify
- * Purpose:  Returns a filetype icon if the filetype is known and there's an icon in img/icons/mime. Returns a default file type icon in any other case
+ * Purpose:  Returns a filetype icon or file type
  * -------------------------------------------------------------
+ *
+ * @param $string               File name with extension
+ * @param null $filetype        File type
+ * @param null $fileId          File id when using file galleries
+ * @param int $size             Icon size
+ * @param string $return        icon or filtype
+ * @return null|string
+ * @throws Exception
+ * @throws SmartyException
  */
-
 function smarty_modifier_iconify($string, $filetype = null, $fileId = null, $size = 1, $return = 'icon')
 {
 	$smarty = TikiLib::lib('smarty');
@@ -56,15 +64,19 @@ function smarty_modifier_iconify($string, $filetype = null, $fileId = null, $siz
 					$icon = 'default';
 				}
 			}
-			return smarty_function_icon(
-				array(
-					'_id' => 'img/icons/mime/'.$icon.'.png',
-					'alt' => ( $filetype === null ? $icon : $filetype ),
-					'class' => '',
-					'size' => $size
-				),
-				$smarty
-			);
+			if ($return === 'filetype') {
+				return $m;
+			} elseif ($return === 'icon') {
+				return smarty_function_icon(
+					array(
+						'_id' => 'img/icons/mime/'.$icon.'.png',
+						'alt' => ( $filetype === null ? $icon : $filetype ),
+						'class' => '',
+						'size' => $size
+					),
+					$smarty
+				);
+			}
 		//iconsets introduced with Tiki14
 		} else {
 			if (!empty($filetype)) {

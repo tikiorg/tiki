@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 <div class="userWizardIconleft"><img src="img/icons/large/wizard_user48x48.png" alt="{tr}User Wizard{/tr}" /></div>
-{tr}Use "watches" to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon _id=eye} button on specific pages.{/tr}<br/>
+{tr}Use "watches" to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon name='watch'} button on specific pages.{/tr}<br/>
 {tr}Use reports to summarise notifications about objects you are watching{/tr}.<br/><br/>
 
 <div class="userWizardContent">

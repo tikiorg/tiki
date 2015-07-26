@@ -71,8 +71,8 @@ function list_perms($objectId, $objectType, $objectName, $filterGroup='')
 
 $filterGroup = empty($_REQUEST['filterGroup']) ? array() : $_REQUEST['filterGroup'];
 $feedbacks = array();
-$del = !empty($_REQUEST['delsel_x']) || !empty($_REQUEST['delsel']);
-$dup = !empty($_REQUEST['dupsel']);
+$del = !empty($_REQUEST['delete']) && $_REQUEST['delete'] === 'delete';
+$dup = !empty($_REQUEST['duplicate']) && $_REQUEST['duplicate'] === 'duplicate';
 if ($del || $dup) {
 	$access->check_authenticity();
 	if (!empty($_REQUEST['groupPerm'])) {
@@ -226,7 +226,7 @@ foreach ($types as $type) {
 			
 			foreach ($objects['data'] as $object) {
 				
-				$r = list_perms($object['blogId'], $type, $object['name'], $filterGroup);
+				$r = list_perms($object['blogId'], $type, isset($object['name']) ? $object['name'] : null, $filterGroup);
 				if (count($r['special']) > 0) {
 					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name']);
 				}
@@ -240,7 +240,7 @@ foreach ($types as $type) {
 			$sheetlib = TikiLib::lib('sheet');
 			$objects = $sheetlib->list_sheets();
 			foreach ($objects['data'] as $object) {
-				$r = list_perms($object['sheetId'], $type, $object['name'], $filterGroup);
+				$r = list_perms($object['sheetId'], $type, isset($object['name']) ? $object['name'] : null, $filterGroup);
 				if (count($r['special']) > 0) {
 					$res[$type]['objects'][] = array('objectId' => $r['objectId'], 'special' => $r['special'], 'objectName' => $object['name']);
 				}

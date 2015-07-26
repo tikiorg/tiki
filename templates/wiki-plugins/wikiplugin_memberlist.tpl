@@ -12,11 +12,11 @@
 							<div class="pull-right">
 								{if not $groupData.isWatching}
 									{self_link watch=$groupName}
-										{icon _id='eye' alt="{tr}Group is NOT being monitored. Click icon to START monitoring.{/tr}"}
+										{icon name='watch' class='tips' title=":{tr}Group is NOT being monitored. Click icon to START monitoring.{/tr}"}
 									{/self_link}
 								{else}
 									{self_link unwatch=$groupName}
-										{icon _id='no_eye' alt="{tr}Group IS being monitored. Click icon to STOP monitoring.{/tr}"}
+										{icon name='stop-watching' class='tips' title=":{tr}Group IS being monitored. Click icon to STOP monitoring.{/tr}"}
 									{/self_link}
 								{/if}
 							</div>

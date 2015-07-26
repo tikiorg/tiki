@@ -27,7 +27,7 @@ if (isset($_REQUEST['checked'])) {
 	#check_ticket('list_comments');
 	$checked = is_array($_REQUEST['checked']) ? $_REQUEST['checked'] : array($_REQUEST['checked']);
 	// Ban IP adresses of multiple spammers
-	if ( isset($_REQUEST['ban_x']) ) {
+	if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'ban') {
 		ask_ticket('admin-banning');
 		$mass_ban_ip = implode('|', $checked);
 		header('Location: tiki-admin_banning.php?mass_ban_ip_actionlog=' . $mass_ban_ip);
