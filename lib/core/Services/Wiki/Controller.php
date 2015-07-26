@@ -81,6 +81,13 @@ class Services_Wiki_Controller
 
 			foreach ($list as $page) {
 				$slug = $manager->generate($prefs['wiki_url_scheme'], $page, $prefs['url_only_ascii'] === 'y');
+
+				$count = 1;
+				while ($pages->fetchCount(['pageSlug' => $slug]) && $count < 100) {
+					$count++;
+					$slug = $manager->generate($prefs['wiki_url_scheme'], $page . ' ' . $count, $prefs['url_only_ascii'] === 'y');
+				}
+
 				$tracker->add($page);
 				$pages->update(['pageSlug' => $slug], ['pageName' => $page]);
 			}
