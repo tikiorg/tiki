@@ -193,7 +193,7 @@
 						{/if}
 						{if $prefs.feature_wiki_print eq 'y'}
 							<li>
-								<a href="tiki-print.php?{query _keepall='y'}">
+								<a href="tiki-print.php?{query _keepall='y' page=$page}">
 									{icon name="print"} {tr}Print{/tr}
 									{assign var="hasTopLineAction" value="1"}
 								</a>

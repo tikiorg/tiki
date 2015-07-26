@@ -37,9 +37,13 @@ class SlugManager
 		}, $this->generators);
 	}
 
-	function generate($generator, $pageName)
+	function generate($generator, $pageName, $asciiOnly = false)
 	{
 		$exists = $this->validationCallback;
+
+		if ($asciiOnly) {
+			$pageName = \TikiLib::lib('tiki')->take_away_accent($pageName);
+		}
 
 		$impl = $this->generators[$generator];
 

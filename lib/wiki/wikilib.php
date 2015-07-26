@@ -255,7 +255,7 @@ class WikiLib extends TikiLib
 		$query = 'update `tiki_pages` set `pageName`=?, `pageSlug`=NULL where `pageName`=?';
 		$this->query($query, array( $tmpName, $oldName ));
 
-		$slug = TikiLib::lib('slugmanager')->generate($prefs['wiki_url_scheme'], $newName);
+		$slug = TikiLib::lib('slugmanager')->generate($prefs['wiki_url_scheme'], $newName, $prefs['url_only_ascii'] === 'y');
 		$query = 'update `tiki_pages` set `pageName`=?, `pageSlug`=? where `pageName`=?';
 		$this->query($query, array( $newName, $slug, $tmpName ));
 

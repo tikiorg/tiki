@@ -40,7 +40,8 @@ class Search_Formatter_AppendPagination implements Search_Formatter_Plugin_Inter
 		$smarty->loadPlugin('smarty_block_pagination_links');
 		$arguments = $this->arguments;
 		$arguments['resultset'] = $entries;
-		$pagination = smarty_block_pagination_links($arguments, '', $smarty, $tmp = false);
+		$tmp = false;
+		$pagination = smarty_block_pagination_links($arguments, '', $smarty, $tmp);
 
 		if ($this->getFormat() == Search_Formatter_Plugin_Interface::FORMAT_WIKI) {
 			$pagination = "~np~$pagination~/np~";

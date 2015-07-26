@@ -2858,7 +2858,13 @@ if ( \$('#$id') ) {
 						if (($divstate == '+' || $divstate == '-') && !$this->option['ck_editor']) {
 							// OK. Must insert flipper after HEADER, and then open new div...
 							$thisid = 'id' . preg_replace('/[^a-zA-z0-9]/', '', urlencode($this->option['page'])) .$nb_hdrs;
-							$aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
+							$state_cookie = getCookie($thisid, "showhide_headings");
+							if ($state_cookie === 'o' && $divstate === '-') {
+								$divstate = '+';
+							} else if ($state_cookie === 'c' && $divstate === '+') {
+								$divstate = '-';
+							}
+							$aclose = '<a id="flipper' . $thisid . '" class="link" href="#" onclick="flipWithSign(\'' . $thisid . '\');return false;">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
 							$aclose2 = '<div id="' . $thisid . '" class="showhide_heading" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
 							$headerlib = TikiLib::lib('header');
 							$headerlib->add_jq_onready("setheadingstate('$thisid');");

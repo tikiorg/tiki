@@ -352,6 +352,17 @@ class Search_Elastic_Connection
 				throw new Search_Elastic_MappingException($parts['type'], $parts['field']);
 			} elseif (preg_match('/No mapping found for \[(\S+)\] in order to sort on/', $message, $parts)) {
 				throw new Search_Elastic_SortException($parts[1]);
+			} elseif (preg_match('/NumberFormatException\[For input string: "(.*?)"\]/', $message, $parts)) {
+				$pattern = '/' . preg_quote('{"match":{"___wildcard___":{"query":"' . $parts[1] . '"}}') . '/';
+				$pattern = str_replace('___wildcard___', '([^"]*)', $pattern);
+				if (preg_match($pattern, $message, $parts2)) {
+					$field = $parts2[1];
+				} else {
+					$field = '';
+				}
+				throw new Search_Elastic_NumberFormatException($parts[1], $field);
+			} elseif (preg_match('/QueryParsingException\[\[[^\]]*\] \[[^\]]*\] ([^\]]*)\]/', $message, $parts)) {
+				throw new Search_Elastic_QueryParsingException($parts[1]);
 			} else {
 				throw new Search_Elastic_Exception($message, $content->status);
 			}

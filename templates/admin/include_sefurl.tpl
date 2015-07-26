@@ -82,6 +82,7 @@
 		{preference name=feature_sefurl_title_article}
 		{preference name=feature_sefurl_title_blog}
 		{preference name=feature_sefurl_tracker_prefixalias}
+		{preference name=url_only_ascii}
 	</fieldset>
 	<div class="text-center">
 		<input type="submit" class="btn btn-primary btn-sm" name="save" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">

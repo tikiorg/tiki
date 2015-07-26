@@ -45,6 +45,9 @@
 	{elseif !empty($smarty.request.actpass)}
 		<input type="hidden" name="actpass" value="{$smarty.request.actpass|escape}">
 	{/if}
+	{if $new_user_validation eq 'y'}
+		<input type="hidden" name="new_user_validation" value="y">
+	{/if}
 	<fieldset>{if $new_user_validation neq 'y'}<legend>{tr}Change your password{/tr}</legend>{/if}
 		<div class="alert alert-warning" id="divRegCapson" style="visibility:hidden">{icon name='error' style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
 	</fieldset>
@@ -89,7 +92,7 @@
 		<div class="form-group">
 			<label class="col-sm-3 col-md-2 control-label" for="email">{tr}E-mail{/tr}</label>
 			<div class="col-sm-7 col-md-6">
-				<input type="email" class="form-control" name="email" id="email" placeholder="E-mail">
+				<input type="email" class="form-control" name="email" id="email" placeholder="E-mail" value="{if not empty($email)}{$email|escape}{/if}">
 			</div>
 		</div>
 	{/if}

@@ -107,10 +107,14 @@ if (isset($_REQUEST["change"])) {
 	$wizardlib = TikiLib::lib('wizard');
 	$force = $_REQUEST["user"] == 'admin';
 	$wizardlib->onLogin($user, $prefs['tikiIndex'], $force);
-	
-	// Go to homepage
+
+	// Go to homepage or url_after_validation
 	$accesslib = TikiLib::lib('access');
-	$accesslib->redirect($prefs['tikiIndex']);
+	if (!empty($prefs['url_after_validation']) && !empty($_REQUEST['new_user_validation'])) {
+		$access->redirect($prefs['url_after_validation']);
+	} else {
+		$accesslib->redirect($prefs['tikiIndex']);
+	}
 }
 ask_ticket('change-password');
 
