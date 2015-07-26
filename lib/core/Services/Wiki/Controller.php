@@ -80,7 +80,7 @@ class Services_Wiki_Controller
 			$pages->updateMultiple(['pageSlug' => null], []);
 
 			foreach ($list as $page) {
-				$slug = $manager->generate($prefs['wiki_url_scheme'], $page);
+				$slug = $manager->generate($prefs['wiki_url_scheme'], $page, $prefs['url_only_ascii'] === 'y');
 				$tracker->add($page);
 				$pages->update(['pageSlug' => $slug], ['pageName' => $page]);
 			}
