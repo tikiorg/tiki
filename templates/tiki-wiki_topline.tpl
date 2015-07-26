@@ -73,7 +73,7 @@
 							<li class="divider"></li>
 							<li role="presentation">
 								{section name=struct loop=$showstructs}
-									<a href="tiki-index.php?page={$page}&structure={$showstructs[struct].pageName|escape}" {if $showstructs[struct].pageName eq $structure_path[0].pageName} title="Current structure: {$showstructs[struct].pageName|escape}" class="selected tips" {else} class="tips" title="{tr}Show structure{/tr}: {$showstructs[struct].pageName|escape}"{/if}>
+									<a href="tiki-index.php?page={$page}&structure={$showstructs[struct].pageName|escape}" {if isset($structure_path[0].pageName) and $showstructs[struct].pageName eq $structure_path[0].pageName} title="Current structure: {$showstructs[struct].pageName|escape}" class="selected tips" {else} class="tips" title="{tr}Show structure{/tr}: {$showstructs[struct].pageName|escape}"{/if}>
 										{if $showstructs[struct].page_alias}
 											{$showstructs[struct].page_alias}
 										{else}
@@ -82,7 +82,7 @@
 									</a>
 								{/section}
 							</li>
-							{if $showstructs[struct].pageName neq $structure_path[0].pageName and $prefs.feature_wiki_open_as_structure neq 'y'}
+							{if isset($structure_path) && $showstructs[struct].pageName neq $structure_path[0].pageName and $prefs.feature_wiki_open_as_structure neq 'y'}
 								<li role="presentation" class="divider"></li>
 								<li role="presentation">
 									<a href="tiki-index.php?page={$page|escape:url}" class="tips" title=":{tr}Hide structure bar and any toc{/tr}">
@@ -118,7 +118,7 @@
 						{if $prefs.flaggedrev_approval neq 'y' or ! $revision_approval or $lastVersion eq $revision_displayed}
 							{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y' and $machine_translate_to_lang eq ''}
 								<li>
-									<a {ajax_href template="tiki-editpage.tpl"}tiki-editpage.php?page={$page|escape:"url"}{if !empty($page_ref_id) and $needsStaging neq 'y'}&amp;page_ref_id={$page_ref_id}{/if}{/ajax_href}>
+									<a {ajax_href template="tiki-editpage.tpl"}tiki-editpage.php?page={$page|escape:"url"}{if !empty($page_ref_id) and (empty($needsStaging) or $needsStaging neq 'y')}&amp;page_ref_id={$page_ref_id}{/if}{/ajax_href}>
 										{icon name="edit"} {tr}Edit{/tr}
 										{assign var="hasTopLineAction" value="1"}
 									</a>
