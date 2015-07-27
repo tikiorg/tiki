@@ -19,6 +19,8 @@ class Tiki_Profile_Transport_File implements Tiki_Profile_Transport_Interface
 		$fullpath = $this->path . '/' . $pageName . '.wiki';
 		if (file_exists($fullpath)) {
 			return file_get_contents($fullpath);
+		} else {
+			return ''; // assume empty if file not found to prevent unexpected errors
 		}
 
 		return null;
@@ -30,6 +32,8 @@ class Tiki_Profile_Transport_File implements Tiki_Profile_Transport_Interface
 
 		if ($content) {
 			return TikiLib::lib('parser')->parse_data($content);
+		} else {
+			return ''; // assume empty if file not found to prevent unexpected errors
 		}
 	}
 }
