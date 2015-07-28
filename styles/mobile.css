@@ -88,6 +88,14 @@ footer .mobileswitch {
 
 /* end remarks boxes */
 
+/* Site title and subtitle */
+.sitetitle {
+	font-size: 200%;
+}
+.sitesubtitle {
+	font-size: 150%;
+}
+
 /* tree browser */
 
 .tree {
