@@ -297,6 +297,21 @@ table.normal tr:nth-child(2n) {
 	background: #FEEAA1;
 }
 
+
+/* adminoptions and labels should not float in mobile */
+.adminoption,
+.featurelist .adminoptionbox,
+label {
+	float: none !important;
+}
+
+label,
+.featurelist .adminoptionbox,
+.labelColumns label
+{
+	width: auto;
+}
+
 /* Generic find.tpl
 
 .find-div label,
