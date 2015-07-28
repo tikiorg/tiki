@@ -23,46 +23,68 @@
 
 
 {* Add form *}
-<form action="tiki-admin_integrator.php" method="post">
+<form action="tiki-admin_integrator.php" method="post" class="form-horizontal">
 	<input type="hidden" name="repID" value="{$repID|escape}">
-	<table class="formcolor">
-		<tr>
-			<td><span title="{tr}Human-readable repository name{/tr}">{tr}Name{/tr}</span></td>
-			<td><input type="text" name="name" value="{$name|escape}" title="{tr}Human-readable repository name{/tr}"></td>
-		</tr><tr>
-			<td><span title="{tr}Path to repository (local filesystem: relative/absolute web root, remote: prefixed with 'http://'){/tr}">{tr}Path{/tr}</span></td>
-			<td><input type="text" name="path" value="{$path|escape}" title="{tr}Path to repository (local filesystem: relative/absolute web root, remote: prefixed with 'http://'){/tr}"></td>
-		</tr><tr>
-			<td><span title="{tr}File name of start page{/tr}">{tr}Start page{/tr}</span></td>
-			<td><input type="text" name="start" value="{$start|escape}" title="{tr}File name of start page{/tr}"></td>
-		</tr><tr>
-			<td><span title="{tr}CSS file to load when browse this repository{/tr}">{tr}CSS File{/tr}</span></td>
-			<td><input type="text" name="cssfile" value="{$cssfile|escape}" title="{tr}CSS file to load when browse this repository{/tr}"></td>
-		</tr><tr>
-			<td><span title="{tr}Is repository visible to users{/tr}">{tr}Visible{/tr}</span></td>
-			<td><input type="checkbox" name="vis" {if $vis eq 'y'}checked="checked"{/if} title="{tr}Is repository visible to users{/tr}"></td>
-		</tr><tr>
-			<td><span title="{tr}Can files from repository be cached{/tr}">{tr}Cacheable{/tr}</span></td>
-			<td>
-				<input type="checkbox" name="cacheable" {if $cacheable eq 'y'}checked="checked"{/if} title="{tr}Are files from repository can be cached{/tr}">
+	<div class="form-group">
+		<label class="col-sm-3 control-label" title="Human-readable repository name">{tr}Name{/tr}</label>
+		<div class="col-sm-7 ">
+			<input type="text" name="name" value="{$name|escape}" title="{tr}Human-readable repository name{/tr}" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label" title="{tr}Path to repository (local filesystem: relative/absolute web root, remote: prefixed with 'http://'){/tr}">{tr}Path{/tr}</label>
+		<div class="col-sm-7">
+			<input type="text" name="path" value="{$path|escape}" title="{tr}Path to repository (local filesystem: relative/absolute web root, remote: prefixed with 'http://'){/tr}" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label" title="{tr}File name of start page{/tr}">{tr}Start page{/tr}</label>
+		<div class="col-sm-7">
+			<input type="text" name="start" value="{$start|escape}" title="{tr}File name of start page{/tr}" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label" title="{tr}CSS file to load when browse this repository{/tr}">{tr}CSS File{/tr}</label>
+		<div class="col-sm-7">
+			<input type="text" name="cssfile" value="{$cssfile|escape}" title="{tr}CSS file to load when browse this repository{/tr}" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label" title="{tr}Is repository visible to users{/tr}">{tr}Visible{/tr}</label>
+		<div class="col-sm-7">
+			<input type="checkbox" name="vis" {if $vis eq 'y'}checked="checked"{/if} title="{tr}Is repository visible to users{/tr}" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label" title="{tr}Can files from repository be cached{/tr}">{tr}Cacheable{/tr}</label>
+		<div class="col-sm-7">
+			<input type="checkbox" name="cacheable" {if $cacheable eq 'y'}checked="checked"{/if} title="{tr}Can files from repository be cached{/tr}" class="form-control">
 				{if isset($repID) and $repID ne '0'}
 					&nbsp;&nbsp;
 					<a href="tiki-admin_integrator.php?action=clear&amp;repID={$repID|escape}" title="{tr}Clear all cached pages of this repository{/tr}">
-						{tr}Clear cache{/tr}
+						{tr}Clear cache{/tr}	
 					</a>
 				{/if}
-			</td>
-		</tr><tr>
-			<td><span title="{tr}Seconds count 'till cached page will be expired{/tr}">{tr}Cache expiration{/tr}</span></td>
-			<td><input type="text" maxlength="14" size="14" name="expiration" value="{$expiration|escape}" title="{tr}Seconds count 'till cached page will be expired{/tr}"></td>
-		</tr><tr>
-			<td><span title="{tr}Human-readable text description of repository{/tr}">{tr}Description{/tr}</span></td>
-			<td><textarea name="description" rows="4" title="{tr}Human-readable text description of repository{/tr}">{$description|escape}</textarea></td>
-		</tr><tr>
-			<td></td>
-			<td><input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}"></td>
-		</tr>
-	</table>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label" title="{tr}Seconds count 'till cached page will be expired{/tr}">{tr}Cache expiration{/tr}</label>
+		<div class="col-sm-7">
+			<input type="text" maxlength="14" size="14" name="expiration" value="{$expiration|escape}" title="{tr}Seconds count 'till cached page will be expired{/tr}"
+			class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label" title="{tr}Human-readable text description of repository{/tr}">{tr}Description{/tr}</label>
+		<div class="col-sm-7">
+			<textarea name="description" rows="4" title="{tr}Human-readable text description of repository{/tr}" class="form-control">{$description|escape}</textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-7 col-sm-offset-3">
+			<input type="submit" class="btn btn-primary btn-block" name="save" value="{tr}Save{/tr}">
+		</div>
+	</div>
 </form>
 
 <h2>{tr}Available Repositories{/tr}</h2>
@@ -97,9 +119,9 @@
 						{$repositories[rep].name}
 					</a>
 				</td>
-				<td class="text">{$repositories[rep].path}</td>
-				<td class="text">{$repositories[rep].start_page}</td>
-				<td class="text">{$repositories[rep].css_file}</td>
+				<td class="text">{($repositories[rep].path)? $repositories[rep].path:'Empty'}</td>
+				<td class="text">{($repositories[rep].start_page)? $repositories[rep].start_page:'Empty'}</td>
+				<td class="text">{($repositories[rep].css_file)? $repositories[rep].css_file:'Empty'}</td>
 				<td class="action">
 					{capture name=integrator_actions}
 						{strip}
