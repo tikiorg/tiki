@@ -104,7 +104,7 @@ footer .mobileswitch {
 
 /* tabs */
 
-.ui-mobile .tabcontent {
+.ui-mobile .tabset .tabcontent {
 	/* from .ui-bar-c */
 	border: 1px solid 		#B3B3B3;
 	background: 			#e9eaeb;
