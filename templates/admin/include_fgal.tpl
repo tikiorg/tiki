@@ -244,18 +244,20 @@
 					{/if}
 
 					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<table class="formcolor">
-								<tr>
-									<th>{tr}MIME Type{/tr}</th>
-									<th>{tr}System Command{/tr}</th>
-								</tr>
-
+						<div class="adminoptionlabel"></br>
+							<table class="table table-responsive">
+								<thead>
+									<tr>
+										<th>{tr}MIME Type{/tr}</th>
+										<th>{tr}System Command{/tr}</th>
+									</tr>
+								</thead>
+								<tbody>
 								{foreach key=mime item=cmd from=$fgal_handlers}
 									<tr>
 										<td>{$mime}</td>
 										<td>
-											<input name="mimes[{$mime}]" type="text" value="{$cmd|escape:html}" size="30"/>
+											<input name="mimes[{$mime}]" class="form-control" type="text" value="{$cmd|escape:html}" />
 										</td>
 									</tr>
 								{/foreach}
@@ -267,6 +269,7 @@
 										<input name="newCmd" type="text" size="30"/>
 									</td>
 								</tr>
+								</tbody>
 							</table>
 						</div>
 					</div>
