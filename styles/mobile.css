@@ -9,6 +9,17 @@
 @import url("layout/design.css");
 * End of File */
 
+/* Clearfix for modern browsers */
+.clearfix:before,
+.clearfix:after {
+    content: "";
+    display: inherit;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
 .hidden {
 	display: none;
 }
