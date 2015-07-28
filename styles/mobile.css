@@ -36,7 +36,12 @@ hr, form, footer {
 
 footer .mobileswitch {
 	display: block;
-	padding: .7em 15px;
+	text-align: center;
+}
+
+/* consistent padding for the content of main, header and footer parts */
+.ui-content, .ui-footer .content, .ui-header .content {
+	padding: 0.9375em; /* 15px */
 }
 
 /* remarks boxes from layout.css */
