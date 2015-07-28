@@ -731,44 +731,51 @@
 					<input type="submit" class="btn btn-default btn-sm" name="search" value="{tr}Search{/tr}">
 				</span>
 			</fieldset>
-			<br>
-			<span class="input_submit_container" style="float: right">
-				<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Set{/tr}">
-			</span>
 			<br class="clearfix" />
-			<table class="formcolor">
-				<tr>
-					{if $tiki_p_admin eq 'y'}
-						<th>{tr}Recorded{/tr}</th>
-					{/if}
-					<th>{tr}Reported{/tr}</th>
-					<th>{tr}Action{/tr}</th>
-					<th>{tr}Type{/tr}</th>
-				</tr>
-
-				{foreach from=$action_log_conf_selected item=actionlog}
-					<tr>
-						{if $tiki_p_admin eq 'y'}
-							<td class="checkbox-cell">
-								<input type="checkbox" name="{$actionlog.code}" {if $actionlog.status eq 'y' or $actionlog.status eq 'v'}checked="checked"{/if}>
-							</td>
-						{/if}
-						{if $tiki_p_admin eq 'y' or $actionlog.status eq 'y' or $actionlog.status eq 'v'}
-							<td class="checkbox-cell">
-								<input type="checkbox" name="v_{$actionlog.code}" {if $actionlog.status eq 'v'}checked="checked"{/if}>
-							</td>
-							<td class="text">{tr}{$actionlog.action}{/tr}</td>
-							<td class="text">{tr}{$actionlog.objectType}{/tr}</td>
-						{/if}
-					</tr>
-				{/foreach}
-
-				<tr>
-					<td colspan="4" class="input_submit_container">
-						<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Set{/tr}">
-					</td>
-				</tr>
-			</table>
+			<div class="form-group">
+				<div class="col-sm-1 col-sm-offset-11">
+					<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Set{/tr}">
+				</div>
+			</div></br>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<table class="table table-responsive">
+						<thead>
+							<tr>
+							{if $tiki_p_admin eq 'y'}
+								<th class="text-center">Recorded</th>
+							{/if}
+								<th class="text-center">Reported</th>
+								<th class="text-center">Action</th>
+								<th class="text-center">Type</th>
+							</tr>
+						</thead>
+						<tbody>
+							{foreach from=$action_log_conf_selected item=actionlog}
+								<tr>
+									{if $tiki_p_admin eq 'y'}
+										<td class="checkbox-cell">
+											<input type="checkbox" class="form-control" name="{$actionlog.code}" {if $actionlog.status eq 'y' or $actionlog.status eq 'v'}checked="checked"{/if}>
+										</td>
+									{/if}
+									{if $tiki_p_admin eq 'y' or $actionlog.status eq 'y' or $actionlog.status eq 'v'}
+										<td class="checkbox-cell">
+											<input type="checkbox" class="form-control" name="v_{$actionlog.code}" {if $actionlog.status eq 'v'}checked="checked"{/if}>
+										</td>
+										<td class="text text-center">{tr}{$actionlog.action}{/tr}</td>
+										<td class="text text-center">{tr}{$actionlog.objectType}{/tr}</td>
+									{/if}
+								</tr>
+							{/foreach}
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-1 col-sm-offset-11">
+					<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Set{/tr}">
+				</div>
+			</div>
 		</form>
 	{/tab}
 {/tabset}
