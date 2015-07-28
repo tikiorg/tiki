@@ -26,6 +26,10 @@ img {
 }
 
 /* lists */
+.ui-content .ui-listview, .ui-panel-inner > .ui-listview {
+	margin: -0.9375em -0.9375em 0 -0.9375em; /* -15px -15px 0px -15px; */
+}
+
 ul, ol {
 	padding-left: 1em;
 }
