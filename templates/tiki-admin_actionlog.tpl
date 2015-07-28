@@ -743,11 +743,11 @@
 						<thead>
 							<tr>
 							{if $tiki_p_admin eq 'y'}
-								<th class="text-center">Recorded</th>
+								<th class="text-center">{tr}Recorded{/tr}</th>
 							{/if}
-								<th class="text-center">Reported</th>
-								<th class="text-center">Action</th>
-								<th class="text-center">Type</th>
+								<th class="text-center">{tr}Reported{/tr}</th>
+								<th class="text-center">{tr}Action{/tr}</th>
+								<th class="text-center">{tr}Type{/tr}</th>
 							</tr>
 						</thead>
 						<tbody>

@@ -5,20 +5,20 @@
 		<form action="tiki-admin.php?page=intertiki" method="post" name="intertiki" class="form-horizontal">
 			<input type="hidden" name="ticket" value="{$ticket|escape}">
 			<div class="form-group">
-				<label class="col-sm-3 control-label">Feature</label>
+				<label class="col-sm-3 control-label">{tr}Feature{/tr}</label>
 				<div class="col-sm-7 col-sm-offset-2">
 				      {preference name=feature_intertiki}
 			    </div>
 		    </div>
 		    <div class="form-group">
-				<label class="col-sm-3 control-label">Tiki Unique key</label>
+				<label class="col-sm-3 control-label">{tr}Tiki Unique key{/tr}</label>
 				<div class="col-sm-7 col-sm-offset-2">
 				      <input type="text" name="tiki_key" value="{$prefs.tiki_key}" size="32" class="form-control"/>
 			    </div>
 		    </div>
 		    <div class="form-group">
-				<label class="col-sm-3 control-label">InterTiki Slave mode
-				<small>Warning: overrides manually registered local users</small></label>
+				<label class="col-sm-3 control-label">{tr}InterTiki Slave mode{/tr}
+				{tr}<small>Warning: overrides manually registered local users</small>{/tr}</label>
 				<div class="col-sm-7 col-sm-offset-2">
 			        <select name="feature_intertiki_mymaster" onchange="check_server_visibility(this);" class="form-control">
 						<option value="">{tr}No{/tr}</option>
@@ -43,28 +43,28 @@
 		    </div>
 			<div id="admin-slavemode-options" style="display: {if $prefs.feature_intertiki_mymaster eq ''}none{else}block{/if}">
 			 	<div class="form-group">
-					<label class="col-sm-3 control-label">Import user preferences</label>
+					<label class="col-sm-3 control-label">{tr}Import user preferences{/tr}</label>
 					<div class="col-sm-7 col-sm-offset-2">
 						<input type="checkbox" name="feature_intertiki_import_preferences" {if $prefs.feature_intertiki_import_preferences eq 'y'}checked="checked"{/if} class="form-control" />
 					</div>
-					<label class="col-sm-3 control-label">Import user groups</label>
+					<label class="col-sm-3 control-label">{tr}Import user groups{/tr}</label>
 					<div class="col-sm-7 col-sm-offset-2">
 						<input type="checkbox" name="feature_intertiki_import_groups" {if $prefs.feature_intertiki_import_groups eq 'y'}checked="checked"{/if} class="form-control" />
 					</div>
-					<label class="col-sm-3 control-label">Limit group import (comma-separated list of imported groups, leave empty to avoid limitation)</label>
+					<label class="col-sm-3 control-label">{tr}Limit group import (comma-separated list of imported groups, leave empty to avoid limitation){/tr}</label>
 					<div class="col-sm-7 col-sm-offset-2">
 						<input type="text" name="feature_intertiki_imported_groups" value="{$prefs.feature_intertiki_imported_groups}" class="form-control" />
 					</div>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label">Intertiki shared cookie for sliding auth under same domain</label>
+				<label class="col-sm-3 control-label">{tr}Intertiki shared cookie for sliding auth under same domain{/tr}</label>
 				<div class="col-sm-7 col-sm-offset-2">
 				      <input type="checkbox" name="feature_intertiki_sharedcookie" {if $prefs.feature_intertiki_sharedcookie eq 'y'}checked="checked"{/if} class="form-control" />
 			    </div>
 		    </div>
 		    <div class="form-group">
-		    	<label class="col-sm-3 control-label">Add new server</label>
+		    	<label class="col-sm-3 control-label">{tr}Add new server{/tr}</label>
 	    			<div class="col-sm-7 col-sm-offset-2">
 	    				<input type="text" name="new[name]" value="" class="form-control text-center"
 	    				placeholder="Server Name"/>
@@ -83,7 +83,7 @@
 	    			</div>
 	    	</div>
 	    	<div class="form-group">
-				<label class="col-sm-3 text-left control-label ">InterTiki Servers</label>
+				<label class="col-sm-3 text-left control-label ">{tr}InterTiki Servers{/tr}</label>
 				<div class="col-sm-9"></div>
 		    </div>
     		{if $prefs.interlist}
@@ -93,12 +93,12 @@
 		    		<table class="table table-responsive table-bordered">
 		    			<thead>
 		    				<tr>
-		    					<td>Name</td>
-		    					<td>Host</td>
-		    					<td>Port</td>
-		    					<td>Path</td>
-		    					<td>Group</td>
-		    					<td>Remove</td>
+		    					<td>{tr}Name{/tr}</td>
+		    					<td>{tr}Host{/tr}</td>
+		    					<td>{tr}Port{/tr}</td>
+		    					<td>{tr}Path{/tr}</td>
+		    					<td>{tr}Group{/tr}</td>
+		    					<td>{tr}Remove{/tr}</td>
 		    				</tr>
 		    			</thead>
 		    			<tbody>
@@ -122,7 +122,7 @@
 			{/if}
 			</br>
 			<div class="heading input_submit_container" style="text-align: center">
-				<input type="submit" class="btn btn-primary btn-block" name="intertikiclient" value="{tr}Save{/tr}" />
+				<input type="submit" class="btn btn-primary btn-block" name="intertikiclient" value="{tr}Save{/tr}"/>
 			</div>
 		</form>
 	{/tab}
@@ -132,37 +132,31 @@
 			<form action="tiki-admin.php?page=intertiki" method="post" name="intertiki" class="form-horizontal">
 				<input type="hidden" name="ticket" value="{$ticket|escape}">
 				<div class="form-group">
-					<label class="col-sm-3 control-label">Intertiki shared cookie for sliding auth under same domain</label>
+					<label class="col-sm-3 control-label">{tr}Intertiki shared cookie for sliding auth under same domain{/tr}</label>
 					<div class="col-sm-7 col-sm-offset-2">
 					      <input type="checkbox" name="feature_intertiki_sharedcookie" {if $prefs.feature_intertiki_sharedcookie eq 'y'}checked="checked"{/if} class="form-control" />
 				    </div>
 			    </div>
 			    <div class="form-group">
-					<label class="col-sm-3 control-label">Intertiki Server enabled</label>
+					<label class="col-sm-3 control-label">{tr}Intertiki Server enabled{/tr}</label>
 					<div class="col-sm-7 col-sm-offset-2">
 					      <input type="checkbox" name="feature_intertiki_sharedcookie" {if $prefs.feature_intertiki_sharedcookie eq 'y'}checked="checked"{/if} class="form-control" />
 				    </div>
 			    </div>
 			    <div class="form-group">
-					<label class="col-sm-3 control-label">Access Log file</label>
+					<label class="col-sm-3 control-label">{tr}Access Log file{/tr}</label>
 					<div class="col-sm-7 col-sm-offset-2">
 					      <input type="text" name="intertiki_logfile" value="{$prefs.intertiki_logfile}" size="42" class="form-control" />
 				    </div>
 			    </div>
 			    <div class="form-group">
-					<label class="col-sm-3 control-label">Access Log file</label>
-					<div class="col-sm-7 col-sm-offset-2">
-					      <input type="text" name="intertiki_logfile" value="{$prefs.intertiki_logfile}" size="42" class="form-control" />
-				    </div>
-			    </div>
-			    <div class="form-group">
-					<label class="col-sm-3 control-label">Errors Log file</label>
+					<label class="col-sm-3 control-label">{tr}Errors Log file{/tr}</label>
 					<div class="col-sm-7 col-sm-offset-2">
 					      <input type="text" name="intertiki_errfile" value="{$prefs.intertiki_errfile}" size="42" class="form-control" />
 				    </div>
 			    </div>
 			    <div class="form-group">
-					<label class="col-sm-3 text-left control-label ">Known Hosts</label>
+					<label class="col-sm-3 text-left control-label ">{tr}Known Hosts{/tr}</label>
 					<div class="col-sm-9"></div>
 			    </div>
 			    <div class="form-group">
@@ -205,18 +199,18 @@
 							{/if}
 							<tr>
 								<td>{tr}New:{/tr}</td>
-								<td><input type="text" class="form-control" name="newhost[name]" value=""  /></td>
-								<td><input type="text" class="form-control" name="newhost[key]" value=""  /></td>
-								<td><input type="text" class="form-control" name="newhost[ip]" value=""  /></td>
-								<td><input type="text" class="form-control" name="newhost[contact]" value=""  /></td>
-								<td><input type="checkbox" class="form-control" name="newhost[allowusersregister]" /></td>
+								<td><input type="text" class="form-control" name="newhost[name]" value=""/></td>
+								<td><input type="text" class="form-control" name="newhost[key]" value=""/></td>
+								<td><input type="text" class="form-control" name="newhost[ip]" value=""/></td>
+								<td><input type="text" class="form-control" name="newhost[contact]" value=""/></td>
+								<td><input type="checkbox" class="form-control" name="newhost[allowusersregister]"/></td>
 							</tr>
 							</tbody>
 						</table>
 			    	</div>
 				</div>
 				<div class="heading input_submit_container" style="text-align: center">
-					<input type="submit" class="btn btn-primary btn-block" name="intertikiserver" value="{tr}Save{/tr}" />
+					<input type="submit" class="btn btn-primary btn-block" name="intertikiserver" value="{tr}Save{/tr}"/>
 				</div>
 				</br>
 			</form>
