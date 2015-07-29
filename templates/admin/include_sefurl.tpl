@@ -82,6 +82,7 @@
 		{preference name=feature_sefurl_title_article}
 		{preference name=feature_sefurl_title_blog}
 		{preference name=feature_sefurl_tracker_prefixalias}
+		{preference name=url_only_ascii}
 	</fieldset>
 	<div class="heading input_submit_container" style="text-align: center;padding:1em;">
 		<input type="submit" class="btn btn-default" name="save" value="{tr}Change preferences{/tr}" />

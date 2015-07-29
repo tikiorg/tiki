@@ -22,5 +22,12 @@ function prefs_url_list()
 			'type' => 'text',
 			'default' => '',
 		),
+		'url_only_ascii' => array(
+			'name' => tra('Use Only ASCII in SEFURLs'),
+			'description' => tra('Do not use accented characters in short (search engine friendly) URLs'),
+			'type' => 'flag',
+			'perspective' => false,
+			'default' => 'n',
+		),
 	);
 }

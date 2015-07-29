@@ -1160,6 +1160,10 @@ class WikiLib extends TikiLib
 		 	}
 		 }
 
+		if ($prefs['url_only_ascii'] === 'y') {
+			$page = \TikiLib::lib('tiki')->take_away_accent($page);
+		}
+
 		$href = "$script_name?page=" . urlencode($page);
 
 		if (isset($prefs['feature_wiki_use_date_links']) && $prefs['feature_wiki_use_date_links'] == 'y') {
