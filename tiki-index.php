@@ -354,10 +354,23 @@ if (empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcase
 		$likepages = array_unique(array_merge($likepages, $referencedPages));
 	}
 
-	$smarty->assign_by_ref('likepages', $likepages);
-	$smarty->assign('create', $isUserPage? 'n': 'y');
-	$smarty->assign('filter', array('content' => $page,));
-	$access->display_error($page, tra('Page cannot be found'), '404');
+	if ($prefs['feature_sefurl'] == 'y' && $prefs['url_only_ascii'] === 'y' && count($likepages) > 0) {
+		// if using url_only_ascii non-word chars will have been replaced by a space, so try and match one of the $likepages here
+		$page_pattern = '/' . str_replace(' ', '[\W]', preg_quote($page)) . '/';
+
+		foreach ($likepages as $likepage) {
+			if (preg_match($page_pattern, $tikilib->take_away_accent($likepage))) {
+				$page = $likepage;
+				$info = $tikilib->get_page_info($page);	// all pages in $likepages exist and are viewable
+				break;
+			}
+		}
+	} else {
+		$smarty->assign_by_ref('likepages', $likepages);
+		$smarty->assign('create', $isUserPage ? 'n' : 'y');
+		$smarty->assign('filter', array('content' => $page,));
+		$access->display_error($page, tra('Page cannot be found'), '404');
+	}
 }
 
 if ( empty($info)
