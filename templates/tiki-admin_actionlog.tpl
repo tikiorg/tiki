@@ -739,7 +739,7 @@
 			</div></br>
 			<div class="form-group">
 				<div class="col-sm-12">
-					<table class="table table-responsive">
+					<table class="table">
 						<thead>
 							<tr>
 							{if $tiki_p_admin eq 'y'}
