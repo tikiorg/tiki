@@ -6,9 +6,9 @@
 			<input type="hidden" name="ticket" value="{$ticket|escape}">
 			<div class="form-group">
 				<label class="col-sm-3 control-label">{tr}Feature{/tr}</label>
-				<div class="col-sm-7 col-sm-offset-2">
-				      {preference name=feature_intertiki}
-			    </div>
+				<div class="col-sm-6 col-sm-offset-0">
+		      		{preference name=feature_intertiki}
+	      		</div>
 		    </div>
 		    <div class="form-group">
 				<label class="col-sm-3 control-label">{tr}Tiki Unique key{/tr}</label>
@@ -49,7 +49,7 @@
 					</div>
 					<label class="col-sm-3 control-label">{tr}Import user groups{/tr}</label>
 					<div class="col-sm-7 col-sm-offset-2">
-						<input type="checkbox" name="feature_intertiki_import_groups" {if $prefs.feature_intertiki_import_groups eq 'y'}checked="checked"{/if} class="form-control" />
+						<input type="checkbox" name="feature_intertiki_import_groups" {if $prefs.feature_intertiki_import_groups eq 'y'}checked="checked"{/if}/>
 					</div>
 					<label class="col-sm-3 control-label">{tr}Limit group import (comma-separated list of imported groups, leave empty to avoid limitation){/tr}</label>
 					<div class="col-sm-7 col-sm-offset-2">
@@ -60,24 +60,24 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">{tr}Intertiki shared cookie for sliding auth under same domain{/tr}</label>
 				<div class="col-sm-7 col-sm-offset-2">
-				      <input type="checkbox" name="feature_intertiki_sharedcookie" {if $prefs.feature_intertiki_sharedcookie eq 'y'}checked="checked"{/if} class="form-control" />
+		      		<input type="checkbox" name="feature_intertiki_sharedcookie" {if $prefs.feature_intertiki_sharedcookie eq 'y'}checked="checked"{/if} />
 			    </div>
 		    </div>
 		    <div class="form-group">
 		    	<label class="col-sm-3 control-label">{tr}Add new server{/tr}</label>
-	    			<div class="col-sm-7 col-sm-offset-2">
+	    			<div class="col-sm-7 col-sm-offset-2 margin-bottom-sm">
 	    				<input type="text" name="new[name]" value="" class="form-control text-center"
 	    				placeholder="Server Name"/>
 	    			</div>
-	    			<div class="col-sm-7 col-sm-offset-5">
+	    			<div class="col-sm-7 col-sm-offset-5 margin-bottom-sm">
 	    				<input type="text" name="new[port]" value="" class="form-control text-center"
 	    				placeholder="Server Port"/>
 	    			</div>
-	    			<div class="col-sm-7 col-sm-offset-5">
+	    			<div class="col-sm-7 col-sm-offset-5 margin-bottom-sm">
 	    				<input type="text" name="new[path]" value="" class="form-control text-center"
 	    				placeholder="Server Path"/>
 	    			</div>
-	    			<div class="col-sm-7 col-sm-offset-5">
+	    			<div class="col-sm-7 col-sm-offset-5 margin-bottom-sm">
 	    				<input type="text" name="new[groups]" value="" class="form-control text-center"
 	    				placeholder="Server Groups"/>
 	    			</div>
@@ -134,13 +134,13 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label">{tr}Intertiki shared cookie for sliding auth under same domain{/tr}</label>
 					<div class="col-sm-7 col-sm-offset-2">
-					      <input type="checkbox" name="feature_intertiki_sharedcookie" {if $prefs.feature_intertiki_sharedcookie eq 'y'}checked="checked"{/if} class="form-control" />
+					      <input type="checkbox" name="feature_intertiki_sharedcookie" {if $prefs.feature_intertiki_sharedcookie eq 'y'}checked="checked"{/if}/>
 				    </div>
 			    </div>
 			    <div class="form-group">
 					<label class="col-sm-3 control-label">{tr}Intertiki Server enabled{/tr}</label>
 					<div class="col-sm-7 col-sm-offset-2">
-					      <input type="checkbox" name="feature_intertiki_sharedcookie" {if $prefs.feature_intertiki_sharedcookie eq 'y'}checked="checked"{/if} class="form-control" />
+					      <input type="checkbox" name="feature_intertiki_sharedcookie" {if $prefs.feature_intertiki_sharedcookie eq 'y'}checked="checked"{/if}/>
 				    </div>
 			    </div>
 			    <div class="form-group">
