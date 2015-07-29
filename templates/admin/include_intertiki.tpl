@@ -66,19 +66,19 @@
 		    <div class="form-group">
 		    	<label class="col-sm-3 control-label">{tr}Add new server{/tr}</label>
 	    			<div class="col-sm-7 col-sm-offset-2 margin-bottom-sm">
-	    				<input type="text" name="new[name]" value="" class="form-control text-center"
+	    				<input type="text" name="new[name]" value="" class="form-control"
 	    				placeholder="Server Name"/>
 	    			</div>
 	    			<div class="col-sm-7 col-sm-offset-5 margin-bottom-sm">
-	    				<input type="text" name="new[port]" value="" class="form-control text-center"
+	    				<input type="text" name="new[port]" value="" class="form-control"
 	    				placeholder="Server Port"/>
 	    			</div>
 	    			<div class="col-sm-7 col-sm-offset-5 margin-bottom-sm">
-	    				<input type="text" name="new[path]" value="" class="form-control text-center"
+	    				<input type="text" name="new[path]" value="" class="form-control"
 	    				placeholder="Server Path"/>
 	    			</div>
 	    			<div class="col-sm-7 col-sm-offset-5 margin-bottom-sm">
-	    				<input type="text" name="new[groups]" value="" class="form-control text-center"
+	    				<input type="text" name="new[groups]" value="" class="form-control"
 	    				placeholder="Server Groups"/>
 	    			</div>
 	    	</div>
@@ -121,8 +121,8 @@
 			</div>
 			{/if}
 			</br>
-			<div class="heading input_submit_container" style="text-align: center">
-				<input type="submit" class="btn btn-primary btn-block" name="intertikiclient" value="{tr}Save{/tr}"/>
+			<div class="heading input_submit_container text-center">
+				<input type="submit" class="btn btn-primary btn-sm" name="intertikiclient" value="{tr}Save{/tr}"/>
 			</div>
 		</form>
 	{/tab}
@@ -209,8 +209,8 @@
 						</table>
 			    	</div>
 				</div>
-				<div class="heading input_submit_container" style="text-align: center">
-					<input type="submit" class="btn btn-primary btn-block" name="intertikiserver" value="{tr}Save{/tr}"/>
+				<div class="heading input_submit_container text-center">
+					<input type="submit" class="btn btn-primary btn-sm" name="intertikiserver" value="{tr}Save{/tr}"/>
 				</div>
 				</br>
 			</form>
