@@ -52,13 +52,13 @@
 	<div class="form-group">
 		<label class="col-sm-3 control-label" title="{tr}Is repository visible to users{/tr}">{tr}Visible{/tr}</label>
 		<div class="col-sm-7">
-			<input type="checkbox" name="vis" {if $vis eq 'y'}checked="checked"{/if} title="{tr}Is repository visible to users{/tr}" class="form-control">
+			<input type="checkbox" name="vis" {if $vis eq 'y'}checked="checked"{/if} title="{tr}Is repository visible to users{/tr}">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label" title="{tr}Can files from repository be cached{/tr}">{tr}Cacheable{/tr}</label>
 		<div class="col-sm-7">
-			<input type="checkbox" name="cacheable" {if $cacheable eq 'y'}checked="checked"{/if} title="{tr}Can files from repository be cached{/tr}" class="form-control">
+			<input type="checkbox" name="cacheable" {if $cacheable eq 'y'}checked="checked"{/if} title="{tr}Can files from repository be cached{/tr}">
 				{if isset($repID) and $repID ne '0'}
 					&nbsp;&nbsp;
 					<a href="tiki-admin_integrator.php?action=clear&amp;repID={$repID|escape}" title="{tr}Clear all cached pages of this repository{/tr}">
@@ -81,8 +81,8 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<div class="col-sm-7 col-sm-offset-3">
-			<input type="submit" class="btn btn-primary btn-block" name="save" value="{tr}Save{/tr}">
+		<div class="col-sm-7 col-sm-offset-3 text-center">
+			<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
 		</div>
 	</div>
 </form>

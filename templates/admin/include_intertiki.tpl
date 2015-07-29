@@ -6,20 +6,20 @@
 			<input type="hidden" name="ticket" value="{$ticket|escape}">
 			<div class="form-group">
 				<label class="col-sm-3 control-label">{tr}Feature{/tr}</label>
-				<div class="col-sm-6 col-sm-offset-0">
+				<div class="col-sm-3">
 		      		{preference name=feature_intertiki}
 	      		</div>
 		    </div>
 		    <div class="form-group">
 				<label class="col-sm-3 control-label">{tr}Tiki Unique key{/tr}</label>
-				<div class="col-sm-7 col-sm-offset-2">
+				<div class="col-sm-7 col-sm-offset-1">
 				      <input type="text" name="tiki_key" value="{$prefs.tiki_key}" size="32" class="form-control"/>
 			    </div>
 		    </div>
 		    <div class="form-group">
 				<label class="col-sm-3 control-label">{tr}InterTiki Slave mode{/tr}
 				{tr}<small>Warning: overrides manually registered local users</small>{/tr}</label>
-				<div class="col-sm-7 col-sm-offset-2">
+				<div class="col-sm-7 col-sm-offset-1">
 			        <select name="feature_intertiki_mymaster" onchange="check_server_visibility(this);" class="form-control">
 						<option value="">{tr}No{/tr}</option>
 						{foreach from=$prefs.interlist key=k item=i}
@@ -44,40 +44,40 @@
 			<div id="admin-slavemode-options" style="display: {if $prefs.feature_intertiki_mymaster eq ''}none{else}block{/if}">
 			 	<div class="form-group">
 					<label class="col-sm-3 control-label">{tr}Import user preferences{/tr}</label>
-					<div class="col-sm-7 col-sm-offset-2">
+					<div class="col-sm-7 col-sm-offset-1">
 						<input type="checkbox" name="feature_intertiki_import_preferences" {if $prefs.feature_intertiki_import_preferences eq 'y'}checked="checked"{/if} class="form-control" />
 					</div>
 					<label class="col-sm-3 control-label">{tr}Import user groups{/tr}</label>
-					<div class="col-sm-7 col-sm-offset-2">
+					<div class="col-sm-7 col-sm-offset-1">
 						<input type="checkbox" name="feature_intertiki_import_groups" {if $prefs.feature_intertiki_import_groups eq 'y'}checked="checked"{/if}/>
 					</div>
 					<label class="col-sm-3 control-label">{tr}Limit group import (comma-separated list of imported groups, leave empty to avoid limitation){/tr}</label>
-					<div class="col-sm-7 col-sm-offset-2">
+					<div class="col-sm-7 col-sm-offset-1">
 						<input type="text" name="feature_intertiki_imported_groups" value="{$prefs.feature_intertiki_imported_groups}" class="form-control" />
 					</div>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label">{tr}Intertiki shared cookie for sliding auth under same domain{/tr}</label>
-				<div class="col-sm-7 col-sm-offset-2">
+				<div class="col-sm-7 col-sm-offset-1">
 		      		<input type="checkbox" name="feature_intertiki_sharedcookie" {if $prefs.feature_intertiki_sharedcookie eq 'y'}checked="checked"{/if} />
 			    </div>
 		    </div>
 		    <div class="form-group">
 		    	<label class="col-sm-3 control-label">{tr}Add new server{/tr}</label>
-	    			<div class="col-sm-7 col-sm-offset-2 margin-bottom-sm">
+	    			<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
 	    				<input type="text" name="new[name]" value="" class="form-control"
 	    				placeholder="Server Name"/>
 	    			</div>
-	    			<div class="col-sm-7 col-sm-offset-5 margin-bottom-sm">
+	    			<div class="col-sm-7 col-sm-offset-4 margin-bottom-sm">
 	    				<input type="text" name="new[port]" value="" class="form-control"
 	    				placeholder="Server Port"/>
 	    			</div>
-	    			<div class="col-sm-7 col-sm-offset-5 margin-bottom-sm">
+	    			<div class="col-sm-7 col-sm-offset-4 margin-bottom-sm">
 	    				<input type="text" name="new[path]" value="" class="form-control"
 	    				placeholder="Server Path"/>
 	    			</div>
-	    			<div class="col-sm-7 col-sm-offset-5 margin-bottom-sm">
+	    			<div class="col-sm-7 col-sm-offset-4 margin-bottom-sm">
 	    				<input type="text" name="new[groups]" value="" class="form-control"
 	    				placeholder="Server Groups"/>
 	    			</div>
@@ -90,7 +90,7 @@
     		</br>
 	    	<div class="form-group">
 	    		<div class="col-sm-12">
-		    		<table class="table table-responsive table-bordered">
+		    		<table class="table">
 		    			<thead>
 		    				<tr>
 		    					<td>{tr}Name{/tr}</td>
@@ -133,25 +133,25 @@
 				<input type="hidden" name="ticket" value="{$ticket|escape}">
 				<div class="form-group">
 					<label class="col-sm-3 control-label">{tr}Intertiki shared cookie for sliding auth under same domain{/tr}</label>
-					<div class="col-sm-7 col-sm-offset-2">
+					<div class="col-sm-7 col-sm-offset-1">
 					      <input type="checkbox" name="feature_intertiki_sharedcookie" {if $prefs.feature_intertiki_sharedcookie eq 'y'}checked="checked"{/if}/>
 				    </div>
 			    </div>
 			    <div class="form-group">
 					<label class="col-sm-3 control-label">{tr}Intertiki Server enabled{/tr}</label>
-					<div class="col-sm-7 col-sm-offset-2">
+					<div class="col-sm-7 col-sm-offset-1">
 					      <input type="checkbox" name="feature_intertiki_sharedcookie" {if $prefs.feature_intertiki_sharedcookie eq 'y'}checked="checked"{/if}/>
 				    </div>
 			    </div>
 			    <div class="form-group">
 					<label class="col-sm-3 control-label">{tr}Access Log file{/tr}</label>
-					<div class="col-sm-7 col-sm-offset-2">
+					<div class="col-sm-7 col-sm-offset-1">
 					      <input type="text" name="intertiki_logfile" value="{$prefs.intertiki_logfile}" size="42" class="form-control" />
 				    </div>
 			    </div>
 			    <div class="form-group">
 					<label class="col-sm-3 control-label">{tr}Errors Log file{/tr}</label>
-					<div class="col-sm-7 col-sm-offset-2">
+					<div class="col-sm-7 col-sm-offset-1">
 					      <input type="text" name="intertiki_errfile" value="{$prefs.intertiki_errfile}" size="42" class="form-control" />
 				    </div>
 			    </div>
@@ -161,7 +161,7 @@
 			    </div>
 			    <div class="form-group">
 			    	<div class="col-sm-12">
-			    		<table class="table table-responsive table-bordered">
+			    		<table class="table">
 			    			<thead>
 								<tr>
 									<td>&nbsp;</td>
