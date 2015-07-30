@@ -14,7 +14,7 @@ class Services_Tracker_TabularController
 
 	function action_manage($input)
 	{
-		Services_Exception_Denied::checkGlobal('tiki_p_admin_trackers');
+		Services_Exception_Denied::checkGlobal('tiki_p_tabular_admin');
 
 		$lib = TikiLib::lib('tabular');
 
@@ -43,7 +43,7 @@ class Services_Tracker_TabularController
 
 	function action_create($input)
 	{
-		Services_Exception_Denied::checkGlobal('tiki_p_admin_trackers');
+		Services_Exception_Denied::checkGlobal('tiki_p_tabular_admin');
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$lib = TikiLib::lib('tabular');
@@ -176,7 +176,7 @@ class Services_Tracker_TabularController
 		$info = $lib->getInfo($input->tabularId->int());
 		$trackerId = $info['trackerId'];
 
-		Services_Exception_Denied::checkObject('tiki_p_tabular_admin', 'tabular', $info['tabularId']);
+		Services_Exception_Denied::checkObject('tiki_p_tabular_export', 'tabular', $info['tabularId']);
 
 		$schema = $this->getSchema($info);
 		$schema->validate();
@@ -268,7 +268,7 @@ class Services_Tracker_TabularController
 			if ($trackerId) {
 				Services_Exception_Denied::checkObject('tiki_p_view_trackers', 'tracker', $trackerId);
 			} else {
-				Services_Exception_Denied::checkGlobal('tiki_p_admin_trackers');
+				Services_Exception_Denied::checkGlobal('tiki_p_tabular_admin');
 			}
 
 			return [
