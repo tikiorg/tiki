@@ -32,8 +32,10 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 function smarty_modifier_userlink($other_user, $class='userlink', $idletime='not_set', $fullname='', $max_length=0, $popup='y')
 {
+	if (empty($other_user)){
+		return "";
+	}
 	if (is_array($other_user)) {
-
 		if (count($other_user) > 1) {
 			$other_user = array_map(
 				function ($username) use ($class, $idletime, $popup) {
