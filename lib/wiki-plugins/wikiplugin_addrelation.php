@@ -75,6 +75,14 @@ function wikiplugin_addrelation_info()
 				'since' => '8.0',
 				'default' => '0',
 			),
+			'button_class' => array(
+				'required' => false,
+				'name' => tra('Set Button Class'),
+				'description' => tra('Class or classes for the Button'),
+				'filter' => 'text',
+				'since' => '8.0',
+				'default' => 'btn btn-default',
+			),
 		),
 	);
 }
@@ -120,6 +128,11 @@ function wikiplugin_addrelation($data, $params)
 	} else {
 		$id = 'wp_addrelation_0';
 	}
+	if (!empty($params['button_class'])) {
+		$button_class = $params['button_class'];
+	} else {
+		$button_class = "btn btn-default";
+	}
 	$relationlib = TikiLib::lib('relation');
 
 	if (isset($_POST[$id])) {
@@ -160,5 +173,6 @@ function wikiplugin_addrelation($data, $params)
 	$smarty->assign('label_add', $labeladd);
 	$smarty->assign('label_added', $labeladded);
 	$smarty->assign('label_remove', $labelremove);
+	$smarty->assign('button_class', $button_class);
 	return $smarty->fetch('wiki-plugins/wikiplugin_addrelation.tpl');
 }
