@@ -119,22 +119,36 @@ class Services_Tracker_TabularController
 		$local = $schema->getFieldSchema($permName);
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
 			$column = $schema->addColumn($permName, $input->mode->text());
-			return [
+
+			$return = [
 				'field' => $column->getField(),
 				'mode' => $column->getMode(),
 				'label' => $column->getLabel(),
 				'isReadOnly' => $column->isReadOnly(),
 				'isPrimary' => $column->isPrimaryKey(),
 			];
+			if ($input->offsetExists('columnIndex')) {
+				$return['columnIndex'] = $input->columnIndex->int();
+			}
+
+			return $return;
 		}
 
-		return [
+		$return = [
 			'title' => tr('Fields in %0', $tracker->getConfiguration('name')),
 			'trackerId' => $trackerId,
 			'permName' => $permName,
 			'schema' => $local,
 		];
+		if ($input->offsetExists('columnIndex')) {
+			$return['columnIndex'] = $input->columnIndex->int();
+		}
+		if ($input->offsetExists('mode')) {
+			$return['mode'] = $input->mode->text();
+		}
+		return $return;
 	}
 
 	function action_select_filter($input)
