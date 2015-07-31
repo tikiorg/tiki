@@ -13,26 +13,27 @@ User-agent: *
 #
 # This is to slow down any crawling so as not to put pressure on your server
 Crawl-Delay: 30
-Disallow: /backups/
-Disallow: /css/
+Disallow: /addons/
+Disallow: /admin/
+Disallow: /backup/
 Disallow: /db/
 Disallow: /doc/
 Disallow: /dump/
-Disallow: /images/
-Disallow: /img/
 Disallow: /installer/
 Disallow: /lang/
 Disallow: /lib/
 Disallow: /maps/
 Disallow: /mods/
 Disallow: /modules/
-Disallow: /popups/
-Disallow: /styles/
-Disallow: /temp/
+Disallow: /permissioncheck/
+Disallow: /temp/cache/
+Disallow: /temp/mail_attachs/
+Disallow: /temp/unified-index/
+Disallow: /temp/composer.phar
 Disallow: /templates/
 Disallow: /templates_c/
 Disallow: /tests/
-Disallow: /tiki_tests/
+Disallow: /vendor*
 Disallow: /about.php
 Disallow: /get_strings.php
 Disallow: /tiki-admin

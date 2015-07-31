@@ -20,6 +20,7 @@ class Tiki_Profile_InstallHandler_Article extends Tiki_Profile_InstallHandler
 			'publication_date' => time(),
 			'expiration_date' => time() + 3600*24*365,
 			'type' => 'Article',
+			'topic' => 0,
 			'topline' => '',
 			'subtitle' => '',
 			'link_to' => '',

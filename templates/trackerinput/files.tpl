@@ -88,13 +88,13 @@
 			}
 		}
 
-		function addFile(fileId, type, name) {			var li = $('
-<li>').appendTo($files); li.text(name).data('file-id', fileId);
+		function addFile(fileId, type, name) {
+			var li = $('<li>').appendTo($files); li.text(name).data('file-id', fileId);
 
 			$field.input_csv('add', ',', fileId);
 
-	li.prepend($.fileTypeIcon(fileId, { type: type, name: name }));
-	li.append($('<label class="file-delete-icon">{{icon name='delete'}}</label>'));
+			li.prepend($.fileTypeIcon(fileId, { type: type, name: name }));
+			li.append($('<label class="file-delete-icon">{{icon name='delete'}}</label>'));
 
 			if (replaceFile && $self.data('firstfile') > 0) {
 				li.prev('li').remove();
@@ -150,9 +150,14 @@
 			}
 		});
 
-	$files.find('input').hide(); // Delete for previously existing and to be added files $files.parent().on('click',
-	'.file-delete-icon', function (e) { var fileId = $(e.target).closest('li').data('file-id'); if (fileId) {
-	$field.input_csv('delete', ',', fileId); $(e.target).closest('li').remove(); toggleWarning(); }
+		$files.find('input').hide();
+		// Delete for previously existing and to be added files
+		$files.parent().on('click', '.file-delete-icon', function (e) {
+			var fileId = $(e.target).closest('li').data('file-id');
+			if (fileId) {
+				$field.input_csv('delete', ',', fileId); $(e.target).closest('li').remove();
+				toggleWarning();
+			}
 		});
 
 		$url.keypress(function (e) {

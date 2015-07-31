@@ -14,7 +14,7 @@ class Services_Tracker_TabularController
 
 	function action_manage($input)
 	{
-		Services_Exception_Denied::checkGlobal('tiki_p_admin_trackers');
+		Services_Exception_Denied::checkGlobal('tiki_p_tabular_admin');
 
 		$lib = TikiLib::lib('tabular');
 
@@ -43,7 +43,7 @@ class Services_Tracker_TabularController
 
 	function action_create($input)
 	{
-		Services_Exception_Denied::checkGlobal('tiki_p_admin_trackers');
+		Services_Exception_Denied::checkGlobal('tiki_p_tabular_admin');
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$lib = TikiLib::lib('tabular');
@@ -119,22 +119,36 @@ class Services_Tracker_TabularController
 		$local = $schema->getFieldSchema($permName);
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
 			$column = $schema->addColumn($permName, $input->mode->text());
-			return [
+
+			$return = [
 				'field' => $column->getField(),
 				'mode' => $column->getMode(),
 				'label' => $column->getLabel(),
 				'isReadOnly' => $column->isReadOnly(),
 				'isPrimary' => $column->isPrimaryKey(),
 			];
+			if ($input->offsetExists('columnIndex')) {
+				$return['columnIndex'] = $input->columnIndex->int();
+			}
+
+			return $return;
 		}
 
-		return [
+		$return = [
 			'title' => tr('Fields in %0', $tracker->getConfiguration('name')),
 			'trackerId' => $trackerId,
 			'permName' => $permName,
 			'schema' => $local,
 		];
+		if ($input->offsetExists('columnIndex')) {
+			$return['columnIndex'] = $input->columnIndex->int();
+		}
+		if ($input->offsetExists('mode')) {
+			$return['mode'] = $input->mode->text();
+		}
+		return $return;
 	}
 
 	function action_select_filter($input)
@@ -176,7 +190,7 @@ class Services_Tracker_TabularController
 		$info = $lib->getInfo($input->tabularId->int());
 		$trackerId = $info['trackerId'];
 
-		Services_Exception_Denied::checkObject('tiki_p_tabular_admin', 'tabular', $info['tabularId']);
+		Services_Exception_Denied::checkObject('tiki_p_tabular_export', 'tabular', $info['tabularId']);
 
 		$schema = $this->getSchema($info);
 		$schema->validate();
@@ -268,7 +282,7 @@ class Services_Tracker_TabularController
 			if ($trackerId) {
 				Services_Exception_Denied::checkObject('tiki_p_view_trackers', 'tracker', $trackerId);
 			} else {
-				Services_Exception_Denied::checkGlobal('tiki_p_admin_trackers');
+				Services_Exception_Denied::checkGlobal('tiki_p_tabular_admin');
 			}
 
 			return [

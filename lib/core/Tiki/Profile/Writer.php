@@ -117,11 +117,11 @@ class Tiki_Profile_Writer
 
 		// Find the object name property
 		$candidates = array();
-		$currentId = preg_replace('/[^\w]+/', '', strtolower($currentId));
+		$currentId = preg_replace('/[^\w]+/u', '', strtolower($currentId));
 
 		foreach (array('name', 'title') as $key) {
 			if (! empty($data[$key])) {
-				$basename = preg_replace('/\W+/', '_', strtolower($data[$key]));
+				$basename = preg_replace('/\W+/u', '_', strtolower($data[$key]));
 				$candidates[] = $basename;
 				$candidates[] = $type . '_' . $basename;
 				$candidates[] = $type . '_' . $basename . '_' . $currentId;

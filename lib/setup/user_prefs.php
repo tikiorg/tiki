@@ -32,6 +32,14 @@ if ( $user ) {
 
 	// Initialize user preferences
 
+	// Defaults that are not in global prefs
+	$prefs['user_article_watch_editor'] = 'n';
+	$prefs['user_blog_watch_editor'] = 'n';
+	$prefs['user_calendar_watch_editor'] = 'n';
+	$prefs['user_wiki_watch_editor'] = 'n';
+	$prefs['user_tracker_watch_editor'] = 'n';
+	$prefs['user_comment_watch_editor'] = 'n';
+
 	// Get all user prefs in one query
 	$tikilib->get_user_preferences($user);
 	
