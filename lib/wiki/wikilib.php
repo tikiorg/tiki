@@ -1162,7 +1162,7 @@ class WikiLib extends TikiLib
 
 		if ($prefs['feature_sefurl'] == 'y' && $prefs['url_only_ascii'] === 'y') {
 			$page = \TikiLib::lib('tiki')->take_away_accent($page);
-			$page = preg_replace('/\W+/', ' ', $page);    // remove other non-word chars
+			$page = trim(preg_replace('/\W+/', ' ', $page));    // remove other non-word chars
 		}
 
 		$href = "$script_name?page=" . urlencode($page);
