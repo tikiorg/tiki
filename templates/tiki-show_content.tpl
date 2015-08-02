@@ -171,8 +171,7 @@
 
 	{if $print_page eq 'y'}
 		<br>
-		{capture name=url}{query _script='tiki-index.php' _type='absolute_uri'}{/capture}
-		{tr}The original document is available at{/tr} <a href="{$smarty.capture.url}">{$smarty.capture.url}</a>
+		{tr}The original document is available at{/tr} <a href="{$base_url|escape}{$page|sefurl}">{$base_url|escape}{$page|sefurl}</a>
 	{/if}
 </footer>
 
