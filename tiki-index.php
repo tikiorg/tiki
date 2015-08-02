@@ -356,7 +356,7 @@ if (empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcase
 
 	if ($prefs['feature_sefurl'] == 'y' && $prefs['url_only_ascii'] === 'y' && count($likepages) > 0) {
 		// if using url_only_ascii non-word chars will have been replaced by a space, so try and match one of the $likepages here
-		$page_pattern = '/' . str_replace(' ', '[\W]+', preg_quote($page)) . '/';
+		$page_pattern = '/' . str_replace(' ', '[^\w-]+', preg_quote($page)) . '/';
 
 		foreach ($likepages as $likepage) {
 			if (preg_match($page_pattern, $tikilib->take_away_accent($likepage))) {
