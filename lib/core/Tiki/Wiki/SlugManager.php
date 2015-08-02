@@ -43,7 +43,7 @@ class SlugManager
 
 		if ($asciiOnly) {
 			$pageName = \TikiLib::lib('tiki')->take_away_accent($pageName);
-			$pageName = preg_replace('/\W+/', ' ', $pageName);    // remove other non-word chars and replace with a space
+			$pageName = preg_replace('/[^\w-]+/', ' ', $pageName);    // remove other non-word chars and replace with a space
 		}
 
 		$impl = $this->generators[$generator];
