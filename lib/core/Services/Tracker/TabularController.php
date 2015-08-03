@@ -188,7 +188,6 @@ class Services_Tracker_TabularController
 	{
 		$lib = TikiLib::lib('tabular');
 		$info = $lib->getInfo($input->tabularId->int());
-		$trackerId = $info['trackerId'];
 
 		Services_Exception_Denied::checkObject('tiki_p_tabular_export', 'tabular', $info['tabularId']);
 
@@ -197,7 +196,9 @@ class Services_Tracker_TabularController
 
 		$source = new \Tracker\Tabular\Source\TrackerSource($schema);
 		$writer = new \Tracker\Tabular\Writer\CsvWriter('php://output');
-		$writer->sendHeaders();
+
+		$name = TikiLib::lib('tiki')->remove_non_word_characters_and_accents($info['name']);
+		$writer->sendHeaders($name . '_export_full.csv');
 		$writer->write($source);
 		exit;
 	}
@@ -228,7 +229,9 @@ class Services_Tracker_TabularController
 
 			$source = new \Tracker\Tabular\Source\QuerySource($schema, $query);
 			$writer = new \Tracker\Tabular\Writer\CsvWriter('php://output');
-			$writer->sendHeaders();
+
+			$name = TikiLib::lib('tiki')->remove_non_word_characters_and_accents($info['name']);
+			$writer->sendHeaders($name . '_export_partial.csv');
 			$writer->write($source);
 			exit;
 		}
@@ -273,7 +276,9 @@ class Services_Tracker_TabularController
 
 			$source = new \Tracker\Tabular\Source\QuerySource($schema, $query);
 			$writer = new \Tracker\Tabular\Writer\CsvWriter('php://output');
-			$writer->sendHeaders();
+
+			$name = TikiLib::lib('tiki')->remove_non_word_characters_and_accents($info['name']);
+			$writer->sendHeaders($name . '_export_search.csv');
 			$writer->write($source);
 			exit;
 		} elseif (count($formats) === 0) {
