@@ -4,23 +4,26 @@
 
 <h2>{tr}Add Hotword{/tr}</h2>
 
-<form method="post" action="tiki-admin_hotwords.php">
-	<table class="formcolor">
-		<tr>
-			<td>{tr}Word{/tr}</td>
-			<td><input type="text" name="word"></td>
-		</tr>
-		<tr>
-			<td>{tr}URL{/tr}</td>
-			<td><input type="text" name="url"></td>
-		</tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td>
-				<input type="submit" class="btn btn-default btn-sm" name="add" value="{tr}Add{/tr}">
-			</td>
-		</tr>
-	</table>
+<form method="post" action="tiki-admin_hotwords.php" class="form-horizontal">
+
+    <div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Word{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+		    <input type="text" name="word" class="form-control">
+	    </div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label">{tr}URL{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+		    <input type="text" name="url" class="form-control">
+	    </div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label"></label>
+		<div class="col-sm-7 col-sm-offset-1">
+		    <input type="submit" class="btn btn-default btn-sm" name="add" value="{tr}Add{/tr}">
+	    </div>
+    </div>
 </form>
 
 <h2>{tr}Hotwords{/tr}</h2>

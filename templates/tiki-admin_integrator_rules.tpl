@@ -4,7 +4,7 @@
 
 <div class="t_navbar margin-bottom-md">
 	{button href="tiki-admin_integrator.php" class="btn btn-default" _icon_name="cog" _text="{tr}Configure Repositories{/tr}"}
-	{button href="tiki-list_integrator_repositories.php" class="btn btn-default" _icon_name="list" _text="{tr}List Repositories{/tr}</a>"}
+	{button href="tiki-list_integrator_repositories.php" class="btn btn-default" _icon_name="list" _text="{tr}List Repositories{/tr}"}
 	{assign var=thisrepID value=$repID|escape}
 	{button href="tiki-admin_integrator.php?action=edit&amp;repID=$thisrepID" class="btn btn-default" _icon_name="wrench" _text="{tr}Configure this Repository{/tr}"}
 	{button href="tiki-integrator.php?repID=$thisrepID" _text="{tr}View this Repository{/tr}" _icon_name="view" class="btn btn-default"}
@@ -16,74 +16,119 @@
 
 {if count($reps) gt 0}
 	<div id="rules-copy-panel">
-		<form action="tiki-admin_integrator_rules.php?repID={$repID|escape}" method="post">
-			<table class="formcolor">
-				<tr>
-					<td>{tr}Source repository{/tr}</td>
-					<td>
-						<select name="srcrep">{html_options options=$reps}</select> &nbsp; &nbsp;
-						<input type="submit" class="btn btn-default btn-sm" name="copy" value="{tr}Copy{/tr}">
-					</td>
-				</tr>
-			</table>
+		<form action="tiki-admin_integrator_rules.php?repID={$repID|escape}" method="post" class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Source repository{/tr}</label>
+				<div class="col-sm-6 col-sm-offset-1">
+			      	<select name="srcrep" class="form-control">{html_options options=$reps}</select>
+			    </div>
+			    <div class="col-sm-1">
+			    	<input type="submit" class="btn btn-default btn-sm" name="copy" value="{tr}Copy{/tr}">
+			    </div>
+		    </div>
 		</form>
 		<br><br>
 	</div>
 {/if}
 
 {* Add form *}
-<form action="tiki-admin_integrator_rules.php?repID={$repID|escape}" method="post">
+<form action="tiki-admin_integrator_rules.php?repID={$repID|escape}" method="post" class="form-horizontal">
 	<input type="hidden" name="ruleID" value="{$ruleID|escape}">
 	<input type="hidden" name="repID" value="{$repID|escape}">
 
-	<table class="formcolor">
-		<tr>
-			<td><span title="{tr}According this order rules will be applied ('0' or empty = auto){/tr}">{tr}Rule order{/tr}</span></td>
-			<td><input type="text" maxlength="2" size="2" name="ord" value="{$ord|escape}" title="{tr}According this order rules will be applied ('0' or empty = auto){/tr}"></td>
-		</tr><tr>
-			<td><span title="{tr}Text to search for{/tr}">{tr}Search{/tr}</span></td>
-			<td><input type="text" name="srch" value="{$srch|escape}" title="{tr}Text to search for{/tr}"></td>
-		</tr><tr>
-			<td><span title="{tr}Text to replace{/tr}">{tr}Replace{/tr}</span></td>
-			<td><input type="text" name="repl" value="{$repl|escape}" title="{tr}Text to replace{/tr}"></td>
-		</tr><tr>
-			<td><span title="{tr}Is this regular expression or simple search/replacer{/tr}">{tr}Regex{/tr}</span></td>
-			<td><input type="checkbox" name="type" {if $type eq 'y'}checked="checked"{/if} title="{tr}Is this regular expression or simple search/replacer{/tr}"></td>
-		</tr><tr>
-			<td><span title="{tr}Is case sensitive (for simple replacer){/tr}">{tr}Case sensitive{/tr}</td>
-			<td><input type="checkbox" name="casesense" {if $casesense eq 'y'}checked="checked"{/if} title="{tr}Is case sensitive (for simple replacer){/tr}"></td>
-		</tr><tr>
-			<td><span title="{tr}subset of chars: imsxeADSXUu, which is regex modifiers{/tr}">{tr}Regex modifiers{/tr}</span></td>
-			<td><input type="text" maxlength="20" size="20" name="rxmod" value="{$rxmod|escape}" title="{tr}subset of chars: imsxeADSXUu, which is regex modifiers{/tr}"></td>
-		</tr><tr>
-			<td><span title="{tr}Human-readable text description of rule{/tr}">{tr}Description{/tr}</td>
-			<td><textarea name="description" rows="4" title="{tr}Human-readable text description of rule{/tr}">{$description|escape}</textarea></td>
-		</tr><tr>
-			<td>&nbsp;</td>
-			<td>
-				<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">&nbsp;&nbsp;
-				<input type="checkbox" name="enabled" {if $enabled eq 'y'}checked="checked"{/if} title="{tr}Check to enable this rule{/tr}">&nbsp;
-				{tr}Enabled{/tr}
-			</td>
-		</tr><tr>
-			<td colspan="2">{tr}Preview options{/tr}</td>
-		</tr><tr>
-			<td><span title="{tr}Apply all rules or just this to generate preview{/tr}">{tr}Apply all rules{/tr}</td>
-			<td><input type="checkbox" name="all" {if $all eq 'y'}checked="checked"{/if} title="{tr}Apply all rules or just this to generate preview{/tr}"></td>
-		</tr><tr>
-			<td><span title="{tr}View source code after rules applied{/tr}">{tr}Code preview{/tr}</td>
-			<td><input type="checkbox" name="code" {if $code eq 'y'}checked="checked"{/if} title="{tr}View source code after rules applied{/tr}"></td>
-		</tr><tr>
-			<td><span title="{tr}Generate HTML preview{/tr}">{tr}HTML preview{/tr}</td>
-			<td><input type="checkbox" name="html" {if $html eq 'y'}checked="checked"{/if} title="{tr}Generate HTML preview{/tr}"></td>
-		</tr><tr>
-			<td><span title="{tr}Test file from repository to generate preview for (empty = configured start page){/tr}">{tr}File{/tr}</td>
-			<td><input type="text" name="file" value="{$file|escape}" title="{tr}Test file from repository to generate preview for (empty = configured start page){/tr}"></td>
-		</tr><tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" class="btn btn-default btn-sm" name="preview" value="{tr}Preview{/tr}"></td>
-		</tr>
-	</table>
+	<div class="form-group">
+		<label class="col-sm-3 control-label" title="{tr}Rules will be applied in this order ('0' or empty = auto){/tr}">{tr}Rule order{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<input type="text" maxlength="2" size="2" class="form-control" name="ord" value="{$ord|escape}" title="{tr}Rules will be applied in this order ('0' or empty = auto){/tr}">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label" title="{tr}Text to search for{/tr}">{tr}Search{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<input type="text" name="srch" value="{$srch|escape}" title="{tr}Text to search for{/tr}" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label" title="{tr}Text to replace{/tr}">{tr}Replace{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<input type="text" name="repl" value="{$repl|escape}" title="{tr}Text to replace{/tr}" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label" title="{tr}Is this regular expression or simple search/replacer{/tr}">{tr}Regex{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<input type="checkbox" name="type" {if $type eq 'y'}checked="checked"{/if} title="{tr}Is this regular expression or simple search/replacer{/tr}">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label" title="{tr}Is case sensitive (for simple replacer){/tr}">{tr}Case sensitive{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<input type="checkbox" name="casesense" {if $casesense eq 'y'}checked="checked"{/if} title="{tr}Is case sensitive (for simple replacer){/tr}">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label" title="{tr}subset of chars: imsxeADSXUu, which are regex modifiers{/tr}">{tr}Regex modifiers{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<input type="text" maxlength="20" size="20" class="form-control" name="rxmod" value="{$rxmod|escape}" title="{tr}subset of chars: imsxeADSXUu, which are regex modifiers{/tr}">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label" title="{tr}Human-readable text description of rule{/tr}">{tr}Description{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<textarea name="description" class="form-control" rows="4" title="{tr}Human-readable text description of rule{/tr}">{$description|escape}</textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Enabled{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<input type="checkbox" name="enabled" {if $enabled eq 'y'}checked="checked"{/if} title="{tr}Check to enable this rule{/tr}">&nbsp;
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label"></label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Preview options{/tr}</label>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label" title="{tr}Apply all rules or just this to generate preview{/tr}">{tr}Apply all rules{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<input type="checkbox" name="all" {if $all eq 'y'}checked="checked"{/if} title="{tr}Apply all rules or just this to generate preview{/tr}">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label" title="{tr}View source code after rules applied{/tr}">{tr}Code preview{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<input type="checkbox" name="code" {if $code eq 'y'}checked="checked"{/if} title="{tr}View source code after rules applied{/tr}">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label" title="{tr}Generate HTML preview{/tr}">{tr}HTML preview{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<input type="checkbox" name="html" {if $html eq 'y'}checked="checked"{/if} title="{tr}Generate HTML preview{/tr}">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label" title="{tr}Test file from repository to generate preview for (empty = configured start page){/tr}">{tr}File{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<input type="text" name="file" value="{$file|escape}" class="form-control" title="{tr}Test file from repository to generate preview for (empty = configured start page){/tr}">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label" title="{tr}View source code after rules applied{/tr}">{tr}Code preview{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<input type="checkbox" name="code" {if $code eq 'y'}checked="checked"{/if} title="{tr}View source code after rules applied{/tr}">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label"></label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<input type="submit" class="btn btn-default btn-sm" name="preview" value="{tr}Preview{/tr}">
+		</div>
+	</div>
 </form>
 
 {if (($html eq 'y') or ($code eq 'y')) and (strlen($preview_data) gt 0)}

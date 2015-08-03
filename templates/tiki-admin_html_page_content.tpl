@@ -11,29 +11,31 @@
 
 {if $zone}
 	<h2>{tr}Edit zone{/tr}</h2>
-	<form action="tiki-admin_html_page_content.php" method="post">
+	<form action="tiki-admin_html_page_content.php" method="post" class="form-horizontal">
 		<input type="hidden" name="pageName" value="{$pageName|escape}">
 		<input type="hidden" name="zone" value="{$zone|escape}">
-		<table class="formcolor">
-			<tr>
-				<td>{tr}Zone:{/tr}</td>
-				<td>{$zone}</td>
-			</tr>
-			<tr>
-				<td>{tr}Content:{/tr}</td>
-				<td>
-					{if $type eq 'ta'}
-						<textarea rows="5" cols="60" name="content">{$content|escape}</textarea>
-					{else}
-						<input type="text" name="content" value="{$content|escape}">
-					{/if}
-				</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td><input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}"></td>
-			</tr>
-		</table>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">{tr}Zone{/tr}</label>
+			<div class="col-sm-7 col-sm-offset-1">
+			    <p>{$zone} Teste</p>
+		    </div>
+	    </div>
+	    <div class="form-group">
+			<label class="col-sm-3 control-label">{tr}Content:{/tr}</label>
+			<div class="col-sm-7 col-sm-offset-1">
+			    {if $type eq 'ta'}
+					<textarea rows="5" cols="15" name="content" class="form-control">{$content|escape}</textarea>
+				{else}
+					<input type="text" name="content" value="{$content|escape}" class="form-control">
+				{/if}
+		    </div>
+	    </div>
+	    <div class="form-group">
+			<div class="col-sm-3"></div>
+			<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+				<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+			</div>
+		</div>
 	</form>
 {/if}
 
@@ -41,10 +43,10 @@
 
 {include file='find.tpl'}
 
-<form action="tiki-admin_html_page_content.php" method="post">
+<form action="tiki-admin_html_page_content.php" method="post" class="form-horizontal">
 	<input type="hidden" name="pageName" value="{$pageName|escape}">
 	<input type="hidden" name="zone" value="{$zone|escape}">
-	<table class="table normal table-striped table-hover">
+	<table class="table">
 		<tr>
 			<th>
 				<a href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'zone_desc'}zone_asc{else}zone_desc{/if}">{tr}zone{/tr}</a>
@@ -60,12 +62,12 @@
 				<td class="text">{$channels[user].zone}</td>
 				<td class="text">
 					{if $channels[user].type eq 'ta'}
-						<textarea name="{$channels[user].zone|escape}" cols="20" rows="4">{$channels[user].content|escape}</textarea>
+						<textarea name="{$channels[user].zone|escape}" cols="20" rows="4" class="form-control">{$channels[user].content|escape}</textarea>
 					{else}
-						<input type="text" name="{$channels[user].zone|escape}" value="{$channels[user].content|escape}">
+						<input type="text" name="{$channels[user].zone|escape}" value="{$channels[user].content|escape}" class="form-control">
 					{/if}
 				</td>
-				<td class="action">
+				<td class="action text-center">
 					<a title=":{tr}Edit{/tr}" class="tips" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;zone={$channels[user].zone}">
 						{icon name='edit'}
 					</a>
@@ -74,8 +76,11 @@
 		{/section}
 	</table>
 
-	<div align="center">
-		<input type="submit" class="btn btn-default btn-sm" name="editmany" value="{tr}Mass update{/tr}">
+	<div class="form-group">
+		<div class="col-sm-3"></div>
+		<div class="col-sm-7 col-sm-offset-2">
+			<input type="submit" class="btn btn-default btn-sm" name="editmany" value="{tr}Mass update{/tr}">
+		</div>
 	</div>
 </form>
 

@@ -10,29 +10,35 @@
 {if $edit_on}
 	<div id="current_keywords" class="clearfix">
 		<h2>{tr}Edit page keywords{/tr} ({$edit_keywords_page|escape})</h2>
-		<form action="tiki-admin_keywords.php" method="post">
+		<form action="tiki-admin_keywords.php" method="post" class="form-horizontal">
 			<input name="page" value="{$edit_keywords_page|escape}" type="hidden">
-			<table class="formcolor">
-				<tbody>
-					<tr>
-						<td style="padding-right: 25px;">{tr}Keywords:{/tr}</td>
-						<td><input name="new_keywords" size="65" value="{$edit_keywords|escape}"></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><input type="submit" class="btn btn-default btn-sm" name="save_keywords" value="{tr}Save{/tr}"></td>
-					</tr>
-				</tbody>
-			</table>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Keywords{/tr}</label>
+				<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+					<input name="new_keywords" size="65" value="{$edit_keywords|escape}" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+					<input type="submit" class="btn btn-default btn-sm" name="save_keywords" value="{tr}Save{/tr}">
+				</div>
+			</div>
 		</form>
 	</div>
 {/if}
 
 <h2>{tr}Current Page Keywords{/tr}</h2>
-<form method="get" action="tiki-admin_keywords.php">
-	<label for="q">{tr}Search by page:{/tr}</label>
-	<input type="text" name="q" value="{if $smarty.request.q}{$smarty.request.q|escape}{/if}">
-	<input type="submit" class="btn btn-default btn-sm" name="search" value="{tr}Go{/tr}">
+<form method="get" action="tiki-admin_keywords.php" class="form-horizontal">
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Search by page:{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+			<input type="text" name="q" value="{if $smarty.request.q}{$smarty.request.q|escape}{/if}" class="form-control">
+		</div>
+		<div class="col-sm-1">
+			<input type="submit" class="btn btn-default btn-sm" name="search" value="{tr}Go{/tr}">
+		</div>
+	</div>
 </form>
 {if $search_on}
 	<strong>{$search_cant|escape} {tr}results found!{/tr}</strong>

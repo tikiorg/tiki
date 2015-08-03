@@ -19,63 +19,59 @@
 	<h2>{tr}Edit this HTML page:{/tr} {$pageName}</h2>
 {/if}
 
-<form action="tiki-admin_html_pages.php" method="post" id='editpageform'>
+<form action="tiki-admin_html_pages.php" method="post" id='editpageform' class="form-horizontal">
 	<input type="hidden" name="pageName" value="{$pageName|escape}">
-	<table class="formcolor">
-		<tr>
-			<td style="width:150px;">{tr}Page name:{/tr}</td>
-			<td>
-				<input type="text" maxlength="255" size="40" name="pageName" value="{$info.pageName|escape}">
-			</td>
-		</tr>
-
-		{if $tiki_p_use_content_templates eq 'y'}
-			<tr>
-				<td>{tr}Apply template:{/tr}</td>
-				<td>
-					<select name="templateId"{if !$templates} disabled="disabled"{/if} onchange="javascript:document.getElementById('editpageform').submit();">
-						<option value="0">{tr}none{/tr}</option>
-						{section name=ix loop=$templates}
-							<option value="{$templates[ix].templateId|escape}">{tr}{$templates[ix].name}{/tr}</option>
-						{/section}
-					</select>
-				</td>
-			</tr>
-		{/if}
-
-		<tr>
-			<td>{tr}Type:{/tr}</td>
-			<td>
-				<select name="type">
-					<option value='d'{if $info.type eq 'd'} selected="selected"{/if}>{tr}Dynamic{/tr}</option>
-					<option value='s'{if $info.type eq 's'} selected="selected"{/if}>{tr}Static{/tr}</option>
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<td>{tr}Refresh rate (if dynamic):{/tr}</td>
-			<td>
-				<input type="text" size="5" name="refresh" value="{$info.refresh|escape}"> {tr}seconds{/tr}
-			</td>
-		</tr>
-
-		<tr>
-			<td>
-				{tr}Content:{/tr}
-			</td>
-			<td>
-				<textarea name="content" id="htmlcode" rows="25" style="width:95%;">{$info.content|escape}</textarea>
-			</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>
-				<input type="submit" class="btn btn-default btn-sm" name="preview" value="{tr}Preview{/tr}">
-				<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-			</td>
-		</tr>
-	</table>
-</form>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Page name{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+			<input type="text" maxlength="255" size="40" name="pageName" value="{$info.pageName|escape}" class="form-control">
+		</div>
+	</div>
+	{if $tiki_p_use_content_templates eq 'y'}
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Apply template{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+			<select name="templateId"{if !$templates} disabled="disabled"{/if} onchange="javascript:document.getElementById('editpageform').submit();" class="form-control">
+				<option value="0">{tr}none{/tr}</option>
+				{section name=ix loop=$templates}
+					<option value="{$templates[ix].templateId|escape}">{tr}{$templates[ix].name}{/tr}</option>
+				{/section}
+			</select>
+		</div>
+	</div>
+	{/if}
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Type{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+			<select name="type" class="form-control">
+				<option value='d'{if $info.type eq 'd'} selected="selected"{/if}>{tr}Dynamic{/tr}</option>
+				<option value='s'{if $info.type eq 's'} selected="selected"{/if}>{tr}Static{/tr}</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Refresh rate (if dynamic){/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+			<input type="text" name="refresh" value="{$info.refresh|escape}" class="form-control"> 
+			<div class="help-block">
+				{tr}seconds{/tr}
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Content{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+			<textarea name="content" id="htmlcode" rows="15" class="form-control">{$info.content|escape}</textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-3"></div>
+		<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+			<input type="submit" class="btn btn-default btn-sm" name="preview" value="{tr}Preview{/tr}">
+			<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+		</div>
+	</div>
+ </form>
 
 <br>
 <h2>{tr}HTML pages{/tr}</h2>

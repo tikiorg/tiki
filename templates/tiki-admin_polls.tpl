@@ -17,75 +17,77 @@
 	{/if}
 	{tab name=$title}
 		<h2>{$title}</h2>
-		<form action="tiki-admin_polls.php" method="post">
+		<form action="tiki-admin_polls.php" method="post" class="form-horizontal">
 			<input type="hidden" name="pollId" value="{$pollId|escape}">
-			<table class="formcolor">
-				<tr>
-					<td>{tr}Title:{/tr}</td>
-					<td><input type="text" name="title" value="{$info.title|escape}"></td>
-				</tr>
-				<tr>
-					<td>{tr}Active:{/tr}</td>
-					<td>
-						<select name="active">
-							<option value='a' {if $info.active eq 'a'}selected="selected"{/if}>{tr}active{/tr}</option>
-							<option value='c' {if $info.active eq 'c'}selected="selected"{/if}>{tr}current{/tr}</option>
-							<option value='x' {if $info.active eq 'x'}selected="selected"{/if}>{tr}closed{/tr}</option>
-							<option value='t' {if $info.active eq 't'}selected="selected"{/if} style="border-top:1px solid black;">{tr}template{/tr}</option>
-							<option value='o' {if $info.active eq 'o'}selected="selected"{/if}>{tr}object{/tr}</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Options:{/tr}</td>
-					<td>
-						<div>
-							<a href="javascript://toggle quick options" onclick="pollsToggleQuickOptions()">{tr}Toggle Quick Options{/tr}</a>
-						</div>
-						<div id="tikiPollsQuickOptions" style="display: none">
-							<div id="tikiPollsOptions">
-								{section name=opt loop=$options}
-									<div>
-										<input type="hidden" name="optionsId[]" value="{$options[opt].optionId}">
-										<input type="text" name="options[]" value="{$options[opt].title}">
-									</div>
-								{/section}
-								<div><input type="text" name="options[]"></div>
-							</div>
-							<a href="javascript://Add Option"	onclick="pollsAddOption()">{tr}Add Option{/tr}</a>
-							{remarksbox type="tip" title="{tr}Tip{/tr}"}
-								{tr}Leave box empty to delete an option.{/tr}
-							{/remarksbox}
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Publish Date:{/tr}</td>
-					<td>
-						{html_select_date time=$info.publishDate end_year="+1" field_order=$prefs.display_field_order} {tr}at{/tr}
-						{html_select_time time=$info.publishDate display_seconds=false use_24_hours=$use_24hr_clock}
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label id="voteConsiderationSpan">{tr}Votes older than this number of days are not considered{/tr}</label>
-					</td>
-					<td>
-						<input type="text" id="voteConsiderationSpan" name="voteConsiderationSpan" size="5" value="{$info.voteConsiderationSpan|escape}">
-						<br>
-						<i>{tr}0 for no limit{/tr}</i>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						{include file='categorize.tpl'}
-					</td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td><input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}"></td>
-				</tr>
-			</table>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Title{/tr}</label>
+				<div class="col-sm-7">
+					<input type="text" name="title" value="{$info.title|escape}" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Active{/tr}</label>
+				<div class="col-sm-7">
+					<select name="active" class="form-control">
+						<option value='a' {if $info.active eq 'a'}selected="selected"{/if}>{tr}active{/tr}</option>
+						<option value='c' {if $info.active eq 'c'}selected="selected"{/if}>{tr}current{/tr}</option>
+						<option value='x' {if $info.active eq 'x'}selected="selected"{/if}>{tr}closed{/tr}</option>
+						<option value='t' {if $info.active eq 't'}selected="selected"{/if} style="border-top:1px solid black;">{tr}template{/tr}</option>
+						<option value='o' {if $info.active eq 'o'}selected="selected"{/if}>{tr}object{/tr}</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Options{/tr}</label>
+				<div class="col-sm-7">
+					<a href="javascript://toggle quick options" onclick="pollsToggleQuickOptions()">{tr}Toggle Quick Options{/tr}</a>
+				</div>
+			</div>
+			<div class="form-group" id="tikiPollsQuickOptions" style="display: none">
+				<div id="tikiPollsOptions">
+					{section name=opt loop=$options}
+					<div>
+						<input type="hidden" name="optionsId[]" value="{$options[opt].optionId}">
+						<input type="text" name="options[]" value="{$options[opt].title}">
+					</div>
+					{/section}
+					<div class="col-sm-7 col-sm-offset-3 margin-bottom-sm">
+						<input type="text" name="options[]" class="form-control">
+					</div>
+					<a href="javascript://Add Option"	onclick="pollsAddOption()">{tr}Add Option{/tr}</a>
+				</div>
+				<div class="col-sm-7 col-sm-offset-3">
+					{remarksbox type="tip" title="{tr}Tip{/tr}"}
+						{tr}Leave box empty to delete an option.{/tr}
+					{/remarksbox}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Publish Date{/tr}</label>
+				<div class="col-sm-7">
+					{html_select_date time=$info.publishDate end_year="+1" field_order=$prefs.display_field_order} {tr}at{/tr}
+					{html_select_time time=$info.publishDate display_seconds=false use_24_hours=$use_24hr_clock}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Votes older than x days are not considered{/tr}</label>
+				<div class="col-sm-7">
+					<input type="text" id="voteConsiderationSpan" name="voteConsiderationSpan" size="5" value="{$info.voteConsiderationSpan|escape}" class="form-control">
+					<div class="small-hint">
+						{tr}0 for no limit{/tr}
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				{include file='categorize.tpl'}
+			</div>
+		    <div class="form-group">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-sm-7 col-sm-offset-1">
+				    <input type="submit" class="btn btn-default btn-sm" name="add" value="{tr}Add{/tr}">
+			    </div>
+		    </div>
 		</form>
 	{/tab}
 
@@ -105,7 +107,7 @@
 			{$liend = ''}
 		{/if}
 		<div class="{if $js === 'y'}table-responsive{/if} poll-table"> {* table-responsive class cuts off css drop-down menus *}
-			<table class="table normal table-striped table-hover">
+			<table class="table table-striped table-hover">
 				{assign var=numbercol value=8}
 				<tr>
 					<th>{self_link _sort_arg='sort_mode' _sort_field='pollId' title="{tr}ID{/tr}"}{tr}ID{/tr}{/self_link}</th>
@@ -193,45 +195,49 @@
 
 	{tab name="{tr}Add poll to pages{/tr}"}
 		<h2>{tr}Add poll to pages{/tr}</h2>
-		<form action="tiki-admin_polls.php" method="post">
-			<table class="formcolor">
-				<tr>
-					<td>{tr}Poll{/tr}</td>
-					<td>
-						<select name="poll_template">
-							{section name=ix loop=$channels}
-								{if $channels[ix].active eq 't'}
-									<option value="{$channels[ix].pollId|escape}"{if $smarty.section.ix.first} selected="selected"{/if}>{tr}{$channels[ix].title}{/tr}</option>
-								{/if}
-							{/section}
-						</select>
-						{remarksbox type="tip" title="Tip"}{tr}This menu shows only Polls with 'status': "template"{/tr}{/remarksbox}
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Title{/tr}</td>
-					<td><input type="text" name="poll_title"></td>
-				</tr>
-				<tr>
-					<td>{tr}Wiki pages{/tr}</td>
-					<td>
-						<select name="pages[]" multiple="multiple" size="20">
-							{section name=ix loop=$listPages}
-								<option value="{$listPages[ix].pageName|escape}">{tr}{$listPages[ix].pageName|escape}{/tr}</option>
-							{/section}
-						</select>
-						{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Lock the pages{/tr}</td>
-					<td><input type="checkbox" name="locked"></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td><input type="submit" class="btn btn-default btn-sm" name="addPoll" value="{tr}Add{/tr}"></td>
-				</tr>
-			</table>
+		<form action="tiki-admin_polls.php" method="post" class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Poll{/tr}</label>
+				<div class="col-sm-7">
+					<select name="poll_template" class="form-control">
+						{section name=ix loop=$channels}
+							{if $channels[ix].active eq 't'}
+								<option value="{$channels[ix].pollId|escape}"{if $smarty.section.ix.first} selected="selected"{/if}>{tr}{$channels[ix].title}{/tr}</option>
+							{/if}
+						{/section}
+					</select></br>
+					{remarksbox type="tip" title="Tip"}{tr}This menu shows only Polls with 'status': "template"{/tr}{/remarksbox}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Title{/tr}</label>
+				<div class="col-sm-7">
+					<input type="text" name="poll_title" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Wiki pages{/tr}</label>
+				<div class="col-sm-7">
+					<select name="pages[]" multiple="multiple" class="form-control">
+						{section name=ix loop=$listPages}
+							<option value="{$listPages[ix].pageName|escape}">{tr}{$listPages[ix].pageName|escape}{/tr}</option>
+						{/section}
+					</select></br>
+					{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Lock the pages{/tr}</label>
+				<div class="col-sm-7">
+					<input type="checkbox" name="locked">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+					<input type="submit" class="btn btn-default btn-sm" name="addPoll" value="{tr}Add{/tr}">
+				</div>
+			</div>
 		</form>
 	{/tab}
 {/tabset}

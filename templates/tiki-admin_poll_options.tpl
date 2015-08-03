@@ -18,26 +18,29 @@
 <br>
 
 <h2>{if $optionId eq ''}{tr}Add poll option{/tr}{else}{tr}Edit poll option{/tr}{/if}</h2>
-<form action="tiki-admin_poll_options.php" method="post">
+<form action="tiki-admin_poll_options.php" method="post" class="form-horizontal">
 	<input type="hidden" name="optionId" value="{$optionId|escape}">
 	<input type="hidden" name="pollId" value="{$pollId|escape}">
-	<table class="formcolor">
-		<tr>
-			<td>{tr}Option:{/tr}</td>
-			<td>
-				<input type="text" name="title" value="{$title|escape}" size="40">
-			</td>
-			<td>{tr}Position:{/tr}</td>
-			<td>
-				<input type="text" name="position" value="{$position|escape}" size="4">
-			</td>
-			<td colspan="2">
-				<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-			</td>
-		</tr>
-	</table>
-</form>
 
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Option{/tr}</label>
+		<div class="col-sm-7">
+			<input type="text" name="title" value="{$title|escape}" maxlength="40" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Position{/tr}</label>
+		<div class="col-sm-7">
+			<input type="text" name="position" value="{$position|escape}" maxlength="4" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label"></label>
+		<div class="col-sm-7">
+			<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+		</div>
+	</div>
+</form>
 <br>
 {* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
 {if $prefs.javascript_enabled !== 'y'}

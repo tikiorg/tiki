@@ -135,7 +135,7 @@
 						{select_all checkbox_names='checked[]'}
 					</th>
 					<th>
-						<a href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}eMail{/tr} - {tr}User{/tr}</a>
+						<a href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}Email{/tr} - {tr}User{/tr}</a>
 					</th>
 					<th>
 						<a href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={if $sort_mode eq 'valid_desc'}valid_asc{else}valid_desc{/if}">{tr}Valid{/tr}</a>
@@ -195,257 +195,234 @@
 	{tab name="{tr}Add subscribers{/tr}"}
 
 		<h2>{tr}Add subscribers{/tr}</h2>
-		<form action="tiki-admin_newsletter_subscriptions.php" method="post">
+		<form action="tiki-admin_newsletter_subscriptions.php" method="post" class="form-horizontal">
 			<input type="hidden" name="nlId" value="{$nlId|escape}">
-			<table class="formcolor">
-				<tr>
-					<td width="30%">{tr}Email:{/tr}</td>
-					<td colspan="2">
-						<textarea cols="70" rows="6" wrap="soft" name="email"></textarea>
-						<br>
-						<i>{tr}You can add several email addresses by separating them with commas.{/tr}</i>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}User:{/tr}</td>
-					<td>
-						<select name="subuser">
-							<option value="">---</option>
-							{foreach key=id item=one from=$users}
-								<option value="{$one|escape}">{$one|escape}</option>
-							{/foreach}
-						</select>
-					</td>
-					<td rowspan="3" valign="middle">
-						<table border="0" cellspacing="0" cellpadding="0">
-							<tr>
-								<td>{tr}Add email:{/tr}</td>
-								<td>
-									<input type="radio" name="addemail" value="y">
-								</td>
-							</tr>
-							<tr>
-								<td>{tr}Add user:{/tr}</td>
-								<td>
-									<input type="radio" name="addemail" value="n" checked="checked">
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}All users:{/tr}</td>
-					<td><input type="checkbox" name="addall"></td>
-				</tr>
-				<tr>
-					<td>{tr}Users from group:{/tr}</td>
-					<td>
-						<select name="group">
-							<option value="">---</option>
-							{section name=x loop=$groups}
-								<option value="{$groups[x]|escape}">{$groups[x]|escape}</option>
-							{/section}
-						</select>
-						<br>
-						<i>{tr}Group subscription also subscribes included groups{/tr}</i>
-					</td>
-				</tr>
-				{if $nl_info.validateAddr eq "y"}
-					<tr>
-						<td>
-							{tr}Don't send confirmation mail{/tr}
-						</td>
-						<td colspan="2">
-							<input type="checkbox" name="confirmEmail" checked="checked">
-						</td>
-					</tr>
-				{/if}
-				<tr>
-					<td>&nbsp;</td>
-					<td colspan="2">
-						<i>{tr}The user email will be refreshed at each newsletter sending{/tr}</i>
-					</td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td colspan="2">
-						<input type="submit" class="btn btn-primary btn-sm" name="add" value="{tr}Add{/tr}">
-					</td>
-				</tr>
-			</table>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Email{/tr}</label>
+				<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+					<textarea cols="70" rows="6" wrap="soft" name="email" class="form-control"></textarea>
+					<div class="small-hint">
+						{tr}You can add several email addresses by separating them with commas.{/tr}
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}User{/tr}</label>
+				<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+					<select name="subuser" class="form-control">
+						<option value="">---</option>
+						{foreach key=id item=one from=$users}
+							<option value="{$one|escape}">{$one|escape}</option>
+						{/foreach}
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Add email{/tr}</label>
+				<div class="col-sm-3 col-sm-offset-1 margin-bottom-sm">
+					<input type="radio" name="addemail" value="y">
+				</div>
+				<label class="col-sm-2 control-label">{tr}Add user{/tr}</label>
+				<div class="col-sm-3 margin-bottom-sm">
+					<input type="radio" name="addemail" value="n" checked="checked">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}All users{/tr}</label>
+				<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+					<input type="checkbox" name="addall">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Users from group{/tr}</label>
+				<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+					<select name="group" class="form-control">
+						<option value="">---</option>
+						{section name=x loop=$groups}
+							<option value="{$groups[x]|escape}">{$groups[x]|escape}</option>
+						{/section}
+					</select>
+					<div class="small-hint">
+						{tr}Group subscription also subscribes included groups{/tr}
+					</div>
+				</div>
+			</div>
+			{if $nl_info.validateAddr eq "y"}
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Don't send confirmation email{/tr}</label>
+				<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+					<input type="checkbox" name="confirmEmail" checked="checked">
+					<div class="small-hint">
+						{tr}The user email will be refreshed at each newsletter sending{/tr}
+					</div>
+				</div>
+			</div>
+			{/if}
+			<div class="form-group">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+					<input type="submit" class="btn btn-primary btn-sm" name="add" value="{tr}Add{/tr}">
+				</div>
+			</div>
 		</form>
 
 		{if $tiki_p_batch_subscribe_email eq "y" && $tiki_p_subscribe_email eq "y"}
 			<h2>{tr}Import emails from file{/tr}</h2>
-			<form action="tiki-admin_newsletter_subscriptions.php" method="post" enctype="multipart/form-data">
+			<form action="tiki-admin_newsletter_subscriptions.php" method="post" enctype="multipart/form-data" class="form-horizontal">
 				<input type="hidden" name="nlId" value="{$nlId|escape}">
-				<table class="formcolor">
-					<tr>
-						<td width="30%">{tr}File:{/tr}</td>
-						<td colspan="2">
-							<input type="file" name="batch_subscription">
-							<br>
-							<i>{tr}txt file, one email per line{/tr}</i>
-						</td>
-					</tr>
-					{if $nl_info.validateAddr eq "y"}
-						<tr>
-							<td width="30%">
-								{tr}Don't send confirmation mails{/tr}
-							</td>
-							<td colspan="2">
-								<input type="checkbox" name="confirmEmail" checked="checked">
-							</td>
-						</tr>
-					{/if}
-					<tr>
-						<td>&nbsp;</td>
-						<td colspan="2">
-							<input type="submit" class="btn btn-primary btn-sm" name="addbatch" value="{tr}Add{/tr}">
-						</td>
-					</tr>
-				</table>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">{tr}File:{/tr}</label>
+					<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+						<input type="file" name="batch_subscription">
+						<div class="small-hint">
+							{tr}.txt file, one email per line{/tr}
+						</div>
+					</div>
+				</div>
+				{if $nl_info.validateAddr eq "y"}
+				<div class="form-group">
+					<label class="col-sm-3 control-label">{tr}Don't send confirmation emails{/tr}</label>
+					<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+						<input type="checkbox" name="confirmEmail" checked="checked">
+					</div>
+				</div>
+				{/if}
+				<div class="form-group">
+					<label class="col-sm-3 control-label"></label>
+					<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+						<input type="submit" class="btn btn-primary btn-sm" name="addbatch" value="{tr}Add{/tr}">
+					</div>
+				</div>
 			</form>
 			<h2>{tr}Import emails from wiki page{/tr}</h2>
-			<form action="tiki-admin_newsletter_subscriptions.php" method="post">
+			<form action="tiki-admin_newsletter_subscriptions.php" method="post" class="form-horizontal">
 				<input type="hidden" name="nlId" value="{$nlId|escape}">
-				<table class="formcolor">
-					<tr>
-						<td width="30%">Wiki page</td>
-						<td colspan="2">
-							<input type="text" name="wikiPageName" value="" size="60">
-							<br>
-							<i>{tr}Wiki page, one email per line{/tr}</i>
-						</td>
-					</tr>
-					{if $nl_info.validateAddr eq "y"}
-						<tr>
-							<td width="30%">
-								{tr}Don't send confirmation mails{/tr}
-							</td>
-							<td colspan="2">
-								<input type="checkbox" name="confirmEmail" checked="checked">
-							</td>
-						</tr>
-					{/if}
-					<tr>
-						<td width="30%">&nbsp;</td>
-						<td colspan="2">
-							<input type="submit" class="btn btn-primary btn-sm" name="importPage" value="{tr}Add{/tr}" width="30">
-						</td>
-					</tr>
-				</table>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">Wiki page</label>
+					<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+						<input type="text" name="wikiPageName" value="" size="60" class="form-control">
+						<div class="small-hint">
+							{tr}Wiki page, one email per line{/tr}
+						</div>
+					</div>
+				</div>
+				{if $nl_info.validateAddr eq "y"}
+				<div class="form-group">
+					<label class="col-sm-3 control-label">{tr}Don't send confirmation emails{/tr}</label>
+					<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+						<input type="checkbox" name="confirmEmail" checked="checked">
+					</div>
+				</div>
+				{/if}
+				<div class="form-group">
+					<label class="col-sm-3 control-label"></label>
+					<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+						<input type="submit" class="btn btn-primary btn-sm" name="importPage" value="{tr}Add{/tr}">
+					</div>
+				</div>
 			</form>
 		{/if}
 
 		<h2>{tr}Subscribe group{/tr}</h2>
-		<form action="tiki-admin_newsletter_subscriptions.php" method="post">
+		<form action="tiki-admin_newsletter_subscriptions.php" method="post" class="form-horizontal">
 			<input type="hidden" name="nlId" value="{$nlId|escape}">
-			<table class="formcolor">
-				<tr>
-					<td width="30%">{tr}Group:{/tr}</td>
-					<td colspan="2">
-						<select name="group">
-							<option value="">---</option>
-							{section name=x loop=$groups}
-								<option value="{$groups[x]|escape}">{$groups[x]|escape}</option>
-							{/section}
-						</select>
-						<label>
-							<input type="checkbox" name="include_groups" value="y"/>
-							{tr}Including group inheritance{/tr}
-						</label>
-						<div>
-							<i>{tr}Including group, group users and emails will be refreshed at each newsletter sending{/tr}</i>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td colspan="2"><input type="submit" class="btn btn-primary btn-sm" name="addgroup" value="{tr}Add{/tr}"></td>
-				</tr>
-			</table>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Group{/tr}</label>
+				<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+					<select name="group" class="form-control">
+						<option value="">---</option>
+						{section name=x loop=$groups}
+							<option value="{$groups[x]|escape}">{$groups[x]|escape}</option>
+						{/section}
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Including group inheritance{/tr}</label>
+				<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+					<input type="checkbox" name="include_groups" value="y"/>
+					<div class="small-hint">
+						{tr}Including group, group users and emails will be refreshed at each newsletter sending{/tr}
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+					<input type="submit" class="btn btn-primary btn-sm" name="addgroup" value="{tr}Add{/tr}">
+				</div>
+			</div>
 		</form>
 
 		<h2>{tr}Use subscribers of another newsletter{/tr}</h2>
-		<form action="tiki-admin_newsletter_subscriptions.php" method="post">
+		<form action="tiki-admin_newsletter_subscriptions.php" method="post" class="form-horizontal">
 			<input type="hidden" name="nlId" value="{$nlId|escape}">
-			<table class="formcolor">
-				<tr>
-					<td width="30%">{tr}Newsletter:{/tr}</td>
-					<td colspan="2">
-						<select name="included">
-							<option value="">---</option>
-							{section name=x loop=$newsletters}
-								{if $nlId ne $newsletters[x].nlId}
-									<option value="{$newsletters[x].nlId|escape}">{$newsletters[x].name|escape}</option>
-								{/if}
-							{/section}
-						</select>
-						<br>
-					</td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td colspan="2">
-						<input type="submit" class="btn btn-primary btn-sm" name="addincluded" value="{tr}Add{/tr}">
-					</td>
-				</tr>
-			</table>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Newsletter:{/tr}</label>
+				<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+					<select name="included" class="form-control">
+						<option value="">---</option>
+						{section name=x loop=$newsletters}
+							{if $nlId ne $newsletters[x].nlId}
+								<option value="{$newsletters[x].nlId|escape}">{$newsletters[x].name|escape}</option>
+							{/if}
+						{/section}
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+					<input type="submit" class="btn btn-primary btn-sm" name="addincluded" value="{tr}Add{/tr}">
+				</div>
+			</div>
 		</form>
 
 		<h2>{tr}Use emails from wiki page{/tr}</h2>
-		<form action="tiki-admin_newsletter_subscriptions.php" method="post">
+		<form action="tiki-admin_newsletter_subscriptions.php" method="post" class="form-horizontal">
 			<input type="hidden" name="nlId" value="{$nlId|escape}">
-			<table class="formcolor">
-				<tr>
-					<td width="30%">Wiki page</td>
-					<td colspan="2">
-						<input type="text" name="wikiPageName" value="" size="60">
-						<br>
-						<i>{tr}Emails on a wiki page which will be added at each newsletter sending, one email per line{/tr}</i>
-						{autocomplete element='input[name=wikiPageName]' type='pagename'}
-					</td>
-				</tr>
-				<tr>
-					<td width="30%">
-						{tr}Don't send confirmation mails{/tr}
-					</td>
-					<td colspan="2">
-						<input type="checkbox" name="noConfirmEmail" checked="checked">
-					</td>
-				</tr>
-				<tr>
-					<td width="30%">
-						{tr}Don't subscribe emails{/tr}
-					</td>
-					<td colspan="2">
-						<input type="checkbox" name="noSubscribeEmail" checked="checked">
-					</td>
-				</tr>
-				<tr>
-					<td width="30%">&nbsp;</td>
-					<td colspan="2">
-						<input type="submit" class="btn btn-primary btn-sm" name="addPage" value="{tr}Add{/tr}" width="30">
-					</td>
-				</tr>
-			</table>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Wiki page{/tr}</label>
+				<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+					<input type="text" name="wikiPageName" value="" size="60" class="form-control">
+					<div class="small-hint">
+						{tr}Emails on a wiki page which will be added at each newsletter sending, one email per line{/tr}
+					</div>
+					{autocomplete element='input[name=wikiPageName]' type='pagename'}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Don't send confirmation emails{/tr}</label>
+				<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+					<input type="checkbox" name="noConfirmEmail" checked="checked">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Don't subscribe emails{/tr}</label>
+				<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+					<input type="checkbox" name="noSubscribeEmail" checked="checked">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+					<input type="submit" class="btn btn-primary btn-sm" name="addPage" value="{tr}Add{/tr}">
+				</div>
+			</div>
 		</form>
 	{/tab}
 
 
 	{tab name="{tr}Export Subscriber Emails{/tr}"}
 		<h2>{tr}Export Subscriber Emails{/tr}</h2>
-		<form action="tiki-admin_newsletter_subscriptions.php" method="post">
+		<br>
+		<form action="tiki-admin_newsletter_subscriptions.php" method="post" class="form-horizontal">
 			<input type="hidden" name="nlId" value="{$nlId|escape}">
-			<table class="formcolor">
-				<tr>
-					<td width="30%">&nbsp;</td>
-					<td colspan="2">
-						<input type="submit" class="btn btn-primary btn-sm" name="export" value="{tr}Export{/tr}">
-					</td>
-				</tr>
-			</table>
+			<div class="form-group">
+				<div class="col-sm-12 margin-bottom-sm">
+					<input type="submit" class="btn btn-primary btn-sm" name="export" value="{tr}Export{/tr}">
+				</div>
+			</div>
 		</form>
 	{/tab}
 
