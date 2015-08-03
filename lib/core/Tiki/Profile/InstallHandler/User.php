@@ -6,10 +6,11 @@
 // $Id$
 
 /**
- * Adding users with this handler is not recommended for production servers
- * as it may be insecure. Use for generating examples and test data only.
+ * Adding users with this handler is not generally recommended for production servers
+ * as it may be insecure unless you take care to restrict its access. 
+ * Use for generating examples and test data is obviously OK.
  * 
- * Assigning existing users to groups should be fine though...
+ * Assigning existing users to groups should be generally fine though...
  * 
  * Example (Tiki 6+):
  * =====================================
@@ -26,10 +27,13 @@
 # doesn't need to change password on first login (defaults to y)
 # finally assigned to Test Group
 # and default Group set as Test Group (Tiki 15 addition backported to 12 & 14)
+# generate password option introduced in Tiki 14.1 and backported to 12.5
+# Example 12.5 +
  -
   type: user 
   data: 
-    name: tester
+    name: $profilerequest:testuser$NO testuser SET$
+    pass: generate  
     email: tester@example.com
     change: n
     groups: [ Test Group ]
@@ -62,11 +66,19 @@ class Tiki_Profile_InstallHandler_User extends Tiki_Profile_InstallHandler
 	{
 		if ($this->canInstall()) {
 			global $userlib; if (!$userlib) require_once 'lib/userslib.php';
+			global $tikilib; if (!$tikilib) require_once 'lib/tikilib.php';
 
 			$user = $this->getData();
+			$retpass = false;
 				
 			if (!$userlib->user_exists($user['name'])) {
+// if pass parameter has not been set use the name parameter as the password as well				
 				$pass = isset($user['pass']) ? $user['pass'] : $user['name'];
+// for the special case where pass has been set to 'generate' then generate a random password				
+				if ($pass == 'generate') {
+					$pass = $tikilib->genPass();
+					$retpass = true;
+				}				
 				$email = isset($user['email']) ? $user['email'] : '';
 				if (isset($user['change']) && $user['change'] === false) {
 					$userlib->add_user($user['name'], $pass, $email);
@@ -84,11 +96,13 @@ class Tiki_Profile_InstallHandler_User extends Tiki_Profile_InstallHandler
 			if (isset($user['defaultgroup'])) {
 				$userlib->set_default_group($user['name'], $user['defaultgroup']);
 			}
-			
-			return $userlib->get_user_id($user['name']);
+
+// if a password has been generated then return this value instead of the userId				
+			if ($retpass) {
+				return $pass;
+			} else {
+				return $userlib->get_user_id($user['name']);
+			}
 		}
 	}
 }
-
-
-
