@@ -108,7 +108,7 @@ if (isset($_REQUEST['display']) && $_REQUEST['display'] == 'pdf') {
 		header('Cache-Control: private, must-revalidate');
 		header('Pragma: private');
 		header("Content-Description: File Transfer");
-		header('Content-disposition: attachment; filename="'. $page. '.pdf"');
+		header('Content-disposition: attachment; filename="'. TikiLib::lib('tiki')->remove_non_word_characters_and_accents($page) . '.pdf"');
 		header("Content-Type: application/pdf");
 		header("Content-Transfer-Encoding: binary");
 		header('Content-Length: '. $length);
