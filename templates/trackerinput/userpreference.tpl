@@ -12,6 +12,19 @@
 		{/section}
 		<option value='' {if !$field.value}selected="selected"{/if}>{tr}Site default{/tr}</option>
 	</select>
+{elseif $field.options_array[0] eq 'country'}
+	<select name="{$field.ins_id}" class="form-control">
+		<option value="Other" {if $user_prefs.country eq "Other"}selected="selected"{/if}>
+			{tr}Other{/tr}
+		</option>
+		{foreach from=$context.flags item=flag key=fval}{strip}
+			{if $fval ne "Other"}
+				<option value="{$fval|escape}" {if $field.value eq $fval}selected="selected"{/if}>
+					{$flag|stringfix}
+				</option>
+			{/if}
+		{/strip}{/foreach}
+	</select>
 {else}
 	<input type="text" name="{$field.ins_id}" value="{$field.value}" class="form-control">
 {/if}
