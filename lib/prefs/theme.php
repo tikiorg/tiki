@@ -49,6 +49,7 @@ function prefs_theme_list($partial = false)
 			'options' => $theme_options,
 			'default' => '',
 			'tags' => array('basic'),
+			'keywords' => tra('theme option, theme-option, style option, options, css'),
 		),		
 		'theme_custom_url' => array(
 			'name' => tr('Custom theme URL'),
