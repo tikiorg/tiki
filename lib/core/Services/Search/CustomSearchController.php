@@ -40,18 +40,12 @@ class Services_Search_CustomSearchController
 
 		$adddata = json_decode($input->adddata->text(), true);
 
-		$dataappend = array();
-
 		$recalllastsearch = $input->recalllastsearch->int() ? true : false;
 
 		$id = $input->searchid->text();
 		if (empty($id)) {
 			$id = '0';
 		}
-		// setup AJAX pagination
-		$offset_jsvar = "customsearch_$id.offset";
-		$onclick = "$('#customsearch_$id').submit();return false;";
-		$dataappend['pagination'] = "{pagination offset_jsvar=\"$offset_jsvar\" onclick=\"$onclick\"}";
 
 		if ($recalllastsearch && isset($_SESSION["customsearch_$id"])) {
 			unset($_SESSION["customsearch_$id"]);

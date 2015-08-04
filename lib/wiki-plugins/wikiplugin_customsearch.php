@@ -160,15 +160,22 @@ function wikiplugin_customsearch($data, $params)
 	$builder = new Search_Query_WikiBuilder($query);
 	$builder->apply($matches);
 
-	// Use maxRecords set in LIST parameters rather then global default if set. 
+	$paginationArgs = $builder->getPaginationArguments();
+
+	// Use maxRecords set in LIST parameters rather then global default if set.
 	if (isset($maxDefault) && $maxDefault) {
-		$paginationArgs = $builder->getPaginationArguments();
 		if (!empty($paginationArgs['max'])) {
 			$maxRecords = $paginationArgs['max'];
 		}
 	}
-	
+
+	// setup AJAX pagination
+	$paginationArguments['offset_jsvar'] = "customsearch_$id.offset";
+	$paginationArguments['sort_jsvar'] = "customsearch_$id.sort_mode";
+	$paginationArguments['_onclick'] = "$('#customsearch_$id').submit();return false;";
+
 	$builder = new Search_Formatter_Builder;
+	$builder->setPaginationArguments($paginationArguments);
 	$builder->apply($matches);
 	$formatter = $builder->getFormatter();
 
