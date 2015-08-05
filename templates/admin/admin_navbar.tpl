@@ -155,6 +155,15 @@
 		{$csrferror}
 	{/remarksbox}
 {/if}
+{* show an alert if the CSRF ticket has timed out - hard coded to 15 minutes in lib/tikiticketlib.php->key_check *}
+{jq}setTimeout(function () {
+	$("form", "#col1").mouseup(function() {
+		if (confirm("{tr}The security ticket has timed out and this page needs to be reloaded before you can make any changes, click OK to reload{/tr}")) {
+			location.href = location.href;
+		}
+	});
+}, 1000 * 60 * 15);
+{/jq}
 {if $lm_error}
 	{remarksbox type="warning" title="{tr}Search error{/tr}"}
 		{$lm_error}
