@@ -853,7 +853,7 @@ class NlLib extends TikiLib
 
 		$mid.=($drafts ? ' and tsn.`sent`=-1' : ' and tsn.`sent`<>-1');
 
-		$query = "select tsn.`editionId`,tn.`nlId`,`subject`,`data`,tsn.`users`,`sent`,`name` from `tiki_newsletters` tn, `tiki_sent_newsletters` tsn ";
+		$query = "select tsn.`editionId`,tn.`nlId`,`subject`,`data`,tsn.`users`,`sent`,`name`,tsn.`wysiwyg` from `tiki_newsletters` tn, `tiki_sent_newsletters` tsn ";
 		$query.= " where tn.`nlId`=tsn.`nlId` $mid order by " . $this->convertSortMode("$sort_mode");
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$ret = array();

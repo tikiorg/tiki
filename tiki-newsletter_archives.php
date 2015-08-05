@@ -82,7 +82,8 @@ $smarty->assign('url', "tiki-newsletter_archives.php");
 if (isset($_REQUEST['editionId'])) {
 	foreach ($channels['data'] as $edition) {
 		if ($edition['editionId'] == $_REQUEST['editionId']) {
-			$edition["dataparsed"] = $tikilib->parse_data($edition["data"]);
+			$is_html = $edition['wysiwyg'] === 'y' && $prefs['wysiwyg_htmltowiki'] !== 'y'; // parse as html if wysiwyg and not htmltowiki
+			$edition["dataparsed"] = $tikilib->parse_data($edition["data"], array('is_html' => $is_html));
 			$smarty->assign_by_ref('edition', $edition);
 			break;
 		}
