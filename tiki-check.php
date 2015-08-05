@@ -678,6 +678,12 @@ if ($s >= 8 * 1024 * 1024) {
 		'setting' => $upload_max_filesize,
 		'message' => tra('Your upload_max_filesize is at').' '.$upload_max_filesize.'. '.tra('You can upload quite big files, but keep in mind to set your script timeouts accordingly.')
 	);
+} else if ($s == 0) {
+	$php_properties['upload_max_filesize'] = array(
+		'fitness' => tra('ugly'),
+		'setting' => $upload_max_filesize,
+		'message' => tra('Your upload_max_filesize is at').' '.$upload_max_filesize.'. '.tra('Upload size is unlimited and this not a wise setting. A user could mistakenly upload a gigantic file which could fill up your disk. You should set this value to your realistic needs.')
+	);
 } else {
 	$php_properties['upload_max_filesize'] = array(
 		'fitness' => tra('ugly'),

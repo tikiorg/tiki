@@ -64,8 +64,19 @@ class Tracker_Field_UserPreference extends Tracker_Field_Abstract
 		return array('value' => $value);
 	}
 
+	function renderInnerOutput($context = array()) {
+		$value = $this->getValue();
+		if ($this->getOption('type') === 'country') {
+			$value = str_replace('_', ' ', $value);
+		}
+		return $value;
+	}
+
 	function renderInput($context = array())
 	{
+		if ($this->getOption('type') === 'country') {
+			$context['flags'] = TikiLib::lib('tiki')->get_flags('', '', '', true);
+		}
 		return $this->renderTemplate('trackerinput/userpreference.tpl', $context);
 	}
 }
