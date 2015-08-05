@@ -255,20 +255,20 @@
 							</tr>
 
 							<tr>
-								<td id="txtcol1">
+								<td id="txtcol1"{if $allowTxt eq 'n'} style="display:none;"{/if}>
 									<label for="editwikitxt">{tr}Data Txt:{/tr}</label>
 								</td>
-								<td id="txtcol2" >
+								<td id="txtcol2"{if $allowTxt eq 'n'} style="display:none;"{/if}>
 									<textarea id='editwikitxt' name="datatxt" rows="20" cols="80">{$info.datatxt|escape}</textarea>
 								</td>
 							</tr>
 
 							<tr>
-								<td id="clipcol1">
+								<td id="clipcol1"{if $allowArticleClip eq 'n'} style="display:none;"{/if}>
 									{tr}Article Clip (read only):{/tr}
 									<input type="submit" name="clipArticles" value="{tr}Clip Now{/tr}" class="wikiaction tips btn btn-default" title="{tr}Clip Articles{/tr}" onclick="needToConfirm=false">
 								</td>
-								<td id="clipcol2" >
+								<td id="clipcol2"{if $allowArticleClip eq 'n'} style="display:none;"{/if}>
 									{tr}To include the article clipping into your newsletter, cut and paste it into the contents.{/tr}
 									<br>{tr}If autoclipping is enabled, you can also enter "~~~articleclip~~~" which will be replaced with the latest	clip when sending.{/tr}
 									{if !empty($articleClip)}
@@ -372,15 +372,6 @@
 {/if}
 
 {jq notonready=true}
-{{if $allowTxt eq 'n'}
-document.getElementById('txtcol1').style.display='none';
-document.getElementById('txtcol2').style.display='none';
-{/if}}
-{{if $allowArticleClip eq 'n'}
-document.getElementById('clipcol1').style.display='none';
-document.getElementById('clipcol2').style.display='none';
-{/if}}
-
 var newsletterfileid={{$info.files|@count}};
 function add_newsletter_file() {
 	document.getElementById('newsletterfileshack').innerHTML='<div id="newsletterfileid_'+newsletterfileid+'"><a href="javascript:remove_newsletter_file('+newsletterfileid+');">[{{tr}remove{/tr}}]</a> <input type="file" name="newsletterfile['+newsletterfileid+']"></div>';
