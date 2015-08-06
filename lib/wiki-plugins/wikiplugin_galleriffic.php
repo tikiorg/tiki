@@ -137,10 +137,11 @@ function wikiplugin_galleriffic($data, $params)
 	$bottomPager = $bottomPager === 'n' ? 'false' : 'true';
 
 $jq = <<<JQ
+if (\$('#thumbs').length) {
 	// We only want these styles applied when javascript is enabled
-\$('div.navigation').css({'width' : '$thumbsWidth', 'float' : 'left'});
-\$('div.gcontent').css('display', 'block');
-\$('.thumbs').show();
+	\$('div.navigation').css({'width' : '$thumbsWidth', 'float' : 'left'});
+	\$('div.gcontent').css('display', 'block');
+	\$('.thumbs').show();
 
 	// Initially set opacity on thumbs and add
 	// additional styling for hover effect on thumbs
@@ -176,11 +177,12 @@ $jq = <<<JQ
         syncTransitions:           false, // Specifies whether the out and in transitions occur simultaneously or distinctly
         defaultTransitionDuration: 1000   // If using the default transitions, specifies the duration of the transitions
     });
-\$('div.gcontent').css({'width' : '$imgWidth'});
-\$('div.loader').css({'width' : '$imgWidth', 'height' : '$imgHeight'});
-\$('div.slideshow a.advance-link').css({'width' : '$imgWidth', 'height' : '$imgHeight', 'line-height' : '$imgHeight'});
-\$('div.span.image-caption').css({'width' : '$imgWidth'});
-\$('div.slideshow-container').css({'height' : '$imgHeight'});
+	\$('div.gcontent').css({'width' : '$imgWidth'});
+	\$('div.loader').css({'width' : '$imgWidth', 'height' : '$imgHeight'});
+	\$('div.slideshow a.advance-link').css({'width' : '$imgWidth', 'height' : '$imgHeight', 'line-height' : '$imgHeight'});
+	\$('div.span.image-caption').css({'width' : '$imgWidth'});
+	\$('div.slideshow-container').css({'height' : '$imgHeight'});
+}
 JQ;
 
 	$headerlib->add_jq_onready($jq);
