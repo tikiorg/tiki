@@ -23,7 +23,17 @@
 
 				{foreach from=$perspectives item=persp}
 					<tr>
-						<td class="text">{$persp.name|escape}</td>
+						<td class="text">
+							{if $persp.can_edit}
+								{self_link _icon_name='edit' action=edit _ajax='y' _menu_text='y' _menu_icon='y' id=$persp.perspectiveId cookietab=3}
+									{$persp.name|escape}
+								{/self_link}
+							{else}
+								<a href="tiki-switch_perspective.php?perspective={$persp.perspectiveId|escape:url}">
+									{icon name='move' _menu_icon='y' alt="{tr}Switch to{/tr}"} {$persp.name|escape}
+								</a>
+							{/if}
+							</td>
 						<td class="action">
 							{capture name=perspective_actions}
 								{strip}

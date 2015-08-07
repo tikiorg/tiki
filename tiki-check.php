@@ -637,7 +637,7 @@ if ( $s >= 30 && $s <= 90 ) {
 
 // max_input_time
 $s = ini_get('max_input_time');
-if ( $s >= 50 && $s <= 90 ) {
+if ( $s >= 30 && $s <= 90 ) {
 	$php_properties['max_input_time'] = array(
 		'fitness' => tra('good'),
 		'setting' => $s.'s',
