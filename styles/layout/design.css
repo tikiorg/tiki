@@ -529,7 +529,6 @@ ul.jumplinks,
 }
 
 /* put all the one-liners which should not display together */
-
 #attzone,
 #bottom_modules .box-rsslist br,
 #comzone,
@@ -537,6 +536,7 @@ ul.jumplinks,
 #forumpost,
 #polledit,
 #pollzone,
+#print .articletrailer .actions,
 #rules-copy-panel,
 #tiki-clean a.editplugin,
 .collapsed ul,
