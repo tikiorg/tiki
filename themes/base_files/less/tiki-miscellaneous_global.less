@@ -57,6 +57,12 @@ div.highlight {
 //  color: @input-color !important; /* the Google guys forgot the number-one rule... when they specify background they should specify forgeround color too ;) */
 // }
 
+// Support for orphans & widows on paragraphs of text (useful when printing or using columns of text)
+p {
+widows: 3;
+orphans: 3;
+}
+
 // Put together all the one-liners which should not display
 #attzone,
 #bottom_modules .box-rsslist br,

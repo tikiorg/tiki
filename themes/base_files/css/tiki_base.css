@@ -750,6 +750,10 @@ div.highlight {
   display: block;
   font-weight: bold;
 }
+p {
+  widows: 3;
+  orphans: 3;
+}
 #attzone,
 #bottom_modules .box-rsslist br,
 #comzone,
