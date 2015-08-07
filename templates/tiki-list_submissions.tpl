@@ -30,7 +30,7 @@
 <form name="checkform" method="post">
 	<input type="hidden" name="maxRecords" value="{$maxRecords|escape}">
 	<div class="{if $js === 'y'}table-responsive{/if}"> {*the table-responsive class cuts off dropdown menus *}
-		<table class="table normal table-striped table-hover">
+		<table class="table table-striped table-hover">
 			{assign var=numbercol value=0}
 			<tr>
 				{if $tiki_p_remove_submission eq 'y' or $tiki_p_approve_submission eq 'y'}

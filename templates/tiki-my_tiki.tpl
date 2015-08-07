@@ -10,7 +10,7 @@
 		<div id="content1" class="content clearfix">
 			<h4>{if $userwatch eq $user}{tr}My pages{/tr}{else}{tr}User Pages{/tr}{/if}</h4>
 			<div class="table-responsive">
-				<table class="table normal table-striped table-hover">
+				<table class="table table-striped table-hover">
 					<tr>
 						<th>
 							<a href="tiki-my_tiki.php?sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}">{tr}Page{/tr}</a>
@@ -56,7 +56,7 @@
 		<div id="content2" class="content clearfix">
 			<h4>{if $userwatch eq $user}{tr}My galleries{/tr}{else}{tr}User Galleries{/tr}{/if}</h4>
 			<div class="table-responsive">
-				<table class="table normal table-striped table-hover">
+				<table class="table table-striped table-hover">
 					<tr>
 						<th>{tr}Gallery{/tr}</th>
 						<th style="width:50px"></th>
@@ -88,7 +88,7 @@
 		<div id="content3" class="content clearfix">
 			<h4>{if $userwatch eq $user}{tr}My Articles{/tr}{else}{tr}User Articles{/tr}{/if}</h4>
 			<div class="table-responsive">
-				<table class="table normal table-striped table-hover">
+				<table class="table table-striped table-hover">
 					<tr>
 						<th>{tr}Article{/tr}</th>
 						<th style="width:50px"></th>
@@ -120,7 +120,7 @@
 		<div id="content4" class="content clearfix">
 			<h4>{if $userwatch eq $user}{tr}My User Items{/tr}{else}{tr}User Items{/tr}{/if}</h4>
 			<div class="table-responsive">
-				<table class="table normal table-striped table-hover">
+				<table class="table table-striped table-hover">
 					<tr>
 						<th>{tr}Item{/tr}</th>
 						<th>{tr}Tracker{/tr}</th>
@@ -153,7 +153,7 @@
 		<div id="content5" class="content clearfix">
 			<h4>{tr}Unread Messages{/tr}</h4>
 			<div class="table-responsive">
-				<table class="table normal table-striped table-hover">
+				<table class="table table-striped table-hover">
 					<tr>
 						<th>{tr}Subject{/tr}</th>
 						<th>{tr}From{/tr}</th>
@@ -187,7 +187,7 @@
 		<div id="content6" class="content clearfix">
 			<h4>{if $userwatch eq $user}{tr}My tasks{/tr}{else}{tr}My Tasks{/tr}{/if}</h4>
 			<div class="table-responsive">
-				<table class="table normal table-striped table-hover">
+				<table class="table table-striped table-hover">
 				<tr>
 					<th>{tr}Tasks{/tr}</th>
 				</tr>
@@ -213,7 +213,7 @@
 		<div id="content7" class="content clearfix">
 			<h4>{if $userwatch eq $user}{tr}My forum topics{/tr}{else}{tr}User forum topics{/tr}{/if}</h4>
 			<div class="table-responsive">
-				<table class="table normal table-striped table-hover">
+				<table class="table table-striped table-hover">
 					<tr>
 						<th>{tr}Forum topic{/tr}</th>
 						<th>{tr}Date of post{/tr}</th>
@@ -243,7 +243,7 @@
 		<div id="content8" class="content clearfix">
 			<h4>{if $userwatch eq $user}{tr}My forum replies{/tr}{else}{tr}User forum replies{/tr}{/if}</h4>
 			<div class="table-responsive">
-				<table class="table normal table-striped table-hover">
+				<table class="table table-striped table-hover">
 					<tr>
 						<th>{tr}Forum reply{/tr}</th>
 						<th>{tr}Date of post{/tr}</th>
@@ -273,7 +273,7 @@
 		<div id="content9" class="content clearfix">
 			<h4>{if $userwatch eq $user}{tr}My blogs{/tr}{else}{tr}User Blogs{/tr}{/if}</h4>
 			<div class="table-responsive">
-				<table class="table normal table-striped table-hover">
+				<table class="table table-striped table-hover">
 					<tr>
 						<th>{tr}Blog{/tr}</th>
 						<th style="width:50px"></th>
@@ -299,7 +299,7 @@
 			<div class="clearfix">
 				<h4>{if $userwatch eq $user}{tr}My blog Posts{/tr}{else}{tr}User Blog Posts{/tr}{/if}</h4>
 				<div class="table-responsive">
-					<table class="table normal table-striped table-hover">
+					<table class="table table-striped table-hover">
 						<tr>
 							<th>{tr}Blog post{/tr}</th>
 							<th style="width:50px"></th>

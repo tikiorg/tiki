@@ -26,7 +26,7 @@
 		<!-- left column -->
 		{if $prefs.feature_left_column ne 'n' || count($modules_l) > 0}
 			<td>
-				<table class="table normal table-striped table-hover">
+				<table class="table table-striped table-hover">
 					<tr>
 						<th>{tr}#{/tr}</th>
 						<th>{tr}Name{/tr}</th>
@@ -63,7 +63,7 @@
 		<!-- right column -->
 		{if $prefs.feature_right_column ne 'n' || count($modules_r) > 0}
 			<td >
-				<table class="table normal">
+				<table class="table">
 					<tr>
 						<th>{tr}#{/tr}</th>
 						<th>{tr}Name{/tr}</th>

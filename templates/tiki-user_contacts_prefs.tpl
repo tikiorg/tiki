@@ -38,7 +38,7 @@
 			<div class="panel-body">
 				<form method='post' action='tiki-user_contacts_prefs.php'>
 					<div class="table-responsive">
-						<table class="table normal">
+						<table class="table">
 							<tr>
 								<th colspan="2">{tr}Order{/tr}</th>
 								<th>{tr}Field{/tr}</th>

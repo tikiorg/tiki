@@ -1,6 +1,6 @@
 <h1>{$title|escape}</h1>
 <div class="table-responsive">
-<table class="table normal">
+<table class="table">
 	{foreach from=$tracker.fields item=field}
 		<tr class="formcolor">
 			<td class="formlabel">

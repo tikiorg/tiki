@@ -11,7 +11,7 @@
 </div>
 
 <div class="table-responsive">
-	<table class="table normal table-striped table-hover">
+	<table class="table table-striped table-hover">
 		<tr>
 			<th colspan="2">{tr}Newsletter{/tr}</th>
 		</tr>
@@ -33,7 +33,7 @@
 		{* groups------------------------------------ *}
 		{if $nb_groups > 0}
 			<div class="table-responsive">
-				<table class="table normal table-striped table-hover">
+				<table class="table table-striped table-hover">
 					<tr>
 						<th>
 							<a href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset_g|urlencode}&amp;sort_mode_g={if $sort_mode_g eq 'groupName_asc'}groupName_desc{else}groupName_asc{/if}">
@@ -71,7 +71,7 @@
 		{* included------------------------------------ *}
 		{if $nb_included > 0}
 			<div class="table-responsive">
-				<table class="table normal table-striped table-hover">
+				<table class="table table-striped table-hover">
 					<tr>
 						<th>
 							<a href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset_g|urlencode}&amp;sort_mode_i={if $sort_mode_i eq 'name_asc'}name_desc{else}name_asc{/if}">{tr}Newsletter{/tr}</a>
@@ -99,7 +99,7 @@
 		{* pages------------------------------------ *}
 		{if $nb_pages > 0}
 			<div class="table-responsive">
-				<table class="table normal table-striped table-hover">
+				<table class="table table-striped table-hover">
 					<tr>
 						<th>{tr}Wiki Page Name{/tr}</th>
 						<th>{tr}Validate Addresses{/tr}</th>
@@ -129,7 +129,7 @@
 		<form method="post" action="tiki-admin_newsletter_subscriptions.php">
 			<input type="hidden" name="nlId" value="{$nlId|escape}">
 		<div class="table-responsive">
-			<table class="table normal table-striped table-hover">
+			<table class="table table-striped table-hover">
 				<tr>
 					<th>
 						{select_all checkbox_names='checked[]'}

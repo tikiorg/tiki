@@ -136,7 +136,7 @@
 	<input type="hidden" name="find" value="{$find|escape}">
 
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table">
 			<tr>
 				{if $items}<th>&nbsp;</th>{/if}
 				<th>{tr}Message{/tr}</th>

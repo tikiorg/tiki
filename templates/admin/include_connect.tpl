@@ -134,7 +134,7 @@
 			</form>
 
 			<div class="table-responsive">
-				<table class="table normal">
+				<table class="table">
 					<tr>
 						<th>{tr}Created{/tr}</th>
 						<th>{tr}Title{/tr}</th>

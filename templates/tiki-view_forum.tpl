@@ -747,7 +747,7 @@
 	{if $forum_info.forum_last_n > 0 && count($last_comments)}
 		{* Last n titles *}
 		<div class="table-responsive">
-		<table class="table normal">
+		<table class="table">
 			<tr>
 				<th>{tr}Last{/tr} {$forum_info.forum_last_n} {tr}posts in this forum{/tr}</th>
 			</tr>

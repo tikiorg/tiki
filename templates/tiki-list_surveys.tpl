@@ -22,7 +22,7 @@
 {/if}
 
 <div class="{if $js === 'y'}table-responsive{/if}"> {*the table-responsive class cuts off dropdown menus *}
-	<table class="table normal table-striped table-hover">
+	<table class="table table-striped table-hover">
 		<tr>
 			<th>
 				{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}

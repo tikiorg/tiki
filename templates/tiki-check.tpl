@@ -5,7 +5,7 @@
 <form method="post" action="tiki-check.php">
 <input class="registerSubmit" type="submit" class="btn btn-default" name="acknowledge" value="{tr}Acknowledge{/tr}">
 <div class="table-responsive">
-	<table class="table normal table-striped table-hover">
+	<table class="table table-striped table-hover">
 		<tr>
 			<th>{tr}Property{/tr}</th>
 			<th>{tr}Value{/tr}</th>
@@ -35,7 +35,7 @@
 <h2>{tr}MySQL crashed Tables{/tr}</h2>
 {remarksbox type="note" title="{tr}Be careful{/tr}"}{tr}The following list is just a very quick look at SHOW TABLE STATUS that tells you, if tables have been marked as crashed. If you are experiencing database problems you should still run CHECK TABLE or myisamchk to make sure{/tr}.{/remarksbox}
 <div class="table-responsive">
-	<table class="table normal">
+	<table class="table">
 		<tr>
 			<th>{tr}Table{/tr}</th>
 			<th>{tr}Comment{/tr}</th>
@@ -57,7 +57,7 @@
 
 <h2>{tr}Server Information{/tr}</h2>
 <div class="table-responsive">
-	<table class="table normal">
+	<table class="table">
 		<tr>
 			<th>{tr}Property{/tr}</th>
 			<th>{tr}Value{/tr}</th>
@@ -76,7 +76,7 @@
 
 <h2>{tr}Server Properties{/tr}</h2>
 <div class="table-responsive">
-	<table class="table normal">
+	<table class="table">
 		<tr>
 			<th>{tr}Property{/tr}</th>
 			<th>{tr}Value{/tr}</th>
@@ -107,7 +107,7 @@
 {tr}To backup these directories go to <a href="tiki-admin_system.php">Admin->Tiki Cache/SysAdmin</a>{/tr}.
 {if count($dirs)}
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table">
 			<tr>
 				<th>{tr}Directory{/tr}</th>
 				<th>{tr}Fitness{/tr}</th>
@@ -141,7 +141,7 @@
 <h2>{tr}Apache properties{/tr}</h2>
 {if $apache_properties}
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table">
 			<tr>
 				<th>{tr}Property{/tr}</th>
 				<th>{tr}Value{/tr}</th>
@@ -174,7 +174,7 @@
 <h2>{tr}IIS properties{/tr}</h2>
 {if $iis_properties}
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table">
 			<tr>
 				<th>{tr}Property{/tr}</th>
 				<th>{tr}Value{/tr}</th>
@@ -206,7 +206,7 @@
 
 <h2>{tr}PHP scripting language properties{/tr}</h2>
 <div class="table-responsive">
-	<table class="table normal">
+	<table class="table">
 		<tr>
 			<th>{tr}Property{/tr}</th>
 			<th>{tr}Value{/tr}</th>
@@ -236,7 +236,7 @@
 <h2>{tr}PHP Security properties{/tr}</h2>
 {tr}To check the file integrity of your Tiki installation, go to <a href="tiki-admin_security.php">Admin->Security</a>{/tr}.
 <div class="table-responsive">
-	<table class="table normal">
+	<table class="table">
 		<tr>
 			<th>{tr}Property{/tr}</th>
 			<th>{tr}Value{/tr}</th>
@@ -267,7 +267,7 @@
 <h2>{tr}File Gallery Search Indexing{/tr}</h2>
 <em>More info <a href="https://doc.tiki.org/Search+within+files">here</a></em>
 <div class="table-responsive">
-	<table class="table normal">
+	<table class="table">
 		<tr>
 			<th>{tr}Mimetype{/tr}</th>
 			<th>{tr}Tiki Fitness{/tr}</th>
@@ -292,7 +292,7 @@
 
 <h2>{tr}MySQL Variable Information{/tr}</h2>
 <div class="table-responsive">
-	<table class="table normal">
+	<table class="table">
 		<tr>
 			<th>{tr}Property{/tr}</th>
 			<th>{tr}Value{/tr}</th>

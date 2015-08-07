@@ -188,7 +188,7 @@
 <div class="catobj">
 	{if $cant_pages > 0}
 		<div class="table-responsive">
-			<table class="table normal">
+			<table class="table">
 				<tr>
 					<th>
 						{tr}Name{/tr}

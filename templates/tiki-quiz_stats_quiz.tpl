@@ -17,7 +17,7 @@
 
 <!-- begin table for stats data -->
 <div class="table-responsive">
-	<table class="table normal">
+	<table class="table">
 		<tr>
 			<th>
 				<!-- sort user -->
@@ -82,7 +82,7 @@
 	<a class="link" href="tiki-edit_quiz_questions.php?quizId={$quizId.questionId}">{$questions[ix].question|escape}<br></a>
 
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table">
 			<!-- begin header data for table -->
 
 			{* I'd like to have every table heading sorted for immediate analysis

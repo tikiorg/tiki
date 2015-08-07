@@ -19,7 +19,7 @@
 			{$liend = ''}
 		{/if}
 		<div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
-			<table class="table normal table-striped table-hover">
+			<table class="table table-striped table-hover">
 				<tr>
 					<th>{self_link _sort_arg='sort_mode' _sort_field='contentId'}{tr}Id{/tr}{/self_link}</th>
 					<th>{self_link _sort_arg='sort_mode' _sort_field='contentLabel'}{tr}Label{/tr}{/self_link}</th>

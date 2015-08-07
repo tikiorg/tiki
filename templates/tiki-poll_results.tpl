@@ -105,7 +105,7 @@
 		</table>
 	</div>
 	<div class="table-responsive">
-		<table class="table normal table-striped table-hover">
+		<table class="table table-striped table-hover">
 			<tr>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='user'}{tr}User{/tr}{/self_link}</th>
 				<th>{self_link _sort_arg='sort_mode' _sort_field='ip'}{tr}IP{/tr}{/self_link}</th>

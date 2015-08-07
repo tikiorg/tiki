@@ -48,7 +48,7 @@
 	<input type="hidden" name="maxRecords" value="{$maxRecords|escape}">
 	{assign var=numbercol value=1}
 	<div class="{if $js === 'y'}table-responsive{/if}"> {*the table-responsive class cuts off dropdown menus *}
-		<table class="table normal">
+		<table class="table">
 			<tr>
 				{if $listpages and $tiki_p_remove_article eq 'y'}
 					<th class="auto">

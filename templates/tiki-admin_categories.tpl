@@ -117,7 +117,7 @@ potato,,vegetable
 				</form>
 			{/if}
 			<div class="table-responsive">
-				<table class="table normal">
+				<table class="table">
 					<tr>
 						<th>&nbsp;</th>
 						<th>

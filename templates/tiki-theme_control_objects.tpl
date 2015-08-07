@@ -42,7 +42,7 @@
 <form action="tiki-theme_control_objects.php" method="post" class="form" role="form">
 	<input type="hidden" name="type" value="{$type|escape}">
     <div class="table-responsive themeobj-table">
-    <table class="table normal">
+    <table class="table">
 		<tr>
 			<th><button type="submit" class="btn btn-warning btn-sm" name="delete" title="{tr}Delete selected{/tr}">{icon name="delete"}</button></th>
 			<th>

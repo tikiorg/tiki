@@ -34,7 +34,7 @@
 		<input type="hidden" name="iTrackerFilter" value="{$iTrackerFilter}">
 		{if !empty($count_item)}<input type="hidden" name="count_item" value="{$count_item}">{/if}
 		<div class="table-responsive">
-			<table class="table normal">
+			<table class="table">
 				{if isset($line) && $line eq 'y'}<tr>{/if}
 
 				{foreach from=$filters item=filter}

@@ -28,7 +28,7 @@
 	{include file='find.tpl'}
 	<form action="tiki-notepad_list.php" method="post">
 		<div class="{if $js === 'y'}table-responsive{/if}"> {*the table-responsive class cuts off dropdown menus *}
-			<table class="table normal table-striped table-hover">
+			<table class="table table-striped table-hover">
 				<tr>
 					<th style="text-align:center;">
 						<input type="submit" class="btn btn-default btn-sm" name="delete" value="{tr}x{/tr} ">

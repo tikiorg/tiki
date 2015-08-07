@@ -12,7 +12,7 @@
 {/if}
 
 <div class="table-responsive">
-<table class="table normal">
+<table class="table">
 	<tr>
 		<th>
 			<a href="tiki-quiz_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'quizName_desc'}quizName_asc{else}quizName_desc{/if}">{tr}Quiz{/tr}</a>

@@ -24,7 +24,7 @@
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 
 <div class="table-responsive syslog-table">
-	<table class="table normal">
+	<table class="table">
 		<tr>
 			<th>{self_link _sort_arg="sort_mode" _sort_field="actionid"}{tr}Id{/tr}{/self_link}</th>
 			<th>{self_link _sort_arg="sort_mode" _sort_field="action"}{tr}Type{/tr}{/self_link}</th>

@@ -18,7 +18,7 @@
 	{$liend = ''}
 {/if}
 <div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
-	<table class="table normal">
+	<table class="table">
 		<tr>
 			<th>
 				<a href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}URL{/tr}</a>

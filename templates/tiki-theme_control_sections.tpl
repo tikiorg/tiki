@@ -27,7 +27,7 @@
 <h2>{tr}Assigned sections{/tr}</h2>
 <form action="tiki-theme_control_sections.php" method="post" role="form" class="form">
     <div class="table-responsive">
-		<table class="table normal">
+		<table class="table">
 			<tr>
 				<th>
 					<button type="submit" class="btn btn-warning btn-sm" name="delete" title="{tr}Delete selected{/tr}">

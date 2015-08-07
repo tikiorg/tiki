@@ -128,7 +128,7 @@
 
 	<br>
 	<div align="center table-responsive">
-		<table class="table normal">
+		<table class="table">
 			<tr>
 				<td class="even">
 					<small>

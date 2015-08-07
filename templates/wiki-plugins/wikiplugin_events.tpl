@@ -1,6 +1,6 @@
 {* $Id$ *}
 <div class="table-responsive">
-<table class="table normal table-condensed table-bordered">
+<table class="table table-condensed table-bordered">
 <tr><th colspan="2">{tr}Upcoming Events{/tr}</th></tr>
 
 {foreach from=$events item=event}

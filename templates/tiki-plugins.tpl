@@ -16,7 +16,7 @@
 
 		{listfilter selectors='#plugins_list tr.odd,#plugins_list tr.even'}
 		<div class="table-responsive">
-			<table class="table normal table-hover table-striped" id="plugins_list">
+			<table class="table table-hover table-striped" id="plugins_list">
 				<tr>
 					<th>{select_all checkbox_names='clear[]'}</th>
 					<th>{tr}Plugin{/tr} </th>

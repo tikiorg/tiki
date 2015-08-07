@@ -196,7 +196,7 @@
 					<form action="{query _type='relative'}" method="post">
 						{tr}Pay with Tiki User Credits:{/tr}
 						<div class="table-responsive">
-							<table class="table normal">
+							<table class="table">
 								<tr>
 									<th>{tr}Credit type{/tr}</th>
 									<th>{tr}Credits left{/tr}</th>

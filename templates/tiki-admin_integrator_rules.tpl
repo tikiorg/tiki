@@ -160,7 +160,7 @@
 	{$liend = ''}
 {/if}
 <div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
-	<table class="table normal table-striped table-hover" id="integrator_rules">
+	<table class="table table-striped table-hover" id="integrator_rules">
 		<tr>
 			<th rowspan="2"><span title="{tr}Rule order{/tr}">#</span></th>
 			<th>{tr}Search{/tr}</th>

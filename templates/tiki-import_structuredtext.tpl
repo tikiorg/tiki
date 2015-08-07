@@ -24,7 +24,7 @@
 
 {if $result eq 'y'}
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table">
 			<tr>
 				<th>{tr}page{/tr}</th>
 				<th>{tr}excerpt{/tr}</th>

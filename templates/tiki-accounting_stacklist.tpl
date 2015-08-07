@@ -5,7 +5,7 @@
 <a class="icon" href="tiki-accounting_export.php?action=settings&what=stack&bookId={$bookId}">
 	{icon name="export" alt="{tr}export table{/tr}"}
 </a>
-<table class="table normal">
+<table class="table">
 	<tr>
 		<th rowspan="2">{tr}Id{/tr}</th>
 		<th rowspan="2">{tr}Date{/tr}</th>

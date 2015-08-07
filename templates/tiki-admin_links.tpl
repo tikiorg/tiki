@@ -18,7 +18,7 @@
 	{$liend = ''}
 {/if}
 <div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
-	<table class="table normal table-striped table-hover">
+	<table class="table table-striped table-hover">
 		<tr>
 			<th>{tr}URL{/tr}</th>
 			<th>{tr}Title{/tr}</th>

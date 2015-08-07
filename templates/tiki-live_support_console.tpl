@@ -17,7 +17,7 @@
 	{/literal}
 	{if $isOperator}
 		<div class="table-responsive">
-			<table class="table normal" >
+			<table class="table" >
 				<tr>
 					<th>{tr}Operator:{/tr} {$user}</th>
 					<th>{tr}Status:{/tr} <b>{tr}{$status}{/tr}</b></th>

@@ -39,7 +39,7 @@
 		{/if}
 
 		<div class="{if $js === 'y'}table-responsive{/if}"> {*the table-responsive class cuts off dropdown menus *}
-			<table class="table normal table-striped table-hover">
+			<table class="table table-striped table-hover">
 				<h3>{tr}Attached files{/tr}</h3>
 				<tr>
 					<th>

@@ -30,7 +30,7 @@
 {tr}Number of invitations:{/tr} {$cant}
 {if $cant > 0}
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table">
 			<tr>
 				{if $tiki_p_admin eq 'y'}
 					<th>{self_link _sort_arg='sort_mode' _sort_field='inviter'}{tr}Inviter{/tr}{/self_link}</th>

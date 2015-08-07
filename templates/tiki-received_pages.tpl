@@ -60,7 +60,7 @@
 		</p>
 	{/if}
 	<div class="table-responsive">
-		<table class="table normal table-striped table-hover">
+		<table class="table table-striped table-hover">
 			<tr>
 				<th>
 					<a href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedPageId_desc'}receivedPageId_asc{else}receivedPageId_desc{/if}">{tr}ID{/tr}</a>
@@ -124,7 +124,7 @@
 {/if}
 <form action="tiki-received_pages.php" method="post">
 	<div class="table-responsive">
-		<table class="table normal table-striped table-hover">
+		<table class="table table-striped table-hover">
 			<tr>
 				<th>&nbsp;</th>
 				<th>

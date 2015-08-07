@@ -7,7 +7,7 @@
 {if $diff_style}
 	<h2><a href="tiki-map_history.php?mapfile={$mapfile}" title="{tr}Compare{/tr}">{tr}Comparing version {$old.version} with version {$new.version}{/tr}</a></h2>
 	<div class="table-responsive">
-		<table class="table normal diff">
+		<table class="table diff">
 			<tr>
 				<th colspan="2"><b>{tr}Version:{/tr} {$old.version}{if $old.version == $info.version} ({tr}Current{/tr}){/if}</b></th>
 				<th colspan="2"><b>{tr}Version:{/tr} {$new.version}{if $new.version == $info.version} ({tr}Current{/tr}){/if}</b></th>

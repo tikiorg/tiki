@@ -63,7 +63,7 @@
 	{if $data}
 		<h3>{tr}Response Information{/tr}</h3>
 		<div class="table-responsive">
-			<table class="table normal">
+			<table class="table">
 				<tr>
 					<th>{tr}OIntegrate Version{/tr}</th>
 					<td>{if $response->version}{$response->version|escape}{else}<em>{tr}Not supported{/tr}</em>{/if}

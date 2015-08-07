@@ -129,7 +129,7 @@
 					</h2>
 					<input type="hidden" name="custom_lang" value="{$custom_lang|escape}" />
 					<div class="table-responsive">
-						<table class="table normal">
+						<table class="table">
 							<tr>
 								<th>{tr}English{/tr}</th><th>{tr}Translation{/tr}</th>
 							</tr>

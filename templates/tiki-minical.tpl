@@ -13,12 +13,12 @@
 </div>
 
 <div class="table-responsive">
-	<table class="table normal" >
+	<table class="table" >
 		<tr>
 			<td>
 				<b>{tr}Upcoming Events{/tr}</b>
 				<br>
-				<table class="table normal">
+				<table class="table">
 					{section name=ix loop=$upcoming}
 						<tr>
 							<td class="even">
@@ -91,7 +91,7 @@
 		{$week_start|tiki_date_format:"%b"} {$week_start|tiki_date_format:"%d"}-{$week_end|tiki_date_format:"%b"} {$week_end|tiki_date_format:"%d"}
 	</b>
 	<a class="link" href="tiki-minical.php?view={$view}&amp;day={$next_week_start|tiki_date_format:"%d"}&amp;mon={$next_week_start|tiki_date_format:"%m"}&amp;year={$next_week_start|tiki_date_format:"%Y"}">{icon name='forward'}</a>
-	<table class="table normal">
+	<table class="table">
 		{section name=ix loop=$slots}
 			<tr>
 				<td>
@@ -131,7 +131,7 @@
 	<form action="tiki-minical.php" method="post">
 		<input type="hidden" name="view" value="{$view|escape}">
 		<div class="table-responsive">
-			<table class="table normal">
+			<table class="table">
 				<tr>
 					<th><input type="submit" class="btn btn-default btn-sm" name="delete" value="x "></th>
 					<th>

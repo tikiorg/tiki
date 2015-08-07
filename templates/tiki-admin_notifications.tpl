@@ -89,7 +89,7 @@
 {/if}
 <form method="get" action="tiki-admin_notifications.php">
 	<div class="table-responsive notifications-table">
-		<table class="table normal table-striped table-hover">
+		<table class="table table-striped table-hover">
 			<tr>
 				<th>
 					{if $channels}
@@ -152,7 +152,7 @@
 {if !empty($trackers)}
 	<h2>{tr}Trackers Outbound Emails{/tr}</h2>
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table">
 			{section name=ix loop=$trackers}
 				<tr>
 					<td><a href="tiki-list_trackers.php?trackerId={$trackers[ix].trackerId}">{$trackers[ix].value|escape}</a></td>
@@ -165,7 +165,7 @@
 {if !empty($forums)}
 	<h2>{tr}Forums Outbound Emails{/tr}</h2>
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table">
 			{section name=ix loop=$forums}
 				<tr>
 					<td><a href="tiki-admin_forums.php?forumId={$forums[ix].forumId}&amp;cookietab=2">{$forums[ix].outbound_address|escape}</a><br/></td>

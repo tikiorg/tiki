@@ -101,7 +101,7 @@
 	{$liend = ''}
 {/if}
 <div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
-	<table class="table normal table-striped table-hover" id="integrator-repositories">
+	<table class="table table-striped table-hover" id="integrator-repositories">
 		<tr>
 			<th rowspan="2">{tr}Name{/tr}</th>
 			<th>{tr}Path{/tr}</th>

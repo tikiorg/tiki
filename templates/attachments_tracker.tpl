@@ -48,7 +48,7 @@
 
 <h3>{tr}Attachments{/tr}</h3>
 <div class="table-responsive">
-	<table class="table normal">
+	<table class="table">
 	<tr>
 		{assign var='nbcols' value=2}
 		<th class="auto">&nbsp;</th>

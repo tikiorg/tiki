@@ -8,7 +8,7 @@
 
 <h2>{tr}Tiki settings{/tr}</h2>
 <div class="table-responsive secsetting-table">
-	<table class="table normal table-striped table-hover">
+	<table class="table table-striped table-hover">
 		<tr>
 			<th>{tr}Tiki variable{/tr}</th>
 			<th>{tr}Setting{/tr}</th>
@@ -48,7 +48,7 @@
 
 {if $filecheck}
 	<div class="table-responsive secfile-table">
-		<table class="table normal table-striped table-hover">
+		<table class="table table-striped table-hover">
 			<tr>
 				<th colspan="2">{tr}File checks{/tr}</th>
 			</tr>
@@ -79,7 +79,7 @@
 
 {if $permcheck}
 	<div class="table-responsive secperm-table">
-		<table class="table normal table-striped table-hover">
+		<table class="table table-striped table-hover">
 			<tr>
 				<th rowspan="2">{tr}Filename{/tr}</th>
 				<th rowspan="2">{tr}type{/tr}</th>

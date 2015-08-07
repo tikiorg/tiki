@@ -66,7 +66,7 @@
 			<fieldset class="table">
 				<legend>{tr}Areas{/tr}</legend>
 				<div class="table-responsive">
-					<table class="table normal">
+					<table class="table">
 						<tr>
 							<th>{tr}On{/tr}</th>
 							<th colspan="2">{tr}Category{/tr}</th>

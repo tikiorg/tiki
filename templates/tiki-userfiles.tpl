@@ -16,7 +16,7 @@
 </div>
 <form action="tiki-userfiles.php" method="post">
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table">
 			<tr>
 				<th style="text-align:center;">&nbsp;</th>
 				<th><a href="tiki-userfiles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}">{tr}Name{/tr}</a></th>

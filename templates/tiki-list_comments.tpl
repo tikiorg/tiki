@@ -23,7 +23,7 @@
 	{$liend = ''}
 {/if}
 		<div class="{if $js === 'y'}table-responsive{/if} comment-table"> {*the table-responsive class cuts off dropdown menus *}
-<table class="table normal table-striped table-hover">
+<table class="table table-striped table-hover">
 	<tr>
 		{if $comments}
 			<th>

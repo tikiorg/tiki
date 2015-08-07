@@ -196,7 +196,7 @@
 	<input type="hidden" name="find" value="{$find|escape}">
 	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 	<div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
-		<table class="table normal table-striped table-hover">
+		<table class="table table-striped table-hover">
 			<tr>
 				<th>
 					{if $items|count > 0}

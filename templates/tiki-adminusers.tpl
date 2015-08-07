@@ -58,7 +58,7 @@
 			<br>
 			{if $discardlist != ''}
 				<div class="table-responsive">
-					<table class="table normal">
+					<table class="table">
 						<tr>
 							<th>{tr}Username{/tr}</th>
 							<th>{tr}Reason{/tr}</th>

@@ -48,7 +48,7 @@
 			<input type="hidden" name="offset" value="{$offset}">
 
 			<div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
-				<table class="table normal table-striped table-hover">
+				<table class="table table-striped table-hover">
 					{assign var=numbercol value=0}
 					<tr>
 						<th>

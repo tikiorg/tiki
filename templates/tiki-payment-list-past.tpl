@@ -1,5 +1,5 @@
 <div class="table-responsive">
-<table class="table normal table-striped table-hover">
+<table class="table table-striped table-hover">
 	<tr>
 		<th>{tr}ID{/tr}</th>
 		<th>{tr}Description{/tr}</th>

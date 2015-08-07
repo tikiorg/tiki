@@ -150,7 +150,7 @@
 		<br>
 		<form action="tiki-user_watches.php" method="post">
 			<div class="table-responsive">
-				<table class="table normal">
+				<table class="table">
 					<tr>
 						{if $watches}
 							<th style="text-align:center;"></th>

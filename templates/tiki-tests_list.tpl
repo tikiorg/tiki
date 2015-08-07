@@ -5,7 +5,7 @@
 {pagination_links cant=$files_number offset=$offset step=$files_per_page}{/pagination_links}
 
 <div class="table-responsive">
-<table class="table normal">
+<table class="table">
 <tr>
 	<th>{tr}File Name{/tr}</th>
 	<th>{tr}Actions{/tr}</th>

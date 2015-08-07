@@ -63,7 +63,7 @@
 									<input type="hidden" name="filterGroup[]" value="{$f|escape}">
 								{/foreach}
 								<div class="table-responsive">
-									<table class="table normal table-striped table-hover">
+									<table class="table table-striped table-hover">
 										<tr>
 											<th class="checkbox-cell">{select_all checkbox_names='groupPerm[]'}</th>
 											<th>{tr}Group{/tr}</th>
@@ -117,7 +117,7 @@
 						<form method="post">
 							{foreach from=$filterGroup item=f}<input type="hidden" name="filterGroup[]" value="{$f|escape}">{/foreach}
 							<div class="table-responsive">
-								<table class="table normal table-striped table-hover">
+								<table class="table table-striped table-hover">
 									<tr>
 										<th class="checkbox-cell">{select_all checkbox_names='objectPerm[]'}</th>
 										<th>{tr}Object{/tr}</th>
@@ -185,7 +185,7 @@
 					{if count($content.category)}
 						<form method="post">
 							<div class="table-responsive">
-								<table class="table normal table-striped table-hover">
+								<table class="table table-striped table-hover">
 									<tr>
 										<th>{tr}Object{/tr}</th>
 										<th>{tr}Group{/tr}</th>

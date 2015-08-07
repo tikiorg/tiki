@@ -16,7 +16,7 @@
 			<tr>
 				<td align="center" valign="middle">
 					<div class="table-responsive">
-						<table class="table normal">
+						<table class="table">
 							<tr>
 								<td align="center">
 									<div id="mapWindow" style="z-index:50;overflow:hidden;
@@ -193,7 +193,7 @@
 				</td>
 
 				<td valign="top">
-					<table class="table normal">
+					<table class="table">
 						<tr><th align="center"><b>{tr}Overview{/tr}</b></th></tr>
 						<tr>
 							<td align="center" valign="middle" bgcolor="FFFFFF">
@@ -216,7 +216,7 @@
 								</div>
 								<div id='layermenu' style="{$mnu_layermenu}">
 									<div class="table-responsive">
-										<table class="table normal">
+										<table class="table">
 											<tr>
 												<th><b>{tr}Layer{/tr}</b></th>
 												<th><b>{tr}On{/tr}</b></th>
@@ -244,7 +244,7 @@
 																</div>
 																<div id='submenu{$unique_layer_group[j]}' style="{$mnu_submenu}">
 																	<div class="table-responsive">
-																		<table class="table normal">
+																		<table class="table">
 																			{section name=i loop=$my_layers}
 																				{if $my_layers[i]->group neq ""}
 																					{if $my_layers[i]->group == $my_layers[j]->group}

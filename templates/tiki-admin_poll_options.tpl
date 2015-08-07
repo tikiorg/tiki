@@ -54,7 +54,7 @@
 {/if}
 <h2>{tr}Poll options{/tr}</h2>
 <div align="center">
-	<table class="table normal table-striped table-hover">
+	<table class="table table-striped table-hover">
 		<tr>
 			<th>{tr}Position{/tr}</th>
 			<th>{tr}Title{/tr}</th>

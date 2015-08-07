@@ -9,7 +9,7 @@
 <div class="text-center margin-bottom-md">
 	<a href="tiki-admin_system.php?do=all" class="btn btn-primary" title="{tr}Empty{/tr}">{icon name="trash"} {tr}Clear all caches{/tr}</a>
 </div>
-<table class="table normal table-striped table-hover">
+<table class="table table-striped table-hover">
 	<tr>
 		<th>{tr}Directory{/tr}</th>
 		<th>{tr}Files{/tr}/{tr}Size{/tr}</th>

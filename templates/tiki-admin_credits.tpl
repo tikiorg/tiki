@@ -16,7 +16,7 @@
 {if $editing}
 <form method="post" action="tiki-admin_credits.php">
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table">
 			<tr>
 				<td></td>
 				<td><b>{tr}Type{/tr}</b></td>
@@ -59,7 +59,7 @@
 
 <h2>{tr}User Credits Expiry Summary (Plans){/tr}</h2>
 <div class="table-responsive">
-	<table class="table normal">
+	<table class="table">
 		<tr>
 			<th>{tr}User Plan{/tr}</th>
 			<th>{tr}Start of Latest Plan{/tr}</th>
@@ -151,7 +151,7 @@
 <h1>{tr}Manage Credit Types{/tr}</h1>
 <form method="post" action="tiki-admin_credits.php">
 	<div class="table-responsive">
-		<table class="table normal table-striped table-hover">
+		<table class="table table-striped table-hover">
 			<tr>
 				<td></td>
 				<td><b>{tr}Type{/tr}</b></td>

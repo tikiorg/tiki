@@ -195,7 +195,7 @@
 				<input type="hidden" name="server" value="{$server}">
 
 				<div class="table-responsive">
-					<table class="table normal">
+					<table class="table">
 						<tr>
 							<th>Select</th>
 							<th>Forum Name</th>
@@ -221,7 +221,7 @@
 			<div class="panel-heading">{tr}Which Forum Do You Wish to Import this Into?{/tr}</div>
 			<div class="panel-body">
 				<div class="table-responsive">
-					<table class="table normal">
+					<table class="table">
 						<tr>
 							<th>Select</th>
 							<th>Forum Name</th>

@@ -7,7 +7,7 @@
 {include file='find.tpl'}
 
 <div class="table-responsive">
-	<table class="table normal">
+	<table class="table">
 		<tr>
 			<th>
 				<a href="tiki-referer_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'referer_desc'}referer_asc{else}referer_desc{/if}">{tr}Domain{/tr}</a>

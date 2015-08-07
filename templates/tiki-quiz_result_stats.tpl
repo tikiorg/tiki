@@ -41,7 +41,7 @@
 
 <h2>{tr}User answers{/tr}</h2>
 <div class="table-responsive">
-<table class="table normal">
+<table class="table">
 	<tr>
 		<th>
 			<a href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'question_desc'}question_asc{else}question_desc{/if}">{tr}Questions{/tr}</a>

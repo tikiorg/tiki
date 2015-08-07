@@ -16,7 +16,7 @@
 		<h2>{tr}Quizzes{/tr}</h2>
 		{include file='find.tpl'}
 		<div class="table-responsive">
-			<table class="table normal table-striped table-hover">
+			<table class="table table-striped table-hover">
 				<tr>
 					<th>
 						{self_link _sort_arg='sort_mode' _sort_field='quizId'}{tr}ID{/tr}{/self_link}

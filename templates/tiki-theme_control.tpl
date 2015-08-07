@@ -30,7 +30,7 @@
 {include file='find.tpl'}
 <form action="tiki-theme_control.php" method="post" role="form" class="form">
 	<div class="table-responsive themecat-table">
-		<table class="table normal">
+		<table class="table">
 			<tr>
 				<th>
 					<button type="submit" class="btn btn-warning btn-sm" name="delete" title="{tr}Delete selected{/tr}" {if !$channels}disabled{/if}>

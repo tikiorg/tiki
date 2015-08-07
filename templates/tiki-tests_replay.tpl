@@ -26,7 +26,7 @@
 		<fieldset>
 			<legend>{tr}Results{/tr}</legend>
 			<div class="table-responsive">
-				<table class="table normal">
+				<table class="table">
 					{foreach from=$result item=r}
 						<tr>
 							<th style="width:10%">{tr}Request:{/tr}&nbsp;{$r.method}</th><td>{$r.url}</td>
@@ -44,7 +44,7 @@
 						<tr>
 							<td colspan="4">
 								<div class="table-responsive">
-									<table class="table normal">
+									<table class="table">
 										{if $show_tidy}
 											<tr><th colspan="2">{tr}Tidy Results{/tr}&nbsp;{tr}Reference{/tr}</th><th colspan="2">{tr}Tidy Results{/tr}&nbsp;{tr}Replay{/tr}</th></tr>
 											<tr>

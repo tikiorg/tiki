@@ -27,7 +27,7 @@
 	{$liend = ''}
 {/if}
 <div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
-	<table class="table normal">
+	<table class="table">
 		<tr>
 			{if $posts and $tiki_p_blog_admin eq 'y'}
 				<th>

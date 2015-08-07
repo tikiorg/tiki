@@ -6,7 +6,7 @@
 	{icon name="export" alt="{tr}export table{/tr}"}
 </a>
 <div class="table-responsive">
-	<table class="table normal">
+	<table class="table">
 		<tr>
 			<th rowspan="2">{tr}Id{/tr}</th>
 			<th rowspan="2">{tr}Date{/tr}</th>

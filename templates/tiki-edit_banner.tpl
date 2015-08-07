@@ -268,7 +268,7 @@
 		<div class="panel-body">
 			<h2>{tr}Remove Zones (you lose entered info for the banner){/tr}</h2>
 			<div class="table-responsive">
-				<table class="table normal table-striped table-hover">
+				<table class="table table-striped table-hover">
 					<tr>
 						<th>{tr}Name{/tr}</th>
 						<th></th>

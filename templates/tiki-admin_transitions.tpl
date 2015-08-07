@@ -116,7 +116,7 @@
 				{$liend = ''}
 			{/if}
 			<div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
-				<table class="table normal table-striped table-hover">
+				<table class="table table-striped table-hover">
 					<thead>
 						<tr>
 							<th>{tr}Label{/tr}</th>
@@ -232,7 +232,7 @@
 			{tab name="{tr}Guards{/tr}"}
 				<h2>{tr}Guards{/tr}</h2>
 				<div class="table-responsive">
-					<table class="table normal">
+					<table class="table">
 						<thead>
 							<tr>
 								<th>{tr}Type{/tr}</th>

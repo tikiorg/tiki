@@ -12,7 +12,7 @@
 	{tab name="{tr}My books{/tr}"}
 		<h2>{tr}My books{/tr}</h2>
 		<div id="booklist" class="table-responsive">
-			<table class="table normal">
+			<table class="table">
 				<tr>
 					<th>{tr}Id{/tr}</th>
 					<th>{tr}Name{/tr}</th>

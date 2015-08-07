@@ -44,7 +44,7 @@
 		{/if}
 		<form name="checkform" method="post">
 			<div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
-				<table class="table normal table-striped table-hover">
+				<table class="table table-striped table-hover">
 					<tr>
 						<th style="width: 20px;">{select_all checkbox_names='checked[]'}</th>
 						<th>{self_link _sort_arg='sort_mode' _sort_field='id'}{tr}ID{/tr}{/self_link}</th>
@@ -450,7 +450,7 @@
 			<form name="checkform" method="post">
 				<input type="hidden" name="group" value="{$group|escape}">
 				<div class="table-responsive">
-					<table class="table normal">
+					<table class="table">
 						<tr>
 							<th class="auto">{if $memberslist}{select_all checkbox_names='members[]'}{/if}</th>
 							<th>{self_link _sort_arg='sort_mode_member' _sort_field='login'}{tr}User{/tr}{/self_link}</th>
@@ -502,7 +502,7 @@
 
 			<h2>{tr}Banned members List:{/tr} {$groupname|escape}</h2>
 			<div class="table-responsive">
-				<table class="table normal">
+				<table class="table">
 					<tr>
 						<th>{tr}User{/tr}</th>
 						<th>{tr}Action{/tr}</th>

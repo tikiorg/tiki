@@ -7,7 +7,7 @@
 <b>{$userwatch}</b>, {tr}you have requested to download the layer:{/tr}<b>{$layer}</b> {tr}from the mapfile:{/tr}<b>{$mapfile}</b><br><br>
 {tr}Here are the files to download, do not forget to rename them:{/tr}<br>
 <div class="table-responsive">
-<table class="table normal" >
+<table class="table" >
 {section name=j loop=$files}
 {if $smarty.section.j.index % 2}
 <tr>

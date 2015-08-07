@@ -99,7 +99,7 @@
 				</ul>
 			{else}
 				<div class="table-responsive">
-					<table class="table normal">
+					<table class="table">
 						<tr>
 							{cycle name=table values=',,,,</tr><tr>' print=false advance=false}
 							{section name=back loop=$likepages}

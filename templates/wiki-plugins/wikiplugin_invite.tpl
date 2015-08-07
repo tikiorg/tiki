@@ -9,7 +9,7 @@
 
 <form method="post">
 <div class="table-responsive">
-<table class="table normal invite">
+<table class="table invite">
 <tr>
 	<td>
 		<label for="email">{tr}Email address the person you want to invite{/tr}</label>

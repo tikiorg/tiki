@@ -258,7 +258,7 @@
 {/if}
 
 <div class="table-responsive">
-	<table class="table normal noslideshow">
+	<table class="table noslideshow">
 		<tr>
 			<td class="even" colspan="2" style="border:0px; font-size:x-small">
 				{tr}You can view this gallery's configured image (first, random, etc.) in your browser using:{/tr}

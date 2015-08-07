@@ -147,7 +147,7 @@
 				{* ------- list headings --- *}
 				<form name="checkform" method="post">
 					<div class="{if $js === 'y'}table-responsive{/if}"> {*the table-responsive class cuts off dropdown menus *}
-						<table class="table normal table-striped table-hover">
+						<table class="table table-striped table-hover">
 							<tr>
 								{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
 									<th class="auto" style="width:20px;"></th>

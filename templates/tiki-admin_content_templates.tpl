@@ -150,7 +150,7 @@
 	{$liend = ''}
 {/if}
 
-<table class="table normal table-striped table-hover">
+<table class="table table-striped table-hover">
 	<tr>
 		<th>{tr}Id{/tr}</th>
 		<th>

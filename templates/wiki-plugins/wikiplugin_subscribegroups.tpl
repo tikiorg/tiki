@@ -4,7 +4,7 @@
 <h3>{tr}Groups you are in{/tr}</h3>
 
 <div class="table-responsive">
-<table class="table normal">
+<table class="table">
 {foreach from=$userGroups key=gr item=type}
 	<tr>
 	<td>
@@ -49,7 +49,7 @@
 <h3{if !empty($userGroups)} style="margin-top: 15px;"{/if}>{tr}Groups you can join{/tr}</h3>
 <form method="post">
 <div class="table-responsive">
-<table class="table normal">
+<table class="table">
 {foreach from=$possibleGroups item=gr}
 	<tr>
 	<td>

@@ -4,7 +4,7 @@
 <a class="link" href="tiki-map_upload.php?dir={$dir}">
 <h3>{tr}{$dir}{/tr}</h3></a>
 <div class="table-responsive">
-<table class="table normal">
+<table class="table">
 <tr>
 <th colspan="2">{tr}Directories{/tr}</th>
 </tr>

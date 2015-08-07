@@ -29,7 +29,7 @@
 	<input type="hidden" name="offset" value="{$offset|escape}">
 	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 	<input type="hidden" name="find" value="{$find|escape}">
-	<table class="table normal table-hover">
+	<table class="table table-hover">
 		<tr>
 			{if $items}
 				<th></th>

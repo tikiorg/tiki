@@ -56,7 +56,7 @@
 	<p>&nbsp;</p>
 {/if}
 <div class="table-responsive">
-<table class="table normal">
+<table class="table">
 	<tr>
 		{if !empty($cat) && !empty($desc)}
 			<th>{tr}Groups{/tr}</th>

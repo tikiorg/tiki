@@ -54,7 +54,7 @@
 			{if count($accounts) != 0}
 				<h2>{tr}Personal email accounts{/tr}</h2>
 				<div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
-					<table class="table normal table-striped table-hover">
+					<table class="table table-striped table-hover">
 						<tr>
 							<th>{tr}Active{/tr}</th>
 							<th>{tr}Account{/tr}</th>
@@ -135,7 +135,7 @@
 				{if count($pubAccounts) != 0}
 					<h2>{tr}Group email accounts{/tr}</h2>
 					<div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
-						<table class="table normal table-striped table-hover">
+						<table class="table table-striped table-hover">
 							<tr>
 								<th>{tr}Active{/tr}</th>
 								<th>{tr}Account{/tr}</th>
@@ -416,7 +416,7 @@
 		<br>
 		<br>
 		<div class="table-responsive">
-			<table class="table normal webmail_list">
+			<table class="table webmail_list">
 				<tr>
 					<th>{select_all checkbox_names='msg[]'}</th>
 					<th>&nbsp;</th>
@@ -704,7 +704,7 @@
 				<br><br>
 				<form action="tiki-webmail.php" method="post">
 					<div class="table-responsive">
-						<table class="table normal">
+						<table class="table">
 							<tr>
 								<th>&nbsp;</th>
 								<th>{tr}Email{/tr}</th>

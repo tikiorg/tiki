@@ -23,7 +23,7 @@
 				| <a class="link" href="javascript:hide('status');">{tr}Hide{/tr}</a> ]
 				<div id="status" style="display:none;">
 					<div class="table-responsive">
-						<table class="table normal">
+						<table class="table">
 							<tr>
 								<td>
 									{if $quiz->online eq 'y'}
@@ -101,7 +101,7 @@
 				| <a class="link" href="javascript:hide('test-time');">{tr}Hide{/tr}</a> ]
 				<div id="test-time" style="display:none;">
 					<div class="table-responsive">
-						<table class="table normal">
+						<table class="table">
 							<tr>
 								<td>
 									<input type="checkbox" name=quiz.shuffleQuestions id="shuffle-questions" {if $quiz->shuffleQuestions eq 'y'}checked="checked"{/if}>
@@ -154,7 +154,7 @@
 				| <a class="link" href="javascript:hide('feedback');">{tr}Hide{/tr}</a> ]
 				<div id="feedback" style="display:none;">
 					<div class="table-responsive">
-						<table class="table normal">
+						<table class="table">
 							<tr>
 								<td colspan=2>
 									<label>{tr}Grading method {/tr}</label>
@@ -195,7 +195,7 @@
 						</tr>
 					</table>
 					<div class="table-responsive">
-						<table class="table normal">
+						<table class="table">
 							<tr>
 								<td>
 									<input type="checkbox" name="quiz.forum" id="forum" {if $quiz->forum eq 'y'}checked="checked"{/if}>
@@ -212,7 +212,7 @@
 	</table>
 
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table">
 			<tr>
 				<td>
 					{tr}Prologue:{/tr}

@@ -108,7 +108,7 @@
 		{if count($suggested) != 0}
 			<br>
 			<div class="table-responsive">
-				<table class="table normal">
+				<table class="table">
 					<tr>
 						<th>{tr}Suggested questions{/tr}</th>
 					</tr>

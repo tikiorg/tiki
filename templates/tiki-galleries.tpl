@@ -198,7 +198,7 @@
 	{/if}
 
 	<div class="{if $js === 'y'}table-responsive{/if}"> {*the table-responsive class cuts off dropdown menus *}
-	<table class="table normal table-hover table-striped">
+	<table class="table table-hover table-striped">
 		<tr>
 			{if $prefs.gal_list_name eq 'y'}
 				<th><a href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></th>

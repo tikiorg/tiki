@@ -21,7 +21,7 @@
 {include file='find.tpl'}
 
 <div class="table-responsive">
-<table class="table normal table-striped table-hover">
+<table class="table table-striped table-hover">
 	<tr>
 		<th>
 			<a href="tiki-admin_shoutbox_words.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'word_desc'}word_asc{else}word_desc{/if}">{tr}Word{/tr}</a>

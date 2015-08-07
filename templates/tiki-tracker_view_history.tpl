@@ -23,7 +23,7 @@
 <br/>
 
 <div class="table-responsive">
-	<table class="table normal">
+	<table class="table">
 		<tr>
 			<th>{tr}Version{/tr}</th>
 			<th>{tr}Date{/tr}</th>

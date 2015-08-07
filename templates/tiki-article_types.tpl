@@ -21,7 +21,7 @@
 		<h3>{tr}{$types[user].type|escape}{/tr}</h3>
 		<a class="link" href="tiki-view_articles.php?type={$types[user].type|escape:url}">{tr}View articles with this type{/tr}</a>
 			<div class="table-responsive article-types">
-				<table class="table normal table-striped table-hover">
+				<table class="table table-striped table-hover">
 				<tr>
 					<th>{tr}Articles{/tr}</th>
 					<th>{tr}Author rating{/tr}</th>
@@ -119,7 +119,7 @@
 		</div>
 		{if $prefs.article_custom_attributes eq 'y'}
 			<div class="table-responsive article-types">
-				<table class="table normal table-striped table-hover">
+				<table class="table table-striped table-hover">
 					<tr>
 						<th>{tr}Custom attribute{/tr}</th>
 						<th></th>
