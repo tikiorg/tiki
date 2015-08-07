@@ -542,7 +542,7 @@
 	{if $groupname}
 		{tab name="{tr}Import/Export{/tr}"}
 			{* ----------------------- tab with import/export --------------------------------------- *}
-			<form method="post" action="tiki-admingroups.php" enctype="multipart/form-data">
+			<form method="post" action="tiki-admingroups.php" enctype="multipart/form-data" class="form-horizontal">
 				<input type="hidden" name="group" value="{$groupname|escape}">
 				{if $errors}
 					<div class="simple highlight">
@@ -553,50 +553,54 @@
 				{/if}
 
 				<h2>{tr}Download CSV export{/tr}</h2>
-				<table class="formcolor">
-					<tr>
-						<td class="auto">{tr}Charset encoding:{/tr}</td>
-						<td class="auto">
-							<select name="encoding">
-								<option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option>
-								<option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td class="auto">{tr}Fields:{/tr}</td>
-						<td class="auto">
-							<input type="checkbox" name="username" checked="checked">
-							{tr}Username{/tr}
-							<br>
-							<input type="checkbox" name="email">{tr}Email{/tr}
-							<br>
-							<input type="checkbox" name="lastLogin">{tr}Last login{/tr}
-						</td>
-					</tr>
-					<tr>
-						<td class="auto"></td>
-						<td class="auto"><input type="submit" class="btn btn-default btn-sm" name="export" value="{tr}Export{/tr}"></td>
-					</tr>
-				</table>
-
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">{tr}Charset encoding{/tr}</label>
+                    <div class="col-sm-7 col-sm-offset-1">
+                        <select name="encoding" class="form-control">
+                            <option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option>
+                            <option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">{tr}Fields{/tr}</label>
+                    <div class="col-sm-7 col-sm-offset-1">
+                       <div class="col-sm-12">
+                           <input type="checkbox" name="username" checked="checked"> {tr}Username{/tr}
+                       </div>
+                        <div class="col-sm-12">
+                            <input type="checkbox" name="email"> {tr}Email{/tr}
+                        </div>
+                        <div class="col-sm-12">
+                            <input type="checkbox" name="lastLogin"> {tr}Last login{/tr}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label"></label>
+                    <div class="col-sm-7 col-sm-offset-1">
+                        <input type="submit" class="btn btn-default btn-sm" name="export" value="{tr}Export{/tr}">
+                    </div>
+                </div>
+                <br>
 				<h2>{tr}Batch upload (CSV file){/tr}</h2>
+                <br>
 				<h3>{tr}Assign users to group:{/tr} {$groupname|escape} </h3>
 				{remarksbox type="tip" title="{tr}Tip{/tr}"}
 					{tr}Each user in the file must already exist.{/tr}<br>{tr}To create users or/and assign them to groups, got to <a href="tiki-adminusers.php">admin->users</a>{/tr}
 				{/remarksbox}
-				<table class="formcolor">
-					<tr>
-						<td class="auto">
-							{tr}CSV File{/tr}<a title="{tr}Help{/tr}" {popup text='user<br>user1<br>user2'}>{icon name='help'}</a>
-						</td>
-						<td class="auto"><input name="csvlist" type="file"></td>
-					</tr>
-					<tr>
-						<td class="auto"></td>
-						<td class="auto"><input type="submit" class="btn btn-default btn-sm" name="import" value="{tr}Import{/tr}"></td>
-					</tr>
-				</table>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">{tr}CSV File{/tr}<a title="{tr}Help{/tr}" {popup text='user<br>user1<br>user2'}>{icon name='help'}</a></label>
+                    <div class="col-sm-7 col-sm-offset-1">
+                        <input name="csvlist" type="file" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label"></label>
+                    <div class="col-sm-7 col-sm-offset-1">
+                        <input type="submit" class="btn btn-default btn-sm" name="import" value="{tr}Import{/tr}">
+                    </div>
+                </div>
 			</form>
 		{/tab}
 	{/if}
