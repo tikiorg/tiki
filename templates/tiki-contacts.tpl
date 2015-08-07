@@ -14,63 +14,77 @@
 	</div>
 </div>
 
-<form action="tiki-contacts.php" method="post" id="editform" name='editform_contact' style="clear:both;margin:5px;display:{if $contactId}block{else}none{/if};">
-	<input type="hidden" name="locSection" value="contacts">
-	<input type="hidden" name="contactId" value="{$contactId|escape}">
+<form action="tiki-contacts.php" method="post" id="editform" name='editform_contact' class="form-horizontal" style="clear:both;margin:5px;display:{if $contactId}block{else}none{/if};">
+    <input type="hidden" name="locSection" value="contacts">
+    <input type="hidden" name="contactId" value="{$contactId|escape}">
 
-	<table class="formcolor">
-		<tbody id='tbody_editcontact'>
-			<tr>
-				<td>{tr}First Name:{/tr}</td>
-				<td>
-					<input type="text" maxlength="80" size="20" name="firstName" value="{$info.firstName|escape}">
-				</td>
-				<td rowspan="5">
-					{tr}Publish this contact to groups:{/tr}<br>
-					<select multiple="multiple" name="groups[]" size="6">
-						<option value=""></option>
-						{foreach item=group from=$groups}
-							<option value="{$group|escape}"{if in_array($group,$info.groups)} selected="selected"{/if}>{$group}</option>
-						{/foreach}
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Last Name:{/tr}</td>
-				<td>
-					<input type="text" maxlength="80" size="20" name="lastName" value="{$info.lastName|escape}">
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Email:{/tr}</td>
-				<td>
-					<input type="text" maxlength="80" size="20" name="email" value="{$info.email|escape}">
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Nickname:{/tr}</td>
-				<td>
-					<input type="text" maxlength="80" size="20" name="nickname" value="{$info.nickname|escape}">
-				</td>
-			</tr>
-			<tr id='tr_exts'>
-				<td>
-					<select id='select_exts' onchange='ext_select();'>
-						<option>{tr}More...{/tr}</option>
-					</select>
-				</td>
-				<td>
-				</td>
-			</tr>
-			<tr>
-				<td>
-				</td>
-				<td>
-					<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-				</td>
-			</tr>
-		</tbody>
-	</table>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">{tr}First Name{/tr}</label>
+        <div class="col-sm-7 col-sm-offset-1">
+            <input type="text" maxlength="80" size="20" name="firstName" value="{$info.firstName|escape}" class="form-control">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label">{tr}Last Name{/tr}</label>
+        <div class="col-sm-7 col-sm-offset-1">
+            <input type="text" maxlength="80" size="20" name="lastName" value="{$info.lastName|escape}" class="form-control">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label">{tr}Email{/tr}</label>
+        <div class="col-sm-7 col-sm-offset-1">
+            <input type="text" maxlength="80" size="20" name="email" value="{$info.email|escape}" class="form-control">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label">{tr}Nickname{/tr}</label>
+        <div class="col-sm-7 col-sm-offset-1">
+            <input type="text" maxlength="80" size="20" name="nickname" value="{$info.nickname|escape}" class="form-control">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label">{tr}Publish this contact to groups{/tr}</label>
+        <div class="col-sm-7 col-sm-offset-1">
+            <select multiple="multiple" name="groups[]" size="6" class="form-control">
+                <option value=""></option>
+                {foreach item=group from=$groups}
+                    <option value="{$group|escape}"{if in_array($group,$info.groups)} selected="selected"{/if}>{$group}</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label">{tr}Extra Fields{/tr}</label>
+        <div class="col-sm-7 col-sm-offset-1">
+            <select id='select_exts' onchange='ext_select();' class="form-control">
+                <option>{tr}More...{/tr}</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="extra-fields-placeholder">
+        <div class="form-group hidden">
+            <label class="col-sm-3 control-label"></label>
+            <div class="col-sm-7 col-sm-offset-1">
+                <input value="" name="" size="20" maxlength="80" class="form-control">
+            </div>
+            <div class="col-sm-1 hidden">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label"></label>
+        <div class="col-sm-7 col-sm-offset-1">
+            <input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+        </div>
+    </div>
 </form>
 
 {include file='find.tpl'}
@@ -230,72 +244,72 @@
 
 {literal}
 <script type="text/javascript">
-	function newelem(type, vals) {
-		var elem=document.createElement(type);
+    function createElementOrFill(type, vals) {
+        var elem;
 
-		for (key in vals) {
-			elem.setAttribute(key, vals[key]);
-		}
-		return elem;
-	}
+        if(typeof type === 'object') {
+            elem = type;
+        }else {
+            elem = document.createElement(type);
+        }
 
-	function htmlspecialchars(ch) {
-		ch = ch.replace(/&/g,"&amp;");
-		ch = ch.replace(/\"/g,"&quot;");
-		ch = ch.replace(/\'/g,"&#039;");
-		ch = ch.replace(/</g,"&lt;");
-		ch = ch.replace(/>/g,"&gt;");
-		return ch;
-	}
+        for (key in vals) {
+            elem.setAttribute(key, vals[key]);
+        }
 
-	function ext_add(extid, text, defaultvalue, pub) {
-		var option=document.getElementById('ext_option_'+extid);
-		option.disabled='1';
+        return elem;
+    }
 
-		var tr,td, input;
-		tr=newelem('tr', { 'class':'formcolor', 'id':'tr_ext_'+extid });
-		td=newelem('td', { });
-		if (pub != 'y' || {/literal}{if $tiki_p_admin_group_webmail eq 'y'}1{else}0{/if}{literal}) {	// add button only if not public
-			input=newelem('input', { 'type':'button', 'value':'-', 'onclick':'ext_remove(\''+extid+'\');' });
-			td.appendChild(input);
-		}
-		td.innerHTML += (pub == 'y' ? ' <em>' : ' ') + text + ':' + (pub == 'y' ? '</em>' : '');
-		tr.appendChild(td);
+    function htmlspecialchars(ch) {
+        ch = ch.replace(/&/g,"&amp;");
+        ch = ch.replace(/\"/g,"&quot;");
+        ch = ch.replace(/\'/g,"&#039;");
+        ch = ch.replace(/</g,"&lt;");
+        ch = ch.replace(/>/g,"&gt;");
+        return ch;
+    }
 
-		td=newelem('td', { });
-		input=newelem('input', { 'maxlength':'80', 'size':'20', 'name':'ext_'+extid, 'value':defaultvalue });
-		td.appendChild(input);
-		tr.appendChild(td);
+    function ext_add(extid, text, defaultvalue, pub) {
+        var newElement = document.querySelector("#extra-fields-placeholder .form-group.hidden").cloneNode(true); //clones nodes too
+        newElement = createElementOrFill(newElement, { id : 'tr_ext_'+extid });
+        var label = newElement.querySelector('.control-label').innerHTML = text;
+        var input = createElementOrFill(newElement.querySelector('input'), { maxlength : 80, name : 'ext_'+extid, value : defaultvalue});
+        newElement.classList.remove('hidden');
+        document.querySelector('#extra-fields-placeholder').appendChild(newElement);
 
-		var tbody=document.getElementById('tbody_editcontact');
-		tbody.insertBefore(tr, document.getElementById('tr_exts'));
-	}
+        if (pub != 'y' || {/literal}{if $tiki_p_admin_group_webmail eq 'y'}1{else}0{/if}{literal}) {	// add button only if not public
+            var inputDiv = newElement.querySelector('.col-sm-7');
+            var buttonDiv = newElement.querySelector('.col-sm-1');
+            var removeButton = createElementOrFill('input', {type:'button', name:'ext_'+extid, value:'-', 'onclick':'ext_remove(\''+extid+'\');' });
+            inputDiv.classList.remove('col-sm-7');
+            inputDiv.classList.add('col-sm-6');
+            buttonDiv.classList.remove('hidden');
+            removeButton.classList.add('btn');
+            removeButton.classList.add('btn-default');
+            buttonDiv.appendChild(removeButton);
+        }
+    }
 
-	function ext_select() {
-		var value, text;
-		value=document.editform_contact.select_exts.options[document.editform_contact.select_exts.selectedIndex].value;
-		text=document.editform_contact.select_exts.options[document.editform_contact.select_exts.selectedIndex].text;
-		document.editform_contact.select_exts.selectedIndex=0;
+    function ext_select() {
+        var value = $('#select_exts option:selected').val();
+        var text = $('#select_exts option:selected').html();
+        $('#select_exts option:nth-child(1)').attr('selected', true);
+        ext_add(value, htmlspecialchars(text), '');
+    }
 
-		ext_add(value, htmlspecialchars(text), '');
-	}
+    function ext_remove(extid) {
+        $('#tr_ext_'+extid).remove();
+        $('#ext_option_'+extid).attr('disabled', false);
+    }
 
-	function ext_remove(extid) {
-		var elem=document.getElementById('tr_ext_'+extid);
-		var tbody=document.getElementById('tbody_editcontact');
-		tbody.removeChild(elem);
-		var option=document.getElementById('ext_option_'+extid);
-		option.disabled='';
-	}
-
-	function extmenu_add(extid, text, defaultvalue, pub) {
-		var selectelem=document.getElementById('select_exts');
-		var option=newelem('option', { 'id':'ext_option_'+extid, 'value':extid });
-		option.innerHTML=text;
-		selectelem.appendChild(option);
-		if (defaultvalue != '')
-			ext_add(extid, text, defaultvalue, pub);
-	}
+    function extmenu_add(extid, text, defaultvalue, pub) {
+        var selectelem=document.getElementById('select_exts');
+        var option=createElementOrFill('option', { 'id':'ext_option_'+extid, 'value':extid });
+        option.innerHTML=text;
+        selectelem.appendChild(option);
+        if (defaultvalue != '')
+            ext_add(extid, text, defaultvalue, pub);
+    }
 {/literal}
 
 {foreach from=$exts item=ext key=k}
