@@ -4586,7 +4586,7 @@ class TrackerLib extends TikiLib
 					$watcher['language'] = $this->get_user_preference($watcher['user'], 'language', $prefs['site_language']);
 					$label = $itemId ? tra('Item Modification', $watcher['language']) : tra('Item creation', $watcher['language']);
 					$mail_action = "\r\n$label\r\n\r\n";
-					$mail_action.= tra('Tracker', $watcher['language']).":\n   $trackerName\r\n";
+					$mail_action.= tra('Tracker', $watcher['language']).":\n   " . tra($trackerName, $watcher['language']) . "\r\n";
 					$mail_action.= tra('Item', $watcher['language']).":\n   $itemId $desc";
 
 					$smarty->assign('mail_action', $mail_action);
