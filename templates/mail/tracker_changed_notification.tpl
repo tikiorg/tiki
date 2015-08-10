@@ -1,5 +1,5 @@
-{if $mail_action eq 'deleted'}{tr}ItemID {$mail_itemId} {$mail_item_desc} was deleted in the tracker {$mail_trackerName}{/tr}
-{elseif $mail_action eq 'status'}{tr}New status for ItemID {$mail_itemId} {$mail_item_desc} for the tracker {$mail_trackerName}:{/tr} {if $status eq 'o'}{tr}open{/tr}{elseif $status eq 'p'}{tr}pending{/tr}{elseif $status eq 'c'}{tr}closed{/tr}{/if}
+{if $mail_action eq 'deleted'}{tr}ItemID {$mail_itemId} {$mail_item_desc} was deleted in the tracker {tr}{$mail_trackerName}{/tr}{/tr}
+{elseif $mail_action eq 'status'}{tr}New status for ItemID {$mail_itemId} {$mail_item_desc} for the tracker {tr}{$mail_trackerName}{/tr}:{/tr} {if $status eq 'o'}{tr}open{/tr}{elseif $status eq 'p'}{tr}pending{/tr}{elseif $status eq 'c'}{tr}closed{/tr}{/if}
 {else}{$mail_action}
 
 {tr}View the tracker item at:{/tr}
