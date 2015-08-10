@@ -40,6 +40,7 @@ class Services_Access_Controller
 	private function prepareReturn($input) {
 		$title = !empty($input['title']) ? $input['title'] : tra('Please confirm');
 		$confirmButton = !empty($input['confirmButton']) ? $input['confirmButton'] : tra('OK');
+		$confirmButtonClass = !empty($input['confirmButtonClass']) ? $input['confirmButtonClass'] : 'btn-primary';
 		$items = $input->asArray('items');
 
 		/*** confirm message ***/
@@ -68,6 +69,7 @@ class Services_Access_Controller
 			'title' => $title,
 			'customMsg' => $customMsg,
 			'confirmButton' => $confirmButton,
+			'confirmButtonClass' => $confirmButtonClass,
 			'confirm' => 'y',
 		];
 	}
