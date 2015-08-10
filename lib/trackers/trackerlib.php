@@ -4571,14 +4571,18 @@ class TrackerLib extends TikiLib
 					$mail_action.= tra('Item', $watcher['language']).":\n   $itemId $desc";
 
 					$smarty->assign('mail_action', $mail_action);
-					$smarty->assign('mail_data', $the_data);
+
+					$subject = $smarty->fetchLang($watcher['language'], 'mail/tracker_changed_notification_subject.tpl');
+					list($watcher_data, $watcher_subject) = $this->translate_watch_data($the_data, $subject, $watcher['language']);
+
+					$smarty->assign('mail_data', $watcher_data);
 					if (isset($watcher['action'])) {
 						$smarty->assign('mail_action', $watcher['action']);
 					}
 					$smarty->assign('mail_to_user', $watcher['user']);
 					$mail_data = $smarty->fetchLang($watcher['language'], 'mail/tracker_changed_notification.tpl');
 					$mail = new TikiMail($watcher['user']);
-					$mail->setSubject($smarty->fetchLang($watcher['language'], 'mail/tracker_changed_notification_subject.tpl'));
+					$mail->setSubject($watcher_subject);
 					$mail->setText($mail_data);
 					$mail->send(array($watcher['email']));
 				}
@@ -4622,19 +4626,7 @@ class TrackerLib extends TikiLib
 				foreach ($watchers as $watcher) {
 					$watcher['language'] = $this->get_user_preference($watcher['user'], 'language', $prefs['site_language']);
 					$mail = new TikiMail($watcher['user']);
-					// first we look for strings marked "-[...]-" to translate by watcher language
-					$translate_strings[$i] = preg_match_all('/-\[([^\]]*)\]-/', $the_data, $tra_matches);
-					$watcher_subject = $subject;
-					$watcher_data = $the_data;
-					if ($translate_strings[$i] > 0) {
-						foreach ($tra_matches[1] as $match) {
-							// now we replace the marked strings with correct translations
-							$tra_replace = tra($match, $watcher['language']);
-							$tra_match = "/-\[".preg_quote($match)."\]-/m";
-							$watcher_subject = preg_replace($tra_match, $tra_replace, $watcher_subject);
-							$watcher_data = preg_replace($tra_match, $tra_replace, $watcher_data);
-						}
-					}
+					list($watcher_data, $watcher_subject) = $this->translate_watch_data($the_data, $subject, $watcher['language']);
 
 					$mail->setSubject('['.$trackerName.'] '.str_replace('> ', '', $watcher_subject).' (' . tra('Tracker was modified at %0 by %1', $watcher['language'], false, array($_SERVER["SERVER_NAME"], $user)) . ')');
 					$mail->setText(tra('View the tracker item at:', $watcher['language'])." $machine/tiki-view_tracker_item.php?itemId=$itemId\n\n" . $watcher_data);
@@ -4646,6 +4638,33 @@ class TrackerLib extends TikiLib
 				}
 			}
 		}
+	}
+
+
+	/**
+	 * Translate the watch data and subject for each watcher
+	 *
+	 * @param string $the_data
+	 * @param string $subject
+	 * @param string $language
+	 * @return array				translated [data, subject]
+	 */
+	private function translate_watch_data($the_data, $subject, $language)
+	{
+		// first we look for strings marked "-[...]-" to translate by watcher language
+		$watcher_subject = $subject;
+		$watcher_data = $the_data;
+
+		if (preg_match_all('/-\[([^\]]*)\]-/', $the_data, $tra_matches) > 0 && $language !== 'en') {
+			foreach ($tra_matches[1] as $match) {
+				// now we replace the marked strings with correct translations
+				$tra_replace = tra($match, $language);
+				$tra_match = "/-\[" . preg_quote($match) . "\]-/m";
+				$watcher_subject = preg_replace($tra_match, $tra_replace, $watcher_subject);
+				$watcher_data = preg_replace($tra_match, $tra_replace, $watcher_data);
+			}
+		}
+		return array($watcher_data, $watcher_subject);
 	}
 
 	private function generate_watch_data($old, $new, $trackerId, $itemId, $version)
@@ -4693,7 +4712,7 @@ class TrackerLib extends TikiLib
 			if ($handler) {
 				$the_data .= $handler->watchCompare($old_value, $new_value);
 			} else {
-				$the_data .= tr('Tracker field not enabled: fieldId=%0 type=%1', $field['fieldId'], $field['type']) . "\n";
+				$the_data .= tr('Tracker field not enabled: fieldId=%0 type=%1', $field['fieldId'], tra($field['type'])) . "\n";
 			}
 			$the_data .= "\n----------\n";
 			$changed = true;
