@@ -1693,12 +1693,12 @@ if (!$standalone) {
 	function deack_on_state_change(&$check_group, $check_group_name) {
 		global $last_state;
 		foreach ( $check_group as $key => $value ) {
-			if ($last_state["$check_group_name"]["$key"] !== NULL &&
-				isset($check_group["$key"]['setting']) &&
-				isset($last_state["$check_group_name"]["$key"]['setting'])
-			) {
+			if (! empty($last_state["$check_group_name"]["$key"]))
+			{
 				$check_group["$key"]['ack'] = $last_state["$check_group_name"]["$key"]['ack'];
-				if ($check_group["$key"]['setting'] != $last_state["$check_group_name"]["$key"]['setting']) {
+				if (isset($check_group["$key"]['setting']) && isset($last_state["$check_group_name"]["$key"]['setting']) &&
+							$check_group["$key"]['setting'] != $last_state["$check_group_name"]["$key"]['setting']) {
+
 					$check_group["$key"]['ack'] = false;
 				}
 			}
@@ -1888,7 +1888,8 @@ if ($standalone && !$nagios) {
 			global $tiki_check_status;
 			foreach($check_group as $key => $value) {
 				$formkey = str_replace(array('.',' '), '_', $key);
-				if ($check_group["$key"]['fitness'] === 'good' || $check_group["$key"]['fitness'] === 'safe' || $_REQUEST["$formkey"] === "on")
+				if (isset($check_group["$key"]['fitness']) &&
+					($check_group["$key"]['fitness'] === 'good' || $check_group["$key"]['fitness'] === 'safe') || $_REQUEST["$formkey"] === "on")
 				{
 					$check_group["$key"]['ack'] = true;
 				} else {
