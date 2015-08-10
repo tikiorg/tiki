@@ -4,68 +4,93 @@
 
 {include file='tiki-directory_admin_bar.tpl'}
 <h2>{tr}Parent directory category:{/tr}</h2>
-<form name="path" method="post" action="tiki-directory_admin_sites.php">
-	<select name="parent" onchange="javascript:path.submit();">
-		<option value="0" {if $parent eq 0}selected="selected"{/if}>{tr}All{/tr}</option>
-		{section name=ix loop=$categs}
-			<option value="{$categs[ix].categId|escape}" {if $parent eq $categs[ix].categId}selected="selected"{/if}>{$categs[ix].path|escape}</option>
-		{/section}
-	</select>
-	<input type="submit" class="btn btn-default btn-sm" name="go" value="{tr}Go{/tr}">
+<form name="path" method="post" action="tiki-directory_admin_categories.php" class="form-horizontal">
+	<br>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">
+			{tr}Parent directory category{/tr}
+		</label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<select name="parent" onchange="javascript:path.submit();" class="form-control">
+				<option value="0">{tr}Top{/tr}</option>
+				{section name=ix loop=$categs}
+					<option value="{$categs[ix].categId|escape}" {if $parent eq $categs[ix].categId}selected="selected"{/if}>{$categs[ix].path|escape}</option>
+				{/section}
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label"></label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<input type="submit" class="btn btn-default btn-sm" name="go" value="{tr}Go{/tr}">
+		</div>
+	</div>
 </form>
 
 {* Dislay a form to add or edit a site *}
 <h2>{if $siteId}{tr}Edit a site{/tr}{else}{tr}Add a Site{/tr}{/if}</h2>
-<form action="tiki-directory_admin_sites.php" method="post">
+<form action="tiki-directory_admin_sites.php" method="post" class="form-horizontal">
 	<input type="hidden" name="parent" value="{$parent|escape}">
 	<input type="hidden" name="siteId" value="{$siteId|escape}">
-	<table class="formcolor">
-		<tr>
-			<td>{tr}Name:{/tr}</td>
-			<td><input type="text" name="name" value="{$info.name|escape}"></td>
-		</tr>
-		<tr>
-			<td>{tr}Description:{/tr}</td>
-			<td><textarea rows="5" cols="60" name="description">{$info.description|escape}</textarea></td>
-		</tr>
-		<tr>
-			<td>{tr}URL:{/tr}</td>
-			<td><input type="text" name="url" value="{$info.url|escape}"></td>
-		</tr>
-		<tr>
-			<td>{tr}Directory Categories:{/tr}</td>
-			<td>
-				<select name="siteCats[]" multiple="multiple" size="4">
-					{section name=ix loop=$categs}
-						<option value="{$categs[ix].categId|escape}" {if $categs[ix].belongs eq 'y'}selected="selected"{/if}>{$categs[ix].path|escape}</option>
+
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Name{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+	      	<input type="text" name="name" value="{$info.name|escape}" class="form-control">
+	    </div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Description{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+	      	<textarea rows="5" cols="60" name="description" class="form-control">{$info.description|escape}</textarea>
+	    </div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label">{tr}URL{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+	      	<input type="text" size="60" name="url" value="{if $info.url ne ""}{$info.url|escape}{else}http://{/if}" class="form-control">
+	    </div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Directory Categories{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+	      	<select name="siteCats[]" multiple="multiple" size="4" class="form-control">
+				{section name=ix loop=$categs}
+					<option value="{$categs[ix].categId|escape}" {if $categs[ix].belongs eq 'y' or $categs[ix].categId eq $addtocat}selected="selected"{/if}>
+						{$categs[ix].path|escape}
+					</option>
+				{/section}
+			</select>
+			<br>
+			{if $categs|@count ge '2'}
+				{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
+			{/if}
+	    </div>
+    </div>
+    {if $prefs.directory_country_flag eq 'y'}
+	    <div class="form-group">
+			<label class="col-sm-3 control-label">{tr}Country{/tr}</label>
+			<div class="col-sm-7 col-sm-offset-1">
+		      	<select id="country" name="country" class="form-control">
+					{section name=ux loop=$countries}
+						<option value="{$countries[ux]|escape}" {if $info.country eq $countries[ux]}selected="selected"{/if}>{tr}{$countries[ux]}{/tr}</option>
 					{/section}
 				</select>
-				{if $categs|@count ge '2'}
-					{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
-				{/if}
-			</td>
-		</tr>
-		{if $prefs.directory_country_flag eq 'y'}
-			<tr>
-				<td>{tr}Country:{/tr}</td>
-				<td>
-					<select name="country">
-						{section name=ux loop=$countries}
-							<option value="{$countries[ux]|escape}" {if $info.country eq $countries[ux]}selected="selected"{/if}>{$countries[ux]}</option>
-						{/section}
-					</select>
-				</td>
-			</tr>
-		{/if}
-		<tr>
-			<td>{tr}Is valid:{/tr}</td>
-			<td><input name="isValid" type="checkbox" {if $info.isValid eq 'y'}checked="checked"{/if}></td>
-		</tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}"></td>
-		</tr>
-	</table>
+		    </div>
+	    </div>
+	{/if}
+    <div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Is valid{/tr}	</label>
+		<div class="col-sm-7 col-sm-offset-1">
+	      	<input name="isValid" type="checkbox" {if $info.isValid eq 'y'}checked="checked"{/if}>
+	    </div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label"></label>
+		<div class="col-sm-7 col-sm-offset-1">
+	      	<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+	    </div>
+    </div>
 </form>
 
 <h2>{tr}Sites{/tr}</h2>
@@ -91,8 +116,8 @@
 				{if $prefs.directory_country_flag eq 'y'}
 					<th> <a href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'country_desc'}country_asc{else}country_desc{/if}">{tr}Country{/tr}</a> </th>
 				{/if}
-				<th> <a href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a> </th>
-				<th> <a href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'isValid_desc'}isValid_asc{else}isValid_desc{/if}">{tr}Valid{/tr}</a> </th>
+				<th class="text-center"> <a href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a> </th>
+				<th class="text-center"> <a href="tiki-directory_admin_sites.php?parent={$parent}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'isValid_desc'}isValid_asc{else}isValid_desc{/if}">{tr}Valid{/tr}</a> </th>
 				<th></th>
 			</tr>
 
@@ -104,8 +129,8 @@
 				{if $prefs.directory_country_flag eq 'y'}
 					<td class="text"><img src='img/flags/{$items[user].country}.gif' alt='{$items[user].country}'> </td>
 				{/if}
-				<td class="integer">{$items[user].hits}</td>
-				<td class="text">{$items[user].isValid}</td>
+				<td class="text text-center">{$items[user].hits}</td>
+				<td class="text text-center">{if $items[user].isValid eq 'y'} Yes {else} No {/if}</td>
 				<td class="action">
 					{capture name=site_actions}
 						{strip}

@@ -6,14 +6,27 @@
 {* Navigation bar to admin, admin related, etc *}
 <h2>{tr}Parent directory category:{/tr}</h2>
 {* Display the path adding manually the top category id=0 *}
-<form name="path" method="post" action="tiki-directory_admin_categories.php">
-	<select name="parent" onchange="javascript:path.submit();">
-		<option value="0">{tr}Top{/tr}</option>
-		{section name=ix loop=$categs}
-			<option value="{$categs[ix].categId|escape}" {if $parent eq $categs[ix].categId}selected="selected"{/if}>{$categs[ix].path|escape}</option>
-		{/section}
-	</select>
-	<input type="submit" class="btn btn-default btn-sm" name="go" value="{tr}Go{/tr}">
+<form name="path" method="post" action="tiki-directory_admin_categories.php" class="form-horizontal">
+	<br>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">
+			{tr}Parent directory category{/tr}
+		</label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<select name="parent" onchange="javascript:path.submit();" class="form-control">
+				<option value="0">{tr}Top{/tr}</option>
+				{section name=ix loop=$categs}
+					<option value="{$categs[ix].categId|escape}" {if $parent eq $categs[ix].categId}selected="selected"{/if}>{$categs[ix].path|escape}</option>
+				{/section}
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label"></label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<input type="submit" class="btn btn-default btn-sm" name="go" value="{tr}Go{/tr}">
+		</div>
+	</div>
 </form>
 
 {* Dislay a form to add or edit a category *} <br>
@@ -23,65 +36,75 @@
 	<h2>{tr}Edit this directory category:{/tr} {$info.name}</h2>
 	<a href="tiki-directory_admin_categories.php">{tr}Add a Directory Category{/tr}</a>
 {/if}
-<form action="tiki-directory_admin_categories.php" method="post">
+<form action="tiki-directory_admin_categories.php" method="post" class="form-horizontal">
 	<input type="hidden" name="parent" value="{$parent|escape}">
 	<input type="hidden" name="categId" value="{$categId|escape}">
-	<table class="formcolor">
-		<tr>
-			<td>{tr}Name:{/tr}</td>
-			<td><input type="text" name="name" value="{$info.name|escape}">
-		</tr>
-		<tr>
-			<td>{tr}Description:{/tr}</td>
-			<td><textarea rows="5" cols="60" name="description">{$info.description|escape}</textarea></td>
-		</tr>
-		<tr>
-			<td>{tr}Children type:{/tr}</td>
-			<td><select name="childrenType">
-					<option value='c' {if $info.childrenType eq 'c'}selected="selected"{/if}>{tr}Most visited directory sub-categories{/tr}</option>
-					<option value='d' {if $info.childrenType eq 'd'}selected="selected"{/if}>{tr}Directory Category description{/tr}</option>
-					<option value='r' {if $info.childrenType eq 'r'}selected="selected"{/if}>{tr}Random directory sub-categories{/tr}</option>
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<td>{tr}Maximum number of children to show:{/tr}</td>
-			<td>
-				<select name="viewableChildren">
-					<option value="0" {if $info.viewableChildren eq 0}selected="selected"{/if}>{tr}none{/tr}</option>
-					<option value="1" {if $info.viewableChildren eq 1}selected="selected"{/if}>1</option>
-					<option value="2" {if $info.viewableChildren eq 2}selected="selected"{/if}>2</option>
-					<option value="3" {if $info.viewableChildren eq 3}selected="selected"{/if}>3</option>
-					<option value="4" {if $info.viewableChildren eq 4}selected="selected"{/if}>4</option>
-					<option value="5" {if $info.viewableChildren eq 5}selected="selected"{/if}>5</option>
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<td>{tr}Allow sites in this directory category:{/tr}</td>
-			<td><input name="allowSites" type="checkbox" {if $info.allowSites eq 'y'}checked="checked"{/if}></td>
-		</tr>
-		<tr>
-			<td>{tr}Show number of sites in this directory category:{/tr}</td>
-			<td><input name="showCount" type="checkbox" {if $info.showCount eq 'y'}checked="checked"{/if}></td>
-		</tr>
-		<tr>
-			<td>{tr}Editor group:{/tr}</td>
-			<td>
-				<select name="editorGroup">
+
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Name{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<input type="text" name="name" value="{$info.name|escape}" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Description{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<textarea rows="5" cols="60" name="description" class="form-control">{$info.description|escape}</textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Children type{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<select name="childrenType" class="form-control">
+				<option value='c' {if $info.childrenType eq 'c'}selected="selected"{/if}>{tr}Most visited directory sub-categories{/tr}</option>
+				<option value='d' {if $info.childrenType eq 'd'}selected="selected"{/if}>{tr}Directory Category description{/tr}</option>
+				<option value='r' {if $info.childrenType eq 'r'}selected="selected"{/if}>{tr}Random directory sub-categories{/tr}</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Maximum number of children to show{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<select name="viewableChildren" class="form-control">
+				<option value="0" {if $info.viewableChildren eq 0}selected="selected"{/if}>{tr}none{/tr}</option>
+				<option value="1" {if $info.viewableChildren eq 1}selected="selected"{/if}>1</option>
+				<option value="2" {if $info.viewableChildren eq 2}selected="selected"{/if}>2</option>
+				<option value="3" {if $info.viewableChildren eq 3}selected="selected"{/if}>3</option>
+				<option value="4" {if $info.viewableChildren eq 4}selected="selected"{/if}>4</option>
+				<option value="5" {if $info.viewableChildren eq 5}selected="selected"{/if}>5</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Allow sites in this directory category{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<input name="allowSites" type="checkbox" {if $info.allowSites eq 'y'}checked="checked"{/if} >
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Show number of sites in this directory category{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<input name="showCount" type="checkbox" {if $info.showCount eq 'y'}checked="checked"{/if}>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Editor group{/tr}</label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<select name="editorGroup" class="form-control">
 					<option value="">{tr}None{/tr}</option>
 					{section name=ux loop=$groups}
 						<option value="{$groups[ux]|escape}" {if $editorGroup eq $groups[ux]}selected="selected"{/if}>{$groups[ux]}</option>
 					{/section}
 				</select>
-			</td>
-		</tr>
-		{include file='categorize.tpl'}
-		<tr>
-			<td>&nbsp;</td>
-			<td><input class="btn btn-default" type="submit" name="save" value="{tr}Save{/tr}">
-		</tr>
-	</table>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label"></label>
+		<div class="col-sm-7 col-sm-offset-1">
+			<input class="btn btn-default" type="submit" name="save" value="{tr}Save{/tr}">
+		</div>
+	</div>
+	{include file='categorize.tpl'}
 </form>
 <br>
 
@@ -114,9 +137,9 @@
 			<tr>
 				<td class="text"><a class="tablename" href="tiki-directory_admin_categories.php?parent={$items[user].categId}">{$items[user].name|escape}</a></td>
 				<td class="text">{$items[user].childrenType}</td>
-				<td class="integer">{$items[user].viewableChildren}</td>
-				<td class="text">{$items[user].allowSites}{if $items[user].allowSites eq 'y'} ({$items[user].sites}) {/if}</td>
-				<td class="text">{$items[user].showCount}</td>
+				<td class="text">{$items[user].viewableChildren}</td>
+				<td class="text">{if $items[user].allowSites eq 'y'} Yes ({$items[user].sites}){else} No {/if}</td>
+				<td class="text">{if $items[user].showCount eq 'y'} Yes {else} No {/if}</td>
 				<td class="text">{$items[user].editorGroup}</td>
 				<td class="action">
 					{capture name=directory_actions}

@@ -22,24 +22,26 @@
 		{$liend = ''}
 	{/if}
 	<div class="{if $js === 'y'}table-responsive{/if}"> {*the table-responsive class cuts off dropdown menus *}
-		<table class="tabletable-striped table-hover">
-			<tr>
-				<th>{tr}Code{/tr}</th>
-				<th>{tr}Value{/tr}</th>
-				<th>{tr}Created{/tr}</th>
-				<th>{tr}Max{/tr}</th>
-				<th>{tr}Comment{/tr}</th>
-				<th></th>
-			</tr>
+		<table class="table table-striped table-hover">
+			<thead>
+				<tr>
+					<th class="text-center">{tr}Code{/tr}</th>
+					<th class="text-center">{tr}Value{/tr}</th>
+					<th class="text-center">{tr}Created{/tr}</th>
+					<th class="text-center">{tr}Max{/tr}</th>
+					<th class="text-center">{tr}Comment{/tr}</th>
+					<th class="text-center"></th>
+				</tr>
+			</thead>
 
 			{foreach from=$discounts.data item=discount}
 				<tr>
-					<td class="text">{$discount.code|escape}</td>
-					<td class="text">{$discount.value|escape}{if !strstr($discount.value, '%')} {$prefs.payment_currency|escape}{/if}</td>
-					<td class="date">{$discount.created|tiki_short_date}</td>
-					<td class="integer">{$discount.max|escape}</td>
-					<td class="text">{$discount.comment|escape}</td>
-					<td class="action">
+					<td class="text text-center">{$discount.code|escape}</td>
+					<td class="text text-center">{$discount.value|escape}{if !strstr($discount.value, '%')} {$prefs.payment_currency|escape}{/if}</td>
+					<td class="date text-center">{$discount.created|tiki_short_date}</td>
+					<td class="text text-center">{$discount.max|escape}</td>
+					<td class="text text-center">{$discount.comment|escape}</td>
+					<td class="action text-center">
 						{capture name=discount_actions}
 							{strip}
 								{$libeg}{self_link id=$discount.id cookietab=2 _icon_name='edit' _menu_text='y' _menu_icon='y'}
@@ -75,33 +77,49 @@
 
 {capture name=tabtitle}{if empty($info.id)}{tr}Create{/tr}{else}{tr}Edit{/tr}{/if}{/capture}
 {tab name=$smarty.capture.tabtitle}
-	<form method="post" action="tiki-discount.php">
+	<form method="post" action="tiki-discount.php" class="form-horizontal">
+		<br>
 		{if !empty($info.id)}<input type="hidden" name="id" value="{$info.id}">{/if}
-		<table class="formcolor">
-			<tr>
-				<td><label for="code">{tr}Code:{/tr}</label></td>
-				<td><input type="text" id="code" name="code" {if !empty($info.code)}value="{$info.code|escape}"{/if}></td>
-			</tr>
-			<tr>
-				<td><label for="value">{tr}Value:{/tr}</label></td>
-				<td>
-					<input type="text" id="value" name="value" {if empty($info.percent) and !empty($info.value)}value="{$info.value|escape}" {/if}>{$prefs.payment_currency|escape}<br>
-					{tr}or{/tr}<input type="text" id="percent" name="percent" {if !empty($info.percent)} value="{$info.percent|escape}"{/if}>%
-				</td>
-			</tr>
-			<tr>
-				<td><label for="max">{tr}Max time the discount can be used in the first phase of payment:{/tr}</label></td>
-				<td><input type="text" id="max" name="max" {if !empty($info.max)} value="{$info.max|escape}"{/if}>{tr}-1 for illimited{/tr}</td>
-			</tr>
-			<tr>
-				<td><label for="comment">{tr}Comment:{/tr}</label></td>
-				<td><input type="text" id=comment" name="comment" {if !empty($info.comment)} value="{$info.comment|escape}"{/if}></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}"></td>
-			</tr>
-		</table>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">{tr}Code{/tr}</label>
+			<div class="col-sm-7 col-sm-offset-1">
+		      	<input type="text" id="code" name="code" {if !empty($info.code)}value="{$info.code|escape}"{/if} class="form-control">
+		    </div>
+	    </div>
+	    <div class="form-group">
+			<label class="col-sm-3 control-label">{tr}Value{/tr}</label>
+			<div class="col-sm-7 col-sm-offset-1">
+		      	<input type="text" id="code" name="code" {if !empty($info.code)}value="{$info.code|escape}"{/if} class="form-control">
+		      	<div class="help-block">
+		      		{tr}{$prefs.payment_currency|escape}{/tr} {tr} or {/tr}
+		      	</div>
+		      	<input type="text" id="percent" name="percent" {if !empty($info.percent)} value="{$info.percent|escape}"{/if} class="form-control">
+		      	<div class="help-block">
+		      		%
+		      	</div>
+		    </div>
+	    </div>
+	    <div class="form-group">
+			<label class="col-sm-3 control-label">{tr}Max time the discount can be used in the first phase of payment{/tr}</label>
+			<div class="col-sm-7 col-sm-offset-1">
+		      	<input type="text" id="max" name="max" {if !empty($info.max)} value="{$info.max|escape}"{/if} class="form-control">
+		      	<div class="help-block">
+		      		{tr}-1 for illimited{/tr}
+		      	</div>
+		    </div>
+	    </div>
+	    <div class="form-group">
+			<label class="col-sm-3 control-label">{tr}Comment{/tr}</label>
+			<div class="col-sm-7 col-sm-offset-1">
+		      	<input type="text" id="comment" name="comment" {if !empty($info.comment)} value="{$info.comment|escape}"{/if} class="form-control">
+		    </div>
+	    </div>
+	    <div class="form-group">
+			<label class="col-sm-3 control-label"></label>
+			<div class="col-sm-7 col-sm-offset-1">
+		      	<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+		    </div>
+	    </div>
 	</form>
 {/tab}
 
