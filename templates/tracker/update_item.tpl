@@ -9,7 +9,7 @@
 {/block}
 
 {block name="content"}
-<form method="post" action="{service controller=tracker action=update_item format=$format}" id="updateItemForm{$trackerId|escape}">
+<form method="post" class="confirm-action" action="{service controller=tracker action=update_item format=$format}" id="updateItemForm{$trackerId|escape}">
 	{trackerfields trackerId=$trackerId fields=$fields status=$status itemId=$itemId format=$format}
 	<div class="submit">
 		<input type="hidden" name="itemId" value="{$itemId|escape}">

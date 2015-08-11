@@ -828,6 +828,18 @@ class Services_Tracker_Controller
 
 			TikiLib::lib('unifiedsearch')->processUpdateQueue();
 			TikiLib::events()->trigger('tiki.process.redirect'); // wait for indexing to complete before loading of next request to ensure updated info shown
+			return array(
+				'modal' => '1',
+				'FORWARD' => array(
+					'controller' => 'utilities',
+					'action' => 'modal_alert',
+					'ajaxtype' => 'feedback',
+					'ajaxheading' => tra('Success'),
+					'ajaxmsg' => 'Your tracker item has been updated',
+					'ajaxdismissible' => 'n',
+					'ajaxtimer' => '3',
+				)
+			);
 		}
 
 		return array(
