@@ -3,8 +3,8 @@
 	{title}{$title|escape}{/title}
 {/block}
 {block name="content"}
-	{include file='access/include_items.tpl'}
 	<form id="confirm-action" class='confirm-action' action="{service controller="$confirmController" action="$confirmAction"}" method="post">
+		{include file='access/include_items.tpl'}
 		{include file='access/include_hidden.tpl'}
 	</form>
 	{include file='access/include_footer.tpl'}

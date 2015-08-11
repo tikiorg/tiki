@@ -26,7 +26,6 @@ class Services_Utilities_Controller
 		return $this->alert($input);
 	}
 
-
 	private function alert($input)
 	{
 		$items = json_decode($input->offsetGet('ajaxitems'));
@@ -43,6 +42,7 @@ class Services_Utilities_Controller
 			'ajaxtoList' => $toList,
 			'ajaxtimeoutMsg' => $input->offsetGet('ajaxtimeoutMsg'),
 			'ajaxtimer' => $input->offsetGet('ajaxtimer'),
+			'ajaxdismissible' => $input->offsetGet('ajaxdismissible'),
 		];
 	}
 

@@ -1,5 +1,5 @@
 <div id="alert-wrapper">
-	{remarksbox type="{$ajaxtype}" close="y" title="{$ajaxheading}"}
+	{remarksbox type="{$ajaxtype}" close="{if $ajaxdismissible eq 'n'}n{else}y{/if}" title="{$ajaxheading}"}
 		{if !empty($ajaxmsg)}
 			{$ajaxmsg|escape}
 		{/if}

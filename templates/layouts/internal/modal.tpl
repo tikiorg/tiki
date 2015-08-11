@@ -23,7 +23,7 @@
 	{block name=buttons}
 		<button type="button" class="btn btn-default" data-dismiss="modal">{tr}Close{/tr}</button>
 		{if $confirm}
-			<button type='submit' form="confirm-action" class="btn {if !empty($confirmButtonClass)}{$confirmButtonClass}{else}btn-primary{/if}">
+			<button type='submit' form="confirm-action" class="btn {if !empty($confirmButtonClass)}{$confirmButtonClass}{else}btn-primary{/if} confirm-action-btn">
 				{if !empty($confirmButton)}
 					{$confirmButton}
 				{else}
