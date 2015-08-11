@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c183e796f0094d9e680522149dae3ace",
+    "hash": "99f2400f6188f6d8b599a20340e232ce",
     "packages": [
         {
             "name": "adodb/adodb",
@@ -126,17 +126,17 @@
         },
         {
             "name": "ckeditor/ckeditor",
-            "version": "4.4.7",
+            "version": "4.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ckeditor/ckeditor-releases.git",
-                "reference": "cc324415302784eb1abe33a3762fbdd3b48c558b"
+                "reference": "a68e8c32012f2955b76e0d2e84f1b14a90c8c959"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-cc324415302784eb1abe33a3762fbdd3b48c558b-zip-f54d37.zip",
-                "reference": "4.4.7",
-                "shasum": "35b28edbbd269291743bb9affa5e355e7cc26d1b"
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-a68e8c32012f2955b76e0d2e84f1b14a90c8c959-zip-ecab63.zip",
+                "reference": "a68e8c32012f2955b76e0d2e84f1b14a90c8c959",
+                "shasum": "1b0d622d31eee9dd3a4aea98dbdc98a7aeaf4cdf"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -163,16 +163,16 @@
                 "text",
                 "wysiwyg"
             ],
-            "time": "2015-01-27 15:13:53"
+            "time": "2015-07-01 12:45:18"
         },
         {
             "name": "ckeditor/ckeditor/plugins/divarea",
-            "version": "4.4.7",
+            "version": "4.4.8",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-plugins-divarea-4.4.7.zip",
-                "reference": "4.4.7",
-                "shasum": "ac19c1d99e3a645b3ee83c857b4f6ae6ee4f9893"
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-plugins-divarea-4.4.8.zip",
+                "reference": null,
+                "shasum": "949891741a3c9cd5a2484b14c6d0dd08ee3bc837"
             },
             "type": "library"
         },
@@ -189,12 +189,12 @@
         },
         {
             "name": "ckeditor/ckeditor/skins/kama",
-            "version": "4.4.7",
+            "version": "4.4.8",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-kama-4.4.7.zip",
-                "reference": "4.4.7",
-                "shasum": "f03858b1d65157bcab7ff8382f35330e030a2522"
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-kama-4.4.8.zip",
+                "reference": null,
+                "shasum": "682c618a4ef1c619017ad6ec2b49d9bf55837ea4"
             },
             "type": "library"
         },
@@ -1176,12 +1176,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jakiestfu/Medium.js.git",
-                "reference": "e3af5e89244aee5c9a5a05c1e8181aaa46928891"
+                "reference": "8bc1013de7a36f794a414e070e694a8d3f4e6863"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/e3af5e89244aee5c9a5a05c1e8181aaa46928891",
-                "reference": "e3af5e89244aee5c9a5a05c1e8181aaa46928891",
+                "url": "https://api.github.com/repos/jakiestfu/Medium.js/zipball/8bc1013de7a36f794a414e070e694a8d3f4e6863",
+                "reference": "8bc1013de7a36f794a414e070e694a8d3f4e6863",
                 "shasum": ""
             },
             "require": {
@@ -1208,7 +1208,7 @@
                 }
             ],
             "description": "A tiny JavaScript library for making contenteditable beautiful (Like Medium's editor).",
-            "time": "2015-06-14 12:18:55"
+            "time": "2015-08-05 02:33:11"
         },
         {
             "name": "phenx/php-font-lib",
@@ -1385,16 +1385,16 @@
         },
         {
             "name": "robloach/component-installer",
-            "version": "0.2.1",
+            "version": "0.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RobLoach/component-installer.git",
-                "reference": "6f654095da6e364261093c2d9ca416e1027d0169"
+                "reference": "908a859aa7c4949ba9ad67091e67bac10b66d3d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RobLoach/component-installer/zipball/6f654095da6e364261093c2d9ca416e1027d0169",
-                "reference": "6f654095da6e364261093c2d9ca416e1027d0169",
+                "url": "https://api.github.com/repos/RobLoach/component-installer/zipball/908a859aa7c4949ba9ad67091e67bac10b66d3d7",
+                "reference": "908a859aa7c4949ba9ad67091e67bac10b66d3d7",
                 "shasum": ""
             },
             "require": {
@@ -1429,7 +1429,7 @@
                 }
             ],
             "description": "Allows installation of Components via Composer.",
-            "time": "2015-06-18 13:02:30"
+            "time": "2015-08-10 12:35:38"
         },
         {
             "name": "simile_timeline/simile_timeline",
@@ -1675,16 +1675,16 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.7.1",
+            "version": "v2.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Filesystem.git",
-                "reference": "a0d43eb3e17d4f4c6990289805a488a0482a07f3"
+                "reference": "2d7b2ddaf3f548f4292df49a99d19c853d43f0b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/a0d43eb3e17d4f4c6990289805a488a0482a07f3",
-                "reference": "a0d43eb3e17d4f4c6990289805a488a0482a07f3",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/2d7b2ddaf3f548f4292df49a99d19c853d43f0b8",
+                "reference": "2d7b2ddaf3f548f4292df49a99d19c853d43f0b8",
                 "shasum": ""
             },
             "require": {
@@ -1720,20 +1720,20 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2015-06-08 09:37:21"
+            "time": "2015-07-09 16:07:40"
         },
         {
             "name": "symfony/process",
-            "version": "v2.7.1",
+            "version": "v2.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Process.git",
-                "reference": "552d8efdc80980cbcca50b28d626ac8e36e3cdd1"
+                "reference": "48aeb0e48600321c272955132d7606ab0a49adb3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Process/zipball/552d8efdc80980cbcca50b28d626ac8e36e3cdd1",
-                "reference": "552d8efdc80980cbcca50b28d626ac8e36e3cdd1",
+                "url": "https://api.github.com/repos/symfony/Process/zipball/48aeb0e48600321c272955132d7606ab0a49adb3",
+                "reference": "48aeb0e48600321c272955132d7606ab0a49adb3",
                 "shasum": ""
             },
             "require": {
@@ -1769,7 +1769,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2015-06-08 09:37:21"
+            "time": "2015-07-01 11:25:50"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
