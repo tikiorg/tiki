@@ -187,14 +187,11 @@
 										{icon name='settings' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
 									</a>{$liend}
 									{$libeg}{permission_link mode=text type=tracker permType=trackers id=$tracker.trackerId}{$liend}
-									{* can't get this to work properly for some reason. the remove one just below it works fine
-										items can be deleted from the item listing of the tracker itself until this is fixed
 									{if $tracker.items > 0}
 										{$libeg}<a href="{service controller=tracker action=clear trackerId=$tracker.trackerId}" class="clear confirm-prompt">
 											{icon name='trash' _menu_text='y' _menu_icon='y' alt="{tr}Clear{/tr}"}
 										</a>{$liend}
 									{/if}
-									*}
 									{$libeg}<a href="{service controller=tracker action=remove trackerId=$tracker.trackerId}"
 										class="remove confirm-prompt"
 									>
@@ -230,18 +227,18 @@
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 
 {jq}
-$('.remove.confirm-prompt').requireConfirm({
-	message: "{tr}Do you really remove this tracker?{/tr}",
-	success: function (data) {
-		$(this).closest('tr').remove();
-	}
-});
-$('.clear.confirm-prompt').requireConfirm({
-	message: "{tr}Do you really want to clear all the items from this tracker? (N.B. there is no undo and notifications will not be sent){/tr}",
-	success: function (data) {
-		history.go(0);	// reload
-	}
-});
+$(document).on('click', '.remove.confirm-prompt', $.clickModal({
+		message: "{tr}Do you really remove this tracker?{/tr}",
+		success: function (data) {
+			history.go(0);	// reload
+		}
+	}));
+$(document).on('click', '.clear.confirm-prompt', $.clickModal({
+		message: "{tr}Do you really want to clear all the items from this tracker? (N.B. there is no undo and notifications will not be sent){/tr}",
+		success: function (data) {
+			history.go(0);	// reload
+		}
+	}));
 {/jq}
 
 {/block}
