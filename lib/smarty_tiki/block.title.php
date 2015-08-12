@@ -33,6 +33,7 @@ function smarty_block_title($params, $content, $template, &$repeat)
 
 	$template->loadPlugin('smarty_function_icon');
 	$template->loadPlugin('smarty_modifier_sefurl');
+	$template->loadPlugin('smarty_modifier_escape');
 
 	if ( ! isset($params['help']) ) $params['help'] = '';
 	if ( ! isset($params['admpage']) ) $params['admpage'] = '';
@@ -59,13 +60,13 @@ function smarty_block_title($params, $content, $template, &$repeat)
 	}
 
 	$html = '<h1 class="pagetitle">';
-	$html .= '<a class="' . $class . '"' . $metadata . ' href="' . $params['url'] . '">' . htmlspecialchars($content) . "</a>\n";
+	$html .= '<a class="' . $class . '"' . $metadata . ' href="' . $params['url'] . '">' . smarty_modifier_escape($content) . "</a>\n";
 
 	if ($template->getTemplateVars('print_page') != 'y') {
 		if ( $prefs['feature_help'] == 'y' && $prefs['helpurl'] != '' && $params['help'] != '' ) {
 			$html .= '<a href="' ;
 
-			$html .= $prefs['helpurl'] . rawurlencode($params['help']) . '" class="tips btn btn-link" title="' . htmlspecialchars($content) . '|' . tra('Help page') . '" target="tikihelp">'
+			$html .= $prefs['helpurl'] . rawurlencode($params['help']) . '" class="tips btn btn-link" title="' . smarty_modifier_escape($content) . '|' . tra('Help page') . '" target="tikihelp">'
 			. smarty_function_icon(array('name' => 'help'), $template)
 			. "</a>\n";
 		}

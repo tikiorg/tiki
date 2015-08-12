@@ -4546,10 +4546,6 @@ class TikiLib extends TikiDb_Bridge
 			$html = 1;
 		}
 
-		if ( $html == 0 ) {
-			$edit_data = str_replace('<x>', '', $edit_data);
-		}
-
 		$parserlib = TikiLib::lib('parser');
 		$edit_data = $parserlib->process_save_plugins(
 			$edit_data,

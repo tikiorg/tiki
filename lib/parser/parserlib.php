@@ -1556,11 +1556,6 @@ if ( \$('#$id') ) {
 
 		/* <x> XSS Sanitization handling */
 
-		// Converts &lt;x&gt; (<x> tag using HTML entities) into the tag <x>. This tag comes from the input sanitizer (XSS filter).
-		// This is not HTML valid and avoids using <x> in a wiki text,
-		//   but hide '<x>' text inside some words like 'style' that are considered as dangerous by the sanitizer.
-		$data = str_replace(array( '&lt;x&gt;', '~np~', '~/np~' ), array( '<x>', '~np~', '~/np~' ), $data);
-
 		// Fix false positive in wiki syntax
 		//   It can't be done in the sanitizer, that can't know if the input will be wiki parsed or not
 		$data = preg_replace('/(\{img [^\}]+li)<x>(nk[^\}]+\})/i', '\\1\\2', $data);
@@ -1706,6 +1701,11 @@ if ( \$('#$id') ) {
 
 		// Put removed strings back.
 		$this->replace_preparse($data, $preparsed, $noparsed, $this->option['is_html']);
+
+		// Converts &lt;x&gt; (<x> tag using HTML entities) into the tag <x>. This tag comes from the input sanitizer (XSS filter).
+		// This is not HTML valid and avoids using <x> in a wiki text,
+		//   but hide '<x>' text inside some words like 'style' that are considered as dangerous by the sanitizer.
+		$data = str_replace(array( '&lt;x&gt;', '~np~', '~/np~' ), array( '<x>', '~np~', '~/np~' ), $data);
 
 		// Process pos_handlers here
 		foreach ($this->pos_handlers as $handler) {

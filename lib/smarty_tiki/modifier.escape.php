@@ -26,18 +26,20 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * @link http://smarty.php.net/manual/en/language.modifier.escape.php
  *          escape (Smarty online manual)
  * @author   Monte Ohrt <monte at ohrt dot com>
- * @param string
  * @param html|htmlall|url|quotes|hex|hexentity|javascript
+ * @param string $esc_type
+ * @param string $char_set
+ * @param bool $double_encode
  * @return string
  */
-function smarty_modifier_escape($string, $esc_type = 'html', $char_set = 'UTF-8')
+function smarty_modifier_escape($string, $esc_type = 'html', $char_set = 'UTF-8', $double_encode = true)
 {
 	switch ($esc_type) {
 		case 'html':
 			if (is_array($string)) {
 				$string = implode(',', $string);
 			}
-			$return = htmlspecialchars($string, ENT_QUOTES, $char_set);
+			$return = htmlspecialchars($string, ENT_QUOTES, $char_set, $double_encode);
 			// Convert back sanitization tags into real tags to avoid them to be displayed
 			$return = str_replace('&lt;x&gt;', '<x>', $return);
 			// Convert back sanitization tags into real tags for no wrap space

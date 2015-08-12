@@ -166,6 +166,10 @@ class Smarty_Tiki extends Smarty
 		  require_once ('tiki-sefurl.php');
 		  $this->registerFilter('output', 'filter_out_sefurl');
 		}
+
+		// restore tiki's own escape function
+		$this->loadPlugin('smarty_modifier_escape');
+		$this->registerPlugin('modifier', 'escape', 'smarty_modifier_escape');
 	}
 
 	/**
