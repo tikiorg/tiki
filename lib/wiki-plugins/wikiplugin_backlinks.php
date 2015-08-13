@@ -12,7 +12,7 @@ class WikiPluginBackLinks extends PluginsLib
 	var $expanded_params = array("exclude", "info");
 	function getDefaultArguments()
 	{
-		return array('exclude' => '',
+		return array('exclude' => [],
 				'include_self' => 0,
 				'noheader' => 0,
 				'page' => '[pagename]',
@@ -37,7 +37,7 @@ class WikiPluginBackLinks extends PluginsLib
 	function run ($data, $params)
 	{
 		$wikilib = TikiLib::lib('wiki');
-		$exclude = isset($params['exclude']) ? $params['exclude'] : '';
+		$exclude = isset($params['exclude']) ? $params['exclude'] : [];
 		$params = $this->getParams($params, true);
 		$aInfoPreset = array_keys($this->aInfoPresetNames);
 		extract($params, EXTR_SKIP);
