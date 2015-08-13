@@ -40,38 +40,40 @@
 			{/if}
 
 			{if $detailed eq 'n' or ($add eq 'y' and not $isInAllManagedCategories)}
-				<div align="center">
+				<div class="text-center">
 					<form method="post" target="_self">
 						<input type="hidden" name="page" value="{$page|escape}" />
 						<input type="hidden" name="modcatid" value="{$modcatid}" />
 
-						{if $multiple eq 'y'}
-							<select name="modcatchange[]" multiple="multiple">
-						{else}
-							<select name="modcatchange" size="1" onchange="this.form.submit();">
-						{/if}
-						{if $add eq 'y'}
-							{if !isset($module_params.notop)}
-								<option value="0" style="font-style: italic;">{tr}None{/tr}</option>
+						<div class="form-group">
+							{if $multiple eq 'y'}
+								<select name="modcatchange[]" multiple="multiple" class="form-control">
+							{else}
+								<select name="modcatchange" size="1" onchange="this.form.submit();" class="form-control">
 							{/if}
-						{/if}
-						{foreach key=k item=i from=$modcatlist}
-							{if $detailed eq 'n' or $i.incat ne 'y'}
-								{if ($add eq 'y' or $i.incat eq 'y')}
-									<option value="{$k}"{if $multiple eq 'y' and $i.incat eq 'y'} selected="selected"{/if}>
-										{if !empty($module_params.path) and $module_params.path eq 'n'}
-											{$i.name|escape}
-										{else}
-											{$i.relativePathString|escape}
-										{/if}
-									</option>
+							{if $add eq 'y'}
+								{if !isset($module_params.notop)}
+									<option value="0" style="font-style: italic;">{tr}None{/tr}</option>
 								{/if}
 							{/if}
-						{/foreach}
-						</select>
+							{foreach key=k item=i from=$modcatlist}
+								{if $detailed eq 'n' or $i.incat ne 'y'}
+									{if ($add eq 'y' or $i.incat eq 'y')}
+										<option value="{$k}"{if $multiple eq 'y' and $i.incat eq 'y'} selected="selected"{/if}>
+											{if !empty($module_params.path) and $module_params.path eq 'n'}
+												{$i.name|escape}
+											{else}
+												{$i.relativePathString|escape}
+											{/if}
+										</option>
+									{/if}
+								{/if}
+							{/foreach}
+							</select>
+						</div>
 
 						{if $multiple eq 'y' and $add eq 'y'}
-							<div align="center">
+							<div class="form-group">
 								<input type="submit" class="btn btn-default btn-sm" name="categorize" value="{if isset($module_params.categorize)}{tr}{$module_params.categorize}{/tr}{else}{tr}Categorize{/tr}{/if}" />
 							</div>
 						{/if}
