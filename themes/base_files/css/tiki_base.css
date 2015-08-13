@@ -3875,7 +3875,7 @@ h6:hover a.tiki_anchor {
 .wikitext .plugin_gauge-bar {
   border: none;
 }
-h1.pagetitle a {
+h1.pagetitle > a {
   padding-left: 0;
   padding-right: 0;
 }
