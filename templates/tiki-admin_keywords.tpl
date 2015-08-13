@@ -1,4 +1,4 @@
-<h1><a class="pagetitle" href="tiki-admin_keywords.php">{tr}Admin keywords{/tr}</a></h1>
+<h1class="pagetitle><a " href="tiki-admin_keywords.php">{tr}Admin keywords{/tr}</a></h1>
 
 {if $keywords_updated}
 	<div class="alert alert-warning">

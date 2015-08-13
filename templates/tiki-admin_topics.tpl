@@ -18,7 +18,7 @@
 		<label class="col-sm-2 control-label" for="image">{tr}Image{/tr}</label>
 		<div class="col-sm-10">
 			<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
-			<input name="userfile1" type="file">
+			<input class="form-control" name="userfile1" type="file">
 		</div>
 	</div>
 	<div class="form-group">

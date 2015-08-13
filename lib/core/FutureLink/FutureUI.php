@@ -56,7 +56,7 @@ Class FutureLink_FutureUI extends Feed_Abstract
 		if ($trackerId < 1 && $perms->admin == 'y') {
 			TikiLib::lib('header')->add_jq_onready(
 <<<JQ
-				var addQuestionsButton = $('<span class="button"><a href="tiki-admin.php?profile=Simple+Wiki+Attributes&repository=&page=profiles&list=List">' + tr('Apply Profile "Simple Wiki Attributes" To Add FutureLink Questions') + '</a></span>')
+				var addQuestionsButton = $('<span class="button btn btn-default"><a href="tiki-admin.php?profile=Simple+Wiki+Attributes&repository=&page=profiles&list=List">' + tr('Apply Profile "Simple Wiki Attributes" To Add FutureLink Questions') + '</a></span>')
 					.appendTo('#page-bar');
 JQ
 			);
@@ -114,7 +114,7 @@ JQ
 						}
 
 						function genericSingleTrackerItemInterface(type, item) {
-							var addButton = $('<span class="button"><a href="tiki-view_tracker.php?trackerId=' + $trackerId + '">' + tr("Edit FutureLink " + type) + '</a></span>')
+							var addButton = $('<span class="button btn btn-default"><a href="tiki-view_tracker.php?trackerId=' + $trackerId + '">' + tr("Edit FutureLink " + type) + '</a></span>')
 								.click(function() {
 									var box = $('<table style="width: 100%;" />');
 
@@ -234,7 +234,7 @@ JQ
 		TikiLib::lib('header')
 			->add_jq_onready(
 <<<JQ
-				var addQuestionsButton = $('<span class="button"><a href="tiki-view_tracker.php?trackerId=' + $trackerId + '">' + tr("Edit FutureLink Questions") + '</a></span>')
+				var addQuestionsButton = $('<span class="button btn btn-default"><a href="tiki-view_tracker.php?trackerId=' + $trackerId + '">' + tr("Edit FutureLink Questions") + '</a></span>')
 					.click(function() {
 						var questionBox = $('<table style="width: 100%;" />');
 						var questions = $questions;
