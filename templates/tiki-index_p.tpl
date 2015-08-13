@@ -14,7 +14,7 @@
 							<div id="tiki-center">
 
 								{if $prefs.feature_page_title eq 'y'}
-									<h1><a href="tiki-index_p.php?page={$page|escape:"url"}" class="pagetitle">{$page}</a>
+									<h1 class="pagetitle"><a href="tiki-index_p.php?page={$page|escape:"url"}">{$page}</a>
 										{if $lock}
 											{capture assign=title}{tr _0=$page_user}Locked by %0{/tr}{/capture}{*FIXME*}
 											{icon name='lock' alt="{tr}Locked{/tr}" title=$title}

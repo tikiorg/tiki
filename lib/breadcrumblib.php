@@ -323,7 +323,7 @@ function _breadcrumb_getTitle($crumbs, $loc)
 		$smarty->loadPlugin('smarty_modifier_sefurl');
 		$smarty->loadPlugin('smarty_modifier_escape');
 
-		$class = "pagetitle";
+		$class = "";
 		$metadata = '';
 
 		$current = current_object();
