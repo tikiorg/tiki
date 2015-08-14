@@ -191,6 +191,9 @@
 										{$libeg}<a href="{service controller=tracker action=clear trackerId=$tracker.trackerId}" class="clear confirm-prompt">
 											{icon name='trash' _menu_text='y' _menu_icon='y' alt="{tr}Clear{/tr}"}
 										</a>{$liend}
+										{$libeg}<a href="{service controller=tracker action=update_all_items trackerId=$tracker.trackerId}" class="resave confirm-prompt">
+											{icon name='save' _menu_text='y' _menu_icon='y' alt="{tr}Resave All Items{/tr}"}
+										</a>{$liend}
 									{/if}
 									{$libeg}<a href="{service controller=tracker action=remove trackerId=$tracker.trackerId}"
 										class="remove confirm-prompt"
@@ -235,6 +238,12 @@ $(document).on('click', '.remove.confirm-prompt', $.clickModal({
 	}));
 $(document).on('click', '.clear.confirm-prompt', $.clickModal({
 		message: "{tr}Do you really want to clear all the items from this tracker? (N.B. there is no undo and notifications will not be sent){/tr}",
+		success: function (data) {
+			history.go(0);	// reload
+		}
+	}));
+$(document).on('click', '.resave.confirm-prompt', $.clickModal({
+		message: "{tr}Do you really want to resave all the items from this tracker? (N.B. there is no undo and notifications will not be sent){/tr}",
 		success: function (data) {
 			history.go(0);	// reload
 		}

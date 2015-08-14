@@ -27,15 +27,34 @@ class Services_Tracker_Utilities
 		]);
 	}
 
-	function resaveItem($itemId)
+	function resaveItem($itemId, $skipCategories = true)
 	{
 		$tracker = TikiLib::lib('trk')->get_item_info($itemId);
 		$definition = Tracker_Definition::get($tracker['trackerId']);
 		$this->replaceItem($definition, $itemId, null, array(), [
 			'validate' => false,
-			'skip_categories' => true,
+			'skip_categories' => $skipCategories,
 			'bulk_import' => true,
 		]);
+	}
+
+	/** Resave and recategorise all tracker items
+	 *
+	 * @param int $trackerId
+	 */
+
+	function resaveAllItems($trackerId)
+	{
+		$table = TikiDb::get()->table('tiki_tracker_items');
+
+		$items = $table->fetchColumn(
+			'itemId',
+			array('trackerId' => $trackerId,)
+		);
+
+		foreach ($items as $itemId) {
+			$this->resaveItem($itemId, false);
+		}
 	}
 
 	private function replaceItem($definition, $itemId, $status, $fieldMap, array $options)

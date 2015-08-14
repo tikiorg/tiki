@@ -852,6 +852,43 @@ class Services_Tracker_Controller
 		);
 	}
 
+	function action_update_all_items($input)
+	{
+
+		return TikiLib::lib('tiki')->allocate_extra(
+			'tracker_clear_items',	// borrowing the clear timeout & memory limit for now
+			function () use ($input) {
+				$trackerId = $input->trackerId->int();
+				$confirm = $input->confirm->int();
+
+				$perms = Perms::get('tracker', $trackerId);
+				if (! $perms->admin_trackers) {
+					throw new Services_Exception_Denied(tr('Reserved to tracker administrators'));
+				}
+
+				$definition = Tracker_Definition::get($trackerId);
+
+				if (! $definition) {
+					throw new Services_Exception_NotFound;
+				}
+
+				if ($confirm) {
+					$this->utilities->resaveAllItems($trackerId);
+
+					return array(
+						'trackerId' => 0,
+					);
+				}
+
+				return array(
+					'trackerId' => $trackerId,
+					'name' => $definition->getConfiguration('name'),
+				);
+			}
+		);
+
+	}
+
 	function action_fetch_item_field($input)
 	{
 		$trackerId = $input->trackerId->int();
