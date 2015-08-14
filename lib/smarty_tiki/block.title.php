@@ -40,7 +40,7 @@ function smarty_block_title($params, $content, $template, &$repeat)
 	// Set the variable for the HTML title tag
 	$template->smarty->assign('headtitle', $content);
 
-//	$class = 'pagetitle-link';
+	$class = '';
 	$current = current_object();
 
 	if ( ! isset($params['url']) ) {
