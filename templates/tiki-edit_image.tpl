@@ -15,23 +15,58 @@
 		<br>
 	{/if}
 	<img src="show_image.php?id={$imageId}" alt="{tr}Image{/tr}"><br><br>
-	<form enctype="multipart/form-data" action="tiki-edit_image.php" method="post">
+	<form enctype="multipart/form-data" action="tiki-edit_image.php" method="post" class="form-horizontal">
 		<input type="hidden" name="edit" value="{$imageId|escape}">
 		<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 		<input type="hidden" name="galleryId" value="{$galleryId|escape}">
-		<table class="formcolor">
-			<tr><td>{tr}Image Name:{/tr}</td><td><input type="text" name="name" value="{$name|escape}"></td></tr>
-			<tr><td>{tr}Image Description:{/tr}</td><td><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
-			{if $prefs.feature_maps eq 'y' and $gal_info.geographic eq 'y'}
-				<tr><td>{tr}Latitude (WGS84/decimal degrees):{/tr}</td><td><input type="text" name="lat" value="{$lat|escape}"></td></tr>
-				<tr><td>{tr}Longitude (WGS84/decimal degrees):{/tr}</td><td><input type="text" name="lon" value="{$lon|escape}"></td></tr>
-			{/if}
-			{include file='categorize.tpl'}
-			<tr>
-				<td>{tr}Upload from disk to change the image:{/tr}</td><td>{$filename}<br><input name="userfile" type="file"></td>
-			</tr>
-			<tr><td>&nbsp;</td><td><input type="submit" class="btn btn-default btn-sm" name="editimage" value="{tr}Save{/tr}">&nbsp;&nbsp;<input type="submit" name="editimage_andgonext" value="{tr}Save and Go Next{/tr}">&nbsp;&nbsp;<a class="link" href="tiki-browse_image.php?imageId={$imageId}">{tr}Cancel Edit{/tr}</a></td></tr>
-		</table>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">{tr}Image Name{/tr}</label>
+			<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+		      	<input type="text" name="name" value="{$name|escape}" class="form-control">
+		    </div>
+	    </div>
+	    <div class="form-group">
+			<label class="col-sm-3 control-label">{tr}Image Description{/tr}</label>
+			<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+		      	<textarea rows="5" cols="40" name="description" class="form-control">{$description|escape}</textarea>
+		    </div>
+	    </div>
+	    {if $prefs.feature_maps eq 'y' and $gal_info.geographic eq 'y'}
+	    <div class="form-group">
+			<label class="col-sm-3 control-label">{tr}Latitude (WGS84/decimal degrees):{/tr}</label>
+			<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+		      	<input type="text" name="lat" value="{$lat|escape}" class="form-control">
+		    </div>
+	    </div>
+	    <div class="form-group">
+			<label class="col-sm-3 control-label">{tr}Longitude (WGS84/decimal degrees):{/tr}</label>
+			<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+		      	<input type="text" name="lon" value="{$lon|escape}" class="form-control">
+		    </div>
+	    </div>
+	    <div class="form-group">
+			<label class="col-sm-3 control-label">{tr}Longitude (WGS84/decimal degrees):{/tr}</label>
+			<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+		      	<input type="text" name="lon" value="{$lon|escape}" class="form-control">
+		    </div>
+	    </div>
+	    {/if}
+	    {include file='categorize.tpl'}
+	    <div class="form-group">
+			<label class="col-sm-3 control-label">{tr}Upload from disk to change the image:{/tr}</label>
+			<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+				{$filename}
+		      	<input name="userfile" type="file">
+		    </div>
+	    </div>
+    	<div class="form-group">
+			<label class="col-sm-3 control-label"></label>
+			<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+		      	<input type="submit" class="btn btn-default btn-sm" name="editimage" value="{tr}Save{/tr}">
+		      	<input type="submit" class="btn btn-default btn-sm" name="editimage_andgonext" value="{tr}Save and Go Next{/tr}">
+		      	<a class="link btn btn-default btn-sm" href="tiki-browse_image.php?imageId={$imageId}">{tr}Cancel Edit{/tr}</a>
+		    </div>
+	    </div>
 	</form>
 
 	<br>
