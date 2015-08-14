@@ -11,6 +11,9 @@
 			<option value="{$cat.categId|escape}" {if in_array($cat.categId, $field.selected_categories)}selected="selected"{/if}>{$cat.relativePathString|escape}</option>
 		{/foreach}
 	</select>
+	{foreach key=ku item=cat from=$field.list}
+		<input id="cat{$cat.categId|escape}_hidden" type="hidden" name="cat_managed[]" value="{$cat.categId|escape}">
+	{/foreach}
 {elseif !empty($cat_tree)}
 	{$cat_tree}{* checkboxes with descendents *}
 {else}
