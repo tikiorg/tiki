@@ -253,7 +253,7 @@ $("#add_object_form").unbind("submit").submit(function (e) {
 			$row.append("<td class=\"icon\">" +
 						"<a href=\"tiki-admin_categories.php?parentId=" + data.categId +
 								"&amp;removeObject=" + data.objects[0].catObjectId + "&amp;fromCateg=" + data.categId + "\">"+
-							"{{icon name="remove"}}"+
+							'{{icon name="remove"}}'+
 						"</a></td>" +
 						"<td class=\"text\">"+
 							"<a href=\"#\">" + data.objects[0].id + "</a></td>" +
