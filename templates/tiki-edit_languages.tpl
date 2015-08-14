@@ -7,51 +7,65 @@
 		{button href="tiki-interactive_trans.php?interactive_translation_mode=on" _text="{tr}Toggle interactive translation on{/tr}" _ajax="n"}
 	{/if}
 </div>
+<br>
 
 {tabset}
 	{tab name="{tr}Edit languages{/tr}"}
 		<h2>{tr}Edit languages{/tr}</h2>
-		<form action="tiki-edit_languages.php" id="select_action" method="post">
+		<form action="tiki-edit_languages.php" id="select_action" method="post" class="form-horizontal">
 			{if isset($find)}
 				<input type="hidden" name="find" value="{$find}">
 			{/if}
 			{if isset($maxRecords)}
 				<input type="hidden" name="maxRecords" value="{$maxRecords}">
 			{/if}
-			<div class="adminoptionbox">
-				<label for="edit_language">{tr}Select the language to edit:{/tr}</label>
-				<select id="edit_language" class="translation_action" name="edit_language">
-					{section name=ix loop=$languages}
-						<option value="{$languages[ix].value|escape}" {if $edit_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
-					{/section}
-				</select>
-			</div>
-			<div class="adminoptionbox">
-				<input id="add_tran_sw" class="translation_action" align="right" type="radio" name="action" value="add_tran_sw" {if $action eq 'add_tran_sw'}checked="checked"{/if}>
-				<label for="add_tran_sw">{tr}Add a translation{/tr}</label>
-			</div>
-			<div class="adminoptionbox">
-				<input id="edit_tran_sw" class="translation_action" align="right" type="radio" name="action" value="edit_tran_sw" {if $action eq 'edit_tran_sw'}checked="checked"{/if}>
-				<label for="edit_tran_sw">{tr}Edit translations{/tr}</label>
-				<div class="adminoptionboxchild">
-					<input id="only_db_translations" class="translation_action" type="checkbox" name="only_db_translations" {if $only_db_translations eq 'y'}checked="checked"{/if}>
-					<label for="only_db_translations">{tr}Show only database stored translations{/tr}</label>
+			<div class="form-group">
+				<div class="adminoptionbox">
+					<label for="edit_language" class="col-sm-3 control-label">{tr}Select the language to edit:{/tr}</label>
+					<div class="col-sm-7 col-sm-offset-1">
+						<select id="edit_language" class="translation_action form-control" name="edit_language">
+							{section name=ix loop=$languages}
+								<option value="{$languages[ix].value|escape}" {if $edit_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
+							{/section}
+						</select>
+					</div>
 				</div>
 			</div>
-
-			<div class="adminoptionbox">
-				<input id="edit_rec_sw" class="translation_action" align="right" type="radio" name="action" value="edit_rec_sw" {if $action eq 'edit_rec_sw'}checked="checked"{/if}>
-				<label for="edit_rec_sw">{tr}Untranslated strings{/tr}</label>
-				{if $prefs.record_untranslated eq 'y'}
-					<div class="adminoptionboxchild">
-						<input id="only_db_untranslated" class="translation_action" type="checkbox" name="only_db_untranslated" {if $only_db_untranslated eq 'y'}checked="checked"{/if}>
-						<label for="only_db_untranslated">{tr}Show only database stored untranslated strings{/tr}</label>
+			<div class="form-group">
+				<div class="adminoptionbox">
+					<label for="add_tran_sw" class="col-sm-3 control-label">{tr}Add a translation{/tr}</label>
+					<div class="col-sm-7 col-sm-offset-1">
+						<label class="radio-inline"><input id="add_tran_sw" class="translation_action" type="radio" name="action" value="add_tran_sw" {if $action eq 'add_tran_sw'}checked="checked"{/if}>{tr}Add{/tr}</label>
 					</div>
-				{/if}
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="adminoptionbox">
+					<label for="add_tran_sw" class="col-sm-3 control-label">{tr}Edit translations{/tr}</label>
+					<div class="col-sm-7 col-sm-offset-1">
+						<label class="radio-inline"><input id="edit_tran_sw" class="translation_action" align="right" type="radio" name="action" value="edit_tran_sw" {if $action eq 'edit_tran_sw'}checked="checked"{/if}>{tr}Edit{/tr}</label>
+						<div class="adminoptionboxchild">
+							<label class="checkbox-inline"><input id="only_db_translations" class="translation_action" type="checkbox" name="only_db_translations" {if $only_db_translations eq 'y'}checked="checked"{/if}>{tr}Show only database stored translations{/tr}</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="adminoptionbox">
+					<label for="add_tran_sw" class="col-sm-3 control-label">{tr}Unstranslated strings{/tr}</label>
+					<div class="col-sm-7 col-sm-offset-1">
+						<label class="radio-inline"><input id="edit_rec_sw" class="translation_action" align="right" type="radio" name="action" value="edit_rec_sw" {if $action eq 'edit_rec_sw'}checked="checked"{/if}>{tr}Untranslated{/tr}</label>
+						{if $prefs.record_untranslated eq 'y'}
+						<div class="adminoptionboxchild">
+							<label class="checkbox-inline"><input id="only_db_untranslated" class="translation_action" type="checkbox" name="only_db_untranslated" {if $only_db_untranslated eq 'y'}checked="checked"{/if}>{tr}Show only database stored untranslated strings{/tr}</label>
+						</div>
+						{/if}
+					</div>
+				</div>
 			</div>
 		</form>
 
-		<form action="tiki-edit_languages.php" method="post">
+		<form action="tiki-edit_languages.php" method="post" class="form-horizontal">
 			<input type="hidden" name="edit_language" value="{$edit_language}">
 			<input type="hidden" name="action" value="{$action}">
 			{if $only_db_translations eq 'y'}
@@ -61,18 +75,29 @@
 				<input type="hidden" name="only_db_untranslated" value="{$only_db_untranslated}">
 			{/if}
 			{if $action eq 'add_tran_sw'}
-				<div class="panel panel-default"><div class="panel-body">
-					<h4>{tr}Add a translation:{/tr}</h4>
-					<table class="formcolor">
-						<tr>
-							<td>{tr}Original:{/tr}</td>
-							<td><input name="add_tran_source" size=20 maxlength=255></td>
-							<td>{tr}Translation:{/tr}</td>
-							<td><input name="add_tran_tran" size=20 maxlength=255></td>
-							<td align="center"><input type="submit" class="btn btn-default btn-sm" name="add_tran" value="{tr}Add{/tr}"></td>
-						</tr>
-					</table>
-				</div></div>
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<h4>{tr}Add a translation:{/tr}</h4>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">{tr}Original:{/tr}</label>
+							<div class="col-sm-7 col-sm-offset-1">
+						      	<input name="add_tran_source" maxlength="255" class="form-control">
+						    </div>
+					    </div>
+					    <div class="form-group">
+							<label class="col-sm-3 control-label">{tr}Translation:{/tr}</label>
+							<div class="col-sm-7 col-sm-offset-1">
+						      	<input name="add_tran_tran" maxlength="255" class="form-control">
+						    </div>
+					    </div>
+					    <div class="form-group">
+							<label class="col-sm-3 control-label"></label>
+							<div class="col-sm-7 col-sm-offset-1">
+					    		<input type="submit" class="btn btn-default btn-sm" name="add_tran" value="{tr}Add{/tr}">
+						    </div>
+						</div>
+					</div>
+				</div>
 			{/if}
 			{if $action eq 'edit_tran_sw' || $action eq 'edit_rec_sw'}
 				<div class="panel panel-default"><div class="panel-body">

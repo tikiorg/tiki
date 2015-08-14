@@ -15,7 +15,7 @@
 
 <h2>{$totfile} {tr}Available Files{/tr} {$totalsize|kbsize}</h2>
 <form method="post" action="tiki-batch_upload_files.php" name="f" class="form-horizontal">
-	<table class="formcolor" id="filelist" width="100%">
+	<table class="table table-stripped" id="filelist">
 		<tr>
 			<th>
 				{select_all checkbox_names='files[]'}
