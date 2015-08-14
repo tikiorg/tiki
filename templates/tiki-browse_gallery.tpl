@@ -199,14 +199,14 @@
 											</a>{$liend}
 										{/if}
 										{if $imagerotate}
-											{$libeg}<a class="gallink" href="{$galleryId|sefurl:gallery:with_next}rotateright={$item.imageId}" title="{tr}rotate right{/tr}">
+											{$libeg}<a class="gallink" href="{$galleryId|sefurl:gallery:with_next}&amp;rotateright={$item.imageId}" title="{tr}rotate right{/tr}">
 												{icon name='repeat' _menu_text='y' _menu_icon='y' alt="{tr}Rotate{/tr}"}
 											</a>{$liend}
 										{/if}
 										{$libeg}<a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$item.imageId}">
 											{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
 										</a>{$liend}
-										{$libeg}<a class="gallink" href="{$galleryId|sefurl:gallery:with_next}remove={$item.imageId}">
+										{$libeg}<a class="gallink" href="{$galleryId|sefurl:gallery:with_next}&amp;remove={$item.imageId}">
 											{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
 										</a>{$liend}
 									{/if}
