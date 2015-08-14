@@ -265,12 +265,6 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">{tr}Name{/tr}</label>
-                <div class="col-sm-7 col-sm-offset-1">
-                    <input type="text" id="um_name" name="um_name" value="{$um_name|escape}" class="form-control">
-                </div>
-            </div>
-            <div class="form-group">
                 <label class="col-sm-3 control-label">{tr}Parse using{/tr}</label>
                 <div class="col-sm-7 col-sm-offset-1">
                     <select name="um_parse" id="um_parse" class="form-control margin-bottom-sm">
