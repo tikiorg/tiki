@@ -755,12 +755,12 @@
 								<tr>
 									{if $tiki_p_admin eq 'y'}
 										<td class="checkbox-cell">
-											<input type="checkbox" class="form-control" name="{$actionlog.code}" {if $actionlog.status eq 'y' or $actionlog.status eq 'v'}checked="checked"{/if}>
+											<input type="checkbox" name="{$actionlog.code}" {if $actionlog.status eq 'y' or $actionlog.status eq 'v'}checked="checked"{/if}>
 										</td>
 									{/if}
 									{if $tiki_p_admin eq 'y' or $actionlog.status eq 'y' or $actionlog.status eq 'v'}
 										<td class="checkbox-cell">
-											<input type="checkbox" class="form-control" name="v_{$actionlog.code}" {if $actionlog.status eq 'v'}checked="checked"{/if}>
+											<input type="checkbox" name="v_{$actionlog.code}" {if $actionlog.status eq 'v'}checked="checked"{/if}>
 										</td>
 										<td class="text text-center">{tr}{$actionlog.action}{/tr}</td>
 										<td class="text text-center">{tr}{$actionlog.objectType}{/tr}</td>

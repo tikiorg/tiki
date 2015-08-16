@@ -45,7 +45,7 @@
 			 	<div class="form-group">
 					<label class="col-sm-3 control-label">{tr}Import user preferences{/tr}</label>
 					<div class="col-sm-7 col-sm-offset-1">
-						<input type="checkbox" name="feature_intertiki_import_preferences" {if $prefs.feature_intertiki_import_preferences eq 'y'}checked="checked"{/if} class="form-control" />
+						<input type="checkbox" name="feature_intertiki_import_preferences" {if $prefs.feature_intertiki_import_preferences eq 'y'}checked="checked"{/if}/>
 					</div>
 					<label class="col-sm-3 control-label">{tr}Import user groups{/tr}</label>
 					<div class="col-sm-7 col-sm-offset-1">
@@ -203,7 +203,7 @@
 								<td><input type="text" class="form-control" name="newhost[key]" value=""/></td>
 								<td><input type="text" class="form-control" name="newhost[ip]" value=""/></td>
 								<td><input type="text" class="form-control" name="newhost[contact]" value=""/></td>
-								<td><input type="checkbox" class="form-control" name="newhost[allowusersregister]"/></td>
+								<td><input type="checkbox" name="newhost[allowusersregister]"/></td>
 							</tr>
 							</tbody>
 						</table>
