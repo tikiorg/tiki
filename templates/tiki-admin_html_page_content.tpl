@@ -46,7 +46,7 @@
 <form action="tiki-admin_html_page_content.php" method="post" class="form-horizontal">
 	<input type="hidden" name="pageName" value="{$pageName|escape}">
 	<input type="hidden" name="zone" value="{$zone|escape}">
-	<table class="table">
+	<table class="table table-striped table-hover">
 		<tr>
 			<th>
 				<a href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'zone_desc'}zone_asc{else}zone_desc{/if}">{tr}zone{/tr}</a>
