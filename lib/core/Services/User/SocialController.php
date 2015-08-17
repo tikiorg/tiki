@@ -33,7 +33,6 @@ class Services_User_SocialController
 			'friends' => $friends,
 			'incoming' => $incoming,
 			'outgoing' => $outgoing,
-			'otheruser' => $input->username->text(),
 		);
 	}
 

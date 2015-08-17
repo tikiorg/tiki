@@ -10,9 +10,7 @@
 	{foreach from=$friends item=friend}
 		<li>
 			{$friend.user|userlink}
-			{if $user eq $otheruser}
-				<a class="pull-right remove-friend tips" href="{service controller=social action=remove_friend friend=$friend.user}" data-confirm="{tr _0=$friend.user}Do you really want to remove %0?{/tr}" title=":{tr}Remove Friend{/tr}">{icon name='delete'}</a>
-			{/if}
+			<a class="pull-right remove-friend tips" href="{service controller=social action=remove_friend friend=$friend.user}" data-confirm="{tr _0=$friend.user}Do you really want to remove %0?{/tr}" title=":{tr}Remove Friend{/tr}">{icon name='delete'}</a>
 		</li>
 	{foreachelse}
 		<li>{tr}No friends have been added.{/tr}</li>
