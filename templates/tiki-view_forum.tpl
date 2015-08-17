@@ -10,7 +10,9 @@
 {/if}
 {if !$tsAjax}
 	{$forum_info.name|addonnavbar:'forum'}
-	{title help="forums" admpage="forums" url=$forum_info.forumId|sefurl:'forum'}{$forum_info.name|addongroupname}{/title}
+	{block name=title}
+		{title help="forums" admpage="forums" url=$forum_info.forumId|sefurl:'forum'}{$forum_info.name|addongroupname}{/title}
+	{/block}
 
 	{if $forum_info.show_description eq 'y'}
 		<div class="description help-block">{wiki}{$forum_info.description}{/wiki}</div>
@@ -490,7 +492,8 @@
 	<input type="hidden" name="forumId" value="{$forumId|escape}">
 	{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
 	<div id="{$ts_tableid}-div" class="{if $js === 'y'}table-responsive{/if} ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}>
-		<table id="{$ts_tableid}" class="table normal table-striped table-hover" data-count="{$comments_cant|escape}">
+		<table id="{$ts_tableid}" class="table normal table-striped table-hover table-forum" data-count="{$comments_cant|escape}">
+			{block name=forum-header}
 			<thead>
 				<tr>
 					{$cntcol = 0}
@@ -555,6 +558,7 @@
 					{$cntcol = $cntcol + 1}
 				</tr>
 			</thead>
+			{/block}
 			<tbody>
 				{section name=ix loop=$comments_coms}
 					{if $userinfo && $comments_coms[ix].lastPost > $userinfo.lastLogin}
@@ -562,6 +566,7 @@
 					{else}
 						{assign var="newtopic" value=""}
 					{/if}
+					{block name=forum-row}
 					<tr>
 						{if $tiki_p_admin_forum eq 'y'}
 							<td class="checkbox-cell">
@@ -729,6 +734,7 @@
 							{/if}
 						</td>
 					</tr>
+					{/block}
 				{sectionelse}
 					{if !$tsOn || ($tsOn && $tsAjax)}
 						{norecords _colspan=$cntcol _text="No topics found"}
@@ -782,7 +788,7 @@
 					<div class="panel-body">
 						<form id='time_control' class="form-horizontal" method="post" action="tiki-view_forum.php">
 							{if $comments_offset neq 0}
-								<input type="hidden" name="comments_offset" value="{$comments_offset|escape}">
+								<input type="hidden" name="comments_offset" value="0"><!--reset the offset when starting a new filtered search-->
 							{/if}
 							{if $comments_threadId neq 0}
 								<input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}">

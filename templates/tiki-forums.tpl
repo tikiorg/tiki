@@ -1,6 +1,8 @@
 {* $Id$ *}
 {if !$tsAjax}
-	{title help="forums" admpage="forums"}{tr}Forums{/tr}{/title}
+	{block name=title}
+		{title help="forums" admpage="forums"}{tr}Forums{/tr}{/title}
+	{/block}
 	<div class="t_navbar margin-bottom-md">
 		{if $tiki_p_admin_forum eq 'y'}
 			{button href="tiki-admin_forums.php" class="btn btn-default" _icon_name="wrench" _text="{tr}Admin{/tr}"}
@@ -63,7 +65,8 @@
 	{$liend = ''}
 {/if}
 <div id="{$ts_tableid}-div" class="{if $js === 'y'}table-responsive{/if} ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}> {*the table-responsive class cuts off dropdown menus *}
-	<table id="{$ts_tableid}" class="table table-striped table-hover normal" data-count="{$cant|escape}">
+	<table id="{$ts_tableid}" class="table table-striped table-hover table-forum normal" data-count="{$cant|escape}">
+		{block name=forum-header}
 		<thead>
 			<tr>
 				{$numbercol = 1}
@@ -97,6 +100,7 @@
 				<th id="actions"></th>
 			</tr>
 		</thead>
+		{/block}
 		<tbody>
 			{assign var=section_old value=""}
 			{section name=user loop=$channels}
@@ -105,7 +109,7 @@
 					{assign var=section_old value=$section}
 					<td class="third info" colspan="{$numbercol}">{$section|escape}</td>
 				{/if}
-
+				{block name=forum-row}
 				<tr>
 					<td class="text">
 						{if (isset($channels[user].individual) and $channels[user].individual eq 'n')
@@ -174,6 +178,7 @@
 						{/if}
 					</td>
 				</tr>
+				{/block}
 			{sectionelse}
 				{if !$tsOn || ($tsOn && $tsAjax)}
 					{norecords _colspan=$numbercol _text="{tr}No forums found{/tr}"}

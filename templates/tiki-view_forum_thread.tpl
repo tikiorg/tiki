@@ -1,9 +1,11 @@
 {* $Id$ *}
 {$forum_info.name|addonnavbar:'forum'}
-{title help="forums" admpage="forums"}
-	{$forum_info.name|addongroupname}
-	{if $prefs.feature_forum_topics_archiving eq 'y' && $thread_info.archived eq 'y'}({tr}Archived{/tr}){/if}
-{/title}
+{block name=title}
+	{title help="forums" admpage="forums"}
+		{$forum_info.name|addongroupname}
+		{if $prefs.feature_forum_topics_archiving eq 'y' && $thread_info.archived eq 'y'}({tr}Archived{/tr}){/if}
+	{/title}
+{/block}
 
 <div class="t_navbar btn-group margin-bottom-md">
 	{if $tiki_p_admin_forum eq "y"}
@@ -41,6 +43,7 @@
 	{$thread_info.title|escape}
 </div>
 
+{block name=thread_actions}
 <div class="text-right margin-bottom-md">
 	{if empty($thread_info.topic.threadId)}
 		<span>
@@ -116,6 +119,7 @@
 		</div>
 
 </div>
+{/block}
 
 
 {if $openpost eq 'y'}
@@ -140,7 +144,7 @@
 
 <div class="form-group">
 	<form class="form-horizontal" role="form" id='time_control' method="get" action="tiki-view_forum_thread.php">
-		<input type="hidden" name="comments_offset" value="{$comments_offset|escape}">
+		<input type="hidden" name="comments_offset" value="0"><!--Reset offset to 0 when applying a new filter -->
 		<input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}">
 		<input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}">
 		<input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
