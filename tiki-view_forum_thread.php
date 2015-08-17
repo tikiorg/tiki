@@ -78,6 +78,11 @@ if (isset($_REQUEST["quote"]) && $_REQUEST["quote"]) {
 }
 $smarty->assign('quote', $quote);
 
+//Set time control to 0 if not set
+if (!isset($_REQUEST['time_control'])) {
+	$_REQUEST['time_control'] = 0;
+}
+$commentslib->set_time_control($_REQUEST['time_control']);
 /* If the forum is flat (no sub-threads), check to see if the requested post is
 the original post for the thread (ie. if it's the root of the thread). If not,
 change the request to fetch its parent's thread and then find the location of the
