@@ -54,11 +54,49 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 		if (isset($detail['preferences']['country'])) {
 			$country = $detail['preferences']['country'];
 		}
+		$gender = '';
+		if (isset($detail['preferences']['gender'])) {
+			$gender = $detail['preferences']['gender'];
+		}
+		$homePage = '';
+		if (isset($detail['preferences']['homePage'])) {
+			$homePage = $detail['preferences']['homePage'];
+		}
+		$realName = '';
+		if (isset($detail['preferences']['realName'])) {
+			$realName = $detail['preferences']['realName'];
+		}
+		if ($prefs['allowmsg_is_optional'] == 'y' && isset($detail['preferences']['allowMsgs'])) {
+			$allowMsgs = $detail['preferences']['allowMsgs'];
+		}else{
+			$allowMsgs = 'y';
+		}
+		if (isset($detail['preferences']['user_style'])) {
+			$user_style = $detail['preferences']['user_style'];
+		} else {
+			$user_style = $prefs['site_style'];
+		}
+
+		$user_language = $this->tiki->get_language($this->user);
+		$user_language_text = $this->tiki->format_language_list(array($user_language));
+
+		$userPage = $prefs['feature_wiki_userpage_prefix'] . $userinfo['login'];
+		if (! $this->tiki->page_exists($userPage)){
+			$userPage = "";
+		}
+
 
 		$data = array(
 			'title' => $typeFactory->sortable($name),
 			'wiki_content' => $typeFactory->wikitext($content),
 			'user_country' => $typeFactory->sortable($country),
+			'user_gender' => $typeFactory->sortable($gender),
+			'user_homepage' => $typeFactory->sortable($homePage),
+			'user_realName' => $typeFactory->sortable($realName),
+			'user_allowmsgs' => $typeFactory->sortable($allowMsgs),
+			'user_language' => $typeFactory->multivalue($user_language),
+			'user_style' => $typeFactory->sortable($user_style),
+			'user_page' => $typeFactory->sortable($userPage),
 			'geo_located' => $typeFactory->identifier(empty($loc) ? 'n' : 'y'),
 			'geo_location' => $typeFactory->identifier($loc),
 			'searchable' => $typeFactory->identifier($this->userIsIndexed($detail) ? 'y' : 'n'),

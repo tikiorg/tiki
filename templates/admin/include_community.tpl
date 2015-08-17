@@ -22,6 +22,7 @@
 			<h2>{tr}User features{/tr}</h2>
 
 			<div class="admin featurelist">
+				{preference name=feature_new_profiles}
 				{preference name=feature_score}
 				{preference name=feature_mytiki}
 				{preference name=feature_minical}

@@ -254,6 +254,13 @@ function prefs_feature_list($partial = false)
 				'textFilter' => 'categ', // intentional use of categ so it catches category and categories
 			),
 		),
+		'feature_new_profiles' => array(
+			'name' => tra('Use new profiles'),
+			'description' => tra('Use new profiles build with elasticsearch'),
+			'help' => 'User+Preferences',
+			'type' => 'flag',
+			'default' => 'n',
+		),
 		'feature_score' => array(
 			'name' => tra('Score'),
 			'description' => tra('Score is a game to motivate participants to increase their contribution by comparing to other users.'),

@@ -979,6 +979,57 @@ class Services_User_Controller
 		}
 	}
 
+	function action_send_message($input) {
+		global $smarty, $user;
+		include_once ('lib/messu/messulib.php');
+		$userlib = TikiLib::lib('user');
+
+		//ensures a user was selected to send a message to.
+		if (empty($input->userwatch->text())) {
+			throw new Services_Exception(tra('No user was selected.'));
+		}
+		//sets default priority for the message to 3 if no priority was given
+		if (!empty($input->priority->text())) {
+			$priority = $input->priority->text();
+		} else {
+			$priority = 3;
+		}
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			if (empty($input->subject->text()) && empty($input->body->text())) {
+				$smarty->assign('message', tra('ERROR: Either the subject or body must be non-empty'));
+				$smarty->display("tiki.tpl");
+				die;
+			}
+			//if message is successfully sent
+			if ($messulib->post_message($input->userwatch->text(), $user, $input->to->text(), '', $input->subject->text(), $input->body->text(), $priority, '', isset($input->replytome) ? 'y' : '', isset($input->bccme) ? 'y' : '')) {
+				$message = tra('Your Message was successfully sent to') . ' ' . $userlib->clean_user($input->userwatch->text());
+				$type = "feedback";
+				$heading = "Success!";
+			} else {
+				$message = tra('An error occurred, please check your mail settings and try again');
+				$type= "error";
+				$heading = "Error!";
+			}
+			return array(
+				'modal' => '1',
+				'FORWARD' => array(
+					'controller' => 'utilities',
+					'action' => 'modal_alert',
+					'ajaxheading' => $heading,
+					'ajaxtype' => $type,
+					'ajaxmsg' => $message,
+					'ajaxdismissible' => 'n',
+				)
+			);
+		} else {
+			return array(
+				'title' => tra("Send Me a Message"),
+				'userwatch' => $input->userwatch->text(),
+				'priority' => $priority,
+			);
+		}
+	}
 
 	private function removeUsers(array $users, $page = false)
 	{

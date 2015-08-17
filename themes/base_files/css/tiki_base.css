@@ -2260,6 +2260,24 @@ ul.freetagged li {
 fieldset.dropzone {
   min-height: 120px;
 }
+.profile-left-bar .profile-avatar img {
+  margin-bottom: 6px;
+  max-width: 100%;
+}
+.profile-left-bar .profile-username {
+  font-size: 18px;
+}
+.profile-right-bar .profile-buttons .btn {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.profile-right-bar button.add-friend {
+  width: 100%;
+  margin-top: 10px;
+}
+.profile-tab-content h2 {
+  margin-top: 0;
+}
 .prio1,
 .prio2,
 .prio3,

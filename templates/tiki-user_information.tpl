@@ -213,7 +213,6 @@
 					{if $user_pages|@count > 0}
 						<h3>{tr}Wiki Pages{/tr}</h3>
 						<div class="table normal">
-
 							{section name=ix loop=$user_pages}
 								<div>
 									<div>

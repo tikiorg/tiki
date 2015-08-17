@@ -11,6 +11,12 @@
 require_once ('tiki-setup.php');
 include_once ('lib/messu/messulib.php');
 include_once ('lib/userprefs/scrambleEmail.php');
+
+if ($prefs['feature_new_profiles'] == 'y'){
+	include "tiki-user_profile.php";
+	die;
+}
+
 $registrationlib = TikiLib::lib('registration');
 $trklib = TikiLib::lib('trk');
 if (isset($_REQUEST['userId'])) {

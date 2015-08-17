@@ -42,6 +42,6 @@
 		{/foreach}
 	</ul>
 {/if}
-<button class="add-friend btn btn-default">{tr}Add Friend{/tr}</button>
+<button class="add-friend btn btn-default"><i class="fa fa-user-plus"></i> {tr}Add Friend{/tr}</button>
 </div>
 {/block}
