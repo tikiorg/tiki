@@ -77,6 +77,34 @@ if (isset($_REQUEST["quote"]) && $_REQUEST["quote"]) {
 	$quote = 0;
 }
 $smarty->assign('quote', $quote);
+
+/* If the forum is flat (no sub-threads), check to see if the requested post is
+the original post for the thread (ie. if it's the root of the thread). If not,
+change the request to fetch its parent's thread and then find the location of the
+originally requested post*/
+if ( $forum_info['is_flat'] == 'y') {
+	if (empty($thread_info)){
+		//need to get thread info to find out if it's the root of the thread
+		$thread_info = $commentslib->get_comment($_REQUEST["comments_parentId"]);
+	}
+	// if it's not the root, ie. not 0, then start the fetch the thread via the root post
+	if ($thread_info['parentId'] > 0) {
+		$anchored_post = $_REQUEST['comments_parentId'];
+		$root_thread_id = $thread_info['parentId'];
+		//gets the position/page offset of the requested post within the parent
+		$resPos = $commentslib->get_comment_position($anchored_post,$root_thread_id,$_REQUEST['topics_sort_mode'],$forum_info['commentsPerPage']);
+		if (empty($_REQUEST['comments_offset'])){
+			//find the needed comments_offset to set to the right page
+			$_REQUEST['comments_offset'] = $resPos['page_offset'] * $forum_info['commentsPerPage'];
+		}
+		//note the #thread anchor added at the end of the URL to fetch the specific post
+		$url = "tiki-view_forum_thread.php?forumId=" . $_REQUEST['forumId'] . "&comments_parentId=" . $root_thread_id . "&comments_offset=" . $_REQUEST['comments_offset'] . "#threadId".$anchored_post;
+		header('location: ' . $url);
+		die;
+	}
+}
+
+
 $comments_parentId = $_REQUEST["comments_parentId"];
 if (isset($_REQUEST["openpost"])) {
 	$smarty->assign('openpost', 'y');

@@ -3752,6 +3752,39 @@ class Comments extends TikiLib
 		return array('cant' => $cant, 'data' => $ret);
 	}
 
+	/**
+	 * Particularly useful for flat forums, you get the position and page of a comment.
+	 *
+	 * @param $comment_id
+	 * @param $parent_id
+	 * @param $sort_mode
+	 * @param $max_per_page
+	 */
+	function get_comment_position($comment_id, $parent_id, $sort_mode, $max_per_page, $show_approved='y'){
+
+		$bindvars = array($parent_id, $sort_mode);
+		$query = "SELECT `threadId` FROM `tiki_comments` tc WHERE (tc.`parentId`=?)";
+		if ($show_approved == "y") {
+			$query .= " AND tc.`approved` = 'y'";
+		}
+		$query .= " ORDER BY ?";
+		$results = $this->fetchAll($query, $bindvars);
+
+		$position = 0;
+		foreach ($results as $result){
+			if ($result['threadId'] == $comment_id) {
+				break;
+			}
+			$position++;
+		}
+		$page_offset = floor($position/$max_per_page);
+
+		return array(
+			'position' => $position,
+			'page_offset' => $page_offset,
+		);
+	}
+
     /**
      * @param $type
      * @param $threadId
