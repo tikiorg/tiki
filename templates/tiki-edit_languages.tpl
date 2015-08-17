@@ -22,7 +22,7 @@
 			<div class="form-group">
 				<div class="adminoptionbox">
 					<label for="edit_language" class="col-sm-3 control-label">{tr}Select the language to edit:{/tr}</label>
-					<div class="col-sm-7 col-sm-offset-1">
+					<div class="col-sm-7">
 						<select id="edit_language" class="translation_action form-control" name="edit_language">
 							{section name=ix loop=$languages}
 								<option value="{$languages[ix].value|escape}" {if $edit_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
@@ -34,7 +34,7 @@
 			<div class="form-group">
 				<div class="adminoptionbox">
 					<label for="add_tran_sw" class="col-sm-3 control-label">{tr}Add a translation{/tr}</label>
-					<div class="col-sm-7 col-sm-offset-1">
+					<div class="col-sm-7">
 						<label class="radio-inline"><input id="add_tran_sw" class="translation_action" type="radio" name="action" value="add_tran_sw" {if $action eq 'add_tran_sw'}checked="checked"{/if}>{tr}Add{/tr}</label>
 					</div>
 				</div>
@@ -42,7 +42,7 @@
 			<div class="form-group">
 				<div class="adminoptionbox">
 					<label for="add_tran_sw" class="col-sm-3 control-label">{tr}Edit translations{/tr}</label>
-					<div class="col-sm-7 col-sm-offset-1">
+					<div class="col-sm-7">
 						<label class="radio-inline"><input id="edit_tran_sw" class="translation_action" align="right" type="radio" name="action" value="edit_tran_sw" {if $action eq 'edit_tran_sw'}checked="checked"{/if}>{tr}Edit{/tr}</label>
 						<div class="adminoptionboxchild">
 							<label class="checkbox-inline"><input id="only_db_translations" class="translation_action" type="checkbox" name="only_db_translations" {if $only_db_translations eq 'y'}checked="checked"{/if}>{tr}Show only database stored translations{/tr}</label>
@@ -53,7 +53,7 @@
 			<div class="form-group">
 				<div class="adminoptionbox">
 					<label for="add_tran_sw" class="col-sm-3 control-label">{tr}Unstranslated strings{/tr}</label>
-					<div class="col-sm-7 col-sm-offset-1">
+					<div class="col-sm-7">
 						<label class="radio-inline"><input id="edit_rec_sw" class="translation_action" align="right" type="radio" name="action" value="edit_rec_sw" {if $action eq 'edit_rec_sw'}checked="checked"{/if}>{tr}Untranslated{/tr}</label>
 						{if $prefs.record_untranslated eq 'y'}
 						<div class="adminoptionboxchild">
@@ -80,19 +80,19 @@
 						<h4>{tr}Add a translation:{/tr}</h4>
 						<div class="form-group">
 							<label class="col-sm-3 control-label">{tr}Original:{/tr}</label>
-							<div class="col-sm-7 col-sm-offset-1">
+							<div class="col-sm-7">
 						      	<input name="add_tran_source" maxlength="255" class="form-control">
 						    </div>
 					    </div>
 					    <div class="form-group">
 							<label class="col-sm-3 control-label">{tr}Translation:{/tr}</label>
-							<div class="col-sm-7 col-sm-offset-1">
+							<div class="col-sm-7">
 						      	<input name="add_tran_tran" maxlength="255" class="form-control">
 						    </div>
 					    </div>
 					    <div class="form-group">
 							<label class="col-sm-3 control-label"></label>
-							<div class="col-sm-7 col-sm-offset-1">
+							<div class="col-sm-7">
 					    		<input type="submit" class="btn btn-default btn-sm" name="add_tran" value="{tr}Add{/tr}">
 						    </div>
 						</div>

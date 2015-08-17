@@ -555,7 +555,7 @@
 				<h2>{tr}Download CSV export{/tr}</h2>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">{tr}Charset encoding{/tr}</label>
-                    <div class="col-sm-7 col-sm-offset-1">
+                    <div class="col-sm-7">
                         <select name="encoding" class="form-control">
                             <option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option>
                             <option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option>
@@ -564,7 +564,7 @@
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">{tr}Fields{/tr}</label>
-                    <div class="col-sm-7 col-sm-offset-1">
+                    <div class="col-sm-7">
                        <div class="col-sm-12">
                            <input type="checkbox" name="username" checked="checked"> {tr}Username{/tr}
                        </div>
@@ -578,7 +578,7 @@
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label"></label>
-                    <div class="col-sm-7 col-sm-offset-1">
+                    <div class="col-sm-7">
                         <input type="submit" class="btn btn-default btn-sm" name="export" value="{tr}Export{/tr}">
                     </div>
                 </div>
@@ -591,13 +591,13 @@
 				{/remarksbox}
                 <div class="form-group">
                     <label class="col-sm-3 control-label">{tr}CSV File{/tr}<a title="{tr}Help{/tr}" {popup text='user<br>user1<br>user2'}>{icon name='help'}</a></label>
-                    <div class="col-sm-7 col-sm-offset-1">
+                    <div class="col-sm-7">
                         <input name="csvlist" type="file" >
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label"></label>
-                    <div class="col-sm-7 col-sm-offset-1">
+                    <div class="col-sm-7">
                         <input type="submit" class="btn btn-default btn-sm" name="import" value="{tr}Import{/tr}">
                     </div>
                 </div>

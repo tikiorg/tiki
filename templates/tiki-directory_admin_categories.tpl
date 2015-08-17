@@ -12,7 +12,7 @@
 		<label class="col-sm-3 control-label">
 			{tr}Parent directory category{/tr}
 		</label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 			<select name="parent" onchange="javascript:path.submit();" class="form-control">
 				<option value="0">{tr}Top{/tr}</option>
 				{section name=ix loop=$categs}
@@ -23,7 +23,7 @@
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label"></label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 			<input type="submit" class="btn btn-default btn-sm" name="go" value="{tr}Go{/tr}">
 		</div>
 	</div>
@@ -42,19 +42,19 @@
 
 	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Name{/tr}</label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 			<input type="text" name="name" value="{$info.name|escape}" class="form-control">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Description{/tr}</label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 			<textarea rows="5" cols="60" name="description" class="form-control">{$info.description|escape}</textarea>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Children type{/tr}</label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 			<select name="childrenType" class="form-control">
 				<option value='c' {if $info.childrenType eq 'c'}selected="selected"{/if}>{tr}Most visited directory sub-categories{/tr}</option>
 				<option value='d' {if $info.childrenType eq 'd'}selected="selected"{/if}>{tr}Directory Category description{/tr}</option>
@@ -64,7 +64,7 @@
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Maximum number of children to show{/tr}</label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 			<select name="viewableChildren" class="form-control">
 				<option value="0" {if $info.viewableChildren eq 0}selected="selected"{/if}>{tr}none{/tr}</option>
 				<option value="1" {if $info.viewableChildren eq 1}selected="selected"{/if}>1</option>
@@ -77,19 +77,19 @@
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Allow sites in this directory category{/tr}</label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 			<input name="allowSites" type="checkbox" {if $info.allowSites eq 'y'}checked="checked"{/if} >
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Show number of sites in this directory category{/tr}</label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 			<input name="showCount" type="checkbox" {if $info.showCount eq 'y'}checked="checked"{/if}>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Editor group{/tr}</label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 			<select name="editorGroup" class="form-control">
 					<option value="">{tr}None{/tr}</option>
 					{section name=ux loop=$groups}
@@ -100,7 +100,7 @@
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label"></label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 			<input class="btn btn-default" type="submit" name="save" value="{tr}Save{/tr}">
 		</div>
 	</div>

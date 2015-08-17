@@ -12,7 +12,7 @@
 		<label class="col-sm-3 control-label">
 			{tr}Parent directory category{/tr}
 		</label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 			<select name="parent" onchange="javascript:path.submit();" class="form-control">
 				{section name=ix loop=$all_categs}
 					<option value="{$all_categs[ix].categId|escape}" {if $parent eq $all_categs[ix].categId}selected="selected"{/if}>{$all_categs[ix].path}</option>
@@ -22,7 +22,7 @@
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label"></label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 			<input type="submit" class="btn btn-default btn-sm" name="go" value="{tr}Go{/tr}">
 		</div>
 	</div>
@@ -33,7 +33,7 @@
 	<input type="hidden" name="parent" value="{$parent|escape}">
 	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Directory Category:{/tr}</label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 			<select name="categId" class="form-control">
 				{section name=ix loop=$categs}
 					<option value="{$categs[ix].categId|escape}">{$categs[ix].path}</option>
@@ -43,13 +43,13 @@
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Mutual:{/tr}</label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 			<input type="checkbox" name="mutual">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label"></label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 			<input type="submit" class="btn btn-default btn-sm" name="add" value="{tr}Save{/tr}">
 		</div>
 	</div>

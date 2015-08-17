@@ -26,19 +26,19 @@
     <form class="form-horizontal">
         <div class="form-group">
             <label class="col-sm-3 control-label">{tr}Login{/tr}</label>
-            <div class="col-sm-7 col-sm-offset-1">
+            <div class="col-sm-7">
                 {$user_info.login|escape}
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">{tr}Email{/tr}</label>
-            <div class="col-sm-7 col-sm-offset-1">
+            <div class="col-sm-7">
                 {$user_info.email}
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">{tr}Groups{/tr}</label>
-            <div class="col-sm-7 col-sm-offset-1">
+            <div class="col-sm-7">
                 {foreach from=$user_info.groups item=what key=grp name=groups}
                     {if $what eq 'included'}<i>{/if}{$grp|escape}{if $what eq 'included'}</i>{/if}
                     {if $grp != "Anonymous" && $grp != "Registered" and $what neq 'included'}
@@ -53,7 +53,7 @@
     <form method="post" action="tiki-assignuser.php{if $assign_user}?assign_user={$assign_user|escape:'url'}{/if}" class="form-horizontal">
         <div class="form-group">
             <label class="col-sm-3 control-label">{tr}Default Group{/tr}</label>
-            <div class="col-sm-6 col-sm-offset-1">
+            <div class="col-sm-6">
                 <select name="defaultgroup" class="form-control">
                     <option value=""></option>
                     {foreach from=$user_info.groups key=name item=included}

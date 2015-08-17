@@ -11,19 +11,19 @@
 		<div class="panel-body">
 			<div class="form-group">
 				<label class="col-sm-3 control-label">{tr}URL to link the banner{/tr}</label>
-				<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+				<div class="col-sm-7 margin-bottom-sm">
 			      	<input type="text" name="url" value="{$url|escape}" class="form-control">
 			    </div>
 		    </div>
 		    <div class="form-group">
 				<label class="col-sm-3 control-label">{tr}Client{/tr}</label>
-				<div class="col-sm-7 col-sm-offset-1 margin-bottom-sm">
+				<div class="col-sm-7 margin-bottom-sm">
 			      	{user_selector user=$client name='client'}
 			    </div>
 		    </div>
 		    <div class="form-group">
 				<label class="col-sm-3 control-label">{tr}Max impressions{/tr}</label>
-				<div class="col-sm-7 col-sm-offset-1">
+				<div class="col-sm-7">
 			      	<input type="text" name="maxImpressions" value="{$maxImpressions|escape}" maxlength="7" class="form-control">
 			      	<div class="help-block">
 			      		{tr}-1 for unlimited{/tr}
@@ -32,7 +32,7 @@
 		    </div>
 		    <div class="form-group">
 				<label class="col-sm-3 control-label">{tr}Max impressions for a user{/tr}</label>
-				<div class="col-sm-7 col-sm-offset-1">
+				<div class="col-sm-7">
 			      	<input type="text" name="maxUserImpressions" value="{$maxUserImpressions|escape}" maxlength="7" class="form-control">
   				    <div class="help-block">
 			      		{tr}-1 for unlimited{/tr}
@@ -41,7 +41,7 @@
 		    </div>
 		    <div class="form-group">
 				<label class="col-sm-3 control-label">{tr}Max clicks{/tr}</label>
-				<div class="col-sm-7 col-sm-offset-1">
+				<div class="col-sm-7">
 			      	<input type="text" name="maxClicks" value="{$maxClicks|escape}" maxlength="7" class="form-control">
 			      	<div class="help-block">
 			      		{tr}-1 for unlimited{/tr}
@@ -50,7 +50,7 @@
 		    </div>
 		    <div class="form-group">
 				<label class="col-sm-3 control-label">{tr}URIs where the banner appears only{/tr}</label>
-				<div class="col-sm-7 col-sm-offset-1">
+				<div class="col-sm-7">
 			      	<input type="text" name="onlyInURIs" value="{$onlyInURIs|escape}" class="form-control">
 			      	<div class="help-block">
 			      		{tr}Type each URI enclosed with the # character. Exemple:#/this_page#/tiki-index.php?page=this_page#{/tr}
@@ -59,7 +59,7 @@
 		    </div>
 		    <div class="form-group">
 				<label class="col-sm-3 control-label">{tr}URIs where the banner will not appear{/tr}</label>
-				<div class="col-sm-7 col-sm-offset-1">
+				<div class="col-sm-7">
 			      	<input type="text" name="exceptInURIs" value="{$exceptInURIs|escape}" class="form-control">
 			      	<div class="help-block">
 			      		{tr}Type each URI enclosed with the # character. Exemple:#/this_page#/tiki-index.php?page=this_page#{/tr}
@@ -68,7 +68,7 @@
 		    </div>
 		    <div class="form-group">
 				<label class="col-sm-3 control-label">{tr}Zone{/tr}</label>
-				<div class="col-sm-7 col-sm-offset-1">
+				<div class="col-sm-7">
 			      	<select name="zone"{if !$zones} disabled="disabled"{/if} class="form-control">
 						{section name=ix loop=$zones}
 							<option value="{$zones[ix].zone|escape}" {if $zone eq $zones[ix].zone}selected="selected"{/if}>{$zones[ix].zone|escape}</option>
@@ -81,13 +81,13 @@
 			      	</div>
 			    </div>
 			    <label class="col-sm-3 control-label">{tr}New Zone{/tr}</label>
-			    <div class="col-sm-7 col-sm-offset-1">
+			    <div class="col-sm-7">
 			    	<input type="text" name="zoneName" maxlength="10" class="form-control">
 		    	</div>
 		    </div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label"></label>
-				<div class="col-sm-7 col-sm-offset-1">
+				<div class="col-sm-7">
 			      	<input type="submit" class="btn btn-default btn-sm" name="create_zone" value="{tr}Create{/tr}">
 			    </div>
 		    </div>
@@ -99,19 +99,19 @@
 			<h4>{tr}Show the banner only between these dates:{/tr}</h4>
 			<div class="form-group">
 				<label class="col-sm-3 control-label">{tr}From date:{/tr}</label>
-				<div class="col-sm-7 col-sm-offset-1">
+				<div class="col-sm-7">
 			      	{html_select_date time=$fromDate prefix="fromDate_" end_year="+2" field_order=$prefs.display_field_order}
 			    </div>
 		    </div>
 		    <div class="form-group">
 				<label class="col-sm-3 control-label">{tr}To date:{/tr}</label>
-				<div class="col-sm-7 col-sm-offset-1">
+				<div class="col-sm-7">
 			      	{html_select_date time=$fromDate prefix="fromDate_" end_year="+2" field_order=$prefs.display_field_order}
 			    </div>
 		    </div>
 		    <div class="form-group">
 				<label class="col-sm-3 control-label">{tr}Use dates:{/tr}</label>
-				<div class="col-sm-7 col-sm-offset-1">
+				<div class="col-sm-7">
 					<label class="checkbox-inline"><input type="checkbox" name="useDates" {if $useDates eq 'y'}checked='checked'{/if}>Yes</label>
 			    </div>
 		    </div>
@@ -123,13 +123,13 @@
 			<h4>{tr}Show the banner only in these hours:{/tr}</h4>
 			<div class="form-group">
 				<label class="col-sm-3 control-label">{tr}from{/tr}</label>
-				<div class="col-sm-7 col-sm-offset-1">
+				<div class="col-sm-7">
 			      	{html_select_time time=$fromTime display_seconds=false prefix='fromTime' use_24_hours=$use_24hr_clock}
 			    </div>
 		    </div>
 		    <div class="form-group">
 				<label class="col-sm-3 control-label">{tr}to{/tr}</label>
-				<div class="col-sm-7 col-sm-offset-1">
+				<div class="col-sm-7">
 			      	{html_select_time time=$toTime display_seconds=false prefix='toTime' use_24_hours=$use_24hr_clock}
 			    </div>
 		    </div>
@@ -170,7 +170,7 @@
 			<h4>{tr}Select ONE method for the banner:{/tr}</h4>
 			<div class="form-group">
 				<label class="col-sm-3 control-label"><label class="radio-inline"><input type="radio" name="use" value="useHTML" {if $use eq 'useHTML'}checked="checked"{/if}>{tr}Use HTML{/tr}</label></label>
-				<div class="col-sm-7 col-sm-offset-1">
+				<div class="col-sm-7">
 					<textarea class="form-control" rows="5" name="HTMLData">{if $use ne 'useFlash'}{$HTMLData|escape}{/if}</textarea>
 					<div class="help-block">
 						{tr}HTML code{/tr}
@@ -179,7 +179,7 @@
 		    </div>
 	    	<div class="form-group">
 				<label class="col-sm-3 control-label"><label class="radio-inline"><input type="radio" name="use" value="useImage" {if $use eq 'useImage'}checked="checked"{/if}>{tr}Use Image{/tr}</label></label>
-				<div class="col-sm-7 col-sm-offset-1">
+				<div class="col-sm-7">
 					<input type="hidden" name="imageData" value="{$imageData|escape}">
 					<input type="hidden" name="imageName" value="{$imageName|escape}">
 					<input type="hidden" name="imageType" value="{$imageType|escape}">
@@ -190,14 +190,14 @@
 		    <div class="form-group">
 			    {if $hasImage eq 'y'}
 			    <label class="col-sm-3 control-label">{tr}Current Image{/tr}</label>
-				<div class="col-sm-7 col-sm-offset-1">
+				<div class="col-sm-7">
 					{$imageName}: <img src="{$tempimg}" alt="{tr}Current Image{/tr}">
 			    </div>
 			    {/if}
 		    </div>
 		    <div class="form-group">
 				<label class="col-sm-3 control-label"><label class="radio-inline"><input type="radio" name="use" value="useFixedURL" {if $use eq 'useFixedURL'}checked="checked"{/if}>{tr}Use Image from URL{/tr}</label></label>
-				<div class="col-sm-7 col-sm-offset-1">
+				<div class="col-sm-7">
 					<input type="text" name="fixedURLData" value="{$fixedURLData|escape}" class="form-control">
 					<div class="help-block">
 						{tr}(the image will be requested at the URL for each impression){/tr}
@@ -213,24 +213,24 @@
 		    	{/if}
 		    </div>
 		    <div class="form-group">
-			    <label class="col-sm-3 col-sm-offset-1 control-label">{tr}Movie URL{/tr}</label>
+			    <label class="col-sm-3 control-label">{tr}Movie URL{/tr}</label>
 			    <div class="col-sm-7 margin-bottom-sm">
 			    	 <input type="text" size="50" name="movieUrl" value="{$movie.movie|escape}" class="form-control">
 			    </div>
-			    <label class="col-sm-3 col-sm-offset-1 control-label">{tr}Movie Size{/tr}</label>
+			    <label class="col-sm-3 control-label">{tr}Movie Size{/tr}</label>
 			    <div class="col-sm-3">
 			    	<input type="text" size="4" name="movieWidth" value="{$movie.width|escape}" class="form-control" placeholder="{tr}width in pixels{/tr}">
 			    	<div class="help-block">
 						{tr}Pixels{/tr}
 					</div>
 			    </div>
-			    <div class="col-sm-3 col-sm-offset-1">
+			    <div class="col-sm-3">
 			    	<input type="text" size="4" name="movieHeight" value="{$movie.height|escape}" class="form-control" placeholder="{tr}height in pixels{/tr}">
 			    	<div class="help-block">
 						{tr}Pixels{/tr}
 					</div>
 		    	</div>
-	    		<label class="col-sm-3 col-sm-offset-1 control-label">{tr}FlashPlugin min version{/tr}</label>
+	    		<label class="col-sm-3 control-label">{tr}FlashPlugin min version{/tr}</label>
 			    <div class="col-sm-7 margin-bottom-sm">
 			    	<input type="text" name="movieVersion" value="{$movie.version|escape}" class="form-control">
 			    	<div class="help-block">
@@ -245,7 +245,7 @@
 		    </div>
 		    <div class="form-group">
 				<label class="col-sm-3 control-label"><label class="radio-inline"><input type="radio" name="use" value="useText" {if $use eq 'useText'}checked="checked"{/if}>{tr}Use Text{/tr}</label></label>
-				<div class="col-sm-7 col-sm-offset-1">
+				<div class="col-sm-7">
 					<textarea class="form-control" rows="5" name="textData">{$textData|escape}</textarea>
 			    </div>
 		    </div>

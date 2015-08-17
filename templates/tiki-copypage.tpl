@@ -11,7 +11,7 @@
 	{if isset($page_badchars_display)}
 		{if $prefs.wiki_badchar_prevent eq 'y'}
 		<div class="form-group">
-			<div class="col-sm-10 col-sm-offset-1"><br>
+			<div class="col-sm-10"><br>
 			{remarksbox type=errors title="{tr}Invalid page name{/tr}"}
 				{tr _0=$page_badchars_display|escape}The page name specified contains unallowed characters. It will not be possible to save the page until those are removed: <strong>%0</strong>{/tr}
 			{/remarksbox}
@@ -36,13 +36,13 @@
 		
     <div class="form-group">
 		<label class="col-sm-3 control-label">{tr}New name{/tr}</label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 		    <input type='text' id='newpage' name='newpage' size='40' value='{$newname|escape}' class="form-control">
 	    </div>
     </div>
     <div class="form-group">
 		<label class="col-sm-3 control-label"></label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 		    <input type="submit" class="btn btn-default btn-sm" name="copy" value="{tr}Copy{/tr}">
 	    </div>
     </div>

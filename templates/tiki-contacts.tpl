@@ -20,35 +20,35 @@
 
     <div class="form-group">
         <label class="col-sm-3 control-label">{tr}First Name{/tr}</label>
-        <div class="col-sm-7 col-sm-offset-1">
+        <div class="col-sm-7">
             <input type="text" maxlength="80" size="20" name="firstName" value="{$info.firstName|escape}" class="form-control">
         </div>
     </div>
 
     <div class="form-group">
         <label class="col-sm-3 control-label">{tr}Last Name{/tr}</label>
-        <div class="col-sm-7 col-sm-offset-1">
+        <div class="col-sm-7">
             <input type="text" maxlength="80" size="20" name="lastName" value="{$info.lastName|escape}" class="form-control">
         </div>
     </div>
 
     <div class="form-group">
         <label class="col-sm-3 control-label">{tr}Email{/tr}</label>
-        <div class="col-sm-7 col-sm-offset-1">
+        <div class="col-sm-7">
             <input type="text" maxlength="80" size="20" name="email" value="{$info.email|escape}" class="form-control">
         </div>
     </div>
 
     <div class="form-group">
         <label class="col-sm-3 control-label">{tr}Nickname{/tr}</label>
-        <div class="col-sm-7 col-sm-offset-1">
+        <div class="col-sm-7">
             <input type="text" maxlength="80" size="20" name="nickname" value="{$info.nickname|escape}" class="form-control">
         </div>
     </div>
 
     <div class="form-group">
         <label class="col-sm-3 control-label">{tr}Publish this contact to groups{/tr}</label>
-        <div class="col-sm-7 col-sm-offset-1">
+        <div class="col-sm-7">
             <select multiple="multiple" name="groups[]" size="6" class="form-control">
                 <option value=""></option>
                 {foreach item=group from=$groups}
@@ -60,7 +60,7 @@
 
     <div class="form-group">
         <label class="col-sm-3 control-label">{tr}Extra Fields{/tr}</label>
-        <div class="col-sm-7 col-sm-offset-1">
+        <div class="col-sm-7">
             <select id='select_exts' onchange='ext_select();' class="form-control">
                 <option>{tr}More...{/tr}</option>
             </select>
@@ -70,7 +70,7 @@
     <div id="extra-fields-placeholder">
         <div class="form-group hidden">
             <label class="col-sm-3 control-label"></label>
-            <div class="col-sm-7 col-sm-offset-1">
+            <div class="col-sm-7">
                 <input value="" name="" size="20" maxlength="80" class="form-control">
             </div>
             <div class="col-sm-1 hidden">
@@ -81,7 +81,7 @@
 
     <div class="form-group">
         <label class="col-sm-3 control-label"></label>
-        <div class="col-sm-7 col-sm-offset-1">
+        <div class="col-sm-7">
             <input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
         </div>
     </div>

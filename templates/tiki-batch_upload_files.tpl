@@ -39,7 +39,7 @@
 	<hr>
     <div class="form-group">
         <label class="col-sm-3 control-label">{tr}Remove extension from filename{/tr}</label>
-        <div class="col-sm-7 col-sm-offset-1">
+        <div class="col-sm-7">
             <input type="checkbox" name="removeExt" value="true" id="removeExt" checked="checked">
             <div class="help-block">
                 {tr}eg. from "digicam0001.jpg" then name digicam0001 will be used for the name field{/tr}
@@ -55,7 +55,7 @@
 -->
     <div class="form-group">
         <label class="col-sm-3 control-label">{tr}Use the last sub directory name as description{/tr}</label>
-        <div class="col-sm-7 col-sm-offset-1">
+        <div class="col-sm-7">
             <input type="checkbox" name="subToDesc" value="true" id="subToDesc">
             <div class="help-block">
                 {tr}eg. from "misc/screenshots/digicam0001.jpg" a description "screenshots" will be created{/tr}r}
@@ -64,7 +64,7 @@
     </div>
     <div class="form-group">
         <label class="col-sm-3 control-label">{tr}Select a File Gallery{/tr}</label>
-        <div class="col-sm-7 col-sm-offset-1">
+        <div class="col-sm-7">
             <select name="galleryId" class="form-control">
                 <option value="{$treeRootId}" {if $treeRootId eq $galleryId}selected="selected"{/if} style="font-style:italic; border-bottom:1px dashed #666;">{tr}Root{/tr}</option>
                 {section name=idx loop=$galleries}
@@ -77,7 +77,7 @@
     </div>
     <div class="form-group">
         <label class="col-sm-3 control-label"></label>
-        <div class="col-sm-7 col-sm-offset-1">
+        <div class="col-sm-7">
             <input type="submit" class="btn btn-default btn-sm" name="batch_upload" value="{tr}Process files{/tr}">
         </div>
     </div>

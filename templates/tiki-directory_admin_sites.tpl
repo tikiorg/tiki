@@ -10,7 +10,7 @@
 		<label class="col-sm-3 control-label">
 			{tr}Parent directory category{/tr}
 		</label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 			<select name="parent" onchange="javascript:path.submit();" class="form-control">
 				<option value="0">{tr}Top{/tr}</option>
 				{section name=ix loop=$categs}
@@ -21,7 +21,7 @@
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 control-label"></label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 			<input type="submit" class="btn btn-default btn-sm" name="go" value="{tr}Go{/tr}">
 		</div>
 	</div>
@@ -35,25 +35,25 @@
 
 	<div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Name{/tr}</label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 	      	<input type="text" name="name" value="{$info.name|escape}" class="form-control">
 	    </div>
     </div>
     <div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Description{/tr}</label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 	      	<textarea rows="5" cols="60" name="description" class="form-control">{$info.description|escape}</textarea>
 	    </div>
     </div>
     <div class="form-group">
 		<label class="col-sm-3 control-label">{tr}URL{/tr}</label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 	      	<input type="text" size="60" name="url" value="{if $info.url ne ""}{$info.url|escape}{else}http://{/if}" class="form-control">
 	    </div>
     </div>
     <div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Directory Categories{/tr}</label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 	      	<select name="siteCats[]" multiple="multiple" size="4" class="form-control">
 				{section name=ix loop=$categs}
 					<option value="{$categs[ix].categId|escape}" {if $categs[ix].belongs eq 'y' or $categs[ix].categId eq $addtocat}selected="selected"{/if}>
@@ -70,7 +70,7 @@
     {if $prefs.directory_country_flag eq 'y'}
 	    <div class="form-group">
 			<label class="col-sm-3 control-label">{tr}Country{/tr}</label>
-			<div class="col-sm-7 col-sm-offset-1">
+			<div class="col-sm-7">
 		      	<select id="country" name="country" class="form-control">
 					{section name=ux loop=$countries}
 						<option value="{$countries[ux]|escape}" {if $info.country eq $countries[ux]}selected="selected"{/if}>{tr}{$countries[ux]}{/tr}</option>
@@ -81,13 +81,13 @@
 	{/if}
     <div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Is valid{/tr}	</label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 	      	<input name="isValid" type="checkbox" {if $info.isValid eq 'y'}checked="checked"{/if}>
 	    </div>
     </div>
     <div class="form-group">
 		<label class="col-sm-3 control-label"></label>
-		<div class="col-sm-7 col-sm-offset-1">
+		<div class="col-sm-7">
 	      	<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
 	    </div>
     </div>
