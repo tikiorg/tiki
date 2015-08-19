@@ -10,7 +10,10 @@
 	{foreach from=$friends item=friend}
 		<li>
 			{$friend.user|userlink}
-			<a class="pull-right remove-friend tips" href="{service controller=social action=remove_friend friend=$friend.user}" data-confirm="{tr _0=$friend.user}Do you really want to remove %0?{/tr}" title=":{tr}Remove Friend{/tr}">{icon name='delete'}</a>
+			{* Show 'X' remove buttons only when on active user's profile *}
+			{if $user eq $username}
+				<a class="pull-right remove-friend tips" href="{service controller=social action=remove_friend friend=$friend.user}" data-confirm="{tr _0=$friend.user}Do you really want to remove %0?{/tr}" title=":{tr}Remove Friend{/tr}">{icon name='delete'}</a>
+			{/if}
 		</li>
 	{foreachelse}
 		<li>{tr}No friends have been added.{/tr}</li>
@@ -42,6 +45,8 @@
 		{/foreach}
 	</ul>
 {/if}
-<button class="add-friend btn btn-default"><i class="fa fa-user-plus"></i> {tr}Add Friend{/tr}</button>
+{if $showbutton eq 'y'}
+    <button class="add-friend btn btn-default"><i class="fa fa-user-plus"></i>{tr}Add Friend{/tr}</button>
+{/if}
 </div>
 {/block}
