@@ -69,6 +69,13 @@ function wikiplugin_bigbluebutton_info()
 					array('value' => 1, 'text' => tr('On')),
 				),
 			),
+			'showrecording' => array(
+				'required' => false,
+				'name' => tra('Display Recordings'),
+				'description' => tra('Enable or Disable the display of video recordings.'),
+				'filter' => 'flag',
+				'default' => 'y',
+			),
 		),
 	);
 }
@@ -81,7 +88,7 @@ function wikiplugin_bigbluebutton( $data, $params )
 		$meeting = $params['name']; // Meeting is more descriptive than name, but parameter name was already decided.
 		$smarty = TikiLib::lib('smarty');
 		$smarty->assign('bbb_meeting', $meeting);
-		
+
 		$perms = Perms::get('bigbluebutton', $meeting);
 
 		$params = array_merge(array('prefix' => '', 'recording' => 0), $params);
@@ -95,7 +102,7 @@ function wikiplugin_bigbluebutton( $data, $params )
 
 		if ( ! $bigbluebuttonlib->roomExists($meeting) ) {
 			if ( ! isset($_POST['bbb']) || $_POST['bbb'] != $meeting || ! $perms->bigbluebutton_create ) {
-				if ($perms->bigbluebutton_view_rec) {
+				if ($perms->bigbluebutton_view_rec && $params['showrecording'] != 'n') {
 					$smarty->assign('bbb_recordings', $bigbluebuttonlib->getRecordings($meeting));
 				} else {
 					$smarty->assign('bbb_recordings', null);
