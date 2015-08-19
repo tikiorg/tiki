@@ -500,6 +500,7 @@ $("#export_type").change(function(){
 
 <fieldset><legend>{tr}Repositories{/tr}</legend>
 <form action="tiki-admin.php?page=profiles" method="post">
+	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	{preference name=profile_unapproved}
 	{preference name=profile_sources}
 	{preference name=profile_channels}
