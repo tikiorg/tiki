@@ -126,6 +126,13 @@ class Messu extends TikiLib
 		$machine = $this->httpPrefix(true) . $foo['path'];
 		$machine = str_replace('messu-compose', 'messu-mailbox', $machine);
 		$machine = str_replace('messu-broadcast', 'messu-mailbox', $machine);
+		// For non-sefurl calls, replace tiki-ajax_services with messu-mailbox if
+		// service called is user > send_message
+		if ($foo['query'] == "controller=user&action=send_message") {
+			$machine = str_replace('tiki-ajax_services', 'messu-mailbox', $machine);
+		}
+		//For sefurl service call user > send_message, redirect to messu-mailbox.php
+		$machine = str_replace('tiki-user-send_message', 'messu-mailbox.php', $machine);
 
 		if ($this->get_user_preference($user, 'minPrio', 6) <= $priority) {
 			if (!isset($_SERVER['SERVER_NAME'])) {
