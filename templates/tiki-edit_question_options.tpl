@@ -9,14 +9,28 @@
 </div>
 
 <h2>{tr}Create/edit options for question:{/tr} <a href="tiki-edit_quiz_questions.php?quizId={$question_info.quizId}&amp;questionId={$question_info.questionId}">{$question_info.question|escape}</a></h2>
-<form action="tiki-edit_question_options.php" method="post">
+<form action="tiki-edit_question_options.php" method="post" class="form-horizontal">
 	<input type="hidden" name="optionId" value="{$optionId|escape}">
 	<input type="hidden" name="questionId" value="{$questionId|escape}">
-	<table class="formcolor">
-		<tr><td>{tr}Option:{/tr}</td><td><textarea name="optionText" rows="5" cols="40">{$optionText|escape}</textarea></td></tr>
-		<tr><td>{tr}Points:{/tr}</td><td><input type="text" name="points" value="{$points|escape}"></td></tr>
-		<tr><td >&nbsp;</td><td><input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}"></td></tr>
-	</table>
+
+    <div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Option{/tr}</label>
+		<div class="col-sm-7">
+	      	<textarea name="optionText" rows="5" cols="40" class="form-control">{$optionText|escape}</textarea>
+	    </div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Points{/tr}</label>
+		<div class="col-sm-7">
+	      	<input type="text" name="points" value="{$points|escape}" class="form-control">
+	    </div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label"></label>
+		<div class="col-sm-7">
+	      	<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+	    </div>
+    </div>
 </form>
 
 <h2>Options</h2>

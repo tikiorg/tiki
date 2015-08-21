@@ -7,60 +7,57 @@
 
 <h2>{tr}Block description: {/tr}{$description}</h2>
 
-<h2>
+<h3>
 	{if $data}
 		{tr}Edit{/tr}
 	{else}
 		{tr}Create{/tr}
 	{/if}
 	{tr}content{/tr}
-</h2>
+</h3>
 
 {if $pId}
 	{tr}You are editing block:{/tr} {$pId}<br>
 {/if}
-
-<form action="tiki-edit_programmed_content.php" method="post">
+<br>
+<form action="tiki-edit_programmed_content.php" method="post" class="form-horizontal">
 	<input type="hidden" name="contentId" value="{$contentId|escape}">
 	<input type="hidden" name="pId" value="{$pId|escape}">
-	<table class="formcolor">
-		<tr>
-			<td>{tr}Content Type:{/tr}</td>
-			<td>
-				<select name="content_type" class="type-selector">
-					<option value="static"{if $info.content_type eq 'static'} selected="selected"{/if}>{tr}Text area{/tr}</option>
-					<option value="page"{if $info.content_type eq 'page'} selected="selected"{/if}>{tr}Wiki Page{/tr}</option>
-				</select>
-			</td>
-		</tr>
 
-		<tr class="type-cond for-page">
-			<td>{tr}Page Name:{/tr}</td>
-			<td>
-				<input type="text" name="page_name" value="{$info.page_name|escape}">
-			</td>
-		</tr>
-
-		<tr class="type-cond for-static">
-			<td>{tr}Content:{/tr}</td>
-			<td>
-				<textarea rows="5" cols="40" name="data">{$info.data|escape}</textarea>
-			</td>
-		</tr>
-
-		<tr>
-			<td>{tr}Publishing date:{/tr}</td>
-			<td>
-				{html_select_date time=$publishDate end_year="+1" field_order=$prefs.display_field_order}
-				{tr}at{/tr} {html_select_time time=$publishDate display_seconds=false use_24_hours=$use_24hr_clock}</td>
-		</tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td>
-				<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-			</td>
-		</tr>
-	</table>
+    <div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Content Type{/tr}</label>
+		<div class="col-sm-7">
+		    <select name="content_type" class="form-control type-selector">
+				<option value="static"{if $info.content_type eq 'static'} selected="selected"{/if}>{tr}Text area{/tr}</option>
+				<option value="page"{if $info.content_type eq 'page'} selected="selected"{/if}>{tr}Wiki Page{/tr}</option>
+			</select>
+	    </div>
+    </div>
+    <div class="form-group type-cond for-page">
+		<label class="col-sm-3 control-label">{tr}Page Name{/tr}</label>
+		<div class="col-sm-7">
+		    <input type="text" name="page_name" value="{$info.page_name|escape}" class="form-control">
+	    </div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Content{/tr}</label>
+		<div class="col-sm-7">
+		    <textarea rows="5" cols="40" name="data" class="form-control">{$info.data|escape}</textarea>
+	    </div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Publising Date{/tr}</label>
+		<div class="col-sm-7">
+		    {html_select_date time=$publishDate end_year="+1" field_order=$prefs.display_field_order}
+			{tr}at{/tr} {html_select_time time=$publishDate display_seconds=false use_24_hours=$use_24hr_clock}
+	    </div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label"></label>
+		<div class="col-sm-7">
+		   <input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+	    </div>
+    </div>
 	{jq}
 		$('.type-selector').change( function( e ) {
 			$('.type-cond').hide();

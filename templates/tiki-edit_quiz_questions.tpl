@@ -15,36 +15,35 @@
 </div>
 
 <h2>{tr}Create/edit questions for quiz:{/tr} <a href="tiki-edit_quiz.php?quizId={$quiz_info.quizId}" >{$quiz_info.name|escape}</a></h2>
-
-<form action="tiki-edit_quiz_questions.php" method="post">
+<br>
+<form action="tiki-edit_quiz_questions.php" method="post" class="form-horizontal">
 	<input type="hidden" name="quizId" value="{$quizId|escape}">
 	<input type="hidden" name="questionId" value="{$questionId|escape}">
 
-	<table class="formcolor">
-		<tr>
-			<td>{tr}Question:{/tr}</td>
-			<td>
-				<textarea name="question" rows="5" cols="80">{$question|escape}</textarea>
-			</td>
-		</tr>
-		<tr>
-			<td>{tr}Position:{/tr}</td>
-			<td>
-				<select name="position">{html_options values=$positions output=$positions selected=$position}</select>
-			</td>
-		</tr>
-
-		<tr>
-			<td>{tr}Question Type:{/tr}</td>
-			<td>
-				<select name="questionType">{html_options options=$questionTypes selected=$type}</select>
-			</td>
-		</tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}"></td>
-		</tr>
-	</table>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Question{/tr}</label>
+		<div class="col-sm-7">
+      		<textarea name="question" rows="5" cols="80" class="form-control">{$question|escape}</textarea>
+  		</div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Position{/tr}</label>
+		<div class="col-sm-7">
+      		<select name="position" class="form-control">{html_options values=$positions output=$positions selected=$position}</select>
+  		</div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Question Type{/tr}</label>
+		<div class="col-sm-7">
+      		<select name="questionType" class="form-control">{html_options options=$questionTypes selected=$type}</select>
+  		</div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label"></label>
+		<div class="col-sm-7">
+      		<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+  		</div>
+    </div>
 </form>
 
 <h2>{tr}Import questions from text{/tr}
@@ -56,25 +55,22 @@
 </h2>
 
 <!-- begin form area for importing questions -->
-<form enctype="multipart/form-data" method="post" action="tiki-edit_quiz_questions.php?quizId={$quiz_info.quizId}">
-	<table class="formcolor">
-		<tr>
-			<td colspan="2">
-				{tr}Instructions: Type, or paste, your multiple choice questions below. One line for the question, then start answer choices on subsequent lines. Separate additional questions with a blank line. Indicate correct answers by starting them with a "*" (without the quotes) character.{/tr}
-			</td>
-		</tr>
-		<tr>
-			<td>
-				{tr}Input{/tr}
-			</td>
-			<td>
-				<textarea class="wikiedit" name="input_data" rows="30" cols="80" id='subheading'></textarea>
-			</td>
-		</tr>
-	</table>
-	<div align="center">
-		<input type="submit" class="wikiaction btn btn-default" name="import" value="Import">
+<form enctype="multipart/form-data" method="post" action="tiki-edit_quiz_questions.php?quizId={$quiz_info.quizId}" class="form-horizontal">
+	<div class="help-block">
+		{tr}Instructions: Type, or paste your multiple choice questions below. Provide one line for the question, then provide as many answers on want on subsequent lines. Separate questions with a blank line. To indicate correct answers, you may initiate an answer with "*" (without the quotes). None, any or all the answers are possible to be marked as correct.{/tr}
 	</div>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Input{/tr}</label>
+		<div class="col-sm-7">
+      		<textarea class="form-control wikiedit" name="input_data" rows="30" cols="80" id='subheading'></textarea>
+  		</div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label"></label>
+		<div class="col-sm-7">
+      		<input type="submit" class="wikiaction btn btn-default" name="import" value="Import">
+  		</div>
+    </div>
 </form>
 
 <!-- begin form for searching questions -->

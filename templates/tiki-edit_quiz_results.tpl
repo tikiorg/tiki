@@ -12,41 +12,33 @@
 	{tr}Create/edit questions for quiz:{/tr} <a href="tiki-edit_quiz.php?quizId={$quiz_info.quizId}" class="pageTitle">{$quiz_info.name}</a>
 </h2>
 
-<form action="tiki-edit_quiz_results.php" method="post">
+<form action="tiki-edit_quiz_results.php" method="post" class="form-horizontal">
 	<input type="hidden" name="quizId" value="{$quizId|escape}">
 	<input type="hidden" name="resultId" value="{$resultId|escape}">
-	<table class="formcolor">
-		<tr>
-			<td>{tr}From Points:{/tr}</td>
-			<td>
-				<input type="text" name="fromPoints" value="{$fromPoints|escape}">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				{tr}To Points:{/tr}
-			</td>
-			<td>
-				<input type="text" name="toPoints" value="{$toPoints|escape}">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				{tr}Answer:{/tr}
-			</td>
-			<td>
-				<textarea name="answer" rows="10" cols="40">{$answer|escape}</textarea>
-			</td>
-		</tr>
-		<tr>
-			<td>&nbsp;
-
-			</td>
-			<td>
-				<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-			</td>
-		</tr>
-	</table>
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}From Points{/tr}</label>
+		<div class="col-sm-7">
+      		<input type="text" name="fromPoints" value="{$fromPoints|escape}" class="form-control">
+  		</div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label">{tr}To Points{/tr}</label>
+		<div class="col-sm-7">
+      		<input type="text" name="toPoints" value="{$toPoints|escape}" class="form-control">
+  		</div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Answer{/tr}</label>
+		<div class="col-sm-7">
+      		<textarea name="answer" rows="10" cols="40" class="form-control">{$answer|escape}</textarea>
+  		</div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label"></label>
+		<div class="col-sm-7">
+      		<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+  		</div>
+    </div>
 </form>
 
 <h2>{tr}Results{/tr}</h2>

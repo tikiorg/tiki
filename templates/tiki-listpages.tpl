@@ -42,24 +42,30 @@
 
 	{if $tiki_p_edit == 'y'}
 		{tab name="{tr}Create a Wiki Page{/tr}"}
-			<h2>{tr}Create a Wiki Page{/tr}</h2>
-			<div class="text-center">
-				<strong>{tr}Insert name of the page you wish to create{/tr}</strong>
-				<form method="get" action="tiki-editpage.php">
-					<div class="form-group clearfix">
-						<div class="col-md-8 col-md-push-2">
+			<h2>{tr}Create a Wiki Page{/tr}</h2><br>
+			<div>
+				<form method="get" action="tiki-editpage.php" class="form-horizontal">
+					<div class="form-group">
+						<label class="control-label col-sm-3">{tr}Insert name of the page you wish to create{/tr}</label>
+						<div class="col-sm-9">
 							<input class="form-control" id="pagename" type="text" name="page">
 						</div>
 					</div>
 					{if $prefs.namespace_enabled == 'y' && $prefs.namespace_default}
-						<div>
-							<label>
-								<input type="checkbox" name="namespace" value="{$prefs.namespace_default|escape}" checked="checked">
-								{tr _0=$prefs.namespace_default}Create page within %0{/tr}
-							</label>
+					<div class="form-group">
+						<label class="control-label col-sm-3">{tr _0=$prefs.namespace_default}Create page within %0{/tr}</label>
+						<div class="col-sm-9">
+							<input type="checkbox" name="namespace" value="{$prefs.namespace_default|escape}" checked="checked">
 						</div>
+					</div>
 					{/if}
-					<input class="btn btn-primary" type="submit" name="quickedit" value="{tr}Create Page{/tr}">
+					<div class="form-group">
+						<label class="control-label col-sm-3"></label>
+						<div class="col-sm-9">
+							<input class="btn btn-primary" type="submit" name="quickedit" value="{tr}Create Page{/tr}">
+						</div>
+					</div>
+					
 				</form>
 			</div>
 		{/tab}
