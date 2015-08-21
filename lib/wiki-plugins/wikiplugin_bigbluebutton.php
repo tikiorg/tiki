@@ -73,7 +73,7 @@ function wikiplugin_bigbluebutton_info()
 				'required' => false,
 				'name' => tra('Display Recordings'),
 				'description' => tra('Enable or Disable the display of video recordings.'),
-				'filter' => 'flag',
+				'filter' => 'alpha',
 				'default' => 'y',
 			),
 		),
