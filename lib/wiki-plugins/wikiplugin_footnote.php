@@ -58,7 +58,7 @@ function wikiplugin_footnote($data, $params)
     if (isset($params["class"])){
     $class= ' class="'.$params["class"].'"';
     }
-	$html = '{SUP()}~np~' . "<a id=\"ref_footnote$number\" href=\"#footnote$number\"$class>$number</a>" . '~/np~{SUP}';
+	$html = '~np~' . "<sup class=\"footnote$number\"><a id=\"ref_footnote$number\" href=\"#footnote$number\"$class>$number</a></sup>" . '~/np~';
 
 	return $html;
 }
