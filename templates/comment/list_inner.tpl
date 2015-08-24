@@ -1,4 +1,4 @@
-<ol class="media media-list">
+<ol class="media media-list comment-list">
 	{foreach from=$comments item=comment}
 		<li class="media comment{if $comment.archived eq 'y'} archived well well-sm{/if} {if $allow_moderate}{if $comment.approved eq 'n'} pending bg-warning{elseif $comment.approved eq 'r'} rejected bg-danger{/if}{/if}{if ! $parentId && $prefs.feature_wiki_paragraph_formatting eq 'y'} inline{/if}" data-comment-thread-id="{$comment.threadId|escape}">
 			<div class="media-left">
@@ -26,23 +26,25 @@
 						{$comment.parsed}
 					</div>
 					<div class="buttons comment-form comment-footer">
-						{if $allow_post && $comment.locked neq 'y'}
-							<a class='btn btn-link btn-sm' href="{service controller=comment action=post type=$type objectId=$objectId parentId=$comment.threadId}">{tr}Reply{/tr}</a>
-						{/if}
-						{if $comment.can_edit}
-							<a class='btn btn-link btn-sm' href="{service controller=comment action=edit threadId=$comment.threadId}">{tr}Edit{/tr}</a>
-						{/if}
-						{if $allow_remove}
-							<a class="btn btn-link btn-sm" href="{service controller=comment action=remove threadId=$comment.threadId}">{tr}Delete{/tr}</a>
-						{/if}
-						{if $allow_archive}
-							{if $comment.archived eq 'y'}
-								<span class="label label-default">{tr}Archived{/tr}</span>
-								<a class="btn btn-link btn-sm" href="{service controller=comment action=archive do=unarchive threadId=$comment.threadId}">{tr}Unarchive{/tr}</a>
-							{else}
-								<a class="btn btn-link btn-sm" href="{service controller=comment action=archive do=archive threadId=$comment.threadId}">{tr}Archive{/tr}</a>
+						{block name="buttons"}
+							{if $allow_post && $comment.locked neq 'y'}
+								<a class='btn btn-link btn-sm' href="{service controller=comment action=post type=$type objectId=$objectId parentId=$comment.threadId}">{tr}Reply{/tr}</a>
 							{/if}
-						{/if}
+							{if $comment.can_edit}
+								<a class='btn btn-link btn-sm' href="{service controller=comment action=edit threadId=$comment.threadId}">{tr}Edit{/tr}</a>
+							{/if}
+							{if $allow_remove}
+								<a class="btn btn-link btn-sm" href="{service controller=comment action=remove threadId=$comment.threadId}">{tr}Delete{/tr}</a>
+							{/if}
+							{if $allow_archive}
+								{if $comment.archived eq 'y'}
+									<span class="label label-default">{tr}Archived{/tr}</span>
+									<a class="btn btn-link btn-sm" href="{service controller=comment action=archive do=unarchive threadId=$comment.threadId}">{tr}Unarchive{/tr}</a>
+								{else}
+									<a class="btn btn-link btn-sm" href="{service controller=comment action=archive do=archive threadId=$comment.threadId}">{tr}Archive{/tr}</a>
+								{/if}
+							{/if}
+						{/block}
 						{if $allow_moderate and $comment.approved neq 'y'}
 							{if $comment.approved eq 'n'}
 								<span class="label label-warning">{tr}Pending{/tr}</span>
