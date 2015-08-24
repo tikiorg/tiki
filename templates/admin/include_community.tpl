@@ -71,6 +71,7 @@
 				</div>
 				{preference name=feature_group_transition}
 				{preference name=user_favorites}
+				{preference name=user_likes}
 				{preference name=feature_invite}
 				{preference name=feature_wizard_user}
 				{preference name=mustread_enabled}
