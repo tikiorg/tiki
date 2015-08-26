@@ -107,8 +107,6 @@ var handleFiles = function (files) {
 				};
 
 				var data = e.target.result;
-				data = data.substr(data.indexOf('base64') + 7);
-
 				sendData = {
 					type: 'POST',
 					url: uploadUrl,
