@@ -94,29 +94,29 @@
 		{if $contentId ne ''}
 			<div class="t_navbar">{button href="tiki-list_contents.php" class="btn btn-default" _text="{tr}Create New Block{/tr}"}</div>
 		{/if}
-		<form action="tiki-list_contents.php" method="post">
+		<br>
+		<form action="tiki-list_contents.php" method="post" class="form-horizontal">
 			{query _type='form_input'}
 			<input type="hidden" name="contentId" value="{$contentId|escape}">
-			<table class="formcolor">
-				<tr>
-					<td>{tr}Label:{/tr}</td>
-					<td>
-						<input type="text" name="contentLabel" style="width:40%" value="{$contentLabel|escape}">
-					</td>
-				</tr>
-				<tr>
-					<td>{tr}Description:{/tr}</td>
-					<td>
-						<textarea rows="5" cols="40" name="description" style="width:95%">{$description|escape}</textarea>
-					</td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td>
-						<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-					</td>
-				</tr>
-			</table>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Label{/tr}</label>
+				<div class="col-sm-7">
+			      	<input type="text" name="contentLabel" style="width:40%" value="{$contentLabel|escape}" class="form-control">
+			    </div>
+		    </div>
+		    <div class="form-group">
+				<label class="col-sm-3 control-label">{tr}Description{/tr}</label>
+				<div class="col-sm-7">
+			      	<textarea rows="5" cols="40" name="description" style="width:95%" class="form-control">{$description|escape}</textarea>
+			    </div>
+		    </div>
+		    <div class="form-group">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-sm-7">
+			      	<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+			    </div>
+		    </div>
 		</form>
 	{/tab}
 {/tabset}

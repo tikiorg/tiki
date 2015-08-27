@@ -17,49 +17,49 @@
 			<input type="hidden" id="tiki_user" value="{$user|escape}">
 
 			<h2>{tr}Request live support{/tr}</h2>
-			<table>
-				{if $user}
-					<input type="hidden" id="username" value="{$user|escape}">
-					<input type="hidden" id="emailaddress" value="{$user_email|escape}">
-					<tr>
-						<td>{tr}User{/tr}</td>
-						<td>
-							{$user}
-						</td>
-					</tr>
-					<tr>
-						<td>{tr}Email{/tr}</td>
-						<td>
-							{$user_email}
-						</td>
-					</tr>
-				{else}
-					<tr>
-						<td>{tr}User{/tr}</td>
-						<td>
-							<input type="text" id="username">
-						</td>
-					</tr>
-					<tr>
-						<td>{tr}Email{/tr}</td>
-						<td>
-							<input type="text" id="emailaddress">
-						</td>
-					</tr>
-				{/if}
-				<tr>
-					<td>{tr}Reason{/tr}</td>
-					<td>
-						<!--input id='reason' type="text" />-->
-						<textarea id='reason' cols='20' rows='3'></textarea>
-					</td>
-				</tr>
-			</table>
 
-			<br><br>
+		    <div class="col-sm-6 col-sm-offset-3 col-xs-12">
+				<div class="table-responsive">
+					<table class="table">
+						{if $user}
+							<input type="hidden" id="username" value="{$user|escape}">
+							<input type="hidden" id="emailaddress" value="{$user_email|escape}">
+							<tr>
+								<td><strong>{tr}User{/tr}</strong></td>
+								<td>
+									{$user}
+								</td>
+							</tr>
+							<tr>
+								<td><strong>{tr}Email{/tr}</strong></td>
+								<td>
+									{$user_email}
+								</td>
+							</tr>
+						{else}
+							<tr>
+								<td><strong>{tr}User{/tr}</strong></td>
+								<td>
+									<input type="text" id="username">
+								</td>
+							</tr>
+							<tr>
+								<td><strong>{tr}Email{/tr}</strong></td>
+								<td>
+									<input type="text" id="emailaddress">
+								</td>
+							</tr>
+						{/if}
+						<tr>
+							<td><strong>{tr}Reason{/tr}</strong></td>
+							<td>
+								<textarea id='reason' rows='3' class="form-control"></textarea>
+							</td>
+						</tr>
+					</table>
+				</div>
 			<input onClick="request_chat(document.getElementById('username').value,document.getElementById('tiki_user').value,document.getElementById('emailaddress').value,document.getElementById('reason').value);" type="button" value="{tr}Request support{/tr}">
-			<br><br>
-			<!--<a href="tiki-live_support_message.php" class="link">{tr}Open a support ticket instead{/tr}</a>-->
+			</div>
 		</div>
 
 		<div id='requesting_chat' style='display:none;'>

@@ -26,7 +26,7 @@
 			{if $individual eq 'y'}
 				{permission_link mode=link type="image gallery" permType="image galleries" id=$galleryId title=$name label="{tr}There are individual permissions set for this gallery{/tr}"}
 			{/if}
-			<form action="tiki-galleries.php" method="post" id="gal-edit-form">
+			<form action="tiki-galleries.php" method="post" id="gal-edit-form" class="form-horizontal">
 				<input type="hidden" name="galleryId" value="{$galleryId|escape}">
 				<table class="formcolor">
 					<tr><td>{tr}Name:{/tr}</td><td><input type="text" name="name" value="{$name|escape}"></td></tr>

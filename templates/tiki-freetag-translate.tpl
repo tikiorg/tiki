@@ -10,7 +10,7 @@
 	universal (i.e. is the same tag in all languages) until a language has been set for the tag.{/tr}
 	{tr}Until then, they cannot be translated.{/tr}
 </p>
-<form method="post" action="tiki-freetag_translate.php">
+<form method="post" action="tiki-freetag_translate.php" class="form-horizontal">
 	<input type="hidden" name="type" value="{$type|escape}">
 	<input type="hidden" name="objId" value="{$objId|escape}">
 	<input type="hidden" name="offset" value="{$freetags_offset|escape}">
@@ -32,77 +32,85 @@
 	{/jq}
 
 	{button _onclick="javascript:show_cleartra_checkboxes()" id="scblink" _text="{tr}Show checkboxes to clear language information on tags{/tr}"}
-
+	<br><br>
 	<div class="resultspagelinks">
 		{if $previous}<a class="neatlink" href="{$previous|escape}">&laquo; {tr}Previous{/tr}</a>{/if}
 		<a class="neatlink" href="{$next|escape}">{tr}Next{/tr} &raquo;</a>
 	</div>
+	<br>
 
-	<table class="formcolor" id="tagtranslationtable">
-		<thead>
-			<tr>
-			{foreach item=lang from=$languageList}
-				{if $lang neq ''}
-					<th>{$lang}</th>
+	<div class="table-responsive">
+		<table class="table" id="tagtranslationtable">
+			<thead>
+				<tr>
+				{foreach item=lang from=$languageList}
+					{if $lang neq ''}
+						<th class="text-center">{$lang}</th>
+					{/if}
+				{/foreach}
+				</tr>
+			</thead>
+			<tbody>
+				{if !$tagList}
+					<tr>
+						<td colspan="{if in_array('',$languageList)}{($languageList|@count) - 1}{else}{$languageList|@count}{/if}">
+							{tr}There are no tags on this page in your preferred languages{/tr}
+						</td>
+					</tr>
 				{/if}
-			{/foreach}
-			</tr>
-		</thead>
-		<tbody>
-			{if !$tagList}
+				{foreach item=tag key=group from=$tagList}
+					<tr>
+						{if $tag[$blank] eq ''}
+							{foreach item=lang from=$languageList}
+								{if $lang neq ''}
+									<td>
+										{if !$tag[$lang]}
+											<div>
+												<input type="text" name="newtag[{$group}][{$lang}]" value="{$newtags[$group][$lang]}" class="form-control">
+												<input type="hidden" name="rootlang[{$group}][{$lang}]" value="{$rootlang[$group]}">
+											</div>
+										{else}
+											<div class="text-center">{$tag[$lang].tag} <input style="display: none" type="checkbox" name="clear[]" value="{$tag[$lang].tagId}"></div>
+										{/if}
+									</td>
+								{/if}
+							{/foreach}
+						{else}
+							{assign var=btag value=$tag[$blank]}
+
+							<td colspan="{if in_array('',$languageList)}{($languageList|@count) - 1}{else}{$languageList|@count}{/if}">
+								<div class="col-sm-3">
+									{$btag.tag} - {tr}Set language{/tr}
+								</div>
+								<div class="col-sm-9">
+									<select name="setlang[{$btag.tagId}]" class="form-control">
+										<option value="">{tr}Universal{/tr}</option>
+										{foreach item=lang from=$languageList}
+											{if $lang neq ''}
+												<option value="{$lang}"{if $setlang[$btag.tagId] eq $lang} selected="selected"{/if}>{$lang}</option>
+											{/if}
+										{/foreach}
+									</select>
+								</div>
+							</td>
+						{/if}
+					</tr>
+				{/foreach}
 				<tr>
 					<td colspan="{if in_array('',$languageList)}{($languageList|@count) - 1}{else}{$languageList|@count}{/if}">
-						{tr}There are no tags on this page in your preferred languages{/tr}
+						<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
 					</td>
 				</tr>
-			{/if}
-			{foreach item=tag key=group from=$tagList}
-				<tr>
-					{if $tag[$blank] eq ''}
-						{foreach item=lang from=$languageList}
-							{if $lang neq ''}
-								<td>
-									{if !$tag[$lang]}
-										<div>
-											<input type="text" name="newtag[{$group}][{$lang}]" value="{$newtags[$group][$lang]}">
-											<input type="hidden" name="rootlang[{$group}][{$lang}]" value="{$rootlang[$group]}">
-										</div>
-									{else}
-										<div>{$tag[$lang].tag} <input style="display: none" type="checkbox" name="clear[]" value="{$tag[$lang].tagId}"></div>
-									{/if}
-								</td>
-							{/if}
-						{/foreach}
-					{else}
-						{assign var=btag value=$tag[$blank]}
-						<td colspan="{if in_array('',$languageList)}{($languageList|@count) - 1}{else}{$languageList|@count}{/if}">
-							{$btag.tag} - {tr}Set language{/tr}
-							<select name="setlang[{$btag.tagId}]">
-								<option value="">{tr}Universal{/tr}</option>
-								{foreach item=lang from=$languageList}
-									{if $lang neq ''}
-										<option value="{$lang}"{if $setlang[$btag.tagId] eq $lang} selected="selected"{/if}>{$lang}</option>
-									{/if}
-								{/foreach}
-							</select>
-						</td>
-					{/if}
-				</tr>
-			{/foreach}
-			<tr>
-				<td colspan="{if in_array('',$languageList)}{($languageList|@count) - 1}{else}{$languageList|@count}{/if}">
-					<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-				</td>
-			</tr>
-		</tbody>
-	</table>
+			</tbody>
+		</table>
+	</div>
 	<div>
 		{tr}Show the following languages:{/tr}
-		<select multiple="multiple" name="additional_languages[]">
+		<select multiple="multiple" name="additional_languages[]" class="form-control">
 			{foreach item=lang from=$fullLanguageList}
 				<option value="{$lang.value}"{if in_array($lang.value, $languageList)} selected="selected"{/if}>{$lang.name}</option>
 			{/foreach}
-		</select>
+		</select></br>
 		<input type="submit" class="btn btn-default btn-sm" value="{tr}Select{/tr}">
 	</div>
 </form>

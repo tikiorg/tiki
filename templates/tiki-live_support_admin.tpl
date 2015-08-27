@@ -117,26 +117,27 @@
 
 {if $tiki_p_live_support_admin eq 'y'}
 <h2>{tr}Add an operator to the system{/tr}</h2>
-<small>{tr}Operators must be tiki users{/tr}</small>
-<form method="post" action="tiki-live_support_admin.php">
-<table class="formcolor">
-	<tr>
-		<td>{tr}User{/tr}</td>
-		<td>
-			<select name="user">
+<br>
+<form method="post" action="tiki-live_support_admin.php" class="form-horizontal">
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}User{/tr}</label>
+		<div class="col-sm-7">
+		    <select name="user" class="form-control">
 				{section name=ix loop=$users}
 					<option value="{$users[ix].user|escape}">{$users[ix].user|escape}</option>
 				{/section}
 			</select>
-		</td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td>
-			<input type="submit" class="btn btn-default btn-sm" name="adduser" value="{tr}Set as Operator{/tr}">
-		</td>
-	</tr>
-</table>
+			<div class="help-block">
+				{tr}Operators must be tiki users{/tr}
+			</div>
+	    </div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label"></label>
+		<div class="col-sm-7">
+		    <input type="submit" class="btn btn-default btn-sm" name="adduser" value="{tr}Set as Operator{/tr}">
+	    </div>
+    </div>
 </form>
 {/if}
 
