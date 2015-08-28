@@ -104,18 +104,27 @@
 			</table>
 		</form>
 	{/if}
-
 {/if}
 
 <div class="table normal">
-	<form enctype="multipart/form-data" action="tiki-pick_avatar.php" method="post">
-		<fieldset>
-			<legend><strong>{tr}Upload your own profile picture{/tr}</strong></legend>
-			{if $user ne $userwatch}<input type="hidden" name="view_user" value="{$userwatch|escape}">{/if}
-			<label for="userfile1">{if $prefs.user_store_file_gallery_picture neq 'y'}{tr}File (only .gif, .jpg and .png images approximately 45px × 45px){/tr}{else}{tr}File (only .gif, .jpg and .png images){/tr}{/if}:</label>
-			<input type="hidden" name="MAX_FILE_SIZE" value="10000000">
-			<input id="userfile1" name="userfile1" type="file">
-			<input type="submit" class="btn btn-primary btn-sm" name="upload" value="{tr}Upload{/tr}">
-		</fieldset>
+	<form enctype="multipart/form-data" action="tiki-pick_avatar.php" method="post" class="form-horizontal">
+		<legend><strong>{tr}Upload your own profile picture{/tr}</strong></legend>
+		{if $user ne $userwatch}<input type="hidden" name="view_user" value="{$userwatch|escape}">{/if}
+		<div class="form-group">
+			<label class="col-sm-3 control-label">{tr}Select your profile picture{/tr}</label>
+			<div class="col-sm-7">
+				<input type="hidden" name="MAX_FILE_SIZE" value="10000000">
+				<input id="userfile1" name="userfile1" type="file">
+				<div class="help-block">
+					{if $prefs.user_store_file_gallery_picture neq 'y'}{tr}File (only .gif, .jpg and .png images approximately 45px × 45px){/tr}{else}{tr}File (only .gif, .jpg and .png images){/tr}{/if}:
+				</div>
+		    </div>
+	    </div>
+	    <div class="form-group">
+			<label class="col-sm-3 control-label"></label>
+			<div class="col-sm-7">
+				<input type="submit" class="btn btn-primary btn-sm" name="upload" value="{tr}Upload{/tr}">
+		    </div>
+	    </div>
 	</form>
 </div>

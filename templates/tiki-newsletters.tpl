@@ -5,7 +5,7 @@
 		{button href="tiki-admin_newsletters.php" class="btn btn-default" _text="{tr}Admin Newsletters{/tr}"}
 	</div>
 {/if}
-
+<br>
 {if $subscribed eq 'y'}
 	<div class="alert alert-warning">
 		{tr}Thanks for your subscription. You will receive an email soon to confirm your subscription. No newsletters will be sent to you until the subscription is confirmed.{/tr}
@@ -44,40 +44,44 @@
 	<h2>
 		{tr}Subscribe to Newsletter{/tr}
 	</h2>
-	<form method="post" action="tiki-newsletters.php">
+	<br>
+	<form method="post" action="tiki-newsletters.php" class="form-horizontal">
 		<input type="hidden" name="nlId" value="{$nlId|escape}">
-		<table class="formcolor">
-			<tr>
-				<td class="even">{tr}Name:{/tr}</td>
-				<td class="even"><strong>{$nl_info.name|escape}</strong></td>
-			</tr>
-			<tr>
-				<td class="even">{tr}Description:{/tr}</td>
-				<td class="even">{$nl_info.description|escape|nl2br}</td>
-			</tr>
-			{if ($nl_info.allowUserSub eq 'y') or ($tiki_p_admin_newsletters eq 'y')}
-				{if $tiki_p_subscribe_email eq 'y' and (($nl_info.allowAnySub eq 'y' and $user) || !$user)}
-					<tr>
-						<td class="even">{tr}Email:{/tr}</td>
-						<td class="even"><input type="text" name="email" size="40" value="{$email|escape}"></td>
-					</tr>
-				{else}
-					<input type="hidden" name="email" value="{$email|escape}">
-				{/if}
-				{if !$user and $prefs.feature_antibot eq 'y'}
-					{include file='antibot.tpl' tr_style="formcolor"}
-				{/if}
-				<tr>
-					<td class="even">&nbsp;</td>
-					<td class="even">
-						<input type="submit" class="btn btn-primary btn-sm" name="subscribe" value="{tr}Subscribe to this Newsletter{/tr}">
-					</td>
-				</tr>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">{tr}Name{/tr}</label>
+			<div class="col-sm-7">
+		      	<p class="form-control-static">{$nl_info.name|escape}</p>
+		    </div>
+	    </div>
+	    <div class="form-group">
+			<label class="col-sm-3 control-label">{tr}Description{/tr}</label>
+			<div class="col-sm-7">
+		      	<p class="form-control-static">{$nl_info.description|escape|nl2br}</p>
+		    </div>
+	    </div>
+	    {if ($nl_info.allowUserSub eq 'y') or ($tiki_p_admin_newsletters eq 'y')}
+			{if $tiki_p_subscribe_email eq 'y' and (($nl_info.allowAnySub eq 'y' and $user) || !$user)}
+				<div class="form-group">
+					<label class="col-sm-3 control-label">{tr}Email{/tr}</label>
+					<div class="col-sm-7">
+				      	<input type="text" name="email" size="40" value="{$email|escape}" class="form-control">
+				    </div>
+			    </div>
+			{else}
+				<input type="hidden" name="email" value="{$email|escape}">
 			{/if}
-		</table>
+			{if !$user and $prefs.feature_antibot eq 'y'}
+				{include file='antibot.tpl' tr_style="formcolor"}
+			{/if}
+			<div class="form-group">
+				<label class="col-sm-3 control-label"></label>
+				<div class="col-sm-7">
+			      	<input type="submit" class="btn btn-primary btn-sm" name="subscribe" value="{tr}Subscribe to this Newsletter{/tr}">
+			    </div>
+		    </div>
+		{/if}
 	</form>
 {/if}
-
 {if $showlist eq 'y'}
 	<h2>{tr}Available Newsletters{/tr}</h2>
 

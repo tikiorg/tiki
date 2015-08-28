@@ -180,60 +180,68 @@
 
 <a name="add"></a>
 <h2>{if $eventId}{tr}Edit Event{/tr}{else}{tr}Add Event{/tr}{/if}</h2>
-<form action="tiki-minical.php" method="post">
+<br>
+<form action="tiki-minical.php" method="post" class="form-horizontal">
 	<input type="hidden" name="eventId" value="{$eventId|escape}">
 	<input type="hidden" name="view" value="{$view|escape}">
 	<input type="hidden" name="duration" value="60*60">
-	<table class="formcolor">
-		<tr>
-			<td>{tr}Title{/tr}</td>
-			<td>
-				<input type="text" name="title" value="{$info.title|escape}" style="width:95%">
-			</td>
-		</tr>
-		<tr>
-			<td>{tr}Start{/tr}</td>
-			<td>
-				{html_select_date time=$ev_pdate end_year="+4" field_order=$prefs.display_field_order} {tr}at{/tr}
-				{html_select_time minute_interval=5 time=$ev_pdate_h display_seconds=false use_24_hours=$use_24hr_clock}
-			</td>
-		</tr>
-		<tr>
-			<td>{tr}Duration{/tr}</td>
-			<td>
-				<select name="duration_hours">
-					{html_options output=$hours values=$hours selected=$duration_hours}
-				</select> {if $duration_hours>1}{tr}hours{/tr}{else}{tr}hour{/tr}{/if}
-				<select name="duration_minutes">
-					{html_options output=$minutes values=$minutes selected=$duration_minutes}
-				</select> {tr}minutes{/tr}
-			</td>
-		</tr>
-		<tr>
-			<td>{tr}Topic{/tr}</td>
-			<td>
-				<select name="topicId">
-					<option value="0" {if $info.topicId eq $topics[ix].topicId}selected="selected"{/if}>{tr}None{/tr}</option>
-					{section name=ix loop=$topics}
-						<option value="{$topics[ix].topicId|escape}" {if $info.topicId eq $topics[ix].topicId}selected="selected"{/if}>{$topics[ix].name}</option>
-					{/section}
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<td>{tr}Description{/tr}</td>
-			<td>
-				<textarea name="description" rows="5" cols="80" style="width:95%">{$info.description|escape}</textarea>
-			</td>
-		</tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td>
-				<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-				{if $eventId}
-					<input type="submit" class="btn btn-warning btn-sm" name="remove2" value="{tr}Delete{/tr}">
-				{/if}
-			</td>
-		</tr>
-	</table>
+
+    <div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Title{/tr}</label>
+		<div class="col-sm-7">
+	      	<input type="text" name="title" value="{$info.title|escape}" style="width:95%" class="form-control">
+	    </div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Start{/tr}</label>
+		<div class="col-sm-7">
+	      	{html_select_date time=$ev_pdate end_year="+4" field_order=$prefs.display_field_order} {tr}at{/tr}
+			{html_select_time minute_interval=5 time=$ev_pdate_h display_seconds=false use_24_hours=$use_24hr_clock}
+	    </div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Duration{/tr}</label>
+		<div class="col-sm-2">
+	      	<select name="duration_hours" class="form-control">
+				{html_options output=$hours values=$hours selected=$duration_hours}
+			</select>
+			<div class="help-block">
+				{if $duration_hours>1}{tr}hours{/tr}{else}{tr}hour{/tr}{/if}
+			</div>
+	    </div>
+	    <div class="col-sm-2">
+	      	<select name="duration_minutes" class="form-control">
+				{html_options output=$minutes values=$minutes selected=$duration_minutes}
+			</select>
+			<div class="help-block">
+				{tr}minutes{/tr}
+			</div>
+	    </div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Topic{/tr}</label>
+		<div class="col-sm-7">
+	      	<select name="topicId" class="form-control">
+				<option value="0" {if $info.topicId eq $topics[ix].topicId}selected="selected"{/if}>{tr}None{/tr}</option>
+				{section name=ix loop=$topics}
+					<option value="{$topics[ix].topicId|escape}" {if $info.topicId eq $topics[ix].topicId}selected="selected"{/if}>{$topics[ix].name}</option>
+				{/section}
+			</select>
+	    </div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Description{/tr}</label>
+		<div class="col-sm-7">
+	      	<textarea name="description" rows="5" cols="80" style="width:95%" class="form-control">{$info.description|escape}</textarea>
+	    </div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label"></label>
+		<div class="col-sm-7">
+	      	<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+			{if $eventId}
+				<input type="submit" class="btn btn-warning btn-sm" name="remove2" value="{tr}Delete{/tr}">
+			{/if}
+	    </div>
+    </div>
 </form>

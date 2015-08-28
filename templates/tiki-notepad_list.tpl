@@ -114,15 +114,18 @@
 {/if}
 
 <h2>{tr}Upload file{/tr}</h2>
-<form enctype="multipart/form-data" action="tiki-notepad_list.php" method="post">
-	<table class="formcolor">
-		<tr>
-			<td>{tr}Upload file:{/tr}</td>
-			<td>
-				<input type="hidden" name="MAX_FILE_SIZE" value="10000000000000">
-				<input size="16" name="userfile1" type="file">
-				<input type="submit" class="btn btn-primary btn-sm" name="upload" value="{tr}Upload{/tr}">
-			</td>
-		</tr>
-	</table>
+<form enctype="multipart/form-data" action="tiki-notepad_list.php" method="post" class="form-horizontal">
+	<div class="form-group">
+		<label class="col-sm-3 control-label">{tr}Upload file:{/tr}</label>
+		<div class="col-sm-7">
+	      	<input type="hidden" name="MAX_FILE_SIZE" value="10000000000000">
+			<input size="16" name="userfile1" type="file">
+	    </div>
+    </div>
+    <div class="form-group">
+		<label class="col-sm-3 control-label"></label>
+		<div class="col-sm-7">
+			<input type="submit" class="btn btn-primary btn-sm" name="upload" value="{tr}Upload{/tr}">
+	    </div>
+    </div>
 </form>
