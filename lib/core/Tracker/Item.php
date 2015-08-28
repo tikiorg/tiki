@@ -447,7 +447,7 @@ class Tracker_Item
 	public function getData($input = null)
 	{
 		$out = array();
-		if ($input && isset($input->fields)) {
+		if ($input) {
 			$fields = $this->prepareInput($input);
 
 			foreach ($fields as $field) {
