@@ -315,16 +315,14 @@ $('.confirm-click').click(function() {
 						{if !empty($user) && $prefs.feature_comments_post_as_anonymous eq 'y'}
 							<input type="submit" class="btn btn-default btn-sm" name="comments_postComment_anonymous" value="{tr}Post as Anonymous{/tr}" onclick="needToConfirm=false;">
 						{/if}
-						<input type="submit" class="btn btn-default btn-sm" name="comments_previewComment" id="comments_previewComment" value="{tr}Preview{/tr}"
-							{if ( isset($can_attach_file) && $can_attach_file eq 'y' ) or empty($user)}{strip}
-								{assign var='file_preview_warning' value="{tr}Please note that the preview does not keep the attached file which you will have to choose before posting.{/tr}"}
-								onclick="
-							{if isset($can_attach_file) && $can_attach_file eq 'y'}
-								if ($('#userfile1').val()) alert('{$file_preview_warning|escape:"javascript"}');
-							{/if}
-							"
-							{/strip}{else} onclick="needToConfirm=false;"{/if}>
-							<input type="submit" class="btn btn-default btn-sm" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}'); return false">
+						<input type="submit" class="btn btn-default btn-sm" name="comments_previewComment" id="comments_previewComment" value="{tr}Preview{/tr}">
+						{jq}$("#comments_previewComment").click(function () {
+	if ($("#userfile1").val()) {
+		alert("{tr}Please note that the preview does not keep the attached file which you will have to choose before posting.{/tr}");
+	}
+	needToConfirm=false;
+});{/jq}
+						<input type="submit" class="btn btn-default btn-sm" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}'); return false">
 					</div>
 				</div>
 			</form>
