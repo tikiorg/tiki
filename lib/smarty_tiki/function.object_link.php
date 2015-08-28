@@ -89,6 +89,7 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 
 	$smarty->loadPlugin('smarty_modifier_sefurl');
 	$smarty->loadPlugin('smarty_modifier_escape');
+	$smarty->loadPlugin('smarty_modifier_addongroupname');
 
 	if (empty($title)) {
 		$title = TikiLib::lib('object')->get_title($type, $object);
@@ -102,6 +103,9 @@ function smarty_function_object_link_default( $smarty, $object, $title = null, $
 		// Blank freetag should not be returned with "No title specified"
 		return '';
 	}
+
+	// get add on object title if needed
+	$title = smarty_modifier_addongroupname($title);
 
 	$text = $title;
 	$titleAttribute = '';
