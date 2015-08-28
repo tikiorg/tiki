@@ -52,6 +52,7 @@ class Search_GlobalSource_RelationSource implements Search_GlobalSource_Interfac
 
 		//take the type array and get a count of each indiv. type
 		$type_count = array_count_values($types);
+		$rel_count = array();
 		foreach ($type_count as $key=>$val) {
 			//instead of returning an assoc. array, format to "relation:count" format for input in index
 			$rel_count[] = $key . ":" . $val;
