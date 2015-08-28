@@ -660,8 +660,16 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 				}
 			}
 		}
-
-		return array();	// doesn't actually need to be indexed with the value
+		// Indexing the value of the field anyway as it could be different from the 'categories' field if
+		// you need to be more specific for filtering under a certain parent only.
+		//
+		// Warning to upgraders: older Tikis had no getDocumentPart so the comma-separated string was indexed
+		// in the past. It now indexes an array. Use {$baseKey}_text instead for a space delimited string.
+		$baseKey = $this->getBaseKey();
+		return array(
+			$baseKey => $typeFactory->multivalue($value),
+			"{$baseKey}_text" => $typeFactory->plaintext(implode(' ', $value)),
+		);
 	}
 
 
