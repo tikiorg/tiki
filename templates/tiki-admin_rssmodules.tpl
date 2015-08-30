@@ -151,7 +151,7 @@
 			<div class="form-group">
 				<label for="refresh" class="control-label col-sm-3">{tr}Refresh rate{/tr}</label>
 				<div class="col-sm-9">
-					<select name="refresh">
+					<select class="form-control" name="refresh">
 						{foreach [1, 5, 10, 15, 20, 30, 45, 60, 90, 120, 360, 720, 1440] as $min}
 							<option value="{$min|escape}" {if $refresh eq ($min*60)}selected="selected"{/if}>{($min*60)|duration}</option>
 						{/foreach}
