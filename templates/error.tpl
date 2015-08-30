@@ -110,11 +110,11 @@ close();
 		{* Hide the error navigation on the homepage *}
 		{if !isset($page) or $prefs.site_wikiHomePage neq $page}
 			{if $prefs.javascript_enabled eq 'y'}
-				{button _onclick="javascript:history.back();return false;" _text="{tr}Go back{/tr}" _ajax="n"}
+				{button _type="link" _icon_name="arrow-left" _onclick="javascript:history.back();return false;" _text="{tr}Go back{/tr}" _ajax="n"}
 				<br><br>
 			{/if}
 
-			{button href=$prefs.tikiIndex _text="{tr}Return to home page{/tr}"}
+			{button href=$prefs.tikiIndex _type="link" _icon_name="home" _text="{tr}Return to home page{/tr}"}
 		{/if}
 	{/if}
 {/capture}
