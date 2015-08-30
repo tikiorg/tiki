@@ -256,8 +256,8 @@ th {
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url('../../../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot');
-  src: url('../../../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../../../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../../../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../../../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot');
+  src: url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 .glyphicon {
   position: relative;
@@ -6660,17 +6660,18 @@ input[type="submit"],
 .button input {
   background: linear-gradient(to bottom, #a1bb87 0%, #8fa872 50%, #a1bb87 100%);
   text-transform: uppercase;
-}
-.btn.btn-link,
-input[type="submit"].btn-link {
-  background: none;
+  border-width: 2px;
 }
 .btn:hover,
-.btn-default:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
 .button input:hover {
   background: linear-gradient(to bottom, #8fa872 50%, #8fa872 50%, #a1bb87 100%);
+}
+.btn.btn-link,
+.btn-link:hover,
+input[type="submit"].btn-link {
+  background: none;
 }
 .topbar {
   margin-bottom: 20px;
