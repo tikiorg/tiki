@@ -7,8 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 function smarty_block_activityframe($params, $content, $smarty, &$repeat)
@@ -93,6 +93,7 @@ function smarty_block_activityframe($params, $content, $smarty, &$repeat)
 			'likeactive' => $likeMode != 'disabled',
 			'sharedgroups' => $sharedGroups,
 			'summary' => isset($params['summary']) ? $params['summary'] : null,
+			'params' => $params,
 		)
 	);
 	$out = $smarty->fetch('activity/activityframe.tpl');
