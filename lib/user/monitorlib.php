@@ -56,7 +56,7 @@ class MonitorLib
 
 		// Include object directly
 		$options[] = $this->gatherOptions($userId, $events, $type, $object);
-		
+
 		// Include translation set
 		if ($this->hasMultilingual($type)) {
 			// Using fake types - wiki page -> wiki page trans
@@ -132,7 +132,7 @@ class MonitorLib
 				return "category:$categoryId";
 			}, $categories);
 		}
-		
+
 		list($type, $objectId) = $this->cleanObjectId($type, $object);
 		$targets[] = 'global';
 		$targets[] = "$type:$objectId";
@@ -251,7 +251,7 @@ class MonitorLib
 
 		$this->queue[$eventId]['events'][] = $registeredEvent;
 	}
-	
+
 	function directNotification($priority, $userId, $event, $args)
 	{
 		$this->queue[$args['EVENT_ID']] = [
@@ -289,7 +289,7 @@ class MonitorLib
 			if (! empty($sendTo)) {
 				$monitormail->queue($item['event'], $args, $sendTo);
 			}
-				
+
 		}
 
 		$tx->commit();
@@ -297,7 +297,7 @@ class MonitorLib
 		// Send email (rather slow, dealing with external services) after Tiki's management is done
 		$monitormail->sendQueue();
 	}
-	
+
 	private function finalHandleEvent($args, $events, $force)
 	{
 		$currentUser = TikiLib::lib('login')->getUserId();
@@ -471,12 +471,6 @@ class MonitorLib
 				'tiki.save' => ['global' => false, 'local' => true, 'label' => tr('Any activity')],
 				'tiki.forumpost.save' => ['global' => false, 'local' => false, 'label' => tr('Any forum activity')],
 				'tiki.forumpost.create' => ['global' => true, 'local' => false, 'label' => tr('New topics')],
-			];
-		case 'trackeritem':
-			return [
-				'tiki.save' => ['global' => false, 'local' => true, 'label' => tr('Any activity')],
-				'tiki.trackeritem.save' => ['global' => false, 'local' => false, 'label' => tr('Any item activity')],
-				'tiki.trackeritem.create' => ['global' => true, 'local' => false, 'label' => tr('New items')],
 			];
 		case 'trackeritem':
 			return [
