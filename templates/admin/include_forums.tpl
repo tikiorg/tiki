@@ -41,6 +41,7 @@
 				{preference name=feature_forum_topics_archiving}
 				{preference name=feature_forum_quickjump}
 				{preference name=feature_forum_replyempty}
+				{preference name=feature_forum_allow_flat_forum_quotes}
 				{preference name=forum_reply_notitle}
 				{preference name=forum_comments_no_title_prefix}
 				{preference name=forum_reply_forcetitle}

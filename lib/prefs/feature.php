@@ -1638,6 +1638,13 @@ function prefs_feature_list($partial = false)
 			'default' => 'y',
 			'tags' => array('basic'),
 		),
+		'feature_forum_allow_flat_forum_quotes' => array(
+			'name' => tra('Allows quoting in flat forums'),
+			'description' => tra('Allows users to reply/'),
+			'type' => 'flag',
+			'default' => 'n',
+			'tags' => array('basic'),
+		),
 		'feature_forums_allow_thread_titles' => array(
 			'name' => tra('First post of a thread can have an empty body'),
             'description' => tra(''),

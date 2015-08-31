@@ -30,13 +30,7 @@ function wikiplugin_quote_info()
 
 function wikiplugin_quote($data, $params)
 {
-	/* set default values for some args */
-	
-	// Remove first <ENTER> if exists...
-//	if (substr($data, 0, 2) == "\r\n") $data = substr($data, 2);
-	// trim space/returns from beginning and end
 	$data = trim($data);
-    
 	extract($params, EXTR_SKIP);
 	if (!empty($replyto)) {
 		$caption = $replyto .' '.tra('wrote:');
@@ -44,12 +38,12 @@ function wikiplugin_quote($data, $params)
 		$caption = tra('Quote:');
 	}
     
-	$begin  = "<div class='quoteheader'>";
+	$begin  = "<div class='quote'><div class='quoteheader'>";
     $begin .= "$caption</div><div class='quotebody'>";
-	$end = "</div>";
-		// Prepend any newline char with br
-		$data = preg_replace("/\\n/", "<br />", $data);
+	$end = "</div></div>";
+
+	// Prepend any newline char with br
+	$data = preg_replace("/\\n/", "<br />", $data);
     // Insert "\n" at data begin if absent (so start-of-line-sensitive syntaxes will be parsed OK)
-//    if (substr($data, 0, 1) != "\n") $data = "\n".$data;
 	return $begin . $data . $end;
 }

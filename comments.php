@@ -240,13 +240,14 @@ if ($_REQUEST["comments_threadId"] > 0) {
 
 	$comment_info = $commentslib->get_comment($_REQUEST["comments_reply_threadId"]);
 
-	if ( $comment_info['parentId'] > 0 && $forum_info['is_flat'] == 'y' ) {
+	global $prefs;
+
+	if ( $prefs['feature_forum_allow_flat_forum_quotes'] != 'y' && $comment_info['parentId'] > 0 && $forum_info['is_flat'] == 'y' ) {
 		$smarty->assign('msg', tra("This forum is flat and doesn't allow replies to other replies"));
 		$smarty->display("error.tpl");
 		die;
 	}
 
-	global $prefs;
 	if ( $comment_info["data"] != ''  ) {
 		if ( ($prefs['feature_forum_parse'] == 'y' || $prefs['section_comments_parse'] == 'y') && $prefs['feature_use_quoteplugin'] == 'y' ) {
 			$comment_info["data"] = "\n{QUOTE(replyto=>" . $comment_info["userName"] . ")}" . $comment_info["data"] . '{QUOTE}';
@@ -287,6 +288,7 @@ if (isset($_REQUEST["comments_previewComment"]) || isset($_REQUEST["comments_pos
 	$comment_preview = array();
 
 	$comment_preview['title'] = $_REQUEST["comments_title"];
+	$comment_preview['userName'] = $user;
 
 	$comment_preview['parsed'] = $commentslib->parse_comment_data(strip_tags($_REQUEST["comments_data"]));
 	$comment_preview['rating'] = $_REQUEST["comment_rating"];

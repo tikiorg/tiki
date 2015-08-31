@@ -269,8 +269,12 @@ $('.confirm-click').click(function() {
 						{else}
 							{$forum_wysiwyg = 'n'}
 						{/if}
-						{textarea codemirror='true' syntax='tiki' id="editpost2" class="form-control" name="comments_data" _wysiwyg=$forum_wysiwyg}{if ($prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || $comment_preview eq 'y' || !empty($errors)}{$comment_data}{/if}{/textarea}
-
+						{textarea rows="10" codemirror='true' syntax='tiki' id="editpost2" class="form-control" name="comments_data" _wysiwyg=$forum_wysiwyg}{strip}
+							{*If set to reply not empty, if you are editing a post, or previewing, put the contents in the text area.*}
+							{if ($prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || $comment_preview eq 'y' || !empty($errors)}
+								{$comment_data}
+							{/if}
+						{/strip}{/textarea}
 						{if $user and $prefs.feature_user_watches eq 'y'}
 							<div id="watch_thread_on_reply">
 								<input id="watch_thread" type="checkbox" name="watch" value="y"{if $user_watching_topic eq 'y' or $smarty.request.watch eq 'y'} checked="checked"{/if}> <label for="watch_thread">{tr}Send me an email when someone replies{/tr}</label>

@@ -54,7 +54,7 @@
 				{button href="#form" _text="{tr}Reply{/tr}"}
 			{elseif $comments_grandParentId}
 				{button href="?post_reply=1&comments_threshold=`$comments_threshold`&comments_reply_threadId=`$comment.threadId`&comments_offset=`$comments_offset`&thread_sort_mode=`$thread_sort_mode`&comments_per_page=`$comments_per_page`&comments_grandParentId=`$comment_grandParentId`&comments_parentId=`$comments_grandParentId`&thread_style=`$thread_style`#form" _auto_args='*' _text="{tr}Reply{/tr}"}
-			{elseif $forum_info.is_flat neq 'y'}
+			{elseif $forum_info.is_flat neq 'y' or $prefs.feature_forum_allow_flat_forum_quotes eq 'y'}
 				{button href="?post_reply=1&comments_threshold=`$comments_threshold`&comments_reply_threadId=`$comment.threadId`&comments_offset=`$comments_offset`&thread_sort_mode=`$thread_sort_mode`&comments_per_page=`$comments_per_page`&comments_grandParentId=`$comment.parentId`&comments_parentId=`$comment.parentId`&thread_style=`$thread_style`#form" _auto_args='*' _text="{tr}Reply{/tr}"}
 			{/if}
 		{/if}
