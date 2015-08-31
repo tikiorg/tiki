@@ -98,7 +98,7 @@ function wikiplugin_addrelation($data, $params)
 	if (isset($params['target_object']) && false !== strpos($params['target_object'], ':')) {
 		list($target_object['type'], $target_object['object']) = explode(':', $params['target_object'], 2);
 	} else {
-		$target_object = current_object(); 
+		$target_object = current_object();
 	}
 	if ($source_object == $target_object) {
 		return tra('Source and target object cannot be the same');
@@ -109,7 +109,7 @@ function wikiplugin_addrelation($data, $params)
 		$qualifier = $params['qualifier'];
 	}
 	if (!empty($params['label_add'])) {
-		$labeladd = $params['label_add'];	
+		$labeladd = $params['label_add'];
 	} else {
 		$labeladd = tra('Add Relation');
 	}
@@ -137,26 +137,11 @@ function wikiplugin_addrelation($data, $params)
 
 	if (isset($_POST[$id])) {
 		if ($_POST[$id] == 'y') {
-			$relationlib->add_relation($qualifier, $source_object['type'], $source_object['object'], $target_object['type'], $target_object['object']);	
-			$finalEvent = 'tiki.social.relation.add';
+			$relationlib->add_relation($qualifier, $source_object['type'], $source_object['object'], $target_object['type'], $target_object['object']);
 		} elseif ($_POST[$id] == 'n') {
 			$relation_id = $relationlib->add_relation($qualifier, $source_object['type'], $source_object['object'], $target_object['type'], $target_object['object']);
 			$relationlib->remove_relation($relation_id);
-			$finalEvent = 'tiki.social.relation.remove';
 		}
-		TikiLib::events()->trigger($finalEvent,
-			array(
-				'type' => $target_object['type'],
-				'object' => $target_object['object'],
-				'sourcetype' => $source_object['type'],
-				'sourceobject' => $source_object['object'],
-				'relation' => $qualifier,
-				'user' => $user,
-                        )
-		);
-		require_once 'lib/search/refresh-functions.php';
-		refresh_index($source_object['type'], $source_object['object']);
-		refresh_index($target_object['type'], $target_object['object']);
 	}
 	$relationsfromsource = $relationlib->get_relations_from($source_object['type'], $source_object['object'], $qualifier);
 	$relationexists = false;

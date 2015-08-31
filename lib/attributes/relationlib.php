@@ -134,6 +134,16 @@ class RelationLib extends TikiDb_Bridge
 				return 0;
 			}
 
+			// Array written to match event trigger that was previously in wikiplugin_addrelation
+			TikiLib::events()->trigger('tiki.social.relation.add', array(
+				'relation' => $relation,
+				'sourcetype' => $src_type,
+				'sourceobject' => $src_object,
+				'type' => $target_type,
+				'object' => $target_object,
+				'user' => $GLOBALS['user'],
+			));
+
 			TikiLib::lib('tiki')->refresh_index($src_type, $src_object);
 			TikiLib::lib('tiki')->refresh_index($target_type, $target_object);
 			return $id;
@@ -227,6 +237,7 @@ class RelationLib extends TikiDb_Bridge
 	 */
 	function remove_relation( $id )
 	{
+		$relation_info = $this->get_relation($id);
 		$this->table->delete(
 			array(
 				'relationId' => $id,
@@ -238,6 +249,15 @@ class RelationLib extends TikiDb_Bridge
 				'itemId' => $id,
 			)
 		);
+
+		TikiLib::events()->trigger('tiki.social.relation.remove', array(
+			'type' => 'relation',
+			'object' => $id,
+			'user' => $GLOBALS['user'],
+		));
+
+		TikiLib::lib('tiki')->refresh_index($relation_info['source_type'], $relation_info['source_itemId']);
+		TikiLib::lib('tiki')->refresh_index($relation_info['target_type'], $relation_info['target_itemId']);
 	}
 
 	/**
