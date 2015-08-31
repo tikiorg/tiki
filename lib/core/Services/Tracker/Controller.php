@@ -837,7 +837,6 @@ class Services_Tracker_Controller
 					'ajaxheading' => tra('Success'),
 					'ajaxmsg' => 'Your tracker item has been updated',
 					'ajaxdismissible' => 'n',
-					'ajaxtimer' => '3',
 				)
 			);
 		}
