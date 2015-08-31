@@ -53,7 +53,7 @@ class Services_ActivityStream_Controller
 		$resultBuilder->apply($matches);
 
 		try {
-			$plugin = new Search_Formatter_Plugin_SmartyTemplate('templates/activity/activitystream.tpl');
+			$plugin = new Search_Formatter_Plugin_SmartyTemplate('activity/activitystream.tpl');
 			$plugin->setFields(array(
 				'like_list' => true,
 				'user_groups' => true,
