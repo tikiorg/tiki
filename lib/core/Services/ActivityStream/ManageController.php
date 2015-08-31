@@ -50,17 +50,26 @@ class Services_ActivityStream_ManageController
 	{
 		$id = $request->activityId->int();
 
-		$removed = false;
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$this->lib->deleteActivity($id);
-			$removed = true;
+			return array(
+				'modal' => '1',
+				'FORWARD' => array(
+					'controller' => 'utilities',
+					'action' => 'modal_alert',
+					'ajaxtype' => 'feedback',
+					'ajaxheading' => tra('Delete Activity'),
+					'ajaxmsg' => 'Your activity (id:'.$id.') was successfully deleted',
+					'ajaxdismissible' => 'n',
+				)
+			);
 		}
 
 		return array(
-			'removed' => $removed,
+			'title' => tra('Delete Activity'),
 			'activityId' => $id,
 		);
-	} 
+	}
 
 	function action_sample(JitFilter $request)
 	{
