@@ -1,7 +1,7 @@
 # This is a robot.txt file for Tiki to tell all search bots that we don't want them to crawl in the paths beginning with the strings below.
 # For an installation in a subdirectory, you have to copy this file in root of your domain and add /yoursubdirname on each line.
 #
-# (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
+# (c) Copyright 2002-2015 by authors of the Tiki Wiki CMS Groupware Project
 # 
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
 # Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -13,26 +13,25 @@ User-agent: *
 #
 # This is to slow down any crawling so as not to put pressure on your server
 Crawl-Delay: 30
-Disallow: /backups/
-Disallow: /css/
+Disallow: /admin/
 Disallow: /db/
 Disallow: /doc/
 Disallow: /dump/
-Disallow: /images/
-Disallow: /img/
 Disallow: /installer/
 Disallow: /lang/
 Disallow: /lib/
 Disallow: /maps/
 Disallow: /mods/
 Disallow: /modules/
-Disallow: /popups/
 Disallow: /styles/
-Disallow: /temp/
+Disallow: /temp/cache/
+Disallow: /temp/mail_attachs/
+Disallow: /temp/unified-index/
+Disallow: /temp/composer.phar
 Disallow: /templates/
 Disallow: /templates_c/
-Disallow: /tests/
 Disallow: /tiki_tests/
+Disallow: /vendor*
 Disallow: /about.php
 Disallow: /get_strings.php
 Disallow: /tiki-admin
