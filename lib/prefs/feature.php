@@ -254,9 +254,9 @@ function prefs_feature_list($partial = false)
 				'textFilter' => 'categ', // intentional use of categ so it catches category and categories
 			),
 		),
-		'feature_new_profiles' => array(
-			'name' => tra('Use new profiles'),
-			'description' => tra('Use new profiles build with elasticsearch'),
+		'feature_unified_user_details' => array(
+			'name' => tra('Use Unified User Details '),
+			'description' => tra('Use User Details Page using the Unified Index.'),
 			'help' => 'User+Preferences',
 			'type' => 'flag',
 			'default' => 'n',

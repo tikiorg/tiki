@@ -60,7 +60,9 @@
 								<td class="profile-info-value">{$userwatch|escape}</td>
 							</tr>
 						{/if}
-						{if !empty($userinfo['user_country']) and $userinfo['user_country'] != 'Other'}
+
+						{$userinfo['user_country']|var_dump}
+						{if not empty($userinfo['user_country']) and $userinfo['user_country'] != 'Other'}
 							<tr class="profile-info">
 								<td class="profile-info-label">{tr}Country:{/tr}</td>
 								<td class="profile-info-value">{$userwatch|countryflag} {tr}{$userinfo['user_country']|stringfix}{/tr}</td>
@@ -92,7 +94,8 @@
 						{if $prefs.change_language eq 'y'}
 							<tr class="profile-info">
 								<td class="profile-info-label">{tr}Language:{/tr}</td>
-								<td class="profile-info-value">{$userinfo['user_language']}</td>
+								<td class="profile-info-value">{', '|implode:$userinfo['user_language']}</td>
+
 							</tr>
 						{/if}
 						{if $userinfo['user_homepage']}

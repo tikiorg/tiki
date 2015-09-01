@@ -80,5 +80,5 @@ if ($user_picture_id = $userprefslib->get_user_picture_id($userwatch)) {
 }
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-$smarty->assign('mid', 'tiki-user_profile.tpl');
+$smarty->assign('mid', 'tiki-user_unified_details.tpl');
 $smarty->display("tiki.tpl");

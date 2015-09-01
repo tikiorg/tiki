@@ -22,7 +22,7 @@
 			<h2>{tr}User features{/tr}</h2>
 
 			<div class="admin featurelist">
-				{preference name=feature_new_profiles}
+				{preference name=feature_unified_user_details}
 				{preference name=feature_score}
 				{preference name=feature_mytiki}
 				{preference name=feature_minical}
@@ -32,7 +32,6 @@
 				{preference name=feature_contacts}
 				{preference name=monitor_enabled}
 				<div class="adminoptionboxchild" id="monitor_enabled_childcontainer">
-
 					{preference name=monitor_individual_clear}
 					{preference name=monitor_count_refresh_interval}
 					{preference name=monitor_reply_email_pattern}
