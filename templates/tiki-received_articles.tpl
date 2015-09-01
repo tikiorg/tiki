@@ -36,137 +36,148 @@
 
 {if $receivedArticleId > 0}
 	<h2>{tr}Edit received article{/tr}</h2>
-	<form action="tiki-received_articles.php" method="post">
+	<form action="tiki-received_articles.php" method="post" class="form-horizontal"><br>
 		<input type="hidden" name="receivedArticleId" value="{$receivedArticleId|escape}">
 		<input type="hidden" name="created" value="{$created|escape}">
 		<input type="hidden" name="image_name" value="{$image_name|escape}">
 		<input type="hidden" name="image_size" value="{$image_size|escape}">
-		<table class="formcolor">
-			<tr>
-				<td>{tr}Title:{/tr}</td>
-				<td><input type="text" name="title" value="{$title|escape}"></td>
-			</tr>
-			<tr>
-				<td>{tr}Author Name:{/tr}</td>
-				<td><input type="text" name="authorName" value="{$authorName|escape}" /></td>
-			</tr>
-			<tr>
-				<td>{tr}Type{/tr}</td>
-				<td>
-					<select id='articletype' name='type' onchange='javascript:chgArtType();'>
-						{section name=t loop=$types}
-							<option value="{$types[t].type|escape}" {if $type eq $types[t].type}selected="selected"{/if}>{$types[t].type}</option>
-						{/section}
-					</select>
-					{if $tiki_p_admin_cms eq 'y'}
-						<a href="tiki-article_types.php" class="link">{tr}Admin Types{/tr}</a>
-					{/if}
-				</td>
-			</tr>
-			<tr id='isreview' {if $type ne 'Review'}style="display:none;"{else}style="display:block;"{/if}>
-				<td>{tr}Rating{/tr}</td>
-				<td>
-					<select name='rating'>
-						<option value="10" {if $rating eq 10}selected="selected"{/if}>10</option>
-						<option value="9.5" {if $rating eq "9.5"}selected="selected"{/if}>9.5</option>
-						<option value="9" {if $rating eq 9}selected="selected"{/if}>9</option>
-						<option value="8.5" {if $rating eq "8.5"}selected="selected"{/if}>8.5</option>
-						<option value="8" {if $rating eq 8}selected="selected"{/if}>8</option>
-						<option value="7.5" {if $rating eq "7.5"}selected="selected"{/if}>7.5</option>
-						<option value="7" {if $rating eq 7}selected="selected"{/if}>7</option>
-						<option value="6.5" {if $rating eq "6.5"}selected="selected"{/if}>6.5</option>
-						<option value="6" {if $rating eq 6}selected="selected"{/if}>6</option>
-						<option value="5.5" {if $rating eq "5.5"}selected="selected"{/if}>5.5</option>
-						<option value="5" {if $rating eq 5}selected="selected"{/if}>5</option>
-						<option value="4.5" {if $rating eq "4.5"}selected="selected"{/if}>4.5</option>
-						<option value="4" {if $rating eq 4}selected="selected"{/if}>4</option>
-						<option value="3.5" {if $rating eq "3.5"}selected="selected"{/if}>3.5</option>
-						<option value="3" {if $rating eq 3}selected="selected"{/if}>3</option>
-						<option value="2.5" {if $rating eq "2.5"}selected="selected"{/if}>2.5</option>
-						<option value="2" {if $rating eq 2}selected="selected"{/if}>2</option>
-						<option value="1.5" {if $rating eq "1.5"}selected="selected"{/if}>1.5</option>
-						<option value="1" {if $rating eq 1}selected="selected"{/if}>1</option>
-						<option value="0.5" {if $rating eq "0.5"}selected="selected"{/if}>0.5</option>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Use Image:{/tr}</td>
-				<td>
-					<select name="useImage">
-						<option value="y" {if $useImage eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
-						<option value="n" {if $useImage eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Image x size:{/tr}</td>
-				<td><input type="text" name="image_x" value="{$image_x|escape}"></td>
-			</tr>
-			<tr>
-				<td>{tr}Image y size:{/tr}</td>
-				<td><input type="text" name="image_y" value="{$image_y|escape}"></td>
-			</tr>
-			<tr>
-				<td>{tr}Image name:{/tr}</td>
-				<td>{$image_name}</td>
-			</tr>
-			<tr>
-				<td>{tr}Image size:{/tr}</td>
-				<td>{$image_size}</td>
-			</tr>
-			{if $useImage eq 'y'}
-				<tr>
-					<td>{tr}Image:{/tr}</td>
-					<td>
-						<img alt="article image" width="{$image_x}" height="{$image_y}" src="received_article_image.php?id={$receivedArticleId}">
-					</td>
-				</tr>
-			{/if}
-			<tr>
-				<td>{tr}Created:{/tr}</td>
-				<td>{$created|tiki_short_datetime}</td>
-			</tr>
-			<tr>
-				<td>{tr}Publishing date:{/tr}</td>
-				<td>
-					{html_select_date time=$publishDate end_year="+1" field_order=$prefs.display_field_order} at
-					{html_select_time time=$publishDate display_seconds=false use_24_hours=$use_24hr_clock}
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Heading:{/tr}</td>
-				<td>
-					<textarea rows="5" cols="40" name="heading">{$heading|escape}</textarea>
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Heading:{/tr}</td>
-				<td>
-					<textarea rows="25" cols="40" name="body">{$body|escape}</textarea>
-				</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>
-					<input type="submit" class="btn btn-default btn-sm" name="preview" value="{tr}Preview{/tr}">
-					&nbsp;
-					<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Accept Article{/tr}</td>
-				<td>
-					{tr}Topic:{/tr}
-					<select name="topic">
-						{section name=t loop=$topics}
-							<option value="{$topics[t].topicId|escape}" {if $topic eq $topics[t].topicId}selected="selected"{/if}>{$topics[t].name}</option>
-						{/section}
-					</select>
-					<input type="submit" class="btn btn-default btn-sm" name="accept" value="{tr}Accept{/tr}">
-				</td>
-			</tr>
-		</table>
+		<div class="form-group">
+			<label class="control-label col-sm-3">{tr}Title:{/tr}</label>
+			<div class="col-sm-7">
+				<input type="text" name="title" value="{$title|escape}" class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-3">{tr}Author Name:{/tr}</label>
+			<div class="col-sm-7">
+				<input type="text" name="authorName" value="{$authorName|escape}" class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-3">{tr}Type{/tr}</label>
+			<div class="col-sm-7">
+				<select id='articletype' name='type' onchange='javascript:chgArtType();' class="form-control">
+					{section name=t loop=$types}
+						<option value="{$types[t].type|escape}" {if $type eq $types[t].type}selected="selected"{/if}>{$types[t].type}</option>
+					{/section}
+				</select>
+				{if $tiki_p_admin_cms eq 'y'}
+					<a href="tiki-article_types.php" class="link">{tr}Admin Types{/tr}</a>
+				{/if}
+			</div>
+		</div>
+		<div class="form-group" id='isreview' {if $type ne 'Review'}style="display:none;"{else}style="display:block;"{/if}>
+			<label class="control-label col-sm-3">{tr}Rating{/tr}</label>
+			<div class="col-sm-7">
+				<select name='rating' class="form-control">
+					<option value="10" {if $rating eq 10}selected="selected"{/if}>10</option>
+					<option value="9.5" {if $rating eq "9.5"}selected="selected"{/if}>9.5</option>
+					<option value="9" {if $rating eq 9}selected="selected"{/if}>9</option>
+					<option value="8.5" {if $rating eq "8.5"}selected="selected"{/if}>8.5</option>
+					<option value="8" {if $rating eq 8}selected="selected"{/if}>8</option>
+					<option value="7.5" {if $rating eq "7.5"}selected="selected"{/if}>7.5</option>
+					<option value="7" {if $rating eq 7}selected="selected"{/if}>7</option>
+					<option value="6.5" {if $rating eq "6.5"}selected="selected"{/if}>6.5</option>
+					<option value="6" {if $rating eq 6}selected="selected"{/if}>6</option>
+					<option value="5.5" {if $rating eq "5.5"}selected="selected"{/if}>5.5</option>
+					<option value="5" {if $rating eq 5}selected="selected"{/if}>5</option>
+					<option value="4.5" {if $rating eq "4.5"}selected="selected"{/if}>4.5</option>
+					<option value="4" {if $rating eq 4}selected="selected"{/if}>4</option>
+					<option value="3.5" {if $rating eq "3.5"}selected="selected"{/if}>3.5</option>
+					<option value="3" {if $rating eq 3}selected="selected"{/if}>3</option>
+					<option value="2.5" {if $rating eq "2.5"}selected="selected"{/if}>2.5</option>
+					<option value="2" {if $rating eq 2}selected="selected"{/if}>2</option>
+					<option value="1.5" {if $rating eq "1.5"}selected="selected"{/if}>1.5</option>
+					<option value="1" {if $rating eq 1}selected="selected"{/if}>1</option>
+					<option value="0.5" {if $rating eq "0.5"}selected="selected"{/if}>0.5</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-3">{tr}Use Image:{/tr}</label>
+			<div class="col-sm-7">
+				<select name="useImage" class="form-control">
+					<option value="y" {if $useImage eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
+					<option value="n" {if $useImage eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-3">{tr}Image x size:{/tr}</label>
+			<div class="col-sm-7">
+				<input type="text" name="image_x" value="{$image_x|escape}" class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-3">{tr}Image y size:{/tr}</label>
+			<div class="col-sm-7">
+				<input type="text" name="image_y" value="{$image_y|escape}" class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-3">{tr}Image name:{/tr}</label>
+			<div class="col-sm-7 form-static-input">
+				{$image_name}
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-3">{tr}Image size:{/tr}</label>
+			<div class="col-sm-7 form-control-static">
+				{$image_size}
+			</div>
+		</div>
+		{if $useImage eq 'y'}
+		<div class="form-group">
+			<label class="control-label col-sm-3">{tr}Image:{/tr}</label>
+			<div class="col-sm-7">
+				<img alt="article image" width="{$image_x}" height="{$image_y}" src="received_article_image.php?id={$receivedArticleId}">
+			</div>
+		</div>
+		{/if}
+		<div class="form-group">
+			<label class="control-label col-sm-3">{tr}Created:{/tr}</label>
+			<div class="col-sm-7">
+				{$created|tiki_short_datetime}
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-3">{tr}Publishing date:{/tr}</label>
+			<div class="col-sm-7">
+				{html_select_date time=$publishDate end_year="+1" field_order=$prefs.display_field_order} at
+				{html_select_time time=$publishDate display_seconds=false use_24_hours=$use_24hr_clock}
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-3">{tr}Heading:{/tr}</label>
+			<div class="col-sm-7">
+				<textarea rows="5" cols="40" name="heading" class="form-control">{$heading|escape}</textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-3">{tr}Body:{/tr}</label>
+			<div class="col-sm-7">
+				<textarea rows="25" cols="40" name="body" class="form-control">{$body|escape}</textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-3"></label>
+			<div class="col-sm-7">
+				<input type="submit" class="btn btn-default btn-sm" name="preview" value="{tr}Preview{/tr}">
+				&nbsp;
+				<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-3">{tr}Accept Article{/tr}</label>
+			<div class="col-sm-7">
+				<select name="topic">
+					{section name=t loop=$topics}
+						<option value="{$topics[t].topicId|escape}" {if $topic eq $topics[t].topicId}selected="selected"{/if}>{$topics[t].name}</option>
+					{/section}
+				</select>
+				<input type="submit" class="btn btn-default btn-sm" name="accept" value="{tr}Accept{/tr}">
+			</div>
+		</div>
 	</form>
 {/if}
 

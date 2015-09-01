@@ -18,36 +18,34 @@
 
 {if $receivedPageId > 0}
 	<h2>{tr}Edit Received Page{/tr}</h2>
-	<form action="tiki-received_pages.php" method="post">
+	<form action="tiki-received_pages.php" method="post" class="form-horizontal">
 		<input type="hidden" name="receivedPageId" value="{$receivedPageId|escape}">
-		<table class="formcolor">
-			<tr>
-				<td>{tr}Name:{/tr}</td>
-				<td>
-					<input type="text" name="pageName" value="{$pageName|escape}">
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Data:{/tr}</td>
-				<td>
-					<textarea name="data" rows="10" cols="60">{$data|escape}</textarea>
-				</td>
-			</tr>
-			<tr>
-				<td>{tr}Comment:{/tr}</td>
-				<td>
-					<input type="text" name="comment" value="{$comment|escape}">
-				</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>
-					<input type="submit" class="btn btn-default btn-sm" name="preview" value="{tr}Preview{/tr}">
-					&nbsp;
-					<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-				</td>
-			</tr>
-		</table>
+		<div class="form-group">
+			<label class="control-label col-sm-3">{tr}Name:{/tr}</label>
+			<div class="col-sm-7">
+				<input type="text" name="pageName" value="{$pageName|escape}" class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-3">{tr}Data:{/tr}</label>
+			<div class="col-sm-7">
+				<textarea name="data" rows="10" cols="60" class="form-control">{$data|escape}</textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-3">{tr}Comment:{/tr}</label>
+			<div class="col-sm-7">
+				<input type="text" name="comment" value="{$comment|escape}" class="form-control">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-3"></label>
+			<div class="col-sm-7">
+				<input type="submit" class="btn btn-default btn-sm" name="preview" value="{tr}Preview{/tr}">
+				&nbsp;
+				<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
+			</div>
+		</div>
 	</form>
 {/if}
 
@@ -202,6 +200,8 @@
 			{select_all checkbox_names='checked[]' label="{tr}Select All{/tr}"}
 		</table>
 	</div>
-	{tr}Prefix the checked:{/tr}<input type="text" name="prefix">
-	{tr}Postfix the checked:{/tr}<input type="text" name="postfix">&nbsp;<input type="submit" class="btn btn-default btn-sm" value="{tr}OK{/tr}">
+	<div class="form-inline">
+	{tr}Prefix the checked: {/tr}<input type="text" name="prefix" class="form-control">
+	{tr} Postfix the checked: {/tr}<input type="text" name="postfix" class="form-control">&nbsp;<input type="submit" class="btn btn-default " value="{tr}OK{/tr}">
+	</div>
 </form>

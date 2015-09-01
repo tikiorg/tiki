@@ -186,22 +186,23 @@
 					{tr}Maximum time{/tr}
 				</label>
 				<div class="col-md-3">
-					<select class="form-control" name="timeLimit"
-						id="quiz-maxtime">{html_options values=$mins selected=$timeLimit output=$mins}</select>
-				</div>
-				<div class="col-md-1 control-label" style="text-align:left;">
-					{tr}minutes{/tr}
+					<select class="form-control" name="timeLimit" id="quiz-maxtime">
+						{html_options values=$mins selected=$timeLimit output=$mins}
+					</select>
+					<div class="help-block">
+						{tr}minutes{/tr}
+					</div>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-md-2" for="quiz-passingperct">
+				<label class="col-md-2 control-label" for="quiz-passingperct">
 					{tr}Passing Percentage{/tr}
 				</label>
 				<div class="col-md-3">
 					<input type="text" name="passingperct" id="quiz-passingperct" class="form-control" maxlength='3' value="{$passingperct}">
-				</div>
-				<div class="col-md-1 control-label" style="text-align:left;">
-					{tr}%{/tr}
+					<div class="help-block">
+						{tr}%{/tr}
+					</div>
 				</div>
 			</div>
 			<div class="text-center">
