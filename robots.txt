@@ -20,10 +20,10 @@ Disallow: /dump/
 Disallow: /installer/
 Disallow: /lang/
 Disallow: /lib/
+Allow: /lib/jquery_tiki/
 Disallow: /maps/
 Disallow: /mods/
 Disallow: /modules/
-Disallow: /styles/
 Disallow: /temp/cache/
 Disallow: /temp/mail_attachs/
 Disallow: /temp/unified-index/
@@ -32,6 +32,8 @@ Disallow: /templates/
 Disallow: /templates_c/
 Disallow: /tiki_tests/
 Disallow: /vendor*
+Allow: /vendor/jquery/
+Allow: /vendor_extra/elfinder/
 Disallow: /about.php
 Disallow: /get_strings.php
 Disallow: /tiki-admin
