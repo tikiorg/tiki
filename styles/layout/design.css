@@ -528,6 +528,11 @@ ul.jumplinks,
 	float: left;
 }
 
+p {
+	widows: 3;
+	orphans: 3;
+}
+
 /* put all the one-liners which should not display together */
 #attzone,
 #bottom_modules .box-rsslist br,
