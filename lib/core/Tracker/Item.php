@@ -454,7 +454,7 @@ class Tracker_Item
 				$permName = $field['permName'];
 				$out[$permName] = $field['value'];
 
-				if (isset($input->fields[$permName])) {
+				if (isset($input->fields) && isset($input->fields[$permName])) {
 					$out[$permName] = $input->fields->$permName->none();
 				}
 			}
