@@ -215,4 +215,13 @@ class TikiAddons_Utilities extends TikiDb_Bridge
 		$folder = str_replace('/profiles', '', $folder);
 		return $folder;
 	}
+
+	function getAddonFilePath($filepath) {
+		foreach (TikiAddons::getPaths() as $path) {
+			if (file_exists($path."/".$filepath)) {
+				return $path."/".$filepath;
+			}
+		}
+		return false;
+	}
 }

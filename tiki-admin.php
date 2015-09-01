@@ -526,12 +526,21 @@ $admin_icons = array(
 
 if (isset($_REQUEST['page'])) {
 	$adminPage = $_REQUEST['page'];
+	// Check if the associated incude_*.php file exists. If not, check to see if it might exist in the Addons.
+	// If it exists, include the associated file and generate the ticket.
+	$utilities = new TikiAddons_Utilities();
 	if (file_exists("admin/include_$adminPage.php")) {
 		$check = key_get(null, null, null, false);
 		$smarty->assign('ticket', $check['ticket']);
 		include_once ("admin/include_$adminPage.php");
 		$url = 'tiki-admin.php' . '?page=' . $adminPage;
+	} elseif ($filepath = $utilities->getAddonFilePath("admin/include_$adminPage.php")) {
+		$check = key_get(null, null, null, false);
+		$smarty->assign('ticket', $check['ticket']);
+		include_once ($filepath);
+		$url = 'tiki-admin.php' . '?page=' . $adminPage;
 	}
+
 	if (isset($admin_icons[$adminPage])) {
 		$admin_icon = $admin_icons[$adminPage];
 
