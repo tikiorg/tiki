@@ -12,6 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 }
 
 $addonprefs = TikiLib::lib('prefs')->getAddonPrefs();
+asort($addonprefs);
 $smarty->assign('addonprefs', $addonprefs);
 
 $smarty->assign('php_major_version', substr(PHP_VERSION, 0, strpos(PHP_VERSION, '.')));
