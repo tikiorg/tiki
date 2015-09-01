@@ -5,7 +5,7 @@
 {/block}
 
 {block name="content"}
-<form class="simple" method="post" action="{service controller=tracker action=clone_item}">
+<form class="simple" method="post" action="{service controller=tracker action=clone_item}" id="cloneItemForm{$trackerId|escape}">
 	{trackerfields trackerId=$trackerId fields=$fields itemId=$itemId}
 	<div class="submit">
 		<input type="hidden" name="itemId" value="{$itemId|escape}">

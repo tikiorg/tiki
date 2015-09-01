@@ -58,7 +58,7 @@
 			{/if}
 		{/if}
 
-		{if $files[$changes].type|truncate:6:'':true eq 'image/'}
+		{if $files[$changes].type|truncate:6:'':true eq 'image/' and $files[$changes].perms.tiki_p_download_files eq 'y'}
 			<a href="{$files[$changes].id|sefurl:display}">
 				{icon name='view' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
 			</a>

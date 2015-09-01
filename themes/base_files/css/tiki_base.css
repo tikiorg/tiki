@@ -750,7 +750,24 @@ div.highlight {
   display: block;
   font-weight: bold;
 }
-p {
+address,
+blockquote,
+dd,
+dl,
+dt,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+nav,
+noscript,
+ol,
+p,
+pre,
+ul {
   widows: 3;
   orphans: 3;
 }

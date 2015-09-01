@@ -599,6 +599,13 @@ class Services_Tracker_Controller
 			throw new Services_Exception_Denied(tr('Not allowed to create new items'));
 		}
 
+		global $prefs;
+		if ($prefs['feature_jquery_validation'] === 'y') {
+			$_REQUEST['itemId'] = 0;	// let the validation code know this will be a new item
+			$validationjs = TikiLib::lib('validators')->generateTrackerValidateJS($definition->getFields());
+			TikiLib::lib('header')->add_jq_onready('$("#cloneItemForm' . $trackerId . '").validate({' . $validationjs . $this->get_validation_options());
+		}
+
 		$itemObject->asNew();
 		$itemData = $itemObject->getData($input);
 
@@ -646,6 +653,7 @@ class Services_Tracker_Controller
 		}
 
 		return array(
+			'title' => tr('Duplicate Item'),
 			'trackerId' => $trackerId,
 			'itemId' => $itemId,
 			'created' => $id,
