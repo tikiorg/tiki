@@ -148,43 +148,42 @@ class TikiAddons_Utilities extends TikiDb_Bridge
 		return true;
 	}
 
-	function removeObject($folder, $type, $ref, $profile = '') {
+	function removeObject($objectId, $type) {
+		if (empty($objectId) || empty($type)) {
+			return;
+		}
 		// TODO add other types
 		if ($type == 'wiki_page' || $type == 'wiki' || $type == 'wiki page' || $type == 'wikipage') {
-			if ($pageName = $this->getObjectId($folder, $ref, $profile)) {
-				TikiLib::lib('tiki')->remove_all_versions($pageName);
-			}
+			TikiLib::lib('tiki')->remove_all_versions($objectId);
 		}
 		if ($type == 'tracker' || $type == 'trk') {
-			if ($trackerId = $this->getObjectId($folder, $ref, $profile)) {
-				TikiLib::lib('trk')->remove_tracker($trackerId);
-			}
+			TikiLib::lib('trk')->remove_tracker($objectId);
 		}
 		if ($type == 'category' || $type == 'cat') {
-			if ($catId = $this->getObjectId($folder, $ref, $profile)) {
-				TikiLib::lib('categ')->remove_category($catId);
-			}
+			TikiLib::lib('categ')->remove_category($objectId);
 		}
 		if ($type == 'file_gallery' || $type == 'file gallery' || $type == 'filegal' || $type == 'fgal' || $type == 'filegallery') {
-			if ($galId = $this->getObjectId($folder, $ref, $profile)) {
-				TikiLib::lib('filegal')->remove_file_gallery($galId);
-			}
+			TikiLib::lib('filegal')->remove_file_gallery($objectId);
 		}
 		if ($type == 'activity' || $type == 'activitystream' || $type == 'activity_stream' || $type == 'activityrule' || $type == 'activity_rule') {
-			if ($ruleId = $this->getObjectId($folder, $ref, $profile)) {
-				TikiLib::lib('activity')->deleteRule($ruleId);
-			}
+			TikiLib::lib('activity')->deleteRule($objectId);
+		}
+		if ($type == 'forum' || $type == 'forums') {
+			TikiLib::lib('comments')->remove_forum($objectId);
 		}
 	}
 
-	function getObjectId($folder, $ref, $profile = '') {
+	function getObjectId($folder, $ref, $profile = '', $domain = '') {
 		if (strpos($folder, '/') !== false && strpos($folder, '_') === false) {
 			$folder = str_replace('/', '_', $folder);
 		}
-		$domain = 'file://addons/' . $folder . '/profiles';
+		if (empty($domain)) {
+			$domain = 'file://addons/' . $folder . '/profiles';
+		}
+
 		if (!$profile) {
 			if ($this->table('tiki_profile_symbols')->fetchCount(array('domain' => $domain, 'object' => $ref)) > 1) {
-				return false;
+				return $this->table('tiki_profile_symbols')->fetchAll('value', array('domain' => $domain, 'object' => $ref));
 			} else {
 				return $this->table('tiki_profile_symbols')->fetchOne('value', array('domain' => $domain, 'object' => $ref));
 			}

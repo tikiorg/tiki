@@ -58,16 +58,30 @@ class AddonRemoveCommand extends Command
 			} else {
 				$profile = $remove->profile;
 			}
-			$objectId = $addon_utilities->getObjectId($folder, $remove->ref, $profile);
-			$objectType = $remove->type;
-			if ($objectId) {
-				if ($confirm) {
-					$addon_utilities->removeObject($folder, $remove->type, $remove->ref, $profile);
-					$output->writeln("$objectType '$objectId' has been deleted.");
-				} else {
-					$output->writeln("<info>$objectType '$objectId' will be deleted.</info>");
+
+			if (empty($remove->domain)) {
+				$domain = '';
+			} else {
+				$domain = $remove->domain;
+			}
+
+			$objectId = $addon_utilities->getObjectId($folder, $remove->ref, $profile, $domain);
+			if (is_array($objectId)) {
+				$objectIds = $objectId;
+			} else {
+				$objectIds = [$objectId];
+			}
+			foreach ($objectIds as $objectId) {
+				$objectType = $remove->type;
+				if ($objectId) {
+					if ($confirm) {
+						$addon_utilities->removeObject($objectId, $objectType);
+						$output->writeln("$objectType '$objectId' has been deleted.");
+					} else {
+						$output->writeln("<info>$objectType '$objectId' will be deleted.</info>");
+					}
+					$willRemove = true;
 				}
-				$willRemove = true;
 			}
 		}
 

@@ -110,7 +110,7 @@ class AddonUpgradeCommand extends Command
 			$objectType = $remove->type;
 			if ($objectId) {
 				if ($confirm) {
-					$addon_utilities->removeObject($folder, $remove->type, $remove->ref, $profile);
+					$addon_utilities->removeObject($objectId, $objectType);
 					$output->writeln("$objectType '$objectId' has been deleted.");
 				} else {
 					$output->writeln("<info>$objectType '$objectId' will be deleted.</info>");
