@@ -49,7 +49,9 @@ function smarty_function_user_selector($params, $smarty)
 			'user_selector_threshold' => $prefs['user_selector_threshold'],
 			'allowNone' => 'n',
 			'realnames' => 'y',
+			'class' => '',
 	);
+	
 	$params = array_merge($defaults, $params);
 	if (isset($params['size'])) {
 		$sz = ' size="' . $params['size'] . '"';
@@ -62,6 +64,10 @@ function smarty_function_user_selector($params, $smarty)
 		$ed = '';
 	}
 	
+	if(isset($params['class'])) {
+		$class = ' class="'. $params['class'] . '"';
+	}
+
 	$groupNames = array();
 	if (is_array($params['groupIds'])) {
 		foreach ($params['groupIds'] as $k => $groupId) {
@@ -106,7 +112,7 @@ function smarty_function_user_selector($params, $smarty)
 	$ret = '';
 	
 	if ($prefs['feature_jquery_autocomplete'] == 'y' && ($ucant > $prefs['user_selector_threshold'] or $ucant > $params['user_selector_threshold'])) {
-		$ret .= '<input id="' . $params['id'] . '" type="text" name="' . $params['name'] . '" value="' . htmlspecialchars($params['user']) . '"' . $sz . $ed . ' style="'.$params['style'].'" />';
+		$ret .= '<input id="' . $params['id'] . '" type="text" name="' . $params['name'] . '" value="' . htmlspecialchars($params['user']) . '"' . $sz . $ed . ' style="'.$params['style'].'"'.$class.' />';
 		if (($params['contact'] == 'true')) {
 			$mode = ('usersandcontacts');
 		} else if ($prefs['user_show_realnames'] === 'y' && $params['realnames'] === 'y') {
