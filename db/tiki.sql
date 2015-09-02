@@ -1725,7 +1725,7 @@ ALTER TABLE tiki_polls ADD INDEX tiki_poll_lookup ( active , title );
 
 DROP TABLE IF EXISTS `tiki_preferences`;
 CREATE TABLE `tiki_preferences` (
-  `name` varchar(40) NOT NULL default '',
+  `name` varchar(255) NOT NULL default '',
   `value` text,
   PRIMARY KEY (`name`)
 ) ENGINE=MyISAM;
