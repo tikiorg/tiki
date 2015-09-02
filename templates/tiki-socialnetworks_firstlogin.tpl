@@ -26,36 +26,40 @@ $("#email").val("{{$userinfo.email|escape}}");
 {if $msg}<p><strong>{$msg|escape}</strong></p>{/if}
 
 <h4>{tr}Please provide local account information{/tr}</h4>
-<form action="tiki-socialnetworks_firstlogin.php" method="post" name="RegForm">
-<table class="formcolor">
+<form action="tiki-socialnetworks_firstlogin.php" method="post" name="RegForm" class="form-horizontal">
 {include file="register-login.tpl"}
 {include file="register-email.tpl"}
 {include file="register-groupchoice.tpl"}
 {if $msg}<p>{$msg|escape}</p>{/if}
-<tr>
-<td>&nbsp;</td>
-<td><input type="submit" class="btn btn-default btn-sm" name="localinfosubmit" value="{tr}Submit{/tr}"></td>
-</tr>
-</table>
+<div class="form-group">
+	<label class="control-label col-sm-3"></label>
+	<div class="col-sm-7">
+		<input type="submit" class="btn btn-default" name="localinfosubmit" value="{tr}Submit{/tr}">
+	</div>
+</div>
 </form>
 
 <h4>{tr}Do you already have a local account for this site?{/tr}</h4>
 <p>{tr}Login to link to it using the following form instead{/tr}</p>
-<form action="tiki-socialnetworks_firstlogin.php" method="post" name="RegForm2">
-<table class="formcolor">
-<tr>
-<td>{tr}Login:{/tr}</td>
-<td><input type="text" name="userlogin"> </td>
-</tr>
-<tr>
-<td>{tr}Password:{/tr}</td>
-<td><input type="password" name="userpass"> </td>
-</tr>
-<tr>
-<td>&nbsp;</td>
-<td><input type="submit" class="btn btn-default btn-sm" name="linkaccount" value="{tr}Link to Existing Account{/tr}"></td>
-</tr>
-</table>
+<form action="tiki-socialnetworks_firstlogin.php" method="post" name="RegForm2" class="form-horizontal">
+	<div class="form-group">
+		<label class="control-label col-sm-3">{tr}Login:{/tr}</label>
+		<div class="col-sm-7">
+			<input type="text" name="userlogin" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-sm-3">{tr}Password:{/tr}</label>
+		<div class="col-sm-7">
+			<input type="password" name="userpass" class="form-control">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-sm-3"></label>
+		<div class="col-sm-7">
+			<input type="submit" class="btn btn-default" name="linkaccount" value="{tr}Link to Existing Account{/tr}">
+		</div>
+	</div>
 </form>
 
 {/if}

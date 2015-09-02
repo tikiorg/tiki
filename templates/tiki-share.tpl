@@ -109,7 +109,7 @@
 						</label>
 						<div class="col-sm-9">
 							{if $prefs.feature_jquery_autocomplete == 'y'}
-								{user_selector contact='true' user = '' multiple='true' editable='y' mustmatch='false' group='all' name='addresses' id='addresses' user_selector_threshold=0 style='width:99%'}
+								{user_selector contact='true' user = '' multiple='true' editable='y' mustmatch='false' group='all' name='addresses' id='addresses' class='form-control' user_selector_threshold=0 style='width:99%'}
 								<span class="help-block">
 									{tr}Separate multiple email addresses with a comma and a space{/tr}
 								</span>
@@ -204,14 +204,14 @@
 				<tr id="twitterrow">
 					<td>
 						{if $twitter}
-							<table class="formcolor" id="twittertable" style="display: none;">
-								<tr>
-									<td>{tr}Tweet{/tr}</td>
-									<td>
-										<input type="text" name="tweet" maxlength="140" style="width:95%;" id="tweet" value="{$subject|escape|default:"{tr}Have a look at {/tr}"} {$shorturl}">
-									</td>
-								</tr>
-							</table>
+							<div class="form-horizontal" id="twittertable" style="display: none;">
+								<div class="form-group">
+									<label class="control-label col-sm-3">{tr}Tweet{/tr}</label>
+									<div class="col-sm-7">
+										<input type="text" class="form-control" name="tweet" maxlength="140" style="width:95%;" id="tweet" value="{$subject|escape|default:"{tr}Have a look at {/tr}"} {$shorturl}">
+									</div>
+								</div>
+							</div>
 						{else}
 							&nbsp;
 						{/if}
@@ -243,25 +243,30 @@
 				<tr id="fbrow">
 					<td>
 						{if $facebook}
-							<table class="formcolor" id="fbtable" style="display: none;">
-								<tr>
-									<td>{tr}Link text{/tr}</td>
-									<td>
-										<input type="text" name="fblinktitle" id="fblinktitle" value="{$fblinktitle|escape}" style="width: 95%;">
-										<br>
-										<em>{tr}This will be the title for the URL{/tr}</em>
-									</td>
-								</tr>
-								<tr>
-									<td>{tr}Like this post{/tr}</td>
-									<td>
-										<input type="radio" name="fblike" value="1" {if $fblike==1}checked="checked" {/if}>
-										{tr}Yes{/tr}
-										<input type="radio" name="fblike" value="0" {if $fblike==0}checked="checked" {/if}>
-										{tr}No{/tr}
-									</td>
-								</tr>
-							</table>
+							<div class="form-horizontal" id="fbtable" style="display: none;">
+								<div class="form-group">
+									<label class="control-label col-sm-3">tr}Link text{/tr}</label>
+									<div class="col-sm-7">
+										<input type="text" name="fblinktitle" id="fblinktitle" value="{$fblinktitle|escape}" style="width: 95%;" class="form-control">
+										<div class="help-block">
+											{tr}This will be the title for the URL{/tr}
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-3">{tr}Like this post{/tr}</label>
+									<div class="col-sm-7">
+										<label class="radio-inline">
+											<input type="radio" name="fblike" value="1" {if $fblike==1}checked="checked" {/if}>
+											{tr}Yes{/tr}
+										</label>
+										<label class="radio-inline">
+											<input type="radio" name="fblike" value="0" {if $fblike==0}checked="checked" {/if}>
+											{tr}No{/tr}
+										</label>
+									</div>
+								</div>
+							</div>
 						{else}
 							&nbsp;
 						{/if}

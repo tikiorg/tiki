@@ -14,81 +14,69 @@
 	{tab name="{tr}Accounts{/tr}"}
 		<h2>{tr}Accounts{/tr}</h2>
 
-		<form action="tiki-socialnetworks.php" method="post">
-			<table class="formcolor" style="width:100%;">
-				<tr>
-					<th colspan="2"><img src="img/icons/twitter_t_logo_32.png" alt="Twitter" width="16" height="16"> Twitter</th>
-				</tr>
-				<tr>
-					<td colspan="2">
-						{if $twitterRegistered==0}
-							{remarksbox type="note" title="{tr}Note{/tr}"}
-								{tr}To use Twitter integration, the site admin must register this site as an application at <a href="http://twitter.com/oauth_clients/" target="_blank">http://twitter.com/oauth_clients/</a> and allow write access for the application.{/tr}
-							{/remarksbox}
-						{else}
-							{if $twitter}
-								{button href="tiki-socialnetworks.php?remove_twitter=true" _text="{tr}Remove{/tr}"}
-								{tr}Twitter authorisation.{/tr}
-							{else}
-								{if $show_removal}
-									<a href="https://twitter.com/settings/connections" target="_blank">{tr}Click here{/tr}</a> {tr}to manage your authorisations at Twitter{/tr}<br>
-								{else}
-									{* Can't use button here, we need the reload/redirect to work *}
-									<span class="button btn btn-default"><a href="tiki-socialnetworks.php?request_twitter=true">Authorize</a></span>
-									{tr}this site with twitter.com to use Twitter integration of this site.{/tr}
-								{/if}
-							{/if}
-						{/if}
-					</td>
-				</tr>
-				<tr>
-					<th colspan="2"><img src="img/icons/facebook-logo_32.png" alt="Facebook" width="16" height="16"> Facebook</th>
-				</tr>
-				<tr>
-					<td colspan="2">
-						{if $facebookRegistered==0}
-							{remarksbox type="note" title="{tr}Note{/tr}"}
-								{tr}To use Facebook integration, the site admin must register this site as an application at <a href="http://developers.facebook.com/setup/" target="_blank">http://developers.facebook.com/setup/</a> first.{/tr}
-							{/remarksbox}
-						{else}
-							{if $facebook}
-								{button href="tiki-socialnetworks.php?remove_facebook=true" _text="{tr}Remove{/tr}"}
-								{tr}Facebook authorisation.{/tr}
-							{else}
-								{if $show_removal}
-									<a href="http://facebook.com/editapps.php" target="_blank">{tr}Click here{/tr}</a> {tr}to manage your authorisations at Facebook{/tr}<br>
-								{else}
-									{* Can't use button here, we need the reload/redirect to work *}
-									<span class="button btn btn-default"><a href="tiki-socialnetworks.php?request_facebook=true">Authorize</a></span>
-									{tr}this site with facebook.com to use Facebook integration of this site.{/tr}
-								{/if}
-							{/if}
-						{/if}
-					</td>
-				</tr>
-				<tr>
-					<th colspan="2">bit.ly</th>
-				</tr>
-				<tr>
-					{if $prefs.socialnetworks_bitly_sitewide=='y'}
-						<td colspan="2">
-							{remarksbox type="note" title="{tr}Note{/tr}"}
-								<p>{tr}The site admin has set up a global account which will be used for this site{/tr}.</p>
-							{/remarksbox}
-						</td>
+		<form action="tiki-socialnetworks.php" method="post" class="form-horizontal">
+			<h2><img src="img/icons/twitter_t_logo_32.png" alt="Twitter" width="32" height="32"> Twitter</h2>
+			{if $twitterRegistered==0}
+				{remarksbox type="note" title="{tr}Note{/tr}"}
+					{tr}To use Twitter integration, the site admin must register this site as an application at <a href="http://twitter.com/oauth_clients/" target="_blank">http://twitter.com/oauth_clients/</a> and allow write access for the application.{/tr}
+				{/remarksbox}
+			{else}
+				{if $twitter}
+					{button href="tiki-socialnetworks.php?remove_twitter=true" _text="{tr}Remove{/tr}"}
+					{tr}Twitter authorisation.{/tr}
+				{else}
+					{if $show_removal}
+						<a href="https://twitter.com/settings/connections" target="_blank">{tr}Click here{/tr}</a> {tr}to manage your authorisations at Twitter{/tr}<br>
 					{else}
-						<td>{tr}bit.ly Login{/tr}</td>
-						<td><input type="text" name="bitly_login" value="{$bitly_login}" style="width:95%;"></td>
-					</tr>
-					<tr>
-						<td>{tr}bit.ly Key{/tr}</td>
-						<td><input type="text" name="bitly_key" value="{$bitly_key}" style="width:95%;"></td>
+						{* Can't use button here, we need the reload/redirect to work *}
+						<span class="button btn btn-default"><a href="tiki-socialnetworks.php?request_twitter=true">Authorize</a></span>
+						{tr}this site with twitter.com to use Twitter integration of this site.{/tr}
 					{/if}
-				</tr>
-				<tr>
-					<td colspan="2" class="input_submit_container"><input type="submit" class="btn btn-primary btn-sm" name="accounts" value="{tr}Save changes{/tr}"></td>
-				</tr>
-			</table>
+				{/if}
+			{/if}
+			<h2><img src="img/icons/facebook-logo_32.png" alt="Facebook" width="32" height="32"> Facebook</h2>
+			{if $facebookRegistered==0}
+				{remarksbox type="note" title="{tr}Note{/tr}"}
+					{tr}To use Facebook integration, the site admin must register this site as an application at <a href="http://developers.facebook.com/setup/" target="_blank">http://developers.facebook.com/setup/</a> first.{/tr}
+				{/remarksbox}
+			{else}
+				{if $facebook}
+					{button href="tiki-socialnetworks.php?remove_facebook=true" _text="{tr}Remove{/tr}"}
+					{tr}Facebook authorisation.{/tr}
+				{else}
+					{if $show_removal}
+						<a href="http://facebook.com/editapps.php" target="_blank">{tr}Click here{/tr}</a> {tr}to manage your authorizations at Facebook{/tr}<br>
+					{else}
+						{* Can't use button here, we need the reload/redirect to work *}
+						<span class="button btn btn-default"><a href="tiki-socialnetworks.php?request_facebook=true">Authorize</a></span>
+						{tr}this site within facebook.com to use Facebook integration with this site.{/tr}
+					{/if}
+				{/if}
+			{/if}
+			<h2>bit.ly</h2>
+			{if $prefs.socialnetworks_bitly_sitewide=='y'}
+				{remarksbox type="note" title="{tr}Note{/tr}"}
+					<p>{tr}The site admin has set up a global account which will be used for this site{/tr}.</p>
+				{/remarksbox}
+			{else}
+				<div class="form-group">
+					<label class="control-label col-sm-3">{tr}bit.ly Login{/tr}</label>
+					<div class="col-sm-7">
+						<input type="text" name="bitly_login" value="{$bitly_login}" class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-3">{tr}bit.ly Key{/tr}</label>
+					<div class="col-sm-7">
+						<input type="text" name="bitly_key" value="{$bitly_key}" class="form-control">
+					</div>
+				</div>
+			{/if}
+			<div class="form-group">
+				<div class="col-sm-12">
+					<input type="submit" class="btn btn-primary btn-sm" name="accounts" value="{tr}Save changes{/tr}">
+				</div>
+			</div>
 		</form>
 	{/tab}
 {/tabset}
