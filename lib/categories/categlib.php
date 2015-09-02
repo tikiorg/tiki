@@ -151,7 +151,7 @@ class CategLib extends ObjectLib
 
 		TikiLib::events()->trigger('tiki.category.delete', [
 			'type' => 'category',
-			'object' => $id,
+			'object' => $categId,
 			'user' => $GLOBALS['user'],
 		]);
 
