@@ -2930,6 +2930,10 @@ if ( \$('#$id') ) {
 						// replace <div> with <h> style attribute
 						$do_center = 0;
 						$title_text = preg_replace('/<div style="text-align: center;">(.*)<\/div>/', '\1', $title_text, 1, $do_center);
+
+						// prevent widow words on headings - thanks http://davidwalsh.name/prevent-widows-php-javascript
+						$title_text = preg_replace( '/([^\s])\s+([^\s]+)\s*$/', '$1&nbsp;$2', $title_text);
+
 						$style = $do_center ? ' style="text-align: center;"' : '';
 
 						if ( $prefs['feature_wiki_show_hide_before'] == 'y' ) {
