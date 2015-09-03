@@ -246,8 +246,8 @@
 {if $prefs.vimeo_upload eq 'y' and $field.options_map.displayMode eq 'vimeo' and $prefs.feature_jquery_validation eq 'y'}
 	{jq}
 		$.validator.addMethod("isVimeoUrl", function(value, element) {
-			return this.optional(element) || value.match(/http[s]?\:\/\/(?:www\.)?vimeo\.com\/\d+$/);
-		}, tr("* URL should be in the format: https://vimeo.com/nnnnnnn"));
+			return this.optional(element) || value.match(/http[s]?\:\/\/(?:www\.)?vimeo\.com.*\/\d{4}/);
+		}, tr("* URL format is incorrect. It should start with 'https://vimeo.com/' and contain a video id of at least 4 digits '\nnnnnnn'"));
 		$.validator.addClassRules({
 			vimeourl : { isVimeoUrl : true }
 		});
