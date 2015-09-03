@@ -41,7 +41,9 @@
 						{else}
 							{assign var='textcols' value=80}
 						{/if}
-						<input type="text" size="{$textcols}" name="{$questionId}" value="{$answer}">
+						<div class="form-inline">
+							<input type="text" size="{$textcols}" name="{$questionId}" value="{$answer}" class="form-control">
+						</div>
 					</div>
 				{elseif $questions[ix].type eq 'x'}
 					{assign var='area' value=$questions[ix].questionId}
@@ -64,18 +66,12 @@
 						{$commentToolBar = 'n'}
 					{/if}
 					<div class="quizoptions">
-						<table class="formcolor">
-							<tr>
-								<td valign="top">&nbsp;
-
-								</td>
-								<td valign="top">
-									{if $showToolBars}{toolbars area_id="question_$area" comments=$commentToolBar}{/if}
-									<textarea id="{$questionId}" name="{$questionId}" rows="{$textrows}"
-										cols="{$textcols}">{$answer}</textarea>
-								</td>
-							</tr>
-						</table>
+						<div class="form-inline">
+							{if $showToolBars}{toolbars area_id="question_$area" comments=$commentToolBar}{/if}
+							<textarea id="{$questionId}" name="{$questionId}" 
+							rows="{$textrows}" cols="{$textcols}" class="form-control">{$answer}
+							</textarea>
+						</div>
 					</div>
 				{elseif $questions[ix].type eq 'm'}
 					{if empty($answer)}{$answer=[]}{/if}
