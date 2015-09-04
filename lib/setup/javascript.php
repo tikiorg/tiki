@@ -27,10 +27,9 @@ if ($prefs['disableJavascript'] == 'y' ) {
 	$prefs['javascript_enabled'] = 'y';
 	setCookieSection('javascript_enabled_detect', '', '', time() - 3600);	// remove the test cookie
 } else {
-	if (isset($_COOKIE['runs_before_js_detect'])) {	// pre-tiki 14 method detected, delete both tests and reload
+	if (isset($_COOKIE['runs_before_js_detect'])) {	// pre-tiki 14 method detected, delete both test cookies (reloading here caused redirect a loop in some case)
 		setcookie('runs_before_js_detect', '', time() - 3600);
 		setcookie('javascript_enabled_detect', '', time() - 3600);
-		$access->redirect();
 	}
 	$prefs['javascript_enabled'] = '';
 }
