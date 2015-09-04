@@ -34,6 +34,7 @@ body {
 /* Fix for too wide images in jQuery mobile view  */
 img {
 	max-width: 100%;
+	height: auto;
 }
 
 /* lists */
