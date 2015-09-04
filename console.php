@@ -108,6 +108,7 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\ProfileExport\Init);
 	$console->add(new Tiki\Command\RecommendationBatchCommand);
 	$console->add(new Tiki\Command\RefreshRssCommand);
+	$console->add(new Tiki\Command\TrackerImportCommand);
 } else {
 	$console->add(new Tiki\Command\UnavailableCommand('addon:install'));
 	$console->add(new Tiki\Command\UnavailableCommand('addon:remove'));
@@ -125,6 +126,7 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\UnavailableCommand('profile:export:init'));
 	$console->add(new Tiki\Command\UnavailableCommand('recommendation:batch'));
 	$console->add(new Tiki\Command\UnavailableCommand('rss:refresh'));
+	$console->add(new Tiki\Command\UnavailableCommand('tracker:import'));
 }
 
 if (file_exists('profiles/info.ini')) {
