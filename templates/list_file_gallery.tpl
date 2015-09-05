@@ -173,7 +173,7 @@
 											<select name="moveto" class="form-control">
 												{section name=ix loop=$all_galleries}
 													{if $all_galleries[ix].id ne $galleryId and $all_galleries[ix].perms.tiki_p_upload_files eq 'y' and
-													($all_galleries[ix].public eq 'y' or $all_galleries[ix].user eq $user)}
+															($all_galleries[ix].public eq 'y' or $all_galleries[ix].user eq $user or $all_galleries[ix].perms.tiki_p_admin_file_galleries eq 'y')}
 														<option value="{$all_galleries[ix].id}">
 															{$all_galleries[ix].label|escape}
 														</option>
