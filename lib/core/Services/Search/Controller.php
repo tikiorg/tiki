@@ -59,6 +59,8 @@ class Services_Search_Controller
 
 	function action_lookup($input)
 	{
+		global $prefs;
+
 		try {
 			$lib = TikiLib::lib('unifiedsearch');
 			$query = $lib->buildQuery($input->filter->none());
