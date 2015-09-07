@@ -175,7 +175,6 @@ ajaxLoadingShow("'.$dom_id.'");
 		// js to initiate the editor
 		$ckoptions = '{
 	toolbar: ' .$cktools.',
-	language: "'.$prefs['language'].'",
 	customConfig: "",
 	autoSaveSelf: "'.addcslashes($auto_save_referrer, '"').'",		// unique reference for each page set up in ensureReferrer()
 	font_names: "' . trim($prefs['wysiwyg_fonts']) . '",
@@ -183,9 +182,9 @@ ajaxLoadingShow("'.$dom_id.'");
 	stylesSet: "tikistyles:' . $tikiroot . 'lib/ckeditor_tiki/tikistyles.js",
 	templates_files: ["' . $tikiroot . 'lib/ckeditor_tiki/tikitemplates.js"],
 	skin: "' . ($prefs['wysiwyg_toolbar_skin'] != 'default' ? $prefs['wysiwyg_toolbar_skin'] : 'moono') . '",
-	defaultLanguage: "' . $prefs['language'] . '",
+	defaultLanguage: "' . $this->languageMap($prefs['language']) . '",
  	contentsLangDirection: "' . ($prefs['feature_bidi'] === 'y' ? 'rtl' : 'ltr') . '",
-	language: "' . ($prefs['feature_detect_language'] === 'y' ? '' : $prefs['language']) . '"
+	language: "' . ($prefs['feature_detect_language'] === 'y' ? '' : $this->languageMap($prefs['language'])) . '"
 	'. (empty($params['rows']) ? ',height: "' . (empty($params['height']) ? '400' : $params['height']) . '"' : '') .'
 	, resize_dir: "both"
 	, allowedContent: true
@@ -200,6 +199,73 @@ ajaxLoadingShow("'.$dom_id.'");
 
 		return $ckoptions;
 	}
+
+	/** Map between tiki lang codes and ckeditor's (mostly the same)
+	 *
+	 * @param string $lang	Tiki language code
+	 * @return string		mapped language code - defaults to the same if not found
+	 */
+	private function languageMap ($lang)
+	{
+
+		$langMap = array(
+			//'ar' => 'ar',			// Arabic = United Arab Emirates - English ok?
+			//'bg' => 'bg',			// Bulgarian
+			//'ca' => 'ca',			// Catalan
+			'cn' => 'zh-cn',		// China - Simplified Chinese
+			//'cs' => 'cs',			// Czech
+			//'cy' => 'cy',			// Welsh
+			//'da' => 'da',			// Danish
+			'de' => 'de',			// Germany - German
+			'en-uk' => 'en-gb',		// United Kingdom - English
+			//'en' => 'en',			// United States - English
+			//'es' => 'es',			// Spain - Spanish
+			//'el' => 'el',			// Greek
+			//'fa' => 'fa',			// Farsi
+			//'fi' => 'fi',			// Finnish
+			'fj' => 'en',			// Fijian	(not supported)
+			//'fr' => 'fr',			// France - French
+			'fy-NL' => 'nl',		// Netherlands - Dutch
+			'gl' => 'es',				// Galician
+			//'he' => 'he',			// Israel - Hebrew
+			//'hr' => 'hr',			// Croatian
+			//'id' => 'id',			// Indonesian
+			//'is' => 'is',			// Icelandic
+			//'it' => 'it',			// Italy - Italian
+			'iu' => 'en',			// Inuktitut	(not supported)
+			'iu-ro' => 'en',		// Inuktitut (Roman)	(not supported)
+			'iu-iq' => 'en',		// Iniunnaqtun	(not supported)
+			//'ja' => 'ja',			// Japan - Japanese
+			//'ko' => 'ko',			// Korean
+			//'hu' => 'hu',			// Hungarian
+			//'lt' => 'lt',			// Lithuanian
+			'nds' => 'de',			// Low German
+			//'nl' => 'nl',			// Netherlands - Dutch
+			//'no' => 'no',			// Norway - Norwegian
+			//'pl' => 'pl',			// Poland - Polish
+			//'pt' => 'pt',			// Portuguese
+			//'pt-br' => 'pt-br',	// Brazil - Portuguese
+			//'ro' => 'ro',			// Romanian
+			'rm' => 'en',			// Romansh	(not supported)
+			//'ru' => 'ru',			// Russia - Russian
+			'sb' => 'en',			// Pijin Solomon	(not supported)
+			//'si' => 'si',			// Sinhala
+			//'sk' => 'sk',			// Slovak
+			//'sl' => 'sl',			// Slovene
+			//'sq' => 'sq',			// Albanian
+			//'sr-latn' => 'sr-latn',	// Serbian Latin
+			//'sv' => 'sv',			// Sweden - Swedish
+			'tv' => 'en',			// Tuvaluansr-latn
+			//'tr' => 'tr',			// Turkey - Turkish
+			'tw' => 'zh',			// Taiwan - Traditional Chinese
+			//'uk' => 'uk',			// Ukrainian
+			//'vi' => 'vi',			// Vietnamese
+		);
+
+		return isset($langMap[$lang]) ? $langMap[$lang] : $lang;
+	}
+
+
 }
 
 global $wysiwyglib;
