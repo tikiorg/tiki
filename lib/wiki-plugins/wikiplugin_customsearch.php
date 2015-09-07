@@ -663,6 +663,8 @@ function cs_design_select($id, $fieldname, $fieldid, $arguments, $default, &$scr
 
 	if (isset($arguments['_labels'])) {
 		$labels = explode(',', $arguments['_labels']);
+	} else {
+		$labels = array();
 	}
 	if (isset($arguments['_options'])) {
 		$options = explode(',', $arguments['_options']);
@@ -680,6 +682,39 @@ function cs_design_select($id, $fieldname, $fieldid, $arguments, $default, &$scr
 			$labels = $handler->getItemList();
 			$options = array_keys($labels);
 			$labels = array_values($labels);
+
+		} else if ($field['type'] === 't') {	// Text field so get all values up to a sensible(?) amount
+
+			global $prefs;
+
+			// turns out using a straight "old fashioned" DISTINCT MySQL query here is the most efficient
+			$result = TikiLib::lib('tiki')->query(
+				'SELECT DISTINCT `value` FROM `tiki_tracker_item_fields` WHERE `fieldId` = ? ORDER BY `value` LIMIT 1000;',
+				$field['fieldId']
+			);
+
+			while ($row = $result->fetchRow()) {
+				$label = $row['value'];
+				if (! in_array($label, $labels)) {
+					$labels[] = $label;
+
+					$label = explode(' ', $label);
+
+					foreach($label as & $word) {
+						if ($prefs['unified_engine'] !== 'mysql') {
+							if (in_array($word, $prefs['unified_stopwords'])) {
+								$word = '';
+							}
+						} else {
+							if (strlen($word) < 4) {	// default mysql fulltext minimum word length TODO find current value for ft_min_word_len
+								$word = '';
+							}
+						}
+					}
+
+					$options[] = implode(' AND ', array_filter($label));
+				}
+			}
 
 		} else if ($field['type'] === 'u') {	// User Selector (only when in dropdown list mode)
 
