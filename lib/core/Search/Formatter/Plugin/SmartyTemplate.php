@@ -58,6 +58,7 @@ class Search_Formatter_Plugin_SmartyTemplate implements Search_Formatter_Plugin_
 		}
 
 		$smarty->assign('prefs', $GLOBALS['prefs']);
+		$smarty->assign('user', $GLOBALS['user']);
 		$smarty->assign('results', $entries);
 		$smarty->assign(
 			'facets',

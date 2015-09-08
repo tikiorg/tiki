@@ -30,6 +30,7 @@ class TikiAddons_Addon
 		if ($this->configuration->smarty) {
 			$this->smarty = new Smarty_Tiki;
 			$this->smarty->assign('prefs', $GLOBALS['prefs']);
+			$this->smarty->assign('user', $GLOBALS['user']);
 			$this->smarty->assign('tikiaddon_package', $this->configuration->package);
 		}
 	}
