@@ -1768,9 +1768,24 @@ function wikiplugin_tracker_save($trackerSavedState)
 	$smarty = TikiLib::lib('smarty');
 	
 	$numVarOk = extract($trackerSavedState, EXTR_SKIP);
+	if (!isset($trackerId)) {
+		$trackerId = null;
+	}
+	if (!isset($itemId)) {
+		$itemId = null;
+	}
+	if (!isset($ins_fields)) {
+		$ins_fields = null;
+	}
+	if (!isset($status)) {
+		$status = "";
+	}
+	if (!isset($ins_categs)) {
+		$ins_categs = 0;
+	}
 	
 	/* ---------------- check registration and create new user if requested ---------------- */
-	if ($registration == 'y' && isset($request['register'])) {
+	if (isset($registration) && $registration == 'y' && isset($request['register'])) {
 		$registrationlib = TikiLib::lib('registration');
 		$req = $request;
 		// if $chosenGroup was empty, we could try to guess it
@@ -1823,7 +1838,7 @@ function wikiplugin_tracker_save($trackerSavedState)
 			}
 		}
 	} else {
-		if ($registration == 'y' && $_SERVER['REQUEST_METHOD'] != 'POST') {
+		if (isset ($registration) && $registration == 'y' && $_SERVER['REQUEST_METHOD'] != 'POST') {
 			return false;
 		}
 		$rid = $trklib->replace_item($trackerId, $itemId, $ins_fields, $status, $ins_categs);

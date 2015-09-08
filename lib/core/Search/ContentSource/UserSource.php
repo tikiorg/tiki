@@ -74,13 +74,13 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 		if (isset($detail['preferences']['user_style'])) {
 			$user_style = $detail['preferences']['user_style'];
 		} else {
-			$user_style = $prefs['site_style'];
+			$user_style = isset($prefs['site_style']) ? $prefs['site_style'] : "" ;
 		}
 
 		$user_language = $this->tiki->get_language($this->user);
 		$user_language_text = $this->tiki->format_language_list(array($user_language));
 
-		$userPage = $prefs['feature_wiki_userpage_prefix'] . $userinfo['login'];
+		$userPage = $prefs['feature_wiki_userpage_prefix'] . $objectId;
 		if (! $this->tiki->page_exists($userPage)){
 			$userPage = "";
 		}
