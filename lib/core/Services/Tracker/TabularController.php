@@ -199,7 +199,13 @@ class Services_Tracker_TabularController
 
 		$name = TikiLib::lib('tiki')->remove_non_word_characters_and_accents($info['name']);
 		$writer->sendHeaders($name . '_export_full.csv');
-		$writer->write($source);
+
+		TikiLib::lib('tiki')->allocate_extra(
+			'tracker_export_items',
+			function () use ($writer, $source) {
+				$writer->write($source);
+			}
+		);
 		exit;
 	}
 
@@ -232,7 +238,13 @@ class Services_Tracker_TabularController
 
 			$name = TikiLib::lib('tiki')->remove_non_word_characters_and_accents($info['name']);
 			$writer->sendHeaders($name . '_export_partial.csv');
-			$writer->write($source);
+
+			TikiLib::lib('tiki')->allocate_extra(
+				'tracker_export_items',
+				function () use ($writer, $source) {
+					$writer->write($source);
+				}
+			);
 			exit;
 		}
 
@@ -279,7 +291,13 @@ class Services_Tracker_TabularController
 
 			$name = TikiLib::lib('tiki')->remove_non_word_characters_and_accents($info['name']);
 			$writer->sendHeaders($name . '_export_search.csv');
-			$writer->write($source);
+
+			TikiLib::lib('tiki')->allocate_extra(
+				'tracker_export_items',
+				function () use ($writer, $source) {
+					$writer->write($source);
+				}
+			);
 			exit;
 		} elseif (count($formats) === 0) {
 			throw new Services_Exception(tr('No formats available.'));

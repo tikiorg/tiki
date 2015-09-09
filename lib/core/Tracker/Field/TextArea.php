@@ -260,7 +260,7 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 			return function ($value, $extra) use ($lang) {
 				if (isset($extra['text'])) {
 					$value = $extra['text'];
-				} elseif (isset($value[$lang])) {
+				} elseif ($lang && isset($value[$lang])) {
 					$value = $lang;
 				}
 

@@ -152,7 +152,7 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 			break;
 	}
 
-	if ($with_next && $with_title != 'y') {
+	if ($with_next && ($with_title != 'y' || $prefs['feature_sefurl'] !== 'y')) {
 		$href .= '&amp;';
 	}
 

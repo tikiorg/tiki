@@ -87,16 +87,18 @@
 			}
 			return false;
 		});
-		var $container = $('.save-fields tbody')
-			.sortable({
-				update: function () {
-					$('td.id :hidden', this).each(function (k) {
-						$(this).val(k * 10);
-					});
-				}
-			})
-			.disableSelection()
-			.css('cursor', 'move');
+		var $container = $('.save-fields tbody');
+		{{if $prefs.feature_jquery_ui eq 'y'}}
+			$container.sortable({
+					update: function () {
+						$('td.id :hidden', this).each(function (k) {
+							$(this).val(k * 10);
+						});
+					}
+				})
+				.disableSelection()
+				.css('cursor', 'move');
+		{{/if}}
 
 		$container.tracker_load_fields(trackerId);
 
