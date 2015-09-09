@@ -190,6 +190,9 @@ function wikiplugin_trackerfilter($data, $params)
 						return true;
 					});'
 	);
+	if ($prefs['jquery_ui_chosen'] === 'y') {
+		$headerlib->add_css('.trackerfilter form .table-responsive { overflow-y: auto; }');
+	}
 
 	if (!empty($_REQUEST['tracker_filters']) && count($_REQUEST['tracker_filters']) > 0) {
 		foreach ($_REQUEST['tracker_filters'] as $tf_vals) {
@@ -544,18 +547,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 		if (empty($formats[$fieldId])) { // default format depends on field type
 			switch ($field['type']){
 			case 'e':// category
-				global $categlib; include_once('lib/categories/categlib.php');
-				if (ctype_digit($field['options_array'][0]) && $field['options_array'][0] > 0) {
-					if (isset($field['options_array'][3]) && $field['options_array'][3] == 1) {
-						$type = 'descendants';
-					} else {
-						$type = 'children';
-					}
-					$filter = array('identifier'=>$field['options_array'][0], 'type'=>$type);
-					$res = $categlib->getCategories($filter, true, false);
-				} else {
-					$res = array();
-				}
+				$res = wikiplugin_trackerfilter_get_categories($field);
 				$formats[$fieldId] = (count($res) >= 6)? 'd': 'r';
     			break;
 			case 'd': // drop down list
@@ -580,13 +572,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 		}
 		if ($field['type'] == 'e' && ($formats[$fieldId] == 't' || $formats[$fieldId] == 'T' || $formats[$fieldId] == 'i')) { // do not accept a format text for a categ for the moment
 			if (empty($res)) {
-				global $categlib; include_once('lib/categories/categlib.php');
-				if (ctype_digit($field['options_array'][0]) && $field['options_array'][0] > 0) {
-					$filter = array('identifier'=>$field['options_array'][0], 'type'=>'children');
-					$res = $categlib->getCategories($filter, true, false);
-				} else {
-					$res = array();
-				}
+				$res = wikiplugin_trackerfilter_get_categories($field);
 			}
 			$formats[$fieldId] = (count($res) >= 6)? 'd': 'r';
 		}
@@ -598,13 +584,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 			switch ($field['type']){
 			case 'e': // category
 				if (empty($res)) {
-					global $categlib; include_once('lib/categories/categlib.php');
-					if (ctype_digit($field['options_array'][0]) && $field['options_array'][0] > 0) {
-						$filter = array('identifier'=>$field['options_array'][0], 'type'=>'children');
-						$res = $categlib->getCategories($filter, true, false);
-					} else {
-						$res = array();
-					}
+					$res = wikiplugin_trackerfilter_get_categories($field);
 				}
 				foreach ($res as $opt) {
 					$opt['id'] = $opt['categId'];
@@ -760,6 +740,31 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', &$fo
 	}
 	return $filters;
 }
+
+/** get get categories for field
+ *
+ * @param array $field
+ * @return array of category arrays
+ * @throws Exception
+ */
+function wikiplugin_trackerfilter_get_categories($field)
+{
+	$handler = TikiLib::lib('trk')->get_field_handler($field);
+
+	if ($handler) {
+		$res = $handler->getFieldData();
+		// handle full path setting here
+		if ($field['options_map']['descendants'] == 2) {
+			foreach($res['list'] as & $cat) {
+				$cat['name'] = $cat['categpath'];
+			}
+		}
+		return $res['list'];
+	} else {
+		return array();
+	}
+}
+
 function wikiplugin_trackerFilter_build_urlquery($params)
 {
 	if (empty($params['filterfield']))
