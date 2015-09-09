@@ -380,7 +380,7 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 				->setRenderTransform(function ($value, $extra) use ($lang) {
 					if (isset($extra['text'])) {
 						return $extra['text'];
-					} elseif (isset($value[$lang])) {
+					} elseif ($lang && isset($value[$lang])) {
 						return $value[$lang];
 					}
 				})
@@ -401,7 +401,7 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 					->setRenderTransform(function ($value, $extra) use ($lang) {
 						if (isset($extra['text'])) {
 							return $extra['text'];
-						} elseif (isset($value[$lang])) {
+						} elseif ($lang && isset($value[$lang])) {
 							return $value[$lang];
 						}
 					})
