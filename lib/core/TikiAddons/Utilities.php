@@ -171,6 +171,11 @@ class TikiAddons_Utilities extends TikiDb_Bridge
 		if ($type == 'forum' || $type == 'forums') {
 			TikiLib::lib('comments')->remove_forum($objectId);
 		}
+		if ($type == 'trackerfield' || $type == 'trackerfields' || $type == 'tracker field') {
+			$trklib = TikiLib::lib('trk');
+			$res = $trklib->get_tracker_field($objectId);
+			$trklib->remove_tracker_field($objectId, $res['trackerId']);
+		}
 	}
 
 	function getObjectId($folder, $ref, $profile = '', $domain = '') {
@@ -182,6 +187,8 @@ class TikiAddons_Utilities extends TikiDb_Bridge
 		}
 
 		if (!$profile) {
+			echo "domain:$domain \n";
+			echo "obj:$ref \n";
 			if ($this->table('tiki_profile_symbols')->fetchCount(array('domain' => $domain, 'object' => $ref)) > 1) {
 				return $this->table('tiki_profile_symbols')->fetchAll('value', array('domain' => $domain, 'object' => $ref));
 			} else {
