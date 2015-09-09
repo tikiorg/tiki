@@ -807,9 +807,6 @@ function wikiplugin_trackerlist($data, $params)
 		} else {
 			$limit = '';
 		}
-		if ($editableall=='y') {
-			$editable = $fields;
-		}
 		if (!empty($filterfield) && !empty($limit)) {
 			$limit = array_unique(array_merge($limit, $filterfield));
 		}
@@ -1515,6 +1512,9 @@ function wikiplugin_trackerlist($data, $params)
 					$nonPublicFieldsWarning = tra('You have attempted to view data of a tracker field which is not public. You need to ask the admin to change the setting to public for this field.');
 				}
 			}
+		}
+		if ($editableall=='y') {
+			$editable = $listfields;
 		}
 		$smarty->assign('nonPublicFieldsWarning', $nonPublicFieldsWarning);
 		$smarty->assign_by_ref('filterfield', $filterfield);
