@@ -113,6 +113,16 @@ class Tracker_Field_Location extends Tracker_Field_Abstract implements Tracker_F
 			return $this->getConfiguration('value');
 		} else {
 			TikiLib::lib('header')->add_map();
+
+			$attributes = TikiLib::lib('attribute')->get_attributes('trackeritem', $this->getItemId());
+
+			if (isset($attributes['tiki.icon.src'])) {
+				TikiLib::lib('smarty')->loadPlugin('smarty_modifier_escape');
+				$context['icon_data'] = ' data-icon-src="'. smarty_modifier_escape($attributes['tiki.icon.src']) .'"';
+			} else {
+				$context['icon_data'] = '';
+			}
+
 			return $this->renderTemplate('trackeroutput/location.tpl', $context);
 		}
 	}
