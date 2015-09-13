@@ -1,6 +1,6 @@
 {* $Id$ *}
 <div class="postbody clearfix">
-	<a name="postId{$post_info.postId}"></a>
+	<a id="postId{$post_info.postId}"></a>
 	{include file='blog_post_postbody_title.tpl'}
 	{include file='blog_post_postbody_content.tpl'}
 	{if $blog_post_context ne 'excerpt'}
