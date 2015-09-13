@@ -143,7 +143,7 @@
 	{/tab}
 	{if isset($smarty.request.edit_assign) or $preview eq "y"}
 		{tab name="{tr}Edit module{/tr}"}
-			<a name="assign"></a>
+			<a id="assign"></a>
 			{if $assign_name eq ''}
 				<h2>{tr}Assign new module{/tr}</h2>
 			{else}
@@ -396,7 +396,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">{tr}Data{/tr}</label>
                 <div class="col-sm-7 col-sm-offset-1">
-                    <a name="editcreate"></a>
+                    <a id="editcreate"></a>
                     {textarea name='um_data' id='um_data' _class=form-color _toolbars='y' _previewConfirmExit='n' _wysiwyg="n"}{$um_data}{/textarea}
                 </div>
             </div>

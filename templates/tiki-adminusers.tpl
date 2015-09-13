@@ -410,7 +410,7 @@
 	{if !$tsAjax}
 
 		{* ---------------------- tab with form -------------------- *}
-		<a name="2" ></a>
+		<a id="tab2" ></a>
 		{if isset($userinfo.userId) && $userinfo.userId}
 			{capture assign=add_edit_user_tablabel}{tr}Edit user{/tr} <i>{$userinfo.login|escape}</i>{/capture}
 		{else}

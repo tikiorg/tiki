@@ -407,7 +407,7 @@
 	</div>
 {/if}
 
-<a name="charts" href="tiki-stats.php?chart=usage#charts" class="link">{tr}Usage chart{/tr}</a>
+<a id="charts" href="tiki-stats.php?chart=usage#charts" class="link">{tr}Usage chart{/tr}</a>
 
 {if $usage_chart eq 'y'}
 	<div align="center">

@@ -160,7 +160,7 @@
 		</div>
 	{/if}
 {/if} {* end read comment *}
-{if $section eq 'forums'}<a name="comments"></a>{/if}
+{if $section eq 'forums'}<a id="comments"></a>{/if}
 {if !empty($errors)}
 	{remarksbox type="warning" title="{tr}Errors{/tr}"}
 		{foreach from=$errors item=error name=error}

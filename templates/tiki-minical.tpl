@@ -178,7 +178,7 @@
 	{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 {/if}
 
-<a name="add"></a>
+<a id="add"></a>
 <h2>{if $eventId}{tr}Edit Event{/tr}{else}{tr}Add Event{/tr}{/if}</h2>
 <br>
 <form action="tiki-minical.php" method="post" class="form-horizontal">

@@ -24,7 +24,7 @@
 {tabset name="admin_menu_options"}
 {tab name="{tr}Manage menu{/tr} {$editable_menu_info.name}"}
 	<div>
-		<a name="options"></a>
+		<a id="options"></a>
 
 		<h2>{tr}Menu options{/tr} <span class="badge">{$cant_pages}</span></h2>
 		{if $channels or ($find ne '')}

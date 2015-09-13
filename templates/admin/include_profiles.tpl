@@ -331,7 +331,7 @@
 				</table>
 				</div>
 			</form>
-			<a name="step2"></a>
+			<a id="step2"></a>
 			{if isset($result) && $result|@count != '0'}
 				<h4>{tr}Select and apply profile <small>Click on a Configuration Profile Name below to review it and apply it on your site</small>{/tr}</h4>
 				<div class="table-responsive">

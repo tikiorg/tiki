@@ -39,7 +39,7 @@
 
 <hr>
 
-<a name="translate_updates"></a>
+<a id="translate_updates"></a>
 <h3>{tr}Translate updates made on this page or one of its translations{/tr}</h3>
 
 <div style="width:50%">
@@ -50,7 +50,7 @@
 <hr>
 <br>
 
-<a name="new_translation"></a>
+<a id="new_translation"></a>
 <h3>{tr}Translate this page to a new language{/tr}</h3>
 <form method="post" action="tiki-editpage.php" onsubmit="return validate_translation_request(this)">
 	<fieldset>
@@ -116,7 +116,7 @@
 
 <hr>
 
-<a name="change_language"></a>
+<a id="change_language"></a>
 <h3>{tr}Change language for this page{/tr}</h3>
 <form method="post" action="tiki-edit_translation.php" class="form">
 	<div class="input-group">

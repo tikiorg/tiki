@@ -31,7 +31,7 @@
 
 	<h2>{tr}Answers{/tr}</h2>
 	{section name=ix loop=$channels}
-		<a name="q{$channels[ix].questionId}"></a>
+		<a id="q{$channels[ix].questionId}"></a>
 		<div class="faqqa">
 			<div class="faqquestion">
 				{if $prefs.faq_prefix neq 'none'}

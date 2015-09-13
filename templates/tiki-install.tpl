@@ -159,7 +159,7 @@
 							{icon name="ok"} {tr}Tiki has detected your PHP memory_limit at:{/tr}<strong>{$php_memory_limit|kbsize:true:0}</strong>.
 						{/remarksbox}
 					{/if}
-					<h2>{tr}Mail{/tr}</h2><a name="mail"> </a>
+					<h2>{tr}Mail{/tr}</h2><a id="mail"> </a>
 					<p>{tr}Tiki uses the PHP <strong>mail</strong> function to send email notifications and messages.{/tr}</p>
 					{if $mail_test_performed ne 'y'}
 						<p>{tr}To test your system configuration, Tiki will attempt to send a test message to you.{/tr}</p>

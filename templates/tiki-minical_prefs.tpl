@@ -68,7 +68,7 @@
 	    </div>
     </div>
 </form>
-<a name="import"></a>
+<a id="import"></a>
 <h2>{tr}Import CSV file{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-minical_prefs.php" method="post" class="form-horizontal">
 	<div class="form-group">

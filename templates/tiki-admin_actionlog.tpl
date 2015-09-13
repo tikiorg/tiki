@@ -338,7 +338,7 @@
 		{/if}
 
 		{if $action}
-			<a name="action">
+			<a id="action">
 			<h2>{tr}Edit Action{/tr}</h2>
 			<form method="post" action="tiki-admin_actionlog.php">
 				<input type="hidden" name="actionId" value="{$action.actionId}">
@@ -703,7 +703,7 @@
 
 	{* -------------------------------------------------- tab with setting --- *}
 	{tab name="{tr}Settings{/tr}"}
-		<a name="Setting" ></a>
+		<a id="Setting" ></a>
 		<h2>{tr}Settings{/tr}</h2>
 		{remarksbox type="tip" title="{tr}How{/tr}"}
 			{tr}You need to check out the recorded box for each action type we may be interested to have some report later. To see a report of some action types, select the reported checkboxes of these action types, goto the Report tab and select additional filters. The report will only contains the actions that occurred since the action type has been set to recorded.{/tr} {tr}Wiki page actions except viewed will always be recorded but can be not reported.{/tr}
