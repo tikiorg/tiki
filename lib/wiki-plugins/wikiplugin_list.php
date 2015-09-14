@@ -18,6 +18,13 @@ function wikiplugin_list_info()
 		'icon' => 'img/icons/text_list_bullets.png',
 		'tags' => array( 'basic' ),
 		'params' => array(
+			'searchable_only' => array(
+				'required' => false,
+				'name' => tra('Searchable Only Results'),
+				'description' => tra('Only include results marked as searchable in the index.'),
+				'filter' => 'digits',
+				'default' => '1',
+			),
 		),
 	);
 }
@@ -30,7 +37,9 @@ function wikiplugin_list($data, $params)
 	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 
 	$query = new Search_Query;
-	$query->filterIdentifier('y', 'searchable');
+	if (!isset($params['searchable_only']) || $params['searchable_only'] == 1) {
+		$query->filterIdentifier('y', 'searchable');
+	}
 	$unifiedsearchlib->initQuery($query);
 
 	$matches = WikiParser_PluginMatcher::match($data);

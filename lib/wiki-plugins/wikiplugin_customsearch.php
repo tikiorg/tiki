@@ -122,6 +122,13 @@ function wikiplugin_customsearch_info()
 				'filter' => 'digits',
 				'default' => '0',
 			),
+			'searchable_only' => array(
+				'required' => false,
+				'name' => tra('Searchable Only Results'),
+				'description' => tra('Only include results marked as searchable in the index.'),
+				'filter' => 'digits',
+				'default' => '1',
+			),
 		),
 	);
 }
@@ -185,7 +192,9 @@ function wikiplugin_customsearch($data, $params)
 	$definitionKey = md5($data);
 	$matches = WikiParser_PluginMatcher::match($data);
 	$query = new Search_Query;
-	$query->filterIdentifier('y', 'searchable');
+	if (!isset($params['searchable_only']) || $params['searchable_only'] == 1) {
+		$query->filterIdentifier('y', 'searchable');
+	}
 	$builder = new Search_Query_WikiBuilder($query);
 	$builder->apply($matches);
 
