@@ -113,6 +113,7 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 			$href = smarty_modifier_sefurl($itemId, 'trackeritem');
 			$href .= (strpos($href, '?') === false) ? '?' : '&';
 			$href .= http_build_query($query, '', '&');
+			$href = rtrim($href, '?&');
 
 			$arguments = array(
 				'class' => implode(' ', $classList),
