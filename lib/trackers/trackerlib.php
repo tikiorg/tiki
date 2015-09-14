@@ -2285,8 +2285,13 @@ class TrackerLib extends TikiLib
 		$erroneous_values = array();
 		if (isset($ins_fields)&&isset($ins_fields['data'])) {
 			foreach ($ins_fields['data'] as $f) {
-				if ($f['type'] == 'f' && isset($f['error']) && $f['isMandatory'] != 'y') {
-					$erroneous_values[] = $f;
+				if ($f['type'] == 'f' && $f['isMandatory'] != 'y' && empty($f['value'])) {
+					$ins_id = 'ins_' . $f['fieldId'];
+					if (!empty($_REQUEST[$ins_id.'Month']) || !empty($_REQUEST[$ins_id.'Day']) || !empty($_REQUEST[$ins_id.'Year']) ||
+								!empty($_REQUEST[$ins_id.'Hour']) || !empty($_REQUEST[$ins_id.'Minute'])) {
+
+						$erroneous_values[] = $f;
+					}
 				}
 				if ($f['type'] != 'q' and isset($f['isMandatory']) && $f['isMandatory'] == 'y') {
 					if (($f['type'] == 'e' || in_array($f['fieldId'], $categorized_fields)) && empty($f['value'])) {	// category: value is now categ id's
