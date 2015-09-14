@@ -42,7 +42,7 @@
 			{if $activityframe.sharedgroups and $user != $activityframe.activity.user}
 				{tr}You share the following groups with this user:{/tr}
 				{foreach $activityframe.sharedgroups as $s_grp}
-					{$s_grp|escape}{if !$s_grp@last}, {/if}
+					{$s_grp|addongroupname|escape}{if !$s_grp@last}, {/if}
 				{/foreach}
 			{/if}
 		</div>
