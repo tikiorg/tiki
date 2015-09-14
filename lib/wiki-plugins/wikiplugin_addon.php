@@ -15,6 +15,7 @@ function wikiplugin_addon_info()
 		'body' => '',
 		'filter' => 'rawhtml_unsafe',
 		'tags' => array( 'basic' ),
+		'extraparams' => true,
 		'params' => array(
 			'package' => array(
 				'required' => true,
