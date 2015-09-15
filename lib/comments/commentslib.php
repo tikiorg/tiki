@@ -2977,6 +2977,7 @@ class Comments extends TikiLib
 					'forum_section' => $forum_info['section'],
 					'user' => $GLOBALS['user'],
 					'title' => $title,
+					'name' => $forum_info['name'],
 					'parent_title' => $parent_title,
 					'content' => $data,
 					'index_handled' => true,
