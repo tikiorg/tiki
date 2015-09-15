@@ -120,10 +120,12 @@
 								submit.name = 'install';
 								submit.value = 'Apply Now';
 								form.setAttribute ( "onsubmit", 'return confirm(\"{/literal}{tr}Are you sure you want to apply the profile{/tr}{literal} ' + profile + '?\");' );
+								form.setAttribute ( "class", "btn btn-primary");
 							} else if ( data.already ) {
 								submit.name = 'forget';
 								submit.value = 'Forget and Re-apply';
 								form.setAttribute ( "onsubmit", 'return confirm(\"{/literal}{tr}Are you sure you want to re-apply the profile{/tr}{literal} ' + profile + '?\");' );
+								form.setAttribute ( "class", "btn btn-primary");
 							}
 
 							p.appendChild(submit);
@@ -293,7 +295,7 @@
 									{/jq}
 								</div>
 							<div class="form-group text-center">
-								<input type="submit" class="btn btn-default" name="list" value="{tr}Find{/tr}" />
+								<input type="submit" class="btn btn-primary" name="list" value="{tr}Find{/tr}" />
 							</div>
 						</td>
 						<td class="col-lg-6">
