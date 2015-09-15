@@ -86,6 +86,11 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 	{
 		global $user;
 
+		// datetime select fields now have the class "date" which triggers an automatic class rule in jquery.validation
+		// but that expects a full valid date value, so always fails
+		TikiLib::lib('header')->add_jq_onready('$.validator.classRuleSettings.date = false;
+');
+
 		TikiLib::lib('smarty')->assign('use_24hr_clock', TikiLib::lib('userprefs')->get_user_clock_pref($user));
 		return $this->renderTemplate('trackerinput/datetime.tpl', $context);
 	}
