@@ -71,7 +71,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 	function getFieldData(array $requestData = array())
 	{
-		global $tiki_p_admin_trackers, $user, $prefs;
+		global $user, $prefs;
 
 		$ins_id = $this->getInsertId();
 
@@ -80,7 +80,9 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		$autoassign = (int) $this->getOption('autoassign');
 
 		if ( isset($requestData[$ins_id])) {
-			if ($autoassign == 0 || $tiki_p_admin_trackers === 'y') {
+			$perms = Perms::get('tracker', $this->getConfiguration('trackerId'));
+
+			if ($autoassign == 0 || $perms->admin_trackers) {
 				$auser = $requestData[$ins_id];
 				$userlib = TikiLib::lib('user');
 				if (! $auser || $userlib->user_exists($auser)) {
@@ -120,15 +122,16 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 	function renderInput($context = array())
 	{
-		global $tiki_p_admin_trackers, $user, $prefs;
+		global $user, $prefs;
 		$smarty = TikiLib::lib('smarty');
+		$perms = Perms::get('tracker', $this->getConfiguration('trackerId'));
 
 		$value = $this->getConfiguration('value');
 		$autoassign = (int) $this->getOption('autoassign');
 		if ((empty($value) && $autoassign == 1) || $autoassign == 2) {	// always use $user for last mod autoassign
 			$value = $user;
 		}
-		if ($autoassign == 0 || $tiki_p_admin_trackers === 'y') {
+		if ($autoassign == 0 || $perms->admin_trackers) {
 			$groupIds = $this->getOption('groupIds', '');
 
 			if ($prefs['user_selector_realnames_tracker'] === 'y' && $this->getOption('showRealname')) {

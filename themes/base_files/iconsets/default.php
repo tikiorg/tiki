@@ -173,6 +173,9 @@ function iconset_default()
 			'admin_wysiwyg' => array(
 				'id' => 'file-text',
 			),
+			'articles' => array(
+				'id' => 'newspaper-o',
+			),
 			//arrow-up in defaults
 			'attach' => array(
 				'id' => 'paperclip',
