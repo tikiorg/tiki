@@ -388,6 +388,8 @@ $file = basename($info['filename']);
 // If the content has not changed, ask the browser to download it (instead of displaying it)
 if ( ! $content_changed and !isset($_GET['display']) ) {
 	header("Content-Disposition: attachment; filename=\"$file\"");
+} else {
+	header("Content-Disposition: filename=\"$file\"");
 }
 
 if ( !empty($filepath) and !$content_changed ) {
