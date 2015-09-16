@@ -1,9 +1,10 @@
 {* $Id$ *}
 
-<div class="t_navbar btn-group form-group">
-	{button href="tiki-admingroups.php" class="btn btn-default" _text="{tr}Admin Groups{/tr}"}
-	{button href="tiki-adminusers.php" class="btn btn-default" _text="{tr}Admin Users{/tr}"}
-	{permission_link mode=button label="{tr}Manage permissions{/tr}"}
+<div class="t_navbar margin-bottom-md">
+	{button href="tiki-admingroups.php" class="btn btn-default" _icon_name="group" _text="{tr}Groups{/tr}"}
+	{button href="tiki-adminusers.php" class="btn btn-default" _icon_name="user" _text="{tr}Users{/tr}"}
+	{permission_link mode=button label="{tr}Permissions{/tr}"}
+	<a href="{service controller=managestream action=list}" class="btn btn-default">{tr}Activity Rules{/tr}</a>
 </div>
 
 <form action="tiki-admin.php?page=community" method="post">
@@ -101,7 +102,6 @@
 			<fieldset class="table">
 				<legend>{tr}Activity Stream{/tr}</legend>
 				{preference name=activity_basic_events}
-
 				<div class="adminoptionboxchild" id="activity_basic_events_childcontainer">
 					{preference name=activity_basic_tracker_create}
 					{preference name=activity_basic_tracker_update}
@@ -111,32 +111,6 @@
 				</div>
 				{preference name=activity_custom_events}
                 {preference name=activity_notifications}
-
-				<div class="adminoptionboxchild" id="activity_custom_events_childcontainer">
-					{* former add_dracula() *}
-					{$headerlib->add_jsfile('lib/dracula/raphael-min.js', true)}
-					{$headerlib->add_jsfile('lib/dracula/graffle.js', true)}
-					{$headerlib->add_jsfile('lib/dracula/graph.js', true)}
-					{$headerlib->add_jsfile('lib/jquery_tiki/activity.js', true)}
-					<div id="graph-canvas" class="graph-canvas" data-graph-nodes="{$event_graph.nodes|@json_encode|escape}" data-graph-edges="{$event_graph.edges|@json_encode|escape}"></div>
-					<div><button href="#" id="graph-draw" class="button">{tr}Draw Event Diagram{/tr}</button></div>
-					<div><button href="{service controller=managestream action=list}" id="show-rules">{tr}Show Rules{/tr}</button></div>
-					{jq}
-						$('#graph-draw').click(function(e) {
-							$('#graph-canvas')
-								.empty()
-								.css('width', $window.width() - 50)
-								.css('height', $window.height() - 130)
-								.dialog({
-									title: "Events",
-									width: $window.width() - 20,
-									height: $window.height() - 100
-								})
-								.drawGraph();
-							return false;
-						});
-					{/jq}
-				</div>
 			</fieldset>
 
 			<fieldset>

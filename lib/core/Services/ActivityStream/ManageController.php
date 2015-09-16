@@ -8,7 +8,10 @@
 class Services_ActivityStream_ManageController
 {
 	private $lib;
-
+	
+	/**
+	 * Set up the controller
+	 */
 	function setUp()
 	{
 		if (! Perms::get()->admin) {
@@ -17,7 +20,10 @@ class Services_ActivityStream_ManageController
 
 		$this->lib = TikiLib::lib('activity');
 	}
-
+	
+	/**
+	 * List activity rules from tiki_activity_stream_rules table
+	 */
 	function action_list(JitFilter $request)
 	{
 		$rules = $this->lib->getRules();
@@ -25,9 +31,13 @@ class Services_ActivityStream_ManageController
 		return array(
 			'rules' => $rules,
 			'ruleTypes' => $this->getRuleTypes(),
+			'event_graph' => TikiLib::events()->getEventGraph(),
 		);
 	}
-
+	
+	/**
+	 * Delete an activity rule from tiki_activity_stream_rules table
+	 */
 	function action_delete(JitRequest $request)
 	{
 		$id = $request->ruleId->int();
@@ -40,12 +50,16 @@ class Services_ActivityStream_ManageController
 		}
 
 		return array(
+			'title' => tr('Delete Rule'),
 			'removed' => $removed,
 			'rule' => $rule,
 			'eventTypes' => $this->getEventTypes(),
 		);
 	}
 
+	/**
+	 * Delete a recorded activity from tiki_activity_stream table
+	 */
 	function action_deleteactivity(JitRequest $request)
 	{
 		$id = $request->activityId->int();
@@ -70,7 +84,10 @@ class Services_ActivityStream_ManageController
 			'activityId' => $id,
 		);
 	}
-
+	
+	/**
+	 * Create/update a sample activity rule. Sample rules are not recorded.
+	 */
 	function action_sample(JitFilter $request)
 	{
 		$id = $request->ruleId->int();
@@ -90,13 +107,27 @@ class Services_ActivityStream_ManageController
 		}
 
 		$rule = $this->getRule($id);
+		
+		$getEventTypes = $this->getEventTypes();
+		foreach($getEventTypes as $key => $eventType){
+			$eventTypes[$key]['eventType'] = $eventType;
+			$sample = $this->lib->getSample($eventType);
+			if(!empty($sample)){
+				$eventTypes[$key]['sample'] = $sample;
+			}
+		}
+		
 		return array(
+			'title' => $id ? tr('Edit Rule %0', $id) : tr('Create Sample Rule'),
 			'data' => $this->lib->getSample($rule['eventType']),
 			'rule' => $rule,
-			'eventTypes' => $this->getEventTypes(),
+			'eventTypes' => $eventTypes,
 		);
 	}
-
+	
+	/**
+	 * Create/update a basic activity rule. Basic rules are recorded.
+	 */
 	function action_record(JitFilter $request)
 	{
 		$id = $request->ruleId->int();
@@ -123,11 +154,15 @@ class Services_ActivityStream_ManageController
 		}
 
 		return array(
+			'title' => $id ? tr('Edit Rule %0', $id) : tr('Create Record Rule'),
 			'rule' => $this->getRule($id),
 			'eventTypes' => $this->getEventTypes(),
 		);
 	}
 
+	/**
+	 * Create/update a tracker_filter activity rule. Tracker rules are recorded and linked to a tracker.
+	 */
 	function action_tracker_filter(JitFilter $request)
 	{
 		$id = $request->ruleId->int();
@@ -174,6 +209,7 @@ $customArguments
 		}
 
 		return array(
+			'title' => $id ? tr('Edit Rule %0', $id) : tr('Create Tracker Rule'),
 			'rule' => $rule,
 			'eventTypes' => $this->getEventTypes(),
 			'targetEvent' => $targetEvent,
@@ -183,6 +219,9 @@ $customArguments
 		);
 	}
 
+	/**
+	 * Create/update an advanced activity rule. Advanced rules are recorded.
+	 */
 	function action_advanced(JitFilter $request)
 	{
 		$id = $request->ruleId->int();
@@ -201,11 +240,15 @@ $customArguments
 		}
 
 		return array(
+			'title' => $id ? tr('Edit Rule %0', $id) : tr('Create Advanced Rule'),
 			'rule' => $this->getRule($id),
 			'eventTypes' => $this->getEventTypes(),
 		);
 	}
 
+	/**
+	 * Private function to perform updating of rules
+	 */
 	private function replaceRule($id, array $data, $ruleField)
 	{
 		try {
@@ -217,16 +260,22 @@ $customArguments
 		}
 	}
 
+	/**
+	 * Private function listing activity rule types
+	 */
 	private function getRuleTypes()
 	{
 		return array(
-			'sample' => tr('Sample Event'),
-			'record' => tr('Record Event'),
-			'tracker_filter' => tr('Tracker Filter'),
+			'sample' => tr('Sample'),
+			'record' => tr('Basic'),
+			'tracker_filter' => tr('Tracker'),
 			'advanced' => tr('Advanced'),
 		);
 	}
 
+	/**
+	 * Private function to get available event types
+	 */
 	private function getEventTypes()
 	{
 		$graph = TikiLib::events()->getEventGraph();
@@ -234,6 +283,9 @@ $customArguments
 		return $graph['nodes'];
 	}
 
+	/**
+	 * Private function to get details of an activity rule
+	 */
 	private function getRule($id)
 	{
 		if (! $rule = $this->lib->getRule($id)) {

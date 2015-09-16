@@ -90,8 +90,11 @@
 		</ul>
 	</li>
 	<li class="dropdown">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown">{tr}Generic{/tr} <b class="caret"></b></a>
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">{tr}System{/tr} <b class="caret"></b></a>
 		<ul class="dropdown-menu">
+			{if $tiki_p_admin eq "y"}
+				<li><a href="{service controller=managestream action=list}">{tr}Activity Rules{/tr}</a></li>
+			{/if}
 			{if ($prefs.feature_wiki_templates eq "y" or $prefs.feature_cms_templates eq "y") and $tiki_p_edit_content_templates eq "y"}
 				<li><a href="tiki-admin_content_templates.php ">{tr}Content Templates{/tr}</a></li>
 			{/if}
