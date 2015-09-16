@@ -1574,7 +1574,7 @@ FILL;
 					$back .= '<input class="btn btn-default button submit preview" type="submit" name="tr_preview" value="'.tra($preview).'" />';
 				}
 				foreach ($action as $key=>$act) {
-					$back .= '<input class="btn btn-primary button submit" type="submit" name="action'.$key.'" value="'.tra($act).'" onclick="needToConfirm=false" />';
+					$back .= '<input class="btn btn-default button submit" type="submit" name="action'.$key.'" value="'.tra($act).'" onclick="needToConfirm=false" />';
 				}
 				$back .= '</div></div>';
 			}
