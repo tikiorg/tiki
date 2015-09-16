@@ -1537,8 +1537,7 @@ function wikiplugin_tracker($data, $params)
 // </td><td>
 <input type="hidden" value="" name="mode_wysiwyg"/>
 <input type="hidden" value="" name="mode_normal"/>
-<div class="edit-zone">
-<textarea id="ins_fill" class="wikiedit class="form-control" data-syntax="" data-codemirror="" onkeyup="" rows="15" name="ins_fill" >
+<div class="col-md-9 edit-zone"><textarea id="ins_fill" class="wikiedit class="form-control" data-syntax="" data-codemirror="" onkeyup="" rows="15" name="ins_fill" >
 </textarea>
 </div>
 <input type="hidden" value="n" name="wysiwyg"/>
