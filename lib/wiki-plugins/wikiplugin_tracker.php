@@ -44,7 +44,7 @@ function wikiplugin_tracker_info()
 				'name' => tra('Action Style'),
 				'description' => tra('Sets button style classes for action buttons. Must be same count as action. Ex: "btn btn-primary:btn btn-success:btn btn-default pull-right"'),
 				'separator' => ':',
-				'default' => 'btn btn-default'
+				'default' => 'btn btn-primary'
 			),
 			'showtitle' => array(
 				'required' => false,
@@ -549,7 +549,7 @@ function wikiplugin_tracker($data, $params)
 	if (!isset($action_style)) {
 		$action_style = array();
 		foreach ($action as $ac){
-			$action_style[] = 'btn btn-default';
+			$action_style[] = 'btn btn-primary';
 		}
 	}
 
