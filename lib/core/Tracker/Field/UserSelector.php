@@ -80,9 +80,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		$autoassign = (int) $this->getOption('autoassign');
 
 		if ( isset($requestData[$ins_id])) {
-			$perms = Perms::get('tracker', $this->getConfiguration('trackerId'));
-
-			if ($autoassign == 0 || $perms->admin_trackers) {
+			if ($autoassign == 0 || $this->canChangeValue()) {
 				$auser = $requestData[$ins_id];
 				$userlib = TikiLib::lib('user');
 				if (! $auser || $userlib->user_exists($auser)) {
@@ -124,14 +122,13 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 	{
 		global $user, $prefs;
 		$smarty = TikiLib::lib('smarty');
-		$perms = Perms::get('tracker', $this->getConfiguration('trackerId'));
 
 		$value = $this->getConfiguration('value');
 		$autoassign = (int) $this->getOption('autoassign');
 		if ((empty($value) && $autoassign == 1) || $autoassign == 2) {	// always use $user for last mod autoassign
 			$value = $user;
 		}
-		if ($autoassign == 0 || $perms->admin_trackers) {
+		if ($autoassign == 0 || $this->canChangeValue()) {
 			$groupIds = $this->getOption('groupIds', '');
 
 			if ($prefs['user_selector_realnames_tracker'] === 'y' && $this->getOption('showRealname')) {
@@ -333,6 +330,17 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 			;
 
 		return $schema;
+	}
+
+	/** Checks if the current user can modify the value even if autoassigned usually
+	 *
+	 * @return boolean
+	 */
+	private function canChangeValue()
+	{
+		$perms = Perms::get('tracker', $this->getConfiguration('trackerId'));
+
+		return $perms->admin_trackers;
 	}
 }
 
