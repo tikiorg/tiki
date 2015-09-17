@@ -691,7 +691,8 @@ if (isset($_POST['ajaxtype'])) {
 	$smarty->assign($ajaxpost);
 }
 $smarty->assign_by_ref('all_groups', $all_groups);
-$smarty->assign('all_groups_encoded', json_encode($all_groups));
+// replace single quote marks and ampersands in the group names as these chars break the service
+$smarty->assign('all_groups_encoded', str_replace(['\'','&'], ['%39;','%26'], json_encode($all_groups)));
 $smarty->assign('userinfo', $userinfo);
 $smarty->assign('userId', $_REQUEST['user']);
 $smarty->assign('username', $username);
