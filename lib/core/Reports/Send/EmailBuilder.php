@@ -138,6 +138,11 @@ class Reports_Send_EmailBuilder
                         $change['data']['user'] = smarty_modifier_username($change['data']['user']);
                     }
 
+                    if (isset($change['data']['editUser'])) {
+                        include_once('lib/smarty_tiki/modifier.username.php');
+                        $change['data']['editUser'] = smarty_modifier_username($change['data']['editUser']);
+                    }
+
                     $body .= $eventObject->getOutput($change);
 
                     $body .= "<br>\n";
