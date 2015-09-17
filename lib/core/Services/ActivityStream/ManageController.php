@@ -27,6 +27,11 @@ class Services_ActivityStream_ManageController
 	function action_list(JitFilter $request)
 	{
 		$rules = $this->lib->getRules();
+		
+		foreach($rules as &$rule){
+			$status = $this->getRuleStatus($rule['ruleId']);
+			$rule['status'] = $status;
+		}
 
 		return array(
 			'rules' => $rules,
@@ -86,7 +91,7 @@ class Services_ActivityStream_ManageController
 	}
 	
 	/**
-	 * Create/update a sample activity rule. Sample rules are not recorded.
+	 * Create/update a sample activity rule. Sample rules are never recorded.
 	 */
 	function action_sample(JitFilter $request)
 	{
@@ -126,7 +131,7 @@ class Services_ActivityStream_ManageController
 	}
 	
 	/**
-	 * Create/update a basic activity rule. Basic rules are recorded.
+	 * Create/update a basic activity rule. Basic rules are recorded by default.
 	 */
 	function action_record(JitFilter $request)
 	{
@@ -220,7 +225,7 @@ $customArguments
 	}
 
 	/**
-	 * Create/update an advanced activity rule. Advanced rules are recorded.
+	 * Create/update an advanced activity rule. Advanced rules are recorded by default.
 	 */
 	function action_advanced(JitFilter $request)
 	{
@@ -306,5 +311,117 @@ $customArguments
 
 		return $rule;
 	}
-}
+	
+	/**
+	 * Change rule type for an activity rule. Sample rules can be changed to basic or advanced rule. Basic rule can be changed to advanced rule. Other type changes are not supported.
+	 */
+	function action_change_rule_type($input)
+	{
+		$id = $input->ruleId->int();
+		$rule = $this->getRule($id);
+		$status = $this->getRuleStatus($id);
+		$ruleTypes = $this->getRuleTypes();
+		$currentRuleType = array_intersect_key($ruleTypes, array_flip(array('ruleType' => $rule['ruleType'])));
 
+		if ($rule['ruleType'] === 'sample'){
+			$updateRuleTypes = array(
+				'record' => tr('Basic'),
+				'advanced' => tr('Advanced'),
+			);
+		}
+		elseif ($rule['ruleType'] === 'record'){
+			$updateRuleTypes = array(
+				'advanced' => tr('Advanced'),
+			);
+		}
+		else {
+			throw new Services_Exception_Denied(tr('Invalid rule type'));
+		}
+		
+		$confirm = $input->confirm->int();
+		if($confirm){
+			$currentRuleType = $rule['ruleType'];
+			$newRuleType = $input->ruleType->text();
+			//if sample is changed to basic or advanced, "event-sample" needs to be changed to "event-record" in the rule 
+			if ($currentRuleType === 'sample'){
+				$rule['rule'] = str_replace('event-sample', 'event-record', $rule['rule']);
+			}
+			
+			$id = $this->replaceRule(
+				$id,
+				array(
+					'rule' => $rule['rule'],
+					'ruleType' => $newRuleType,
+					'notes' => $rule['notes'],
+					'eventType' => $rule['eventType'],
+				),
+				'notes'
+			);
+		}
+		
+		return array(
+			'title' => tr('Change Rule Type'),
+			'rule' => $rule,
+			'currentRuleType' => $currentRuleType,
+			'ruleTypes' => $updateRuleTypes,
+		);
+	}
+	
+	/**
+	 * Enable/disable an activity rule. Can be used for basic and advanced types. Tracker type is always enabled, sample type is always disabled, so no need to manage them.
+	 */
+	function action_change_rule_status($input)
+	{
+		$id = $input->ruleId->int();
+		$rule = $this->getRule($id);
+		$status = $this->getRuleStatus($id);
+		$confirm = $input->confirm->int();
+
+		if($confirm){
+			//to disable a rule "event-record" needs to be changed to "event-sample" in the rule 
+			if (($rule['ruleType'] === 'record' || $rule['ruleType'] === 'advanced') && $status === 'enabled'){
+				$rule['rule'] = str_replace('event-record', 'event-sample', $rule['rule']);
+			}
+			//to enable a rule "event-sample" needs to be changed to "event-record" in the rule
+			elseif (($rule['ruleType'] === 'record' || $rule['ruleType'] === 'advanced') && $status === 'disabled'){
+				$rule['rule'] = str_replace('event-sample', 'event-record', $rule['rule']);
+			}
+			
+			$id = $this->replaceRule(
+				$id,
+				array(
+					'rule' => $rule['rule'],
+					'ruleType' => $rule['ruleType'],
+					'notes' => $rule['notes'],
+					'eventType' => $rule['eventType'],
+				),
+				'notes'
+			);
+		}
+		
+		return array(
+			'title' => tr('Change Rule Status'),
+			'rule' => $rule,
+			'status' => $status,
+		);
+	}
+	
+	/**
+	 * Private function to get the status of an activity rule
+	 */
+	private function getRuleStatus($id)
+	{
+		$rule = $this->getRule($id);
+		$ruleCommandRaw = explode(' ', $rule['rule']);
+		$ruleCommand = str_replace('(','', $ruleCommandRaw[0]);
+		if($ruleCommand === 'event-sample'){
+			return 'disabled';
+		}
+		if($ruleCommand === 'event-record' || $ruleCommand === 'event-notify' || $rule['ruleType'] === 'tracker_filter'){
+			return 'enabled';
+		}
+		else {
+			return 'unknown';
+		}
+	}
+}

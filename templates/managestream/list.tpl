@@ -73,6 +73,7 @@
 		<table class="table table-hover">
 			<tr>
 				<th>{tr}ID{/tr}</th>
+				<th>{tr}Status{/tr}</th>
 				<th>{tr}Event Type{/tr}</th>
 				<th>{tr}Rule Type{/tr}</th>
 				<th>{tr}Description{/tr}</th>
@@ -82,6 +83,15 @@
 				<tr>
 					<td class="id">
 						{$rule.ruleId|escape}
+					</td>
+					<td class="text">
+						{if $rule.status eq 'enabled'}
+							<span class="text-success tips" title=":{tr}Enabled{/tr}">{icon name="toggle-on"}</span>
+						{elseif $rule.status eq 'disabled'}
+							<span class="tips" title=":{tr}Disabled{/tr}">{icon name="toggle-off"}</span>
+						{else}
+							<span class="text-warning tips" title=":{tr}Unknown{/tr}">{icon name="warning"}</span>
+						{/if}						
 					</td>
 					<td class="text">
 						{$rule.eventType|escape}
@@ -100,8 +110,26 @@
 										{icon name="edit"} {tr}Edit{/tr}
 									</a>
 								{$liend}
+								{if $rule.ruleType eq "record"}
+									{$libeg}
+										<a href="{bootstrap_modal controller=managestream action=change_rule_status ruleId=$rule.ruleId}">
+											{if $rule.status eq "disabled"}
+												{icon name="toggle-on"} {tr}Enable{/tr}
+											{elseif $rule.status eq "enabled"}
+												{icon name="toggle-off"} {tr}Disable{/tr}
+											{/if}
+										</a>
+									{$liend}
+								{/if}
+								{if $rule.ruleType eq "sample" or $rule.ruleType eq "record"}
+									{$libeg}
+										<a href="{bootstrap_modal controller=managestream action=change_rule_type ruleId=$rule.ruleId}">
+											{icon name="exchange"} {tr}Change Rule Type{/tr}
+										</a>
+									{$liend}
+								{/if}
 								{$libeg}
-									<a class="rule-delete tips" href="{bootstrap_modal controller=managestream action=delete ruleId=$rule.ruleId}" data-rule-id="{$rule.ruleId|escape}">
+									<a href="{bootstrap_modal controller=managestream action=delete ruleId=$rule.ruleId}">
 										{icon name="delete"} {tr}Delete{/tr}
 									</a>
 								{$liend}

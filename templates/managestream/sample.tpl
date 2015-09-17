@@ -43,7 +43,7 @@
 				{tr}Rule{/tr}
 			</label>
 			<div class="col-md-9">
-				<textarea name="rule" class="form-control" rows="3">{$rule.rule|escape}</textarea>
+				<textarea name="rule" class="form-control" rows="3" readonly>{$rule.rule|escape}</textarea>
 			</div>
 		</div>
 		<div class="submit">
