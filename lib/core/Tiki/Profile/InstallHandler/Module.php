@@ -38,11 +38,11 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler
 		$module_zones = array_map(array($this, 'processModuleZones'), $module_zones);
 		$module_zones = array_flip($module_zones);
 		$data['position'] = $module_zones[$data['position']];
-
-		$data['params'] = http_build_query($data['params'], '', '&');
 		if ( is_null($data['params']) ) {
 			// Needed on some versions of php to make sure null is not passed all the way to query as a parameter, since params field in db cannot be null
 			$data['params'] = '';
+		} else {
+			$data['params'] = http_build_query($data['params'], '', '&');
 		}
 
 		return $data;

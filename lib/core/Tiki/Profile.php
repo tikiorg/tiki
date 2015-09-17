@@ -76,7 +76,7 @@ class Tiki_Profile
 
 	public static function convertYesNo( $data ) // {{{
 	{
-		$copy = $data;
+		$copy = (array) $data;
 		foreach ( $copy as &$value )
 			if ( is_bool($value) )
 				$value = $value ? 'y' : 'n';

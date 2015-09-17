@@ -154,6 +154,13 @@ if (isset($_GET[session_name()]) && (($tikilib->get_ip_address() == '127.0.0.1')
 	session_id($_GET[session_name()]);		
 }
 
+//Set tikiroot and tikidomain to blank string if not set.
+if (empty($tikiroot)) {
+	$tikiroot = "";
+}
+if (empty($tikidomain)) {
+	$tikidomain = "";
+}
 
 if ($prefs['cookie_consent_feature'] === 'y' && empty($_COOKIE[$prefs['cookie_consent_name']])) {
 	$feature_no_cookie = true;
