@@ -125,6 +125,7 @@ class ModLib extends TikiLib
 			$this->query($query, array($name, $position, (int)$order, $params));
 			$query = "insert into `tiki_modules`(`name`,`title`,`position`,`ord`,`cache_time`,`rows`,`groups`,`params`,`type`) values(?,?,?,?,?,?,?,?,?)";
 			$result = $this->query($query, array($name,$title,$position,(int) $order,(int) $cache_time,(int) $rows,$groups,$params,$type));
+			$moduleId = $this->lastInsertId(); //to return the recently created module
 			if ($type == "D" || $type == "P") {
 				$query = 'select `moduleId` from `tiki_modules` where `name`=? and `title`=? and `position`=? and `ord`=? and `cache_time`=? and `rows`=? and `groups`=? and `params`=? and `type`=?';
 				$moduleId = $this->getOne($query, array($name,$title,$position,(int) $order,(int) $cache_time,(int) $rows,$groups,$params,$type));
@@ -134,7 +135,7 @@ class ModLib extends TikiLib
 			$usermoduleslib = TikiLib::lib('usermodules');
 			$usermoduleslib->add_module_users($moduleId, $name, $title, $position, $order, $cache_time, $rows, $groups, $params, $type);
 		}
-		return true;
+		return $moduleId;
 	}
 
 	/* Returns the requested module assignation. A module assignation is represented by an array similar to a tiki_modules record. The groups field is unserialized in the module_groups key, a spaces-separated list of groups. */

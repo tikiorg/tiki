@@ -176,6 +176,10 @@ class TikiAddons_Utilities extends TikiDb_Bridge
 			$res = $trklib->get_tracker_field($objectId);
 			$trklib->remove_tracker_field($objectId, $res['trackerId']);
 		}
+		if ($type == 'module' || $type == 'modules') {
+			$modlib = TikiLib::lib('mod');
+			$modlib->unassign_module($objectId);
+		}
 	}
 
 	function getObjectId($folder, $ref, $profile = '', $domain = '') {
