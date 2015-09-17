@@ -149,3 +149,10 @@ body.tiki.navbar-padding {
 		min-height: 32px;
 	}
 }
+
+// https://github.com/twbs/bootstrap/issues/16120
+.img-thumbnail {
+	&.media-object {
+		max-width: none;
+	}
+}
