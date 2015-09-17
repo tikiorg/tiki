@@ -25,7 +25,7 @@
 			<label for="select_groups" class="control-label">
 				{tr}These groups:{/tr}
 			</label>
-			<select name="checked_groups[]" multiple="multiple" size="{$countgrps}" class="form-control">
+			<select name="checked_groups[]" multiple="multiple" size="{$countgrps}" class="form-control" id="select_groups" data-usergroups='{$userGroups}'>
 				{section name=ix loop=$all_groups}
 					{if $all_groups[ix] != 'Anonymous' && $all_groups[ix] != 'Registered'}
 						<option value="{$all_groups[ix]|escape}">{$all_groups[ix]|escape}</option>
@@ -37,6 +37,24 @@
 					{tr}Use Ctrl+Click or Command+Click to select multiple options{/tr}
 				</div>
 			{/if}
+			{jq}
+$("input[name=add_remove]").change(function () {
+	var userGroups = $("#select_groups").data("usergroups"), mode = false;
+	if ($(this).prop("checked") && userGroups) {
+		if ($(this).val() === "add") {	// filter the group list to ones this user is not in
+			mode = true;
+		}
+		$("option", "#select_groups").each(function () {
+			if ($.inArray($(this).val(), userGroups) > -1) {
+				$(this).prop("disabled", mode);
+			} else {
+				$(this).prop("disabled", ! mode);
+			}
+		});
+		$("#select_groups").trigger("chosen:updated");
+	}
+}).change();
+			{/jq}
 		</div>
 	</form>
 	{include file='access/include_footer.tpl'}

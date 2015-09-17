@@ -189,10 +189,10 @@
 						{if $listpages[ix].useImage eq 'y'}
 							{if $listpages[ix].hasImage eq 'y'}
 								<a
-									href="{$smarty.capture.href}" class="thumbnail" {if $listpages[ix].isfloat eq 'y'} style="margin-right:20px; float:left;"{/if}
+									href="{$smarty.capture.href}" {if $listpages[ix].isfloat eq 'y'} style="margin-right:20px; float:left;"{/if}
 									title="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption|escape}{elseif $listpages[ix].topicName}{tr}{$listpages[ix].topicName}{/tr}{else}{tr}Read More{/tr}{/if}">
 									{$style=''}
-									<img
+									<img class="img-thumbnail media-object"
 										alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption|escape}{elseif $listpages[ix].topicName}{tr}{$listpages[ix].topicName}{/tr}{/if}"
 										{strip}src="article_image.php?image_type=article&amp;id={$listpages[ix].articleId}
 										{if $listpages[ix].list_image_x > 0 and ($largefirstimage neq 'y' or not $smarty.section.ix.first)}
@@ -214,9 +214,9 @@
 							{/if}
 						{else}
 							{if isset($topics[$listpages[ix].topicId].image_size) and $topics[$listpages[ix].topicId].image_size > 0}
-								<a href="{$smarty.capture.href}" class="thumbnail" {if $listpages[ix].isfloat eq 'y'} style="margin-right:20px; float:left;"{/if}
+								<a href="{$smarty.capture.href}" {if $listpages[ix].isfloat eq 'y'} style="margin-right:20px; float:left;"{/if}
 										title="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption|escape}{else}{tr}{$listpages[ix].topicName}{/tr}{/if}">
-									<img
+									<img class="media-object img-thumbnail"
 											alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption|escape}{else}{tr}{$listpages[ix].topicName}{/tr}{/if}"
 											src="article_image.php?image_type=topic&amp;id={$listpages[ix].topicId}">
 								</a>

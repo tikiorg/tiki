@@ -1740,10 +1740,10 @@ class TikiLib extends TikiDb_Bridge
 		}
 		if ($prefs['feature_intertiki'] == 'y' and empty($prefs['feature_intertiki_mymaster']) and strstr($user, '@')) {
 			$realm = substr($user, strpos($user, '@')+1);
-			$user = substr($user, 0, strpos($user, '@'));
 			if (isset($prefs['interlist'][$realm])) {
+				$user = substr($user, 0, strpos($user, '@'));
 				$groups = $prefs['interlist'][$realm]['groups'].',Anonymous';
-				return explode(',', $prefs['interlist'][$realm]['groups']);
+				return explode(',', $groups);
 			}
 		}
 		if (!isset($this->usergroups_cache[$user])) {

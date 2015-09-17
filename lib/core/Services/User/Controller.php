@@ -698,8 +698,10 @@ class Services_User_Controller
 					$users = $input->asArray('checked');
 					if (count($users) == 1) {
 						$customMsg = tra('For this user:');
+						$userGroups = TikiLib::lib('tiki')->get_user_groups($users[0]);
 					} else {
 						$customMsg = tra('For these selected users:');
+						$userGroups = '';
 					}
 					return [
 						'title' => tra('Change group assignments for selected users'),
@@ -713,6 +715,7 @@ class Services_User_Controller
 						'ticket' => $check['ticket'],
 						'modal' => '1',
 						'confirm' => 'y',
+						'userGroups' => str_replace(['\'','&'], ['%39;','%26'], json_encode($userGroups)),
 					];
 				}
 			} else {
