@@ -84,6 +84,7 @@ $("input[name=add_remove]").change(function () {
 				$(this).prop("disabled", ! mode);
 			}
 		});
+		$("#select_groups").trigger("chosen:updated");
 	}
 }).change();
 			{/jq}
