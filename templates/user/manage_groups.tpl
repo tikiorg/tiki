@@ -19,7 +19,8 @@
 					disabled=""
 					cols="10"
 					rows="{$rows}"
-					wrap="hard">{foreach $users as $name}{$name|escape}{if !$name@last}, {/if}{/foreach}</textarea>
+					wrap="hard"
+					data-usergroups='{$userGroups}'>{foreach $users as $name}{$name|escape}{if !$name@last}, {/if}{/foreach}</textarea>
 			</div>
 			<div class="form-group">
 				<label for="add_remove" class="control-label">
@@ -69,6 +70,23 @@
 				<input type='hidden' name='daconfirm' value="y">
 				<input type='hidden' name='ticket' value="{$ticket}">
 			</div>
+			{jq}
+$("input[name=add_remove]").change(function () {
+	var userGroups = $("#userlist").data("usergroups"), mode = false;
+	if ($(this).prop("checked") && userGroups) {
+		if ($(this).val() === "add") {	// filter the group list to ones this user is not in
+			mode = true;
+		}
+		$("option", "#select_groups").each(function () {
+			if ($.inArray($(this).val(), userGroups) > -1) {
+				$(this).prop("disabled", mode);
+			} else {
+				$(this).prop("disabled", ! mode);
+			}
+		});
+	}
+}).change();
+			{/jq}
 		</fieldset>
 	</form>
 {/block}

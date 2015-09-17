@@ -653,6 +653,11 @@ class Services_User_Controller
 					$rows = ceil(count($params['checked']) / 8);
 					global $prefs;
 					$chosenpref = $prefs['jquery_ui_chosen'];
+					if (count($params['checked']) === 1) {
+						$userGroups = TikiLib::lib('tiki')->get_user_groups($params['checked'][0]);
+					} else {
+						$userGroups = '';
+					}
 					return [
 						'title' => tra('Change group assignments for selected users'),
 						'confirmAction' => $input->action->word(),
@@ -664,6 +669,7 @@ class Services_User_Controller
 						'rows' => $rows,
 						'ticket' => $check['ticket'],
 						'modal' => '1',
+						'userGroups' => str_replace(['\'','&'], ['%39;','%26'], json_encode($userGroups)),
 					];
 				}
 			} else {
