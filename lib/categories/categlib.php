@@ -43,7 +43,7 @@ class CategLib extends ObjectLib
 	{
 		$category = $this->get_category($categId);
 		$tepath = array ('Top');
-		foreach ($category['tepath'] as $pathelem) {
+		foreach ( (array) $category['tepath'] as $pathelem) {
 			$tepath[] = $pathelem;
 		}
 		return implode(" > ", $tepath);
@@ -866,10 +866,21 @@ class CategLib extends ObjectLib
 				}
 
 				$path = array($category['categId'] => $category['name']);
-				for ($parent = $category['parentId']; $parent != 0; $parent = $categories[$parent]['parentId']) {
-					$path[$parent] = $categories[$parent]['name'];
+
+				$parent = $category['parentId'];
+				while (!empty($parent)) {
+					if (isset($categories[$parent]['name'])){
+						$path[$parent] = $categories[$parent]['name'];
+					}else {
+						$path[$parent] = "";
+					}
 
 					$categories[$parent]['descendants'][] = $category['categId']; // Link this category from its ascendants for optimization.
+					if (isset($categories[$parent]['parentId'])) {
+						$parent = $categories[$parent]['parentId'];
+					} else {
+						$parent = 0;
+					}
 				}
 				$path = array_reverse($path, true);
 
@@ -905,7 +916,12 @@ class CategLib extends ObjectLib
 				if (!isset($filter['identifier'])) {
 					throw new Exception("Missing base category");
 				}
-				$filterBaseCategory = $ret[$filter['identifier']];
+				if (!empty($ret) && isset($ret[$filter['identifier']])) {
+					$filterBaseCategory = $ret[$filter['identifier']];
+				} else {
+					$filterBaseCategory = null;
+				}
+
 			}
 			switch ($type) {
 				case 'children':
