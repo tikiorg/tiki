@@ -392,9 +392,9 @@
 									</div>
 									{if $show_translation_history}
 										<input type="hidden" name="show_translation_history" value="1">
-										{button show_translation_history=0 _text='{tr}Hide translation history{/tr}' _auto_args="*" _class="btn btn-default btn-sm"}
+										{button show_translation_history=0 _text="{tr}Hide translation history{/tr}" _auto_args="*" _class="btn btn-default btn-sm"}
 									{else}
-										{button show_translation_history=1 _text='{tr}Show translation history{/tr}' _auto_args="*" _class="btn btn-default btn-sm"}
+										{button show_translation_history=1 _text="{tr}Show translation history{/tr}" _auto_args="*" _class="btn btn-default btn-sm"}
 									{/if}
 								</div>
 							</td>
