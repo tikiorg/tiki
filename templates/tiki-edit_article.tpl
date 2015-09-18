@@ -59,7 +59,7 @@
 					{textarea _simple="y" name="heading" class="form-control" rows="5" id="subheading" comments="y"}{$heading}{/textarea}
 				{/if}
 			</div>
-			<div class="form-group  margin-side-0{if $types.$type.heading_only eq 'y'} hidden{/if}">
+			<div id='heading_only' class="form-group  margin-side-0{if $types.$type.heading_only eq 'y'} hidden{/if}">
 				<label for="body">{tr}Body{/tr}</label>
 				{textarea name="body" id="body"}{$body}{/textarea}
 			</div>
