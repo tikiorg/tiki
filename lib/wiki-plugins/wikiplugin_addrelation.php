@@ -9,12 +9,13 @@ function wikiplugin_addrelation_info()
 {
 	return array(
 		'name' => tra('Add Relation'),
-		'description' => tra('Displays a simple button that toggles i.e. adds or removes a pre-specified relation.'),
+		'description' => tra('Provide a button to toggle a pre-specified relation'),
 		'filter' => 'int',
 		'format' => 'html',
 		'validate' => 'all',
 		'prefs' => array('wikiplugin_addrelation'),
 		'introduced' => 8,
+		'iconname' => 'link-external',
 		'documentation' => 'PluginAddRelation',
 		'params' => array(
 			'qualifier' => array(
@@ -28,7 +29,8 @@ function wikiplugin_addrelation_info()
 			'source_object' => array(
 				'required' => false,
 				'name' => tra('Source Object'),
-				'description' => tra('Object identifier as type:itemId to start the relation from, will use the current object if left blank.'),
+				'description' => tr('Object identifier as %0type:itemId%1 to start the relation from, will use the current
+					object if left blank.', '<code>', '</code>'),
 				'filter' => 'text',
 				'default' => null,
 				'since' => '8.0',
@@ -37,7 +39,8 @@ function wikiplugin_addrelation_info()
 			'target_object' => array(
 				'required' => false,
 				'name' => tra('Target Object'),
-				'description' => tra('Object identifier as type:itemId to end the relation to, will use the current object if left blank.'),
+				'description' => tr('Object identifier as %0type:itemId%1 to end the relation to, will use the current
+					object if left blank.', '<code>', '</code>'),
 				'filter' => 'text',
 				'default' => null,
 				'since' => '8.0',

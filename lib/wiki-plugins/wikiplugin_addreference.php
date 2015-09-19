@@ -9,16 +9,18 @@ function wikiplugin_addreference_info()
 {
 	return array(
 		'name' => tra('Add Reference'),
-		'description' => tra('Add bibliography references to wiki pages.'),
+		'description' => tra('Add a bibliography reference'),
 		'format' => 'html',
+		'introduced' => 10,
 		'prefs' => array('wikiplugin_addreference','feature_references'),
-		'icon' => 'img/icons/text_signature.png',
+		'iconname' => 'pencil',
 		'params' => array(
 			'biblio_code' => array(
 				'required' => true,
 				'name' => tra('Biblio Code'),
 				'description' => tra('The code to be added as reference.'),
 				'default' => '',
+				'since' => '10.0',
 			),
 		),
 	);

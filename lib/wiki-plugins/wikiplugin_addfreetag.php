@@ -9,16 +9,18 @@ function wikiplugin_addfreetag_info()
 {
 	return array(
 		'name' => tra('Add Tag'),
-		'description' => tra('Add a single tag to specified object'),
+		'description' => tra('Provide an input field for adding a freetag to an object'),
 		'format' => 'html',
 		'prefs' => array('feature_freetags', 'wikiplugin_addfreetag'),
 		'introduced' => 8,
+		'iconname' => 'tag',
 		'documentation' => 'PluginAddFreetag',
 		'params' => array(
 			'object' => array(
 				'required' => false,
 				'name' => tra('Object'),
-				'description' => tra('Object type and id, as in type:id, if unset, will use current object.'),
+				'description' => tr('Object type and id, as in %0type:id%1, if unset, will use current object.', '<code>',
+					'</code>'),
 				'filter' => 'text',
 				'default' => null,
 				'since' => '8.0',
