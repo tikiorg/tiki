@@ -25,8 +25,12 @@ function iconset_glyphicons()
 			'add' => array(
 				'id' => 'plus-sign',
 			),
+			//align-center in defaults
 			//arrow-up in defaults
- 			'attach' => array(
+			'article' => array(
+				'id' => 'text-background',
+			),
+			'attach' => array(
 				'id' => 'paperclip',
 			),
 			'audio' => array(
@@ -45,20 +49,32 @@ function iconset_glyphicons()
 			'ban' => array(
 				'id' => 'ban-circle',
 			),
+			//bookmark in defaults
+			'box' => array(
+				'id' => 'text-background',
+			),
 			'bug' => array(
 				'id' => 'alert',
 			),
+			//bullhorn in defaults
+			//calendar in defaults
 			'caret-left' => array(
 				'id' => 'triangle-left',
 			),
 			'caret-right' => array(
 				'id' => 'triangle-right',
 			),
+			'cart' => array(
+				'id' => 'shopping-cart',
+			),
 			'chart' => array(
 				'id' => 'object-align-bottom',
 			),
 			'check' => array(
 				'id' => 'ok-circle',
+			),
+			'code' => array(
+				'id' => 'console',
 			),
 			'code_file' => array(
 				'id' => 'file',
@@ -69,11 +85,15 @@ function iconset_glyphicons()
 			'columns' => array(
 				'id' => 'th-large',
 			),
+			//comment in defaults
 			'comments' => array(
 				'id' => 'comment',
 			),
 			'compose' => array(
 				'id' => 'pencil',
+			),
+			'computer' => array(
+				'id' => 'modal-window',
 			),
 			'contacts' => array(
 				'id' => 'user',
@@ -81,12 +101,16 @@ function iconset_glyphicons()
 			'copy' => array(
 				'id' => 'duplicate',
 			),
+			'copyright' => array(
+				'id' => 'copyright-mark',
+			),
 			'create' => array(
 				'id' => 'plus',
 			),
 			'delete' => array(
 				'id' => 'remove',
 			),
+			//dashboard in defaults
 			'difference' => array(
 				'id' => 'text-color',
 			),
@@ -100,6 +124,7 @@ function iconset_glyphicons()
 				'id' => 'arrow-down',
 			),
 			//edit in defaults
+			//education in defaults
 			//envelope in defaults
 			'error' => array(
 				'id' => 'exclamation-sign',
@@ -126,9 +151,14 @@ function iconset_glyphicons()
 			'floppy' => array(
 				'id' => 'floppy-save',
 			),
+			//font in defaults
 			//forward in defaults
 			'forward_step' => array(
 				'id' => 'step-forward',
+			),
+			//used for google doc plugin
+			'google' => array(
+				'id' => 'file',
 			),
 			'group' => array(
 				'id' => 'user',
@@ -152,11 +182,17 @@ function iconset_glyphicons()
 			'information' => array(
 				'id' => 'info-sign',
 			),
+			'language' => array(
+				'id' => 'globe',
+			),
 			//link in defaults
 			'link-external' => array(
 				'id' => 'share',
 			),
 			//list in defaults
+			'list-numbered' => array(
+				'id' => 'list-alt',
+			),
 			//lock in defaults
 			'log' => array(
 				'id' => 'list-alt',
@@ -169,6 +205,9 @@ function iconset_glyphicons()
 			),
 			'mailbox' => array(
 				'id' => 'inbox',
+			),
+			'map' => array(
+				'id' => 'map-marker',
 			),
 			'menu' => array(
 				'id' => 'menu-hamburger',
@@ -183,10 +222,14 @@ function iconset_glyphicons()
 			'module' => array(
 				'id' => 'cog',
 			),
+			'money' => array(
+				'id' => 'piggy-bank',
+			),
 			'more' => array(
 				'id' => 'option-horizontal',
 			),
 			//move in defaults
+			//music in defaults
 			'next' => array(
 				'id' => 'arrow-right',
 			),
@@ -201,9 +244,13 @@ function iconset_glyphicons()
 				'id' => 'ok-sign',
 			),
 			//pause in defaults
+			'paypal' => array(
+				'id' => 'credit-card',
+			),
 			'pdf' => array(
 				'id' => 'file',
 			),
+			//pencil in defaults
 			'permission' => array(
 				'id' => 'lock',
 			),
@@ -224,6 +271,9 @@ function iconset_glyphicons()
 				'id' => 'arrow-left',
 			),
 			//print in defaults
+			'quotes' => array(
+				'id' => 'comment',
+			),
 			'ranking' => array(
 				'id' => 'sort-by-order',
 			),
@@ -244,6 +294,9 @@ function iconset_glyphicons()
 			//share in defaults
 			'sharethis' => array(
 				'id' => 'share-alt',
+			),
+			'skype' => array(
+				'id' => 'share',
 			),
 			//sort in defaults
 			'sort-down' => array(
@@ -279,11 +332,17 @@ function iconset_glyphicons()
 			'success' => array(
 				'id' => 'ok',
 			),
+			//subscript in defaults
+			//superscript in defaults
+			'table' => array(
+				'id' => 'list-alt',
+			),
 			//tag in defaults
 			//tags in defaults
 			'textfile' => array(
 				'id' => 'file',
 			),
+			//th-large in defaults
 			//th-list in defaults
 			'themegenerator' => array(
 				'id' => 'picture',
@@ -305,6 +364,9 @@ function iconset_glyphicons()
 				'id' => 'globe',
 			),
 			//trash in defaults
+			'tv' => array(
+				'id' => 'film',
+			),
 			'twitter' => array(
 				'id' => 'retweet',
 			),
@@ -321,8 +383,14 @@ function iconset_glyphicons()
 			'video' => array(
 				'id' => 'facetime-video',
 			),
+			'video_file' => array(
+				'id' => 'facetime-video',
+			),
 			'view' => array(
 				'id' => 'zoom-in',
+			),
+			'vimeo' => array(
+				'id' => 'facetime-video',
 			),
 			'warning' => array(
 				'id' => 'warning-sign',
@@ -341,6 +409,9 @@ function iconset_glyphicons()
 			),
 			'wysiwyg' => array(
 				'id' => 'text-background',
+			),
+			'youtube' => array(
+				'id' => 'play',
 			),
 			'zip' => array(
 				'id' => 'compressed',
@@ -518,7 +589,9 @@ function iconset_glyphicons()
 			'step-backward',
 			'step-forward',
 			'stop',
+			'subscript',
 			'subtitles',
+			'superscript',
 			'tag',
 			'tags',
 			'tasks',

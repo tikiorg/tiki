@@ -31,9 +31,7 @@ function iconset_legacy()
 			'actions' => array(
 				'id' => 'application_form',
 			),
-			'add' => array(
-				'id' => 'large/icon-configuration',
-			),
+			//add in defaults
 			'admin_ads' => array(
 				'id' => 'large/ads',
 			),
@@ -188,8 +186,14 @@ function iconset_legacy()
 			'admin_wysiwyg' => array(
 				'id' => 'large/wysiwyg',
 			),
+			'align-center' => array(
+				'id' => 'text_align_center',
+			),
 			'arrow-up' => array(
 				'id' => 'arrow-up',
+			),
+			'article' => array(
+				'id' => 'newspaper_go',
 			),
 			'attach' => array(
 				'id' => 'attach',
@@ -212,12 +216,25 @@ function iconset_legacy()
 			'ban' => array(
 				'id' => 'cancel',
 			),
+			'bookmark' => array(
+				'id' => 'book',
+			),
+			'box' => array(
+				'id' => 'layout_header',
+			),
 			//bug in defaults
+			'bullhorn' => array(
+				'id' => 'announce',
+			),
+			//calendar in defaults
 			'caret-left' => array(
 				'id' => 'resultset_previous',
 			),
 			'caret-right' => array(
 				'id' => 'resultset_next',
+			),
+			'cart' => array(
+				'id' => 'cart_add',
 			),
 			'chart' => array(
 				'id' => 'chart_curve',
@@ -225,6 +242,9 @@ function iconset_legacy()
 			'check' => array(
 				'id' => 'select',
 				'append' => '.gif'
+			),
+			'code' => array(
+				'id' => 'page_white_code',
 			),
 			'code_file' => array(
 				'id' => 'page_white_code',
@@ -237,6 +257,9 @@ function iconset_legacy()
 			),
 			'columns' => array(
 				'id' => 'text_columns',
+			),
+			'comment' => array(
+				'id' => 'comment_add',
 			),
 			'comments' => array(
 				'id' => 'comments',
@@ -258,6 +281,7 @@ function iconset_legacy()
 					)
 				)
 			),
+			//computer in defaults
 			'contacts' => array(
 				'id' => 'group',
 				'size' => 1,
@@ -272,8 +296,14 @@ function iconset_legacy()
 			'copy' => array(
 				'id' => 'page_copy',
 			),
+			'copyright' => array(
+				'id' => 'shield',
+			),
 			'create' => array(
 				'id' => 'add',
+			),
+			'dashboard' => array(
+				'id' => 'application_view_columns',
 			),
 			'delete' => array(
 				'id' => 'cross',
@@ -292,6 +322,9 @@ function iconset_legacy()
 			),
 			'edit' => array(
 				'id' => 'page_edit',
+			),
+			'education' => array(
+				'id' => 'text_signature',
 			),
 			'envelope' => array(
 				'id' => 'email',
@@ -341,12 +374,14 @@ function iconset_legacy()
 			'floppy' => array(
 				'id' => 'disk',
 			),
+			//font in defaults
 			'forward' => array(
 				'id' => 'control_fastforward',
 			),
 			'forward_step' => array(
 				'id' => 'control_end',
 			),
+			//google in defaults
 			//help in defaults
 			'history' => array(
 				'id' => 'clock',
@@ -363,6 +398,9 @@ function iconset_legacy()
 				'id' => 'table_refresh',
 			),
 			//information in defaults
+			'language' => array(
+				'id' => 'world',
+			),
 			//link in defaults
 			'link-external' => array(
 				'id' => 'external_link',
@@ -370,6 +408,9 @@ function iconset_legacy()
 			),
 			'list' => array(
 				'id' => 'application_view_list',
+			),
+			'list-numbered' => array(
+				'id' => 'text_list_numbers',
 			),
 			'lock' => array(
 				'id' => 'lock_add',
@@ -394,6 +435,7 @@ function iconset_legacy()
 					)
 				)
 			),
+			//map in defaults
 			'menu' => array(
 				'id' => 'application_side_tree',
 			),
@@ -401,7 +443,7 @@ function iconset_legacy()
 				'id' => 'arrow_right',
 			),
 			'merge' => array(
-				'id' => 'arrow_switch',
+				'id' => 'arrow_merge',
 			),
 			'minus' => array(
 				'id' => 'delete',
@@ -409,11 +451,15 @@ function iconset_legacy()
 			'module' => array(
 				'id' => 'module',
 			),
+			//money in defaults
 			'more' => array(
 				'id' => 'resultset_down',
 			),
 			'move' => array(
 				'id' => 'task_submitted',
+			),
+			'music' => array(
+				'id' => 'icons/mime/mp3.png',
 			),
 			'next' => array(
 				'id' => 'arrow_right',
@@ -433,9 +479,13 @@ function iconset_legacy()
 			'pause' => array(
 				'id' => 'control_pause',
 			),
+			'paypal' => array(
+				'id' => 'money',
+			),
 			'pdf' => array(
 				'id' => 'page_white_acrobat',
 			),
+			//pencil in defaults
 			'permission' => array(
 				'id' => 'key',
 			),
@@ -458,6 +508,7 @@ function iconset_legacy()
 			'print' => array(
 				'id' => 'printer',
 			),
+			//quotes in defaults
 			'ranking' => array(
 				'id' => 'star',
 			),
@@ -503,6 +554,7 @@ function iconset_legacy()
 				'id' => 'share_link',
 			),
 			//sharethis in defaults
+			//skype in defaults
 			'sort' => array(
 				'id' => 'resultset',
 			),
@@ -541,9 +593,16 @@ function iconset_legacy()
 			'structure' => array(
 				'id' => 'chart_organisation',
 			),
+			'subscript' => array(
+				'id' => 'text_subscript',
+			),
 			'success' => array(
 				'id' => 'tick',
 			),
+			'superscript' => array(
+				'id' => 'text_superscript',
+			),
+			//table in defaults
 			'tag' => array(
 				'id' => 'tag_blue',
 			),
@@ -552,6 +611,9 @@ function iconset_legacy()
 			),
 			'textfile' => array(
 				'id' => 'page',
+			),
+			'th-large' => array(
+				'id' => 'application_view_columns',
 			),
 			'th-list' => array(
 				'id' => 'text_list_bullets',
@@ -580,6 +642,9 @@ function iconset_legacy()
 			'trash' => array(
 				'id' => 'bin',
 			),
+			'tv' => array(
+				'id' => 'television',
+			),
 			'twitter' => array(
 				'id' => 'twitter',
 				'size' => 1,
@@ -601,6 +666,10 @@ function iconset_legacy()
 			'video' => array(
 				'id' => 'mime/mpg',
 			),
+			'video_file' => array(
+				'id' => 'mime/mpg',
+			),
+			//vimeo in defaults
 			'view' => array(
 				'id' => 'magnifier',
 			),
@@ -620,26 +689,37 @@ function iconset_legacy()
 				'id' => 'mime/doc',
 			),
 			'wysiwyg' => array(
-				'id' => 'text-dropcaps',
+				'id' => 'text_dropcaps',
 			),
+			//youtube in defaults
 			'zip' => array(
 				'id' => 'mime/zip',
 			),
 		),
 		'defaults' => array(
+			'add',
 			'bug',
 			'calendar',
+			'computer',
+			'font',
+			'google',
 			'group',
 			'help',
 			'html',
 			'image',
 			'information',
 			'link',
+			'map',
+			'money',
 			'pencil',
 			'plugin',
+			'quotes',
 			'sharethis',
+			'skype',
 			'star',
+			'table',
 			'user',
+			'vimeo',
 			'wrench',
 		)
 	);

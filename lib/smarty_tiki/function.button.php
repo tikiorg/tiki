@@ -25,6 +25,17 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  *	- _flip_default_open: if set to 'y', the flip is open by default (if no cookie jar)
  *	- _escape: if set to 'y', will escape the apostrophes in onclick
  *  - _type: button styling. Possible values: default, primary, success, info, warning, danger, link (following bootstrap conventions)
+ *     Set different class, title, text and icon depending on whether the button is disabled or selected
+ *  - _disabled: set to y to disable the button
+ *  - _disabled_class: class to use if _disabled is set to y. Default is 'disabled'
+ *  - _disabled_title: button title to use if _disabled is set to y
+ *  - _disabled_text: button text to use if _disabled is set to y
+ *  - _disabled_icon_name: button icon to use if _disabled is set to y
+ *  - _selected: set to y to enable the button. Default is y
+ *  - _selected_class: class to use if _selected set to y. Default is 'selected'
+ *  - _selected_title: button title to use if _selected is set to y
+ *  - _selected_text: button text to use if _selected is set to y
+ *  - _selected_icon_name: button icon to use if _selected is set to y
  */
 function smarty_function_button($params, $smarty)
 {
@@ -58,6 +69,9 @@ function smarty_function_button($params, $smarty)
 					if (! empty($params['_selected_icon']) ) {
 						$params['_icon'] = $params['_selected_icon'];
 					}
+					if (! empty($params['_selected_icon_name']) ) {
+						$params['_icon_name'] = $params['_selected_icon_name'];
+					}
 				}
 			}
 		}
@@ -86,6 +100,9 @@ function smarty_function_button($params, $smarty)
 					if (! empty($params['_disabled_icon']) ) {
 						$params['_icon'] = $params['_disabled_icon'];
 					}
+					if (! empty($params['_disabled_icon_name']) ) {
+						$params['_icon_name'] = $params['_disabled_icon_name'];
+					}
 				}
 			}
 		}
@@ -113,7 +130,7 @@ function smarty_function_button($params, $smarty)
 				. "');flip('"
 				. $params['_flip_id']
 				. "_close','inline');return false;";
-			if ( ! empty($params['_escape']) ) {
+			if ( ! empty($params['_escape']) && $params['_escape'] === 'y') {
 				$params['_onclick'] = addslashes($params['_onclick']);
 			}
 			if ( ! isset($params['_flip_hide_text']) || $params['_flip_hide_text'] != 'n' ) {
