@@ -10,10 +10,11 @@ function wikiplugin_back_info()
 	return array(
 		'name' => tra('Back'),
 		'documentation' => 'PluginBack',
-		'description' => tra('Displays a link that goes back one page in the browser history'),
+		'description' => tra('Display a link that goes back one page in the browser history'),
 		'prefs' => array( 'wikiplugin_back' ),
-		'icon' => 'img/icons/arrow_left.png',
+		'iconname' => 'back',
 		'tags' => array( 'basic' ),
+		'introduced' => 3,
 		'params' => array(),
 		);
 }

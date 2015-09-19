@@ -14,7 +14,8 @@ function wikiplugin_attributes_info()
 		'prefs' => array( 'wikiplugin_attributes' ),
 		'extraparams' => true,
 		'defaultfilter' => 'text',
-		'icon' => 'img/icons/page_gear.png',
+		'iconname' => 'cog',
+		'introduced' => 6,
 		'params' => array(
 		),
 	);
