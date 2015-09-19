@@ -68,7 +68,7 @@ h1 {
 }
 mark {
   background: #ff0;
-  color: #000000;
+  color: #000;
 }
 small {
   font-size: 80%;
@@ -234,18 +234,18 @@ th {
     page-break-after: avoid;
   }
   select {
-    background: #ffffff !important;
+    background: #fff !important;
   }
   .navbar {
     display: none;
   }
   .table td,
   .table th {
-    background-color: #ffffff !important;
+    background-color: #fff !important;
   }
   .btn > .caret,
   .dropup > .btn > .caret {
-    border-top-color: #000000 !important;
+    border-top-color: #000 !important;
   }
   .label {
     border: 1px solid #000000;
@@ -4357,7 +4357,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
-  border-radius: 0.25em;
+  border-radius: .25em;
 }
 .label[href]:hover,
 .label[href]:focus {
@@ -5894,7 +5894,7 @@ h2 {
   margin-right: 50px;
   margin-bottom: 0.6em;
   background-color: #f49ac0;
-  color: #ffffff;
+  color: #fff;
 }
 h1:before,
 h2:before {
@@ -6008,13 +6008,13 @@ label {
 .nav-tabs > li > a,
 .nav-pills > li > a {
   background-color: #f49ac0;
-  color: #ffffff;
+  color: #fff;
 }
 .nav-tabs > li > a:hover,
 .nav-pills > li > a:hover,
 .nav-tabs > li > a:focus,
 .nav-pills > li > a:focus {
-  color: #ffffff;
+  color: #fff;
 }
 .nav-tabs > li.disabled > a,
 .nav-pills > li.disabled > a,
@@ -6053,12 +6053,12 @@ label {
   margin-top: 0;
 }
 .breadcrumb a {
-  color: #ffffff;
+  color: #fff;
 }
 .pager li > a,
 .pager li > a:hover,
 .pager li > a:focus {
-  color: #ffffff;
+  color: #fff;
 }
 .pager .disabled > a,
 .pager .disabled > a:hover,
@@ -6129,13 +6129,13 @@ a.list-group-item:hover,
 a.list-group-item:focus,
 a.list-group-item:hover .list-group-item-heading,
 a.list-group-item:focus .list-group-item-heading {
-  color: #ffffff;
+  color: #fff;
 }
 .panel {
   border: none;
   -webkit-box-shadow: none;
   box-shadow: none;
-  color: #ffffff;
+  color: #fff;
 }
 .panel-heading,
 .panel-footer {
@@ -6186,7 +6186,7 @@ a.list-group-item:focus .list-group-item-heading {
 }
 .modal-header {
   background-color: #f0569f;
-  color: #ffffff;
+  color: #fff;
 }
 .modal-header h1,
 .modal-header h2,
@@ -6194,7 +6194,7 @@ a.list-group-item:focus .list-group-item-heading {
 .modal-header h4,
 .modal-header h5,
 .modal-header h6 {
-  color: #ffffff;
+  color: #fff;
 }
 .popover {
   border: none;
@@ -6210,7 +6210,7 @@ a.list-group-item:focus .list-group-item-heading {
 .popover h4,
 .popover h5,
 .popover h6 {
-  color: #ffffff;
+  color: #fff;
 }
 .clearfix:before,
 .clearfix:after,
