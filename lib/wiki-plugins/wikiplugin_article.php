@@ -12,8 +12,9 @@ function wikiplugin_article_info()
 		'documentation' => 'PluginArticle',
 		'description' => tra('Display a field of an article'),
 		'prefs' => array( 'feature_articles', 'wikiplugin_article' ),
-		'icon' => 'img/icons/layout_content.png',
+		'iconname' => 'article',
 		'format' => 'html',
+		'introduced' => 1,
 		'params' => array(
 			'Field' => array(
 				'required' => false,
@@ -21,6 +22,7 @@ function wikiplugin_article_info()
 				'description' => tra('The article field to display. Default field is Heading.'),
 				'filter' => 'word',
 				'default' => 'heading',
+				'since' => '1',
 			),
 			'Id' => array(
 				'required' => false,
@@ -29,6 +31,7 @@ function wikiplugin_article_info()
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'article',
+				'since' => '1',
 			),
 		),
 	);
