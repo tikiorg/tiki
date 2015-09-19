@@ -10,32 +10,39 @@ function wikiplugin_ajaxload_info() {
 	return array(
 		'name' => tra('AJAX Load'),
 		'documentation' => 'PluginAJAXLoad',
-		'description' => tra('Load data into a DIV using AJAX if JavaScript is enabled, or in an IFRAME if not.'),
+		'description' => tra('Load data into a DIV using AJAX or in an IFRAME'),
 		'prefs' => array('wikiplugin_ajaxload'),
 		'format' => 'html',
-		'icon' => 'img/icons/script_code_red.png',
+		'iconname' => 'code_file',
+		'introduced' => 14.1,
 		'validate' => 'all',
-		'body' => tra('On Load JS'),
+		'body' => tra('JavaScript to run when the data is loaded, the incoming HTML is in a variable called data. You can modify that variable\'s contents to customise the HTML.'),
 		'params' => array(
 			'url' => array(
 				'required' => true,
 				'name' => tra('URL'),
-				'description' => tra('Address of the data to load, e.g. "tiki-index_raw.php?page=Page+Name"'),
+				'description' => tr('Address of the data to load, e.g. %0tiki-index_raw.php?page=Page+Name%1', '<code>',
+					'</code>'),
 				'filter' => 'url',
+				'since' => '14.1',
 			),
 			'selector' => array(
 				'required' => false,
 				'name' => tra('Selector'),
-				'description' => tra('jQuery selector to retrieve part of the page when using AJAX, e.g. "#page-data"'),
+				'description' => tra('jQuery selector to retrieve part of the page when using AJAX, e.g.
+					%0#page-data%1', '<code>', '</code>'),
 				'filter' => 'none',
 				'default' => '',
+				'since' => '14.1',
 			),
 			'target' => array(
 				'required' => false,
 				'name' => tra('Target'),
-				'description' => tra('Where to load the AJAX data into (when using iframe if JavaScript is disabled it will appear where the plugin is in the page)'),
+				'description' => tra('Where to load the AJAX data into (will create own DIV if not supplied. When using
+					iframe if JavaScript is disabled it will appear where the plugin is in the page.'),
 				'filter' => 'none',
 				'default' => '',
+				'since' => '14.1',
 			),
 			'id' => array(
 				'required' => false,
@@ -43,6 +50,7 @@ function wikiplugin_ajaxload_info() {
 				'description' => tra('Id for the DIV or IFRAME.'),
 				'filter' => 'text',
 				'default' => '',
+				'since' => '14.1',
 			),
 			'class' => array(
 				'required' => false,
@@ -50,18 +58,21 @@ function wikiplugin_ajaxload_info() {
 				'description' => tra('Class for the DIV or IFRAME.'),
 				'filter' => 'text',
 				'default' => '',
+				'since' => '14.1',
 			),
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
 				'description' => tra('In pixels or percentage. Default value is 100%.'),
 				'default' => '100%',
+				'since' => '14.1',
 			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
 				'description' => tra('In pixels or percentage. Default value is "auto".'),
 				'default' => 'auto',
+				'since' => '14.1',
 			),
 		),
 	);

@@ -10,10 +10,12 @@ function wikiplugin_adjustinventory_info()
 	return array(
 		'name' => tra('Adjust Inventory'),
 		'documentation' => tra('PluginAdjustInventory'),
-		'description' => tra('Modifies inventory of a product'),
+		'description' => tra('Adjust the inventory level of a product'),
 		'prefs' => array( 'wikiplugin_adjustinventory', 'payment_feature' ),
 		'filter' => 'wikicontent',
+		'introduced' => 7,
 		'format' => 'html',
+		'iconname' => 'add',
 		'tags' => array( 'experimental' ),
 		'params' => array(
 			'code' => array(
@@ -21,21 +23,34 @@ function wikiplugin_adjustinventory_info()
 				'name' => tra('Product ID'),
 				'description' => tra('Product ID of item in the cart tracker'),
 				'filter' => 'text',
-				'default' => ''
+				'default' => '',
+				'since' => '7.0',
 			),
 			'add' => array(
 				'required' => false,
-				'name' => tra('Show add'),
-				'description' => tra('y|n'),
+				'name' => tra('Show Add'),
+				'description' => tra('Show option to add to inventory'),
+				'since' => '7.0',
 				'filter' => 'text',
 				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				),
 			),
 			'subtract' => array(
 				'required' => false,
-				'name' => tra('Show subtract'),
-				'description' => tra('y|n'),
+				'name' => tra('Show Subtract'),
+				'description' => tra('Show option to subtract from inventory'),
+				'since' => '7.0',
 				'filter' => 'text',
 				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				),
 			),
 		),
 	);

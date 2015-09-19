@@ -12,7 +12,8 @@ function wikiplugin_agentinfo_info()
 		'documentation' => 'PluginAgentinfo',
 		'description' => tra('Show user\'s browser and server information'),
 		'prefs' => array('wikiplugin_agentinfo'),
-		'icon' => 'img/icons/computer.png',
+		'introduced' => 1,
+		'iconname' => 'computer',
 		'params' => array(
 			'info' => array(
 				'required' => false,
@@ -20,6 +21,7 @@ function wikiplugin_agentinfo_info()
 				'description' => tra('Display\'s the visitor\'s IP address (IP or default), browser information (BROWSER), or server software (SVRSW).'),
 				'default' => 'IP',
 				'filter' => 'alpha',
+				'since' => '1',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('IP address'), 'value' => 'IP'), 
