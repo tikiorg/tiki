@@ -10,15 +10,17 @@ function wikiplugin_author_info()
 	return array(
 		'name' => tra('Author'),
 		'documentation' => 'PluginAuthor',
-		'description' => tra('View author contributions to a wiki page'),
+		'description' => tra('Add pop-ups and color coding that identifies authors'),
 		'prefs' => array('wikiplugin_author'),
 		'body' => tra('text'),
-		'icon' => 'img/icons/text_signature.png',
+		'iconname' => 'pencil',
+		'introduced' => 6,
 		'params' => array(
 			'author' => array(
 				'required' => true,
 				'name' => tra('User Name'),
 				'description' => tra('User name of the user who wrote the text.'),
+				'since' => '6.0',
 				'default' => '',
 				'filter' => 'username',
 			),
@@ -26,6 +28,7 @@ function wikiplugin_author_info()
 				'required' => false,
 				'name' => tra('Deleted by User'),
 				'description' => tra('User name of the user who deleted the text.'),
+				'since' => '6.0',
 				'default' => '',
 				'filter' => 'username',
 			),
@@ -33,6 +36,7 @@ function wikiplugin_author_info()
 				'required'	=> false,
 				'name'		=> tra('Make Visible'),
 				'description' => tra("Should this author's contribution be visible (default: no)."),
+				'since' => '6.0',
 				'filter' => 'text',
 				'default' => 0,
 				'options' => array(
@@ -45,6 +49,7 @@ function wikiplugin_author_info()
 				'required'	=> false,
 				'name'		=> tra('Show popup with author/deleted by'),
 				'description' => tra('Generate a popup with names of author(s) (default: no).'),
+				'since' => '6.0',
 				'filter' => 'text',
 				'default' => 0,
 				'options' => array(

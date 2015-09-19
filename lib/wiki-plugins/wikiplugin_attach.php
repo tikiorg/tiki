@@ -10,27 +10,36 @@ function wikiplugin_attach_info()
 	return array(
 		'name' => tra('Attachment'),
 		'documentation' => 'PluginAttach',
-		'description' => tra('Displays an attachment or a list of them'),
+		'description' => tra('Display an attachment or a list of them'),
 		'prefs' => array( 'feature_wiki_attachments', 'wikiplugin_attach' ),
 		'body' => tra("Comment"),
-		'icon' => 'img/icons/attach.png',
+		'iconname' => 'attach',
+		'introduced' => 1,
 		'params' => array(
 			'name' => array(
 				'required' => false,
 				'name' => tra('Name'),
-				'description' => tra('File name of the attached file to link to. Either name, file, id or num can be used to identify a single attachment'),
+				'description' => tra('File name of the attached file to link to. Either name, file, id or num can be
+					used to identify a single attachment'),
+				'since' => '1',
+				'filter' => 'text',
 				'default' => '',
 			),
 			'file' =>array(
 				'required' => false,
 				'name' => tra('File'),
 				'description' => tra('Same as name'),
+				'since' => '1',
+				'filter' => 'text',
 				'default' => '',
 			),
 			'page' => array(
 				'required' => false,
 				'name' => tra('Page'),
-				'description' => tra('Name of the wiki page the file is attached to. If left empty when the plugin is used on a wiki page, this defaults to that wiki page.'),
+				'description' => tra('Name of the wiki page the file is attached to. If left empty when the plugin is
+					used on a wiki page, this defaults to that wiki page.'),
+				'since' => '1',
+				'filter' => 'pagename',
 				'default' => '',
 				'profile_reference' => 'wiki_page',
 			),
@@ -38,6 +47,8 @@ function wikiplugin_attach_info()
 				'required' => false,
 				'name' => tra('Show Description'),
 				'description' => tra('Shows the description as the link text instead of the file name (not used by default)'),
+				'since' => '1',
+				'filter' => 'digits',
 				'default' => 0,
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -49,6 +60,8 @@ function wikiplugin_attach_info()
 				'required' => false,
 				'name' => tra('Bullets'),
 				'description' => tra('Makes the list of attachments a bulleted list (not set by default)'),
+				'since' => '1',
+				'filter' => 'digits',
 				'default' => 0,
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -59,7 +72,10 @@ function wikiplugin_attach_info()
 			'image' =>array(
 				'required' => false,
 				'name' => tra('Image'),
-				'description' => tra('Indicates that this file is an image, and should be displayed inline using the img tag (not set by default)'),
+				'description' => tr('Indicates that this file is an image, and should be displayed inline using the
+					%0 tag (not set by default)', '<code>img</code>'),
+				'since' => '1',
+				'filter' => 'digits',
 				'default' => 0,
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -70,7 +86,10 @@ function wikiplugin_attach_info()
 			'inline' =>array(
 				'required' => false,
 				'name' => tra('Custom Label'),
-				'description' => tra('Makes the text between the {ATTACH} tags the link text instead of the file name or description. Only the first attachment will be listed.'),
+				'description' => tr('Makes the text between the %0 tags the link text instead of the file name
+					or description. Only the first attachment will be listed.', '<code>{ATTACH}</code>'),
+				'since' => '1',
+				'filter' => 'digits',
 				'default' => 0,
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -81,7 +100,10 @@ function wikiplugin_attach_info()
 			'all' => array(
 				'required' => false,
 				'name' => tra('All'),
-				'description' => tra('Lists links to all attachments for the entire tiki site together with pages they are attached to when set to 1 (Yes)'),
+				'description' => tr('Lists links to all attachments for the entire tiki site together with pages they
+					are attached to when set to %0 (Yes)', '<code>1</code>'),
+				'since' => '1',
+				'filter' => 'digits',
 				'default' => 0,
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -92,18 +114,28 @@ function wikiplugin_attach_info()
 			'num' => array(
 				'required' => false,
 				'name' => tra('Order Number'),
-				'description' => tra('Identifies the attachment to link to by the order of the attachment in the list of attachments to a page instead of by file name or ID. Either name, file, id or num can be used to identify a single attachment.'),
+				'description' => tra('Identifies the attachment to link to by the order of the attachment in the list
+					of attachments to a page instead of by file name or ID. Either name, file, id or num can be used to
+					identify a single attachment.'),
+				'since' => '1',
 				'default' => '',
 			),
 			'id' => array(
 				'required' => false,
 				'name' => tra('ID'),
-				'description' => tra('Identifies the attachment to link to by id number instead of by file name or order number. Either name, file, id or num can be used to identify a single attachment.'),
+				'description' => tra('Identifies the attachment to link to by id number instead of by file name or order
+					number. Either name, file, id or num can be used to identify a single attachment.'),
+				'since' => '1',
+				'accepted' => tra('Attachment name, file, id or num'),
+				'filter' => 'text',
 			),
 			'dls' => array(
 				'required' => false,
 				'name' => tra('Downloads'),
-				'description' => tra('The alt text that pops up on mouseover will include the number of downloads of the attachment at the end when set to 1 (Yes)'),
+				'description' => tr('The alt text that pops up on mouseover will include the number of downloads of the
+					attachment at the end when set to %0 (Yes)', '<code>1</code>'),
+				'since' => '1',
+				'filter' => 'digits',
 				'default' => 0,
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -114,7 +146,10 @@ function wikiplugin_attach_info()
 			'icon' =>array(
 				'required' => false,
 				'name' => tra('File Type Icon'),
-				'description' => tra('A file type icon is displayed in front of the attachment link when this is set to 1'),
+				'description' => tr('A file type icon is displayed in front of the attachment link when this is set to
+					%0 (Yes)', '<code>1</code>'),
+				'since' => '1',
+				'filter' => 'digits',
 				'default' => 0,
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -260,21 +295,11 @@ function wikiplugin_attach($data, $params)
 			}
 
 			$link.= '">';
-
 			if (isset($icon)) {
-				if (!isset($mimeextensions)) {
-					require("lib/mime/mimeextensions.php");
-				}
-				$ext = $atts['data'][$n]['filetype'];
-				if (isset($mimeextensions["$ext"]) and (is_file("img/icons/mime/".$mimeextensions["$ext"].".png"))) {
-					$link.= '<img src="img/icons/mime/'.$mimeextensions["$ext"].'.png" />&nbsp;';
-				} else {
-					$string = strtolower(substr($atts['data'][$n]['filename'], strlen($atts['data'][$n]['filename'])-3));
-					if (is_file("img/icons/mime/".$string.".png"))
-						$link.= '<img src="img/icons/mime/'.$string.'.png" />&nbsp;';
-					else
-						$link.= '<img src="img/icons/mime/default.png" />&nbsp;';
-				}
+				$smarty = TikiLib::lib('smarty');
+				$smarty->loadPlugin('smarty_modifier_iconify');
+				$iconhtml = smarty_modifier_iconify($atts['data'][$n]['filename']);
+				$link .= $iconhtml . '&nbsp';
 			}
 
 			if (!empty($showdesc) && !empty($atts['data'][$n]['comment'])) {
