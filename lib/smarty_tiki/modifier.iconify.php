@@ -112,7 +112,7 @@ function smarty_modifier_iconify($string, $filetype = null, $fileId = null, $siz
 					$iconname = 'textfile';
 					break;
 				case strpos($type,'video/') === 0:
-					$iconname = 'video';
+					$iconname = 'video_file';
 					break;
 				case strpos($type,'application/') === 0:
 					$iconname = 'code_file';
