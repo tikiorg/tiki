@@ -13,21 +13,25 @@ function wikiplugin_addon_info()
 		'description' => tra('Display output of a Tiki Addon View'),
 		'prefs' => array('wikiplugin_addon'),
 		'body' => '',
+		'introduced' => 14,
 		'filter' => 'rawhtml_unsafe',
+		'iconname' => 'view',
 		'tags' => array( 'basic' ),
 		'params' => array(
 			'package' => array(
 				'required' => true,
-				'name' => tra('Name of package (vendor/name)'),
-				'description' => tra('Name of package in the form vendor/name'),
+				'name' => tra('Package Name'),
+				'description' => tr('Name of package in the form %0vendor/name%1', '<code>', '</code>'),
 				'filter' => 'text',
+				'since' => '14.0',
 			),
 			'view' => array(
 				'required' => true,
 				'name' => tra('Name of the view'),
-				'description' => tra('Name of the view file without the .php'),
+				'description' => tr('Name of the view file without the %0.php%1', '<code>', '</code>'),
 				'filter' => 'text',
-			),	
+				'since' => '14.0',
+			),
 		),
 	);
 }
