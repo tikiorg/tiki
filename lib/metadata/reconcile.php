@@ -408,6 +408,7 @@ class ReconcileExifIptcXmp
 	 */
 	private function makeSummaryInfo($omni)
 	{
+		$basicsum = array();
 		foreach ($this->basicSummary as $infogroup => $fields) {
 			foreach ($fields as $label => $infotypes) {
 				foreach ($infotypes as $infotype => $fieldame) {
