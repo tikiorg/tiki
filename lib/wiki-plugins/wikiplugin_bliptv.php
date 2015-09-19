@@ -20,7 +20,7 @@ function wikiplugin_bliptv_info()
 			'url' => array(
 				'required' => true,
 				'name' => tra('URL'),
-				'description' => tra('Blip.tv embed URL. Example: %0', '<code>http://blip.tv/play/AYGd_GAC</code>'),
+				'description' => tr('Blip.tv embed URL. Example: %0', '<code>http://blip.tv/play/AYGd_GAC</code>'),
 				'since' => '6.1',
 				'filter' => 'url',
 				'default' => '',
