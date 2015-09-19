@@ -13,14 +13,16 @@ function wikiplugin_alink_info()
 		'description' => tra('Create a link to an anchor'),
 		'prefs' => array('wikiplugin_alink'),
 		'body' => tra('Anchor link label.'),
-		'icon' => 'img/icons/world_link.png',
-		'tags' => array( 'basic' ),		
+		'introduced' => 1,
+		'iconname' => 'link',
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'aname' => array(
 				'required' => true,
 				'name' => tra('Anchor Name'),
 				'description' => tra('The anchor name as defined in the ANAME plugin.'),
 				'default' => '',
+				'since' => '1',
 			),
 			'pagename' => array(
 				'required' => false,
@@ -29,6 +31,7 @@ function wikiplugin_alink_info()
 				'filter' => 'pagename',
 				'default' => '',
 				'profile_reference' => 'wiki_page',
+				'since' => '1',
 			),
 		),
 	);

@@ -10,15 +10,17 @@ function wikiplugin_archivebuilder_info()
 	return array(
 		'name' => tra('Archive Builder'),
 		'documentation' => 'PluginArchiveBuilder',
-		'description' => tra('Build a zip archive that can be downloaded'),
+		'description' => tra('Define an archive that can be downloaded'),
 		'prefs' => array( 'wikiplugin_archivebuilder' ),
 		'body' => tra('Description of the archive content. Multiple handlers are available for content types. One per line. Ex: page-as-pdf:some-folder/foo.pdf:HomePage , tracker-attachments:target-folder/:3435'),
-		'icon' => 'img/icons/mime/zip.png',
+		'iconname' => 'file-archive',
+		'introduced' => 5,
 		'params' => array(
 			'name' => array(
 				'name' => tra('Archive Name'),
 				'description' => tra('Upon download, the name of the file that will be provided.'),
 				'required' => true,
+				'since' => '5.0',
 				'default' => ''
 			),
 		),
