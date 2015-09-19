@@ -54,6 +54,12 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 						'filter' => 'int',
 						'legacy_index' => 2,
 					),
+					'canChangeGroupIds' => array(
+						'name' => tr('Groups that can modify autoassigned values'),
+						'description' => tr('List of group IDs who can change this field, even without tracker_admin permission.'),
+						'separator' => '|',
+						'filter' => 'int',
+					),
 					'showRealname' => array(
 						'name' => tr('Show real name if possible'),
 						'description' => tr('Show real name if possible'),
@@ -338,6 +344,17 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 	 */
 	private function canChangeValue()
 	{
+		$groupsCanChangeValue = $this->getOption('canChangeGroupIds');
+		if ($groupsCanChangeValue) {
+			global $user;
+
+			foreach ($groupsCanChangeValue as $groupId) {
+				$groupName = TikiDb::get()->table('users_groups')->fetchOne('groupName', ['id' => $groupId]);
+				if ($groupName && TikiLib::lib('user')->user_is_in_group($user, $groupName)) {
+					return true;
+				}
+			}
+		}
 		$perms = Perms::get('tracker', $this->getConfiguration('trackerId'));
 
 		return $perms->admin_trackers;
