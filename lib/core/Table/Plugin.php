@@ -44,10 +44,12 @@ class Table_Plugin
 				'name' => tra('Server Side Processing'),
 				'description' => tr(
 					'Enter %0y%1 to have the server do the sorting and filtering through Ajax and %0n%1 to have the
-					browser do it (n is the default). Set to %0y%1 (and also set the %2Paginate%3 parameter) if you do not
-					want all rows fetched at once, but rather fetch rows as you paginate, filter or sort.',
-					'<b>', '</b>', '<em>', '</em>'
+					browser do it (n is the default). Set to %0y%1 (and also set the Paginate parameter
+					(%0tspaginate%1)) if you do not want all rows fetched at once, but rather fetch rows as you
+					paginate, filter or sort.', '<code>', '</code>'
 				),
+				'since' => '12.0',
+				'doctype' => 'tablesorter',
 				'default' => 'n',
 				'filter' => 'striptags',
 			),
@@ -55,24 +57,28 @@ class Table_Plugin
 				'required' => false,
 				'name' => tra('Overall Sort Settings'),
 				'description' => tr(
-					'Enter %0y%1 to allow sorting and %0n%1 to disallow (n is the default). Enter type:%0save%1
-					to allow sorts to be saved between page refreshes. Enter type:%0reset%1;text:***** to allow sorting
-					and show an unsort button with custom text. Enter %0type:savereset%1;text:buttontext to allow the
-					same for saved sorts.',
-					'<b>', '</b>'
+					'Enter %0y%1 to allow sorting and %0n%1 to disallow (n is the default). Enter %0type:save%1
+					to allow sorts to be saved between page refreshes. Enter %0type:%2reset%3;text:*****%1 to allow sorting
+					and show an unsort button with custom text. Enter %0type:%2savereset%3;text:buttontext%1 to allow the
+					same for saved sorts.', '<code>', '</code>', '<strong>', '</strong>'
 				),
+				'since' => '12.0',
+				'doctype' => 'tablesorter',
 				'default' => 'n',
 				'filter' => 'striptags',
 			),
 			'sortList' => array(
 				'required' => false,
 				'name' => tra('Pre-sorted Columns'),
-				'description' => tra(
+				'description' => tr(
 					'Bracketed numbers for column number (first column = 0) and sort direction
-					(0 = ascending, 1 = descending, n = no sort, y = allow sorting but no pre-sort), for example:
-					[0,y],[1,0],[2,n]. If the first pre-sorted or no filter column is not the first column, then you
-					should use the y parameter (as in [0,y]) to assign all previous columns.'
+					(%20%3 = ascending, %21%3 = descending, %2n%3 = no sort, %2y%3 = allow sorting but no pre-sort),
+					for example: %0. If the first pre-sorted or no filter column is not the first column, then you
+					should use the %2y%3 parameter (as in %1) to assign all previous columns.',
+					'<code>~np~[0,y],[1,0],[2,n]~/np~</code>', '<code>~np~[0,y]~/np~</code>', '<code>', '</code>'
 				),
+				'since' => '12.0',
+				'doctype' => 'tablesorter',
 				'default' => '',
 				'filter' => 'striptags',
 				'advanced' => true,
@@ -82,21 +88,23 @@ class Table_Plugin
 				'name' => tra('Sort Settings by Column'),
 				'description' => tr(
 					'Set %0type%1 and %0group%1 settings for each column, using %0|%1 to separate columns. To
-					show group headings upon page load, the %2Pre-sorted Columns%3 parameter will need to be set for a
-					column with a group setting. Group will not work in plugins where the %2Server Side Processing%3
-					parameter is set to \'y\'.', '<b>', '</b>', '<em>', '</em>')
-				. '<br>' . tr('%0type%1 tells the sorter what type of date is being sorted and choices include:
+					show group headings upon page load, the Pre-sorted Columns parameter (%0sortList%1) will need to be
+					set for a column with a group setting. Group will not work in plugins where the Server Side
+					Processing parameter (%0server%1) is set to %0y%1.', '<code>', '</code>')
+				. '<br />' . tr('%0type%1 tells the sorter what type of date is being sorted and choices include:
 					%0text%1, %0digit%1, %0currency%1, %0percent%1, %0usLongDate%1, %0shortDate%1, %0isoDate%1,
 					%0dateFormat-ddmmyyyy%1, %0ipAddress%1, %0url%1, %0time%1.
 					Also handle strings in numeric columns with %0string-min%1 and %0string-max%1. Handle empty cells
-					with %0empty-top%1, %0empty-bottom%1 or %0empty-zero%1.', '<b>', '</b>')
-				. '<br>' . tr('%0group%1 creates automatic row headings upon sort with the heading text determined by
+					with %0empty-top%1, %0empty-bottom%1 or %0empty-zero%1.', '<code>', '</code>')
+				. '<br />' . tr('%0group%1 creates automatic row headings upon sort with the heading text determined by
 					the setting as follows: %0letter%1 (first letter), %0word%1 (first word), %0number%1, %0date%1,
 					%0date-year%1, %0date-month%1, %0date-day%1, %0date-week%1, %0date-time%1. %0letter%1 and %0word%1
 					can be extended, e.g., %0word-2%1 shows first 2 words. %0number-10%1 will group rows in blocks of
-					ten. Group will not work in plugins where the %2Server Side Processing%3 parameter is set to
-					\'y\'.', '<b>', '</b>', '<em>', '</em>'
+					ten. Group will not work in plugins where the Server Side Processing parameter (%0server%1) is
+					set to %0y%1.', '<code>', '</code>'
 				),
+				'since' => '12.0',
+				'doctype' => 'tablesorter',
 				'default' => '',
 				'filter' => 'striptags',
 				'advanced' => true,
@@ -105,22 +113,26 @@ class Table_Plugin
 				'required' => false,
 				'name' => tra('Column Filters'),
 				'description' => tr(
-					'Enter %0y%1 for a blank text filter on all columns, or %0n%1 for no filters. Or set custom column filters
-					separated by %0|%1 for each column for the following filter choices and parameters:', '<b>', '</b>'
+					'Enter %0y%1 for a blank text filter on all columns, or %0n%1 for no filters. Or set custom column
+					filters separated by %0|%1 for each column for the following filter choices and parameters:',
+					'<code>', '</code>'
 				)
-					. '<br> <b>Text - </b>type:text;placeholder:xxxx<br>' .
+					. '<br> <b>Text - </b><code>type:text;placeholder:xxxx</code><br>' .
 					tra('(For PluginTrackerlist this will be an exact search, for other plugins partial values will work.)') . '<br>
-					<b>Dropdown - </b>type:dropdown;placeholder:****;option:****;option:****;option:**** <br>' .
-					tra('Options generated automatically if not set and the server parameter is not \'y\'.') . '<br>' .
-					tra('Use \'value=Display label\' to have the option value be different than the displayed label in the dropdown.') . '<br>
-					<b>' . tra('Date range - ') . '</b>type:date;format:yy-mm-dd;from:2013-06-30;to:2020-12-31<br>' .
+					<b>Dropdown - </b><code>type:dropdown;placeholder:****;option:****;option:****;option:****</code> <br>' .
+					tr('Options generated automatically if not set and the %0server%1 parameter is not %0y%1.', '<code>', '</code>') . '<br>' .
+					tr('Use %0value=Display label%1 to have the option value be different than the displayed label in
+					the dropdown.', '<code>', '</code>') . '<br>
+					<b>' . tra('Date range - ') . '</b><code>type:date;format:yy-mm-dd;from:2013-06-30;to:2020-12-31</code><br>' .
 					tra('(from and to values set defaults for these fields when user clicks on the input field)') . '<br>
-					<b>' . tra('Numeric range - ') . '</b>type:range;from:0;to:50<br>
-					<b>' . tra('No filter - ') . '</b>type:nofilter<br>' .
-					tra(
-						'For example: tsfilters="type:dropdown;placeholder:Type to filter..." would result in a dropdown
+					<b>' . tra('Numeric range - ') . '</b><code>type:range;from:0;to:50</code><br>
+					<b>' . tra('No filter - ') . '</b><code>type:nofilter</code><br>' .
+					tr(
+						'For example: %0tsfilters="type:dropdown;placeholder:Type to filter..."%1 would result in a dropdown
 						filter on the first column with all unique values in that column in the dropdown list.'
-					),
+						, '<code>', '</code>'),
+				'since' => '12.0',
+				'doctype' => 'tablesorter',
 				'default' => '',
 				'filter' => 'striptags',
 				'advanced' => true,
@@ -130,9 +142,11 @@ class Table_Plugin
 				'name' => tra('Filter Options'),
 				'description' => tr(
 					'The following options are available: %0reset%1 (adds button to take off filters), and %0hide%1
-					(Filters are revealed upon mouseover. Hide doesn\'t work when date and range filters are used.). To use both, set
-					tsfilteroptions="type:reset;text:button text;style:hide"', '<b>', '</b>'
+					(Filters are revealed upon mouseover. Hide doesn\'t work when date and range filters are used.).
+					To use both, set %0tsfilteroptions="type:reset;text:button text;style:hide"%1', '<code>', '</code>'
 				),
+				'since' => '12.0',
+				'doctype' => 'tablesorter',
 				'default' => '',
 				'filter' => 'striptags',
 				'advanced' => true,
@@ -142,10 +156,12 @@ class Table_Plugin
 				'name' => tra('Paginate'),
 				'description' => tr(
 					'Enter %0y%1 to set default values based on the site setting for maximum records in listings (on the
-				 	pagination table of the Look & Feel admin panel). Set to %0n%1 (and %2server%3 cannot be set to
+				 	pagination table of the Look & Feel admin panel). Set to %0n%1 (and %0server%1 cannot be set to
 				 	%0y%1) for no pagination. Set custom values as in the following example: ',
-						'<b>', '</b>', '<em>', '</em>') .
-					'<b>max</b>:40;<b>expand</b>:60;expand:100;expand:140',
+						'<code>', '</code>') .
+					'<code>max:40;expand:60;expand:100;expand:140</code>',
+				'since' => '12.0',
+				'doctype' => 'tablesorter',
 				'default' => '',
 				'filter' => 'striptags',
 				'advanced' => true,
@@ -157,8 +173,10 @@ class Table_Plugin
 					'Add a button for hiding and re-showing columns. Also sets priority for dropping columns when
 				 	browser is too narrow. Set each column to a number between 1 and 6 (1 is highest priority and last
 				 	to be dropped) or to %0critical%1 to never hide or drop. An example with 4 columns:',
-						'<b>', '</b>') .
-					'tscolselect="critical|4|5|6"',
+						'<code>', '</code>') .
+					'<code>tscolselect="critical|4|5|6"</code>',
+				'since' => '14.0',
+				'doctype' => 'tablesorter',
 				'default' => '',
 				'filter' => 'striptags',
 				'advanced' => true,
