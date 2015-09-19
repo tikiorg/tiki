@@ -29,7 +29,7 @@ function wikiplugin_ajaxload_info() {
 			'selector' => array(
 				'required' => false,
 				'name' => tra('Selector'),
-				'description' => tra('jQuery selector to retrieve part of the page when using AJAX, e.g.
+				'description' => tr('jQuery selector to retrieve part of the page when using AJAX, e.g.
 					%0#page-data%1', '<code>', '</code>'),
 				'filter' => 'none',
 				'default' => '',
@@ -63,14 +63,14 @@ function wikiplugin_ajaxload_info() {
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
-				'description' => tra('In pixels or percentage. Default value is 100%.'),
+				'description' => tra('In pixels or percentage. Default value is %0.', '<code>100%</code>'),
 				'default' => '100%',
 				'since' => '14.1',
 			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
-				'description' => tra('In pixels or percentage. Default value is "auto".'),
+				'description' => tra('In pixels or percentage. Default value is %0.', '<code>auto</code>'),
 				'default' => 'auto',
 				'since' => '14.1',
 			),

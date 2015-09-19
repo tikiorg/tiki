@@ -20,7 +20,7 @@ function wikiplugin_bigbluebutton_info()
 			'name' => array(
 				'required' => true,
 				'name' => tra('Meeting'),
-				'description' => tra('MeetingID for BigBlueButton. This is a 5 digit number, starting with a 7.
+				'description' => tr('MeetingID for BigBlueButton. This is a 5 digit number, starting with a 7.
 					Ex.: %0 or %1.', '<code>77777</code>', '<code>71111</code>'),
 				'since' => '5.0',
 				'filter' => 'text',
