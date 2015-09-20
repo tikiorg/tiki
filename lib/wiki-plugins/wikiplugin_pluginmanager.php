@@ -192,9 +192,9 @@ class WikiPluginPluginManager extends PluginsLib
 								$paramblock = substr($paramblock, 0, -3);
 							}
 							if (isset($infoPlugin['params'][$paramname]['required']) && $infoPlugin['params'][$paramname]['required'] == true) {
-								$aData[$sPlugin]['parameters']['<b>' . $paramname . '</b>'] = $paramblock;
+								$aData[$sPlugin]['parameters']['<b><code>' . $paramname . '</code></b>'] = $paramblock;
 							} else {
-								$aData[$sPlugin]['parameters'][$paramname] = $paramblock;
+								$aData[$sPlugin]['parameters']['<code>' . $paramname . '</code>'] = $paramblock;
 							}
 						}
 					} else {
