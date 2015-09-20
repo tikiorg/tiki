@@ -13,9 +13,10 @@ function wikiplugin_center_info()
 		'description' => tra('Center text'),
 		'prefs' => array('wikiplugin_center'),
 		'body' => tra('text'),
-		'icon' => 'img/icons/text_align_center.png',
+		'iconname' => 'align-center',
 		'filter' => 'wikicontent',
-		'tags' => array( 'basic' ),		
+		'tags' => array( 'basic' ),
+		'introduced' => 1,
 		'params' => array(
 		),
 	);
@@ -23,9 +24,6 @@ function wikiplugin_center_info()
 
 function wikiplugin_center($data, $params)
 {
-	global $tikilib;
-
-	extract($params, EXTR_SKIP);
-	$data = '<div align="center">' . trim($data). '</div>';
+	$data = '<div style="text-align:center">' . trim($data). '</div>';
 	return $data;
 }
