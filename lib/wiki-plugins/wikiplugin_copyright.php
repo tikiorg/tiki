@@ -14,8 +14,10 @@ function wikiplugin_copyright_info()
 		'documentation' => 'PluginCopyright',
 		'description' => tra('Insert copyright notices'),
 		'prefs' => array( 'wiki_feature_copyrights', 'wikiplugin_copyright' ),
-		'body' => tra('Pattern to display the copyright in. May contain ~title~, ~year~, ~authors~ and ~holder~.'),
-		'icon' => 'img/icons/shield.png',
+		'body' => tr('Pattern to display the copyright in. May contain %0~title~%1, %0~year~%1, %0~authors~%1 and %0~holder~%1.',
+			'<code>', '</code>'),
+		'iconname' => 'copyright',
+		'introduced' => 1,
 		'params' => array(
 		),
 	);

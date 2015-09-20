@@ -10,18 +10,20 @@ function wikiplugin_customsearch_info()
 	return array(
 		'name' => tra('Custom Search'),
 		'documentation' => 'PluginCustomSearch',
-		'description' => tra('Custom Search Interface that displays results using the LIST plugin'),
+		'description' => tra('Create a custom search form for searching or listing items on the site'),
 		'prefs' => array('wikiplugin_customsearch', 'wikiplugin_list', 'feature_ajax', 'feature_search'),
 		'body' => tra('LIST plugin configuration information'),
 		'filter' => 'wikicontent',
 		'profile_reference' => 'search_plugin_content',
-		'icon' => 'img/icons/text_list_bullets.png',
+		'iconname' => 'search',
+		'introduced' => 8,
 		'tags' => array('advanced'),
 		'params' => array(
 			'wiki' => array(
 				'required' => false,
 				'name' => tra('Template wiki page'),
 				'description' => tra('Wiki page where search user interface template is found'),
+				'since' => '8.0',
 				'filter' => 'pagename',
 				'default' => '',
 				'profile_reference' => 'wiki_page',
@@ -30,33 +32,42 @@ function wikiplugin_customsearch_info()
 				'required' => false,
 				'name' => tra('Template file'),
 				'description' => tra('TPL file where search user interface template is found'),
+				'since' => '12.2',
 				'default' => '',
 			),
 			'id' => array(
 				'required' => false,
-				'name' => tra('Alphanumeric Unique Identifier for search'),
-				'description' => tra('A unique identifier to distinguish custom searches for storing of previous search criteria entered by users'),
+				'name' => tra('Search Id'),
+				'description' => tra('A unique identifier to distinguish custom searches for storing of previous search
+					criteria entered by users'),
+				'since' => '8.0',
 				'filter' => 'alnum',
 				'default' => '0',
 			),
 			'autosearchdelay' => array(
 				'required' => false,
-				'name' => tra('Autotrigger AJAX search on criteria change'),
-				'description' => tra('Delay in milliseconds before automatically triggering search after change (0 disables)'),
+				'name' => tra('Search Delay'),
+				'description' => tr('Delay in milliseconds before automatically triggering search after change
+					(%00%1 disables and is the default)', '<code>', '</code>'),
+				'since' => '8.0',
 				'filter' => 'digits',
 				'default' => '0',
 			),
 			'searchfadediv' => array(
 				'required' => false,
-				'name' => tra('Div to fade when AJAX search in progress'),
-				'description' => tra('The specific ID of the specific div to fade out when AJAX search is in progress, if not set will attempt to fade the whole area or if failing simply show the spinner'),
+				'name' => tra('Fade DIV Id'),
+				'description' => tra('The specific ID of the specific div to fade out when AJAX search is in progress,
+					if not set will attempt to fade the whole area or if failing simply show the spinner'),
+				'since' => '8.0',
 				'filter' => 'text',
 				'default' => '',
 			),
 			'recalllastsearch' => array(
 				'required' => false,
-				'name' => tra('Return users to same search parameters on coming back to the search page after leaving'),
-				'description' => tra('In the same session, return users to same search parameters on coming back to the search page after leaving'),
+				'name' => tra('Recall Last Search'),
+				'description' => tra('In the same session, return users to same search parameters on coming back to the
+					search page after leaving'),
+				'since' => '8.0',
 				'options' => array(
 					array('text' => tra('No'), 'value' => '0'),
 					array('text' => tra('Yes'), 'value' => '1'),
@@ -66,8 +77,9 @@ function wikiplugin_customsearch_info()
 			),
 			'callbackscript' => array(
 				'required' => false,
-				'name' => tra('Custom JavaScript wiki page'),
+				'name' => tra('Custom JavaScript Page'),
 				'description' => tra('The wiki page on which custom JavaScript that is to be executed on return of AJAX results'),
+				'since' => '8.0',
 				'filter' => 'pagename',
 				'default' => '',
 			),
@@ -75,6 +87,7 @@ function wikiplugin_customsearch_info()
 				'required' => false,
 				'name' => tra('Destination Div'),
 				'description' => tra('Id of a pre-existing div to contain the search results'),
+				'since' => '9.0',
 				'filter' => 'text',
 				'default' => '',
 			),
@@ -82,6 +95,7 @@ function wikiplugin_customsearch_info()
 				'required' => false,
 				'name' => tra('Search On Load'),
 				'description' => tra('Execute the search when the page loads (default: Yes)'),
+				'since' => '9.0',
 				'options' => array(
 					array('text' => tra('No'), 'value' => '0'),
 					array('text' => tra('Yes'), 'value' => '1'),
@@ -91,8 +105,9 @@ function wikiplugin_customsearch_info()
 			),
 			'requireinput' => array(
 				'required' => false,
-				'name' => tra('Require non-empty search text'),
+				'name' => tra('Require Input'),
 				'description' => tra('Require first input field to be filled for search to trigger'),
+				'since' => '12.0',
 				'options' => array(
 					array('text' => tra('No'), 'value' => '0'),
 					array('text' => tra('Yes'), 'value' => '1'),
@@ -102,8 +117,9 @@ function wikiplugin_customsearch_info()
 			),
 			'forcesortmode' => array(
 				'required' => false,
-				'name' => tra('Force sort mode overriding result relevance'),
+				'name' => tra('Force Sort'),
 				'description' => tra('Force the use of specified sort mode in place of search relevance even when there is a text search query'),
+				'since' => '13.0',
 				'options' => array(
 					array('text' => tra('No'), 'value' => '0'),
 					array('text' => tra('Yes'), 'value' => '1'),
@@ -113,8 +129,9 @@ function wikiplugin_customsearch_info()
 			),
 			'trimlinefeeds' => array(
 				'required' => false,
-				'name' => tra('Trim linefeeds'),
+				'name' => tra('Trim Linefeeds'),
 				'description' => tra('Remove the linefeeds added after each input which casues the wiki parser to add extra paragraphs.'),
+				'since' => '14.1',
 				'options' => array(
 					array('text' => tra('No'), 'value' => '0'),
 					array('text' => tra('Yes'), 'value' => '1'),
