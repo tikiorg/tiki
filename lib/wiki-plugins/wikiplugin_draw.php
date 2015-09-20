@@ -10,10 +10,11 @@ function wikiplugin_draw_info()
 	return array(
 		'name' => tra('Draw'),
 		'documentation' => 'PluginDraw',
-		'description' => tra('Display or create an image from TikiDraw that is stored into the File Gallery'),
+		'description' => tra('Embed a drawing in a page'),
 		'prefs' => array( 'feature_draw' , 'wikiplugin_draw'),
-		'icon' => 'img/icons/shape_square_edit.png',
+		'iconname' => 'edit',
 		'tags' => array( 'basic' ),
+		'introduced' => 7.1,
 		'params' => array(
 			'id' => array(
 				'required' => false,
@@ -28,8 +29,9 @@ function wikiplugin_draw_info()
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
-				'description' => tra('Width in pixels or percentage. Default value is page width. e.g. "200px" or "100%"'),
-				'filter' => 'striptags',
+				'description' => tr('Width in pixels or percentage. Default value is page width. e.g. %0 or %1',
+					'<code>200px</code>', '<code>100%</code>'),
+				'filter' => 'text',
 				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
 				'default' => 'Image width',
 				'since' => '7.1'
@@ -38,7 +40,7 @@ function wikiplugin_draw_info()
 				'required' => false,
 				'name' => tra('Height'),
 				'description' => tra('Height in pixels or percentage. Default value is complete drawing height.'),
-				'filter' => 'striptags',
+				'filter' => 'text',
 				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
 				'default' => 'Image height',
 				'since' => '7.1'
@@ -46,11 +48,11 @@ function wikiplugin_draw_info()
 			'archive' => array(
 				'required' => false,
 				'name' => tra('Force Display Archive'),
-				'description' => tra('The latest revision of file is automatically shown, by setting archive to y, it bypasses this check and shows the archive rather than the latest revision'),
-				'filter' => 'striptags',
-				'accepted' => 'y or n',
+				'description' => tr('The latest revision of file is automatically shown, by setting archive to Yes (%0),
+				it bypasses this check and shows the archive rather than the latest revision', '<code>y</code>'),
+				'filter' => 'alpha',
 				'default' => 'n',
-				'since' => '8',
+				'since' => '8.0',
 				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 'y'),

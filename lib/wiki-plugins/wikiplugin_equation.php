@@ -10,15 +10,18 @@ function wikiplugin_equation_info()
 	return array(
 		'name' => tra('Equation'),
 		'documentation' => 'PluginEquation',
-		'description' => tra('Render an equation written in LaTeX syntax as an image.'),
+		'description' => tra('Render an equation written in LaTeX syntax as an image'),
 		'prefs' => array('wikiplugin_equation'),
 		'body' => tra('equation'),
-		'icon' => 'img/icons/sum.png',
+		'iconname' => 'superscript',
+		'introduced' => 2,
 		'params' => array(
 			'size' => array(
 				'required' => false,
 				'name' => tra('Size'),
-				'description' => tra('Size expressed as a percentage of the normal size. 100 produces the default size. 200 produces an image twice as large.'),
+				'description' => tr('Size expressed as a percentage of the normal size. %0 produces the default size.
+					%1 produces an image twice as large.', '<code>100</code>', '<code>200</code>'),
+				'since' => '2.0',
 				'default' => 100,
 				'filter' => 'digits',
 			),

@@ -10,22 +10,26 @@ function wikiplugin_exercise_info()
 	return array(
 		'name' => tra('Exercise'),
 		'documentation' => tra('PluginExercise'),
-		'description' => tra('Creates exercises within a wiki page for students to test their new skills. Inline questions and optional answers selections can be defined. A score is given for multiple exercises within a page.'),
+		'description' => tra('Create an exercise for a user to complete and grade'),
 		'prefs' => array('wikiplugin_exercise'),
 		'filter' => 'text',
 		'format' => 'html',
-		'tags' => array('basic'),		
+		'iconname' => 'education',
+		'introduced' => 9,
+		'tags' => array('basic'),
 		'params' => array(
 			'answer' => array(
 				'required' => false,
 				'name' => tr('Answer'),
 				'description' => tr('Used inline to specify the right answer to the question and propose an input field.'),
+				'since' => '9.0',
 				'filter' => 'text',
 			),
 			'incorrect' => array(
 				'required' => false,
 				'name' => tr('Incorrect'),
 				'description' => tr('Alternative answers to provide'),
+				'since' => '9.0',
 				'filter' => 'text',
 			),
 		),

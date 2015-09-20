@@ -10,29 +10,37 @@ function wikiplugin_events_info()
 	return array(
 		'name' => tra('Events'),
 		'documentation' => 'PluginEvents',
-		'description' => tra('Display upcoming events from calendars'),
+		'description' => tra('Display events from calendars'),
 		'prefs' => array( 'feature_calendar', 'wikiplugin_events' ),
-		'icon' => 'img/icons/calendar_view_day.png',
+		'iconname' => 'calendar',
 		'tags' => array( 'basic' ),
+		'introduced' => 2,
 		'params' => array(
 			'calendarid' => array(
 				'required' => true,
 				'name' => tra('Calendar IDs'),
-				'description' => tra('ID numbers for the site calendars whose events are to be displayed, separated by vertical bars (|)'),
+				'description' => tr('ID numbers for the site calendars whose events are to be displayed, separated by
+					vertical bars (%0)', '<code>|</code>'),
+				'since' => '2.0',
 				'default' => '',
+				'filter' => 'text',
 				'profile_reference' => 'calendar',
 			),
 			'maxdays' => array(
 				'required' => false,
 				'name' => tra('Maximum Days'),
-				'description' => tra('Events occurring within this number of days in the future from today will be included in the list (unless limited by other parameter settings). Default is 365 days.'),
+				'description' => tr('Events occurring within this number of days in the future from today will be
+					included in the list (unless limited by other parameter settings). Default is %0.', '<code>365</code>'),
+				'since' => '2.0',
 				'filter' => 'digits',
 				'default' => 365,
 			),
 			'max' => array(
 				'required' => false,
 				'name' => tra('Maximum Events'),
-				'description' => tra('Maximum number of events to display. Default is 10. Set to 0 to display all (unless limited by other parameter settings)'),
+				'description' => tr('Maximum number of events to display. Default is %0. Set to %1 to display all
+					(unless limited by other parameter settings)', '<code>10</code>', '<code>0</code>'),
+				'since' => '2.0',
 				'default' => 10,
 				'filter' => 'digits',
 			),
@@ -40,7 +48,9 @@ function wikiplugin_events_info()
 				'required' => false,
 				'name' => tra('Show Time'),
 				'description' => tra('Show the time along with the date (shown by default)'),
+				'since' => '2.0',
 				'default' => 1,
+				'filter' => 'digits',
 				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 1),
@@ -51,7 +61,9 @@ function wikiplugin_events_info()
 				'required' => false,
 				'name' => tra('Show Description'),
 				'description' => tra('Show the description of the event (shown by default)'),
+				'since' => '2.0',
 				'default' => 1,
+				'filter' => 'digits',
 				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 1),
@@ -61,13 +73,23 @@ function wikiplugin_events_info()
 			// Pagination
 			'timespan' => array(
 				'required' => false,
-				'name' => tra('Timespan'),
-				'description' => tra('all, past, future (default)'),
+				'name' => tra('Time Span'),
+				'description' => tra('Specify the time span.'),
+				'since' => '10.0',
+				'default' => 'future',
+				'filter' => 'word',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('All'), 'value' => 'all'),
+					array('text' => tra('Past'), 'value' => 'past'),
+					array('text' => tra('Future'), 'value' => 'future')
+				),
 			),
 			'usePagination' => array(
 				'required' => false,
 				'name' => tra('Use Pagination'),
-				'description' => tra('Activate pagination when Events listing are long. Default is n'),
+				'description' => tr('Activate pagination when Events listing are long. Default is %0.', '<code>n</code>'),
+				'since' => '10.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(

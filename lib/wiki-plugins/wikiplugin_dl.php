@@ -12,9 +12,10 @@ function wikiplugin_dl_info()
 		'documentation' => 'PluginDL',
 		'description' => tra('Create a definition list'),
 		'prefs' => array('wikiplugin_dl'),
-		'body' => tra('One entry per line. Each line is in "Term: Definition" format.'),
-		'icon' => 'img/icons/text_list_bullets.png',
-		'tags' => array( 'basic' ),		
+		'body' => tr('One entry per line. Each line is in %0Term: Definition%1 format.', '<code>', '</code>'),
+		'iconname' => 'list',
+		'tags' => array( 'basic' ),
+		'introduced' => 1,
 		'params' => array(
 		),
 	);
