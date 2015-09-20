@@ -38,6 +38,12 @@ class LessCompileCommand  extends Command
 				InputOption::VALUE_OPTIONAL,
 				'Only compile named theme or themes, separated by commas'
 			)
+			->addOption(
+				'without-options',
+				null,
+				InputOption::VALUE_NONE,
+				'Do not compile the theme options if present'
+			)
 		;
 	}
 
@@ -61,27 +67,52 @@ class LessCompileCommand  extends Command
 					if ($fileInfo->isDot() || ! $fileInfo->isDir()) {
 						continue;
 					}
-					$dirname = $fileInfo->getFilename();
-                    if (!empty($only) && ! in_array($dirname, $only) && ! $all) {
+					$themename = $fileInfo->getFilename();
+                    if (!empty($only) && ! in_array($themename, $only) && ! $all) {
                         continue;
                     }
-					if ($dirname === 'base_files') {
-						$less_file = "themes/$dirname/less/tiki_base.less";
+
+					if ($themename === 'base_files') {
+						$less_file = "themes/$themename/less/tiki_base.less";
 					} else {
-						$less_file = "themes/$dirname/less/$dirname.less";
+						$less_file = "themes/$themename/less/$themename.less";
 					}
                     if (! file_exists($less_file)) {
                         continue;
                     }
-                    $css_file = "themes/$dirname/css/$dirname.css";
+                    $css_file = "themes/$themename/css/$themename.css";
                     if (file_exists($css_file && filemtime($css_file) >= filemtime($less_file))) {
                         continue;
                     }
-					$command = "php vendor/oyejorge/less.php/bin/lessc $less_file $css_file";
-					$output->writeln($command);
-					$result = shell_exec($command);
-                    $result = str_replace(array("\r", "\n"), '', $result);
-					$output->writeln($result);
+					$files = [];
+					$files[] = ['less' => $less_file, 'css' => $css_file];
+
+					if (! $input->getOption('without-options')) {
+
+						foreach (new \DirectoryIterator("themes/$themename/options") as $fileInfo2) {
+							if ($fileInfo2->isDot() || !$fileInfo2->isDir()) {
+								continue;
+							}
+							$optionname = $fileInfo2->getFilename();
+							$less_file = "themes/$themename/options/$optionname/less/$optionname.less";
+							if (! file_exists($less_file)) {
+								continue;
+							}
+							$css_file = "themes/$themename/options/$optionname/css/$optionname.css";
+							if (file_exists($css_file && filemtime($css_file) >= filemtime($less_file))) {
+								continue;
+							}
+							$files[] = ['less' => $less_file, 'css' => $css_file];
+						}
+					}
+
+					foreach ($files as $file) {
+						$command = "php vendor/oyejorge/less.php/bin/lessc {$file['less']} {$file['css']}";
+						$output->writeln($command);
+						$result = shell_exec($command);
+						$result = str_replace(array("\r", "\n"), '', $result);
+						$output->writeln($result);
+					}
 				}
 				break;
 			case '':
