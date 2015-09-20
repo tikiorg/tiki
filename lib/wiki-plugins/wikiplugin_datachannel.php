@@ -11,26 +11,37 @@ function wikiplugin_datachannel_info()
 	return array(
 		'name' => tra('Data Channel'),
 		'documentation' => 'PluginDataChannel',
-		'description' => tra('Display a form to access data channels.'),
+		'description' => tra('Display a form to access data channels'),
 		'prefs' => array('wikiplugin_datachannel'),
-		'body' => tra('List of fields to display. One field per line. Comma delimited: fieldname,label') . '<br /><br />' .
-					tra('To use values from other forms on the same page as parameters for the data-channel use "fieldname, external=fieldid" or "fieldname, external=fieldid,text" can be used where a value is simply listed on the same page where each value has the fieldid as an html id tag.') . ' ' .
-					tra('Where "fieldid" is the id (important) of the external input to use, and "fieldname" is the name of the parameter in the data-channel') . ' . ' .
-					tra('To use fixed hidden preset values use "fieldname, hidden=value."'),
+		'body' => tr('List of fields to display. One field per line. Comma delimited: %0', '<code>fieldname,label</code>')
+			. '<br /><br />' . tr('To use values from other forms on the same page as parameters for the data-channel
+			use %0 or %1 can be used where a value is simply listed on the same page where each value has the %2
+			as an html id tag.', '<code>fieldname, external=fieldid</code>',
+			'<code>fieldname, external=fieldid,text</code>', '<code>fieldid</code>') . ' ' . tr('Where %0 is
+			the id (important) of the external input to use, and %1 is the name of the parameter in the
+			data-channel', '<code>fieldid</code>', '<code>fieldname</code>') . ' . ' . tr('To use fixed hidden preset
+			values use %0', '<code>fieldname, hidden=value</code>'),
 		'extraparams' => true,
-		'icon' => 'img/icons/transmit_blue.png',
+		'iconname' => 'move',
+		'introduced' => 4,
 		'params' => array(
 			'channel' => array(
 				'required' => true,
 				'name' => tra('Channel Name'),
 				'description' => tra('Name of the channel as registered by the administrator.'),
+				'since' => '4.0',
+				'filter' => 'text',
 				'default' => '',
 				'profile_reference' => 'datachannel',
 			),
 			'returnURI' => array(
 				'required' => false,
 				'name' => tra('Return URL'),
-				'description' => tra('URL to go to after data channel has run. Defaults to current page. Can contain placeholders %reference% or %reference:urlencode%, where reference matches a profile object ref, allowing to redirect conditionally to a freshly created object.'),
+				'description' => tr('URL to go to after data channel has run. Defaults to current page. Can contain
+					placeholders %0 or %1, where reference matches a profile object ref,
+					allowing to redirect conditionally to a freshly created object.', '<code>~np~%reference%~/np~</code>',
+					'<code>~np~%reference:urlencode%~/np~</code>'),
+				'since' => '6.0',
 				'filter' => 'url',
 				'default' => '',
 			),
@@ -38,33 +49,45 @@ function wikiplugin_datachannel_info()
 				'required' => false,
 				'name' => tra('Return URL on error'),
 				'description' => tra('URL to go to after data channel has run and failed. If not specified, use the success URL.'),
+				'since' => '12.0',
 				'filter' => 'url',
 				'default' => '',
 			),
 			'quietReturn' => array(
 				'required' => false,
 				'name' => tra('Do not use returnURI but instead return true quietly'),
-				'description' => tra('If set to y, will return quietly after data channel has run which would be needed if plugin is used in non-wiki page context.'),
+				'description' => tr('If set to %0, will return quietly after data channel has run which would be needed
+					if plugin is used in non-wiki page context.', '<code>y</code>'),
+				'since' => '6.2',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				),
+				'filter' => 'alpha',
 				'default' => 'n',
 			),
 			'buttonLabel' => array(
 				'required' => false,
 				'name' => tra('Button Label'),
 				'description' => tra('Label for the submit button. Default: "Go".'),
+				'since' => '6.0',
 				'default' => 'Go',
 			),
 			'class' => array(
 				'required' => false,
 				'name' => tra('Class'),
 				'description' => tra('CSS class for this form'),
+				'since' => '6.0',
 				'default' => '',
 			),
 			'emptyCache' => array(
 				'required' => false,
 				'name' => tra('Empty Caches'),
 				'description' => tra('Which caches to empty. Default "Clear all Tiki caches"'),
+				'since' => '6.0',
 				'default' => 'all',
-				'filter' => 'word',
+				'filter' => 'text',
 				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Clear all Tiki caches'), 'value' => 'all'), 
@@ -80,6 +103,7 @@ function wikiplugin_datachannel_info()
 				'required' => false,
 				'name' => tra('Price'),
 				'description' => tr('Price to execute the datachannel (%0).', $prefs['payment_currency']),
+				'since' => '6.0',
 				'prefs' => array('payment_feature'),
 				'default' => '',
 				'filter' => 'text',
@@ -87,6 +111,7 @@ function wikiplugin_datachannel_info()
 			'paymentlabel' => array(
 				'required' => false,
 				'name' => tra('Payment Label'),
+				'since' => '6.0',
 				'prefs' => array('payment_feature'),
 				'default' => '',
 				'filter' => 'text',
@@ -94,9 +119,11 @@ function wikiplugin_datachannel_info()
 			'debug' => array(
 				'required' => false,
 				'name' => tra('Debug'),
-				'description' => tra('Be careful, if debug is on, the page will not be refreshed and previous modules can be obsolete (not on by default)'),
+				'description' => tra('Be careful, if debug is on, the page will not be refreshed and previous modules
+					can be obsolete (not on by default)'),
+				'since' => '5.0',
 				'default' => 'n',
-				'filter' => 'word',
+				'filter' => 'alpha',
 				'advanced' => true,
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -107,7 +134,9 @@ function wikiplugin_datachannel_info()
 			'array_values' => array(
 				'required' => false,
 				'name' => tra('Multiple Values'),
-				'description' => tra('Accept arrays of multiple values in the POST. e.g. itemId[]=42&itemId=43 etc. (multiple values not accepted by default)'),
+				'description' => tr('Accept arrays of multiple values in the POST. e.g. %0 etc.
+					(multiple values not accepted by default)', '<code>itemId[]=42&itemId=43</code>'),
+				'since' => '6.0',
 				'default' => 'n',
 				'filter' => 'alpha',
 				'advanced' => true,

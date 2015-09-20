@@ -10,11 +10,13 @@ function wikiplugin_extendcarthold_info()
 	return array(
 		'name' => tra('Extend Cart Inventory Hold'),
 		'documentation' => tra('PluginExtendCartHold'),
-		'description' => tra('Extends the time that items are held in the shop before timing out'),
+		'description' => tra('Extend the time items are held in a shopping cart'),
 		'prefs' => array('wikiplugin_extendcarthold', 'payment_feature'),
 		'filter' => 'wikicontent',
 		'format' => 'html',
-		'tags' => array( 'experimental' ),		
+		'iconname' => 'cart',
+		'introduced' => 7,
+		'tags' => array( 'experimental' ),
 		'params' => array(
 		),
 	);
