@@ -12,15 +12,36 @@ a:focus {
   background-color: #395bb0;
   border-color: #395bb0;
 }
-.btn-default:hover,
 .btn-default:focus,
-.btn-default.focus,
+.btn-default.focus {
+  color: #395bb0;
+  background-color: #2d4789;
+  border-color: #1a2950;
+}
+.btn-default:hover {
+  color: #395bb0;
+  background-color: #2d4789;
+  border-color: #2a4382;
+}
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
   color: #395bb0;
   background-color: #2d4789;
   border-color: #2a4382;
+}
+.btn-default:active:hover,
+.btn-default.active:hover,
+.open > .dropdown-toggle.btn-default:hover,
+.btn-default:active:focus,
+.btn-default.active:focus,
+.open > .dropdown-toggle.btn-default:focus,
+.btn-default:active.focus,
+.btn-default.active.focus,
+.open > .dropdown-toggle.btn-default.focus {
+  color: #395bb0;
+  background-color: #24396f;
+  border-color: #1a2950;
 }
 .btn-default:active,
 .btn-default.active,
