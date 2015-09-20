@@ -10,21 +10,26 @@ function wikiplugin_lang_info()
 	return array(
 		'name' => tra('Language'),
 		'documentation' => 'PluginLang',
-		'description' => tra('Vary text based on the page language'),
+		'description' => tra('Vary content based on the page language'),
 		'prefs' => array( 'feature_multilingual', 'wikiplugin_lang' ),
-		'body' => tra('text'),
-		'icon' => 'img/icons/flag_blue.png',
+		'body' => tra('Content to show'),
+		'iconname' => 'language',
+		'introduced' => 1,
 		'params' => array(
 			'lang' => array(
 				'required' => false,
 				'name' => tra('Language'),
-				'description' => tra('List of languages for which the block is displayed. Languages use the two letter language codes (ex: en, fr, es, ...). Multiple languages can be specified by separating codes by + signs.'),
+				'description' => tr('List of languages for which the block is displayed. Languages use the two letter
+					language codes (ex: en, fr, es, ...). Use %0 to separate multiple languages.', '<code>+<code>'),
+				'since' => '1',
 				'default' => '',
 			),
 			'notlang' => array(
 				'required' => false,
 				'name' => tra('Not Language'),
-				'description' => tra('List of languages for which the block is not displayed. Languages use the two letter language codes (ex: en, fr, es, ...). Multiple languages can be specified by separating codes by + signs.'),
+				'description' => tr('List of languages for which the block is not displayed. Languages use the two
+					letter language codes (ex: en, fr, es, ...). Use %0 to separate multiple languages.', '<code>+<code>'),
+				'since' => '1',
 				'default' => '',
 			),
 		),

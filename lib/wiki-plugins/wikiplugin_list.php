@@ -10,12 +10,13 @@ function wikiplugin_list_info()
 	return array(
 		'name' => tra('List'),
 		'documentation' => 'PluginList',
-		'description' => tra('Create lists of Tiki objects based on custom search criteria and formatting'),
+		'description' => tra('Search for, list, and filter all types of items and display custom formatted results'),
 		'prefs' => array('wikiplugin_list', 'feature_search'),
 		'body' => tra('List configuration information'),
 		'filter' => 'wikicontent',
 		'profile_reference' => 'search_plugin_content',
-		'icon' => 'img/icons/text_list_bullets.png',
+		'iconname' => 'list',
+		'introduced' => 7,
 		'tags' => array( 'basic' ),
 		'params' => array(
 		),

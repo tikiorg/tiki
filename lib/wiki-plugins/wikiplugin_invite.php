@@ -13,22 +13,30 @@ function wikiplugin_invite_info()
 		'description' => tra('Invite a user to join your groups'),
 		'prefs' => array( 'wikiplugin_invite', 'feature_invite' ),
 		'body' => tra('Confirmation message after posting form'),
-		'icon' => 'img/icons/group.png',
+		'iconname' => 'share',
+		'introduced' => 4,
 		'params' => array(
 			'including' => array(
 				'required' => false,
 				'name' => tra('Including Group'),
 				'description' => tra('Will list only the groups that include this group'),
+				'since' => '4.0',
+				'filter' => 'groupname',
 			),
 			'defaultgroup' => array(
 				'required' => false,
 				'name' => tra('Default Group'),
 				'description' => tra('Dropdown list will show this group by default'),
+				'since' => '4.0',
+				'filter' => 'groupname',
 			),
 			'itemId' => array(
 				'required' => false,
 				'name' => tra('Item ID'),
-				'description' => tra('Dropdown list will show the group related to this item ID (in group selector or creator field) by default'),
+				'description' => tra('Dropdown list will show the group related to this item ID (in group selector or
+					creator field) by default'),
+				'since' => '4.0',
+				'filter' => 'text',
 				'profile_reference' => 'tracker_item',
 			),
 		)

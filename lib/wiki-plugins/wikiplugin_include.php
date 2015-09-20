@@ -10,9 +10,10 @@ function wikiplugin_include_info()
 	return array(
 		'name' => tra('Include'),
 		'documentation' => 'PluginInclude',
-		'description' => tra('Include content from a wiki page'),
+		'description' => tra('Include a portion of another wiki page'),
 		'prefs' => array('wikiplugin_include'),
-		'icon' => 'img/icons/page_copy.png',
+		'iconname' => 'copy',
+		'introduced' => 1,
 		'tags' => array( 'basic' ),
 		'format' => 'html',
 		'params' => array(
@@ -20,6 +21,7 @@ function wikiplugin_include_info()
 				'required' => true,
 				'name' => tra('Page Name'),
 				'description' => tra('Wiki page name to include.'),
+				'since' => '1',
 				'filter' => 'pagename',
 				'default' => '',
 				'profile_reference' => 'wiki_page',
@@ -27,33 +29,48 @@ function wikiplugin_include_info()
 			'start' => array(
 				'required' => false,
 				'name' => tra('Start'),
-				'description' => tra('When only a portion of the page should be included, specify the marker from which inclusion should start.'),
+				'description' => tra('When only a portion of the page should be included, specify the marker from which
+					inclusion should start.'),
+				'since' => '1',
 				'default' => '',
 			),
 			'stop' => array(
 				'required' => false,
 				'name' => tra('Stop'),
-				'description' => tra('When only a portion of the page should be included, specify the marker at which inclusion should end.'),
+				'description' => tra('When only a portion of the page should be included, specify the marker at which
+					inclusion should end.'),
+				'since' => '1',
 				'default' => '',
 			),
 			'nopage_text' => array(
 				'required' => false,
 				'name' => tra('Nopage Text'),
 				'description' => tra('Text to show when no page is found.'),
+				'since' => '6.0',
+				'filter' => 'text',
 				'default' => '',
 			),
 			'pagedenied_text' => array(
 				'required' => false,
 				'name' => tra('Page Denied Text'),
 				'description' => tra('Text to show when the page exists but is denied to the user.'),
+				'since' => '6.0',
+				'filter' => 'text',
 				'default' => '',
 			),
 			'page_edit_icon' => array(
 				'required' => false,
-				'name' => tra('Show the page edit icon'),
-				'description' => tra('y/n option to show the edit icon for the included page.'),
+				'name' => tra('Edit Icon'),
+				'description' => tra('Option to show the edit icon for the included page (shown by default).'),
+				'since' => '12.1',
 				'default' => 'y',
-			),			
+				'filter' => 'alpha',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n'),
+				),
+			),
 		),
 	);
 }
