@@ -11,36 +11,46 @@ function wikiplugin_cookieconsent_info()
 	return array(
 		'name' => tra('Cookie Consent'),
 		'documentation' => 'PluginCookieConsent',
-		'description' => tra('Only displays the body markup if cookie consent has been granted by the user.'),
+		'description' => tra('Display content based on whether cookie consent has been granted by the user'),
 		'prefs' => array('wikiplugin_cookieconsent', 'cookie_consent_feature'),
 		'body' => tra('Wiki syntax containing the content that can be hidden or shown.'),
 		'filter' => 'wikicontent',
-		'icon' => 'img/icons/question.gif',
+		'introduced' => 10,
+		'iconname' => 'information',
 		'params' => array(
 			'no_consent_message' => array(
 				'required' => false,
 				'name' => tra('No Cookie Message'),
 				'description' => tra('Message displayed if user has not consented to accepting cookies.'),
+				'since' => '10.0',
 				'default' => tra($prefs['cookie_consent_alert']),
+				'filter' => 'text',
 			),
 			'element' => array(
 				'required' => false,
 				'name' => tra('Containing Element'),
-				'description' => tra('DOM element to contain everything (DIV, SPAN etc). Default to "div", set to "none" for no container.'),
+				'description' => tr('DOM element to contain everything (DIV, SPAN etc). Default to %0,
+					set to %1 for no container.', '<code>div</code>', '<code>none</code>'),
+				'since' => '10.0',
 				'default' => 'div',
+				'filter' => 'word',
 			),
 			'element_class' => array(
 				'required' => false,
 				'name' => tra('Element CSS Class'),
 				'description' => tra('CSS class for above.'),
+				'since' => '10.0',
 				'default' => '',
+				'filter' => 'text',
 			),
 			'no_consent_class' => array(
 				'required' => false,
 				'name' => tra('No Consent CSS Class'),
-				'description' => tra('CSS class for no consent message. Default "wp-cookie-consent-required"'),
+				'description' => tr('CSS class for no consent message. Default: %0', '<code>wp-cookie-consent-required</code>'),
+				'since' => '11.1',
 				'default' => 'wp-cookie-consent-required',
-			),	
+				'filter' => 'text',
+			),
 		)
 	);
 }

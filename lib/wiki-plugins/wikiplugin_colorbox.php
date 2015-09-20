@@ -13,7 +13,7 @@ function wikiplugin_colorbox_info()
 		'description' => tra('Display a gallery of images in a popup slideshow'),
 		'prefs' => array( 'feature_file_galleries', 'feature_shadowbox', 'wikiplugin_colorbox' ),
 		'introduced' => 5,
-		'icon' => 'img/icons/pictures.png',
+		'iconname' => 'image',
 		'tags' => array( 'basic' ),		
 		'params' => array(
 			'fgalId' => array(
@@ -38,7 +38,7 @@ function wikiplugin_colorbox_info()
 			'fileId' => array(
 				'required' => false,
 				'name' => tra('File ID Filter'),
-				'description' => tra('Filter on fileIds in a file gallery to only show those images. Separate each fileId with \':\''),
+				'description' => tra('Colon-separated list of fileIds in a file gallery to show.'),
 				'filter' => 'digits',
 				'separator' => ':',
 				'accepted' => 'ID separated with :',
@@ -48,7 +48,7 @@ function wikiplugin_colorbox_info()
 			'thumb' => array(
 				'required' => false,
 				'name' => tra('Thumb'),
-				'description' => tra('Display as a thumbnail (y) or full size (n)'),
+				'description' => tr('Display as a thumbnail or full size.'),
 				'filter' => 'alpha',
 				'accepted' => 'y or n',
 				'default' => 'y',
@@ -62,9 +62,11 @@ function wikiplugin_colorbox_info()
 			'sort_mode' => array(
 				'required' => false,
 				'name' => tra('Sort Mode'),
-				'description' => tra('Sort by database table field name, ascending or descending. Examples: fileId_asc or name_desc.'),
+				'description' => tr('Sort by database table field name, ascending or descending. Examples:
+					%0 or %1.', '<code>fileId_asc</code>', '<code>name_desc</code>'),
 				'filter' => 'word',
-				'accepted' => 'fieldname_asc or fieldname_desc with actual table field name in place of \'fieldname\'.',
+				'accepted' => tr('%0 or %1 with actual database field name in place of
+					%2.', '<code>fieldname_asc</code>', '<code>fieldname_desc</code>', '<code>fieldname</code>'),
 				'default' => 'created_desc',
 				'since' => '5.0'
 				),

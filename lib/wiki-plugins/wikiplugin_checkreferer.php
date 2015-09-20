@@ -10,16 +10,20 @@ function wikiplugin_checkreferer_info()
 	return array(
 		'name' => tra('Check Referer'),
 		'documentation' => 'PluginCheckReferer',
-		'description' => tra('Checks if the server HTTP_REFERER matches one of the referers specified in the parameter and displays content accordingly.'),
+		'description' => tra('Display content based on the address that originated the request for the current page'),
 		'prefs' => array('wikiplugin_checkreferer'),
-		'icon' => 'img/icons/database_go.png',
-		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed if conditions are not met.'),
+		'introduced' => 14,
+		'iconname' => 'computer',
+		'body' => tr('Wiki text to display if conditions are met. The body may contain %0. Text after the marker
+			will be displayed if conditions are not met.', '<code>{ELSE}</code>'),
 		'params' => array(
 			'referer_list' => array(
 				'required' => true,
 				'name' => tra('Referer List'),
-				'description' => tra('Comma separated list of domains to check.'),
+				'description' => tra('Comma separated list of domains to check'),
+				'since' => '14.0',
 				'separator' => ',',
+				'filter' => 'text',
 				'default' => '',
 			),
 		),
