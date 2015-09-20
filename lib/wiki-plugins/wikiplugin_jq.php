@@ -10,27 +10,31 @@ function wikiplugin_jq_info()
 	return array(
 		'name' => tra('jQuery'),
 		'documentation' => 'PluginJQ',
-		'description' => tra('Add JavaScript code'),
+		'description' => tra('Add jQuery JavaScript code'),
 		'prefs' => array( 'wikiplugin_jq' ),
 		'body' => tra('JavaScript code'),
 		'validate' => 'all',
 		'filter' => 'none',
-		'icon' => 'img/icons/script_code_red.png',
+		'iconname' => 'code',
+		'introduced' => 3,
 		'params' => array(
 			'notonready' => array(
 				'required' => false,
 				'name' => tra('Not On Ready'),
 				'description' => tra('Do not execute on document ready (execute inline)'),
+				'since' => '3.0',
 			),
 			'nojquery' => array(
 				'required' => false,
 				'name' => tra('No JavaScript'),
 				'description' => tra('Optional markup for when JavaScript is off'),
+				'since' => '3.0',
 			),
 			'lang' => array(
 				'required' => false,
 				'name' => tra('Language'),
 				'description' => tra('Language to apply JQuery to'),
+				'since' => '13.0',
 			),
 		)
 	);

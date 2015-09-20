@@ -11,16 +11,20 @@ function wikiplugin_img_info()
 	$info = array(
 		'name' => tra('Image'),
 		'documentation' => 'PluginImg',
-		'description' => tra('Display custom formatted images. One of "fileId", "src", "attId", id" or "randomGalleryId" required.'),
+		'description' => tra('Display one or more custom formatted images'),
 		'prefs' => array( 'wikiplugin_img'),
-		'icon' => 'img/icons/picture.png',
+		'iconname' => 'image',
 		'tags' => array( 'basic' ),
+		'introduced' => 3,
 		'params' => array(
 			'type' => array(
 				'required' => true,
 				'name' => tra('Image Source'),
 				'description' => tra('Choose where to get your image from'),
+				'since' => '11.0',
+				'doctype' => 'id',
 				'default' => '',
+				'filter' => 'word',
 				'options' => array(
 					array('text' => tra('Select an option'), 'value' => ''),
 					array('text' => tra('An image in the File Galleries'), 'value' => 'fileId'),
@@ -35,25 +39,35 @@ function wikiplugin_img_info()
 				'name' => tra('File ID'),
 				'type' => 'image',
 				'area' => 'fgal_picker_id',
-				'description' => tra('Numeric ID of an image in a File Gallery (or list separated by commas or |).'),
-				'filter' => 'striptags',
+				'description' => tr('Numeric ID of an image in a File Gallery (or list separated by commas or %0).',
+					'<code>|</code>'),
+				'since' => '4.0',
+				'doctype' => 'id',
+				'filter' => 'text',
 				'default' => '',
+				'accepted' => tra('Valid file IDs separated by commas or |'),
 				'parent' => array('name' => 'type', 'value' => 'fileId'),
 				'profile_reference' => 'file',
 			),
 			'id' => array(
 				'required' => true,
 				'name' => tra('Image ID'),
-				'description' => tra('Numeric ID of an image in an Image Gallery (or list separated by commas or |).'),
-				'filter' => 'striptags',
+				'description' => tr('Numeric ID of an image in an Image Gallery (or list separated by commas or %0).',
+					'<code>|</code>'),
+				'since' => '4.0',
+				'doctype' => 'id',
+				'filter' => 'text',
 				'advanced' => $prefs['feature_galleries'] !== 'y',
+				'accepted' => tra('Valid image IDs separated by commas or |'),
 				'default' => '',
 				'parent' => array('name' => 'type', 'value' => 'id'),
 			),
 			'src' => array(
 				'required' => true,
-				'name' => tra('Image source'),
+				'name' => tra('Image Source'),
 				'description' => tra('Full URL to the image to display.'),
+				'since' => '3.0',
+				'doctype' => 'id',
 				'filter' => 'url',
 				'default' => '',
 				'parent' => array('name' => 'type', 'value' => 'src'),
@@ -62,7 +76,9 @@ function wikiplugin_img_info()
 				'required' => true,
 				'name' => tra('Gallery ID'),
 				'description' => tra('Numeric ID of a file gallery. Displays a random image from that gallery.'),
-				'filter' => 'int',
+				'since' => '5.0',
+				'doctype' => 'id',
+				'filter' => 'digits',
 				'advanced' => true,
 				'default' => '',
 				'parent' => array('name' => 'type', 'value' => 'randomGalleryId'),
@@ -71,7 +87,9 @@ function wikiplugin_img_info()
 				'required' => true,
 				'name' => tra('File Gallery ID'),
 				'description' => tra('Numeric ID of a file gallery. Displays all images from that gallery.'),
-				'filter' => 'int',
+				'since' => '8.0',
+				'doctype' => 'id',
+				'filter' => 'digits',
 				'advanced' => true,
 				'default' => '',
 				'parent' => array('name' => 'type', 'value' => 'fgalId'),
@@ -80,19 +98,26 @@ function wikiplugin_img_info()
 			'attId' => array(
 				'required' => true,
 				'name' => tra('Attachment ID'),
-				'description' => tra('Numeric ID of an image attached to a wiki page (or list separated by commas or |).'),
-				'filter' => 'striptags',
+				'description' => tr('Numeric ID of an image attached to a wiki page (or list separated by commas or %0).',
+					'<code>|</code>'),
+				'since' => '4.0',
+				'doctype' => 'id',
+				'filter' => 'text',
+				'accepted' => tra('Valid attachment IDs separated by commas or |'),
 				'default' => '',
 				'parent' => array('name' => 'type', 'value' => 'attId'),
 			),
 			'sort_mode' => array(
 				'required' => false,
 				'name' => tra('Sort Mode'),
-				'description' => tra('Sort by database table field name, ascending or descending. Examples: fileId_asc or name_desc.'),
+				'description' => tr('Sort by database table field name, ascending or descending. Examples:
+					%0 or %1.', '<code>fileId_asc</code>', '<code>name_desc</code>'),
 				'filter' => 'word',
-				'accepted' => 'fieldname_asc or fieldname_desc with actual table field name in place of \'fieldname\'.',
+				'accepted' => tr('%0 or %1 with actual database field name in place of
+					%2.', '<code>fieldname_asc</code>', '<code>fieldname_desc</code>', '<code>fieldname</code>'),
 				'default' => 'created_desc',
 				'since' => '8.0',
+				'doctype' => 'id',
 				'advanced' => true,
 				'options' => array (
 					array('text' => tra(''), 'value' => ''),
@@ -139,83 +164,125 @@ function wikiplugin_img_info()
 			'thumb' => array(
 				'required' => false,
 				'name' => tra('Thumbnail'),
-				'description' => tra('Makes the image a thumbnail that enlarges to full size when clicked or moused over (unless "link" is set to another target). "download" only works with file gallery or attachments.'),
+				'description' => tr('Makes the image a thumbnail that enlarges to full size when clicked or moused over
+					(unless %0 is set to another target). Values function as follows:', '<code>link</code>') . '<br />'
+					. '<code>y</code> - ' . tr('Enlarges on a new page (depends on browser and preference settings).
+						Enlarges in a popup box when %0', '<code>rel="box"</code>') . '<br />'
+					. '<code>box</code> - ' . tra('Enlarges in a popup box when clicked') . '<br />'
+					. '<code>mouseover</code> - ' . tr('Enlarges in a popup when moused over. Images larger than 400px
+						will fall back to %0', '<code>mousesticky</code>') . '<br />'
+					. '<code>mousesticky</code> - ' . tra('Enlarges in a popup when moused over that stays open until
+						second mouseover or click') . '<br />'
+					. '<code>popup</code> - ' . tra('Enlarges in a separate window or tab (depending on browser settings') . '<br />'
+					. '<code>browse</code>, <code>browsepopup</code> - ' . tr('For image gallery images only: galery
+						browse page opens (in a new tab or window if %0 is used)', '<code>browsepopup</code>') . '<br />'
+					. '<code>download</code> - ' . tra('Dialog box for downloading the image appears when clicked
+						 (file gallery and attachment images only)') . '<br />'
+					. '<code>zoombox</code> - ' . tra('Enlarges in a popup with a zoom option when clicked') . '<br />',
+				'since' => '4.0',
+				'doctype' => 'link',
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'y', 'description' => tra('Full size image appears when thumbnail is clicked.')),
-					array('text' => tra('Overlay'), 'value' => 'box', 'description' => tra('Full size image appears in a "Colorbox" overlay when thumbnail is clicked.')),
-					array('text' => tra('Mouseover'), 'value' => 'mouseover', 'description' => tra('Full size image will pop up while cursor is over the thumbnail (and disappear when not).')),
-					array('text' => tra('Mouseover (Sticky)'), 'value' => 'mousesticky', 'description' => tra('Full size image will pop up once cursor passes over thumbnail and will remain up unless cursor passes over full size popup.')),
-					array('text' => tra('Popup'), 'value' => 'popup', 'description' => tra('Full size image will open in a separate winow or tab (depending on browser settings) when thumbnail is clicked.')),
-					array('text' => tra('Download'), 'value' => 'download', 'description' => tra('Download dialog box will appear for file gallery and attachment images when thumbnail is clicked.')),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('Box'), 'value' => 'box'),
+					array('text' => tra('Mouseover'), 'value' => 'mouseover'),
+					array('text' => tra('Mouseover (Sticky)'), 'value' => 'mousesticky'),
+					array('text' => tra('Popup'), 'value' => 'popup'),
+					array('text' => tra('Download'), 'value' => 'download'),
 				),
 			),
 			'button' => array(
 				'required' => false,
-				'name' => tra('Enlarge button'),
-				'description' => tra('Button for enlarging image.'),
+				'name' => tra('Enlarge Button'),
+				'description' => tr('Adds an enlarge button (magnifying glass icon) below the image for use together
+					with %0thumb%1. Follows %0thumb%1 settings unless %0thumb%1 is set to %0mouseover%1 or %0mousesticky%1
+					(or overridden by %0link%1), otherwise button settings are followed, operating as described above
+					for %0thumb%1', '<code>', '</code>'),
+				'since' => '4.0',
+				'doctype' => 'link',
 				'filter' => 'alpha',
 				'default' => '',
 				'advanced' => true,
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('Popup'), 'value' => 'popup', 'description' => tra('Full size image will open in a separate winow or tab (depending on browser settings) when thumbnail is clicked.')),
-					array('text' => tra('Browse'), 'value' => 'browse', 'description' => tra('Image gallery browse window for the image will open when the thumbnail is clicked if the image is in a Tiki image gallery')),
-					array('text' => tra('Browse Popup'), 'value' => 'browsepopup', 'description' => tra('Same as "browse" except that the page opens in a new window or tab.')),
-					array('text' => tra('Download'), 'value' => 'download', 'description' => tra('Download dialog box will appear for file gallery and attachment images when thumbnail is clicked.')),
+					array('text' => tra('Popup'), 'value' => 'popup'),
+					array('text' => tra('Browse'), 'value' => 'browse'),
+					array('text' => tra('Browse Popup'), 'value' => 'browsepopup'),
+					array('text' => tra('Download'), 'value' => 'download'),
 				),
 			),
 			'link' => array(
 				'required' => false,
 				'name' => tra('Link'),
-				'description' => tra('Enter a URL to the address the image should link to. Not needed if thumb parameter is set; overrides thumb setting.'),
+				'description' => tr('Causes the image to be a link to this address. Overrides %0thumb%1 unless %0thumb%1 is
+					set to %0mouseover%1 or %0mousesticky%1', '<code>', '</code>'),
+				'since' => '3.0',
+				'doctype' => 'link',
 				'filter' => 'url',
 				'default' => '',
 			),
 			'rel' => array(
 				'required' => false,
-				'name' => tra('Link relation'),
-				'filter' => 'striptags',
-				'description' => tra('Enter "box" for colorbox effect (like shadowbox and lightbox) or appropriate syntax for link relation.'),
+				'name' => tra('Link Relation'),
+				'since' => '3.0',
+				'doctype' => 'link',
+				'filter' => 'text',
+				'description' => tr('Specifies the relationship between the link image and the target. Enter %0 to
+					cause the image to enlarge in a popup when clicked.', '<code>box</code>'),
 				'advanced' => true,
 				'default' => '',
 			),
 			'usemap' => array(
 				'required' => false,
-				'name' => tra('Image map'),
-				'filter' => 'striptags',
+				'name' => tra('Image Map'),
+				'filter' => 'text',
 				'description' => tra('Name of the image map to use for the image.'),
+				'since' => '3.0',
+				'doctype' => 'link',
 				'advanced' => true,
 				'default' => '',
 			),
 			'height' => array(
 				'required' => false,
-				'name' => tra('Image height'),
-				'description' => tra('Height in pixels or percent. Syntax: "100" or "100px" means 100 pixels; "50%" means 50 percent.'),
-				'filter' => 'striptags',
+				'name' => tra('Image Height'),
+				'description' => tr('Height in pixels or percent. Syntax: %0100%1 or %0100px%1 means 100 pixels;
+					%050%%1 means 50 percent.', '<code>', '</code>'),
+				'since' => '3.0',
+				'doctype' => 'size',
+				'filter' => 'text',
 				'default' => '',
 			),
 			'width' => array(
 				'required' => false,
-				'name' => tra('Image width'),
-				'description' => tra('Width in pixels or percent. Syntax: "100" or "100px" means 100 pixels; "50%" means 50 percent.'),
-				'filter' => 'striptags',
+				'name' => tra('Image Width'),
+				'description' => tr('Width in pixels or percent. Syntax: %0100%1 or %0100px%1 means 100 pixels;
+					%050%%1 means 50 percent.', '<code>', '</code>'),
+				'since' => '3.0',
+				'doctype' => 'size',
+				'filter' => 'text',
 				'default' => '',
 			),
 			'max' => array(
 				'required' => false,
-				'name' => tra('Maximum image size'),
-				'description' => tra('Maximum height or width in pixels (largest dimension is scaled). Overrides height and width settings.'),
-				'filter' => 'int',
+				'name' => tra('Maximum Size'),
+				'description' => tra('Maximum height or width in pixels (largest dimension is scaled). Overrides height
+					and width settings.'),
+				'since' => '4.0',
+				'doctype' => 'size',
+				'filter' => 'digits',
 				'default' => '',
 			),
 			'imalign' => array(
 				'required' => false,
-				'name' => tra('Align image'),
-				'description' => tra('Aligns the image itself. If the image is inside a box (because of other settings), use the align parameter to align the box.'),
+				'name' => tra('Align Image'),
+				'description' => tr('Aligns the image itself. Overridden by any alignment settings in %0styleimage%1.
+					If %0stylebox%1 or %0desc%1 are also set, then image only aligns inside the box - use %0stylebox%1
+					in this case to align the box on the page.', '<code>', '</code>'),
+				'since' => '3.0',
+				'doctype' => 'style',
 				'filter' => 'alpha',
 				'advanced' => true,
 				'default' => '',
@@ -228,16 +295,22 @@ function wikiplugin_img_info()
 			),
 			'styleimage' => array(
 				'required' => false,
-				'name' => tra('Image style'),
-				'description' => tra('Enter "border" to place a dark gray border around the image. Otherwise enter CSS styling syntax for other style effects.'),
-				'filter' => 'striptags',
+				'name' => tra('Image Style'),
+				'description' => tr('Enter %0border%1 to place a dark gray border around the image. Otherwise enter
+					CSS styling syntax for other style effects.', '<code>', '</code>'),
+				'since' => '4.0',
+				'doctype' => 'style',
+				'filter' => 'text',
 				'advanced' => true,
 				'default' => '',
 			),
 			'align' => array(
 				'required' => false,
-				'name' => tra('Align image block'),
-				'description' => tra('Aligns the box containing the image.'),
+				'name' => tra('Align Image Block'),
+				'description' => tr('Aligns a block around the image (including the image). Image is no longer inline
+					when this setting is used. Can be overridden by any alignment settings in %0stylebox%1.', '<code>', '</code>'),
+				'since' => '3.0',
+				'doctype' => 'style',
 				'filter' => 'alpha',
 				'advanced' => true,
 				'default' => '',
@@ -250,24 +323,32 @@ function wikiplugin_img_info()
 			),
 			'stylebox' => array(
 				'required' => false,
-				'name' => tra('Image block style'),
-				'filter' => 'striptags',
-				'description' => tra('Enter "border" to place a dark gray border frame around the image. Otherwise enter CSS styling syntax for other style effects.'),
+				'name' => tra('Image Block Style'),
+				'filter' => 'text',
+				'description' => tr('Enter %0border%1 to place a dark gray border around the image. Otherwise enter
+					CSS styling syntax for other style effects.', '<code>', '</code>'),
+				'since' => '4.0',
+				'doctype' => 'style',
 				'advanced' => true,
 				'default' => '',
 			),
 			'styledesc' => array(
 				'required' => false,
-				'name' => tra('Description style'),
-				'filter' => 'striptags',
-				'description' => tra('Enter "right" or "left" to align text accordingly. Otherwise enter CSS styling syntax for other style effects.'),
+				'name' => tra('Description Style'),
+				'since' => '4.0',
+				'doctype' => 'text',
+				'filter' => 'text',
+				'description' => tr('Enter %0right%1 or %0left%1 to align text accordingly. Otherwise enter CSS styling
+					syntax for other style effects.', '<code>', '</code>'),
 				'advanced' => true,
 				'default' => '',
 			),
 			'block' => array(
 				'required' => false,
-				'name' => tra('Wrapping control'),
+				'name' => tra('Wrapping'),
 				'description' => tra('Control how other items wrap around the image.'),
+				'since' => '4.0',
+				'doctype' => 'style',
 				'filter' => 'alpha',
 				'advanced' => true,
 				'default' => '',
@@ -281,23 +362,34 @@ function wikiplugin_img_info()
 			'class' => array(
 				'required' => false,
 				'name' => tra('CSS Class'),
-				'filter' => 'striptags',
-				'description' => tra('CSS class to apply to the image.'),
+				'filter' => 'style',
+				'description' => tr('CSS class to apply to the image. %0class="fixedSize"%1 prevents the image from being
+					automatically resized and relocated in Tiki SlideShows', '<code>', '</code>'),
+				'since' => '3.0',
+				'doctype' => 'style',
 				'advanced' => true,
 				'default' => '',
 			),
 			'desc' => array(
 				'required' => false,
 				'name' => tra('Caption'),
+				'since' => '3.0',
+				'doctype' => 'text',
 				'filter' => 'text',
-				'description' => tra('Image caption. "desc" or "name" or "namedesc" for tiki images, "idesc" or "ititle" for iptc data, otherwise enter your own description.'),
+				'description' => tr('Image caption. Use %0name%1 or %0desc%1 or %0namedesc%1 for Tiki name and
+					description properties, %0idesc%1 or %0ititle%1 for metadata from the image itself, otherwise
+					enter your own description.', '<code>', '</code>'),
 				'default' => '',
 			),
 			'title' => array(
 				'required' => false,
-				'name' => tra('Link title'),
+				'name' => tra('Link Title'),
 				'filter' => 'text',
-				'description' => tra('Title text. "desc" or "name" or "namedesc", otherwise enter your own title.'),
+				'description' => tr('This text will appear in a tool tip when the image is moused over. If this is
+					not set, the %0desc%1 setting will be used. Use %0name%1 or %0desc%1 or %0namedesc%1 for Tiki name
+					and description properties', '<code>', '</code>'),
+				'since' => '3.0',
+				'doctype' => 'text',
 				'advanced' => true,
 				'default' => '',
 			),
@@ -305,7 +397,9 @@ function wikiplugin_img_info()
 				'required' => false,
 				'name' => tra('Metadata'),
 				'filter' => 'text',
-				'description' => tra('Display the image metadata (IPTC and EXIF information).'),
+				'description' => tra('Display the image metadata (IPTC, EXIF and XMP information).'),
+				'since' => '8.0',
+				'doctype' => 'text',
 				'default' => '',
 				'advanced' => true,
 				'options' => array(
@@ -315,16 +409,20 @@ function wikiplugin_img_info()
 			),
 			'alt' => array(
 				'required' => false,
-				'name' => tra('Alternate text'),
+				'name' => tra('Alternate Text'),
 				'filter' => 'text',
 				'description' => tra('Alternate text that displays when image does not load. Set to "Image" by default.'),
+				'since' => '3.0',
+				'doctype' => 'text',
 				'default' => 'Image',
 			),
 			'responsive' => array(
 				'required' => false,
-				'name' => tra('Responsive image'),
-				'filter' => 'text',
-				'description' => tra('Determines whether the image has the img-responsive class: y/n '),
+				'name' => tra('Responsive Image'),
+				'filter' => 'alpha',
+				'description' => tr('Determines whether the image has the %0img-responsive%1 class.', '<code>', '</code>'),
+				'since' => '14.0',
+				'doctype' => 'style',
 				'advanced' => false,
 				'default' => 'y',				
 				'options' => array(
@@ -334,22 +432,28 @@ function wikiplugin_img_info()
 			),	
 			'default' => array(
 				'required' => false,
-				'name' => tra('Default config settings'),
-				'description' => tra('Default configuration settings (usually set by admin in the source code or through Plugin Alias).'),
+				'name' => tra('Default Settings'),
+				'description' => tra('Default configuration settings (usually set by admin in the source code or
+					through Plugin Alias).'),
+				'since' => '4.1',
+				'doctype' => 'deprecated',
 				'advanced' => true,
 				'default' => '',
 			),
 			'mandatory' => array(
 				'required' => false,
-				'name' => tra('Mandatory admin setting'),
-				'description' => tra('Mandatory configuration settings (usually set by admin in the source code or through Plugin Alias).'),
+				'name' => tra('Mandatory Setting'),
+				'description' => tra('Mandatory configuration settings (usually set by admin in the source code or
+					through Plugin Alias).'),
+				'since' => '4.1',
+				'doctype' => 'deprecated',
 				'advanced' => true,
 				'default' => '',
 			),
 		),
 	);
 	if ($prefs['feature_galleries'] === 'y') {
-		$info['params']['type']['options'][] = array('text' => tra('An image in the Image Galleries'), 'value' => 'id');
+		$info['params']['type']['options'][] = array('text' => tra('Image Gallery Image'), 'value' => 'id');
 		$info['params']['thumb']['options'][] = array('text' => tra('Browse'), 'value' => 'browse', 'description' => tra('Image gallery browse window for the image will open when the thumbnail is clicked if the image is in a Tiki image gallery'));
 		$info['params']['thumb']['options'][] = array('text' => tra('Browse Popup'), 'value' => 'browsepopup', 'description' => tra('Same as "browse" except that the page opens in a new window or tab.'));
 		$info['params']['thumb']['description'] = tra('Makes the image a thumbnail that enlarges to full size when clicked or moused over (unless "link" is set to another target). "browse" and "browsepopup" only work with image gallery and "download" only works with file gallery or attachments.');
@@ -359,7 +463,10 @@ function wikiplugin_img_info()
 			'required' => false,
 			'name' => tra('Hide Draw Icon'),
 			'description' => tra('Do not show draw/edit icon button under image.'),
+			'since' => '11.0',
+			'doctype' => 'style',
 			'advanced' => true,
+			'filter' => 'alpha',
 			'options' => array(
 				array('text' => tra('None'), 'value' => ''),			
 				array('text' => tra('No'), 'value' => 'n'),

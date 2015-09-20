@@ -10,13 +10,14 @@ function wikiplugin_listexecute_info()
 	return array(
 		'name' => tra('List Execute'),
 		'documentation' => 'PluginListExecute',
-		'description' => tra('Generates a list of objects based on a set of filters and allows to execute configured actions on them.'),
+		'description' => tra('Set custom actions that can be executed on a filtered list of objects'),
 		'prefs' => array('wikiplugin_listexecute', 'feature_search'),
 		'body' => tra('List configuration information'),
 		'validate' => 'all',
 		'filter' => 'wikicontent',
 		'profile_reference' => 'search_plugin_content',
-		'icon' => 'img/icons/text_list_bullets.png',
+		'iconname' => 'list',
+		'introduced' => 11,
 		'tags' => array( 'advanced' ),
 		'params' => array(
 		),
