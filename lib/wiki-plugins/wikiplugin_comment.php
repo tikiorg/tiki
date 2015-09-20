@@ -10,15 +10,17 @@ function wikiplugin_comment_info()
 	return array(
 		'name' => tra('Comment'),
 		'documentation' => 'PluginComment',
-		'description' => tra('Display a comment area for any specified object'),
+		'description' => tra('Display a comment area for a specified object'),
 		'prefs' => array( 'wikiplugin_comment' ),
 		'format' => 'html',
-		'icon' => 'img/icons/comments.png',
+		'iconname' => 'comment',
+		'introduced' => 8,
 		'params' => array(
 			'objectType' => array(
 				'required' => true,
 				'name' => tra('Object Type'),
-				'description' => tra('Object Type'),
+				'description' => tra('Object type the comment is associated with'),
+				'since' => '8.0',
 				'filter' => 'text',
 				'options' => array(
 					array('text' => tr('Tracker Item'), 'value' => 'trackeritem'),
@@ -43,7 +45,8 @@ function wikiplugin_comment_info()
 				'required' => true,
 				'name' => tra('Object ID'),
 				'description' => tra('Object ID'),
-				'filter' => 'int',
+				'since' => '8.0',
+				'filter' => 'digits',
 				'default' => tr('The current wiki page you have added the plugin to'),
 				'profile_reference' => 'type_in_param',
 			),
