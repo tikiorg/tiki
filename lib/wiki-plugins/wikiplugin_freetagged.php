@@ -12,12 +12,14 @@ function wikiplugin_freetagged_info()
 		'documentation' => 'PluginFreetagged',
 		'description' => tra('List similarly tagged objects'),
 		'prefs' => array('feature_freetags','wikiplugin_freetagged'),
-		'icon' => 'img/icons/tag_blue.png',
+		'iconname' => 'tag',
+		'introduced' => 5,
 		'params' => array(
 			'tags' => array(
 				'required' => false,
 				'name' => tra('Tags to find similar to'),
 				'description' => tra('Leave blank to use the object\'s own tags.'),
+				'since' => '5.0',
 				'filter' => 'text',
 				'default' => ''
 			),
@@ -25,9 +27,11 @@ function wikiplugin_freetagged_info()
 				'required' => false,
 				'name' => tra('Type'),
 				'description' => tra('Type of objects to extract. Set to All to find all types.'),
+				'since' => '5.0',
 				'filter' => 'text',
 				'default' => null,
 				'options' => array (
+					array('text' => '', 'value' => ''),
 					array('text' => tra('Same'), 'value' => 'all'),
 					array('text' => tra('All'), 'value' => 'all'),
 					array('text' => tra('Wiki Pages'), 'value' => 'wiki page'),
@@ -46,21 +50,24 @@ function wikiplugin_freetagged_info()
 			'offset' => array(
 				'required' => false,
 				'name' => tra('Offset'),
-				'description' => tra('Start record.'),
-				'filter' => 'text',
+				'description' => tra('Start record'),
+				'since' => '5.0',
+				'filter' => 'int',
 				'default' => 0
 			),
 			'maxRecords' => array(
 				'required' => false,
 				'name' => tra('Max Records'),
 				'description' => tra('Default -1 (all)'),
-				'filter' => 'text',
+				'since' => '5.0',
+				'filter' => 'int',
 				'default' => -1
 			),
 			'sort_mode' => array(
 				'required' => false,
 				'name' => tra('Sort Order'),
-				'description' => tra('Choose from:  objectId, type, itemId, description, created, name, href, hits, comments_locked (Default: created_desc)'),
+				'description' => tr('Determine sort order based on various fields (Default: %0)', '<code>created_desc</code>'),
+				'since' => '5.0',
 				'filter' => 'text',
 				'default' => 'created_desc',
 				'options' => array (
@@ -89,14 +96,16 @@ function wikiplugin_freetagged_info()
 				'required' => false,
 				'name' => tra('Find'),
 				'description' => tra('Show objects with names or descriptions similar to the text entered here'),
+				'since' => '5.0',
 				'filter' => 'text',
 				'default' => ''
 			),
 			'broaden' => array(
 				'required' => false,
-				'name' => tra('Broaden'),
+				'name' => tra('Choose whether to broaden'),
 				'description' => tra('n|y'),
-				'filter' => 'text',
+				'since' => '5.0',
+				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -107,7 +116,9 @@ function wikiplugin_freetagged_info()
 			'h_level' => array(
 				'required' => false,
 				'name' => tra('Header Level'),
-				'description' => tra('Choose the header level for formatting. Default is 3 (for header level h3). Set to -1 for no header tags.'),
+				'description' => tr('Choose the header level for formatting. Default is %0 (for header level h3). Set
+					to %1 for no header tags.', '<code>3</code>', '<code>-1</code>'),
+				'since' => '5.0',
 				'filter' => 'int',
 				'default' => '3'
 			),
@@ -115,7 +126,8 @@ function wikiplugin_freetagged_info()
 				'required' => false,
 				'name' => tra('Show Titles Only'),
 				'description' => tra('Choose whether to show titles only (not shown by default)'),
-				'filter' => 'text',
+				'since' => '5.0',
+				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
 					array('text' => tra('No'), 'value' => 'n'),
@@ -124,9 +136,10 @@ function wikiplugin_freetagged_info()
 			),
 			'max_image_size' => array(
 				'required' => false,
-				'name' => tra('Maximum Image Size'),
-				'description' => tra('Height or width in pixels. Default = 0 (no maximum)'),
-				'filter' => 'text',
+				'name' => tra('Max Image Size'),
+				'description' => tr('Height or width in pixels. Default: %0 (no maximum)', '<code>0</code>'),
+				'since' => '5.0',
+				'filter' => 'digits',
 				'default' => 0
 			),
 			'more' => array(

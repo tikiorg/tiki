@@ -11,44 +11,55 @@ function wikiplugin_group_info()
 		'name' => tra('Group'),
 		'documentation' => 'PluginGroup',
 		'description' => tra('Display content based on the user\'s groups or friends'),
-		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed to users not matching the conditions.'),
+		'body' => tr('Wiki text to display if conditions are met. The body may contain %0. Text after the marker
+			will be displayed to users not matching the conditions.', '<code>{ELSE}</code>'),
 		'prefs' => array('wikiplugin_group'),
-		'icon' => 'img/icons/group.png',
+		'iconname' => 'group',
 		'filter' => 'wikicontent',
-		'tags' => array( 'basic' ),		
+		'introduced' => 1,
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'friends' => array(
 				'required' => false,
 				'name' => tra('Allowed User Friends'),
-				'description' => tra('Pipe separated list of users whose friends are allowed to view the block. ex: admin|johndoe|foo'),
+				'description' => tra('Pipe separated list of users whose friends are allowed to view the block.
+					Example:') . ' <code>admin|johndoe|foo</code>',
+				'since' => '4.0',
 				'filter' => 'username',
 				'default' => ''
 			),
 			'groups' => array(
 				'required' => false,
 				'name' => tra('Allowed Groups'),
-				'description' => tra('Pipe separated list of groups allowed to view the block. ex: Admins|Developers'),
+				'description' => tra('Pipe separated list of groups allowed to view the block.
+					Example:') . ' <code>Admins|Developers</code>',
+				'since' => '1',
 				'filter' => 'groupname',
 				'default' => ''
 			),
 			'notgroups' => array(
 				'required' => false,
 				'name' => tra('Denied Groups'),
-				'description' => tra('Pipe separated list of groups denied from viewing the block. ex: Anonymous|Managers'),
+				'description' => tra('Pipe separated list of groups denied from viewing the block.'),
+				'since' => '1',
 				'filter' => 'groupname',
 				'default' => ''
 			),
 			'pending' => array(
 				'required' => false,
 				'name' => tra('Allowed Groups Pending Membership'),
-				'description' => tra('User allowed to view block if membership payment to join group (or pipe-separated list of groups) is outstanding.'),
+				'description' => tra('User allowed to view block if membership payment to join group (or pipe-separated
+					list of groups) is outstanding.'),
+				'since' => '13.0',
 				'filter' => 'groupname',
 				'default' => ''
 			),
 			'notpending' => array(
 				'required' => false,
 				'name' => tra('Allowed Groups Full Membership'),
-				'description' => tra('User allowed to view block if membership in the group (or pipe-separated list of groups) is not pending.'),
+				'description' => tra('User allowed to view block if membership in the group (or pipe-separated list of
+					groups) is not pending.'),
+				'since' => '13.0',
 				'filter' => 'groupname',
 				'default' => ''
 			),
