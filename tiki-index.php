@@ -210,6 +210,8 @@ if ($prefs['wysiwyg_inline_editing'] == 'y' && $page &&
 	setCookieSection('wysiwyg_inline_edit', 0, 'preview');	// kill cookie if pref off or no perms
 }
 
+$page = $_REQUEST['page'] = $wikilib->get_page_by_slug($page);
+
 // Process page display options
 $wikilib->processPageDisplayOptions();
 
@@ -220,8 +222,6 @@ if ( isset($_REQUEST['fullscreen']) ) {
 	$fullscreen = 'n';
 }
 $smarty->assign('fullscreen', $fullscreen);
-
-$page = $_REQUEST['page'] = $wikilib->get_page_by_slug($page);
 
 if (!$info || isset($_REQUEST['date']) || isset($_REQUEST['version'])) {
 	if ($prefs['feature_wiki_use_date'] == 'y' && isset($_REQUEST['date'])) {

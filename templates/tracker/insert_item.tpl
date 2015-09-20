@@ -26,6 +26,9 @@
 					</label>
 				</div>
 			{/if}
+			{if !$user and $prefs.feature_antibot eq 'y'}
+				{include file='antibot.tpl'}
+			{/if}
 			<div class="submit">
 				<input type="hidden" name="trackerId" value="{$trackerId|escape}">
 				<input type="submit" class="btn btn-primary" value="{tr}Create{/tr}">

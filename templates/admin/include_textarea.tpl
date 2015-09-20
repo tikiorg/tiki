@@ -167,8 +167,11 @@
 					<fieldset class="table">
 						<legend>{$info.name|escape}</legend>
 						<div class="adminoptionbox">
-							<strong>{$plugin|escape}</strong>: {$info.description|default:''|escape}{assign var=pref value="wikiplugin_$plugin"}{help url="Plugin$plugin"}
+							<strong>{$plugin|escape}</strong>: {$info.description|default:''|escape}
+							{if $info.iconname}{icon name=$info.iconname}{elseif $info.icon}{icon _id=$info.icon}{else}{icon name='plugin'}{/if}
+							{help url="Plugin$plugin"}
 						</div>
+						{assign var=pref value="wikiplugin_$plugin"}
 						{if in_array( $pref, $info.prefs)}
 							{assign var=pref value="wikiplugin_$plugin"}
 							{assign var=pref_inline value="wikiplugininline_$plugin"}
