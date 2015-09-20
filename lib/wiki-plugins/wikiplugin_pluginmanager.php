@@ -330,6 +330,10 @@ class WikiPluginPluginManager extends PluginsLib
 					$rows .= '<tr><td colspan="5">' . $infoPlugin['additional'] . '</td></tr>';
 				}
 			} else {
+				if (!empty($infoPlugin['body'])) {
+					$rows .= "\n\t" . '<tr>' . $cellbegin . '<em>' . tra('(body of plugin)') . ' - </em>'
+						. $infoPlugin['body'] . '</td>';
+				}
 				$rows .= "\n\t" . '<tr>' . $cellbegin . '<em>' . tra('no parameters') . '</em></td>';
 			}
 			$header .= "\n\t" . '</tr>';
