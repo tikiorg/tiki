@@ -12,18 +12,22 @@ function wikiplugin_catpath_info()
 		'documentation' => 'PluginCatPath',
 		'description' => tra('Show the full category path for a wiki page'),
 		'prefs' => array( 'feature_categories', 'wikiplugin_catpath' ),
-		'icon' => 'img/icons/sitemap_color.png',
+		'iconname' => 'structure',
+		'introduced' => 1,
 		'params' => array(
 			'divider' => array(
 				'required' => false,
 				'name' => tra('Separator'),
-				'description' => tra('String used to separate the categories in the path. Default character is >.'),
+				'description' => tr('String used to separate the categories in the path. Default character is %0.',
+					'<code>></code>'),
+				'since' => '1',
 				'default' => '>',
 			),
 			'top' => array(
 				'required' => false,
 				'name' => tra('Display Top Category'),
 				'description' => tra('Show the top category as part of the path name (not shown by default)'),
+				'since' => '1',
 				'filter' => 'alpha',
 				'default' => 'no',
 				'options' => array(

@@ -10,37 +10,46 @@ function wikiplugin_box_info()
 	return array(
 		'name' => tra('Box'),
 		'documentation' => 'PluginBox',
-		'description' => tra('Creates a formatted box with a title bar'),
+		'description' => tra('Create a formatted box with a title bar'),
 		'prefs' => array('wikiplugin_box'),
 		'body' => tra('text'),
-		'icon' => 'img/icons/layout_header.png',
+		'introduced' => 1,
+		'iconname' => 'box',
 		'tags' => array( 'basic' ),
                 'validate' => 'arguments',
 		'params' => array(
 			'title' => array(
 				'required' => false,
 				'safe' => true,
-				'name' => tra('Box title'),
+				'name' => tra('Box Title'),
 				'description' => tra('Displayed above the content'),
+				'since' => '1',
+				'filter' => 'text',
 				'default' => '',
 			),
 			'bg' => array(
 				'required' => false,
 				'safe' => true,
-				'name' => tra('Background color'),
+				'name' => tra('Background Color'),
 				'description' => tra('As defined by CSS, name or Hex code.'),
+				'since' => '1',
+				'filter' => 'text',
+				'accepted' => tra('Valid CSS color name or code'),
 			),
 			'width' => array(
 				'required' => false,
 				'safe' => true,
-				'name' => tra('Box width'),
-				'description' => tra('In pixels or percentage. Default value is 100%.'),
+				'name' => tra('Box Width'),
+				'description' => tr('In pixels or percentage. Default value is %0.', '<code>100%</code>'),
+				'since' => '1',
+				'filter' => 'text',
 			),
 			'align' => array(
 				'required' => false,
 				'safe' => true,
 				'name' => tra('Text Alignment'),
 				'description' => tra('Aligns the text within the box (left aligned by default)'),
+				'since' => '1',
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
@@ -53,10 +62,11 @@ function wikiplugin_box_info()
 				'required' => false,
 				'safe' => true,
 				'name' => tra('Float Position'),
-				'description' => tra(
-					'Set the alignment for the entire box. For elements with a width of less than 100%, other elements will wrap around it
-					unless the clear parameter is appropriately set.)'
+				'description' => tr(
+					'Set the alignment for the entire box. For elements with a width of less than 100%, other elements
+					will wrap around it unless the %0 parameter is appropriately set.)', '<code>clear</code>'
 				),
+				'since' => '1',
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
@@ -69,8 +79,10 @@ function wikiplugin_box_info()
 				'required' => false,
 				'safe' => true,
 				'name' => tra('Clear'),
-				'description' => tra('Items are not allowed to wrap around the box if this parameter is set to.1 (Yes)'),
-				'filter' => 'text',
+				'description' => tra('Items are not allowed to wrap around the box if this parameter is set to
+					%0 (Yes)', '<code>1</code>'),
+				'since' => '1',
+				'filter' => 'digits',
 				'default' => '',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -83,19 +95,25 @@ function wikiplugin_box_info()
 				'safe' => true,
 				'name' => tra('CSS Class'),
 				'description' => tra('Apply custom CSS class to the box.'),
+				'since' => '1',
+				'filter' => 'text',
+				'accepted' => tra('Valid CSS class'),
 			),
 			'style' => array(
-					'required' => false,
-					'name' => tra('CSS Style'),
-					'description' => tra('Enter CSS styling tags for the div type used.'),
-					'filter' => 'text',
-					'default' => '',
+				'required' => false,
+				'name' => tra('CSS Style'),
+				'description' => tra('Enter CSS styling tags for the div type used.'),
+				'since' => '13.0',
+				'filter' => 'text',
+				'default' => '',
 			),
 			'id' => array(
 				'required' => false,
 				'safe' => true,
 				'name' => tra('ID'),
 				'description' => tra('ID'),
+				'since' => '1',
+				'filter' => 'text',
 			),
 
 		),

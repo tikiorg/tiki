@@ -12,17 +12,19 @@ function wikiplugin_cclite_info()
 	return array(
 		'name' => tra('Cclite'),
 		'documentation' => 'PluginCclite',
-		'description' => tra('General purpose cclite utility plugin'),
+		'description' => tra('Access and use your cclite social credit and alternative currency account'),
 //		'validate' => '',
 		'prefs' => array( 'wikiplugin_cclite', 'payment_feature' ),
-		'icon' => 'img/icons/money.png',
-		'tags' => array( 'experimental' ),		
+		'iconname' => 'money',
+		'introduced' => 6,
+		'tags' => array( 'experimental' ),
 		'params' => array(
 			'mode' => array(
 				'required' => false,
 				'name' => tra('Mode'),
-				'description' => tr('Mode of operation - summary or recent. Default: summary'),
-				'filter' => 'text',
+				'description' => tr('Mode of operation - summary or recent. Default: %0', '<code>summary</code>'),
+				'since' => '6.0',
+				'filter' => 'word',
 				'default' => 'summary',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -34,6 +36,7 @@ function wikiplugin_cclite_info()
 				'required' => false,
 				'name' => tra('Registry'),
 				'description' => tr('Registry to query. Default: site preference (or first in list when more than one)'),
+				'since' => '6.0',
 				'filter' => 'text',
 				'default' => '',
 			),
