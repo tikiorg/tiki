@@ -154,7 +154,7 @@ function wikiplugin_button_info()
 			'_disabled' => array(
 				'required' => false,
 				'name' => tra('Disable Button'),
-				'description' => tra('Set to %0 to disable the button', '<code>y</code>'),
+				'description' => tr('Set to %0 to disable the button', '<code>y</code>'),
 				'since' => '6.1',
 				'filter' => 'alpha',
 				'default' => '',

@@ -11,15 +11,16 @@ function wikiplugin_carousel_info()
 		'name' => tra('Carousel'),
 		'documentation' => 'PluginCarousel',
 		'description' => tra('Display images in a self-advancing carousel'),
-		'introduced' => 8.0,
+		'introduced' => 8,
 		'prefs' => array('wikiplugin_carousel', 'feature_file_galleries', 'feature_jquery_carousel'),
-		'icon' => 'img/icons/wand.png',
+		'iconname' => 'wizard',
 		'tags' => array( 'basic' ),
 		'params' => array(
 			'fgalId' => array(
 				'required' => true,
 				'name' => tra('File Gallery ID'),
 				'description' => tra('ID number of the file gallery that contains the images to be displayed'),
+				'since' => '8.0',
 				'filter' => 'digits',
 				'accepted' => 'ID',
 				'default' => '',
@@ -28,31 +29,37 @@ function wikiplugin_carousel_info()
 			'sort_mode' => array(
 				'required' => false,
 				'name' => tra('Sort Mode'),
-				'description' => tra('Sort by database table field name, ascending or descending. Examples: fileId_asc or name_desc.'),
+				'description' => tr('Sort by database table field name, ascending or descending. Examples:
+					%0 or %1.', '<code>fileId_asc</code>', '<code>name_desc</code>'),
+				'since' => '8.0',
 				'filter' => 'word',
-				'accepted' => 'fieldname_asc or fieldname_desc with actual table field name in place of \'fieldname\'.',
+				'accepted' => tr('%0 or %1 with actual database field name in place of
+					%2.', '<code>fieldname_asc</code>', '<code>fieldname_desc</code>', '<code>fieldname</code>'),
 				'default' => 'created_desc',
 			),
 			'transitionSpeed' => array(
 				'required' => false,
-				'name' => tra('Transition time'),
+				'name' => tra('Transition Time'),
 				'description' => tra('The time (in milliseconds) it will take to transition between two images.'),
+				'since' => '8.0',
 				'filter' => 'digits',
 				'accepted' => tra('number'),
 				'default' => '1500',
 			),
 			'displayTime' => array(
 				'required' => false,
-				'name' => tra('Display time'),
+				'name' => tra('Display Time'),
 				'description' => tra('The time (in milliseconds) to display each image.'),
+				'since' => '8.0',
 				'filter' => 'digits',
 				'accepted' => tra('number'),
 				'default' => '6000',
 			),
 			'textholderHeight' => array(
 				'required' => false,
-				'name' => tra('Caption height'),
+				'name' => tra('Caption Height'),
 				'description' => tra('The height of the caption. This is a fraction of the height of the images.'),
+				'since' => '8.0',
 				'filter' => 'text',
 				'accepted' => tra('real between 0 and 1'),
 				'default' => '.2',
@@ -60,7 +67,8 @@ function wikiplugin_carousel_info()
 			),
 			'displayProgressBar' => array(
 				'required' => false,
-				'name' => tra('Display progress ring'),
+				'name' => tra('Display Progress Bar'),
+				'since' => '8.0',
 				'filter' => 'digits',
 				'options' => array(
 					array('text' => tra('Yes'), 'value' => '1'),
@@ -71,8 +79,9 @@ function wikiplugin_carousel_info()
 			),
 			'thumbnailType' => array(
 				'required' => false,
-				'name' => tra('Display thumbnails'),
+				'name' => tra('Display Thumbnails'),
 				'description' => tra('Display thumbnails, number, count etc.'),
+				'since' => '8.0',
 				'filter' => 'text',
 				'options' => array(
 					array('text' => tra('None'), 'value' => 'none'),
@@ -85,24 +94,27 @@ function wikiplugin_carousel_info()
 			),
 			'thumbnailWidth' => array(
 				'required' => false,
-				'name' => tra('Thumbnail box width'),
-				'description' => tra('Width of thumbnail box in CSS units (default "20px")'),
+				'name' => tra('Thumbnail Box Width'),
+				'description' => tr('Width of thumbnail box in CSS units (default %0)', '<code>20px</code>'),
+				'since' => '8.0',
 				'filter' => 'text',
 				'default' => '20px',
 				'advanced' => true,
 			),
 			'thumbnailHeight' => array(
 				'required' => false,
-				'name' => tra('Thumbnail box height'),
-				'description' => tra('Height of thumbnail box in CSS units (default "20px")'),
+				'name' => tra('Thumbnail Box Height'),
+				'description' => tr('Height of thumbnail box in CSS units (default %0)', '<code>20px</code>'),
+				'since' => '8.0',
 				'filter' => 'text',
 				'default' => '20px',
 				'advanced' => true,
 			),
 			'autoPilot' => array(
 				'required' => false,
-				'name' => tra('Start automatically'),
+				'name' => tra('Start Automatically'),
 				'description' => tra('Move the carousel automatically when the page loads (default Yes).'),
+				'since' => '8.0',
 				'filter' => 'digits',
 				'options' => array(
 					array('text' => tra('Yes'), 'value' => '1'),
@@ -112,8 +124,9 @@ function wikiplugin_carousel_info()
 			),
 			'displayThumbnails' => array(
 				'required' => false,
-				'name' => tra('Display thumbnails'),
+				'name' => tra('Thumbnails'),
 				'description' => tra('Legacy v2 param:') . ' ' . tra('Display thumbnails.'),
+				'since' => '8.0',
 				'filter' => 'digits',
 				'options' => array(
 					array('text' => tra('Yes'), 'value' => '1'),
@@ -124,8 +137,9 @@ function wikiplugin_carousel_info()
 			),
 			'displayThumbnailNumbers' => array(
 				'required' => false,
-				'name' => tra('Display place numbers in the thumbnail boxes'),
+				'name' => tra('Thumbnail Numbers'),
 				'description' => tra('Legacy v2 param:') . ' ' . tra('Display place numbers in the thumbnail boxes.'),
+				'since' => '8.0',
 				'filter' => 'digits',
 				'options' => array(
 					array('text' => tra('Yes'), 'value' => '1'),
@@ -136,8 +150,9 @@ function wikiplugin_carousel_info()
 			),
 			'displayThumbnailBackground' => array(
 				'required' => false,
-				'name' => tra('Use corresponding image as background for a thumbnail box'),
+				'name' => tra('Thumbnail Background'),
 				'description' => tra('Legacy v2 param:') . ' ' . tra('Use corresponding image as background for a thumbnail box.'),
+				'since' => '8.0',
 				'filter' => 'digits',
 				'options' => array(
 					array('text' => tra('Yes'), 'value' => '1'),
@@ -148,8 +163,10 @@ function wikiplugin_carousel_info()
 			),
 			'thumbnailFontSize' => array(
 				'required' => false,
-				'name' => tra('Thumbnail box font size'),
-				'description' => tra('Legacy v2 param:') . ' ' . tra('Font size of thumbnail box in CSS units (default ".7em").'),
+				'name' => tra('Thumbnail Font Size'),
+				'description' => tra('Legacy v2 param:') . ' ' . tr('Font size of thumbnail box in CSS units
+					(default %0).', '<code>7em</code>'),
+				'since' => '8.0',
 				'filter' => 'text',
 				'accepted' => tra('CSS units'),
 				'default' => '.7em',
@@ -157,8 +174,9 @@ function wikiplugin_carousel_info()
 			),
 			'displaySize' => array(
 				'required' => false,
-				'name' => tra('Size of picture'),
-				'description' => tra('In case your picture is too large, you can specify a scale between 0 and 1 to reduce it, or a maximum size in pixels'),
+				'name' => tra('Image Size'),
+				'description' => tra('Scale image between 0 and 1 to reduce it, or set a maximum size in pixels'),
+				'since' => '8.0',
 				'filter' => 'text',
 				'default' => '1',
 				'accepted' => tra('Real between 0 and 1, or integer over 10'),

@@ -11,11 +11,14 @@ function wikiplugin_categorytransition_info()
 		'name' => tra('PluginCategoryTransition'),
 		'description' => tra('Displays controls to trigger category transitions for any object.'),
 		'prefs' => array( 'feature_category_transition', 'wikiplugin_categorytransition' ),
+		'iconname' => 'move',
+		'introduced' => 9,
 		'params' => array(
 			'objType' => array(
 				'required' => true,
 				'name' => tra('Object Type'),
 				'description' => tra('Object Type'),
+				'since' => '9.0',
 				'filter' => 'text',
 				'default' => '',
 			),
@@ -23,6 +26,7 @@ function wikiplugin_categorytransition_info()
 				'required' => true,
 				'name' => tra('Object ID'),
 				'description' => tra('Object ID'),
+				'since' => '9.0',
 				'filter' => 'text',
 				'default' => '',
 				'profile_reference' => 'type_in_param',
@@ -31,6 +35,7 @@ function wikiplugin_categorytransition_info()
 				'required' => false,
 				'name' => tra('Redirect URL'),
 				'description' => tra('URL the user is sent to after transition is done'),
+				'since' => '9.0',
 				'filter' => 'text',
 				'default' => "REQUEST_URI",
 			) 

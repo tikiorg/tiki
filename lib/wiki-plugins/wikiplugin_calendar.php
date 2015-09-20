@@ -12,12 +12,15 @@ function wikiplugin_calendar_info()
 		'documentation' => 'PluginCalendar',
 		'description' => tra('Display a calendar and its events'),
 		'prefs' => array( 'feature_calendar', 'wikiplugin_calendar' ),
-		'icon' => 'img/icons/calendar.png',
+		'iconname' => 'calendar',
 		'format' => 'html',
+		'introduced' => 4,
 		'params' => array(
 			'calIds' => array(
 				'name' => tra('Calendar IDs'),
-				'description' => tra('If set to a list of calendar identifiers, restricts the events to those in the identified calendars. Identifiers are separated by commas (",").') . " " . tra('Example values:') . '"13", "4,7", "31,49". ' . tra('Not set by default.'),
+				'description' => tra('Comma-separated list of calendar Ids to restrict the events to specified calendars.')
+					. " " . tra('Example values:') . '<code>13</code>, <code>4,7</code> ' . tra('Not set by default.'),
+				'since' => '4.0',
 				'filter' => 'digits',
 				'separator' => ',',
 				'default' => '',
@@ -26,7 +29,9 @@ function wikiplugin_calendar_info()
 			'viewlist' => array(
 				'required' => false,
 				'name' => tra('View Type'),
-				'description' => tra('Determines how to show events.') . ' ' . tra('Possible values:') . ' ' . 'table, list, both. ' . tra('"table" shows events in a calendar.') . ' ' . tra('Default value:') . ' table.',
+				'description' => tra('Determines how events.') . ' ' . tr('%0 (default) shows events in a calendar.',
+					'<code>table</code>'),
+				'since' => '4.0',
 				'filter' => 'word',
 				'default' => 'table',
 				'options' => array(
@@ -38,8 +43,9 @@ function wikiplugin_calendar_info()
 			),
 			'viewmode' => array(
 				'name' => tra('View Time Span'),
-				'description' => tra('If in calendar (or "table") view type, determines the time span displayed by the calendar.') . ' ' . tra('Possible values:') . ' year, semester, quarter, month, week, day. '
-										. tra('Default is month'),
+				'description' => tr('If in calendar (%0) View Type, determines the time span displayed by the
+					calendar.', '<code>table</code>') . tra('Default is month'),
+				'since' => '4.0',
 				'filter' => 'word',
 				'default' => 'month',
 				'options' => array(
@@ -55,7 +61,8 @@ function wikiplugin_calendar_info()
 			'viewnavbar' => array(
 				'required' => false,
 				'name' => tra('Navigation Bar'),
-				'description' => tra('Decide or not to show the navigation bar (not shown by default)'),
+				'description' => tra('Show or hide the navigation bar (not shown by default)'),
+				'since' => '4.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(

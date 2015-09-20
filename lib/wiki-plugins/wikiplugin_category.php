@@ -12,12 +12,15 @@ function wikiplugin_category_info()
 		'documentation' => 'PluginCategory',
 		'description' => tra('List categories and objects assigned to them'),
 		'prefs' => array( 'feature_categories', 'wikiplugin_category' ),
-		'icon' => 'img/icons/sitemap_color.png',
+		'iconname' => 'structure',
+		'introduced' => 1,
 		'params' => array(
 			'id' => array(
 				'required' => false,
 				'name' => tra('Category IDs'),
-				'description' => tra('List of category IDs separated by + signs. ex: 1+2+3. Default will use category of the current page.'),
+				'description' => tr('List of category IDs separated by + signs. ex: %0. Default will use category
+					of the current page.', '<code>1+2+3</code>'),
+				'since' => '1',
 				'filter' => 'digits',
 				'separator' => '+',
 				'default' => '',
@@ -26,14 +29,20 @@ function wikiplugin_category_info()
 			'types' => array(
 				'required' => false,
 				'name' => tra('Types'),
-				'description' => tra('List of object types to include in the list separated by plus signs. ex: article+blog+blog post+faq+fgal<br />+forum+igal+newsletter<br />+event+poll+quiz+survey<br />+tracker+wiki+img'),
+				'description' => tra('List of object types to include in the list separated by plus signs. Example: ')
+					. '<code>article+blog+blog post+fgal</code>',
+				'since' => '1',
+				'accepted' => 'article, blog, blog post, fgal, forum, igal, newsletter, event, poll, quiz, survey,
+					tracker, wiki, img',
 				'filter' => 'text',
 				'default' => '*',
 			),
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort Order'),
-				'description' => tra('Sort ascending or descending based on various attributes (sorted ascending by name by default)'),
+				'description' => tra('Sort ascending or descending based on various attributes (sorted ascending by
+					name by default)'),
+				'since' => '1',
 				'filter' => 'text',
 				'default' => '',
 				'options' => array (
@@ -55,6 +64,7 @@ function wikiplugin_category_info()
 				'required' => false,
 				'name' => tra('Split'),
 				'description' => tra('Whether multiple categories will be listed on different lines (default is to split them)'),
+				'since' => '1',
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
@@ -66,7 +76,9 @@ function wikiplugin_category_info()
 			'and' => array(
 				'required' => false,
 				'name' => tra('And'),
-				'description' => tra('If set to y (Yes), only objects in all of the categories will be shown (default is to show objects in any of the categories)'),
+				'description' => tr('If set to %0 (Yes), only objects in all of the categories will be shown (default
+					is to show objects in any of the categories)', '<code>y</code>'),
+				'since' => '1',
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
@@ -77,8 +89,10 @@ function wikiplugin_category_info()
 			),
 			'sub' => array(
 				'required' => false,
-				'name' => tra('With Sub-categories'),
-				'description' => tra('Also list objects in sub-categories of the categories given (default is to list sub-category objects)'),
+				'name' => tra('Sub-categories'),
+				'description' => tra('Also list objects in sub-categories of the categories given (default is to list
+					sub-category objects)'),
+				'since' => '4.1',
 				'default' => 'n',
 				'filter' => 'alpha',
 				'options' => array(
@@ -89,8 +103,9 @@ function wikiplugin_category_info()
 			),
 			'showdescription' => array(
 				'required' => false,
-				'name' => tra('Show Description'),
+				'name' => tra('Description'),
 				'description' => tra('Show descriptions (not shown by default)'),
+				'since' => '4.1',
 				'default' => 'n',
 				'filter' => 'alpha',
 				'options' => array(
@@ -101,8 +116,9 @@ function wikiplugin_category_info()
 			),
 			'showname' => array(
 				'required' => false,
-				'name' => tra('Show Name'),
+				'name' => tra('Name'),
 				'description' => tra('Show object names (shown by default)'),
+				'since' => '4.1',
 				'default' => 'y',
 				'filter' => 'alpha',
 				'options' => array(
@@ -113,8 +129,9 @@ function wikiplugin_category_info()
 			),
 			'showtype' => array(
 				'required' => false,
-				'name' => tra('Show type'),
+				'name' => tra('Type'),
 				'description' => tra('Show type (shown by default)'),
+				'since' => '4.1',
 				'default' => 'y',
 				'filter' => 'alpha',
 				'options' => array(
@@ -128,6 +145,7 @@ function wikiplugin_category_info()
 				'name' => tra('One Per Line'),
 				'description' => tra('Show one object per line (multiple per line shown by default)'),
 				'default' => 'n',
+				'since' => '5.0',
 				'filter' => 'alpha',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -137,8 +155,9 @@ function wikiplugin_category_info()
 			),		
 			'showlinks' => array(
 				'required' => false,
-				'name' => tra('Show Child Links'),
+				'name' => tra('Child Links'),
 				'description' => tra('Show children category links (shown by default)'),
+				'since' => '5.0',
 				'default' => 'y',
 				'filter' => 'alpha',
 				'options' => array(
@@ -149,8 +168,9 @@ function wikiplugin_category_info()
 			),		
 			'categoryshowlink' => array(
 				'required' => false,
-				'name' => tra('Show Top Link'),
+				'name' => tra('Top Link'),
 				'description' => tra('Show top category link (shown by default)'),
+				'since' => '5.0',
 				'default' => 'y',
 				'filter' => 'alpha',
 				'options' => array(
@@ -162,14 +182,16 @@ function wikiplugin_category_info()
 			'maxRecords' => array(
 				'required' => false,
 				'name' => tra('Max Records'),
-				'description' => tra('Maximum number of objects to list (default is 50)'),
+				'description' => tr('Maximum number of objects to list (default is %0)', '<code>50</code>'),
+				'since' => '6.1',
 				'default' => '50',
 				'filter' => 'digits',
-			),		
+			),
 			'showTitle' => array(
 				'required' => false,
-				'name' => tra('Show Title'),
+				'name' => tra('Title'),
 				'description' => tra('Show title text above category object lists (shown by default)'),
+				'since' => '6.1',
 				'default' => 'y',
 				'filter' => 'alpha',
 				'options' => array(
@@ -181,10 +203,12 @@ function wikiplugin_category_info()
 			'lang' => array(
 				'required' => false,
 				'name' => tra('Language'),
-				'description' => tra('List only objects in this language.').' '.tra('Only apply if type=wiki.'),
+				'description' => tra('List only objects in this language.') . ' ' . tr('Only apply if %0.',
+					'<code>type="wiki"</code>'),
+				'since' => '8.0',
 				'filter' => 'lang',
 				'default' => '',
-			),		
+			),
 		),
 	);
 }

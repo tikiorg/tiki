@@ -11,14 +11,17 @@ function wikiplugin_cartmissinguserinfo_info()
 	return array(
 		'name' => tra('Cart Missing User Info'),
 		'documentation' => tra('PluginCartMissingUserInfo'),
-		'description' => tra('Check if user still has missing info to enter'),
+		'description' => tra('Check completeness of user input for a shopping cart transaction'),
 		'prefs' => array('wikiplugin_cartmissinguserinfo', 'payment_feature'),
 		'tags' => array( 'experimental' ),
+		'iconname' => 'cart',
+		'introduced' => 7,
 		'params' => array(
 			'info_type' => array(
 				'required' => true,
-				'name' => tra('Type of Information'),
-				'filter' => 'text',
+				'name' => tra('Information Type'),
+				'since' => '7.0',
+				'filter' => 'word',
 				'default' => 'postpurchase',
 				'options' => array(
 					array('text' => tra('Post Purchase'), 'value' => 'postpurchase'),
@@ -28,7 +31,8 @@ function wikiplugin_cartmissinguserinfo_info()
 			'product_class_id' => array(
 				'required' => true,
 				'name' => tra('Product Class ID'),
-				'filter' => 'int',
+				'since' => '7.0',
+				'filter' => 'digits',
 				'default' => '',
 			),
 		),
