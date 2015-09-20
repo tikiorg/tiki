@@ -10,19 +10,23 @@ function wikiplugin_grouplist_info()
 	return array(
 		'name' => tra('Group List'),
 		'documentation' => 'PluginGroupList',
-		'description' => tra('List all groups or just groups that include a certain group'),
-		'icon' => 'img/icons/group.png',
+		'description' => tra('Create a complete or filtered list of groups'),
+		'iconname' => 'group',
+		'introduced' => 5,
 		'params' => array(
 			'group' => array(
 				'required' => false,
 				'name' => tra('Group Name'),
-				'description' => tra('If empty, all groups will be listed. Entering a group name will cause only groups that include this group to be listed.'),
+				'description' => tra('If empty, all groups will be listed. Entering a group name will cause only groups
+					that include this group to be listed.'),
+				'since' => '5.0',
 				'filter' => 'groupname',
 			),
 			'linkhome' => array(
 				'required' => false,
 				'name' => tra('Group Home Page'),
 				'description' => tra('Link the group name to the group home page, if there is one (not linked by default)'),
+				'since' => '5.0',
 				'default' => 'n',
 				'filter' => 'alpha',
 				'options' => array(
@@ -35,6 +39,7 @@ function wikiplugin_grouplist_info()
 				'required' => false,
 				'name' => tra('Recursively List Groups'),
 				'description' => tra('Recurse on the included groups (default is not to recurse)'),
+				'since' => '5.0',
 				'default' => 'n',
 				'filter' => 'alpha',
 				'options' => array(
@@ -46,8 +51,10 @@ function wikiplugin_grouplist_info()
             'own' => array(
                 'required' => false,
                 'name' => tra('List only your own'),
-                'description' => tra('Filter the list of groups to include only the groups from the user viewing the page (default is not to filter)'),
-                'default' => 'n',
+                'description' => tra('Filter the list of groups to include only the groups from the user viewing the
+                    page (default is not to filter)'),
+	            'since' => '14.0',
+	            'default' => 'n',
                 'filter' => 'alpha',
                 'options' => array(
                     array('text' => '', 'value' => ''),

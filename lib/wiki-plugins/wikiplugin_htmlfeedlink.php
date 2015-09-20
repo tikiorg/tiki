@@ -10,26 +10,30 @@ function wikiplugin_htmlfeedlink_info()
 	return array(
 		'name' => tra('HTML Feed Link'),
 		'documentation' => 'PluginHtmlFeedlink',
-		'description' => tra('Display remote content'),
+		'description' => tra('Receive and display content from another site sent using PluginHTMLFeed'),
 		'prefs' => array( 'feature_wiki', 'wikiplugin_htmlfeedlink', 'feature_htmlfeed' ),
 		'body' => tra('Initial Value'),
-		'icon' => 'img/icons/page_white_code.png',
+		'iconname' => 'link',
 		'filter' => 'rawhtml_unsafe',
 		'tags' => array( 'basic' ),
+		'introduced' => 9,
 		'params' => array(
 			'feed' => array(
 				'required' => false,
-				'name' => tra('Feed location'),
+				'name' => tra('Feed Location'),
 				'description' => tra(''),
+				'since' => '9.0',
 			),
 			'name' => array(
 				'required' => false,
-				'name' => tra('Name of content'),
+				'name' => tra('Content Name'),
 				'description' => tra(''),
+				'since' => '9.0',
 			),
 			'style' => array(
 				'required' => false,
-				'name' => tra('Style of content'),
+				'name' => tra('Content Style'),
+				'since' => '9.0',
 				'options' => array(
 					array('text' => tra('None'), 'value' => ''),
 					array('text' => tra('Highlight'), 'value' => 'highlight'),
@@ -39,6 +43,7 @@ function wikiplugin_htmlfeedlink_info()
 			'type' => array(
 				'required' => false,
 				'name' => tra('HTML Feed Link Type'),
+				'since' => '9.0',
 				'default' => 'replace',
 				'options' => array(
 					array('text' => tra('Replace'), 'value' => 'replace'),
@@ -49,7 +54,8 @@ function wikiplugin_htmlfeedlink_info()
 			),
 			'moderate' => array(
 				'required' => false,
-				'name' => tra('Is the HTML feed moderated'),
+				'name' => tra('Moderated?'),
+				'since' => '9.0',
 				'default' => 'n',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -61,6 +67,7 @@ function wikiplugin_htmlfeedlink_info()
 				'required' => false,
 				'name' => tra('Date'),
 				'description' => tr('Date of last accepted HTML item, not used if not moderated'),
+				'since' => '9.0',
 				'default' => '',
 			),
 		),

@@ -10,13 +10,17 @@ function wikiplugin_groupexpiry_info()
 	return array(
 		'name' => tra('Group Expiry'),
 		'documentation' => 'PluginGroupExpiry',
-		'description' => tra('Show the expiry date of a group membership of the current user'),
+		'description' => tra('Show the expiration date of a group the user belongs to'),
 		'prefs' => array( 'wikiplugin_groupexpiry' ),
-		'icon' => 'img/icons/group_delete.png',
+		'iconname' => 'group',
+		'introduced' => 7,
 		'params' => array(
 			'group' => array(
 				'required' => true,
 				'name' => tra('Group Name'),
+				'description' => tra('The name of an existing group on the site'),
+				'since' => '7.0',
+				'filter' => 'groupname',
 			),
 		),
 	);
