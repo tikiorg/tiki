@@ -10,21 +10,25 @@ function wikiplugin_favorite_info()
 	return array(
 		'name' => tra('Favorite'),
 		'documentation' => 'PluginFavorite',
-		'description' => tra('Shows if item is user favorite or not and provide the way to set it'),
+		'description' => tra('Display a button for a user to click to make an object a favorite'),
 		'prefs' => array( 'wikiplugin_favorite', 'user_favorites' ),	
 		'format' => 'html',
+		'iconname' => 'star',
+		'introduced' => 8,
 		'params' => array(
 			'objectType' => array(
 				'required' => true,
 				'name' => tra('Object Type'),
-				'description' => tra('Object Type'),
+				'description' => tra('Indicate type of object'),
+				'since' => '8.0',
 				'filter' => 'text',
 				'default' => '',
 			),
 			'objectId' => array(
 				'required' => true,
 				'name' => tra('Object ID'),
-				'description' => tra('Object ID'),
+				'description' => tra('Enter the ID of the object'),
+				'since' => '8.0',
 				'filter' => 'text',
 				'default' => '',
 				'profile_reference' => 'type_in_param',

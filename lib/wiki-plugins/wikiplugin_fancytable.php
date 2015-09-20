@@ -21,54 +21,96 @@ function wikiplugin_fancytable_info()
 			 'head' => array(
 				 'required' => false,
 				 'name' => tra('Heading Row'),
-				 'description' => tra('Header rows of the table. Use >> to separate multiple rows.'),
+				 'description' => tr('Header rows of the table. Use %0 to separate multiple rows.', '<code>>></code>'),
 				 'default' => '',
+				 'since' => '1'
 			 ),
 			 'headclass' => array(
 				 'required' => false,
 				 'name' => tra('Heading CSS Class'),
 				 'description' => tra('CSS class to apply to the heading row.'),
 				 'default' => '',
+				 'since' => '1'
 			 ),
 			 'headaligns' => array(
 				 'required' => false,
 				 'name' => tra('Header Horizontal Align'),
-				 'description' => tra('Horizontal alignments for header cells separated by |. Choices: left, right, center, justify.'),
+				 'description' => tr('Horizontal alignments for header cells separated by %0.', '<code>|</code>'),
 				 'default' => '',
+				 'since' => '4.1',
+				 'filter' => 'word',
+				 'options' => array(
+					 array('text' => '', 'value' => ''),
+					 array('text' => tra('Left'), 'value' => 'left'),
+					 array('text' => tra('Right'), 'value' => 'right'),
+					 array('text' => tra('Center'), 'value' => 'center'),
+					 array('text' => tra('Justify'), 'value' => 'justify'),
+				 ),
 			 ),
 			 'headvaligns' => array(
 				 'required' => false,
 				 'name' => tra('Header Vertical Align'),
-				 'description' => tra('Vertical alignments for header cells separated by |. Choices: top, middle, bottom, baseline.'),
+				 'description' => tr('Vertical alignments for header cells separated by %0.', '<code>|</code>'),
 				 'default' => '',
+				 'since' => '4.1',
+				 'filter' => 'word',
+				 'options' => array(
+					 array('text' => '', 'value' => ''),
+					 array('text' => tra('Top'), 'value' => 'top'),
+					 array('text' => tra('Middle'), 'value' => 'middle'),
+					 array('text' => tra('Bottom'), 'value' => 'bottom'),
+					 array('text' => tra('Baseline'), 'value' => 'baseline'),
+				 ),
 			 ),
 			 'colwidths' => array(
 				 'required' => false,
 				 'name' => tra('Column Widths'),
-				 'description' => tra('Column widths followed by px for pixels or % for percentages. Each column separated by |.'),
+				 'description' => tr('Column widths followed by px for pixels or % for percentages. Each column
+				    separated by %0.', '<code>|</code>'),
 				 'default' => '',
+				 'since' => '4.1'
 			 ),
 			 'colaligns' => array(
 				 'required' => false,
 				 'name' => tra('Cell Horizontal Align'),
-				 'description' => tra('Table body column horizontal alignments separated by |. Choices: left, right, center, justify.'),
+				 'description' => tr('Table body column horizontal alignments separated by %0.', '<code>|</code>'),
 				 'default' => '',
+				 'since' => '4.1',
+				 'filter' => 'word',
+				 'options' => array(
+					 array('text' => '', 'value' => ''),
+					 array('text' => tra('Left'), 'value' => 'left'),
+					 array('text' => tra('Right'), 'value' => 'right'),
+					 array('text' => tra('Center'), 'value' => 'center'),
+					 array('text' => tra('Justify'), 'value' => 'justify'),
+				 ),
 			 ),
 			 'colvaligns' => array(
 				 'required' => false,
 				 'name' => tra('Cell Vertical Align'),
-				 'description' => tra('Table body column vertical alignments separated by |. Choices: top, middle, bottom, baseline.'),
+				 'description' => tra('Table body column vertical alignments separated by |.'),
 				 'default' => '',
+				 'since' => '4.1',
+				 'filter' => 'word',
+				 'options' => array(
+					 array('text' => '', 'value' => ''),
+					 array('text' => tra('Top'), 'value' => 'top'),
+					 array('text' => tra('Middle'), 'value' => 'middle'),
+					 array('text' => tra('Bottom'), 'value' => 'bottom'),
+					 array('text' => tra('Baseline'), 'value' => 'baseline'),
+				 ),
 			 ),
 		), $tsparams
 	);
 	return array(
 		'name' => tra('Fancy Table'),
 		'documentation' => 'PluginFancyTable',
-		'description' => tra('Create a formatted table'),
+		'description' => tra('Create a formatted table that can be filtered and sorted'),
 		'prefs' => array('wikiplugin_fancytable'),
-		'body' => tra('Rows separated by >> in the header; for the table body, one row per line. Cells separated by | in both cases.'),
-		'icon' => 'img/icons/table.png',
+		'body' => tra('Rows separated by %0 in the header; for the table body, one row per line. Cells separated by %1
+			(since Tiki4) or %2 in both cases.', '<code>>></code>', '<code>|</code>', '<code>~|~</code>'),
+		'iconname' => 'table',
+		'introduced' => 1,
 		'tags' => array( 'basic' ),
 		'params' => $params,
 	);

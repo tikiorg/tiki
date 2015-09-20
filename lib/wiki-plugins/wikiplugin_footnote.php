@@ -13,13 +13,15 @@ function wikiplugin_footnote_info()
 		'description' => tra('Create automatically numbered footnotes (together with PluginFootnoteArea)'),
 		'prefs' => array('wikiplugin_footnote'),
 		'body' => tra('The footnote'),
-		'icon' => 'img/icons/text_horizontalrule.png',
+		'iconname' => 'superscript',
 		'filter' => 'wikicontent',
+		'introduced' => 3,
 		'params' => array(
 			'sameas' => array(
 				'required' => false,
 				'name' => tra('Sameas'),
 				'description' => tra('Tag to existing footnote'),
+				'since' => '5.0',
 				'default' => '',
 				'filter' => 'int',
 			),
@@ -27,8 +29,9 @@ function wikiplugin_footnote_info()
 				'required' => false,
 				'name' => tra('Class'),
 				'description' => tra('Add class to footnotearea'),
+				'since' => '14.0',
 				'default' => '',
-				'filter' => 'text',
+				'accepted' => tra('Valid CSS class'),
 			),
 		)
 	);

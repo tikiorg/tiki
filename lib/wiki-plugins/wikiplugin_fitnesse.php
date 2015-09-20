@@ -10,13 +10,14 @@ function wikiplugin_fitnesse_info()
 	return array(
 		'name' => tra('Fitnesse Test Suite'),
 		'documentation' => 'PluginFitnesse',
-		'description' => tra('Executable test suite'),
+		'description' => tra('Create test suites for applications built using Tiki'),
 		'prefs' => array('wikiplugin_fitnesse'),
 		'default' => 'n',
 		'format' => 'wiki',
 		'body' => tra('Test execution scenario'),
 		'filter' => 'wikicontent',
-		'icon' => 'img/icons/text_list_bullets.png',
+		'iconname' => 'pencil',
+		'introduced' => 12.1,
 		'tags' => array('advanced'),
 		'profile_reference' => 'fitnesse_content',
 		'params' => array(

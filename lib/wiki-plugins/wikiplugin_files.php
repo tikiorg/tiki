@@ -12,17 +12,20 @@ function wikiplugin_files_info()
 		'name' => tra('Files'),
 		'documentation' => 'PluginFiles',
 		'description' => tra('List files by ID, gallery or category, or show a slideshow of image files'),
-		'introduced' => 7.0,
 		'prefs' => array( 'feature_file_galleries', 'wikiplugin_files' ),
-		'body' => tra('Title for the file listing, or the link text when slideshow = y'),
-		'icon' => 'img/icons/large/file-manager.png',
-		'tags' => array( 'basic' ),		
+		'body' => tr('Title for the file listing, or the link text when %0', '<code>slideshow="y"</code>'),
+		'iconname' => 'copy',
+		'introduced' => 3,
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'galleryId' => array(
 				'required' => false,
 				'name' => tra('File Galleries ID'),
-				'description' => tra('To list only files contained in these file galleries (multiple IDs separated by colon)') .
-									($prefs['feature_use_fgal_for_user_files'] === 'y' ? '.<br> ' . tra('Or enter a username for user files (hint: enter {{user}} for current logged in user).') : ''),
+				'description' => tra('To list only files contained in these file galleries (multiple IDs separated by
+					colon)') . ($prefs['feature_use_fgal_for_user_files'] === 'y' ? '.<br> ' . tr('Or enter a username
+					for user files (hint: enter %0 for current logged in user).', '<code>{{user}}</code>')
+					: ''),
+				'since' => '3.0',
 				'default' => '',
 				'separator' => ':',
 				'profile_reference' => 'file_gallery',
@@ -30,32 +33,62 @@ function wikiplugin_files_info()
 			'categId' => array(
 				'required' => false,
 				'name' => tra('Category ID'),
-				'description' => tra('To restrict files listed to those belonging to one or more categories. Enter a single category or ID or list of them separated by colon'),
+				'description' => tra('To restrict files listed to those belonging to one or more categories. Enter a
+					single category or ID or list of them separated by colon'),
+				'since' => '3.0',
 				'default' => '',
+				'filter' => 'text',
+				'accepted' => tra('Valid category IDs separated by colons'),
 				'advanced' => true,
 				'profile_reference' => 'category',
 			),
 			'fileId' => array(
 				'required' => false,
 				'name' => tra('File ID'),
-				'description' => tra('To list only specified files, enter their file IDs separated by colon. If File IDs are specified here then the Gallery ID field above should be empty.'),
+				'description' => tra('To list only specified files, enter their file IDs separated by colon. If File
+					IDs are specified here then the Gallery ID field above should be empty.'),
+				'since' => '5.0',
 				'type' => 'fileId',
 				'area' => 'fgal_picker_id',
+				'accepted' => tra('Valid file IDs separated by colons'),
 				'default' => '',
+				'filter' => 'text',
 				'separator' => ':',
 				'profile_reference' => 'file',
 			),
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort Order'),
-				'description' => tra('Order ascending, descending or random based on any field in the file gallery table. Default is name_asc').'. '.tra('Attributes: name, created, lastModif, filename, filesize, filetype, lastDownload'),
+				'description' => tr('Order ascending (_asc), descending (_desc) or random based on any field in the
+					file gallery table. Default is %0', '<code>name_asc</code>'),
+				'since' => '3.0',
 				'default' => 'name_asc',
-				'filter' => 'text'
+				'filter' => 'text',
+				'options' => array (
+					array('text' => tra(''), 'value' => ''),
+					array('text' => tra('Name Ascending'), 'value' => 'name_asc'),
+					array('text' => tra('Name Descending'), 'value' => 'name_desc'),
+					array('text' => tra('Created Ascending'), 'value' => 'created_asc'),
+					array('text' => tra('Created Descending'), 'value' => 'created_desc'),
+					array('text' => tra('Last Modified Ascending'), 'value' => 'lastModif_asc'),
+					array('text' => tra('Last Modified Descending'), 'value' => 'lastModif_desc'),
+					array('text' => tra('File Name Ascending'), 'value' => 'filename_asc'),
+					array('text' => tra('File Name Descending'), 'value' => 'filename_desc'),
+					array('text' => tra('File Size Ascending'), 'value' => 'filesize_asc'),
+					array('text' => tra('File Size Descending'), 'value' => 'filesize_desc'),
+					array('text' => tra('File Type Ascending'), 'value' => 'filetype_asc'),
+					array('text' => tra('File Type Descending'), 'value' => 'filetype_desc'),
+					array('text' => tra('Last Download Ascending'), 'value' => 'lastDownload_asc'),
+					array('text' => tra('Last Download Descending'), 'value' => 'lastDownload_desc'),
+					array('text' => tra('Random'), 'value' => 'random'),
+				),
 			),
 			'showaction' => array(
 				'required' => false,
 				'name' => tra('Show Action'),
-				'description' => tra('Show a column with icons for the various actions the user can take with each file (shown by default)'),
+				'description' => tra('Show a column with icons for the various actions the user can take with each file
+					(shown by default)'),
+				'since' => '3.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'advanced' => true,
@@ -69,6 +102,7 @@ function wikiplugin_files_info()
 				'required' => false,
 				'name' => tra('Show Find'),
 				'description' => tra('Show a search box above the list (not shown by default)'),
+				'since' => '3.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'advanced' => true,
@@ -81,9 +115,11 @@ function wikiplugin_files_info()
 			'showtitle' => array(
 				'required' => false,
 				'name' => tra('Show Title'),
-				'description' => tra('Show the title of the file gallery (shown by default). Also shown on slide show pop up window if a single galleryId is used.'),
+				'description' => tra('Show the title of the file gallery (shown by default). Also shown on slide show
+					pop up window if a single galleryId is used.'),
 				'filter' => 'alpha',
 				'default' => 'y',
+				'since' => '5.0',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
@@ -94,6 +130,7 @@ function wikiplugin_files_info()
 				'required' => false,
 				'name' => tra('Show ID'),
 				'description' => tra('Show the ID number of each file (shown by default)'),
+				'since' => '3.0',
 				'default' => 'y',
 				'advanced' => true,
 				'options' => array(
@@ -106,6 +143,7 @@ function wikiplugin_files_info()
 				'required' => false,
 				'name' => tra('Show Icon'),
 				'description' => tra('Show an icon for each file depicting the file type'),
+				'since' => '3.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -117,7 +155,9 @@ function wikiplugin_files_info()
 			'showname' => array(
 				'required' => false,
 				'name' => tra('Show Name'),
-				'description' => tra('Show the name given to the file upon upload into the file gallery (shown by default). Set to Yes (y) to show as a caption in a slide show.'),
+				'description' => tr('Show the name given to the file upon upload into the file gallery (shown by
+					default). Set to Yes (%0) to show as a caption in a slide show.', '<code>y</code>'),
+				'since' => '3.0',
 				'default' => 'y',
 				'filter' => 'alpha',
 				'options' => array(
@@ -129,7 +169,9 @@ function wikiplugin_files_info()
 			'showfilename' => array(
 				'required' => false,
 				'name' => tra('Show Filename'),
-				'description' => tra('Show each file\'s filename (shown by default except in slide show). Set to Yes (y) to show as a caption in a slide show.'),
+				'description' => tr('Show each file\'s filename (shown by default except in slide show). Set to Yes
+					(%0) to show as a caption in a slide show.', '<code>y</code>'),
+				'since' => '3.0',
 				'filter' => 'alpha',
 				'default' => 'y',
 				'advanced' => true,
@@ -143,6 +185,7 @@ function wikiplugin_files_info()
 				'required' => false,
 				'name' => tra('Show Size'),
 				'description' => tra('Show the size of each file in kilobytes (shown by default except in slide show)'),
+				'since' => '3.0',
 				'default' => 'y',
 				'filter' => 'alpha',
 				'options' => array(
@@ -154,7 +197,9 @@ function wikiplugin_files_info()
 			'showdescription' => array(
 				'required' => false,
 				'name' => tra('Show Description'),
-				'description' => tra('Show the description of the file given upon upload into the file gallery (shown by default except in slide show). Set to Yes (y) to show as a caption in a slide show.'),
+				'description' => tr('Show the description of the file given upon upload into the file gallery (shown
+					by default except in slide show). Set to Yes (%0) to show as a caption in a slide show.', '<code>y</code>'),
+				'since' => '3.0',
 				'filter' => 'alpha',
 				'default' => 'y',
 				'options' => array(
@@ -167,6 +212,7 @@ function wikiplugin_files_info()
 				'required' => false,
 				'name' => tra('Show Creation Date'),
 				'description' => tra('Show the date each file was created (not shown by default)'),
+				'since' => '3.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'advanced' => true,
@@ -180,6 +226,7 @@ function wikiplugin_files_info()
 				'required' => false,
 				'name' => tra('Show Last Modification Date'),
 				'description' => tra('Show the date each file was last modified (shown by default)'),
+				'since' => '3.0',
 				'default' => 'y',
 				'filter' => 'alpha',
 				'options' => array(
@@ -192,6 +239,7 @@ function wikiplugin_files_info()
 				'required' => false,
 				'name' => tra('Show Hits'),
 				'description' => tra('Show the number of hits each file has received (not shown by default)'),
+				'since' => '3.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'advanced' => true,
@@ -205,6 +253,7 @@ function wikiplugin_files_info()
 				'required' => false,
 				'name' => tra('Show Locked By'),
 				'description' => tra('For locked files, show the user name of the user who locked it (not shown by default)'),
+				'since' => '3.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'advanced' => true,
@@ -218,6 +267,7 @@ function wikiplugin_files_info()
 				'required' => false,
 				'name' => tra('Show Author'),
 				'description' => tra('Show the user name of the user who is the author of the file (not shown by default)'),
+				'since' => '3.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'advanced' => true,
@@ -231,6 +281,7 @@ function wikiplugin_files_info()
 				'required' => false,
 				'name' => tra('Show Creator'),
 				'description' => tra('Show the user name of the user who is the creator of the file (not shown by default)'),
+				'since' => '3.0',
 				'default' => 'n',
 				'advanced' => true,
 				'options' => array(
@@ -243,6 +294,7 @@ function wikiplugin_files_info()
 				'required' => false,
 				'name' => tra('Show Parent Gallery Name'),
 				'description' => tra('Show the name of the parent gallery'),
+				'since' => '3.0',
 				'filter' => 'alpha',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -253,7 +305,9 @@ function wikiplugin_files_info()
 			'showfiles' => array(
 				'required' => false,
 				'name' => tra('Show File Count'),
-				'description' => tra('For galleries included in the list (where the file gallery includes other galleries), show the number of files in each of those galleries (not shown by default)'),
+				'description' => tra('For galleries included in the list (where the file gallery includes other
+					galleries), show the number of files in each of those galleries (not shown by default)'),
+				'since' => '3.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'advanced' => true,
@@ -270,6 +324,7 @@ function wikiplugin_files_info()
 				'filter' => 'alpha',
 				'default' => 'n',
 				'advanced' => true,
+				'since' => '10.0',
 				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 'y'),
@@ -280,6 +335,7 @@ function wikiplugin_files_info()
 				'required' => false,
 				'name' => tra('Show Slideshow'),
 				'description' => tra('Show a link that produces a pop-up slide show when clicked (not set by default)'),
+				'since' => '3.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'advanced' => true,
@@ -313,6 +369,7 @@ function wikiplugin_files_info()
 				'required' => false,
 				'name' => tra('Show Comment'),
 				'description' => tra('Show comments for each file (not shown by default)'),
+				'since' => '5.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -326,6 +383,7 @@ function wikiplugin_files_info()
 				'required' => false,
 				'name' => tra('Show Last Editor'),
 				'description' => tra('Show the user name of the user who last modified the file (shown by default)'),
+				'since' => '5.0',
 				'default' => 'y',
 				'filter' => 'alpha',
 				'options' => array(
@@ -338,6 +396,7 @@ function wikiplugin_files_info()
 				'required' => false,
 				'name' => tra('Show Image Thumb'),
 				'description' => tra('Show Image thumb'),
+				'since' => '8.0',
 				'default' => 'n',
 				'filter' => 'alpha',
 				'options' => array(
@@ -350,12 +409,14 @@ function wikiplugin_files_info()
 				'required' => false,
 				'name' => tra('Creator'),
 				'description' => tra('Show only files created by this user'),
+				'since' => '5.0',
 				'advanced' => true,
 			),
 			'showupload' => array(
 				'required' => false,
 				'name' => tra('Show Upload'),
 				'description' => tra('Show a simple upload form to the gallery (not shown by default)'),
+				'since' => '6.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'advanced' => true,
@@ -369,13 +430,16 @@ function wikiplugin_files_info()
 				'required' => false,
 				'name' => tra('Max'),
 				'description' => tra('Number of rows (default: -1 = all)'),
+				'since' => '7.1',
 				'default' => -1,
+				'filter' => 'int',
 				'advanced' => true,
 			),
 			'recursive' => array(
 				'required' => false,
 				'name' => tra('Recursive'),
 				'description' => tra('Recursive'),
+				'since' => '8.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'advanced' => true,
@@ -389,6 +453,7 @@ function wikiplugin_files_info()
 				'required' => false,
 				'name' => tra('With sub-galleries'),
 				'description' => tra('With sub-galleries'),
+				'since' => '8.0',
 				'filter' => 'alpha',
 				'default' => 'y',
 				'advanced' => true,

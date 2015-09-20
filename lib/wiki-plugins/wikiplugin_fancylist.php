@@ -10,30 +10,34 @@ function wikiplugin_fancylist_info()
 	return array(
 		'name' => tra('Fancy List'),
 		'documentation' => 'PluginFancyList',
-		'description' => tra('Create a fancy-looking list'),
+		'description' => tra('Create a formatted numbered list'),
 		'prefs' => array('wikiplugin_fancylist'),
 		'body' => tra('One item per line starting with anything followed by ")".'),
-		'icon' => 'img/icons/text_list_bullets.png',
-		'tags' => array( 'basic' ),		
+		'iconname' => 'list',
+		'introduced' => 3,
+		'tags' => array( 'basic' ),
 		'params' => array(
-		 	'div' => array(
-			 	'required' => false,
+			'div' => array(
+				'required' => false,
 				'name' => tra('Use Div'),
 				'description' => tra('Use the HTML tag div instead of the HTML tag for lists (ol)'),
+				'since' => '3.0',
 				'default' => '',
+				'filter' => 'digits',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
 					array('text' => tra('No'), 'value' => 0)
 				),
 			),
-		 	'class' => array(
-			 	'required' => false,
+			'class' => array(
+				'required' => false,
 				'name' => tra('Class'),
 				'description' => tra('CSS class for the fancylist'),
+				'since' => '3.0',
 				'default' => '',
+				'filter' => 'text',
 			),
-																		 
 		),
 	);
 }
@@ -66,7 +70,7 @@ function wikiplugin_fancylist($data, $params)
 	if (isset($div)) {
 		$result .= '</div>';
 	} else {
-	 	$result .= '</ol>';
+		$result .= '</ol>';
 	}
 	return $result;
 }
