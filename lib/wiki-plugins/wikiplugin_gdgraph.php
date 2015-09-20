@@ -17,61 +17,73 @@ function wikiplugin_gdgraph_info()
 	return array(
 		'name' => tra('GDGraph'),
 		'documentation' => 'PluginGDGraph',
-		'description' => tra('Creates a simple graph from supplied data'),
+		'description' => tra('Create a simple graph from supplied data'),
 		'tags' => array('basic'),
 		'prefs' => array('wikiplugin_gdgraph'),
-		'body' => tra('x,y data to be graphed ie comma separated'),
-		'icon' => 'img/icons/chart_curve.png',
+		'body' => tra('Comma-separated data (x,y) to be graphed. A useful option is to generate this data from a LIST
+			or CUSTOMSEARCH using a .tpl template or trackerlist plugin placed in the body'),
+		'iconname' => 'chart',
 		'format' => 'html',
+		'introduced' => tra('14, backported to 12.4'),
 		'params' => array(
 			'type' => array(
 				'required' => true,
-				'name' => tra('Graph type'),
-				'description' => tra('Graph type must be set: use either barvert, barhoriz, multiline or pie (but multiline and pie are not yet working'),
+				'name' => tra('Graph Type'),
+				'description' => tra('Defines what ype of graph or chart is to be generated'),
+				'since' => '14.0',
 				'filter' => 'word',
 				'options' => array(
 					array('text' => tra('Vertical Bar'), 'value' => 'barvert'),
 					array('text' => tra('Horizontal Bar'), 'value' => 'barhoriz'),
-					array('text' => tra('Multiline'), 'value' => 'multiline'),
-					array('text' => tra('Pie'), 'value' => 'pie'),
+/*					array('text' => tra('Multiline'), 'value' => 'multiline'),
+					array('text' => tra('Pie'), 'value' => 'pie'),*/
 				),
 			),
 			'title' => array(
 				'required' => false,
-				'name' => tra('Graph title'),
+				'name' => tra('Graph Title'),
 				'description' => tra('Displayed above the graph'),
+				'since' => '14.0',
 				'filter' => 'text',
 				'default' => '',
 			),
 			'alttag' => array(
 				'required' => false,
-				'name' => tra('alt tag'),
-				'description' => tra('text for image alt tag'),
+				'name' => tra('Alt Tag'),
+				'description' => tra('Text for image alt tag'),
+				'since' => '14.0',
 				'filter' => 'text',
 				'default' => 'GDgraph graph image',
 			),			
-			'bg' => array(
+/*			'bg' => array(
 				'required' => false,
 				'name' => tra('Background color'),
 				'description' => tra('As defined by CSS, name or Hex code - not used yet'),
 				'filter' => 'text',
 				'default' => '',
-			),
+			),*/
 			'width' => array(
 				'required' => false,
-				'name' => tra('Graph image width'),
-				'description' => tra('overall width in pixels. Default value is 300.'),
+				'name' => tra('Graph Image Width'),
+				'description' => tr('Overall width in pixels. Default value is %0.', '<code>300</code>'),
+				'since' => '14.0',
 				'filter' => 'digits',
 				'default' => 300,
 			),
 			'height' => array(
 				'required' => false,
-				'name' => tra('Graph image height'),
-				'description' => tra('Height in pixels, auto if not set.'),
+				'name' => tra('Graph Image Height'),
+				'description' => tr('Sets the total height in pixels of the image generated to display the entire graph
+					- if not set and %0 is %1 then the image height will be calculated from the number of x,y pairs,
+					which is useful if the number of x,y pairs is not known eg they are generated using (say) a LIST,
+					CUSTOMSEARCH or trackerlist plugin. The auto height option only works properly if the title is not
+					shown.', '<code>type</code>', '<code>barhoriz</code>'
+				),
+				'since' => '14.0',
 				'filter' => 'digits',
 				'default' => 0,
 			),
-			'class' => array(
+/*			'class' => array(
 				'required' => false,
 				'name' => tra('CSS Class'),
 				'description' => tra('Apply custom CSS class to the surrounding div - not used yet'),
@@ -84,8 +96,10 @@ function wikiplugin_gdgraph_info()
 			'float' => array(
 				'required' => false,
 				'name' => tra('Float Position'),
-				'description' => tra('Set the alignment for the div surrounding the graph. For elements with a width of less than 100%, other elements will wrap around it unless the clear parameter is appropriately set - not used yet'),
-			),
+				'description' => tra('Set the alignment for the div surrounding the graph. For elements with a width of
+					less than 100%, other elements will wrap around it unless the clear parameter is appropriately set
+					- not used yet'),
+			),*/
 		),
 	);
 }

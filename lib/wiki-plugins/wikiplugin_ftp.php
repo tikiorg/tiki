@@ -13,31 +13,41 @@ function wikiplugin_ftp_info()
 		'description' => tra('Create a button for downloading a file from an FTP server'),
 		'prefs' => array( 'wikiplugin_ftp' ),
 		'validate' => 'all',
-		'body' => tra('file name'),
-		'icon' => 'img/icons/application_put.png',
+		'body' => tra('File name on the server'),
+		'iconname' => 'upload',
+		'introduced' => 3,
 		'params' => array(
 			'server' => array(
 				'required' => true,
 				'name' => tra('Server Name'),
-				'description' => tra('Name of the server where the FTP account is housed. Example: ') . 'ftp.myserver.com',
+				'description' => tra('Name of the server where the FTP account is housed. Example: ')
+					. '<code>ftp.myserver.com</code>',
+				'since' => '3.0',
+				'filter' => 'text',
 				'default' => ''
 			),
 			'user' => array(
 				'required' => true,
 				'name' => tra('User Name'),
 				'description' => tra('User name needed to access the FTP account'),
+				'since' => '3.0',
+				'filter' => 'username',
 				'default' => ''
 			),
 			'password' =>array(
 				'required' => true,
 				'name' => tra('Password'),
 				'description' => tra('Password needed to access the FTP account'),
+				'since' => '3.0',
+				'filter' => 'text',
 				'default' => ''
 			),
 			'title' =>array(
 				'required' => false,
 				'name' => tra('Download Button Label'),
 				'description' => tra('Label for the FTP download button'),
+				'since' => '3.0',
+				'filter' => 'text',
 				'default' => ''
 			)
 		),

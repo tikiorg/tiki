@@ -12,13 +12,17 @@ function wikiplugin_googleanalytics_info()
 		'documentation' => 'PluginGoogleAnalytics',
 		'description' => tra('Add the tracking code for Google Analytics'),
 		'prefs' => array( 'wikiplugin_googleanalytics' ),
-		'icon' => 'img/icons/chart_line.png',
+		'iconname' => 'chart',
 		'format' => 'html',
+		'introduced' => 3,
 		'params' => array(
 			'account' => array(
 				'required' => true,
 				'name' => tra('Account Number'),
-				'description' => tra('The account number for the site. Your account number from google looks like UA-XXXXXXX-YY. All you need to enter is XXXXXXX-YY'),
+				'description' => tr('The account number for the site. Your account number from google looks like
+					%0. All you need to enter is %1', 'UA-XXXXXXX-YY','<code>XXXXXXX-YY</code>'),
+				'since' => '3.0',
+				'filter' => 'text',
 				'default' => ''
 			),
 		),

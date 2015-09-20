@@ -12,8 +12,9 @@ function wikiplugin_footnotearea_info()
 		'documentation' => 'PluginFootnoteArea',
 		'description' => tra('Create automatically numbered footnotes (together with PluginFootnote)'),
 		'prefs' => array('wikiplugin_footnotearea'),
-		'icon' => 'img/icons/text_horizontalrule.png',
+		'iconname' => 'superscript',
 		'format' => 'html',
+		'introduced' => 3,
 		'params' => array(),
 	);
 }

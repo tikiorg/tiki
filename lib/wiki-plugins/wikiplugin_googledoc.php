@@ -14,15 +14,17 @@ function wikiplugin_googledoc_info()
 		'prefs' => array( 'wikiplugin_googledoc' ),
 		'body' => tra('Leave this empty.'),
 //		'validate' => 'all',
-		'icon' => 'img/icons/google.png',
+		'iconname' => 'google',
 		'tags' => array( 'basic' ),
+		'introduced' => 3,
 		'params' => array(
 			'type' => array(
 				'safe' => true,
 				'required' => true,
 				'name' => tra('Type'),
 				'description' => tra('Type of Google document'),
-				'filter' => 'alpha',
+				'since' => '3.0',
+				'filter' => 'word',
 				'default' => '',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -34,22 +36,28 @@ function wikiplugin_googledoc_info()
 			'key' => array(
 					'safe' => true,
 					'required' => true,
-					'name' => tra('key'),
-					'description' => tra('Google doc key - for example: pXsHENf1bGGY92X1iEeJJI'),
+					'name' => tra('Key'),
+					'description' => tra('Google doc key - for example:') . ' <code>pXsHENf1bGGY92X1iEeJJI</code>',
+					'since' => '3.0',
+					'filter' => 'text',
 					'default' => ''
 				),
 			'name' => array(
 				'safe' => true,
 				'required' => false,
 				'name' => tra('Name'),
-				'description' => tra('Name of iframe. Default is "Frame" + the key')
+				'description' => tra('Name of iframe. Default is "Frame" + the key'),
+				'filter' => 'text',
+				'since' => '3.0',
 			),
 			'size' => array(
 				'safe' => true,
 				'required' => false,
 				'name' => tra('Size'),
-				'description' => tra('Size of frame. Use instead of width and height. The sizes will fit the Google presentations sizes exactly.'),
-				'filter' => 'alpha',
+				'description' => tra('Size of frame. Use instead of width and height. The sizes will fit the Google
+					presentations sizes exactly.'),
+				'since' => '3.0',
+				'filter' => 'word',
 				'default' => '',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -63,6 +71,7 @@ function wikiplugin_googledoc_info()
 				'required' => false,
 				'name' => tra('Width'),
 				'description' => tra('Width in pixels or %'),
+				'since' => '3.0',
 				'filter' => 'digits',
 				'default' => 800
 			),
@@ -71,6 +80,7 @@ function wikiplugin_googledoc_info()
 				'required' => false,
 				'name' => tra('Height'),
 				'description' => tra('Height in pixels or %'),
+				'since' => '3.0',
 				'filter' => 'digits',
 				'default' => 400
 			),
@@ -78,8 +88,10 @@ function wikiplugin_googledoc_info()
 				'safe' => true,
 				'required' => false,
 				'name' => tra('Alignment'),
-				'description' => 'top|middle|bottom|left|right',
+				'description' => tra('Position of frame on page'),
+				'since' => '3.0',
 				'default' => '',
+				'filter' => 'word',
 				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Top'), 'value' => 'top'),
@@ -94,7 +106,9 @@ function wikiplugin_googledoc_info()
 				'required' => false,
 				'name' => tra('Frame Border'),
 				'description' => tra('Choose whether to show a border around the iframe'),
+				'since' => '3.0',
 				'default' => 0,
+				'filter' => 'digits',
 				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 1),
@@ -106,6 +120,8 @@ function wikiplugin_googledoc_info()
 				'required' => false,
 				'name' => tra('Margin Height'),
 				'description' => tra('Margin height in pixels'),
+				'filter' => 'digits',
+				'since' => '3.0',
 				'default' => ''
 			),
 			'marginwidth' => array(
@@ -113,6 +129,8 @@ function wikiplugin_googledoc_info()
 				'required' => false,
 				'name' => tra('Margin Width'),
 				'description' => tra('Margin width in pixels'),
+				'since' => '3.0',
+				'filter' => 'digits',
 				'default' => ''
 			),
 			'scrolling' => array(
@@ -120,7 +138,9 @@ function wikiplugin_googledoc_info()
 				'required' => false,
 				'name' => tra('Scrolling'),
 				'description' => tra('Choose whether to add a scroll bar'),
+				'since' => '3.0',
 				'default' => '',
+				'filter' => 'word',
 				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 'yes'),
@@ -133,7 +153,8 @@ function wikiplugin_googledoc_info()
 				'required' => false,
 				'name' => tra('Edit Link'),
 				'description' => tra('Choose whether to show an edit link and set its location'),
-				'filter' => 'alpha',
+				'since' => '3.0',
+				'filter' => 'word',
 				'default' => '',
 				'options' => array(
 					array('text' => '', 'value' => ''),

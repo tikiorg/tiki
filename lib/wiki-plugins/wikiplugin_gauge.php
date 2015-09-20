@@ -13,44 +13,58 @@ function wikiplugin_gauge_info()
 		'description' => tra('Display a horizontal bar gauge'),
 		'prefs' => array('wikiplugin_gauge'),
 		'body' => tra('description'),
-		'icon' => 'img/icons/chart_bar.png',
+		'iconname' => 'chart',
 		'tags' => array( 'basic' ),
 		'format' => 'html',
+		'introduced' => 1,
 		'params' => array(
 			'value' => array(
 				'required' => true,
 				'name' => tra('Value'),
 				'description' => tra('Current value to be represented by the gauge'),
+				'since' => '1',
+				'filter' => 'digits',
 				'default' => ''
 			),
 			'max' => array(
 				'required' => false,
 				'name' => tra('Maximum Value'),
-				'description' => tra('Maximum possible value. Default: 100'),
-				'default' => 100				
+				'description' => tr('Maximum possible value. Default: %0', '<code>100</code>'),
+				'since' => '1',
+				'filter' => 'digits',
+				'default' => 100
 			),
 			'label' => array(
 				'required' => false,
 				'name' => tra('Label'),
 				'description' => tra('Label displayed on the left side of the gauge.'),
+				'since' => '1',
+				'filter' => 'text',
 				'default' => ''
 			),
 			'color' => array(
 				'required' => false,
 				'name' => tra('Color'),
 				'description' => tra('Main color of the gauge. Use HTML color codes or names.'),
+				'since' => '1',
+				'filter' => 'text',
+				'accepted' => tra('Valid CSS color name or hex code'),
 				'default' => '#FF0000'
 			),
 			'bgcolor' => array(
 				'required' => false,
 				'name' => tra('Background Color'),
 				'description' => tra('Background color of the gauge. Use HTML color codes or names.'),
+				'since' => '1',
+				'filter' => 'text',
+				'accepted' => tra('Valid CSS color name or hex code'),
 				'default' => '#0000FF'
 			),
 			'size' => array(
 				'required' => false,
 				'name' => tra('Width'),
 				'description' => tra('Bar width in pixels.'),
+				'since' => '1',
 				'filter' => 'digits',
 				'default' => 150
 			),
@@ -58,13 +72,15 @@ function wikiplugin_gauge_info()
 				'required' => false,
 				'name' => tra('Label Width'),
 				'description' => tra('Width in pixels allocated to the label.'),
+				'since' => '1',
 				'filter' => 'digits',
 				'default' => 50
 			),
 			'perc' => array(
 				'required' => false,
 				'name' => tra('Display Percentage'),
-				'description' => tra('Set to true (Yes) to display a percentage of the maximum.'),
+				'description' => tr('Set to %0 (Yes) to display a percentage of the maximum.', '<code>true</code>'),
+				'since' => '1',
 				'default' => false,
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -75,8 +91,9 @@ function wikiplugin_gauge_info()
 			'showvalue' => array(
 				'required' => false,
 				'name' => tra('Display Value'),
-				'description' => tra('Set to false (No) to hide the numeric value (shown by default).'),
+				'description' => tr('Set to %1 (No) to hide the numeric value (shown by default).', '<code>false</code>'),
 				'default' => true,
+				'since' => '3.0',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => true), 
@@ -87,6 +104,7 @@ function wikiplugin_gauge_info()
 				'required' => false,
 				'name' => tra('Height'),
 				'description' => tra('Bar height in pixels.'),
+				'since' => '1',
 				'filter' => 'digits',
 				'default' => 14
 			),
