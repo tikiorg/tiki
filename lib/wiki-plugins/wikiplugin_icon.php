@@ -10,24 +10,31 @@ function wikiplugin_icon_info()
 	return array(
 		'name' => tra('Icon'),
 		'documentation' => 'PluginIcon',
-		'description' => tra('Displays an icon'),
+		'description' => tra('Display an icon'),
 		'prefs' => array('wikiplugin_icon'),
-		'icon' => 'img/icons/grey_question.png',
+		'iconname' => 'information',
 		'tags' => array('basic'),
 		'format' => 'html',
+		'introduced' => 14.1,
 		'params' => array(
 			'name' => array(
 				'required' => true,
 				'name' => tra('Name'),
 				'description' => tra('Name of the icon'),
+				'since' => '14.1',
+				'filter' => 'text',
+				'accepted' => tra('Valid icon name'),
 				'default' => '',
 			),
 			'size' => array(
 				'required' => false,
 				'name' => tra('Size'),
 				'description' => tra('Size of the icon (1 to 9).'),
+				'since' => '14.1',
 				'default' => 1,
-				'type' => 'int',
+				'filter' => 'digits',
+				'accepted' => '1 - 9',
+				'type' => 'digits',
 			),
 		)
 	);

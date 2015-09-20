@@ -10,13 +10,17 @@ function wikiplugin_htmlfeed_info()
 	return array(
 		'name' => tra('HTML Feed'),
 		'documentation' => 'PluginHtmlFeed',
-		'description' => tra('Adds an item to HTML feed'),
+		'description' => tra('Add an item to HTML Feed'),
 		'prefs' => array( 'feature_wiki', 'wikiplugin_htmlfeed' , 'feature_htmlfeed'),
-		'icon' => 'img/icons/link.png',
-		'params' => array(			
+		'iconname' => 'link',
+		'introduced' => 9,
+		'params' => array(
 			'name' => array(
 				'required' => true,
 				'name' => tra('Name'),
+				'description' => tra('Name of this feed'),
+				'since' => '9.0',
+				'filter' => 'text',
 				'default' => false
 			),
 		),
