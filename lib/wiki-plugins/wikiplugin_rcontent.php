@@ -12,12 +12,15 @@ function wikiplugin_rcontent_info()
 		'documentation' => 'PluginRcontent',
 		'description' => tra('Display pre-programmed changing content'),
 		'prefs' => array( 'feature_dynamic_content', 'wikiplugin_rcontent' ),
-		'icon' => 'img/icons/database_table.png',
+		'iconname' => 'merge',
+		'introduced' => 3,
 		'params' => array(
 			'id' => array(
 				'required' => true,
 				'name' => tra('Content ID'),
 				'description' => tra('Numeric value representing the content ID'),
+				'since' => '3.0',
+				'filter' => 'digits',
 				'default' => '',
 			)
 		)

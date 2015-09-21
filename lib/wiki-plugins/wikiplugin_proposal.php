@@ -13,20 +13,27 @@ function wikiplugin_proposal_info()
 		'description' => tra('Allow users to vote on a proposal and view the results'),
 		'prefs' => array( 'wikiplugin_proposal' ),
 		'body' => tra('The list of votes cast. One vote per line. Either 0, +1 or -1 followed by a username.'),
-		'icon' => 'img/icons/thumb_up.png',
+		'iconname' => 'thumbs-up',
+		'introduced' => 3,
 		'tags' => array( 'basic' ),
 		'params' => array(
 			'caption' => array(
 				'required' => false,
 				'name' => tra('Caption'),
-				'description' => tra('Short description of the proposal to vote on. Will be displayed above the result table.'),
+				'description' => tra('Short description of the proposal to vote on. Will be displayed above the result
+					table.'),
+				'since' => '3.0',
+				'filter' => 'text',
 				'default' => '',
 			),
 			'weights' => array(
 				'required' => false,
 				'advanced' => true,
 				'name' => tr('Weights'),
-				'description' => tr('Comma-separated list of groups and their associated weight. Ex: Reviewer(2.5),User(1),Manager(0.25),Registered(0)'),
+				'description' => tr('Comma-separated list of groups and their associated weight. Default is
+					%0Registered(1)%1 Example:') . ' <code>Reviewer(2.5),User(1),Manager(0.25),Registered(0)</code>',
+				'since' => '10.0',
+				'filter' => 'text',
 				'default' => 'Registered(1)',
 			),
 		)

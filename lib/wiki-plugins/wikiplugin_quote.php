@@ -13,7 +13,8 @@ function wikiplugin_quote_info()
 		'description' => tra('Format text as a quote'),
 		'prefs' => array( 'wikiplugin_quote' ),
 		'body' => tra('Quoted text'),
-		'icon' => 'img/icons/quotes.png',
+		'iconname' => 'quotes',
+		'introduced' => 1,
 		'filter' => 'text',
 		'tags' => array( 'basic' ),
 		'params' => array(
@@ -21,6 +22,7 @@ function wikiplugin_quote_info()
 				'required' => false,
 				'name' => tra('Reply To'),
 				'description' => tra('Name of the quoted person.'),
+				'since' => '1',
 				'filter' => 'text',
 				'default' => '',
 			),

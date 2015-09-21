@@ -14,19 +14,24 @@ function wikiplugin_profile_info()
 		'prefs' => array( 'wikiplugin_profile' ),
 		'validate' => 'all',
 		'inline' => true,
-		'icon' => 'img/icons/database_lightning.png',
+		'iconname' => 'cog',
+		'introduced' => 3,
 		'tags' => array( 'experimental' ),
 		'params' => array(
 			'domain' => array(
 				'required' => false,
 				'name' => tra('Domain'),
-				'description' => tra('Profile repository domain. Default value is profiles.tiki.org'),
+				'description' => tr('Profile repository domain. Default value is %0profiles.tiki.org%1', '<code>', '</code>'),
+				'since' => '3.0',
+				'filter' => 'url',
 				'default' => 'profiles.tiki.org',
 			),
 			'name' => array(
 				'required' => true,
 				'name' => tra('Profile Name'),
 				'description' => tra('Name of the profile to be applied.'),
+				'since' => '3.0',
+				'filter' => 'text',
 				'default' => '',
 			)
 		)

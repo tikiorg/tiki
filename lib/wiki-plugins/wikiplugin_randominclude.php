@@ -12,7 +12,8 @@ function wikiplugin_randominclude_info()
 		'documentation' => 'PluginRandomInclude',
 		'description' => tra('Include a random page\'s content.'),
 		'prefs' => array('wikiplugin_randominclude'),
-		'icon' => 'img/icons/page_copy.png',
+		'iconname' => 'merge',
+		'introduced' => 6,
 		'params' => array(),
 	);
 }

@@ -10,12 +10,14 @@ function wikiplugin_pref_info()
 	return array(
 		'name' => tra('Preference'),
 		'documentation' => 'PluginPref',
-		'description' => tra('Display contents based on global preferences'),
-		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed if not matching the conditions.'),
+		'description' => tra('Display content based on global preference settings'),
+		'body' => tr('Wiki text to display if conditions are met. The body may contain %0{ELSE}%1. Text after the marker
+			will be displayed if not matching the conditions.', '<code>', '</code>'),
 		'prefs' => array('wikiplugin_pref'),
 		'filter' => 'wikicontent',
 		'extraparams' => true,
-		'icon' => 'img/icons/wrench.png',
+		'iconname' => 'settings',
+		'introduced' => 11,
 		'params' => array(
 		),
 	);

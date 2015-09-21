@@ -9,11 +9,12 @@ function wikiplugin_relations_info()
 {
 	return array(
 		'name' => tra('Relations'),
-		'description' => tra('Displays the relations between the current object or a specified one and the rest of Tiki.'),
+		'description' => tra('Display the relation of an object to the rest of the site'),
 		'filter' => 'int',
 		'format' => 'html',
 		'prefs' => array('wikiplugin_relations'),
 		'introduced' => 8,
+		'iconname' => 'move',
 		'documentation' => 'PluginRelations',
 		'params' => array(
 			'qualifiers' => array(
@@ -42,6 +43,7 @@ function wikiplugin_relations_info()
 				'since' => '8.0',
 				'default' => 0,
 				'options' => array(
+					array('text' => '', 'value' => ''),
 					array('text' => tra('No'), 'value' => 0),
 					array('text' => tra('Yes'), 'value' => 1),
 				),
