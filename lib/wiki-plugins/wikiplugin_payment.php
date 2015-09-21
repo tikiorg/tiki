@@ -12,12 +12,14 @@ function wikiplugin_payment_info()
 		'documentaion' => 'PluginPayment',
 		'description' => tra('Show details of a payment request or invoice'),
 		'prefs' => array( 'wikiplugin_payment', 'payment_feature' ),
-		'icon' => 'img/icons/money.png',
+		'iconname' => 'money',
+		'introduced' => 5,
 		'params' => array(
 			'id' => array(
 				'required' => true,
 				'name' => tra('Payment Request Number'),
 				'description' => tra('Unique identifier of the payment request'),
+				'since' => '5.0',
 				'filter' => 'digits',
 				'default' => '',
 			)

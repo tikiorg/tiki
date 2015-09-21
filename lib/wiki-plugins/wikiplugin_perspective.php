@@ -10,15 +10,20 @@ function wikiplugin_perspective_info()
 	return array(
 		'name' => tra('Perspective'),
 		'documentation' => 'PluginPerspective',
-		'description' => tra('Display content based on the reader\'s current perspective'),
+		'description' => tra('Display content based on the user\'s current perspective'),
 		'prefs' => array( 'feature_perspective', 'wikiplugin_perspective' ),
-		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed to users not matching the condition.'),
+		'body' => tr('Wiki text to display if conditions are met. The body may contain %0{ELSE}%1. Text after the
+			marker will be displayed to users not matching the condition.', '<code>', '</code>'),
 		'filter' => 'wikicontent',
+		'iconname' => 'view',
+		'introduced' => 7.1,
 		'params' => array(
 			'perspectives' => array(
 				'required' => false,
 				'name' => tra('Allowed Perspectives'),
-				'description' => tra('Pipe-separated list of identifiers of perspectives in which the block is shown.') . tra('Example value:') . '2|3|5',
+				'description' => tra('Pipe-separated list of identifiers of perspectives in which the block is shown.')
+					. tra('Example value:') . ' <code>2|3|5</code>',
+				'since' => '7.1',
 				'filter' => 'digits',
 				'separator' => '|',
 				'default' => '',
@@ -27,7 +32,9 @@ function wikiplugin_perspective_info()
 			'notperspectives' => array(
 				'required' => false,
 				'name' => tra('Denied Perspectives'),
-				'description' => tra('Pipe-separated list of identifiers of perspectives in which the block is not shown.') . tra('Example value:') . '3|5|8',
+				'description' => tra('Pipe-separated list of identifiers of perspectives in which the block is not
+					shown.') . tra('Example value:') . ' <code>3|5|8</code>',
+				'since' => '7.1',
 				'filter' => 'digits',
 				'separator' => '|',
 				'default' => '',

@@ -20,14 +20,19 @@ function wikiplugin_pagetabs_info()
 	return array(
 		'name' => tra('Page Tabs'),
 		'documentation' => tra('PluginPageTabs'),
-		'description' => tra('Display page content in a set of tabs'),
+		'description' => tra('Display content of wiki pages in a set of tabs'),
 		'prefs' => array( 'wikiplugin_pagetabs' ),
+		'iconname' => 'copy',
+		'introduced' => 9,
 		'body' => NULL,
 		'params' => array(
 			'pages' => array(
 				'required' => false,
 				'name' => tra('Wiki page names'),
-				'description' => tra('The wiki pages you would like to use in this plugin, optional, separate with pipe "|".  Or a table with the class of "pagetabs" on the main page. On child pages use as a way to redirect to the parent.'),
+				'description' => tr('The wiki pages you would like to use in this plugin, optional, separate with
+					pipe %0|%1. Or a table with the class of "pagetabs" on the main page. On child pages use as a way
+					to redirect to the parent.', '<code>', '</code>'),
+				'since' => '9.0',
 				'default' => '',
 				'separator' => '|',
 				'filter' => 'pagename',
