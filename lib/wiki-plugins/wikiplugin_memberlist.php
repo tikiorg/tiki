@@ -13,20 +13,24 @@ function wikiplugin_memberlist_info()
 		'description' => tra('List and allow editing of group members'),
 		'prefs' => array( 'wikiplugin_memberlist' ),
 		'filter' => 'wikicontent',
-		'icon' => 'img/icons/group_gear.png',
+		'iconname' => 'group',
+		'introduced' => 4,
 		'params' => array(
 			'groups' => array(
 				'required' => true,
 				'name' => tra('Groups'),
-				'description' => tra('List of groups to handle through the interface (use "*" for all). Semi-colon separated.'),
+				'description' => tr('List of groups to handle through the interface (use %0*%1 for all). Semi-colon
+					separated.', '<code>', '</code>'),
+				'since' => '4.0',
 				'separator' => ':',
 				'filter' => 'groupname',
 				'default' => '',
 			),
 			'showDescriptions' => array(
 				'required' => false,
-				'name' => tra('Show Descriptions'),
+				'name' => tra('Descriptions'),
 				'description' => tra('Display group descriptions below list name.'),
+				'since' => '8.0',
 				'filter' => 'alpha',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -37,9 +41,10 @@ function wikiplugin_memberlist_info()
 			),
 			'displayMode' => array(
 				'required' => false,
-				'name' => tra('Display mode'),
+				'name' => tra('Display Mode'),
 				'description' => tra('How to show the member lists.'),
-				'filter' => 'text',
+				'since' => '8.0',
+				'filter' => 'word',
 				'options' => array(
 					array('text' => 'Default (plain)', 'value' => ''),
 					array('text' => tra('Tabs'), 'value' => 'tabs'),
@@ -50,14 +55,17 @@ function wikiplugin_memberlist_info()
 			'max' => array(
 				'required' => false,
 				'name' => tra('Maximum'),
-				'description' => tra('Maximum number of users to list in each group (default 100).'),
+				'description' => tr('Maximum number of users to list in each group (default %0100%1).', '<code>', '</code>'),
+				'since' => '8.0',
 				'default' => 100,
 				'filter' => 'digits',
 			),
 			'membersOnly' => array(
 				'required' => false,
 				'name' => tra('Members Only'),
-				'description' => tra('Only shows groups containing a certain user. Enter "%user%" to show groups for the current logged in user.'),
+				'description' => tr('Only shows groups containing a certain user. Enter %0%user%%1 to show groups for
+					the current logged in user.', '<code>', '</code>'),
+				'since' => '8.0',
 				'default' => '',
 				'filter' => 'username',
 			),
@@ -65,6 +73,7 @@ function wikiplugin_memberlist_info()
 				'required' => false,
 				'name' => tra('Sort mode'),
 				'description' => tra('Sort mode for member listing.'),
+				'since' => '8.0',
 				'default' => 'login_asc',
 				'filter' => 'text',
 			),
@@ -72,6 +81,7 @@ function wikiplugin_memberlist_info()
 				'required' => false,
 				'name' => tra('Read only'),
 				'description' => tra('Read only mode. All ability to modify membership is hidden.'),
+				'since' => '8.0',
 				'default' => 'n',
 				'filter' => 'alpha',
 				'options' => array(
@@ -83,7 +93,9 @@ function wikiplugin_memberlist_info()
 			'defaultGroup' => array(
 				'required' => false,
 				'name' => tra('Set as Default Group'),
-				'description' => tra('Adds possibility to set group as default group. This automatically adds the user to the group. "Forced" option will not propose simple addition in group.'),
+				'description' => tra('Adds possibility to set group as default group. This automatically adds the user
+					to the group. "Forced" option will not propose simple addition in group.'),
+				'since' => '9.2',
 				'default' => 'n',
 				'filter' => 'alpha',
 				'options' => array(
@@ -97,12 +109,15 @@ function wikiplugin_memberlist_info()
 				'required' => false,
 				'name' => tra('Including Group'),
 				'description' => tra('Only groups including the group that you specify will be listed'),
+				'since' => '8.0',
+				'filter' => 'groupname',
 				'default' => '',
 			),
 			'email_to_added_user' => array(
 				'required' => false,
-				'name' => tra('Email notification to added user'),
+				'name' => tra('Notify Added User'),
 				'description' => tra(''),
+				'since' => '14.0',
 				'default' => 'n',
 				'filter' => 'alpha',
 				'options' => array(
@@ -113,8 +128,9 @@ function wikiplugin_memberlist_info()
 			),
 			'email_to_removed_user' => array(
 				'required' => false,
-				'name' => tra('Email notification to removed user'),
+				'name' => tra('Notify Removed User'),
 				'description' => tra('Email notification to removed user'),
+				'since' => '14.0',
 				'default' => 'n',
 				'filter' => 'alpha',
 				'options' => array(
@@ -125,8 +141,9 @@ function wikiplugin_memberlist_info()
 			),
 			'addon_groups_approval_buttons' => array(
 				'required' => false,
-				'name' => tra('Need approval'),
+				'name' => tra('Need Approval'),
 				'description' => tra('Add approve/reject user buttons for private addon groups'),
+				'since' => '14.0',
 				'default' => 'n',
 				'filter' => 'alpha',
 				'options' => array(

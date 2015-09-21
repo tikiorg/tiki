@@ -20,7 +20,7 @@ function wikiplugin_lang_info()
 				'required' => false,
 				'name' => tra('Language'),
 				'description' => tr('List of languages for which the block is displayed. Languages use the two letter
-					language codes (ex: en, fr, es, ...). Use %0 to separate multiple languages.', '<code>+<code>'),
+					language codes (ex: en, fr, es, ...). Use %0 to separate multiple languages.', '<code>+</code>'),
 				'since' => '1',
 				'default' => '',
 			),
@@ -28,7 +28,7 @@ function wikiplugin_lang_info()
 				'required' => false,
 				'name' => tra('Not Language'),
 				'description' => tr('List of languages for which the block is not displayed. Languages use the two
-					letter language codes (ex: en, fr, es, ...). Use %0 to separate multiple languages.', '<code>+<code>'),
+					letter language codes (ex: en, fr, es, ...). Use %0 to separate multiple languages.', '<code>+</code>'),
 				'since' => '1',
 				'default' => '',
 			),

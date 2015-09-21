@@ -13,72 +13,72 @@ class MCalendar
    // set MCalendar->StartLongCount = 584285 before calling function MCalendar->Maya()
    var $StartLongCount = 584283;
    var $LongCount = Array (
-                           "Baktun" => 13,
-                           "Katun" => 0,
-                           "Tun" => 0,
-                           "Winal" => 0,
-                           "Kin" => 0
-                           );
+						   "Baktun" => 13,
+						   "Katun" => 0,
+						   "Tun" => 0,
+						   "Winal" => 0,
+						   "Kin" => 0
+						   );
    var $LongKin;
    var $Tzolkin = Array (
-                        "Kin13" => 0,
-                        "Kin20" => 0
-                         );
+						"Kin13" => 0,
+						"Kin20" => 0
+						 );
    var $TzolkinNames = Array (
-                      "AHAU", "IMIX", "IK", "AKBAL", "KAN",
-                      "CHICCHAN", "CIMI", "MANIK", "LAMAT",
-                      "MULUC", "OC", "CHUEN", "EB", "BEN",
-                      "IX", "MEN", "CIB", "CABAN", "ETZNAB",
-                      "CAUAC"
-                     );
+					  "AHAU", "IMIX", "IK", "AKBAL", "KAN",
+					  "CHICCHAN", "CIMI", "MANIK", "LAMAT",
+					  "MULUC", "OC", "CHUEN", "EB", "BEN",
+					  "IX", "MEN", "CIB", "CABAN", "ETZNAB",
+					  "CAUAC"
+					 );
    var $Haab = Array (
-                      "Winal" => 0,
-                      "Kin" => 0
-                      );
+					  "Winal" => 0,
+					  "Kin" => 0
+					  );
    var $HaabNames = Array (
-                     "POP", "WO", "SIP", "SOTZ",
-                     "SEK", "XUL", "YAXKIN", "MOL",
-                     "CHEN", "YAX", "SAC", "KEH", "MAK",
-                     "KANKIN", "MUWAN", "PAX", "KAYAB",
-                     "KUMKU", "WAYEB"
-                     );
+					 "POP", "WO", "SIP", "SOTZ",
+					 "SEK", "XUL", "YAXKIN", "MOL",
+					 "CHEN", "YAX", "SAC", "KEH", "MAK",
+					 "KANKIN", "MUWAN", "PAX", "KAYAB",
+					 "KUMKU", "WAYEB"
+					 );
    var $Gregorian = Array (
-                           "Year" => 2008,
-                           "Month" => 11,
-                           "Day" => 25
-                           );
+						   "Year" => 2008,
+						   "Month" => 11,
+						   "Day" => 25
+						   );
    var $Julian = 0;
 
 
 	function setLongKin()
 	{
-     $this->LongKin = $this->LongCount["Baktun"] * 144000
-                    + $this->LongCount["Katun"] * 7200
-                    + $this->LongCount["Tun"] * 360
-                    + $this->LongCount["Winal"] * 20
-                    + $this->LongCount["Kin"];
-     return $this->LongKin;
+	 $this->LongKin = $this->LongCount["Baktun"] * 144000
+					+ $this->LongCount["Katun"] * 7200
+					+ $this->LongCount["Tun"] * 360
+					+ $this->LongCount["Winal"] * 20
+					+ $this->LongCount["Kin"];
+	 return $this->LongKin;
 	}
 
 
 	function setJulian()
 	{
 
-    $Year = $this->Gregorian["Year"];
-    $Month = $this->Gregorian["Month"];
-    $Day = $this->Gregorian["Day"];
+	$Year = $this->Gregorian["Year"];
+	$Month = $this->Gregorian["Month"];
+	$Day = $this->Gregorian["Day"];
 
-    if ($Month < 3) {
-     $Month += 12;
-     $Year -= 1;
-    };
+	if ($Month < 3) {
+	 $Month += 12;
+	 $Year -= 1;
+	};
 
-    $a = floor($Year/100);
-    $b = 2 - $a + floor($a/4);
-    $j = floor(365.25*($Year+4716))+ floor(30.6001*($Month+1))+ $Day + $b - 1524;
+	$a = floor($Year/100);
+	$b = 2 - $a + floor($a/4);
+	$j = floor(365.25*($Year+4716))+ floor(30.6001*($Month+1))+ $Day + $b - 1524;
 
-    $this->Julian = $j;
-    return $this->Julian;
+	$this->Julian = $j;
+	return $this->Julian;
 
 	}
 
@@ -86,50 +86,50 @@ class MCalendar
 	function Maya()
 	{
 
-    $this->setJulian();
+	$this->setJulian();
 
-    $days = $this->Julian - $this->StartLongCount;
-    $xdays = $days;
+	$days = $this->Julian - $this->StartLongCount;
+	$xdays = $days;
 
-    $baktun = floor($xdays/144000);
-    $this->LongCount["Baktun"] = $baktun;
+	$baktun = floor($xdays/144000);
+	$this->LongCount["Baktun"] = $baktun;
 
-    $xdays -= $baktun*144000;
+	$xdays -= $baktun*144000;
 
-    $katun = floor($xdays/7200);
-    $this->LongCount["Katun"] = $katun;
+	$katun = floor($xdays/7200);
+	$this->LongCount["Katun"] = $katun;
 
-    $xdays -= $katun*7200;
+	$xdays -= $katun*7200;
 
-    $tun = floor($xdays/360);
-    $this->LongCount["Tun"] = $tun;
+	$tun = floor($xdays/360);
+	$this->LongCount["Tun"] = $tun;
 
-    $xdays -= $tun*360;
+	$xdays -= $tun*360;
 
-    $winal = floor($xdays/20);
-    $this->LongCount["Winal"] = $winal;
+	$winal = floor($xdays/20);
+	$this->LongCount["Winal"] = $winal;
 
-    $kin = $xdays - ($winal*20);
-    $this->LongCount["Kin"] = $kin;
+	$kin = $xdays - ($winal*20);
+	$this->LongCount["Kin"] = $kin;
 
-    $xdays = $days - (260*(floor($days/260)));
-    $tzolradical = 4 + $xdays - (13*(floor(($xdays+3)/13)));
-    $this->Tzolkin["Kin13"] = $tzolradical;
+	$xdays = $days - (260*(floor($days/260)));
+	$tzolradical = 4 + $xdays - (13*(floor(($xdays+3)/13)));
+	$this->Tzolkin["Kin13"] = $tzolradical;
 
-    $tzolkin = $xdays - (20*(floor(($xdays)/20)));
-    $this->Tzolkin["Kin20"] = $tzolkin;
+	$tzolkin = $xdays - (20*(floor(($xdays)/20)));
+	$this->Tzolkin["Kin20"] = $tzolkin;
 
-    $xdays = $days + 348 - (365*(floor(($days+348)/365)));
-    $haabkin = $xdays - (20*(floor($xdays/20)));
-    $this->Haab["Kin"] = $haabkin;
+	$xdays = $days + 348 - (365*(floor(($days+348)/365)));
+	$haabkin = $xdays - (20*(floor($xdays/20)));
+	$this->Haab["Kin"] = $haabkin;
 
 
-    if ($xdays > 360) $this->Haab["Winal"] = 18;
+	if ($xdays > 360) $this->Haab["Winal"] = 18;
 
-    $haabwinal = floor($xdays/20);
-    $this->Haab["Winal"] = $haabwinal;
+	$haabwinal = floor($xdays/20);
+	$this->Haab["Winal"] = $haabwinal;
 
-    $this->setLongKin();
+	$this->setLongKin();
 	}
 
 };
@@ -141,36 +141,40 @@ function wikiplugin_mcalendar_info()
 		'documentation' => 'PluginMCalendarInfo',
 		'description' => tra('Convert a Gregorian date to a Mayan calendar date'),
 		'prefs' => array('wikiplugin_mcalendar'),
-		'icon' => 'img/icons/calendar.png',
+		'iconname' => 'calendar',
+		'introduced' => 4,
 		'params' => array(
 			'template' => array(
 				'required' => false,
 				'name' => tra('Template'),
+				'since' => '4.0',
 				'description' => tra('You must use the variable substitution.')
-											. '<br />'
-											. tra('LongCount: ')
-											. '~np~%baktun%, %katun%, %tun%, %winal%, %kin%~/np~'
-											. '<br />'
-											. tra('Tzolkin: ') 
-											. '~np~%tzolkin13%, %tzolkin20%, %tzolkin20name%~/np~'
-											. '<br />'
-											. tra('Haab: ')
-											. '~np~%haabkin%, %haabwinal%, %haabwinalname%~/np~'
-											. '<br />'
-											. tra('Misc: ')
-											. '~np~%longkin%, %julianday%~/np~'
-											. '<br /><br />'
-											. tra('Example: template ')
-											. '~np~"%baktun%.%katun%.%tun%.%winal%.%kin%, %tzolkin13% %tzolkin20name%, %haabkin% %haabwinalname%" ~/np~' 
-											. tra('for 22.05.2009 will return 12.19.16.6.11, 8 CHUEN, 9 SIP.')
-											. '<br /><br />'
-											. tra('Default template: ')
-											. '~np~%baktun%.%katun%.%tun%.%winal%.%kin% %tzolkin13% %tzolkin20name% %haabkin% %haabwinalname%~/np~',
+					. '<br />'
+					. tra('LongCount: ')
+					. '~np~<code>%baktun%</code>, <code>%katun%</code>, <code>%tun%</code>, <code>%winal%</code>, <code>%kin%</code>~/np~'
+					. '<br />'
+					. tra('Tzolkin: ')
+					. '~np~<code>%tzolkin13%</code>, <code>%tzolkin20%</code>, <code>%tzolkin20name%</code>~/np~'
+					. '<br />'
+					. tra('Haab: ')
+					. '~np~<code>%haabkin%</code>, <code>%haabwinal%</code>, <code>%haabwinalname%</code>~/np~'
+					. '<br />'
+					. tra('Misc: ')
+					. '~np~<code>%longkin%</code>, <code>%julianday%</code>~/np~'
+					. '<br /><br />'
+					. tra('Example: template ')
+					. '~np~<code>"%baktun%.%katun%.%tun%.%winal%.%kin%, %tzolkin13% %tzolkin20name%, %haabkin% %haabwinalname%"</code>~/np~'
+					. tr('for %022.05.2009%1 will return 12.19.16.6.11, 8 CHUEN, 9 SIP.', '<code>', '</code>')
+					. '<br /><br />'
+					. tra('Default template: ')
+					. '~np~<code>%baktun%.%katun%.%tun%.%winal%.%kin% %tzolkin13% %tzolkin20name% %haabkin% %haabwinalname%</code>~/np~',
 			),
 			'grdate' => array(
 				'required' => false,
 				'name' => tra('Gregorian date'),
-				'description' => tra('Gregorian date for convert. Format: DD.MM.YYYY. Default: Today date'),
+				'description' => tr('Gregorian date for convert. Format: %0DD.MM.YYYY%1. Default: Today\'s date',
+					'<code>', '</code>'),
+				'since' => '4.0',
 			),
 		),
 	);
@@ -188,37 +192,37 @@ function wikiplugin_mcalendar($data, $params)
 		$template = '%baktun%.%katun%.%tun%.%winal%.%kin% %tzolkin13% %tzolkin20name% %haabkin% %haabwinalname%';
 	}
 	
-    $template = strtolower($template);
+	$template = strtolower($template);
   
-    $today = $grdate;
-    // Set default date to Today.
-    if (!isset($grdate)) {
-     $today = date('d.m.Y');
-    }
+	$today = $grdate;
+	// Set default date to Today.
+	if (!isset($grdate)) {
+	 $today = date('d.m.Y');
+	}
 
-    // If date is not in DD.MM.YYYY format display error message
-    if (!preg_match('/\d{1,2}\.\d{1,2}\.\d{4}/', $today)) {
-  		$error = "<span class='attention'>".$today.tra(" is not a valid date format. should be dd.mm.yyyy") ."</span>";
+	// If date is not in DD.MM.YYYY format display error message
+	if (!preg_match('/\d{1,2}\.\d{1,2}\.\d{4}/', $today)) {
+		$error = "<span class='attention'>".$today.tra(" is not a valid date format. should be dd.mm.yyyy") ."</span>";
 		return $error;
-    }
+	}
   
-    $MCal = new MCalendar();
-    list($MCal->Gregorian["Day"], $MCal->Gregorian["Month"], $MCal->Gregorian["Year"]) = explode(".", $today);
+	$MCal = new MCalendar();
+	list($MCal->Gregorian["Day"], $MCal->Gregorian["Month"], $MCal->Gregorian["Year"]) = explode(".", $today);
 
-    $MCal->Maya();
+	$MCal->Maya();
 
-    $vars = array('%baktun%', '%katun%', '%tun%', '%winal%', '%kin%',
-                  '%tzolkin13%', '%tzolkin20%', '%tzolkin20name%',
-                  '%haabkin%', '%haabwinal%', '%haabwinalname%',
-                  '%longkin%', '%julianday%');
+	$vars = array('%baktun%', '%katun%', '%tun%', '%winal%', '%kin%',
+				  '%tzolkin13%', '%tzolkin20%', '%tzolkin20name%',
+				  '%haabkin%', '%haabwinal%', '%haabwinalname%',
+				  '%longkin%', '%julianday%');
 
-    $values = array($MCal->LongCount["Baktun"], $MCal->LongCount["Katun"],
-                    $MCal->LongCount["Tun"], $MCal->LongCount["Winal"], $MCal->LongCount["Kin"],
-                    $MCal->Tzolkin["Kin13"], $MCal->Tzolkin["Kin20"], $MCal->TzolkinNames[$MCal->Tzolkin["Kin20"]],
-                    $MCal->Haab["Kin"], $MCal->Haab["Winal"], $MCal->HaabNames[$MCal->Haab["Winal"]],
-                    $MCal->LongKin, $MCal->Julian);
+	$values = array($MCal->LongCount["Baktun"], $MCal->LongCount["Katun"],
+					$MCal->LongCount["Tun"], $MCal->LongCount["Winal"], $MCal->LongCount["Kin"],
+					$MCal->Tzolkin["Kin13"], $MCal->Tzolkin["Kin20"], $MCal->TzolkinNames[$MCal->Tzolkin["Kin20"]],
+					$MCal->Haab["Kin"], $MCal->Haab["Winal"], $MCal->HaabNames[$MCal->Haab["Winal"]],
+					$MCal->LongKin, $MCal->Julian);
 
-    $out = str_replace($vars, $values, $template);
+	$out = str_replace($vars, $values, $template);
 
 	return $out;
 }

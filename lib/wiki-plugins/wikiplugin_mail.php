@@ -12,23 +12,26 @@ function wikiplugin_mail_info()
 	return array(
 		'name' => tra('Mail'),
 		'documentation' => 'PluginMail',
-		'description' => tra('Directly mail other users or groups'),
+		'description' => tra('Mail other users or groups'),
 		'validate' => 'all',
 		'prefs' => array('wikiplugin_mail'),
-		'icon' => 'img/icons/email.png',
+		'iconname' => 'envelope',
+		'introduced' => 3,
 		'params' => array(
 			'group' => array(
 				'required' => false,
 				'name' => tra('Group'),
 				'description' => tra('Limit the list of groups to the groups including each group'),
 				'filter' => 'groupname',
+				'since' => '5.0',
 				'default' => '',
 				'separator' => ':',
 			),
 			'showgroupdd' => array(
 				'required' => false,
-				'name' => tra('Show Group Dropdown'),
+				'name' => tra('Group Dropdown'),
 				'description' => tra('Show a dropdown list of groups (not shown by default)'),
+				'since' => '5.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -39,8 +42,9 @@ function wikiplugin_mail_info()
 			),
 			'recurse' => array(
 				'required' => false,
-				'name' => tra('Recurse on groups'),
-				'description' => tra('show each group and each group included in this group'),
+				'name' => tra('Recurse Groups'),
+				'description' => tra('Show each group and each group included in this group'),
+				'since' => '8.0',
 				'filter' => 'alpha',
 				'default' => 'y',
 				'options' => array(
@@ -51,15 +55,19 @@ function wikiplugin_mail_info()
 			),
 			'recurseuser' => array(
 				'required' => false,
-				'name' => tra('Recurse on groups to have the users'),
-				'description' => tra('Collect the users of a selected group and the users of each included groups. If 0 do not recurse, if 1, recurse one time, 2 two times....'),
+				'name' => tra('Recurse Group Users'),
+				'description' => tr('Indicate how many times to recurse to collect the users of a selected group and
+					the users of each included groups. If %00%1 do not recurse, if %01%1, recurse one time, %02%1 for
+					two times....', '<code>', '</code>'),
+				'since' => '8.0',
 				'filter' => 'int',
 				'default' => '0',
 			),
 			'showuserdd' => array(
 				'required' => false,
-				'name' => tra('Show User Dropdown'),
+				'name' => tra('User Dropdown'),
 				'description' => tra('Show a dropdown list of users (not shown by default)'),
+				'since' => '5.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -70,8 +78,9 @@ function wikiplugin_mail_info()
 			),
 			'showuser' => array(
 				'required' => false,
-				'name' => tra('User email entry'),
+				'name' => tra('User Emails'),
 				'description' => tra('Show a box for user to enter emails'),
+				'since' => '5.0',
 				'filter' => 'alpha',
 				'default' => 'y',
 				'options' => array(
@@ -84,6 +93,7 @@ function wikiplugin_mail_info()
 				'required' => false,
 				'name' => tra('Real Name Dropdown'),
 				'description' => tra('Show a dropdown list of user real names (not shown by default)'),
+				'since' => '5.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -94,8 +104,9 @@ function wikiplugin_mail_info()
 			),
 			'popup' => array(
 				'required' => false,
-				'name' => tra('Show in popup'),
+				'name' => tra('Popup'),
 				'description' => tra('Show in popup instead of inline.'),
+				'since' => '14.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -107,14 +118,16 @@ function wikiplugin_mail_info()
 			'label_name' => array(
 				'required' => false,
 				'name' => tra('Button Text'),
-				'description' => tra('Text to show on the button to send emails (default: Send mail)'),
+				'description' => tr('Text to show on the button to send emails (default: %0Send mail%1)', '<code>', '</code>'),
+				'since' => '14.0',
 				'filter' => 'text',
 				'default' => tra('Send mail'),
 			),
 			'mail_subject' => array(
 				'required' => true,
-				'name' => tra('Preset Email subject'),
+				'name' => tra('Email Subject'),
 				'description' => tra('Present Email subject content'),
+				'since' => '14.0',
 				'filter' => 'text',
 				'default' => '',
 			),
@@ -122,6 +135,7 @@ function wikiplugin_mail_info()
 				'required' => false,
 				'name' => tra('Bypass Preview'),
 				'description' => tra('Send emails without first previewing'),
+				'since' => '14.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -134,6 +148,7 @@ function wikiplugin_mail_info()
 				'required' => false,
 				'name' => tra('Debug mode (admins only)'),
 				'description' => tra('Show list of emails that are sent (admins only)'),
+				'since' => '14.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(

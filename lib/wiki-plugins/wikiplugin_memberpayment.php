@@ -12,15 +12,17 @@ function wikiplugin_memberpayment_info()
 	return array(
 		'name' => tra('Member Payment'),
 		'documentation' => 'PluginMemberPayment',
-		'description' => tra('Receive payments from a member to extend membership to a group.'),
+		'description' => tra('Receive payment from a member to extend membership to a group'),
 		'validate' => 'all',
 		'prefs' => array( 'wikiplugin_memberpayment', 'payment_feature' ),
-		'icon' => 'img/icons/money.png',
+		'iconname' => 'money',
+		'introduced' => 5,
 		'params' => array(
 			'group' => array(
 				'required' => true,
 				'name' => tra('Group'),
 				'description' => tra('Name of the group for which the subscription should be added or extended.'),
+				'since' => '5.0',
 				'filter' => 'groupname',
 				'default' => '',
 			),
@@ -28,12 +30,14 @@ function wikiplugin_memberpayment_info()
 				'required' => true,
 				'name' => tra('Price'),
 				'description' => tr('Price per period (%0).', $prefs['payment_currency']),
+				'since' => '5.0',
 				'filter' => 'text',
 			),
 			'currentuser' => array(
 				'required' => false,
 				'name' => tra('Current User Member'),
 				'description' => tra('Membership only for the current user'),
+				'since' => '6.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -45,15 +49,19 @@ function wikiplugin_memberpayment_info()
 			'inputtitle' => array(
 				'required' => false,
 				'name' => tra('Input Title'),
-				'description' => tra('Title of the initial input form.').' '. tra('Use %0 for the group name, %1 for the price, %2 for the currency, %4 for the number of days and %5 for the number of years.') . ' ' .
-					tra('Supports wiki syntax.'),
+				'description' => tra('Title of the initial input form.').' '. tr('Use %0 for the group name, %1 for
+					the price, %2 for the currency, %4 for the number of days and %5 for the number of years.')
+					. ' ' . tra('Supports wiki syntax.'),
+				'since' => '6.0',
 				'filter' => 'text',
 				'default' => 'Membership to %0 for %1 (x%2)',
 			),
 			'inputtitleonly' => array(
 				'required' => false,
 				'name' => tra('Input Title Only'),
-				'description' => tra('Select Yes (y) to just show the title of the input form and not the period and cost information. Input Title must be set as well.'),
+				'description' => tr('Select Yes (%0y%1) to just show the title of the input form and not the period and
+					cost information. Input Title must be set as well.', '<code>', '</code>'),
+				'since' => '11.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'advanced' => true,
@@ -66,16 +74,19 @@ function wikiplugin_memberpayment_info()
 			'howtitle' => array(
 				'required' => false,
 				'name' => tra('Initial Payment Form Title'),
-				'description' => tra('Add a title to the payment form when initially shown after clicking "Continue".') . ' ' .
-					tra('Use %0 for the group name, %1 for the price, %2 for the currency, %4 for the number of days and %5 for the number of years.') . ' ' .
-					tra('Supports wiki syntax'),
+				'description' => tra('Add a title to the payment form when initially shown after clicking "Continue".')
+					. ' ' . tra('Use %0 for the group name, %1 for the price, %2 for the currency, %4 for the number
+					of days and %5 for the number of years.') . ' ' . tra('Supports wiki syntax'),
+				'since' => '6.0',
 				'filter' => 'text',
 				'default' => 'Membership to %0 for %1 (x%2)',
 			),
 			'howtitleonly' => array(
 				'required' => false,
 				'name' => tra('Payment Form Title Only'),
-				'description' => tra('Select Yes (y) to just show the title of the payment form. Initial Payment Form Title must be set as well.'),
+				'description' => tr('Select Yes (%0y%1) to just show the title of the payment form. Initial Payment Form
+					Title must be set as well.', '<code>', '</code>'),
+				'since' => '11.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'advanced' => true,
@@ -89,15 +100,18 @@ function wikiplugin_memberpayment_info()
 				'required' => false,
 				'name' => tra('Subsequent Payment Form Title'),
 				'description' => tra('Title of the payment form after the initial showing.') . ' ' .
-					tra('Use %0 for the group name, %1 for the price, %2 for the currency, %4 for the number of days and %5 for the number of years.') . ' ' .
-					tra('Supports wiki syntax'),
+					tra('Use %0 for the group name, %1 for the price, %2 for the currency, %4 for the number of days
+						and %5 for the number of years.') . ' ' . tra('Supports wiki syntax'),
+				'since' => '11.0',
 				'filter' => 'text',
 				'default' => 'Membership to %0 for %1 (x%2)',
 			),
 			'paytitleonly' => array(
 				'required' => false,
 				'name' => tra('Subsequent Payment Form Title Only'),
-				'description' => tra('Select Yes (y) to just show the title of the payment form that shows after the initial viewing. Subsequent Payment Form Title must be set as well.'),
+				'description' => tr('Select Yes (%0y%1) to just show the title of the payment form that shows after the
+					initial viewing. Subsequent Payment Form Title must be set as well.', '<code>', '</code>'),
+				'since' => '11.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'advanced' => true,
@@ -111,6 +125,7 @@ function wikiplugin_memberpayment_info()
 				'required' => false,
 				'name' => tra('Prevent Double Request'),
 				'description' => tra('Prevent user from extended if there is already a pending request'),
+				'since' => '8.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -122,7 +137,9 @@ function wikiplugin_memberpayment_info()
 			'freeperiods' => array(
 				'required' => false,
 				'name' => tra('Free Periods'),
-				'description' => tra('Give specified numbers of free periods, the first one could be prorated, in addition to those bought'),
+				'description' => tra('Give specified numbers of free periods, the first one could be prorated, in
+					addition to those bought'),
+				'since' => '9.0',
 				'filter' => 'int',
 				'default' => 0,
 			),
@@ -130,6 +147,7 @@ function wikiplugin_memberpayment_info()
 				'required' => false,
 				'name' => tra('Hide Period'),
 				'description' => tra('Do not allow user to set period - use default of 1.'),
+				'since' => '11.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'advanced' => true,
@@ -142,7 +160,9 @@ function wikiplugin_memberpayment_info()
 			'periodslabel' => array(
 				'required' => false,
 				'name' => tra('Periods Label'),
-				'description' => tra('Customize the label for the periods input. No effect if Hide Period is set to Yes (y).'),
+				'description' => tr('Customize the label for the periods input. No effect if Hide Period is set to
+					Yes (%0y%1).', '<code>', '</code>'),
+				'since' => '9.1',
 				'filter' => 'text',
 				'default' => 'Number of periods:',
 			),
@@ -150,6 +170,7 @@ function wikiplugin_memberpayment_info()
 				'required' => false,
 				'name' => tra('Return URL'),
 				'description' => tra('Page that payment service returns to after processing.'),
+				'since' => '11.0',
 				'filter' => 'url',
 				'default' => '',
 				'advanced' => true,

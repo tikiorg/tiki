@@ -10,28 +10,35 @@ function wikiplugin_lsdir_info()
 	return array(
 		'name' => tra('List Directory'),
 		'documentation' => 'PluginLsDir',
-		'description' => tra('Lists files in a directory'),
+		'description' => tra('List files in a directory'),
 		'prefs' => array( 'wikiplugin_lsdir' ),
 		'validate' => 'all',
-		'icon' => 'img/icons/folder_find.png',
+		'iconname' => 'file-archive',
+		'introduced' => 1,
 		'params' => array(
 			'dir' => array(
 				'required' => true,
 				'name' => tra('Directory'),
 				'description' => tra('Full path to the server-local directory. Default is the document root.'),
+				'since' => '1',
 				'default' => '',
 			),
 			'urlprefix' => array(
 				'required' => false,
 				'name' => tra('URL Prefix'),
-				'description' => tra('Make the file name a link to the file by adding the URL path preceding the file name. Example: http://yoursite.com/tiki/'),
-				'default' => NULL
+				'description' => tra('Make the file name a link to the file by adding the URL path preceding the file
+					name. Example:') . ' <code>http://yoursite.com/tiki/</code>',
+				'since' => '1',
+				'default' => NULL,
+				'filter' => 'url',
 			),
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort Order'),
 				'description' => tra('Set the sort order of the file list'),
+				'since' => '1',
 				'default' => 'name',
+				'filter' => 'word',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('File Name'), 'value' => 'name'), 
@@ -44,14 +51,18 @@ function wikiplugin_lsdir_info()
 			'filter' => array(
 				'required' => false,
 				'name' => tra('Filter'),
-				'description' => tra('Only list files with filenames that contain this filter. Example: ".jpg"'),
+				'description' => tra('Only list files with file names that contain this filter. Example:')
+					. ' <code>.jpg</code>',
+				'since' => '1',
 				'default' => NULL
 			),
 			'limit' => array(
 				'required' => false,
 				'name' => tra('Limit'),
 				'description' => tra('Maximum amount of files to display. Default is no limit.'),
+				'since' => '1',
 				'default' => 0,
+				'filter' => 'digits',
 			),
 		),
 	);
