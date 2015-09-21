@@ -649,7 +649,7 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		if ($event != 'auth_token_called') {
-			$this->remove_user_watch($user, $event, $object, $type);
+			$this->remove_user_watch($user, $event, $object, $type, $email);
 		}
 
 		$userWatches = $this->table('tiki_user_watches');
@@ -738,20 +738,23 @@ class TikiLib extends TikiDb_Bridge
 
 	/*shared*/
 	/**
-	 * @param $user
-	 * @param $event
-	 * @param $object
-	 * @param string $type
+	 * @param string $user
+	 * @param string $event
+	 * @param string $object
+	 * @param string $type = 'wiki page'
+	 * @param string $email = ''
 	 */
-	function remove_user_watch($user, $event, $object, $type = 'wiki page')
+	function remove_user_watch($user, $event, $object, $type = 'wiki page', $email = '')
 	{
 		$conditions = array(
 			'user' => $user,
 			'event' => $event,
 			'object' => $object,
+			'type' => $type,
 		);
-		if (isset($type)) {
-			$conditions['type'] = $type;
+
+		if ($email) {
+			$conditions['email'] = $email;
 		}
 
 		$this->table('tiki_user_watches')->deleteMultiple($conditions);
