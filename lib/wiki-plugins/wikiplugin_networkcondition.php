@@ -10,15 +10,17 @@ function wikiplugin_networkcondition_info()
 	return array(
 		'name' => tr('Network condition'),
 		'documentation' => 'PluginNetworkCondition',
-		'description' => tr('Conditionally display content based on network information.'),
+		'description' => tr('Display content based on the user\'s IP address'),
 		'prefs' => array('wikiplugin_networkcondition'),
-		'icon' => 'img/icons/computer.png',
+		'iconname' => 'computer',
+		'introduced' => 11,
 		'body' => tr('Content to display conditionally.'),
 		'params' => array(
 			'ipv4list' => array(
 				'required' => false,
 				'name' => tra('IPv4 List'),
 				'description' => tra("Comma separated list of IPv4 addresses to match against the visitor's address."),
+				'since' => '11.0',
 				'default' => '',
 				'filter' => 'text',
 				'separator' => ',',

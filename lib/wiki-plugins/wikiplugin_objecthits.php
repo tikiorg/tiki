@@ -12,33 +12,44 @@ function wikiplugin_objecthits_info()
 		'documentation' => 'PluginObjectHits',
 		'description' => tra('Display the number of hits for certain objects'),
 		'prefs' => array( 'wikiplugin_objecthits' ),
-		'icon' => 'img/icons/calculator.png',
+		'iconname' => 'chart',
+		'introduced' => 1,
 		'params' => array(
 			'object' => array(
 				'required' => false,
 				'name' => tra('Object'),
-				'description' => tra('For a wiki page, the page name, for other object types: ID number + ? + object title'),
+				'description' => tra('For a wiki page, the page name, for other object types: ID number + ? +
+					object title'),
+				'since' => '1',
 				'default' => '',
+				'filter' => 'text',
 				'profile_reference' => 'type_in_param',
 			),
 			'type' => array(
 				'required' => false,
 				'name' => tra('Type'),
-				'description' => tra('Object type, such as wiki, file gallery, file, article, etc. Default is "wiki".'),
+				'description' => tr('Object type, such as wiki, file gallery, file, article, etc. Default is
+					%0wiki%1.', '<code>', '</code>'),
+				'since' => '1',
 				'filter' => 'alpha',
 				'default' => 'wiki',
 			),
 			'days' => array(
 				'required' => false,
 				'name' => tra('Days'),
-				'description' => tra('Show the number of hits over the past number of days indicated. Default is to show all hits.'),
+				'description' => tra('Show the number of hits over the past number of days indicated. Default is to
+					show all hits.'),
+				'since' => '1',
+				'filter' => 'digits',
 				'default' => 0,
 			),
 			'since' => array(
 				'required' => false,
 				'name' => tra('Since a date'),
 				'description' => tra('Date since the hits are collected in a format supported by strtotime'),
-				'default' => ''
+				'since' => '10.0',
+				'default' => '',
+				'filter' => 'text',
 			),
 		)
 	);

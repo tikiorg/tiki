@@ -12,14 +12,17 @@ function wikiplugin_mono_info()
 		'documentation' => 'PluginMono',
 		'description' => tra('Display text in a monospace font'),
 		'prefs' => array( 'wikiplugin_mono' ),
-		'body' => tra('text'),
-		'icon' => 'img/icons/font.png',
+		'body' => tra('Text that the font will be applied to'),
+		'iconname' => 'font',
+		'introduced' => 1,
 		'params' => array(
 			'font' => array(
 				'required' => false,
 				'name' => tra('Font'),
 				'description' => tra('Font name as known in browsers.'),
+				'since' => '1',
 				'default' => 'monospace',
+				'filter' => 'text',
 			),
 		),
 	);
