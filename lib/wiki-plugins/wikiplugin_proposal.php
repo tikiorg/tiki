@@ -31,7 +31,8 @@ function wikiplugin_proposal_info()
 				'advanced' => true,
 				'name' => tr('Weights'),
 				'description' => tr('Comma-separated list of groups and their associated weight. Default is
-					%0Registered(1)%1 Example:') . ' <code>Reviewer(2.5),User(1),Manager(0.25),Registered(0)</code>',
+					%0Registered(1)%1 Example:', '<code>', '</code>')
+					. ' <code>Reviewer(2.5),User(1),Manager(0.25),Registered(0)</code>',
 				'since' => '10.0',
 				'filter' => 'text',
 				'default' => 'Registered(1)',
