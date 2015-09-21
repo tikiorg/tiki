@@ -10,24 +10,29 @@ function wikiplugin_poll_info()
 	return array(
 		'name' => tra('Poll'),
 		'documentation' => 'PluginPoll',
-		'description' => tra('Display a poll'),
+		'description' => tra('Embed a poll'),
 		'prefs' => array( 'feature_polls', 'wikiplugin_poll' ),
-		'body' => tra('Title'),
-		'icon' => 'img/icons/thumb_up.png',
+		'body' => tra('Title of the poll'),
+		'iconname' => 'thumbs-up',
+		'introduced' => 1,
 		'tags' => array( 'basic' ),
 		'params' => array(
 			'pollId' => array(
 				'required' => true,
 				'name' => tra('Poll'),
 				'description' => tra('Numeric value representing the poll ID'),
+				'since' => '1',
 				'default' => '',
+				'filter' => 'digits',
 				'profile_reference' => 'poll',
 			),
 			'showtitle' => array(
 				'required' => false,
 				'name' => tra('Show Title'),
 				'description' => tra('Show poll title (shown by default).'),
+				'since' => '5.0',
 				'default' => 'y',
+				'filter' => 'alpha',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
@@ -37,16 +42,29 @@ function wikiplugin_poll_info()
 			'showresult' => array(
 				'required' => false,
 				'name' => tra('Show result'),
-				'description' => 'link|voted|always',
-				'filter' => 'alpha',
+				'description' => tr('Set how results of the poll will be shown (default is %0link%1)', '<code>', '</code>'),
+				'since' => '7.0',
+				'filter' => 'word',
 				'default' => 'link',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Link'), 'value' => 'link'),
+					array('text' => tra('Voted'), 'value' => 'voted'),
+					array('text' => tra('Always'), 'value' => 'always'),
+				)
 			),
 			'showtotal' => array(
 				'required' => false,
 				'name' => tra('Show total votes'),
-				'description' => 'y|n',
+				'description' => tr('Set to No (%0n%1) to not show votes. Default is Yes (%0y%1).', '<code>', '</code>'),
+				'since' => '7.0',
 				'filter' => 'alpha',
 				'default' => 'y',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 		),
 	);

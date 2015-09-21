@@ -17,15 +17,17 @@ function wikiplugin_pastlink_info()
 	return array(
 		'name' => tra('PastLink'),
 		'documentation' => 'PluginPastLink',
-		'description' => tra('Links your article to a site using futurelink protocol'),
+		'description' => tra('Link content to another site'),
         'keywords' => array('forward', 'futurelink', 'futurelink-protocol', 'futurelinkprotocol', 'protocol'),
 		'prefs' => array( 'feature_wiki', 'wikiplugin_pastlink', 'feature_futurelinkprotocol' ),
-		'icon' => 'img/icons/link.png',
+		'iconname' => 'link',
+		'introduced' => 13,
 		'body' => tra('Text to link to futurelink'),
 		'params' => array(			
 			'clipboarddata' => array(
 				'required' => true,
-				'name' => tra('ClipboardData'),
+				'name' => tra('Clipboard Data'),
+				'since' => '13.0',
 				'default' => false
 			),
 		),

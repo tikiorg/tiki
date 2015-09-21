@@ -9,32 +9,36 @@ function wikiplugin_playscorm_info() {
 	return array(
 		'name' => tra('PlayScorm'),
 		'documentation' => 'PluginPlayScorm',
-		'description' => tra('Play a SCORM learning object in an iframe. Requires Moodle to be installed.'),
+		'description' => tra('Play a SCORM learning object in an iframe using Moodle'),
 		'prefs' => array( 'wikiplugin_playscorm' ),
 		'tags' => array( 'experimental' ),
 		'format' => 'html',
-		'icon' => 'pics/icons/page_copy.png',
+		'iconname' => 'play',
+		'introduced' => 12,
 		'params' => array(
 			'fileId' => array(
                                 'required' => true,
                                 'name' => tra('File ID'),
                                 'area' => 'fgal_picker_id',
                                 'description' => tra('Numeric ID of a SCORM zip file in a File Gallery'),
-                                'filter' => 'striptags',
+				'since' => '12.0',
+				'filter' => 'digits',
                                 'default' => '',
                         ),
 			'moodle_url' => array(
 				'required' => true,
 				'name' => tra('Moodle Url'),
 				'description' => tra('URL where the moodle instance is at'),
-				'filter' => 'striptags',
+				'since' => '12.0',
+				'filter' => 'url',
 				'default' => '',
 			),
 			'moodle_course_id' => array(
 				'required' => true,
 				'name' => tra('Moodle Course ID'),
 				'description' => tra('Course ID in Moodle to upload SCORM objects to'),
-				'filter' => 'int',
+				'since' => '12.0',
+				'filter' => 'digits',
 				'default' => '', 
 			),
 			'width' => array(
@@ -42,6 +46,8 @@ function wikiplugin_playscorm_info() {
 				'required' => false,
 				'name' => tra('Frame Width'),
 				'description' => tra('Width in pixels or %'),
+				'since' => '12.0',
+				'filter' => 'text',
 				'default' => '1160',
 			),
 			'height' => array(
@@ -49,6 +55,8 @@ function wikiplugin_playscorm_info() {
 				'required' => false,
 				'name' => tra('Frame Height'),
 				'description' => tra('Pixels or %'),
+				'since' => '12.0',
+				'filter' => 'text',
 				'default' => '740',
 			),
 			'scrolling' => array(
@@ -56,7 +64,9 @@ function wikiplugin_playscorm_info() {
 				'required' => false,
 				'name' => tra('Scrolling'),
 				'description' => tra('Choose whether to add a scroll bar'),
-				'default' => 'Yes',
+				'since' => '12.0',
+				'default' => 'y',
+				'filter' => 'alpha',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
@@ -67,8 +77,9 @@ function wikiplugin_playscorm_info() {
 				'required' => false,
 				'name' => tra('Numeric ID'),
 				'description' => tra('Numeric ID to distinguish multiple plugins of there is more than one'),
+				'since' => '12.0',
 				'default' => '',
-				'filter' => 'int'
+				'filter' => 'digits'
 			) 
 		), 
 	);
