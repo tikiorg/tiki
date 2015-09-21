@@ -10,9 +10,10 @@ function wikiplugin_localfiles_info()
 	return array(
 		'name' => tra('Local Files'),
 		'documentation' => 'PluginLocalFiles',
-		'description' => tra('Displays links to local files or directories (in IE only).'),
+		'description' => tra('Show link to local or shared files and directories'),
 		'prefs' => array('wikiplugin_localfiles'),
-		'icon' => 'img/icons/mime/default.png',
+		'iconname' => 'file',
+		'introduced' => 12,
 		'tags' => array( 'experimental' ),
 		'format' => 'html',
 		'validate' => 'all',
@@ -21,14 +22,15 @@ function wikiplugin_localfiles_info()
 				'required' => false,
 				'name' => tra('Path'),
 				'description' => tra('Local file or directory path'),
+				'since' => '12.0',
 				'default' => '',
 				'filter' => 'text',
-				//'separator' => ',',	TODO?
 			),
 			'list' => array(
 				'required' => false,
 				'name' => tra('List Directory'),
 				'description' => tra('If the path above is a directory then list the contents.'),
+				'since' => '12.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -41,6 +43,7 @@ function wikiplugin_localfiles_info()
 				'required' => false,
 				'name' => tra('Show Icons'),
 				'description' => tra('Show mime-type icons.'),
+				'since' => '12.0',
 				'filter' => 'alpha',
 				'default' => 'y',
 				'options' => array(
