@@ -13,12 +13,14 @@ function wikiplugin_miniquiz_info()
 		'description' => tra('Create a quiz using a tracker'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_miniquiz' ),
 		'body' => tra('Instructions::Feedback'),
-		'icon' => 'img/icons/green_question.png',
+		'iconname' => 'help',
+		'introduced' => 1,
 		'params' => array(
 			'trackerId' => array(
 				'required' => true,
 				'name' => tra('Tracker ID'),
 				'description' => tra('Numeric value representing the miniquiz tracker ID'),
+				'since' => '1',
 				'default' => '',
 				'profile_reference' => 'tracker',
 			),

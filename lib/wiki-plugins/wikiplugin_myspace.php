@@ -12,13 +12,16 @@ function wikiplugin_myspace_info()
 		'documentation' => 'PluginMySpace',
 		'description' => tra('Display a MySpace Flash mp3 playlist'),
 		'prefs' => array( 'wikiplugin_myspace' ),
-		'icon' => 'img/icons/myspace.png',
+		'iconname' => 'music',
+		'introduced' => 3,
 		'params' => array(
 			'page' => array(
 				'required' => true,
 				'name' => tra('MySpace Page'),
 				'description' => tra('MySpace page name.'),
+				'since' => '3.0',
 				'default' => '',
+				'filter' => 'text',
 			)
 		)
 	);

@@ -10,17 +10,30 @@ function wikiplugin_modulelist_info()
 	return array(
 		'name' => tra('Module List'),
 		'documentation' => 'PluginModuleList',
-		'description' => tra('Displays a list of modules as configured by the administrator. Allows to include multiple modules in a page with various conditionals without relying excessively on group plugins or other techniques.'),
+		'description' => tra('Display the modules assigned to a zone'),
 		'prefs' => array( 'wikiplugin_modulelist' ),
 		'format' => 'html',
-		'icon' => 'img/icons/module.png',
+		'iconname' => 'list',
+		'introduced' => 11,
 		'tags' => array( 'basic' ),
 		'params' => array(
 			'zone' => array(
 				'required' => true,
 				'name' => tra('Zone Name'),
 				'description' => tra('The name of the module zone to include. Can be a custom zone name.'),
+				'since' => '11.0',
+				'filter' => 'word',
 				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Top'), 'value' => 'top'),
+					array('text' => tra('Top bar'), 'value' => 'topbar'),
+					array('text' => tra('Page top'), 'value' => 'pagetop'),
+					array('text' => tra('Left'), 'value' => 'left'),
+					array('text' => tra('Right'), 'value' => 'right'),
+					array('text' => tra('Page bottom'), 'value' => 'pagebottom'),
+					array('text' => tra('Bottom'), 'value' => 'bottom'),
+				)
 			),
 		)
 	);

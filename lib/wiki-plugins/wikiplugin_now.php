@@ -10,17 +10,20 @@ function wikiplugin_now_info()
 	return array(
 		'name' => tra('Now'),
 		'documentation' => 'PluginNow',
-		'description' => tra('Display the current date or time'),
+		'description' => tra('Show current date and time'),
 		'prefs' => array('wikiplugin_now'),
 		'body' => tra('text'),
-		'icon' => 'img/icons/layout_header.png',
-		'tags' => array( 'basic' ),		
+		'iconname' => 'history',
+		'introduced' => 9,
+		'tags' => array( 'basic' ),
 		'params' => array(
 			'format' => array(
 				'required' => false,
 				'name' => tra('Format'),
 				'description' => tra('Time format'),
+				'since' => '9.0',
 				'default' => '%A %e %B %Y %H:%M',
+				'filter' => 'text',
 			),
 		),
 	);
