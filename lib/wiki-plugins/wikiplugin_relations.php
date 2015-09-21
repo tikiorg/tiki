@@ -29,7 +29,7 @@ function wikiplugin_relations_info()
 			'object' => array(
 				'required' => false,
 				'name' => tra('Object'),
-				'description' => tra('Object identifier as type:itemId'),
+				'description' => tr('Object identifier as %0type:itemId%1', '<code>', '</code>'),
 				'filter' => 'text',
 				'default' => null,
 				'since' => '8.0',
