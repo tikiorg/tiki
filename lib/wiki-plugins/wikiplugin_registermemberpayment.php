@@ -12,19 +12,22 @@ function wikiplugin_registermemberpayment_info()
 
 	return array(
 		'name' => tra('Register Member Payment'),
-		'documentation' => '',
+		'documentation' => 'PluginRegisterMemberPayment',
 		'validate' => 'all',
-		'description' => tra('Allows user to register and make member payment at the same time'),
+		'description' => tra('Register and make a member payment at the same time'),
 		'prefs' => array( 'wikiplugin_registermemberpayment', 'payment_feature' ),
 		'body' => tra('NA'),
-		'icon' => 'img/icons/text_replace.png',
+		'iconname' => 'money',
+		'introduced' => 9.1,
 		'params' => array_merge(
 			$infoFromParent['params'],
 			array(
 				'fixedperiods' => array(
 					'required' => false,
 					'name' => tra('Fixed Periods'),
-					'description' => tra('Give specific periods that can be chosen with a dropdown list.  Example - "name:value;name:value;value;value;"'),
+					'description' => tra('Give specific periods that can be chosen with a dropdown list.
+						Example:') . " <code>name:value;name:value;value;value;</code>",
+					'since' => '9.1',
 					'filter' => 'text',
 					'default' => 'Number of periods:',
 				),

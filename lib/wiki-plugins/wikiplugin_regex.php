@@ -14,12 +14,15 @@ function wikiplugin_regex_info()
 		'description' => tra('Perform a regular expression search and replace'),
 		'prefs' => array( 'wikiplugin_regex' ),
 		'body' => tra('Each line of content is evaluated separately'),
-		'icon' => 'img/icons/text_replace.png',
+		'iconname' => 'search',
+		'introduced' => 1,
 		'params' => array(
 			'pageName' => array(
 				'required' => true,
 				'name' => tra('Page name'),
-				'description' => tra('Name of page containing search and replace expressions separated by two colons. Example of syntax on that page: /search pattern/::replacement text'),
+				'description' => tra('Name of page containing search and replace expressions separated by two colons.
+					Example of syntax on that page:') . ' <code>/search pattern/::replacement text</code>',
+				'since' => '1',
 				'default' => 'pageName',
 				'profile_reference' => 'wiki_page',
 			),
