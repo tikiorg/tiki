@@ -9,16 +9,20 @@ function wikiplugin_sign_info()
 {
 	return array(
 		'name' => tr('Signature'),
-		'description' => tr('By writing {sign} in a wiki page, it will be converted to your username with a timestamp.'),
+		'documentation' => 'PluginSign',
+		'description' => tr('Sign and date your contribution to a page'),
 		'prefs' => array('wikiplugin_sign'),
 		'tags' => array('basic'),
 		'inline' => true,
 		'format' => 'html',
+		'iconname' => 'pencil',
+		'introduced' => 10,
 		'params' => array(
 			'user' => array(
 				'required' => false,
 				'name' => tr('User'),
 				'description' => tr('Auto-generated, the username.'),
+				'since' => '10.0',
 				'default' => '',
 				'filter' => 'text',
 				'advanced' => true,
@@ -27,6 +31,7 @@ function wikiplugin_sign_info()
 				'required' => false,
 				'name' => tr('Date and time'),
 				'description' => tr('Auto-generated, the timestamp'),
+				'since' => '10.0',
 				'default' => '',
 				'filter' => 'text',
 				'advanced' => true,

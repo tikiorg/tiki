@@ -10,15 +10,18 @@ function wikiplugin_showpref_info()
 	return array(
 		'name' => tra('Show Preference'),
 		'documentation' => 'PluginShowpref',
-		'description' => tra('Display contents of certain whitelisted global preference'),
+		'description' => tra('Display the value of public global preferences'),
 		'prefs' => array('wikiplugin_showpref'),
 		'filter' => 'wikicontent',
-		'icon' => 'img/icons/wrench.png',
+		'iconname' => 'cog',
+		'introduced' => 13,
 		'params' => array(
 			'pref' => array(
 				'required' => true,
 				'name' => tra('Preference Name'),
 				'description' => tra('Name of preference to be displayed.'),
+				'since' => '13.0',
+				'filter' => 'text',
 			),
 		),
 	);

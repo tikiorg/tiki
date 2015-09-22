@@ -10,8 +10,10 @@ function wikiplugin_shopperinfo_info()
 	return array(
 		'name' => tra('Collect Anonymous Shopper Info'),
 		'documentation' => tra('PluginShopperinfo'),
-		'description' => tra('Collect Anonymous Shopper Info for Shopping Cart'),
+		'description' => tra('Collect shopper information for the shopping cart'),
 		'prefs' => array('wikiplugin_shopperinfo', 'payment_feature'),
+		'iconname' => 'cart',
+		'introduced' => 7,
 		'filter' => 'wikicontent',
 		'format' => 'html',
 		'tags' => array( 'experimental' ),
@@ -20,24 +22,30 @@ function wikiplugin_shopperinfo_info()
 				'required' => true,
 				'name' => tra('Values to be collected'),
 				'description' => tra('Names of values to be collected separated by : as defined in shopper profile'),
+				'since' => '7.0',
 				'filter' => 'text',
-				'default' => array(),
 				'separator' => ':'
 			),
 			'labels' => array(
 				'required' => true,
 				'name' => tra('Labels for the values to be collected'),
-				'description' => tra('Labels of the values to be collected separated by :'),
+				'description' => tra('Labels of the values to be collected separated by a colon'),
+				'since' => '7.0',
 				'filter' => 'text',
-				'default' => array(),
 				'separator' => ':'
 			),
 			'showifloggedin' => array(
 				'required' => false,
 				'name' => tra('Show even if logged in'),
 				'description' => tra('Normally this is used for anonymous users but sometimes may be used when logged in also'),
-				'filter' => 'text',
+				'since' => '7.0',
+				'filter' => 'alpha',
 				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 		),
 	);
