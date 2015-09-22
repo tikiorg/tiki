@@ -10,16 +10,19 @@ function wikiplugin_report_info()
 	return array(
 		'name' => tra('Report'),
 		'documentation' => 'Report',
-		'description' => tra('Build a report, and store it in a wiki page'),
+		'description' => tra('Display data from the Tiki database in spreadsheet or chart format'),
 		'prefs' => array( 'wikiplugin_report', 'feature_reports', 'feature_trackers' ),
 		'body' => tra('The wiki syntax report settings'),
-		'icon' => 'img/icons/mime/zip.png',
+		'iconname' => 'table',
+		'introduced' => 9,
 		'params' => array(
 			'view' => array(
 				'name' => tra('Report View'),
-				'description' => tra('Report Plugin View'),
+				'description' => tra('Report plugin view'),
+				'since' => '9.0',
 				'required' => true,
 				'default' => 'sheet',
+				'filter' => 'word',
 				'options' => array(
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Sheet'), 'value' => 'sheet'),
@@ -29,7 +32,9 @@ function wikiplugin_report_info()
 			'name' => array(
 				'name' => tra('Report Name'),
 				'description' => tra('Report Plugin Name, sometimes used headings and reference'),
+				'since' => '9.0',
 				'required' => true,
+				'filter' => 'text',
 				'default' => 'Report Type',
 			),
 		),

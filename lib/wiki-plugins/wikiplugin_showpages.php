@@ -12,26 +12,30 @@ function wikiplugin_showpages_info()
 		'documentation' => 'PluginShowPages',
 		'description' => tra('Find pages by searching within page names'),
 		'prefs' => array( 'wikiplugin_showpages' ),
-		'icon' => 'img/icons/page_find.png',
+		'iconname' => 'search',
+		'introduced' => 1,
 		'params' => array(
 			'find' => array(
 				'required' => true,
 				'name' => tra('Find'),
 				'description' => tra('Search criteria'),
+				'since' => '1',
 				'default' => '',
 			),
 			'max' => array(
 				'required' => false,
 				'name' => tra('Result Count'),
 				'description' => tra('Maximum amount of results displayed.'),
-				'filter' => 'digits',
+				'since' => '1',
+				'filter' => 'int',
 				'default' => '',
 			),
 			'display' => array(
 				'required' => false,
 				'name' => tra('Display'),
 				'description' => tra('Display page name and/or description. Both displayed by default.'),
-				'filter' => 'striptags',
+				'since' => '1',
+				'filter' => 'text',
 				'default' => 'name|desc',
 				'options' => array(
 					array('text' => '', 'value' => ''), 

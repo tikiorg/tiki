@@ -15,12 +15,14 @@ function wikiplugin_sf_info()
 		'description' => tra('Creates a link to SourceForge tracker items'),
 		'prefs' => array( 'wikiplugin_sf' ),
 		'body' => tra('text'),
-		'icon' => 'img/icons/world_link.png',
+		'iconname' => 'link',
+		'introduced' => 1,
 		'params' => array(
 			'groupid' => array(
 				'required' => true,
 				'name' => tra('Group ID'),
 				'description' => tra('SourceForge project ID (shows as group_id in the URL of a tracker item'),
+				'since' => '1',
 				'filter' => 'digits',
 				'default' => '',
 			),
@@ -28,6 +30,7 @@ function wikiplugin_sf_info()
 				'required' => true,
 				'name' => tra('Tracker ID'),
 				'description' => tra('SourceForge tracker ID (shows as atid in the URL of a tracker item'),
+				'since' => '1',
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'tracker',
@@ -36,6 +39,7 @@ function wikiplugin_sf_info()
 				'required' => true,
 				'name' => tra('Item ID'),
 				'description' => tra('SourceForge item ID (shows as aid in the URL of a tracker item'),
+				'since' => '1',
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'tracker_item',
@@ -43,7 +47,8 @@ function wikiplugin_sf_info()
 			'title' => array(
 				'required' => false,
 				'name' => tra('Link title'),
-				'description' => tra('First part of link tooltip identifying the type of tracker item (bug, feature request, patch or support request).'),
+				'description' => tra('First part of link tooltip identifying the type of tracker item (bug, feature
+					request, patch or support request).'),
 				'filter' => 'alpha',
 				'default' => 'Item',
 				'since' => 7.0,

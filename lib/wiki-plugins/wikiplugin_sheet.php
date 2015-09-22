@@ -13,34 +13,35 @@ function wikiplugin_sheet_info()
 		'description' => tra('Display data from a TikiSheet'),
 		'prefs' => array( 'wikiplugin_sheet', 'feature_sheet' ),
 		'body' => tra('Sheet Heading'),
-		'icon' => 'img/icons/sheet_get_range.png',
+		'iconname' => 'table',
+		'introduced' => 1,
 		'tags' => array( 'basic' ),
 		'params' => array(
 			'id' => array(
 				'required' => false,
 				'name' => tra('Sheet ID'),
-				'description' => tra('Internal ID of the TikiSheet.  Either id or url MUST be used.'),
+				'description' => tr('Internal ID of the TikiSheet. Either %0id%1 or %0url%1 is required.', '<code>', '</code>'),
 				'filter' => 'digits',
 				'accepted' => 'Sheet ID number',
 				'default' => '',
-				'since' => '',
+				'since' => '1',
 				'profile_reference' => 'sheet',
 			),
 			'url' => array(
 				'required' => false,
 				'name' => tra('Sheet Url Location'),
-				'description' => tra('Internal URL of the Table to use as a spreadsheet.  Either id or url MUST be used.'),
+				'description' => tr('Internal URL of the Table to use as a spreadsheet. Either %0id%1 or %0url%1 is
+					required.', '<code>', '</code>'),
 				'filter' => 'url',
-				'accepted' => 'Valid url',
 				'default' => '',
 				'since' => '6.0'
 			),
 			'simple' => array(
 				'required' => false,
 				'name' => tra('Simple'),
-				'description' => tra('Simple table view y/n (Default: n = jquery.sheet view if feature enabled).'),
+				'description' => tr('Show a simple table view (Default: %0 = jquery.sheet view if feature enabled).',
+					'<code>n</code>'),
 				'filter' => 'alpha',
-				'accepted' => 'y or n',
 				'default' => 'n',
 				'since' => '5.0',
 				'options' => array(
@@ -52,9 +53,10 @@ function wikiplugin_sheet_info()
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
-				'description' => tra('Width in pixels or percentage. Default value is page width. e.g. "200px" or "100%"'),
-				'filter' => 'striptags',
-				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
+				'description' => tr('Width in pixels or percentage. Default value is page width. e.g. %0200px%1 or
+					%0100%%1', '<code>', '</code>'),
+				'filter' => 'text',
+				'accepted' => 'Number of pixels followed by \'px\' or percent followed by %).',
 				'default' => 'Page width',
 				'since' => '6.0'
 			),
@@ -62,15 +64,15 @@ function wikiplugin_sheet_info()
 				'required' => false,
 				'name' => tra('Height'),
 				'description' => tra('Height in pixels or percentage. Default value is complete spreadsheet height.'),
-				'filter' => 'striptags',
-				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
+				'filter' => 'text',
+				'accepted' => 'Number of pixels followed by \'px\' or percent followed by %).',
 				'default' => 'Spreadsheet height',
 				'since' => '5.0'
 			),
 			'editable' => array(
 				'required' => false,
 				'name' => tra('Editable'),
-				'description' => tra('Show edit button. Default \'y\' depending on user\'s permissions.'),
+				'description' => tra('Show edit button. Default is to show depending on user\'s permissions.'),
 				'filter' => 'alpha',
 				'accepted' => 'y or n',
 				'default' => 'y',
@@ -84,7 +86,7 @@ function wikiplugin_sheet_info()
 			'subsheets' => array(
 				'required' => false,
 				'name' => tra('Show subsheets'),
-				'description' => tra('y/n. Show multi-sheets. Default \'y\'.'),
+				'description' => tra('Show multi-sheets (default is to show)'),
 				'filter' => 'alpha',
 				'accepted' => 'y or n',
 				'default' => 'y',
@@ -98,8 +100,9 @@ function wikiplugin_sheet_info()
 			'range' => array(
 				'required' => false,
 				'name' => tra('Range'),
-				'description' => tra('Show a range of cells (or single cell). Default shows all. e.g. "D1:F3" or "e14:e14"'),
-				'filter' => 'striptags',
+				'description' => tr('Show a range of cells (or single cell). Default shows all. e.g. %0D1:F3%1 or
+					%0e14:e14%1', '<code>', '</code>'),
+				'filter' => 'text',
 				'accepted' => 'Cell range, e.g. "D1:F3" or "e14:e14"',
 				'default' => 'All cells',
 				'since' => '6.0',
