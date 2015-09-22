@@ -88,7 +88,7 @@
 		{foreach from=$server_properties key=key item=item}
 			<tr>
 				<td class="text">{$key}</td>
-				<td class="text">{$item.value}</td>
+				<td class="text">{$item.setting}</td>
 				<td class="text">
 					<span class="text-{$fmap[$item.fitness]['class']}">
 						{icon name="{$fmap[$item.fitness]['icon']}"} {$item.fitness}
