@@ -87,7 +87,7 @@ class LessCompileCommand  extends Command
 					$files = [];
 					$files[] = ['less' => $less_file, 'css' => $css_file];
 
-					if (! $input->getOption('without-options')) {
+					if (! $input->getOption('without-options') && is_dir("themes/$themename/options")) {
 
 						foreach (new \DirectoryIterator("themes/$themename/options") as $fileInfo2) {
 							if ($fileInfo2->isDot() || !$fileInfo2->isDir()) {
