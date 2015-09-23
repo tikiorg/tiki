@@ -272,7 +272,7 @@
 											<td class="action">
 												{capture name=user_actions}
 													{strip}
-														{$libeg}<a href="{service controller=user action=manage_groups checked=$username all_groups=$all_groups offset=$offset sort_mode=$sort_mode numrows=$numrows}"
+														{$libeg}<a href="{bootstrap_modal controller=user action=manage_groups checked=$username all_groups=$all_groups offset=$offset sort_mode=$sort_mode numrows=$numrows}"
 														   class="confirm-click"
 														>
 															{icon name="group" _menu_text='y' _menu_icon='y' alt="{tr}Add or remove from a group{/tr}"}
