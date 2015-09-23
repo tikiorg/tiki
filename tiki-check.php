@@ -313,12 +313,18 @@ $server_information['Server Signature']['value'] = !empty($_SERVER['SERVER_SIGNA
 
 // Free disk space
 if (function_exists('disk_free_space')) {
-	$bytes = disk_free_space('.');
+	$bytes = @disk_free_space('.');	// this can fail on 32 bit systems with lots of disc space so suppress the possible warning
 	$si_prefix = array( 'B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB' );
 	$base = 1024;
 	$class = min((int) log($bytes, $base), count($si_prefix) - 1);
 	$free_space = sprintf('%1.2f', $bytes / pow($base, $class)) . ' ' . $si_prefix[$class];
-	if ( $bytes < 200 * 1024 * 1024 ) {
+	if ( $bytes === false ) {
+		$server_properties['Disk Space'] = array(
+			'fitness' => 'ugly',
+			'setting' => tra('Unable to detect'),
+			'message' => tra('Cannot determine the size of this disk drive.')
+		);
+	} else if ( $bytes < 200 * 1024 * 1024 ) {
 		$server_properties['Disk Space'] = array(
 			'fitness' => 'bad',
 			'setting' => $free_space,
