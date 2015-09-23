@@ -88,6 +88,13 @@ function wikiplugin_bigbluebutton_info()
 				'filter' => 'alpha',
 				'default' => 'y',
 			),
+			'showattendees' => array(
+				'required' => false,
+				'name' => tra('Display Attendees'),
+				'description' => tra('Enable or Disable the display of attendees list.'),
+				'filter' => 'alpha',
+				'default' => 'y',
+			),
 		),
 	);
 }
@@ -129,8 +136,13 @@ function wikiplugin_bigbluebutton( $data, $params )
 			$smarty->assign('bbb_recordings', null);
 		}
 
-		if ( $perms->bigbluebutton_join ) {
-			$smarty->assign('bbb_attendees', $bigbluebuttonlib->getAttendees($meeting));
+		if ($perms->bigbluebutton_join) {
+			if ($params['showattendees'] != 'n') {
+				$smarty->assign('bbb_attendees', $bigbluebuttonlib->getAttendees($meeting));
+				$smarty->assign('bbb_show_attendees', true);
+			} else {
+				$smarty->assign('bbb_show_attendees', false);
+			}
 
 			return $smarty->fetch('wiki-plugins/wikiplugin_bigbluebutton.tpl');
 
