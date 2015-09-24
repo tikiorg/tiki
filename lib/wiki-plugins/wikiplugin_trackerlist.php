@@ -82,7 +82,8 @@ function wikiplugin_trackerlist_info()
 				 'options' => array(
 					 array('text' => '', 'value' => ''),
 					 array('text' => tra('Yes'), 'value' => 'y'),
-					 array('text' => tra('No'), 'value' => 'n')
+					 array('text' => tra('No'), 'value' => 'n'),
+					 array('text' => tra('Row'), 'value' => 'r')
 				 )
 			 ),
 			 'showdesc' => array(
