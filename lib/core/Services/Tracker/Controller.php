@@ -772,10 +772,34 @@ class Services_Tracker_Controller
 		);
 	}
 
+	/**
+	 * @param $input
+	 * - "trackerId" required
+	 * - "itemId" required
+	 * - "editable" optional. array of field names. e.g. ['title', 'description', 'user']. If not set, all fields
+	 *    all fields will be editable
+	 * - "forced" optional. associative array of fields where the value is 'forced'. Commonly used with skip_form.
+	 *    e.g ['isArchived'=>'y']. For example, this can be used to create a button that allows you to set the
+	 *    trackeritem to "Closed", or to set a field to a pre-determined value.
+	 * - "skip_form" - Allows users to skip the input form. This must be used with "forced" or "status" otherwise nothing would change
+	 * - "status" - sets a status for the object to be set to. Often used with skip_form
+	 *
+	 * Formatting the edit screen
+	 * - "title" optional. Sets a title for the edit screen.
+	 * - "skip_form_confirm_message" optional. Used with skip_form. E.g. "Are you sure you want to set this item to 'Closed'".
+	 * - "button_label" optional. Used to override the label for the Update/Save button.
+	 * - "redirect" set a url to which a user should be redirected, if any.
+	 *
+	 * @return array
+	 * @throws Exception
+	 * @throws Services_Exception
+	 * @throws Services_Exception_Denied
+	 * @throws Services_Exception_MissingValue
+	 * @throws Services_Exception_NotFound
+	 *
+	 */
 	function action_update_item($input)
 	{
-		$processedFields = array();
-
 		$trackerId = $input->trackerId->int();
 		$definition = Tracker_Definition::get($trackerId);
 
@@ -797,23 +821,6 @@ class Services_Tracker_Controller
 			throw new Services_Exception_Denied;
 		}
 
-		$processedFields = $itemObject->prepareInput($input);
-
-		$fields = array();
-		foreach ($processedFields as $k => $f) {
-			$permName = $f['permName'];
-			$fields[$permName] = isset($f['value']) ? $f['value'] : '';
-		}
-
-		$userInput = $input->fields->none();
-		if (! empty($userInput)) {
-			foreach ($userInput as $key => $value) {
-				if ($itemObject->canModifyField($key)) {
-					$fields[$key] = $value;
-				}
-			}
-		}
-
 		global $prefs;
 		if ($prefs['feature_jquery_validation'] === 'y') {
 			$validationjs = TikiLib::lib('validators')->generateTrackerValidateJS($definition->getFields());
@@ -821,6 +828,32 @@ class Services_Tracker_Controller
 		}
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			//fetch the processed fields and the changes made in the form. Put them in the 'fields' variable
+			$processedFields = $itemObject->prepareInput($input);
+			$fields = array();
+			foreach ($processedFields as $k => $f) {
+				$permName = $f['permName'];
+				$fields[$permName] = isset($f['value']) ? $f['value'] : '';
+			}
+			// for each input from the form, ensure user has modify rights. If so, add to the fields var to be edited.
+			$userInput = $input->fields->none();
+			if (! empty($userInput)) {
+				foreach ($userInput as $key => $value) {
+					if ($itemObject->canModifyField($key)) {
+						$fields[$key] = $value;
+					}
+				}
+			}
+			// for each input from the form, ensure user has modify rights. If so, add to the fields var to be edited.
+			$forcedInput = $input->forced->none();
+			if (! empty($forcedInput)) {
+				foreach ($forcedInput as $key => $value) {
+					if ($itemObject->canModifyField($key)) {
+						$fields[$key] = $value;
+					}
+				}
+			}
+
 			$result = $this->utilities->updateItem(
 				$definition,
 				array(
@@ -838,24 +871,88 @@ class Services_Tracker_Controller
 			TikiLib::events()->trigger('tiki.process.redirect'); // wait for indexing to complete before loading of next request to ensure updated info shown
 			return array(
 				'modal' => '1',
+				'url' => empty($input->redirect->none()) ? "" : $input->redirect->none(),
 				'FORWARD' => array(
 					'controller' => 'utilities',
 					'action' => 'modal_alert',
 					'ajaxtype' => 'feedback',
 					'ajaxheading' => tra('Success'),
-					'ajaxmsg' => 'Your tracker item has been updated',
+					'ajaxmsg' => 'Your item has been updated.',
 					'ajaxdismissible' => 'n',
 				)
 			);
 		}
 
+		// sets all fields for the tracker item with their value
+		$processedFields = $itemObject->prepareInput($input);
+		// fields that we want to change in the form. If
+		$editableFields = $input->editable->none();
+		// fields where the value is forced.
+		$forcedFields = $input->forced->none();
+
+		// if forced fields are set, remove them from the processedFields since they will not show up visually
+		// in the form; they will be set up separately and hidden.
+		if (!empty($forcedFields)) {
+			foreach ($processedFields as $k => $f) {
+				$permName = $f['permName'];
+				if (isset($forcedFields[$permName])) {
+					unset($processedFields[$k]);
+				}
+			}
+		}
+
+		if (empty($editableFields)) {
+			//if editable fields, show all fields in the form (except the ones from forced which have been removed).
+			$displayedFields = $processedFields;
+		} else {
+			// if editableFields is set, only add the field if found in the editableFields array
+			$displayedFields = array();
+			foreach ($processedFields as $k => $f) {
+				$permName = $f['permName'];
+				if (in_array($permName, $editableFields)) {
+					$displayedFields[] = $f;
+				}
+			}
+		}
+
+		/* Allow overriding of default wording in the template */
+		if (empty($input->title->text())) {
+			$title = tr('Update');
+		} else {
+			$title = $input->title->text();
+		}
+
+		//Used if skip form is set
+		if (empty($input->skip_form_message->text())) {
+			$skip_form_message = tr('Are you sure you would like to update this item?');
+		} else {
+			$skip_form_message = $input->skip_form_message->text();
+		}
+
+		if (empty($input->button_label->text())) {
+			$button_label = tr('Save');
+		} else {
+			$button_label = $input->button_label->text();
+		}
+
+		if (empty($input->skip_form->word())) {
+			$status = $itemObject->getDisplayedStatus();
+		} else {
+			$status = $input->status->word();
+		}
+
 		return array(
-			'title' => tr('Update'),
+			'title' => $title,
 			'trackerId' => $trackerId,
 			'itemId' => $itemId,
-			'fields' => $processedFields,
-			'status' => $itemObject->getDisplayedStatus(),
+			'fields' => $displayedFields,
+			'forced' => $forcedFields,
+			'status' => $status,
+			'skip_form' => $input->skip_form->word(),
+			'skip_form_message' => $skip_form_message,
 			'format' => $input->format->word(),
+			'button_label' => $button_label,
+			'redirect' => $input->redirect->none(),
 		);
 	}
 
