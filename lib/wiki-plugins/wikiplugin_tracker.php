@@ -969,7 +969,7 @@ function wikiplugin_tracker($data, $params)
 					if ($transactionFinalStep == 'y') {
 						//-- final step: commit the transaction of registrations and tracker changes of all the transaction steps
 						foreach ($_SESSION[$transactionName] as $saveStep) {
-							wikiplugin_tracker_save($saveStep);
+							$rid = wikiplugin_tracker_save($saveStep);
 						}
 						unset($_SESSION[$transactionName]); // the tracker transaction can be closed
 					} else {
@@ -977,7 +977,7 @@ function wikiplugin_tracker($data, $params)
 					}
 				} else {
 					// no transaction is used
-					wikiplugin_tracker_save($saveThis);
+					$rid = wikiplugin_tracker_save($saveThis);
 				}
 				// now for wiki output if desired
 				if (isset($outputtowiki) && !empty($outputwiki)) {
@@ -1855,5 +1855,6 @@ function wikiplugin_tracker_save($trackerSavedState)
 		}
 	}
 	$tx->commit();
+	return $rid;
 	/* ------------------------------------- end save the item ---------------------------------- */
 }
