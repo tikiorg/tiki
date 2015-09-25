@@ -10,8 +10,9 @@
  *
  * Letter key: ~e~
  *
+ * N.B. Implements Tracker_Field_Indexable so items can be recategorised when indexing
  */
-class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Exportable, Tracker_Field_Filterable
+class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Exportable, Tracker_Field_Filterable, Tracker_Field_Indexable
 {
 	public static function getTypes()
 	{
@@ -93,6 +94,16 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 						'options' => array(
 							0 => tr('Inherit (default)'),
 							1 => tr('Do not inherit'),
+						),
+					),
+					'recategorize' => array(
+						'name' => tr('Recategorization event'),
+						'type' => 'list',
+						'description' => tr('Set this to "Indexing" to recategorize the items during reindexing as well as when saving.'),
+						'filter' => 'word',
+						'options' => array(
+							'save' => tr('Save'),
+							'index' => tr('Indexing'),
 						),
 					),
 				),
@@ -600,6 +611,61 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		}
 
 		return $collection;
+	}
+
+	/**
+	 * This updates and recategorise the item when being reindexed, which allows you to recategorise all a tracker's items
+	 * if the parent tracker's categories have been changed (or following an upgrade for instance)
+	 *
+	 * Category fields don't actually need to be indexed as category objects are indexed separately.
+	 *
+	 * @param Search_Type_Factory_Interface $typeFactory
+	 * @return array
+	 * @throws Exception
+	 */
+
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
+	{
+		$value = array_filter(explode(',', $this->getValue()));
+
+		if ($this->getOption('recategorize') === 'index') {
+
+			// if using inherit this will get the tracker's categories too even if not saved
+			$newValue = $this->getFieldData();
+			$newValue = $newValue['selected_categories'];
+
+			$diff = array_diff($newValue, $value);
+
+			if ($diff) {		// unsaved categs found
+
+				$categlib = TikiLib::lib('categ');
+				$itemId = $this->getItemId();
+
+				// update value
+				TikiLib::lib('trk')->modify_field($itemId, $this->getConfiguration('fieldId'), implode(',', $newValue));
+
+				// check current categs
+				$categories = $categlib->get_object_categories('trackeritem', $itemId);
+				$missingCategories = array_diff($diff, $categories);
+
+				if ($missingCategories) {
+					// temporarily prevent incremental index update which happens in categlib causing an infinite loop
+					global $prefs;
+					$incPref = $prefs['unified_incremental_update'];
+					$prefs['unified_incremental_update'] = 'n';
+
+					$categlib->categorize_any('trackeritem', $itemId, $missingCategories);
+
+					$prefs['unified_incremental_update'] = $incPref;
+				}
+			}
+
+		}
+
+		// Preserve previous behaviour in indexing the basic comma-separated value
+		// N.B. This will be different from Tiki 15 onwards, see r56096
+
+		return parent::getDocumentPart($typeFactory);
 	}
 }
 
