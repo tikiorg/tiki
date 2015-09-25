@@ -10,8 +10,9 @@
  *
  * Letter key: ~e~
  *
+ * N.B. Implements Tracker_Field_Indexable so items can be recategorised when indexing
  */
-class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable
+class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Indexable
 {
 	public static function getTypes()
 	{
@@ -88,11 +89,21 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 					),
 					'doNotInheritCategories' => array(
 						'name' => tr('Do not Inherit Categories'),
-						'description' => tr("New tracker items will inherit the parent tracker's categories by default, unless you set this option."),
+						'description' => tr("Tracker items will inherit the parent tracker's categories by default, unless you set this option."),
 						'filter' => 'int',
 						'options' => array(
 							0 => tr('Inherit (default)'),
 							1 => tr('Do not inherit'),
+						),
+					),
+					'recategorize' => array(
+						'name' => tr('Recategorization event'),
+						'type' => 'list',
+						'description' => tr('Set this to "Indexing" to recategorize the items during reindexing as well as when saving.'),
+						'filter' => 'word',
+						'options' => array(
+							'save' => tr('Save'),
+							'index' => tr('Indexing'),
 						),
 					),
 				),
@@ -105,22 +116,28 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		$key = 'ins_' . $this->getConfiguration('fieldId');
 		$parentId = $this->getOption('parentId');
 
-		if (isset($requestData[$key]) && is_array($requestData[$key])) {
-			$selected = $requestData[$key];
+		if (isset($requestData[$key])) {
+			if (!is_array($requestData[$key])) {
+				$selected = array($requestData[$key]);
+			} else {
+				$selected = $requestData[$key];
+			}
 		} else if (isset($requestData['cat_managed'])) {
 			$selected = array();
 		} elseif ($this->getItemId() && !isset($requestData[$key])) {
 			// only show existing category of not receiving request, otherwise might be uncategorization in progress
-			$selected = $this->getCategories();
+			$selected = $this->getCategories($this->getItemId());
 		} else {
 			$selected = TikiLib::lib('categ')->get_default_categories();
+		}
 
-			if (! $this->getOption('doNotInheritCategories')) {
-				// use the parent tracker categories by default for new items
-				$trackerCategories = TikiLib::lib('categ')->get_object_categories('tracker', $this->getConfiguration('trackerId'));
-				// for now just merge these, category jail will get enforced later
-				$selected = array_merge($selected, $trackerCategories);
-			}
+		$tracker_categories = array();
+
+		if (! $this->getOption('doNotInheritCategories')) {
+			// use the parent tracker categories by default for new items
+			$tracker_categories = TikiLib::lib('categ')->get_object_categories('tracker', $this->getConfiguration('trackerId'));
+			// for now just merge these, category jail will get enforced later
+			$selected = array_unique(array_merge($selected, $tracker_categories));
 		}
 
 		$categories = $this->getApplicableCategories();
@@ -129,6 +146,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		$data = array(
 			'value' => implode(',', $selected),
 			'selected_categories' => $selected,
+			'tracker_categories' => $tracker_categories,
 			'list' => $categories,
 		);
 
@@ -141,9 +159,18 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		$smarty->assign('cat_tree', array());
 		if ($this->getOption('descendants') > 0 && $this->getOption('inputtype') === 'checkbox') {
 			$categories = $this->getConfiguration('list');
+			$tracker_categories = $this->getConfiguration('tracker_categories');
+			if (is_array($tracker_categories) && !empty($tracker_categories)) {
+				foreach ($categories as & $cat) {
+					$cat['canchange'] = ! in_array($cat['categId'], $tracker_categories);
+				}
+				$changeall = false;
+			} else {
+				$changeall = true;
+			}
 			$selected_categories = $this->getConfiguration('selected_categories');
 			$smarty->assign_by_ref('categories', $categories);
-			$cat_tree = TikiLib::lib('categ')->generate_cat_tree($categories, true, $selected_categories);
+			$cat_tree = TikiLib::lib('categ')->generate_cat_tree($categories, $changeall, $selected_categories);
 			$cat_tree = str_replace('name="cat_categories[]"', 'name="' . $this->getInsertId() . '[]"', $cat_tree);
 			$smarty->assign('cat_tree', $cat_tree);
 		}
@@ -268,9 +295,9 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		return $cache[$fieldId];
 	}
 
-	private function getCategories()
+	private function getCategories($itemId)
 	{
-		return TikiLib::lib('categ')->get_object_categories('trackeritem', $this->getItemId());
+		return TikiLib::lib('categ')->get_object_categories('trackeritem', $itemId);
 	}
 
 	public function importRemote($value)
@@ -317,6 +344,61 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		}
 
 		return implode(',', $parts);
+	}
+
+	/**
+	 * This updates and recategorise the item when being reindexed, which allows you to recategorise all a tracker's items
+	 * if the parent tracker's categories have been changed (or following an upgrade for instance)
+	 *
+	 * Category fields don't actually need to be indexed as category objects are indexed separately.
+	 *
+	 * @param Search_Type_Factory_Interface $typeFactory
+	 * @return array
+	 * @throws Exception
+	 */
+
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
+	{
+		$value = array_filter(explode(',', $this->getValue()));
+
+		if ($this->getOption('recategorize') === 'index') {
+
+			// if using inherit this will get the tracker's categories too even if not saved
+			$newValue = $this->getFieldData();
+			$newValue = $newValue['selected_categories'];
+
+			$diff = array_diff($newValue, $value);
+
+			if ($diff) {		// unsaved categs found
+
+				$categlib = TikiLib::lib('categ');
+				$itemId = $this->getItemId();
+
+				// update value
+				TikiLib::lib('trk')->modify_field($itemId, $this->getConfiguration('fieldId'), implode(',', $newValue));
+
+				// check current categs
+				$categories = $categlib->get_object_categories('trackeritem', $itemId);
+				$missingCategories = array_diff($diff, $categories);
+
+				if ($missingCategories) {
+					// temporarily prevent incremental index update which happens in categlib causing an infinite loop
+					global $prefs;
+					$incPref = $prefs['unified_incremental_update'];
+					$prefs['unified_incremental_update'] = 'n';
+
+					$categlib->categorize_any('trackeritem', $itemId, $missingCategories);
+
+					$prefs['unified_incremental_update'] = $incPref;
+				}
+			}
+
+		}
+
+		// Preserve previous behaviour in indexing the basic comma-separated value
+		// N.B. This will be different from Tiki 15 onwards, see r56096
+
+		return parent::getDocumentPart($typeFactory);
 	}
 }
 
