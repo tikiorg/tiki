@@ -20,7 +20,7 @@ class Services_MailIn_Controller
 	function action_replace_account($input)
 	{
 		$mailinlib = TikiLib::lib('mailin');
-		$accountId = $input->accountId->int();array('html' => $result);
+		$accountId = $input->accountId->int();	// array('html' => $result);
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$account = [
@@ -30,8 +30,12 @@ class Services_MailIn_Controller
 				'username' => $input->username->text(),
 				'pass' => $input->pass->none(),
 			];
-			if (! Tiki\MailIn\Account::test($account)) {
-				throw new Services_Exception_FieldError('username', tr('Failed to connect or authenticate with remote host.'));
+			try {
+				if (! Tiki\MailIn\Account::test($account)) {
+					throw new Services_Exception_FieldError('username', tr('Failed to connect or authenticate with remote host.'));
+				}
+			} catch (Exception $e) {
+				throw new Services_Exception_FieldError('username', tr('Failed to connect or authenticate with remote host. Error "%0"', $e->getMessage()));
 			}
 
 			$mailinlib->replace_mailin_account(
@@ -96,7 +100,7 @@ class Services_MailIn_Controller
 	function action_remove_account($input)
 	{
 		$mailinlib = TikiLib::lib('mailin');
-		$accountId = $input->accountId->int();array('html' => $result);
+		$accountId = $input->accountId->int();	// array('html' => $result);
 		$info = $mailinlib->get_mailin_account($accountId);
 
 		if (! $info) {
