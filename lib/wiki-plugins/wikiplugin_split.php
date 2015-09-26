@@ -10,17 +10,19 @@ function wikiplugin_split_info()
 	return array(
 		'name' => tra('Split'),
 		'documentation' => 'PluginSplit',
-		'description' => tra('Easily arrange content on a page into rows and columns'),
+		'description' => tra('Arrange content on a page into rows and columns'),
 		'prefs' => array( 'wikiplugin_split' ),
 		'filter' => 'wikicontent',
-		'icon' => 'img/icons/table.png',
+		'iconname' => 'th-large',
+		'introduced' => 1,
 		'tags' => array( 'basic' ),
 		'params' => array(
 			'joincols' => array(
 				'required' => false,
 				'name' => tra('Join Columns'),
 				'description' => tra('Generate the colspan attribute if columns are missing'),
-				'filter' => 'striptags',
+				'since' => '1',
+				'filter' => 'alpha',
 				'default' => 'y',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -32,7 +34,8 @@ function wikiplugin_split_info()
 				'required' => false,
 				'name' => tra('Fixed Size'),
 				'description' => tra('Generate the width attribute for the columns'),
-				'filter' => 'striptags',
+				'since' => '1',
+				'filter' => 'alpha',
 				'default' => 'y',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -43,13 +46,19 @@ function wikiplugin_split_info()
 			'colsize' => array(
 				'required' => false,
 				'name' => tra('Column Sizes'),
-				'description' => tra('Specify all column widths in number of pixels or percent, separating each width by a pipe (|)'),
+				'description' => tr('Specify all column widths in number of pixels or percent, separating each width
+					by a pipe (%0)', '<code>|</code>'),
+				'since' => '1',
+				'seprator' => '|',
+				'filter' => 'text',
 				'default' => '',
 			),
 			'first' => array(
 				'required' => false,
 				'name' => tra('First'),
-				'description' => tra('Cells specified are ordered first left to right across rows (default) or top to bottom down columns'),
+				'description' => tra('Cells specified are ordered first left to right across rows (default) or top to
+					bottom down columns'),
+				'since' => '1',
 				'filter' => 'alpha',
 				'default' => 'line',
 				'options' => array(
@@ -61,8 +70,10 @@ function wikiplugin_split_info()
 			'edit' => array(
 				'required' => false,
 				'name' => tra('Editable'),
-				'description' => tra('Display edit icon for each section'),
-				'filter' => 'striptags',
+				'description' => tr('Display edit icon for each section. Works when used on a wiki page and the %0
+					parameter is set to %1', '<code>first</code>', '<code>col</code>'),
+				'since' => '1',
+				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -74,6 +85,8 @@ function wikiplugin_split_info()
 				'required' => false,
 				'name' => tra('Custom Class'),
 				'description' => tra('Add a class to customize the design'),
+				'since' => '3.0',
+				'filter' => 'text',
 				'default' => '',
 			),
 		),

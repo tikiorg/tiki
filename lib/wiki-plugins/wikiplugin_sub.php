@@ -13,7 +13,8 @@ function wikiplugin_sub_info()
 		'description' => tra('Apply subscript font to text'),
 		'prefs' => array( 'wikiplugin_sub' ),
 		'body' => tra('text'),
-		'icon' => 'img/icons/text_subscript.png',
+		'iconname' => 'subscript',
+		'introduced' => 1,
 		'tags' => array( 'basic' ),
 		'params' => array(
 		),
@@ -22,8 +23,5 @@ function wikiplugin_sub_info()
 
 function wikiplugin_sub($data, $params)
 {
-	global $tikilib;
-
-	extract($params, EXTR_SKIP);
 	return "<sub>$data</sub>";
 }

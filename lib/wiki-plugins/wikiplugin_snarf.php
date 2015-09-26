@@ -13,12 +13,14 @@ function wikiplugin_snarf_info()
 		'description' => tra('Display the contents of another web page'),
 		'prefs' => array( 'wikiplugin_snarf' ),
 		'validate' => 'all',
-		'icon' => 'img/icons/page_copy.png',
+		'iconname' => 'copy',
+		'introduced' => 1,
 		'params' => array(
 			'url' => array(
 				'required' => true,
 				'name' => tra('URL'),
 				'description' => tra('Full URL to the page to include.'),
+				'since' => '1',
 				'filter' => 'url',
 				'default' => '',
 			),
@@ -26,39 +28,45 @@ function wikiplugin_snarf_info()
 				'required' => false,
 				'name' => tra('Regular Expression Pattern'),
 				'description' => tra('PCRE-compliant regular expression pattern to find the parts you want changed'),
+				'since' => '1',
 				'default' => '',
-				'filter' => 'striptags'
+				'filter' => 'text'
 			),
 			'regexres' => array(
 				'required' => false,
 				'name' => tra('Regular Expression Replacement'),
 				'description' => tra('PCRE-compliant regular expression replacement syntax showing what the content should be changed to'),
+				'since' => '1',
 				'default' => '',
-				'filter' => 'striptags'
+				'filter' => 'text'
 			),
 			'wrap' => array(
 				'required' => false,
 				'name' => tra('Word Wrap'),
 				'description' => tra('Enable/disable word wrapping of snippets of code (enabled by default)'),
 				'default' => 1,
+				'since' => '3.0',
+				'filter' => 'digits',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 1), 
 					array('text' => tra('No'), 'value' => 0)
 				),
-				'filter' => 'int',
 			),
 			'colors' => array(
 				'required' => false,
 				'name' => tra('Colors'),
-				'description' => tra('Syntax highlighting to use for code snippets. Available: php, html, sql, javascript, css, java, c, doxygen, delphi, ...'),
+				'description' => tra('Syntax highlighting to use for code snippets (Plugin Code is used for this)'),
+				'since' => '3.0',
 				'default' => NULL,
-				'filter' => 'striptags'
+				'filter' => 'text'
 			),
 			'ln' => array(
 				'required' => false,
 				'name' => tra('Line Numbers'),
-				'description' => tra('Set to 1 (Yes) to add line numbers to code snippets (not shown by default)'),
+				'description' => tr('Set to Yes (%0) to add line numbers to code snippets (not shown by default)',
+					'<code>1</code>'),
+				'since' => '3.0',
 				'default' => NULL,
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -71,6 +79,7 @@ function wikiplugin_snarf_info()
 				'required' => false,
 				'name' => tra('Wiki Syntax'),
 				'description' => tra('Parse wiki syntax within the code snippet (not parsed by default).'),
+				'since' => '3.0',
 				'default' => 0,
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -83,6 +92,7 @@ function wikiplugin_snarf_info()
 				'required' => false,
 				'name' => tra('Right to Left'),
 				'description' => tra('Switch the text display from left to right to right to left'),
+				'since' => '3.0',
 				'default' => NULL,
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -94,7 +104,9 @@ function wikiplugin_snarf_info()
 			'ishtml' => array(
 				'required' => false,
 				'name' => tra('HTML Content'),
-				'description' => tra('Set to 1 (Yes) to display the content as is instead of escaping HTML special chars (not set by default).'),
+				'description' => tr('Set to Yes (%0) to display the content as is instead of escaping HTML special
+					characters (not set by default).', '<code>1</code>'),
+				'since' => '3.0',
 				'default' => NULL,
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -106,7 +118,9 @@ function wikiplugin_snarf_info()
 			'cache' => array(
 				'required' => false,
 				'name' => tra('Cache Url'),
-				'description' => tra('Cache time in minutes. Default is to use site preference, Set to 0 for no cache.'),
+				'description' => tr('Cache time in minutes. Default is to use site preference, Set to %0 for no cache.',
+					'<code>0</code>'),
+				'since' => '5.0',
 				'default' => '',
 				'filter' => 'int'
 			),
@@ -114,8 +128,9 @@ function wikiplugin_snarf_info()
 				'required' => false,
 				'name' => tra('Label'),
 				'description' => tra('Text to click on to fetch the url via ajax'),
+				'since' => '6.0',
 				'default' => '',
-				'filter' => 'striptags'
+				'filter' => 'text'
 			),
 		),
 	);

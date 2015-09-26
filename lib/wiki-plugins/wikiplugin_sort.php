@@ -14,13 +14,15 @@ function wikiplugin_sort_info()
 		'prefs' => array( 'wikiplugin_sort' ),
 		'body' => tra('Data to sort, one entry per line.'),
 		'filter' => 'text',
-		'icon' => 'img/icons/table_sort.png',
+		'iconname' => 'sort-desc',
+		'introduced' => 1,
 		'tags' => array( 'basic' ),
 		'params' => array(
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Order'),
 				'description' => tra('Set the sort order of lines of content (default is ascending)'),
+				'since' => '1',
 				'filter' => 'alpha',
 				'default' => 'asc',
 				'options' => array(
