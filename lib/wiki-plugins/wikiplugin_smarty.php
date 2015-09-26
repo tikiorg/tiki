@@ -10,17 +10,20 @@ function wikiplugin_smarty_info()
 	return array(
 		'name' => tra('Smarty function'),
 		'documentation' => 'PluginSmarty',
-		'description' => tra('Insert a Smarty function'),
+		'description' => tra('Insert a Smarty function or variable'),
 		'prefs' => array('wikiplugin_smarty'),
 		'validate' => 'all',
 		'extraparams' => true,
 		'tags' => array( 'experimental' ),
-		'icon' => 'img/icons/task_submitted.png',
+		'iconname' => 'code',
+		'introduced' => 5,
 		'params' => array(
 			'name' => array(
 				'required' => true,
 				'name' => tra('Smarty function'),
-				'description' => tra('The name of the Smarty function that the button will activate. Available functions are: lib/smarty/libs/plugins/function.[name].php'),
+				'description' => tr('The name of the Smarty function that the button will activate. Available
+					functions can be found at %0', '<code>lib/smarty/libs/plugins/function.(<strong>name</strong>).php</code>'),
+				'since' => '7.0',
 				'filter' => 'word',
 				'default' => '',
 			),
@@ -39,7 +42,7 @@ function wikiplugin_smarty($data, $params)
 	} else {
 		$path = 'lib/smarty_tiki/function.'.$params['name'].'.php';
 		if (!file_exists($path)) {
-			$path = 'lib/smarty/libs/plugins/function.'.$params['name'].'.php';
+			$path = 'vendor/smarty/smarty/libs/plugins/function.'.$params['name'].'.php';
 			if (!file_exists($path)) {
 				return tra('Incorrect parameter');
 			}

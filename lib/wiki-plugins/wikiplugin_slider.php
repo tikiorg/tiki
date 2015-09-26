@@ -10,40 +10,48 @@ function wikiplugin_slider_info()
 	return array(
 		'name' => tra('Slider'),
 		'documentation' => 'PluginSlider',
-		'description' => tra('Arrange content in a sliding area'),
+		'description' => tra('Embed a mini-slideshow of content on a page'),
 		'prefs' => array( 'wikiplugin_slider' ),
 		'body' => tra('Content separated by /////'),
-		'icon' => 'img/icons/cool.gif',
+		'iconname' => 'tv',
+		'introduced' => 8,
 		'tags' => array( 'basic' ),
 		'params' => array(
 			'titles' => array(
 				'required' => false,
 				'name' => tra('Slider Titles'),
-				'description' => tra('Pipe separated list of slider titles. Ex: slider 1|slider 2|slider 3'),
+				'description' => tr('Pipe separated list of slider titles. Example:')
+					. '<code>slider 1|slider 2|slider 3</code>',
+				'since' => '8.0',
+				'filter' => 'text',
+				'separator' => '|',
 				'default' => '',
 			),
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
-				'description' => tra('Width in pixels or percentage. Default value is page width. e.g. "200px" or "100%"'),
-				'filter' => 'striptags',
-				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
+				'description' => tr('Width in pixels or percentage. Default value is page width. e.g. %0 or %1',
+					'<code>200px</code>', '<code>100%</code>'),
+				'since' => '8.0',
+				'filter' => 'text',
 				'default' => 'Slider width',
 			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
-				'description' => tra('Height in pixels or percentage. Default value is complete slider height. if expand parameter set to y, then don\'t use percent only use pixels '),
-				'filter' => 'striptags',
-				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',
+				'description' => tr('Height in pixels or percentage. Default value is complete slider height.
+					If the %0 parameter set to Yes (%1), then don\'t use percent only use pixels.',
+					'<code>expand</code>', '<code>y</code>'),
+				'since' => '8.0',
+				'filter' => 'text',
 				'default' => 'Slider height',
 			),
 			'theme' => array(
 				'required' => false,
 				'name' => tra('Theme'),
 				'description' => tra('The theme to use in slider.'),
-				'filter' => 'striptags',
-				'accepted' => 'Name of the theme you want to use',
+				'since' => '8.0',
+				'filter' => 'text',
 				'default' => 'default',
 				'options' => array(
 					array('text' => 'default', 'value' => ''),
@@ -68,9 +76,10 @@ function wikiplugin_slider_info()
 			'expand' => array(
 				'required' => false,
 				'name' => tra('Expand'),
-				'description' => tra('if y, the entire slider will expand to fit the parent element and height parameter should not be empty'),
+				'description' => tr('Set whether the entire slider expands to fit the parent element. The %0 parameter
+					needs to also be set', '<code>height</code>'),
+				'since' => '8.0',
 				'filter' => 'alpha',
-				'accepted' => 'y or n',
 				'default' => 'n',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -80,10 +89,10 @@ function wikiplugin_slider_info()
 			),
 			'resizecontents' => array(
 				'required' => false,
-				'name' => tra('Resize Contents'),
-				'description' => tra('if y, solitary images/objects in the panel will expand to fit the viewport'),
+				'name' => tra('Resize'),
+				'description' => tr('Set whether solitary images/objects in the panel will be expanded to fit the viewport'),
+				'since' => '8.0',
 				'filter' => 'alpha',
-				'accepted' => 'y or n',
 				'default' => 'y',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -95,16 +104,16 @@ function wikiplugin_slider_info()
 				'required' => false,
 				'name' => tra('Show Multiple'),
 				'description' => tra('Set this value to a number and it will show that many slides at once'),
-				'filter' => 'striptags',
-				'accepted' => 'a number',
+				'since' => '8.0',
+				'filter' => 'digits',
 				'default' => '1'
 			),
 			'buildarrows' => array(
 				'required' => false,
-				'name' => tra('Build Arrows'),
-				'description' => tra('if y, builds the forwards and backwards buttons'),
+				'name' => tra('Arrows'),
+				'description' => tra('Set whether to show forward and backward buttons'),
+				'since' => '8.0',
 				'filter' => 'alpha',
-				'accepted' => 'y or n',
 				'default' => 'y',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -114,10 +123,10 @@ function wikiplugin_slider_info()
 			),
 			'buildnavigation' => array(
 				'required' => false,
-				'name' => tra('Build Navigation'),
-				'description' => tra('if y, builds a list of anchor links to link to each panel'),
+				'name' => tra('Navigation'),
+				'description' => tra('Set whether to show a list of anchor links to link to each panel'),
+				'since' => '8.0',
 				'filter' => 'alpha',
-				'accepted' => 'y or n',
 				'default' => 'y',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -127,10 +136,10 @@ function wikiplugin_slider_info()
 			),
 			'buildstartstop' => array(
 				'required' => false,
-				'name' => tra('Build Start Stop'),
-				'description' => tra('if y, builds the start/stop button and adds slideshow functionality'),
+				'name' => tra('Start / Stop'),
+				'description' => tra('Set whether to show a start/stop button and add slideshow functionality'),
+				'since' => '8.0',
 				'filter' => 'alpha',
-				'accepted' => 'y or n',
 				'default' => 'y',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -141,9 +150,9 @@ function wikiplugin_slider_info()
 			'togglearrows' => array(
 				'required' => false,
 				'name' => tra('Toggle Arrows'),
-				'description' => tra('if y, side navigation arrows will slide out on hovering & hide @ other times'),
+				'description' => tra('Set whether side navigation arrows slide out on hovering and hide at other times'),
+				'since' => '8.0',
 				'filter' => 'alpha',
-				'accepted' => 'y or n',
 				'default' => 'n',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -154,9 +163,10 @@ function wikiplugin_slider_info()
 			'togglecontrols' => array(
 				'required' => false,
 				'name' => tra('Toggle Controls'),
-				'description' => tra('if y, slide in controls (navigation + play/stop button) on hover and slide change, hide @ other times'),
+				'description' => tra('Set whether slide in controls (navigation + play/stop button) on hover and slide
+					change, hide at other times'),
+				'since' => '8.0',
 				'filter' => 'alpha',
-				'accepted' => 'y or n',
 				'default' => 'n',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -167,9 +177,9 @@ function wikiplugin_slider_info()
 			'enablearrows' => array(
 				'required' => false,
 				'name' => tra('Enable Arrows'),
-				'description' => tra('if n, arrows will be visible, but not clickable.'),
+				'description' => tra('Set whether arrows are clickable'),
+				'since' => '8.0',
 				'filter' => 'alpha',
-				'accepted' => 'y or n',
 				'default' => 'y',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -180,9 +190,9 @@ function wikiplugin_slider_info()
 			'enablenavigation' => array(
 				'required' => false,
 				'name' => tra('Enable Navigation'),
-				'description' => tra('if n, navigation links will still be visible, but not clickable.'),
+				'description' => tra('Set whether navigation links are clickable'),
+				'since' => '8.0',
 				'filter' => 'alpha',
-				'accepted' => 'y or n',
 				'default' => 'y',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -193,9 +203,10 @@ function wikiplugin_slider_info()
 			'enablestartstop' => array(
 				'required' => false,
 				'name' => tra('Enable Start Stop'),
-				'description' => tra('if n, the play/stop button will still be visible, but not clickable. Previously "enablePlay"'),
+				'description' => tr('Set whether the play/stop button is clickable. Previously %0',
+					'<code>enablePlay</code>'),
+				'since' => '8.0',
 				'filter' => 'alpha',
-				'accepted' => 'y or n',
 				'default' => 'y',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -206,9 +217,9 @@ function wikiplugin_slider_info()
 			'enablekeyboard' => array(
 				'required' => false,
 				'name' => tra('Enable Keyboard'),
-				'description' => tra('if n, keyboard arrow keys will not work for this slider.'),
+				'description' => tra('Set whether keyboard arrow keys will work for this slider'),
+				'since' => '8.0',
 				'filter' => 'alpha',
-				'accepted' => 'y or n',
 				'default' => 'y',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -219,9 +230,10 @@ function wikiplugin_slider_info()
 			'autoplay' => array(
 				'required' => false,
 				'name' => tra('Auto Play'),
-				'description' => tra('if y, the slideshow will start running; replaces "startStopped" option'),
+				'description' => tr('Set whether the slideshow will start running automatically; replaces %0 option',
+					'<code>startStopped</code>'),
+				'since' => '8.0',
 				'filter' => 'alpha',
-				'accepted' => 'y or n',
 				'default' => 'f',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -232,9 +244,9 @@ function wikiplugin_slider_info()
 			'autoplaylocked' => array(
 				'required' => false,
 				'name' => tra('Auto Play Locked'),
-				'description' => tra('if y, user changing slides will not stop the slideshow'),
+				'description' => tra('Keep playing the slideshow even if the user changes slides'),
+				'since' => '8.0',
 				'filter' => 'alpha',
-				'accepted' => 'y or n',
 				'default' => 'n',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -245,9 +257,9 @@ function wikiplugin_slider_info()
 			'autoplaydelayed' => array(
 				'required' => false,
 				'name' => tra('Auto Play Delayed'),
-				'description' => tra('if y, starting a slideshow will delay advancing slides; if n, the slider will immediately advance to the next slide when slideshow starts'),
+				'description' => tra('Set whether there will be a delay in advancing slides'),
+				'since' => '8.0',
 				'filter' => 'alpha',
-				'accepted' => 'y or n',
 				'default' => 'n',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -258,9 +270,9 @@ function wikiplugin_slider_info()
 			'pauseonhover' => array(
 				'required' => false,
 				'name' => tra('Pause On Hover'),
-				'description' => tra('if y & the slideshow is active, the slideshow will pause on hover'),
+				'description' => tra('Set whether the slideshow will pause on hover while the slideshow is active'),
+				'since' => '8.0',
 				'filter' => 'alpha',
-				'accepted' => 'y or n',
 				'default' => 'y',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -271,9 +283,9 @@ function wikiplugin_slider_info()
 			'stopatend' => array(
 				'required' => false,
 				'name' => tra('Stop At End'),
-				'description' => tra('if y & the slideshow is active, the slideshow will stop on the last page. This also stops the rewind effect when infiniteSlides is false.'),
+				'description' => tra('Set whether the slideshow stops on the last page'),
+				'since' => '8.0',
 				'filter' => 'alpha',
-				'accepted' => 'y or n',
 				'default' => 'n',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -285,16 +297,16 @@ function wikiplugin_slider_info()
 				'required' => false,
 				'name' => tra('Delay between slides'),
 				'description' => tra('Time in milliseconds between slideshow transitions (in AutoPlay mode).'),
-				'filter' => 'striptags',
-				'accepted' => 'a number',
+				'since' => '10.0',
+				'filter' => 'digits',
 				'default' => '3000',
 			),
 			'playrtl' => array(
 				'required' => false,
-				'name' => tra('Play Right To Left'),
-				'description' => tra('if y, the slideshow will move right-to-left'),
+				'name' => tra('Right To Left'),
+				'description' => tra('Set whether the slideshow moves right-to-left'),
+				'since' => '8.0',
 				'filter' => 'alpha',
-				'accepted' => 'y or n',
 				'default' => 'n',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -305,9 +317,9 @@ function wikiplugin_slider_info()
 			'resumeonvideoend' => array(
 				'required' => false,
 				'name' => tra('Resume On Video End'),
-				'description' => tra('if y & the slideshow is active & a supported video is playing, it will pause the autoplay until the video is complete'),
+				'description' => tra('Set whether auto play stops until the video is complete (for supported video types)'),
+				'since' => '8.0',
 				'filter' => 'alpha',
-				'accepted' => 'y or n',
 				'default' => 'y',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -319,16 +331,16 @@ function wikiplugin_slider_info()
 				'required' => false,
 				'name' => tra('Animation Time'),
 				'description' => tra('Milliseconds between slides'),
-				'filter' => 'striptags',
-				'accepted' => 'a number',
+				'since' => '10.0',
+				'filter' => 'digits',
 				'default' => '600',
 			),
 			'hashtags' => array(
 				'required' => false,
-				'name' => tra('Display panel hashtag'),
-				'description' => tra('if y, each panel has a hashtag that will appear in the page URL, allowing you to link to a specific panel.'),
+				'name' => tra('Panel Hashtags'),
+				'description' => tra('Set whether to include a hashtag in the page URL, allowing links to specific panels'),
+				'since' => '13.0',
 				'filter' => 'alpha',
-				'accepted' => 'y or n',
 				'default' => 'y',
 				'options' => array(
 					array('text' => '', 'value' => ''),
