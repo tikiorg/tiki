@@ -13,7 +13,8 @@ function wikiplugin_sup_info()
 		'description' => tra('Apply superscript font to text'),
 		'prefs' => array( 'wikiplugin_sup' ),
 		'body' => tra('text'),
-		'icon' => 'img/icons/text_superscript.png',
+		'iconname' => 'superscript',
+		'introduced' => 2,
 		'filter' => 'wikicontent',
 		'tags' => array( 'basic' ),
 		'params' => array(
@@ -23,8 +24,5 @@ function wikiplugin_sup_info()
 
 function wikiplugin_sup($data, $params)
 {
-	global $tikilib;
-
-	extract($params, EXTR_SKIP);
 	return "<sup>$data</sup>";
 }

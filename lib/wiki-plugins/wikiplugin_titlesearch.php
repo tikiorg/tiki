@@ -12,39 +12,51 @@ function wikiplugin_titlesearch_info()
 	return array(
 		'name' => tra('Title Search'),
 		'documentation' => 'PluginTitleSearch',
-		'description' => tra('Search pages by title'),
+		'description' => tra('Search page titles'),
 		'prefs' => array( 'feature_wiki', 'wikiplugin_titlesearch' ),
-		'icon' => 'img/icons/page_find.png',
+		'iconname' => 'search',
+		'introduced' => 1,
 		'params' => array(
 			'search' => array(
 				'required' => true,
 				'name' => tra('Search Criteria'),
 				'description' => tra('Portion of a page name.'),
+				'since' => '1',
+				'filter' => 'text',
 				'default' => '',
 			),
 			'info' => array(
 				'required' => false,
 				'name' => tra('Information'),
 				'description' => tra('Also show page hits or user'),
+				'since' => '1',
 				'default' => '',
+				'filter' => 'alpha',
+				'separator' => '|',
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Hits'), 'value' => 'hits'), 
-					array('text' => tra('User'), 'value' => 'user')
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Hits'), 'value' => 'hits'),
+					array('text' => tra('User'), 'value' => 'user'),
+					array('text' => tra('Hits and user'), 'value' => 'hits|user'),
+					array('text' => tra('User and hits'), 'value' => 'user|hits')
 				)
 			),
 			'exclude' => array(
 				'required' => false,
 				'name' => tra('Exclude'),
 				'description' => tra('Pipe-separated list of page names to exclude from results.'),
+				'since' => '1',
 				'default' => '',
+				'filter' => 'text',
 				'separator' => '|',
 				'profile_reference' => 'wiki_page',
 			),
 			'noheader' => array(
 				'required' => false,
 				'name' => tra('No Header'),
-				'description' => tra('Set to 1 (Yes) to have no header for the search results.'),
+				'description' => tr('Set to Yes (%0) to have no header for the search results.', '<code>1</code>'),
+				'since' => '1',
+				'filter' => 'digits',
 				'default' => 0,
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -84,7 +96,7 @@ class WikiPluginTitleSearch extends PluginsLib
 		$wikilib = TikiLib::lib('wiki');
 		$tikilib = TikiLib::lib('tiki');
 		$aInfoPreset = array_keys($this->aInfoPresetNames);
-		$exclude = $params['exclude'];
+		$exclude = !empty($params['exclude']) ? $params['exclude'] : '';
 		$params = $this->getParams($params, true);
 		extract($params, EXTR_SKIP);
 		if (!$search) {
@@ -119,9 +131,11 @@ class WikiPluginTitleSearch extends PluginsLib
 		$sOutput = "";
 		$aPages = $tikilib->list_pages(0, -1, 'pageName_desc', $search, null, false);
 		foreach ($aPages["data"] as $idPage => $aPage) {
-			if (in_array($aPage["pageName"], $exclude)) {
-				unset($aPages["data"][$idPage]);
-				$aPages["cant"]--;
+			if (!empty($exclude)) {
+				if (in_array($aPage["pageName"], $exclude)) {
+					unset($aPages["data"][$idPage]);
+					$aPages["cant"]--;
+				}
 			}
 		}
 		//

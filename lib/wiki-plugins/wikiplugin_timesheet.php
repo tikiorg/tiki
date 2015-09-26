@@ -10,10 +10,11 @@ function wikiplugin_timesheet_info()
 	return array(
 		'name' => tra('TimeSheet'),
 		'documentation' => 'Timesheet',
-		'description' => tra('A portable timesheet usable in a webpage'),
+		'description' => tra('Embed a timesheet into a page'),
 		'prefs' => array('wikiplugin_timesheet', 'feature_time_sheet'),
 		'body' => tra('text'),
-		'icon' => 'img/icons/layout_header.png',
+		'iconname' => 'table',
+		'introduced' => 9,
 		'tags' => array( 'basic' ),
 		'params' => array(
 		),
