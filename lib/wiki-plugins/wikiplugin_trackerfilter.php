@@ -14,20 +14,37 @@ function wikiplugin_trackerfilter_info()
 			'filters' => array(
 				'required' => true,
 				'name' => tra('Filters'),
-				'description' => tra('The list of fields that can be used as filters along with their formats. The field number and format are separated by a / and multile fields are separated by ":". Format choices are: d - dropdown; r - radio buttons; m - multiple choice dropdown; c - checkbox; t - text with wild characters; T - exact text match; i - initials; sqlsearch - advanced search; >, <, >=, <= - greater than, less than, greater than or equal, less than or equal. Example:') . '2/d:4/r:5:(6:7)/sqlsearch',
+				'description' => tr('The list of fields that can be used as filters along with their formats.
+					The field number and format are separated by a %0/%1 and multiple fields are separated by %0:%1.',
+						'<code>', '</code>')
+					. tr('Format choices are:') . '<br /><code>d</code> - ' . tr('dropdown')
+					. '<br /><code>r</code> - ' . tr('radio buttons')
+					. '<br /><code>m</code> - ' . tr('multiple choice dropdown')
+					. '<br /><code>c</code> - ' . tr('checkbox')
+					. '<br /><code>t</code> - ' . tr('text with wild characters')
+					. '<br /><code>T</code> - ' . tr('exact text match')
+					. '<br /><code>i</code> - ' . tr('initials')
+					. '<br /><code>sqlsearch</code> - ' . tr('advanced search')
+					. '<br /><code>></code>, <code>><</code>, <code>>>=</code>, <code>><=</code> - ' . tr('greater
+						than, less than, greater than or equal, less than or equal.') . '<br />'
+					. tr('Example:') . ' <code>2/d:4/r:5:(6:7)/sqlsearch</code>',
+				'since' => '1',
 				'default' => '',
 				'profile_reference' => 'tracker_field_string',
 			),
 			'action' => array(
 				'required' => false,
 				'name' => tra('Action'),
-				'description' => tra('Label on the submit button. Default: "Filter". Use a space character to omit the button (for use in datachannels etc)'),
+				'description' => tr('Label on the submit button. Default: %0Filter%1. Use a space character to omit the
+					button (for use in datachannels etc)', '<code>', '</code>'),
+				'since' => '2.0',
 				'default' => 'Filter'
 			),
 			'displayList' => array(
 				'required' => false,
 				'name' => tra('Display List'),
 				'description' => tra('Show the full list (before filtering) initially (filtered list shown by default)'),
+				'since' => '2.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -40,6 +57,7 @@ function wikiplugin_trackerfilter_info()
 				'required' => false,
 				'name' => tra('Line'),
 				'description' => tra('Displays all the filters on the same line (not shown on same line by default)'),
+				'since' => '2.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -52,7 +70,9 @@ function wikiplugin_trackerfilter_info()
 			'noflipflop' => array(
 				'required' => false,
 				'name' => tra('No Toggle'),
-				'description' => tra('The toggle button to show/hide filters will not be shown if set to y (Yes). Default is to show the toggle.'),
+				'description' => tr('The toggle button to show/hide filters will not be shown if set to Yes (%0y%1).
+					Default is to show the toggle.', '<code>', '</code>'),
+				'since' => '6.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -65,13 +85,15 @@ function wikiplugin_trackerfilter_info()
 				'required' => false,
 				'name' => tra('Export CSV.'),
 				'description' => tra('Label for an export button. Leave blank to show the usual "Filter" button instead.'),
+				'since' => '6.0',
 				'default' => '',
 				'advanced' => true,
 			),
 			'export_status' => array(
 				'required' => false,
-				'name' => tra('Export status field'),
+				'name' => tra('Export Status Field'),
 				'description' => tra('Export the status field if the Export CSV option is used'),
+				'since' => '11.1',
 				'advanced' => true,
 				'filter' => 'alpha',
 				'default' => 'n',
@@ -83,8 +105,9 @@ function wikiplugin_trackerfilter_info()
 			),					
 			'export_created' => array(
 				'required' => false,
-				'name' => tra('Export created date field'),
+				'name' => tra('Export Created Date Field'),
 				'description' => tra('Export the created date field if the Export CSV option is used'),
+				'since' => '11.1',
 				'advanced' => true,
 				'filter' => 'alpha',
 				'default' => 'n',
@@ -96,8 +119,9 @@ function wikiplugin_trackerfilter_info()
 			),					
 			'export_modif' => array(
 				'required' => false,
-				'name' => tra('Export modified date field'),
+				'name' => tra('Export Modified Date Field'),
 				'description' => tra('Export the modified date field if the Export CSV option is used'),
+				'since' => '11.1',
 				'advanced' => true,
 				'filter' => 'alpha',
 				'default' => 'n',
@@ -109,8 +133,9 @@ function wikiplugin_trackerfilter_info()
 			),					
 			'export_charset' => array(
 				'required' => false,
-				'name' => tra('Export character set'),
+				'name' => tra('Export Character Set'),
 				'description' => tra('Character set to be used if the Export CSV option is used'),
+				'since' => '11.1',
 				'default' => 'UTF-8',
 				'advanced' => true,
 			),					
@@ -118,6 +143,7 @@ function wikiplugin_trackerfilter_info()
 				'required' => false,
 				'name' => tra('Map View Buttons'),
 				'description' => tra('Display Mapview and Listview buttons'),
+				'since' => '6.0' . tr('was 0% until 12.0', '<code>googlemapButtons</code>'),
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
@@ -136,7 +162,8 @@ function wikiplugin_trackerfilter_info()
 		'description' => tra('Create a form to filter tracker fields'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_trackerfilter' ),
 		'body' => tra('notice'),
-		'icon' => 'img/icons/application_form_magnify.png',
+		'iconname' => 'filter',
+		'introduced' => 1,
 		'params' => $params,
 		'format' => 'html',
 		'extraparams' => true,

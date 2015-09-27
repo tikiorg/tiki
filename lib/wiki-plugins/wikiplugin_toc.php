@@ -10,21 +10,26 @@ function wikiplugin_toc_info()
 	return array(
 		'name' => tra('Table of Contents (Structure)'),
 		'documentation' => 'PluginTOC',
-		'description' => tra('Display a table of contents of pages or sub-pages'),
+		'description' => tra('Display a table of contents of pages in a structure'),
 		'prefs' => array( 'wikiplugin_toc', 'feature_wiki_structure' ),
-		'icon' => 'img/icons/text_list_numbers.png',
+		'iconname' => 'list-numbered',
+		'introduced' => 3,
 		'lateParse' => true,
 		'params' => array(
 			'maxdepth' => array(
 				'name' => tra('Maximum Depth'),
-				'description' => tra('Maximum number of levels to display. On very large structures, this should be limited. Zero means no limit (and is the default).'),
+				'description' => tr('Maximum number of levels to display. On very large structures, this should be
+					limited. %0 means no limit (and is the default).', '<code>0</code>'),
+				'since' => '3.0',
 				'required' => false,
 				'filter' => 'digits',
 				'default' => 0,
 			),
 			'structId' => array(
 				'name' => tra('Structure ID'),
-				'description' => tra('By default, structure for the current page will be displayed. Alternate structure may be provided.'),
+				'description' => tra('By default, structure for the current page will be displayed. Alternate
+					structure may be provided.'),
+				'since' => '3.0',
 				'required' => false,
 				'filter' => 'digits',
 				'default' => '',
@@ -33,6 +38,7 @@ function wikiplugin_toc_info()
 			'order' => array(
 				'name' => tra('Order'),
 				'description' => tra('Order items in ascending or descending order (default is ascending).'),
+				'since' => '3.0',
 				'required' => false,
 				'filter' => 'alpha',
 				'default' => 'asc',
@@ -45,7 +51,9 @@ function wikiplugin_toc_info()
 			'showdesc' => array(
 				'name' => tra('Show Description'),
 				'description' => tra('Show the page description instead of the page name'),
+				'since' => '3.0',
 				'required' => false,
+				'filter' => 'digits',
 				'default' => 0,
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -56,7 +64,9 @@ function wikiplugin_toc_info()
 			'shownum' => array(
 				'name' => tra('Show Numbering'),
 				'description' => tra('Display the section numbers or not'),
+				'since' => '3.0',
 				'required' => false,
+				'filter' => 'digits',
 				'default' => 0,
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -67,6 +77,7 @@ function wikiplugin_toc_info()
 			'type' => array(
 				'name' => tra('Type'),
 				'description' => tra('Style to apply'),
+				'since' => '3.0',
 				'required' => false,
 				'filter' => 'alpha',
 				'default' => 'plain',
@@ -79,8 +90,11 @@ function wikiplugin_toc_info()
 			),
 			'pagename' => array(
 				'name' => tra('Page Name'),
-				'description' => tra('By default, the table of contents for the current page will be displayed. Alternate page may be provided.'),
+				'description' => tra('By default, the table of contents for the current page will be displayed.
+					Alternate page may be provided.'),
+				'since' => '5.0',
 				'required' => false,
+				'filter' => 'pagename',
 				'default' => '',
 				'profile_reference' => 'wiki_page',
 			),
