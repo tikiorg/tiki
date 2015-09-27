@@ -265,21 +265,27 @@ function wikiplugin_tracker_info()
 			'transactionName' => array(
 				'required' => false,
 				'name' => tra('Transaction name'),
-				'description' => tra('Under this transaction name is the transaction information stored. Must be unique per transaction. The same steps must share the same name.'),
+				'description' => tra('The transaction identifier. This identifier connects the various trackers into a
+					single transaction. Must be unique per transaction. The multiple steps in a single transaction
+					must share the same transaction name.'),
+				'since' => '15.0',
 				'filter' => 'alpha',
 				'default' => '',
 			),
 			'transactionStep' => array(
 				'required' => false,
-				'name' => tra('Transaction step'),
-				'description' => tra('Transaction step, numbering must start from 0.'),
+				'name' => tra('Transaction Step'),
+				'description' => tr('Transaction step number specifying the order of the transaction steps. The first
+					step must be %0.', '<code>0</code>'),
+				'since' => '15.0',
 				'filter' => 'digits',
 				'default' => '0',
 			),
 			'transactionFinalStep' => array(
 				'required' => false,
-				'name' => tra('Final transaction step'),
-				'description' => tra('Is this the final transaction step?'),
+				'name' => tra('Final Transaction Step'),
+				'description' => tra('Indicate whether this is the final transaction step'),
+				'since' => '15.0',
 				'filter' => 'alpha',
 				'default' => 'y',
 				'options' => array(
@@ -411,7 +417,9 @@ function wikiplugin_tracker_info()
 			'chosenGroup' => array(
 				'required' => false,
 				'name' => tra('Register to group'),
-				'description' => tra('The user enters this group via the registration (only a single group name is supported)'),
+				'description' => tra('The user enters this group via the registration (only a single group name
+					is supported)'),
+				'since' => '15.0',
 				'filter' => 'text',
 				'default' => 'Registered',
 			),
@@ -419,6 +427,7 @@ function wikiplugin_tracker_info()
 				'required' => false,
 				'name' => tra('Validate users'),
 				'description' => tra('Here one can overrule the default validate users by e-mail preference.'),
+				'since' => '15.0',
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
