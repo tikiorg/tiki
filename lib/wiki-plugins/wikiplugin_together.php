@@ -10,15 +10,23 @@ function wikiplugin_together_info()
 	return array(
 		'name' => tra('Together'),
 		'documentation' => 'PluginTogether',
-		'description' => tra('Insert the TogetherJS Widget'),
+		'description' => tra('Collaborate in real time'),
+		'iconname' => 'group',
+		'introduced' => 12,
 		'prefs' => array( 'wikiplugin_together' ),
-		'body' => tra('A service for your website that makes it surprisingly easy to collaborate in real-time. TogetherJS lets users communicate, co-author, co-browse and guide each other. TogetherJS is implemented in Javascript; no software or plugins to install, and it is friendly with existing web pages, while still letting developers customize the experience.')." ".tra("Note: TogetherJS is alpha-quality software. We do not recommend using it in production at this time."),
+		'additional' => tra('A service for collaborating on your website in real-time. TogetherJS lets users communicate,
+			co-author, co-browse and guide each other. TogetherJS is implemented in Javascript; no software or plugins
+			to install, and it is friendly with existing web pages, while still letting developers customize the
+			experience.')." ".tra("Note: TogetherJS is alpha-quality software. We do not recommend using it in
+			production at this time."),
 		'params' => array(
 			'buttonname' => array(
 				'required' => false,
 				'name' => tra('Button Name'),
 				'description' => tra('Set the button name. Default is CoWrite with TogetherJS'),
-				'default' => 'CoWrite with TogetherJS'
+				'since' => '12.0',
+				'filter' => 'text',
+				'default' => tra('CoWrite with TogetherJS')
 			),
 		)
 	);

@@ -10,16 +10,18 @@ function wikiplugin_tracker_info()
 	return array(
 		'name' => tra('Tracker'),
 		'documentation' => 'PluginTracker',
-		'description' => tra('Create a form in a wiki page to populate a tracker'),
+		'description' => tra('Embed a form to populate a tracker'),
 		'tags' => array( 'basic' ),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_tracker' ),
 		'body' => tra('Confirmation message after posting form'),
-		'icon' => 'img/icons/application_form.png',
+		'iconname' => 'trackers',
+		'introduced' => 1,
 		'params' => array(
 			'trackerId' => array(
 				'required' => true,
 				'name' => tra('Tracker ID'),
 				'description' => tra('Numeric value representing the tracker ID'),
+				'since' => '1',
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'tracker',
@@ -27,7 +29,9 @@ function wikiplugin_tracker_info()
 			'fields' => array(
 				'required' => false,
 				'name' => tra('Fields'),
-				'description' => tra('Colon-separated list of field IDs to be displayed. Example: 2:4:5  If empty, all fields will be shown'),
+				'description' => tr('Colon-separated list of field IDs to be displayed. If empty, all fields will be
+					shown. Example: %0', '<code>2:4:5</code>'),
+				'since' => '1',
 				'default' => '',
 				'separator' => ':',
 				'profile_reference' => 'tracker_field',
@@ -35,14 +39,17 @@ function wikiplugin_tracker_info()
 			'action' => array(
 				'required' => false,
 				'name' => tra('Action'),
-				'description' => tra('Label on the submit button. Default is "Save". When set to "NONE", the save button will not appear and values will be saved dynamically.'),
+				'description' => tr('Label on the submit button. Default is %0Save%1. When set to %0NONE%1, the save
+					button will not appear and values will be saved dynamically.', '<code>', '</code>'),
+				'since' => '1',
 				'separator' => ':',
 				'default' => 'Save'
 			),
 			'action_style' => array(
 				'required' => false,
 				'name' => tra('Action Style'),
-				'description' => tra('Sets button style classes for action buttons. Must be same count as action. Ex: "btn btn-primary:btn btn-success:btn btn-default pull-right"'),
+				'description' => tra('Sets button style classes for action buttons. Must be same count as action.
+					Example:') . "<code>btn btn-primary:btn btn-success:btn btn-default pull-right</code>",
 				'separator' => ':',
 				'default' => 'btn btn-primary'
 			),
@@ -50,6 +57,7 @@ function wikiplugin_tracker_info()
 				'required' => false,
 				'name' => tra('Show Title'),
 				'description' => tra('Display the title of the tracker (not shown by default)'),
+				'since' => '1',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -62,6 +70,7 @@ function wikiplugin_tracker_info()
 				'required' => false,
 				'name' => tra('Show Description'),
 				'description' => tra('Show the tracker\'s description (not shown by default)'),
+				'since' => '1',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -74,6 +83,7 @@ function wikiplugin_tracker_info()
 				'required' => false,
 				'name' => tra('Show Fields Descriptions'),
 				'description' => tra('Show the tracker\'s field descriptions (shown by default)'),
+				'since' => '12.1',
 				'filter' => 'alpha',
 				'default' => 'y',
 				'options' => array(
@@ -86,6 +96,7 @@ function wikiplugin_tracker_info()
 				'required' => false,
 				'name' => tra('Mark Mandatory'),
 				'description' => tra('Indicate mandatory fields with an asterisk (shown by default).'),
+				'since' => '1',
 				'filter' => 'alpha',
 				'default' => 'y',
 				'options' => array(
@@ -98,6 +109,7 @@ function wikiplugin_tracker_info()
 				'required' => false,
 				'name' => tra('Show Status'),
 				'description' => tra('Show the status of the items (not shown by default)'),
+				'since' => '5.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -110,6 +122,7 @@ function wikiplugin_tracker_info()
 				'required' => false,
 				'name' => tra('Embedded'),
 				'description' => tra('Embedded'),
+				'since' => '1',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -121,19 +134,24 @@ function wikiplugin_tracker_info()
 			'email' => array(
 				'required' => false,
 				'name' => tra('Email'),
-				'description' => tra('To send an email once the tracker item has been created. Format: from').'|'.tra('to').'|'.tra('template'),
+				'description' => tr('To send an email once the tracker item has been created. Format: %0from', '<code>')
+					.'|'.tra('to').'|'.tr('template%0', '</code>'),
+				'since' => '2.0',
 				'default' => '',
 			),
 			'emailformat' => array(
 				'required' => false,
-				'name' => tra('Email format'),
-				'description' => tra('Choose between values text or html, depending on the syntax in the template file that you will use'),
+				'name' => tra('Email Format'),
+				'description' => tra('Choose between values text or html, depending on the syntax in the template file
+					that you will use'),
+				'since' => '6.1',
 				'default' => 'text',
 			),
 			'url' => array(
 				'required' => false,
 				'name' => tra('URL'),
 				'description' => tra('URL the user is sent to after the form is submitted'),
+				'since' => '1',
 				'filter' => 'url',
 				'separator' => ':',
 				'default' => '',
@@ -141,7 +159,9 @@ function wikiplugin_tracker_info()
 			'target' => array(
 				'required' => false,
 				'name' => tra('URL Target'),
-				'description' => tra('Set the target parameter for the url (determines whether target will open in a new page, etc.)'),
+				'description' => tra('Set the target parameter for the url (determines whether target will open in a
+					new page, etc.)'),
+				'since' => '4.0',
 				'default' => '',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -154,13 +174,16 @@ function wikiplugin_tracker_info()
 			'values' => array(
 				'required' => false,
 				'name' => tra('Values'),
-				'description' => tra('Colon-separated list of default values for the fields. First value corresponds to first field, second value to second field, etc.'),
+				'description' => tra('Colon-separated list of default values for the fields. First value corresponds
+					to first field, second value to second field, etc.'),
+				'since' => '2.0',
 				'default' => '',
 			),
 			'overwrite' => array(
 				'required' => false,
 				'name' => tra('Overwrite'),
 				'description' => tra('Overwrite current field values of the item with the input values'),
+				'since' => '6.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -172,7 +195,9 @@ function wikiplugin_tracker_info()
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort'),
-				'description' => tra('Display columns in the order listed in the fields parameter instead of by field ID (field ID order is used by default'),
+				'description' => tra('Display columns in the order listed in the fields parameter instead of by
+					field ID (field ID order is used by default'),
+				'since' => '2.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -184,19 +209,23 @@ function wikiplugin_tracker_info()
 			'preview' => array(
 				'required' => false,
 				'name' => tra('Preview'),
-				'description' => tra('Label for the preview button. Default:').' "'. tra('Preview') . '"',
+				'description' => tra('Label for the preview button. Default:').' <code>'. tra('Preview') . '</code>',
+				'since' => '2.0',
 				'default' => 'Preview',
 			),
 			'reset' => array(
 				'required' => false,
 				'name' => tra('Reset'),
 				'description' => tra('Label for the reset button, to return all fields to their default values.'),
+				'since' => '4.2',
 				'default' => tra('reset'),
 			),
 			'view' => array(
 				'required' => false,
 				'name' => tra('View'),
 				'description' => tra('View'),
+				'since' => '1',
+				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
 					array('text' => '', 'value' => ''),
@@ -208,7 +237,8 @@ function wikiplugin_tracker_info()
 			'status' => array(
 				'required' => false,
 				'name' => tra('Status'),
-				'description' => tra('Status of the item used in combination with:').' view=user',
+				'description' => tra('Status of the item used in combination with:').' <code>view="user"</code>',
+				'since' => '6.0',
 				'default' => '',
 			),
 			'transactionName' => array(
@@ -241,6 +271,7 @@ function wikiplugin_tracker_info()
 				'required' => false,
 				'name' => tra('ItemId'),
 				'description' => tra('ItemId allowing for editing an item'),
+				'since' => '3.0',
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'tracker_item',
@@ -249,6 +280,7 @@ function wikiplugin_tracker_info()
 				'required' => false,
 				'name' => tra('Ignore ItemId'),
 				'description' => tra('Do not filter on the parameter itemId if in the url'),
+				'since' => '6.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -261,12 +293,14 @@ function wikiplugin_tracker_info()
 				'required' => false,
 				'name' => tra('Template File'),
 				'description' => tra('Name of the template used to display the tracker items.'),
+				'since' => '2.0',
 				'default' => '',
 			),
 			'wiki' => array(
 				'required' => false,
 				'name' => tra('Wiki'),
 				'description' => tra('Name of the wiki page containing the template to display the tracker items.'),
+				'since' => '2.0',
 				'filter' => 'pagename',
 				'default' => '',
 				'profile_reference' => 'wiki_page',
@@ -275,6 +309,7 @@ function wikiplugin_tracker_info()
 				'required' => false,
 				'name' => tra('New Status'),
 				'description' => tra('Default status applied to newly created items.'),
+				'since' => '2.0',
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
@@ -287,14 +322,17 @@ function wikiplugin_tracker_info()
 			'colwidth' => array(
 				'required' => false,
 				'name' => tra('Width'),
-				'description' => tra('Specify the width in pixels or percentage of the first column (the labels) in the tracker form.'),
+				'description' => tra('Specify the width in pixels or percentage of the first column (the labels) in the
+					tracker form.'),
+				'since' => '3.0',
 				'default' => '',
 				'accepted' => '## or ##%',
 			),
 			'autosavefields' => array(
 				'required' => false,
-				'name' => tra('Autosave fields'),
+				'name' => tra('Autosave Fields'),
 				'description' => tra('Colon-separated list of field IDs to be automatically filled with values'),
+				'since' => '5.0',
 				'filter' => 'digits',
 				'separator' => ':',
 				'default' => '',
@@ -302,8 +340,9 @@ function wikiplugin_tracker_info()
 			),
 			'autosavevalues' => array(
 				'required' => false,
-				'name' => tra('Autosavevalue'),
-				'description' => tra('Colon-separated values corresponding to autosavefields'),
+				'name' => tra('Autosave Values'),
+				'description' => tr('Colon-separated values corresponding to %0', '<code>autosavefields</code>'),
+				'since' => '5.0',
 				'filter' => 'text',
 				'separator' => ':',
 				'default' => '',
@@ -311,7 +350,9 @@ function wikiplugin_tracker_info()
 			'levelupfields' => array(
 				'required' => false,
 				'name' => tra('Increase-only autosave fields'),
-				'description' => tra('Colon-separated list of field IDs being autosaved whose value can only go up, not down'),
+				'description' => tra('Colon-separated list of field IDs being autosaved whose value can only go up,
+					not down'),
+				'since' => '8.0',
 				'filter' => 'digits',
 				'separator' => ':',
 				'default' => '',
@@ -321,6 +362,7 @@ function wikiplugin_tracker_info()
 				'required' => false,
 				'name' => tra('Registration Fields'),
 				'description' => tra('Add registration fields such as Username and Password'),
+				'since' => '6.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -351,7 +393,9 @@ function wikiplugin_tracker_info()
 			'outputtowiki' => array(
 				'required' => false,
 				'name' => tra('Output To Wiki'),
-				'description' => tra('Output result to a new wiki page with the name taken from the input for the specified fieldId'),
+				'description' => tra('Output result to a new wiki page with the name taken from the input for the
+					specified fieldId'),
+				'since' => '6.0',
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'tracker_field',
@@ -359,7 +403,9 @@ function wikiplugin_tracker_info()
 			'discarditem' => array(
 				'required' => false,
 				'name' => tra('Discard After Output'),
-				'description' => tra('Used when results are output to a wiki page to discard the tracker item itself once the wiki page is created'),
+				'description' => tra('Used when results are output to a wiki page to discard the tracker item itself
+					once the wiki page is created'),
+				'since' => '6.0',
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
@@ -372,6 +418,7 @@ function wikiplugin_tracker_info()
 				'required' => false,
 				'name' => tra('Template Page'),
 				'description' => tra('Name of the wiki page containing the template to format the output to wiki page'),
+				'since' => '6.0',
 				'filter' => 'pagename',
 				'default' => '',
 				'profile_reference' => 'wiki_page',
@@ -380,13 +427,16 @@ function wikiplugin_tracker_info()
 				'required' => false,
 				'name' => tra('Output Wiki Namespace'),
 				'description' => tra('Name of namespace to save the wiki page in.'),
+				'since' => '13.0',
 				'filter' => 'pagename',
 				'default' => '',
 			),
 			'outputwikirelation' => array(
 				'required' => false,
-				'name' => tra('Store relation to wiki page'),
-				'description' => tra('Store tiki.wiki.linkeditem and tiki.wiki.linkedfield relation from the created wiki page.'),
+				'name' => tra('Store Relation'),
+				'description' => tra('Store tiki.wiki.linkeditem and tiki.wiki.linkedfield relation from the created
+					wiki page.'),
+				'since' => '13.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -398,27 +448,34 @@ function wikiplugin_tracker_info()
 			'fieldsfill' => array(
 				'required' => false,
 				'name' => tra('Multiple Fill Fields'),
-				'description' => tra('Colon-separated list of field IDs to be filled with multiple values, to create multiple items in one save. Example: 2:4:5  If empty, only one item will be created. Only for item creation'),
+				'description' => tr('Colon-separated list of field IDs to be filled with multiple values, to create
+					multiple items in one save. If empty, only one item will be created. Only for
+					item creation. Example: %0', '<code>2:4:5</code>'),
+				'since' => '9.0',
 				'default' => '',
 				'separator' => ':',
 				'profile_reference' => 'tracker_field',
 			),
 			'fieldsfillseparator' => array(
 				'required' => false,
-				'name' => tra('Separator for Multiple Fill Fields'),
-				'description' => tra('Choose separator between fields in each line of the Multiple Fill text area. Default is pipe (|).'),
+				'name' => tra('Fill Fields Separator'),
+				'description' => tr('Choose separator between fields in each line of the Multiple Fill text area.
+					Default is pipe (%0|%1).', '<code>', '</code>'),
+				'since' => '9.0',
 				'default' => '|',
 			),
 			'fieldsfilldefaults' => array(
 				'required' => false,
-				'name' => tra('Multiple Fill Fields defaults'),
+				'name' => tra('Fill Fields Defaults'),
 				'description' => tra('Colon-separated list of default values for Multiple Fill Fields.'),
+				'since' => '9.0',
 				'default' => '',
 			),
 			'formtag' => array(
 				'required' => false,
 				'name' => tra('Embed the tracker in a form tag'),
 				'description' => tra('If set to Yes, the tracker is contained in a <form> tag and has action buttons'),
+				'since' => '6.4',
 				'filter' => 'alpha',
 				'default' => 'y',
 				'options' => array(

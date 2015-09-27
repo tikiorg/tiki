@@ -14,19 +14,28 @@ function wikiplugin_trackerif_info()
 		'documentation' => 'PluginTrackerIf',
 		'description' => tra('Display content based on results of a tracker field test'),
 		'prefs' => array( 'wikiplugin_trackerif', 'feature_trackers', 'wikiplugin_tracker' ), // ML: is wikiplugin_tracker necessary?
-		'icon' => 'img/icons/database_table.png',
+		'iconname' => 'trackers',
+		'introduced' => 7,
 		'defaultfilter' => 'wikicontent',
 		'params' => array(
 			'test' => array(
 				'required' => true,
 				'name' => tra('Test'),
 				'description' => tra('Test'),
+				'since' => '7.0',
 			),
 			'ignore' => array(
 				'required' => false,
 				'name' => tra('Ignore'),
 				'default' => 'y',
 				'description' => tra('Ignore test in edit mode'),
+				'since' => '7.0',
+				'filter' => 'alpha',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
 			),
 		),
 	);

@@ -10,14 +10,16 @@ function wikiplugin_trackercomments_info()
 	return array(
 		'name' => tra('Tracker Comments'),
 		'documentation' => 'PluginTrackerComments',
-		'description' => tra('Display the number of tracker comments'),
+		'description' => tra('Display the number of comments for a tracker'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_trackercomments' ),	
-		'icon' => 'img/icons/comments.png',
+		'iconname' => 'comments',
+		'introduced' => 5,
 		'params' => array(
 			'trackerId' => array(
 				'required' => true,
 				'name' => tra('Tracker ID'),
 				'description' => tra('Numeric value representing the tracker ID'),
+				'since' => '5.0',
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'tracker',
@@ -26,6 +28,7 @@ function wikiplugin_trackercomments_info()
 				'required' => false,
 				'name' => tra('Item Count'),
 				'description' => tra('Determines whether the number of items will be shown (not shown by default)'),
+				'since' => '5.0',
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
@@ -38,8 +41,9 @@ function wikiplugin_trackercomments_info()
 				'required' => false,
 				'name' => tra('View'),
 				'description' => tra('Enter a user name to select the items of the current user'),
+				'since' => '5.0',
 				'accepted' => tra('a user name'),
-				'filter' => 'alpha',
+				'filter' => 'text',
 				'default' => ''
 			),
 		)
