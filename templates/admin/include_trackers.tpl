@@ -45,6 +45,7 @@
 				{preference name=tracker_change_field_type}
 				{preference name=tracker_show_comments_below}
 				{preference name=tracker_legacy_insert}
+				{preference name=tracker_status_in_objectlink}
 				{preference name=tracker_always_notify}
 			</fieldset>
 

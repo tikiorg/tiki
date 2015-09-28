@@ -53,7 +53,13 @@ function prefs_tracker_list()
 			'description' => tr('Use the legacy tracker insertion screen as a tab instead of the dialog.'),
 			'type' => 'flag',
 			'default' => 'n',
-		),		
+		),
+		'tracker_status_in_objectlink' => array(
+			'name' => tr('Show tracker status in objectlink'),
+			'description' => tr('Sets whether we want to show the status when doing an objectlink. This can be used if you want the status to show in tracker screens but not in outputs.'),
+			'type' => 'flag',
+			'default' => 'y',
+		),
 		'tracker_wikirelation_synctitle' => array(
 			'name' => tr('Sync wiki page name to linked tracker field'),
 			'description' => tr('When wiki page is renamed or when the value of the trackerfield that is linked to the wiki page is changed, make the corresponding change as well to the other linked via tiki.wiki.linkedfield relation.'),
