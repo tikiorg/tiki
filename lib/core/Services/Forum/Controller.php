@@ -182,7 +182,8 @@ class Services_Forum_Controller
 	function action_delete_topic($input)
 	{
 		parse_str($input->offsetGet('params'), $params);
-		$this->checkPerms($params['forumId']);
+		$forumId = $this->lib->get_comment_forum_id($params['forumtopic'][0]);
+		$this->checkPerms($forumId);
 		$check = Services_Exception_BadRequest::checkAccess();
 		if (!empty($check['ticket'])) {
 			//check number of topics on first pass
@@ -204,7 +205,7 @@ class Services_Forum_Controller
 						'customObject' => tr('forum %0', $object),
 						'items' => $items,
 						'extra' => [
-							'forumId' => $params['forumId']
+							'forumId' => $forumId
 						],
 						'ticket' => $check['ticket'],
 						'modal' => '1',
