@@ -1,5 +1,6 @@
 <div id="alert-wrapper">
-	{remarksbox type="{$ajaxtype}" icon="{$ajaxicon}" close="y" title="{$ajaxheading}"}
+	{if isset($ajaxicon)}{$icon = $ajaxicon}{else}{$icon = ''}{/if}
+	{remarksbox type="{$ajaxtype}" icon="{$icon}" close="y" title="{$ajaxheading}"}
 		{if !empty($ajaxmsg)}
 			{$ajaxmsg|escape}
 		{/if}

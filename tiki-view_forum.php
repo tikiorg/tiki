@@ -499,13 +499,15 @@ if ($prefs['feature_forum_parse'] == 'y') {
 	$smarty->assign_by_ref('plugins', $plugins);
 }
 
-if (isset($_POST['ajaxtype']) || !empty($_SESSION['ajaxpost' . $_GET['deleted_parentId']])) {
+$del = isset($_GET['deleted_parentId']) ? $_GET['deleted_parentId'] : '';
+if (isset($_POST['ajaxtype']) || !empty($_SESSION['ajaxpost' . $del])) {
 	$smarty->assign('ajaxfeedback', 'y');
-	$posted = isset($_POST['ajaxtype']) ? $_POST : $_SESSION['ajaxpost' . $_GET['deleted_parentId']];
-	unset($_SESSION['ajaxpost' . $_GET['deleted_parentId']]);
+	$posted = isset($_POST['ajaxtype']) ? $_POST : $_SESSION['ajaxpost' . $del];
+	unset($_SESSION['ajaxpost' . $del]);
 	$ajaxpost = array_intersect_key($posted, [
 		'ajaxtype' => '',
 		'ajaxheading' => '',
+		'ajaxicon' => '',
 		'ajaxitems' => '',
 		'ajaxmsg' => '',
 		'ajaxtoMsg' => '',
