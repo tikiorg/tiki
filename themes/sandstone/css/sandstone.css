@@ -1,3 +1,4 @@
+util.print: Use console.log instead
 @import url("//fonts.googleapis.com/css?family=Roboto:400,500");
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
@@ -7078,27 +7079,40 @@ div.cvsup {
 .layout_fixed_top_modules #top_modules .navbar-inverse {
   border-color: transparent;
 }
-.prio1,
-.prio2,
-.prio3,
-.prio4,
-.prio5 {
-  border: 1px solid #dfd7ca;
-}
 .prio1 {
-  background: #d9534f;
+  background: inherit;
 }
 .prio2 {
-  background: #f47c3c;
+  background: #93c54b;
+  color: #ffffff;
+  border: transparent;
+}
+.prio2 a {
+  color: #ffffff;
 }
 .prio3 {
-  background: #93c54b;
+  background: #29abe0;
+  color: #ffffff;
+  border: transparent;
+}
+.prio3 a {
+  color: #ffffff;
 }
 .prio4 {
-  background: #29abe0;
+  background: #f47c3c;
+  color: #ffffff;
+  border: transparent;
+}
+.prio4 a {
+  color: #ffffff;
 }
 .prio5 {
-  background: #f8f5f0;
+  background: #d9534f;
+  color: #ffffff;
+  border: transparent;
+}
+.prio5 a {
+  color: #ffffff;
 }
 .messureadflag {
   background: #98978b;

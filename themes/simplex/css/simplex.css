@@ -1,3 +1,4 @@
+util.print: Use console.log instead
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -7037,27 +7038,40 @@ div.cvsup {
 .layout_fixed_top_modules #top_modules .navbar-inverse {
   border-color: transparent;
 }
-.prio1,
-.prio2,
-.prio3,
-.prio4,
-.prio5 {
-  border: 1px solid #dddddd;
-}
 .prio1 {
-  background: #d9831f;
+  background: inherit;
 }
 .prio2 {
-  background: #9b479f;
+  background: #dff0d8;
+  color: #468847;
+  border: #d6e9c6;
+}
+.prio2 a {
+  color: #468847;
 }
 .prio3 {
-  background: #469408;
+  background: #d9edf7;
+  color: #3a87ad;
+  border: #bce8f1;
+}
+.prio3 a {
+  color: #3a87ad;
 }
 .prio4 {
-  background: #029acf;
+  background: #fcf8e3;
+  color: #c09853;
+  border: #fbeed5;
+}
+.prio4 a {
+  color: #c09853;
 }
 .prio5 {
-  background: #fcfcfc;
+  background: #f2dede;
+  color: #b94a48;
+  border: #eed3d7;
+}
+.prio5 a {
+  color: #b94a48;
 }
 .messureadflag {
   background: #555555;
