@@ -194,7 +194,7 @@ class TikiAddons_Utilities extends TikiDb_Bridge
 			echo "domain:$domain \n";
 			echo "obj:$ref \n";
 			if ($this->table('tiki_profile_symbols')->fetchCount(array('domain' => $domain, 'object' => $ref)) > 1) {
-				return $this->table('tiki_profile_symbols')->fetchAll('value', array('domain' => $domain, 'object' => $ref));
+				return $this->table('tiki_profile_symbols')->fetchColumn('value', array('domain' => $domain, 'object' => $ref));
 			} else {
 				return $this->table('tiki_profile_symbols')->fetchOne('value', array('domain' => $domain, 'object' => $ref));
 			}
