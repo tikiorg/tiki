@@ -93,7 +93,8 @@ function wikiplugin_trackercalendar_info()
 			'addAllFields' => array(
 				'required' => false,
 				'name' => tra('Add All Fields'),
-				'description' => tra('If "yes" all fields in the tracker will be added to the URL, not just the itemId'),
+				'description' => tr('If Yes (%0y%1)  all fields in the tracker will be added to the URL, not just the
+					itemId', '<code>', '</code>'),
 				'since' => '12.4',
 				'filter' => 'alpha',
 				'default' => 'y',
