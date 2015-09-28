@@ -20,5 +20,5 @@
 		</ul>
 	{/if}
 {else}
-	{tr}No relations found.{/tr}
+	{tr}{$wp_emptymsg}{/tr}
 {/if}

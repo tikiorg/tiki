@@ -48,6 +48,14 @@ function wikiplugin_relations_info()
 					array('text' => tra('Yes'), 'value' => 1),
 				),
 			),
+			'emptymsg' => array(
+				'required' => false,
+				'name' => tra('Empty Message'),
+				'description' => tra('Message to give if result is empty and no relations are found.'),
+				'filter' => 'text',
+				'since' => '15.0',
+				'default' => "No relations found.",
+			),
 		),
 	);
 }
@@ -69,6 +77,11 @@ function wikiplugin_relations($data, $params)
 		$singlelist = true;
 	}
 
+	$emptymsg = "No relations found.";
+	if (isset($params['emptymsg']) && $params['emptymsg']) {
+		$emptymsg = $params['emptymsg'];
+	}
+
 	$data = array();
 
 	$relationlib = TikiLib::lib('relation');
@@ -87,6 +100,7 @@ function wikiplugin_relations($data, $params)
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('wp_relations', $data);
 	$smarty->assign('wp_singlelist', $singlelist);
+	$smarty->assign('wp_emptymsg', $emptymsg);
 	return $smarty->fetch('wiki-plugins/wikiplugin_relations.tpl');
 }
 
