@@ -103,7 +103,7 @@ function wikiplugin_wysiwyg($data, $params)
 
 		$html = "<div id='$exec_key' class='{$class}'$style data-initial='$namespace' data-html='{$params['use_html']}'>" . $html . '</div>';
 
-		$js = '$("#' . $exec_key . '").wysiwygPlugin("' . $execution . '", "' . $sourcepage . '", ' . $ckoption . ')';
+		$js = '$("#' . $exec_key . '").wysiwygPlugin("' . $execution . '", "' . $sourcepage . '", ' . $ckoption . ');';
 
 		TikiLib::lib('header')
 			->add_jsfile('lib/ckeditor_tiki/tiki-ckeditor.js')
