@@ -143,7 +143,7 @@ function wikiplugin_trackerfilter_info()
 				'required' => false,
 				'name' => tra('Map View Buttons'),
 				'description' => tra('Display Mapview and Listview buttons'),
-				'since' => '6.0' . tr('was 0% until 12.0', '<code>googlemapButtons</code>'),
+				'since' => '6.0' . tr(' - was %0 until 12.0', '<code>googlemapButtons</code>'),
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(

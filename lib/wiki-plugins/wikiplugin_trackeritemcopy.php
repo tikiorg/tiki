@@ -95,8 +95,8 @@ function wikiplugin_trackeritemcopy_info()
 				'required' => false,
 				'name' => tra('Returns array non-interactively'),
 				'advanced' => true,
-				'description' => tra('If y, returns array of new information instead of displaying results to screen,
-					used in non-interactive mode'),
+				'description' => tr('If Yes (%0y%1), returns array of new information instead of displaying results
+					to screen, used in non-interactive mode', '<code>', '</code>'),
 				'since' => '7.0',
 				'filter' => 'text',
 				'default' => '',
