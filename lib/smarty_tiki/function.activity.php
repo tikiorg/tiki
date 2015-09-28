@@ -35,6 +35,11 @@ function smarty_function_activity($params)
 	}
 
 	$smarty->assign('activity', $activity);
-	return $smarty->fetch('activity/' . $activity['event_type'] . '.tpl');
+	$templateName = 'activity/' . $activity['event_type'] . '.tpl';
+
+	if (! is_readable($smarty->get_filename($templateName))) {
+		$templateName = 'activity/default_event.tpl';
+	}
+	return $smarty->fetch($templateName);
 }
 
