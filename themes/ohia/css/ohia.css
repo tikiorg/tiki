@@ -7059,27 +7059,40 @@ div.cvsup {
 .layout_fixed_top_modules #top_modules .navbar-inverse {
   border-color: transparent;
 }
-.prio1,
-.prio2,
-.prio3,
-.prio4,
-.prio5 {
-  border: 1px solid #333333;
-}
 .prio1 {
-  background: #712d2d;
+  background: inherit;
 }
 .prio2 {
-  background: #9c8611;
+  background: #3d6c2a;
+  color: #aad4ab;
+  border: #3c5a23;
+}
+.prio2 a {
+  color: #aad4ab;
 }
 .prio3 {
-  background: #3d6c2a;
+  background: #1b6083;
+  color: #aad0e2;
+  border: #155865;
+}
+.prio3 a {
+  color: #aad0e2;
 }
 .prio4 {
-  background: #1b6083;
+  background: #9c8611;
+  color: #deceb3;
+  border: #855e0e;
+}
+.prio4 a {
+  color: #deceb3;
 }
 .prio5 {
-  background: #5e0000;
+  background: #712d2d;
+  color: #ebcdcc;
+  border: #5f252f;
+}
+.prio5 a {
+  color: #ebcdcc;
 }
 .messureadflag {
   background: #555555;

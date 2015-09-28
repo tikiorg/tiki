@@ -423,27 +423,48 @@ div.cvsup {
 .prio3,
 .prio4,
 .prio5 {
-	border: 1px solid @panel-default-border;
+//	border: 1px solid @panel-default-border;
 }
 
 .prio1 {
-	background: @panel-danger-heading-bg;
+	background: inherit;
 }
 
 .prio2 {
-	background: @panel-warning-heading-bg;
+	background: @alert-success-bg;
+	color: @alert-success-text;
+	border: @alert-success-border;
+	a {
+		color: @alert-success-text;
+	}
 }
 
 .prio3 {
-	background: @panel-success-heading-bg;
+	background: @alert-info-bg;
+	color: @alert-info-text;
+	border: @alert-info-border;
+	a {
+		color: @alert-info-text;
+	}
 }
 
 .prio4 {
-	background: @panel-info-heading-bg;
+	background: @alert-warning-bg;
+	color: @alert-warning-text;
+	border: @alert-warning-border;
+	a {
+		color: @alert-warning-text;
+	}
+
 }
 
 .prio5 {
-	background: @panel-default-heading-bg;
+	background: @alert-danger-bg;
+	color: @alert-danger-text;
+	border: @alert-danger-border;
+	a {
+		color: @alert-danger-text;
+	}
 }
 
 .messureadflag {

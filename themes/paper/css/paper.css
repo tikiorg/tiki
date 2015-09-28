@@ -7495,27 +7495,40 @@ div.cvsup {
 .layout_fixed_top_modules #top_modules .navbar-inverse {
   border-color: transparent;
 }
-.prio1,
-.prio2,
-.prio3,
-.prio4,
-.prio5 {
-  border: 1px solid #dddddd;
-}
 .prio1 {
-  background: #f9bdbb;
+  background: inherit;
 }
 .prio2 {
-  background: #ffe0b2;
+  background: #dff0d8;
+  color: #4caf50;
+  border: #d6e9c6;
+}
+.prio2 a {
+  color: #4caf50;
 }
 .prio3 {
-  background: #dff0d8;
+  background: #e1bee7;
+  color: #9c27b0;
+  border: #cba4dd;
+}
+.prio3 a {
+  color: #9c27b0;
 }
 .prio4 {
-  background: #e1bee7;
+  background: #ffe0b2;
+  color: #ff9800;
+  border: #ffc599;
+}
+.prio4 a {
+  color: #ff9800;
 }
 .prio5 {
-  background: #f5f5f5;
+  background: #f9bdbb;
+  color: #e51c23;
+  border: #f7a4af;
+}
+.prio5 a {
+  color: #e51c23;
 }
 .messureadflag {
   background: #666666;
