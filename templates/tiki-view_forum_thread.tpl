@@ -27,15 +27,15 @@
 {/if}
 <br>
 <div id="thread-breadcrumb" class="breadcrumb">
-	<a class="link" href="tiki-forums.php">
+	<a class="link" href="{if $prefs.feature_sefurl eq 'y'}forums{else}tiki-forums.php{/if}">
 		{tr}Forums{/tr}
 	</a>
 	{$prefs.site_crumb_seper}
-	<a class="link" href="tiki-view_forum.php?forumId={$forumId}">
+	<a class="link" href="{$forumId|sefurl:'forum'}">
 		{$forum_info.name|addongroupname|escape}
 	</a>{if isset($thread_info.topic.threadId) and $thread_info.topic.threadId}
 		{$prefs.site_crumb_seper}
-		<a class="link" href="tiki-view_forum_thread.php?comments_parentId={$thread_info.topic.threadId}{if $smarty.request.topics_offset}&amp;topics_offset={$smarty.request.topics_offset}{/if}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}">
+		<a class="link" href="{$thread_info.topic.threadId|sefurl:'forumthread'}{if $smarty.request.topics_offset}&amp;topics_offset={$smarty.request.topics_offset}{/if}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}">
 			{$thread_info.topic.title}
 		</a>
 	{/if}
