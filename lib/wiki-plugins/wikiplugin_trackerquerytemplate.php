@@ -10,91 +10,126 @@ function wikiplugin_trackerquerytemplate_info()
 	return array(
 		'name' => tra('Tracker Query Template'),
 		'documentation' => 'PluginTrackerQueryTemplate',
-		'description' => tra('Tracker Query and form generation. Supports nesting. When using byname="y" (default), variables are accessed "$field name$" (rendered) and "$~field name$ (unrendered). When using byname="n", variables are {$f_id} (rendered) and {$~f_id} (unrendered)'),
+		'description' => tra('Generate a form from tracker data'),
 		'prefs' => array('feature_trackers','wikiplugin_trackerquerytemplate'),
 		'body' => tra('Wiki Syntax, with variables from tracker query.'),
 		'filter' => 'striptags',
-		'icon' => 'img/icons/image_edit.png',
+		'iconname' => 'code',
+		'introduced' => 10,
 		'tags' => array( 'basic' ),
 		'params' => array(
 			'tracker' => array(
 				'required' => true,
 				'name' => tra('Tracker'),
-				'description' => tra('Name of the tracker you want to query.'),
+				'description' => tr('The name of the tracker to be queried, or if %0, the tracker ID.',
+					'<code>byname="n"</code>'),
+				'since' => '10.0',
+				'filter' => 'text',
 				'default' => '',
 				'profile_reference' => 'tracker',
 			),
 			'debug' => array(
 				'required' => false,
 				'name' => tra('Debug'),
-				'description' => tra('Turn tracker query debug on or off, default = "".'),
+				'description' => tra('Turn tracker query debug on (off by default).'),
+				'since' => '10.0',
 				'default' => '',
+				'filter' => 'alpha',
 				'options' => array(
 					array('text' => '', 'value' => ''),
-					array('text' => tra('y'), 'value' => 'y'),
-					array('text' => tra('n'), 'value' => 'n'),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n'),
 				)
 			),
 			'byname' => array(
 				'required' => false,
 				'name' => tra('Tracker'),
-				'description' => tra('Make tracker be accessed by name or ids, default is name, or "y".'),
+				'description' => tr('Use the tracker name instead of tracker ID in the %0 parameter. Also use the field
+					name instead of field ID in the filter parameters. Set to Yes (%1) to use names (default) or
+					No (%2) to use IDs.', '<code>tracker</code>', '<code>y</code>', '<code>n</code>'),
+				'since' => '10.0',
 				'default' => 'y',
+				'filter' => 'alpha',
 				'options' => array(
 					array('text' => '', 'value' => ''),
-					array('text' => tra('y'), 'value' => 'y'),
-					array('text' => tra('n'), 'value' => 'n'),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n'),
 				)
 			),
 			'render' => array(
 				'required' => false,
 				'name' => tra('Render'),
-				'description' => tra('Makes the field render as needed for trackers, default = "y".'),
+				'description' => tra('Render as needed for trackers (default).'),
+				'since' => '10.0',
 				'default' => 'y',
+				'filter' => 'alpha',
 				'options' => array(
 					array('text' => '', 'value' => ''),
-					array('text' => tra('y'), 'value' => 'y'),
-					array('text' => tra('n'), 'value' => 'n'),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n'),
 				)
 			),
 			'itemid' => array(
 				'required' => false,
 				'name' => tra('Tracker Item Id'),
 				'description' => tra('Item id of tracker item'),
+				'since' => '10.0',
 				'default' => '',
+				'filter' => 'digits',
 				'profile_reference' => 'tracker_item',
 			),
 			'itemids' => array(
 				'required' => false,
 				'name' => tra('Tracker Item Ids'),
 				'description' => tra('Item id of tracker items, separated with comma'),
+				'since' => '11.0',
 				'default' => '',
+				'filter' => 'digits',
 				'separator' => ',',
 				'profile_reference' => 'tracker_item',
 			),
 			'likefilters' => array(
 				'required' => false,
 				'name' => tra('Like Filters'),
-				'description' => tra('Filters for tracker query.'),
+				'description' => tr('Apply "like" filters to fields. Format: %0field:value;field:value;field:value%1,
+					where %0field%1 may be the field name or ID depending on the setting for the %0byname%1 parameter.',
+					'<code>', '</code>'),
+				'since' => '10.0',
+				'filter' => 'text',
 				'default' => ''
 			),
 			'andfilters' => array(
 				'required' => false,
 				'name' => tra('And Filters'),
-				'description' => tra('Filters for tracker query.'),
+				'description' => tr('Apply "and" filters to fields. Format: %0field:value;field:value;field:value%1,
+					where %0field%1 may be the field name or ID depending on the setting for the %0byname%1 parameter.',
+					'<code>', '</code>'),
+				'since' => '10.0',
+				'filter' => 'text',
 				'default' => ''
 			),
 			'orfilters' => array(
 				'required' => false,
 				'name' => tra('Or Filters'),
-				'description' => tra('Filters for tracker query.'),
+				'description' => tr('Apply "or" filters to fields. Format: %0field:value;field:value;field:value%1,
+					where %0field%1 may be the field name or ID depending on the setting for the %0byname%1 parameter.',
+					'<code>', '</code>'),
+				'since' => '10.0',
+				'filter' => 'text',
 				'default' => ''
 			),
 			'getlast' => array(
 				'required' => false,
 				'name' => tra('Get Last'),
-				'description' => tra('Gets only the last item from the tracker.'),
-				'default' => ''
+				'description' => tra('Retrieve only the last item from the tracker.'),
+				'since' => '10.0',
+				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n'),
+				)
 			),
 		)
 	);
