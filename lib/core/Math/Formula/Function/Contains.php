@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: Substring.php 53803 2015-02-06 00:42:50Z jyhem $
+// $Id$
 
 class Math_Formula_Function_Contains extends Math_Formula_Function
 {
