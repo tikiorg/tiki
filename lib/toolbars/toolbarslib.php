@@ -19,6 +19,7 @@ abstract class Toolbar
 {
 	protected $wysiwyg;
 	protected $icon;
+	protected $iconname;
 	protected $label;
 	protected $type;
 
@@ -347,6 +348,13 @@ abstract class Toolbar
 		return $this;
 	} // }}}
 
+	protected function setIconName( $iconname ) // {{{
+	{
+		$this->iconname = $iconname;
+
+		return $this;
+	} // }}}
+
 	protected function setLabel( $label ) // {{{
 	{
 		$this->label = $label;
@@ -419,7 +427,11 @@ abstract class Toolbar
 		$params['_class'] = 'toolbar btn btn-xs btn-link' . (!empty($class) ? ' '.$class : '');
 		$params['_ajax'] = 'n';
 		$content = $title;
-		$params['_icon'] = $this->icon;
+		if ($this->iconname) {
+			$params['_icon_name'] = $this->iconname;
+		} else {
+			$params['_icon'] = $this->icon;
+		}
 
 		if (strpos($class, 'qt-plugin') !== false && $this->icon == 'img/icons/plugin.png') {
 			$params['_menu_text'] = 'y';
@@ -1703,18 +1715,20 @@ class ToolbarWikiplugin extends Toolbar
 		if ( substr($name, 0, 11) == 'wikiplugin_' ) {
 			$name = substr($name, 11);
 			if ( $info = $parserlib->plugin_info($name) ) {
-				if (isset($info['icon']) and $info['icon'] != '') {
-					$icon = $info['icon'];
-				} else {
-					$icon = 'img/icons/plugin.png';
-				}
 
 				$tag = new self;
 				$tag->setLabel(str_ireplace('wikiplugin_', '', $info['name']))
-					->setIcon($icon)
 					->setWysiwygToken($info['name'] === 'Image' ? 'Image Plugin' : $info['name'])
 					->setPluginName($name)
 					->setType('Wikiplugin');
+
+				if (!empty($info['icon'])) {
+					$tag->setIcon($info['icon']);
+				} else if (!empty($info['iconname'])) {
+					$tag->setIconName($info['iconname']);
+				} else {
+					$tag->setIcon('img/icons/plugin.png');
+				}
 
 				return $tag;
 			}
@@ -1761,7 +1775,7 @@ class ToolbarWikiplugin extends Toolbar
 	{
 		if (!empty($this->wysiwyg) && $add_js) {
 			$js = "popup_plugin_form('{$areaId}','{$this->pluginName}');";
-			$this->setupCKEditorTool($js, $this->wysiwyg, $this->label, $this->icon);
+			$this->setupCKEditorTool($js, $this->wysiwyg, $this->label, $this->icon ? $this->icon : 'img/icons/plugin.png');
 		}
 		return $this->wysiwyg;
 	} // }}}
