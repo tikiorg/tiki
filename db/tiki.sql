@@ -1062,7 +1062,7 @@ CREATE TABLE `tiki_history` (
 
 DROP TABLE IF EXISTS `tiki_hotwords`;
 CREATE TABLE `tiki_hotwords` (
-  `word` varchar(40) NOT NULL default '',
+  `word` varchar(255) NOT NULL default '',
   `url` varchar(255) NOT NULL default '',
   PRIMARY KEY (`word`)
 ) ENGINE=MyISAM;
