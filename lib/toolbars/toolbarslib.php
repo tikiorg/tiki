@@ -1775,7 +1775,7 @@ class ToolbarWikiplugin extends Toolbar
 	{
 		if (!empty($this->wysiwyg) && $add_js) {
 			$js = "popup_plugin_form('{$areaId}','{$this->pluginName}');";
-			$this->setupCKEditorTool($js, $this->wysiwyg, $this->label, $this->icon);
+			$this->setupCKEditorTool($js, $this->wysiwyg, $this->label, $this->icon ? $this->icon : 'img/icons/plugin.png');
 		}
 		return $this->wysiwyg;
 	} // }}}
