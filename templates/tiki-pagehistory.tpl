@@ -257,7 +257,7 @@
 									{icon name='wysiwyg' iclass='tips' ititle=':{tr}Wiki Wysiwyg{/tr}'}
 								{/if}
 							</td>
-							<td class="button_container">
+							<td class="button_container" style="white-space: nowrap">
 								{self_link page=$page preview=$info.version _title=':{tr}View{/tr}' _class="tips" _icon_name="view"}v{/self_link}
 							{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
 								{self_link page=$page source=$info.version _title=':{tr}Source{/tr}' _class="tips" _icon_name="code"}{/self_link}
@@ -330,7 +330,7 @@
 									{icon name='html' iclass='tips' ititle='HTML'}
 								{/if}
 							</td>
-							<td class="button_container">
+							<td class="button_container" style="white-space: nowrap">
 								{self_link page=$page preview=$element.version _title=':{tr}View{/tr}' _class="tips" _icon_name="view"}{/self_link}
 								{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
 									{self_link page=$page source=$element.version _title=':{tr}Source{/tr}' _class="tips" _icon_name="code"}{/self_link}
