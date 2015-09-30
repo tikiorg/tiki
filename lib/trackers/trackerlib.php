@@ -2387,10 +2387,19 @@ class TrackerLib extends TikiLib
 							break;
 					}
 
-					$handler = $this->get_field_handler($f);
-					if (method_exists($handler, 'isValid') && ! $handler->isValid()) {
-						$f['errorMsg'] = $f['validationMessage'] ?: tr('Unknown error');
-						$erroneous_values[] = $f;
+					$handler = $this->get_field_handler($f, $this->get_item_info($itemId));
+					if (method_exists($handler, 'isValid')) {
+						$validationResponse = $handler->isValid($ins_fields['data']);
+						if ($validationResponse !== true) {
+							if (!empty($f['validationMessage'])) {
+								$f['errorMsg'] = $f['validationMessage'];
+							} elseif (!empty($validationResponse)) {
+								$f['errorMsg'] = $validationResponse;
+							} else {
+								$f['errorMsg'] = tr('Unknown error');
+							}
+							$erroneous_values[] = $f;
+						}
 					}
 				}
 			}

@@ -47,6 +47,6 @@ interface Tracker_Field_Interface
 
 	//function handleSave($value, $oldValue);
 
-	//function isValid();
+	//function isValid($ins_fields_data);
 }
 
