@@ -13,12 +13,14 @@ function wikiplugin_trackerstat_info()
 		'description' => tra('Display statistics about a tracker.'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_trackerstat' ),
 		'body' => tra('Title'),
-		'icon' => 'img/icons/calculator.png',
+		'iconname' => 'chart',
+		'introduced' => 2,
 		'params' => array(
 			'trackerId' => array(
 				'required' => true,
 				'name' => tra('Tracker ID'),
 				'description' => tra('Numeric value representing the tracker ID'),
+				'since' => '2.0',
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'tracker',
@@ -26,7 +28,9 @@ function wikiplugin_trackerstat_info()
 			'fields' => array(
 				'required' => true,
 				'name' => tra('Fields'),
-				'description' => tra('Colon-separated list of field IDs to be displayed. Example: 2:4:5'),
+				'description' => tra('Colon-separated list of field IDs to be displayed. Example:')
+					. ' <code>2:4:5</code>',
+				'since' => '2.0',
 				'default' => '',
 				'separator' => ':',
 				'profile_reference' => 'tracker_field',
@@ -35,6 +39,7 @@ function wikiplugin_trackerstat_info()
                 'required' => false,
                 'name' => tra('Show Count'),
                 'description' => tra('Choose whether to show the count of votes each option received (shown by default)'),
+	            'since' => '10.3',
                 'filter' => 'alpha',
                 'default' => 'y',
                 'options' => array(
@@ -46,7 +51,9 @@ function wikiplugin_trackerstat_info()
 			'show_percent' => array(
 				'required' => false,
 				'name' => tra('Show Percentage'),
-				'description' => tra('Choose whether to show the percentage of the vote each option received (not shown by default)'),
+				'description' => tra('Choose whether to show the percentage of the vote each option received (not shown
+					by default)'),
+				'since' => '2.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -58,7 +65,9 @@ function wikiplugin_trackerstat_info()
 			'show_bar' => array(
 				'required' => false,
 				'name' => tra('Show Bar'),
-				'description' => tra('Choose whether to show a bar representing the number of votes each option received (not shown by default)'),
+				'description' => tra('Choose whether to show a bar representing the number of votes each option received
+					(not shown by default)'),
+				'since' => '2.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -71,6 +80,7 @@ function wikiplugin_trackerstat_info()
 				'required' => false,
 				'name' => tra('Status Filter'),
 				'description' => tra('Only show items matching certain status filters'),
+				'since' => '2.0',
 				'filter' => 'alpha',
 				'default' => 'o',
 				'options' => array(
@@ -87,7 +97,8 @@ function wikiplugin_trackerstat_info()
 			'show_link' => array(
 				'required' => false,
 				'name' => tra('Show Link'),
-				'description' => tra('Show link to tiki-view_tracker'),
+				'description' => tra('Add a link to the tracker'),
+				'since' => '3.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -99,10 +110,12 @@ function wikiplugin_trackerstat_info()
 			'show_lastmodif' => array(
 				'required' => false,
 				'name' => tra('Last Modification Date'),
-				'description' => tra('Show last modification date of a tracker. Set to y to use site setting or use PHP\s format (www.php.net/strftime).'),
+				'description' => tr('Show last modification date of a tracker. Set to Yes (%0) to use site setting for
+					the short date format or use PHP\'s format (www.php.net/strftime). Example:',
+					'<code>y</code>', '<code>%A %d of %B, %Y</code>'),
+				'since' => '5.0',
 				'filter' => 'text',
 				'default' => '',
-				'accepted' => tra('y to use the site setting for short date format. Otherwise, use PHP format (www.php.net/strftime), Example: "%A %d of %B, %Y"'),
 			)
 		)
 	);
