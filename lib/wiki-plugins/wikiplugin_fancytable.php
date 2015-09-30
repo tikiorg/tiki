@@ -107,8 +107,8 @@ function wikiplugin_fancytable_info()
 		'documentation' => 'PluginFancyTable',
 		'description' => tra('Create a formatted table that can be filtered and sorted'),
 		'prefs' => array('wikiplugin_fancytable'),
-		'body' => tra('Rows separated by %0 in the header; for the table body, one row per line. Cells separated by %1
-			(since Tiki4) or %2 in both cases.', '<code>>></code>', '<code>|</code>', '<code>~|~</code>'),
+		'body' => tr('Rows separated by %0 in the header; for the table body, one row per line. Cells separated by %1 (since Tiki4) or %2 in both cases.',
+			'<code>>></code>', '<code>|</code>', '<code>~|~</code>'),
 		'iconname' => 'table',
 		'introduced' => 1,
 		'tags' => array( 'basic' ),
