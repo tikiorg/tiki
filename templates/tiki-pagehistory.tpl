@@ -280,7 +280,7 @@
 									{icon name='wysiwyg' iclass='tips' ititle=':{tr}Wiki Wysiwyg{/tr}'}
 								{/if}
 							</td>
-							<td class="button_container">
+							<td class="button_container" style="white-space: nowrap">
 								{capture name='current_actions'}
 									{strip}
 										{$libeg}{self_link page=$page preview=$info.version _icon_name="view" _menu_text='y' _menu_icon='y'}
@@ -374,7 +374,7 @@
 									{icon name='html' iclass='tips' ititle='HTML'}
 								{/if}
 							</td>
-							<td class="button_container">
+							<td class="button_container" style="white-space: nowrap">
 								{capture name='history_actions'}
 									{strip}
 										{$libeg}{self_link page=$page preview=$element.version _icon_name="view" _menu_text='y' _menu_icon='y'}

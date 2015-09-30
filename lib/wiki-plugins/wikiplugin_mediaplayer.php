@@ -238,8 +238,40 @@ function wikiplugin_mediaplayer($data, $params)
 				scale: 'aspect'
 				} 
 			} );";
-			
+
+		// check for support for PDF
+
+		if ($params['type'] === 'pdf') {
+			$js = '
+var found = false;
+$.each(navigator.plugins, function(i, plugins) {
+	$.each(plugins, function(i, plugin) {
+		if (plugin.type === "application/pdf") {
+			found = true;
+			return;
+		}
+	});
+});
+if (!found) {
+    // IE doesnt bother using the plugins array (sometimes?), plus ActiveXObject is hidden now so just try and catch... :(
+    try {
+        var oAcro7 = new ActiveXObject("AcroPDF.PDF.1");
+        if (oAcro7) {
+            found = true;
+        }
+    } catch (e) {
+    }
+}
+if (found) {
+	' . $js . '
+} else {
+	// no pdf plugin
+	$("#' . $id . '").text(tr("Download file:") + " " + "' . $params['src'] . '");
+}';
+		}
+
 		$headerlib->add_jq_onready($js);
+
 		return "<a href=\"".$params['src']."\" id=\"$id\"></a>";
 	}
 	
