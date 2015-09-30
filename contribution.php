@@ -51,6 +51,10 @@ if ($prefs['feature_contribution'] == 'y') {
 
 	if ($prefs['feature_contributor_wiki'] == 'y' && !empty($section) && $section == 'wiki page') {
 		$users = $userlib->list_all_users();
+
+		include_once('lib/smarty_tiki/modifier.username.php');
+		$users = array_map('smarty_modifier_username', $users);
+
 		$smarty->assign_by_ref('users', $users);
 		if (!empty($_REQUEST['contributors'])) {
 			$smarty->assign_by_ref('contributors', $_REQUEST['contributors']);

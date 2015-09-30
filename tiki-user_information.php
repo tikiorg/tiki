@@ -184,15 +184,23 @@ if ($prefs['feature_display_my_to_others'] == 'y') {
 if ($prefs['user_tracker_infos']) {
 	// arg passed 11,56,58,68=trackerId,fieldId...
 	$trackerinfo = explode(',', $prefs['user_tracker_infos']);
-	$userTrackerId = $trackerinfo[0];
-	array_shift($trackerinfo);
-	$fields = $trklib->list_tracker_fields($userTrackerId, 0, -1, 'position_asc', '', true, array('fieldId' => $trackerinfo));
+	$userTrackerId = array_shift($trackerinfo);
+	if (!empty($trackerinfo)) {
+		$filter = array('fieldId' => $trackerinfo);
+	} else {
+		$filter = array();
+	}
+	$fields = $trklib->list_tracker_fields($userTrackerId, 0, -1, 'position_asc', '', true, $filter);
 	foreach ($fields['data'] as $field) {
 		$lll[$field['fieldId']] = $field;
 	}
 	$definition = Tracker_Definition::get($userTrackerId);
-	$items = $trklib->list_items($userTrackerId, 0, 1, '', $lll, $definition->getUserField(), '', '', '', $userwatch);
-	$smarty->assign_by_ref('userItem', $items['data'][0]);
+	if ($definition) {
+		$items = $trklib->list_items($userTrackerId, 0, 1, '', $lll, $definition->getUserField(), '', '', '', $userwatch);
+		$smarty->assign_by_ref('userItem', $items['data'][0]);
+	} else {
+		$smarty->assign('userItem', array());
+	}
 }
 ask_ticket('user-information');
 // Get full user picture if it is set
