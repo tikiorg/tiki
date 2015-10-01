@@ -38,7 +38,7 @@
 		</span>
 	{else}
 		<span class="back_to_top">
-			<a href="#thread-breadcrumb" class="tips" title=":{tr}top of page{/tr}">
+			<a href="#top" class="tips" title=":{tr}top of page{/tr}">
 				{icon name='arrow-up'}
 			</a>
 		</span>
@@ -51,7 +51,7 @@
 		{if ( $prefs.feature_comments_locking neq 'y' or $thread_is_locked neq 'y' ) and
 			( $tiki_p_forum_post eq 'y' and ( $forum_is_locked neq 'y' or $prefs.feature_comments_locking neq 'y' ) )}
 			{if $first eq 'y'}
-				{button href="#form" _text="{tr}Reply{/tr}"}
+				{button href="#form" _onclick="show('`$postclass`open');" _text="{tr}Reply{/tr}"}
 			{elseif $comments_grandParentId}
 				{button href="?post_reply=1&comments_threshold=`$comments_threshold`&comments_reply_threadId=`$comment.threadId`&comments_offset=`$comments_offset`&thread_sort_mode=`$thread_sort_mode`&comments_per_page=`$comments_per_page`&comments_grandParentId=`$comment_grandParentId`&comments_parentId=`$comments_grandParentId`&thread_style=`$thread_style`#form" _auto_args='*' _text="{tr}Reply{/tr}"}
 			{elseif $forum_info.is_flat neq 'y'}
