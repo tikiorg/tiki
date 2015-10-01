@@ -1413,7 +1413,7 @@ class ToolbarHelptool extends Toolbar
 		$icon = smarty_function_icon(array('_id' => 'help'), $smarty);
 		$url = $servicelib->getUrl($params);
 
-		return "<a href=\"$url\" data-toggle=\"modal\" data-target=\"#bootstrap-modal\">$icon</a>";
+		return "<a class=\"toolbar btn btn-xs btn-link qt-help\" href=\"$url\" data-toggle=\"modal\" data-target=\"#bootstrap-modal\">$icon</a>";
 	} // }}}
 
 	function getWysiwygToken( $areaId ) // {{{
