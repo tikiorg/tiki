@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-<div class='edit-zone'>
+<div class='col-md-9 edit-zone'> {* grid class added here for correct layout in form-horizontal tracker plugin; hopefully no unintended side-effects *}
 	{if $textarea__toolbars ne 'n'}
 		<div class='textarea-toolbar nav-justified' id='{$textarea_id|default:editwiki}_toolbar'>
 			{toolbars area_id=$textarea_id|default:editwiki comments=$comments switcheditor=$switcheditor section=$toolbar_section}

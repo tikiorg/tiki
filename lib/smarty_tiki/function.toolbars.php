@@ -11,7 +11,7 @@
 
 function smarty_function_toolbars($params, $smarty)
 {
-	global $prefs, $is_html, $tiki_p_admin, $section;
+	global $prefs, $is_html, $tiki_p_admin, $tiki_p_admin_toolbars, $section;
 	$default = array(
 		'comments' => 'n',
 		'is_html' => $is_html,
@@ -28,7 +28,7 @@ function smarty_function_toolbars($params, $smarty)
 		$hidden[] = 'switcheditor';
 	}
 	
-	if(!$tiki_p_admin) {
+	if( $tiki_p_admin != 'y' || $tiki_p_admin_toolbars != 'y' ) {
 		$hidden[] = 'admintoolbar';
 	}
 
