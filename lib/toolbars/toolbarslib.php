@@ -1629,7 +1629,7 @@ class ToolbarAdmin extends Toolbar
 		return $this->getSelfLink(
 			'admintoolbar();',
 			htmlentities($this->label, ENT_QUOTES, 'UTF-8'),
-			'qt-switcheditor'
+			'qt-admintoolbar'
 		);
 	} // }}}
 
