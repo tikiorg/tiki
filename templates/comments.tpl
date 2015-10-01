@@ -306,7 +306,7 @@
 								{/if}
 								"
 							{/strip}{else} onclick="needToConfirm=false;"{/if}>
-							<input type="submit" class="btn btn-default" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}'); return false">
+							<input type="submit" class="btn btn-default" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}open'); return false">
 						</td>
 					</tr>
 				</table>
