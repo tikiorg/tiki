@@ -65,6 +65,10 @@ class Services_File_Controller
 		$mimelib = TikiLib::lib('mime');
 		$type = $mimelib->from_content($name, $data);
 
+		if (empty($name) || $size == 0 || empty($data)) {
+			throw new Services_Exception(tr('File could not be uploaded. File empty.'), 406);
+		}
+
 		if ($fileId) {
 			$this->utilities->updateFile($gal_info, $name, $size, $type, $data, $fileId, $asuser);
 		} else {
