@@ -1923,7 +1923,9 @@ class ToolbarsList
 		global $toolbarPickerIndex;
 		$toolbarPickerIndex = -1;
 		$list = new self;
-		$list->wysiwyg = ($params['_wysiwyg'] === 'y');
+		if (isset($params['_wysiwyg'])) {
+			$list->wysiwyg = ($params['_wysiwyg'] === 'y');
+		}
 		$list->is_html = !empty($params['_is_html']);
 
 		$string = preg_replace('/\s+/', '', $string);
