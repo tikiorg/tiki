@@ -3137,6 +3137,7 @@ a.flip:hover,
 .textarea-toolbar > div {
 	background-color: #eee;
 	border: #eee outset 1px;
+	height: 2.3662em; /* 28px */
 }
 
 
