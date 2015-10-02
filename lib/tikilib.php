@@ -57,7 +57,14 @@ class TikiLib extends TikiDb_Bridge
 		}
 
 		$container = TikiInit::getContainer();
-		$service = "tiki.lib.$name";
+
+		//if no period in the lib name, default to tiki.lib prefix.
+		if (strpos($name, ".") !== false) {
+			$service = $name;
+		} else {
+			$service = "tiki.lib.$name";
+		}
+
 		if ($lib = $container->get($service, \Symfony\Component\DependencyInjection\ContainerInterface::NULL_ON_INVALID_REFERENCE)) {
 			return $lib;
 		}

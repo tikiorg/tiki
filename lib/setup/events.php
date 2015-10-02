@@ -278,6 +278,10 @@ function tiki_setup_events()
 		// If available, try to send everything to the user at this point
 		$events->bindPriority(-10, 'tiki.process.shutdown', 'fastcgi_finish_request');
 	}
+
+	//Check the Addons to see if there are any events to bind
+	$api = new TikiAddons_Api_Events();
+	$api->bindEvents($events);
 }
 
 function tiki_save_refresh_index($args)
