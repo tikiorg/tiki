@@ -304,7 +304,7 @@
 								{if isset($can_attach_file) && $can_attach_file eq 'y'}
 									if ($('#userfile1').val()) alert('{$file_preview_warning|escape:"javascript"}');
 								{/if}
-								"
+								needToConfirm=false;"
 							{/strip}{else} onclick="needToConfirm=false;"{/if}>
 							<input type="submit" class="btn btn-default" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}open'); return false">
 						</td>
