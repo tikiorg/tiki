@@ -49,7 +49,7 @@ function smarty_block_add_help($params, $content, $smarty, &$repeat)
 		$self_link_params['_ajax'] = 'n';
 		$self_link_params['_anchor'] = $section['id'];
 		$self_link_params['_title'] = $section['title'];
-		$self_link_params['_class'] = 'help';
+		$self_link_params['_class'] = 'help toolbar qt-help';
 
 		$self_link_params['_onclick'] = '$.openEditHelp('.(count($help_sections)-1).');return false;';
 
