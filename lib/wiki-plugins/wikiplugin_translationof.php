@@ -20,31 +20,39 @@ require_once('lib/debug/Tracer.php');
 function wikiplugin_translationof_info()
 {
     $description =
-        tra('Assist in the translation of a link from one language to another.');
+        tra('Translate a link from one language to another');
 
     return array(
         'name' => tra('TranslationOf'),
         'documentation' => 'PluginTranslationOf',
         'description' => $description,
         'prefs' => array( 'feature_multilingual', 'wikiplugin_translationof' ),
-        'icon' => 'img/icons/world_link.png',
+        'iconname' => 'language',
+        'introduced' => 12,
         'params' => array(
             'orig_page' => array(
                 'required' => true,
                 'name' => tra('Original Page'),
-                'description' => tra('Name of the page from which this link will be translate.'),
+                'description' => tra('Name of the page from which this link will be translated.'),
+                'since' => '12.0',
+                'filter' => 'pagename',
                 'default' => '',
             ),
             'translation_lang' => array(
                 'required' => true,
                 'name' => tra('Translation Language'),
-                'description' => tra('Two letter language code of the language in which you want to translate this link, ex: fr'),
+                'description' => tr('Two letter language code of the language in which you want to translate this
+                    link. Example:') . ' <code>fr</code>',
+                'since' => '12.0',
+                'filter' => 'alpha',
                 'default' => '',
             ),
             'translation_page' => array(
                 'required' => false,
                 'name' => tra('Translation Name'),
                 'description' => tra('Name of the page that will become the translation of the "Original Page".'),
+                'since' => '12.0',
+                'filter' => 'pagename',
                 'default' => '',
             ),
         ),

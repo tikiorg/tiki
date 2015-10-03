@@ -14,13 +14,16 @@ function wikiplugin_transclude_info()
 		'prefs' => array('wikiplugin_transclude', 'feature_wiki'),
 		'extraparams' => true,
 		'defaultfilter' => 'text',
-		'icon' => 'img/icons/page_copy.png',
+		'iconname' => 'copy',
+		'introduced' => 6,
 		'params' => array(
 			'page' => array(
 				'required' => true,
 				'name' => tra('Page Name'),
 				'description' => tra('Name of the wiki page to use as a template for the values.'),
+				'since' => '6.0',
 				'default' => '',
+				'filter' => 'pagename',
 				'profile_reference' => 'wiki_page',
 			),
 		),
