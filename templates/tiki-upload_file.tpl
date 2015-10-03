@@ -114,43 +114,48 @@
 
 		<div class="fgal_file">
 			<div class="fgal_file_c1">
-				{if $simpleMode neq 'y'}
-					<div class="form-group">
-						<label for="name" class="col-sm-3 control-label">{tr}File title{/tr}</label>
-						<div class="col-sm-9">
-							<input class="form-control" type="text" id="name" name="name[]"
-								{if isset($fileInfo) and $fileInfo.name}
-									value="{$fileInfo.name|escape}"
+				{if $prefs.file_galleries_use_jquery_upload eq 'n' or $editFileId}
+					{if $simpleMode neq 'y'}
+						<div class="form-group">
+							<label for="name" class="col-sm-3 control-label">{tr}File title{/tr}</label>
+							<div class="col-sm-9">
+								<input class="form-control" type="text" id="name" name="name[]"
+									{if isset($fileInfo) and $fileInfo.name}
+										value="{$fileInfo.name|escape}"
+									{/if}
+									size="40"
+								>
+								{if isset($gal_info.type) and ($gal_info.type eq "podcast" or $gal_info.type eq "vidcast")}
+									({tr}required field for podcasts{/tr})
 								{/if}
-								size="40"
-							>
-							{if isset($gal_info.type) and ($gal_info.type eq "podcast" or $gal_info.type eq "vidcast")}
-								({tr}required field for podcasts{/tr})
-							{/if}
+							</div>
 						</div>
-					</div>
-					<div class="form-group">
-						<label for="description" class="col-sm-3 control-label">{tr}File description{/tr}</label>
-						<div class="col-sm-9">
-							<textarea class="form-control" rows="2" cols="40" id="description" name="description[]">{if isset($fileInfo.description)}{$fileInfo.description|escape}{/if}</textarea>
-							{if isset($gal_info.type) and ($gal_info.type eq "podcast" or $gal_info.type eq "vidcast")}
-								<br><em>{tr}Required for podcasts{/tr}.</em>
-							{/if}
+						<div class="form-group">
+							<label for="description" class="col-sm-3 control-label">{tr}File description{/tr}</label>
+							<div class="col-sm-9">
+								<textarea class="form-control" rows="2" cols="40" id="description" name="description[]">{if isset($fileInfo.description)}{$fileInfo.description|escape}{/if}</textarea>
+								{if isset($gal_info.type) and ($gal_info.type eq "podcast" or $gal_info.type eq "vidcast")}
+									<br><em>{tr}Required for podcasts{/tr}.</em>
+								{/if}
+							</div>
 						</div>
-					</div>
-				{/if}
-				{if $prefs.javascript_enabled neq 'y' || !$editFileId}
-					<div class="form-group">
-						<label for="userfile" class="col-sm-3 control-label">{tr}Upload from disk{/tr}</label>
-						<div class="col-sm-9">
-							{if $editFileId}
-								{$fileInfo.filename|escape}
-							{/if}
+					{/if}
+					{if $prefs.javascript_enabled neq 'y' || !$editFileId}
+						<div class="form-group">
+							<label for="userfile" class="col-sm-3 control-label">{tr}Upload from disk{/tr}</label>
+							<div class="col-sm-9">
+								{if $editFileId}
+									{$fileInfo.filename|escape}
+								{/if}
 
-							<input id="userfile" name="userfile[]" type="file" size="40">
+								<input id="userfile" name="userfile[]" type="file" size="40">
+							</div>
 						</div>
-					</div>
+					{/if}
+				{else}{* file_galleries_use_jquery_upload = y *}
+					{filegal_uploader}
 				{/if}
+
 			</div>
 
 			{if $simpleMode neq 'y'}
@@ -313,25 +318,27 @@
 
 			{$upload_str}
 
-			{if $editFileId}
-				{include file='categorize.tpl'}<br>
-				<div id="page_bar" class="form-group">
-					<div class="col-sm-9 col-sm-offset-3">
-						<input name="upload" type="submit" class="btn btn-default" value="{tr}Save{/tr}">
+			{if $prefs.file_galleries_use_jquery_upload eq 'n'}
+				{if $editFileId}
+					{include file='categorize.tpl'}<br>
+					<div id="page_bar" class="form-group">
+						<div class="col-sm-9 col-sm-offset-3">
+							<input name="upload" type="submit" class="btn btn-default" value="{tr}Save{/tr}">
+						</div>
 					</div>
-				</div>
-			{elseif $prefs.javascript_enabled neq 'y'}
-				{$upload_str}
-				{$upload_str}
-				{include file='categorize.tpl'}<br>
-				<div id="page_bar" class="form-group">
-					<div class="col-sm-9 col-sm-offset-3">
-						<input type="submit" class="btn btn-default btn-sm" name="upload" value="{tr}Upload{/tr}">
+				{elseif $prefs.javascript_enabled neq 'y'}
+					{$upload_str}
+					{$upload_str}
+					{include file='categorize.tpl'}<br>
+					<div id="page_bar" class="form-group">
+						<div class="col-sm-9 col-sm-offset-3">
+							<input type="submit" class="btn btn-default btn-sm" name="upload" value="{tr}Upload{/tr}">
+						</div>
 					</div>
-				</div>
+				{/if}
 			{/if}
 
-			{if !$editFileId}
+			{if !$editFileId && $prefs.file_galleries_use_jquery_upload eq 'n'}
 				<div id="page_bar" class="form-group">
 					<div class="col-sm-9 col-sm-offset-3">
 						<input type="submit" class="btn btn-primary btn-sm"
@@ -370,7 +377,7 @@
 	{include file='metadata/meta_view_tabs.tpl'}
 {/if}
 
-{if ! $editFileId}
+{if ! $editFileId and $prefs.file_galleries_use_jquery_upload eq 'n'}
 	{if $prefs.feature_jquery_ui eq 'y'}
 		{jq}$('.datePicker').datepicker({minDate: 0, maxDate: '+1m', dateFormat: 'dd/mm/yy'});{/jq}
 	{/if}

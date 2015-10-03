@@ -26,5 +26,16 @@ function prefs_file_list()
 			),
 			'default' => 'points_desc',
 		),
+		'file_galleries_use_jquery_upload' => array(
+			'name' => tra('Use jQuery Upload'),
+            'description' => tra('Use the improved Tiki 15+ upload page'),
+			'type' => 'flag',
+			'default' => 'n',
+			'tags' => array('experimental'),
+			'dependencies' => array(
+				'feature_file_galleries',
+				'feature_jquery_ui',
+			),
+		),
 	);
 }

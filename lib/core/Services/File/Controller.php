@@ -89,6 +89,53 @@ class Services_File_Controller
 		);
 	}
 
+	/**
+	 * Uploads several files at once, currently from jquery_upload when file_galleries_use_jquery_upload pref is enabled
+	 *
+	 * @param $input
+	 * @return array
+	 * @throws Services_Exception
+	 * @throws Services_Exception_NotAvailable
+	 */
+	function action_upload_multiple($input)
+	{
+		$output = ['files' => []];
+
+		if (isset($_FILES['files']) && is_array($_FILES['files']['tmp_name'])) {
+
+			// a few other params that are still arrays but shouldn't be
+			$input->offsetSet('galleryId', $input->galleryId->asArray()[0]);
+			$input->offsetSet('hit_limit', $input->hit_limit->asArray()[0]);
+			$input->offsetSet('isbatch', $input->isbatch->asArray()[0]);
+			$input->offsetSet('deleteAfter', $input->deleteAfter->asArray()[0]);
+			$input->offsetSet('author', $input->author->asArray()[0]);
+			$input->offsetSet('listtoalert', $input->listtoalert->asArray()[0]);
+
+			for ($i = 0; $i < count($_FILES['files']['tmp_name']); $i++) {
+				if (is_uploaded_file($_FILES['files']['tmp_name'][$i])) {
+					$input->offsetSet('name', $_FILES['files']['name'][$i]);
+					$input->offsetSet('size', $_FILES['files']['size'][$i]);
+					$input->offsetSet('type', $_FILES['files']['type'][$i]);
+					$data = file_get_contents($_FILES['files']['tmp_name'][$i]);
+					$input->offsetSet('data', base64_encode($data));
+
+					$file = $this->action_upload($input);
+					if (!empty($file['fileId'])) {
+						$file['info'] =  TikiLib::lib('filegal')->get_file_info($file['fileId']);
+						$file['syntax'] = TikiLib::lib('filegal')->getWikiSyntax($file['galleryId'], $file['info']);
+					}
+
+					$output['files'][] = $file;
+				} else {
+					throw new Services_Exception_NotAvailable(tr('File could not be uploaded.'));
+				}
+			}
+		}
+
+		return $output;
+
+	}
+
 	function action_browse($input)
 	{
 		try {
