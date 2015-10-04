@@ -49,7 +49,7 @@
 				{/if}
 				<tr>
 					<td><strong>{tr}Last login{/tr}</strong></td>
-					<td>{$lastSeen|tiki_short_datetime}</td>
+					<td>{if !empty($lastSeen)}{$lastSeen|tiki_short_datetime}{else}{tr}Never logged in{/tr}{/if}</td>
 				</tr>
 				{if $shared_groups}
 				<tr>
