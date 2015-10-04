@@ -77,10 +77,12 @@ function wikiplugin_trade_info()
 			'inputtitle' => array(
 				'required' => false,
 				'name' => tra('Input Title'),
-				'description' => tra('Title of the input form.').' '. tr('Use %0%0%1 for the amount, %0%1%1 for currency,
-					 %0%2%1 for your user name, %0%3%1 for the other user.', '<code>', '</code>').' '.tra('Supports
-					 wiki syntax') . '<br />'. tr('Default') . ':' . tra('"Payment of %0 %1 from user %2 to %3" for
-					 offered items, "Request payment of %0 %1 to user %2 from %3" for wanted'),
+				'description' => tra('Title of the input form.').' '. tr('Use %0 for the amount, %1 for currency,
+					 %2 for your user name, %3 for the other user.', '<code>%0</code>', '<code>%1</code>',
+					'<code>%2</code>', '<code>%3</code>').' '
+					.tra('Supports wiki syntax') . '<br />'. tr('Default') . ':'
+					. tra('"Payment of %0 %1 from user %2 to %3" for offered items, "Request payment of %0 %1 to user
+					%2 from %3" for wanted'),
 				'since' => '6.0',
 				'filter' => 'text',
 				'default' => '',

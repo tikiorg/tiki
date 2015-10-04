@@ -11,11 +11,13 @@ function wikiplugin_userpref_info()
 		'name' => tra('User Preference'),
 		'documentation' => 'PluginUserpref',
 		'description' => tra('Display contents based on user preference settings'),
-		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed to users not matching the conditions.'),
+		'body' => tr('Wiki text to display if conditions are met. The body may contain %0. Text after the marker
+			will be displayed to users not matching the conditions.', '<code>{ELSE}</code>'),
 		'prefs' => array('wikiplugin_userpref'),
 		'filter' => 'wikicontent',
 		'extraparams' => true,
-		'icon' => 'img/icons/user.png',
+		'iconname' => 'user',
+		'introduced' => 4,
 		'params' => array(
 		),
 	);

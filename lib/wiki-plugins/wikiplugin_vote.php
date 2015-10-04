@@ -13,12 +13,14 @@ function wikiplugin_vote_info()
 		'description' => tra('Create a tracker for voting'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_vote' ),
 		'body' => tra('Title'),
-		'icon' => 'img/icons/thumb_up.png',
+		'iconname' => 'thumbs-up',
+		'introduced' => 2,
 		'params' => array(
 			'trackerId' => array(
 				'required' => true,
 				'name' => tra('Tracker ID'),
 				'description' => tra('Numeric value representing the tracker ID'),
+				'since' => '2.0',
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'tracker',
@@ -26,7 +28,9 @@ function wikiplugin_vote_info()
 			'fields' => array(
 				'required' => true,
 				'name' => tra('Fields'),
-				'description' => tra('Colon-separated list of field IDs to be displayed. Example: 2:4:5'),
+				'description' => tra('Colon-separated list of field IDs to be displayed. If not set all the fields that
+					can be used (except IP, user, system, private fields) are used. Example:') . ' <code>2:4:5</code>',
+				'since' => '2.0',
 				'default' => '',
 				'separator' => ':',
 				'profile_reference' => 'tracker_field',
@@ -34,7 +38,9 @@ function wikiplugin_vote_info()
 			'show_percent' => array(
 				'required' => false,
 				'name' => tra('Show Percentage'),
-				'description' => tra('Choose whether to show the percentage of the vote each option received (not shown by default)'),
+				'description' => tra('Choose whether to show the percentage of the vote each option received (not
+					shown by default)'),
+				'since' => '2.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -46,7 +52,9 @@ function wikiplugin_vote_info()
 			'show_bar' => array(
 				'required' => false,
 				'name' => tra('Show Bar'),
-				'description' => tra('Choose whether to show a bar representing the number of votes each option received (not shown by default)'),
+				'description' => tra('Choose whether to show a bar representing the number of votes each option
+					received (not shown by default)'),
+				'since' => '2.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -59,6 +67,7 @@ function wikiplugin_vote_info()
 				'required' => false,
 				'name' => tra('Show Stats'),
 				'description' => tra('Choose whether to show the voting results (shown by default)'),
+				'since' => '2.0',
 				'filter' => 'alpha',
 				'default' => 'y',
 				'options' => array(
@@ -70,7 +79,9 @@ function wikiplugin_vote_info()
 			'show_stat_only_after' => array(
 				'required' => false,
 				'name' => tra('Show Stats After'),
-				'description' => tra('Choose whether to show the voting results only after the date given in the tracker configuration (not set by default)'),
+				'description' => tra('Choose whether to show the voting results only after the date given in the
+					tracker configuration (not set by default)'),
+				'since' => '2.0',
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
@@ -82,7 +93,9 @@ function wikiplugin_vote_info()
 			'show_creator' => array(
 				'required' => false,
 				'name' => tra('Show Creator'),
-				'description' => tra('Choose whether to display the user name of the creator of the voting tracker (not shown by default)'),
+				'description' => tra('Choose whether to display the user name of the creator of the voting tracker (not
+					shown by default)'),
+				'since' => '2.0',
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
@@ -95,6 +108,7 @@ function wikiplugin_vote_info()
 				'required' => false,
 				'name' => tra('Status Filter'),
 				'description' => tra('Only show items matching certain status filters'),
+				'since' => '2.0',
 				'filter' => 'alpha',
 				'default' => 'o',
 				'options' => array(
@@ -111,7 +125,9 @@ function wikiplugin_vote_info()
 			'float' => array(
 				'required' => false,
 				'name' => tra('Float'),
-				'description' => tra('Align the plugin on the page, allowing other elements to wrap around it (not set by default)'),
+				'description' => tra('Align the plugin on the page, allowing other elements to wrap around it (not set
+					by default)'),
+				'since' => '2.0',
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
@@ -125,6 +141,7 @@ function wikiplugin_vote_info()
 				'required' => false,
 				'name' => tra('Show Toggle'),
 				'description' => tra('Show toggle or not to display the form and the results'),
+				'since' => '10.0',
 				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(

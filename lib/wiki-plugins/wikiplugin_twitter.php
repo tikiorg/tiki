@@ -38,7 +38,7 @@ function wikiplugin_twitter_info()
 			'theme' => array(
 				'required' => false,
 				'name' => tra('Theme'),
-				'description' => tra('Embedded timelines are available in light and dark themes for customization.
+				'description' => tr('Embedded timelines are available in light and dark themes for customization.
 					The light theme is for pages that use a light colored background, while the dark theme is for pages
 					that use a dark colored background. Default is %0light%1.', '<code>', '</code>'),
 				'since' => '13.1',

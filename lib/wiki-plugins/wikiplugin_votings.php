@@ -13,11 +13,14 @@ function wikiplugin_votings_info()
 		'description' => tra('Saves voting information in Smarty variables for display'),
 		'prefs' => array( 'wikiplugin_votings' ),	
 		'format' => 'html',
+		'iconname' => 'thumbs-up',
+		'introduced' => 8,
 		'params' => array(
 			'objectkey' => array(
 				'required' => true,
 				'name' => tra('Object Key'),
 				'description' => tra('Object key that is used to record votes'),
+				'since' => '8.0',
 				'filter' => 'text',
 				'default' => '',
 			),
@@ -25,6 +28,7 @@ function wikiplugin_votings_info()
 				'required' => false,
 				'name' => tra('Return value'),
 				'description' => tra('Value to display as output of plugin'),
+				'since' => '8.0',
 				'filter' => 'text',
 				'default' => '',
 			),

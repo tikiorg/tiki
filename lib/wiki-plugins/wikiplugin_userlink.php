@@ -12,12 +12,14 @@ function wikiplugin_userlink_info()
 		'documentation' => 'PluginUserlink',
 		'description' => tra('Display a link to a user\'s information page'),
 		'prefs' => array('wikiplugin_userlink'),
-		'icon' => 'img/icons/user_go.png',
-		'params' => array( 
+		'iconname' => 'user',
+		'introduced' => 6,
+		'params' => array(
 			'user' => array(
 				'required' => false,
 				'name' => tra('User Name'),
 				'description' => tra('User account name (which can be an email address)'),
+				'since' => '6.0',
 				'filter' => 'xss',
 				'default' => ''
 			),

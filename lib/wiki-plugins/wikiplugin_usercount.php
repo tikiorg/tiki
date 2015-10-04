@@ -10,16 +10,21 @@ function wikiplugin_usercount_info()
 	return array(
 		'name' => tra('User Count'),
 		'documentation' => 'PluginUserCount',
-		'description' => tra('Display number of users for a site or group'),
+		'description' => tra('Display number of users for a site or one or more groups'),
 		'prefs' => array( 'wikiplugin_usercount' ),
-		'body' => tra('Group name'),
-		'icon' => 'img/icons/group_gear.png',
+		'body' => tra('Group name. If left blank, the total number of users for the site will be shown.'),
+		'iconname' => 'group',
+		'introduced' => 1,
 		'params' => array(
 			'groups' => array(
 				'required' => false,
 				'name' => tra('Groups'),
-				'description' => tra('List of colon separated groups where a consolidated user count for multiple groups is needed.'),
+				'description' => tra('List of colon separated groups where a consolidated user count for multiple
+					groups is needed. Users in multiple groups are counted only once. If left blank then the behaviour
+					is defined by the body parameter settings.'),
+				'since' => '14.1',
 				'separator' => ':',
+				'filter' => 'groupname',
 				'default' => '',
 			),		
 		),

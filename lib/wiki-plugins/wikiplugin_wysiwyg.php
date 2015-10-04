@@ -12,9 +12,10 @@ function wikiplugin_wysiwyg_info()
 	return array(
 		'name' => 'WYSIWYG',
 		'documentation' => 'PluginWYSIWYG',
-		'description' => tra('Permits to have a WYSIWYG section for part of a page.'),
+		'description' => tra('Use a WYSIWYG editor to edit a section of content'),
 		'prefs' => array('wikiplugin_wysiwyg'),
-		'icon' => 'img/icons/mime/default.png',
+		'iconname' => 'wysiwyg',
+		'introduced' => 9,
 		'tags' => array( 'experimental' ),
 		'filter' => 'purifier',			/* N.B. uses htmlpurifier to ensure only "clean" html gets in */
 		'format' => 'html',
@@ -24,21 +25,25 @@ function wikiplugin_wysiwyg_info()
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
-				'description' => tra('Minimum width for DIV. Default:500px'),
+				'description' => tra('Minimum width for DIV. Default:') . ' <code>500px</code>',
+				'since' => '9.0',
 				'filter' => 'text',
 				'default' => '500px',
 			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
-				'description' => tra('Minimum height for DIV. Default:300px.'),
+				'description' => tra('Minimum height for DIV. Default:') . ' <code>300px</code>',
+				'since' => '9.0',
 				'filter' => 'text',
 				'default' => '300px',
 			),
 			'use_html' => array(
 				'required' => false,
 				'name' => tra('Use HTML'),
-				'description' => tra('Overrides the "wysiwyg_htmltowiki" preference if needed. Defaults to "n" if wysiwyg_htmltowiki is set to "y".'),
+				'description' => tr('Override the %0wysiwyg_htmltowiki%1 preference if needed. Defaults to No (%0n%1)
+					if wysiwyg_htmltowiki is set to Yes (%0y%1).', '<code>', '</code>'),
+				'since' => '14.1',
 				'filter' => 'alpha',
 				'default' => $prefs['wysiwyg_htmltowiki'] == 'y' ? 'n' : 'y',
 				'options' => array(

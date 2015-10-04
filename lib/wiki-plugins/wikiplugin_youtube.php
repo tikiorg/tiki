@@ -10,15 +10,18 @@ function wikiplugin_youtube_info()
 	return array(
 		'name' => tra('YouTube'),
 		'documentation' => 'PluginYouTube',
-		'description' => tra('Display a YouTube video'),
+		'description' => tra('Embed a YouTube video in a page'),
 		'prefs' => array( 'wikiplugin_youtube' ),
-		'icon' => 'img/icons/youtube.png',
+		'iconname' => 'youtube',
+		'introduced' => 2,
 		'tags' => array( 'basic' ),
 		'params' => array(
 			'movie' => array(
 				'required' => true,
 				'name' => tra('Movie'),
-				'description' => tra('Entire URL to the YouTube video or last part (after www.youtube.com/v/ and before the first question mark)'),
+				'description' => tr('Entire URL to the YouTube video or last part (after %0www.youtube.com/v/%1 and
+					before the first question mark)', '<code>', '</code>'),
+				'since' => '2.0',
 				'filter' => 'url',
 				'default' => '',
 			),
@@ -37,21 +40,24 @@ function wikiplugin_youtube_info()
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
-				'description' => tra('Width in pixels'),
+				'description' => tra('Width in pixels.') . ' ' . tra('Default')  . ' :<code>425</code>',
+				'since' => '2.0',
 				'filter' => 'digits',
 				'default' => 425,
 			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
-				'description' => tra('Height in pixels'),
+				'description' => tra('Height in pixels') . ' ' . tra('Default')  . ' :<code>350</code>',
+				'since' => '2.0',
 				'filter' => 'digits',
 				'default' => 350,
 			),
 			'quality' => array(
 				'required' => false,
 				'name' => tra('Quality'),
-				'description' => tra('Quality of the video. Default is high.'),
+				'description' => tr('Quality of the video. Default is %0high%1.', '<code>', '</code>'),
+				'since' => '2.0',
 				'default' => 'high',
 				'filter' => 'alpha',
     			'options' => array(
@@ -66,6 +72,7 @@ function wikiplugin_youtube_info()
 				'required' => false,
 				'name' => tra('Allow Fullscreen'),
 				'description' => tra('Enlarge video to full screen size'),
+				'since' => '5.0',
 				'default' => '',
 				'filter' => 'alpha',
      			'options' => array(
@@ -79,7 +86,7 @@ function wikiplugin_youtube_info()
 				'required' => false,
 				'name' => tra('Related'),
 				'description' => tra('Show related videos (shown by default)'),
-				'since' => 6.1,
+				'since' => '6.1',
 				'default' => '',
 				'filter' => 'alpha',
     			'options' => array(
@@ -92,20 +99,22 @@ function wikiplugin_youtube_info()
 			'background' => array(
 				'required' => false,
 				'name' => tra('Background'),
-				'description' => tra('Toolbar background color. Use an HTML color code. Example: ffffff'),
+				'description' => tra('Toolbar background color. Use an HTML color code.') . ' ' . tra('Example')
+					. ': <code>ffffff</code>',
 				'accepted' => tra('HTML color code, e.g. ffffff'),
-				'since' => 6.1,
-				'filter' => 'striptags',
+				'since' => '6.1',
+				'filter' => 'text',
 				'default' => '',
 				'advanced' => true
 			),
 			'border' => array(
 				'required' => false,
 				'name' => tra('Borders'),
-				'description' => tra('Toolbar border colors. Use an HTML color code. Example: ffffff'),
+				'description' => tra('Toolbar border colors. Use an HTML color code.') . ' ' . tra('Example')
+					. ': <code>ffffff</code>',
 				'accepted' => tra('HTML color code, e.g. ffffff'),
-				'since' => 6.1,
-				'filter' => 'striptags',
+				'since' => '6.1',
+				'filter' => 'text',
 				'default' => '',
 				'advanced' => true
 			),

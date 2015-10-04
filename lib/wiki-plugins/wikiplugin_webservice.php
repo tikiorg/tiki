@@ -10,16 +10,20 @@ function wikiplugin_webservice_info()
 	return array(
 		'name' => tra('Web Service'),
 		'documentation' => 'PluginWebservice',
-		'description' => tra('Display remote information exposed in JSON or YAML.'),
+		'description' => tra('Display remote information exposed in JSON or YAML or SOAP XML'),
 		'prefs' => array( 'wikiplugin_webservice' ),
-		'body' => tra('Template to apply to the data provided. Template format uses smarty templating engine using double brackets as delimiter. Output must provide wiki syntax. Body can be sent to a parameter instead by using the bodyname parameter.'),
+		'body' => tr('Template to apply to the data provided. Template format uses smarty templating engine using
+			double brackets as delimiter. Output must provide wiki syntax. Body can be sent to a parameter instead by
+			using the %0 parameter.', '<code>bodyname</code>'),
 		'validate' => 'all',
-		'icon' => 'img/icons/world_go.png',
+		'iconname' => 'move',
+		'introduced' => 3,
 		'params' => array(
 			'url' => array(
 				'required' => false,
 				'name' => tra('URL'),
 				'description' => tra('Complete service URL'),
+				'since' => '3.0',
 				'default' => '',
 			),
 			'service' => array(
@@ -27,13 +31,16 @@ function wikiplugin_webservice_info()
 				'safe' => true,
 				'name' => tra('Service Name'),
 				'description' => tra('Registered service name.'),
+				'since' => '3.0',
 				'default' => '',
 			),
 			'template' => array(
 				'required' => false,
 				'safe' => true,
 				'name' => tra('Template Name'),
-				'description' => tra('For use with registered services, name of the template to be used to display the service output. This parameter will be ignored if a body is provided.'),
+				'description' => tra('For use with registered services, name of the template to be used to display the
+					service output. This parameter will be ignored if a body is provided.'),
+				'since' => '3.0',
 				'default' => '',
 			),
 			'bodyname' => array(
@@ -41,17 +48,20 @@ function wikiplugin_webservice_info()
 				'filter' => 'word',
 				'safe' => true,
 				'name' => tra('Body as Parameter'),
-				'description' => tra('Name of the argument to send the body as for services with complex input. Named service required for this to be useful.'),
+				'description' => tra('Name of the argument to send the body as for services with complex input.
+					Named service required for this to be useful.'),
+				'since' => '3.0',
 				'default' => '',
 			),
 			'params' => array(
 				'required' => false,
 				'safe' => true,
 				'name' => tra('Parameters'),
-				'description' => tra('Parameters formatted like a query : param1=value1&amp;param2=value2.'),
+				'description' => tra('Parameters formatted like a query')
+					. ': <code>param1=value1&amp;param2=value2</code>',
+				'since' => '7.0',
 				'default' => '',
 			),
-
 		),
 	);
 }

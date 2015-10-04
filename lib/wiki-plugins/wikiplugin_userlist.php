@@ -13,12 +13,14 @@ function wikiplugin_userlist_info()
 		'description' => tra('Display a list of registered users'),
 		'prefs' => array( 'wikiplugin_userlist' ),
 		'body' => tra('Login Filter'),
-		'icon' => 'img/icons/group_go.png',
+		'iconname' => 'group',
+		'introduced' => 3,
 		'params' => array(
 			'sep' => array(
 				'required' => false,
 				'name' => tra('Separator'),
 				'description' => tra('Separator to use between users in the list. Default: comma'),
+				'since' => '3.0',
 				'default' => ', ',
 				'advanced' => true,
 			),
@@ -26,6 +28,7 @@ function wikiplugin_userlist_info()
 				'required' => false,
 				'name' => tra('Maximum'),
 				'description' => tra('Result limit'),
+				'since' => '3.0',
 				'default' => '',
 				'filter' => 'digits',
 				'advanced' => true,
@@ -33,7 +36,8 @@ function wikiplugin_userlist_info()
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort Order'),
-				'description' => 'Set to sort in ascending or descending order',
+				'description' => tra('Set to sort in ascending or descending order'),
+				'since' => '3.0',
 				'default' => '',
 				'filter' => 'alpha',
 				'options' => array(
@@ -45,7 +49,8 @@ function wikiplugin_userlist_info()
 			'layout' => array(
 				'required' => false,
 				'name' => tra('Layout'),
-				'description' => 'Set to table to display results in a table',
+				'description' => tra('Set to table to display results in a table'),
+				'since' => '3.0',
 				'default' => '',
 				'filter' => 'alpha',
 				'options' => array(
@@ -57,7 +62,8 @@ function wikiplugin_userlist_info()
 			'link' => array(
 				'required' => false,
 				'name' => tra('Link'),
-				'description' => 'Make the user names listed links to different types of user information',
+				'description' => tra('Make the user names listed links to different types of user information'),
+				'since' => '3.0',
 				'default' => '',
 				'filter' => 'alpha',
 				'options' => array(
@@ -72,6 +78,7 @@ function wikiplugin_userlist_info()
 				'filter' => 'alpha',
 				'name' => tra('Real Name'),
 				'description' => tra('Display the user\'s real name (when available) instead of login name'),
+				'since' => '4.0',
 				'default' => '',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -83,6 +90,7 @@ function wikiplugin_userlist_info()
 				'required' => false,
 				'name' => tra('Group'),
 				'description' => tra('Filter on a group'),
+				'since' => '5.0',
 				'filter' => 'groupname',
 				'default' => '',
 			),
