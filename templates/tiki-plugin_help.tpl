@@ -4,13 +4,7 @@
 <em>{$plugin_name|lower}</em>
 
 {if $prefs.javascript_enabled eq 'y' && $area_id}
-	<a href="javascript:void(0);" onclick="needToConfirm=false;$.closeModal();popup_plugin_form('{$area_id}','{$plugin_name|lower|@addslashes}');return false;">
-		{if !empty($plugin.iconname)}
-			{icon name=$plugin.iconname _text="{tr}Insert{/tr}"}
-		{else}
-			{icon _id=$plugin.icon|default:"plugin_add" _text="{tr}Insert{/tr}"}
-		{/if}
-	</a>
+	<a href="javascript:void(0);" onclick="needToConfirm=false;$.closeModal();popup_plugin_form('{$area_id}','{$plugin_name|lower|@addslashes}');return false;">{icon name=$plugin.iconname|default:"plugin" _text="{tr}Insert{/tr}"}</a>
 {/if}
 {if $prefs.feature_help eq 'y'}
 	{if !empty($plugin.documentation)}
