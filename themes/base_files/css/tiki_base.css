@@ -4025,7 +4025,6 @@ body.tiki_wiki #comments {
   overflow: hidden;
   position: absolute;
   z-index: 1;
-  background-image: url('../../../img/icons/text_signature.png');
   background-repeat: no-repeat;
   padding: 0.3em;
   vertical-align: bottom;
