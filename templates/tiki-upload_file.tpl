@@ -114,7 +114,7 @@
 
 		<div class="fgal_file">
 			<div class="fgal_file_c1">
-				{if $prefs.file_galleries_use_jquery_upload eq 'n' or $editFileId}
+				{if $prefs.file_galleries_use_jquery_upload neq 'y' or $editFileId}
 					{if $simpleMode neq 'y'}
 						<div class="form-group">
 							<label for="name" class="col-sm-3 control-label">{tr}File title{/tr}</label>
@@ -318,7 +318,7 @@
 
 			{$upload_str}
 
-			{if $prefs.file_galleries_use_jquery_upload eq 'n'}
+			{if $prefs.file_galleries_use_jquery_upload neq 'y'}
 				{if $editFileId}
 					{include file='categorize.tpl'}<br>
 					<div id="page_bar" class="form-group">
@@ -338,7 +338,7 @@
 				{/if}
 			{/if}
 
-			{if !$editFileId && $prefs.file_galleries_use_jquery_upload eq 'n'}
+			{if !$editFileId && $prefs.file_galleries_use_jquery_upload neq 'y'}
 				<div id="page_bar" class="form-group">
 					<div class="col-sm-9 col-sm-offset-3">
 						<input type="submit" class="btn btn-primary btn-sm"
@@ -377,7 +377,7 @@
 	{include file='metadata/meta_view_tabs.tpl'}
 {/if}
 
-{if ! $editFileId and $prefs.file_galleries_use_jquery_upload eq 'n'}
+{if ! $editFileId and $prefs.file_galleries_use_jquery_upload neq 'y'}
 	{if $prefs.feature_jquery_ui eq 'y'}
 		{jq}$('.datePicker').datepicker({minDate: 0, maxDate: '+1m', dateFormat: 'dd/mm/yy'});{/jq}
 	{/if}
