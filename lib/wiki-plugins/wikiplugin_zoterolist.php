@@ -9,12 +9,15 @@ function wikiplugin_zoterolist_info()
 {
 	return array(
 		'name' => tra('Zotero Reference List'),
-		'description' => tra('Produces the complete reference list from the Zotero server.'),
+		'description' => tra('Display the complete reference list from a Zotero server'),
 		'prefs' => array('zotero_enabled', 'wikiplugin_zoterolist'),
+		'iconname' => 'bookmark',
+		'introduced' => 7,
 		'params' => array(
 			'tag' => array(
 				'name' => tra('Tag'),
 				'description' => tra('Provide the list of references with a given tag.'),
+				'since' => '7.0',
 				'required' => true,
 				'filter' => 'alnum',
 			),

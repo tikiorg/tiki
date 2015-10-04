@@ -10,12 +10,17 @@ function wikiplugin_userlastlogged_info()
 	return array(
 		'name' => tra('Last Login information'),
 		'documentation' => tra('PluginUserLastLogged'),
-		'description' => tra('Show the last login information for a current user'),
+		'description' => tra('Show the last login information for a given or current user'),
+		'iconname' => 'user',
+		'introduced' => 13,
 		'params' => array(
 			'user' => array(
 				'required' => false,
 				'name' => tra('Username'),
-				'description' => tra('Username to display last login information'),
+				'description' => tra('Username to display last login information for. Current user information shown
+					if left blank.'),
+				'since' => '13.0',
+				'filter' => 'username',
 			),
 		),
 	);

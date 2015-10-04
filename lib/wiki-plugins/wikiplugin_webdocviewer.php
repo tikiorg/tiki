@@ -10,24 +10,32 @@ function wikiplugin_webdocviewer_info()
 	return array(
 		'name' => tra('Web Document Viewer'),
 		'documentation' => 'PluginWebDocViewer',
-		'description' => tra('Display files found in a gallery or from a URL in an embedded document viewer'),
+		'description' => tra('View a document in a page'),
 		'prefs' => array( 'wikiplugin_webdocviewer' ),
 		'tags' => array( 'basic' ),
+		'iconname' => 'copy',
+		'introduced' => 12,
 		'params' => array(
 			'fileId' => array(
 				'required' => false,
 				'name' => tra('File Id'),
 				'description' => tra('The FileId of a file in a File Gallery of the file you wish to embed in the viewer.'),
+				'since' => '12.0',
+				'filter' => 'digits',
 			),
 			'url' => array(
 				'required' => false,
 				'name' => tra('URL'),
-				'description' => tra('The URL of the file you wish to embed in the viewer. If the file is stored in File Galleries, please use the fileId parameter'),
+				'description' => tr('The URL of the file you wish to embed in the viewer. If the file is stored in
+					File Galleries, please use the %0 parameter', '<code>fileId</code>'),
+				'since' => '12.0',
+				'filter' => 'url',
 			),
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
 				'description' => tra('Width in pixels'),
+				'since' => '12.0',
 				'filter' => 'digits',
 				'default' => 425,
 			),
@@ -35,6 +43,7 @@ function wikiplugin_webdocviewer_info()
 				'required' => false,
 				'name' => tra('Height'),
 				'description' => tra('Height in pixels'),
+				'since' => '12.0',
 				'filter' => 'digits',
 				'default' => 350,
 			),
