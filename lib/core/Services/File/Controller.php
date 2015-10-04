@@ -122,6 +122,8 @@ class Services_File_Controller
 					$file = $this->action_upload($input);
 					if (!empty($file['fileId'])) {
 						$file['info'] =  TikiLib::lib('filegal')->get_file_info($file['fileId']);
+						// when stored in the database the file contents is here and should not be sent back to the client
+						$file['info']['data'] = null;
 						$file['syntax'] = TikiLib::lib('filegal')->getWikiSyntax($file['galleryId'], $file['info']);
 					}
 
