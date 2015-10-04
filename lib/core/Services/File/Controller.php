@@ -132,6 +132,13 @@ class Services_File_Controller
 					throw new Services_Exception_NotAvailable(tr('File could not be uploaded.'));
 				}
 			}
+
+			global $user;
+			if ($input->autoupload->word()) {
+				TikiLib::lib('user')->set_user_preference($user, 'filegals_autoupload', 'y');
+			} else {
+				TikiLib::lib('user')->set_user_preference($user, 'filegals_autoupload', 'n');
+			}
 		}
 
 		return $output;
