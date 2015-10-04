@@ -7,9 +7,5 @@
     <!-- The file input field used as target for the file upload widget -->
     <input id="fileupload" type="file" name="files[]" multiple>
 </div>
-{* The global progress bar *}
-<div id="progress" class="progress margin-bottom-sm">
-	<div class="progress-bar progress-bar-success"></div>
-</div>
 {* The container for the uploaded files *}
-<table id="files" class="files"></table>
+<div id="files" class="files"></div>
