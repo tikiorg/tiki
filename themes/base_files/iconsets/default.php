@@ -194,7 +194,13 @@ function iconset_default()
 				'id' => 'step-backward',
 			),
 			//ban in defaults
+			'box' => array(
+				'id' => 'list-alt',
+			),
 			//caret-left & caret-right in defaults
+			'cart' => array(
+				'id' => 'shopping-cart',
+			),
 			'chart' => array(
 				'id' => 'area-chart',
 			),
@@ -213,6 +219,9 @@ function iconset_default()
 			),
 			'compose' => array(
 				'id' => 'pencil',
+			),
+			'computer' => array(
+				'id' => 'desktop',
 			),
 			'contacts' => array(
 				'id' => 'group',
@@ -234,6 +243,9 @@ function iconset_default()
 				'id' => 'sort-desc',
 			),
 			//edit in defaults
+			'education' => array(
+				'id' => 'graduation-cap',
+			),
 			'envelope' => array(
 				'id' => 'envelope-o',
 			),
@@ -292,6 +304,9 @@ function iconset_default()
 				'id' => 'external-link',
 			),
 			//list in defaults
+			'list-numbered' => array(
+				'id' => 'list-ol',
+			),
 			//lock in defaults
 			//same fa icon used for admin_security, but not the same in other icon sets
 			'log' => array(
@@ -305,6 +320,9 @@ function iconset_default()
 			),
 			'mailbox' => array(
 				'id' => 'inbox',
+			),
+			'map' => array(
+				'id' => 'map-marker',
 			),
 			'menu' => array(
 				'id' => 'bars',
@@ -364,6 +382,9 @@ function iconset_default()
 				'id' => 'arrow-left',
 			),
 			//print in defaults
+			'quotes' => array(
+				'id' => 'quote-left',
+			),
 			'ranking' => array(
 				'id' => 'sort-numeric-asc',
 			),
@@ -448,6 +469,9 @@ function iconset_default()
 				'id' => 'trash-o',
 			),
 			//twitter in defaults
+			'tv' => array(
+				'id' => 'desktop',
+			),
 			//undo in defaults
 			//unlock in defaults
 			'up' => array(

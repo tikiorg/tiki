@@ -13,7 +13,7 @@ function wikiplugin_subscribenewsletter_info()
 		'description' => tra('Allow users to subscribe to a newsletter'),
 		'prefs' => array('feature_newsletters', 'wikiplugin_subscribenewsletter'),
 		'body' => tra('Invitation message'),
-		'iconname' => 'article',
+		'iconname' => 'articles',
 		'introduced' => 5,
 		'tags' => array( 'basic' ),
 		'params' => array(

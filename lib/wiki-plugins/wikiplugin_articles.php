@@ -13,7 +13,7 @@ function wikiplugin_articles_info()
 		'documentation' => 'PluginArticles',
 		'description' => tra('Display multiple articles'),
 		'prefs' => array( 'feature_articles', 'wikiplugin_articles' ),
-		'iconname' => 'article',
+		'iconname' => 'articles',
 		'tags' => array( 'basic' ),
 		'introduced' => 1,
 		'params' => array(
