@@ -1165,17 +1165,6 @@
 		{
 			"type": "package",
 			"package": {
-				"name": "jquery/plugins/tablesorter",
-				"version": "2.21.5",
-				"dist": {
-					"url": "https://github.com/Mottie/tablesorter/archive/v2.21.5.zip",
-					"type": "zip"
-				}
-			}
-		},
-		{
-			"type": "package",
-			"package": {
 				"name": "jquery/plugins/tagcanvas",
 				"version": "2.6.1",
 				"dist": {
