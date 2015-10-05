@@ -12,7 +12,7 @@ function wikiplugin_article_info()
 		'documentation' => 'PluginArticle',
 		'description' => tra('Display a field of an article'),
 		'prefs' => array( 'feature_articles', 'wikiplugin_article' ),
-		'iconname' => 'article',
+		'iconname' => 'articles',
 		'format' => 'html',
 		'introduced' => 1,
 		'params' => array(
