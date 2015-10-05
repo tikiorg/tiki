@@ -194,6 +194,9 @@
 				<div class="adminoptionboxchild print_pdf_from_url_childcontainer webkit">
 					{preference name=print_pdf_webkit_path}
 				</div>
+				<div class="adminoptionboxchild print_pdf_from_url_childcontainer weasyprint">
+					{preference name=print_pdf_weasyprint_path}
+				</div>
 				<div class="adminoptionboxchild print_pdf_from_url_childcontainer webservice">
 					{preference name=print_pdf_webservice_url}
 				</div>
