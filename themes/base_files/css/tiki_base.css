@@ -1858,6 +1858,11 @@ table.treetable tr.expanded span.indenter a {
   clear: both;
   margin: 10px;
 }
+.files .file-list span.icon {
+  font-size: 90px;
+  width: 100px;
+  height: 100px;
+}
 .statuson,
 .statusoff {
   padding: 3px 2px 0 2px;
