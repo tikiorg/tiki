@@ -324,9 +324,7 @@ function iconset_default()
 			'mailbox' => array(
 				'id' => 'inbox',
 			),
-			'map' => array(
-				'id' => 'map-marker',
-			),
+			//map in defaults
 			'menu' => array(
 				'id' => 'bars',
 			),
@@ -472,9 +470,7 @@ function iconset_default()
 				'id' => 'trash-o',
 			),
 			//twitter in defaults
-			'tv' => array(
-				'id' => 'desktop',
-			),
+			//tv in defaults
 			//undo in defaults
 			//unlock in defaults
 			'up' => array(
