@@ -61,6 +61,10 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 			return $value;
 		}
 		$field = $tracker->getField(substr($name, 14));
+		// TextArea fields need the raw wiki syntax here for it to get wiki parsed if necessary
+		if ($field['type'] === 'a' && isset($entry[$name . '_raw'])) {
+			$value = $entry[$name . '_raw'];
+		}
 		$field['value'] = $value;
 
 		$this->cancache = ! in_array($field['type'], array('STARS', 's'));	// don't cache ratings fields
