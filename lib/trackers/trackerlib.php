@@ -2418,6 +2418,9 @@ class TrackerLib extends TikiLib
 		$trackerId = $res['trackerId'];
 		$status = $res['status'];
 
+		// keep copy of item for putting info into final event
+		$itemInfo = $this->get_tracker_item($itemId);
+
 		// ---- save image list before sql query ---------------------------------
 		$fieldList = $this->list_tracker_fields($trackerId, 0, -1, 'name_asc', '');
 		$imgList = array();
@@ -2530,6 +2533,7 @@ class TrackerLib extends TikiLib
 				'object' => $itemId,
 				'trackerId' => $trackerId,
 				'user' => $GLOBALS['user'],
+				'values' => $itemInfo,
 			)
 		);
 
@@ -3855,21 +3859,38 @@ class TrackerLib extends TikiLib
 	{
 		global $prefs;
 
-		$query = "update `tiki_tracker_item_fields` ttif left join `tiki_tracker_fields` ttf on (ttif.fieldId = ttf.fieldId) set ttif.`value`=? where ttif.`value`=? and ttf.`type` = ?";
-		$this->query($query, array($new, $old, 'k'));
+		$query = "update `tiki_tracker_item_fields` ttif left join `tiki_tracker_fields` ttf on (ttif.fieldId = ttf.fieldId) set ttif.`value`=? where ttif.`value`=? and (ttf.`type` = ? or ttf.`type` = ?)";
+		$this->query($query, array($new, $old, 'k', 'wiki'));
 
-		if ($prefs['tracker_wikirelation_synctitle'] == 'y') {
-			$relationlib = TikiLib::lib('relation');
-			$wikilib = TikiLib::lib('wiki');
-			$relatedfields = $relationlib->get_object_ids_with_relations_from( 'wiki page', $new, 'tiki.wiki.linkedfield' ); // $new because attributes have been changed 
-			$relateditems = $relationlib->get_object_ids_with_relations_from( 'wiki page', $new, 'tiki.wiki.linkeditem' );
-			foreach ($relateditems as $itemId) {
-				foreach ($relatedfields as $fieldId) {
+		$relationlib = TikiLib::lib('relation');
+		$wikilib = TikiLib::lib('wiki');
+		$relatedfields = $relationlib->get_object_ids_with_relations_from( 'wiki page', $new, 'tiki.wiki.linkedfield' ); // $new because attributes have been changed 
+		$relateditems = $relationlib->get_object_ids_with_relations_from( 'wiki page', $new, 'tiki.wiki.linkeditem' );
+		foreach ($relateditems as $itemId) {
+			foreach ($relatedfields as $fieldId) {
+				$field = $this->get_tracker_field($fieldId);
+				$toSync = false;
+				$nameFieldId = 0;
+				if ($field['type'] == 'wiki') {
+					$trackerId = $field['trackerId'];
+					$definition = Tracker_Definition::get($trackerId);
+					$field = $definition->getField($fieldId);	
+					if ($field['options_map']['syncwikipagename'] != 'n') {
+						$toSync = true;
+					}
+                                        $nameFieldId = $field['options_map']['fieldIdForPagename'];	
+				} elseif ($prefs['tracker_wikirelation_synctitle'] == 'y') {
+					$toSync = true;
+				}
+				if ($toSync) {
 					$value = $this->get_item_value(0, $itemId, $fieldId);
 					if ($wikilib->get_namespace($value) && $value != $new) {
 						$this->modify_field($itemId, $fieldId, $new);
 					} elseif (!$wikilib->get_namespace($value) && $value != $wikilib->get_without_namespace($new)) {
 						$this->modify_field($itemId, $fieldId, $wikilib->get_without_namespace($new));
+					}
+					if ($nameFieldId) {
+						$this->modify_field($itemId, $nameFieldId, $wikilib->get_without_namespace($new));
 					}
 				}
 			}
@@ -3899,6 +3920,67 @@ class TrackerLib extends TikiLib
 						$newname = $args['values'][$fieldId];
 					}
 					$wikilib->wiki_rename_page($pageName, $newname, false);
+				}
+			}
+		}
+	}
+
+	public function setup_wiki_fields($args)
+	{
+		$definition = Tracker_Definition::get($args['trackerId']);
+		$itemId = $args['object'];
+		$values = $args['values'];
+
+                if ($definition && $fieldIds = $definition->getWikiFields()) {
+			foreach ($fieldIds as $fieldId) {
+				if (!empty($values[$fieldId])) {
+					TikiLib::lib('relation')->add_relation('tiki.wiki.linkeditem', 'wiki page', $values[$fieldId], 'trackeritem', $itemId);
+					TikiLib::lib('relation')->add_relation('tiki.wiki.linkedfield', 'wiki page', $values[$fieldId], 'trackerfield', $fieldId);
+				}
+			}
+		}
+	}
+
+	public function update_wiki_fields($args) {
+		global $prefs;
+		$wikilib = TikiLib::lib('wiki');
+		$definition = Tracker_Definition::get($args['trackerId']);
+		$values = $args['values'];
+		$old_values = $args['old_values'];
+		$itemId = $args['object'];
+
+		if ($definition && $fieldIds = $definition->getWikiFields()) {
+			foreach($fieldIds as $fieldId) {
+				$field = $definition->getField($fieldId);
+				if ($field['options_map']['syncwikipagename'] != 'n') {
+					$nameFieldId = $field['options_map']['fieldIdForPagename'];
+					if (!empty($values[$nameFieldId]) && !empty($old_values[$nameFieldId]) && !empty($old_values[$fieldId])
+						&& $values[$nameFieldId] != $old_values[$nameFieldId] ) {
+							if ($namespace = $wikilib->get_namespace($old_values[$fieldId])) {
+								$newname = $namespace . $prefs['namespace_separator'] . $wikilib->get_without_namespace($values[$nameFieldId]);
+							} else {
+								$newname = $values[$nameFieldId];
+							}
+							$args['values'][$fieldId] = $newname;
+							$this->modify_field($itemId, $fieldId, $newname);
+							$wikilib->wiki_rename_page($old_values[$fieldId], $newname, false);
+					}
+				}
+			}
+		}
+	}
+
+	public function delete_wiki_fields($args) {
+		$definition = Tracker_Definition::get($args['trackerId']);
+		$itemId = $args['object'];
+
+		if ($definition && $fieldIds = $definition->getWikiFields()) {
+			foreach($fieldIds as $fieldId) {
+				$field = $definition->getField($fieldId);
+
+				if ($field['options_map']['syncwikipagedelete'] == 'y' && !empty($args['values'][$fieldId])) {
+					$pagename = $args['values'][$fieldId];
+					TikiLib::lib('tiki')->remove_all_versions($pagename);
 				}
 			}
 		}

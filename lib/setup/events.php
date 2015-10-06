@@ -74,6 +74,10 @@ function tiki_setup_events()
 			$events->bind('tiki.trackeritem.create', $defer('trk', 'group_tracker_create'));
 		}
 
+		$events->bind('tiki.trackeritem.create', $defer('trk', 'setup_wiki_fields'));
+		$events->bind('tiki.trackeritem.update', $defer('trk', 'update_wiki_fields'));
+		$events->bind('tiki.trackeritem.delete', $defer('trk', 'delete_wiki_fields'));
+
 		if ($prefs['userTracker'] == 'y') {
 			$events->bind('tiki.trackeritem.save', $defer('trk', 'update_user_account'));
 		}

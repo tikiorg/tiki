@@ -215,6 +215,17 @@ class Tracker_Definition
 		}
 	}
 
+	function getWikiFields()
+	{
+		$fields = array(); 
+		foreach ($this->getFields() as $field) {
+			if ($field['type'] == 'wiki') {
+				$fields[] = $field['fieldId'];
+			}
+		}
+		return $fields;
+	}
+
 	function getIconField()
 	{
 		foreach ($this->getFields() as $field) {
