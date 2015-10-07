@@ -191,6 +191,8 @@
 				</div>
 			</div>
 
+			{include file='categorize.tpl'}
+
 			<div class="form-group type-cond for-static">
 				<label class="col-sm-12" for="editwiki">{tr}Template{/tr}</label>
 				<div class="col-sm-12">

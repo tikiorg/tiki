@@ -65,6 +65,9 @@ if ($_REQUEST["templateId"]) {
 	} else {
 		$info["section_cms"] = 'n';
 	}
+	$cat_type = 'template';
+	$cat_objid = $_REQUEST['templateId'];
+	include_once ("categorize_list.php");
 } else {
 	$info = array();
 	$info["name"] = '';
@@ -189,6 +192,14 @@ if (isset($_REQUEST["save"])) {
 		} else {
 			$templateslib->remove_template_from_section($tid, 'html');
 		}
+
+		$cat_type = 'template';
+		$cat_objid = $tid;
+		$cat_desc = '';
+		$cat_name = $_REQUEST["name"];
+		$cat_href = "tiki-admin_content_templates.php?templateId=" . $cat_objid;
+		include_once ("categorize.php");
+
 		$cookietab = 1;
 	} else {
 		$smarty->assign("templateId", '0');

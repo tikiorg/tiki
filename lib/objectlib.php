@@ -21,7 +21,7 @@ class ObjectLib extends TikiLib
 	 * When creating, if $description is given, use the description, name and URL given as information.
 	 * Otherwise retrieve it from the object (if $checkHandled is FALSE, fill with empty strings if the object type is not handled).
 	 * Handled object types: "article", "blog", "calendar", "directory", "faq",
-	 * "file", "file gallery", "forum", "image gallery", "poll", "quiz", "tracker", "trackeritem" and "wiki page".
+	 * "file", "file gallery", "forum", "image gallery", "poll", "quiz", "tracker", "trackeritem", "wiki page" and "template".
 	 *
 	 * Remember to update get_supported_types if this changes
 	 */
@@ -167,6 +167,14 @@ class ObjectLib extends TikiLib
 						$href = 'tiki-index.php?page=' . urlencode($itemId);
 						break;
 
+					case 'template':
+						$info = TikiLib::lib('template')->get_template($itemId);
+
+						$description = '';
+						$name = $info['name'];
+						$href = "tiki-admin_content_templates.php?templateId=$itemId";
+						break;
+
 					default:
 						if ($checkHandled) {
 							return FALSE;
@@ -205,6 +213,7 @@ class ObjectLib extends TikiLib
 			'tracker',
 			'trackeritem',
 			'wiki page',
+			'template',
 		);
 	}
 
@@ -220,6 +229,7 @@ class ObjectLib extends TikiLib
 			'trackerfield' => 'trackerfield',
 			'wiki_page' => 'wiki page',
 			'wiki page' => 'wiki page',
+			'template' => 'template',
 		];
 
 		if (isset($supported[$type])) {
@@ -409,6 +419,16 @@ class ObjectLib extends TikiLib
 					case 'edit':
 						return 'tiki_p_admin_trackers';
 				}
+
+			case 'template':
+				switch ($action) {
+					case 'view':
+					case 'read':
+						return 'tiki_p_use_content_templates';
+
+					case 'edit':
+						return 'tiki_p_edit_content_templates';
+				}
 			default :
 				return '';
 		}
@@ -454,6 +474,11 @@ class ObjectLib extends TikiLib
 
 			case 'goal':
 				return TikiLib::lib('goal')->fetchGoal($object);
+
+			case 'template':
+				$info = TikiLib::lib('template')->get_template($object);
+				return array('title' => $info['name']);
+
 		}
 		return (array('error'=>'true'));
 	}
@@ -560,6 +585,7 @@ class ObjectLib extends TikiLib
 			'blog' => 'tiki_p_read_blog',
 			'blog post' => 'tiki_p_read_blog',
 			'quiz' => 'tiki_p_take_quiz',
+			'template' => 'tiki_p_use_content_templates',
 
 			// overhead - we are checking individual permission on types below, but they
 			// can't have individual permissions, although they can be categorized.

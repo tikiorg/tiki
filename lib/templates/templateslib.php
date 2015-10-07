@@ -58,6 +58,10 @@ class TemplatesLib extends TikiLib
 			$ret[] = $res;
 		}
 
+		// filter out according to perms
+		$ret = Perms::filter(array('type' => 'template'), 'object', $ret, array( 'object' => 'templateId' ), 'use_content_templates');
+		$cant = count($ret);
+
 		$retval = array();
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
