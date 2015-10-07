@@ -39,8 +39,7 @@ class Tiki_Profile_InstallHandler_Template extends Tiki_Profile_InstallHandler
 
 	function _install()
 	{
-		global $templateslib;
-		if ( ! $templateslib ) require_once 'lib/templates/templateslib.php';
+		$templateslib = TikiLib::lib('template');
 
 		$data = $this->getData();
 

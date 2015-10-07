@@ -1032,8 +1032,7 @@ class MultilingualLib extends TikiLib
      */
     function getTemplateIDInLanguage($section, $template_name, $language)
 	{
-		global $templateslib;
-		require_once 'lib/templates/templateslib.php';
+		$templateslib = TikiLib::lib('template');
 
 		$all_templates = $templateslib->list_templates($section, 0, -1, 'name_asc', '');
 		$looking_for_templates_named = array("$template_name-$language");

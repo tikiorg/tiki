@@ -171,10 +171,9 @@ if (isset($_REQUEST['is_html'])) {
 }
 
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && (!isset($_REQUEST['previousTemplateId']) || $_REQUEST['previousTemplateId'] != $_REQUEST['templateId'])) {
-	global $templateslib; require_once 'lib/templates/templateslib.php';
-	$template_data = $templateslib->get_template($_REQUEST["templateId"]);
+	$template_data = TikiLib::lib('template')->get_template($_REQUEST["templateId"]);
 	$_REQUEST["data"] = $template_data["content"];
-	if ($templateslib->template_is_in_section($_REQUEST['templateId'], 'wiki_html') ) {
+	if (TikiLib::lib('template')->template_is_in_section($_REQUEST['templateId'], 'wiki_html') ) {
 		$_REQUEST['is_html'] = 'on';
 		$_REQUEST['wysiwyg'] ='y';
 	}
@@ -532,8 +531,7 @@ $smarty->assign_by_ref('cant_editions', $editions["cant"]);
 $smarty->assign_by_ref('cant_drafts', $drafts["cant"]);
 $smarty->assign('url', "tiki-send_newsletters.php");
 if (!empty($tiki_p_use_content_templates) && $tiki_p_use_content_templates == 'y') {
-	global $templateslib; require_once 'lib/templates/templateslib.php';
-	$templates = $templateslib->list_templates('newsletters', 0, -1, 'name_asc', '');
+	$templates = TikiLib::lib('template')->list_templates('newsletters', 0, -1, 'name_asc', '');
 }
 $smarty->assign_by_ref('templates', $templates["data"]);
 $tpls = $nllib->list_tpls();
