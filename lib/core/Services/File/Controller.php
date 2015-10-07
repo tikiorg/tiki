@@ -43,6 +43,7 @@ class Services_File_Controller
 		$asuser = $input->user->text();
 
 		if (isset($_FILES['data'])) {
+			// used by $this->action_upload_multiple and file gallery Files fields (possibly others)
 			if (is_uploaded_file($_FILES['data']['tmp_name'])) {
 				$file = new JitFilter($_FILES['data']);
 				$name = $file->name->text();
@@ -117,13 +118,14 @@ class Services_File_Controller
 
 			for ($i = 0; $i < count($_FILES['files']['tmp_name']); $i++) {
 				if (is_uploaded_file($_FILES['files']['tmp_name'][$i])) {
-					$input->offsetSet('name', $_FILES['files']['name'][$i]);
-					$input->offsetSet('size', $_FILES['files']['size'][$i]);
-					$input->offsetSet('type', $_FILES['files']['type'][$i]);
-					$data = file_get_contents($_FILES['files']['tmp_name'][$i]);
-					$input->offsetSet('data', base64_encode($data));
+					$_FILES['data']['name'] = $_FILES['files']['name'][$i];
+					$_FILES['data']['size'] = $_FILES['files']['size'][$i];
+					$_FILES['data']['type'] = $_FILES['files']['type'][$i];
+					$_FILES['data']['tmp_name'] = $_FILES['files']['tmp_name'][$i];
 
+					// do the actual upload
 					$file = $this->action_upload($input);
+
 					if (!empty($file['fileId'])) {
 						$file['info'] =  $filegallib->get_file_info($file['fileId']);
 						// when stored in the database the file contents is here and should not be sent back to the client
