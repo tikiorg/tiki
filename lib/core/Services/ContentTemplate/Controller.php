@@ -22,9 +22,8 @@ class Services_ContentTemplate_Controller
 		$access = TikiLib::lib('access');
 		$access->check_permission('tiki_p_use_content_templates');
 		
-		// Load the templates
-		require_once ('lib/templates/templateslib.php');
-		$templatesLib = new TemplatesLib();
+		// Load the templates library
+		$templateslib =  TikiLib::lib('template');
 		
 		$section = 'wiki';
 		$offset = 0;
@@ -32,7 +31,7 @@ class Services_ContentTemplate_Controller
 		$sort_mode = 'name_asc';
 		$find = null;
 		
-		$contentTmpl = $templatesLib->list_templates($section, $offset, $maxRecords, $sort_mode, $find);
+		$contentTmpl = $templateslib->list_templates($section, $offset, $maxRecords, $sort_mode, $find);
 		
 		// Build the result		
 		$result = array();
@@ -41,7 +40,7 @@ class Services_ContentTemplate_Controller
 		foreach ($contentTmpl['data'] as $val) {
 			if (count($contentTmpl) > 0) {
 				$templateId = $val['templateId'];
-				$templateData = $templatesLib->get_template($templateId);
+				$templateData = $templateslib->get_template($templateId);
 			
 				$name = $templateData['name'];
 				if (isset($templateData['content'])) {
