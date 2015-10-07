@@ -130,6 +130,8 @@ if (isset($_REQUEST["preview"])) {
 	$info['page_name'] = $_REQUEST['page_name'];
 	$info['template_type'] = $_REQUEST['template_type'];
 	$smarty->assign('info', $info);
+
+	$cookietab = 2;
 }
 if (isset($_REQUEST["save"])) {
 	check_ticket('admin-content-templates');
@@ -188,6 +190,7 @@ if (isset($_REQUEST["save"])) {
 		} else {
 			$templateslib->remove_template_from_section($tid, 'html');
 		}
+		$cookietab = 1;
 	} else {
 		$smarty->assign("templateId", '0');
 		$info["name"] = '';
@@ -201,6 +204,8 @@ if (isset($_REQUEST["save"])) {
 		$info["section_html"] = (isset($_REQUEST["section_html"]) && $_REQUEST["section_html"] == 'on') ? 'y' : 'n';
 		$smarty->assign('info', $info);
 		$smarty->assign('emptyname', "true");
+
+		$cookietab = 2;
 	}
 }
 if (!isset($_REQUEST["sort_mode"])) {
