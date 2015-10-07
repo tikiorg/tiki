@@ -1850,6 +1850,9 @@ table.treetable tr.expanded span.indenter a {
 .files .file-list .file-to-upload span {
   font-size: x-small;
 }
+.files .file-list .file-to-upload span.text-danger {
+  white-space: normal;
+}
 .files .file-list .file-to-upload code {
   font-size: x-small;
   white-space: normal;

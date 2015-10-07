@@ -112,6 +112,7 @@ class Services_File_Controller
 			$input->offsetSet('isbatch', $input->isbatch->asArray()[0]);
 			$input->offsetSet('deleteAfter', $input->deleteAfter->asArray()[0]);
 			$input->offsetSet('author', $input->author->asArray()[0]);
+			$input->offsetSet('user', $input->user->asArray()[0]);
 			$input->offsetSet('listtoalert', $input->listtoalert->asArray()[0]);
 
 			for ($i = 0; $i < count($_FILES['files']['tmp_name']); $i++) {
@@ -169,6 +170,8 @@ class Services_File_Controller
 			} else {
 				TikiLib::lib('user')->set_user_preference($user, 'filegals_autoupload', 'n');
 			}
+		} else {
+			throw new Services_Exception_NotAvailable(tr('File could not be uploaded.'));
 		}
 
 		return $output;
