@@ -212,7 +212,7 @@ class CategLib extends ObjectLib
 
 		TikiLib::events()->trigger('tiki.category.update', [
 			'type' => 'category',
-			'object' => $id,
+			'object' => $categId,
 			'user' => $GLOBALS['user'],
 		]);
 	}
@@ -372,7 +372,7 @@ class CategLib extends ObjectLib
 		$query = "delete from `tiki_category_objects` where `catObjectId`=? and `categId`=?";
 		$result = $this->query($query, array((int) $catObjectId,(int) $categId), -1, -1, false);
 
-		$cachelib->empty_type_cache("allcategs");
+		TikiLib::lib('cache')->empty_type_cache("allcategs");
 		$info = TikiLib::lib('object')->get_object_via_objectid($catObjectId);
 		if ($prefs['feature_actionlog'] == 'y') {
 			$logslib = TikiLib::lib('logs');
@@ -672,7 +672,7 @@ class CategLib extends ObjectLib
 		}
 
 		if ($maxRecords != -1) {	// if filtered result is less than what's there look for more
-			while (count($requiredResult) < $maxRecords && count($requiredResult) < $cant) {
+			while (count($requiredResult) < $maxRecords && count($requiredResult) < $count) {
 				$nextResults = array_slice($result, $maxRecords, $maxRecords - count($requiredResult));
 				if (empty($nextResults)) {
 					break;
@@ -680,7 +680,7 @@ class CategLib extends ObjectLib
 				$requiredResult = array_merge($requiredResult, $nextResults);
 			}
 		} else {
-			$cant = count($requiredResult);
+			$count = count($requiredResult);
 		}
 		$result = $requiredResult;
 		
