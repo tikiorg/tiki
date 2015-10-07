@@ -99,6 +99,9 @@ class Services_File_Controller
 	 */
 	function action_upload_multiple($input)
 	{
+		global $user;
+		$filegallib = TikiLib::lib('filegal');
+		$errorreportlib = TikiLib::lib('errorreport');
 		$output = ['files' => []];
 
 		if (isset($_FILES['files']) && is_array($_FILES['files']['tmp_name'])) {
@@ -121,11 +124,39 @@ class Services_File_Controller
 
 					$file = $this->action_upload($input);
 					if (!empty($file['fileId'])) {
-						$file['info'] =  TikiLib::lib('filegal')->get_file_info($file['fileId']);
+						$file['info'] =  $filegallib->get_file_info($file['fileId']);
 						// when stored in the database the file contents is here and should not be sent back to the client
 						$file['info']['data'] = null;
-						$file['syntax'] = TikiLib::lib('filegal')->getWikiSyntax($file['galleryId'], $file['info']);
+						$file['syntax'] = $filegallib->getWikiSyntax($file['galleryId'], $file['info']);
 					}
+
+					if ($input->isbatch->word() && stripos($input->type->text(), 'zip') !== false) {
+						$errors = [];
+						$perms = Perms::get(['type' => 'file', 'object' => $file['fileId']]);
+						if ($perms->batch_upload_files) {
+							try {
+								$filegallib->process_batch_file_upload(
+									$file['galleryId'],
+									$_FILES['files']['tmp_name'][$i],
+									$user,
+									'',
+									$errors
+								);
+							} catch (Exception $e) {
+								$errorreportlib->report($e->getMessage());
+							}
+							if ($errors) {
+								foreach ($errors as $error) {
+									$errorreportlib->report($error);
+								}
+							} else {
+								$file['syntax'] = tr('Batch file processed: "%0"', $file['name']);	// cheeky?
+							}
+						} else {
+							$errorreportlib->report(tra('No permission to upload zipped file packages'));
+						}
+					}
+
 
 					$output['files'][] = $file;
 				} else {
@@ -133,7 +164,6 @@ class Services_File_Controller
 				}
 			}
 
-			global $user;
 			if ($input->autoupload->word()) {
 				TikiLib::lib('user')->set_user_preference($user, 'filegals_autoupload', 'y');
 			} else {
