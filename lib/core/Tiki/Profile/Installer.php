@@ -428,8 +428,11 @@ class Tiki_Profile_Installer
 		tiki_setup_events();
 
 		foreach ( $profile->getObjects() as $object ) {
-			$this->getInstallHandler($object)->install();
-			$this->setFeedback(tra('Added (or modified)').': '.$object->getDescription());
+			$installer = $this->getInstallHandler($object);
+			$installer->install();
+			$description = $object->getDescription();
+			$installer->replaceReferences($description);
+			$this->setFeedback(tra('Added (or modified)').': '.$description);
 		}
 		$groupMap = $profile->getGroupMap();
 		$profile->replaceReferences($groupMap, $this->userData);
