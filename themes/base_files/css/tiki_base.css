@@ -2623,6 +2623,10 @@ body > .ui-front {
   bottom: 3px;
   text-align: right;
 }
+div.olMap {
+  position: relative;
+  display: block;
+}
 /*** ESSENTIAL STYLES ***/
 .cssmenu_horiz,
 .cssmenu_horiz *,
