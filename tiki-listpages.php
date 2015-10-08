@@ -71,7 +71,7 @@ if (isset($_REQUEST['hits_link_to_all_languages']) && $_REQUEST['hits_link_to_al
 $smarty->assign('all_langs', $all_langs);
 
 $access->check_feature(array('feature_wiki', 'feature_listPages'));
-$access->check_permission('tiki_p_view');
+
 /* mass-remove:
 the checkboxes are sent as the array $_REQUEST["checked[]"], values are the wiki-PageNames,
 e.g. $_REQUEST["checked"][3]="HomePage"
