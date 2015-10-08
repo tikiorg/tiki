@@ -86,6 +86,7 @@ function wikiplugin_datachannel_info()
 				'name' => tra('Template'),
 				'description' => tra('Template to be used to render the form, instead of the default template'),
 				'default' => '',
+				'since' => '15.0',
 				'filter' => 'text',
 			),
 			'emptyCache' => array(
