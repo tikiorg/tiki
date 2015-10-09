@@ -197,7 +197,7 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract implements Tracker_
 			->setLabel($name)
 			->setReadOnly(true)
 			->setRenderTransform(function ($value) {
-				$labels = $this->getItemLabels($value, ['list_mode' => 'y']);
+				$labels = $this->getItemLabels($value, ['list_mode' => 'csv']);
 				return implode(';', $labels);
 			})
 			->setParseIntoTransform(function (& $info, $value) use ($permName) {
