@@ -41,7 +41,7 @@ class DateHelper
 		$this->setupCallbacks(
 			$column,
 			function ($value, array $extra) use ($format) {
-				if (empty($value)) {
+				if (empty($value) || $value === '0000-00-00 00:00:00') {	// empty dates are indexed as '0000-00-00 00:00:00'
 					return '';
 				}
 
