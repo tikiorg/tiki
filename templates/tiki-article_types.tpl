@@ -2,8 +2,8 @@
 {title admpage="articles" url="tiki-article_types.php" help=Articles}{tr}Article Types{/tr}{/title}
 <div class="t_navbar margin-bottom-md">
 	{if $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
-		{button href="tiki-list_articles.php" class="btn btn-default btn-sm" _text="{tr}List Articles{/tr}"}
-		{button href="tiki-admin_topics.php" class="btn btn-default btn-sm" _text="{tr}Article Topics{/tr}"}
+		{button href="tiki-list_articles.php" _type="link" _icon_name="list" _text="{tr}List Articles{/tr}"}
+		{button href="tiki-admin_topics.php" _type="link" _icon_name="flag" _text="{tr}Article Topics{/tr}"}
 	{/if}
 </div>
 <form enctype="multipart/form-data" action="tiki-article_types.php" method="post" role="form" class="form">
