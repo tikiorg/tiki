@@ -97,16 +97,16 @@
 				{button href="" _style="background-color:#fff;padding:0 4px;" _text="{tr}None{/tr}"}
 			{/if}
 		{/if}
-
+	</div>
 {* show jscalendar if set *}
 		{if $prefs.feature_jscalendar eq 'y'}
-			<div class="jscalrow">
+			<div class="jscalrow" style="display: inline-block">
 				<form action="{$myurl}" method="post" name="f">
 					{jscalendar date="$focusdate" id="trig" goto="$jscal_url" align="Bc"}
 				</form>
 			</div>
 		{/if}
-	</div>
+
 
 
 
