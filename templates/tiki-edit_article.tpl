@@ -124,8 +124,8 @@
 				</select>
 			</div> {if $tiki_p_admin_cms eq 'y'}
 				<span class="col-sm-3">
-							<a href="tiki-admin_topics.php" class="btn btn-default">
-								{icon name="cog"} {tr}Article Topics{/tr}
+							<a href="tiki-admin_topics.php" class="btn btn-link">
+								{icon name="flag"} {tr}Article Topics{/tr}
 							</a>
 						</span>
 			{/if}
@@ -141,8 +141,8 @@
 				</select>
 			</div> {if $tiki_p_admin_cms eq 'y'}
 				<span class="col-sm-3">
-							<a href="tiki-article_types.php" class="btn btn-default">
-								{icon name="cog"} {tr}Article Types{/tr}
+							<a href="tiki-article_types.php" class="btn btn-link">
+								{icon name="structure"} {tr}Article Types{/tr}
 							</a>
 						</span>
 			{/if}
