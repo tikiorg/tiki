@@ -233,12 +233,14 @@ class Iconset
 				} else {
 					TikiLib::lib('errorreport')->report(tr('Iconset: Class not defined for icon %0', $name));
 				}
-				if ($size > 1 || !empty($styleparam)) {
-					$styleparams[] = $size > 1 ? 'font-size:' . $size . '00%' : '';
+				if ((!empty($size) && $size != 1) || !empty($styleparam)) {
+					$styleparams[] = (!empty($size) && $size != 1) ? 'font-size:' . ($size * 100) . '%' : '';
 					$styleparams[] = !empty($styleparam) ? $styleparam  : '';
 					$style = 'style="';
 					foreach ($styleparams as $sparam) {
-						$style .= $sparam . ';';
+						if (!empty($sparam)) {
+							$style .= $sparam . ';';
+						}
 					}
 					$style .= '"';
 				} else {

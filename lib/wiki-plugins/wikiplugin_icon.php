@@ -29,11 +29,11 @@ function wikiplugin_icon_info()
 			'size' => array(
 				'required' => false,
 				'name' => tra('Size'),
-				'description' => tra('Size of the icon (1 to 9).'),
+				'description' => tra('Size of the icon (greater than 0 and less than 10).'),
 				'since' => '14.1',
 				'default' => 1,
 				'filter' => 'digits',
-				'accepted' => '1 - 9',
+				'accepted' => tra('greater than 0 and less than 10'),
 				'type' => 'digits',
 			),
 		)
