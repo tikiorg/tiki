@@ -378,7 +378,9 @@ function iconset_legacy()
 			'floppy' => array(
 				'id' => 'disk',
 			),
-			//font in defaults
+			'font-color' => array(
+				'id' => 'font',
+			),
 			'forward' => array(
 				'id' => 'control_fastforward',
 			),

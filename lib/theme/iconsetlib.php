@@ -131,7 +131,7 @@ class Iconset
 					$icon['append'] = $append;
 				}
 				if (empty($icon['class']) && $class && $this->class !== $class) {
-					$icon['clas'] = $class;
+					$icon['class'] = $class;
 				}
 				$this->icons[$name] = $icon;
 			}
@@ -201,16 +201,24 @@ class Iconset
 			$prepend = isset($icon['prepend']) ? $icon['prepend'] : $this->prepend;
 			$append = isset($icon['append']) ? $icon['append'] : $this->append;
 			$icon_class = isset($icon['class']) ? ' ' . $icon['class'] : '';
-			$size = isset($params['size']) && $params['size'] < 10 ? $params->size->int() : 1;
 			$custom_class = isset($params['iclass']) ? ' ' . $params->iclass->striptags() : '';
 			$title = isset($params['ititle']) ? 'title="' . $params->ititle->striptags() . '"' : '';
 			$id = isset($params['id']) ? 'id="' . $params->id->striptags() . '"' : '';
-			$styleparam = isset($params['istyle']) ? $params->istyle->striptags() : '';
+			//apply both user defined style and any stule from the icon definition
+			$styleparams = [];
+			if (!empty($icon['style'])) {
+				$styleparams[] = $icon['style'];
+			} elseif (!empty($params['istyle'])) {
+				$styleparams[] = $params->istyle->striptags();
+			}
+			$sizeuser = !empty($params['size']) && $params['size'] < 10 ? abs($params->size->int()) : 1;
+			//only used in legacy icon definition
+			$sizedef = isset($icon['size']) ? $icon['size'] : 1;
 
 			if ($tag == 'img') { //manage legacy image icons (eg: png, gif, etc)
 				//some ability to use larger legacy icons based on size setting
 				// 1 = 16px x 16px; 2 = 32px x 32px; 3 = 48px x 48px
-				if ($size > 1 && isset($icon['size']) && $icon['size'] != $size && !empty($icon['sizes'][$size])) {
+				if ($sizeuser != 1 && $sizedef != $sizeuser && !empty($icon['sizes'][$size])) {
 					$id = $icon['sizes'][$size]['id'];
 					if (isset($icon['sizes'][$size]['prepend'])) {
 						$prepend = $icon['sizes'][$size]['prepend'];
@@ -224,7 +232,7 @@ class Iconset
 					$src = $prepend . $id . $append;
 				}
 				$alt = $name;  //use icon name as alternate text
-				$style = !empty($styleparam) ? 'style="' . $styleparam . '"' : '';
+				$style = $this->setStyle($styleparams);
 				$html = "<span class=\"icon icon-$name$icon_class$custom_class $id\" $title $style><img src=\"$src\" alt=\"$alt\"></span>";
 			} else {
 				if (isset($icon['id'])) { //use class defined for the icon if set
@@ -233,28 +241,35 @@ class Iconset
 				} else {
 					TikiLib::lib('errorreport')->report(tr('Iconset: Class not defined for icon %0', $name));
 				}
-				if ((!empty($size) && $size != 1) || !empty($styleparam)) {
-					$styleparams[] = (!empty($size) && $size != 1) ? 'font-size:' . ($size * 100) . '%' : '';
-					$styleparams[] = !empty($styleparam) ? $styleparam  : '';
-					$style = 'style="';
-					foreach ($styleparams as $sparam) {
-						if (!empty($sparam)) {
-							$style .= $sparam . ';';
-						}
-					}
-					$style .= '"';
-				} else {
-					$style = '';
+				if ((!empty($sizeuser) && $sizeuser != 1)) {
+					$styleparams[] = 'font-size:' . ($sizeuser * 100) . '%';
 				}
+				$style = $this->setStyle($styleparams);
 				$html = "<$tag class=\"icon icon-$name $icon_class $custom_class\" $style $title $id></$tag>";
 			}
 
 			return $html;
 
-		} else { //if icon is not found in $iconset, than display bootstrap glyphicon warning-sign. Helps to detect missing icon definitions, typos
+		} else { //if icon is not found in $iconset, then display warning sign. Helps to detect missing icon definitions, typos
 			return $this->getHtml('warning');
 		}
 
+	}
+
+	private function setStyle(array $styleparams)
+	{
+		if (!empty($styleparams)) {
+			$style = 'style="';
+			foreach ($styleparams as $sparam) {
+				if (!empty($sparam)) {
+					$style .= $sparam . ';';
+				}
+			}
+			$style .= '"';
+		} else {
+			$style = '';
+		}
+		return $style;
 	}
 
 }

@@ -281,6 +281,10 @@ function iconset_default()
 			'floppy' => array(
 				'id' => 'floppy-o',
 			),
+			'font-color' => array(
+				'id' => 'font',
+				'style' => 'color:red',
+			),
 			//forward in defaults
 			'forward_step' => array(
 				'id' => 'step-forward',
@@ -293,9 +297,11 @@ function iconset_default()
 			),
 			'h2' => array(
 				'id' => 'header',
+				'size' => '.9'
 			),
 			'h3' => array(
 				'id' => 'header',
+				'size' => '.8'
 			),
 			'help' => array(
 				'id' => 'question-circle',

@@ -152,7 +152,10 @@ function iconset_glyphicons()
 			'floppy' => array(
 				'id' => 'floppy-save',
 			),
-			//font in defaults
+			'font-color' => array(
+				'id' => 'font',
+				'style' => 'color:red',
+			),
 			//forward in defaults
 			'forward_step' => array(
 				'id' => 'step-forward',
@@ -170,9 +173,11 @@ function iconset_glyphicons()
 			),
 			'h2' => array(
 				'id' => 'header',
+				'size' => '.9'
 			),
 			'h3' => array(
 				'id' => 'header',
+				'size' => '.8'
 			),
 			'help' => array(
 				'id' => 'question-sign',
