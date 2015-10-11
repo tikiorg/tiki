@@ -517,7 +517,7 @@ class ParserLib extends TikiDb_Bridge
 
 			if ( $this->plugin_is_editable($plugin_name) && (empty($this->option['preview_mode']) || !$this->option['preview_mode']) && empty($this->option['indexing']) && (empty($this->option['print']) || !$this->option['print']) && !$this->option['suppress_icons'] ) {
 				$headerlib = TikiLib::lib('header');
-				include_once('lib/smarty_tiki/function.icon.php');
+				$smarty->loadPlugin('smarty_function_icon');
 
 				$id = 'plugin-edit-' . $plugin_name . $current_index;
 
@@ -551,7 +551,9 @@ if ( \$('#$id') ) {
 					}
 				}
 
-				$ret .= '~np~<a id="' .$id. '" href="javascript:void(1)" class="editplugin"'.$iconDisplayStyle.'>'.smarty_function_icon(array('name'=>'plugin', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty)."</a>~/np~";
+				$ret .= '~np~<a id="' . $id . '" href="javascript:void(1)" class="editplugin"' . $iconDisplayStyle . '>'
+					. smarty_function_icon(array('name'=>'plugin', 'iclass' => 'tips', 'ititle'=>tra('Edit plugin')
+					. ':' . ucfirst($plugin_name)), $smarty)."</a>~/np~";
 			}
 
 			// End plugin handling

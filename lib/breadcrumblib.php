@@ -373,8 +373,9 @@ function _breadcrumb_getTitle($crumbs, $loc)
 	}
 	$ret .= help_doclink(array('crumb'=>$crumbs[$len-1]));
 	if ( isset($info['flag']) && $info['flag'] == 'L' && $print_page != 'y' ) {
-		$ret .= ' <img src="img/icons/lock.png" height="16" width="16" alt="' .
-							tra('locked') . '" title="' . tra('locked by') . ' ' . $info['user'] . '" />';
+		$smarty->loadPlugin('smarty_function_icon');
+		$ret .= smarty_function_icon(['name' => 'lock', 'iclass' => 'tips', 'ititle' => ':' . tra('Locked by')
+			. $info['user']], $smarty);
 	}
 	return $ret;
 }
