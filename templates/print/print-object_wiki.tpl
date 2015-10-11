@@ -4,4 +4,5 @@
 {jq}
 	var id = '#comment-container-{{$info.page_id}}';
 	$(id).comment_load($(id).data('target'));
+	$(document).ajaxComplete(function(){$(id).tiki_popover();});
 {/jq}
