@@ -489,6 +489,7 @@ function wikiplugin_img( $data, $params )
 	global $tikidomain, $prefs, $user;
 	$userlib = TikiLib::lib('user');
 	$smarty = TikiLib::lib('smarty');
+	$smarty->loadPlugin('smarty_function_icon');
 
 	$imgdata = array();
 
@@ -1331,13 +1332,14 @@ function wikiplugin_img( $data, $params )
 			if (!empty($titleonly)) {
 				$repl .= ' title="' . $titleonly . '"';
 			}
-			$repl .= ">\r\t\t\t\t" . '<img class="magnify" src="./img/icons/magnifier.png" alt="'.tra('Enlarge').'" /></a>' . "\r\t\t\t</div>";
+			$repl .=  ">\r\t\t\t\t"  . smarty_function_icon(['name' => 'view', 'iclass' => 'tips',
+					'ititle' => ':' . tra('Enlarge')]) . '</a>' . "\r\t\t\t</div>";
 		}
 		//Add metadata icon
 		if ($imgdata['metadata'] == 'view') {
 			$repl .= '<div style="float:right; margin-right:2px"><a href="#" id="' . $id_link
-				. '"><img src="./img/icons/tag_orange.png" alt="' . tra('Metadata') . '" title="'
-				. tra('Metadata') . '"/></a></div>';
+				. '" class="tips" title=":' . tra('Metadata') . '">' . smarty_function_icon(['name' => 'tag'])
+				. '</a></div>';
 		}
 		//Add description based on user setting (use $desconly from above) and close divs
 		isset($desconly) ? $repl .= $desconly : '';
@@ -1450,10 +1452,11 @@ function wikiplugin_img( $data, $params )
 				$iconDisplayStyle = '';
 			}
 			$jsonParams = json_encode(array_filter($imgdata));
-			$repl .= "<a href=\"tiki-edit_draw.php?fileId={$imgdata['fileId']}\" onclick=\"return $(this).ajaxEditDraw();\" title=\"".tr("Draw on the Image") . "\"" .
-						" class=\"editplugin pluginImgEdit{$imgdata['fileId']}\" data-fileid=\"{$imgdata['fileId']}\" " .
-						"data-galleryid=\"{$dbinfo['galleryId']}\"{$iconDisplayStyle} data-imgparams='$jsonParams'>" .
-						"<img width='16' height='16' class='icon' alt='Edit' src='img/icons/page_edit.png' /></a>";
+			$repl .= "<a href=\"tiki-edit_draw.php?fileId={$imgdata['fileId']}\" onclick=\"return $(this).ajaxEditDraw();\" title=\""
+				. tr("Draw on the Image") . "\"" .
+				" class=\"editplugin pluginImgEdit{$imgdata['fileId']}\" data-fileid=\"{$imgdata['fileId']}\" " .
+				"data-galleryid=\"{$dbinfo['galleryId']}\"{$iconDisplayStyle} data-imgparams='$jsonParams'>" .
+				smarty_function_icon(['name' => 'edit', 'iclass' => 'tips', 'ititle' => ':' . tra('Edit')]) . '</a>';
 		}
 	}
 
