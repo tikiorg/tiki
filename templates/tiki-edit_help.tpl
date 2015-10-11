@@ -22,32 +22,32 @@
 	{if (!isset($wysiwyg) or $wysiwyg ne 'y') or (isset($wysiwyg) and $wysiwyg eq 'y' and $prefs.wysiwyg_wiki_parsed eq 'y')}
 		<tr>
 			<td>
-				<img src='img/icons/text_bold.png' alt=''> <strong>{tr}Bold text{/tr}</strong> &nbsp;&nbsp;&nbsp; __{tr}text{/tr}__
+				{icon name='bold'} <strong>{tr}Bold text{/tr}</strong> &nbsp;&nbsp;&nbsp; __{tr}text{/tr}__
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<img src='img/icons/text_italic.png' alt=''> <strong>{tr}Italic text{/tr}</strong> &nbsp;&nbsp;&nbsp; 2 {tr}single quotes{/tr} ('). &nbsp;&nbsp;&nbsp; '"{tr}text{/tr}"'
+				{icon name='italic'} <strong>{tr}Italic text{/tr}</strong> &nbsp;&nbsp;&nbsp; 2 {tr}single quotes{/tr} ('). &nbsp;&nbsp;&nbsp; '"{tr}text{/tr}"'
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<img src='img/icons/text_underline.png' alt=''> <strong>{tr}Underlined text{/tr}</strong> &nbsp;&nbsp;&nbsp; ==={tr}text{/tr}===
+				{icon name='underline'} <strong>{tr}Underlined text{/tr}</strong> &nbsp;&nbsp;&nbsp; ==={tr}text{/tr}===
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<img src='img/icons/palette.png' alt=''> <strong>{tr}Colored text{/tr}</strong> <br/> ~~#FFEE33:{tr}text{/tr}~~ {tr}or{/tr} ~~yellow:{tr}text{/tr}~~. {tr}Will display using the indicated HTML color or color name. Color name can contain two colors separated by a comma. In this case, the first color would be the foreground and the second one the background.{/tr}
+				{icon name='font' istyle='color:red'} <strong>{tr}Colored text{/tr}</strong> <br/> ~~#FFEE33:{tr}text{/tr}~~ {tr}or{/tr} ~~yellow:{tr}text{/tr}~~. {tr}Will display using the indicated HTML color or color name. Color name can contain two colors separated by a comma. In this case, the first color would be the foreground and the second one the background.{/tr}
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<img src='img/icons/text_strikethrough.png' alt=''> <strong>{tr}Deleted text{/tr}</strong> &nbsp;&nbsp;&nbsp; {tr}2 dashes{/tr} "-". &nbsp;&nbsp;&nbsp; --{tr}text{/tr}--
+				{icon name='strikethrough'} <strong>{tr}Deleted text{/tr}</strong> &nbsp;&nbsp;&nbsp; {tr}2 dashes{/tr} "-". &nbsp;&nbsp;&nbsp; --{tr}text{/tr}--
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<img src='img/icons/text_heading_1.png' alt=''><img src='img/icons/text_heading_2.png' alt=''><img src='img/icons/text_heading_3.png' alt=''> <strong>{tr}Headings{/tr}</strong> <br/> !heading1, !!heading2, !!!heading3
+				{icon name='h1'} <strong>{tr}Headings{/tr}</strong> <br/> !heading1, !!heading2, !!!heading3
 			</td>
 		</tr>
 		<tr>
@@ -69,28 +69,28 @@
 	{if (!isset($wysiwyg) or $wysiwyg ne 'y') or (isset($wysiwyg) and $wysiwyg eq 'y' and $prefs.wysiwyg_wiki_parsed eq 'y')}
 		<tr>
 			<td>
-				<img src='img/icons/page.png' alt=''> <strong>{tr}Horizontal rule{/tr}</strong> &nbsp;&nbsp;&nbsp; -<em></em>-<em></em>-<em></em>-
+				{icon name='horizontal-rule'} <strong>{tr}Horizontal rule{/tr}</strong> &nbsp;&nbsp;&nbsp; -<em></em>-<em></em>-<em></em>-
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<img src='img/icons/box.png' alt=''> <strong>{tr}Text box{/tr}</strong> &nbsp;&nbsp;&nbsp; ^{tr}Box content{/tr}^
+				{icon name='box'} <strong>{tr}Text box{/tr}</strong> &nbsp;&nbsp;&nbsp; ^{tr}Box content{/tr}^
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<img src='img/icons/text_align_center.png' alt=''> <strong>{tr}Centered text{/tr}</strong> &nbsp;&nbsp;&nbsp; {if $prefs.feature_use_three_colon_centertag eq 'y'}:::{tr}text{/tr}:::{else}::{tr}text{/tr}::{/if}
+				{icon name='align-center'} <strong>{tr}Centered text{/tr}</strong> &nbsp;&nbsp;&nbsp; {if $prefs.feature_use_three_colon_centertag eq 'y'}:::{tr}text{/tr}:::{else}::{tr}text{/tr}::{/if}
 			</td>
 		</tr>
 	{/if}{* wysiwyg *}
 	<tr>
 		<td>
-			<strong><img src='img/icons/database_gear.png' alt=''> {tr}Dynamic variables{/tr}</strong> <br/> %{tr}Name{/tr}% {tr}Inserts an editable variable{/tr}
+			{icon name='cog'} <strong>{tr}Dynamic variables{/tr}</strong> <br/> %{tr}Name{/tr}% {tr}Inserts an editable variable{/tr}
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<img src='img/icons/world_link.png' alt=''> <strong>{tr}External links{/tr}</strong> <br/> {tr}use square brackets for an external link: [URL], [URL|link_description],[URL|link_description|relation] or [URL|description|relation|nocache] (that last prevents the local Wiki from caching the linked page; relation can be used to insert rel attribute for the link - useful e.g. for shadowbox).{/tr}<br>{tr}For an external Wiki, use ExternalWikiName:PageName or ((External Wiki Name: Page Name)){/tr}
+			{icon name='link-external'} <strong>{tr}External links{/tr}</strong> <br/> {tr}use square brackets for an external link: [URL], [URL|link_description],[URL|link_description|relation] or [URL|description|relation|nocache] (that last prevents the local Wiki from caching the linked page; relation can be used to insert rel attribute for the link - useful e.g. for shadowbox).{/tr}<br>{tr}For an external Wiki, use ExternalWikiName:PageName or ((External Wiki Name: Page Name)){/tr}
 		</td>
 	</tr>
 	<tr>
@@ -100,7 +100,7 @@
 	</tr>
 	<tr>
 		<td>
-			<img src='img/icons/page_link.png' alt=''> <strong>{tr}Wiki References{/tr}</strong> <br/> {if $prefs.feature_wikiwords eq 'y'}{tr}JoinCapitalizedWords or use{/tr} {/if}(({tr}page{/tr})) {tr}or{/tr} (({tr}page|description{/tr})) {tr}for wiki references{/tr}
+			{icon name='link'} <strong>{tr}Wiki References{/tr}</strong> <br/> {if $prefs.feature_wikiwords eq 'y'}{tr}JoinCapitalizedWords or use{/tr} {/if}(({tr}page{/tr})) {tr}or{/tr} (({tr}page|description{/tr})) {tr}for wiki references{/tr}
 			{if $prefs.wikiplugin_alink eq 'y'}
 			, (({tr}page|#anchor{/tr})) {tr}or{/tr} (({tr}page|#anchor|desc{/tr})) {tr}for wiki heading/anchor references{/tr}
 			{/if}
@@ -110,7 +110,7 @@
 	{if (!isset($wysiwyg) or $wysiwyg ne 'y') or (isset($wysiwyg) and $wysiwyg eq 'y' and $prefs.wysiwyg_wiki_parsed eq 'y')}
 		<tr>
 			<td>
-				<img src='img/icons/text_list_bullets.png' alt=''> <img src='img/icons/text_list_numbers.png' alt=''> <strong>{tr}Lists{/tr}</strong> <br> * {tr}for bullet lists{/tr}, # {tr}for numbered lists{/tr}, ;{tr}Word:{/tr}{tr}definition{/tr} {tr}for definiton lists{/tr}
+				{icon name='list'} {icon name='list-numbered'} <strong>{tr}Lists{/tr}</strong> <br> * {tr}for bullet lists{/tr}, # {tr}for numbered lists{/tr}, ;{tr}Word:{/tr}{tr}definition{/tr} {tr}for definiton lists{/tr}
 			</td>
 		</tr>
 		<tr>
@@ -121,19 +121,19 @@
 		{if $prefs.feature_wiki_tables eq 'new'}
 			<tr>
 				<td>
-					<img src='img/icons/table.png' alt=''> <strong>{tr}Tables{/tr}</strong> <br/> || {tr}row{/tr}1-{tr}col{/tr}1 | {tr}row{/tr}1-{tr}col{/tr}2 | {tr}row{/tr}1-{tr}col{/tr}3<br>{tr}row{/tr}2-{tr}col{/tr}1 | {tr}row{/tr}2-{tr}col{/tr}2 | {tr}row{/tr}2-{tr}col{/tr}3 ||
+					{icon name='table'} <strong>{tr}Tables{/tr}</strong> <br/> || {tr}row{/tr}1-{tr}col{/tr}1 | {tr}row{/tr}1-{tr}col{/tr}2 | {tr}row{/tr}1-{tr}col{/tr}3<br>{tr}row{/tr}2-{tr}col{/tr}1 | {tr}row{/tr}2-{tr}col{/tr}2 | {tr}row{/tr}2-{tr}col{/tr}3 ||
 				</td>
 			</tr>
 		{else}
 			<tr>
 				<td>
-					<img src='img/icons/table.png' alt=''> <strong>{tr}Tables{/tr}</strong> <br/> ||{tr}row{/tr}1-{tr}col{/tr}1|{tr}row{/tr}1-{tr}col{/tr}2|{tr}row{/tr}1-{tr}col{/tr}3||{tr}row{/tr}2-{tr}col{/tr}1|{tr}row{/tr}2-{tr}col{/tr}2|{tr}row{/tr}2-{tr}col{/tr}3||
+					{icon name='table'} <strong>{tr}Tables{/tr}</strong> <br/> ||{tr}row{/tr}1-{tr}col{/tr}1|{tr}row{/tr}1-{tr}col{/tr}2|{tr}row{/tr}1-{tr}col{/tr}3||{tr}row{/tr}2-{tr}col{/tr}1|{tr}row{/tr}2-{tr}col{/tr}2|{tr}row{/tr}2-{tr}col{/tr}3||
 				</td>
 			</tr>
 		{/if}
 		<tr>
 			<td>
-				<img src='img/icons/text_padding_top.png' alt=''> <strong>{tr}Title bar{/tr}</strong> &nbsp;&nbsp;&nbsp; -={tr}Title{/tr}=-
+				{icon name='title'} <strong>{tr}Title bar{/tr}</strong> &nbsp;&nbsp;&nbsp; -={tr}Title{/tr}=-
 			</td>
 		</tr>
 		<tr>
