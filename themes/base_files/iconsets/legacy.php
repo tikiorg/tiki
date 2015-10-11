@@ -204,6 +204,9 @@ function iconset_legacy()
 			'back' => array(
 				'id' => 'arrow_left',
 			),
+			'background-color' => array(
+				'id' => 'palette_bg',
+			),
 			'backlink' => array(
 				'id' => 'arrow_turn_left',
 			),
@@ -216,6 +219,10 @@ function iconset_legacy()
 			'ban' => array(
 				'id' => 'cancel',
 			),
+			'bold' => array(
+				'id' => 'text_bold',
+			),
+			//book in defaults
 			'bookmark' => array(
 				'id' => 'book',
 			),
@@ -378,13 +385,28 @@ function iconset_legacy()
 			'forward_step' => array(
 				'id' => 'control_end',
 			),
+			'fullscreen' => array(
+				'id' => 'application_get',
+			),
 			//google in defaults
+			'h1' => array(
+				'id' => 'text_heading_1',
+			),
+			'h2' => array(
+				'id' => 'text_heading_2',
+			),
+			'h3' => array(
+				'id' => 'text_heading_3',
+			),
 			//help in defaults
 			'history' => array(
 				'id' => 'clock',
 			),
 			'home' => array(
 				'id' => 'house',
+			),
+			'horizontal-rule' => array(
+				'id' => 'text_horizontalrule',
 			),
 			//html in defaults
 			//image in defaults
@@ -395,6 +417,9 @@ function iconset_legacy()
 				'id' => 'table_refresh',
 			),
 			//information in defaults
+			'italic' => array(
+				'id' => 'text_italic',
+			),
 			'language' => array(
 				'id' => 'world',
 			),
@@ -402,6 +427,9 @@ function iconset_legacy()
 			'link-external' => array(
 				'id' => 'external_link',
 				'append' => '.gif'
+			),
+			'link-external-alt' => array(
+				'id' => 'page_link',
 			),
 			'list' => array(
 				'id' => 'application_view_list',
@@ -472,6 +500,9 @@ function iconset_legacy()
 			),
 			'ok' => array(
 				'id' => 'accept',
+			),
+			'page-break' => array(
+				'id' => 'page_break',
 			),
 			'pause' => array(
 				'id' => 'control_pause',
@@ -552,6 +583,11 @@ function iconset_legacy()
 			),
 			//sharethis in defaults
 			//skype in defaults
+			'smile' => array(
+				'prepend' => 'img/smiles/',
+				'id' => 'icon_smile',
+				'append' => '.gif'
+			),
 			'sort' => array(
 				'id' => 'resultset',
 			),
@@ -586,6 +622,9 @@ function iconset_legacy()
 			),
 			'stop-watching' => array(
 				'id' => 'no_eye',
+			),
+			'strikethrough' => array(
+				'id' => 'text_strikethrough',
 			),
 			'structure' => array(
 				'id' => 'chart_organisation',
@@ -624,6 +663,9 @@ function iconset_legacy()
 			'thumbs-up' => array(
 				'id' => 'thumb_up',
 			),
+			'title' => array(
+				'id' => 'text_padding_top',
+			),
 			'toggle-off' => array(
 				'id' => 'accept',
 			),
@@ -650,6 +692,9 @@ function iconset_legacy()
 						'id' => 'twitter_t_logo_32'
 					)
 				)
+			),
+			'underline' => array(
+				'id' => 'text_underline',
 			),
 			'undo' => array(
 				'id' => 'arrow_undo',
@@ -695,6 +740,7 @@ function iconset_legacy()
 		),
 		'defaults' => array(
 			'add',
+			'book',
 			'bug',
 			'calendar',
 			'computer',

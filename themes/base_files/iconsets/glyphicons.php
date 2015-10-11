@@ -39,6 +39,9 @@ function iconset_glyphicons()
 			'back' => array(
 				'id' => 'arrow-left',
 			),
+			'background-color' => array(
+				'id' => 'text-background',
+			),
 			'backlink' => array(
 				'id' => 'new-window',
 			),
@@ -49,6 +52,7 @@ function iconset_glyphicons()
 			'ban' => array(
 				'id' => 'ban-circle',
 			),
+			//book in defaults
 			//bookmark in defaults
 			'box' => array(
 				'id' => 'text-background',
@@ -153,6 +157,7 @@ function iconset_glyphicons()
 			'forward_step' => array(
 				'id' => 'step-forward',
 			),
+			//fullscreen in defaults
 			//used for google doc plugin
 			'google' => array(
 				'id' => 'file',
@@ -160,11 +165,23 @@ function iconset_glyphicons()
 			'group' => array(
 				'id' => 'user',
 			),
+			'h1' => array(
+				'id' => 'header',
+			),
+			'h2' => array(
+				'id' => 'header',
+			),
+			'h3' => array(
+				'id' => 'header',
+			),
 			'help' => array(
 				'id' => 'question-sign',
 			),
 			'history' => array(
 				'id' => 'time',
+			),
+			'horizontal-rule' => array(
+				'id' => 'minus',
 			),
 			'html' => array(
 				'id' => 'console',
@@ -184,6 +201,9 @@ function iconset_glyphicons()
 			),
 			//link in defaults
 			'link-external' => array(
+				'id' => 'share',
+			),
+			'link-external-alt' => array(
 				'id' => 'share',
 			),
 			//list in defaults
@@ -240,6 +260,9 @@ function iconset_glyphicons()
 			'ok' => array(
 				'id' => 'ok-sign',
 			),
+			'page-break' => array(
+				'id' => 'scissors',
+			),
 			//pause in defaults
 			'paypal' => array(
 				'id' => 'credit-card',
@@ -295,6 +318,9 @@ function iconset_glyphicons()
 			'skype' => array(
 				'id' => 'share',
 			),
+			'smile' => array(
+				'id' => 'sunglasses',
+			),
 			//sort in defaults
 			'sort-down' => array(
 				'id' => 'sort-by-alphabet-alt',
@@ -348,6 +374,9 @@ function iconset_glyphicons()
 				'id' => 'road',
 			),
 			//thumbs-up in defaults
+			'title' => array(
+				'id' => 'text-color',
+			),
 			'toggle-off' => array(
 				'id' => 'stop',
 			),
@@ -560,6 +589,7 @@ function iconset_glyphicons()
 			'road',
 			'save',
 			'saved',
+			'scissors',
 			'screenshot',
 			'sd-video',
 			'search',

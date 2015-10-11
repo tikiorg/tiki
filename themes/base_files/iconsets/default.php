@@ -173,6 +173,7 @@ function iconset_default()
 			'admin_wysiwyg' => array(
 				'id' => 'file-text',
 			),
+			//align-center in defaults
 			'articles' => array(
 				'id' => 'newspaper-o',
 			),
@@ -186,6 +187,9 @@ function iconset_default()
 			'back' => array(
 				'id' => 'arrow-left',
 			),
+			'background-color' => array(
+				'id' => 'paint-brush',
+			),
 			'backlink' => array(
 				'id' => 'reply',
 			),
@@ -194,6 +198,7 @@ function iconset_default()
 				'id' => 'step-backward',
 			),
 			//ban in defaults
+			//book in defaults
 			'box' => array(
 				'id' => 'list-alt',
 			),
@@ -280,10 +285,25 @@ function iconset_default()
 			'forward_step' => array(
 				'id' => 'step-forward',
 			),
+			'fullscreen' => array(
+				'id' => 'arrows-alt',
+			),
+			'h1' => array(
+				'id' => 'header',
+			),
+			'h2' => array(
+				'id' => 'header',
+			),
+			'h3' => array(
+				'id' => 'header',
+			),
 			'help' => array(
 				'id' => 'question-circle',
 			),
 			//history in defaults
+			'horizontal-rule' => array(
+				'id' => 'minus',
+			),
 			'html' => array(
 				'id' => 'html5',
 			),
@@ -299,9 +319,15 @@ function iconset_default()
 			'information' => array(
 				'id' => 'info-circle',
 			),
+			'keyboard' => array(
+				'id' => 'keyboard-o',
+			),
 			//link in defaults
 			'link-external' => array(
 				'id' => 'external-link',
+			),
+			'link-external-alt' => array(
+				'id' => 'external-link-square',
 			),
 			//list in defaults
 			'list-numbered' => array(
@@ -358,6 +384,9 @@ function iconset_default()
 			'ok' => array(
 				'id' => 'check-circle',
 			),
+			'page-break' => array(
+				'id' => 'scissors',
+			),
 			//pause in defaults
 			'pdf' => array(
 				'id' => 'file-pdf-o',
@@ -404,6 +433,9 @@ function iconset_default()
 			'sharethis' => array(
 				'id' => 'share-alt',
 			),
+			'smile' => array(
+				'id' => 'smile-o',
+			),
 			//sort in defaults
 			'sort-down' => array(
 				'id' => 'sort-desc',
@@ -440,6 +472,7 @@ function iconset_default()
 			'success' => array(
 				'id' => 'check',
 			),
+			//table in defaults
 			//tag in defaults
 			//tags in defaults
 			'textfile' => array(
@@ -453,6 +486,9 @@ function iconset_default()
 				'id' => 'cube',
 			),
 			//thumbs-up in defaults
+			'title' => array(
+				'id' => 'text-width',
+			),
 			'toggle-off' => array(
 				'id' => 'toggle-off',
 			),
