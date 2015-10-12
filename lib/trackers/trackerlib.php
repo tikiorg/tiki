@@ -915,7 +915,7 @@ class TrackerLib extends TikiLib
 		return $this->items()->fetchColumn('itemId', array('trackerId' => (int) $trackerId));
 	}
 
-	public function getSqlStatus($status, &$mid, &$bindvars, $trackerId)
+	public function getSqlStatus($status, &$mid, &$bindvars, $trackerId, $skip_status_perm_check = false)
 	{
 		global $user;
 		if (is_array($status)) {
@@ -923,10 +923,10 @@ class TrackerLib extends TikiLib
 		}
 
 		// Check perms
-		if ( $status && ! $this->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_view_trackers_pending') && ! $this->group_creator_has_perm($trackerId, 'tiki_p_view_trackers_pending') ) {
+		if ( ! $skip_status_perm_check && $status && ! $this->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_view_trackers_pending') && ! $this->group_creator_has_perm($trackerId, 'tiki_p_view_trackers_pending') ) {
 			$status = str_replace('p', '', $status);
 		}
-		if ( $status && ! $this->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_view_trackers_closed') && ! $this->group_creator_has_perm($trackerId, 'tiki_p_view_trackers_closed') ) {
+		if ( ! $skip_status_perm_check && $status && ! $this->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_view_trackers_closed') && ! $this->group_creator_has_perm($trackerId, 'tiki_p_view_trackers_closed') ) {
 			$status = str_replace('c', '', $status);
 		}
 
@@ -1025,7 +1025,7 @@ class TrackerLib extends TikiLib
 			}
 		}
 
-		if ( ! $this->getSqlStatus($status, $mid, $bindvars, $trackerId) && ! $skip_status_perm_check && $status ) {
+		if ( ! $this->getSqlStatus($status, $mid, $bindvars, $trackerId, $skip_status_perm_check) && ! $skip_status_perm_check && $status ) {
 			return array('cant' => 0, 'data' => '');
 		}
 		if ( substr($sort_mode, 0, 2) == 'f_' ) {
