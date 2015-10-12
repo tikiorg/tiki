@@ -472,6 +472,9 @@ function iconset_legacy()
 			'merge' => array(
 				'id' => 'arrow_merge',
 			),
+			'minimize' => array(
+				'id' => 'arrow_in',
+			),
 			'minus' => array(
 				'id' => 'delete',
 			),

@@ -240,6 +240,9 @@ function iconset_glyphicons()
 			'merge' => array(
 				'id' => 'random',
 			),
+			'minimize' => array(
+				'id' => 'resize-small',
+			),
 			//minus in defaults
 			'module' => array(
 				'id' => 'cog',

@@ -365,6 +365,9 @@ function iconset_default()
 			'merge' => array(
 				'id' => 'random',
 			),
+			'minimize' => array(
+				'id' => 'compress',
+			),
 			//minus in defaults
 			'module' => array(
 				'id' => 'cogs',
