@@ -68,7 +68,7 @@
 			<small class="tips" title=":{tr}Votes{/tr}">
 				({$field.numvotes})
 			</small>
-			{icon name='help' ititle="{$smarty.capture.stat}"}
+			{icon name='help' iclass='tips' ititle=":{$smarty.capture.stat}"}
 		{/if}
 		{if $tiki_p_tracker_revote_ratings eq 'y'}
 			<a

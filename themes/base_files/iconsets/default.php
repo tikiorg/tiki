@@ -283,7 +283,7 @@ function iconset_default()
 			),
 			'font-color' => array(
 				'id' => 'font',
-				'style' => 'color:red',
+				'class' => 'text-danger'
 			),
 			//forward in defaults
 			'forward_step' => array(
@@ -470,6 +470,18 @@ function iconset_default()
 			'star-selected' => array(
 				'id' => 'star',
 				'class' => 'text-success'
+			),
+			'status-open' => array(
+				'id' => 'circle',
+				'class' => 'text-success'
+			),
+			'status-pending' => array(
+				'id' => 'circle',
+				'class' => 'text-warning'
+			),
+			'status-closed' => array(
+				'id' => 'circle',
+				'class' => 'text-muted'
 			),
 			//stop in defaults
 			'stop-watching' => array(

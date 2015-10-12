@@ -194,7 +194,7 @@
 									{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
 										<td class="icon">
 											{assign var=ustatus value=$items[user].status|default:"c"}
-											{html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}
+											{icon name=$status_types.$ustatus.iconname iclass='tips' ititle=":{$status_types.$ustatus.label}"}
 										</td>
 									{/if}
 									{if $tiki_p_admin_trackers eq 'y'}

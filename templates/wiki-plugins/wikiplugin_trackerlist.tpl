@@ -247,8 +247,8 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 			{/if}
 			{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $perms.tiki_p_admin_trackers eq 'y'))}
 		<td class="auto" style="width:20px;">
-				{assign var=ustatus value=$items[user].status|default:"c"}
-				{html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}
+				{$ustatus = $items[user].status|default:"c"}
+				{icon name=$status_types.$ustatus.iconname iclass='tips' ititle=":{$status_types.$ustatus.label}"}
 		</td>
 			{/if}
 			{if $showitemrank eq 'y'}

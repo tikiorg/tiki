@@ -50,8 +50,10 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 				break;
 			}
 
-			$alt = tr($status);
-			return "<img src=\"img/icons/status_$status.gif\" alt=\"$status\"/>";
+			$smarty = TikiLib::lib('smarty');
+			$smarty->loadPlugin('smarty_function_icon');
+			return smarty_function_icon(['name' => 'status-' . $status, 'iclass' => 'tips', 'ititle' => ':'
+				. ucfirst($status) ], $smarty);
 		} elseif (substr($name, 0, 14) !== 'tracker_field_') {
 			return $value;
 		}

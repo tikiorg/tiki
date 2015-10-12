@@ -353,6 +353,18 @@ function iconset_glyphicons()
 				'id' => 'star',
 				'class' => 'text-success'
 			),
+			'status-open' => array(
+				'id' => 'ok-sign',
+				'class' => 'text-success'
+			),
+			'status-pending' => array(
+				'id' => 'question-sign',
+				'class' => 'text-warning'
+			),
+			'status-closed' => array(
+				'id' => 'remove-sign',
+				'class' => 'text-muted'
+			),
 			//stop in defaults
 			'stop-watching' => array(
 				'id' => 'eye-close',

@@ -622,6 +622,18 @@ function iconset_legacy()
 			'star-selected' => array(
 				'id' => 'star_selected',
 			),
+			'status-open' => array(
+				'id' => 'status_open',
+				'append' => '.gif'
+			),
+			'status-pending' => array(
+				'id' => 'status_pending',
+				'append' => '.gif'
+			),
+			'status-closed' => array(
+				'id' => 'status_closed',
+				'append' => '.gif'
+			),
 			'stop' => array(
 				'id' => 'control_stop',
 			),

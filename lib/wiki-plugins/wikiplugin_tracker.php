@@ -1336,9 +1336,11 @@ function wikiplugin_tracker($data, $params)
 				$_REQUEST['error'] = 'y';
 			}
 			if (isset($field_errors['err_outputwiki'])) {
-				$back.= '<div class="alert alert-warning"><img src="img/icons/exclamation.png" alt=" '.tra('Error').'" style="vertical-align:middle" /> ';
+				$smarty->loadPlugin('smarty_function_icon');
+				$icon = smarty_function_icon(['name' => 'warning'], $smarty);
+				$back .= '<div class="alert alert-warning">' . $icon . ' ';
 				$back .= $field_errors['err_outputwiki'];
-				$back.= '</div><br />';
+				$back .= '</div><br />';
 				$_REQUEST['error'] = 'y';
 			}
 			if (count($field_errors['err_mandatory']) > 0 || count($field_errors['err_value']) > 0 || isset($field_errors['err_antibot']) || isset($field_errors['err_outputwiki'])) {

@@ -7,8 +7,8 @@
 			{foreach key=st item=stdata from=$status_types}
 				<div style="display:inline-block;">
 					<div class="{$stdata.class}">
-						<a href="tiki-view_tracker.php?trackerId={$trackerId}{if $filtervalue and !$filtervalue|is_array}&amp;filtervalue={$filtervalue|escape:"url"}{/if}{if $filtervalue|is_array}{$filtervalueencoded}{/if}{if $filterfield}&amp;filterfield={$filterfield|escape:"url"}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}&amp;status={$stdata.statuslink}" class="statusimg">
-							<img src="{$stdata.image}" title="{$stdata.label}" alt="{$stdata.label}" align="top" width="12px" height="12px">
+						<a href="{$trackerId|sefurl:tracker}?status={$stdata.statuslink}{if $filtervalue and !$filtervalue|is_array}&amp;filtervalue={$filtervalue|escape:"url"}{/if}{if $filtervalue|is_array}{$filtervalueencoded}{/if}{if $filterfield}&amp;filterfield={$filterfield|escape:"url"}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}">
+							{icon name="{$stdata.iconname}" ititle=":{tr}Toggle{/tr} {$stdata.label}" iclass='tips'}
 						</a>
 					</div>
 				</div>
