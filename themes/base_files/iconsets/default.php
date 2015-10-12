@@ -284,6 +284,10 @@ function iconset_default()
 			'floppy' => array(
 				'id' => 'floppy-o',
 			),
+			'font-color' => array(
+				'id' => 'font',
+				'class' => 'text-danger'
+			),
 			//forward in defaults
 			'forward_step' => array(
 				'id' => 'step-forward',
@@ -296,9 +300,11 @@ function iconset_default()
 			),
 			'h2' => array(
 				'id' => 'header',
+				'size' => '.9'
 			),
 			'h3' => array(
 				'id' => 'header',
+				'size' => '.8'
 			),
 			'help' => array(
 				'id' => 'question-circle',
@@ -359,6 +365,9 @@ function iconset_default()
 			),
 			'merge' => array(
 				'id' => 'random',
+			),
+			'minimize' => array(
+				'id' => 'compress',
 			),
 			//minus in defaults
 			'module' => array(
@@ -462,6 +471,18 @@ function iconset_default()
 			'star-selected' => array(
 				'id' => 'star',
 				'class' => 'text-success'
+			),
+			'status-open' => array(
+				'id' => 'circle',
+				'class' => 'text-success'
+			),
+			'status-pending' => array(
+				'id' => 'circle',
+				'class' => 'text-warning'
+			),
+			'status-closed' => array(
+				'id' => 'circle',
+				'class' => 'text-muted'
 			),
 			//stop in defaults
 			'stop-watching' => array(

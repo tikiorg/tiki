@@ -109,6 +109,7 @@
 						{jq}{literal}
 							var id = '#comment-container';
 							$(id).comment_load('tiki-ajax_services.php?controller=comment&action=list&type=wiki+page&objectId={/literal}{$page|escape:url}{literal}#comment-container');
+							$(document).ajaxComplete(function(){$(id).tiki_popover();});
 							{/literal}
 						{/jq}
 						{/if}

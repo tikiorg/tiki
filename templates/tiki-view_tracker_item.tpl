@@ -153,6 +153,7 @@
 			{jq}
 				var id = '#comment-container-below';
 				$(id).comment_load($(id).data('target'));
+				$(document).ajaxComplete(function(){$(id).tiki_popover();});
 			{/jq}
 
 		{/if}
@@ -167,6 +168,7 @@
 			{jq}
 				var id = '#comment-container';
 				$(id).comment_load($(id).data('target'));
+				$(document).ajaxComplete(function(){$(id).tiki_popover();});
 			{/jq}
 
 		{/tab}

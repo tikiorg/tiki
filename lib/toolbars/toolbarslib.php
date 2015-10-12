@@ -444,17 +444,6 @@ abstract class Toolbar
 			$params['_menu_text'] = 'y';
 			$params['_menu_icon'] = 'y';
 		}
-		if ($this->iconname === 'font') {
-			$params['_style'] = 'color:red';
-		}
-		if ($prefs['theme_iconset'] !== 'legacy') {
-			if ($this->iconname === 'h2') {
-				$params['_icon_size'] = '.9';
-			}
-			if ($this->iconname === 'h3') {
-				$params['_icon_size'] = '.8';
-			}
-		}
 		return smarty_block_self_link($params, $content, $smarty);
 	} // }}}
 
@@ -992,7 +981,7 @@ class ToolbarPicker extends Toolbar
 		case 'color':
 			$wysiwyg = 'TextColor';
 			$label = tra('Foreground color');
-			$iconname = 'font';
+			$iconname = 'font-color';
 			$rawList = array();
 			$styleType = 'color';
 

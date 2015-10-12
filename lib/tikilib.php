@@ -1413,6 +1413,7 @@ class TikiLib extends TikiDb_Bridge
 	 */
 	function get_star($score)
 	{
+		global $prefs;
 		$star = '';
 		$star_colors = array(0 => 'grey',
 				100 => 'blue',
@@ -1428,7 +1429,14 @@ class TikiLib extends TikiDb_Bridge
 		}
 		if (!empty($star)) {
 			$alt = sprintf(tra("%d points"), $score);
-			$star = "<img src='img/icons/$star' height='11' width='11' alt='$alt' />&nbsp;";
+			if ($prefs['theme_iconset'] === 'legacy') {
+				$star = "<img src='img/icons/$star' height='11' width='11' alt='$alt' />&nbsp;";
+			} else {
+				$smarty = TikiLib::lib('smarty');
+				$smarty->loadPlugin('smarty_function_icon');
+				$star = smarty_function_icon(['name' => 'star', 'istyle' => 'color:' . $color, 'iclass' => 'tips',
+					'ititle' => ':' . $alt], $smarty) . "&nbsp;";
+			}
 		}
 		return $star;
 	}

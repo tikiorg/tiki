@@ -155,7 +155,10 @@ function iconset_glyphicons()
 			'floppy' => array(
 				'id' => 'floppy-save',
 			),
-			//font in defaults
+			'font-color' => array(
+				'id' => 'font',
+				'style' => 'color:red',
+			),
 			//forward in defaults
 			'forward_step' => array(
 				'id' => 'step-forward',
@@ -173,9 +176,11 @@ function iconset_glyphicons()
 			),
 			'h2' => array(
 				'id' => 'header',
+				'size' => '.9'
 			),
 			'h3' => array(
 				'id' => 'header',
+				'size' => '.8'
 			),
 			'help' => array(
 				'id' => 'question-sign',
@@ -237,6 +242,9 @@ function iconset_glyphicons()
 			),
 			'merge' => array(
 				'id' => 'random',
+			),
+			'minimize' => array(
+				'id' => 'resize-small',
 			),
 			//minus in defaults
 			'module' => array(
@@ -347,6 +355,18 @@ function iconset_glyphicons()
 			'star-selected' => array(
 				'id' => 'star',
 				'class' => 'text-success'
+			),
+			'status-open' => array(
+				'id' => 'ok-sign',
+				'class' => 'text-success'
+			),
+			'status-pending' => array(
+				'id' => 'question-sign',
+				'class' => 'text-warning'
+			),
+			'status-closed' => array(
+				'id' => 'remove-sign',
+				'class' => 'text-muted'
 			),
 			//stop in defaults
 			'stop-watching' => array(

@@ -381,7 +381,9 @@ function iconset_legacy()
 			'floppy' => array(
 				'id' => 'disk',
 			),
-			//font in defaults
+			'font-color' => array(
+				'id' => 'font',
+			),
 			'forward' => array(
 				'id' => 'control_fastforward',
 			),
@@ -472,6 +474,9 @@ function iconset_legacy()
 			),
 			'merge' => array(
 				'id' => 'arrow_merge',
+			),
+			'minimize' => array(
+				'id' => 'arrow_in',
 			),
 			'minus' => array(
 				'id' => 'delete',
@@ -619,6 +624,18 @@ function iconset_legacy()
 			),
 			'star-selected' => array(
 				'id' => 'star_selected',
+			),
+			'status-open' => array(
+				'id' => 'status_open',
+				'append' => '.gif'
+			),
+			'status-pending' => array(
+				'id' => 'status_pending',
+				'append' => '.gif'
+			),
+			'status-closed' => array(
+				'id' => 'status_closed',
+				'append' => '.gif'
 			),
 			'stop' => array(
 				'id' => 'control_stop',

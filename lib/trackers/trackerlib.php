@@ -3301,9 +3301,12 @@ class TrackerLib extends TikiLib
 
 	public function status_types()
 	{
-		$status['o'] = array('name' => 'open', 'label'=>tra('open'),'perm'=>'tiki_p_view_trackers','image'=>'img/icons/status_open.gif');
-		$status['p'] = array('name' => 'pending', 'label'=>tra('pending'),'perm'=>'tiki_p_view_trackers_pending','image'=>'img/icons/status_pending.gif');
-		$status['c'] = array('name' => 'closed', 'label'=>tra('closed'),'perm'=>'tiki_p_view_trackers_closed','image'=>'img/icons/status_closed.gif');
+		$status['o'] = array('name' => 'open', 'label' => tra('Open'),'perm'=>'tiki_p_view_trackers',
+			'image'=>'img/icons/status_open.gif', 'iconname' => 'status-open');
+		$status['p'] = array('name' => 'pending', 'label' => tra('Pending'),'perm'=>'tiki_p_view_trackers_pending',
+			'image'=>'img/icons/status_pending.gif', 'iconname' => 'status-pending');
+		$status['c'] = array('name' => 'closed', 'label' => tra('Closed'),'perm'=>'tiki_p_view_trackers_closed',
+			'image'=>'img/icons/status_closed.gif', 'iconname' => 'status-closed');
 		return $status;
 	}
 

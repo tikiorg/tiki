@@ -66,6 +66,10 @@ JQ
 			$page = htmlspecialchars($this->page);
 
 			if ($trackerPerms->edit == true) {
+				$smarty = TikiLib::lib('smarty');
+				$smarty->loadPlugin('smarty_function_icon');
+				$pencilicon = smarty_function_icon(['name' => 'pencil'], $smarty);
+				$deleteicon = smarty_function_icon(['name' => 'delete'], $smarty);
 				TikiLib::lib('header')
 					->add_jsfile('lib/jquery_tiki/tiki-trackers.js')
 					->add_jq_onready(
@@ -121,8 +125,8 @@ JQ
 									$.each(item, function() {
 										$('<tr>')
 											.append('<td>' + this.Value + '</td>')
-											.append('<td title="' + tr("Edit") + '"><a class="edit" data-itemid="' + this.itemId + '"><img src="img/icons/pencil.png" /></a></td>')
-											.append('<td title="' + tr("Delete") + '"><a class="delete" data-itemid="' + this.itemId + '"><img src="img/icons/cross.png" /></a></td>')
+											.append('<td title="' + tr("Edit") + '"><a class="edit" data-itemid="' + this.itemId + '">$pencilicon</a></td>')
+											.append('<td title="' + tr("Delete") + '"><a class="delete" data-itemid="' + this.itemId + '">$deleteicon</a></td>')
 											.appendTo(box);
 									});
 
@@ -230,6 +234,10 @@ JQ
 	function editQuestionsInterface($questions, $trackerId)
 	{
 		$questions = json_encode($questions);
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_function_icon');
+		$pencilicon = smarty_function_icon(['name' => 'pencil'], $smarty);
+		$deleteicon = smarty_function_icon(['name' => 'delete'], $smarty);
 
 		TikiLib::lib('header')
 			->add_jq_onready(
@@ -241,8 +249,8 @@ JQ
 						$.each(questions, function() {
 							$('<tr>')
 								.append('<td>' + this.Value + '</td>')
-								.append('<td title="' + tr("Edit") + '"><a class="edit" data-itemid="' + this.itemId + '"><img src="img/icons/pencil.png" /></a></td>')
-								.append('<td title="' + tr("Delete") + '"><a class="delete" data-itemid="' + this.itemId + '"><img src="img/icons/cross.png" /></a></td>')
+								.append('<td title="' + tr("Edit") + '"><a class="edit" data-itemid="' + this.itemId + '">$pencilicon</a></td>')
+								.append('<td title="' + tr("Delete") + '"><a class="delete" data-itemid="' + this.itemId + '">$deleteicon</a></td>')
 								.appendTo(questionBox);
 						});
 

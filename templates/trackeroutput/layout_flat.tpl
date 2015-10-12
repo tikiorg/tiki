@@ -3,7 +3,7 @@
 		{assign var=ustatus value=$info.status|default:"p"}
 		<dt>{tr}Status{/tr}</dt>
 		<dd>
-			{html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}
+			{icon name=$status_types.$ustatus.iconname}
 			{$status_types.$ustatus.label}
 		</dd>
 	{/if}

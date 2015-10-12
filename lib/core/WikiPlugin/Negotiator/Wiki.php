@@ -618,11 +618,11 @@ class WikiPlugin_Negotiator_Wiki
 				. '	$(this).prev().removeClass("ui-state-highlight");'
 				. '});'
 			);
-			include_once('lib/smarty_tiki/function.icon.php');
+			$smarty->loadPlugin('smarty_function_icon');
 
-			$button = '<a id="' . $id . '" class="editplugin"' . $iconDisplayStyle . '>' .
-								smarty_function_icon(array('_id'=>'wiki_plugin_edit', 'alt'=>tra('Edit Plugin') . ':' . $this->name), $smarty) .
-								'</a>'
+			$button = '<a id="' . $id . '" class="editplugin tips"' . $iconDisplayStyle . '>' .
+						smarty_function_icon(array('name'=>'plugin', 'iclass' => 'tips',
+						'ititle'=>tra('Edit Plugin') . ':' . $this->name), $smarty) . '</a>'
 			;
 
 			if ($wrapInNp == false) return $button;
