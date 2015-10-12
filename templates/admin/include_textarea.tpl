@@ -165,10 +165,11 @@
 				</fieldset>
 				{foreach from=$plugins key=plugin item=info}
 					<fieldset class="table">
-						<legend>{$info.name|escape}</legend>
+						<legend>
+							{if $info.iconname}{icon name=$info.iconname}{else}{icon name='plugin'}{/if} {$info.name|escape}
+						</legend>
 						<div class="adminoptionbox">
 							<strong>{$plugin|escape}</strong>: {$info.description|default:''|escape}
-							{if $info.iconname}{icon name=$info.iconname}{elseif $info.icon}{icon _id=$info.icon}{else}{icon name='plugin'}{/if}
 							{help url="Plugin$plugin"}
 						</div>
 						{assign var=pref value="wikiplugin_$plugin"}
