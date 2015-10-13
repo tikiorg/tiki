@@ -1425,7 +1425,8 @@ function wikiplugin_tracker($data, $params)
 				$back .= '~np~';
 			$smarty->assign_by_ref('tiki_p_admin_trackers', $perms['tiki_p_admin_trackers']);
 			$smarty->assign('trackerEditFormId', $iTRACKER);
-
+		}
+		
 		if (!empty($params['_ajax_form_ins_id'])) {
 			$headerlib = TikiLib::lib('header');
 			$old_js['js'] = $headerlib->js;						// of tracker form JS into a function to initialise it when the dialog is created
