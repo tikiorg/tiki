@@ -537,6 +537,9 @@ function iconset_default()
 			'video' => array(
 				'id' => 'file-video-o',
 			),
+			'vimeo' => array(
+				'id' => 'vimeo-square',
+			),
 			'view' => array(
 				'id' => 'search-plus',
 			),
