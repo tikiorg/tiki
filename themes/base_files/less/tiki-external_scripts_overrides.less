@@ -54,3 +54,23 @@ div.form-group label.error {
 }
 
 .chosen-container + .alert {margin-top: 20px;}
+
+// AnythingSlider (wikiplugin_slider) compatibility
+
+.tiki .anythingSlider,
+.tiki .anythingWindow,
+.tiki .anythingBase,
+.tiki .anythingBase > .panel {
+		-webkit-box-sizing: content-box;
+		-moz-box-sizing: content-box;
+		box-sizing: content-box;
+
+}
+
+.tiki .anythingBase > .panel {
+	margin-bottom: 0;
+	background-color: inherit;
+	border: none;
+	border-radius: 0;
+	box-shadow: none;
+}
