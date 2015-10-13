@@ -444,7 +444,15 @@ class Tracker_Item
 		}
 	}
 
-	public function getData($input = null)
+	/**
+	 * Gets a tracker item's data
+	 *
+	 * @param JitFilter|null $input		optional input object
+	 * @param bool|false $forExport		gets the field output in list_mode=csv not necessarily the stored value
+	 * @return array					[permName => value]
+	 */
+
+	public function getData($input = null, $forExport = false)
 	{
 		$out = array();
 		if ($input) {

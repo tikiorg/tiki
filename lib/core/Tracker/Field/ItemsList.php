@@ -196,7 +196,20 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract implements Tracker_
 		$schema->addNew($permName, 'multi-name')
 			->setLabel($name)
 			->setReadOnly(true)
-			->setRenderTransform(function ($value) {
+			->setRenderTransform(function ($value, $extra) {
+
+				if (is_string($value) && empty($value)) {
+					// ItemsLists have no stored value, so when called from \Tracker\Tabular\Source\TrackerSourceEntry...
+					// we have to: get a copy of this field
+					$field = $this->getTrackerDefinition()->getFieldFromPermName($this->getConfiguration('permName'));
+					// get a new handler for it
+					$factory = $this->getTrackerDefinition()->getFieldFactory();
+					$handler = $factory->getHandler($field, ['itemId' => $extra['itemId']]);
+					// for which we can then get the itemIds array of the "linked" items
+					$value = $handler->getItemIds();
+					// and then get the labels from the id's we've now found as if they were the field's data
+				}
+
 				$labels = $this->getItemLabels($value, ['list_mode' => 'csv']);
 				return implode(';', $labels);
 			})
