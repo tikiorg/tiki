@@ -51,8 +51,8 @@
 
 	{tab name="{tr}Settings{/tr}"}
 		<h2>{tr}Settings{/tr}</h2>
-		<input type="hidden" name="ticket" value="{$ticket|escape}">
 		<form class="admin" id="connect" name="connect" action="tiki-admin.php?page=connect" method="post">
+			<input type="hidden" name="ticket" value="{$ticket|escape}">
 			<fieldset>
 				<legend>{tr}Tiki Connect{/tr}</legend>
 				{remarksbox type="info" title="{tr}New Feature{/tr}" icon="bricks"}
