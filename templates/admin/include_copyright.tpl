@@ -2,7 +2,7 @@
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Copyright allows a copyright to be determined for all the objects of tiki{/tr}.{/remarksbox}
 
-<form action="tiki-admin.php?page=copyright" method="post">
+<form class="form-horizontal" action="tiki-admin.php?page=copyright" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
@@ -14,7 +14,7 @@
 
 	<input type="hidden" name="setcopyright" />
 
-	<fieldset class="table">
+	<fieldset>
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_copyright visible="always"}
 	</fieldset>

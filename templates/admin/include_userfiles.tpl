@@ -1,4 +1,4 @@
-<form action="tiki-admin.php?page=userfiles" method="post">
+<form class="form-horizontal" action="tiki-admin.php?page=userfiles" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 
 	<div class="row">
@@ -9,7 +9,7 @@
 		</div>
 	</div>
 
-	<fieldset class="table">
+	<fieldset>
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_userfiles visible="always"}
 		<div class="adminoptionboxchild" id="feature_userfiles_childcontainer">
@@ -17,7 +17,7 @@
 		</div>
 	</fieldset>
 
-	<fieldset class="table">
+	<fieldset>
 		<legend>{tr}Settings{/tr}</legend>
 		{preference name=userfiles_quota}
 		{preference name=userfiles_private}

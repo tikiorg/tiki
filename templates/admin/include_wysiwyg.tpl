@@ -1,9 +1,9 @@
 {* $Id$ *}
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}WYSIWYG means What You See Is What You Get, and is handled in Tiki by <a class="alert-link" href="http://ckeditor.com/">CKEditor</a>{/tr}.{/remarksbox}
-<form action="tiki-admin.php?page=wysiwyg" method="post">
+<form class="form-horizontal" action="tiki-admin.php?page=wysiwyg" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="t_navbar margin-bottom-md">
-		<a role="button" class="btn btn-default btn-sm" href="tiki-admin_toolbars.php" title="{tr}Toolbars{/tr}">
+		<a role="button" class="btn btn-link" href="tiki-admin_toolbars.php" title="{tr}Toolbars{/tr}">
 			{icon name="settings"} {tr}Toolbars{/tr}
 		</a>
 		<div class="pull-right">
@@ -13,12 +13,12 @@
 	{if $prefs.wysiwyg_htmltowiki neq 'y'}
 		{remarksbox type="warning" title="{tr}Page links{/tr}"}{tr}Note that if the SEFURL feature is on, page links created using wysiwyg might not be automatically updated when pages are renamed. This is addressed through the "Use Wiki syntax in WYSIWYG" feature.{/tr}{/remarksbox}
 	{/if}
-	<fieldset class="table">
+	<fieldset>
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_wysiwyg visible="always"}
 		{preference name=wikiplugin_wysiwyg}
 	</fieldset>
-	<fieldset class="table">
+	<fieldset>
 		<legend>{tr}Wysiwyg Editor Features{/tr}</legend>
 		{preference name=wysiwyg_optional}
 		<div class="adminoptionboxchild" id="wysiwyg_optional_childcontainer">

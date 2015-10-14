@@ -1,8 +1,8 @@
-<form action="tiki-admin.php?page=faqs" method="post">
+<form class="form-horizontal" action="tiki-admin.php?page=faqs" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
-			<a role="button" class="btn btn-default btn-sm" href="tiki-list_faqs.php" title="{tr}List{/tr}">
+			<a role="button" class="btn btn-link" href="tiki-list_faqs.php" title="{tr}List{/tr}">
 				{icon name="list"} {tr}FAQs{/tr}
 			</a>
 			<div class="pull-right">
@@ -10,7 +10,7 @@
 			</div>
 		</div>
 	</div>
-	<fieldset class="table">
+	<fieldset>
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_faqs visible="always"}
 	</fieldset>

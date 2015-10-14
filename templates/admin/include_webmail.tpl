@@ -1,8 +1,8 @@
-<form action="tiki-admin.php?page=webmail" method="post">
+<form class="form-horizontal" action="tiki-admin.php?page=webmail" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
-			<a role="button" class="btn btn-default btn-sm" href="tiki-webmail.php" title="{tr}Webmail{/tr}">
+			<a role="button" class="btn btn-link" href="tiki-webmail.php" title="{tr}Webmail{/tr}">
 				{icon name="inbox"} {tr}Webmail{/tr}
 			</a>
 			<div class="pull-right">
@@ -10,13 +10,13 @@
 			</div>
 		</div>
 	</div>
-	<fieldset class="table">
+	<fieldset>
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_webmail visible="always"}
 	</fieldset>
 
 
-	<fieldset class="table">
+	<fieldset>
 		<legend>{tr}Settings{/tr}</legend>
 		{preference name=webmail_view_html}
 		{preference name=webmail_max_attachment}
