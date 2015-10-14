@@ -228,30 +228,53 @@
 
         <p>{tr}Send notification when I am the editor:{/tr}</p>
         {if $prefs.feature_wiki eq 'y'}
-            <p><input type="checkbox" name="user_wiki_watch_editor" value="true"
-                      {if $user_wiki_watch_editor eq 'y'}checked{/if}> {tr}Wiki{/tr}</p>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="user_wiki_watch_editor" value="true"
+                           {if $user_wiki_watch_editor eq 'y'}checked{/if}> {tr}Wiki{/tr}
+                </label>
+            </div>
         {/if}
         {if $prefs.feature_articles eq 'y'}
-            <p><input type="checkbox" name="user_article_watch_editor" value="true"
-                      {if $user_article_watch_editor eq 'y'}checked{/if}> {tr}Article{/tr}</p>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="user_article_watch_editor" value="true"
+                           {if $user_article_watch_editor eq 'y'}checked{/if}> {tr}Article{/tr}
+                </label>
+            </div>
         {/if}
         {if $prefs.feature_blogs eq 'y'}
-            <p><input type="checkbox" name="user_blog_watch_editor" value="true"
-                      {if $user_blog_watch_editor eq 'y'}checked{/if}> {tr}Blog{/tr}</p>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="user_blog_watch_editor" value="true"
+                           {if $user_blog_watch_editor eq 'y'}checked{/if}> {tr}Blog{/tr}</label>
+            </div>
         {/if}
         {if $prefs.feature_trackers eq 'y'}
-            <p><input type="checkbox" name="user_tracker_watch_editor" value="true"
-                      {if $user_tracker_watch_editor eq 'y'}checked{/if}> {tr}Tracker{/tr}</p>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="user_tracker_watch_editor" value="true"
+                           {if $user_tracker_watch_editor eq 'y'}checked{/if}> {tr}Tracker{/tr}</label>
+            </div>
         {/if}
         {if $prefs.feature_calendar eq 'y'}
-            <p><input type="checkbox" name="user_calendar_watch_editor" value="true"
-                      {if $user_calendar_watch_editor eq 'y'}checked{/if}> {tr}Calendar{/tr}</p>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="user_calendar_watch_editor" value="true"
+                           {if $user_calendar_watch_editor eq 'y'}checked{/if}> {tr}Calendar{/tr}</label>
+            </div>
         {/if}
-        <p><input type="checkbox" name="user_comment_watch_editor" value="true"
-                  {if $user_comment_watch_editor eq 'y'}checked{/if}> {tr}Comment{/tr}</p>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="user_comment_watch_editor" value="true"
+                       {if $user_comment_watch_editor eq 'y'}checked{/if}> {tr}Comment{/tr}</label>
+        </div>
 
-        <p><input type="submit" class="btn btn-primary btn-sm" name="submit" title="{tr}Apply Changes{/tr}"
-                  value="{tr}Apply{/tr}"></p>
+        <div class="checkbox">
+            <label>
+                <input type="submit" class="btn btn-primary btn-sm" name="submit" title="{tr}Apply Changes{/tr}"
+                       value="{tr}Apply{/tr}"></label>
+        </div>
     </form>
 {/tab}
 
