@@ -2,7 +2,7 @@
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Please see the <a class='alert-link' target='tikihelp' href='http://dev.tiki.org/Performance'>Performance page</a> on Tiki's developer site.{/tr}{/remarksbox}
 
-<form class="admin" id="performance" name="performance" action="tiki-admin.php?page=performance" method="post">
+<form class="admin form-horizontal" id="performance" name="performance" action="tiki-admin.php?page=performance" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">

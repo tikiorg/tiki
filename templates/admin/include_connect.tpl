@@ -51,7 +51,7 @@
 
 	{tab name="{tr}Settings{/tr}"}
 		<h2>{tr}Settings{/tr}</h2>
-		<form class="admin" id="connect" name="connect" action="tiki-admin.php?page=connect" method="post">
+		<form class="admin form-horizontal" id="connect" name="connect" action="tiki-admin.php?page=connect" method="post">
 			<input type="hidden" name="ticket" value="{$ticket|escape}">
 			<fieldset>
 				<legend>{tr}Tiki Connect{/tr}</legend>
@@ -123,7 +123,7 @@
 	{if $prefs.connect_server_mode eq "y"}
 		{tab name="{tr}Connections received{/tr}"}
 			<h2>{tr}Recent connections{/tr}</h2>
-			<form class="admin" name="cserver_form" action="tiki-admin.php?page=connect" method="post">
+			<form class="admin form-horizontal" name="cserver_form" action="tiki-admin.php?page=connect" method="post">
 				<input type="hidden" name="ticket" value="{$ticket|escape}">
 				<input name="cserver_search" type="text" value="{$cserver_search_text}" />
 				<input name="cserver" type="submit" class="btn btn-default" value="{tr}Search{/tr}" />
@@ -167,7 +167,7 @@
 	{/if}
 
 	{tab name="{tr}Jitsi{/tr}"}
-		<form class="admin" id="connect" name="connect" action="tiki-admin.php?page=connect" method="post">
+		<form class="admin form-horizontal" id="connect" name="connect" action="tiki-admin.php?page=connect" method="post">
 			<input type="hidden" name="ticket" value="{$ticket|escape}">
 			<fieldset>
 				<legend>{tr}Jitsi{/tr}</legend>

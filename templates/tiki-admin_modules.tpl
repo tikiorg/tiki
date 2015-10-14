@@ -245,7 +245,7 @@
 		{else}
 			<h2>{tr}Edit this custom module:{/tr} {$um_name}</h2>
 		{/if}
-        <div class="col-sm-10 col-sm-offset-2">
+        <div class="col-sm-10 col-sm-offset-1">
             {remarksbox type="tip" title="{tr}Tip{/tr}"}
                 {tr}Create your new custom module below. Make sure to preview first and make sure all is OK before <a href="#assign">assigning it</a>. Using HTML, you will be fine. However, if you improperly use wiki syntax or Smarty code, you could lock yourself out of the site.{/tr}
             {/remarksbox}
@@ -254,19 +254,19 @@
 		<form name='editusr' method="post" action="tiki-admin_modules.php" class="form-horizontal">
             <div class="form-group">
                 <label class="col-sm-3 control-label">{tr}Name{/tr}</label>
-                <div class="col-sm-7 col-sm-offset-1">
+                <div class="col-sm-8">
                     <input type="text" id="um_name" name="um_name" value="{$um_name|escape}" class="form-control">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">{tr}Title{/tr}</label>
-                <div class="col-sm-7 col-sm-offset-1">
+                <div class="col-sm-8">
                     <input type="text" id="um_title" name="um_title" value="{$um_title|escape}" class="form-control">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">{tr}Parse using{/tr}</label>
-                <div class="col-sm-7 col-sm-offset-1">
+                <div class="col-sm-8">
                     <select name="um_parse" id="um_parse" class="form-control margin-bottom-sm">
                         <option value=""{if $um_parse eq "" and $um_wikiLingo eq ""} selected="selected"{/if}>{tr}None{/tr}</option>
                         <option value="y"{if $um_parse eq "y" and $um_wikiLingo eq ""} selected="selected"{/if}>{tr}Wiki Markup{/tr}</option>
@@ -378,7 +378,7 @@
                 </div>
             {/if}
             {pagination_links cant=$maximum step=$maxRecords offset=$offset}{/pagination_links}
-            <div class="col-sm-10 col-sm-offset-2">
+            <div class="col-sm-10 col-sm-offset-1">
                 {remarksbox type="tip" title="{tr}Tip{/tr}"}
                 {if $prefs.feature_cssmenus eq 'y'}
                     {tr}To use a <a target="tikihelp" href="http://users.tpg.com.au/j_birch/plugins/superfish/">CSS (Superfish) menu</a>, use one of these syntaxes:{/tr}
@@ -394,15 +394,15 @@
                 {/remarksbox}
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">{tr}Data{/tr}</label>
-                <div class="col-sm-7 col-sm-offset-1">
+                <label class="col-sm-2 control-label">{tr}Data{/tr}</label>
+                <div class="col-sm-9">
                     <a id="editcreate"></a>
-                    {textarea name='um_data' id='um_data' _class=form-color _toolbars='y' _previewConfirmExit='n' _wysiwyg="n"}{$um_data}{/textarea}
+                    {textarea name='um_data' id='um_data' _class=form-control _toolbars='y' _previewConfirmExit='n' _wysiwyg="n"}{$um_data}{/textarea}
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label"></label>
-                <div class="col-sm-7 col-sm-offset-1">
+                <div class="col-sm-8">
                     <input type="submit" class="btn btn-primary btn-sm" name="um_update" value="{if empty($um_name)}{tr}Create{/tr}{else}{tr}Save{/tr}{/if}" onclick="needToConfirm=false">
                 </div>
             </div>

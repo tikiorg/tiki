@@ -84,7 +84,7 @@
 					{preference name=zend_mail_queue}
 				</div>
 				<div class="adminoptionbox form-group clearfix">
-					<label for="testMail" class="col-md-4">{tr}Email to send a test mail{/tr}</label>
+					<label for="testMail" class="col-md-4 control-label">{tr}Email to send a test mail{/tr}</label>
 					<div class="col-md-8">
 						<input type="text" name="testMail" id="testMail" class="form-control">
 					</div>

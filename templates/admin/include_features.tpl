@@ -4,7 +4,7 @@
 	{tr}Please see the <a class='alert-link' target='tikihelp' href='http://doc.tiki.org/Features'>evaluation of each feature</a> on Tiki's developer site.{/tr}
 {/remarksbox}
 
-<form class="admin" id="features" name="features" action="tiki-admin.php?page=features" method="post">
+<form class="admin form-horizontal" id="features" name="features" action="tiki-admin.php?page=features" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
@@ -27,7 +27,7 @@
 			<fieldset>
 				<legend>{tr}Main feature{/tr}</legend>
 
-				<div class="admin clearfix featurelist">
+				<div class="admin clearfix form-group featurelist">
 					{preference name=feature_wiki}
 					{preference name=feature_file_galleries}
 					{preference name=feature_blogs}
@@ -49,7 +49,7 @@
 			<fieldset>
 				<legend>{tr}Additional{/tr}</legend>
 
-				<div class="admin clearfix featurelist">
+				<div class="admin clearfix form-group featurelist">
 					{preference name=feature_surveys}
 					{preference name=feature_directory}
 					{preference name=feature_quizzes}
