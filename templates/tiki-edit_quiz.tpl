@@ -111,10 +111,10 @@
 				<label class="col-md-2 control-label">
 					{tr}Publish Date{/tr}
 				</label>
-				<div class="col-md-4">
+				<div class="col-md-5">
 					{html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+10" field_order=$prefs.display_field_order}
 				</div>
-				<div class="col-md-1 control-label" style="text-align: center">
+				<div class="col-md-1 text-center">
 					{tr}at{/tr}
 				</div>
 				<div class="col-md-4" dir="ltr">
@@ -126,10 +126,10 @@
 				<label class="control-label col-md-2">
 					{tr}Expiration Date{/tr}
 				</label>
-				<div class="col-md-4">
+				<div class="col-md-5">
 					{html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+10" field_order=$prefs.display_field_order}
 				</div>
-				<div class="col-md-1 control-label" style="text-align: center">
+				<div class="col-md-1 text-center">
 					{tr}at{/tr}
 				</div>
 				<div class="col-md-4" dir="ltr">
