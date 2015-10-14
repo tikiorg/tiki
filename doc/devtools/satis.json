@@ -1177,9 +1177,9 @@
 			"type": "package",
 			"package": {
 				"name": "jquery/plugins/tagcanvas",
-				"version": "2.6.1",
+				"version": "2.8",
 				"dist": {
-					"url": "http://www.goat1000.com/jquery.tagcanvas.js?2.6.1.js",
+					"url": "http://www.goat1000.com/jquery.tagcanvas.js?2.8.js",
 					"type": "file"
 				}
 			}
@@ -1420,7 +1420,7 @@
 		"jquery/plugins/reflection-jquery": "1.1",
 		"jquery/plugins/superfish": "*",
 		"jquery/plugins/tablesorter": "*",
-		"jquery/plugins/tagcanvas": "*",
+		"jquery/plugins/tagcanvas": ">=2.8",
 		"jquery/plugins/treetable": "*",
 		"jquery/plugins/sparkline": "2.1.1",
 		"jquery/plugins/zoom": "*",
