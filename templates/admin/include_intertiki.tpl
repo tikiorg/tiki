@@ -43,26 +43,26 @@
 		    </div>
 			<div id="admin-slavemode-options" style="display: {if $prefs.feature_intertiki_mymaster eq ''}none{else}block{/if}">
 			 	<div class="form-group">
-					<label class="col-sm-3 control-label">{tr}Import user preferences{/tr}</label>
+					<label class="col-sm-3 control-label" for="feature_intertiki_import_preferences">{tr}Import user preferences{/tr}</label>
 					<div class="col-sm-7">
-						<input type="checkbox" name="feature_intertiki_import_preferences" {if $prefs.feature_intertiki_import_preferences eq 'y'}checked="checked"{/if}/>
+						<input type="checkbox" name="feature_intertiki_import_preferences" id="feature_intertiki_import_preferences" {if $prefs.feature_intertiki_import_preferences eq 'y'}checked="checked"{/if}/>
 					</div>
-					<label class="col-sm-3 control-label">{tr}Import user groups{/tr}</label>
+					<label class="col-sm-3 control-label" for="feature_intertiki_import_groups">{tr}Import user groups{/tr}</label>
 					<div class="col-sm-7">
-						<input type="checkbox" name="feature_intertiki_import_groups" {if $prefs.feature_intertiki_import_groups eq 'y'}checked="checked"{/if}/>
+						<input type="checkbox" name="feature_intertiki_import_groups" id="feature_intertiki_import_groups" {if $prefs.feature_intertiki_import_groups eq 'y'}checked="checked"{/if}/>
 					</div>
-					<label class="col-sm-3 control-label">{tr}Limit group import (comma-separated list of imported groups, leave empty to avoid limitation){/tr}</label>
+					<label class="col-sm-3 control-label" for="feature_intertiki_imported_groups">{tr}Limit group import (comma-separated list of imported groups, leave empty to avoid limitation){/tr}</label>
 					<div class="col-sm-7">
-						<input type="text" name="feature_intertiki_imported_groups" value="{$prefs.feature_intertiki_imported_groups}" class="form-control" />
+						<input type="text" name="feature_intertiki_imported_groups" id="feature_intertiki_imported_groups" value="{$prefs.feature_intertiki_imported_groups}" class="form-control" />
 					</div>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label">{tr}Intertiki shared cookie for sliding auth under same domain{/tr}</label>
-				<div class="col-sm-7">
-		      		<input type="checkbox" name="feature_intertiki_sharedcookie" {if $prefs.feature_intertiki_sharedcookie eq 'y'}checked="checked"{/if} />
-			    </div>
-		    </div>
+				<label class="col-sm-3 control-label" for="feature_intertiki_sharedcookie">{tr}Intertiki shared cookie for sliding auth under same domain{/tr}</label>
+					<div class="col-sm-9">
+					<input type="checkbox" id="feature_intertiki_sharedcookie" name="feature_intertiki_sharedcookie" {if $prefs.feature_intertiki_sharedcookie eq 'y'}checked="checked"{/if} />
+					</div>
+			</div>
 		    <div class="form-group">
 		    	<label class="col-sm-3 control-label">{tr}Add new server{/tr}</label>
 	    			<div class="col-sm-7 margin-bottom-sm">
@@ -165,11 +165,11 @@
 			    			<thead>
 								<tr>
 									<td>&nbsp;</td>
-									<td class="text-center">{tr}Name{/tr}</td>
-									<td class="text-center">{tr}Key{/tr}</td>
-									<td class="text-center">{tr}IP{/tr}</td>
-									<td class="text-center">{tr}Contact{/tr}</td>
-									<td class="text-center">{tr}Can register{/tr}</td>
+									<td class="text-center"><label for="known_hosts_name">{tr}Name{/tr}</label></td>
+									<td class="text-center"><label for="known_hosts_key">{tr}Key{/tr}</label></td>
+									<td class="text-center"><label for="known_hosts_ip">{tr}IP{/tr}</label></td>
+									<td class="text-center"><label for="known_hosts_contact">{tr}Contact{/tr}</label></td>
+									<td class="text-center"><label for="known_hosts_can_register">{tr}Can register{/tr}</label></td>
 								</tr>
 							</thead>
 							<tbody>
@@ -180,30 +180,30 @@
 											<a href="tiki-admin.php?page=intertiki&amp;delk={$k|escape:'url'}" class="tips" title=":{tr}Delete{/tr}">{icon name='delete'}</a>
 										</td>
 										<td>
-											<input type="text" class="form-control" name="known_hosts[{$k}][name]" value="{$i.name}" />
+											<input type="text" class="form-control" id="known_hosts_name" name="known_hosts[{$k}][name]" value="{$i.name}" />
 										</td>
 										<td>
-											<input type="text" class="form-control" name="known_hosts[{$k}][key]" value="{$i.key}"  />
+											<input type="text" class="form-control" id="known_hosts_key" name="known_hosts[{$k}][key]" value="{$i.key}"  />
 										</td>
 										<td>
-											<input type="text" class="form-control" name="known_hosts[{$k}][ip]" value="{$i.ip}"  />
+											<input type="text" class="form-control" id="known_hosts_ip" name="known_hosts[{$k}][ip]" value="{$i.ip}"  />
 										</td>
 										<td>
-											<input type="text" class="form-control"  name="known_hosts[{$k}][contact]" value="{$i.contact}"  />
+											<input type="text" class="form-control" id="known_hosts_contact"  name="known_hosts[{$k}][contact]" value="{$i.contact}"  />
 										</td>
 										<td>
-											<input type="checkbox" class="form-control" name="known_hosts[{$k}][allowusersregister]" {if $i.allowusersregister eq 'y'}checked="checked"{/if} />
+											<input type="checkbox" class="form-control" id="known_hosts_can_register" name="known_hosts[{$k}][allowusersregister]" {if $i.allowusersregister eq 'y'}checked="checked"{/if} />
 										</td>
 									</tr>
 								{/foreach}
 							{/if}
 							<tr>
 								<td>{tr}New:{/tr}</td>
-								<td><input type="text" class="form-control" name="newhost[name]" value=""/></td>
-								<td><input type="text" class="form-control" name="newhost[key]" value=""/></td>
-								<td><input type="text" class="form-control" name="newhost[ip]" value=""/></td>
-								<td><input type="text" class="form-control" name="newhost[contact]" value=""/></td>
-								<td><input type="checkbox" name="newhost[allowusersregister]"/></td>
+								<td><label class="sr-only" for="new_host_name">{tr}New{/tr}</label><input type="text" class="form-control" id="new_host_name" name="newhost[name]" value=""/></td>
+								<td><label class="sr-only" for="new_host_key">{tr}Key{/tr}</label><input type="text" class="form-control" id="new_host_key" name="newhost[key]" value=""/></td>
+								<td><label class="sr-only" for="new_host_ip">{tr}IP{/tr}</label><input type="text" class="form-control" id="new_host_ip" name="newhost[ip]" value=""/></td>
+								<td><label class="sr-only" for="new_host_contact">{tr}Contact{/tr}</label><input type="text" class="form-control" id="new_host_contact" name="newhost[contact]" value=""/></td>
+								<td class="text-center"><label class="sr-only" for="new_host_can_register">{tr}Can register{/tr}</label><input type="checkbox" id="new_host_can_register" name="newhost[allowusersregister]"/></td>
 							</tr>
 							</tbody>
 						</table>
