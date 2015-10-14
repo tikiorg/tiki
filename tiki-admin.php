@@ -409,7 +409,7 @@ $admin_icons = array(
 		'help' => 'Category',
 	),
 	"workspace" => array(
-		'title' => tr('Workspaces & Areas'),
+		'title' => tr('Workspaces'),
 		'disabled' => $prefs['workspace_ui'] != 'y' && $prefs['feature_areas'] != 'y',
 		'description' => tr('Configure workspace feature'),
 		'help' => 'workspace',
