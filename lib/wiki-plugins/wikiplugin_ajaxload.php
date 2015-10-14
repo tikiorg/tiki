@@ -137,9 +137,13 @@ function wikiplugin_ajaxload($data, $params) {
 
 			if ($parts) {
 				$base = $parts['scheme'] . '://' .
-					(!empty($parts['port']) ? ':' . $parts['port'] : '') .
 					(!empty($parts['host']) ? $parts['host'] : '') .
-					(!empty($parts['path']) ? pathinfo($parts['path'], PATHINFO_DIRNAME) . '/' : '/');
+					(!empty($parts['port']) ? ':' . $parts['port'] : '') .
+					(!empty($parts['path']) ? pathinfo($parts['path'], PATHINFO_DIRNAME) : '');
+
+				if (substr($base, -1) !== '/') {
+					$base .= '/';
+				}
 
 				if ($params['absolutelinks'] === '') {
 					$types = 'src|href';
