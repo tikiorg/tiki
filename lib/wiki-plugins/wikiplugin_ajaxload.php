@@ -63,16 +63,31 @@ function wikiplugin_ajaxload_info() {
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
-				'description' => tra('In pixels or percentage. Default value is %0.', '<code>100%</code>'),
+				'description' => tr('In pixels or percentage. Default value is %0.', '<code>100%</code>'),
 				'default' => '100%',
 				'since' => '14.1',
 			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
-				'description' => tra('In pixels or percentage. Default value is %0.', '<code>auto</code>'),
+				'description' => tr('In pixels or percentage. Default value is %0.', '<code>auto</code>'),
 				'default' => 'auto',
 				'since' => '14.1',
+			),
+			'absolutelinks' => array(
+				'required' => false,
+				'name' => tra('Make Links Absolute'),
+				'description' => tra('Convert relative links in the incoming data to be absolute. Default value is "All".'),
+				'since' => '14.1',
+				'filter' => 'alpha',
+				'default' => '',
+				'advanced' => true,
+				'options' => array(
+					array('text' => tra('All'), 'value' => ''),
+					array('text' => tra('Images Only'), 'value' => 'src'),
+					array('text' => tra('Links Only'), 'value' => 'href'),
+					array('text' => tra('None'), 'value' => 'none'),
+				),
 			),
 		),
 	);
@@ -114,8 +129,29 @@ function wikiplugin_ajaxload($data, $params) {
 			$id = '#' . $id;
 		}
 
-		$selector = $params['selector'] ? 'data = $("' . $params['selector'] . '", data).html();' : '';
+		$js = $params['selector'] ? 'data = $("' . $params['selector'] . '", data).html();' : '';
 		$data = str_replace('<x>', '', $data);	// desanitize js
+
+		if ($params['absolutelinks'] !== 'none') {
+			$parts = parse_url($params['url']);
+
+			if ($parts) {
+				$base = $parts['scheme'] . '://' .
+					(!empty($parts['port']) ? ':' . $parts['port'] : '') .
+					(!empty($parts['host']) ? $parts['host'] : '') .
+					(!empty($parts['path']) ? pathinfo($parts['path'], PATHINFO_DIRNAME) . '/' : '/');
+
+				if ($params['absolutelinks'] === '') {
+					$types = 'src|href';
+				} else {
+					$types = $params['absolutelinks'];
+				}
+
+				$js .= '	data = data.replace(/([\s-](?:' . $types . ')=["\'])(.*?)(["\'])/gi, function (match, start, url, end) {
+		return start + "' . $base . '" + url + end;
+	});';
+			}
+		}
 
 		TikiLib::lib('header')->add_jq_onready('
 (function ($) {
@@ -126,7 +162,7 @@ function wikiplugin_ajaxload($data, $params) {
 		dataType: "html",
 		method: "GET"
 	}).done(function(data) {
-	  '. $selector . '
+	  '. $js . '
 	  '. $data .'
 	  $el.html(data);
 	}).fail(function() {
