@@ -63,14 +63,14 @@ function wikiplugin_ajaxload_info() {
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
-				'description' => tra('In pixels or percentage. Default value is %0.', '<code>100%</code>'),
+				'description' => tr('In pixels or percentage. Default value is %0.', '<code>100%</code>'),
 				'default' => '100%',
 				'since' => '14.1',
 			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
-				'description' => tra('In pixels or percentage. Default value is %0.', '<code>auto</code>'),
+				'description' => tr('In pixels or percentage. Default value is %0.', '<code>auto</code>'),
 				'default' => 'auto',
 				'since' => '14.1',
 			),
