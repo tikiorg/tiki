@@ -18,7 +18,7 @@
 	{/remarksbox}
 {/if}
 
-<form action="tiki-admin.php?page=login" class="admin" method="post" name="LogForm">
+<form action="tiki-admin.php?page=login" class="admin form-horizontal" method="post" name="LogForm">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<input type="hidden" name="loginprefs" />
 	<div class="row">
@@ -65,25 +65,22 @@
 					{preference name=generate_password}
 					{preference name=http_referer_registration_check}
 					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label for="registration_choices">{tr}Users can select a group to join at registration:{/tr}</label>
-							<br>
-							<em>{tr}By default, new users automatically join the Registered group{/tr}.</em>
+						<div class="adminoptionlabel form-group">
+							<label for="registration_choices" class="col-sm-4 control-label">{tr}Users can select a group to join at registration:{/tr}</label>
+							<div class="col-sm-8 adminoptionlabel">
+								<select id="registration_choices" name="registration_choices[]" multiple="multiple" size="5" class="form-control">
+									{foreach key=g item=gr from=$listgroups}
+										{if $gr.groupName ne 'Anonymous'}
+											<option value="{$gr.groupName|escape}" {if $gr.registrationChoice eq 'y'} selected="selected"{/if}>{$gr.groupName|truncate:"52"|escape}</option>
+										{/if}
+									{/foreach}
+								</select>
+								<div class="help-block">{tr}By default, new users automatically join the Registered group{/tr}.</div>
+							</div>
 						</div>
-						<div class="adminoptionlabel">
-							<select id="registration_choices" name="registration_choices[]" multiple="multiple" size="5" style="width:95%;">
-								{foreach key=g item=gr from=$listgroups}
-									{if $gr.groupName ne 'Anonymous'}
-										<option value="{$gr.groupName|escape}" {if $gr.registrationChoice eq 'y'} selected="selected"{/if}>{$gr.groupName|truncate:"52"|escape}</option>
-									{/if}
-								{/foreach}
-							</select>
-						</div>
-						{preference name=user_must_choose_group}
-						{preference name=url_after_validation}
-					</div>
-				</div>
-				{preference name=userTracker}
+					{preference name=user_must_choose_group}
+					{preference name=url_after_validation}
+					{preference name=userTracker}
 				<div class="adminoptionboxchild" id="userTracker_childcontainer">
 					{preference name=feature_userWizardDifferentUsersFieldIds}
 					<div class="adminoptionboxchild" id="feature_userWizardDifferentUsersFieldIds_childcontainer">
