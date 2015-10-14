@@ -30,16 +30,16 @@
 	{tr}Use the 'Quick Edit' module to easily create or edit wiki pages.{/tr} {tr}Select <a class="alert-link" href="tiki-admin_modules.php">Admin &gt; Modules</a> to add this (or other) modules.{/tr}
 {/remarksbox}
 
-<form action="tiki-admin.php?page=wiki" method="post">
+<form class="form-horizontal" action="tiki-admin.php?page=wiki" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
-	<div class="heading input_submit_container" style="text-align: right">
+	<div class="heading input_submit_container text-right">
 	</div>
 
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
-			{button _icon_name='admin_wiki' _text='{tr}Pages{/tr}' class='btn btn-default btn-sm' _script='tiki-listpages.php' _title='{tr}List wiki pages{/tr}'}
+			{button _icon_name='admin_wiki' _text='{tr}Pages{/tr}' class='btn btn-link' _script='tiki-listpages.php' _title='{tr}List wiki pages{/tr}'}
 			{if $prefs.feature_wiki_structure eq "y" and $tiki_p_view eq "y"}
-				{button _icon_name='structure' _text='{tr}Structures{/tr}' class='btn btn-default btn-sm' _script='tiki-admin_structures.php' _title='{tr}List structures{/tr}'}
+				{button _icon_name='structure' _text='{tr}Structures{/tr}' class='btn btn-link' _script='tiki-admin_structures.php' _title='{tr}List structures{/tr}'}
 			{/if}
 			<div class="pull-right">
 				<input type="submit" class="btn btn-primary btn-sm" name="wikisetprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
@@ -52,7 +52,7 @@
 		{tab name="{tr}General Preferences{/tr}"}
 			<h2>{tr}General Preferences{/tr}</h2>
 
-			<fieldset class="table">
+			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_wiki visible="always"}
 				{preference name=wiki_url_scheme}

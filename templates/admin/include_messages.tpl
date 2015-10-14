@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-<form action="tiki-admin.php?page=messages" method="post" name="messages">
+<form class="form-horizontal" action="tiki-admin.php?page=messages" method="post" name="messages">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 
 	<div class="row">

@@ -13,7 +13,7 @@
 {/if}
 
 
-<form action="tiki-admin.php?page=search" method="post">
+<form class="form-horizontal" action="tiki-admin.php?page=search" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<input type="hidden" name="searchprefs">
 

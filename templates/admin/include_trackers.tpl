@@ -1,9 +1,9 @@
-<form action="tiki-admin.php?page=trackers" method="post">
+<form class="form-horizontal" action="tiki-admin.php?page=trackers" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
-			<a role="button" class="btn btn-default btn-sm" href="tiki-list_trackers.php" title="{tr}List{/tr}">
+			<a role="button" class="btn btn-link" href="tiki-list_trackers.php" title="{tr}List{/tr}">
 				{icon name="list"} {tr}Trackers{/tr}
 			</a>
 			<div class="pull-right">
@@ -16,7 +16,7 @@
 
 		{tab name="{tr}Settings{/tr}"}
 			<h2>{tr}Settings{/tr}</h2>
-			<fieldset class="table">
+			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_trackers visible="always"}
 			</fieldset>

@@ -1,4 +1,4 @@
-<form action="tiki-admin.php?page=calendar" method="post">
+<form class="form-horizontal" action="tiki-admin.php?page=calendar" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
@@ -10,7 +10,7 @@
 			</div>
 		</div>
 	</div>
-	<fieldset class="table">
+	<fieldset>
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_calendar visible="always"}
 	</fieldset>

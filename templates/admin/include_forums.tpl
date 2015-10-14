@@ -1,9 +1,9 @@
 {* $Id$ *}
-<form method="post" action="tiki-admin.php?page=forums">
+<form class="form-horizontal" method="post" action="tiki-admin.php?page=forums">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
-			<a role="button" class="btn btn-default btn-sm" href="tiki-admin_forums.php" title="{tr}List{/tr}">
+			<a role="button" class="btn btn-link" href="tiki-admin_forums.php" title="{tr}List{/tr}">
 				{icon name="list"} {tr}Forums{/tr}
 			</a>
 			<div class="pull-right">
@@ -16,7 +16,7 @@
 		{tab name="{tr}General Settings{/tr}"}
 			<h2>{tr}General Settings{/tr}</h2>
 
-			<fieldset class="table">
+			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_forums visible="always"}
 				{preference name=home_forum}

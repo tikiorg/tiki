@@ -1,4 +1,4 @@
-<form action="tiki-admin.php?page=directory" method="post">
+<form class="form-horizontal" action="tiki-admin.php?page=directory" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
@@ -12,12 +12,12 @@
 	</div>
 
 
-	<fieldset class="table">
+	<fieldset>
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_directory visible="always"}
 	</fieldset>
 
-	<fieldset class="table">
+	<fieldset>
 		<legend>{tr}Directory{/tr}</legend>
 		{preference name=directory_columns}
 		{preference name=directory_links_per_page}

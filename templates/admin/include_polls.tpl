@@ -1,4 +1,4 @@
-<form method="post" action="tiki-admin.php?page=polls">
+<form class="form-horizontal" method="post" action="tiki-admin.php?page=polls">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
@@ -23,7 +23,7 @@
 		{if $prefs.feature_polls eq "y"}
 			{tab name="{tr}Polls{/tr}"}
 				<h2>{tr}Polls{/tr}</h2>
-				<fieldset class="table">
+				<fieldset>
 					<legend>{tr}Activate the feature{/tr}</legend>
 					{preference name=feature_polls visible="always"}
 				</fieldset>

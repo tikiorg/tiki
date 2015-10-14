@@ -24,12 +24,12 @@
 	{tr}To configure the directory path use UNIX like paths for example files/ or c:/foo/files or /www/files/{/tr}
 {/remarksbox}
 
-<form action="tiki-admin.php?page=fgal" method="post">
+<form class="form-horizontal" action="tiki-admin.php?page=fgal" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
-			<a role="button" class="btn btn-default btn-sm" href="tiki-list_file_gallery.php" title="{tr}List{/tr}">
+			<a role="button" class="btn btn-link" href="tiki-list_file_gallery.php" title="{tr}List{/tr}">
 				{icon name="list"} {tr}Files{/tr}
 			</a>
 			<div class="pull-right">
@@ -42,7 +42,7 @@
 		{tab name="{tr}General Settings{/tr}"}
 			<h2>{tr}General Settings{/tr}</h2>
 
-			<fieldset class="table">
+			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_file_galleries visible="always"}
 			</fieldset>
