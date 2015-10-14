@@ -1371,6 +1371,8 @@
 		"alxlit/bootstrap-chosen": ">=1.0.0",
 		"barryvdh/elfinder-builds": ">=2.1.0",
 		"blueimp/jquery-file-upload": ">=9.10.4",
+		"blueimp/javascript-load-image": ">=1.14.0",
+		"blueimp/javascript-canvas-to-blob": ">=2.2.0",
 		"bombayworks/zendframework1": ">=1.12.3",
 		"ckeditor/ckeditor": "*",
 		"ckeditor/ckeditor/skins/kama": "*",
