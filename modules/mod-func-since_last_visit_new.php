@@ -187,13 +187,17 @@ function module_since_last_visit_new($mod_reference, $params = null)
 				$perm = 'tiki_p_view';
 				break;
 
-			default:
+			default:		// note trackeritme needs more complex perms checking due to status and ownership
 				$perm = 'tiki_p_read_comments';
 				break;
 		}
 
 		if ($res['approved'] == 'n' || $res['archived'] == 'y') {
 			$visible = $userlib->user_has_perm_on_object($user, $res['object'], $res['objectType'], 'tiki_p_admin_comments');
+
+		} else if ($res['objectType'] === 'trackeritem') {
+			$item = Tracker_Item::fromId($res['object']);
+			$visible = $item->canView();
 		} else {
 			$visible = !isset($perm) || $userlib->user_has_perm_on_object($user, $res['object'], $res['objectType'], $perm);
 		}
