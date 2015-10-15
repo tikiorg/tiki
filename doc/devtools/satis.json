@@ -340,17 +340,6 @@
 		{
 			"type": "package",
 			"package": {
-				"name": "fivefilters/php-readability",
-				"version": "1.0",
-				"dist": {
-					"url": "http://sourceforge.net/projects/tikiwiki/files/vendors_abandoned/php-readability-v1.0.zip/download",
-					"type": "zip"
-				}
-			}
-		},
-		{
-			"type": "package",
-			"package": {
 				"name": "jquery/jquery",
 				"version": "2.1.3",
 				"dist": {
@@ -1384,7 +1373,6 @@
 		"cwspear/bootstrap-hover-dropdown": ">=2.0.11",
 		"dompdf/dompdf": "0.6.1",
 		"ezyang/htmlpurifier": ">=4.5.0",
-		"fivefilters/php-readability": "1.0",
 		"jcapture-applet/jcapture-applet": "dev-master",
 		"jquery/jquery": "*",
 		"jquery/jquery-min": "*",
