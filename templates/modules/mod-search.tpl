@@ -74,7 +74,7 @@
 									{icon name="search"}
 								</button>
 							</div>
-							<div class="btn-group search_mod_buttons box" style="display:none;position:absolute;right:1em;top:1em;z-index:2;white-space:nowrap;">
+							<div class="btn-group search_mod_buttons box" style="display:none;position:absolute;right:0;top:2.5em;z-index:2;white-space:nowrap;">
 						{else}
 							<div class="btn-group">
 						{/if}
