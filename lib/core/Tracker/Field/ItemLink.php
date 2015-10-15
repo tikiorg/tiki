@@ -214,11 +214,27 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			$placeholder =  tr(TikiLib::lib('object')->get_title('tracker', $this->getOption('trackerId')));
 			$status = implode(' OR ', str_split($this->getOption('status', 'opc'), 1));
 			$value = $value ? "trackeritem:$value" : null;
-			
+
+			// the labels on the select will not necessarily be the title field, so offer the object_selector the correct format string
+			$displayFieldsListArray = $this->getDisplayFieldsListArray();
+			$definition = Tracker_Definition::get($this->getOption('trackerId'));
+			if ($displayFieldsListArray) {
+				array_walk($displayFieldsListArray, function(& $field) use ($definition) {
+					$field = $definition->getField($field);
+					$field = '{tracker_field_' . $field['permName'] . '}';
+				});
+				$format = implode(' ', $displayFieldsListArray);
+			} else {
+				$field = $definition->getField($this->getOption('fieldId'));
+				$format = '{tracker_field_' . $field['permName'] . '}';
+			}
+
+
 			$template = $this->renderTemplate('trackerinput/itemlink_selector.tpl', $context, [
 				'placeholder' => $placeholder,
 				'status' => $status,
 				'selector_value' => $value,
+				'format' => $format,
 			]);
 			
 			return $template;
