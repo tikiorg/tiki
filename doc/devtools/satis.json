@@ -1069,7 +1069,7 @@
 				"name": "jquery/plugins/reflection-jquery",
 				"version": "1.1",
 				"dist": {
-					"url": "http://www.digitalia.be/file_download/14/reflection-jquery.zip",
+					"url": "http://www.digitalia.be/download/reflection-jquery.zip",
 					"type": "zip"
 				}
 			}
