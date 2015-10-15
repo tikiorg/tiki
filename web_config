@@ -32,7 +32,9 @@
     <staticContent>
     	<remove fileExtension=".woff" /> <!-- In case IIS already has this mime type -->
    		<mimeMap fileExtension=".woff" mimeType="application/x-font-woff" />
-	</staticContent>
+    	<remove fileExtension=".woff2" /> <!-- In case IIS already has this mime type -->
+   		<mimeMap fileExtension=".woff2" mimeType="application/font-woff2" />   	
+   	</staticContent>
 	<rewrite>
 		<rules>
 		<!--# $Id$ [This line is used to check that this configuration file is up to date. Do not edit this line and leave it as the first line.]-->
