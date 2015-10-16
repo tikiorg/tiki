@@ -506,6 +506,7 @@ function iconset_default()
 			'three-d' => array(
 				'id' => 'cube',
 			),
+			//thumbs-down in defaults
 			//thumbs-up in defaults
 			'title' => array(
 				'id' => 'text-width',
