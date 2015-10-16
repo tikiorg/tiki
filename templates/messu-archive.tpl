@@ -3,34 +3,31 @@
 {include file='tiki-mytiki_bar.tpl'}
 {include file='messu-nav.tpl'}
 {if $prefs.messu_archive_size gt '0'}
-<br>
-<table border='0' cellpadding='0' cellspacing='0'>
-	<tr>
-		<td>
-			<table border='0' height='20' cellpadding='0' cellspacing='0' width='200' style='background-color:#666666;'>
-				<tr>
-					<td style='background-color:red;' width='{$cellsize}'>&nbsp;</td>
-					<td>&nbsp;</td>
-				</tr>
-			</table>
-		</td>
-		<td><small>{$percentage}%</small></td>
-	</tr>
-</table>
+
+<div class="progress">
+	<div class="progress-bar" role="progressbar" aria-valuenow="{$cellsize}" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em;">
+		{$percentage}%
+	</div>
+</div>
+<div class="margin-bottom-md">
 [{$messu_archive_number} / {$prefs.messu_archive_size}] {tr}messages{/tr}. {if $messu_archive_number eq $prefs.messu_archive_size}{tr}Archive is full!{/tr}{/if}
-{/if}
-<br><br>
-<form action="messu-archive.php" method="get">
+</div>
+	{/if}
+
+<form action="messu-archive.php" method="get" class="form-inline margin-bottom-md">
+	<div class="form-group">
 	<label for="mess-mailmessages">{tr}Messages:{/tr}</label>
-	<select name="flags" id="mess-mailmessages">
+	<select name="flags" id="mess-mailmessages" class="form-control">
 		<option value="isRead_y" {if $flag eq 'isRead' and $flagval eq 'y'}selected="selected"{/if}>{tr}Read{/tr}</option>
 		<option value="isRead_n" {if $flag eq 'isRead' and $flagval eq 'n'}selected="selected"{/if}>{tr}Unread{/tr}</option>
 		<option value="isFlagged_y" {if $flag eq 'isFlagged' and $flagval eq 'y'}selected="selected"{/if}>{tr}Flagged{/tr}</option>
 		<option value="isFlagged_y" {if $flag eq 'isflagged' and $flagval eq 'n'}selected="selected"{/if}>{tr}Unflagged{/tr}</option>
 		<option value="" {if $flag eq ''}selected="selected"{/if}>{tr}All{/tr}</option>
 	</select>
+	</div>
+	<div class="form-group">
 	<label for="mess-mailprio">{tr}Priority:{/tr}</label>
-	<select name="priority" id="mess-mailprio">
+	<select name="priority" id="mess-mailprio" class="form-control">
 		<option value="" {if $priority eq ''}selected="selected"{/if}>{tr}All{/tr}</option>
 		<option value="1" {if $priority eq 1}selected="selected"{/if}>1</option>
 		<option value="2" {if $priority eq 2}selected="selected"{/if}>2</option>
@@ -38,13 +35,17 @@
 		<option value="4" {if $priority eq 4}selected="selected"{/if}>4</option>
 		<option value="5" {if $priority eq 5}selected="selected"{/if}>5</option>
 	</select>
+		</div>
+	<div class="form-group">
 	<label for="mess-mailcont">{tr}Containing:{/tr}</label>
-	<input type="text" name="find" id="mess-mailcont" value="{$find|escape}">
+	<input type="text" name="find" id="mess-mailcont" value="{$find|escape}" class="form-control">
+		</div>
 	<input type="submit" class="btn btn-default btn-sm" name="filter" value="{tr}Filter{/tr}">
 </form>
-<br>
+
 
 <form action="messu-archive.php" method="post" name="form_messu_archive">
+    <div class="form-group">
 	<input type="hidden" name="offset" value="{$offset|escape}">
 	<input type="hidden" name="find" value="{$find|escape}">
 	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
@@ -53,11 +54,12 @@
 	<input type="hidden" name="priority" value="{$priority|escape}">
 	<input type="submit" class="btn btn-warning btn-sm" name="delete" value="{tr}Delete{/tr}">
 	<input type="submit" class="btn btn-default btn-sm" name="download" value="{tr}Download{/tr}">
+        </div>
 {jq notonready=true}
 var CHECKBOX_LIST = [{{section name=user loop=$items}'msg[{$items[user].msgId}]'{if not $smarty.section.user.last},{/if}{/section}}];
 {/jq}
 	<div class="table-responsive">
-		<table class="table normal">
+		<table class="table">
 			<tr>
 				<th><input type="checkbox" name="checkall" onclick="checkbox_list_check_all('form_messu_archive',CHECKBOX_LIST,this.checked);"></th>
 				<th style="width:18px">&nbsp;</th>

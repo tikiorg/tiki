@@ -16,7 +16,7 @@
 		<h2>{tr}Quizzes{/tr}</h2>
 		{include file='find.tpl'}
 		<div class="table-responsive">
-			<table class="table normal table-striped table-hover">
+			<table class="table table-striped table-hover">
 				<tr>
 					<th>
 						{self_link _sort_arg='sort_mode' _sort_field='quizId'}{tr}ID{/tr}{/self_link}
@@ -111,10 +111,10 @@
 				<label class="col-md-2 control-label">
 					{tr}Publish Date{/tr}
 				</label>
-				<div class="col-md-4">
+				<div class="col-md-5">
 					{html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+10" field_order=$prefs.display_field_order}
 				</div>
-				<div class="col-md-1 control-label" style="text-align: center">
+				<div class="col-md-1 text-center">
 					{tr}at{/tr}
 				</div>
 				<div class="col-md-4" dir="ltr">
@@ -126,10 +126,10 @@
 				<label class="control-label col-md-2">
 					{tr}Expiration Date{/tr}
 				</label>
-				<div class="col-md-4">
+				<div class="col-md-5">
 					{html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+10" field_order=$prefs.display_field_order}
 				</div>
-				<div class="col-md-1 control-label" style="text-align: center">
+				<div class="col-md-1 text-center">
 					{tr}at{/tr}
 				</div>
 				<div class="col-md-4" dir="ltr">
@@ -186,22 +186,23 @@
 					{tr}Maximum time{/tr}
 				</label>
 				<div class="col-md-3">
-					<select class="form-control" name="timeLimit"
-						id="quiz-maxtime">{html_options values=$mins selected=$timeLimit output=$mins}</select>
-				</div>
-				<div class="col-md-1 control-label" style="text-align:left;">
-					{tr}minutes{/tr}
+					<select class="form-control" name="timeLimit" id="quiz-maxtime">
+						{html_options values=$mins selected=$timeLimit output=$mins}
+					</select>
+					<div class="help-block">
+						{tr}minutes{/tr}
+					</div>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-md-2" for="quiz-passingperct">
+				<label class="col-md-2 control-label" for="quiz-passingperct">
 					{tr}Passing Percentage{/tr}
 				</label>
 				<div class="col-md-3">
 					<input type="text" name="passingperct" id="quiz-passingperct" class="form-control" maxlength='3' value="{$passingperct}">
-				</div>
-				<div class="col-md-1 control-label" style="text-align:left;">
-					{tr}%{/tr}
+					<div class="help-block">
+						{tr}%{/tr}
+					</div>
 				</div>
 			</div>
 			<div class="text-center">

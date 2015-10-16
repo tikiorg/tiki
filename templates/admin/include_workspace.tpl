@@ -1,5 +1,5 @@
 {* $Id$ *}
-<form action="tiki-admin.php?page=workspace" method="post">
+<form class="form-horizontal" action="tiki-admin.php?page=workspace" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="row">
 		<div class="form-group col-lg-12">
@@ -17,12 +17,12 @@
 		{tab name="{tr}Workspaces{/tr}"}
 			<h2>{tr}Workspaces{/tr}</h2>
 
-			<fieldset class="table">
+			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=workspace_ui visible="always"}
 			</fieldset>
 
-			<fieldset class="table">
+			<fieldset>
 				<legend>{tr}Dependencies{/tr}</legend>
 				{preference name=namespace_enabled}
 				{preference name=namespace_separator}
@@ -32,7 +32,7 @@
 				{preference name=feature_wiki}
 			</fieldset>
 
-			<fieldset class="table">
+			<fieldset>
 				<legend>{tr}Advanced{/tr}</legend>
 				{preference name=workspace_root_category}
 			</fieldset>
@@ -56,17 +56,17 @@
 		{tab name="{tr}Areas{/tr}"}
 			<h2>{tr}Areas{/tr}</h2>
 
-			<fieldset class="table">
+			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_areas}
 			</fieldset>
 			{if isset($error)}
 				{remarksbox type="warning" title="{tr}Error{/tr}"}{$error} {tr}Nothing was updated.{/tr}{/remarksbox}
 			{/if}
-			<fieldset class="table">
+			<fieldset>
 				<legend>{tr}Areas{/tr}</legend>
 				<div class="table-responsive">
-					<table class="table normal">
+					<table class="table">
 						<tr>
 							<th>{tr}On{/tr}</th>
 							<th colspan="2">{tr}Category{/tr}</th>

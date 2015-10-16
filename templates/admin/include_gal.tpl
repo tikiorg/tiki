@@ -6,12 +6,12 @@
 {tr}You can upload images of a size of {/tr}{$max_img_upload_size|kbsize}. {tr}Alter the php.ini variables file_uploads, upload_max_filesize, post_max_size and database variables (max_allowed_packet for mysql) to change this value{/tr}.
 {/remarksbox}
 
-<fieldset class="table">
+<fieldset>
 	<legend>{tr}Activate the feature{/tr}</legend>
 	{preference name=feature_galleries visible="always"}
 </fieldset>
 
-<fieldset class="table">
+<fieldset>
 	<legend>{tr}Home Gallery{/tr}</legend>
 	<form action="tiki-admin.php?page=gal" method="post">
 		<input type="hidden" name="ticket" value="{$ticket|escape}">
@@ -20,9 +20,9 @@
 	</form>
 </fieldset>
 
-<fieldset class="table">
+<fieldset>
 	<legend>{tr}Galleries features{/tr}</legend>
-	<form action="tiki-admin.php?page=gal" method="post">
+	<form class="form-horizontal" action="tiki-admin.php?page=gal" method="post">
 		<input type="hidden" name="ticket" value="{$ticket|escape}">
 		<table class="table">
 			<tr>
@@ -175,7 +175,7 @@
 	</form>
 </fieldset>
 
-<fieldset class="table">
+<fieldset>
 	<legend>{tr}Exterminator{/tr}</legend>
 	<form action="tiki-admin.php?page=gal" method="post">
 		<input type="hidden" name="ticket" value="{$ticket|escape}">
@@ -193,7 +193,7 @@
 	</form>
 </fieldset>
 
-<fieldset class="table">
+<fieldset>
 	<legend>{tr}Mover{/tr}</legend>
 		<form action="tiki-admin.php?page=gal" method="post">
 		<input type="hidden" name="ticket" value="{$ticket|escape}">
@@ -239,7 +239,7 @@
 	</form>
 </fieldset>
 
-<fieldset class="table">
+<fieldset>
 	<legend>{tr}Gallery listing configuration{/tr}</legend>
 	<form method="post" action="tiki-admin.php?page=gal">
 		<input type="hidden" name="ticket" value="{$ticket|escape}">

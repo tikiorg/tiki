@@ -1,12 +1,12 @@
 {* $Id$ *}
 
-<div class="t_navbar btn-group form-group">
-	{button href="tiki-admingroups.php" class="btn btn-default" _text="{tr}Admin Groups{/tr}"}
-	{button href="tiki-adminusers.php" class="btn btn-default" _text="{tr}Admin Users{/tr}"}
+<div class="t_navbar margin-bottom-md">
+	{button href="tiki-admingroups.php" class="btn btn-link" _icon_name="group" _text="{tr}Admin Groups{/tr}"}
+	{button href="tiki-adminusers.php" class="btn btn-link" _icon_name="user" _text="{tr}Admin Users{/tr}"}
 	{permission_link mode=button label="{tr}Manage permissions{/tr}"}
 </div>
 
-<form action="tiki-admin.php?page=community" method="post">
+<form class="form-horizontal" action="tiki-admin.php?page=community" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">

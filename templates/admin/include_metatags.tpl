@@ -2,7 +2,7 @@
 	{tr}See also{/tr} <a class="alert-link" href="tiki-admin.php?page=sefurl">{tr}Search Engine Friendly URLs{/tr}</a>.
 {/remarksbox}
 
-<form action="tiki-admin.php?page=metatags" method="post">
+<form class="form-horizontal" action="tiki-admin.php?page=metatags" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 
 	<div class="row">

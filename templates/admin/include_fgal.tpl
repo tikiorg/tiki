@@ -24,12 +24,12 @@
 	{tr}To configure the directory path use UNIX like paths for example files/ or c:/foo/files or /www/files/{/tr}
 {/remarksbox}
 
-<form action="tiki-admin.php?page=fgal" method="post">
+<form class="form-horizontal" action="tiki-admin.php?page=fgal" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
-			<a role="button" class="btn btn-default btn-sm" href="tiki-list_file_gallery.php" title="{tr}List{/tr}">
+			<a role="button" class="btn btn-link" href="tiki-list_file_gallery.php" title="{tr}List{/tr}">
 				{icon name="list"} {tr}Files{/tr}
 			</a>
 			<div class="pull-right">
@@ -42,7 +42,7 @@
 		{tab name="{tr}General Settings{/tr}"}
 			<h2>{tr}General Settings{/tr}</h2>
 
-			<fieldset class="table">
+			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_file_galleries visible="always"}
 			</fieldset>
@@ -52,8 +52,10 @@
 			<div class="adminoptionboxchild fgal_use_db_childcontainer n">
 				{preference name='fgal_use_dir'}
 			</div>
+			<div class="col-lg-8 col-sm-offset-4 margin-bottom-md">
 			{button href="tiki-admin.php?page=fgal&amp;move=to_fs" _text="{tr}Move files from database to directory{/tr}"}
 			{button href="tiki-admin.php?page=fgal&amp;move=to_db" _text="{tr}Move files from directory to database{/tr}"}
+			</div>
 
 			{preference name='fgal_podcast_dir'}
 
@@ -245,17 +247,19 @@
 
 					<div class="adminoptionbox">
 						<div class="adminoptionlabel">
-							<table class="formcolor">
-								<tr>
-									<th>{tr}MIME Type{/tr}</th>
-									<th>{tr}System Command{/tr}</th>
-								</tr>
-
+							<table class="table table-responsive">
+								<thead>
+									<tr>
+										<th>{tr}MIME Type{/tr}</th>
+										<th>{tr}System Command{/tr}</th>
+									</tr>
+								</thead>
+								<tbody>
 								{foreach key=mime item=cmd from=$fgal_handlers}
 									<tr>
 										<td>{$mime}</td>
 										<td>
-											<input name="mimes[{$mime}]" type="text" value="{$cmd|escape:html}" size="30"/>
+											<input name="mimes[{$mime}]" class="form-control" type="text" value="{$cmd|escape:html}" />
 										</td>
 									</tr>
 								{/foreach}

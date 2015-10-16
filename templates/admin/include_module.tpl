@@ -3,13 +3,13 @@
 	<a class="alert-link" href="tiki-admin_modules.php">{tr}Admin &gt; Modules{/tr}</a> {tr}from the menu to create and edit modules{/tr}.
 {/remarksbox}
 
-<form action="tiki-admin.php?page=module" method="post">
+<form class="form-horizontal" action="tiki-admin.php?page=module" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<input type="hidden" name="modulesetup" />
 
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
-			<a role="button" class="btn btn-default btn-sm" href="tiki-admin_modules.php" title="{tr}List{/tr}">
+			<a role="button" class="btn btn-link" href="tiki-admin_modules.php" title="{tr}List{/tr}">
 				{icon name="list"} {tr}Modules{/tr}
 			</a>
 			<div class="pull-right">

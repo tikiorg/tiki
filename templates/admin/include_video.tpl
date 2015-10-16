@@ -1,4 +1,4 @@
-<form action="tiki-admin.php?page=video" method="post">
+<form class="form-horizontal" action="tiki-admin.php?page=video" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 
 	{tabset name="admin_video"}
@@ -21,27 +21,27 @@
 				</div>
 			</div>
 
-			<fieldset class="table">
+			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_kaltura visible="always"}
 			</fieldset>
 
-			<fieldset class="table">
+			<fieldset>
 				<legend>{tr}Plugin to embed in pages{/tr}</legend>
 				{preference name=wikiplugin_kaltura}
 			</fieldset>
 
-			<fieldset class="table">
+			<fieldset>
 				<legend>{tr}Enable related Tracker field types{/tr}</legend>
 				{preference name=trackerfield_kaltura}
 			</fieldset>
 
-			<fieldset class="table">
+			<fieldset>
 				<legend>{tr}Kaltura / Tiki config{/tr}</legend>
 				{preference name=kaltura_kServiceUrl}
 			</fieldset>
 
-			<fieldset class="table">
+			<fieldset>
 				<legend>{tr}Kaltura Partner Settings{/tr}</legend>
 				{preference name=kaltura_partnerId}
 				{preference name=kaltura_adminSecret}
@@ -50,7 +50,7 @@
 
 			<br>
 
-			<fieldset class="table">
+			<fieldset>
 				<legend>{tr}Kaltura Dynamic Player{/tr}</legend>
 				{preference name=kaltura_kdpUIConf}
 				{preference name=kaltura_kdpEditUIConf}
@@ -59,7 +59,7 @@
 
 			<br>
 
-			<fieldset class="table">
+			<fieldset>
 				<legend>{tr}Kaltura Contribution Wizard{/tr}</legend>
 				{$kcwText}
 				<div class="adminoptionbox">
@@ -70,7 +70,7 @@
 
 			<br>
 
-			<fieldset class="table">
+			<fieldset>
 				<legend>{tr}Legacy support{/tr}</legend>
 				{preference name=kaltura_legacyremix}
 			</fieldset>

@@ -12,17 +12,17 @@
 	</div>
 {/if}
 
-<form method="post" action="tiki-admin.php?page=articles">
+<form class="form-horizontal" method="post" action="tiki-admin.php?page=articles">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
-			<a role="button" class="btn btn-default btn-sm tips" href="tiki-list_articles.php" title=":{tr}List{/tr}">
+			<a role="button" class="btn btn-link" href="tiki-list_articles.php" title=":{tr}List{/tr}">
 				{icon name="list"} {tr}Articles{/tr}
 			</a>
-			<a role="button" class="btn btn-default btn-sm tips" href="tiki-article_types.php" title=":{tr}List{/tr}">
+			<a role="button" class="btn btn-link" href="tiki-article_types.php" title=":{tr}List{/tr}">
 				{icon name="list"} {tr}Article Types{/tr}
 			</a>
-			<a role="button" class="btn btn-default btn-sm tips" href="tiki-admin_topics.php" title=":{tr}List{/tr}">
+			<a role="button" class="btn btn-link" href="tiki-admin_topics.php" title=":{tr}List{/tr}">
 				{icon name="list"} {tr}Article Topics{/tr}
 			</a>
 			{if $prefs.feature_submissions eq "y"}
@@ -41,7 +41,7 @@
 			<h2>{tr}General Settings{/tr}</h2>
 			<input type="hidden" name="articlesprefs" />
 
-			<fieldset class="table">
+			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_articles visible="always"}
 			</fieldset>

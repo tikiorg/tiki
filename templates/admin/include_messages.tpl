@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-<form action="tiki-admin.php?page=messages" method="post" name="messages">
+<form class="form-horizontal" action="tiki-admin.php?page=messages" method="post" name="messages">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 
 	<div class="row">
@@ -11,12 +11,12 @@
 		</div>
 	</div>
 
-	<fieldset class="table">
+	<fieldset>
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_messages visible="always"}
 	</fieldset>
 
-	<fieldset class="table">
+	<fieldset>
 		<legend>{tr}Settings{/tr}</legend>
 
 		{preference name=allowmsg_by_default}

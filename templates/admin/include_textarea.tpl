@@ -2,7 +2,7 @@
 	{tr}Text area (that apply throughout many features){/tr}
 {/remarksbox}
 
-<form action="tiki-admin.php?page=textarea" method="post">
+<form class="form-horizontal" action="tiki-admin.php?page=textarea" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 
 	<div class="row">

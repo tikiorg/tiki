@@ -5,18 +5,18 @@
 	{/remarksbox}
 {/if}
 
-<form action="tiki-admin.php?page=category" method="post">
+<form class="form-horizontal" action="tiki-admin.php?page=category" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<input type="hidden" name="categorysetup" />
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
-			<a role="button" class="btn btn-default btn-sm" href="tiki-browse_categories.php" title="{tr}List{/tr}">
+			<a role="button" class="btn btn-link" href="tiki-browse_categories.php" title="{tr}List{/tr}">
 				{icon name="list"} {tr}Browse Categories{/tr}
 			</a>
-			<a role="button" class="btn btn-default btn-sm" href="tiki-admin_categories.php" title="{tr}Administration{/tr}">
+			<a role="button" class="btn btn-link" href="tiki-admin_categories.php" title="{tr}Administration{/tr}">
 				{icon name="cog"} {tr}Administer Categories{/tr}
 			</a>
-			<a role="button" class="btn btn-default btn-sm" href="tiki-edit_categories.php" title="{tr}Organize Objects{/tr}">
+			<a role="button" class="btn btn-link" href="tiki-edit_categories.php" title="{tr}Organize Objects{/tr}">
 				{icon name="sort"} {tr}Organize Objects{/tr}
 			</a>
 			<div class="pull-right">
@@ -25,7 +25,7 @@
 		</div>
 	</div>
 
-	<fieldset class="table">
+	<fieldset>
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_categories visible="always"}
 	</fieldset>

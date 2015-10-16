@@ -1,4 +1,4 @@
-<form action="tiki-admin.php?page=socialnetworks" method="post">
+<form class="form-horizontal" action="tiki-admin.php?page=socialnetworks" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 
 	<div class="row">

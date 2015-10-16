@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-<form action="tiki-admin.php?page=share" method="post">
+<form class="form-horizontal" action="tiki-admin.php?page=share" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 
 	<div class="row">
@@ -11,12 +11,12 @@
 		</div>
 	</div>
 
-	<fieldset class="table">
+	<fieldset>
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_share visible="always"}
 	</fieldset>
 
-	<fieldset class="table">
+	<fieldset>
 		<legend>{tr}Site-wide features{/tr}</legend>
 
 		<div class="admin featurelist">

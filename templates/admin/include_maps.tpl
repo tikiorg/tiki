@@ -1,4 +1,4 @@
-<form action="tiki-admin.php?page=maps" method="post" role="form">
+<form class="form-horizontal" action="tiki-admin.php?page=maps" method="post" role="form">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 
 	<div class="row">
@@ -9,7 +9,7 @@
 		</div>
 	</div>
 
-	<fieldset class="table">
+	<fieldset>
 		<legend>{tr}Settings{/tr}</legend>
 
 		{preference name=geo_tilesets}
