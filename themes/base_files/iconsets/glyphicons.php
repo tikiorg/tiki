@@ -396,6 +396,7 @@ function iconset_glyphicons()
 			'three-d' => array(
 				'id' => 'road',
 			),
+			//thumbs-down in defaults
 			//thumbs-up in defaults
 			'title' => array(
 				'id' => 'text-color',

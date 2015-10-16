@@ -680,8 +680,13 @@ function iconset_legacy()
 			'three-d' => array(
 				'id' => 'application_side_tree',
 			),
+			'thumbs-down' => array(
+				'prepend' => 'vendor/ckeditor/ckeditor/plugins/smiley/images/',
+				'id' => 'thumbs_down',
+			),
 			'thumbs-up' => array(
-				'id' => 'thumb_up',
+				'prepend' => 'vendor/ckeditor/ckeditor/plugins/smiley/images/',
+				'id' => 'thumbs_up',
 			),
 			'title' => array(
 				'id' => 'text_padding_top',

@@ -246,12 +246,17 @@ class PreferencesLib
 
 	private function getVoteIconParams( $pref, $vote, $label )
 	{
+		$iconname = [
+			'like' => 'thumbs-up',
+			'unlike' => 'thumbs-down'
+		];
 		return array(
-			'_id' => 'connect_' . $vote,
+			'name' => $iconname[$vote],
 			'title' => $label,
 			'href' => '#', 'onclick' => 'connectVote(\'' . $pref . '\', \''. $vote .'\', this);return false;',
-			'class' => 'icon connectVoter',
-			'style' => 'display:none',
+			'class' => '',
+			'iclass' => 'icon connectVoter',
+			'istyle' => 'display:none',
 		);
 	}
 
