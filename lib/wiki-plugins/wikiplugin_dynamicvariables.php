@@ -12,12 +12,15 @@ function wikiplugin_dynamicvariables_info()
 		'documentation' => 'PluginDynamicvariables',
 		'description' => tra('Show dynamic variables and their values.'),
 		'prefs' => array( 'wikiplugin_dynamicvariables' ),
-		'icon' => 'img/icons/group.png',
+		'iconname' => 'code',
+		'introduced' => 15,
 		'params' => array(
 			'layout' => array(
 				'required' => false,
 				'name' => tra('Layout'),
 				'description' => tra('Set to table to show results in a table (not shown in a table by default)'),
+				'since' => '15.0',
+				'filter' => 'alpha',
 				'default' => '',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
@@ -28,6 +31,8 @@ function wikiplugin_dynamicvariables_info()
 				'required' => false,
 				'name' => tra('Separator'),
 				'description' => tra('String to use between elements of the list if table layout is not used'),
+				'since' => '15.0',
+				'filter' => 'xss',
 				'default' => ', ',
 			),
 /*
@@ -49,10 +54,11 @@ function wikiplugin_dynamicvariables_info()
 
 function wikiplugin_dynamicvariables($data, $params)
 {
-	global $tikilib, $userlib, $prefs, $tiki_p_admin, $tiki_p_admin_users;
+	global $prefs;
+	$tikilib = TikiLib::lib('tiki');
 
-	$layout = $params['layout'];
-	$linesep = $params['linesep'];
+	$layout = isset($params['layout']) ? $params['layout'] : '';
+	$linesep = isset($params['linesep']) ? $params['linesep'] : '';
 
 	if (!isset($linesep)) {
 		$linesep='<br>';
@@ -67,21 +73,34 @@ function wikiplugin_dynamicvariables($data, $params)
 	$bindvars = array();
 
 	$pre=''; $post='';
+	$oparens = '(';
+	$cparens = ')';
 	if (isset($layout) && $layout=='table') {
-		$pre='<table class=\'sortable\' id=\''.$tikilib->now.'\'><tr><th>'.tra($tableheader).'</th></tr><tr><td>';
+		$pre='<table class=\'table table-striped table-hover\' id=\''.$tikilib->now.'\'><tr>'
+			. '<th>'.tra('Parsed result').'</th>'
+			. '<th>'.tra('Syntax').'</th>'
+			. '<th>'.tra('Value per database').'</th>'
+			. '</tr><tr><td>';
 		$linesep = '</td></tr><tr><td>';
 		$sep = '</td><td>';
 		$post='</td></tr></table>';
+		$oparens = '';
+		$cparens = '';
 	}
 
 	$query = 'SELECT * FROM `tiki_dynamic_variables` ' . $filter ; 
 
 	$result = $tikilib->query($query, $bindvars, $numRows);
 	$ret = array();
-
+	$tag = '';
+	if ($prefs['wiki_dynvar_style'] == 'single') {
+		$tag = '%';
+	} elseif ($prefs['wiki_dynvar_style'] == 'double') {
+		$tag = '%%';
+	}
 	while ($row = $result->fetchRow()) {
-		$res = '';
-		$res = '%' . $row['name'] . '% ' . $sep . ' (~np~%' . $row['name'] . '%~/np~) ' . $sep . $row['data'] ;
+		$res = $tag . $row['name'] . $tag . $sep . ' ' . $oparens . '~np~' . $tag . $row['name'] . $tag . '~/np~'
+			. $cparens . ' ' . $sep . $row['data'] ;
 		$ret[] = $res;
 	}
 
