@@ -228,7 +228,8 @@ function wikiplugin_convene($data, $params)
 	foreach ($votes as $stamp => $total) {
 		$pic = "";
 		if ($total == $votes[$topVoteStamp]) {
-			$pic .= ($perms->edit ? "<img src='img/icons/tick.png' class='icon' width='16' height='16' title='" . tr("Selected Date") . "' />" : "");
+			$pic .= ($perms->edit ? smarty_function_icon(['name' => 'ok', 'iclass' => 'tips', 'ititle' => ':'
+					. tr("Selected Date")], $smarty) : "");
 			if ($perms->edit && $votes[$topVoteStamp] >= $minvotes) {
 				$pic .= "<button class='icon btn btn-default btn-sm' onclick='document.location = $(this).find(\"a\").attr(\"href\"); return false;'><a href='tiki-calendar_edit_item.php?todate=$stamp&calendarId=$calendarid' title='"
 					. tr("Add as Calendar Event")
@@ -480,7 +481,7 @@ FORM;
 					.removeClass('ui-state-default')
 					.addClass('ui-state-highlight');
 
-				$(this).find('img').attr('src', 'img/icons/accept.png');
+				$(this).find('span.icon-ok');
 				var parent = $(this).parent().parent();
 				parent.find('.vote').hide();
 				parent.find('input').each(function() {
