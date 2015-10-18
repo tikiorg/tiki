@@ -170,12 +170,13 @@ EOF;
 		. '">' . $fileInfo['data'] . '</div>';
 
 		if ($globalperms->upload_files == 'y') {
+			$smarty->loadPlugin('smarty_function_icon');
+			$editicon = smarty_function_icon(['name' => 'edit'], $smarty);
 			$ret .= "<a href='tiki-edit_draw.php?fileId=$id&page=$page&index=$drawIndex&label=$label" .
 				(isset($width) ? "&width=$width" : "") . (isset($height) ? "&height=$height" : "") .
 				"' onclick='return $(this).ajaxEditDraw();'  title='Edit: ".$fileInfo['filename'].
-				"' data-fileid='".$fileInfo['fileId']."' data-galleryid='".$fileInfo['galleryId']."'>
-					<img src='img/icons/page_edit.png' alt='$label' width='16' height='16' title='$label' class='icon'/>
-				</a>";
+				"' data-fileid='".$fileInfo['fileId']."' data-galleryid='".$fileInfo['galleryId']."'>" .
+				$editicon . "</a>";
 		}
 
 
