@@ -160,6 +160,7 @@
 				{preference name=feature_jquery_reflection}
 				{preference name=feature_jquery_superfish}
 				{preference name=feature_jquery_tooltips}
+				{preference name=feature_jquery_tagcanvas}
 				{preference name=feature_jquery_ui_theme}
 				{preference name=feature_jquery_ui}
 				{preference name=feature_jquery_validation}
@@ -168,7 +169,7 @@
 				{preference name=jquery_fitvidjs}
 				<div class="adminoptionboxchild">
 					<fieldset>
-						<legend> {tr}Experimental:{/tr} {icon name='bug'}</legend>
+						<legend>{tr}Experimental{/tr}</legend>
 						{preference name=feature_jquery_carousel}
 						{preference name=feature_jquery_tablesorter}
 					</fieldset>

@@ -501,6 +501,11 @@ if ( $prefs['feature_jquery_tablesorter'] == 'y' ) {
 	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-columnSelector.js');
 	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/parsers/parser-input-select.js');
 }
+
+if ( $prefs['feature_jquery_tagcanvas'] == 'y' ) {
+	$headerlib->add_jsfile('vendor/jquery/plugins/tagcanvas/jquery.tagcanvas.js');
+}
+
 if ( $prefs['feature_shadowbox'] == 'y' ) {
 	$headerlib->add_jsfile('vendor/jquery/plugins/colorbox/jquery.colorbox.js');
 	$headerlib->add_cssfile('vendor/jquery/plugins/colorbox/' . $prefs['jquery_colorbox_theme'] . '/colorbox.css');

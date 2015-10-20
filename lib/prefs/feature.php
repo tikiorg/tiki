@@ -2001,6 +2001,14 @@ function prefs_feature_list($partial = false)
 			'help' => 'PluginMediaPlayer',
 			'default' => 'n',
 		),
+		'feature_jquery_tagcanvas' => array(
+			'name' => tra('TagCanvas'),
+            'description' => tra('TagCanvas is a Javascript class which will draw and animate a HTML5 canvas based tag cloud'),
+			'type' => 'flag',
+			'help' => 'TagCanvas',
+			'default' => 'y',
+			'tags' => array('basic'),
+		),
 		'feature_jquery_zoom' => array(
 			'name' => tra('jQuery Zoom'),
             'description' => tra('Provides the capability to zoom in images on mouseover or mousedown. Used inside the Plugin Img with the parameter thumb=zoombox'),
