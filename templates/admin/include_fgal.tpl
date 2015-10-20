@@ -248,7 +248,7 @@
 					{/if}
 
 					<div class="adminoptionbox">
-						<div class="adminoptionlabel"></br>
+						<div class="adminoptionlabel">
 							<table class="table table-responsive">
 								<thead>
 									<tr>

@@ -129,7 +129,7 @@
 </form>
 
 
-<fieldset class="table">
+<fieldset>
 	<legend>{tr}Tracker attachments{/tr}</legend>
 	<div class="table">
 		{if $attachements}

@@ -11,12 +11,12 @@
 		</div>
 	</div>
 
-	<fieldset class="table">
+	<fieldset>
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_messages visible="always"}
 	</fieldset>
 
-	<fieldset class="table">
+	<fieldset>
 		<legend>{tr}Settings{/tr}</legend>
 
 		{preference name=allowmsg_by_default}

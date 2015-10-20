@@ -1,7 +1,7 @@
 <form class="form-horizontal" action="tiki-admin.php?page=freetags" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="t_navbar margin-bottom-md">
-		<a role="button" class="btn btn-default btn-sm" href="tiki-browse_freetags.php" title="{tr}Browse Tags{/tr}">
+		<a role="button" class="btn btn-link" href="tiki-browse_freetags.php" title="{tr}List{/tr}">
 			{icon name="list"} {tr}Browse Tags{/tr}
 		</a>
 		{if $prefs.freetags_multilingual eq 'y'}
@@ -15,7 +15,6 @@
 		<div class="pull-right">
 			<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 		</div>
-	</div>
 
 	{tabset name="admin_freetags"}
 		{tab name="{tr}General Settings{/tr}"}
