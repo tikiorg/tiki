@@ -5,17 +5,17 @@
 			{icon name="list"} {tr}Browse Tags{/tr}
 		</a>
 		{if $prefs.freetags_multilingual eq 'y'}
-			<a role="button" class="btn btn-default btn-sm" href="tiki-freetag_translate.php" title="{tr}Translate Tags{/tr}">
+			<a role="button" class="btn btn-link" href="tiki-freetag_translate.php" title="{tr}Translate Tags{/tr}">
 				{icon name="language"} {tr}Translate Tags{/tr}
 			</a>
 		{/if}
-		<button type="submit" class="btn btn-default btn-sm" name="cleanup" />
+		<button type="submit" class="btn btn-link" name="cleanup" />
 			{icon name="trash"} {tr}Cleanup unused tags{/tr}
 		</button>
 		<div class="pull-right">
 			<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 		</div>
-
+	</div>
 	{tabset name="admin_freetags"}
 		{tab name="{tr}General Settings{/tr}"}
 			<h2>{tr}General Settings{/tr}</h2>
