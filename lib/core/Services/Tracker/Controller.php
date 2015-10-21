@@ -1074,8 +1074,8 @@ class Services_Tracker_Controller
 
 			$tx = TikiDb::get()->begin();
 
+			$itemData = $itemObject->getData();
 			foreach ($definition->getFields() as $field) {
-				$itemData = $itemObject->getData();
 				$handler = $definition->getFieldFactory()->getHandler($field, $itemData);
 				if (method_exists($handler, 'handleDelete')) {
 					$handler->handleDelete();
