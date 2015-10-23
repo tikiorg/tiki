@@ -726,10 +726,10 @@
 			"type": "package",
 			"package": {
 				"name": "rangy/rangy",
-				"version": "1.2.3",
+				"version": "1.3.0",
 				"dist": {
-					"url": "http://rangy.googlecode.com/files/rangy-1.2.3.tar.gz",
-					"type": "tar"
+					"url": "https://github.com/timdown/rangy/releases/download/1.3.0/rangy-1.3.0.zip",
+					"type": "zip"
 				}
 			}
 		},
@@ -1334,10 +1334,33 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "medium.js/medium.js",
+				"type": "component",
+				"version": "1.0.1",
+				"dist": {
+					"url": "https://github.com/jakiestfu/Medium.js/archive/1.0.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "jquery/jquery-s5",
 				"version": "1.0.1",
 				"dist": {
 					"url": "https://github.com/robertleeplummerjr/jQuery.s5/archive/1.0.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "undojs/undojs",
+				"version": "0.0.1",
+				"dist": {
+					"url": "https://github.com/koogle/undojs/archive/master.zip",
 					"type": "zip"
 				}
 			}
@@ -1413,13 +1436,14 @@
 		"jquery/plugins/sparkline": "2.1.1",
 		"jquery/plugins/zoom": "*",
 		"mbostock/d3": ">=3.5.6",
+		"mediumjs/mediumjs": "1.0.1",
 		"morteza/bootstrap-rtl": ">=3.3.2",
 		"openlayers/ol3": ">=3.6.0",
 		"phpcas/phpcas": ">=1.3.2",
 		"phpseclib/phpseclib": ">=0.3.1",
 		"player/flv": "1.0",
 		"player/mp3": "1.0",
-		"rangy/rangy": "1.2.3",
+		"rangy/rangy": "1.3.0",
 		"Sam152/Javascript-Equal-Height-Responsive-Rows" : "1.0.0",
 		"simile_timeline/simile_timeline": "2.3.0",
 		"smarty/smarty": ">=3.1.14",
@@ -1428,6 +1452,7 @@
 		"symfony/dependency-injection": ">=2.4.3",
 		"symfony/config": ">=2.4.3",
 		"tijsverkoyen/css-to-inline-styles": "1.2.1",
+		"undojs/undojs": ">=0.0.1",
 		"zetacomponents/base": "1.8"
 	},
 	"archive": {
