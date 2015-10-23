@@ -24,7 +24,6 @@
 		"cwspear/bootstrap-hover-dropdown": "2.1.3",
 		"dompdf/dompdf": "0.6.1",
 		"ezyang/htmlpurifier": "4.6.0",
-		"fivefilters/php-readability": "1.0",
 		"jcapture-applet/jcapture-applet": "dev-master",
 		"jquery/jquery": "1.11.2",
 		"jquery/jquery-min": "1.11.2",
