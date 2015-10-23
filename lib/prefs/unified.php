@@ -265,6 +265,15 @@ function prefs_unified_list()
 			'separator' => ',',
 			'hint' => tr('MySQL Full Text Search has its own list of stop words configured in the server.'),
 		),
+		'unified_trim_sorted_search' => array(
+			'name' => tra('Automatically Trim ElasticSearch results on Date-Sorted Query'),
+			'description' => tra('Automatically trim Elastic Search results in unified search if the query is sorted by modification or creation date.'),
+			'type' => 'flag',
+			'default' => 'n',
+			'dependencies' => array(
+				'feature_search',
+			),
+		),
 	);
 }
 

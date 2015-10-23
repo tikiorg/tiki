@@ -65,5 +65,16 @@ class Search_Expr_And implements Search_Expr_Interface
 	{
 		return call_user_func($callback, $callback, $this, $this->parts);
 	}
+
+	/**
+	 * Returns a serialized string of the parts of the query. Used for caching since
+	 * the query parts will need to be hashed.
+	 *
+	 * @return string
+	 */
+	function getSerializedParts()
+	{
+		return serialize($this->parts);
+	}
 }
 

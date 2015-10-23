@@ -203,6 +203,27 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 
 	function find(Search_Query_Interface $query, $resultStart, $resultCount)
 	{
+		global $prefs;
+		/**
+		 * Sorted search size adjustment (part 1) - This is used to trim large data sets that need
+		 * to be sorted by date. Sorting can take a very long time on these data sets and the data
+		 * past a certain number of results are not generally useful.
+		 *
+		 * This checks to see if a particular query is cached if we are trying to sort by modification date.
+		 * If cached, set a time range filter to minimize results.
+		 */
+		$soField = $query->getSortOrder()->getField();
+		if ($prefs['unified_trim_sorted_search'] == 'y') {
+			$cacheLib = TikiLib::lib("cache");
+			$cacheKey = ($query->getExpr()->getSerializedParts());
+			// if the sort order is modified or creation date, and there is a trim query cache item,
+			// fetch the period filter that it should be filtering by (set in part 2, below) and add it to the search
+			if (($soField == "modification_date" || $soField="creation_date") && $periodFilter = $cacheLib->getCached($cacheKey,"esquery")) {
+				$query->filterRange(strtotime("-".$periodFilter." days"),time(),$soField);
+			}
+		}
+		/**End of Sorted Search size adjustment (part 1)*/
+
 		$builder = new Search_Elastic_OrderBuilder;
 		$orderPart = $builder->build($query->getSortOrder());
 
@@ -266,6 +287,31 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 
 		$result = $this->connection->search($indices, $fullQuery);
 		$hits = $result->hits;
+
+		/**
+		 * Sorted Search size adjustment (part 2) - Checks to see if the number of results returned
+		 * are more than 500. If they are, set an approximate period filter to get to 500 results next
+		 * time that query is run.
+		 */
+		if ($prefs['unified_trim_sorted_search'] == 'y') {
+			if ($hits->total >= 500) {
+				if (empty($periodFilter)) {
+					//set the default filter to ~6 months if no filter was previosuly set
+					$periodFilter = 180;
+				} else {
+					// estimate the filter required to get 500 results
+					$periodFilter = round(500/$hits->total * $periodFilter);
+				}
+				$cacheLib->cacheItem($cacheKey,(string) $periodFilter,"esquery");
+			}
+			// if total hits was less than 300 and a period filter had been set, increase the period filter
+			// for the next search
+			if ($hits->total < 300 && !empty($periodFilter)) {
+				$periodFilter = round(300/$hits->total * $periodFilter);
+				$cacheLib->cacheItem($cacheKey,(string) $periodFilter,"esquery");
+			}
+		}
+		/** End Sorted Search size adjustment (part 2) */
 
 		$indicesMap = array_combine($indices, $indices);
 
