@@ -304,6 +304,7 @@ class CategLib extends ObjectLib
 	// Returns the object's OID, or FALSE if the object type is not handled and $checkHandled is FALSE.
 	function add_categorized_object($type, $itemId, $description = NULL, $name = NULL, $href = NULL, $checkHandled = FALSE)
 	{
+		global $prefs;
 		$id = $this->add_object($type, $itemId, $checkHandled, $description, $name, $href);
 		if ($id === FALSE) {
 			return FALSE;
@@ -314,7 +315,9 @@ class CategLib extends ObjectLib
 			$this->query($query, array($id));
 
 			$cachelib = TikiLib::lib('cache');
-			$cachelib->empty_type_cache('allcategs');
+			if ($prefs['categories_cache_refresh_on_object_cat'] != "n") {
+				$cachelib->empty_type_cache("allcategs");
+			}
 			$cachelib->empty_type_cache('fgals_perms');
 		}
 		return $id;
@@ -356,7 +359,9 @@ class CategLib extends ObjectLib
 		$query = "insert into `tiki_category_objects`(`catObjectId`,`categId`) values(?,?)";
 		$result = $this->query($query, array((int) $catObjectId,(int) $categId));
 
-		TikiLib::lib('cache')->empty_type_cache("allcategs");
+		if ($prefs['categories_cache_refresh_on_object_cat'] != "n") {
+			$cachelib->empty_type_cache("allcategs");
+		}
 		$info = TikiLib::lib('object')->get_object_via_objectid($catObjectId);
 		if ($prefs['feature_actionlog'] == 'y') {
 			$logslib = TikiLib::lib('logs');
@@ -372,7 +377,9 @@ class CategLib extends ObjectLib
 		$query = "delete from `tiki_category_objects` where `catObjectId`=? and `categId`=?";
 		$result = $this->query($query, array((int) $catObjectId,(int) $categId), -1, -1, false);
 
-		TikiLib::lib('cache')->empty_type_cache("allcategs");
+		if ($prefs['categories_cache_refresh_on_object_cat'] != "n") {
+			$cachelib->empty_type_cache("allcategs");
+		}
 		$info = TikiLib::lib('object')->get_object_via_objectid($catObjectId);
 		if ($prefs['feature_actionlog'] == 'y') {
 			$logslib = TikiLib::lib('logs');
@@ -752,6 +759,7 @@ class CategLib extends ObjectLib
 	// Removes the object with the given identifer from the categories specified in the $categIds array. The array contains category identifiers.
 	function remove_object_from_categories($catObjectId, $categIds)
 	{
+		global $prefs;
 		if (!empty($categIds)) {
 			$cachelib = TikiLib::lib('cache');
 			$query = "delete from `tiki_category_objects` where `catObjectId`=? and `categId` in (".implode(',', array_fill(0, count($categIds), '?')).")";
@@ -762,7 +770,9 @@ class CategLib extends ObjectLib
 				$query = "delete from `tiki_categorized_objects` where `catObjectId`=?";
 				$result = $this->query($query, array((int) $catObjectId));
 			}
-			$cachelib->empty_type_cache('allcategs');
+			if ($prefs['categories_cache_refresh_on_object_cat'] != "n") {
+				$cachelib->empty_type_cache("allcategs");
+			}
 			$cachelib->empty_type_cache('fgals_perms');
 		}
 	}
@@ -1064,6 +1074,7 @@ class CategLib extends ObjectLib
 	// Moved from tikilib.php
 	function uncategorize_object($type, $id)
 	{
+		global $prefs;
 		$query = "select `catObjectId` from `tiki_categorized_objects` c, `tiki_objects` o where o.`objectId`=c.`catObjectId` and o.`type`=? and o.`itemId`=?";
 		$catObjectId = $this->getOne($query, array((string) $type,(string) $id));
 
@@ -1074,8 +1085,10 @@ class CategLib extends ObjectLib
 
 		    // Refresh categories
 		    $cachelib = TikiLib::lib('cache');
-		    $cachelib->empty_type_cache('allcategs');
-        	$cachelib->empty_type_cache('fgals_perms');
+			if ($prefs['categories_cache_refresh_on_object_cat'] != "n") {
+				$cachelib->empty_type_cache("allcategs");
+			}
+			$cachelib->empty_type_cache('fgals_perms');
 		}
 	}
 
