@@ -57,10 +57,12 @@ class Table_Plugin
 				'required' => false,
 				'name' => tra('Overall Sort Settings'),
 				'description' => tr(
-					'Enter %0y%1 to allow sorting and %0n%1 to disallow (n is the default). Enter %0type:save%1
-					to allow sorts to be saved between page refreshes. Enter %0type:%2reset%3;text:*****%1 to allow sorting
-					and show an unsort button with custom text. Enter %0type:%2savereset%3;text:buttontext%1 to allow the
-					same for saved sorts.', '<code>', '</code>', '<strong>', '</strong>'
+					'Serves as the overall switch for turning jQuery Tablesorter on (also for filtering) as well as
+					overall sort settings. Enter %0y%1 to allow sorting and %0n%1 to disallow (n is the default).
+					Enter %0type:save%1 to allow sorts to be saved between page refreshes.
+					Enter %0type:%2reset%3;text:*****%1 to allow sorting and show an unsort button with
+					custom text. Enter %0type:%2savereset%3;text:buttontext%1 to allow the same for saved sorts.',
+					'<code>', '</code>', '<strong>', '</strong>'
 				),
 				'since' => '12.0',
 				'doctype' => 'tablesorter',
@@ -323,6 +325,9 @@ class Table_Plugin
 		}
 
 		//tspaginate
+		if (empty($tspaginate)) {
+			$tspaginate = $server === 'y' ? 'y' : '';
+		}
 		if (!empty($tspaginate)) {
 			$tsp = $this->parseParam($tspaginate);
 			//pagination must be on if server side processing is on ($server == 'y')
