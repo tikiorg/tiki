@@ -1094,10 +1094,10 @@ function wikiplugin_trackerlist($data, $params)
 			}
 		}
 		/*** tablesorter ***/
-		//note whether tablesorter will be used
+		//note whether ajax is needed
 		$tsServer = isset($params['server']) && $params['server'] === 'y' ? true : false;
 
-		$tsOn	= (Table_Check::isEnabled(true) || $tsServer === false) && isset($sortable) && $sortable !== 'n' ? true : false;
+		$tsOn	= isset($sortable) && $sortable === 'y' && Table_Check::isEnabled($tsServer);
 		$smarty->assign('tsOn', $tsOn);
 
 		//note whether this is the initial tablesorter ajax call or a subsequent ajax call
