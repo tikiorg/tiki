@@ -14,41 +14,22 @@
 		}
 	{/jq}
 	{if $prefs.generate_password eq 'y'}
-		{if $userTrackerData}
-			{jq}
-				$("#genPass span").click(function () {
-					genPass('genepass','pass1','pass2');
-					runPassword(document.editItemForm{{$trackerEditFormId}}.genepass.value, 'mypassword');
-					checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');
-					$('#pass1, #pass2').val('');
-					$('#mypassword_text, #mypassword2_text').hide();
-					$("#genepass").show();
-				});
 
-				$("#pass1, #pass2").change(function () {
-					$('#mypassword_text, #mypassword2_text').show();
-					document.editItemForm{{$trackerEditFormId}}.genepass.value='';
-					$("#genepass").hide();
-				});
-			{/jq}
-		{else}
-			{jq}
-				$("#genPass span").click(function () {
-					genPass('genepass','pass1','pass2');
-					runPassword(document.RegForm.genepass.value, 'mypassword');
-					checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');
-					$('#pass1, #pass2').val('');
-					$('#mypassword_text, #mypassword2_text').hide();
-					$("#genepass").show();
-				});
+		{jq}
+			$("#genPass").click(function () {
+				genPass('genepass');
+				$('#mypassword_text, #mypassword2_text, #mypassword_bar').hide();
+				$('#genepass').show();
+				return false;
+			});
 
-				$("#pass1, #pass2").change(function () {
-					$('#mypassword_text, #mypassword2_text').show();
-					document.RegForm.genepass.value='';
-					$("#genepass").hide();
-				});
-			{/jq}
-		{/if}
+			$("#pass1, #pass2").change(function () {
+				$('#mypassword_text, #mypassword2_text, #mypassword_bar').show();
+				$("#genepass").val('');
+				$("#genepass").hide();
+				return false;
+			});
+		{/jq}
 	{/if}
 
 	{if $openid_associate neq 'n'}
@@ -64,8 +45,8 @@
 				<form action="tiki-register.php{if !empty($prefs.registerKey)}?key={$prefs.registerKey|escape:'url'}{/if}" class="form-horizontal" method="post" name="RegForm">
 					{if $smarty.request.invite}<input type='hidden' name='invite' value='{$smarty.request.invite|escape}'>{/if}
 						{include file="register-form.tpl"}
-						{if $merged_prefs.feature_antibot eq 'y'}{include file='antibot.tpl' td_style='formcolor'}{/if}
-						<div class="form-group text-center">
+						{if $merged_prefs.feature_antibot eq 'y'}{include file='antibot.tpl' td_style='formcolor' form='register'}{/if}
+						<div class="form-group col-sm-9 col-sm-offset-3 text-center">
 							<button class="btn btn-primary registerSubmit submit" name="register" type="submit">{tr}Register{/tr} <!--i class="fa fa-check"></i--></button>
 						</div>
 				</form>
