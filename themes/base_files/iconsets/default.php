@@ -212,6 +212,7 @@ function iconset_default()
 			'check' => array(
 				'id' => 'check-square-o',
 			),
+			//code in defaults
 			'code_file' => array(
 				'id' => 'file-code-o',
 			),
@@ -295,6 +296,7 @@ function iconset_default()
 			'fullscreen' => array(
 				'id' => 'arrows-alt',
 			),
+			//group in defaults
 			'h1' => array(
 				'id' => 'header',
 			),

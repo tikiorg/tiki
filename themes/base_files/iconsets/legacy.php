@@ -394,6 +394,7 @@ function iconset_legacy()
 				'id' => 'application_get',
 			),
 			//google in defaults
+			//group in defaults
 			'h1' => array(
 				'id' => 'text_heading_1',
 			),

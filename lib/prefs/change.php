@@ -17,13 +17,14 @@ function prefs_change_list()
 		),
 		'change_theme' => array(
 			'name' => tra('Users can change theme'),
-            'description' => tra(''),
+			'description' => tra(''),
+			'warning' => tra('Users can override the theme with this setting.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'change_password' => array(
 			'name' => tra('Users can change their password'),
-            'description' => tra(''),
+			'description' => tra('Allow users to change their own login password'),
 			'type' => 'flag',
 			'help' => 'User+Preferences',
 			'default' => 'y',
