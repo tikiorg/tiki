@@ -50,7 +50,7 @@
 					{preference name=useRegisterPasscode}
 					<div class="adminoptionboxchild" id="useRegisterPasscode_childcontainer">
 						{preference name=registerPasscode}
-						<div class="form-group col-sm-8 col-sm-offset-4">
+						<div class="col-sm-8 col-sm-offset-4">
 							<span id="genPass">
 								{button href="#" _onclick="" _text="{tr}Generate a passcode{/tr}"}
 							</span>
