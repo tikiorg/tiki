@@ -2,7 +2,9 @@
 {title help="comments" admpage="comments"}{$title}{/title}
 
 {if $comments or ($find ne '') or count($show_types) gt 0 or isset($smarty.request.findfilter_approved)}
-	{include file='find.tpl' types=$show_types find_type=$selected_types types_tag='checkbox' filters=$filters filter_names=$filter_names filter_values=$filter_values}
+	<div class="col-md-6">
+		{include file='find.tpl' types=$show_types find_type=$selected_types types_tag='checkbox' filters=$filters filter_names=$filter_names filter_values=$filter_values}
+	</div>
 {/if}
 
 {if $comments}
@@ -54,7 +56,7 @@
 		{capture name=over_actions}
 			{strip}
 				{$libeg}<a href="{$comments[ix].href}">
-					{icon name='view' _menu_text='y' _menu_icon='y' alt="{tr}Display{/tr}"}
+					{icon name='view' _menu_text='y' _menu_icon='y'}
 				</a>{$liend}
 				{$libeg}<a href="{$comments[ix].href|cat:"&amp;comments_threadId=$id&amp;edit_reply=1#form"}">
 					{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
