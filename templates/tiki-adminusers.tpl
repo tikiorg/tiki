@@ -352,7 +352,6 @@
 					</div>
 					{if $users}
 						<div class="input-group col-sm-6">
-							<label for="user_action" class="control-label sr-only">{tr}Select action to perform with checked{/tr}</label>
 							<select class="form-control" name="action">
 								<option value="no_action" selected="selected">
 									{tr}Select action to perform with checked{/tr}...
