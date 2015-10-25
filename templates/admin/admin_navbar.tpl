@@ -159,9 +159,17 @@
 {* show an alert if the CSRF ticket has timed out - hard coded to 15 minutes in lib/tikiticketlib.php->key_check *}
 {jq}setTimeout(function () {
 	$("form", "#col1").mouseup(function() {
-		if (confirm("{tr}The security ticket has timed out and this page needs to be reloaded before you can make any changes, click OK to reload{/tr}")) {
-			location.href = location.href;
-		}
+	var target = $('.modal.fade:not(.in)').first();
+	$.post('tiki-utilities-security', {
+		modal: '1',
+		ajaxheading: 'Security ticket timed out',
+		ajaxmsg: 'The security ticket for this page has timed out. Please reload the page to make any changes.',
+		ajaxtype: 'error',
+		ajaxaction: location.href
+		}, function (data) {
+			$('.modal-content', target).html(data);
+			target.modal();
+		});
 	});
 }, 1000 * 60 * 15);
 {/jq}

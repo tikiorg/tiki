@@ -26,6 +26,16 @@ class Services_Utilities_Controller
 		return $this->alert($input);
 	}
 
+	function action_security($input)
+	{
+		return [
+			'ajaxtype' => $input->ajaxtype->word(),
+			'ajaxheading' => $input->ajaxheading->text(),
+			'ajaxmsg' => $input->ajaxmsg->text(),
+			'ajaxaction' => $input->ajaxaction->url(),
+		];
+	}
+
 	private function alert($input)
 	{
 		$items = json_decode($input->offsetGet('ajaxitems'));
