@@ -51,13 +51,13 @@
 				{if $prefs.feature_jquery_ui eq 'y'}
 					{preference name=feature_jquery_ui_theme}
 				{/if}
-
-				{if $prefs.change_theme eq 'y' and ($user_prefs.theme neq '' and $prefs.site_style neq $user_prefs.theme) or ($prefs.style neq '' and $prefs.site_style neq $prefs.style)}
-					{remarksbox type="warning" title="{tr}Admin{/tr}"}{tr}The "users can change theme" feature will override the theme displayed.{/tr}{/remarksbox}
-				{/if}
-
 				{if $prefs.themegenerator_feature eq 'y' and $prefs.site_style != $a_style}
-					{remarksbox type="note" title="{tr}Note{/tr}"}{tr}Theme not saved yet - click "Apply"{/tr}{/remarksbox}
+					<div class="form-group">
+						<label class="col-md-4 control-label"></label>
+						<div class="col-md-8">
+							{remarksbox type="note" title="{tr}Note{/tr}"}{tr}Theme not saved yet - click "Apply"{/tr}{/remarksbox}
+						</div>
+					</div>
 				{/if}
 			</div>
 
