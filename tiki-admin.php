@@ -214,7 +214,8 @@ if ( isset( $_REQUEST['lm_preference'] ) ) {
 			$access->redirect($_SERVER['REQUEST_URI'], '', 200);
 		}
 	} else {
-		$smarty->assign('csrferror', tra('Bad request - potential cross-site request forgery (CSRF) detected. Operation blocked'));
+		$smarty->assign('csrferror',
+			tr('Bad request - potential cross-site request forgery (CSRF) detected. Operation blocked. The security ticket may have expired - try reloading the page in this case.'));
 	}
 }
 

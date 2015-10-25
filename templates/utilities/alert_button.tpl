@@ -3,10 +3,9 @@
 	<br>
 {/block}
 {block name="content"}
-	{remarksbox type="{$ajaxtype}" close="n" title="{$ajaxheading}"}{/remarksbox}
-	{tr}{$ajaxmsg|escape}{/tr}
+	{include file="utilities/alert.tpl"}
 {/block}
 {block name="buttons"}
 	<button type="button" class="btn btn-default btn-dismiss" data-dismiss="modal">{tr}Close{/tr}</button>
-	<a href="{$ajaxaction}" class="btn btn-primary">{tr}Reload{/tr}</a>
+	<a href="{$ajaxhref}" class="btn btn-primary">{$ajaxbuttonname}</a>
 {/block}

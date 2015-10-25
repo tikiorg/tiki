@@ -26,14 +26,12 @@ class Services_Utilities_Controller
 		return $this->alert($input);
 	}
 
-	function action_security($input)
+	function action_alert_button($input)
 	{
-		return [
-			'ajaxtype' => $input->ajaxtype->word(),
-			'ajaxheading' => $input->ajaxheading->text(),
-			'ajaxmsg' => $input->ajaxmsg->text(),
-			'ajaxaction' => $input->ajaxaction->url(),
-		];
+		$alert = $this->alert($input);
+		$alert['ajaxhref'] = $input->ajaxhref->url();
+		$alert['ajaxbuttonname'] = $input->ajaxbuttonname->text();
+		return $alert;
 	}
 
 	private function alert($input)

@@ -157,15 +157,20 @@
 	{/remarksbox}
 {/if}
 {* show an alert if the CSRF ticket has timed out - hard coded to 15 minutes in lib/tikiticketlib.php->key_check *}
+{$ajaxmsg = "{tr}The security ticket for this page has timed out. Please reload the page to make any changes.{/tr}"}
+{$ajaxheading = "{tr}Security ticket timed out{/tr}"}
+{$ajaxbuttonname = "{tr}Reload{/tr}"}
 {jq}setTimeout(function () {
 	$("form", "#col1").mouseup(function() {
 	var target = $('.modal.fade:not(.in)').first();
-	$.post('tiki-utilities-security', {
+	$.post('tiki-utilities-alert_button', {
 		modal: '1',
-		ajaxheading: 'Security ticket timed out',
-		ajaxmsg: 'The security ticket for this page has timed out. Please reload the page to make any changes.',
+		ajaxheading: '{{$ajaxheading}}',
+		ajaxmsg: '{{$ajaxmsg}}',
+		ajaxbuttonname: '{{$ajaxbuttonname}}',
 		ajaxtype: 'error',
-		ajaxaction: location.href
+		ajaxhref: location.href,
+		ajaxdismissible: 'n'
 		}, function (data) {
 			$('.modal-content', target).html(data);
 			target.modal();
