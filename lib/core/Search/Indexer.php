@@ -10,6 +10,7 @@ class Search_Indexer
 	private $searchIndex;
 	private $contentSources = array();
 	private $globalSources = array();
+	private $addonSources = array();
 
 	private $cacheGlobals = null;
 	private $cacheTypes = array();
@@ -27,6 +28,9 @@ class Search_Indexer
 		$this->log = new Zend_Log($logWriter);
 
 		$this->searchIndex = $searchIndex;
+
+		$api = new TikiAddons_Api_Search();
+		$this->addonSources = $api->getAddonSources();
 	}
 
 	public function addContentSource($objectType, Search_ContentSource_Interface $contentSource)
@@ -135,6 +139,15 @@ class Search_Indexer
 
 			if (false !== $local) {
 				$data = array_merge($data, $local);
+			}
+		}
+		foreach ($this->addonSources as $addonSource) {
+			if ($addonSource->toIndex($objectType, $objectId, $initialData)) {
+				$local = $addonSource->getData($objectType, $objectId, $typeFactory, $initialData);
+
+				if (false !== $local) {
+					$data = array_merge($data, $local);
+				}
 			}
 		}
 

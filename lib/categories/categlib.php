@@ -359,6 +359,7 @@ class CategLib extends ObjectLib
 		$query = "insert into `tiki_category_objects`(`catObjectId`,`categId`) values(?,?)";
 		$result = $this->query($query, array((int) $catObjectId,(int) $categId));
 
+		$cachelib = TikiLib::lib('cache');
 		if ($prefs['categories_cache_refresh_on_object_cat'] != "n") {
 			$cachelib->empty_type_cache("allcategs");
 		}
@@ -377,6 +378,7 @@ class CategLib extends ObjectLib
 		$query = "delete from `tiki_category_objects` where `catObjectId`=? and `categId`=?";
 		$result = $this->query($query, array((int) $catObjectId,(int) $categId), -1, -1, false);
 
+		$cachelib = TikiLib::lib('cache');
 		if ($prefs['categories_cache_refresh_on_object_cat'] != "n") {
 			$cachelib->empty_type_cache("allcategs");
 		}
