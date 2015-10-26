@@ -33,6 +33,26 @@ class Tracker_Field_Computed extends Tracker_Field_Abstract
 						'legacy_index' => 0,
 						'profile_reference' => array(__CLASS__, 'profileReference'),
 					),
+					'decimals' => array(
+						'name' => tr('Decimal Places'),
+						'description' => tr('Amount of decimals to preserve before rounding.'),
+						'filter' => 'int',
+						'legacy_index' => 1,
+					),
+					'dec_point' => array(
+						'name' => tr('Decimal separator when displaying data'),
+						'description' => tr('Single character. Use c for comma, d for dot or s for space. The valid decimal separator when inserting numbers may depend on site language and web browser. See documentation for more details.'),
+						'filter' => 'text',
+						'default' => '.',
+						'legacy_index' => 2,
+					),
+					'thousands' => array(
+						'name' => tr('Thousand separator when displaying data'),
+						'description' => tr('Single character,  Use c for comma, d for dot or s for space.  When inserting data no thousands separator is needed.'),
+						'filter' => 'text',
+						'default' => ',',
+						'legacy_index' => 3,
+					),					
 				),
 			),
 		);
