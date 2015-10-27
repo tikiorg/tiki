@@ -356,6 +356,9 @@ class Tiki_Profile_Installer
 		$tikilib = TikiLib::lib('tiki');
 
 		try {
+
+			$profile->getObjects(); // need to be refreshed before installation in case any have changed due to replacements
+
 			if ( ! $profiles = $this->getInstallOrder($profile) ) {
 				return false;
 			}

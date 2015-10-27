@@ -314,12 +314,6 @@ class Tiki_Profile
 		return true;
 	} // }}}
 
-	public function refreshYaml() // {{{
-	{
-		$this->objects = null;
-		$this->loadYaml($this->pageContent);
-	} // }}}
-
 	private function loadYaml( $content ) // {{{
 	{
 		$this->pageContent = $content;
@@ -733,8 +727,7 @@ class Tiki_Profile
 
 	function getObjects() // {{{
 	{
-		if ( !is_null($this->objects) )
-			return $this->objects;
+		// Note this function needs to be called each time the objects need to be refreshed after YAML replacements
 
 		$objects = array();
 
