@@ -617,7 +617,7 @@ class Tiki_Profile
 					$preferenceName = $row[1];
 					$definition = TikiLib::lib('prefs')->getPreference($preferenceName);
 
-					if (! empty($definition['public'])) {
+					if (! empty($definition)) {
 						$needles[] = $row[0];
 						$replacements[] = $definition['value'];
 					}
