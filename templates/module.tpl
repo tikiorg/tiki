@@ -13,7 +13,7 @@
         <div class="panel-heading">
             <h3 class="panel-title clearfix" {if !empty($module_params.bgcolor)} style="background-color:{$module_params.bgcolor};"{/if}>
                 {if $module_notitle ne 'y'}
-                    <span class="moduletitle">{$module_title|escape}</span>
+                    <span class="moduletitle">{$module_title}</span>
                 {/if}
                 {if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
                     <span class="moduleflip" id="moduleflip-{$smarty.capture.name}">
