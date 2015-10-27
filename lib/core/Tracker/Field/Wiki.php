@@ -10,6 +10,11 @@ class Tracker_Field_Wiki extends Tracker_Field_Text
 	public static function getTypes()
 	{
 		global $prefs;
+		if (isset($prefs['tracker_wikirelation_synctitle'])) {
+			$tracker_wikirelation_synctitle = $prefs['tracker_wikirelation_synctitle'];
+		} else {
+			$tracker_wikirelation_synctitle = 'n';
+		}
 		return array(
 			'wiki' => array(
 				'name' => tr('Wiki Page'),
@@ -44,7 +49,7 @@ class Tracker_Field_Wiki extends Tracker_Field_Text
 					'syncwikipagename' => array(
 						'name' => tr('Rename Wiki Page when changed in tracker'),
 						'description' => tr('Rename associated wiki page when the field that is used for Wiki Page Name is changed.'),
-						'default' => $prefs['tracker_wikirelation_synctitle'],
+						'default' => $tracker_wikirelation_synctitle,
 						'filter' => 'alpha',
                                                 'options' => array(
                                                         'n' => tr('No'),
