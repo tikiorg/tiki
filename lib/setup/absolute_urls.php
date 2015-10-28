@@ -140,9 +140,9 @@ if (strpos($base_uri, $tikiroot . 'route.php') !== false && !empty($inclusion)) 
 	if (!empty($_GET)) {
 		$base_uri .= '?' . http_build_query($_GET, '', '&');
 	}
-	global $section;
+	global $section, $sections;
 	include_once('tiki-sefurl.php');
-	$base_uri =  TikiLib::tikiUrlOpt(filter_out_sefurl($base_uri, $type));;
+	$base_uri =  TikiLib::tikiUrlOpt(filter_out_sefurl($base_uri, $sections['section']));;
 }
 
 // SSL options
