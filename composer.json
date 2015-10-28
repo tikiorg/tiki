@@ -114,7 +114,8 @@
             "Type": "lib/core/",
 			"Report": "lib/core/",
 			"Feed": "lib/core/",
-			"FutureLink": "lib/core/"
+			"FutureLink": "lib/core/",
+			"Yaml": "lib/core/"
 		},
 		"classmap": [
 			"vendor_extra/pear/",

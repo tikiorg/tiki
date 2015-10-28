@@ -29,7 +29,7 @@ class Services_Tracker_Controller
 			throw new Services_Exception_Denied('Permission denied');
 		}
 
-		$defintion = $item->getDefinition();
+		$definition = $item->getDefinition();
 
 		$fields = $item->prepareOutput(new JitFilter([]));
 
@@ -37,7 +37,7 @@ class Services_Tracker_Controller
 			'title' => TikiLib::lib('object')->get_title('trackeritem', $item->getId()),
 			'format' => $input->format->word(),
 			'itemId' => $item->getId(),
-			'trackerId' => $defintion->getConfiguration('trackerId'),
+			'trackerId' => $definition->getConfiguration('trackerId'),
 			'fields' => $fields,
 			'canModify' => $item->canModify(),
 		];

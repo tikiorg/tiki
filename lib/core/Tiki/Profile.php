@@ -346,7 +346,15 @@ class Tiki_Profile
 		$this->getObjects();
 	} // }}}
 
-	private function fetchExternals() // {{{
+	public function getData(){
+		return $this->data;
+	}
+
+	public function setData($data){
+		$this->data = $data;
+	}
+
+	public function fetchExternals() // {{{
 	{
 		$this->traverseForExternals($this->data);
 	} // }}}
@@ -843,5 +851,23 @@ class Tiki_Profile
 			}
 		}
 	}
+
+	function getPath()
+	{
+		$domain = $this->domain;
+		$profile = $this->profile;
+		if ( strpos($domain, '://') === false ) {
+			if ( is_dir($domain) ) {
+				$domain = "file://" . $domain;
+			} else {
+				$domain = "http://" . $domain;
+			}
+		}
+		if ( substr($domain, 0, 7) == "file://" ) {
+			return TIKI_PATH . '/' . substr($domain, 7);
+		} else {
+			return $domain;
+		}
+	} // }}}
 }
 

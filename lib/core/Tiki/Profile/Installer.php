@@ -357,6 +357,14 @@ class Tiki_Profile_Installer
 
 		try {
 
+			// Apply directives, note Directives should be and are a runtime thing
+			$yamlDirectives = new Yaml_Directives(new Yaml_Filter_ReplaceUserData($profile, $this->userData), $profile->getPath());
+			$data = $profile->getData();
+			$yamlDirectives->process($data);
+			$profile->setData($data);
+			$profile->fetchExternals(); // there might be new externals as a result of the directives processing
+
+
 			$profile->getObjects(); // need to be refreshed before installation in case any have changed due to replacements
 
 			if ( ! $profiles = $this->getInstallOrder($profile) ) {
