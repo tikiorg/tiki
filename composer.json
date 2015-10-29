@@ -119,7 +119,7 @@
 			"lib/TikiWebdav/",
 			"lib/rating/formula/",
 			"lib/core/StandardAnalyzer/",
-			"vendor/smarty/smarty/distribution/libs/sysplugins/smarty_security.php",
+			"vendor/smarty/smarty/libs/sysplugins/smarty_security.php",
 			"vendor/adodb/adodb/",
 			"vendor/phpcas/phpcas/",
 			"installer/",
