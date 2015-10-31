@@ -63,9 +63,23 @@ class Tracker_Field_UserPreference extends Tracker_Field_Abstract
 		return array('value' => $value);
 	}
 
+	function renderInnerOutput($context = array()) {
+		$fieldData = $this->getFieldData();
+		$value = $fieldData['value'];
+		return $value;
+	}
+
 	function renderInput($context = array())
 	{
 		return $this->renderTemplate('trackerinput/userpreference.tpl', $context);
+	}
+
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
+	{
+		$baseKey = $this->getBaseKey();
+		return array(
+			$baseKey => $typeFactory->plaintext($this->renderInnerOutput()),
+		);
 	}
 }
 
