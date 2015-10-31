@@ -251,8 +251,11 @@ class RelationLib extends TikiDb_Bridge
 		);
 
 		TikiLib::events()->trigger('tiki.social.relation.remove', array(
-			'type' => 'relation',
-			'object' => $id,
+			'relation' => $relation_info['relation'],
+			'sourcetype' => $relation_info['source_type'],
+			'sourceobject' => $relation_info['source_itemId'],
+			'type' => $relation_info['target_type'], 
+			'object' => $relation_info['target_itemId'],
 			'user' => $GLOBALS['user'],
 		));
 
