@@ -32,6 +32,8 @@ class Tracker_Field_UserGroups extends Tracker_Field_Abstract
 	function getFieldData(array $requestData = array())
 	{
 		$itemId = $this->getItemId();
+
+		$value = array();
 		
 		if ($itemId) {
 			$itemUser = $this->getTrackerDefinition()->getItemUser($itemId);
