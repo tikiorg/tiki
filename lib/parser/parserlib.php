@@ -2501,7 +2501,7 @@ if ( \$('#$id') ) {
 		$tikilib = TikiLib::lib('tiki');
 		$result = $tikilib->table('tiki_dynamic_variables')->fetchAll(array('data', 'lang'), array('name' => $name));
 
-		$value = "NaV";
+		$value = tr('No value assigned');
 
 		foreach ( $result as $row ) {
 			if ( $row['lang'] == $lang ) {
