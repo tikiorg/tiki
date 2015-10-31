@@ -2476,21 +2476,18 @@ if ( \$('#$id') ) {
 
 				if (isset($tiki_p_edit_dynvar)&& $tiki_p_edit_dynvar=='y') {
 					$span1 = "<span  style='display:inline;' id='dyn_".$dvar."_display'><a class='dynavar' onclick='javascript:toggle_dynamic_var(\"$dvar\");' title='".tra('Click to edit dynamic variable', '', true).": $dvar'>$value</a></span>";
-					$span2 = "<span style='display:none;' id='dyn_".$dvar."_edit'><input type='text' name='dyn_".$dvar."' value='".$value."' />".'<input type="submit" class="btn btn-default btn-sm" name="_dyn_update" value="'.tra('Update variables', '', true).'"/></span>';
+					$span2 = "<span style='display:none;' id='dyn_".$dvar."_edit'><input type='text' name='dyn_".$dvar."' value='".$value."' />".'<input type="submit" class="btn btn-default btn-sm" name="_dyn_update" value="'.tra('Update variable', '', true).'"/></span>';
 				} else {
 					$span1 = "<span class='dynavar' style='display:inline;' id='dyn_".$dvar."_display'>$value</span>";
 					$span2 = '';
 				}
-				$html = $span1.$span2;
+				$html = '<form method="post" name="dyn_vars">' . $span1 . $span2 . '</form>';
 				//It's important to replace only once
 				$dvar_preg = preg_quote($dvar);
 				$data = preg_replace("+$enclose$dvar_preg$enclose+", $html, $data, 1);
 				//Further replacements only with the value
 				$data = str_replace("$enclose$dvar$enclose", $value, $data);
 			}
-			//At the end put an update button
-			//<br /><div align="center"><input type="submit" class="btn btn-default btn-sm" name="dyn_update" value="'.tra('Update variables','',true).'"/></div>
-			$data='<form method="post" name="dyn_vars">'."\n".$data.'</form>';
 		}
 
 		return $data;
