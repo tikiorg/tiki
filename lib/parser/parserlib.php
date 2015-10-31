@@ -2471,6 +2471,8 @@ if ( \$('#$id') ) {
 			// variable value and a text field to edit the variable. Each
 			foreach ($dvars as $dvar) {
 				$value = $this->get_dynamic_variable($dvar, $lang);
+				//replace backslash with html entity to avoid losing backslashes in the preg_replace function below
+				$value = str_replace('\\', '&bsol;', $value );
 				// Now build 2 divs
 				$id = 'dyn_'.$dvar;
 
