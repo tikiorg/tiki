@@ -65,7 +65,8 @@ class Tracker_Field_UserPreference extends Tracker_Field_Abstract
 	}
 
 	function renderInnerOutput($context = array()) {
-		$value = $this->getValue();
+		$fieldData = $this->getFieldData();
+		$value = $fieldData['value'];
 		if ($this->getOption('type') === 'country') {
 			$value = str_replace('_', ' ', $value);
 		}
@@ -78,6 +79,14 @@ class Tracker_Field_UserPreference extends Tracker_Field_Abstract
 			$context['flags'] = TikiLib::lib('tiki')->get_flags('', '', '', true);
 		}
 		return $this->renderTemplate('trackerinput/userpreference.tpl', $context);
+	}
+
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
+	{
+		$baseKey = $this->getBaseKey();
+		return array(
+			$baseKey => $typeFactory->plaintext($this->renderInnerOutput()),
+		);
 	}
 }
 
