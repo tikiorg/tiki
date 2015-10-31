@@ -1673,11 +1673,9 @@ class TrackerLib extends TikiLib
 			$value = isset($array["value"]) ? $array["value"] : null;
 
 			if ($array['type']=='p' && ($user == $trackersync_user || $tiki_p_admin_users == 'y')) {
-				$pref_changed = false;
 				if ($array['options_array'][0] == 'password') {
 					if (!empty($array['value']) && $prefs['change_password'] == 'y' && ($e = $userlib->check_password_policy($array['value'])) == '') {
 						$userlib->change_user_password($trackersync_user, $array['value']);
-						$pref_changed = true;
 					}
 					if (!empty($itemId)) {
 						$this->log($version, $itemId, $array['fieldId'], '?');
@@ -1686,7 +1684,6 @@ class TrackerLib extends TikiLib
 					if (!empty($array['value']) && validate_email($array['value'])) {
 						$old_value = $userlib->get_user_email($trackersync_user);
 						$userlib->change_user_email($trackersync_user, $array['value']);
-						$pref_changed = true;
 					}
 					if (!empty($itemId) && $old_value != $array['value']) {
 						$this->log($version, $itemId, $array['fieldId'], $old_value);
@@ -1697,12 +1694,11 @@ class TrackerLib extends TikiLib
 					if (!empty($itemId) && $old_value != $array['value']) {
 						$this->log($version, $itemId, $array['fieldId'], $array['value']);
 					}
-					$pref_changed = true;
 				}
-				if ($pref_changed) {
-					$fil[$fieldId] = $value;
-					$this->modify_field($currentItemId, $array['fieldId'], $value);
-				}
+				// Should not store value in tracker database as it won't be reliable (what if pref is changed afterwards?)
+				$value = '';
+				$fil[$fieldId] = $value;
+				$this->modify_field($currentItemId, $array['fieldId'], $value);
 			} elseif ($array['type'] == 'k') { //page selector
 				if ($array['value'] != '') {
 					$this->modify_field($currentItemId, $array['fieldId'], $value);
