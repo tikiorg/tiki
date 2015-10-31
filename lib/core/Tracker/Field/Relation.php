@@ -187,8 +187,8 @@ class Tracker_Field_Relation extends Tracker_Field_Abstract
 		$toRemove = array_diff(array_keys($map), $target);
 		$toAdd = array_diff($target, array_keys($map));
 
-		foreach ($toRemove as $value) {
-			$id = $map[$value];
+		foreach ($toRemove as $v) {
+			$id = $map[$v];
 			$relationlib->remove_relation($id);
 		}
 
