@@ -214,6 +214,8 @@ function tiki_setup_events()
 	}
 
 	// Chain events
+	$events->bind('tiki.object.categorized', 'tiki.save');
+
 	$events->bind('tiki.wiki.update', 'tiki.wiki.save');
 	$events->bind('tiki.wiki.create', 'tiki.wiki.save');
 	$events->bind('tiki.wiki.save', 'tiki.save');
