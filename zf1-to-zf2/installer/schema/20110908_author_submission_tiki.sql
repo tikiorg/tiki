@@ -1,0 +1,1 @@
+alter table `tiki_submissions` change `author` `author` varchar(200) default NULL;

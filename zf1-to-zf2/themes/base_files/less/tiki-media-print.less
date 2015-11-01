@@ -1,0 +1,34 @@
+// $Id$
+//  Subject: tiki media print definitions
+
+@media print {
+	// To prevent urls from being printed for all links
+	body a[href]:after {
+		content: none;
+	}
+
+	// print output should user smaller size than screen for better readability
+	body {
+		font-size: 12px;
+	}
+
+	h1, .h1 {
+		font-size: 26px;
+	}
+
+	h2, .h2 {
+		font-size: 20px;
+	}
+
+	h3, .h3 {
+		font-size: 14px;
+	}
+
+	h4, .h4 {
+		font-size: 14px;
+	}
+
+	.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+		padding: 4px;
+	}
+}

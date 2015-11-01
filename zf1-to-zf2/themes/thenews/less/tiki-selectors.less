@@ -1,0 +1,83 @@
+// $Id$
+// This file contains CSS rules for this theme that aren't covered by Bootstrap, such as additional Tiki theme properties.
+// To do: Use variables for global Tiki properties and customize a Tiki variables file per-theme.
+@imagePath: ~"../images/";
+// image path use example:
+//  body {
+//	background-image: url('@{imagePath}bg.jpg');
+//  }
+
+@topmodules-row-sidemargins: 0;
+@topbar-row-sidemargins: -15px;
+
+body > .container {
+	border: 1px solid #aaa;
+	margin-top: 18px;
+	margin-bottom: 18px;
+}
+
+.container {
+	background: #fff;
+	border-left: 1px solid #aaa;
+	border-right: 1px solid #aaa;
+}
+
+.navbar-inverse .container {
+	background: #222;
+	border-color: transparent;
+}
+
+#col1 {
+	margin-left: -1px;
+	margin-right: -1px;
+}
+
+#col2 {
+	margin-right: -1px;
+	margin-left: 1px;
+	.content {
+		margin-left: -15px;
+		margin-right: -15px;
+	}
+}
+
+#col3 {
+	margin-right: 0;
+	.content {
+		margin-left: -15px;
+		margin-right: -15px;
+	}
+}
+
+#col1,
+#col2,
+#col3 {
+	border: 1px solid #aaa;
+	/*border-width: 0 1px;*/
+}
+
+#col3 {
+	border-right-width: 0;
+}
+
+h3.panel-title {
+	color: black;
+	font: 90% "Arial", "Helvetica", sans-serif;
+	font-weight: bold;
+	/*  height: 18px;
+	  margin: 0px 0px 7px 1em;
+	  padding: 0px;*/
+	text-transform: uppercase;
+}
+
+#col2 .panel-default,
+#col3 .panel-default,
+#col2 .panel-default > .panel-heading,
+#col3 .panel-default > .panel-heading {
+	border: none;
+}
+
+#col2 .panel-heading,
+#col3 .panel-heading {
+	padding: 10px 15px 0 10px;
+}

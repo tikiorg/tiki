@@ -1,0 +1,7 @@
+---
+preferences:
+  feature_abc:
+    - a
+    - b
+    - c
+  feature_something: y

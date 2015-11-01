@@ -1,0 +1,195 @@
+.tabrow {
+	position: relative;
+	left: 0;
+	margin: 0;
+	height: 24px !important;
+	font-size: 11px;
+	padding: 1px 10px 4px 10px;
+	clear: both;
+}
+
+.tabrow a {
+	text-decoration: none;
+}
+
+.tabrow .jscalrow {
+	float: right;
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+.calHeading {
+	height: 36px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.calHours {
+	vertical-align: middle;
+	text-align: center;
+}
+
+/*.calDay {
+	padding: 0;
+	border-width: 0 1px 1px 1px;
+	border-style: solid;
+}*/
+
+/* Table that contains the week view */
+.calendarweek {
+	border: none;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#calprio {
+	margin-left: 7px;
+	padding: 0 5px;
+}
+
+.calnavigation {
+	border-width: 0;
+	text-align: center;
+	font-size: 1.1em;
+	font-weight: bold;
+	clear: both;
+	vertical-align: middle;
+	margin: 7px 0;
+}
+
+.calnavigation a {
+	padding: 0 4px 4px 4px;
+}
+
+.calnavigation a.prev {
+	float: left;
+}
+
+.calnavigation a.next {
+	float: right;
+}
+
+.middle {
+	vertical-align: middle;
+}
+
+.calcontent {
+	min-height: 60px;
+	height: auto;
+	padding-right: 0;
+	padding-left: 0;
+}
+
+.caltable .days {
+	height: 20px;
+	text-align: center;
+	border: 0;
+}
+
+.caltable .weeks {
+	vertical-align: middle;
+}
+
+.addevent {
+	padding: 0 5px;
+	float: right;
+}
+
+#configlinks {
+	width: 100%;
+	padding: 5px;
+}
+
+#filtercal {
+	position: absolute;
+	z-index: 2 !important;
+	right: 190px;
+}
+
+#filtercal .caltitle,
+#filtercal .caltoggle,
+#filtercal .calcheckbox {
+	padding: 0 10px;
+}
+
+#filtercal .calinput {
+	padding: 10px;
+}
+
+#exportcal {
+	z-index: 200 !important;
+	position: absolute;
+	right: 240px;
+}
+
+#exportcal .caltitle,
+#exportcal .caltoggle,
+#exportcal .calcheckbox {
+	padding: 0 10px;
+}
+
+#exportcal .calinput {
+	padding: 10px;
+}
+
+.statusbox {
+	margin-bottom: 1px;
+	width: 120px;
+	padding: 0 3px;
+	font-weight: bold;
+}
+
+select[name=start_Hour],
+select[name=start_Minute],
+select[name=end_Hour],
+select[name=end_Minute] {
+		min-width: 40px;
+}
+
+.caltable,
+#calscreen .normal {
+		clear: both;
+		border-collapse: collapse;
+		width: 100%;
+}
+
+.caltable td {
+	padding: 2px;
+}
+
+#calscreen td.odd, #calscreen td.even {
+	vertical-align: top;
+}
+
+#calscreen td a {
+	text-decoration: none;
+}
+
+.days {
+	font-size: 11px;
+	font-weight: bold;
+}
+
+.html_select_time {
+	white-space: nowrap;
+}
+
+.viewmode {
+	line-height: 1em;
+	width: 100%;
+	text-align: center;
+	padding: 1px;
+}
+
+.viewmode div {
+	display: inline;
+}
+
+.calbuttonoff,
+.calbuttonon,
+a.prev img,
+a.next img {
+	vertical-align: middle;
+}

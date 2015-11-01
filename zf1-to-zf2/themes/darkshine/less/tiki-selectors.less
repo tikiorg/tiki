@@ -1,0 +1,201 @@
+// $Id$
+// This file is for additional LESS rules beyond what are in variables.less.
+// Image path example:
+@imagePath: ~"../images/";
+//
+// If Glyphicons should be rendered in a color other than the Bootstrap default or the theme default, uncomment and specify the color.
+// .glyphicon {color: @gray-lighter;}
+
+body {
+	background: #90140c url('@{imagePath}stripes.png') repeat-x 50% 0;
+}
+
+.sitetitle {
+	background: url('@{imagePath}title_background.jpg') no-repeat transparent;
+	color: #FE9B27;
+	cursor: default;
+	text-transform: uppercase;
+	font: 2.5em/1.8em "Trebuchet MS", "Georgia", "Lucidia Grande";
+	height: 101px;
+	letter-spacing: 8px;
+	margin-top: 66px;
+	text-align: center;
+	//  width: 410px;
+}
+
+.sitetitle,
+.sitetitle a,
+.sitesubtitle {
+	color: #fe9b27;
+}
+
+h2.sitesubtitle {
+	font-size: 20px;
+	margin-top: 0;
+}
+
+.layout_social, .layout_fixed_top_modules {
+	.sitetitle {
+		background: none;
+		height: auto;
+	}
+	h2.sitesubtitle {
+		margin-top: 20px;
+	}
+}
+
+#middle,
+.row-middle,
+.layout_social > .container {
+	background: #f3f3f3;
+	border: 15px solid #600000;
+}
+
+//.btn-default {
+//  background: #fea841;
+//  background: -moz-linear-gradient(top,  #fea841 0%, #fd7931 100%);
+//  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fea841), color-stop(100%,#fd7931));
+//  background: -webkit-linear-gradient(top,  #fea841 0%,#fd7931 100%);
+//  background: -o-linear-gradient(top,  #fea841 0%,#fd7931 100%);
+//  background: -ms-linear-gradient(top,  #fea841 0%,#fd7931 100%);
+//  background: linear-gradient(to bottom,  #fea841 0%,#fd7931 100%);
+//  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fea841', endColorstr='#fd7931',GradientType=0 );
+//}
+
+.btn-default {
+	background: #ffd19f;
+	background: -moz-linear-gradient(top, #ffd19f 0%, #fea841 3%, #fca73a 5%, #fda541 8%, #ffa340 10%, #f8a441 13%, #ffa439 15%, #fba23e 18%, #fea23f 21%, #fc9338 46%, #fe9039 54%, #fc8c36 59%, #fd7931 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffd19f), color-stop(3%, #fea841), color-stop(5%, #fca73a), color-stop(8%, #fda541), color-stop(10%, #ffa340), color-stop(13%, #f8a441), color-stop(15%, #ffa439), color-stop(18%, #fba23e), color-stop(21%, #fea23f), color-stop(46%, #fc9338), color-stop(54%, #fe9039), color-stop(59%, #fc8c36), color-stop(100%, #fd7931));
+	background: -webkit-linear-gradient(top, #ffd19f 0%, #fea841 3%, #fca73a 5%, #fda541 8%, #ffa340 10%, #f8a441 13%, #ffa439 15%, #fba23e 18%, #fea23f 21%, #fc9338 46%, #fe9039 54%, #fc8c36 59%, #fd7931 100%);
+	background: -o-linear-gradient(top, #ffd19f 0%, #fea841 3%, #fca73a 5%, #fda541 8%, #ffa340 10%, #f8a441 13%, #ffa439 15%, #fba23e 18%, #fea23f 21%, #fc9338 46%, #fe9039 54%, #fc8c36 59%, #fd7931 100%);
+	background: -ms-linear-gradient(top, #ffd19f 0%, #fea841 3%, #fca73a 5%, #fda541 8%, #ffa340 10%, #f8a441 13%, #ffa439 15%, #fba23e 18%, #fea23f 21%, #fc9338 46%, #fe9039 54%, #fc8c36 59%, #fd7931 100%);
+	background: linear-gradient(to bottom, #ffd19f 0%, #fea841 3%, #fca73a 5%, #fda541 8%, #ffa340 10%, #f8a441 13%, #ffa439 15%, #fba23e 18%, #fea23f 21%, #fc9338 46%, #fe9039 54%, #fc8c36 59%, #fd7931 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffd19f', endColorstr='#fd7931', GradientType=0);
+}
+
+.btn-default:hover {
+	background: #fd7931;
+	background: -moz-linear-gradient(bottom, #ffd19f 0%, #fea841 3%, #fca73a 5%, #fda541 8%, #ffa340 10%, #f8a441 13%, #ffa439 15%, #fba23e 18%, #fea23f 21%, #fc9338 46%, #fe9039 54%, #fc8c36 59%, #fd7931 100%);
+	background: -webkit-gradient(linear, left bottom, left top, color-stop(0%, #ffd19f), color-stop(3%, #fea841), color-stop(5%, #fca73a), color-stop(8%, #fda541), color-stop(10%, #ffa340), color-stop(13%, #f8a441), color-stop(15%, #ffa439), color-stop(18%, #fba23e), color-stop(21%, #fea23f), color-stop(46%, #fc9338), color-stop(54%, #fe9039), color-stop(59%, #fc8c36), color-stop(100%, #fd7931));
+	background: -webkit-linear-gradient(bottom, #ffd19f 0%, #fea841 3%, #fca73a 5%, #fda541 8%, #ffa340 10%, #f8a441 13%, #ffa439 15%, #fba23e 18%, #fea23f 21%, #fc9338 46%, #fe9039 54%, #fc8c36 59%, #fd7931 100%);
+	background: -o-linear-gradient(bottom, #ffd19f 0%, #fea841 3%, #fca73a 5%, #fda541 8%, #ffa340 10%, #f8a441 13%, #ffa439 15%, #fba23e 18%, #fea23f 21%, #fc9338 46%, #fe9039 54%, #fc8c36 59%, #fd7931 100%);
+	background: -ms-linear-gradient(bottom, #ffd19f 0%, #fea841 3%, #fca73a 5%, #fda541 8%, #ffa340 10%, #f8a441 13%, #ffa439 15%, #fba23e 18%, #fea23f 21%, #fc9338 46%, #fe9039 54%, #fc8c36 59%, #fd7931 100%);
+	background: linear-gradient(to top, #ffd19f 0%, #fea841 3%, #fca73a 5%, #fda541 8%, #ffa340 10%, #f8a441 13%, #ffa439 15%, #fba23e 18%, #fea23f 21%, #fc9338 46%, #fe9039 54%, #fc8c36 59%, #fd7931 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffd19f', endColorstr='#fd7931', GradientType=0);
+}
+
+.tiki .row.topbar {
+	background: #fe6322 url('@{imagePath}stripes_small.gif') repeat-x 0 -8px;
+	border-bottom: 1px solid #916047;
+	margin-left: -15px;
+	margin-right: -15px;
+	.cssmenu_horiz > li,
+	.navbar-default {
+		background-color: transparent;
+	}
+}
+
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li {
+	background: transparent;
+}
+
+#top_modules .navbar-default .navbar-collapse,
+#top_modules .navbar-default .navbar-form .panel-default > .panel-heading,
+#topbar_modules .navbar-default .navbar-collapse,
+#topbar_modules .navbar-default .navbar-form .panel-default > .panel-heading {
+	border: none;
+}
+
+#top_modules .navbar-default,
+#topbar_modules .navbar-default {
+	background: none;
+	border: none;
+}
+
+#top_modules .navbar,
+#topbar_modules .navbar {
+	margin-bottom: 0;
+}
+
+.panel-title {
+	color: #8A0700;
+	font: 1.8rem arial, verdana, helvetica, sans-serif;
+}
+
+#col2 .panel,
+#col3 .panel,
+#col2 .panel-default > .panel,
+#col3 .panel-default > .panel,
+#col2 .panel-default > .panel-heading,
+#col3 .panel-default > .panel-heading {
+	border: none;
+	background: transparent;
+}
+
+.popover-content .table .table,
+.popover-content .table-hover {
+	background: #fff;
+}
+
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	color: @link-color;
+}
+
+.topbar .cssmenu_horiz > li > a {
+	color: @navbar-default-link-color;
+}
+
+.topbar .cssmenu_horiz > li:hover > a {
+	color: @navbar-default-link-hover-color;
+}
+
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {
+	padding: 5px 0;
+	margin: 2px 0 0; // override default ul
+	//  font-size: @font-size-base;
+	background-color: @dropdown-bg;
+	border: 1px solid @dropdown-fallback-border; // IE8 fallback
+	border: 1px solid @dropdown-border;
+	border-radius: @border-radius-base;
+	.box-shadow(0 6px 12px rgba(0, 0, 0, .175));
+	background-clip: padding-box;
+
+	// Links within the dropdown menu
+	> li > a {
+		padding: 3px 20px;
+		font-weight: normal;
+		line-height: @line-height-base;
+		color: @dropdown-link-color;
+		background: @dropdown-bg;
+	}
+}
+
+// Hover/Focus state
+.cssmenu_horiz > li > a,
+.cssmenu_vert > li > a,
+.cssmenu_horiz ul > li > a,
+.cssmenu_vert ul > li > a {
+	&:hover,
+	&:focus {
+		text-decoration: none;
+		color: @dropdown-link-hover-color;
+		background-color: @dropdown-link-hover-bg;
+	}
+}
+
+.main-footer {
+	color: lighten(#9d9d9d, 15%);
+	a {
+		color: #9d9d9d;
+		&:hover,
+		&:focus {
+			color: lighten(#9d9d9d, 15%);
+		}
+	}
+	h1, h2, h3, h4, h5 {
+		color: @brand-warning;
+	}
+}

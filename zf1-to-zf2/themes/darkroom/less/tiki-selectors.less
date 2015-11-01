@@ -1,0 +1,170 @@
+// $Id$ Darkroom theme custom-other.less file.
+
+@imagePath: ~"../images/";
+//body {
+//	background-image: url('@{imagePath}bg.jpg');
+//}
+@topmodules-row-margin-bottom: 15px;
+
+body {
+	background-image: url('@{imagePath}474747_5e5e5e_40.png');
+}
+
+.container {
+	background: #0C0C0C;
+}
+
+body.layout_social > .container {
+	padding-top: 20px;
+}
+
+#col1 {
+	background: #3F3F3F;
+	border-left: 10px solid #0c0c0c;
+	border-right: 10px solid #0c0c0c;
+	padding-bottom: 10px;
+}
+
+h3.panel-title {
+	color: #9D9D9D;
+	font-size: 24px;
+}
+
+.panel-body {
+	border: solid #292929;
+	border-width: 0 8px 8px 8px;
+}
+
+.navbar-fixed-top .container,
+.navbar-default,
+.topbar,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li,
+.btn,
+.nav-tabs > li > a,
+.input-group-addon {
+	background: #818181; /* Old browsers */
+	background: -moz-linear-gradient(top, #818181 0%, #393939 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #818181), color-stop(100%, #393939)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #818181 0%, #393939 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #818181 0%, #393939 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #818181 0%, #393939 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #818181 0%, #393939 100%) !important; /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#818181', endColorstr='#393939', GradientType=0);
+}
+
+.btn.btn-link {background: none !important;}
+
+.topbar {
+	margin-bottom: 20px;
+}
+
+#topbar_modules .navbar-default {
+	background: transparent;
+	border: none;
+	margin-bottom: 0;
+}
+
+#topbar_modules .form-group {
+	margin-bottom: 0
+}
+
+.textarea-toolbar a.toolbar {
+	background: none !important;
+}
+
+.nav > li > a {
+	padding: 6px 10px;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+	color: #fff;
+}
+
+select {
+	background: #292929
+}
+
+.cke_wysiwyg_frame, .cke_wysiwyg_div {
+	background: #292929 !important;
+	color: #fff !important;
+}
+
+.even {
+	background: @table-bg-accent;
+}
+
+.odd,
+#trig_dptxt {
+	background: @table-bg;
+	color: @brand-primary;
+}
+
+input[type="checkbox"] {
+	color: #fff !important;
+	background: @table-bg;
+}
+
+input.reportBuilderInput,
+.ui-datepicker {
+	background: #292929;
+}
+
+textarea,
+input {
+	background: @input-bg;
+	color: @input-color;
+}
+
+.jtrack-form {
+	background: #292929 !important;
+}
+
+.box-quickadmin .cssmenu_horiz ul li {
+	background-color: @body-bg;
+}
+
+#admin-navbar-collapse-1 {
+	border: 8px solid #292929;
+	border-bottom: none;
+}
+
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	color: @link-color;
+}
+
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {
+	padding: 0;
+	margin: 2px 0 0; // override default ul
+	//  font-size: @font-size-base;
+	background-color: @dropdown-bg;
+	border: 1px solid @dropdown-fallback-border; // IE8 fallback
+	border: 1px solid @dropdown-border;
+	border-radius: @border-radius-base;
+	.box-shadow(0 6px 12px rgba(0, 0, 0, .175));
+	background-clip: padding-box;
+
+	// Links within the dropdown menu
+	> li > a {
+		padding: 3px 20px;
+		font-weight: normal;
+		line-height: @line-height-base;
+		color: @dropdown-link-color;
+		background: @dropdown-bg;
+	}
+}
+
+// Hover/Focus state
+.cssmenu_horiz > li > a,
+.cssmenu_vert > li > a,
+.cssmenu_horiz ul > li > a,
+.cssmenu_vert ul > li > a {
+	&:hover,
+	&:focus {
+		text-decoration: none;
+		color: @dropdown-link-hover-color;
+		background-color: @dropdown-link-hover-bg;
+	}
+}

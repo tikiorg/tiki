@@ -1,0 +1,253 @@
+// $Id$
+// This file is for additional LESS rules beyond what are in variables.less.
+// Image path example:
+// body {
+//	background-image: url('@{imagePath}bg.jpg');
+// }
+//
+// If Glyphicons should be rendered in a color other than the Bootstrap default or the theme default, uncomment and specify the color.
+// .glyphicon {color: @gray-lighter;}
+@imagePath: ~"../images/";
+.middle_outer {
+	-webkit-box-shadow: inset 0 24px 0 0 #28a7de;
+	-moz-box-shadow: inset 0 24px 0 0 #28a7de;
+	box-shadow: inset 0 24px 0 0 #28a7de;
+	border-top: 2px solid #fff;
+}
+
+.navbar {
+	min-height: 24px;
+}
+
+body.tiki.navbar-padding,
+	//.layout_fixed_top_modules .navbar-fixed-top,
+.layout_fixed_top_modules,
+.layout_social_modules {
+	padding-top: @navbar-fixed-height;
+	h1.sitetitle {
+		line-height: normal;
+	}
+}
+
+.layout_social .topbar_modules h1.sitetitle,
+.layout_social_modules .topbar_modules h1.sitetitle,
+.layout_fixed_top_modules #top_modules h1.sitetitle {
+	float: left;
+	font-size: 1.8rem;
+	line-height: @navbar-fixed-height;
+}
+
+//#top_modules,
+.layout_fixed_top_modules .top_modules,
+.navbar-fixed-top {
+	height: @navbar-fixed-height;
+	//  overflow: hidden;
+	.sitelogo img {
+		width: auto !important;
+		margin-right: 1.5em;
+	}
+	h1.sitetitle {
+		//    display: inline-block;
+		font-size: 2em;
+		//    height: 54px;
+		//    line-height: 54px;
+		margin: 0 0 0 1rem;
+		//    font-size: 24px;
+		//    margin-top: 15px;
+		float: left;
+		a {
+			color: #fff;
+		}
+		a:hover {
+			text-decoration: none;
+		}
+	}
+	h2.sitesubtitle {
+		float: left;
+		font-size: 1.5em;
+		margin: 0 0 0 1.5em;
+		line-height: @navbar-fixed-height;
+		height: @navbar-fixed-height;
+		color: #fff;
+	}
+}
+
+.topbar_container,
+.layout_basic .page-header > .topbar {
+	background: @topbar_container_background;
+}
+
+.layout_basic .topbar,
+.layout_basic.tiki .row.topbar,
+.layout_fixed_top_modules .navbar-fixed-top .navbar {
+	margin-bottom: 0;
+}
+
+.topbar,
+	//.topbar .cssmenu_horiz ul,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li,
+.topbar .navbar,
+.topbar .navbar-default .navbar-collapse,
+.topbar .navbar-default .navbar-form {
+	border: none;
+	background: transparent;
+}
+
+.topbar .navbar-nav > li > a,
+.topbar .navbar > li > a {
+	padding-top: 4px;
+	padding-bottom: 4px;
+	line-height: 1;
+}
+
+.topbar {
+	margin-bottom: 2rem;
+}
+
+#col2 .panel,
+#col3 .panel,
+#bottom_modules .panel {
+	border: @side-column-border; // none;
+}
+
+#col2 .panel-default > .panel-heading,
+#col3 .panel-default > .panel-heading,
+#bottom_modules .panel-heading {
+	background: @side-column-panel-heading-background; // #e1d518 url('@{imagePath}siteheader.png') no-repeat -1000px -200px;
+	border-width: @side-column-panel-heading-border-width;
+	border-style: solid;
+	border-color: @side-column-panel-heading-border-color;
+}
+
+#col2 .panel-title,
+#col3 .panel-title {
+	color: @side-column-panel-title-color;
+}
+
+// Header graphics
+.header_outer,
+.layout_basic .page-header > .top_modules {
+	// whole width div containing the header strip
+	background: @header_outer-background; // url('@{imagePath}siteheadertile.png') 0 0 no-repeat;
+	border-bottom: 5px solid #000;
+}
+
+.header_container > .header {
+	// inner <header> element that gets .fixedwidth class applied
+	background: none; // @header_container_header-background; // url('@{imagePath}siteheader.png') -248px 0 no-repeat;
+}
+
+header.header .module.secondary_site_menu {
+	background: none;
+}
+
+.page-header {
+	margin-top: 0;
+	margin-bottom: 0;
+	border-bottom: none;
+}
+
+// Little gap (line) between the topbar and top
+.layout_basic .page-header > .topbar {
+	margin-top: 1px;
+}
+
+// When it displays as inline-block for some reason there is some little padding on the bottom of the element which needs to be removed
+.layout_basic .page-header > .topbar > div {
+	margin-bottom: -3px !important;
+}
+
+//.sitelogo img {max-height: 34px; width: auto; margin-bottom: 1em;}
+
+.form-control,
+select,
+input[type="text"],
+input[type="password"],
+input[type="file"],
+input[type="email"],
+input[type="file"],
+input[type="search"],
+input[type="number"],
+input#login-pass,
+textarea,
+.adminoptionbox option {
+	background-color: @form-control-background; //#f8f9d4;
+	border-color: @form-control-border-colors; // #F5FB86 #FBFBEE #FBFBEE #F5FB86;
+}
+
+.navbar-collapse {
+	border: none;
+}
+
+#footer {
+	background: black;
+	color: @footer-color; // #696969;
+	padding: 1px 0 2px 0;
+	width: 100%;
+}
+
+.footer {
+	border-top: 1px solid @footer-border-color; //#ebdc14;
+	border-bottom: 1px solid @footer-border-color; // #ebdc14;
+}
+
+.footer_liner {
+	h3.panel-title {
+		color: #fff;
+		border-bottom: 1px dotted @footer-border-color;
+	}
+	//#ebdc14;
+	legend,
+	a,
+	a:visited {
+		color: @footer-link-color;
+	}
+	// #a9a9a9;
+}
+
+.topbar {
+	.nav > li > a {
+		padding-bottom: 2px;
+		padding-top: 2px;
+	}
+	.form-control,
+	.btn {
+		font-size: 12px;
+		height: 20px;
+		padding-top: 1px;
+		padding-bottom: 1px;
+		margin-top: 1px;
+		margin-bottom: 2px;
+	}
+	.form-group {
+		margin-bottom: 0;
+	}
+}
+
+.navbar-nav .open .dropdown-menu,
+.navbar-nav .open .dropdown-menu li,
+.navbar-default .navbar-nav > li > a {
+	//  background: @navbar-default-navbar-nav-li-a-background; // #cdbe23;
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+	background: lighten(@navbar-default-navbar-nav-li-a-background, 5%);
+}
+
+.postbody-title {
+	background: @postbody-title-background; //url('@{imagePath}siteheader.png') no-repeat -480px -200px;
+}
+
+.siteloginbar_popup .dropdown-menu > li > a {
+	color: #fff;
+}
+
+// This comes last to enable site title color of theme options under FiveAlive-lite to have priority over the default set by FiveAlive.
+header.header {
+	.sitetitle,
+	.sitesubtitle {
+		color: @brand-primary;
+		text-shadow: none;
+	}
+}

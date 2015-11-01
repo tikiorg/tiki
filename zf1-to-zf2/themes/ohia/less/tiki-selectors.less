@@ -1,0 +1,155 @@
+// $Id$  Ohia theme custom-other.less
+@imagePath: ~"../images/";
+// body {
+// 	background-image: url('@{imagePath}bg.jpg');
+// }
+
+.topbar {
+	margin-bottom: 20px;
+}
+
+@topmodules-row-sidemargins: -15px;
+@topbar-row-sidemargins: -15px;
+
+.tiki .row.top_modules {
+	margin-left: @topmodules-row-sidemargins;
+	margin-right: @topmodules-row-sidemargins;
+}
+
+.tiki .row.topbar {
+	margin-left: @topbar-row-sidemargins;
+	margin-right: @topbar-row-sidemargins;
+}
+
+button, input, optgroup, select, textarea {
+	background: #242424;
+	color: #cfcfcf;
+}
+
+.container {
+	border: 1px solid #4c4c4c;
+	margin-bottom: 5px;
+	//  margin-top: 18px;
+}
+
+.layout_social .navbar-inverse,
+.layout_social .navbar-inverse .navbar-collapse,
+.layout_social .navbar-inverse .navbar-form,
+.layout_social .navbar-inverse .container {
+	background: #5e0000;
+	border-color: transparent;
+}
+
+.navbar-default.navbar-fixed-top > .container {
+	border: none;
+	margin-bottom: 0;
+}
+
+header.container,
+.middle_outer > .container {
+	margin-bottom: 0;
+}
+
+.navbar-collapse {
+	background: @navbar-default-bg;
+}
+
+.top_modules,
+.navbar-default.navbar-fixed-top {
+	background: url('@{imagePath}header.png');
+//	background-size: cover;
+	a, a:visited {
+		color: #f4f4f4;
+	}
+}
+
+.box-quickadmin .cssmenu_horiz ul li {
+	background-color: #4c4c4c;
+}
+
+.middle_outer > .container {
+	border-top: none;
+}
+
+#topbar_modules .box-search {
+	margin-top: 8px;
+}
+
+#col2,
+#col3 {
+	padding-right: 0;
+	padding-left: 0;
+}
+
+.navbar-collapse {
+	background: @navbar-default-bg;
+}
+
+.glyphicon {
+	color: @gray-lighter;
+}
+
+.panel-title,
+.panel-heading {
+	font-weight: bold;
+}
+
+@nav-tabs-active-link-hover-color: #fff;
+
+.nav-tabs > li > a {
+	border: solid @gray;
+	border-width: 1px 1px 0 1px;
+}
+
+footer.footer .modules {
+	background-image: url('@{imagePath}header.png');
+	color: #F4F4F4;
+	font-size: 0.9em;
+	min-height: 90px;
+	a, a:visited {
+		color: #f4f4f4;
+	}
+}
+
+.popover {
+	background-color: @gray-darker;
+}
+
+.popover-title {
+	background-color: #696969;
+	border-bottom: 1px solid #EBEBEB;
+}
+
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {
+	padding: 5px 0;
+	margin: 2px 0 0; // override default ul
+	//  font-size: @font-size-base;
+	background-color: @dropdown-bg;
+	border: 1px solid @dropdown-fallback-border; // IE8 fallback
+	border: 1px solid @dropdown-border;
+	border-radius: @border-radius-base;
+	.box-shadow(0 6px 12px rgba(0, 0, 0, .175));
+	background-clip: padding-box;
+
+	// Links within the dropdown menu
+	> li > a {
+		padding: 3px 20px;
+		font-weight: normal;
+		line-height: @line-height-base;
+		color: @dropdown-link-color;
+	}
+}
+
+// Hover/Focus state
+.cssmenu_horiz > li > a,
+.cssmenu_vert > li > a,
+.cssmenu_horiz ul > li > a,
+.cssmenu_vert ul > li > a {
+	&:hover,
+	&:focus {
+		text-decoration: none;
+		color: @dropdown-link-hover-color;
+		background-color: @dropdown-link-hover-bg;
+	}
+}

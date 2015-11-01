@@ -1,0 +1,1 @@
+update tiki_modules set name='search_wiki_page' where name='search_wiki_page_new';

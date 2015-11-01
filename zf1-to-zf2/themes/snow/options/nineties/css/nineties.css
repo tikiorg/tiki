@@ -1,0 +1,67 @@
+/* Nineties theme option for the Snow theme for Tiki Wiki CMS Groupware.  */
+.container {
+  background: #b1c1db url('../../../images/flakesptn.jpg') !important;
+  border: 1px solid #6C7B8C;
+  box-shadow: none !important;
+}
+.panel {
+  background: url('../../../images/flakesptn2.jpg');
+}
+#col2 .panel-heading,
+#col3 .panel-heading {
+  background: url('../../../images/boxtop.jpg') no-repeat transparent;
+  background-size: 100%;
+  border-bottom: medium none currentColor;
+}
+#col2 .panel-footer,
+#col3 .panel-footer {
+  background: url('../../../images/boxbtm.jpg') no-repeat transparent 0 100%;
+  background-size: 100%;
+  border-top: none;
+}
+#col2 .panel,
+#col3 .panel {
+  background: url('../../../images/boxmid.jpg') repeat-y transparent;
+  background-size: 100%;
+}
+#col2 .panel-footer,
+#col3 .panel-footer {
+  display: block;
+}
+.navbar-fixed-top,
+.layout_fixed_top_modules .navbar-fixed-top,
+.layout_fixed_top_modules .navbar-fixed-top .container,
+.layout_social .navbar-fixed-top,
+.layout_social .navbar-fixed-top .container,
+.navbar-default,
+.topbar,
+.topbar .cssmenu_horiz > ul,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li {
+  background: #d7e5f3 url('../../../images/pagetitle-bg.jpg') repeat-x !important;
+  background-size: 400px 100% !important;
+  margin-bottom: 0;
+  border: none;
+}
+.topbar .nav > li > a:hover,
+.topbar .nav > li > a:focus,
+.topbar .cssmenu_horiz > li > a:hover,
+.topbar .cssmenu_horiz > li:hover,
+.topbar .cssmenu_horiz li.sfHover:hover,
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  background: #d7e5f3 url('../../../images/pagetitle-bg.jpg') repeat-x;
+  color: #555555;
+}
+.dropdown-menu > li > form {
+  background: url('../../../images/flakesptn2.jpg');
+}
+.dropdown-menu > li > a {
+  background: url('../../../images/flakesptn2.jpg');
+}
+.dropdown-menu > li > a:hover {
+  background: url('../../../images/flakesptn3.jpg');
+}
+.nav > li > a:hover {
+  background: url('../../../images/flakesptn3.jpg');
+}

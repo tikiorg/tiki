@@ -1,0 +1,84 @@
+# Set defaults
+WEBROOT='/var/www'
+SVN_CACHE='/usr/local/src/tiki'
+LOCKSDIR='/var/local/tim/'
+PREFIX='/usr/local/sbin/'
+
+# Get possible config files
+if [[ -f /opt/tim/tim.conf ]]; then . /opt/tim/tim.conf ;fi
+if [[ -f /usr/local/etc/tim.conf ]]; then . /usr/local/etc/tim.conf ;fi
+if [[ -f /etc/tim.conf ]]; then . /etc/tim.conf ;fi
+if [[ -f ~/.tim.conf ]]; then . ~/.tim.conf ;fi
+
+# SVN uppable stuff
+BRANCHES="trunk 12.x 13.x"
+
+# Set our common variables
+TIM_LOCK="$LOCKSDIR/tim.lock"
+if [[ -z $TUSER ]] || [[ "$TUSER" == "" ]]; then TUSER="user"; fi
+SUBDOMAIN=$TUSER-$TUSERID-$ID
+DB=${TUSER}_${TUSERID}_${ID}
+INSTANCE_DIR=$WEBROOT/$SUBDOMAIN
+INSTANCE_INFO=$INSTANCE_DIR/info.txt
+INSTANCE_LOG="${INSTANCE_DIR}/install_log.txt"
+if [[ -f ${INSTANCE_DIR}/db/local.php ]]; then DB_DETECTED=$(grep "^\$dbs_tiki" ${INSTANCE_DIR}/db/local.php | cut -d"'" -f2| tail -n 1); fi
+INSTANCE_LOCK="${LOCKSDIR}/${SUBDOMAIN}.lock"
+if [[ -f $INSTANCE_LOCK ]]; then INSTANCE_LOCK_REASON=`cat ${INSTANCE_LOCK}`; fi
+
+log()
+{
+	echo
+	echo "== TIM" `date` : "$@"
+}
+
+startlog()
+{
+	exec 1>>"$INSTANCE_LOG" 2>&1
+	echo
+	echo "###########################################################################################"
+	log "TIM command: `echo $COMMAND | tr '[:lower:]' '[:upper:]'`"
+	echo "###########################################################################################"
+	echo
+}
+
+mk_info()
+{
+	cd $INSTANCE_DIR
+	# Collect data useful to developers in infotext
+	#if [[ "${TUSER}" != "user" ]]; then FRIENDLYUSERNAME="${TUSER}"; fi
+#Wish was created by user ${FRIENDLYUSERNAME} http://dev.tiki.org/user${TUSERID}
+	read -r -d '' header <<EOT
+This Tiki instance was created on the Tiki show community website
+Creation date: `date -u +%Y-%m-%d_%H-%M-%S`
+Version: ${SVNTAG}
+Related to Wish: http://dev.tiki.org/item${ID}
+Created as http://${SUBDOMAIN}.show.tikiwiki.org/
+Installation log: http://${SUBDOMAIN}.show.tikiwiki.org/install_log.txt
+This information is also kept here: http://${SUBDOMAIN}.show.tikiwiki.org/info.txt
+
+===== Instance History =====
+EOT
+
+FORMER_HIST=$(cat $INSTANCE_INFO | sed -e "1,/===== Instance History =====/d")
+
+	read -r -d '' infotext <<EOT
+$header
+== `date` TIM action: `echo $COMMAND | tr '[:lower:]' '[:upper:]'`
+`svn info`
+
+$FORMER_HIST
+EOT
+
+	# Create info.txt file with data useful to developers
+	log "Creating file http://${SUBDOMAIN}.show.tikiwiki.org/info.txt with extra info for developers"
+	echo "$infotext" > ${INSTANCE_INFO}
+	cd -
+}
+
+# Check for maintenance and die
+if [[ -f $TIM_LOCK ]];
+then
+	echo -n "MAINTENANCE: "
+	cat $TIM_LOCK
+	exit 1
+fi

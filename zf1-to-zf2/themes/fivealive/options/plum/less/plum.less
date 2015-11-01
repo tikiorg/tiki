@@ -1,0 +1,29 @@
+// $Id$ - plum.less; compile to make
+/*  The plum theme option file for the FiveAlive theme of Tiki Wiki CMS Groupware. */
+@import "../../../../../vendor/twitter/bootstrap/less/mixins.less";
+// To apply variables defined in bootstrap-variables.less.
+// These two files are theme-specific:
+@import "bootstrap-variables.less";
+// A copy of the Bootstrap variables.less file but using only color settings.
+@import "tiki-selector-variables.less";
+// Provides values for "legacy" Tiki CSS selectors (not covered by Bootstrap).
+// @import url("../jquery-ui/options/plum/jquery-ui.min.css"); // Currently needed for popup styling, textarea width, etc.
+// These files are used/shared by all FiveAlive theme options:
+@import "../../../less/bootstrap-less-for-options.less";
+// Contains relevant Bootstrap .less file sections to expose variables for the theme options to provide values for.]
+@import "../../../less/tiki-selectors-for-options.less";
+
+// Contains CSS for styling Tiki elements not covered by Bootstrap.
+
+// This comes last to enable site title color of theme options under FiveAlive-lite to have priority over the default set by FiveAlive.
+header.header {
+	.sitetitle,
+	.sitesubtitle {
+		color: @brand-primary;
+		text-shadow: none;
+	}
+	a,
+	a:visited {
+		color: @brand-primary;
+	}
+}

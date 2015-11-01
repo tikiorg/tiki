@@ -1,0 +1,88 @@
+header.page-header::before,
+.layout_social > .container:before {
+	content: none;
+}
+
+.topbar {
+	margin-bottom: 20px;
+}
+
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {
+	padding: 0;
+	margin: 2px 0 0; // override default ul
+	//  font-size: @font-size-base;
+	background-color: @dropdown-bg;
+	border: 1px solid @dropdown-fallback-border; // IE8 fallback
+	border: 1px solid @dropdown-border;
+	border-radius: @border-radius-base;
+	.box-shadow(0 6px 12px rgba(0, 0, 0, .175));
+	background-clip: padding-box;
+
+	// Links within the dropdown menu
+	> li > a {
+		padding: 3px 20px;
+		font-weight: normal;
+		line-height: @line-height-base;
+		color: @dropdown-link-color;
+	}
+}
+
+.cssmenu_horiz > li > ul {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	margin: 0;
+}
+
+// Hover/Focus state
+.cssmenu_horiz > li > a,
+.cssmenu_vert > li > a,
+ .cssmenu_horiz ul > li > a,
+ .cssmenu_vert ul > li > a {
+	&:hover,
+	&:focus {
+		text-decoration: none;
+		color: @dropdown-link-hover-color;
+		background-color: @dropdown-link-hover-bg;
+	}
+}
+
+// styling for both css and generated arrows
+.sf-arrows .sf-with-ul:after {
+  border: 5px solid transparent;
+  border-top-color: @dropdown-link-color; // /* edit this to suit design (no rgba in IE8) */
+}
+
+// styling for right-facing arrows
+.sf-arrows ul .sf-with-ul:after,
+.cssmenu_vert.sf-arrows > li > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: @dropdown-link-color; // @link-color; /* edit this to suit design (no rgba in IE8) */
+}
+
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: @dropdown-link-hover-color;
+}
+
+.cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
+.cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
+.cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: @dropdown-link-hover-color; // white;
+}
+
+
+// Widens scope of Bootstrap rule to cover L&F admin anchors filter, etc.
+.dropdown-menu li {
+	background-color: @dropdown-bg;
+	color: @dropdown-link-color;
+}
+
+.dropdown-menu li:hover,
+.dropdown-menu li:focus {
+	background-color: @dropdown-link-hover-bg;
+	color: @dropdown-link-hover-color;
+}

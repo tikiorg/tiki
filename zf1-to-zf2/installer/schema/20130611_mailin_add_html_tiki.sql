@@ -1,0 +1,1 @@
+ALTER TABLE `tiki_mailin_accounts` ADD COLUMN `save_html` CHAR(1) DEFAULT 'y' NULL;

@@ -1,0 +1,134 @@
+// $Id$
+// This file is for additional LESS rules beyond what are in variables.less.
+// Image path example:
+// @imagePath: ~"../images/";
+// body {
+//	background-image: url('@{imagePath}bg.jpg');
+// }
+//
+// If Glyphicons should be rendered in a color other than the Bootstrap default or the theme default, uncomment and specify the color.
+// .glyphicon {color: @gray-lighter;}
+
+@topmodules-row-sidemargins: 0;
+@topbar-row-sidemargins: -15px;
+
+.container {
+	background-color: #fff;
+}
+
+a, a:visited {
+	font-weight: bold;
+}
+
+h1 {
+	color: #000;
+}
+
+.topbar .navbar-collapse {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.topbar .navbar {
+	border: 1px solid transparent;
+	margin-bottom: 0;
+	min-height: 32px;
+	color: #888;
+	background-color: #fafafa;
+}
+
+.topbar .navbar a {
+	color: #888;
+}
+
+.topbar .navbar-nav > li > a {
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+
+#col2 {
+	padding-left: 0
+}
+
+#col3 {
+	padding-right: 0;
+}
+
+.panel-body a//,
+//.panel-body a:visited
+  {
+	color: #333;
+	font-weight: normal;
+}
+
+.panel-body a:hover {
+	color: #999;
+	text-decoration: none;
+}
+
+.cssmenu_vert li a,
+.cssmenu_vert li ul a,
+.cssmenu_horiz li ul a,
+.cssmenu_horiz li ul a,
+.box-menu .cssmenu_horiz li a,
+.box-menu .cssmenu_horiz li ul a,
+.box-menu .cssmenu_horiz li:hover ul a,
+#topbar_modules .cssmenu_horiz li ul a,
+#topbar_modules .cssmenu_horiz li:hover ul a {
+	padding: .6em 1em;
+	background-color: #fafafa;
+	color: #333;
+	font-weight: bold;
+	font-size: 110%;
+}
+
+.cssmenu_vert li ul a:hover,
+.cssmenu_horiz li ul a:hover,
+.box-menu .cssmenu_horiz li ul a:hover,
+#topbar_modules .cssmenu_horiz li ul a:hover {
+	color: #000;
+	text-decoration: none;
+	background-color: #fff;
+}
+
+.cssmenu_horiz li.selected a,
+.cssmenu_vert li.selected a,
+.cssmenu_horiz li ul li.selected a:link,
+.cssmenu_vert li ul li.selected a:link,
+.cssmenu_horiz li ul li.selected a:visited,
+.cssmenu_vert li ul li.selected a:visited,
+li.menuoption a {
+	text-decoration: none;
+	background-color: #c8c8c8;
+}
+
+.cssmenu_horiz li a.sf-with-ul {
+	padding-right: 2.5em;
+}
+
+.sf-arrows .sf-with-ul:after {
+	border-color: #888 transparent transparent; /* IE8 */
+	border-color: rgba(0, 0, 0, .5) transparent transparent;
+}
+
+.panel {
+	background: #fff;
+	border: 1px solid #ddd;
+	//  margin: 0 0 .2em;
+}
+
+.panel-heading {
+	background-color: #f4f4f4;
+}
+
+.panel-title {
+	//  padding: .4em .7em .3em;
+	//  margin: 0;
+	color: #555;
+	font-size: 125%;
+}
+
+.panel-title a {
+	color: #555
+}
+

@@ -1,0 +1,421 @@
+// $Id$ This file contains CSS selectors beyond what's covered by Bootstrap. Some values are
+// specified here, and some are used from trontastic/less/bootstrap-variables.less.
+
+@imagePath: ~"../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/";
+
+body   {
+	background: url('@{imagePath}ui-bg_diagonals-small_50_262626_40x40.png') repeat;
+	font-family: 'Play', sans-serif;
+	font-size: 16px;
+}
+.layout_basic .container,
+.page-header,
+.header_container { //classic tiki
+	background: #c6e99c;
+}
+
+.page-header,
+.header-container {
+	a,
+	a:visited {
+		color: #222;
+	}
+}
+
+.layout_social > .container,
+#middle,
+.row-middle {
+	background: #9fda58 url('@{imagePath}ui-bg_gloss-wave_85_9fda58_500x100.png') repeat-x;
+}
+.layout_basic #footer,
+#footer .container {
+	background: #000 url('@{imagePath}ui-bg_gloss-wave_55_000000_500x100.png') 50% 50% repeat-x;
+	color: #c6e99c;
+}
+
+#footer a:link,
+#footer a:visited  {
+	color: #B8EC79;
+}
+
+#footer a:link,
+#footer a:visited  {
+	color: #B8EC79;
+}
+
+#col1 {
+	border: 1px solid #4a4a4a;
+	background: #000 url('@{imagePath}ui-bg_gloss-wave_55_000000_500x100.png') 50% top repeat-x;
+	color: #f3fce8;
+}
+
+.btn-default, .btn-primary, .btn-success, .btn-info, .btn-warning, .btn-danger,
+.pagination > li > a, .pagination > li > span,
+.pager li > a, .pager li > span {
+	background: url('@{imagePath}ui-bg_glass_40_0a0a0a_1x400.png') 50% 50% repeat-x;
+	color: @brand-primary;
+}
+
+.btn-default:hover, .btn-primary:hover, .btn-success:hover, .btn-info:hover, .btn-warning:hover, .btn-danger:hover  {
+	background: url('@{imagePath}ui-bg_glass_60_000000_1x400.png') 50% 50% repeat-x;
+}
+
+.btn-default {
+	color: @brand-primary;
+	border-color: lighten(#222,30%);
+}
+
+.btn-primary {
+	color: @brand-primary;
+	border-color: @brand-primary;
+}
+.btn-success {
+	color: @brand-success;
+	border-color: @brand-success;
+}
+.btn-info {
+	color: @brand-info;
+	border-color: @brand-info;
+}
+.btn-warning {
+	color: @brand-warning;
+	border-color: @brand-warning;
+}
+.btn-danger {
+	color: @brand-danger;
+	border-color: @brand-danger;
+}
+
+.btn-link {
+	color: @link-color;
+	&:hover {
+		color: @link-hover-color;
+	}
+}
+
+a.admbox.off {
+	border: 1px solid lighten(#222,20%);
+	color: lighten(#222,20%);
+}
+
+a.admbox.off:hover {
+	border: 1px solid lighten(#222,20%);
+	color: @brand-primary;
+}
+
+.admbox.btn-primary:hover {
+	background: #222;
+	color: #fff;
+	border-color: #fff;
+}
+
+.well {
+	background: #484848;
+	border: lighten(#000000,40%);
+}
+
+pre,
+.btn,
+.form-control,
+.dropdown-menu {
+	font-size: 15px;
+}
+
+a.list-group-item .list-group-item-heading {
+	color: #fff;
+}
+.list-group-item {
+	background-color: #222;
+	border: 1px solid #4a4a4a;
+}
+
+a.list-group-item:hover .list-group-item-heading,
+.list-group-item:hover {
+	color: #222 !important;
+}
+
+blockquote {
+	border-left: 5px solid @brand-primary;
+}
+
+.blockquote-reverse,
+blockquote.pull-right {
+	border-left: none;
+	border-right: 5px solid @brand-primary;
+}
+
+.breadcrumb {
+	display: inline-block;
+	font-size: 90%;
+	font-style: normal;
+	background: transparent;
+}
+
+
+.topbar,
+.navbar-default {
+	border: 1px solid #222;
+	background: #000 url('@{imagePath}ui-bg_gloss-wave_55_000000_500x100.png') 50% 50% repeat-x;
+	color: #c6e99c;
+}
+
+.navbar .navbar-form,
+.navbar-default .navbar-collapse,
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus
+{
+	background: transparent;
+//	border: none;
+}
+
+.topbar {
+	.navbar-default,
+	.navbar-default .navbar-collapse,
+	.navbar-default .navbar-form {
+	background: transparent;
+	border-color: transparent;
+	}
+}
+
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+	background-color: #222;
+	color: @brand-primary;
+}
+
+.navbar-default .navbar-nav > li > a,
+.topbar > a,
+.topbar .navbar-default .navbar-nav > li > a,
+.topbar .nav > li > a {
+	color: @brand-primary;
+}
+
+.cssmenu_horiz.sf-arrows > .menuSection0 > .sf-with-ul::after,
+.topbar .cssmenu_horiz.sf-arrows > .menuSection0 > .sf-with-ul::after,
+.topbar .sf-arrows .sf-with-ul:after {
+	border: 5px solid transparent;
+	border-top-color: @brand-primary; // @dropdown-link-color; // /* edit this to suit design (no rgba in IE8) */
+}
+
+.topbar .cssmenu_horiz.sf-arrows > .menuSection0:hover > .sf-with-ul:after,
+.topbar .cssmenu_horiz.sf-arrows > .menuSection0.sfhover > .sf-with-ul:after {
+	border-top-color: #fff;
+}
+
+.cssmenu_horiz > ul > li > a,
+.cssmenu_vert ul a {
+	background: #fff;
+	color: #222;
+}
+
+// styling for right-facing arrows
+.cssmenu_vert.sf-arrows li > .sf-with-ul:after {
+	border-color: transparent;
+	border-left-color: @link-color; /* edit this to suit design (no rgba in IE8) */
+}
+
+.topbar .sf-arrows ul .sf-with-ul:after,
+.topbar .cssmenu_vert.sf-arrows ul > li > .sf-with-ul:after {
+	border-color: transparent;
+	border-left-color: @dropdown-link-color; /* edit this to suit design (no rgba in IE8) */
+}
+
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li,
+.cssmenu_horiz a,
+.cssmenu_vert a,
+.topbar .cssmenu_horiz li ul li a,
+.topbar .cssmenu_horiz li:hover ul li a {
+	background: none;
+}
+
+.panel,
+.panel-default,
+.box,
+.input-group-addon,
+.popover,
+.modal,
+.modal-body {
+	border: 1px solid #4a4a4a;
+	background: #000 url('@{imagePath}ui-bg_gloss-wave_55_000000_500x100.png') 50% top repeat-x;
+	color: #f3fce8;
+}
+
+.panel-footer,
+.modal-footer {
+	background-color: #222;
+	border-top: 1px solid #4a4a4a;
+}
+
+.panel-heading,
+th,
+td.heading,
+tr.diffheader,
+.popover-title,
+.modal-header {
+	border: 1px solid #000;
+	background: #9fda58 url('@{imagePath}ui-bg_gloss-wave_85_9fda58_500x100.png') 50% 50% repeat-x;
+	color: #222222;
+	font-weight: bold;
+}
+
+.panel-accordian .panel-heading h4.panel-title a {
+	color: #222;
+	&:hover,
+	&:focus {
+		color: lighten(#222,20%);
+	}
+}
+
+.panel-title {
+	font-weight: bold;
+	font-size: 17px;
+}
+
+.table-striped {
+	color: #222;
+	border: 1px solid #95da58;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd),
+.tablesorter tr.odd td {
+	background: #c6e99c;
+	color: #222;
+	a {
+		color: lighten(#222, 25%);
+	}
+}
+
+.table-striped > tbody > tr:nth-of-type(even),
+.tablesorter tr.even td {
+	background: #b0e077;
+	color: #222;
+	a {
+		color: lighten(#222, 10%);
+	}
+}
+
+.table-hover > tbody > tr > td:hover,
+.table-hover > tbody > tr > th:hover,
+.table-hover > tbody > tr:hover > td,
+.table-hover > tbody > tr:hover,
+.table-hover > tbody > tr:hover > th {
+
+	background: lighten(#222, 10%);
+}
+
+.table-striped.table-hover > tbody > tr > td:hover,
+.table-striped.table-hover > tbody > tr > th:hover,
+.table-striped.table-hover > tbody > tr:hover > td,
+.table-striped.table-hover > tbody > tr:hover,
+.table-striped.table-hover > tbody > tr:hover > th {
+	background-color: lighten(#c6e99c, 5%) !important;
+}
+
+th,
+td.heading,
+tr.diffheader {
+	border: none;
+}
+
+.post .postbody-title .title a {
+	color: #222;
+}
+.post .postbody {
+	border: 1px solid #4a4a4a;
+	background: #000000 url('@{imagePath}ui-bg_gloss-wave_55_000000_500x100.png') 50% top repeat-x;
+	color: #fff;
+}
+
+.postbody-title {
+	background:#9fda58 url('@{imagePath}ui-bg_gloss-wave_85_9fda58_500x100.png') 50% 50% repeat-x;
+	color: #222;
+}
+
+.help-block {
+	color: lighten(#404040, 30%);
+}
+
+.alert,
+.jumbotron,
+textarea,
+.form-control,
+.chosen-container-single .chosen-single,
+.chosen-container-active.chosen-with-drop .chosen-single,
+.chosen-container .chosen-drop,
+.chosen-container-multi .chosen-choices .search-choice {
+	background: #FBF9EE url('@{imagePath}ui-bg_gloss-wave_95_f6ecd5_500x100.png') repeat-x 50% 60%;
+	border: 1px solid #FCEFA1;
+	color: #363636;
+}
+
+.tabs {
+	border: 1px solid #d3d3d3;
+	background:#9fda58 url('@{imagePath}ui-bg_gloss-wave_85_9fda58_500x100.png') 50% 50% repeat-x;
+}
+
+.nav-tabs > li > a {
+	background: #0a0a0a url('@{imagePath}ui-bg_glass_40_0a0a0a_1x400.png') 50% 50% repeat-x;
+	color: #b8ec79;
+}
+
+.nav > li > a:hover,
+.nav > li > a:focus,
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus,
+.nav .open > a,
+.nav .open > a:hover,
+.nav .open > a:focus {
+	background: #4c4c4c url('@{imagePath}ui-bg_flat_0_4c4c4c_40x100.png') 50% 50% repeat-x;
+	color: #fff !important;
+}
+
+.caltable .even,
+.caltable .odd {
+	background: #0A0A0A url('@{imagePath}ui-bg_gloss-wave_55_000000_500x100.png') repeat-x scroll 50% 50%;
+	border:1px solid #1B1613;
+	color:#B8EC79;
+}
+
+.caltable .even a,
+.caltable .even a:visited,
+.caltable .odd a,
+.caltable .odd a:visited  {
+	color: #B8EC79;
+}
+
+.caltable td.calhighlight,
+.caltable td.calhighlight a,
+.caltable td.calhighlight a:visited,
+td.calheadhighlight {
+	background: #9fda58 url('@{imagePath}ui-bg_gloss-wave_85_9fda58_500x100.png') 50% 50% repeat-x;
+	color: #000;
+}
+
+td.calheadhighlight,
+td.calheadhighlight a:link,
+td.calheadhighlight a:visited {
+	background: #0A0A0A url('@{imagePath}ui-bg_gloss-wave_55_000000_500x100.png') repeat-x scroll 50% 50%;
+	font-weight: bold;
+	color: #b8ec79;
+}
+
+.caltable .calborder {
+	border: 1px solid #1B1613;
+}
+
+.caltable .calmodfocus {
+	text-decoration: underline;
+}
+
+//.cssmenu_horiz li ul li,
+//.cssmenu_vert li ul li,
+//.topbar .cssmenu_horiz li {
+//	border-radius: 4px;
+//	-moz-border-radius: 4px;
+//	-webkit-border-radius: 4px;
+//}

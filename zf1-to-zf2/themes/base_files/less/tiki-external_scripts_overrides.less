@@ -1,0 +1,76 @@
+// $Id$
+
+// Tweaks to improve spacing of text in jquery.s5 slides
+.s5-slide * {
+	line-height: 1.3em;
+}
+
+.s5-slide h1, .s5-slide h2, .s5-slide h3, .s5-slide h4 {
+	line-height: 1em;
+}
+
+.s5-slide * li {
+	padding-top: 0.3em;
+	padding-bottom: 0.3em;
+}
+
+.s5-footer {
+	font-size: 110%;
+}
+
+// jquery-ui dialogs help
+.ui-dialog {
+	box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
+}
+
+.ui-dialog label {
+	display: block;
+}
+
+.ui-datepicker, .ui-dialog {
+	z-index: 1024;
+}
+
+h4.ui-accordion-header {
+	padding-left: 2.2em;
+}
+
+// jquery validation
+div.form-group label.error {
+	font-weight: normal !important;
+}
+.tiki .chosen-container .active-result {
+	width: auto !important;
+}
+
+// Chosen is calculating the widths wrong (too narrow) so this is a crude workaround.
+.tiki .chosen-container-single,
+.tiki #assign_order_chosen.chosen-container {
+	min-width: 5em;
+}
+
+.chosen-container-single {
+	max-width: 100%;
+}
+
+.chosen-container + .alert {margin-top: 20px;}
+
+// AnythingSlider (wikiplugin_slider) compatibility
+
+.tiki .anythingSlider,
+.tiki .anythingWindow,
+.tiki .anythingBase,
+.tiki .anythingBase > .panel {
+		-webkit-box-sizing: content-box;
+		-moz-box-sizing: content-box;
+		box-sizing: content-box;
+
+}
+
+.tiki .anythingBase > .panel {
+	margin-bottom: 0;
+	background-color: inherit;
+	border: none;
+	border-radius: 0;
+	box-shadow: none;
+}

@@ -1,0 +1,28 @@
+// $Id$ tiki-selector-variables.less file, to provide values for "legacy" Tiki CSS selectors (not covered by Bootstrap).
+// These Akebi theme option values are used by themes/fivealive/less/tiki-selectors.less
+
+@imagePath: ~"../images/";
+@side-column-border: none;
+@side-column-panel-heading-background: #fff;
+// #12bcd1
+//@side-column-panel-heading-border-color:    #19a5be;
+@side-column-panel-heading-border-width: 0;
+//@side-column-panel-title-color:             #19a5be; // #00303c
+@header_outer-background: url('@{imagePath}siteheadertile.jpg') 0 0 no-repeat;
+@header_container_header-background: url('@{imagePath}siteheader.png') -248px 0 no-repeat;
+@form-control-background: #ddf8f9;
+@form-control-border-colors: #b4f3fb #fff #fff #b4f3fb;
+@footer-color: #696969;
+@footer-border-color: #19a5be;
+@footer-link-color: #19a5be;
+@navbar-default-navbar-nav-li-a-background: #19a5be;
+@postbody-title-background: url('@{imagePath}siteheader.png') no-repeat -480px -200px;
+@brand-primary-of-option: @brand-primary;
+
+.navbar-nav > li.dropdown {
+	border-bottom: 1px solid @btn-primary-bg;
+}
+
+.secondary_site_menu .navbar-nav li.dropdown {
+	border-bottom: none;
+}

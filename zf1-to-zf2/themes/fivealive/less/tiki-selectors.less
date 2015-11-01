@@ -1,0 +1,174 @@
+// $Id$
+// This file is for additional LESS rules beyond what are in variables.less.
+// Image path example:
+@imagePath: ~"../images/";
+// body {
+//	background-image: url('@{imagePath}bg.jpg');
+// }
+//
+// If Glyphicons should be rendered in a color other than the Bootstrap default or the theme default, uncomment and specify the color.
+// .glyphicon {color: @gray-lighter;}
+
+
+.topbar {
+	margin-bottom: 20px;
+}
+
+.topbar .navbar-default .navbar-nav > li > a,
+.topbar .navbar-default .navbar-nav > li > a:hover,
+.topbar .navbar-default .navbar-nav > li > a:focus {
+	color: #fff;
+}
+
+#col2 .panel,
+#col3 .panel,
+#bottom_modules .panel {
+	background: none;
+	border: none;
+}
+
+#col2 h3.panel-title,
+#col3 h3.panel-title {
+	color: #000;
+}
+
+#col2 .panel-heading,
+#col3 .panel-heading,
+#bottom_modules .panel-heading {
+	background: none !important;
+	border-bottom: none;
+}
+
+// Header graphics
+.header_outer {
+	/* whole width div containing the header strip */
+	background: url('@{imagePath}headertile.png') 0 0 no-repeat;
+}
+
+.header_container {
+	/* 2nd whole width div for background image tricks */
+	background: url('@{imagePath}header_left.png') 0 100% no-repeat;
+}
+
+.header_container {
+	/* inner <header> element that gets .fixedwidth class applied */
+	background: url('@{imagePath}siteheader.jpg') 0 0 no-repeat;
+}
+
+.page-header {
+	margin-top: 0;
+	margin-bottom: 0;
+	border-bottom: none;
+}
+
+.page-header .btn-link,
+.siteloginbar_popup .btn-link {
+	color: #fff;
+}
+
+.box-quickadmin .cssmenu_horiz ul li {
+	background: #0e567a;
+}
+
+#topbar_modules .box-search {
+	margin-top: 8px;
+}
+
+.form-control,
+select,
+input[type="text"],
+input[type="password"],
+input[type="file"],
+input[type="email"],
+input[type="file"],
+input[type="search"],
+input[type="number"],
+input#login-pass,
+textarea,
+.adminoptionbox option {
+	background-color: #d6f3fa;
+	color: #000;
+	border: 1px solid;
+	border-color: #9ae8fa #e3f7fb #e3f7fb #9ae8fa;
+}
+
+.middle_outer {
+	background: url('@{imagePath}topbar.jpg') repeat-x;
+}
+
+.navbar-collapse {
+	border: none;
+}
+
+#footer {
+	background: black;
+	color: #696969;
+	padding: 1px 0 2px 0;
+	width: 100%;
+}
+
+.footer {
+	border-top: 1px solid #28aae1;
+	border-bottom: 1px solid #28aae1;
+	margin-bottom: 2px;
+	padding-bottom: 2px;
+}
+
+.footer_liner {
+	h3.panel-title {
+		color: #fff;
+		border-bottom: 1px dotted #28aae1;
+	}
+	legend,
+	a,
+	a:visited {
+		color: #a9a9a9;
+	}
+}
+
+/*header.header .sitetitles {
+  font-family: Paneuropa, "Bitstream Vera Sans", Arial, Helvetica, sans-serif;
+}*/
+
+header.header {
+	.sitetitles {
+		font-family: Paneuropa, "Bitstream Vera Sans", Arial, Helvetica, sans-serif;
+	}
+	.sitetitle,
+	.sitesubtitle {
+		color: #fff !important;
+		text-shadow: #143c64 3px 2px 0 !important;
+	}
+	a,
+	a:visited {
+		color: #fff !important;
+		text-decoration: none;
+	}
+}
+
+.navbar-default .navbar-nav > li > a {
+	//  background: url('@{imagePath}options/blueberry/siteheader.jpg') -260px -200px no-repeat transparent;
+	//  border-radius: @border-radius-base;
+	margin-right: inherit;
+}
+
+.navbar-nav {
+	> li > a {
+		background: transparent;
+	}
+}
+
+@media (min-width: @screen-md-min) {
+	.navbar-default .navbar-nav > li > a {
+		border-radius: 0;
+		background: transparent !important;
+	}
+
+	.topbar {
+		min-height: 34px;
+	}
+}
+
+.calhighlight {
+	background: #ddf4ef;
+}

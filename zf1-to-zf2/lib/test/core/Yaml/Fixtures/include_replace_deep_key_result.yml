@@ -1,0 +1,12 @@
+---
+preferences:
+  feature_something: y
+  level1:
+    something: "abc"
+    level2:
+      level3:
+        feature_abc:
+          - a
+          - b
+          - c
+      something_else: "xyz"

@@ -1,0 +1,97 @@
+<?php
+
+// (c) Copyright 2002-2015 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// 
+// Nota per utilitzar el català respectuós (tractament de VOS als usuaris)
+// 
+// La traducció al català de tiki, en general, quan mostra algun missatge als usuaris
+// els tracta de tu. Aquest fitxer inclou traduccions al català en un estil més
+// formal tractan de vos/vosaltres als usuaris, o emprant formes impersonals.
+// 
+// Si voleu que tiki utilitzi aquestes traduccions més formals, canvieu el nom d'aquest
+// fitxer de "custom.php_vos" a "custom.php"
+//
+// Es mostra la traducció original comentada i la versió formal
+//
+$lang_custom = array(
+//"Your comment was posted" => "S'ha publicat el teu comentari",
+"Your comment was posted" => "S'ha publicat el vostre comentari",
+//"You must choose a group" => "Has d'escollir un grup",
+"You must choose a group" => "Heu d'escollir un grup",
+//"Wrong passcode. You need to know the passcode to register at this site" => "Codi de registre no vàlid. Necessites saber el codi de registre per donar-te d'alta en aquest lloc web",
+"Wrong passcode. You need to know the passcode to register at this site" => "Codi de registre no vàlid. Necessiteu saber el codi de registre per donar-vos d'alta en aquest lloc web",
+//"Log In" => "Connecta't",
+"Log In" => "Connectar",
+//"Log in" => "Connecta't",
+"Log in" => "Connectar",
+//"Log out" => "Desconnecta't",
+"Log out" => "Desconnectar",
+//"CapsLock is on" => "Tens activada la tecla de bloqueig de majúscules",
+"CapsLock is on" => "Teniu activada la tecla de bloqueig de majúscules",
+//"A valid email is mandatory to register" => "Cal una adreça de correu-e vàlida per enregistrar-te",
+"A valid email is mandatory to register" => "Cal una adreça de correu-e vàlida per registrar-se",
+//"You or someone registered this email address at" => "tu o alguna persona ha registrat aquesta adreça de correu-e a",
+"You or someone registered this email address at" => "Aquesta adreça de correu-e ha estat registrada a",
+//"Your registration confirmation" => "El teu registre d'informació de Tiki",
+"Your registration confirmation" => "La vostra confirmació de registre",
+//"Enjoy the site!" => "Disfruta del lloc!",
+"Enjoy the site!" => "Disfruteu del lloc!",
+//"If you want to be a registered user in this site you will have to use the following link to login for the first time:" => "Si vols ser un usuari registrat en aquesta web hauràs de seguir aquest enllaç la primera vegada:",
+"If you want to be a registered user in this site you will have to use the following link to login for the first time:" => "Per confirmar el vostre registre seguiu aquest enllaç:",
+//"Your registration confirmation" => "El teu registre d'informació de Tiki",
+"Your registration confirmation" => "Confirmar el registre",
+//"requested a reminder of the password for your account" => "ha demanat un recordatori de la contrasenya del teu compte",
+"requested a reminder of the password for your account" => "ha demanat un recordatori de la contrasenya del seu compte",
+//"requested password reset for your account" => "ha demanat que es posi una nova contrasenya per al teu compte",
+"requested password reset for your account" => "heu demanat que es posi una nova contrasenya al vostre compte",
+//"Please click on the following link to confirm you wish to reset your password and go to the screen where you must enter a new \"permanent\" password. Please pick a password only you will know, and don't share it with anyone else" => "Si us plau, clica en el següent enllaç per confirmar que vols canviar la teva contrasenya i anar a la pantalla on hauràs d'introduir una contrasenya nova. Si us plau, escull una contrasenya que només sàpigues tu, i no la comparteixis amb altres persones",
+"Please click on the following link to confirm you wish to reset your password and go to the screen where you must enter a new \"permanent\" password. Please pick a password only you will know, and don't share it with anyone else" => "Si us plau, cliqeu en el següent enllaç per confirmar que voleu canviar la vostra contrasenya i anar a la pantalla on haureu d'introduir una contrasenya nova.",
+//"Important: The old password remains active if you don't click the link above." => "Important: La teva antiga contrasenya roman activa si no punxes sobre l'enllaç de més amunt.",
+"Important: The old password remains active if you don't click the link above." => "Important: La vostra antiga contrasenya roman activa si no cliqueu sobre l'enllaç anterior.",
+//"An email with a link to reset your password has been sent " => "S'ha enviat el correu-e amb l'enllaç per canviar la teva contrasenya ",
+"An email with a link to reset your password has been sent " => "S'ha enviat un correu electrònic amb l'enllaç per canviar la contrasenya ",
+//"Get a visual challenge" => "Demana un desafiament visual",
+"Get a visual challenge" => "Demaneu un desafiament visual",
+//"Get an audio challenge" => "Demana un desafiament auditiu",
+"Get an audio challenge" => "Demaneu un desafiament auditiu",
+//"Get a new challenge" => "Demana un nou desafiament",
+"Get a new challenge" => "Demaneu un nou desafiament",
+//"Enter your username or email" => "Introdueix el teu nom d'usuari o correu-e",
+"Enter your username or email" => "Introduiu el vostre nom d'usuari o correu-e",
+//"Enter your email" => "Introdueix el teu correu-e",
+"Enter your email" => "Introduiu el vostre correu-e",
+//"Send me my Password" => "Envia'm la meva contrasenya",
+"Send me my Password" => "Envieu-me la meva contrasenya",
+//"Request Password Reset" => "Demana un canvi de contrasenya",
+"Request Password Reset" => "Demaneu un canvi de contrasenya",
+//"Contact Us" => "Contacta'ns",
+"Contact Us" => "Contacteu-nos",
+//"You are not logged in" => "No està connectat",
+"You are not logged in" => "No esteu connectat",
+//"Go to Log in Page" => "Ves a la pàgina per Connectar-te",
+"Go to Log in Page" => "Aneu a la Pàgina per Connectar-vos",
+//"Read the License" => "Llegeix la Llicència",
+"Read the License" => "Llegiu la Llicència",
+//"Read this first!" => "Llegeix això abans de començar!",
+"Read this first!" => "Llegiu això abans de començar!",
+//"Read an article" => "Llegeix un article",
+"Read an article" => "Llegiu un article",
+//"Publish an article" => "Publica un article",
+"Publish an article" => "Publiqueu un article",
+//"Read more" => "Llegeix més",
+"Read more" => "Llegiu més",
+//"Try another code" => "Prova amb un altre codi",
+"Try another code" => "Proveu amb un altre codi",
+"You do not have permission to duplicate this gallery" => "No teniu permís per duplicar aquesta galeria",
+"You do not have permission to edit this banner" => "No teniu permís per editar aquest banner",
+"Please create a category first" => "Si us plau, primer creeu una categoria",
+"You do not have permission to edit this article" => "No teniu permís per editar aquest article",
+"You must specify a directory" => "Heu d'especificar un directori",
+"You must set a home file gallery" => "Heu de configurar una galeria d'arxius d'inici",
+"You must supply all the information, including title and year." => "Heu de facilitar tota la informació, incloent títol i any.",
+);
+$lang = $lang_custom + $lang;
+

@@ -1,0 +1,81 @@
+// $Id$
+// This file is for additional LESS rules beyond what are in variables.less.
+// Image path example:
+// @imagePath: ~"newtheme/images/";
+// body {
+//	background-image: url('@{imagePath}bg.jpg');
+// }
+//
+// If Glyphicons should be rendered in a color other than the Bootstrap default or the theme default, uncomment and specify the color.
+// .glyphicon {color: @gray-lighter;}
+@import "../../../vendor/twitter/bootstrap/less/mixins.less";
+
+.topbar {
+	border-radius: @border-radius-base;
+	border: 1px solid #aaa;
+	margin-bottom: 20px;
+}
+
+.topbar {
+	.nav > li > a {
+		border-right: 1px solid #aaa;
+		font-weight: bold;
+	}
+
+	.nav > li:first-of-type > a {
+		border-left: none;
+	}
+}
+
+.navbar-default,
+.topbar,
+	// .topbar .cssmenu_horiz ul,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li,
+.panel-heading,
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+	#gradient > .vertical(@start-color: #e3e3e3; @end-color: #ccc);
+}
+
+.panel-heading {
+	margin: 3px;
+	border-bottom-left-radius: @border-radius-base;
+	border-bottom-right-radius: @border-radius-base;
+}
+
+.panel-title {
+	font-weight: bold;
+}
+
+.btn-default,
+.btn-primary,
+.btn-success,
+.btn-info,
+.btn-warning,
+.btn-danger {
+	background: #f2f2f2;
+	background: -moz-linear-gradient(top, #f2f2f2 0%, #f2f2f2 46%, #e6e6e6 50%, #eeeeee 50%, #eeeeee 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f2f2f2), color-stop(46%, #f2f2f2), color-stop(50%, #e6e6e6), color-stop(50%, #eeeeee), color-stop(100%, #eeeeee));
+	background: -webkit-linear-gradient(top, #f2f2f2 0%, #f2f2f2 46%, #e6e6e6 50%, #eeeeee 50%, #eeeeee 100%);
+	background: -o-linear-gradient(top, #f2f2f2 0%, #f2f2f2 46%, #e6e6e6 50%, #eeeeee 50%, #eeeeee 100%);
+	background: -ms-linear-gradient(top, #f2f2f2 0%, #f2f2f2 46%, #e6e6e6 50%, #eeeeee 50%, #eeeeee 100%);
+	background: linear-gradient(to bottom, #f2f2f2 0%, #f2f2f2 46%, #e6e6e6 50%, #eeeeee 50%, #eeeeee 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f2f2f2', endColorstr='#eeeeee', GradientType=0);
+}
+
+.btn-default:hover,
+.btn-primary:hover,
+.btn-success:hover,
+.btn-info:hover,
+.btn-warning:hover,
+.btn-danger:hover {
+	background: #eeeeee;
+	background: -moz-linear-gradient(top,  #eeeeee 0%, #eeeeee 50%, #e6e6e6 50%, #f2f2f2 54%, #f2f2f2 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(50%,#eeeeee), color-stop(50%,#e6e6e6), color-stop(54%,#f2f2f2), color-stop(100%,#f2f2f2));
+	background: -webkit-linear-gradient(top,  #eeeeee 0%,#eeeeee 50%,#e6e6e6 50%,#f2f2f2 54%,#f2f2f2 100%);
+	background: -o-linear-gradient(top,  #eeeeee 0%,#eeeeee 50%,#e6e6e6 50%,#f2f2f2 54%,#f2f2f2 100%);
+	background: -ms-linear-gradient(top,  #eeeeee 0%,#eeeeee 50%,#e6e6e6 50%,#f2f2f2 54%,#f2f2f2 100%);
+	background: linear-gradient(to bottom,  #eeeeee 0%,#eeeeee 50%,#e6e6e6 50%,#f2f2f2 54%,#f2f2f2 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#f2f2f2',GradientType=0 );
+}

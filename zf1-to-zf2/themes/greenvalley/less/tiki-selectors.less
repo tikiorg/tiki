@@ -1,0 +1,145 @@
+// $Id$
+// This file is for additional LESS rules beyond what are in variables.less.
+// Image path example:
+@imagePath: ~"../images/";
+// body {
+//	background-image: url('@{imagePath}bg.jpg');
+// }
+//
+// If Glyphicons should be rendered in a color other than the Bootstrap default or the theme default, uncomment and specify the color.
+// .glyphicon {color: @gray-lighter;}
+
+@topmodules-row-sidemargins: 0;
+@topbar-row-sidemargins: -15px;
+
+//body {
+//	background: url('@{imagePath}background.jpg');
+//}
+
+.header_outer {
+	margin-top: 24px;
+}
+
+// add media query for medium and large displays
+.page-header .top_modules {
+	min-height: 175px;
+	background: url('@{imagePath}header_background_ltr.jpg') 50% 0 no-repeat;
+	background-size: cover;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+}
+
+.topbar {
+	margin-bottom: 20px;
+}
+
+.topbar,
+.navbar-default,
+.navbar-fixed-top {
+	background: #473119 url('@{imagePath}menubar-wood.jpg') 50% 50% no-repeat;
+	background-size: cover;
+	-moz-box-shadow: inset 0 -3px 10px #331A00;
+	-webkit-box-shadow: inset 0 -3px 10px #331A00;
+	box-shadow: inset 0 -3px 10px #331A00;
+	border: none;
+	border-radius: 0;
+}
+
+.topbar .navbar-default,
+.topbar .cssmenu_horiz ul,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li {
+	background: transparent;
+}
+
+#topbar_modules {
+	background: #473119 url('@{imagePath}menubar-wood.jpg') 50% 50% no-repeat;
+	background-size: cover;
+	-moz-box-shadow: inset 0 -3px 10px #331A00;
+	-webkit-box-shadow: inset 0 -3px 10px #331A00;
+	box-shadow: inset 0 -3px 10px #331A00;
+	border: none;
+	border-radius: 0;
+	.navbar-default {
+		background: transparent;
+		border: none;
+	}
+	.form-group {
+		margin-bottom: 0;
+	}
+}
+
+#middle,
+.row-middle,
+.tiki > .container {
+	background: url('@{imagePath}page_background_ltr.jpg') repeat;
+}
+
+.pagetitle {
+	text-shadow: #666666 0 1px 1px;
+}
+
+#page-data {
+	text-shadow: 1px 1px 0 rgb(255, 255, 255);
+}
+
+.panel-default > .panel-heading {
+	height: 52px;
+	padding-top: 6px;
+	background: url('@{imagePath}box_header3.png') no-repeat 50% 0%;
+	background-size: cover;
+	text-align: center;
+}
+
+.panel-title {
+	font-size: 1.2em;
+	font-weight: 700;
+	color: #FFFFFF;
+	text-shadow: #666 0px 2px 3px;
+
+}
+
+.btn-default, input[type="reset"], input[type="submit"] {
+	background: url('@{imagePath}button_bck.jpg') 100% 50% repeat;
+	//  border: solid 1px rgba(84, 60, 27, 0.64);
+	box-shadow: 2px 2px 3px 1px rgba(43, 43, 43, 0.65);
+	text-shadow: #f2e4ab 0px 1px 1px;
+}
+
+.btn-default:hover, input[type="reset"]:hover, input[type="submit"]:hover {
+	color: #a99278;
+	background: url('@{imagePath}button_bck_hover.jpg') 100% 50% repeat;
+	box-shadow: 1px 1px 2px 1px rgba(84, 60, 27, 0.64);
+	text-shadow: #2b2b2b 0 1px 1px;
+}
+
+footer.footer {
+	margin-bottom: 20px;
+}
+
+.footer .modules {
+	background: url('@{imagePath}footer_bck.jpg');
+	background-size: contain;
+	color: #E0D6CC;
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+	-webkit-border-bottom-left-radius: 8px;
+	-webkit-border-bottom-right-radius: 8px;
+	-moz-border-radius-bottomleft: 8px;
+	-moz-border-radius-bottomright: 8px;
+	padding-top: 20px;
+	h3 {
+		a,
+		a:visited {
+			color: #B29980;
+		}
+		&:hover {
+			color: #c48054;
+		}
+	}
+}
+
+.articletitle .titleb {
+	color: #996633;
+	font-size: 0.9em;
+}

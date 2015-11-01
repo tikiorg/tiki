@@ -1,0 +1,299 @@
+// $Id$
+//****** Misc. Global Classes (layout and style) ****/
+// highlight on interface text to draw attention;
+// also highlight on "button" links, e.g. if there are some comments it
+// highlights the "button" link in #page-bar under the content of the wiki pages
+
+// (this and the following color-related selectors are moved to tiki-selectors.less)
+// .searchresults blockquote em,
+// .highlight,
+// .button.highlight a,
+// .button a.highlight {
+//   background: @state-danger-bg;
+//   color: @state-danger-text;
+// }
+//
+// .button a.highlight:hover {
+//   background: darken(@state-danger-bg, 15%);
+// }
+
+// Since button background is actually applied to the link within the button, apply button highlight to same bg area as normal button state .
+.button.highlight {
+	background: inherit;
+}
+
+// Highlight effect is just visual distinction, so no need for block element.
+span.highlight {
+	padding: 0 .3em;
+}
+
+// Border and background should "shrinkwrap" to text size.
+div.highlight {
+	display: inline-block;
+}
+
+.rating .highlight {
+	padding: inherit;
+}
+
+.ratingResultAvg {
+	font-weight: bold;
+}
+
+.articletitle span.ratingResultAvg {
+	font-weight: normal;
+}
+
+.rbox > div.highlight {
+	display: block;
+	font-weight: bold;
+}
+
+// Input fields auto-fill/
+// Webkit-based browser specific (Google Chrome, Chromium, etc.)
+// input:-webkit-autofill {
+//  background-color: @input-bg !important; /* needs important because Chrome has it already important */
+//  background-image: none !important;
+//  color: @input-color !important; /* the Google guys forgot the number-one rule... when they specify background they should specify forgeround color too ;) */
+// }
+
+// Support for orphans & widows on block level elements (useful when printing or when using columns of text)
+// More info at https://css-tricks.com/almanac/properties/w/widows/
+address,
+blockquote,
+dd,
+dl,
+dt,
+h1, h2, h3, h4, h5, h6,
+li,
+nav,
+noscript,
+ol,
+p,
+pre,
+ul {
+widows: 3;
+orphans: 3;
+}
+
+// Put together all the one-liners which should not display
+#attzone,
+#bottom_modules .box-rsslist br,
+#comzone,
+#edithelpzone,
+#forumpost,
+#polledit,
+#pollzone,
+#rules-copy-panel,
+#tiki-clean a.editplugin,
+.collapsed ul,
+	// .comment.archived,
+.convene-no img,
+.s5-slide a.editplugin,
+.tabs br,
+.wiki-edithelp,
+.wpfade-div-plain,
+form[name=editpageform] .form-group .tab-content .alert-warning {
+	display: none;
+}
+
+#attzoneopen,
+#comzoneopen,
+#pollopen,
+.all .comment.archived {
+	display: block;
+}
+
+// Ajax, jquery. etc.
+// Ajax Loading Overlay
+#ajaxLoadingBG {
+	display: none;
+	z-index: 9999;
+	position: absolute;
+	//  background: transparent url('@{imagePathToImgDir}overlay-light.png');
+}
+
+#ajaxLoading {
+	display: none;
+	z-index: 10000;
+	position: absolute;
+	text-align: center;
+	vertical-align: top;
+	height: 80px;
+	width: 220px;
+	font-size: 2em;
+	font-weight: bold;
+	//  color: @gray-lighter;
+	//  background: transparent url('@{imagePathToImgDir}loading-light.gif') no-repeat 50% 50%;
+}
+
+// cookie consent style
+#cookie_consent_div {
+	//  padding: @alert-padding;
+	margin: 1em;
+	//  border: 1px solid @alert-info-border;
+	//  color: @alert-info-text;
+	//  background-color: @alert-info-bg;
+}
+
+#cookie_consent_div.banner {
+	position: fixed;
+	//  padding: @alert-padding;
+	margin: 0;
+	//  border: 1px solid @alert-info-border;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 1100;
+}
+
+#cookie_consent_div .description {
+	font-style: normal;
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+// print mode only - to make sure print templates will use and print on seamless white bg color
+// html#print {
+//  background: #fff;
+//  color: #000;
+// }
+
+body.db_error {
+	background: none;
+}
+
+body.fullscreen {
+	text-align: left;
+	//  background: #fff;
+}
+
+#show-errors-button {
+	z-index: 1024;
+}
+
+#errors {
+	z-index: 1023;
+}
+
+// Misc. Global Classes (layout and style)
+
+#edithelpzone code {
+	font-size: 1.2em;
+}
+
+// .attention {
+//  color: @alert-danger-text;
+// }
+
+// .openid_url {
+//  background: #fff url('@{imagePath}icons/login-OpenID-bg.gif') 1px 1px no-repeat;
+// }
+
+.bannertext {
+	font-size: .95em;
+	text-decoration: none;
+}
+
+#debugconsole {
+	//  background: @navbar-inverse-bg;
+	//  color: @navbar-inverse-link-color;
+	padding: 5px;
+	//  border: 2px solid @navbar-inverse-border;
+	font-size: 1em;
+	position: absolute;
+	top: 0;
+	left: 20px;
+	width: 60%;
+	height: auto;
+	z-index: 1000;
+}
+
+// #debugconsole form {
+//  color: @navbar-inverse-link-active-bg;
+// }
+//
+// #debugconsole a {
+//  color: @navbar-inverse-link-active-color;
+// }
+
+.cachedStatus,
+.mini {
+	font-size: .9em;
+}
+
+/* Icons */
+a.icon,
+img.icon {
+	border: none;
+	//  background: transparent;
+}
+
+a .icon {
+	font-size: 1.2em;
+}
+
+.nav a .icon.icon-menuitem {
+	font-size: 0.8em;
+}
+
+// So a span can act like a link and avoid the width of a button (e.g., for action icons)
+span.btn-link {
+	cursor: pointer;
+}
+
+// div #metadata fieldset.tabcontent, div #metadata div.tabs {
+//  background-color: transparent;
+// }
+
+.magnify {
+	float: right;
+	padding-top: 2px;
+}
+
+// Modal submit buttons need to be hidden to avoid blink
+.modal-body div.submit {
+	display: none;
+}
+
+// ColorBox
+// #cboxTitle {
+//   background-color: @body-bg;
+// }
+//
+// #captchaImg {
+//   border: 1px solid @panel-default-border;
+// }
+
+/* fix for lists with empty dl items, e.g. tracker items
+ * thanks hayksaakian on https://github.com/twbs/bootstrap/issues/4062
+ * to be removed when we update to bs 3.2
+ */
+.dl-horizontal > dd:after {
+	display: table;
+	content: "";
+	clear: both;
+}
+
+//Title for bootstrap dropdowns that drop down upon hover
+.dropdown-title {
+	text-align: center;
+	padding-right: 5px;
+	padding-left: 5px;
+	opacity: .75;
+}
+
+.jscal input[type=text] {
+	width: 90%;
+	display: inline-block;
+	margin-right: 2px;
+}
+
+//date picker dropdowns
+select.form-control.date {
+	padding: 0;
+	margin-left: 0;
+	width: auto;
+	display: inline;
+}
+

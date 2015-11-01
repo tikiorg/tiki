@@ -1,0 +1,39 @@
+/* $Id$
+	Shadows theme option for Tikinewt theme.
+	Tiki Wiki CMS Groupware.
+*/
+
+body {
+	background: #F3F6F9;
+}
+
+#col1 {
+    border: none;
+    background: #ffffff;
+}
+
+#col2 .module,
+#col3 .module,
+article,
+.post,
+.table-responsive,
+.tab-content {
+	border: solid #f6f6f6;
+    border-width: 1px 0 0 1px;
+    background: #fff;
+	padding: 0 8px 9px 0;
+    -webkit-box-shadow: 4px 4px 4px 0px rgba(210,210,210,1);
+    -moz-box-shadow: 4px 4px 4px 0px rgba(210,210,210,1);
+    box-shadow: 4px 4px 4px 0px rgba(210,210,210,1);
+/*	margin: 6px !important;*/
+}
+
+article {
+    border-left: none;
+}
+
+.module.panel-default > .panel-heading {
+	border-bottom: 2px solid #f7f7f7;
+	background: #fff;
+}
+
