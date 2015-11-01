@@ -101,6 +101,25 @@ function tiki_setup_events()
 			$events->bind('tiki.trackeritem.save', array('Tracker_Field_Icon', 'updateIcon'));
 		}
 
+		// Certain non-read only fields that can be edited outside of using the tracker field do store a value in the
+		// tiki_tracker_item_fields database, and therefore need updates of the tracker field value to be in sync, when
+		// edited elsewhere. Completely read-only fields don't have this problem as they don't save anything anyway.
+		//
+		// A possible solution could have been to avoid storing the value in the database altogether and get the value
+		// from the canonical source, but there is code that currently could dependd on it and also it might actually
+		// be argued in favor of for performance reasons to have the value in the tiki_tracker_item_fields db as well.
+		//
+		// TODO: freetags field. There is already handling for the Freetags field in wikiplugin_addfreetag.php which
+		// is the most likely place it would be edited outside of tracker field but an event would be cleaner.
+		//
+		if ($prefs['trackerfield_relation'] == 'y') {
+			$events->bind('tiki.social.relation.add', array('Tracker_Field_Relation', 'syncRelationAdded'));
+			$events->bind('tiki.social.relation.remove', array('Tracker_Field_Relation', 'syncRelationRemoved'));
+		}
+		if ($prefs['trackerfield_category'] == 'y') {
+			$events->bind('tiki.object.categorized', array('Tracker_Field_Category', 'syncCategoryFields'));
+		}
+
 		$events->bind('tiki.trackeritem.save', $defer('trk', 'update_tracker_summary'));
 		$events->bind('tiki.trackeritem.save', $defer('trk', 'invalidate_item_cache'));
 		$events->bind('tiki.trackeritem.rating', $defer('trk', 'invalidate_item_cache'));

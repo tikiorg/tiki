@@ -672,6 +672,42 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		);
 	}
 
-
+	static public function syncCategoryFields($args)
+	{
+		if ($args['type'] == 'trackeritem') {
+			$itemId = $args['object'];
+			$trackerId = TikiLib::lib('trk')->get_tracker_for_item($itemId);
+			$definition = Tracker_Definition::get($trackerId);
+			if ($fieldIds = $definition->getCategorizedFields()) {
+				foreach ($fieldIds as $fieldId) {
+					$field = $definition->getField($fieldId);
+					$handler = TikiLib::lib('trk')->get_field_handler($field);
+					$data = $handler->getFieldData();
+					$applicable = array_keys($data['list']);
+					$value = $old_value = explode(",", TikiLib::lib('trk')->get_item_value($trackerId, $itemId, $fieldId));
+					foreach ($args['added'] as $added) {
+						if (!in_array($added, $applicable)) {
+							continue;
+						}
+						if (!in_array($added, $value)) {
+							$value[] = $added;
+						}
+					}
+					foreach ($args['removed'] as $removed) {
+						if (!in_array($removed, $applicable)) {
+							continue;
+						}
+						if (in_array($removed, $value)) {
+							$value = array_diff($value, [$removed]);
+						}
+					}
+					if ($value != $old_value) {
+						$value = implode(",", $value);
+						TikiLib::lib('trk')->modify_field($itemId, $fieldId, $value);
+					}
+				}
+			}
+		}
+	}
 }
 

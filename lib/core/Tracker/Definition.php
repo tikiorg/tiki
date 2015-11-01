@@ -287,6 +287,16 @@ class Tracker_Definition
 
 		return $out;
 	}
+
+	function getRelationField($relation)
+	{
+		foreach ($this->getFields() as $field) {
+			if ($field['type'] == 'REL'
+				&& $field['options_map']['relation'] == $relation) {
+				return $field['fieldId'];
+			}
+		}
+	}
 	
 	/**
 	 * Get the name of the item user if any.
