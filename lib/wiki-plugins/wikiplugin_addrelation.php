@@ -142,8 +142,9 @@ function wikiplugin_addrelation($data, $params)
 		if ($_POST[$id] == 'y') {
 			$relationlib->add_relation($qualifier, $source_object['type'], $source_object['object'], $target_object['type'], $target_object['object']);
 		} elseif ($_POST[$id] == 'n') {
-			$relation_id = $relationlib->add_relation($qualifier, $source_object['type'], $source_object['object'], $target_object['type'], $target_object['object']);
-			$relationlib->remove_relation($relation_id);
+			if ($relation_id = $relationlib->get_relation_id($qualifier, $source_object['type'], $source_object['object'], $target_object['type'], $target_object['object'])) {
+				$relationlib->remove_relation($relation_id);
+			}
 		}
 	}
 	$relationsfromsource = $relationlib->get_relations_from($source_object['type'], $source_object['object'], $qualifier);
