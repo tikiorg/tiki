@@ -77,12 +77,12 @@ class OpenPGP_Zend_Mail_Transport_Sendmail extends OpenPGP_Zend_Mail_Transport_A
 	/**
 	 * Constructor.
 	 *
-	 * @param  string|array|Zend_Config $parameters OPTIONAL (Default: null)
+	 * @param  string|array|Zend\Config\Config $parameters OPTIONAL (Default: null)
 	 * @return void
 	 */
 	public function __construct($parameters = null)
 	{
-		if ($parameters instanceof Zend_Config) {
+		if ($parameters instanceof Zend\Config\Config) {
 			$parameters = $parameters->toArray();
 		}
 

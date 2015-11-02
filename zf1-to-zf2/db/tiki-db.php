@@ -70,7 +70,7 @@ if ($parts = TikiInit::getEnvironmentCredentials()) {
 unset($host_map, $db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $shadow_user, $shadow_pass, $shadow_host, $shadow_dbs);
 
 global $systemConfiguration;
-$systemConfiguration = new Zend_Config(
+$systemConfiguration = new Zend\Config\Config(
 	array(
 		'preference' => array(),
 		'rules' => array(),
@@ -82,7 +82,7 @@ if (isset ($_SERVER['TIKI_INI_FILE'])) {
 		die('Configuration file could not be read.');
 	}
 
-	$systemConfiguration = $systemConfiguration->merge(new Zend_Config_Ini(
+	$systemConfiguration = $systemConfiguration->merge(new Zend\Config\Ini(
 		$_SERVER['TIKI_INI_FILE'],
 		isset($_SERVER['TIKI_INI_IDENTIFIER']) ? $_SERVER['TIKI_INI_IDENTIFIER'] : null
 	));
@@ -94,7 +94,7 @@ if (isset ($system_configuration_file)) {
 	if (! isset($system_configuration_identifier)) {
 		$system_configuration_identifier = null;
 	}
-	$systemConfiguration = $systemConfiguration->merge(new Zend_Config_Ini($system_configuration_file, $system_configuration_identifier));
+	$systemConfiguration = $systemConfiguration->merge(new Zend\Config\Ini($system_configuration_file, $system_configuration_identifier));
 }
 
 if ( $re === false ) {

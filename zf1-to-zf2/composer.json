@@ -80,13 +80,16 @@
 		"jcobb/basic-jquery-slider": "1",
 		"symfony/console": "2.6.4",
 		"symfony/dependency-injection": "2.6.4",
-		"symfony/config": "2.6.4"
+		"symfony/config": "2.6.4",
+		"zendframework/zend-config": "~2.4.0"
 	},
 	"require-dev": {
 		"oyejorge/less.php": "1.7.0.7",
 		"mikey179/vfsStream": "1.1.0",
 		"bafs/testify": "dev-master",
-		"phpunit/phpunit": "4.8.*"
+		"phpunit/phpunit": "4.8.*",
+		"phpunit/phpunit-selenium": ">=1.2",
+		"phpunit/dbunit": ">=1.2"
 	},
 	"config": {
 		"process-timeout": 5000,
