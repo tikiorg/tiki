@@ -265,7 +265,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 		);
 		$AddUser=false;
 	}
-	if ($_REQUEST['pass'] != $_REQUEST['pass2']) {
+	if ($_REQUEST['pass'] != $_REQUEST['passAgain']) {
 		$errors[] = array(
 			'num' => 1,
 			'mes' => tra('The passwords do not match')
