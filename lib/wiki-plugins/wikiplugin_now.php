@@ -20,9 +20,10 @@ function wikiplugin_now_info()
 			'format' => array(
 				'required' => false,
 				'name' => tra('Format'),
-				'description' => tra('Time format'),
+				'description' => tr('Time format using the PHP format described here: %0',
+					'http://www.php.net/manual/en/function.strftime.php'),
 				'since' => '9.0',
-				'default' => '%A %e %B %Y %H:%M',
+				'default' => tr('Based site long date and time setting'),
 				'filter' => 'text',
 			),
 		),
@@ -31,6 +32,18 @@ function wikiplugin_now_info()
 
 function wikiplugin_now($data, $params) 
 {
-	extract($params, EXTR_SKIP);
-	return TikiLib::date_format(tra($format));
+	global $prefs;
+	$default =  TikiLib::date_format($prefs['long_date_format'] . ' ' . $prefs['long_time_format']);
+	if (!empty($params['format'])) {
+		$ret = TikiLib::date_format($params['format']);
+		//see if the user format setting results in a valid date, return default format if not
+		try {
+			$dateObj = new DateTime($ret);
+		} catch (Exception $e) {
+			return $default;
+		}
+		return $ret;
+	} else {
+		return $default;
+	}
 }
