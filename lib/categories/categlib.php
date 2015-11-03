@@ -1118,7 +1118,7 @@ class CategLib extends ObjectLib
 				'object' => $info['itemId'],
 				'type' => $info['type'],
 				'added' => array(),
-				'removed' => array($removed),
+				'removed' => $removed,
 			));
 		}
 	}
@@ -1736,8 +1736,8 @@ class CategLib extends ObjectLib
 		TikiLib::events()->trigger('tiki.object.categorized', array(
 			'object' => $objId,
 			'type' => $objType,
-			'added' => array($added),
-			'removed' => array($removed),
+			'added' => $added,
+			'removed' => $removed,
 		));
 
 		$this->notify_add($added, $name, $objType, $href);
