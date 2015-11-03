@@ -1,21 +1,32 @@
 <div id="{$field.ins_id|escape}_container">
 	<input type="hidden" name="{$field.ins_id|escape}[]" value="">
-	<ul class="related_items">
-		{foreach from=$data.labels item=label key=id}
-			<li>{$label|escape}</li>
-		{/foreach}
-	</ul>
-	<h5>{tr}Existing Article{/tr}</h5>
-	{object_selector _class=selector _filter=$data.filter}
-	{if $prefs.page_content_fetch eq 'y'}
-		<h5>{tr}New Article{/tr}</h5>
-		<div class="form-inline">
-			<input class="form-control" type="url" name="{$field.ins_id|escape}_add" placeholder="{tr}Article URL{/tr}" size="50">
-			<button name="{$field.ins_id|escape}_add" class="add-more btn btn-default" data-topic="{$field.options_map.topicId|escape}" data-type="{$field.options_map.type|escape}">{icon name="add"} {tr}Add Article{/tr}</button>
-		</div>
+	{if $data.readonly}
+		<ul>
+			{foreach from=$data.labels item=label key=id}
+				<input type="hidden" name="{$field.ins_id|escape}[]" value={$id}>
+				<li>{object_link type="article" id=$id} <i class="fa fa-info-circle" data-toggle="tooltip" title="You cannot edit this article as it was generated automatically via the rss feed."></i></li>
+			{/foreach}
+		</ul>
+	{else}
+		<ul class="related_items">
+			{foreach from=$data.labels item=label key=id}
+				<li>{$label|escape}</li>
+			{/foreach}
+		</ul>
+		<h5>{tr}Existing Article{/tr}</h5>
+		{object_selector _class=selector _filter=$data.filter}
+		{if $prefs.page_content_fetch eq 'y'}
+			<h5>{tr}New Article{/tr}</h5>
+			<div class="form-inline">
+				<input class="form-control" type="url" name="{$field.ins_id|escape}_add" placeholder="{tr}Article URL{/tr}" size="50">
+				<button name="{$field.ins_id|escape}_add" class="add-more btn btn-default" data-topic="{$field.options_map.topicId|escape}" data-type="{$field.options_map.type|escape}">{icon name="add"} {tr}Add Article{/tr}</button>
+			</div>
+		{/if}
 	{/if}
 </div>
 {jq}
+	$('[data-toggle="tooltip"]').tooltip();
+
 	(function () {
 		var container = $('#{{$field.ins_id}}_container')[0];
 		var currents = [];

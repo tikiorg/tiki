@@ -93,6 +93,14 @@ function prefs_tracker_list()
  			'default' => '',
  			'profile_reference' => 'tracker',
  		),
+		'tracker_article_indexing' => array(
+			'name' => tr("Index article info in trackeritem. See Description for more info."),
+			'description' => tr('Sets whether the article info should be indexed in the trackeritem. This automatically sets the article field to read-only and sets up categorization synchronization between articles and tracker items.'),
+			'type' => 'flag',
+			'tags' => array('advanced'),
+			'default' => 'n',
+			'dependencies' => array('feature_articles', 'feature_trackers', 'tracker_article_trackerId', 'tracker_article_tracker'),
+		),
 		'tracker_tabular_enabled' => array(
 			'name' => tr('Tracker Tabular'),
 			'description' => tr('Allows to manage import/export tracker profiles and manage custom list formats.'),

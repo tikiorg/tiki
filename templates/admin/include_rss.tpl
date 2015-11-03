@@ -246,6 +246,7 @@
 			<div class="adminoptionboxchild" id="tracker_article_tracker_container">
 				{preference name=tracker_article_trackerId}
 			</div>
+			{preference name=tracker_article_indexing}
 		{/tab}
 
 	{/tabset}

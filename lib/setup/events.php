@@ -216,6 +216,7 @@ function tiki_setup_events()
 	// Chain events
 	$events->bind('tiki.object.categorized', 'tiki.save');
 
+
 	$events->bind('tiki.wiki.update', 'tiki.wiki.save');
 	$events->bind('tiki.wiki.create', 'tiki.wiki.save');
 	$events->bind('tiki.wiki.save', 'tiki.save');
@@ -302,6 +303,12 @@ function tiki_setup_events()
 	if (function_exists('fastcgi_finish_request')) {
 		// If available, try to send everything to the user at this point
 		$events->bindPriority(-10, 'tiki.process.shutdown', 'fastcgi_finish_request');
+	}
+
+	// if article indexing is on as part of the rss article generator bind the categorization of objects to ensure
+	// that the trackeritem and article are always in sync category-wise
+	if ($prefs['tracker_article_indexing'] == 'y') {
+		$events->bind('tiki.object.categorized', $defer('trk','sync_tracker_article_categories'));
 	}
 
 	//Check the Addons to see if there are any events to bind
