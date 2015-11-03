@@ -6922,7 +6922,7 @@ function detect_browser_language()
  */
 function validate_email($email)
 {
-	$validate = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_ALL);
+	$validate = new Zend\Validator\EmailAddress(['allow' => Zend\Validator\Hostname::ALLOW_ALL]);
 	return $validate->isValid($email);
 }
 

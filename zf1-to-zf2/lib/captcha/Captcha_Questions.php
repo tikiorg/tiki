@@ -60,7 +60,7 @@ class Captcha_Questions extends Zend_Captcha_Word
 	/**
 	 * Validate the answer
 	 *
-	 * @see    Zend_Validate_Interface::isValid()
+	 * @see    Zend\Validator\Interface::isValid()
 	 * @param  mixed $value
 	 * @param  array|null $context
 	 * @return boolean

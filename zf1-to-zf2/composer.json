@@ -81,7 +81,10 @@
 		"symfony/console": "2.6.4",
 		"symfony/dependency-injection": "2.6.4",
 		"symfony/config": "2.6.4",
-		"zendframework/zend-config": "~2.4.0"
+		"zendframework/zend-config": "~2.4.0",
+		"zendframework/zend-validator": "~2.4.0",
+		"zendframework/zend-filter": "~2.4.0",
+		"zendframework/zend-i18n": "~2.4.0"
 	},
 	"require-dev": {
 		"oyejorge/less.php": "1.7.0.7",

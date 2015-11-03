@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_ResultSet_SnippetHelper implements Zend_Filter_Interface
+class Search_ResultSet_SnippetHelper implements Zend\Filter\FilterInterface
 {
 	private $length;
 	private $formatter;

@@ -22,7 +22,7 @@ class DeclFilter_ConfigureTest extends TikiTestCase
 			array('staticKeyFiltersForArrays' => array(
 				'foo' => 'digits',
 			)),
-			array('catchAllFilter' => new Zend_Filter_StringToUpper),
+			array('catchAllFilter' => new Zend\Filter\StringToUpper),
 		);
 
 		$filter = DeclFilter::fromConfiguration($configuration);
@@ -53,7 +53,7 @@ class DeclFilter_ConfigureTest extends TikiTestCase
 	function testDisallowed()
 	{
 		$configuration = array(
-			array('catchAllFilter' => new Zend_Filter_StringToUpper),
+			array('catchAllFilter' => new Zend\Filter\StringToUpper),
 		);
 
 		$filter = DeclFilter::fromConfiguration($configuration, array('catchAllFilter'));
@@ -75,7 +75,7 @@ class DeclFilter_ConfigureTest extends TikiTestCase
 	{
 		$configuration = array(
 			array('staticKeyUnset' => array('hello', 'world')),
-			array('catchAllFilter' => new Zend_Filter_StringToUpper),
+			array('catchAllFilter' => new Zend\Filter\StringToUpper),
 		);
 
 		$filter = DeclFilter::fromConfiguration($configuration);

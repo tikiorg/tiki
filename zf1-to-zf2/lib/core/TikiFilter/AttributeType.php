@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class TikiFilter_AttributeType implements Zend_Filter_Interface
+class TikiFilter_AttributeType implements Zend\Filter\FilterInterface
 {
 	function filter( $name )
 	{
