@@ -433,7 +433,6 @@ if ($prefs['users_prefs_display_timezone'] == 'Site'
 ) {
 	// Stay in the time zone of the server
 	$prefs['display_timezone'] = $prefs['server_timezone'];
-	$smarty->assign('warning_site_timezone_set', 'y');
 } elseif ( !isset($prefs['display_timezone']) and ! isset($user_preferences[$user]['display_timezone'])
 					|| $user_preferences[$user]['display_timezone'] == ''
 					|| $user_preferences[$user]['display_timezone'] == 'Local'
@@ -471,6 +470,13 @@ if ($prefs['users_prefs_display_timezone'] == 'Site'
 if (isset($prefs['display_timezone'])) {
 	$smarty->assign('display_timezone', $prefs['display_timezone']);
 }
+
+if ($prefs['users_prefs_display_timezone'] == 'Site') {
+	$smarty->assign('warning_site_timezone_set', 'y');
+} else {
+	$smarty->assign('warning_site_timezone_set', 'n');
+}
+
 $smarty->assign('userPageExists', 'n');
 if ($prefs['feature_wiki'] == 'y' and $prefs['feature_wiki_userpage'] == 'y') {
 	if ($tikilib->page_exists($prefs['feature_wiki_userpage_prefix'] . $user)) $smarty->assign('userPageExists', 'y');

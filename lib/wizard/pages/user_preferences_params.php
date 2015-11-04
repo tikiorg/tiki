@@ -148,10 +148,7 @@ class UserWizardPreferencesParams extends Wizard
 		$smarty->assign('timezones', TikiDate::getTimeZoneList());
 		
 		// Time zone data for the user
-		if ($prefs['users_prefs_display_timezone'] == 'Site'
-					|| (isset($user_preferences[$user]['display_timezone'])
-					&& $user_preferences[$user]['display_timezone'] == 'Site')
-		) {
+		if ($prefs['users_prefs_display_timezone'] == 'Site') {
 			$smarty->assign('warning_site_timezone_set', 'y');
 		}
 
