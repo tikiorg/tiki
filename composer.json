@@ -133,10 +133,8 @@
 		]
 	},
 	"scripts": {
-		"pre-install-cmd": [
-			"Tiki\\Composer\\ThemeInstaller::setup"
-		],
 		"post-install-cmd": [
+			"Tiki\\Composer\\ThemeInstaller::setup",
 			"Tiki\\Composer\\BootstrapCompiler::build",
 			"Tiki\\Composer\\CleanVendors::clean"
 		],

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "902250abc3abdb6ae2dd9a62ab167c15",
-    "content-hash": "e4d0a4a61476b1027b5286fb411fa70d",
+    "hash": "b1b7f3c1d993debd8e64489a84f67cd7",
+    "content-hash": "1a459b917e857ca31db9b0b759547e7f",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
