@@ -54,7 +54,7 @@
 	<div class="form-group">
 		<label class="col-sm-3 col-md-2 control-label" for="pass2">{tr}Repeat Password{/tr}</label>
 		<div class="col-sm-7 col-md-6">
-			<input type="password" class="form-control" name="pass2" id="pass2" placeholder="Repeat Password">
+			<input type="password" class="form-control" name="passAgain" id="pass2" placeholder="Repeat Password">
 			<div id="mypassword2_text">
 				<div id="match" style="display:none">
 					{icon name='ok' istyle='color:#0ca908'} {tr}Passwords match{/tr}
