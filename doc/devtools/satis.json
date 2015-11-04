@@ -726,6 +726,17 @@
 			"type": "package",
 			"package": {
 				"name": "rangy/rangy",
+				"version": "1.2.3",
+				"dist": {
+					"url": "https://github.com/timdown/rangy/archive/1.2.3.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "rangy/rangy",
 				"version": "1.3.0",
 				"dist": {
 					"url": "https://github.com/timdown/rangy/releases/download/1.3.0/rangy-1.3.0.zip",
@@ -1443,7 +1454,7 @@
 		"phpseclib/phpseclib": ">=0.3.1",
 		"player/flv": "1.0",
 		"player/mp3": "1.0",
-		"rangy/rangy": "1.3.0",
+		"rangy/rangy": "*",
 		"Sam152/Javascript-Equal-Height-Responsive-Rows" : "1.0.0",
 		"simile_timeline/simile_timeline": "2.3.0",
 		"smarty/smarty": ">=3.1.14",
