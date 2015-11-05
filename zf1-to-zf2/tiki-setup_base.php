@@ -194,7 +194,7 @@ if (isset($_SERVER["REQUEST_URI"])) {
 
 		try {
 						
-			Zend_Session::start();
+			Zend\Session\Container::getDefaultManager()->start();
 
 			/* This portion may seem strange, but it is an extra validation against session
 			 * collisions. An extra cookie is set with an additional random value. When loading
@@ -208,7 +208,7 @@ if (isset($_SERVER["REQUEST_URI"])) {
 				$cookie = isset($_COOKIE[$extra_cookie_name]) ? $_COOKIE[$extra_cookie_name] : null;
 
 				if ($cookie !== $_SESSION['extra_validation']) {
-					Zend_Session::destroy();
+					Zend\Session\Container::getDefaultManager()->destroy();
 					header('Location: ' . $_SERVER['REQUEST_URI']);
 					exit;
 				}
