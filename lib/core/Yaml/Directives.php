@@ -53,7 +53,7 @@ class Yaml_Directives
 	protected function valueIsDirective($value)
 	{
 		$testValue = $value;
-		if (is_array($value)) {
+		if (is_array($value) &&  !empty($value)) {
 			$testValue = array_values($value)[0];
 		}
 

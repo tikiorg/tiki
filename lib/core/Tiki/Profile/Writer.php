@@ -161,22 +161,26 @@ class Tiki_Profile_Writer
 		foreach ($this->data['unknown_objects'] as $key => $entry) {
 			if ($entry['type'] == $type && $entry['id'] == $id) {
 				$token = $entry['token'];
-				array_walk_recursive(
-					$this->data['objects'],
-					function (& $entry) use ($token, $replacement) {
-						if (is_string($entry)) {
-							$entry = str_replace($token, $replacement, $entry);
+				if (is_array($this->data['objects'])) {
+					array_walk_recursive(
+						$this->data['objects'],
+						function (& $entry) use ($token, $replacement) {
+							if (is_string($entry)) {
+								$entry = str_replace($token, $replacement, $entry);
+							}
 						}
-					}
-				);
-				array_walk_recursive(
-					$this->data['permissions'],
-					function (& $entry) use ($token, $replacement) {
-						if (is_string($entry)) {
-							$entry = str_replace($token, $replacement, $entry);
+					);
+				}
+				if (is_array($this->data['permissions'])) {
+					array_walk_recursive(
+						$this->data['permissions'],
+						function (& $entry) use ($token, $replacement) {
+							if (is_string($entry)) {
+								$entry = str_replace($token, $replacement, $entry);
+							}
 						}
-					}
-				);
+					);
+				}
 
 				$writer = $this->externalWriter;
 				foreach ($writer->getFiles() as $file => $content) {
