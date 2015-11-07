@@ -254,12 +254,18 @@ class TodoLib
 		$definition = Tracker_Definition::get($todo['objectId']);
 		$fieldId = $definition->getUserField();
 
+		if ($fieldId) {
+			$filterFields = array($fieldId => $trklib->get_tracker_field($fieldId));
+		} else {
+			$filterFields = '';
+		}
+
 		$objects = $trklib->list_items(
 			$todo['objectId'],
 			0,
 			-1,
 			'created_asc',
-			array($fieldId=>$trklib->get_tracker_field($fieldId)),
+			$filterFields,
 			'',
 			'',
 			$todo['from']['status'],
