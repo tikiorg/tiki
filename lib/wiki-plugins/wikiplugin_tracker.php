@@ -36,6 +36,15 @@ function wikiplugin_tracker_info()
 				'separator' => ':',
 				'profile_reference' => 'tracker_field',
 			),
+			'values' => array(
+					'required' => false,
+					'name' => tra('Values'),
+					'description' => tr('Colon-separated list of default values corresponding to the %0fields%1 parameter.
+				First value corresponds to first field, second value to second field, etc. Default values can be
+				set by using %0autosavefields%1 and %0autosavevalues%1 as URL parameters.', '<code>', '</code>'),
+					'since' => '2.0',
+					'default' => '',
+			),
 			'action' => array(
 				'required' => false,
 				'name' => tra('Action'),
@@ -183,15 +192,6 @@ function wikiplugin_tracker_info()
 					array('text' => tra('Self'), 'value' => '_self'),
 					array('text' => tra('Top'), 'value' => '_top')
 				)
-			),
-			'values' => array(
-				'required' => false,
-				'name' => tra('Values'),
-				'description' => tr('Colon-separated list of default values corresponding to the %0fields%1 parameter.
-					First value corresponds to first field, second value to second field, etc. Default values can be
-					set by using %0autosavefields%1 and %0autosavevalues%1 as URL parameters.', '<code>', '</code>'),
-				'since' => '2.0',
-				'default' => '',
 			),
 			'overwrite' => array(
 				'required' => false,
