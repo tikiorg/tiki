@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title help="Permission"}{if $objectType eq 'global'}{tr}Assign global permissions{/tr}{else}{tr}Assign permissions to {/tr}{$objectType}: {$objectName}{/if}{/title}
+{title help="Permissions"}{if $objectType eq 'global'}{tr}Assign global permissions{/tr}{else}{tr}Assign permissions to {/tr}{$objectType}: {$objectName}{/if}{/title}
 
 <div class="t_navbar margin-bottom-md">
 	{if !empty($referer)}{button href="$referer" _class="btn btn-warning" _icon_name="back" _text="{tr}Back{/tr}"}{/if}
