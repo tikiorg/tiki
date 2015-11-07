@@ -461,7 +461,7 @@ class MenuLib extends TikiLib
 				if (!empty($option['selected']) || !empty($option['selectedAscendant'])) {
 					$option['open'] = true;
 				}
-			} elseif ($option['type'] == 's') {
+			} else {
 				if (empty($params['id']) && !empty($params['structureId'])) {
 					$params['id'] = $params['structureId'];
 				}
