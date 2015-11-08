@@ -10,58 +10,101 @@
 <div class="toolbars-admin clearfix">
 	<form name="toolbars" method="post" action="tiki-admin_toolbars.php" onsubmit="return saveRows()">
 		<div>
-			<div class="adminoptionbox">
-				<div class="adminoptionlabel"><label for="section">{tr}Section:{/tr}</label>
-				<select id="section" name="section" onchange="toolbars_autoreload()">
-					{foreach from=$sections item=name key=skey}
-						<option value="{$skey}"{if $skey eq $loaded} selected="selected"{/if}>{$name|escape}</option>
-					{/foreach}
-				</select>
+			<div class="adminoptionbox form-group">
+				<div class="adminoptionlabel">
+					<label for="section" class="control-label col-sm-4">
+						{tr}Section{/tr}
+					</label>
+				<div class="col-sm-8">
+					<select id="section" name="section" onchange="toolbars_autoreload()" class="form-control">
+						{foreach from=$sections item=name key=skey}
+							<option value="{$skey}"{if $skey eq $loaded} selected="selected"{/if}>{$name|escape}</option>
+						{/foreach}
+					</select>
+				</div>
 				</div>
 			</div>
-			<div class="adminoptionbox">
-				<label for="comments">{tr}Comments{/tr}</label>
-				<input id="comments" name="comments" type="checkbox" onchange="toolbars_autoreload()" {if $comments eq 'on'}checked="checked" {/if}>
+			<div class="adminoptionbox form-group">
+				<label for="comments" class="control-label col-sm-4">
+					{tr}Comments{/tr}
+				</label>
+				<div class="col-sm-8">
+					<input id="comments" name="comments" type="checkbox" class="form-control" onchange="toolbars_autoreload()" {if $comments eq 'on'}checked="checked" {/if}>
+				</div>
 			</div>
-			<div class="adminoptionbox" style="float: right;">
-				<label for="view_mode">{tr}View mode{/tr}</label>
-				<select id="view_mode" name="view_mode">
-					{if $prefs.feature_wysiwyg eq 'y'}<option value="both"{if $view_mode eq "both"} selected{/if}>{tr}Wiki and WYSIWYG{/tr}</option>{/if}
-					<option value="wiki"{if $view_mode eq "wiki"} selected{/if}>{tr}Wiki only{/tr}</option>
-					{if $prefs.feature_wysiwyg eq 'y'}<option value="wysiwyg"{if $view_mode eq "wysiwyg"} selected{/if}>{tr}WYSIWYG (html mode){/tr}</option>{/if}
-					{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_htmltowiki eq 'y'}<option value="wysiwyg_wiki"{if $view_mode eq "wysiwyg_wiki"} selected{/if}>{tr}WYSIWYG (wiki mode){/tr}</option>{/if}
-					{if $prefs.feature_sheet eq 'y'}<option value="sheet"{if $view_mode eq "sheet"} selected{/if}>{tr}Spreadsheet{/tr}</option>{/if}
-				</select>
+			<div class="adminoptionbox form-group">
+				<label for="view_mode" class="control-label col-sm-4">
+					{tr}View mode{/tr}
+				</label>
+				<div class="col-sm-8">
+					<select id="view_mode" name="view_mode" class="form-control">
+						{if $prefs.feature_wysiwyg eq 'y'}
+							<option value="both"{if $view_mode eq "both"} selected{/if}>
+							{tr}Wiki and WYSIWYG{/tr}
+							</option>
+						{/if}
+						<option value="wiki"{if $view_mode eq "wiki"} selected{/if}>
+							{tr}Wiki only{/tr}
+						</option>
+						{if $prefs.feature_wysiwyg eq 'y'}
+							<option value="wysiwyg"{if $view_mode eq "wysiwyg"} selected{/if}>
+								{tr}WYSIWYG (html mode){/tr}
+							</option>
+						{/if}
+						{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_htmltowiki eq 'y'}
+							<option value="wysiwyg_wiki"{if $view_mode eq "wysiwyg_wiki"} selected{/if}>
+								{tr}WYSIWYG (wiki mode){/tr}
+							</option>
+						{/if}
+						{if $prefs.feature_sheet eq 'y'}
+							<option value="sheet"{if $view_mode eq "sheet"} selected{/if}>
+								{tr}Spreadsheet{/tr}
+							</option>
+						{/if}
+					</select>
+				</div>
 			</div>
-			<div class="adminoptionbox">
-				<input name="load" type="submit" class="btn btn-default" value="{tr}Load{/tr}">
-				<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
-				{if $loaded neq 'global' and $not_global}<input type="submit" class="btn btn-default btn-sm" name="reset" value="{tr}Reset to Global{/tr}">{/if}
-				{if $loaded eq 'global' and $not_default}<input type="submit" class="btn btn-default btn-sm" name="reset_global" value="{tr}Reset to defaults{/tr}">{/if}
-				<label for="autoreload">{tr}Auto Reloading{/tr}</label>
-				<input id="autoreload" name="autoreload" type="checkbox" {if $autoreload eq 'on'}checked="checked"{/if}>
+			<div class="form-group">
+				<label for="autoreload" class="control-label col-sm-4">{tr}Auto Reloading{/tr}</label>
+				<div class="col-sm-8">
+					<input id="autoreload" name="autoreload" type="checkbox" class="form-control" {if $autoreload eq 'on'}checked="checked"{/if}>
+				</div>
+			</div>
+			<div class="adminoptionbox form-group">
+				<div class="col-sm-offset-4 col-sm-8">
+					<input name="load" type="submit" class="btn btn-default" value="{tr}Load{/tr}">
+					<input type="submit" class="btn btn-primary" name="save" value="{tr}Save{/tr}">
+					{if $loaded neq 'global' and $not_global}<input type="submit" class="btn btn-default" name="reset" value="{tr}Reset to Global{/tr}">{/if}
+					{if $loaded eq 'global' and $not_default}<input type="submit" class="btn btn-default" name="reset_global" value="{tr}Reset to defaults{/tr}">{/if}
+				</div>
 			</div>
 			<input id="qt-form-field" type="hidden" name="pref" value="">
 		</div>
 	</form>
 	<div class="rows">
 		{foreach from=$current item=line name=line}
-			<label for="row-{$smarty.foreach.line.iteration|escape}">{tr}Row{/tr}&nbsp;{$smarty.foreach.line.iteration}:</label>
-			<ul id="row-{$smarty.foreach.line.iteration|escape}" class="row">
+			<label for="row-{$smarty.foreach.line.iteration|escape}">
+				{tr}Row{/tr}&nbsp;{$smarty.foreach.line.iteration}
+			</label>
+			<ul id="row-{$smarty.foreach.line.iteration|escape}" class="row panel panel-default">
 			{foreach from=$line item=bit name=bit}
 				{foreach from=$bit item=tool name=tool}
 					{if !empty($qtelement[$tool].class)}
-						<li class="{$qtelement[$tool].class}" {if $smarty.foreach.bit.index eq 1}style="float:right;"{/if}{if not $qtelement[$tool].visible} style="display:none"{/if}>{$qtelement[$tool].html}</li>
+						<li class="{$qtelement[$tool].class}" {if $smarty.foreach.bit.index eq 1}style="float:right;"{/if}{if not $qtelement[$tool].visible} style="display:none"{/if}>
+							{$qtelement[$tool].html}
+						</li>
 					{/if}
 				{/foreach}
 			{/foreach}
 			{if $smarty.foreach.line.last and $rowCount gt 1}
 				{assign var=total value=$smarty.foreach.line.total+1}
 				</ul>
-				<label for="row-{$total|escape}">{tr}Row{/tr}&nbsp;{$total}:</label>
-					<ul id="row-{$total|escape}" class="row">
+				<br>
+				<label for="row-{$total|escape}">{tr}Row{/tr}&nbsp;{$total}</label>
+				<ul id="row-{$total|escape}" class="row panel panel-default">
 			{/if}
 			</ul>
+			<br>
 		{/foreach}
 	</div>
 	<div class="lists">

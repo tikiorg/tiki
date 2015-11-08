@@ -415,10 +415,20 @@ abstract class Toolbar
 
 	function getIconHtml() // {{{
 	{
-		$headerlib = TikiLib::lib('header');
-		return '<img src="' . htmlentities($headerlib->convert_cdn($this->icon), ENT_QUOTES, 'UTF-8') . '" alt="'
-			. htmlentities($this->getLabel(), ENT_QUOTES, 'UTF-8') . '" title="'
-			. htmlentities($this->getLabel(), ENT_QUOTES, 'UTF-8') . '" class="icon"/>';
+		if (!empty($this->iconname)) {
+			$iname = $this->iconname;
+		} elseif (!empty($this->icon)) {
+			$headerlib = TikiLib::lib('header');
+			return '<img src="' . htmlentities($headerlib->convert_cdn($this->icon), ENT_QUOTES, 'UTF-8') . '" alt="'
+			. htmlentities($this->getLabel(), ENT_QUOTES, 'UTF-8') . '" title=":'
+			. htmlentities($this->getLabel(), ENT_QUOTES, 'UTF-8') . '" class="tips icon">';
+		} else {
+			$iname = 'help';
+		}
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_function_icon');
+		return smarty_function_icon(['name' => $iname, 'ititle' => ':'
+				. htmlentities($this->getLabel(), ENT_QUOTES, 'UTF-8'), 'iclass' => 'tips'], $smarty);
 	} // }}}
 
 	function getSelfLink( $click, $title, $class )
@@ -498,7 +508,7 @@ class ToolbarSeparator extends Toolbar
 
 class ToolbarCkOnly extends Toolbar
 {
-	function __construct( $token, $icon = '' ) // {{{
+	function __construct( $token, $icon = '', $iconname = '' ) // {{{
 	{
 		if (empty($icon)) {
 			$img_path = 'lib/ckeditor_tiki/ckeditor-icons/' . strtolower($token) . '.gif';
@@ -510,7 +520,8 @@ class ToolbarCkOnly extends Toolbar
 		}
 		$this->setWysiwygToken($token)
 			->setIcon($icon)
-				->setType('CkOnly');
+			->setIconName($iconname)
+			->setType('CkOnly');
 	} // }}}
 
 	public static function fromName( $name, $is_html ) // {{{
@@ -527,7 +538,7 @@ class ToolbarCkOnly extends Toolbar
 		case 'cut':
 			return new self( 'Cut' );
 		case 'copy':
-			return new self( 'Copy' );
+			return new self( 'Copy', null, 'copy' );
 		case 'paste':
 			return new self( 'Paste' );
 		case 'pastetext':
@@ -539,9 +550,9 @@ class ToolbarCkOnly extends Toolbar
 		case 'spellcheck':
 			return new self( 'SpellChecker' );
 		case 'undo':
-			return new self( 'Undo' );
+			return new self( 'Undo', null, 'undo' );
 		case 'redo':
-			return new self( 'Redo' );
+			return new self( 'Redo', null, 'repeat' );
 		case 'selectall':
 			return new self( 'SelectAll' );
 		case 'removeformat':
@@ -570,20 +581,20 @@ class ToolbarCkOnly extends Toolbar
 			global $tikilib, $user, $page;
 			$p = $prefs['wysiwyg_htmltowiki'] == 'y' ? 'tiki_p_wiki_view_source'  : 'tiki_p_use_HTML';
 			if ($tikilib->user_has_perm_on_object($user, $page, 'wiki page', $p)) {
-				return new self('Source');
+				return new self('Source', null, 'code_file');
 			} else {
 				return null;
 			}
 		case 'autosave':
-			return new self( 'autosave', 'lib/ckeditor_tiki/plugins/autosave/images/ajaxAutoSaveDirty.gif');
+			return new self( 'Autosave', 'lib/ckeditor_tiki/plugins/autosave/images/ajaxAutoSaveDirty.gif', 'floppy');
 		case 'inlinesave':
 			return new self( 'inlinesave', 'lib/ckeditor_tiki/plugins/inlinesave/images/ajaxSaveDirty.gif');
 		case 'inlinecancel':
 			return new self( 'inlinecancel', 'lib/ckeditor_tiki/plugins/inlinecancel/images/cross.png');
 		case 'sub':
-			return new self( 'Subscript' );
+			return new self( 'Subscript', null, 'subscript' );
 		case 'sup':
-			return new self( 'Superscript' );
+			return new self( 'Superscript', null, 'subscript'  );
 		case 'anchor':
 			return new self( 'Anchor' );
 		case 'bidiltr':
@@ -646,21 +657,29 @@ class ToolbarCkOnly extends Toolbar
 
 	function getIconHtml() // {{{ for admin page
 	{
-		global $prefs;
-		$headerlib = TikiLib::lib('header');
 
+		if (!empty($this->iconname)) {
+			$smarty = TikiLib::lib('smarty');
+			$smarty->loadPlugin('smarty_function_icon');
+			return smarty_function_icon(['name' => $this->iconname, 'ititle' => ':'
+					. htmlentities($this->getLabel(), ENT_QUOTES, 'UTF-8'), 'iclass' => 'tips'], $smarty);
+		}
 		if ((!empty($this->icon) && $this->icon !== 'img/icons/shading.png') || in_array($this->label, array('Autosave'))) {
 			return parent::getIconHtml();
 		}
 
+		global $prefs;
 		$skin = $prefs['wysiwyg_toolbar_skin'];
+		$headerlib = TikiLib::lib('header');
 		$headerlib->add_cssfile('vendor/ckeditor/ckeditor/skins/' . $skin . '/editor.css');
 		$cls = strtolower($this->wysiwyg);
 		$headerlib->add_css(
 			'span.cke_skin_' . $skin . ' {border: none;background: none;padding:0;margin:0;}'.
 			'.toolbars-admin .row li.toolbar > span.cke_skin_' . $skin . ' {display: inline-block;}'
 		);
-		return '<span class="cke_skin_' . $skin . '"><a class="cke_button cke_ltr"><span class="cke_button__' . htmlentities($cls, ENT_QUOTES, 'UTF-8') . '_icon"' .
+		return '<span class="cke_skin_' . $skin
+			. '"><a class="cke_button cke_ltr" style="margin-top:-5px"><span class="cke_button__'
+			. htmlentities($cls, ENT_QUOTES, 'UTF-8') . '_icon"' .
 			' title="' . htmlentities($this->getLabel(), ENT_QUOTES, 'UTF-8') . '">'.
 			'<span class="cke_icon"> </span>'.
 			'</span></a></span>';
@@ -676,30 +695,35 @@ class ToolbarInline extends Toolbar
 		switch( $tagName ) {
 		case 'bold':
 			$label = tra('Bold');
+			$icon = tra('img/icons/text_bold.png');
 			$iconname = 'bold';
 			$wysiwyg = 'Bold';
 			$syntax = '__text__';
 			break;
 		case 'italic':
 			$label = tra('Italic');
+			$icon = tra('img/icons/text_italic.png');
 			$iconname = 'italic';
 			$wysiwyg = 'Italic';
 			$syntax = "''text''";
 			break;
 		case 'underline':
 			$label = tra('Underline');
+			$icon = tra('img/icons/text_underline.png');
 			$iconname = 'underline';
 			$wysiwyg = 'Underline';
 			$syntax = "===text===";
 			break;
 		case 'strike':
 			$label = tra('Strikethrough');
+			$icon = tra('img/icons/text_strikethrough.png');
 			$iconname = 'strikethrough';
 			$wysiwyg = 'Strike';
 			$syntax = '--text--';
 			break;
 		case 'nonparsed':
 			$label = tra('Non-parsed (Wiki syntax does not apply)');
+			$icon = tra('img/icons/noparse.png');
 			$iconname = 'ban';
 			$wysiwyg = null;
 			$syntax = '~np~text~/np~';
@@ -712,6 +736,7 @@ class ToolbarInline extends Toolbar
 		$tag->setLabel($label)
 			->setWysiwygToken($wysiwyg)
 			->setIconName(!empty($iconname) ? $iconname : 'help')
+			->setIcon(!empty($icon) ? $icon : 'img/icons/shading.png')
 			->setSyntax($syntax)
 			->setType('Inline');
 
@@ -1230,6 +1255,7 @@ class ToolbarDialog extends Toolbar
 			break;
 
 		case 'find':
+			$icon = tra('img/icons/find.png');
 			$iconname = 'search';
 			$wysiwyg = 'Find';
 			$label = tra('Find Text');
@@ -1247,6 +1273,7 @@ class ToolbarDialog extends Toolbar
 			break;
 
 		case 'replace':
+			$icon = tra('img/icons/text_replace.png');
 			$iconname = 'repeat';
 			$wysiwyg = 'Replace';
 			$label = tra('Text Replace');
@@ -1448,6 +1475,7 @@ class ToolbarHelptool extends Toolbar
 		$params['areaId'] = '';	// this must be last param
 
 		$this->setLabel(tra('Wysiwyg Help'));
+		$this->setIconName('help');
 		$name = 'tikihelp';
 
 		$js = '$("#bootstrap-modal").modal({show: true, remote: "' . $servicelib->getUrl($params) . '" + editor.name});';
@@ -1793,7 +1821,24 @@ class ToolbarWikiplugin extends Toolbar
 	{
 		if (!empty($this->wysiwyg) && $add_js) {
 			$js = "popup_plugin_form('{$areaId}','{$this->pluginName}');";
-			$this->setupCKEditorTool($js, $this->wysiwyg, $this->label, $this->icon ? $this->icon : 'img/icons/plugin.png');
+			//CKEditor needs image icons so get legacy plugin icons for the toolbar
+			if (!$this->icon && !empty($this->iconname)) {
+				$iconsetlib = TikiLib::lib('iconset');
+				$legacy = $iconsetlib->loadFile('themes/base_files/iconsets/legacy.php');
+				if (array_key_exists($this->iconname, $legacy['icons'])) {
+					$iconinfo = $legacy['icons'][$this->iconname];
+				} elseif (in_array($this->iconname, $legacy['defaults'])) {
+					$iconinfo['id'] = $this->iconname;
+				}
+				if (isset($iconinfo)) {
+					$prepend = isset($iconinfo['prepend']) ? $iconinfo['prepend'] : 'img/icons/';
+					$append = isset($iconinfo['append']) ? $iconinfo['append'] : '.png';
+					$iconpath = $prepend . $iconinfo['id'] . $append;
+				} else {
+					$iconpath = 'img/icons/plugin.png';
+				}
+			}
+			$this->setupCKEditorTool($js, $this->wysiwyg, $this->label, $iconpath);
 		}
 		return $this->wysiwyg;
 	} // }}}
