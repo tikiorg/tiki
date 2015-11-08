@@ -219,21 +219,21 @@ class Iconset
 				//some ability to use larger legacy icons based on size setting
 				// 1 = 16px x 16px; 2 = 32px x 32px; 3 = 48px x 48px
 				if ($sizeuser != 1 && $sizedef != $sizeuser && !empty($icon['sizes'][$size])) {
-					$id = $icon['sizes'][$size]['id'];
+					$file = $icon['sizes'][$size]['id'];
 					if (isset($icon['sizes'][$size]['prepend'])) {
 						$prepend = $icon['sizes'][$size]['prepend'];
 						$append = $icon['sizes'][$size]['append'];
 					}
 				} else {
-					$id = $icon['id'];
+					$file = $icon['id'];
 				}
-				$src = TikiLib::lib('theme')->get_theme_path($prefs['theme'], $prefs['theme_option'], $id . $append, 'icons/');
+				$src = TikiLib::lib('theme')->get_theme_path($prefs['theme'], $prefs['theme_option'], $file . $append, 'icons/');
 				if (empty($src)) {
-					$src = $prepend . $id . $append;
+					$src = $prepend . $file . $append;
 				}
 				$alt = $name;  //use icon name as alternate text
 				$style = $this->setStyle($styleparams);
-				$html = "<span class=\"icon icon-$name$icon_class$custom_class $id\" $title $style><img src=\"$src\" alt=\"$alt\"></span>";
+				$html = "<span class=\"icon icon-$name$icon_class$custom_class $file\" $title $style $id><img src=\"$src\" alt=\"$alt\"></span>";
 			} else {
 				if (isset($icon['id'])) { //use class defined for the icon if set
 					$space = !empty($icon_class) ? ' ' : '';
