@@ -115,7 +115,7 @@ a.admbox.off img {
 
 
 .toolbars-admin .full {
-	border: solid thin gray;
+	border: solid thin lightgrey;
 	float: left;
 	height: auto;
 	max-height: 400px;
@@ -127,7 +127,7 @@ a.admbox.off img {
 .toolbars-admin .lists {
 	padding: 1em 2em 1em 0;
 	float: left;
-	width: 28%;
+	width: 31%;
 	min-height: 10em;
 }
 
@@ -199,6 +199,11 @@ a.admbox.off img {
 
 .toolbars-admin .row li.toolbar > span:not(.icon) {
 	display: none;
+}
+
+.toolbars-admin .row li.toolbar > span.icon,
+.toolbars-admin .full li.toolbar > span.icon {
+	margin-right: 2px;
 }
 
 .toolbars-admin .row li.qt-plugin {

@@ -27,7 +27,7 @@ function iconset_glyphicons()
 			),
 			//align-center in defaults
 			//arrow-up in defaults
-			'article' => array(
+			'articles' => array(
 				'id' => 'text-background',
 			),
 			'attach' => array(
@@ -110,6 +110,9 @@ function iconset_glyphicons()
 			),
 			'create' => array(
 				'id' => 'plus',
+			),
+			'database' => array(
+					'id' => 'tasks',
 			),
 			'delete' => array(
 				'id' => 'remove',

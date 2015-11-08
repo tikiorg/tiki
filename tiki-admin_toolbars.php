@@ -49,7 +49,8 @@ $sections = array_merge($sections, $sections2);
 if ( isset($_REQUEST['section']) && in_array($_REQUEST['section'], array_keys($sections)) ) {
 	$section = $_REQUEST['section'];
 } else {
-	$section = reset(array_keys($sections));
+	$keys = array_keys($sections);
+	$section = reset($keys);
 }
 if ( isset($_REQUEST['comments']) && $_REQUEST['comments'] == 'on') {
 	$comments = true;

@@ -108,7 +108,7 @@
 		{/foreach}
 	</div>
 	<div class="lists">
-		<label for="full-list-w">{tr}Formatting Tools:{/tr}</label>
+		<label for="full-list-w">{tr}Formatting Tools{/tr}</label>
 		<ul id="full-list-w" class="full">
 		{foreach from=$display_w item=tool}
 			<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
@@ -116,7 +116,7 @@
 		</ul>
 	</div>
 	<div class="lists">
-		<label for="full-list-p">{tr}Plugin Tools:{/tr}</label><br/>
+		<label for="full-list-p">{tr}Plugin Tools{/tr}</label>
 		<ul id="full-list-p" class="full">
 		{foreach from=$display_p item=tool}
 			<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
@@ -168,7 +168,7 @@
 			</form>
 			{autocomplete element='#tool_icon' type='icon'}
 		</div>
-		<label for="full-list-c">{tr}Custom Tools:{/tr}</label>{icon name="add" title="{tr}Add a new custom tool{/tr}" id="toolbar_add_custom"}<br/>
+		<label for="full-list-c">{tr}Custom Tools{/tr}</label><a href="#" id="toolbar_add_custom">{icon name="add" ititle=":{tr}Add a new custom tool{/tr}" iclass="tips"}
 		<ul id="full-list-c" class="full">
 		{foreach from=$display_c item=tool}
 			<li class="{$qtelement[$tool].class}">{$qtelement[$tool].html}</li>
