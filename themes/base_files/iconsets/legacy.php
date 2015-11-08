@@ -217,7 +217,7 @@ function iconset_legacy()
 				'id' => 'control_start',
 			),
 			'ban' => array(
-				'id' => 'cancel',
+				'id' => 'ban_remove',
 			),
 			'bold' => array(
 				'id' => 'text_bold',
@@ -493,7 +493,7 @@ function iconset_legacy()
 				'id' => 'task_submitted',
 			),
 			'music' => array(
-				'id' => 'icons/mime/mp3.png',
+				'id' => '/mime/mp3',
 			),
 			'next' => array(
 				'id' => 'arrow_right',
