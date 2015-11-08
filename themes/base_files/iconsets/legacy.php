@@ -192,7 +192,7 @@ function iconset_legacy()
 			'arrow-up' => array(
 				'id' => 'arrow-up',
 			),
-			'article' => array(
+			'articles' => array(
 				'id' => 'newspaper_go',
 			),
 			'attach' => array(
@@ -312,6 +312,7 @@ function iconset_legacy()
 			'dashboard' => array(
 				'id' => 'application_view_columns',
 			),
+			//database in defaults
 			'delete' => array(
 				'id' => 'cross',
 			),
@@ -478,9 +479,7 @@ function iconset_legacy()
 			'minus' => array(
 				'id' => 'delete',
 			),
-			'module' => array(
-				'id' => 'module',
-			),
+			//module in defaults
 			//money in defaults
 			'more' => array(
 				'id' => 'resultset_down',
@@ -766,6 +765,7 @@ function iconset_legacy()
 			'bug',
 			'calendar',
 			'computer',
+			'database',
 			'font',
 			'google',
 			'group',
@@ -775,6 +775,7 @@ function iconset_legacy()
 			'information',
 			'link',
 			'map',
+			'module',
 			'money',
 			'pencil',
 			'plugin',
@@ -786,6 +787,7 @@ function iconset_legacy()
 			'user',
 			'vimeo',
 			'wrench',
+			'youtube',
 		)
 	);
 }

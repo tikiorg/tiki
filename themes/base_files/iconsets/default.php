@@ -235,6 +235,7 @@ function iconset_default()
 			'create' => array(
 				'id' => 'plus',
 			),
+			//database in defaults
 			'delete' => array(
 				'id' => 'times',
 			),
