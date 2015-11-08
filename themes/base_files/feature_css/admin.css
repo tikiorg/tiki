@@ -171,7 +171,7 @@ a.admbox.off img {
 	min-height: 20px;
 	min-width: 500px;
 	overflow: hidden;
-	border: solid thin gray;
+	border: solid thin lightgrey;
 	margin: 0;
 	padding: 2px 4px 0;
 	white-space: nowrap;
@@ -197,19 +197,17 @@ a.admbox.off img {
 	float: left;
 }
 
-.toolbars-admin .row li.toolbar > span {
+.toolbars-admin .row li.toolbar > span:not(.icon) {
 	display: none;
 }
 
 .toolbars-admin .row li.qt-plugin {
 	width: auto;
-	background-color: #d4e483;
 	margin: 0 6px 0 0;
 	padding: 2px 0px 2px 3px;
 	color: #030;
 	font-style: normal;
 	font-weight: normal;
-	font-size: 10px;
 }
 
 .toolbars-placeholder, .placeholder {

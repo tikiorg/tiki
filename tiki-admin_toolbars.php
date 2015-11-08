@@ -58,7 +58,8 @@ if ( isset($_REQUEST['comments']) && $_REQUEST['comments'] == 'on') {
 }
 
 foreach ($sections as $skey => $sval) {
-	if ($prefs['toolbar_' . $skey . ($comments ? '_comments' : '') . 'modified'] == 'y') {
+	if (isset($prefs['toolbar_' . $skey . ($comments ? '_comments' : '') . 'modified'])
+		&& $prefs['toolbar_' . $skey . ($comments ? '_comments' : '') . 'modified'] == 'y') {
 		$sections[$skey] = $sval . ' *';
 	}
 }
