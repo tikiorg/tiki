@@ -10,7 +10,7 @@ function wikiplugin_friend_info()
 	return array(
 		'name' => tra('Friend'),
 		'documentation' => 'PluginFriend',
-		'description' => tra('Allows users to friend and unfriend.'),
+		'description' => tra('Friend and unfriend other users'),
 		'prefs' => array('wikiplugin_friend', 'feature_search'),
 		'format' => 'html',
 		'body' => tra('Add or Remove Friend Button'),

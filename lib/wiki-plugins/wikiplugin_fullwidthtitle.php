@@ -9,7 +9,7 @@ function wikiplugin_fullwidthtitle_info()
 {
 	return array(
 		'name' => tra('Set a Full-Width Page Title'),
-		'description' => tra('Allows for the setting of a Page Title that bleeds to the edges of the screen'),
+		'description' => tra('Create a full page width title '),
 		'documentation' => tra('PluginFullWidthTitle'),
 		'default' => 'y',
 		'format' => 'html',
