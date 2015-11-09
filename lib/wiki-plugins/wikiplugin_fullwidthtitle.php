@@ -14,17 +14,21 @@ function wikiplugin_fullwidthtitle_info()
 		'default' => 'y',
 		'format' => 'html',
 		'filter' => 'wikicontent',
+		'introduced' => 15,
+		'iconname' => 'title',
 		'tags' => array('advanced'),
 		'params' => array(
 			'title' => array(
 				'name' => tr('Page title'),
 				'description' => tr('If you need to include tpl files.'),
+				'since' => '15.0',
 				'required' => true,
 				'filter' => 'text'
 			),
 			'iconsrc' => array(
 				'name' => tr('Icon Source'),
 				'description' => tr('Source path of the icon.'),
+				'since' => '15.0',
 				'required' => false,
 				'filter' => 'text'
 			),
