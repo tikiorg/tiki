@@ -307,7 +307,7 @@ function tiki_setup_events()
 
 	// if article indexing is on as part of the rss article generator bind the categorization of objects to ensure
 	// that the trackeritem and article are always in sync category-wise
-	if ($prefs['tracker_article_indexing'] == 'y') {
+	if (isset($prefs['tracker_article_indexing']) && $prefs['tracker_article_indexing'] == 'y') {
 		$events->bind('tiki.object.categorized', $defer('trk','sync_tracker_article_categories'));
 	}
 
