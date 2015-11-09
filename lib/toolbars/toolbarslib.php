@@ -536,39 +536,39 @@ class ToolbarCkOnly extends Toolbar
 				return null;
 			}
 		case 'cut':
-			return new self( 'Cut' );
+			return new self( 'Cut', null, 'scissors'  );
 		case 'copy':
 			return new self( 'Copy', null, 'copy' );
 		case 'paste':
-			return new self( 'Paste' );
+			return new self( 'Paste', null, 'paste' );
 		case 'pastetext':
-			return new self( 'PasteText' );
+			return new self( 'PasteText', null, 'paste'  );
 		case 'pasteword':
-			return new self( 'PasteFromWord' );
+			return new self( 'PasteFromWord', null, 'paste'  );
 		case 'print':
-			return new self( 'Print' );
+			return new self( 'Print', null, 'print' );
 		case 'spellcheck':
-			return new self( 'SpellChecker' );
+			return new self( 'SpellChecker', null, 'ok' );
 		case 'undo':
 			return new self( 'Undo', null, 'undo' );
 		case 'redo':
 			return new self( 'Redo', null, 'repeat' );
 		case 'selectall':
-			return new self( 'SelectAll' );
+			return new self( 'SelectAll', null, 'selectall' );
 		case 'removeformat':
-			return new self( 'RemoveFormat' );
+			return new self( 'RemoveFormat', null, 'erase'  );
 		case 'showblocks':
-			return new self( 'ShowBlocks' );
+			return new self( 'ShowBlocks', null, 'box' );
 		case 'left':
-			return new self( 'JustifyLeft' );
+			return new self( 'Justify Left', null, 'align-left' );
 		case 'right':
-			return new self( 'JustifyRight' );
+			return new self( 'Justify Right', null, 'align-right' );
 		case 'full':
-			return new self( 'JustifyBlock' );
+			return new self( 'Justify Block', null, 'align-justify' );
 		case 'indent':
-			return new self( 'Indent' );
+			return new self( 'Indent', null, 'indent' );
 		case 'outdent':
-			return new self( 'Outdent' );
+			return new self( 'Outdent', null, 'outdent' );
 		case 'style':
 			return new self( 'Styles' );
 		case 'fontname':
@@ -588,27 +588,27 @@ class ToolbarCkOnly extends Toolbar
 		case 'autosave':
 			return new self( 'Autosave', 'lib/ckeditor_tiki/plugins/autosave/images/ajaxAutoSaveDirty.gif', 'floppy');
 		case 'inlinesave':
-			return new self( 'inlinesave', 'lib/ckeditor_tiki/plugins/inlinesave/images/ajaxSaveDirty.gif');
+			return new self( 'Inline save', 'lib/ckeditor_tiki/plugins/inlinesave/images/ajaxSaveDirty.gif');
 		case 'inlinecancel':
-			return new self( 'inlinecancel', 'lib/ckeditor_tiki/plugins/inlinecancel/images/cross.png');
+			return new self( 'Inline cancel', 'lib/ckeditor_tiki/plugins/inlinecancel/images/cross.png');
 		case 'sub':
 			return new self( 'Subscript', null, 'subscript' );
 		case 'sup':
 			return new self( 'Superscript', null, 'subscript'  );
 		case 'anchor':
-			return new self( 'Anchor' );
+			return new self( 'Anchor', null, 'anchor' );
 		case 'bidiltr':
-			return new self( 'BidiLtr' );
+			return new self( 'BidiLtr', null, 'arrow-right' );
 		case 'bidirtl':
-			return new self( 'BidiRtl' );
+			return new self( 'BidiRtl', null, 'arrow-left' );
 		case 'image':
-			return new self( 'Image' );
+			return new self( 'Image', null, 'image' );
 		case 'table':
 			return $is_html ? new self( 'Table' ) : null;
 		case 'link':
 			return $is_html ? new self( 'Link' ) : null;
 		case 'unlink':
-			return new self( 'Unlink' );
+			return new self( 'Unlink', null, 'unlink' );
 		}
 	} // }}}
 

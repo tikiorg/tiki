@@ -174,6 +174,10 @@ function iconset_default()
 				'id' => 'file-text',
 			),
 			//align-center in defaults
+			//align-justify in defaults
+			//align-left in defaults
+			//align-right in defaults
+			//anchor in defaults
 			'articles' => array(
 				'id' => 'newspaper-o',
 			),
@@ -259,6 +263,9 @@ function iconset_default()
 			'envelope' => array(
 				'id' => 'envelope-o',
 			),
+			'erase' => array(
+				'id' => 'eraser',
+			),
 			'error' => array(
 				'id' => 'exclamation-circle',
 			),
@@ -325,12 +332,14 @@ function iconset_default()
 			'import' => array(
 				'id' => 'upload',
 			),
+			//indent in defaults
 			'index' => array(
 				'id' => 'spinner',
 			),
 			'information' => array(
 				'id' => 'info-circle',
 			),
+			//italic in defaults
 			'keyboard' => array(
 				'id' => 'keyboard-o',
 			),
@@ -397,9 +406,11 @@ function iconset_default()
 			'ok' => array(
 				'id' => 'check-circle',
 			),
+			//outdent in defaults
 			'page-break' => array(
 				'id' => 'scissors',
 			),
+			//paste in defaults
 			//pause in defaults
 			'pdf' => array(
 				'id' => 'file-pdf-o',
@@ -434,10 +445,14 @@ function iconset_default()
 			//remove in defaults
 			//repeat in defaults
 			//rss in defaults
+			//scissors in defaults
 			'screencapture' => array(
 				'id' => 'camera',
 			),
 			//search in defaults
+			'selectall' => array(
+				'id' => 'file-text',
+			),
 			//send in defaults
 			'settings' => array(
 				'id' => 'wrench',
@@ -533,6 +548,7 @@ function iconset_default()
 			//twitter in defaults
 			//tv in defaults
 			//undo in defaults
+			//unlink in defaults
 			//unlock in defaults
 			'up' => array(
 				'id' => 'sort-asc',
@@ -572,6 +588,7 @@ function iconset_default()
 		 * All the available icons in this set (font-awsome in this case, from http://fortawesome.github.io/Font-Awesome/cheatsheet/)
 		 */
 		'defaults' => array(
+			'500px',
 			'adjust',
 			'adn',
 			'align-center',
@@ -619,6 +636,7 @@ function iconset_default()
 			'bar-chart-o',
 			'barcode',
 			'bars',
+			'bed',
 			'beer',
 			'behance',
 			'behance-square',
@@ -1122,7 +1140,6 @@ function iconset_default()
 			'youtube-play',
 			'youtube-square',
 			// new in FA 4.3 Jan 2015
-			'bed',
 			'buysellads',
 			'cart-arrow-down',
 			'cart-plus',
@@ -1163,7 +1180,6 @@ function iconset_default()
 			'venus-mars',
 			'viacoin',
 			// new fa 4.4
-			'500px',
 			'amazon',
 			'balance-scale',
 			'battery-0',
