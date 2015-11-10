@@ -34,7 +34,7 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 		$article = $artlib->get_article($objectId, false);
 
 		if ($topic = $artlib->get_topic($article['topicId'])) {
-			$topic_name = $topic['topicName'];
+			$topic_name = $topic['name'];
 		} else {
 			$topic_name = '';
 		}
