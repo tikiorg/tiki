@@ -7258,10 +7258,10 @@ ul.all_languages > li {
   border: 1px solid;
   border-color: #faebcc;
 }
-div#outerToc {
+#autotoc > .nav {
   background: #eeeeee;
 }
-div#outerToc * {
+#autotoc * {
   color: #000000;
 }
 .plugin-form-float {
@@ -7639,5 +7639,5 @@ li.menuoption a {
   font-size: 125%;
 }
 .panel-title a {
-  color: #555;
+  color: #555555;
 }

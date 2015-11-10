@@ -7557,10 +7557,10 @@ ul.all_languages > li {
   border: 1px solid;
   border-color: #f39c12;
 }
-div#outerToc {
+#autotoc > .nav {
   background: #ebebeb;
 }
-div#outerToc * {
+#autotoc * {
   color: #ffffff;
 }
 .plugin-form-float {

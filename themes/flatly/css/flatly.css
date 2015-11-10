@@ -7535,10 +7535,10 @@ ul.all_languages > li {
   border: 1px solid;
   border-color: #f39c12;
 }
-div#outerToc {
+#autotoc > .nav {
   background: #ecf0f1;
 }
-div#outerToc * {
+#autotoc * {
   color: #2c3e50;
 }
 .plugin-form-float {

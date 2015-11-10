@@ -7362,10 +7362,10 @@ ul.all_languages > li {
   border: 1px solid;
   border-color: #f05800;
 }
-div#outerToc {
+#autotoc > .nav {
   background: #adafae;
 }
-div#outerToc * {
+#autotoc * {
   color: #888888;
 }
 .plugin-form-float {

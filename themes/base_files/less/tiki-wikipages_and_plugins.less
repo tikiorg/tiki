@@ -273,38 +273,78 @@ div.tiki_plugin {
 }
 
 // /* Auto TOC */
-div#outerToc {
-	position: fixed;
-	top: 0;
-	left: 75%;
-	//  background: @gray-lighter;
-	display: none;
-	border-radius: 0 0 5px 5px;
-	z-index: 5;
-	padding: 5px;
-	margin: 0 5px 5px;
-	max-height: 95%;
+#autotoc {
+  position: relative;
 }
 
-// div#outerToc * {
-//  color: @text-color;
-// }
-
-div#innerToc {
-	overflow-y: auto;
+.autotoc.affix {
+  top: 0;
 }
 
-div#outerToc-static {
-	border: 1px solid;
-	padding: 5px;
-	margin: 5px;
+.autotoc .nav > li {
+  float: none;
 }
 
-div#outerToc-static ul {
-	list-style-position: inside;
-	list-style-type: none;
-	padding-left: 1em;
+.autotoc .nav > li > a {
+  display: block;
+  padding: 4px 20px;
+  font-size: 13px;
+  font-weight: 500;
 }
+
+.autotoc .nav > li > a:focus, .autotoc .nav > li > a:hover {
+  padding-left: 19px;
+  border-left: 1px solid @btn-default-border;
+}
+
+.autotoc .nav > .active:focus > a, .autotoc .nav > .active:hover > a,
+.autotoc .nav > .active > a {
+  padding-left: 18px;
+  font-weight: 700;
+  border: none;
+  border-left: 2px solid @btn-default-border;
+  background-color: transparent;
+}
+
+.autotoc .nav .nav {
+  //display: none;  TODO
+  padding-bottom: 10px;
+  list-style: none;
+}
+
+.autotoc .nav .nav > li > a {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 30px;
+  font-size: 12px;
+  font-weight: 400
+}
+
+.autotoc .nav .nav > li > a:focus, .autotoc .nav .nav > li > a:hover {
+  padding-left: 29px
+}
+
+.autotoc .nav .nav > .active:focus > a, .autotoc .nav .nav > .active:hover > a,
+.autotoc .nav .nav > .active > a {
+  padding-left: 28px;
+  font-weight: 500
+}
+
+.back-to-top {
+  display: none;
+  padding: 4px 10px;
+  margin-top: 10px;
+  margin-left: 10px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.back-to-top:hover, .bs-docs-theme-toggle:hover {
+  color: #563d7c;
+  text-decoration: none
+}
+
+/* end autotoc */
 
 .plugin-form-float {
 	position: fixed;
