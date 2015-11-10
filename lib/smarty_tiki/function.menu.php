@@ -167,7 +167,7 @@ function get_menu_with_selections($params)
 		$channels = $structlib->build_subtree_toc($structureId);
 		$structure_info =  $structlib->s_get_page_info($structureId);
 		$channels = $structlib->to_menu($channels, $structure_info['pageName'], 0, 0, $params);
-		$menu_info = array('type'=>'d', 'menuId'=> "s_$structureId", 'structure' => 'y');
+		$menu_info = array('type'=>'d', 'menuId'=> $structureId, 'structure' => 'y');
 	} else if (!empty($id)) {
 		$menu_info = $menulib->get_menu($id);
 		$channels = $menulib->list_menu_options($id, 0, -1, 'position_asc', '', '', isset($prefs['mylevel'])?$prefs['mylevel']:0);
