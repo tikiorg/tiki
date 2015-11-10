@@ -250,8 +250,8 @@ class Table_Settings_TikiListpages extends Table_Settings_Standard
 		$perms = Perms::get();
 		//
 		//set initial sort order based on user preferences or default
-		$field = !empty($prefs['wiki_list_sortorder']) ? $prefs['wiki_list_sortorder'] : 'pageName';
-		$dir = !empty($prefs['wiki_list_sortdirection']) ? $prefs['wiki_list_sortdirection'] : 'asc';
+		$field = !empty($prefs['wiki_list_sortorder']) ? $prefs['wiki_list_sortorder'] : 'lastmodif';
+		$dir = !empty($prefs['wiki_list_sortdirection']) ? $prefs['wiki_list_sortdirection'] : 'desc';
 		$sortfield = array(
 			'pageName'  => '#pagename',
 			'lastModif' => '#lastmodif',
