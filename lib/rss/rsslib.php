@@ -791,6 +791,10 @@ class RSSLib extends TikiDb_Bridge
 			TikiLib::lib('relation')->add_relation('tiki.rss.source', 'article', $id, 'rss', $rssId);
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('articles', $id);
+			$related_items = TikiLib::lib('relation')->get_relations_to('article', $id, 'tiki.article.attach');
+			foreach ($related_items as $item) {
+				refresh_index($item['type'], $item['itemId']);	
+			}
 		}
 	}
 
