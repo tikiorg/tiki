@@ -4,7 +4,7 @@ class TikiLib_UriMergeTest extends PHPUnit_Framework_TestCase
 {
 	function testFullReplace()
 	{
-		$this->assertEquals('http://www.example.com', $this->merge('http://example.com/foo/bar?x=y', 'http://www.example.com'));
+		$this->assertEquals('http://www.example.com/', $this->merge('http://example.com/foo/bar?x=y', 'http://www.example.com'));
 	}
 
 	function testAbsolutePath()
@@ -34,7 +34,7 @@ class TikiLib_UriMergeTest extends PHPUnit_Framework_TestCase
 
 	private function merge($first, $last)
 	{
-		return TikiLib::lib('tiki')->http_get_uri(Zend_Uri_Http::fromString($first), $last)->getUri();
+		return TikiLib::lib('tiki')->http_get_uri(new Zend\Uri\Http($first), $last)->toString();
 	}
 }
 

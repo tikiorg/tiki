@@ -199,7 +199,8 @@ class BigBlueButtonLib
 			)
 		);
 
-		$response = $client->request('POST');
+		$client->setMethod(Zend\Http\Request::METHOD_POST);
+		$response = $client->send();
 		$document = $response->getBody();
 
 		$dom = new DOMDocument;

@@ -112,8 +112,8 @@ if (isset($attributes['tiki.content.url'])) {
 	session_write_close();
 
 	$client = $tikilib->get_http_client($src);
-	$response = $client->request();
-	header('Content-Type: ' . $response->getHeader('Content-Type'));
+	$response = $client->send();
+	header('Content-Type: ' . $response->getHeaders()->get('Content-Type'));
 	echo $response->getBody();
 	exit();
 }

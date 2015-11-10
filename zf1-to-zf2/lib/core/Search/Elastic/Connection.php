@@ -291,11 +291,12 @@ class Search_Elastic_Connection
 		try {
 			$client = $this->getClient($path);
 			if ($data) {
-				$client->setRawData($data);
+				$client->setRawBody($data);
 			}
-			$response = $client->request('GET');
+			$client->setMethod(Zend\Http\Request::METHOD_GET);
+			$response = $client->send();
 			return $this->handleResponse($response);
-		} catch (Zend_Http_Exception $e) {
+		} catch (Zend\Http\Exception\ExceptionInterface $e) {
 			throw new Search_Elastic_TransportException($e->getMessage());
 		}
 	}
@@ -304,11 +305,12 @@ class Search_Elastic_Connection
 	{
 		try {
 			$client = $this->getClient($path);
-			$client->setRawData($data);
-			$response = $client->request('PUT');
+			$client->setRawBody($data);
+			$client->setMethod(Zend\Http\Request::METHOD_PUT);
+			$response = $client->send();
 
 			return $this->handleResponse($response);
-		} catch (Zend_Http_Exception $e) {
+		} catch (Zend\Http\Exception\ExceptionInterface $e) {
 			throw new Search_Elastic_TransportException($e->getMessage());
 		}
 	}
@@ -318,10 +320,11 @@ class Search_Elastic_Connection
 		try {
 			$client = $this->getClient($path);
 			$client->setRawData($data);
-			$response = $client->request('POST');
+			$client->setMethod(Zend\Http\Request::METHOD_POST);
+			$response = $client->send();
 
 			return $this->handleResponse($response);
-		} catch (Zend_Http_Exception $e) {
+		} catch (Zend\Http\Exception\ExceptionInterface $e) {
 			throw new Search_Elastic_TransportException($e->getMessage());
 		}
 	}
@@ -330,10 +333,11 @@ class Search_Elastic_Connection
 	{
 		try {
 			$client = $this->getClient($path);
-			$response = $client->request('DELETE');
+			$client->setMethod(Zend\Http\Request::METHOD_DELETE);
+			$response = $client->send();
 
 			return $this->handleResponse($response);
-		} catch (Zend_Http_Exception $e) {
+		} catch (Zend\Http\Exception\ExceptionInterface $e) {
 			throw new Search_Elastic_TransportException($e->getMessage());
 		}
 	}
@@ -342,7 +346,7 @@ class Search_Elastic_Connection
 	{
 		$content = json_decode($response->getBody());
 
-		if ($response->isSuccessful()) {
+		if ($response->isSuccess()) {
 			return $content;
 		} elseif (isset($content->exists) && $content->exists === false) {
 			throw new Search_Elastic_NotFoundException($content->_type, $content->_id);
@@ -378,7 +382,7 @@ class Search_Elastic_Connection
 		$tikilib = TikiLib::lib('tiki');
 		try {
 			return $tikilib->get_http_client($full);
-		} catch (Zend_Exception $e) {
+		} catch (\Zend\Http\Exception\ExceptionInterface $e) {
 			throw new Search_Elastic_TransportException($e->getMessage());
 		}
 	}

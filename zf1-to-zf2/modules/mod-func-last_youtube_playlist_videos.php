@@ -129,7 +129,7 @@ function module_last_youtube_playlist_videos($mod_reference, $module_params)
 		} else {
 			$feedUrl = 'http://gdata.youtube.com/feeds/api/playlists/' . $id . '?orderby=position';
 		}
-		$yt = new Zend_Gdata_YouTube();
+		$yt = new \ZendGData\YouTube();
 		$yt->setMajorProtocolVersion(2);
 		$yt->setHttpClient($tikilib->get_http_client());
 	

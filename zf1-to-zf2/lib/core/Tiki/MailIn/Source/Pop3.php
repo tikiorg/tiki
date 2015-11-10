@@ -86,7 +86,7 @@ class Pop3 implements SourceInterface
 
 	private function getBody($part, $type)
 	{
-		if (! $part->isMultipart() && 0 === strpos($part->getHeader('Content-Type'), $type)) {
+		if (! $part->isMultipart() && 0 === strpos($part->getHeaders()->get('Content-Type'), $type)) {
 			return $this->decode($part);
 		}
 
@@ -102,7 +102,7 @@ class Pop3 implements SourceInterface
 
 	private function handleAttachments($message, $part)
 	{
-		$type = $part->getHeader('Content-Type');
+		$type = $part->getHeaders()->get('Content-Type');
 		if (0 === strpos($type, 'multipart/mixed') || 0 === strpos($type, 'multipart/related')) {
 			// Skip initial content
 			for ($i = 2; $i <= $part->countParts(); ++$i) {
@@ -110,7 +110,7 @@ class Pop3 implements SourceInterface
 				if ($p->isMultipart()) {
 					continue;
 				}
-				$headers = $p->getHeaders();
+				$headers = $p->getHeaders()->toArray();
 
 				if (isset($headers['content-id'])) {
 					$contentId = $headers['content-id'];

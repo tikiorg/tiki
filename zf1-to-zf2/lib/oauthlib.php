@@ -26,7 +26,7 @@ class OAuthLib extends TikiDb_Bridge
 			$client = $access->getHttpClient($configuration);
 
 			if (isset($configuration['secretAsGet'])) {
-				$client->setParameterGet($configuration['secretAsGet'], $access->getTokenSecret());
+				$client->getRequest()->getQuery()->set($configuration['secretAsGet'], $access->getTokenSecret());
 			}
 		} else {
 			$client = TikiLib::lib('tiki')->get_http_client();
@@ -35,23 +35,23 @@ class OAuthLib extends TikiDb_Bridge
 		$client->setUri($arguments['url']);
 
 		if (isset($arguments['post'])) {
-			$client->setMethod(Zend_Http_Client::POST);
+			$client->setMethod(Zend\Http\Request::METHOD_POST);
 			foreach ($arguments['post'] as $key => $value) {
-				$client->setParameterPost($key, $value);
+				$client->getRequest()->getPost()->set($key, $value);
 			}
 		}
 
 		if (isset($arguments['get'])) {
 			foreach ($arguments['get'] as $key => $value) {
-				$client->setParameterGet($key, $value);
+				$client->getRequest()->getQuery()->set($key, $value);
 			}
 		}
 
 		try {
-			$response = $client->request();
+			$response = $client->send();
 
 			return $response;
-		} catch (Zend_Http_Exception $e) {
+		} catch (Zend\Http\Exception\ExceptionInterface $e) {
 			return null;
 		}
 	}

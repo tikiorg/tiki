@@ -306,7 +306,7 @@ class SocialNetworksLib extends LogsLib
 		$this->options['callbackUrl'] = $this->getURL();
 		$this->options['consumerKey'] = $prefs['socialnetworks_twitter_consumer_key'];
 		$this->options['consumerSecret'] = $prefs['socialnetworks_twitter_consumer_secret'];
-		$twitter = new Zend_Service_Twitter(
+		$twitter = new ZendService\Twitter\Twitter(
 			array(
 				'oauthOptions' => array(
 					'consumerKey' => $prefs['socialnetworks_twitter_consumer_key'],
@@ -317,8 +317,8 @@ class SocialNetworksLib extends LogsLib
 		);
 
 		try {
-			$response = $twitter->statusesUpdate($message);
-		} catch (Zend_Service_Twitter_Exception $e) {
+			$response = $twitter->statuses->update($message);
+		} catch (ZendService\Twitter\Exception\ExceptionInterface $e) {
 			$this->add_log('tweet', 'twitter error ' . $e->getMessage());
 			return -($e->getCode());
 		}
@@ -352,7 +352,7 @@ class SocialNetworksLib extends LogsLib
 		$this->options['callbackUrl'] = $this->getURL();
 		$this->options['consumerKey'] = $prefs['socialnetworks_twitter_consumer_key'];
 		$this->options['consumerSecret'] = $prefs['socialnetworks_twitter_consumer_secret'];
-		$twitter = new Zend_Service_Twitter(
+		$twitter = new ZendService\Twitter\Twitter(
 			array(
 				'oauthOptions' => array(
 					'consumerKey' => $prefs['socialnetworks_twitter_consumer_key'],
@@ -362,8 +362,8 @@ class SocialNetworksLib extends LogsLib
 			)
 		);
 		try {
-			$response = $twitter->statusesDestroy($id);
-		} catch(Zend_Http_Client_Exception $e)	{
+			$response = $twitter->statuses->destroy($id);
+		} catch(ZendService\Twitter\Exception\ExceptionInterface $e)	{
 			return false;
 		}
 		return true;
@@ -522,8 +522,8 @@ class SocialNetworksLib extends LogsLib
 		$params['apiKey'] = $key;
 		$httpclient->setParameterGet($params);
 
-		$response = $httpclient->request();
-		if (!$response->isSuccessful() ) {
+		$response = $httpclient->send();
+		if (!$response->isSuccess() ) {
 			return false;
 		}
 		return $response->getBody();
@@ -588,7 +588,7 @@ class SocialNetworksLib extends LogsLib
 
 		$token = unserialize($token);
 
-		$twitter = new Zend_Service_Twitter(
+		$twitter = new ZendService\Twitter\Twitter(
 			array(
 				'oauthOptions' => array(
 					'consumerKey' => $prefs['socialnetworks_twitter_consumer_key'],
@@ -599,11 +599,11 @@ class SocialNetworksLib extends LogsLib
 		);
 
 		if ($timelineType=='friends') {
-			$response = $twitter->statusesHomeTimeline();
+			$response = $twitter->statuses->homeTimeline();
 		} elseif ($timelineType == 'search') {
 			$response = $twitter->search->tweets($search, array('include_entities' => true));
 		} else {
-			$response = $twitter->statusesUserTimeline();
+			$response = $twitter->statuses->userTimeline();
 		}
 
 		if (!$response->isSuccess()) {

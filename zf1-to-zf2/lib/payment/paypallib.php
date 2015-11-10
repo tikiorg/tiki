@@ -134,7 +134,8 @@ class PaypalLib extends TikiDb_Bridge
 		$base = array( 'cmd' => '_notify-validate' );
 
 		$client->setParameterPost(array_merge($base, $ipn_data));
-		$response = $client->request('POST');
+		$client->setMethod(Zend\Http\Request::METHOD_POST);
+		$response = $client->send();
 
 		$body = $response->getBody();
 

@@ -130,7 +130,7 @@ if ($_REQUEST['locSection'] == 'read') {
 
 	if (isset($_REQUEST['msgid'])) {
 		$message = $mail->getMessage($_REQUEST['msgid']);
-		$aux = $message->getHeaders();
+		$aux = $message->getHeaders()->toArray();
 		$realmsgid = preg_replace('/[<>]/', '', $aux['message-id']);
 		$smarty->assign('msgid', $_REQUEST['msgid']);
 		$smarty->assign('realmsgid', $realmsgid);

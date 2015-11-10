@@ -76,34 +76,33 @@ class OIntegrate
 
 		if ( empty($postBody) ) {
 			$method = 'GET';
-			$client->setHeaders(
-				array(
+			$http_headers = array(
 					'Accept' => 'application/json,text/x-yaml',
 					'OIntegrate-Version' => '1.0',
-				)
-			);
+				);
 		} else {
-			$client->setHeaders(
-				array(
+			$http_headers = array(
 					'Accept' => 'application/json,text/x-yaml',
 					'OIntegrate-Version' => '1.0',
-				)
+					'Content-Type' => 'application/x-www-form-urlencoded',
 			);
-			$client->setRawData($postBody, 'application/x-www-form-urlencoded');
+			$client->setRawBody($postBody);
 		}
 
 		if ( count($this->schemaVersion) ) {
-			$client->setHeaders('OIntegrate-SchemaVersion', implode(', ', $this->schemaVersion));
+			$http_headers['OIntegrate-SchemaVersion'] = implode(', ', $this->schemaVersion);
 		}
 		if ( count($this->acceptTemplates) ) {
-			$client->setHeaders('OIntegrate-AcceptTemplate', implode(', ', $this->acceptTemplates));
+			$http_headers['OIntegrate-AcceptTemplate'] = implode(', ', $this->acceptTemplates);
 		}
+		$client->setHeaders($http_headers);
 
-		$httpResponse = $client->request($method);
+		$client->setMethod($method);
+		$httpResponse = $client->send();
 		$content = $httpResponse->getBody();
 
-		$contentType = $httpResponse->getHeader('Content-Type');
-		$cacheControl = $httpResponse->getHeader('Cache-Control');
+		$contentType = $httpResponse->getHeaders()->get('Content-Type');
+		$cacheControl = $httpResponse->getHeaders()->get('Cache-Control');
 
 		$response = new OIntegrate_Response;
 		$response->contentType = $contentType;
@@ -114,11 +113,11 @@ class OIntegrate
 		$filter->addCatchAllFilter('xss');
 
 		$response->data = $filter->filter($response->data);
-		$response->version = $httpResponse->getHeader('OIntegrate-Version');
-		$response->schemaVersion = $httpResponse->getHeader('OIntegrate-SchemaVersion');
+		$response->version = $httpResponse->getHeaders()->get('OIntegrate-Version');
+		$response->schemaVersion = $httpResponse->getHeaders()->get('OIntegrate-SchemaVersion');
 		if ( ! $response->schemaVersion && isset( $response->data->_version ) )
 			$response->schemaVersion = $response->data->_version;
-		$response->schemaDocumentation = $httpResponse->getHeader('OIntegrate-SchemaDocumentation');
+		$response->schemaDocumentation = $httpResponse->getHeaders()->get('OIntegrate-SchemaDocumentation');
 
 		global $prefs;
 		// Respect cache duration asked for

@@ -43,16 +43,17 @@ class ShippingProvider_Ups implements ShippingProvider
 
 			$client = TikiLib::lib('tiki')->get_http_client();
 			$client->setUri('https://www.ups.com/ups.app/xml/Rate');
-			$client->setRawData($auth . $request);
+			$client->setRawBody($auth . $request);
 
-			$response = $client->request('POST');
+			$client->setMethod(Zend\Http\Request::METHOD_POST);
+			$response = $client->send();
 			$body = $response->getBody();
 
 			$dom = new DOMDocument;
 			$dom->loadXML($body);
 
 			return $dom;
-		} catch( Zend_Http_Exception $e ) {
+		} catch(Zend\Http\Exception\ExceptionInterface $e ) {
 			return null;
 		}
 	}

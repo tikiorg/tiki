@@ -37,10 +37,10 @@ Class FutureLink_FutureUI extends Feed_Abstract
 	{
 		//May be used soon for encrypting futurelinks
 		if (isset($_REQUEST['action'], $_REQUEST['hash']) && $_REQUEST['action'] == 'timestamp') {
-			$client = new Zend_Http_Client(TikiLib::tikiUrl() . 'tiki-timestamp.php', array('timeout' => 60));
-			$client->setParameterGet('hash', $_REQUEST['hash']);
-			$client->setParameterGet('clienttime', time());
-			$response = $client->request();
+			$client = new Zend\Http\Client(TikiLib::tikiUrl() . 'tiki-timestamp.php', array('timeout' => 60));
+			$client->getRequest()->getQuery()->set('hash', $_REQUEST['hash']);
+			$client->getRequest()->getQuery()->set('clienttime', time());
+			$response = $client->send();
 			echo $response->getBody();
 			exit();
 		}

@@ -3870,23 +3870,28 @@ class FileGalLib extends TikiLib
 		try {
 			$client = TikiLib::lib('tiki')->get_http_client($url);
 
+			$http_headers = array();
 			if ($lastCheck) {
-				$client->setHeaders('If-Modified-Since', gmdate('D, d M Y H:i:s T', $lastCheck));
+				$http_headers['If-Modified-Since'] = gmdate('D, d M Y H:i:s T', $lastCheck);
 			}
 
 			if ($eTag) {
-				$client->setHeaders('If-None-Match', $eTag);
+				$http_headers['If-None-Match'] = $eTag;
+			}
+
+			if(count($http_headers)){
+				$client->setHeaders($http_headers);
 			}
 
 			$response = TikiLib::lib('tiki')->http_perform_request($client);
 
-			if ($response->isError()) {
-				TikiLib::lib('logs')->add_action($action, $url, 'url', 'error=' . $response->getStatus());
+			if ($response->isClientError()) {
+				TikiLib::lib('logs')->add_action($action, $url, 'url', 'error=' . $response->getStatusCode());
 				return false;
 			}
 
 			// 300 code, likely not modified or other non-critical error
-			if (! $response->isSuccessful()) {
+			if (! $response->isSuccess()) {
 				return false;
 			}
 
@@ -3894,7 +3899,7 @@ class FileGalLib extends TikiLib
 			$expiryDate = time();
 
 			$result = $response->getBody();
-			if ($disposition = $response->getHeader('Content-Disposition')) {
+			if ($disposition = $response->getHeaders()->get('Content-Disposition')) {
 				if (preg_match('/filename=[\'"]?([^;\'"]+)[\'"]?/i', $disposition, $parts)) {
 					$name = $parts[1];
 				}
@@ -3902,13 +3907,13 @@ class FileGalLib extends TikiLib
 
 			$name = rawurldecode($name);
 			// Check expires
-			if ($expires = $response->getHeader('Expires')) {
+			if ($expires = $response->getHeaders()->get('Expires')) {
 				$potential = strtotime($expires);
 				$expiryDate = max($expiryDate, $potential);
 			}
 
 			// Check cache-control for max-age, which has priority
-			if ($cacheControl = $response->getHeader('Cache-Control')) {
+			if ($cacheControl = $response->getHeaders()->get('Cache-Control')) {
 				if (preg_match('/max-age=(\d+)/', $cacheControl, $parts)) {
 					$expiryDate = time() + $parts[1];
 				}
@@ -3923,16 +3928,16 @@ class FileGalLib extends TikiLib
 				$name = tr('unknown');
 			}
 
-			TikiLib::lib('logs')->add_action($action, $url, 'url', 'success=' . $response->getStatus());
+			TikiLib::lib('logs')->add_action($action, $url, 'url', 'success=' . $response->getStatusCode());
 			return array(
 				'data' => $result,
 				'size' => $size,
 				'type' => $type,
 				'name' => $name,
 				'expires' => $expiryDate,
-				'etag' => $response->getHeader('Etag'),
+				'etag' => $response->getHeaders()->get('Etag'),
 			);
-		} catch (Zend_Http_Exception $e) {
+		} catch (Zend\Http\Exception\ExceptionInterface $e) {
 			TikiLib::lib('logs')->add_action($action, $url, 'url', 'error=' . $e->getMessage());
 			return false;
 		}

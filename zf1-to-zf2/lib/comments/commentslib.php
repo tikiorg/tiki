@@ -3055,7 +3055,7 @@ class Comments extends TikiLib
 			$tikilib = TikiLib::lib('tiki');
 
 			$url = $tikilib->tikiUrl();
-			$akismet = new Zend_Service_Akismet($prefs['comments_akismet_apikey'], $url);
+			$akismet = new ZendService\Akismet\Akismet($prefs['comments_akismet_apikey'], $url);
 
 			return $akismet->isSpam(
 				array(

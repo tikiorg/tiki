@@ -100,9 +100,9 @@ class Multilingual_MachineTranslation_BingTranslateWrapper implements Multilingu
 		$url = $url . '?' . http_build_query($data, '', '&');
 
 		$client = $tikilib->get_http_client();
-		$client->setHeaders('Authorization', "Bearer $access");
+		$client->setHeaders(array('Authorization' => "Bearer $access"));
 		$client->setUri($url);
-		$response = $client->request();
+		$response = $client->send();
 		$xml = $response->getBody();
 
 		$dom = new DOMDocument;
@@ -133,12 +133,13 @@ class Multilingual_MachineTranslation_BingTranslateWrapper implements Multilingu
 		$tikilib = TikiLib::lib('tiki');
 		$client = $tikilib->get_http_client();
 		$client->setUri(self::AUTH_URL);
-		$client->setParameterPost('client_id', $this->clientId);
-		$client->setParameterPost('client_secret', $this->clientSecret);
-		$client->setParameterPost('scope', 'http://api.microsofttranslator.com');
-		$client->setParameterPost('grant_type', 'client_credentials');
+		$client->getRequest()->getPost()->set('client_id', $this->clientId);
+		$client->getRequest()->getPost()->set('client_secret', $this->clientSecret);
+		$client->getRequest()->getPost()->set('scope', 'http://api.microsofttranslator.com');
+		$client->getRequest()->getPost()->set('grant_type', 'client_credentials');
 
-		$response = $client->request('POST');
+		$client->setMethod(Zend\Http\Request::METHOD_POST);
+		$response = $client->send();
 
 		$data = json_decode($response->getBody());
 
