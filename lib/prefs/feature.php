@@ -1258,7 +1258,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_sefurl_title_article' => array(
-			'name' => tra('Display article title in the SEFURL'),
+			'name' => tra('Display article title in the search engine friendly URL'),
             'description' => tra(''),
 			'type' => 'flag',
 			'perspective' => false,
@@ -1266,7 +1266,7 @@ function prefs_feature_list($partial = false)
 			'default' =>'y',
 		),
 		'feature_sefurl_title_blog' => array(
-			'name' => tra('Display blog title in the SEFURL'),
+			'name' => tra('Display blog title in the search engine friendly URL'),
             'description' => tra(''),
 			'type' => 'flag',
 			'perspective' => false,
@@ -1300,7 +1300,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_modulecontrols' => array(
 			'name' => tra('Show module controls'),
-            'description' => tra('enable controls in modules'),
+            'description' => tra('Enable controls in modules'),
 			'help' => 'Module',
 			'type' => 'flag',
 			'default' => 'n',
