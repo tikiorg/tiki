@@ -1,1 +1,0 @@
-{tr}Tiki mail-in instructions{/tr}

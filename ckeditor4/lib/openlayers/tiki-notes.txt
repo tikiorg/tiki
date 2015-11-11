@@ -1,3 +1,0 @@
-OpenLayers 2.12 distribution, stripped from development folders and debug versions
-
-theme/dark added

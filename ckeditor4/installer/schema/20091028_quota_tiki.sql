@@ -1,1 +1,0 @@
-alter table `tiki_file_galleries` add column `quota` int(8) default 0;

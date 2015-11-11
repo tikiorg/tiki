@@ -1,1 +1,0 @@
-ALTER TABLE `tiki_todo_notif` ADD COLUMN `objectType` VARCHAR(50) AFTER `todoId`;
