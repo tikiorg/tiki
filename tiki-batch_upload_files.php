@@ -192,7 +192,7 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 		);
 
 		if (isset($result['error'])) {
-			$feedback[] = "!!!" . tr('Upload was not successful for %0 (%1)', $path_parts['basename'], $result['error']);
+			$feedback[] = '<span class="text-danger">' . tr('Upload was not successful for "%0"', $path_parts['basename']) . '<br>(' . $result['error'] . ')</span>';
 		} else {
 			// check which gallery to upload to
 			$tmpGalId = (int)$_REQUEST["galleryId"];
@@ -220,7 +220,7 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 				if (!file_exists($filepath)) {
 					$feedback[] = sprintf(tra('File %s removed from Batch directory.'), $file);
 				} else {
-					$feedback[] = "!!! " . sprintf(tra('Impossible to remove file %s from Batch directory.'), $file);
+					$feedback[] = '<span class="text-danger">' . sprintf(tra('Impossible to remove file %s from Batch directory.'), $file) . '</span>';
 				}
 			}
 		}
