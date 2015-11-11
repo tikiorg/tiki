@@ -238,8 +238,7 @@ class Search_Indexer
 
 	private function log($message)
 	{
-		$this->log->setEventItem('memoryUsage', memory_get_usage());
-		$this->log->info($message);
+		$this->log->info($message, array('memoryUsage' => memory_get_usage()));
 	}
 }
 
