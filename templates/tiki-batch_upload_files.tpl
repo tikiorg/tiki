@@ -1,4 +1,4 @@
-{title}{tr}Directory batch upload{/tr}{/title}
+{title url=''}{tr}Directory batch upload{/tr}{/title}
 
 <div class="t_navbar btn-group form-group">
 	{if $galleryId ne ''}
@@ -17,36 +17,24 @@
 <form method="post" action="tiki-batch_upload_files.php" name="f" class="form-horizontal">
 	<table class="table table-stripped" id="filelist">
 		<tr>
-			<th>
-				{select_all checkbox_names='files[]'}
-			</th>
-			<th><a href="javascript:void(0);">{tr}Filename{/tr}</a></th>
-			<th width="80"><a href="javascript:void(0);">{tr}Filesize{/tr}</a></th>
-			<th width="80"><a href="javascript:void(0);">{tr}Filetype{/tr}</a></th>
+			<th>{select_all checkbox_names='files[]'}</th>
+			<th>{tr}Filename{/tr}</th>
+			<th width="80">{tr}Filesize{/tr}</th>
+			<th width="80">{tr}Filetype{/tr}</th>
+			<th width="80">{tr}Permissions{/tr}</th>
 		</tr>
 
 		{foreach key=k item=it from=$filestring}
 			<tr>
-				<td class="checkbox-cell">
-					<input type="checkbox" name="files[]" value="{$it[0]}" id="box_{$k}">
-				</td>
+				<td class="checkbox-cell"><input type="checkbox" name="files[]" value="{$it[0]}" id="box_{$k}"></td>
 				<td><label for="box_{$k}">{$it[0]}</label></td>
 				<td>{$it[1]|kbsize}</td>
 				<td>{$it[2]}</td>
+				<td>{if $it[3]}{icon name='success' title="{tr}File is writable{/tr}"}{else}{icon name='ban' title="{tr}File is not writable{/tr}"}{/if}</td>
 			</tr>
 		{/foreach}
 	</table>
 	<hr>
-    <div class="form-group">
-        <label class="col-sm-3 control-label">{tr}Remove extension from filename{/tr}</label>
-        <div class="col-sm-7">
-            <input type="checkbox" name="removeExt" value="true" id="removeExt" checked="checked">
-            <div class="help-block">
-                {tr}eg. from "digicam0001.jpg" then name digicam0001 will be used for the name field{/tr}
-            </div>
-        </div>
-    </div>
-
 <!--
 {if $permAddGallery eq "y"}
 &nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="subdirToSubgal" value="true" id="subdirToSubgal"> {tr}Convert the last sub directory to a sub gallery{/tr}<br>
