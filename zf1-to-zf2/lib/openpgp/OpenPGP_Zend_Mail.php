@@ -934,7 +934,7 @@ class OpenPGP_Zend_Mail extends Zend_Mime_Message
     /**
      * Sets Date-header
      *
-     * @param  timestamp|string|Zend_Date $date
+     * @param  timestamp|string|DateTime $date
      * @return OpenPGP_Zend_Mail Provides fluent interface
      * @throws Zend_Mail_Exception if called subsequent times or wrong date format.
      */
@@ -952,10 +952,10 @@ class OpenPGP_Zend_Mail extends Zend_Mime_Message
                                                   'strtotime()-compatible');
                 }
                 $date = date('r', $date);
-            } else if ($date instanceof Zend_Date) {
-                $date = $date->get(Zend_Date::RFC_2822);
+            } else if ($date instanceof DateTime) {
+                $date = $date->format(DateTime::RFC2822);
             } else {
-                throw new Zend_Mail_Exception(__METHOD__ . ' only accepts UNIX timestamps, Zend_Date objects, ' .
+                throw new Zend_Mail_Exception(__METHOD__ . ' only accepts UNIX timestamps, DateTime objects, ' .
                                               ' and strtotime()-compatible strings');
             }
             $this->_date = $date;

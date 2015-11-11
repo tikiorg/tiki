@@ -129,7 +129,7 @@ class Captcha
 				$this->captcha->setSession($session);
 				$this->captcha->setKeepSession(false);
 			}
-		} catch (Zend_Exception $e) {
+		} catch (Zend\Captcha\Exception\ExceptionInterface $e) {
 		}
 		return $key;
 	}

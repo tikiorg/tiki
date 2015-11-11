@@ -70,11 +70,11 @@ class Captcha_Questions extends Zend\Captcha\AbstractWord
 	/**
 	 * Render the captcha
 	 *
-	 * @param  Zend_View_Interface $view
+	 * @param  $view
 	 * @param  mixed $element
 	 * @return string
 	 */
-	public function render(Zend_View_Interface $view = null, $element = null)
+	public function render($view = null, $element = null)
 	{
 		$question = $this->questions[$this->current];
 

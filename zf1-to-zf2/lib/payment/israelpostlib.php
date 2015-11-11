@@ -122,7 +122,7 @@ class IsraelPostLib
 		global $prefs;
 		
 		$wsdl = $prefs['payment_israelpost_environment'] . 'GetGenericStatus?wsdl';
-		$client = new Zend_Soap_Client($wsdl, array(
+		$client = new Zend\Soap\Client($wsdl, array(
 			'soap_version' => SOAP_1_1,
 		));
 

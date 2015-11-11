@@ -218,7 +218,7 @@ if (isset($_SERVER["REQUEST_URI"])) {
 				setcookie($extra_cookie_name, $sequence, time() + 365*24*3600, ini_get('session.cookie_path'));
 				unset($sequence);
 			}
-		} catch( Zend_Session_Exception $e ) {
+		} catch( Zend\Session\Exception\ExceptionInterface $e ) {
 			// Ignore
 		}
 	}

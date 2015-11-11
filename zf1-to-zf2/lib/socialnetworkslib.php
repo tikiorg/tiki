@@ -83,11 +83,11 @@ class SocialNetworksLib extends LogsLib
 		$this->options['consumerSecret'] = $prefs['socialnetworks_twitter_consumer_secret'];
 
 		try {
-			$consumer = new Zend_Oauth_Consumer($this->options);
+			$consumer = new ZendOAuth\Consumer($this->options);
 			$token = $consumer->getRequestToken();
 			$_SESSION['TWITTER_REQUEST_TOKEN'] = serialize($token);
 			$consumer->redirect();
-		} catch (Zend_Oauth_Exception $e) {
+		} catch (ZendOAuth\Exception\ExceptionInterface $e) {
 			return false;
 		}
 	}
@@ -115,7 +115,7 @@ class SocialNetworksLib extends LogsLib
 		$this->options['consumerKey'] = $prefs['socialnetworks_twitter_consumer_key'];
 		$this->options['consumerSecret'] = $prefs['socialnetworks_twitter_consumer_secret'];
 
-		$consumer = new Zend_Oauth_Consumer($this->options);
+		$consumer = new ZendOAuth\Consumer($this->options);
 		$token = $consumer->getAccessToken($_GET, unserialize($_SESSION['TWITTER_REQUEST_TOKEN']));
 		unset($_SESSION['TWITTER_REQUEST_TOKEN']);
 		$this->set_user_preference($user, 'twitter_token', serialize($token));

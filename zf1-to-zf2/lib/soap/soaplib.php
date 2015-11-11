@@ -36,7 +36,7 @@ class Tiki_Soap
 			$options['soap_version'] = SOAP_1_1;
 		}
 
-		$client = new Zend_Soap_Client($wsdl, $options);
+		$client = new Zend\Soap\Client($wsdl, $options);
 		$soap_params = array();
 
 		foreach ($params as $param_name => $param_value) {

@@ -65,7 +65,7 @@ function module_youtube($mod_reference, $module_params)
 		$ids = explode(',', $module_params['ids']);
 		$data['urls']['gdata'] = array();
 		foreach ($ids as $id) {
-			$data['urls']['gdata'][$id] = Zend_Gdata_YouTube::VIDEO_URI . '/' . $id;
+			$data['urls']['gdata'][$id] = ZendGData\YouTube::VIDEO_URI . '/' . $id;
 			$params = array('movie' => $id);
 			if (isset($module_params['width'])) $params['width'] = $module_params['width'];
 			if (isset($module_params['height'])) $params['height'] = $module_params['height'];

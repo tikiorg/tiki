@@ -65,7 +65,7 @@ class OAuthLib extends TikiDb_Bridge
 				$_SESSION['OAUTH_REQUEST_' . $provider_key] = serialize($consumer->getRequestToken());
 				$consumer->redirect();
 			}
-		} catch (Zend_Oauth_Exception $e) {
+		} catch (ZendOAuth\Exception\ExceptionInterface $e) {
 			$oauth_ex = $e->getPrevious();
 			$prevErr = '';
 			if ($oauth_ex != null) {
@@ -87,7 +87,7 @@ class OAuthLib extends TikiDb_Bridge
 				$this->store_token($provider_key, $accessToken);
 
 				unset($_SESSION[$key]);
-			} catch (Zend_Oauth_Exception $e) {
+			} catch (ZendOAuth\Exception\ExceptionInterface $e) {
 				$oauth_ex = $e->getPrevious();
 				$prevErr = '';
 				if ($oauth_ex != null)
@@ -109,7 +109,7 @@ class OAuthLib extends TikiDb_Bridge
 		$config = $this->get_configuration($provider_key);
 
 		if (! empty($config['accessToken']) && ! empty($config['accessTokenSecret'])) {
-			$token = new Zend_Oauth_Token_Access;
+			$token = new ZendOAuth\Token\Access();
 			$token->setParams(
 				array(
 					'oauth_token' => $config['accessToken'],
@@ -169,7 +169,7 @@ class OAuthLib extends TikiDb_Bridge
 	private function get_consumer($provider_key)
 	{
 		if ($configuration = $this->get_configuration($provider_key)) {
-			return new Zend_Oauth_Consumer($configuration);
+			return new ZendOAuth\Consumer($configuration);
 		}
 	}
 }

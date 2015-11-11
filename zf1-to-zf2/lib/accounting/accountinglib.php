@@ -553,17 +553,17 @@ class AccountingLib extends LogsLib
 	 *
 	 * Checks if the book date is within the books limits
 	 * @param array		$book		book array
-	 * @param unknown_type $Date
+	 * @param DateTime $Date
 	 */
 	function checkBookDates($book, $Date)
 	{
-		$StartDate = new Zend_Date($book['bookStartDate']);
-		if ($Date->compareDate($StartDate) === -1) {
+		$StartDate = new DateTime($book['bookStartDate']);
+		if ($Date < $StartDate) {
 			return array(tra("The date for the transaction is before this books start date."));
 		}
 
-		$EndDate = new Zend_Date($book['bookEndDate']);
-		if ($Date->compareDate($EndDate) === 1) {
+		$EndDate = new DateTime($book['bookEndDate']);
+		if ($Date > $EndDate) {
 			return array(tra("The date for the transaction is after this books end date."));
 		}
 
@@ -600,8 +600,8 @@ class AccountingLib extends LogsLib
 		if ($book['bookClosed'] == 'y') {
 			return array(tra("This book has been closed. You can't book into it any more."));
 		} try {
-			$date = new Zend_Date($journalDate);
-		} catch(Zend_Date_Exception $e) {
+			$date = new DateTime($journalDate);
+		} catch(Exception $e) {
 			return array(tra("Invalid booking date."));
 		}
 
@@ -682,8 +682,8 @@ class AccountingLib extends LogsLib
 		if ($book['bookClosed'] == 'y') {
 			$errors[] = tra("This book has been closed. You can't book into it any more.");
 		} try {
-			$date = new Zend_Date($journalDate);
-		} catch(Zend_Date_Exception $e) {
+			$date = new DateTime($journalDate);
+		} catch(Exception $e) {
 			return array(tra("Invalid booking date."));
 		}
 
@@ -907,8 +907,8 @@ class AccountingLib extends LogsLib
 		if ($book['bookClosed'] == 'y') {
 			$errors[] = tra("This book has been closed. You can't book into it any more.");
 		} try {
-			$date = new Zend_Date($stackDate);
-		} catch (Zend_Date_Exception $e) {
+			$date = new DateTime($stackDate);
+		} catch (Exception $e) {
 			return array(tra("Invalid booking date."));
 		}
 		$errors = $this->checkBookDates($book, $date);
@@ -1022,8 +1022,8 @@ class AccountingLib extends LogsLib
 		if ($book['bookClosed'] == 'y') {
 			$errors[] = tra("This book has been closed. You can't book into it any more.");
 		}	try {
-			$date = new Zend_Date($stackDate);
-		} catch (Zend_Date_Exception $e) {
+			$date = new DateTime($stackDate);
+		} catch (Exception $e) {
 			return array(tra("Invalid booking date."));
 		}
 		$errors = $this->checkBookDates($book, $date);

@@ -21,11 +21,12 @@ class Search_Indexer
 
 	public function __construct(Search_Index_Interface $searchIndex, $logWriter = null)
 	{
-		if (! $logWriter instanceof Zend_Log_Writer_Abstract) {
-			$logWriter = new Zend_Log_Writer_Null();
+		if (! $logWriter instanceof \Zend\Log\Writer\AbstractWriter) {
+			$logWriter = new Zend\Log\Writer\Noop();
 		}
-		$logWriter->setFormatter(new Zend_Log_Formatter_Simple(Zend_Log_Formatter_Simple::DEFAULT_FORMAT . ' [%memoryUsage% bytes]' . PHP_EOL));
-		$this->log = new Zend_Log($logWriter);
+		$logWriter->setFormatter(new Zend\Log\Formatter\Simple(Zend\Log\Formatter\Simple::DEFAULT_FORMAT . ' [%memoryUsage% bytes]' . PHP_EOL));
+		$this->log = new Zend\Log\Logger();
+		$this->log->addWriter($logWriter);
 
 		$this->searchIndex = $searchIndex;
 

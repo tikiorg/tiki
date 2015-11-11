@@ -471,9 +471,9 @@ class UnifiedSearchLib
 		$logWriter = null;
 
 		if ((int) $loggit == 1) {
-			$logWriter = new Zend_Log_Writer_Stream($prefs['tmpDir'] . '/Search_Indexer.log', 'w');
+			$logWriter = new Zend\Log\Writer\Stream($prefs['tmpDir'] . '/Search_Indexer.log', 'w');
 		} elseif ((int) $loggit == 2) {
-			$logWriter = new Zend_Log_Writer_Stream($prefs['tmpDir'] . '/Search_Indexer_console.log', 'w');
+			$logWriter = new Zend\Log\Writer\Stream($prefs['tmpDir'] . '/Search_Indexer_console.log', 'w');
 		}
 
 		$indexer = new Search_Indexer($index, $logWriter);
