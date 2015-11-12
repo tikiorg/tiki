@@ -1,12 +1,13 @@
 {title url=''}{tr}Directory batch upload{/tr}{/title}
 
 <div class="t_navbar btn-group form-group">
-	{if $galleryId ne ''}
+	{if $galleryId}
 		{button href="tiki-list_file_gallery.php?galleryId=$galleryId" class="btn btn-default" _text="{tr}Browse File Gallery{/tr}"}
+		{button href="tiki-upload_file.php?galleryId=$galleryId" class="btn btn-default" _text="{tr}Upload From Disk{/tr}"}
 	{else}
 		{button href="tiki-list_file_gallery.php" class="btn btn-default" _text="{tr}Browse File Gallery{/tr}"}
+		{button href="tiki-upload_file.php" class="btn btn-default" _text="{tr}Upload From Disk{/tr}"}
 	{/if}
-	{button href="tiki-upload_file.php?galleryId=$galleryId" class="btn btn-default" _text="{tr}Upload From Disk{/tr}"}
 </div>
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Please do not use this feature to upload data into the database.{/tr}{/remarksbox}
@@ -26,11 +27,11 @@
 
 		{foreach key=k item=it from=$filestring}
 			<tr>
-				<td class="checkbox-cell"><input type="checkbox" name="files[]" value="{$it[0]}" id="box_{$k}"></td>
-				<td><label for="box_{$k}">{$it[0]}</label></td>
-				<td>{$it[1]|kbsize}</td>
-				<td>{$it[2]}</td>
-				<td>{if $it[3]}{icon name='success' title="{tr}File is writable{/tr}"}{else}{icon name='ban' title="{tr}File is not writable{/tr}"}{/if}</td>
+				<td class="checkbox-cell"><input type="checkbox" name="files[]" value="{$it.file}" id="box_{$k}"></td>
+				<td><label for="box_{$k}">{$it.file|replace:$prefs.fgal_batch_dir:''}</label></td>
+				<td>{$it.size|kbsize}</td>
+				<td>{$it.ext}</td>
+				<td>{if $it.writable}{icon name='success' title="{tr}File is writable{/tr}"}{else}{icon name='ban' title="{tr}File is not writable{/tr}"}{/if}</td>
 			</tr>
 		{/foreach}
 	</table>

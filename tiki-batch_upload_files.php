@@ -54,24 +54,22 @@ $disallowed_types = array(
 	'.sh',
 	'php~'
 ); // list of filetypes you DO NOT want to show
-// recursively get all files from all subdirectories
+
 /**
- * @param $sub
+ * recursively get all files from all subdirectories
+ *
+ * @param $dir
+ * @return array
+ * @throws Exception
  */
-function getDirContent($sub)
+function batchUploadDirContent($dir)
 {
 	global $disallowed_types;
-	global $a_file;
-	global $a_path;
-	global $filedir;
-	$smarty = TikiLib::lib('smarty');
-	$tmp = rtrim($filedir . '/' . $sub, '/');
 
-	if (false === $allfile = scandir($tmp)) {
-		$msg = tra("Invalid directory name");
-		$smarty->assign('msg', $msg);
-		$smarty->display("error.tpl");
-		die;
+	$files = [];
+
+	if (false === $allfile = scandir($dir)) {
+		throw new Exception(tra("Invalid directory name"));
 	}
 
 	foreach ($allfile as $filefile) {
@@ -79,53 +77,46 @@ function getDirContent($sub)
 			continue;
 		}
 
-		if (is_dir($tmp . "/" . $filefile)) {
-			if ($sub && (substr($sub, -1) != "/") && (substr($sub, -1) != "\\")) {
-				$sub.= '/';
-			}
-			getDirContent($sub . $filefile);
+		if (is_dir($dir . "/" . $filefile)) {
+			$files = array_merge(batchUploadDirContent($dir . DIRECTORY_SEPARATOR . $filefile), $files);
+
 		} elseif (!in_array(strtolower(substr($filefile, -(strlen($filefile) - strrpos($filefile, ".")))), $disallowed_types)) {
-			$a_file[] = $filefile;
-			$a_path[] = $sub;
+			$files[] =  $dir . DIRECTORY_SEPARATOR . $filefile;
 		}
 	}
+	return $files;
 }
-// build a complete list of all files on filesystem including all necessary file info
-function buildFileList()
+
+/**
+ * build a complete list of all files in $prefs['fgal_batch_dir'] including all necessary file info
+ *
+ * @throws Exception
+ */
+function batchUploadFileList()
 {
 
-	global $a_file;
-	global $a_path;
 	global $filedir;
 	global $filestring;
-	getDirContent('');
-	$totfile = count($a_file); // total file number
+	// get root dir
+	$filedir = rtrim($filedir, '/');
+
+	$files = batchUploadDirContent($filedir);
+
+	$totfile = count($files); // total file number
 	$totalsize = 0;
 	// build file data array
-	foreach ($a_file as $x => $file) {
-		$path = $a_path[$x];
+	foreach ($files as $file) {
 
-		// get root dir
-		$filedir = rtrim($filedir, '/');
-
-		$tmp = $filedir;
-		// add any subdir names
-		if ($path <> "") {
-			$tmp.= '/' . $path;
-		}
 		// get file information
-		$filesize = @filesize($tmp . '/' . $file);
-		$filestring[$x][0] = $file;
-		if ($path) {
-			$filestring[$x][0] = $path . '/' . $file;
-		}
-		$filestring[$x][1] = $filesize;
-		// type is string after last dot
-		$ext = strtolower(substr($file, -(strlen($file) - 1 - strrpos($file, "."))));
-		$filestring[$x][2] = $ext;
+		$filesize = @filesize($file);
 		$totalsize+= $filesize;
 
-		$filestring[$x][3] = is_writable($tmp . '/' . $file);
+		$filestring[] = [
+			'file' => $file,
+			'size' => $filesize,
+			'ext' => strtolower(substr($file, -(strlen($file) - 1 - strrpos($file, ".")))),
+			'writable' => is_writable($file),
+		];
 	}
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('totfile', $totfile);
@@ -141,16 +132,7 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 	$fileArray = $_REQUEST['files'];
 	$totfiles = count($fileArray);
 
-	// if ALL is given, get all the files from the filesystem (stored in $a_file[] already)
-	if ($totfiles == 1) {
-		if ($fileArray[0] == "ALL") {
-			getDirContent('');
-			$fileArray = $a_file;
-			$filePathArray = $a_path;
-			$totfiles = count($fileArray);
-		}
-	}
-	// for subdirToSubgal we need all existing sub galleries for the current gallery
+	// for subdirToSubgal we need all existing dir galleries for the current gallery
 	$subgals = array();
 	if (isset($_REQUEST["subdirTosubgal"])) {
 		$subgals = $filegallib->get_subgalleries(0, 9999, "name_asc", '', $_REQUEST["galleryId"]);
@@ -158,34 +140,21 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 
 	// cycle through all files to upload
 	foreach ($fileArray as $x => $file) {
-		if (!isset($filePathArray[$x])) {
-			$path = '';
-		} else if ($filePathArray[$x] != "") {
-			$path = $filePathArray[$x] . '/';
-		} else {
-			// if there is a path in file name, move it to the path array
-			if (strrpos($file, "/") > 0) {
-				$path = substr($file, 0, strrpos($file, "/") + 1);
-				$file = substr($file, strrpos($file, "/") + 1);
-			}
-		}
-
-		$filepath = $filedir . $path . '/' . $file;
-		$filesize = @filesize($filepath);
 
 		//add meadata
-		$metadata = $filegallib->extractMetadataJson($filepath);
+		$metadata = $filegallib->extractMetadataJson($file);
 
-		$path_parts = pathinfo($filepath);
+		$path_parts = pathinfo($file);
 		$ext = strtolower($path_parts["extension"]);
 		include_once ('lib/mime/mimetypes.php');
 		global $mimetypes;
 		$type = $mimetypes["$ext"];
+		$filesize = @filesize($file);
 
 		$result = $filegallib->handle_batch_upload(
 			$_REQUEST['galleryId'],
 			array(
-				'source' => $filepath,
+				'source' => $file,
 				'size' => $filesize,
 				'type' => $type,
 				'name' => $path_parts['basename'],
@@ -206,16 +175,16 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 				$tmpDesc = '';
 			}
 			// remove possible path from filename
-			$file = preg_replace('/.*([^\/]*)$/U', '$1', $file);
-			$name = $file;
+			$name = $path_parts['basename'];
+
 			$fileId = $filegallib->insert_file(
-				$tmpGalId, $name, $tmpDesc, $file, $result['data'], $filesize, $type,
+				$tmpGalId, $name, $tmpDesc, $name, $result['data'], $filesize, $type,
 				$user, $result['fhash'], null, null, null, null, null, null, $metadata
 			);
 			if ($fileId) {
 				$feedback[] = tra('Upload was successful') . ': ' . $name;
-				@unlink($filepath);	// seems to return false sometimes even if the file was deleted
-				if (!file_exists($filepath)) {
+				@unlink($file);	// seems to return false sometimes even if the file was deleted
+				if (!file_exists($file)) {
 					$feedback[] = sprintf(tra('File %s removed from Batch directory.'), $file);
 				} else {
 					$feedback[] = '<span class="text-danger">' . sprintf(tra('Impossible to remove file %s from Batch directory.'), $file) . '</span>';
@@ -225,9 +194,12 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 	}
 }
 
-$a_file = array();
-$a_path = array();
-buildFileList();
+try {
+	batchUploadFileList();
+} catch (Exception $e) {
+	TikiLib::lib('errorreport')->report($e->getMessage());
+}
+
 $smarty->assign('feedback', $feedback);
 if (isset($_REQUEST["galleryId"])) {
 	$smarty->assign_by_ref('galleryId', $_REQUEST["galleryId"]);
