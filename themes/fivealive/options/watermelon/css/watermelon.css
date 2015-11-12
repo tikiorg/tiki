@@ -17,15 +17,36 @@ a.btn-link:focus {
   background-color: #c31e3b;
   border-color: #e7768a;
 }
-.btn-default:hover,
 .btn-default:focus,
-.btn-default.focus,
+.btn-default.focus {
+  color: #ffffff;
+  background-color: #97172e;
+  border-color: #bc213d;
+}
+.btn-default:hover {
+  color: #ffffff;
+  background-color: #97172e;
+  border-color: #de425e;
+}
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
   color: #ffffff;
   background-color: #97172e;
   border-color: #de425e;
+}
+.btn-default:active:hover,
+.btn-default.active:hover,
+.open > .dropdown-toggle.btn-default:hover,
+.btn-default:active:focus,
+.btn-default.active:focus,
+.open > .dropdown-toggle.btn-default:focus,
+.btn-default:active.focus,
+.btn-default.active.focus,
+.open > .dropdown-toggle.btn-default.focus {
+  color: #ffffff;
+  background-color: #781224;
+  border-color: #bc213d;
 }
 .btn-default:active,
 .btn-default.active,
@@ -62,15 +83,36 @@ fieldset[disabled] .btn-default.active {
   background-color: #c31e3b;
   border-color: #e7768a;
 }
-.btn-primary:hover,
 .btn-primary:focus,
-.btn-primary.focus,
+.btn-primary.focus {
+  color: #ffffff;
+  background-color: #97172e;
+  border-color: #bc213d;
+}
+.btn-primary:hover {
+  color: #ffffff;
+  background-color: #97172e;
+  border-color: #de425e;
+}
 .btn-primary:active,
 .btn-primary.active,
 .open > .dropdown-toggle.btn-primary {
   color: #ffffff;
   background-color: #97172e;
   border-color: #de425e;
+}
+.btn-primary:active:hover,
+.btn-primary.active:hover,
+.open > .dropdown-toggle.btn-primary:hover,
+.btn-primary:active:focus,
+.btn-primary.active:focus,
+.open > .dropdown-toggle.btn-primary:focus,
+.btn-primary:active.focus,
+.btn-primary.active.focus,
+.open > .dropdown-toggle.btn-primary.focus {
+  color: #ffffff;
+  background-color: #781224;
+  border-color: #bc213d;
 }
 .btn-primary:active,
 .btn-primary.active,
@@ -711,6 +753,17 @@ header.header .sitesubtitle {
 .chosen-container .chosen-results li.highlighted {
   background-color: #76142a;
   color: #f2f2f2;
+}
+.autotoc > .nav {
+  background: #8c1832;
+}
+.autotoc * {
+  color: #ffffff;
+}
+.autotoc .nav > li > a:hover,
+.autotoc .nav .nav > li > a:hover {
+  color: #f2f2f2;
+  background: #76142a;
 }
 header.header .sitetitle,
 header.header .sitesubtitle {

@@ -14,15 +14,36 @@ a.btn-link:focus {
   background-color: #bcb923;
   border-color: #f0e884;
 }
-.btn-default:hover,
 .btn-default:focus,
-.btn-default.focus,
+.btn-default.focus {
+  color: #ffffff;
+  background-color: #918f1b;
+  border-color: #dacc1b;
+}
+.btn-default:hover {
+  color: #ffffff;
+  background-color: #918f1b;
+  border-color: #e9de4d;
+}
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
   color: #ffffff;
   background-color: #918f1b;
   border-color: #e9de4d;
+}
+.btn-default:active:hover,
+.btn-default.active:hover,
+.open > .dropdown-toggle.btn-default:hover,
+.btn-default:active:focus,
+.btn-default.active:focus,
+.open > .dropdown-toggle.btn-default:focus,
+.btn-default:active.focus,
+.btn-default.active.focus,
+.open > .dropdown-toggle.btn-default.focus {
+  color: #ffffff;
+  background-color: #737115;
+  border-color: #dacc1b;
 }
 .btn-default:active,
 .btn-default.active,
@@ -59,15 +80,36 @@ fieldset[disabled] .btn-default.active {
   background-color: #bcb923;
   border-color: #f0e884;
 }
-.btn-primary:hover,
 .btn-primary:focus,
-.btn-primary.focus,
+.btn-primary.focus {
+  color: #ffffff;
+  background-color: #918f1b;
+  border-color: #dacc1b;
+}
+.btn-primary:hover {
+  color: #ffffff;
+  background-color: #918f1b;
+  border-color: #e9de4d;
+}
 .btn-primary:active,
 .btn-primary.active,
 .open > .dropdown-toggle.btn-primary {
   color: #ffffff;
   background-color: #918f1b;
   border-color: #e9de4d;
+}
+.btn-primary:active:hover,
+.btn-primary.active:hover,
+.open > .dropdown-toggle.btn-primary:hover,
+.btn-primary:active:focus,
+.btn-primary.active:focus,
+.open > .dropdown-toggle.btn-primary:focus,
+.btn-primary:active.focus,
+.btn-primary.active.focus,
+.open > .dropdown-toggle.btn-primary.focus {
+  color: #ffffff;
+  background-color: #737115;
+  border-color: #dacc1b;
 }
 .btn-primary:active,
 .btn-primary.active,
@@ -746,4 +788,15 @@ header.header .sitesubtitle {
 .chosen-container .chosen-results li.highlighted {
   background-color: #587631;
   color: #f2f2f2;
+}
+.autotoc > .nav {
+  background: #658838;
+}
+.autotoc * {
+  color: #ffffff;
+}
+.autotoc .nav > li > a:hover,
+.autotoc .nav .nav > li > a:hover {
+  color: #f2f2f2;
+  background: #587631;
 }

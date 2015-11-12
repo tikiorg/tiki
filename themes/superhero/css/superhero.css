@@ -7523,11 +7523,18 @@ ul.all_languages > li {
   border: 1px solid;
   border-color: transparent;
 }
-#autotoc > .nav {
-  background: #ebebeb;
+.autotoc > .nav {
+  background: #4e5d6c;
+  border: 1px solid transparent;
+  border-radius: 0;
 }
-#autotoc * {
+.autotoc * {
+  color: #df691a;
+}
+.autotoc .nav > li > a:hover,
+.autotoc .nav .nav > li > a:hover {
   color: #ebebeb;
+  background: #485563;
 }
 .plugin-form-float {
   background: #2b3e50;
