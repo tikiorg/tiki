@@ -134,6 +134,7 @@ function wikiplugin_box($data, $params)
 	$w = (isset($width)) ? " width:$width"  : "";
 	$f = (isset($float) && ($float == "left" || $float == "right")) ? " float:$float" : "";
 	$c = (isset($clear))    ? " clear:both" : "";
+	$style = (isset($style)) ? $style : "";
 	if (empty($float)) {
 	$begin = "<div class='panel panel-default$class' $id style='$bg;$f;margin:0;$w;$c;$style'>";
     } else {
