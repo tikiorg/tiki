@@ -7254,10 +7254,10 @@ ul.all_languages > li {
   border: 1px solid;
   border-color: #b37f13;
 }
-div#outerToc {
+#autotoc > .nav {
   background: #eeeeee;
 }
-div#outerToc * {
+#autotoc * {
   color: #d8d8d8;
 }
 .plugin-form-float {

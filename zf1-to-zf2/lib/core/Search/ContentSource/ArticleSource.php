@@ -33,6 +33,12 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 		
 		$article = $artlib->get_article($objectId, false);
 
+		if ($topic = $artlib->get_topic($article['topicId'])) {
+			$topic_name = $topic['name'];
+		} else {
+			$topic_name = '';
+		}
+
 		$rss_relations = TikiLib::lib('relation')->get_object_ids_with_relations_from('article', $objectId, 'tiki.rss.source');
 		$sitetitle = '';
  		$siteurl = '';
@@ -58,6 +64,8 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
  			'siteurl' => $typeFactory->plaintext($siteurl),
 
 			'topic_id' => $typeFactory->identifier($article['topicId']),
+			'topic_name' => $typeFactory->plaintext($topic_name),
+
 			'article_type' => $typeFactory->identifier($article['type']),
 			'article_content' => $typeFactory->wikitext($article['body']),
 			'article_topline' => $typeFactory->wikitext($article['topline']),
@@ -87,6 +95,8 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
  			'siteurl',
 
 			'topic_id',
+			'topic_name',
+
 			'article_content',
 			'article_type',
 			'article_topline',

@@ -1,37 +1,4 @@
-{* test for caps lock*}
-{jq notonready=true}
-{literal}
-	function regCapsLock(e){
-		var kc = e.keyCode?e.keyCode:e.which;
-		var sk = e.shiftKey?e.shiftKey:((kc == 16)?true:false);
-		if(((kc >= 65 && kc <= 90) && !sk)||((kc >= 97 && kc <= 122) && sk))
-			document.getElementById('divRegCapson').style.visibility = 'visible';
-		else
-			document.getElementById('divRegCapson').style.visibility = 'hidden';
-	}
-
-	var submit_counter = 0;
-	function match_pass() {
-		submit_counter += 1;
-		var ret_msg = document.getElementById('validate');
-		var pass0 = document.getElementById('oldpass') ? document.getElementById('oldpass').value : "dummy";
-		var pass1 = document.getElementById('pass1').value;
-		var pass2 = document.getElementById('pass2').value;
-		if (submit_counter > 10) {
-			ret_msg.innerHTML = "<img src='img/icons/exclamation.png' style='vertical-align:middle' alt='Overflow'> {tr}Too many tries{/tr}";
-			return false;
-		} else if ((pass0 == '') || (pass1 == '') || (pass2 == '')) {
-			ret_msg.innerHTML = "<img src='img/icons/exclamation.png' style='vertical-align:middle' alt='Missing'> {tr}Passwords missing{/tr}";
-			return false;
-		} else if ( pass1 != pass2 ) {
-			ret_msg.innerHTML = "<img src='img/icons/exclamation.png' style='vertical-align:middle' alt='Do not match'> {tr}Passwords don\'t match{/tr}";
-			return false;
-		}
-		return true;
-	}
-{/literal}
-{/jq}
-
+{* $Id$ *}
 {if isset($new_user_validation) && $new_user_validation eq 'y'}
 	{title}{tr}Your account has been validated.{/tr} {tr}You have to choose a password to use this account.{/tr}{/title}
 {else}
@@ -70,22 +37,40 @@
 		</div>
 	</div>
 	{/if}
+	{include file='password_jq.tpl'}
 	<div class="form-group">
 		<label class="col-sm-3 col-md-2 control-label" for="pass1">{tr}New Password{/tr}</label>
 		<div class="col-sm-7 col-md-6">
-			<input type="password" class="form-control" placeholder="New Password" name="pass" id="pass1"
-				onkeypress="regCapsLock(event)" onkeyup="runPassword(this.value, 'mypassword');{if 0 and $prefs.feature_ajax eq 'y'}check_pass();{/if}">
+			<input type="password" class="form-control" placeholder="New Password" name="pass" id="pass1">
+			<div style="margin-left:5px;">
+				<div id="mypassword_text">{icon name='ok' istyle='display:none'}{icon name='error' istyle='display:none' } <span id="mypassword_text_inner"></span></div>
+				<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div>
+			</div>
+			<div style="margin-top:5px">
+				{include file='password_help.tpl'}
+			</div>
 		</div>
-		<div class="col-md-4">
-			<div id="mypassword_text"></div>
-			<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div>
-		</div>
-		<div class="col-md-4 col-sm-10 help-block">{include file='password_help.tpl'}</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3 col-md-2 control-label" for="pass2">{tr}Repeat Password{/tr}</label>
 		<div class="col-sm-7 col-md-6">
-			<input type="password" class="form-control" name="pass2" id="pass2" placeholder="Repeat Password">
+			<input type="password" class="form-control" name="passAgain" id="pass2" placeholder="Repeat Password">
+			<div id="mypassword2_text">
+				<div id="match" style="display:none">
+					{icon name='ok' istyle='color:#0ca908'} {tr}Passwords match{/tr}
+				</div>
+				<div id="nomatch" style="display:none">
+					{icon name='error' istyle='color:#ff0000'} {tr}Passwords do not match{/tr}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-3 col-sm-offset-3 col-md-2 col-md-offset-2">
+			<span id="genPass">{button href="#" _text="{tr}Generate a password{/tr}"}</span>
+		</div>
+		<div class="col-sm-3 col-md-2">
+			<input id='genepass' class="form-control" name="genepass" type="text" tabindex="0" style="display:none">
 		</div>
 	</div>
 	{if empty($email)}

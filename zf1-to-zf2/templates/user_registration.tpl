@@ -1,37 +1,7 @@
 {* $Id:$ *}
 {if empty($user)}
 
-	{jq notonready=true} {* test for caps lock*}
-		var divRegCapson = $('#divRegCapson');
-		function regCapsLock(e){
-			kc = e.keyCode?e.keyCode:e.which;
-			sk = e.shiftKey?e.shiftKey:((kc == 16)?true:false);
-			if(((kc >= 65 && kc <= 90) && !sk)||((kc >= 97 && kc <= 122) && sk)) {
-				divRegCapson.show();
-			} else {
-				divRegCapson.hide();
-			}
-		}
-	{/jq}
-	{if $prefs.generate_password eq 'y'}
-
-		{jq}
-			$("#genPass").click(function () {
-				genPass('genepass');
-				$('#mypassword_text, #mypassword2_text, #mypassword_bar').hide();
-				$('#genepass').show();
-				return false;
-			});
-
-			$("#pass1, #pass2").change(function () {
-				$('#mypassword_text, #mypassword2_text, #mypassword_bar').show();
-				$("#genepass").val('');
-				$("#genepass").hide();
-				return false;
-			});
-		{/jq}
-	{/if}
-
+	{include file='password_jq.tpl'}
 	{if $openid_associate neq 'n'}
 		<h1>{tr}Your OpenID identity is valid{/tr}</h1>
 		<p>{tr}However, no account is associated to the OpenID identifier.{/tr}</p>
@@ -52,7 +22,7 @@
 				</form>
 			{/if}
 		</div>
-		<div class="row">
+		<div class="col-sm-9 col-sm-offset-2">
 			{remarksbox type="note" title="{tr}Note{/tr}"}
 				{if $prefs.feature_wiki_protect_email eq 'y'}
 					{assign var=sender_email value=$prefs.sender_email|default:"this domain"|escape:'hexentity'}

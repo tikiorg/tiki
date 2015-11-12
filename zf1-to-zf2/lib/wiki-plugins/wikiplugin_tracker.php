@@ -36,6 +36,15 @@ function wikiplugin_tracker_info()
 				'separator' => ':',
 				'profile_reference' => 'tracker_field',
 			),
+			'values' => array(
+					'required' => false,
+					'name' => tra('Values'),
+					'description' => tr('Colon-separated list of default values corresponding to the %0fields%1 parameter.
+				First value corresponds to first field, second value to second field, etc. Default values can be
+				set by using %0autosavefields%1 and %0autosavevalues%1 as URL parameters.', '<code>', '</code>'),
+					'since' => '2.0',
+					'default' => '',
+			),
 			'action' => array(
 				'required' => false,
 				'name' => tra('Action'),
@@ -183,15 +192,6 @@ function wikiplugin_tracker_info()
 					array('text' => tra('Self'), 'value' => '_self'),
 					array('text' => tra('Top'), 'value' => '_top')
 				)
-			),
-			'values' => array(
-				'required' => false,
-				'name' => tra('Values'),
-				'description' => tr('Colon-separated list of default values corresponding to the %0fields%1 parameter.
-					First value corresponds to first field, second value to second field, etc. Default values can be
-					set by using %0autosavefields%1 and %0autosavevalues%1 as URL parameters.', '<code>', '</code>'),
-				'since' => '2.0',
-				'default' => '',
 			),
 			'overwrite' => array(
 				'required' => false,
@@ -571,6 +571,7 @@ function wikiplugin_tracker($data, $params)
 	++$iTRACKER;
 	if (isset($params['itemId']) && empty($params['itemId']))
 		return;
+	$smarty->assign('trackerEditFormId', $iTRACKER);
 	$default = array('overwrite' => 'n', 'embedded' => 'n', 'showtitle' => 'n', 'showdesc' => 'n', 'showfieldsdesc' => 'y', 'sort' => 'n', 'showmandatory'=>'y', 'status' => '', 'transactionFinalStep' => 'y', 'registration' => 'n', 'chosenGroup' => 'Registered', 'validateusers' => '', 'emailformat' => 'text');
 	$params = array_merge($default, $params);
 	$item = array();
@@ -766,33 +767,18 @@ function wikiplugin_tracker($data, $params)
 			if ($registration == 'y' && $prefs["user_register_prettytracker"] == 'y' && !empty($prefs["user_register_prettytracker_tpl"])) {
 				$registrationlib = TikiLib::lib('registration');
 				$smarty->assign('listgroups', $registrationlib->merged_prefs['choosable_groups']);
-
-			$notificationlib = TikiLib::lib('notification');
-			$tracker = $trklib->get_tracker($trackerId);
-			$tracker = array_merge($tracker, $trklib->get_tracker_options($trackerId));
-			if ((!empty($tracker['start']) && $tikilib->now < $tracker['start']) || (!empty($tracker['end']) && $tikilib->now > $tracker['end']))
-				return;
-			$outf = array();
-			$auto_fieldId = array();
-			$hidden_fieldId = array();
-			if (!empty($fields)  || !empty($wiki) || !empty($tpl)) {
-				if ($registration == 'y' && $prefs["user_register_prettytracker"] == 'y' && !empty($prefs["user_register_prettytracker_tpl"])) {
-					$registrationlib = TikiLib::lib('registration');
-					$smarty->assign('listgroups', $registrationlib->merged_prefs['choosable_groups']);
-
-					$smarty->assign('register_login', $smarty->fetch('register-login.tpl'));
-					$smarty->assign('register_email', $smarty->fetch('register-email.tpl'));
-					$smarty->assign('register_pass', $smarty->fetch('register-pass.tpl'));
-					$smarty->assign('register_pass2', $smarty->fetch('register-pass2.tpl'));
-					$smarty->assign('register_passcode', $smarty->fetch('register-passcode.tpl'));
-					$smarty->assign('register_groupchoice', $smarty->fetch('register-groupchoice.tpl'));
-					if ($prefs['feature_antibot'] == 'y') {
-						$smarty->assign('showantibot', true);
-						$smarty->assign('form', 'register');
-						$smarty->assign('register_antibot', $smarty->fetch('antibot.tpl'));
-					}
-					$wiki = $prefs["user_register_prettytracker_tpl"];
+				$smarty->assign('register_login', $smarty->fetch('register-login.tpl'));
+				$smarty->assign('register_email', $smarty->fetch('register-email.tpl'));
+				$smarty->assign('register_pass', $smarty->fetch('register-pass.tpl'));
+				$smarty->assign('register_pass2', $smarty->fetch('register-pass2.tpl'));
+				$smarty->assign('register_passcode', $smarty->fetch('register-passcode.tpl'));
+				$smarty->assign('register_groupchoice', $smarty->fetch('register-groupchoice.tpl'));
+				if ($prefs['feature_antibot'] == 'y') {
+					$smarty->assign('showantibot', true);
+					$smarty->assign('form', 'register');
+					$smarty->assign('register_antibot', $smarty->fetch('antibot.tpl'));
 				}
+				$wiki = $prefs["user_register_prettytracker_tpl"];
 			}
 			if (!empty($wiki)) {
 				$outf = $trklib->get_pretty_fieldIds($wiki, 'wiki', $prettyModifier, $trackerId);
@@ -1432,12 +1418,11 @@ function wikiplugin_tracker($data, $params)
 			if (count($field_errors['err_mandatory']) > 0 || count($field_errors['err_value']) > 0 || isset($field_errors['err_antibot']) || isset($field_errors['err_outputwiki'])) {
 				$smarty->assign('input_err', 'y');
 			}
-			if (!empty($page))
-				$back .= '~np~';
-			$smarty->assign_by_ref('tiki_p_admin_trackers', $perms['tiki_p_admin_trackers']);
-			$smarty->assign('trackerEditFormId', $iTRACKER);
 		}
-		
+		if (!empty($page)) {
+			$back .= '~np~';
+			$smarty->assign_by_ref('tiki_p_admin_trackers', $perms['tiki_p_admin_trackers']);
+		}
 		if (!empty($params['_ajax_form_ins_id'])) {
 			$headerlib = TikiLib::lib('header');
 			$old_js['js'] = $headerlib->js;						// of tracker form JS into a function to initialise it when the dialog is created
@@ -1555,7 +1540,7 @@ function wikiplugin_tracker($data, $params)
 		if (isset($_REQUEST['register']))
 			$back.= '<input type="hidden" name="register" value="'.$_REQUEST["register"].'" />';
 		if ($showtitle == 'y') {
-				$back.= '<div class="h1">'.$tracker["name"].'</div>';
+			$back.= '<div class="h1">'.$tracker["name"].'</div>';
 		}
 		if ($showdesc == 'y' && $tracker['description']) {
 			if ($tracker['descriptionIsParsed'] == 'y') {
@@ -1600,20 +1585,20 @@ function wikiplugin_tracker($data, $params)
 			$status_input = $smarty->fetch('tracker_status_input.tpl');
 		}
 
-			$labelclass = 'col-md-3';
-			$inputclass = 'col-md-9';
-			$buttonclass = 'col-md-9 col-md-offset-3';
+		$labelclass = 'col-md-3';
+		$inputclass = 'col-md-9';
+		$buttonclass = 'col-md-9 col-md-offset-3';
 
-			if ($registration == "y") {
-				$back .= '<input type="hidden" name="register" value="Register">';
-				$labelclass = 'col-md-4 col-sm-3';
-				$inputclass = 'col-md-4 col-sm-6';
-				$buttonclass = 'col-md-8 col-md-offset-4';
-			}
+		if ($registration == "y") {
+			$back .= '<input type="hidden" name="register" value="Register">';
+			$labelclass = 'col-md-4 col-sm-3';
+			$inputclass = 'col-md-4 col-sm-6';
+			$buttonclass = 'col-md-8 col-md-offset-4';
+		}
 		
 		// Loop on tracker fields and display form
 		if (empty($tpl) && empty($wiki)) {
-		$back.= '<div class="wikiplugin_tracker">';
+			$back.= '<div class="wikiplugin_tracker">';
 			if (!empty($showstatus) && $showstatus == 'y') {
 				$back .= '<div class="alert alert-info">'.tra('Status').$status_input.'</div>'; // <tr><td>'.tra('Status').'</td><td>'.$status_input.'</td></tr>
 			}
@@ -1628,9 +1613,7 @@ function wikiplugin_tracker($data, $params)
 		}
 		$backLength0 = strlen($back);
 
-			if ($registration == "y") {
-				$back .= '<input type="hidden" name="register" value="Register" />';
-			}
+		foreach ($flds['data'] as $f) {
 
 			if (!in_array($f['fieldId'], $auto_fieldId) && in_array($f['fieldId'], $hidden_fieldId)) {
 				// Show in hidden form
@@ -1707,7 +1690,7 @@ function wikiplugin_tracker($data, $params)
 						$back .= '><label class="' . $labelclass . ' control-label" for="' . $f['ins_id'] . '">' // ><label for="'
 									. wikiplugin_tracker_name($f['fieldId'], tra($f['name']), $field_errors); //
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y'&& $registration != 'y') {
-							$back.= "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;";
+							$back.= " <strong class='mandatory_star'>*</strong> ";
 						}
                         $back .= '</label>';
 						// If use different lines, add a line break.
@@ -1721,7 +1704,7 @@ function wikiplugin_tracker($data, $params)
 						$back .= wikiplugin_tracker_render_input($f, $item, $dynamicSave)."</div>"; // chibaguy added /divs
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y' && $registration == 'y') {
 							$back.= '<div class="col-md-1 col-sm-1"><span class="text-danger tips" title=":'
-								. tra('This field is manadatory') . '">*</span></div>';
+								. tra('This field is mandatory') . '">*</span></div>';
 						}
 
 					if ($isTextOnSameRow) {
@@ -1731,7 +1714,9 @@ function wikiplugin_tracker($data, $params)
 
 				if ($f['type'] != 'S' && empty($tpl) && empty($wiki)) {
 					if ($showfieldsdesc == 'y') {
-						$back .= '<div class="form-group tracker-help-block"><div class="col-md-3 control-label sr-only">Label</div><div class="col-md-9 trackerplugindesc help-block">';
+						$back .= '<div class="form-group tracker-help-block"><div class="' . $labelclass
+							. ' control-label sr-only">Label</div><div class="' . $inputclass
+							. ' trackerplugindesc help-block">';
 
 						if ($f['descriptionIsParsed'] == 'y') {
 							$back .= $tikilib->parse_data($f['description']);
@@ -1785,6 +1770,7 @@ FILL;
 		$smarty->assign('showmandatory', $showmandatory);
 
 			if ($prefs['feature_antibot'] == 'y' && empty($user)
+				&& (!isset($transactionStep) || $transactionStep == 0)
 				&& $params['formtag'] != 'n'
 				&& ($registration != 'y' || $prefs["user_register_prettytracker"] != 'y')
 				) {
@@ -1800,7 +1786,11 @@ FILL;
 			$back .= '</div>';
 
 			if ($params['formtag'] == 'y') {
-				$back .= '<div class="form-group"><div class="input_submit_container btn-bar ' . $buttonclass . '">';
+				if (empty($wiki) && empty($tpl)){
+					$back .= '<div class="form-group"><div class="input_submit_container btn-bar ' . $buttonclass . '">';
+				}else{
+					$back .= '<div class="form-group"><div class="input_submit_container btn-bar">';
+				};
 
 			if (!empty($reset)) {
 					$back .= '<input class="button submit preview" type="reset" name="tr_reset" value="'.tra($reset).'" />';

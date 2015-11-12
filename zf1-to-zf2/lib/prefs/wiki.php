@@ -477,7 +477,7 @@ function prefs_wiki_list($partial = false)
 			'name' => tra('Default sort order'),
 			'type' => 'list',
 			'options' => $wiki_sort_columns,
-			'default' => 'pageName',
+			'default' => 'lastmodif',
 		),
 		'wiki_list_sortdirection' => array(
 			'name' => tra('Sort Direction'),
@@ -486,7 +486,7 @@ function prefs_wiki_list($partial = false)
 				'desc' => tra('Descending'),
 				'asc' => tra('Ascending'),
 			),
-			'default' => 'asc',
+			'default' => 'desc',
 		),
 		'wiki_list_rating' => array(
 			'name' => tra('Rating'),

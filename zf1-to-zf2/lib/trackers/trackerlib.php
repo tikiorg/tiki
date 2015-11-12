@@ -5487,5 +5487,84 @@ class TrackerLib extends TikiLib
 		}
 		return $found;
 	}
+
+
+	/**
+	 * Called from lib/setup/events.php when object are categorized.
+	 * This is to ensure that article and trackeritem categories stay in sync when article indexing is on
+	 * as part of the RSS Article generator feature.
+	 * @param $args
+	 * @param $event
+	 * @param $priority
+	 * @throws Exception
+	 */
+	public function sync_tracker_article_categories( $args, $event, $priority )
+	{
+		global $prefs;
+		$catlib = TikiLib::lib('categ');
+		if ($args['type'] == 'article') {
+			//if it's an article, find the associated trackeritem per the relation
+			$relationlib = TikiLib::lib('relation');
+			$artRelation = $relationlib->get_relations_to('article', $args['object'], 'tiki.article.attach', '', '1');
+			if (empty($artRelation)) {
+				return;
+			}
+			$tracker_item_id = $artRelation[0]['itemId'];
+			//if the tracker isn't the article tracker as per the pref, don't sync
+			if (!$tracker_item_id || $prefs['tracker_article_trackerId'] != $this->get_tracker_for_item($tracker_item_id)) {
+				return;
+			}
+			// get the trackeritem's categories and add or remove the same categories that the article had
+			// added or removed as per the event
+			$categories = $catlib->get_object_categories('trackeritem', $tracker_item_id);
+			$categories_old = $categories;
+			foreach ($args['added'] as $added) {
+				if (!in_array($added, $categories)) {
+					$categories[] = $added;
+				}
+			}
+			foreach ($args['removed'] as $removed) {
+				if (in_array($removed, $categories)) {
+					$categories = array_diff($categories, [$removed]);
+				}
+			}
+			//update the trackeritems categories if there were new ones added/removed
+			if ($categories != $categories_old) {
+				$catlib->update_object_categories($categories, $tracker_item_id, 'trackeritem');
+			}
+		} elseif ($args['type'] == 'trackeritem') {
+			//if trackeritem, make sure it's the article tracker that we're dealing with
+			$trackerId = $this->get_tracker_for_item($args['object']);
+			if ($prefs['tracker_article_trackerId'] != $trackerId) {
+				return;
+			}
+			$definition = Tracker_Definition::get($trackerId);
+			//find the article field in this tracker and from there find the relation for the
+			$relationlib = TikiLib::lib('relation');
+			$artRelation = $relationlib->get_relations_from('trackeritem', $args['object'], 'tiki.article.attach', '', '1');
+			if (empty($artRelation)) {
+				return;
+			}
+			$articleId = $artRelation[0]['itemId'];
+			// get the articles's categories and add or remove the same categories that the trackeritem had
+			// added or removed as per the event
+			$categories = $catlib->get_object_categories('article', $articleId);
+			$categories_old = $categories;
+			foreach ($args['added'] as $added) {
+				if (!in_array($added, $categories)) {
+					$categories[] = $added;
+				}
+			}
+			foreach ($args['removed'] as $removed) {
+				if (in_array($removed, $categories)) {
+					$categories = array_diff($categories, [$removed]);
+				}
+			}
+			//update the article's categories if there were new ones added/removed
+			if ($categories != $categories_old) {
+				$catlib->update_object_categories($categories, $articleId, 'article');
+			}
+		}
+	}
 }
 

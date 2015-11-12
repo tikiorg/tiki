@@ -10,14 +10,17 @@ function wikiplugin_like_info()
 	return array(
 		'name' => tra('Like'),
 		'documentation' => 'PluginFavorite',
-		'description' => tra('Replicates like functionality seen on the web. Allows user to have a like button to like and unlike. Also shows the count of total likes.'),
+		'description' => tra('Create a like button'),
 		'prefs' => array( 'wikiplugin_like', 'user_likes' ),
+		'introduced' => 15,
+		'iconname' => 'thumbs-up',
 		'format' => 'html',
 		'params' => array(
 			'objectType' => array(
 				'required' => true,
 				'name' => tra('Object Type'),
 				'description' => tra('Object Type'),
+				'since' => '15.0',
 				'filter' => 'text',
 				'default' => '',
 			),
@@ -25,6 +28,7 @@ function wikiplugin_like_info()
 				'required' => true,
 				'name' => tra('Object ID'),
 				'description' => tra('Object ID'),
+				'since' => '15.0',
 				'filter' => 'text',
 				'default' => '',
 				'profile_reference' => 'type_in_param',
@@ -33,7 +37,8 @@ function wikiplugin_like_info()
 				'required' => false,
 				'name' => tra('Count only'),
 				'description' => tra('Sets whether to only show the count of likes rather than give the option to vote'),
-				'filter' => 'flag',
+				'since' => '15.0',
+				'filter' => 'alpha',
 				'default' => 'false',
 			),
 		)

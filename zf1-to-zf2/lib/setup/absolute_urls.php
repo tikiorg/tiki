@@ -142,7 +142,16 @@ if (strpos($base_uri, $tikiroot . 'route.php') !== false && !empty($inclusion)) 
 	}
 	global $section, $sections;
 	include_once('tiki-sefurl.php');
-	$base_uri =  TikiLib::tikiUrlOpt(filter_out_sefurl($base_uri, $sections[$section]['objectType']));
+	if (isset($sections[$section]['objectType'])) {
+		$objectType = $sections[$section]['objectType'];
+	} else {
+		$objectType = $section;
+	}
+	if ($objectType === 'wiki page') {
+		$objectType = 'wiki';
+	}
+
+	$base_uri =  TikiLib::tikiUrlOpt(filter_out_sefurl($base_uri, $objectType));
 }
 
 // SSL options

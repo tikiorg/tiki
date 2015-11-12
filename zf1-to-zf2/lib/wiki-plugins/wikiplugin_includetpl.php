@@ -9,21 +9,26 @@ function wikiplugin_includetpl_info()
 {
 	return array(
 		'name' => tra('Include TPL files to the wiki page'),
-		'description' => tra('Include tpl files to all the wiki pages.'),
+		'description' => tra('Include a template file in a page'),
 		'format' => 'html',
 		'validate' => 'all',
 		'filter' => 'wikicontent',
 		'tags' => array('advanced'),
+		'introduced' => 15,
+		'iconname' => 'code_file',
 		'params' => array(
 			'filename' => array(
 				'name' => tr('TPL file name'),
 				'description' => tr('If you need to include tpl files.'),
+				'since' => '15.0',
 				'required' => false,
 				'filter' => 'text'
 			),
 			'values' => array(
 				'name' => tr('values passed to the TPL'),
-				'description' => tr('Values can be passed to tpl file eg: values=var1:val1&var2:val2'),
+				'description' => tr('Values can be passed to tpl file, for example %0',
+					'<code>values=var1:val1&var2:val2</code>'),
+				'since' => '15.0',
 				'required' => false,
 				'filter' => 'text'
 			),

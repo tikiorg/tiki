@@ -26,8 +26,14 @@ function iconset_glyphicons()
 				'id' => 'plus-sign',
 			),
 			//align-center in defaults
+			//align-justify in defaults
+			//align-left in defaults
+			//align-right in defaults
+			'anchor' => array(
+				'id' => 'flag',
+			),
 			//arrow-up in defaults
-			'article' => array(
+			'articles' => array(
 				'id' => 'text-background',
 			),
 			'attach' => array(
@@ -111,6 +117,9 @@ function iconset_glyphicons()
 			'create' => array(
 				'id' => 'plus',
 			),
+			'database' => array(
+					'id' => 'tasks',
+			),
 			'delete' => array(
 				'id' => 'remove',
 			),
@@ -130,6 +139,7 @@ function iconset_glyphicons()
 			//edit in defaults
 			//education in defaults
 			//envelope in defaults
+			//erase in defaults
 			'error' => array(
 				'id' => 'exclamation-sign',
 			),
@@ -198,6 +208,9 @@ function iconset_glyphicons()
 				'id' => 'picture',
 			),
 			//import in defaults
+			'indent' => array(
+					'id' => 'indent-left',
+			),
 			'index' => array(
 				'id' => 'refresh',
 			),
@@ -271,9 +284,13 @@ function iconset_glyphicons()
 			'ok' => array(
 				'id' => 'ok-sign',
 			),
+			'outdent' => array(
+				'id' => 'indent-right',
+			),
 			'page-break' => array(
 				'id' => 'scissors',
 			),
+			//paste in defaults
 			//pause in defaults
 			'paypal' => array(
 				'id' => 'credit-card',
@@ -314,10 +331,14 @@ function iconset_glyphicons()
 			'rss' => array(
 				'id' => 'bullhorn',
 			),
+			//scissors in defaults
 			'screencapture' => array(
 				'id' => 'camera',
 			),
 			//search in defaults
+			'selectall' => array(
+				'id' => 'open-file',
+			),
 			//send in defaults
 			'settings' => array(
 				'id' => 'wrench',
@@ -424,6 +445,9 @@ function iconset_glyphicons()
 				'id' => 'arrow-left',
 			),
 			//use a better unlock icon when available
+			'unlink' => array(
+					'id' => 'flash',
+			),
 			'unlock' => array(
 				'id' => 'folder-open',
 			),
@@ -469,26 +493,39 @@ function iconset_glyphicons()
 		),
 		'defaults' => array(
 			'adjust',
+			'alert',
+			'align-bottom',
 			'align-center',
+			'align-horizontal',
 			'align-justify',
 			'align-left',
 			'align-right',
+			'align-top',
+			'align-vertical',
+			'apple',
 			'arrow-down',
 			'arrow-left',
 			'arrow-right',
 			'arrow-up',
 			'asterisk',
+			'baby-formula',
 			'backward',
 			'ban-circle',
 			'barcode',
+			'bed',
 			'bell',
+			'bishop',
+			'bitcoin',
+			'blackboard',
 			'bold',
 			'book',
 			'bookmark',
 			'briefcase',
+			'btc',
 			'bullhorn',
 			'calendar',
 			'camera',
+			'cd',
 			'certificate',
 			'check',
 			'chevron-down',
@@ -507,16 +544,22 @@ function iconset_glyphicons()
 			'collapse-up',
 			'comment',
 			'compressed',
+			'console',
+			'copy',
 			'copyright-mark',
 			'credit-card',
 			'cutlery',
 			'dashboard',
 			'download-alt',
 			'download',
+			'duplicate',
 			'earphone',
 			'edit',
+			'education',
 			'eject',
 			'envelope',
+			'equalizer',
+			'erase',
 			'euro',
 			'exclamation-sign',
 			'expand',
@@ -546,6 +589,7 @@ function iconset_glyphicons()
 			'gift',
 			'glass',
 			'globe',
+			'grain',
 			'hand-down',
 			'hand-left',
 			'hand-right',
@@ -557,13 +601,21 @@ function iconset_glyphicons()
 			'heart-empty',
 			'heart',
 			'home',
+			'hourglass',
+			'ice-lolly',
+			'ice-lolly-tasted',
 			'import',
 			'inbox',
 			'indent-left',
 			'indent-right',
 			'info-sign',
 			'italic',
+			'jpy',
+			'king',
+			'knight',
+			'lamp',
 			'leaf',
+			'level-up',
 			'link',
 			'list-alt',
 			'list',
@@ -572,22 +624,35 @@ function iconset_glyphicons()
 			'log-out',
 			'magnet',
 			'map-marker',
+			'menu-down',
+			'menu-hamburger',
+			'menu-left',
+			'menu-right',
+			'menu-up',
 			'minus-sign',
 			'minus',
+			'modal-window',
 			'move',
 			'music',
 			'new-window',
 			'off',
+			'oil',
 			'ok-circle',
 			'ok-sign',
 			'ok',
 			'open',
+			'open-file',
+			'option-horizontal',
+			'option-vertical',
 			'paperclip',
+			'paste',
 			'pause',
+			'pawn',
 			'pencil',
 			'phone-alt',
 			'phone',
 			'picture',
+			'piggy-bank',
 			'plane',
 			'play-circle',
 			'play',
@@ -596,6 +661,7 @@ function iconset_glyphicons()
 			'print',
 			'pushpin',
 			'qrcode',
+			'queen',
 			'question-sign',
 			'random',
 			'record',
@@ -611,8 +677,12 @@ function iconset_glyphicons()
 			'resize-vertical',
 			'retweet',
 			'road',
+			'rub',
+			'ruble',
 			'save',
+			'save-file',
 			'saved',
+			'scale',
 			'scissors',
 			'screenshot',
 			'sd-video',
@@ -642,11 +712,16 @@ function iconset_glyphicons()
 			'stop',
 			'subscript',
 			'subtitles',
+			'sunglasses',
 			'superscript',
 			'tag',
 			'tags',
 			'tasks',
+			'tent',
+			'text-background',
+			'text-color',
 			'text-height',
+			'text-size',
 			'text-width',
 			'th-large',
 			'th-list',
@@ -660,6 +735,10 @@ function iconset_glyphicons()
 			'trash',
 			'tree-conifer',
 			'tree-deciduous',
+			'triangle-bottom',
+			'triangle-left',
+			'triangle-right',
+			'triangle-top',
 			'unchecked',
 			'upload',
 			'usd',
@@ -669,6 +748,8 @@ function iconset_glyphicons()
 			'volume-up',
 			'warning-sign',
 			'wrench',
+			'xbt',
+			'yen',
 			'zoom-in',
 			'zoom-out',
 		),

@@ -347,7 +347,7 @@ $admin_icons = array(
 		'description' => tr('Search configuration'),
 		'help' => 'Search',
 		'disabled' => $prefs['feature_search'] !== 'y' &&
-							$prefs['feature_search_fulltext'] !== 'y',
+						$prefs['feature_search_fulltext'] !== 'y',
 	),
 	"wiki" => array(
 		'title' => tr('Wiki'),
@@ -452,7 +452,7 @@ $admin_icons = array(
 		'help' => 'Inter-User+Messages',
 	),
 	"userfiles" => array(
-		'title' => tr('User files'),
+		'title' => tr('User Files'),
 		'disabled' => $prefs['feature_userfiles'] != 'y',
 		'description' => tr('User files settings'),
 		'help' => 'User+Files',
@@ -470,9 +470,9 @@ $admin_icons = array(
 		'help' => 'Wysiwyg',
 	),
 	"ads" => array(
-		'title' => tr('Site Ads and Banners'),
+		'title' => tr('Banners'),
 		'disabled' => $prefs['feature_banners'] != 'y',
-		'description' => tr('Banners are a common way to display advertisements and notices on a Web page.'),
+		'description' => tr('Site advertisements and notices'),
 		'help' => 'Look+and+Feel',
 	),
 	"intertiki" => array(
@@ -482,7 +482,7 @@ $admin_icons = array(
 		'help' => 'InterTiki',
 	),
 	"semantic" => array(
-		'title' => tr('Semantic links'),
+		'title' => tr('Semantic Links'),
 		'disabled' => $prefs['feature_semantic'] != 'y',
 		'description' => tr('Manage semantic wiki links'),
 		'help' => 'Semantic+Admin',
@@ -494,7 +494,7 @@ $admin_icons = array(
 		'help' => 'WebServices',
 	),
 	"sefurl" => array(
-		'title' => tr('Search engine friendly url'),
+		'title' => tr('SEF URL'),
 		'disabled' => $prefs['feature_sefurl'] != 'y' && $prefs['feature_canonical_url'] != 'y',
 		'description' => tr('Search Engine Friendly URLs'),
 		'help' => 'Rewrite+Rules',

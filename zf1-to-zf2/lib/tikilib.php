@@ -3412,7 +3412,9 @@ class TikiLib extends TikiDb_Bridge
 		$userlib = TikiLib::lib('user');
 
 		$perms = Perms::get(array( 'type' => $objectType, 'object' => $objectId ));
-		$perms->setGroups($this->get_user_groups($user));
+		if (empty($perms->getGroups())) {
+			$perms->setGroups($this->get_user_groups($user));
+		}
 		$permNames = $userlib->get_permission_names_for($this->get_permGroup_from_objectType($objectType));
 
 		$ret = array();
@@ -4924,6 +4926,50 @@ class TikiLib extends TikiDb_Bridge
 			$tz = 'UTC';
 		}
 		return $tz;
+	}
+
+	function set_display_timezone($user)
+	{
+		global $prefs;
+		if ($prefs['users_prefs_display_timezone'] == 'Site'
+			|| (isset($user_preferences[$user]['display_timezone'])
+				&& $user_preferences[$user]['display_timezone'] == 'Site')
+		) {
+			// Stay in the time zone of the server
+			$prefs['display_timezone'] = $prefs['server_timezone'];
+		} elseif ( !isset($prefs['display_timezone']) and ! isset($user_preferences[$user]['display_timezone'])
+			|| $user_preferences[$user]['display_timezone'] == ''
+			|| $user_preferences[$user]['display_timezone'] == 'Local'
+		) {
+			// If the display timezone is not known ...
+			if ( isset($_COOKIE['local_tz'])) {
+				//   ... we try to use the timezone detected by javascript and stored in cookies
+				if (TikiDate::TimezoneIsValidId($_COOKIE['local_tz'])) {
+					$prefs['timezone_offset'] = isset($_COOKIE['local_tzoffset']) ? $_COOKIE['local_tzoffset'] : '';
+					if (isset($_COOKIE['local_tzoffset'])) {
+						$tzname = timezone_name_from_abbr($_COOKIE['local_tz'], $_COOKIE['local_tzoffset'] * 60 * 60);
+						$prefs['timezone_offset'] = $_COOKIE['local_tzoffset'];
+					} else {
+						$tzname = timezone_name_from_abbr($_COOKIE['local_tz']);
+						$prefs['timezone_offset'] = '';
+					}
+					if (TikiDate::TimezoneIsValidId($tzname)) {
+						$prefs['display_timezone'] = $tzname;
+					} else {
+						$prefs['display_timezone'] = $_COOKIE['local_tz'];
+					}
+				} elseif ( $_COOKIE['local_tz'] == 'HAEC' ) {
+					// HAEC, returned by Safari on Mac, is not recognized as a DST timezone (with daylightsavings)
+					//  ... So use one equivalent timezone name
+					$prefs['display_timezone'] = 'Europe/Paris';
+				} else {
+					$prefs['display_timezone'] = $prefs['server_timezone'];
+				}
+			} else {
+				// ... and we fallback to the server timezone if the cookie value is not available
+				$prefs['display_timezone'] = $prefs['server_timezone'];
+			}
+		}
 	}
 
 	function get_long_date_format()

@@ -9,22 +9,26 @@ function wikiplugin_fullwidthtitle_info()
 {
 	return array(
 		'name' => tra('Set a Full-Width Page Title'),
-		'description' => tra('Allows for the setting of a Page Title that bleeds to the edges of the screen'),
+		'description' => tra('Create a full page width title '),
 		'documentation' => tra('PluginFullWidthTitle'),
 		'default' => 'y',
 		'format' => 'html',
 		'filter' => 'wikicontent',
+		'introduced' => 15,
+		'iconname' => 'title',
 		'tags' => array('advanced'),
 		'params' => array(
 			'title' => array(
 				'name' => tr('Page title'),
 				'description' => tr('If you need to include tpl files.'),
+				'since' => '15.0',
 				'required' => true,
 				'filter' => 'text'
 			),
 			'iconsrc' => array(
 				'name' => tr('Icon Source'),
 				'description' => tr('Source path of the icon.'),
+				'since' => '15.0',
 				'required' => false,
 				'filter' => 'text'
 			),

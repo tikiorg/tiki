@@ -189,10 +189,20 @@ function iconset_legacy()
 			'align-center' => array(
 				'id' => 'text_align_center',
 			),
+			'align-justify' => array(
+				'id' => 'text_align_justify',
+			),
+			'align-left' => array(
+				'id' => 'text_align_left',
+			),
+			'align-right' => array(
+				'id' => 'text_align_right',
+			),
+			//anchor in defaults
 			'arrow-up' => array(
 				'id' => 'arrow-up',
 			),
-			'article' => array(
+			'articles' => array(
 				'id' => 'newspaper_go',
 			),
 			'attach' => array(
@@ -217,7 +227,7 @@ function iconset_legacy()
 				'id' => 'control_start',
 			),
 			'ban' => array(
-				'id' => 'cancel',
+				'id' => 'ban_remove',
 			),
 			'bold' => array(
 				'id' => 'text_bold',
@@ -312,6 +322,7 @@ function iconset_legacy()
 			'dashboard' => array(
 				'id' => 'application_view_columns',
 			),
+			//database in defaults
 			'delete' => array(
 				'id' => 'cross',
 			),
@@ -344,6 +355,9 @@ function iconset_legacy()
 			),
 			'error' => array(
 				'id' => 'exclamation',
+			),
+			'erase' => array(
+					'id' => 'page_edit',
 			),
 			'excel' => array(
 				'id' => 'mime/xls',
@@ -419,6 +433,9 @@ function iconset_legacy()
 			'import' => array(
 				'id' => 'upload',
 			),
+			'indent' => array(
+				'id' => 'text_indent',
+			),
 			'index' => array(
 				'id' => 'table_refresh',
 			),
@@ -482,9 +499,7 @@ function iconset_legacy()
 			'minus' => array(
 				'id' => 'delete',
 			),
-			'module' => array(
-				'id' => 'module',
-			),
+			//module in defaults
 			//money in defaults
 			'more' => array(
 				'id' => 'resultset_down',
@@ -493,7 +508,7 @@ function iconset_legacy()
 				'id' => 'task_submitted',
 			),
 			'music' => array(
-				'id' => 'icons/mime/mp3.png',
+				'id' => '/mime/mp3',
 			),
 			'next' => array(
 				'id' => 'arrow_right',
@@ -510,8 +525,14 @@ function iconset_legacy()
 			'ok' => array(
 				'id' => 'accept',
 			),
+			'outdent' => array(
+				'id' => 'text_indent_remove',
+			),
 			'page-break' => array(
 				'id' => 'page_break',
+			),
+			'paste' => array(
+				'id' => 'control_pause',
 			),
 			'pause' => array(
 				'id' => 'control_pause',
@@ -561,11 +582,17 @@ function iconset_legacy()
 			'rss' => array(
 				'id' => 'feed',
 			),
+			'scissors' => array(
+					'id' => 'cut',
+			),
 			'screencapture' => array(
 				'id' => 'camera',
 			),
 			'search' => array(
 				'id' => 'magnifier',
+			),
+			'selectall' => array(
+				'id' => 'page-lightning',
 			),
 			'send' => array(
 				'id' => 'email_go',
@@ -725,6 +752,9 @@ function iconset_legacy()
 			'undo' => array(
 				'id' => 'arrow_undo',
 			),
+			'unlink' => array(
+				'id' => 'lock_delete',
+			),
 			'unlock' => array(
 				'id' => 'lock_open',
 			),
@@ -766,10 +796,13 @@ function iconset_legacy()
 		),
 		'defaults' => array(
 			'add',
+			'anchor',
 			'book',
 			'bug',
 			'calendar',
 			'computer',
+			'cut',
+			'database',
 			'font',
 			'google',
 			'group',
@@ -779,6 +812,7 @@ function iconset_legacy()
 			'information',
 			'link',
 			'map',
+			'module',
 			'money',
 			'pencil',
 			'plugin',
@@ -790,6 +824,7 @@ function iconset_legacy()
 			'user',
 			'vimeo',
 			'wrench',
+			'youtube',
 		)
 	);
 }

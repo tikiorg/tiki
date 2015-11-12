@@ -31,7 +31,7 @@ function wikiplugin_module_info()
 		'prefs' => array( 'wikiplugin_module' ),
 		'validate' => 'all',
 		'format' => 'html',
-		'iconname' => 'cogs',
+		'iconname' => 'module',
 		'introduced' => 1,
 		'extraparams' =>true,
 		'tags' => array( 'basic' ),

@@ -80,7 +80,7 @@ function getDirContent($sub)
 		}
 
 		if (is_dir($tmp . "/" . $filefile)) {
-			if ((substr($sub, -1) != "/") && (substr($sub, -1) != "\\")) {
+			if ($sub && (substr($sub, -1) != "/") && (substr($sub, -1) != "\\")) {
 				$sub.= '/';
 			}
 			getDirContent($sub . $filefile);
@@ -111,7 +111,7 @@ function buildFileList()
 		$tmp = $filedir;
 		// add any subdir names
 		if ($path <> "") {
-			$tmp.= $path;
+			$tmp.= '/' . $path;
 		}
 		// get file information
 		$filesize = @filesize($tmp . '/' . $file);
@@ -121,9 +121,11 @@ function buildFileList()
 		}
 		$filestring[$x][1] = $filesize;
 		// type is string after last dot
-		$tmp = strtolower(substr($file, -(strlen($file) - 1 - strrpos($file, "."))));
-		$filestring[$x][2] = $tmp;
+		$ext = strtolower(substr($file, -(strlen($file) - 1 - strrpos($file, "."))));
+		$filestring[$x][2] = $ext;
 		$totalsize+= $filesize;
+
+		$filestring[$x][3] = is_writable($tmp . '/' . $file);
 	}
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('totfile', $totfile);
@@ -168,7 +170,7 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 			}
 		}
 
-		$filepath = $filedir . $path . $file;
+		$filepath = $filedir . $path . '/' . $file;
 		$filesize = @filesize($filepath);
 
 		//add meadata
@@ -192,7 +194,7 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 		);
 
 		if (isset($result['error'])) {
-			$feedback[] = "!!!" . tr('Upload was not successful for %0 (%1)', $path_parts['basename'], $result['error']);
+			$feedback[] = '<span class="text-danger">' . tr('Upload was not successful for "%0"', $path_parts['basename']) . '<br>(' . $result['error'] . ')</span>';
 		} else {
 			// check which gallery to upload to
 			$tmpGalId = (int)$_REQUEST["galleryId"];
@@ -206,10 +208,6 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 			// remove possible path from filename
 			$file = preg_replace('/.*([^\/]*)$/U', '$1', $file);
 			$name = $file;
-			// remove extension from name field
-			if (isset($_REQUEST["removeExt"])) {
-				$name = substr($name, 0, strrpos($name, "."));
-			}
 			$fileId = $filegallib->insert_file(
 				$tmpGalId, $name, $tmpDesc, $file, $result['data'], $filesize, $type,
 				$user, $result['fhash'], null, null, null, null, null, null, $metadata
@@ -220,7 +218,7 @@ if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array(
 				if (!file_exists($filepath)) {
 					$feedback[] = sprintf(tra('File %s removed from Batch directory.'), $file);
 				} else {
-					$feedback[] = "!!! " . sprintf(tra('Impossible to remove file %s from Batch directory.'), $file);
+					$feedback[] = '<span class="text-danger">' . sprintf(tra('Impossible to remove file %s from Batch directory.'), $file) . '</span>';
 				}
 			}
 		}

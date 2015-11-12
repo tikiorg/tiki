@@ -478,49 +478,43 @@
 							</div>
 						</div>
 					{else}
+						{include file='password_jq.tpl' ignorejq='y'}
 						<div class="form-group">
 							<label class="col-sm-3 col-md-2 control-label" for="pass1">{tr}New Password{/tr}</label>
 							<div class="col-sm-7 col-md-6">
-								<input type="password" class="form-control" placeholder="New Password" name="pass" id="pass1"
-										onkeypress="regCapsLock(event)" onkeyup="runPassword(this.value, 'mypassword');{if 0 and $prefs.feature_ajax eq 'y'}check_pass();{/if}">
+								<input type="password" class="form-control" placeholder="New Password" name="pass" id="pass1">
+								<div style="margin-left:5px;">
+									<div id="mypassword_text">{icon name='ok' istyle='display:none'}{icon name='error' istyle='display:none' } <span id="mypassword_text_inner"></span></div>
+									<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div>
+								</div>
+								<div style="margin-top:5px">
+									{include file='password_help.tpl'}
+								</div>
 							</div>
-							<div class="col-md-4">
-								<div id="mypassword_text"></div>
-								<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div>
-							</div>
-							<div class="col-md-4 col-sm-10 help-block">{include file='password_help.tpl'}</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-3 col-md-2 control-label" for="pass2">{tr}Repeat Password{/tr}</label>
 							<div class="col-sm-7 col-md-6">
-								<input type="password" class="form-control" name="pass2" id="pass2" placeholder="Repeat Password">
+								<input type="password" class="form-control" name="passAgain" id="pass2" placeholder="Repeat Password">
+								<div id="mypassword2_text">
+									<div id="match" style="display:none">
+										{icon name='ok' istyle='color:#0ca908'} {tr}Passwords match{/tr}
+									</div>
+									<div id="nomatch" style="display:none">
+										{icon name='error' istyle='color:#ff0000'} {tr}Passwords do not match{/tr}
+									</div>
+								</div>
 							</div>
 						</div>
 						{if ! ( $prefs.auth_method eq 'ldap' and ( $prefs.ldap_create_user_tiki eq 'n' or $prefs.ldap_skip_admin eq 'y' ) and $prefs.ldap_create_user_ldap eq 'n' )}
 							<div class="form-group">
-								<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
-									<span id="genPass">{button href="#" _onclick="genPass('genepass');runPassword(document.RegForm.genepass.value, 'mypassword');checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');return false;" _text="{tr}Generate a password{/tr}"}</span>
+								<div class="col-sm-3 col-sm-offset-3 col-md-2 col-md-offset-2">
+									<span id="genPass">{button href="#" _text="{tr}Generate a password{/tr}"}</span>
+								</div>
+								<div class="col-sm-3 col-md-2">
+									<input id='genepass' class="form-control" name="genepass" type="text" tabindex="0" style="display:none">
 								</div>
 							</div>
-							<div id="genepass_div" class="form-group" style="display: none">
-								<label class="col-sm-3 col-md-2 control-label" for="pass2">{tr}Generated Password{/tr}</label>
-								<div class="col-sm-7 col-md-6">
-									<input id='genepass' class="form-control" name="genepass" type="text" tabindex="0">
-								</div>
-							</div>
-
-	{jq}
-		$("#genPass").click(function () {
-		$('#pass1, #pass2').val('');
-		$('#mypassword_text, #mypassword2_text').hide();
-		$("#genepass_div").show();
-		});
-		$("#pass1, #pass2").change(function () {
-		$('#mypassword_text, #mypassword2_text').show();
-		document.RegForm.genepass.value='';
-		$("#genepass_div").hide();
-		});
-	{/jq}
 						{/if}
 						{if $userinfo.login neq 'admin' && $prefs.change_password neq 'n'}
 							<div class="form-group">

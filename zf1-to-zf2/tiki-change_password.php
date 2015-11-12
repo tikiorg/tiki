@@ -13,7 +13,7 @@ $inputConfiguration = array(
 		'user' => 'text',
 		'username' => 'text',
 		'pass' => 'none',
-		'pass2' => 'none',
+		'passAgain' => 'none',
 		'oldpass' => 'none',
 	) )
 );
@@ -40,8 +40,8 @@ $smarty->assign('oldpass', $_REQUEST["oldpass"]);
 
 if (isset($_REQUEST["change"])) {
 	check_ticket('change-password');
-	// Check that pass and pass2 match, otherwise display error and exit
-	if ($_REQUEST["pass"] != $_REQUEST["pass2"]) {
+	// Check that pass and passAgain match, otherwise display error and exit
+	if ($_REQUEST["pass"] != $_REQUEST["passAgain"]) {
 		$smarty->assign('msg', tra("The passwords do not match"));
 		$smarty->assign('errortype', 'no_redirect_login');
 		$smarty->display("error.tpl");

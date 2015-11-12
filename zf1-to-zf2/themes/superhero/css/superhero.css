@@ -7523,10 +7523,10 @@ ul.all_languages > li {
   border: 1px solid;
   border-color: transparent;
 }
-div#outerToc {
+#autotoc > .nav {
   background: #ebebeb;
 }
-div#outerToc * {
+#autotoc * {
   color: #ebebeb;
 }
 .plugin-form-float {

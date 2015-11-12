@@ -262,28 +262,36 @@ function setMenuCon(foo) {
 }
 
 function genPass(w1) {
-	var vo = "aeiouAEU", co, s, l, p, i, letter;
-
-	co = "bcdfgjklmnprstvwxzBCDFGHJKMNPQRSTVWXYZ0123456789_$%#";
-	s = Math.round(Math.random());
+	var lower, upper, num, other, l, p, pstr, i, letter, j, temp;
+	lower = 'abcdefghijklmnopqrstuvwxyz';
+	upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	num = '0123456789';
+	other = '_$%#!@*+';
 	l = 8;
-	p = '';
-
+	p = [];
+	//ensure at least 2 upper case letters, 2 numbers, and 2 other characters
 	for (i = 0; i < l; i++) {
-		if (s) {
-			letter = vo.charAt(Math.round(Math.random() * (vo.length - 1)));
-
-			s = 0;
+		if (i < 2) {
+			letter = lower.charAt(Math.round(Math.random() * (lower.length - 1)));
+		} else if (i < 4) {
+			letter = upper.charAt(Math.round(Math.random() * (upper.length - 1)));
+		} else if (i < 6) {
+			letter = num.charAt(Math.round(Math.random() * (num.length - 1)));
 		} else {
-			letter = co.charAt(Math.round(Math.random() * (co.length - 1)));
-
-			s = 1;
+			letter = other.charAt(Math.round(Math.random() * (other.length - 1)));
 		}
-
-		p = p + letter;
+		p[i] = letter;
 	}
-
-	document.getElementById(w1).value = p;
+	//shuffle the characters since they are blocks of 2 per above
+	for (i = p.length - 1; i > 0; i--) {
+		j = Math.floor(Math.random() * (i + 1));
+		temp = p[i];
+		p[i] = p[j];
+		p[j] = temp;
+	}
+	//implode into a string
+	pstr = p.join('');
+	document.getElementById(w1).value = pstr;
 }
 
 function setUserModule(foo1) {
@@ -1722,70 +1730,88 @@ function checkPassword(strPassword)
 //Runs password through check and then updates GUI
 function runPassword(strPassword, strFieldID)
 {
-	// Check password
-	var nScore = checkPassword(strPassword);
-
 	// Get controls
 	var ctlBar = document.getElementById(strFieldID + "_bar");
 	var ctlText = document.getElementById(strFieldID + "_text");
-	if (!ctlBar || !ctlText) {
+	var ctlTextInner = document.getElementById(strFieldID + "_text_inner");
+	if (!ctlBar || !ctlText || !ctlTextInner) {
 		return;
 	}
-	// Set new width
-	ctlBar.style.width = nScore + "%";
+	if (strPassword.length > 0) {
+		// Check password
+		var nScore = checkPassword(strPassword);
 
-	// Color and text
-	// -- Very Secure
-	if (nScore >= 90)
-	{
-		var strIcon = "<img src='img/icons/accept.png' style='vertical-align:middle' alt='Very Secure' />";
-		var strText = tr("Very Secure");
-		var strColor = "#0ca908";
+		// Set new width
+		ctlBar.style.width = nScore + "%";
+
+		// Color and text
+		var icon, strText, strColor;
+		// -- Very Secure
+		if (nScore >= 90)
+		{
+			icon = 'ok';
+			strText = tr("Very Secure");
+			strColor = "#0ca908";
+		}
+		// -- Secure
+		else if (nScore >= 80)
+		{
+			icon = 'ok';
+			strText = tr("Secure");
+			strColor = "#0ca908";
+		}
+		// -- Very Strong
+		else if (nScore >= 70)
+		{
+			icon = 'ok';
+			strText = tr("Very Strong");
+			strColor = "#0ca908";
+		}
+		// -- Strong
+		else if (nScore >= 60)
+		{
+			icon = 'ok';
+			strText = tr("Strong");
+			strColor = "#0ca908";
+		}
+		// -- Average
+		else if (nScore >= 40)
+		{
+			icon = 'none';
+			strText = tr("Average");
+			strColor = "#e3cb00";
+		}
+		// -- Weak
+		else if (nScore >= 25)
+		{
+			icon = 'error';
+			strText = tr("Weak");
+			strColor = "#ff0000";
+		}
+		// -- Very Weak
+		else
+		{
+			icon = 'error';
+			strText = tr("Very Weak");
+			strColor = "#ff0000";
+		}
+		ctlBar.style.backgroundColor = strColor;
+		$(ctlBar).show();
+		if (icon === 'none') {
+			$(ctlText).children('span.icon').hide();
+		} else if (icon === 'ok') {
+			$(ctlText).children('span.icon-ok').css('color', strColor).show();
+			$(ctlText).children('span.icon-error').hide();
+		} else if (icon === 'error') {
+			$(ctlText).children('span.icon-ok').hide();
+			$(ctlText).children('span.icon-error').css('color', strColor).show();
+		}
+		$(ctlTextInner).text(tr('Strength') + ': ' + strText).show();
+	} else {
+		$(ctlText).children().hide();
+		$(ctlTextInner).hide();
+		$(ctlBar).hide();
 	}
-	// -- Secure
-	else if (nScore >= 80)
-	{
-		strIcon = "<img src='img/icons/accept.png' style='vertical-align:middle' alt='Secure' />";
-		strText = tr("Secure");
-		strColor = "#0ca908";
-	}
-	// -- Very Strong
-	else if (nScore >= 70)
-	{
-		strIcon = "<img src='img/icons/accept.png' style='vertical-align:middle' alt='Very Strong' />";
-		strText = tr("Very Strong");
-		strColor = "#0ca908";
-	}
-	// -- Strong
-	else if (nScore >= 60)
-	{
-		strIcon = "<img src='img/icons/accept.png' style='vertical-align:middle' alt='Strong' />";
-		strText = tr("Strong");
-		strColor = "#0ca908";
-	}
-	// -- Average
-	else if (nScore >= 40)
-	{
-		strIcon = " ";
-		strText = tr("Average");
-		strColor = "#e3cb00";
-	}
-	// -- Weak
-	else if (nScore >= 25)
-	{
-		strIcon = "<img src='img/icons/exclamation.png' style='vertical-align:middle' alt='Weak' />";
-		strText = tr("Weak");
-		strColor = "#ff0000";
-	}
-	// -- Very Weak
-	else
-	{
-		strIcon = "<img src='img/icons/exclamation.png' style='vertical-align:middle' alt='Very weak' />";
-		strText = tr("Very Weak");
-		strColor = "#ff0000";
-	}
-	ctlBar.style.backgroundColor = strColor;
-	ctlText.innerHTML = "<span>"  + strIcon + " " + tr("Strength") + ": " + strText + "</span>";
 }
 
 //Checks a string for a list of characters
@@ -1806,12 +1832,18 @@ function countContain(strPassword, strCheck)
 }
 
 function checkPasswordsMatch(in1, in2, el) {
-	if ($(in1).val().length && $(in1).val() == $(in2).val()) {
-		$(el).html("<img src='img/icons/accept.png' style='vertical-align:middle' alt='Secure' /><em>" + tr("Passwords match") + "</em>");
-		return true;
+	if ($(in1).val().length) {
+		if ($(in1).val() == $(in2).val()) {
+			$(el).children('#match').show();
+			$(el).children('#nomatch').hide();
+			return true;
+		} else {
+			$(el).children('#match').hide();
+			$(el).children('#nomatch').show();
+			return false;
+		}
 	} else {
-		$(el).html("");
-		return false;
+		$(el).children().hide();
 	}
 }
 
