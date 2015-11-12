@@ -64,7 +64,7 @@ class FileGalLib extends TikiLib
 		}
 	}
 
-	private function find_unique_name($directory, $start)
+	protected function find_unique_name($directory, $start)
 	{
 		$fhash = md5($start);
 
@@ -3761,37 +3761,6 @@ class FileGalLib extends TikiLib
 			'type' => preg_match('/.flv$/', $file['name']) ? 'video/x-flv' : $file['type'],
 			'size' => $file['size'],
 			'metadata' => isset($filemeta) && count($filemeta) > 0 ? $filemeta : null,
-		);
-	}
-
-	function handle_batch_upload($galleryId, $info, $ext = '')
-	{
-		$savedir = $this->get_gallery_save_dir($galleryId);
-
-		$fhash = null;
-		$data = null;
-
-		if ($savedir) {
-			$fhash = $this->find_unique_name($savedir, $info['name']);
-
-			if (in_array($ext, array("m4a", "mp3", "mov", "mp4", "m4v", "pdf"))) {
-				$fhash.= "." . $ext;
-			}
-
-			if (! rename($info['source'], $savedir . $fhash)) {
-				return array('error' => tra('Cannot write to this file:') . $savedir . $fhash);
-			}
-		} else {
-			$data = file_get_contents($info['source']);
-
-			if (false === $data) {
-				return array('error' => tra('Cannot read file on disk.'));
-			}
-		}
-
-		return array(
-			'data' => $data,
-			'fhash' => $fhash,
 		);
 	}
 

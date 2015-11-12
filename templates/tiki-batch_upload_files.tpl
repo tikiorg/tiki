@@ -13,8 +13,8 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Please do not use this feature to upload data into the database.{/tr}{/remarksbox}
 
 {if count($feedback)}<div class="alert alert-warning">{section name=i loop=$feedback}{$feedback[i]}<br>{/section}</div>{/if}
-
-<h2>{$totfile} {tr}Available Files{/tr} {$totalsize|kbsize}</h2>
+{$totalsize = 0}
+<h2>{tr}Available Files{/tr}</h2>
 <form method="post" action="tiki-batch_upload_files.php" name="f" class="form-horizontal">
 	<table class="table table-stripped" id="filelist">
 		<tr>
@@ -25,7 +25,7 @@
 			<th width="80">{tr}Permissions{/tr}</th>
 		</tr>
 
-		{foreach key=k item=it from=$filestring}
+		{foreach key=k item=it from=$filelist}
 			<tr>
 				<td class="checkbox-cell"><input type="checkbox" name="files[]" value="{$it.file}" id="box_{$k}"></td>
 				<td><label for="box_{$k}">{$it.file|replace:$prefs.fgal_batch_dir:''}</label></td>
@@ -33,17 +33,25 @@
 				<td>{$it.ext}</td>
 				<td>{if $it.writable}{icon name='success' title="{tr}File is writable{/tr}"}{else}{icon name='ban' title="{tr}File is not writable{/tr}"}{/if}</td>
 			</tr>
+			{$totalsize = $totalsize + $it.size}
 		{/foreach}
+		<tr>
+			<td></td>
+			<td><strong>{tr}Total:{/tr} {$filelist|count}</strong></td>
+			<td><em>{$totalsize|kbsize}</em></td>
+			<td></td>
+			<td></td>
+		</tr>
 	</table>
 	<hr>
 <!--
-{if $permAddGallery eq "y"}
+{if $tiki_p_create_file_galleries eq "y"}
 &nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="subdirToSubgal" value="true" id="subdirToSubgal"> {tr}Convert the last sub directory to a sub gallery{/tr}<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {tr}eg. from "misc/screenshots/digicam0001.jpg" a gallery named "screenshots" will be created{/tr}<br>
 {/if}
 -->
     <div class="form-group">
-        <label class="col-sm-3 control-label">{tr}Use the last sub directory name as description{/tr}</label>
+        <label class="col-sm-3 control-label" for="subToDesc">{tr}Use the last sub directory name as description{/tr}</label>
         <div class="col-sm-7">
             <input type="checkbox" name="subToDesc" value="true" id="subToDesc">
             <div class="help-block">
@@ -52,9 +60,9 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label">{tr}Select a File Gallery{/tr}</label>
+        <label class="col-sm-3 control-label" for="galleryId">{tr}Select a File Gallery{/tr}</label>
         <div class="col-sm-7">
-            <select name="galleryId" class="form-control">
+            <select name="galleryId" id="galleryId" class="form-control">
                 <option value="{$treeRootId}" {if $treeRootId eq $galleryId}selected="selected"{/if} style="font-style:italic; border-bottom:1px dashed #666;">{tr}Root{/tr}</option>
                 {section name=idx loop=$galleries}
                     {if ($galleries[idx].individual eq 'n') or ($galleries[idx].individual_tiki_p_batch_upload_file_dir eq 'y')}
