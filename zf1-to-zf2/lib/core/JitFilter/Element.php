@@ -10,7 +10,7 @@
  * @method Zend\I18n\Filter\Alpha alpha
  * @method Zend\I18n\Filter\Alnum alnum
  * @method Zend\Filter\Digits digits
- * @method Zend\Filter\Int int
+ * @method Zend\Filter\ToInt int
  * @method Zend\Filter\StripTags username
  * @method Zend\Filter\StripTags groupname
  * @method Zend\Filter\StripTags pagename

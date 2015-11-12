@@ -29,7 +29,7 @@ class TikiFilter
 		case 'digits':
 			return new Zend\Filter\Digits;
 		case 'int':
-			return new Zend\Filter\Int;
+			return new Zend\Filter\ToInt;
 		case 'isodate':
 			return new TikiFilter_IsoDate;
 		case 'isodatetime':
