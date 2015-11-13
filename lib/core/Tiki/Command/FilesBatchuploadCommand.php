@@ -56,6 +56,10 @@ class FilesBatchuploadCommand extends Command
 	{
 		global $prefs;
 
+		if ($prefs['feature_file_galleries'] != 'y' || $prefs['feature_file_galleries_batch'] != 'y' || ! is_dir($prefs['fgal_batch_dir'])) {
+			throw new \Exception("Feature Batch Uploading not set up, please refer to https://doc.tiki.org/Batch+Upload for instructions");
+		}
+
 		$filegallib = \TikiLib::lib('filegal');
 		$filegalbatchlib = \TikiLib::lib('filegalbatch');
 

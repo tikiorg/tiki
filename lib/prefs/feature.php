@@ -1602,7 +1602,7 @@ function prefs_feature_list($partial = false)
 			'description' => tra('Direct import of local files into a File Gallery. Can handle large files. User can upload file via FTP to target folder'),
 			'hint' => tra('Use batch uploading to integrate large files into File Galleries'),
 			'type' => 'flag',
-			'help' => 'File+Gallery+Config',
+			'help' => 'Batch+Upload',
 			'default' => 'n',
 		),
 		'feature_forum_rankings' => array(
