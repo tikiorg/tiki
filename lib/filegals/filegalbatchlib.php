@@ -201,7 +201,11 @@ class FilegalBatchLib extends FileGalLib
 			}
 
 			if (! rename($info['source'], $savedir . $fhash)) {
-				return array('error' => tra('Cannot write to this file:') . $savedir . $fhash);
+				if (is_writable(dirname($info['source']))) {
+					return array('error' => tra('Cannot write to this file:') . $savedir . $fhash);
+				} else {
+					return array('error' => tra('Cannot move this file:') . $info['source']);
+				}
 			}
 		} else {
 			$data = file_get_contents($info['source']);
@@ -244,7 +248,7 @@ class FilegalBatchLib extends FileGalLib
 				'file' => $file,
 				'size' => $filesize,
 				'ext' => strtolower(substr($file, -(strlen($file) - 1 - strrpos($file, ".")))),
-				'writable' => is_writable($file),
+				'writable' => is_writable($file) && is_writable(dirname($file)),	// it's the parent dir perms needed to move the file
 			];
 		}
 
