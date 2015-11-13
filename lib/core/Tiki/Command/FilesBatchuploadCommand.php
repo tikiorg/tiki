@@ -38,6 +38,12 @@ class FilesBatchuploadCommand extends Command
 				'Move the file into a gallery matching the subdirectory name'
 			)
 			->addOption(
+				'createSubgals',
+				null,
+				InputOption::VALUE_NONE,
+				'Create missing sub galleries'
+			)
+			->addOption(
 				'confirm',
 				null,
 				InputOption::VALUE_NONE,
@@ -71,6 +77,13 @@ class FilesBatchuploadCommand extends Command
 			return;
 		}
 
+		$subdirToSubgal = $input->getOption('subdirToSubgal');
+		if ($subdirToSubgal) {
+			$createSubgals = $input->getOption('createSubgals');
+		} else {
+			$createSubgals = false;
+		}
+
 		if ($confirm) {
 			$output->writeln('<comment>Files Batch Upload starting...</comment>');
 
@@ -80,11 +93,23 @@ class FilesBatchuploadCommand extends Command
 
 			$feedback = $filegalbatchlib->processBatchUpload($files, $galleryId, [
 					'subToDesc' => $input->getOption('subToDesc'),
-					'subdirToSubgal' => $input->getOption('subdirToSubgal'),
+					'subdirToSubgal' => $subdirToSubgal,
+					'createSubgals' => $createSubgals,
 			]);
 
 			foreach ($feedback as $message) {
-				$output->writeln("<info>$message</info>");
+				if (strpos($message, '<span class="text-danger">') !== false) {
+					$error = true;
+				} else {
+					$error = false;
+				}
+				$message = strip_tags(str_replace('<br>', ' : ', $message));
+				if ($error) {
+					$message = "<error>$message</error>";
+				} else {
+					$message = "<info>$message</info>";
+				}
+				$output->writeln($message);
 			}
 
 			$output->writeln('<comment>Files Batch Upload complete</comment>');

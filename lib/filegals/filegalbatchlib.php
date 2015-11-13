@@ -43,7 +43,7 @@ class FilegalBatchLib extends FileGalLib
 	 * @return array				feedback
 	 */
 
-	function processBatchUpload($files, $galleryId = null, $options = [ 'subToDesc' => false, 'subdirToSubgal' => false, ])
+	function processBatchUpload($files, $galleryId = null, $options = [ 'subToDesc' => false, 'subdirToSubgal' => false, 'createSubgals' => false])
 	{
 		include_once ('lib/mime/mimetypes.php');
 		global $mimetypes, $user, $prefs;
@@ -72,7 +72,11 @@ class FilegalBatchLib extends FileGalLib
 			$type = $mimetypes["$ext"];
 			$filesize = @filesize($file);
 
+			$destinationGalleryId = $galleryId;
+
 			if ($options['subdirToSubgal']) {
+
+				$foundDir = true;
 
 				$dirs = array_filter(
 						explode(DIRECTORY_SEPARATOR,
@@ -81,17 +85,58 @@ class FilegalBatchLib extends FileGalLib
 				);
 
 				foreach($dirs as $dir) {
+					$foundDir = false;
+
 					foreach($subgals['data'] as $subgal) {
-						if ($subgal['parentId'] == $galleryId && $subgal['name'] == $dir) {
-							$galleryId = (int) $subgal['id'];
+						if ($subgal['parentId'] == $destinationGalleryId && $subgal['name'] == $dir) {
+							$destinationGalleryId = (int) $subgal['id'];
+							$foundDir = true;
+							break;
+						}
+					}
+					if (! $foundDir) {
+						if ($options['createSubgals']) {
+							$perms = $this->get_perm_object($destinationGalleryId, 'file gallery', $this->get_file_gallery_info($destinationGalleryId), false);
+							if ($perms['tiki_p_create_file_galleries'] === 'y') {
+
+								$new_info = $this->default_file_gallery();
+								$new_info['name'] = $dir;
+								$new_info['description'] = tr('Created by batch upload by user "%0" on %1', $user, $this->get_short_datetime($this->now, $user));
+								$new_info['parentId'] = $destinationGalleryId;
+								$new_info['user'] = $user;
+
+								$newGalleryId = $this->replace_file_gallery($new_info);
+								if ($newGalleryId) {
+									$destinationGalleryId = $newGalleryId;
+									$subgals = $this->getSubGalleries($galleryId, true, 'batch_upload_file_dir');
+									$foundDir = true;
+								} else {
+									$feedback[] = '<span class="text-danger">' .
+											tr('Upload was not successful for "%0"', $path_parts['basename']) .
+											'<br>' . tr('Create gallery "%0" failed</span>', $dir);
+									break;
+								}
+							} else {
+								$feedback[] = '<span class="text-danger">' .
+										tr('Upload was not successful for "%0"', $path_parts['basename']) .
+										'<br>' . tr('No permsission to create gallery "%0"</span>', $dir);
+								break;
+							}
+						} else {
+							$feedback[] = '<span class="text-danger">' .
+									tr('Upload was not successful for "%0"', $path_parts['basename']) .
+									'<br>' . tr('Gallery "%0" not found</span>', $dir);
 							break;
 						}
 					}
 				}
+				if (! $foundDir) {
+					continue;
+				}
 			}
 
 			$result = $this->handle_batch_upload(
-					$galleryId,
+					$destinationGalleryId,
 					[
 							'source' => $file,
 							'size' => $filesize,
@@ -115,7 +160,7 @@ class FilegalBatchLib extends FileGalLib
 				$name = $path_parts['basename'];
 
 				$fileId = $this->insert_file(
-						$galleryId, $name, $tmpDesc, $name, $result['data'], $filesize, $type,
+						$destinationGalleryId, $name, $tmpDesc, $name, $result['data'], $filesize, $type,
 						$user, $result['fhash'], null, null, null, null, null, null, $metadata
 				);
 				if ($fileId) {

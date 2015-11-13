@@ -15,7 +15,7 @@
 {if count($feedback)}<div class="alert alert-warning">{section name=i loop=$feedback}{$feedback[i]}<br>{/section}</div>{/if}
 {$totalsize = 0}
 <h2>{tr}Available Files{/tr}</h2>
-<form method="post" action="tiki-batch_upload_files.php" name="f" class="form-horizontal">
+<form method="post" action="tiki-batch_upload_files.php" name="f" id="batchUploadForm" class="form-horizontal">
 	<table class="table table-stripped" id="filelist">
 		<tr>
 			<th>{select_all checkbox_names='files[]'}</th>
@@ -64,8 +64,29 @@
 			<div class="text-muted description">
 				{tr}eg. for "misc/screenshots/digicam0001.jpg" the file will be uploaded into a gallery called "screenshots" in the called "misc" inside the chosen gallery if it exists{/tr}
 			</div>
+    	</div>
+	</div>
+	<div class="form-group create-subgals" style="display:none;">
+		<label class="col-sm-4 control-label" for="createSubgals">{tr}Create sub-galleries?{/tr}</label>
+		<div class="col-sm-8">
+			<input type="checkbox" name="createSubgals" value="true" id="createSubgals">
+			<div class="text-muted description">
+				{tr}Sub-galleries will be automatically created if they don't exist and the user has permission. Note that these galleries will have the global file gallery permissions set.{/tr}
+			</div>
 		</div>
-    </div>
+		{jq}
+$("#subdirToSubgal").change(function () {
+	if ($(this).prop("checked")) {
+		$(".create-subgals").show();
+	} else {
+		$(".create-subgals").hide();
+	}
+}).change();
+$("#batchUploadForm").submit(function () {
+	return $("input[name='files[]']:checked").length > 0;
+});
+{/jq}
+	</div>
     <div class="form-group">
         <label class="col-sm-4 control-label" for="subToDesc">{tr}Use the last sub directory name as description{/tr}</label>
         <div class="col-sm-8">
