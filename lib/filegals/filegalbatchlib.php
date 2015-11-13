@@ -72,6 +72,24 @@ class FilegalBatchLib extends FileGalLib
 			$type = $mimetypes["$ext"];
 			$filesize = @filesize($file);
 
+			if ($options['subdirToSubgal']) {
+
+				$dirs = array_filter(
+						explode(DIRECTORY_SEPARATOR,
+								substr($path_parts['dirname'], strlen($prefs['fgal_batch_dir']))
+						)
+				);
+
+				foreach($dirs as $dir) {
+					foreach($subgals['data'] as $subgal) {
+						if ($subgal['parentId'] == $galleryId && $subgal['name'] == $dir) {
+							$galleryId = (int) $subgal['id'];
+							break;
+						}
+					}
+				}
+			}
+
 			$result = $this->handle_batch_upload(
 					$galleryId,
 					[

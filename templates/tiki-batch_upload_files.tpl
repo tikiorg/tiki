@@ -22,7 +22,7 @@
 			<th>{tr}Filename{/tr}</th>
 			<th width="80">{tr}Filesize{/tr}</th>
 			<th width="80">{tr}Filetype{/tr}</th>
-			<th width="80">{tr}Permissions{/tr}</th>
+			<th class="text-center">{icon name='permission' title="{tr}File Permissions{/tr}"}</th>
 		</tr>
 
 		{foreach key=k item=it from=$filelist}
@@ -31,37 +31,22 @@
 				<td><label for="box_{$k}">{$it.file|replace:$prefs.fgal_batch_dir:''}</label></td>
 				<td>{$it.size|kbsize}</td>
 				<td>{$it.ext}</td>
-				<td>{if $it.writable}{icon name='success' title="{tr}File is writable{/tr}"}{else}{icon name='ban' title="{tr}File is not writable{/tr}"}{/if}</td>
+				<td class="text-center">{if $it.writable}{icon name='success' title="{tr}File is writable{/tr}"}{else}{icon name='ban' title="{tr}File is not writable{/tr}"}{/if}</td>
 			</tr>
 			{$totalsize = $totalsize + $it.size}
 		{/foreach}
 		<tr>
 			<td></td>
-			<td><strong>{tr}Total:{/tr} {$filelist|count}</strong></td>
+			<td><strong>{tr _0=$filelist|count}Total: %0{/tr}</strong></td>
 			<td><em>{$totalsize|kbsize}</em></td>
 			<td></td>
 			<td></td>
 		</tr>
 	</table>
 	<hr>
-<!--
-{if $tiki_p_create_file_galleries eq "y"}
-&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="subdirToSubgal" value="true" id="subdirToSubgal"> {tr}Convert the last sub directory to a sub gallery{/tr}<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {tr}eg. from "misc/screenshots/digicam0001.jpg" a gallery named "screenshots" will be created{/tr}<br>
-{/if}
--->
     <div class="form-group">
-        <label class="col-sm-3 control-label" for="subToDesc">{tr}Use the last sub directory name as description{/tr}</label>
-        <div class="col-sm-7">
-            <input type="checkbox" name="subToDesc" value="true" id="subToDesc">
-            <div class="help-block">
-                {tr}eg. from "misc/screenshots/digicam0001.jpg" a description "screenshots" will be created{/tr}r}
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-3 control-label" for="galleryId">{tr}Select a File Gallery{/tr}</label>
-        <div class="col-sm-7">
+        <label class="col-sm-4 control-label" for="galleryId">{tr}Select a File Gallery{/tr}</label>
+        <div class="col-sm-4">
             <select name="galleryId" id="galleryId" class="form-control">
                 <option value="{$treeRootId}" {if $treeRootId eq $galleryId}selected="selected"{/if} style="font-style:italic; border-bottom:1px dashed #666;">{tr}Root{/tr}</option>
                 {section name=idx loop=$galleries}
@@ -73,8 +58,26 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-3 control-label"></label>
-        <div class="col-sm-7">
+        <label class="col-sm-4 control-label" for="subdirToSubgal">{tr}Upload into galleries according to sub-directories{/tr}</label>
+        <div class="col-sm-8">
+            <input type="checkbox" name="subdirToSubgal" value="true" id="subdirToSubgal">
+			<div class="text-muted description">
+				{tr}eg. for "misc/screenshots/digicam0001.jpg" the file will be uploaded into a gallery called "screenshots" in the called "misc" inside the chosen gallery if it exists{/tr}
+			</div>
+		</div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 control-label" for="subToDesc">{tr}Use the last sub directory name as description{/tr}</label>
+        <div class="col-sm-8">
+            <input type="checkbox" name="subToDesc" value="true" id="subToDesc">
+            <div class="text-muted description">
+                {tr}eg. from "misc/screenshots/digicam0001.jpg" a description "screenshots" will be created{/tr}r}
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 control-label"></label>
+        <div class="col-sm-8">
             <input type="submit" class="btn btn-default btn-sm" name="batch_upload" value="{tr}Process files{/tr}">
         </div>
     </div>

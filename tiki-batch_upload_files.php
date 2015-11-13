@@ -50,7 +50,7 @@ if (isset($_REQUEST['batch_upload']) and isset($_REQUEST['files']) and is_array(
 	$feedback = $filegalbatchlib->processBatchUpload($_REQUEST['files'], (int) $_REQUEST['galleryId'],
 			[
 				'subToDesc' => isset($_REQUEST['subToDesc']),
-				'subdirToSubgal' => isset($_REQUEST['subdirTosubgal']),
+				'subdirToSubgal' => isset($_REQUEST['subdirToSubgal']),
 			]
 	);
 
