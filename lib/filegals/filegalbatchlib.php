@@ -39,12 +39,18 @@ class FilegalBatchLib extends FileGalLib
 	 *
 	 * @param array $files
 	 * @param int $galleryId
-	 * @param array $options		[subToDesc,subdirToSubgal]
-	 * @return array				feedback
+	 * @param array $options		[bool subToDesc, bool subdirToSubgal, bool createSubgals, string fileUser, string fileGroup, string fileMode]
+	 * @return array				feedback messages
 	 */
 
-	function processBatchUpload($files, $galleryId = null, $options = [ 'subToDesc' => false, 'subdirToSubgal' => false, 'createSubgals' => false])
-	{
+	function processBatchUpload($files, $galleryId = null, $options = [
+			'subToDesc' => false,
+			'subdirToSubgal' => false,
+			'createSubgals' => false,
+			'fileUser' => '',
+			'fileGroup' => '',
+			'fileMode' => '',
+	]) {
 		include_once ('lib/mime/mimetypes.php');
 		global $mimetypes, $user, $prefs;
 
@@ -73,6 +79,22 @@ class FilegalBatchLib extends FileGalLib
 			$filesize = @filesize($file);
 
 			$destinationGalleryId = $galleryId;
+
+			if ($options['fileUser']) {
+				if (!chown($file, $options['fileUser'])) {
+					$feedback[] = '<span class="text-danger">' . tr('Problem setting user for "%0"', $path_parts['basename']);
+				}
+			}
+			if ($options['fileGroup']) {
+				if (!chgrp($file, $options['fileGroup'])) {
+					$feedback[] = '<span class="text-danger">' . tr('Problem setting group for "%0"', $path_parts['basename']);
+				}
+			}
+			if ($options['fileMode']) {
+				if (!chmod($file, octdec($options['fileMode']))) {
+					$feedback[] = '<span class="text-danger">' . tr('Problem setting mode for "%0"', $path_parts['basename']);
+				}
+			}
 
 			if ($options['subdirToSubgal']) {
 

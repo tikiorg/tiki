@@ -26,6 +26,12 @@ class FilesBatchuploadCommand extends Command
 				'Destination gallery for uploads'
 			)
 			->addOption(
+				'confirm',
+				null,
+				InputOption::VALUE_NONE,
+				'Perform the batch upload'
+			)
+			->addOption(
 				'subToDesc',
 				null,
 				InputOption::VALUE_NONE,
@@ -33,21 +39,33 @@ class FilesBatchuploadCommand extends Command
 			)
 			->addOption(
 				'subdirToSubgal',
-				null,
+				's',
 				InputOption::VALUE_NONE,
 				'Move the file into a gallery matching the subdirectory name'
 			)
 			->addOption(
 				'createSubgals',
-				null,
+				'c',
 				InputOption::VALUE_NONE,
 				'Create missing sub galleries'
 			)
 			->addOption(
-				'confirm',
-				null,
-				InputOption::VALUE_NONE,
-				'Perform the batch upload'
+				'fileUser',
+				'u',
+				InputOption::VALUE_REQUIRED,
+				'User name (or id) to "own" the uploaded files (e.g. www-data, nobody, apache etc)'
+			)
+			->addOption(
+				'fileGroup',
+				'g',
+				InputOption::VALUE_REQUIRED,
+				'Group name (or id) to "own" the uploaded files (e.g. www-data)'
+			)
+			->addOption(
+				'fileMode',
+				'm',
+				InputOption::VALUE_REQUIRED,
+				'Octal file mode to set on the uploaded files (e.g. 0755)'
 			)
 		;
 	}	
@@ -77,7 +95,9 @@ class FilesBatchuploadCommand extends Command
 
 		$files = $filegalbatchlib->batchUploadFileList();
 		if (! $files) {
-			$output->writeln('<comment>No files to upload</comment>');
+			if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
+				$output->writeln('<comment>No files to upload</comment>');
+			}
 			return;
 		}
 
@@ -89,7 +109,9 @@ class FilesBatchuploadCommand extends Command
 		}
 
 		if ($confirm) {
-			$output->writeln('<comment>Files Batch Upload starting...</comment>');
+			if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
+				$output->writeln('<comment>Files Batch Upload starting...</comment>');
+			}
 
 			foreach ($files as & $file) {
 				$file = $file['file'];
@@ -99,6 +121,9 @@ class FilesBatchuploadCommand extends Command
 					'subToDesc' => $input->getOption('subToDesc'),
 					'subdirToSubgal' => $subdirToSubgal,
 					'createSubgals' => $createSubgals,
+					'fileUser' => $input->getOption('fileUser'),
+					'fileGroup' => $input->getOption('fileGroup'),
+					'fileMode' => $input->getOption('fileMode'),
 			]);
 
 			foreach ($feedback as $message) {
@@ -110,15 +135,20 @@ class FilesBatchuploadCommand extends Command
 				$message = strip_tags(str_replace('<br>', ' : ', $message));
 				if ($error) {
 					$message = "<error>$message</error>";
-				} else {
+					$output->writeln($message);
+				} else if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
 					$message = "<info>$message</info>";
+					$output->writeln($message);
 				}
-				$output->writeln($message);
 			}
 
-			$output->writeln('<comment>Files Batch Upload complete</comment>');
+			if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
+				$output->writeln('<comment>Files Batch Upload complete</comment>');
+			}
 		} else {
-			$output->writeln("<comment>Files to upload from {$prefs['fgal_batch_dir']} to gallery #$galleryId</comment>");
+			if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
+				$output->writeln("<comment>Files to upload from {$prefs['fgal_batch_dir']} to gallery #$galleryId</comment>");
+			}
 
 			foreach($files as $file) {
 				$fname = substr($file['file'], strlen($prefs['fgal_batch_dir']) + 1);
@@ -127,7 +157,9 @@ class FilesBatchuploadCommand extends Command
 				}
 				$output->writeln("  {$fname} ({$file['size']} bytes)");
 			}
-			$output->writeln("<info>Use the --confirm option to proceed with the upload operation.</info>");
+			if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
+				$output->writeln("<info>Use the --confirm option to proceed with the upload operation.</info>");
+			}
 		}
 
 	}
