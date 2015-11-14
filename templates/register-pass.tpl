@@ -5,8 +5,8 @@
 {else}
 	{if !isset($openid_associate) || $openid_associate neq 'y'}
 		<div class="form-group">
-			<label class="col-md-4 col-sm-3 control-label" for="pass1">{tr}Password{/tr}</label>
-			<div class="col-md-4 col-sm-6">
+			<label class="col-sm-4 control-label" for="pass1">{tr}Password{/tr} {if $trackerEditFormId}<span class='text-danger tips' title=":{tr}This field is manadatory{/tr}">*</span>{/if}</label>
+			<div class="col-sm-8">
 				<input
 					class="form-control"
 					id='pass1'
@@ -23,9 +23,6 @@
 						{include file='password_help.tpl'}
 					</div>
 				{/if}
-			</div>
-			<div class="col-sm-1">
-				{if $trackerEditFormId}<span class='text-danger tips' title=":{tr}This field is manadatory{/tr}">*</span>{/if}
 			</div>
 		</div>
 	{/if}
