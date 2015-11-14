@@ -47,6 +47,7 @@ class FilegalBatchLib extends FileGalLib
 			'subToDesc' => false,
 			'subdirToSubgal' => false,
 			'createSubgals' => false,
+			'deleteAfter' => null,
 			'fileUser' => '',
 			'fileGroup' => '',
 			'fileMode' => '',
@@ -183,7 +184,7 @@ class FilegalBatchLib extends FileGalLib
 
 				$fileId = $this->insert_file(
 						$destinationGalleryId, $name, $tmpDesc, $name, $result['data'], $filesize, $type,
-						$user, $result['fhash'], null, null, null, null, null, null, $metadata
+						$user, $result['fhash'], null, null, null, null, $options['deleteAfter'], null, $metadata
 				);
 				if ($fileId) {
 					$feedback[] = tra('Upload was successful') . ': ' . $name;

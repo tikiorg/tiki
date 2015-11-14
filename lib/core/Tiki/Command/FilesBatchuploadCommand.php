@@ -50,6 +50,12 @@ class FilesBatchuploadCommand extends Command
 				'Create missing sub galleries'
 			)
 			->addOption(
+				'deleteAfter',
+				'd',
+				InputOption::VALUE_REQUIRED,
+				'Delete file after a certain number of seconds. e.g. "86400" for one day, "604800" for a week etc'
+			)
+			->addOption(
 				'fileUser',
 				'u',
 				InputOption::VALUE_REQUIRED,
@@ -121,6 +127,7 @@ class FilesBatchuploadCommand extends Command
 					'subToDesc' => $input->getOption('subToDesc'),
 					'subdirToSubgal' => $subdirToSubgal,
 					'createSubgals' => $createSubgals,
+					'deleteAfter' => $input->getOption('deleteAfter'),
 					'fileUser' => $input->getOption('fileUser'),
 					'fileGroup' => $input->getOption('fileGroup'),
 					'fileMode' => $input->getOption('fileMode'),
@@ -157,9 +164,7 @@ class FilesBatchuploadCommand extends Command
 				}
 				$output->writeln("  {$fname} ({$file['size']} bytes)");
 			}
-			if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-				$output->writeln("<info>Use the --confirm option to proceed with the upload operation.</info>");
-			}
+			$output->writeln("<info>Use the --confirm option to proceed with the upload operation.</info>");
 		}
 
 	}
