@@ -238,6 +238,8 @@ class FilegalBatchLib extends FileGalLib
 
 		$files = $this->batchUploadDirContent($filedir);
 
+		sort($files, SORT_NATURAL);
+
 		// build file data array
 		foreach ($files as $file) {
 
@@ -251,8 +253,6 @@ class FilegalBatchLib extends FileGalLib
 				'writable' => is_writable($file) && is_writable(dirname($file)),	// it's the parent dir perms needed to move the file
 			];
 		}
-
-		sort($filelist, SORT_NATURAL);
 
 		return $filelist;
 	}
