@@ -372,7 +372,7 @@
 	{/if}
 
 </div>
-{$metarray|var_dump}
+
 {if not empty($metarray) and $metarray|count gt 0}
 	{include file='metadata/meta_view_tabs.tpl'}
 {/if}
