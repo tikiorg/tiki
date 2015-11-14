@@ -2956,6 +2956,10 @@ body.tiki.navbar-padding {
   transition: line-height 0.1s ease;
 }
 /*** Arrows ***/
+/* div around table */
+div.tablesorter-resizable-container {
+  clear: both;
+}
 .tablesorter {
   width: 100%;
   margin-bottom: 2px;
