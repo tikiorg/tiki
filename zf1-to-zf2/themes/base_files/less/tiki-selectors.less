@@ -700,12 +700,20 @@ ul.all_languages > li {
 }
 
 // /* Auto TOC */
-#autotoc > .nav {
-	background: @gray-lighter;
+.autotoc > .nav {
+	background: @panel-bg;
+	border: 1px solid @panel-default-border;
+	border-radius: @panel-border-radius;
 }
 
-#autotoc * {
-	color: @text-color;
+.autotoc * {
+	color: @link-color;
+}
+
+.autotoc .nav > li > a:hover,
+.autotoc .nav .nav > li > a:hover {
+	color: @navbar-default-link-color;
+	background: @navbar-default-link-hover-bg;
 }
 
 .plugin-form-float {

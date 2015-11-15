@@ -97,6 +97,7 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\AddonUpgradeCommand);
 	$console->add(new Tiki\Command\DailyReportSendCommand);
 	$console->add(new Tiki\Command\GoalCheckCommand);
+	$console->add(new Tiki\Command\FilesBatchuploadCommand);
 	$console->add(new Tiki\Command\IndexRebuildCommand);
 	$console->add(new Tiki\Command\IndexOptimizeCommand);
 	$console->add(new Tiki\Command\IndexCatchUpCommand);
@@ -109,12 +110,14 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\RecommendationBatchCommand);
 	$console->add(new Tiki\Command\RefreshRssCommand);
 	$console->add(new Tiki\Command\TrackerImportCommand);
+	$console->add(new Tiki\Command\TrackerClearCommand);
 } else {
 	$console->add(new Tiki\Command\UnavailableCommand('addon:install'));
 	$console->add(new Tiki\Command\UnavailableCommand('addon:remove'));
 	$console->add(new Tiki\Command\UnavailableCommand('addon:upgrade'));
 	$console->add(new Tiki\Command\UnavailableCommand('daily-report:send'));
 	$console->add(new Tiki\Command\UnavailableCommand('goal:check'));
+	$console->add(new Tiki\Command\UnavailableCommand('files:batchupload'));
 	$console->add(new Tiki\Command\UnavailableCommand('index:rebuild'));
 	$console->add(new Tiki\Command\UnavailableCommand('index:optimize'));
 	$console->add(new Tiki\Command\UnavailableCommand('index:catch-up'));
@@ -127,6 +130,7 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\UnavailableCommand('recommendation:batch'));
 	$console->add(new Tiki\Command\UnavailableCommand('rss:refresh'));
 	$console->add(new Tiki\Command\UnavailableCommand('tracker:import'));
+	$console->add(new Tiki\Command\UnavailableCommand('tracker:clear'));
 }
 
 if (file_exists('profiles/info.ini')) {

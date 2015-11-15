@@ -318,15 +318,15 @@
 
 			{$upload_str}
 
-			{if $prefs.file_galleries_use_jquery_upload neq 'y'}
-				{if $editFileId}
-					{include file='categorize.tpl'}<br>
-					<div id="page_bar" class="form-group">
-						<div class="col-sm-9 col-sm-offset-3">
-							<input name="upload" type="submit" class="btn btn-default" value="{tr}Save{/tr}">
-						</div>
+			{if $editFileId}
+				{include file='categorize.tpl'}<br>
+				<div id="page_bar" class="form-group">
+					<div class="col-sm-9 col-sm-offset-3">
+						<input name="upload" type="submit" class="btn btn-default" value="{tr}Save{/tr}">
 					</div>
-				{elseif $prefs.javascript_enabled neq 'y'}
+				</div>
+			{elseif $prefs.javascript_enabled neq 'y'}
+				{if $prefs.file_galleries_use_jquery_upload neq 'y'}
 					{$upload_str}
 					{$upload_str}
 					{include file='categorize.tpl'}<br>
@@ -373,7 +373,7 @@
 
 </div>
 
-{if isset($metarray) and $metarray|count gt 0}
+{if not empty($metarray) and $metarray|count gt 0}
 	{include file='metadata/meta_view_tabs.tpl'}
 {/if}
 

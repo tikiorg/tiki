@@ -7254,11 +7254,18 @@ ul.all_languages > li {
   border: 1px solid;
   border-color: #b37f13;
 }
-#autotoc > .nav {
-  background: #eeeeee;
+.autotoc > .nav {
+  background: #474747;
+  border: 1px solid #292929;
+  border-radius: 4px;
 }
-#autotoc * {
-  color: #d8d8d8;
+.autotoc * {
+  color: #ababab;
+}
+.autotoc .nav > li > a:hover,
+.autotoc .nav .nav > li > a:hover {
+  color: #a6a68d;
+  background: transparent;
 }
 .plugin-form-float {
   background: #474747;

@@ -502,11 +502,18 @@ ul.all_languages > li {
   border: 1px solid;
   border-color: #faebcc;
 }
-#autotoc > .nav {
-  background: #eeeeee;
+.autotoc > .nav {
+  background: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
 }
-#autotoc * {
-  color: #333333;
+.autotoc * {
+  color: #337ab7;
+}
+.autotoc .nav > li > a:hover,
+.autotoc .nav .nav > li > a:hover {
+  color: #777777;
+  background: transparent;
 }
 .plugin-form-float {
   background: #ffffff;
@@ -2949,6 +2956,10 @@ body.tiki.navbar-padding {
   transition: line-height 0.1s ease;
 }
 /*** Arrows ***/
+/* div around table */
+div.tablesorter-resizable-container {
+  clear: both;
+}
 .tablesorter {
   width: 100%;
   margin-bottom: 2px;
