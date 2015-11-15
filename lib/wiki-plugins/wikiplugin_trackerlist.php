@@ -1097,7 +1097,7 @@ function wikiplugin_trackerlist($data, $params)
 		//note whether ajax is needed
 		$tsServer = isset($params['server']) && $params['server'] === 'y' ? true : false;
 
-		$tsOn	= isset($sortable) && $sortable === 'y' && Table_Check::isEnabled($tsServer);
+		$tsOn	= isset($sortable) && $sortable !== 'n' && Table_Check::isEnabled($tsServer);
 		$smarty->assign('tsOn', $tsOn);
 
 		//note whether this is the initial tablesorter ajax call or a subsequent ajax call
