@@ -62,10 +62,24 @@ $inputConfiguration = array(
 		)
 	)
 );
-$inputFilter = DeclFilter::fromConfiguration($inputConfiguration);
-$_GET = $inputFilter->filter($_GET);
-$_POST = $inputFilter->filter($_POST);
-$_REQUEST = array_merge($_GET, $_POST);
+
+$errors = '';
+
+
+try {
+
+	$inputFilter = DeclFilter::fromConfiguration($inputConfiguration);
+	$_GET = $inputFilter->filter($_GET);
+	$_POST = $inputFilter->filter($_POST);
+	$_REQUEST = array_merge($_GET, $_POST);
+
+} catch (Exception $e) {
+
+	$errors .= '<strong>' . $e->getMessage() . '</strong><br>
+Check <a href="tiki-check.php">tiki-check.php</a> to ensure your system is ready for Tiki or refer to <a href="https://doc.tiki.org/Requirements">https://doc.tiki.org/Requirements</a> for more information.
+	';
+	error_and_exit();
+}
 
 require_once('tiki-filter-base.php');
 
@@ -710,8 +724,6 @@ $dbservers = array();
 if (function_exists('mysqli_connect'))	$dbservers['mysqli'] = tra('MySQL Improved (mysqli)');
 if (function_exists('mysql_connect'))	$dbservers['mysql'] = tra('MySQL classic (mysql)');
 $smarty->assignByRef('dbservers', $dbservers);
-
-$errors = '';
 
 check_session_save_path();
 
