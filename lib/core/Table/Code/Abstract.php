@@ -29,6 +29,8 @@ class Table_Code_Abstract
 	protected static $sortcol;
 	protected static $filters;
 	protected static $filtercol;
+	protected static $math;
+	protected static $mathcol;
 	protected static $usecolselector;
 	protected static $group;
 	protected static $pager;
@@ -62,9 +64,11 @@ class Table_Code_Abstract
 			//filter, group, pager and ajax off unless type is set and is not false
 			self::$filters = empty($settings['filters']['type']) ? false : true;
 			self::$filtercol = isset(self::$s['columns']) && count(array_column(self::$s['columns'], 'filter')) > 0;
+			self::$math = empty($settings['math']) ? false : true;
+			self::$mathcol = isset(self::$s['columns']) && count(array_column(self::$s['columns'], 'math')) > 0;
 			//whether to use array index to identify columns or a selector (id, class, etc.)
 			//generally index used for plugins where columns are set by user and selectors are used with tables with
-			//smarty templates to keep from recreating tpl logic that determine which columns are shown
+			//smarty templates to keep from recreating tpl logic that determines which columns are shown
 			self::$usecolselector = !isset(self::$s['usecolselector']) || self::$s['usecolselector'] !== false;
 			self::$pager = empty($settings['pager']['type']) ? false : true;
 			global $prefs;
@@ -102,7 +106,7 @@ class Table_Code_Abstract
 	 */
 	protected function iterate(array $data, $start = '', $finish = '', $before = '\'' , $after = '\'', $separator = ', ')
 	{
-		// if $data is just emtpy, count($data) equals 1. So need to check for type. 
+		// if $data is just empty, count($data) equals 1. So need to check for type.
 		if (!is_array($data)) {
 			$ret = $start. $before. $after. $finish;
 			return $ret;

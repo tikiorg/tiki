@@ -100,13 +100,12 @@ class Table_Check
 	}
 
 	/**
-	 * Utility to convert string entered by user for a parameter setting to an array
-	 *
-	 * @param $param
-	 *
+	 * * Utility to convert string entered by user for a parameter setting to an array
+	 * @param $paramstr
+	 * @param int $levels
 	 * @return array
 	 */
-	static public function parseParam ($paramstr)
+	static public function parseParam ($paramstr, $levels = 2)
 	{
 		if (!empty($paramstr)) {
 			$ret = explode('|', $paramstr);
@@ -139,6 +138,16 @@ class Table_Check
 				}
 			}
 			ksort($ret);
+			if ($levels === 1) {
+				unset($key);
+				$new = [];
+				foreach($ret as $array) {
+					foreach($array as $key => $val) {
+						$new[$key] = $val;
+					}
+				}
+				return $new;
+			}
 			return $ret;
 		} else {
 			return $paramstr;

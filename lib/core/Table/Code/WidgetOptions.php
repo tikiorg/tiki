@@ -54,7 +54,7 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 		}
 
 		//now incorporate options which are handled in child classes
-		$classes = ['Filter', 'Pager'];
+		$classes = ['Filter', 'Pager', 'Math'];
 		foreach ($classes as $option) {
 			$optarray = Table_Factory::build('WidgetOptions' . $option, parent::$s, 'code')->getOptionArray();
 			$wo = $optarray === false ? $wo : array_merge($wo, $optarray);
