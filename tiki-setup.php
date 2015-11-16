@@ -493,13 +493,13 @@ if ( $prefs['feature_jquery_media'] == 'y' ) {
 	$headerlib->add_jsfile('vendor/jquery/plugins/media/jquery.media.js');
 }
 if ( $prefs['feature_jquery_tablesorter'] == 'y' ) {
-	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.js');
-	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.widgets.js');
+	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/jquery.tablesorter.combined.js');
 	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-pager.js');
 	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-filter-formatter-jui.js');
 	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-grouping.js');
 	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-columnSelector.js');
 	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/parsers/parser-input-select.js');
+	$headerlib->add_jsfile('vendor/jquery/plugins/tablesorter/js/widgets/widget-math.js');
 }
 
 if ( $prefs['feature_jquery_tagcanvas'] == 'y' ) {
