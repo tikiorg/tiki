@@ -76,7 +76,7 @@ table.@{ts} {
 	/* style header */
 	thead {
 		tr.@{ts}-headerRow {
-			th.@{ts}-header:not(.sorter-false) {
+			th.@{ts}-headerUnSorted:not(.sorter-false) {
 				.ts-bg();
 				.unsorted(@ts-bg);
 			}
@@ -98,7 +98,7 @@ table.@{ts} {
 				.tsFilterInput;
 			}
 		}
-		tr.@{ts}-headerRow, tr&-filter-row {
+		tr.@{ts}-headerRow, tr.@{ts}-filter-row {
 			.ts-bg();
 			background-color: @ts-bg;
 		}

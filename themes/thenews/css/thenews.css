@@ -7522,7 +7522,7 @@ a.admbox.off:active {
 table.tablesorter {
   /* style header */
 }
-table.tablesorter thead tr.tablesorter-headerRow th.tablesorter-header:not(.sorter-false) {
+table.tablesorter thead tr.tablesorter-headerRow th.tablesorter-headerUnSorted:not(.sorter-false) {
   background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
 }
 table.tablesorter thead tr.tablesorter-headerRow th.tablesorter-headerAsc {
@@ -7541,7 +7541,7 @@ table.tablesorter thead tr.tablesorter-filter-row input.dateTo {
   background-color: #ececec;
 }
 table.tablesorter thead tr.tablesorter-headerRow,
-trtable.tablesorter thead-filter-row {
+table.tablesorter thead tr.tablesorter-filter-row {
   background-color: #f4f4f4;
 }
 body > .container {
