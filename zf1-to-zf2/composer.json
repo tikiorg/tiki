@@ -98,7 +98,9 @@
 		"zendframework/zend-soap": "~2.4.0",
 		"zendframework/zend-log": "~2.4.0",
 		"zendframework/zendopenid": "~2.0.0",
-		"zendframework/zendoauth": "~2.0.0"
+		"zendframework/zendoauth": "~2.0.0",
+		"zendframework/zend-mime": "~2.4.0",
+		"zendframework/zend-mail": "~2.4.0"
 	},
 	"require-dev": {
 		"oyejorge/less.php": "1.7.0.7",

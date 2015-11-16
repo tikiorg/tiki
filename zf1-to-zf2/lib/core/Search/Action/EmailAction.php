@@ -51,9 +51,15 @@ class Search_Action_EmailAction implements Search_Action_Action
 			$subject = $this->parse($data->subject->text());
 
 			$mail->setSubject(strip_tags($subject));
-			$mail->setBodyHtml($content);
 
-			$mail->send();
+			$bodyPart = new \Zend\Mime\Message();
+			$bodyMessage = new \Zend\Mime\Part($content);
+			$bodyMessage->type = \Zend\Mime\Mime::TYPE_HTML;
+			$bodyPart->setParts(array($bodyMessage));
+
+			$mail->setBody($bodyPart);
+
+			tiki_send_email($mail);
 
 			return true;
 		} catch (Exception $e) {

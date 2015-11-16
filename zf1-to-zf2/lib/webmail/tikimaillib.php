@@ -13,6 +13,9 @@ $access->check_script($_SERVER["SCRIPT_NAME"], basename(__FILE__));
 
 class TikiMail
 {
+	/**
+	 * @var \Zend\Mail\Message
+	 */
 	private $mail;
 
 	/**
@@ -39,7 +42,7 @@ class TikiMail
 			$this->mail = tiki_get_basic_mail();
 			try {
 				$this->mail->setFrom($from);
-				$this->mail->setReturnPath($from);
+				$this->mail->setSender($from);
 			} catch (Exception $e) {
 				// was already set, then do nothing
 			}
@@ -57,7 +60,6 @@ class TikiMail
 
 	function setFrom($email, $name = null)
 	{
-		$this->mail->clearFrom();		// Zend mail throws an exception if from is set twice, Tiki does that quite a bit
 		$this->mail->setFrom($email, $name);
 	}
 
@@ -68,21 +70,78 @@ class TikiMail
 
 	function setSubject($subject)
 	{
-		$this->mail->clearSubject();
 		$this->mail->setSubject($subject);
 	}
 
 	function setHtml($html, $text = null, $images_dir = null)
 	{
-		$this->mail->setBodyHtml($html);
-		if ($text) {
-			$this->mail->setBodyText($text);
+		$body = $this->mail->getBody();
+		if ( !($body instanceof \Zend\Mime\Message) && !empty($body)){
+			$this->convertBodyToMime($body);
+			$body = $this->mail->getBody();
 		}
+
+		if (! $body instanceof Zend\Mime\Message){
+			$body = new Zend\Mime\Message();
+		}
+
+		$partHtmlFound = false;
+		$partTextFound = false;
+
+		$parts = $body->getParts();
+		foreach($parts as $part){
+			/* @var $part Zend\Mime\Part */
+			if ($part->getType() == Zend\Mime\Mime::TYPE_HTML){
+				$partHtmlFound = true;
+				$part->setContent($html);
+			}
+			if ($part->getType() == Zend\Mime\Mime::TYPE_TEXT){
+				$partTextFound = true;
+				if ($text){
+					$part->setContent($text);
+				}
+			}
+		}
+
+		if (!$partHtmlFound){
+			$htmlPart = new Zend\Mime\Part($html);
+			$htmlPart->setType(Zend\Mime\Mime::TYPE_HTML);
+			$parts[] = $htmlPart;
+		}
+
+		if (!$partTextFound && $text){
+			$textPart = new Zend\Mime\Part($text);
+			$textPart->setType(Zend\Mime\Mime::TYPE_TEXT);
+			$parts[] = $textPart;
+		}
+
+		$body->setParts($parts);
+		$this->mail->setBody($body);
 	}
 
 	function setText($text = '')
 	{
-		$this->mail->setBodyText($text);
+		$body = $this->mail->getBody();
+		if ( $body instanceof \Zend\Mime\Message ){
+			$parts = $body->getParts();
+			$textPartFound = false;
+			foreach($parts as $part){
+				/* @var $part Zend\Mime\Part */
+				if ($part->getType() == Zend\Mime\Mime::TYPE_TEXT){
+					$part->setContent($text);
+					$textPartFound = true;
+					break;
+				}
+			}
+			if (!$textPartFound){
+				$part = new Zend\Mime\Part($text);
+				$part->setType(Zend\Mime\Mime::TYPE_TEXT);
+				$parts[] = $part;
+			}
+			$body->setParts($parts);
+		} else {
+			$this->mail->setBody($text);
+		}
 	}
 
 	function setCc($address)
@@ -102,9 +161,9 @@ class TikiMail
 	function setHeader($name, $value)
 	{
 		if ($name === 'Message-ID') {
-			$this->mail->setMessageId(trim($value, "<>"));
+			$this->mail->getHeaders()->addHeader(Zend\Mail\Header\MessageId::fromString('Message-ID: ' . trim($value, "<>")));
 		} else {
-			$this->mail->addHeader($name, $value);
+			$this->mail->getHeaders()->addHeaderLine($name, $value);
 		}
 	}
 
@@ -113,7 +172,7 @@ class TikiMail
 		global $tikilib, $prefs;
 		$logslib = TikiLib::lib('logs');
 
-		$this->mail->clearHeader('To');
+		//$this->mail->getHeaders()->removeHeader('To');
 		foreach ((array) $recipients as $to) {
 			$this->mail->addTo($to);
 		}
@@ -125,10 +184,10 @@ class TikiMail
             $title = 'mail';
         } else {
     		try {
-    			$this->mail->send();
+					tiki_send_email($this->mail);
 
     			$title = 'mail';
-    		} catch (Zend_Mail_Exception $e) {
+    		} catch (Zend\Mail\Exception\ExceptionInterface $e) {
     			$title = 'mail error';
     		}
 
@@ -141,9 +200,29 @@ class TikiMail
 		return $title == 'mail';
 	}
 
+	protected function convertBodyToMime($text)
+	{
+		$textPart = new Zend\Mime\Part($text);
+		$textPart->setType(Zend\Mime\Mime::TYPE_TEXT);
+		$newBody = new Zend\Mime\Message();
+		$newBody->addPart($textPart);
+		$this->mail->setBody($newBody);
+	}
+
 	function addAttachment($data, $filename, $mimetype)
 	{
-		$this->mail->createAttachment($data, $mimetype, Zend_Mime::DISPOSITION_INLINE, Zend_Mime::ENCODING_BASE64, $filename);
+		$body = $this->mail->getBody();
+		if (! ($body instanceof \Zend\Mime\Message) ){
+			$this->convertBodyToMime($body);
+			$body = $this->mail->getBody();
+		}
+
+		$attachment = new Zend\Mime\Part($data);
+		$attachment->setFileName($filename);
+		$attachment->setType($mimetype);
+		$attachment->setEncoding(Zend\Mime\Mime::ENCODING_BASE64);
+		$attachment->setDisposition(Zend\Mime\Mime::DISPOSITION_INLINE);
+		$body->addPart($attachment);
 	}
 }
 

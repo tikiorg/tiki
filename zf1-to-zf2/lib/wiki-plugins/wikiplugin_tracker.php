@@ -1193,7 +1193,7 @@ function wikiplugin_tracker($data, $params)
 						try {
 							$mail->send($ueo);
 							$title = 'mail';
-						} catch (Zend_Mail_Exception $e) {
+						} catch (Zend\Mail\Exception\ExceptionInterface $e) {
 							$title = 'mail error';
 						}
 						if ($title == 'mail error') {

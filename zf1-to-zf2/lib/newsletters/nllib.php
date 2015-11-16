@@ -444,7 +444,8 @@ class NlLib extends TikiLib
 			include_once 'lib/mail/maillib.php';
 			$zmail = tiki_get_admin_mail();
 			$zmail->setSubject(tra('Newsletter subscription information at').' '. $_SERVER["SERVER_NAME"]);
-			$zmail->setBodyText($mail_data);
+			$textPart = new Zend\Mime\Part($mail_data);
+			$textPart->setType(Zend\Mime\Mime::TYPE_TEXT);
 			//////////////////////////////////////////////////////////////////////////////////
 			//										//
 			// [BUG FIX] hollmeer 2012-11-04: 						//
@@ -470,15 +471,21 @@ class NlLib extends TikiLib
 					$mail_data_html = $mail_data;
 				}
 			}
-			$zmail->setBodyHtml($mail_data_html);
+			$htmlPart = new Zend\Mime\Part($mail_data_html);
+			$htmlPart->setType(Zend\Mime\Mime::TYPE_HTML);
+
+			$emailBody = new \Zend\Mime\Message();
+			$emailBody->setParts(array($htmlPart, $textPart));
+
+			$zmail->setBody($emailBody);
 			//										//
 			//////////////////////////////////////////////////////////////////////////////////
 			$zmail->addTo($email);
 			try {
-				$zmail->send();
+				tiki_send_email($zmail);
 
 				return true;
-			} catch (Zend_Mail_Exception $e) {
+			} catch (Zend\Mail\Exception\ExceptionInterface $e) {
 				return false;
 			}
 		} else {
@@ -536,7 +543,8 @@ class NlLib extends TikiLib
 		$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_welcome_subject.tpl');
 		$zmail->setSubject(sprintf($mail_data, $info["name"], $_SERVER["SERVER_NAME"]));
 		$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_welcome.tpl');
-		$zmail->setBodyText($mail_data);
+		$textPart = new Zend\Mime\Part($mail_data);
+		$textPart->setType(Zend\Mime\Mime::TYPE_TEXT);
 		//////////////////////////////////////////////////////////////////////////////////
 		//										//
 		// [BUG FIX] hollmeer 2012-11-04: 						//
@@ -562,16 +570,20 @@ class NlLib extends TikiLib
 				$mail_data_html = $mail_data;
 			}
 		}
-		$zmail->setBodyHtml($mail_data_html);
+		$htmlPart = new Zend\Mime\Part($mail_data_html);
+		$htmlPart->setType(Zend\Mime\Mime::TYPE_HTML);
+
+		$emailBody = new \Zend\Mime\Message();
+		$emailBody->setParts(array($htmlPart, $textPart));
 		//										//
 		//////////////////////////////////////////////////////////////////////////////////
 		$zmail->addTo($email);
 
 		try {
-			$zmail->send();
+			tiki_send_email($zmail);
 
 			return $this->get_newsletter($res["nlId"]);
-		} catch (Zend_Mail_Exception $e) {
+		} catch (Zend\Mail\Exception\ExceptionInterface $e) {
 			return false;
 		}
 	}
@@ -622,7 +634,8 @@ class NlLib extends TikiLib
 			$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_byebye_subject.tpl');
 			$zmail->setSubject(sprintf($mail_data, $info["name"], $_SERVER["SERVER_NAME"]));
 			$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_byebye.tpl');
-			$zmail->setBodyText($mail_data);
+			$textPart = new Zend\Mime\Part($mail_data);
+			$textPart->setType(Zend\Mime\Mime::TYPE_TEXT);
 			//////////////////////////////////////////////////////////////////////////////////
 			//										//
 			// [BUG FIX] hollmeer 2012-11-04: 						//
@@ -648,14 +661,18 @@ class NlLib extends TikiLib
 					$mail_data_html = $mail_data;
 				}
 			}
-			$zmail->setBodyHtml($mail_data_html);
+			$htmlPart = new Zend\Mime\Part($mail_data_html);
+			$htmlPart->setType(Zend\Mime\Mime::TYPE_HTML);
+
+			$emailBody = new \Zend\Mime\Message();
+			$emailBody->setParts(array($htmlPart, $textPart));
 			//										//
 			//////////////////////////////////////////////////////////////////////////////////
 			$zmail->addTo($email);
 
 			try {
-				$zmail->send();
-			} catch (Zend_Mail_Exception $e) {
+				tiki_send_email($zmail);
+			} catch (Zend\Mail\Exception\ExceptionInterface $e) {
 			}
 		}
 		/*$this->update_users($res["nlId"]);*/
@@ -1279,6 +1296,7 @@ class NlLib extends TikiLib
 
 			include_once 'lib/mail/maillib.php';
 			$zmail = tiki_get_admin_mail();
+			$emailMimeParts = array();
 
 			if (!empty($info['replyto'])) {
 				$zmail->setReplyTo($info['replyto']);
@@ -1286,9 +1304,11 @@ class NlLib extends TikiLib
 
 			foreach ($info['files'] as $f) {
 				$fpath = isset($f['path']) ? $f['path'] : $prefs['tmpDir'] . '/newsletterfile-' . $f['filename'];
-				$att = $zmail->createAttachment(file_get_contents($fpath));
+				$att = new Zend\Mime\Part(file_get_contents($fpath));
 				$att->filename = $f['name'];
-				$att->mimeType = $f['type'];
+				$att->type = $f['type'];
+				$att->encoding = Zend\Mime\Mime::ENCODING_BASE64;
+				$emailMimeParts[] = $att;
 			}
 
 			$zmail->setSubject($info['subject']);
@@ -1316,8 +1336,18 @@ class NlLib extends TikiLib
 		}
 
 		$zmail = $cache['zmail'];
-		$zmail->setBodyHtml($html);
-		$zmail->setBodyText($cache['text'] . strip_tags($unsubmsg));
+
+		$textPart = new Zend\Mime\Part($cache['text'] . strip_tags($unsubmsg));
+		$textPart->setType(Zend\Mime\Mime::TYPE_TEXT);
+		$emailMimeParts[] = $textPart;
+
+		$htmlPart = new Zend\Mime\Part($html);
+		$htmlPart->setType(Zend\Mime\Mime::TYPE_HTML);
+		$emailMimeParts[] = $htmlPart;
+
+		$emailBody = new \Zend\Mime\Message();
+		$emailBody->setParts($emailMimeParts);
+
 		$zmail->clearRecipients();
 		$zmail->addTo($target['email']);
 
@@ -1413,14 +1443,14 @@ class NlLib extends TikiLib
 				if (!$zmail) {
 					continue;
 				}
-				$zmail->send();
+				tiki_send_email($zmail);
 				$sent[] = $email;
 				if ($browser) {
 					print "'green'>" . tra('OK');
 				}
 				$this->delete_edition_subscriber($info['editionId'], $us);
 				$logStatus = 'OK';
-			} catch (Zend_Mail_Exception $e) {
+			} catch (Zend\Mail\Exception\ExceptionInterface $e) {
 				if ($browser) {
 					print "'red'>" . tra('Error') . " - {$e->getMessage()}";
 				}
