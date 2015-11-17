@@ -172,7 +172,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 			$sl = '';
 			$i = 0;
 			foreach (parent::$s['columns'] as $col => $info) {
-				$info = $info['sort'];
+				$info = !empty($info['sort']) ? $info['sort'] : [];
 				$colpointer =  parent::$usecolselector ? $i : $col;
 				if (!empty($info['dir'])) {
 					if ($info['dir'] === 'asc') {
