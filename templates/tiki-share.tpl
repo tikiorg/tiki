@@ -245,7 +245,7 @@
 						{if $facebook}
 							<div class="form-horizontal" id="fbtable" style="display: none;">
 								<div class="form-group">
-									<label class="control-label col-sm-3">tr}Link text{/tr}</label>
+									<label class="control-label col-sm-3">{tr}Link text{/tr}</label>
 									<div class="col-sm-7">
 										<input type="text" name="fblinktitle" id="fblinktitle" value="{$fblinktitle|escape}" style="width: 95%;" class="form-control">
 										<div class="help-block">
