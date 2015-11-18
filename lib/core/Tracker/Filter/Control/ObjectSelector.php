@@ -26,7 +26,7 @@ class ObjectSelector implements Control
 		if ($this->multi) {
 			$value = $input->{$this->fieldName}->text();
 			if (! is_array($value)) {
-				$value = preg_split("/\r\n|\r|\n/", $value);    // any line ends
+				$value = preg_split("/\r\n|\r|\n|,/", $value);    // any line ends or comma
 			}
 			$this->value = $value;
 		} else {
