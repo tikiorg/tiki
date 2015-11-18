@@ -55,4 +55,30 @@ class Table_Totals
 			return false;
 		}
 	}
+	static public function totalsEnabled(array $s)
+	{
+		if (Table_Check::isEnabled()) {
+			$mathcols = isset($s['columns']) && count(array_column($s['columns'], 'math')) > 0
+					? array_column($s['columns'], 'math') : false;
+			if (!empty($s['math']['page']) || $mathcols)
+			{
+				$smarty = TikiLib::lib('smarty');
+				if ($mathcols) {
+					$smarty->assign('cols', $mathcols);
+				}
+				if (!empty($s['math'])) {
+					$smarty->assign('totals', $s['math']);
+				}
+				$ret['cols'] = $mathcols ? $mathcols : '';
+				$ret['totals'] = !empty($s['math']) ? $s['math'] : '';
+				return $ret;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
+
 }

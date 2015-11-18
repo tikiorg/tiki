@@ -31,6 +31,7 @@ class Table_Code_WidgetOptionsMath extends Table_Code_WidgetOptions
 		if (parent::$math || parent::$mathcol) {
 			$format = isset(parent::$s['math']['format']) ? '\'' . parent::$s['math']['format'] . '\'': '\'###0.00\'';
 			$m[] = 'math_mask : ' . $format;
+			$m[] = 'math_event : \'pagerChange\'';
 			if (parent::$mathcol) {
 				$mathsets = array_column(parent::$s['columns'], 'math');
 				$ignore = [];
