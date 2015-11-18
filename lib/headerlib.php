@@ -323,7 +323,7 @@ class HeaderLib
 	{
 		if ($no_repeat == true) {
 			if (in_array(md5($script),$this->js_norepeat_has)) {
-				return;
+				return $this;
 			}
 			$this->js_norepeat_has[] = md5($script);
 		}
@@ -344,7 +344,7 @@ class HeaderLib
 	{
 		if ($no_repeat == true) {
 			if (in_array(md5($script),$this->js_norepeat_has)) {
-				return;
+				return $this;
 			}
 			$this->js_norepeat_has[] = md5($script);
 		}
