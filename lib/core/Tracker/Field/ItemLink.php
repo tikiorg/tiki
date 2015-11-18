@@ -807,6 +807,25 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			})
 			;
 
+		$collection->addNew($permName, 'multiselect')
+			->setLabel($name)
+			->setControl(new Tracker\Filter\Control\ObjectSelector("tf_{$permName}_ms", [
+				'type' => 'trackeritem',
+				'tracker_status' => implode(' OR ', str_split($this->getOption('status', 'opc'), 1)),
+				'tracker_id' => $this->getOption('trackerId'),
+				'_placeholder' => tr(TikiLib::lib('object')->get_title('tracker', $this->getOption('trackerId'))),
+			],
+			true))	// for multi
+			->setApplyCondition(function ($control, Search_Query $query) use ($baseKey) {
+				$value = $control->getValue();
+
+				if ($value) {
+					$value = array_map(function ($v) { return str_replace('trackeritem:', '', $v); }, $value);
+					$query->filterMultivalue(implode(' OR ', $value), $baseKey);
+				}
+			})
+		;
+
 		$indexRemote = array_filter($this->getOption('indexRemote') ?: []);
 		if (count($indexRemote)) {
 			$trklib = TikiLib::lib('trk');
