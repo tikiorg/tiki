@@ -62,10 +62,6 @@ function tiki_setup_events()
 			$events->bind('tiki.trackeritem.save', $defer('trk', 'sync_user_realname'));
 		}
 
-		if ($prefs['user_trackersync_groups'] == 'y') {
-			$events->bind('tiki.trackeritem.save', $defer('trk', 'sync_user_groups'));
-		}
-
 		if ($prefs['user_trackersync_geo'] == 'y') {
 			$events->bind('tiki.trackeritem.save', $defer('trk', 'sync_user_geo'));
 		}

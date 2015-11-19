@@ -9,19 +9,6 @@ function prefs_user_list($partial = false)
 {
 	
 	global $prefs;
-	
-	$catree = array('-1' => tra('None'));
-
-	if (! $partial && $prefs['feature_categories'] == 'y') {
-		$categlib = TikiLib::lib('categ');
-		$all_categs = $categlib->getCategories(NULL, true, false);
-
-		$catree['0'] = tra('All');
-
-		foreach ($all_categs as $categ) {
-			$catree[$categ['categId']] = $categ['categpath'];
-		}
-	}
 
 	$fieldFormat = '{title} ({tracker_name})';
 	return array(
@@ -224,29 +211,6 @@ function prefs_user_list($partial = false)
 				'user_trackersync_trackers',
 			),
 			'default' => 'n',
-		),
-		'user_trackersync_groups' => array(
-			'name' => tra('Synchronize categories of user tracker item to user groups'),
-			'description' => tra('Will add the user tracker item to the category of the same name as the user groups and vice versa'),
-			'type' => 'flag',
-			'dependencies' => array(
-				'userTracker',
-				'user_trackersync_trackers',
-				'feature_categories',
-			),
-			'default' => 'n',
-		),
-		'user_trackersync_parentgroup' => array(
-			'name' => tra('Put user in group only if categorized within'),
-			'type' => 'list',
-			'options' => $catree,
-			'dependencies' => array(
-				'userTracker',
-				'user_trackersync_trackers',
-				'user_trackersync_groups',
-				'feature_categories',
-			),
-			'default' => -1,
 		),
 		'user_trackersync_lang' => array(
 			'name' => tra('Change user system language when changing user tracker item language'),

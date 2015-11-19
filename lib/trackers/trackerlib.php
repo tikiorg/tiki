@@ -5052,48 +5052,6 @@ class TrackerLib extends TikiLib
 		return array_unique(array_filter($categories));
 	}
 
-	public function sync_user_groups($args)
-	{
-		$trackerId = $args['trackerId'];
-
-		if (! $this->tracker_is_syncable($trackerId)) {
-			return;
-		}
-
-		if (false === $trackersync_user = $this->get_tracker_item_user($trackerId, $args['values'])) {
-			return;
-		}
-
-		$userlib = TikiLib::lib('user');
-		$categlib = TikiLib::lib('categ');
-
-		$current_categories = $categlib->get_object_categories('trackeritem', $args['object'], -1, false);
-
-		global $prefs;
-
-		$sig_catids = $categlib->get_category_descendants($prefs['user_trackersync_parentgroup']);
-		$addable_catids = array_intersect($current_categories, $sig_catids);
-
-		$categoryfield_catids = $this->get_viewable_category_field_cats($trackerId);
-		$removable_catids = array_diff(array_intersect($categoryfield_catids, $sig_catids), $current_categories);
-
-		$groupList = $userlib->list_all_groups();
-		$currentGroups = $userlib->get_user_groups($trackersync_user);
-
-		foreach ($addable_catids as $c) {
-			$groupName = $categlib->get_category_name($c, true);
-			if (!in_array($groupName, $currentGroups) && in_array($groupName, $groupList)) {
-				$userlib->assign_user_to_group($trackersync_user, $groupName);
-			}
-		}
-		foreach ($currentGroups as $groupName) {
-			$catid = $categlib->get_category_id($groupName);
-			if (in_array($catid, $removable_catids) && !in_array($catid, $addable_catids)) {
-				$userlib->remove_user_from_group($trackersync_user, $groupName);
-			}
-		}
-	}
-
 	public function invalidate_item_cache($args)
 	{
 		$itemId = $args['object'];
