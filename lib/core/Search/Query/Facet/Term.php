@@ -10,6 +10,7 @@ class Search_Query_Facet_Term implements Search_Query_Facet_Interface
 	private $field;
 	private $renderCallback;
 	private $operator = 'or';
+	private $count;
 
 	static function fromField($field)
 	{
@@ -30,6 +31,17 @@ class Search_Query_Facet_Term implements Search_Query_Facet_Interface
 	function getField()
 	{
 		return $this->field;
+	}
+
+	function getCount()
+	{
+		return $this->count;
+	}
+
+	function setCount($count)
+	{
+		$this->count = $count;
+		return $this;
 	}
 
 	function getLabel()

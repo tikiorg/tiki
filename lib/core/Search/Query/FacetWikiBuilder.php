@@ -17,11 +17,13 @@ class Search_Query_FacetWikiBuilder
 			if ($match->getName() === 'facet') {
 				$arguments = $argumentParser->parse($match->getArguments());
 				$operator = isset($arguments['operator']) ? $arguments['operator'] : 'or';
+				$count = isset($arguments['count']) ? $arguments['count'] : null;
 
 				if (isset($arguments['name'])) {
 					$this->facets[] = array(
 						'name' => $arguments['name'],
 						'operator' => $operator,
+						'count' => $count,
 					);
 				}
 			}
@@ -33,6 +35,11 @@ class Search_Query_FacetWikiBuilder
 		foreach ($this->facets as $facet) {
 			if ($real = $provider->getFacet($facet['name'])) {
 				$real->setOperator($facet['operator']);
+
+				if ($facet['count']) {
+					$real->setCount($facet['count']);
+				}
+
 				$query->requestFacet($real);
 			}
 		}

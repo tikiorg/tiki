@@ -9,6 +9,7 @@ class Search_Elastic_Index implements Search_Index_Interface
 {
 	private $connection;
 	private $index;
+	private $facetCount = 10;
 	private $invalidateList = array();
 
 	private $providedMappings = array();
@@ -147,7 +148,7 @@ class Search_Elastic_Index implements Search_Index_Interface
 		$builder = new Search_Elastic_OrderBuilder;
 		$orderPart = $builder->build($query->getSortOrder());
 
-		$builder = new Search_Elastic_FacetBuilder;
+		$builder = new Search_Elastic_FacetBuilder($this->facetCount);
 		$facetPart = $builder->build($query->getFacets());
 
 		$fullQuery = array_merge(
@@ -208,6 +209,11 @@ class Search_Elastic_Index implements Search_Index_Interface
 		return function ($type, $object) use ($connection, $index) {
 			return (array) $connection->document($index, $type, $object);
 		};
+	}
+
+	function setFacetCount($count)
+	{
+		$this->facetCount = (int) $count;
 	}
 }
 

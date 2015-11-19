@@ -201,6 +201,7 @@ $("#log-rebuild").click(function(){
 
 		{tab name="{tr}Search Results{/tr}"}
 			{preference name=search_use_facets}
+			{preference name=search_facet_default_amount}
 			{preference name=category_custom_facets}
 			
 			<fieldset>

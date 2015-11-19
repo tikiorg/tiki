@@ -70,5 +70,13 @@ function prefs_search_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'search_facet_default_amount' => array(
+			'name' => tra('Facet result count'),
+			'description' => tra('Default amount of facet results to obtain.'),
+			'type' => 'text',
+			'size' => 8,
+			'filter' => 'digits',
+			'default' => '10',
+		),
 	);
 }
