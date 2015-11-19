@@ -1,5 +1,8 @@
 {* $Id$ *}
 <div class="item-link">
+	{if $data.selectMultipleValues}
+		<input type="hidden" name="{$field.ins_id}_old" value="{$field.value|escape}" />
+	{/if}
 	<select name="{$field.ins_id}{if $data.selectMultipleValues}[]{/if}" {if $data.preselection and $data.crossSelect neq 'y'}disabled="disabled"{/if} {if $data.selectMultipleValues}multiple="multiple"{/if} class="form-control">
 		{if $field.isMandatory ne 'y' || empty($field.value)}
 			<option value=""></option>

@@ -178,8 +178,16 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 	function getFieldData(array $requestData = array())
 	{
 		$string_id = $this->getInsertId();
+		if (isset($requestData[$string_id])) {
+			$value = $requestData[$string_id];
+		} elseif (isset($requestData[$string_id . '_old'])) {
+			$value = '';
+		} else {
+			$value = $this->getValue();
+		}
+
 		$data = array(
-			'value' => isset($requestData[$string_id]) ? $requestData[$string_id] : $this->getValue(),
+			'value' => $value, 
 		);
 
 		if ($this->getOption('selectMultipleValues') && ! is_array($data['value'])) {
