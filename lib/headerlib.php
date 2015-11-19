@@ -115,8 +115,7 @@ class HeaderLib
 	 * @var boolean
 	 */
 	public $forceJsRankLate;
-	public $js_norepeat_has;
-	
+
 
 	public $jquery_version = '1.11.2';
 	public $jqueryui_version = '1.11.3';
@@ -133,7 +132,6 @@ class HeaderLib
 		$this->skip_minify = array();
 		$this->js = array();
 		$this->js_config = array();
-		$this->js_norepeat_has = array();
 		$this->jq_onready = array();
 		$this->cssfiles = array();
 		$this->css = array();
@@ -316,17 +314,10 @@ class HeaderLib
 	 * JS scripts to add as string 
 	 * @param string $script
 	 * @param integer $rank loadorder optional, default = 0
-	 * @param boolean $no_repeat - sets whether we want to prevent adding the same jq block more than once
 	 * @return object $HeaderLib
 	 */
-	function add_js($script, $rank = 0, $no_repeat=false)
+	function add_js($script, $rank = 0)
 	{
-		if ($no_repeat == true) {
-			if (in_array(md5($script),$this->js_norepeat_has)) {
-				return $this;
-			}
-			$this->js_norepeat_has[] = md5($script);
-		}
 		if (!$this->wysiwyg_parsing && (empty($this->js[$rank]) or !in_array($script, $this->js[$rank]))) {
 			$this->js[$rank][] = $script;
 		}
@@ -337,17 +328,10 @@ class HeaderLib
 	 * Adds lines or blocks of JQuery JavaScript to $(document).ready handler
 	 * @param string $script - Script to execute
 	 * @param number $rank - load order (default=0)
-	 * @param boolean $no_repeat - sets whether we want to prevent adding the same jq block more than once
 	 * @return $object HeaderLib
 	 */
-	function add_jq_onready($script,$rank=0, $no_repeat=false)
+	function add_jq_onready($script,$rank=0)
 	{
-		if ($no_repeat == true) {
-			if (in_array(md5($script),$this->js_norepeat_has)) {
-				return $this;
-			}
-			$this->js_norepeat_has[] = md5($script);
-		}
 		if (!$this->wysiwyg_parsing && (empty($this->jq_onready[$rank]) or !in_array($script, $this->jq_onready[$rank]))) {
 			$this->jq_onready[$rank][] = $script;
 		}
