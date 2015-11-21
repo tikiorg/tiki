@@ -100,7 +100,8 @@
 		"zendframework/zendopenid": "~2.0.0",
 		"zendframework/zendoauth": "~2.0.0",
 		"zendframework/zend-mime": "~2.4.0",
-		"zendframework/zend-mail": "~2.4.0"
+		"zendframework/zend-mail": "~2.4.0",
+		"zendframework/zendsearch": "~2.0.0@RC"
 	},
 	"require-dev": {
 		"oyejorge/less.php": "1.7.0.7",
