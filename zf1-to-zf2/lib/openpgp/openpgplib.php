@@ -1110,7 +1110,7 @@ class OpenPGPLib
 	 *
 	 * @param  string $original_mail_headers
 	 * @param  string $original_mail_body
-	 * @param  OpenPGP_Zend_Mail $mail
+	 * @param  array|string $recipients
 	 * @access public
 	 * @return array
 	 *		0 => string $pgpmime_header
