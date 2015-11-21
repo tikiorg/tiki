@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "beb89180df48dde287b8b4def1b5544c",
+    "hash": "bb019b97ace3d32e3d876a2d1eee57bb",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -155,57 +155,6 @@
                 "widget"
             ],
             "time": "2015-08-11 06:07:24"
-        },
-        {
-            "name": "bombayworks/zendframework1",
-            "version": "v1.12.11",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/bombayworks/zendframework1.git",
-                "reference": "64447e39d4c7a08ba17d2087a89caab713804d27"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/bombayworks-zendframework1-64447e39d4c7a08ba17d2087a89caab713804d27-zip-9bb8b8.zip",
-                "reference": "64447e39d4c7a08ba17d2087a89caab713804d27",
-                "shasum": "4ccf38e24a2f5f149679ddb6ec6172ee1fcdae8b"
-            },
-            "require": {
-                "php": ">=5.2.11"
-            },
-            "require-dev": {
-                "phpunit/dbunit": "1.3.*",
-                "phpunit/phpunit": "3.7.*"
-            },
-            "bin": [
-                "bin/zf.sh",
-                "bin/zf.php"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.12.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Zend_": "library/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "include-path": [
-                "library/"
-            ],
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "Zend Framework 1",
-            "homepage": "http://framework.zend.com/",
-            "keywords": [
-                "ZF1",
-                "framework"
-            ],
-            "time": "2015-02-11 16:00:41"
         },
         {
             "name": "ckeditor/ckeditor",
