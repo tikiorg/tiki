@@ -2023,10 +2023,6 @@ class UsersLib extends TikiLib
 		$query = 'update `users_users` set `default_group`=? where `login`=? and `default_group`=?';
 		$this->query($query, array('Registered', $user, $group));
 
-		if ($prefs['user_trackersync_groups'] == 'y') {
-			$this->uncategorize_user_tracker_item($user, $group);
-		}
-
 		if ($prefs['feature_community_send_mail_leave'] == 'y') {
 			$api = new TikiAddons_Api_Group;
 			if ($api->isOrganicGroup($group)) {
@@ -2063,12 +2059,6 @@ class UsersLib extends TikiLib
 	function remove_user_from_all_groups($user)
 	{
 		global $prefs;
-		if ($prefs['user_trackersync_groups'] == 'y') {
-			$groups = $this->get_user_groups($user);
-			foreach ($groups as $group) {
-				$this->uncategorize_user_tracker_item($user, $group);
-			}
-		}
 		$userid = $this->get_user_id($user);
 		$query = 'delete from `users_usergroups` where `userId` = ?';
 		$result = $this->query($query, array($userid));
@@ -6045,9 +6035,6 @@ class UsersLib extends TikiLib
 			$query = "insert ignore into `users_usergroups`(`userId`,`groupName`, `created`) values(?,?,?)";
 			$result = $this->query($query, array($userid, $group, $tikilib->now), -1, -1, false);
 			$group_ret = true;
-			if ($prefs['user_trackersync_groups'] == 'y') {
-				$this->categorize_user_tracker_item($user, $group);
-			}
 		}
 		$this->update_group_expiries();
 

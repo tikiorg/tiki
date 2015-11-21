@@ -166,6 +166,7 @@ abstract class Toolbar
 					'sheetclose',
 
 					'objectlink',
+					'tikitable',
 				),
 				$plugins
 			)
@@ -1243,6 +1244,7 @@ class ToolbarDialog extends Toolbar
 			break;
 
 		case 'table':
+		case 'tikitable':
 			$iconname = 'table';
 			$icon = tra('img/icons/table.png');
 			$wysiwyg = 'Table';

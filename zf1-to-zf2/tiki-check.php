@@ -1627,6 +1627,7 @@ if ($s == 1) {
 		'application/x-msexcel' => array('xls2csv %1'),
 		'application/x-pdf' => array('pstotext %1', 'pdftotext %1 -'),
 		'application/x-troff-man' => array('man -l %1'),
+		'application/zip' => array('unzip -l %1'),
 		'text/enriched' => array('col -b %1', 'strings %1'),
 		'text/html' => array('elinks -dump -no-home %1'),
 		'text/richtext' => array('col -b %1', 'strings %1'),

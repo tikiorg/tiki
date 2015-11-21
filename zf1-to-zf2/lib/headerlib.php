@@ -115,7 +115,7 @@ class HeaderLib
 	 * @var boolean
 	 */
 	public $forceJsRankLate;
-	
+
 
 	public $jquery_version = '1.11.2';
 	public $jqueryui_version = '1.11.3';
@@ -316,14 +316,13 @@ class HeaderLib
 	 * @param integer $rank loadorder optional, default = 0
 	 * @return object $HeaderLib
 	 */
-	function add_js($script, $rank=0)
+	function add_js($script, $rank = 0)
 	{
 		if (!$this->wysiwyg_parsing && (empty($this->js[$rank]) or !in_array($script, $this->js[$rank]))) {
 			$this->js[$rank][] = $script;
 		}
 		return $this;
 	}
-
 
 	/**
 	 * Adds lines or blocks of JQuery JavaScript to $(document).ready handler

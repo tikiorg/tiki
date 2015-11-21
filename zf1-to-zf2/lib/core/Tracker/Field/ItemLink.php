@@ -178,8 +178,16 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 	function getFieldData(array $requestData = array())
 	{
 		$string_id = $this->getInsertId();
+		if (isset($requestData[$string_id])) {
+			$value = $requestData[$string_id];
+		} elseif (isset($requestData[$string_id . '_old'])) {
+			$value = '';
+		} else {
+			$value = $this->getValue();
+		}
+
 		$data = array(
-			'value' => isset($requestData[$string_id]) ? $requestData[$string_id] : $this->getValue(),
+			'value' => $value, 
 		);
 
 		if ($this->getOption('selectMultipleValues') && ! is_array($data['value'])) {
@@ -806,6 +814,25 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 				}
 			})
 			;
+
+		$collection->addNew($permName, 'multiselect')
+			->setLabel($name)
+			->setControl(new Tracker\Filter\Control\ObjectSelector("tf_{$permName}_ms", [
+				'type' => 'trackeritem',
+				'tracker_status' => implode(' OR ', str_split($this->getOption('status', 'opc'), 1)),
+				'tracker_id' => $this->getOption('trackerId'),
+				'_placeholder' => tr(TikiLib::lib('object')->get_title('tracker', $this->getOption('trackerId'))),
+			],
+			true))	// for multi
+			->setApplyCondition(function ($control, Search_Query $query) use ($baseKey) {
+				$value = $control->getValue();
+
+				if ($value) {
+					$value = array_map(function ($v) { return str_replace('trackeritem:', '', $v); }, $value);
+					$query->filterMultivalue(implode(' OR ', $value), $baseKey);
+				}
+			})
+		;
 
 		$indexRemote = array_filter($this->getOption('indexRemote') ?: []);
 		if (count($indexRemote)) {

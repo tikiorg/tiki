@@ -124,7 +124,11 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		/*** widgets ***/
 		//standard ones
 		$w[] = 'stickyHeaders';
-		$w[] = 'resizable';
+		//only fancytable uses this and it is set in wikiplugin_fancytable.php
+		//other tables don't show up full width due to use of table-responsive class in wrapper div
+		if (isset(parent::$s['resizable']) && parent::$s['resizable']) {
+			$w[] = 'resizable';
+		}
 		if (parent::$group) {
 			$w[] = 'group';
 		}
@@ -143,6 +147,10 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		//column selector
 		if (parent::$s['colselect']) {
 			$w[] = 'columnSelector';
+		}
+		//math
+		if (parent::$math || parent::$mathcol) {
+			$w[] = 'math';
 		}
 		if (count($w) > 0) {
 			$mo[] = $this->iterate($w, 'widgets : [', ']', '\'', '\'', ',');
@@ -164,7 +172,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 			$sl = '';
 			$i = 0;
 			foreach (parent::$s['columns'] as $col => $info) {
-				$info = $info['sort'];
+				$info = !empty($info['sort']) ? $info['sort'] : [];
 				$colpointer =  parent::$usecolselector ? $i : $col;
 				if (!empty($info['dir'])) {
 					if ($info['dir'] === 'asc') {

@@ -1203,6 +1203,7 @@ a.toolbar:hover {
   display: inline-block;
   border: none;
   background: transparent;
+  color: #333333;
 }
 .toolbar-list {
   padding: 0 0 0 .5em;
@@ -2959,24 +2960,21 @@ body.tiki.navbar-padding {
 /* div around table */
 div.tablesorter-resizable-container {
   clear: both;
+  width: 100%;
 }
-.tablesorter {
+table.tablesorter {
   width: 100%;
   margin-bottom: 2px;
   /* style header */
-  /* table processing indicator - decrease opacity of table rows */
-  /* filter widget */
-  /* hidden filter row */
   /*no formatting on filter row when filter-false*/
   /* rows hidden by filtering (needed for child rows) */
-  /*column select*/
 }
-.tablesorter-header {
+table.tablesorter thead tr.tablesorter-headerRow th.tablesorter-header {
   background-repeat: no-repeat;
   background-position: center right;
   cursor: pointer;
 }
-.tablesorter-header i {
+table.tablesorter thead tr.tablesorter-headerRow th.tablesorter-header i {
   font-weight: 400;
   position: absolute;
   right: 2px;
@@ -2989,18 +2987,20 @@ div.tablesorter-resizable-container {
   line-height: 14px;
   display: inline-block;
 }
-.tablesorter-header-inner span {
+table.tablesorter thead tr.tablesorter-headerRow th div.tablesorter-header-inner span {
   padding-right: 10px;
 }
-.tablesorter-header.sorter-false {
-  background-image: none;
-  cursor: default;
+table.tablesorter thead tr.tablesorter-filter-row td {
+  text-align: center;
+  line-height: normal;
+  -webkit-transition: line-height 0.1s ease;
+  -moz-transition: line-height 0.1s ease;
+  -o-transition: line-height 0.1s ease;
+  transition: line-height 0.1s ease;
+  /* Add tooltips to slider handles */
 }
-table.tablesorter-processing tbody tr td {
-  opacity: .25;
-}
-.tablesorter-filter-row input,
-.tablesorter-filter-row select {
+table.tablesorter thead tr.tablesorter-filter-row td input,
+table.tablesorter thead tr.tablesorter-filter-row td select {
   width: 98%;
   height: auto;
   margin: 0;
@@ -3012,38 +3012,35 @@ table.tablesorter-processing tbody tr td {
   -o-transition: line-height 0.1s ease;
   transition: line-height 0.1s ease;
 }
-.tablesorter-filter-row td {
-  text-align: center;
-  line-height: normal;
-  -webkit-transition: line-height 0.1s ease;
-  -moz-transition: line-height 0.1s ease;
-  -o-transition: line-height 0.1s ease;
-  transition: line-height 0.1s ease;
-  /* Add tooltips to slider handles */
-}
-.tablesorter-filter-row td label {
+table.tablesorter thead tr.tablesorter-filter-row td label {
   float: left;
   clear: both;
   font-size: 70%;
 }
-.tablesorter-filter-row td .ui-slider {
+table.tablesorter thead tr.tablesorter-filter-row td input.dateFrom,
+table.tablesorter thead tr.tablesorter-filter-row td input.dateTo {
+  width: 60px;
+  font-size: 70%;
+  float: right;
+}
+table.tablesorter thead tr.tablesorter-filter-row td .ui-slider {
   width: 90%;
   margin: 13px auto 2px auto;
   /* add enough top margin so the tooltips will fit */
   font-size: 0.9em;
 }
-.tablesorter-filter-row td .ui-slider .ui-slider-handle {
+table.tablesorter thead tr.tablesorter-filter-row td .ui-slider .ui-slider-handle {
   width: 0.9em;
   height: 0.9em;
 }
-.tablesorter-filter-row td .ui-datepicker {
+table.tablesorter thead tr.tablesorter-filter-row td .ui-datepicker {
   font-size: 0.8em;
 }
-.tablesorter-filter-row td span.currange {
+table.tablesorter thead tr.tablesorter-filter-row td span.currange {
   font-size: smaller;
   font-weight: normal;
 }
-.tablesorter-filter-row td .value-popup:after {
+table.tablesorter thead tr.tablesorter-filter-row td .value-popup:after {
   content: attr(data-value);
   position: absolute;
   bottom: 15px;
@@ -3068,7 +3065,7 @@ table.tablesorter-processing tbody tr td {
   padding: 1px;
   text-align: center;
 }
-.tablesorter-filter-row td .value-popup:before {
+table.tablesorter thead tr.tablesorter-filter-row td .value-popup:before {
   content: "";
   position: absolute;
   width: 0;
@@ -3081,13 +3078,13 @@ table.tablesorter-processing tbody tr td {
   margin-left: -8px;
   margin-top: -1px;
 }
-.tablesorter-filter-row.hideme td {
+table.tablesorter thead tr.tablesorter-filter-row.hideme td {
   padding: 2px;
   margin: 0;
   line-height: 0;
   cursor: pointer;
 }
-.tablesorter-filter-row.hideme .tablesorter-filter {
+table.tablesorter thead tr.tablesorter-filter-row.hideme .tablesorter-filter {
   height: 1px;
   min-height: 0;
   border: 0;
@@ -3097,25 +3094,22 @@ table.tablesorter-processing tbody tr td {
   opacity: 0;
   filter: alpha(opacity=0);
 }
-.tablesorter thead .disabled {
+table.tablesorter thead .disabled {
   display: none;
 }
-.tablesorter .filtered {
+table.tablesorter .filtered {
   display: none;
 }
-span.tablesorter-column-selector label {
+table.tablesorter-processing tbody tr td {
+  opacity: .25;
+}
+/* pager and other controls above the table */
+div.ts-wrapperdiv span.tablesorter-column-selector label {
   margin: 0 5px;
 }
-span.tablesorter-column-selector input {
+div.ts-wrapperdiv span.tablesorter-column-selector input[type="checkbox"] {
   margin-right: 6px;
 }
-.tablesorter input.dateFrom,
-.tablesorter input.dateTo {
-  width: 60px;
-  font-size: 70%;
-  float: right;
-}
-/*pager*/
 div.ts-wrapperdiv select.form-control {
   width: auto;
   display: inline;
@@ -3174,33 +3168,30 @@ div.ts-wrapperdiv div.ts-pager div.btn-group select.form-control {
   border: none;
   background-color: #f7f7f7;
 }
-.tablesorter {
+table.tablesorter {
   /* style header */
 }
-.tablesorter-header {
+table.tablesorter thead tr.tablesorter-headerRow th.tablesorter-headerUnSorted:not(.sorter-false) {
   background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
 }
-tr.tablesorter-headerRow,
-tr.tablesorter-filter-row {
-  background-color: #ffffff;
-}
-.tablesorter .bootstrap-icon-unsorted {
-  background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
-}
-.tablesorter-headerAsc {
+table.tablesorter thead tr.tablesorter-headerRow th.tablesorter-headerAsc {
   background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);
 }
-.tablesorter-headerDesc {
+table.tablesorter thead tr.tablesorter-headerRow th.tablesorter-headerDesc {
   background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);
 }
-input.tablesorter-filter {
+table.tablesorter thead tr.tablesorter-filter-row input.tablesorter-filter {
   border: none;
   background-color: #f7f7f7;
 }
-.tablesorter input.dateFrom,
-.tablesorter input.dateTo {
+table.tablesorter thead tr.tablesorter-filter-row input.dateFrom,
+table.tablesorter thead tr.tablesorter-filter-row input.dateTo {
   border: none;
   background-color: #f7f7f7;
+}
+table.tablesorter thead tr.tablesorter-headerRow,
+table.tablesorter thead tr.tablesorter-filter-row {
+  background-color: #ffffff;
 }
 .chosen-select {
   width: 100%;

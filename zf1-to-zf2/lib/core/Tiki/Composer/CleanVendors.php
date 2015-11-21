@@ -188,29 +188,66 @@ class CleanVendors
 				'addons',
 				'beta-testing',
 				'css',
+				'docs',
 				'dist',
+				'testing',
+				'.gitattributes',
+				'.gitignore',
+				'.jscsrc',
+				'bower.json',
+				'changelog.txt',
+				'CONTRIBUTING.md',
+				'example.json',
+				'Gruntfile.js',
+				'index.html',
+				'package.json',
 				'tablesorter.jquery.json',
 				'test.html',
+				'js/extras',
+				'js/jquery.tablesorter.js',
+				'js/jquery.tablesorter.widgets.js',
+				'js/parsers/parser-date.js',
+				'js/parsers/parser-date-extract.js',
+				'js/parsers/parser-date-iso8601.js',
+				'js/parsers/parser-date-month.js',
+				'js/parsers/parser-date-range.js',
+				'js/parsers/parser-date-two-digit-year.js',
+				'js/parsers/parser-date-weekday.js',
+				'js/parsers/parser-duration.js',
+				'js/parsers/parser-feet-inch-fraction.js',
+				'js/parsers/parser-file-type.js',
+				'js/parsers/parser-globalize.js',
+				'js/parsers/parser-ignore-articles.js',
+				'js/parsers/parser-image.js',
+				'js/parsers/parser-metric.js',
+				'js/parsers/parser-named-numbers.js',
+				'js/parsers/parser-network.js',
+				'js/parsers/parser-roman.js',
 				'js/widgets/widget-alignChar.js',
 				'js/widgets/widget-build-table.js',
 				'js/widgets/widget-chart.js',
-				'js/widgets/widget-columns.js',      //in jquery.tablesorter.widgets.js
+				'js/widgets/widget-cssStickyHeaders.js',
+				'js/widgets/widget-columns.js',      //in jquery.tablesorter.combined.js
 				'js/widgets/widget-editable.js',
-				'js/widgets/widget-filter.js',      //in jquery.tablesorter.widgets.js
+				'js/widgets/widget-filter.js',      //in jquery.tablesorter.combined.js
 				'js/widgets/widget-filter-formatter-html5.js',
 				'js/widgets/widget-filter-formatter-select2.js',
+				'js/widgets/widget-filter-type-insideRange.js',
+				'js/widgets/widget-formatter.js',
 				'js/widgets/widget-headerTitles.js',
-				'js/widgets/widget-math.js',
 				'js/widgets/widget-output.js',
 				'js/widgets/widget-print.js',
 				'js/widgets/widget-reflow.js',
 				'js/widgets/widget-repeatheaders.js',
-				'js/widgets/widget-resizable.js',       //in jquery.tablesorter.widgets.js
-				'js/widgets/widget-saveSort.js',        //in jquery.tablesorter.widgets.js
+				'js/widgets/widget-resizable.js',       //in jquery.tablesorter.combined.js
+				'js/widgets/widget-saveSort.js',        //in jquery.tablesorter.combined.js
 				'js/widgets/widget-scroller.js',
-				'js/widgets/widget-stickyHeaders.js',   //in jquery.tablesorter.widgets.js
-				'js/widgets/widget-storage.js',         //in jquery.tablesorter.widgets.js
-				'js/widgets/widget-uitheme.js'          //in jquery.tablesorter.widgets.js
+				'js/widgets/widget-sort2Hash.js',
+				'js/widgets/widget-sortTbodies.js',
+				'js/widgets/widget-staticRow.js',
+				'js/widgets/widget-stickyHeaders.js',   //in jquery.tablesorter.combined.js
+				'js/widgets/widget-storage.js',         //in jquery.tablesorter.combined.js
+				'js/widgets/widget-uitheme.js'          //in jquery.tablesorter.combined.js
 			]
 		);
 		self::removeMultiple($vendors . 'jquery/plugins/treetable',

@@ -100,8 +100,6 @@
 					{preference name=user_trackersync_trackers}
 					{preference name=user_trackersync_realname}
 					{preference name=user_trackersync_geo}
-					{preference name=user_trackersync_groups}
-					{preference name=user_trackersync_parentgroup}
 					{preference name=user_trackersync_lang}
 					{preference name=user_tracker_auto_assign_item_field}
 				</div>

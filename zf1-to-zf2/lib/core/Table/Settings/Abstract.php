@@ -78,6 +78,14 @@ abstract class Table_Settings_Abstract
 				'id' => $ts_offsetid,
 			),
 		),
+		//set whether column, page or subtotals will be added
+		'math' => array(
+			'format' => '$(#,###.00)'       //see choices at http://mottie.github.io/tablesorter/docs/example-widget-math.html#mask_examples
+			//add a grand total or amount related to all numbers in the table on the page
+			'page' => 'sum'                 //see choices at http://mottie.github.io/tablesorter/docs/example-widget-math.html#attribute_settings
+			'pagelabel' => 'Grand total'    //custom label
+			'columnlabel' => 'Column total' //custon label for column totals
+		),
 		//determine whether the code uses columns selectors (e.g., th id) or indexes. With selectors the logic
 		//for which columns are shown doesn't need to be recreated for tables with smarty templates where some
 		//columns aren't shown based on logic. For plugins, indexes will generally need to be used since users set
@@ -113,6 +121,8 @@ abstract class Table_Settings_Abstract
 					'placeholder' => 'Enter valid email...',	//override default placeholder text
 					'ajax' => 'filterEmail',
 				),
+				//math settings for the 1st column
+				'math' => 'col-sum'         //choices: see http://mottie.github.io/tablesorter/docs/example-widget-math.html#attribute_settings
 			),
 			1 => array(
 				//sort settings for the 2nd column

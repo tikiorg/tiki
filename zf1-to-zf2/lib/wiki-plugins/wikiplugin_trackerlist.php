@@ -1503,9 +1503,7 @@ function wikiplugin_trackerlist($data, $params)
 		$tr_sort_mode = $sort_mode;
 		$smarty->assign_by_ref('tr_sort_mode', $tr_sort_mode);
 
-		if (isset($compute)) {
-			$max = -1; // to avoid confusion compute is on what you see or all the items
-		} elseif (!isset($max)) {
+		if (!isset($max)) {
 			$max = $prefs['maxRecords'];
 		}
 
@@ -1916,38 +1914,25 @@ function wikiplugin_trackerlist($data, $params)
 				}
 			}
 			// End Optimization
-
-
-			if ($tsOn) {
-				$ts_id = 'wptrackerlist' . $trackerId . '-' . $iTRACKERLIST;
-			}
-
-			if ($tsAjax || !$tsOn || !$tsServer) {
-				//fetch tracker items
-				$items = $trklib->list_items(
-					$trackerId,
-					$tr_offset,
-					$max,
-					$tr_sort_mode,
-					$passfields,
-					(!empty($calendarfielddate) ? null : $filterfield),
-					$filtervalue,
-					$tr_status,
-					$tr_initial,
-					$exactvalue,
-					$filter,
-					$allfields,
-					$skip_status_perm_check
-				);
+			//fetch tracker items
+			$items = $trklib->list_items(
+				$trackerId,
+				$tr_offset,
+				$max,
+				$tr_sort_mode,
+				$passfields,
+				(!empty($calendarfielddate) ? null : $filterfield),
+				$filtervalue,
+				$tr_status,
+				$tr_initial,
+				$exactvalue,
+				$filter,
+				$allfields,
+				$skip_status_perm_check
+			);
 			/*** tablesorter ***/
-			}
 			if($tsOn && ! $tsAjax) {
-				$trkritems = $tikilib->table('tiki_tracker_items');
-				$itemcount = $trkritems->fetchCount(array('trackerId' => $trackerId));
-				$ts = new Table_Plugin;
-				
-				
-				// when using serverside filtering check wether a dropdown is in use 
+				// when using serverside filtering check wether a dropdown is in use
 				// and we must take params from tracker definition because no explicit options have been defined
 				if ($tsServer) {
 					//format from plugin: type:text|type:dropdown;option:1=Open;option:2=Closed|type:text|type:nofilter|type:nofilter|type:nofilter
@@ -1976,10 +1961,8 @@ function wikiplugin_trackerlist($data, $params)
 						$tsfilters = implode('|', $tsfiltersArray);
 					}
 				}
-
-				
-				
-				
+				$ts_id = 'wptrackerlist' . $trackerId . '-' . $iTRACKERLIST;
+				$ts = new Table_Plugin;
 				$ts->setSettings(
 					$ts_id,
 					isset($server) ? $server : null,
@@ -1991,7 +1974,9 @@ function wikiplugin_trackerlist($data, $params)
 					isset($tspaginate) ? $tspaginate : null,
 					isset($tscolselect) ? $tscolselect : null,
 					$GLOBALS['requestUri'],
-					$itemcount
+					$items['cant'],
+					isset($tsmathcolumns) ? $tsmathcolumns : null,
+					isset($tsmathoptions) ? $tsmathoptions : null
 				);
 				//loads the jquery tablesorter code
 				if (is_array($ts->settings)) {
@@ -1999,6 +1984,15 @@ function wikiplugin_trackerlist($data, $params)
 					Table_Factory::build('PluginWithAjax', $ts->settings);
 				}
 			}
+			//determine whether totals will be added to bottom of table
+			if (isset($ts->settings)) {
+				$tstotals = Table_Totals::totalsEnabled($ts->settings);
+				$smarty->assign('cols', $tstotals['cols']);
+				$smarty->assign('totals', $tstotals['totals']);
+			} else {
+				$tstotals = false;
+			}
+			$smarty->assign('totals', $tstotals);
 			//handle certain tablesorter sorts
 			if (isset($sortcol) && $items['cant'] > 1) {
 				$fieldtype = $items['data'][0]['field_values'][$sortcol + $adjustCol]['type'];

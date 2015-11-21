@@ -224,7 +224,7 @@ class Services_Tracker_TabularController
 
 		$collection->applyInput($input);
 
-		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		if ($_SERVER['REQUEST_METHOD'] == 'POST' || $input->confirm->word() === 'export') {
 			$search = TikiLib::lib('unifiedsearch');
 			$query = $search->buildQuery([
 				'type' => 'trackeritem',

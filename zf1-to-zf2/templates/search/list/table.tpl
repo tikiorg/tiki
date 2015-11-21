@@ -13,7 +13,7 @@
 			<tr>
 				{foreach from=$column item=col}
 					<th>
-						{if $col.sort}
+						{if isset($col.sort) && $col.sort}
 							{if !empty($sort_jsvar) and !empty($_onclick)}
 								{$order = '_asc'}
 								{if !empty($smarty.request.sort_mode) and stristr($smarty.request.sort_mode, $col.sort) neq false}

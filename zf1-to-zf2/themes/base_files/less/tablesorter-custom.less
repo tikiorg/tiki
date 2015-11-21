@@ -2,7 +2,7 @@
 //Less file for the jQuery tablesorter plugin
 //custom formatting for individual themes
 
-@ts-theme                 : tablesorter;
+@ts                 : tablesorter;
 
 .ts-bg() when not (@input-bg = transparent) and (iscolor(@input-bg)) {
 	@ts-bg: @input-bg;
@@ -72,38 +72,35 @@
 	.filter-bg(@ts-bg);
 }
 
-.@{ts-theme} {
+table.@{ts} {
 	/* style header */
-	&-header {
-		.ts-bg();
-		.unsorted(@ts-bg);
-	}
-
-	tr&-headerRow, tr&-filter-row {
-		.ts-bg();
-		background-color: @ts-bg;
-	}
-
-	.bootstrap-icon-unsorted {
-		.ts-bg();
-		.unsorted(@ts-bg);
-	}
-
-	&-headerAsc {
-		.ts-bg();
-		.sortAsc(@ts-bg);
-	}
-
-	&-headerDesc {
-		.ts-bg();
-		.sortDesc(@ts-bg);
-	}
-
-	input&-filter {
-		.tsFilterInput;
-	}
-	input.dateFrom,
-	input.dateTo {
-		.tsFilterInput;
+	thead {
+		tr.@{ts}-headerRow {
+			th.@{ts}-headerUnSorted:not(.sorter-false) {
+				.ts-bg();
+				.unsorted(@ts-bg);
+			}
+			th.@{ts}-headerAsc {
+				.ts-bg();
+				.sortAsc(@ts-bg);
+			}
+			th.@{ts}-headerDesc {
+				.ts-bg();
+				.sortDesc(@ts-bg);
+			}
+		}
+		tr.@{ts}-filter-row {
+			input.@{ts}-filter {
+				.tsFilterInput;
+			}
+			input.dateFrom,
+			input.dateTo {
+				.tsFilterInput;
+			}
+		}
+		tr.@{ts}-headerRow, tr.@{ts}-filter-row {
+			.ts-bg();
+			background-color: @ts-bg;
+		}
 	}
 }

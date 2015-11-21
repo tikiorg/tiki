@@ -12,16 +12,26 @@ class ObjectSelector implements Control
 	private $fieldName;
 	private $filters;
 	private $value = '';
+	private $multi = false;
 
-	function __construct($name, array $filters)
+	function __construct($name, array $filters, $multi = false)
 	{
 		$this->fieldName = $name;
 		$this->filters = $filters;
+		$this->multi = $multi;
 	}
 
 	function applyInput(\JitFilter $input)
 	{
-		$this->value = (string) $input->{$this->fieldName}->int();
+		if ($this->multi) {
+			$value = $input->{$this->fieldName}->text();
+			if (! is_array($value)) {
+				$value = preg_split("/\r\n|\r|\n|,/", $value);    // any line ends or comma
+			}
+			$this->value = $value;
+		} else {
+			$this->value = (string)$input->{$this->fieldName}->int();
+		}
 	}
 
 	function getQueryArguments()
@@ -65,11 +75,25 @@ class ObjectSelector implements Control
 		$params = $this->filters;
 		$params['_simpleid'] = $this->fieldName;
 		$params['_simplename'] = $this->fieldName;
-		$params['_simplevalue'] = $this->value;
 
 		$smarty = \TikiLib::lib('smarty');
-		$smarty->loadPlugin('smarty_function_object_selector');
 
-		return smarty_function_object_selector($params, $smarty);
+		if ($this->multi) {
+			$params['_name'] = $this->fieldName;
+			$type = $this->filters['type'];
+			$value = array_map(function ($v) use ($type) { return str_replace($type . ':', '', $v); }, $this->value);
+			$params['_simplevalue'] = implode(',', $value);
+			$params['_separator'] = ',';
+
+			$smarty->loadPlugin('smarty_function_object_selector_multi');
+			$result = smarty_function_object_selector_multi($params, $smarty);
+		} else {
+			$params['_simplevalue'] = $this->value;
+
+			$smarty->loadPlugin('smarty_function_object_selector');
+			$result = smarty_function_object_selector($params, $smarty);
+		}
+
+		return $result;
 	}
 }

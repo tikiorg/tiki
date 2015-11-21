@@ -35,32 +35,20 @@ function wikiplugin_fancytable_info()
 			 'headaligns' => array(
 				 'required' => false,
 				 'name' => tra('Header Horizontal Align'),
-				 'description' => tr('Horizontal alignments for header cells separated by %0.', '<code>|</code>'),
+				 'description' => tr('Horizontal alignments for header cells separated by %0. Choices: %1', '<code>|</code>',
+					 '<code>left</code>, <code>right</code>, <code>center</code>, <code>justify</code>'),
 				 'default' => '',
 				 'since' => '4.1',
-				 'filter' => 'word',
-				 'options' => array(
-					 array('text' => '', 'value' => ''),
-					 array('text' => tra('Left'), 'value' => 'left'),
-					 array('text' => tra('Right'), 'value' => 'right'),
-					 array('text' => tra('Center'), 'value' => 'center'),
-					 array('text' => tra('Justify'), 'value' => 'justify'),
-				 ),
+				 'filter' => 'text',
 			 ),
 			 'headvaligns' => array(
 				 'required' => false,
 				 'name' => tra('Header Vertical Align'),
-				 'description' => tr('Vertical alignments for header cells separated by %0.', '<code>|</code>'),
+				 'description' => tr('Vertical alignments for header cells separated by %0. Choices: %1', '<code>|</code>',
+					 '<code>top</code>, <code>middle</code>, <code>bottom</code>, <code>baseline</code>'),
 				 'default' => '',
 				 'since' => '4.1',
-				 'filter' => 'word',
-				 'options' => array(
-					 array('text' => '', 'value' => ''),
-					 array('text' => tra('Top'), 'value' => 'top'),
-					 array('text' => tra('Middle'), 'value' => 'middle'),
-					 array('text' => tra('Bottom'), 'value' => 'bottom'),
-					 array('text' => tra('Baseline'), 'value' => 'baseline'),
-				 ),
+				 'filter' => 'text',
 			 ),
 			 'colwidths' => array(
 				 'required' => false,
@@ -73,32 +61,20 @@ function wikiplugin_fancytable_info()
 			 'colaligns' => array(
 				 'required' => false,
 				 'name' => tra('Cell Horizontal Align'),
-				 'description' => tr('Table body column horizontal alignments separated by %0.', '<code>|</code>'),
+				 'description' => tr('Table body column horizontal alignments separated by %0. Choices: %1', '<code>|</code>',
+					 '<code>left</code>, <code>right</code>, <code>center</code>, <code>justify</code>'),
 				 'default' => '',
 				 'since' => '4.1',
-				 'filter' => 'word',
-				 'options' => array(
-					 array('text' => '', 'value' => ''),
-					 array('text' => tra('Left'), 'value' => 'left'),
-					 array('text' => tra('Right'), 'value' => 'right'),
-					 array('text' => tra('Center'), 'value' => 'center'),
-					 array('text' => tra('Justify'), 'value' => 'justify'),
-				 ),
+				 'filter' => 'text',
 			 ),
 			 'colvaligns' => array(
 				 'required' => false,
 				 'name' => tra('Cell Vertical Align'),
-				 'description' => tra('Table body column vertical alignments separated by |.'),
+				 'description' => tr('Table body column vertical alignments separated by %0. Choices: %1', '<code>|</code>',
+					 '<code>top</code>, <code>middle</code>, <code>bottom</code>, <code>baseline</code>'),
 				 'default' => '',
 				 'since' => '4.1',
-				 'filter' => 'word',
-				 'options' => array(
-					 array('text' => '', 'value' => ''),
-					 array('text' => tra('Top'), 'value' => 'top'),
-					 array('text' => tra('Middle'), 'value' => 'middle'),
-					 array('text' => tra('Bottom'), 'value' => 'bottom'),
-					 array('text' => tra('Baseline'), 'value' => 'baseline'),
-				 ),
+				 'filter' => 'text',
 			 ),
 		), $tsparams
 	);
@@ -139,9 +115,14 @@ function wikiplugin_fancytable($data, $params)
 				isset($tsfilters) ? $tsfilters : null,
 				isset($tsfilteroptions) ? $tsfilteroptions : null,
 				isset($tspaginate) ? $tspaginate : null,
-				isset($tscolselect) ? $tscolselect : null
+				isset($tscolselect) ? $tscolselect : null,
+				null,
+				null,
+				isset($tsmathcolumns) ? $tsmathcolumns : null,
+				isset($tsmathoptions) ? $tsmathoptions : null
 			);
 			if (is_array($ts->settings)) {
+				$ts->settings['resizable'] = true;
 				Table_Factory::build('plugin', $ts->settings);
 				$sort = true;
 			} else {
@@ -198,9 +179,10 @@ function wikiplugin_fancytable($data, $params)
 		);
 
 		//restore original tags and plugin syntax
-		postprocess_section($headrows, $tagremove, $pluginremove);
+		$headhtml = $headrows['html'];
+		postprocess_section($headhtml, $tagremove, $pluginremove);
 
-		$wret .= '<thead>' . $headrows . "\r\t" . '</thead>' . "\r\t" . '<tbody>';
+		$wret .= '<thead>' . $headhtml . "\r\t" . '</thead>' . "\r\t";
 	}
 
 	//Body
@@ -226,13 +208,17 @@ function wikiplugin_fancytable($data, $params)
 	);
 
 	//restore original tags and plugin syntax
-	postprocess_section($bodyrows, $tagremove, $pluginremove);
+	$bodyhtml = $bodyrows['html'];
+	postprocess_section($bodyhtml, $tagremove, $pluginremove);
 
-	$wret .= $bodyrows;
+	//end the tbody
+	$wret .= '<tbody>' . $bodyhtml . "\r\t" . '</tbody>';
 
-	//end the table
-	if (isset($head)) {
-		$wret .= "\r\t" . '</tbody>';
+	if (isset($ts->settings)) {
+		$footer = Table_Totals::getTotalsHtml($ts->settings, $bodyrows['cols']);
+		if ($footer) {
+			$wret .= $footer;
+		}
 	}
 	$wret .= "\r" . '</table></div>' . "\r" . $msg;
 	return $wret;
@@ -439,7 +425,9 @@ function process_section ($data, $type, $line_sep, $cellbeg, $cellend, $widths, 
 		}
 		$l++;//increment row number
 	}
-	return $wret;
+	$ret['html'] = $wret;
+	$ret['cols'] = count($parts);
+	return $ret;
 }
 
 /**
