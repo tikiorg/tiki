@@ -199,7 +199,7 @@ class BigBlueButtonLib
 			)
 		);
 
-		$client->setMethod(Zend\Http\Request::METHOD_POST);
+		$client->getRequest()->setMethod(Zend\Http\Request::METHOD_POST);
 		$response = $client->send();
 		$document = $response->getBody();
 

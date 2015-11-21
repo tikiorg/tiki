@@ -305,8 +305,8 @@ class Search_Elastic_Connection
 	{
 		try {
 			$client = $this->getClient($path);
-			$client->setRawBody($data);
-			$client->setMethod(Zend\Http\Request::METHOD_PUT);
+			$client->getRequest()->setMethod(Zend\Http\Request::METHOD_PUT);
+			$client->getRequest()->setContent($data);
 			$response = $client->send();
 
 			return $this->handleResponse($response);
@@ -319,8 +319,8 @@ class Search_Elastic_Connection
 	{
 		try {
 			$client = $this->getClient($path);
-			$client->setRawData($data);
-			$client->setMethod(Zend\Http\Request::METHOD_POST);
+			$client->getRequest()->setMethod(Zend\Http\Request::METHOD_POST);
+			$client->getRequest()->setContent($data);
 			$response = $client->send();
 
 			return $this->handleResponse($response);
@@ -333,7 +333,7 @@ class Search_Elastic_Connection
 	{
 		try {
 			$client = $this->getClient($path);
-			$client->setMethod(Zend\Http\Request::METHOD_DELETE);
+			$client->getRequest()->setMethod(Zend\Http\Request::METHOD_DELETE);
 			$response = $client->send();
 
 			return $this->handleResponse($response);
