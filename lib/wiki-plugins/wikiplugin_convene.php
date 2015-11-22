@@ -190,7 +190,7 @@ function wikiplugin_convene($data, $params)
 			} elseif ($vote == -1) {
 				$class = 	"convene-no text-center label-danger";
 				$text = 	smarty_function_icon(['name' => 'remove', 'iclass' => 'tips', 'ititle' => ':'
-					. tr('Not OK')], $smarty) . "' class='vote icon' width='16' height='16' />";
+					. tr('Not OK')], $smarty);
 			} else {
 				$class = 	"convene-unconfirmed text-center label-default";
 				$text = 	smarty_function_icon(['name' => 'help', 'iclass' => 'tips', 'ititle' => ':'
