@@ -465,7 +465,13 @@ class UnifiedSearchLib
 		}
 
 		if (! empty($prefs['unified_excluded_categories'])) {
-			$index = new Search_Index_CategoryFilterDecorator($index, array_filter($prefs['unified_excluded_categories']));
+			$index = new Search_Index_CategoryFilterDecorator($index,
+				array_filter(
+					array_map ('intval',
+						$prefs['unified_excluded_categories']
+					)
+				)
+			);
 		}
 
 		$logWriter = null;
