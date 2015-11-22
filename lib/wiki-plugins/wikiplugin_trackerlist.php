@@ -1975,7 +1975,6 @@ function wikiplugin_trackerlist($data, $params)
 					isset($tscolselect) ? $tscolselect : null,
 					$GLOBALS['requestUri'],
 					$items['cant'],
-					isset($tsmathcolumns) ? $tsmathcolumns : null,
 					isset($tsmathoptions) ? $tsmathoptions : null
 				);
 				//loads the jquery tablesorter code
@@ -1986,13 +1985,8 @@ function wikiplugin_trackerlist($data, $params)
 			}
 			//determine whether totals will be added to bottom of table
 			if (isset($ts->settings)) {
-				$tstotals = Table_Totals::totalsEnabled($ts->settings);
-				$smarty->assign('cols', $tstotals['cols']);
-				$smarty->assign('totals', $tstotals['totals']);
-			} else {
-				$tstotals = false;
+				Table_Totals::setTotals($ts->settings);
 			}
-			$smarty->assign('totals', $tstotals);
 			//handle certain tablesorter sorts
 			if (isset($sortcol) && $items['cant'] > 1) {
 				$fieldtype = $items['data'][0]['field_values'][$sortcol + $adjustCol]['type'];

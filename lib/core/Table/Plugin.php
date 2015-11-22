@@ -33,6 +33,13 @@ class Table_Plugin
 	public $settings;
 
 	/**
+	 * Available types of column and table calculations
+	 * @var array
+	 */
+	private $mathtypes = ['count', 'sum', 'max', 'min', 'mean', 'median', 'mode', 'range', 'varp', 'vars', 'stdevp',
+			'stdevs'];
+
+	/**
 	 * Creates parameters that can be appended to a plugin's native parameters so the user can
 	 * set tablesorter functionality
 	 */
@@ -186,44 +193,31 @@ class Table_Plugin
 			'tsmathoptions' => array(
 				'required' => false,
 				'name' => tra('Math Options'),
-				'description' => tr('Set the number format, generate a page total and set labels, using the
-					%0type:value%1 separated by a semi-colon:', '<code>', '</code>')
-					. '<br><code>format:(pattern)</code> - ' . tr('sets the number format (see patterns at %2).
-					Example:', '<code>', '</code>',
-					'http://mottie.github.io/tablesorter/docs/example-widget-math.html#mask_examples')
+				'description' => tr('Set the number format, generate table or column totals and set labels, using %0
+					separated by a semi-colon:', '<code>type:value</code>')
+					. '<br><strong>format(pattern)</strong> - ' . tr('sets the number format (see patterns at %0).
+					Example:', '<a href="http://mottie.github.io/tablesorter/docs/example-widget-math.html#mask_examples">mask_examples</a>')
 					. ' <code>format:$#,##0.00</code><br>'
-					. '<br><code>page:(type)</code> - ' . tr('will add a grand total row for all amounts on the page.
-					See types in the description for the %0tsmathcolumns%1 parameter. Example:', '<code>', '</code>')
-					. ' <code>page:range</code><br>'
-					//TODO
-/*					. '<br><code>row:(type)</code> - ' . tr('will add a right column applying the total type to each row.
-					Example:', '<code>', '</code>') . ' <code>row:median</code><br>'
-					. tr('The next two require the %0sortList%1 parameter to be set fixing the first column sort
-					(ability to resort will be turned off):')
-					. '<br><code>subabove:(type)</code> - ' . tr('will create amounts related to the cells above this row.
-					Example:', '<code>', '</code>') . ' <code>subabove:min</code>'
-					. '<br><code>subbelow:(type)</code> - ' . tr('will create amounts for the cells below this row.
-					Example:', '<code>', '</code>') . ' <code>subbelow:max</code><br>'*/
-					. tr('Set labels page and column totals using %0 and %1.',
-					'<code>pagelabel:Grand total</code>', '<code>columnlabel:Column totals</code>')
-					. tr('Combined example:')
-					. ' <code>format:$(#,###.00);column:sum;page:sum;columnlabel:Totals;pagelabel:Grand total</code><br>',
-				'since' => '15.0',
-				'doctype' => 'tablesorter',
-				'default' => '',
-				'filter' => 'striptags',
-				'advanced' => true,
-			),
-			'tsmathcolumns' => array(
-				'required' => false,
-				'name' => tra('Math Column Settings'),
-				'description' => tr(
-					'Set custom column totals separated by %0|%1 for each column using the following choices (set to
-					%0ignore%1 to have no total for a columns):', '<code>', '</code>') . '<code>sum</code>,
+					. '<strong>coltotal</strong> - ' . tr('will add a column total row for columns not set to be
+					ignored. Limited to amounts on the page if %0. Can add multiple totals.
+					Example:', '<code>server="y"</code>') . ' <code>coltotal:sum</code><br>'
+						. tr('The types of column and table totals that can be set are:') . ' <code>sum</code>,
 					<code>count</code>, <code>max</code>, <code>min</code>, <code>mean</code>, <code>median</code>,
 					<code>mode</code>, <code>range</code>, <code>varp</code>, <code>vars</code>, <code>stdevp</code>,
 					<code>stdevs</code>. ' . tr('See %0 for a description of these options.',
-					'http://mottie.github.io/tablesorter/docs/example-widget-math.html#attribute_settings'),
+					'<a href="http://mottie.github.io/tablesorter/docs/example-widget-math.html#attribute_settings">attribute_settings</a>')
+					. '<br><strong>tabletotal</strong> - ' . tr('will add a total row for all amounts in the
+					table not set to be ignored. Limited to amounts on the page if %0. Can add multiple totals.
+					Example with two totals:', '<code>server="y"</code>')
+					. ' <code>tabletotal:range;tabletotal:sum</code><br>'
+					. '<strong>ignore</strong> - ' . tr('indicate comma-separated columns (by number starting
+					with 0) that should be excluded from all column and table totals. Example:')
+					. '<code>ignore:0,1,4</code><br>'
+					. '<strong>collabel</strong>, <strong>tablelabel</strong> - '
+					. tr('set labels for page and column totals. Example, %0 and %1.',
+					'<code>tablelabel:Table total</code>', '<code>collabel:Column totals</code>')
+					. '<br>' . tr('Combined example:')
+					. ' <code>format:$(#,###.00);coltotal:sum;tabletotal:sum;collabel:Sum;tablelabel:Table total</code><br>',
 				'since' => '15.0',
 				'doctype' => 'tablesorter',
 				'default' => '',
@@ -249,7 +243,7 @@ class Table_Plugin
 	 */
 	public function setSettings ($id = null, $server = 'n', $sortable = 'n', $sortList = null, $tsortcolumns = null,
 		$tsfilters = null, $tsfilteroptions = null, $tspaginate = null, $tscolselect = null, $ajaxurl = null,
-		$totalrows = null, $tsmathcolumns = null, $tsmathoptions = null)
+		$totalrows = null, $tsmathoptions = null)
 	{
 		$s = array();
 
@@ -408,45 +402,6 @@ class Table_Plugin
 			}
 		}
 
-		//tsmathcolumns
-		if (!empty($tsmathcolumns)) {
-			$tsmc = Table_Check::parseParam($tsmathcolumns);
-			if (is_array($tsmc)) {
-				//see choices at http://mottie.github.io/tablesorter/docs/example-widget-math.html#attribute_settings
-				$choices = ['count', 'sum', 'max', 'min', 'mean', 'median', 'mode', 'range', 'varp', 'vars', 'stdevp',
-					'stdevs'];
-				foreach ($tsmc as $col => $totaltype) {
-					$s['columns'][$col]['math'] = in_array($totaltype, $choices) ? 'col-' . $totaltype : 'ignore';
-				}
-			}
-		}
-
-		//tsmathoptions
-		if (!empty($tsmathoptions)) {
-			$tsmo = Table_Check::parseParam($tsmathoptions, 1);
-			if (is_array($tsmo)) {
-				//TODO
-/*				//sortList must be set for the first column for subabove or subbelow to work
-				if (!empty($tsmo['subabove']) || !empty($tsmo['subbelow'])) {
-					if (!isset($s['columns'][0]['sort']['dir'])) {
-						if (!empty($tsmo['subabove'])) {
-							unset($tsmo['subabove']);
-						}
-						if (!empty($tsmo['subabovename'])) {
-							unset($tsmo['subabovename']);
-						}
-						if (!empty($tsmo['subbelowname'])) {
-							unset($tsmo['subbelowname']);
-						}
-						trigger_error(tr('Tablesorter: The first column\'s sort direction must be set with the %0
-						parameter in order to set %1 or %2 in the %3 parameter.', 'sortList', 'subabove', 'subbelow',
-								'tsmathcolumns'), E_NOTICE);
-					}
-				}*/
-				$s['math'] = $tsmo;
-			}
-		}
-
 		//ajaxurl
 		if (!empty($ajaxurl) && $server === 'y') {
 			$url = $this->getAjaxurl($ajaxurl);
@@ -460,6 +415,25 @@ class Table_Plugin
 		//totalrows
 		if (!empty($totalrows)) {
 			$s['total'] = $totalrows;
+		}
+
+		//tsmathoptions
+		if (!empty($tsmathoptions)) {
+			$tsmo = Table_Check::parseParam($tsmathoptions);
+			if (is_array($tsmo)) {
+				//column and table totals and labels
+				foreach(['col', 'table'] as $type) {
+					if (!empty($tsmo[0][$type . 'total'])) {
+						$label = !empty($tsmo[0][$type . 'label']) ? $tsmo[0][$type . 'label'] : null;
+						$tsmo[0][$type . 'total'] = $this->setTotals($tsmo[0][$type . 'total'], $label);
+					}
+				}
+				//ignore
+				if (!empty($tsmo[0]['ignore'])) {
+					$tsmo[0]['ignore'] = explode(',', $tsmo[0]['ignore']);
+				}
+				$s['math'] = $tsmo[0];
+			}
 		}
 
 		$this->settings = $s;
@@ -483,6 +457,26 @@ class Table_Plugin
 			$url['query'] = '?' . $str;
 		}
 		return $url;
+	}
+
+	private function setTotals($total, $label)
+	{
+		if (!empty($total)) {
+			foreach($total as $row => $value) {
+				if (!empty($value) && in_array($value, $this->mathtypes)) {
+					$t[$row]['type'] = $value;
+					if (isset($label[$row])) {
+						$jitlabel = new JitFilter(['label' => $label[$row]]);
+						$t[$row]['label'] = $jitlabel->label->text();
+					}
+				}
+			}
+			if (isset($t)) {
+				return $t;
+			} else {
+				return false;
+			}
+		}
 	}
 
 }

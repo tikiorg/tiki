@@ -72,40 +72,40 @@
 					<table class="table table-striped table-hover normal wikiplugin_trackerlist" id="wptrackerlist{$listTrackerId}-{$iTRACKERLIST}"
 						{if isset($displaysheet) && $displaysheet eq 'true'}title="{$tracker_info.name}" readonly="true"{/if}
 						{if isset($tableassheet) && $tableassheet eq 'true'}title="{tr}Tracker - {/tr}{$tracker_info.name}" readonly="true"{/if}
-						data-count="{$count_item}"
+						 data-count="{$count_item}"
 					>
 
 					{if $showfieldname ne 'n' and empty($tpl)}
 						<thead>
 							<tr>
-								{$count = 0}
+								{$precols = 0}
+								{$fieldcount = 0}
+								{$postcols = 0}
 								{if isset($checkbox) && $checkbox}
-									{$count = $count++}
+									{$precols = $precols + 1}
 									<th>{$checkbox.title}</th>
 								{/if}
 								{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $perms.tiki_p_admin_trackers eq 'y'))}
-									{$count = $count++}
+									{$precols = $precols + 1}
 									<th class="auto" style="width:20px;">&nbsp;</th>
 								{/if}
 								{if $showitemrank eq 'y'}
-									{$count = $count++}
+									{$precols = $precols + 1}
 									<th>{tr}Rank{/tr}</th>
 								{/if}
 								{foreach key=jx item=ix from=$fields}
+									{$fieldcount = $fieldcount + 1}
 									{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $perms.tiki_p_admin_trackers eq 'y')
 										and $ix.type ne 'x' and $ix.type ne 'h' and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password')
 										and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) or $perms.tiki_p_admin_trackers eq 'y')}
 										{if $ix.type eq 'l'}
-											{$count = $count++}
 											<th class="auto field{$ix.fieldId}">{$ix.name|default:"&nbsp;"}</th>
 										{elseif $ix.type eq 's' and $ix.name eq "Rating"}
 											{if $perms.tiki_p_admin_trackers eq 'y' or $perms.tiki_p_tracker_view_ratings eq 'y'}
-												{$count = $count++}
 												<th class="auto field{$ix.fieldId}">
 												{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='f_'|cat:$ix.fieldId}{$ix.name|default:"&nbsp;"}{/self_link}</th>
 											{/if}
 										{else}
-											{$count = $count++}
 											<th class="auto field{$ix.fieldId}">
 												{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='f_'|cat:$ix.fieldId session_filters='y'}{$ix.name|default:"&nbsp;"}{/self_link}
 											</th>
@@ -113,27 +113,27 @@
 									{/if}
 								{/foreach}
 								{if $showcreated eq 'y'}
-									{$count = $count++}
+									{$postcols = $postcols + 1}
 									<th>{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='created' session_filters='y'}{tr}Created{/tr}{/self_link}</th>
 								{/if}
 								{if $showlastmodif eq 'y'}
-									{$count = $count++}
+									{$postcols = $postcols + 1}
 									<th>{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='lastModif' session_filters='y'}{tr}LastModif{/tr}{/self_link}</th>
 								{/if}
 								{if $showlastmodifby eq 'y'}
-									{$count = $count++}
+									{$postcols = $postcols + 1}
 									<th>{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='lastModifBy' session_filters='y'}{tr}Last Modified By{/tr}{/self_link}</th>
 								{/if}
 								{if $tracker_info.useComments eq 'y' and ($tracker_info.showComments eq 'y' || $tracker_info.showLastComment eq 'y') and $perms.tiki_p_tracker_view_comments ne 'n'}
-									{$count = $count++}
+									{$postcols = $postcols + 1}
 									<th{if $tracker_info.showLastComment ne 'y'} style="width:5%"{/if}>{tr}Coms{/tr}</th>
 								{/if}
 								{if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}
-									{$count = $count++}
+									{$postcols = $postcols + 1}
 									<th style="width:5%">{tr}atts{/tr}</th>
 								{/if}
 								{if ($showdelete eq 'y' || $showpenditem eq 'y' || $showopenitem eq 'y' || $showcloseitem eq 'y') && ($perms.tiki_p_admin_trackers eq 'y' or $perms.tiki_p_remove_tracker_items eq 'y' or $perms.tiki_p_remove_tracker_items_pending eq 'y' or $perms.tiki_p_remove_tracker_items_closed eq 'y')}
-									{$count = $count++}
+									{$postcols = $postcols + 1}
 									<th>{tr}Action{/tr}</th>
 								{/if}
 
@@ -148,11 +148,14 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 {capture name="trackerlist_bottomstuff"}
 	{if empty($tpl)}
 						</tbody>
-		{if !empty($computedFields) and $items|@count gt 0}
+		{if (!empty($computedFields) || isset($tstotals)) and $items|@count gt 0}
 			{assign var=itemoff value=0}
 			<tfoot>
+				{if ($tstotals) && $tsOn}
+					{include file="tablesorter/totals.tpl" nofoot="y" fieldcount="{$fieldcount}" precols="{$precols}" postcols="{$postcols}"}
+				{/if}
 				<tr class='compute'>
-					{if $checkbox}<td></td>{/if}
+					{if isset($checkbox) && $checkbox}<td></td>{/if}
 					{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $perms.tiki_p_admin_trackers eq 'y'))}<td></td>{/if}
 					{if $showitemrank eq 'y'}<td></td>{/if}
 					{foreach key=jx item=ix from=$fields}
@@ -162,7 +165,7 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 							{if isset($computedFields[$ix.fieldId])}
 								<td class="numeric" style="padding-right:2px">
 									{foreach from=$computedFields[$ix.fieldId] item=computedField name=computedField}
-										<label>{if $computedField.operator eq 'avg'}{tr}Average{/tr}{else}{tr}Total{/tr}</label>{/if}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<label>{if isset($computedField.operator) && $computedField.operator eq 'avg'}{tr}Average{/tr}{else}{tr}Total{/tr}</label>{/if}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										{trackeroutput field=$computedField item=$items[user] list_mode=$list_mode url=$txturl|replacei:'#itemId':$items[user].itemId}<br/>
 									{/foreach}
 								</td>
@@ -176,12 +179,12 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 					{if $showlastmodifby eq 'y'}<td></td>{/if}
 					{if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y' and $perms.tiki_p_tracker_view_comments ne 'n'}<td></td>{/if}
 					{if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}<td></td>{/if}
+					{if ($showdelete eq 'y' || $showpenditem eq 'y' || $showopenitem eq 'y' || $showcloseitem eq 'y') && ($perms.tiki_p_admin_trackers eq 'y' or $perms.tiki_p_remove_tracker_items eq 'y' or $perms.tiki_p_remove_tracker_items_pending eq 'y' or $perms.tiki_p_remove_tracker_items_closed eq 'y')}
+						<td></td>
+					{/if}
 				</tr>
 			</tfoot>
 		{/if}
-						{if ($totals || $cols) && $tsOn}
-							{include file="tablesorter/totals.tpl"}
-						{/if}
 					</table>
 				</div>
 		</div> {* end: div id="trackerlist_{$iTRACKERLIST}" *}

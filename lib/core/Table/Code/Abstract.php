@@ -65,7 +65,6 @@ class Table_Code_Abstract
 			self::$filters = empty($settings['filters']['type']) ? false : true;
 			self::$filtercol = isset(self::$s['columns']) && count(array_column(self::$s['columns'], 'filter')) > 0;
 			self::$math = empty($settings['math']) ? false : true;
-			self::$mathcol = isset(self::$s['columns']) && count(array_column(self::$s['columns'], 'math')) > 0;
 			//whether to use array index to identify columns or a selector (id, class, etc.)
 			//generally index used for plugins where columns are set by user and selectors are used with tables with
 			//smarty templates to keep from recreating tpl logic that determines which columns are shown
