@@ -370,7 +370,9 @@ class PreferencesLib
 			$value = $this->$function($info, $data);
 			return $value;
 		} else {
-			return $data[$pref];
+			if (isset($data[$pref]))
+				return $data[$pref];
+			return null;
 		}
 	}
 
