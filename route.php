@@ -210,7 +210,7 @@ default:
 	if (isset($_SERVER['SCRIPT_URL'])) {
 		$full = $_SERVER['SCRIPT_URL'];
 	} elseif (isset($_SERVER['REQUEST_URI'])) {
-		$full = $_SERVER['REQUEST_URI'];
+		$full = utf8_encode($_SERVER['REQUEST_URI']);
 		if (strpos($full, '?') !== false) {
 			$full = substr($full, 0, strpos($full, '?'));
 		}
