@@ -207,10 +207,15 @@ $inclusion = null;
 switch ($sapi) {
 case 'apache2handler':
 default:
+
+	// Fix $_SERVER['REQUEST_URI', which is ASCII encoded on IIS
+	//	Convert the SERVER variable itself, to fix $_SERVER['REQUEST_URI'] access everywhere
+	$_SERVER['REQUEST_URI'] = utf8_encode($_SERVER['REQUEST_URI']);
+
 	if (isset($_SERVER['SCRIPT_URL'])) {
 		$full = $_SERVER['SCRIPT_URL'];
 	} elseif (isset($_SERVER['REQUEST_URI'])) {
-		$full = utf8_encode($_SERVER['REQUEST_URI']);
+		$full = $_SERVER['REQUEST_URI'];
 		if (strpos($full, '?') !== false) {
 			$full = substr($full, 0, strpos($full, '?'));
 		}
