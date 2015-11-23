@@ -23,26 +23,56 @@ function wikiplugin_lastmod_info()
 				'profile_reference' => 'wiki_page',
 				'filter' => 'pagename',
 			),
+			'format' => array(
+				'required' => false,
+				'name' => tra('Date format'),
+				'description' => tra('Set date and time format according to site settings.'),
+				'since' => '15.0',
+				'filter' => 'text',
+				'options' => [
+					['text' => '', 'value' => ''],
+					['text' => tra('Long date'), 'value' => 'long_date'],
+					['text' => tra('Short date'), 'value' => 'short_date'],
+					['text' => tra('Long datetime'), 'value' => 'long_datetime'],
+					['text' => tra('Short datetime'), 'value' => 'short_datetime'],
+					['text' => tra('ISO'), 'value' => 'iso'],
+				],
+			),
 		),
 	);
 }
 
 function wikiplugin_lastmod($data, $params)
 {
-	global $tikilib, $page;
-
+	$tikilib = TikiLib::lib('tiki');
+	global $page, $user;
+	//set page
 	if (!isset($params['page'])) {
 		if (!empty($page)) {
 			$thispage = $page;
 		} else {
-			return;
+			return false;
 		}
 	} else {
 		$thispage = $params['page'];
 	}
-
-	$lastmod = $tikilib->date_format("%a, %e %b %Y %H:%M:%S %Z", $tikilib->page_exists_modtime($thispage));
-
+	//set datetime format
+	$format = isset($params['format']) ? $params['format'] : 'long_datetime';
+	switch ($format) {
+		case 'long_date':
+			$lastmod = $tikilib->get_long_date($tikilib->page_exists_modtime($thispage), $user);
+			break;
+		case 'short_date':
+			$lastmod = $tikilib->get_short_date($tikilib->page_exists_modtime($thispage), $user);
+			break;
+		case 'short_datetime':
+			$lastmod = $tikilib->get_short_datetime($tikilib->page_exists_modtime($thispage), $user);
+			break;
+		case 'iso':
+			$lastmod = $tikilib->get_iso8601_datetime($tikilib->page_exists_modtime($thispage), $user);
+			break;
+		default:
+			$lastmod = $tikilib->get_long_datetime($tikilib->page_exists_modtime($thispage), $user);
+	}
 	return $lastmod;
-
 }
