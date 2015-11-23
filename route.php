@@ -210,7 +210,8 @@ default:
 
 	// Fix $_SERVER['REQUEST_URI', which is ASCII encoded on IIS
 	//	Convert the SERVER variable itself, to fix $_SERVER['REQUEST_URI'] access everywhere
-	$_SERVER['REQUEST_URI'] = utf8_encode($_SERVER['REQUEST_URI']);
+	include_once("lib/init/initlib.php");
+	$_SERVER['REQUEST_URI'] = TikiInit::to_utf8($_SERVER['REQUEST_URI']);
 
 	if (isset($_SERVER['SCRIPT_URL'])) {
 		$full = $_SERVER['SCRIPT_URL'];
