@@ -5967,6 +5967,8 @@ class UsersLib extends TikiLib
 	{
 		global $tikilib, $cachelib, $prefs;
 
+		$user = trim($user);
+
 		if ($this->user_exists($user)
 				|| empty($user)
 				|| (!empty($prefs['username_pattern']) && !preg_match($prefs['username_pattern'], $user))
