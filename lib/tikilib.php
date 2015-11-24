@@ -308,6 +308,13 @@ class TikiLib extends TikiDb_Bridge
 		global $prefs;
 		$response = $client->request();
 
+		$attempts = 0;
+		while ($response->isRedirect() && $attempts < 10) { // prevent redirect loop
+			$client->setUri($client->getUri());
+			$response = $client->request();
+			$attempts++;
+		}
+
 		if ($prefs['http_skip_frameset'] == 'y') {
 			if ($outcome = $this->http_perform_request_skip_frameset($client, $response)) {
 				return $outcome;
