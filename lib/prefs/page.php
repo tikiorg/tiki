@@ -21,7 +21,7 @@ function prefs_page_list()
 		),
 		'page_n_times_in_a_structure' => array(
 			'name' => tra('Pages can re-occur in structure'),
-            'description' => tra('A page can occur multiple times in a structure'),
+			'description' => tra('A page can occur multiple times in a structure'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -31,5 +31,12 @@ function prefs_page_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'page_content_fetch_readability' => array(
+			'name' => tra('Path to PHP-Readability library'),
+			'description' => tra('Enter path to PHP-Readability library php file here (not included with Tiki due to licensing reasons'),
+			'type' => 'text',
+			'size' => 20,
+			'default' => '',
+		),	
 	);
 }

@@ -44,6 +44,14 @@ class PageContentLib
 		$html = $this->tidy($html);
 
 		// give it to Readability
+		global $prefs;
+		if (is_file($prefs['page_content_fetch_readability'])) {
+			require_once($prefs['page_content_fetch_readability']);
+		}
+		if (!class_exists('Readability')) {
+			return false;
+		}
+
 		$readability = new Readability($html, $url);
 
 		$result = $readability->init();
