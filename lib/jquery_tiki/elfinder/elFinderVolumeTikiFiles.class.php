@@ -300,7 +300,14 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 		} else {
 			$id = isset($row['id']) ? $row['id'] : $row['fileId'];
 			$id = 'f_' . $id;
-			$r['mime'] = $row['filetype'];
+			$filetype = $row['filetype'];
+			// elFinder assigns standard mime types like application/vnd.ms-word to ms doc, we use application/msword etc in tiki for some obscure reason :(
+			if (strpos($filetype, 'application/ms') !== false) {
+				$filetype = str_replace('application/ms', 'application/vnd.ms-', $filetype);
+				$filetype = str_replace('ms--', 'ms-', $filetype);	// in case it was application/ms-word
+			}
+
+			$r['mime'] = $filetype;
 			$r['size'] = $row['filesize'];
 			$row['parentId'] = $row['galleryId'];
 
