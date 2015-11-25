@@ -201,6 +201,9 @@ if (isset($_SERVER["REQUEST_URI"])) {
 				$cookie = isset($_COOKIE[$extra_cookie_name]) ? $_COOKIE[$extra_cookie_name] : null;
 
 				if ($cookie !== $_SESSION['extra_validation']) {
+
+					TikiLib::lib('logs')->add_log('system', 'session cookie validation failed');
+
 					Zend_Session::destroy();
 					header('Location: ' . $_SERVER['REQUEST_URI']);
 					exit;

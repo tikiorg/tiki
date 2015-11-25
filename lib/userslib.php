@@ -3092,7 +3092,7 @@ class UsersLib extends TikiLib
 			array(
 				'name' => 'tiki_p_admin_cms',
 				'description' => tra('Can admin the articles'),
-				'level' => 'editors',
+				'level' => 'admin',
 				'type' => 'articles',
 				'admin' => true,
 				'prefs' => array('feature_articles'),
@@ -3398,7 +3398,7 @@ class UsersLib extends TikiLib
 			array(
 				'name' => 'tiki_p_admin_categories',
 				'description' => tra('Can admin categories'),
-				'level' => 'editors',
+				'level' => 'admin',
 				'type' => 'category',
 				'admin' => true,
 				'prefs' => array('feature_categories'),
@@ -3800,7 +3800,7 @@ class UsersLib extends TikiLib
 			array(
 				'name' => 'tiki_p_admin_file_galleries',
 				'description' => tra('Can admin file galleries'),
-				'level' => 'editors',
+				'level' => 'admin',
 				'type' => 'file galleries',
 				'admin' => true,
 				'prefs' => array('feature_file_galleries'),
@@ -3881,7 +3881,7 @@ class UsersLib extends TikiLib
 			array(
 				'name' => 'tiki_p_admin_forum',
 				'description' => tra('Can admin forums'),
-				'level' => 'editors',
+				'level' => 'admin',
 				'type' => 'forums',
 				'admin' => true,
 				'prefs' => array('feature_forums'),
@@ -4655,7 +4655,7 @@ class UsersLib extends TikiLib
 			array(
 				'name' => 'tiki_p_admin_trackers',
 				'description' => tra('Can admin trackers'),
-				'level' => 'editors',
+				'level' => 'admin',
 				'type' => 'trackers',
 				'admin' => true,
 				'prefs' => array('feature_trackers'),
@@ -5051,7 +5051,7 @@ class UsersLib extends TikiLib
 			array(
 				'name' => 'tiki_p_admin_group_webmail',
 				'description' => tra('Can admin group webmail accounts'),
-				'level' => 'registered',
+				'level' => 'admin',
 				'type' => 'webmail',
 				'admin' => false,
 				'prefs' => array('feature_webmail', 'feature_contacts'),
@@ -5114,7 +5114,7 @@ class UsersLib extends TikiLib
 			array(
 				'name' => 'tiki_p_admin_wiki',
 				'description' => tra('Can admin the wiki'),
-				'level' => 'editors',
+				'level' => 'admin',
 				'type' => 'wiki',
 				'admin' => true,
 				'prefs' => array('feature_wiki'),
@@ -6436,8 +6436,10 @@ class UsersLib extends TikiLib
 
 		if ($userId === $this->getOne($query, array($secret, $userId))) {
 			return $userId;
+		} else {
+			TikiLib::lib('logs')->add_log('login', 'get_user_by_cookie failed', $userId);
+			return false;
 		}
-		return false;
 	}
 
 	function get_user_by_email($email)
