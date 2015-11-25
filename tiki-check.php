@@ -1651,9 +1651,11 @@ if ($s == 1) {
 	// adapted from \FileGalLib::get_file_handlers
 	$fh_possibilities = array(
 		'application/ms-excel' => array('xls2csv %1'),
+		'application/msexcel' => array('xls2csv %1'),
 		// vnd.openxmlformats are handled natively in Zend
 		//'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => array('xlsx2csv.py %1'),
 		'application/ms-powerpoint' => array('catppt %1'),
+		'application/mspowerpoint' => array('catppt %1'),
 		//'application/vnd.openxmlformats-officedocument.presentationml.presentation' => array('pptx2txt.pl %1 -'),
 		'application/msword' => array('catdoc %1', 'strings %1'),
 		//'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => array('docx2txt.pl %1 -'),
