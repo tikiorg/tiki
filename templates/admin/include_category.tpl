@@ -60,6 +60,7 @@
 
 		{preference name=feature_category_transition}
 		{preference name=categories_used_in_tpl}
+		{preference name=categories_add_class_to_body_tag}
 		{preference name=categories_cache_refresh_on_object_cat}
 		
 		<div class="adminoptionboxchild" id="categories_used_in_tpl_childcontainer">
