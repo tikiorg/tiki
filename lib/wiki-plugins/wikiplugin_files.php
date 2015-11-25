@@ -120,8 +120,8 @@ function wikiplugin_files_info()
 				'default' => 'y',
 				'advanced' => true,
 				'options' => array(
-					array('text' => '', 'value' => ''), 
-					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n')
 				),
 				'parent' => array('name' => 'showfind', 'value' => 'y'),
