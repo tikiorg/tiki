@@ -385,6 +385,7 @@ function check_smarty_syntax(&$error_msg)
 	$prefs['maxRecords'] = 25;
 	$prefs['log_tpl'] = 'y';
 	$prefs['feature_sefurl_filter'] = 'y';
+	$prefs['site_layout'] = 'basic';
 	require_once 'vendor/smarty/smarty/libs/Smarty.class.php';
 	require_once 'lib/init/smarty.php';
 	// needed in Smarty_Tiki

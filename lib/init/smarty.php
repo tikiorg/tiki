@@ -464,26 +464,30 @@ class Smarty_Tiki extends Smarty
 
 		$this->setTemplateDir([]);
 
-		// Theme templates
-		$themelib = TikiLib::lib('theme');
-		if (! in_array($prefs['theme'], ['custom_url'])) {
-			$theme_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], '', 'templates'); // path to the theme options
-			$this->addTemplateDir(TIKI_PATH . "/$theme_path/");
+		// when called from release.php TikiLib isn't initialised so we can ignore the themes and addons
+		if (class_exists('TikiLib')) {
 
-			$main_theme_path = $themelib->get_theme_path($prefs['theme'], '', '', 'templates'); // path to the main theme
-			$this->addTemplateDir(TIKI_PATH . "/$main_theme_path/");
-		}
-		// Tikidomain main template folder
-		if ( ! empty($tikidomainslash) ) {
-			$this->addTemplateDir(TIKI_PATH . "/themes/{$tikidomainslash}templates/"); // This dir is for all the themes in the tikidomain
-			$this->addTemplatedir($this->main_template_dir.'/'.$tikidomainslash); // legacy tpls just in case, for example: /templates/mydomain.ltd/
-		}
-		
-		$this->addTemplateDir(TIKI_PATH . "/themes/templates/"); //This dir stores templates for all the themes
+			// Theme templates
+			$themelib = TikiLib::lib('theme');
+			if (!in_array($prefs['theme'], ['custom_url'])) {
+				$theme_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], '', 'templates'); // path to the theme options
+				$this->addTemplateDir(TIKI_PATH . "/$theme_path/");
 
-		//Addon templates
-		foreach (TikiAddons::getPaths() as $path) {
-			$this->addTemplateDir($path . '/templates/');
+				$main_theme_path = $themelib->get_theme_path($prefs['theme'], '', '', 'templates'); // path to the main theme
+				$this->addTemplateDir(TIKI_PATH . "/$main_theme_path/");
+			}
+			// Tikidomain main template folder
+			if (!empty($tikidomainslash)) {
+				$this->addTemplateDir(TIKI_PATH . "/themes/{$tikidomainslash}templates/"); // This dir is for all the themes in the tikidomain
+				$this->addTemplatedir($this->main_template_dir . '/' . $tikidomainslash); // legacy tpls just in case, for example: /templates/mydomain.ltd/
+			}
+
+			$this->addTemplateDir(TIKI_PATH . "/themes/templates/"); //This dir stores templates for all the themes
+
+			//Addon templates
+			foreach (TikiAddons::getPaths() as $path) {
+				$this->addTemplateDir($path . '/templates/');
+			}
 		}
 		
 		//Layout templates
