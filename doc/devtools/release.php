@@ -766,7 +766,7 @@ function update_copyright_file($newVersion)
 	$nbCommiters = 0;
 	$contributors = array();
 
-	$repositoryUri = empty($options['svn-mirror-uri']) ? TIKISVN : $options['svn-mirror-uri'];
+	$repositoryUri = empty($options['svn-mirror-uri']) ? TIKISVN : 'file://' . $options['svn-mirror-uri'];
 	$repositoryInfo = get_info($repositoryUri);
 
 	$oldContributors = parse_copyrights();
