@@ -166,7 +166,12 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 								<td class="numeric" style="padding-right:2px">
 									{foreach from=$computedFields[$ix.fieldId] item=computedField name=computedField}
 										<label>{if isset($computedField.operator) && $computedField.operator eq 'avg'}{tr}Average{/tr}{else}{tr}Total{/tr}</label>{/if}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										{trackeroutput field=$computedField item="{if isset($items[user])}{$items[user]}{/if}" list_mode="{if isset($list_mode)}{$list_mode}{/if}" url=$txturl|replacei:'#itemId':$items[user].itemId}<br/>
+										{if isset($texturl) && isset($items[user].itemId)}
+											{$url=$txturl|replacei:'#itemId':$items[user].itemId}
+										{elseif isset($texturl)}
+											{$url = "{$txturl}"}
+										{/if}
+										{trackeroutput field=$computedField item="{if isset($items[user])}{$items[user]}{/if}" list_mode="{if isset($list_mode)}{$list_mode}{/if}" url="{$url}"}<br/>
 									{/foreach}
 								</td>
 							{else}
