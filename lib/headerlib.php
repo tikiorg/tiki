@@ -519,8 +519,10 @@ class HeaderLib
 		// output dynamic and cdn first - they cannot be minified anyway
 		$ranks = array('10dynamic', '20cdn');
 		foreach ($ranks as $rank) {
-			foreach ($jsfiles[$rank] as $entry) {
-				$output[] = "<script type=\"text/javascript\" src=\"".smarty_modifier_escape($entry)."\"></script>\n";
+			if (isset($jsfiles[$rank])) {
+				foreach ($jsfiles[$rank] as $entry) {
+					$output[] = "<script type=\"text/javascript\" src=\"" . smarty_modifier_escape($entry) . "\"></script>\n";
+				}
 			}
 		}
 		
@@ -532,9 +534,11 @@ class HeaderLib
 		if (!$minifyActive) {
 			$ranks = array('30dependancy', '40external', '50standard', '60late');
 			foreach ($ranks as $rank) {
-				foreach ($jsfiles[$rank] as $entry) {
-					$entry = $this->convert_cdn($entry, $rank);
-					$output[] = "<script type=\"text/javascript\" src=\"".smarty_modifier_escape($entry)."\"></script>\n";
+				if (isset($jsfiles[$rank])) {
+					foreach ($jsfiles[$rank] as $entry) {
+						$entry = $this->convert_cdn($entry, $rank);
+						$output[] = "<script type=\"text/javascript\" src=\"" . smarty_modifier_escape($entry) . "\"></script>\n";
+					}
 				}
 			}
 		} else {
