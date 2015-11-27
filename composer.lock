@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "173e38b0e827444caaca1568eb7def4b",
+    "hash": "91999f056a6a7d6538dd4366f2b84984",
     "content-hash": "31d8630e180657cacc52efc5b348b99d",
     "packages": [
         {
@@ -849,19 +849,24 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/smarty-smarty-v3.1.14-a8f22b.zip",
-                "reference": "v3.1.14",
-                "shasum": "69a262b46a1821222eb3ba5847b46ac335457205"
+                "url": "https://composer.tiki.org/dist/smarty-smarty-5ea2a50161a0ce2482222cd42467432fe7ab1baa-zip-2f4bab.zip",
+                "reference": "5ea2a50161a0ce2482222cd42467432fe7ab1baa",
+                "shasum": "8d563f7a098a4c6418f17869bb17519e785002b2"
             },
             "require": {
                 "php": ">=5.2"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1.x-dev"
+                }
+            },
             "autoload": {
                 "classmap": [
-                    "distribution/libs/Smarty.class.php",
-                    "distribution/libs/SmartyBC.class.php",
-                    "distribution/libs/sysplugins/smarty_security.php"
+                    "libs/Smarty.class.php",
+                    "libs/SmartyBC.class.php",
+                    "libs/sysplugins/smarty_security.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -887,7 +892,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2013-07-02 16:38:47"
+            "time": "2014-10-31 00:55:21"
         },
         {
             "name": "svg-edit/svg-edit",

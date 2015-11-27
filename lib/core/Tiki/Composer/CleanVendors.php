@@ -73,7 +73,7 @@ class CleanVendors
 		self::deleteDirectory($vendors . 'phpseclib/phpseclib/tests');
 		self::deleteDirectory($vendors . 'smarty/smarty/development');
 		self::deleteDirectory($vendors . 'smarty/smarty/documentation');
-		self::deleteDirectory($vendors . 'smarty/smarty/distribution/demo');
+		self::deleteDirectory($vendors . 'smarty/smarty/demo');
 		self::deleteDirectory($vendors . 'zetacomponents/base/design');
 		self::deleteDirectory($vendors . 'zetacomponents/base/docs');
 		self::deleteDirectory($vendors . 'zetacomponents/base/tests');
