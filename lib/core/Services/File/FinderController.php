@@ -195,16 +195,25 @@ class Services_File_FinderController
 				$fileId = str_replace('f_', '', $fileId);
 				$display = '';
 
+				$url = $base_url . 'tiki-download_file.php?fileId=' . $fileId;
+
 				if (! $input->download->int()) {	// images can be displayed
 
 					$info = $filegallib->get_file($fileId);
 
 					if (strpos($info['filetype'], 'image/') !== false) {
-						$display = '&display';
+
+						$url .= '&display';
+
+					} else if ($prefs['fgal_viewerjs_feature'] === 'y' &&
+							($info['filetype'] === 'application/pdf' or
+									strpos($info['filetype'], 'application/vnd.oasis.opendocument.') !== false)) {
+
+						$url = \ZendOpenId\OpenId::absoluteUrl($prefs['fgal_viewerjs_uri']) . '#' . $url;
 					}
 				}
 
-				TikiLib::lib('access')->redirect($base_url . 'tiki-download_file.php?fileId=' . $fileId . $display);
+				TikiLib::lib('access')->redirect($url);
 				return array();
 			}
 		}
