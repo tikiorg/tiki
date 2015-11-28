@@ -154,40 +154,42 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 				{if ($tstotals) && $tsOn}
 					{include file="tablesorter/totals.tpl" nofoot="y" fieldcount="{$fieldcount}" precols="{$precols}" postcols="{$postcols}"}
 				{/if}
-				<tr class='compute'>
-					{if isset($checkbox) && $checkbox}<td></td>{/if}
-					{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $perms.tiki_p_admin_trackers eq 'y'))}<td></td>{/if}
-					{if $showitemrank eq 'y'}<td></td>{/if}
-					{foreach key=jx item=ix from=$fields}
-						{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $perms.tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h'
-							and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy)
-							or $perms.tiki_p_admin_trackers eq 'y')}
-							{if isset($computedFields[$ix.fieldId])}
-								<td class="numeric" style="padding-right:2px">
-									{foreach from=$computedFields[$ix.fieldId] item=computedField name=computedField}
-										<label>{if isset($computedField.operator) && $computedField.operator eq 'avg'}{tr}Average{/tr}{else}{tr}Total{/tr}</label>{/if}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										{if isset($texturl) && isset($items[user].itemId)}
-											{$url=$txturl|replacei:'#itemId':$items[user].itemId}
-										{elseif isset($texturl)}
-											{$url = "{$txturl}"}
-										{/if}
-										{trackeroutput field=$computedField item="{if isset($items[user])}{$items[user]}{/if}" list_mode="{if isset($list_mode)}{$list_mode}{/if}" url="{$url}"}<br/>
-									{/foreach}
-								</td>
-							{else}
-								<td></td>
+				{if !empty($computedFields)}
+					<tr class='compute'>
+						{if isset($checkbox) && $checkbox}<td></td>{/if}
+						{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $perms.tiki_p_admin_trackers eq 'y'))}<td></td>{/if}
+						{if $showitemrank eq 'y'}<td></td>{/if}
+						{foreach key=jx item=ix from=$fields}
+							{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $perms.tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h'
+								and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy)
+								or $perms.tiki_p_admin_trackers eq 'y')}
+								{if isset($computedFields[$ix.fieldId])}
+									<td class="numeric" style="padding-right:2px">
+										{foreach from=$computedFields[$ix.fieldId] item=computedField name=computedField}
+											<label>{if isset($computedField.operator) && $computedField.operator eq 'avg'}{tr}Average{/tr}{else}{tr}Total{/tr}</label>{/if}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											{if isset($texturl) && isset($items[user].itemId)}
+												{$url=$txturl|replacei:'#itemId':$items[user].itemId}
+											{elseif isset($texturl)}
+												{$url = "{$txturl}"}
+											{/if}
+											{trackeroutput field=$computedField item="{if isset($items[user])}{$items[user]}{/if}" list_mode="{if isset($list_mode)}{$list_mode}{/if}" url="{$url}"}<br/>
+										{/foreach}
+									</td>
+								{else}
+									<td></td>
+								{/if}
 							{/if}
+						{/foreach}
+						{if $showcreated eq 'y'}<td></td>{/if}
+						{if $showlastmodif eq 'y'}<td></td>{/if}
+						{if $showlastmodifby eq 'y'}<td></td>{/if}
+						{if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y' and $perms.tiki_p_tracker_view_comments ne 'n'}<td></td>{/if}
+						{if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}<td></td>{/if}
+						{if ($showdelete eq 'y' || $showpenditem eq 'y' || $showopenitem eq 'y' || $showcloseitem eq 'y') && ($perms.tiki_p_admin_trackers eq 'y' or $perms.tiki_p_remove_tracker_items eq 'y' or $perms.tiki_p_remove_tracker_items_pending eq 'y' or $perms.tiki_p_remove_tracker_items_closed eq 'y')}
+							<td></td>
 						{/if}
-					{/foreach}
-					{if $showcreated eq 'y'}<td></td>{/if}
-					{if $showlastmodif eq 'y'}<td></td>{/if}
-					{if $showlastmodifby eq 'y'}<td></td>{/if}
-					{if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y' and $perms.tiki_p_tracker_view_comments ne 'n'}<td></td>{/if}
-					{if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}<td></td>{/if}
-					{if ($showdelete eq 'y' || $showpenditem eq 'y' || $showopenitem eq 'y' || $showcloseitem eq 'y') && ($perms.tiki_p_admin_trackers eq 'y' or $perms.tiki_p_remove_tracker_items eq 'y' or $perms.tiki_p_remove_tracker_items_pending eq 'y' or $perms.tiki_p_remove_tracker_items_closed eq 'y')}
-						<td></td>
-					{/if}
-				</tr>
+					</tr>
+				{/if}
 			</tfoot>
 		{/if}
 					</table>
