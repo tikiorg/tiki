@@ -388,8 +388,8 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 			$client->setUri($attachment['link']);
 
 			try {
-				$response = $client->request();
-			} catch (Zend_Http_Client_Adapter_Exception $e) {
+				$response = $client->send();
+			} catch (Zend\Http\Exception\ExceptionInterface $e) {
 				$this->saveAndDisplayLog(
 					'Unable to download file ' . $attachment['fileName'] . '. Error message was: ' . $e->getMessage() . "\n",
 					true
@@ -398,11 +398,11 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 				continue;
 			}
 
-			$data = $response->getRawBody();
-			$size = $response->getHeader('Content-length');
-			$mimeType = $response->getHeader('Content-type');
+			$data = $response->getBody();
+			$size = $response->getHeaders()->get('Content-length');
+			$mimeType = $response->getHeaders()->get('Content-type');
 
-			if ($response->isSuccessful()) {
+			if ($response->isSuccess()) {
 				$fileId = $filegallib->insert_file(
 					$galleryId,
 					$attachment['name'],
@@ -430,8 +430,8 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 					tr(
 						'Unable to download attachment %0. Error message was: %1 %2',
 						$attachment['fileName'],
-						$response->getStatus(),
-						$response->getMessage()
+						$response->getStatusCode(),
+						$response->getReasonPhrase()
 					) . "\n",
 					true
 				);
@@ -875,11 +875,11 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		return $created;
 	}
 
-	//TODO: check if a proxy is configured and than use Zend_Http_Client_Adapter_Proxy
+	//TODO: check if a proxy is configured and than use Zend\Http\Client\Adapter\Proxy
 	/**
-	 * Set $this->httpClient property as an instance of Zend_Http_Client
+	 * Set $this->httpClient property as an instance of Zend\Http\Client
 	 *
-	 * @return void
+	 * @return Zend\Http\Client
 	 */
 	function getHttpClient()
 	{

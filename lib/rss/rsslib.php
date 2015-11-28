@@ -133,7 +133,7 @@ class RSSLib extends TikiDb_Bridge
 	}
 
 	/**
-	 * Generate a feed (ATOM 1.0 or RSS 2.0 using Zend_Feed_Writer_Feed
+	 * Generate a feed (ATOM 1.0 or RSS 2.0 using Zend\Feed\Writer\Feed
 	 *
 	 * @param string $section Tiki feature the feed is related to
 	 * @param string $uniqueid
@@ -205,7 +205,7 @@ class RSSLib extends TikiDb_Bridge
 		$desc = htmlspecialchars($desc);
 		$read = $URLPrefix.$itemurl;
 
-		$feed = new Zend_Feed_Writer_Feed();
+		$feed = new Zend\Feed\Writer\Feed();
 		$feed->setTitle($title);
 		$feed->setDescription($desc);
 
@@ -483,8 +483,8 @@ class RSSLib extends TikiDb_Bridge
 
 		try {
 			$content = $tikilib->httprequest($url);
-			$feed = Zend_Feed_Reader::importString($content);
-		} catch( Zend_Exception $e ) {
+			$feed = Zend\Feed\Reader\Reader::importString($content);
+		} catch( Zend\Feed\Exception\ExceptionInterface $e ) {
 			$this->modules->update(
 				array(
 					'lastUpdated' => $tikilib->now,
@@ -527,7 +527,7 @@ class RSSLib extends TikiDb_Bridge
 
 			$data['guid'] = $guid;
 			if ( method_exists($entry, 'getDateCreated') && $createdDate = $entry->getDateCreated() ) {
-				$data['publication_date'] = $createdDate->get(Zend_Date::TIMESTAMP);
+				$data['publication_date'] = $createdDate->getTimestamp();
 			} else {
 				global $tikilib;
 				$data['publication_date'] = $tikilib->now;
@@ -861,7 +861,7 @@ class RSSLib extends TikiDb_Bridge
 		require_once 'lib/smarty_tiki/modifier.sefurl.php';
 
 		$tikilib = TikiLib::lib('tiki');
-		$writer = new Zend_Feed_Writer_Feed;
+		$writer = new Zend\Feed\Writer\Feed();
 		$writer->setTitle($feed_descriptor['feedTitle']);
 		$writer->setDescription($feed_descriptor['feedDescription']);
 		$writer->setLink($tikilib->tikiUrl(''));

@@ -784,13 +784,13 @@ if ($s) {
 	$php_properties['intl'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Loaded',
-		'message' => tra("intl extension will be needed in future versions of Tiki.")
+		'message' => tra("intl extension is required for Tiki 15 onwards.")
 	);
 } else {
 	$php_properties['intl'] = array(
-		'fitness' => tra('info'),
+		'fitness' => tra('bad'),
 		'setting' => 'Not available',
-		'message' => tra("intl extension will be needed in future versions of Tiki.")
+		'message' => tra("intl extension is required for Tiki 15 onwards.")
 	);
 }
 

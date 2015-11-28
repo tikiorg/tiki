@@ -11,7 +11,7 @@
  *
  */
 
-class StandardAnalyzer_Analysis_TokenFilter_EnglishStemmer extends Zend_Search_Lucene_Analysis_TokenFilter
+class StandardAnalyzer_Analysis_TokenFilter_EnglishStemmer implements ZendSearch\Lucene\Analysis\TokenFilter\TokenFilterInterface
 {
     /**
      * Stop Words
@@ -29,13 +29,13 @@ class StandardAnalyzer_Analysis_TokenFilter_EnglishStemmer extends Zend_Search_L
     /**
      * Normalize Token or remove it (if null is returned)
      *
-     * @param Zend_Search_Lucene_Analysis_Token $srcToken
-     * @return Zend_Search_Lucene_Analysis_Token
+     * @param ZendSearch\Lucene\Analysis\Token $srcToken
+     * @return ZendSearch\Lucene\Analysis\Token
      */
-	public function normalize(Zend_Search_Lucene_Analysis_Token $srcToken)
+	public function normalize(ZendSearch\Lucene\Analysis\Token $srcToken)
 	{
 
-		$newToken = new Zend_Search_Lucene_Analysis_Token(
+		$newToken = new ZendSearch\Lucene\Analysis\Token(
 			PorterStemmer::stem($srcToken->getTermText()),
 			$srcToken->getStartOffset(),
 			$srcToken->getEndOffset()

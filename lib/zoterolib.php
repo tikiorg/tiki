@@ -52,7 +52,7 @@ class ZoteroLib extends TikiDb_Bridge
 		);
 
 		if ($response && $response->isSuccessful()) {
-			$feed = Zend_Feed_Reader::importString($response->getBody());
+			$feed = Zend\Feed\Reader\Reader::importString($response->getBody());
 
 			$data = array();
 			foreach ($feed as $entry) {
@@ -60,7 +60,7 @@ class ZoteroLib extends TikiDb_Bridge
 					'key' => basename($entry->getLink()),
 					'url' => $entry->getLink(),
 					'title' => $entry->getTitle(),
-					'content' => $entry->getContent(),
+					'content' => $entry->getDescription(),
 				);
 			}
 
@@ -111,14 +111,14 @@ class ZoteroLib extends TikiDb_Bridge
 		if ($response->isSuccessful()) {
 			$entry = $response->getBody();
 			$entry = str_replace('<entry ', '<feed xmlns="http://www.w3.org/2005/Atom"><entry ', $entry) . '</feed>';
-			$feed = Zend_Feed_Reader::importString($entry);
+			$feed = Zend\Feed\Reader\Reader::importString($entry);
 
 			foreach ($feed as $entry) {
 				return array(
 					'key' => basename($entry->getLink()),
 					'url' => $entry->getLink(),
 					'title' => $entry->getTitle(),
-					'content' => $entry->getContent(),
+					'content' => $entry->getDescription(),
 				);
 			}
 		}

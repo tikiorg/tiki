@@ -20,11 +20,11 @@ class Search_Lucene_Index implements Search_Index_Interface
 		switch($lang) {
 		case 'en':
 			default:
-				Zend_Search_Lucene_Analysis_Analyzer::setDefault(new StandardAnalyzer_Analyzer_Standard_English());
-				Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('UTF-8');
+				ZendSearch\Lucene\Analysis\Analyzer\Analyzer::setDefault(new StandardAnalyzer_Analyzer_Standard_English());
+				ZendSearch\Lucene\Search\QueryParser::setDefaultEncoding('UTF-8');
 		}
 
-		Zend_Search_Lucene_Storage_Directory_Filesystem::setDefaultFilePermissions(0660);
+		ZendSearch\Lucene\Storage\Directory\Filesystem::setDefaultFilePermissions(0660);
 		$this->directory = $directory;
 		$this->lastModif = file_exists($directory) ? filemtime($directory) : 0;
 
@@ -38,9 +38,9 @@ class Search_Lucene_Index implements Search_Index_Interface
 		}
 
 		try {
-			$this->lucene = Zend_Search_Lucene::open($this->directory);
-		} catch (Zend_Search_Lucene_Exception $e) {
-			$this->lucene = Zend_Search_Lucene::create($this->directory);
+			$this->lucene = ZendSearch\Lucene\Lucene::open($this->directory);
+		} catch (ZendSearch\Lucene\Exception\ExceptionInterface $e) {
+			$this->lucene = ZendSearch\Lucene\Lucene::create($this->directory);
 		}
 		global $prefs;
 		if (!empty($prefs['unified_lucene_max_buffered_docs'])) {							// these break indexing if set empty
@@ -52,7 +52,7 @@ class Search_Lucene_Index implements Search_Index_Interface
 		if (!empty($prefs['unified_lucene_merge_factor'])) {
 			$this->lucene->setMergeFactor($prefs['unified_lucene_merge_factor']);			// default is 10
 		}
-		$this->lucene->setResultSetLimit($this->resultSetLimit);
+		ZendSearch\Lucene\Lucene::setResultSetLimit($this->resultSetLimit);
 
 		return $this->lucene;
 	}
@@ -297,7 +297,7 @@ class Search_Lucene_Index implements Search_Index_Interface
 
 	private function generateDocument($data)
 	{
-		$document = new Zend_Search_Lucene_Document;
+		$document = new ZendSearch\Lucene\Document;
 		$typeMap = array(
 			'Search_Type_WikiText' => 'UnStored',
 			'Search_Type_PlainText' => 'UnStored',
@@ -309,7 +309,7 @@ class Search_Lucene_Index implements Search_Index_Interface
 		);
 		foreach ($data as $key => $value) {
 			$luceneType = $typeMap[get_class($value)];
-			$field = Zend_Search_Lucene_Field::$luceneType($key, $value->getValue(), 'UTF-8');
+			$field = ZendSearch\Lucene\Document\Field::$luceneType($key, $value->getValue(), 'UTF-8');
 			$document->addField($field);
 		}
 
@@ -322,7 +322,7 @@ class Search_Lucene_Index implements Search_Index_Interface
 
 		// FIX : Depending on the locale, decimals may be rendered as 1,2 instead of 1.2, causing lucene to go crazy
 		$query = preg_replace('/\^(\d+),(\d+)/', '^$1.$2', $query);
-		return Zend_Search_Lucene_Search_QueryParser::parse($query, 'UTF-8');
+		return ZendSearch\Lucene\Search\QueryParser::parse($query, 'UTF-8');
 	}
 
 	function walkCallback($node, $childNodes)
@@ -343,7 +343,7 @@ class Search_Lucene_Index implements Search_Index_Interface
 		} elseif ($node instanceof Search_Expr_Or) {
 			$term = $this->buildCondition($childNodes, null);
 		} elseif ($node instanceof Search_Expr_Not) {
-			$result = new Zend_Search_Lucene_Search_Query_Boolean;
+			$result = new ZendSearch\Lucene\Search\Query\Boolean;
 			$result->addSubquery($childNodes[0], false);
 
 			$term = $result;
@@ -356,7 +356,7 @@ class Search_Lucene_Index implements Search_Index_Interface
 
 			// Range search not supported for phrases, so revert to normal token matching
 			if (method_exists($from, 'getTerm')) {
-				$range = new Zend_Search_Lucene_Search_Query_Range(
+				$range = new ZendSearch\Lucene\Search\Query\Range(
 					$from->getTerm(),
 					$to->getTerm(),
 					true // inclusive
@@ -381,11 +381,11 @@ class Search_Lucene_Index implements Search_Index_Interface
 
 	private function buildCondition($childNodes, $required)
 	{
-		$result = new Zend_Search_Lucene_Search_Query_Boolean;
+		$result = new ZendSearch\Lucene\Search\Query\Boolean;
 		foreach ($childNodes as $child) {
 
 			// Detect if child is a NOT, and reformulate on the fly to support the syntax
-			if ($child instanceof Zend_Search_Lucene_Search_Query_Boolean) {
+			if ($child instanceof ZendSearch\Lucene\Search\Query\Boolean) {
 				$signs = $child->getSigns();
 				if (count($signs) === 1 && $signs[0] === false) {
 					$subs = $child->getSubqueries();
@@ -415,17 +415,17 @@ class Search_Lucene_Index implements Search_Index_Interface
 
 			$parts = explode(' ', $this->leftToRight($whole));
 			if (count($parts) === 1) {
-				return new Zend_Search_Lucene_Search_Query_Term(new Zend_Search_Lucene_Index_Term($parts[0], $field), true);
+				return new ZendSearch\Lucene\Search\Query\Term(new ZendSearch\Lucene\Index\Term($parts[0], $field), true);
 			} else {
-				return new Zend_Search_Lucene_Search_Query_Phrase($parts, array_keys($parts), $field);
+				return new ZendSearch\Lucene\Search\Query\Phrase($parts, array_keys($parts), $field);
 			}
 		case 'Search_Type_Timestamp':
 			$parts = explode(' ', $value->getValue());
-			return new Zend_Search_Lucene_Search_Query_Term(new Zend_Search_Lucene_Index_Term($parts[0], $field), true);
+			return new ZendSearch\Lucene\Search\Query\Term(new ZendSearch\Lucene\Index\Term($parts[0], $field), true);
 		case 'Search_Type_Whole':
 		case 'Search_Type_Numeric':
 			$parts = explode(' ', $value->getValue());
-			return new Zend_Search_Lucene_Search_Query_Phrase($parts, array_keys($parts), $field);
+			return new ZendSearch\Lucene\Search\Query\Phrase($parts, array_keys($parts), $field);
 		}
 	}
 

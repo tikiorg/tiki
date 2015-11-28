@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class TikiFilter_Word extends Zend_Filter_PregReplace
+class TikiFilter_Word extends Zend\Filter\PregReplace
 {
 	function __construct()
 	{

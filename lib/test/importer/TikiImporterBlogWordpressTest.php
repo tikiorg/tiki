@@ -460,7 +460,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 		$filegallib = $this->getMock('FileGalLib', array('insert_file'));
 		$filegallib->expects($this->exactly(3))->method('insert_file')->will($this->returnValue(1));
 
-		$adapter = new Zend_Http_Client_Adapter_Test();
+		$adapter = new Zend\Http\Client\Adapter\Test();
 
 		$adapter->setResponse(
 			"HTTP/1.1 200 OK"         . "\r\n" .
@@ -470,7 +470,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 			'empty content'
 		);
 
-		$client = new Zend_Http_Client();
+		$client = new Zend\Http\Client();
 		$client->setAdapter($adapter);
 
 		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('getHttpClient', 'createFileGallery'));
@@ -544,10 +544,10 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 		$filegallib = $this->getMock('FileGalLib', array('insert_file'));
 		$filegallib->expects($this->exactly(0))->method('insert_file');
 
-		$adapter = new Zend_Http_Client_Adapter_Test();
+		$adapter = new Zend\Http\Client\Adapter\Test();
 		$adapter->setNextRequestWillFail(true);
 
-		$client = new Zend_Http_Client();
+		$client = new Zend\Http\Client();
 		$client->setAdapter($adapter);
 
 		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('getHttpClient', 'createFileGallery'));
@@ -567,7 +567,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 
 		$filegallib = $this->getMock('FileGalLib', array('insert_file'));
 		$filegallib->expects($this->exactly(0))->method('insert_file');
-		$adapter = new Zend_Http_Client_Adapter_Test();
+		$adapter = new Zend\Http\Client\Adapter\Test();
 
 		$adapter->setResponse(
 			"HTTP/1.1 404 NOT FOUND"         . "\r\n" .
@@ -577,7 +577,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 			'empty content'
 		);
 
-		$client = new Zend_Http_Client();
+		$client = new Zend\Http\Client();
 		$client->setAdapter($adapter);
 
 		$obj = $this->getMock('TikiImporter_Blog_Wordpress', array('getHttpClient', 'createFileGallery'));

@@ -171,7 +171,7 @@ class TikiLib extends TikiDb_Bridge
 
 	/**
 	 * @param bool $url
-	 * @return mixed|Zend_Http_Client
+	 * @return mixed|Zend\Http\Client
 	 */
 	function get_http_client($url = false)
 	{
@@ -183,7 +183,7 @@ class TikiLib extends TikiDb_Bridge
 		);
 
 		if ($prefs['use_proxy'] == 'y') {
-			$config['adapter'] = 'Zend_Http_Client_Adapter_Proxy';
+			$config['adapter'] = 'Zend\Http\Client\Adapter\Proxy';
 			$config["proxy_host"] = $prefs['proxy_host'];
 			$config["proxy_port"] = $prefs['proxy_port'];
 
@@ -193,12 +193,12 @@ class TikiLib extends TikiDb_Bridge
 			}
 		}
 
-		$client = new Zend_Http_Client(null, $config);
+		$client = new Zend\Http\Client(null, $config);
 
 		if ($url) {
 			$client = $this->prepare_http_client($client, $url);
 
-			$client->setUri($this->urlencode_accent($url));	// Zend_Http_Client seems to fail with accents in urls (jb june 2011)
+			$client->setUri($this->urlencode_accent($url));	// Zend\Http\Client seems to fail with accents in urls (jb june 2011)
 		}
 
 		return $client;
@@ -254,7 +254,7 @@ class TikiLib extends TikiDb_Bridge
 	 */
 	private function prepare_http_auth_basic($client, $arguments)
 	{
-		$client->setAuth($arguments['username'], $arguments['password'], Zend_Http_Client::AUTH_BASIC);
+		$client->setAuth($arguments['username'], $arguments['password'], Zend\Http\Client::AUTH_BASIC);
 
 		return $client;
 	}
@@ -269,8 +269,9 @@ class TikiLib extends TikiDb_Bridge
 		$url = $arguments['url'];
 
 		$client->setCookieJar();
-		$client->setUri($this->urlencode_accent($url)); // Zend_Http_Client seems to fail with accents in urls
-		$response = $client->request(Zend_Http_Client::GET);
+		$client->setUri($this->urlencode_accent($url)); // Zend\Http\Client seems to fail with accents in urls
+		$client->setMethod(Zend\Http\Request::METHOD_GET);
+		$response = $client->send();
 		$client->resetParameters();
 
 		return $client;
@@ -287,13 +288,15 @@ class TikiLib extends TikiDb_Bridge
 		unset($arguments['post_url']);
 
 		$client->setCookieJar();
-		$client->setUri($this->urlencode_accent($url)); // Zend_Http_Client seems to fail with accents in urls
-		$response = $client->request(Zend_Http_Client::GET);
+		$client->setUri($this->urlencode_accent($url)); // Zend\Http\Client seems to fail with accents in urls
+		$client->setMethod(Zend\Http\Request::METHOD_GET);
+		$response = $client->send();
 		$client->resetParameters();
 
-		$client->setUri($this->urlencode_accent($url)); // Zend_Http_Client seems to fail with accents in urls
+		$client->setUri($this->urlencode_accent($url)); // Zend\Http\Client seems to fail with accents in urls
 		$client->setParameterPost($arguments);
-		$response = $client->request(Zend_Http_Client::POST);
+		$client->setMethod(Zend\Http\Request::METHOD_POST);
+		$response = $client->send();
 		$client->resetParameters();
 
 		return $client;
@@ -306,7 +309,7 @@ class TikiLib extends TikiDb_Bridge
 	function http_perform_request($client)
 	{
 		global $prefs;
-		$response = $client->request();
+		$response = $client->send();
 
 		$attempts = 0;
 		while ($response->isRedirect() && $attempts < 10) { // prevent redirect loop
@@ -332,7 +335,7 @@ class TikiLib extends TikiDb_Bridge
 	private function http_perform_request_skip_frameset($client, $response)
 	{
 		// Only attempt if document is declared as HTML
-		if (0 === strpos($response->getHeader('Content-Type'), 'text/html')) {
+		if (0 === strpos($response->getHeaders()->get('Content-Type'), 'text/html')) {
 			$use_int_errors = libxml_use_internal_errors(true); // suppress errors and warnings due to bad HTML
 			$dom = new DOMDocument;
 			if ($response->getBody() && $dom->loadHTML($response->getBody())) {
@@ -346,7 +349,7 @@ class TikiLib extends TikiDb_Bridge
 							$client->setUri($this->http_get_uri($client->getUri(), $this->urlencode_accent($f->getAttribute('src'))));
 							libxml_clear_errors();
 							libxml_use_internal_errors($use_int_errors);
-							return $client->request();
+							return $client->send();
 						}
 					}
 				}
@@ -357,14 +360,15 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	/**
-	 * @param Zend_Uri_Http $uri
+	 * @param Zend\Uri\Http $uri
 	 * @param $relative
-	 * @return Zend_Uri_Http
+	 * @return Zend\Uri\Http
 	 */
-	function http_get_uri(Zend_Uri_Http $uri, $relative)
+	function http_get_uri(Zend\Uri\Http $uri, $relative)
 	{
 		if (strpos($relative, 'http://') === 0 || strpos($relative, 'https://') === 0) {
-			$uri = Zend_Uri_Http::fromString($relative);
+			$uri = new Zend\Uri\Http($relative);
+
 		} else {
 			$uri = clone $uri;
 			$uri->setQuery(array());
@@ -407,14 +411,15 @@ class TikiLib extends TikiDb_Bridge
 
 		try {
 			$client = $this->get_http_client($url);
+			/* @var $response Zend\Http\Response */
 			$response = $this->http_perform_request($client);
 
-			if ($response->isError()) {
+			if (!$response->isSuccess()) {
 				return false;
 			}
 
 			return $response->getBody();
-		} catch (Zend_Http_Exception $e) {
+		} catch (Zend\Http\Exception\ExceptionInterface $e) {
 			return false;
 		}
 	}
@@ -6975,7 +6980,7 @@ function detect_browser_language()
  */
 function validate_email($email)
 {
-	$validate = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_ALL);
+	$validate = new Zend\Validator\EmailAddress(['allow' => Zend\Validator\Hostname::ALLOW_ALL]);
 	return $validate->isValid($email);
 }
 

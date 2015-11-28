@@ -26,7 +26,7 @@ class OAuthLib extends TikiDb_Bridge
 			$client = $access->getHttpClient($configuration);
 
 			if (isset($configuration['secretAsGet'])) {
-				$client->setParameterGet($configuration['secretAsGet'], $access->getTokenSecret());
+				$client->getRequest()->getQuery()->set($configuration['secretAsGet'], $access->getTokenSecret());
 			}
 		} else {
 			$client = TikiLib::lib('tiki')->get_http_client();
@@ -35,23 +35,23 @@ class OAuthLib extends TikiDb_Bridge
 		$client->setUri($arguments['url']);
 
 		if (isset($arguments['post'])) {
-			$client->setMethod(Zend_Http_Client::POST);
+			$client->setMethod(Zend\Http\Request::METHOD_POST);
 			foreach ($arguments['post'] as $key => $value) {
-				$client->setParameterPost($key, $value);
+				$client->getRequest()->getPost()->set($key, $value);
 			}
 		}
 
 		if (isset($arguments['get'])) {
 			foreach ($arguments['get'] as $key => $value) {
-				$client->setParameterGet($key, $value);
+				$client->getRequest()->getQuery()->set($key, $value);
 			}
 		}
 
 		try {
-			$response = $client->request();
+			$response = $client->send();
 
 			return $response;
-		} catch (Zend_Http_Exception $e) {
+		} catch (Zend\Http\Exception\ExceptionInterface $e) {
 			return null;
 		}
 	}
@@ -65,7 +65,7 @@ class OAuthLib extends TikiDb_Bridge
 				$_SESSION['OAUTH_REQUEST_' . $provider_key] = serialize($consumer->getRequestToken());
 				$consumer->redirect();
 			}
-		} catch (Zend_Oauth_Exception $e) {
+		} catch (ZendOAuth\Exception\ExceptionInterface $e) {
 			$oauth_ex = $e->getPrevious();
 			$prevErr = '';
 			if ($oauth_ex != null) {
@@ -87,7 +87,7 @@ class OAuthLib extends TikiDb_Bridge
 				$this->store_token($provider_key, $accessToken);
 
 				unset($_SESSION[$key]);
-			} catch (Zend_Oauth_Exception $e) {
+			} catch (ZendOAuth\Exception\ExceptionInterface $e) {
 				$oauth_ex = $e->getPrevious();
 				$prevErr = '';
 				if ($oauth_ex != null)
@@ -109,7 +109,7 @@ class OAuthLib extends TikiDb_Bridge
 		$config = $this->get_configuration($provider_key);
 
 		if (! empty($config['accessToken']) && ! empty($config['accessTokenSecret'])) {
-			$token = new Zend_Oauth_Token_Access;
+			$token = new ZendOAuth\Token\Access();
 			$token->setParams(
 				array(
 					'oauth_token' => $config['accessToken'],
@@ -169,7 +169,7 @@ class OAuthLib extends TikiDb_Bridge
 	private function get_consumer($provider_key)
 	{
 		if ($configuration = $this->get_configuration($provider_key)) {
-			return new Zend_Oauth_Consumer($configuration);
+			return new ZendOAuth\Consumer($configuration);
 		}
 	}
 }

@@ -141,7 +141,7 @@ class Math_Formula_Runner
 	private function getPrefixFactory($prefix)
 	{
 		return function ($functionName) use ($prefix) {
-			$filter = new Zend_Filter_Word_DashToCamelCase;
+			$filter = new Zend\Filter\Word\DashToCamelCase;
 
 			// Workaround Deprecated errors showing from Zend lib
 			if (error_reporting() & E_DEPRECATED) {

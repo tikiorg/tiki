@@ -38,7 +38,7 @@ Class FutureLink_SendToFuture extends Feed_Abstract
 				if (empty($item->futurelink->href) || isset($sent[$item->futurelink->hash])) continue;
 
 				$sent[$item->futurelink->hash] = true;
-				$client = new Zend_Http_Client($item->futurelink->href, array('timeout' => 60));
+				$client = new Zend\Http\Client($item->futurelink->href, array('timeout' => 60));
 
 				if (!empty($feed->feed->entry)) {
 					$client->setParameterPost(
@@ -49,7 +49,8 @@ Class FutureLink_SendToFuture extends Feed_Abstract
 					);
 
 						try {
-							$response = $client->request(Zend_Http_Client::POST);
+							$client->setMethod(Zend\Http\Request::METHOD_POST);
+							$response = $client->send();
 							$request = $client->getLastResponse();
 			                $result = $response->getBody();
 							$resultJson = json_decode($response->getBody());

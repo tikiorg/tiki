@@ -12,22 +12,22 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) != FALSE) {
 }
 
 /**
- * A simple class to switch between Zend_Captcha_Image and
- * Zend_Captcha_ReCaptcha based on admin preference
+ * A simple class to switch between Zend\Captcha\Image and
+ * Zend\Captcha\ReCaptcha based on admin preference
  */
 class Captcha
 {
 
 	/**
-	 * The type of the captch ('default' when using Zend_Captcha_Image
-	 * or 'recaptcha' when using Zend_Captcha_ReCaptcha)
+	 * The type of the captch ('default' when using Zend\Captcha\Image
+	 * or 'recaptcha' when using Zend\Captcha\ReCaptcha)
 	 *
 	 * @var string
 	 */
 	public $type = '';
 
 	/**
-	 * An instance of Zend_Captcha_Image or Zend_Captcha_ReCaptcha
+	 * An instance of Zend\Captcha\Image or Zend\Captcha\ReCaptcha
 	 * depending on the value of $this->type
 	 *
 	 * @var object
@@ -36,7 +36,7 @@ class Captcha
 
 	/**
 	 * Class constructor: decides whether to create an instance of
-	 * Zend_Captcha_Image or Zend_Captcha_ReCaptcha or Captcha_Question
+	 * Zend\Captcha\Image or Zend\Captcha\ReCaptcha or Captcha_Question
 	 *
 	 * @param string $type recaptcha|questions|default|dumb
 	 */
@@ -57,13 +57,13 @@ class Captcha
 		}
 
 		if ($type === 'recaptcha') {
-			$this->captcha = new Zend_Captcha_ReCaptcha(
+			$this->captcha = new Zend\Captcha\ReCaptcha(
 				array(
-					'privkey' => $prefs['recaptcha_privkey'],
-					'pubkey' => $prefs['recaptcha_pubkey'],
-					'theme' => isset($prefs['recaptcha_theme']) ? $prefs['recaptcha_theme'] : 'clean',
+					'private_key' => $prefs['recaptcha_privkey'],
+					'public_key' => $prefs['recaptcha_pubkey'],
 				)
 			);
+			$this->captcha->getService()->setOption('theme', isset($prefs['recaptcha_theme']) ? $prefs['recaptcha_theme'] : 'clean');
 
 			$this->captcha->setOption('ssl', true);
 
@@ -71,7 +71,7 @@ class Captcha
 
 			$this->recaptchaCustomTranslations();
 		} else if ($type === 'default') {
-			$this->captcha = new Zend_Captcha_Image(
+			$this->captcha = new Zend\Captcha\Image(
 				array(
 					'wordLen' => $prefs['captcha_wordLen'],
 					'timeout' => 600,
@@ -103,7 +103,7 @@ class Captcha
 
 
 		} else {		// implied $type==='dumb'
-			$this->captcha = new Zend_Captcha_Dumb;
+			$this->captcha = new Zend\Captcha\Dumb;
 			$this->captcha->setWordlen($prefs['captcha_wordLen']);
 			$this->captcha->setLabel(tra('Please type this word backwards'));
 			$this->type = 'dumb';
@@ -129,7 +129,7 @@ class Captcha
 				$this->captcha->setSession($session);
 				$this->captcha->setKeepSession(false);
 			}
-		} catch (Zend_Exception $e) {
+		} catch (Zend\Captcha\Exception\ExceptionInterface $e) {
 		}
 		return $key;
 	}
@@ -161,6 +161,9 @@ Recaptcha.create("' . $this->captcha->getPubKey() . '",
 ', 100);
 			return '<div id="captcha' . $id . '"></div>';
 		} else {
+			if ($this->captcha instanceof Zend\Captcha\ReCaptcha){
+				return $this->captcha->getService()->getHtml();
+			}
 			return $this->captcha->render();
 		}
 	}
@@ -177,12 +180,7 @@ Recaptcha.create("' . $this->captcha->getPubKey() . '",
 			$input = $_REQUEST;
 		}
 		if ($this->type == 'recaptcha') {
-			return $this->captcha->isValid(
-				array(
-					'recaptcha_challenge_field' => $input['recaptcha_challenge_field'],
-					'recaptcha_response_field' => $input['recaptcha_response_field']
-				)
-			);
+			return $this->captcha->isValid($input);
 		} else {
 			return $this->captcha->isValid($input['captcha']);
 		}
@@ -199,7 +197,7 @@ Recaptcha.create("' . $this->captcha->getPubKey() . '",
 	}
 
 	/**
-	 * Translate Zend_Captcha_Image, Zend_Captcha_Dumb and Zend_Captcha_ReCaptcha
+	 * Translate Zend\Captcha\Image, Zend\Captcha\Dumb and Zend\Captcha\ReCaptcha
 	 * default error messages
 	 *
 	 * @return void

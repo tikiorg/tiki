@@ -7,22 +7,22 @@
 
 /**
  * Class JitFilter_Element
- * @method Zend_Filter_Alpha alpha
- * @method Zend_Filter_Alnum alnum
- * @method Zend_Filter_Digits digits
- * @method Zend_Filter_Int int
- * @method Zend_Filter_StripTags username
- * @method Zend_Filter_StripTags groupname
- * @method Zend_Filter_StripTags pagename
- * @method Zend_Filter_StripTags topicname
- * @method Zend_Filter_StripTags themename
- * @method Zend_Filter_StripTags email
- * @method Zend_Filter_StripTags url
- * @method Zend_Filter_StripTags text
- * @method Zend_Filter_StripTags date
- * @method Zend_Filter_StripTags time
- * @method Zend_Filter_StripTags datetime
- * @method Zend_Filter_StripTags striptags
+ * @method Zend\I18n\Filter\Alpha alpha
+ * @method Zend\I18n\Filter\Alnum alnum
+ * @method Zend\Filter\Digits digits
+ * @method Zend\Filter\ToInt int
+ * @method Zend\Filter\StripTags username
+ * @method Zend\Filter\StripTags groupname
+ * @method Zend\Filter\StripTags pagename
+ * @method Zend\Filter\StripTags topicname
+ * @method Zend\Filter\StripTags themename
+ * @method Zend\Filter\StripTags email
+ * @method Zend\Filter\StripTags url
+ * @method Zend\Filter\StripTags text
+ * @method Zend\Filter\StripTags date
+ * @method Zend\Filter\StripTags time
+ * @method Zend\Filter\StripTags datetime
+ * @method Zend\Filter\StripTags striptags
  * @method TikiFilter_Word word
  * @method TikiFilter_PreventXss xss
  * @method TikiFilter_HtmlPurifier purifier

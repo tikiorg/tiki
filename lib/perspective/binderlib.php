@@ -60,7 +60,7 @@ class AreasLib extends CategLib
 
 				if (($area && !$area['share_common']) || ($objectArea && $objectArea['exclusive'])) {
 					$perspectivelib->set_perspective($objectPerspective, true);
-					Zend_OpenId::redirect(Zend_OpenId::selfUrl());
+					ZendOpenId\OpenId::redirect(ZendOpenId\OpenId::selfUrl());
 				}
 			}
 		}
@@ -70,7 +70,7 @@ class AreasLib extends CategLib
 			if ($area) {
 				if ( !$area['share_common']) {
 					$perspectivelib->set_perspective($objectPerspective, true);
-					Zend_OpenId::redirect(Zend_OpenId::selfUrl());
+					ZendOpenId\OpenId::redirect(ZendOpenId\OpenId::selfUrl());
 				}
 			}
 		}

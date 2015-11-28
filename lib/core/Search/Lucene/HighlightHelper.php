@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-class Search_Lucene_HighlightHelper implements Zend_Filter_Interface
+class Search_Lucene_HighlightHelper implements Zend\Filter\FilterInterface
 {
 	private $query;
 	private $snippetHelper;
@@ -14,7 +14,7 @@ class Search_Lucene_HighlightHelper implements Zend_Filter_Interface
 	{
 		$qstr = $query->__toString();									// query needs the object_type field removing for highlighting
 		$qstr = preg_replace('/\+?\(\(object_type.*?\)\)/', '', $qstr);	// this is the only way i can find to remove a term form a query
-		$query = Zend_Search_Lucene_Search_QueryParser::parse($qstr, 'UTF-8');	// rebuild
+		$query = ZendSearch\Lucene\Search\QueryParser::parse($qstr, 'UTF-8');	// rebuild
 		$this->query = $query;
 		$this->snippetHelper = new Search_ResultSet_SnippetHelper;
 	}

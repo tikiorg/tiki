@@ -196,10 +196,10 @@ function wikiplugin_subscribegroup($data, $params)
 				$userlib->set_default_group($user, $group);
 			}
 			if (!empty($params['defgroup_url']) && $params['defgroup_url'] === 'n') {
-				Zend_OpenId::redirect(Zend_OpenId::selfUrl());
+				ZendOpenId\OpenId::redirect(ZendOpenId\OpenId::selfUrl());
 			} else {
 				global $tikiroot;
-				Zend_OpenId::redirect($tikiroot);
+				ZendOpenId\OpenId::redirect($tikiroot);
 			}
 			die;
 		} else if (isset($groups[$group])) {

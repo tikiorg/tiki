@@ -1,232 +1,88 @@
 <?php
+// (c) Copyright 2002-2015 by authors of the Tiki Wiki CMS Groupware Project
+//
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id$
 
-/////////////////////////////////////////////////////////////////////////////
-/**
- * Tiki OpenPGP PGP/MIME Mail Enhancement to Zend Framework
- *
- * See Zend/Mail/Transport/Smtp.php for original Zend Framework class
- *
- * Files of Tiki OpenPGP PGP/MIME Mail Enhancement to Zend Framework are:
- *
- * Tiki OpenPGP		lib/openpgp/openpgplib.php
- *
- * Tiki OpenPGP		lib/openpgp/OpenPGP_Zend_Mail.php
- * =>	ZF Original	Zend/Mail.php
- *
- * Tiki OpenPGP		lib/openpgp/OpenPGP_Zend_Mail_Transport_Abstract.php
- * =>	ZF Original	Zend/Mail/Transport/Abstract.php
- *
- * Tiki OpenPGP		lib/openpgp/OpenPGP_Zend_Mail_Transport_Sendmail.php
- * =>	ZF Original	Zend/Mail/Transport/Sendmail.php
- *
- * Tiki OpenPGP		lib/openpgp/OpenPGP_Zend_Mail_Transport_Smtp.php
- * =>	ZF Original	Zend/Mail/Transport/Smtp.php
- *
- * PURPOSE:
- * Avoid direct patching to ZF by bringing/changing into lib/openpgp/ versions
- * which instantiate OpenPGP versions of files/classes.
- *
- * NOTE: NO direct required functionality for PGP/MIME encrypted mail in this 
- * 	 class (all in OpenPGP_Zend_Mail_Transport_Abstract), but due to need 
- *	 for altered class instantiations, this class needs to be pulled from 
- *	 original ZF also.
- *
- * CHANGE HISTORY
- * v0.10
- * 2012-11-04		hollmeer: Initial Tiki OpenPGP version from original ZF class.
- *			File & class references according to OpenPGP instances.
- */
-/////////////////////////////////////////////////////////////////////////////
-
-
-/**
- * SMTP connection object
- *
- * Loads an instance of Zend_Mail_Protocol_Smtp and forwards smtp transactions
- *
- */
-class OpenPGP_Zend_Mail_Transport_Smtp extends OpenPGP_Zend_Mail_Transport_Abstract
+class OpenPGP_Zend_Mail_Transport_Smtp extends Zend\Mail\Transport\Smtp
 {
     /**
-     * EOL character string used by transport
-     * @var string
-     * @access public
-     */
-    public $EOL = "\n";
-
-    /**
-     * Remote smtp hostname or i.p.
+     * Prepare header string from message
      *
-     * @var string
+     * @param  Message $message
+     * @return string
      */
-    protected $_host;
-
-
-    /**
-     * Port number
-     *
-     * @var integer|null
-     */
-    protected $_port;
-
-
-    /**
-     * Local client hostname or i.p.
-     *
-     * @var string
-     */
-    protected $_name = 'localhost';
-
-
-    /**
-     * Authentication type OPTIONAL
-     *
-     * @var string
-     */
-    protected $_auth;
-
-
-    /**
-     * Config options for authentication
-     *
-     * @var array
-     */
-    protected $_config;
-
-
-    /**
-     * Instance of Zend_Mail_Protocol_Smtp
-     *
-     * @var Zend_Mail_Protocol_Smtp
-     */
-    protected $_connection;
-
-
-    /**
-     * Constructor.
-     *
-     * @param  string $host OPTIONAL (Default: 127.0.0.1)
-     * @param  array|null $config OPTIONAL (Default: null)
-     * @return void
-     *
-     * @todo Someone please make this compatible
-     *       with the SendMail transport class.
-     */
-    public function __construct($host = '127.0.0.1', Array $config = array())
+    protected function prepareHeaders(Zend\Mail\Message $message)
     {
-        if (isset($config['name'])) {
-            $this->_name = $config['name'];
-        }
-        if (isset($config['port'])) {
-            $this->_port = $config['port'];
-        }
-        if (isset($config['auth'])) {
-            $this->_auth = $config['auth'];
+        $originalSubject = '';
+
+        $headers = $message->getHeaders();
+        if ($headers->has('Subject')) {
+            $subjectHeader = $headers->get('Subject');
+            $originalSubject = $subjectHeader->getFieldValue();
         }
 
-        $this->_host = $host;
-        $this->_config = $config;
-    }
-
-
-    /**
-     * Class destructor to ensure all open connections are closed
-     *
-     * @return void
-     */
-    public function __destruct()
-    {
-        if ($this->_connection instanceof Zend_Mail_Protocol_Smtp) {
-            try {
-                $this->_connection->quit();
-            } catch (Zend_Mail_Protocol_Exception $e) {
-                // ignore
+        $body = $message->getBody();
+        if ($body instanceof Zend\Mime\Message){
+            $parts = $body->getParts();
+            foreach($parts as $part) {
+                /* @var $part Zend\Mime\Part */
+                if ($part->getType() == Zend\Mime\Mime::TYPE_HTML) {
+                    $part->setContent("******** PGP/MIME-ENCRYPTED MESSAGE ********<br>\n"
+                        . "Subject: "
+                        . $originalSubject
+                        . "<br><br>\n"
+                        . $part->getContent()
+                    );
+                }
+                if ($part->getType() == Zend\Mime\Mime::TYPE_TEXT) {
+                    $part->setContent("******** PGP/MIME-ENCRYPTED MESSAGE ********\n"
+                        . "Subject: "
+                        . $originalSubject
+                        . "\n\n"
+                        . $part->getContent()
+                    );
+                }
             }
-            $this->_connection->disconnect();
-        }
-    }
-
-
-    /**
-     * Sets the connection protocol instance
-     *
-     * @param Zend_Mail_Protocol_Abstract $client
-     *
-     * @return void
-     */
-    public function setConnection(Zend_Mail_Protocol_Abstract $connection)
-    {
-        $this->_connection = $connection;
-    }
-
-
-    /**
-     * Gets the connection protocol instance
-     *
-     * @return Zend_Mail_Protocol|null
-     */
-    public function getConnection()
-    {
-        return $this->_connection;
-    }
-
-    /**
-     * Send an email via the SMTP connection protocol
-     *
-     * The connection via the protocol adapter is made just-in-time to allow a
-     * developer to add a custom adapter if required before mail is sent.
-     *
-     * @return void
-     * @todo Rename this to sendMail, it's a public method...
-     */
-    public function _sendMail()
-    {
-        // If sending multiple messages per session use existing adapter
-        if (!($this->_connection instanceof Zend_Mail_Protocol_Smtp)) {
-            // Check if authentication is required and determine required class
-            $connectionClass = 'Zend_Mail_Protocol_Smtp';
-            if ($this->_auth) {
-                $connectionClass .= '_Auth_' . ucwords($this->_auth);
-            }
-            $this->setConnection(new $connectionClass($this->_host, $this->_port, $this->_config));
-            $this->_connection->connect();
-            $this->_connection->helo($this->_name);
         } else {
-            // Reset connection to ensure reliable transaction
-            $this->_connection->rset();
+            $message->setBody("******** PGP/MIME-ENCRYPTED MESSAGE ********\n"
+              . "Subject: "
+              . $originalSubject
+              . "\n\n"
+              . $body);
         }
 
-        // Set sender email address
-        $this->_connection->mail($this->_mail->getReturnPath());
+        $originalHeaders = parent::prepareHeaders($message);
+        $originalBody = parent::prepareBody($message);
 
-        // Set recipient forward paths
-        foreach ($this->_mail->getRecipients() as $recipient) {
-            $this->_connection->rcpt($recipient);
+        $recipients = array();
+        foreach($message->getTo() as $destination){
+            $recipients[] = $destination->getEmail();
+        }
+        foreach($message->getCc() as $destination){
+            $recipients[] = $destination->getEmail();
+        }
+        foreach($message->getBcc() as $destination){
+            $recipients[] = $destination->getEmail();
         }
 
-        // Issue DATA command to client
-        $this->_connection->data($this->header . Zend_Mime::LINEEND . $this->body);
+        global $openpgplib;
+        $pgpmime_msg = $openpgplib->prepareEncryptWithZendMail($originalHeaders, $originalBody, $recipients);
+        $headers = $pgpmime_msg[0]; // set pgp/mime headers from result array
+        $this->OpenGPGStoreMailBody = $pgpmime_msg[1];    // set pgp/mime encrypted message body from result array
+
+        return $headers;
     }
 
     /**
-     * Format and fix headers
+     * Prepare body string from message
      *
-     * Some SMTP servers do not strip BCC headers. Most clients do it themselves as do we.
-     *
-     * @access  protected
-     * @param   array $headers
-     * @return  void
-     * @throws  Zend_Transport_Exception
+     * @param  Message $message
+     * @return string
      */
-    protected function _prepareHeaders($headers)
+    protected function prepareBody(Zend\Mail\Message $message)
     {
-        if (!$this->_mail) {
-            throw new Zend_Mail_Transport_Exception('_prepareHeaders requires a registered OpenPGP_Zend_Mail object');
-        }
-
-        unset($headers['Bcc']);
-
-        // Prepare headers
-        parent::_prepareHeaders($headers);
+        return $this->OpenGPGStoreMailBody;
     }
 }

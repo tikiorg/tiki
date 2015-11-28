@@ -16,7 +16,7 @@
  */
 
 
-abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Analysis_Analyzer
+abstract class StandardAnalyzer_Analyzer_Standard extends ZendSearch\Lucene\Analysis\Analyzer\AbstractAnalyzer
 {
   /**
      * The set of Token filters applied to the Token stream.
@@ -45,7 +45,7 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
 	{
 		if (@preg_match('/\pL/u', 'a') != 1) {
 			// PCRE unicode support is turned off
-			throw new Zend_Search_Lucene_Exception('Analyzer needs PCRE unicode support to be enabled.');
+			throw new ZendSearch\Lucene\Exception\RuntimeException('Analyzer needs PCRE unicode support to be enabled.');
 		}
 		$this->_position     = 0;
 		$this->_bytePosition = 0;
@@ -54,9 +54,9 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
     /**
      * Add Token filter to the Analyzer
      *
-     * @param Zend_Search_Lucene_Analysis_TokenFilter $filter
+     * @param ZendSearch\Lucene\Analysis\TokenFilter\TokenFilterInterface $filter
      */
-    public function addFilter(Zend_Search_Lucene_Analysis_TokenFilter $filter)
+    public function addFilter(ZendSearch\Lucene\Analysis\TokenFilter\TokenFilterInterface $filter)
     {
         $this->_filters[] = $filter;
     }
@@ -86,10 +86,10 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
     /**
      * Apply filters to the token. Can return null when the token was removed.
      *
-     * @param Zend_Search_Lucene_Analysis_Token $token
-     * @return Zend_Search_Lucene_Analysis_Token
+     * @param ZendSearch\Lucene\Analysis\Token $token
+     * @return ZendSearch\Lucene\Analysis\Token
      */
-    public function normalize(Zend_Search_Lucene_Analysis_Token $token)
+    public function normalize(ZendSearch\Lucene\Analysis\Token $token)
     {
         foreach ($this->_filters as $filter) {
             $token = $filter->normalize($token);
@@ -139,7 +139,7 @@ abstract class StandardAnalyzer_Analyzer_Standard extends Zend_Search_Lucene_Ana
             $this->_bytePosition = $binStartPos + strlen($matchedWord);
             $this->_position     = $endPos;
 
-            $token = $this->normalize(new Zend_Search_Lucene_Analysis_Token($matchedWord, $startPos, $endPos));
+            $token = $this->normalize(new ZendSearch\Lucene\Analysis\Token($matchedWord, $startPos, $endPos));
 		} while ($token === null); // try again if token is skipped
 
 		return $token;

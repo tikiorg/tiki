@@ -5,7 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once('PHPUnit/Framework/TestCase.php');
+//require_once('PHPUnit/Framework/TestCase.php');
 
 /**
  * @group importer

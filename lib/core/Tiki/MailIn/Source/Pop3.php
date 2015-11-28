@@ -7,6 +7,8 @@
 
 namespace Tiki\MailIn\Source;
 use Tiki\MailIn\Exception\TransportException;
+use Zend\Mail\Storage\Pop3 as ZendPop3;
+use Zend\Mail\Exception\ExceptionInterface as ZendMailException;
 
 class Pop3 implements SourceInterface
 {
@@ -35,12 +37,17 @@ class Pop3 implements SourceInterface
 		}
 	}
 
+	/**
+	 * @return \Generator
+	 * @throws TransportException
+	 */
 	function getMessages()
 	{
 		$pop = $this->connect();
 		$toDelete = [];
 
 		foreach ($pop as $i => $source) {
+			/* @var $source \Zend\Mail\Storage\Message */
 			$message = new Message($i, function () use ($i, & $toDelete) {
 				$toDelete[] = $i;
 			});
@@ -67,10 +74,14 @@ class Pop3 implements SourceInterface
 		$pop->close();
 	}
 
+	/**
+	 * @return \Zend\Mail\Storage\Pop3
+	 * @throws TransportException
+	 */
 	protected function connect()
 	{
 		try {
-			$pop = new \Zend_Mail_Storage_Pop3([
+			$pop = new ZendPop3([
 				'host' => $this->host,
 				'port' => $this->port,
 				'user' => $this->username,
@@ -79,14 +90,19 @@ class Pop3 implements SourceInterface
 			]);
 
 			return $pop;
-		} catch (\Zend_Mail_Protocol_Exception $e) {
+		} catch (ZendMailException $e) {
 			throw new TransportException(tr("Login failed for POP3 account on %0:%1 for user %2", $this->host, $this->password, $this->username));
 		}
 	}
 
+	/**
+	 * @param $part \Zend\Mail\Storage\Message
+	 * @param $type string
+	 * @return string
+	 */
 	private function getBody($part, $type)
 	{
-		if (! $part->isMultipart() && 0 === strpos($part->getHeader('Content-Type'), $type)) {
+		if (! $part->isMultipart() && 0 === strpos($part->getHeaders()->get('Content-Type'), $type)) {
 			return $this->decode($part);
 		}
 
@@ -100,9 +116,13 @@ class Pop3 implements SourceInterface
 		}
 	}
 
+	/**
+	 * @param $message \Tiki\MailIn\Source\Message
+	 * @param $part \Zend\Mail\Storage\Message
+	 */
 	private function handleAttachments($message, $part)
 	{
-		$type = $part->getHeader('Content-Type');
+		$type = $part->getHeaders()->get('Content-Type');
 		if (0 === strpos($type, 'multipart/mixed') || 0 === strpos($type, 'multipart/related')) {
 			// Skip initial content
 			for ($i = 2; $i <= $part->countParts(); ++$i) {
@@ -110,7 +130,7 @@ class Pop3 implements SourceInterface
 				if ($p->isMultipart()) {
 					continue;
 				}
-				$headers = $p->getHeaders();
+				$headers = $p->getHeaders()->toArray();
 
 				if (isset($headers['content-id'])) {
 					$contentId = $headers['content-id'];
@@ -152,6 +172,10 @@ class Pop3 implements SourceInterface
 		}
 	}
 
+	/**
+	 * @param $part \Zend\Mail\Storage\Message
+	 * @return string
+	 */
 	private function decode($part)
 	{
 		$content = $part->getContent();

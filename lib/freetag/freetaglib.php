@@ -1635,7 +1635,7 @@ class FreetagLib extends ObjectLib
 	}
 
     /**
-     * @return Zend_Tag_Cloud
+     * @return Zend\Tag\Cloud
      */
     function get_cloud()
 	{
@@ -1646,7 +1646,7 @@ class FreetagLib extends ObjectLib
 			$row['params'] = array('url' => $row['tagId']);
 		}
 
-		return new Zend_Tag_Cloud(array('tags' => $result));
+		return new Zend\Tag\Cloud(array('tags' => $result));
 	}
 }
 
