@@ -4,6 +4,7 @@
 		{if $files[$changes].perms.tiki_p_view_file_gallery eq 'y'}
 			{self_link _icon_name='file-archive-open' _menu_text=$menu_text _menu_icon=$menu_icon galleryId=$files[$changes].id}
 				{tr}Open{/tr}
+				{tr}Open{/tr}
 			{/self_link}
 		{/if}
 
@@ -77,6 +78,10 @@
 			{/if}
 		{elseif $files[$changes].type eq 'text/csv' and $prefs.feature_sheet eq 'y'}
 			<a href="tiki-view_sheets.php?fileId={$files[$changes].id}">
+				{icon name='view' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
+			</a>
+		{elseif $prefs.fgal_viewerjs_feature eq 'y' and ($files[$changes].type eq 'application/pdf' or $files[$changes].type|strpos:'application/vnd.oasis.opendocument.' !== false)}
+			<a href="{$prefs.fgal_viewerjs_uri}#{$base_url}{$files[$changes].id|sefurl:display}">
 				{icon name='view' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
 			</a>
 		{elseif ($files[$changes].type eq 'application/vnd.oasis.opendocument.text'
