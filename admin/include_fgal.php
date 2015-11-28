@@ -141,6 +141,29 @@ if (isset($_REQUEST["filegalfixvndmsfiles"])) {
 	$filegallib->fix_vnd_ms_files();
 }
 
+if ($prefs['fgal_viewerjs_feature'] === 'y') {
+	$viewerjs_err = '';
+	if (empty($prefs['fgal_viewerjs_uri'])) {
+
+		$viewerjs_err = tra('ViewerJS URI not set');
+
+	} else if (strpos($prefs['fgal_viewerjs_uri'], '://') === false) {	// local install
+
+		if (! is_readable($prefs['fgal_viewerjs_uri'])) {
+			$viewerjs_err = tr('ViewerJS URI not found (local file not readable)');
+		}
+
+	} else {												// remote (will take a while)
+
+		$file_headers = get_headers(\ZendOpenId\OpenId::absoluteUrl($prefs['fgal_viewerjs_uri']));
+		if (strpos($file_headers[0], '200') === false) {
+			$viewerjs_err = tr('ViewerJS URI not found (%0)', $file_headers[0]);
+		}
+	}
+
+	$smarty->assign('viewerjs_err', $viewerjs_err);
+}
+
 if (!empty($prefs['fgal_sort_mode']) && preg_match('/(.*)_(asc|desc)/', $prefs['fgal_sort_mode'], $matches)) {
 	$smarty->assign('fgal_sortorder', $matches[1]);
 	$smarty->assign('fgal_sortdirection', $matches[2]);
