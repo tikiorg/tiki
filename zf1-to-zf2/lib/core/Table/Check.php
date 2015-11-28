@@ -100,12 +100,11 @@ class Table_Check
 	}
 
 	/**
-	 * * Utility to convert string entered by user for a parameter setting to an array
+	 * Utility to convert string entered by user for a parameter setting to an array
 	 * @param $paramstr
-	 * @param int $levels
 	 * @return array
 	 */
-	static public function parseParam ($paramstr, $levels = 2)
+	static public function parseParam ($paramstr)
 	{
 		if (!empty($paramstr)) {
 			$ret = explode('|', $paramstr);
@@ -125,7 +124,9 @@ class Table_Check
 						if (strpos($subparam, ':') !== false) {
 							$colon = explode(':', $subparam);
 							unset($ret[$key][$key2]);
-							if ($colon[0] == 'expand' || $colon[0] == 'option') {
+							if (in_array($colon[0], ['expand', 'option', 'coltotal', 'collabel', 'tabletotal',
+								'tablelabel']))
+							{
 								if ($colon[0] == 'option') {
 									$colon[0] = 'options';
 								}
@@ -138,16 +139,6 @@ class Table_Check
 				}
 			}
 			ksort($ret);
-			if ($levels === 1) {
-				unset($key);
-				$new = [];
-				foreach($ret as $array) {
-					foreach($array as $key => $val) {
-						$new[$key] = $val;
-					}
-				}
-				return $new;
-			}
 			return $ret;
 		} else {
 			return $paramstr;

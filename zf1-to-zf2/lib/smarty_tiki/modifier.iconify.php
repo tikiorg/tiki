@@ -95,10 +95,14 @@ function smarty_modifier_iconify($string, $filetype = null, $fileId = null, $siz
 					$iconname = 'pdf';
 					break;
 				case $type === 'application/vnd.ms-excel'
+					|| $type === 'application/ms-excel'
+					|| $type === 'application/msexcel'
 					|| strpos($type, 'application/vnd.openxmlformats-officedocument.spreadsheetml') === 0:
 					$iconname = 'excel';
 					break;
 				case $type === 'application/vnd.ms-powerpoint'
+					|| $type === 'application/ms-powerpoint'
+					|| $type === 'application/mspowerpoint'
 					|| strpos($type, 'application/vnd.openxmlformats-officedocument.presentationml') === 0:
 					$iconname = 'powerpoint';
 					break;

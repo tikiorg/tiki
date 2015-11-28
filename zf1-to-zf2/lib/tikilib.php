@@ -47,7 +47,7 @@ class TikiLib extends TikiDb_Bridge
 	/** Gets a library reference
 	 *
 	 * @param $name
-	 * @return \ActivityLib|\AreasLib|array|\AutoSaveLib|\BannerLib|\BigBlueButtonLib|\CalendarLib|\Captcha|\CartLib|\CreditsLib|\CryptLib|\DCSLib|\EditLib|\ErrorReportLib|\FaqLib|\FileGalLib|\FileGalBatchLib|\GeoLib|\GoalEventLib|\GoalLib|\GoalRewardLib|\groupAlertLib|\HeaderLib|\IconsetLib|\KalturaLib|\LoginLib|\MailinLib|\MimeLib|mixed|\ModLib|\MonitorLib|\MonitorMailLib|\OAuthLib|object|\PageContentLib|\ParserLib|\PaymentLib|\PerspectiveLib|\PollLib|\PollLibShared|\PreferencesLib|\QueueLib|\QuizLib|\RatingConfigLib|\ReferencesLib|\RegistrationLib|\RSSLib|\ScormLib|\SearchStatsLib|\SheetLib|\Smarty_Tiki|\SocialLib|\StatsLib|\StoredSearchLib|\ThemeControlLib|\ThemeGenLib|\ThemeLib|\Tiki_Connect_Client|\Tiki\Wiki\SlugManager|\Tiki_Connect_Server|\TikiAccessLib|\TikiLib|\Tracker\Tabular\Manager|\TrackerLib|\UnifiedSearchLib|\UserMailinLib|\UserModulesLib|\Validators|\VimeoLib|\WikiLingoTikiEvents|\WizardLib|\WYSIWYGLib|\ZoteroLib
+	 * @return \ActivityLib|\AreasLib|array|\AutoSaveLib|\BannerLib|\BigBlueButtonLib|\CalendarLib|\Captcha|\CartLib|\CreditsLib|\CryptLib|\DCSLib|\EditLib|\ErrorReportLib|\FaqLib|\FlaggedRevisionLib|\FileGalLib|\FileGalBatchLib|\GeoLib|\GoalEventLib|\GoalLib|\GoalRewardLib|\groupAlertLib|\HeaderLib|\IconsetLib|\KalturaLib|\LoginLib|\LogsLib|\MailinLib|\MimeLib|mixed|\ModLib|\MonitorLib|\MonitorMailLib|\OAuthLib|object|\PageContentLib|\ParserLib|\PaymentLib|\PerspectiveLib|\PollLib|\PollLibShared|\PreferencesLib|\QueueLib|\QuizLib|\RatingConfigLib|\ReferencesLib|\RegistrationLib|\RSSLib|\ScormLib|\SearchStatsLib|\SheetLib|\Smarty_Tiki|\SocialLib|\StatsLib|\StoredSearchLib|\ThemeControlLib|\ThemeGenLib|\ThemeLib|\Tiki_Connect_Client|\Tiki\Wiki\SlugManager|\Tiki_Connect_Server|\TikiAccessLib|\TikiLib|\Tracker\Tabular\Manager|\TrackerLib|\UnifiedSearchLib|\UserMailinLib|\UserModulesLib|\Validators|\VimeoLib|\WikiLingoTikiEvents|\WizardLib|\WYSIWYGLib|\ZoteroLib
 	 * @throws Exception
 	 */
 	public static function lib($name)
@@ -310,6 +310,13 @@ class TikiLib extends TikiDb_Bridge
 	{
 		global $prefs;
 		$response = $client->send();
+
+		$attempts = 0;
+		while ($response->isRedirect() && $attempts < 10) { // prevent redirect loop
+			$client->setUri($client->getUri());
+			$response = $client->request();
+			$attempts++;
+		}
 
 		if ($prefs['http_skip_frameset'] == 'y') {
 			if ($outcome = $this->http_perform_request_skip_frameset($client, $response)) {
@@ -5534,7 +5541,7 @@ class TikiLib extends TikiDb_Bridge
 
 	/**
 	 * Get URL Scheme (http / https)
-	 * Considers the use of a reverse proxy / ssl offloader. I.e If request is https -> ssl offloader -> http tiki, then it will correctly return https 
+	 * Considers the use of a reverse proxy / ssl offloader. I.e If request is https -> ssl offloader -> http tiki, then it will correctly return https
 	 * @return string http | https
 	 */
 	static function httpScheme()

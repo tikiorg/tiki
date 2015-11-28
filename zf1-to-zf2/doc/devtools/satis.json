@@ -451,6 +451,17 @@
 			"type": "package",
 			"package": {
 				"name": "jquery/jquery-sheet",
+				"version": "2.0.1",
+				"dist": {
+					"url": "http://sourceforge.net/projects/tikiwiki/files/vendors_abandoned/jquery-sheet-2.0.1.0-2.0.1.zip/download",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-sheet",
 				"version": "3.1",
 				"dist": {
 					"url": "https://github.com/Spreadsheets/jQuery.sheet/archive/3.1.zip",
@@ -1176,6 +1187,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "jquery/plugins/tablesorter",
+				"version": "2.24.6",
+				"dist": {
+					"url": "https://github.com/Mottie/tablesorter/archive/v2.24.6.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "jquery/plugins/tagcanvas",
 				"version": "2.8",
 				"dist": {
@@ -1411,7 +1433,7 @@
 		"jquery/jquery": "*",
 		"jquery/jquery-min": "*",
 		"jquery/jquery-s5": "1.0.1",
-		"jquery/jquery-sheet": "3.1",
+		"jquery/jquery-sheet": ">=2.0.1",
 		"jquery/jquery-ui": "*",
 		"jquery/jquery-mobile": "*",
 		"jquery/jquery-ui-themes": "*",

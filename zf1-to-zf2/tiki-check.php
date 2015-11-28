@@ -477,6 +477,12 @@ if ($s >= 160 * 1024 * 1024) {
 		'setting' => $memory_limit,
 		'message' => tra('Your memory_limit is at').' '.$memory_limit.'. '.tra('This will normally work, but you might run into problems when your site grows.')
 	);
+} elseif ( $s == -1 ) {
+	$php_properties['memory_limit'] = array(
+		'fitness' => tra('ugly') ,
+		'setting' => $memory_limit,
+		'message' => tra("Your memory_limit is unlimited. This is not necessarily bad, but it's a good idea to limit this on productions servers in order to eliminate unexpectedly greedy scripts.")
+	);
 } else {
 	$php_properties['memory_limit'] = array(
 		'fitness' => tra('bad'),
@@ -498,6 +504,40 @@ if ($s != 'files') {
 		'fitness' => tra('good'),
 		'setting' => $s,
 		'message' => tra('Well set! the default setting of \'files\' is needed for Tiki.')
+	);
+}
+
+// session.save_handler
+$s = ini_get('session.save_path');
+if (empty($s) || ! is_writable($s)) {
+	$php_properties['session.save_path'] = array(
+		'fitness' => tra('bad'),
+		'setting' => $s,
+		'message' => tra('Your session.save_path must writable.')
+	);
+} else {
+	$php_properties['session.save_path'] = array(
+		'fitness' => tra('good'),
+		'setting' => $s,
+		'message' => tra('Your session.save_path is writable.')
+	);
+}
+
+// test session work
+session_start();
+
+if (empty($_SESSION['tiki-check'])) {
+	$php_properties['session'] = array(
+		'fitness' => tra('ugly'),
+		'setting' => tra('empty'),
+		'message' => tra('Your session is empty, try reloading the page and if you see this message again you may have a problem with your server setup.')
+	);
+	$_SESSION['tiki-check'] = 1;
+} else {
+	$php_properties['session'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'ok',
+		'message' => tra('Your appears to work.')
 	);
 }
 
@@ -1611,9 +1651,11 @@ if ($s == 1) {
 	// adapted from \FileGalLib::get_file_handlers
 	$fh_possibilities = array(
 		'application/ms-excel' => array('xls2csv %1'),
+		'application/msexcel' => array('xls2csv %1'),
 		// vnd.openxmlformats are handled natively in Zend
 		//'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => array('xlsx2csv.py %1'),
 		'application/ms-powerpoint' => array('catppt %1'),
+		'application/mspowerpoint' => array('catppt %1'),
 		//'application/vnd.openxmlformats-officedocument.presentationml.presentation' => array('pptx2txt.pl %1 -'),
 		'application/msword' => array('catdoc %1', 'strings %1'),
 		//'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => array('docx2txt.pl %1 -'),

@@ -19,6 +19,18 @@ function prefs_categories_list()
 			),
 			'default' => 'n',
 		),
+		'categories_add_class_to_body_tag' => array(
+			'name' => tra('Category names added as class body tag'),
+			'description' => tra('Selected categories will have cat_catname added to the body tag.'),
+			'separator' => ',',
+			'type' => 'text',
+			'size' => '15',
+			'dependencies' => array(
+				'feature_categories', 'categories_used_in_tpl',
+			),
+			'profile_reference' => 'category',
+			'default' => array(''), //empty string needed to keep preference from setting unexpectedly
+		),
 		'categories_cache_refresh_on_object_cat' => array(
 			'name' => tra('Category cache gets cleared when an object is categorized/uncategorized'),
 			'description' => tra('A cache is used to avoid having to fetch all categories from db every time; this clears the cache when an object is categorized to keep count up to date.'),

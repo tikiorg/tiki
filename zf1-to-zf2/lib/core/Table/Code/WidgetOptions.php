@@ -27,7 +27,6 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 	{
 		$wo[] = 'stickyHeaders : \'ts-stickyHeader\'';
 		$wo[] = 'resizable : true';
-
 		//sort
 		if (parent::$sorts) {
 			//row grouping
@@ -35,7 +34,7 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 				$gc = ['$(table).find(\'.group-header\').addClass(\'info\');'];
 				$wo[] = $this->iterate(
 					$gc,
-					$this->nt3 . 'group_callback : function($cell, $rows, column, table){',
+					'group_callback : function($cell, $rows, column, table){',
 					$this->nt3 . '}',
 					$this->nt4,
 					''

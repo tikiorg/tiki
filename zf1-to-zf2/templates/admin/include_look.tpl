@@ -266,6 +266,7 @@
 				{preference name="header_custom_js" syntax="javascript"}
 
 				{preference name="layout_add_body_group_class"}
+				{preference name=categories_add_class_to_body_tag}
 			</fieldset>
 
 			<fieldset>

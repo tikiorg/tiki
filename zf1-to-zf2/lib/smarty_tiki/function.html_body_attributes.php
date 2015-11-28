@@ -61,6 +61,14 @@ function smarty_function_html_body_attributes($params, $smarty)
 	if ($prefs['feature_perspective'] == 'y' && isset($_SESSION['current_perspective'])) {
 		$class .= ' perspective' . $_SESSION['current_perspective'];
 	}
+
+	if ($categories = $smarty->getTemplateVars('objectCategoryIds')) {
+		foreach ($categories as $cat) {
+			if (in_array($cat, $prefs['categories_add_class_to_body_tag'])) {
+				$class .= ' cat_' . str_replace(' ', '-', TikiLib::lib('categ')->get_category_name($cat));
+			}
+		}
+	}
 	
 	if (!empty($onload)) {
 		$back .= ' onload="' . $onload . '"';

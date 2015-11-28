@@ -22,25 +22,27 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 class Table_Code_WidgetOptionsMath extends Table_Code_WidgetOptions
 {
-	private $mathtypes = ['count', 'sum', 'max', 'min', 'mean', 'median', 'mode', 'range', 'varp', 'vars', 'stdevp',
-			'stdevs'];
-
 
 	protected function getOptionArray()
 	{
-		if (parent::$math || parent::$mathcol) {
-			$format = isset(parent::$s['math']['format']) ? '\'' . parent::$s['math']['format'] . '\'': '\'###0.00\'';
-			$m[] = 'math_mask : ' . $format;
-			$m[] = 'math_event : \'pagerChange\'';
-			if (parent::$mathcol) {
-				$mathsets = array_column(parent::$s['columns'], 'math');
+		if (parent::$math) {
+			$format = isset(parent::$s['math']['format']) ? parent::$s['math']['format'] : '###0.00';
+			$filter = new JitFilter(['format' => $format]);
+			$m[] = 'math_data : \'tsmath\'';
+			$m[] = 'math_mask : ' . '\'' . $filter->format->striptags() . '\'';
+			$m[] = 'math_event : \'pagerComplete\'';
+			$m[] = 'math_none : \'' . tr('n/a') . '\'';
+			//ignore
+			if (isset(parent::$s['math']['ignore'])) {
 				$ignore = [];
-				foreach($mathsets as $col => $set) {
-					if ($set == 'ignore') {
+				foreach(parent::$s['math']['ignore'] as $col) {
+					if (is_numeric($col)) {
 						$ignore[] = (int) $col;
 					}
 				}
-				$m[] = $this->iterate($ignore, 'math_ignore : [', ']', '', '', ',');
+				if (count($ignore) > 0) {
+					$m[] = $this->iterate($ignore, 'math_ignore : [', ']', '', '', ',');
+				}
 			} else {
 				$m[] = 'math_ignore : [0]';
 			}

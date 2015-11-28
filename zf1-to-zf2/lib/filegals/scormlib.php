@@ -16,7 +16,7 @@ class ScormLib
 
 	function __destruct()
 	{
-		foreach ($unlinkList as $file) {
+		foreach ($this->unlinkList as $file) {
 			unlink($file);
 		}
 	}

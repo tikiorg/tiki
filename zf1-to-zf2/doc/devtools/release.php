@@ -385,6 +385,7 @@ function check_smarty_syntax(&$error_msg)
 	$prefs['maxRecords'] = 25;
 	$prefs['log_tpl'] = 'y';
 	$prefs['feature_sefurl_filter'] = 'y';
+	$prefs['site_layout'] = 'basic';
 	require_once 'vendor/smarty/smarty/libs/Smarty.class.php';
 	require_once 'lib/init/smarty.php';
 	// needed in Smarty_Tiki
@@ -767,6 +768,9 @@ function update_copyright_file($newVersion)
 	$contributors = array();
 
 	$repositoryUri = empty($options['svn-mirror-uri']) ? TIKISVN : $options['svn-mirror-uri'];
+	if (strpos($repositoryUri, '/') === 0) {
+		$repositoryUri = 'file://' . $repositoryUri;
+	}
 	$repositoryInfo = get_info($repositoryUri);
 
 	$oldContributors = parse_copyrights();

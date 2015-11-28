@@ -118,7 +118,6 @@ function wikiplugin_fancytable($data, $params)
 				isset($tscolselect) ? $tscolselect : null,
 				null,
 				null,
-				isset($tsmathcolumns) ? $tsmathcolumns : null,
 				isset($tsmathoptions) ? $tsmathoptions : null
 			);
 			if (is_array($ts->settings)) {

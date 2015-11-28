@@ -70,7 +70,7 @@ function wikiplugin_webdocviewer($data, $params)
 	}
 
 	if (isset($url)) {
-		$iframe = ('<iframe src="http://docs.google.com/viewer?embedded=true&url='.$url.'" width="'.$params['width'].'" height="'.$params['height'].'" style="border: none;"></iframe>');
+		$iframe = ('<iframe src="//docs.google.com/viewer?embedded=true&url='.$url.'" width="'.$params['width'].'" height="'.$params['height'].'" style="border: none;"></iframe>');
 		return '~np~' . $iframe . '~/np~';
 	} else {
 		return '~np~'. tra('No FileId or URL has been set'). '~/np~';
