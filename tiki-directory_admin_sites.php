@@ -126,6 +126,7 @@ $smarty->assign_by_ref('items', $items["data"]);
 $categs = $dirlib->dir_get_all_categories_accept_sites(0, -1, 'name asc', $find, $_REQUEST["siteId"]);
 $smarty->assign('categs', $categs);
 $countries = $tikilib->get_flags();
+sort($countries);
 $smarty->assign_by_ref('countries', $countries);
 // This page should be displayed with Directory section options
 $section = 'directory';
