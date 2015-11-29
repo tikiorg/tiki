@@ -32,12 +32,12 @@ class Services_Language_Utilities
 	function getTranslations($type, $object)
 	{
 		$multilinguallib = TikiLib::lib('multilingual');
-		$tikilib = TikiLib::lib('tiki');
+		$langLib = TikiLib::lib('language');
 
 		$objId = $this->toInternalId($type, $object);
 
 		$translations = $multilinguallib->getTrads($type, $objId);
-		$languages = $tikilib->get_language_map();
+		$languages = $langLib->get_language_map();
 
 		foreach ($translations as & $trans) {
 			$trans['objId'] = $this->toExternalId($type, $trans['objId']);

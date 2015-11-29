@@ -90,7 +90,8 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 		}
 	}
 	if (isset($_REQUEST["userbreadCrumb"])) $tikilib->set_user_preference($userwatch, 'userbreadCrumb', $_REQUEST["userbreadCrumb"]);
-	if (isset($_REQUEST["language"]) && $tikilib->is_valid_language($_REQUEST['language'])) {
+	$langLib = TikiLib::lib('language');
+	if (isset($_REQUEST["language"]) && $langLib->is_valid_language($_REQUEST['language'])) {
 		if ($tiki_p_admin || $prefs['change_language'] == 'y') {
 			$tikilib->set_user_preference($userwatch, 'language', $_REQUEST["language"]);
 		}
@@ -108,7 +109,8 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 			$tok = strtok(' ');
 		}
 		$list = array_unique($list);
-		$list = array_filter($list, array($tikilib, 'is_valid_language'));
+		$langLib = TikiLib::lib('language');
+		$list = array_filter($list, array($langLib, 'is_valid_language'));
 		$list = implode(' ', $list);
 		$tikilib->set_user_preference($userwatch, 'read_language', $list);
 	}
@@ -378,8 +380,10 @@ $smarty->assign_by_ref('userwatch_theme', $userwatch_theme);
 $smarty->assign_by_ref('userwatch_themeOption', $userwatch_themeOption);
 //user language
 $languages = array();
-$languages = $tikilib->list_languages();
+$langLib = TikiLib::lib('language');
+$languages = $langLib->list_languages();
 $smarty->assign_by_ref('languages', $languages);
+
 $user_pages = $tikilib->get_user_pages($userwatch, -1);
 $smarty->assign_by_ref('user_pages', $user_pages);
 $bloglib = TikiLib::lib('blog');

@@ -93,8 +93,9 @@ if ( array_key_exists('additional_languages', $_REQUEST)
 	foreach ( $_REQUEST['additional_languages'] as $lang )
 		$used_languages[$lang] = true;
 $used_languages = array_keys($used_languages);
+$langLib = TikiLib::lib('language');
+$allLanguages = $langLib->list_languages();
 
-$allLanguages = $tikilib->list_languages();
 // select roughly readable languages
 $t_used_languages = array();
 foreach ($allLanguages as $al) {

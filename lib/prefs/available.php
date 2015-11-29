@@ -16,7 +16,8 @@ function prefs_available_list($partial = false)
 	];
 	
 	if (! $partial) {
-		$languages = $tikilib->list_languages(false, null, true);
+		$langLib = TikiLib::lib('language');
+		$languages = $langLib->list_languages(false, null, true);
 		foreach ( $languages as $lang ) {
 			$map[ $lang['value'] ] = $lang['name'];
 		}

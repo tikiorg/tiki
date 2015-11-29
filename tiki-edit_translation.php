@@ -97,7 +97,8 @@ $usedLang = array();
 foreach ( $trads as $trad )
 	$usedLang[] = $trad['lang'];
 
-$rawLangs = $tikilib->list_languages();
+$langLib = TikiLib::lib('language');
+$rawLangs = $langLib->list_languages();
 $languages = array();
 foreach ( $rawLangs as $langInfo )
 	if ( ! in_array($langInfo['value'], $usedLang) )

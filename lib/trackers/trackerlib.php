@@ -2662,7 +2662,8 @@ class TrackerLib extends TikiLib
 				$res['name'] = tra($res['name']);
 			}
 			if ($res['type'] == 'p' && $res['options_array'][0] == 'language') {
-				$smarty->assign('languages', $this->list_languages());
+				$langLib = TikiLib::lib('language');
+				$smarty->assign('languages', $langLib->list_languages());
 			}
 			$ret[] = $res;
 		}

@@ -11,7 +11,6 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
-//TODO: move language functions (like $tikilib->list_languages()) from $tikilib to this class
 /**
  * @package   Tiki
  * @subpackage    Language
@@ -141,5 +140,151 @@ class Language extends TikiDb_Bridge
 	{
 		global $prefs;
 		return self::isLanguageRTL($prefs['language']);
+	}
+	
+	/**
+	 * @param bool $path
+	 * @param null $short
+	 * @param bool $all
+	 * @return array|mixed
+	 */
+	static function list_languages($path = false, $short=null, $all=false)
+	{
+		global $prefs;
+
+		$args = func_get_args();
+		$key = 'disk_languages' . implode(',', $args) . $prefs['language'];
+		$cachelib = TikiLib::lib('cache');
+
+		if (! $languages = $cachelib->getSerialized($key)) {
+			$languages = self::list_disk_languages($path);
+			$languages = self::format_language_list($languages, $short, $all);
+
+			$cachelib->cacheItem($key, serialize($languages));
+		}
+
+		return $languages;
+	}
+
+	/**
+	 * @param $path
+	 * @return array
+	 */
+	private static function list_disk_languages($path)
+	{
+		$languages = array();
+
+		if (!$path)
+			$path = "lang";
+
+		if (!is_dir($path))
+			return array();
+
+		$h = opendir($path);
+
+		while ($file = readdir($h)) {
+			if (strpos($file, '.') === false && $file != 'CVS' && $file != 'index.php' && is_dir("$path/$file") && file_exists("$path/$file/language.php")) {
+				$languages[] = $file;
+			}
+		}
+
+		closedir($h);
+
+		return $languages;
+	}
+
+	/**
+	 * @return array
+	 */
+	static function get_language_map()
+	{
+		$languages = self::list_languages();
+
+		$map = array();
+		foreach ($languages as $lang) {
+			$map[$lang['value']] = $lang['name'];
+		}
+
+		return $map;
+	}
+
+	/**
+	 * @param $language
+	 * @return bool
+	 */
+	function is_valid_language( $language )
+	{
+		return preg_match("/^[a-zA-Z-_]*$/", $language)
+			&& file_exists('lang/' . $language . '/language.php');
+	}
+	
+	/**
+	 * Comparison function used to sort languages by their name in the current locale.
+	 * @param $a
+	 * @param $b
+	 * @return int
+	 */
+	static function formatted_language_compare($a, $b)
+	{
+		return strcasecmp($a['name'], $b['name']);
+	}
+	
+	/**
+	 * Returns a list of languages formatted as a twodimensionel array with 'value' being the language code and 'name' being the name of the language. If $short is 'y' returns only the localized language names array
+	 * @param $languages
+	 * @param null $short
+	 * @param bool $all
+	 * @return array
+	 */
+	static function format_language_list($languages, $short=null, $all=false)
+	{
+		// The list of available languages so far with both English and
+		// translated names.
+		global $langmapping, $prefs;
+		include("lang/langmapping.php");
+		$formatted = array();
+
+		// run through all the language codes:
+		if (isset($short) && $short == "y") {
+			foreach ($languages as $lc) {
+				if ( $prefs['restrict_language'] === 'n' || empty($prefs['available_languages'] ) || (!$all and in_array($lc, $prefs['available_languages']))) {
+					if (isset($langmapping[$lc]))
+						$formatted[] = array('value' => $lc, 'name' => $langmapping[$lc][0]);
+					else
+						$formatted[] = array('value' => $lc, 'name' => $lc);
+				}
+				usort($formatted, array('language', 'formatted_language_compare'));
+			}
+			return $formatted;
+		}
+		foreach ($languages as $lc) {
+			if ( $prefs['restrict_language'] === 'n' || empty($prefs['available_languages']) || (!$all and in_array($lc, $prefs['available_languages'])) or $all) {
+				if (isset($langmapping[$lc])) {
+					// known language
+					if ($langmapping[$lc][0] == $langmapping[$lc][1]) {
+						// Skip repeated text, 'English (English, en)' looks silly.
+						$formatted[] = array(
+								'value' => $lc,
+								'name' => $langmapping[$lc][0] . " ($lc)"
+								);
+					} else {
+						$formatted[] = array(
+								'value' => $lc,
+								'name' => $langmapping[$lc][1] . " (" . $langmapping[$lc][0] . ', ' . $lc . ")"
+								);
+					}
+				} else {
+					// unknown language
+					$formatted[] = array(
+							'value' => $lc,
+							'name' => tra("Unknown language"). " ($lc)"
+							);
+				}
+			}
+		}
+
+		// Sort the languages by their name in the current locale
+		usort($formatted, array('language', 'formatted_language_compare'));
+		return $formatted;
 	}
 }

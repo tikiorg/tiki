@@ -154,7 +154,8 @@ class Tiki_Connect_Server extends Tiki_Connect_Abstract
 		if (!empty($data['prefs'])) {
 			$doc->addField(ZendSearch\Lucene\Document\Field::UnIndexed('prefs', serialize($data['prefs'])));
 			if (!empty($data['prefs']['language'])) {
-				$languages = TikiLib::get_language_map();
+				$langLib = TikiLib::lib('language');
+				$languages = $langLib->get_language_map();
 				$doc->addField(ZendSearch\Lucene\Document\Field::Text('language', $languages[$data['prefs']['language']]));
 			}
 		}

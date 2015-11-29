@@ -187,7 +187,8 @@ if ($prefs['feature_categories'] == 'y') {
 }
 if ($prefs['feature_multilingual'] == 'y') {
 	$languages = array();
-	$languages = $tikilib->list_languages(false, 'y');
+	$langLib = TikiLib::lib('language');
+	$languages = $langLib->list_languages(false, 'y');
 	$smarty->assign_by_ref('languages', $languages);
 }
 if ($tiki_p_edit_article != 'y' && $tiki_p_remove_article != 'y') { //check one editable

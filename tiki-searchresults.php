@@ -211,7 +211,8 @@ if ($prefs['feature_trackers'] == 'y') {
 }
 if (($where == 'wikis' || $where == 'articles') && $prefs['feature_multilingual'] == 'y') {
 	$languages = array();
-	$languages = $tikilib->list_languages(false, 'y');
+	$langLib = TikiLib::lib('language');
+	$languages = $langLib->list_languages(false, 'y');
 	$smarty->assign_by_ref('languages', $languages);
 }
 

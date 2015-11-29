@@ -256,7 +256,8 @@ if (isset($_REQUEST["exact_match"])) {
 }
 if ($prefs['feature_multilingual'] == 'y') {
 	$languages = array();
-	$languages = $tikilib->list_languages(false, 'y');
+	$langLib = TikiLib::lib('language');
+	$languages = $langLib->list_languages(false, 'y');
 	$smarty->assign_by_ref('languages', $languages);
 }
 $channels = $structlib->list_structures($offset, $maxRecords, $sort_mode, $find, $exact_match, $filter);

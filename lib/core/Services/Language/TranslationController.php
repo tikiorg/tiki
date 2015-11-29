@@ -141,7 +141,8 @@ class Services_Language_TranslationController
 	private function getSearchFilters($type, $object)
 	{
 		$translations = $this->utilities->getTranslations($type, $object);
-		$languages = TikiLib::get_language_map();
+		$langLib = TikiLib::lib('language');
+		$languages = $langLib->get_language_map();
 
 		foreach ($translations as $trans) {
 			unset($languages[$trans['lang']]);

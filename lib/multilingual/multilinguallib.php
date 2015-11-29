@@ -167,10 +167,11 @@ class MultilingualLib extends TikiLib
 
 		$result = $this->query($query, array($type, $objId));
 		$ret = array();
-		$l = $this->format_language_list(array($objLang), $long ? 'n' : 'y');
+		$langLib = TikiLib::lib('language');
+		$l = $langLib->format_language_list(array($objLang), $long ? 'n' : 'y');
 		$ret0 = array('objId'=>$objId, 'objName'=>$objName, 'lang'=> $objLang, 'langName'=>empty($l)?'':$l[0]['name']);
 		while ($res = $result->fetchRow()) {
-			$l = $this->format_language_list(array($res['lang']), $long ? 'n' : 'y');
+			$l = $langLib->format_language_list(array($res['lang']), $long ? 'n' : 'y');
 			$res['langName'] = $l[0]['name'];
 			$ret[] = $res;
 		}
@@ -1002,7 +1003,8 @@ class MultilingualLib extends TikiLib
 		$userLangIDs = $this->preferredLangs();
 
 		// Get information about ALL languages supported by Tiki
-		$allLangsInfo = $tikilib->list_languages(false, 'y');
+		$langLib = TikiLib::lib('language');
+		$allLangsInfo = $langLib->list_languages(false, 'y');
 
 		// Create a map of language ID (ex: 'en') to language info
 		$langIDs2Info = array();

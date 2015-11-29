@@ -757,7 +757,8 @@ if (!defined('ADODB_CASE_ASSOC')) { // typo in adodb's driver for sybase? // so 
 require_once('lib/tikilib.php');
 
 // Get list of available languages
-$languages = TikiLib::list_languages(false, null, true);
+$langLib = TikiLib::lib('language');
+$languages = $langLib->list_languages(false, null, true);
 $smarty->assignByRef("languages", $languages);
 
 $logslib = TikiLib::lib('logs');

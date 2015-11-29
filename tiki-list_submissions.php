@@ -114,7 +114,9 @@ $smarty->assign('find_lang', $_REQUEST['lang']);
 $smarty->assign('topics', $artlib->list_topics());
 $smarty->assign('types', $artlib->list_types());
 if ($prefs['feature_multilingual'] == 'y') {
-	$smarty->assign('languages', $tikilib->list_languages(false, 'y'));
+	$langLib = TikiLib::lib('language');
+	$languages = $langLib->list_languages(false, 'y');
+	$smarty->assign('languages', $languages);
 }
 
 $listpages = $artlib->list_submissions($offset, $maxRecords, $sort_mode, $find, $pdate, $_REQUEST['type'], $_REQUEST['topic'], $_REQUEST['lang']);

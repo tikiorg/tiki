@@ -39,7 +39,8 @@ if (isset($_REQUEST['lock']) && isset($_REQUEST['forumId'])) {
 }
 if ($prefs['feature_multilingual'] === 'y') {
 	$languages = array();
-	$languages = $tikilib->list_languages();
+	$langLib = TikiLib::lib('language');
+	$languages = $langLib->list_languages();
 	$smarty->assign_by_ref('languages', $languages);
 } else {
 	$_REQUEST["forumLanguage"] = '';

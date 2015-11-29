@@ -370,7 +370,8 @@ if (!isset($newver)) {
 }
 if ($prefs['feature_multilingual'] == 'y') {
 	$multilinguallib = TikiLib::lib('multilingual');
-	$languages = $tikilib->list_languages();
+	$langLib = TikiLib::lib('language');
+	$languages = $langLib->list_languages();
 	$smarty->assign_by_ref('languages', $languages);
 	if (isset($_REQUEST["update_translation"])) {
 		// Update translation button clicked. Forward request to edit page of translation.

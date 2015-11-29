@@ -67,7 +67,8 @@ function guess_new_page_attributes_from_parent_pages($page, $page_info)
 			// Language of new page was not defined, and could not be guessed from the
 			// parent pages. User will have to specify it explicitly.
 			//
-			$languages = $tikilib->list_languages(false, true);
+			$langLib = TikiLib::lib('language');
+			$languages = $langLib->list_languages(false, true);
 			$smarty->assign('languages', $languages);
 			$smarty->assign('default_lang', $prefs['language']);
 			$need_lang = true;
@@ -1391,7 +1392,8 @@ if ($prefs['feature_polls'] ==='y' and $prefs['feature_wiki_ratings'] === 'y' &&
 
 if ($prefs['feature_multilingual'] === 'y') {
 	$languages = array();
-	$languages = $tikilib->list_languages();
+	$langLib = TikiLib::lib('language');
+	$languages = $langLib->list_languages();
 	$smarty->assign_by_ref('languages', $languages);
 
 	if ($editlib->isNewTranslationMode()) {

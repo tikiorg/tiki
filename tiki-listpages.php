@@ -412,7 +412,8 @@ if (!empty($multiprint_pages)) {
 
 	if ($prefs['feature_multilingual'] == 'y') {
 		$languages = array();
-		$languages = $tikilib->list_languages(false, 'y');
+		$langLib = TikiLib::lib('language');
+		$languages = $langLib->list_languages(false, 'y');
 		$smarty->assign_by_ref('languages', $languages);
 	}
 

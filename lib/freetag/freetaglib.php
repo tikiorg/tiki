@@ -1464,7 +1464,8 @@ class FreetagLib extends ObjectLib
 	 */
 	function set_tag_language( $tagId, $lang )
 	{
-		if ( ! $this->is_valid_language($lang) )
+		$langLib = TikiLib::lib('language');
+		if ( ! $langLib->is_valid_language($lang) )
 			return;
 
 		$result = $this->query(

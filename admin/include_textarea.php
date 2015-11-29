@@ -50,7 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		'description',
 		'trackerDescription'
 	);
-	foreach ($tikilib->list_languages() as $tlang) {
+	$langLib = TikiLib::lib('language');
+	$languages = $langLib->list_languages();
+	foreach ($languages as $tlang) {
 		foreach ($areanames as $an) {
 			$cachetag = 'plugindesc' . $tlang['value'] . $an . '_js=' . $prefs['javascript_enabled'];
 			$cachelib->invalidate($cachetag);

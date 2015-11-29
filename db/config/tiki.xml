@@ -140,6 +140,12 @@
 			<file>%kernel.root_dir%/lib/videogals/kalturalib.php</file>
 			<argument type="string">0</argument> <!-- KalturaLib::SESSION_USER -->
 		</service>
+		<service id="tiki.lib.language" class="Language">
+			<file>%kernel.root_dir%/lib/language/language.php</file>
+		</service>
+		<service id="tiki.lib.languagetranslations" class="LanguageTranslations">
+			<file>%kernel.root_dir%/lib/language/languagetranslations.php</file>
+		</service>
 		<service id="tiki.lib.ldap" class="LdapLib">
 			<file>%kernel.root_dir%/lib/ldap/ldaplib.php</file>
 		</service>

@@ -46,7 +46,8 @@ if (!empty($_REQUEST['clean'])) {
 }
 $smarty->assign('lostGroups', $userlib->get_lost_groups());
 $languages = array();
-$languages = $tikilib->list_languages();
+$langLib = TikiLib::lib('language');
+$languages = $langLib->list_languages();
 $templates_c = $cachelib->count_cache_files("templates_c/$tikidomain");
 $smarty->assign('templates_c', $templates_c);
 $tempcache = $cachelib->count_cache_files("temp/cache/$tikidomain");

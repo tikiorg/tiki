@@ -112,7 +112,8 @@ class Tracker_Field_Language extends Tracker_Field_Abstract implements Tracker_F
 
 	private function getLanguages()
 	{
-		return TikiLib::get_language_map();
+		$langLib = TikiLib::lib('language');
+		return $langLib->get_language_map();
 	}
 
 	private function isLanguageAvailable($lang)

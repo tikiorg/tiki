@@ -10,8 +10,8 @@ function prefs_language_list($partial = false)
 	$map = array();
 
 	if (! $partial) {
-		$languages = TikiLib::lib('tiki')->list_languages(false, null, true);
-
+		$langLib = TikiLib::lib('language');
+		$languages = $langLib->list_languages(false, null, true);
 		foreach ( $languages as $lang ) {
 			$map[ $lang['value'] ] = $lang['name'];
 		}

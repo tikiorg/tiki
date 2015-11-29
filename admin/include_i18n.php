@@ -13,7 +13,8 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 
 // Get list of available languages
 $languages = array();
-$languages = $tikilib->list_languages(false, null, true);
+$langLib = TikiLib::lib('language');
+$languages = $langLib->list_languages(false, null, true);
 $smarty->assign_by_ref('languages', $languages);
 
 $ok = true;

@@ -15,7 +15,8 @@ $access->check_user($user);
 $access->check_feature('feature_user_watches');
 
 if ($prefs['feature_user_watches_translations']) {
-	$languages = $tikilib->list_languages();
+	$langLib = TikiLib::lib('language');
+	$languages = $langLib->list_languages();
 	$smarty->assign_by_ref('languages', $languages);
 }
 

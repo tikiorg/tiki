@@ -16,7 +16,8 @@ $access->check_feature('lang_use_db');
 $access->check_permission('tiki_p_edit_languages');
 
 // Get available languages
-$languages = $tikilib->list_languages();
+$langLib = TikiLib::lib('language');
+$languages = $langLib->list_languages();
 $smarty->assign_by_ref('languages', $languages);
 
 // check if is possible to write to lang/
@@ -187,7 +188,7 @@ if (isset($_REQUEST['exportToLanguage']) && $tiki_p_admin == 'y') {
 }
 
 $db_languages = Language::getDbTranslatedLanguages();
-$db_languages = $tikilib->format_language_list($db_languages);
+$db_languages = $langLib->format_language_list($db_languages);
 $smarty->assign_by_ref('db_languages', $db_languages);
 
 ask_ticket('edit-languages');

@@ -525,7 +525,8 @@ if ($calendar["customsubscription"] == 'y') {
 $smarty->assign('subscrips', $subscrips);
 
 if ($calendar["customlanguages"] == 'y') {
-	$languages = $tikilib->list_languages();
+	$langLib = TikiLib::lib('language');
+	$languages = $langLib->list_languages();
 } else {
 	$languages = array();
 }
