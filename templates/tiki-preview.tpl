@@ -1,12 +1,20 @@
 <!-- templates/tiki-preview.tpl start -->
 <div class="wikipreview" {if $prefs.ajax_autosave eq "y"}style="display:none;" id="autosave_preview"><div{/if}>
 	{if $prefs.ajax_autosave eq "y"}
-		<div style="float:right;">
-			<select name="diff_style" id="preview_diff_style">
-				<option value="" {if empty($diff_style)}selected="selected"{/if}>{tr}Preview{/tr}</option>
-				<option value="htmldiff" {if isset($diff_style) && $diff_style == "htmldiff"}selected="selected"{/if}>{tr}HTML diff{/tr}</option>
-				<option value="sidediff" {if isset($diff_style) && $diff_style == "sidediff"}selected="selected"{/if}>{tr}Side-by-side diff{/tr}</option>
-			</select>
+		<div class="form-group pull-right">
+			<div class="pull-right" style="display:inline;margin-left: 10px;margin-top: 5px">
+				{self_link _icon_name="back" _ajax="n" _class="tips" _title=":{tr}Popup preview{/tr}" _onclick="ajax_preview( 'editwiki', autoSaveId );$('#autosave_preview').hide();return false;"}
+				{/self_link}
+				{self_link _icon_name="remove" _ajax="n" _class="tips" _title=":{tr}Close preview{/tr}" _onclick="$('#autosave_preview').hide();return false;"}
+				{/self_link}
+			</div>
+			<div class="pull-right" style="display:inline">
+				<select name="diff_style" id="preview_diff_style" class="form-control">
+					<option value="" {if empty($diff_style)}selected="selected"{/if}>{tr}Preview{/tr}</option>
+					<option value="htmldiff" {if isset($diff_style) && $diff_style == "htmldiff"}selected="selected"{/if}>{tr}HTML diff{/tr}</option>
+					<option value="sidediff" {if isset($diff_style) && $diff_style == "sidediff"}selected="selected"{/if}>{tr}Side-by-side diff{/tr}</option>
+				</select>
+			</div>
 			{jq}
 				$("#preview_diff_style").change(function(){
 					ajaxLoadingShow($("#autosave_preview .wikitext"));
@@ -23,12 +31,6 @@
 					});
 				});
 			{/jq}
-			{self_link _icon_name="back" _ajax="n" _onclick="ajax_preview( 'editwiki', autoSaveId );$('#autosave_preview').hide();return false;"}
-				{tr}Popup preview{/tr}
-			{/self_link}
-			{self_link _icon_name="remove" _ajax="n" _onclick="$('#autosave_preview').hide();return false;"}
-				{tr}Close preview{/tr}
-			{/self_link}
 		</div>
 	{/if}
 	{if $prefs.feature_jquery_ui eq "y"}
