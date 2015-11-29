@@ -11,6 +11,8 @@
 		{if $prefs.feature_editcss eq 'y' and $tiki_p_create_css eq 'y'}
 			{button _text="{tr}Edit CSS{/tr}" _class="btn-sm" href="tiki-edit_css.php"}
 		{/if}
+		{button _text="{tr}CSS Assistant{/tr}" _class="btn-sm tips" _onclick="show_brosho();return false;" _ajax="n" _title="{tr}Brosho jQuery Plugin{/tr}:{tr}Assistance to edit Custom CSS{/tr}" href="#"}
+		{$headerlib->add_jsfile('lib/jquery_tiki/brosho/tiki_brosho.js')}
 		<div class="pull-right">
 			<input type="submit" class="btn btn-primary btn-sm" name="looksetup" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
 		</div>
@@ -19,7 +21,7 @@
 		{tab name="{tr}Theme{/tr}"}
 			<h2>{tr}Theme{/tr}</h2>
 			<div class="row">
-				<div class="col-md-3 col-md-push-9">
+				<div class="col-md-2 col-md-push-10">
 					<div class="thumbnail">
 						{if $thumbfile}
 							<img src="{$thumbfile}" alt="{tr}Theme Screenshot{/tr}" id="theme_thumb">
@@ -28,7 +30,7 @@
 						{/if}
 					</div>
 				</div>
-				<div class="col-md-9 col-md-pull-3 adminoptionbox">
+				<div class="col-md-9 col-md-pull-1 adminoptionbox">
 					{preference name=theme}
 					{preference name=theme_option}
 				</div>
@@ -60,18 +62,14 @@
 					</div>
 				{/if}
 			</div>
-
-
 			{preference name=change_theme}
 			<div class="adminoptionboxchild" id="change_theme_childcontainer">
 				{preference name=available_themes}
 			</div>
-
 			{preference name=feature_fixed_width}
 			<div class="adminoptionboxchild" id="feature_fixed_width_childcontainer">
 				{preference name=layout_fixed_width}
 			</div>
-
 			{preference name=useGroupTheme}
 			{preference name=feature_theme_control}
 			<div class="adminoptionboxchild" id="feature_theme_control_childcontainer">
@@ -79,9 +77,7 @@
 				{preference name=feature_theme_control_parentcategory}
 				{preference name=feature_theme_control_autocategorize}
 			</div>
-
 		{/tab}
-
 		{tab name="{tr}General Layout{/tr}"}
 			<h2>{tr}General Layout{/tr}</h2>
 			{preference name=feature_sitelogo}
@@ -94,14 +90,12 @@
 					{preference name=sitelogo_title}
 					{preference name=sitelogo_alt}
 				</fieldset>
-
 				<fieldset>
 					<legend>{tr}Title{/tr}</legend>
 					{preference name=sitetitle}
 					{preference name=sitesubtitle}
 				</fieldset>
 			</div>
-
 			<div class="adminoptionbox">
 				<fieldset>
 					<legend>{tr}Module zone visibility{/tr}</legend>
@@ -122,7 +116,6 @@
 					{preference name=module_zone_available_extra}
 				</fieldset>
 			</div>
-
 			<div class="adminoptionbox">
 				<fieldset>
 					<legend>{tr}Site Report Bar{/tr}</legend>
@@ -132,7 +125,6 @@
 				</fieldset>
 			</div>
 		{/tab}
-
 		{if $prefs.site_layout eq 'classic'}
 			{tab name="{tr}Shadow layer{/tr}"}
 				<h2>{tr}Shadow layer{/tr}</h2>
@@ -140,25 +132,19 @@
 				<div class="adminoptionboxchild" id="feature_layoutshadows_childcontainer">
 					{preference name=main_shadow_start}
 					{preference name=main_shadow_end}
-
 					{preference name=header_shadow_start}
 					{preference name=header_shadow_end}
-
 					{preference name=middle_shadow_start}
 					{preference name=middle_shadow_end}
-
 					{preference name=center_shadow_start}
 					{preference name=center_shadow_end}
-
 					{preference name=footer_shadow_start}
 					{preference name=footer_shadow_end}
-
 					{preference name=box_shadow_start}
 					{preference name=box_shadow_end}
 				</div>
 			{/tab}
 		{/if}
-
 		{tab name="{tr}Pagination{/tr}"}
 			<h2>{tr}Pagination{/tr}</h2>
 			{preference name=user_selector_threshold}
@@ -170,13 +156,11 @@
 				{preference name=direct_pagination_max_middle_links}
 				{preference name=direct_pagination_max_ending_links}
 			</div>
-
 			{preference name=pagination_firstlast}
 			{preference name=pagination_fastmove_links}
 			{preference name=pagination_hide_if_one_page}
 			{preference name=pagination_icons}
 		{/tab}
-
 		{tab name="{tr}UI Effects{/tr}"}
 			<h2>{tr}UI Effects{/tr}</h2>
 			<div class="adminoptionbox">
@@ -187,7 +171,6 @@
 					{preference name=jquery_effect_direction}
 				</fieldset>
 			</div>
-
 			<div class="adminoptionbox">
 				<fieldset class="table">
 					<legend>{tr}Tab UI effects{/tr}</legend>
@@ -196,7 +179,6 @@
 					{preference name=jquery_effect_tabs_direction}
 				</fieldset>
 			</div>
-
 			<fieldset>
 				<legend>{tr}Other{/tr}</legend>
 				<div class="admin featurelist">
@@ -210,7 +192,6 @@
 				</div>
 			</fieldset>
 		{/tab}
-
 		{tab name="{tr}Customization{/tr}"}
 			<h2>{tr}Customization{/tr}</h2>
 			<fieldset>
@@ -253,22 +234,16 @@
 					</div>
 				</div>
 			</fieldset>
-
 			<fieldset>
 				<legend>{tr}Custom Codes{/tr}</legend>
-				{button _text="{tr}CSS Assistant{/tr}" _class="btn-sm tips" _onclick="show_brosho();return false;" _ajax="n" _title="{tr}Brosho jQuery Plugin{/tr}:{tr}Assistance to edit Custom CSS{/tr}"}
 				{preference name="header_custom_css" syntax="css"}
-
 				{preference name=feature_custom_html_head_content syntax="htmlmixed"}
 				{preference name=feature_endbody_code syntax="tiki"}
 				{preference name=site_google_analytics_account}
-
 				{preference name="header_custom_js" syntax="javascript"}
-
 				{preference name="layout_add_body_group_class"}
 				{preference name=categories_add_class_to_body_tag}
 			</fieldset>
-
 			<fieldset>
 				<legend>{tr}Editing{/tr}</legend>
 				{preference name=feature_editcss}
@@ -278,7 +253,6 @@
 						{button href="tiki-edit_templates.php" _text="{tr}View Templates{/tr}"}
 					</div>
 				{/if}
-
 				{preference name=feature_edit_templates}
 				{if $prefs.feature_edit_templates eq 'y'}
 					<div class="adminoptionboxchild">
@@ -287,20 +261,17 @@
 				{/if}
 			</fieldset>
 		{/tab}
-
 		{tab name="{tr}Miscellaneous{/tr}"}
 			<h2>{tr}Miscellaneous{/tr}</h2>
 			{preference name=feature_tabs}
 			<div class="adminoptionboxchild" id="feature_tabs_childcontainer">
 				{preference name=layout_tabs_optional}
 			</div>
-
 			{preference name=feature_iepngfix}
 			<div class="adminoptionboxchild" id="feature_iepngfix_childcontainer">
 				{preference name=iepngfix_selectors}
 				{preference name=iepngfix_elements}
 			</div>
-
 			<div class="adminoptionbox">
 				<fieldset>
 					<legend>{tr}Favicon{/tr}</legend>
@@ -308,38 +279,31 @@
 					{preference name=site_favicon_type}
 				</fieldset>
 			</div>
-
 			<div class="adminoptionbox">
 				<fieldset class="table">
-					<legend>{tr}Context Menus{/tr} (<em>{tr}Currently used in File Galleries only{/tr}.</em>)</legend>
+					<legend>{tr}Context Menus{/tr} (<small>{tr}Currently used in File Galleries only{/tr}.</small>)</legend>
 					{preference name=use_context_menu_icon}
 					{preference name=use_context_menu_text}
 				</fieldset>
 			</div>
-
 			<fieldset>
 				<legend>{tr}Separators{/tr}</legend>
 				{preference name=site_crumb_seper}
-				<div class="adminoptionboxchild">
-					<em>{tr}Examples:{/tr} &nbsp; &raquo; &nbsp; / &nbsp; &gt; &nbsp; : &nbsp; -> &nbsp; &#8594;</em>
+				<div class="adminoptionboxchild clearfix">
+					<span class="col-md-8 col-md-push-4 help-block">{tr}Examples:{/tr} &nbsp; &raquo; &nbsp; / &nbsp; &gt; &nbsp; : &nbsp; -> &nbsp; &#8594;</span>
 				</div>
-
 				{preference name=site_nav_seper}
-				<div class="adminoptionboxchild">
-					<em>{tr}Examples:{/tr} &nbsp; | &nbsp; / &nbsp; &brvbar; &nbsp; :</em>
+				<div class="adminoptionboxchild clearfix">
+					<span class="col-md-8 col-md-push-4 help-block">{tr}Examples:{/tr} &nbsp; | &nbsp; / &nbsp; &brvbar; &nbsp; :</span>
 				</div>
 			</fieldset>
-
 			{preference name=log_tpl}
 			{preference name=smarty_compilation}
 			{preference name=smarty_cache_perms}
 			{preference name=categories_used_in_tpl}
-
 			{preference name=feature_html_head_base_tag}
 		{/tab}
-
 	{/tabset}
-
 	<div class="row">
 		<div class="form-group col-lg-12">
 			<div class="text-center">
