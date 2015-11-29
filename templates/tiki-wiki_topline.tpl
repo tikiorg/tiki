@@ -105,7 +105,7 @@
 					</a>
 					<ul class="dropdown-menu dropdown-menu-right">
 						<li class="dropdown-title">
-							{tr}Actions{/tr}
+							{tr}Page actions{/tr}
 						</li>
 						<li class="divider"></li>
 						<li>
