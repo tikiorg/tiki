@@ -77,7 +77,7 @@ class Services_Language_Utilities
 		}
 
 		if (! $lang) {
-			throw new Services_Exception(tr('Object has no language and cannot be translated'), 400);
+			throw new Services_Exception(tr('The object has no language indicated and cannot be translated'), 400);
 		}
 
 		return $lang;

@@ -22,7 +22,7 @@ class Services_Menu_Controller
 		//check permissions
 		$perms = Perms::get('menu');
 		if (! $perms->tiki_p_edit_menu) {
-			throw new Services_Exception_Denied(tr('Permission denied (tiki_p_edit_menu)'));
+			throw new Services_Exception_Denied(tr('You don't have permission to edit menus (tiki_p_edit_menu)'));
 		}
 		
 		//get menu details
@@ -145,7 +145,7 @@ class Services_Menu_Controller
 		if ($confirm) {
 			//check necessary permissions
 			if (! $perms = Perms::get()->tiki_p_edit_menu_option) {
-				throw new Services_Exception_Denied(tr('Permission denied (tiki_p_edit_menu_option)'));
+				throw new Services_Exception_Denied(tr('You don't have permission to edit menu options (tiki_p_edit_menu_option)'));
 			}
 		
 			//prepare data and check conditions
@@ -274,7 +274,7 @@ class Services_Menu_Controller
 		//check permissions
 		$perms = Perms::get('menu');
 		if (! $perms->tiki_p_edit_menu_option) {
-			throw new Services_Exception_Denied(tr('Permission denied (tiki_p_edit_menu_option)'));
+			throw new Services_Exception_Denied(tr('You don't have permission to edit menu options (tiki_p_edit_menu_option)'));
 		}
 		
 		//get menu details

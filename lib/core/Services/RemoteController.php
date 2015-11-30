@@ -58,7 +58,7 @@ class Services_RemoteController
 		$response = $client->send();
 
 		if (! $response->isSuccess()) {
-			throw new Services_Exception(tr('Remote service unaccessible (%0)', $response->getStatusCode()), 400);
+			throw new Services_Exception(tr('Remote service inaccessible (%0)', $response->getStatusCode()), 400);
 		}
 
 		return json_decode($response->getBody(), true);

@@ -229,13 +229,13 @@ if (isset($_REQUEST['import']) && isset($_FILES['csvlist']['tmp_name'])) {
 	check_ticket('admin-categories');
 	$fhandle = fopen($_FILES['csvlist']['tmp_name'], 'r');
 	if (!$fhandle) {
-		$smarty->assign('msg', tra("The file is not a CSV file or has not a correct syntax"));
+		$smarty->assign('msg', tra("The file has incorrect syntax or is not a CSV file"));
 		$smarty->display("error.tpl");
 		die;
 	}
 	$fields = fgetcsv($fhandle, 1000);
 	if (!$fields[0]) {
-		$smarty->assign('msg', tra('The file is not a CSV file or has not a correct syntax'));
+		$smarty->assign('msg', tra('The file has incorrect syntax or is not a CSV file'));
 		$smarty->display('error.tpl');
 		die;
 	}

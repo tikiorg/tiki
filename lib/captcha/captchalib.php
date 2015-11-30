@@ -205,14 +205,14 @@ Recaptcha.create("' . $this->captcha->getPubKey() . '",
 	function setErrorMessages()
 	{
 		$errors = array(
-			'missingValue' => tra('Empty captcha value'),
+			'missingValue' => tra('Empty CAPTCHA value'),
 			'badCaptcha' => tra('You have mistyped the anti-bot verification code. Please try again.')
 		);
 
 		if ($this->type == 'recaptcha')
-			$errors['errCaptcha'] = tra('Failed to validate captcha');
+			$errors['errCaptcha'] = tra('Failed to validate CAPTCHA');
 		else
-			$errors['missingID'] = tra('Captcha ID field is missing');
+			$errors['missingID'] = tra('CAPTCHA ID field is missing');
 
 		$this->captcha->setMessages($errors);
 	}
@@ -245,7 +245,7 @@ Recaptcha.create("' . $this->captcha->getPubKey() . '",
 				'instructions_audio' => tra('Type what you hear'),
 				'help_btn' => tra('Help'),
 				'play_again' => tra('Play sound again'),
-				'cant_hear_this' => tra('Download sound as MP3'),
+				'cant_hear_this' => tra('Download audio as an MP3 file'),
 				'incorrect_try_again' => tra('Incorrect. Try again.')
 			)
 		);

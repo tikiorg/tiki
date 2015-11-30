@@ -171,7 +171,7 @@ class BanLib extends TikiLib
 		if ($fields === false) {
 			$smarty = TikiLib::lib('smarty');
 
-			$smarty->assign('msg', tra("The file is not a CSV file or has not a correct syntax"));
+			$smarty->assign('msg', tra("The file has incorrect syntax or is not a CSV file"));
 			$smarty->display("error.tpl");
 			die;
 		}

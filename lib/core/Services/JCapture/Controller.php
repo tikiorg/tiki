@@ -58,7 +58,7 @@ class Services_JCapture_Controller
 		global $prefs, $is_token_access, $detailtoken;
 
 		if (!$is_token_access) {
-			throw new Services_Exception_NotAvailable(tr('Not authorised'));
+			throw new Services_Exception_NotAvailable(tr('Not authorized'));
 		}
 
 		$fileController = new Services_File_Controller();

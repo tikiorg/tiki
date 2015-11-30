@@ -63,7 +63,7 @@ function batchImportUsers()
 	$fields = fgetcsv($fhandle, 1000);
 
 	if (!$fields[0]) {
-		$smarty->assign('msg', tra('The file is not a CSV file or has not a correct syntax'));
+		$smarty->assign('msg', tra('The file has incorrect syntax or is not a CSV file'));
 		$smarty->display('error.tpl');
 		die;
 	}

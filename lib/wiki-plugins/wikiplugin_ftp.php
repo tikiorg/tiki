@@ -28,7 +28,7 @@ function wikiplugin_ftp_info()
 			),
 			'user' => array(
 				'required' => true,
-				'name' => tra('User Name'),
+				'name' => tra('Username'),
 				'description' => tra('User name needed to access the FTP account'),
 				'since' => '3.0',
 				'filter' => 'username',

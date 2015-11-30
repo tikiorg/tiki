@@ -104,7 +104,7 @@
 				{tr}You can additionally protect from spam enabling the "<a href="http://doc.tiki.org/Forum+Admin#Forum_moderation" target="_blank">moderation queue on forums</a>", or through <strong>banning</strong> multiple ip's from the "<a href="tiki-admin_actionlog.php" target="_blank">Action log</a>", from "<a href="tiki-adminusers.php" target="_blank">Users registration</a>", or from the "<a href="tiki-list_comments.php" target="_blank">Comments moderation queue</a>" itself{/tr}.
 			{/remarksbox}
 			<fieldset>
-				<legend>{tr}Captcha{/tr}</legend>
+				<legend>{tr}CAPTCHA{/tr}</legend>
 				{preference name=feature_antibot}
 				<div class="adminoptionboxchild" id="feature_antibot_childcontainer">
 					{preference name=captcha_wordLen}

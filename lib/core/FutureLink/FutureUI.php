@@ -456,7 +456,7 @@ JQ
 									};
 
 									answersDialog.dialog({
-										title: tr("Please fill in the questions below"),
+										title: tr("Please answer the questions below"),
 										buttons: answersDialogButtons,
 										modal: true,
 										width: $(window).width() / 2
@@ -507,7 +507,7 @@ JQ
 									me.data('rangyBusy', true);
 
 									var pastlinkCopy = $('<div></div>');
-									var pastlinkCopyButton = $('<div>' + tr('Click HERE to Copy to Clipboard') + '</div>')
+									var pastlinkCopyButton = $('<div>' + tr('Click here to copy to clipboard') + '</div>')
 										.button()
 										.appendTo(pastlinkCopy);
 									var pastlinkCopyValue = $('<textarea style="width: 100%; height: 80%;"></textarea>')
@@ -515,7 +515,7 @@ JQ
 										.appendTo(pastlinkCopy);
 
 									pastlinkCopy.dialog({
-										title: tr("Copy text and Metadata"),
+										title: tr("Copy text and metadata"),
 										modal: true,
 										close: function() {
 											me.data('rangyBusy', false);
@@ -536,7 +536,7 @@ JQ
 										me.data('rangyBusy', false);
 
 
-										$.notify(tr('Text and Metadata copied to Clipboard'));
+										$.notify(tr('Text and metadata copied to clipboard'));
 										return false;
 									});
 

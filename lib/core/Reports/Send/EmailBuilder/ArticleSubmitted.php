@@ -12,7 +12,7 @@ class Reports_Send_EmailBuilder_ArticleSubmitted extends Reports_Send_EmailBuild
 {
 	public function getTitle()
 	{
-		return tr('New articles submited:');
+		return tr('New articles submitted:');
 	}
 	
 	public function getOutput(array $change)

@@ -34,7 +34,7 @@ class Captcha_Questions extends Zend\Captcha\AbstractWord
 	 */
 	protected $messageTemplates = array(
 		self::MISSING_VALUE => 'Missing captcha fields',
-		self::ERR_CAPTCHA   => 'Failed to validate captcha',
+		self::ERR_CAPTCHA   => 'Failed to validate CAPTCHA',
 		self::BAD_CAPTCHA   => 'Captcha value is wrong: %value%',
 		self::MISSING_ID    => 'missingID',
 	);

@@ -122,7 +122,7 @@ class Services_User_ConditionsController
 				$this->setBirthDate($user, $inputBirthDate);
 				TikiLib::lib('access')->redirect($origin);
 			} else {
-				TikiLib::lib('errorreport')->report(tr('You are required enter your birth date to continue.'));
+				TikiLib::lib('errorreport')->report(tr('You must enter your date of birth to continue.'));
 			}
 		}
 

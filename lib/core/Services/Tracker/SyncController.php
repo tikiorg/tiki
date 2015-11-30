@@ -23,7 +23,7 @@ class Services_Tracker_SyncController
 		}
 
 		if (! Perms::get()->admin_trackers) {
-			throw new Services_Exception(tr('Reserved to tracker administrators'), 403);
+			throw new Services_Exception(tr('Reserved for tracker administrators'), 403);
 		}
 	}
 

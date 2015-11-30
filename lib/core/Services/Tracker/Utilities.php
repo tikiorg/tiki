@@ -99,7 +99,7 @@ class Services_Tracker_Utilities
 				$names[] = $f['name'];
 			}
 
-			$errorreportlib->report(tr('Following mandatory fields are missing: %0', implode(', ', $names)));
+			$errorreportlib->report(tr('The following mandatory fields are missing: %0', implode(', ', $names)));
 		}
 
 		foreach ($errors['err_value'] as $f) {

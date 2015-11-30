@@ -761,7 +761,7 @@ class CalendarLib extends TikiLib
 			$fields = fgetcsv($fhandle, 1000);
 		}
 		if ($fields === false || !array_search('name', $fields)) {
-			$smarty->assign('msg', tra("The file is not a CSV file or has not a correct syntax"));
+			$smarty->assign('msg', tra("The file has incorrect syntax or is not a CSV file"));
 			$smarty->display("error.tpl");
 			die;
 		}
@@ -1041,7 +1041,7 @@ class CalendarLib extends TikiLib
 	{
 		global $prefs;
 		if ($prefs['calendar_firstDayofWeek'] == 'user') {
-			$firstDayofWeek = (int)tra('First day of week: Sunday (its ID is 0) - translators you need to localize this string!');
+			$firstDayofWeek = (int)tra('First day of week: Sunday (its ID is 0) - Translators, you need to localize this string!');
 			if ( $firstDayofWeek < 1 || $firstDayofWeek > 6 ) {
 				$firstDayofWeek = 0;
 			}

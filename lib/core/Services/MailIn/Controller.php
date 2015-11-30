@@ -13,7 +13,7 @@ class Services_MailIn_Controller
 
 		$perms = Perms::get();
 		if (! $perms->admin_mailin) {
-			throw new Services_Exception_Denied(tr('Reserved to administrators.'));
+			throw new Services_Exception_Denied(tr('Reserved for administrators.'));
 		}
 	}
 

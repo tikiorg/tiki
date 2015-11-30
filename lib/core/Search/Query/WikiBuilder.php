@@ -192,7 +192,7 @@ class Search_Query_WikiBuilder
 			$arguments['to'] = $arguments['from'] + $arguments['gap'];
 		}
 		if (! isset($arguments['from'], $arguments['to'])) {
-			TikiLib::lib('errorreport')->report(tr('Missing from or to for range filter.'));
+			TikiLib::lib('errorreport')->report(tr('The range filter is missing \"from\" or \"to\".'));
 		}
 		$query->filterRange($arguments['from'], $arguments['to'], $value);
 	}
@@ -200,7 +200,7 @@ class Search_Query_WikiBuilder
 	function wpquery_filter_textrange($query, $value, array $arguments)
 	{
 		if (! isset($arguments['from'], $arguments['to'])) {
-			TikiLib::lib('errorreport')->report(tr('Missing from or to for range filter.'));
+			TikiLib::lib('errorreport')->report(tr('The range filter is missing \"from\" or \"to\".'));
 		}
 		$query->filterTextRange($arguments['from'], $arguments['to'], $value);
 	}

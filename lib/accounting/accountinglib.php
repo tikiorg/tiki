@@ -559,12 +559,12 @@ class AccountingLib extends LogsLib
 	{
 		$StartDate = new DateTime($book['bookStartDate']);
 		if ($Date < $StartDate) {
-			return array(tra("The date for the transaction is before this books start date."));
+			return array(tra("The date of the transaction is before the start date of this book."));
 		}
 
 		$EndDate = new DateTime($book['bookEndDate']);
 		if ($Date > $EndDate) {
-			return array(tra("The date for the transaction is after this books end date."));
+			return array(tra("The date of the transaction is after the end date of this book."));
 		}
 
 		return true;
@@ -598,7 +598,7 @@ class AccountingLib extends LogsLib
 		$book = $this->getBook($bookId);
 
 		if ($book['bookClosed'] == 'y') {
-			return array(tra("This book has been closed. You can't book into it any more."));
+			return array(tra("This book has been closed. Bookings can no longer be made in it."));
 		} try {
 			$date = new DateTime($journalDate);
 		} catch(Exception $e) {
@@ -680,7 +680,7 @@ class AccountingLib extends LogsLib
 		$book = $this->getBook($bookId);
 
 		if ($book['bookClosed'] == 'y') {
-			$errors[] = tra("This book has been closed. You can't book into it any more.");
+			$errors[] = tra("This book has been closed. Bookings can no longer be made in it.");
 		} try {
 			$date = new DateTime($journalDate);
 		} catch(Exception $e) {
@@ -703,11 +703,11 @@ class AccountingLib extends LogsLib
 		if (!is_array($creditText)) $creditText = array($creditText);
 
 		if (count($debitAccount) != count($debitAmount) or count($debitAccount) != count($debitText)) {
-			$errors[] = tra('Number of debit entries differ: ') . count($debitAccount) . '/' . count($debitAmount) . '/' . count($debitText);
+			$errors[] = tra('The number of debit entries differs: ') . count($debitAccount) . '/' . count($debitAmount) . '/' . count($debitText);
 		}
 
 		if (count($creditAccount) != count($creditAmount) or count($creditAccount) != count($creditText)) {
-			$errors[] = tra('Number of credit entries differ: ') . count($creditAccount) . '/' . count($creditAmount) . '/' . count($creditText);
+			$errors[] = tra('The number of credit entries differs: ') . count($creditAccount) . '/' . count($creditAmount) . '/' . count($creditText);
 		}
 
 		if (count($debitAccount)>1 and count($creditAccount)>1) {
@@ -819,7 +819,7 @@ class AccountingLib extends LogsLib
 	{
 		$book = $this->getBook($bookId);
 		if ($book['bookClosed'] == 'y') {
-			$errors[] = tra("This book has been closed. You can't cancel transactions in it any more.");
+			$errors[] = tra("This book has been closed. Transactions can no longer be cancelled in it.");
 		}
 		$query = "UPDATE `tiki_acct_journal` SET `journalCancelled`=1 WHERE `journalBookId`=? and `journalId`=?";
 		$res = $this->query($query, array($bookId, $journalId));
@@ -905,7 +905,7 @@ class AccountingLib extends LogsLib
 
 		$book = $this->getBook($bookId);
 		if ($book['bookClosed'] == 'y') {
-			$errors[] = tra("This book has been closed. You can't book into it any more.");
+			$errors[] = tra("This book has been closed. Bookings can no longer be made in it.");
 		} try {
 			$date = new DateTime($stackDate);
 		} catch (Exception $e) {
@@ -925,11 +925,11 @@ class AccountingLib extends LogsLib
 		if (!is_array($creditText)) $creditText = array($creditText);
 
 		if (count($debitAccount) != count($debitAmount) or count($debitAccount) != count($debitText)) {
-			$errors[] = tra('Number of debit entries differ: ') . count($debitAccount) . '/' . count($debitAmount) . '/' . count($debitText);
+			$errors[] = tra('The number of debit entries differs: ') . count($debitAccount) . '/' . count($debitAmount) . '/' . count($debitText);
 		}
 
 		if (count($creditAccount) != count($creditAmount) or count($creditAccount) != count($creditText)) {
-			$errors[] = tra('Number of credit entries differ: ') . count($creditAccount) . '/' . count($creditAmount) . '/' . count($creditText);
+			$errors[] = tra('The number of credit entries differs: ') . count($creditAccount) . '/' . count($creditAmount) . '/' . count($creditText);
 		}
 
 		if (count($debitAccount)>1 and count($creditAccount)>1) {
@@ -1020,7 +1020,7 @@ class AccountingLib extends LogsLib
 
 		$book = $this->getBook($bookId);
 		if ($book['bookClosed'] == 'y') {
-			$errors[] = tra("This book has been closed. You can't book into it any more.");
+			$errors[] = tra("This book has been closed. Bookings can no longer be made in it.");
 		}	try {
 			$date = new DateTime($stackDate);
 		} catch (Exception $e) {
@@ -1040,11 +1040,11 @@ class AccountingLib extends LogsLib
 		if (!is_array($creditText)) $creditText = array($creditText);
 
 		if (count($debitAccount) != count($debitAmount) or count($debitAccount) != count($debitText)) {
-			$errors[] = tra('Number of debit entries differ: ') . count($debitAccount) . '/' . count($debitAmount) . '/' . count($debitText);
+			$errors[] = tra('The number of debit entries differs: ') . count($debitAccount) . '/' . count($debitAmount) . '/' . count($debitText);
 		}
 
 		if (count($creditAccount) != count($creditAmount) or count($creditAccount) != count($creditText)) {
-			$errors[] = tra('Number of credit entries differ: ') . count($creditAccount) . '/' . count($creditAmount) . '/' . count($creditText);
+			$errors[] = tra('The number of credit entries differs: ') . count($creditAccount) . '/' . count($creditAmount) . '/' . count($creditText);
 		}
 
 		if (count($debitAccount) > 1 and count($creditAccount) > 1) {
@@ -1172,7 +1172,7 @@ class AccountingLib extends LogsLib
 				FROM `tiki_acct_stackitem` WHERE `stackBookId`=? AND `stackItemStackId`=?";
 		$res = $this->query($query, array($bookId, $journalId, $bookId, $stackId));
 		if ($res === false) {
-			$errors[] = tra('Booking error cconfirming stack entry') . $this->ErrorNo() . ": " . $this->ErrorMsg() . "<br /><pre>$query</pre>";
+			$errors[] = tra('Booking error confirming stack entry') . $this->ErrorNo() . ": " . $this->ErrorMsg() . "<br /><pre>$query</pre>";
 			$errors[] = $this->manualRollback($bookId, $journalId);
 			return $errors;
 		}
@@ -1388,7 +1388,7 @@ class AccountingLib extends LogsLib
 		$errors = array();
 		if (!is_numeric($id)) {
 			$errors[] = htmlspecialchars($idname) . ' (' . htmlspecialchars($id) . ')'
-				. tra('is is not a number.');
+				. tra('is not a number.');
 		} elseif ($id <= 0) {
 			$errors[] = htmlspecialchars($idname) . ' ' . tra('must be > 0.');
 		} else {

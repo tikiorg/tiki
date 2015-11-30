@@ -909,7 +909,7 @@ class ArtLib extends TikiLib
 		global $user, $prefs, $tikilib;
 		$fhandle = fopen($fileName, 'r');
 		if (($fds = fgetcsv($fhandle, 4096, $csvDelimiter)) === false || empty($fds[0])) {
-			$msgs[] = tra('The file is not a CSV file or has not a correct syntax');
+			$msgs[] = tra('The file has incorrect syntax or is not a CSV file');
 			return false;
 		}
 		for ($i = 0, $icount_fds = count($fds); $i < $icount_fds; $i++) {

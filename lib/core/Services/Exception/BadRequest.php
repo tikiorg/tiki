@@ -17,7 +17,7 @@ class Services_Exception_BadRequest extends Services_Exception
 	function __construct($message = null)
 	{
 		if (is_null($message)) {
-			$message = tra('Bad request - cross-site request forgery (CSRF) detected. Operation blocked');
+			$message = tra('Bad request - possible cross-site request forgery (CSRF) detected. The action was blocked');
 		}
 		parent::__construct($message, 400);
 	}

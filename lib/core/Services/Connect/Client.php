@@ -29,7 +29,7 @@ class Services_Connect_Client
 		global $prefs;
 
 		if (! Perms::get()->admin) {
-			throw new Services_Exception(tr('Reserved to administrators during development'), 403);
+			throw new Services_Exception(tr('Reserved for administrators during development'), 403);
 		}
 
 		if (empty($prefs['connect_guid'])) {
@@ -63,7 +63,7 @@ class Services_Connect_Client
 	function action_list($input = null)
 	{
 		if (! Perms::get()->admin) {
-			throw new Services_Exception(tr('Reserved to administrators during development'), 403);
+			throw new Services_Exception(tr('Reserved for administrators during development'), 403);
 		}
 		$info = $this->connectlib->buildConnectData();
 
@@ -76,7 +76,7 @@ class Services_Connect_Client
 		global $prefs;
 
 		if (! Perms::get()->admin) {
-			throw new Services_Exception(tr('Reserved to administrators during development'), 403);
+			throw new Services_Exception(tr('Reserved for administrators during development'), 403);
 		}
 
 		$tikilib = TikiLib::lib('tiki');
@@ -94,7 +94,7 @@ class Services_Connect_Client
 				} else {
 					$data = array(
 						'status' => 'error',
-						'message' => empty($data['message']) ? tra('Something went wrong. Tiki Connect is still experimental. Please try again.') . ' (' . tra('registration') . ')' : $data['message'],
+						'message' => empty($data['message']) ? tra('There was an error (Tiki Connect is still experimental). Please try again.') . ' (' . tra('registration') . ')' : $data['message'],
 					);
 				}
 
@@ -116,7 +116,7 @@ class Services_Connect_Client
 				} else {
 					$data = array(
 						'status' => 'error',
-						'message' => empty($data['message']) ? tra('Something went wrong. Tiki Connect is still experimental. Please try again.') . ' (' . tra('confirmation') . ')' : $data['message'],
+						'message' => empty($data['message']) ? tra('There was an error (Tiki Connect is still experimental). Please try again.') . ' (' . tra('confirmation') . ')' : $data['message'],
 					);
 				}
 			}
