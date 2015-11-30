@@ -28,7 +28,7 @@ class TrackerClearCommand extends Command
 			->addOption(
 				'confirm',
 				null,
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Required to confirm deletion of all items'
 			)
 		;

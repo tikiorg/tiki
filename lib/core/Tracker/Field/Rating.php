@@ -21,7 +21,7 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 				'params' => array(
 					'option' => array(
 						'name' => tr('Option'),
-						'description' => tr('The possible options (comma separated integers) for the rating.'),
+						'description' => tr('The possible options (comma-separated integers) for the rating.'),
 						'filter' => 'int',
 						'count' => '*',
 						'legacy_index' => 0,
@@ -33,13 +33,13 @@ class Tracker_Field_Rating extends Tracker_Field_Abstract
 						'options' => array(
 							'stars' => tr('Stars'),
 							'radio' => tr('Radio Buttons'),
-							'like' => tr('Single Option: e.g. Like'),
+							'like' => tr('Single Option: for example, Like'),
 						),
 						'legacy_index' => 1,
 					),
 					'labels' => array(
 						'name' => tr('Labels'),
-						'description' => tr('The text labels (comma separated) for the possible options.'),
+						'description' => tr('The text labels (comma-separated) for the possible options.'),
 						'filter' => 'text',
 						'count' => '*',
 						'legacy_index' => 2,

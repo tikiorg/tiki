@@ -48,7 +48,7 @@ class Table_Plugin
 		$this->params = array(
 			'server' => array(
 				'required' => false,
-				'name' => tra('Server Side Processing'),
+				'name' => tra('Server-side Processing'),
 				'description' => tr(
 					'Enter %0y%1 to have the server do the sorting and filtering through Ajax and %0n%1 to have the
 					browser do it (n is the default). Set to %0y%1 (and also set the Paginate parameter
@@ -109,7 +109,7 @@ class Table_Plugin
 					the setting as follows: %0letter%1 (first letter), %0word%1 (first word), %0number%1, %0date%1,
 					%0date-year%1, %0date-month%1, %0date-day%1, %0date-week%1, %0date-time%1. %0letter%1 and %0word%1
 					can be extended, e.g., %0word-2%1 shows first 2 words. %0number-10%1 will group rows in blocks of
-					ten. Group will not work in plugins where the Server Side Processing parameter (%0server%1) is
+					ten. Group will not work in plugins where the Server-side Processing parameter (%0server%1) is
 					set to %0y%1.', '<code>', '</code>'
 				),
 				'since' => '12.0',

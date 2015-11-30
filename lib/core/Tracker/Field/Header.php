@@ -17,17 +17,17 @@ class Tracker_Field_Header extends Tracker_Field_Abstract implements Tracker_Fie
 	{
 		return array(
 			'h' => array(
-				'name' => tr('Header'),
-				'description' => tr('Displays a header between fields to delimit a section and allow folding the fields.'),
+				'name' => tr('Heading'),
+				'description' => tr('Displays a heading between fields to delimit a section and allow folding the fields.'),
 				'readonly' => true,
-				'help' => 'Header Tracker Field',
+				'help' => 'Heading Tracker Field',
 				'prefs' => array('trackerfield_header'),
 				'tags' => array('basic'),
 				'default' => 'y',
 				'params' => array(
 					'level' => array(
-						'name' => tr('Header Level'),
-						'description' => tr('Level of the header to use for complex tracker structures needing multiple heading levels.'),
+						'name' => tr('Heading Level'),
+						'description' => tr('Level of the heading to use for complex tracker structures needing multiple heading levels.'),
 						'default' => 3,
 						'filter' => 'int',
 						'legacy_index' => 0,

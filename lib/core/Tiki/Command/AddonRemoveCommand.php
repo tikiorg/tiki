@@ -28,7 +28,7 @@ class AddonRemoveCommand extends Command
 			->addOption(
 				'confirm',
 				null,
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Confirm deletion of objects'
 			);
 	}

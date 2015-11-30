@@ -45,7 +45,7 @@ function wikiplugin_subscribegroups_info()
 				'filter' => 'alpha',
 				'default' => 'dropdown',
 				'options' => array(
-					array('text' => tra('Drop Down'), 'value' => 'dropdown'),
+					array('text' => tra('Dropdown'), 'value' => 'dropdown'),
 					array('text' => tra('Table'), 'value' => 'table'),
 				)
 			),

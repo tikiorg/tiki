@@ -48,7 +48,7 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 					),
 					'listFieldIdThere' => array(
 						'name' => tr('Listed Field'),
-						'description' => tr('Field ID to be displayed in the drop list.'),
+						'description' => tr('Field ID to be displayed in the dropdown list.'),
 						'filter' => 'int',
 						'legacy_index' => 3,
 						'profile_reference' => 'tracker_field',

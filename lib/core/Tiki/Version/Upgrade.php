@@ -26,9 +26,9 @@ class Tiki_Version_Upgrade
 			$parts[] = tr('Version %0 is no longer supported.', (string) $this->old);
 
 			if ($this->isMinor()) {
-				$parts[] = tr('A minor upgrade to %0 is required.', (string) $this->new);
+				$parts[] = tr('A minor upgrade to %0 is strongly recommended.', (string) $this->new);
 			} else {
-				$parts[] = tr('A major upgrade to %0 is required.', (string) $this->new);
+				$parts[] = tr('A major upgrade to %0 is strongly recommended.', (string) $this->new);
 			}
 		} else {
 			// Do not encourage people to leave an LTS which is still supported. Just inform them

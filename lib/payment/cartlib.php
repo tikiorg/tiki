@@ -750,7 +750,7 @@ class CartLib
 					unset( $_SESSION['cart'][ $code ] );
 				}
 
-				$this->handle_error(tra('There is not enough inventory left for your request'));
+				$this->handle_error(tra('There is insufficient inventory to meet your request'));
 			}
 
 			if ($currentQuantity > 0) {

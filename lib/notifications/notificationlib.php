@@ -117,7 +117,7 @@ class NotificationLib extends TikiLib
 				'object' => '*'
 		);// Blog comment mail
 		$watches['blog_comment_changes'] = array(
-			'label' => tra('A comment in a blog page is posted or edited') ,
+			'label' => tra('A blog post comment is posted or edited') ,
 			'type' => 'blog',
 			'url' => '',
 			'available' => $prefs['feature_blogs'] == 'y',
@@ -139,14 +139,14 @@ class NotificationLib extends TikiLib
 		);
 
 		$watches['wiki_comment_changes'] = array(
-				'label' => tra('A comment in a wiki page is posted or edited') ,
+				'label' => tra('A wiki page comment is posted or edited') ,
 				'type' => 'wiki page',
 				'url' => '',
 				'available' => $prefs['feature_wiki'] == 'y' && $prefs['feature_wiki_comments'] == 'y'
 		);
 
 		$watches['article_commented'] = array(
-				'label' => tra('A comment in an article is posted or edited') ,
+				'label' => tra('An article comment is posted or edited') ,
 				'type' => 'article',
 				'url' => '',
 				'available' => $prefs['feature_articles'] == 'y' && $prefs['feature_article_comments'] == 'y'

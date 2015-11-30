@@ -28,13 +28,13 @@ class AddonInstallCommand extends Command
 			->addOption(
 				'reapply',
 				null,
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Re-apply profiles when already applied.'
 			)
 			->addOption(
 				'ignoredepends',
 				null,
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Ignore dependencies.'
 			);
 	}

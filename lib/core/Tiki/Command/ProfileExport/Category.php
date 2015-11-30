@@ -27,19 +27,19 @@ class Category extends ObjectWriter
 			->addOption(
 				'deep',
 				null,
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Also export sub-categories'
 			)
 			->addOption(
 				'include-objects',
 				null,
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Include references to objects contained in the profile'
 			)
 			->addOption(
 				'include-all-objects',
 				null,
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Include references to all objects associated to the category'
 			);
 

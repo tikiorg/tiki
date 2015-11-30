@@ -22,19 +22,19 @@ class Finalize extends ObjectWriter
 			->addOption(
 				'force',
 				null,
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Write static references even if they are unknown'
 			)
 			->addOption(
 				'dry-run',
 				null,
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Do not save changes. Only verify integrity.'
 			)
 			->addOption(
 				'dump',
 				null,
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Write the profile content to the output.'
 			);
 	}

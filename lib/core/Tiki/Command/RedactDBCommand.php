@@ -23,7 +23,7 @@ class RedactDBCommand extends Command
 			->addOption(
 				'force',
 				null,
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Force installation. Overwrite any current database.'
 			);
 	}

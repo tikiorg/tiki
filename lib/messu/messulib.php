@@ -251,7 +251,7 @@ class Messu extends TikiLib
 			$res['len'] = strlen($res['body']);
 
 			if (empty($res['subject']))
-				$res['subject'] = tra('NONE');
+				$res['subject'] = tra('None');
 
 			$ret[] = $res;
 		}
@@ -461,7 +461,7 @@ class Messu extends TikiLib
 		$res['len'] = strlen($res['parsed']);
 
 		if (empty($res['subject']))
-			$res['subject'] = tra('NONE');
+			$res['subject'] = tra('None');
 
 		return $res;
 	}
@@ -508,7 +508,7 @@ class Messu extends TikiLib
 			$res['parsed'] = $this->parse_data($res['body']);
 			$res['len'] = strlen($res['parsed']);
 			if (empty($res['subject']))
-				$res['subject'] = tra('NONE');
+				$res['subject'] = tra('None');
 			$ret[] = $res;
 		}
 		return $ret;

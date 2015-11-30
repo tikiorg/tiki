@@ -18,7 +18,7 @@ class Tracker_Field_Currency extends Tracker_Field_Abstract implements Tracker_F
 		return array(
 			'b' => array(
 				'name' => tr('Currency Field'),
-				'description' => tr('Provides a one-line field for numeric input only. Prepend or append values may be alphanumeric.'),
+				'description' => tr('Provides a one-line field for numeric input only. Prepended or appended values may be alphanumeric.'),
 				'help' => 'Currency Amount Tracker Field',
 				'prefs' => array('trackerfield_currency'),
 				'tags' => array('basic'),
@@ -38,14 +38,14 @@ class Tracker_Field_Currency extends Tracker_Field_Abstract implements Tracker_F
 					),
 					'size' => array(
 						'name' => tr('Display Size'),
-						'description' => tr('Visible size of the field in characters. Does not affect the numeric length.'),
+						'description' => tr('Visible size of the field, in characters. Does not affect the numeric length.'),
 						'filter' => 'int',
 						'default' => 7,
 						'legacy_index' => 1,
 					),
 					'prepend' => array(
 						'name' => tr('Prepend'),
-						'description' => tr('Text to be displayed prior to the currency amount.'),
+						'description' => tr('Text to be displayed in front of the currency amount.'),
 						'filter' => 'text',
 						'default' => '',
 						'legacy_index' => 2,

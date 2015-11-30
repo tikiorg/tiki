@@ -28,13 +28,13 @@ class BackupFilesCommand extends Command
 			->addOption(
 				'storageonly',
 				null,
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Backup only storage directories (file galleries, attachments etc...)'
 			)
 			->addOption(
 				'nostorage',
 				null,
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Backup only the main directory (ignore linked file gallery folders etc...)'
 			);
 	}	

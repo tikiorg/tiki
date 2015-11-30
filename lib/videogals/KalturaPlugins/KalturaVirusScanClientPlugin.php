@@ -12,9 +12,9 @@ require_once(dirname(__FILE__) . "/../KalturaTypes.php");
 
 class KalturaVirusFoundAction
 {
-	const NONE = 0;
+	const None = 0;
 	const DELETE = 1;
-	const CLEAN_NONE = 2;
+	const CLEAN_None = 2;
 	const CLEAN_DELETE = 3;
 }
 

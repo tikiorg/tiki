@@ -709,7 +709,7 @@ if (!empty($_FILES)) {
 			if ($result['fhash']) {
 				@unlink($savedir . $result['fhash']);
 			}
-			$smarty->assign('msg', tra('Upload was not successful. Duplicate file content') . ': ' . $v['name']);
+			$smarty->assign('msg', tra('The upload was not successful due to duplicate file content') . ': ' . $v['name']);
 			$smarty->display('error.tpl');
 			die;
 		}

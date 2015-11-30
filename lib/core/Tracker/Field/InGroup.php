@@ -18,7 +18,7 @@ class Tracker_Field_InGroup extends Tracker_Field_Abstract
 		return array(
 			'N' => array(
 				'name' => tr('In Group'),
-				'description' => tr('Indicates if the user associated to the item is member of a specified group.'),
+				'description' => tr('Indicates if the user associated with the item is member of a specified group.'),
 				'readonly' => true,
 				'help' => 'In Group Field',				
 				'prefs' => array('trackerfield_ingroup'),

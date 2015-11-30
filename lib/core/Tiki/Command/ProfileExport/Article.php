@@ -22,13 +22,13 @@ class Article extends ObjectWriter
 			->addOption(
 				'with-topic',
 				null,
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Includes article topic'
 			)
 			->addOption(
 				'with-type',
 				null,
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Includes article type'
 			)
 			->addArgument(

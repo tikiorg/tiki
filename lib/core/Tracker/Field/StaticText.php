@@ -37,7 +37,7 @@ class Tracker_Field_StaticText extends Tracker_Field_Abstract implements Tracker
 					),
 					'max' => array(
 						'name' => tr('Maximum Length (List)'),
-						'description' => tr('Maximum amount of characters to be displayed in list mode'),
+						'description' => tr('Maximum number of characters to be displayed in list mode'),
 						'filter' => 'int',
 						'legacy_index' => 1,
 					),

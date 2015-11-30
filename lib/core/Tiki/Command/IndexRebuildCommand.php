@@ -23,19 +23,19 @@ class IndexRebuildCommand extends Command
 			->addOption(
 				'force',
 				null,
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Destroy failed indexes prior to rebuild'
 			)
 			->addOption(
 				'log',
 				null,
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Generate a log of the indexed documents, useful to track down failures or memory issues'
 			)
 			->addOption(
 				'cron',
 				null,
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Only output error messages'
 			);
 	}

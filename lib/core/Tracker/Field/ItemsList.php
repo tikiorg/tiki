@@ -27,7 +27,7 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract implements Tracker_
 				'params' => array(
 					'trackerId' => array(
 						'name' => tr('Tracker ID'),
-						'description' => tr('Tracker to list items from'),
+						'description' => tr('Tracker from which to list items'),
 						'filter' => 'int',
 						'legacy_index' => 0,
 						'profile_reference' => 'tracker',

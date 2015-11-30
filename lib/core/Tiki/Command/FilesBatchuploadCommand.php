@@ -28,25 +28,25 @@ class FilesBatchuploadCommand extends Command
 			->addOption(
 				'confirm',
 				null,
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Perform the batch upload'
 			)
 			->addOption(
 				'subToDesc',
 				null,
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Use last sub-directory name as description'
 			)
 			->addOption(
 				'subdirToSubgal',
 				's',
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Move the file into a gallery matching the subdirectory name'
 			)
 			->addOption(
 				'createSubgals',
 				'c',
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Create missing sub galleries'
 			)
 			->addOption(

@@ -11,7 +11,7 @@ function prefs_ajax_list()
 	return array(
 		'ajax_autosave' => array(
 			'name' => tra('Ajax auto-save'),
-			'description' => tra('Saves your edits as you go along enabling you to recover your work after an "interruption". Also enables "Live" preview and is required for wysiwyg plugin processing.'),
+			'description' => tra('Saves your edits as you write, enabling work to be recovered after an "interruption". Also enables a "live" preview and is required for WYSIWYG plugin processing.'),
 			'help' => 'Lost+Edit+Protection',
 			'type' => 'flag',
 			'dependencies' => array(
@@ -23,7 +23,7 @@ function prefs_ajax_list()
 		
 		'ajax_inline_edit' => array(
 			'name' => tr('Inline editing'),
-			'description' => tr('Allow in-line editing of certain values. Currently limited to tracker item fields.'),
+			'description' => tr('Enable inline editing of certain values. Currently limited to tracker item fields.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),

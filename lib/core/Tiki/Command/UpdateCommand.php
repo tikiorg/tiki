@@ -23,7 +23,7 @@ class UpdateCommand extends Command
 			->addOption(
 				'auto-register',
 				null,
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Record any failed patch as applied.'
 			);
 	}

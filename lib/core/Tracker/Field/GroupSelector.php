@@ -43,7 +43,7 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract
 					),
 					'assign' => array(
 						'name' => tr('Assign to the group'),
-						'description' => tr('For no autoaassigned field, the user (user selector if exsits or user) will be assigned to the group and it will be his default group. The group must have the user choice setting on.'),
+						'description' => tr('For no auto-assigned field, the user (user selector if it exists, or user) will be assigned to the group and it will be his or her default group. The group must have the user choice setting activated.'),
 						'filter' => 'int',
 						'options' => array(
 							0 => tr('None'),

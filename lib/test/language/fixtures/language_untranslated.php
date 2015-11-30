@@ -90,7 +90,7 @@ $lang=Array(
 "Approved Status" => "Aprovado",
 // "Queued" => "Queued",
 // "The file is already locked by %s" => "The file is already locked by %s",
-// "WARNING: The file is used in" => "WARNING: The file is used in",
+// "Warning: The file is used in" => "Warning: The file is used in",
 // "You do not have permission to edit this file" => "You do not have permission to edit this file",
 // ### end of untranslated words
 // ###

@@ -18,7 +18,7 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 		return array(
 			'n' => array(
 				'name' => tr('Numeric Field'),
-				'description' => tr('Provides a one-line field for numeric input only. Prepend or append values may be alphanumeric.'),
+				'description' => tr('Provides a one-line field for numeric input only. Prepended or appended values may be alphanumeric.'),
 				'help' => 'Numeric Tracker Field',
 				'prefs' => array('trackerfield_numeric'),
 				'tags' => array('basic'),
@@ -38,13 +38,13 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 					),
 					'size' => array(
 						'name' => tr('Display Size'),
-						'description' => tr('Visible size of the field in characters. Does not affect the numeric length.'),
+						'description' => tr('Visible size of the field, in characters. Does not affect the numeric length.'),
 						'filter' => 'int',
 						'legacy_index' => 1,
 					),
 					'prepend' => array(
 						'name' => tr('Prepend'),
-						'description' => tr('Text to be displayed prior to the numeric value.'),
+						'description' => tr('Text to be displayed in front of the numeric value.'),
 						'filter' => 'text',
 						'legacy_index' => 2,
 					),
@@ -56,20 +56,20 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 					),
 					'decimals' => array(
 						'name' => tr('Decimal Places'),
-						'description' => tr('Amount of decimals to preserve before rounding.'),
+						'description' => tr('Number of decimal places to round to.'),
 						'filter' => 'int',
 						'legacy_index' => 4,
 					),
 					'dec_point' => array(
 						'name' => tr('Decimal separator when displaying data'),
-						'description' => tr('Single character. Use c for comma, d for dot or s for space. The valid decimal separator when inserting numbers may depend on site language and web browser. See documentation for more details.'),
+						'description' => tr('Single character. Use "c" for comma, "d" for dot or "s" for space. The valid decimal separator when inserting numbers may depend on the site language and web browser. See the documentation for more details.'),
 						'filter' => 'text',
 						'default' => '.',
 						'legacy_index' => 5,
 					),
 					'thousands' => array(
 						'name' => tr('Thousands separator when displaying data'),
-						'description' => tr('Single character,  Use c for comma, d for dot or s for space.  When inserting data no thousands separator is needed.'),
+						'description' => tr('Single character: use "c" for comma, "d" for dot or "s" for space.  When inserting data, no thousands separator is needed.'),
 						'filter' => 'text',
 						'default' => ',',
 						'legacy_index' => 6,

@@ -172,7 +172,7 @@
 				</div>
 			</div>
 			<div class="form-group clearfix">
-				<label for="authorName" class="control-label col-sm-3">{tr}Author Name (as displayed){/tr}</label>
+				<label for="authorName" class="control-label col-sm-3">{tr}Author name (as displayed){/tr}</label>
 				<div class="col-sm-4">
 					<input type="text" name="authorName" value="{$authorName|escape}" class="form-control">
 				</div>
@@ -320,7 +320,7 @@
 				</div>
 			</div>
 			<div class="form-group {if $types.$type.use_ratings neq 'y'}hidden{/if}">
-				<label for="rating" class="col-sm-3 control-label">{tr}Author Rating{/tr}</label>
+				<label for="rating" class="col-sm-3 control-label">{tr}Author rating{/tr}</label>
 				<div class="col-sm-3 col-sm-offet-6">
 				<select name='rating' class="form-control">
 					<option value="10" {if $rating eq 10}selected="selected"{/if}>10</option>

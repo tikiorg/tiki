@@ -29,7 +29,7 @@ class CacheClearCommand extends Command
 			->addOption(
 				'all',
 				null,
-				InputOption::VALUE_NONE,
+				InputOption::VALUE_None,
 				'Clear all caches'
 			);
 	}

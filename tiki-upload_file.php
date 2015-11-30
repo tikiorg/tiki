@@ -95,7 +95,7 @@ if (isset($_REQUEST['galleryId'][1])) {
 }
 if ( ! empty( $fileId ) ) {
 	if (!empty($fileInfo['lockedby']) && $fileInfo['lockedby'] != $user && $tiki_p_admin_file_galleries != 'y') { // if locked must be the locker
-		$smarty->assign('msg', tra(sprintf('The file is locked by %s', $fileInfo['lockedby'])));
+		$smarty->assign('msg', tra(sprintf('The file has been locked by %s', $fileInfo['lockedby'])));
 		$smarty->display('error.tpl');
 		die;
 	}
@@ -115,7 +115,7 @@ if ( ! empty( $fileId ) ) {
 		if (empty($fileInfo['lockedby'])) {
 			$smarty->assign('msg', tra(sprintf('The file has been unlocked meanwhile')));
 		} else {
-			$smarty->assign('msg', tra(sprintf('The file is locked by %s', $fileInfo['lockedby'])));
+			$smarty->assign('msg', tra(sprintf('The file has been locked by %s', $fileInfo['lockedby'])));
 		}
 		$smarty->display('error.tpl');
 		die;
