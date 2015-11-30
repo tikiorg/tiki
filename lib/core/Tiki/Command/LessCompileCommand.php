@@ -29,7 +29,7 @@ class LessCompileCommand  extends Command
 			->addOption(
 				'all',
 				null,
-				InputOption::VALUE_None,
+				InputOption::VALUE_NONE,
 				'Build all less files, including all built-in "Tiki" themes'
 			)
 			->addOption(
@@ -41,7 +41,7 @@ class LessCompileCommand  extends Command
 			->addOption(
 				'without-options',
 				null,
-				InputOption::VALUE_None,
+				InputOption::VALUE_NONE,
 				'Do not compile the theme options if present'
 			)
 		;

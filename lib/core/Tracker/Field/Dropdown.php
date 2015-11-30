@@ -17,7 +17,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 	{
 		return array(
 			'd' => array(
-				'name' => tr('Dropdown'),
+				'name' => tr('Drop Down'),
 				'description' => tr('Allows users to select only from a specified set of options'),
 				'help' => 'Drop Down - Radio Tracker Field',
 				'prefs' => array('trackerfield_dropdown'),
@@ -26,7 +26,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 				'params' => array(
 					'options' => array(
 						'name' => tr('Option'),
-						'description' => tr('If an option contains an equal sign, the part before the equal sign will be used as the value, and the second part as the label'),
+						'description' => tr('An option, if containing an equal sign, the prior part will be used as the value while the later as the label'),
 						'filter' => 'text',
 						'count' => '*',
 						'legacy_index' => 0,
@@ -34,7 +34,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 				),
 			),
 			'D' => array(
-				'name' => tr('Dropdown selector with "Other" field'),
+				'name' => tr('Drop Down with Other field'),
 				'description' => tr('Allows users to select from a specified set of options or to enter an alternate option'),
 				'help' => 'Drop Down - Radio Tracker Field',
 				'prefs' => array('trackerfield_dropdownother'),
@@ -43,7 +43,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 				'params' => array(
 					'options' => array(
 						'name' => tr('Option'),
-						'description' => tr('If an option contains an equal sign, the part before the equal sign will be used as the value, and the second part as the label. It is recommended to add an "other" option.'),
+						'description' => tr('An option, if containing an equal sign, the prior part will be used as the value while the later as the label. It is recommended to add an "other" option.'),
 						'filter' => 'text',
 						'count' => '*',
 						'legacy_index' => 0,
@@ -60,7 +60,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 				'params' => array(
 					'options' => array(
 						'name' => tr('Option'),
-						'description' => tr('If an option contains an equal sign, the part before the equal sign will be used as the value, and the second part as the label'),
+						'description' => tr('An option, if containing an equal sign, the prior part will be used as the value while the later as the label'),
 						'filter' => 'text',
 						'count' => '*',
 						'legacy_index' => 0,
@@ -77,7 +77,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 				'params' => array(
 					'options' => array(
 						'name' => tr('Option'),
-						'description' => tr('If an option contains an equal sign, the part before the equal sign will be used as the value, and the second part as the label'),
+						'description' => tr('An option, if containing an equal sign, the prior part will be used as the value while the later as the label'),
 						'filter' => 'text',
 						'count' => '*',
 						'legacy_index' => 0,
@@ -88,7 +88,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 						'default' => '',
 						'filter' => 'alpha',
 						'options' => array(
-							'' => tr('Multiple-selection checkboxes'),
+							'' => tr('Multiple-selection check-boxes'),
 							'm' => tr('List box'),
 						),
 					),

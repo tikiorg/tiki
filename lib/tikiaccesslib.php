@@ -717,7 +717,7 @@ class TikiAccessLib extends TikiLib
 					if ($data === false) {
 						$error = '';
 						switch (json_last_error()) {
-							case JSON_ERROR_None:
+							case JSON_ERROR_NONE:
 								$error = 'json_encode - No errors';
 								break;
 							case JSON_ERROR_DEPTH:

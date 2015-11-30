@@ -34,7 +34,7 @@ class NotificationDigestCommand extends Command
 			->addOption(
 				'ssl',
 				null,
-				InputOption::VALUE_None,
+				InputOption::VALUE_NONE,
 				'Use HTTPS for generated links'
 			)
 			->addOption(

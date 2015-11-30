@@ -52,7 +52,7 @@ class CCLiteLib extends TikiDb_Bridge
 		if (!empty($this->registries)) {
 			return $this->registries[0];	// default if not specified in plugins etc
 		} else {
-			TikiLib::lib('errorreport')->report(tra('No registries specified in admin/payment/Cclite.'));
+			TikiLib::lib('errorreport')->report(tra('No registries specified in admin/payment/cclite.'));
 		}
 	}
 
@@ -222,7 +222,7 @@ class CCLiteLib extends TikiDb_Bridge
 			if ($logon_result[0] != 'failed' && strlen($logon_result[1])) {
 				curl_setopt($ch, CURLOPT_COOKIE, $logon_result[1]);
 			} else {
-				return tr('Connection to Cclite server %0 failed for %1<br />"%2"', $cclite_base_url, $main_user, $logon_result[1]);
+				return tr('Connection to cclite server %0 failed for %1<br />"%2"', $cclite_base_url, $main_user, $logon_result[1]);
 			}
 		}
 		curl_setopt($ch, CURLOPT_AUTOREFERER, true);

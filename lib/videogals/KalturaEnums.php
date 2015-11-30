@@ -88,7 +88,7 @@ class KalturaAssetStatus
 
 class KalturaAudioCodec
 {
-	const None = "";
+	const NONE = "";
 	const MP3 = "mp3";
 	const AAC = "aac";
 	const VORBIS = "vorbis";
@@ -423,7 +423,7 @@ class KalturaEntryModerationStatus
 
 class KalturaEntryReplacementStatus
 {
-	const None = "0";
+	const NONE = "0";
 	const APPROVED_BUT_NOT_READY = "1";
 	const READY_BUT_NOT_APPROVED = "2";
 	const NOT_READY_AND_NOT_APPROVED = "3";
@@ -955,7 +955,7 @@ class KalturaLanguageCode
 class KalturaLicenseType
 {
 	const UNKNOWN = -1;
-	const None = 0;
+	const NONE = 0;
 	const COPYRIGHTED = 1;
 	const PUBLIC_DOMAIN = 2;
 	const CREATIVECOMMONS_ATTRIBUTION = 3;
@@ -1741,7 +1741,7 @@ class KalturaUserStatus
 
 class KalturaVideoCodec
 {
-	const None = "";
+	const NONE = "";
 	const VP6 = "vp6";
 	const H263 = "h263";
 	const H264 = "h264";
@@ -1767,7 +1767,7 @@ class KalturaWidgetOrderBy
 
 class KalturaWidgetSecurityType
 {
-	const None = 1;
+	const NONE = 1;
 	const TIMEHASH = 2;
 }
 

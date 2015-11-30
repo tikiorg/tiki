@@ -49,7 +49,7 @@ function wikiplugin_tracker_info()
 				'required' => false,
 				'name' => tra('Action'),
 				'description' => tr('Colon-separated labels for form submit buttons. Default is %0Save%1. When set to
-					%0None%1, the save button will not appear and values will be saved dynamically.', '<code>',
+					%0NONE%1, the save button will not appear and values will be saved dynamically.', '<code>',
 					'</code>'),
 				'since' => '1',
 				'separator' => ':',
@@ -655,7 +655,7 @@ function wikiplugin_tracker($data, $params)
 	}
 
 	$dynamicSave = false;
-	if (count($action) == 1 && reset($action) == 'None') {
+	if (count($action) == 1 && reset($action) == 'NONE') {
 		$action = array();
 		$dynamicSave = true;
 	}

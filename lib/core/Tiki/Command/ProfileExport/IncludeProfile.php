@@ -32,7 +32,7 @@ class IncludeProfile extends ObjectWriter
 			->addOption(
 				'full-references',
 				null,
-				InputOption::VALUE_None,
+				InputOption::VALUE_NONE,
 				'Include the repository path in the reference'
 			);
 	}

@@ -156,7 +156,7 @@ class Services_File_Controller
 								$file['syntax'] = tr('Batch file processed: "%0"', $file['name']);	// cheeky?
 							}
 						} else {
-							$errorreportlib->report(tra("You don't have permission to upload zipped file packages"));
+							$errorreportlib->report(tra('No permission to upload zipped file packages'));
 						}
 					}
 

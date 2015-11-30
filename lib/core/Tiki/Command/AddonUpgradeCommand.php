@@ -28,13 +28,13 @@ class AddonUpgradeCommand extends Command
 			->addOption(
 				'ignoredepends',
 				null,
-				InputOption::VALUE_None,
+				InputOption::VALUE_NONE,
 				'Ignore dependencies.'
 			)
 			->addOption(
 				'confirm',
 				null,
-				InputOption::VALUE_None,
+				InputOption::VALUE_NONE,
 				'Confirm deletion of objects'
 			);
 	}

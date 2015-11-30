@@ -1,6 +1,6 @@
 <div id="testingstatus" style="display:none">{$field.status|escape}</div>
 <h5 id="showtikiorg{$field.fieldId}_{$item.itemId}{if isset($context.list_mode)}_view{/if}" class="showactive{$field.fieldId}_{$item.itemId}" {if $field.status neq 'ACTIV'}style="display: none;"{/if}>This bug has been demonstrated on show.tiki.org</h5>
-<h5 class="shownone{$field.fieldId}_{$item.itemId}" {if $field.status neq 'None'}style="display: none;"{/if}>Please demonstrate your bug on show.tiki.org</h5>
+<h5 class="shownone{$field.fieldId}_{$item.itemId}" {if $field.status neq 'NONE'}style="display: none;"{/if}>Please demonstrate your bug on show.tiki.org</h5>
 {if $field.status == 'NOSSH'}
 	{remarksbox type="error" title="SSH2 extension not installed" close="n"}
 		<p>SSH2 extension for PHP needs to be installed for show.tiki.org feature to work</p>
@@ -50,7 +50,7 @@
 			<p>Show.tiki.org is in the progress of creating the new instance. Please continue waiting for a minute or two. If this continues on for more than 10 minutes, please let us know of the problem so that we can do something about it. Thanks.</p>
 		{/remarksbox}
 	</div>
-	<div class="shownone{$field.fieldId}_{$item.itemId}" {if $field.status neq 'None'}style="display: none;"{/if}>
+	<div class="shownone{$field.fieldId}_{$item.itemId}" {if $field.status neq 'NONE'}style="display: none;"{/if}>
 		{remarksbox type="info" title="About show.tiki.org" close="n"}
 			<p>To help developers solve the bug, we kindly request that you demonstrate your bug on a show.tiki.org instance. To start, simply select a version and click on "Create show.tiki.org instance". Once the instance is ready (in a minute or two), as indicated in the status window below, you can then access that instance, login (the initial admin username/password is "admin") and configure the Tiki to demonstrate your bug. Priority will be given to bugs that have been demonstrated on show.tiki.org.</p>
 		{/remarksbox}
@@ -141,7 +141,7 @@
 					$('.showdestroy{{$field.fieldId}}_{{$item.itemId}}').hide();
 					setTimeout("showtikiorg_process{{$field.fieldId}}_{{$item.itemId}}('info')",5000);
 					$.tikiModal(tr('Instance is being created... Please wait... This might take a minute or two.'));
-				} else if (data.status == 'None') {
+				} else if (data.status == 'NONE') {
 					$('.shownone{{$field.fieldId}}_{{$item.itemId}}').show();
 					$('.showactive{{$field.fieldId}}_{{$item.itemId}}').hide();
 					$('.showbuilding{{$field.fieldId}}_{{$item.itemId}}').hide();

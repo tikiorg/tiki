@@ -93,7 +93,7 @@ class Services_ShowTikiOrg_Controller
 				TikiLib::lib('trk')->modify_field($id, $fieldId, $value);
 				require_once('lib/search/refresh-functions.php');
 				refresh_index('trackeritem', $id);
-			} elseif ($ret['status'] == 'None') {
+			} elseif ($ret['status'] == 'NONE') {
 				$value = 'none';
 				TikiLib::lib('trk')->modify_field($id, $fieldId, $value);
 				require_once('lib/search/refresh-functions.php');

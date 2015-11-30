@@ -952,7 +952,7 @@ function wikiplugin_trackerlist_info()
 		'prefs' => array( 'feature_trackers', 'wikiplugin_trackerlist' ),
 		'tags' => array( 'basic' ),
 		'body' => tra('Notice'),
-		'additional' => '<br>' . tr('Additional information when using tablesorter and the %0 parameter (Server-side Processing) is set to y:', '<code>server</code>') . '<ul>'
+		'additional' => '<br>' . tr('Additional information when using tablesorter and the %0 parameter (Server Side Processing) is set to y:', '<code>server</code>') . '<ul>'
 			. '<li>' . tra('Filtering and sorting on some field types (e.g., items list), may behave unexpectedly') . '</li>'
 			. '<li>' . tra('For best results the date filter should only be applied to date field types') . '</li>'
 			. '<li>' . tra('To filter the category field type, the exact category name or id needs to be entered') . '</li>'

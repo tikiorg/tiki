@@ -135,7 +135,7 @@ if ( ! isset($_GET['thumbnail']) && ! isset($_GET['icon']) ) {
 
 	if ( ! empty($_REQUEST['lock']) ) {
 		if (!empty($info['lockedby']) && $info['lockedby'] != $user) {
-			$access->display_error('', tra(sprintf('The file has been locked by %s', $info['lockedby'])), 401);
+			$access->display_error('', tra(sprintf('The file is locked by %s', $info['lockedby'])), 401);
 		}
 		$filegallib->lock_file($info['fileId'], $user);
 	}
@@ -196,8 +196,8 @@ header('ETag: '.$etag);
 $use_client_cache = false;
 if ( isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && $last_modified == strtotime(current($a = explode(';', $_SERVER['HTTP_IF_MODIFIED_SINCE']))) ) {
 	$use_client_cache = true;
-} elseif ( isset($_SERVER['HTTP_IF_None_MATCH']) ) {
-	$tmp = array_map('trim', explode(',', $_SERVER['HTTP_IF_None_MATCH']));
+} elseif ( isset($_SERVER['HTTP_IF_NONE_MATCH']) ) {
+	$tmp = array_map('trim', explode(',', $_SERVER['HTTP_IF_NONE_MATCH']));
 	foreach ( $tmp as $v ) {
 		if ( $v == '*' || $v == $etag ) {
 			$use_client_cache = true;

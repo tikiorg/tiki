@@ -22,13 +22,13 @@ class FileGallery extends ObjectWriter
 			->addOption(
 				'with-parents',
 				null,
-				InputOption::VALUE_None,
+				InputOption::VALUE_NONE,
 				'Includes all parents'
 			)
 			->addOption(
 				'deep',
 				null,
-				InputOption::VALUE_None,
+				InputOption::VALUE_NONE,
 				'Includes all children'
 			)
 			->addArgument(

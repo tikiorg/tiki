@@ -22,7 +22,7 @@ function prefs_art_list()
 	return array(
 		'art_sort_mode' => array(
 			'name' => tra('Article ordering'),
-			'description' => tra('Default sort mode for the articles on the list-articles page'),
+			'description' => tra('Default sort mode for the articles on the article listing'),
 			'type' => 'list',
 			'options' => $article_sort_orders,
 			'default' => 'publishDate_desc',
@@ -86,17 +86,17 @@ function prefs_art_list()
 			'default' => 'y',
 		),
 		'art_list_authorName' => array(
-			'name' => tra('Author name (as displayed)'),
+			'name' => tra('Author Name (as displayed)'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'art_list_rating' => array(
-			'name' => tra('Author rating'),
+			'name' => tra('Author Rating'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'art_list_usersRating' => array(
-			'name' => tra('Users rating'),
+			'name' => tra('Users Rating'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -121,7 +121,7 @@ function prefs_art_list()
 			'default' => 'y',
 		),
 		'art_list_ispublished' => array(
-			'name' => tra('Is published'),
+			'name' => tra('Is Published'),
 			'type' => 'flag',
 			'default' => 'y',
 		),

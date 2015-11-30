@@ -55,7 +55,7 @@
 					<br>
 					{tr}This profile sets up the configuration needed to facilitate forums that help their users to seek consensus on the discussion topics held{/tr}.
 					<br/>
-					<a href="https://doc.tiki.org/Rating#Users_ratings_in_Forums" target="tikihelp" class="tikihelp" title="{tr}Users ratings in Forums{/tr}:
+					<a href="https://doc.tiki.org/Rating#Users_ratings_in_Forums" target="tikihelp" class="tikihelp" title="{tr}Users Ratings in Forums{/tr}:
 						{tr}More details{/tr}:
 						<ul>
 							<li>{tr}Topics with less agreement can be easily identified from the topic list{/tr}</li>

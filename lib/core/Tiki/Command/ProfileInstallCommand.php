@@ -34,7 +34,7 @@ class ProfileInstallCommand extends Command
 			->addOption(
 				'force',
 				null,
-				InputOption::VALUE_None,
+				InputOption::VALUE_NONE,
 				'Re-apply profiles when already applied.'
 			);
 	}

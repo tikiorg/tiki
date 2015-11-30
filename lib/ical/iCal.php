@@ -43,7 +43,7 @@ class File_iCal
     const CLASSIFICATION_PRIVATE = "PRIVATE";
     const CLASSIFICATION_CONFIDENTIAL = "CONFIDENTIAL";
 
-    const PRIORITY_None = 0;
+    const PRIORITY_NONE = 0;
     const PRIORITY_HIGHEST = 1;
     const PRIORITY_MEDIUM = 5;
     const PRIORITY_LOWEST = 9;

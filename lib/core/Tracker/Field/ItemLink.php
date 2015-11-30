@@ -13,7 +13,7 @@
  */
 class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Exportable, Search_FacetProvider_Interface, Tracker_Field_Filterable
 {
-	const CASCADE_None = 0;
+	const CASCADE_NONE = 0;
 	const CASCADE_CATEG = 1;
 	const CASCADE_STATUS = 2;
 	const CASCADE_DELETE = 4;
@@ -106,8 +106,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'legacy_index' => 8,
 					),
 					'preSelectFieldThere' => array(
-						'name' => tr('Preselect based on the value in this remote field'),
-						'description' => tr('Match preselect item to this field ID in the tracker that is being linked to'),
+						'name' => tr('Preselect based on value in this remote field'),
+						'description' => tr('Match preselect item with this field ID in tracker that is being linked to'),
 						'filter' => 'int',
 						'legacy_index' => 9,
 						'profile_reference' => 'tracker_field',
@@ -159,7 +159,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'description' => tr("Elements to cascade when the master is updated or deleted. Categories may conflict if multiple item links are used to different items attempting to manage the same categories. Same for status."),
 						'filter' => 'int',
 						'options' => array(
-							self::CASCADE_None => tr('No'),
+							self::CASCADE_NONE => tr('No'),
 							self::CASCADE_CATEG => tr('Categories'),
 							self::CASCADE_STATUS => tr('Status'),
 							self::CASCADE_DELETE => tr('Delete'),

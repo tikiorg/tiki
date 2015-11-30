@@ -37,25 +37,25 @@ class ProfileBaselineCommand extends Command
 			->addOption(
 				'categories',
 				null,
-				InputOption::VALUE_None,
+				InputOption::VALUE_NONE,
 				'Include categories'
 			)
 			->addOption(
 				'file-galleries',
 				null,
-				InputOption::VALUE_None,
+				InputOption::VALUE_NONE,
 				'Include file galleries'
 			)
 			->addOption(
 				'trackers',
 				null,
-				InputOption::VALUE_None,
+				InputOption::VALUE_NONE,
 				'Include trackers'
 			)
 			->addOption(
 				'tracker-fields',
 				null,
-				InputOption::VALUE_None,
+				InputOption::VALUE_NONE,
 				'Include tracker fields'
 			)
 			;

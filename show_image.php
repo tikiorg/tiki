@@ -77,8 +77,8 @@ if ($imagegallib->get_etag($id, $itype, $scalesize)!==false) {
 # Client-Side image cache (based on Etag Headers)
 # Etag value is based on the md5 hash of the image. It should change everytime the image changes. See http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.19
 
-#if the client sends the HTTP_IF_None_MATCH header(because it received the etag for this image the first time he saw it) we check that the received etag is the same as the actual etag (this is, the image haven't changed) and if it's equal, we send the "Not modified" header(304)
-  if (isset($_SERVER['HTTP_IF_None_MATCH']) && $_SERVER['HTTP_IF_None_MATCH'] == $imagegallib->etag) {
+#if the client sends the HTTP_IF_NONE_MATCH header(because it received the etag for this image the first time he saw it) we check that the received etag is the same as the actual etag (this is, the image haven't changed) and if it's equal, we send the "Not modified" header(304)
+  if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $imagegallib->etag) {
            header("HTTP/1.0 304 Not Modified");
 	   exit();
   }

@@ -56,7 +56,7 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 					),
 					'fixedUserId' => array(
 						'name' => tr('Fixed user id'),
-						'description' => tr('SSet fixed user ID instead of using the user ID of the creator of the tracker item'),
+						'description' => tr('Set fixed user id instead of using user id of creator of tracker item'),
 						'filter' => 'int',
 						'legacy_index' => 5,
 					),

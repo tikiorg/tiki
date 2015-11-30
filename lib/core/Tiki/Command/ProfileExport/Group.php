@@ -27,13 +27,13 @@ class Group extends ObjectWriter
 			->addOption(
 				'with-category',
 				null,
-				InputOption::VALUE_None,
+				InputOption::VALUE_NONE,
 				'Include category permissions'
 			)
 			->addOption(
 				'with-object',
 				null,
-				InputOption::VALUE_None,
+				InputOption::VALUE_NONE,
 				'Include object permissions (note: some object types may be missing)'
 			)
 			;

@@ -111,7 +111,7 @@ class KalturaDistributionValidationErrorType
 
 class KalturaEntryDistributionFlag
 {
-	const None = 0;
+	const NONE = 0;
 	const SUBMIT_REQUIRED = 1;
 	const DELETE_REQUIRED = 2;
 	const UPDATE_REQUIRED = 3;

@@ -28,7 +28,7 @@ class RefreshRssCommand extends Command
 			->addOption(
 				'all',
 				null,
-				InputOption::VALUE_None,
+				InputOption::VALUE_NONE,
 				'Refresh all modules'
 			);
 	}

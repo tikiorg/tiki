@@ -8,7 +8,7 @@
 abstract class TikiDb
 {
 	const ERR_DIRECT = true;
-	const ERR_None = false;
+	const ERR_NONE = false;
 	const ERR_EXCEPTION = 'exception';
 
 	private static $instance;
@@ -58,7 +58,7 @@ abstract class TikiDb
 	function queryError($query, &$error, $values = null, $numrows = -1, $offset = -1) // {{{
 	{
 		$this->errorMessage = '';
-		$result = $this->query($query, $values, $numrows, $offset, self::ERR_None);
+		$result = $this->query($query, $values, $numrows, $offset, self::ERR_NONE);
 		$error = $this->errorMessage;
 
 		return $result;
@@ -153,7 +153,7 @@ abstract class TikiDb
 
 	protected function handleQueryError($query, $values, $result, $mode) // {{{
 	{
-		if ($mode === self::ERR_None) {
+		if ($mode === self::ERR_NONE) {
 			return null;
 		} elseif ($mode === self::ERR_DIRECT && $this->errorHandler) {
 			$this->errorHandler->handle($this, $query, $values, $result);

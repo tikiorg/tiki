@@ -39,7 +39,7 @@ function prefs_user_list($partial = false)
 			'default' => 'n',
 		),	
 		'user_flip_modules' => array(
-			'name' => tra('Users can open and close the modules'),
+			'name' => tra('Users can shade modules'),
 			'help' => 'Users+Shade+Modules',
 			'type' => 'list',
 			'description' => tra('Allows users to hide/show modules.'),
