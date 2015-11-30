@@ -25,6 +25,9 @@ function iconset_glyphicons()
 			'add' => array(
 				'id' => 'plus-sign',
 			),
+			'admin' => array(
+					'id' => 'cog',
+			),
 			//align-center in defaults
 			//align-justify in defaults
 			//align-left in defaults

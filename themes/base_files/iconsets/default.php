@@ -29,6 +29,9 @@ function iconset_default()
 			'actions' => array( 
 				'id' => 'play-circle',    // id to match the defaults defined below
 			),
+			'admin' => array(
+					'id' => 'cog',
+			),
 			'add' => array(
 				'id' => 'plus-circle',
 			),

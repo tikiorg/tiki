@@ -32,6 +32,9 @@ function iconset_legacy()
 				'id' => 'application_form',
 			),
 			//add in defaults
+			'admin' => array(
+					'id' => 'wrench',
+			),
 			'admin_ads' => array(
 				'id' => 'large/ads',
 			),
