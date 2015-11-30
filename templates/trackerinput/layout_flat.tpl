@@ -6,6 +6,7 @@
 		</div>
 	</div>
 {/if}
+{$jscal = 0}
 {foreach from=$fields item=field}
 	<div class="form-group">
 		<label for="trackerinput_{$field.fieldId|escape}" class="control-label{if $field.type eq 'h'} h{$field.options_map.level}{/if}">
@@ -25,5 +26,9 @@
 			{/if}
 		</div>
 	</div>
+	{if $field.type == 'j'}{$jscal = 1}{/if}
 {/foreach}
 {jq}$('label').click(function() {$('input, select, textarea', '#'+$(this).attr('for')).focus();});{/jq}
+{if $jscal}
+	{js_insert_icon type="jscalendar"}
+{/if}

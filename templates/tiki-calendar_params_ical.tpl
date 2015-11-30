@@ -74,3 +74,6 @@
 
 </div>
 {/strip}
+{if $prefs.feature_jscalendar eq 'y' and $prefs.javascript_enabled eq 'y'}
+	{js_insert_icon type="jscalendar"}
+{/if}

@@ -109,8 +109,8 @@ function smarty_function_jscalendar($params, $smarty)
 
 	$datepicker_options .= $datepicker_options_common;
 
-	$html = '<input type="hidden" id="' . $params['id'] . '"' . $name  . ' value="'.$params['date'].'" />';
-	$html .= '<input type="text" class="form-control" id="' . $params['id'] . '_dptxt" value="" />';	// text version of datepicker date
+	$html = '<input type="hidden" id="' . $params['id'] . '"' . $name  . ' value="'.$params['date'].'">';
+	$html .= '<input type="text" style="width:225px" class="form-control" id="' . $params['id'] . '_dptxt" value="">';	// text version of datepicker date
 
 	$display_tz = $tikilib->get_display_timezone();
 	if ( $display_tz == '' ) {
@@ -154,7 +154,7 @@ var tm = { hour: dt.getHours(), minute: dt.getMinutes(), second: dt.getSeconds()
 			$command . '", "jscalendar", ' . $datepicker_options . ');'
 		);
 	}
-	return '<span class="jscal">' . $html . '</span>';
+	return '<div class="jscal" style="margin-bottom:10px">' . $html . '</div>';
 }
 
 function smarty_function_jscalendar_tra($str)

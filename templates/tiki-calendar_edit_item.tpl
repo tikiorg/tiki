@@ -835,6 +835,9 @@ $(".end.time select, #end").change(function () {
 				{/if}
 			{/if}
 		</div> <!-- /.wikitext -->
+		{if $prefs.feature_jscalendar eq 'y' and $prefs.javascript_enabled eq 'y'}
+			{js_insert_icon type="jscalendar"}
+		{/if}
 	</div> <!-- /.modal-body -->
 	{if $edit}
 		<div class="modal-footer">

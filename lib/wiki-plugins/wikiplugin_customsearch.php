@@ -374,6 +374,7 @@ window.customsearch_$id = customsearch;
 ";
 
 	$parser = new WikiParser_PluginArgumentParser;
+	$dr = 0;
 	foreach ($matches as $match) {
 		$name = $match->getName();
 		$arguments = $parser->parse($match->getArguments());
@@ -430,12 +431,23 @@ window.customsearch_$id = customsearch;
 			}
 			$match->replaceWith($html);
 		}
+		if ($name == 'daterange') {
+			$dr++;
+		}
 	}
 
 	$callbackScript = null;
 	if (!empty($params['callbackscript']) && TikiLib::lib('tiki')->page_exists($params['callbackscript'])) {
 		$callbackscript_tpl = "wiki:" . $params['callbackscript'];
 		$callbackScript = TikiLib::lib('smarty')->fetch($callbackscript_tpl);
+	}
+	//get iconset icon if daterange is one of the fields
+	if ($dr) {
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_function_js_insert_icon');
+		$iconinsert = smarty_function_js_insert_icon(['type' => 'jscalendar', 'return' => 'y'], $smarty);
+	} else {
+		$iconinsert = '';
 	}
 
 	global $page;
@@ -474,7 +486,7 @@ customsearch.offset = $offset;
 customsearch.maxRecords = $maxRecords;
 customsearch.store_query ='';
 customsearch.init();
-";
+$iconinsert";
 
 	TikiLib::lib('header')->add_jq_onready($script);
 
