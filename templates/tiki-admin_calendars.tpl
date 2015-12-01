@@ -4,7 +4,7 @@
 	{title help=Calendar url="tiki-admin_calendars.php" admpage="calendar"}{tr}Admin Calendars{/tr}{/title}
 {/if}
 
-<div class="t_navbar btn-group margin-bottom-md">
+<div class="t_navbar margin-bottom-md">
 	{if !empty($calendarId) && $tiki_p_admin_calendar eq 'y'}
 		<a href="tiki-admin_calendars.php?cookietab=2" class="btn btn-default">
 			{icon name="create"} {tr}Create Calendar{/tr}
