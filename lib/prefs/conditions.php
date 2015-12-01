@@ -10,23 +10,23 @@ function prefs_conditions_list()
 	return array(
 		'conditions_enabled' => array(
 			'name' => tr('Terms and Conditions'),
-			'description' => tr('Automatically present a terms page to be accepted by users accessing the site.'),
+			'description' => tr('Automatically present a terms of use page to be accepted by users accessing the site.'),
 			'dependencies' => array('feature_wiki'),
 			'help' => 'Terms+and+Conditions',
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'conditions_page_name' => array(
-			'name' => tr('Terms and Conditions page name'),
-			'description' => tr('Wiki page to use as the source content. The page may be translated using the multilingual feature.'),
+			'name' => tr('Terms of Use page name'),
+			'description' => tr('Wiki page for Terms of Use content. The page may be translated using the multilingual feature.'),
 			'type' => 'text',
 			'filter' => 'pagename',
 			'default' => 'Terms',
 			'profile_reference' => 'wiki_page',
 		),
 		'conditions_minimum_age' => array(
-			'name' => tr('Minimal age'),
-			'description' => tr('While accepting the terms of use, request age.'),
+			'name' => tr('Minimum age'),
+			'description' => tr('When presenting the terms of use, request age.'),
 			'hint' => tr('0 to ignore age validation'),
 			'type' => 'text',
 			'filter' => 'int',

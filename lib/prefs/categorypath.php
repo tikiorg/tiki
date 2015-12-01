@@ -23,8 +23,8 @@ function prefs_categorypath_list()
 			'type' => 'list',
 			'default' => 'link_when_visible',
 			'options' => array(
-				'link_when_visible' => tr('Links to the category when category is visible'),
-				'text_when_visible' => tr('Text label when category is visible'),
+				'link_when_visible' => tr('Links to the category when the category is visible'),
+				'text_when_visible' => tr('Text label when the category is visible'),
 				'link_or_text' => tr('Link when visible, text label otherwise'),
 				'always_text' => tr('Always display the category path labels'),
 			),
