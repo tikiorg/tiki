@@ -40,7 +40,7 @@
 		</div>
 		<br>
 	{/if}
-	{if isset($show_participants) and $show_participants eq 'y' and $cellparticipants}
+	{if isset($show_participants) and $show_participants eq 'y' and isset($cellparticipants) and $cellparticipants}
 		<span class="box-title">
 			{tr}Organized by:{/tr}
 		</span>
