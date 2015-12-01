@@ -178,7 +178,7 @@ function wikiplugin_module_info()
 			),
 			'topclass' => array(
 				'name' => tra('Containing Class'),
-				'description' => tra('Custom CSS class around.'),
+				'description' => tra('Custom CSS class of div around the module.'),
 				'since' => '9.0',
 				'filter' => 'text',
 				'section' => 'appearance',

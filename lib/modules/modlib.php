@@ -848,7 +848,7 @@ class ModLib extends TikiLib
 				),
 				'category' => array(
 					'name' => tra('Category'),
-					'description' => tra('Module displayed depending on category. Multiple category ids or names can be separated by semi-colons.'),
+					'description' => tra('Module displayed depending on category. Separate multiple category IDs or names by semi-colons.'),
 					'section' => 'visibility',
 					'separator' => ';',
 					'filter' => 'alnum',
@@ -856,7 +856,7 @@ class ModLib extends TikiLib
 				),
 				'nocategory' => array(
 					'name' => tra('No Category'),
-					'description' => tra('Module hidden depending on category. Multiple category ids or names can be separated by semi-colons. This takes precedence over the category parameter above.'),
+					'description' => tra('Module is hidden depending on category. Separate multiple category IDs or names by semi-colons. This takes precedence over the category parameter above.'),
 					'section' => 'visibility',
 					'separator' => ';',
 					'filter' => 'alnum',
@@ -864,13 +864,13 @@ class ModLib extends TikiLib
 				),
 				'subtree' => array(
 					'name' => tra('Category subtrees'),
-					'description' => tra('Consider children categories of the categories listed in category and no category to be part of those categories. (0 or 1)'),
+					'description' => tra('Consider child categories of the categories listed in "category" and "no category" to be part of those categories. (0 or 1)'),
 					'section' => 'visibility',
 					'filter' => 'int',
 				),
 				'perspective' => array(
 					'name' => tra('Perspective'),
-					'description' => tra('Only display the module if in one of the listed perspective IDs. Semi-colon separated.'),
+					'description' => tra('Module is displayed only in the listed perspective ID(s). Separate multiple perspective IDs by semi-colons.'),
 					'separator' => ';',
 					'filter' => 'digits',
 					'section' => 'visibility',
@@ -878,21 +878,21 @@ class ModLib extends TikiLib
 				),
 				'lang' => array(
 					'name' => tra('Language'),
-					'description' => tra('Module only applicable for the specified languages. Languages are defined as two character language codes. Multiple values can be separated by semi-colons.'),
+					'description' => tra('Module is displayed only when the specified language(s) in use. Designate languages by two-character language codes. Separate multiple languages by semi-colons.'),
 					'separator' => ';',
 					'filter' => 'lang',
 					'section' => 'visibility',
 				),
 				'section' => array(
 					'name' => tra('Section'),
-					'description' => tra('Module only applicable for the specified sections. Multiple values can be separated by semi-colons. Choose values from: blogs; calendar; categories; cms (for "articles"); contacts; directory; faqs; featured_links; file_galleries; forums; galleries (for "image galleries"); gmaps; html_pages; maps; mytiki; newsletters; poll; quizzes; surveys; trackers; user_messages; webmail; wiki page'),
+					'description' => tra('Module is displayed only in the specified sections. Separate multiple sections by semi-colons. Choose from: blogs; calendar; categories; cms (for "articles"); contacts; directory; faqs; featured_links; file_galleries; forums; galleries (for "image galleries"); gmaps; html_pages; maps; mytiki; newsletters; poll; quizzes; surveys; trackers; user_messages; webmail; wiki page'),
 					'separator' => ';',
 					'filter' => 'striptags',
 					'section' => 'visibility',
 				),
 				'page' => array(
 					'name' => tra('Page Filter'),
-					'description' => tra('Module only applicable on the specified page names. Multiple values can be separated by semi-colons.'),
+					'description' => tra('Module is displayed only on the specified page(s). Separate multiple page names by semi-colons.'),
 					'separator' => ';',
 					'filter' => 'pagename',
 					'section' => 'visibility',
@@ -900,7 +900,7 @@ class ModLib extends TikiLib
 				),
 				'nopage' => array(
 					'name' => tra('No Page'),
-					'description' => tra('Module not applicable on the specified page names. Multiple values can be separated by semi-colons.'),
+					'description' => tra('Module is not displayed on the specified page(s). Separate multiple page names by semi-colons.'),
 					'separator' => ';',
 					'filter' => 'pagename',
 					'section' => 'visibility',
@@ -908,7 +908,7 @@ class ModLib extends TikiLib
 				),
 				'theme' => array(
 					'name' => tra('Theme'),
-					'description' => tra('Module enabled or disabled depending on the theme file name (e.g. "thenews.css"). Specified themes can be either included or excluded. Theme names prefixed by "!" are in the exclusion list. Multiple values can be separated by semi-colons.'),
+					'description' => tra('Module is displayed or not displayed depending on the theme. (Enter the theme\'s file name, for example, "thenews.css".) Prefix the theme name with "!" for the module to not display. Separate multiple theme names by semi-colons.'),
 					'separator' => ';',
 					'filter' => 'themename',
 					'section' => 'visibility',
@@ -927,13 +927,13 @@ class ModLib extends TikiLib
 				),
 				'flip' => array(
 					'name' => tra('Flip'),
-					'description' => tra('Users can shade module.'),
+					'description' => tra('Users can open and close the module.'),
 					'filter' => 'alpha',
 					'section' => 'appearance',
 				),
 				'style' => array(
 					'name' => tra('Style'),
-					'description' => tra('CSS styling for positioning the module.'),
+					'description' => tra('CSS style for positioning the module, etc.'),
 					'section' => 'appearance',
 				),
 				'class' => array(
@@ -943,7 +943,7 @@ class ModLib extends TikiLib
 				),
 				'topclass' => array(
 					'name' => tra('Containing Class'),
-					'description' => tra('Custom CSS class around.'),
+					'description' => tra('Custom CSS class of div around the module.'),
 					'section' => 'appearance',
 				),
 			)
