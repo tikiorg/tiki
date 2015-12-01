@@ -842,7 +842,7 @@ $('#$fieldid').trigger('change');
 		}
 		$element->appendChild($option);
 	}
-	return $document->saveHTML();
+	return '~np~' . $document->saveHTML() . '~/np~';
 }
 
 function cs_design_daterange($id, $fieldname, $fieldid, $arguments, $default, &$script)
