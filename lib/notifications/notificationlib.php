@@ -139,14 +139,14 @@ class NotificationLib extends TikiLib
 		);
 
 		$watches['wiki_comment_changes'] = array(
-				'label' => tra('A comment in a wiki page is posted or edited') ,
+				'label' => tra('A wiki page comment is posted or edited') ,
 				'type' => 'wiki page',
 				'url' => '',
 				'available' => $prefs['feature_wiki'] == 'y' && $prefs['feature_wiki_comments'] == 'y'
 		);
 
 		$watches['article_commented'] = array(
-				'label' => tra('A comment in an article is posted or edited') ,
+				'label' => tra('An article comment is posted or edited') ,
 				'type' => 'article',
 				'url' => '',
 				'available' => $prefs['feature_articles'] == 'y' && $prefs['feature_article_comments'] == 'y'

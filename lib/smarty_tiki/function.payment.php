@@ -75,7 +75,7 @@ function smarty_function_payment( $params, $smarty )
 				$smarty->assign('ccresult', $result);
 				$smarty->assign('ccresult_ok', $result);
 			} else {
-				$smarty->assign('ccresult', tr('Payment sent but verification not currently available. (Work in progress)'));
+				$smarty->assign('ccresult', tr('Payment was sent but verification is not currently available (this feature is a work in progress)'));
 			}
 		} else if ( $prefs['payment_system'] == 'tikicredits') {
 			require_once 'lib/payment/creditspaylib.php';

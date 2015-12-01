@@ -56,7 +56,7 @@ function payment_behavior_perform_trade( $params )
 		$smarty->assign('ccresult2', $result);
 		$smarty->assign('ccresult_ok', (strpos($result, 'Transaction Accepted') !== false));
 	} else {
-		$smarty->assign('ccresult2', tr('Payment sent but verification not currently available. (Work in progress)'));
+		$smarty->assign('ccresult2', tr('Payment was sent but verification is not currently available (this feature is a work in progress)'));
 	}
 	return $result;
 }

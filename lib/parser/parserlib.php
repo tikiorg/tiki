@@ -1679,7 +1679,7 @@ if ( \$('#$id') ) {
 		}
 
 		if ($prefs['wiki_pagination'] != 'y') {
-			$data = str_replace($prefs['wiki_page_separator'], $prefs['wiki_page_separator'] . ' <em>' . tr('Wiki Pagination has not been enabled on this site.') . '</em>', $data);
+			$data = str_replace($prefs['wiki_page_separator'], $prefs['wiki_page_separator'] . ' <em>' . tr('Wiki page pagination has not been enabled.') . '</em>', $data);
 		}
 
 		$data = $this->parse_data_externallinks($data);
