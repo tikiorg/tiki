@@ -137,7 +137,7 @@ class Services_Tracker_Controller
 		$perms = Perms::get('tracker', $trackerId);
 
 		if (! $perms->view_trackers) {
-			throw new Services_Exception_Denied(tr('You don't have permission to view the tracker'));
+			throw new Services_Exception_Denied(tr("You don't have permission to view the tracker"));
 		}
 
 		$definition = Tracker_Definition::get($trackerId);
