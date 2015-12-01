@@ -13,7 +13,7 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 
 		return array(
 			'STO' => array(
-				'name' => tr('Show.tiki.org'),
+				'name' => tr('show.tiki.org'),
 				'description' => tr('Create, display or manage show.tiki.org instances.'),
 				'prefs' => array('trackerfield_showtikiorg'),
 				'tags' => array('experimental'),
@@ -55,8 +55,8 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 						'legacy_index' => 4,
 					),
 					'fixedUserId' => array(
-						'name' => tr('Fixed user id'),
-						'description' => tr('Set fixed user id instead of using user id of creator of tracker item'),
+						'name' => tr('Fixed user ID'),
+						'description' => tr('Set fixed user ID instead of using the user ID of the creator of the tracker item'),
 						'filter' => 'int',
 						'legacy_index' => 5,
 					),

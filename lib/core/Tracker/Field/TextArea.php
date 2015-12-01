@@ -36,31 +36,31 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 					),
 					'width' => array(
 						'name' => tr('Width'),
-						'description' => tr('Size of the text area in characters.'),
+						'description' => tr('Size of the text area, in characters.'),
 						'filter' => 'int',
 						'legacy_index' => 1,
 					),
 					'height' => array(
 						'name' => tr('Height'),
-						'description' => tr('Size of the text area in lines.'),
+						'description' => tr('Size of the text area, in lines.'),
 						'filter' => 'int',
 						'legacy_index' => 2,
 					),
 					'max' => array(
 						'name' => tr('Character Limit'),
-						'description' => tr('Maximum amount of characters to be stored.'),
+						'description' => tr('Maximum number of characters to be stored.'),
 						'filter' => 'int',
 						'legacy_index' => 3,
 					),
 					'listmax' => array(
 						'name' => tr('Display Limit (List)'),
-						'description' => tr('Maximum amount of characters to be displayed in list mode before the value gets truncated.'),
+						'description' => tr('Maximum number of characters to be displayed in list mode before the value gets truncated.'),
 						'filter' => 'int',
 						'legacy_index' => 4,
 					),
 					'wordmax' => array(
 						'name' => tr('Word Count'),
-						'description' => tr('Limit the length of the text in words.'),
+						'description' => tr('Limit the length of the text, in number of words.'),
 						'filter' => 'int',
 						'legacy_index' => 5,
 					),
@@ -77,7 +77,7 @@ class Tracker_Field_TextArea extends Tracker_Field_Text
 					),
 					'wysiwyg' => array(
 						'name' => tr('Use WYSIWYG'),
-						'description' => tr('Use a rich text editor instead of a plain text box.'),
+						'description' => tr('Use a rich text editor instead of inputting plain text.'),
 						'default' => 'n',
 						'filter' => 'alpha',
 						'options' => array(

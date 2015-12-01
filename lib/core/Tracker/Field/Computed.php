@@ -41,14 +41,14 @@ class Tracker_Field_Computed extends Tracker_Field_Abstract
 					),
 					'dec_point' => array(
 						'name' => tr('Decimal separator when displaying data'),
-						'description' => tr('Single character. Use c for comma, d for dot or s for space. The valid decimal separator when inserting numbers may depend on site language and web browser. See documentation for more details.'),
+						'description' => tr('Single character. Use "c" for comma, "d" for dot or "s" for space. The valid decimal separator when inserting numbers may depend on the site language and web browser. See the documentation for more details.'),
 						'filter' => 'text',
 						'default' => '.',
 						'legacy_index' => 2,
 					),
 					'thousands' => array(
 						'name' => tr('Thousand separator when displaying data'),
-						'description' => tr('Single character,  Use c for comma, d for dot or s for space.  When inserting data no thousands separator is needed.'),
+						'description' => tr('Single character: use "c" for comma, "d" for dot or "s" for space.  When inserting data, no thousands separator is needed.'),
 						'filter' => 'text',
 						'default' => ',',
 						'legacy_index' => 3,

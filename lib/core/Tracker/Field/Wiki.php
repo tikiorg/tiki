@@ -78,27 +78,27 @@ class Tracker_Field_Wiki extends Tracker_Field_Text
 					),
 					'width' => array(
 						'name' => tr('Width'),
-						'description' => tr('Size of the text area in characters.'),
+						'description' => tr('Size of the text area, in characters.'),
 						'filter' => 'int',
 					),
 					'height' => array(
 						'name' => tr('Height'),
-						'description' => tr('Size of the text area in lines.'),
+						'description' => tr('Size of the text area, in lines.'),
 						'filter' => 'int',
 					),
 					'max' => array(
 						'name' => tr('Character Limit'),
-						'description' => tr('Maximum amount of characters to be stored.'),
+						'description' => tr('Maximum number of characters to be stored.'),
 						'filter' => 'int',
 					),
 					'wordmax' => array(
 						'name' => tr('Word Count'),
-						'description' => tr('Limit the length of the text in words.'),
+						'description' => tr('Limit the length of the text, in number of words.'),
 						'filter' => 'int',
 					),
 					'wysiwyg' => array(
 						'name' => tr('Use WYSIWYG'),
-						'description' => tr('Use a rich text editor instead of a plain text box.'),
+						'description' => tr('Use a rich text editor instead of inputting plain text.'),
 						'default' => 'n',
 						'filter' => 'alpha',
 						'options' => array(

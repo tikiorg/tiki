@@ -38,7 +38,7 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 					),
 					'size' => array(
 						'name' => tr('Display Size'),
-						'description' => tr('Visible size of the field in characters. Does not affect the numeric length.'),
+						'description' => tr('Visible size of the field, in characters. Does not affect the numeric length.'),
 						'filter' => 'int',
 						'legacy_index' => 1,
 					),
@@ -62,14 +62,14 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 					),
 					'dec_point' => array(
 						'name' => tr('Decimal separator when displaying data'),
-						'description' => tr('Single character. Use c for comma, d for dot or s for space. The valid decimal separator when inserting numbers may depend on site language and web browser. See documentation for more details.'),
+						'description' => tr('Single character. Use "c" for comma, "d" for dot or "s" for space. The valid decimal separator when inserting numbers may depend on the site language and web browser. See the documentation for more details.'),
 						'filter' => 'text',
 						'default' => '.',
 						'legacy_index' => 5,
 					),
 					'thousands' => array(
 						'name' => tr('Thousands separator when displaying data'),
-						'description' => tr('Single character,  Use c for comma, d for dot or s for space.  When inserting data no thousands separator is needed.'),
+						'description' => tr('Single character: use "c" for comma, "d" for dot or "s" for space.  When inserting data, no thousands separator is needed.'),
 						'filter' => 'text',
 						'default' => ',',
 						'legacy_index' => 6,
