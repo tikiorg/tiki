@@ -32,7 +32,7 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 						'legacy_index' => 1,
 					),
 					'maxIcons' => array(
-						'name' => tr('Max Icons'),
+						'name' => tr('Maximum Icons'),
 						'description' => tr('Number of icons to display in each gallery (default 120).'),
 						'filter' => 'int',
 						'default' => 120,

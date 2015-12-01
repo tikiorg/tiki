@@ -115,7 +115,7 @@ function wikiplugin_freetagged_info()
 			),
 			'h_level' => array(
 				'required' => false,
-				'name' => tra('Header Level'),
+				'name' => tra('Heading Level'),
 				'description' => tr('Choose the header level for formatting. Default is %0 (for header level h3). Set
 					to %1 for no header tags.', '<code>3</code>', '<code>-1</code>'),
 				'since' => '5.0',

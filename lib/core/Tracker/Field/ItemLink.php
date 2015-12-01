@@ -106,8 +106,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'legacy_index' => 8,
 					),
 					'preSelectFieldThere' => array(
-						'name' => tr('Preselect based on value in this remote field'),
-						'description' => tr('Match preselect item with this field ID in tracker that is being linked to'),
+						'name' => tr('Preselect based on the value in this remote field'),
+						'description' => tr('Match preselect item to this field ID in the tracker that is being linked to'),
 						'filter' => 'int',
 						'legacy_index' => 9,
 						'profile_reference' => 'tracker_field',

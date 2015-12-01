@@ -12,7 +12,7 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 		return array(
 			'j' => array(
 				'name' => tr('Date and Time (Date Picker)'),
-				'description' => tr('Provides jQuery-UI date picker select a date and optionally time.'),
+				'description' => tr('Provides a jQuery UI date picker to select a date and optionally time.'),
 				'prefs' => array('trackerfield_jscalendar'),
 				'tags' => array('advanced'),
 				'default' => 'y',

@@ -44,7 +44,7 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 					),
 					'prepend' => array(
 						'name' => tr('Prepend'),
-						'description' => tr('Text to be displayed prior to the numeric value.'),
+						'description' => tr('Text to be displayed in front of the numeric value.'),
 						'filter' => 'text',
 						'legacy_index' => 2,
 					),
@@ -56,7 +56,7 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 					),
 					'decimals' => array(
 						'name' => tr('Decimal Places'),
-						'description' => tr('Amount of decimals to preserve before rounding.'),
+						'description' => tr('Number of decimal places to round to.'),
 						'filter' => 'int',
 						'legacy_index' => 4,
 					),

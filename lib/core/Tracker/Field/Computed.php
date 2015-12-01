@@ -35,7 +35,7 @@ class Tracker_Field_Computed extends Tracker_Field_Abstract
 					),
 					'decimals' => array(
 						'name' => tr('Decimal Places'),
-						'description' => tr('Amount of decimals to preserve before rounding.'),
+						'description' => tr('Number of decimal places to round to.'),
 						'filter' => 'int',
 						'legacy_index' => 1,
 					),
