@@ -125,7 +125,7 @@ class Collection
 			$collection = new self($this->definition);
 			$collection->addNew($name, 'lookup')
 				->setLabel(tr('Item ID'))
-				->setHelp(tr('Lookup a single item by ID.'))
+				->setHelp(tr('Look up a single item by ID.'))
 				->setControl(new Control\TextField("tf_itemId"))
 				->setApplyCondition(function ($control, Search_Query $query) {
 					$value = $control->getValue();

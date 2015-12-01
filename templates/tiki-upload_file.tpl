@@ -103,7 +103,7 @@
 		{if $user eq $fileInfo.lockedby}
 			{tr}You locked the file{/tr}
 		{else}
-			{tr}The file is locked by {$fileInfo.lockedby}{/tr}
+			{tr}The file has been locked by {$fileInfo.lockedby}{/tr}
 		{/if}
 	{/remarksbox}
 {/if}
@@ -356,7 +356,7 @@
 
 	{if !empty($fileInfo.lockedby) and $user ne $fileInfo.lockedby}
 		{icon name="lock"}
-		<span class="attention">{tr}The file is locked by {$fileInfo.lockedby}{/tr}</span>
+		<span class="attention">{tr}The file has been locked by {$fileInfo.lockedby}{/tr}</span>
 	{/if}
 	<br>
 

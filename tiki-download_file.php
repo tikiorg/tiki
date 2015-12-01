@@ -135,7 +135,7 @@ if ( ! isset($_GET['thumbnail']) && ! isset($_GET['icon']) ) {
 
 	if ( ! empty($_REQUEST['lock']) ) {
 		if (!empty($info['lockedby']) && $info['lockedby'] != $user) {
-			$access->display_error('', tra(sprintf('The file is locked by %s', $info['lockedby'])), 401);
+			$access->display_error('', tra(sprintf('The file has been locked by %s', $info['lockedby'])), 401);
 		}
 		$filegallib->lock_file($info['fileId'], $user);
 	}

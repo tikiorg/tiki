@@ -202,7 +202,7 @@ class LanguageTranslationsTest extends TikiTestCase
 				"Approved Status" => array('source' => "Approved Status", 'tran' => null),
 				"Queued" => array('source' => "Queued", 'tran' => null),
 				"The file is already locked by %s" => array('source' => "The file is already locked by %s", 'tran' => null),
-				"WARNING: The file is used in" => array('source' => "WARNING: The file is used in", 'tran' => null),
+				"Warning: The file is used in" => array('source' => "Warning: The file is used in", 'tran' => null),
 				"You do not have permission to edit this file" => array('source' => "You do not have permission to edit this file", 'tran' => null),
 				"Not modified since" => array('source' => "Not modified since", 'tran' => null),
 				'Test special "characters" escaping' => array('source' => 'Test special "characters" escaping', 'tran' => null),
@@ -221,7 +221,7 @@ class LanguageTranslationsTest extends TikiTestCase
 				"Approved Status" => array('source' => "Approved Status", 'tran' => null),
 				"Queued" => array('source' => "Queued", 'tran' => null),
 				"The file is already locked by %s" => array('source' => "The file is already locked by %s", 'tran' => null),
-				"WARNING: The file is used in" => array('source' => "WARNING: The file is used in", 'tran' => null),
+				"Warning: The file is used in" => array('source' => "Warning: The file is used in", 'tran' => null),
 				"You do not have permission to edit this file" => array('source' => "You do not have permission to edit this file", 'tran' => null),
 				"Not modified since" => array('source' => "Not modified since", 'tran' => null),
 				'Test special "characters" escaping' => array('source' => 'Test special "characters" escaping', 'tran' => null),
@@ -236,7 +236,7 @@ class LanguageTranslationsTest extends TikiTestCase
 				"Delete comments" => array('source' => "Delete comments", 'tran' => null),
 				"Queued" => array('source' => "Queued", 'tran' => null),
 				"The file is already locked by %s" => array('source' => "The file is already locked by %s", 'tran' => null),
-				"WARNING: The file is used in" => array('source' => "WARNING: The file is used in", 'tran' => null),
+				"Warning: The file is used in" => array('source' => "Warning: The file is used in", 'tran' => null),
 				"You do not have permission to edit this file" => array('source' => "You do not have permission to edit this file", 'tran' => null),
 				);
 		$this->assertEquals($expectedResult, $this->obj->getFileUntranslated());
