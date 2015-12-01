@@ -148,7 +148,7 @@
 						{if $listpages[ix].comment_can_rate_article eq 'y' && $prefs.article_user_rating eq 'y'
 							&& ($tiki_p_ratings_view_results eq 'y' or $tiki_p_admin eq 'y')}
 							- <span class="ratingResultAvg">
-								{tr}Users Rating: {/tr}
+								{tr}Users rating: {/tr}
 							</span>{rating_result_avg id=$listpages[ix].articleId type=article}
 						{/if}
 					</span><br>

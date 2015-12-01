@@ -9,7 +9,7 @@ function prefs_cas_list()
 {
 	return array(
 		'cas_create_user_tiki' => array(
-			'name' => tra('Create user if not in Tiki'),
+			'name' => tra('Create user if not already a registered user'),
             'description' => tra(''),
 			'type' => 'flag',
 			'perspective' => false,

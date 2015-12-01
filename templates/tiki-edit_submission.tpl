@@ -117,7 +117,7 @@
 	    </div>
     </div>
     <div class="form-group" id='use_ratings' {if $types.$type.use_ratings eq 'y'}style="display:;"{else}style="display:none;"{/if}>
-		<label class="col-sm-3 control-label">{tr}Author Rating{/tr}</label>
+		<label class="col-sm-3 control-label">{tr}Author rating{/tr}</label>
 		<div class="col-sm-7">
 	      	<select name='rating' class="form-control">
 				<option value="10" {if $rating eq 10}selected="selected"{/if}>10</option>

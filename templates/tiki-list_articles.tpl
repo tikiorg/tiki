@@ -104,7 +104,7 @@
 				{if $prefs.art_list_usersRating eq 'y'}
 					{assign var=numbercol value=$numbercol+1}
 					<th class="text-right">
-						{self_link _sort_arg='sort_mode' _sort_field='usersRating'}{tr}Users Rating{/tr}{/self_link}
+						{self_link _sort_arg='sort_mode' _sort_field='usersRating'}{tr}Users rating{/tr}{/self_link}
 					</th>
 				{/if}
 				{if $prefs.art_list_reads eq 'y'}

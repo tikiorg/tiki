@@ -36,7 +36,7 @@ function prefs_shib_list()
 			'default' => 'n',
 		),
 		'shib_create_user_tiki' => array(
-			'name' => tra('Create user if not in Tiki'),
+			'name' => tra('Create user if not already a registered user'),
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',

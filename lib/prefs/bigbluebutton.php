@@ -33,7 +33,7 @@ function prefs_bigbluebutton_list()
 		),
 		'bigbluebutton_server_salt' => array(
 			'name' => tra('BigBlueButton server salt'),
-			'description' => tra('A salt key used to generate checksums for the BigBlueButton server to know the requests are authentic.'),
+			'description' => tra('A salt key used to generate checksums for the BigBlueButton server to assure that requests are authentic.'),
 			'keywords' => 'big blue button web conferencing audio video chat screensharing whiteboard',
 			'type' => 'text',
 			'size' => 40,

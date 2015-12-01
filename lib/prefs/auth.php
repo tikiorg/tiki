@@ -10,7 +10,7 @@ function prefs_auth_list()
 	return array(
 		'auth_method' => array(
 			'name' => tra('Authentication method'),
-			'description' => tra('Tiki supports several authentication methods. The default value is to use the internal user database.'),
+			'description' => tra('Tiki supports several authentication methods. The default method is to use the internal user database.'),
 			'type' => 'list',
 			'help' => 'External+Authentication',
 			'perspective' => false,
@@ -28,7 +28,7 @@ function prefs_auth_list()
 		),
 		'auth_token_access' => array(
 			'name' => tra('Token Access'),
-			'description' => tra('Allow to access the content with superior rights with the presentation of a token. The primary use of this authentication method is to grant temporary access to content to an external service.'),
+			'description' => tra('With the presentation of a token, allow access to the content with elevated rights. The primary use of this authentication method is to grant temporary access to content to an external service.'),
 			'help' => 'Token+Access',
 			'perspective' => false,
 			'type' => 'flag',
@@ -46,8 +46,8 @@ function prefs_auth_list()
 			'default' => 3600*24*7,
 		),
 		'auth_token_access_maxhits' => array(
-			'name' => tra('Token Access Max Hits'),
-			'description' => tra('The maximum amount of times a token can be used before it expires.'),
+			'name' => tra('Token Access Maximum Hits'),
+			'description' => tra('The maximum number of times a token can be used before it expires.'),
 			'type' => 'text',
 			'size' => 5,
 			'perspective' => false,
@@ -56,7 +56,7 @@ function prefs_auth_list()
 		),
 		'auth_token_tellafriend' => array(
 			'name' => tra('Share access rights with friends when using Tell a friend'),
-			'description' => tra('Allow users to share their access rights on the current page with a friend when sending the link by email. Lifespan of the links is defined by the site.'),
+			'description' => tra('Allow users to share their access rights for the current page with a friend when sending the link by email. The lifespan of the link is defined by the site.'),
 			'type' => 'flag',
 			'perspective' => false,
 			'dependencies' => array(
@@ -67,7 +67,7 @@ function prefs_auth_list()
 		),
 		'auth_token_share' => array(
 			'name' => tra('Share access rights with friends when using Share'),
-			'description' => tra('Allow users to share their access rights on the current page with a friend when sending the link by email/Twitter/Facebook. Lifespan of the links is defined by the site.'),
+			'description' => tra('Allow users to share their access rights for the current page with a friend when sending the link by email, Twitter, or Facebook. The lifespan of the link is defined by the site.'),
 			'type' => 'flag',
 			'perspective' => false,
 			'dependencies' => array(
@@ -77,8 +77,8 @@ function prefs_auth_list()
 			'default' => 'n',
 		),
 		'auth_phpbb_create_tiki' => array(
-			'name' => tra('Create user if not in Tiki'),
-            'description' => tra('Automatically create a new Tiki User for the PHPbb login'),
+			'name' => tra('Create user if not already a registered user'),
+            'description' => tra('Automatically create a new Tiki user for the PHPbb login'),
             'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',
@@ -503,7 +503,7 @@ function prefs_auth_list()
 			'default' => '',
 		),
 		'auth_ws_create_tiki' => array(
-			'name' => tra('Create user if not in Tiki'),
+			'name' => tra('Create user if not already a registered user'),
             'description' => tra(''),
 			'type' => 'flag',
 			'perspective' => false,
