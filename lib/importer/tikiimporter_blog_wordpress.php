@@ -65,7 +65,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 			array(
 					'name' => 'htaccessRules',
 					'type' => 'checkbox',
-					'label' => tra('Suggest .htaccess rules to redirect from old WP URLs to new Tiki URLs (experimental)')
+					'label' => tra('Suggest .htaccess rules to redirect from old WordPress URLs to new Tiki URLs (experimental)')
 			)
 		);
 
@@ -122,7 +122,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
             die("This particular implementation of the method requires an explicity file path.");
         }
 		if (isset($_FILES['importFile']) && !in_array($_FILES['importFile']['type'], $this->validTypes)) {
-			throw new UnexpectedValueException(tra('Invalid file mime type'));
+			throw new UnexpectedValueException(tra('Invalid file MIME type'));
 		}
 
 		if (!empty($_POST['importAttachments']) && $_POST['importAttachments'] == 'on') {
@@ -132,7 +132,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		$this->dom = new DOMDocument;
 
 		if (!$this->dom->load($filePath)) {
-			throw new DOMException(tra('Error while loading XML file. Probably your XML file is malformed. Some versions of Wordpress generate a malformed XML file. See the Tiki Importer documentation for more information.'));
+			throw new DOMException(tra('There was an error while loading the XML file. Probably the XML file is malformed. Some versions of WordPress generate a malformed XML file. See the Tiki Importer documentation for more information.'));
 		}
 
 		$this->validateInput();
@@ -173,7 +173,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 			}
 		}
 
-		throw new DOMException(tra('Invalid Wordpress XML file'));
+		throw new DOMException(tra('Invalid WordPress XML file'));
 	}
 
 	/**
@@ -185,7 +185,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 	function checkRequirementsForAttachments()
 	{
 		if (ini_get('allow_url_fopen') === false) {
-			$this->saveAndDisplayLog("ABORTING: you need to enable the PHP setting 'allow_url_fopen' to be able to import attachments. Fix the problem or try to import without the attachments.\n");
+			$this->saveAndDisplayLog("Aborting: you need to enable the PHP setting 'allow_url_fopen' to be able to import attachments. Fix the problem or try to import without the attachments.\n");
 			die;
 		}
 	}

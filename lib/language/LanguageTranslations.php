@@ -144,7 +144,7 @@ class LanguageTranslations extends TikiDb_Bridge
 			if ($lastStr === FALSE) {
 				// file has no line with "###end###\"=>\"###end###\") marking the end of the array
 				throw new Language_Exception(
-					tr("The file lang/%0/language.php is not well formated. Run get_strings.php?lang=%0 and then try to export the translations again.", $this->lang)
+					tr("The file lang/%0/language.php is not correctly formatted. Run get_strings.php?lang=%0 and then try to export the translations again.", $this->lang)
 				);
 			}
 
@@ -193,7 +193,7 @@ class LanguageTranslations extends TikiDb_Bridge
 
 			return $stats;
 		} else {
-			throw new Exception(sprintf(tra('ERROR: unable to write to lang/%s/language.php'), $this->lang));
+			throw new Exception(sprintf(tra('Error: unable to write to lang/%s/language.php'), $this->lang));
 		}
 	}
 

@@ -47,7 +47,7 @@ class TikiImporter_Wiki extends TikiImporter
 								array('name' => 'override', 'label' => tra('Override')),
 								array(
 										'name' => 'appendPrefix',
-										'label' => tra('Append software name as prefix to the page name')
+										'label' => tra('Prepend software name as a prefix to the page name')
 								),
 						)
 				),

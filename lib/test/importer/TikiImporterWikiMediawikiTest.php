@@ -211,7 +211,7 @@ class TikiImporter_Wiki_Mediawiki_Test extends TikiImporter_TestCase
     public function testDownloadAttachmentsShouldDisplayMessageIfNoAttachments()
     {
         $this->obj->dom = new DOMDocument;
-        $this->expectOutputString("\n\nNo attachments found to import! Make sure you have created your XML file with the dumpDump.php script and with the option --uploads. This is the only way to import attachment.\n");
+        $this->expectOutputString("\n\nNo attachments were found to import. Be sure to create the XML file with the dumpDump.php script and with the option --uploads. This is the only way to import attachments.\n");
         $this->obj->downloadAttachments(); 
     }
 
