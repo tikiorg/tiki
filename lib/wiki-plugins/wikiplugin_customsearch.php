@@ -157,6 +157,19 @@ function wikiplugin_customsearch_info()
 				'filter' => 'digits',
 				'default' => 1,
 			),
+			'customsearchjs' => array(
+				'required' => false,
+				'name' => tra('Use custom search JavaScript file'),
+				'description' => tra('Mainly keeps the search state on the URL hash, but also adds some helper functions like easier sorting and page size.'),
+				'since' => '14.1',
+				'options' => array(
+					array('text' => tra(''), 'value' => ''),
+					array('text' => tra('No'), 'value' => '0'),
+					array('text' => tra('Yes'), 'value' => '1'),
+				),
+				'filter' => 'digits',
+				'default' => 0,
+			),
 		),
 	);
 }
@@ -371,6 +384,7 @@ $('#customsearch_$id').submit(function() {
 });
 
 window.customsearch_$id = customsearch;
+$(document).trigger('formSearchReady');
 ";
 
 	$parser = new WikiParser_PluginArgumentParser;
@@ -489,6 +503,10 @@ customsearch.init();
 $iconinsert";
 
 	TikiLib::lib('header')->add_jq_onready($script);
+
+	if ($params['customsearchjs']) {
+		TikiLib::lib('header')->add_jsfile('lib/jquery_tiki/customsearch.js');
+	}
 
 	$out = '<div id="customsearch_' . $id . '_form"><form id="customsearch_' . $id . '">' . $matches->getText() . '</form></div>';
 
