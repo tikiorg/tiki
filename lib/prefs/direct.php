@@ -15,14 +15,14 @@ function prefs_direct_list()
 			'default' => 'y',
 		),
 		'direct_pagination_max_middle_links' => array(
-			'name' => tra('Max. number of links around the current item'),
+			'name' => tra('Maximum number of links around the current item'),
             'description' => tra(''),
 			'type' => 'text',
 			'size' => '4',
 			'default' => 2,
 		),
 		'direct_pagination_max_ending_links' => array(
-			'name' => tra('Max. number of links after the first or before the last item'),
+			'name' => tra('Maximum number of links after the first or before the last item'),
             'description' => tra(''),
 			'type' => 'text',
 			'size' => '4',

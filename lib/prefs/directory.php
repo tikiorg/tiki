@@ -9,13 +9,13 @@ function prefs_directory_list()
 {
 	return array(
 		'directory_country_flag' => array(
-			'name' => tra('Show Country Flag'),
+			'name' => tra('Show country flag'),
 			'description' => tra('Show the country flag'),
 			'type' => 'flag',
 			'default' => 'y',
 		),
 		'directory_cool_sites' => array(
-			'name' => tra('Enable cool sites'),
+			'name' => tra('Enable "popular sites"'),
             'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'y',
@@ -46,13 +46,13 @@ function prefs_directory_list()
 			'default' => 20,
 			),
 		'directory_open_links' => array(
-            'name' => tra('Method to Open Directory Links'),
-			'description' => tra('Method to open directory links'),
+            'name' => tra('Method to open Directory links'),
+			'description' => tra('The linked-to website can be opened in various ways'),
             'type' => 'list',
         	'options' => array(
-	            'r' => tra('replace current window'),
-                'n' => tra('new window'),
-                'f' => tra('inline frame')),
+	            'r' => tra('Replace the current window'),
+                'n' => tra('Open a new window'),
+                'f' => tra('Open an iframe')),
 			'default' => 'n',
 			),
 	);

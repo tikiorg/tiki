@@ -25,16 +25,16 @@ function prefs_display_list()
 		),
 		'display_start_year' => array(
 			'name' => tra('Start Year'),
-            'description' => tra('Year to show as first on drop down year lists.') . '<br>' .
-							tra('E.G. Use "-2" for the current year minus two, or "2003" for an explicit year'),
+            'description' => tra('Year to show first in dropdown lists.') . '<br>' .
+							tra('For example, use "-2" for the current year minus two, or "2010" for a specific year'),
 			'type' => 'text',
 			'size' => 6,
 			'default' => '-3',
 		),
 		'display_end_year' => array(
 			'name' => tra('End Year'),
-            'description' => tra('Year to show as last on drop down year lists.') . '<br>' .
-							tra('E.G. Use "+2" for the current year plus two, or "2013" for an explicit year'),
+            'description' => tra('Year to show last on dropdown lists.') . '<br>' .
+							tra('For example, use "+2" for the current year plus two, or "2016" for a specific year'),
 			'type' => 'text',
 			'size' => 6,
 			'default' => '+1',

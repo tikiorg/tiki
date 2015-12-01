@@ -295,7 +295,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><label>{tr}Comments default ordering{/tr}</label></td>
+				<td><label>{tr}Default order of comments{/tr}</label></td>
 				<td>
 					<select name="image_galleries_comments_default_order">
 						<option value="commentDate_desc" {if $prefs.image_galleries_comments_default_order eq 'commentDate_desc'}selected="selected"{/if}>{tr}Newest first{/tr}</option>

@@ -54,7 +54,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki' => array(
 			'name' => tra('Wiki'),
-			'description' => tra('Collaboratively authored documents with history of changes.'),
+			'description' => tra('Collaboratively authored documents with edit history.'),
 			'type' => 'flag',
 			'help' => 'Wiki',
 			'default' => 'y',
@@ -82,8 +82,8 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_galleries' => array(
 			'name' => tra('Image Gallery'),
-			'description' => tra('Collections of graphic images for viewing or downloading (photo album)'),
-			'warning' => tra('You can use file galleries instead.'),
+			'description' => tra('Collections of images for viewing or downloading (photo albums)'),
+			'warning' => tra('File galleries can be used instead.'),
 			'type' => 'flag',
 			'help' => 'Image+Gallery',
 			'default' => 'n',
