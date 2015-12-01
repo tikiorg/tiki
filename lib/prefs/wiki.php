@@ -344,7 +344,7 @@ function prefs_wiki_list($partial = false)
 			),
 		),
 		'wiki_watch_editor' => array(
-			'name' => tra('Enable watch events when I am the editor'),
+			'name' => tra('Enable watch events when you are the editor'),
 			'type' => 'flag',
 			'default' => 'n',
 			'dependencies' => array(

@@ -9,8 +9,8 @@ function prefs_categories_list()
 {
 	return array(
 		'categories_used_in_tpl' => array(
-			'name' => tra('Categories used in templates (TPL)'),
-			'description' => tra('Permits to show alternate content depending on category of current object'),
+			'name' => tra('Categories used in templates (.tpl files)'),
+			'description' => tra('Enables showing alternate content, depending on the category of the current object'),
 			'type' => 'flag',
 			'perspective' => false,
 			'help' => 'http://themes.tiki.org/Template+Tricks',

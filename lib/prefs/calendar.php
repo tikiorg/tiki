@@ -101,7 +101,7 @@ function prefs_calendar_list()
 			'default' => 'n',
 		),
 		'calendar_addtogooglecal' => array(
-			'name' => tra('Show Add to Google Calendar icon'),
+			'name' => tra('Show "Add to Google Calendar" icon'),
             'description' => tra(''),
 			'type' => 'flag',
 			'dependencies' => array(
@@ -110,19 +110,19 @@ function prefs_calendar_list()
 			'default' => 'n',
 		),
 		'calendar_export' => array(
-			'name' => tra('Show Export Calendars button'),
+			'name' => tra('Show "Export Calendars" button'),
             'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'calendar_export_item' => array(
-			'name' => tra('Show Export Calendar Item Button'),
+			'name' => tra('Show "Export Calendar Item" Button'),
             'description' => tra('Allow exporting a single calendar event as an iCal file'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'calendar_fullcalendar' => array(
-			'name' => tra('Use FullCalendar to display Calendars'),
+			'name' => tra('Use FullCalendar to display calendars'),
             'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
@@ -134,8 +134,8 @@ function prefs_calendar_list()
 			'default' => 'y',
 		),
 		'calendar_watch_editor' => array(
-			'name' => tra('Enable watch events when I am the editor'),
-			'description' => tra('If unchecked you will not recieve email notifications for events you changed yourself.'),
+			'name' => tra('Enable watch events when you are the editor'),
+			'description' => tra('Check this to receive email notifications of events you changed yourself.'),
 			'type' => 'flag',
 			'default' => 'y',
 		),
