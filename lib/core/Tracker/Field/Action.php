@@ -12,7 +12,7 @@ class Tracker_Field_Action implements Tracker_Field_Interface
 		return array(
 			'x' => array(
 				'name' => tr('Action'),
-				'description' => tr('Create a form which will be posted somewhere, not necessarily trackers or even Tiki.'),
+				'description' => tr('Create a form to be posted somewhere, not necessarily in a tracker or even at this Tiki site.'),
 				'help' => 'Action Tracker Field',
 				'prefs' => array('trackerfield_action'),
 				'tags' => array('experimental'),
@@ -26,20 +26,20 @@ class Tracker_Field_Action implements Tracker_Field_Interface
 					),
 					'post' => array(
 						'name' => tr('Post'),
-						'description' => tr('The protocol to use at the form: either get or post'),
+						'description' => tr('The protocol to use in the form: either get or post'),
 						'filter' => 'text',
 						'legacy_index' => 1,
 					),
 					'script' => array(
 						'name' => tr('Script'),
-						'description' => tr('The arbitrary url of the destination of the form'),
+						'description' => tr('The URL of the destination of the form'),
 						'filter' => 'text',
 						'example' => 'tiki-index.php',
 						'legacy_index' => 2,
 					),
 					'parameters' => array(
 						'name' => tr('Parameters'),
-						'description' => tr('Here page:fieldname can be repeated several times, it specifies the variable names to pass in the form, as well as value taken from the current item from field named fieldname. highlight=test can also be repeated and is useful for fixed values as params to pass to the form.'),
+						'description' => tr('Here page:fieldname can be repeated several times. It specifies the variable names to pass in the form as well as the value taken from the current item in the field named fieldname. "highlight=test" can also be repeated and is useful for fixed values as parameters to pass to the form.'),
 						'filter' => 'text',
 						'count' => '*',
 						'example' => 'page:fieldname',

@@ -376,7 +376,7 @@ class Tiki_Profile_Installer
 			}
 			
 			if (count($this->getFeedback()) == count($profiles)) {
-				$this->setFeedback(tra('Nothing was changed, please check profile for errors'));
+				$this->setFeedback(tra('Nothing was changed. Please check the profile for errors'));
 			}
 			$cachelib->empty_cache($empty_cache, 'profile');
 			return true;

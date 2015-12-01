@@ -48,7 +48,7 @@ class Table_Plugin
 		$this->params = array(
 			'server' => array(
 				'required' => false,
-				'name' => tra('Server Side Processing'),
+				'name' => tra('Server-side Processing'),
 				'description' => tr(
 					'Enter %0y%1 to have the server do the sorting and filtering through Ajax and %0n%1 to have the
 					browser do it (n is the default). Set to %0y%1 (and also set the Paginate parameter

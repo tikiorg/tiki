@@ -26,10 +26,10 @@ class TikiAddons_Utilities extends TikiDb_Bridge
 		}
 		foreach ($depends as $depend) {
 			if (!in_array($depend->package, $installed)) {
-				throw new Exception($package . tra(' cannot load because it is missing the following dependency: ') . $depend->package);
+				throw new Exception($package . tra(' cannot load because the following dependency is missing: ') . $depend->package);
 			}
 			if (!$this->checkVersionMatch($versions[$depend->package], $depend->version)) {
-				throw new Exception($package . tra(' cannot load because it is missing a required version of a dependency: ') . $depend->package . ' version ' . $depend->version);
+				throw new Exception($package . tra(' cannot load because a required version of a dependency is missing: ') . $depend->package . ' version ' . $depend->version);
 			}
 			$this->checkProfilesInstalled($depend->package, $depend->version);
 		}
@@ -47,7 +47,7 @@ class TikiAddons_Utilities extends TikiDb_Bridge
 		foreach (glob(TIKI_PATH . '/addons/' . $folder . '/profiles/*.yml') as $file) {
 			$profileName = str_replace('.yml', '', basename($file));
 			if (!array_key_exists($profileName, $profiles)) {
-				throw new Exception(tra('This profile for this addon have not yet been installed: ') . $package . ' - ' . $profileName);
+				throw new Exception(tra('This profile for this addon has not yet been installed: ') . $package . ' - ' . $profileName);
 			} else {
 				$versionok = false;
 				foreach ($profiles[$profileName] as $versionInstalled) {
@@ -56,7 +56,7 @@ class TikiAddons_Utilities extends TikiDb_Bridge
 					}
 				}
 				if (!$versionok) {
-					throw new Exception(tra('This profile for this version of addon have not yet been installed: ') . $package . ' version ' . $version . ' - ' . $profileName);
+					throw new Exception(tra('This profile for this version of the addon has not yet been installed: ') . $package . ' version ' . $version . ' - ' . $profileName);
 				}
 			}
 		}

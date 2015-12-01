@@ -54,13 +54,13 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 					),
 					'displayParams' => array(
 						'name' => tr('Display parameters'),
-						'description' => tr('URL-encoded parameters used as in the {img} plugin. e.g.') . ' "max=400&desc=namedesc&stylebox=block"',
+						'description' => tr('URL-encoded parameters used such as in the {img} plugin, for example,.') . ' "max=400&desc=namedesc&stylebox=block"',
 						'filter' => 'text',
 						'legacy_index' => 4,
 					),
 					'displayParamsForLists' => array(
 						'name' => tr('Display parameters for lists'),
-						'description' => tr('URL-encoded parameters used as in the {img} plugin. e.g.') . ' "thumb=mouseover&max=60&rel=box[g]"',
+						'description' => tr('URL-encoded parameters used such as in the {img} plugin, for example,.') . ' "thumb=mouseover&max=60&rel=box[g]"',
 						'filter' => 'text',
 						'legacy_index' => 5,
 					),
@@ -76,7 +76,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 					),
 					'replace' => array(
 						'name' => tr('Replace Existing File'),
-						'description' => tr('Replace existing file if any, instead of uploading new one.'),
+						'description' => tr('Replace the existing file, if any, instead of uploading a new one.'),
 						'filter' => 'alpha',
 						'default' => 'n',
 						'options' => array(
@@ -126,7 +126,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			),
 		);
 		if (isset($prefs['vimeo_upload']) && $prefs['vimeo_upload'] === 'y') {
-			$options['FG']['params']['displayMode']['description'] = tr('Show files as object links or via a wiki plugin (img, vimeo)');
+			$options['FG']['params']['displayMode']['description'] = tr('Show files as object links or via a wiki plugin (img, Vimeo)');
 			$options['FG']['params']['displayMode']['options']['vimeo'] = tr('Vimeo');
 		}
 		return $options;
@@ -505,7 +505,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 
 		$perms = Perms::get('file gallery', $galleryId);
 		if (! $perms->upload_files) {
-			TikiLib::lib('errorreport')->report(tr('No permissions to upload file to gallery "%0"', $gal_info['name']));
+			TikiLib::lib('errorreport')->report(tr('You don\'t have permission to upload a file to gallery "%0"', $gal_info['name']));
 			return false;
 		}
 

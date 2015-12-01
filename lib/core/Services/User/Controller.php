@@ -526,7 +526,7 @@ class Services_User_Controller
 			$items = $input->asArray('checked');
 			if (count($items) > 0) {
 				if (count($items) === 1) {
-					$msg = tra('Are you sure you want to delete the following user and related user page and ban the user IP?');
+					$msg = tra('Are you sure you want to delete the following user and related userpage and ban the user\'s IP?');
 				} else {
 					$msg = tra('Are you sure you want to delete the following users and their user pages and ban their IPs?');
 				}
@@ -922,7 +922,7 @@ class Services_User_Controller
 					throw new Services_Exception(tra('Invalid bcc email address.'));
 				}
 				$mail->setBcc($bcc);
-				$bccmsg = tr('and blind copied to %0', $bcc);
+				$bccmsg = tr('and blind copied (bcc) to %0', $bcc);
 			}
 			$foo = parse_url($_SERVER['REQUEST_URI']);
 			$machine = $tikilib->httpPrefix(true) . dirname($foo['path']);
@@ -938,7 +938,7 @@ class Services_User_Controller
 				$mail->setSubject($pageinfo['description']);
 				$text = $smarty->fetch('wiki:' . $wikiTpl);
 				if (empty($text)) {
-					throw new Services_Exception(tra('The template page has no text or it cannot be extracted.'));
+					throw new Services_Exception(tra('The template page has no text or the text cannot be extracted.'));
 				}
 				$mail->setHtml($text);
 				if (!$mail->send($this->lib->get_user_email($mail_user))) {
@@ -1044,7 +1044,7 @@ class Services_User_Controller
 					$logslib = TikiLib::lib('logs');
 					$logslib->add_log('adminusers', sprintf(tra('Deleted account %s'), $deleteuser), $user);
 				} else {
-					throw new Services_Exception_NotFound(tr('An error occurred, user %0 could not be deleted',
+					throw new Services_Exception_NotFound(tr('An error occurred. User %0 could not be deleted',
 						$deleteuser));
 				}
 				if ($page) {
@@ -1054,7 +1054,7 @@ class Services_User_Controller
 					$tikilib = TikiLib::lib('tiki');
 					$res = $tikilib->remove_all_versions($page);
 					if ($res !== true) {
-						throw new Services_Exception_NotFound(tr('An error occurred, user %0 could not be deleted',
+						throw new Services_Exception_NotFound(tr('An error occurred. User %0 could not be deleted',
 							$deleteuser));
 					}
 				}

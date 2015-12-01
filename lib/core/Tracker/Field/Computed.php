@@ -23,7 +23,7 @@ class Tracker_Field_Computed extends Tracker_Field_Abstract
 				'prefs' => array('trackerfield_computed'),
 				'tags' => array('advanced'),
 				'default' => 'n',
-				'warning' => tra('This feature is still in place for backwards compatibility. While there are no flaws associated to it, it could be used as a vector for attacks causing a lot of damage. Webservice field or custom JavaScript is recommended instead of this field.'),
+				'warning' => tra('This feature is still in place for backward compatibility. While it has no known flaws, it could be used as a vector for a malicious attack. A webservice field or custom JavaScript is recommended instead of this field.'),
 				'params' => array(
 					'formula' => array(
 						'name' => tr('Formula'),

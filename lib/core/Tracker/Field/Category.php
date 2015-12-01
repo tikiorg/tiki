@@ -19,7 +19,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		return array(
 			'e' => array(
 				'name' => tr('Category'),
-				'description' => tr('Allows for one or multiple categories under the specified main category to be affected to the tracker item.'),
+				'description' => tr('Allows the tracker item to be categorized in one or more categories under the specified main category.'),
 				'help' => 'Category Tracker Field',
 				'prefs' => array('trackerfield_category', 'feature_categories'),
 				'tags' => array('advanced'),
@@ -38,10 +38,10 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 						'default' => 'd',
 						'filter' => 'alpha',
 						'options' => array(
-							'd' => tr('Drop Down'),
+							'd' => tr('Dropdown'),
 							'radio' => tr('Radio buttons'),
 							'm' => tr('List box'),
-							'checkbox' => tr('Multiple-selection check-boxes'),
+							'checkbox' => tr('Multiple-selection checkboxes'),
 						),
 						'legacy_index' => 1,
 					),
@@ -81,15 +81,15 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 						'description' => tr(''),
 						'filter' => 'word',
 						'options' => array(
-							'' => tr('Plain list separate by line breaks (default)'),
-							'links' => tr('Links separate by line breaks'),
+							'' => tr('Plain list with items separated by line breaks (default)'),
+							'links' => tr('Links separated by line breaks'),
 							'ul' => tr('Unordered list of labels'),
 							'ulinks' => tr('Unordered list of links'),
 						),
 					),
 					'doNotInheritCategories' => array(
 						'name' => tr('Do not Inherit Categories'),
-						'description' => tr("Tracker items will inherit the parent tracker's categories by default, unless you set this option."),
+						'description' => tr("Tracker items will inherit their tracker's categories unless this option is set."),
 						'filter' => 'int',
 						'options' => array(
 							0 => tr('Inherit (default)'),

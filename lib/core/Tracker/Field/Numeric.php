@@ -18,7 +18,7 @@ class Tracker_Field_Numeric extends Tracker_Field_Abstract implements Tracker_Fi
 		return array(
 			'n' => array(
 				'name' => tr('Numeric Field'),
-				'description' => tr('Provides a one-line field for numeric input only. Prepend or append values may be alphanumeric.'),
+				'description' => tr('Provides a one-line field for numeric input only. Prepended or appended values may be alphanumeric.'),
 				'help' => 'Numeric Tracker Field',
 				'prefs' => array('trackerfield_numeric'),
 				'tags' => array('basic'),
