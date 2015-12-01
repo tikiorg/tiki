@@ -141,10 +141,10 @@
 			<argument type="string">0</argument> <!-- KalturaLib::SESSION_USER -->
 		</service>
 		<service id="tiki.lib.language" class="Language">
-			<file>%kernel.root_dir%/lib/language/language.php</file>
+			<file>%kernel.root_dir%/lib/language/Language.php</file>
 		</service>
 		<service id="tiki.lib.languagetranslations" class="LanguageTranslations">
-			<file>%kernel.root_dir%/lib/language/languagetranslations.php</file>
+			<file>%kernel.root_dir%/lib/language/LanguageTranslations.php</file>
 		</service>
 		<service id="tiki.lib.ldap" class="LdapLib">
 			<file>%kernel.root_dir%/lib/ldap/ldaplib.php</file>
