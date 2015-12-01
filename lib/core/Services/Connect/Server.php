@@ -17,7 +17,7 @@ class Services_Connect_Server
 			throw new Services_Exception(tr('Connect Feature disabled'), 403);
 		}
 		if ($prefs['connect_server_mode'] !== 'y') {
-			throw new Services_Exception(tr('Connect Server Mode disabled'), 403);
+			throw new Services_Exception(tr('Connect server mode disabled'), 403);
 		}
 		$this->connectlib = TikiLib::lib('connect_server');
 	}

@@ -41,7 +41,7 @@
 					{preference name="connect_site_title"}
 					{if $prefs.connect_send_info eq "y" and empty($prefs.connect_site_title)}
 						{remarksbox type="errors" title=""}
-							{tr}Site Title is required{/tr}
+							{tr}Site title is required{/tr}
 						{/remarksbox}
 					{/if}
 					{preference name="connect_site_email"}
