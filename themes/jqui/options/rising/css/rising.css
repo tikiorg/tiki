@@ -87,29 +87,3 @@ li.cs_advanced {
 .sf-sub-indicator {
     background: url(../images/arrows-ea2e11.png) -10px -100px;
 }
-
-/* mobile definitions needs to go in header_custom_css
-
-.ui-body-c .ui-link {
-	color: #ed1c24;
-}
-.ui-body-c .ui-link:hover {
-	color: #FF2029;
-}
-.ui-body-c .ui-link:active {
-	color: #ed1c24;
-}
-
-.ui-body-c .ui-link:visited {
-    color: #9A1217;
-}
-.ui-btn-up-d {
-	color: #2F3E46;
-}
-.ui-btn-hover-d {
-	color: #2F3E46;
-}
-.ui-btn-down-d {
-	color: #2F3E46;
-}
- */
