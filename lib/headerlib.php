@@ -996,7 +996,7 @@ class HeaderLib
 
 	private function collect_css_files()
 	{
-		global $tikipath, $tikidomain, $style_base;
+		global $tikipath;
 
 		$files = array(
 			'default' => array(),
@@ -1019,11 +1019,6 @@ class HeaderLib
 
 		foreach ($this->cssfiles as $x=>$cssf) {
 			foreach ($cssf as $cf) {
-				if (!empty($tikidomain) && is_file("styles/$tikidomain/$style_base/$cf")) {
-					$cf = "styles/$tikidomain/$style_base/$cf";
-				} elseif (is_file("styles/$style_base/$cf")) {
-					$cf = "styles/$style_base/$cf";
-				}
 				$cfprint = str_replace('.css', '', $cf) . '-print.css';
 				if (!file_exists($tikipath . $cfprint)) {
 					$pushFile('default', $cf);

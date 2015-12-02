@@ -118,7 +118,7 @@ class Smarty_Tiki extends Smarty
 	function __construct()
 	{
 		parent::__construct();
-		global $prefs, $style_base;
+		global $prefs;
 
 		$this->initializePaths();
 
