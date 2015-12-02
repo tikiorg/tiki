@@ -52,6 +52,7 @@ if (isset($_REQUEST['batch_upload']) and isset($_REQUEST['files']) and is_array(
 				'subToDesc' => isset($_REQUEST['subToDesc']),
 				'subdirToSubgal' => isset($_REQUEST['subdirToSubgal']),
 				'createSubgals' => isset($_REQUEST['createSubgals']),
+				'subdirIntegerToSubgalId' => isset($_REQUEST['subdirIntegerToSubgalId']),
 			]
 	);
 

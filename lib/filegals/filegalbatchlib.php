@@ -39,13 +39,14 @@ class FilegalBatchLib extends FileGalLib
 	 *
 	 * @param array $files
 	 * @param int $galleryId
-	 * @param array $options		[bool subToDesc, bool subdirToSubgal, bool createSubgals, string fileUser, string fileGroup, string fileMode]
+	 * @param array $options		[bool subToDesc, bool subdirToSubgal, bool subdirIntegerToSubgalId, bool createSubgals, string fileUser, string fileGroup, string fileMode]
 	 * @return array				feedback messages
 	 */
 
 	function processBatchUpload($files, $galleryId = null, $options = [
 			'subToDesc' => false,
 			'subdirToSubgal' => false,
+			'subdirIntegerToSubgalId' => false,
 			'createSubgals' => false,
 			'deleteAfter' => null,
 			'fileUser' => '',
@@ -107,52 +108,91 @@ class FilegalBatchLib extends FileGalLib
 						)
 				);
 
-				foreach($dirs as $dir) {
+				if ($options['subdirIntegerToSubgalId']) {
+
 					$foundDir = false;
 
-					foreach($subgals['data'] as $subgal) {
-						if ($subgal['parentId'] == $destinationGalleryId && $subgal['name'] == $dir) {
-							$destinationGalleryId = (int) $subgal['id'];
-							$foundDir = true;
-							break;
+					// if there is only one subdir and it's a number, check if there's a gallery with that id to use
+					if (count($dirs) !== 1) {
+
+						$feedback[] = '<span class="text-danger">' .
+								tr('Upload was not successful for "%0"', $path_parts['basename']) .
+								'<br>' . tr('Subgallery number to galleryId error: Too many subdirs (%0)</span>', count($dirs));
+
+					} else if (! ctype_digit($dirs[0])) {
+
+						$feedback[] = '<span class="text-danger">' .
+								tr('Upload was not successful for "%0"', $path_parts['basename']) .
+								'<br>' . tr('Subgallery number to galleryId error: Not an integer (%0)</span>', $dirs[0]);
+
+					} else {
+						foreach ($subgals['data'] as $subgal) {
+							if ($subgal['id'] == $dirs[0]) {
+								$foundDir = true;
+								break;
+							}
+						}
+						if ($foundDir) {
+							$destinationGalleryId = (int)$dirs[0];
+						} else {
+
+							$feedback[] = '<span class="text-danger">' .
+								tr('Upload was not successful for "%0"', $path_parts['basename']) .
+								'<br>' . tr('Subgallery number to galleryId error: Gallery with ID %0 not found</span>', $dirs[0]);
+
 						}
 					}
-					if (! $foundDir) {
-						if ($options['createSubgals']) {
-							$perms = $this->get_perm_object($destinationGalleryId, 'file gallery', $this->get_file_gallery_info($destinationGalleryId), false);
-							if ($perms['tiki_p_create_file_galleries'] === 'y') {
 
-								$new_info = $this->default_file_gallery();
-								$new_info['name'] = $dir;
-								$new_info['description'] = tr('Created by batch upload by user "%0" on %1', $user, $this->get_short_datetime($this->now, $user));
-								$new_info['parentId'] = $destinationGalleryId;
-								$new_info['user'] = $user;
+				} else {	// not subdirIntegerToSubgalId
 
-								$newGalleryId = $this->replace_file_gallery($new_info);
-								if ($newGalleryId) {
-									$destinationGalleryId = $newGalleryId;
-									$subgals = $this->getSubGalleries($galleryId, true, 'batch_upload_file_dir');
-									$foundDir = true;
+					foreach($dirs as $dir) {
+						$foundDir = false;
+
+						foreach($subgals['data'] as $subgal) {
+							if ($subgal['parentId'] == $destinationGalleryId && $subgal['name'] == $dir) {
+								$destinationGalleryId = (int) $subgal['id'];
+								$foundDir = true;
+								break;
+							}
+						}
+						if (! $foundDir) {
+							if ($options['createSubgals']) {
+								$perms = $this->get_perm_object($destinationGalleryId, 'file gallery', $this->get_file_gallery_info($destinationGalleryId), false);
+								if ($perms['tiki_p_create_file_galleries'] === 'y') {
+
+									$new_info = $this->default_file_gallery();
+									$new_info['name'] = $dir;
+									$new_info['description'] = tr('Created by batch upload by user "%0" on %1', $user, $this->get_short_datetime($this->now, $user));
+									$new_info['parentId'] = $destinationGalleryId;
+									$new_info['user'] = $user;
+
+									$newGalleryId = $this->replace_file_gallery($new_info);
+									if ($newGalleryId) {
+										$destinationGalleryId = $newGalleryId;
+										$subgals = $this->getSubGalleries($galleryId, true, 'batch_upload_file_dir');
+										$foundDir = true;
+									} else {
+										$feedback[] = '<span class="text-danger">' .
+												tr('Upload was not successful for "%0"', $path_parts['basename']) .
+												'<br>' . tr('Create gallery "%0" failed</span>', $dir);
+										break;
+									}
 								} else {
 									$feedback[] = '<span class="text-danger">' .
 											tr('Upload was not successful for "%0"', $path_parts['basename']) .
-											'<br>' . tr('Create gallery "%0" failed</span>', $dir);
+											'<br>' . tr('No permsission to create gallery "%0"</span>', $dir);
 									break;
 								}
 							} else {
 								$feedback[] = '<span class="text-danger">' .
 										tr('Upload was not successful for "%0"', $path_parts['basename']) .
-										'<br>' . tr('No permsission to create gallery "%0"</span>', $dir);
+										'<br>' . tr('Gallery "%0" not found</span>', $dir);
 								break;
 							}
-						} else {
-							$feedback[] = '<span class="text-danger">' .
-									tr('Upload was not successful for "%0"', $path_parts['basename']) .
-									'<br>' . tr('Gallery "%0" not found</span>', $dir);
-							break;
 						}
 					}
 				}
+
 				if (! $foundDir) {
 					continue;
 				}

@@ -44,6 +44,12 @@ class FilesBatchuploadCommand extends Command
 				'Move the file into a gallery matching the subdirectory name'
 			)
 			->addOption(
+				'subdirIntegerToSubgalId',
+				'i',
+				InputOption::VALUE_NONE,
+				'Move the file into a gallery matching the subdirectory as galleryId'
+			)
+			->addOption(
 				'createSubgals',
 				'c',
 				InputOption::VALUE_NONE,
@@ -109,9 +115,15 @@ class FilesBatchuploadCommand extends Command
 
 		$subdirToSubgal = $input->getOption('subdirToSubgal');
 		if ($subdirToSubgal) {
-			$createSubgals = $input->getOption('createSubgals');
+			$subdirIntegerToSubgalId = $input->getOption('subdirIntegerToSubgalId');
+			if (! $subdirIntegerToSubgalId) {
+				$createSubgals = $input->getOption('createSubgals');
+			} else {
+				$createSubgals = false;
+			}
 		} else {
 			$createSubgals = false;
+			$subdirIntegerToSubgalId = false;
 		}
 
 		if ($confirm) {
@@ -126,6 +138,7 @@ class FilesBatchuploadCommand extends Command
 			$feedback = $filegalbatchlib->processBatchUpload($files, $galleryId, [
 					'subToDesc' => $input->getOption('subToDesc'),
 					'subdirToSubgal' => $subdirToSubgal,
+					'subdirIntegerToSubgalId' => $subdirIntegerToSubgalId,
 					'createSubgals' => $createSubgals,
 					'deleteAfter' => $input->getOption('deleteAfter'),
 					'fileUser' => $input->getOption('fileUser'),

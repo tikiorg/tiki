@@ -74,6 +74,17 @@
 				{tr}Sub-galleries will be automatically created if they don't exist and the user has permission. Note that these galleries will have the global file gallery permissions set.{/tr}
 			</div>
 		</div>
+		<div class="form-group">
+			<label class="col-sm-4 control-label" for="subdirIntegerToSubgalId">{tr}Upload into galleries according sub-directory as galleryId{/tr}</label>
+
+			<div class="col-sm-8">
+				<input type="checkbox" name="subdirIntegerToSubgalId" value="true" id="subdirIntegerToSubgalId">
+
+				<div class="text-muted description">
+					{tr}eg. for "42/digicam0001.jpg" the file will be uploaded into a gallery with the Id "42" if it exists{/tr}
+				</div>
+			</div>
+		</div>
 		{jq}
 $("#subdirToSubgal").change(function () {
 	if ($(this).prop("checked")) {
@@ -82,9 +93,19 @@ $("#subdirToSubgal").change(function () {
 		$(".create-subgals").hide();
 	}
 }).change();
+
+$("#subdirIntegerToSubgalId").change(function () {
+	if ($(this).prop("checked")) {
+		$("#createSubgals").prop("checked", false).prop("disabled", true);
+	} else {
+		$("#createSubgals").prop("disabled", false);
+	}
+}).change();
+
 $("#batchUploadForm").submit(function () {
 	return $("input[name='files[]']:checked").length > 0;
 });
+
 {/jq}
 	</div>
     <div class="form-group">
