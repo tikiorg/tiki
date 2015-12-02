@@ -1,4 +1,4 @@
- {* $Id:  $ *}
+ {* $Id$ *}
  
 
 <p>The current values for the {$xmlcount} items from the XML management file are shown in the input fields below.</p>
