@@ -39,5 +39,13 @@ function prefs_header_list()
 			'hint' => tra('Do not include the <script> and </script> tags.'),
 			'filter' => 'none',
 		),
-	);	
+		'header_custom_less' => array(
+			'name' => tra('Custom LESS'),
+			'description' => tra('Compiles a new version of the currently selected theme and option using definitions declared here.'),
+			'type' => 'textarea',
+			'size' => 5,
+			'default' => '',
+			'filter' => 'none',
+		),
+	);
 }

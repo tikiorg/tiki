@@ -237,6 +237,7 @@
 			<fieldset>
 				<legend>{tr}Custom Codes{/tr}</legend>
 				{preference name="header_custom_css" syntax="css"}
+				{preference name="header_custom_less" syntax="css"}
 				{preference name=feature_custom_html_head_content syntax="htmlmixed"}
 				{preference name=feature_endbody_code syntax="tiki"}
 				{preference name=site_google_analytics_account}
