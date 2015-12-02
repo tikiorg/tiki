@@ -1080,13 +1080,13 @@ class HeaderLib
 				chmod($css_file, 0644);
 
 			} catch (Exception $e) {
+				if (is_writeable($css_file)) {
+					unlink($css_file);
+				}
 
 				TikiLib::lib('errorreport')->report(tra('Custom LESS compilation failed with error:') . $e->getMessage());
 				$css_file = $themeLib->get_theme_path($themename, '', $themename . '.css');
 
-				if (is_writeable($css_file)) {
-					unlink($css_file);
-				}
 			}
 
 		}
