@@ -1047,21 +1047,27 @@ class HeaderLib
 	 * @param string $themename          Theme to base the compile on
 	 * @param string $themeoptionname    Theme option name (for future use)
 	 * @param bool $use_cache            (for future use and testing)
-	 * @return string                    CSS file path out
+	 * @return array                     Array of CSS file paths out (can be theme and option if there's an error)
 	 */
 	function compile_custom_less($custom_less, $themename, $themeoptionname = '', $use_cache = true) {
 
 		global $tikidomainslash, $base_url;
 
-		$hash = md5($custom_less . $themename);
+		$hash = md5($custom_less . $themename . $themeoptionname);
 		$target = "temp/public/$tikidomainslash";
 		$css_file = $target . "custom_less_$hash.css";
+		$css_files = array($css_file);
 
 		if ( ! file_exists($css_file) || ! $use_cache) {
 
 			$themeLib = TikiLib::lib('theme');
 
 			$theme_less_file = $themeLib->get_theme_path($themename, '', $themename . '.less');
+			$themeoption_less_file = $themeLib->get_theme_path($themename, $themeoptionname, $themeoptionname . '.less');
+
+			if ($theme_less_file === $themeoption_less_file) {
+				$themeoption_less_file = '';	// some theme options are CSS only
+			}
 
 			$options = array(
 				'compress' => true,
@@ -1073,11 +1079,16 @@ class HeaderLib
 			try {
 				// less.php does all the work of course
 				$parser->parseFile($theme_less_file, $base_url);
+				if ($themeoption_less_file) {
+					$parser->parseFile($themeoption_less_file, $base_url);
+				}
 				$parser->parse($custom_less);
 				$css = $parser->getCss();
 
 				file_put_contents($css_file, $css);
 				chmod($css_file, 0644);
+
+				$css_files = array($css_file);
 
 			} catch (Exception $e) {
 				if (is_writeable($css_file)) {
@@ -1085,13 +1096,16 @@ class HeaderLib
 				}
 
 				TikiLib::lib('errorreport')->report(tra('Custom LESS compilation failed with error:') . $e->getMessage());
-				$css_file = $themeLib->get_theme_path($themename, '', $themename . '.css');
+				$css_files = array(
+					$themeLib->get_theme_path($themename, '', $themename . '.css'),
+					$themeLib->get_theme_path($themename, $themeoptionname, ($themeoptionname ?: $themename) . '.css'),
+				);
 
 			}
 
 		}
 
-		return $css_file;
+		return $css_files;
 	}
 
 

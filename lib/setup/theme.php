@@ -73,11 +73,13 @@ foreach (TikiAddons::getPaths() as $path) {
 //5) Now add the theme or theme option
 $themelib = TikiLib::lib('theme');
 
-// compile a new CSS file using header_custom_less and using the real theme and ignoring the theme option (for now)
+// compile a new CSS file using header_custom_less and using the real theme and the theme option
 if (!empty($prefs['header_custom_less'])) {
 
-	$cssfile = $headerlib->compile_custom_less($prefs['header_custom_less'], $theme_active);
-	$headerlib->add_cssfile($cssfile);
+	$cssfiles = $headerlib->compile_custom_less($prefs['header_custom_less'], $theme_active, $theme_option_active);
+	foreach ($cssfiles as $cssfile) {
+		$headerlib->add_cssfile($cssfile);
+	}
 
 } else if ($theme_active == 'custom_url' && !empty($prefs['theme_custom_url'])) { //custom URL, use only if file exists at the custom location
 	$custom_theme = $prefs['theme_custom_url'];
