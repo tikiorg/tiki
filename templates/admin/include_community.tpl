@@ -78,6 +78,7 @@
 				<div class="adminoptionboxchild" id="mustread_enabled_childcontainer">
 					{preference name=mustread_tracker}
 				</div>
+				{preference name=user_multilike_config}
 			</div>
 		{/tab}
 

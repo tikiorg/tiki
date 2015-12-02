@@ -291,6 +291,13 @@ function prefs_user_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'user_multilike_config' => array(
+			'name' => tr('Configuration for multilike'),
+			'description' => tr('Separate configurations by a blank line. E.g. relation_prefix=tiki.multilike values=1,3,5 labels=Good,Great,Excellent)'),
+			'type' => 'textarea',
+			'size' => 5,
+			'default' => ''
+		),
 	);
 }
 
