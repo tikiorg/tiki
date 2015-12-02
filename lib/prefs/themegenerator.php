@@ -35,10 +35,10 @@ function prefs_themegenerator_list($partial = false)
 		'themegenerator_feature' => array(
 			'name' => tra('Theme Generator'),
 			'type' => 'flag',
-			'warning' => tra('Experimental. This feature is still under development.'),
+			'warning' => tra('Deprecated. This feature will be replaced soon and is currently not working properly.'),
 			'description' => tra('Permits to adjust colors and fonts via the browser.'),
 			'help' => 'Theme+Generator',
-			'tags' => array('experimental'),
+			'tags' => array('experimental','deprecated'),
 			'default' => 'n',
 		),
 		'themegenerator_theme' => array(
