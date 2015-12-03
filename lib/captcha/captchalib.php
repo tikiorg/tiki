@@ -46,7 +46,11 @@ class Captcha
 
 		if (empty($type)) {
 			if ($prefs['recaptcha_enabled'] == 'y' && !empty($prefs['recaptcha_privkey']) && !empty($prefs['recaptcha_pubkey'])) {
-				$type = 'recaptcha';
+				if ($prefs['recaptcha_version'] == '2') {
+					$type = 'recaptcha20';
+				} else {
+					$type = 'recaptcha';
+				}
 			} else if ($prefs['captcha_questions_active'] == 'y' && !empty($prefs['captcha_questions'])) {
 				$type = 'questions';
 			} else if (extension_loaded('gd') && function_exists('imagepng') && function_exists('imageftbbox')) {
@@ -67,7 +71,24 @@ class Captcha
 
 			$this->captcha->setOption('ssl', true);
 
-			$this->type = 'recaptcha';
+			$this->type = $type;
+
+			$this->recaptchaCustomTranslations();
+		} else if ($type === 'recaptcha20') {
+
+			include_once('lib/captcha/Captcha_ReCaptcha20.php');
+
+			$this->captcha = new Captcha_ReCaptcha20(
+				array(
+					'privkey' => $prefs['recaptcha_privkey'],
+					'pubkey' => $prefs['recaptcha_pubkey'],
+					'theme' => isset($prefs['recaptcha_theme']) ? $prefs['recaptcha_theme'] : 'clean',
+				)
+			);
+
+			$this->captcha->setOption('ssl', true);
+
+			$this->type = $type;
 
 			$this->recaptchaCustomTranslations();
 		} else if ($type === 'default') {
@@ -152,16 +173,22 @@ class Captcha
 	{
 		$access = TikiLib::lib('access');
 		if ($access->is_xml_http_request()) {
-			$params = json_encode($this->captcha->getService()->getOptions());
-			$id = 1;
-			TikiLib::lib('header')->add_js('
+			if ($this->type == 'recaptcha20') {
+				return $this->captcha->renderAjax();
+			} else {
+				$params = json_encode($this->captcha->getService()->getOptions());
+				$id = 1;
+				TikiLib::lib('header')->add_js('
 Recaptcha.create("' . $this->captcha->getPubKey() . '",
 	"captcha' . $id . '",' . $params . '
   );
 ', 100);
-			return '<div id="captcha' . $id . '"></div>';
+				return '<div id="captcha' . $id . '"></div>';
+			}
 		} else {
-			if ($this->captcha instanceof Zend\Captcha\ReCaptcha){
+			if ($this->captcha instanceof Captcha_ReCaptcha20) {
+				return $this->captcha->render();
+			} else if ($this->captcha instanceof Zend\Captcha\ReCaptcha){
 				return $this->captcha->getService()->getHtml();
 			}
 			return $this->captcha->render();
@@ -179,9 +206,9 @@ Recaptcha.create("' . $this->captcha->getPubKey() . '",
 		if (is_null($input)) {
 			$input = $_REQUEST;
 		}
-		if ($this->type == 'recaptcha') {
+		if ($this->type == 'recaptcha' || $this->type == 'recaptcha20') {
 			return $this->captcha->isValid($input);
-		} else {
+		}	else {
 			return $this->captcha->isValid($input['captcha']);
 		}
 	}
@@ -209,7 +236,7 @@ Recaptcha.create("' . $this->captcha->getPubKey() . '",
 			'badCaptcha' => tra('You have mistyped the anti-bot verification code. Please try again.')
 		);
 
-		if ($this->type == 'recaptcha')
+		if ($this->type == 'recaptcha' || $this->type == 'recaptcha20')
 			$errors['errCaptcha'] = tra('Failed to validate CAPTCHA');
 		else
 			$errors['missingID'] = tra('CAPTCHA ID field is missing');
