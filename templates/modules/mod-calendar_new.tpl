@@ -6,10 +6,10 @@
 		{else}
 			{include file='tiki-calendar_nav.tpl' ajax='n' module='y'}
 
-			<table cellpadding="0" cellspacing="0" border="0" class="caltable" style="text-align:center;">
+			<table class="caltable" style="text-align:center;">
 				<tr>
 					{section name=dn loop=$daysnames_abr}
-						<th class="days" width="14%">{$daysnames_abr[dn]|ucfirst}</th>
+						<th class="days" style="width:14%">{$daysnames_abr[dn]|ucfirst}</th>
 					{/section}
 				</tr>
 				{cycle values="odd,even" print=false}
@@ -45,7 +45,7 @@
 							{/if}
 							<td class="{if isset($cell[w][d].day) and $date eq $today}calhighlight calborder{else}{cycle advance=false}{/if}{if isset($cell[w][d].items[0])
 								and ((isset($cell[w][d].items[0].modifiable) and $cell[w][d].items[0].modifiable eq "y")
-								|| $cell[w][d].items[0].visible eq 'y')} calmodfocus{/if}" width="14%" style="text-align:center; font-size:0.8em;">
+								|| $cell[w][d].items[0].visible eq 'y')} calmodfocus{/if}" style="text-align:center; font-size:0.8em; width=14%">
 								{if isset($cell[w][d].over)}
 									{assign var=over value=$cell[w][d].over}
 								{elseif isset($cell[w][d].items[0])}

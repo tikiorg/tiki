@@ -41,7 +41,7 @@ function smarty_function_js_insert_icon($params, $smarty)
 		}
 		//load js
 		if (!empty($js)) {
-			if ($params['return'] === 'y') {
+			if (isset($params['return']) && $params['return'] === 'y') {
 				return $js;
 			} else {
 				$headerlib = TikiLib::lib('header');
