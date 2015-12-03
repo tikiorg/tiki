@@ -199,13 +199,16 @@ class Tiki_Profile_Writer
 	 */
 	function getUnknownObjects()
 	{
-		return array_map(
-			function ($entry) {
-				unset($entry['token']);
-				return $entry;
-			},
-			$this->data['unknown_objects']
-		);
+		if (is_array($this->data['unknown_objects'])){
+			return array_map(
+				function ($entry) {
+					unset($entry['token']);
+					return $entry;
+				},
+				$this->data['unknown_objects']
+			);
+		}
+		return;
 	}
 
 	/**

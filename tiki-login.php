@@ -467,8 +467,14 @@ if ($isvalid) {
 	exit;
 }
 
-if ( isset($user) and $prefs['feature_score'] == 'y' ) {
-	$tikilib->score_event($user, 'login');
+if ( isset($user) ) {
+	TikiLib::events()->trigger('tiki.user.login',
+		array(
+			'type' => 'user',
+			'object' => $user,
+			'user' => $user,
+		)
+	);
 }
 // RFC 2616 defines that the 'Location' HTTP headerconsists of an absolute URI
 if ( !preg_match('/^https?\:/i', $url) ) {

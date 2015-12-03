@@ -190,6 +190,10 @@ function tiki_setup_events()
 		$events->bind('tiki.user.create', ['Services_MustRead_Controller', 'handleUserCreation']);
 	}
 
+	if ($prefs['feature_score'] == 'y') {
+		TikiLib::lib('score')->bindEvents($events);
+	}
+
 	// If the parameter is supplied by the web server, Tiki will expose the username as a response header
 	if (! empty($_SERVER['TIKI_HEADER_REPORT_USER'])) {
 		$events->bind('tiki.process.render', function () {
@@ -212,17 +216,36 @@ function tiki_setup_events()
 	// Chain events
 	$events->bind('tiki.object.categorized', 'tiki.save');
 
+	$events->bind('tiki.user.login', 'tiki.view');
+	$events->bind('tiki.user.view', 'tiki.view');
+	$events->bind('tiki.user.avatar', 'tiki.save');
 
 	$events->bind('tiki.wiki.update', 'tiki.wiki.save');
 	$events->bind('tiki.wiki.create', 'tiki.wiki.save');
 	$events->bind('tiki.wiki.save', 'tiki.save');
 	$events->bind('tiki.wiki.view', 'tiki.view');
+	$events->bind('tiki.wiki.attachfile', 'tiki.save');
+
+	$events->bind('tiki.article.create', 'tiki.article.save');
+	$events->bind('tiki.article.save', 'tiki.save');
+	$events->bind('tiki.article.delete', 'tiki.save');
+	$events->bind('tiki.article.view', 'tiki.view');
+
+	$events->bind('tiki.blog.create', 'tiki.blog.save');
+	$events->bind('tiki.blog.save', 'tiki.save');
+	$events->bind('tiki.blog.delete', 'tiki.save');
+	$events->bind('tiki.blog.view', 'tiki.view');
+
+	$events->bind('tiki.blogpost.create', 'tiki.blogpost.save');
+	$events->bind('tiki.blogpost.save', 'tiki.save');
+	$events->bind('tiki.blogpost.delete', 'tiki.save');
 
 	$events->bind('tiki.trackeritem.update', 'tiki.trackeritem.save');
 	$events->bind('tiki.trackeritem.create', 'tiki.trackeritem.save');
 	$events->bind('tiki.trackeritem.save', 'tiki.save');
 	$events->bind('tiki.trackeritem.delete', 'tiki.save');
 	$events->bind('tiki.trackeritem.rating', 'tiki.rating');
+	$events->bind('tiki.trackeritem.view', 'tiki.view');
 
 	$events->bind('tiki.trackerfield.update', 'tiki.trackerfield.save');
 	$events->bind('tiki.trackerfield.create', 'tiki.trackerfield.save');
@@ -243,11 +266,22 @@ function tiki_setup_events()
 	$events->bind('tiki.file.create', 'tiki.file.save');
 	$events->bind('tiki.file.delete', 'tiki.file.save');
 	$events->bind('tiki.file.save', 'tiki.save');
+	$events->bind('tiki.file.download', 'tiki.view');
 
 	$events->bind('tiki.filegallery.update', 'tiki.filegallery.save');
 	$events->bind('tiki.filegallery.create', 'tiki.filegallery.save');
 	$events->bind('tiki.filegallery.delete', 'tiki.filegallery.save');
 	$events->bind('tiki.filegallery.save', 'tiki.save');
+
+	$events->bind('tiki.image.create', 'tiki.image.save');
+	$events->bind('tiki.image.delete', 'tiki.image.save');
+	$events->bind('tiki.image.save', 'tiki.save');
+	$events->bind('tiki.image.view', 'tiki.view');
+
+	$events->bind('tiki.imagegallery.create', 'tiki.imagegallery.save');
+	$events->bind('tiki.imagegallery.delete', 'tiki.imagegallery.save');
+	$events->bind('tiki.imagegallery.save', 'tiki.save');
+	$events->bind('tiki.imagegallery.view', 'tiki.view');
 
 	$events->bind('tiki.forum.update', 'tiki.forum.save');
 	$events->bind('tiki.forum.create', 'tiki.forum.save');
@@ -258,6 +292,7 @@ function tiki_setup_events()
 	$events->bind('tiki.forumpost.reply', 'tiki.forumpost.save');
 	$events->bind('tiki.forumpost.update', 'tiki.forumpost.save');
 	$events->bind('tiki.forumpost.save', 'tiki.save');
+	$events->bind('tiki.forumpost.view', 'tiki.view');
 
 	$events->bind('tiki.group.update', 'tiki.group.save');
 	$events->bind('tiki.group.create', 'tiki.group.save');
@@ -277,6 +312,7 @@ function tiki_setup_events()
 	$events->bind('tiki.user.follow.add', 'tiki.user.network');
 	$events->bind('tiki.user.follow.incoming', 'tiki.user.network');
 	$events->bind('tiki.user.friend.add', 'tiki.user.network');
+	$events->bind('tiki.user.message', 'tiki.user.network');
 
 	$events->bind('tiki.social.like.add', 'tiki.social.save');
 	$events->bind('tiki.social.like.remove', 'tiki.social.save');
@@ -284,6 +320,8 @@ function tiki_setup_events()
 	$events->bind('tiki.social.favorite.remove', 'tiki.social.save');
 	$events->bind('tiki.social.relation.add', 'tiki.social.save');
 	$events->bind('tiki.social.relation.remove', 'tiki.social.save');
+	$events->bind('tiki.social.rating.add', 'tiki.social.save');
+	$events->bind('tiki.social.rating.remove', 'tiki.social.save');
 
 	$events->bind('tiki.query.critical', 'tiki.query.hit');
 	$events->bind('tiki.query.high', 'tiki.query.hit');

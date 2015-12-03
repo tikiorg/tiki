@@ -17,5 +17,7 @@ if (isset($_REQUEST["scoreevents"])) {
 		$scorelib->update_events($_REQUEST['events']);
 	}
 }
+
+$smarty->assign('eventTypes', $scorelib->getEventTypes());
 $smarty->assign('events', $scorelib->get_all_events());
 ask_ticket('admin-inc-score');

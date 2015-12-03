@@ -37,6 +37,10 @@ class Services_File_Controller
 
 	function action_upload($input)
 	{
+		if ($input->files->array()) {
+			return;
+		}
+
 		$gal_info = $this->checkTargetGallery($input);
 
 		$fileId = $input->fileId->int();

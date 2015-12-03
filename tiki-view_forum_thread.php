@@ -211,11 +211,17 @@ if (isset($_REQUEST['post_reported'])) {
 $smarty->assign_by_ref('forum_info', $forum_info);
 $thread_info = $commentslib->get_comment($_REQUEST["comments_parentId"], null, $forum_info);
 
-if ($prefs['feature_score'] == 'y' && $user != $thread_info['userName']) {
-	$score_user = $_SESSION['u_info']['login'];
+if ($user != $thread_info['userName']) {
 	$score_id = $thread_info["threadId"];
-	$tikilib->score_event($score_user, 'forum_post_read', $_REQUEST["comments_parentId"]);
-	$tikilib->score_event($thread_info['userName'], 'forum_post_is_read', "$score_user:$score_id");
+
+	TikiLib::events()->trigger('tiki.forumpost.view',
+		array(
+			'type' => 'forum post',
+			'object' => $score_id,
+			'author' => $thread_info['userName'],
+			'user' => $GLOBALS['user'],
+		)
+	);
 }
 
 if (empty($thread_info) && empty($_POST['ajaxtype'])) {

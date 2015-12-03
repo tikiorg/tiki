@@ -4230,10 +4230,6 @@ class TikiLib extends TikiDb_Bridge
 			$this->invalidate_cache($res);
 		}
 
-		if ($prefs['feature_score'] == 'y') {
-			$this->score_event($user, 'wiki_new');
-		}
-
 		TikiLib::events()->trigger(
 			'tiki.wiki.create',
 			array(
@@ -4729,11 +4725,6 @@ class TikiLib extends TikiDb_Bridge
 				$diff = diff2($old["data"], $edit_data, "unidiff");
 				sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $old_version, $edit_data, $machine, $diff, $edit_minor, $hash['contributions'], 0, 0, $lang);
 			}
-
-			if ($prefs['feature_score'] == 'y') {
-				$this->score_event($user, 'wiki_edit');
-			}
-
 		}
 
 		$tx = $this->begin();

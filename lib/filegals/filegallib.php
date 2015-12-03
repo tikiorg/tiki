@@ -363,10 +363,6 @@ class FileGalLib extends TikiLib
 
 		$galleriesTable->update(array('lastModif' => $this->now), array('galleryId' => $galleryId));
 
-		if ($prefs['feature_score'] == 'y') {
-		    $this->score_event($user, 'fgallery_new_file');
-		}
-
 		if ($prefs['feature_actionlog'] == 'y') {
 			$logslib = TikiLib::lib('logs');
 			$logslib->add_action('Uploaded', $galleryId, 'file gallery', "fileId=$fileId&amp;add=$size");
@@ -850,10 +846,6 @@ class FileGalLib extends TikiLib
 
 			$galleryId = $galleriesTable->insert($fgal_info);
 
-			if ($prefs['feature_score'] == 'y') {
-				global $user;
-			    $this->score_event($user, 'fgallery_new');
-			}
 			$finalEvent = 'tiki.filegallery.create';
 		}
 
@@ -2557,14 +2549,16 @@ class FileGalLib extends TikiLib
 			$files->update(array('lastDownload' => $this->now), array('fileId' => (int) $id));
 		}
 
-		if ($prefs['feature_score'] == 'y') {
-			if ( ! $this->score_event($user, 'fgallery_download', $id) )
-				return false;
+		$owner = $files->fetchOne('user', array('fileId' => (int) $id));
 
-			$owner = $files->fetchOne('user', array('fileId' => (int) $id));
-			if ( ! $this->score_event($owner, 'fgallery_is_downloaded', "$user:$id") )
-				return false;
-		}
+		TikiLib::events()->trigger('tiki.file.download',
+			array(
+				'type' => 'file',
+				'object' => $id,
+				'user' => $user,
+				'owner' => $owner,
+			)
+		);
 
 		return true;
 	}

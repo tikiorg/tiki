@@ -1381,6 +1381,19 @@ td.numeric {
   text-align: left;
   padding: .2em .5em;
 }
+#score-table tbody.event-section tr:first-child {
+  background: #eeeeee;
+}
+#score-table .condition-row,
+.table .advanced-row {
+  padding: 1em;
+}
+#score-table .condition-row td {
+  border-bottom: none;
+}
+#score-table .advanced-row td {
+  border-top: none;
+}
 .article {
   margin-top: 15px;
   margin-bottom: 40px;

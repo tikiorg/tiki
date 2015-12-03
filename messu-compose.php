@@ -209,10 +209,13 @@ if (isset($_REQUEST['send'])) {
 		// 										//
 		//////////////////////////////////////////////////////////////////////////////////
 		if ($result) {
-			if ($prefs['feature_score'] == 'y') {
-				$tikilib->score_event($user, 'message_send');
-				$tikilib->score_event($a_user, 'message_receive');
-			}
+			TikiLib::events()->trigger('tiki.user.message',
+				array(
+					'type' => 'user',
+					'object' => $a_user,
+					'user' => $user,
+				)
+			);
 			// if this is a reply flag the original messages replied to
 			if ($_REQUEST['replyto_hash'] <> '') {
 				$messulib->mark_replied($a_user, $_REQUEST['replyto_hash']);

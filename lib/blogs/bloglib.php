@@ -111,9 +111,15 @@ class BlogLib extends TikiDb_Bridge
 			return false;
 		}
 
-		if ($prefs['feature_score'] == 'y' && $user != $res['user']) {
-			$tikilib->score_event($user, 'blog_read', $blogId);
-			$tikilib->score_event($res['user'], 'blog_is_read', "$user:$blogId");
+		if ($user != $res['user']) {
+			TikiLib::events()->trigger('tiki.blog.view',
+				array(
+					'type' => 'blog',
+					'object' => $blogId,
+					'user' => $user,
+					'author' => $res['user'],
+				)
+			);
 		}
 
 		return $res;
@@ -485,9 +491,14 @@ class BlogLib extends TikiDb_Bridge
 			$query2 = "select max(`blogId`) from `tiki_blogs` where `lastModif`=?";
 			$blogId = $this->getOne($query2, array($lastModif));
 
-			if ($prefs['feature_score'] == 'y') {
-				$tikilib->score_event($user, 'blog_new');
-			}
+			TikiLib::events()->trigger('tiki.blog.create',
+				array(
+					'type' => 'blog',
+					'object' => $blogId,
+					'user' => $user,
+				)
+			);
+
 			$tikilib->object_post_save(array('type'=>'blog', 'object'=>$blogId, 'description'=>$description, 'name'=>$title, 'href'=>"tiki-view_blog.php?blogId=$blogId"), array( 'content' => $heading ));
 		}
 
@@ -818,9 +829,14 @@ class BlogLib extends TikiDb_Bridge
 			}
 		}
 
-		if ($prefs['feature_score'] == 'y') {
-			$tikilib->score_event($user, 'blog_post');
-		}
+		TikiLib::events()->trigger('tiki.blogpost.create',
+			array(
+				'type' => 'blog post',
+				'object' => $id,
+				'blog' => $blogId,
+				'user' => $user,
+			)
+		);
 
 		if ($prefs['feature_actionlog'] == 'y') {
 			$logslib = TikiLib::lib('logs');
@@ -843,7 +859,7 @@ class BlogLib extends TikiDb_Bridge
 	 */
 	function remove_blog($blogId)
 	{
-		global $tikilib;
+		global $tikilib, $user;
 
 		$query = "delete from `tiki_blogs` where `blogId`=?";
 
@@ -851,6 +867,14 @@ class BlogLib extends TikiDb_Bridge
 		$query = "delete from `tiki_blog_posts` where `blogId`=?";
 		$result = $this->query($query, array((int) $blogId));
 		$tikilib->remove_object('blog', $blogId);
+
+		TikiLib::events()->trigger('tiki.blog.delete',
+			array(
+				'type' => 'blog',
+				'object' => $blogId,
+				'user' => $user,
+			)
+		);
 
 		return true;
 	}
@@ -904,6 +928,15 @@ class BlogLib extends TikiDb_Bridge
 		$this->query($query, array((int) $postId));
 
 		$tikilib->remove_object('blog post', $postId);
+
+		TikiLib::events()->trigger('tiki.blogpost.delete',
+			array(
+				'type' => 'blog post',
+				'object' => $postId,
+				'blog' => $blogId,
+				'user' => $GLOBALS['user'],
+			)
+		);
 
 		return true;
 	}

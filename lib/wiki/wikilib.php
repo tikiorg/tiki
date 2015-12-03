@@ -582,9 +582,14 @@ class WikiLib extends TikiLib
 		]);
 
 		global $prefs;
-		if ($prefs['feature_score'] == 'y') {
-			$this->score_event($user, 'wiki_attach_file');
-		}
+		TikiLib::events()->trigger('tiki.wiki.attachfile',
+			array(
+				'type' => 'file',
+				'object' => $attId,
+				'wiki' => $page,
+				'user' => $user,
+			)
+		);
 		if ($prefs['feature_user_watches'] = 'y') {
 			include_once('lib/notifications/notificationemaillib.php');
 			sendWikiEmailNotification('wiki_file_attached', $page, $user, $comment, '', $name, '', '', false, '', 0, $attId);

@@ -100,12 +100,17 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 		}
 	}
 	
-	if ($prefs['feature_score'] == 'y') {
-		global $tikilib ,$user;
-		$userid = $tikilib->get_user_id($user);
-		$tikilib->score_event($user, 'avatar_added', "avatar:$userid");
-	}
-	
+	global $tikilib ,$user;
+	$userid = $tikilib->get_user_id($user);
+	TikiLib::events()->trigger('tiki.user.avatar',
+		array(
+			'type' => 'user',
+			'object' => $user,
+			'user' => $user,
+		)
+	);
+
+
 	/* redirect to prevent re-submit on page reload */
 	if ($tiki_p_admin == 'y' && $user !== $userwatch) {
 		header('Location: tiki-pick_avatar.php?view_user=' . $userwatch);

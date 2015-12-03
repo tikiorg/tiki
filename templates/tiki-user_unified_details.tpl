@@ -60,8 +60,6 @@
 								<td class="profile-info-value">{$userwatch|escape}</td>
 							</tr>
 						{/if}
-
-						{$userinfo['user_country']|var_dump}
 						{if not empty($userinfo['user_country']) and $userinfo['user_country'] != 'Other'}
 							<tr class="profile-info">
 								<td class="profile-info-label">{tr}Country:{/tr}</td>

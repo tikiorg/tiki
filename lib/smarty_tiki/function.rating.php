@@ -36,23 +36,35 @@ function smarty_function_rating( $params, $smarty )
 				}
 	        }
 
-			if ($prefs['feature_score'] == 'y' && $id) {
-				$tikilib = TikiLib::lib('tiki');
-				if ($type == 'comment') {
-				  $forum_id = $commentslib->get_comment_forum_id($id);
-				  $forum_info = $commentslib->get_forum($forum_id);
-				  $thread_info = $commentslib->get_comment($id, null, $forum_info);
-				  $item_user = $thread_info['userName'];
-				} elseif ($type == 'article') {
-				  $artlib = TikiLib::lib('art');
-				  $res = $artlib->get_article($id);
-				  $item_user = $res['author'];
-				}
-				if ($value == '1') {
-				  $tikilib->score_event($item_user, 'item_is_rated', "$user:$type:$id");
-				} elseif ($value == '2') {
-				  $tikilib->score_event($item_user, 'item_is_unrated', "$user:$type:$id");
-				}
+			$tikilib = TikiLib::lib('tiki');
+			if ($type == 'comment') {
+				$forum_id = $commentslib->get_comment_forum_id($id);
+			  	$forum_info = $commentslib->get_forum($forum_id);
+			  	$thread_info = $commentslib->get_comment($id, null, $forum_info);
+			  	$item_user = $thread_info['userName'];
+			} elseif ($type == 'article') {
+			  	$artlib = TikiLib::lib('art');
+			  	$res = $artlib->get_article($id);
+			  	$item_user = $res['author'];
+			}
+			if ($value == '1') {
+				TikiLib::events()->trigger('tiki.social.rating.add',
+					array(
+						'type' => $type,
+						'object' => $id,
+						'author' => $item_user,
+						'user' => $user,
+					)
+				);
+			} elseif ($value == '2') {
+				TikiLib::events()->trigger('tiki.social.rating.remove',
+					array(
+						'type' => $type,
+						'object' => $id,
+						'author' => $item_user,
+						'user' => $user,
+					)
+				);
 			}
 		} elseif ( $value != $prev ) {
 			return tra('An error occurred.');

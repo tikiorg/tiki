@@ -73,9 +73,14 @@ if ($user) {
 		$smarty->assign('message', $message);
 	}
 }
-if ($prefs['feature_score'] == 'y' and isset($user) and $user != $userwatch) {
-	$tikilib->score_event($user, 'profile_see');
-	$tikilib->score_event($userwatch, 'profile_is_seen');
+if (isset($user) and $user != $userwatch) {
+	TikiLib::events()->trigger('tiki.user.view',
+		array(
+			'type' => 'user',
+			'object' => $userwatch,
+			'user' => $user,
+		)
+	);
 }
 $smarty->assign('priority', 3);
 if ($prefs['allowmsg_is_optional'] == 'y') {
@@ -111,6 +116,7 @@ $email_isPublic = $tikilib->get_user_preference($userwatch, 'email is public', '
 if ($email_isPublic != 'n') {
 	$smarty->assign('scrambledEmail', scrambleEmail($userinfo['email'], $email_isPublic));
 }
+$userinfo['score'] = TikiLib::lib('score')->get_user_score($userwatch);
 $smarty->assign_by_ref('userinfo', $userinfo);
 $smarty->assign_by_ref('email_isPublic', $email_isPublic);
 $userPage = $prefs['feature_wiki_userpage_prefix'] . $userinfo['login'];

@@ -570,12 +570,17 @@ class ImageGalsLib extends TikiLib
 			$result = $this->query($query, array((int)$id));
 		}
 
-		if ($prefs['feature_score'] == 'y') {
-			$this->score_event($user, 'igallery_see_img', $id);
-			$query = "select `user` from `tiki_images` where `imageId`=?";
-			$owner = $this->getOne($query, array((int)$id));
-			$this->score_event($owner, 'igallery_img_seen', "$user:$id");
-		}
+		$query = "select `user` from `tiki_images` where `imageId`=?";
+		$owner = $this->getOne($query, array((int)$id));
+
+		TikiLib::events()->trigger('tiki.image.view',
+			array(
+				'type' => 'image',
+				'object' => $id,
+				'user' => $user,
+				'owner' => $owner,
+			)
+		);
 
 		return true;
 	}
@@ -594,12 +599,17 @@ class ImageGalsLib extends TikiLib
 			$result = $this->query($query, array((int) $id));
 		}
 
-		if ($prefs['feature_score'] == 'y') {
-			$this->score_event($user, 'igallery_see', $id);
-			$query = "select `user` from `tiki_galleries` where `galleryId`=?";
-			$owner = $this->getOne($query, array((int)$id));
-			$this->score_event($owner, 'igallery_seen', "$user:$id");
-		}
+		$query = "select `user` from `tiki_galleries` where `galleryId`=?";
+		$owner = $this->getOne($query, array((int)$id));
+
+		TikiLib::events()->trigger('tiki.imagegallery.view',
+			array(
+				'type' => 'imagegallery',
+				'object' => $id,
+				'user' => $user,
+				'owner' => $owner,
+			)
+		);
 
 		return true;
 	}
@@ -1029,9 +1039,13 @@ class ImageGalsLib extends TikiLib
 		$query = "update `tiki_galleries` set `lastModif`=? where `galleryId`=?";
 		$result = $this->query($query, array((int)$this->now, (int)$galleryId));
 
-		if ($prefs['feature_score'] == 'y') {
-			$this->score_event($user, 'igallery_new_img');
-		}
+		TikiLib::events()->trigger('tiki.image.create',
+			array(
+				'type' => 'image',
+				'object' => $id,
+				'user' => $user,
+			)
+		);
 
 		if ($prefs['feature_actionlog'] == 'y') {
 			$logslib = TikiLib::lib('logs');
@@ -1146,6 +1160,15 @@ class ImageGalsLib extends TikiLib
 		$result = $this->query($query, array((int)$id));
 		$this->remove_object('image', $id);
 		$this->notify($imageInfo['imageId'], $imageInfo['galleryId'], $imageInfo['name'], $imageInfo['filename'], $imageInfo['description'], isset($gal_info['name'])?$gal_info['name']: '', 'remove image', $user);
+
+		TikiLib::events()->trigger('tiki.image.delete',
+			array(
+				'type' => 'image',
+				'object' => $id,
+				'user' => $user,
+			)
+		);
+
 		return true;
 	}
 
@@ -2212,9 +2235,13 @@ class ImageGalsLib extends TikiLib
 			$result = $this->query($query, $bindvars);
 			$galleryId = $this->getOne("select max(`galleryId`) from `tiki_galleries` where `name`=? and `created`=?", array($name, (int) $this->now));
 
-			if ($prefs['feature_score'] == 'y') {
-				$this->score_event($user, 'igallery_new');
-			}
+			TikiLib::events()->trigger('tiki.imagegallery.create',
+				array(
+					'type' => 'imagegallery',
+					'object' => $id,
+					'user' => $user,
+				)
+			);
 		}
 
 		require_once('lib/search/refresh-functions.php');
@@ -2310,6 +2337,15 @@ class ImageGalsLib extends TikiLib
 		$result = $this->query($query, array((int) $id));
 		$this->remove_gallery_scale($id);
 		$this->remove_object('image gallery', $id);
+
+		TikiLib::events()->trigger('tiki.imagegallery.delete',
+			array(
+				'type' => 'imagegallery',
+				'object' => $id,
+				'user' => $user,
+			)
+		);
+
 		return true;
 	}
 

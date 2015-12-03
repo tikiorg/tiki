@@ -152,11 +152,18 @@ if (!isset($_REQUEST["trackerId"]) || !$_REQUEST["trackerId"]) {
 	die;
 }
 
-if ($prefs['feature_score'] == 'y' && isset($_REQUEST["itemId"])) {
+if (isset($_REQUEST["itemId"])) {
     $item_info = $trklib->get_tracker_item($_REQUEST["itemId"]);
     $currentItemId = $_REQUEST["itemId"];
-    $tikilib->score_event($user, 'trackeritem_read', $currentItemId);
-    $tikilib->score_event($item_info['createdBy'], 'trackeritem_is_read', "$user:$currentItemId");
+
+	TikiLib::events()->trigger('tiki.trackeritem.view',
+		array(
+			'type' => 'trackeritem',
+			'object' => $currentItemId,
+			'owner' => $item_info['createdBy'],
+			'user' => $GLOBALS['user'],
+		)
+	);
 }
 
 $definition = Tracker_Definition::get($_REQUEST['trackerId']);

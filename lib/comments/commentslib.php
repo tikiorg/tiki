@@ -3549,13 +3549,6 @@ class Comments extends TikiLib
 					);
 					// The thread *WAS* successfully created.
 
-					if ($prefs['feature_score'] == 'y') {
-					  if ($parent_id) {
-						$tikilib->score_event($user, 'forum_topic_reply', $threadId);
-					  } else {
-						$tikilib->score_event($user, 'forum_topic_post', $threadId);
-					  }
-					}
 					if ($threadId) {
 						// Deal with mail notifications.
 						include_once('lib/notifications/notificationemaillib.php');
