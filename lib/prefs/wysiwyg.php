@@ -56,7 +56,7 @@ function prefs_wysiwyg_list()
 			'tags' => array('experimental'),
 		),
 		'wysiwyg_toolbar_skin' => array(
-			'name' => tra('Full Wysiwyg editor skin'),
+			'name' => tra('Full WYSIWYG editor skin'),
 			'type' => 'list',
 			'options' => array(
 				'moono' => tra('Moono (Default)'),
