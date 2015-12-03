@@ -170,7 +170,7 @@ function tiki_route($path)
 
 function tiki_route_attempt($pattern, $file, $callback = null, $extra = array())
 {
-	global $path, $inclusion;
+	global $path, $inclusion, $base, $full;
 
 	if ($inclusion) {
 		return;
@@ -178,6 +178,8 @@ function tiki_route_attempt($pattern, $file, $callback = null, $extra = array())
 
 	if (preg_match($pattern, $path, $parts)) {
 		$inclusion = $file;
+
+		$full = $base . $file;
 
 		if ($callback && is_callable($callback)) {
 			$_GET = array_merge($_GET, $callback($parts), $extra);
