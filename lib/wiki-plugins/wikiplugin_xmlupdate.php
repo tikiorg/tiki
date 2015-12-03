@@ -15,17 +15,20 @@ function wikiplugin_xmlupdate_info()
 		'prefs' => array( 'wikiplugin_xmlupdate' ),
 		'body' => tra('list (one per line) of the XML element (node) names irrespective of their path and must (at present) be unique in the file '),
 		'tags' => array( 'basic' ),
+		'introduced' => 15,
 		'params' => array(
 			'fileId' => array(
 				'required' => true,
 				'name' => tra('File Id'),
 				'description' => tra('File Id of the XML file stored in a File Gallery which is assumed to store its data in a directory'),
+				'since' => '15.0',
 				'filter' => 'digits',
 			),
 			'attribute' => array(
 				'required' => false,
 				'name' => tra('XML node attribute name'),
 				'description' => tra('optional use of an attribute for the XML nodes - used as a label in the input form. If used then all nodes in the XML file should have the attribute text set even if it is a blank/space'),
+				'since' => '15.0',
 				'filter' => 'text',
 				'default' => '',
 			),	
@@ -33,6 +36,7 @@ function wikiplugin_xmlupdate_info()
 				'required' => false,
 				'name' => tra('XML node listed in output'),
 				'description' => tra('yes/no option to include the XML node name in the plugin output - default is yes - and should always be yes if the attribute parameter is not used or not all the nodes have their attribute text set'),
+				'since' => '15.0',
 				'filter' => 'word',
 				'options' => array(
 					array('text' => tra('yes'), 'value' => 'yes'),
