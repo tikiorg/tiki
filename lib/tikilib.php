@@ -192,6 +192,9 @@ class TikiLib extends TikiDb_Bridge
 				$config["proxy_pass"] = $prefs['proxy_pass'];
 			}
 		}
+		if (strpos($url, 'https://') === 0) {
+			$config['sslverifypeer'] = false;	// zf2 only
+		}
 
 		$client = new Zend\Http\Client(null, $config);
 
