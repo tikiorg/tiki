@@ -81,6 +81,7 @@ class OIntegrate
 					'OIntegrate-Version' => '1.0',
 				);
 		} else {
+			$method = 'POST';
 			$http_headers = array(
 					'Accept' => 'application/json,text/x-yaml',
 					'OIntegrate-Version' => '1.0',
