@@ -9,7 +9,7 @@ function wikiplugin_like_info()
 {
 	return array(
 		'name' => tra('Like'),
-		'documentation' => 'PluginFavorite',
+		'documentation' => 'PluginLike',
 		'description' => tra('Create a like button'),
 		'prefs' => array( 'wikiplugin_like', 'user_likes' ),
 		'introduced' => 15,
