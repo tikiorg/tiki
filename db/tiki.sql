@@ -2807,8 +2807,8 @@ INSERT INTO `tiki_score` VALUES
 	{"ruleId":"User logs in","recipientType":"user","recipient":"user","score":"1","validObjectIds":[""],"expiration":""}
 ]',''),
 ('tiki.user.view','[
-	{"ruleId":"See other user\'s profile","recipientType":"user","recipient":"user","score":"2","validObjectIds":[""],"expiration":"60"},
-	{"ruleId":"Have your profile seen","recipientType":"user","recipient":"object","score":"1","validObjectIds":[""],"expiration":"60"}
+	{"ruleId":"See other user\'s profile","recipientType":"user","recipient":"user","score":"2","validObjectIds":[""],"expiration":""},
+	{"ruleId":"Have your profile seen","recipientType":"user","recipient":"object","score":"1","validObjectIds":[""],"expiration":""}
 ]',''),
 ('tiki.user.friend','[
 	{"ruleId":"Make friends","recipientType":"user","recipient":"user","score":"10","validObjectIds":[""],"expiration":""}
@@ -2841,8 +2841,8 @@ INSERT INTO `tiki_score` VALUES
 	{"ruleId":"Upload new image to gallery","recipientType":"user","recipient":"user","score":"6","validObjectIds":[""],"expiration":""}
 ]',''),
 ('tiki.image.view','[
-	{"ruleId":"See other user\'s image","recipientType":"user","recipient":"user","score":"3","validObjectIds":[""],"expiration":"60"},
-	{"ruleId":"Have your image seen","recipientType":"user","recipient":"owner","score":"1","validObjectIds":[""],"expiration":"60"}
+	{"ruleId":"See other user\'s image","recipientType":"user","recipient":"user","score":"3","validObjectIds":[""],"expiration":""},
+	{"ruleId":"Have your image seen","recipientType":"user","recipient":"owner","score":"1","validObjectIds":[""],"expiration":""}
 ]',''),
 ('tiki.blog.create','[
 	{"ruleId":"Create new blog","recipientType":"user","recipient":"user","score":"20","validObjectIds":[""],"expiration":""}
