@@ -39,7 +39,7 @@ class FilegalBatchLib extends FileGalLib
 	 *
 	 * @param array $files
 	 * @param int $galleryId
-	 * @param array $options		[bool subToDesc, bool subdirToSubgal, bool subdirIntegerToSubgalId, bool createSubgals, string fileUser, string fileGroup, string fileMode]
+	 * @param array $options		[bool subToDesc, bool subdirToSubgal, bool subdirIntegerToSubgalId, bool createSubgals, string fileUser, string fileGroup, string fileMode, string filesPath]
 	 * @return array				feedback messages
 	 */
 
@@ -52,6 +52,7 @@ class FilegalBatchLib extends FileGalLib
 			'fileUser' => '',
 			'fileGroup' => '',
 			'fileMode' => '',
+			'filesPath' => '',
 	]) {
 		include_once ('lib/mime/mimetypes.php');
 		global $mimetypes, $user, $prefs;
@@ -61,6 +62,8 @@ class FilegalBatchLib extends FileGalLib
 		if ($galleryId === null) {
 			$galleryId = $prefs['fgal_root_id'];
 		}
+
+		$filesPath = $options['filesPath'] ? $options['filesPath'] . DIRECTORY_SEPARATOR : $prefs['fgal_batch_dir'];
 
 		// for subdirToSubgal we need all existing dir galleries for the current gallery
 		$subgals = [];
@@ -104,7 +107,7 @@ class FilegalBatchLib extends FileGalLib
 
 				$dirs = array_filter(
 						explode(DIRECTORY_SEPARATOR,
-								substr($path_parts['dirname'], strlen($prefs['fgal_batch_dir']))
+								substr($path_parts['dirname'], strlen($filesPath))
 						)
 				);
 
@@ -215,7 +218,7 @@ class FilegalBatchLib extends FileGalLib
 				// if subToDesc is set, set description:
 				if ($options['subToDesc']) {
 					// get last subdir 'last' from 'some/path/last'
-					$tmpDesc = preg_replace('/.*([^\/]*)\/([^\/]+)$/U', '$1', substr($file, strlen($prefs['fgal_batch_dir'])));
+					$tmpDesc = preg_replace('/.*([^\/]*)\/([^\/]+)$/U', '$1', substr($file, strlen($filesPath)));
 				} else {
 					$tmpDesc = '';
 				}
@@ -285,16 +288,20 @@ class FilegalBatchLib extends FileGalLib
 	}
 
 	/**
-	 * build a complete list of all files in $prefs['fgal_batch_dir'] including all necessary file info
+	 * build a complete list of all files in $prefs['fgal_batch_dir'] or elsewhere, including all necessary file info
 	 *
+	 * @param string $filedir Path to find files to import, uses fgal_batch_dir pref if empty
+	 * @return array Files [file, size, ext, writable]
 	 * @throws Exception
 	 */
-	function batchUploadFileList()
+	function batchUploadFileList($filedir = '')
 	{
 		global $prefs;
 
 		// get root dir
-		$filedir = $prefs['fgal_batch_dir'];
+		if (empty($filedir)) {
+			$filedir = $prefs['fgal_batch_dir'];
+		}
 		$filedir = rtrim($filedir, '/');
 
 		$filelist = [];

@@ -23,7 +23,7 @@ class FilesBatchuploadCommand extends Command
 			->addArgument(
 				'galleryId',
 				InputArgument::OPTIONAL,
-				'Destination gallery for uploads'
+				'Destination gallery for uploads (optional, uses file gallery root if not supplied)'
 			)
 			->addOption(
 				'confirm',
@@ -79,6 +79,12 @@ class FilesBatchuploadCommand extends Command
 				InputOption::VALUE_REQUIRED,
 				'Octal file mode to set on the uploaded files (e.g. 0755)'
 			)
+			->addOption(
+				'filesPath',
+				'p',
+				InputOption::VALUE_REQUIRED,
+				'Path to files to upload'
+			)
 		;
 	}	
 
@@ -105,7 +111,9 @@ class FilesBatchuploadCommand extends Command
 
 		$confirm = $input->getOption('confirm');
 
-		$files = $filegalbatchlib->batchUploadFileList();
+		$filesPath = $input->getOption('filesPath');
+		$files = $filegalbatchlib->batchUploadFileList($filesPath);
+
 		if (! $files) {
 			if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
 				$output->writeln('<comment>No files to upload</comment>');
@@ -144,6 +152,7 @@ class FilesBatchuploadCommand extends Command
 					'fileUser' => $input->getOption('fileUser'),
 					'fileGroup' => $input->getOption('fileGroup'),
 					'fileMode' => $input->getOption('fileMode'),
+					'filesPath' => $filesPath,
 			]);
 
 			foreach ($feedback as $message) {
