@@ -42,5 +42,15 @@ function prefs_recaptcha_list()
 			),
 			'default' => 'clean',
 		),
+		'recaptcha_version' => array(
+			'name' => tra('Version'),
+			'type' => 'list',
+			'description' => tra('ReCaptcha version.'),
+			'options' => array(
+				'1' => tra('1.0'),
+				'2' => tra('2.0'),
+			),
+			'default' => '2',
+		),
 	);
 }

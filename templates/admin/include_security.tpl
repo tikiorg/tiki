@@ -111,6 +111,7 @@
 					{preference name=recaptcha_pubkey}
 					{preference name=recaptcha_privkey}
 					{preference name=recaptcha_theme}
+					{preference name=recaptcha_version}
 				</div>
 			</div>
 			</fieldset>

@@ -12,7 +12,7 @@
 		</div>
 		<div class="antibot2">
 	{/if}
-			{if $captchalib->type eq 'recaptcha'}
+			{if $captchalib->type eq 'recaptcha' || $captchalib->type eq 'recaptcha20'}
 				{$captchalib->render()}
 			{else}
 				<input type="hidden" name="captcha[id]" id="captchaId" value="{$captchalib->generate()}">
@@ -29,7 +29,7 @@
 	{else}
 		</div>
 	{/if}
-	{if $captchalib->type ne 'recaptcha'}
+	{if $captchalib->type ne 'recaptcha' and $captchalib->type ne 'recaptcha20'}
 		{if $antibot_table ne 'y'}
 		<tr{if !empty($tr_style)} class="{$tr_style}"{/if}>
 			<td{if !empty($td_style)} class="{$td_style}"{/if}>
@@ -55,49 +55,58 @@
 			</div>
 		{/if}
 	{/if}
+	<span style="display:none" id="_antibot_form" />
 {/if}
+
 {jq}
-if($("#antibotcode").parents('form').data("validator")) {
-	$( "#antibotcode" ).rules( "add", {
-		required: true,
-		remote: {
-			url: "validate-ajax.php",
-			type: "post",
-			data: {
-				validator: "captcha",
-				parameter: function() {
-					return $("#captchaId").val();
-				},
-				input: function() {
-					return $("#antibotcode").val();
-				} 
-			} 
+	function antibotVerification(element, rule) {
+		if (!jqueryTiki.validate) return;
+
+		var form = $("#_antibot_form").parents('form');
+		if (!form.data("validator")) {
+			form.validate({});
 		}
-	});
-} else {
-    $("#antibotcode").parents('form').validate({
-		rules: {
-			"captcha[input]": {
-				required: true,
-				remote: {
-					url: "validate-ajax.php",
-					type: "post",
-					data: {
-						validator: "captcha",
-						parameter: function() {
-							return $("#captchaId").val();
-						},
-						input: function() {
-							return $("#antibotcode").val();
-						} 
-					} 
+		form.data("validator").settings.ignore = [];
+		element.rules( "add", rule);
+	}
+{/jq}
+
+{if $captchalib->type eq 'recaptcha'}
+	{jq}
+		var existCondition = setInterval(function() {
+			if ($('#recaptcha_response_field').length) {
+				clearInterval(existCondition);
+				antibotVerification($("#recaptcha_response_field"), {required: true});
+			}
+		}, 100); // wait for captcha to load
+
+	{/jq}
+{elseif $captchalib->type eq 'recaptcha20'}
+	{jq}
+		var existCondition = setInterval(function() {
+			if ($('#g-recaptcha-response').length) {
+				clearInterval(existCondition);
+				antibotVerification($("#g-recaptcha-response"), {required: true});
+			}
+		}, 100); // wait for captcha to load
+	{/jq}
+{else}
+	{jq}
+		antibotVerification($("#antibotcode"),  {
+			required: true,
+			remote: {
+				url: "validate-ajax.php",
+				type: "post",
+				data: {
+					validator: "captcha",
+					parameter: function() {
+						return $("#captchaId").val();
+					},
+					input: function() {
+						return $("#antibotcode").val();
+					}
 				}
 			}
-		},
-		messages: {
-			"captcha[input]": { required: "This field is required"}
-		},
-		submitHandler: function(){form.submit();}
-	});
-}
-{/jq}
+		});
+	{/jq}
+{/if}
