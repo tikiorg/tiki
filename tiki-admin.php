@@ -210,9 +210,6 @@ if ( isset( $_REQUEST['lm_preference'] ) ) {
 				}
 			}
 		}
-		if (!empty($changes)) {
-			$access->redirect($_SERVER['REQUEST_URI'], '', 200);
-		}
 	} else {
 		$smarty->assign('csrferror',
 			tr('Bad request - potential cross-site request forgery (CSRF) detected. Operation blocked. The security ticket may have expired - try reloading the page in this case.'));
@@ -549,6 +546,10 @@ if (isset($_REQUEST['page'])) {
 	$helpDescription = tr("Help on %0 Config", $admintitle);
 
 	$smarty->assign('include', $adminPage);
+
+	if (!empty($changes) && key_check(null, false)) {
+		$access->redirect($_SERVER['REQUEST_URI'], '', 200);
+	}
 
 } else {
 	$smarty->assign('include', 'list_sections');
