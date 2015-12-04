@@ -127,7 +127,8 @@ class AuthTokens
 			$groups = json_decode($data['groups'], true);
 			$parameters = json_decode($data['parameters'], true);
 			if (!$userlib->user_exists($tempuser)) {
-				$userlib->add_user($tempuser, '', $data['email'], '', false, NULL, NULL, NULL, $groups);
+				$randompass = $userlib->genPass();
+				$userlib->add_user($tempuser, $randompass, $data['email'], '', false, NULL, NULL, NULL, $groups);
 			}
 			$userlib->autologin_user($tempuser);
 			$url = basename($data['entry']);
