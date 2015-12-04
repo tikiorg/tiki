@@ -3876,7 +3876,7 @@ class TikiLib extends TikiDb_Bridge
 		if ( ! is_string($my_user) || $my_user == '' ) return false;
 
 		global $user_preferences;
-		if (!array_key_exists($my_user, $user_preferences)) {
+		if (!is_array($user_preferences) || !array_key_exists($my_user, $user_preferences)) {
 			$user_preferences[$my_user] = array();
 		}
 		$global_ref =& $user_preferences[$my_user];
