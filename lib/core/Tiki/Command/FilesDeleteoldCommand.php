@@ -51,7 +51,7 @@ class FilesDeleteoldCommand extends Command
 		} else {
 			$query = 'select * from `tiki_files` where `deleteAfter` < ? - `lastModif` and `deleteAfter` is not NULL and `deleteAfter` != \'\' order by galleryId asc';
 			$now = time();
-			$files = \TikiDb::get()->query($query, array($this->now));
+			$files = \TikiDb::get()->query($query, array($now));
 
 			if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
 				if ($files->numrows) {
