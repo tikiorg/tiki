@@ -33,7 +33,7 @@ class FilesDeleteoldCommand extends Command
 	{
 		$confirm = $input->getOption('confirm');
 
-		$perms = \Perms::get('file galleries');
+		$perms = \Perms::get();
 		if (! $perms->admin_file_galleries) {
 			throw new \Exception('Tracker Clear: Admin permission required');
 		}
