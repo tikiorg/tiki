@@ -130,7 +130,7 @@ class FilegalBatchLib extends FileGalLib
 
 					} else {
 						foreach ($subgals['data'] as $subgal) {
-							if ($subgal['id'] == $dirs[0]) {
+							if ($subgal['id'] == $dirs[0] || $galleryId == $dirs[0]) {
 								$foundDir = true;
 								break;
 							}
