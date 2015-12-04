@@ -2731,13 +2731,11 @@ CREATE TABLE `users_users` (
   `avatarData` longblob,
   `avatarLibName` varchar(200) default NULL,
   `avatarType` char(1) default NULL,
-  `score` int(11) NOT NULL default 0,
   `valid` varchar(32) default NULL,
   `unsuccessful_logins` int(14) default 0,
   `openid_url` varchar(255) default NULL,
   `waiting` char(1) default NULL,
   PRIMARY KEY (`userId`),
-  KEY `score` (score),
   UNIQUE KEY `login` (login),
   KEY `registrationDate` (`registrationDate`),
   KEY `openid_url` (openid_url)
@@ -2798,52 +2796,88 @@ CREATE TABLE `tiki_translated_objects` (
 
 DROP TABLE IF EXISTS `tiki_score`;
 CREATE TABLE `tiki_score` (
-  event varchar(40) NOT NULL default '',
-  score int(11) NOT NULL default '0',
-  expiration int(11) NOT NULL default '0',
-  validObjectIds text,
+  event varchar(255) NOT NULL default '',
+  data text,
+  reversalEvent varchar(255),
   PRIMARY KEY (`event`)
 ) ENGINE=MyISAM;
 
-INSERT INTO tiki_score (event, score, expiration) VALUES ('login',1,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('login_remain',2,60);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('profile_fill',10,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('profile_see',2,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('profile_is_seen',1,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('friend_new',10,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('message_receive',1,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('message_send',2,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('article_read',2,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('article_comment',5,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('article_new',20,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('article_is_read',1,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('article_is_commented',2,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('fgallery_new',10,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('fgallery_new_file',10,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('fgallery_download',5,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('fgallery_is_downloaded',5,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('igallery_new',10,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('igallery_new_img',6,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('igallery_see_img',3,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('igallery_img_seen',1,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('blog_new',20,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('blog_post',5,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('blog_read',2,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('blog_comment',2,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('blog_is_read',3,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('blog_is_commented',3,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('wiki_new',10,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('wiki_edit',5,0);
-INSERT INTO tiki_score (event, score, expiration) VALUES ('wiki_attach_file',3,0);
+INSERT INTO `tiki_score` VALUES
+('tiki.user.login','[
+	{"ruleId":"User logs in","recipientType":"user","recipient":"user","score":"1","validObjectIds":[""],"expiration":""}
+]',''),
+('tiki.user.view','[
+	{"ruleId":"See other user\'s profile","recipientType":"user","recipient":"user","score":"2","validObjectIds":[""],"expiration":"60"},
+	{"ruleId":"Have your profile seen","recipientType":"user","recipient":"object","score":"1","validObjectIds":[""],"expiration":"60"}
+]',''),
+('tiki.user.friend','[
+	{"ruleId":"Make friends","recipientType":"user","recipient":"user","score":"10","validObjectIds":[""],"expiration":""}
+]',''),
+('tiki.user.message','[
+	{"ruleId":"Send message","recipientType":"user","recipient":"user","score":"2","validObjectIds":[""],"expiration":""},
+	{"ruleId":"Receive message","recipientType":"user","recipient":"object","score":"1","validObjectIds":[""],"expiration":""}
+]',''),
+('tiki.article.create','[
+	{"ruleId":"Publish new article","recipientType":"user","recipient":"user","score":"20","validObjectIds":[""],"expiration":""}
+]',''),
+('tiki.article.view','[
+	{"ruleId":"Read an article","recipientType":"user","recipient":"user","score":"2","validObjectIds":[""],"expiration":""},
+	{"ruleId":"Have your article read","recipientType":"user","recipient":"author","score":"1","validObjectIds":[""],"expiration":""}
+]',''),
+('tiki.filegallery.create','[
+	{"ruleId":"Create new file gallery","recipientType":"user","recipient":"user","score":"10","validObjectIds":[""],"expiration":""}
+]',''),
+('tiki.file.create','[
+	{"ruleId":"Upload new file to gallery","recipientType":"user","recipient":"user","score":"10","validObjectIds":[""],"expiration":""}
+]',''),
+('tiki.file.download','[
+	{"ruleId":"Download other user\'s file","recipientType":"user","recipient":"user","score":"5","validObjectIds":[""],"expiration":""},
+	{"ruleId":"Have your file downloaded","recipientType":"user","recipient":"owner","score":"5","validObjectIds":[""],"expiration":""}
+]',''),
+('tiki.imagegallery.create','[
+	{"ruleId":"Create new image gallery","recipientType":"user","recipient":"user","score":"10","validObjectIds":[""],"expiration":""}
+]',''),
+('tiki.image.create','[
+	{"ruleId":"Upload new image to gallery","recipientType":"user","recipient":"user","score":"6","validObjectIds":[""],"expiration":""}
+]',''),
+('tiki.image.view','[
+	{"ruleId":"See other user\'s image","recipientType":"user","recipient":"user","score":"3","validObjectIds":[""],"expiration":"60"},
+	{"ruleId":"Have your image seen","recipientType":"user","recipient":"owner","score":"1","validObjectIds":[""],"expiration":"60"}
+]',''),
+('tiki.blog.create','[
+	{"ruleId":"Create new blog","recipientType":"user","recipient":"user","score":"20","validObjectIds":[""],"expiration":""}
+]',''),
+('tiki.blogpost.create','[
+	{"ruleId":"Post in a blog","recipientType":"user","recipient":"user","score":"5","validObjectIds":[""],"expiration":""}
+]',''),
+('tiki.blog.view','[
+	{"ruleId":"Read other user\'s blog","recipientType":"user","recipient":"user","score":"2","validObjectIds":[""],"expiration":""},
+	{"ruleId":"Have your blog read","recipientType":"user","recipient":"author","score":"3","validObjectIds":[""],"expiration":""}
+]',''),
+('tiki.wiki.create','[
+	{"ruleId":"Create a wiki page","recipientType":"user","recipient":"user","score":"10","validObjectIds":[""],"expiration":""}
+]',''),
+('tiki.wiki.update','[
+	{"ruleId":"Edit an existing wiki page","recipientType":"user","recipient":"user","score":"5","validObjectIds":[""],"expiration":""}
+]',''),
+('tiki.wiki.attachfile','[
+	{"ruleId":"Attach file to wiki page","recipientType":"user","recipient":"user","score":"3","validObjectIds":[""],"expiration":""}
+]','');
 
-DROP TABLE IF EXISTS `tiki_users_score`;
-CREATE TABLE `tiki_users_score` (
-  `user` char(200) NOT NULL default '',
-  `event_id` char(200) NOT NULL default '',
-  `expire` int(14) NOT NULL default '0',
-  `tstamp` timestamp NOT NULL,
-  PRIMARY KEY (`user`(110),`event_id`(110)),
-  KEY `user` (user(110),event_id(110),expire)
+DROP TABLE IF EXISTS `tiki_object_scores`;
+CREATE TABLE `tiki_object_scores` (
+  `id` INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `triggerObjectType` VARCHAR(255) NOT NULL,
+  `triggerObjectId` VARCHAR(255) NOT NULL,
+  `triggerUser` VARCHAR(255) NOT NULL,
+  `triggerEvent` VARCHAR(255) NOT NULL,
+  `ruleId` VARCHAR(255) NOT NULL,
+  `recipientObjectType` VARCHAR(255) NOT NULL,
+  `recipientObjectId` VARCHAR(255) NOT NULL,
+  `pointsAssigned` INT NOT NULL,
+  `pointsBalance` INT NOT NULL,
+  `date` INT NOT NULL,
+  `reversalOf` INT UNSIGNED
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS `tiki_file_handlers`;
