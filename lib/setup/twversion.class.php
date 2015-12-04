@@ -76,6 +76,7 @@ class TWVersion
 				23=>'Altair',		// 12.x
 				24=>'Fomalhaut',	// 13.x
 				25=>'Peony',		// 14.x
+				26=>'Star TBA',		// 15.x
 		);
 	}
 
