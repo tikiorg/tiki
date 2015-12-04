@@ -49,17 +49,19 @@ class FilesDeleteoldCommand extends Command
 				$output->writeln('<info>Deleting old filegal files done</info>');
 			}
 		} else {
-			$query = 'select * from `tiki_files` where `deleteAfter` < NOW() - `lastModif` and `deleteAfter` is not NULL and `deleteAfter` != \'\' order by galleryId asc';
-			$files = \TikiDb::get()->query($query);
+			$query = 'select * from `tiki_files` where `deleteAfter` < ? - `lastModif` and `deleteAfter` is not NULL and `deleteAfter` != \'\' order by galleryId asc';
+			$now = time();
+			$files = \TikiDb::get()->query($query, array($this->now));
 
 			if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
 				if ($files->numrows) {
 					$output->writeln("<comment>Files to delete:</comment>");
 
-					$now = time();
 					foreach ($files->result as $file) {
 						$old = ceil(abs($now - $file['lastModif']) / 86400);
-						$output->writeln("<info>    \"{$file['name']}\" is $old days old in gallery #{$file['galleryId']} (id #{$file['fileId']})</info>");
+						$days = $old > 1 ? 'days' : 'day';
+						$deleteAfter = \TikiLib::lib('tiki')->get_short_datetime($file['deleteAfter']);
+						$output->writeln("<info>    \"{$file['name']}\" is $old $days old in gallery #{$file['galleryId']} (id #{$file['fileId']} deleteAfter $deleteAfter)</info>");
 					}
 				} else {
 					$output->writeln("<comment>No files to delete</comment>");
