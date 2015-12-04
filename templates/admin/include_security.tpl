@@ -166,13 +166,14 @@
 		{tab name="{tr}Tokens{/tr}"}
 			<h2>{tr}Tokens{/tr}</h2>
 			{remarksbox type="tip" title="{tr}Tip{/tr}"}
-				{tr}To manage tokens go to <a href="tiki-admin_tokens.php">Admin Tokens</a> page{/tr}
+				{tr}To manage tokens go to <a href="tiki-admin_tokens.php">Admin Tokens</a> page. Tokens are also used for the Temporary Users feature (see <a href="tiki-adminusers.php">Admin Users</a>).{/tr}
 			{/remarksbox}
 			{preference name=auth_token_access}
 			{preference name=auth_token_access_maxtimeout}
 			{preference name=auth_token_access_maxhits}
 			{preference name=auth_token_tellafriend}
 			{preference name=auth_token_share}
+			{preference name=auth_token_preserve_tempusers}
 		{/tab}
 
 		{tab name="{tr}OpenPGP{/tr}"}

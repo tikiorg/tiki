@@ -726,6 +726,61 @@
 				{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}You can export users of a group by clicking on that group at <a href="tiki-admingroups.php">admin->groups</a>{/tr}{/remarksbox}
 			{/if}
 		{/tab}
+
+		{tab name="{tr}Temporary Users{/tr}"}
+			<h2>Invite new temporary user(s)</h2>
+			{if $prefs['auth_token_access'] != 'y'}
+				{remarksbox type="warning" title="Token Access Feature Dependency"}
+					{tr}The token access feature is needed for Temporary Users to login.{/tr}
+					<a href="tiki-admin.php?page=security">{tr}Turn it on here.{/tr}</a>
+				{/remarksbox}
+			{/if}
+			{remarksbox type="info" title="Temporary Users"}
+				<p>{tr}Temporary users cannot login the usual way but instead do so via an autologin URL that is associated with a token.{/tr} {tr}An email will be sent out to invited users containing this URL. You will receive a copy of the email yourself.{/tr}</>
+				<p>{tr}These temporary users will be deleted (but can be set to be preserved in Admin Tokens) once the validity period is over. Normally, these users should have read-only access. Nevertheless, if you are allowing these users to submit information, e.g. fill in a tracker form, make sure to ask for their information again in those forms.{/tr}</p>
+				<p>{tr}Please do not assign temporary users to Groups that can access any security sensitive information, since access to these accounts is relatively easy to obtain, for example by intercepting or otherwise getting access to these emails.{/tr}</p>
+			{/remarksbox}
+			{remarksbox type="info" title="Revoking Access"}
+				{tr}To revoke access before validity expires or to review who has access, please see:{/tr} <a href="tiki-admin_tokens.php">{tr}Admin Tokens{/tr}</a>
+			{/remarksbox}
+			<form class="form-horizontal confirm-form" name="checkform" id="checkform" method="post" action="{service controller=user action=invite_tempuser}">
+				<div class="form-group">
+					<label class="col-sm-4 col-md-4 control-label" for="tempuser_emails">{tr}Emails (comma separated){/tr}</label>
+					<div class="col-sm-8 col-md-8">
+						<input type="text" class="form-control" name="tempuser_emails" id="tempuser_emails" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4 col-md-4 control-label" for="tempuser_groups">{tr}Groups (comma separated){/tr}</label>
+					<div class="col-sm-8 col-md-8">
+						<input type="text" class="form-control" name="tempuser_groups" id="tempuser_groups" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4 col-md-4 control-label" for="tempuser_expiry">{tr}Valid for days (use -1 for forever){/tr}</label>
+					<div class="col-sm-8 col-md-8">
+						<input type="text" class="form-control" name="tempuser_expiry" id="tempuser_expiry" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4 col-md-4 control-label" for="tempuser_prefix">{tr}Username prefix{/tr}</label>
+					<div class="col-sm-8 col-md-8">
+						<input type="text" class="form-control" name="tempuser_prefix" id="tempuser_prefix" placeholder="_token"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4 col-md-4 control-label" for="tempuser_path">{tr}Autologin (non-SEFURL) path{/tr}</label>
+					<div class="col-sm-8 col-md-8">
+						<input type="text" class="form-control" name="tempuser_path" id="tempuser_path" placeholder="tiki-index.php"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-10 col-sm-offset-4 col-md-10 col-md-offset-4">
+						<input type="submit" name="invite_tempuser" class="btn btn-primary" value="{tr}Invite{/tr}" />
+					</div>
+				</div>
+			</form>
+		{/tab}
 	{/if}
 {/tabset}
 {jq}

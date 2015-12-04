@@ -36,8 +36,8 @@ function prefs_auth_list()
 			'view' => 'tiki-admin_tokens.php',
 		),
 		'auth_token_access_maxtimeout' => array(
-			'name' => tra('Token Access Max Timeout'),
-			'description' => tra('The maximum duration for which the generated tokens will be valid.'),
+			'name' => tra('Token Access Default Timeout'),
+			'description' => tra('The default duration for which the generated tokens will be valid.'),
 			'type' => 'text',
 			'size' => 5,
 			'perspective' => false,
@@ -46,8 +46,8 @@ function prefs_auth_list()
 			'default' => 3600*24*7,
 		),
 		'auth_token_access_maxhits' => array(
-			'name' => tra('Token Access Maximum Hits'),
-			'description' => tra('The maximum number of times a token can be used before it expires.'),
+			'name' => tra('Token Access Default Maximum Hits'),
+			'description' => tra('The default maximum number of times a token can be used before it expires.'),
 			'type' => 'text',
 			'size' => 5,
 			'perspective' => false,
@@ -62,6 +62,15 @@ function prefs_auth_list()
 			'dependencies' => array(
 				'auth_token_access',
 				'feature_tell_a_friend',
+			),
+			'default' => 'n',
+		),
+		'auth_token_preserve_tempusers' => array(
+			'name' => tra('Do not delete temporary users when token is deleted/expired'),
+			'description' => tra('Normally temporary users created (see tiki-adminusers.php) are deleted when their access token is deleted/expired. If turned on, this will keep those users around (and can be manually deleted later) but they will have no groups and therefore no perms'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'auth_token_access',
 			),
 			'default' => 'n',
 		),

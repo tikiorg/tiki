@@ -1034,6 +1034,55 @@ class Services_User_Controller
 		}
 	}
 
+	function action_invite_tempuser($input)
+	{
+		Services_Exception_Denied::checkGlobal('admin_users');
+		$emails = $input->tempuser_emails->string();
+		$groups = $input->tempuser_groups->string();
+		$expiry = $input->tempuser_expiry->int();
+		$prefix = $input->tempuser_prefix->string();
+		$path = $input->tempuser_path->string();
+
+		if (empty($prefix)) {
+			$prefix = '_token';
+		}
+		if (empty($path)) {
+			$path = 'tiki-index.php';
+		}
+
+		$groups = explode(',', $groups);
+		$emails = explode(',', $emails);
+		$groups = array_map('trim', $groups);
+		$emails = array_map('trim', $emails);
+		if ($expiry > 0) {
+			$expiry = $expiry * 3600;
+		} else if ($expiry != -1) {
+			throw new Services_Exception(tra('Please specify validity period'));
+		}
+
+		foreach($groups as $grp) {
+			if (!TikiLib::lib('user')->group_exists($grp)) {
+				throw new Services_Exception(tra('The group %0 does not exist', $grp));
+			}
+		}
+
+		TikiLib::lib('user')->invite_tempuser($emails, $groups, $expiry, $prefix, $path);
+
+		return array(
+			'modal' => '1',
+			'FORWARD' => array(
+				'controller' => 'utilities',
+				'action' => 'modal_alert',
+				'ajaxtype' => 'feedback',
+				'ajaxheading' => tra('Success'),
+				'ajaxmsg' => 'Your invite has been sent.',
+				'ajaxdismissible' => 'n',
+			)
+		);
+
+	}
+
+
 	private function removeUsers(array $users, $page = false)
 	{
 		global $user;

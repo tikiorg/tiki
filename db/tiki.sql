@@ -3306,6 +3306,8 @@ CREATE TABLE `tiki_auth_tokens` (
     `email` varchar(255) NOT NULL,
     `parameters` VARCHAR(255),
     `groups` TEXT,
+    `createUser` CHAR(1) DEFAULT 'n',
+    `userPrefix` VARCHAR(200) DEFAULT '_token',
     PRIMARY KEY( `tokenId` ),
     KEY `tiki_auth_tokens_token` (`token`)
 ) ENGINE=MyISAM;

@@ -63,13 +63,23 @@ class AuthTokens
 
 	function getGroups( $token, $entry, $parameters )
 	{
+		// Process deletion of temporary users that are created via tokens
+		$usersToDelete = $this->db->fetchAll(
+			'SELECT tokenId, userPrefix FROM tiki_auth_tokens
+			WHERE (timeout != -1 AND UNIX_TIMESTAMP(creation) + timeout < UNIX_TIMESTAMP()) OR `hits` = 0'
+		);
+
+		foreach ($usersToDelete as $del) {
+			TikiLib::lib('user')->remove_temporary_user($del['userPrefix'] . $del['tokenId']);
+		}
+
 		$this->db->query(
 			'DELETE FROM tiki_auth_tokens
 			 WHERE (timeout != -1 AND UNIX_TIMESTAMP(creation) + timeout < UNIX_TIMESTAMP()) OR `hits` = 0'
 		);
 
 		$data = $this->db->query(
-			'SELECT tokenId, entry, parameters, groups FROM tiki_auth_tokens WHERE token = ? AND token = ' . self::SCHEME,
+			'SELECT tokenId, entry, parameters, groups, email, createUser, userPrefix FROM tiki_auth_tokens WHERE token = ? AND token = ' . self::SCHEME,
 			array( $token )
 		)->fetchRow();
 
@@ -110,6 +120,27 @@ class AuthTokens
 			array( $data['tokenId'] )
 		);
 
+		// Process autologin of temporary users
+		if ($data['createUser'] == 'y') {
+			$userlib = TikiLib::lib('user');
+			$tempuser = $data['userPrefix'] . $data['tokenId'];
+			$groups = json_decode($data['groups'], true);
+			$parameters = json_decode($data['parameters'], true);
+			if (!$userlib->user_exists($tempuser)) {
+				$userlib->add_user($tempuser, '', $data['email'], '', false, NULL, NULL, NULL, $groups);
+			}
+			$userlib->autologin_user($tempuser);
+			$url = basename($data['entry']);
+			if ($parameters) {
+				$query = '?' . http_build_query($parameters, '', '&');
+				$url .= $query;
+			}
+			include_once('tiki-sefurl.php');
+			$url = filter_out_sefurl($url);
+			TikiLib::lib('access')->redirect($url);
+			die;
+		}
+
 		$this->ok = true;
 		return (array) json_decode($data['groups'], true);
 	}
@@ -127,14 +158,14 @@ class AuthTokens
 
 	function createToken( $entry, array $parameters, array $groups, array $arguments = array() )
 	{
-		if ( isset($arguments['timeout']) ) {
-			$timeout = min($this->maxTimeout, $arguments['timeout']);
+		if ( !empty($arguments['timeout']) ) {
+			$timeout = $arguments['timeout'];
 		} else {
 			$timeout = $this->maxTimeout;
 		}
 
-		if ( isset($arguments['hits']) ) {
-			$hits = min($this->maxHits, $arguments['hits']);
+		if ( !empty($arguments['hits']) ) {
+			$hits = $arguments['hits'];
 		} else {
 			$hits = $this->maxHits;
 		}
@@ -145,8 +176,20 @@ class AuthTokens
 			$email = '';
 		}
 
+		if (!empty($arguments['createUser']) && $arguments['createUser'] !== 'n') {
+			$createUser = 'y';
+		} else {
+			$createUser = 'n';
+		}
+
+		if (isset($arguments['userPrefix'])) {
+			$userPrefix = $arguments['userPrefix'];
+		} else {
+			$userPrefix = '';
+		}
+
 		$this->db->query(
-			'INSERT INTO tiki_auth_tokens ( timeout, maxhits, hits, entry, parameters, groups, email ) VALUES( ?, ?, ?, ?, ?, ?, ? )',
+			'INSERT INTO tiki_auth_tokens ( timeout, maxhits, hits, entry, parameters, groups, email, createUser, userPrefix ) VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ? )',
 			array(
 				(int) $timeout,
 				(int) $hits,
@@ -154,7 +197,10 @@ class AuthTokens
 				$entry,
 				json_encode($parameters),
 				json_encode($groups),
-				$email
+				$email,
+				$createUser,
+				$userPrefix,
+
 			)
 		);
 
@@ -173,9 +219,11 @@ class AuthTokens
 	 * emails, it currently saves as comma separated list but exploding will need to trim spaces.
 	 * @param int $timeout Timeout to set in seconds. If not included, will use default as set in prefs.
 	 * @param int $hits Number of hits allowed before token expires. If not included, will use default as set in prefs.
+	 * @param boolean $createUser Login token user as temporary user if set to true
+	 * @param string $userPrefix Username of the created users will be the token ID prefixed with this (default is '_token')
 	 * @return string A URL that has the security token included.
 	 */
-	function includeToken( $url, array $groups = array(), $email = '', $timeout = 0, $hits = 0)
+	function includeToken( $url, array $groups = array(), $email = '', $timeout = 0, $hits = 0, $createUser = false, $userPrefix = '_token')
 	{
 		$data = parse_url($url);
 
@@ -193,6 +241,8 @@ class AuthTokens
 		if (!empty($hits)) {
 			$settings['hits'] = $hits;
 		}
+		$settings['createUser'] = $createUser;
+		$settings['userPrefix'] = $userPrefix;
 
 		$token = $this->createToken($data['path'], $args, $groups, $settings);
 		$args['TOKEN'] = $token;
@@ -210,6 +260,13 @@ class AuthTokens
 
 	function deleteToken($tokenId)
 	{
+		$userPrefix = $this->table->fetchOne(
+			'userPrefix',
+			array('tokenId' => $tokenId, 'createUser' => 'y')
+		);
+		if ($userPrefix) {
+			TikiLib::lib('user')->remove_temporary_user($userPrefix . $tokenId);
+		}
 		$this->table->delete(array('tokenId' => $tokenId));
 	}
 }

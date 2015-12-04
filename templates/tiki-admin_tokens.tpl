@@ -17,6 +17,8 @@
 					<th>{tr}Email{/tr}</th>
 					<th>{tr}Parameters{/tr}</th>
 					<th>{tr}Groups{/tr}</th>
+					<th>{tr}Create Temp User{/tr}</th>
+					<th>{tr}Temp User Prefix{/tr}</th>
 					<th></th>
 				</tr>
 
@@ -36,6 +38,8 @@
 							{/foreach}
 						</td>
 						<td>{$token.groups}</td>
+						<td>{$token.createUser}</td>
+						<td>{$token.userPrefix}</td>
 						<td>
 							{self_link tokenId=$token.tokenId action='delete' _menu_text='y' _menu_icon='y' _icon_name='remove'}
 								{tr}Delete{/tr}
