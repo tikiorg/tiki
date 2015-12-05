@@ -117,12 +117,7 @@ function smarty_function_listfilter($params, $smarty)
 
 		$content = "
 $('#$id').keyup( function() {
-	var criterias = this.value.toLowerCase().split( /\s+/ ), len = $(this).length;
-/*	if (len > 0) {
-		$(this).next('img.closeicon').css('visibility', '');
-	} else {
-		$(this).next('img.closeicon').css('visibility', 'hidden');
-	}*/
+	var criterias = this.value.toLowerCase().split( /\s+/ );
 	$('$selectors').each( function() {
 		var text = $(this).text().toLowerCase();
 		for( i = 0; criterias.length > i; ++i ) {
