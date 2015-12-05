@@ -331,7 +331,7 @@
 								<div class="col-sm-10 checkbox">
 									<input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}>
 									{remarksbox type=tip title="{tr}Tip{/tr}"}
-										{tr }Per-page option: HTML in Wiki Pages is parsed by the browser, instead of HTML tags being displayed as typed.{/tr}
+										{tr }Per-page option: HTML tags are used to create elements of the wiki page, instead of being displayed as code.{/tr}
 									{/remarksbox}
 								</div>
 							</div>

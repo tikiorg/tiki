@@ -618,7 +618,7 @@
 											<input type="checkbox" id="smarty_notice_reporting" name="smarty_notice_reporting"{if $prefs.smarty_notice_reporting eq 'y'} checked="checked"{/if}>
 										</div>
 										<div style="padding:5px;clear:both">
-											<label for="log_tpl">{tr}Add HTML comment at start and end of each Smarty template (TPL){/tr}.</label>
+											<label for="log_tpl">{tr}Add HTML comment at start and end of each Smarty template (.tpl file){/tr}.</label>
 											<input type="checkbox" id="log_tpl" name="log_tpl"{if $prefs.log_tpl eq 'y'} checked="checked"{/if}>
 											{remarksbox type=warning title="{tr}Warning{/tr}" close="n"}
 												{tr}Use only for development, not in production because these warnings are added to emails as well, and visible to the users{/tr}

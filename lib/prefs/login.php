@@ -36,8 +36,8 @@ function prefs_login_list()
 			),
 		),
 		'login_multiple_forbidden' => array(
-			'name' => tr('Prevent multiple logins from same user'),
-			'description' => tr('User can not login simultaneously from multiple browsers. Admin account is still allowed.'),
+			'name' => tr('Prevent multiple log-ins by the same user'),
+			'description' => tr('Users (other than admin) cannot log in simultaneously with multiple browsers.'),
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('advanced'),			

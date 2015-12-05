@@ -14,7 +14,7 @@
 			<div class="col-md-6">
 				<fieldset>
 					<legend>{tr}Basic Search{/tr} {help url="Search"}</legend>
-					{tr}Uses MySQL Full-Text Search{/tr}.
+					{tr}Uses MySQL full-text search{/tr}.
 					{tr}If enabled, the search module and search feature in the main application menu will use it by default, even if 'Advanced Search' is also enabled below{/tr}.
 					{preference name=feature_search_fulltext}
 					<div class="adminoptionboxchild" id="feature_search_fulltext_childcontainer">

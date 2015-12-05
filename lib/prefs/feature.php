@@ -1380,20 +1380,20 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_cms_sharethis' => array(
 			'name' => tra('ShareThis buttons'),
-            'description' => tra('enable sharing via ShareThis'),
+            'description' => tra('Enable sharing site content via ShareThis'),
 			'type' => 'flag',
 			'hint' => tra('Insert a ShareThis button from www.sharethis.com.'),
 			'default' => 'n',
 		),
 		'feature_categorypath' => array(
 			'name' => tra('Category Path'),
-			'description' => tra('Show category tree, above wiki pages'),
+			'description' => tra('Show the category tree above the wiki page'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_categoryobjects' => array(
 			'name' => tra('Show category objects'),
-			'description' => tra('Show objects sharing the same category, below wiki pages'),
+			'description' => tra('Show, at the bottom of the wiki page, objects in the same category'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -1408,7 +1408,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_listPages' => array(
 			'name' => tra('List pages'),
-            'description' => tra('allow viewing the Page list'),
+            'description' => tra('Allow viewing the wiki page list'),
 			'type' => 'flag',
 			'view' => 'tiki-listpages.php',
 			'default' => 'y',
@@ -1416,7 +1416,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_lastChanges' => array(
 			'name' => tra('Latest Changes'),
-            'description' => tra('show a list of last changed items'),
+            'description' => tra('Show the list of last-changed items'),
 			'type' => 'flag',
 			'view' => 'tiki-lastchanges.php',
 			'default' => 'y',
@@ -1424,14 +1424,14 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_listorphanPages' => array(
 			'name' => tra('Orphan pages'),
-            'description' => tra('allow listing of orphaned (non-categorised) items'),
+            'description' => tra('Allow listing of "orphan pages" (pages not linked to from another page)'),
 			'type' => 'flag',
 			'view' => 'tiki-orphan_pages.php',
 			'default' => 'n',
 		),
 		'feature_search_fulltext' => array(
-			'name' => tra('MySQL Full-Text Search'),
-			'description' => tra("Also known as 'Basic Search'. This search uses the MySQL Full-Text Search feature. The indexation is continuously updated."),
+			'name' => tra('MySQL full-text search'),
+			'description' => tra("Also known as 'Basic Search'. This search uses the MySQL full-text search feature. The indexation is continuously updated."),
 			'warning' => tra("InnoDB doesn't support Full-Text Search until 5.6, so if this is your case, use Unified Search."),
 			'type' => 'flag',
 			'help' => 'Search',
@@ -1446,7 +1446,7 @@ function prefs_feature_list($partial = false)
 			),
 		),
 		'feature_referer_highlight' => array(
-			'name' => tra('Referer Search Highlighting'),
+			'name' => tra('Referer search highlighting'),
             'description' => tra(''),
 			'type' => 'flag',
 			'help' => 'Referer+Search+Highlighting',
@@ -1454,7 +1454,7 @@ function prefs_feature_list($partial = false)
 			'dbfeatures' => array('mysql_fulltext'),
 		),
 		'feature_search_stats' => array(
-			'name' => tra('Search stats'),
+			'name' => tra('Search statistics'),
             'description' => tra(''),
 			'type' => 'flag',
 			'help' => 'Search+Stats',
@@ -1505,15 +1505,15 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_search_show_last_modification' => array(
-			'name' => tra('Last modified date'),
-            'description' => tra('show the Last Modified date'),
+			'name' => tra('Last-modified date'),
+            'description' => tra('Show the last-modified date'),
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
 		),
 		'feature_blog_rankings' => array(
 			'name' => tra('Rankings'),
-            'description' => tra('enable Rankings for blog items'),
+            'description' => tra('Enable ranking of blog posts'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -1599,8 +1599,8 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_file_galleries_batch' => array(
 			'name' => tra('Batch uploading'),
-			'description' => tra('Direct import of local files into a File Gallery. Can handle large files. User can upload file via FTP to target folder'),
-			'hint' => tra('Use batch uploading to integrate large files into File Galleries'),
+			'description' => tra('Direct import of local files into a file gallery. This method can handle large files. The user can upload files via FTP to the target folder'),
+			'hint' => tra('Use batch uploading to transfer large files to file galleries'),
 			'type' => 'flag',
 			'help' => 'Batch+Upload',
 			'default' => 'n',
@@ -1772,7 +1772,7 @@ function prefs_feature_list($partial = false)
 			'default' => '',
 		),
 		'feature_html_head_base_tag' => array(
-			'name' => tra('Add BASE tag in the page HEAD'),
+			'name' => tra('Add <base> tag in the page <head>'),
             'description' => tra('The &lt;base&gt; tag specifies a default address for all links on a page.'),
 			'type' => 'flag',
 			'default' => 'n',
@@ -1781,7 +1781,7 @@ function prefs_feature_list($partial = false)
 			'name' => tra('Site Logo and Title'),
             'description' => tra('use a Site Logo and Title'),
 			'type' => 'flag',
-			'warning' => tra('Expected to be migrated to modules entirely and made obsolete.'),
+			'warning' => tra('This setting is expected to be moved from here to the admin-modules page .'),
 			'default' => 'y',
 			'tags' => array('basic'),
 		),
@@ -1793,25 +1793,25 @@ function prefs_feature_list($partial = false)
 			'hint' => tra('Controls visibility of the left column of modules'),
 			'keywords' => tra('side bar'),
 			'options' => array(
-				'y' => tra('Only if module'),
+				'y' => tra('Only if one or more modules are assigned'),
 				'fixed' => tra('Always'),
-				'user' => tra('User Decides'),
+				'user' => tra('User decides'),
 				'n' => tra('Never'),
 			),
 			'default' => 'y',
 			'tags' => array('basic'),
 		),
 		'feature_right_column' => array(
-			'name' => tra('Right Column'),
+			'name' => tra('Right column'),
             'description' => tra(''),
 			'type' => 'list',
 			'help' => 'Users+Flip+Columns',
 			'hint' => tra('Controls visibility of the right column of modules'),
 			'keywords' => tra('side bar'),
 			'options' => array(
-				'y' => tra('Only if module'),
+				'y' => tra('Only if one or more modules are assigned'),
 				'fixed' => tra('Always'),
-				'user' => tra('User Decides'),
+				'user' => tra('User decides'),
 				'n' => tra('Never'),
 			),
 			'default' => 'y',
@@ -1829,7 +1829,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'list',
 			'options' => array(
 				'y' => tra('Use breadcrumbs module'),
-				'page' => tra('Top of center column (legacy mode)'),
+				'page' => tra('Top of center column'),
 				'n' => tra('None'),
 			),
 			'default' => 'y',
@@ -1850,7 +1850,7 @@ function prefs_feature_list($partial = false)
             'description' => tra(''),
 			'type' => 'list',
 			'options' => array(
-				'y' => tra('Top of page'),
+				'y' => tra('Extreme top of page, above the site logo, etc'),
 				'page' => tra('Top of center column'),
 				'n' => tra('None'),
 			),
@@ -1896,7 +1896,7 @@ function prefs_feature_list($partial = false)
 		'feature_layoutshadows' => array(
 			'name' => tra('Shadow layer'),
             'description' => tra(''),
-			'hint' => tra('Additional layers for shadows, rounded corners or other decorative styling'),
+			'hint' => tra('Additional div elements for shadows, radiused corners or other decorative styling'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -1909,7 +1909,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_jquery_autocomplete' => array(
 			'name' => tra('Autocomplete'),
-			'description' => tra('Provides various drop-down menus on many text input boxes for page names, user names, groups, tags etc.'),
+			'description' => tra('Provides various dropdown menus on many text input boxes for page names, user names, groups, tags, etc.'),
 			'type' => 'flag',
             'help' => 'JQuery#Autocomplete',
             'dependencies' => array(
@@ -1926,14 +1926,14 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_jquery_reflection' => array(
 			'name' => tra('Reflection'),
-            'description' => tra('Allows images to have a reflection effect below them. Used inside the Plugin Img with the parameter class=reflect'),
+            'description' => tra('Creates a reflection under an image. Used in Plugin Img with the parameter "class=reflect"'),
 			'type' => 'flag',
 			'help' => 'JQuery#Reflection',
 			'default' => 'n',		// reflection effects on images
 		),
 		'feature_jquery_ui' => array(
 			'name' => tra('JQuery UI'),
-            'description' => tra('Include jQuery UI library. Enables many user interface features.'),
+            'description' => tra('Include jQuery UI library. Enables a number of interface features.'),
 			'type' => 'flag',
 			'help' => 'JQuery#UI',
 			'default' => 'y',				// include UI lib for more effects
@@ -1974,21 +1974,21 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_jquery_validation' => array(
 			'name' => tra('Validation'),
-            'description' => tra('Provides various validation possibilities like in Trackers.'),
+            'description' => tra('Provides various validation possibilities such as for trackers.'),
 			'type' => 'flag',
 			'help' => 'JQuery#Validation',
 			'default' => 'y',		// validation on Trackers etc
 		),
 		'feature_jquery_carousel' => array(
 			'name' => tra('jQuery Infinite Carousel'),
-            'description' => tra('Provides a slideshow effect (like an image carousel) for file galleries. Used in Plugin Carousel'),
+            'description' => tra('Creates a slideshow (like an image carousel) for file galleries. Used in Plugin Carousel'),
 			'type' => 'flag',
 			'help' => 'PluginCarousel',
 			'default' => 'n',		// slideshow/carousel for file gals etc
 		),
 		'feature_jquery_tablesorter' => array(
 			'name' => tra('jQuery Sortable Tables'),
-			'description' => tra('Provides an interactive way to sort and filter data in tables produced with Plugin FancyTable and Plugin TrackerList, as well as other administrative tables used in Tiki.'),
+			'description' => tra('Provides an interactive way to sort and filter data in tables produced with Plugin FancyTable and Plugin TrackerList, as well as administrative tables.'),
 			'type' => 'flag',
 			'help' => 'JQuery#TableSorter',
 			'warning' => tra('This feature can cause problems with JS minify on some systems.'),
@@ -1996,7 +1996,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_jquery_media' => array(
 			'name' => tra('jQuery Media'),
-            'description' => tra('It provides a Media Player which can be used in wiki pages or any other wiki-syntax enabled feature to play a FLV or MP3 file, or any other type of media file, like MP4, SWF, AVI, WMV, RAM, MOV, MPEG, PDF, ... It calls on a flash based open source media player to play them. Used in Plugin MediaPlayer'),
+            'description' => tra('Provides a media player via Plugin MediaPlayer that can be used in wiki pages or other wiki text area to play media files including .flv, .mp3, .mp4, .swf, .avi, .wmv, .ram, .mov, .mpeg, and .pdf. A Flash-based open source media player is used.'),
 			'type' => 'flag',
 			'help' => 'PluginMediaPlayer',
 			'default' => 'n',
@@ -2011,14 +2011,14 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_jquery_zoom' => array(
 			'name' => tra('jQuery Zoom'),
-            'description' => tra('Provides the capability to zoom in images on mouseover or mousedown. Used inside the Plugin Img with the parameter thumb=zoombox'),
+            'description' => tra('Enables zoom in images on mouseover or click. Used in Plugin Img with the parameter \"thumb=zoombox\"'),
 			'type' => 'flag',
 			'help' => 'PluginImg#Zoombox',
 			'default' => 'n',
 		),
 		'feature_tabs' => array(
 			'name' => tra('Use Tabs'),
-			'description' => tra('Makes pages shorter by splitting the content in different tabs'),
+			'description' => tra('Separates page content into tabbed panels'),
 			'type' => 'flag',
 			'default' => 'y',
 			'tags' => array('basic'),
@@ -2050,7 +2050,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_templates' => array(
 			'name' => tra('Wiki content templates'),
-            'description' => tra('Predefined content for a wiki page'),
+            'description' => tra('Prewritten content (probably partial content) for a wiki page'),
 			'type' => 'flag',
 			'keywords' => tra('template'),
 			'help' => 'Content+Template',
@@ -2059,7 +2059,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_warn_on_edit' => array(
 			'name' => tra('Warn on edit conflict'),
-			'description' => tra('Tiki will warn users who attempt to edit a page that another user is currenly editing.'),
+			'description' => tra('Provide a warning to a user who attempts to edit a page that it is currently being edited by another user.'),
             'type' => 'flag',
 			'default' => 'y',
 			'tags' => array('basic'),
@@ -2072,13 +2072,13 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_footnotes' => array(
 			'name' => tra('Footnotes'),
-            'description' => tra('Create private notes for a page that are visible only by the author.'),
+            'description' => tra('Enable creating private notes for a page that are visible only to the author.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_wiki_allowhtml' => array(
 			'name' => tra('Allow HTML'),
-            'description' => tra('Per-page option: HTML in Wiki Pages is parsed by the browser, instead of HTML tags being displayed as typed.'),
+            'description' => tra('Per-page option: HTML tags are used to create elements of the wiki page, instead of being displayed as code.'),
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
@@ -2092,7 +2092,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_sandbox' => array(
 			'name' => tra('Sandbox'),
-            'description' => tra('A special wiki page for testing. Users can edit, but not save the Sandbox.'),
+            'description' => tra('A special wiki page for testing that can edited but not permanently saved.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -2111,7 +2111,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_pictures' => array(
 			'name' => tra('Pictures'),
-            'description' => tra('Allow users to upload images (pictures) to a page.'),
+            'description' => tra('Allow users to upload images to a page.'),
 			'type' => 'flag',
 			'help' => 'Wiki-Syntax+Images',
 			'default' => 'y',
@@ -2125,7 +2125,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wikiwords' => array(
 			'name' => tra('WikiWords'),
-            'description' => tra('Automatically convert words with UpPeR and LoWeR-case letters into wiki links.'),
+            'description' => tra('Automatically convert \"CamelCase\" words into wiki links.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -2163,7 +2163,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_page_contribution' => array(
 			'name' => tra('View page contributions by author'),
-            'description' => tra('Visualize the contributions of different authors made to a wiki page'),
+            'description' => tra('Visualize the contributions that different authors have made to a wiki page'),
 			'type' => 'flag',
 			'dependencies' => array (
 				'feature_history'
@@ -2181,7 +2181,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_source' => array(
 			'name' => tra('View source'),
-            'description' => tra('enable viewing the source of Wiki pages'),
+            'description' => tra('Enable viewing the source of wiki pages'),
 			'type' => 'flag',
 			'default' => 'y',
 			'tags' => array('basic'),
@@ -2205,7 +2205,7 @@ function prefs_feature_list($partial = false)
 			'tags' => array('basic'),
 		),
 		'feature_likePages' => array(
-			'name' => tra('Similar (like pages)'),
+			'name' => tra('Similar pages'),
             'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
@@ -2218,14 +2218,14 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_structure' => array(
 			'name' => tra('Structures'),
-            'description' => tra('Structures allow grouping many wiki pages with hierarchy, a common navigation bar and the option to print them all together as a single html'),
+            'description' => tra('Structures allow grouping any number of wiki pages in a hierarchy, with a common navigation bar and the option to print them all together as a single HTML document'),
 			'type' => 'flag',
 			'help' => 'Structure',
 			'default' => 'n',
 		),
 		'feature_wiki_structure_drilldownmenu' => array(
-			'name' => tra('Structures Drill Down Menu'),
-            'description' => tra('Ajax style drill down menu for structures'),
+			'name' => tra('Structures drill down menu'),
+            'description' => tra('Ajax-style menu in which the user moves through the page hierarchy by clicking to reveal the next level down'),
 			'type' => 'flag',
 			'help' => 'Structure',
 			'keywords' => 'wiki ajax structure',
@@ -2236,7 +2236,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_open_as_structure' => array(
 			'name' => tra('Open page as structure'),
-            'description' => tra('Opens the structure heading for structure pages, even if no structure parameter is given in the URL'),
+            'description' => tra('Open a page within its structure (with structure navigation, etc.), even if no structure parameter is given in the URL'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -2248,7 +2248,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_categorize_structure' => array(
 			'name' => tra('Categorize structure pages together'),
-            'description' => tra('Group new pages in the structure under the same category as the root page of that structure'),
+            'description' => tra('Place new pages of a structure in the same category as the structure\'s root page'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -2295,28 +2295,28 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_wiki_userpage_prefix' => array(
-			'name' => tra('UserPage prefix'),
-			'description' => tra('All user pages share a common prefix. The concatenation of the prefix and the username will generate the page name. The prefix cannot be empty.'),
+			'name' => tra('Userpage prefix'),
+			'description' => tra('All userpages share a common prefix. The page name will be a concatenation of the prefix and the username. A prefix is required.'),
 			'type' => 'text',
 			'size' => '40',
 			'default' => 'User:',
 		),
 		'feature_wiki_usrlock' => array(
 			'name' => tra('Users can lock pages'),
-            'description' => tra('permit users to lock individual pages'),
+            'description' => tra('Enable users to lock pages and so prevent others from editing them'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_wiki_multiprint' => array(
 			'name' => tra('MultiPrint'),
-            'description' => tra('Permit printing of multiple Wiki pages as well as entire structures of wiki pages as a book in a single html'),
+            'description' => tra('Enable printing of multiple wiki pages as well as an entire structure of wiki pages as a book in a single HTML document'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 
 		'feature_wiki_print' => array(
 			'name' => tra('Print'),
-            'description' => tra('enable printing of the Wiki'),
+            'description' => tra('Provide a print icon and layout of the wiki page formatted for printing'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -2339,13 +2339,13 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_dump' => array(
 			'name' => tra('Dumps'),
-            'description' => tra('allow dumping the Site into a downloadable archive'),
+            'description' => tra('Enable exporting the site as a downloadable archive'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_wiki_mandatory_category' => array(
 			'name' =>  tra('Wiki:').' '.tra('Force and limit categorization to within subtree of'),
-			'description' => tra('If you get an error message indicating a mandatory category is required when editing a wiki page, this is the option to blame. Set it to None.'),
+			'description' => tra('If an error message indicates a mandatory category is required when editing a wiki page, set this option to "None".'),
 			'type' => 'list',
 			'options' => $catree,
 			'dependencies' => array(
@@ -2356,7 +2356,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_image_gallery_mandatory_category' => array(
 			'name' =>  tra('Image Gallery:').' '.tra('Force and limit categorization to within subtree of'),
-			'description' => tra('If you get an error message indicating a mandatory category is required when editing an image (in an image gallery), this is the option to blame. Set it to None.'),
+			'description' => tra('If an error message indicates a mandatory category is required when editing an image (in an image gallery), set this option to "None".'),
 			'type' => 'list',
 			'options' => $catree,
 			'dependencies' => array(
@@ -2366,14 +2366,14 @@ function prefs_feature_list($partial = false)
 			'default' => -1,
 		),
 		'feature_wiki_show_hide_before' => array(
-			'name' => tra('Show/Hide before Headings'),
-            'description' => tra('Display show/hide icon displayed before headings'),
+			'name' => tra('Show/hide icon before headings'),
+            'description' => tra('Display before headings an icon to show or hide the content that follows the headings'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_wiki_argvariable' => array(
 			'name' => tra('Wiki argument variables'),
-			'description' => tra('Allow to write request variables inside wiki content using {{paramname}} or {{paramname|default}} - special case {{page}} {{user}}'),
+			'description' => tra('Allow writing request variables in wiki content using {{paramname}} or {{paramname|default}} - special case {{page}} {{user}}'),
 			'type' => 'flag',
 			'help' => 'Advanced+Wiki+Syntax+usage+examples',
 			'default' => 'n',
@@ -2382,7 +2382,7 @@ function prefs_feature_list($partial = false)
 			'name' => tra('Use challenge/response authentication'),
             'description' => tra(''),
 			'type' => 'flag',
-			'hint' => tra('Confirm that the Admin account has a valid email address or you will not be permitted to login'),
+			'hint' => tra('Confirm that the Admin account has a valid email address or you will not be able to log in'),
 			'default' => 'n',
 		),
 		'feature_show_stay_in_ssl_mode' => array(
@@ -2607,14 +2607,14 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_fixed_width' => array(
 			'name' => tra('Fixed width'),
-            'description' => tra('Constrains the width of the site.'),
+            'description' => tra('Sets the width of the site contents display.'),
 			'type' => 'flag',
 			'tags' => array('basic'),
 			'default' => 'y',
 		),
 		'feature_socialnetworks' => array(
 			'name' => tra('Social networks'),
-			'description' => tra('Integration with different social networks like Twitter or Facebook'),
+			'description' => tra('Integration with social applications and networks like Twitter and Facebook'),
 			'help' => 'Social+Networks',
 			'type' => 'flag',
 			'keywords' => 'social networks',
@@ -2633,7 +2633,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_category_transition' => array(
 			'name' => tra('Category Transition'),
-			'description' => tra('Enables transitions on objects between different categories. Transitions will create a document workflow.'),
+			'description' => tra('Enables transitions for objects between different categories. Transitions will create a document workflow.'),
 			'type' => 'flag',
 			'help' => 'Category+Transitions',
 			'default' => 'n',
@@ -2652,26 +2652,26 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_invite' => array(
 			'name' => tra('Invite users'),
-			'description' => tra('Allow users to invite new users by mail to register on this tiki'),
+			'description' => tra('Allow users to invite new users by mail to register at this site'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_alternate_registration_page' => array(
 			'name' => tra('Alternate Registration Page'),
-			'description' => tra('Makes any access to tiki-register.php redirect to an alternate page for registration.'),
+			'description' => tra('Redirects requests for tiki-register.php to an alternate registration page.'),
 			'type' => 'text',
 			'default' => 'tiki-register.php',
 		),
 		'feature_loadbalancer' => array(
-			'name' => tra('Load Balancer'),
-				'description' => tra('Enable this only if the server is behind a load balancer (or reverse proxy), this allow tiki to log the IP of the user, instead of the IP of the proxy server'),
+			'name' => tra('Load balancer'),
+				'description' => tra('Activate this only if the server is behind a load balancer (or reverse proxy). This enables logging the IP of the user rather than the IP of the proxy server'),
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('experimental'),
 		),
 		'feature_port_rewriting' => array(
-			'name' => tra('Tiki is behind a Frontend-Proxy/Load-Balancer which rewrites ports'),
-				'description' => tra('Enable this only if the server is behind some Frontend-Proxy/Load-Balancer (or reverse proxy) which rewrites ports. This allows Tiki to use the HTTP_X_FORWARDED_PROTO parameter set by the proxy in order to provide correct links.'),
+			'name' => tra('Tiki is behind a frontend-proxy/load-balancer that rewrites ports'),
+				'description' => tra('Activate this only if the server is behind a frontend-proxy/load-balancer (or reverse proxy) that rewrites ports. This enables Tiki to use the HTTP_X_FORWARDED_PROTO parameter set by the proxy, to provide correct links.'),
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('experimental'),
@@ -2686,8 +2686,8 @@ function prefs_feature_list($partial = false)
 			'tags' => array('experimental'),
 		),
 		'feature_syntax_highlighter' => array(
-			'name' => tra('Syntax Highlighter (CodeMirror)'),
-            'description' => tra('Enables syntax highlighting with the use of CodeMirror'),
+			'name' => tra('Syntax highlighter (CodeMirror)'),
+            'description' => tra('Enables syntax highlighting provided by CodeMirror'),
 			'type' => 'flag',
 			'help' => 'Syntax+Highlighter',
 			'keywords' => 'Code Mirror Syntax Highlighter',
@@ -2695,8 +2695,8 @@ function prefs_feature_list($partial = false)
 			'tags' => array('experimental'),			
 		),
 		'feature_syntax_highlighter_theme' => array(
-			'name' => tra('Syntax Highlighter (CodeMirror) Theme'),
-            'description' => tra('Code Mirror Themes (clear cache when you change)'),
+			'name' => tra('Syntax highlighter (CodeMirror) Theme'),
+            'description' => tra('CodeMirror themes (clear cache after changing)'),
 			'help' => 'Syntax+Highlighter',
 			'type' => 'list',
 			'tags' => array('experimental'),
@@ -2789,7 +2789,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_htmlfeed' => array(
 			'name' => tra('HTML Feed'),
-            'description' => tra('A way to push and pull HTML bits around from one site to another'),
+            'description' => tra('A way to transfer HTML content from one Tiki site to another'),
 			'type' => 'flag',
 			'help' => 'HtmlFeed',
 			'keywords' => 'html feed ads ad share',
@@ -2809,7 +2809,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_jcapture' => array(
 			'name' => tra('jCapture Screencast'),
-            'description' => tra('Use jCapture applet to create screencasts and capture screenshots, store them in a file gallery and show them directly into the wiki page'),
+            'description' => tra('Use jCapture applet to create screencasts and capture screenshots, store them in a file gallery, and show them directly in a wiki page'),
 			'type' => 'flag',
 			'help' => 'jCapture',
 			'default' => 'n',				// include UI lib for more effects
@@ -2819,13 +2819,13 @@ function prefs_feature_list($partial = false)
 			),
 		),
 		'feature_community_send_mail_join' => array(
-			'name' => tra('Send email notification to group leaders on user join'),
+			'name' => tra('Send an email notification to group leaders when a user joins'),
 			'type' => 'flag',
 			'help' => 'User+Preferences',
 			'default' => 'n',
 		),
 		'feature_community_send_mail_leave' => array(
-			'name' => tra('Send email notification to group leaders on user leave'),
+			'name' => tra('Send an email notification to group leaders when a user leaves'),
 			'type' => 'flag',
 			'help' => 'User+Preferences',
 			'default' => 'n',
@@ -2841,8 +2841,8 @@ function prefs_feature_list($partial = false)
 			'help' => 'Inline+comments',
 		),
 		'feature_hidden_links' => array(
-			'name' => tra('Hidden anchors/links shown on mouseover of headers'),
-			'description' => tra('This is useful to share a URL to exact location on the page.'),
+			'name' => tra('Display hidden anchor on mouseover of headings'),
+			'description' => tra('This is useful for sharing the URL to an exact location on a page.'),
 			'type' => 'flag',
 			'default' => 'y',
 			'tags' => array('advanced'),
@@ -2863,7 +2863,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_theme_control_parentcategory' => array(
 			'name' => tra('Parent category of theme control categories'),
-			'description' => tra('Choose the parent category that contains categories used in theme control'),
+			'description' => tra('Choose the parent category of categories used for theme control'),
 			'type' => 'list',
 			'options' => $catlist,
 			'dependencies' => array(
@@ -2872,33 +2872,33 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_theme_control_autocategorize' => array(
-			'name' => tra('Automatically select theme control category of current theme when categorizing'),
-			'description' => tra('When creating or editing object, automatically check the category that matches the theme control category of the current theme'),
+			'name' => tra('Automatically select the theme-control category of the current theme when categorizing'),
+			'description' => tra('When creating or editing an object, automatically select the category that matches the theme-control category of the current theme'),
 			'type' => 'flag',
 			'dependencies' => array('feature_theme_control_savesession', 'feature_theme_control_parentcategory'),
 			'default' => 'n',
 		),
 		'feature_lang_nonswitchingpages' => array(
-			'name' => tra('List of page names that always redirect to home page on language switching'),
-			'description' => tra('List of page names that always redirect to home page on language switching'),
+			'name' => tra('List of names of pages that always redirect to the homepage when the language is switched'),
+			'description' => tra('List of names of pages that always redirect to the homepage when the language is switched'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'feature_lang_nonswitchingpages_names' => array(
-			'name' => tra('Enter the multiple page names with comma separated'),
-			'description' => tra('List of page names that always redirect to home page on language switching'),
+			'name' => tra('Multiple page names may be entered, separated by commas'),
+			'description' => tra('List of names of pages that always redirect to the homepage when the language is switched'),
 			'type' => 'textarea',
 			'default' => 'n',
 		),
 		'feature_wizard_user' => array(
 			'name' => tra('User Wizard'),
-			'description' => tra('Wizard to help users to set up their basic settings and details'),
+			'description' => tra('Wizard to help users set up their basic settings and account details'),
 			'help' => 'User+Wizard',
 			'type' => 'flag',
 			'default' => 'n',
 		),		
 		'feature_userWizardDifferentUsersFieldIds' => array(
-			'name' => tra('Ask different fields in the User Wizard than the ones in Registration'),
+			'name' => tra('Present different input fields in the User Wizard than are in the Registration form'),
 			'description' => tra('Ask a different set of fields for the User Details section in the User Wizard than the ones shown in the Registration form'),
 			'help' => 'User+Wizard',
 			'type' => 'flag',

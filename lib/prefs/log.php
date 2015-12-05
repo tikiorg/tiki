@@ -17,7 +17,7 @@ function prefs_log_list()
 		),
 		'log_tpl' => array(
 			'name' => tra('Smarty Template usage indicator'),
-			'description' => tra('Add HTML comment at start and end of each Smarty template (TPL)'),
+			'description' => tra('Add HTML comment at start and end of each Smarty template (.tpl file)'),
 			'hint' => tra('Use only for development, not in production because these warnings are added to emails as well, and visible to the users'),
 			'warning' => tra('You need to clear your Tiki template cache for this change to take effect'),
 			'type' => 'flag',
