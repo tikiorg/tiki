@@ -475,14 +475,13 @@ if ( $prefs['feature_jquery_ui'] == 'y' ) {
 			'select { font-size: 16px; padding: 4px; border-color:#fff; /* this forces chrome to apply the font-size */ }'
 		);
 	}
-	if ( $prefs['jquery_fitvidjs'] == 'y' ) {
-		$headerlib->add_jsfile('vendor/jquery/plugins/fitvidjs/jquery.fitvids.js')
-					->add_jq_onready('$("article").fitVids();');		// apply fitvid to any video in the middle section
-	}
 	$headerlib->add_jsfile('vendor/jquery/jquery-timepicker-addon/dist/jquery-ui-timepicker-addon.js');
 	$headerlib->add_cssfile('vendor/jquery/jquery-timepicker-addon/dist/jquery-ui-timepicker-addon.css');
 }
-
+if ( $prefs['jquery_fitvidjs'] == 'y' ) {
+	$headerlib->add_jsfile('vendor/jquery/plugins/fitvidjs/jquery.fitvids.js')
+				->add_jq_onready('$("article").fitVids();');		// apply fitvid to any video in the middle section
+}
 if ( $prefs['feature_jquery_superfish'] == 'y' ) {
 	$headerlib->add_jsfile('vendor/jquery/plugins/superfish/dist/js/superfish.js');
 	$headerlib->add_jsfile('vendor/jquery/plugins/superfish/dist/js/supersubs.js');
