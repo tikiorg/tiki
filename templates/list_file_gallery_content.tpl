@@ -172,7 +172,7 @@
 								{else}
 									{assign var=propkey value="show_$propname"}
 								{/if}
-								{if isset($files[changes].$propname)}
+								{if not empty($files[changes].$propname)}
 									{if $propname == 'share' && isset($files[changes].share.data)}
 										{foreach item=tmp_prop key=tmp_propname from=$files[changes].share.data}
 											{$email[]=$tmp_prop.email}
@@ -181,10 +181,11 @@
 									{else}
 										{assign var=propval value=$files[changes].$propname}
 									{/if}
+								{else}
+									{$propval = ''}
 								{/if}
 								{* Format property values *}
-								{if isset($propname) and ($propname eq 'created' or $propname eq 'lastModif'
-									or $propname eq 'lastDownload')}
+								{if isset($propname) and ($propname eq 'created' or $propname eq 'lastModif' or $propname eq 'lastDownload')}
 									{if empty($propval)}
 										{assign var=propval value=''}
 									{else}
@@ -200,8 +201,7 @@
 									{assign var=propval value=$propval|nl2br}
 								{/if}
 
-								{if isset($gal_info.$propkey) and $propval neq '' and ( $gal_info.$propkey eq 'a'
-									or $gal_info.$propkey eq 'o' )}
+								{if isset($gal_info.$propkey) and ( $gal_info.$propkey eq 'a' or $gal_info.$propkey eq 'o' )}
 									<tr>
 										<th class="text-right">
 											{$fgal_listing_conf.$propname.name|escape}

@@ -2991,19 +2991,23 @@ class FileGalLib extends TikiLib
 				if ($prefs['auth_token_access'] == 'y') {
 					$query = 'select email, sum((maxhits - hits)) as visit, sum(maxhits) as maxhits  from tiki_auth_tokens where `parameters`=? group by email';
 					$share_result = $this->fetchAll($query, array('{"fileId":"'.$res['id'].'"}'));
-					$res['share']['data'] = $share_result;
-					$tmp = array();
-					if (is_array($res['share']['data'])) {
-						foreach ($res['share']['data'] as $data) {
-							$tmp[] = $data['email'];
+					if ($share_result) {
+						$res['share']['data'] = $share_result;
+						$tmp = array();
+						if (is_array($res['share']['data'])) {
+							foreach ($res['share']['data'] as $data) {
+								$tmp[] = $data['email'];
+							}
 						}
+						$string_share = implode(', ', $tmp);
+						$res['share']['string'] = substr($string_share, 0, 40);
+						if (strlen($string_share) > 40) {
+							$res['share']['string'] .= '...';
+						}
+						$res['share']['nb'] = count($share_result);
+					} else {
+						$res['share'] = null;
 					}
-					$string_share = implode(', ', $tmp);
-					$res['share']['string'] = substr($string_share, 0, 40);
-					if (strlen($string_share) >40) {
-						$res['share']['string'] .= '...';
-					}
-					$res['share']['nb'] = count($share_result);
 				}
 			} else {	// a gallery
 
