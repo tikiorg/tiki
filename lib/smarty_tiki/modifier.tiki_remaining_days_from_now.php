@@ -13,13 +13,13 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 
 /**
  * @param int $time future time to calculate number of day to go
- * @param string $format PHP date format for the displayed date set in $time. Use 'human' for automatic formatting
+ * @param string $format PHP date format for the displayed date set in $time.
  *
  * @return string
  */
 function smarty_modifier_tiki_remaining_days_from_now($time, $format)
 {
-	global $prefs, $tikilib;
+	global $tikilib;
 
 	$iNbDayBetween = ($time - $tikilib->now) / (60 * 60 * 24);
 
