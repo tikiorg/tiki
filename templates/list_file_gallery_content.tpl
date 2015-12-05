@@ -375,7 +375,7 @@
 							{else}
 								{assign var=propval value=$files[changes].nbBacklinks}
 								{assign var=fid value=$files[changes].id}
-								{assign var=propval value="<a class='ajaxtips' href='list-file_backlinks_ajax.php?fileId=$fid' rel='list-file_backlinks_ajax.php?fileId=$fid'>$propval</a>"}
+								{assign var=propval value="<a class='ajaxtips' href='list-file_backlinks_ajax.php?fileId=$fid' data-ajaxtips='list-file_backlinks_ajax.php?fileId=$fid'>$propval</a>"}
 							{/if}
 						{elseif $propname eq 'deleteAfter'}
 							{if empty($files[changes].deleteAfter)}

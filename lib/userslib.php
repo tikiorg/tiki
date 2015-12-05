@@ -2668,12 +2668,12 @@ class UsersLib extends TikiLib
 		$url = filter_out_sefurl($url);
 		$extra = '';
 		if ($prefs['feature_community_mouseover'] == 'y' && ($this->get_user_preference($auser, 'show_mouseover_user_info', 'y') == 'y' || $prefs['feature_friends'] == 'y')) {
-			$rel = TikiLib::lib('service')->getUrl(array(
+			$data = TikiLib::lib('service')->getUrl(array(
 				'controller' => 'user',
 				'action' => 'info',
 				'username' => $auser,
 			));
-			$extra .= ' rel="' . htmlspecialchars($rel, ENT_QUOTES) . '"';
+			$extra .= ' data-ajaxtips="' . htmlspecialchars($data, ENT_QUOTES) . '"';
 			$class .= ' ajaxtips';
 
 			if ($auser === $user) {
