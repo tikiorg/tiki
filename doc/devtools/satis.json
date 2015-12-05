@@ -1212,7 +1212,7 @@
 				"name": "jquery/plugins/timaeago",
 				"version": "1.4.3",
 				"dist": {
-					"url": "http://sohttps://github.com/rmm5t/jquery-timeago/archive/v1.4.3.zip",
+					"url": "https://github.com/rmm5t/jquery-timeago/archive/v1.4.3.zip",
 					"type": "zip"
 				}
 			}
