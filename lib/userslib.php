@@ -2682,9 +2682,11 @@ class UsersLib extends TikiLib
 				$title = tra('User Information');
 			}
 		} else if ($prefs['user_show_realnames'] == 'y') {
-			$title = $realn;
+			$class .= ' tips';
+			$title = tr('User') . ':' . $realn;
 		} else {
-			$title = $auser;
+			$class .= ' tips';
+			$title = tr('User') . ':' . $auser;
 		}
 
 		if (empty($prefs['urlOnUsername'])) {
