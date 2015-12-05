@@ -39,8 +39,8 @@
 			<fieldset>
 				<legend>{tr}Registration{/tr} &amp; {tr}Log in{/tr}</legend>
 				{preference name=allowRegister}
-				{preference name=validateUsers}
 				<div class="adminoptionboxchild" id="allowRegister_childcontainer">
+					{preference name=validateUsers}
 					{preference name=validateEmail}
 					{preference name=validateRegistration}
 					<div class="adminoptionboxchild" id="validateRegistration_childcontainer">
@@ -66,23 +66,23 @@
 					{/if}
 					{preference name=generate_password}
 					{preference name=http_referer_registration_check}
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel form-group">
-							<label for="registration_choices" class="col-sm-4 control-label">{tr}Users can select a group to join at registration:{/tr}</label>
-							<div class="col-sm-8 adminoptionlabel">
-								<select id="registration_choices" name="registration_choices[]" multiple="multiple" size="5" class="form-control">
-									{foreach key=g item=gr from=$listgroups}
-										{if $gr.groupName ne 'Anonymous'}
-											<option value="{$gr.groupName|escape}" {if $gr.registrationChoice eq 'y'} selected="selected"{/if}>{$gr.groupName|truncate:"52"|escape}</option>
-										{/if}
-									{/foreach}
-								</select>
-								<div class="help-block">{tr}By default, new users automatically join the Registered group{/tr}.</div>
-							</div>
+					<div class="adminoptionbox form-group">
+						<label for="registration_choices" class="col-sm-4 control-label">{tr}Users can select a group to join at registration:{/tr}</label>
+						<div class="col-sm-8 adminoptionlabel">
+							<select id="registration_choices" name="registration_choices[]" multiple="multiple" size="5" class="form-control">
+								{foreach key=g item=gr from=$listgroups}
+									{if $gr.groupName ne 'Anonymous'}
+										<option value="{$gr.groupName|escape}" {if $gr.registrationChoice eq 'y'} selected="selected"{/if}>{$gr.groupName|truncate:"52"|escape}</option>
+									{/if}
+								{/foreach}
+							</select>
+							<div class="help-block">{tr}By default, new users automatically join the Registered group{/tr}.</div>
 						</div>
+					</div>
 					{preference name=user_must_choose_group}
 					{preference name=url_after_validation}
-					{preference name=userTracker}
+				</div>
+				{preference name=userTracker}
 				<div class="adminoptionboxchild" id="userTracker_childcontainer">
 					{preference name=feature_userWizardDifferentUsersFieldIds}
 					<div class="adminoptionboxchild" id="feature_userWizardDifferentUsersFieldIds_childcontainer">
@@ -125,14 +125,14 @@
 					{preference name=https_external_links_for_users}
 				</div>
 
-				{preference name=rememberme}
-				<div class="adminoptionboxchild rememberme_childcontainer all always">
-					{preference name=remembertime}
-					{preference name=cookie_refresh_rememberme}
-				</div>
-
 				<fieldset>
 					<legend>{tr}Cookies{/tr}</legend>
+					{preference name=rememberme}
+					<div class="adminoptionboxchild rememberme_childcontainer all always">
+						{preference name=remembertime}
+						{preference name=cookie_refresh_rememberme}
+					</div>
+
 					{preference name=cookie_name}
 					{preference name=cookie_domain}
 					{preference name=cookie_path}
