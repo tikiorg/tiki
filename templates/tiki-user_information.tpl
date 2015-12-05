@@ -179,7 +179,7 @@
 					<div class="clearfix">
 						<div class="col-sm-8">
 							{if $userinfo.login eq $user}
-								<a class="link tips" href="tiki-view_tracker_item.php?view=+user&cookietab=2" title=":{tr}Change user information{/tr}">
+								<a class="link tips" href="tiki-view_tracker_item.php?view=+user&amp;cookietab=2" title=":{tr}Change user information{/tr}">
 									{icon name='wrench' align="right" alt="{tr}Change user information{/tr}"}
 								</a>
 							{/if}
@@ -293,7 +293,7 @@
 							{section name=ix loop=$user_forum_comments}
 								<div>
 									<div>
-										<a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_comments[ix].threadId}&forumId={$user_forum_comments[ix].object}">
+										<a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_comments[ix].threadId}&amp;forumId={$user_forum_comments[ix].object}">
 											{$user_forum_comments[ix].title|escape}
 										</a>
 									</div>
@@ -308,7 +308,7 @@
 							{section name=ix loop=$user_forum_topics}
 								<div>
 									<div>
-										<a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_topics[ix].threadId}&forumId={$user_forum_topics[ix].object}">
+										<a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_topics[ix].threadId}&amp;forumId={$user_forum_topics[ix].object}">
 											{$user_forum_topics[ix].title|escape}
 										</a>
 									</div>
