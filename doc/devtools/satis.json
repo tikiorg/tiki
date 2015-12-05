@@ -1209,6 +1209,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "jquery/plugins/timaeago",
+				"version": "1.4.3",
+				"dist": {
+					"url": "http://sohttps://github.com/rmm5t/jquery-timeago/archive/v1.4.3.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "jquery/plugins/treetable",
 				"version": "3.0.1",
 				"dist": {
