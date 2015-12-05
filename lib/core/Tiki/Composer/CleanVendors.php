@@ -29,7 +29,6 @@ class CleanVendors
 		'.gitignore',
 		'.gitmodules',
 		'.jshintrc',
-		'build',
 		'bower.json',
 		'changelog.txt',
 		'ChangeLog',
@@ -38,48 +37,6 @@ class CleanVendors
 		'Gruntfile.js',
 		'Gruntfile.coffee',
 		'package.json'
-	];
-
-	private static $vendorDirs = [
-		'aFarkas/html5shiv',
-		'alvarotrigo/fullpage.js',
-		'bafs/testify',
-		'ckeditor/ckeditor',
-		'codemirror/codemirror',
-		'cwspear/bootstrap-hover-dropdown',
-		'dompdf/dompdf',
-		'ezyang/htmlpurifier',
-		'fivefilters/php-readability',
-		'flp/flp',
-		'fortawesome/font-awesome',
-		'gabordemooij/redbean',
-		'jcapture-applet/jcapture-applet',
-		'jquery/jquery-s5',
-		'jquery/jquery-sheet',
-		'jquery/jquery-timepicker-addon',
-		'jquery/jquery-ui-themes',
-		'jquery/md5',
-		'jquery/minicart',
-		'jquery/plugins/anythingslider',
-		'jquery/plugins/colorbox',
-		'jquery/plugins/superfish',
-		'jquery/plugins/form',
-		'jquery/plugins/jquery-validation',
-		'jquery/plugins/jquery-json',
-		'jquery/plugins/treetable',
-		'jquery/plugins/zoom',
-		'mediumjs/mediumjs',
-		'mikey179/vfsStream',
-		'oyejorge/less.php',
-		'phenx/php-font-lib',
-		'smarty/smarty',
-		'twitter/bootstrap',
-		'undojs/undojs',
-		'wikilingo/codemirror',
-		'wikilingo/wikilingo',
-		'zetacomponents/base',
-		'zetacomponents/webdav',
-
 	];
 
 	public static function clean(Event $event)
@@ -334,10 +291,12 @@ class CleanVendors
 	private static function removeStandard ($base)
 	{
 		$fs = new FileSystem;
-		foreach (self::$vendorDirs as $dir) {
-			if (is_dir($base . $dir)) {
+		$vendorDirs = glob($base . '*/*', GLOB_ONLYDIR);
+
+		foreach ($vendorDirs as $dir) {
+			if (is_dir($dir)) {
 				foreach (self::$standardFiles as $file) {
-					$path = $base . $dir . '/' . $file;
+					$path = $dir . '/' . $file;
 					if (file_exists($path) || is_dir($path)) {
 						$fs->remove($path);
 					}
