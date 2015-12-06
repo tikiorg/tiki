@@ -29,7 +29,7 @@
 					</p>
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2">
-							<a href="http://tiki.org/display524" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
+							<a href="http://tiki.org/display524" class="thumbnail internal" data-box="box" title="{tr}Click to expand{/tr}">
 								<img src="img/profiles/profile_thumb_collaborative_community.png" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
 							</a>
 							<div class="small text-center">
@@ -58,7 +58,7 @@
 					</p>
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2">
-							<a href="http://tiki.org/display525" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
+							<a href="http://tiki.org/display525" class="thumbnail internal" data-box="box" title="{tr}Click to expand{/tr}">
 								<img src="img/profiles/profile_thumb_company_intranet.png" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
 							</a>
 							<div class="small text-center">
@@ -89,7 +89,7 @@
 					</p>
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2">
-							<a href="http://tiki.org/display526" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
+							<a href="http://tiki.org/display526" class="thumbnail internal" data-box="box" title="{tr}Click to expand{/tr}">
 								<img src="img/profiles/profile_thumb_personal_blog_and_profile.png" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
 							</a>
 							<div class="small text-center">
@@ -118,7 +118,7 @@
 					</p>
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2">
-							<a href="http://tiki.org/display527" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
+							<a href="http://tiki.org/display527" class="thumbnail internal" data-box="box" title="{tr}Click to expand{/tr}">
 								<img src="img/profiles/profile_thumb_small_org_web_presence.png" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
 							</a>
 							<div class="small text-center">

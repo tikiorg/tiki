@@ -144,7 +144,7 @@ class Tracker_field_Image extends Tracker_Field_File
 					$rel = '['.$this->getConfiguration('fieldId').']';
     				break;
 				}
-				$pre = "<a href=\"$val\" rel=\"shadowbox$rel;type=img\">";
+				$pre = "<a href=\"$val\" data-box=\"shadowbox$rel;type=img\">";
 			}
 			if ( $this->getOption('xListSize') || $this->getOption('yListSize') || $this->getOption('xDetailSize') || $this->getOption('yDetailSize')) {
 				$image_size_info = getimagesize($val);

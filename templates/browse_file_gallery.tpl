@@ -183,11 +183,11 @@
 									<a {$link}
 										{if $prefs.feature_shadowbox eq 'y' && empty($filegals_manager)}
 											{if $imagetypes eq 'y' }
-													rel="box[g]"
+													data-box="box[g]"
 											{elseif $key_type eq 'text/html'}
-													rel="shadowbox[gallery];type=iframe"
+													data-box="shadowbox[gallery];type=iframe"
 											{elseif $key_type eq 'application/x-shockwave-flash'}
-													rel="shadowbox[gallery];type=flash"
+													data-box="shadowbox[gallery];type=flash"
 											{/if}
 										{/if}
 										{if $over_infos neq ''}

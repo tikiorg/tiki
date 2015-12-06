@@ -43,7 +43,7 @@ function smarty_function_fileinfo($params, $smarty)
 		$key_type = substr($infos['filetype'], 0, 9);
 		$tmp = '<a href="'.$url_path.'tiki-download_file.php?fileId='.$params['_id'].'&amp;display"';
 		if ( $prefs['feature_shadowbox'] == 'y' ) {
-			$tmp .= ' rel="shadowbox['.htmlentities($params['_link']).'];type=' . ( in_array($key_type, array('image/png', 'image/jpe', 'image/gif')) ? 'img' : 'iframe' ) . '"';
+			$tmp .= ' data-box="shadowbox['.htmlentities($params['_link']).'];type=' . ( in_array($key_type, array('image/png', 'image/jpe', 'image/gif')) ? 'img' : 'iframe' ) . '"';
 		}
 		$return = $tmp.'>'.$return.'</a>';
 		unset($tmp);

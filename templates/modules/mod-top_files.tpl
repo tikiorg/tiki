@@ -5,7 +5,7 @@
 	{section name=ix loop=$modTopFiles}
 		<li>
 		{if $prefs.feature_shadowbox eq 'y' and $modTopFiles[ix].type|substring:0:5 eq 'image'}
-			<a class="linkmodule" href="{$modTopFiles[ix].fileId|sefurl:preview}" rel="shadowbox[modTopFiles];type=img">
+			<a class="linkmodule" href="{$modTopFiles[ix].fileId|sefurl:preview}" data-box="shadowbox[modTopFiles];type=img">
 		{else}
 			<a class="linkmodule" href="{$modTopFiles[ix].fileId|sefurl:file}">
 		{/if}

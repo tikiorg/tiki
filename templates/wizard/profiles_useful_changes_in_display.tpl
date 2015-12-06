@@ -30,7 +30,7 @@
 					</a>
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2">
-							<a href="http://tiki.org/display541" class="thumbnail internal" rel="box" title="{tr}Click to expand{/tr}">
+							<a href="http://tiki.org/display541" class="thumbnail internal" data-box="box" title="{tr}Click to expand{/tr}">
 								<img src="img/profiles/profile_thumb_slideshow_demo.png" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
 							</a>
 							<div class="mini text-center">
