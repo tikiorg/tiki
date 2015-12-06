@@ -1200,8 +1200,22 @@ function wikiplugin_img( $data, $params )
 				$imgtarget = ' target="_blank"';
 			}
 		}
-		// rel
-		!empty($imgdata['rel']) ? $linkrel = ' rel="'.$imgdata['rel'].'"' : $linkrel = '';
+		// rel or data-box
+		if (!empty($imgdata['rel'])) {
+			$box = ['box', 'type=', 'slideshow', 'zoom'];
+			foreach ($box as $btype) {
+				if (strpos($imgdata['rel'], $btype) !== false) {
+					$attr = 'data-box';
+					break;
+				}
+			}
+			if (!isset($attr)) {
+				$attr = 'rel';
+			}
+			$linkrel = ' ' . $attr . '="'.$imgdata['rel'].'"';
+		} else {
+			$linkrel = '';
+		}
 		// title
 		!empty($imgtitle) ? $linktitle = $imgtitle : $linktitle = '';
 
