@@ -49,7 +49,7 @@ if ($output["data"]=="EMPTY") {
 		$desc .= $tmp['description'];
 	} else {
 		$title = (!empty($prefs['feed_file_galleries_title'])) ? $prefs['feed_file_galleries_title'] : tra("Tiki RSS feed for file galleries");
-		$desc = (!empty($prefs['feed_file_galleries_desc'])) ? $prefs['feed_file_galleries_desc'] : tra("Last files uploaded to the file galleries.");
+		$desc = (!empty($prefs['feed_file_galleries_desc'])) ? $prefs['feed_file_galleries_desc'] : tra("Latest files uploaded to the file galleries.");
 	}
 	$descId = "description";
 	$dateId = "lastModif";

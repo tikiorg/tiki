@@ -101,7 +101,7 @@
 						<option value="hits_desc" {if $sort_mode eq 'hits_desc'}selected="selected"{/if}>{tr}Hits (desc){/tr}</option>
 						<option value="hits_asc" {if $sort_mode eq 'hits_asc'}selected="selected"{/if}>{tr}Hits (asc){/tr}</option>
 						<option value="created_desc" {if $sort_mode eq 'created_desc'}selected="selected"{/if}>{tr}Creation Date (desc){/tr}</option>
-						<option value="created_asc" {if $sort_mode eq 'created_asc'}selected="selected"{/if}>{tr}Creation Date (asc){/tr}</option>
+						<option value="created_asc" {if $sort_mode eq 'created_asc'}selected="selected"{/if}>{tr}Creation date (asc){/tr}</option>
 						<option value="lastModif_desc" {if $sort_mode eq 'lastModif_desc'}selected="selected"{/if}>{tr}Last updated (desc){/tr}</option>
 						<option value="lastModif_asc" {if $sort_mode eq 'lastModif_asc'}selected="selected"{/if}>{tr}Last updated (asc){/tr}</option>
 					</select>

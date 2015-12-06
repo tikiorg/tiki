@@ -581,7 +581,7 @@ function prefs_wiki_list($partial = false)
 			'default' => '250',
 		),
 		'wiki_3d_feed_animation_interval' => array(
-			'name' => tra('Feed animation interval (milisecs)'),
+			'name' => tra('Feed animation interval (miliseconds)'),
 			'type' => 'text',
 			'size' => '3',
 			'filter' => 'digits',

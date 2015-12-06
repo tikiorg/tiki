@@ -72,8 +72,8 @@ function wikiplugin_freetagged_info()
 				'default' => 'created_desc',
 				'options' => array (
 					array('text' => tra(''), 'value' => ''),
-					array('text' => tra('Comments Locked Ascending'), 'value' => 'comments_locked_asc'),
-					array('text' => tra('Comments Locked Descending'), 'value' => 'comments_locked_desc'),
+					array('text' => tra('Comments locked Ascending'), 'value' => 'comments_locked_asc'),
+					array('text' => tra('Comments locked Descending'), 'value' => 'comments_locked_desc'),
 					array('text' => tra('Created Ascending'), 'value' => 'created_asc'),
 					array('text' => tra('Created Descending'), 'value' => 'created_desc'),
 					array('text' => tra('Description Ascending'), 'value' => 'description_asc'),

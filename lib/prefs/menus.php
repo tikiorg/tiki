@@ -22,7 +22,7 @@ function prefs_menus_list()
 		),
 		'menus_item_names_raw_teaser' => array(
 			'name' => tra('Allow HTML in menu option names and URLs'),
-			'description' => tra('If enabled, menu option names and URL-s are treated as HTML content and they are not escaped (no replacement of HTML special characters). This allows the use of HTML to insert images for example. Code must be valid. This allows menu item editors to put arbitrary HTML; only enable if you know what you are doing.'),
+			'description' => tra('If enabled, menu option names and URLs are treated as HTML content and they are not escaped (there is no replacement of HTML special characters). This allows the use of HTML for inserting images, for example (the code must be valid). This also allows menu item editors to input arbitrary HTML; only enable this if the risks are understood and accepted.'),
 			'help' => 'Menus',
 			'type' => 'flag',
 			'default' => 'n',

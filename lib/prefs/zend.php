@@ -54,7 +54,7 @@ function prefs_zend_list()
 			'default' => '',
 		),
 		'zend_mail_handler' => array(
-			'name' => tra('Mail Sender'),
+			'name' => tra('Mail sender'),
 			'type' => 'list',
 			'options' => array(
 				'sendmail' => tra('Sendmail'),

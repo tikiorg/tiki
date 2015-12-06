@@ -189,7 +189,7 @@ if ($(this).val() != '') {
 					{/if}
 				{/if}
 				<div class="form-group">
-					<label for="image_max_size_x" class="col-sm-4 text-right">{tr}Maximum width for images in gallery{/tr}</label>
+					<label for="image_max_size_x" class="col-sm-4 text-right">{tr}Maximum width of images in gallery{/tr}</label>
 					<div class="col-sm-8">
 						<div class="input-group col-sm-4">
 							<input type="text" name="image_max_size_x" id="image_max_size_x" value="{$gal_info.image_max_size_x|escape}" class="form-control text-right">
@@ -199,7 +199,7 @@ if ($(this).val() != '') {
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="image_max_size_y" class="col-sm-4 text-right">{tr}Maximum height for images in gallery{/tr}</label>
+					<label for="image_max_size_y" class="col-sm-4 text-right">{tr}Maximum height of images in gallery{/tr}</label>
 					<div class="col-sm-8">
 						<div class="input-group col-sm-4">
 							<input type="text" name="image_max_size_y" id="image_max_size_y" value="{$gal_info.image_max_size_y|escape}" class="form-control text-right">

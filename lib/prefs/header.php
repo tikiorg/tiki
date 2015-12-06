@@ -9,14 +9,14 @@ function prefs_header_list()
 {
 	return array(
 		'header_shadow_start' => array(
-			'name' => tra('Header shadow start'),
+			'name' => tra('HHeader shadow div start'),
             'description' => tra(''),
 			'type' => 'textarea',
 			'size' => '2',
 			'default' => '',
 		),
 		'header_shadow_end' => array(
-			'name' => tra('Header shadow end'),
+			'name' => tra('Header shadow div end'),
             'description' => tra(''),
 			'type' => 'textarea',
 			'size' => '2',
@@ -24,7 +24,7 @@ function prefs_header_list()
 		),
 		'header_custom_css' => array(
 			'name' => tra('Custom CSS'),
-			'description' => tra('Includes a custom block of CSS inline in all pages.'),
+			'description' => tra('Includes a custom block of CSS in the <html> <head> section of all pages.'),
 			'type' => 'textarea',
 			'size' => 5,
 			'default' => '',

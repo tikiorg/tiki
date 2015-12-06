@@ -99,7 +99,7 @@ function prefs_site_list()
 			'tags' => array('basic'),
 		),
 		'site_terminal_active' => array(
-			'name' => tra('Site Terminal'),
+			'name' => tra('Site terminal'),
 			'description' => tra('Allows users to be directed to a specific perspective depending on the origin IP address. Can be used inside intranets to use different configurations for users depending on their departements or discriminate people in web contexts. Unspecified IPs will fall back to default behavior, including multi-domain handling. Manually selected perspectives take precedence over this.'),
 			'type' => 'flag',
 			'dependencies' => array(
@@ -108,7 +108,7 @@ function prefs_site_list()
 			'default' => 'n',
 		),
 		'site_terminal_config' => array(
-			'name' => tra('Site Terminal Configuration'),
+			'name' => tra('Site terminal configuration'),
 			'description' => tra('Provides the mapping from subnets to perspective.'),
 			'type' => 'textarea',
 			'perspective' => false,

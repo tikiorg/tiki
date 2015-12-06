@@ -10,15 +10,15 @@ function prefs_http_list()
 	return array(
 		'http_port' => array(
 			'name' => tra('HTTP port'),
-            'description' => tra('the port used to access this server, if left empty will use port 80'),
+            'description' => tra('The port used to access this server; if not specified, port 80 will be used'),
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',
 			'default' => '',
-			'shorthint' => tra('If left empty, port 80 will be used'),
+			'shorthint' => tra('If not specified, port 80 will be used'),
 		),
 		'http_skip_frameset' => array(
-			'name' => tra('HTTP Lookup Skip Framesets'),
+			'name' => tra('HTTP lookup: skip framesets'),
 			'description' => tra('When performing and HTTP request to an external source, verify if the result is a frameset and use heuristic to provide the real content.'),
 			'type' => 'flag',
 			'default' => 'n',

@@ -10,7 +10,7 @@ function prefs_global_list($partial = false)
 	return array(
 		'browsertitle' => array(
 			'name' => tra('Browser title'),
-			'description' => tra('Label visible in the browser\'s title bar on all pages. Also appears in search engines.'),
+			'description' => tra('LVisible label in the browser\'s title bar on all pages. Also appears in search engine results.'),
 			'type' => 'text',
 			'default' => '',
 			'tags' => array('basic'),
@@ -18,7 +18,7 @@ function prefs_global_list($partial = false)
 		),
 		'validateUsers' => array(
 			'name' => tra('Validate new user registrations by email'),
-			'description' => tra('Upon registration, the new user will receive an email containing a link to confirm validity.'),
+			'description' => tra('UUpon registration, the new user will receive an email containing a new-account validation link.'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'sender_email',
@@ -27,8 +27,8 @@ function prefs_global_list($partial = false)
 			'tags' => array('basic'),
 		),
 		'wikiHomePage' => array(
-			'name' => tra('Wiki Home page'),
-			'description' => tra('Landing page used for the wiki when no page is specified. The page will be created if it does not exist.'),
+			'name' => tra('Wiki homepage'),
+			'description' => tra('The default home page of the wiki when no other page is specified. The page will be created if it does not already exist.'),
 			'keywords' => 'homepage',
 			'type' => 'text',
 			'size' => 20,
@@ -38,14 +38,14 @@ function prefs_global_list($partial = false)
 		),
 		'useGroupHome' => array(
 			'name' => tra('Use group homepages'),
-			'description' => tra('Users can be sent to different pages upon login, depending on their default group.'),
+			'description' => tra('Users can be directed to different pages upon logging in, depending on their default group.'),
 			'type' => 'flag',
 			'help' => 'Groups',
 			'keywords' => 'group home page pages',
 			'default' => 'n',
 		),
 		'limitedGoGroupHome' => array(
-			'name' => tra('Go to group homepage only if login from default homepage'),
+			'name' => tra('Go to the group homepage only if logging in from the default homepage'),
             'description' => tra(''),
 			'type' => 'flag',
 			'dependencies' => array(
@@ -77,7 +77,7 @@ function prefs_global_list($partial = false)
 		),
 		'helpurl' => array(
 			'name' => tra('Help URL'),
-			'description' => tra('The default help system may not be complete. You can help with the Tiki documentation.'),
+			'description' => tra('The default help system may not be complete. You can contribute to the Tiki documentation, which is a community-edited wiki.'),
 			'help' => 'Welcome+Authors',
 			'type' => 'text',
 			'size' => '50',
@@ -138,7 +138,7 @@ function prefs_global_list($partial = false)
 			'default' => '180',
 		),
 		'modallgroups' => array(
-			'name' => tra('Display modules to all groups always'),
+			'name' => tra('Always display modules to all groups'),
             'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
@@ -179,7 +179,7 @@ function prefs_global_list($partial = false)
 		),
 		'forgotPass' => array(
 			'name' => tra('Forgot password'),
-			'description' => tra('Users can request to reset password. They will receive a link by email.'),
+			'description' => tra('Users can request a password reset. They will receive a link by email.'),
             'type' => 'flag',
 			'detail' => tra("Since passwords are encrypted, it's not possible to tell the user what the password is. It's only possible to change it."),
 			'default' => 'y',
@@ -187,7 +187,7 @@ function prefs_global_list($partial = false)
 		),
 		'useGroupTheme' => array(
 			'name' => tra('Group Theme'),
-            'description' => tra('Each group can have its theme'),
+            'description' => tra('Each group can have its own theme'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -228,7 +228,7 @@ function prefs_global_list($partial = false)
 		),
 		'allowRegister' => array(
 			'name' => tra('Users can register'),
-            'description' => tra('permit User registration'),
+            'description' => tra('Permit user registration'),
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
@@ -241,7 +241,7 @@ function prefs_global_list($partial = false)
 		),
 		'validateRegistration' => array(
 			'name' => tra('Require validation by Admin'),
-			'description' => tra('The administrator will receive an email for each new user registration, and must validate the user before the user can login.'),
+			'description' => tra('The administrator will receive an email for each new user registration, and must validate the user before the user can log in.'),
             'type' => 'flag',
 			'dependencies' => array(
 				'sender_email',
@@ -250,7 +250,7 @@ function prefs_global_list($partial = false)
 		),
 		'useRegisterPasscode' => array(
 			'name' => tra('Require passcode to register'),
-            'description' => tra('Users must enter a code to register.  You must inform users of this code. Use to restrict registration to invited users only.'),
+            'description' => tra('Users must enter an alphanumeric code to register.  The site administrator must inform users of this code. This is to restrict registration to invited users.'),
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
@@ -272,7 +272,7 @@ function prefs_global_list($partial = false)
 			'tags' => array('basic'),
 		),
 		'registerKey' => array(
-			'name' => tra('Registration Page Key'),
+			'name' => tra('Registration page key'),
             'hint' => tra('Key required to be on included the URL to access the registration page (if not empty).'),
 			'description' =>  tra('e.g. To register users need to go to: tiki-register.php?key=yourregistrationkeyvalue'),
 			'type' => 'text',
@@ -281,14 +281,14 @@ function prefs_global_list($partial = false)
 			'tags' => array('basic'),
 		),
 		'userTracker' => array(
-			'name' => tra('Use tracker to collect more user information'),
-            'description' => tra('Display a tracker (form) for the user to complete, as part of the registration process. Use this tracker to store additional information about each user.'),
+			'name' => tra('Use a tracker to collect more user information'),
+            'description' => tra('Display a tracker (form) for the user to complete as part of the registration process. This tracker will be used to store additional information about each user.'),
 			'type' => 'flag',
 			'help' => 'User+Tracker',
 			'dependencies' => array(
 				'feature_trackers',
 			),
-			'hint' => tra('Use the "Admin Groups" page to select which tracker and fields to display'),
+			'hint' => tra('Go to the "Admin Groups" page to select which tracker and fields to display'),
 			'default' => 'n',
 		),
 		'groupTracker' => array(
@@ -299,7 +299,7 @@ function prefs_global_list($partial = false)
 			'dependencies' => array(
 				'feature_trackers',
 			),
-			'hint' => tra('Use the "Admin Groups" page to select which tracker and fields to display'),
+			'hint' => tra('Go to the "Admin Groups" page to select which tracker and fields to display'),
 			'default' => 'n',
 		),
 		'eponymousGroups' => array(
@@ -386,7 +386,7 @@ function prefs_global_list($partial = false)
 		),
 		'disableJavascript' => array(
 			'name' => tra('Disable JavaScript'),
-            'description' => tra('Disable JavaScript for testing purpose even if the browser allows it'),
+            'description' => tra('Disable JavaScript for the purpose of testing even if enabled in the browser'),
 			'type' => 'flag',
 			'default' => 'n',
 		),

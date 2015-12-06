@@ -34,7 +34,7 @@ $output = $rsslib->get_from_cache($uniqueid);
 if ($output["data"] == "EMPTY") {
 	$title = tra("Tiki RSS feed for directory sites");
 	$rc = $dirlib->dir_get_category($_REQUEST["parent"]);
-	$desc = tr("Last sites of directory %0.", $rc["name"]);
+	$desc = tr("Latest sites of directory %0.", $rc["name"]);
 	$id = "siteId";
 	$titleId = "name";
 	$descId = "description";

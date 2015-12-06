@@ -59,7 +59,7 @@
 				{preference name=site_title_breadcrumb}
 
 				<div class="adminoptionbox">
-					{tr}Go to <a href="tiki-admin.php?page=look" title=""><strong>Look & Feel</strong></a> section for additional site related customization preferences{/tr}.
+					{tr}Go to the <a href="tiki-admin.php?page=look" title=""><strong>Look & Feel</strong></a> section for additional site customization preferences{/tr}.
 				</div>
 			</fieldset>
 
@@ -164,7 +164,7 @@
 			</fieldset>
 
 			<fieldset>
-				<legend>{tr}Site Terminal{/tr}</legend>
+				<legend>{tr}Site terminal{/tr}</legend>
 				{preference name=site_terminal_active}
 				<div class="adminoptionboxchild" id="site_terminal_active_childcontainer">
 					{preference name=site_terminal_config}

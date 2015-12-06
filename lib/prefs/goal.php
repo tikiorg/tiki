@@ -28,7 +28,7 @@ function prefs_goal_list($partial = false)
 		),
 		'goal_group_blacklist' => array(
 			'name' => tr('Groups not eligible for goals'),
-			'description' => tr('List of system groups that will be eliminated from the eligible group lists.'),
+			'description' => tr('Groups that will not be on the eligible group list.'),
 			'type' => 'text',
 			'separator' => ';',
 			'filter' => 'groupname',

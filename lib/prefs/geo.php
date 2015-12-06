@@ -10,25 +10,25 @@ function prefs_geo_list()
 	return array(
 		'geo_locate_wiki' => array(
 			'name' => tra('Geolocate wiki pages'),
-			'description' => tra('Provide controls to geolocate wiki pages from the edit functionality.'),
+			'description' => tra('Provide controls to indicate a geographic location of wiki pages in the edit form.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'geo_locate_article' => array(
 			'name' => tra('Geolocate articles'),
-			'description' => tra('Provide controls to geolocate articles from the edit functionality.'),
+			'description' => tra('Provide controls to indicate a geographic location in the article edit form.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'geo_locate_blogpost' => array(
 			'name' => tra('Geolocate blog posts'),
-			'description' => tra('Provide controls to geolocate blog posts from the edit functionality.'),
+			'description' => tra('Provide controls to indicate a geographic location in the blog post edit form.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'geo_tilesets' => array(
 			'name' => tra('Available tile layers on maps'),
-			'description' => tra('Allows to replace the default OpenStreetMap tiles for tiles from other mapping services, such as Google or Bing.'),
+			'description' => tra('Enables replacement of the default OpenStreetMap tiles with tiles from other mapping services, such as Google or Bing.'),
 			'hint' => tr(
 				'Valid options are: %0',
 				implode(
@@ -61,7 +61,7 @@ function prefs_geo_list()
 		),
 		'geo_google_streetview' => array(
 			'name' => tr('Google Street View'),
-			'description' => tr('Open up Google Street View in a window to see the visible coordinates.'),
+			'description' => tr('Open Google Street View in a new window to see the visible coordinates.'),
 			'dependencies' => array('gmap_key'),
 			'type' => 'flag',
 			'default' => 'n',
@@ -69,7 +69,7 @@ function prefs_geo_list()
 		),
 		'geo_google_streetview_overlay' => array(
 			'name' => tr('Google Street View Overlay'),
-			'description' => tr('Open up Google Street View in a window to see the visible coordinates.'),
+			'description' => tr('Open Google Street View in a new window to see the visible coordinates.'),
 			'dependencies' => array('geo_google_streetview'),
 			'warning' => tr('This is not guaranteed to work.'),
 			'type' => 'flag',
@@ -83,8 +83,8 @@ function prefs_geo_list()
 			'default' => 'n',
 		),
 		'geo_zoomlevel_to_found_location' => array(
-			'name' => tr('Zoom to found location'),
-			'description' => tr('Zoom to street level when finding a searched location'),
+			'name' => tr('Zoom to the found location'),
+			'description' => tr('Zoom to street level when a searched-for location is found'),
 			'type' => 'list',
 			'options' => array(
 					'street' => tra('Street level'),

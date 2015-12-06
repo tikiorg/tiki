@@ -280,7 +280,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_search' => array(
 			'name' => tra('Unified Search Index'),
-			'description' => tra("Also known as 'Advanced Search'. Enables searching for content on the website, using Tiki-managed index."),
+			'description' => tra('Also known as "Advanced Search". Enables searching for content at the site using a Tiki-managed index.'),
 			'help' => 'Search',
 			'type' => 'flag',
 			'default' => 'n',
@@ -590,7 +590,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_purifier' => array(
 			'name' => tra('HTML Purifier'),
-			'description' => tra("HTML Purifier is a standards-compliant HTML filter library written in PHP and integrated in Tiki. HTML Purifier will not only remove all malicious code (better known as XSS) with a thoroughly audited, secure yet permissive whitelist, it will also make sure your documents are standards compliant, something only achievable with a comprehensive knowledge of W3C's specifications."),
+			'description' => tra("HTML Purifier is a standards-compliant HTML filter library written in PHP and integrated in Tiki. HTML Purifier will not only remove all malicious code (better known as XSS) with a thoroughly audited, secure yet permissive whitelist, it will also ensure that your documents are standards-compliant. Keep in mind that HTML Purifier is not HTML5 compatible and may rewrite HTML5 syntax and produce unwanted results."),
 			'hint' => tra('If you use HTML in your wiki page and it gets stripped out or rewritten, make sure your HTML is valid, or de-activate this feature.  Keep in mind that HTML Purifier is not HTML5 compatible and may rewrite HTML5 syntax and produce unwanted results.'),
 			'help' => 'Purifier',
 			'type' => 'flag',
@@ -770,7 +770,7 @@ function prefs_feature_list($partial = false)
 			'view' => 'tiki-referer_stats.php',
 		),
 		'feature_redirect_on_error' => array(
-			'name' => tra('Redirect On Error'),
+			'name' => tra('Redirect on error'),
 			'description' => tra('On an error, refresh to the homepage as specified on the Admin General page.'),
 			'help' => 'Redirect+On+Error',
 			'type' => 'flag',
@@ -785,8 +785,8 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_mytiki' => array(
-			'name' => tra("Display 'My Account' in the application menu"),
-			'description' => tra("Display 'My Account' in the application menu"),
+			'name' => tra('Display "My Account" in the application menu'),
+			'description' => tra('Display "My Account" in the application menu'),
 			'help' => 'My Account',
 			'type' => 'flag',
 			'default' => 'n',
@@ -903,8 +903,8 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_userlevels' => array(
-			'name' => tra('Menu User Levels'),
-			'description' => tra('Allows the menu options that can be seen by a user to be controlled'),
+			'name' => tra('Menu user levels'),
+			'description' => tra('Enables control of the per-group visibility of menu options'),
 			'help' => 'User+Levels',
 			'type' => 'flag',
 			'default' => 'n',
@@ -1094,7 +1094,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_draw_in_userfiles' => array(
 			'name' => tra('Draw in User File Gallery'),
-			'description' => tra("User's drawings are stored in their user files gallery"),
+			'description' => tra("Users' drawings are stored in their user files gallery"),
 			'help' => 'Draw',
 			'dependencies' => array(
 				'feature_draw',
@@ -1591,7 +1591,7 @@ function prefs_feature_list($partial = false)
 			'warning' => tra('experimental'),
 		),
 		'feature_file_galleries_author' => array(
-			'name' => tra("Require file author's name for anonymous uploads"),
+			'name' => tra("Require file creator's name for anonymous uploads"),
             'description' => tra(''),
 			'type' => 'flag',
 			'help' => 'File+Gallery+Config',
@@ -2289,7 +2289,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_wiki_userpage' => array(
-			'name' => tra("User's page"),
+			'name' => tra("User's information page"),
 			'description' => tra('A personal page for the user to manage.'),
 			'type' => 'flag',
 			'default' => 'n',
@@ -2657,7 +2657,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_alternate_registration_page' => array(
-			'name' => tra('Alternate Registration Page'),
+			'name' => tra('Alternate registration page'),
 			'description' => tra('Redirects requests for tiki-register.php to an alternate registration page.'),
 			'type' => 'text',
 			'default' => 'tiki-register.php',
@@ -2905,8 +2905,8 @@ function prefs_feature_list($partial = false)
 			'default' => 'y',
 		),
 		'feature_userWizardUsersFieldIds' => array(
-			'name' => tra('Tracker Fields Asked in the User Wizard as User Details'),
-			'description' => tra('Users Information Tracker Fields Asked in the User Wizard as User Details (fieldIds separated with colon)'),
+			'name' => tra('Tracker fields presented in the User Wizard as User Details'),
+			'description' => tra('User\'s information tracker fields presented in the User Wizard as User Details (separate fieldIds with colons)'),
 			'help' => 'User+Wizard',
 			'type' => 'text',
 			'size' => '50',

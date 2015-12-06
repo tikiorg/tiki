@@ -279,7 +279,7 @@ function wikiplugin_files_info()
 			),
 			'showauthor' => array(
 				'required' => false,
-				'name' => tra('Show Author'),
+				'name' => tra('Show author'),
 				'description' => tra('Show the user name of the user who is the author of the file (not shown by default)'),
 				'since' => '3.0',
 				'filter' => 'alpha',
