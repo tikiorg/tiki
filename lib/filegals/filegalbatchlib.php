@@ -57,6 +57,8 @@ class FilegalBatchLib extends FileGalLib
 		include_once ('lib/mime/mimetypes.php');
 		global $mimetypes, $user, $prefs;
 
+		$userlib = TikiLib::lib('user');
+
 		$feedback = [];
 
 		if ($galleryId === null) {
@@ -82,6 +84,18 @@ class FilegalBatchLib extends FileGalLib
 
 			$type = $mimetypes["$ext"];
 			$filesize = @filesize($file);
+
+			$creator = $user;
+
+			// if the same file creator user matches a tiki user then set the creator to that
+			if (function_exists('posix_getpwuid')) {
+
+				$info = posix_getpwuid(fileowner($file));
+
+				if ($userlib->user_exists($info['name'])) {
+					$creator = $info['name'];
+				}
+			}
 
 			$destinationGalleryId = $galleryId;
 
@@ -227,7 +241,7 @@ class FilegalBatchLib extends FileGalLib
 
 				$fileId = $this->insert_file(
 						$destinationGalleryId, $name, $tmpDesc, $name, $result['data'], $filesize, $type,
-						$user, $result['fhash'], null, null, null, null, $options['deleteAfter'], null, $metadata
+						$creator, $result['fhash'], null, null, null, null, $options['deleteAfter'], null, $metadata
 				);
 				if ($fileId) {
 					$feedback[] = tra('Upload was successful') . ': ' . $name;

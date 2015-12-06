@@ -180,7 +180,7 @@ class FilesBatchuploadCommand extends Command
 			}
 
 			foreach($files as $file) {
-				$fname = substr($file['file'], strlen($prefs['fgal_batch_dir']) + 1);
+				$fname = substr($file['file'], strlen($prefs['fgal_batch_dir']));
 				if (! $file['writable']) {
 					$fname = "<error>$fname</error>";
 				}
