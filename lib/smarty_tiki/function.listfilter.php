@@ -55,7 +55,7 @@ function smarty_function_listfilter($params, $smarty)
 		} else {
 			$input .= tra($prefix);
 		}
-		$input .= '</label><div class="col-sm-10"><input type="text" class="form-control"';
+		$input .= '</label><div class="col-sm-5"><input type="text" class="form-control listfilter"';
 		if (!isset($id)) {
 			if (isset($listfilter_id)) {
 				$listfilter_id++;
@@ -105,31 +105,29 @@ function smarty_function_listfilter($params, $smarty)
 			);
 		}
 
-		$input .= " class='listfilter' /></div></div></div>";
-		$input .= "<img src='img/icons/close.png' onclick=\"\$('#$id').val('').focus().keyup();return false;\" class='closeicon' width='16' height='16' style='visibility:hidden;position:relative;right:20px;top:6px;'/>";
-		$input .= '</label>';
+		$input .= "></div><div class='col-sm-5'>";
+		$smartylib = TikiLib::lib('smarty');
+		$smartylib->loadPlugin('smarty_function_icon');
+		$icon = smarty_function_icon(['name' => 'delete'], $smarty);
+		$input .= "<a href='#' onclick=\"\$('#$id').val('').focus().keyup();return false;\" class='closeicon tips' title=':"
+				. tr('Clear fiilter') . "'>$icon</a>";
+		$input .= '</div></div></div>';
 
 		if (!isset($selectors)) $selectors = ".$id table tr";
 
 		$content = "
-\$('#$id').keyup( function() {
+$('#$id').keyup( function() {
 	var criterias = this.value.toLowerCase().split( /\s+/ );
-
-	if (this.value.length) {
-		$(this).next('img.closeicon').css('visibility', '');
-	} else {
-		$(this).next('img.closeicon').css('visibility', 'hidden');
-	}
-	\$('$selectors').each( function() {
-		var text = \$(this).text().toLowerCase();
+	$('$selectors').each( function() {
+		var text = $(this).text().toLowerCase();
 		for( i = 0; criterias.length > i; ++i ) {
 			word = criterias[i];
 			if ( word.length > 0 && text.indexOf( word ) == -1 ) {
-				\$(this).not('$exclude').hide();	// don't search within excluded elements
+				$(this).not('$exclude').hide();	// don't search within excluded elements
 				return;
 			}
 		}
-		\$(this).show();
+		$(this).show();
 	} );
 ";
 		if (!empty($parentSelector)) {
