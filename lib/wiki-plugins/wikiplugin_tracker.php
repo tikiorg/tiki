@@ -912,6 +912,12 @@ function wikiplugin_tracker($data, $params)
 					$tx->commit();
 
 					if (!empty($email)) {
+						// expose the pretty tracker fields to the email tpls
+						foreach ($flds['data'] as $f) {
+							$prettyout = strip_tags(wikiplugin_tracker_render_value($f, $item));
+							$smarty->assign('f_' . $f['fieldId'], $prettyout);
+							$smarty->assign('f_' . $f['permName'], $prettyout);
+						}
 						$emailOptions = preg_split("#\|#", $email);
 						if (is_numeric($emailOptions[0])) {
 							$emailOptions[0] = $trklib->get_item_value($trackerId, $rid, $emailOptions[0]);
