@@ -10,7 +10,7 @@ function wikiplugin_tour_info()
 	return array(
 		'name' => tra('Tour'),
 		'documentation' => 'PluginTour',
-		'description' => tra('Quick and easy way to build your product tours with Bootstrap Popovers'),
+		'description' => tra('Quick and easy way to build your product tours with Bootstrap popovers'),
 		'prefs' => array( 'wikiplugin_tour' ),
 		'iconname' => 'information',
 		'introduced' => 15,
@@ -20,7 +20,7 @@ function wikiplugin_tour_info()
 			'element' => array(
 				'name' => tra('Element'),
 				'required' => false,
-				'description' => tra('Element to show the popup on, if enpty use the plugin location itself'),
+				'description' => tra('Element to show the popup on; if empty, use the plugin location itself'),
 				'since' => '15.0',
 				'filter' => 'text',
 				'default' => '',
