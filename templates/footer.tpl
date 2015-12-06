@@ -3,6 +3,11 @@
 <div id="bootstrap-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
+			{* Add header with title to avoid HTML validation errors for aria-labelledby missing a title while hidden.
+			Gets replaced when modal becomes visible.*}
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel"></h4>
+			</div>
 		</div>
 	</div>
 </div>
