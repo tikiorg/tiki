@@ -10,29 +10,31 @@
     <div id="module_{$moduleId}"
          class="panel panel-default box-{$module_name}{if $module_type eq 'cssmenu'} cssmenubox{/if} module"{if !empty($tpl_module_style)} style="{$tpl_module_style}"{/if}>
         {if $module_decorations ne 'n'}
-        <div class="panel-heading">
-            <h3 class="panel-title clearfix" {if !empty($module_params.bgcolor)} style="background-color:{$module_params.bgcolor};"{/if}>
-                {if $module_notitle ne 'y'}
-                    <span class="moduletitle">{$module_title}</span>
-                {/if}
-                {if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
-                    <span class="moduleflip" id="moduleflip-{$smarty.capture.name}">
-							<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle close"
-                               href="javascript:icntoggle('mod-{$smarty.capture.name}','module.png');">
-                                {icon id="icnmod-"|cat:$smarty.capture.name class="flipmodimage" name="module" alt="[{tr}Toggle{/tr}]"}
-                            </a>
-						</span>
-                    {if $prefs.menus_items_icons eq 'y'}
-                        <span class="moduleflip moduleflip-vert" id="moduleflip-vert-{$smarty.capture.name}">
-								<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle"
-                                   href="javascript:flip_class('main','minimize-modules-left','maximize-modules');icntoggle('mod-{$smarty.capture.name}','vmodule.png');">
-                                    {icon id="icnmod-"|cat:$smarty.capture.name class="flipmodimage" name="move" alt="[{tr}Toggle Vertically{/tr}]" _defaultdir="img"}
+            {if ($module_notitle ne 'y' && !empty($module_title)) || ($module_flip eq 'y' and $prefs.javascript_enabled ne 'n') || $prefs.menus_items_icons eq 'y'}
+                <div class="panel-heading">
+                    <h3 class="panel-title clearfix" {if !empty($module_params.bgcolor)} style="background-color:{$module_params.bgcolor};"{/if}>
+                        {if $module_notitle ne 'y' && !empty($module_title)}
+                            <span class="moduletitle">{$module_title}</span>
+                        {/if}
+                        {if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
+                            <span class="moduleflip" id="moduleflip-{$smarty.capture.name}">
+                                <a title="{tr}Toggle module contents{/tr}" class="flipmodtitle close"
+                                   href="javascript:icntoggle('mod-{$smarty.capture.name}','module.png');">
+                                    {icon id="icnmod-"|cat:$smarty.capture.name class="flipmodimage" name="module" alt="[{tr}Toggle{/tr}]"}
                                 </a>
-							</span>
-                    {/if}
-                {/if}
-            </h3>
-        </div>
+                            </span>
+                            {if $prefs.menus_items_icons eq 'y'}
+                                <span class="moduleflip moduleflip-vert" id="moduleflip-vert-{$smarty.capture.name}">
+                                    <a title="{tr}Toggle module contents{/tr}" class="flipmodtitle"
+                                       href="javascript:flip_class('main','minimize-modules-left','maximize-modules');icntoggle('mod-{$smarty.capture.name}','vmodule.png');">
+                                        {icon id="icnmod-"|cat:$smarty.capture.name class="flipmodimage" name="move" alt="[{tr}Toggle Vertically{/tr}]" _defaultdir="img"}
+                                    </a>
+                                </span>
+                            {/if}
+                        {/if}
+                    </h3>
+                </div>
+            {/if}
         {elseif $module_notitle ne 'y'}{* means when module decorations are set to 'n' don't render the panel-heading wrapper as above *}
         {if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
         <h3 class="panel-title"
