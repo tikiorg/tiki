@@ -118,14 +118,7 @@ class Services_Comment_Controller
 			if (empty($user) && $prefs['feature_antibot'] == 'y') {
 				$captchalib = TikiLib::lib('captcha');
 
-				if (! $captchalib->validate(
-					array(
-						'recaptcha_challenge_field' => $input->recaptcha_challenge_field->none(),
-						'recaptcha_response_field' => $input->recaptcha_response_field->none(),
-						'captcha' => $input->captcha->none(),
-					)
-				)
-				) {
+				if (! $captchalib->validate($input->none())) {
 					$errors[] = $captchalib->getErrors();
 				}
 			}
