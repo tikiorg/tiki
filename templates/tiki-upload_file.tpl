@@ -173,9 +173,9 @@
 						<div class="form-group">
 							<label for="deleteAfter" class="col-sm-3 control-label">{tr}File can be deleted after{/tr}</label>
 								{if $editFileId}
-									{html_select_duration prefix='deleteAfter' default_value=$fileInfo.deleteAfter}
+									{html_select_duration prefix='deleteAfter' id="deleteAfter" default_value=$fileInfo.deleteAfter}
 								{else}
-									{html_select_duration prefix='deleteAfter[]' default_unit=week}
+									{html_select_duration prefix='deleteAfter[]' id="deleteAfter" default_unit=week}
 								{/if}
 						</div>
 					{/if}

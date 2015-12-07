@@ -31,7 +31,7 @@ function smarty_function_html_select_duration($params, $smarty)
 	$smarty = TikiLib::lib('smarty');
 	$smarty->loadPlugin('smarty_function_html_options');
 	$html_result = '';
-	$default = array('prefix'=>'Duration_', 'default_unit'=>'week', 'default'=>'', 'default_value'=>'');
+	$default = array('prefix'=>'Duration_', 'default_unit'=>'week', 'default'=>'', 'default_value'=>'', 'id'=>'');
 	$params = array_merge($default, $params);
 	$values = array(31536000, 2628000, 604800, 86400, 3600, 60);
 	$output = array(tra('Year'), tra('Month'), tra('Week'), tra('Day'), tra('Hour'), tra('Minute'));
@@ -50,8 +50,9 @@ function smarty_function_html_select_duration($params, $smarty)
 	} else {
 		$selected = 604800;
 	}
+	$id = !empty($params['id']) ? ' id="' . $params['id'] . '" ' : '';
 	$html_result .= '<div class="col-sm-1">';
-	$html_result .= '<input name="'.$params['prefix'].'" type="text" size="5" value="'.$params['default'].'" class="form-control"></div>';
+	$html_result .= '<input ' . $id . 'name="'.$params['prefix'].'" type="text" size="5" value="'.$params['default'].'" class="form-control"></div>';
 	if (strstr($params['prefix'], '[]')) {
 		$prefix = str_replace('[]', '_unit[]', $params['prefix']);
 	} else {
