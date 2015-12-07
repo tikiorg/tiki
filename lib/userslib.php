@@ -715,6 +715,11 @@ class UsersLib extends TikiLib
 			// start off easy
 			// if the user is in Tiki and password is verified in LDAP, log in
 			if ($userLdap && $userTikiPresent) {
+				if ($userLdapPresent) {
+					# Sync again user attributes from LDAP (such as the RealName, mail and country) with user data in Tiki to prevent un-sync'ing them in a later stage
+					$this->init_ldap($user, $pass);
+					$this->ldap_sync_user_data($user, $this->ldap->get_user_attributes());
+				}
 				return array($this->_ldap_sync_and_update_lastlogin($user, $pass), $user, $result);
 			} elseif (!$userTikiPresent && !$userLdapPresent) {
 			// if the user wasn't found in either system, just fail
