@@ -752,6 +752,8 @@ class UsersLib extends TikiLib
 				// see if we are allowed to create a new account
 				if ($ldap_create_tiki) {
 					$ldap_user_attr = $this->ldap->get_user_attributes();
+					// Get user attributes such as the real name, email and country from the data received by the ldap auth
+					$this->ldap_sync_user_data($user, $ldap_user_attr);
 					// Use what was configured in ldap admin config, otherwise assume the attribute name is "mail" as is usual
 					$email = $ldap_user_attr[empty($prefs['auth_ldap_emailattr'])?'mail':$prefs['auth_ldap_emailattr']];
 					$result = $this->add_user($user, $pass, $email);
