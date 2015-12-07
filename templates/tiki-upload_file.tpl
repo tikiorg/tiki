@@ -172,17 +172,11 @@
 					{if $prefs.fgal_delete_after eq 'y'}
 						<div class="form-group">
 							<label for="deleteAfter" class="col-sm-3 control-label">{tr}File can be deleted after{/tr}</label>
-							<div class="col-sm-9">
 								{if $editFileId}
 									{html_select_duration prefix='deleteAfter' default_value=$fileInfo.deleteAfter}
 								{else}
-									{if $prefs.feature_jscalendar eq 'y'}
-										<input type="text" value="" name="deleteAfter[]" class="datePicker">
-									{else}
-										{html_select_duration prefix='deleteAfter[]' default_unit=week}
-									{/if}
+									{html_select_duration prefix='deleteAfter[]' default_unit=week}
 								{/if}
-							</div>
 						</div>
 					{/if}
 
@@ -199,7 +193,7 @@
 							{/if}
 						{elseif empty($groupforalert)}
 							<div class="form-group">
-								<label for="galleryId" class="col-sm-3">{tr}File gallery{/tr}</label>
+								<label for="galleryId" class="col-sm-3 control-label">{tr}File gallery{/tr}</label>
 								<div class="col-sm-9">
 									<select id="galleryId" name="galleryId[]" class="form-control">
 										<option value="{$treeRootId}" {if $treeRootId eq $galleryId}selected="selected"{/if} style="font-style:italic; border-bottom:1px dashed #666;">{tr}Root{/tr}</option>
