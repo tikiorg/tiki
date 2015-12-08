@@ -10,8 +10,8 @@
     <div id="module_{$moduleId}"
          class="panel panel-default box-{$module_name}{if $module_type eq 'cssmenu'} cssmenubox{/if} module"{if !empty($tpl_module_style)} style="{$tpl_module_style}"{/if}>
         {if $module_decorations ne 'n'}
-            {if ($module_notitle ne 'y' && !empty($module_title)) || ($module_flip eq 'y' and $prefs.javascript_enabled ne 'n') || $prefs.menus_items_icons eq 'y'}
-                <div class="panel-heading">
+            <div class="panel-heading">
+                {if ($module_notitle ne 'y' && !empty($module_title)) || ($module_flip eq 'y' and $prefs.javascript_enabled ne 'n') || $prefs.menus_items_icons eq 'y'}
                     <h3 class="panel-title clearfix" {if !empty($module_params.bgcolor)} style="background-color:{$module_params.bgcolor};"{/if}>
                         {if $module_notitle ne 'y' && !empty($module_title)}
                             <span class="moduletitle">{$module_title}</span>
@@ -33,8 +33,8 @@
                             {/if}
                         {/if}
                     </h3>
-                </div>
-            {/if}
+                {/if}
+            </div>
         {elseif $module_notitle ne 'y'}{* means when module decorations are set to 'n' don't render the panel-heading wrapper as above *}
         {if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
         <h3 class="panel-title"
