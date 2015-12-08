@@ -1488,8 +1488,8 @@ function wikiplugin_img( $data, $params )
 				. '</a>';
 		}
 	}
-
-	return '~np~' . $repl. "\r" . '~/np~';
+	$repl = str_replace('&', '&amp;', $repl);
+	return '~np~' . $repl . "\r" . '~/np~';
 }
 
 function getMetadataArray($imageObj, $dbinfo = false)
