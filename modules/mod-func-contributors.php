@@ -52,9 +52,8 @@ function module_contributors($mod_reference, $module_params)
 				}
 				$email_isPublic = $tikilib->get_user_preference($contributor, 'email is public');
 				if ($email_isPublic != 'n') {
-					include_once ('lib/userprefs/scrambleEmail.php');
 					$details['email'] = $userlib->get_user_email($contributor);
-					$details['scrambledEmail'] = scrambleEmail($details['email'], $email_isPublic);
+					$details['scrambledEmail'] = TikiMail::scrambleEmail($details['email'], $email_isPublic);
 				}
 				$details['homePage'] = $tikilib->get_user_preference($contributor, 'homePage');
 				$details['avatar'] = $tikilib->get_user_avatar($contributor);

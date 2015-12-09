@@ -221,8 +221,7 @@ class Services_User_Controller
 				if ($prefs['feature_community_mouseover_email'] == 'y') {
 					$email_isPublic = $tikilib->get_user_preference($other_user, 'email is public');
 					if ($email_isPublic != 'n') {
-						include_once ('lib/userprefs/scrambleEmail.php');
-						$result['email'] = scrambleEmail($info['email'], $email_isPublic);
+						$result['email'] = TikiMail::scrambleEmail($info['email'], $email_isPublic);
 					//} elseif ($friend) {
 					//	$result['email'] = $info['email']; // should friends see each other's emails whatever the settings? I doubt it (jb)
 					}

@@ -224,6 +224,44 @@ class TikiMail
 		$attachment->setDisposition(Zend\Mime\Mime::DISPOSITION_INLINE);
 		$body->addPart($attachment);
 	}
+
+	/**
+	 *	scramble an email with a method
+	 *
+	 * @param string $email email address to be scrambled
+	 * @param string $method unicode or y: each character is replaced with the unicode value
+	 *                       strtr: mr@tw.org -> mr AT tw DOT org
+	 *                       x: mr@tw.org -> mr@xxxxxx
+	 *
+	 * @return string scrambled email
+	 */
+	static function scrambleEmail($email, $method='unicode')
+	{
+		switch ($method) {
+		case 'strtr':
+			$trans = array(	"@" => tra("(AT)"),
+							"." => tra("(DOT)")
+			);
+			return strtr($email, $trans);
+		case 'x' :
+			$encoded = $email;
+			for ($i = strpos($email, "@") + 1, $istrlen_email = strlen($email); $i < $istrlen_email; $i++) {
+				if ($encoded[$i]  != ".") $encoded[$i] = 'x';
+			}
+			return $encoded;
+		case 'unicode':
+		case 'y':// for previous compatibility
+			$encoded = '';
+			for ($i = 0, $istrlen_email = strlen($email); $i < $istrlen_email; $i++) {
+				$encoded .= '&#' . ord($email[$i]). ';';
+			}
+			return $encoded;
+		case 'n':
+		default:
+			return $email;
+		}
+	}
+
 }
 
 /**

@@ -10,7 +10,6 @@
 
 require_once ('tiki-setup.php');
 $messulib = TikiLib::lib('message');
-include_once ('lib/userprefs/scrambleEmail.php');
 
 $trklib = TikiLib::lib('trk');
 

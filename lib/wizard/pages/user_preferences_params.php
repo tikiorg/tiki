@@ -6,7 +6,6 @@
 // $Id$
 
 require_once('lib/wizard/wizard.php');
-include_once('lib/userprefs/scrambleEmail.php');
 $userprefslib = TikiLib::lib('userprefs');
 
 /**
@@ -118,7 +117,12 @@ class UserWizardPreferencesParams extends Wizard
 		$smarty->assign_by_ref('user_items', $user_items);
 		$scramblingMethods = array("n", "strtr", "unicode", "x", 'y'); // email_isPublic utilizes 'n'
 		$smarty->assign_by_ref('scramblingMethods', $scramblingMethods);
-		$scramblingEmails = array(tra("no"), scrambleEmail($userinfo['email'], 'strtr'), scrambleEmail($userinfo['email'], 'unicode') . "-" . tra("unicode"), scrambleEmail($userinfo['email'], 'x'), $userinfo['email']);
+		$scramblingEmails = array(
+				tra("no"),
+				TikiMail::scrambleEmail($userinfo['email'], 'strtr'),
+				TikiMail::scrambleEmail($userinfo['email'], 'unicode') . "-" . tra("unicode"),
+				TikiMail::scrambleEmail($userinfo['email'], 'x'), $userinfo['email'],
+			);
 		$smarty->assign_by_ref('scramblingEmails', $scramblingEmails);
 		$mailCharsets = array('utf-8', 'iso-8859-1');
 		$smarty->assign_by_ref('mailCharsets', $mailCharsets);
