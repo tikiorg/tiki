@@ -75,7 +75,6 @@ $needed_prefs = array(
 	'memcache_servers' => false,
 	'min_pass_length' => 5,
 	'pass_chr_special' => 'n',
-	'menus_item_names_raw' => 'n',
 	'cookie_consent_feature' => 'n',
 	'cookie_consent_name' => 'tiki_cookies_accepted',
 
@@ -100,12 +99,7 @@ $patterns['stringlist'] = "/^[^<>\"#]*$/"; // to, cc, bcc (for string lists like
 $patterns['vars'] = "/^[-_a-zA-Z0-9]*$/"; // for variable keys
 $patterns['dotvars'] = "/^[-_a-zA-Z0-9\.]*$/"; // same pattern as a variable key, but that may contain a dot
 $patterns['hash'] = "/^[a-z0-9]*$/"; // for hash reqId in live support
-// allow quotes in url for additional tag attributes if html allowed in menu options links
-if ($prefs['menus_item_names_raw'] == 'y' and strpos($_SERVER["SCRIPT_NAME"], 'tiki-admin_menu_options.php') !== false) {
-	$patterns['url'] = "/^(https?:\/\/)?[^<>]*$/";
-} else {
-	$patterns['url'] = "/^(https?:\/\/)?[^<>\"]*$/";
-}
+$patterns['url'] = "/^(https?:\/\/)?[^<>\"]*$/";
 
 // IIS always sets the $_SERVER['HTTPS'] value (on|off)
 $noSSLActive = !isset($_SERVER['HTTPS']) || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'off');

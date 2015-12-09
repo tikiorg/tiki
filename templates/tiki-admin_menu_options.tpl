@@ -85,11 +85,11 @@
 								<a
 									href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}&amp;maxRecords={$maxRecords}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}"
 								   class="tips"
-								   title=":{tr}Edit{/tr}">{if $escape_menu_labels}{$channels[user].name|escape}{else}{$channels[user].name}{/if}</a>
+								   title=":{tr}Edit{/tr}">{$channels[user].name|escape}</a>
 											<span class="help-block">
 												{if $channels[user].url}
 													{tr}URL:{/tr}
-													<a href="{if $prefs.menus_item_names_raw eq 'n'}{$channels[user].url|escape}{else}{$channels[user].url}{/if}"
+													<a href="{$channels[user].url|escape:'url'}"
 													   class="link tips" target="_blank"
 													   title=":{$channels[user].canonic|escape}">{$channels[user].canonic|truncate:40:' ...'|escape}</a>
 												{/if}

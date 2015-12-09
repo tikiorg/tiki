@@ -624,8 +624,12 @@ class MenuLib extends TikiLib
 		foreach ($result as $res) {
 			$res['canonic'] = $res['url'];
 			$resourceGroups = array_filter(explode(',', $res['groupname'] ?: ''));
-			if (!$do_not_parse && isset($menu['parse']) && $menu['parse'] === 'y') {
-				$res['name'] = $wikilib->parse_data($res['name'], array('is_html' => ($prefs['menus_item_names_raw'] === 'y')));
+			if (!$do_not_parse) {
+				if (isset($menu['parse']) && $menu['parse'] === 'y') {
+					$res['name'] = $wikilib->parse_data($res['name']);
+				} else {
+					$res['name'] = htmlspecialchars($res['name']);
+				}
 			}
 			if (preg_match('|^\(\((.+?)\)\)$|', $res['url'], $matches)) {
 				$res['url'] = 'tiki-index.php?page=' . rawurlencode($matches[1]);

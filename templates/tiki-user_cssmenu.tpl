@@ -46,39 +46,18 @@
 
 					<li class="dropdown option{$chdata.optionId} menuSection menuSection{$opensec} menuLevel{$opensec}{if isset($chdata.selected) and $chdata.selected} selected{/if}{if isset($chdata.selectedAscendant) and $chdata.selectedAscendant} selectedAscendant{/if}">
 					{if empty($chdata.block)}
-						<a{if !empty($chdata.url)} href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}
-									{if $prefs.menus_item_names_raw eq 'n'}
-										{$chdata.sefurl|escape}
-									{else}
-										{$chdata.sefurl}
-									{/if}
-								{else}
-									{if $prefs.menus_item_names_raw eq 'n'}
-										{$chdata.url|escape}
-									{else}
-										{$chdata.url}
-									{/if}
-								{/if}"
-							{/if}>
+						<a{if !empty($chdata.url)} href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}{$chdata.sefurl|escape:'url'}{else}{$chdata.url|escape:'url'}{/if}"{/if}>
 							{if $menu_type eq 'vert' and $prefs.menus_items_icons eq 'y' and $menu_info.use_items_icons eq 'y' and $opensec eq 0}
 								{icon _id=$chdata.icon alt='' _defaultdir=$prefs.menus_items_icons_path}
 							{elseif isset($icon) and $icon}
 								{icon name='file-archive' align="left"}
 							{/if}
 							<span class="menuText">
-								{if $translate eq 'n'}
-									{if $escape_menu_labels}{$chdata.name|escape}{else}{$chdata.name}{/if}
-								{else}
-									{tr}{if $escape_menu_labels}{$chdata.name|escape}{else}{$chdata.name}{/if}{/tr}
-								{/if}
+								{if $translate eq 'n'}{$chdata.name}{else}{tr}{$chdata.name}{/tr}{/if}
 							</span>
 						{if $link_on_section ne 'n'}</a>{/if}
 					{else}
-						{if $translate eq 'n'}
-							{if $escape_menu_labels}{$chdata.name|escape}{else}{$chdata.name}{/if}
-						{else}
-							{tr}{if $escape_menu_labels}{$chdata.name|escape}{else}{$chdata.name}{/if}{/tr}
-						{/if}
+						{if $translate eq 'n'}{$chdata.name}{else}{tr}{$chdata.name}{/tr}{/if}
 					{/if}
 					{assign var=opensec value=$opensec+1}
 					<ul>
@@ -87,37 +66,16 @@
 				{elseif $chdata.type eq 'o'}
 					<li class="option{$chdata.optionId} menuOption menuLevel{$opensec}{if isset($chdata.selected) and $chdata.selected} selected{/if}{if isset($chdata.selectedAscendant) and $chdata.selectedAscendant} selectedAscendant{/if}">
 						{if empty($chdata.block)}
-							<a href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}
-									{if $prefs.menus_item_names_raw eq 'n'}
-										{$chdata.sefurl|escape}
-									{else}
-										{$chdata.sefurl}
-									{/if}
-								{else}
-									{if $prefs.menus_item_names_raw eq 'n'}
-										{$chdata.url|escape}
-									{else}
-										{$chdata.url}
-									{/if}
-								{/if}"
-							>
+							<a href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}{$chdata.sefurl|escape:'url'}{else}{$chdata.url|escape:'url'}{/if}">
 								{if $menu_type eq 'vert' and $prefs.menus_items_icons eq 'y' and $menu_info.use_items_icons eq 'y' and $opensec eq 0}
 									{icon _id=$chdata.icon alt='' _defaultdir=$prefs.menus_items_icons_path}
 								{/if}
 								<span class="menuText">
-									{if $translate eq 'n'}
-										{if $escape_menu_labels}{$chdata.name|escape}{else}{$chdata.name}{/if}
-									{else}
-										{tr}{if $escape_menu_labels}{$chdata.name|escape}{else}{$chdata.name}{/if}{/tr}
-									{/if}
+									{if $translate eq 'n'}{$chdata.name}{else}{tr}{$chdata.name}{/tr}{/if}
 								</span>
 							</a>
 						{else}
-							{if $translate eq 'n'}
-								{if $escape_menu_labels}{$chdata.name|escape}{else}{$chdata.name}{/if}
-							{else}
-								{tr}{if $escape_menu_labels}{$chdata.name|escape}{else}{$chdata.name}{/if}{/tr}
-							{/if}
+							{if $translate eq 'n'}{$chdata.name}{else}{tr}{$chdata.name}{/tr}{/if}
 						{/if}
 					</li>
 					{if $sep eq 'line'}{assign var=sep value=''}{/if}
