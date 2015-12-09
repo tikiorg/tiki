@@ -137,5 +137,22 @@ class Services_File_VimeoController
 			'err' => $errMsg,
 		);
 	}
+
+	/**
+	 * View controller function. Best-used when called from a bootstrap_modal smarty function.
+	 * @param $input
+	 * @return array
+	 * @throws Exception
+	 */
+	function action_view($input){
+		$fileId = $input->file_id->text();
+
+		$filelib = TikiLib::lib("filegal");
+		$file = $filelib->get_file_info($fileId);
+		return array(
+			"title" => $file["filename"],
+			"file_id" => $fileId,
+		);
+	}
 }
 
