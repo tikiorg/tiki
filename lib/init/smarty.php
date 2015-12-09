@@ -472,7 +472,7 @@ class Smarty_Tiki extends Smarty
 		if (class_exists('TikiLib')) {
 			// Theme templates
 			$themelib = TikiLib::lib('theme');
-			if (!in_array($prefs['theme'], ['custom_url'])) {
+			if (!empty($prefs['theme']) && !in_array($prefs['theme'], ['custom_url'])) {
 				$theme_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], '', 'templates'); // path to the theme options
 				$this->addTemplateDir(TIKI_PATH . "/$theme_path/");
 				//if theme_admin is empty, use main theme and site_layout instead of site_layout_admin
@@ -507,9 +507,9 @@ class Smarty_Tiki extends Smarty
 		}
 		
 		//Layout templates
-		if ($section != "admin" || empty($prefs['theme_admin'])){ //use the admin layout if in the admin section
+		if (!empty($prefs['site_layout']) && ($section != "admin" || empty($prefs['theme_admin']))){ //use the admin layout if in the admin section
 			$this->addTemplateDir($this->main_template_dir . '/layouts/' . $prefs['site_layout'] . '/');
-		} else {
+		} elseif (!empty($prefs['site_layout_admin'])) {
 			$this->addTemplateDir($this->main_template_dir . '/layouts/' . $prefs['site_layout_admin'] . '/');
 		}
 		$this->addTemplateDir($this->main_template_dir.'/layouts/');
