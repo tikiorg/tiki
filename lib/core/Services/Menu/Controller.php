@@ -11,10 +11,7 @@ class Services_Menu_Controller
 	function action_get_menu($input)
 	{
 		$menuId = $input->menuId->int();
-		$menuLib = TikiLib::lib('menu');
-		return array(
-			'title' => $res,
-		);
+		return TikiLib::lib('menu')->get_menu($menuId);
 	}
 
 	function action_manage_menu ($input)
@@ -22,7 +19,7 @@ class Services_Menu_Controller
 		//check permissions
 		$perms = Perms::get('menu');
 		if (! $perms->tiki_p_edit_menu) {
-			throw new Services_Exception_Denied(tr('You don't have permission to edit menus (tiki_p_edit_menu)'));
+			throw new Services_Exception_Denied(tr("You don't have permission to edit menus (tiki_p_edit_menu)"));
 		}
 		
 		//get menu details
@@ -134,6 +131,13 @@ class Services_Menu_Controller
 		
 		//get preference information
 		$headerlib = TikiLib::lib('header');
+		$feature_prefs = array();
+		global $prefs;
+		foreach ($prefs as $k => $v) {	// attempt to filter out non-feature prefs (still finds 133!)
+			if (strpos($k, 'feature') !== false && preg_match_all('/_/m', $k, $m) === 1) {
+				$feature_prefs[] = $k;
+			}
+		}
 		$headerlib->add_js('var prefNames = ' . json_encode($feature_prefs) . ';');
 
 		//get permission information		
@@ -145,7 +149,7 @@ class Services_Menu_Controller
 		if ($confirm) {
 			//check necessary permissions
 			if (! $perms = Perms::get()->tiki_p_edit_menu_option) {
-				throw new Services_Exception_Denied(tr('You don't have permission to edit menu options (tiki_p_edit_menu_option)'));
+				throw new Services_Exception_Denied(tr("You don't have permission to edit menu options (tiki_p_edit_menu_option)"));
 			}
 		
 			//prepare data and check conditions
@@ -274,7 +278,7 @@ class Services_Menu_Controller
 		//check permissions
 		$perms = Perms::get('menu');
 		if (! $perms->tiki_p_edit_menu_option) {
-			throw new Services_Exception_Denied(tr('You don't have permission to edit menu options (tiki_p_edit_menu_option)'));
+			throw new Services_Exception_Denied(tr("You don't have permission to edit menu options (tiki_p_edit_menu_option)"));
 		}
 		
 		//get menu details
