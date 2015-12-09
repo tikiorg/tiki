@@ -210,7 +210,7 @@ class Perms
 	 * @param $bulkKey string The key added for each of the objects in bulk
 	 *                        loading.
 	 * @param $data array A list of records.
-	 * @param $dataKey mixed The key to fetch from each record as the object.
+	 * @param $contextMap mixed The key to fetch from each record as the object.
 	 * @param $permission string The permission name to validate on each record.
 	 * @return array What remains of the dataset after filtering.
 	 */
