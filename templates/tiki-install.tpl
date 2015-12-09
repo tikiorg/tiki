@@ -714,11 +714,11 @@
 						{tr}You can now log in into Tiki as user <strong>admin</strong> and start configuring the application.{/tr}
 					</p>
 					{if isset($smarty.post.scratch)}
-						<h3><img src="img/icons/information.png" alt="{tr}Note{/tr}" style="vertical-align:middle"> {tr}Installation{/tr}</h3>
+						<h3>{icon name='information'} {tr}Installation{/tr}</h3>
 						<p>{tr}If this is a first time installation, go to <strong>tiki-admin.php</strong> after login to start configuring your new Tiki installation.{/tr}</p>
 					{/if}
 					{if isset($smarty.post.update)}
-						<h3><img src="img/icons/information.png" alt="{tr}Note{/tr}" style="vertical-align:middle"> {tr}Upgrade{/tr}</h3>
+						<h3>{icon name='information'} {tr}Upgrade{/tr}</h3>
 						<p>{tr}If this is an upgrade, clean the Tiki caches manually (the <strong>templates_c</strong> directory) or by using the <strong>Admin &gt; System</strong> option from the Admin menu.{/tr}</p>
 					{/if}
 					{if $tikidb_is20}
@@ -750,49 +750,51 @@
 									<legend>{tr}Upgrading and running into encoding issues?{/tr}</legend>
 									<p>{tr}We can try to fix it, but <strong>make sure you have backups, and can restore them</strong>.{/tr}</p>
 									{if $client_charset_in_file eq 'utf8'}
-										<p>
-											{tr}Previous table encoding:{/tr}
-											<select name="previous_encoding" id="previous_encoding">
-												<option value="">{tr}Please select{/tr}</option>
-												<option value="armscii8" title="Armenian, Binary">armscii8</option>
-												<option value="ascii" title="West European (multilingual), Binary">ascii</option>
-												<option value="big5" title="Traditional Chinese, Binary">big5</option>
-												<option value="binary" title="Binary">binary</option>
-												<option value="cp1250" title="Central European (multilingual), Binary">cp1250</option>
-												<option value="cp1251" title="Cyrillic (multilingual), Binary">cp1251</option>
-												<option value="cp1256" title="Arabic, Binary">cp1256</option>
-												<option value="cp1257" title="Baltic (multilingual), Binary">cp1257</option>
-												<option value="cp850" title="West European (multilingual), Binary">cp850</option>
-												<option value="cp852" title="Central European (multilingual), Binary">cp852</option>
-												<option value="cp866" title="Russian, Binary">cp866</option>
-												<option value="cp932" title="Japanese, Binary">cp932</option>
-												<option value="dec8" title="West European (multilingual), Binary">dec8</option>
-												<option value="eucjpms" title="Japanese, Binary">eucjpms</option>
-												<option value="euckr" title="Korean, Binary">euckr</option>
-												<option value="gb2312" title="Simplified Chinese, Binary">gb2312</option>
-												<option value="gbk" title="Simplified Chinese, Binary">gbk</option>
-												<option value="geostd8" title="Georgian, Binary">geostd8</option>
-												<option value="greek" title="Greek, Binary">greek</option>
-												<option value="hebrew" title="Hebrew, Binary">hebrew</option>
-												<option value="hp8" title="West European (multilingual), Binary">hp8</option>
-												<option value="keybcs2" title="Czech-Slovak, Binary">keybcs2</option>
-												<option value="koi8r" title="Russian, Binary">koi8r</option>
-												<option value="koi8u" title="Ukrainian, Binary">koi8u</option>
-												<option value="latin1" title="West European (multilingual), Binary">latin1</option>
-												<option value="latin2" title="Central European (multilingual), Binary">latin2</option>
-												<option value="latin5" title="Turkish, Binary">latin5</option>
-												<option value="latin7" title="Baltic (multilingual), Binary">latin7</option>
-												<option value="macce" title="Central European (multilingual), Binary">macce</option>
-												<option value="macroman" title="West European (multilingual), Binary">macroman</option>
-												<option value="sjis" title="Japanese, Binary">sjis</option>
-												<option value="swe7" title="Swedish, Binary">swe7</option>
-												<option value="tis620" title="Thai, Binary">tis620</option>
-												<option value="ucs2" title="Unicode (multilingual), Binary">ucs2</option>
-												<option value="ujis" title="Japanese, Binary">ujis</option>
-											</select>
-											<input type="submit" class="btn btn-danger btn-sm" name="fix_double_encoding" value="{tr}Dangerous: Fix double encoding{/tr}">
+										<div class="form-group">
+											<div class="input-group col-sm-8">
+												<span class="input-group-addon">{tr}Previous table encoding:{/tr}</span>
+												<select class="form-control" name="previous_encoding" id="previous_encoding">
+													<option value="">{tr}Please select{/tr}</option>
+													<option value="armscii8" title="Armenian, Binary">armscii8</option>
+													<option value="ascii" title="West European (multilingual), Binary">ascii</option>
+													<option value="big5" title="Traditional Chinese, Binary">big5</option>
+													<option value="binary" title="Binary">binary</option>
+													<option value="cp1250" title="Central European (multilingual), Binary">cp1250</option>
+													<option value="cp1251" title="Cyrillic (multilingual), Binary">cp1251</option>
+													<option value="cp1256" title="Arabic, Binary">cp1256</option>
+													<option value="cp1257" title="Baltic (multilingual), Binary">cp1257</option>
+													<option value="cp850" title="West European (multilingual), Binary">cp850</option>
+													<option value="cp852" title="Central European (multilingual), Binary">cp852</option>
+													<option value="cp866" title="Russian, Binary">cp866</option>
+													<option value="cp932" title="Japanese, Binary">cp932</option>
+													<option value="dec8" title="West European (multilingual), Binary">dec8</option>
+													<option value="eucjpms" title="Japanese, Binary">eucjpms</option>
+													<option value="euckr" title="Korean, Binary">euckr</option>
+													<option value="gb2312" title="Simplified Chinese, Binary">gb2312</option>
+													<option value="gbk" title="Simplified Chinese, Binary">gbk</option>
+													<option value="geostd8" title="Georgian, Binary">geostd8</option>
+													<option value="greek" title="Greek, Binary">greek</option>
+													<option value="hebrew" title="Hebrew, Binary">hebrew</option>
+													<option value="hp8" title="West European (multilingual), Binary">hp8</option>
+													<option value="keybcs2" title="Czech-Slovak, Binary">keybcs2</option>
+													<option value="koi8r" title="Russian, Binary">koi8r</option>
+													<option value="koi8u" title="Ukrainian, Binary">koi8u</option>
+													<option value="latin1" title="West European (multilingual), Binary">latin1</option>
+													<option value="latin2" title="Central European (multilingual), Binary">latin2</option>
+													<option value="latin5" title="Turkish, Binary">latin5</option>
+													<option value="latin7" title="Baltic (multilingual), Binary">latin7</option>
+													<option value="macce" title="Central European (multilingual), Binary">macce</option>
+													<option value="macroman" title="West European (multilingual), Binary">macroman</option>
+													<option value="sjis" title="Japanese, Binary">sjis</option>
+													<option value="swe7" title="Swedish, Binary">swe7</option>
+													<option value="tis620" title="Thai, Binary">tis620</option>
+													<option value="ucs2" title="Unicode (multilingual), Binary">ucs2</option>
+													<option value="ujis" title="Japanese, Binary">ujis</option>
+												</select>
+												<span class="input-group-btn"><input type="submit" class="btn btn-danger btn-sm" name="fix_double_encoding" value="{tr}Click to fix double encoding (dangerous){/tr}"></span>
+											</div>
 											<input type="hidden" name="install_step" value="7">
-										</p>
+										</div>
 									{else}
 										<p>{tr}Oops. You need to make sure client charset is forced to UTF-8. Reset the database connection to continue.{/tr}</p>
 									{/if}
@@ -808,7 +810,7 @@
 				{if $virt}
 					<div class="box-shadow">
 						<div class="box">
-							<h3 class="box-title">{tr}MultiTiki Setup{/tr} <a title="{tr}Help{/tr}" href="https://doc.tiki.org/MultiTiki" target="help"><img style="border:0" src="img/icons/help.png" alt="{tr}Help{/tr}"></a></h3>
+							<h3 class="box-title">{tr}MultiTiki Setup{/tr} <a title="{tr}Help{/tr}" href="https://doc.tiki.org/MultiTiki" target="help">{icon name='help'}</h3>
 							<div class="clearfix box-data">
 								{if !empty({$multi})}
 									<div><a href="#" onclick="$('#multi').submit();return false;">{tr}Default Installation{/tr}</a></div>
