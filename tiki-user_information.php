@@ -9,7 +9,7 @@
 // $Id$
 
 require_once ('tiki-setup.php');
-include_once ('lib/messu/messulib.php');
+$messulib = TikiLib::lib('message');
 include_once ('lib/userprefs/scrambleEmail.php');
 
 if ($prefs['feature_unified_user_details'] == 'y'){

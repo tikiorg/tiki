@@ -8,7 +8,7 @@
 $section = 'mytiki';
 require_once ('tiki-setup.php');
 include_once ('lib/tasks/tasklib.php');
-include_once ('lib/messu/messulib.php');
+$messulib = TikiLib::lib('message');
 
 $access->check_feature('feature_tasks', '', 'community');
 $access->check_user($user);

@@ -2253,6 +2253,7 @@ class UsersLib extends TikiLib
 
 	function change_login($from,$to)
 	{
+		global $user;
 		$cachelib = TikiLib::lib('cache');
 
 		if ( $from == 'admin' ) return false;
@@ -7102,8 +7103,7 @@ class UsersLib extends TikiLib
 					return false;
 				}
 
-				global $messulib; include_once('lib/messu/messulib.php');
-				$messulib->post_message(
+				TikiLib::lib('message')->post_message(
 					$prefs['contact_user'],
 					$prefs['contact_user'],
 					$prefs['contact_user'],

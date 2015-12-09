@@ -984,9 +984,7 @@ class Services_User_Controller
 
 	function action_send_message($input) {
 		global $smarty, $user;
-		include_once ('lib/messu/messulib.php');
 		$userlib = TikiLib::lib('user');
-
 		//ensures a user was selected to send a message to.
 		if (empty($input->userwatch->text())) {
 			throw new Services_Exception(tra('No user was selected.'));
@@ -1005,7 +1003,7 @@ class Services_User_Controller
 				die;
 			}
 			//if message is successfully sent
-			if ($messulib->post_message($input->userwatch->text(), $user, $input->to->text(), '', $input->subject->text(), $input->body->text(), $priority, '', isset($input->replytome) ? 'y' : '', isset($input->bccme) ? 'y' : '')) {
+			if (TikiLib::lib('message')->post_message($input->userwatch->text(), $user, $input->to->text(), '', $input->subject->text(), $input->body->text(), $priority, '', isset($input->replytome) ? 'y' : '', isset($input->bccme) ? 'y' : '')) {
 				$message = tra('Your Message was successfully sent to') . ' ' . $userlib->clean_user($input->userwatch->text());
 				$type = "feedback";
 				$heading = "Success!";

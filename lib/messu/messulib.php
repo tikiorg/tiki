@@ -504,6 +504,8 @@ class Messu extends TikiLib
 		$query = 'select * from `messu_' . $dbsource . "` where `user`=? $mid";
 
 		$result = $this->query($query, $bindvars);
+		$ret = [];
+
 		while ($res = $result->fetchRow()) {
 			$res['parsed'] = $this->parse_data($res['body']);
 			$res['len'] = strlen($res['parsed']);
@@ -515,4 +517,3 @@ class Messu extends TikiLib
 	}
 
 }
-$messulib = new Messu;

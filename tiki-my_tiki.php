@@ -100,10 +100,9 @@ if ($prefs['feature_tasks'] == 'y') {
 if ($prefs['feature_messages'] == 'y' && $tiki_p_messages == 'y') {
 	$mytiki_msgs = $tikilib->get_user_preference($user, 'mytiki_msgs', 'y');
 	if ($mytiki_msgs == 'y') {
-		include_once ('lib/messu/messulib.php');
 		$unread = $tikilib->user_unread_messages($userwatch);
 		$smarty->assign_by_ref('unread', $unread);
-		$msgs = $messulib->list_user_messages($user, 0, -1, 'date_desc', '', 'isRead', 'n', '', 'messages');
+		$msgs = TikiLib::lib('message')->list_user_messages($user, 0, -1, 'date_desc', '', 'isRead', 'n', '', 'messages');
 		$smarty->assign_by_ref('msgs', $msgs['data']);
 		$smarty->assign('mytiki_msgs', 'y');
 	}
