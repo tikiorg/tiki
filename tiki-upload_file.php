@@ -180,6 +180,8 @@ if ( $isUpload ) {
 	}
 }
 
+$fileparts = pathinfo($fileInfo['filename']);
+$fileInfo['extension'] = $fileparts['extension'];
 $smarty->assign_by_ref('fileInfo', $fileInfo);
 $smarty->assign('editFileId', (int) $fileId);
 
