@@ -1424,7 +1424,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_listorphanPages' => array(
 			'name' => tra('Orphan pages'),
-            'description' => tra('Allow listing of "orphan pages" (pages not linked to from another page)'),
+            'description' => tra('Allow listing of \"orphan pages\" (pages not linked to from another page)'),
 			'type' => 'flag',
 			'view' => 'tiki-orphan_pages.php',
 			'default' => 'n',
