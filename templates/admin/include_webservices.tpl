@@ -92,7 +92,7 @@
 					<th colspan="2">{tr}Returned Data{/tr}</th>
 				</tr>
 				<tr>
-					<td colspan="2"><pre>{$data|escape}</pre></td>
+					<td colspan="2"><pre style="max-height: 40em; max-width: 60em; overflow: auto;">{$data|escape}</pre></td>
 				</tr>
 				<tr>
 					<th colspan="2">{tr}Proposed Templates{/tr}</th>
