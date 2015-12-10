@@ -46,7 +46,7 @@
 
 					<li class="dropdown option{$chdata.optionId} menuSection menuSection{$opensec} menuLevel{$opensec}{if isset($chdata.selected) and $chdata.selected} selected{/if}{if isset($chdata.selectedAscendant) and $chdata.selectedAscendant} selectedAscendant{/if}">
 					{if empty($chdata.block)}
-						<a{if !empty($chdata.url)} href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}{$chdata.sefurl|escape:'url'}{else}{$chdata.url|escape:'url'}{/if}"{/if}>
+						<a{if !empty($chdata.url)} href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}{$chdata.sefurl|escape}{else}{$chdata.url|escape}{/if}"{/if}>
 							{if $menu_type eq 'vert' and $prefs.menus_items_icons eq 'y' and $menu_info.use_items_icons eq 'y' and $opensec eq 0}
 								{icon _id=$chdata.icon alt='' _defaultdir=$prefs.menus_items_icons_path}
 							{elseif isset($icon) and $icon}
@@ -66,7 +66,7 @@
 				{elseif $chdata.type eq 'o'}
 					<li class="option{$chdata.optionId} menuOption menuLevel{$opensec}{if isset($chdata.selected) and $chdata.selected} selected{/if}{if isset($chdata.selectedAscendant) and $chdata.selectedAscendant} selectedAscendant{/if}">
 						{if empty($chdata.block)}
-							<a href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}{$chdata.sefurl|escape:'url'}{else}{$chdata.url|escape:'url'}{/if}">
+							<a href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}{$chdata.sefurl|escape}{else}{$chdata.url|escape}{/if}">
 								{if $menu_type eq 'vert' and $prefs.menus_items_icons eq 'y' and $menu_info.use_items_icons eq 'y' and $opensec eq 0}
 									{icon _id=$chdata.icon alt='' _defaultdir=$prefs.menus_items_icons_path}
 								{/if}
