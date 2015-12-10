@@ -152,7 +152,7 @@ if ( $prefs['feature_wiki_structure'] == 'y' ) {
 			array( 'type' => 'wiki page' ),
 			'object',
 			$structs,
-			array( 'object' => 'permName' ),
+			array( 'object' => 'pageName' ),
 			'view'
 		);
 
