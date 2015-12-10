@@ -133,4 +133,20 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 
 		return $output;
 	}
+
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
+	{
+		$baseKey = $this->getBaseKey();
+		$value = json_decode($this->getValue(), true);
+
+		return array(
+			$baseKey => $typeFactory->multivalue($value['result']),
+			"{$baseKey}_text" => $typeFactory->plaintext(		// ignore nested arrays and remove html for plain text
+					strip_tags(
+							implode(' ', array_filter($value['result'], 'is_string'))
+					)
+			),
+		);
+	}
+
 }
