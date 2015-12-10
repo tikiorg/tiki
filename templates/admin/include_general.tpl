@@ -5,6 +5,9 @@
 	<input type="hidden" name="new_prefs" />
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
+			{button _class="btn btn-link tips" href="tiki-install.php" _icon_name="database" _text="{tr}Tiki installer{/tr}" _title=":{tr}Reset or upgrade your database{/tr}"}
+			{button _class="btn btn-link tips" href="tiki-admin.php?page=general&amp;forcecheck=1" _icon_name="search" _text="{tr}Check for updates now{/tr}" _title=":{tr}Check for updates now{/tr}"}
+			{button _class="btn btn-link tips" href="tiki-admin_menus.php" _icon_name="menu" _text="{tr}Menus{/tr}" _title=":{tr}Create and edit menus{/tr}"}
 			<div class="pull-right">
 				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
 			</div>
@@ -19,35 +22,28 @@
 	{tabset name="admin_general"}
 		{tab name="{tr}General Preferences{/tr}"}
 			<h2>{tr}General Preferences{/tr}</h2>
-			<fieldset>
-				<legend>{tr}Server Fitness{/tr}</legend>
-				{tr}To check if your server meets the requirements for running Tiki please visit <a href="tiki-check.php">Tiki Server Compatibility Check</a>{/tr}.
-			</fieldset>
-
+			{remarksbox type="info" title="{tr}Server Fitness{/tr}" close="n"}
+				{tr}To check if your server meets the requirements for running Tiki please visit <a href="tiki-check.php" class="alert-link">Tiki Server Compatibility Check</a>{/tr}.
+			{/remarksbox}
 			<fieldset>
 				<legend>{tr}Release Check{/tr}</legend>
-				<div class="adminoptionbox">{tr}Tiki version:{/tr}
-					<strong>
-						{if !empty($lastup)}
-							{tr}Last update from SVN{/tr} ({$tiki_version}): {$lastup|tiki_long_datetime}
-						{else}
-							{$tiki_version}
-						{/if}
-						{if $svnrev}
-							- REV {$svnrev}
-						{/if}
-					</strong>
+				{remarksbox type="info" title="{tr}Tiki version{/tr}" close="n"}
+					{if !empty($lastup)}
+						{tr}Last update from SVN{/tr} ({$tiki_version}): {$lastup|tiki_long_datetime}
+					{else}
+						{$tiki_version}
+					{/if}
+					{if $svnrev}
+						- REV {$svnrev}
+					{/if}
 					({$db_engine_type})
-					{button href="tiki-install.php" _text="{tr}Reset or upgrade your database{/tr}"}
-				</div>
-
+				{/remarksbox}
 				<div class="adminoptionbox">
 					{preference name=feature_version_checks}
 					{preference name=tiki_release_cycle}
 					<div id="feature_version_checks_childcontainer">
 						{preference name=tiki_version_check_frequency}
 					</div>
-					{button href="tiki-admin.php?page=general&amp;forcecheck=1" _text="{tr}Check for updates now{/tr}."}
 				</div>
 			</fieldset>
 
@@ -57,10 +53,9 @@
 				{preference name=browsertitle}
 				{preference name=site_title_location}
 				{preference name=site_title_breadcrumb}
-
-				<div class="adminoptionbox">
-					{tr}Go to the <a href="tiki-admin.php?page=look" title=""><strong>Look & Feel</strong></a> section for additional site customization preferences{/tr}.
-				</div>
+				{remarksbox type="info" title="{tr}Themes{/tr}"}
+					{tr}Go to the <a href="tiki-admin.php?page=look" class="alert-link">Look & Feel</a> section for additional site customization preferences{/tr}.
+				{/remarksbox}
 			</fieldset>
 
 			<fieldset>
@@ -111,7 +106,6 @@
 					</div>
 				</div>
 				{preference name=disableJavascript}
-
 				{preference name=log_mail}
 				{preference name=log_sql}
 				<div class="adminoptionboxchild" id="log_sql_childcontainer">
@@ -130,11 +124,9 @@
 				<div class="adminoptionboxchild" id="use_proxy_childcontainer">
 					{preference name=proxy_host}
 					{preference name=proxy_port}
-
 					{preference name=proxy_user}
 					{preference name=proxy_pass}
 				</div>
-
 				{preference name=http_skip_frameset}
 				{preference name=feature_loadbalancer}
 				{preference name=feature_port_rewriting}
@@ -218,10 +210,9 @@
 				<div class="adminoptionboxchild" id="feature_help_childcontainer">
 					{preference name=helpurl}
 				</div>
-				<strong>{tr}Change admin password{/tr}</strong>
-				<div style="padding:1em; text-align:left;">
-					<p>{tr}Change the <strong>Admin</strong> password:{/tr} <a href="tiki-adminusers.php?find=admin">{tr}User administration{/tr}</a></p>
-				</div>
+				{remarksbox type="info" title="{tr}Change admin password{/tr}"}
+					{tr}Change the <strong>Admin</strong> password:{/tr} <a href="tiki-adminusers.php?find=admin" class="alert-link">{tr}User administration{/tr}</a>
+				{/remarksbox}
 			</fieldset>
 		{/tab}
 
@@ -229,7 +220,6 @@
 			<h2>{tr}Navigation{/tr}</h2>
 			<fieldset>
 				<legend>{tr}Menus{/tr}</legend>
-				<em>{tr}Create and edit menus {/tr}</em><a href="tiki-admin_menus.php"><em>{tr}here{/tr}</em></a>
 				<div class="adminoptionbox">
 					{preference name=feature_cssmenus}
 					{preference name=feature_userlevels}
