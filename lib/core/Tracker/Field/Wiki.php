@@ -260,24 +260,23 @@ class Tracker_Field_Wiki extends Tracker_Field_Text
 
 	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
 	{
+		$data = array();
 		$value = $this->getValue();
 		$baseKey = $this->getBaseKey();
 
-		$info = TikiLib::lib('tiki')->get_page_info($value, true, true);
-
-		if (! $info) {
-			return false;
-		}
-
 		if (!empty($value)) {
 
-			$data = array(
-				$baseKey => $typeFactory->identifier($value),
-				"{$baseKey}_text" => $typeFactory->wikitext($info['data']),
-			);
+			$info = TikiLib::lib('tiki')->get_page_info($value, true, true);
+			if ($info) {
+				$data = array(
+					$baseKey => $typeFactory->identifier($value),
+					"{$baseKey}_text" => $typeFactory->wikitext($info['data']),
+				);
+			}
 
-			return $data;
 		}
+
+		return $data;
 	}
 
 	function getProvidedFields()
