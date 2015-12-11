@@ -118,6 +118,10 @@ class Search_Indexer
 			$contentSource = $this->contentSources[$objectType];
 
 			if (false !== $data = $contentSource->getDocument($objectId, $typeFactory)) {
+				if ($data === null) {
+					TikiLib::lib('errorreport')->report(tr('Object %0 type %1 returned null from getDocument function', $objectId, $objectType));
+					$data = array();
+				}
 				if (! is_int(key($data))) {
 					$data = array($data);
 				}
