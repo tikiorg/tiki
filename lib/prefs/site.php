@@ -14,7 +14,7 @@ function prefs_site_list()
 
 	return array (
 		'site_closed' => array(
-			'name' => tra('Close site (except for those with permission)'),
+			'name' => tra('Close site'),
 			'description' => tra('Close site (except for those with permission)'),
 			'type' => 'flag',
 			'perspective' => false,

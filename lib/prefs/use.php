@@ -9,7 +9,7 @@ function prefs_use_list()
 {
 	return array (
 		'use_load_threshold' => array(
-			'name' => tra('Close site when server load is above the threshold  (except for those with permission)'),
+			'name' => tra('Close site when server load is above the threshold'),
 			'description' => tra('Close site when server load is above the threshold  (except for those with permission)'),
 			'type' => 'flag',
 			'perspective' => false,
