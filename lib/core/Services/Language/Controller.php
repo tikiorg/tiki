@@ -16,32 +16,55 @@ class Services_Language_Controller
 
 	function setUp()
 	{
-		global $prefs;
+		Services_Exception_Denied::checkAuth();
+		Services_Exception_Disabled::check('feature_multilingual');
 
-		if ($prefs['feature_multilingual'] != 'y') {
-			throw new Services_Exception(tr('Feature Disabled'), 403);
-		}
 	}
 
 	/**
-	 * Download database translations into a language.php file
+	 * Download database translations into a custom.php file
 	 * @param $input
 	 * @return language.php file
 	 */
 	function action_download_db_translations($input)
 	{
-		$lang = $input->language->text();
-
-		//extract data from database
-		$langTransLib = TikiLib::lib('languageTranslations');
-		$data = $langTransLib->createCustomFile();
+		//check preference
+		Services_Exception_Disabled::check('lang_use_db');
 		
-		//create file for download
-		header("Content-type: application/unknown");
-		header("Content-Disposition: inline; filename=language.php");
-		header("Content-encoding: UTF-8");
-		echo $data;
-		exit (0);
+		//check permissions
+		$perms = Perms::get('tiki');
+		if (! $perms->tiki_p_edit_languages) {
+			throw new Services_Exception_Denied(tr('Permission denied'));
+		}
+		
+		//get input
+		$language = $input->language->text();
+		$confirm = $input->confirm->int();
+
+		//get languages
+		$langLib = TikiLib::lib('language');
+		$db_languages = $langLib->getDbTranslatedLanguages();
+		$db_languages = $langLib->format_language_list($db_languages);
+		
+		if($confirm){
+			//set export language
+			$export_language = new LanguageTranslations($language);
+			
+			//get translation data from database
+			$data = $export_language->createCustomFile();
+			
+			//create file for download
+			header("Content-type: application/unknown");
+			header("Content-Disposition: inline; filename=custom.php");
+			header("Content-encoding: UTF-8");
+			echo $data;
+			die;
+		}
+		
+		return array(
+			'title' => tr('Download Translations'),
+			'db_languages' => $db_languages,
+		);
 	}
 
 	/**

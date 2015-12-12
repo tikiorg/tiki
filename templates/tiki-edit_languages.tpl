@@ -1,14 +1,14 @@
 {title admpage="i18n"}{tr}Edit languages{/tr}{/title}
-
-<div class="t_navbar">
+<div class="t_navbar margin-bottom-md">
 	{if $smarty.session.interactive_translation_mode eq 'on'}
 		{button href="tiki-interactive_trans.php?interactive_translation_mode=off" _text="{tr}Toggle interactive translation off{/tr}" _ajax="n"}
 	{else}
 		{button href="tiki-interactive_trans.php?interactive_translation_mode=on" _text="{tr}Toggle interactive translation on{/tr}" _ajax="n"}
 	{/if}
+	<a class="btn btn-link tips" href="{service controller=language action=download_db_translations}" title="{tr}Download Translations{/tr}:{tr}Download a file with all the translations in the database for the selected language.{/tr}">
+		{icon name="download"} {tr}Download Translations{/tr}
+	</a>
 </div>
-<br>
-
 {tabset}
 	{tab name="{tr}Edit languages{/tr}"}
 		<h2>{tr}Edit languages{/tr}</h2>
@@ -205,7 +205,6 @@
 					</select>
 				</div>
 					{remarksbox type="note" title="{tr}Note:{/tr}"}
-					{tr}If you click "Download database translations", you will download a file with all the translations in the database.{/tr}
 					{if $tiki_p_admin eq 'y' and $langIsWritable}
 						{tr}If you click "Write to language.php", the translations in the database will be merged with the other translations in language.php. Note that after writing translations to language.php they are removed from the database.{/tr}
 					{/if}
@@ -216,7 +215,6 @@
 					{/remarksbox}
 				{/if}
 				<div class="adminoptionbox">
-					<input type="submit" class="btn btn-default btn-sm" name="downloadFile" value="{tr}Download database translations{/tr}">
 					{if $tiki_p_admin eq 'y' and $langIsWritable}
 						<input type="submit" class="btn btn-default btn-sm" name="exportToLanguage" value="{tr}Write to language.php{/tr}">
 					{/if}

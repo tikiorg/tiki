@@ -154,25 +154,6 @@ if ($action == "edit_rec_sw" || $action == "edit_tran_sw") {
 	$smarty->assign('hasDbTranslations', $translations->hasDbTranslations);
 }
 
-if (isset($_REQUEST["exp_language"])) {
-	$exp_language = $_REQUEST["exp_language"];
-	$export_language = new LanguageTranslations($exp_language);
-	$smarty->assign('exp_language', $exp_language);
-} else {
-	$smarty->assign('exp_language', $prefs['language']);
-}
-
-// Export
-if (isset($_REQUEST['downloadFile'])) {
-	check_ticket('edit-languages');
-	$data = $export_language->createCustomFile();
-	header("Content-type: application/unknown");
-	header("Content-Disposition: inline; filename=language.php");
-	header("Content-encoding: UTF-8");
-	echo $data;
-	exit (0);
-}
-
 // Write to language.php
 if (isset($_REQUEST['exportToLanguage']) && $tiki_p_admin == 'y') {
 	try {
