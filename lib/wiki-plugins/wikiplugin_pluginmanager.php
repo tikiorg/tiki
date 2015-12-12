@@ -231,6 +231,13 @@ class WikiPluginPluginManager extends PluginsLib
 				$header .= $headbegin . tra('Accepted Values') . '</th>';
  			   	$header .= $headbegin . tra('Description') . '</th>';
 				$rowCounter = 1;
+				//sort required params first
+				$reqarray = array_column($infoPlugin['params'], 'required');
+				$keysarray = array_keys($infoPlugin['params']);
+				$reqarray = array_combine($keysarray, $reqarray);
+				if (count($reqarray) == count($infoPlugin['params'])) {
+					array_multisort($reqarray, SORT_DESC, $infoPlugin['params']);
+				}
 				//add body instructions to the parameter array
 				if (!empty($infoPlugin['body'])) {
 					$body = array('(body of plugin)' => array('description' => $infoPlugin['body']));
