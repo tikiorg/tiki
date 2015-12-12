@@ -8,7 +8,7 @@
 function wikiplugin_includetpl_info()
 {
 	return array(
-		'name' => tra('Include TPL files to the wiki page'),
+		'name' => tra('Include Template File'),
 		'description' => tra('Include a template file in a page'),
 		'format' => 'html',
 		'validate' => 'all',

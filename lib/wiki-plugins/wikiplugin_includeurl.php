@@ -8,29 +8,32 @@
 function wikiplugin_includeurl_info()
 {
 	return array(
-		'name' => tra('IncludeURL'),
+		'name' => tra('Include URL'),
 		'documentation' => 'PluginIncludeURL',
 		'description' => tra('Include the body content from a URL'),
 		'prefs' => array('wikiplugin_includeurl'),
-		'icon' => 'img/icons/link.png',
+		'iconname' => 'link-external',
+		'introduced' => 15,
 		'tags' => array( 'basic' ),
 		'format' => 'html',
 		'params' => array(
 			'url' => array(
-				'required' => false,
+				'required' => true,
 				'name' => tra('URL'),
 				'description' => tra('URL to external file to include.'),
+				'since' => '15.0',
+				'filter' => 'url',
 				'default' => '',
 			),
 		),
 	);
 }
 
-function wikiplugin_includeurl($dataIn, $params)
+function wikiplugin_includeurl($data, $params)
 {
 	// Validate that "url" is set.
 	if (empty($params['url'])) {
-		return ("<b>{tr}Missing url for plugin includeurl{/tr}</b><br />");
+		return tr('Missing parameter url for plugin %0', 'includeurl') . '<br>';
 	} else {
 		$url = $params['url'];
 		$html = file_get_contents($url);
