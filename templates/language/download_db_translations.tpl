@@ -4,16 +4,18 @@
 {/block}
 {block name="content"}
 	<form action="{service controller=language action=download_db_translations}" method="post" role="form" class="form">
-		{remarksbox type="note" title="{tr}Information{/tr}" close="n"}
-			{tr}Download a custom.php file with all the translations in the database for the selected language.{/tr}
-		{/remarksbox}
 		{if (empty($db_languages))}
-			{remarksbox type="note" title="{tr}Note:{/tr}"}
-				{tr}No translations in the database available to export. First translate strings using interactive translation or "Edit languages".{/tr}
+			{remarksbox type="note" title="{tr}No translations in the database available to export{/tr}" close="n"}
+				 <a href="tiki-edit_languages.php" class="btn btn-default">{tr}Edit languages{/tr}</a>
 			{/remarksbox}
 		{else}
+			{remarksbox type="note" title="{tr}Information{/tr}" close="n"}
+				{tr}Download a custom.php file with all the translations in the database for the selected language.{/tr}
+			{/remarksbox}
 			<div class="form-group">
-				<label for="language" class="control-label">{tr}Language{/tr}</label>
+				<label for="language" class="control-label">
+					{tr}Language{/tr}
+				</label>
 				<select id="language" class="form-control" name="language">
 					{section name=ix loop=$db_languages}
 						<option value="{$db_languages[ix].value|escape}"

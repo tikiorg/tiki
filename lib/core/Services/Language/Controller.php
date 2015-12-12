@@ -74,24 +74,36 @@ class Services_Language_Controller
 	 */
 	function action_write_to_language_php($input)
 	{
-		$lang = $input->language->text();
+		//check preference
+		Services_Exception_Disabled::check('lang_use_db');
 		
-		//TODO: move this to check if this action is available
+		//check permissions
+		$perms = Perms::get('tiki');
+		if (! $perms->tiki_p_edit_languages) {
+			throw new Services_Exception_Denied(tr('Permission denied'));
+		}
+		
+		//get input
+		$language = $input->language->text();
+		$confirm = $input->confirm->int();
+				
+		//prepare language list
 		$langLib = TikiLib::lib('language');
 		$db_languages = $langLib->getDbTranslatedLanguages();
 		$db_languages = $langLib->format_language_list($db_languages);
-		$confirm = $input->confirm->int();
 		
-		// check if is possible to write to lang/,TODO: throw exception
-		// TODO: check if each language file is writable instead of the whole lang/ dir
+		//TODO: check if each language file is writable instead of the whole lang/ dir
 		if (is_writable('lang/')) {
 			$langIsWritable = true;
 		} else {
 			$langIsWritable = false;
+			throw new Services_Exception_Denied(tr('lang/ folder is not writable'));
 		}
 		
-		// Write to language.php
-		if (isset($_REQUEST['exportToLanguage']) && $tiki_p_admin == 'y') {
+		if($confirm){
+			//set export language
+			$export_language = new LanguageTranslations($language);
+			// Write to language.php
 			try {
 				$stats = $export_language->writeLanguageFile();
 			} catch (Exception $e) {
@@ -99,10 +111,15 @@ class Services_Language_Controller
 				$smarty->display('error.tpl');
 				die;
 			}
-
 			$expmsg = sprintf(tra('Wrote %d new strings and updated %d to lang/%s/language.php'), $stats['new'], $stats['modif'], $export_language->lang);
-			$smarty->assign('expmsg', $expmsg);
+			//$smarty->assign('expmsg', $expmsg);
 		}
+
+		return array(
+			'title' => tr('Write to language.php'),
+			'db_languages' => $db_languages,
+			'langIsWritable' => $langIsWritable,
+		);
 	}
 }
 

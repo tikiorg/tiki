@@ -154,20 +154,6 @@ if ($action == "edit_rec_sw" || $action == "edit_tran_sw") {
 	$smarty->assign('hasDbTranslations', $translations->hasDbTranslations);
 }
 
-// Write to language.php
-if (isset($_REQUEST['exportToLanguage']) && $tiki_p_admin == 'y') {
-	try {
-		$stats = $export_language->writeLanguageFile();
-	} catch (Exception $e) {
-		$smarty->assign('msg', $e->getMessage());
-		$smarty->display('error.tpl');
-		die;
-	}
-
-	$expmsg = sprintf(tra('Wrote %d new strings and updated %d to lang/%s/language.php'), $stats['new'], $stats['modif'], $export_language->lang);
-	$smarty->assign('expmsg', $expmsg);
-}
-
 $db_languages = Language::getDbTranslatedLanguages();
 $db_languages = $langLib->format_language_list($db_languages);
 $smarty->assign_by_ref('db_languages', $db_languages);
