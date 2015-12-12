@@ -2,14 +2,12 @@
 <form class="form-horizontal" action="tiki-admin.php?page=general" class="admin" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<input type="hidden" name="new_prefs" />
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			{button _class="btn btn-link tips" href="tiki-install.php" _icon_name="database" _text="{tr}Tiki installer{/tr}" _title=":{tr}Reset or upgrade your database{/tr}"}
-			{button _class="btn btn-link tips" href="tiki-admin.php?page=general&amp;forcecheck=1" _icon_name="search" _text="{tr}Check for updates now{/tr}" _title=":{tr}Check for updates now{/tr}"}
-			{button _class="btn btn-link tips" href="tiki-admin_menus.php" _icon_name="menu" _text="{tr}Menus{/tr}" _title=":{tr}Create and edit menus{/tr}"}
-			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-			</div>
+	<div class="t_navbar margin-bottom-md">
+		{button _class="btn btn-link tips" href="tiki-install.php" _icon_name="database" _text="{tr}Tiki installer{/tr}" _title=":{tr}Reset or upgrade your database{/tr}"}
+		{button _class="btn btn-link tips" href="tiki-admin.php?page=general&amp;forcecheck=1" _icon_name="search" _text="{tr}Check for updates now{/tr}" _title=":{tr}Check for updates now{/tr}"}
+		{button _class="btn btn-link tips" href="tiki-admin_menus.php" _icon_name="menu" _text="{tr}Menus{/tr}" _title=":{tr}Create and edit menus{/tr}"}
+		<div class="pull-right">
+			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
 		</div>
 	</div>
 	{if !empty($error_msg)}
@@ -349,11 +347,7 @@
 			{preference name=wikiplugin_convene}
 		{/tab}
 	{/tabset}
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-			</div>
-		</div>
+	<div class="t_navbar margin-bottom-md text-center">
+		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
 	</div>
 </form>
