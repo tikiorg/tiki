@@ -3,21 +3,28 @@
 	var baseURI = '{$smarty.server.REQUEST_URI}';
 	{literal}
 		function refreshCache( entry ) { // {{{
-			var status = document.getElementById( 'profile-status-' + entry );
 			var datespan = document.getElementById( 'profile-date-' + entry );
-			var pending = 'img/icons/status_pending.gif';
 
-			if( status.src == pending )
+			if($('profile-status-' + entry + ' > span.icon-status-pending').is(':visible')) {
 				return;
+			}
 
-			status.src = pending;
+			$('#profile-status-' + entry + ' > span.icon-status-pending').show();
+			$('#profile-status-' + entry + ' > span.icon-status-open').hide();
+			$('#profile-status-' + entry + ' > span.icon-status-closed').hide();
 
 			var req = getHttpRequest( 'POST', baseURI + '&refresh=' + escape(entry), true );
 			req.onreadystatechange = function (aEvt) {
 				if (req.readyState == 4) {
 					if(req.status == 200) {
 						var data = eval( "(" + req.responseText + ")" );
-						status.src = 'img/icons/status_' + data.status + '.gif';
+						$.each(['open', 'pending', 'closed'], function (key, value) {
+							if (value == data.status) {
+								$('#profile-status-' + entry + ' > span.icon-status-' + value).show();
+							} else {
+								$('#profile-status-' + entry + ' > span.icon-status-' + value).hide();
+							}
+						});
 						datespan.innerHTML = data.lastupdate;
 					} else
 						alert("Error loading page\n");
@@ -485,8 +492,22 @@
 				{foreach key=k item=entry from=$sources}
 					<tr>
 						<td>{$entry.short}</td>
-						<td><img id="profile-status-{$k}" alt="{tr}Status{/tr}" src="img/icons/status_{$entry.status}.gif"></td>
-						<td><span id="profile-date-{$k}">{$entry.formatted}</span> <a href="javascript:refreshCache({$k})" title="{tr}Refresh{/tr}">{icon name="refresh"}</a></td>
+						<td id="profile-status-{$k}">
+							{if $entry.status == 'open'}
+								{icon name='status-open' iclass='tips' ititle="{tr}Status{/tr}:{tr}Open{/tr}"}
+								{icon name='status-pending' istyle='display:none' iclass='tips' ititle="{tr}Status{/tr}:{tr}Pending{/tr}"}
+								{icon name='status-closed' istyle='display:none' iclass='tips' ititle="{tr}Status{/tr}:{tr}Closed{/tr}"}
+							{elseif $entry.status == 'closed'}
+								{icon name='status-open' istyle='display:none' iclass='tips' ititle="{tr}Status{/tr}:{tr}Open{/tr}"}
+								{icon name='status-pending' istyle='display:none' iclass='tips' ititle="{tr}Status{/tr}:{tr}Pending{/tr}"}
+								{icon name='status-closed' iclass='tips' ititle="{tr}Status{/tr}:{tr}Closed{/tr}"}
+							{else}
+								{icon name='status-open' istyle='display:none' iclass='tips' ititle="{tr}Status{/tr}:{tr}Open{/tr}"}
+								{icon name='status-pending' iclass='tips' ititle="{tr}Status{/tr}:{tr}Pending{/tr}"}
+								{icon name='status-closed' istyle='display:none' iclass='tips' ititle="{tr}Status{/tr}:{tr}Closed{/tr}"}
+							{/if}
+						</td>
+						<td><span id="profile-date-{$k}">{$entry.formatted}</span> <a href="javascript:refreshCache({$k})" title="{tr}Refresh{/tr}">{icon name="refresh" iclass='tips' ititle=":{tr}Refresh{/tr}"}</a></td>
 					</tr>
 				{/foreach}
 			</table>
