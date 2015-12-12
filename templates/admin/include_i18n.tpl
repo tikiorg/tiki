@@ -1,3 +1,4 @@
+{* $Id$ *}
 {jq}
 	function updateList( active )
 	{
@@ -9,40 +10,52 @@
 		}
 	}
 {/jq}
-
-<form class="form-horizontal" action="tiki-admin.php?page=i18n" method="post">
+<form role="form" class="form-horizontal" action="tiki-admin.php?page=i18n" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
+	<div class="t_navbar margin-bottom-md clearfix">
+		{if $prefs.lang_use_db eq "y"}
+			{button _class="btn btn-link tips" href="tiki-edit_languages.php" _icon_name="edit" _text="{tr}Edit languages{/tr}" _title=":{tr}Edit languages{/tr}"}
+			<div class="btn-group">
+				<button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					{icon name="export"} {tr}Export{/tr}
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li>
+						<a class="btn btn-link tips" href="{service controller=language action=download_db_translations}" title=":{tr}Download a file with all the translations in the database for the selected language.{/tr}">
+							{tr}Download Translations{/tr}
+						</a>
+					</li>
+					<li>
+						<a class="btn btn-link tips" href="{service controller=language action=write_to_language_php}" title=":{tr}Translations in the database will be merged with the other translations in language.php for the selected language.{/tr}">
+							{tr}Write to language.php{/tr}
+						</a>
+					</li>
+				</ul>
 			</div>
+		{/if}
+		<div class="pull-right">
+			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 		</div>
 	</div>
-
 	<input type="hidden" name="i18nsetup" />
 	{tabset name="admin_i18n"}
 		{tab name="{tr}Internationalization{/tr}"}
 			<h2>{tr}Internationalization{/tr}</h2>
-
 			{preference name=language}
 			{preference name=wiki_page_regex}
 			{preference name=default_mail_charset}
-
 			<div class="adminoptionbox">
 				{preference name=feature_multilingual visible="always"}
 				<div class="adminoptionboxchild" id="feature_multilingual_childcontainer">
-
 					{preference name=feature_detect_language}
 					{preference name=feature_best_language}
 					{preference name=change_language}
 					{preference name=restrict_language}
-
 					<div class="adminoptionboxchild" id="restrict_language_childcontainer">
 						{preference name=available_languages}
 						{preference name=language_inclusion_threshold}
 					</div>
-
 					{preference name=show_available_translations}
 					{preference name=feature_sync_language}
 					{preference name=search_default_interface_language}
@@ -51,11 +64,8 @@
 					{preference name=feature_translation_incomplete_notice}
 					{preference name=feature_multilingual_one_page}
 					{preference name=quantify_changes}
-
 					{preference name=wiki_edit_minor}
-
 					{preference name=feature_user_watches_translations}
-
 					{preference name=feature_multilingual_structures}
 					{preference name=freetags_multilingual}
 					{preference name=category_i18n_sync}
@@ -67,11 +77,8 @@
 					{preference name=wikiplugin_lang}
 					{preference name=wikiplugin_translated}
 				</div>
-
 				{preference name=lang_use_db}
-
 				{preference name=record_untranslated}
-
 				{preference name=feature_machine_translation}
 				<div class="adminoptionboxchild" id="feature_machine_translation_childcontainer">
 					{preference name=lang_machine_translate_implementation}
@@ -90,9 +97,7 @@
 				</div>
 			</div>
 		{/tab}
-
 		{tab name="{tr}Customized String Translation{/tr}"}
-		{*----------------------------------- Custom translation --------------------*}
 			<h2>{tr}Customized String Translation{/tr}</h2>
 			<div class="adminoptionbox">
 				{if empty($custom_lang)}
@@ -147,15 +152,8 @@
 				{/if}
 			</div>
 		{/tab}
-
 	{/tabset}
-
-	<br>{* I cheated. *}
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
-		</div>
+	<div class="t_navbar margin-bottom-md text-center">
+		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 	</div>
 </form>

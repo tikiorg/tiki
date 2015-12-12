@@ -14,7 +14,7 @@ function prefs_lang_list()
 			'type' => 'flag',
 			'help' => 'Translating+Tiki+interface',
 			'default' => 'n',
-			'hint' => tr('[%0|Edit or export/import Languages]', 'tiki-edit_languages.php'),	
+			'hint' => tr('Edit, export and import languages'),
 		),
 		'lang_machine_translate_implementation' => array(
 			'name' => tr('Machine translation implementation'),
