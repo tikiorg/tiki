@@ -495,15 +495,15 @@ function iconset_default()
 			),
 			'status-open' => array(
 				'id' => 'circle',
-				'class' => 'text-success'
+				'style' => 'color:green'
 			),
 			'status-pending' => array(
 				'id' => 'circle',
-				'class' => 'text-warning'
+				'style' => 'color:orange'
 			),
 			'status-closed' => array(
 				'id' => 'circle',
-				'class' => 'text-muted'
+				'style' => 'color:lightgrey'
 			),
 			//stop in defaults
 			'stop-watching' => array(
