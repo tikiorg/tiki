@@ -15,11 +15,11 @@
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<input type="hidden" name="loginprefs" />
 	<div class="t_navbar margin-bottom-md">
-		{button href="tiki-admingroups.php" _class="btn btn-link" _icon_name="group" _text="{tr}Groups{/tr}"}
-		{button href="tiki-adminusers.php" _class="btn btn-link" _icon_name="user" _text="{tr}Users{/tr}"}
+		{button href="tiki-admingroups.php" _class="btn btn-link tips" _icon_name="group" _text="{tr}Groups{/tr}" _title=":{tr}Group Administration{/tr}"}
+		{button href="tiki-adminusers.php" _class="btn btn-link tips" _icon_name="user" _text="{tr}Users{/tr}" _title=":{tr}User Administration{/tr}"}
 		{permission_link mode=text label="{tr}Permissions{/tr}"}
 		<div class="pull-right">
-			<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
 		</div>
 	</div>
 	{tabset name="admin_login"}
@@ -380,6 +380,6 @@
 		{/tab}
 	{/tabset}
 	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
 	</div>
 </form>

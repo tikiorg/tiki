@@ -1,27 +1,18 @@
 {* $Id$ *}
-
-<div class="t_navbar margin-bottom-md">
-	{button href="tiki-admingroups.php" class="btn btn-link" _icon_name="group" _text="{tr}Groups{/tr}"}
-	{button href="tiki-adminusers.php" class="btn btn-link" _icon_name="user" _text="{tr}Users{/tr}"}
-	{permission_link mode=button label="{tr}Permissions{/tr}"}
-	<a href="{service controller=managestream action=list}" class="btn btn-default">{tr}Activity Rules{/tr}</a>
-</div>
-
 <form class="form-horizontal" action="tiki-admin.php?page=community" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
+	<div class="t_navbar margin-bottom-md">
+		{button href="tiki-admingroups.php" _class="btn btn-link tips" _icon_name="group" _text="{tr}Groups{/tr}" _title=":{tr}Group Administration{/tr}"}
+		{button href="tiki-adminusers.php" _class="btn btn-link tips" _icon_name="user" _text="{tr}Users{/tr}" _title=":{tr}User Administration{/tr}"}
+		{permission_link mode=text label="{tr}Permissions{/tr}"}
+		<a href="{service controller=managestream action=list}" class="btn btn-link">{tr}Activity Rules{/tr}</a>
+		<div class="pull-right">
+			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 		</div>
 	</div>
-
-
 	{tabset name="admin_community"}
 		{tab name="{tr}User features{/tr}"}
 			<h2>{tr}User features{/tr}</h2>
-
 			<div class="admin featurelist">
 				{preference name=feature_unified_user_details}
 				{preference name=feature_score}
@@ -37,12 +28,12 @@
 					{preference name=monitor_count_refresh_interval}
 					{preference name=monitor_reply_email_pattern}
 					{preference name=monitor_digest}
-					<div class="alert alert-warning">
-						<p>{tr}For the digest emails to be sent out, you will need to set-up a cron job.{/tr}</p>
-						<p>{tr}Adjust the command parameters for your digest frequency. Default frequency is 7 days.{/tr}</p>
+					{remarksbox type="info" title="{tr}Information{/tr}"}
+						{tr}For the digest emails to be sent out, you will need to set-up a cron job.{/tr}</br>
+						{tr}Adjust the command parameters for your digest frequency. Default frequency is 7 days.{/tr}</br>
 						<strong>{tr}Sample command:{/tr}</strong>
 						<code>/usr/bin/php {$monitor_command|escape}</code>
-					</div>
+					{/remarksbox}
 				</div>
 				{preference name=feature_user_watches_translations}
 				{preference name=feature_user_watches}
@@ -81,7 +72,6 @@
 				{preference name=user_multilike_config}
 			</div>
 		{/tab}
-
 		{tab name="{tr}Social Network{/tr}"}
 			<h2>{tr}Social Network{/tr}</h2>
 			<fieldset class="table">
@@ -99,7 +89,6 @@
 					</fieldset>
 				</div>
 			</fieldset>
-
 			<fieldset class="table">
 				<legend>{tr}Activity Stream{/tr}</legend>
 				{preference name=activity_basic_events}
@@ -113,7 +102,6 @@
 				{preference name=activity_custom_events}
                 {preference name=activity_notifications}
 			</fieldset>
-
 			<fieldset>
 				<legend>{tr}Goal, Recognition and Rewards{/tr}</legend>
 				{preference name=goal_enabled}
@@ -121,7 +109,6 @@
 				{preference name=goal_group_blacklist}
 			</fieldset>
 		{/tab}
-
 		{tab name="{tr}Plugins{/tr}"}
 			<h2>{tr}Plugins{/tr}</h2>
 			{preference name=wikiplugin_author}
@@ -145,8 +132,6 @@
 			{preference name=wikiplugin_userlist}
 			{preference name=wikiplugin_userpref}
 		{/tab}
-
-
 		{tab name="{tr}General Settings{/tr}"}
 			<h2>{tr}General Settings{/tr}</h2>
 			{preference name=user_show_realnames}
@@ -155,17 +140,14 @@
 			{preference name=feature_display_my_to_others}
 			{preference name=user_tracker_infos}
 			{preference name=user_use_gravatar}
-
 			{preference name=user_who_viewed_my_stuff}
 			{preference name=user_who_viewed_my_stuff_days}
 			{preference name=user_who_viewed_my_stuff_show_others}
-
 			{preference name=user_store_file_gallery_picture}
 			{preference name=user_small_avatar_size}
 			{preference name=user_small_avatar_square_crop}
 			{preference name=user_picture_gallery_id}
 			{preference name=user_default_picture_id}
-
 			<input type="hidden" name="userfeatures" />
 			<fieldset>
 				<legend>{tr}Community{/tr}{help url="Community"}</legend>
@@ -182,8 +164,6 @@
 					{preference name=feature_community_mouseover_distance}
 				</div>
 			</fieldset>
-
-			{* ************ Users Default Preferences *}
 			<fieldset>
 				<legend>
 					{tr}Default user preferences{/tr}
@@ -195,28 +175,21 @@
 				{preference name=users_prefs_user_information}
 				{preference name=users_prefs_user_dbl}
 				{preference name=users_prefs_display_12hr_clock}
-
 				{preference name=users_prefs_show_mouseover_user_info}
 				{preference name=users_prefs_tasks_maxRecords}
 				{preference name=users_prefs_diff_versions}
-
-
 			</fieldset>
-
-			{* *** User Messages *** *}
 			<fieldset>
 				<legend>
 					{tr}User messages{/tr}
 					{help url="Inter-User+Messages"}
 				</legend>
-
 				{preference name=users_prefs_mess_maxRecords}
 				{preference name=users_prefs_allowMsgs}
 				{preference name=users_prefs_mess_sendReadStatus}
 				{preference name=users_prefs_minPrio}
 				{preference name=users_prefs_mess_archiveAfter}
 			</fieldset>
-
 			<fieldset>
 				<legend>{tr}My Account{/tr}</legend>
 				{preference name=users_prefs_mytiki_pages}
@@ -229,7 +202,6 @@
 				{preference name=users_prefs_mytiki_items}
 			</fieldset>
 		{/tab}
-
 		{tab name="{tr}BigBlueButton{/tr}"}
 			<h2>{tr}BigBlueButton{/tr}</h2>
 			{preference name=bigbluebutton_feature}
@@ -240,15 +212,8 @@
 				{preference name=wikiplugin_bigbluebutton}
 			</div>
 		{/tab}
-
 	{/tabset}
-
-	<br>{* I cheated. *}
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
-		</div>
+	<div class="t_navbar margin-bottom-md text-center">
+		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 	</div>
 </form>
