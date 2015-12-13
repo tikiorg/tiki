@@ -35,21 +35,7 @@
 			{if $prefs.feature_intertiki_import_preferences eq 'y'}{tr}Since this Tiki site is in slave mode and imports preferences, the master user preferences will be automatically reimported at each login{/tr}{/if}
 		{/remarksbox}
 	{/if}
-	<div id="ajax-feedback" style="display:none"></div>
-	{if isset($ajaxfeedback) && $ajaxfeedback eq 'y'}
-		<div id="posted-ajax-feedback">
-			{include file="utilities/alert.tpl"}
-		</div>
-	{/if}
-	{if $tikifeedback}
-		{remarksbox type="feedback" title="{tr}Feedback{/tr}"}
-			{section name=n loop=$tikifeedback}
-				{tr}{$tikifeedback[n].mes|escape}{/tr}
-				<br>
-			{/section}
-		{/remarksbox}
-	{/if}
-
+	{include file='utilities/feedback.tpl'}
 	{if !empty($added) or !empty($discarded) or !empty($discardlist)}
 		{remarksbox type="feedback" title="{tr}Batch Upload Results{/tr}"}
 			{tr}Updated users{/tr} {$added}
@@ -73,10 +59,10 @@
 				</div>
 			{/if}
 
-			{if $errors}
+			{if $batcherrors}
 				<br>
-				{section name=ix loop=$errors}
-					{$errors[ix]}<br>
+				{section name=ix loop=$batcherrors}
+					{$batcherrors[ix]}<br>
 				{/section}
 			{/if}
 		{/remarksbox}
@@ -783,9 +769,3 @@
 		{/tab}
 	{/if}
 {/tabset}
-{jq}
-	$('form.confirm-form').submit(function() {
-		confirmForm(this);
-		return false;
-	});
-{/jq}

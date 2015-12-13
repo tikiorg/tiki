@@ -20,12 +20,7 @@
 		{/if}
 	</div>
 {/if}
-<div id="ajax-feedback" style="display:none"></div>
-{if isset($ajaxfeedback) && $ajaxfeedback eq 'y'}
-	<div id="posted-ajax-feedback">
-		{include file="utilities/alert.tpl"}
-	</div>
-{/if}
+{include file='utilities/feedback.tpl'}
 {tabset}
 
 	{tab name="{tr}Forums{/tr}"}
@@ -625,9 +620,3 @@
 		{/tab}
 	{/if}
 {/tabset}
-{jq}
-	$('form.confirm-form').submit(function() {
-		confirmForm(this);
-		return false;
-	});
-{/jq}

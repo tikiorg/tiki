@@ -16,12 +16,7 @@
 	{/if}
 	{button href="tiki-view_forum.php?forumId=$forumId" class="btn btn-default" _text="{tr}Topic List{/tr}"}
 </div>
-<div id="ajax-feedback" style="display:none"></div>
-{if isset($ajaxfeedback) && $ajaxfeedback eq 'y'}
-	<div id="posted-ajax-feedback">
-		{include file="utilities/alert.tpl"}
-	</div>
-{/if}
+{include file="utilities/feedback.tpl"}
 {if $post_reported eq 'y'}
 	{remarksbox type=warning title="{tr}The post has been reported and will be reviewed by a moderator.{/tr}"}{/remarksbox}
 {/if}
@@ -233,11 +228,3 @@
 	</div>
 	{pagination_links cant=$atts.cant offset=$atts.offset offset_arg='fa_offset' step=$atts.maxRecords _anchor='attachments'}{/pagination_links}
 {/if}
-{jq}
-	$('[data-toggle=popover]').on('shown.bs.popover', function() {
-		$('.confirm-click').click(function() {
-			confirmClick(this, 'href');
-			return false;
-		});
-	});
-{/jq}

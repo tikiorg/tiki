@@ -10,7 +10,7 @@
 	{* WARNING: when previewing a new reply to a forum post, $parent_com is also set *}
 
 	{if $comments_cant gt 0}
-		<form method="get" id="comment-form" action="{$comments_father}" class="comments">
+		<form method="get" id="comment-form" action="{service controller=forum}" class="comments confirm-form">
 			{section name=i loop=$comments_request_data}
 				<input type="hidden" name="{$comments_request_data[i].name|escape}" value="{$comments_request_data[i].value|escape}">
 			{/section}
@@ -45,16 +45,16 @@
 						{if $topics|@count > 1}
 							<button
 								type="submit" name="action" value="merge_topic" title=":{tr}Merge{/tr}"
-								form="comment-form" formaction="{service controller=forum}"
-								class="btn btn-default btn-sm tips confirm-form"
+								form="comment-form"
+								class="btn btn-default btn-sm tips"
 							>
 								{icon name="merge"}
 							</button>
 						{/if}
 						<button
 							type="submit" name="action" value="delete_topic" title=":{tr}Delete{/tr}"
-							form="comment-form" formaction="{service controller=forum}"
-							class="btn btn-default btn-sm tips confirm-form"
+							form="comment-form"
+							class="btn btn-default btn-sm tips"
 						>
 							{icon name="remove"}
 						</button>
@@ -177,24 +177,6 @@
 		{/foreach}
 	{/remarksbox}
 {/if}
-{jq}
-	$('.confirm-form').click(function() {
-		var formId = $(this).attr('form'), form = $('form#' + formId), action = this.value;
-		$(form).attr('action', 'tiki-forum-' + action);
-		confirmForm(form);
-		return false;
-	});
-{/jq}
-
-{jq}
-$('.confirm-click').click(function() {
-		var form = this.closest('form'), action = this.value;
-		$(form).attr('action', 'tiki-forum-' + action);
-		confirmForm(form);
-		return false;
-	});
-{/jq}
-
 
 {* Post dialog *}
 {if $tiki_p_forum_post eq 'y'}

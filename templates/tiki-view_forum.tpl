@@ -124,36 +124,7 @@
 		<a class="link" href="{$forumId|sefurl:'forum'}">{$forum_info.name|addongroupname|escape}</a>
 	</div>
 
-	{if !empty($errors)}
-		{remarksbox type="warning" title="{tr}Errors{/tr}"}
-			{foreach from=$errors item=error name=error}
-				{if !$smarty.foreach.error.first}<br>{/if}
-				{$error|escape}
-			{/foreach}
-		{/remarksbox}
-	{/if}
-	{if !empty($feedbacks)}
-		{remarksbox type="note"}
-			{foreach from=$feedbacks item=feedback name=feedback}
-				{$feedback|escape}
-				{if !$smarty.foreach.feedback.first}<br>{/if}
-			{/foreach}
-		{/remarksbox}
-	{/if}
-	{if isset($ajaxfeedback) && $ajaxfeedback eq 'y'}
-		<div id="posted-ajax-feedback">
-			{include file="utilities/alert.tpl"}
-		</div>
-	{/if}
-	{if isset($tikifeedback)}
-		{remarksbox type="feedback" title="{tr}Feedback{/tr}"}
-		{section name=n loop=$tikifeedback}
-			{tr}{$tikifeedback[n].mes|escape}{/tr}
-			<br>
-		{/section}
-		{/remarksbox}
-	{/if}
-
+	{include file='utilities/feedback.tpl'}
 	{if $tiki_p_forum_post_topic eq 'y'}
 		{if $comment_preview eq 'y'}
 			<br><br>

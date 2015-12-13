@@ -230,7 +230,7 @@ function batchImportUsers()
 
 	if (count($errors)) {
 		array_unique($errors);
-		$smarty->assign_by_ref('errors', $errors);
+		$smarty->assign_by_ref('batcherrors', $errors);
 	}
 }
 
