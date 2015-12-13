@@ -20,14 +20,6 @@ $langLib = TikiLib::lib('language');
 $languages = $langLib->list_languages();
 $smarty->assign_by_ref('languages', $languages);
 
-// check if is possible to write to lang/
-// TODO: check if each language file is writable instead of the whole lang/ dir
-if (is_writable('lang/')) {
-	$smarty->assign('langIsWritable', true);
-} else {
-	$smarty->assign('langIsWritable', false);
-}
-
 // preserving variables
 if (isset($_REQUEST["edit_language"])) {
 	$smarty->assign('edit_language', $_REQUEST["edit_language"]);

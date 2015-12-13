@@ -120,53 +120,74 @@
 			</div>
 			<div class="panel-body">
 				<table class="table table-condensed table-hover" id="edit_translations">
-					<tr>
-						<div class="col-md-8">
-							{include file='find.tpl' find_show_num_rows='y'}
-						</div>
-					</tr>
-					{foreach from=$translations name=translations item=item}
+					<thead>
 						<tr>
-							<td><label for="source_{$smarty.foreach.translations.index}">{tr}Original:{/tr}</label></td>
-							<td><input id="source_{$smarty.foreach.translations.index}" name="source_{$smarty.foreach.translations.index}" value="{$item.source|escape}" size=65 readonly="readonly">
-							<td align="center" align="center" rowspan="{if isset($item.originalTranslation)}5{else}3{/if}">
-								<input type="submit" class="btn btn-default btn-sm" name="edit_tran_{$smarty.foreach.translations.index}" value="{tr}Translate{/tr}">
-								{if $action eq 'edit_tran_sw' && isset($item.changed)}
-									<input type="submit" class="btn btn-default btn-sm" name="del_tran_{$smarty.foreach.translations.index}" value="{tr}Delete{/tr}">
-								{/if}
-								{assign var=itemIndex value=$smarty.foreach.translations.index}
-								{if isset($item.originalTranslation)}
-									{button _flip_id="diff_$itemIndex" _flip_hide_text=n _text="{tr}Diff{/tr}"}
-								{/if}
-							</td>
+							<div class="col-md-8">
+								{include file='find.tpl' find_show_num_rows='y'}
+							</div>
+						</tr>					
+						<tr>
+							<th>
+								{tr}Original string{/tr}
+							</th>
+							<th>
+								{tr}Original translation{/tr}
+							</th>
+							<th>
+								{tr}Translation{/tr}
+							</th>
+							<th></th>								
 						</tr>
-						{if isset($item.originalTranslation)}
+					</thead>
+					<tbody>					
+						{foreach from=$translations name=translations item=item}
 							<tr>
-								<td><label for="original_tran_{$smarty.foreach.translations.index}">{tr}Original translation:{/tr}</label></td>
-								<td><input id="original_tran_{$smarty.foreach.translations.index}" name="original_tran_{$smarty.foreach.translations.index}" value="{$item.originalTranslation|escape}" size="65" readonly="readonly"></td>
+								<td class="col-md-3">
+									<textarea id="source_{$smarty.foreach.translations.index}" name="source_{$smarty.foreach.translations.index}" class="form-control" rows="2" readonly="readonly">{$item.source|escape}</textarea>
+								</td>
+								<td class="col-md-3">
+									{if isset($item.originalTranslation)}
+										<textarea id="original_tran_{$smarty.foreach.translations.index}" name="original_tran_{$smarty.foreach.translations.index}" class="form-control" rows="2" readonly="readonly">{$item.originalTranslation|escape}</textarea>
+									{/if}
+								</td>
+								<td class="col-md-3">
+									<textarea id="tran_{$smarty.foreach.translations.index}" name="tran_{$smarty.foreach.translations.index}" class="form-control" rows="2">{$item.tran|escape}</textarea>
+								</td>
+								<td class="col-md-3 text-center">
+									<button type="submit" class="btn btn-primary btn-sm tips" name="edit_tran_{$smarty.foreach.translations.index}" title=":{tr}Save translation in the database{/tr}">
+										{tr}Translate{/tr}
+									</button>
+									{if $action eq 'edit_tran_sw' && isset($item.changed)}
+										<button type="submit" class="btn btn-warning btn-sm tips" name="del_tran_{$smarty.foreach.translations.index}" title=":{tr}Delete translation from the database{/tr}">
+											{tr}Delete{/tr}
+										</button>
+									{/if}
+									{assign var=itemIndex value=$smarty.foreach.translations.index}
+									{if isset($item.originalTranslation)}
+										{button _flip_id="diff_$itemIndex" _flip_hide_text="n" _text="{tr}Compare{/tr}" _title=":{tr}Compare the origional translation with the database translation{/tr}" _class="btn btn-default btn-sm tips"}
+									{/if}
+									{if isset($item.user) && isset($item.lastModif)}
+										<span class="help-block">
+											<small>{tr _0=$item.user|userlink _1=$item.lastModif|tiki_short_date}Last changed by %0 on %1{/tr}</small>
+										</span>
+									{/if}
+								</td>
 							</tr>
-						{/if}
-						<tr>
-							<td><label for="tran_{$smarty.foreach.translations.index}">{tr}Translation:{/tr}</label></td>
-							<td><input id="tran_{$smarty.foreach.translations.index}" name="tran_{$smarty.foreach.translations.index}" value="{$item.tran|escape}" size="65"></td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								{if isset($item.originalTranslation)}
-									<table class="formcolor" id="diff_{$smarty.foreach.translations.index}" style="display: none;">{$item.diff}</table>
-								{/if}
-							</td>
-						</tr>
-						<tr class="last">
-							<td colspan="2">
-								{if isset($item.user) && isset($item.lastModif)}
-									{tr _0=$item.user|userlink _1=$item.lastModif|tiki_short_date}Last changed by %0 on %1{/tr}
-								{/if}
-							</td>
-						</tr>
-					{foreachelse}
-						{norecords _colspan=3}
-					{/foreach}
+							{if isset($item.originalTranslation)}
+								<tr>
+									<td colspan="4">
+										<div class="col-md-6 col-md-push-3">
+											<table class="table" id="diff_{$smarty.foreach.translations.index}" style="display: none;">
+												{$item.diff}
+											</table>
+										</div>
+									</td>
+								</tr>
+							{/if}
+						{foreachelse}
+							{norecords _colspan=3}
+						{/foreach}
+					</tbody>
 				</table>
 				<div class="text-center">
 					{pagination_links cant=$total step=$maxRecords offset=$offset _ajax='n'}{strip}
