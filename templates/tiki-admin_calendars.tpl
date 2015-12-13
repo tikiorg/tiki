@@ -6,15 +6,15 @@
 
 <div class="t_navbar margin-bottom-md">
 	{if !empty($calendarId) && $tiki_p_admin_calendar eq 'y'}
-		<a href="tiki-admin_calendars.php?cookietab=2" class="btn btn-default">
+		<a role="button" href="tiki-admin_calendars.php?cookietab=2" class="btn btn-default">
 			{icon name="create"} {tr}Create Calendar{/tr}
 		</a>
 	{/if}
-	<a href="tiki-calendar.php" class="btn btn-default">
+	<a role="link" href="tiki-calendar.php" class="btn btn-link">
 		{icon name="view"} {tr}View Calendars{/tr}
 	</a>
 	{if $tiki_p_admin_calendar eq 'y'}
-		<a href="tiki-calendar_import.php" class="btn btn-default">
+		<a role="link" href="tiki-calendar_import.php" class="btn btn-link">
 			{icon name="import"} {tr}Import{/tr}
 		</a>
 	{/if}
@@ -189,13 +189,13 @@
 					{tr}Description{/tr}
 				</label>
 				<div class="col-sm-6">
-					<textarea name="description" rows="5" wrap="virtual" class="form-control">
+					<textarea name="description" rows="5" wrap="virtual" class="form-control" id="calendarDescription">
 						{$description|escape}
 					</textarea>
 				</div>
 				<div class="checkbox col-sm-3">
 					<label for="showCalDescriptionPopup" class="control-label">
-						<input type="checkbox" id="showCalDescriptionPopup"name="show[description]" value="on"{if $show_description eq 'y'} checked="checked"{/if}>
+						<input type="checkbox" id="showCalDescriptionPopup" name="show[description]" value="on"{if $show_description eq 'y'} checked="checked"{/if}>
 						{tr}Show in popup box{/tr}
 					</label>
 				</div>
@@ -222,7 +222,7 @@
 					{tr}Custom Participants{/tr}
 				</label>
 				<div class="col-sm-2">
-					<select name="customparticipants" class="form-control">
+					<select name="customparticipants" id="customparticipants" class="form-control">
 						<option value='y' {if $customparticipants eq 'y'}selected="selected"{/if}>{tr}Yes{/tr}</option>
 						<option value='n' {if $customparticipants eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
 					</select>
@@ -299,7 +299,7 @@
 				</div>
 			{/if}
 			<div class="form-group">
-				<label class="col-sm-3 control-label" for="customsubscription">
+				<label class="col-sm-3 control-label" for="custompriorities">
 					{tr}Custom Priorities{/tr}
 				</label>
 				<div class="col-sm-2">
@@ -310,7 +310,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label" for="customcategories">
+				<label class="col-sm-3 control-label" for="personal">
 					{tr}Personal Calendar{/tr}
 				</label>
 				<div class="col-sm-2">
@@ -355,7 +355,7 @@
 					{tr}Standard Colors{/tr}
 				</label>
 				<div class="col-sm-2">
-					<select class="form-control" name="options[customcolors]" onChange="javascript:document.getElementById('fgColorField').disabled=(this.options[this.selectedIndex].value != 0);document.getElementById('bgColorField').disabled=(this.options[this.selectedIndex].value != 0);">
+					<select class="form-control" id="customcategories" name="options[customcolors]" onChange="javascript:document.getElementById('fgColorField').disabled=(this.options[this.selectedIndex].value != 0);document.getElementById('bgColorField').disabled=(this.options[this.selectedIndex].value != 0);">
 						<option value="" />
 						<option value="008400-99fa99" style="background-color:#99fa99;color:#008400" {if ($customColors) eq '008400-99fa99'}selected{/if}>{tr}Green{/tr}</option>
 						<option value="3333ff-aaccff" style="background-color:#aaccff;color:#3333ff" {if ($customColors) eq '3333ff-aaccff'}selected{/if}>{tr}Blue{/tr}</option>
@@ -367,7 +367,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label" for="customcategories">
+				<label class="col-sm-3 control-label" for="fgColorField">
 					{tr}Custom foreground color{/tr}
 				</label>
 				<div class="col-sm-9">
@@ -375,7 +375,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label" for="customcategories">
+				<label class="col-sm-3 control-label" for="bgColorField">
 					{tr}Custom background color{/tr}
 				</label>
 				<div class="col-sm-9">
@@ -383,11 +383,11 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label" for="customcategories">
+				<label class="col-sm-3 control-label" for="customstatus">
 					{tr}Status{/tr}
 				</label>
 				<div class="col-sm-2">
-					<select name="customstatus" class="form-control">
+					<select name="customstatus" id="customstatus" class="form-control">
 						<option value='y' {if $info.customstatus ne 'n'}selected="selected"{/if}>{tr}Yes{/tr}</option>
 						<option value='n' {if $info.customstatus eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
 					</select>
@@ -419,7 +419,7 @@
 			</div>
 			{if $prefs.feature_groupalert eq 'y'}
 				<div class="form-group">
-					<label class="col-sm-3 control-label" for="customcategories">
+					<label class="col-sm-3 control-label" for="groupforAlert">
 						{tr}Group of users alerted when calendar event is modified{/tr}
 					</label>
 					<div class="col-sm-2">
@@ -432,24 +432,24 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-3 control-label" for="customcategories">
+					<label class="col-sm-3 control-label" for="showeachuser">
 						{tr}Allows each user to be selected for small groups{/tr}
 					</label>
 					<div class="col-sm-2">
-						<input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if}>
+						<input type="checkbox" name="showeachuser" id="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if}>
 					</div>
 				</div>
 			{/if}
 			<div class="form-group">
-				<label class="col-sm-3 control-label" for="customcategories">
+				<label class="col-sm-3 control-label" for="allday">
 					{tr}Default event to all day{/tr}
 				</label>
 				<div class="col-sm-9">
-					<input type="checkbox" name="allday"{if $info.allday eq 'y'} checked="checked"{/if}>
+					<input type="checkbox" id="allday" name="allday"{if $info.allday eq 'y'} checked="checked"{/if}>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label" for="customcategories">
+				<label class="col-sm-3 control-label" for="nameoneachday">
 					{tr}Event name on each day in calendar view{/tr}
 				</label>
 				<div class="col-sm-9">
@@ -467,7 +467,7 @@
 						{tr}Delete events older than:{/tr}
 					</label>
 					<div class="col-sm-2 input-group">
-						<input type="text" name="days" value="0" class="form-control">
+						<input type="text" name="days" id="days" value="0" class="form-control">
 						<span class="input-group-addon">
 							{tr}days{/tr}
 						</span>

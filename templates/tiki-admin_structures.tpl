@@ -3,7 +3,9 @@
 
 {if $tiki_p_admin eq 'y'}
 	<div class="t_navbar margin-bottom-md">
-		{button href='tiki-import_xml_zip.php' _icon_name="zip" _text="{tr}XML Zip Import{/tr}"}
+		<a role="link" href="tiki-import_xml_zip.php" class="btn btn-link" title="{tr}XML Zip Import{/tr}">
+			{icon name="zip"} {tr}XML Zip Import{/tr}
+		</a>
 	</div>
 {/if}
 
@@ -206,19 +208,19 @@
 			<h2>{tr}Create Structure{/tr}</h2>
 			<form class="form-horizontal" action="tiki-admin_structures.php" method="post">
 				<div class="form-group">
-					<label class="control-label col-md-3">{tr}Structure{/tr}</label>
+					<label class="control-label col-md-3" for="name">{tr}Structure{/tr}</label>
 					<div class="col-md-9">
 						<input type="text" name="name" id="name" class="form-control">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-md-3">{tr}Alias{/tr}</label>
+					<label class="control-label col-md-3" for="alias">{tr}Alias{/tr}</label>
 					<div class="col-md-9">
 						<input type="text" name="alias" id="alias" class="form-control">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-md-3">{tr}Tree{/tr}</label>
+					<label class="control-label col-md-3" for="tree">{tr}Tree{/tr}</label>
 					<div class="col-md-9">
 						<textarea rows="5" cols="60" id="tree" name="tree" class="form-control"></textarea>
 						<div class="help-block">{tr}Use single spaces to indent structure levels{/tr}</div>

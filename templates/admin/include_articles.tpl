@@ -16,17 +16,17 @@
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
-			<a role="button" class="btn btn-link" href="tiki-list_articles.php" title=":{tr}List{/tr}">
+			<a role="link" class="btn btn-link" href="tiki-list_articles.php" title=":{tr}List{/tr}">
 				{icon name="list"} {tr}Articles{/tr}
 			</a>
-			<a role="button" class="btn btn-link" href="tiki-article_types.php" title=":{tr}List{/tr}">
+			<a role="link" class="btn btn-link" href="tiki-article_types.php" title=":{tr}List{/tr}">
 				{icon name="list"} {tr}Article Types{/tr}
 			</a>
-			<a role="button" class="btn btn-link" href="tiki-admin_topics.php" title=":{tr}List{/tr}">
+			<a role="link" class="btn btn-link" href="tiki-admin_topics.php" title=":{tr}List{/tr}">
 				{icon name="list"} {tr}Article Topics{/tr}
 			</a>
 			{if $prefs.feature_submissions eq "y"}
-				<a role="button" class="btn btn-default btn-sm tips" href="tiki-list_submissions.php" title=":{tr}List{/tr}">
+				<a role="link" class="btn btn-default btn-sm tips" href="tiki-list_submissions.php" title=":{tr}List{/tr}">
 					{icon name="list"} {tr}Submissions{/tr}
 				</a>
 			{/if}

@@ -29,8 +29,8 @@
 
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
-			<a role="button" class="btn btn-link" href="tiki-list_file_gallery.php" title="{tr}List{/tr}">
-				{icon name="list"} {tr}Files{/tr}
+			<a role="link" class="btn btn-link" href="tiki-list_file_gallery.php" title="{tr}List{/tr}">
+				{icon name="list"} {tr}File Galleries{/tr}
 			</a>
 			<div class="pull-right">
 				<input type="submit" class="btn btn-primary btn-sm" name="filegalhandlers" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">

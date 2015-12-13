@@ -20,8 +20,8 @@
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			{if $prefs.feature_search eq 'y'}
-				<a href="tiki-searchindex.php" class="btn btn-default btn-sm">{icon name="search"} {tr}Search{/tr}</a>
-				<a href="{bootstrap_modal controller=search action=rebuild}" class="btn btn-primary btn-sm">{tr}Rebuild Index{/tr}</a>
+				<a role="link" href="tiki-searchindex.php" class="btn btn-link">{icon name="search"} {tr}Search{/tr}</a>
+				<a role="link" href="{bootstrap_modal controller=search action=rebuild}" class="btn btn-link">{icon name="cog"} {tr}Rebuild Index{/tr}</a>
 			{/if}
 			<div class="pull-right">
 				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
@@ -55,15 +55,15 @@
 					{preference name="unified_engine"}
 
 					{remarksbox type=tip title="{tr}About Unified Search Engines{/tr}"}
-						<b>{tr}MySQL Full Text Search{/tr}: </b></br>
-						{tr}Advantages{/tr}: {tr}Fast performance. Works out of the box with Tiki and even on most basic server setups{/tr}.</br>
-						{tr}Disadvantages{/tr}: {tr}Many common words (such as "first", "second", and "third" are not searchable unless MySQL configuration is modified). Only the first 65,535 characters (about 8000 words) of long pieces of content are searchable{/tr}(See this <a class='alert-link' href='http://dev.mysql.com/doc/refman/5.7/en/fulltext-stopwords.html'>{tr}link{/tr}</a> {tr} for full list) {/tr}</br>
-						<b>{tr}Lucene (PHP implementation){/tr}: </b></br>
-						{tr}Advantages{/tr}: {tr}Overcomes limitations of MySQL search mentioned above. Comes built in with Tiki{/tr}.</br>
-						{tr}Disadvantages{/tr}: {tr}Slower performance. May not work well with the most basic server setups and because the index is stored on disk it is more prone to file permissions problems and other server configuration issues{/tr}.</br>
-						<b>{tr}ElasticSearch{/tr}: </b></br>
-						{tr}Advantages{/tr}: {tr}Most advanced, fast and scalable search engine. Enables some very advanced/new features of Tiki{/tr}.</br>
-						{tr}Disadvantages{/tr}: {tr}Needs to be separately installed from Tiki and requires more configuration{/tr} (See this <a class='alert-link' href='http://doc.tiki.org/ElasticSearch'>{tr}link{/tr}</a> {tr}for more information) {/tr}</br>
+						<b>{tr}MySQL Full Text Search{/tr}: </b><br>
+						{tr}Advantages{/tr}: {tr}Fast performance. Works out of the box with Tiki and even on most basic server setups{/tr}.<br>
+						{tr}Disadvantages{/tr}: {tr}Many common words (such as "first", "second", and "third" are not searchable unless MySQL configuration is modified). Only the first 65,535 characters (about 8000 words) of long pieces of content are searchable{/tr}(See this <a class='alert-link' href='http://dev.mysql.com/doc/refman/5.7/en/fulltext-stopwords.html'>{tr}link{/tr}</a> {tr} for full list) {/tr}<br>
+						<b>{tr}Lucene (PHP implementation){/tr}: </b><br>
+						{tr}Advantages{/tr}: {tr}Overcomes limitations of MySQL search mentioned above. Comes built in with Tiki{/tr}.<br>
+						{tr}Disadvantages{/tr}: {tr}Slower performance. May not work well with the most basic server setups and because the index is stored on disk it is more prone to file permissions problems and other server configuration issues{/tr}.<br>
+						<b>{tr}ElasticSearch{/tr}: </b><br>
+						{tr}Advantages{/tr}: {tr}Most advanced, fast and scalable search engine. Enables some very advanced/new features of Tiki{/tr}.<br>
+						{tr}Disadvantages{/tr}: {tr}Needs to be separately installed from Tiki and requires more configuration{/tr} (See this <a class='alert-link' href='http://doc.tiki.org/ElasticSearch'>{tr}link{/tr}</a> {tr}for more information) {/tr}<br>
 					{/remarksbox}
 
 					{if ! empty($engine_info)}

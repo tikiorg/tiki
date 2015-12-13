@@ -3,7 +3,7 @@
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
-			<a role="button" class="btn btn-link" href="tiki-payment.php" title="{tr}List{/tr}">
+			<a role="link" class="btn btn-link" href="tiki-payment.php" title="{tr}List{/tr}">
 				{icon name="list"} {tr}Payments{/tr}
 			</a>
 			<div class="pull-right">

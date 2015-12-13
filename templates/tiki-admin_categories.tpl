@@ -2,8 +2,8 @@
 {title help="Categories" admpage="category"}{tr}Admin Categories{/tr}{/title}
 
 <div class="t_navbar margin-bottom-md">
-	{button href="tiki-browse_categories.php?parentId=$parentId" class="btn btn-default" _icon_name="view" _text="{tr}Browse Categories{/tr}" _title="{tr}Browse the category system{/tr}"}
-	{button href="tiki-edit_categories.php" class="btn btn-default" _text="{tr}Organize Objects{/tr}" _icon_name="structure" _title="{tr}Organize Objects{/tr}"}
+	{button href="tiki-browse_categories.php?parentId=$parentId" _class="btn btn-link" _icon_name="view" _text="{tr}Browse Categories{/tr}" _title="{tr}Browse the category system{/tr}"}
+	{button href="tiki-edit_categories.php" _class="btn btn-link" _text="{tr}Organize Objects{/tr}" _icon_name="structure" _title="{tr}Organize Objects{/tr}"}
 </div>
 
 {if !empty($errors)}
@@ -47,7 +47,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label" for="parentId">{tr}Name{/tr}</label>
+				<label class="col-sm-3 control-label" for="name">{tr}Name{/tr}</label>
 				<div class="col-sm-9">
 					<input type="text" class="form-control" name="name" id="name" value="{$categoryName|escape}">
 				</div>
@@ -175,7 +175,7 @@ potato,,vegetable
 							{tr}Move to selected category{/tr}
 						</label>
 						<div class="col-sm-6 input-group">
-							<select name="toId" class="form-control">
+							<select name="toId" id="toId" class="form-control">
 								{foreach $categories as $category}
 									{if $category.name !== $categ_name}
 										<option value="{$category.categId}" {if $category.categId eq $parentId}selected="selected"{/if}>
@@ -339,7 +339,7 @@ $("#add_object_type").change(function () {
 										{/section}
 									</select>
 									<span class="input-group-btn">
-										<input type="submit" class="btn btn-default" name="addarticle" value="{tr}Add{/tr}"></td>
+										<input type="submit" class="btn btn-default" name="addarticle" value="{tr}Add{/tr}">
 									</span>
 								</div>
 							</div>

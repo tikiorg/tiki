@@ -2,7 +2,10 @@
 
 {if $tiki_p_admin_newsletters eq "y"}
 	<div class="t_navbar">
-		{button href="tiki-admin_newsletters.php" class="btn btn-default" _text="{tr}Admin Newsletters{/tr}"}
+		<a role="link" href="tiki-admin_newsletters.php" class="btn btn-link" title="{tr}Admin Newsletters{/tr}">
+			{icon name="cog"} {tr}Admin Newsletters{/tr}
+		</a>
+{*		{button href="tiki-admin_newsletters.php" class="btn btn-default" _text="{tr}Admin Newsletters{/tr}"}*}
 	</div>
 {/if}
 <br>
@@ -62,9 +65,9 @@
 	    {if ($nl_info.allowUserSub eq 'y') or ($tiki_p_admin_newsletters eq 'y')}
 			{if $tiki_p_subscribe_email eq 'y' and (($nl_info.allowAnySub eq 'y' and $user) || !$user)}
 				<div class="form-group">
-					<label class="col-sm-3 control-label">{tr}Email{/tr}</label>
+					<label class="col-sm-3 control-label" for="email">{tr}Email{/tr}</label>
 					<div class="col-sm-7">
-				      	<input type="text" name="email" size="40" value="{$email|escape}" class="form-control">
+				      	<input type="text" name="email" id="email" value="{$email|escape}" class="form-control">
 				    </div>
 			    </div>
 			{else}
@@ -123,7 +126,7 @@
 										</a>{$liend}
 									{/if}
 									{if $channels[user].tiki_p_send_newsletters eq 'y'}
-										{$libeg}<a href="tiki-send_newsletters.php?nlId={$channels[user].nlId}"">
+										{$libeg}<a href="tiki-send_newsletters.php?nlId={$channels[user].nlId}">
 											{icon name='envelope' _menu_text='y' _menu_icon='y' alt="{tr}Send{/tr}"}
 										</a>{$liend}
 									{/if}

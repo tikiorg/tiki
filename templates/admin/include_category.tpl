@@ -10,13 +10,13 @@
 	<input type="hidden" name="categorysetup" />
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
-			<a role="button" class="btn btn-link" href="tiki-browse_categories.php" title="{tr}List{/tr}">
+			<a role="link" class="btn btn-link" href="tiki-browse_categories.php" title="{tr}List{/tr}">
 				{icon name="list"} {tr}Browse Categories{/tr}
 			</a>
-			<a role="button" class="btn btn-link" href="tiki-admin_categories.php" title="{tr}Administration{/tr}">
+			<a role="link" class="btn btn-link" href="tiki-admin_categories.php" title="{tr}Administration{/tr}">
 				{icon name="cog"} {tr}Administer Categories{/tr}
 			</a>
-			<a role="button" class="btn btn-link" href="tiki-edit_categories.php" title="{tr}Organize Objects{/tr}">
+			<a role="link" class="btn btn-link" href="tiki-edit_categories.php" title="{tr}Organize Objects{/tr}">
 				{icon name="sort"} {tr}Organize Objects{/tr}
 			</a>
 			<div class="pull-right">

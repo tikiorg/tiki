@@ -4,7 +4,10 @@
 
 {if $tiki_p_admin_shoutbox eq 'y'}
 	<div class="t_navbar">
-		{button href="tiki-admin_shoutbox_words.php" class="btn btn-default" _text="{tr}Banned Words{/tr}"}
+		<a href="tiki-admin_shoutbox_words.php" class="btn btn-link" title="List">
+			{icon name="list"} {tr}Banned Words{/tr}
+		</a>
+	{*	{button href="tiki-admin_shoutbox_words.php" class="btn btn-default" _text="{tr}Banned Words{/tr}"} *}
 	</div>
 
 	<h2>{tr}Change shoutbox general settings{/tr}</h2>
@@ -30,9 +33,9 @@
 	<form class="form-horizontal" action="tiki-shoutbox.php" method="post" onsubmit="return verifyForm(this);">
 		<input type="hidden" name="msgId" value="{$msgId|escape}">
 		<div class="form-group">
-            <label class="control-label col-md-3">{tr}Message:{/tr}</label>
+            <label class="control-label col-md-3" for="message">{tr}Message:{/tr}</label>
 			<div class="col-md-9">
-				<textarea class="form-control" name="message">{$message|escape}</textarea>
+				<textarea class="form-control" name="message" id="message">{$message|escape}</textarea>
 				{if $prefs.feature_socialnetworks eq 'y' && $user neq ''}
 					{if $prefs.socialnetworks_twitter_consumer_key neq ''}
 						<div class="checkbox">

@@ -1,9 +1,14 @@
 {* $Id$ *}
 
 <div class="t_navbar btn-group form-group">
-	{button href="tiki-admingroups.php" class="btn btn-default" _text="{tr}Admin Groups{/tr}"}
-	{button href="tiki-adminusers.php" class="btn btn-default" _text="{tr}Admin Users{/tr}"}
-	{permission_link mode=button label="{tr}Manage permissions{/tr}"}
+	<a role="link" class="btn btn-link" href="tiki-admingroups.php" title="{tr}Admin groups{/tr}">
+		{icon name="group"} {tr}Admin Groups{/tr}
+	</a>
+	<a role="link" class="btn btn-link" href="tiki-adminusers.php" title="{tr}Admin users{/tr}">
+		{icon name="user"} {tr}Admin Users{/tr}
+	</a>
+
+	{permission_link mode=link label="{tr}Manage permissions{/tr}" icon_name="key" addclass="btn btn-link"}
 </div>
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
@@ -73,7 +78,7 @@
 				{if isset($no_mcrypt)}
 					{remarksbox type="warning" title="{tr}Mcrypt is not loaded{/tr}"}
 					{tr}User Encryption requires the PHP extension Mcrypt for encryption.
-						You should activate Mcrypt before activating User Encryption{/tr}</a>.
+						You should activate Mcrypt before activating User Encryption{/tr}.
 					{/remarksbox}
 				{else}
 					Requires the Mcrypt PHP extension for encryption. <u>You have Mcrypt installed</u>.<br>

@@ -2,9 +2,9 @@
 {title help="Polls" admpage="polls"}{tr}Admin Polls{/tr}{/title}
 
 <div class="t_navbar margin-bottom-md">
-	{button href="tiki-admin_polls.php?setlast=1" class="btn btn-default" _icon_name="previous" _text="{tr}Set last poll as current{/tr}"}
-	{button href="tiki-admin_polls.php?closeall=1" class="btn btn-default" _icon_name="disable" _text="{tr}Close all polls but last{/tr}"}
-	{button href="tiki-admin_polls.php?activeall=1" class="btn btn-default" _icon_name="enable" _text="{tr}Activate all polls{/tr}"}
+	<a href="tiki-admin_polls.php?setlast=1" class="btn btn-link" title="">{icon name="previous"} {tr}Set last poll as current{/tr} </a>
+	<a href="tiki-admin_polls.php?closeall=1" class="btn btn-link" title="">{icon name="disable"} {tr}Close all polls but last{/tr}</a>
+	<a href="tiki-admin_polls.php?activeall=1" class="btn btn-link" title="">{icon name="enable"} {tr}Activate all polls{/tr}</a>
 	{if $pollId neq '0'}{button pollId=0 cookietab=1 class="btn btn-default" _icon_name="create" _text="{tr}Create poll{/tr}"}{/if}
 </div>
 
@@ -21,15 +21,15 @@
 			<input type="hidden" name="pollId" value="{$pollId|escape}">
 
 			<div class="form-group">
-				<label class="col-sm-3 control-label">{tr}Title{/tr}</label>
+				<label class="col-sm-3 control-label" for="title">{tr}Title{/tr}</label>
 				<div class="col-sm-7">
-					<input type="text" name="title" value="{$info.title|escape}" class="form-control">
+					<input type="text" name="title" id="title" value="{$info.title|escape}" class="form-control">
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-3 control-label">{tr}Active{/tr}</label>
+				<label class="col-sm-3 control-label" for="active">{tr}Active{/tr}</label>
 				<div class="col-sm-7">
-					<select name="active" class="form-control">
+					<select name="active" id="active" class="form-control">
 						<option value='a' {if $info.active eq 'a'}selected="selected"{/if}>{tr}active{/tr}</option>
 						<option value='c' {if $info.active eq 'c'}selected="selected"{/if}>{tr}current{/tr}</option>
 						<option value='x' {if $info.active eq 'x'}selected="selected"{/if}>{tr}closed{/tr}</option>

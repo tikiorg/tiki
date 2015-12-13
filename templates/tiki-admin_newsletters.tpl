@@ -2,9 +2,11 @@
 {title help="Newsletters"}{tr}Admin newsletters{/tr}{/title}
 
 <div class="t_navbar btn-group form-group">
-	{button href="tiki-admin_newsletters.php?cookietab=2" _class="btn btn-default" _icon_name="create" _text="{tr}Create{/tr}"}
-	{button href="tiki-newsletters.php" _class="btn btn-default" _icon_name="list" _text="{tr}List{/tr}"}
-	{button href="tiki-send_newsletters.php" _class="btn btn-default" _icon_name="envelope" _text="{tr}Send{/tr}"}
+	{button  href="tiki-admin_newsletters.php?cookietab=2" _icon_name="create" _text="{tr}Create{/tr}"}
+	<a role="link" href="tiki-newsletters.php" class="btn btn-link" title="{tr}List{/tr}">{icon name="list"} {tr}List{/tr}</a>
+	<a role="link" href="tiki-send_newsletters.php" class="btn btn-link" title="{tr}Send{/tr}">{icon name="envelope"} {tr}Send{/tr}</a>
+{*	{button href="tiki-newsletters.php" _class="btn btn-default" _icon_name="list" _text="{tr}List{/tr}"}
+	{button href="tiki-send_newsletters.php" _class="btn btn-default" _icon_name="envelope" _text="{tr}Send{/tr}"} *}
 </div>
 
 {tabset}
@@ -112,9 +114,9 @@
                 </div>
 			</div>
             <div class="form-group">
-                <label class="col-md-2 control-label">{tr}Description:{/tr}</label>
+                <label class="col-md-2 control-label" for="description">{tr}Description:{/tr}</label>
                 <div class="col-md-10">
-                    <textarea class="form-control" name="description">{$info.description|escape}</textarea>
+                    <textarea class="form-control" name="description" id="description">{$info.description|escape}</textarea>
 				</div>
 			</div>
             <div class="checkbox col-md-offset-2">
@@ -166,17 +168,17 @@
                 </label>
             </div>
             <div class="form-group">
-                <label class="col-md-5 control-label">
+                <label class="col-md-5 control-label" for="articleClipRangeDays">
                     {tr}Clip articles published in the past number of days{/tr}</label>
                 <div class="col-md-4">
-				    <input type="text" class="form-control" name="articleClipRangeDays" value="{$info.articleClipRangeDays|escape}">
+				    <input type="text" class="form-control" name="articleClipRangeDays" id="articleClipRangeDays" value="{$info.articleClipRangeDays|escape}">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-5 control-label">
+                <label class="col-md-5 control-label" for="articleClipTypes">
 				    {tr}Article types to clip{/tr}</label>
                 <div class="col-md-4">
-					<select name="articleClipTypes[]" class="form-control" multiple="multiple">
+					<select id="articleClipTypes" name="articleClipTypes[]" class="form-control" multiple="multiple">
 						{section name=type loop=$articleTypes}
 							<option value="{$articleTypes[type]}" {if in_array($articleTypes[type], $info.articleClipTypes)}selected="selected"{/if}>{$articleTypes[type]|escape}</option>
 						{/section}
