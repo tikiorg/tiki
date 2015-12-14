@@ -196,6 +196,7 @@ class Services_User_Controller
 				}
 
 				if ($prefs['feature_score'] == 'y') {
+					$info['score'] =  TikiLib::lib('score')->get_user_score($other_user);
 					if ($prefs['feature_community_mouseover_score'] == 'y' &&
 							!empty($info['score']) && $other_user !== 'admin' && $other_user !== 'system' && $other_user !== 'Anonymous') {
 						$result['starHtml'] = $tikilib->get_star($info['score']);
