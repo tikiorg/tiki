@@ -1,4 +1,13 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:300,400,700");
+/*! Original theme information:
+ * bootswatch v3.3.6
+ * Homepage: http://bootswatch.com
+ * Copyright 2012-2015 Thomas Park
+ * Licensed under MIT
+ * Based on Bootstrap
+ *
+ * Adapted by the Tiki Community for Tiki Wiki CMS Groupware
+*/
 /*!
  * Bootstrap v3.3.6 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
@@ -7812,4 +7821,7 @@ table.tablesorter thead tr.tablesorter-filter-row input.dateTo {
 table.tablesorter thead tr.tablesorter-headerRow,
 table.tablesorter thead tr.tablesorter-filter-row {
   background-color: #2b3e50;
+}
+.topbar .nav {
+  font-size: 12px;
 }
