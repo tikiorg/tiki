@@ -118,7 +118,8 @@ function wikiplugin_fancytable($data, $params)
 				isset($tscolselect) ? $tscolselect : null,
 				null,
 				null,
-				isset($tsmathoptions) ? $tsmathoptions : null
+				isset($tstotals) ? $tstotals : null,
+				isset($tstotaloptions) ? $tstotaloptions : null
 			);
 			if (is_array($ts->settings)) {
 				$ts->settings['resizable'] = true;

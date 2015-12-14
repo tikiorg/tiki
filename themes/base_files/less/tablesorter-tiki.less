@@ -54,6 +54,9 @@ table.@{ts} {
 			th div.@{ts}-header-inner span {
 				padding-right: 10px;
 			}
+			th.sorter-false {
+				cursor: default;
+			}
 		}
 		tr.@{ts}-filter-row {
 			td {
@@ -77,6 +80,7 @@ table.@{ts} {
 				input.dateFrom,
 				input.dateTo {
 					width: 60px;
+					padding: 0px;
 					font-size: 70%;
 					float: right;
 				}
@@ -158,9 +162,15 @@ table.@{ts} {
 	thead .disabled {
 		display: none;
 	}
-	/* rows hidden by filtering (needed for child rows) */
-	.filtered {
-		display: none;
+	tbody {
+		/* rows hidden by filtering (needed for child rows) */
+		tr.filtered {
+			display: none;
+		}
+		td[data-tsmath] {
+			font-weight: bold;
+			text-align: right;
+		}
 	}
 }
 

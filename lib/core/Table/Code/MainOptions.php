@@ -92,8 +92,8 @@ class Table_Code_MainOptions extends Table_Code_Manager
 					if ($attr == 'addClass') {
 						$args = implode(' ',$val);
 					} else {
-						foreach($info[$attr] as $type => $val) {
-							$args = $type . '\',\'' . $val;
+						foreach($info[$attr] as $type => $val2) {
+							$args = $type . '\',\'' . $val2;
 						}
 					}
 					$orh[$col] .= '.' . $attr . '(\'' . $args . '\')';
@@ -156,6 +156,8 @@ class Table_Code_MainOptions extends Table_Code_Manager
 			$mo[] = $this->iterate($w, 'widgets : [', ']', '\'', '\'', ',');
 		}
 		/*** end widget section ***/
+		//debug - uncomment the line below to show log of events in the browser console
+		$mo[] = 'debug: true';
 
 		//server side sorting
 		if (parent::$sorts && parent::$ajax) {

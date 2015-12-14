@@ -1975,7 +1975,8 @@ function wikiplugin_trackerlist($data, $params)
 					isset($tscolselect) ? $tscolselect : null,
 					$GLOBALS['requestUri'],
 					$items['cant'],
-					isset($tsmathoptions) ? $tsmathoptions : null
+					isset($tstotals) ? $tstotals : null,
+					isset($tstotaloptions) ? $tstotaloptions : null
 				);
 				//loads the jquery tablesorter code
 				if (is_array($ts->settings)) {

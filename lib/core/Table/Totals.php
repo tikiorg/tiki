@@ -13,7 +13,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 
 /**
  * Class Table_Totals
- * This is a public class for checking necessary preferences or tablesorter status
+ * This is a public class for setting or getting HTML for total rows
  *
  * @package Tiki
  * @subpackage Table
@@ -31,7 +31,8 @@ class Table_Totals
 			if (!empty($s['math'])) {
 				$smarty = TikiLib::lib('smarty');
 				$smarty->assign('fieldcount', $count);
-				$smarty->assign('tstotals', $s['math']);
+				$smarty->assign('tstotals', $s['math']['totals']);
+				$smarty->assign('tsignore', $s['math']['ignore']);
 				return $smarty->fetch('tablesorter/totals.tpl');
 			}
 		} else {
@@ -47,7 +48,8 @@ class Table_Totals
 		if (Table_Check::isEnabled()) {
 			if (!empty($s['math'])) {
 				$smarty = TikiLib::lib('smarty');
-				$smarty->assign('tstotals', $s['math']);
+				$smarty->assign('tstotals', $s['math']['totals']);
+				$smarty->assign('tsignore', $s['math']['ignore']);
 			}
 		}
 	}

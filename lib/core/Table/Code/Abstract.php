@@ -118,11 +118,9 @@ class Table_Code_Abstract
 			$ret .= $start;
 			foreach ($data as $value) {
 				$i++;
-				if (!empty($value)) {
-					$ret .= $before . $value . $after;
-					if ($i < $c) {
-						$ret .= $separator;
-					}
+				$ret .= $before . $value . $after;
+				if ($i < $c) {
+					$ret .= $separator;
 				}
 			}
 			$ret .= $finish;

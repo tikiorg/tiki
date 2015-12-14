@@ -40,6 +40,17 @@ class Table_Plugin
 			'stdevs'];
 
 	/**
+	 * Map to actual tablesorter syntax
+	 * @var array
+	 */
+	private $totalfilters = [
+		'visible' => '',
+		'unfiltered' => ':not(.filtered)',
+		'all' => '*',
+		'hidden' => ':hidden',
+	];
+
+	/**
 	 * Creates parameters that can be appended to a plugin's native parameters so the user can
 	 * set tablesorter functionality
 	 */
@@ -96,21 +107,26 @@ class Table_Plugin
 				'required' => false,
 				'name' => tra('Sort Settings by Column'),
 				'description' => tr(
-					'Set %0type%1 and %0group%1 settings for each column, using %0|%1 to separate columns. To
-					show group headings upon page load, the Pre-sorted Columns parameter (%0sortList%1) will need to be
-					set for a column with a group setting. Group will not work in plugins where the Server Side
-					Processing parameter (%0server%1) is set to %0y%1.', '<code>', '</code>')
-				. '<br />' . tr('%0type%1 tells the sorter what type of date is being sorted and choices include:
-					%0text%1, %0digit%1, %0currency%1, %0percent%1, %0usLongDate%1, %0shortDate%1, %0isoDate%1,
-					%0dateFormat-ddmmyyyy%1, %0ipAddress%1, %0url%1, %0time%1.
-					Also handle strings in numeric columns with %0string-min%1 and %0string-max%1. Handle empty cells
-					with %0empty-top%1, %0empty-bottom%1 or %0empty-zero%1.', '<code>', '</code>')
-				. '<br />' . tr('%0group%1 creates automatic row headings upon sort with the heading text determined by
-					the setting as follows: %0letter%1 (first letter), %0word%1 (first word), %0number%1, %0date%1,
-					%0date-year%1, %0date-month%1, %0date-day%1, %0date-week%1, %0date-time%1. %0letter%1 and %0word%1
-					can be extended, e.g., %0word-2%1 shows first 2 words. %0number-10%1 will group rows in blocks of
-					ten. Group will not work in plugins where the Server Side Processing parameter (%0server%1) is
-					set to %0y%1.', '<code>', '</code>'
+					'Set %0 and %1 settings for each column, using %2 to separate columns. To show group headings upon
+					page load, the Pre-sorted Columns parameter (%3) will need to be set for a column with a group
+					setting. Group will not work in plugins where the Server Side Processing parameter (%4) is set to
+					%5.', '<code>type</code>', '<code>group</code>', '<code>|</code>', '<code>0sortList</code>',
+					'<code>server</code>', '<code>y</code>')
+					. '<br>' . tr('Set %0 to one of the following:', '<code>type</code>') . ' <code>text</code>,
+					<code>digit</code>, <code>currency</code>, <code>percent</code>, <code>usLongDate</code>,
+					<code>shortDate</code>, <code>isoDate</code>, <code>dateFormat-ddmmyyyy</code>,
+					<code>ipAddress</code>, <code>url</code>, <code>time</code>', '<code>nosort</code>'
+					. '<br>' . tr('Also handle strings in numeric columns with:') . ' <code>string-min</code>,
+					</code>string-max</code>' .  tr('Handle empty cells with:') . ' <code>empty-top<code>,
+					<code>empty-bottom</code>,  <code>empty-zero</code>.<br>'
+					. tr('%0 creates automatic row headings upon sort with the heading text determined by
+					the setting as follows: %1 (first letter), %2 (first word)', '<code>group</code>',
+					'<code>letter</code>', '<code>word</code>') . ', <code>number</code>, <code>date</code>,
+					<code>date-year</code>, <code>date-month</code>, <code>date-day</code>, <code>date-week</code>,
+					<code>date-time</code>.' .  tr('%0 and %1 can be extended, e.g., %2 shows the first 2 words.
+					%3 will group rows in blocks of ten. Group will not work in plugins where the Server Side Processing
+					parameter (%4) is set to %5.', '<code>letter</code>', '<code>word</code>',
+					'<code>word-2</code>', '<code>number-10</code>', '<code>server</code>', '<code>y</code>'
 				),
 				'since' => '12.0',
 				'doctype' => 'tablesorter',
@@ -122,9 +138,9 @@ class Table_Plugin
 				'required' => false,
 				'name' => tra('Column Filters'),
 				'description' => tr(
-					'Enter %0y%1 for a blank text filter on all columns, or %0n%1 for no filters. Or set custom column
-					filters separated by %0|%1 for each column for the following filter choices and parameters:',
-					'<code>', '</code>'
+					'Enter %0 for a blank text filter on all columns, or %1 for no filters. Or set custom column
+					filters separated by %2 for each column for the following filter choices and parameters:',
+					'<code>y</code>', '<code>n</code>', '<code>|</code>'
 				)
 					. '<br> <b>Text - </b><code>type:text;placeholder:xxxx</code><br>' .
 					tra('(For PluginTrackerlist this will be an exact search, for other plugins partial values will work.)') . '<br>
@@ -190,34 +206,52 @@ class Table_Plugin
 				'filter' => 'striptags',
 				'advanced' => true,
 			),
-			'tsmathoptions' => array(
+			'tstotals' => array(
 				'required' => false,
-				'name' => tra('Math Options'),
-				'description' => tr('Set the number format, generate table or column totals and set labels, using %0
-					separated by a semi-colon:', '<code>type:value</code>')
-					. '<br><strong>format(pattern)</strong> - ' . tr('sets the number format (see patterns at %0).
-					Example:', '<a href="http://mottie.github.io/tablesorter/docs/example-widget-math.html#mask_examples">mask_examples</a>')
+				'name' => tra('Totals'),
+				'description' => tr('Generate table, column or row totals and set labels, using either %0 or the following
+					syntax for each total: %1.', '<code>y</code>',
+					'<code>type:value;formula:value;filter:value;label:value</code>')
+					. '<br>' . tr('Setting to %0 will add one column total row set as follows: %1.', '(<code>y</code>)',
+					'<code>type:col;formula:sum;filter:visible;label:Totals</code>')
+					. '<br>' . tr('Separate multiple total row or column settings with a pipe %0. Set %1 only to
+					generate sums of visible values. In all cases, cells in columns set to be ignored in
+					the %2 parameter will not be included in calculations.', '(<code>|</code>)', '<code>type</code>',
+					'<code>tstotaloptions</code>')
+					.  '<br>' . tr('Instructions for each total option follows:')
+					. '<br><strong>type</strong> - ' . tr('Choices are %0, for a row of columns totals, %1, for a
+					column of row totals, and %2 to include amounts from all cells in the table body in a row total.',
+					'<code>col</code>', '<code>row</code>', '<code>all</code>', '<code>tstotaloptions</code>')
+					. '<br><strong>formula</strong> - ' . tr('set what the calculation is. Choices are:')
+					. ' <code>sum</code>, <code>count</code>, <code>max</code>, <code>min</code>, <code>mean</code>,
+					<code>median</code>, <code>mode</code>, <code>range</code>, <code>varp</code>, <code>vars</code>,
+					<code>stdevp</code>, <code>stdevs</code>. ' . tr('Click %0 for a description of these options.',
+					'<a href="http://mottie.github.io/tablesorter/docs/example-widget-math.html#attribute_settings">here</a>')
+					. '<br><strong>filter</strong> - ' . tr('Determines the rows that will be included in the
+					calculations (so no impact if %0). Also, when %1, only visible cells are included regardless of this
+					setting. Choices are %2 (rows visible on the page), %3 (all rows not filtered out, even if not
+					visible because of pagination), %4 (all rows, even if filtered or hidden), and %5 (rows filtered out
+					and rows hidden due to pagination).', '<code>type:row</code>', '<code>server="y"</code>',
+					'<code>visible</code>', '<code>unfiltered</code>', '<code>all</code>', '<code>hidden</code>')
+					. '<br><strong>label</strong> - ' . tr('set the label for the total, which will appear in the header
+					for row totals and in the first column for column totals.'),
+				'since' => '15.0',
+				'doctype' => 'tablesorter',
+				'default' => '',
+				'filter' => 'striptags',
+				'advanced' => true,
+			),
+			'tstotaloptions' => array(
+				'required' => false,
+				'name' => tra('Total Options'),
+				'description' => tr('Options for totals which are set in the %0 parameter:', '<code>tstotals</code>')
+					. '<br><strong>format</strong> - ' . tr('sets the number format (click %0 for patterns).
+					Example:', '<a href="http://mottie.github.io/tablesorter/docs/example-widget-math.html#mask_examples">here</a>')
 					. ' <code>format:$#,##0.00</code><br>'
-					. '<strong>coltotal</strong> - ' . tr('will add a column total row for columns not set to be
-					ignored. Limited to amounts on the page if %0. Can add multiple totals.
-					Example:', '<code>server="y"</code>') . ' <code>coltotal:sum</code><br>'
-						. tr('The types of column and table totals that can be set are:') . ' <code>sum</code>,
-					<code>count</code>, <code>max</code>, <code>min</code>, <code>mean</code>, <code>median</code>,
-					<code>mode</code>, <code>range</code>, <code>varp</code>, <code>vars</code>, <code>stdevp</code>,
-					<code>stdevs</code>. ' . tr('See %0 for a description of these options.',
-					'<a href="http://mottie.github.io/tablesorter/docs/example-widget-math.html#attribute_settings">attribute_settings</a>')
-					. '<br><strong>tabletotal</strong> - ' . tr('will add a total row for all amounts in the
-					table not set to be ignored. Limited to amounts on the page if %0. Can add multiple totals.
-					Example with two totals:', '<code>server="y"</code>')
-					. ' <code>tabletotal:range;tabletotal:sum</code><br>'
 					. '<strong>ignore</strong> - ' . tr('indicate comma-separated columns (by number starting
-					with 0) that should be excluded from all column and table totals. Example:')
-					. '<code>ignore:0,1,4</code><br>'
-					. '<strong>collabel</strong>, <strong>tablelabel</strong> - '
-					. tr('set labels for page and column totals. Example, %0 and %1.',
-					'<code>tablelabel:Table total</code>', '<code>collabel:Column totals</code>')
-					. '<br>' . tr('Combined example:')
-					. ' <code>format:$(#,###.00);coltotal:sum;tabletotal:sum;collabel:Sum;tablelabel:Table total</code><br>',
+					with 0) that should be excluded from all total calculations set in the %0 parameter. Remember to
+					include any columns that will be added for row totals set in the %0 parameter. Example:',
+					'<code>tstotals</code>') . '<code>ignore:0,1,4</code><br>',
 				'since' => '15.0',
 				'doctype' => 'tablesorter',
 				'default' => '',
@@ -228,22 +262,26 @@ class Table_Plugin
 	}
 
 	/**
-	 * To be used within plugin program to convert user parameter settings into the settings array
+	* To be used within plugin program to convert user parameter settings into the settings array
 	 * that can be used by Table_Factory to generate the necessary jQuery
 	 *
-	 * @param null   $id				//html element id for table and surrounding div
-	 * @param string $sortable			//see params above
-	 * @param null   $sortList			//see params above
-	 * @param string $tsortcolumns		//see params above
-	 * @param null   $tsfilters			//see params above
-	 * @param null   $tsfilteroptions	//see params above
-	 * @param null   $tspaginate		//see params above
-	 * @param null   $ajaxurl			//only needed if ajax will be used to pull partial record sets
-	 * @param null   $totalrows			//only needed if ajax will be used to pull partial record sets
+	 * @param null $id                  //html element id for table and surrounding div
+	 * @param string $server            //see params above
+	 * @param string $sortable          //see params above
+	 * @param null $sortList            //see params above
+	 * @param null $tsortcolumns        //see params above
+	 * @param null $tsfilters           //see params above
+	 * @param null $tsfilteroptions     //see params above
+	 * @param null $tspaginate          //see params above
+	 * @param null $tscolselect         //see params above
+	 * @param null $ajaxurl             //only needed if ajax will be used to pull partial record sets
+	 * @param null $totalrows           //only needed if ajax will be used to pull partial record sets
+	 * @param null $tsmathoptions       //see params above
+	 * @param null $tsmathtotals        //see params above
 	 */
 	public function setSettings ($id = null, $server = 'n', $sortable = 'n', $sortList = null, $tsortcolumns = null,
 		$tsfilters = null, $tsfilteroptions = null, $tspaginate = null, $tscolselect = null, $ajaxurl = null,
-		$totalrows = null, $tsmathoptions = null)
+		$totalrows = null, $tstotals = null, $tstotaloptions = null)
 	{
 		$s = array();
 
@@ -307,10 +345,14 @@ class Table_Plugin
 			}
 		}
 
+		//tsortcolumns
 		if (!empty($tsortcolumns)) {
 			$tsc = Table_Check::parseParam($tsortcolumns);
 			if (is_array($tsc)) {
 				foreach ($tsc as $col => $sortinfo) {
+					if (isset($sortinfo['type']) && $sortinfo['type'] == 'nosort') {
+						$sortinfo['type'] = false;
+					}
 					if (isset($s['columns'][$col]['sort'])) {
 						$s['columns'][$col]['sort'] = $s['columns'][$col]['sort'] + $sortinfo;
 					} else {
@@ -318,6 +360,9 @@ class Table_Plugin
 					}
 				}
 				ksort($s['columns']);
+			}
+			if ($server === 'y') {
+				$s['sorts']['group'] = false;
 			}
 		} else {
 			$s['sorts']['group'] = false;
@@ -417,22 +462,58 @@ class Table_Plugin
 			$s['total'] = $totalrows;
 		}
 
-		//tsmathoptions
-		if (!empty($tsmathoptions)) {
-			$tsmo = Table_Check::parseParam($tsmathoptions);
-			if (is_array($tsmo)) {
-				//column and table totals and labels
-				foreach(['col', 'table'] as $type) {
-					if (!empty($tsmo[0][$type . 'total'])) {
-						$label = !empty($tsmo[0][$type . 'label']) ? $tsmo[0][$type . 'label'] : null;
-						$tsmo[0][$type . 'total'] = $this->setTotals($tsmo[0][$type . 'total'], $label);
+		//tstotals
+		if (!empty($tstotals)) {
+			switch ($tstotals) {
+				case 'y':
+					$s['math']['totals'][0] = ['type' => 'col', 'formula' => 'sum', 'filter' => '',
+						'label' => tr('Page totals')];
+					break;
+				default:
+					$tst = Table_Check::parseParam($tstotals);
+					if (is_array($tst)) {
+						foreach ($tst as $key => $tinfo) {
+							if (!empty($tinfo['type'] && in_array($tinfo['type'], ['col', 'row', 'all']))) {
+								$s['math']['totals'][$tinfo['type']][$key]['formula'] = !empty($tinfo['formula'])
+									&& in_array($tinfo['formula'], $this->mathtypes) ? $tinfo['formula'] : 'sum';
+								if (!empty($tinfo['filter']) && isset($this->totalfilters[$tinfo['filter']])) {
+									if ($server === 'y') {
+										$s['math']['totals'][$tinfo['type']][$key]['filter'] = '';
+										$labelfilter = '';
+									} else {
+										$s['math']['totals'][$tinfo['type']][$key]['filter'] = $this->totalfilters[$tinfo['filter']];
+										$labelfilter = $tinfo['filter'];
+									}
+								} else {
+									$s['math']['totals'][$tinfo['type']][$key]['filter'] = '';
+									$labelfilter = '';
+								}
+								if (isset($tinfo['label'])) {
+									$s['math']['totals'][$tinfo['type']][$key]['label'] = $tinfo['label'];
+								} else {
+									$map = ['col' => 'Column', 'row' => 'Row', 'all' => 'Table'];
+									$label = $map[$tinfo['type']] . ' '
+										. $s['math']['totals'][$tinfo['type']][$key]['formula'] . ' ' . $labelfilter;
+									$s['math']['totals'][$tinfo['type']][$key]['label'] = tr($label);
+								}
+							}
+						}
+					}
+			}
+		}
+
+		//tstotaloptions
+		if (!empty($tstotaloptions)) {
+			$tsto = Table_Check::parseParam($tstotaloptions);
+			if (is_array($tsto[0])) {
+				foreach($tsto[0] as $option => $string) {
+					if (in_array($option, ['format', 'ignore'])) {
+						if ($option == 'ignore') {
+							$string = explode(',', $string);
+						}
+						$s['math'][$option] = $string;
 					}
 				}
-				//ignore
-				if (!empty($tsmo[0]['ignore'])) {
-					$tsmo[0]['ignore'] = explode(',', $tsmo[0]['ignore']);
-				}
-				$s['math'] = $tsmo[0];
 			}
 		}
 
@@ -457,26 +538,6 @@ class Table_Plugin
 			$url['query'] = '?' . $str;
 		}
 		return $url;
-	}
-
-	private function setTotals($total, $label)
-	{
-		if (!empty($total)) {
-			foreach($total as $row => $value) {
-				if (!empty($value) && in_array($value, $this->mathtypes)) {
-					$t[$row]['type'] = $value;
-					if (isset($label[$row])) {
-						$jitlabel = new JitFilter(['label' => $label[$row]]);
-						$t[$row]['label'] = $jitlabel->label->text();
-					}
-				}
-			}
-			if (isset($t)) {
-				return $t;
-			} else {
-				return false;
-			}
-		}
 	}
 
 }

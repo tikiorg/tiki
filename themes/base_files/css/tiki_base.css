@@ -2980,7 +2980,6 @@ table.tablesorter {
   margin-bottom: 2px;
   /* style header */
   /*no formatting on filter row when filter-false*/
-  /* rows hidden by filtering (needed for child rows) */
 }
 table.tablesorter thead tr.tablesorter-headerRow th.tablesorter-header {
   background-repeat: no-repeat;
@@ -3002,6 +3001,9 @@ table.tablesorter thead tr.tablesorter-headerRow th.tablesorter-header i {
 }
 table.tablesorter thead tr.tablesorter-headerRow th div.tablesorter-header-inner span {
   padding-right: 10px;
+}
+table.tablesorter thead tr.tablesorter-headerRow th.sorter-false {
+  cursor: default;
 }
 table.tablesorter thead tr.tablesorter-filter-row td {
   text-align: center;
@@ -3033,6 +3035,7 @@ table.tablesorter thead tr.tablesorter-filter-row td label {
 table.tablesorter thead tr.tablesorter-filter-row td input.dateFrom,
 table.tablesorter thead tr.tablesorter-filter-row td input.dateTo {
   width: 60px;
+  padding: 0px;
   font-size: 70%;
   float: right;
 }
@@ -3110,8 +3113,15 @@ table.tablesorter thead tr.tablesorter-filter-row.hideme .tablesorter-filter {
 table.tablesorter thead .disabled {
   display: none;
 }
-table.tablesorter .filtered {
+table.tablesorter tbody {
+  /* rows hidden by filtering (needed for child rows) */
+}
+table.tablesorter tbody tr.filtered {
   display: none;
+}
+table.tablesorter tbody td[data-tsmath] {
+  font-weight: bold;
+  text-align: right;
 }
 table.tablesorter-processing tbody tr td {
   opacity: .25;

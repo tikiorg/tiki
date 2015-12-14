@@ -184,6 +184,18 @@ class Table_Code_Other extends Table_Code_Manager
 			);
 			$htmlafter[] = $pagerstring;
 		}
+		//add math total column if set
+		if (!empty(parent::$s['math']['totals']['row'])) {
+			foreach(parent::$s['math']['totals']['row'] as $total) {
+				$label = $total['label'] ? $total['label'] : tr('Total');
+				$class = parent::$s['ajax']['type'] !== false ? ' class="sorter-false filter-false"' : '';
+				$jq[] = $this->nt . '$(\'' . parent::$tid . '\').find(\'thead tr\').append(\'<th' . $class . '>'
+					. $total['label'] . '</th>\');'
+					. $this->nt . '$(\'' . parent::$tid . '\').find(\'tbody tr\').append(\'<td data-tsmath="row-'
+					. $total['formula'] . '"></td>\')'
+					. $this->nt . '$(\'' . parent::$tid . '\').find(\'tfoot tr:not(.ts-foot-row)\').append(\'<th></th>\');';
+			}
+		}
 
 		//add any reset/disable buttons just above the table
 		if (isset($htmlbefore)) {

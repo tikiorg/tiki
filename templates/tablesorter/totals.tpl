@@ -1,72 +1,70 @@
 {* $Id$ *}
 {if isset($tstotals)}
+	{$rowtotal = 0}
+	{if !empty($tstotals.row)}
+		{$rowtotal = $tstotals.row|count}
+	{/if}
 	{if empty($nofoot)}
 		<tfoot class="tablesorter-totals">
 	{/if}
-	{if isset($tstotals.coltotal)}
-		{foreach $tstotals.coltotal as $info}
-			<tr>
-				{if !empty($precols)}
-					{for $i=1 to $precols}
-						<th>
-							{if $i === 1}
-								{if isset($info.label)}
+	{foreach $tstotals as $key => $value}
+		{if $key == 'col'}
+			{foreach $value as $info}
+				<tr class="ts-foot-row">
+					{if !empty($precols)}
+						{for $i=1 to $precols}
+							<th>
+								{if $i === 1}
 									{$info.label|escape}
-								{else}
-									{tr}Totals{/tr}
 								{/if}
+							</th>
+						{/for}
+					{else}
+						{$precols = 0}
+					{/if}
+					{for $i=1 to $fieldcount}
+						{$index = $i - 1 + $precols}
+						{if in_array($index, $tsignore)}
+							{$ignore = 1}
+						{else}
+							{$ignore = 0}
+						{/if}
+						<th {if !empty($info.formula) && !$ignore}data-tsmath="col-{$info.formula|escape}" class="text-right"{if !empty($info.filter)} data-tsmath-filter="{$info.filter}"{/if}{/if} data-index="{$index}">
+							{if $i === 1 && $ignore && empty($precols)}
+								{$info.label|escape}
 							{/if}
 						</th>
 					{/for}
-				{else}
-					{$precols = 0}
-				{/if}
-				{for $i=1 to $fieldcount}
-					{$index = $i - 1 + $precols}
-					{if in_array($index, $tstotals.ignore)}
-						{$ignore = 1}
+					{if !empty($postcols)}
+						{for $i=1 to $postcols}
+							<th></th>
+						{/for}
 					{else}
-						{$ignore = 0}
+						{$postcols = 0}
 					{/if}
-					<th {if !empty($info.type) && !$ignore}data-tsmath="col-{$info.type|escape}" class="text-right"{/if}>
-						{if $i === 1 && $ignore && empty($precols)}
-							{if isset($info.label)}
-								{$info.label|escape}
-							{else}
-								{tr}Totals{/tr}
-							{/if}
-						{/if}
-					</th>
-				{/for}
-				{if !empty($postcols)}
-					{for $i=1 to $postcols}
-						<th></th>
-					{/for}
-				{else}
-					{$postcols = 0}
-				{/if}
-			</tr>
-
-		{/foreach}
-	{/if}
-	{if isset($tstotals.tabletotal)}
-		{foreach $tstotals.tabletotal as $tableinfo}
-			<tr>
-				{$allcols = $precols + $fieldcount + $postcols}
-				{for $i=1 to $allcols}
-					<th {if $i == $allcols && !empty($tableinfo.type)}data-tsmath="all-{$tableinfo.type}" class="text-right"{/if}>
-						{if $i === 1}
-							{if isset($tableinfo.label)}
+					{if $rowtotal}
+						{for $i=1 to $rowtotal}
+							<th></th>
+						{/for}
+					{/if}
+				</tr>
+			{/foreach}
+		{/if}
+		{if $key == 'all'}
+			{foreach $value as $tableinfo}
+				<tr class="ts-foot-row">
+					{$allcols = $precols + $fieldcount + $postcols + $rowtotal}
+					{for $i=1 to $allcols}
+						<th {if $i == $allcols && !empty($tableinfo.formula)}data-tsmath="all-{$tableinfo.formula}" class="text-right"{if !empty($tableinfo.filter)} data-tsmath-filter="{$tableinfo.filter}"{/if}{/if}>
+							{if $i === 1}
 								{$tableinfo.label|escape}
-							{else}
-								{tr}Table total{/tr}
 							{/if}
-						{/if}
-					</th>
-				{/for}
-			</tr>
-		{/foreach}
-	{/if}
+						</th>
+					{/for}
+				</tr>
+			{/foreach}
+		{/if}
+	{/foreach}
 	{if empty($nofoot)}
 		</tfoot>
 	{/if}

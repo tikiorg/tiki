@@ -124,8 +124,7 @@ class Table_Check
 						if (strpos($subparam, ':') !== false) {
 							$colon = explode(':', $subparam);
 							unset($ret[$key][$key2]);
-							if (in_array($colon[0], ['expand', 'option', 'coltotal', 'collabel', 'tabletotal',
-								'tablelabel']))
+							if (in_array($colon[0], ['expand', 'option']))
 							{
 								if ($colon[0] == 'option') {
 									$colon[0] = 'options';

@@ -27,11 +27,12 @@ class Table_Code_WidgetOptionsMath extends Table_Code_WidgetOptions
 	{
 		if (parent::$math) {
 			$format = isset(parent::$s['math']['format']) ? parent::$s['math']['format'] : '###0.00';
-			$filter = new JitFilter(['format' => $format]);
 			$m[] = 'math_data : \'tsmath\'';
-			$m[] = 'math_mask : ' . '\'' . $filter->format->striptags() . '\'';
-			$m[] = 'math_event : \'pagerComplete\'';
+			$m[] = 'math_mask : ' . '\'' . $format . '\'';
+			$m[] = 'math_event : \'tablesorter-ready\'';
 			$m[] = 'math_none : \'' . tr('n/a') . '\'';
+			//page totals by default
+			$m[] = 'math_rowFilter : \':not(.filtered):visible\'';
 			//ignore
 			if (isset(parent::$s['math']['ignore'])) {
 				$ignore = [];
