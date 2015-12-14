@@ -1,4 +1,4 @@
-@import url("//fonts.googleapis.com/css?family=Roboto:400,500");
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,500");
 /*!
  * Bootstrap v3.3.6 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
@@ -255,8 +255,8 @@ th {
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot');
-  src: url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../../../vendor/twitter/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 .glyphicon {
   position: relative;
@@ -2735,7 +2735,7 @@ select[multiple].input-sm {
   height: 66px;
   padding: 20px 30px;
   font-size: 18px;
-  line-height: 1.33;
+  line-height: 1.3333333;
   border-radius: 6px;
 }
 select.input-lg {
@@ -2750,7 +2750,7 @@ select[multiple].input-lg {
   height: 66px;
   padding: 20px 30px;
   font-size: 18px;
-  line-height: 1.33;
+  line-height: 1.3333333;
   border-radius: 6px;
 }
 .form-group-lg select.form-control {
@@ -2766,7 +2766,7 @@ select[multiple].input-lg {
   min-height: 38px;
   padding: 21px 30px;
   font-size: 18px;
-  line-height: 1.33;
+  line-height: 1.3333333;
 }
 .has-feedback {
   position: relative;
@@ -3425,7 +3425,7 @@ fieldset[disabled] .btn-link:focus {
 .btn-group-lg > .btn {
   padding: 20px 30px;
   font-size: 18px;
-  line-height: 1.33;
+  line-height: 1.3333333;
   border-radius: 6px;
 }
 .btn-sm,
@@ -3824,7 +3824,7 @@ tbody.collapse.in {
   height: 66px;
   padding: 20px 30px;
   font-size: 18px;
-  line-height: 1.33;
+  line-height: 1.3333333;
   border-radius: 6px;
 }
 select.input-group-lg > .form-control,
@@ -3849,7 +3849,6 @@ select[multiple].input-group-lg > .input-group-btn > .btn {
   font-size: 12px;
   line-height: 1.5;
   border-radius: 3px;
-  padding: 15px 10px;
 }
 select.input-group-sm > .form-control,
 select.input-group-sm > .input-group-addon,
@@ -4759,7 +4758,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .pagination-lg > li > span {
   padding: 20px 30px;
   font-size: 18px;
-  line-height: 1.33;
+  line-height: 1.3333333;
 }
 .pagination-lg > li:first-child > a,
 .pagination-lg > li:first-child > span {
@@ -6838,9 +6837,6 @@ input:focus,
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-.input-sm {
-  padding: 15px 10px;
-}
 .nav {
   font-size: 11px;
   line-height: 22px;
@@ -6935,14 +6931,19 @@ input:focus,
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-.panel-heading,
-.panel-title,
-.panel-footer {
+.panel .panel-heading,
+.panel .panel-title {
   font-size: 11px;
   line-height: 22px;
   font-weight: 500;
   text-transform: uppercase;
   color: #fff;
+}
+.panel .panel-footer {
+  font-size: 11px;
+  line-height: 22px;
+  font-weight: 500;
+  text-transform: uppercase;
 }
 .panel-default .panel-heading,
 .panel-default .panel-title,

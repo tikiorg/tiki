@@ -1,7 +1,13 @@
-// Sandstone 3.2.0
+// Sandstone 3.3.5
 // Bootswatch
 // -----------------------------------------------------
-@import url("//fonts.googleapis.com/css?family=Roboto:400,500");
+
+@web-font-path: "https://fonts.googleapis.com/css?family=Roboto:400,500";
+
+.web-font(@path) {
+	@import url("@{path}");
+}
+.web-font(@web-font-path);
 
 // Navbar =====================================================================
 
@@ -14,7 +20,7 @@
 
 .navbar {
 	.nav > li > a {
-		.sandstone();
+		.sandstone;
 	}
 
 	&-form input,
@@ -27,7 +33,7 @@
 
 .btn {
 	border: none;
-	.sandstone();
+	.sandstone;
 
 	&:hover {
 		border-color: transparent;
@@ -60,14 +66,10 @@ input,
 	}
 }
 
-.input-sm {
-	padding: 15px 10px;
-}
-
 // Navs =======================================================================
 
 .nav {
-	.sandstone();
+	.sandstone;
 
 	.open > a,
 	.open > a:hover,
@@ -109,7 +111,7 @@ input,
 }
 
 .breadcrumb {
-	.sandstone();
+	.sandstone;
 
 	border: 1px solid @gray-light;
 
@@ -119,11 +121,11 @@ input,
 }
 
 .pagination {
-	.sandstone();
+	.sandstone;
 }
 
 .pager {
-	.sandstone();
+	.sandstone;
 
 	li > a {
 		color: @gray;
@@ -132,7 +134,7 @@ input,
 
 .dropdown-menu {
 	& > li > a {
-		.sandstone();
+		.sandstone;
 	}
 }
 
@@ -147,7 +149,7 @@ input,
 }
 
 .tooltip {
-	.sandstone();
+	.sandstone;
 }
 
 // Progress bars ==============================================================
@@ -177,11 +179,14 @@ input,
 .panel {
 	.box-shadow(none);
 
-	&-heading,
-	&-title,
-	&-footer {
-		.sandstone();
+	.panel-heading,
+	.panel-title {
+		.sandstone;
 		color: #fff;
+	}
+
+	.panel-footer {
+		.sandstone;
 	}
 
 	&-default {
