@@ -1298,16 +1298,40 @@ class TikiLib extends TikiDb_Bridge
 	 */
 	function rank_users($limit = 10, $start = 0)
 	{
+		global $prefs;
+		$score_expiry_days = $prefs['feature_score_expday'];
+
 		if (!$start) {
 			$start = "0";
 		}
 
-		$users = $this->table('users_users');
+		if (empty($score_expiry_days)) {
+			// score does not expire
+			$query = "select `recipientObjectId` as `login`,
+				`pointsBalance` as `score`
+				from `tiki_object_scores` tos
+				where `recipientObjectType`='user'
+				and tos.`id` = (select max(id) from `tiki_object_scores` where `recipientObjectId` = tos.`recipientObjectId` and `recipientObjectType`='user' group by `recipientObjectId`)
+				group by `recipientObjectId` order by `score` desc
+				limit ? offset ?";
 
-		$result = $users->fetchAll(
-			array('userId', 'login', 'score'),
-			array('login' => $users->not('admin')), $limit, $start, array('score' => 'desc')
-		);
+			$result = $this->fetchAll($query, array($limit, $start));
+		} else {
+			// score expires
+			$query = "select `recipientObjectId` as `login`,
+				`pointsBalance` - ifnull((select `pointsBalance` from `tiki_object_scores`
+					where `recipientObjectId`=tos.`recipientObjectId`
+					and `recipientObjectType`='user'
+					and `date` < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL ? DAY))
+					order by id desc limit 1), 0) as `score`
+				from `tiki_object_scores` tos
+				where `recipientObjectType`='user'
+				and tos.`id` = (select max(id) from `tiki_object_scores` where `recipientObjectId` = tos.`recipientObjectId` and `recipientObjectType`='user' group by `recipientObjectId`)
+				group by `recipientObjectId` order by `score` desc
+				limit ? offset ?";
+
+				$result = $this->fetchAll($query, array($score_expiry_days, $limit, $start));
+		}
 
 		foreach ( $result as & $res ) {
 			$res['position'] = ++$start;

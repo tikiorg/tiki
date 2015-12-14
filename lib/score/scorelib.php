@@ -35,8 +35,38 @@ class ScoreLib extends TikiLib
      */
     public function user_position($user)
 	{
-		$score = $this->getOne("select `score` from `users_users` where `login`=?", array($user));
-		return $this->getOne("select count(*)+1 from `users_users` where `score` > ? and `login` <> ?", array((int) $score,'admin'));
+		global $prefs;
+		$score_expiry_days = $prefs['feature_score_expday'];
+
+		$score = $this->get_user_score($user);
+
+		if (empty($score_expiry_days)) {
+			// score does not expire
+			$query = "select count(*)+1 from `tiki_object_scores` tos
+				where `recipientObjectType`='user'
+				and `recipientObjectId`<> ?
+				and `pointsBalance` > ?
+				and tos.`id` = (select max(id) from `tiki_object_scores` where `recipientObjectId` = tos.`recipientObjectId` and `recipientObjectType`='user' group by `recipientObjectId`)
+				group by `recipientObjectId`";
+
+			$position = $this->getOne($query, array($user, $score));
+		} else {
+			// score expires
+			$query = "select count(*)+1 from `tiki_object_scores` tos
+				where `recipientObjectType`='user'
+				and `recipientObjectId`<> ?
+				and `pointsBalance` - ifnull((select `pointsBalance` from `tiki_object_scores`
+					where `recipientObjectId`=tos.`recipientObjectId`
+					and `recipientObjectType`='user'
+					and `date` < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL ? DAY))
+					order by id desc limit 1), 0) > ?
+				and tos.`id` = (select max(id) from `tiki_object_scores` where `recipientObjectId` = tos.`recipientObjectId` and `recipientObjectType`='user' group by `recipientObjectId`)
+				group by `recipientObjectId`";
+
+			$position = $this->getOne($query, array($user, $score_expiry_days, $score));
+		}
+
+		return $position;
 	}
 
 	// User's score on site
@@ -79,7 +109,34 @@ class ScoreLib extends TikiLib
      */
     public function count_users()
 	{
-		return $this->getOne("select count(*) from `users_users` where `score`>0 and `login`<>'admin'", array());
+		global $prefs;
+		$score_expiry_days = $prefs['feature_score_expday'];
+
+		if (empty($score_expiry_days)) {
+			// score does not expire
+			$query = "select count(*) from `tiki_object_scores` tos
+				where `recipientObjectType`='user'
+				and `pointsBalance` > 0
+				and tos.`id` = (select max(id) from `tiki_object_scores` where `recipientObjectId` = tos.`recipientObjectId` and `recipientObjectType`='user' group by `recipientObjectId`)
+				group by `recipientObjectId`";
+
+			$count = $this->getOne($query, array());
+		} else {
+			// score expires
+			$query = "select count(*) from `tiki_object_scores` tos
+				where `recipientObjectType`='user'
+				and `pointsBalance` - ifnull((select `pointsBalance` from `tiki_object_scores`
+					where `recipientObjectId`=tos.`recipientObjectId`
+					and `recipientObjectType`='user'
+					and `date` < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL ? DAY))
+					order by id desc limit 1), 0) > 0
+				and tos.`id` = (select max(id) from `tiki_object_scores` where `recipientObjectId` = tos.`recipientObjectId` and `recipientObjectType`='user' group by `recipientObjectId`)
+				group by `recipientObjectId`";
+
+			$count = $this->getOne($query, array($score_expiry_days));
+		}
+
+		return $count;
 	}
 
 	// All event types, for administration
