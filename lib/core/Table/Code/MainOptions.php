@@ -157,7 +157,7 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		}
 		/*** end widget section ***/
 		//debug - uncomment the line below to show log of events in the browser console
-		$mo[] = 'debug: true';
+//		$mo[] = 'debug: true';
 
 		//server side sorting
 		if (parent::$sorts && parent::$ajax) {
