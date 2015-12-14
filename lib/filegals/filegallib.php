@@ -2549,6 +2549,13 @@ class FileGalLib extends TikiLib
 			$files->update(array('lastDownload' => $this->now), array('fileId' => (int) $id));
 		}
 
+		if ($prefs['feature_score'] == 'y' && $prefs['fgal_prevent_negative_score'] == 'y') {
+			$score = TikiLib::lib('score')->get_user_score($user);
+			if ($score < 0) {
+				return false;
+			}
+		}
+
 		$owner = $files->fetchOne('user', array('fileId' => (int) $id));
 
 		TikiLib::events()->trigger('tiki.file.download',
