@@ -12,7 +12,7 @@
 </p>
 {jq}
 var url = $.service('kaltura', 'upload');
-$('#more-media .button').click(function () {
+$('#more-media .btn').click(function () {
 	$('#more-media').hide();
 
 	$('#upload-container').load(url, function () {
