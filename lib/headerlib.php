@@ -1051,7 +1051,7 @@ class HeaderLib
 	 */
 	function compile_custom_less($custom_less, $themename, $themeoptionname = '', $use_cache = true) {
 
-		global $tikidomainslash, $base_url;
+		global $tikidomainslash, $tikiroot;
 
 		$hash = md5($custom_less . $themename . $themeoptionname);
 		$target = "temp/public/$tikidomainslash";
@@ -1071,16 +1071,16 @@ class HeaderLib
 
 			$options = array(
 				'compress' => true,
-				'cache_dir' => $target,
+				'cache_dir' => realpath($target),
 			);
 
 			$parser = new Less_Parser($options);
 
 			try {
 				// less.php does all the work of course
-				$parser->parseFile($theme_less_file, $base_url);
+				$parser->parseFile($theme_less_file, '../../' . $tikiroot);	// appears to need the relative path from temp/public where the CSS will be cached
 				if ($themeoption_less_file) {
-					$parser->parseFile($themeoption_less_file, $base_url);
+					$parser->parseFile($themeoption_less_file, '../../' . $tikiroot);
 				}
 				$parser->parse($custom_less);
 				$css = $parser->getCss();
