@@ -276,8 +276,8 @@ class Table_Plugin
 	 * @param null $tscolselect         //see params above
 	 * @param null $ajaxurl             //only needed if ajax will be used to pull partial record sets
 	 * @param null $totalrows           //only needed if ajax will be used to pull partial record sets
-	 * @param null $tsmathoptions       //see params above
-	 * @param null $tsmathtotals        //see params above
+	 * @param null $tstotals            //see params above
+	 * @param null $tstotaloptions      //see params above
 	 */
 	public function setSettings ($id = null, $server = 'n', $sortable = 'n', $sortList = null, $tsortcolumns = null,
 		$tsfilters = null, $tsfilteroptions = null, $tspaginate = null, $tscolselect = null, $ajaxurl = null,
