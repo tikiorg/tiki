@@ -5714,14 +5714,14 @@ class TikiLib extends TikiDb_Bridge
 	/**
 	 * @param $data
 	 * @param string $outputType
-	 * @param string $is_html
+	 * @param boolean $is_html
 	 * @param string $highlight
 	 * @param int $length
 	 * @param string $start
 	 * @param string $end
 	 * @return string
 	 */
-	function get_snippet($data, $outputType = '', $is_html='n', $highlight='', $length=240, $start='', $end='')
+	function get_snippet($data, $outputType = '', $is_html = false, $highlight='', $length=240, $start='', $end='')
 	{
 		global $prefs;
 		if ($prefs['search_parsed_snippet'] == 'y') {

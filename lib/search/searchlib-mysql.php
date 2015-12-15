@@ -280,7 +280,7 @@ class SearchLib extends TikiLib
 				$data = substr($tikilib->strip_tags($res['cache']), 0, 240);
 			}
 			else {
-				$data = $tikilib->get_snippet($res['data'], $res['outputType'], isset($res['is_html'])? $res['is_html']:'n');
+				$data = $tikilib->get_snippet($res['data'], $res['outputType'], ! empty($res['is_html']));
 			}
 
 			$r = array(
