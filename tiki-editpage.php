@@ -1370,7 +1370,7 @@ if (
 	$access->redirect($url);
 } //save
 $smarty->assign('pageAlias', $pageAlias);
-if ($prefs['feature_wiki_templates'] === 'y' && $tiki_p_use_content_templates === 'y') {
+if ($prefs['feature_wiki_templates'] === 'y') {
 	$templates = TikiLib::lib('template')->list_templates('wiki', 0, -1, 'name_asc', '');
 	$smarty->assign_by_ref('templates', $templates["data"]);
 }

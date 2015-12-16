@@ -530,9 +530,9 @@ $smarty->assign_by_ref('drafts', $drafts["data"]);
 $smarty->assign_by_ref('cant_editions', $editions["cant"]);
 $smarty->assign_by_ref('cant_drafts', $drafts["cant"]);
 $smarty->assign('url', "tiki-send_newsletters.php");
-if (!empty($tiki_p_use_content_templates) && $tiki_p_use_content_templates == 'y') {
-	$templates = TikiLib::lib('template')->list_templates('newsletters', 0, -1, 'name_asc', '');
-}
+
+$templates = TikiLib::lib('template')->list_templates('newsletters', 0, -1, 'name_asc', '');
+
 $smarty->assign_by_ref('templates', $templates["data"]);
 $tpls = $nllib->list_tpls();
 if (count($tpls) > 0) {

@@ -78,9 +78,8 @@ $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $htmlpageslib->list_html_pages($offset, $maxRecords, $sort_mode, $find);
 $smarty->assign_by_ref('cant_pages', $channels["cant"]);
 $smarty->assign_by_ref('channels', $channels["data"]);
-if ($tiki_p_use_content_templates == 'y') {
-	$templates = TikiLib::lib('template')->list_templates('html', 0, -1, 'name_asc', '');
-}
+$templates = TikiLib::lib('template')->list_templates('html', 0, -1, 'name_asc', '');
+
 $smarty->assign_by_ref('templates', $templates["data"]);
 ask_ticket('admin-html-pages');
 // disallow robots to index page:
