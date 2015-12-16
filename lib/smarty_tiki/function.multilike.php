@@ -11,7 +11,7 @@ function smarty_function_multilike( $params, $smarty )
 
 	$relationlib = TikiLib::lib("relation");
 
-	$multivalues = set_multivalues_from_pref($params['relation_prefix']);
+	$multivalues = get_multivalues_from_pref($params['relation_prefix']);
 
 	$item = array();
 	foreach ($multivalues as $mv) {
@@ -73,7 +73,7 @@ function smarty_function_multilike( $params, $smarty )
  * @param $mv
  * @return array
  */
-function set_multivalues_from_pref() {
+function get_multivalues_from_pref() {
 	global $prefs;
 	$data = (explode("\n\n",trim($prefs['user_multilike_config'])));
 	$configurations = array();
