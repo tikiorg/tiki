@@ -189,6 +189,7 @@ class TemplatesLib extends TikiLib
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
+		$categlib = TikiLib::lib('categ');
 
 		while ($res = $result->fetchRow()) {
 			$query2 = "select `section` from `tiki_content_templates_sections` where `templateId`=?";
@@ -198,6 +199,13 @@ class TemplatesLib extends TikiLib
 				$sections[] = $res2["section"];
 			}
 			$res["sections"] = $sections;
+
+			$categs = $categlib->get_object_categories('template', $res['templateId']);
+
+			$res['categories'] = [];
+			foreach ($categs as $categ) {
+				$res['categories'][$categ] = $categlib->get_category_name($categ);
+			}
 			$ret[] = $res;
 		}
 

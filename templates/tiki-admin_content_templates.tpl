@@ -28,6 +28,7 @@
 					<a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Last Modified{/tr}</a>
 				</th>
 				<th>{tr}Sections{/tr}</th>
+				<th>{tr}Categories{/tr}</th>
 				<th></th>
 			</tr>
 			{cycle values="odd,even" print=false advance=false}
@@ -48,6 +49,14 @@
 								{icon name='remove' alt="{tr}Remove section{/tr}"}
 							</a>
 						{/section}
+					</td>
+					<td class="text">
+						{if count($channels[user].categories) == 0}{tr}Uncategorized{/tr}{/if}
+						{foreach $channels[user].categories as $categId => $catName}
+							<a title="{tr}Browse{/tr}" class="link" href="{$categId|sefurl:'category'}" >
+								{tr}{$catName}{/tr}
+							</a>
+						{/foreach}
 					</td>
 					<td class="action">
 						{capture name=template_actions}
