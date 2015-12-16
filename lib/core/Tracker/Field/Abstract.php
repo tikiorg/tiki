@@ -389,11 +389,21 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 		}
 	}
 
+	/**
+	 * Get the tracker definition object
+	 *
+	 * @return \Tracker_Definition
+	 */
 	protected function getTrackerDefinition()
 	{
 		return $this->trackerDefinition;
 	}
 
+	/**
+	 * Get the item's data
+	 *
+	 * @return array
+	 */
 	protected function getItemData()
 	{
 		return $this->itemData;
