@@ -693,10 +693,10 @@
 					<h1 class="pagetitle">{tr}Enter Your Tiki{/tr}</h1>
 					<p>{tr}The installation is complete!{/tr} {tr}Your database has been configured and Tiki is ready to run.{/tr} </p>
 					{remarksbox type='tip' title="{tr}Join us!{/tr}" close="n"}
-						{tr}Tiki is an open source project, you can <a href='https://info.tiki.org/Join+the+Community' target='_blank' class="alert-link">join the community</a> and help <a href='https://info.tiki.org/Develop+Tiki' target='_blank' class="alert-link">develop Tiki</a>.{/tr}
+						{tr}Tiki is an open source project, you can <a href='https://tiki.org/Join' target='_blank' class="alert-link">join the community</a> and help <a href='https://dev.tiki.org' target='_blank' class="alert-link">develop Tiki</a>.{/tr}
 					{/remarksbox}
 					{remarksbox type='tip' title="{tr}Stay up-to-date{/tr}" close="n"}
-						{tr}Subscribe to the <a href="https://tiki.org/Newsletter" title="Subscribe" target="_blank" class="alert-link">Tiki newsletter</a> or <a href="https://info.tiki.org/tiki-articles_rss.php" title="RSS" target="_blank" class="alert-link">RSS feed</a> to learn about new releases, security updates, and community news.{/tr}
+						{tr}Subscribe to the <a href="https://tiki.org/Newsletter" title="Subscribe" target="_blank" class="alert-link">Tiki newsletter</a> or <a href="https://tiki.org/tiki-articles_rss.php" title="RSS" target="_blank" class="alert-link">RSS feed</a> to learn about new releases, security updates, and community news.{/tr}
 					{/remarksbox}
 
 					{if isset($htaccess_error) and $htaccess_error eq 'y'}
