@@ -212,7 +212,7 @@ class TemplatesLib extends TikiLib
 					$res['categories'][$categ] = $categlib->get_category_name($categ);
 				}
 
-				$res['edit'] = $perms->edit_content_templates;
+				$res['edit'] = $perms->edit_content_templates || $perms->admin_content_templates;
 				$res['remove'] = $perms->admin_content_templates;	// admin_content_templates otherwise unused
 
 				$ret[] = $res;

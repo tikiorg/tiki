@@ -263,6 +263,15 @@ if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal']=='y') {
 	$smarty->assign('parsed', $parsed);
 }
 
+// check edit/create perms
+if ($_REQUEST['templateId']) {
+	$perms = Perms::get(array('type' => 'template', 'object' => $_REQUEST['templateId']));
+	$canEdit = $perms->edit_content_templates;
+} else {
+	$canEdit = $tiki_p_admin_content_templates === 'y';	// create
+}
+$smarty->assign('canEdit', $canEdit);
+
 $smarty->assign_by_ref('channels', $channels["data"]);
 ask_ticket('admin-content-templates');
 $wikilib = TikiLib::lib('wiki');
