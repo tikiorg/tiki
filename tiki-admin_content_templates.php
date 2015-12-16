@@ -16,7 +16,6 @@ $templateslib = TikiLib::lib('template');
 
 $auto_query_args = array('templateId');
 
-$access->check_permission('tiki_p_edit_content_templates');
 //get_strings tra('Content Templates')
 
 if (!isset($_REQUEST["templateId"])) {
@@ -93,6 +92,9 @@ if (isset($_REQUEST["removesection"])) {
 }
 $smarty->assign('preview', 'n');
 if (isset($_REQUEST["preview"])) {
+
+	TikiLib::lib('access')->check_permission('edit_content_templates', 'Edit template', 'template', $_REQUEST['templateId']);
+
 	$smarty->assign('preview', 'y');
 	if (isset($_REQUEST["section_html"]) && $_REQUEST["section_html"] == 'on') {
 		$info["section_html"] = 'y';

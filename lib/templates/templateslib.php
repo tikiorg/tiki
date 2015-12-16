@@ -75,6 +75,8 @@ class TemplatesLib extends TikiLib
      */
     public function get_template($templateId, $lang = null)
 	{
+		TikiLib::lib('access')->check_permission('use_content_templates', 'Use templates', 'template', $templateId);
+
 		$query = "select * from `tiki_content_templates` where `templateId`=?";
 		$result = $this->query($query, array((int) $templateId));
 
@@ -185,29 +187,39 @@ class TemplatesLib extends TikiLib
 		$query = "select `name`,`created`,`templateId` from `tiki_content_templates` $mid order by " .
 							$this->convertSortMode($sort_mode);
 
-		$query_cant = "select count(*) from `tiki_content_templates` $mid";
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
-		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
 		$categlib = TikiLib::lib('categ');
 
 		while ($res = $result->fetchRow()) {
-			$query2 = "select `section` from `tiki_content_templates_sections` where `templateId`=?";
-			$result2 = $this->query($query2, array((int) $res["templateId"]));
-			$sections = array();
-			while ($res2 = $result2->fetchRow()) {
-				$sections[] = $res2["section"];
-			}
-			$res["sections"] = $sections;
 
-			$categs = $categlib->get_object_categories('template', $res['templateId']);
+			$perms = Perms::get(array('type' => 'template', 'object' => $res["templateId"]));
 
-			$res['categories'] = [];
-			foreach ($categs as $categ) {
-				$res['categories'][$categ] = $categlib->get_category_name($categ);
+			if ($perms->use_content_templates) {
+
+				$query2 = "select `section` from `tiki_content_templates_sections` where `templateId`=?";
+				$result2 = $this->query($query2, array((int)$res["templateId"]));
+				$sections = array();
+				while ($res2 = $result2->fetchRow()) {
+					$sections[] = $res2["section"];
+				}
+				$res["sections"] = $sections;
+
+				$categs = $categlib->get_object_categories('template', $res['templateId']);
+
+				$res['categories'] = [];
+				foreach ($categs as $categ) {
+					$res['categories'][$categ] = $categlib->get_category_name($categ);
+				}
+
+				$res['edit'] = $perms->edit_content_templates;
+				$res['remove'] = $perms->admin_content_templates;	// admin_content_templates otherwise unused
+
+				$ret[] = $res;
 			}
-			$ret[] = $res;
 		}
+
+		$cant = count($ret);
 
 		$retval = array();
 		$retval["data"] = $ret;
@@ -224,6 +236,8 @@ class TemplatesLib extends TikiLib
      */
     public function replace_template($templateId, $name, $content, $type = 'static')
 	{
+		TikiLib::lib('access')->check_permission('edit_content_templates', 'Edit template', 'template', $templateId);
+
 		$bindvars = array($content, $name, (int) $this->now, $type);
 		if ($templateId) {
 			$query = "update `tiki_content_templates` set `content`=?, `name`=?, `created`=?, `template_type`=? where `templateId`=?";
@@ -249,6 +263,8 @@ class TemplatesLib extends TikiLib
      */
     public function add_template_to_section($templateId, $section)
 	{
+		TikiLib::lib('access')->check_permission('edit_content_templates', 'Edit template', 'template', $templateId);
+
 		$this->query(
 			"delete from `tiki_content_templates_sections` where `templateId`=? and `section`=?",
 			array((int) $templateId, $section),
@@ -267,6 +283,8 @@ class TemplatesLib extends TikiLib
      */
     public function remove_template_from_section($templateId, $section)
 	{
+		TikiLib::lib('access')->check_permission('edit_content_templates', 'Edit template', 'template', $templateId);
+
 		$result = $this->query(
 			"delete from `tiki_content_templates_sections` where `templateId`=? and `section`=?",
 			array((int) $templateId, $section)
@@ -294,6 +312,8 @@ class TemplatesLib extends TikiLib
      */
     public function remove_template($templateId)
 	{
+		TikiLib::lib('access')->check_permission('admin_content_templates', 'Admin template', 'template', $templateId);
+
 		$query = "delete from `tiki_content_templates` where `templateId`=?";
 		$result = $this->query($query, array((int) $templateId));
 		$query = "delete from `tiki_content_templates_sections` where `templateId`=?";

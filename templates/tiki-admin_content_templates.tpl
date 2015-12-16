@@ -1,4 +1,4 @@
-{title help="Content+Templates"}{tr}Content templates{/tr}{/title}
+{title help='Content+Templates' url='tiki-admin_content_templates.php'}{tr}Content templates{/tr}{/title}
 
 
 {tabset}
@@ -36,18 +36,24 @@
 				<tr>
 					<td class="text">{$channels[user].templateId}</td>
 					<td class="text">
-						<a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}&cookietab=2">
+						{if $channels[user].edit}
+							<a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}&cookietab=2">
+								{$channels[user].name|escape}
+							</a>
+						{else}
 							{$channels[user].name|escape}
-						</a>
+						{/if}
 					</td>
 					<td class="date">{$channels[user].created|tiki_short_datetime}</td>
 					<td class="text">
 						{if count($channels[user].sections) == 0}{tr}Visible in no sections{/tr}{/if}
 						{section name=ix loop=$channels[user].sections}
 							{$channels[user].sections[ix]}
-							<a class="tips" title=":{tr}Delete{/tr}" class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" >
-								{icon name='remove' alt="{tr}Remove section{/tr}"}
-							</a>
+							{if $channels[user].edit}
+								<a class="tips" title=":{tr}Delete{/tr}" class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" >
+									{icon name='remove' alt="{tr}Remove section{/tr}"}
+								</a>
+							{/if}
 						{/section}
 					</td>
 					<td class="text">
@@ -59,28 +65,34 @@
 						{/foreach}
 					</td>
 					<td class="action">
-						{capture name=template_actions}
-							{strip}
-								{$libeg}<a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}&cookietab=2">
-									{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
-								</a>{$liend}
-								{$libeg}<a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" >
-									{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
-								</a>{$liend}
-							{/strip}
-						{/capture}
-						{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
-						<a
-							class="tips"
-							title="{tr}Actions{/tr}"
-							href="#"
-							{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.template_actions|escape:"javascript"|escape:"html"}{/if}
-							style="padding:0; margin:0; border:0"
-						>
-							{icon name='wrench'}
-						</a>
-						{if $js === 'n'}
-							<ul class="dropdown-menu" role="menu">{$smarty.capture.template_actions}</ul></li></ul>
+						{if $channels[user].edit or $channels[user].remove}
+							{capture name=template_actions}
+								{strip}
+									{if $channels[user].edit}
+										{$libeg}<a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}&cookietab=2">
+											{icon name='edit' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+										</a>{$liend}
+									{/if}
+									{if $channels[user].remove}
+										{$libeg}<a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" >
+											{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
+										</a>{$liend}
+									{/if}
+								{/strip}
+							{/capture}
+							{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+							<a
+								class="tips"
+								title="{tr}Actions{/tr}"
+								href="#"
+								{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.template_actions|escape:"javascript"|escape:"html"}{/if}
+								style="padding:0; margin:0; border:0"
+							>
+								{icon name='wrench'}
+							</a>
+							{if $js === 'n'}
+								<ul class="dropdown-menu" role="menu">{$smarty.capture.template_actions}</ul></li></ul>
+							{/if}
 						{/if}
 					</td>
 				</tr>
