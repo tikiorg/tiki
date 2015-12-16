@@ -101,8 +101,8 @@ class Services_Relation_Controller
 		$relations = $relationlib->get_relations_by_prefix($relation_prefix, $source_type, $source_id, $target_type, $target_id);
 
 		// If there is not an existing relation, add the relation and trigger the add relation event.
+		$relationWasSelected = false;
 		if (! empty($relations)) {
-			$relationWasSelected = false;
 			foreach ($relations as $rel) {
 				if ($rel['relation'] == $relation) {
 					//sets whether the relation was previously selected and is being toggled off
@@ -121,11 +121,12 @@ class Services_Relation_Controller
 						'relation' => $relation,
 					)
 				);
-				$relationId = null; // set the
 			}
 		}
 
-		//only adds relation if it hadn't previously been selected. If it was selected, then the user toggled it off. 
+		$relationId = null; // set the return id
+
+		//only adds relation if it hadn't previously been selected. If it was selected, then the user toggled it off.
 		if (! $relationWasSelected) {
 			$relationId = $relationlib->add_relation($relation, $source_type, $source_id, $target_type, $target_id);
 			TikiLib::events()->trigger(

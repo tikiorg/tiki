@@ -185,12 +185,12 @@ class RelationLib extends TikiDb_Bridge
 	}
 
 	/**
-	 * @param $relation
+	 * @param $relation_prefix
 	 * @param $src_type
 	 * @param $src_object
 	 * @param $target_type
 	 * @param $target_object
-	 * @return int
+	 * @return array
 	 */
 	function get_relations_by_prefix( $relation_prefix, $src_type, $src_object, $target_type, $target_object )
 	{
