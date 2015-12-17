@@ -108,7 +108,7 @@ class OIntegrate
 		$response = new OIntegrate_Response;
 		$response->contentType = $contentType;
 		$response->cacheControl = $cacheControl;
-		$response->data = $this->unserialize($contentType, $content);
+		$response->data = $this->unserialize($contentType->getMediaType(), $content);
 
 		$filter = new DeclFilter;
 		$filter->addCatchAllFilter('xss');
@@ -122,15 +122,16 @@ class OIntegrate
 
 		global $prefs;
 		// Respect cache duration asked for
-		if ( preg_match('/max-age=(\d+)/', $cacheControl, $parts) ) {
-			$expiry = time() + $parts[1];
+		$maxage = $cacheControl->getDirective('max-age');
+		if ( $maxage ) {
+			$expiry = time() + $maxage;
 
 			$cachelib->cacheItem(
 				$url,
 				serialize(array('expires' => $expiry, 'data' => $response))
 			);
 		// Unless service specifies not to cache result, apply a default cache
-		} elseif ( false !== strpos($cacheControl, 'no-cache') && $prefs['webservice_consume_defaultcache'] > 0 ) {
+		} elseif ( $cacheControl->getDirective('no-cache') !== null && $prefs['webservice_consume_defaultcache'] > 0 ) {
 			$expiry = time() + $prefs['webservice_consume_defaultcache'];
 
 			$cachelib->cacheItem($url, serialize(array('expires' => $expiry, 'data' => $response)));
@@ -140,14 +141,12 @@ class OIntegrate
 	} // }}}
 
     /**
-     * @param $type
-     * @param $data
+     * @param string $type
+     * @param string $data
      * @return array|mixed|null
      */
     function unserialize( $type, $data ) // {{{
 	{
-		$parts = explode(';', $type);
-		$type = trim($parts[0]);
 
 		if ( empty($data) ) {
 			return null;
