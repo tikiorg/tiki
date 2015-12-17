@@ -43,6 +43,11 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 						'filter' => 'url',
 						'legacy_index' => 2,
 					),
+					'cacheSeconds' => array(
+						'name' => tr('Cache time'),
+						'description' => tr('Time in seconds to cache the result for before trying again.'),
+						'filter' => 'digits',
+					),
 				),
 			),
 		);
@@ -64,7 +69,7 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 		if (!$this->getOption('service') || !$this->getOption('template')) {
 			return false;
 		}
-	
+
 		require_once 'lib/webservicelib.php';
 
 		if (!($webservice = Tiki_Webservice::getService($this->getOption('service')))  ||
@@ -72,25 +77,76 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 				return false;
 		}
 
-		$ws_params = array();
-		
-		if ( $this->getOption('params') ) {
-			parse_str($this->getOption('params'), $ws_params);
-			foreach ($ws_params as $ws_param_name => &$ws_param_value) {
-				if (preg_match('/(.*)%(.*)%(.*)/', $ws_param_value, $matches)) {
-					$ws_param_field_name = $matches[2];
-				}
-				$field = $this->getTrackerDefinition()->getFieldFromName($ws_param_field_name);
-				if ($field) {
-					$value = TikiLib::lib('trk')->get_field_value($field, $this->getItemData());
-					$ws_params[$ws_param_name] = preg_replace('/%' . $ws_param_field_name . '%/', $value, $ws_param_value);
+		$oldData = json_decode($this->getValue(), true);
+		$cacheSeconds = $this->getOption('cacheSeconds');
+		$lastRefreshed = strtotime($oldData['tiki_updated']);
+
+		if (! $cacheSeconds || TikiLib::lib('tiki')->now > $lastRefreshed + $cacheSeconds) {
+			$ws_params = array();
+			$definition = $this->getTrackerDefinition();
+
+			if ($this->getOption('params')) {
+				parse_str($this->getOption('params'), $ws_params);
+				foreach ($ws_params as $ws_param_name => &$ws_param_value) {
+					if (preg_match('/(.*)%(.*)%(.*)/', $ws_param_value, $matches)) {
+						$ws_param_field_name = $matches[2];
+
+						$field = $definition->getField($ws_param_field_name);
+						if (!$field) {
+							$field = $definition->getFieldFromName($ws_param_field_name);
+						}
+						if ($field) {
+							$value = TikiLib::lib('trk')->get_field_value($field, $this->getItemData());
+							$ws_params[$ws_param_name] = preg_replace('/%' . $ws_param_field_name . '%/', $value, $ws_param_value);
+						}
+					}
 				}
 			}
+
+			$response = $webservice->performRequest($ws_params);
+
+			$response->data['tiki_updated'] = gmdate('c');
+
+			$itemId = TikiLib::lib('trk')->replace_item(
+					$definition->getConfiguration('trackerId'),
+					$this->getItemId(),
+					['data' => [
+							[
+									'fieldId' => $this->getConfiguration('fieldId'),
+									'value' => json_encode($response->data),
+							],
+					]]
+			);
+			if (!$itemId) {
+				TikiLib::lib('errorreport')->report(tr('Error updating Webservice field %0', $this->getConfiguration('permName')));
+				// try and restore previous data
+				$response->data = json_decode($this->getValue());
+			}
+		} else {
+			$response = OIntegrate_Response::create($oldData, false);
+			unlink($template->getTemplateFile());
+			$template = $webservice->getTemplate($this->getOption('template'));
 		}
 
-		$response = $webservice->performRequest($ws_params);
+
 		$output = $template->render($response, 'html');
-					
+
 		return $output;
 	}
+
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
+	{
+		$baseKey = $this->getBaseKey();
+		$value = json_decode($this->getValue(), true);
+
+		return array(
+			$baseKey => $typeFactory->multivalue($value['result']),
+			"{$baseKey}_text" => $typeFactory->plaintext(		// ignore nested arrays and remove html for plain text
+					strip_tags(
+							implode(' ', array_filter($value['result'], 'is_string'))
+					)
+			),
+		);
+	}
+
 }
