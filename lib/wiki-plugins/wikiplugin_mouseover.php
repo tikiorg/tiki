@@ -278,7 +278,10 @@ function wikiplugin_mouseover( $data, $params )
 	}
 
 	$js = "\$('#$id-link').mouseover(function(event) {
-	\$('#$id').css('position', 'relative').css('left', $offsetx).css('top', $offsety); showJQ('#$id', '$effect', '$speed'); $closeDelayStr });";
+	var pos = $('#tiki-center').position();
+	var top = event.pageY;
+	var left = event.pageX;
+	\$('#$id').css('position', 'absolute').css('left', left + $offsetx).css('top', top + $offsety); showJQ('#$id', '$effect', '$speed'); $closeDelayStr });";
 	if ($sticky) {
 		$js .= "\$('#$id').click(function(event) { hideJQ('#$id', '$effect', '$speed'); }).css('cursor','pointer');\n";
 	} else {
