@@ -107,15 +107,13 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 
 			$response->data['tiki_updated'] = gmdate('c');
 
+			$thisField = $this->getTrackerDefinition()->getField($this->getConfiguration('fieldId'));
+			$thisField['value'] = json_encode($response->data);
+
 			$itemId = TikiLib::lib('trk')->replace_item(
 					$definition->getConfiguration('trackerId'),
 					$this->getItemId(),
-					['data' => [
-							[
-									'fieldId' => $this->getConfiguration('fieldId'),
-									'value' => json_encode($response->data),
-							],
-					]]
+					['data' => [$thisField]]
 			);
 			if (!$itemId) {
 				TikiLib::lib('errorreport')->report(tr('Error updating Webservice field %0', $this->getConfiguration('permName')));
