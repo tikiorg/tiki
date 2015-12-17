@@ -1198,7 +1198,7 @@
 		{
 			"type": "package",
 			"package": {
-				"name": "jquery/plugins/timaeago",
+				"name": "jquery/plugins/timeago",
 				"version": "1.4.3",
 				"dist": {
 					"url": "https://github.com/rmm5t/jquery-timeago/archive/v1.4.3.zip",
@@ -1465,7 +1465,7 @@
 		"jquery/plugins/superfish": "*",
 		"jquery/plugins/tablesorter": "*",
 		"jquery/plugins/tagcanvas": ">=2.8",
-		"jquery/plugins/timaeago": ">=1.4.3",
+		"jquery/plugins/timeago": ">=1.4.3",
 		"jquery/plugins/treetable": "*",
 		"jquery/plugins/sparkline": "2.1.1",
 		"jquery/plugins/zoom": "*",
