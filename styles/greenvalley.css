@@ -556,10 +556,6 @@ h3.box-title .moduletitle em {
 
 /** Tacker Filter **/
 
-.trackerfilter {
-    background: url('greenvalley/menubar-wood2.jpg') 100% 50% no-repeat;
-}
-
 .trackerfilter table {
     border: none;
 }
@@ -574,7 +570,6 @@ h3.box-title .moduletitle em {
 .trackerfilter table td {
     vertical-align: middle;
     font-size: 1.1em;
-    color: #fff;
 }
 
 .trackerfilter select {
@@ -732,51 +727,6 @@ select#viewSwitcher {
 }
 
 /***** Trackers *****/
-/** Trackerfilter **/
-
-.trackerfilter {
-    background: url('greenvalley/menubar-wood2.jpg') 100% 50% no-repeat;
-}
-
-.trackerfilter table {
-    border: none;
-}
-
-.trackerfilter table.normal tr:first-child {
-    background: none !important;
-}
-
-.trackerfilter table.normal tr:nth-child(2n+1) {
-    background: none !important;}
-
-.trackerfilter table td {
-    vertical-align: middle;
-    font-size: 1.1em;
-    color: #fff;
-}
-
-.trackerfilter select {
-    margin: 0 10px;
-    color: #cda256;
-    background-color : #42281d;
-    height: 20px;
-    font-size: 1em;
-    border: none;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    border-radius: 20px;
-    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
-    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
-    -o-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 3px rgba(0, 0, 0, 0.2) inset;
-    -webkit-background-clip: padding-box;
-    -webkit-transition: all 0.7s ease-out 0s;  /* Saf3.2+, Chrome */
-    -moz-transition: all 0.7s ease-out 0s;  /* FF4+ */
-    -ms-transition: all 0.7s ease-out 0s;  /* IE10? */
-    -o-transition: all 0.7s ease-out 0s;  /* Opera 10.5+ */
-    transition: all 0.7s ease-out 0s;
-}
 
 /***** Surveys *****/
 
