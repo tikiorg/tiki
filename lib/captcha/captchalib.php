@@ -207,7 +207,15 @@ Recaptcha.create("' . $this->captcha->getPubKey() . '",
 			$input = $_REQUEST;
 		}
 		if ($this->type == 'recaptcha' || $this->type == 'recaptcha20') {
-			return $this->captcha->isValid($input);
+			// Temporary workaround of zend/http client uses arg_separator.output for making POST request body
+			// which fails with Google recaptcha services if used with '&amp;' value
+			// should be fixed in zend/http (pull request submitted)
+			// or remove ini_get('arg_separator.output', '&amp;') we have in tiki code tiki-setup_base.php:31
+			$oldVal = ini_get('arg_separator.output');
+			ini_set('arg_separator.output', '&');
+			$result = $this->captcha->isValid($input);
+			ini_set('arg_separator.output', $oldVal);
+			return $result;
 		}	else {
 			return $this->captcha->isValid($input['captcha']);
 		}
