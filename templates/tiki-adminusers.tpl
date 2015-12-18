@@ -280,7 +280,7 @@
 														{/if}
 
 														{if $users[user].user ne 'admin'}
-															{$libeg}<a href="{service controller=user action=remove_users checked=$username offset=$offset sort_mode=$sort_mode numrows=$numrows}"  class="confirm-click">
+															{$libeg}<a href="{bootstrap_modal controller=user action=remove_users checked=$username offset=$offset sort_mode=$sort_mode numrows=$numrows}"  class="confirm-click">
 																{icon name="remove" _menu_text='y' _menu_icon='y' alt="{tr}Delete{/tr}"}
 															</a>{$liend}
 															{if $users[user].waiting eq 'a'}
