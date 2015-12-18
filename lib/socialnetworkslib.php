@@ -248,6 +248,27 @@ class SocialNetworksLib extends LogsLib
 						$user = 'fb_' . $fb_profile->id;
 					}
 					$userlib->add_user($user, $randompass, $email);
+
+					$ret = $userlib->get_usertrackerid("Registered");
+					$userTracker = $ret['usersTrackerId'];
+					$userField = $ret['usersFieldId'];
+					if ($userTracker && $userField) {
+						$definition = Tracker_Definition::get($userTracker);
+						$utilities = new Services_Tracker_Utilities();
+						$fields = array('ins_'.$userField => $user);
+						if (!empty($prefs['socialnetworks_facebook_names'])) {
+							$names = array_map('trim', explode(',', $prefs['socialnetworks_facebook_names']));
+							$fields['ins_'.$names[0]] = $fb_profile->first_name;
+							$fields['ins_'.$names[1]] = $fb_profile->last_name;
+						}
+						$utilities->insertItem($definition,
+							array(
+								'status' => '',
+								'fields' => $fields,
+							)
+						);
+					}
+
 					$this->set_user_preference($user, 'realName', $fb_profile->name);
 					if ($prefs['socialnetworks_facebook_firstloginpopup'] == 'y') {
 						$this->set_user_preference($user, 'socialnetworks_user_firstlogin', 'y');

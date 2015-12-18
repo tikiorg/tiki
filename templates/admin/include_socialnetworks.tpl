@@ -54,6 +54,7 @@
 				{preference name=socialnetworks_facebook_manage_pages}
 				{preference name=socialnetworks_facebook_sms}
 				{preference name=socialnetworks_facebook_email}
+				{preference name=socialnetworks_facebook_names}
 			</div>
 		{/tab}
 		{tab name="{tr}bit.ly{/tr}"}

@@ -110,6 +110,16 @@ function prefs_socialnetworks_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'socialnetworks_facebook_names' => array(
+			'name' => tra('First and last name tracker field IDs'),
+			'description' => tra("Comma-separated. First name field followed by last name field. eg '2,3'"),
+			'keywords' => 'social networks',
+			'type' => 'text',
+			'default' => 'n',
+			'dependencies' => array(
+				'userTracker',
+			),
+		),
 		'socialnetworks_bitly_login' => array(
 			'name' => tra('bit.ly Login'),
 			'description' => tra('Site wide login (username) for bit.ly'),
