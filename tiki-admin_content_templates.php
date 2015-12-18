@@ -64,9 +64,6 @@ if ($_REQUEST["templateId"]) {
 	} else {
 		$info["section_cms"] = 'n';
 	}
-	$cat_type = 'template';
-	$cat_objid = $_REQUEST['templateId'];
-	include_once ("categorize_list.php");
 } else {
 	$info = array();
 	$info["name"] = '';
@@ -80,6 +77,9 @@ if ($_REQUEST["templateId"]) {
 	$info["section_newsletters"] = 'n';
 	$info["section_event"] = 'n';
 }
+$cat_type = 'template';
+$cat_objid = $_REQUEST['templateId'];
+include_once ("categorize_list.php");
 
 $smarty->assign_by_ref('info', $info);
 if (isset($_REQUEST["remove"])) {
