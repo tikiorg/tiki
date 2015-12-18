@@ -36,80 +36,10 @@ $smarty->assign('userwatch', $userwatch);
 // Upload avatar is processed here
 if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
 	check_ticket('pick-avatar');
-	$type = $_FILES['userfile1']['type'];
-	$size = $_FILES['userfile1']['size'];
 	$name = $_FILES['userfile1']['name'];
-	$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
-	$data = fread($fp, filesize($_FILES['userfile1']['tmp_name']));
-	fclose($fp);
-	
-	// Get image parameters
-	list($iwidth, $iheight, $itype, $iattr) = getimagesize($_FILES['userfile1']['tmp_name']);	
-	$itype = image_type_to_mime_type($itype);
-	// Store full-size file gallery image if that is required
-	if ($prefs["user_store_file_gallery_picture"] == 'y') {
-		$fgImageId = $userprefslib->set_file_gallery_image($userwatch, $name, $size, $itype, $data);
-	}
-	// Store small avatar
-	if ($prefs['user_small_avatar_size']) {
-		$avsize = $prefs['user_small_avatar_size'];
-	} else {
-		$avsize = "45"; //default
-	}
-	if (($iwidth == $avsize and $iheight <= $avsize) || ($iwidth <= $avsize and $iheight == $avsize)) {
-		$userprefslib->set_user_avatar($userwatch, 'u', '', $name, $size, $itype, $data);
-	} else {
-		if (function_exists("ImageCreateFromString") && (!strstr($type, "gif"))) {
-			$img = imagecreatefromstring($data);
-			$size_x = imagesx($img);
-			$size_y = imagesy($img);
-			/* if the square crop is set, crop the image before resizing */
-			if ($prefs['user_small_avatar_square_crop']){
-				$crop_size = min ($size_x, $size_y);
-				$offset_x = ($size_x - $crop_size)/2;
-				$offset_y = ($size_y - $crop_size)/2;
-				$crop_array = array('x' =>$offset_x , 'y' => $offset_y, 'width' => $crop_size, 'height'=> $crop_size);
-				$img = imagecrop($img,$crop_array);
-				$size_x = $size_y = $crop_size;
-			}
-			if ($size_x > $size_y) $tscale = ((int)$size_x / $avsize);
-			else $tscale = ((int)$size_y / $avsize);
-			$tw = ((int)($size_x / $tscale));
-			$ty = ((int)($size_y / $tscale));
-			if ($tw > $size_x) $tw = $size_x;
-			if ($ty > $size_y) $ty = $size_y;
-			if (chkgd2()) {
-				$t = imagecreatetruecolor($tw, $ty);
-				imagecopyresampled($t, $img, 0, 0, 0, 0, $tw, $ty, $size_x, $size_y);
-			} else {
-				$t = imagecreate($tw, $ty);
-				$imagegallib->ImageCopyResampleBicubic($t, $img, 0, 0, 0, 0, $tw, $ty, $size_x, $size_y);
-			}
-			// CHECK IF THIS TEMP IS WRITEABLE OR CHANGE THE PATH TO A WRITEABLE DIRECTORY
-			$tmpfname = tempnam($prefs['tmpDir'], "TMPIMG");
-			imagejpeg($t, $tmpfname);
-			// Now read the information
-			$fp = fopen($tmpfname, "rb");
-			$t_data = fread($fp, filesize($tmpfname));
-			fclose($fp);
-			unlink($tmpfname);
-			$t_type = 'image/jpeg';
-			$userprefslib->set_user_avatar($userwatch, 'u', '', $name, $size, $t_type, $t_data);
-		} else {
-			$userprefslib->set_user_avatar($userwatch, 'u', '', $name, $size, $type, $data);
-		}
-	}
-	
-	global $tikilib ,$user;
-	$userid = $tikilib->get_user_id($user);
-	TikiLib::events()->trigger('tiki.user.avatar',
-		array(
-			'type' => 'user',
-			'object' => $user,
-			'user' => $user,
-		)
-	);
 
+	$avatarlib = TikiLib::lib('avatar');
+	$avatarlib->set_avatar_from_url($_FILES['userfile1']['tmp_name'], $userwatch, $name);
 
 	/* redirect to prevent re-submit on page reload */
 	if ($tiki_p_admin == 'y' && $user !== $userwatch) {

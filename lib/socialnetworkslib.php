@@ -221,7 +221,13 @@ class SocialNetworksLib extends LogsLib
 				// Returned string may have other var like expiry
 				$access_token = substr($access_token, 0, $endoftoken);
 			}
-			$fb_profile = json_decode($this->facebookGraph('', 'me', array('access_token' => $access_token), false, 'GET'));
+			$fields = array('id', 'name', 'first_name', 'last_name');
+
+			if ($prefs['socialnetworks_facebook_email'] == 'y') {
+				$fields[] = 'email';
+			}
+
+			$fb_profile = json_decode($this->facebookGraph('', 'me', array('fields' => implode(',', $fields),'access_token' => $access_token), false, 'GET'));
 			if (empty($fb_profile->id)) {
 				return false;
 			}
@@ -245,6 +251,11 @@ class SocialNetworksLib extends LogsLib
 					$this->set_user_preference($user, 'realName', $fb_profile->name);
 					if ($prefs['socialnetworks_facebook_firstloginpopup'] == 'y') {
 						$this->set_user_preference($user, 'socialnetworks_user_firstlogin', 'y');
+					}
+					if ($prefs['feature_userPreferences'] == 'y') {
+						$fb_avatar = json_decode($this->facebookGraph('', 'me/picture', array('type' => 'square', 'width' => '480', 'redirect' => '0','access_token' => $access_token), false, 'GET'));
+						$avatarlib = TikiLib::lib('avatar');
+						$avatarlib->set_avatar_from_url($fb_avatar->data->url, $user);
 					}
 				} else {
 					$smarty = TikiLib::lib('smarty');
