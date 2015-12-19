@@ -222,7 +222,7 @@
 						{if $prefs.feature_contribution eq 'y'}<th>{tr}Contribution{/tr}</th>{/if}
 						{if $prefs.feature_contribution eq 'y' and $prefs.feature_contributor_wiki eq 'y'}<th>{tr}Contributors{/tr}</th>{/if}
 						<th>{tr}Version{/tr}</th>
-						<th>{icon name="pencil" iclass="tips" ititle=':{tr}HTML or WYSIWYG{/tr}'}</th>
+						<th>{icon name="html" iclass="tips" ititle='{tr}HTML allowed{/tr}:{tr}HTML syntax is allowed either by page setting or use of the WYSIWIG editor{/tr}'}</th>
 						<th></th>
 						{if $prefs.default_wiki_diff_style != "old" and $history}
 							<th colspan="2">
@@ -274,10 +274,8 @@
 								{/if}
 							</td>
 							<td class="button_container">
-								{if $info.is_html}
-									{icon name='html' iclass='tips' ititle='HTML'}
-								{elseif $info.wysiwyg eq "y"}
-									{icon name='wysiwyg' iclass='tips' ititle=':{tr}Wiki Wysiwyg{/tr}'}
+								{if $info.is_html || $info.wysiwyg eq "y"}
+									{icon name='html' iclass='tips' ititle=':{tr}HTML allowed{/tr}'}
 								{/if}
 							</td>
 							<td class="button_container" style="white-space: nowrap">
@@ -371,7 +369,7 @@
 							</td>
 							<td class="button_container">
 								{if $element.is_html eq "1"}
-									{icon name='html' iclass='tips' ititle='HTML'}
+									{icon name='html' iclass='tips' ititle=':{tr}HTML allowed{/tr}'}
 								{/if}
 							</td>
 							<td class="button_container" style="white-space: nowrap">
