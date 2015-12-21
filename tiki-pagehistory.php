@@ -28,6 +28,7 @@ if (!isset($_REQUEST["page"])) {
 	$smarty->assign_by_ref('page', $_REQUEST["page"]);
 }
 
+$real_compare = !empty($_REQUEST['compare']);
 $auto_query_args = array('page', 'oldver', 'newver', 'show_all_versions');
 foreach ($auto_query_args as $key => $value ) {
 	if(isset($_GET[$value])){
@@ -74,9 +75,9 @@ if (isset($_REQUEST['preview'], $_REQUEST['flaggedrev'], $_REQUEST['page']) && $
 $smarty->assign_by_ref('info', $info);
 // If the page doesn't exist then display an error
 //check_page_exits($page);
-if (isset($_REQUEST["delete"]) && isset($_REQUEST["hist"]) && $info["flag"] != 'L') {
+if (isset($_REQUEST["confirmAction"]) && $_REQUEST["confirmAction"] === 'delete' && isset($_REQUEST["checked"]) && $info["flag"] != 'L') {
 	check_ticket('page-history');
-	foreach (array_keys($_REQUEST["hist"]) as $version) {
+	foreach ($_REQUEST["checked"] as $version) {
 		$histlib->remove_version($_REQUEST["page"], $version);
 	}
 }
@@ -90,7 +91,9 @@ if ($prefs['feature_contribution'] == 'y') {
 	}
 }
 
-$paginate = (isset($_REQUEST['paginate']) && $_REQUEST['paginate'] == 'on') || !isset($_REQUEST['diff_style']);
+$paginate = !isset($_REQUEST['source']) && !isset($_REQUEST['source_idx'])  && !$real_compare
+		&& !isset($_REQUEST['bothver_idx']) && ((isset($_REQUEST['paginate']) && $_REQUEST['paginate'] == 'on')
+		|| !isset($_REQUEST['paginate']));
 $smarty->assign('paginate', $paginate);
 
 if (isset($_REQUEST['history_offset']) && $paginate) {
