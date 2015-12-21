@@ -320,7 +320,7 @@ class ScoreLib extends TikiLib
 		return;
 	}
 
-	function table()
+	function table($tableName, $autoIncrement = true)
 	{
 		return TikiDb::get()->table('tiki_object_scores');
 	}
