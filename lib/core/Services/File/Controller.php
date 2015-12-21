@@ -42,6 +42,7 @@ class Services_File_Controller
 		$asuser = $input->user->text();
 
 		if (isset($_FILES['data'])) {
+			// used by $this->action_upload_multiple and file gallery Files fields (possibly others)
 			if (is_uploaded_file($_FILES['data']['tmp_name'])) {
 				$file = new JitFilter($_FILES['data']);
 				$name = $file->name->text();
@@ -82,6 +83,96 @@ class Services_File_Controller
 			'galleryId' => $gal_info['galleryId'],
 			'md5sum' => md5($data),
 		);
+	}
+
+	/**
+	 * Uploads several files at once, currently from jquery_upload when file_galleries_use_jquery_upload pref is enabled
+	 *
+	 * @param $input
+	 * @return array
+	 * @throws Services_Exception
+	 * @throws Services_Exception_NotAvailable
+	 */
+	function action_upload_multiple($input)
+	{
+		global $user;
+		$filegallib = TikiLib::lib('filegal');
+		$errorreportlib = TikiLib::lib('errorreport');
+		$output = ['files' => []];
+
+		if (isset($_FILES['files']) && is_array($_FILES['files']['tmp_name'])) {
+
+			// a few other params that are still arrays but shouldn't be
+			$input->offsetSet('galleryId', $input->galleryId->asArray()[0]);
+			$input->offsetSet('hit_limit', $input->hit_limit->asArray()[0]);
+			$input->offsetSet('isbatch', $input->isbatch->asArray()[0]);
+			$input->offsetSet('deleteAfter', $input->deleteAfter->asArray()[0]);
+			$input->offsetSet('author', $input->author->asArray()[0]);
+			$input->offsetSet('user', $input->user->asArray()[0]);
+			$input->offsetSet('listtoalert', $input->listtoalert->asArray()[0]);
+
+			for ($i = 0; $i < count($_FILES['files']['tmp_name']); $i++) {
+				if (is_uploaded_file($_FILES['files']['tmp_name'][$i])) {
+					$_FILES['data']['name'] = $_FILES['files']['name'][$i];
+					$_FILES['data']['size'] = $_FILES['files']['size'][$i];
+					$_FILES['data']['type'] = $_FILES['files']['type'][$i];
+					$_FILES['data']['tmp_name'] = $_FILES['files']['tmp_name'][$i];
+
+					// do the actual upload
+					$file = $this->action_upload($input);
+
+					if (!empty($file['fileId'])) {
+						$file['info'] =  $filegallib->get_file_info($file['fileId']);
+						// when stored in the database the file contents is here and should not be sent back to the client
+						$file['info']['data'] = null;
+						$file['syntax'] = $filegallib->getWikiSyntax($file['galleryId'], $file['info']);
+					}
+
+					if ($input->isbatch->word() && stripos($input->type->text(), 'zip') !== false) {
+						$errors = [];
+						$perms = Perms::get(['type' => 'file', 'object' => $file['fileId']]);
+						if ($perms->batch_upload_files) {
+							try {
+								$filegallib->process_batch_file_upload(
+									$file['galleryId'],
+									$_FILES['files']['tmp_name'][$i],
+									$user,
+									'',
+									$errors
+								);
+							} catch (Exception $e) {
+								$errorreportlib->report($e->getMessage());
+							}
+							if ($errors) {
+								foreach ($errors as $error) {
+									$errorreportlib->report($error);
+								}
+							} else {
+								$file['syntax'] = tr('Batch file processed: "%0"', $file['name']);	// cheeky?
+							}
+						} else {
+							$errorreportlib->report(tra('No permission to upload zipped file packages'));
+						}
+					}
+
+
+					$output['files'][] = $file;
+				} else {
+					throw new Services_Exception_NotAvailable(tr('File could not be uploaded.'));
+				}
+			}
+
+			if ($input->autoupload->word()) {
+				TikiLib::lib('user')->set_user_preference($user, 'filegals_autoupload', 'y');
+			} else {
+				TikiLib::lib('user')->set_user_preference($user, 'filegals_autoupload', 'n');
+			}
+		} else {
+			throw new Services_Exception_NotAvailable(tr('File could not be uploaded.'));
+		}
+
+		return $output;
+
 	}
 
 	function action_browse($input)

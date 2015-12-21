@@ -50,13 +50,14 @@ function smarty_function_html_select_duration($params, $smarty)
 	} else {
 		$selected = 604800;
 	}
-	$html_result .= '<input name="'.$params['prefix'].'" type="text" size="5" value="'.$params['default'].'" />';
+	$html_result .= '<div class="col-sm-1">';
+	$html_result .= '<input name="'.$params['prefix'].'" type="text" size="5" value="'.$params['default'].'" class="form-control"></div>';
 	if (strstr($params['prefix'], '[]')) {
 		$prefix = str_replace('[]', '_unit[]', $params['prefix']);
 	} else {
 		$prefix = $params['prefix'].'_unit';
 	}
-	$html_result .= '<select name="'.$prefix.'">';
+	$html_result .= '<div class="col-sm-2"><select name="'.$prefix.'" class="form-control">';
 
 	$html_result .= smarty_function_html_options(
 		array(
@@ -67,7 +68,7 @@ function smarty_function_html_select_duration($params, $smarty)
 		$smarty
 	);
 
-	$html_result .= '</select>';
+	$html_result .= '</select></div>';
 	return $html_result;
 }
 
