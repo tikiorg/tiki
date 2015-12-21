@@ -1077,10 +1077,15 @@ class HeaderLib
 			$parser = new Less_Parser($options);
 
 			try {
+
+				$nesting = count(array_filter(explode(DIRECTORY_SEPARATOR, $tikiroot)));
+				$depth = count(array_filter(explode(DIRECTORY_SEPARATOR, $target)));
+				$offset = $nesting ? str_repeat('../', $depth) : '';
+
 				// less.php does all the work of course
-				$parser->parseFile($theme_less_file, '../../' . $tikiroot);	// appears to need the relative path from temp/public where the CSS will be cached
+				$parser->parseFile($theme_less_file, $offset . $tikiroot);	// appears to need the relative path from temp/public where the CSS will be cached
 				if ($themeoption_less_file) {
-					$parser->parseFile($themeoption_less_file, '../../' . $tikiroot);
+					$parser->parseFile($themeoption_less_file, $offset . $tikiroot);
 				}
 				$parser->parse($custom_less);
 				$css = $parser->getCss();
