@@ -139,7 +139,7 @@
 						{tr}None{/tr}
 					{else}
 						<ul>
-						{foreach from=$disabled item=plugin}
+						{foreach from="{$disabled}" item=plugin}
 							<li>{$plugin|lower|escape}</li>
 						{/foreach}
 						</ul>
