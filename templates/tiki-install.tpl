@@ -553,7 +553,7 @@
 								<legend>{tr}General{/tr} <a href="https://doc.tiki.org/general+admin" target="_blank" title="{tr}Help{/tr}">{icon name="help"}</a></legend>
 								<div style="padding:5px; clear:both">
 									<label for="browsertitle">{tr}Browser title:{/tr}</label>
-									<div style="margin-left:1em"><input class="form-control" type="text" size="40" name="browsertitle" id="browsertitle" onclick="if (this.value=='{tr}My Tiki{/tr}') this.value='';" onfocus="origval=this.value;" onblur="if (this.value=='') this.value=origval;" value="{if $prefs.browsertitle eq ''}{tr}My Tiki{/tr}{else}{$prefs.browsertitle|escape}{/if}">
+									<div style="margin-left:1em"><input class="form-control" type="text" size="40" name="browsertitle" id="browsertitle" onclick="if (this.value=="{tr}My Tiki{/tr}") this.value='';" onfocus="origval=this.value;" onblur="if (this.value=='') this.value=origval;" value="{if $prefs.browsertitle eq ''}{tr}My Tiki{/tr}{else}{$prefs.browsertitle|escape}{/if}">
 										<br><em>{tr}This will appear in the browser title bar.{/tr}</em>
 									</div>
 								</div>
@@ -745,7 +745,7 @@
 						{if $double_encode_fix_attempted eq 'y'}
 							<p>{tr}You can now access the site normally. Report back any issues that you might find (if any) to the Tiki forums or bug tracker{/tr}</p>
 						{elseif not isset($legacy_collation)}
-							<form method="post" action="#" onsubmit="return confirm('{tr}Are you sure you want to attempt to fix the encoding of your entire database?{/tr}');" style="padding-top: 100px;">
+							<form method="post" action="#" onsubmit="return confirm("{tr}Are you sure you want to attempt to fix the encoding of your entire database?{/tr}");" style="padding-top: 100px;">
 								<fieldset>
 									<legend>{tr}Upgrading and running into encoding issues?{/tr}</legend>
 									<p>{tr}We can try to fix it, but <strong>make sure you have backups, and can restore them</strong>.{/tr}</p>

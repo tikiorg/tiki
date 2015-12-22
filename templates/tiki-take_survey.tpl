@@ -123,9 +123,9 @@
 	</div>
 	<div class="navbar">
 		{if $pageCount gt 0}
-				{button _text='{tr}Previous{/tr}' _class='btn-sm btn-prev'}
+				{button _text="{tr}Previous{/tr}" _class='btn-sm btn-prev'}
 				{tr}Page{/tr} <span class="pageNum">0</span> / <span class="pageCount">0</span>
-				{button _text='{tr}Next{/tr}' _class='btn-sm btn-next'}
+				{button _text="{tr}Next{/tr}" _class='btn-sm btn-next'}
 		{/if}
 		<input type="submit" class="btn btn-default btn-sm submit" value="{tr}Send Answers{/tr}" name="ans">
 	</div>

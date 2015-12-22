@@ -296,7 +296,7 @@
 					<tr>
 						<td>{tr}Reset remark boxes visibility{/tr}</td>
 						<td>
-							{button _text='{tr}Reset{/tr}' _onclick="if (confirm('{tr}This will reset the visibility of all the tips, notices and warning remarks boxes you have closed.{/tr}')) {ldelim}deleteCookie('rbox');{rdelim}return false;"}
+							{button _text="{tr}Reset{/tr}" _onclick="if (confirm('{tr}This will reset the visibility of all the tips, notices and warning remarks boxes you have closed.{/tr}')) {ldelim}deleteCookie('rbox');{rdelim}return false;"}
 						</td>
 					</tr>
 

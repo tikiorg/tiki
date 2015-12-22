@@ -23,7 +23,7 @@
 
 {tabset name="admin_rssmodules"}
 
-	{tab name='{tr}External Feeds{/tr}'}
+	{tab name="{tr}External Feeds{/tr}"}
 		<h2>{tr}External Feeds{/tr}</h2>
 		<div align="center">
 			{if $channels or ($find ne '')}

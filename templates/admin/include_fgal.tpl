@@ -302,7 +302,7 @@
 					{preference name='fgal_viewerjs_uri'}
 					{if $viewerjs_err}
 						<div class="col-sm-8 pull-right">
-							{remarksbox type='errors' title='{tr}Warning{/tr}'}{$viewerjs_err}{/remarksbox}
+							{remarksbox type='errors' title="{tr}Warning{/tr}"}{$viewerjs_err}{/remarksbox}
 						</div>
 					{/if}
 				</div>

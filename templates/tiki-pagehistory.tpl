@@ -130,7 +130,7 @@
 				<div class="col-sm-6 pull-left" style="margin-bottom: 10px">
 					<div class="input-group input-group-sm">
 						<span class="input-group-addon">
-							{icon name='admin_i18n' class='tips' title=':{tr}Translation{/tr}'}
+							{icon name='admin_i18n' class='tips' title=':{tr}Translation{/tr}"}
 						</span>
 						<select name="tra_lang" class="form-control">
 							{section name=ix loop=$languages}
@@ -143,9 +143,9 @@
 						<div class="input-group-btn">
 							{if $show_translation_history}
 								<input type="hidden" name="show_translation_history" value="1">
-								{button show_translation_history=0 _text='{tr}Hide translation history{/tr}' _auto_args="*" _class="btn btn-default btn-sm"}
+								{button show_translation_history=0 _text="{tr}Hide translation history{/tr}" _auto_args="*" _class="btn btn-default btn-sm"}
 							{else}
-								{button show_translation_history=1 _text='{tr}Show translation history{/tr}' _auto_args="*" _class="btn btn-default btn-sm"}
+								{button show_translation_history=1 _text="{tr}Show translation history{/tr}" _auto_args="*" _class="btn btn-default btn-sm"}
 							{/if}
 						</div>
 					</div>
@@ -278,7 +278,7 @@
 							{tr}Version{/tr}
 						</th>
 						<th>
-							{icon name="html" iclass="tips" ititle='{tr}HTML allowed{/tr}:{tr}HTML syntax is allowed either by page setting or use of the WYSIWIG editor{/tr}'}
+							{icon name="html" iclass="tips" ititle="{tr}HTML allowed{/tr}:{tr}HTML syntax is allowed either by page setting or use of the WYSIWIG editor{/tr}"}
 						</th>
 						<th></th>
 						{if $prefs.default_wiki_diff_style != "old" and $history}
@@ -332,7 +332,7 @@
 							</td>
 							<td class="button_container">
 								{if $info.is_html || $info.wysiwyg eq "y"}
-									{icon name='html' iclass='tips' ititle=':{tr}HTML allowed{/tr}'}
+									{icon name='html' iclass='tips' ititle=':{tr}HTML allowed{/tr}"}
 								{/if}
 							</td>
 							<td class="button_container" style="white-space: nowrap">
@@ -428,7 +428,7 @@
 							</td>
 							<td class="button_container">
 								{if $element.is_html eq "1"}
-									{icon name='html' iclass='tips' ititle=':{tr}HTML allowed{/tr}'}
+									{icon name='html' iclass='tips' ititle=':{tr}HTML allowed{/tr}"}
 								{/if}
 							</td>
 							<td class="button_container" style="white-space: nowrap">

@@ -31,7 +31,7 @@
 				{/if}
 				{if $prefs.calendar_fullcalendar neq 'y' or not $edit}
 					{if $prefs.calendar_export_item == 'y' and $tiki_p_view_calendar eq 'y'}
-						{button href='tiki-calendar_export_ical.php? export=y&calendarItem='|cat:$id _icon_name="export" _text='{tr}Export Event as iCal{/tr}'}
+						{button href='tiki-calendar_export_ical.php? export=y&calendarItem='|cat:$id _icon_name="export" _text="{tr}Export Event as iCal{/tr}'}
 					{/if}
 				{/if}
 			</div>
@@ -865,7 +865,7 @@ $(".end.time select, #end").change(function () {
 					{/if}
 					{if $prefs.calendar_fullcalendar eq 'y'}
 						{if $prefs.calendar_export_item == 'y'}
-							{button href='tiki-calendar_export_ical.php? export=y&calendarItem='|cat:$id _text='{tr}Export Event as iCal{/tr}'}
+							{button href='tiki-calendar_export_ical.php? export=y&calendarItem='|cat:$id _text="{tr}Export Event as iCal{/tr}'}
 						{/if}
 					{/if}
 					<input type="submit" class="btn btn-default" onclick="needToConfirm=false;document.location='{$referer|escape:'html'}';return false;" value="{tr}Cancel{/tr}">

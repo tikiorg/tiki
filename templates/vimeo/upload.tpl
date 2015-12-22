@@ -6,12 +6,12 @@
 
 {block name="content"}
 {if $errMsg}
-	{remarksbox title='{tr}Vimeo Setup Error{/tr}' type='error'}
+	{remarksbox title="{tr}Vimeo Setup Error{/tr}" type='error'}
 		<p>{$errMsg}</p>
 	{/remarksbox}
 	{$disabled=true}
 {else}
-	{remarksbox title='{tr}Vimeo Info{/tr}' type='info'}
+	{remarksbox title="{tr}Vimeo Info{/tr}" type='info'}
 		<p>{tr _0=$availableMB}Available space: %0 megabytes{/tr}</p>
 		{if $availableSD eq '0'}<p>{tr}No standard definition uploads available currently{/tr}</p>{/if}
 		{if $availableHD eq '0'}<p>{tr}No high definition uploads available currently{/tr}</p>{/if}
