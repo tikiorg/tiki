@@ -65,11 +65,11 @@ function smarty_function_multilike( $params, $smarty )
 		$smarty->assign("show_option_totals", true);
 	}
 
-	if(!empty($params['showPoints']) && $params['showPoints'] != 'n') {
+	if(!empty($params['showPoints']) && strtolower($params['showPoints']) != 'n') {
 		$smarty->assign("show_points", true);
 	}
 
-	if($params['showLikes'] == 'n') {
+	if(!empty($params['showLikes']) && strtolower($params['showLikes']) == 'n') {
 		$smarty->assign("show_likes", false);
 	} else {
 		$smarty->assign("show_likes", true);
@@ -81,7 +81,7 @@ function smarty_function_multilike( $params, $smarty )
 		$smarty->assign("choice_label", "I found this:");
 	}
 
-	if(!empty($params['orientation']) && $params['orientation'] == 'vertical') {
+	if(!empty($params['orientation']) && strtolower($params['orientation']) == 'vertical') {
 		$smarty->assign("orientation", 'vertical');
 	} else {
 		$smarty->assign("orientation", 'horizontal');
