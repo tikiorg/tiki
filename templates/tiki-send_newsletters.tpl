@@ -222,7 +222,7 @@
 												</option>
 											{/section}
 										</select>
-										{button _text='{tr}Admin templates{/tr}' href='tiki-admin_content_templates.php' _target='blank'}
+										{button _text="{tr}Admin templates{/tr}" href='tiki-admin_content_templates.php' _target='blank'}
 									</td>
 								</tr>
 							{/if}

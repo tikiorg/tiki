@@ -124,7 +124,7 @@
 										{if !$active}
 											{self_link _icon_name='star-half' current=$pubAccounts[ixp].accountId}{tr}Activate{/tr}{/self_link}
 										{else}
-											{icon name='star' iclass='tips' ititle=':{tr}This is the active account.{/tr}'}
+											{icon name='star' iclass='tips' ititle=":{tr}This is the active account.{/tr}"}
 										{/if}
 									</td>
 									<td class="username">

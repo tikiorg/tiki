@@ -199,7 +199,7 @@
 						{if $prefs.feature_contribution eq 'y'}<th>{tr}Contribution{/tr}</th>{/if}
 						{if $prefs.feature_contribution eq 'y' and $prefs.feature_contributor_wiki eq 'y'}<th>{tr}Contributors{/tr}</th>{/if}
 						<th>{tr}Version{/tr}</th>
-						<th>{icon name="pencil" iclass="tips" ititle=':{tr}HTML or WYSIWYG{/tr}'}</th>
+						<th>{icon name="pencil" iclass="tips" ititle=":{tr}HTML or WYSIWYG{/tr}"}</th>
 						<th>{tr}Action{/tr}</th>
 						{if $prefs.default_wiki_diff_style != "old" and $history}
 							<th colspan="2">
@@ -254,13 +254,13 @@
 								{if $info.is_html}
 									{icon name='html' iclass='tips' ititle='HTML'}
 								{elseif $info.wysiwyg eq "y"}
-									{icon name='wysiwyg' iclass='tips' ititle=':{tr}Wiki Wysiwyg{/tr}'}
+									{icon name='wysiwyg' iclass='tips' ititle=":{tr}Wiki Wysiwyg{/tr}"}
 								{/if}
 							</td>
 							<td class="button_container" style="white-space: nowrap">
-								{self_link page=$page preview=$info.version _title=':{tr}View{/tr}' _class="tips" _icon_name="view"}v{/self_link}
+								{self_link page=$page preview=$info.version _title=":{tr}View{/tr}" _class="tips" _icon_name="view"}v{/self_link}
 							{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
-								{self_link page=$page source=$info.version _title=':{tr}Source{/tr}' _class="tips" _icon_name="code"}{/self_link}
+								{self_link page=$page source=$info.version _title=":{tr}Source{/tr}" _class="tips" _icon_name="code"}{/self_link}
 							{/if}
 							</td>
 							{if $prefs.default_wiki_diff_style ne "old" and $history}
@@ -331,16 +331,16 @@
 								{/if}
 							</td>
 							<td class="button_container" style="white-space: nowrap">
-								{self_link page=$page preview=$element.version _title=':{tr}View{/tr}' _class="tips" _icon_name="view"}{/self_link}
+								{self_link page=$page preview=$element.version _title=":{tr}View{/tr}" _class="tips" _icon_name="view"}{/self_link}
 								{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}
-									{self_link page=$page source=$element.version _title=':{tr}Source{/tr}' _class="tips" _icon_name="code"}{/self_link}
+									{self_link page=$page source=$element.version _title=":{tr}Source{/tr}" _class="tips" _icon_name="code"}{/self_link}
 								{/if}
 								{if $prefs.default_wiki_diff_style eq "old"}
-									&nbsp;{self_link page=$page diff2=$element.version diff_style="sideview" _title='{tr}Compare{/tr}'}c{/self_link}
-									&nbsp;{self_link page=$page diff2=$element.version diff_style="unidiff" _title='{tr}Diff{/tr}'}d{/self_link}
+									&nbsp;{self_link page=$page diff2=$element.version diff_style="sideview" _title="{tr}Compare{/tr}"}c{/self_link}
+									&nbsp;{self_link page=$page diff2=$element.version diff_style="unidiff" _title="{tr}Diff{/tr}"}d{/self_link}
 								{/if}
 								{if $tiki_p_rollback eq 'y' && $lock neq true}
-									{self_link _script="tiki-rollback.php" page=$page version=$element.version _title=':{tr}Rollback{/tr}' _class="tips" _icon_name="back"}{/self_link}
+									{self_link _script="tiki-rollback.php" page=$page version=$element.version _title=":{tr}Rollback{/tr}" _class="tips" _icon_name="back"}{/self_link}
 								{/if}
 							</td>
 							{if $prefs.default_wiki_diff_style ne "old"}

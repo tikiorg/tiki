@@ -48,14 +48,14 @@
 				<td><input name='Taxable[]' class='InvoiceTaxable' type='checkbox' value='y' {if $invoiceItem.Taxable eq 'y'} checked='true' {/if}></td>
 				<td><input name='Amount[]' class='InvoiceAmount' type='text' value='{$invoiceItem.Amount}'></td>
 				<td>
-					<input type='button' class='DeleteItem' value='{tr}Delete{/tr}'>
+					<input type='button' class='DeleteItem' value="{tr}Delete{/tr}">
 				</td>
 			</tr>
 		{/foreach}
 
 		<tr>
 			<td colspan='4'>
-				<input type='button' value='{tr}New Item{/tr}' id='InvoiceNewItem'>
+				<input type='button' value="{tr}New Item{/tr}" id='InvoiceNewItem'>
 			</td>
 		</tr>
 

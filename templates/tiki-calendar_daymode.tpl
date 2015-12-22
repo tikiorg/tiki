@@ -36,7 +36,7 @@
 											href="tiki-calendar_edit_item.php?viewcalitemId={$event.calitemId}"
 										{/if}
 									{/if}
-							   title='{tr}Details{/tr}'>{icon name='info'}
+							   title="{tr}Details{/tr}">{icon name='info'}
 							</a>
 						</span>
 					{if $myurl eq "tiki-action_calendar.php"}

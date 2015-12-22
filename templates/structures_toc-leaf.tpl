@@ -23,7 +23,7 @@
 							{capture assign=title}{tr _0=$structure_tree.user}locked by %0{/tr}{/capture}
 							{icon name='lock' alt="{tr}Locked{/tr}" title=$title}
 						{else}
-							{self_link _script='tiki-editpage.php' page=$structure_tree.pageName _class='tips' _title=':{tr}Edit page{/tr}'}
+							{self_link _script='tiki-editpage.php' page=$structure_tree.pageName _class='tips' _title=":{tr}Edit page{/tr}"}
 								{icon name="edit"}
 							{/self_link}
 						{/if}

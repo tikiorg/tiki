@@ -457,7 +457,7 @@
 			{/if}
 			<div class="form-group">
 				{tr}Reset remark boxes visibility{/tr}&nbsp;&nbsp;
-				{button _text='{tr}Reset{/tr}' _onclick="if (confirm('{tr}This will reset the visibility of all the tips, notices and warning remarks boxes you have closed.{/tr}')) {ldelim}deleteCookie('rbox');{rdelim}return false;"}
+				{button _text="{tr}Reset{/tr}" _onclick="if (confirm('{tr}This will reset the visibility of all the tips, notices and warning remarks boxes you have closed.{/tr}')) {ldelim}deleteCookie('rbox');{rdelim}return false;"}
 			</div>
 
 			<div><input type="submit" class="btn btn-primary" name="new_prefs" value="{tr}Save changes{/tr}"></div>
