@@ -144,7 +144,7 @@
 		{assign var=tabaddeditgroup_admgrp value="{tr}Add a New Group{/tr}"}
 	{/if}
 
-	{tab name=$tabaddeditgroup_admgrp}
+	{tab name="{$tabaddeditgroup_admgrp}"}
 		{* ----------------------- tab with form --------------------------------------- *}
 
 		{if !empty($user) and $prefs.feature_user_watches eq 'y' && !empty($groupname)}

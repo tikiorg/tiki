@@ -623,7 +623,7 @@
 							<div class="form-group">
 								<label for="" class="col-sm-2 control-label">{tr}Geolocation{/tr}</label>
 								<div class="col-sm-10">
-									<div class="map-container form-control" data-geo-center="{defaultmapcenter}" data-target-field="geolocation" style="height: 250px;"></div>
+									<div class="map-container form-control" data-geo-center="{$defaultmapcenter}" data-target-field="geolocation" style="height: 250px;"></div>
 									<input type="hidden" name="geolocation" value="{$geolocation_string}">
 								</div>
 							</div>
