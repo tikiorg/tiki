@@ -52,6 +52,41 @@ function smarty_function_multilike( $params, $smarty )
 		}
 		$buttons[] = $button;
 	}
+
+	if(!empty($params['onlyShowTotalPoints'])) {
+		return $totalPoints;
+	}
+
+	if(!empty($params['onlyShowTotalLikes'])) {
+		return $totalCount;
+	}
+
+	if(!empty($params['showOptionTotals'])) {
+		$smarty->assign("show_option_totals", true);
+	}
+
+	if(!empty($params['showPoints']) && $params['showPoints'] != 'n') {
+		$smarty->assign("show_points", true);
+	}
+
+	if($params['showLikes'] == 'n') {
+		$smarty->assign("show_likes", false);
+	} else {
+		$smarty->assign("show_likes", true);
+	}
+
+	if(!empty($params['choiceLabel'])) {
+		$smarty->assign("choice_label", $params['choiceLabel']);
+	} else {
+		$smarty->assign("choice_label", "I found this:");
+	}
+
+	if(!empty($params['orientation']) && $params['orientation'] == 'vertical') {
+		$smarty->assign("orientation", 'vertical');
+	} else {
+		$smarty->assign("orientation", 'horizontal');
+	}
+
 	$smarty->assign("buttons", $buttons);
 	$smarty->assign("type", $params['type']);
 	$smarty->assign("object", $params['object']);
@@ -61,6 +96,9 @@ function smarty_function_multilike( $params, $smarty )
 	$smarty->assign("multilike_many", $config['allow_multi']);
 
 	$smarty->assign("uses_values", isset($config['values']));
+
+	$headerlib = TikiLib::lib('header');
+	$headerlib->add_jsfile("lib/jquery_tiki/multilike.js");
 
 	if (empty($params['template'])) {
 		return $smarty->fetch('multilike.tpl');

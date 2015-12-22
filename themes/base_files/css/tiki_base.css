@@ -4203,4 +4203,51 @@ div.drillshow {
 .titlebar {
   border-bottom: 2px solid;
 }
+.multilike .horizontal {
+  display: inline-block;
+  height: 38px;
+}
+.multilike .vertical {
+  display: block;
+  height: auto;
+}
+.multilike .vertical .mini-counts,
+.multilike .vertical .label-text {
+  width: 50px;
+}
+.multilike .likes,
+.multilike .points {
+  min-width: 38px;
+  margin: 0 3px 0 0;
+  font-size: 0.9em;
+  color: #777;
+  padding: 5px 5px 6px 5px;
+  text-align: center;
+}
+.multilike .likes .mini-counts,
+.multilike .points .mini-counts {
+  font-size: 1.4em;
+  font-weight: 300;
+  color: #777;
+  margin-bottom: 4px;
+  text-align: center;
+}
+.multilike .rate {
+  font-size: 0.9em;
+  color: #555;
+  padding-left: 10px;
+  vertical-align: super;
+}
+.multilike .rate div {
+  padding: 5px 0px 0px 0px;
+}
+.multilike .rate div .title {
+  font-weight: 300;
+}
+.multilike .rate div a {
+  margin-right: 10px;
+}
+.multilike .rate div .count {
+  font-size: 0.8em;
+}
 /* End of file */
