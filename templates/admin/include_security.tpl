@@ -33,13 +33,13 @@
 			<div class="adminoptionboxchild" id="smarty_security_childcontainer">
 			{if $haveMySQLSSL}
 				{if $mysqlSSL === true}
-					<p class="mysqlsslstatus"><img src="img/icons/lock.png" style="outline:lightgreen solid thin"/> {tr}MySQL SSL connection is active{/tr}
+					<p class="mysqlsslstatus">{icon name="lock" iclass="text-success"} {tr}MySQL SSL connection is active{/tr}
 					<a class="tikihelp" title="MySQL SSL" target="tikihelp" href="http://doc.tiki.org/MySQL SSL">
 						{icon name="help"}
 					</a>
 					</p>
 				{else}
-					<p class="mysqlsslstatus"><img src="img/icons/lock_open.png" style="outline:pink solid thin"/> {tr}MySQL connection is not encrypted{/tr}<br>
+					<p class="mysqlsslstatus">{icon name="unlock"} {tr}MySQL connection is not encrypted{/tr}<br>
 					{tr}To activate SSL, copy the keyfiles (.pem) til db/cert folder. The filenames must end with "-key.pem", "-cert.pem", "-ca.pem"{/tr}
 					<a class="tikihelp" title="MySQL SSL" target="tikihelp" href="http://doc.tiki.org/MySQL SSL">
 						{icon name="help"}
@@ -47,7 +47,7 @@
 					</p>
 				{/if}
 			{else}
-				<p><img src="img/icons/lock_gray.png" style="outline:pink solid thin"/> {tr}MySQL Server does not have SSL activated{/tr}
+				<p>{icon name="lock" iclass="text-warning"} {tr}MySQL Server does not have SSL activated{/tr}
 				<a class="tikihelp" title="MySQL SSL" target="tikihelp" href="http://doc.tiki.org/MySQL SSL">
 					{icon name="help"}
 				</a>
