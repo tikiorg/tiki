@@ -72,6 +72,17 @@
 				{preference name=socialnetworks_bitly_sitewide}
 			</div>
 		{/tab}
+	{tab name="{tr}LinkedIn{/tr}"}
+		<h2>{tr}LinkedIn{/tr}</h2>
+		<div class="adminoptionbox">
+			{preference name=socialnetworks_linkedin_client_id}
+			{preference name=socialnetworks_linkedin_client_secr}
+			{preference name=socialnetworks_linkedin_login}
+			{preference name=socialnetworks_linkedin_autocreateuser}
+			{preference name=socialnetworks_linkedin_email}
+			{preference name=socialnetworks_linkedin_names}
+		</div>
+	{/tab}
 	{/tabset}
 
 	<div class="row">

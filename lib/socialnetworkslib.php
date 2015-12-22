@@ -76,7 +76,6 @@ class SocialNetworksLib extends LogsLib
 			return false;
 		}
 
-
 		$this->options['callbackUrl'] = $this->getURL();
 		$this->options['siteUrl'] = 'https://api.twitter.com/oauth';
 		$this->options['consumerKey'] = $prefs['socialnetworks_twitter_consumer_key'];
@@ -304,6 +303,172 @@ class SocialNetworksLib extends LogsLib
 	}
 
 	/**
+	 * Checks if the site is registered with linkedIn (client id  and secret are set)
+	 *
+	 * @return bool	true, if this site is registered with linkedIn as an application
+	 */
+	function linkedInRegistered(){
+		global $prefs;
+		return ($prefs['socialnetworks_linkedin_client_id'] != '' and $prefs['socialnetworks_linkedin_client_secr'] != '');
+	}
+
+	function getLinkedInRequestToken()
+	{
+		global $prefs;
+		if (!$this->linkedInRegistered()) {
+			return false;
+		}
+		$scopes = array();
+		$scopes[] = 'r_basicprofile';
+		if ($prefs['socialnetworks_linkedin_email'] == 'y') {
+			$scopes[] = 'r_emailaddress';
+		}
+		$scope = implode(' ', $scopes);
+
+		//generate a random state token to pass to linked in to verify on response to protect against CSRF
+		$state = md5((string) rand());
+		$_SESSION['LINKEDIN_REQ_STATE'] = $state;
+
+		$url = $this->getURL();
+		if (strpos($url, '?') != 0) {
+			$url = preg_replace('/\?.*/', '', $url);
+		}
+		$_SESSION['LINKEDIN_CALLBACK_URL'] = $url;
+		$url = 'https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id=' . $prefs['socialnetworks_linkedin_client_id'] .
+			'&state=' . $state . '&scope=' . $scope . '&redirect_uri=' . $url;
+		header("Location: $url");
+		die();
+	}
+
+	function getLinkedInAccessToken() {
+		global $prefs;
+		if (!$this->linkedInRegistered()) {
+			return false;
+		}
+
+		$curl_request = curl_init();
+		curl_setopt_array($curl_request, array(
+			CURLOPT_HTTPHEADER => array('Content-Type: application/x-www-form-urlencoded'),
+			CURLOPT_RETURNTRANSFER => 1,
+			CURLOPT_URL => 'https://www.linkedin.com/uas/oauth2/accessToken',
+			CURLOPT_POST => 1,
+			CURLOPT_POSTFIELDS => http_build_query (array(
+				client_id =>  $prefs['socialnetworks_linkedin_client_id'],
+				client_secret => $prefs['socialnetworks_linkedin_client_secr'],
+				grant_type => "authorization_code",
+				redirect_uri => $_SESSION['LINKEDIN_CALLBACK_URL'],
+				code => $_SESSION['LINKEDIN_AUTH_CODE'],
+			)),
+		));
+
+		$curl_result = curl_exec($curl_request);
+		$ret = json_decode($curl_result);
+		$_SESSION['LINKEDIN_ACCESS_TOKEN'] = $ret->access_token;
+		$_SESSION['LINKEDIN_ACCESS_TOKEN_EXPIRY'] = time() + $ret->expires_in;
+
+		$this->linkedInLogin();
+		return true;
+
+	}
+
+	function linkedInLogin() {
+		global $user, $prefs;
+		$userlib = TikiLib::lib('user');
+		$curl = curl_init();
+
+		$data = array(
+			"oauth2_access_token"=>$_SESSION['LINKEDIN_ACCESS_TOKEN'],
+			"format"=>"json"
+		);
+		$profile_fields = array(
+			'id',
+			'first-name',
+			'last-name',
+			'formatted-name',
+			'picture-url',
+			'picture-urls::(original)',
+		);
+
+		if ($prefs['socialnetworks_linkedin_email'] == 'y') {
+			$profile_fields[] = 'email-address';
+		}
+
+		$url = "https://api.linkedin.com/v1/people/~:(". implode(",",$profile_fields) .")";
+		$url = sprintf("%s?%s", $url, http_build_query($data));
+		curl_setopt($curl, CURLOPT_URL, $url);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+		$result = curl_exec($curl);
+		curl_close($curl);
+
+		$linkedin_info = json_decode($result);
+
+		if (!$user) {
+			if ($prefs['socialnetworks_linkedin_login'] != 'y') {
+				return false;
+			}
+			$local_user = $this->getOne("select `user` from `tiki_user_preferences` where `prefName` = 'linkedin_id' and `value` = ?", array($linkedin_info->id));
+			if ($local_user) {
+				$user = $local_user;
+			} elseif ($prefs['socialnetworks_linkedin_autocreateuser'] == 'y') {
+				$randompass = $userlib->genPass();
+				$email = $prefs['socialnetworks_linkedin_email'] === 'y' ? $linkedin_info->emailAddress : '';
+				if ($prefs['login_is_email'] == 'y' && $email) {
+					$user = $email;
+				} else {
+					$user = 'li_' . $linkedin_info->id;
+				}
+				$userlib->add_user($user, $randompass, $email);
+
+				//Checks if user tracker is used and if it is, then set the names as per the info
+				$ret = $userlib->get_usertrackerid("Registered");
+				$userTracker = $ret['usersTrackerId'];
+				$userField = $ret['usersFieldId'];
+				if ($userTracker && $userField) {
+					$definition = Tracker_Definition::get($userTracker);
+					$utilities = new Services_Tracker_Utilities();
+					$fields = array('ins_'.$userField => $user);
+					if (!empty($prefs['socialnetworks_linkedin_names'])) {
+						$names = array_map('trim', explode(',', $prefs['socialnetworks_linkedin_names']));
+						$fields['ins_'.$names[0]] = $linkedin_info->firstName;
+						$fields['ins_'.$names[1]] = $linkedin_info->lastName;
+					}
+					$utilities->insertItem($definition,
+						array(
+							'status' => '',
+							'fields' => $fields,
+						)
+					);
+				}
+
+				$this->set_user_preference($user, 'realName', $linkedin_info->formattedName);
+				if ($prefs['feature_userPreferences'] == 'y') {
+					$avatarlib = TikiLib::lib('avatar');
+					$avatarlib->set_avatar_from_url($linkedin_info->pictureUrls->values[0], $user);
+				}
+			} else {
+				$smarty = TikiLib::lib('smarty');
+				$smarty->assign('errortype', 'login');
+				$smarty->assign('msg', tra('You need to link your local account to LinkedIn before you can login using it'));
+				$smarty->display('error.tpl');
+				die;
+			}
+			global $user_cookie_site;
+			$_SESSION[$user_cookie_site] = $user;
+			$userlib->update_expired_groups();
+			$this->set_user_preference($user, 'linkedin_id', $linkedin_info->id);
+			$this->set_user_preference($user, 'linkedin_token', $_SESSION['LINKEDIN_ACCESS_TOKEN']);
+			$userlib->update_lastlogin($user);
+			header('Location: tiki-index.php');
+			die;
+		} else {
+			$this->set_user_preference($user, 'linkedin_id', $linkedin_info->id);
+			$this->set_user_preference($user, 'linkedin_token', $_SESSION['LINKEDIN_ACCESS_TOKEN']);
+		}
+		return true;
+	}
+
+	/**
 	 * Sends a tweet via Twitter
 	 *
 	 * @param string	$message	Message to send
@@ -516,6 +681,7 @@ class SocialNetworksLib extends LogsLib
 		$ret = $this->facebookGraph($user, "$id/likes/", $params);
 		return json_decode($ret);
 	}
+
 	/**
 	 * Talking to bit.ly api at "http://api.bit.ly/" using Zend
 	 *
