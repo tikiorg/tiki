@@ -101,7 +101,8 @@
 			<h2>{tr}Customized String Translation{/tr}</h2>
 			<div class="adminoptionbox">
 				{if empty($custom_lang)}
-					<select name="custom_lang" id="custom_lang_select">
+				<div class="input-group col-sm-5">
+					<select name="custom_lang" id="custom_lang_select" class="form-control">
 						{section name=ix loop=$languages}
 							<option value="{$languages[ix].value|escape}"
 								{if (empty($custom_lang) && $languages[ix].value eq $prefs.site_language) || (!empty($custom_lang) && $languages[ix].value eq $custom_lang)} selected="selected"{/if}>
@@ -109,7 +110,10 @@
 							</option>
 						{/section}
 					</select>
-					<input type="submit" class="btn btn-default btn-sm" name="custom" value="{tr}Edit{/tr}" />
+					<span class="input-group-btn">
+						<input type="submit" class="btn btn-default" name="custom" value="{tr}Edit{/tr}">
+					</span>
+				</div><br><br>
 				{else}
 					{if !empty($custom_error)}
 						{remarksbox title="{tr}Error{/tr}" type="error"}
