@@ -5,9 +5,9 @@
 {block name="navigation"}
 	<div class="t_navbar margin-bottom-md clearfix">
 		{if $prefs.lang_use_db eq "y"}
-			{button _class="btn btn-link tips" href="tiki-edit_languages.php" _icon_name="edit" _text="{tr}Edit languages{/tr}" _title=":{tr}Edit languages{/tr}"}
+			{button _type="link" _class="tips" href="tiki-edit_languages.php" _icon_name="edit" _text="{tr}Edit languages{/tr}" _title="{tr}Edit languages{/tr}:{tr}Edit, export and import languages{/tr}"}
 			{if $prefs.freetags_multilingual eq 'y'}
-				{button _class="btn btn-link tips" href="tiki-freetag_translate.php" _icon_name="tags" _text="{tr}Translate Tags{/tr}" _title=":{tr}Translate tags{/tr}"}
+				{button _type="link" _class="tips" href="tiki-freetag_translate.php" _icon_name="tags" _text="{tr}Translate Tags{/tr}" _title=":{tr}Translate tags{/tr}"}
 			{/if}
 		{/if}
 	</div>

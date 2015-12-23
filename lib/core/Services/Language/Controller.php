@@ -39,17 +39,11 @@ class Services_Language_Controller
 		
 		//get input
 		$language = $input->language->text();
-		$confirm = $input->confirm->int();
-
-		//get languages
-		$langLib = TikiLib::lib('language');
-		$db_languages = $langLib->getDbTranslatedLanguages();
-		$db_languages = $langLib->format_language_list($db_languages);
 		
-		if($confirm){
+		if($language){
 			//set export language
 			$export_language = new LanguageTranslations($language);
-			
+
 			//get translation data from database
 			$data = $export_language->createCustomFile();
 			
@@ -60,11 +54,9 @@ class Services_Language_Controller
 			echo $data;
 			die;
 		}
-		
-		return array(
-			'title' => tr('Download Translations'),
-			'db_languages' => $db_languages,
-		);
+		else {
+			throw new Services_Exception_Denied(tr('No language provided'));
+		}
 	}
 
 	/**
@@ -86,10 +78,13 @@ class Services_Language_Controller
 		//get language from input
 		$language = $input->language->text();
 	
-		//prepare language list
+		//prepare language list -> seems useless...
 		$langLib = TikiLib::lib('language');
 		$db_languages = $langLib->getDbTranslatedLanguages();
 		$db_languages = $langLib->format_language_list($db_languages);
+		
+		//TODO: get count of available translations in the database
+		//$db_translation_count = $this->getDbTranslationCount($language);
 		
 		//TODO: check if each language file is writable instead of the whole lang/ dir
 		if (is_writable('lang/')) {
@@ -106,18 +101,19 @@ class Services_Language_Controller
 			// Write to language.php
 			try {
 				$stats = $export_language->writeLanguageFile();
-			} catch (Exception $e) {
+			} catch (Exception $e) { //TODO: this is messy
 				$smarty->assign('msg', $e->getMessage());
 				$smarty->display('error.tpl');
 				die;
 			}
+			//TODO: expose expmsg properly
 			$expmsg = sprintf(tra('Wrote %d new strings and updated %d to lang/%s/language.php'), $stats['new'], $stats['modif'], $export_language->lang);
-			//$smarty->assign('expmsg', $expmsg);
 		}
 
 		return array(
 			'title' => tr('Write to language.php'),
 			'db_languages' => $db_languages,
+			'db_translation_count' => $db_translation_count,
 			'langIsWritable' => $langIsWritable,
 		);
 	}

@@ -18,28 +18,10 @@
 			{icon name="file-code-o"} {tr}Custom Translations{/tr}
 		</a>
 		{if $prefs.lang_use_db eq "y"}
-			{button _class="btn btn-link tips" href="tiki-edit_languages.php" _icon_name="edit" _text="{tr}Edit languages{/tr}" _title=":{tr}Edit languages{/tr}"}
-			<div class="btn-group">
-				<button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					{icon name="export"} {tr}Export{/tr}
-					<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu">
-					<li>
-						<a class="btn btn-link tips" href="{service controller=language action=download_db_translations}" title=":{tr}Download a file with all the translations in the database for the selected language.{/tr}">
-							{tr}Download Translations{/tr}
-						</a>
-					</li>
-					<li>
-						<a class="btn btn-link tips" href="{service controller=language action=write_to_language_php}" title=":{tr}Translations in the database will be merged with the other translations in language.php for the selected language.{/tr}">
-							{tr}Write to language.php{/tr}
-						</a>
-					</li>
-				</ul>
-			</div>
-			{if $prefs.freetags_multilingual eq 'y'}
-				{button _class="btn btn-link tips" href="tiki-freetag_translate.php" _icon_name="tags" _text="{tr}Translate Tags{/tr}" _title=":{tr}Translate tags{/tr}"}
-			{/if}
+			{button _type="link" _class="tips" href="tiki-edit_languages.php" _icon_name="edit" _text="{tr}Edit languages{/tr}" _title="{tr}Edit languages{/tr}:{tr}Edit, export and import languages{/tr}"}
+		{/if}
+		{if $prefs.freetags_multilingual eq 'y'}
+			{button _type="link" _class="tips" href="tiki-freetag_translate.php" _icon_name="tags" _text="{tr}Translate Tags{/tr}" _title=":{tr}Translate tags{/tr}"}
 		{/if}
 		<div class="pull-right">
 			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
