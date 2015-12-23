@@ -9,7 +9,6 @@
 				{$expmsg}
 			{/remarksbox}
 		{/if}
-		{$db_languages|@debug_print_var}
 		{if (empty($db_languages))}
 			{remarksbox type="note" title="{tr}Information{/tr}" close="n"}
 				 {tr}No translations in the database available to export{/tr}
