@@ -39,7 +39,10 @@ if ($user) {
 	$token=$tikilib->get_user_preference($user, 'twitter_token', '');
 	$smarty->assign('twitter', ($token!=''));
 }
-
+if ($user) {
+	$token=$tikilib->get_user_preference($user, 'linkedin_token', '');
+	$smarty->assign('linkedIn', ($token!=''));
+}
 if (isset($_REQUEST['request_facebook'])) {
 	if ($prefs["socialnetworks_facebook_login"] != 'y') {
 		$access->check_user($user);
@@ -84,6 +87,7 @@ if ($user) {
 }
 $smarty->assign('twitterRegistered', $socialnetworkslib->twitterRegistered());
 $smarty->assign('facebookRegistered', $socialnetworkslib->facebookRegistered());
+$smarty->assign('linkedInRegistered', $socialnetworkslib->linkedInRegistered());
 
 ask_ticket('socialnetworks');
 $smarty->assign('mid', 'tiki-socialnetworks.tpl');

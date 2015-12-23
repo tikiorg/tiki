@@ -18,6 +18,11 @@ $auto_query_args = array();
 if (isset($_REQUEST['connect'])) {
 	$socialnetworkslib->getLinkedInRequestToken();
 }
+/* Is set to link the existing user to the LinkedIn Account */
+if (isset($_REQUEST['link'])) {
+	$access->check_user($user);
+	$socialnetworkslib->getLinkedInRequestToken();
+}
 if (isset($_REQUEST['code'])) {
 	if ($_SESSION['LINKEDIN_REQ_STATE'] != $_REQUEST['state']) {
 		//csrf breach 401
@@ -25,6 +30,13 @@ if (isset($_REQUEST['code'])) {
 	}
 	$_SESSION['LINKEDIN_AUTH_CODE'] = $_REQUEST['code'];
 	$socialnetworkslib->getLinkedInAccessToken();
+}
+/* Is set to remove the link from your user to the LinkedIn Account */
+if (isset($_REQUEST['remove'])) {
+	global $tikilib;
+	$access->check_user($user);
+	$tikilib->set_user_preference($user, 'linkedin_token', '');
+	$tikilib->set_user_preference($user, 'linkedin_id', '');
 }
 
 header("Location: tiki-socialnetworks.php");

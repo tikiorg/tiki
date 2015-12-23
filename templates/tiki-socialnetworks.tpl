@@ -53,6 +53,20 @@
 					{/if}
 				{/if}
 			{/if}
+			<h2>LinkedIn</h2>
+			{if $linkedInRegistered==0}
+				{remarksbox type="note" title="{tr}Note{/tr}"}
+				{tr}To use LinkedIn integration, the site admin must register this site as an application at <a href="https://www.linkedin.com/secure/developer" target="_blank">https://www.linkedin.com/secure/developer</a> first.{/tr}
+				{/remarksbox}
+			{else}
+				{if $linkedIn}
+					{button href="tiki-socialnetworks_linkedin.php?remove=true" _text="{tr}Remove{/tr}"}
+					{tr}LinkedIn authorisation.{/tr}
+				{else}
+					<a class="button btn btn-default" href="tiki-socialnetworks_linkedin.php?link=true">Authorize</a>
+					{tr}this site to link your user to your LinkedIn account.{/tr}
+				{/if}
+			{/if}
 			<h2>bit.ly</h2>
 			{if $prefs.socialnetworks_bitly_sitewide=='y'}
 				{remarksbox type="note" title="{tr}Note{/tr}"}
