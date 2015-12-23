@@ -1,7 +1,7 @@
 {title admpage=freetags}{tr}Tag translation{/tr}{if isset($data)}: {$data.pageName}{/if}{/title}
 <div class="t_navbar margin-bottom-md">
 	{if $tiki_p_admin_freetags eq 'y'}
-		{button href="tiki-browse_freetags.php" class="btn btn-default tips" _icon_name="list" _text="{tr}Browse Tags{/tr}"}
+		{button href="tiki-browse_freetags.php" _class="btn btn-link" _icon_name="list" _text="{tr}Browse Tags{/tr}"}
 	{/if}
 	{if isset($data)}
 		{button href="tiki-index.php?page=$objId" class="btn btn-default" _text="{tr}View page{/tr}"}

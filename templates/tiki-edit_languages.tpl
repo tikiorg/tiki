@@ -5,6 +5,9 @@
 	{else}
 		{button href="tiki-interactive_trans.php?interactive_translation_mode=on" _text="{tr}Toggle interactive translation on{/tr}" _ajax="n"}
 	{/if}
+	<a class="btn btn-link tips" href="{service controller=language action=manage_custom_php_translations}" title="{tr}Customized String Translation{/tr}:{tr}Manage local translations in a custom.php file{/tr}">
+		{icon name="file-code-o"} {tr}Custom Translations{/tr}
+	</a>
 	<div class="btn-group">
 		<button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			{icon name="export"} {tr}Export{/tr}
