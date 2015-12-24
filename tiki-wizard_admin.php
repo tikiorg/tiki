@@ -99,6 +99,9 @@ if ($useDefaultPrefs) {
     require_once('lib/wizard/pages/upgrade_new_in_14.php');
     $pages[] = new UpgradeWizardNewIn14();
 
+    require_once('lib/wizard/pages/upgrade_new_in_15.php');
+    $pages[] = new UpgradeWizardNewIn15();
+
     require_once('lib/wizard/pages/upgrade_doc_page_iframe.php');
     $pages[] = new UpgradeWizardDocPageIframe();
 
