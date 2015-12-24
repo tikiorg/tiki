@@ -8,8 +8,8 @@
 	{tr}Main new features and settings in Tiki 15{/tr}.
 	<a href="http://doc.tiki.org/Tiki15" target="tikihelp" class="tikihelp" title="{tr}Tiki15:{/tr}
 			{tr}Tiki15 is an LTS version{/tr}.
-			{tr}It will be supported until ...(XXX to be written){/tr}.
-			{tr}The requirements are ...(XXX to be written){/tr}.
+			{tr}As it is a Long Term Support (LTS) version, it will be supported for 5 years.{/tr}.
+			{tr}The requirements are the same as in the previous version (IE9, PHP 5.5), plus php5-curl and php5-intl{/tr}.
 			<br/><br/>
 			{tr}Click to read more{/tr}
 		">
@@ -21,10 +21,9 @@
 			<legend>{tr}Tiki Addons{/tr}</legend>
 			{tr}Addons allow a way for developers to add an even broader range of functionality{/tr}
 			<a href="http://doc.tiki.org/Addons" target="tikihelp" class="tikihelp" title="{tr}Addons:{/tr}
-				{tr}Tiki is already one of the most feature-rich social business/web content management platforms that exist today, where hundreds of developers have contributed directly to its codebase{/tr}.
+				{tr}In Tiki 14, the Tiki Addons feature was added to allow a way for developers <br/>to add an even broader range of functionality that can be used with Tiki{/tr}.
 				<br/><br/>
-				{tr}Nevertheless, in Tiki 14, the Tiki Addons feature was added to allow a way for developers to add an even broader range of functionality that can be used with Tiki{/tr}.
-				{tr}And in Tiki 15 ...(XXX to be written){/tr}.
+				{tr}In Tiki 15, an addons repository was added{/tr}.
 				<br/><br/>
 				{tr}Click to read more{/tr}
 			">
@@ -35,13 +34,82 @@
 			{/foreach}
 		</fieldset>
 		<fieldset class="table clearfix featurelist">
+			<legend>{tr}Remote Tiki Autologin{/tr}</legend>
+			{preference name=login_autologin}
+				<div class="adminoptionboxchild" id="login_autologin_childcontainer">
+				{preference name=login_autologin_user}
+				{preference name=login_autologin_group}
+				{preference name=login_autologin_createnew}
+				{preference name=login_autologin_allowedgroups}
+				{preference name=login_autologin_syncgroups}
+				{preference name=login_autologin_logoutremote}
+				{preference name=login_autologin_redirectlogin}
+				{preference name=login_autologin_redirectlogin_url}
+				</div>
+		</fieldset>
+		<fieldset class="table clearfix featurelist">
+			<legend>{tr}New Wiki Plugins{/tr}</legend>
+			{preference name=wikiplugin_fullwidthtitle}
+			{preference name=wikiplugin_like}
+			{preference name=wikiplugin_tour}
+			{preference name=wikiplugin_xmlupdate}
+		</fieldset>
+		<fieldset class="table clearfix featurelist">
+			<legend>{tr}Social Networks with Linkedin{/tr}</legend>
+				{preference name=socialnetworks_linkedin_login}
+					<div class="adminoptionboxchild" id="socialnetworks_linkedin_login_childcontainer">
+					{preference name=socialnetworks_linkedin_client_id}
+					{preference name=socialnetworks_linkedin_client_secr}
+					{preference name=socialnetworks_linkedin_autocreateuser}
+					{preference name=socialnetworks_linkedin_email}
+					{preference name=socialnetworks_linkedin_names}
+					</div>
+		</fieldset>
+		<fieldset class="table clearfix featurelist">
+			<legend>{tr}Temporary User Accounts{/tr}</legend>
+				<div class="adminoptionbox preference clearfix advanced pref-fake all modified">
+					<div class="adminoption form-group">
+						<label class="col-sm-4 control-label">
+							{tr}Display more information here{/tr}
+						</label>
+						<div class="col-sm-8">
+							<input id="pref-fake" type="checkbox" name="pref-fake" data-tiki-admin-child-block="#pref-fake_childcontainer" data-tiki-admin-child-mode="normal"/>
+						</div>
+					</div>
+				</div>
+				<div class="adminoptionboxchild" id="pref-fake_childcontainer">
+				{if $prefs['auth_token_access'] != 'y'}
+					{remarksbox type="warning" title="Token Access Feature Dependency"}
+					{tr}The token access feature is needed for Temporary Users to login.{/tr}
+						<a href="tiki-admin.php?page=security">{tr}Turn it on here.{/tr}</a>
+					{/remarksbox}
+				{/if}
+				{remarksbox type="info" title="Temporary Users"}
+					<p>{tr}You can use this feature through: {/tr}<a href="tiki-admin.php?page=tiki-adminusers.php#contenttabs_adminusers-4">{tr}Admin Users > Temporary Users (tab){/tr}</a></p>
+					<p>{tr}Temporary users cannot login the usual way but instead do so via an autologin URL that is associated with a token.{/tr} {tr}An email will be sent out to invited users containing this URL. You will receive a copy of the email yourself.{/tr}</p>
+					<p>{tr}These temporary users will be deleted (but can be set to be preserved in Admin Tokens) once the validity period is over. Normally, these users should have read-only access. Nevertheless, if you are allowing these users to submit information, e.g. fill in a tracker form, make sure to ask for their information again in those forms.{/tr}</p>
+					<p>{tr}Please do not assign temporary users to Groups that can access any security sensitive information, since access to these accounts is relatively easy to obtain, for example by intercepting or otherwise getting access to these emails.{/tr}</p>
+				{/remarksbox}
+				{remarksbox type="info" title="Revoking Access"}
+				{tr}To revoke access before validity expires or to review who has access, please see:{/tr} <a href="tiki-admin_tokens.php">{tr}Admin Tokens{/tr}</a>
+				{/remarksbox}
+				</div>
+		</fieldset>
+		<fieldset class="table clearfix featurelist">
 			<legend>{tr}Other new features{/tr}</legend>
-				Tours (through Plugin Tour)
+				{preference name=user_multilike_config}
 		</fieldset>
 		<fieldset class="table clearfix featurelist">
 			<legend>{tr}Improved and extended features{/tr}</legend>
-				...(XXX to be written)
+				{preference name=wikiplugin_datachannel}
+				{preference name=wikiplugin_list}
+				{preference name=wikiplugin_tracker}
 		</fieldset>
+		<fieldset class="table clearfix featurelist">
+			<legend>{tr}Removed features{/tr}</legend>
+			{tr}Synchronize categories of user tracker item to user groups{/tr}
+		</fieldset>
+
 		<i>{tr}See the full list of changes{/tr}.</i>
 		<a href="http://doc.tiki.org/Tiki15" target="tikihelp" class="tikihelp" title="{tr}Tiki15:{/tr}
 			{tr}Click to read more{/tr}
