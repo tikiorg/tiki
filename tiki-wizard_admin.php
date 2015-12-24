@@ -209,10 +209,17 @@ foreach ($pages as $page) {
 		$url .= '&amp;use-upgrade-wizard=1';
 	}
 	$cnt = 	$stepNr+1;
+	if ($stepNr == 1) {
+		$toc .= '<ul><li>'. tra("New in Tiki 12 (LTS)") .'</li>';
+	}
 	if ($cnt <= 9) {
 		$cnt = '&nbsp;&nbsp;'.$cnt;
 	}
-	$toc .= '<li><a ';
+	if (preg_match('/ Tiki /',$page->pageTitle()) OR $stepNr == 0) {
+		$toc .= '</ul><ul><li><a ';
+	} else {
+		$toc .= '<ul><li><a ';
+	}
 	$cssClasses .= 'adminWizardTOCItem ';
 	if ($stepNr == $reqStepNr) {
 		$cssClasses .= 'highlight ';
@@ -226,6 +233,7 @@ foreach ($pages as $page) {
 	}
 	$toc .= $css;
 	$toc .= 'href="'.$url.'">'.$page->pageTitle().'</a></li>';
+	$toc .= '</ul>';
 	$stepNr++;
 }
 $toc .= '</ul>';

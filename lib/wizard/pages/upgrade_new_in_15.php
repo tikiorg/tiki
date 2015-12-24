@@ -14,7 +14,7 @@ class UpgradeWizardNewIn15 extends Wizard
 {
     function pageTitle ()
     {
-        return tra('New in Tiki 15');
+        return tra('New in Tiki 15 (LTS)');
     }
 
 	function isEditable ()
