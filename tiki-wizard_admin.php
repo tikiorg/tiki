@@ -209,7 +209,7 @@ foreach ($pages as $page) {
 		$url .= '&amp;use-upgrade-wizard=1';
 	}
 	$cnt = 	$stepNr+1;
-	if ($stepNr == 1) {
+	if ($stepNr == 1 && $useUpgradeWizard) {
 		$toc .= '<ul><li>'. tra("New in Tiki 12 (LTS)") .'</li>';
 	}
 	if ($cnt <= 9) {
