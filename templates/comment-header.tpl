@@ -39,9 +39,9 @@
 						</a>{$liend}
 					{/if}
 					{if $tiki_p_admin_forum eq 'y'}
-						<a {if $first eq 'y'} href="{service controller=forum action=delete_topic forumId={$forum_info.forumId} comments_threshold={$comments_threshold} forumtopic={$comment.threadId} comments_offset={$comments_offset} thread_sort_mode={$thread_sort_mode} comments_find={$smarty.request.topics_find} comments_per_page={$comments_per_page}}"
-							{else} href="{service controller=forum action=delete_topic forumId={$forum_info.forumId} comments_threshold={$comments_threshold} forumtopic={$comment.threadId} comments_offset={$comments_offset} thread_sort_mode={$thread_sort_mode} comments_per_page={$comments_per_page} comments_parentId={$comments_parentId} thread_style={$thread_style}}"
-							{/if} class="confirm-click"
+						<a {if $first eq 'y'} href="{bootstrap_modal controller=forum action=delete_topic forumId={$forum_info.forumId} comments_threshold={$comments_threshold} forumtopic={$comment.threadId} comments_offset={$comments_offset} thread_sort_mode={$thread_sort_mode} comments_find={$smarty.request.topics_find} comments_per_page={$comments_per_page}}"
+							{else} href="{bootstrap_modal controller=forum action=delete_topic forumId={$forum_info.forumId} comments_threshold={$comments_threshold} forumtopic={$comment.threadId} comments_offset={$comments_offset} thread_sort_mode={$thread_sort_mode} comments_per_page={$comments_per_page} comments_parentId={$comments_parentId} thread_style={$thread_style}}"
+							{/if}
 						>
 							{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Delete post{/tr}"}
 						</a>{$liend}

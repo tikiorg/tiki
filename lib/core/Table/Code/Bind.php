@@ -38,16 +38,6 @@ class Table_Code_Bind extends Table_Code_Manager
 				'	$(\'div#' . parent::$s['pager']['controls']['id']
 				. '.ts-pager-bottom\').css(\'visibility\', \'hidden\');',
 				'}',
-				'$(\'[data-toggle=popover]\').on(\'shown.bs.popover\', function() {',
-				'	$(\'.confirm-click\').click(function() {',
-				'		confirmClick(this, \'href\');',
-				'		return false;',
-				'	});',
-				'});',
-				'$(\'.confirm-click\').click(function() {',
-				'	confirmClick(this, \'href\');',
-				'	return false;',
-				'});',
 			];
 			$jq[] = $this->iterate(
 				$bind, '.bind(\'pagerComplete\', function(e, c){', $this->nt . '})', $this->nt2, '', '');

@@ -10,7 +10,7 @@
 	{* WARNING: when previewing a new reply to a forum post, $parent_com is also set *}
 
 	{if $comments_cant gt 0}
-		<form method="get" id="comment-form" action="{service controller=forum}" class="comments confirm-form">
+		<form method="get" id="comment-form" class="comments">
 			{section name=i loop=$comments_request_data}
 				<input type="hidden" name="{$comments_request_data[i].name|escape}" value="{$comments_request_data[i].value|escape}">
 			{/section}
@@ -44,17 +44,17 @@
 						</span>
 						{if $topics|@count > 1}
 							<button
-								type="submit" name="action" value="merge_topic" title=":{tr}Merge{/tr}"
+								type="submit" formaction="{bootstrap_modal controller=forum action=merge_topic}" title=":{tr}Merge{/tr}"
 								form="comment-form"
-								class="btn btn-default btn-sm tips"
+								class="btn btn-default btn-sm tips confirm-submit"
 							>
 								{icon name="merge"}
 							</button>
 						{/if}
 						<button
-							type="submit" name="action" value="delete_topic" title=":{tr}Delete{/tr}"
+							type="submit" formaction="{bootstrap_modal controller=forum action=delete_topic}" title=":{tr}Delete{/tr}"
 							form="comment-form"
-							class="btn btn-default btn-sm tips"
+							class="btn btn-default btn-sm tips confirm-submit"
 						>
 							{icon name="remove"}
 						</button>

@@ -149,7 +149,7 @@
 			{if ($cant > $numrows or !empty($initial)) && !$tsOn}
 				{initials_filter_links}
 			{/if}
-			<form class="form-horizontal confirm-form" name="checkform" id="checkform" method="post" action="{service controller=user}">
+			<form class="form-horizontal" name="checkform" id="checkform" method="post">
 				<div id="{$ts_tableid}-div" {if $tsOn}style="visibility:hidden;"{/if}>
 					<div class="{if $js === 'y'}table-responsive{/if} user-table ts-wrapperdiv">
 		{/if}
@@ -245,7 +245,7 @@
 															{if $what eq 'included'}<span class="label label-info">{tr}Included{/tr}</span>{/if}
 															{if $grs eq $users[user].default_group}<small>({tr}default{/tr})</small>{/if}
 															{if $what ne 'included' and $grs != "Registered"}
-																<a href="{service controller=user action=manage_groups checked=$username groupremove=$grs offset=$offset sort_mode=$sort_mode numrows=$numrows}" class="confirm-click">
+																<a href="{bootstrap_modal controller=user action=manage_groups checked=$username groupremove=$grs offset=$offset sort_mode=$sort_mode numrows=$numrows}">
 																	{icon name="remove"}
 																</a>
 															{/if}
@@ -258,9 +258,7 @@
 											<td class="action">
 												{capture name=user_actions}
 													{strip}
-														{$libeg}<a href="{bootstrap_modal controller=user action=manage_groups checked=$username all_groups=$all_groups offset=$offset sort_mode=$sort_mode numrows=$numrows}"
-														   class="confirm-click"
-														>
+														{$libeg}<a href="{bootstrap_modal controller=user action=manage_groups checked=$username all_groups=$all_groups offset=$offset sort_mode=$sort_mode numrows=$numrows}">
 															{icon name="group" _menu_text='y' _menu_icon='y' alt="{tr}Add or remove from a group{/tr}"}
 														</a>{$liend}
 														{$libeg}<a href="{query _type='relative' user=$users[user].userId}">
@@ -280,7 +278,7 @@
 														{/if}
 
 														{if $users[user].user ne 'admin'}
-															{$libeg}<a href="{bootstrap_modal controller=user action=remove_users checked=$username offset=$offset sort_mode=$sort_mode numrows=$numrows}"  class="confirm-click">
+															{$libeg}<a href="{bootstrap_modal controller=user action=remove_users checked=$username offset=$offset sort_mode=$sort_mode numrows=$numrows}">
 																{icon name="remove" _menu_text='y' _menu_icon='y' alt="{tr}Delete{/tr}"}
 															</a>{$liend}
 															{if $users[user].waiting eq 'a'}
@@ -342,7 +340,7 @@
 								<option value="no_action" selected="selected">
 									{tr}Select action to perform with checked{/tr}...
 								</option>
-								<option value="remove_users" >
+								<option value="remove_users">
 									{tr}Remove{/tr}
 								</option>
 								{if $prefs.feature_banning == 'y'}
@@ -363,7 +361,7 @@
 										</option>
 									{/if}
 								{/if}
-								<option value="manage_groups" >
+								<option value="manage_groups">
 									{tr}Change group assignments{/tr}
 								</option>
 								<option value="default_groups">
@@ -376,7 +374,12 @@
 								{/if}
 							</select>
 							<span class="input-group-btn">
-								<button type="submit" form="checkform" class="btn btn-primary">
+								<button
+									type="submit"
+									form="checkform"
+									formaction="{bootstrap_modal controller=user}"
+									class="btn btn-primary confirm-submit"
+								>
 									{tr}OK{/tr}
 								</button>
 							</span>
@@ -729,7 +732,7 @@
 			{remarksbox type="info" title="Revoking Access"}
 				{tr}To revoke access before validity expires or to review who has access, please see:{/tr} <a href="tiki-admin_tokens.php">{tr}Admin Tokens{/tr}</a>
 			{/remarksbox}
-			<form class="form-horizontal confirm-form" name="checkform" id="checkform" method="post" action="{service controller=user action=invite_tempuser}">
+			<form class="form-horizontal" name="tempuser" id="tempuser" method="post">
 				<div class="form-group">
 					<label class="col-sm-4 col-md-4 control-label" for="tempuser_emails">{tr}Emails (comma separated){/tr}</label>
 					<div class="col-sm-8 col-md-8">
@@ -762,7 +765,13 @@
 				</div>
 				<div class="form-group">
 					<div class="col-sm-10 col-sm-offset-4 col-md-10 col-md-offset-4">
-						<input type="submit" name="invite_tempuser" class="btn btn-primary" value="{tr}Invite{/tr}" />
+						<input
+							type="submit"
+							class="btn btn-primary confirm-submit"
+							form="tempuser"
+							formaction="{bootstrap_modal controller=user action=invite_tempuser}"
+							value="{tr}Invite{/tr}"
+						>
 					</div>
 				</div>
 			</form>

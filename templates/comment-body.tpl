@@ -88,11 +88,11 @@
 	{if $tiki_p_admin_forum eq 'y'}
 		<a
 			{if $first eq 'y'}
-				href="{service controller=forum action=delete_attachment topics_offset={$smarty.request.topics_offset} topics_sort_mode={$smarty.request.topics_sort_mode} topics_find={$smarty.request.topics_find} topics_threshold={$smarty.request.topics_threshold} comments_threshold={$smarty.request.topics_threshold} comments_find={$smarty.request.topics_find} forumId={$forum_info.forumId} comments_per_page={$comments_per_page} comments_parentId={$comments_parentId} remove_attachment={$comment.attachments[ix].attId} filename={$comment.attachments[ix].filename}}"
+				href="{bootstrap_modal controller=forum action=delete_attachment topics_offset={$smarty.request.topics_offset} topics_sort_mode={$smarty.request.topics_sort_mode} topics_find={$smarty.request.topics_find} topics_threshold={$smarty.request.topics_threshold} comments_threshold={$smarty.request.topics_threshold} comments_find={$smarty.request.topics_find} forumId={$forum_info.forumId} comments_per_page={$comments_per_page} comments_parentId={$comments_parentId} remove_attachment={$comment.attachments[ix].attId} filename={$comment.attachments[ix].filename}}"
 			{else}
-				href="{service controller=forum action=delete_attachment topics_offset={$smarty.request.topics_offset} topics_sort_mode={$smarty.request.topics_sort_mode} topics_find={$smarty.request.topics_find} topics_threshold={$smarty.request.topics_threshold} comments_threshold={$smarty.request.topics_threshold} comments_find={$smarty.request.topics_find} forumId={$forum_info.forumId} comments_per_page={$comments_per_page} comments_parentId={$comments_parentId} remove_attachment={$comment.attachments[ix].attId} filename={$comment.attachments[ix].filename} comments_offset={$smarty.request.topics_offset} thread_sort_mode={$thread_sort_mode}}"
+				href="{bootstrap_modal controller=forum action=delete_attachment topics_offset={$smarty.request.topics_offset} topics_sort_mode={$smarty.request.topics_sort_mode} topics_find={$smarty.request.topics_find} topics_threshold={$smarty.request.topics_threshold} comments_threshold={$smarty.request.topics_threshold} comments_find={$smarty.request.topics_find} forumId={$forum_info.forumId} comments_per_page={$comments_per_page} comments_parentId={$comments_parentId} remove_attachment={$comment.attachments[ix].attId} filename={$comment.attachments[ix].filename} comments_offset={$smarty.request.topics_offset} thread_sort_mode={$thread_sort_mode}}"
 			{/if}
-			class="btn-link tips confirm-click"
+			class="btn-link tips"
 			title=":{tr}Remove attachment{/tr}"
 		>
 				{icon name='remove' alt="{tr}Remove attachment{/tr}"}

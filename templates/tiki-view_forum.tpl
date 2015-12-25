@@ -409,36 +409,51 @@
 			<div class="pull-left">
 				{if $comments_coms|@count > 1}
 					<button
-						type="submit" form="view_forum" name="action" value="merge_topic" title=":{tr}Merge{/tr}"
-						class="btn btn-default btn-sm tips confirm-form"
+						type="submit"
+						form="view_forum"
+						formaction="{bootstrap_modal controller=forum action=merge_topic}"
+						title=":{tr}Merge{/tr}"
+						class="btn btn-default btn-sm tips confirm-submit"
 					>
 						{icon name="merge"}
 					</button>
 				{/if}
 				{if $all_forums|@count > 1 && $comments_coms|@count > 0}
 					<button
-						type="submit" form="view_forum" name="action" value="move_topic" title=":{tr}Move{/tr}"
-						class="btn btn-default btn-sm tips confirm-form"
+						type="submit"
+						form="view_forum"
+						formaction="{bootstrap_modal controller=forum action=move_topic}"
+						title=":{tr}Move{/tr}"
+						class="btn btn-default btn-sm tips confirm-submit"
 					>
 						{icon name="move"}
 					</button>
 				{/if}
 				{if $comments_coms|@count > 0}
 					<button
-						type="submit" form="view_forum" name="action" value="lock_topic" title=":{tr}Lock{/tr}"
-						class="btn btn-default btn-sm tips confirm-form"
+						type="submit"
+						form="view_forum"
+						formaction="{bootstrap_modal controller=forum action=lock_topic}"
+						title=":{tr}Lock{/tr}"
+						class="btn btn-default btn-sm tips confirm-submit"
 					>
 						{icon name="lock"}
 					</button>
 					<button
-						type="submit" form="view_forum" name="action" value="unlock_topic" title=":{tr}Unlock{/tr}"
-						class="btn btn-default btn-sm tips confirm-form"
+						type="submit"
+						form="view_forum"
+						formaction="{bootstrap_modal controller=forum action=unlock_topic}"
+						title=":{tr}Unlock{/tr}"
+						class="btn btn-default btn-sm tips confirm-submit"
 					>
 						{icon name="unlock"}
 					</button>
 					<button
-						type="submit" form="view_forum" name="action" value="delete_topic" title=":{tr}Delete{/tr}"
-						class="btn btn-default btn-sm tips confirm-form"
+						type="submit"
+						form="view_forum"
+						formaction="{bootstrap_modal controller=forum action=delete_topic}"
+						title=":{tr}Delete{/tr}"
+						class="btn btn-default btn-sm tips confirm-submit"
 					>
 						{icon name="remove"}
 					</button>
@@ -455,7 +470,7 @@
 		</div>
 	</div>
 {/if}
-<form id="view_forum" method="post" action="{service controller=forum}">
+<form id="view_forum" method="post">
 	<input type="hidden" name="comments_offset" value="{$comments_offset|escape}">
 	<input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}">
 	<input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}">
@@ -669,23 +684,17 @@
 									{/if}
 									{if $prefs.feature_forum_topics_archiving eq 'y' && $tiki_p_admin_forum eq 'y'}
 										{if $comments_coms[ix].archived eq 'y'}
-											<a href="{service controller=forum action=unarchive_topic forumId={$forum_info.forumId} comments_parentId={$comments_coms[ix].threadId} comments_offset={$comments_offset} thread_sort_mode={$thread_sort_mode} comments_per_page={$comments_per_page}}"
-											class="confirm-click"
-											>
+											<a href="{bootstrap_modal controller=forum action=unarchive_topic forumId={$forum_info.forumId} comments_parentId={$comments_coms[ix].threadId} comments_offset={$comments_offset} thread_sort_mode={$thread_sort_mode} comments_per_page={$comments_per_page}}">
 												{icon name='file-archive-open' _menu_text='y' _menu_icon='y' alt="{tr}Unarchive{/tr}"}
 											</a>{$liend}
 										{else}
-											<a href="{service controller=forum action=archive_topic forumId={$forum_info.forumId} comments_parentId={$comments_coms[ix].threadId} comments_offset={$comments_offset} thread_sort_mode={$thread_sort_mode} comments_per_page={$comments_per_page}}"
-											class="confirm-click"
-											>
+											<a href="{bootstrap_modal controller=forum action=archive_topic forumId={$forum_info.forumId} comments_parentId={$comments_coms[ix].threadId} comments_offset={$comments_offset} thread_sort_mode={$thread_sort_mode} comments_per_page={$comments_per_page}}">
 												{icon name='file-archive' _menu_text='y' _menu_icon='y' alt="{tr}Archive{/tr}"}
 											</a>{$liend}
 										{/if}
 									{/if}
 									{if $tiki_p_admin_forum eq 'y'}
-										<a href="{service controller=forum action=delete_topic forumId={$forum_info.forumId} forumtopic={$comments_coms[ix].threadId} comments_offset={$comments_offset} thread_sort_mode={$thread_sort_mode} comments_per_page={$comments_per_page}}"
-											class="confirm-click"
-										>
+										<a href="{bootstrap_modal controller=forum action=delete_topic forumId={$forum_info.forumId} forumtopic={$comments_coms[ix].threadId} comments_offset={$comments_offset} thread_sort_mode={$thread_sort_mode} comments_per_page={$comments_per_page}}">
 											{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Delete{/tr}"}
 										</a>{$liend}
 									{/if}
@@ -867,13 +876,5 @@
 				$forum.submit();
 			}
 		});
-	{/jq}
-	{jq}
-	$('.confirm-form').click(function() {
-		var formId = $(this).attr('form'), form = $('form#' + formId), action = this.value;
-		$(form).attr('action', 'tiki-forum-' + action);
-		confirmForm(form);
-		return false;
-	});
 	{/jq}
 {/if}

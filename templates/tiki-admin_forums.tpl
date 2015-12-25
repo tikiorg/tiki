@@ -38,7 +38,7 @@
 			{$libeg = ''}
 			{$liend = ''}
 		{/if}
-		<form method='post' id="admin_forums" class="confirm-form" action="{service controller=forum}">
+		<form method='post' id="admin_forums">
 			<div id="{$ts_tableid}-div" class="{if $js === 'y'}table-responsive{/if} ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}>
 				<table  id="{$ts_tableid}" class="table table-striped table-hover" data-count="{$cant|escape}">
 					{$numbercol = 0}
@@ -120,7 +120,7 @@
 												{/self_link}{$liend}
 												{$libeg}{permission_link mode=text type=forum permType=forums id=$channels[user].forumId title=$channels[user].name}{$liend}
 												{* go ahead and set action to delete_forum since that is the only action available in the multi selct dropdown *}
-												{$libeg}<a href="{service controller=forum action=delete_forum checked={$channels[user].forumId}}" class="confirm-click">
+												{$libeg}<a href="{bootstrap_modal controller=forum action=delete_forum checked={$channels[user].forumId}}">
 													{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Delete{/tr}"}
 												</a>{$liend}
 											{/if}
@@ -159,14 +159,19 @@
 						<div class="col-sm-6 input-group">
 							<select name="action" class="form-control" onchange="show('groups');">
 								<option value="no_action">
-									{tr}Select action to perform with checked...{/tr}
+									{tr}Select action to perform with checked{/tr}...
 								</option>
 								{if $tiki_p_admin_forum eq 'y'}
 									<option value="delete_forum">{tr}Delete{/tr}</option>
 								{/if}
 							</select>
 							<span class="input-group-btn">
-							<button type="submit" form='admin_forums' class="btn btn-primary">
+							<button
+								type="submit"
+								form='admin_forums'
+								formaction="{bootstrap_modal controller=forum}"
+								class="btn btn-primary confirm-submit"
+							>
 								{tr}OK{/tr}
 							</button>
 						</span>
