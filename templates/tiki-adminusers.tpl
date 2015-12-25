@@ -402,7 +402,7 @@
 			{assign var=add_edit_user_tablabel value="{tr}Add a New User{/tr}"}
 		{/if}
 
-		{tab name=$add_edit_user_tablabel}
+		{tab name="{$add_edit_user_tablabel}"}
 			{if $prefs.feature_user_encryption eq 'y'}
 				{remarksbox type="warning" title="{tr}Warning: User Encryption is Active{/tr}"}
 				{tr}The feature User Encryption stores encrypted user information, such as password used to connect to externalsystems.
