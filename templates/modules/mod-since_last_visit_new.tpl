@@ -22,39 +22,38 @@
 								<li style="width:{$slvn_info.li_width}%;">
 									<a data-toggle="tab" href="#fragment-{$fragment}" style="padding: 0;">
 										{if $pos eq "blogs"}
-											<img src="img/icons/large/blogs.png" alt="{tr}Blogs{/tr}" title="{tr}Blogs{/tr}">
+											{icon name="bold" size=1 ititle="Blogs"}
 										{elseif $pos eq "blogPosts"}
-											<img src="img/icons/large/blogs_new.png" alt="{tr}Blog Posts{/tr}" title="{tr}Blog Posts{/tr}">
+											{icon name="bold" size=1 ititle="{tr}Blog Posts{/tr}"}
 										{elseif $pos eq "articles"}
-											<img src="img/icons/large/stock_bold.png" alt="{tr}Articles{/tr}" title="{tr}Articles{/tr}">
+											{icon name="newspaper-o" size=1 ititle="{tr}Articles{/tr}"}
 										{elseif $pos eq "posts"}
-											<img src="img/icons/large/stock_index.png" alt="{tr}Forums{/tr}" title="{tr}Forums{/tr}">
-										{elseif $pos eq "fileGalleries"}
-											<img src="img/icons/large/file-manager.png" alt="{tr}File Galleries{/tr}" title="{tr}File Galleries{/tr}">
+											{icon name="comments" size=1 ititle="{tr}Forums{/tr}"}
+											{icon name="folder-open" size=1 ititle="{tr}File Galleries{/tr}"}
 										{elseif $pos eq "files"}
-											<img src="img/icons/large/file-manager_new.png" alt="{tr}Files{/tr}" title="{tr}Files{/tr}">
+											{icon name="file-o" size=1 ititle="{tr}Files{/tr}"}
 										{elseif $pos eq "imageGalleries"}
-											<img src="img/icons/large/stock_select-color.png" alt="{tr}Image Galleries{/tr}" title="{tr}Image Galleries{/tr}">
+											{icon name="file-image-o" size=1 ititle="{tr}Image Galleries{/tr}"}
 										{elseif $pos eq "images"}
-											<img src="img/icons/large/stock_select-color_new.png" alt="{tr}Images{/tr}" title="{tr}Images{/tr}">
+											{icon name="file-image-o" size=1 ititle="{tr}Images{/tr}"}
 										{elseif $pos eq "poll"}
-											<img src="img/icons/large/stock_missing-image.png" alt="{tr}Poll{/tr}" title="{tr}Poll{/tr}">
+											{icon name="tasks" size=1 ititle="{tr}Poll{/tr}"}
 										{elseif $pos eq "pages"}
-											<img src="img/icons/large/wikipages.png" alt="{tr}Wiki{/tr}" title="{tr}Wiki{/tr}">
+											{icon name="file-text-o" size=1 ititle="{tr}Wiki{/tr}"}
 										{elseif $pos eq "comments"}
-											<img src="img/icons/large/comments.png" alt="{tr}Comments{/tr}" title="{tr}Comments{/tr}">
+											{icon name="comments-o" size=1 ititle="{tr}Comments{/tr}"}
 										{elseif $pos eq "forums"}
-											<img src="img/icons/large/stock_index.png" alt="{tr}Forums{/tr}" title="{tr}Forums{/tr}">
+											{icon name="comments" size=1 ititle="{tr}Forums{/tr}"}
 										{elseif $pos eq "trackers"}
-											<img src="img/icons/large/trackers_new.png" alt="{tr}Tracker Items{/tr} ({tr}New{/tr})" title="{tr}Tracker Items{/tr} ({tr}New{/tr})">
+											{icon name="database" size=1 ititle="{tr}Tracker Items{/tr} ({tr}New{/tr})"}
 										{elseif $pos eq "utrackers"}
-											<img src="img/icons/large/trackers_updated.png" alt="{tr}Tracker Items{/tr} ({tr}Updated{/tr})" title="{tr}Tracker Items{/tr} ({tr}Updated{/tr})">
+											{icon name="database" size=1 ititle="{tr}Tracker Items{/tr} ({tr}Updated{/tr})"}
 										{elseif $pos eq "users"}
-											<img src="img/icons/large/users.png" alt="{tr}Users{/tr}" title="{tr}Users{/tr}">
+											{icon name="group" size=1 ititle="{tr}Users{/tr}"}
 										{elseif $pos eq "calendar"}
-											<img src="img/icons/large/date.png" alt="{tr}Calendars{/tr}" title="{tr}Calendars{/tr}">
+											{icon name="calendar" size=1 ititle="{tr}Calendars{/tr}"}
 										{elseif $pos eq "events"}
-											<img src="img/icons/large/date_new.png" alt="{tr}Events{/tr}" title="{tr}Events{/tr}">
+											{icon name="calendar" size=1 ititle="{tr}Events{/tr}"}
 										{else}
 											{$pos}
 										{/if}
