@@ -29,6 +29,7 @@
 											{icon name="newspaper-o" size=1 ititle="{tr}Articles{/tr}"}
 										{elseif $pos eq "posts"}
 											{icon name="comments" size=1 ititle="{tr}Forums{/tr}"}
+										{elseif $pos eq "fileGalleries"}
 											{icon name="folder-open" size=1 ititle="{tr}File Galleries{/tr}"}
 										{elseif $pos eq "files"}
 											{icon name="file-o" size=1 ititle="{tr}Files{/tr}"}
