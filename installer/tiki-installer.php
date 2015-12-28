@@ -25,6 +25,11 @@ $inputConfiguration = array(
 			'dbinfo' => 'alpha',
 			'email_test_cc' => 'digits',
 //			'email_test_to' => '',  //validated later
+			'use_proxy' => 'alpha',
+			'proxy_host' => 'striptags',
+			'proxy_port' => 'digits',
+			'proxy_user' => 'striptags',
+			'proxy_pass' => 'striptags',
 			'error_reporting_adminonly' => 'alpha',
 			'error_reporting_level' => 'int',
 			'feature_switch_ssl_mode' => 'alpha',
@@ -1169,6 +1174,7 @@ if ( isset($_POST['general_settings']) && $_POST['general_settings'] == 'y' ) {
 		"DELETE FROM `tiki_preferences` WHERE `name` IN " .
 		"('browsertitle', 'sender_email', 'https_login', 'https_port', ".
 		"'feature_switch_ssl_mode', 'feature_show_stay_in_ssl_mode', 'language',".
+		"'use_proxy', 'proxy_host', 'proxy_port', 'proxy_user', 'proxy_pass',".
 		"'error_reporting_level', 'error_reporting_adminonly', 'smarty_notice_reporting', 'log_tpl')"
 	);
 
@@ -1178,6 +1184,12 @@ if ( isset($_POST['general_settings']) && $_POST['general_settings'] == 'y' ) {
 		. " ('https_login', ?),"
 		. " ('https_port', ?),"
 		. " ('error_reporting_level', ?),"
+		. " ('use_proxy', '" . (isset($_POST['use_proxy'])
+			&& $_POST['use_proxy'] == 'on' ? 'y' : 'n') . "'),"
+		. " ('proxy_host', '". $_POST['proxy_host'] . "'),"
+		. " ('proxy_port', '". $_POST['proxy_port'] . "'),"
+		. " ('proxy_user', '". $_POST['proxy_user'] . "'),"
+		. " ('proxy_pass', '". $_POST['proxy_pass'] . "'),"
 		. " ('error_reporting_adminonly', '" . (isset($_POST['error_reporting_adminonly'])
 			&& $_POST['error_reporting_adminonly'] == 'on' ? 'y' : 'n') . "'),"
 		. " ('smarty_notice_reporting', '" . (isset($_POST['smarty_notice_reporting'])

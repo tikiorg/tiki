@@ -562,6 +562,19 @@
 										<br><em>{tr}Email sent by your site will use this address.{/tr}</em>
 									</div>
 								</div>
+								<div style="padding:5px; clear:both">
+									<div style="padding:5px; clear:both">
+										<label for="network_proxy">{tr}Network Proxy?{/tr}</label> <a href="#" onclick="$('#use_proxy_childcontainer').toggle();return false;">{tr}Toggle section display{/tr}</a>
+										<div id="use_proxy_childcontainer"{if $prefs.use_proxy neq 'y'} style="display:none;"{/if}>
+											<div style="margin-left:1em"><label for="use_proxy">{tr}Use proxy{/tr}</label> <input type="checkbox" name="use_proxy" id="use_proxy"{if $prefs.use_proxy eq 'y'} checked="checked"{/if}><a href="https://doc.tiki.org/General+Settings" target="_blank" title="{tr}Help{/tr}">{icon name="help"}</a></div>
+											<div style="margin-left:1em"><label for="proxy_host">{tr}Proxy host name{/tr}</label><input type="text" class="form-control" size="40" name="proxy_host" id="proxy_host" value="{$prefs.proxy_host|escape}"></div>
+											<div style="margin-left:1em"><label for="proxy_port">{tr}Port{/tr}</label><input type="text" class="form-control" size="40" name="proxy_port" id="proxy_port" value="{$prefs.proxy_port|escape}"></div>
+											<div style="margin-left:1em"><label for="proxy_user">{tr}Proxy username{/tr}</label><input type="text" class="form-control" size="40" name="proxy_user" id="proxy_user" value="{$prefs.proxy_user|escape}"></div>
+											<div style="margin-left:1em"><label for="proxy_pass">{tr}Proxy password{/tr}</label><input type="text" class="form-control" size="40" name="proxy_pass" id="proxy_pass" value="{$prefs.proxy_pass|escape}"></div>
+											</div>
+										</div>
+									</div>
+								</div>
 							</fieldset>
 							<br>
 							<fieldset>
