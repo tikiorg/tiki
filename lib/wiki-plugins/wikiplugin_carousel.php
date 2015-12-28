@@ -16,6 +16,17 @@ function wikiplugin_carousel_info()
 		'iconname' => 'wizard',
 		'tags' => array( 'basic' ),
 		'params' => array(
+			'type' => array(
+				'required' => true,
+				'name' => tra('Images Source'),
+				'description' => tra('Choose where to get your images from'),
+				'default' => 'fgalId',
+				'options' => array(
+					array('text' => tra('Select an option'), 'value' => ''),
+					array('text' => tra('All the images in a File Gallery'), 'value' => 'fgalId'),
+					array('text' => tra('A list of file IDs'), 'value' => 'fileIds'),
+				),
+			),
 			'fgalId' => array(
 				'required' => true,
 				'name' => tra('File Gallery ID'),
@@ -24,7 +35,17 @@ function wikiplugin_carousel_info()
 				'filter' => 'digits',
 				'accepted' => 'ID',
 				'default' => '',
+				'parent' => array('name' => 'type', 'value' => 'fgalId'),
 				'profile_reference' => 'file_gallery',
+			),
+			'fileIds' => array(
+				'required' => true,
+				'name' => tra('File IDs'),
+				'description' => tra('List of IDs of images from the File Galleries separated by commas.'),
+				'filter' => 'striptags',
+				'default' => '',
+				'parent' => array('name' => 'type', 'value' => 'fileIds'),
+				'profile_reference' => 'file',
 			),
 			'sort_mode' => array(
 				'required' => false,
@@ -211,7 +232,23 @@ function wikiplugin_carousel( $body, $params )
 	$uniqueId = 'carousel'.$id;
 
 	$filegallib = TikiLib::lib('filegal');
-	$files = $filegallib->get_files(0, -1, $params['sort_mode'], '', $params['fgalId']);
+
+	if ($params['type'] == 'fgalId') {
+		$files = $filegallib->get_files(0, -1, $params['sort_mode'], '', $params['fgalId']);
+	} else if ($params['type'] == 'fileIds') {
+		$params['fileIds'] = explode(',', $params['fileIds']);
+
+		foreach ($params['fileIds'] as $fileId) {
+			$file = $filegallib->get_file($fileId);
+
+			if (!is_null($file)) {
+				$files['data'][] = $file;
+			}
+		}
+
+		$files['cant'] = count($files['data']);
+	}
+
 	if (empty($files['cant'])) {
 		return '';
 	}
