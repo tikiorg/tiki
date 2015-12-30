@@ -517,7 +517,15 @@ if ( $prefs['feature_shadowbox'] == 'y' ) {
 if ( $prefs['wikiplugin_flash'] == 'y' ) {
 	$headerlib->add_jsfile('lib/swfobject/swfobject.js');
 }
-
+if ($prefs['jquery_timeago'] === 'y') {
+	$headerlib->add_jsfile('vendor/jquery/plugins/timeago/jquery.timeago.js');
+	$language_short = substr($prefs['language'], 0, 2);
+	$timeago_locale = "vendor/jquery/plugins/timeago/locales/jquery.timeago.{$language_short}.js";
+	if (is_readable($timeago_locale)) {
+		$headerlib->add_jsfile($timeago_locale);	// TODO handle zh-CN and zh-TW
+	}
+	$headerlib->add_jq_onready('$("time.timeago").timeago();');
+}
 // include and setup themegen editor if already open
 if (! empty($tiki_p_admin) && $tiki_p_admin === 'y' && !empty($prefs['themegenerator_feature']) && $prefs['themegenerator_feature'] === 'y' && !empty($_COOKIE['themegen']) &&
 		(strpos($_SERVER['SCRIPT_NAME'], 'tiki-admin.php') === false || strpos($_SERVER['QUERY_STRING'], 'page=look') === false)) {

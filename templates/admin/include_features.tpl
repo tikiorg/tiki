@@ -167,6 +167,7 @@
 				{preference name=feature_jquery_zoom}
 				{preference name=jquery_ui_chosen}
 				{preference name=jquery_fitvidjs}
+				{preference name=jquery_timeago}
 				<div class="adminoptionboxchild">
 					<fieldset>
 						<legend>{tr}Experimental{/tr}</legend>

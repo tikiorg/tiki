@@ -127,5 +127,11 @@ function prefs_jquery_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'jquery_timeago' => array(
+			'name' => tra('jQuery Timeago'),
+			'description' => tra('jQuery plugin for fuzzy timestamps.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);
 }
