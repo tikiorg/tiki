@@ -39,7 +39,7 @@ class FilegalBatchLib extends FileGalLib
 	 *
 	 * @param array $files
 	 * @param int $galleryId
-	 * @param array $options		[bool subToDesc, bool subdirToSubgal, bool subdirIntegerToSubgalId, bool createSubgals, string fileUser, string fileGroup, string fileMode, string filesPath]
+	 * @param array $options		[bool subToDesc, bool subdirToSubgal, bool createSubgals, string fileUser, string fileGroup, string fileMode]
 	 * @return array				feedback messages
 	 */
 
