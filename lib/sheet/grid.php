@@ -188,7 +188,7 @@ class TikiSheet
 		return array(
 			'TikiSheetSerializeHandler',
 			'TikiSheetCSVHandler',
-            'TikiSheetCSVExcelHandler',
+            'TikiSheetCSVExcelHandler'//,
 			//'TikiSheetExcelHandler'
 		);
 	}
@@ -1008,7 +1008,7 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 	// name
 	function name()
 	{
-		return $this->name;
+		return "CSV File (commas)";
 	}
 
 	// supports
@@ -1272,7 +1272,7 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
     // name
     function name()
     {
-        return "CSV-Excel File";
+        return "CSV-Excel File (semicolons)";
     }
 
     // supports
