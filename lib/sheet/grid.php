@@ -997,7 +997,7 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 	// name {{{2
 	function name()
 	{
-		return $this->name;
+		return "CSV File (commas)";
 	}
 
 	// supports {{{2
@@ -1261,7 +1261,7 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
     // name {{{2
     function name()
     {
-        return "CSV-Excel File";
+        return "CSV-Excel File (semicolons)";
     }
 
     // supports {{{2
