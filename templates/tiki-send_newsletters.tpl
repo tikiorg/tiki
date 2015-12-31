@@ -213,7 +213,7 @@
 				<div class="form-group form-inline">
 					<label class="control-label col-sm-2">{tr}Apply content template{/tr}</label>
 					<div class="col-sm-10">
-						<select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();" class="form-control">
+						<select name="templateId" onchange="javascript:needToConfirm=false;document.getElementById('editpageform').submit();" class="form-control">
 							<option value="0">{tr}none{/tr}</option>
 							{section name=ix loop=$templates}
 								<option value="{$templates[ix].templateId|escape}" {if $templateId eq $templates[ix].templateId}selected="selected"{/if}>
