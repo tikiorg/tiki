@@ -214,7 +214,7 @@
 									<td>{tr}Apply content template{/tr}</td>
 									<td>
 										<input type="hidden" name="previousTemplateId" value="{$templateId}">
-										<select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();">
+										<select name="templateId" onchange="javascript:needToConfirm=false;document.getElementById('editpageform').submit();">
 											<option value="0">{tr}none{/tr}</option>
 											{section name=ix loop=$templates}
 												<option value="{$templates[ix].templateId|escape}" {if $templateId eq $templates[ix].templateId}selected="selected"{/if}>
