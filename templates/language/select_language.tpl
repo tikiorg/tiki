@@ -11,7 +11,7 @@
 			<select name="language" id="custom_lang_select" class="form-control">
 				{section name=ix loop=$languages}
 					<option value="{$languages[ix].value|escape}"
-						{if (empty($custom_lang) && $languages[ix].value eq $prefs.site_language) || (!empty($custom_lang) && $languages[ix].value eq $custom_lang)} selected="selected"{/if}>
+						{if (empty($language) && $languages[ix].value eq $prefs.site_language) || (!empty($language) && $languages[ix].value eq $language)} selected="selected"{/if}>
 						{$languages[ix].name|escape}
 					</option>
 				{/section}

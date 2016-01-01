@@ -61,7 +61,7 @@ class Services_Language_Controller
 
 	/**
 	 * Translations in the database will be merged with the other translations in language.php. Note that after writing translations to language.php they are removed from the database.
-	 * @param $input (at least value for "language" is expected)
+	 * @param $input
 	 * @return language.php file
 	 */
 	function action_write_to_language_php($input)
@@ -86,19 +86,17 @@ class Services_Language_Controller
 		//TODO: get count of available translations in the database
 		//$db_translation_count = $this->getDbTranslationCount($language);
 		
-		//TODO: check if each language file is writable instead of the whole lang/ dir
-		if (is_writable('lang/')) {
-			$langIsWritable = true;
-		} else {
-			$langIsWritable = false;
-			throw new Services_Exception_Denied(tr('lang/ folder is not writable'));
+		//check if lang directory is writable for the selected language
+		$langIsWritable = $this->checkLangIsWritable($language);
+		if ($langIsWritable === false){
+			throw new Services_Exception_Denied(tr('lang/$language directory is not writable'));
 		}
-
+		
 		$confirm = $input->confirm->int();		
 		if($confirm){
 			//set export language
 			$export_language = new LanguageTranslations($language);
-			// Write to language.php
+			//write to language.php
 			try {
 				$stats = $export_language->writeLanguageFile();
 			} catch (Exception $e) { //TODO: this is messy
@@ -150,7 +148,11 @@ class Services_Language_Controller
 		$language_name = $language_details[0]['name'];
 
 		//get custom php file location and content
-		$custom_php_location = $this->getCustomPhpLocation($language);
+		$custom_php_file = $this->getLangDir($language);
+		$custom_php_file .= 'custom.php';
+		if(!file_exists($custom_php_file)){
+			$custom_php_file = null;
+		}
 		$custom_php_translations = $this->getCustomPhpTranslations($language);
 
 		//get count of custom translations
@@ -189,13 +191,13 @@ class Services_Language_Controller
 			'language' => $language,
 			'language_name' => $language_name,
 			'custom_translations' => $custom_php_translations,
-			'custom_php_location' => $custom_php_location,
+			'custom_file' => $custom_php_file,
 			'custom_translation_item_count' => $custom_translation_item_count,
 		);
 	}
 
 	/**
-	 * Select a language for custom php file management
+	 * Select a language
 	 * @param 
 	 * @return 
 	 */
@@ -205,38 +207,186 @@ class Services_Language_Controller
 		$language = $input->language->text();
 		
 		//get languages
-		$languages = array();
-		$langLib = TikiLib::lib('language');
-		$languages = $langLib->list_languages(false, null, true);
+		$languages = $this->getLanguages();
 		
 		return array(
 			'title' => tr('Select language'),
 			'languages' => $languages,
-			'custom_lang' => $language,
+			'language' => $language,
 		);
 	}
 	
 	/**
-	 * Get custom php file location (if exists)
+	 * Download a language file (language.php or custom.php)
 	 * @param $language
-	 * @return $custom_php_location
+	 * @return $success
 	 */
-	private function getCustomPhpLocation($language)
-	{	
-		$custom_file = 'lang/' . $language . '/';
-		if (!empty($tikidomain)) {
-			$custom_file .= "$tikidomain/";
+	function action_download($input)	
+	{
+		//get input
+		$language = $input->language->text();
+		$file_type = $input->file_type->text();
+		
+		//get language directory
+		$file = $this->getLangDir($language);
+		
+		//add file name
+		if($file_type === 'custom_php'){
+			$file .= 'custom.php';
 		}
-
-		$custom_file .= 'custom.php';
-
-		if (file_exists($custom_file)) {
-			return $custom_file;
+		elseif($file_type === 'language_php'){
+			$file .= 'language.php';
 		}
 		else {
-			return false;
+			throw new Services_Exception_Denied(tr('Invalid file type'));
+		}
+		
+		//get the file
+		if (file_exists($file))	{
+			header('Content-Description: File Transfer');
+			header('Content-Type: application/octet-stream');
+			header('Content-Disposition: attachment; filename="'.basename($file).'"');
+			header('Expires: 0');
+			header('Cache-Control: must-revalidate');
+			header('Pragma: public');
+			header('Content-Length: ' . filesize($file));
+			readfile($file);
+			exit;
+		}
+		else {
+			throw new Services_Exception_Denied(tr('File does not exist'));
 		}
 	}
+	
+	/**
+	 * Upload a language file (language.php or custom.php)
+	 * @param $input
+	 * @return integer
+	 */
+	function action_upload($input)	
+	{
+		//check permissions
+		$perms = Perms::get('tiki');
+		if (! $perms->tiki_p_edit_languages) {
+			throw new Services_Exception_Denied(tr('Permission denied'));
+		}
+
+		//get list of languages
+		$languages = $this->getLanguages();
+		
+		//get language
+		if($input->language->text()){
+			$language = $input->language->text();
+		}
+		elseif (isset($user) && isset($user_preferences[$user]['language'])) {
+			$language = $user_preferences[$user]['language'];
+		} 
+		else {
+			global $prefs;
+			$language = $prefs['language'];
+		}
+	
+		//language file type array
+		$fileTypes = array(
+			'tiki_custom_php' => 'Tiki custom.php',
+			'tiki_language_php' => 'Tiki language.php',
+			'transifex_language_php' => 'Transifex language.php',
+		);
+
+		$confirm = $input->confirm->int();
+		if($confirm){
+			//check if lang directory is writable
+			$langIsWritable = $this->checkLangIsWritable($language);
+			if ($langIsWritable === false){
+				throw new Services_Exception_Denied(tr('lang/$language directory is not writable'));
+			}
+			
+			//process file type types
+			$fileType = $input->file_type->text();
+
+			if($fileType === 'tiki_custom_php'){
+				//verify php error _FILES error count
+				if($_FILES['language_file']['error'] > 0){
+					throw new Services_Exception_Denied(tr('There was an error during upload'));
+				}
+				//verify file name
+				elseif($_FILES['language_file']['name'] !== 'custom.php'){
+					throw new Services_Exception_Denied(tr('Invalid file name (expected file name: custom.php)'));
+				}
+				//verify file type
+				elseif($_FILES['language_file']['type'] !== 'application/x-httpd-php'){
+					throw new Services_Exception_Denied(tr('Invalid file type (expected file type: php)'));
+				}
+				//move the file to temp/ folder
+				else {
+					//check if a custom.php already exist in temp/ folder and delete it
+					if(file_exists('temp/custom.php')){
+						unlink('temp/custom.php');
+					}					
+					//move the file 
+					move_uploaded_file($_FILES['language_file']['tmp_name'], 'temp/' . $_FILES['language_file']['name']);
+				}
+				
+				//read lang_custom array from the just uploaded custom.php file
+				include('temp/custom.php');
+				if (isset($lang_custom) && is_array($lang_custom)){
+					$uploadCustomPhpTranslations = $lang_custom;
+				}
+				else {
+					throw new Services_Exception_Denied(tr('Invalid file content (not a standard Tiki custom.php file)'));
+				}
+				
+				//delete the file
+				unlink('temp/custom.php');
+				
+				//get existing custom translations
+				if(!is_null($this->getCustomPhpTranslations($language))){
+					$existingCustomPhpTranslations = $this->getCustomPhpTranslations($language);	
+				}
+
+				//merge uploaded into existing, this way existing translations are preserved in case translation exist in both files
+				$data = array_merge($uploadCustomPhpTranslations, $existingCustomPhpTranslations);
+	
+				//write the new custom.php file to the lang/$language folder
+				$this->writeCustomPhpTranslations($language, $data);
+				
+				//TODO: add a success message
+				return array(
+					'FORWARD' => array(
+						'controller' => 'language',
+						'action' => 'manage_custom_php_translations',
+						'language' => $language,
+					),
+				);
+			}
+			elseif($fileType === 'tiki_language_php'){
+				//$success = $this->uploadTikiLanguagePhp($fileData);
+			}
+			elseif($fileType === 'transifex_language_php'){
+				//$success = $this->uploadTransifexLanguagePhp($fileData);
+			}
+			else {
+				throw new Services_Exception_Denied(tr('Invalid file type'));
+			}
+			
+			/*return array(
+				'FORWARD' => array(
+					'controller' => 'language',
+					'action' => 'action_upload_language_php',
+					//'language' => $language,
+					//'langIsWritable' => $langIsWritable,
+					//'langDirectory' => $langDirectory,
+				),
+			);*/
+		}
+
+		return array(
+			'title' => tr('Upload Translations'),
+			'languages' => $languages,
+			'language' => $language,
+			'fileTypes' => $fileTypes,
+		);
+	}	
 	
 	/**
 	 * Get translations from the custom.php file for a language
@@ -244,9 +394,10 @@ class Services_Language_Controller
 	 * @return array
 	 */
 	private function getCustomPhpTranslations($language)
-	{	
-		$custom_file = $this->getCustomPhpLocation($language);
-
+	{
+		$custom_file = $this->getLangDir($language);
+		$custom_file .= 'custom.php';
+		
 		if (!empty($custom_file)) {
 			$lang = array();
 			include ($custom_file);
@@ -265,10 +416,9 @@ class Services_Language_Controller
 	private function writeCustomPhpTranslations($language, $data)	
 	{
 		//prepare custom file path
-		$custom_file = 'lang/' . $language . '/';
-		if (!empty($tikidomain)) {
-			$custom_file.= "$tikidomain/";
-		}
+		$custom_file = $this->getLangDir($language);
+		
+		//add file name
 		$custom_file.= 'custom.php';
 
 		//prepare php file
@@ -317,4 +467,60 @@ class Services_Language_Controller
 			return $item_count;
 		}
 	}
+	
+	/**
+	 * Get formatted list of languages
+	 * @param none
+	 * @return array $languages
+	 */
+	private function getLanguages($language = '')	
+	{	
+		$languages = array();
+		$langLib = TikiLib::lib('language');
+		$languages = $langLib->list_languages(false, null, true);
+		return $languages;
+	}
+
+	/**
+	 * Get language directory generally and for a specific language too
+	 * @param language
+	 * @return true/false
+	 */
+	private function getLangDir($language = '')	
+	{	
+		$langDir = "lang/";
+		
+		if(!empty($language)){
+			$langDir .= "$language/";
+		}
+		
+		global $tikidomain;
+		if (!empty($tikidomain)) {
+			$langDir .= "$tikidomain/";
+		}
+			
+		return $langDir;
+	}	
+
+	/**
+	 * Check if lang/ directory is writeable generally and for a specific language too
+	 * @param language
+	 * @return true/false
+	 */
+	private function checkLangIsWritable($language = '')	
+	{	
+		$directory = $this->getLangDir($language);
+		
+		if ($language) {
+			if(is_writable($directory)) {
+				$langIsWritable = true;
+			}
+			else {
+				$langIsWritable = false;
+			}
+		}
+		
+		return $langIsWritable;
+	}	
+	
 }

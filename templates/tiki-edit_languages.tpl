@@ -8,6 +8,9 @@
 	<a class="btn btn-link tips" href="{service controller=language action=manage_custom_php_translations}" title="{tr}Customized String Translation{/tr}:{tr}Manage local translations in a custom.php file{/tr}">
 		{icon name="file-code-o"} {tr}Custom Translations{/tr}
 	</a>
+	<a class="btn btn-link tips" href="{service controller=language action=upload language={$edit_language}}" title="{tr}Upload Translations{/tr}:{tr}Upload a file with translations for the selected language.{/tr}">
+		{icon name="upload"} {tr}Upload Translations{/tr}
+	</a>
 </div>
 <form action="tiki-edit_languages.php" id="select_action" method="post" class="form-horizontal">
 	{if isset($find)}

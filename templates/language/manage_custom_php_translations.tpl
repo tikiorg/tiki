@@ -3,14 +3,19 @@
 	{title admpage="i18n"}{$title|escape}{/title}
 {/block}
 {block name="navigation"}
-	<div class="t_navbar margin-bottom-md clearfix">
-		{if $prefs.lang_use_db eq "y"}
-			{button _type="link" _class="tips" href="tiki-edit_languages.php" _icon_name="edit" _text="{tr}Edit languages{/tr}" _title="{tr}Edit languages{/tr}:{tr}Edit, export and import languages{/tr}"}
-			{if $prefs.freetags_multilingual eq 'y'}
-				{button _type="link" _class="tips" href="tiki-freetag_translate.php" _icon_name="tags" _text="{tr}Translate Tags{/tr}" _title=":{tr}Translate tags{/tr}"}
+	{if $tiki_p_edit_languages}
+		<div class="t_navbar margin-bottom-md clearfix">
+			<a class="btn btn-link tips" href="{service controller=language action=upload language={$edit_language}}" title="{tr}Upload Translations{/tr}:{tr}Upload a file with translations for the selected language.{/tr}">
+			{icon name="upload"} {tr}Upload Translations{/tr}
+			</a>
+			{if $prefs.lang_use_db eq "y"}
+				{button _type="link" _class="tips" href="tiki-edit_languages.php" _icon_name="edit" _text="{tr}Edit languages{/tr}" _title="{tr}Edit languages{/tr}:{tr}Edit, export and import languages{/tr}"}
+				{if $prefs.freetags_multilingual eq 'y'}
+					{button _type="link" _class="tips" href="tiki-freetag_translate.php" _icon_name="tags" _text="{tr}Translate Tags{/tr}" _title=":{tr}Translate tags{/tr}"}
+				{/if}
 			{/if}
-		{/if}
-	</div>
+		</div>
+	{/if}
 {/block}
 {block name="content"}
 	<form action="{service controller=language action=manage_custom_php_translations}" method="post" role="form" class="form">
@@ -46,8 +51,11 @@
 			</div>
 			<div class="col-md-6 pull-right">
 				{remarksbox type="info" title="{tr}File{/tr}" close="n"}
-					{if $custom_php_location}
-						{$custom_php_location}
+					{if $custom_file}
+						{$custom_file}
+						<a class="btn btn-link tips" href="{service controller=language action=download language={$language} file_type="custom_php"}" title="{tr}Download{/tr}:{tr}Download custom.php file for the selected language.{/tr}">
+						{icon name="download"} {tr}Download{/tr}
+						</a>
 					{else}
 						{tr}Custom translation file does not exist. Save a translation to create the file.{/tr}
 					{/if}
