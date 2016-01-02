@@ -88,7 +88,7 @@ class Language extends TikiDb_Bridge
 	 * $string = str_replace ('\"',   '"',  $string);
 	 * We skip the exotic regexps for octal an hexadecimal
 	 * notation - \{0-7]{1,3} and \x[0-9A-Fa-f]{1,2} - since they
-	 * should not apper in english strings.
+	 * should not appear in english strings.
 	 */
 	public static function removePhpSlashes ($string)
 	{

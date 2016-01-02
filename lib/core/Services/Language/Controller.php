@@ -148,7 +148,7 @@ class Services_Language_Controller
 		$language_name = $language_details[0]['name'];
 
 		//get custom php file location and content
-		$custom_php_file = $this->getLangDir($language);
+		$custom_php_file = $this->getLanguageDirectory($language);
 		$custom_php_file .= 'custom.php';
 		if(!file_exists($custom_php_file)){
 			$custom_php_file = null;
@@ -228,7 +228,7 @@ class Services_Language_Controller
 		$file_type = $input->file_type->text();
 		
 		//get language directory
-		$file = $this->getLangDir($language);
+		$file = $this->getLanguageDirectory($language);
 		
 		//add file name
 		if($file_type === 'custom_php'){
@@ -290,7 +290,7 @@ class Services_Language_Controller
 		$fileTypes = array(
 			'tiki_custom_php' => 'Tiki custom.php',
 			'tiki_language_php' => 'Tiki language.php',
-			'transifex_language_php' => 'Transifex language.php',
+			'transifex_php' => 'Transifex php',
 		);
 
 		$confirm = $input->confirm->int();
@@ -301,33 +301,32 @@ class Services_Language_Controller
 				throw new Services_Exception_Denied(tr('lang/$language directory is not writable'));
 			}
 			
+			//verify php error _FILES error count
+			if($_FILES['language_file']['error'] > 0){
+				throw new Services_Exception_Denied(tr('There was an error during upload'));
+			}
+				
+			//verify file type
+			if($_FILES['language_file']['type'] !== 'application/x-httpd-php'){
+				throw new Services_Exception_Denied(tr('Invalid file type (expected file type: php)'));
+			}
+			
 			//process file type types
 			$fileType = $input->file_type->text();
 
 			if($fileType === 'tiki_custom_php'){
-				//verify php error _FILES error count
-				if($_FILES['language_file']['error'] > 0){
-					throw new Services_Exception_Denied(tr('There was an error during upload'));
-				}
 				//verify file name
-				elseif($_FILES['language_file']['name'] !== 'custom.php'){
+				if($_FILES['language_file']['name'] !== 'custom.php'){
 					throw new Services_Exception_Denied(tr('Invalid file name (expected file name: custom.php)'));
 				}
-				//verify file type
-				elseif($_FILES['language_file']['type'] !== 'application/x-httpd-php'){
-					throw new Services_Exception_Denied(tr('Invalid file type (expected file type: php)'));
-				}
-				//move the file to temp/ folder
-				else {
-					//check if a custom.php already exist in temp/ folder and delete it
-					if(file_exists('temp/custom.php')){
-						unlink('temp/custom.php');
-					}					
-					//move the file 
-					move_uploaded_file($_FILES['language_file']['tmp_name'], 'temp/' . $_FILES['language_file']['name']);
-				}
+				//check if a custom.php already exist in temp/ directory and delete it
+				if(file_exists('temp/custom.php')){
+					unlink('temp/custom.php');
+				}					
+				//move the uploaded file to /temp directory
+				move_uploaded_file($_FILES['language_file']['tmp_name'], 'temp/' . $_FILES['language_file']['name']);
 				
-				//read lang_custom array from the just uploaded custom.php file
+				//read $lang_custom array from the uploaded custom.php file
 				include('temp/custom.php');
 				if (isset($lang_custom) && is_array($lang_custom)){
 					$uploadCustomPhpTranslations = $lang_custom;
@@ -336,7 +335,7 @@ class Services_Language_Controller
 					throw new Services_Exception_Denied(tr('Invalid file content (not a standard Tiki custom.php file)'));
 				}
 				
-				//delete the file
+				//delete the temporary file
 				unlink('temp/custom.php');
 				
 				//get existing custom translations
@@ -360,10 +359,69 @@ class Services_Language_Controller
 				);
 			}
 			elseif($fileType === 'tiki_language_php'){
-				//$success = $this->uploadTikiLanguagePhp($fileData);
+				//verify file name
+				if($_FILES['language_file']['name'] !== 'language.php'){
+					throw new Services_Exception_Denied(tr('Invalid file name (expected file name: language.php)'));
+				}
+				
+				//move the file to lang/$language folder, it will overwrite the existing file
+				$langDir = $this->getLanguageDirectory($language);
+				$langFile = $langDir . 'language.php';
+				move_uploaded_file($_FILES['language_file']['tmp_name'], $langFile);
+				
+				//redirect to tiki-edit_languages.php
+				$accessLib = TikiLib::lib('access');
+				$accessLib->redirect('tiki-edit_languages.php', tr('Tiki language.php file uploaded.'));
 			}
-			elseif($fileType === 'transifex_language_php'){
-				//$success = $this->uploadTransifexLanguagePhp($fileData);
+			elseif($fileType === 'transifex_php'){
+				//check if a same named file already exist in temp/ directory and delete it
+				if(file_exists('temp/'. $_FILES['language_file']['name'])){
+					unlink('temp/'. $_FILES['language_file']['name']);
+				}					
+				//move the uploaded file to temp/ directory
+				move_uploaded_file($_FILES['language_file']['tmp_name'], 'temp/' . $_FILES['language_file']['name']);
+				
+				//pass the file for processing
+				$file = 'temp/'. $_FILES['language_file']['name'];
+				$processResult = $this->processTransifexLanguagePhp($file);
+					
+				//prepare modifications to be written to the temporary language file
+				$langFile = file($file);
+				$arrayStart = array_search("\$lang = array(\n", $langFile);
+				$arrayClose = array_search(");\n", $langFile);
+				if ($arrayClose === FALSE) {
+					throw new Services_Exception_Denied(tr('Invalid file content (array unclosed)'));
+				}
+				
+				$transifexLang = array();
+				foreach ($processResult['lang'] as $lang) {
+					$transifexLang[] = $lang . "\n";
+				}
+				array_push($transifexLang, ");\n");
+				array_splice($langFile, $arrayStart+1, count($langFile), $transifexLang);
+				
+				//do write
+				$f = fopen($file, 'w');
+				foreach ($langFile as $line) {
+					fwrite($f, $line);
+				}
+				fclose($f);
+				
+				//test if file can be included
+				$test = include($file);
+				if(!$test){
+					throw new Services_Exception_Denied(tr('Error including the file'));
+				}
+				unset($test);
+				
+				//move the file to lang/$language folder, it will overwrite the existing file
+				$langDir = $this->getLanguageDirectory($language);
+				$langFile = $langDir . 'language.php';
+				rename($file, $langFile);
+				
+				//redirect to tiki-edit_languages.php
+				$accessLib = TikiLib::lib('access');
+				$accessLib->redirect('tiki-edit_languages.php', tr('Transifex language.php file uploaded.'));
 			}
 			else {
 				throw new Services_Exception_Denied(tr('Invalid file type'));
@@ -395,7 +453,7 @@ class Services_Language_Controller
 	 */
 	private function getCustomPhpTranslations($language)
 	{
-		$custom_file = $this->getLangDir($language);
+		$custom_file = $this->getLanguageDirectory($language);
 		$custom_file .= 'custom.php';
 		
 		if (!empty($custom_file)) {
@@ -416,7 +474,7 @@ class Services_Language_Controller
 	private function writeCustomPhpTranslations($language, $data)	
 	{
 		//prepare custom file path
-		$custom_file = $this->getLangDir($language);
+		$custom_file = $this->getLanguageDirectory($language);
 		
 		//add file name
 		$custom_file.= 'custom.php';
@@ -486,7 +544,7 @@ class Services_Language_Controller
 	 * @param language
 	 * @return true/false
 	 */
-	private function getLangDir($language = '')	
+	private function getLanguageDirectory($language = '')	
 	{	
 		$langDir = "lang/";
 		
@@ -509,7 +567,7 @@ class Services_Language_Controller
 	 */
 	private function checkLangIsWritable($language = '')	
 	{	
-		$directory = $this->getLangDir($language);
+		$directory = $this->getLanguageDirectory($language);
 		
 		if ($language) {
 			if(is_writable($directory)) {
@@ -521,6 +579,52 @@ class Services_Language_Controller
 		}
 		
 		return $langIsWritable;
-	}	
+	}
 	
+	/**
+	 * Process a transifex language.php file
+	 * @param $file (complete path to the file including file name)
+	 * @return array 
+	 */
+	private function processTransifexLanguagePhp($file)	
+	{	
+		//check if file is available
+		if(!is_file($file)){
+			throw new Services_Exception_Denied(tr('Invalid file parameter supplied'));
+		}
+		
+		//language.php file is big, set time limit to prevent timeout 
+		set_time_limit(0);
+
+		//read the file into an array
+		$fileContent = file($file);
+		
+		//preg_match array values to get translation strings from the language.php file
+		//$captureFullString |(^\/\/\s*?".+"\s*=>\s*".*".*)|
+		//$captureSource |^\/\/\s*?".+"\s*=>\s*"(.*)".*|
+		//$captureTranslation |^\/\/\s*?"(.+)"\s*=>\s*".*".*|
+		foreach ($fileContent as $line) {
+			if (preg_match('|^\/\/\s*?"(.+)"\s*=>\s*"(.*)".*|', $line, $matches)) {
+				//assuming that untranslated lines are those, that have the same key and value OR where value is empty
+				if(($matches[1] === $matches[2]) || ($matches[2] === '')){
+					$untranslated[$matches[1]] = $matches[2];
+					//lets keep the original lines as they were so that untranslated strings remain commented out
+					$lang[] = $matches[0];
+				}
+				//assuming translated line are those, where key and value are different
+				else {
+					$translated[$matches[1]] = $matches[2];
+					//remove slashes and space to activate translated lines
+					$lang[] = substr($matches[0], 3);
+					//$lang[] = Language::removePhpSlashes($matches[0]);
+				}
+			}
+		}
+		
+		return array(
+			'lang' => $lang,
+			'translated' => $translated,
+			'untranslated' => $untranslated,
+		);
+	}
 }

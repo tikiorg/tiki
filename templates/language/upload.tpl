@@ -1,6 +1,21 @@
 {extends 'layout_view.tpl'}
 {block name="title"}
-	{title}{$title|escape}{/title}
+	{title admpage="i18n"}{$title|escape}{/title}
+{/block}
+{block name="navigation"}
+	{if $tiki_p_edit_languages}
+		<div class="t_navbar margin-bottom-md clearfix">
+			<a class="btn btn-link tips" href="{service controller=language action=manage_custom_php_translations}" title="{tr}Customized String Translation{/tr}:{tr}Manage local translations in a custom.php file{/tr}">
+				{icon name="file-code-o"} {tr}Custom Translations{/tr}
+			</a>
+			{if $prefs.lang_use_db eq "y"}
+				{button _type="link" _class="tips" href="tiki-edit_languages.php" _icon_name="edit" _text="{tr}Edit languages{/tr}" _title="{tr}Edit languages{/tr}:{tr}Edit, export and import languages{/tr}"}
+			{/if}
+			{if $prefs.freetags_multilingual eq 'y'}
+				{button _type="link" _class="tips" href="tiki-freetag_translate.php" _icon_name="tags" _text="{tr}Translate Tags{/tr}" _title=":{tr}Translate tags{/tr}"}
+			{/if}
+		</div>
+	{/if}
 {/block}
 {block name="content"}
 	<form action="{service controller=language action=upload}" method="post" role="form" class="form" enctype="multipart/form-data">
