@@ -12,7 +12,6 @@ function wikiplugin_appframe_info()
 		'description' => tra('Create a frame in which to assemble custom applications'),
 		'prefs' => array('wikiplugin_appframe'),
 		'format' => 'html',
-		'introduced' => 9,
 		'documentation' => 'PluginAppFrame',
 		'iconname' => 'merge',
 		'filter' => 'wikicontent',
