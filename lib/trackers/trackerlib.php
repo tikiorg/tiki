@@ -1322,7 +1322,7 @@ class TrackerLib extends TikiLib
 			$csort_mode = 'tti.created';
 		}
 		$query = 'SELECT tti.*'
-				.', '.( ($numsort) ? "cast($csort_mode as decimal)" : $csort_mode).' as `sortvalue`'
+				.', '.( ($numsort) ? "cast(max($csort_mode) as decimal)" : "max($csort_mode)").' as `sortvalue`'
 			.' FROM '.$base_tables.$sort_tables.$cat_table
 			.$mid
 			.' GROUP BY tti.`itemId`'
