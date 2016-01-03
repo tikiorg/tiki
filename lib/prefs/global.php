@@ -73,7 +73,6 @@ function prefs_global_list($partial = false)
 			'size' => 30,
 			'default' => TikiInit::tempdir(),
 			'perspective' => false,
-			'default' => 'temp',
 		),
 		'helpurl' => array(
 			'name' => tra('Help URL'),
@@ -172,7 +171,6 @@ function prefs_global_list($partial = false)
 		),
 		'urlOnUsername' => array(
 			'name' => tra('URL to go to when clicking on a username'),
-            'description' => tra(''),
 			'type' => 'text',
 			'description' => tra('URL to go to when clicking on a username.').' '.tra('Default').': tiki-user_information.php?userId=%userId% <em>('.tra('Use %user% for login name and %userId% for userId)').')</em>',
 			'default' => '',

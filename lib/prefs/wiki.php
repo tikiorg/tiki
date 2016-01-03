@@ -602,13 +602,11 @@ function prefs_wiki_list($partial = false)
 		'wiki_3d_eletrostatic_constant' => array(
 			'name' => tra('Electrostatic constant'),
 			'type' => 'text',
-			'type' => 'text',
 			'size' => '5',
 			'default' => '1000f',
 		),
 		'wiki_3d_node_mass' => array(
 			'name' => tra('Node mass'),
-			'type' => 'text',
 			'type' => 'text',
 			'size' => '3',
 			'filter' => 'digits',
@@ -616,7 +614,6 @@ function prefs_wiki_list($partial = false)
 		),
 		'wiki_3d_node_charge' => array(
 			'name' => tra('Node charge'),
-			'type' => 'text',
 			'type' => 'text',
 			'size' => '3',
 			'filter' => 'digits',

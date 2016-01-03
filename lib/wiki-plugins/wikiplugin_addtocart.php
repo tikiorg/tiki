@@ -106,7 +106,6 @@ function wikiplugin_addtocart_info()
 				'since' => '7.0',
 				'filter' => 'text',
 				'default' => 'n',
-				'since' => '7',
 			),
 			'onbehalf' => array(
 				'required' => false,

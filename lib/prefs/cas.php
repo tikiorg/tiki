@@ -58,7 +58,6 @@ function prefs_cas_list()
 		'cas_hostname' => array(
 			'name' => tra('Hostname'),
 			'description' => tra('Hostname of the CAS server.'),
-            'description' => tra(''),
 			'type' => 'text',
 			'size' => 50,
 			'filter' => 'striptags',

@@ -523,11 +523,10 @@ class FileGalLib extends TikiLib
 				}
 			}
 			//if no archives allowed by user, then replace certain original file information with
-			//informtion from the validated draft
+			//information from the validated draft
 			if ($archives == -1) {
 				$filesTable->update(
 					array(
-						'path' => $newPath,
 						'filename' => $draft['filename'],
 						'filesize' => $draft['filesize'],
 						'filetype' => $draft['filetype'],

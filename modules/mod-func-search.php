@@ -182,7 +182,6 @@ function module_search($mod_reference, $smod_params) 	// modifies $smod_params s
 		'go_submit' => tra('Titles'),
 		'edit_action' => 'tiki-editpage.php',
 		'edit_submit' => tra('Edit'),
-		'default_button' => 'search',
 		'search_heading' => '',
 		'templateId' => '',
 		'categId' => '',

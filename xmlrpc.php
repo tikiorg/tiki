@@ -19,7 +19,6 @@ $map = array (
 		'blogger.editPost' => array( 'function' => 'editPost'),
 		'blogger.deletePost' => array( 'function' => 'deletePost'),
 		'blogger.getRecentPosts' => array( 'function' => 'getRecentPosts'),
-		'blogger.getUserInfo' => array( 'function' => 'getUserInfo'),
 		'blogger.getUsersBlogs' => array( 'function' => 'getUserBlogs')
 );
 
