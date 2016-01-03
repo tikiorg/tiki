@@ -20,7 +20,7 @@ class DbgCmd_Watch extends DebuggerCommand
 	var $watches;
 
 	/// Restore watches list at construction time
-	function DbgCmd_Watch()
+	function __construct()
 	{
 		global $user;
 
