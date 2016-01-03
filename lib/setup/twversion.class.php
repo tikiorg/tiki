@@ -18,7 +18,7 @@ class TWVersion
 	public $star;			// Star being used for this version tree
 	public $svn;			// Is this a Subversion version or a package?
 
-	function TWVersion()
+	function __construct()
 	{
 		// Set the development branch.  Valid are:
 		//   stable   : Represents stable releases.
