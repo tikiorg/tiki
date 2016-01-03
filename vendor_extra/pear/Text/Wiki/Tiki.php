@@ -30,59 +30,57 @@
  * @see        Text_Wiki::Text_Wiki()
  */
 class Text_Wiki_Tiki extends Text_Wiki {
-    var $rules = array(
-        'Prefilter',
-        'Delimiter',
-        'Code',
-        'Plugin',
+	var $rules = array(
+		'Prefilter',
+		'Delimiter',
+		'Code',
+		'Plugin',
 //        'Function',
-        'Html',
-        'Raw',    // Now Parsed in Plugin
-        'Preformatted',    // Now Parsed in Plugin
-        'Include',
-        'Embed',
-        'Page',
-        'Anchor',
-        'Heading',
-        'Toc',
-        'Titlebar',
-        'Horiz',
-        'Redirect',
-        'Break',
-        'Blockquote',
-        'List',
-        'Deflist',
-        'Table',
-        'Box',
-        'Image',
-        'Smiley',
+		'Html',
+		'Raw',    // Now Parsed in Plugin
+		'Preformatted',    // Now Parsed in Plugin
+		'Include',
+		'Embed',
+		'Page',
+		'Anchor',
+		'Heading',
+		'Toc',
+		'Titlebar',
+		'Horiz',
+		'Redirect',
+		'Break',
+		'Blockquote',
+		'List',
+		'Deflist',
+		'Table',
+		'Box',
+		'Image',
+		'Smiley',
 //        'Phplookup',
-        'Center',
-        'Newline',
-        'Paragraph',
-        'Url',
-        //'Freelink',
-        'Colortext',
-        'Wikilink',
-        'Strong',
-        'Bold',
-        'Emphasis',
-        'Italic',
-        'Underline',
-        'Tt',
-        'Superscript',
-        'Subscript',
-        'Specialchar',
-        'Revise',
-        'Interwiki',
-        'Tighten'
-    );
+		'Center',
+		'Newline',
+		'Paragraph',
+		'Url',
+		//'Freelink',
+		'Colortext',
+		'Wikilink',
+		'Strong',
+		'Bold',
+		'Emphasis',
+		'Italic',
+		'Underline',
+		'Tt',
+		'Superscript',
+		'Subscript',
+		'Specialchar',
+		'Revise',
+		'Interwiki',
+		'Tighten'
+	);
 
-    function Text_Wiki_Tiki($rules = null) {
-        parent::Text_Wiki($rules);
-        $this->addPath('parse', $this->fixPath(dirname(__FILE__)).'Parse/Tiki');
+	function Text_Wiki_Tiki($rules = null) {
+		parent::Text_Wiki($rules);
+		$this->addPath('parse', $this->fixPath(dirname(__FILE__)).'Parse/Tiki');
 //        $this->addPath('render', $this->fixPath(dirname(__FILE__)).'Render');
-    }
+	}
 }
-
-?>

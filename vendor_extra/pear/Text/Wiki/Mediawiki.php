@@ -28,64 +28,62 @@
  * @see        Text_Wiki::Text_Wiki()
  */
 class Text_Wiki_Mediawiki extends Text_Wiki {
-    var $rules = array(
-        'Prefilter',
-        'Delimiter',
-        'Code',
-        'Comment',
-        'Preformatted',
+	var $rules = array(
+		'Prefilter',
+		'Delimiter',
+		'Code',
+		'Comment',
+		'Preformatted',
 //        'Plugin',
 //        'Function',
 //        'Html',
-        'Raw',
+		'Raw',
 //        'Include',
 //        'Embed',
 //        'Page',
 //        'Anchor',
-        'Heading',
-        'Toc',
+		'Heading',
+		'Toc',
 //        'Titlebar',
-        'Horiz',
-        'Redirect',
-        'Break',
+		'Horiz',
+		'Redirect',
+		'Break',
 //        'Blockquote',
 //        'Box',
-        'Wikilink',
+		'Wikilink',
 //        'Image', // done by Wikilink but still possible to disable/configure
 //        'Interwiki', // done by Wikilink but still possible to disable/configure
-        'Table',
+		'Table',
 //        'Phplookup',
 //        'Center',
-        'List',
-        'Deflist',
+		'List',
+		'Deflist',
 //        'Strong',  ** will be only fake inserted by Emphasis if needed for render
-        'Emphasis', // must run before Newline (see Text_Wiki_Parse_Emphasis::parse())
-        'Newline',
-        'Paragraph',
-        'Url',
+		'Emphasis', // must run before Newline (see Text_Wiki_Parse_Emphasis::parse())
+		'Newline',
+		'Paragraph',
+		'Url',
 //        'Freelink',
 //        'Colortext',
 //        'Bold',
 //        'Italic',
 //        'Underline',
-        'Tt',
-        'Superscript',
-        'Subscript',
+		'Tt',
+		'Superscript',
+		'Subscript',
 //        'Specialchar',
 //        'Revise',
-        'Tighten'
-    );
+		'Tighten'
+	);
 
 	/**
-     * Constructor: just adds the path to Mediawiki rules
-     *
-     * @access public
-     * @param array $rules The set of rules to load for this object.
-     */
-    function Text_Wiki_Mediawiki($rules = null) {
-        parent::Text_Wiki($rules);
-        $this->addPath('parse', $this->fixPath(dirname(__FILE__)).'Parse/Mediawiki');
-    }
+	 * Constructor: just adds the path to Mediawiki rules
+	 *
+	 * @access public
+	 * @param array $rules The set of rules to load for this object.
+	 */
+	function Text_Wiki_Mediawiki($rules = null) {
+		parent::Text_Wiki($rules);
+		$this->addPath('parse', $this->fixPath(dirname(__FILE__)).'Parse/Mediawiki');
+	}
 }
-
-?>

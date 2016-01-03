@@ -166,5 +166,3 @@ class Auth_Container_SAP extends Auth_Container {
     // }}}
 
 }
-
-?>

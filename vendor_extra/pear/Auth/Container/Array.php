@@ -148,5 +148,3 @@ class Auth_Container_Array extends Auth_Container {
     // }}}
 
 }
-
-?>

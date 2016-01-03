@@ -33,40 +33,39 @@
  * @see        Text_Wiki_Parse::Text_Wiki_Parse()
  */
 class Text_Wiki_Parse_Preformatted extends Text_Wiki_Parse {
-    
-    
-    /**
-    * The regular expression used to find source text matching this
-    * rule.
-    * 
-    * @access public
-    * @var string
-    */
-    var $regex ='!<pre(?:[^>]*)>\n?(.*?)\n?</pre>|(?<=\n)((?:[ ]+.*?)+)(?=\n\S)!s';
-    
-    /**
-    * Generates a token entry for the matched text.  Token options are:
-    * 'text' => The full matched text.
-    * 
-    * @access public
-    * @param array &$matches The array of matches from parse().
-    * @return A delimited token number to be used as a placeholder in
-    * the source text.
-    */
-    function process(&$matches)
-    {
-        if(isset($matches[2])){
-            return $this->wiki->addToken(
-                $this->rule,
-                array('text' => $matches[2])
-            );
-        }
-        else{
-            return $this->wiki->addToken(
-                $this->rule,
-                array('text' => $matches[1])
-            );
-        }
-    }
+
+
+	/**
+	* The regular expression used to find source text matching this
+	* rule.
+	*
+	* @access public
+	* @var string
+	*/
+	var $regex ='!<pre(?:[^>]*)>\n?(.*?)\n?</pre>|(?<=\n)((?:[ ]+.*?)+)(?=\n\S)!s';
+
+	/**
+	* Generates a token entry for the matched text.  Token options are:
+	* 'text' => The full matched text.
+	*
+	* @access public
+	* @param array &$matches The array of matches from parse().
+	* @return A delimited token number to be used as a placeholder in
+	* the source text.
+	*/
+	function process(&$matches)
+	{
+		if(isset($matches[2])){
+			return $this->wiki->addToken(
+				$this->rule,
+				array('text' => $matches[2])
+			);
+		}
+		else{
+			return $this->wiki->addToken(
+				$this->rule,
+				array('text' => $matches[1])
+			);
+		}
+	}
 }
-?>

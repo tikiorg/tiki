@@ -13,17 +13,15 @@
 */
 
 class Text_Wiki_Render_Tiki_Anchor extends Text_Wiki_Render {
-    
-    function token($options)
-    {
-        if ($options['type'] == 'start') {
-            return '(('.$options['name'];
-        }
-        
-        if ($options['type'] == 'end') {
-            return '))';
-        }
-    }
-}
 
-?>
+	function token($options)
+	{
+		if ($options['type'] == 'start') {
+			return '(('.$options['name'];
+		}
+
+		if ($options['type'] == 'end') {
+			return '))';
+		}
+	}
+}

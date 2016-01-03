@@ -175,5 +175,3 @@ class Auth_Container_Multiple extends Auth_Container {
     // }}}
 
 }
-
-?>
