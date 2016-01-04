@@ -52,9 +52,13 @@ if (is_file($local_php) || TikiInit::getEnvironmentCredentials()) {
 	require_once 'db/tiki-db.php';
 	$console->add(new Tiki\Command\InstallCommand);
 	$console->add(new Tiki\Command\UpdateCommand);
+	$console->add(new Tiki\Command\MultiTikiListCommand);
+	$console->add(new Tiki\Command\MultiTikiMoveCommand);
 } else {
 	$console->add(new Tiki\Command\UnavailableCommand('database:install'));
 	$console->add(new Tiki\Command\UnavailableCommand('database:update'));
+	$console->add(new Tiki\Command\UnavailableCommand('multitiki:list'));
+	$console->add(new Tiki\Command\UnavailableCommand('multitiki:move'));
 }
 
 $installer = $installer = new Installer;
