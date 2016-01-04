@@ -63,8 +63,8 @@ class Horde_Yaml_Dumper
         $dump = "---\n";
 
         // iterate through array and yamlize it
-        foreach ($value as $key => $value) {
-            $dump .= $this->_yamlize($key, $value, 0);
+        foreach ($value as $key => $val) {
+            $dump .= $this->_yamlize($key, $val, 0);
         }
         return $dump;
     }
