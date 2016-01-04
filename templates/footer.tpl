@@ -6,7 +6,7 @@
 			{* Add header with title to avoid HTML validation errors for aria-labelledby missing a title while hidden.
 			Gets replaced when modal becomes visible.*}
 			<div class="modal-header">
-				<h4 class="modal-title" id="myModalLabel">{tr}Please confirm{/tr}</h4>
+				<h4 class="modal-title" id="myModalLabel"></h4>
 			</div>
 		</div>
 	</div>
