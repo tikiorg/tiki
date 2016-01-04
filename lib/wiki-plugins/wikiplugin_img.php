@@ -1422,8 +1422,6 @@ function wikiplugin_img( $data, $params )
 		case 'both':
 			$repl = "\n\r<br style=\"clear:both\" />\r" . $repl . "\n\r<br style=\"clear:both\" />\r";
     		break;
-		case 'top':
-    		break;
 		}
 	}
 	// Mobile
