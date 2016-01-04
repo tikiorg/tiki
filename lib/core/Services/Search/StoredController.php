@@ -30,7 +30,7 @@ class Services_Search_StoredController
 					try {
 						$queryId = $lib->createBlank($label, $priority, $description);
 					} catch (TikiDb_Exception_DuplicateEntry $e) {
-						throw new Services_Exception_FieldError('label', tr('A query couldn't be created because the name is already in use'));
+						throw new Services_Exception_FieldError('label', tr('A query could not be created because the name is already in use'));
 					} catch (TikiDb_Exception $e) {
 						throw new Services_Exception($e->getMessage(), 500);
 					}
@@ -141,7 +141,7 @@ class Services_Search_StoredController
 			try {
 				$lib->updateQuery($data['queryId'], $label, $priority, $description);
 			} catch (TikiDb_Exception_DuplicateEntry $e) {
-				throw new Services_Exception_FieldError('label', tr('A query couldn't be created because the name is already in use'));
+				throw new Services_Exception_FieldError('label', tr('A query could not be created because the name is already in use'));
 			} catch (TikiDb_Exception $e) {
 				throw new Services_Exception($e->getMessage(), 500);
 			}

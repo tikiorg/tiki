@@ -33,13 +33,13 @@ class TikiWebdav_Auth_Default extends ezcWebdavBasicAuth implements ezcWebdavAut
 		if ($this->tokens !== array()) {
 			file_put_contents($this->storageFile, serialize($this->tokens));
 		} else {
-			print_debug('Auth_Default __destruct: '. serialize($this->tokens). " \n", FILE_APPEND);
+			print_debug('Auth_Default __destruct: '. serialize($this->tokens). " \n");
 		}
 	} 
 
 	public function authenticateAnonymous(ezcWebdavAnonymousAuth $data)
 	{
-		return false;
+		global $user;
 		$user = $_SESSION['webdav_user'] = 'Anonymous';
 		return true;
 	}
@@ -70,12 +70,10 @@ class TikiWebdav_Auth_Default extends ezcWebdavBasicAuth implements ezcWebdavAut
 			$user = $_SESSION['webdav_user'];
 			return true;
 		}
-		return false;
 	}
 
 	public function authenticateDigest(ezcWebdavDigestAuth $data)
 	{
-		return null;
 		global $user;
 		if (!isset($_SESSION['webdav_user'])) {
 			if ($data->username === '' or $data->username === 'Anonymous') {
@@ -96,7 +94,6 @@ class TikiWebdav_Auth_Default extends ezcWebdavBasicAuth implements ezcWebdavAut
 			$user = $_SESSION['webdav_user'];
 			return true;
 		}
-		return false;
 	}
 
 	public function authorize($user, $path, $access = self::ACCESS_READ)
@@ -151,7 +148,6 @@ class TikiWebdav_Auth_Default extends ezcWebdavBasicAuth implements ezcWebdavAut
 		if ($user == '') $user = 'Anonymous';
 		print_debug("Checking Lock($user, $lockToken): " . (isset($this->tokens[$user][$lockToken]) ? 'OK' : 'NOT OK') . "\n");
 		return isset($this->tokens[$user][$lockToken]);
-		return true; ///FIXME
 	}
 
 	public function releaseLock($user, $lockToken)

@@ -43,9 +43,6 @@ class TikiPhpBBLib
 		} else {
 			return PHPBB_INVALID_CREDENTIALS;
 		}
-
-		// shouldn't happen..
-		return PHPBB_INVALID_SYNTAX;
 	}
 
 	function connectdb()

@@ -7,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 /*
-This file is part of J4PHP - Ensembles de propriétés et méthodes permettant le developpment rapide d'application web modulaire
+This file is part of J4PHP - Ensembles de propriï¿½tï¿½s et mï¿½thodes permettant le developpment rapide d'application web modulaire
 Copyright (c) 2002-2004 @PICNet
 
 This program is free software; you can redistribute it and/or
@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 *
 * @update $Date: 2005-05-18 11:01:38 $
 * @version 1.0
-* @author diogène MOULRON <logiciel@apicnet.net>
+* @author diogï¿½ne MOULRON <logiciel@apicnet.net>
 * @package core
 */ 
 class APIClassRegistry extends ErrorManager{
@@ -74,7 +74,8 @@ class APIClassRegistry extends ErrorManager{
 	
 	/**
 	* Try to register the class/package 
-	* @param	string	a class name or a package name
+	* @param	string	$class_package  package name
+	* @param	string	$class_package  class name
 	* @return boolean TRUE if the class has been registered
 	* @access public static
 	*/
@@ -86,7 +87,7 @@ class APIClassRegistry extends ErrorManager{
 		if (isset($class_class)){
 			$class_package.= '.'.$class_class;
 		}
-		$class_package = preg_replace('/([À-Ý]|[A-Z])/e','chr(ord(\'\\1\')+32)', $class_package);
+		$class_package = preg_replace('/([ï¿½-ï¿½]|[A-Z])/e','chr(ord(\'\\1\')+32)', $class_package);
 		// determine is a class or is a package
 		if (APIClassRegistry::isClass($class_package)){
 			$extractedClassName = APIClassRegistry::extractClassName($class_package);
@@ -114,11 +115,11 @@ class APIClassRegistry extends ErrorManager{
 		if (!isset($registry)) {
 			$registry =& APIClassRegistry::getInstance();
 		}
-		$class_package      = preg_replace('/([À-Ý]|[A-Z])/e','chr(ord(\'\\1\')+32)', $class_package);
+		$class_package      = preg_replace('/([ï¿½-ï¿½]|[A-Z])/e','chr(ord(\'\\1\')+32)', $class_package);
 		$extractedClassName = strtolower(APIClassRegistry::extractClassName($class_package));
 		if (isset($registry->instances[$extractedClassName])){
 		//	echo("OK ");
-		//	echo(" chargement effectué avec succès de la class ".$registry->instances[$extractedClassName]->className()."<br>");
+		//	echo(" chargement effectuï¿½ avec succï¿½s de la class ".$registry->instances[$extractedClassName]->className()."<br>");
 			return $registry->instances[$extractedClassName]; 
 		} else {
 		//	echo(" ....");
@@ -150,7 +151,7 @@ class APIClassRegistry extends ErrorManager{
 	/**
 	* try to extract a class name from a package call
 	* @param string|core.StringBuffer	a class name or a package name
-	* @return core.StringBuffer	the extracted class name if extraction is a success or NULL if fail to extract
+	* @return string/core.StringBuffer	the extracted class name if extraction is a success or NULL if fail to extract
 	* @access public static
 	*/
 	function extractClassName($package){
@@ -161,7 +162,7 @@ class APIClassRegistry extends ErrorManager{
 	/**
 	* try to extract a package name from a package call
 	* @param string|core.StringBuffer	a class name or a package name
-	* @return core.StringBuffer	the extracted package name if extraction is a success or NULL if fail to extract
+	* @return string/core.StringBuffer	the extracted package name if extraction is a success or NULL if fail to extract
 	* @access public static
 	*/
 	function extractPackageName($package){
@@ -175,7 +176,6 @@ class APIClassRegistry extends ErrorManager{
 				return $package;
 			}
 		}
-		return NULL;
 	}
 	
 	/**
@@ -194,10 +194,10 @@ class APIClassRegistry extends ErrorManager{
 			if (!isset($class_class)){
 			$class_class = APIClassRegistry::extractClassName($class_package);
 			}
-			$class_class = preg_replace('/([À-Ý]|[A-Z])/e','chr(ord(\'\\1\')+32)', $class_class);
+			$class_class = preg_replace('/([ï¿½-ï¿½]|[A-Z])/e','chr(ord(\'\\1\')+32)', $class_class);
 			return isset($registry->classes[$class_class]);
 		}else{
-			$class_package = preg_replace('/([À-Ý]|[A-Z])/e','chr(ord(\'\\1\')+32)', $class_package);
+			$class_package = preg_replace('/([ï¿½-ï¿½]|[A-Z])/e','chr(ord(\'\\1\')+32)', $class_package);
 			return isset($registry->packages[$class_package]);
 		}
 	}
