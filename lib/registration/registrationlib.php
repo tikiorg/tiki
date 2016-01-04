@@ -33,7 +33,7 @@ class RegistrationLib extends TikiLib
 	public $master_prefs;
 	public $merged_prefs;
 
-	public function RegistrationLib()
+	public function __construct()
 	{
 		$this->merged_prefs=$this->init_registration_prefs();
 	}
@@ -760,7 +760,7 @@ class RegistrationError
 	public $field;
 	public $msg;
 
-	public function RegistrationError($field, $msg)
+	public function __construct($field, $msg)
 	{
 		$this->field = $field;
 		$this->msg = $msg;

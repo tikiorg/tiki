@@ -20,7 +20,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 class TikiRegistrationFields extends TikiLib
 {
-	function TikiRegistrationFields() 
+	function __construct()
 	{
 	}
 
