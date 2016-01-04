@@ -152,7 +152,7 @@ function wikiplugin_ajaxload($data, $params) {
 				}
 
 				$js .= '	data = data.replace(/([\s-](?:' . $types . ')=["\'])(.*?)(["\'])/gi, function (match, start, url, end) {
-		return start + "' . $base . '" + url + end;
+		return start + (url.indexOf("://") === -1 ? "' . $base . '" : "") + url + end;
 	});';
 			}
 		}
