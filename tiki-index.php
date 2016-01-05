@@ -672,12 +672,12 @@ if (!empty($_REQUEST['machine_translate_to_lang'])) {
 TikiLib::events()->trigger(
 	'tiki.wiki.view',
 	array_merge(
+		(is_array($info) ? $info : array()),
 		array(
 			'type' => 'wiki page',
 			'object' => $page,
 			'user' => $GLOBALS['user'],
-		),
-		(is_array($info) ? $info : array())
+		)
 	)
 );
 
