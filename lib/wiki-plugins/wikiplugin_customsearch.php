@@ -617,10 +617,6 @@ function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &
 
 	$cats = TikiLib::lib('categ')->getCategories($filter);
 
-	$element = $document->createElement('select');
-	cs_design_setbasic($element, $fieldid, $fieldname, $arguments);
-	$document->appendChild($element);
-
 	if ($_style == 'checkbox' || $_style == 'radio') {
 		$currentlevel = 0;
 		$orig_fieldid = $fieldid;
@@ -662,9 +658,9 @@ function cs_design_categories($id, $fieldname, $fieldid, $arguments, $default, &
 $('#$fieldid').change(function() {
 	if ($(this).is(':checked')) {
 		var filter = {
-			config = " . json_encode($arguments) . ",
-			name = 'categories',
-			value = $(this).val()
+			config : " . json_encode($arguments) . ",
+			name : 'categories',
+			value : $(this).val()
 		}
 		$radioreset
 		customsearch.add('$fieldid', filter);
@@ -675,13 +671,17 @@ $('#$fieldid').change(function() {
 ";
 
 			if ($default && in_array($c['categId'], (array) $default)) {
-				$element->setAttribute('checked', 'checked');
+				$input->setAttribute('checked', 'checked');
 				$script .= "
 $('#$fieldid').trigger('change');
 ";
 			}
 		}
-	} elseif ($_style == 'select') {
+	}
+	elseif ($_style == 'select') {
+		$element = $document->createElement('select');
+		cs_design_setbasic($element, $fieldid, $fieldname, $arguments);
+		$document->appendChild($element);
 		// leave a blank one in the front
 		if (!isset($arguments['multiple']) && !isset($arguments['size']) || isset($arguments['_firstlabel'])) {
 			if (!empty($arguments['_firstlabel'])) {
