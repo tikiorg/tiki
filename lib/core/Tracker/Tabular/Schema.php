@@ -86,7 +86,12 @@ class Schema
 	function loadFormatDescriptor($descriptor)
 	{
 		foreach ($descriptor as $column) {
-			$col = $this->addColumn($column['field'], $column['mode']);
+			try {
+				$col = $this->addColumn($column['field'], $column['mode']);
+			} catch (Exception\FieldNotFound $e) {
+				\TikiLib::lib('errorreport')->report($e->getMessage());	// TODO make error message appear when exporting
+				continue;
+			}
 			$col->setExportOnly(! empty($column['isExportOnly']));
 
 			if (! $col->isReadOnly() && ! empty($column['isReadOnly'])) {
