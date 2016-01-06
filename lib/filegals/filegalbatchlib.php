@@ -43,23 +43,28 @@ class FilegalBatchLib extends FileGalLib
 	 * @return array				feedback messages
 	 */
 
-	function processBatchUpload($files, $galleryId = null, $options = [
-			'subToDesc' => false,
-			'subdirToSubgal' => false,
-			'subdirIntegerToSubgalId' => false,
-			'createSubgals' => false,
-			'deleteAfter' => null,
-			'fileUser' => '',
-			'fileGroup' => '',
-			'fileMode' => '',
-			'filesPath' => '',
-	]) {
+	function processBatchUpload($files, $galleryId = null, $options = []) {
 		include_once ('lib/mime/mimetypes.php');
 		global $mimetypes, $user, $prefs;
 
 		$userlib = TikiLib::lib('user');
 
 		$feedback = [];
+
+		$options = array_merge(
+			[
+				'subToDesc' => false,
+				'subdirToSubgal' => false,
+				'subdirIntegerToSubgalId' => false,
+				'createSubgals' => false,
+				'deleteAfter' => null,
+				'fileUser' => '',
+				'fileGroup' => '',
+				'fileMode' => '',
+				'filesPath' => '',
+			],
+			$options
+		);
 
 		if ($galleryId === null) {
 			$galleryId = $prefs['fgal_root_id'];
@@ -80,9 +85,16 @@ class FilegalBatchLib extends FileGalLib
 			$metadata = $this->extractMetadataJson($file);
 
 			$path_parts = pathinfo($file);
-			$ext = strtolower($path_parts["extension"]);
 
-			$type = $mimetypes["$ext"];
+			$type = 'application/octet-stream';
+			if ($path_parts['extension']) {
+				$ext = strtolower($path_parts['extension']);
+
+				if (isset($mimetypes["$ext"])) {
+					$type = $mimetypes["$ext"];
+				}
+			}
+
 			$filesize = @filesize($file);
 
 			$creator = $user;
