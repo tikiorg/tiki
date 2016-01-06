@@ -142,13 +142,13 @@ class FilegalBatchLib extends FileGalLib
 					$foundDir = false;
 
 					// if there is only one subdir and it's a number, check if there's a gallery with that id to use
-					if (count($dirs) !== 1) {
+					if (count($dirs) > 1) {
 
 						$feedback[] = '<span class="text-danger">' .
 								tr('Upload was not successful for "%0"', $path_parts['basename']) .
 								'<br>' . tr('Subgallery number to galleryId error: Too many subdirs (%0)</span>', count($dirs));
 
-					} else if (! ctype_digit($dirs[0])) {
+					} else if (count($dirs) === 1 && ! ctype_digit($dirs[0])) {
 
 						$feedback[] = '<span class="text-danger">' .
 								tr('Upload was not successful for "%0"', $path_parts['basename']) .
@@ -163,6 +163,11 @@ class FilegalBatchLib extends FileGalLib
 						}
 						if ($foundDir) {
 							$destinationGalleryId = (int)$dirs[0];
+
+						} else if (count($dirs) === 0) {	// in root
+							$destinationGalleryId = $galleryId;
+							$foundDir = true;
+
 						} else {
 
 							$feedback[] = '<span class="text-danger">' .
