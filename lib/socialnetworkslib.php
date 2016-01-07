@@ -248,6 +248,14 @@ class SocialNetworksLib extends LogsLib
 					}
 					$user = $userlib->add_user($user, $randompass, $email);
 
+					if (!$user) {
+						$smarty = TikiLib::lib('smarty');
+						$smarty->assign('errortype', 'login');
+						$smarty->assign('msg', tra('We were unable to log you in using your Facebook account. Please contact the administrator.'));
+						$smarty->display('error.tpl');
+						die;
+					}
+
 					$ret = $userlib->get_usertrackerid("Registered");
 					$userTracker = $ret['usersTrackerId'];
 					$userField = $ret['usersFieldId'];
@@ -402,7 +410,9 @@ class SocialNetworksLib extends LogsLib
 		curl_close($curl);
 
 		$linkedin_info = json_decode($result);
-
+		if (isset($linkedin_info->errorCode)) {
+			return false;
+		}
 		if (!$user) {
 			if ($prefs['socialnetworks_linkedin_login'] != 'y') {
 				return false;
@@ -420,6 +430,13 @@ class SocialNetworksLib extends LogsLib
 				}
 				$user = $userlib->add_user($user, $randompass, $email);
 
+				if (!$user) {
+					$smarty = TikiLib::lib('smarty');
+					$smarty->assign('errortype', 'login');
+					$smarty->assign('msg', tra('We were unable to log you in using your LinkedIn account. Please contact the administrator.'));
+					$smarty->display('error.tpl');
+					die;
+				}
 				//Checks if user tracker is used and if it is, then set the names as per the info
 				$ret = $userlib->get_usertrackerid("Registered");
 				$userTracker = $ret['usersTrackerId'];
