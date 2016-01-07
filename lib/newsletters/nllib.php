@@ -575,6 +575,8 @@ class NlLib extends TikiLib
 
 		$emailBody = new \Zend\Mime\Message();
 		$emailBody->setParts(array($htmlPart, $textPart));
+
+		$zmail->setBody($emailBody);
 		//										//
 		//////////////////////////////////////////////////////////////////////////////////
 		$zmail->addTo($email);
@@ -666,6 +668,8 @@ class NlLib extends TikiLib
 
 			$emailBody = new \Zend\Mime\Message();
 			$emailBody->setParts(array($htmlPart, $textPart));
+
+			$zmail->setBody($emailBody);
 			//										//
 			//////////////////////////////////////////////////////////////////////////////////
 			$zmail->addTo($email);
@@ -1295,6 +1299,7 @@ class NlLib extends TikiLib
 			$info['files'] = $this->get_edition_files($editionId);
 
 			include_once 'lib/mail/maillib.php';
+			/* @var Zend\Mail\Message $zmail */
 			$zmail = tiki_get_admin_mail();
 			$emailMimeParts = array();
 
@@ -1348,7 +1353,12 @@ class NlLib extends TikiLib
 		$emailBody = new \Zend\Mime\Message();
 		$emailBody->setParts($emailMimeParts);
 
-		$zmail->clearRecipients();
+		$zmail->setBody($emailBody);
+
+		$zmail->getHeaders()->removeHeader('to');
+		$zmail->getHeaders()->removeHeader('cc');
+		$zmail->getHeaders()->removeHeader('bcc');
+
 		$zmail->addTo($target['email']);
 
 		return $zmail;

@@ -172,7 +172,7 @@ class TikiMail
 		global $tikilib, $prefs;
 		$logslib = TikiLib::lib('logs');
 
-		//$this->mail->getHeaders()->removeHeader('To');
+		$this->mail->getHeaders()->removeHeader('to');
 		foreach ((array) $recipients as $to) {
 			$this->mail->addTo($to);
 		}
