@@ -312,6 +312,7 @@ class Services_User_Controller
 				//provide redirect if js is not enabled
 				$referer = Services_Utilities_Controller::noJsPath();
 				return [
+					'modal' => '1',
 					'FORWARD' => [
 						'controller' => 'access',
 						'action' => 'confirm',
