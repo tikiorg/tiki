@@ -147,6 +147,7 @@
 					{preference name=lowercase_username}
 				</div>
 				{preference name=username_pattern}
+				{preference name=login_autogenerate}
 			</fieldset>
 			<fieldset>
 				<legend>{tr}Password{/tr}</legend>

@@ -6247,6 +6247,10 @@ class UsersLib extends TikiLib
 		$cachelib = TikiLib::lib('cache');
 		$tikilib = TikiLib::lib('tiki');
 
+		if ($prefs['login_autogenerate'] == 'y') {
+			$user = "tmp" . md5((string) rand());
+		}
+
 		$user = trim($user);
 
 		if ($this->user_exists($user)
@@ -6300,6 +6304,18 @@ class UsersLib extends TikiLib
 			)
 		);
 
+		if ($prefs['login_autogenerate'] == 'y') {
+			$user = $this->autogenerate_login($userId);
+			$userTable->update(
+				array(
+					'login' => $user,
+				),
+				array(
+					'userId' => $userId,
+				)
+			);
+		}
+
 		if (empty($groups)) {
 			$this->assign_user_to_group($user, 'Registered');
 		} else {
@@ -6335,7 +6351,13 @@ class UsersLib extends TikiLib
 			'userId' => $userId,
 		));
 
-		return true;
+		return $user;
+	}
+
+	function autogenerate_login($userId, $digits=6) {
+		//create unique hash based on $userId, between 0 and 999999 (if digits = 6)
+		$userHash = $userId*pow(9,$digits) % (pow(10,$digits));
+		return sprintf('%0'.  $digits . 'd', $userHash); //add leading 0's
 	}
 
 	function set_user_default_preferences($user, $force=true)

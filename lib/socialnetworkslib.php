@@ -246,7 +246,7 @@ class SocialNetworksLib extends LogsLib
 					} else {
 						$user = 'fb_' . $fb_profile->id;
 					}
-					$userlib->add_user($user, $randompass, $email);
+					$user = $userlib->add_user($user, $randompass, $email);
 
 					$ret = $userlib->get_usertrackerid("Registered");
 					$userTracker = $ret['usersTrackerId'];
@@ -418,7 +418,7 @@ class SocialNetworksLib extends LogsLib
 				} else {
 					$user = 'li_' . $linkedin_info->id;
 				}
-				$userlib->add_user($user, $randompass, $email);
+				$user = $userlib->add_user($user, $randompass, $email);
 
 				//Checks if user tracker is used and if it is, then set the names as per the info
 				$ret = $userlib->get_usertrackerid("Registered");

@@ -23,6 +23,12 @@ function prefs_login_list()
 			),
 			'default' => 'n',
 		),
+		'login_autogenerate' => array(
+			'name' => tra('Auto-generate 6-digit login ID for users'),
+			'description' => tra('This will auto-generate a 6-digit ID for users who sign up.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 		'login_http_basic' => array(
 			'name' => tr('HTTP Basic Authentication'),
 			'description' => tr('Check credentials from HTTP Basic Authentication, useful to allow webservices to use credentials.'),
