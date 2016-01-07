@@ -23,6 +23,15 @@ function prefs_login_list()
 			),
 			'default' => 'n',
 		),
+		'login_allow_email' => array(
+			'name' => tra('User can login via username or e-mail.'),
+			'description' => tra('This will allow users to login using their email (as well as their username).'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'user_unique_email',
+			),
+			'default' => 'n',
+		),
 		'login_autogenerate' => array(
 			'name' => tra('Auto-generate 6-digit login ID for users'),
 			'description' => tra('This will auto-generate a 6-digit ID for users who sign up.'),

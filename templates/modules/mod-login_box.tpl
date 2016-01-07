@@ -48,7 +48,8 @@ if (jqueryTiki.no_cookie) {
 					<fieldset>
 						<legend>{tr}Return to Main User{/tr}</legend>
 						<input type="hidden" name="su" value="revert" />
-						<input type="hidden" name="username" value="auto" />
+						<input type="hidden" name="
+						e" value="auto" />
 						<div class="text-center"><button type="submit" class="btn btn-primary" name="actsu">{tr}Switch{/tr}</button></div>
 					</fieldset>
 				</form>
@@ -57,7 +58,7 @@ if (jqueryTiki.no_cookie) {
 					<fieldset>
 						<legend>{tr}Switch User{/tr}</legend>
 						<div class="form-group">
-							<label for="login-switchuser_{$module_logo_instance}">{tr}Username:{/tr}</label>
+							<label for="login-switchuser_{$module_logo_instance}">{tr}Username{/tr} {if $prefs.login_allow_email eq 'y'} {tr}or e-mail address{/tr}{/if}:</label>
 							<input type="hidden" name="su" value="1" class="form-control" />
 							{if $prefs.feature_help eq 'y'}
 								{help url="Switch+User" desc="{tr}Help{/tr}" desc="{tr}Switch User:{/tr}{tr}Enter user name and click 'Switch'.<br>Useful for testing permissions.{/tr}"}
@@ -161,7 +162,7 @@ if (jqueryTiki.no_cookie) {
 		{/if}
 		<div class="user form-group">
 			{if !isset($module_logo_instance)}{assign var=module_logo_instance value=' '}{/if}
-			<label for="login-user_{$module_logo_instance}">{if $prefs.login_is_email eq 'y'}{tr}Email:{/tr}{else}{tr}Username:{/tr}{/if}</label>
+			<label for="login-user_{$module_logo_instance}">{if $prefs.login_is_email eq 'y'}{tr}Email:{/tr}{else}{tr}Username{/tr}{if $prefs.login_allow_email eq 'y'} {tr}or e-mail address{/tr}{/if}:</label>{/if}</label>
 			{if !isset($loginuser) or $loginuser eq ''}
 				<input class="form-control" type="text" name="user" id="login-user_{$module_logo_instance}" {*size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}"*} {if !empty($error_login)} value="{$error_user|escape}"{elseif !empty($adminuser)} value="{$adminuser|escape}"{/if}/>
 				{jq}if ($('#login-user_{{$module_logo_instance}}:visible').length) {if ($("#login-user_{{$module_logo_instance}}").offset().top < $(window).height()) {$('#login-user_{{$module_logo_instance}}')[0].focus();} }{/jq}

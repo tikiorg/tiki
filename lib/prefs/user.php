@@ -19,6 +19,13 @@ function prefs_user_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'user_unique_email' => array(
+			'name' => tra('User e-mails must be unique'),
+			'description' => tra('User e-mails must be unique'),
+			'help' => 'User+Preferences',
+			'type' => 'flag',
+			'default' => 'n',
+		),
 		'user_tracker_infos' => array(
 			'name' => tra('Display UserTracker information on the user information page'),
 			'description' => tra('Display UserTracker information on the user information page'),

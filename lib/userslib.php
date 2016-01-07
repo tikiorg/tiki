@@ -1558,6 +1558,15 @@ class UsersLib extends TikiLib
 
 			switch ($result->numRows()) {
 				case 0:
+					if ($prefs['login_allow_email']) {
+						//if users can login with email
+						$query = 'select * from `users_users` where upper(`email`) = ?';
+						$result = $this->query($query, array(TikiLib::strtoupper($user)));
+
+						if ($result->numRows() > 0) {
+							break;
+						}
+					}
 					return array(USER_NOT_FOUND, $user);
 
 				case 1:
@@ -6260,6 +6269,14 @@ class UsersLib extends TikiLib
 				|| strtolower($user) == 'registered'
 		) {
 			return false;
+		}
+
+		if ($prefs['user_unique_email'] == 'y' && $this->get_user_by_email($email)) {
+			$smarty = TikiLib::lib('smarty');
+			$smarty->assign('errortype', 'login');
+			$smarty->assign('msg', tra('We were unable to create your account because this e-mail is already in use.'));
+			$smarty->display('error.tpl');
+			die;
 		}
 
 		$userexists_cache[$user] = NULL;

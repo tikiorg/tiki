@@ -141,6 +141,8 @@
 				<legend>{tr}Username{/tr}</legend>
 				{preference name=login_is_email mode=invert}
 				{preference name=login_is_email_obscure}
+				{preference name=user_unique_email}
+				{preference name=login_allow_email}
 				<div class="adminoptionboxchild" id="login_is_email_childcontainer">
 					{preference name=min_username_length}
 					{preference name=max_username_length}
