@@ -1514,6 +1514,37 @@ class NlLib extends TikiLib
 			@fclose($logFileHandle);
 		}
 	}
+	
+	// code originally in tiki-send_newsletters.php but made into a lib function so it could 
+	// be reused for the resume option when newsletter throttling is used
+	public function closesendframe($sent, $errors, $logFileName )
+	{
+		$smarty = TikiLib::lib('smarty');
+		$nb_sent = count($sent);
+		$nb_errors = count($errors);
+
+		$msg = '<h4>' . sprintf(tra('Newsletter successfully sent to %s users.'), $nb_sent) . '</h4>';
+		if ( $nb_errors > 0 )
+			$msg .= "\n" . '<font color="red">' . '(' . sprintf(tra('There was %s errors.'), $nb_errors) . ')' . '</font><br />';
+
+		// If logfile exists and if it is reachable from the web browser, add a download link
+		if ( !empty($logFileName) && $logFileName[0] != '/' && $logFileName[0] != '.' )
+			$smarty->assign('downloadLink', $logFileName);
+
+		echo str_replace("'", "\\'", $msg);
+		echo $smarty->fetch('send_newsletter_footer.tpl');
+
+		$smarty->assign('sent', $nb_sent);
+		$smarty->assign('emited', 'y');
+		if (count($errors) > 0) {
+			$smarty->assign_by_ref('errors', $errors);
+		}
+		unset($_SESSION["sendingUniqIds"][ $_REQUEST["sendingUniqId"] ]);
+		
+		return;
+		
+	}
+	
 	public function generateTxtVersion($txt, $parsed=null)
 	{
 		global $tikilib;

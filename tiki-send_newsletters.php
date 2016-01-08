@@ -407,26 +407,9 @@ if ( isset($_REQUEST["send"]) && ! empty($_REQUEST["sendingUniqId"]) || $resend 
 	$_REQUEST['begin'] = true;
 	$nllib->send($nl_info, $_REQUEST, true, $sent, $errors, $logFileName);
 
-	$nb_sent = count($sent);
-	$nb_errors = count($errors);
-
-	$msg = '<h4>' . sprintf(tra('Newsletter successfully sent to %s users.'), $nb_sent) . '</h4>';
-	if ( $nb_errors > 0 )
-		$msg .= "\n" . '<font color="red">' . '(' . sprintf(tra('There was %s errors.'), $nb_errors) . ')' . '</font><br />';
-
-	// If logfile exists and if it is reachable from the web browser, add a download link
-	if ( !empty($logFileName) && $logFileName[0] != '/' && $logFileName[0] != '.' )
-		$smarty->assign('downloadLink', $logFileName);
-
-	echo str_replace("'", "\\'", $msg);
-	echo $smarty->fetch('send_newsletter_footer.tpl');
-
-	$smarty->assign('sent', $nb_sent);
-	$smarty->assign('emited', 'y');
-	if (count($errors) > 0) {
-		$smarty->assign_by_ref('errors', $errors);
-	}
-	unset($_SESSION["sendingUniqIds"][ $_REQUEST["sendingUniqId"] ]);
+	// use lib function to close the frame with the completion info
+	$nllib->closesendframe($sent, $errors, $logFileName);
+	
 	exit; // Stop here since we are in an iframe and don't want to use smarty display
 }
 
@@ -434,7 +417,11 @@ if (isset($_REQUEST['resume'])) {
 	$edition_info = $nllib->get_edition($_REQUEST['resume']);
 	$nl_info = $nllib->get_newsletter($edition_info['nlId']);
 	$nllib->send($nl_info, $edition_info, true, $sent, $errors, $logFileName);
-	exit;
+	
+	// use lib function to close the frame with the completion info
+	$nllib->closesendframe($sent, $errors, $logFileName);
+		
+	exit; // Stop here since we are in an iframe and don't want to use smarty display
 }
 
 // Article Clipping
