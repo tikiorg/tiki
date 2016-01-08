@@ -70,10 +70,40 @@ function wikiplugin_tour_info()
 					array('text' => tra('No'), 'value' => 'n'),
 				),
 			),
+			'placement' => array(
+				'name' => tra('Placement'),
+				'required' => false,
+				'description' => tra('The placement of the popup'),
+				'since' => '15.0',
+				'filter' => 'alpha',
+				'default' => 'right',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Top'), 'value' => 'top'),
+					array('text' => tra('Right'), 'value' => 'right'),
+					array('text' => tra('Bottom'), 'value' => 'bottom'),
+					array('text' => tra('Left'), 'value' => 'left'),
+				),
+			),
+			'orphan' => array(
+				'name' => tra('Orphan'),
+				'required' => false,
+				'description' => tra('Setting to true removes the pointer on the popup and centers it on the page'),
+				'since' => '15.0',
+				'filter' => 'int',
+				'default' => '0',
+			),
+			'backdrop' => array(
+				'name' => tra('Backdrop'),
+				'required' => false,
+				'description' => tra('Show a dark backdrop behind the popover and its element, highlighting the current step.'),
+				'since' => '15.0',
+				'filter' => 'int',
+				'default' => '0',
+			),
 		),
 	);
 }
-
 
 function wikiplugin_tour($data, $params)
 {
@@ -111,7 +141,13 @@ if (tour) {
 
 	$html = '';
 
-	if (empty($params['element'])) {
+	if ($params['orphan'] == 1) {
+		$params['orphan'] = true;
+	} else {
+		$params['orphan'] = false;
+	}
+
+	if (empty($params['element']) && !$params['orphan']) {
 		$params['element'] = "#$unique";
 		$html = '<span id="' . $unique . '"></span>';
 	}
@@ -128,3 +164,4 @@ tour = new Tour(' . json_encode($wp_tour) . ');
 
 	return $html;
 }
+
