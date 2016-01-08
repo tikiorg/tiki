@@ -79,6 +79,10 @@
 			<a href="tiki-view_sheets.php?fileId={$files[$changes].id}">
 				{icon name='view' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
 			</a>
+		{elseif $prefs.fgal_viewerjs_feature eq 'y' and ($files[$changes].type eq 'application/pdf' or $files[$changes].type|strpos:'application/vnd.oasis.opendocument.' !== false)}
+			<a href="{$prefs.fgal_viewerjs_uri}#{$base_url}{$files[$changes].id|sefurl:display}">
+				{icon name='view' _menu_text=$menu_text _menu_icon=$menu_icon alt="{tr}Display{/tr}"}
+			</a>
 		{elseif ($files[$changes].type eq 'application/vnd.oasis.opendocument.text'
 			or $files[$changes].type eq 'application/octet-stream') and $prefs.feature_docs eq 'y'}
 			<a href="tiki-edit_docs.php?fileId={$files[$changes].id}">

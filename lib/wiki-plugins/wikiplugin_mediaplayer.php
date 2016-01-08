@@ -181,7 +181,7 @@ function wikiplugin_mediaplayer($data, $params)
 	$id = 'mediaplayer'.++$iMEDIAPLAYER;
 
 	if (empty($params['mp3']) && empty($params['flv']) && empty($params['src'])) {
-		return;
+		return '';
 	}
 	if (!empty($params['src']) && $params['style'] != 'native') {
 		$access->check_feature('feature_jquery_media');
@@ -215,7 +215,7 @@ function wikiplugin_mediaplayer($data, $params)
 	} else {
 		$params = array_merge($defaults, $params);
 	}
-	if (!empty($params['src']) && $params['style'] != 'native') {
+	if (!empty($params['src']) && (empty($params['style']) || $params['style'] != 'native')) {
 		$headerlib = TikiLib::lib('header');
 		$js = "\n var media_$id = $('#$id').media( {";
 		foreach ($params as $param => $value) {
@@ -242,7 +242,18 @@ function wikiplugin_mediaplayer($data, $params)
 		// check for support for PDF
 
 		if ($params['type'] === 'pdf') {
-			$js = '
+			if ($prefs['fgal_viewerjs_feature'] === 'y') {
+
+				$src = Zend_OpenId::absoluteUrl($params['src']);
+				$src = $prefs['fgal_viewerjs_uri'] . '#' . $src;
+
+				$out = "<iframe width=\"{$params['width']}\" height=\"{$params['height']}\" src=\"{$src}\"></iframe>";
+
+				return $out;
+
+			} else {
+
+				$js = '
 var found = false;
 $.each(navigator.plugins, function(i, plugins) {
 	$.each(plugins, function(i, plugin) {
@@ -268,6 +279,7 @@ if (found) {
 	// no pdf plugin
 	$("#' . $id . '").text(tr("Download file:") + " " + "' . $params['src'] . '");
 }';
+			}
 		}
 
 		$headerlib->add_jq_onready($js);
