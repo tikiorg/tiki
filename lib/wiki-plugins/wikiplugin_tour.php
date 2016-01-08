@@ -101,15 +101,55 @@ function wikiplugin_tour_info()
 				'filter' => 'int',
 				'default' => '0',
 			),
+			'show_once' => array(
+				'name' => tra('Only Show Once'),
+				'required' => false,
+				'description' => tra('Set to 1 to only show once. tour_id should also be set if there are multiple tours.'),
+				'since' => '15.0',
+				'filter' => 'int',
+				'default' => '0',
+			),
+			'tour_id' => array(
+				'name' => tra('Tour ID'),
+				'required' => false,
+				'description' => tra('Set a tour ID to be able to only show the tour once.'),
+				'since' => '15.0',
+				'filter' => 'text',
+				'default' => '0',
+			),
 		),
 	);
 }
 
 function wikiplugin_tour($data, $params)
 {
+	if ($params['show_once'] && $params['show_once'] == 1) {
+		if (empty($params['tour_id'])) {
+			$tourId = "default";
+		} else {
+			$tourId = $params['tour_id'];
+		}
+		$cookie_id = 'tour'.md5($tourId);
+		if ($_COOKIE[$cookie_id] == 'y') {
+			return;
+		}
+		setcookie($cookie_id,'y');
+	}
+
 	static $id = 0;
 	$unique = 'wptour_' . ++$id;
 	static $wp_tour = array('steps' => array());
+
+	$params['template'] = "<div class='popover tour'>
+  <div class='arrow'></div>
+  <h3 class='popover-title'></h3>
+  <div class='popover-content'></div>
+  <div class='popover-navigation'>
+    <button class='btn btn-default' data-role='prev'>« ".tr('Prev')."</button>
+    <button class='btn btn-default' data-role='next'>".tr('Next')." »</button>
+    <button class='btn btn-default' data-role='end'>".tr('Close Tour')."</button>
+  </div>
+</div>";
 
 	$headerlib = TikiLib::lib('header');
 	$headerlib->add_jsfile('vendor/sorich87/bootstrap-tour/build/js/bootstrap-tour.js')
