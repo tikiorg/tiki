@@ -144,6 +144,7 @@
 
 	<div id="sendingArea" style="display:none">
 		<h3>{tr}Sending Newsletter{/tr} ...</h3>
+        <h5> ... {tr}sending to {$subscribers} addresses{/tr}</h5>
 		<div id="confirmed"></div>
 		<iframe id="resultIframe" name="resultIframe" frameborder="0" style="width: 600px; height: 400px"></iframe>
 		{jq}
