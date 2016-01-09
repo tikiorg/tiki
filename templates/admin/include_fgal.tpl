@@ -273,6 +273,15 @@
 				{preference name='feature_webdav'}
 				{preference name='fgal_elfinder_feature'}
 				{preference name='feature_docs'}
+				{preference name='fgal_viewerjs_feature'}
+				<div class="adminoptionboxchild" id="fgal_viewerjs_feature_childcontainer">
+					{preference name='fgal_viewerjs_uri'}
+					{if $viewerjs_err}
+						<div class="col-sm-8 pull-right">
+							{remarksbox type='errors' title='{tr}Warning{/tr}'}{$viewerjs_err}{/remarksbox}
+						</div>
+					{/if}
+				</div>
 			</fieldset>
 
 			<fieldset>
