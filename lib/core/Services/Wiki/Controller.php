@@ -12,44 +12,6 @@ class Services_Wiki_Controller
 		Services_Exception_Disabled::check('feature_wiki');
 	}
 
-	function action_save_structure($input)
-	{
-		Services_Exception_Disabled::check('feature_wiki_structure');
-
-		$data = json_decode($input->data->text());
-		if ($data) {
-			$structlib = TikiLib::lib('struct');
-			$structlib->reorder_structure($data);
-			$params = json_decode($input->params->text());
-
-			$_GET = array();		// self_link and query objects used by get_toc adds all this request data to the action links
-			$_POST = array();
-
-			$html = $structlib->get_toc(
-				$params->page_ref_id,
-				$params->order,
-				$params->showdesc,
-				$params->numbering,
-				$params->numberPrefix,
-				$params->type,
-				$params->page,
-				$params->maxdepth,
-				$params->structurePageName
-			);
-			
-			//Empty structure caches to refresh structure data in menu module. Seems better to empty cache for any possible subnodes, might make it a bit slow
-			$cachelib = TikiLib::lib('cache');
-			$structurePages = array();
-			$structurePages = $structlib->s_get_structure_pages($params->page_ref_id);
-			foreach($structurePages as &$value) {
-				$cachetype = 'structure_'.$value["page_ref_id"].'_';
-				$cachelib->empty_type_cache($cachetype);
-			}
-			unset($value);
-		}
-		return array('html' => $html);
-	}
-
 	function action_get_page($input)
 	{
 		$wikilib = TikiLib::lib('wiki');
@@ -100,4 +62,3 @@ class Services_Wiki_Controller
 		);
 	}
 }
-
