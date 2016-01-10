@@ -29,6 +29,15 @@ if ($prefs['feature_kaltura'] === 'y') {
 		if ($kcwDefault != $prefs['kaltura_kcwUIConf']) {
 			$tikilib->set_preference('kaltura_kcwUIConf', $kcwDefault);
 		}
+		if (empty($prefs['kaltura_kdpUIConf'])) {	// player pref empty
+			$playerList = $kalturaadminlib->getPlayersUiConfs();
+			if ($playerList) {
+				$tikilib->set_preference('kaltura_kdpUIConf', $playerList[0]['id']);
+			}
+		}
+		if (empty($prefs['kaltura_kdpEditUIConf'])) {    // edit mode player pref empty
+			$tikilib->set_preference('kaltura_kdpEditUIConf', $prefs['kaltura_kdpUIConf']);
+		}
 	} else {
 		$kcwText = "<div class='adminoptionbox error'>Unable to retrieve configuration from Kaltura. Please reload page after setting up the Kaltura Partner Settings section</div>";
 		$kplayerlist = "<div class='adminoptionbox error'>Unable to retrieve list of valid player IDs. Please reload page after setting up the Kaltura Partner Settings section</div>";
