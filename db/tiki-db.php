@@ -82,10 +82,10 @@ if (isset ($_SERVER['TIKI_INI_FILE'])) {
 		die('Configuration file could not be read.');
 	}
 
-	$systemConfiguration = $systemConfiguration->merge(new Zend\Config\Ini(
-		$_SERVER['TIKI_INI_FILE'],
-		isset($_SERVER['TIKI_INI_IDENTIFIER']) ? $_SERVER['TIKI_INI_IDENTIFIER'] : null
-	));
+	$configReader = new Tiki_Config_Ini();
+	$configReader->setFilterSection(isset($_SERVER['TIKI_INI_IDENTIFIER']) ? $_SERVER['TIKI_INI_IDENTIFIER'] : null);
+	$configData = $configReader->fromFile($_SERVER['TIKI_INI_FILE']);
+	$systemConfiguration = $systemConfiguration->merge(new Zend\Config\Config($configData));
 }
 if (isset ($system_configuration_file)) {
 	if (! is_readable($system_configuration_file)) {
@@ -94,7 +94,10 @@ if (isset ($system_configuration_file)) {
 	if (! isset($system_configuration_identifier)) {
 		$system_configuration_identifier = null;
 	}
-	$systemConfiguration = $systemConfiguration->merge(new Zend\Config\Ini($system_configuration_file, $system_configuration_identifier));
+	$configReader = new Tiki_Config_Ini();
+	$configReader->setFilterSection($system_configuration_identifier);
+	$configData = $configReader->fromFile($system_configuration_file);
+	$systemConfiguration = $systemConfiguration->merge(new Zend\Config\Config($configData));
 }
 
 if ( $re === false ) {
