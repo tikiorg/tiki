@@ -115,7 +115,7 @@ function wikiplugin_tour_info()
 				'description' => tra('Set a tour ID to be able to only show the tour once.'),
 				'since' => '15.0',
 				'filter' => 'text',
-				'default' => '0',
+				'default' => 'default',
 			),
 		),
 	);
@@ -123,15 +123,19 @@ function wikiplugin_tour_info()
 
 function wikiplugin_tour($data, $params)
 {
-	if ($params['show_once'] && $params['show_once'] == 1) {
-		if (empty($params['tour_id'])) {
-			$tourId = "default";
-		} else {
-			$tourId = $params['tour_id'];
-		}
-		$cookie_id = 'tour'.md5($tourId);
+	$defaults = array();
+	$plugininfo = wikiplugin_tour_info();
+	foreach ($plugininfo['params'] as $key => $param) {
+		$defaults["$key"] = $param['default'];
+	}
+	$params = array_merge($defaults, $params);
+
+	if ($params['show_once']) {
+
+		$cookie_id = 'tour'.md5($params['tour_id']);
+
 		if ($_COOKIE[$cookie_id] == 'y') {
-			return;
+			return '';
 		}
 		setcookie($cookie_id,'y');
 	}
@@ -155,13 +159,6 @@ function wikiplugin_tour($data, $params)
 	$headerlib->add_jsfile('vendor/sorich87/bootstrap-tour/build/js/bootstrap-tour.js')
 			->add_cssfile('vendor/sorich87/bootstrap-tour/build/css/bootstrap-tour.css');
 
-	$defaults = array();
-	$plugininfo = wikiplugin_tour_info();
-	foreach ($plugininfo['params'] as $key => $param) {
-		$defaults["$key"] = $param['default'];
-	}
-	$params = array_merge($defaults, $params);
-
 	// non changing init js in ransk 11 and 13 (the tour definition goes in 12)
 	$headerlib->add_jq_onready('var tour;
 ', 11);
@@ -177,7 +174,7 @@ if (tour) {
 ', 13);
 	}
 	unset($params['start']);
-
+	unset($params['tour_id']);
 
 	$html = '';
 
