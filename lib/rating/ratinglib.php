@@ -326,7 +326,6 @@ class RatingLib extends TikiDb_Bridge
 				FROM tiki_user_votings tuv2
 				WHERE tuv2.user = tuv1.user AND tuv1.id = tuv2.id
 			)
-			GROUP BY user
 			ORDER BY time DESC", array($type.$threadId)
 		);
 
