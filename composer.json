@@ -154,7 +154,8 @@
 			"vendor/adodb/adodb/",
 			"vendor/phpcas/phpcas/",
 			"installer/",
-			"lib/test"
+			"lib/test",
+			"lib/webmail"
 		]
 	},
 	"scripts": {
