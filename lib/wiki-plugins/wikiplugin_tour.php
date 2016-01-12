@@ -117,6 +117,14 @@ function wikiplugin_tour_info()
 				'filter' => 'text',
 				'default' => 'default',
 			),
+			'show_restart_button' => array(
+				'name' => tra('Restart Button'),
+				'required' => false,
+				'description' => tra('Display a button to restart the tour. Enter the text to appear on the button.'),
+				'since' => '15.0',
+				'filter' => 'text',
+				'default' => '',
+			),
 		),
 	);
 }
@@ -187,6 +195,16 @@ if (tour) {
 	if (empty($params['element']) && !$params['orphan']) {
 		$params['element'] = "#$unique";
 		$html = '<span id="' . $unique . '"></span>';
+		if (!empty($params['show_restart_button'])) {
+			$smarty = TikiLib::lib('smarty');
+			$smarty->loadPlugin('smarty_function_button');
+			$html .= smarty_function_button([
+					'_text' => tra($params['show_restart_button']),
+					'_id' => $unique . '_restart',
+					'href' => '#',
+				], $smarty);
+			$headerlib->add_jq_onready('$("#' . $unique . '_restart").click(function() { tour.restart(); return false;});', 13);
+		}
 	}
 	$params['content'] = TikiLib::lib('parser')->parse_data($data);
 
