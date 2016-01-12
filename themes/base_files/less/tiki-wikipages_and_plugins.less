@@ -292,12 +292,14 @@ div.tiki_plugin {
   font-weight: 500;
 }
 
-.autotoc .nav > li > a:focus, .autotoc .nav > li > a:hover {
+.autotoc .nav > li > a:focus,
+.autotoc .nav > li > a:hover {
   padding-left: 19px;
   border-left: 1px solid @btn-default-border;
 }
 
-.autotoc .nav > .active:focus > a, .autotoc .nav > .active:hover > a,
+.autotoc .nav > .active:focus > a,
+.autotoc .nav > .active:hover > a,
 .autotoc .nav > .active > a {
   padding-left: 18px;
   font-weight: 700;
@@ -308,7 +310,7 @@ div.tiki_plugin {
 
 .autotoc .nav .nav {
   //display: none;  TODO
-  padding-bottom: 10px;
+  padding-bottom: 0;
   list-style: none;
 }
 
@@ -320,6 +322,18 @@ div.tiki_plugin {
   font-weight: 400
 }
 
+.autotoc .nav .nav .nav > li > a {
+  padding-left: 40px;
+}
+
+.autotoc .nav .nav .nav .nav > li > a {
+  padding-left: 50px;
+}
+
+.autotoc .nav .nav .nav .nav .nav > li > a {
+  padding-left: 60px;
+}
+
 .autotoc .nav .nav > li > a:focus, .autotoc .nav .nav > li > a:hover {
   padding-left: 29px
 }
@@ -328,6 +342,17 @@ div.tiki_plugin {
 .autotoc .nav .nav > .active > a {
   padding-left: 28px;
   font-weight: 500
+}
+
+/* reset tabs styling */
+.autotoc .nav-tabs > li.active > a,
+.autotoc .nav-tabs > li.active > a:hover,
+.autotoc .nav-tabs > li.active > a:focus {
+  color: inherit;
+  background-color: inherit;
+  border: inherit;
+  border-bottom-color: transparent;
+  cursor: default;
 }
 
 .back-to-top {
