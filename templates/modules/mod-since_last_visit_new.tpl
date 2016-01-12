@@ -41,7 +41,7 @@
 									<img src="img/icons/large/stock_select-color.png" alt="{tr}Image Galleries{/tr}" title="{tr}Image Galleries{/tr}">
 								{elseif $pos eq "images"}
 									<img src="img/icons/large/stock_select-color_new.png" alt="{tr}Images{/tr}" title="{tr}Images{/tr}">
-								{elseif $pos eq "poll"}
+								{elseif $pos eq "polls"}
 									<img src="img/icons/large/stock_missing-image.png" alt="{tr}Poll{/tr}" title="{tr}Poll{/tr}">
 								{elseif $pos eq "pages"}
 									<img src="img/icons/large/wikipages.png" alt="{tr}Wiki{/tr}" title="{tr}Wiki{/tr}">
