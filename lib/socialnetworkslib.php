@@ -306,7 +306,11 @@ class SocialNetworksLib extends LogsLib
 			}
 			return true;
 		} else {
-			return false;
+			$smarty = TikiLib::lib('smarty');
+			$smarty->assign('errortype', 'login');
+			$smarty->assign('msg', tra('We were unable to log you in using your Facebook account. Please contact the administrator.'));
+			$smarty->display('error.tpl');
+			die;
 		}
 	}
 
@@ -361,16 +365,26 @@ class SocialNetworksLib extends LogsLib
 			CURLOPT_URL => 'https://www.linkedin.com/uas/oauth2/accessToken',
 			CURLOPT_POST => 1,
 			CURLOPT_POSTFIELDS => http_build_query (array(
-				client_id =>  $prefs['socialnetworks_linkedin_client_id'],
+				client_secret => $prefs['socialnetworks_linkedin_client_secr'],
+				client_id => $prefs['socialnetworks_linkedin_client_id'],
 				client_secret => $prefs['socialnetworks_linkedin_client_secr'],
 				grant_type => "authorization_code",
 				redirect_uri => $_SESSION['LINKEDIN_CALLBACK_URL'],
 				code => $_SESSION['LINKEDIN_AUTH_CODE'],
-			)),
+			), '', '&'),
 		));
 
 		$curl_result = curl_exec($curl_request);
 		$ret = json_decode($curl_result);
+
+		if (empty($curl_result)) {
+			$smarty = TikiLib::lib('smarty');
+			$smarty->assign('errortype', 'login');
+			$smarty->assign('msg', tra('We were unable to connect to your LinkedIn account. Please contact the administrator.'));
+                        $smarty->display('error.tpl');
+			die;
+		}
+
 		$_SESSION['LINKEDIN_ACCESS_TOKEN'] = $ret->access_token;
 		$_SESSION['LINKEDIN_ACCESS_TOKEN_EXPIRY'] = time() + $ret->expires_in;
 
@@ -402,7 +416,7 @@ class SocialNetworksLib extends LogsLib
 		}
 
 		$url = "https://api.linkedin.com/v1/people/~:(". implode(",",$profile_fields) .")";
-		$url = sprintf("%s?%s", $url, http_build_query($data));
+		$url = sprintf("%s?%s", $url, http_build_query($data, '', '&'));
 		curl_setopt($curl, CURLOPT_URL, $url);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
@@ -411,7 +425,11 @@ class SocialNetworksLib extends LogsLib
 
 		$linkedin_info = json_decode($result);
 		if (isset($linkedin_info->errorCode)) {
-			return false;
+			$smarty = TikiLib::lib('smarty');
+			$smarty->assign('errortype', 'login');
+			$smarty->assign('msg', tra('We were unable to log you in using your LinkedIn account. Please contact the administrator.'));
+			$smarty->display('error.tpl');
+			die;
 		}
 		if (!$user) {
 			if ($prefs['socialnetworks_linkedin_login'] != 'y') {
@@ -464,6 +482,7 @@ class SocialNetworksLib extends LogsLib
 					$avatarlib->set_avatar_from_url($linkedin_info->pictureUrls->values[0], $user);
 				}
 			} else {
+				$_SESSION['loginfrom'] = str_replace('tiki-socialnetworks_linkedin.php', 'tiki-socialnetworks.php', $_SERVER['REQUEST_URI']);
 				$smarty = TikiLib::lib('smarty');
 				$smarty->assign('errortype', 'login');
 				$smarty->assign('msg', tra('You need to link your local account to LinkedIn before you can login using it'));
