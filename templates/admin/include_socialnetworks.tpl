@@ -44,7 +44,11 @@
 				{preference name=socialnetworks_facebook_application_id}
 				{preference name=socialnetworks_facebook_login}
 				{preference name=socialnetworks_facebook_autocreateuser}
-				{preference name=socialnetworks_facebook_firstloginpopup}
+				<div class="adminoptionboxchild" id="socialnetworks_facebook_autocreateuser_childcontainer">
+					{preference name=socialnetworks_facebook_firstloginpopup}
+					{preference name=socialnetworks_facebook_email}
+					{preference name=socialnetworks_facebook_names}
+				</div>
 				{remarksbox type="note" title="{tr}Note{/tr}"}
 					{tr}The following preferences affect what permissions the user is asked to allow Tiki to do by Facebook when authorizing it.{/tr}
 				{/remarksbox}
@@ -53,8 +57,6 @@
 				{preference name=socialnetworks_facebook_manage_events}
 				{preference name=socialnetworks_facebook_manage_pages}
 				{preference name=socialnetworks_facebook_sms}
-				{preference name=socialnetworks_facebook_email}
-				{preference name=socialnetworks_facebook_names}
 			</div>
 		{/tab}
 		{tab name="{tr}bit.ly{/tr}"}
@@ -74,13 +76,23 @@
 		{/tab}
 	{tab name="{tr}LinkedIn{/tr}"}
 		<h2>{tr}LinkedIn{/tr}</h2>
+		{remarksbox type="note" title="{tr}Note{/tr}"}
+		<p>
+			{tr}To use LinkedIn integration, you must register this site as an application at{/tr}
+			<a class="alert-link" href="https://www.linkedin.com/developer/apps" target="_blank">https://www.linkedin.com/developer/apps</a>
+			{tr}and allow necessary permissions for the application{/tr}.<br>
+			{tr}Enter &lt;your site URL&gt;tiki-socialnetworks_linkedin.php as Authorized OAuth Redirect URLs{/tr}.
+		</p>
+		{/remarksbox}
 		<div class="adminoptionbox">
 			{preference name=socialnetworks_linkedin_client_id}
 			{preference name=socialnetworks_linkedin_client_secr}
 			{preference name=socialnetworks_linkedin_login}
 			{preference name=socialnetworks_linkedin_autocreateuser}
-			{preference name=socialnetworks_linkedin_email}
-			{preference name=socialnetworks_linkedin_names}
+			<div class="adminoptionboxchild" id="socialnetworks_linkedin_autocreateuser_childcontainer">
+				{preference name=socialnetworks_linkedin_email}
+				{preference name=socialnetworks_linkedin_names}
+			</div>
 		</div>
 	{/tab}
 	{/tabset}

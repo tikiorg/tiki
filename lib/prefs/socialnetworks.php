@@ -58,7 +58,7 @@ function prefs_socialnetworks_list()
 			'default' => 'n',
 		),
 		'socialnetworks_facebook_firstloginpopup' => array(
-			'name' => tra('Require Facebook users to enter local account info'),
+			'name' => tra('Require Facebook users to enter local account info on creation'),
 			'description' => tra('Require Facebook users to enter local account info, specifically email and local login name'),
 			'keywords' => 'social networks',
 			'type' => 'flag',
@@ -104,20 +104,24 @@ function prefs_socialnetworks_list()
 			'default' => 'n',
 		),
 		'socialnetworks_facebook_email' => array(
-			'name' => tra('Tiki can get email'),
-			'description' => tra("Tiki can request the user's email"),
+			'name' => tra('Set user email from Facebook on creation'),
+			'description' => tra("Tiki will set the user's email from Facebook on creation"),
 			'keywords' => 'social networks',
+			'dependencies' => array(
+				'socialnetworks_facebook_autocreateuser',
+			),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'socialnetworks_facebook_names' => array(
-			'name' => tra('First and last name tracker field IDs'),
+			'name' => tra('First and last name tracker field IDs to set on creation'),
 			'description' => tra("Comma-separated. First name field followed by last name field. eg '2,3'"),
 			'keywords' => 'social networks',
 			'type' => 'text',
 			'default' => 'n',
 			'dependencies' => array(
 				'userTracker',
+				'socialnetworks_facebook_autocreateuser',
 			),
 		),
 		'socialnetworks_bitly_login' => array(
@@ -177,20 +181,24 @@ function prefs_socialnetworks_list()
 			'default' => 'n',
 		),
 		'socialnetworks_linkedin_email' => array(
-			'name' => tra('Tiki can get email from linkedin'),
-			'description' => tra("Tiki can request the user's email"),
+			'name' => tra('Set user email from LinkedIn on creation'),
+			'description' => tra("Tiki will set the user's email from LinkedIn on creation"),
 			'keywords' => 'social networks',
 			'type' => 'flag',
+			'dependencies' => array(
+				'socialnetworks_linkedin_autocreateuser',
+			),
 			'default' => 'n',
 		),
 		'socialnetworks_linkedin_names' => array(
-			'name' => tra('First and last name tracker field IDs'),
+			'name' => tra('First and last name tracker field IDs to set on creation'),
 			'description' => tra("Comma-separated. First name field followed by last name field. eg '2,3'"),
 			'keywords' => 'social networks',
 			'type' => 'text',
-			'default' => 'n',
+			'default' => '',
 			'dependencies' => array(
 				'userTracker',
+				'socialnetworks_linkedin_autocreateuser',
 			),
 		),
 	);
