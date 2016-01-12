@@ -37,7 +37,7 @@
 											{icon name="file-image-o" size=1 ititle="{tr}Image Galleries{/tr}"}
 										{elseif $pos eq "images"}
 											{icon name="file-image-o" size=1 ititle="{tr}Images{/tr}"}
-										{elseif $pos eq "poll"}
+										{elseif $pos eq "polls"}
 											{icon name="tasks" size=1 ititle="{tr}Poll{/tr}"}
 										{elseif $pos eq "pages"}
 											{icon name="file-text-o" size=1 ititle="{tr}Wiki{/tr}"}
