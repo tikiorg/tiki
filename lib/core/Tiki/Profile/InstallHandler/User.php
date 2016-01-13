@@ -81,9 +81,9 @@ class Tiki_Profile_InstallHandler_User extends Tiki_Profile_InstallHandler
 				}				
 				$email = isset($user['email']) ? $user['email'] : '';
 				if (isset($user['change']) && $user['change'] === false) {
-					$userlib->add_user($user['name'], $pass, $email);
+					$user['name'] = $userlib->add_user($user['name'], $pass, $email);
 				} else {
-					$userlib->add_user($user['name'], $pass, $email, $pass, true);
+					$user['name'] = $userlib->add_user($user['name'], $pass, $email, $pass, true);
 				}
 			}
 

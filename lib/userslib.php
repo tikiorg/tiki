@@ -6258,8 +6258,12 @@ class UsersLib extends TikiLib
 		$cachelib = TikiLib::lib('cache');
 		$tikilib = TikiLib::lib('tiki');
 
-		if ($prefs['login_autogenerate'] == 'y') {
+		$autogenerate_uname = false;
+		if ($prefs['login_autogenerate'] == 'y' && $user == '') {
+			// only autogenerate if no username is provided (as many features might want to create real user name)
+			// need to create as tmp uname first before replacing with user ID based number
 			$user = "tmp" . md5((string) rand());
+			$autogenerate_uname = true;
 		}
 
 		$user = trim($user);
@@ -6323,7 +6327,8 @@ class UsersLib extends TikiLib
 			)
 		);
 
-		if ($prefs['login_autogenerate'] == 'y') {
+		if ($prefs['login_autogenerate'] == 'y' && $autogenerate_uname) {
+			// only autogenerate if no username is provided (as many features might want to create real user name)
 			$user = $this->autogenerate_login($userId);
 			$userTable->update(
 				array(

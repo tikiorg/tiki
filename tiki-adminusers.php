@@ -163,7 +163,7 @@ function batchImportUsers()
 				$apass = '';
 			}
 
-			$userlib->add_user(
+			$u['login'] = $userlib->add_user(
 				$u['login'],
 				$u['password'],
 				$u['email'],
@@ -325,7 +325,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 				$apass = '';
 			}
 
-			if ($userlib->add_user(
+			if ($_REQUEST['login'] = $userlib->add_user(
 				$_REQUEST['login'],
 				$newPass,
 				$_REQUEST['email'],
@@ -357,7 +357,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 
 				if ($prefs['userTracker'] === 'y' && !empty($_REQUEST['insert_user_tracker_item'])) {
 					TikiLib::lib('header')->add_jq_onready('setTimeout(function () { $(".insert-usertracker").click(); });');
-					$_REQUEST['user'] = $_REQUEST['login'];
+					$_REQUEST['user'] = $userlib->get_user_id($_REQUEST['login']);
 					$cookietab = '2';
 				} else {
 					$cookietab = '1';

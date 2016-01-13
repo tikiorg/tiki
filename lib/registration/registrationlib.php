@@ -393,7 +393,7 @@ class RegistrationLib extends TikiLib
 			}
 		} else {
 			if (!$confirmed) {
-				$userlib->add_user($registration['name'], $newPass, $registration['email'], '', false, null, $openid_url);
+				$registration['name'] = $userlib->add_user($registration['name'], $newPass, $registration['email'], '', false, null, $openid_url);
 			}
 			if (!$pending) {
 				$logslib->add_log('register', 'created account ' . $registration['name']);
