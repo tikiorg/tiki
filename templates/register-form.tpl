@@ -1,9 +1,9 @@
 {* $Id$ *}
 {include file="register-login.tpl"}
+{include file="register-email.tpl"}
 {include file="register-passcode.tpl"}
 {include file="register-pass.tpl"}
 {include file="register-pass2.tpl"}
-{include file="register-email.tpl"}
 {* Custom fields *}
 {if isset($customfields)}
 	{section name=ir loop=$customfields}
