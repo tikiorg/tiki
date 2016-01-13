@@ -455,6 +455,10 @@ if ($isvalid) {
 			$error = tra('You are already logged in.');
         		break;
 
+		case EMAIL_AMBIGUOUS:
+			$error = tra("There is more than one user account with this email. Please contact the administrator.");
+			break;
+
 		default:
 			$error = tra('Invalid username or password');
 	}

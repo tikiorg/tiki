@@ -27,6 +27,7 @@ define('USER_AMBIGOUS', -7);
 define('USER_NOT_VALIDATED', -8);
 define('USER_PREVIOUSLY_VALIDATED', -10);
 define('USER_ALREADY_LOGGED', -11);
+define('EMAIL_AMBIGUOUS', -12);
 
 //added for Auth v1.3 support
 define('AUTH_LOGIN_OK', 0);
@@ -1562,8 +1563,9 @@ class UsersLib extends TikiLib
 						//if users can login with email
 						$query = 'select * from `users_users` where upper(`email`) = ?';
 						$result = $this->query($query, array(TikiLib::strtoupper($user)));
-
-						if ($result->numRows() > 0) {
+						if ($result->numRows() > 1) {
+							return array(EMAIL_AMBIGUOUS, $user);	
+						} elseif ($result->numRows() > 0) {
 							break;
 						}
 					}
@@ -6525,8 +6527,8 @@ class UsersLib extends TikiLib
 
 	function get_user_by_email($email)
 	{
-		$query = 'select `login` from `users_users` where `email`=?';
-		$pass = $this->getOne($query, array($email));
+		$query = 'select `login` from `users_users` where upper(`email`)=?';
+		$pass = $this->getOne($query, array(TikiLib::strtoupper($email)));
 
 		return $pass;
 	}
