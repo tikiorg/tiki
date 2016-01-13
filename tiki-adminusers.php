@@ -495,7 +495,7 @@ if (isset($_REQUEST['user']) and $_REQUEST['user']) {
 
 		$pass_first_login = (isset($_REQUEST['pass_first_login']) && $_REQUEST['pass_first_login'] == 'on');
 		if ((isset($_POST['pass']) && $_POST["pass"]) || $pass_first_login || (isset($_POST['genepass']) && $_POST['genepass'])) {
-			if ($_POST['pass'] != $_POST['pass2']) {
+			if ($_POST['pass'] != $_POST['passAgain']) {
 				$smarty->assign('msg', tra('The passwords do not match'));
 				$smarty->display('error.tpl');
 				die;
