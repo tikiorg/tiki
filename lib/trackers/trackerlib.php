@@ -1681,7 +1681,7 @@ class TrackerLib extends TikiLib
 						$this->log($version, $itemId, $array['fieldId'], '?');
 					}
 				} elseif ($array['options_array'][0] == 'email') {
-					if (!empty($array['value']) && validate_email($array['value'])) {
+					if (!empty($array['value']) && validate_email($array['value']) && ($prefs['user_unique_email'] != 'y' || !$userlib->other_user_has_email($trackersync_user, $array['value']))) {
 						$old_value = $userlib->get_user_email($trackersync_user);
 						$userlib->change_user_email($trackersync_user, $array['value']);
 					}

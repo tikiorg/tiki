@@ -6285,7 +6285,7 @@ class UsersLib extends TikiLib
 			}
 			$smarty = TikiLib::lib('smarty');
 			$smarty->assign('errortype', 'login');
-			$smarty->assign('msg', tra('We were unable to create your account because this e-mail is already in use.'));
+			$smarty->assign('msg', tra('We were unable to create your account because this email is already in use.'));
 			$smarty->display('error.tpl');
 			die;
 		}
@@ -6408,14 +6408,32 @@ class UsersLib extends TikiLib
 			$this->set_user_preference($user, 'language', $prefs['language']);
 		}
 	}
+
 	function change_user_email_only($user, $email)
 	{
+		global $prefs;
+		if ($prefs['user_unique_email'] == 'y' && $this->other_user_has_email($user, $email)) {
+			$smarty = TikiLib::lib('smarty');
+			$smarty->assign('errortype', 'login');
+			$smarty->assign('msg', tra('Email cannot be set because this email is already in use by another user.'));
+			$smarty->display('error.tpl');
+			die;
+		}
 		$query = 'update `users_users` set `email`=? where binary `login`=?';
 		$result = $this->query($query, array($email, $user));
 	}
 
 	function change_user_email($user, $email, $pass=null)
 	{
+		global $prefs;
+		if ($prefs['user_unique_email'] == 'y' && $this->other_user_has_email($user, $email)) {
+			$smarty = TikiLib::lib('smarty');
+			$smarty->assign('errortype', 'login');
+			$smarty->assign('msg', tra('Email cannot be set because this email is already in use by another user.'));
+			$smarty->display('error.tpl');
+			die;    
+		}
+
 		// Need to change the email-address for notifications, too
 		$notificationlib = TikiLib::lib('notification');
 		$oldMail = $this->get_user_email($user);
@@ -6542,6 +6560,14 @@ class UsersLib extends TikiLib
 
 		return $pass;
 	}
+
+	function other_user_has_email($user, $email)
+	{
+		$query = 'select `login` from `users_users` where upper(`email`)=? and `login`!=?';
+		$pass = $this->getOne($query, array(TikiLib::strtoupper($email), $user));
+
+		return $pass;	
+	}	
 
 	function is_due($user, $method=null)
 	{
@@ -6931,6 +6957,13 @@ class UsersLib extends TikiLib
 		}
 
 		if (isset($u['email'])) {
+			if ($prefs['user_unique_email'] == 'y' && $this->other_user_has_email($user, $email)) {
+				$smarty = TikiLib::lib('smarty');
+				$smarty->assign('errortype', 'login');
+				$smarty->assign('msg', tra('Email cannot be set because this email is already in use by another user.'));
+				$smarty->display('error.tpl');
+				die;
+			}
 			$q[] = '`email` = ?';
 			$bindvars[] = strip_tags($u['email']);
 		}

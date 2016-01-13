@@ -71,7 +71,7 @@ if ($user == $prefs['login_autologin_user']) {
 	} elseif (!TikiLib::lib('user')->user_exists($uname)) {
 		$access->display_error('', tra('Permission denied'), "401");
 		die;
-	} elseif (!empty($email)) {
+	} elseif (!empty($email) && ($prefs['user_unique_email'] != 'y' || !TikiLib::lib('user')->other_user_has_email($uname, $email))) {
 		TikiLib::lib('user')->change_user_email($uname, $email);
 	}
 	if (!empty($realName)) {
