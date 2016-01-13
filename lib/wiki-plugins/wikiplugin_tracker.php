@@ -1437,6 +1437,18 @@ function wikiplugin_tracker($data, $params)
 			if ($registration == 'y') {
 				// email validation
 				$customvalidation .= 'email: { ';
+				if ($prefs['user_unique_email'] == 'y') {
+					$customvalidation .= '
+						remote: {
+								url: "validate-ajax.php",
+								type: "post",
+								data: {
+									validator: "uniqueemail",
+									input: function() { return $("#email").val(); }
+								}
+							},
+					';
+				}
 				$customvalidation .= 'required: true, ';
 				$customvalidation .= 'email: true }, ';
 				$customvalidation_m .= 'email: { email: "'. tra("Invalid email")
