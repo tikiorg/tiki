@@ -58,6 +58,11 @@ class Services_User_Controller
 		$antibotcode = $input->antibotcode->string();
 		$email = $input->email->string();
 
+		if ($prefs['user_unique_email'] == 'y' && TikiLib::lib('user')->get_user_by_email($email)) {
+			$errormsg = tra('We were unable to create your account because this email is already in use.');
+			throw new Services_Exception($errormsg);
+		}
+
 		$regResult =  TikiLib::lib('registration')->register_new_user(
 			array(
 				'name' => $name,
