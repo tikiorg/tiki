@@ -123,7 +123,7 @@ class AuthTokens
 		// Process autologin of temporary users
 		if ($data['createUser'] == 'y') {
 			$userlib = TikiLib::lib('user');
-			$tempuser = $data['userPrefix'] . $data['tokenId'];
+			$tempuser = $data['userPrefix'] . $userlib->autogenerate_login($data['tokenId'], 6);
 			$groups = json_decode($data['groups'], true);
 			$parameters = json_decode($data['parameters'], true);
 			if (!$userlib->user_exists($tempuser)) {
@@ -221,10 +221,10 @@ class AuthTokens
 	 * @param int $timeout Timeout to set in seconds. If not included, will use default as set in prefs.
 	 * @param int $hits Number of hits allowed before token expires. If not included, will use default as set in prefs.
 	 * @param boolean $createUser Login token user as temporary user if set to true
-	 * @param string $userPrefix Username of the created users will be the token ID prefixed with this (default is '_token')
+	 * @param string $userPrefix Username of the created users will be a 6 digit number based on the token ID prefixed with this (default is 'guest')
 	 * @return string A URL that has the security token included.
 	 */
-	function includeToken( $url, array $groups = array(), $email = '', $timeout = 0, $hits = 0, $createUser = false, $userPrefix = '_token')
+	function includeToken( $url, array $groups = array(), $email = '', $timeout = 0, $hits = 0, $createUser = false, $userPrefix = 'guest')
 	{
 		$data = parse_url($url);
 

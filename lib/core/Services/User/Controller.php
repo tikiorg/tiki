@@ -1043,7 +1043,7 @@ class Services_User_Controller
 		$path = $input->tempuser_path->string();
 
 		if (empty($prefix)) {
-			$prefix = '_token';
+			$prefix = 'guest';
 		}
 		if (empty($path)) {
 			$path = 'tiki-index.php';

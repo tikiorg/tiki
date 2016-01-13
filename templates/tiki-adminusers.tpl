@@ -759,7 +759,7 @@
 				<div class="form-group">
 					<label class="col-sm-4 col-md-4 control-label" for="tempuser_prefix">{tr}Username prefix{/tr}</label>
 					<div class="col-sm-8 col-md-8">
-						<input type="text" class="form-control" name="tempuser_prefix" id="tempuser_prefix" placeholder="_token"/>
+						<input type="text" class="form-control" name="tempuser_prefix" id="tempuser_prefix" placeholder="guest"/>
 					</div>
 				</div>
 				<div class="form-group">

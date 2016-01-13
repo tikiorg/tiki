@@ -7902,7 +7902,7 @@ class UsersLib extends TikiLib
 	 * @param string $path Users will have to autologin using this path on the site using the token
 	 * @throws Exception
 	 */
-	function invite_tempuser($emails, $groups, $timeout, $prefix = '_token', $path = 'tiki-index.php') {
+	function invite_tempuser($emails, $groups, $timeout, $prefix = 'guest', $path = 'tiki-index.php') {
 		global $smarty, $user, $prefs;
 		include_once ('lib/webmail/tikimaillib.php');
 
