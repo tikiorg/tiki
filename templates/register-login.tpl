@@ -6,7 +6,7 @@
 	<span class='text-danger'>*</span>
 {else}
 		<div class="form-group">
-			<label class="col-sm-4 control-label" for="name">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}Username{/tr}{/if} {if $trackerEditFormId}<span class='text-danger tips' title=":{tr}This field is manadatory{/tr}">*</span>{/if}</label>
+			<label class="col-sm-4 control-label" for="name">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}Username{/tr}{/if} {if $trackerEditFormId}<span class='text-danger tips' title=":{tr}This field is mandatory{/tr}">*</span>{/if}</label>
 			<div class="col-sm-8">
 				<input class="form-control" type="text" name="name" id="name" value="{if !empty($smarty.post.name)}{$smarty.post.name}{/if}">
 			{if $prefs.login_is_email eq 'y'}
