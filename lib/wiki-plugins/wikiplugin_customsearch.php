@@ -494,6 +494,12 @@ customsearch._load = function (receive) {
 			$callbackScript;
 		},
 		error: function ( jqXHR, textStatus, errorThrown ) {
+			var selector = '#' + customsearch.options.searchfadediv;
+			if (customsearch.options.searchfadediv.length <= 1 && $(selector).length === 0) {
+				selector = '#customsearch_' + customsearch.id;
+			}
+			$(selector).tikiModal();
+
 			$('#customsearch_$id').showError(jqXHR)
 		}
 	});
