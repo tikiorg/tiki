@@ -587,7 +587,19 @@ class RegistrationLib extends TikiLib
 							}
 						}
 					},
-					email: {
+					email: {';
+			if ($prefs['user_unique_email'] == 'y') {
+				$js .= '
+						remote: {
+							url: "validate-ajax.php",
+							type: "post",
+							data: {
+								validator: "uniqueemail",
+								input: function() { return $("#email").val(); }
+							}
+						},';
+			}
+			$js .= '
 						required: true,
 						email: true
 					},
