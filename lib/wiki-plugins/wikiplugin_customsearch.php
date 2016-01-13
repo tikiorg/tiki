@@ -492,6 +492,9 @@ customsearch._load = function (receive) {
 		success: function(data) {
 			receive(data);
 			$callbackScript;
+		},
+		error: function ( jqXHR, textStatus, errorThrown ) {
+			$('#customsearch_$id').showError(jqXHR)
 		}
 	});
 };
