@@ -33,9 +33,13 @@ function prefs_login_list()
 			'default' => 'n',
 		),
 		'login_autogenerate' => array(
-			'name' => tra('Auto-generate 6-digit login ID for users'),
-			'description' => tra('This will auto-generate a 6-digit ID for users who sign up.'),
+			'name' => tra('Auto-generate 6-digit username on registration'),
+			'description' => tra('This will auto-generate a 6-digit username for users who sign up (they will normally login with emails only).'),
 			'type' => 'flag',
+			'dependencies' => array(
+				'user_unique_email',
+				'login_allow_email',
+			),
 			'default' => 'n',
 		),
 		'login_http_basic' => array(
