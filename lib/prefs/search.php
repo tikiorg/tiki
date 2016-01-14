@@ -38,12 +38,12 @@ function prefs_search_list()
 		),
 		'search_default_interface_language' => array(
 			'name' => tra('Restrict search language by default'),
-			'description' => tra('If enabled, only search content in the interface language, otherwise show language menu.'),
+			'description' => tra('If enabled, only search content that is in the interface language, otherwise show the language menu.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'search_autocomplete' => array(
-			'name' => tra('Autocomplete on page names'),
+			'name' => tra('Autocomplete page names'),
 			'type' => 'flag',
 			'dependencies' => array('feature_jquery_autocomplete', 'javascript_enabled'),
 			'warning' => tra('deprecated'),
@@ -72,7 +72,7 @@ function prefs_search_list()
 		),
 		'search_facet_default_amount' => array(
 			'name' => tra('Facet result count'),
-			'description' => tra('Default amount of facet results to obtain.'),
+			'description' => tra('DDefault number of facet results to obtain.'),
 			'type' => 'text',
 			'size' => 8,
 			'filter' => 'digits',

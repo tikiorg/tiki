@@ -9,7 +9,7 @@ function prefs_share_list()
 {
 	return array(
 		'share_display_links' => array(
-			'name' => tra('Display links in the share page'),
+			'name' => tra('Display links on the share page'),
 			'type' => 'flag',
 			'default' => 'y',
 		),
@@ -25,7 +25,7 @@ function prefs_share_list()
 		),
 		'share_contact_add_non_existant_contact' => array(
 			'name'	=> tra('Add contact'),
-			'description' => tra('If not exist, recipients are add in the list of contacts'),
+			'description' => tra('If not already in the list, recipients are added to the list of contacts'),
 			'type' => 'flag',
 			'perspective' => false,
 			'dependencies' => array(
@@ -40,7 +40,7 @@ function prefs_share_list()
 			'default' => 'y',
 		),
 		'share_can_choose_how_much_time_access' => array(
-			'name' => tra('How many times accessed'),
+			'name' => tra('Number of times accessed'),
 			'description' => tra('User can choose how many times the share page can be consulted'),
 			'type' => 'flag',
 			'dependencies' => array(
@@ -49,7 +49,7 @@ function prefs_share_list()
 			'default' => 'n',
 		),
 		'share_max_access_time' => array(
-			'name' => tra('Max how many times accessed'),
+			'name' => tra('Maximum number of times accessed'),
 			'description' => tra('Maximum number of times that the shared page can be consulted'),
 			'type' => 'text',
 			'default' => '-1',

@@ -10,14 +10,14 @@ function prefs_permission_list()
 	return array(
 		'permission_denied_url' => array(
 			'name' => tra('Send to URL'),
-            'description' => tra('URL to redirect to on \'permission denied\''),
+            'description' => tra('URL to redirect to on "permission denied"'),
 			'type' => 'text',
 			'size' => '50',
 			'default' => '',
 			'tags' => array('basic'),
 		),
 		'permission_denied_login_box' => array(
-			'name' => tra('On permission denied, display login module (for Anonymous)'),
+			'name' => tra('On "Permission denied", display the log-in module (for anonymous users)'),
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),

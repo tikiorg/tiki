@@ -10,7 +10,7 @@ function prefs_print_list()
 	return array(
 		'print_pdf_from_url' => array(
 			'name' => tra('PDF from URL'),
-			'description' => tra('Using extenal tools, generate PDF document from web URLs.'),
+			'description' => tra('Using external tools, generate PDF documents from URLs.'),
 			'type' => 'list',
 			'options' => array(
 				'none' => tra('Disabled'),
@@ -22,7 +22,7 @@ function prefs_print_list()
 		),
 		'print_pdf_webservice_url' => array(
 			'name' => tra('Webservice URL'),
-			'description' => tra('URL to a service taking a URL as the query string and returns a PDF document.'),
+			'description' => tra('URL to a service that takes a URL as the query string and returns a PDF document.'),
 			'type' => 'text',
 			'size' => 50,
 			'dependencies' => array('auth_token_access'),

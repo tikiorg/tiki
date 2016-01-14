@@ -23,7 +23,7 @@ function prefs_session_list()
 		'session_lifetime' => array(
 			'name' => tra('Session lifetime'),
 			'description' => tra('Session lifetime'),
-			'hint' => tra('Value provided in minutes. It will be the minimum time you are logged in. If you want it to be the exact time, you need to adjust in .htaccess session.gc_probability and session.gc_divisor to 1. Be careful that changing the probability will affect the server performance.'),
+			'hint' => tra('Expressed as minutes. This is the minimum time logged in. To be the exact time, adjustments must be made in .htaccess session.gc_probability and session.gc_divisor to 1. Be careful - changing the probability may affect server performance.'),
 			'type' => 'text',
 			'filter' => 'digits',
 			'perspective' => false,
@@ -33,8 +33,8 @@ function prefs_session_list()
 		'session_silent' => array(
 			'name' => tra('Silent session'),
 			'description' => tra('Do not automatically start sessions.'),
-			'hint' => tra('Users will only have a session if they log in. So anonymous users will lose the capacity to have things like Switch Language or Switch Theme (a session is needed for this)'),
-			'warning' => tra('Can cause problems when combined with cookie consent and javascript disabled browsers.'),
+			'hint' => tra('Users will only have a session if they log in. Anonymous users will not have features like Switch Language or Switch Theme (which require a session)'),
+			'warning' => tra('Can cause problems when combined with cookie consent and JavaScript-disabled browsers.'),
 			'perspective' => false,
 			'type' => 'flag',
 			'default' => 'n',
@@ -53,7 +53,7 @@ function prefs_session_list()
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',
-			'warning' => tra('Only activate if you have already configured SSL, otherwise, your will lock yourself out of Tiki'),
+			'warning' => tra('Warning: activate only if SSL is already configured; otherwise, all users including admin will be locked out of the site'),
 			'tags' => array('advanced'),
 		),
 	);

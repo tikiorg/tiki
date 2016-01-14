@@ -19,7 +19,7 @@ function prefs_rating_list()
 		),
 		'rating_recalculation' => array(
 			'name' => tra('Rating recalculation mode'),
-			'description' => tra('Determines when and how rating aggregates are recalculated. Depending on the site load, some options may be preferred to others. On large volume sites, it should be done as a cron job. On vote recalculation may be inaccurate if rating calculation depends time.'),
+			'description' => tra('Determines when and how rating aggregates are recalculated. Depending on the site load, some options may be preferred to others. On large-volume sites, it should be done as a cron job. On vote recalculation, there may be inaccuracies if rating calculation is time-dependent.'),
 			'type' => 'list',
 			'options' => array(
 				'vote' => tra('Recalculate on vote'),
@@ -48,7 +48,7 @@ function prefs_rating_list()
 		),
 		'rating_smileys' => array(
 			'name' => tr('Smiley Ratings'),
-			'description' => tr('Displays a smiley face for simple ratings system. Only works with 0-11, depending on what you have set. An easier user-interface to use, like emoticons.'),
+			'description' => tr('Displays smiley faces for a simple ratings system with an easy-to-use user interface, similar to emoticons. Works with 0-11 only, depending on the configuration.'),
 			'type' => 'flag',
 			'options' => array(
 				'' => tr('Disabled'),

@@ -436,7 +436,7 @@ function prefs_payment_list()
 		),
 		'payment_cart_giftcert_tracker' => array(
 			'name' => tra('Gift Certificate Tracker ID'),
-			'description' => tra('Tracker ID of tracker that is the Gift Certificate tracker'),
+			'description' => tra('ID of the tracker that is the Gift Certificate tracker'),
 			'type' => 'text',
 			'filter' => 'digits',
 			'size' => 3,
