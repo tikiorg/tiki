@@ -15,8 +15,8 @@ function prefs_pagination_list()
 			'default' => 'y',
 		),
 		'pagination_fastmove_links' => array(
-			'name' => tra('Display fast move links'),
-            'description' => tra('Display fast move links (by 10 percent of the total number of pages) '),
+			'name' => tra('Display "fast-forward" links'),
+            'description' => tra('Display "fast-forward" links (to advance 10 percent of the total number of pages) '),
 			'type' => 'flag',
 			'default' => 'y',
 		),

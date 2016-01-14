@@ -19,7 +19,7 @@ function prefs_newsletter_list()
 		),
 		'newsletter_pause_length' => array(
 			'name' => tra('Newsletter pause length'),
-			'description' => tra('Amount of seconds on wait before each batch'),
+			'description' => tra('Number of seconds delay before each batch'),
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'digits',

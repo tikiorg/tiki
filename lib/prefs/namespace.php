@@ -42,7 +42,7 @@ function prefs_namespace_list()
 		),
 		'namespace_force_links' => array(
 			'name' => tra('Force all non-namespace page links to same namespace'),
-			'description' => tra('If the current page is in a namespace, all links without namespace will have it added automatically'),
+			'description' => tra('If the current page is in a namespace, all links without a namespace will have it added automatically'),
 			'type' => 'flag',
 			'default' => 'n',
 		),

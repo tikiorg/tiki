@@ -38,7 +38,7 @@ function prefs_module_list()
 		),
 		'module_zones_pagetop' => array(
 			'name' => tra('Page top module zone'),
-			'description' => tra('Visibility of area to keep modules such as share etc'),
+			'description' => tra('Activate zone for modules such as breadcrumbs, banners, share icons, etc'),
 			'type' => 'list',
 			'keywords' => tra('side bar'),
 			'help' => 'Users+Flip+Columns',
@@ -52,7 +52,7 @@ function prefs_module_list()
 		),
 		'module_zones_bottom' => array(
 			'name' => tra('Bottom module zone'),
-			'description' => tra('Visibility of area to keep modules such as "powered by" and "rss list" (footer)'),
+			'description' => tra('Activate zone for modules such as "powered by" and "rss list" (page footer)'),
 			'type' => 'list',
 			'keywords' => tra('side bar'),
 			'help' => 'Users+Flip+Columns',
@@ -66,7 +66,7 @@ function prefs_module_list()
 		),
 		'module_zones_pagebottom' => array(
 			'name' => tra('Page bottom module zone'),
-			'description' => tra('Visibility of area to keep modules at the foot of each page'),
+			'description' => tra('Activate zone for modules at the bottom of the main column of each page'),
 			'type' => 'list',
 			'keywords' => tra('side bar'),
 			'help' => 'Users+Flip+Columns',
@@ -87,7 +87,7 @@ function prefs_module_list()
 		'module_zone_available_extra' => array(
 			'name' => tr('Extra module zones available'),
 			'description' => tr('Extra module zones to be managed through the module administration interface. Useful if your custom theme requires a special zone other than the predefined ones.'),
-			'hint' => tr('Comma-separated list, 20 characters max per entry.'),
+			'hint' => tr('Comma-separated list, maximum of 20 characters per entry.'),
 			'type' => 'text',
 			'separator' => ',',
 			'filter' => 'alpha',

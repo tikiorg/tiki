@@ -10,7 +10,7 @@ function prefs_mustread_list()
 	return array(
 		'mustread_enabled' => array(
 			'name' => tr('Must Read'),
-			'description' => tr('Allow to assign mandatory readings and track progress.'),
+			'description' => tr('Allow assignment of mandatory readings and track progress.'),
 			'help' => 'Must+Reads',
 			'type' => 'flag',
 			'default' => 'n',
