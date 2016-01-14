@@ -31,13 +31,13 @@ function prefs_https_list()
 			'type' => 'list',
 			'options' => array(
 				'disabled' => tra('Disabled'),
-				'allowed' => tra('Allow secure (https) login'),
-				'encouraged' => tra('Encourage secure (https) login'),
+				'allowed' => tra('Allow secure (HTTPS) login'),
+				'encouraged' => tra('Encourage secure (HTTPS) login'),
 				'force_nocheck' => tra('Consider we are always in HTTPS, but do not check'),
-				'required' => tra('Require secure (https) login'),
+				'required' => tra('Require secure (HTTPS) login'),
 			),
 			'default' => 'allowed',
-			'warning' => tra('Do not require HTTPS until you have setup and tested the connection, otherwise, you will make your whole site unaccessible'),
+			'warning' => tra('Do not require HTTPS until the connection has been set up and tested; otherwise, the website will be inaccessible'),
 			'keywords' => 'SSL secure', 
 		),
 	);

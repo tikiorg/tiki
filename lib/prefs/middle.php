@@ -9,14 +9,14 @@ function prefs_middle_list()
 {
 	return array(
 		'middle_shadow_start' => array(
-			'name' => tra('Middle shadow start'),
+			'name' => tra('Middle shadow div start'),
             'description' => tra(''),
 			'type' => 'textarea',
 			'size' => '2',
 			'default' => '',
 		),
 		'middle_shadow_end' => array(
-			'name' => tra('Middle shadow end'),
+			'name' => tra('Middle shadow div end'),
             'description' => tra(''),
 			'type' => 'textarea',
 			'size' => '2',

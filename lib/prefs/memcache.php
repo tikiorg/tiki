@@ -37,7 +37,7 @@ function prefs_memcache_list()
 		),
 		'memcache_prefix' => array(
 			'name' => tra('Memcache key prefix'),
-			'description' => tra('When the memcache cluster is used by multiple applications, using unique prefixes for each of them helps avoiding conflicts.'),
+			'description' => tra('When the memcache cluster is used by multiple applications, using unique prefixes for each of them helps avoid conflicts.'),
 			'filter' => 'word',
 			'size' => 10,
 			'type' => 'text',

@@ -154,7 +154,7 @@ function prefs_global_list($partial = false)
 			'default' => 'n',
 		),
 		'maxArticles' => array(
-			'name' => tra('Maximum number of articles on articles home page'),
+			'name' => tra('Maximum number of articles on the articles homepage'),
             'description' => tra(''),
 			'type' => 'text',
 			'size' => '5',
@@ -272,7 +272,7 @@ function prefs_global_list($partial = false)
 		'registerKey' => array(
 			'name' => tra('Registration page key'),
             'hint' => tra('Key required to be on included the URL to access the registration page (if not empty).'),
-			'description' =>  tra('e.g. To register users need to go to: tiki-register.php?key=yourregistrationkeyvalue'),
+			'description' =>  tra('for example, to register, users need to go to: tiki-register.php?key=yourregistrationkeyvalue'),
 			'type' => 'text',
 			'size' => 15,
 			'default' => '',

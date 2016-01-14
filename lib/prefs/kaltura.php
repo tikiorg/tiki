@@ -30,7 +30,7 @@ function prefs_kaltura_list()
 		),
 		'kaltura_secret' => array(
 			'name' => tra('User secret'),
-			'description' => tra('Kaltura partner setting user secret.'),
+			'description' => tra('Kaltura partner-setting user secret.'),
 			'type' => 'text',
 			'size' => 45,
 			'filter' => 'alnum',
@@ -39,7 +39,7 @@ function prefs_kaltura_list()
 		),
 		'kaltura_adminSecret' => array(
 			'name' => tra('Admin secret'),
-			'description' => tra('Kaltura partner setting admin secret.'),
+			'description' => tra('Kaltura partner-setting admin secret.'),
 			'type' => 'text',
 			'size' => 45,
 			'filter' => 'alnum',
@@ -73,7 +73,7 @@ function prefs_kaltura_list()
 		),
 		'kaltura_kServiceUrl' => array(
 			'name' => tra('Kaltura Service URL'),
-			'description' => tra('e.g. https://www.kaltura.com/'),
+			'description' => tra('for example, https://www.kaltura.com/'),
 			'type' => 'text',
 			'size' => 40,
 			'default' => 'https://www.kaltura.com/',

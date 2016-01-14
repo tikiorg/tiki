@@ -10,7 +10,7 @@ function prefs_metatag_list()
 	return array(
 		'metatag_keywords' => array(
 			'name' => tra('Keywords'),
-			'description' => tra('A list of key words (separated by commas) that describe your site.'),
+			'description' => tra('A list of keywords (separated by commas) that describe this website.'),
 			'type' => 'textarea',
 			'size' => '4',
 			'default' => '',
@@ -18,7 +18,7 @@ function prefs_metatag_list()
 		),
 		'metatag_freetags' => array(
 			'name' => tra('Include tags'),
-			'description' => tra('If the tags feature is enabled, use the tags in the meta keywords for each page with tags set. This allows individual pages at the site to have different meta tags.'),
+			'description' => tra('If the Tags feature is enabled, the tags for each page with tags set will be used as meta keywords. This allows individual pages at the site to have different meta tags.'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_freetags',
@@ -45,7 +45,7 @@ function prefs_metatag_list()
 		),
 		'metatag_description' => array(
 			'name' => tra('Description'),
-			'description' => tra('A short description of your site. Some search engines display this information with your site\'s listing.'),
+			'description' => tra('A short description of the website. Some search engines display this information with the website\'s listing.'),
 			'type' => 'textarea',
 			'size' => '5',
 			'default' => '',
@@ -53,13 +53,13 @@ function prefs_metatag_list()
 		),
 		'metatag_pagedesc' => array(
 			'name' => tra('Page Description'),
-			'description' => tra('Use individual page description as a met tag for the page.'),
+			'description' => tra('Use each page description as a meta tag for that page.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'metatag_author' => array(
 			'name' => tra('Author'),
-			'description' => tra('The author of your site. Typically this will be the Admin or Webmaster.'),
+			'description' => tra('The author of this website. Typically this is the Admin or Webmaster.'),
 			'type' => 'text',
 			'size' => '50',
 			'default' => '',

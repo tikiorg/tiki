@@ -952,7 +952,7 @@ class ModLib extends TikiLib
 		if ($prefs['cookie_consent_feature'] === 'y') {
 			$info['params']['cookie_consent'] = array(
 				'name' => tra('Cookie Consent'),
-				'description' => 'n|y '.tra('Show only if consent for cookies has been granted.'),
+				'description' => 'n|y '.tra('Show only if consent to accept cookies has been granted.'),
 				'filter' => 'alpha',
 				'section' => 'visibility',
 			);

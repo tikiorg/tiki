@@ -21,7 +21,7 @@ function prefs_language_list($partial = false)
 	return array(
 		'language' => array(
 			'name' => tra('Default language'),
-			'description' => tra('Site language used when no other language is specified by the user.'),
+			'description' => tra('The site language is used when no other language is specified by the user.'),
 			'filter' => 'lang',
 			'help' => 'I18n',
 			'type' => 'list',

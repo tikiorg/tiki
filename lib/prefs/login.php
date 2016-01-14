@@ -15,8 +15,8 @@ function prefs_login_list()
 			'default' => 'n',
 		),
 		'login_is_email_obscure' => array(
-			'name' => tra('Obscure email when using email as username if possible (coverage will not be complete)'),
-			'description' => tra('This will attempt as much as possible to hide the email, showing the realname or the truncated email instead.'),
+			'name' => tra('Obscure the email address when using the email address as username if possible (coverage will not be complete)'),
+			'description' => tra('This will attempt as much as possible to hide the email address, showing the real name or the truncated email address instead.'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'login_is_email',
@@ -44,7 +44,7 @@ function prefs_login_list()
 		),
 		'login_http_basic' => array(
 			'name' => tr('HTTP Basic Authentication'),
-			'description' => tr('Check credentials from HTTP Basic Authentication, useful to allow webservices to use credentials.'),
+			'description' => tr('Check credentials from HTTP Basic Authentication, which is useful to allow webservices to use credentials.'),
 			'type' => 'list',
 			'filter' => 'alpha',
 			'default' => 'n',

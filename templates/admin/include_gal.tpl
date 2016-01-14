@@ -106,7 +106,7 @@
 			</tr>
 			{if $prefs.feature_categories eq 'y'}
 				<tr>
-					<td>{tr}Force and limit categorization to within subtree of:{/tr}</td>
+					<td>{tr}Limit categorization to within the subtree of:{/tr}</td>
 					<td>
 						<select name="feature_image_gallery_mandatory_category">
 							<option value="-1" {if $prefs.feature_image_gallery_mandatory_category eq -1 or $prefs.feature_image_gallery_mandatory_category eq ''}selected="selected"{/if}>{tr}None{/tr}</option>

@@ -35,7 +35,7 @@ function prefs_cookie_list()
 		),
 		'cookie_consent_feature' => array(
 			'name' => tra('Cookie Consent'),
-			'description' => tra('Ask users permission before setting any cookies, and obey their decision.'),
+			'description' => tra('Ask permission of the user before setting any cookies, and comply with the response.'),
 			'hint' => tra('Complies with EU Privacy and Electronic Communications Regulations.'),
 			'type' => 'flag',
 			'help' => 'Cookie+Consent',

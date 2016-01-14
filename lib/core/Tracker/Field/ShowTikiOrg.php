@@ -27,8 +27,8 @@ class Tracker_Field_ShowTikiOrg extends Tracker_Field_Abstract
 						'legacy_index' => 0,
 					),
 					'remoteShellUser' => array(
-						'name' => tr('Shell user name on remote server'),
-						'description' => tr('The shell user name on the show server'),
+						'name' => tr('Shell username on remote server'),
+						'description' => tr('The shell username on the show server'),
 						'filter' => 'text',
 						'legacy_index' => 1,
 					),

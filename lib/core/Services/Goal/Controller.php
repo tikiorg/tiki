@@ -29,7 +29,7 @@ class Services_Goal_Controller
 
 		if (! $info['enabled']) {
 			if (! $isAdmin) {
-				throw new Services_Exception_Denied(tr('Goal currently disabled'));
+				throw new Services_Exception_Denied(tr('The goal is currently disabled'));
 			} else {
 				$messages[] = tr('This goal is not enabled.');
 			}
@@ -60,7 +60,7 @@ class Services_Goal_Controller
 
 			// Goal is only visible because user is admin, mock some of the data
 			$info = $goallib->unevaluateConditions($info);
-			$messages[] = tr('Goal has not been evaluated, administrator view.');
+			$messages[] = tr('The goal has not been evaluated, administrator view.');
 		}
 
 		$info['conditions'] = array_filter($info['conditions'], function ($item) {

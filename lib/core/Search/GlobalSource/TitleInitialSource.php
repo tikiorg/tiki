@@ -27,7 +27,7 @@ class Search_GlobalSource_TitleInitialSource implements Search_GlobalSource_Inte
 			Search_Query_Facet_Term::fromField('title_initial')
 				->setLabel(tr('Letter')),
 			Search_Query_Facet_Term::fromField('title_firstword')
-				->setLabel(tr('First Word')),
+				->setLabel(tr('First word')),
 		);
 	}
 

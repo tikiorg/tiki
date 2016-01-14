@@ -9,7 +9,7 @@ function prefs_calendar_list()
 {
 	return array(
 		'calendar_view_days' => array(
-			'name' => tra('Days to display in the Calendar'),
+			'name' => tra('Days to display in the calendar'),
             'description' => tra(''),
 			'type' => 'multicheckbox',
 			'options' => array( 

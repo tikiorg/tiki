@@ -28,7 +28,7 @@ function prefs_art_list()
 			'default' => 'publishDate_desc',
 		),
 		'art_home_title' => array(
-			'name' => tra('Title of articles home page'),
+			'name' => tra('Title of articles homepage'),
 			'type' => 'list',
 			'options' => array(
 				'' => '',

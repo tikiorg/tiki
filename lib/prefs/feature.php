@@ -26,7 +26,7 @@ function prefs_feature_list($partial = false)
 
 	return array(
 		'feature_blog_mandatory_category' => array(
-			'name' =>  tra('Blog:').' '.tra('Force and limit categorization to within subtree of'),
+			'name' =>  tra('Blog:').' '.tra('Limit categorization to within the subtree of'),
 			'description' => tra('If you get an error message indicating a mandatory category is required when editing a blog post, this is the option to blame. Set it to None.'),
 			'type' => 'list',
 			'options' => $catree,
@@ -541,7 +541,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_fullscreen' => array(
 			'name' => tra('Full Screen'),
-			'description' => tra('Allow users to activate fullscreen mode.'),
+			'description' => tra('Allow users to activate full-screen mode.'),
 			'help' => 'Fullscreen',
 			'type' => 'flag',
 			'default' => 'n',
@@ -949,7 +949,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_version_checks' => array(
 			'name' => tra('Check for updates automatically'),
-			'description' => tra('Tiki will check for updates when you access the main Administration page'),
+			'description' => tra('Tiki will check for updates when the main Administration page is accessed'),
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'y',
@@ -1006,7 +1006,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_translation_incomplete_notice' => array(
 			'name' => tra('Incomplete translation notice'),
-			'description' => tra('When a page is translated to a new language, a notice will be automatically inserted into the page to indicate that the translation is not yet complete.'),
+			'description' => tra('When a page is translated to a new language, a notice will automatically be inserted into the page to indicate that the translation is not yet complete.'),
 			'type' => 'flag',
 			'default' => 'y',
 		),
@@ -1109,7 +1109,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_docs' => array(
 			'name' => tra('Docs (WebODF)'),
-			'description' => tra('Docs gives you the ability to view/edit Open Document Format'),
+			'description' => tra('Docs enables viewing and editing Open Document Format files'),
 			'help' => 'Docs',
 			'type' => 'flag',
 			'default' => 'n',
@@ -1779,7 +1779,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_sitelogo' => array(
 			'name' => tra('Site Logo and Title'),
-            'description' => tra('use a Site Logo and Title'),
+            'description' => tra('display a site logo image and/or title'),
 			'type' => 'flag',
 			'warning' => tra('This setting is expected to be moved from here to the admin-modules page .'),
 			'default' => 'y',
@@ -2119,7 +2119,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_export' => array(
 			'name' => tra('Export'),
-            'description' => tra('permit exporting the Wiki'),
+            'description' => tra('permit exporting wiki pages'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -2344,7 +2344,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_wiki_mandatory_category' => array(
-			'name' =>  tra('Wiki:').' '.tra('Force and limit categorization to within subtree of'),
+			'name' =>  tra('Wiki:').' '.tra('Limit categorization to within the subtree of'),
 			'description' => tra('If an error message indicates a mandatory category is required when editing a wiki page, set this option to "None".'),
 			'type' => 'list',
 			'options' => $catree,
@@ -2355,7 +2355,7 @@ function prefs_feature_list($partial = false)
 			'default' => -1,
 		),
 		'feature_image_gallery_mandatory_category' => array(
-			'name' =>  tra('Image Gallery:').' '.tra('Force and limit categorization to within subtree of'),
+			'name' =>  tra('Image Gallery:').' '.tra('Limit categorization to within the subtree of'),
 			'description' => tra('If an error message indicates a mandatory category is required when editing an image (in an image gallery), set this option to "None".'),
 			'type' => 'list',
 			'options' => $catree,

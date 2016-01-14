@@ -10,9 +10,9 @@ function prefs_layout_list()
 	return array(
 		'layout_fixed_width' => array(
 			'name' => tra('Layout width'),
-            'description' => tra('Constrains the site display width (default: 990px).'),
+            'description' => tra('Constrains the width of the content area of the site (default: 1170px).'),
 			'type' => 'text',
-			'hint' => tra('ex.: 800px'),
+			'hint' => tra('for example, 960px'),
 			'dependencies' => array(
 				'feature_fixed_width',
 			),

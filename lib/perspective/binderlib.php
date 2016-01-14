@@ -153,7 +153,7 @@ class AreasLib extends CategLib
 			$this->cacheAreas(true); // recache the whole table
 			return true;
 		} else {
-			return tra("Areas root category id") . " " . tra("is invalid.");
+			return tra("Areas root category ID") . " " . tra("is invalid.");
 		}
 	}
 

@@ -15,7 +15,7 @@ class Search_Elastic_MappingException extends Search_Elastic_Exception
 		$this->type = $type;
 		$this->field = $field;
 
-		parent::__construct(tr('Uknown mapping type "%0" for field "%1"', $type, $field));
+		parent::__construct(tr('Unknown mapping type "%0" for field "%1"', $type, $field));
 	}
 
 	function getType()

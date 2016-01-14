@@ -10,7 +10,7 @@ function prefs_module_list()
 	return array(
 		'module_zones_top' => array(
 			'name' => tra('Top module zone'),
-			'description' => tra('Visibility of area to keep modules such as logo, login etc (header)'),
+			'description' => tra('Activate zone for modules such as site logo, log-in form, etc. (page header)'),
 			'type' => 'list',
 			'keywords' => tra('side bar'),
 			'help' => 'Users+Flip+Columns',
@@ -24,7 +24,7 @@ function prefs_module_list()
 		),
 		'module_zones_topbar' => array(
 			'name' => tra('Topbar module zone'),
-			'description' => tra('Visibility of area for modules such as main horizontal menu, search form, page-wide content, etc.'),
+			'description' => tra('Activate zone for modules such as horizontal menu (navbar), search form, page-wide content, etc.'),
 			'type' => 'list',
 			'keywords' => tra('topbar'),
 			'help' => 'Users+Flip+Columns',

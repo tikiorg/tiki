@@ -19,7 +19,7 @@ function prefs_http_list()
 		),
 		'http_skip_frameset' => array(
 			'name' => tra('HTTP lookup: skip framesets'),
-			'description' => tra('When performing and HTTP request to an external source, verify if the result is a frameset and use heuristic to provide the real content.'),
+			'description' => tra('When performing an HTTP request to an external source, verify if the result is a frameset and use heuristic to provide the real content.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),

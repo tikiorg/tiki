@@ -584,15 +584,15 @@
 									</a>
 								</legend>
 								{remarksbox type=info title="{tr}Tip{/tr}" close="n"}
-									{tr}It is recommended to choose the "Require secure (https) login" option for better security. A security certificate and dedicated IP address are required to implement a secure login.{/tr}
+									{tr}It is recommended to choose the "Require secure (HTTPS) login" option for better security. A security certificate and dedicated IP address are required to implement a secure login.{/tr}
 								{/remarksbox}
 								<div style="padding:5px; clear:both"><label for="https_login">{tr}HTTPS login:{/tr}</label>
 									<select class="form-control" name="https_login" id="https_login" onchange="hidedisabled('httpsoptions',this.value);">
 										<option value="disabled"{if $prefs.https_login eq 'disabled'} selected="selected"{/if}>{tr}Disabled{/tr}</option>
-										<option value="allowed"{if $prefs.https_login eq 'allowed'} selected="selected"{/if}>{tr}Allow secure (https) login{/tr}</option>
-										<option value="encouraged"{if $prefs.https_login eq 'encouraged' or ($prefs.https_login eq '' and $detected_https eq 'on' )} selected="selected"{/if}>{tr}Encourage secure (https) login{/tr}</option>
+										<option value="allowed"{if $prefs.https_login eq 'allowed'} selected="selected"{/if}>{tr}Allow secure (HTTPS) login{/tr}</option>
+										<option value="encouraged"{if $prefs.https_login eq 'encouraged' or ($prefs.https_login eq '' and $detected_https eq 'on' )} selected="selected"{/if}>{tr}Encourage secure (HTTPS) login{/tr}</option>
 										<option value="force_nocheck"{if $prefs.https_login eq 'force_nocheck'} selected="selected"{/if}>{tr}Consider we are always in HTTPS, but do not check{/tr}</option>
-										<option value="required"{if $prefs.https_login eq 'required'} selected="selected"{/if}>{tr}Require secure (https) login{/tr}</option>
+										<option value="required"{if $prefs.https_login eq 'required'} selected="selected"{/if}>{tr}Require secure (HTTPS) login{/tr}</option>
 									</select>
 								</div>
 								<div id="httpsoptions" style="display:{if $prefs.https_login eq 'disabled' or ( $prefs.https_login eq '' and $detected_https eq '')}none{else}block{/if};">

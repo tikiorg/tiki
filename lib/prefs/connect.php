@@ -20,7 +20,7 @@ function prefs_connect_list()
 		),
 		'connect_send_info' => array(
 			'name' => tra('Send Site Information'),
-            'description' => tra('Additionally send keywords, location etc to tiki.org so you can connect with Tikis near you.'),
+            'description' => tra('Additionally send keywords, location, etc. to tiki.org so you can connect with other Tiki sites near you.'),
 			'type' => 'flag',
 			'dependencies' => 'connect_feature',
 			'default' => 'y',

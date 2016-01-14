@@ -17,7 +17,7 @@ function prefs_iepngfix_list()
 			'default' => '.sitelogo a img',
 		),
 		'iepngfix_elements' => array(
-			'name' => tra('HTMLDomElements to be fixed'),
+			'name' => tra('HTML DOM Elements to be fixed'),
             'description' => tra(''),
 			'type' => 'text',
 			'size' => '30',

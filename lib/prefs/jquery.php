@@ -96,8 +96,8 @@ function prefs_jquery_list($partial = false)
 			'default' => 'vertical',
 		),
 		'jquery_ui_chosen' => array(
-			'name' => tra('jQuery-ui Chosen Menu'),
-			'description' => tra('Styled replacement for dropdown select menus and multiple select inputs.'),
+			'name' => tra('jQuery-UI Chosen Select Boxes'),
+			'description' => tra('Styled replacement for dropdown select lists and multiple-select inputs.'),
 			'type' => 'flag',
 			'default' => 'n',
 			'dependencies' => array(
@@ -105,7 +105,7 @@ function prefs_jquery_list($partial = false)
 			),
 		),
 		'jquery_colorbox_theme' => array(
-			'name' => tra('CSS to use in Colorbox (a.k.a. "Shadowbox")'),
+			'name' => tra('Visual style of Colorbox (a.k.a. "Shadowbox")'),
             'description' => tra(''),
 			'type' => 'list',
 			'perspective' => false,
@@ -123,7 +123,7 @@ function prefs_jquery_list($partial = false)
 		),
 		'jquery_fitvidjs' => array(
 			'name' => tra('FitVids.js'),
-			'description' => tra('jQuery plugin for fluid width video embeds.'),
+			'description' => tra('jQuery plugin for fluid-width (responsive) embedded videos.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
