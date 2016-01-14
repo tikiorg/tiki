@@ -10,7 +10,7 @@ function prefs_pass_list()
 	return array(
 		'pass_chr_num' => array(
 			'name' => tra('Require characters and numerals'),
-			'description' => tra('For improved security, require users to include a mix of characters and numerals in passwords.'),
+			'description' => tra('For improved security, require users to include a mix of alphabetical characters and numerals in passwords.'),
             'type' => 'flag',
 			'default' => 'n',
 		),
@@ -26,7 +26,7 @@ function prefs_pass_list()
 		),
 		'pass_chr_case' => array(
 			'name' => tra('Require alphabetical characters in lower and upper case'),
-			'description' => tra('Password must contain at least one alphabetical character in lower case like a and one in upper case like A.'),
+			'description' => tra('Password must contain at least one lowercase alphabetical character like "a" and one uppercase character like "A".'),
             'type' => 'flag',
 			'default' => 'n',
 		),
@@ -38,13 +38,13 @@ function prefs_pass_list()
 		),
 		'pass_repetition' => array(
 			'name' => tra('Require no consecutive repetition of the same character'),
-			'description' => tra('Password must contain no consecutive repetition of the same character as 111 or aab.'),
+			'description' => tra('Password must not contain a consecutive repetition of the same character such as "111" or "aab".'),
             'type' => 'flag',
 			'default' => 'n',
 		),
 		'pass_diff_username' => array(
-			'name' => tra('Password must be different from the user login'),
-			'description' => tra('Password must be different from the user login.'),
+			'name' => tra('The password must be different from the user\'s log-in name'),
+			'description' => tra('The password must be different from the user\'s log-in name.'),
             'type' => 'flag',
 			'default' => 'y',
 		),	);	

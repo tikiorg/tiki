@@ -6677,7 +6677,7 @@ class UsersLib extends TikiLib
 
 		if ($prefs['pass_chr_case'] == 'y') {
 			if (!preg_match_all('/[a-z]+/', $pass, $foo) || !preg_match_all('/[A-Z]+/', $pass, $foo)) {
-				$errors[] = tra('Password must contain at least one alphabetical character in lower case like a and one in upper case like A.');
+				$errors[] = tra('Password must contain at least one lowercase alphabetical character like "a" and one uppercase character like "A".');
 			}
 		}
 
@@ -6698,7 +6698,7 @@ class UsersLib extends TikiLib
 			$previous = '';
 			foreach ($chars as $char) {
 				if ($char == $previous) {
-					$errors[] = tra('Password must contain no consecutive repetition of the same character as 111 or aab');
+					$errors[] = tra('Password must not contain a consecutive repetition of the same character such as "111" or "aab"');
 					break;
 				}
 				$previous = $char;
@@ -6707,7 +6707,7 @@ class UsersLib extends TikiLib
 
 		if ($prefs['pass_diff_username'] == 'y') {
 			if (strtolower($user) == strtolower($pass)) {
-				$errors[] = tra('Password must be different from the user login.');
+				$errors[] = tra('The password must be different from the user\'s log-in name.');
 			}
 		}
 
