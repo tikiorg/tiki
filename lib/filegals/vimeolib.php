@@ -9,6 +9,10 @@ class VimeoLib
 {
 	private $oauth;
 
+	/**
+	 * VimeoLib constructor.
+	 * @param OAuthLib $oauthlib
+	 */
 	function __construct($oauthlib)
 	{
 		$this->oauth = $oauthlib;

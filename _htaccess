@@ -151,6 +151,8 @@ FileETag none
 
 # Set a timezone (needed for dates and times to work properly in PHP)
 # php_value date.timezone "America/New_York"
+# if the php one doesn't work then this should set the apache environment variable
+# SetEnv TZ America/New_York
 
 # Set a character set
 #php_value default_charset utf-8
