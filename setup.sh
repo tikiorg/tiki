@@ -533,8 +533,8 @@ composer_core()
 	if exists php;
 	then
 		if [ ${LOGCOMPOSERFLAG} = "0" ] ; then
-			#until php -dmemory_limit=-1 temp/composer.phar install --prefer-dist
-			until ${PHPCLI} -dmemory_limit=-1 temp/composer.phar install --prefer-dist 2>&1 | sed '/Warning: Ambiguous class resolution/d'
+			#until php -dmemory_limit=-1 temp/composer.phar install --prefer-dist --no-dev
+			until ${PHPCLI} -dmemory_limit=-1 temp/composer.phar install --prefer-dist --no-dev 2>&1 | sed '/Warning: Ambiguous class resolution/d'
 			# setting memory_limit here prevents suhosin ALERT - script tried to increase memory_limit to 536870912 bytes
 			do
 				if [ $N -eq 7 ];
@@ -549,7 +549,7 @@ composer_core()
 			done
 		fi
 		if [ ${LOGCOMPOSERFLAG} = "1" ] ; then
-			until ${PHPCLI} -dmemory_limit=-1 temp/composer.phar install --prefer-dist > ${TIKI_COMPOSER_INSTALL_LOG}
+			until ${PHPCLI} -dmemory_limit=-1 temp/composer.phar install --prefer-dist --no-dev > ${TIKI_COMPOSER_INSTALL_LOG}
 			# setting memory_limit here prevents suhosin ALERT - script tried to increase memory_limit to 536870912 bytes
 			do
 				if [ $N -eq 7 ];
@@ -565,8 +565,8 @@ composer_core()
 		fi
 		if [ ${LOGCOMPOSERFLAG} = "2" ] ; then
 			echo "Suppress output lines with 'Warning: Ambiguous class resolution'\n..."
-			#until php -dmemory_limit=-1 temp/composer.phar install --prefer-dist | sed '/Warning: Ambiguous class resolution/d'
-			until ${PHPCLI} -dmemory_limit=-1 temp/composer.phar install --prefer-dist
+			#until php -dmemory_limit=-1 temp/composer.phar install --prefer-dist --no-dev | sed '/Warning: Ambiguous class resolution/d'
+			until ${PHPCLI} -dmemory_limit=-1 temp/composer.phar install --prefer-dist --no-dev
 			# setting memory_limit here prevents suhosin ALERT - script tried to increase memory_limit to 536870912 bytes
 			do
 				if [ $N -eq 7 ];
