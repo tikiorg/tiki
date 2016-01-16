@@ -22,6 +22,18 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  *	- _flip_hide_text: if set to 'n', do not display a '(Hide)' suffix after _text when status is not 'hidden'
  *	- _flip_default_open: if set to 'y', the flip is open by default (if no cookie jar)
  *	- _escape: if set to 'y', will escape the apostrophes in onclick
+ *  - _type: button styling. Possible values: default, primary, success, info, warning, danger, link (following bootstrap conventions)
+ *     Set different class, title, text and icon depending on whether the button is disabled or selected
+ *  - _disabled: set to y to disable the button
+ *  - _disabled_class: class to use if _disabled is set to y. Default is 'disabled'
+ *  - _disabled_title: button title to use if _disabled is set to y
+ *  - _disabled_text: button text to use if _disabled is set to y
+ *  - _disabled_icon_name: button icon to use if _disabled is set to y
+ *  - _selected: set to y to enable the button.
+ *  - _selected_class: class to use if _selected set to y. Default is 'selected'
+ *  - _selected_title: button title to use if _selected is set to y
+ *  - _selected_text: button text to use if _selected is set to y
+ *  - _selected_icon_name: button icon to use if _selected is set to y
  */
 function smarty_function_button($params, $smarty)
 {
@@ -31,57 +43,49 @@ function smarty_function_button($params, $smarty)
 	$smarty->loadPlugin('smarty_block_self_link');
 
 	$selected = false ;
-	if ( ! empty($params['_selected']) ) {
-		// Filter the condition
-		if (preg_match('/[a-zA-Z0-9 =<>!]+/', $params['_selected'])) {
-			$error_report = error_reporting(~E_ALL);
-			$return = eval ( '$selected =' . $params['_selected'].";" );
-			error_reporting($error_report);
-			if ($return !== FALSE) {
-				if ($selected) {
-					if (! empty($params['_selected_class']) ) {
-						$params['_class'] = $params['_selected_class'];
-					} else {
-						$params['_class'] = 'selected';
-					}
-					if (! empty($params['_selected_text']) ) {
-						$params['_text'] = $params['_selected_text'];
-					}
-					if (! empty($params['_selected_title']) ) {
-						$params['_title'] = $params['_selected_title'];
-					}
-					if (! empty($params['_selected_icon']) ) {
-						$params['_icon'] = $params['_selected_icon'];
-					}
-				}
+	if ( ! empty($params['_selected'])) {
+		if ( $params['_selected'] == 'y' ) {
+			$selected = true;
+			if (!empty($params['_selected_class'])) {
+				$params['_class'] = $params['_selected_class'];
+			} else {
+				$params['_class'] = 'selected';
+			}
+			if (!empty($params['_selected_text'])) {
+				$params['_text'] = $params['_selected_text'];
+			}
+			if (!empty($params['_selected_title'])) {
+				$params['_title'] = $params['_selected_title'];
+			}
+			if (!empty($params['_selected_icon'])) {
+				$params['_icon'] = $params['_selected_icon'];
+			}
+			if (!empty($params['_selected_icon_name'])) {
+				$params['_icon_name'] = $params['_selected_icon_name'];
 			}
 		}
 	}
 
 	$disabled = false ;
 	if ( ! empty($params['_disabled']) ) {
-		// Filter the condition
-		if (preg_match('/[a-zA-Z0-9 =<>!]+/', $params['_disabled'])) {
-			$error_report = error_reporting(~E_ALL);
-			$return = eval ( '$disabled =' . $params['_disabled'].";" );
-			error_reporting($error_report);
-			if ($return !== FALSE) {
-				if ($disabled) {
-					if (! empty($params['_disabled_class']) ) {
-						$params['_class'] = $params['_disabled_class'];
-					} else {
-						$params['_class'] = 'disabled';
-					}
-					if (! empty($params['_disabled_text']) ) {
-						$params['_text'] = $params['_disabled_text'];
-					}
-					if (! empty($params['_disabled_title']) ) {
-						$params['_title'] = $params['_disabled_title'];
-					}
-					if (! empty($params['_disabled_icon']) ) {
-						$params['_icon'] = $params['_disabled_icon'];
-					}
-				}
+		if ( $params['_disabled'] == 'y' ) {
+			$disabled = true;
+			if (!empty($params['_disabled_class'])) {
+				$params['_class'] = $params['_disabled_class'];
+			} else {
+				$params['_class'] = 'disabled';
+			}
+			if (!empty($params['_disabled_text'])) {
+				$params['_text'] = $params['_disabled_text'];
+			}
+			if (!empty($params['_disabled_title'])) {
+				$params['_title'] = $params['_disabled_title'];
+			}
+			if (!empty($params['_disabled_icon'])) {
+				$params['_icon'] = $params['_disabled_icon'];
+			}
+			if (!empty($params['_disabled_icon_name'])) {
+				$params['_icon_name'] = $params['_disabled_icon_name'];
 			}
 		}
 		unset($params['_disabled']);
