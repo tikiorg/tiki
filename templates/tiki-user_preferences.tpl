@@ -330,7 +330,7 @@
 					</label>
 				</div>
 				<div class="form-group">
-					<label class="input-control" for="minPrio">{tr}Send me an email for messages with priority equal or greater than:{/tr}</label>
+					<label class="input-control" for="minPrio">{tr}Send me an email for messages with priority equal to or greater than:{/tr}</label>
 					<select class="form-control" id="minPrio" name="minPrio">
 						<option value="1" {if $user_prefs.minPrio eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
 						<option value="2" {if $user_prefs.minPrio eq 2}selected="selected"{/if}>2 -{tr}Low{/tr}-</option>

@@ -15,14 +15,14 @@ function prefs_tracker_list()
 			'default' => 'n',
 		),
 		'tracker_refresh_itemlink_detail' => array(
-			'name' => tr('Refresh item link items when master is modified'),
+			'name' => tr('Refresh item link items when the master is modified'),
 			'description' => tr('To be used when item link is used in trackers so that the index remains in good shape when data on the master that is indexed with the detail is modified and used to search on.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'tracker_clone_item' => array(
 			'name' => tr('Clone tracker items'),
-			'description' => tr('Allow copying tracker item information into new tracker item.'),
+			'description' => tr('Allow copying tracker item information to a new tracker item.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -44,13 +44,13 @@ function prefs_tracker_list()
 		),
 		'tracker_show_comments_below' => array(
 			'name' => tr('Show comments below items'),
-			'description' => tr('Show comments to a tracker item below the item itself like in other trackers, instead of enclosed in a tab'),
+			'description' => tr('Show comments for a tracker item below the item itself as in other trackers, instead of enclosed in a tab'),
 			'type' => 'flag',
 			'default' => 'n',
 		),		
 		'tracker_legacy_insert' => array(
 			'name' => tr('Use legacy tracker insertion screen'),
-			'description' => tr('Use the legacy tracker insertion screen as a tab instead of the dialog.'),
+			'description' => tr('Use the legacy tracker insertion screen (a tab) instead of a popup dialog.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -62,7 +62,7 @@ function prefs_tracker_list()
 		),
 		'tracker_wikirelation_synctitle' => array(
 			'name' => tr('Sync wiki page name to linked tracker field'),
-			'description' => tr('When wiki page is renamed or when the value of the trackerfield that is linked to the wiki page is changed, make the corresponding change as well to the other linked via tiki.wiki.linkedfield relation.'),
+			'description' => tr('When the wiki page is renamed or when the value of the tracker field that is linked to the wiki page is changed, make the corresponding change as well to the other linked via tiki.wiki.linkedfield relation.'),
 			'type' => 'flag',
 			'tags' => array('advanced'),
 			'default' => 'n',
@@ -85,7 +85,7 @@ function prefs_tracker_list()
  		),
  		'tracker_article_trackerId' => array(
  			'name' => tr('Tracker ID of tracker for articles'),
- 			'description' => tr('The tracker that is for articles, must contain an Articles field'),
+ 			'description' => tr('The tracker that is for articles must contain an "Articles" field'),
  			'type' => 'text',
 			'tags' => array('advanced'),
  			'size' => '3',
@@ -103,7 +103,7 @@ function prefs_tracker_list()
 		),
 		'tracker_tabular_enabled' => array(
 			'name' => tr('Tracker Tabular'),
-			'description' => tr('Allows to manage import/export tracker profiles and manage custom list formats.'),
+			'description' => tr('Allows management of import/export tracker profiles and management of custom list formats.'),
 			'type' => 'flag',
 			'default' => 'n',
 			'dependencies' => ['feature_trackers'],
@@ -111,7 +111,7 @@ function prefs_tracker_list()
             'help' => 'Tracker+Tabular',
 		),
 		'tracker_always_notify' => array(
-			'name' => tr('Always Notify Watchers'),
+			'name' => tr('Always notify watchers'),
 			'description' => tr('Send item updated notifications to watchers even if nothing has changed.'),
 			'type' => 'flag',
 			'default' => 'y',

@@ -11,7 +11,7 @@
 		<input type="text" name="name" value="{$name|escape}" required="required" class="form-control">
 	</div>
 	<div class="form-group" style="display: none;">
-		<label for="permName" class="control-label">{tr}Permanent Name{/tr}</label>
+		<label for="permName" class="control-label">{tr}Permanent name{/tr}</label>
 		<input type="text" name="permName" value="{$permName|escape}" pattern="[a-zA-Z0-9_]+" class="form-control">
 	</div>
 	<div class="form-group">

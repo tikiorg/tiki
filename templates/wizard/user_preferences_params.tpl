@@ -157,7 +157,7 @@
 						</tr>
 					{/if}
 					<tr>
-						<td>{tr}Send me an email for messages with priority equal or greater than:{/tr}</td>
+						<td>{tr}Send me an email for messages with priority equal to or greater than:{/tr}</td>
 						<td>
 							<select name="minPrio">
 								<option value="1" {if $minPrio eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>

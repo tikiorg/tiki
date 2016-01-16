@@ -9,7 +9,7 @@ function prefs_url_list()
 {
 	return array(
 		'url_after_validation' => array(
-			'name' => tra('URL a user is redirected to after account validation'),
+			'name' => tra('URL the user is redirected to after account validation'),
 			'hint' => tra('Default').': tiki-information.php?msg='.tra('Account validated successfully.'),
 			'type' => 'text',
 			'dependencies' => array(

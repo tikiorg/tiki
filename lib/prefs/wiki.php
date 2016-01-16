@@ -51,8 +51,8 @@ function prefs_wiki_list($partial = false)
 	return array(
 		'wiki_page_regex' => array(
 			'name' => tra('Wiki link format'),
-			'description' => tra('What level of special characters are accepted as wiki links for page names. Ex.: ((Page &eacute;&agrave;&icirc;))'),
-			'hint' => tra('Strict will only be basic characters like a-z and 0-9. If you have accented or special characters in page names, you should not use strict.'),
+			'description' => tra('Level of special characters acceptable in wiki links for page names. For example: ((Page &eacute;&agrave;&icirc;))'),
+			'hint' => tra('"Strict" includes only basic characters such as a-z and 0-9. A site that uses accented or special characters in page names should not use "strict".'),
 			'type' => 'list',
 			'options' => array(
 				'complete' => tra('Complete'),
@@ -98,7 +98,7 @@ function prefs_wiki_list($partial = false)
 			'description' => tra('Changes the list format used to display the authors of the page.'),
 			'type' => 'list',
 			'options' => array(
-				'classic' => tra('Creator & Author'),
+				'classic' => tra('Creator and Author'),
 				'business' => tra('Business style'),
 				'collaborative' => tra('Collaborative style'),
 				'lastmodif' => tra('Page last modified on'),
@@ -185,7 +185,7 @@ function prefs_wiki_list($partial = false)
 		),
 		'wiki_edit_plugin' => array(
 			'name' => tra('Enable edit plugin icons'),
-			'description' => tra('Permits editing of a plugin, via a popup form, without needing to edit the whole page.'),
+			'description' => tra('Enables editing a plugin, via a popup form, without needing to edit the whole page.'),
 			'type' => 'flag',
 			'hint' => tra('Requires JavaScript'),
 			'default' => 'y',
@@ -199,7 +199,7 @@ function prefs_wiki_list($partial = false)
 		),
 		'wiki_ranking_reload_probability' => array(
 			'name' => tra('Page ranking reload probability'),
-			'description' => tra('Calculation of page rankings is an expensive task that cannot be performed at every page load. It will be calculated at random page loads based on a dice roll. This option indicates the amount of faces on the dice. Larger numbers lead to less load, but less accurate ranking.'),
+			'description' => tra('Calculation of page rankings is a resource-intensive task that cannot be performed at every page load. It will be calculated at random page loads based on a dice roll. This option indicates the number of faces on the dice. Larger numbers lead to reduced resource use, but less-accurate ranking.'),
 			'type' => 'text',
 			'size' => 7,
 			'filter' => 'digits',
@@ -323,7 +323,7 @@ function prefs_wiki_list($partial = false)
 			'tags' => array('basic'),
 		),
 		'wiki_creator_admin' => array(
-			'name' => tra('Page creators are admin of their pages'),
+			'name' => tra('Page creators are administrators of their pages'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -407,7 +407,7 @@ function prefs_wiki_list($partial = false)
 			'default' => 'y',
 		),
 		'wiki_list_comment_len' => array(
-			'name' => tra('Edit Comment length'),
+			'name' => tra('Edit comment length'),
 			'type' => 'text',
 			'size' => '3',
 			'default' => '200',

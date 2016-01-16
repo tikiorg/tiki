@@ -13,8 +13,8 @@ function prefs_user_list($partial = false)
 	$fieldFormat = '{title} ({tracker_name})';
 	return array(
 		'user_show_realnames' => array(
-			'name' => tra('Show user\'s real name instead of login (when possible)'),
-			'description' => tra('Show user\'s real name instead of login (when possible)'),
+			'name' => tra('Show user\'s real name instead of username (log-in name), when possible'),
+			'description' => tra('Show user\'s real name instead of username (log-in name), when possible'),
 			'help' => 'User+Preferences',
 			'type' => 'flag',
 			'default' => 'n',
@@ -27,8 +27,8 @@ function prefs_user_list($partial = false)
 			'default' => 'n',
 		),
 		'user_tracker_infos' => array(
-			'name' => tra('Display UserTracker information on the user information page'),
-			'description' => tra('Display UserTracker information on the user information page'),
+			'name' => tra('Display user tracker information on the user information page'),
+			'description' => tra('Display user tracker information on the user information page'),
 			'help' => 'User+Tracker',
 			'hint' => tra('Input the user tracker ID then field IDs to be shown, all separated by commas. Example: 1,1,2,3,4 (user tracker ID 1 followed by field IDs 1-4)'),
 			'type' => 'text',
@@ -49,7 +49,7 @@ function prefs_user_list($partial = false)
 			'name' => tra('Users can open and close the modules'),
 			'help' => 'Users+Shade+Modules',
 			'type' => 'list',
-			'description' => tra('Allows users to hide/show modules.'),
+			'description' => tra('Allows users to open and close modules using the icon in the module header.'),
 			'options' => array(
 				'y' => tra('Always'),
 				'module' => tra('Module decides'),
@@ -79,8 +79,8 @@ function prefs_user_list($partial = false)
 			'default' => 'n',
 		),
 		'user_picture_gallery_id' => array(
-			'name' => tra('File gallery in which to store full-size copy of profile picture'),
-			'description' => tra('Enter the gallery id here. Please create a dedicated gallery that is admin-only for security, or make sure gallery permissions are set so that only admins can edit.'),
+			'name' => tra('File gallery in which to store full-size profile picture'),
+			'description' => tra('Enter the gallery ID here. Please create a dedicated gallery that is admin-only for security, or make sure gallery permissions are set so that only admins can edit.'),
 			'help' => 'User+Preferences',
 			'keywords' => 'avatar',
 			'type' => 'text',
@@ -103,8 +103,8 @@ function prefs_user_list($partial = false)
 			'profile_reference' => 'file',
 		),
 		'user_who_viewed_my_stuff' => array(
-			'name' => tra('Display who viewed my items on the user information page'),
-			'description' => tra('You will need to activate tracking of views for various items in the action log for this to work'),
+			'name' => tra('Display who has viewed "my items" on the user information page'),
+			'description' => tra('This requires activation of tracking of views for various items in the action log'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_actionlog',
@@ -112,16 +112,16 @@ function prefs_user_list($partial = false)
 			'default' => 'n',
 		),
 		'user_who_viewed_my_stuff_days' => array(
-			'name' => tra('Number of days to consider who viewed my items'),
-			'description' => tra('Number of days before current time to consider when showing who viewed my items'),
+			'name' => tra('Number of days to consider in displaying "who viewed my items"'),
+			'description' => tra('Number of days before the current day to consider when displayng "who viewed my items"'),
 			'type' => 'text',
 			'filter' => 'digits',
 			'size' => '4',
 			'default' => 90,
 		),
 		'user_who_viewed_my_stuff_show_others' => array(
-			'name' => tra('Show to others who viewed my items on the user information page'),
-			'description' => tra('Show to others who viewed my items on the user information page. Admins can always see this information.'),
+			'name' => tra('Show to others "who viewed my items" on the user information page'),
+			'description' => tra('Show to others "who viewed my items" on the user information page. Admins can always see this information.'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'user_who_viewed_my_stuff',
@@ -178,8 +178,8 @@ function prefs_user_list($partial = false)
 			'profile_reference' => 'wiki_page',
 		),
 		'user_register_prettytracker_outputtowiki' => array(
-			'name' => tra('Page name fieldId'),
-			'description' => tra('User trackers field id whose value is used as output page name'),
+			'name' => tra('Page name field ID'),
+			'description' => tra('User tracker's field ID whose value is used as output page name'),
 			'type' => 'text',
 			'size' => '20',
 			'default' => '',
@@ -202,7 +202,7 @@ function prefs_user_list($partial = false)
 			'profile_reference' => 'tracker',
 		),
 		'user_trackersync_realname' => array(
-			'name' => tra('Tracker field IDs to sync Real Name pref from'),
+			'name' => tra('Tracker field IDs to sync the "real name" pref from'),
 			'description' => tra('Enter the IDs separated by commas in priority of being chosen, each item can concatenate multiple fields using +, e.g. 2+3,4'),
 			'type' => 'text',
 			'size' => '10',
@@ -245,30 +245,30 @@ function prefs_user_list($partial = false)
 			'format' => $fieldFormat,
 		),
 		'user_selector_threshold' => array(
-			'name' => tra('Maximum number of users to show in drop down lists'),
-			'description' => tra('Prevents out of memory and performance issues when user list is very large by using a jQuery autocomplete text input box.'),
+			'name' => tra('Maximum number of users to show in drop-down lists'),
+			'description' => tra('Prevents out-of-memory and performance issues when the user list is very large, by using a jQuery autocomplete text input box.'),
 			'type' => 'text',
 			'size' => '5',
 			'dependencies' => array('feature_jquery_autocomplete'),
 			'default' => 50,
 		),
 		'user_selector_realnames_tracker' => array(
-			'name' => tra('Show user\'s real name instead of login in autocomplete selector in trackers feature'),
-			'description' => tra('Use user\'s real name instead of login in autocomplete selector in trackers feature'),
+			'name' => tra('Show user\'s real name instead of log-in name in the autocomplete selector in trackers'),
+			'description' => tra('Use user\'s real name instead of log-in name in the autocomplete selector in trackers'),
 			'type' => 'flag',
 			'dependencies' => array('feature_jquery_autocomplete', 'user_show_realnames', 'feature_trackers'),
 			'default' => 'n',
 		),
 		'user_selector_realnames_messu' => array(
-			'name' => tra('Show user\'s real name instead of login in autocomplete selector in messaging feature'),
-			'description' => tra('Use user\'s real name instead of login in autocomplete selector in messaging feature'),
+			'name' => tra('Show user\'s real name instead of log-in name in the autocomplete selector in the messaging feature'),
+			'description' => tra('Use user\'s real name instead of log-in name in the autocomplete selector in the messaging feature'),
 			'type' => 'flag',
 			'dependencies' => array('feature_jquery_autocomplete', 'user_show_realnames', 'feature_messages'),
 			'default' => 'n',
 		),
 		'user_favorites' => array(
 			'name' => tra('User Favorites'),
-			'description' => tra('Allows for users to flag content as their favorite.'),
+			'description' => tra('Allows users to flag content as their favorite.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -280,7 +280,7 @@ function prefs_user_list($partial = false)
 		),
 		'user_must_choose_group' => array(
 			'name' => tra('Users must choose a group at registration'),
-			'description' => tra('Users cannot register without choosing one of the groups defined above.'),
+			'description' => tra('Users cannot register without choosing one of the groups indicated above.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),

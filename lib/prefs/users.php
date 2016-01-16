@@ -59,7 +59,7 @@ function prefs_users_list()
 		'users_prefs_display_12hr_clock' => array(
 			'name' => tra('Use 12-hour clock for time selectors'),
 			'type' => 'flag',
-			'description' => tra('Use the 12-hour clock (with AM and PM) for time selectors used in some edit windows to set the time for publishing new or edited blog posts, articles, etc.'),
+			'description' => tra('Use the 12-hour clock (with AM and PM) in some edit screens to set the time for publishing new or edited blog posts, articles, etc.'),
 			'default' => 'n',
 		),
 		'users_prefs_diff_versions' => array(
@@ -131,7 +131,7 @@ function prefs_users_list()
 			'default' => 'n',
 		),
 		'users_prefs_minPrio' => array(
-			'name' => tra('Send me an email for messages with priority equal or greater than'),
+			'name' => tra('Send me an email for messages with priority equal to or greater than'),
 			'type' => 'list',
 			'dependencies' => array(
 				'feature_messages',

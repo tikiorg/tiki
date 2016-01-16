@@ -15,7 +15,7 @@ function prefs_unsuccessful_list()
 			'filter' => 'int',
 			'shorthint' => tra('unsuccessful login attempts'),
 			'hint' => tra('Use "-1" for never'),
-			'description' => tra('After a certain number of consecutive unsuccessful login attempts, the user will receive a mail with instruction to validate his account. However the user can still log-in with his old password.'),
+			'description' => tra('After a certain number of consecutive unsuccessful log-in attempts, the user will receive an email with instruction to validate his or her account. However, the user can still log in with the old password.'),
 			'default' => 20,
 			'keywords' => tra('brute force, brute-force, login failure, login-failure, failed logins'),
 		),

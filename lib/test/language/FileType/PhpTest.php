@@ -23,14 +23,14 @@ class Language_FileType_PhpTest extends TikiTestCase
 		$strings = array(
 			'Features',
 			'Enable/disable Tiki features here, but configure them elsewhere',
-			"Show user\'s real name instead of login in autocomplete selector in trackers feature",
+			"Show user\'s real name instead of log-in name in the autocomplete selector in trackers",
 			'General preferences and settings',
 		);
 		
 		$expectedResult = array(
 			'Features',
 			'Enable/disable Tiki features here, but configure them elsewhere',
-			"Show user's real name instead of login in autocomplete selector in trackers feature",
+			"Show user's real name instead of log-in name in the autocomplete selector in trackers",
 			'General preferences and settings',
 		);
 

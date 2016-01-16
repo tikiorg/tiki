@@ -24,7 +24,7 @@ class Search_MySql_SortTest extends Search_Index_SortTest
 
 	function testWeightImpact()
 	{
-		$this->markTestSkipped('Weighting is not supported by MySQL Full Text Search');
+		$this->markTestSkipped('Weighting is not supported by MySQL full-text search');
 	}
 }
 

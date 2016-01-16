@@ -72,7 +72,7 @@
 					{tr}Or you may use the <b>Upgrade Wizard</b>{/tr}.
 					{tr}This will guide you through the most common new settings and informations in order to upgrade your site{/tr}.
 					<a href="http://doc.tiki.org/Upgrade+Wizard" target="tikihelp" class="tikihelp" title="{tr}Upgrade Wizard:{/tr}
-						{tr}Use this wizard if you are upgrading from previous versions of Tiki, specially if you come from the previous Long Term Support (LTS) version.{/tr}</p>
+						{tr}Use this wizard if you are upgrading from previous versions of Tiki, specially if you come from the previous Long-Term Support (LTS) version.{/tr}</p>
 
 						<p>{tr}Some of these settings are also available through the Configuration Wizard, and all of them are available through Control Panels{/tr}.
 						{tr}But this wizard will let you learn about them as well as enable/disable them easily according to your needs and interests for your site{/tr}."
