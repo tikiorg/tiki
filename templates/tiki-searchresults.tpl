@@ -13,7 +13,8 @@
 		<div class="navbar">
 			{tr}Search in:{/tr}
 			{foreach item=name key=k from=$where_list}
-				{button _auto_args='where,highlight' href="tiki-searchresults.php?where=$k"  _selected="'$where'=='$k'" _selected_class="highlight" _text="$name"}
+				{if $where == $k}{assign var='selected' value='y'}{else}{assign var='selected' value='n'}{/if}
+				{button _auto_args='where,highlight' href="tiki-searchresults.php?where=$k" _selected="{$selected}" _selected_class="highlight" class="btn btn-default" _text="$name"}
 			{/foreach}
 		</div>
 	{/if}
