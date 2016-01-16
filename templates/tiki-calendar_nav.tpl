@@ -45,23 +45,23 @@
 {*viewmodes*}
 		{if !isset($calendar_type) or $calendar_type neq "tiki_actions"}
 			{if $module neq 'y'}
-				{button _ajax=$ajax href="?viewmode=day" _title="{tr}Day{/tr}" _text="{tr}Day{/tr}" _selected_class="buttonon"  _type="xs" _selected="'$viewmode' == 'day'"}
+				{button _ajax=$ajax href="?viewmode=day" _title="{tr}Day{/tr}" _text="{tr}Day{/tr}" _selected_class="buttonon" _selected="{if $viewmode == 'day'}y{else}n{/if}"}
 			{elseif empty($module_params.viewmode)}
-				{button _ajax=$ajax viewmode='day' _auto_args="viewmode" _keepall='y' _title="{tr}Day{/tr}" _text="{tr}D{/tr}" _selected_class="buttonon"  _type="xs" _selected="'$viewmode' == 'day'"}
+				{button _ajax=$ajax viewmode='day' _auto_args="viewmode" _keepall='y' _title="{tr}Day{/tr}" _text="{tr}D{/tr}" _selected_class="buttonon" _selected="{if $viewmode == 'day'}y{else}n{/if}"}
 			{/if}
 		{/if}
 		{if $module neq 'y'}
-			{button _ajax=$ajax href="?viewmode=week" _title="{tr}Week{/tr}" _text="{tr}Week{/tr}" _selected_class="buttonon"  _type="xs" _selected="'$viewmode' == 'week'"}
-			{button _ajax=$ajax href="?viewmode=month" _title="{tr}Month{/tr}" _text="{tr}Month{/tr}" _selected_class="buttonon"  _type="xs" _selected="'$viewmode' == 'month'"}
+			{button _ajax=$ajax href="?viewmode=week" _title="{tr}Week{/tr}" _text="{tr}Week{/tr}" _selected_class="buttonon" _selected="{if $viewmode == 'week'}y{else}n{/if}"}
+			{button _ajax=$ajax href="?viewmode=month" _title="{tr}Month{/tr}" _text="{tr}Month{/tr}" _selected_class="buttonon" _selected="{if $viewmode == 'month'}y{else}n{/if}"}
 		{elseif empty($module_params.viewmode)}
-			{button _ajax=$ajax viewmode='week' _auto_args="viewmode" _keepall='y' _title="{tr}Week{/tr}" _text="{tr}W{/tr}" _selected_class="buttonon"  _type="xs" _selected="'$viewmode' == 'week'"}
-			{button _ajax=$ajax viewmode='month' _auto_args="viewmode" _keepall='y' _title="{tr}Month{/tr}" _text="{tr}M{/tr}" _selected_class="buttonon"  _type="xs" _selected="'$viewmode' == 'month'"}
+			{button _ajax=$ajax viewmode='week' _auto_args="viewmode" _keepall='y' _title="{tr}Week{/tr}" _text="{tr}W{/tr}" _selected_class="buttonon" _selected="{if $viewmode == 'week'}y{else}n{/if}"}
+			{button _ajax=$ajax viewmode='month' _auto_args="viewmode" _keepall='y' _title="{tr}Month{/tr}" _text="{tr}M{/tr}" _selected_class="buttonon" _selected="{if $viewmode == 'month'}y{else}n{/if}"}
 		{/if}
 
 		{if $module neq 'y'}
-			{button _ajax=$ajax href="?viewmode=quarter" _title="{tr}Quarter{/tr}" _text="{tr}Quarter{/tr}" _selected_class="buttonon"  _type="xs" _selected="'$viewmode' == 'quarter'"}
-			{button href="?viewmode=semester" _title="{tr}Semester{/tr}" _text="{tr}Semester{/tr}" _selected_class="buttonon"  _type="xs" _selected="'$viewmode' == 'semester'"}
-			{button href="?viewmode=year" _ajax=$ajax viewmode=year _title="{tr}Year{/tr}" _text="{tr}Year{/tr}" _selected_class="buttonon"  _type="xs" _selected="'$viewmode' == 'year'"}
+			{button _ajax=$ajax href="?viewmode=quarter" _title="{tr}Quarter{/tr}" _text="{tr}Quarter{/tr}" _selected_class="buttonon" _selected="{if $viewmode == 'quarter'}y{else}n{/if}"}
+			{button href="?viewmode=semester" _title="{tr}Semester{/tr}" _text="{tr}Semester{/tr}" _selected_class="buttonon" _selected="{if $viewmode == 'semester'}y{else}n{/if}"}
+			{button href="?viewmode=year" _ajax=$ajax viewmode=year _title="{tr}Year{/tr}" _text="{tr}Year{/tr}" _selected_class="buttonon" _selected="{if $viewmode == 'year'}y{else}n{/if}"}
 		{/if}
 
 {*next*}
