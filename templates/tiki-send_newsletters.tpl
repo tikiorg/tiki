@@ -63,6 +63,7 @@
 	{remarksbox type='note' title="{tr}Please Confirm{/tr}"}
 		<b>{tr}This newsletter will be sent to {$subscribers} email addresses.{/tr}</b>
 		<br>
+		{if $prefs.newsletter_throttle eq 'y'}{tr}Sending will be throttled with a batch size of {$prefs.newsletter_batch_size} and a pause period of {$prefs.newsletter_pause_length} seconds.{/tr}<br>{/if}
 		{tr}Reply to:{/tr} {if empty($replyto)}{$prefs.sender_email|escape} ({tr}default{/tr}){else}{$replyto|escape}{/if}
 	{/remarksbox}
 	<p>
@@ -139,6 +140,7 @@
 
 	<div id="sendingArea" style="display:none">
 		<h3>{tr}Sending Newsletter{/tr} ...</h3>
+		<h5> ... {tr}sending to {$subscribers} addresses{/tr}</h5>
 		<div id="confirmed"></div>
 		<iframe id="resultIframe" name="resultIframe" frameborder="0" style="width: 600px; height: 400px"></iframe>
 		{jq}
