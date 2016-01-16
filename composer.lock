@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cb851a85d6f840b65a0e7e71cb7943a6",
+    "hash": "50d5ac691cdcc88b233ce1c309fb6f43",
     "content-hash": "a3b0cbb9a22292709784b4229f7a0021",
     "packages": [
         {
@@ -374,16 +374,16 @@
         },
         {
             "name": "components/jquery",
-            "version": "2.1.4",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/jquery.git",
-                "reference": "7b1d1104656a092423fbfba13c5920e9bbba290c"
+                "reference": "d8b2ac0c1978e9ed8602789123976b1c7161ef96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/components/jquery/zipball/7b1d1104656a092423fbfba13c5920e9bbba290c",
-                "reference": "7b1d1104656a092423fbfba13c5920e9bbba290c",
+                "url": "https://api.github.com/repos/components/jquery/zipball/d8b2ac0c1978e9ed8602789123976b1c7161ef96",
+                "reference": "d8b2ac0c1978e9ed8602789123976b1c7161ef96",
                 "shasum": ""
             },
             "type": "component",
@@ -412,7 +412,7 @@
             ],
             "description": "jQuery JavaScript Library",
             "homepage": "http://jquery.com",
-            "time": "2015-05-08 05:04:47"
+            "time": "2016-01-08 23:29:41"
         },
         {
             "name": "cwspear/bootstrap-hover-dropdown",
@@ -1699,16 +1699,16 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.8.0",
+            "version": "v2.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "3e661a0d521ac67496515fa6e6704bd61bcfff60"
+                "reference": "637b64d0ee10f44ae98dbad651b1ecdf35a11e8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/3e661a0d521ac67496515fa6e6704bd61bcfff60",
-                "reference": "3e661a0d521ac67496515fa6e6704bd61bcfff60",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/637b64d0ee10f44ae98dbad651b1ecdf35a11e8c",
+                "reference": "637b64d0ee10f44ae98dbad651b1ecdf35a11e8c",
                 "shasum": ""
             },
             "require": {
@@ -1744,20 +1744,20 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2015-11-23 10:19:46"
+            "time": "2016-01-13 10:28:07"
         },
         {
             "name": "symfony/process",
-            "version": "v3.0.0",
+            "version": "v3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "01383ed02a1020759bc8ee5d975fcec04ba16fbf"
+                "reference": "f4794f1d00f0746621be3020ffbd8c5e0b217ee3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/01383ed02a1020759bc8ee5d975fcec04ba16fbf",
-                "reference": "01383ed02a1020759bc8ee5d975fcec04ba16fbf",
+                "url": "https://api.github.com/repos/symfony/process/zipball/f4794f1d00f0746621be3020ffbd8c5e0b217ee3",
+                "reference": "f4794f1d00f0746621be3020ffbd8c5e0b217ee3",
                 "shasum": ""
             },
             "require": {
@@ -1793,7 +1793,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2015-11-30 12:36:17"
+            "time": "2015-12-23 11:04:02"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
