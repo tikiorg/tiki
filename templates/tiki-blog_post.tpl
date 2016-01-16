@@ -3,7 +3,7 @@
 
 <div class="t_navbar btn-group form-group">
 	{if $postId > 0}
-		{button href=$postId|sefurl:blogpost class="btn 
+		{button href=$postId|sefurl:blogpost class="btn btn-default" _text="{tr}View post{/tr}"} 
 	{/if}
 
 	{if $blogId gt 0}
