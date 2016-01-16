@@ -1,3 +1,4 @@
+{* $Id$ *} 
 {title url="tiki-blog_post.php?blogId=$blogId&amp;postId=$postId"}{if $postId gt 0}{tr}Edit Post{/tr}{else}{tr}New Post{/tr}{/if}{if !empty($blog_data.title)} - {$blog_data.title}{/if}{/title}
 
 <div class="t_navbar btn-group form-group">
@@ -65,8 +66,10 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-2 control-label" for="blogedit">{tr}Body{/tr}</label>
-			<div class="col-sm-10">
+			<label class="col-sm-1 control-label" for="blogedit">{tr}Body{/tr}</label>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-12">
 				{textarea id='blogedit' class="form-control wikiedit" name="data"}{if isset($data)}{$data}{/if}{/textarea}
 			</div>
 		</div>
