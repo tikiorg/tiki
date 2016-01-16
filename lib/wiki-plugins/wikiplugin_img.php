@@ -275,6 +275,41 @@ function wikiplugin_img_info()
 				'filter' => 'digits',
 				'default' => '',
 			),
+			'hspace' => array(
+				'required' => false,
+				'name' => tra('Horizontal spacing'),
+				'description' => tra('Horizontal spacing, in pixels, applied to both sides of the image. It may be necessary to use this legacy type of styling if the legacyalign parameter needs to be used for cases where float does not work eg newsletters viewed as an email.'),
+				'since' => '15.0',
+				'doctype' => 'size',
+				'filter' => 'digits',
+				'advanced' => true,
+				'default' => '',
+			),
+			'vspace' => array(
+				'required' => false,
+				'name' => tra('Vertical spacing'),
+				'description' => tra('Vertical spacing, in pixels, applied to top and bottom of the image. It may be necessary to use this legacy type of styling if the legacyalign parameter needs to be used for cases where float does not work eg newsletters viewed as an email.'),
+				'since' => '15.0',
+				'doctype' => 'size',
+				'filter' => 'digits',
+				'advanced' => true,
+				'default' => '',
+			),
+			'legacyalign' => array(
+				'required' => false,
+				'name' => tra('Align image using legacy align tag'),
+				'description' => tra('Aligns the image itself using the legacy align tag for cases where float does not work eg newsletters viewed as an email. Can be used in addition to the imalign parameter for cases where web pages are viewed by modern browsers and are used by the Newsletter function to send a web page as an email'),
+				'since' => '15.0',
+				'filter' => 'alpha',
+				'advanced' => true,
+				'default' => '',
+				'options' => array(
+					array('text' => tra('None'), 'value' => ''),
+					array('text' => tra('Right'), 'value' => 'right'),
+					array('text' => tra('Left'), 'value' => 'left'),
+					array('text' => tra('Center'), 'value' => 'center'),
+				),
+			),
 			'imalign' => array(
 				'required' => false,
 				'name' => tra('Align Image'),
@@ -509,6 +544,9 @@ function wikiplugin_img( $data, $params )
 	$imgdata['height'] = '';
 	$imgdata['width'] = '';
 	$imgdata['max'] = '';
+	$imgdata['legacyalign'] = '';
+	$imgdata['hspace'] = '';
+	$imgdata['vspace'] = '';
 	$imgdata['imalign'] = '';
 	$imgdata['styleimage'] = '';
 	$imgdata['align'] = '';
@@ -1001,6 +1039,24 @@ function wikiplugin_img( $data, $params )
 	}
 
 	if (!empty($imgdata_dim)) $replimg .= $imgdata_dim;
+	
+	//Configure alignment if legacy align has been set
+	//legacyalign
+	if ( !empty($imgdata['legacyalign']) ) {
+		$replimg .= ' align="' . $imgdata['legacyalign'] . '"';
+	}
+	
+	//Configure horizontal spacing if legacy hspace has been set
+	//hspace
+	if ( !empty($imgdata['hspace']) ) {
+		$replimg .= ' hspace="' . $imgdata['hspace'] . '"';
+	}
+	
+	//Configure vertical spacing if legacy vspace has been set
+	//vspace
+	if ( !empty($imgdata['vspace']) ) {
+		$replimg .= ' vspace="' . $imgdata['vspace'] . '"';
+	}
 
 	//Create style attribute allowing for shortcut inputs
 	//First set alignment string
