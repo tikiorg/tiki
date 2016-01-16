@@ -12,9 +12,9 @@ This is how we implement the Tiki Social Contract.
 http://tiki.org/Social+Contract
 
 List of members of the Community
-As of 2015-11-26, the community has:
-  * 596 members on SourceForge.net,
-  * 311 of those people who made at least one code commit
+As of 2016-01-16, the community has:
+  * 599 members on SourceForge.net,
+  * 314 of those people who made at least one code commit
 
 This list is automatically generated and alphabetically sorted
 from subversion repository by the following script:
@@ -54,6 +54,9 @@ SF Role: Developer
 
 Nickname: aholmes99
 Name: Aaron Holmes
+First Commit: 2015-12-22
+Last Commit: 2015-12-22
+Number of Commits: 2
 SF Role: Developer
 
 Nickname: aigarius
@@ -112,11 +115,22 @@ Nickname: alrahal
 Name: Alessandro
 SF Role: Developer
 
+Nickname: ameoba32
+Name: Constantin Bosneaga
+First Commit: 2015-12-03
+Last Commit: 2015-12-18
+Number of Commits: 7
+SF Role: Developer
+
 Nickname: amette
 Name: Alexander Mette
 First Commit: 2005-05-19
 Last Commit: 2015-09-29
 Number of Commits: 228
+SF Role: Developer
+
+Nickname: amnabilal
+Name: Amna Bilal
 SF Role: Developer
 
 Nickname: amotl
@@ -191,8 +205,8 @@ SF Role: Developer
 
 Nickname: arildb
 First Commit: 2011-09-04
-Last Commit: 2015-11-24
-Number of Commits: 1004
+Last Commit: 2015-12-02
+Number of Commits: 1006
 SF Role: Developer
 
 Nickname: arion92fr
@@ -493,8 +507,8 @@ SF Role: Developer
 Nickname: chibaguy
 Name: Gary Cunningham-Lee
 First Commit: 2006-02-04
-Last Commit: 2015-11-12
-Number of Commits: 2893
+Last Commit: 2016-01-16
+Number of Commits: 2931
 SF Role: Admin
 
 Nickname: chris_holman
@@ -816,8 +830,8 @@ SF Role: Developer
 
 Nickname: eromneg
 First Commit: 2009-06-07
-Last Commit: 2015-08-03
-Number of Commits: 252
+Last Commit: 2016-01-16
+Number of Commits: 273
 SF Role: Developer
 
 Nickname: essele
@@ -1025,8 +1039,8 @@ SF Role: Developer
 Nickname: gezzzan
 Name: gezza
 First Commit: 2009-05-02
-Last Commit: 2015-11-17
-Number of Commits: 461
+Last Commit: 2016-01-09
+Number of Commits: 489
 SF Role: Developer
 
 Nickname: ggd
@@ -1431,8 +1445,8 @@ SF Role: Developer
 Nickname: jonnybradley
 Name: jonny Bradley
 First Commit: 2007-08-15
-Last Commit: 2015-11-26
-Number of Commits: 8400
+Last Commit: 2016-01-16
+Number of Commits: 8535
 SF Role: Admin
 
 Nickname: jorgercosta
@@ -1518,8 +1532,8 @@ SF Role: Developer
 Nickname: jyhem
 Name: Jean-Marc Libs
 First Commit: 2006-12-11
-Last Commit: 2015-11-26
-Number of Commits: 1062
+Last Commit: 2016-01-16
+Number of Commits: 1069
 SF Role: Admin
 
 Nickname: k2s
@@ -1691,10 +1705,10 @@ Name: Lee Wilson (aka stella12)
 SF Role: Developer
 
 Nickname: lindonb
-Name: Lindon Barnfield
+Name: lindon
 First Commit: 2009-05-10
-Last Commit: 2015-11-26
-Number of Commits: 1804
+Last Commit: 2016-01-11
+Number of Commits: 1889
 SF Role: Developer
 
 Nickname: llunax
@@ -1913,6 +1927,13 @@ Name: Massimo Infunti
 SF Role: Developer
 
 Nickname: mastre
+SF Role: Developer
+
+Nickname: mathchartier
+Name: mathieu chartier
+First Commit: 2015-11-27
+Last Commit: 2015-11-27
+Number of Commits: 1
 SF Role: Developer
 
 Nickname: mathieu-rodic
@@ -2198,8 +2219,8 @@ SF Role: Developer
 Nickname: nkoth
 Name: Nelson
 First Commit: 2007-05-17
-Last Commit: 2015-11-25
-Number of Commits: 2020
+Last Commit: 2016-01-16
+Number of Commits: 2052
 SF Role: Admin
 
 Nickname: normandaoust
@@ -2327,8 +2348,8 @@ SF Role: Developer
 Nickname: patrick-proulx
 Name: Patrick Proulx
 First Commit: 2013-07-14
-Last Commit: 2015-11-19
-Number of Commits: 115
+Last Commit: 2016-01-08
+Number of Commits: 140
 SF Role: Developer
 
 Nickname: patrickallard
@@ -2587,8 +2608,8 @@ SF Role: Developer
 Nickname: rjsmelo
 Name: Ricardo Melo
 First Commit: 2015-10-08
-Last Commit: 2015-11-21
-Number of Commits: 18
+Last Commit: 2016-01-11
+Number of Commits: 22
 SF Role: Developer
 
 Nickname: rleibman
@@ -2717,8 +2738,8 @@ SF Role: Developer
 Nickname: sampaioprimo
 Name: Rodrigo Sampaio Primo
 First Commit: 2005-10-17
-Last Commit: 2015-10-27
-Number of Commits: 1160
+Last Commit: 2015-12-28
+Number of Commits: 1161
 SF Role: Admin
 
 Nickname: scarle
@@ -3147,8 +3168,8 @@ SF Role: Developer
 Nickname: xavidp
 Name: Xavier de Pedro
 First Commit: 2005-07-08
-Last Commit: 2015-10-26
-Number of Commits: 1723
+Last Commit: 2016-01-16
+Number of Commits: 1757
 SF Role: Admin
 
 Nickname: xbtheria
