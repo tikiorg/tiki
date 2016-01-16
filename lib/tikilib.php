@@ -5587,13 +5587,13 @@ class TikiLib extends TikiDb_Bridge
 	{
 		switch($iError) {
 			case UPLOAD_ERR_OK:
-				return tra('The file was uploaded with success.');
+				return tra('The file was successfully uploaded.');
 			case UPLOAD_ERR_INI_SIZE :
 				return tra('The uploaded file exceeds the upload_max_filesize directive in php.ini.');
 			case UPLOAD_ERR_FORM_SIZE:
 				return tra('The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.');
 			case UPLOAD_ERR_PARTIAL:
-				return tra('The file you are trying upload was only partially uploaded.');
+				return tra('The file was only partially uploaded.');
 			case UPLOAD_ERR_NO_FILE:
 				return tra('No file was uploaded. Was a file selected ?');
 			case UPLOAD_ERR_NO_TMP_DIR:

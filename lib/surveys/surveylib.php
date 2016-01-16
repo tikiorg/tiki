@@ -536,14 +536,14 @@ class SurveyLib extends TikiLib
 				}
 
 				if ($question['min_answers'] == $question['max_answers'] && $nb_answers != $question['min_answers']) {
-					$errors[] = sprintf(tra('You have to make %d choice(s) for the question'), $question['min_answers']).$q;
+					$errors[] = sprintf(tra('%d choice(s) must be made for the question'), $question['min_answers']).$q;
 				} elseif ($nb_answers < $question['min_answers']) {
-					$errors[] = sprintf(tra('You have to make at least %d choice(s) for the question'), $question['min_answers']).$q;
+					$errors[] = sprintf(tra('At least %d choice(s) must be made for the question'), $question['min_answers']).$q;
 				} elseif ($question['max_answers'] > 0 && $nb_answers > $question['max_answers']) {
-					$errors[] = sprintf(tra('You have to make less than %d choice(s) for the question'), $question['max_answers']).$q;
+					$errors[] = sprintf(tra('Fewer than %d choice(s) must be made for the question'), $question['max_answers']).$q;
 				}
 			} elseif ($question['mandatory'] == 'y' && $nb_answers == 0 && $question["type"] !== 'h') {
-				$errors[] = sprintf(tra('You have to choose at least %d choice(s) for the question'), 1).$q;
+				$errors[] = sprintf(tra('At least %d choice(s) must be made for the question'), 1).$q;
 			}
 		}
 
@@ -632,8 +632,8 @@ class SurveyLib extends TikiLib
 			'g' => tra('Thumbnails'),
 			't' => tra('Short text'),
 			'x' => tra('Wiki textarea'),
-			'r' => tra('Rate (1..5)'),
-			's' => tra('Rate (1..10)'),
+			'r' => tra('Rate (1 to 5)'),
+			's' => tra('Rate (1 to 10)'),
 			'h' => tra('Heading'),
 		);
 	}

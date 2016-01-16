@@ -164,11 +164,11 @@ class RSSLib extends TikiDb_Bridge
 
 		// both title and description fields cannot be null
 		if (empty($title) || empty($desc)) {
-			$msg = tra('The fields title and description are mandatory to generate a feed.');
+			$msg = tra('The title and description must be entered, to generate a feed.');
 			if ($tiki_p_admin) {
 				$msg .= ' ' . tra('To fix this error go to Admin -> Feeds.');
 			} else {
-				$msg .= ' ' . tra('Please contact the site administrator and ask him to fix this error');
+				$msg .= ' ' . tra('Please contact the site administrator and request this error to be corrected');
 			}
 			$smarty->assign('msg', $msg);
 			$smarty->display('error.tpl');

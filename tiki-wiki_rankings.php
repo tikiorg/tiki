@@ -41,7 +41,7 @@ $allrankings = array(
 	'value' => 'wiki_ranking_last_pages'
 ),
 	array(
-	'name' => tra('Most relevant pages'),
+	'name' => tra('Most-relevant pages'),
 	'value' => 'wiki_ranking_top_pagerank'
 ),
 	array(

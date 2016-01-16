@@ -137,7 +137,7 @@ class TikiAccessLib extends TikiLib
 			}
 
 			$msg = tr(
-				'Required features: <b>%0</b>. If you do not have the privileges to activate these features, ask the site administrator.',
+				'Required features: <b>%0</b>. If you do not have permission to activate these features, ask the site administrator.',
 				implode(', ', $features)
 			);
 
@@ -332,7 +332,7 @@ class TikiAccessLib extends TikiLib
 				return true;
 			}
 			// TODO: Improve feedback and allow proceeding by confirming the request. $_REQUEST needs to be saved and restored.
-			$smarty->assign('msg', tra('Sea Surfing (CSRF) detected. Operation blocked.'));
+			$smarty->assign('msg', tra('Possible cross-site request forgery (CSRF, or \"sea surfing\") detected. Operation blocked.'));
 			$smarty->display("error.tpl");
 			exit();
 		}
@@ -556,7 +556,7 @@ class TikiAccessLib extends TikiLib
 
 		//refuse to authenticate in plaintext if https_login_required.
 		if ($prefs['https_login_required'] == 'y' && !$https_mode) {
-			$result['msg']=tra("For the security of your password direct access to the feed is only available via https");
+			$result['msg']=tra("For the security of your password, direct access to the feed is only available via HTTPS");
 			return $result;
 		}
 

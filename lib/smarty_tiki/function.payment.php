@@ -103,6 +103,6 @@ function smarty_function_payment( $params, $smarty )
 		return $smarty->fetch('tiki-payment-single.tpl', $smarty_cache_id, $smarty_compile_id);
 
 	} else {
-		return tra('This invoice does not exist or is in limited access.');
+		return tra('This invoice does not exist or access to it is restricted.');
 	}
 }

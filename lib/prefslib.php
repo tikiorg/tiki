@@ -99,7 +99,7 @@ class PreferencesLib
 
 		if (! $this->checkExtensions($info['extensions']) ) {
 			$info['available'] = false;
-			$info['notes'][] = tr('Unmatched system requirement. Missing php extension among %0', implode(', ', $info['extensions']));
+			$info['notes'][] = tr('Unmatched system requirement. Missing PHP extension among %0', implode(', ', $info['extensions']));
 		}
 
 		if (! $this->checkDatabaseFeatures($info['dbfeatures']) ) {

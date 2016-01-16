@@ -38,7 +38,7 @@ if (isset($_REQUEST['cas']) && $_REQUEST['cas'] == 'y' && $prefs['auth_method'] 
 $smarty->assign('errortype', 'login'); // to avoid any redirection to the login box if error
 // Alert user if cookies are switched off
 if (ini_get('session.use_cookies') == 1 && !isset($_COOKIE[ session_name() ]) && $prefs['session_silent'] != 'y') {
-	$smarty->assign('msg', tra('You have to enable cookies to be able to login to this site'));
+	$smarty->assign('msg', tra('Cookies must be enabled to log in to this site'));
 	$smarty->display('error.tpl');
 	exit;
 }

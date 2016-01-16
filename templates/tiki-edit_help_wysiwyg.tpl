@@ -2,7 +2,7 @@
 {* \brief Show wysiwyg help
  * included by tiki-show_help.tpl via smarty_block_add_help() *}
 
-<h3>{tr}Wysiwyg Help{/tr}</h3>
+<h3>{tr}WYSIWYG Help{/tr}</h3>
 <div class="help_section">
 {if $prefs.feature_help eq 'y'}
 <p>{tr}For more information, please see{/tr}

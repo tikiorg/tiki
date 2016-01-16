@@ -10,7 +10,7 @@ function prefs_workspace_list()
 	return array(
 		'workspace_ui' => array(
 			'name' => tr('Workspace UI'),
-			'description' => tr('Binds multiple features in Tiki to form a workspace experience for workgroups.'),
+			'description' => tr('Combines multiple site features to create a workspace experience for workgroups.'),
 			'type' => 'flag',
 			'default' => 'n',
 			'perspective' => false,

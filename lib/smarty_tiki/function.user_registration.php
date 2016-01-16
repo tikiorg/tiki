@@ -58,7 +58,7 @@ function smarty_function_user_registration($params, $smarty)
 		$cookie_name = $prefs['session_cookie_name'];
 
 		if ( ini_get('session.use_cookie') && ! isset( $_COOKIE[$cookie_name] ) ) {
-			$errorreportlib->report(tra("You have to enable cookies to be able to login to this site"));
+			$errorreportlib->report(tra("Cookies must be enabled to log in to this site"));
 			return '';
 		}
 

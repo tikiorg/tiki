@@ -120,7 +120,7 @@ class RankLib extends TikiLib
 		}
 
 		$retval["data"] = $ret;
-		$retval["title"] = tra("Most relevant pages");
+		$retval["title"] = tra("Most-relevant pages");
 		$retval["y"] = tra("Relevance");
 		$retval["type"] = "nb";
 		return $retval;
@@ -359,7 +359,7 @@ $query = "select a.*, tf.*, max(b.`commentDate`) as `lastPost` from
 		}
 
 		$retval["data"] = $ret;
-		$retval["title"] = tra("Forums most visited forums");
+		$retval["title"] = tra("Most-visited forums");
 		$retval["y"] = tra("Visits");
 		$retval["type"] = "nb";
 		return $retval;
@@ -608,7 +608,7 @@ $query = "select a.*, tf.*, max(b.`commentDate`) as `lastPost` from
 		}
 
 		$retval["data"] = $ret;
-		$retval["title"] = tra("Most visited blogs");
+		$retval["title"] = tra("Most-visited blogs");
 		$retval["y"] = tra("Visits");
 		$retval["type"] = "nb";
 		return $retval;
@@ -636,7 +636,7 @@ $query = "select a.*, tf.*, max(b.`commentDate`) as `lastPost` from
 		}
 
 		$retval["data"] = $ret;
-		$retval["title"] = tra("Most-active Blogs");
+		$retval["title"] = tra("Most-active blogs");
 		$retval["y"] = tra("Activity");
 		$retval["type"] = "nb";
 		return $retval;

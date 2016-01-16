@@ -267,7 +267,7 @@ class StatsLib extends TikiLib
 				}
 				if ($view['views'] == $minvar) {
 					$stats['worstday'] .= $tikilib->get_long_date($view['unixtime']) . ' (' . $minvar . ' ' . tra('pvs') . ')<br />';
-					$w > 0 ? $stats['worstdesc'] = tra('Days with the least pageviews') : $stats['worstdesc'] = tra('Day with the least pageviews');
+					$w > 0 ? $stats['worstdesc'] = tra('Days with the fewest pageviews') : $stats['worstdesc'] = tra('Day with the fewest pageviews');
 					$w++;
 				}
 			}

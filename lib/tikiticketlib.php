@@ -40,7 +40,7 @@ function check_ticket($area)
 			$smarty->assign('post', $_POST);
 			$smarty->assign('query', $_SERVER['QUERY_STRING']);
 			$smarty->assign('self', $_SERVER['PHP_SELF']);
-			$smarty->assign('msg', tra('Sea Surfing (CSRF) detected. Operation blocked.'));
+			$smarty->assign('msg', tra('Possible cross-site request forgery (CSRF, or "sea surfing") detected. Operation blocked.'));
 			$smarty->display('error_ticket.tpl');
 			die;
 		}
@@ -100,7 +100,7 @@ function key_check($area = null, $returnHtml = true)
 		}
 		if ($returnHtml) {
 			$smarty = TikiLib::lib('smarty');
-			$smarty->assign('msg', tra('Sea Surfing (CSRF) detected. Operation blocked.'));
+			$smarty->assign('msg', tra('Possible cross-site request forgery (CSRF, or "sea surfing") detected. Operation blocked.'));
 			$smarty->display('error.tpl');
 			exit();
 		} else {

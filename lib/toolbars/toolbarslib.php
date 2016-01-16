@@ -723,7 +723,7 @@ class ToolbarInline extends Toolbar
 			$syntax = '--text--';
 			break;
 		case 'nonparsed':
-			$label = tra('Non-parsed (Wiki syntax does not apply)');
+			$label = tra('Non-parsed (wiki syntax does not apply)');
 			$icon = tra('img/icons/noparse.png');
 			$iconname = 'ban';
 			$wysiwyg = null;
@@ -1476,7 +1476,7 @@ class ToolbarHelptool extends Toolbar
 		// multiple ckeditors share the same toolbar commands, so area_id (editor.name) must be added when clicked
 		$params['areaId'] = '';	// this must be last param
 
-		$this->setLabel(tra('Wysiwyg Help'));
+		$this->setLabel(tra('WYSIWYG Help'));
 		$this->setIconName('help');
 		$name = 'tikihelp';
 

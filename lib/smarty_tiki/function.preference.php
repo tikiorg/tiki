@@ -90,7 +90,7 @@ function smarty_function_preference( $params, $smarty )
 			'separator' => null,
 		);
 		if (strpos($_SERVER["SCRIPT_NAME"], 'tiki-edit_perspective.php') !== false) {
-			$info['hint'] = tra('Drag this out of the perspective and resave it.');
+			$info['hint'] = tra('Drag this out of the perspective and resave the perspective.');
 		}
 
 		$smarty->assign('p', $info);
