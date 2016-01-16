@@ -31,57 +31,49 @@ function smarty_function_button($params, $smarty)
 	$smarty->loadPlugin('smarty_block_self_link');
 
 	$selected = false ;
-	if ( ! empty($params['_selected']) ) {
-		// Filter the condition
-		if (preg_match('/[a-zA-Z0-9 =<>!]+/', $params['_selected'])) {
-			$error_report = error_reporting(~E_ALL);
-			$return = eval ( '$selected =' . $params['_selected'].";" );
-			error_reporting($error_report);
-			if ($return !== FALSE) {
-				if ($selected) {
-					if (! empty($params['_selected_class']) ) {
-						$params['_class'] = $params['_selected_class'];
-					} else {
-						$params['_class'] = 'selected';
-					}
-					if (! empty($params['_selected_text']) ) {
-						$params['_text'] = $params['_selected_text'];
-					}
-					if (! empty($params['_selected_title']) ) {
-						$params['_title'] = $params['_selected_title'];
-					}
-					if (! empty($params['_selected_icon']) ) {
-						$params['_icon'] = $params['_selected_icon'];
-					}
-				}
+	if ( ! empty($params['_selected'])) {
+		if ( $params['_selected'] == 'y' ) {
+			$selected = true;
+			if (!empty($params['_selected_class'])) {
+				$params['_class'] = $params['_selected_class'];
+			} else {
+				$params['_class'] = 'selected';
+			}
+			if (!empty($params['_selected_text'])) {
+				$params['_text'] = $params['_selected_text'];
+			}
+			if (!empty($params['_selected_title'])) {
+				$params['_title'] = $params['_selected_title'];
+			}
+			if (!empty($params['_selected_icon'])) {
+				$params['_icon'] = $params['_selected_icon'];
+			}
+			if (!empty($params['_selected_icon_name'])) {
+				$params['_icon_name'] = $params['_selected_icon_name'];
 			}
 		}
 	}
 
 	$disabled = false ;
 	if ( ! empty($params['_disabled']) ) {
-		// Filter the condition
-		if (preg_match('/[a-zA-Z0-9 =<>!]+/', $params['_disabled'])) {
-			$error_report = error_reporting(~E_ALL);
-			$return = eval ( '$disabled =' . $params['_disabled'].";" );
-			error_reporting($error_report);
-			if ($return !== FALSE) {
-				if ($disabled) {
-					if (! empty($params['_disabled_class']) ) {
-						$params['_class'] = $params['_disabled_class'];
-					} else {
-						$params['_class'] = 'disabled';
-					}
-					if (! empty($params['_disabled_text']) ) {
-						$params['_text'] = $params['_disabled_text'];
-					}
-					if (! empty($params['_disabled_title']) ) {
-						$params['_title'] = $params['_disabled_title'];
-					}
-					if (! empty($params['_disabled_icon']) ) {
-						$params['_icon'] = $params['_disabled_icon'];
-					}
-				}
+		if ( $params['_disabled'] == 'y' ) {
+			$disabled = true;
+			if (!empty($params['_disabled_class'])) {
+				$params['_class'] = $params['_disabled_class'];
+			} else {
+				$params['_class'] = 'disabled';
+			}
+			if (!empty($params['_disabled_text'])) {
+				$params['_text'] = $params['_disabled_text'];
+			}
+			if (!empty($params['_disabled_title'])) {
+				$params['_title'] = $params['_disabled_title'];
+			}
+			if (!empty($params['_disabled_icon'])) {
+				$params['_icon'] = $params['_disabled_icon'];
+			}
+			if (!empty($params['_disabled_icon_name'])) {
+				$params['_icon_name'] = $params['_disabled_icon_name'];
 			}
 		}
 		unset($params['_disabled']);
