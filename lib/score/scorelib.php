@@ -247,11 +247,11 @@ class ScoreLib extends TikiLib
 			}
 			//if user is anonymous, store a unique identifier in a cookie and set it as the user.
 			if (empty($args['user'])) {
-				$uniqueVal = $_COOKIE['anonUserScoreId'];
+				$uniqueVal = getCookie('anonUserScoreId');
 				if (empty($uniqueVal)) {
 					$uniqueVal = getenv('HTTP_CLIENT_IP') . time() . rand();
 					$uniqueVal = md5($uniqueVal);
-					setcookie('anonUserScoreId', "anon".$uniqueVal);
+					setCookieSection('anonUserScoreId', "anon".$uniqueVal);
 				}
 				$args['user'] = $uniqueVal;
 			}
