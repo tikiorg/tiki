@@ -25,6 +25,21 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 6.15
+<http://tiki.org/ReleaseNotes615>
+------------------
+
+----------------------------------------------
+r57208 | jonnybradley | 2016-01-16 17:27:03 +0100 (Sat, 16 Jan 2016) | 2 lines
+
+[bp/r57202][bp/r57201][bp/r57046][bp/r57045][bp/r56958][FIX] Cleanup button smarty variables to do what the documentation says it should do (thanks Nelson)
+(manual changes for the version of smarty used in 6.x which doesn't support {if}s inside parameters, plus some other syntax fixes to make the tpl file compile properly)
+----------------------------------------------
+r52561 | redflo | 2014-09-19 00:29:13 +0200 (Fri, 19 Sep 2014) | 2 lines
+
+[SEC] Prevent null byte poisioning (thanks Matthew Daley)
+
+----------------------------------------------
 Version 6.14
 <http://tiki.org/ReleaseNotes614>
 ------------------
