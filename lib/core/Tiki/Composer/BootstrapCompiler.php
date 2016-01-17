@@ -13,12 +13,15 @@ class BootstrapCompiler
 {
 	public static function build(Event $event)
 	{
-		$base = __DIR__ . '/../../../../vendor/twitter/bootstrap';
-		if (! file_exists($base . '/css')) {
-			mkdir($base . '/css');
+		if (class_exists('lessc')) {	// this can get called before composer has installed all the packages
 
-			$compiler = new \lessc;
-			$compiler->compileFile("$base/less/bootstrap.less", "$base/css/bootstrap.css");
+			$base = __DIR__ . '/../../../../vendor/twitter/bootstrap';
+			if (! file_exists($base . '/css')) {
+				mkdir($base . '/css');
+
+				$compiler = new \lessc;
+				$compiler->compileFile("$base/less/bootstrap.less", "$base/css/bootstrap.css");
+			}
 		}
 	}
 }
