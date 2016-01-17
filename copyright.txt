@@ -12,9 +12,9 @@ This is how we implement the Tiki Social Contract.
 http://tiki.org/Social+Contract
 
 List of members of the Community
-As of 2015-05-23, the community has:
-  * 306 members on SourceForge.net,
-  * 306 of those people who made at least one code commit
+As of 2016-01-17, the community has:
+  * 314 members on SourceForge.net,
+  * 314 of those people who made at least one code commit
 
 This list is automatically generated and alphabetically sorted
 from subversion repository by the following script:
@@ -37,6 +37,11 @@ First Commit: 2004-03-25
 Last Commit: 2004-04-21
 Number of Commits: 6
 
+Nickname: aholmes99
+First Commit: 2015-12-22
+Last Commit: 2015-12-22
+Number of Commits: 2
+
 Nickname: akshi
 First Commit: 2009-12-11
 Last Commit: 2010-02-10
@@ -57,10 +62,15 @@ First Commit: 2014-04-17
 Last Commit: 2015-04-01
 Number of Commits: 46
 
+Nickname: ameoba32
+First Commit: 2015-12-03
+Last Commit: 2015-12-18
+Number of Commits: 7
+
 Nickname: amette
 First Commit: 2005-05-19
-Last Commit: 2015-02-09
-Number of Commits: 227
+Last Commit: 2015-09-29
+Number of Commits: 228
 
 Nickname: anbumania
 First Commit: 2015-03-03
@@ -94,8 +104,8 @@ Number of Commits: 24
 
 Nickname: arildb
 First Commit: 2011-09-04
-Last Commit: 2015-05-10
-Number of Commits: 986
+Last Commit: 2015-12-02
+Number of Commits: 1006
 
 Nickname: arion92fr
 First Commit: 2013-03-11
@@ -249,13 +259,13 @@ Number of Commits: 1631
 
 Nickname: chealer
 First Commit: 2003-09-27
-Last Commit: 2014-07-24
-Number of Commits: 1845
+Last Commit: 2015-11-10
+Number of Commits: 1846
 
 Nickname: chibaguy
 First Commit: 2006-02-04
-Last Commit: 2015-05-23
-Number of Commits: 2798
+Last Commit: 2016-01-16
+Number of Commits: 2931
 
 Nickname: chris_holman
 First Commit: 2003-10-08
@@ -384,8 +394,8 @@ Number of Commits: 5
 
 Nickname: drsassafras
 First Commit: 2014-04-03
-Last Commit: 2014-12-04
-Number of Commits: 3
+Last Commit: 2015-11-25
+Number of Commits: 4
 
 Nickname: duebel
 First Commit: 2008-11-15
@@ -424,8 +434,13 @@ Number of Commits: 1
 
 Nickname: eromneg
 First Commit: 2009-06-07
-Last Commit: 2015-05-12
-Number of Commits: 240
+Last Commit: 2016-01-16
+Number of Commits: 274
+
+Nickname: estheban
+First Commit: 2015-09-18
+Last Commit: 2015-09-18
+Number of Commits: 2
 
 Nickname: etuate
 First Commit: 2008-05-14
@@ -507,6 +522,11 @@ First Commit: 2006-09-27
 Last Commit: 2006-10-28
 Number of Commits: 6
 
+Nickname: funkju
+First Commit: 2015-06-09
+Last Commit: 2015-06-16
+Number of Commits: 4
+
 Nickname: garygriffin
 First Commit: 2007-01-21
 Last Commit: 2007-02-07
@@ -524,8 +544,8 @@ Number of Commits: 4
 
 Nickname: gezzzan
 First Commit: 2009-05-02
-Last Commit: 2015-05-23
-Number of Commits: 419
+Last Commit: 2016-01-09
+Number of Commits: 489
 
 Nickname: ggeller
 First Commit: 2003-12-07
@@ -719,8 +739,8 @@ Number of Commits: 2
 
 Nickname: jonnybradley
 First Commit: 2007-08-15
-Last Commit: 2015-05-23
-Number of Commits: 7942
+Last Commit: 2016-01-16
+Number of Commits: 8544
 
 Nickname: jorgercosta
 First Commit: 2004-04-14
@@ -769,8 +789,8 @@ Number of Commits: 2
 
 Nickname: jyhem
 First Commit: 2006-12-11
-Last Commit: 2015-05-23
-Number of Commits: 1041
+Last Commit: 2016-01-16
+Number of Commits: 1070
 
 Nickname: k2s
 First Commit: 2005-12-18
@@ -854,8 +874,8 @@ Number of Commits: 2
 
 Nickname: lindonb
 First Commit: 2009-05-10
-Last Commit: 2015-05-06
-Number of Commits: 1516
+Last Commit: 2016-01-11
+Number of Commits: 1889
 
 Nickname: lmoss
 First Commit: 2005-12-28
@@ -884,8 +904,8 @@ Number of Commits: 1
 
 Nickname: luciash
 First Commit: 2003-08-05
-Last Commit: 2015-05-20
-Number of Commits: 1321
+Last Commit: 2015-11-23
+Number of Commits: 1377
 
 Nickname: lueders
 First Commit: 2003-08-18
@@ -904,8 +924,8 @@ Number of Commits: 84
 
 Nickname: manivannans
 First Commit: 2013-10-24
-Last Commit: 2015-05-19
-Number of Commits: 138
+Last Commit: 2015-05-25
+Number of Commits: 139
 
 Nickname: marc-etienne
 First Commit: 2009-06-11
@@ -932,6 +952,11 @@ First Commit: 2008-06-18
 Last Commit: 2009-08-15
 Number of Commits: 13
 
+Nickname: markitosaad
+First Commit: 2015-07-28
+Last Commit: 2015-09-03
+Number of Commits: 26
+
 Nickname: markusvk
 First Commit: 2003-11-12
 Last Commit: 2003-12-03
@@ -951,6 +976,11 @@ Nickname: mashmorgan
 First Commit: 2005-08-18
 Last Commit: 2005-10-31
 Number of Commits: 7
+
+Nickname: mathchartier
+First Commit: 2015-11-27
+Last Commit: 2015-11-27
+Number of Commits: 1
 
 Nickname: matwho
 First Commit: 2008-08-25
@@ -999,8 +1029,8 @@ Number of Commits: 16
 
 Nickname: minger0
 First Commit: 2010-04-30
-Last Commit: 2011-01-30
-Number of Commits: 32
+Last Commit: 2015-09-24
+Number of Commits: 37
 
 Nickname: mjeanson3
 First Commit: 2012-07-10
@@ -1084,8 +1114,8 @@ Number of Commits: 1
 
 Nickname: nkoth
 First Commit: 2007-05-17
-Last Commit: 2015-05-23
-Number of Commits: 1950
+Last Commit: 2016-01-17
+Number of Commits: 2061
 
 Nickname: ntavares
 First Commit: 2007-11-08
@@ -1134,8 +1164,8 @@ Number of Commits: 118
 
 Nickname: patrick-proulx
 First Commit: 2013-07-14
-Last Commit: 2015-05-07
-Number of Commits: 40
+Last Commit: 2016-01-08
+Number of Commits: 140
 
 Nickname: patrickallard
 First Commit: 2009-01-26
@@ -1247,6 +1277,11 @@ First Commit: 2006-06-24
 Last Commit: 2013-03-30
 Number of Commits: 34
 
+Nickname: rjsmelo
+First Commit: 2015-10-08
+Last Commit: 2016-01-11
+Number of Commits: 22
+
 Nickname: rleibman
 First Commit: 2005-05-03
 Last Commit: 2005-05-03
@@ -1314,8 +1349,8 @@ Number of Commits: 3
 
 Nickname: sampaioprimo
 First Commit: 2005-10-17
-Last Commit: 2014-09-29
-Number of Commits: 1145
+Last Commit: 2015-12-28
+Number of Commits: 1161
 
 Nickname: sdoh
 First Commit: 2010-08-31
@@ -1472,6 +1507,11 @@ First Commit: 2013-07-14
 Last Commit: 2013-07-15
 Number of Commits: 2
 
+Nickname: uxeric
+First Commit: 2015-08-17
+Last Commit: 2015-09-23
+Number of Commits: 16
+
 Nickname: vulgrin
 First Commit: 2003-12-27
 Last Commit: 2003-12-27
@@ -1509,8 +1549,8 @@ Number of Commits: 42
 
 Nickname: xavidp
 First Commit: 2005-07-08
-Last Commit: 2015-04-26
-Number of Commits: 1698
+Last Commit: 2016-01-16
+Number of Commits: 1757
 
 Nickname: xen216
 First Commit: 2011-05-26
@@ -1524,8 +1564,8 @@ Number of Commits: 4
 
 Nickname: yonixxx
 First Commit: 2008-02-25
-Last Commit: 2015-04-30
-Number of Commits: 153
+Last Commit: 2015-11-10
+Number of Commits: 162
 
 Nickname: yuzhenxin
 First Commit: 2005-11-21
