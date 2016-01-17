@@ -39,7 +39,15 @@ if ($prefs['disableJavascript'] == 'y' ) {
 // assuming that js is on before then
 $javascript_enabled_detect = getCookie('javascript_enabled_detect', '', '0');
 
-if ( $prefs['javascript_enabled'] === '' && $prefs['disableJavascript'] != 'y' && $javascript_enabled_detect < 3) {
+// Cookie Consent: setCookieSection uses the session tiki_cookie_jar to simulate cookies,
+// so check that $feature_no_cookie is not true because cookies are not really set when using cookie_consent_feature
+// and so javascript will get disabled by mistake
+
+if (empty($javascript_enabled_detect) && $feature_no_cookie) {
+
+	$prefs['javascript_enabled'] = 'y';					// assume javascript should be enabled while cookie consent is pending
+
+} else if ( $prefs['javascript_enabled'] === '' && $prefs['disableJavascript'] != 'y' && $javascript_enabled_detect < 3) {
 	// Set the cookie to 'y', through javascript - expires: approx. 1 year
 	$prefs['javascript_enabled'] = 'y';											// temporarily enable to we output the test js
 	$plus_one_year = $tikilib->now + 365 * 24 * 3600;

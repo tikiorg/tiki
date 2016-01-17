@@ -5,26 +5,20 @@
 			style="display:none;" class="{$prefs.cookie_consent_mode}"
 		{/if}
 	>
-		{if $prefs.javascript_enabled neq 'y'}
-			<form method="POST">
-		{/if}
-		<div class="description">
-			{wiki}{tr}{$prefs.cookie_consent_description}{/tr}{/wiki}
-		</div>
-		{if !empty($prefs.cookie_consent_question)}
-			<span class="question">
-				{wiki}{tr}{$prefs.cookie_consent_question}{/tr}{/wiki}
-			</span>
-			<input type="checkbox" name="cookie_consent_checkbox">&nbsp;
-		{else}
-			<input type="hidden" name="cookie_consent_checkbox" value="1">
-		{/if}
-		{if $prefs.javascript_enabled neq 'y'}
-			<input type="submit" class="btn btn-default btn-sm" name="cookie_consent_button" value="{tr}{$prefs.cookie_consent_button}{/tr}">
-			</form>
-		{else}
-			{button _text=$prefs.cookie_consent_button|tr_if _id='cookie_consent_button'}
-		{/if}
+		<form method="POST">
+			<div class="description">
+				{wiki}{tr}{$prefs.cookie_consent_description}{/tr}{/wiki}
+			</div>
+			{if !empty($prefs.cookie_consent_question)}
+				<span class="question">
+					{wiki}{tr}{$prefs.cookie_consent_question}{/tr}{/wiki}
+				</span>
+				<input type="checkbox" name="cookie_consent_checkbox">&nbsp;
+			{else}
+				<input type="hidden" name="cookie_consent_checkbox" value="1">
+			{/if}
+			<input type="submit" class="btn btn-default" id="cookie_consent_button" name="cookie_consent_button" value="{tr}{$prefs.cookie_consent_button}{/tr}">
+		</form>
 	</div>
 	{jq}
 		$("#cookie_consent_button").click(function(){
