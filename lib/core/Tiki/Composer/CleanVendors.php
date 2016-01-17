@@ -273,8 +273,6 @@ class CleanVendors
 		$fs->remove($vendors . 'adodb/adodb/perf/perf-informix.inc.php');
 		$fs->remove($vendors . 'adodb/adodb/datadict/datadict-informix.inc.php');
 
-		// html5shiv uses a component installer that doesn't seem to be optional, so delete the spare copy we end up with.
-		$fs->remove($vendors . '../components');
 		// and cwspear/bootstrap-hover-dropdown includes bootstrap and jquery without asking
 		$fs->remove($vendors . 'components');
 	}
