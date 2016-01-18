@@ -15,6 +15,16 @@
 			{/remarksbox}
 		{else}
 			{if $tiki_p_admin eq 'y' and $langIsWritable}
+				<div class="form-group">
+					<label>
+						{tr}Translations in the database{/tr}: <span class="badge">{$db_translation_count}</span>
+					</label>
+				</div>
+				<div class="form-group">
+					<label>
+						{tr}File{/tr}: {$langFile}
+					</label>
+				</div>
 				{remarksbox type="warning" title="{tr}Warning{/tr}" close="n"}
 					{tr}The translations in the database will be merged with the other translations in language.php. After writing translations to language.php the translations are removed from the database.{/tr}
 				{/remarksbox}
@@ -27,6 +37,7 @@
 			<div class="submit text-center">
 				{if $langIsWritable}
 					<input type="hidden" name="confirm" value="1">
+					<input type="hidden" name="language" value={$language}>
 					<input type="submit" class="btn btn-primary" name="exportToLanguage" value="{tr}Write to language.php{/tr}">
 				{/if}
 			</div>

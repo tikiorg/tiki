@@ -18,9 +18,8 @@ class Services_Language_Controller
 	{
 		Services_Exception_Denied::checkAuth();
 		Services_Exception_Disabled::check('feature_multilingual');
-
 	}
-
+	
 	/**
 	 * Download database translations into a php file
 	 * @param $input
@@ -43,7 +42,7 @@ class Services_Language_Controller
 		if($language){
 			//set export language
 			$export_language = new LanguageTranslations($language);
-
+			
 			//get translation data from database
 			$data = $export_language->createCustomFile();
 			
@@ -58,7 +57,7 @@ class Services_Language_Controller
 			throw new Services_Exception_Denied(tr('No language provided'));
 		}
 	}
-
+	
 	/**
 	 * Translations in the database will be merged with the other translations in language.php. Note that after writing translations to language.php they are removed from the database.
 	 * @param $input
@@ -74,17 +73,17 @@ class Services_Language_Controller
 		if (! $perms->tiki_p_edit_languages) {
 			throw new Services_Exception_Denied(tr('Permission denied'));
 		}
-
+		
 		//get language from input
 		$language = $input->language->text();
-	
+		
 		//prepare language list -> seems useless...
 		$langLib = TikiLib::lib('language');
 		$db_languages = $langLib->getDbTranslatedLanguages();
 		$db_languages = $langLib->format_language_list($db_languages);
 		
-		//TODO: get count of available translations in the database
-		//$db_translation_count = $this->getDbTranslationCount($language);
+		//get count of available translations in the database
+		$db_translation_count = $this->getDbTranslationCount($language);
 		
 		//check if lang directory is writable for the selected language
 		$langIsWritable = $this->checkLangIsWritable($language);
@@ -92,7 +91,11 @@ class Services_Language_Controller
 			throw new Services_Exception_Denied(tr('lang/$language directory is not writable'));
 		}
 		
-		$confirm = $input->confirm->int();		
+		//get the language file string so that it can be displayed
+		$langDir = $this->getLanguageDirectory($language);
+		$langFile = $langDir . 'language.php';
+		
+		$confirm = $input->confirm->int();
 		if($confirm){
 			//set export language
 			$export_language = new LanguageTranslations($language);
@@ -107,15 +110,17 @@ class Services_Language_Controller
 			//TODO: expose expmsg properly
 			$expmsg = sprintf(tra('Wrote %d new strings and updated %d to lang/%s/language.php'), $stats['new'], $stats['modif'], $export_language->lang);
 		}
-
+		
 		return array(
 			'title' => tr('Write to language.php'),
+			'language' => $language,
 			'db_languages' => $db_languages,
 			'db_translation_count' => $db_translation_count,
 			'langIsWritable' => $langIsWritable,
+			'langFile' => $langFile,
 		);
 	}
-
+	
 	/**
 	 * Customized String Translation - create and edit custom.php language file
 	 * @param $input (at least value for "language" is expected)
@@ -140,13 +145,13 @@ class Services_Language_Controller
 			global $prefs;
 			$language = $prefs['language'];
 		}
-
+		
 		//get language name
 		$languages = array();
 		$langLib = TikiLib::lib('language');
 		$language_details = $langLib->format_language_list(array('0' => $language), null, false);
 		$language_name = $language_details[0]['name'];
-
+		
 		//get custom php file location and content
 		$custom_php_file = $this->getLanguageDirectory($language);
 		$custom_php_file .= 'custom.php';
@@ -154,16 +159,16 @@ class Services_Language_Controller
 			$custom_php_file = null;
 		}
 		$custom_php_translations = $this->getCustomPhpTranslations($language);
-
+		
 		//get count of custom translations
-		$custom_translation_item_count = $this->getCustomTranslationItemCount($language);
+		$custom_translation_item_count = $this->getCustomPhpTranslationCount($language);
 		
 		$confirm = $input->confirm->int();
 		if($confirm){
 			//get strings and translations
 			$from = $input->from->array();
 			$to = $input->to->array();
-
+			
 			//prepare data
 			foreach($from as $fromKey => $source){
 				foreach($to as $toKey => $translation){
@@ -172,7 +177,7 @@ class Services_Language_Controller
 					}
 				}
 			}
-
+			
 			//write custom php file content
 			$this->writeCustomPhpTranslations($language, $data);
 			
@@ -221,7 +226,7 @@ class Services_Language_Controller
 	 * @param $language
 	 * @return $success
 	 */
-	function action_download($input)	
+	function action_download($input)
 	{
 		//get input
 		$language = $input->language->text();
@@ -242,7 +247,7 @@ class Services_Language_Controller
 		}
 		
 		//get the file
-		if (file_exists($file))	{
+		if (file_exists($file)) {
 			header('Content-Description: File Transfer');
 			header('Content-Type: application/octet-stream');
 			header('Content-Disposition: attachment; filename="'.basename($file).'"');
@@ -259,18 +264,18 @@ class Services_Language_Controller
 	}
 	
 	/**
-	 * Upload a language file (language.php or custom.php)
+	 * Upload a language file (Tiki language.php, Tiki custom.php or Transifex translation)
 	 * @param $input
 	 * @return integer
 	 */
-	function action_upload($input)	
+	function action_upload($input)
 	{
 		//check permissions
 		$perms = Perms::get('tiki');
 		if (! $perms->tiki_p_edit_languages) {
 			throw new Services_Exception_Denied(tr('Permission denied'));
 		}
-
+		
 		//get list of languages
 		$languages = $this->getLanguages();
 		
@@ -285,14 +290,14 @@ class Services_Language_Controller
 			global $prefs;
 			$language = $prefs['language'];
 		}
-	
+		
 		//language file type array
 		$fileTypes = array(
 			'tiki_custom_php' => 'Tiki custom.php',
 			'tiki_language_php' => 'Tiki language.php',
 			'transifex_php' => 'Transifex php',
 		);
-
+		
 		$confirm = $input->confirm->int();
 		if($confirm){
 			//check if lang directory is writable
@@ -313,7 +318,7 @@ class Services_Language_Controller
 			
 			//process file type types
 			$fileType = $input->file_type->text();
-
+			
 			if($fileType === 'tiki_custom_php'){
 				//verify file name
 				if($_FILES['language_file']['name'] !== 'custom.php'){
@@ -322,7 +327,7 @@ class Services_Language_Controller
 				//check if a custom.php already exist in temp/ directory and delete it
 				if(file_exists('temp/custom.php')){
 					unlink('temp/custom.php');
-				}					
+				}
 				//move the uploaded file to /temp directory
 				move_uploaded_file($_FILES['language_file']['tmp_name'], 'temp/' . $_FILES['language_file']['name']);
 				
@@ -342,10 +347,9 @@ class Services_Language_Controller
 				if(!is_null($this->getCustomPhpTranslations($language))){
 					$existingCustomPhpTranslations = $this->getCustomPhpTranslations($language);	
 				}
-
 				//merge uploaded into existing, this way existing translations are preserved in case translation exist in both files
 				$data = array_merge($uploadCustomPhpTranslations, $existingCustomPhpTranslations);
-	
+				
 				//write the new custom.php file to the lang/$language folder
 				$this->writeCustomPhpTranslations($language, $data);
 				
@@ -437,7 +441,7 @@ class Services_Language_Controller
 				),
 			);*/
 		}
-
+		
 		return array(
 			'title' => tr('Upload Translations'),
 			'languages' => $languages,
@@ -471,7 +475,7 @@ class Services_Language_Controller
 	 * @param $input
 	 * @return custom.php file
 	 */
-	private function writeCustomPhpTranslations($language, $data)	
+	private function writeCustomPhpTranslations($language, $data)
 	{
 		//prepare custom file path
 		$custom_file = $this->getLanguageDirectory($language);
@@ -510,11 +514,25 @@ class Services_Language_Controller
 	}
 	
 	/**
-	 * Count the items in the custom.php translation file for a language
+	 * Get the count of database stored translations for a language
+	 * @param language
+	 * @return true/false
+	 */
+	private function getDbTranslationCount($language)
+	{
+		$db_language = new LanguageTranslations($language);
+		$db_language_translations = $db_language->getDbTranslations();
+		$db_translation_count = $db_language_translations["total"];
+		
+		return $db_translation_count;
+	}
+	
+	/**
+	 * Get the count of items in the custom.php translation file for a language
 	 * @param $language
 	 * @return integer
 	 */
-	private function getCustomTranslationItemCount($language)	
+	private function getCustomPhpTranslationCount($language)
 	{
 		$lang_array = $this->getCustomPhpTranslations($language);
 		if(is_null($lang_array)){
@@ -531,7 +549,7 @@ class Services_Language_Controller
 	 * @param none
 	 * @return array $languages
 	 */
-	private function getLanguages($language = '')	
+	private function getLanguages($language = '')
 	{	
 		$languages = array();
 		$langLib = TikiLib::lib('language');
@@ -544,7 +562,7 @@ class Services_Language_Controller
 	 * @param language
 	 * @return true/false
 	 */
-	private function getLanguageDirectory($language = '')	
+	private function getLanguageDirectory($language = '')
 	{	
 		$langDir = "lang/";
 		
@@ -565,17 +583,15 @@ class Services_Language_Controller
 	 * @param language
 	 * @return true/false
 	 */
-	private function checkLangIsWritable($language = '')	
+	private function checkLangIsWritable($language = '')
 	{	
 		$directory = $this->getLanguageDirectory($language);
 		
-		if ($language) {
-			if(is_writable($directory)) {
-				$langIsWritable = true;
-			}
-			else {
-				$langIsWritable = false;
-			}
+		if(is_writable($directory)) {
+			$langIsWritable = true;
+		}
+		else {
+			$langIsWritable = false;
 		}
 		
 		return $langIsWritable;
@@ -586,7 +602,7 @@ class Services_Language_Controller
 	 * @param $file (complete path to the file including file name)
 	 * @return array 
 	 */
-	private function processTransifexLanguagePhp($file)	
+	private function processTransifexLanguagePhp($file)
 	{	
 		//check if file is available
 		if(!is_file($file)){
@@ -611,7 +627,7 @@ class Services_Language_Controller
 					//lets keep the original lines as they were so that untranslated strings remain commented out
 					$lang[] = $matches[0];
 				}
-				//assuming translated line are those, where key and value are different
+				//assuming translated lines are those, where key and value are different
 				else {
 					$translated[$matches[1]] = $matches[2];
 					//remove slashes and space to activate translated lines

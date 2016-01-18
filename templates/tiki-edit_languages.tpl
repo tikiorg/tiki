@@ -37,7 +37,7 @@
 				<a class="btn btn-link tips" href="{service controller=language action=download_db_translations language={$edit_language}}" title="{tr}Download Database Translations{/tr}:{tr}Download a file with all the translations in the database for the selected language.{/tr}">
 					{icon name="file-text-o"}
 				</a>
-				<a class="btn btn-link tips" href="{bootstrap_modal controller=language action=write_to_language_php}" title="{tr}Write to language.php{/tr}:{tr}Translations in the database will be merged with the other translations in language.php for the selected language.{/tr}">
+				<a class="btn btn-link tips" href="{bootstrap_modal controller=language action=write_to_language_php language={$edit_language}}" title="{tr}Write to language.php{/tr}:{tr}Translations in the database will be merged with the other translations in language.php for the selected language.{/tr}">
 					{icon name="flash"}
 				</a>				
 			</div>
