@@ -1489,8 +1489,12 @@ class Comments extends TikiLib
 		global $prefs, $user;
 
 		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
+			require_once('lib/search/refresh-functions.php');
+
 			$comments = $this->table('tiki_comments');
 			$comments->update(array('hits' => $comments->increment(1)), array('threadId' => (int) $threadId));
+
+			refresh_index("forum post", $threadId);
 		}
 		return true;
 	}
@@ -3780,6 +3784,9 @@ class Comments extends TikiLib
 	}
 
     /**
+	 * This function is used to collectively index all of the forum threads that are parents
+	 * of the forum thread being updated.
+	 *
      * @param $type
      * @param $threadId
      * @param null $parentId
