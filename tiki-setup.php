@@ -99,7 +99,7 @@ if (strpos($prefs['tiki_domain_redirects'], ',') !== false) {
 	unset($new);
 }
 
-if ( isset($domain_map[$host]) ) {
+if ( isset($domain_map[$host]) && ! defined('TIKI_CONSOLE') ) {
 	$prefix = $tikilib->httpPrefix();
 	$prefix = str_replace("://$host", "://{$domain_map[$host]}", $prefix);
 	$url = $prefix . $requestUri;
