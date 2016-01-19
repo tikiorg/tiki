@@ -146,19 +146,18 @@ function wikiplugin_tracker_info()
 			'email' => array(
 				'required' => false,
 				'name' => tra('Email'),
-				'description' => tr('To send an email once the tracker item has been created. Format: %0from', '<code>')
-					.'|'.tra('to').'|'.tr('template%0', '</code> ') . tr('For %0from%1 and %0to%1, use an email address
-					(separate multiple addresses with a comma) or a fieldId of a field containing an email address.
-					When sending to several emails, provide the template name for the message body for each email;
-					I.e., the first template will be used for the first to, the second template if exists will be used
-					for the second from (otherwise the last given template will be used). The subject will be the
-					template_subject.tpl. All the templates must be in the %0templates/mail%1 directory. Example:
-					%0webmaster@my.com |a@my.com,b@my.com | ta.tpl,tb.tpl%1 (%0templates/mail/ tracker_changed_notification.tpl%1
-					is the default from which you can get inspiration). Please note that you need to have an email
-					address in the normal "Copy activity to email" property in the Tracker notifications panel as well',
-					'<code>', '</code>'),
-				'since' => '2.0',
-				'default' => '',
+                                'description' => tr('To send an email once the tracker item has been created. Format: %0from', '<code>')
+                                        .'|'.tra('to').'|'.tr('template%0', '</code> ') . tr('For %0from%1 and %0to%1, use an email address
+                                        (separate multiple addresses with a comma) or a fieldId of a field containing an email address.
+                                        When sending to several emails using different template, provide the template name for the message body for each email;
+                                        I.e., the first template will be used for the first to, the second template if exists will be used
+                                        for the second from (otherwise the last given template will be used). Each template needs two files, one for the subject one for the body. The subject will be named
+                                        template_subject.tpl. All the templates must be in the %0templates/mail%1 directory. Example:
+                                        %0webmaster@my.com|a@my.com,b@my.com|template_a.tpl,template_b.tpl%1 (%0templates/mail/template_tracker_modified.tpl%1
+                                        is the default from which you can get inspiration). Please note that you need to have an email
+                                        address in the normal "Copy activity to email" property in the Tracker notifications panel as well',
+                                        '<code>', '</code>'),
+                                'since' => '2.0',				'default' => '',
 			),
 			'emailformat' => array(
 				'required' => false,
