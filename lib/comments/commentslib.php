@@ -342,10 +342,6 @@ class Comments extends TikiLib
 				continue;
 			}
 
-			//echo '<pre>';
-			//print_r ($aux);
-			//echo '</pre>';
-
 			if (!isset($aux['From'])) {
 				if (isset($aux['Return-path'])) {
 					$aux['From'] = $aux['Return-path'];
@@ -3878,6 +3874,21 @@ class Comments extends TikiLib
 			return true;
 		}
 	}
+
+	/**
+	 * @param $threadId
+	 *
+	 * @return array
+	 */
+	function get_lastPost($threadId)
+	{
+		$query = "select * from tiki_comments where parentId=? order by commentDate desc limit 1";
+		$ret = $this->fetchAll($query, array($threadId));
+
+		if(is_array($ret)) {
+			return $ret[0];
+		}
+	}
 }
 
 /**
@@ -3939,4 +3950,3 @@ function r_compare_lastPost($ar1, $ar2)
 		return $ar1['type'] == 's' ? -1 : 1;
 	}
 }
-

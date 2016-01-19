@@ -91,6 +91,45 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 			'root_thread_id' => $typeFactory->identifier($root_thread_id),
 		);
 
+		$forum_lastPost = $this->getForumLastPostData($objectId, $typeFactory);
+
+		$data = array_merge($data, $forum_lastPost);
+
+		return $data;
+	}
+
+	/**
+	 * Return data array of last post for thread
+	 *
+	 * @param $threadId
+	 * @param Search_Type_Factory_Interface $typeFactory
+	 * @return array
+	 * @throws Exception
+	 */
+	function getForumLastPostData($threadId, Search_Type_Factory_Interface $typeFactory)
+	{
+		$commentslib = TikiLib::lib('comments');
+		$commentslib->extras_enabled(false);
+
+		$comment = $commentslib->get_lastPost($threadId);
+
+		$lastModification = isset($comment['commentDate']) ? $comment['commentDate'] : 0;
+		$content = isset($comment['data']) ? $comment['data'] : '';
+		$snippet = TikiLib::lib('tiki')->get_snippet($content);
+		$author = array(isset($comment['userName']) ? $comment['userName'] : '');
+
+		$commentslib->extras_enabled(true);
+
+		$data = array(
+			'lastpost_title' => $typeFactory->sortable(isset($comment['title']) ? $comment['title'] : ''),
+			'lastpost_modification_date' => $typeFactory->timestamp($lastModification),
+			'lastpost_contributors' => $typeFactory->multivalue(array_unique($author)),
+			'lastpost_post_content' => $typeFactory->wikitext($content),
+			'lastpost_post_snippet' => $typeFactory->plaintext($snippet),
+			'lastpost_hits' => $typeFactory->numeric(isset($comment['hits']) ? $comment['hits'] : 0),
+			'lastpost_thread_id' => $typeFactory->identifier(isset($comment['thread_id']) ? $comment['thread_id'] : 0),
+		);
+
 		return $data;
 	}
 
@@ -115,6 +154,14 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 			'root_thread_id',
 			'parent_contributors',
 			'hits',
+
+			'lastpost_title',
+			'lastpost_modification_date',
+			'lastpost_contributors',
+			'lastpost_post_content',
+			'lastpost_post_snippet',
+			'lastpost_hits',
+			'lastpost_thread_id',
 		);
 	}
 
