@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "517edf9fc8a3232bc1ad952acc3a827e",
-    "content-hash": "62f39950aa0806e033bff2a1e3eecb96",
+    "hash": "c6bc98fc020184596dc225ceaa03158d",
+    "content-hash": "aa1119f20354294ec7bd3c5dae473816",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -156,17 +156,17 @@
         },
         {
             "name": "ckeditor/ckeditor",
-            "version": "4.5.1",
+            "version": "4.5.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ckeditor/ckeditor-releases.git",
-                "reference": "d73e63a92b2215ab61ad7599d5c342bf541508c7"
+                "reference": "6b2514e803e1cf1df5df3148198aacfb36a2864f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-d73e63a92b2215ab61ad7599d5c342bf541508c7-zip-97ff1b.zip",
-                "reference": "d73e63a92b2215ab61ad7599d5c342bf541508c7",
-                "shasum": "23a39b66b3d27f98e8d374789e81867ada8ca427"
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-6b2514e803e1cf1df5df3148198aacfb36a2864f-zip-bc9c14.zip",
+                "reference": "6b2514e803e1cf1df5df3148198aacfb36a2864f",
+                "shasum": "af24f7867beb3a22edc4e4a56f462161c7ec21c3"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -193,16 +193,16 @@
                 "text",
                 "wysiwyg"
             ],
-            "time": "2015-07-02 12:38:46"
+            "time": "2015-12-09 15:59:05"
         },
         {
             "name": "ckeditor/ckeditor/plugins/divarea",
-            "version": "4.5.1",
+            "version": "4.5.6",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-plugins-divarea-4.5.1.zip",
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-plugins-divarea-4.5.6.zip",
                 "reference": null,
-                "shasum": "889bfea31000063c4e8c6a996d19b20f6fbea228"
+                "shasum": "549337fce4fc79089d6c8245bcd2d5b5ab82c566"
             },
             "type": "library"
         },
@@ -219,12 +219,12 @@
         },
         {
             "name": "ckeditor/ckeditor/skins/kama",
-            "version": "4.5.1",
+            "version": "4.5.6",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-kama-4.5.1.zip",
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-kama-4.5.6.zip",
                 "reference": null,
-                "shasum": "6ef38e0689e58b4de13eb8565cacc01877d18eed"
+                "shasum": "ed917f245e769791867363b037937604d1ef3b08"
             },
             "type": "library"
         },
