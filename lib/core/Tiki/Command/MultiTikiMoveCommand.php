@@ -117,7 +117,7 @@ class MultiTikiMoveCommand extends Command
 						rename($move[0], $move[1]);
 						$mode = "Moved:";
 					} else {
-						$mode = "Move:";
+						$mode = "Will move:";
 					}
 					$output->writeln("{$mode} {$move[0]} to {$move[1]}");
 				}
@@ -138,7 +138,7 @@ class MultiTikiMoveCommand extends Command
 					}
 
 				} else {
-					if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
+					if ($output->getVerbosity() >= OutputInterface::VERBOSITY_NORMAL) {
 						$output->writeln("<info>Use --confirm to perform moves</info>");
 					}
 				}
