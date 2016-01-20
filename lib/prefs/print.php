@@ -15,7 +15,7 @@ function prefs_print_list()
 			'options' => array(
 				'none' => tra('Disabled'),
 				'webkit' => tra('WebKit (wkhtmltopdf)'),
-				'weasyprint' => tra('Weasyprint'),
+				'weasyprint' => tra('WeasyPrint'),
 				'webservice' => tra('Webservice'),
 			),
 			'default' => 'none',
@@ -38,7 +38,7 @@ function prefs_print_list()
 			'default' => '',
 		),
 		'print_pdf_weasyprint_path' => array(
-			'name' => tra('Weasyprint path'),
+			'name' => tra('WeasyPrint path'),
 			'description' => tra('Full path to the weasyprint executable to generate the PDF document with.'),
 			'type' => 'text',
 			'size' => 50,
