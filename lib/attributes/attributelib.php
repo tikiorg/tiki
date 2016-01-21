@@ -23,9 +23,11 @@ class AttributeLib extends TikiDb_Bridge
 	}
 
     /**
-     * @param $type
-     * @param $objectId
-     * @return mixed
+	 * Get all attributes for an object
+	 *
+     * @param $type string      One of \ObjectLib::get_supported_types()
+     * @param $objectId mixed   Object id (or name for wiki pages)
+     * @return array            Array [attribute => value]
      */
     function get_attributes( $type, $objectId )
 	{
@@ -33,6 +35,22 @@ class AttributeLib extends TikiDb_Bridge
 			'attribute',
 			'value',
 			array('type' => $type,'itemId' => $objectId,)
+		);
+	}
+
+	/**
+	 * Get a single attribute
+	 *
+	 * @param $type string          One of \ObjectLib::get_supported_types()
+	 * @param $objectId mixed       Object id (or name for wiki pages)
+	 * @param $attribute string     At least two dots and only lowercase letters
+	 * @return string|boolean       Contents of the attribute on the object or false if not present
+	 */
+	function get_attribute($type, $objectId, $attribute)
+	{
+		return $this->attributes->fetchOne(
+			'value',
+			array('type' => $type, 'itemId' => $objectId, 'attribute' => $attribute)
 		);
 	}
 
