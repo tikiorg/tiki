@@ -733,6 +733,26 @@ class Tiki_Profile
 		return $groups;
 	} // }}}
 
+	/**
+	 * Gets the objects that have already been loaded from the profile or have been installed, otherwise
+	 * it loads it from the profile itself.
+	 * @return array|null
+	 */
+	function getLoadedObjects() // {{{
+	{
+		if ( !is_null($this->objects) ) {
+			return $this->objects;
+                } else {
+			return $this->getObjects();
+		}
+	} // }}}
+
+	/**
+	 * Loads objects for the profile for the purpose of installation or the steps before the installation.
+	 * Should not be called after installation is complete as it will reload it from the profile causing things
+	 * like the reference IDs to be lost.
+	 * @return array|null
+	 */
 	function getObjects() // {{{
 	{
 		// Note this function needs to be called each time the objects need to be refreshed after YAML replacements

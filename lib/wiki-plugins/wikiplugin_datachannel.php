@@ -348,8 +348,7 @@ function wikiplugin_datachannel( $data, $params )
 
 				$params['emptyCache'] = isset($params['emptyCache']) ? $params['emptyCache'] : 'all';
 				$success = $installer->install($profile, $params['emptyCache']) && $success;
-
-				foreach ($profile->getObjects() as $object) {
+				foreach ($profile->getLoadedObjects() as $object) {
 					$arguments["%{$object->getRef()}%"] = $object->getValue();
 					$arguments["%{$object->getRef()}:urlencode%"] = rawurlencode($object->getValue());
 				}
