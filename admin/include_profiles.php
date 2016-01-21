@@ -45,13 +45,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$installer->install($profile);
 		$transaction->commit();
 
+		$profilefeedback = $installer->getFeedback();
+
 		if ($target = $profile->getInstructionPage()) {
+
+			foreach ($profilefeedback as $feedback) {
+				if (strpos($feedback, tra('An error occurred: ')) === 0) {
+					TikiLib::lib('errorreport')->report($feedback);
+				}
+			}
+
 			$wikilib = TikiLib::lib('wiki');
 			$target = $wikilib->sefurl($target);
 			header('Location: ' . $target);
             exit;
 		} else {
-			$profilefeedback = $installer->getFeedback();
 			if (count($profilefeedback) > 0) {
 				$smarty->assign_by_ref('profilefeedback', $profilefeedback);
 			}

@@ -184,7 +184,7 @@ class Tiki_Profile_Installer
 	
 	/**
 	 * @param $index - (int) index of feedback string to return if present
-	 * @return string or whole array if no index specified 
+	 * @return mixed string or whole array if no index specified
 	 */
 	function getFeedback( $index = null ) // {{{
 	{
