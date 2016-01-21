@@ -127,12 +127,12 @@
 								submit.name = 'install';
 								submit.value = 'Apply Now';
 								form.setAttribute ( "onsubmit", 'return confirm(\"{/literal}{tr}Are you sure you want to apply the profile{/tr}{literal} ' + profile + '?\");' );
-								form.setAttribute ( "class", "btn btn-primary");
+								submit.setAttribute ( "class", "btn btn-primary");
 							} else if ( data.already ) {
 								submit.name = 'forget';
 								submit.value = 'Forget and Re-apply';
 								form.setAttribute ( "onsubmit", 'return confirm(\"{/literal}{tr}Are you sure you want to re-apply the profile{/tr}{literal} ' + profile + '?\");' );
-								form.setAttribute ( "class", "btn btn-primary");
+								submit.setAttribute ( "class", "btn btn-primary");
 							}
 
 							p.appendChild(submit);
@@ -288,7 +288,7 @@
 									{jq}
 										if ($("#profile-0").length > 0) {
 											$(".quickmode_notes").hide();
-											$(window).scrollTop($("a[name=step2]").offset().top);
+											$(window).scrollTop($("#step2").offset().top);
 										} else {
 											$(".quickmode_notes").show();
 										}
