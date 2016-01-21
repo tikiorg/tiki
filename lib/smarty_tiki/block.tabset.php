@@ -50,9 +50,13 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 			$smarty_tabset_i_tab = 1;
 		}
 
+		if (!isset($cookietab) || $tabset_index > 1) {
+			$cookietab = getCookie($smarty_tabset_name, 'tabs', 1);
+		}
 		// work out cookie value if there
-		if ( isset($_REQUEST['cookietab']) && $tabset_index === 1) {	// overrides cookie if added to request as in tiki-admin.php?page=look&cookietab=6
+		if ( isset($_REQUEST['cookietab']) && $tabset_index) {	// overrides cookie if added to request as in tiki-admin.php?page=look&cookietab=6
 			$cookietab = empty($_REQUEST['cookietab']) ? 1 : $_REQUEST['cookietab'];
+			setCookieSection($smarty_tabset_name, $cookietab, 'tabs');	// too late to set it here as output has started
 		}
 
 		// If the tabset specifies the tab, override any kind of memory but only if not doing "no tabs" mode
@@ -62,7 +66,7 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 
 		$smarty_tabset_i_tab = 1;
 
-		return '';
+		return;
 	} else {
 		$content = trim($content);
 		if (empty($content)) {
@@ -113,15 +117,6 @@ function smarty_block_tabset($params, $content, $smarty, &$repeat)
 		$ret .= '</ul>';
 
 		$ret .= "</div>";
-
-		// has been changed by code but now too late to reset
-		if ($cookietab) {
-			$tab_value = '#' . $smarty_tabset[$tabset_index]['tabs'][$cookietab - 1]['id'];
-			if ($tabset_index === 1 && $tab_value != getCookie($smarty_tabset_name, 'tabs')) {
-				setCookieSection($smarty_tabset_name, $tab_value, 'tabs');
-			}
-		}
-
 		$tabset_index--;
 
 		return $ret . '<div class="tab-content">' . $content . '</div>';
