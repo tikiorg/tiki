@@ -11,6 +11,7 @@
 		<service id="tiki.controller.access" class="Services_Access_Controller"/>
 		<service id="tiki.controller.activitystream" class="Services_ActivityStream_Controller"/>
 		<service id="tiki.controller.article" class="Services_Article_Controller"/>
+		<service id="tiki.controller.attribute" class="Services_Attribute_Controller"/>
 		<service id="tiki.controller.auth_source" class="Services_AuthSource_Controller"/>
 		<service id="tiki.controller.autosave" class="Services_AutoSave_Controller"/>
 		<service id="tiki.controller.bigbluebutton" class="Services_BigBlueButton_Controller"/>
