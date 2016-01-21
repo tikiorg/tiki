@@ -203,7 +203,7 @@ function wikiplugin_piwik($data, $params)
 // Issue with date range
 // If ($params['period']) = range) the enddate parameter should be added as well as a ',' is to be inserted between the 2 date value so it look as follow; &date='.$params['startdate'].','.$params['enddate'].'
 
-    $iframe = ('<iframe src="'.$params['piwikserverurl'].'/index.php?module=Widgetize&action=iframe&widget=1&moduleToWidgetize='.$params['moduleToWidgetize'].'&actionToWidgetize='.$params['actionToWidgetize'].'&idSite='.$params['idSite'].'&period='.$params['period'].'&date='.$params['startdate'].'&disableLink=1&widget=1" scrolling="'.$params['scrolling'].'" frameborder="0" marginheight="0" marginwidth="0" width="'.$params['width'].'" height="'.$params['height'].'"></iframe>');
+    $iframe = ('<iframe src="'.$params['piwikserverurl'].'/index.php?module=Widgetize&token_auth='.$params['piwiktokenauth'].'&action=iframe&widget=1&moduleToWidgetize='.$params['moduleToWidgetize'].'&actionToWidgetize='.$params['actionToWidgetize'].'&idSite='.$params['idSite'].'&period='.$params['period'].'&date='.$params['startdate'].'&disableLink=1&widget=1" scrolling="'.$params['scrolling'].'" frameborder="0" marginheight="0" marginwidth="0" width="'.$params['width'].'" height="'.$params['height'].'"></iframe>');
 
     return '~np~' . $iframe . '~/np~';
 }
