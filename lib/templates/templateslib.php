@@ -175,6 +175,9 @@ class TemplatesLib extends TikiLib
      */
     public function list_all_templates($offset, $maxRecords, $sort_mode, $find)
 	{
+		global $prefs, $user;
+		$attributeslib = TikiLib::lib('attribute');
+
 		$bindvars = array();
 		if ($find) {
 			$bindvars[] = '%' . $find . '%';
@@ -213,6 +216,14 @@ class TemplatesLib extends TikiLib
 				}
 
 				$res['edit'] = $perms->edit_content_templates || $perms->admin_content_templates;
+				if ($prefs['lock_content_templates'] && $res['edit']) {	// check for locked
+					$lockedby = $attributeslib->get_attribute('template', $res['templateId'], 'tiki.object.lock');
+					if ($lockedby && $lockedby === $user && $perms->lock_content_templates || ! $lockedby || $perms->admin_content_templates) {
+						$res['edit'] = true;
+					} else {
+						$res['edit'] = false;
+					}
+				}
 				$res['remove'] = $perms->admin_content_templates;	// admin_content_templates otherwise unused
 
 				$ret[] = $res;

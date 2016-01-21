@@ -76,6 +76,9 @@
 				</div>
 
 				{preference name=feature_cms_templates}
+				<div class="adminoptionboxchild" id="feature_cms_templates_childcontainer">
+					{preference name=lock_content_templates}
+				</div>
 				{preference name=feature_cms_print}
 				{preference name=feature_cms_emails}
 

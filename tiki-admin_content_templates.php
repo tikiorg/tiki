@@ -202,6 +202,13 @@ if (isset($_REQUEST["save"])) {
 		$cat_href = "tiki-admin_content_templates.php?templateId=" . $cat_objid;
 		include_once ("categorize.php");
 
+		// Locking: only needed on new templates, ajax locks existing ones
+		if ($prefs['lock_content_templates'] === 'y' && empty($_REQUEST['templateId'])) {
+			if (!empty($_REQUEST['locked'])) {
+				TikiLib::lib('attribute')->set_attribute('template', $tid, 'tiki.object.lock', $_REQUEST['locked']);
+			}
+		}
+
 		$cookietab = 1;
 	} else {
 		$smarty->assign("templateId", '0');
@@ -267,6 +274,14 @@ if (isset($_REQUEST['mode_normal']) && $_REQUEST['mode_normal']=='y') {
 if ($_REQUEST['templateId']) {
 	$perms = Perms::get(array('type' => 'template', 'object' => $_REQUEST['templateId']));
 	$canEdit = $perms->edit_content_templates;
+	if ($prefs['lock_content_templates'] === 'y' && $canEdit) {	// check for locked
+		$lockedby = TikiLib::lib('attribute')->get_attribute('template', $_REQUEST['templateId'], 'tiki.object.lock');
+		if ($lockedby && $lockedby === $user && $perms->lock_content_templates || ! $lockedby || $perms->admin_content_templates) {
+			$canEdit = true;
+		} else {
+			$canEdit = false;
+		}
+	}
 } else {
 	$canEdit = $tiki_p_admin_content_templates === 'y';	// create
 }

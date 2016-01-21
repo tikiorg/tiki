@@ -119,6 +119,9 @@
 				<legend>{tr}Edit{/tr}</legend>
 
 				{preference name=feature_wiki_templates}
+				<div class="adminoptionboxchild" id="feature_wiki_templates_childcontainer">
+					{preference name=lock_content_templates}
+				</div>
 				{preference name=feature_warn_on_edit}
 				{preference name=warn_on_edit_time}
 				{preference name=feature_wiki_undo}

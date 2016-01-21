@@ -3683,6 +3683,15 @@ class UsersLib extends TikiLib
 				'scope' => 'object',
 			),
 			array(
+				'name' => 'tiki_p_lock_content_templates',
+				'description' => tra('Can lock content templates'),
+				'level' => 'editors',
+				'type' => 'content templates',
+				'admin' => false,
+				'prefs' => array('feature_wiki_templates', 'feature_cms_templates', 'lock_content_templates'),
+				'scope' => 'object',
+			),
+			array(
 				'name' => 'tiki_p_use_content_templates',
 				'description' => tra('Can use content templates'),
 				'level' => 'registered',
