@@ -127,6 +127,9 @@ if (is_readable($custom_css)) {
 
 //8) produce $iconset to be used for generating icons
 $iconset = TikiLib::lib('iconset')->getIconsetForTheme($theme_active, $theme_option_active);
+// and add js support file
+$headerlib->add_js('jqueryTiki.iconset = ' . json_encode($iconset->getJS()));
+$headerlib->add_jsfile('lib/jquery_tiki/iconsets.js');
 
 //9) set global variable and prefs so that they can be accessed elsewhere
 $prefs['theme'] = $theme_active;

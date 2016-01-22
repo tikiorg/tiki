@@ -257,6 +257,22 @@ class Iconset
 
 	}
 
+	/**
+	 * Get an array representation of the iconset for encoding as JSON
+	 *
+	 */
+	public function getJS() {
+		$return = [
+			'defaults' => $this->defaults,
+			'icons' => $this->icons,
+			'tag' => $this->tag,
+			'prepend' => $this->prepend,
+			'append' => $this->append,
+		];
+
+		return $return;
+	}
+
 	private function setStyle(array $styleparams)
 	{
 		$style = '';
