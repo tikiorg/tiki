@@ -464,7 +464,7 @@ function iconset_legacy()
 				'id' => 'text_list_numbers',
 			),
 			'lock' => array(
-				'id' => 'lock_add',
+				'id' => 'lock',
 			),
 			'log' => array(
 				'id' => 'book',
