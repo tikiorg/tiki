@@ -121,23 +121,23 @@ class Iconset
 
 		foreach ($iconset->icons() as $name => $icon) {
 			if (! isset($this->icons[$name]) || $over) {
-				if (empty($icon['tag']) && $tag && $this->tag !== $tag) {
+				if (!isset($icon['tag']) && $tag && $this->tag !== $tag) {
 					$icon['tag'] = $tag;
 				}
-				if (empty($icon['prepend']) && $prepend && $this->prepend !== $prepend) {
+				if (!isset($icon['prepend']) && $this->prepend !== $prepend) {
 					$icon['prepend'] = $prepend;
 				}
-				if (empty($icon['append']) && $append && $this->append !== $append) {
+				if (!isset($icon['append']) && $this->append !== $append) {
 					$icon['append'] = $append;
 				}
-				if (empty($icon['class']) && $class && $this->class !== $class) {
+				if (!isset($icon['class']) && $this->class !== $class) {
 					$icon['class'] = $class;
 				}
 				$this->icons[$name] = $icon;
 			}
 		}
 
-		if (isset($iconset->defaults) && count($iconset->defaults > 0)) {
+		if (!empty($iconset->defaults)) {
 			foreach ($iconset->defaults as $defname) {
 				if (! isset($this->icons[$defname]) || $over) {
 					$deficon['id'] = $defname;
@@ -212,14 +212,14 @@ class Iconset
 			if (!empty($params['istyle'])) {
 				$styleparams[] = $params->istyle->striptags();
 			}
-			$sizeuser = !empty($params['size']) && $params['size'] < 10 ? abs($params->size->int()) : 1;
+			$size = !empty($params['size']) && $params['size'] < 10 ? abs($params->size->int()) : 1;
 			//only used in legacy icon definition
 			$sizedef = isset($icon['size']) ? $icon['size'] : 1;
 
 			if ($tag == 'img') { //manage legacy image icons (eg: png, gif, etc)
 				//some ability to use larger legacy icons based on size setting
 				// 1 = 16px x 16px; 2 = 32px x 32px; 3 = 48px x 48px
-				if ($sizeuser != 1 && $sizedef != $sizeuser && !empty($icon['sizes'][$size])) {
+				if ($size != 1 && $sizedef != $size && !empty($icon['sizes'][$size])) {
 					$file = $icon['sizes'][$size]['id'];
 					if (isset($icon['sizes'][$size]['prepend'])) {
 						$prepend = $icon['sizes'][$size]['prepend'];
@@ -259,6 +259,7 @@ class Iconset
 
 	private function setStyle(array $styleparams)
 	{
+		$style = '';
 		if (!empty($styleparams)) {
 			foreach ($styleparams as $sparam) {
 				if (!empty($sparam)) {
@@ -270,8 +271,6 @@ class Iconset
 				}
 			}
 			$style .= '"';
-		} else {
-			$style = '';
 		}
 		return $style;
 	}
