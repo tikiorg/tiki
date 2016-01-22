@@ -27,7 +27,7 @@
 {/if}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
-	{tr}Use the 'Quick Edit' module to easily create or edit wiki pages.{/tr} {tr}Select <a class="alert-link" href="tiki-admin_modules.php">Admin &gt; Modules</a> to add this (or other) modules.{/tr}
+	{tr}Use the 'Quick Edit' module to easily create or edit wiki pages.{/tr} <a class="btn btn-default" href="tiki-admin_modules.php">{icon name="module"} {tr}Modules{/tr}</a>
 {/remarksbox}
 
 <form class="form-horizontal" action="tiki-admin.php?page=wiki" method="post">
@@ -35,15 +35,13 @@
 	<div class="heading input_submit_container text-right">
 	</div>
 
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			{button _icon_name='admin_wiki' _text="{tr}Pages{/tr}" class='btn btn-link' _script='tiki-listpages.php' _title="{tr}List wiki pages{/tr}"}
-			{if $prefs.feature_wiki_structure eq "y" and $tiki_p_view eq "y"}
-				{button _icon_name='structure' _text="{tr}Structures{/tr}" class='btn btn-link' _script='tiki-admin_structures.php' _title="{tr}List structures{/tr}"}
-			{/if}
-			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm" name="wikisetprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-			</div>
+	<div class="t_navbar margin-bottom-md clearfix">
+		{button _icon_name='admin_wiki' _text="{tr}Pages{/tr}" _class='btn btn-link' _script='tiki-listpages.php' _title="{tr}List wiki pages{/tr}"}
+		{if $prefs.feature_wiki_structure eq "y" and $tiki_p_view eq "y"}
+			{button _icon_name='structure' _text="{tr}Structures{/tr}" _class='btn btn-link' _script='tiki-admin_structures.php' _title="{tr}List structures{/tr}"}
+		{/if}
+		<div class="pull-right">
+			<input type="submit" class="btn btn-primary btn-sm" name="wikisetprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
 		</div>
 	</div>
 
@@ -305,21 +303,6 @@
 			{preference name=feature_wiki_pagealias}
 			{preference name=wiki_pagealias_tokens}
 			{preference name=feature_wiki_rankings}
-
-			{preference name=feature_wiki_structure}
-			<div class="adminoptionboxchild" id="feature_wiki_structure_childcontainer">
-				{preference name=feature_wiki_open_as_structure}
-				{preference name=feature_wiki_make_structure}
-				{preference name=feature_wiki_categorize_structure}
-				{preference name=feature_create_webhelp}
-				{preference name=feature_wiki_structure_drilldownmenu}
-				{preference name=page_n_times_in_a_structure}
-				{preference name=feature_listorphanStructure}
-				{preference name=feature_wiki_no_inherit_perms_structure}
-				{preference name=wiki_structure_bar_position}
-				{preference name=wikiplugin_toc}
-			</div>
-
 			{preference name=feature_wiki_import_html}
 			{preference name=feature_wiki_import_page}
 			{preference name=feature_wiki_use_date}
@@ -347,6 +330,24 @@
 			{preference name=feature_wiki_mindmap}
 			{preference name=feature_morcego}
 
+			<div class="adminoptionbox clearfix">
+				<fieldset>
+					<legend>{tr}Structures{/tr}{help url="Structures"}</legend>
+					{preference name=feature_wiki_structure}
+					<div class="adminoptionboxchild" id="feature_wiki_structure_childcontainer">
+						{preference name=feature_wiki_open_as_structure}
+						{preference name=feature_wiki_make_structure}
+						{preference name=feature_wiki_categorize_structure}
+						{preference name=feature_create_webhelp}
+						{preference name=feature_wiki_structure_drilldownmenu}
+						{preference name=page_n_times_in_a_structure}
+						{preference name=feature_listorphanStructure}
+						{preference name=feature_wiki_no_inherit_perms_structure}
+						{preference name=wiki_structure_bar_position}
+						{preference name=wikiplugin_toc}
+					</div>
+				</fieldset>
+			</div>
 			<div class="adminoptionbox clearfix">
 				<fieldset>
 					<legend>{tr}Wiki watch{/tr}{help url="Watch"}</legend>
@@ -494,12 +495,7 @@
 			<a href="tiki-report_direct_object_perms.php">{tr}Report wiki pages with direct object permissions{/tr}</a><br>
 		{/tab}
 	{/tabset}
-
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm" name="wikisetprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-			</div>
-		</div>
+	<div class="t_navbar margin-bottom-md text-center">
+		<input type="submit" class="btn btn-primary btn-sm tips" name="wikisetprefs" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 	</div>
 </form>
