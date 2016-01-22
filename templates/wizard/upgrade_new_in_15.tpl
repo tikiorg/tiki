@@ -20,7 +20,7 @@
 		<fieldset class="table clearfix featurelist">
 			<legend>{tr}Tiki Addons{/tr}</legend>
 			{tr}Addons allow a way for developers to add an even broader range of functionality{/tr}
-			<a href="http://doc.tiki.org/Addons" target="tikihelp" class="tikihelp" title="{tr}Addons:{/tr}
+			<a href="https://doc.tiki.org/Addons" target="tikihelp" class="tikihelp" title="{tr}Addons:{/tr}
 				{tr}In Tiki 14, the Tiki Addons feature was added to allow a way for developers <br/>to add an even broader range of functionality that can be used with Tiki{/tr}.
 				<br/><br/>
 				{tr}In Tiki 15, an addons repository was added{/tr}.
@@ -50,8 +50,11 @@
 		<fieldset class="table clearfix featurelist">
 			<legend>{tr}New Wiki Plugins{/tr}</legend>
 			{preference name=wikiplugin_fullwidthtitle}
+			{preference name=wikiplugin_googlechart}
 			{preference name=wikiplugin_like}
+			{preference name=wikiplugin_piwik}
 			{preference name=wikiplugin_tour}
+			{preference name=wikiplugin_useringroup}
 			{preference name=wikiplugin_xmlupdate}
 		</fieldset>
 		<fieldset class="table clearfix featurelist">
@@ -97,13 +100,46 @@
 		</fieldset>
 		<fieldset class="table clearfix featurelist">
 			<legend>{tr}Other new features{/tr}</legend>
+				{preference name="header_custom_less" syntax="css"}
 				{preference name=user_multilike_config}
+				{preference name='fgal_viewerjs_feature'}
+				<div class="adminoptionboxchild" id="fgal_viewerjs_feature_childcontainer">
+					{preference name='fgal_viewerjs_uri'}
+					{if $viewerjs_err}
+						<div class="col-sm-8 pull-right">
+							{remarksbox type='errors' title="{tr}Warning{/tr}"}{$viewerjs_err}{/remarksbox}
+						</div>
+					{/if}
+				</div>
+				{preference name=jquery_timeago}
+				{preference name=user_unique_email}
+				{preference name=recaptcha_enabled}
+				<div class="adminoptionboxchild" id="recaptcha_enabled_childcontainer">
+					{preference name=recaptcha_pubkey}
+					{preference name=recaptcha_privkey}
+					{preference name=recaptcha_theme}
+					{preference name=recaptcha_version}
+				</div>
 		</fieldset>
 		<fieldset class="table clearfix featurelist">
 			<legend>{tr}Improved and extended features{/tr}</legend>
 				{preference name=wikiplugin_datachannel}
 				{preference name=wikiplugin_list}
 				{preference name=wikiplugin_tracker}
+				{preference name='file_galleries_use_jquery_upload'}
+				{preference name='feature_file_galleries_batch'}
+				<div class="adminoptionboxchild" id="feature_file_galleries_batch_childcontainer">
+					{remarksbox title="Note"}
+						{tr}You are highly recommended to use a file directory as the File Gallery storage, when using this feature{/tr}
+					{/remarksbox}
+					<br/>
+					{preference name='fgal_batch_dir'}
+				</div>
+				<b>{tr}Console{/tr}</b>: 
+				{tr}There is a console.php command to set a scheduled batch upload cron task{/tr}.
+				<a href="https://doc.tiki.org/Batch+Upload#Console_Command">{tr}More Information{/tr}...</a>
+				{tr}A couple of helper commands to manage multitikis.
+List the sites in a tiki instance and move a site from one tiki to another to help with upgrades etc (using local file access only){/tr}
 		</fieldset>
 		<fieldset class="table clearfix featurelist">
 			<legend>{tr}Removed features{/tr}</legend>
