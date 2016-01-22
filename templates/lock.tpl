@@ -29,16 +29,12 @@
 			}
 			), function(data) {
 				if (data && data.value) {
-					$this.find(".icon")
-						.removeClass("fa-unlock")
-						.addClass("fa-lock");
+					$this.find(".icon").setIcon("lock");
 					$this.data("is_locked", "1")
 						.attr("title", tr("Locked by " + jqueryTiki.userRealName))
 						.parent().find("input[name=locked]").val(jqueryTiki.username);
 				} else {
-					$this.find(".icon")
-						.removeClass("fa-lock")
-						.addClass("fa-unlock");
+					$this.find(".icon").setIcon("unlock");
 					$this.data("is_locked", "")
 						.attr("title", "")
 						.parent().find("input[name=locked]").val("");

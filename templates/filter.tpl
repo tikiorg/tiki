@@ -18,9 +18,9 @@
 				</select>
 			</div>
 			{if preg_match('/desc$/',$sort_mode)}
-				{icon name='sort-down' class='icon sort_invert' title="{tr}Sort direction{/tr}" href='#'}
+				{icon name='sort-down' class='sort_invert' title="{tr}Sort direction{/tr}" href='#'}
 			{else}
-				{icon name='sort-up' class='icon sort_invert' title="{tr}Sort direction{/tr}" href='#'}
+				{icon name='sort-up' class='sort_invert' title="{tr}Sort direction{/tr}" href='#'}
 			{/if}
 		</div>
 	{else}
@@ -256,43 +256,18 @@
 		}
 {{/if}}
 
-		var showDirection = function(down) {
-
-			var src = $invert.attr("src");
-			if (src) {
-				if (down) {
-					$invert.attr("src", src.replace("down", "up"));
-				} else {
-					$invert.attr("src", src.replace("up", "down"));
-				}
-			} else {
-				var $icon = $("span", $invert);
-				if (down) {	// fonticon
-					$icon.removeClass("icon-sort-up").addClass("icon-sort-down");
-					if ($icon.hasClass("fa")) {
-						$icon.removeClass("fa-sort-asc").addClass("fa-sort-desc");
-					}	// handling for glyphicons too one day?
-				} else {		// must be up
-					$icon.removeClass("icon-sort-down").addClass("icon-sort-up");
-					if ($icon.hasClass("fa")) {
-						$icon.removeClass("fa-sort-desc").addClass("fa-sort-asc");
-					}
-				}
-			}
-		}
-
 		$sort_mode.change(function () {	// update direction arrow
-			showDirection($(this).val().search(/desc$/) > -1);
-		}).trigger("change");
+			$(".icon", $invert).setIcon($(this).val().search(/desc$/) > -1 ? "sort-down" : "sort-up");
+		});
 
-		$invert.parent().click(function () {	// change the value of the option to opposite direction
+		$invert.click(function () {	// change the value of the option to opposite direction
 			var v = $sort_mode.prop("options")[$sort_mode.prop("selectedIndex")].value;
 			if (v.search(/desc$/) > -1) {
 				$sort_mode.prop("options")[$sort_mode.prop("selectedIndex")].value = v.replace(/desc$/, "asc");
-				showDirection(false);
+				$(".icon", $invert).setIcon("sort-up");
 			} else {
 				$sort_mode.prop("options")[$sort_mode.prop("selectedIndex")].value = v.replace(/asc$/, "desc");
-				showDirection(true);
+				$(".icon", $invert).setIcon("sort-down");
 			}
 			$(this).parents("form").submit();
 			return false;
