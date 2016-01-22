@@ -63,7 +63,7 @@ class Yaml_Directives
 				return false;
 			}
 	
-			$class = "Yaml_Directive_" . $this->directiveFromValue($testValue); 
+			$class = "Yaml_Directive_" . ucfirst($this->directiveFromValue($testValue)); 
 			if (!class_exists($class)) {
 				return false;
 			}
