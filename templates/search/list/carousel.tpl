@@ -35,10 +35,12 @@
 
 	{* Controls *}
 	<a class="left carousel-control" href="#{$containerId}" role="button" data-slide="prev">
-		<span class="glyphicon glyphicon-chevron-left"></span>
+		{icon name='chevron-left'}
+		<span class="sr-only">Previous</span>
 	</a>
 	<a class="right carousel-control" href="#{$containerId}" role="button" data-slide="next">
-		<span class="glyphicon glyphicon-chevron-right"></span>
+		{icon name='chevron-right'}
+		<span class="sr-only">Next</span>
 	</a>
 </div>
 {pagination_links resultset=$results}{/pagination_links}
