@@ -10,7 +10,8 @@ function wikiplugin_piwik_info()
     return array(
         'name' => tra('Piwik'),
         'documentation' => 'PluginPiwik',
-        'description' => tra('Embed a Piwik preformatted report (widget module) - Piwik Analytics is required.'),
+        'description' => tr('Embed a Piwik preformatted report (widget module) - Piwik Analytics is required.
+                            To use this plugin you have to grant in your Piwik view permission to anonymous for the selected "Site Id" or to add a token authentification parameter.'),
         'prefs' => array( 'wikiplugin_piwik' ),
         'iconname' => 'chart',
         'introduced' => 15,
@@ -19,7 +20,9 @@ function wikiplugin_piwik_info()
             'piwikserverurl' => array(
                 'required' => true,
                 'name' => tra('Piwik server url'),
-                'description' => tr('The url to your Piwik Server, where data for the report are collected and available.'),
+                'description' => tr('The url to your Piwik Server, where data for the report are collected and available.') . ' <code>http(s)://yourpiwik.tld/index.php?</code> ' . '<br />'
+                                    . tr('In your Piwik, your selected site (Site Id) MUST have view permission for anonymous OR you can insert in your Piwik server url a token authentification parameter.') . '<br />'
+                                    . '<code>http(s)://yourpiwik.tld/index.php&token_auth=yourtokencode</code> ' . tr('Important : token_auth is visible in the html code and must be used in private page accessible to trusted users.'),
                 'since' => '15',
                 'default' => '',
             ),
@@ -30,14 +33,6 @@ function wikiplugin_piwik_info()
                 'description' => tr('The ID of your website in Piwik. To be improved.'),
                 'since' => '15',
                 'filter' => 'digits',
-                'default' => '',
-            ),
-
-            'piwiktokenauth' => array(
-                'required' => false,
-                'name' => tra('Token-based authentication'),
-                'description' => tra('Optional, required to display data if anonymous are not allowed on your Piwik server.'),
-                'since' => '15',
                 'default' => '',
             ),
 
@@ -203,7 +198,7 @@ function wikiplugin_piwik($data, $params)
 // Issue with date range
 // If ($params['period']) = range) the enddate parameter should be added as well as a ',' is to be inserted between the 2 date value so it look as follow; &date='.$params['startdate'].','.$params['enddate'].'
 
-    $iframe = ('<iframe src="'.$params['piwikserverurl'].'/index.php?module=Widgetize&token_auth='.$params['piwiktokenauth'].'&action=iframe&widget=1&moduleToWidgetize='.$params['moduleToWidgetize'].'&actionToWidgetize='.$params['actionToWidgetize'].'&idSite='.$params['idSite'].'&period='.$params['period'].'&date='.$params['startdate'].'&disableLink=1&widget=1" scrolling="'.$params['scrolling'].'" frameborder="0" marginheight="0" marginwidth="0" width="'.$params['width'].'" height="'.$params['height'].'"></iframe>');
+    $iframe = ('<iframe src="'.$params['piwikserverurl'].'&module=Widgetize&action=iframe&widget=1&moduleToWidgetize='.$params['moduleToWidgetize'].'&actionToWidgetize='.$params['actionToWidgetize'].'&idSite='.$params['idSite'].'&period='.$params['period'].'&date='.$params['startdate'].'&disableLink=1&widget=1" scrolling="'.$params['scrolling'].'" frameborder="0" marginheight="0" marginwidth="0" width="'.$params['width'].'" height="'.$params['height'].'"></iframe>');
 
     return '~np~' . $iframe . '~/np~';
 }
