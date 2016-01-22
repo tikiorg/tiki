@@ -58,6 +58,16 @@ class Yaml_Directives
 		}
 
 		if (is_string($testValue) && (strncmp('!', $testValue, 1) == 0)) {
+			// Wiki syntax can often start with ! for titles and so the following checks are needed to reduce conflict possibility with YAML user-defined data type extensions syntax
+			if (!ctype_lower(substr($testValue, 1, 1))) {
+				return false;
+			}
+	
+			$class = "Yaml_Directive_" . $this->directiveFromValue($testValue); 
+			if (!class_exists($class)) {
+				return false;
+			}
+
 			return true;
 		}
 
