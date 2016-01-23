@@ -148,9 +148,6 @@ function tiki_get_admin_mail()
 		} catch (Exception $e) {
 			// was already set, then do nothing
 		}
-	} else {
-		// Better to throw error that means something that mail library throwing obscure message like "Invalid address format"
-		throw new Exception(tra("Sender email not set"));
 	}
 
 	return $mail;
