@@ -4786,7 +4786,13 @@ class TikiLib extends TikiDb_Bridge
 
 		$mail->setBcc($recipients);
 
-		$mail->send(array($prefs['sender_email']));
+		if (!empty($prefs['sender_email'])) {
+			$mail->send(array($prefs['sender_email']));
+		} elseif ($admin_email = TikiLib::lib('user')->get_user_email('admin')) {
+			$recipients = array_diff($recipients, array($admin_email));
+			$mail->setBcc($recipients);
+			$mail->send(array($admin_email));
+		}
 	}
 
 	/**
