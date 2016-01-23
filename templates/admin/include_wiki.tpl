@@ -148,30 +148,6 @@
 
 			{preference name=feature_sandbox}
 			{preference name=feature_references}
-			{preference name=feature_wiki_comments}
-			<div class="adminoptionboxchild" id="feature_wiki_comments_childcontainer">
-				{preference name=wiki_comments_displayed_default}
-				{preference name=wiki_comments_form_displayed_default}
-				{preference name=wiki_comments_per_page}
-				{preference name=wiki_comments_default_ordering}
-				{preference name=wiki_comments_allow_per_page}
-				{preference name=wiki_watch_comments}
-			</div>
-
-			{preference name=feature_wiki_attachments}
-			<div class="adminoptionboxchild" id="feature_wiki_attachments_childcontainer">
-					{preference name=w_displayed_default}
-					{preference name=w_use_db}
-					<div class="adminoptionboxchild">
-						{preference name=w_use_dir}
-					</div>
-					{if !empty($prefs.w_use_dir)}
-						{tr}If you change storage, it is better to move all the files for easy backup...{/tr}
-						{button href="tiki-admin.php?page=wikiatt&all2db=1" _text="{tr}Change all to db{/tr}"}
-						{button href="tiki-admin.php?page=wikiatt&all2file=1" _text="{tr}Change all to file{/tr}"}
-					{/if}
-			</div>
-
 			{preference name=wiki_pagination}
 			<div class="adminoptionboxchild" id="wiki_pagination_childcontainer">
 				{preference name=wiki_page_separator}
@@ -219,21 +195,6 @@
 				{else}
 					{button href="dump/new.tar" _text="{tr}Download last dump{/tr}"}
 				{/if}
-			</div>
-
-			{preference name=feature_wiki_pictures}
-			<div class="adminoptionboxchild" id="feature_wiki_pictures_childcontainer">
-				<div class="col-sm-offset-4 col-sm-8">
-					{permission_link mode=button permType=wiki textFilter=picture showDisabled=y}
-				</div>
-				{preference name=feature_filegals_manager}
-				<div class="col-sm-offset-4 col-sm-8">
-					{button href="tiki-admin.php?page=wiki&amp;rmvunusedpic=1" _text="{tr}Remove unused pictures{/tr}"}
-					{button href="tiki-admin.php?page=wiki&amp;moveWikiUp=1" _text="{tr}Move images from wiki_up to the home file gallery{/tr}"}
-					<span class="help-block">
-						{tr}If you use these buttons please make sure to have a backup of the database and the directory wiki_up{/tr}
-					</span>
-				</div>
 			</div>
 
 			{preference name=feature_wiki_export}
@@ -314,22 +275,65 @@
 			<div class="adminoptionboxchild" id="feature_wiki_userpage_childcontainer">
 				{preference name=feature_wiki_userpage_prefix}
 			</div>
-
 			{preference name=feature_wiki_usrlock}
 			<div class="adminoptionboxchild col-sm-8 col-sm-offset-4" id="feature_wiki_usrlock_childcontainer">
 				{permission_link mode=button permType=wiki textFilter=lock showDisabled=y}
 			</div>
-
 			{preference name=wiki_creator_admin}
 			{preference name=feature_wiki_print}
 			<div class="adminoptionboxchild" id="feature_wiki_print_childcontainer">
 				{preference name=feature_wiki_multiprint}
 			</div>
 			{preference name=feature_print_indexed}
-
 			{preference name=feature_wiki_mindmap}
 			{preference name=feature_morcego}
 
+			<div class="adminoptionbox clearfix">
+				<fieldset>
+					<legend>{tr}Attachments{/tr}</legend>
+					{preference name=feature_wiki_attachments}
+					<div class="adminoptionboxchild" id="feature_wiki_attachments_childcontainer">
+						{preference name=w_displayed_default}
+						{preference name=w_use_db}
+						<div class="adminoptionboxchild">
+							{preference name=w_use_dir}
+						</div>
+						{if !empty($prefs.w_use_dir)}
+							{tr}If you change storage, it is better to move all the files for easy backup...{/tr}
+							{button href="tiki-admin.php?page=wikiatt&all2db=1" _text="{tr}Change all to db{/tr}"}
+							{button href="tiki-admin.php?page=wikiatt&all2file=1" _text="{tr}Change all to file{/tr}"}
+						{/if}
+					</div>
+					{preference name=feature_wiki_pictures}
+					<div class="adminoptionboxchild" id="feature_wiki_pictures_childcontainer">
+						<div class="col-sm-offset-4 col-sm-8">
+							{permission_link mode=button permType=wiki textFilter=picture showDisabled=y}
+						</div>
+						{preference name=feature_filegals_manager}
+						<div class="col-sm-offset-4 col-sm-8">
+							{button href="tiki-admin.php?page=wiki&amp;rmvunusedpic=1" _text="{tr}Remove unused pictures{/tr}"}
+							{button href="tiki-admin.php?page=wiki&amp;moveWikiUp=1" _text="{tr}Move images from wiki_up to the home file gallery{/tr}"}
+							<span class="help-block">
+								{tr}If you use these buttons please make sure to have a backup of the database and the directory wiki_up{/tr}
+							</span>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+			<div class="adminoptionbox clearfix">
+				<fieldset>
+					<legend>{tr}Comments{/tr}</legend>
+					{preference name=feature_wiki_comments}
+					<div class="adminoptionboxchild" id="feature_wiki_comments_childcontainer">
+						{preference name=wiki_comments_displayed_default}
+						{preference name=wiki_comments_form_displayed_default}
+						{preference name=wiki_comments_per_page}
+						{preference name=wiki_comments_default_ordering}
+						{preference name=wiki_comments_allow_per_page}
+						{preference name=wiki_watch_comments}
+					</div>
+				</fieldset>
+			</div>
 			<div class="adminoptionbox clearfix">
 				<fieldset>
 					<legend>{tr}Structures{/tr}{help url="Structures"}</legend>
