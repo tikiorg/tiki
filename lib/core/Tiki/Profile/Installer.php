@@ -438,8 +438,15 @@ class Tiki_Profile_Installer
 		require_once 'lib/setup/events.php';
 		tiki_setup_events();
 
+		$userhandlers = array();
 		foreach ( $profile->getObjects() as $object ) {
 			$installer = $this->getInstallHandler($object);
+			if ($installer instanceof Tiki_Profile_InstallHandler_User) {
+				// postpone installation of users till after groups/perms are set
+				$description = $object->getDescription();
+				$userhandlers[$description] = $installer;
+				continue;
+			}
 			$installer->install();
 			$description = $object->getDescription();
 			$installer->replaceReferences($description);
@@ -453,6 +460,11 @@ class Tiki_Profile_Installer
 		foreach ( $permissions as $groupName => $info ) {
 			$this->setFeedback(tra('Group changed (or modified)').': '.$groupName);
 			$this->setupGroup($groupName, $info['general'], $info['permissions'], $info['objects'], $groupMap);
+		}
+
+		foreach ($userhandlers as $description => $installer) {
+			$installer->install();
+			$this->setFeedback(tra('Added (or modified)').': '.$description);
 		}
 
 		$this->applyPreferences($profile, $leftovers);
