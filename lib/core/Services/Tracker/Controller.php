@@ -1478,7 +1478,7 @@ class Services_Tracker_Controller
 				}
 
 				if (0 === count($fields)) {
-					throw new Services_Exception(tr('No valid field selected for export'), 400);
+					$fields = $definition->getFields();
 				}
 
 				$showItemId = $input->showItemId->int();
