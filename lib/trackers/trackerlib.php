@@ -2448,6 +2448,9 @@ class TrackerLib extends TikiLib
 			}
 		}
 
+		// remove the object and uncategorize etc while the item still exists
+		$this->remove_object("trackeritem", $itemId);
+
 		$this->trackers()->update(
 			array('lastModif' => $this->now, 'items' => $this->trackers()->decrement(1)),
 			array('trackerId' => (int) $trackerId)
@@ -2481,7 +2484,7 @@ class TrackerLib extends TikiLib
 			$currentCategId=$categlib->get_category_id("Tracker Item $itemId");
 			$categlib->remove_category($currentCategId);
 		}
-		$this->remove_object("trackeritem", $itemId);
+
 		if (isset($options['autoCreateGroup']) && $options['autoCreateGroup'] == 'y') {
 			$userlib = TikiLib::lib('user');
 			$groupName = $this->groupName($options, $itemId);
