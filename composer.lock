@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c6bc98fc020184596dc225ceaa03158d",
-    "content-hash": "aa1119f20354294ec7bd3c5dae473816",
+    "hash": "57201e4724696fd56eab2cf3eb9ce8eb",
+    "content-hash": "4fb648fab6d86970df0724f5ae22a9f2",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -1432,12 +1432,12 @@
         },
         {
             "name": "svg-edit/svg-edit",
-            "version": "2.7.1",
+            "version": "2.8.1",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/svg-edit-svg-edit-2.7.1.zip",
+                "url": "https://composer.tiki.org/dist/svg-edit-svg-edit-2.8.1.zip",
                 "reference": null,
-                "shasum": "678696a4e44bf1d1efe363ee80e6de5be9b7a49f"
+                "shasum": "f3b86ea64efd07864b4efd20331cb668fb12ebc2"
             },
             "type": "library"
         },
