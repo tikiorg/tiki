@@ -4,8 +4,13 @@
 	{jq}$(".pagename").tiki("autocomplete", "pagename");{/jq}
 	<form class="forms" method="post" action="tiki-listpages.php">
 		<input type="hidden" name="lang" value=""/>
-		<input name="find" size="14" type="text" accesskey="s" class="pagename"{if isset($find)} value="{$find|escape}"{/if} />
-		<label><span style="white-space: nowrap">{tr}Exact match{/tr}</span><input type="checkbox" name="exact_match"{if $exact eq 'y'} checked="checked"{/if}/></label>
-		<input type="submit" class="wikiaction btn btn-default btn-sm" name="search" value="{tr}Go{/tr}"/>
+		<div class="input-group">
+			<input name="find" size="14" type="text" accesskey="s" class="pagename form-control"{if isset($find)} value="{$find|escape}"{/if} />
+			<span class="input-group-btn">
+				<button type="submit" class="wikiaction btn btn-default" name="search" value="{tr}Go{/tr}">{tr}Go{/tr}</button>
+			</span>
+		</div>
+		<input type="checkbox" name="exact_match"{if $exact eq 'y'} checked="checked"{/if}>
+		<label for="exact_match"><span style="white-space: nowrap">{tr}Exact match{/tr}</span></label>
 	</form>
 {/tikimodule}
