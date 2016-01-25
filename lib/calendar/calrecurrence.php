@@ -49,7 +49,7 @@ class CalRecurrence extends TikiLib
     /**
      * @param $param
      */
-    public function CalRecurrence($param = -1)
+    public function __construct($param = -1)
 	{
 		parent::__construct();
 		if ($param > 0)
