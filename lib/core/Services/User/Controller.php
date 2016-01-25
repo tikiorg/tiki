@@ -8,7 +8,14 @@
 class Services_User_Controller
 {
 
+	/**
+	 * @var UsersLib
+	 */
 	private $lib;
+
+	/**
+	 * @var TikiAccessLib
+	 */
 	private $access;
 
 	function setUp()
@@ -294,7 +301,7 @@ class Services_User_Controller
 	/**
 	 * Admin user "perform with checked" action to remove selected users
 	 *
-	 * @param $input
+	 * @param $input JitFilter
 	 * @return array
 	 * @throws Services_Exception
 	 * @throws Services_Exception_BadRequest
@@ -318,18 +325,16 @@ class Services_User_Controller
 				$referer = Services_Utilities_Controller::noJsPath();
 				return [
 					'modal' => '1',
-					'FORWARD' => [
-						'controller' => 'access',
-						'action' => 'confirm',
-						'title' => tra('Please confirm deletion'),
-						'confirmAction' => $input->action->word(),
-						'confirmController' => 'user',
-						'customMsg' => $msg,
-						'items' => $items,
-						'extra' => ['referer' => $referer],
-						'ticket' => $check['ticket'],
-						'modal' => '1',
-					]
+					'controller' => 'access',
+					'action' => 'confirm',
+					'title' => tra('Please confirm deletion'),
+					'confirmAction' => $input->action->word(),
+					'confirmController' => 'user',
+					'customMsg' => $msg,
+					'items' => $items,
+					'extra' => ['referer' => $referer],
+					'ticket' => $check['ticket'],
+					'confirm' => 'y',
 				];
 			} else {
 				throw new Services_Exception(tra('No users were selected. Please select one or more users.'), 409);
@@ -338,251 +343,66 @@ class Services_User_Controller
 		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST') {
 			//delete user
 			$items = json_decode($input['items'], true);
-			$this->removeUsers($items);
-			//return to page
-			//if javascript is not enabled
-			$extra = json_decode($input['extra'], true);
-			if (!empty($extra['referer'])) {
-				$this->access->redirect($extra['referer'], tra('Selected user(s) deleted'), null,
-					'feedback');
-			}
-			if (count($items) === 1) {
-				$msg = tra('The following user has been deleted:');
-			} else {
-				$msg = tra('The following users have been deleted:');
-			}
-			return [
-				'extra' => 'post',
-				'feedback' => [
-					'ajaxtype' => 'feedback',
-					'ajaxheading' => tra('Success'),
-					'ajaxitems' => $items,
-					'ajaxmsg' => $msg,
-				],
-			];
-		}
-	}
 
-	/**
-	 * Admin user "perform with checked" action to remove selected users and their user pages
-	 *
-	 * @param $input
-	 * @return array
-	 * @throws Services_Exception
-	 * @throws Services_Exception_BadRequest
-	 * @throws Services_Exception_Denied
-	 * @throws Services_Exception_NotFound
-	 */
-	function action_remove_users_with_page($input)
-	{
-		Services_Exception_Denied::checkGlobal('admin_users');
-		$check = Services_Exception_BadRequest::checkAccess();
-		//first pass - show confirm popup
-		if (!empty($check['ticket'])) {
-			$items = $input->asArray('checked');
-			if (count($items) > 0) {
-				if (count($items) === 1) {
-					$msg = tra('Are you sure you want to delete the following user and related user page?');
-				} else {
-					$msg = tra('Are you sure you want to delete the following users and their user pages?');
+			// maybe delete page as well?
+			$remove_pages = ! empty($input->remove_pages->word());
+			// do the deleting...
+			$this->removeUsers($items, $remove_pages);
+
+			if ($input->ban_users->word()) {
+				$mass_ban_ip = implode('|', $items);
+				//if javascript is not enabled
+				global $prefs;
+				if ($prefs['javascript_enabled'] !== 'y') {
+					$this->access->redirect('tiki-admin_banning.php?mass_ban_ip_users=' . $mass_ban_ip);
 				}
-				//provide redirect if js is not enabled
-				$referer = Services_Utilities_Controller::noJsPath();
-				return [
-					'FORWARD' => [
-						'controller' => 'access',
-						'action' => 'confirm',
-						'title' => tra('Please confirm deletion'),
-						'confirmAction' => $input->action->word(),
-						'confirmController' => 'user',
-						'customMsg' => $msg,
-						'items' => $items,
-						'extra' => ['referer' => $referer],
-						'ticket' => $check['ticket'],
-						'modal' => '1',
-					]
-				];
-			} else {
-				throw new Services_Exception(tra('No users were selected. Please select one or more users.'), 409);
-			}
-		//after confirm submit - perform action and return success feedback
-		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST') {
-			//perform deletions
-			$items = json_decode($input['items'], true);
-			$this->removeUsers($items, true);
-			//return to page
-			//if javascript is not enabled
-			$extra = json_decode($input['extra'], true);
-			if (!empty($extra['referer'])) {
-				$this->access->redirect($extra['referer'], tra('Selected user(s) and their pages deleted'), null,
-					'feedback');
-			}
-			if (count($items) === 1) {
-				$msg = tra('The following user and related user page have been deleted:');
-			} else {
-				$msg = tra('The following users and their user pages have been deleted:');
-			}
-			return [
-				'extra' => 'post',
-				'feedback' => [
-					'ajaxtype' => 'feedback',
-					'ajaxheading' => tra('Success'),
-					'ajaxitems' => $items,
-					'ajaxmsg' => $msg,
-				],
-			];
-		}
-	}
-
-	/**
-	 * Admin user "perform with checked" action to remove selected users and send to banning page with users preselected
-	 * for banning
-	 *
-	 * @param $input
-	 * @return array
-	 * @throws Services_Exception
-	 * @throws Services_Exception_BadRequest
-	 * @throws Services_Exception_Denied
-	 * @throws Services_Exception_NotFound
-	 */
-	function action_remove_users_and_ban($input)
-	{
-		Services_Exception_Denied::checkGlobal('admin_users');
-		Services_Exception_Disabled::check('feature_banning');
-		Services_Exception_Denied::checkGlobal('admin_banning');
-		$check = Services_Exception_BadRequest::checkAccess();
-		//first pass - show confirm popup
-		if (!empty($check['ticket'])) {
-			$items = $input->asArray('checked');
-			if (count($items) > 0) {
 				if (count($items) === 1) {
-					$msg = tra('Are you sure you want to delete and ban the following user?');
+					$msg = tra('The following user has been deleted:');
+					$timeoutmsg = tra('You will be redirected in a few seconds to a form where this user\'s IP has been preselected for banning.');
 				} else {
-					$msg = tra('Are you sure you want to delete and ban the following users?');
+					$msg = tra('The following users have been deleted:');
+					$timeoutmsg = tra('You will be redirected in a few seconds to a form where these users\' IPs have been preselected for banning.');
 				}
 				return [
+					'url' => 'tiki-admin_banning.php?mass_ban_ip_users=' . $mass_ban_ip,
 					'FORWARD' => [
-						'controller' => 'access',
-						'action' => 'confirm',
-						'title' => tra('Please confirm deletion and ban'),
-						'confirmAction' => $input->action->word(),
-						'confirmController' => 'user',
-						'customMsg' => $msg,
-						'items' => $items,
-						'ticket' => $check['ticket'],
-						'modal' => '1',
+						'controller' => 'utilities',
+						'action' => 'modal_alert',
+						'ajaxtype' => 'feedback',
+						'ajaxheading' => tra('Success'),
+						'ajaxitems' => json_encode($items),
+						'ajaxmsg' => $msg,
+						'ajaxtimeoutMsg' => $timeoutmsg,
+						'ajaxtimer' => 8,
+						'modal' => '1'
 					]
 				];
-			} else {
-				throw new Services_Exception(tra('No users were selected. Please select one or more users.'), 409);
-			}
-		//after confirm submit - perform action and return success feedback
-		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST') {
-			$items = json_decode($input['items'], true);
-			$this->removeUsers($items, false, true);
-			$mass_ban_ip = implode('|', $items);
-			//if javascript is not enabled
-			global $prefs;
-			if ($prefs['javascript_enabled'] !== 'y') {
-				$this->access->redirect('tiki-admin_banning.php?mass_ban_ip_users=' . $mass_ban_ip);
-			}
-			if (count($items) === 1) {
-				$msg = tra('The following user has been deleted:');
-				$timeoutmsg = tra('You will be redirected in a few seconds to a form where this user\'s IP has been preselected for banning.');
-			} else {
-				$msg = tra('The following users have been deleted:');
-				$timeoutmsg = tra('You will be redirected in a few seconds to a form where these users\' IPs have been preselected for banning.');
-			}
-			return [
-				'url' => 'tiki-admin_banning.php?mass_ban_ip_users=' . $mass_ban_ip,
-				'FORWARD' => [
-					'controller' => 'utilities',
-					'action' => 'modal_alert',
-					'ajaxtype' => 'feedback',
-					'ajaxheading' => tra('Success'),
-					'ajaxitems' => json_encode($items),
-					'ajaxmsg' => $msg,
-					'ajaxtimeoutMsg' => $timeoutmsg,
-					'ajaxtimer' => 8,
-					'modal' => '1'
-				]
-			];
-		}
-	}
 
-	/**
-	 * Admin user "perform with checked" action to remove selected users and their user pages and send to
-	 * banning page with users preselected for banning
-	 * 	 *
-	 * @param $input
-	 * @return array
-	 * @throws Services_Exception
-	 * @throws Services_Exception_BadRequest
-	 * @throws Services_Exception_Denied
-	 * @throws Services_Exception_NotFound
-	 */
-	function action_remove_users_with_page_and_ban($input)
-	{
-		Services_Exception_Denied::checkGlobal('admin_users');
-		Services_Exception_Disabled::check('feature_banning');
-		Services_Exception_Denied::checkGlobal('admin_banning');
-		$check = Services_Exception_BadRequest::checkAccess();
-		//first pass - show confirm popup
-		if (!empty($check['ticket'])) {
-			$items = $input->asArray('checked');
-			if (count($items) > 0) {
+			} else {
+
+				//return to page
+				//if javascript is not enabled
+				$extra = json_decode($input['extra'], true);
+				if (!empty($extra['referer'])) {
+					$this->access->redirect($extra['referer'], tra('Selected user(s) deleted'), null,
+						'feedback');
+				}
 				if (count($items) === 1) {
-					$msg = tra('Are you sure you want to delete the following user and related userpage and ban the user\'s IP?');
+					$msg = tra('The following user has been deleted:');
 				} else {
-					$msg = tra('Are you sure you want to delete the following users and their user pages and ban their IPs?');
+					$msg = tra('The following users have been deleted:');
 				}
 				return [
-					'FORWARD' => [
-						'controller' => 'access',
-						'action' => 'confirm',
-						'title' => tra('Please confirm deletion'),
-						'confirmAction' => $input->action->word(),
-						'confirmController' => 'user',
-						'customMsg' => $msg,
-						'items' => $items,
-						'ticket' => $check['ticket'],
-						'modal' => '1',
-					]
+					'extra' => 'post',
+					'feedback' => [
+						'ajaxtype' => 'feedback',
+						'ajaxheading' => tra('Success'),
+						'ajaxitems' => $items,
+						'ajaxmsg' => $msg,
+					],
 				];
-			} else {
-				throw new Services_Exception(tra('No users were selected. Please select one or more users.'), 409);
+
 			}
-			//after confirm submit - perform action and return success feedback
-		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST') {
-			$items = json_decode($input['items'], true);
-			$this->removeUsers($items, true, true);
-			$mass_ban_ip = implode('|', $items);
-			//if javascript is not enabled
-			global $prefs;
-			if ($prefs['javascript_enabled'] !== 'y') {
-				$this->access->redirect('tiki-admin_banning.php?mass_ban_ip_users=' . $mass_ban_ip);
-			}
-			if (count($items) === 1) {
-				$msg = tra('The following user and related user page have been deleted:');
-				$timeoutmsg = tra('You will be redirected in a few seconds to a form where this user\'s IP has been preselected for banning.');
-			} else {
-				$msg = tra('The following users and their user pages have been deleted:');
-				$timeoutmsg = tra('You will be redirected in a few seconds to a form where these users\' IPs have been preselected for banning.');
-			}
-			return [
-				'url' => 'tiki-admin_banning.php?mass_ban_ip_users=' . $mass_ban_ip,
-				'FORWARD' => [
-					'controller' => 'utilities',
-					'action' => 'modal_alert',
-					'ajaxtype' => 'feedback',
-					'ajaxheading' => tra('Success'),
-					'ajaxitems' => json_encode($items),
-					'ajaxmsg' => $msg,
-					'ajaxtimeoutMsg' => $timeoutmsg,
-					'ajaxtimer' => 8,
-					'modal' => '1'
-				]
-			];
 		}
 	}
 
@@ -884,6 +704,16 @@ class Services_User_Controller
 		}
 	}
 
+	/**
+	 * @param $input JitFilter
+	 * @return array
+	 * @throws Exception
+	 * @throws Services_Exception
+	 * @throws Services_Exception_BadRequest
+	 * @throws Services_Exception_Denied
+	 * @throws Services_Exception_Disabled
+	 * @throws Services_Exception_NotFound
+	 */
 	function action_email_wikipage($input)
 	{
 		Services_Exception_Disabled::check('feature_wiki');

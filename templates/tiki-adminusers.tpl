@@ -341,25 +341,12 @@
 									{tr}Select action to perform with checked{/tr}...
 								</option>
 								<option value="remove_users">
-									{tr}Remove{/tr}
+									{tr}Remove users...{/tr}
 								</option>
 								{if $prefs.feature_banning == 'y'}
 									<option value="ban_ips">
 										{tr}Ban IPs{/tr}
 									</option>
-									<option value="remove_users_and_ban">
-										{tr}Remove users and ban their IPs{/tr}
-									</option>
-								{/if}
-								{if $prefs.feature_wiki_userpage == 'y'}
-									<option value="remove_users_with_page">
-										{tr}Remove users and their user pages{/tr}
-									</option>
-									{if $prefs.feature_banning == 'y'}
-										<option value="remove_users_with_page_and_ban">
-											{tr}Remove users, their user pages and ban their IPs{/tr}
-										</option>
-									{/if}
 								{/if}
 								<option value="manage_groups">
 									{tr}Change group assignments{/tr}

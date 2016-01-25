@@ -289,7 +289,7 @@ class TikiAccessLib extends TikiLib
 
 	 * @param string $confirmation_text Text on the confirmation screen. Default: 'Click here to confirm your action'
 	 * @access public
-	 * @return void
+	 * @return array
 	 */
 	function check_authenticity($confirmation_text = '', $returnHtml = true)
 	{

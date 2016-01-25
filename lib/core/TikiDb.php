@@ -22,6 +22,9 @@ abstract class TikiDb
 	private $tablePrefix;
 	private $usersTablePrefix;
 
+	/**
+	 * @return TikiDb
+	 */
 	public static function get() // {{{
 	{
 		return self::$instance;
