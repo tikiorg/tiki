@@ -10,18 +10,27 @@
 			<label class="control-label" for="remove_users">{tr}Remove users{/tr}</label>
 			<div>
 				<input class="form-control" type="checkbox" id="remove_users" name="remove_users" checked="checked" disabled="disabled">
-				<div class="help-block">
-					{tr}Remove these user accounts{/tr}
-				</div>
 			</div>
 		</div>
 		{if $prefs.feature_wiki_userpage == 'y'}
 			<div class="form-group">
-				<label class="control-label" for="remove_pages">{tr}Remove the user pages{/tr}</label>
+				<label class="control-label" for="remove_pages">{tr}Remove the users' pages{/tr}</label>
 				<div>
 					<input class="form-control" type="checkbox" id="remove_pages" name="remove_pages">
 					<div class="help-block">
 						{tr}Remove the user pages belonging to these users{/tr}
+					</div>
+				</div>
+			</div>
+		{/if}
+		{if $prefs.feature_trackers eq 'y'}
+			<div class="form-group">
+				<label class="control-label" for="remove_items">{tr}Delete user items from these trackers{/tr}</label>
+				<div>
+					{object_selector_multi type='tracker' _separator="," _simplename="remove_items"}
+					<div class="help-block">
+						{tr}Select trackers here to have items in them which are "owned" by these users deleted{/tr}<br>
+						{tr}N.B. "User" and "Group" tracker items are deleted automatically without this option{/tr}
 					</div>
 				</div>
 			</div>

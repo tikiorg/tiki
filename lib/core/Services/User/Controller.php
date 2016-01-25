@@ -346,8 +346,12 @@ class Services_User_Controller
 
 			// maybe delete page as well?
 			$remove_pages = ! empty($input->remove_pages->word());
+
+			// check for trackers
+			$remove_items = $input->remove_items->text();
+			$remove_items = $remove_items ? explode(',', $remove_items) : [];
 			// do the deleting...
-			$this->removeUsers($items, $remove_pages);
+			$this->removeUsers($items, $remove_pages, $remove_items);
 
 			if ($input->ban_users->word()) {
 				$mass_ban_ip = implode('|', $items);
@@ -917,19 +921,13 @@ class Services_User_Controller
 	}
 
 
-	private function removeUsers(array $users, $page = false)
+	private function removeUsers(array $users, $page = false, $trackerIds = [])
 	{
 		global $user;
 		foreach ($users as $deleteuser) {
 			if ($deleteuser != 'admin') {
-				$res = $this->lib->remove_user($deleteuser);
-				if ($res === true) {
-					$logslib = TikiLib::lib('logs');
-					$logslib->add_log('adminusers', sprintf(tra('Deleted account %s'), $deleteuser), $user);
-				} else {
-					throw new Services_Exception_NotFound(tr('An error occurred. User %0 could not be deleted',
-						$deleteuser));
-				}
+
+				// remove the user's objects, wiki page first
 				if ($page) {
 					global $prefs;
 					$page = $prefs['feature_wiki_userpage_prefix'] . $deleteuser;
@@ -937,9 +935,30 @@ class Services_User_Controller
 					$tikilib = TikiLib::lib('tiki');
 					$res = $tikilib->remove_all_versions($page);
 					if ($res !== true) {
-						throw new Services_Exception_NotFound(tr('An error occurred. User %0 could not be deleted',
-							$deleteuser));
+						throw new Services_Exception_NotFound(tr('An error occurred. User %0 could not be deleted', $deleteuser));
 					}
+				}
+
+				// then tracker items "owner" by the user
+				if (! empty($trackerIds)) {
+					$trklib = TikiLib::lib('trk');
+
+					$items = $trklib->get_user_items($deleteuser);
+
+					foreach($items as $item) {
+						if (in_array($item['trackerId'], $trackerIds)) {
+							$trklib->remove_tracker_item($item['itemId'], true);
+						}
+					}
+				}
+
+				// and finally remove the actual user (and other associated data)
+				$res = $this->lib->remove_user($deleteuser);
+				if ($res === true) {
+					$logslib = TikiLib::lib('logs');
+					$logslib->add_log('adminusers', sprintf(tra('Deleted account %s'), $deleteuser), $user);
+				} else {
+					throw new Services_Exception_NotFound(tr('An error occurred. User %0 could not be deleted', $deleteuser));
 				}
 			}
 		}
