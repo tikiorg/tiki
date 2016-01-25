@@ -27,6 +27,11 @@ class Tracker_Item
 
 	private $isNew = false;
 
+	/**
+	 * @param $itemId int
+	 * @return Tracker_Item Tracker_Item
+	 * @throws Exception
+	 */
 	public static function fromId($itemId)
 	{
 		$info = TikiLib::lib('trk')->get_tracker_item($itemId);
