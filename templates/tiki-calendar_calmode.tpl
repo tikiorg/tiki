@@ -18,7 +18,7 @@
 						{if $cell[w][d].focus}
 							{cycle values="odd,even" print=false advance=false}
 						{else}
-							{cycle values="notoddoreven" print=false advance=false}
+							{cycle values="text-muted" print=false advance=false}
 						{/if}
 						<td id="row_{$smarty.section.w.index}_{$smarty.section.d.index}" class="{if $cell[w][d].day eq $today}calhighlight calborder{/if} {cycle}" style="padding:0px">
 							<table style="width:100%; border:none">

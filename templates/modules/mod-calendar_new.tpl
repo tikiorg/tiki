@@ -41,7 +41,7 @@
 							{if isset($cell[w][d].focus) and $cell[w][d].focus}
 								{cycle values="odd,even" print=false}
 							{else}
-								{cycle values="notoddoreven" print=false}
+								{cycle values="text-muted" print=false}
 							{/if}
 							<td class="{if isset($cell[w][d].day) and $date eq $today}calhighlight calborder{else}{cycle advance=false}{/if}{if isset($cell[w][d].items[0])
 								and ((isset($cell[w][d].items[0].modifiable) and $cell[w][d].items[0].modifiable eq "y")
