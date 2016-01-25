@@ -593,7 +593,7 @@ class TrackerLib extends TikiLib
 	}
 
 	/*shared*/
-	public function get_user_items($auser)
+	public function get_user_items($auser, $with_groups = true)
 	{
 		global $user;
 		$items = array();
@@ -631,31 +631,33 @@ class TrackerLib extends TikiLib
 			}
 		}
 
-		$groups = $this->get_user_groups($auser);
+		if ($with_groups) {
+			$groups = $this->get_user_groups($auser);
 
-		foreach ($groups as $group) {
-			$query = "select ttf.`trackerId`, tti.`itemId` from `tiki_tracker_fields` ttf, `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif ";
-			$query .= " where ttf.`fieldId`=ttif.`fieldId` and ttif.`itemId`=tti.`itemId` and `type`=? and tti.`status`=? and `value`=?";
-			$result = $this->fetchAll($query, array('g','o',$group));
+			foreach ($groups as $group) {
+				$query = "select ttf.`trackerId`, tti.`itemId` from `tiki_tracker_fields` ttf, `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif ";
+				$query .= " where ttf.`fieldId`=ttif.`fieldId` and ttif.`itemId`=tti.`itemId` and `type`=? and tti.`status`=? and `value`=?";
+				$result = $this->fetchAll($query, array('g', 'o', $group));
 
-			foreach ($result as $res) {
-				$itemId = $res["itemId"];
+				foreach ($result as $res) {
+					$itemId = $res["itemId"];
 
-				$trackerId = $res["trackerId"];
-				// Now get the isMain field for this tracker
-				$fieldId = $trackerFields->fetchOne('fieldId', array('isMain' => 'y', 'trackerId' => (int) $trackerId));
-				// Now get the field value
-				$value = $trackerItemFields->fetchOne('value', array('fieldId' => (int) $fieldId, 'itemId' => (int) $itemId));
-				$tracker = $trackers->fetchOne('name', array('trackerId' => (int) $trackerId));
+					$trackerId = $res["trackerId"];
+					// Now get the isMain field for this tracker
+					$fieldId = $trackerFields->fetchOne('fieldId', array('isMain' => 'y', 'trackerId' => (int)$trackerId));
+					// Now get the field value
+					$value = $trackerItemFields->fetchOne('value', array('fieldId' => (int)$fieldId, 'itemId' => (int)$itemId));
+					$tracker = $trackers->fetchOne('name', array('trackerId' => (int)$trackerId));
 
-				$aux["trackerId"] = $trackerId;
-				$aux["itemId"] = $itemId;
-				$aux["value"] = $value;
-				$aux["name"] = $tracker;
+					$aux["trackerId"] = $trackerId;
+					$aux["itemId"] = $itemId;
+					$aux["value"] = $value;
+					$aux["name"] = $tracker;
 
-				if (!in_array($itemId, $items)) {
-					$ret[] = $aux;
-					$items[] = $itemId;
+					if (!in_array($itemId, $items)) {
+						$ret[] = $aux;
+						$items[] = $itemId;
+					}
 				}
 			}
 		}

@@ -943,7 +943,7 @@ class Services_User_Controller
 				if (! empty($trackerIds)) {
 					$trklib = TikiLib::lib('trk');
 
-					$items = $trklib->get_user_items($deleteuser);
+					$items = $trklib->get_user_items($deleteuser, false);
 
 					foreach($items as $item) {
 						if (in_array($item['trackerId'], $trackerIds)) {
