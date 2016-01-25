@@ -593,13 +593,14 @@ class TrackerLib extends TikiLib
 	}
 
 	/*shared*/
-	public function get_user_items($user)
+	public function get_user_items($auser)
 	{
+		global $user;
 		$items = array();
 
 		$query = "select ttf.`trackerId`, tti.`itemId` from `tiki_tracker_fields` ttf, `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif";
 		$query .= " where ttf.`fieldId`=ttif.`fieldId` and ttif.`itemId`=tti.`itemId` and `type`=? and tti.`status`=? and `value`=?";
-		$result = $this->fetchAll($query, array('u','o',$user));
+		$result = $this->fetchAll($query, array('u','o',$auser));
 		$ret = array();
 
 		$trackers = $this->table('tiki_trackers');
@@ -630,7 +631,7 @@ class TrackerLib extends TikiLib
 			}
 		}
 
-		$groups = $this->get_user_groups($user);
+		$groups = $this->get_user_groups($auser);
 
 		foreach ($groups as $group) {
 			$query = "select ttf.`trackerId`, tti.`itemId` from `tiki_tracker_fields` ttf, `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif ";
