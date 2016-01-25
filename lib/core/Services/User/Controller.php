@@ -350,8 +350,12 @@ class Services_User_Controller
 			// check for trackers
 			$remove_items = $input->remove_items->text();
 			$remove_items = $remove_items ? explode(',', $remove_items) : [];
+
+			// file galleries?
+			$remove_files = ! empty($input->remove_files->word());
+
 			// do the deleting...
-			$this->removeUsers($items, $remove_pages, $remove_items);
+			$this->removeUsers($items, $remove_pages, $remove_items, $remove_files);
 
 			if ($input->ban_users->word()) {
 				$mass_ban_ip = implode('|', $items);
@@ -921,7 +925,7 @@ class Services_User_Controller
 	}
 
 
-	private function removeUsers(array $users, $page = false, $trackerIds = [])
+	private function removeUsers(array $users, $page = false, $trackerIds = [], $files = false)
 	{
 		global $user;
 		foreach ($users as $deleteuser) {
@@ -949,6 +953,17 @@ class Services_User_Controller
 						if (in_array($item['trackerId'], $trackerIds)) {
 							$trklib->remove_tracker_item($item['itemId'], true);
 						}
+					}
+				}
+
+				// then tracker items "owner" by the user
+				if ($files) {
+					$filegallib = TikiLib::lib('filegal');
+
+					$galleryId = $filegallib->get_user_file_gallery($deleteuser);
+
+					if ($galleryId) {
+						$filegallib->remove_file_gallery($galleryId);
 					}
 				}
 

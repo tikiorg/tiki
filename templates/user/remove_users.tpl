@@ -35,6 +35,17 @@
 				</div>
 			</div>
 		{/if}
+		{if $prefs.feature_use_fgal_for_user_files eq 'y'}
+			<div class="form-group">
+				<label class="control-label" for="remove_files">{tr}Delete user files{/tr}</label>
+				<div>
+					<input class="form-control" type="checkbox" id="remove_files" name="remove_files">
+					<div class="help-block">
+						{tr}Delete the users' file galleries and all the files in them{/tr}
+					</div>
+				</div>
+			</div>
+		{/if}
 		{if $prefs.feature_banning eq 'y'}
 			<div class="form-group">
 				<label class="control-label" for="ban_users">{tr}Ban users{/tr}</label>
