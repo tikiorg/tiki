@@ -80,9 +80,39 @@
 							</div>
 						</div>
 					</div>
-				<div class="row">
+				</div>
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3">
+							<h4>{tr}Profile Conditional_Display_in_Forms{/tr}</h4>
+							(<a href="tiki-admin.php?profile=Conditional_Display_in_Forms_14&show_details_for=Conditional_Display_in_Forms_14&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+							<br>
+							{tr}This profile demonstrates the setup to conditionally hide or display some fields in a form{/tr}
+					<br/>
+					<a href="https://doc.tiki.org/PluginJQ" target="tikihelp" class="tikihelp" title="{tr}Conditional_Display_in_Forms{/tr}:
+							{tr}Main features used{/tr}:
+							<ul>
+								<li>{tr}Trackers{/tr}</li>
+								<li>{tr}Plugin JQ (jQuery){/tr}</li>
+								<li>{tr}Plugin TrackerIf{/tr}</li>
+								<br/>
+							</ul>
+						{tr}Click to read more{/tr}"
+					>
+						{icon name="help"}
+					</a>
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2">
+							<a href="http://tiki.org/display988" class="thumbnail internal" data-box="box" title="{tr}Click to expand{/tr}">
+								<img src="img/profiles/profile_thumb_conditional_display_in_forms.png" alt="Click to expand" class="regImage pluginImg" title="{tr}Click to expand{/tr}" />
+							</a>
+							<div class="small text-center">
+								{tr}Click to expand{/tr}
+							</div>
+						</div>
+					</div>
+				</div>
+					<!--
 					<div class="col-md-6">
-						<!--
 							<b>{tr}Groupmail{/tr}</b> (<a href="tiki-admin.php?profile=Groupmail&show_details_for=Groupmail&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)<br/>
 							<br>
 							{tr}This profile allows to provide a way for a team (a Tiki group) to process email contact requests, save them in contact lists and act on them and record the process in wiki pages{/tr}
@@ -94,21 +124,8 @@
 								<li>{tr}A system to review communication logs from that group mail account{/tr}</li>
 								<br/><em>{tr}See also{/tr} <a href="https://doc.tiki.org/Groupmail" target="_blank">{tr}Groupmail in doc.tiki.org{/tr}</a></em>
 							</ul>
-						-->
 					</div>
-					<div class="col-md-6">
-						<!--
-							<b>{tr}Profile X{/tr}</b> (<a href="tiki-admin.php?profile=Profile_X&show_details_for=Profile_X&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)<br/>
-							<br>
-							{tr}This profile allows to {/tr}
-							<ul>
-								<li>{tr}...{/tr}</li>
-								<li>{tr}...{/tr}</li>
-								<li>{tr}...{/tr}</li>
-								<br/><em>{tr}See also{/tr} <a href="https://doc.tiki.org/Feature_X" target="_blank">{tr}Feature_X in doc.tiki.org{/tr}</a></em>
-							</ul>
-						-->
-					</div>
+					-->
 				</div>
 			</div>
 		</fieldset>
