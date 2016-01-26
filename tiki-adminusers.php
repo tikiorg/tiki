@@ -244,10 +244,6 @@ $auto_query_args = array(
 	'filterGroup'
 );
 
-if (!isset($cookietab)) {
-	$cookietab = '1';
-}
-
 if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name'])) {
 	$access->check_ticket();
 	batchImportUsers();
@@ -374,6 +370,8 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 	if (isset($tikifeedback[0]['mes'])) {
 		$logslib->add_log('adminusers', $tikifeedback[0]['mes'], $user);
 	}
+
+	$cookietab = 1;
 
 } elseif (isset($_REQUEST['action'])) {
 
@@ -588,10 +586,6 @@ if (isset($_REQUEST['user']) and $_REQUEST['user']) {
 	$userinfo['currentLogin'] = '';
 	$userinfo['editable'] = true;
 
-	if (!isset($cookietab)) {
-		$cookietab = '1';
-	}
-
 	$_REQUEST['user'] = 0;
 }
 
@@ -682,7 +676,6 @@ $smarty->assign('userId', $_REQUEST['user']);
 $smarty->assign('username', $username);
 $smarty->assign('usermail', $usermail);
 $smarty->assign_by_ref('tikifeedback', $tikifeedback);
-setcookie('tab', $cookietab);
 $smarty->assign('cookietab', $cookietab);
 $smarty->assign('uses_tabs', 'y');
 // disallow robots to index page:
