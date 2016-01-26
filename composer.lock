@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "57201e4724696fd56eab2cf3eb9ce8eb",
-    "content-hash": "4fb648fab6d86970df0724f5ae22a9f2",
+    "hash": "232b0b331fc32d9dfc108e88c9c8bd6a",
+    "content-hash": "f93dcfc2cf548c25d1586621911e52be",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -627,17 +627,6 @@
             "time": "2014-01-27 14:02:15"
         },
         {
-            "name": "jcobb/basic-jquery-slider",
-            "version": "1",
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/jcobb/basic-jquery-slider/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "component"
-        },
-        {
             "name": "jquery/jquery",
             "version": "1.11.2",
             "dist": {
@@ -1021,17 +1010,6 @@
                 "shasum": "15a2abe9f3792c1124b016533b7811de8b4b46ce"
             },
             "type": "library"
-        },
-        {
-            "name": "md5/md5",
-            "version": "1.1.0",
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/blueimp/JavaScript-MD5/archive/1.1.0.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "component"
         },
         {
             "name": "mediumjs/mediumjs",
