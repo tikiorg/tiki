@@ -15,17 +15,20 @@ abstract class TikiAddons
 	{
 		self::$installed = array();
 		self::$paths = array();
-		foreach ( glob(TIKI_PATH . '/addons/*/tikiaddon.json') as $file ) {
-			try {
-				$conf = json_decode(file_get_contents($file));
-				$package = str_replace('_', '/', basename(dirname($file)));
-				self::$installed[$package] = $conf;
-				self::$paths[$package] = dirname($file);
-				self::initializeGroupApi($package);
-				self::initializeNavbarApi($package);
-				self::initializeFileGalleryApi($package);
-			} catch (InvalidArgumentException $e) {
-				// Do nothing, absence of tikiaddon.json
+		$addon_list = glob(TIKI_PATH . '/addons/*/tikiaddon.json');
+		if ( $addon_list != NULL ) {
+			foreach ( $addon_list as $file ) {
+				try {
+					$conf = json_decode(file_get_contents($file));
+					$package = str_replace('_', '/', basename(dirname($file)));
+					self::$installed[$package] = $conf;
+					self::$paths[$package] = dirname($file);
+					self::initializeGroupApi($package);
+					self::initializeNavbarApi($package);
+					self::initializeFileGalleryApi($package);
+				} catch (InvalidArgumentException $e) {
+					// Do nothing, absence of tikiaddon.json
+				}
 			}
 		}
 	}
