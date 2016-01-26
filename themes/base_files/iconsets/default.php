@@ -322,6 +322,9 @@ function iconset_default()
 			'help' => array(
 				'id' => 'question-circle',
 			),
+			'history' => array(
+				'id' => 'clock-o',
+			),
 			//history in defaults
 			'horizontal-rule' => array(
 				'id' => 'minus',

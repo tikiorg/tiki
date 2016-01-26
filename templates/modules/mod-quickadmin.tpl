@@ -11,7 +11,7 @@
 			<div class="btn-group">
 				{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
 				<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
-					{icon name="sort-down"}
+					{icon name="history"}
 				</a>
 				<ul class="dropdown-menu" role="menu">
 					<li class="dropdown-title">
