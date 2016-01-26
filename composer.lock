@@ -61,17 +61,6 @@
             "time": "2015-07-20 20:04:00"
         },
         {
-            "name": "alvarotrigo/fullpage.js",
-            "version": "1",
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/alvarotrigo/fullPage.js/archive/master.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "component"
-        },
-        {
             "name": "alxlit/bootstrap-chosen",
             "version": "1.0.1",
             "dist": {

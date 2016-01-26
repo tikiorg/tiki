@@ -186,42 +186,6 @@
 					"type": "zip"
 				}
 			}
-		},
-		{
-			"type": "package",
-			"package": {
-				"name": "vkbeautify/vkbeautify",
-				"type": "component",
-				"version": "1",
-				"dist": {
-					"url": "http://vkbeautify.googlecode.com/files/vkbeautify.0.99.00.beta.js",
-					"type": "file"
-				}
-			}
-		},
-		{
-			"type": "package",
-			"package": {
-				"name": "alvarotrigo/fullpage.js",
-				"type": "component",
-				"version": "1",
-				"dist": {
-					"url": "https://github.com/alvarotrigo/fullPage.js/archive/master.zip",
-					"type": "zip"
-				}
-			}
-		},
-		{
-			"type": "package",
-			"package": {
-				"name": "jcobb/basic-jquery-slider",
-				"type": "component",
-				"version": "1",
-				"dist": {
-					"url": "https://github.com/jcobb/basic-jquery-slider/archive/master.zip",
-					"type": "zip"
-				}
-			}
 		}
 	]
 }
