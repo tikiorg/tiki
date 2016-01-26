@@ -59,7 +59,7 @@
 		<div class="btn-group">
 			{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
 			<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
-				{icon name="more"}
+				{icon name='menu-extra'}
 			</a>
 			<ul class="dropdown-menu dropdown-menu-right">
 				<li class="dropdown-title">

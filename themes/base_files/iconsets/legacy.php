@@ -490,6 +490,9 @@ function iconset_legacy()
 			'menu' => array(
 				'id' => 'application_side_tree',
 			),
+			'menu-extra' => array(
+				'id' => 'resultset_down',
+			),
 			'menuitem' => array(
 				'id' => 'arrow_right',
 			),

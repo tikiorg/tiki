@@ -375,6 +375,9 @@ function iconset_default()
 			'menu' => array(
 				'id' => 'bars',
 			),
+			'menu-extra' => array(
+				'id' => 'chevron-down',
+			),
 			'menuitem' => array(
 				'id' => 'angle-right',
 			),

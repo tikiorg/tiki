@@ -253,6 +253,9 @@ function iconset_glyphicons()
 			'menu' => array(
 				'id' => 'menu-hamburger',
 			),
+			'menu-extra' => array(
+				'id' => 'chevron-down',
+			),
 			'menuitem' => array(
 				'id' => 'chevron-right',
 			),
