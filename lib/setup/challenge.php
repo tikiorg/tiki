@@ -10,7 +10,7 @@ $access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
 // If we are processing a login then do not generate the challenge
 // if we are in any other case then yes.
-if ( ! strstr($_SERVER['REQUEST_URI'], 'tiki-login') ) {
+if ( ! isset($_REQUEST['login']) ) {
 	$chall = $userlib->generate_challenge();
 
 	$_SESSION['challenge'] = $chall;

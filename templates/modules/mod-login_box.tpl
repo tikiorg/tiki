@@ -125,23 +125,23 @@ if (jqueryTiki.no_cookie) {
 		{/if}
 
 		<form name="loginbox" class="form{if $mode eq "header"} form-inline{/if}" id="loginbox-{$module_logo_instance}" action="{$login_module.login_url|escape}"
-				method="post" {if $prefs.feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}
+				method="post" {if $prefs.feature_challenge eq 'y'}onsubmit="doChallengeResponse(this)"{/if}
 				{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}
 		>
 		{capture assign="close_tags"}</form>{$close_tags}{/capture}
 
 		{if $prefs.feature_challenge eq 'y'}
-			<script type='text/javascript' src="lib/md5.js"></script>
+			<script type='text/javascript' src="vendor/jquery/md5/js/md5.js"></script>
 			{jq notonready=true}
-				function doChallengeResponse() {
-					hashstr = document.loginbox.user.value +
-								document.loginbox.pass.value +
-								document.loginbox.email.value;
-					str = document.loginbox.user.value +
-							MD5(hashstr) + document.loginbox.challenge.value;
-					document.loginbox.response.value = MD5(str);
-					document.loginbox.pass.value='';
-					document.loginbox.submit();
+				function doChallengeResponse(form) {
+					var $form = $(form), hashstr, str;
+					hashstr= $("input[name=user]", $form).val() +
+								$("input[name=pass]", $form).val() +
+								$("input[name=email]", $form).val();
+					str = $("input[name=user]", $form).val() + md5(hashstr) + $("input[name=challenge]", $form).val();
+					$("input[name=response]", $form).val(md5(str));
+					//$("input[name=pass]", $form).val(""); // (form does not submit without password)
+					$form.submit();
 					return false;
 				}
 			{/jq}
