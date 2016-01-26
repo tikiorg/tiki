@@ -1228,6 +1228,9 @@ class WikiLib extends TikiLib
 
 		if ($prefs['feature_sefurl'] == 'y') {
 
+			// escape colon chars so the url doesn't appear to be protocol:address - occurs with user pages and namespaces
+			$href = str_replace(':', '%3A', $href);
+
 			include_once('tiki-sefurl.php');
 			return filter_out_sefurl($href, 'wiki');
 		} else {
