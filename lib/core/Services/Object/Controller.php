@@ -89,15 +89,103 @@ class Services_Object_Controller
 		return $smarty->fetch('object/infobox/activity.tpl');
 	}
 
+
+	function action_lock($input)
+	{
+		$attributelib = TikiLib::lib('attribute');
+
+		$type = $input->type->word();
+		$object = $input->object->text();
+		$value = $input->value->text();
+
+		list($perm, $adminperm, $attribute) = $this->setup_locking($type);
+
+		$perms = Perms::get($type, $object);
+		$lockedby = $attributelib->get_attribute($type, $object, $attribute);
+
+
+		if (empty($lockedby) || $perms->$adminperm) {
+
+			Services_Exception_Denied::checkObject($perm, $type, $object);
+
+			$return = TikiLib::lib('attribute')->set_attribute($type, $object, $attribute, $value);
+
+			if (!$return) {
+				TikiLib::lib('errorreport')->report(tr('Invalid attribute name "%0"', $attribute));
+			}
+
+			return ['locked' => true];
+		}
+
+		return [];
+	}
+
+	function action_unlock($input)
+	{
+		global $user;
+		$attributelib = TikiLib::lib('attribute');
+
+		$type = $input->type->word();
+		$object = $input->object->text();
+
+		list($perm, $adminperm, $attribute) = $this->setup_locking($type);
+
+		$perms = Perms::get($type, $object);
+		$lockedby = $attributelib->get_attribute($type, $object, $attribute);
+
+		if ($lockedby) {	// it's locked
+
+			if ($perms->$adminperm || ($user === $lockedby && $perms->$perm)) {
+
+				$res = $attributelib->set_attribute($type, $object, $attribute, '');
+
+				if (!$res) {
+					TikiLib::lib('errorreport')->report(tr('Invalid attribute name "%0"', $attribute));
+				}
+
+				return ['locked' => false];
+
+			} else {
+				Services_Exception_Denied::checkObject($adminperm, $type, $object);
+			}
+		}
+		return [];
+	}
+
 	/**
 	 * Generic function to allow consistently formatted errors from javascript using ErrorReportLib
 	 *
-	 * @param $input jit filtered input object
+	 * @param $input JitFilter filtered input object
 	 */
 	function action_report_error($input)
 	{
 		TikiLib::lib('errorreport')->report($input->message->text());
 		TikiLib::lib('errorreport')->send_headers();
+	}
+
+	/**
+	 * @param $type
+	 * @return array string
+	 * @throws Exception
+	 * @throws Services_Exception_Disabled
+	 */
+	private function setup_locking($type)
+	{
+		$perm = 'lock';    // default (for wiki page, so not used here yet)
+		$adminperm ='admin';
+		$attribute = 'tiki.object.lock';
+
+		switch ($type) {
+			case 'template':
+				Services_Exception_Disabled::check('lock_content_templates');
+				$perm = 'lock_content_templates';
+				$adminperm = 'admin_content_templates';
+				break;
+			default:
+				TikiLib::lib('errorreport')->report(tr('Cannot lock "%0"', $type));
+		}
+
+		return array($perm, $adminperm, $attribute);
 	}
 }
 

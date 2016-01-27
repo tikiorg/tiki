@@ -29,6 +29,9 @@
 				</th>
 				<th>{tr}Sections{/tr}</th>
 				<th>{tr}Categories{/tr}</th>
+				{if $prefs.lock_content_templates}
+					<th></th>
+				{/if}
 				<th></th>
 			</tr>
 			{cycle values="odd,even" print=false advance=false}
@@ -64,6 +67,11 @@
 							</a>
 						{/foreach}
 					</td>
+					{if $prefs.lock_content_templates}
+						<td class="action">
+							{lock type='template' object=$channels[user].templateId}
+						</td>
+					{/if}
 					<td class="action">
 						{if $channels[user].edit or $channels[user].remove}
 							{capture name=template_actions}

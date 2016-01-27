@@ -23,6 +23,9 @@ function smarty_function_lock($params, $smarty)
 {
 	global $user, $smarty;
 
+	static $instance = 0;
+	$instance++;
+
 	$attribute = "tiki.object.lock";
 
 	// unregistered user, do nothing
@@ -63,6 +66,8 @@ function smarty_function_lock($params, $smarty)
 		$value = '';
 	}
 
+	$params['instance'] = $instance;
+
 	if ($value) {
 		$params['is_locked'] = true;
 		if ($value === $user || $perms->$params['admin_perm']) {
@@ -77,5 +82,5 @@ function smarty_function_lock($params, $smarty)
 	}
 
 	$smarty->assign('data', $params);
-	return $smarty->fetch('lock.tpl');
+	return $smarty->fetch('object/lock.tpl');
 }
