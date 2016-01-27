@@ -187,19 +187,24 @@ function wikiplugin_piwik($data, $params)
 	$params = array_merge($default, $params);
 
 	if (empty($params['piwikserverurl'])) {
-		return tra('Plugin TikiPiwik error: Piwik server url.');
+		return tra('Plugin Piwik error:') . ' ' . tra('Piwik server url is required.');
 	}
 
 	if (empty($params['idSite'])) {
-		return tra('Missing Site Id error: Site Id is required.');
-	}
-
-	if (!empty($params['piwiktokenauth'])) {
-		setCookieSection('token_auth', $params['piwiktokenauth']);
+		return tra('Plugin Piwik error:') . ' ' . tra('Site Id is required.');
 	}
 
 // Issue with date range
 // If ($params['period']) = range) the enddate parameter should be added as well as a ',' is to be inserted between the 2 date value so it look as follow; &date='.$params['startdate'].','.$params['enddate'].'
+
+	if ($params['period'] === 'range') {
+		if ($params['enddate']) {
+			$params['date'] .= ',' . $params['enddate'];
+			unset($params['enddate']);
+		} else {
+			return tra('Plugin Piwik error:') . ' ' . tra('Period set to range but no end date provided.');
+		}
+	}
 
 	// grab out the params that aren't going to be part of the url, they will be iframe attributes and start with an underscore
 	$attributes = '';
