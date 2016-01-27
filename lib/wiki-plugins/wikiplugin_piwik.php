@@ -39,78 +39,51 @@ function wikiplugin_piwik_info()
 
 			'moduleToWidgetize' => array(
 				'required' => false,
-				'name' => tra('Module To Widgetize'),
-				'description' => tr('Piwik widget module to be used (as described in the widget section of your Piwik server).'),
+				'name' => tra('Module and Action To Widgetize'),
+				'description' => tr('Piwik widget module to be used (as described in the widget section of your Piwik server) followed by the actionToWidgetize parameter separated by a comma.'),
 				'since' => '15',
-				'default' => 'Live',
+				'default' => 'VisitsSummary,getEvolutionGraph',
 				'options' => array(
-					array('text' => tra('Visits Time'), 'value' => 'VisitTime'),
-					array('text' => tra('Visits Summary'), 'value' => 'VisitsSummary'),
-					array('text' => tra('User Country Map'), 'value' => 'UserCountryMap'),
-					array('text' => tra('Live'), 'value' => 'Live'),
-					array('text' => tra('Visitors Interest'), 'value' => 'VisitorInterest'),
-					array('text' => tra('Visits Frequency'), 'value' => 'VisitFrequency'),
+					array('text' => tra('Actions - Pages'), 'value' => 'Actions,getPageUrls'),
+					array('text' => tra('Actions - Entry pages'), 'value' => 'Actions,getEntryPageUrls'),
+					array('text' => tra('Actions - Exit pages'), 'value' => 'Actions,getExitPageUrls'),
+					array('text' => tra('Actions - Outlinks'), 'value' => 'Actions,getOutlinks'),
+					array('text' => tra('Dashboard'), 'value' => 'Dashboard,index'),
+					array('text' => tra('Live - Visitor in real time'), 'value' => 'Live,widget'),
+					array('text' => tra('Live - Simple Last Visit Count'), 'value' => 'Live,getSimpleLastVisitCount'),
+					array('text' => tra('Live - Visitor Profile Popup'), 'value' => 'Live,getVisitorProfilePopup'),
+					array('text' => tra('Referrers - All referrers'), 'value' => 'Referrers,getAll'),
+					array('text' => tra('Referrers - Search engines'), 'value' => 'Referrers,getSearchEngines'),
+					array('text' => tra('Resolution - Screen Resolution'), 'value' => 'Resolution,getResolution'),
+					array('text' => tra('SEO - SEO Ranking (slow)'), 'value' => 'SEO,getRank'),
+					array('text' => tra('User Country Map - RealTime Map'), 'value' => 'UserCountryMap,realtimeMap'),
+					array('text' => tra('User Country Map - Visitor Map'), 'value' => 'UserCountryMap,visitorMap'),
+					array('text' => tra('User Country Map - Country'), 'value' => 'UserCountryMap,getCountry'),
+					array('text' => tra('User Country Map - Continent'), 'value' => 'UserCountryMap,getContinent'),
+					array('text' => tra('User Language - Language'), 'value' => 'UserLanguage,getLanguage'),
+					array('text' => tra('User Language - Language Code'), 'value' => 'UserLanguage,getLanguageCode'),
+					array('text' => tra('Visits Frequency - Evolution Graph'), 'value' => 'VisitFrequency,getEvolutionGraph'),
+					array('text' => tra('Visits Frequency - Sparklines'), 'value' => 'VisitFrequency,getSparklines'),
+					array('text' => tra('Visits Time - By day of the week'), 'value' => 'VisitTime,getByDayOfWeek'),
+					array('text' => tra('Visits Time - Visit Information Per Local Time'), 'value' => 'VisitTime,getVisitInformationPerLocalTime'),
+					array('text' => tra('Visits Time - Visit Information Per Server Time'), 'value' => 'VisitTime,getVisitInformationPerServerTime'),
+					array('text' => tra('Visits Summary - by day of the week'), 'value' => 'VisitTime,getByDayOfWeek'),
+					array('text' => tra('Visits Summary - over time'), 'value' => 'VisitsSummary,getEvolutionGraph'),
+					array('text' => tra('Visits Summary - overview with graph'), 'value' => 'VisitsSummary,index'),
+					array('text' => tra('Visitors - Visitor map'), 'value' => 'UserCountryMap,visitorMap'),
+					array('text' => tra('Visitors - Pages per visit'), 'value' => 'VisitorInterest,getNumberOfVisitsPerVisitDuration'),
+					array('text' => tra('Visitors - Frequency overview'), 'value' => 'VisitFrequency,getSparklines'),
+					array('text' => tra('Visitor Devices - Device type'), 'value' => 'DevicesDetection,getType'),
+					array('text' => tra('Visitor Devices - browser'), 'value' => 'DevicesDetection,getBrowsers'),
+					array('text' => tra('Visitor Devices - Browser Versions'), 'value' => 'DevicesDetection,getBrowserVersions'),
+					array('text' => tra('Visitor Devices - OS Families'), 'value' => 'DevicesDetection,getOsFamilies'),
+					array('text' => tra('Visitor Devices - OS Versions'), 'value' => 'DevicesDetection,getOsVersions'),
+					array('text' => tra('Visitor Interest - Number Of Visits Per Visit Duration'), 'value' => 'VisitorInterest,getNumberOfVisitsPerVisitDuration'),
+					array('text' => tra('Visitor Interest - Number Of Visits Per Page'), 'value' => 'VisitorInterest,getNumberOfVisitsPerPage'),
+					array('text' => tra('Visitor Interest - Number Of Visits By Visit Count'), 'value' => 'VisitorInterest,getNumberOfVisitsByVisitCount'),
+					array('text' => tra('Visitor Interest - Number Of Visits By Days Since Last'), 'value' => 'VisitorInterest,getNumberOfVisitsByDaysSinceLast'),
 					array('text' => tra('Visitor Resolution'), 'value' => 'Resolution'),
-					array('text' => tra('User Language'), 'value' => 'UserLanguage'),
-					array('text' => tra('Visitor Devices'), 'value' => 'DevicesDetection'),
-					array('text' => tra('Actions'), 'value' => 'Actions'),
-					array('text' => tra('Referrers'), 'value' => 'Referrers'),
-					array('text' => tra('SEO'), 'value' => 'SEO'),
-				),
-			),
-
-			'actionToWidgetize' => array(
-				'required' => false,
-				'name' => tra('Action To Widgetize'),
-				'description' => tr('Piwik action type to reports (as described in the widget section of your Piwik server).'),
-				'since' => '15',
-				'default' => 'widget',
-				'options' => array(
-					// Module visitTime
-					array('text' => tra('By day of the week'), 'value' => 'getByDayOfWeek'),
-					array('text' => tra('Visit Information Per Local Time'), 'value' => 'getVisitInformationPerLocalTime'),
-					array('text' => tra('Visit Information Per Server Time'), 'value' => 'getVisitInformationPerServerTime'),
-					// Module VisitsSummary
-					array('text' => tra('Evolution Graph'), 'value' => 'getEvolutionGraph'),
-					array('text' => tra('Index'), 'value' => 'index'),
-					// Module UserCountryMap
-					array('text' => tra('RealTime Map'), 'value' => 'realtimeMap'),
-					array('text' => tra('Visitor Map'), 'value' => 'visitorMap'),
-					array('text' => tra('Country'), 'value' => 'getCountry'),
-					array('text' => tra('Continent'), 'value' => 'getContinent'),
-					// Module Live
-					array('text' => tra('Simple Last Visit Count'), 'value' => 'getSimpleLastVisitCount'),
-					array('text' => tra('Widget'), 'value' => 'widget'),
-					array('text' => tra('Visitor Profile Popup'), 'value' => 'getVisitorProfilePopup'),
-					// Module VisitorInterest
-					array('text' => tra('Number Of Visits Per Visit Duration'), 'value' => 'getNumberOfVisitsPerVisitDuration'),
-					array('text' => tra('Number Of Visits Per Page'), 'value' => 'getNumberOfVisitsPerPage'),
-					array('text' => tra('Number Of Visits By Visit Count'), 'value' => 'getNumberOfVisitsByVisitCount'),
-					array('text' => tra('Number Of Visits By Days Since Last'), 'value' => 'getNumberOfVisitsByDaysSinceLast'),
-					// Module VisitFrequency
-					array('text' => tra('Evolution Graph'), 'value' => 'getEvolutionGraph'), //Duplicate from line 77
-					array('text' => tra('Sparklines'), 'value' => 'getSparklines'),
-					// Module Resolution
-					array('text' => tra('Screen Resolution'), 'value' => 'getResolution'),
-					// Module UserLanguage
-					array('text' => tra('Language'), 'value' => 'getLanguage'),
-					array('text' => tra('Language Code'), 'value' => 'getLanguageCode'),
-					// Module DevicesDetection
-					array('text' => tra('Device type'), 'value' => 'getType'),
-					array('text' => tra('Browsers'), 'value' => 'getBrowsers'),
-					array('text' => tra('Browser Versions'), 'value' => 'getBrowserVersions'),
-					array('text' => tra('Os Families'), 'value' => 'getOsFamilies'),
-					array('text' => tra('Os Versions'), 'value' => 'getOsVersions'),
-					// Module Actions
-					array('text' => tra('Pages'), 'value' => 'getPageUrls'),
-					array('text' => tra('Entry pages'), 'value' => 'getEntryPageUrls'),
-					array('text' => tra('Exit pages'), 'value' => 'getExitPageUrls'),
-					array('text' => tra('Outlinks'), 'value' => 'getOutlinks'),
-					// Module Referrers
-					array('text' => tra('All referrers'), 'value' => 'getAll'),
-					array('text' => tra('Search Engines'), 'value' => 'getSearchEngines'),
-					// Module SEO
-					array('text' => tra('SEO Ranking (slow)'), 'value' => 'getRank'),
+					array('text' => tra('Visitor Setting - Screen resolution'), 'value' => 'Resolution,getResolution'),
 				),
 			),
 
@@ -194,8 +167,16 @@ function wikiplugin_piwik($data, $params)
 		return tra('Plugin Piwik error:') . ' ' . tra('Site Id is required.');
 	}
 
-// Issue with date range
-// If ($params['period']) = range) the enddate parameter should be added as well as a ',' is to be inserted between the 2 date value so it look as follow; &date='.$params['startdate'].','.$params['enddate'].'
+	if (empty($params['moduleToWidgetize'])) {
+
+		return tra('Plugin Piwik error:') . ' ' . tra('moduleToWidgetize is required.');
+
+	} else {
+		$arr = explode(',', $params['moduleToWidgetize']);
+
+		$params['moduleToWidgetize'] = $arr[0];
+		$params['actionToWidgetize'] = $arr[1];
+	}
 
 	if ($params['period'] === 'range') {
 		if ($params['enddate']) {
