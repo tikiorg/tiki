@@ -129,7 +129,7 @@ function wikiplugin_piwik_info()
 				),
 			),
 
-			'startdate' => array(
+			'date' => array(
 				'required' => false,
 				'name' => tra('Date or Start date'),
 				'description' => tr('Enter date or start date for the data to be displayed (yesterday by default). Possible values are: today, yesterday, and yyyy-mm-dd.'),
@@ -145,7 +145,7 @@ function wikiplugin_piwik_info()
 				'default' => '',
 			),
 
-			'width' => array(
+			'_width' => array(
 				'required' => false,
 				'name' => tra('Module width'),
 				'description' => tr('Optional, width of the module in px or % (100% by default).'),
@@ -153,15 +153,15 @@ function wikiplugin_piwik_info()
 				'default' => '100%',
 			),
 
-			'height' => array(
+			'_height' => array(
 				'required' => false,
 				'name' => tra('Module height'),
 				'description' => tr('Optional, height of the module in px.'), // Would be nice to have this as auto - checking if number of rows is applicable.
 				'since' => '15',
-				'default' => '',
+				'default' => '265',
 			),
 
-			'scrolling' => array(
+			'_scrolling' => array(
 				'required' => false,
 				'name' => tra('Iframe Scrolling'),
 				'description' => tr('Optional, scrolling of the iframe that contain the module (no by default).'),
@@ -201,7 +201,39 @@ function wikiplugin_piwik($data, $params)
 // Issue with date range
 // If ($params['period']) = range) the enddate parameter should be added as well as a ',' is to be inserted between the 2 date value so it look as follow; &date='.$params['startdate'].','.$params['enddate'].'
 
-	$iframe = ('<iframe src="' . $params['piwikserverurl'] . '&module=Widgetize&action=iframe&widget=1&moduleToWidgetize=' . $params['moduleToWidgetize'] . '&actionToWidgetize=' . $params['actionToWidgetize'] . '&idSite=' . $params['idSite'] . '&period=' . $params['period'] . '&date=' . $params['startdate'] . '&disableLink=1&widget=1" scrolling="' . $params['scrolling'] . '" frameborder="0" marginheight="0" marginwidth="0" width="' . $params['width'] . '" height="' . $params['height'] . '"></iframe>');
+	// grab out the params that aren't going to be part of the url, they will be iframe attributes and start with an underscore
+	$attributes = '';
+
+	foreach($params as $key => $value) {
+		if (strpos($key, '_') === 0) {
+			if ($value) {
+				$attributes .= ' ' . substr($key, 1) . '="' . $value . '"';
+			}
+			unset($params[$key]);
+		}
+	}
+
+	// parse the main url param and unset it
+	$url_parts = parse_url($params['piwikserverurl']);
+	unset($params['piwikserverurl']);
+
+	// add the fixed query params
+	$params['module'] = 'Widgetize';
+	$params['action'] = 'iframe';
+	$params['disableLink'] = 1;
+	$params['widget=1'] = 1;
+
+	// parse the query part of the url into an array
+	parse_str($url_parts['query'], $query);
+
+	// merge the params and the fixed ones
+	$query = array_merge($params, $query);
+	// convert back to a string and replace in the parts array
+	$url_parts['query'] = http_build_query($query, '', '&amp;');
+
+	$url  = TikiLib::unparse_url($url_parts);
+
+	$iframe = ('<iframe src="' . $url . '" ' . $attributes . ' frameborder="0"></iframe>');
 
 	return $iframe;
 }
