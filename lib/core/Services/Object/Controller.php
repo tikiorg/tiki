@@ -108,10 +108,12 @@ class Services_Object_Controller
 
 			Services_Exception_Denied::checkObject($perm, $type, $object);
 
-			$return = TikiLib::lib('attribute')->set_attribute($type, $object, $attribute, $value);
+			if (! empty($object)) {
+				$return = TikiLib::lib('attribute')->set_attribute($type, $object, $attribute, $value);
 
-			if (!$return) {
-				TikiLib::lib('errorreport')->report(tr('Invalid attribute name "%0"', $attribute));
+				if (!$return) {
+					TikiLib::lib('errorreport')->report(tr('Invalid attribute name "%0"', $attribute));
+				}
 			}
 
 			return ['locked' => true];
@@ -137,10 +139,12 @@ class Services_Object_Controller
 
 			if ($perms->$adminperm || ($user === $lockedby && $perms->$perm)) {
 
-				$res = $attributelib->set_attribute($type, $object, $attribute, '');
+				if (! empty($object)) {
+					$res = $attributelib->set_attribute($type, $object, $attribute, '');
 
-				if (!$res) {
-					TikiLib::lib('errorreport')->report(tr('Invalid attribute name "%0"', $attribute));
+					if (!$res) {
+						TikiLib::lib('errorreport')->report(tr('Invalid attribute name "%0"', $attribute));
+					}
 				}
 
 				return ['locked' => false];
