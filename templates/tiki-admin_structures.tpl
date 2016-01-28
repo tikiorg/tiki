@@ -230,6 +230,14 @@
 						<div class="help-block">{tr}Use single spaces to indent structure levels{/tr}</div>
 					</div>
 				</div>
+				{if $prefs.lock_wiki_structures eq 'y'}
+					<div class="form-group">
+						<label class="col-sm-3 control-label">{tr}Lock{/tr}</label>
+						<div class="col-sm-9">
+							{lock type='wiki structure' object=0}
+						</div>
+					</div>
+				{/if}
 				{if $prefs.feature_categories eq 'y'}
 					{include file='categorize.tpl'}
 				{/if}

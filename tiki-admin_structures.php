@@ -139,6 +139,14 @@ if ($tiki_p_edit_structures == 'y') {
 		include_once ("categorize_list.php"); // needs to be up here to avoid picking up selection of cats from other existing sub-pages
 		$smarty->assign('just_created', $structure_id);
 		$smarty->assign('just_created_name', $_REQUEST['name']);
+
+		// Locking: only needed on new structures, ajax locks existing ones
+		if ($prefs['lock_wiki_structures'] === 'y') {
+			if (!empty($_REQUEST['locked'])) {
+				TikiLib::lib('attribute')->set_attribute('wiki structure', $structure_id, 'tiki.object.lock', $_REQUEST['locked']);
+			}
+		}
+
 		$parents[0] = $structure_id;
 		$last_pages[0] = null;
 		$tree_lines = explode("\n", $_REQUEST["tree"]);
