@@ -72,6 +72,14 @@ function wikiplugin_googlechart_info() {
 				'default' => 'ga:date',
 				'filter' => 'text',
 			),
+			'query_segment' => array(
+				'name' => tra('Segment'),
+				'description' => tra('default ""'),
+				'since' => '15.0',
+				'required' => false,
+				'default' => '',
+				'filter' => 'text',
+			),
 			'query_max-results' => array(
 				'name' => tra('Max Results'),
 				'description' => tra('default 50'),
@@ -96,7 +104,7 @@ function wikiplugin_googlechart_info() {
 				'filter' => 'text',
 			),
 			'chart_type' => array(
-				'name' => tra('Chrat Type'),
+				'name' => tra('Chart Type'),
 				'description' => tra('Type of chart, e.g. LINE, PIE etc.'),
 				'since' => '15.0',
 				'required' => false,
