@@ -59,27 +59,28 @@
 
 <div>
 	<h2>{tr}Structure Layout{/tr}</h2>
-	{if $tiki_p_edit_structures eq 'y'}
-		<span>
-			<form action="tiki-edit_structure.php?page_ref_id={$page_ref_id}" method="post" class="form-inline" role="form">
-				<div class="form-group">
-					<label for="pageAlias" class="control-label">{tr}Alias{/tr}:</label>
-					<input type="hidden" name="page_ref_id" value="{$structure_id}">
-					<div class="input-group">
-						<input type="text" class="form-control input-sm" name="pageAlias" id="pageAlias" value="{$topPageAlias}">
-						<div class="input-group-btn">
-							<input type="submit" class="btn btn-primary btn-sm" name="create" value="{tr}Update{/tr}">
-						</div>
+	{if $editable eq 'y'}
+		<form action="tiki-edit_structure.php?page_ref_id={$page_ref_id}" method="post" class="form-inline" role="form" style="display: inline-block">
+			<div class="form-group">
+				<label for="pageAlias" class="control-label">{tr}Alias{/tr}:</label>
+				<input type="hidden" name="page_ref_id" value="{$structure_id}">
+				<div class="input-group">
+					<input type="text" class="form-control input-sm" name="pageAlias" id="pageAlias" value="{$topPageAlias}">
+					<div class="input-group-btn">
+						<input type="submit" class="btn btn-primary btn-sm" name="create" value="{tr}Update{/tr}">
 					</div>
 				</div>
-			</form>
-		</span>
+			</div>
+		</form>
+		{if $prefs.lock_wiki_structures eq 'y'}
+			{lock type='wiki structure' object=$page_ref_id}
+		{/if}
 	{/if}
 </div>
 <div>
 	{self_link page_ref_id=$structure_id}
 		{if $structure_id eq $page_ref_id}<strong>{/if}
-		<big>{tr}Top{/tr}</big>
+		<span class="lead">{tr}Top{/tr}</span>
 		{if $structure_id eq $page_ref_id}</strong>{/if}
 	{/self_link}
 </div>

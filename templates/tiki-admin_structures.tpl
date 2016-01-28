@@ -110,6 +110,10 @@
 								</a>
 							</td>
 							<td class="action">
+								{if $prefs.lock_wiki_structures eq 'y'}
+									{lock type='wiki structure' object=$channels[ix].page_ref_id}
+								{/if}
+
 								{capture name=admin_structure_actions}
 									{strip}
 										{$libeg}<a href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}">

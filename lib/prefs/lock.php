@@ -14,5 +14,11 @@ function prefs_lock_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'lock_wiki_structures' => array(
+			'name' => tra('Lock Wiki Structures'),
+            'description' => tra('Enable users to lock wiki structures and so prevent others from editing them'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);
 }

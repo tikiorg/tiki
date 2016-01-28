@@ -43,10 +43,21 @@ if ( ! $perms->view ) {
 	die;
 }
 
-if ($perms->edit_structures)
-	$editable = 'y';
-else
+if ($perms->edit_structures) {
+	if ($prefs['lock_wiki_structures'] === 'y') {
+		$lockedby = TikiLib::lib('attribute')->get_attribute('wiki structure', $_REQUEST['page_ref_id'], 'tiki.object.lock');
+		if ($lockedby && $lockedby === $user && $perms->lock_structures || ! $lockedby || $perms->admin_structures) {
+			$editable = 'y';
+		} else {
+			$editable = 'n';
+		}
+
+	} else {
+		$editable = 'y';
+	}
+} else {
 	$editable = 'n';
+}
 $smarty->assign('editable', $editable);
 	
 
@@ -56,7 +67,7 @@ $alert_to_remove_cats = array();
 $alert_to_remove_extra_cats = array();
 
 // start security hardened section
-if ($perms->edit_structures) {
+if ($editable === 'y') {
 	$smarty->assign('remove', 'n');
 	
 	if (isset($_REQUEST["remove"])) {
@@ -206,7 +217,7 @@ foreach ($subtree as $i=>$s) { // dammed recursivite - acn not do a left join
 $smarty->assign('subtree', $subtree);
 
 // Re-categorize
-if ($perms->edit_structures) {
+if ($editable === 'y') {
 	$all_editable = 'y';
 	foreach ($subtree as $k => $st) {
 		if ($st['editable'] != 'y' && $k > 0) {

@@ -342,6 +342,7 @@
 						{preference name=feature_wiki_open_as_structure}
 						{preference name=feature_wiki_make_structure}
 						{preference name=feature_wiki_categorize_structure}
+						{preference name=lock_wiki_structures}
 						{preference name=feature_create_webhelp}
 						{preference name=feature_wiki_structure_drilldownmenu}
 						{preference name=page_n_times_in_a_structure}

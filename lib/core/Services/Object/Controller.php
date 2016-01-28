@@ -94,7 +94,7 @@ class Services_Object_Controller
 	{
 		$attributelib = TikiLib::lib('attribute');
 
-		$type = $input->type->word();
+		$type = $input->type->text();
 		$object = $input->object->text();
 		$value = $input->value->text();
 
@@ -125,7 +125,7 @@ class Services_Object_Controller
 		global $user;
 		$attributelib = TikiLib::lib('attribute');
 
-		$type = $input->type->word();
+		$type = $input->type->text();
 		$object = $input->object->text();
 
 		list($perm, $adminperm, $attribute) = $this->setup_locking($type);
@@ -180,6 +180,11 @@ class Services_Object_Controller
 				Services_Exception_Disabled::check('lock_content_templates');
 				$perm = 'lock_content_templates';
 				$adminperm = 'admin_content_templates';
+				break;
+			case 'wiki structure':
+				Services_Exception_Disabled::check('lock_wiki_structures');
+				$perm = 'lock_structures';
+				$adminperm = 'admin_structures';
 				break;
 			default:
 				TikiLib::lib('errorreport')->report(tr('Cannot lock "%0"', $type));

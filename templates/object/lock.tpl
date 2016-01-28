@@ -18,5 +18,9 @@
 	{jq}
 		$("#lock_{{$data.instance}}").click(function () { objectLockToggle(this); });
 	{/jq}
+{else}
+	{jq}
+		$("#lock_{{$data.instance}}").css("cursor", "default");
+	{/jq}
 {/if}
 {/strip}

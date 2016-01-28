@@ -685,14 +685,28 @@ class StructLib extends TikiLib
 	}
 	public function get_toc($page_ref_id,$order='asc',$showdesc=false,$numbering=true,$numberPrefix='',$type='plain',$page='',$maxdepth=0, $structurePageName='')
 	{
-		global $user;
+		global $user, $prefs;
 
 		$structure_tree = $this->build_subtree_toc($page_ref_id, false, $order, $numberPrefix);
 
 		if ($type === 'admin') {
 			// check perms here as we still have $page_ref_id
 			$structure_info = $this->s_get_structure_info($page_ref_id);
-			if (!$this->user_has_perm_on_object($user, $structure_info["pageName"], 'wiki page', 'tiki_p_edit_structures')) {
+
+			$perms = Perms::get('wiki page', $structure_info["pageName"]);
+
+			if ($prefs['lock_wiki_structures'] === 'y') {
+				$lockedby = TikiLib::lib('attribute')->get_attribute('wiki structure', $_REQUEST['page_ref_id'], 'tiki.object.lock');
+				if ($lockedby && $lockedby === $user && $perms->lock_structures || ! $lockedby || $perms->admin_structures) {
+					$editable = $perms->edit_structures;
+				} else {
+					$editable = false;
+				}
+			} else {
+				$editable = $perms->edit_structures;
+			}
+
+			if (! $editable) {
 				$type = 'plain';
 			} else {
 				TikiLib::lib('smarty')->assign('structure_name', $structure_info["pageName"]);

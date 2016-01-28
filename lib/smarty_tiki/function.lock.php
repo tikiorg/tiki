@@ -42,6 +42,9 @@ function smarty_function_lock($params, $smarty)
 			case 'template':
 				$params['lock_perm'] = 'lock_content_templates';
 				break;
+			case 'wiki structure':
+				$params['lock_perm'] = 'lock_structures';
+				break;
 			default:
 				return tra('lock perm not found');
 		}
@@ -52,8 +55,11 @@ function smarty_function_lock($params, $smarty)
 			case 'template':
 				$params['admin_perm'] = 'admin_content_templates';
 				break;
+			case 'wiki structure':
+				$params['admin_perm'] = 'admin_structures';
+				break;
 			default:
-				return tra('lock perm not found');
+				return tra('admin perm not found');
 		}
 	}
 
