@@ -29,7 +29,7 @@
 				</th>
 				<th>{tr}Sections{/tr}</th>
 				<th>{tr}Categories{/tr}</th>
-				{if $prefs.lock_content_templates}
+				{if $prefs.lock_content_templates eq 'y'}
 					<th></th>
 				{/if}
 				<th></th>
@@ -67,7 +67,7 @@
 							</a>
 						{/foreach}
 					</td>
-					{if $prefs.lock_content_templates}
+					{if $prefs.lock_content_templates eq 'y'}
 						<td class="action">
 							{lock type='template' object=$channels[user].templateId}
 						</td>
@@ -213,7 +213,7 @@
 						<input type="checkbox" name="section_wiki_html" id="is_html" class="form=control" {if $info.section_wiki_html eq 'y'}checked="checked"{/if}>
 					</div>
 				</div>
-				{if $prefs.lock_content_templates}
+				{if $prefs.lock_content_templates eq 'y'}
 					<div class="form-group">
 						<label class="col-sm-3 control-label">{tr}Lock{/tr}</label>
 						<div class="col-sm-9">

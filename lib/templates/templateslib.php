@@ -216,7 +216,7 @@ class TemplatesLib extends TikiLib
 				}
 
 				$res['edit'] = $perms->edit_content_templates || $perms->admin_content_templates;
-				if ($prefs['lock_content_templates'] && $res['edit']) {	// check for locked
+				if ($prefs['lock_content_templates'] === 'y' && $res['edit']) {	// check for locked
 					$lockedby = $attributeslib->get_attribute('template', $res['templateId'], 'tiki.object.lock');
 					if ($lockedby && $lockedby === $user && $perms->lock_content_templates || ! $lockedby || $perms->admin_content_templates) {
 						$res['edit'] = true;
