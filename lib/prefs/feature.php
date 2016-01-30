@@ -2849,7 +2849,7 @@ function prefs_feature_list($partial = false)
 			'tags' => array('advanced'),
 		),
 		'feature_equal_height_rows_js' => array(
-			'name' => tra('Enable Equal Height Rows JS Pugin'),
+			'name' => tra('Enable JavaScript Plugin for Equal-Height Rows'),
 			'description' => tra('This allows responsive rows to be set so that each contained element has the same height '),
 			'type' => 'flag',
 			'default' => 'n',
