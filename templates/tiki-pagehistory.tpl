@@ -20,7 +20,7 @@
 	</h2>
 	{if $info.version ne $preview and $tiki_p_rollback eq 'y'}
 		<div class="navbar">
-			{self_link _script="tiki-rollback.php" page=$page version=$preview _title="{tr}Rollback{/tr}"}{tr}Rollback to this version{/tr}{/self_link}
+			{self_link _script="tiki-rollback.php" page=$page version=$preview _title="{tr}Roll back{/tr}"}{tr}Roll back to this version{/tr}{/self_link}
 		</div>
 	{/if}
 	<div>
@@ -75,7 +75,7 @@
 		{if $info.version eq $source}<small><small>{tr}(current){/tr}</small></small>{/if}
 	</h2>
 	{if $info.version ne $source and $tiki_p_rollback eq 'y'}
-		<div class="navbar">{self_link _script="tiki-rollback.php" page=$page version=$source _title="{tr}Rollback{/tr}"}{tr}Rollback to this version{/tr}{/self_link}</div>
+		<div class="navbar">{self_link _script="tiki-rollback.php" page=$page version=$source _title="{tr}Roll back{/tr}"}{tr}Roll back to this version{/tr}{/self_link}</div>
 	{/if}
 	<div>
 		{if !isset($noHistory)}
@@ -452,7 +452,7 @@
 										{/if}
 										{if $tiki_p_rollback eq 'y' && $lock neq true}
 											{$libeg}{self_link _script="tiki-rollback.php" page=$page version=$element.version _icon_name="undo" _menu_text='y' _menu_icon='y'}
-												{tr}Rollback{/tr}
+												{tr}Roll back{/tr}
 											{/self_link}
 										{/if}
 									{/strip}

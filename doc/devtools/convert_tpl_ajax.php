@@ -23,7 +23,7 @@
  *
  * ***** N.B. 3: Nested quote marks in Smarty syntax       ******
  * I found one tpl (tiki-pagehistory.tpl) that had links with nested quotes in the hrefs (ik!)
- * e.g. <a href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$preview}" title="{tr}Rollback{/tr}">{tr}Rollback to this version{/tr}</a>
+ * e.g. <a href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$preview}" title="{tr}Roll back{/tr}">{tr}Roll back to this version{/tr}</a>
  * so i had to "manually" replace the "url" params with 'url' before running the script.
  */
 

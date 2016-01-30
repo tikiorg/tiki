@@ -42,7 +42,7 @@
 									<div style="text-align: center;">
 										{button _keepall='y' href="tiki-view_sheets.php" sheetId=$sheetId readdate=$history[$sheetIndexes[$smarty.section.date.index]].stamp parse="y" class="view_button" _text="{tr}View{/tr}" _htmlelement="role_main" _title="{tr}View{/tr}"}
 										{button _keepall='y' href="tiki-view_sheets.php" sheetId=$sheetId readdate=$history[$sheetIndexes[$smarty.section.date.index]].stamp parse="clone" class="clone_button" _text="{tr}Clone{/tr}" _htmlelement="role_main" _title="{tr}Clone{/tr}"}
-										{button _keepall='y' href="tiki-view_sheets.php" sheetId=$sheetId readdate=$history[$sheetIndexes[$smarty.section.date.index]].stamp parse="rollback" class="rollback_button" _text="{tr}Rollback{/tr}" _htmlelement="role_main" _title="{tr}Rollback{/tr}"}
+										{button _keepall='y' href="tiki-view_sheets.php" sheetId=$sheetId readdate=$history[$sheetIndexes[$smarty.section.date.index]].stamp parse="rollback" class="rollback_button" _text="{tr}Roll back{/tr}" _htmlelement="role_main" _title="{tr}Roll back{/tr}"}
 									</div>
 								</td>
 							{/section}
