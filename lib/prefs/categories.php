@@ -20,8 +20,8 @@ function prefs_categories_list()
 			'default' => 'n',
 		),
 		'categories_add_class_to_body_tag' => array(
-			'name' => tra('Category names added as class body tag'),
-			'description' => tra('Selected categories will have cat_catname added to the body tag.'),
+			'name' => tra('Categories to add as CSS classes to &lt;body&gt;'),
+			'description' => tra('Pages in selected categories will have a class with syntax like "cat_catname" added to the body tag.'),
 			'separator' => ',',
 			'type' => 'text',
 			'size' => '15',
