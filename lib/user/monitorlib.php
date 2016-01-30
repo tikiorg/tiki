@@ -22,7 +22,7 @@ class MonitorLib
 		$priorities = array(
 			'none' => ['label' => '', 'description' => null],
 			'critical' => ['label' => tr('Critical'), 'description' => tr('Immediate notification by email.'), 'class' => 'label-danger'],
-			'high' => ['label' => tr('High'), 'description' => tr('Sent to you with the next periodic digest.'), 'class' => 'label-warning'],
+			'high' => ['label' => tr('High'), 'description' => tr('Will be sent to you with the next periodic digest.'), 'class' => 'label-warning'],
 			'low' => ['label' => tr('Low'), 'description' => tr('Included in your personalized recent changes feed.'), 'class' => 'label-info'],
 		);
 

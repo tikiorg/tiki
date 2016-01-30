@@ -66,14 +66,14 @@ function prefs_user_list($partial = false)
 			'dependencies' => ['user_picture_gallery_id',],
 		),
 		'user_small_avatar_size' => array(
-			'name' => tra('Size of the small avatar stored for users.'),
+			'name' => tra('Size of the small profile picture stored for users'),
 			'help' => 'User+Preferences',
 			'type' => 'text',
 			'filter' => 'digits',
 			'default' => '45',
 		),
 		'user_small_avatar_square_crop' => array(
-			'name' => tra('Sets whether the image avatar thumbnail should be cropped to a square'),
+			'name' => tra('Crop the profile picture thumbnail to a square'),
 			'help' => 'User+Preferences',
 			'type' => 'flag',
 			'default' => 'n',
@@ -113,7 +113,7 @@ function prefs_user_list($partial = false)
 		),
 		'user_who_viewed_my_stuff_days' => array(
 			'name' => tra('Number of days to consider in displaying "who viewed my items"'),
-			'description' => tra('Number of days before the current day to consider when displayng "who viewed my items"'),
+			'description' => tra('Number of days before the current day to consider when displaying "who viewed my items"'),
 			'type' => 'text',
 			'filter' => 'digits',
 			'size' => '4',
@@ -129,7 +129,7 @@ function prefs_user_list($partial = false)
 			'default' => 'n',
 		),
 		'user_list_order' => array(
-			'name' => tra('Sort Order'),
+			'name' => tra('Sort order'),
 			'type' => 'list',
 			'options' => $partial ? array() : UserListOrder(),
 			'default' => 'score_desc',

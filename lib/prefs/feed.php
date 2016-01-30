@@ -63,7 +63,7 @@ function prefs_feed_list()
 		),
 
 		'feed_img' => array(
-			'name' => tra('Feed Image path'),
+			'name' => tra('Feed image path'),
 			'description' => tra('Specifies a GIF, JPEG or PNG image that can be displayed with the feed.'),
 			'type' => 'text',
 			'size' => '40',
@@ -84,7 +84,7 @@ function prefs_feed_list()
 			'default' => 'n',
 		),
 		'feed_cache_time' => array(
-			'name' => tra('Feed Caching time'),
+			'name' => tra('Feed caching time'),
 			'description' => tra('"Cache the feed for this number of seconds'),
 			'type' => 'text',
 			'size' => '5',

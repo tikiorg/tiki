@@ -41,7 +41,7 @@
 				<ul>
 					<li><a onclick="sheetInstance.addSheet(); return false;" title="{tr}Add new spreadsheet.{/tr}">{tr}Add Spreadsheet{/tr}</a></li>
 					<li><a onclick="$.sheet.deleteSheet(sheetInstance); return false;" title="{tr}Delete the current spreadsheet.{/tr}">{tr}Delete Spreadsheet{/tr}</a></li>
-					<li><a onclick="sheetInstance.calc(sheetInstance.obj.tableBody()); return false;" title="{tr}Recompiles the current sheet{/tr}">{tr}Refresh Calculations{/tr}</a></li>
+					<li><a onclick="sheetInstance.calc(sheetInstance.obj.tableBody()); return false;" title="{tr}Recompiles the current sheet{/tr}">{tr}Refresh calculations{/tr}</a></li>
 					<li><a onclick="sheetInstance.sheetTitle(); return false;" title="{tr}Change the title of the sheet.{/tr}">{tr}Title{/tr}</a></li>
 				</ul>
 			</li>

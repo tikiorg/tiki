@@ -3381,7 +3381,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_change_events',
-				'description' => tra('Can change events in the calendar'),
+				'description' => tra('Can edit events in the calendar'),
 				'level' => 'registered',
 				'type' => 'calendar',
 				'admin' => false,
@@ -3399,7 +3399,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_view_events',
-				'description' => tra('Can view events details'),
+				'description' => tra('Can view event details'),
 				'level' => 'registered',
 				'type' => 'calendar',
 				'admin' => false,
@@ -3453,7 +3453,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_add_object',
-				'description' => tra('Can add objects to the category (needs tiki_p_modify_object_categories)'),
+				'description' => tra('Can add objects to the category (tiki_p_modify_object_categories permission required)'),
 				'level' => 'editors',
 				'type' => 'category',
 				'admin' => false,

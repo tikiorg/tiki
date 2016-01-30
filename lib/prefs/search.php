@@ -60,7 +60,7 @@ function prefs_search_list()
 			'default' => 'n',
 		),
 		'search_show_sort_order' => array(
-			'name' => tra('Sort Order'),
+			'name' => tra('Sort order'),
 			'type' => 'flag',
 			'default' => 'n',
 		),

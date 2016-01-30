@@ -5,7 +5,7 @@
 
 		{* Command prompt form *}
 		<form method="post" action="{$console_father|escape}">
-			<b>{tr}Debugger Console{/tr}</b>
+			<b>{tr}Debugger console{/tr}</b>
 			<span style="float: right">
 				<a href='#' onclick="toggle('debugconsole');" title=":{tr}Close{/tr}" class="tips">
 					{icon name='delete'}

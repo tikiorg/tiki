@@ -65,7 +65,7 @@ function wikiplugin_freetagged_info()
 			),
 			'sort_mode' => array(
 				'required' => false,
-				'name' => tra('Sort Order'),
+				'name' => tra('Sort order'),
 				'description' => tr('Determine sort order based on various fields (Default: %0)', '<code>created_desc</code>'),
 				'since' => '5.0',
 				'filter' => 'text',

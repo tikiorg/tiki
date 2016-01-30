@@ -39,7 +39,7 @@ function wikiplugin_category_info()
 			),
 			'sort' => array(
 				'required' => false,
-				'name' => tra('Sort Order'),
+				'name' => tra('Sort order'),
 				'description' => tra('Sort ascending or descending based on various attributes (sorted ascending by
 					name by default)'),
 				'since' => '1',

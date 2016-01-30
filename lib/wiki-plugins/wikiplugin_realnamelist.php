@@ -35,7 +35,7 @@ function wikiplugin_realnamelist_info()
 			),
 			'sort' => array(
 				'required' => false,
-				'name' => tra('Sort Order'),
+				'name' => tra('Sort order'),
 				'description' => tra('Set to sort in ascending or descending order (unsorted by default'),
 				'since' => '4.0',
 				'filter' => 'word',

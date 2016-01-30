@@ -53,7 +53,7 @@ function prefs_category_list()
 		),
 		'category_i18n_synced' => array(
 			'name' => tra('Synchronized categories'),
-			'description' => tra('List of categories affected by the multilingual synchronization. Depending on the parent feature, this list will be used as a white list (only categories allows) or as a black list (all except thoses specified).'),
+			'description' => tra('List of categories affected by the multilingual synchronization. Depending on the parent feature, this list will be used as a white list (the only categories allowed) or as a black list (all categories allowed except those specified).'),
 			'type' => 'text',
 			'filter' => 'digits',
 			'separator' => ',',

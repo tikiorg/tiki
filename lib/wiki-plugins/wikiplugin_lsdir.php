@@ -34,7 +34,7 @@ function wikiplugin_lsdir_info()
 			),
 			'sort' => array(
 				'required' => false,
-				'name' => tra('Sort Order'),
+				'name' => tra('Sort order'),
 				'description' => tra('Set the sort order of the file list'),
 				'since' => '1',
 				'default' => 'name',

@@ -35,14 +35,14 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 						'legacy_index' => 0,
 					),
 					'startyear' => array(
-						'name' => tr('Start Year'),
+						'name' => tr('Start year'),
 						'description' => tr('Year to allow selecting from'),
 						'example' => '1987',
 						'filter' => 'digits',
 						'legacy_index' => 1,
 					),
 					'endyear' => array(
-						'name' => tr('End Year'),
+						'name' => tr('End year'),
 						'description' => tr('Year to allow selecting to'),
 						'example' => '2020',
 						'filter' => 'digits',

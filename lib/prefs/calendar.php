@@ -43,7 +43,7 @@ function prefs_calendar_list()
             'description' => tra(''),
 			'type' => 'list',
 			'options' => array(
-				'y' => tra('Focus Date'),
+				'y' => tra('Focus date'),
 				'n' => tra('Period beginning'),
 			),
 			'default' => 'n',

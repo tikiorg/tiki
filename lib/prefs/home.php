@@ -10,7 +10,7 @@ function prefs_home_list($partial = false)
 
 	return array(
 		'home_blog' => array(
-			'name' => tra('Home Blog (main blog)'),
+			'name' => tra('Home blog (main blog)'),
             'description' => tra(''),
 			'type' => 'list',
 			'options' => $partial ? array() : listblog_pref(),
@@ -18,14 +18,14 @@ function prefs_home_list($partial = false)
 			'profile_reference' => 'blog',
 		),
 		'home_forum' => array(
-			'name' => tra('Home Forum (main forum)'),
+			'name' => tra('Home forum (main forum)'),
             'description' => tra(''),
 			'type' => 'text',
 			'default' => 0,
 			'profile_reference' => 'forum',
 		),
 		'home_file_gallery' => array(
-			'name' => tra('Home File Gallery (main file gallery)'),
+			'name' => tra('Home file gallery (main file gallery)'),
             'description' => tra(''),
 			'type' => 'list',
 			'options' => $partial ? array() : listfgal_pref(),
@@ -33,7 +33,7 @@ function prefs_home_list($partial = false)
 			'profile_reference' => 'file_gallery',
 		),
 		'home_gallery' => array(
-			'name' => tra('Home Gallery (main gallery)'),
+			'name' => tra('Home gallery (main gallery)'),
             'description' => tra(''),
 			'type' => 'list',
 			'options' => $partial ? array() : listimgal_pref(),

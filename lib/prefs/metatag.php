@@ -52,7 +52,7 @@ function prefs_metatag_list()
 			'tags' => array('basic'),
 		),
 		'metatag_pagedesc' => array(
-			'name' => tra('Page Description'),
+			'name' => tra('Page description'),
 			'description' => tra('Use each page description as a meta tag for that page.'),
 			'type' => 'flag',
 			'default' => 'n',
@@ -74,7 +74,7 @@ function prefs_metatag_list()
 		),
 		'metatag_georegion' => array(
 			'name' => tra('geo.region'),
-			'description' => tra('The ISO-3166 Country and Region Codes for your location. For example, "US-NY".'),
+			'description' => tra('The ISO-3166 country and region codes for your location. For example, "US-NY".'),
 			'type' => 'text',
 			'size' => '50',
 			'default' => '',
@@ -88,14 +88,14 @@ function prefs_metatag_list()
 		),
 		'metatag_robots' => array(
 			'name' => tra('Meta robots'),
-			'description' => tra('Specify how web-bots should index your site. Valid values include: INDEX or NOINDEX, and FOLLOW or NOFOLLOW'),
+			'description' => tra('Specify how Web robots should index your site. Valid values include: INDEX or NOINDEX, and FOLLOW or NOFOLLOW'),
 			'type' => 'text',
 			'size' => '50',
 			'default' => '',
 		),
 		'metatag_revisitafter' => array(
 			'name' => tra('Revisit after'),
-			'description' => tra('Specify how often (in days) web-bots should visit your site.'),
+			'description' => tra('Specify how often (in days) Web robots should visit your site.'),
 			'type' => 'text',
 			'size' => '50',
 			'default' => '',

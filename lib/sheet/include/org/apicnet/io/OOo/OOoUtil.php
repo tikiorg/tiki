@@ -38,7 +38,7 @@ APIC::import("org.apicnet.io.CDir");
  **/
 class OOoUtil extends absOOo{
 	
-	var $directories = array("Pictures", "META-INF");
+	var $directories = array("Images", "META-INF");
 	var $pictures    = array("gif", "png");
 	var $tmpdir;
 	var $docExist;

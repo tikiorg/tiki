@@ -12,7 +12,7 @@ function prefs_module_list()
 			'name' => tra('Top module zone'),
 			'description' => tra('Activate zone for modules such as site logo, log-in form, etc. (page header)'),
 			'type' => 'list',
-			'keywords' => tra('side bar'),
+			'keywords' => tra('sidebar'),
 			'help' => 'Users+Flip+Columns',
 			'options' => array(
 				'y' => tra('Only if one or more modules are assigned'),
@@ -40,7 +40,7 @@ function prefs_module_list()
 			'name' => tra('Page top module zone'),
 			'description' => tra('Activate zone for modules such as breadcrumbs, banners, share icons, etc'),
 			'type' => 'list',
-			'keywords' => tra('side bar'),
+			'keywords' => tra('sidebar'),
 			'help' => 'Users+Flip+Columns',
 			'options' => array(
 				'y' => tra('Only if one or more modules are assigned'),
@@ -54,7 +54,7 @@ function prefs_module_list()
 			'name' => tra('Bottom module zone'),
 			'description' => tra('Activate zone for modules such as "powered by" and "rss list" (page footer)'),
 			'type' => 'list',
-			'keywords' => tra('side bar'),
+			'keywords' => tra('sidebar'),
 			'help' => 'Users+Flip+Columns',
 			'options' => array(
 				'y' => tra('Only if one or more modules are assigned'),
@@ -68,7 +68,7 @@ function prefs_module_list()
 			'name' => tra('Page bottom module zone'),
 			'description' => tra('Activate zone for modules at the bottom of the main column of each page'),
 			'type' => 'list',
-			'keywords' => tra('side bar'),
+			'keywords' => tra('sidebar'),
 			'help' => 'Users+Flip+Columns',
 			'options' => array(
 				'y' => tra('Only if one or more modules are assigned'),

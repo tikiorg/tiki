@@ -9,7 +9,7 @@ function prefs_activity_list()
 {
 	return array(
 		'activity_basic_events' => array(
-			'name' => tr('Record Basic Events'),
+			'name' => tr('Record basic events'),
 			'description' => tr('Enable recording of basic internal Tiki events. This is primarily for entry level options. Using custom events is strongly encouraged.'),
 			'help' => 'Activity+Stream',
 			'type' => 'flag',
@@ -56,14 +56,14 @@ function prefs_activity_list()
 			'default' => 'n',
 		),
 		'activity_custom_events' => array(
-			'name' => tr('Custom Activities'),
+			'name' => tr('Custom activities'),
 			'description' => tr('"Allows the defining of custom behaviors in addition to internal events.'),
 			'help' => 'Activity+Stream',
 			'type' => 'flag',
 			'default' => 'n',
 		),
 		'activity_notifications' => array(
-			'name' => tr('Enable Notifications through Activities'),
+			'name' => tr('Enable notifications through activities'),
 			'description' => tr('Allows to users to develop notifications using activities.'),
 			'help' => 'Activity+Notifications',
 			'type' => 'flag',

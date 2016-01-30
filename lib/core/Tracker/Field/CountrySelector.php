@@ -36,7 +36,7 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract implements Tr
 						'legacy_index' => 0,
 					),
 					'sortorder' => array(
-						'name' => tr('Sort Order'),
+						'name' => tr('Sort order'),
 						'description' => tr('Determines whether the ordering should be based on the translated name or the English name.'),
 						'filter' => 'int',
 						'options' => array(

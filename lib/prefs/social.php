@@ -9,7 +9,7 @@ function prefs_social_list()
 {
 	return array(
 		'social_network_type' => array(
-			'name' => tra('Social Network Type'),
+			'name' => tra('Social network type'),
 			'description' => tra('Select how the friendship relations within the social network should be treated.'),
 			'type' => 'list',
 			'options' => array(

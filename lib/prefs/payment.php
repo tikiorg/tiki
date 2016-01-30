@@ -34,7 +34,7 @@ function prefs_payment_list()
 		),
 		'payment_paypal_business' => array(
 			'name' => tra('Paypal Business ID'),
-			'description' => tra('Enable payments through paypal.'),
+			'description' => tra('Enable payments through PayPal.'),
 			'hint' => tra('Primary email of your PayPal account'),
 			'type' => 'text',
 			'filter' => 'email',
@@ -45,7 +45,7 @@ function prefs_payment_list()
 
         'payment_paypal_password' => array(
             'name' => tra('Paypal Business Password'),
-            'description' => tra('The Paypal password associated with you PayPal Pro business account.'),
+            'description' => tra('The PayPal password associated with your PayPal Pro business account.'),
             'hint' => tra('Primary password of your PayPal Pro business account'),
             'type' => 'password',
             'filter' => 'text',
@@ -66,7 +66,7 @@ function prefs_payment_list()
             'default' => '',
         ),
 		'payment_paypal_environment' => array(
-			'name' => tra('Paypal Environment'),
+			'name' => tra('PayPal environment'),
 			'description' => tra('Used to switch between the PayPal sandbox, used for testing and development and the live environment.'),
 			'type' => 'list',
 			'options' => array(
@@ -77,7 +77,7 @@ function prefs_payment_list()
 			'default' => 'https://www.paypal.com/cgi-bin/webscr',
 		),
 		'payment_paypal_ipn' => array(
-			'name' => tra('Paypal Instant Payment Notification (IPN)'),
+			'name' => tra('PayPal Instant Payment Notification (IPN)'),
 			'description' => tra('Enable IPN for automatic payment completion. When enabled, PayPal will ping back the site when a payment is confirmed. The payment will then be entered automatically. This may not be possible if the site is not on a public server.'),
 			'type' => 'flag',
 			'dependencies' => array( 'payment_paypal_business' ),
@@ -93,7 +93,7 @@ function prefs_payment_list()
 		),
 		'payment_default_delay' => array(
 			'name' => tra('Default acceptable payment delay'),
-			'description' => tra('Amount of days before the payment requests becomes overdue. This can be changed per payment request.'),
+			'description' => tra('Number of days before the payment requests becomes overdue. This can be changed per payment request.'),
             'shorthint' => tra('days'),
 			'type' => 'text',
 			'filter' => 'digits',

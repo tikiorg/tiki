@@ -145,7 +145,7 @@ function prefs_fgal_list()
 			'default' => 'y',
 		),
 		'fgal_list_ratio_hits' => array(
-			'name' => tra('Display hits with a ratio between hits / maxhits'),
+			'name' => tra('Display hits with a ratio of hits to maximum hits'),
             'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
@@ -226,7 +226,7 @@ function prefs_fgal_list()
 			'shorthint' => tra('seconds'),
 		),
 		'fgal_source_show_refresh' => array(
-			'name' => tra('Display controls to attempt refresh'),
+			'name' => tra('Display controls to attempt a file refresh'),
 			'description' => tra('Let users trigger a refresh attempt from the remote host.'),
 			'type' => 'flag',
 			'default' => 'n',

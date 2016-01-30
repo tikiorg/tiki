@@ -58,7 +58,7 @@ function wikiplugin_files_info()
 			),
 			'sort' => array(
 				'required' => false,
-				'name' => tra('Sort Order'),
+				'name' => tra('Sort order'),
 				'description' => tr('Order ascending (_asc), descending (_desc) or random based on any field in the
 					file gallery table. Default is %0', '<code>name_asc</code>'),
 				'since' => '3.0',

@@ -126,7 +126,7 @@ function prefs_socialnetworks_list()
 		),
 		'socialnetworks_bitly_login' => array(
 			'name' => tra('bit.ly Login'),
-			'description' => tra('Site wide login (username) for bit.ly'),
+			'description' => tra('Site-wide log-in name (username) for bit.ly'),
 			'keywords' => 'social networks',
 			'type' => 'text',
 			'size' => 60,
