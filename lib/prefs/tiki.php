@@ -76,7 +76,7 @@ function prefs_tiki_list()
 			'tags' => array('basic'),
 		),
 		'tiki_cachecontrol_session' => array(
-			'name' => tra('Cache-Control header'),
+			'name' => tra('Cache-control header'),
 			'description' => tra('Custom HTTP header to use when a session is active.'),
 			'type' => 'text',
 			'filter' => 'striptags',
@@ -84,7 +84,7 @@ function prefs_tiki_list()
 			'default' => '',
 		),
 		'tiki_cachecontrol_nosession' => array(
-			'name' => tra('Cache-Control header (no session)'),
+			'name' => tra('Cache-control header (no session)'),
 			'description' => tra('Custom HTTP header to use when no session is active.'),
 			'type' => 'text',
 			'filter' => 'striptags',

@@ -624,8 +624,8 @@ function prefs_wiki_list($partial = false)
 			'description' => tra('Just a button among others (default), or special section'),
 			'type' => 'list',
 			'options' => array(
-				'button' => tra('In the buttons row (default)'),
-				'above' => tra('Special section above buttons bar'),
+				'button' => tra('In the button bar (default)'),
+				'above' => tra('Special section above button bar'),
 			),
 			'default' => 'button',
 		),
@@ -705,7 +705,7 @@ function prefs_wiki_list($partial = false)
 			'default' => 'alias',
 		),
 		'wiki_prefixalias_tokens' => array(
-			'name' => tra('Redirect pages using these prefix alias semantic links'),
+			'name' => tra('Redirect pages using these prefix-alias semantic links'),
 			'description' => tra('Comma separated list of prefixes of which pages will be redirected to page with semantic link'),
 			'type' => 'text',
 			'help' => 'Semantic+Alias',

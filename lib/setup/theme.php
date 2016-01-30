@@ -14,7 +14,7 @@ $theme_option_active = $prefs['theme_option'];
 
 // User theme previously set up in lib/setup/user_prefs.php
 
-//consider Group Theme
+//consider Group theme
 if ($prefs['useGroupTheme'] == 'y') {
 	$userlib = TikiLib::lib('user');
 	$users_group_groupTheme = $userlib->get_user_group_theme();

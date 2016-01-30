@@ -39,7 +39,7 @@ function refresh_index($object_type, $object_id = null, $process = true)
 			$errlib = TikiLib::lib('errorreport');
 			$message = $e->getMessage();
 			if (empty($message)) {
-				$message = tra('try rebuilding or optimizing the index on the search admin page');
+				$message = tra('Try rebuilding or optimizing the index on the search admin page');
 			}
 			$errlib->report(tr('Search index could not be updated: %0', $message));
 		}

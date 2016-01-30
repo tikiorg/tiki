@@ -184,7 +184,7 @@ function prefs_global_list($partial = false)
 			'tags' => array('basic'),
 		),
 		'useGroupTheme' => array(
-			'name' => tra('Group Theme'),
+			'name' => tra('Group theme'),
             'description' => tra('Each group can have its own theme'),
 			'type' => 'flag',
 			'default' => 'n',

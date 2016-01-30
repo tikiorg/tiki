@@ -245,7 +245,7 @@
 			{/if}
 			{if $prefs.useGroupTheme eq 'y'}
 				<div class="form-group">
-					<label for="groups_theme" class="control-label col-md-3">{tr}Group Theme{/tr}</label>
+					<label for="groups_theme" class="control-label col-md-3">{tr}Group theme{/tr}</label>
 					<div class="col-md-9">
 						<select name="theme" id="groups_theme" class="form-control">
 							<option value="" {if $grouptheme eq ""} selected="selected"{/if}>{tr}none{/tr} ({tr}Use site default{/tr})</option>

@@ -21,7 +21,7 @@
 {if $galleryId}<a href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}" class="btn btn-default">{tr}Browse Gallery{/tr}</a>{/if}
 {/if}
 {if $tiki_p_create_file_galleries eq 'y'and $edit_mode ne 'y'}
-<a href="tiki-list_file_gallery.php?edit_mode=1&amp;galleryId=0{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}" class="btn btn-default">{tr}Create New File Gallery{/tr}</a>
+<a href="tiki-list_file_gallery.php?edit_mode=1&amp;galleryId=0{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}" class="btn btn-default">{tr}Create new file gallery{/tr}</a>
 {/if}
 
 {if $tiki_p_create_file_galleries eq 'y'and $dup_mode ne 'y'}

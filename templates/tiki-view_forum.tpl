@@ -229,7 +229,7 @@
 					</div>
 					{if ($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and $tiki_p_admin_forum eq 'y') or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y')}
 						<div class="form-group">
-							<label class="col-sm-2 control-label" for="userfile1">{tr}Attach file{/tr}</label>
+							<label class="col-sm-2 control-label" for="userfile1">{tr}Attach a file{/tr}</label>
 							<div class="col-sm-10">
 								<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}">
 								<input name="userfile1" id="userfile1" class="form-control" type="file">{tr}Maximum size:{/tr} {$forum_info.att_max_size|kbsize}

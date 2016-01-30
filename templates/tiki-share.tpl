@@ -279,7 +279,7 @@
 				<div class="panel-heading radio">
 					{if $send_msg=='y'}
 						<label for="do_message" class="control-label col-sm-3">
-							{icon name="admin_messages"} {tr}Send message{/tr}
+							{icon name="admin_messages"} {tr}Send a message{/tr}
 						</label>
 						<label class="radio-inline">
 							<input class="share-message-show" type="radio" name="do_message" value="1" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('messagetable')" {/if}>
@@ -290,7 +290,7 @@
 							{tr}No{/tr}
 						</label>
 					{else}
-						{remarksbox type="note" title="{tr}Send message{/tr}" close="n"}
+						{remarksbox type="note" title="{tr}Send a message{/tr}" close="n"}
 							{tr}You do not have the permission to send messages or you did not allow other users to send you messages.{/tr}
 						{/remarksbox}
 					{/if}

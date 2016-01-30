@@ -249,7 +249,7 @@
 				<td colspan="3">
 					{tr}This message will be send to users if you are makeing changes of assigned tasks{/tr}<br>
 					<textarea style="width:98%;" rows="2" cols="80" name="task_info_message">{$info.info|escape}</textarea>
-					<input checked="checked" type="checkbox" name="task_send_changes_message">{tr}Send message with changes{/tr}
+					<input checked="checked" type="checkbox" name="task_send_changes_message">{tr}Send a message with changes{/tr}
 				</td>
 			</tr>
 		{/if}

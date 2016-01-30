@@ -99,7 +99,7 @@ class UnifiedSearchLib
 				}
 
 				$errlib->report(
-					tr('Search index could not be updated. The site is misconfigured. Contact an administrator.') .
+					tr('The search index could not be updated. The site is misconfigured. Contact an administrator.') .
 					'<br />' . $e->getMessage()
 				);
 			}
@@ -243,7 +243,7 @@ class UnifiedSearchLib
 			$tikilib->set_preference('unified_identifier_fields', $index->getIdentifierFields());
 		} catch (Exception $e) {
 			$errlib->report(
-				tr('Search index could not be rebuilt.') .
+				tr('The search index could not be rebuilt.') .
 				'<br />' . $e->getMessage()
 			);
 		}
@@ -262,7 +262,7 @@ class UnifiedSearchLib
 			// Current to -old
 			if (file_exists($index_location)) {
 				if (! rename($index_location, $swapName)) {
-					$errlib->report(tr('Could not remove active index. Likely a file permission issue.'));
+					$errlib->report(tr('The active index could not be removed, probably due to a file permission issue.'));
 				}
 			}
 			// -new to current

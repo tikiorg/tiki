@@ -70,7 +70,7 @@ function module_switch_theme($mod_reference, &$module_params)
 		} else if (($section === 'admin' || empty($section)) && !empty($prefs['theme_admin'])) {
 			$info_title .= ' (' . tra('Admin Theme') . ')';
 		} else if ($group_theme) {
-			$info_title .= ' (' . tra('Group Theme') . ')';
+			$info_title .= ' (' . tra('Group theme') . ')';
 		}
 
 		$smarty->assign('switchtheme_enabled', false);
