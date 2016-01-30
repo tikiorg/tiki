@@ -1402,7 +1402,7 @@ class ToolbarFullscreen extends Toolbar
 {
 	function __construct() // {{{
 	{
-		$this->setLabel(tra('Full Screen Edit'))
+		$this->setLabel(tra('Full-screen edit'))
 			->setIconName('fullscreen')
 			->setWysiwygToken('Maximize')
 			->setType('Fullscreen');

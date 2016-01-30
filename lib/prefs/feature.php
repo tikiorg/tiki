@@ -540,7 +540,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_fullscreen' => array(
-			'name' => tra('Full Screen'),
+			'name' => tra('Full screen'),
 			'description' => tra('Allow users to activate full-screen mode.'),
 			'help' => 'Fullscreen',
 			'type' => 'flag',
