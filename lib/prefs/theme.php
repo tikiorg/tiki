@@ -69,7 +69,7 @@ function prefs_theme_list($partial = false)
 			'tags' => array('basic'),
 		),
 		'theme_option_admin' => array(
-			'name' => tra('Supplemental style sheet for the admin pages theme'),
+			'name' => tra('Admin theme option'),
 			'type' => 'list',
 			'help' => 'Themes',
 			'description' => tra('Supplemental style sheet for the selected theme'),

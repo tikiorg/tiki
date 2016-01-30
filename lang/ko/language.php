@@ -4189,7 +4189,7 @@ Temporarily adjust the time available during %0. Depending on the volume of data
 "bit.ly Key" => "bit.ly 키",
 "Site-wide API key for bit.ly" => "bit.ly 에 대한 사이트 전역 API 키",
 "Use site-wide account" => "사이트 전역 계정 사용",
-"When setting this option to yes, only the site wide account will be used for all users" => "이 선택사항을 \"예\"로 설정하면, 모든 사용자들에 대하여 사이트 전역 계정만 사용하게 됩니다",
+"When set to \"yes\", only the site-wide account will be used for all users" => "이 선택사항을 \"예\"로 설정하면, 모든 사용자들에 대하여 사이트 전역 계정만 사용하게 됩니다",
 // "Tiki can request the user's email" => "Tiki can request the user's email",
 // "Stored Searches" => "Stored Searches",
 // "Allow users to store search queries" => "Allow users to store search queries",

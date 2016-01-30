@@ -142,7 +142,7 @@ function prefs_socialnetworks_list()
 		),
 		'socialnetworks_bitly_sitewide' => array(
 			'name' => tra('Use site-wide account'),
-			'description' => tra('When setting this option to yes, only the site wide account will be used for all users'),
+			'description' => tra('When set to "yes", only the site-wide account will be used for all users'),
 			'keywords' => 'social networks',
 			'type' => 'flag',
 			'default' => 'n',
