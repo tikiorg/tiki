@@ -14,7 +14,7 @@
 			<b>{tr}Wiki{/tr}</b>:
 			<ul>
 				<li>
-					{tr}wiki{/tr} > {tr}Can inline edit pages{/tr} <em>(tiki_p_edit_inline)</em>
+					{tr}wiki{/tr} > {tr}Can inline-edit pages{/tr} <em>(tiki_p_edit_inline)</em>
 					<a href="http://doc.tiki.org/Wiki+Inline+Editing" target="tikihelp" class="tikihelp" title="{tr}Wiki Inline Editing:{/tr}
 						{tr}Starting in Tiki12, Tiki offers the option to edit inline a wiki page in wysiwyg mode with a simplified editor, which is based on Ckeditor4{/tr}
 						<br/><br/>

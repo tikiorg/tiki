@@ -3462,7 +3462,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_remove_object',
-				'description' => tra('Can remove objects from the category (needs tiki_p_modify_object_categories)'),
+				'description' => tra('Can remove objects from the category (tiki_p_modify_object_categories permission required)'),
 				'level' => 'editors',
 				'type' => 'category',
 				'admin' => false,
@@ -3656,7 +3656,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_vote_comments',
-				'description' => tra('Can vote comments'),
+				'description' => tra('Can vote on comments'),
 				'level' => 'registered',
 				'type' => 'comments',
 				'admin' => false,
@@ -3855,7 +3855,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_assign_perm_file_gallery',
-				'description' => tra('Can assign perms to file gallery'),
+				'description' => tra('Can assign permissions to file galleries'),
 				'level' => 'admin',
 				'type' => 'file galleries',
 				'admin' => false,
@@ -3873,7 +3873,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_batch_upload_files',
-				'description' => tra('Can upload zip files with files'),
+				'description' => tra('Can upload .zip file packages'),
 				'level' => 'editors',
 				'type' => 'file galleries',
 				'admin' => false,
@@ -3936,7 +3936,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_forum_attach',
-				'description' => tra('Can attach to forum posts'),
+				'description' => tra('Can attach files to forum posts'),
 				'level' => 'registered',
 				'type' => 'forums',
 				'admin' => false,
@@ -3954,7 +3954,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_forum_edit_own_posts',
-				'description' => tra('Can edit own forum posts'),
+				'description' => tra("Can edit one's own forum posts"),
 				'level' => 'registered',
 				'type' => 'forums',
 				'admin' => false,
@@ -3999,7 +3999,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_forum_vote',
-				'description' => tra('Can vote comments in forums'),
+				'description' => tra('Can vote on comments in forums'),
 				'level' => 'registered',
 				'type' => 'forums',
 				'admin' => false,
@@ -4134,7 +4134,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_assign_perm_image_gallery',
-				'description' => tra('Can assign perms to image gallery'),
+				'description' => tra('Can assign permissions to image galleries'),
 				'level' => 'admin',
 				'type' => 'image galleries',
 				'admin' => false,
@@ -4152,7 +4152,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_batch_upload_images',
-				'description' => tra('Can upload zip files with images'),
+				'description' => tra('Can upload .zip files of images'),
 				'level' => 'editors',
 				'type' => 'image galleries',
 				'admin' => false,
@@ -4260,7 +4260,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_map_create',
-				'description' => tra('Can create new mapfile'),
+				'description' => tra('Can create new mapfiles'),
 				'level' => 'admin',
 				'type' => 'maps',
 				'admin' => false,
@@ -4305,7 +4305,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_broadcast_all',
-				'description' => tra('Can broadcast messages to all user'),
+				'description' => tra('Can broadcast messages to all users'),
 				'level' => 'admin',
 				'type' => 'messages',
 				'admin' => false,
@@ -4341,7 +4341,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_batch_subscribe_email',
-				'description' => tra('Can subscribe many emails at once (requires tiki_p_subscribe email)'),
+				'description' => tra('Can subscribe multiple email addresses at once (requires tiki_p_subscribe email)'),
 				'level' => 'editors',
 				'type' => 'newsletters',
 				'admin' => false,
@@ -4359,7 +4359,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_subscribe_email',
-				'description' => tra('Can subscribe any email to newsletters'),
+				'description' => tra('Can subscribe any email address to newsletters'),
 				'level' => 'editors',
 				'type' => 'newsletters',
 				'admin' => false,
@@ -4494,7 +4494,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_vote_poll',
-				'description' => tra('Can vote polls'),
+				'description' => tra('Can vote in polls'),
 				'level' => 'basic',
 				'type' => 'polls',
 				'admin' => false,
@@ -4548,7 +4548,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_admin_sheet',
-				'description' => tra('Can admin sheet'),
+				'description' => tra('Can admin spreadsheets'),
 				'level' => 'admin',
 				'type' => 'sheet',
 				'admin' => true,
@@ -4557,7 +4557,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_edit_sheet',
-				'description' => tra('Can create and edit sheets'),
+				'description' => tra('Can create and edit spreadsheets'),
 				'level' => 'editors',
 				'type' => 'sheet',
 				'admin' => false,
@@ -4566,7 +4566,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_view_sheet',
-				'description' => tra('Can view sheet'),
+				'description' => tra('Can view spreadsheets'),
 				'level' => 'basic',
 				'type' => 'sheet',
 				'admin' => false,
@@ -4575,7 +4575,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_view_sheet_history',
-				'description' => tra('Can view sheet history'),
+				'description' => tra('Can view spreadsheets history'),
 				'level' => 'admin',
 				'type' => 'sheet',
 				'admin' => false,
@@ -4584,7 +4584,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_admin_shoutbox',
-				'description' => tra('Can admin shoutbox (Edit/remove messages)'),
+				'description' => tra('Can admin the shoutbox (edit/remove messages)'),
 				'level' => 'editors',
 				'type' => 'shoutbox',
 				'admin' => true,
@@ -4593,7 +4593,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_post_shoutbox',
-				'description' => tra('Can post messages in shoutbox'),
+				'description' => tra('Can post messages in the shoutbox'),
 				'level' => 'basic',
 				'type' => 'shoutbox',
 				'admin' => false,
@@ -4602,7 +4602,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_view_shoutbox',
-				'description' => tra('Can view shoutbox'),
+				'description' => tra('Can view the shoutbox'),
 				'level' => 'basic',
 				'type' => 'shoutbox',
 				'admin' => false,
@@ -4611,7 +4611,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_socialnetworks',
-				'description' => tra('user can use social network integration'),
+				'description' => tra('Can use social network integration'),
 				'level' => 'registered',
 				'type' => 'socialnetworks',
 				'admin' => false,
@@ -4620,7 +4620,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_admin_socialnetworks',
-				'description' => tra('user can register this site with social networks'),
+				'description' => tra('Can register this site with social networks'),
 				'level' => 'admin',
 				'type' => 'socialnetworks',
 				'admin' => true,
@@ -4674,7 +4674,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_admin_tikitests',
-				'description' => tra('Can admin the TikiTests'),
+				'description' => tra('Can admin TikiTests'),
 				'level' => 'admin',
 				'type' => 'tikitests',
 				'admin' => false,
@@ -4692,7 +4692,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_play_tikitests',
-				'description' => tra('Can replay the TikiTests'),
+				'description' => tra('Can replay TikiTests'),
 				'level' => 'registered',
 				'type' => 'tikitests',
 				'admin' => false,
@@ -4719,7 +4719,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_tracker_view_attachments',
-				'description' => tra('Can view tracker items attachments and download'),
+				'description' => tra('Can view tracker item attachments and download them'),
 				'level' => 'registered',
 				'type' => 'trackers',
 				'admin' => false,
@@ -4728,7 +4728,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_comment_tracker_items',
-				'description' => tra('Can insert comments for tracker items'),
+				'description' => tra('Can post tracker item comments'),
 				'level' => 'basic',
 				'type' => 'trackers',
 				'admin' => false,
@@ -4737,7 +4737,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_tracker_view_comments',
-				'description' => tra('Can view tracker items comments'),
+				'description' => tra('Can view tracker item comments'),
 				'level' => 'basic',
 				'type' => 'trackers',
 				'admin' => false,
@@ -4746,7 +4746,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_create_tracker_items',
-				'description' => tra('Can create new items for trackers'),
+				'description' => tra('Can create new tracker items'),
 				'level' => 'registered',
 				'type' => 'trackers',
 				'admin' => false,
@@ -4827,7 +4827,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_tracker_vote_ratings',
-				'description' => tra('Can vote a rating for tracker items'),
+				'description' => tra('Can rate tracker items'),
 				'level' => 'registered',
 				'type' => 'trackers',
 				'admin' => false,
@@ -4836,7 +4836,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_tracker_revote_ratings',
-				'description' => tra('Can re-vote a rating for tracker items'),
+				'description' => tra('Can re-rate tracker items'),
 				'level' => 'registered',
 				'type' => 'trackers',
 				'admin' => false,
@@ -4872,7 +4872,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_watch_trackers',
-				'description' => tra('Can watch tracker'),
+				'description' => tra('Can watch a tracker'),
 				'level' => 'registered',
 				'type' => 'trackers',
 				'admin' => false,
@@ -4890,7 +4890,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_tracker_dump',
-				'description' => tra('Can save a .CSV backup of entire trackers'),
+				'description' => tra('Can save a CSV backup of all trackers'),
 				'level' => 'admin',
 				'type' => 'trackers',
 				'admin' => false,
@@ -4908,7 +4908,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_tabular_list',
-				'description' => tr('View list view of a tracker tabular. Tracker item permissions apply.'),
+				'description' => tr('View list view of tracker tabular data. Tracker item permissions apply.'),
 				'level' => 'registered',
 				'type' => 'tabular',
 				'admin' => false,
@@ -5142,7 +5142,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_edit_inline',
-				'description' => tra('Can inline edit pages'),
+				'description' => tra('Can inline-edit pages'),
 				'level' => 'registered',
 				'type' => 'wiki',
 				'admin' => false,
@@ -5169,7 +5169,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_assign_perm_wiki_page',
-				'description' => tra('Can assign perms to wiki pages'),
+				'description' => tra('Can assign permissions to wiki pages'),
 				'level' => 'admin',
 				'type' => 'wiki',
 				'admin' => false,
@@ -5214,7 +5214,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_minor',
-				'description' => tra('Can save as minor edit'),
+				'description' => tra('Can save as a minor edit'),
 				'level' => 'registered',
 				'type' => 'wiki',
 				'admin' => false,
@@ -5241,7 +5241,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_rollback',
-				'description' => tra('Can rollback pages'),
+				'description' => tra('Can roll back pages'),
 				'level' => 'editors',
 				'type' => 'wiki',
 				'admin' => false,
@@ -5259,7 +5259,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_use_as_template',
-				'description' => tra('Can use the page as a template for tracker or unified search'),
+				'description' => tra('Can use the page as a template for a tracker or unified search'),
 				'level' => 'basic',
 				'type' => 'wiki',
 				'admin' => false,
@@ -5304,7 +5304,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_wiki_view_attachments',
-				'description' => tra('Can view wiki attachments and download'),
+				'description' => tra('Can view and download wiki page attachments'),
 				'level' => 'registered',
 				'type' => 'wiki',
 				'admin' => false,
@@ -5340,7 +5340,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_wiki_vote_ratings',
-				'description' => tra('Can participate to rating of wiki pages'),
+				'description' => tra('Can participate in rating of wiki pages'),
 				'level' => 'registered',
 				'type' => 'wiki',
 				'admin' => false,
@@ -5439,7 +5439,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_watch_structure',
-				'description' => tra('Can watch structure'),
+				'description' => tra('Can watch structures'),
 				'level' => 'registered',
 				'type' => 'wiki structure',
 				'admin' => false,
@@ -5475,7 +5475,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_admin_banning',
-				'description' => tra('Can ban users or ips'),
+				'description' => tra('Can ban users or IP addresses'),
 				'level' => 'admin',
 				'type' => 'tiki',
 				'admin' => false,
@@ -5547,7 +5547,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_create_css',
-				'description' => tra('Can create new css suffixed with -user'),
+				'description' => tra('Can create a new CSS file (style sheet) appended with -user'),
 				'level' => 'registered',
 				'type' => 'tiki',
 				'admin' => false,
@@ -5556,7 +5556,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_detach_translation',
-				'description' => tra('Can remove association between two pages in a translation set'),
+				'description' => tra('Can remove the association between two pages in a translation set'),
 				'level' => 'editors',
 				'type' => 'tiki',
 				'admin' => false,
@@ -5584,7 +5584,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_edit_menu',
-				'description' => tra('Can edit menu'),
+				'description' => tra('Can edit menus'),
 				'level' => 'admin',
 				'type' => 'tiki',
 				'admin' => false,
@@ -5593,7 +5593,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_edit_menu_option',
-				'description' => tra('Can edit menu option'),
+				'description' => tra('Can edit menu options'),
 				'level' => 'admin',
 				'type' => 'tiki',
 				'admin' => false,
@@ -5665,7 +5665,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_view_actionlog_owngroups',
-				'description' => tra('Can view action log for users of his own groups'),
+				'description' => tra('Can view the action log for users of his or her groups'),
 				'level' => 'registered',
 				'type' => 'tiki',
 				'admin' => false,
@@ -5783,7 +5783,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_modify_object_categories',
-				'description' => tra('Can change the categories of the object'),
+				'description' => tra('Can change the categories of an object'),
 				'level' => 'editors',
 				'type' => 'tiki',
 				'admin' => false,
@@ -5811,7 +5811,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_workspace_instantiate',
-				'description' => tra('Can create a new workspace for the given template'),
+				'description' => tra('Can create a new workspace for a given template'),
 				'level' => 'admin',
 				'type' => 'workspace',
 				'admin' => false,
@@ -5820,7 +5820,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_goal_admin',
-				'description' => tr('Can manage all aspects of the goal'),
+				'description' => tr('Can manage all aspects of a goal'),
 				'level' => 'admin',
 				'type' => 'goal',
 				'admin' => true,
@@ -5829,7 +5829,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_goal_modify_eligible',
-				'description' => tr('Can manage who is eligible to a goal'),
+				'description' => tr('Can manage who is eligible for a goal'),
 				'level' => 'admin',
 				'type' => 'goal',
 				'admin' => false,

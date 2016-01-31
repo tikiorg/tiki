@@ -436,7 +436,7 @@ class WebMailLib extends TikiLib
 			}
 
 			if (!isset($mail)) {
-				return tra('Mailbox uninitialised???');
+				return tra('Is the mailbox not initialised??');
 			}
 
 			$webmail_list = array();
