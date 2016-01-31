@@ -15,14 +15,14 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * Smarty plugin
  * -------------------------------------------------------------
  * Type:     modifier
- * Name:     capitalize
- * Purpose:  capitalize words in the string
+ * Name:     avatarize
+ * Purpose:  show avatar for a given user name
  * -------------------------------------------------------------
  */
 function smarty_modifier_avatarize($user, $float = '', $default = '', $show_tag='y')
 {
 	if (! $user) {
-		return;
+		return '';
 	}
 
 	$avatar = TikiLib::lib('tiki')->get_user_avatar($user, $float);
