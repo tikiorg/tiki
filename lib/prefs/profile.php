@@ -17,7 +17,7 @@ function prefs_profile_list()
 			'default' => 'http://profiles.tiki.org/profiles',
 		),
 		'profile_channels' => array(
-			'name' => tra('Data Channels'),
+			'name' => tra('Data channels'),
 			'description' => tra('Data channels are templates that can be applied from a post request. They can be used to automate work on more complex installations.'),
 			'type' => 'textarea',
 			'size' => 5,

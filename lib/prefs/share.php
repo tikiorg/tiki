@@ -35,7 +35,7 @@ function prefs_share_list()
 		),
 		'share_display_name_and_email' => array(
 			'name' => tra('Display name and email'),
-			'description' => tra('If user is connect, name and email display in the page'),
+			'description' => tra('If the user is connected, the name and email will display in the page'),
 			'type' => 'flag',
 			'default' => 'y',
 		),

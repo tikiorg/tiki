@@ -49,7 +49,7 @@ function prefs_session_list()
 		),
 		'session_protected' => array(
 			'name' => tra('Protect all sessions with HTTPS'),
-			'description' => tra('Always redirect to HTTPS to prevent session hijack through network sniffing.'),
+			'description' => tra('Always redirect to HTTPS to prevent a session hijack through network sniffing.'),
 			'type' => 'flag',
 			'perspective' => false,
 			'default' => 'n',

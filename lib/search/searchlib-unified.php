@@ -267,7 +267,7 @@ class UnifiedSearchLib
 			}
 			// -new to current
 			if (! rename($tempName, $index_location)) {
-				$errlib->report(tr('Could not transfer new index to active. Likely a file permission issue.'));
+				$errlib->report(tr('The new index could not be made active, probably due to a file permission issue.'));
 			}
 
 			// Destroy old
@@ -290,7 +290,7 @@ class UnifiedSearchLib
 
 		if ($oldIndex) {
 			if (! $oldIndex->destroy()) {
-				$errlib->report(tr('Failed to destroy the old index.'));
+				$errlib->report(tr('Failed to delete the old index.'));
 			}
 		}
 
@@ -395,7 +395,7 @@ class UnifiedSearchLib
 		}
 
 		if ($prefs['feature_trackers'] == 'y') {
-			$types['trackeritem'] = tra('trackeritem');
+			$types['trackeritem'] = tra('tracker item');
 		}
 
 		if ($prefs['feature_sheet'] == 'y') {

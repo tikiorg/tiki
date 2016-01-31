@@ -10,7 +10,7 @@ function prefs_payment_list()
 	return array(
 		'payment_feature' => array(
 			'name' => tra('Payment'),
-			'description' => tra('Feature to manage and track payment requests.'),
+			'description' => tra('Feature for tracking and managing payment requests.'),
 			'type' => 'flag',
 			'help' => 'Payment',
 			'default' => 'n',

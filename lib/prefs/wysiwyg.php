@@ -37,7 +37,7 @@ function prefs_wysiwyg_list()
 		),
 		'wysiwyg_wiki_parsed' => array(
 			'name' => tra('Content is parsed like wiki page'),
-			'description' => tra('This allows a mixture of wiki and HTML. All wiki syntax is parsed.'),
+			'description' => tra('This allows a mixture of wiki syntax and HTML syntax. All wiki syntax is parsed.'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_wysiwyg',
@@ -46,7 +46,7 @@ function prefs_wysiwyg_list()
 		),
 		'wysiwyg_wiki_semi_parsed' => array(
 			'name' => tra('Content is partially wiki parsed'),
-			'description' => tra('This also allows a mixture of wiki and HTML. Only some wiki syntax is parsed, such as plugins (not inline character styles etc).'),
+			'description' => tra('This also allows a mixture of wiki syntax and HTML syntax. Only some wiki syntax is parsed, such as plugins (not inline character styles, etc).'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_wysiwyg',

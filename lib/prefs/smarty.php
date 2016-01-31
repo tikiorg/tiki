@@ -71,7 +71,7 @@ function prefs_smarty_list()
 		),
 		'smarty_cache_perms' => array(
 			'name' => tra('Smarty cache permissions'),
-			'description' => tra('Permissions smarty writes to templates_c with.'),
+			'description' => tra('Permissions that enable Smarty to write to the templates_c directory.'),
 			'type' => 'list',
 			'options' => array(
 				0644 => tra('User writable (0644)'),

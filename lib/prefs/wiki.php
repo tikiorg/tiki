@@ -240,7 +240,7 @@ function prefs_wiki_list($partial = false)
 		),
 		'wiki_dynvar_multilingual' => array(
 			'name' => tra('Multilingual dynamic variables'),
-			'description' => tra('Make dynamic variable content language specific.'),
+			'description' => tra('Make dynamic variable content language-specific.'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_multilingual',

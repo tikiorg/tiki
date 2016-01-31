@@ -17,7 +17,7 @@ function prefs_monitor_list()
         ),
 		'monitor_digest' => array(
 			'name' => tr('Notification Digests'),
-			'description' => tr('Enable the digest notifications, requires cron job'),
+			'description' => tr('Enable digest notifications (requires a cron job)'),
 			'type' => 'flag',
 			'default' => 'n',
             'help' => 'Notifications#Digests',

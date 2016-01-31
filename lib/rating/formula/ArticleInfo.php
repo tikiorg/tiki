@@ -21,7 +21,7 @@ class Tiki_Formula_Function_ArticleInfo extends Math_Formula_Function
 		}
 
 		if ( $prefs['feature_articles'] != 'y' ) {
-			$this->error(tra('Articles feature not enabled.'));
+			$this->error(tra('The Articles feature is not activated.'));
 		}
 
 		$type = $this->evaluateChild($element[0]);

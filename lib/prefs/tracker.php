@@ -68,7 +68,7 @@ function prefs_tracker_list()
 			'default' => 'n',
 		),
 		'tracker_wikirelation_redirectpage' => array(
-			'name' => tr('Redirect page views to linked tracker item'),
+			'name' => tr('Redirect page views to the linked tracker item'),
 			'description' => tr('Redirect the user to the tracker item when trying to view a wiki page that has a linked tracker item via tiki.wiki.linkeditem relation. Can be bypassed by adding &admin (?admin in sefurl) to the URL.'),
 			'warning' => tra('To get to the wiki page after activation, you can add &admin (?admin in sefurl) to the URL.'),
 			'type' => 'flag',

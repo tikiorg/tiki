@@ -94,7 +94,7 @@ function prefs_tiki_list()
 		'tiki_cdn' => array(
 			'name' => tra('Content Delivery Networks'),
 			'description' => tra('Use alternate domains to serve static files from this Tiki site to avoid sending cookies, improve local caching and generally improve user-experience performance.'),
-			'hint' => tra('List of URI Prefixes to include before static files (One per line), for example: http://cdn1.example.com'),
+			'hint' => tra('List of URI prefixes to include before static files (one per line), for example: http://cdn1.example.com'),
 			'help' => 'Content+Delivery+Network',
 			'type' => 'textarea',
 			'size' => 4,
@@ -104,7 +104,7 @@ function prefs_tiki_list()
 		'tiki_cdn_ssl' => array(
 			'name' => tra('Content Delivery Networks (in SSL)'),
 			'description' => tra('Use alternate domains to serve static files from this Tiki site to avoid sending cookies, improve local caching and generally improve user-experience performance. Leave empty to disable CDN in SSL mode.'),
-			'hint' => tra('List of URI Prefixes to include before static files (One per line), for example: https://sslcdn1.example.com'),
+			'hint' => tra('List of URI prefixes to include before static files (one per line), for example: https://sslcdn1.example.com'),
 			'help' => 'Content+Delivery+Network',
 			'type' => 'textarea',
 			'size' => 4,
@@ -127,7 +127,7 @@ function prefs_tiki_list()
 			'name' => tra('Domain redirects'),
 			'description' => tra('When the site is accessed through specific domain names, redirect to an alternate domain preserving the URL. Useful for domain name transitions, like tikiwiki.org to tiki.org.'),
 			'type' => 'textarea',
-			'hint' => tra('One entry per line. Comma separated list: old, new'),
+			'hint' => tra('One entry per line, with each entry a comma-separated list: old domain, new domain'),
 			'size' => 8,
 			'default' => '',
 		),
@@ -141,7 +141,7 @@ function prefs_tiki_list()
 		'tiki_allow_trust_input' => array(
 			'name' => tra('Allow the tiki_p_trust_input permission.'),
 			'hint' => tra('Bypasses user input filtering'),
-			'warning' => tra('Note, all permissions are granted to the Admins group including this one, so if you enable this you may expose your site to XSS (Cross Site Scripting) attacks for admin users.'),
+			'warning' => tra('Note: all permissions are granted to the Admins group including this one, so if you enable this you may expose your site to XSS (Cross Site Scripting) attacks for admin users.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
