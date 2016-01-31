@@ -152,8 +152,7 @@ function prefs_user_list($partial = false)
 			'dependencies' => array(
 				'user_register_pretty_tracker',
 			),
-			'default' => '',
-			'profile_reference' => 'wiki_page',
+			'default' => ''
 		),
 		'user_register_prettytracker_output' => array(
 			'name' => tra('Output the registration results'),
