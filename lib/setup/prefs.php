@@ -406,7 +406,7 @@ function initialize_prefs($force = false)
 			$system['site_' . $uop] = $system[$uop];
 		}
 	}
-	$prefs = $system + $prefs;
+	$prefs = array_merge($prefs, $system);
 
 	if ( !defined('TIKI_PREFS_DEFINED') ) define('TIKI_PREFS_DEFINED', 1);
 }
