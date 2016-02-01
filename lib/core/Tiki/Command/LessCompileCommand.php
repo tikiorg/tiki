@@ -74,13 +74,14 @@ class LessCompileCommand  extends Command
 
 					if ($themename === 'base_files') {
 						$less_file = "themes/$themename/less/tiki_base.less";
+						$css_file = "themes/$themename/css/tiki_base.css";
 					} else {
 						$less_file = "themes/$themename/less/$themename.less";
+						$css_file = "themes/$themename/css/$themename.css";
 					}
                     if (! file_exists($less_file)) {
                         continue;
                     }
-                    $css_file = "themes/$themename/css/$themename.css";
                     if (file_exists($css_file && filemtime($css_file) >= filemtime($less_file))) {
                         continue;
                     }
