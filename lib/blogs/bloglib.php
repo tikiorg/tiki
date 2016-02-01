@@ -353,7 +353,7 @@ class BlogLib extends TikiDb_Bridge
 	function add_blog_hit($blogId)
 	{
 		global $prefs, $user;
-		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
+		if (StatsLib::is_stats_hit()) {
 			$query = "update `tiki_blogs` set `hits` = `hits`+1 where `blogId`=?";
 			$result = $this->query($query, array((int) $blogId));
 		}
@@ -370,7 +370,7 @@ class BlogLib extends TikiDb_Bridge
 	function add_blog_post_hit($postId)
 	{
 		global $prefs, $user;
-		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
+		if (StatsLib::is_stats_hit()) {
 			$query = "update `tiki_blog_posts` set `hits` = `hits`+1 where `postId`=?";
 			$result = $this->query($query, array((int) $postId));
 		}

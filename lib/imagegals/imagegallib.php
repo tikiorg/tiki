@@ -565,7 +565,7 @@ class ImageGalsLib extends TikiLib
 	{
 		global $prefs, $user;
 
-		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
+		if (StatsLib::is_stats_hit()) {
 			$query = "update `tiki_images` set `hits`=`hits`+1 where `imageId`=?";
 			$result = $this->query($query, array((int)$id));
 		}
@@ -593,7 +593,7 @@ class ImageGalsLib extends TikiLib
 	{
 		global $prefs, $user;
 
-		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
+		if (StatsLib::is_stats_hit()) {
 			$query = "update `tiki_galleries` set `hits`=`hits`+1 where `galleryId`=?";
 
 			$result = $this->query($query, array((int) $id));

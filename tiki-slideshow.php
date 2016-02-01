@@ -108,9 +108,7 @@ if (!in_array($page, $_SESSION["breadCrumb"])) {
 }
 
 // Now increment page hits since we are visiting this page
-if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
-	$tikilib->add_hit($page);
-}
+$tikilib->add_hit($page);
 
 // Get page data
 $parserlib = TikiLib::lib('parser');

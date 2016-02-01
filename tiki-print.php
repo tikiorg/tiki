@@ -41,9 +41,8 @@ $tikilib->get_perm_object($page, 'wiki page', $info);
 $access->check_permission('tiki_p_view', '', 'wiki page', $page);
 
 // Now increment page hits since we are visiting this page
-if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
-	$tikilib->add_hit($page);
-}
+$tikilib->add_hit($page);
+
 if (isset($prefs['wiki_feature_copyrights']) && $prefs['wiki_feature_copyrights'] == 'y' && isset($prefs['wikiLicensePage'])) {
 	// insert license if wiki copyrights enabled
 	$license_info = $tikilib->get_page_info($prefs['wikiLicensePage']);

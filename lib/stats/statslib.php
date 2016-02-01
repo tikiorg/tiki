@@ -16,6 +16,14 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 class StatsLib extends TikiLib
 {
+	/**
+	 *  Check if the prerequisites for recording a statistics hit are fulfilled
+	 */
+	public static function is_stats_hit() {
+		global $prefs, $user;
+		return $prefs['feature_stats'] === 'y' && ( $prefs['count_admin_pvs'] === 'y' || $user != 'admin' );
+	}
+
 	// obsolete, but keeped for compatibility purposes
 	// use Tikilib::list_pages() instead
     /**

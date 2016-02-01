@@ -1468,7 +1468,7 @@ class Comments extends TikiLib
 	{
 		global $prefs, $user;
 
-		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
+		if (StatsLib::is_stats_hit()) {
 			$forums = $this->table('tiki_forums');
 			$forums->update(array('hits' => $forums->increment(1)), array('forumId' => (int) $forumId));
 			$this->forum_prune($forumId);
@@ -1484,7 +1484,7 @@ class Comments extends TikiLib
 	{
 		global $prefs, $user;
 
-		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
+		if (StatsLib::is_stats_hit()) {
 			require_once('lib/search/refresh-functions.php');
 
 			$comments = $this->table('tiki_comments');

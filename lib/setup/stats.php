@@ -17,12 +17,9 @@ if ( $prefs['feature_referer_stats'] == 'y' ) {
     }
 }
 
-// Stats - Record even if the feature is off because if it is turned on later the stats will be completly stupid
-//if ( $prefs['feature_stats'] == 'y' ) {
-	if ( $prefs['count_admin_pvs'] == 'y' || $user != 'admin' ) {
-		if ( ! isset($section) or ( $section != 'chat' and $section != 'livesupport' ) ) {
-			$statslib = TikiLib::lib('stats');
-			$statslib->add_pageview();
-		}
+if (StatsLib::is_stats_hit()) {
+	if ( ! isset($section) or ( $section != 'chat' and $section != 'livesupport' ) ) {
+		$statslib = TikiLib::lib('stats');
+		$statslib->add_pageview();
 	}
-//}
+}

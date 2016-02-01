@@ -1509,7 +1509,7 @@ class TikiLib extends TikiDb_Bridge
 	function add_wiki_attachment_hit($id)
 	{
 		global $prefs, $user;
-		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
+		if (StatsLib::is_stats_hit()) {
 			$wikiAttachments = $this->table('tiki_wiki_attachments');
 			$wikiAttachments->update(
 				array('hits' => $wikiAttachments->increment(1)),
@@ -3998,8 +3998,11 @@ class TikiLib extends TikiDb_Bridge
 	 */
 	function add_hit($pageName)
 	{
-		$pages = $this->table('tiki_pages');
-		$pages->update(array('hits' => $pages->increment(1)), array('pageName' => $pageName));
+		global $prefs;
+		if (StatsLib::is_stats_hit()) {
+			$pages = $this->table('tiki_pages');
+			$pages->update(array('hits' => $pages->increment(1)), array('pageName' => $pageName));
+		}
 		return true;
 	}
 

@@ -231,7 +231,7 @@ class FaqLib extends TikiLib
 	{
 		global $prefs, $user;
 
-		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
+		if (StatsLib::is_stats_hit()) {
 			$query = "update `tiki_faqs` set `hits`=`hits`+1 where `faqId`=?";
 
 			$result = $this->query($query, array($faqId));

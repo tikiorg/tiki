@@ -70,7 +70,7 @@ class SurveyLib extends TikiLib
 	{
 		global $prefs, $user;
 
-		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
+		if (StatsLib::is_stats_hit()) {
 			$this->surveysTable->update(
 				array(
 					'taken' => $this->surveysTable->increment(1),

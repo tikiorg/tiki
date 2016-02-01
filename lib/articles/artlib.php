@@ -91,7 +91,7 @@ class ArtLib extends TikiLib
 	{
 		global $prefs, $user;
 
-		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
+		if (StatsLib::is_stats_hit()) {
 			$query = "update `tiki_articles` set `nbreads`=`nbreads`+1 where `articleId`=?";
 
 			$result = $this->query($query, array($articleId));

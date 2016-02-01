@@ -145,7 +145,7 @@ class TrackerLib extends TikiLib
 	public function add_item_attachment_hit($id)
 	{
 		global $prefs, $user;
-		if ($user != 'admin' || $prefs['count_admin_pvs'] == 'y' ) {
+		if (StatsLib::is_stats_hit()) {
 			$attachments = $this->attachments();
 			$attachments->update(array('hits' => $attachments->increment(1)), array('attId' => (int) $id));
 		}
