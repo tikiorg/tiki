@@ -74,16 +74,6 @@ function wikiplugin_flash_info()
 				'filter' => 'url',
 				'default' => '',
 			),
-			'bliptv' => array(
-				'required' => true,
-				'name' => tra('Blip.tv URL'),
-				'description' => tra('Blip.tv embed URL.') . ' ' . tra('Example:')
-					. ' <code>http://blip.tv/play/AYGd_GAC</code>',
-				'since' => '6.1',
-				'parent' => array('name' => 'type', 'value' => 'bliptv'),
-				'filter' => 'url',
-				'default' => '',
-			),
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
@@ -156,13 +146,7 @@ function wikiplugin_flash($data, $params)
 		$params['movie'] = '//vimeo.com/moogaloop.swf?clip_id=' . $matches[4];
 	}
 	
-	// Handle Blip.tv video
-	// We need the embed URL because there is tno relation between the video URL and the embed URL
-	if (isset($params['bliptv']) && preg_match('|http://blip.tv/play/\w+|', $params['bliptv'], $matches)) {
-		$params['movie'] = $params['bliptv'];
-	}
-
-	if ((isset($params['youtube']) || isset($params['vimeo']) || isset($params['bliptv'])) && !isset($params['movie'])) {		
+	if ((isset($params['youtube']) || isset($params['vimeo'])) && !isset($params['movie'])) {
 		return tra('Invalid URL');
 	}
 
