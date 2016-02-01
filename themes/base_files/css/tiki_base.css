@@ -2148,8 +2148,6 @@ a.fc-event:hover {
   left: 0;
   right: 0;
   top: 0;
-  height: 40px;
-  padding: 1em;
   z-index: 1000;
 }
 #intertrans-form {
@@ -4266,4 +4264,3 @@ div.drillshow {
 .multilike .rate div .count {
   font-size: 0.8em;
 }
-/* End of file */
