@@ -30,11 +30,6 @@
 				{icon name="rss"} {tr}Forums{/tr}
 			</a>
 		{/if}
-		{if $prefs.feature_maps eq 'y' and $prefs.rss_mapfiles eq 'y' and $tiki_p_map_view eq 'y'}
-			<a class="linkmodule tips" title=":{tr}Maps feed{/tr}" href="tiki-map_rss.php?ver={$prefs.feed_default_version}">
-				{icon name="rss"} {tr}Maps{/tr}
-			</a>
-		{/if}
 		{if $prefs.feature_directory eq 'y' and $prefs.feed_directories eq 'y' and $tiki_p_view_directory eq 'y'}
 			<a class="linkmodule tips" title=":{tr}Directory feed{/tr}" href="tiki-directories_rss.php?ver={$prefs.feed_default_version}">
 				{icon name="rss"} {tr}Directories{/tr}

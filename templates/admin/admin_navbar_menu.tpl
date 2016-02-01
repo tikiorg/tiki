@@ -57,9 +57,6 @@
 			{if $prefs.feature_html_pages eq "y" and $tiki_p_edit_html_pages eq "y"}
 				<li><a href="tiki-admin_html_pages.php">{tr}HTML Pages{/tr}</a></li>
 			{/if}
-			{if $prefs.feature_maps eq "y" and $tiki_p_map_view eq "y"}
-				<li><a href="tiki-map.php">{tr}Maps{/tr}</a></li>
-			{/if}
 			{if $prefs.feature_newsletters eq "y" and $tiki_p_admin_newsletters eq "y"}
 				<li><a href="tiki-admin_newsletters.php">{tr}Newsletters{/tr}</a></li>
 			{/if}

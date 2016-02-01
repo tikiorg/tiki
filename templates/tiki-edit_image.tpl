@@ -31,26 +31,6 @@
 		      	<textarea rows="5" cols="40" name="description" class="form-control">{$description|escape}</textarea>
 		    </div>
 	    </div>
-	    {if $prefs.feature_maps eq 'y' and $gal_info.geographic eq 'y'}
-	    <div class="form-group">
-			<label class="col-sm-3 control-label">{tr}Latitude (WGS84/decimal degrees):{/tr}</label>
-			<div class="col-sm-7 margin-bottom-sm">
-		      	<input type="text" name="lat" value="{$lat|escape}" class="form-control">
-		    </div>
-	    </div>
-	    <div class="form-group">
-			<label class="col-sm-3 control-label">{tr}Longitude (WGS84/decimal degrees):{/tr}</label>
-			<div class="col-sm-7 margin-bottom-sm">
-		      	<input type="text" name="lon" value="{$lon|escape}" class="form-control">
-		    </div>
-	    </div>
-	    <div class="form-group">
-			<label class="col-sm-3 control-label">{tr}Longitude (WGS84/decimal degrees):{/tr}</label>
-			<div class="col-sm-7 margin-bottom-sm">
-		      	<input type="text" name="lon" value="{$lon|escape}" class="form-control">
-		    </div>
-	    </div>
-	    {/if}
 	    {include file='categorize.tpl'}
 	    <div class="form-group">
 			<label class="col-sm-3 control-label">{tr}Upload from disk to change the image:{/tr}</label>
@@ -81,10 +61,6 @@
 			<tr><td class="even">{tr}Image Scale:{/tr}</td><td class="even">{if $resultscale}{$xsize_scaled}x{$ysize_scaled}{else}{tr}Original Size{/tr}{/if}</td></tr>
 			<tr><td class="odd">{tr}Hits:{/tr}</td><td class="odd">{$hits}</td></tr>
 			<tr><td class="even">{tr}Description:{/tr}</td><td class="even">{$description}</td></tr>
-			{if $prefs.feature_maps eq 'y' and $gal_info.geographic eq 'y'}
-				<tr><td class="odd">{tr}Latitude (WGS84/decimal degrees):{/tr}</td><td class="odd">{$lat|escape}</td></tr>
-				<tr><td class="even">{tr}Longitude (WGS84/decimal degrees):{/tr}</td><td class="even">{$lon|escape}</td></tr>
-			{/if}
 			<tr><td class="odd">{tr}Author:{/tr}</td><td class="odd">{$image_user|userlink}</td></tr>
 			{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
 				<tr>

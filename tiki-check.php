@@ -1737,9 +1737,6 @@ if (!$standalone) {
 		$dirs[] = 'img/wiki';
 		$dirs[] = 'img/wiki_up';
 	}
-	if ($prefs['feature_maps'] && !empty($prefs['map_path'])) {
-		$dirs[] = $prefs['map_path'];
-	}
 	$dirs = array_unique($dirs);
 	$dirsExist = array();
 	foreach ($dirs as $i => $d) {

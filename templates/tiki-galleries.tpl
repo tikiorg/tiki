@@ -37,9 +37,6 @@
 					{else}
 						<input type="hidden" name="visible" value="on">
 					{/if}
-					{if $prefs.feature_maps eq 'y'}
-						<tr><td>{tr}Geographic:{/tr}</td><td><input type="checkbox" name="geographic" {if $geographic eq 'y'}checked="checked"{/if}></td></tr>
-					{/if}
 					{if $prefs.preset_galleries_info ne 'y'}
 						<tr>
 							<td>{tr}Max Rows per page:{/tr}</td>
@@ -339,6 +336,5 @@
 		{/section}
 	</table>
 	</div>
-	{if $prefs.feature_maps eq 'y'}{$map_error}{/if}
 	{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 </div>

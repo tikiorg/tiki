@@ -57,27 +57,9 @@
 	</fieldset>
 
 	<fieldset class="table">
-		<legend>{tr}MapServer settings{/tr}</legend>
-
-		{preference name=feature_maps}
-		<div class="adminoptionboxchild" id="feature_maps_childcontainer">
-			{if $map_error neq ''}
-				{remarksbox type=warning title="{tr}Warning{/tr}"}{$map_error}{/remarksbox}
-			{/if}
-			{preference name=map_path}
-			{preference name=default_map}
-			{preference name=map_help}
-			{preference name=map_comments}
-			{preference name=gdaltindex}
-			{preference name=ogr2ogr}
-			{preference name=mapzone}
-		</div>
-
-		<br>{* I cheated. *}
 		<div class="row">
 			<div class="form-group col-lg-12 clearfix">
 				<div class="text-center">
-					<input type="submit" class="btn btn-default btn-sm" name="mapuser" value="{tr}Generate User Map{/tr}" />
 					<input type="submit" class="btn btn-primary btn-sm" name="mapsset" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
 				</div>
 			</div>

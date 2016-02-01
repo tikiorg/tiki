@@ -405,15 +405,6 @@ function prefs_feature_list($partial = false)
 			'view' => 'tiki-shoutbox.php',
 			'module' => 'shoutbox',
 		),
-		'feature_maps' => array(
-			'name' => tra('MapServer'),
-			'description' => tra('Navigable, interactive maps with user-selectable layers'),
-			'help' => 'MapServer',
-			'warning' => tra('Requires MapServer'),
-			'type' => 'flag',
-			'default' => 'n',
-			'tags' => array('experimental'),
-		),
 		'feature_live_support' => array(
 			'name' => tra('Live support system'),
 			'description' => tra('One-on-one chatting with customer'),

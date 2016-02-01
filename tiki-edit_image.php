@@ -66,12 +66,6 @@ if (isset($_REQUEST['editimage']) || isset($_REQUEST['editimage_andgonext'])) {
 
 	$error_msg = '';
 
-	// Avoid warnings
-	if ($prefs['feature_maps'] != 'y') {
-		$_REQUEST['lat'] = '';
-		$_REQUEST['lon'] = '';
-	}
-
 	if (!empty($_FILES['userfile']) && !empty($_FILES['userfile']['name'])) {
 		if ((!empty($prefs['gal_match_regex']) && !preg_match('/' . $prefs['gal_match_regex'] . '/', $_FILES['userfile']['name'], $reqs))
 			|| (!empty($prefs['gal_nmatch_regex']) && preg_match('/' . $prefs['gal_nmatch_regex'] . '/', $_FILES['userfile']['name'], $reqs))

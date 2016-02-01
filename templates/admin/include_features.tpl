@@ -105,7 +105,6 @@
 				<legend>{tr}Interaction with online services or other software{/tr}</legend>
 				<div class="admin clearfix featurelist">
 					{preference name=connect_feature}
-					{preference name=feature_maps}
 					{preference name=feature_socialnetworks}
 
 					{preference name=feature_kaltura}
