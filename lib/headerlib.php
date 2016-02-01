@@ -117,9 +117,9 @@ class HeaderLib
 	public $forceJsRankLate;
 
 
-	public $jquery_version = '1.11.2';
-	public $jqueryui_version = '1.11.3';
-	public $jquerymobile_version = '1.3.2';
+	public $jquery_version = '2.2.0';
+	public $jqueryui_version = '1.11.4';
+	public $jquerymigrate_version = '1.3.0';
 
 
 	function __construct()

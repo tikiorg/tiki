@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "15bb9ecad65b37802236565d2ee65cd4",
-    "content-hash": "41f7ba873177f2a30ce8ce59c1e5b6a0",
+    "hash": "bfd4d9e8cfb0fc6b850ce9b1cee2ae1d",
+    "content-hash": "35102cf240a59554e494ec4a936378b2",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -628,23 +628,23 @@
         },
         {
             "name": "jquery/jquery",
-            "version": "1.11.2",
+            "version": "2.2.0",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-1.11.2.zip",
+                "url": "https://composer.tiki.org/dist/jquery-jquery-2.2.0.zip",
                 "reference": null,
-                "shasum": "52938ef9c9c501fb9054e79a8a9e335656640385"
+                "shasum": "61f9e3c849159d7a20877c5616853c952c278b8d"
             },
             "type": "library"
         },
         {
             "name": "jquery/jquery-min",
-            "version": "1.11.2",
+            "version": "2.2.0",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-min-1.11.2.zip",
+                "url": "https://composer.tiki.org/dist/jquery-jquery-min-2.2.0.zip",
                 "reference": null,
-                "shasum": "66a5a528ea4c344cfd41c4a4adf51e1a1e156c0c"
+                "shasum": "6e61221ff6dc79962f154472237e3e94f87985e2"
             },
             "type": "library"
         },
@@ -683,23 +683,23 @@
         },
         {
             "name": "jquery/jquery-ui",
-            "version": "1.11.3",
+            "version": "1.11.4",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-1.11.3.zip",
+                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-1.11.4.zip",
                 "reference": null,
-                "shasum": "8be2cccc3c7eab3932cdd421c788d5cbb7ab2e32"
+                "shasum": "2f5e1cfb9b8528547e4b7887205294e1973d6848"
             },
             "type": "library"
         },
         {
             "name": "jquery/jquery-ui-themes",
-            "version": "1.11.3",
+            "version": "1.11.4",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-themes-1.11.3.zip",
+                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-themes-1.11.4.zip",
                 "reference": null,
-                "shasum": "24b728fe71be80739d33658fa589b9b64562b006"
+                "shasum": "edf7d9142d82c8931c335d4198667a634bc7d5ea"
             },
             "type": "library"
         },
@@ -870,12 +870,12 @@
         },
         {
             "name": "jquery/plugins/migrate",
-            "version": "1.2.1",
+            "version": "1.3.0",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-migrate-1.2.1.zip",
+                "url": "https://composer.tiki.org/dist/jquery-plugins-migrate-1.3.0.zip",
                 "reference": null,
-                "shasum": "65ba8fe28839299fbf66b92c67b984c39fb31b1e"
+                "shasum": "6478ba95f12bf423525409a118e3738290a29261"
             },
             "type": "library"
         },
