@@ -35,7 +35,6 @@ if ($prefs['useGroupTheme'] == 'y') {
 if (!empty($prefs['theme_admin']) && ($section === 'admin' || empty($section))) {		// use admin theme if set
 	$theme_active = $prefs['theme_admin'];
 	$theme_option_active = $prefs['theme_option_admin'];								// and its option
-	$prefs['themegenerator_theme'] = '';												// and disable theme generator
 }
 	
 //consider CSS Editor (tiki-edit_css.php) 

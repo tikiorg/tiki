@@ -26,10 +26,6 @@ if (isset($_REQUEST['theme'])) {
 
 }
 
-if (isset($_REQUEST['theme-themegen']) && $prefs['themegenerator_feature'] === 'y') {
-	$tikilib->set_user_preference($user, 'themegenerator_theme', $_REQUEST['theme-themegen']);
-}
-
 if (isset($_SERVER['HTTP_REFERER'])) {
 	$orig_url = $_SERVER['HTTP_REFERER'];
 } else {

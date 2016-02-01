@@ -41,7 +41,6 @@ if ( !isset($_REQUEST['mobile_mode']) || $_REQUEST['mobile_mode'] === 'y' ) {
 				$prefs['feature_syntax_highlighter'] = 'n';
 				$prefs['feature_layoutshadows'] = 'n';
 				$prefs['feature_wysiwyg'] = 'n';
-				$prefs['themegenerator_feature'] = 'n';
 				$prefs['ajax_autosave'] = 'n';
 				$prefs['change_theme'] = 'n';
 				$prefs['feature_syntax_highlighter'] = 'n';

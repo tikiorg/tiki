@@ -29,18 +29,6 @@
 			{else}
 				<input type="hidden" name="theme_option" value="">
 			{/if}
-			{if $prefs.themegenerator_feature eq "y"}
-				<div class="form-group">
-					<select name="theme-themegen" onchange="this.form.submit();" class="form-control" {if not $switchtheme_enabled}disabled{/if}>
-						<option value="">{tr}None{/tr}</option>
-						{section name=ix loop=$themegen_list}
-							{if !empty($themegen_list[ix])}
-								<option value="{$themegen_list[ix]|escape}"{if $prefs.themegenerator_theme eq $themegen_list[ix]} selected="selected"{/if}>{$themegen_list[ix]|truncate:15|ucwords}</option>
-							{/if}
-						{/section}
-					</select>
-				</div>
-			{/if}
 			<noscript>
 				<button type="submit" class="btn btn-default btn-sm">{tr}Switch{/tr}</button>
 			</noscript>

@@ -176,32 +176,3 @@ $js
 JS
 	);
 }
-
-//Theme generator
-$reload = false;
-if ($prefs['themegenerator_feature'] === 'y') {
-	$headerlib->add_jsfile('lib/jquery_tiki/brosho/tiki_brosho.js');
-	$themegenlib = TikiLib::lib('themegenerator');
-
-	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-		$reload = true;
-		if (!empty($_REQUEST['tg_new_theme']) && !empty($_REQUEST['tg_edit_theme_name'])) {
-			$tg_edit_theme_name = $_REQUEST['tg_edit_theme_name'];
-			$themegenlib->saveNewTheme($tg_edit_theme_name);
-		} else if (!empty($_REQUEST['tg_delete_theme'])) {
-			$themegenlib->deleteCurrentTheme();
-		} else if (!empty($_REQUEST['tg_swaps']) && !empty($_REQUEST['tg_preview'])) {
-			$themegenlib->previewCurrentTheme($_REQUEST['tg_css_file'], $_REQUEST['tg_swaps']);
-		} else if (!empty($_REQUEST['tg_swaps']) && !empty($_REQUEST['tg_change_file'])) {
-			//$themegenlib->previewCurrentTheme($_REQUEST['tg_css_file'], $_REQUEST['tg_swaps']);
-			$reload = false;
-		} else if (!empty($_REQUEST['tg_swaps']) && !empty($_REQUEST['tg_css_file'])) {
-			$themegenlib->updateCurrentTheme($_REQUEST['tg_css_file'], $_REQUEST['tg_swaps']);
-		} else {
-			$reload = false;
-		}
-	}
-
-	$themegenlib->setupEditor();
-
-}

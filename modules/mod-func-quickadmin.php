@@ -35,13 +35,6 @@ function module_quickadmin_info()
  */
 function module_quickadmin($mod_reference, $module_params)
 {
-	global $prefs;
-	// include and setup themegen editor
-	if ($prefs['themegenerator_feature'] === 'y' &&
-			(strpos($_SERVER['SCRIPT_NAME'], 'tiki-admin.php') === false || strpos($_SERVER['QUERY_STRING'], 'page=look') === false)) {
-		$themegenlib = TikiLib::lib('themegenerator');
-		$themegenlib->setupEditor();
-	}
 
 	TikiLib::lib('smarty')->assign('recent_prefs', TikiLib::lib('prefs')->getRecent());
 

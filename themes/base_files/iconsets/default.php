@@ -528,9 +528,6 @@ function iconset_default()
 				'id' => 'file-text-o',
 			),
 			//th-list in defaults
-			'themegenerator' => array(
-				'id' => 'paint-brush',
-			),
 			'three-d' => array(
 				'id' => 'cube',
 			),

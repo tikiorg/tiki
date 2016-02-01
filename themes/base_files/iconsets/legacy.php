@@ -708,9 +708,6 @@ function iconset_legacy()
 			'th-list' => array(
 				'id' => 'text_list_bullets',
 			),
-			'themegenerator' => array(
-				'id' => 'palette',
-			),
 			'three-d' => array(
 				'id' => 'application_side_tree',
 			),

@@ -28,7 +28,6 @@ $user_overrider_prefs = array(
 	'wikiHomePage',
 	'default_calendars',
 	'metatag_robots',
-	'themegenerator_theme',
 	'theme',
 	'theme_option',
 );

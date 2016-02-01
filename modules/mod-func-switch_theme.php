@@ -45,16 +45,6 @@ function module_switch_theme($mod_reference, &$module_params)
 		$css_theme = '';
 	}
 	
-	//themegenerator
-	if ($prefs['themegenerator_feature'] === 'y') {
-		include_once 'lib/prefs/themegenerator.php';
-		$p = prefs_themegenerator_list();
-		if (!empty($p['themegenerator_theme']['options'])) {
-			$smarty->assign('themegen_list', array_keys($p['themegenerator_theme']['options']));
-			$smarty->assign('themegenerator_theme', $prefs['themegenerator_theme']);
-		}
-	}
-
 	if (!empty($tc_theme) ||
 		!empty($group_theme) ||
 		(($section === 'admin' || empty($section)) && !empty($prefs['theme_admin'])) ||

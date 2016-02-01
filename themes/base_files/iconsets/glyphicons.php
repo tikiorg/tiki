@@ -417,9 +417,6 @@ function iconset_glyphicons()
 			),
 			//th-large in defaults
 			//th-list in defaults
-			'themegenerator' => array(
-				'id' => 'picture',
-			),
 			'three-d' => array(
 				'id' => 'road',
 			),

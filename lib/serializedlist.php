@@ -15,7 +15,6 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  * SerializedList manages lists of objects in prefs
  *
  * Should be extended in your own class to use
- * See ThemeGenTheme in themegenlib.php
  * TODO refactor toolbars and plugin aliasses to use this
  */
 abstract class SerializedList

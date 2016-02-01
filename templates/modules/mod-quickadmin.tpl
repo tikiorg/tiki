@@ -84,13 +84,6 @@
 								{/if}
 							</li>
 						{/if}
-					{if $prefs.themegenerator_feature eq "y" and !empty($prefs.themegenerator_theme)}
-						<li>
-							<a href="#" onclick="openThemeGenDialog();return false;">
-								{icon name="themegenerator"} {tr}Theme Generator{/tr}
-							</a>
-						</li>
-					{/if}
 					{if $prefs.feature_comments_moderation eq "y"}
 						<li>
 							<a href="tiki-list_comments.php">

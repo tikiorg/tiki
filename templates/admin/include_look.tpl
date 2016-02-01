@@ -5,9 +5,6 @@
 		{if $prefs.feature_theme_control eq y}
 			{button _text="{tr}Theme Control{/tr}" href="tiki-theme_control.php" _class="btn-sm tikihelp" }
 		{/if}
-		{if $prefs.themegenerator_feature eq "y" and !empty($prefs.themegenerator_theme)}
-			{button _text="{tr}Theme Generator{/tr}" _name="themegenerator" _class="tgFloatDialog btn-sm" href="#" _onclick="openThemeGenDialog();return false;"}
-		{/if}
 		{if $prefs.feature_editcss eq 'y' and $tiki_p_create_css eq 'y'}
 			{button _text="{tr}Edit CSS{/tr}" _class="btn-sm" href="tiki-edit_css.php"}
 		{/if}
@@ -52,14 +49,6 @@
 			<div class="adminoptionbox">
 				{if $prefs.feature_jquery_ui eq 'y'}
 					{preference name=feature_jquery_ui_theme}
-				{/if}
-				{if $prefs.themegenerator_feature eq 'y' and $prefs.site_style != $a_style}
-					<div class="form-group">
-						<label class="col-md-4 control-label"></label>
-						<div class="col-md-8">
-							{remarksbox type="note" title="{tr}Note{/tr}"}{tr}Theme not saved yet - click "Apply"{/tr}{/remarksbox}
-						</div>
-					</div>
 				{/if}
 			</div>
 			{preference name=change_theme}
@@ -194,46 +183,6 @@
 		{/tab}
 		{tab name="{tr}Customization{/tr}"}
 			<h2>{tr}Customization{/tr}</h2>
-			<fieldset>
-				<legend>{tr}Theme Generator{/tr} <em>({tr}Experimental{/tr})</em></legend>
-				{preference name="themegenerator_feature"}
-				<div class="adminoptionboxchild" id="themegenerator_feature_childcontainer">
-					<div class="adminoptionbox">
-						{preference name="themegenerator_theme"}
-						<div class="adminoptionboxchild pull-right" id="themegenerator_feature_childcontainer">
-							<input type="text" name="tg_edit_theme_name" value="{$tg_edit_theme_name|default:''|escape}"{if !empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
-							<input type="submit" class="btn btn-primary btn-sm" name="tg_new_theme" value="{tr}New{/tr}"{if !empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
-							<input type="submit" class="btn btn-warning btn-sm" name="tg_delete_theme" value="{tr}Delete{/tr}"{if empty($prefs.themegenerator_theme)} style="display:none;"{/if} />
-							{jq}
-								$("select[name=themegenerator_theme]").change(function(){
-								if ($(this)[0].selectedIndex === 0) {
-									$("input[name=tg_edit_theme_name]").keyup(function(e){
-										if (e.keyCode === 13 && $(this).val()) {
-											$("input[name=tg_new_theme]").click();
-										}
-									}).show();
-									$("input[name=tg_new_theme]").show();
-									$("input[name=tg_delete_theme]").hide();
-								}
-								}).change();
-							{/jq}
-						</div>
-					</div>
-					<div class="adminoptionbox">
-						{if $prefs.feature_jquery_ui neq "y" or $prefs.feature_ajax neq "y"}
-							<div id="themegenerator_container">
-								{include file="themegen.tpl"}
-								<div class="input_submit_container clear" style="text-align: center">
-									<input type="submit" class="btn btn-default btn-sm" name="tg_preview" value="{tr}Preview Theme{/tr}">
-								</div>
-							</div>
-							{if $prefs.themegenerator_feature eq 'y'}
-								{jq}initThemeGenDialog();{/jq}
-							{/if}
-						{/if}
-					</div>
-				</div>
-			</fieldset>
 			<fieldset>
 				<legend>{tr}Custom Codes{/tr}</legend>
 				{preference name="header_custom_css" syntax="css"}

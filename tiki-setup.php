@@ -526,12 +526,6 @@ if ($prefs['jquery_timeago'] === 'y') {
 	}
 	$headerlib->add_jq_onready('$("time.timeago").timeago();');
 }
-// include and setup themegen editor if already open
-if (! empty($tiki_p_admin) && $tiki_p_admin === 'y' && !empty($prefs['themegenerator_feature']) && $prefs['themegenerator_feature'] === 'y' && !empty($_COOKIE['themegen']) &&
-		(strpos($_SERVER['SCRIPT_NAME'], 'tiki-admin.php') === false || strpos($_SERVER['QUERY_STRING'], 'page=look') === false)) {
-	$themegenlib = TikiLib::lib('themegenerator');
-	$themegenlib->setupEditor();
-}
 
 if ( $prefs['feature_jquery_validation'] == 'y' ) {
 	$headerlib->add_jsfile('vendor/jquery/plugins/jquery-validation/dist/jquery.validate.js');
