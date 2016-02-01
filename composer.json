@@ -152,7 +152,8 @@
 			"vendor/phpcas/phpcas/",
 			"installer/",
 			"lib/test",
-			"lib/webmail"
+			"lib/webmail",
+			"lib/stats"
 		]
 	},
 	"scripts": {
