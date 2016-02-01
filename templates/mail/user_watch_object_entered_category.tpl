@@ -4,7 +4,7 @@
 {tr}Date:{/tr} {$mail_date|tiki_short_datetime:"":"n"}
 {tr}Name:{/tr} {$categoryName}
 {tr}Path:{/tr} {$categoryPath}
-{$mail_machine}/tiki-browse_categories.php?parentId={$categoryId}
+{$mail_machine}/{$categoryId|sefurl:category}
 
 {tr}Object:{/tr} {$objectName}
 {tr}Object type:{/tr} {$objectType}
