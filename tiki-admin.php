@@ -248,17 +248,17 @@ $admin_icons = array(
 	"general" => array(
 		'title' => tr('General'),
 		'description' => tr('Global site configuration, date formats, admin password, etc.'),
-		'help' => 'General+Admin',
+		'help' => 'General Admin',
 	),
 	"features" => array(
 		'title' => tr('Features'),
 		'description' => tr('Switches for major features'),
-		'help' => 'Features+Admin',
+		'help' => 'Features Admin',
 	),
 	"login" => array(
 		'title' => tr('Log in'),
 		'description' => tr('User registration, remember me cookie settings and authentication methods'),
-		'help' => 'Login+Config',
+		'help' => 'Login Config',
 	),
 	"community" => array(
 		'title' => tr('Community'),
@@ -273,12 +273,12 @@ $admin_icons = array(
 	"look" => array(
 		'title' => tr('Look & Feel'),
 		'description' => tr('Theme selection, layout settings and UI effect controls'),
-		'help' => 'Look+and+Feel',
+		'help' => 'Look and Feel',
 	),
 	"textarea" => array(
 		'title' => tr('Editing and Plugins'),
 		'description' => tr('Text editing settings applicable to many areas. Plugin activation and plugin alias management'),
-		'help' => 'Text+area',
+		'help' => 'Text area',
 	),
 	"module" => array(
 		'title' => tr('Modules'),
@@ -288,7 +288,7 @@ $admin_icons = array(
 	"metatags" => array(
 		'title' => tr('Meta Tags'),
 		'description' => tr('Information to include in the header of each page'),
-		'help' => 'Meta+Tags',
+		'help' => 'Meta Tags',
 	),
 	"i18n" => array(
 		'title' => tr('i18n'),
@@ -350,13 +350,13 @@ $admin_icons = array(
 		'title' => tr('Wiki'),
 		'disabled' => $prefs['feature_wiki'] != 'y',
 		'description' => tr('Wiki page settings and features'),
-		'help' => 'Wiki+Config',
+		'help' => 'Wiki Config',
 	),
 	"fgal" => array(
 		'title' => tr('File Galleries'),
 		'disabled' => $prefs['feature_file_galleries'] != 'y',
 		'description' => tr('Defaults and configuration for file galleries'),
-		'help' => 'File+Gallery',
+		'help' => 'File Gallery',
 	),
 	"blogs" => array(
 		'title' => tr('Blogs'),
@@ -368,7 +368,7 @@ $admin_icons = array(
 		'title' => tr('Image Galleries'),
 		'disabled' => $prefs['feature_galleries'] != 'y',
 		'description' => tr('Defaults and configuration for image galleries (will be phased out in favour of file galleries)'),
-		'help' => 'Image+Gallery',
+		'help' => 'Image Gallery',
 	),
 	"articles" => array(
 		'title' => tr('Articles'),
@@ -410,7 +410,7 @@ $admin_icons = array(
 		'title' => tr('Workspaces'),
 		'disabled' => $prefs['workspace_ui'] != 'y' && $prefs['feature_areas'] != 'y',
 		'description' => tr('Configure workspace feature'),
-		'help' => 'workspace',
+		'help' => 'Workspace',
 	),
 	"score" => array(
 		'title' => tr('Score'),
@@ -446,13 +446,13 @@ $admin_icons = array(
 		'title' => tr('Messages'),
 		'disabled' => $prefs['feature_messages'] != 'y',
 		'description' => tr('Message settings'),
-		'help' => 'Inter-User+Messages',
+		'help' => 'Inter-User Messages',
 	),
 	"userfiles" => array(
 		'title' => tr('User Files'),
 		'disabled' => $prefs['feature_userfiles'] != 'y',
 		'description' => tr('User files settings'),
-		'help' => 'User+Files',
+		'help' => 'User Files',
 	),
 	"webmail" => array(
 		'title' => tr('Webmail'),
@@ -470,7 +470,7 @@ $admin_icons = array(
 		'title' => tr('Banners'),
 		'disabled' => $prefs['feature_banners'] != 'y',
 		'description' => tr('Site advertisements and notices'),
-		'help' => 'Look+and+Feel',
+		'help' => 'Banners',
 	),
 	"intertiki" => array(
 		'title' => tr('InterTiki'),
@@ -482,7 +482,7 @@ $admin_icons = array(
 		'title' => tr('Semantic Links'),
 		'disabled' => $prefs['feature_semantic'] != 'y',
 		'description' => tr('Manage semantic wiki links'),
-		'help' => 'Semantic+Admin',
+		'help' => 'Semantic Admin',
 	),
 	"webservices" => array(
 		'title' => tr('Webservices'),
@@ -494,13 +494,13 @@ $admin_icons = array(
 		'title' => tr('SEF URL'),
 		'disabled' => $prefs['feature_sefurl'] != 'y' && $prefs['feature_canonical_url'] != 'y',
 		'description' => tr('Search Engine Friendly URLs'),
-		'help' => 'Rewrite+Rules',
+		'help' => 'Rewrite Rules',
 	),
 	"video" => array(
 		'title' => tr('Video'),
 		'disabled' => $prefs['feature_kaltura'] != 'y',
 		'description' => tr('Video integration configuration'),
-		'help' => 'Kaltura+Config',
+		'help' => 'Kaltura Config',
 	),
 	"payment" => array(
 		'title' => tr('Payment'),
@@ -512,13 +512,13 @@ $admin_icons = array(
 		'title' => tr('Social networks'),
 		'disabled' => $prefs['feature_socialnetworks'] != 'y',
 		'description' => tr('Configure social networks integration'),
-		'help' => 'Social+Networks',
+		'help' => 'Social Networks',
 	),
 	"share" => array(
 		'title' => tr('Share'),
 		'disabled' => $prefs['feature_share'] != 'y',
 		'description' => tr('Configure share feature'),
-		'help' => 'share',
+		'help' => 'Share',
 	),
 );
 
