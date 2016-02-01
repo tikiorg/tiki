@@ -268,7 +268,7 @@
 
 				{if isset($show_parentName) and $show_parentName eq 'y'}
 					<td>
-						<a href="tiki-list_file_gallery.php?galleryId={$files[changes].galleryId}">{$files[changes].parentName|escape}</a>
+						<a href="{$files[changes].galleryId|sefurl:'filegallery'}">{$files[changes].parentName|escape}</a>
 					</td>
 				{/if}
 				{if isset($show_thumb) and $show_thumb eq 'y'}
@@ -299,7 +299,7 @@
 						{capture assign=link}
 							{strip}
 								{if $files[changes].isgal eq 1}
-									href="tiki-list_file_gallery.php?galleryId={$files[changes].id}{if !empty($filegals_manager)}&amp;filegals_manager={$filegals_manager|escape}{/if}{if !empty($insertion_syntax)}&amp;insertion_syntax={$insertion_syntax|escape}{/if}"
+									href="{$files[changes].id|sefurl:'filegallery'}{if !empty($filegals_manager)}&amp;filegals_manager={$filegals_manager|escape}{/if}{if !empty($insertion_syntax)}&amp;insertion_syntax={$insertion_syntax|escape}{/if}"
 								{else}
 
 									{if !empty($filegals_manager)}
