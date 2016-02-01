@@ -171,11 +171,11 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 					if ($prefs['feature_intertiki_imported_groups']) {
 						$groups = preg_split('/\s*,\s*/', $prefs['feature_intertiki_imported_groups']);
 						foreach ($groups as $group) {
-							if (in_array(trim($group), $user_details['groups'])) {
+							if (in_array(trim($group), $user_details['groups']) && $userlib->group_exists(trim($group))) {
 								$userlib->assign_user_to_group($user, trim($group));
 							}
 						}
-					} else {
+					} elseif ($userlib->group_exists($user_details['groups'])) {
 						$userlib->assign_user_to_groups($user, $user_details['groups']);
 					}
 				} else {
