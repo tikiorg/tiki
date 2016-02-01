@@ -582,6 +582,28 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "jquery/jquery-ui",
+				"version": "1.11.4",
+				"dist": {
+					"url": "http://jqueryui.com/resources/download/jquery-ui-1.11.4.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-ui-themes",
+				"version": "1.11.4",
+				"dist": {
+					"url": "http://jqueryui.com/resources/download/jquery-ui-themes-1.11.4.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "jquery/jquery-timepicker-addon",
 				"version": "1.4",
 				"dist": {
