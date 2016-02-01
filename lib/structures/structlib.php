@@ -1046,32 +1046,57 @@ class StructLib extends TikiLib
 		}
 		return $ret;
 	}
-	public function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_match = true, $filter = '')
+	public function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_match = true, $filter = array())
 	{
+		global $prefs;
+
 		if ($find) {
 			if (!$exact_match && $find) {
 				$find = preg_replace("/(\w+)/", "%\\1%", $find);
 				$find = preg_split("/[\s]+/", $find, -1, PREG_SPLIT_NO_EMPTY);
-				$mid = " where (`parent_id` is null or `parent_id`=0) and (tp.`pageName` like ".implode(' or tp.`pageName` like ', array_fill(0, count($find), '?')).")";
+				$mid = " where (`parent_id` is null or `parent_id`=0) and (tp.`pageName` like " . implode(' or tp.`pageName` like ', array_fill(0, count($find), '?')) . ")";
 				$bindvars = $find;
 			} else {
 				$mid = ' where (`parent_id` is null or `parent_id`=0) and (tp.`pageName` like ?)';
 				$findesc = '%' . $find . '%';
-				$bindvars=array($findesc);
+				$bindvars = array($findesc);
 			}
 		} else {
 			$mid = ' where (`parent_id` is null or `parent_id`=0) ';
-			$bindvars=array();
+			$bindvars = array();
 		}
+
+		// If language is set to '', assume that no language filtering should be done.
+		if (isset($filter['lang']) && $filter['lang'] == '') {
+			unset($filter['lang']);
+		}
+
+		if ($prefs['feature_wiki_categorize_structure'] == 'y') {
+			$category_jails = TikiLib::lib('categ')->get_jail();
+			if ( ! isset( $filter['andCategId'] ) && ! isset( $filter['categId'] ) && empty( $filter['noCateg'] ) && ! empty( $category_jails ) ) {
+				$filter['categId'] = $category_jails;
+			}
+		}
+
 		$join_tables = ' inner join `tiki_pages` tp on (tp.`page_id`= ts.`page_id`)';
 		$join_bindvars = array();
+		$distinct = '';
 		if (!empty($filter)) {
 			foreach ($filter as $type => $val) {
 				if ($type == 'categId') {
-					$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId`=?) ";
-					$join_bindvars = array('wiki page', $val);
+					$categories = TikiLib::lib('categ')->get_jailed((array) $val);
+					$categories[] = -1;
+
+					$cat_count = count($categories);
+					$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId` IN(" . implode(', ', array_fill(0, $cat_count, '?')) . ")) ";
+
+					if ( $cat_count > 1 ) {
+						$distinct = ' DISTINCT ';
+					}
+
+					$join_bindvars = array_merge(array('wiki page'), $categories);
 				} elseif ($type == 'lang') {
-					$mid .= empty($mid)? ' where ': ' and ';
+					$mid .= empty($mid) ? ' where ' : ' and ';
 					$mid .= '`lang`=? ';
 					$bindvars[] = $val;
 				}
@@ -1079,9 +1104,10 @@ class StructLib extends TikiLib
 		}
 
 		if (!empty($join_bindvars)) {
-			$bindvars = empty($bindvars)? $join_bindvars : array_merge($join_bindvars, $bindvars);
+			$bindvars = empty($bindvars) ? $join_bindvars : array_merge($join_bindvars, $bindvars);
 		}
-		$query = "select `page_ref_id`,`structure_id`,`parent_id`,ts.`page_id`,`page_alias`,`pos`,
+
+		$query = "select $distinct `page_ref_id`,`structure_id`,`parent_id`,ts.`page_id`,`page_alias`,`pos`,
 			`pageName`,tp.`hits`,`data`,tp.`description`,`lastModif`,`comment`,`version`,
 			`user`,`ip`,`flag`,`points`,`votes`,`cache`,`wiki_cache`,`cache_timestamp`,
 			`pageRank`,`creator`,`page_size` from `tiki_structures` as ts $join_tables $mid order by ".$this->convertSortMode($sort_mode);
