@@ -82,7 +82,6 @@ class CleanVendors
 				'video.html'
 			]
 		);
-		$fs->remove($vendors . 'jquery/plugins/brosho/__MACOSX');
 		self::removeMultiple($vendors . 'jquery/plugins/chosen',
 			[
 				'docsupport',

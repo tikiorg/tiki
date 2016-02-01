@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "232b0b331fc32d9dfc108e88c9c8bd6a",
-    "content-hash": "f93dcfc2cf548c25d1586621911e52be",
+    "hash": "f07eb27342f8c2ff11b10ab26712b6a4",
+    "content-hash": "8f6c7a0905117392f17e6177b0b36f4f",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -766,17 +766,6 @@
                 "url": "https://composer.tiki.org/dist/jquery-plugins-async-1.0.zip",
                 "reference": null,
                 "shasum": "7dd1dbc94b1e40fb3138ae67cf5b93149e2c4b8a"
-            },
-            "type": "library"
-        },
-        {
-            "name": "jquery/plugins/brosho",
-            "version": "0.1",
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-brosho-0.1.zip",
-                "reference": null,
-                "shasum": "9047eaa2416a79278a91f34e2b41235087f1d091"
             },
             "type": "library"
         },

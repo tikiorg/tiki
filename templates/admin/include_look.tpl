@@ -8,8 +8,6 @@
 		{if $prefs.feature_editcss eq 'y' and $tiki_p_create_css eq 'y'}
 			{button _text="{tr}Edit CSS{/tr}" _class="btn-sm" href="tiki-edit_css.php"}
 		{/if}
-		{button _text="{tr}CSS Assistant{/tr}" _class="btn-sm tips" _onclick="show_brosho();return false;" _ajax="n" _title="{tr}Brosho jQuery Plugin{/tr}:{tr}Assistance to edit Custom CSS{/tr}" href="#"}
-		{$headerlib->add_jsfile('lib/jquery_tiki/brosho/tiki_brosho.js')}
 		<div class="pull-right">
 			<input type="submit" class="btn btn-primary btn-sm" name="looksetup" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
 		</div>
