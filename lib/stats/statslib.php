@@ -300,9 +300,8 @@ class StatsLib extends TikiLib
      */
     public function stats_hit($object, $type, $id = null)
 	{
-		if ( is_null($object) || is_null($type) ) {
-			$result = false;
-			return $result;
+		if ( empty($object) || empty($type) || !StatsLib::is_stats_hit() ) {
+			return false;
 		}
 
 		list($month, $day, $year) = explode(',', $this->date_format("%m,%d,%Y"));
