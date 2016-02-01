@@ -40,11 +40,12 @@ function prefs_header_list()
 			'filter' => 'none',
 		),
 		'header_custom_less' => array(
-			'name' => tra('Custom Less (CSS precompiler) variable definitions'),
+			'name' => tra('Custom Less'),
 			'description' => tra('Compiles a new version of the currently selected theme and option using definitions declared here.'),
 			'type' => 'textarea',
 			'size' => 5,
 			'default' => '',
+			'hint' => tra('Custom Less (CSS precompiler) variable definitions'),
 			'filter' => 'none',
 		),
 	);

@@ -175,7 +175,7 @@
 					</div>
 					{preference name=feature_jscalendar}
 					{preference name=feature_hidden_links}
-                    {preference name=feature_equal_height_rows_js}
+					{preference name=feature_equal_height_rows_js}
 				</div>
 			</fieldset>
 		{/tab}
@@ -252,11 +252,7 @@
 			{preference name=feature_html_head_base_tag}
 		{/tab}
 	{/tabset}
-	<div class="row">
-		<div class="form-group col-lg-12">
-			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm" name="looksetup" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-			</div>
-		</div>
+	<div class="t_navbar margin-bottom-md text-center">
+		<input type="submit" class="btn btn-primary btn-sm tips" name="looksetup" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 	</div>
 </form>
