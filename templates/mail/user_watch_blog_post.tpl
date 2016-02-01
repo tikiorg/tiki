@@ -4,7 +4,7 @@
 {tr}Contribution:{/tr} {$mail_contributions}{/if}
 
 {tr}View the blog at:{/tr}
-{$mail_machine_raw}/tiki-view_blog_post.php?blogId={$mail_blogid}&postId={$mail_postid}
+{$mail_machine_raw}/{$mail_postid|sefurl:blogpost}
 
 {tr}If you don't want to receive these notifications follow this link:{/tr}
 {$mail_machine_raw}/tiki-user_watches.php?id={$watchId}
