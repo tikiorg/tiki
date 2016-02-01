@@ -26,8 +26,7 @@ function sendForumEmailNotification(
 				$inReplyTo = '',
 				$threadId,
 				$parentId,
-				$contributions='',
-				$postId = '')
+				$contributions='')
 {
 	global $prefs;
 	$userlib = TikiLib::lib('user');
@@ -57,7 +56,7 @@ function sendForumEmailNotification(
 			} else {
 				$reply_link="$machine/tiki-view_forum_thread.php?forumId=" .
 					$forum_info['forumId'] .
-					"&comments_reply_threadId=$object&comments_parentId=$threadId&post_reply=1#form";
+					"&comments_reply_threadId=$threadId&comments_parentId=$threadId&post_reply=1#form";
 			}
 		} else {
 			$reply_link = '';
@@ -144,8 +143,8 @@ function sendForumEmailNotification(
 				"event"=>$event,
 				"forumId"=>$forum_info['forumId'],
 				"forumName"=>$forum_info['name'],
-				"topicId"=>$threadId,
-				"threadId"=>$postId,
+				"topicId"=>$parentId,
+				"threadId"=>$threadId,
 				"threadName"=>$topicName,
 				"user"=>$author
 			)
@@ -171,9 +170,13 @@ function sendForumEmailNotification(
 		if ($event == "forum_post_topic") {
 			$smarty->assign('new_topic', 'y');
 		} else {
-			$smarty->assign('threadId', $object);
+			$smarty->assign('threadId', $threadId);
 		}
-		$smarty->assign('topicId', $threadId);
+		if ($parentId) {
+			$smarty->assign('topicId', $parentId);
+		} else {
+			$smarty->assign('topicId', $threadId);
+		}
 		$smarty->assign('mail_topic', $topicName);
 		foreach ($nots as $not) {
 			$mail = new TikiMail();

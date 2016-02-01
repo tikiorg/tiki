@@ -541,7 +541,7 @@ class Comments extends TikiLib
 			}
 
 			// post
-			$threadid = $this->post_new_comment(
+			$threadId = $this->post_new_comment(
 				'forum:' . $forumId,
 				$parentId,
 				$userName,
@@ -574,14 +574,14 @@ class Comments extends TikiLib
 								} else {
 									$part_name = "Unnamed File";
 								}
-								$this->add_thread_attachment($forum_info, $threadid, $errors, $part_name, $part['type'], strlen($part['body']), 1, '', '', $part['body']);
+								$this->add_thread_attachment($forum_info, $threadId, $errors, $part_name, $part['type'], strlen($part['body']), 1, '', '', $part['body']);
 							} elseif ($part['disposition'] == 'inline') {
 								if (!empty($part['parts'])) {
 									foreach ($part['parts'] as $p) {
-										$this->add_thread_attachment($forum_info, $threadid, $errors, '-', $p['type'], strlen($p['body']), 1, '', '', $p['body']);
+										$this->add_thread_attachment($forum_info, $threadId, $errors, '-', $p['type'], strlen($p['body']), 1, '', '', $p['body']);
 									}
 								} else if (!empty($part['body'])) {
-									$this->add_thread_attachment($forum_info, $threadid, $errors, '-', $part['type'], strlen($part['body']), 1, '', '', $part['body']);
+									$this->add_thread_attachment($forum_info, $threadId, $errors, '-', $part['type'], strlen($part['body']), 1, '', '', $part['body']);
 								}
 							}
 						}
@@ -595,7 +595,7 @@ class Comments extends TikiLib
 				include_once('lib/notifications/notificationemaillib.php');
 				sendForumEmailNotification(
 					'forum_post_thread',
-					$threadid,
+					$info['forum_id'],
 					$info,
 					$title,
 					$body,
@@ -603,7 +603,7 @@ class Comments extends TikiLib
 					$title,
 					$message_id,
 					$in_reply_to,
-					$threadid,
+					$threadId,
 					$parentId
 				);
 			}
@@ -766,9 +766,8 @@ class Comments extends TikiLib
 			$info['user'],
 			$info['title'],
 			$message_id, $info['in_reply_to'],
-			isset($info['parentId'])?$info['parentId']: $threadId,
-			isset($info['parentId'])?$info['parentId']: 0,
-			$threadId
+			$threadId,
+			isset($info['parentId'])?$info['parentId']: 0
 		);
 
 		if ($info['email']) {
@@ -3562,10 +3561,9 @@ class Comments extends TikiLib
 							$params['comments_title'],
 							$message_id,
 							$in_reply_to,
-							isset($params['comments_parentId']) ? $params['comments_parentId'] : $threadId,
+							$threadId,
 							isset($params['comments_parentId']) ? $params['comments_parentId'] : 0,
-							isset($params['contributions'])? $params['contributions'] : '',
-							$threadId
+							isset($params['contributions'])? $params['contributions'] : ''
 						);
 						// Set watch if requested
 						if ($prefs['feature_user_watches'] == 'y') {
