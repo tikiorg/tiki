@@ -149,6 +149,9 @@ function iconset_default()
 			'admin_socialnetworks' => array(
 				'id' => 'thumbs-up',
 			),
+			'admin_stats' => array(
+				'id' => 'bar-chart',
+			),
 			'admin_textarea' => array(
 				'id' => 'edit',
 			),

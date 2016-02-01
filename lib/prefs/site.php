@@ -151,5 +151,33 @@ function prefs_site_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'site_piwik_analytics_server_url' => array(
+			'name' => tr('Piwik server url'),
+			'description' => tr('The url to your Piwik Server') . '<br />'
+					. tr('In your Piwik, your selected site (Site Id) MUST have view permission for anonymous OR you can insert in your Piwik server url a token authentification parameter.'),
+			'type' => 'text',
+			'filter' => 'url',
+			'size' => 30,
+			'default' => '',
+			'hint' => 'http(s)://yourpiwik.tld/index.php(?token_auth=yourtokencode)',
+		),
+		'site_piwik_site_id' => array(
+			'name' => tra('Site Id'),
+			'description' => tr('The ID of your website in Piwik.'),
+			'type' => 'text',
+			'size' => '5',
+			'default' => '',
+			'dependencies' => array(
+				'site_piwik_analytics_server_url',
+			),
+		),
+		'site_google_credentials' => array(
+			'name' => tra('Google Authentication Credentials File'),
+			'description' => tr('Path to you Google Service Account credentials JSON file.'),
+			'type' => 'text',
+			'size' => 30,
+			'default' => '',
+			'warning' => 'Must be kept private and not accessible on the internet directly',
+		),
 	);
 }

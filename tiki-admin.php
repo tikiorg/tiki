@@ -520,6 +520,12 @@ $admin_icons = array(
 		'description' => tr('Configure share feature'),
 		'help' => 'Share',
 	),
+	"stats" => array(
+		'title' => tr('Statistics'),
+//		'disabled' => $prefs['feature_stats'] != 'y',
+		'description' => tr('Configure statistics reporting for your site usage'),
+		'help' => 'Statistics',
+	),
 );
 
 if (isset($_REQUEST['page'])) {

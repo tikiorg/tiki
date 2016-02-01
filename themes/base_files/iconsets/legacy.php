@@ -156,6 +156,9 @@ function iconset_legacy()
 			'admin_socialnetworks' => array(
 				'id' => 'large/socialnetworks',
 			),
+			'admin_stats' => array(
+				'id' => 'large/stats48x48',
+			),
 			'admin_textarea' => array(
 				'id' => 'large/editing',
 			),

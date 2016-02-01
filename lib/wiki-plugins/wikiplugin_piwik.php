@@ -19,7 +19,7 @@ function wikiplugin_piwik_info()
 		'format' => 'html',
 		'params' => array(
 			'piwikserverurl' => array(
-				'required' => true,
+				'required' => false,
 				'name' => tra('Piwik server url'),
 				'description' => tr('The url to your Piwik Server, where data for the report are collected and available.') . ' <code>http(s)://yourpiwik.tld/index.php?</code> ' . '<br />'
 					. tr('In your Piwik, your selected site (Site Id) MUST have view permission for anonymous OR you can insert in your Piwik server url a token authentification parameter.') . '<br />'
@@ -29,7 +29,7 @@ function wikiplugin_piwik_info()
 			),
 
 			'idSite' => array(
-				'required' => true,
+				'required' => false,
 				'name' => tra('Site Id'),
 				'description' => tr('The ID of your website in Piwik. To be improved.'),
 				'since' => '15',
@@ -149,6 +149,7 @@ function wikiplugin_piwik_info()
 
 function wikiplugin_piwik($data, $params)
 {
+	global $prefs;
 
 	$plugininfo = wikiplugin_piwik_info();
 	$default = array();
@@ -158,7 +159,15 @@ function wikiplugin_piwik($data, $params)
 	$params = array_merge($default, $params);
 
 	if (empty($params['piwikserverurl'])) {
+		$params['piwikserverurl'] = $prefs['site_piwik_analytics_server_url'];
+	}
+
+	if (empty($params['piwikserverurl'])) {
 		return tra('Plugin Piwik error:') . ' ' . tra('Piwik server url is required.');
+	}
+
+	if (empty($params['idSite'])) {
+		$params['idSite'] = $prefs['site_piwik_site_id'];
 	}
 
 	if (empty($params['idSite'])) {
