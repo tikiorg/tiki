@@ -40,7 +40,6 @@
 					{preference name=freetags_browse_amount_tags_in_cloud}
 				</div>
 
-				{preference name=freetags_3d_autoload}
 				{preference name=freetags_show_middle}
 
 				<div class="adminoptionbox">
@@ -77,45 +76,6 @@
 				<span class="help-block col-md-8 col-md-push-4">{tr}When arriving on <a href="tiki-browse_freetags.php">tag search page</a>{/tr}.</span>
 			</fieldset>
 		{/tab}
-
-		{if $prefs.feature_morcego eq 'y'}
-			{tab name="{tr}3D Tag Browser Configuration{/tr}"}
-				<h2>{tr}3D Tag Browser Configuration{/tr}</h2>
-				{preference name=freetags_feature_3d}
-				<div id=freetags_feature_3d_childcontainer>
-					<fieldset>
-						<legend>{tr}General{/tr}</legend>
-						{preference name=freetags_3d_width}
-						{preference name=freetags_3d_height}
-					</fieldset>
-					<fieldset>
-						<legend>{tr}Graph appearance{/tr}</legend>
-						{preference name=freetags_3d_navigation_depth}
-						{preference name=freetags_3d_node_size}
-						{preference name=freetags_3d_text_size}
-						{preference name=freetags_3d_spring_size}
-						{preference name=freetags_3d_existing_page_color}
-						{preference name=freetags_3d_missing_page_color}
-					</fieldset>
-					<fieldset>
-						<legend>{tr}Camera settings{/tr}</legend>
-						{preference name=freetags_3d_adjust_camera}
-						{preference name=freetags_3d_camera_distance}
-						{preference name=freetags_3d_fov}
-						{preference name=freetags_3d_feed_animation_interval}
-					</fieldset>
-					<fieldset>
-						<legend>{tr}Physics engine{/tr}</legend>
-						{preference name=freetags_3d_friction_constant}
-						{preference name=freetags_3d_elastic_constant}
-						{preference name=freetags_3d_eletrostatic_constant}
-						{preference name=freetags_3d_node_mass}
-						{preference name=freetags_3d_node_charge}
-					</fieldset>
-				</div>
-			{/tab}
-		{/if}
-
 	{/tabset}
 
 	<br>{* I cheated. *}

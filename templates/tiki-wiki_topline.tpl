@@ -176,14 +176,6 @@
 								{/if}
 							{/if}
 						{/if}
-						{if $prefs.feature_morcego eq 'y' && $prefs.wiki_feature_3d eq 'y'}
-							<li>
-								<a href="javascript:wiki3d_open('{$page|escape}',{$prefs.wiki_3d_width}, {$prefs.wiki_3d_height})">
-									{icon name="three-d"} {tr}3d browser{/tr}
-									{assign var="hasPageAction" value="1"}
-								</a>
-							</li>
-						{/if}
 						{if $cached_page eq 'y'}
 							<li>
 								<a href="{$page|sefurl:'wiki':'with_next'}refresh=1">

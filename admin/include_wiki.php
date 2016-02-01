@@ -89,20 +89,6 @@ if (isset($_REQUEST['wikifeatures'])) {
 	}
 }
 
-if (isset($_REQUEST['wikiset3d'])) {
-	check_ticket('admin-inc-wiki');
-	if (isset($_REQUEST['wiki_3d_autoload']) && $_REQUEST['wiki_3d_autoload'] == 'on') {
-		$tikilib->set_preference('wiki_3d_autoload', 'true');
-	} else {
-		$tikilib->set_preference('wiki_3d_autoload', 'false');
-	}
-	if (isset($_REQUEST['wiki_3d_adjust_camera']) && $_REQUEST['wiki_3d_adjust_camera'] == 'on') {
-		$tikilib->set_preference('wiki_3d_adjust_camera', 'true');
-	} else {
-		$tikilib->set_preference('wiki_3d_adjust_camera', 'false');
-	}
-}
-
 $tags = $adminlib->get_tags();
 $smarty->assign_by_ref('tags', $tags);
 ask_ticket('admin-inc-wiki');

@@ -23,9 +23,5 @@ if (isset($_REQUEST["morelikethisoptions"])) {
 	check_ticket('admin-inc-freetags');
 }
 
-if (isset($_REQUEST["freetagsset3d"])) {
-	check_ticket('admin-inc-freetags');
-}
-
 $headerlib->add_cssfile('themes/base_files/feature_css/admin.css');
 ask_ticket('admin-inc-freetags');

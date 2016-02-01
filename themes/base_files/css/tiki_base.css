@@ -660,9 +660,6 @@ h6 a.tiki_anchor:hover {
 .diffadded .diffchar {
   color: #4d984e;
 }
-.morcego_embedded {
-  border: 1px solid;
-}
 .highlight_word_0 {
   color: #3c763d;
   background: #dff0d8;
@@ -4211,9 +4208,6 @@ body.tiki_wiki #comments {
 .diffdeleted,
 .diffinldel {
   text-decoration: line-through;
-}
-.morcego_embedded {
-  border: 1px solid;
 }
 .ui-tabs .ui-tabs-nav li a {
   padding: 0.3em 0.8em 0.1em;

@@ -130,7 +130,7 @@ class WikiLib extends TikiLib
 	}
 
 	// Returns all pages that links from here or to here, without distinction
-	// This is used by wiki3d, to make the graph
+	// This is used by wiki mindmap, to make the graph
 	public function wiki_get_neighbours($page)
 	{
 		$neighbours = array();

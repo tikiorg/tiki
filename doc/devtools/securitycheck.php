@@ -106,7 +106,7 @@ function get_content($filename)
 function feature_pattern(&$featureNameIndex) // {{{
 {
 	global $major, $minor, $revision;
-	$featureName = "((feature_\w+)|wiki_feature_3d|lang_use_db|allowRegister|validateUsers|cachepages)";
+	$featureName = "((feature_\w+)|lang_use_db|allowRegister|validateUsers|cachepages)";
 	$q = "[\"']";
 	if ($major == 1 && $minor == 9) {
 		$featureNameIndex = array(2, 7);

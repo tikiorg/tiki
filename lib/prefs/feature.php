@@ -596,13 +596,6 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'y',
 		),
-		'feature_morcego' => array(
-			'name' => tra('Morcego 3D browser'),
-			'description' => tra('Visualize relationships between wiki pages, in a 3D applet'),
-			'help' => 'Wiki+3D',
-			'type' => 'flag',
-			'default' => 'n',
-		),
 		'feature_webmail' => array(
 			'name' => tra('Webmail'),
 			'description' => tra('Webmail'),

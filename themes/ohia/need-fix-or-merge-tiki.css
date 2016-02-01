@@ -1282,10 +1282,6 @@ body.tiki_wiki #comments {
 .diffadded .diffchar {
   color: blue;
 }
-.morcego_embedded {
-  border: 1px solid;
-  text-align: center;
-}
 .highlight_word_0 {
   color: #ffff66;
   background: #666;
