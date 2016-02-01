@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f07eb27342f8c2ff11b10ab26712b6a4",
-    "content-hash": "8f6c7a0905117392f17e6177b0b36f4f",
+    "hash": "15bb9ecad65b37802236565d2ee65cd4",
+    "content-hash": "41f7ba873177f2a30ce8ce59c1e5b6a0",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -792,17 +792,6 @@
             "type": "library"
         },
         {
-            "name": "jquery/plugins/colorpicker",
-            "version": "0.5",
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-colorpicker-0.5.zip",
-                "reference": null,
-                "shasum": "3a07d613df9bdec079bc535ba0da3b03183476db"
-            },
-            "type": "library"
-        },
-        {
             "name": "jquery/plugins/fitvidjs",
             "version": "1.1.0",
             "dist": {
@@ -909,17 +898,6 @@
                 "url": "https://composer.tiki.org/dist/jquery-plugins-nestedsortable-1.3.4.zip",
                 "reference": null,
                 "shasum": "6d536f147c8df6c6478bbb7e9534c641e5bb45ec"
-            },
-            "type": "library"
-        },
-        {
-            "name": "jquery/plugins/pxem",
-            "version": "0.1",
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-pxem-0.1.zip",
-                "reference": null,
-                "shasum": "1487ed08b114f77b8803426758b151f8cf235b59"
             },
             "type": "library"
         },
