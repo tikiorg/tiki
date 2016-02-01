@@ -1046,7 +1046,7 @@ li.archivedate {
 li.login_link ul li a {
   background: none !important;
 }
-.siteloginbar_popup > .userlink > img {
+.siteloginbar_popup img {
   height: 24px;
 }
 .tellafriend,
@@ -4264,3 +4264,4 @@ div.drillshow {
 .multilike .rate div .count {
   font-size: 0.8em;
 }
+/* End of file */
