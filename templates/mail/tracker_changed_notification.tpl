@@ -3,7 +3,7 @@
 {else}{$mail_action}
 
 {tr}View the tracker item at:{/tr}
-	{$mail_machine_raw}/tiki-view_tracker_item.php?itemId={$mail_itemId}
+	{$mail_machine_raw}/{$mail_itemId|sefurl:'trackeritem'}
 {/if}
 
 {tr}Author:{/tr} {$mail_user|username}
