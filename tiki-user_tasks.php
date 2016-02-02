@@ -70,10 +70,10 @@ if (isset($_REQUEST['update_tasks'])) {
 				$msg_from = $user;
 				$msg_to = $trashed_task['user'];
 			}
-			$msg_title = tra('Task') . ' "' . $trashed_task['title'] . '" ' . tra('was moved into trash');
+			$msg_title = tra('Task') . ' "' . $trashed_task['title'] . '" ' . tra('was moved to the trash');
 			$msg_body = '__' . tra('Task') . ':__';
 			$msg_body.= '^[tiki-user_tasks.php?taskId=' . $trashed_task['taskId'] . "|" . $trashed_task['title'] . "]^\n\n";
-			$msg_body.= tra('trashed by') . ': ' . $user;
+			$msg_body.= tra('was moved to the trash by') . ': ' . $user;
 			if ($userlib->user_has_permission($msg_from, 'tiki_p_messages') and $userlib->user_has_permission($msg_to, 'tiki_p_messages')) {
 				$messulib->post_message($msg_to, $msg_from, $msg_to, '', $msg_title, $msg_body, $trashed_task['priority']);
 			}

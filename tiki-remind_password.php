@@ -46,11 +46,11 @@ if (isset($_REQUEST["remind"])) {
 	} else if (!empty($_REQUEST['email'])) {
 		if (!($_REQUEST['name'] = $userlib->get_user_by_email($_REQUEST['email']))) {
 			$showmsg = 'e';
-			$smarty->assign('msg', tra('Invalid or unknown email') . ': ' . $_REQUEST['email']);
+			$smarty->assign('msg', tra('Invalid or unknown email address') . ': ' . $_REQUEST['email']);
 		}
 	} else {
 		$showmsg = 'e';
-		$smarty->assign('msg', tra('Please provide a username or email.'));
+		$smarty->assign('msg', tra('Please provide a username or email address.'));
 	}
 	if (isset($showmsg) && $showmsg == 'e') {
 		$smarty->assign('showmsg', 'e');

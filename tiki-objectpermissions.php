@@ -231,7 +231,7 @@ if (!empty($_SESSION['perms_clipboard'])) {
 	);
 
 	if (isset($_REQUEST['paste'])) {
-		$access->check_authenticity(tra('Are you sure you want paste the copied permissions onto this object?'));
+		$access->check_authenticity(tra('Are you sure you want to paste the copied permissions into this object?'));
 		unset($_SESSION['perms_clipboard']);
 
 		$set = new Perms_Reflection_PermissionSet;

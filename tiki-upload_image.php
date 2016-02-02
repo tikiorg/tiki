@@ -139,7 +139,7 @@ if (isset($_REQUEST["upload"])) {
 				$imginfo = @getimagesize($tmp_dest);
 				unlink($tmp_dest);
 				if (!$data || !$imginfo) { // Not in Image format
-					$error_msg = tra('The uploaded file ist not recognized as a image');
+					$error_msg = tra('The uploaded file is not recognized as a image');
 					$smarty->assign('errortype', 'no_redirect_login');
 				}
 			} else {
@@ -205,7 +205,7 @@ if (isset($_REQUEST["upload"])) {
 					$t_type = 'image/jpg'; // . $t_type;
 					$imageId = $imagegallib->insert_image($_REQUEST["galleryId"], $name, $_REQUEST["description"], $filename, $type, $data, $size, $size_x, $size_y, $user, $t_data, $t_type, $lat, $lon, $gal_info);
 				} else { // Not in Image format
-					$smarty->assign('msg', tra('The uploaded file ist not recognized as a image'));
+					$smarty->assign('msg', tra('The uploaded file is not recognized as a image'));
 					$smarty->display('error.tpl');
 					die;
 				}
@@ -220,7 +220,7 @@ if (isset($_REQUEST["upload"])) {
 					$size_y = imagesy($img);
 				} else {
 					// Not in Image format
-					$smarty->assign('msg', tra('The uploaded file ist not recognized as a image'));
+					$smarty->assign('msg', tra('The uploaded file is not recognized as a image'));
 					$smarty->display('error.tpl');
 					die;
 				}

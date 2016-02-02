@@ -558,7 +558,7 @@ function postForum($forumId, $subject)
 	$forumperms = Perms::get(array( 'type' => 'forum', 'object' => $forumId ));
 
 	if (!($forumperms->forum_post and $forumperms->forum_post_topic) or !$forumperms->admin_forum) {
-		$errors[] = tra('Permission to post in forum denied');
+		$errors[] = tra("You don't have permission to post in this forum");
 		return 0;
 	}
 

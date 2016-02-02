@@ -22,7 +22,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 	}
 	fclose($fp);
 	if (strlen($data) > 1000000) {
-		$smarty->assign('msg', tra("File is too big"));
+		$smarty->assign('msg', tra("The file is too large"));
 		$smarty->display("error.tpl");
 		die;
 	}

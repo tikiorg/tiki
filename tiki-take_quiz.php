@@ -61,7 +61,7 @@ if (isset($_REQUEST["timeleft"])) {
 	// Verify time limit if appropiate
 	if ($quiz_info["timeLimited"] == 'y') {
 		if ($elapsed > $quiz_info["timeLimit"] * 60) {
-			$smarty->assign('msg', tra("Quiz time limit exceeded quiz cannot be computed"));
+			$smarty->assign('msg', tra("The quiz time limit was exceeded. The quiz score cannot be computed"));
 			$smarty->display("error.tpl");
 			die;
 		}

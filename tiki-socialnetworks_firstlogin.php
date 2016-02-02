@@ -42,7 +42,7 @@ if (isset($_REQUEST["localinfosubmit"])) {
 		$smarty->assign('msg', tra('User already exists'));
 	} elseif (!preg_match('/^[_a-z0-9\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$/i',
 				($prefs['login_is_email'] !== 'y') ? $_REQUEST['email'] : $_REQUEST['name'])) {
-		$smarty->assign('msg', tra('Email is invalid'));
+		$smarty->assign('msg', tra('The email address is invalid'));
 	} else {
 		$tikilib->set_user_preference($user, 'socialnetworks_user_firstlogin', 'n');
 		if ($prefs['user_unique_email'] != 'y' || !$userlib->other_user_has_email($user, $_REQUEST['email'])) {

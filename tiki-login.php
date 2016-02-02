@@ -444,7 +444,7 @@ if ($isvalid) {
         		break;
  
 		case USER_AMBIGOUS:
-			$error = tra('You must use the right case for your user name.');
+			$error = tra('You must use the right case for your username.');
         		break;
 
 		case USER_NOT_VALIDATED:
