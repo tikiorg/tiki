@@ -124,7 +124,7 @@ if ($_REQUEST['locSection'] == 'read') {
 			$webmaillib->remove_webmail_message($current['accountId'], $user, $aux['realmsgid']);
 			unset($_REQUEST['msgid']);
 		} catch (Exception $e) {
-			$smarty->assign('conmsg', tra('There was a problem deleting that mail.').'<br />'.$e->getMessage());
+			$smarty->assign('conmsg', tra('There was a problem deleting that email message.').'<br />'.$e->getMessage());
 		}
 	}
 
@@ -369,7 +369,7 @@ END;
 				}
 			}
 			if (!empty($err)) {
-				$smarty->assign('conmsg', tra('There was a problem while trying to delete these mails.').'<br />'.$err);
+				$smarty->assign('conmsg', tra('There was a problem while trying to delete these email messages.').'<br />'.$err);
 			}
 		}
 	}
@@ -381,7 +381,7 @@ END;
 		try {
 			$mail->removeMessage($_REQUEST['msgdel']);
 		} catch (Exception $e) {
-			$smarty->assign('conmsg', tra('There was a problem while trying to delete that mail.').'<br />'.$e->getMessage());
+			$smarty->assign('conmsg', tra('TThere was a problem while trying to delete this email message.').'<br />'.$e->getMessage());
 		}
 	}
 

@@ -216,7 +216,7 @@ if (isset($_REQUEST['comments_remove']) && isset($_REQUEST['comments_threadId'])
 		$commentslib->remove_comment($_REQUEST['comments_threadId']);
 		$commentslib->register_remove_post($_REQUEST['forumId'], 0);
 	} else { // user can't edit this post
-		$smarty->assign('msg', tra('You are not permitted to remove someone else\'s post!'));
+		$smarty->assign('msg', tra('You do not have permission to remove someone else\'s post!'));
 		$smarty->assign('errortype', 'no_redirect_login');
 		$smarty->display('error.tpl');
 		die;

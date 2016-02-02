@@ -22,7 +22,7 @@ $info = $trklib->get_moreinfo($_REQUEST["attId"]);
 $trackerId = $info['trackerId'];
 unset($info['trackerId']);
 if (!$trackerId) {
-	$smarty->assign('msg', tra("That tracker don't use extras."));
+	$smarty->assign('msg', tra('That tracker does not use extras.'));
 	$smarty->display("error_simple.tpl");
 	die;
 }

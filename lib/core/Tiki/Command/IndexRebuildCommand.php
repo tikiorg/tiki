@@ -63,7 +63,7 @@ class IndexRebuildCommand extends Command
 
 		if ($result) {
 			if (!$cron) {
-				$output->writeln("Indexation");
+				$output->writeln("Indexed");
 				foreach($result as $key => $val) {
 					$output->writeln("  $key: $val");
 				}

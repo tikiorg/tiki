@@ -68,7 +68,7 @@ for ($i = 0; $i < 5; $i++) {
 		$name = $_FILES["userfile$i"]['name'];
 		$type = $_FILES["userfile$i"]['type'];
 		if ($quota + $size > $limit) {
-			$smarty->assign('msg', tra('Cannot upload this file not enough quota'));
+			$smarty->assign('msg', tra('Cannot upload this file. The storage quota would be exceeded'));
 			$smarty->display("error.tpl");
 			die;
 		}

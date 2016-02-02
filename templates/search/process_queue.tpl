@@ -7,7 +7,7 @@
 {block name="content"}
 	<form method="post" action="{service controller=search action=process_queue}">
 		{if !empty($stat)}
-			{remarksbox type='feedback' title="{tr}Indexation{/tr}"}
+			{remarksbox type='feedback' title="{tr}Indexed{/tr}"}
 				<ul>
 					{foreach from=$stat key=what item=nb}
 						<li>{$what|escape}: {$nb|escape}</li>

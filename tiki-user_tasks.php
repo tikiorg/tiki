@@ -249,7 +249,7 @@ if (isset($_REQUEST['show_history'])) $show_history = $_REQUEST['show_history'];
 if (($_REQUEST['taskId']) && !isset($_REQUEST['preview'])) {
 	$info = $tasklib->get_task($user, $_REQUEST['taskId'], $show_history, $task_admin);
 	if (!(isset($info['user']))) {
-		$smarty->assign('msg', tra("Sorry this task does not exist or you have no rights to view this task"));
+		$smarty->assign('msg', tra("Sorry, this task does not exist or you don't have permission to view this task"));
 		$smarty->display("error.tpl");
 		die;
 	}
@@ -482,7 +482,7 @@ if (isset($_REQUEST['save'])) {
 			$taskId = $tasklib->new_task($_REQUEST['task_user'], $user, $public_for_group, $rights_by_creator, $tikilib->now, $save);
 		} else {
 			unset($_REQUEST['taskId']);
-			$smarty->assign('msg', tra("Sorry you are not allowed to send tasks to other users, or the user is not allowed to receive tasks!"));
+			$smarty->assign('msg', tra("Either you don't have permission to send tasks to other users, or the user doesn't have permission to receive tasks!"));
 			$smarty->display("error.tpl");
 			die;
 		}
@@ -539,12 +539,12 @@ if (isset($_REQUEST['save'])) {
 		}
 		$mail_data.= ".\n\n";
 		if ($info['start'] !== NULL) {
-			$mail_data.= tra("You've to start your work at least on") . ": " . $tikilib->date_format($prefs['short_date_format'] . ' ' . $prefs['short_time_format'], $info['end']) . "\n";
+			$mail_data.= tra("You must start your work at least on") . ": " . $tikilib->date_format($prefs['short_date_format'] . ' ' . $prefs['short_time_format'], $info['end']) . "\n";
 		}
 		if ($info['end'] !== NULL) {
-			$mail_data.= tra("You've to finish your work on") . ": " . $tikilib->date_format($prefs['short_date_format'] . ' ' . $prefs['short_time_format'], $info['end']) . "\n";
+			$mail_data.= tra("You must finish your work on") . ": " . $tikilib->date_format($prefs['short_date_format'] . ' ' . $prefs['short_time_format'], $info['end']) . "\n";
 		}
-		$mail_data.= "\n" . tra("Login and click the link below") . "\n";
+		$mail_data.= "\n" . tra("Log in and click the link below") . "\n";
 		$mail_data.= "http://" . $_REQUEST['HTTP_HOST'] . $_REQUEST['REQUEST_URI'] . "?tiki_view_mode=view&taskId=" . $taskId . "\n\n";
 		$mail_data.= tra("Please read the task and work on it!");
 		$mail->setText($mail_data);

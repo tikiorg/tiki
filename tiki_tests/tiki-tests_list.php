@@ -26,7 +26,7 @@ $smarty->assign('curl', extension_loaded("curl"));
 function delete_test($file)
 {
 	$access = TikiLib::lib('access');
-	$access->check_authenticity(tra("You are about to delete a TikiTest file, do you want to continue ?"));
+	$access->check_authenticity(tra("You are about to delete a TikiTest file. Do you want to continue ?"));
 	// Clean the filename
 	$file = basename($file);
 	if (file_exists("tiki_tests/tests/$file")) {
@@ -52,7 +52,7 @@ if (isset($_REQUEST['action'])) {
 		if (isset($_REQUEST['filename'])) {
 			$ok = delete_test($_REQUEST['filename']);
 			if (!$ok) {
-				$smarty->assign('msg', tra("Error deleting the file"));
+				$smarty->assign('msg', tra("There was an error deleting the file"));
 				$smarty->display("error.tpl");
 				die();
 			}

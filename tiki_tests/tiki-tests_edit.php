@@ -65,7 +65,7 @@ function get_url($url, $use_tidy = TRUE)
 			$result['ref_error_msg'] = tidy_get_error_buffer($data);
 		}
 	} else {
-		$result['ref_error_msg'] = tra("Tidy Extension not present");
+		$result['ref_error_msg'] = tra("The Tidy extension is not present");
 	}
 	$result['url'] = $urlstr;
 	$result['xpath'] = $xpath;
