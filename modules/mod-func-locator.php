@@ -34,5 +34,8 @@ function module_locator($mod_reference, $module_params)
 	$headerlib = TikiLib::lib('header');
 
 	$headerlib->add_map();
+
+	// assign the default map centre from the prefs as a data attribute for the map-container div
+	TikiLib::lib('smarty')->assign('center', TikiLib::lib('geo')->get_default_center());
 }
 
