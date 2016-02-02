@@ -19,7 +19,7 @@
 {/if}
 
 {if $individual eq 'y'}
-	{permission_link mode=link type=blog permType=blogs id=$blogId title=$title label="{tr}There are individual permissions set for this blog{/tr}"}
+	{permission_link mode=link type=blog permType=blogs id=$blogId title=$title label="{tr}Individual permissions are set for this blog{/tr}"}
 {/if}
 
 <form method="post" action="tiki-edit_blog.php" id="blog-edit-form" class="form-horizontal" role="form">
@@ -64,7 +64,7 @@
 					<div class="checkbox">
 						<label for="blogs-always_owner">
 							<input type="checkbox" name="alwaysOwner" id="blogs-always_owner" {if isset($alwaysOwner) and $alwaysOwner eq 'y'}checked='checked'{/if}>
-							{tr}If others post to blog, author should always be owner{/tr}
+							{tr}Even if others post to the blog, the author is always its administrator{/tr}
 						</label>
 					</div>
 					<div class="checkbox">
@@ -104,19 +104,19 @@
 					<div class="checkbox">
 						<label for="blogs-title">
 							<input type="checkbox" name="use_title" id="blogs-title" {if $use_title eq 'y'}checked='checked'{/if}>
-							{tr}Display blog title in posts list page{/tr}
+							{tr}Display the blog title on the posts list page{/tr}
 						</label>
 					</div>
 					<div class="checkbox">
 						<label for="blogs-title-post">
 							<input type="checkbox" name="use_title_in_post" id="blogs-title-post" {if $use_title_in_post eq 'y'}checked='checked'{/if}>
-							{tr}Display blog title in post page{/tr}
+							{tr}Display the blog title on the post page{/tr}
 						</label>
 					</div>
 					<div class="checkbox">
 						<label for="blogs-description">
 							<input type="checkbox" name="use_description" id="blogs-description" {if $use_description eq 'y'}checked='checked'{/if}>
-							{tr}Display blog description{/tr}
+							{tr}Display the blog description{/tr}
 						</label>
 					</div>
 					<div class="checkbox">
@@ -128,13 +128,13 @@
 					<div class="checkbox">
 						<label for="blogs-author">
 							<input type="checkbox" name="use_author" id="blogs-author" {if $use_author eq 'y'}checked='checked'{/if}>
-							{tr}Display author in blog posts{/tr}
+							{tr}Display the author in blog posts{/tr}
 						</label>
 					</div>
 					<div class="checkbox">
 						<label for="blogs-date">
 							<input type="checkbox" name="add_date" id="blogs-date" {if $add_date eq 'y'}checked='checked'{/if}>
-							{tr}Display published date in blog posts{/tr}
+							{tr}Display the publish date in blog posts{/tr}
 						</label>
 					</div>
 					<div class="checkbox">
@@ -146,7 +146,7 @@
 					<div class="checkbox">
 						<label for="blogs-post-related">
 							<input type="checkbox" name="show_related" id="blogs-post-related" {if $show_related eq 'y'}checked='checked'{/if} {if $prefs.feature_freetags ne 'y'}disabled="disabled"{/if}>
-							{tr}Show post related content{/tr}
+							{tr}Show the post's related content{/tr}
 							{if $prefs.feature_freetags neq 'y'}
 								<span class="help-block">{tr}The checkbox is disabled because the tags feature is disabled globally.{/tr}</span>
 							{/if}

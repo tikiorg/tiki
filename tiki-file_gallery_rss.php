@@ -17,7 +17,7 @@ if ($prefs['feed_file_gallery'] != 'y') {
 }
 
 if (empty($_REQUEST['galleryId'])) {
-	$errmsg=tra("No galleryId specified");
+	$errmsg=tra("No gallery ID specified");
 	require_once ('tiki-rss_error.php');
 }
 if (!is_array($_REQUEST['galleryId'])) {

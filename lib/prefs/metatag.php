@@ -35,7 +35,7 @@ function prefs_metatag_list()
 			'default' => 'n',
 		),
 		'metatag_imagetitle' => array(
-			'name' => tra('Use image title instead'),
+			'name' => tra('Use the image title instead'),
 			'description' => tra('Use the image title in the meta title tag'),
 			'type' => 'flag',
 			'dependencies' => array(

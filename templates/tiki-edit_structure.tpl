@@ -94,7 +94,7 @@
 	<form action="tiki-edit_structure.php" method="post" class="form-inline" role="form">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<strong>{tr}Add pages{/tr}</strong> <small>{tr}Use pre-existing page by dragging into the structure above{/tr}</small>
+				<strong>{tr}Add pages{/tr}</strong> <small>{tr}Use an existing page by dragging it into the structure above{/tr}</small>
 			</div>
 			<div class="panel-body">
 				<div>

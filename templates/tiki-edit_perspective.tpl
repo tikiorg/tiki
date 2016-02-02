@@ -3,7 +3,7 @@
 
 	{tab name="{tr}List{/tr}"}
 		<h2>{tr}List{/tr}</h2>
-		<a href="tiki-switch_perspective.php">{tr}Return to default perspective{/tr}</a>
+		<a href="tiki-switch_perspective.php">{tr}Return to the default perspective{/tr}</a>
 		{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
 		{if $prefs.javascript_enabled !== 'y'}
 			{$js = 'n'}

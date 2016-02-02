@@ -813,9 +813,9 @@ $(".end.time select, #end").change(function () {
 					0: {tr}chair{/tr} ({tr}default role{/tr})<br>
 					1: {tr}required participant{/tr}<br>
 					2: {tr}optional participant{/tr}<br>
-					3: {tr}non participant{/tr}<br>
+					3: {tr}non-participant{/tr}<br>
 					<br>
-					{tr}Give participant list separated by commas. Roles have to be given in a prefix separated by a column like in:{/tr}&nbsp;
+					{tr}Input list of participants, separated by commas. Roles must be indicated by a prefix separated by a colon as in:{/tr}&nbsp;
 					<code>
 						{tr}role:login_or_email,login_or_email{/tr}
 					</code>

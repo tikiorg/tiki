@@ -18,7 +18,7 @@
 	{elseif $error == "srcLang"}
 		{tr}The object doesn't have a language{/tr}
 	{elseif $error == "alreadyTrad"}
-		{tr}The object has already a translation for this language{/tr}
+		{tr}The object already has a translation for this language{/tr}
 	{elseif $error == "alreadySet"}
 		{tr}The object is already in the set of translations{/tr}
 	{/if}
@@ -92,7 +92,7 @@
 
 			if (language_of_translation == "unspecified") {
 		{/literal}
-				var message = {tr}"You forgot to specify the language of the translation. Please choose a language in the picklist."{/tr};
+				var message = {tr}You forgot to specify the language of the translation. Please choose a language in the picklist.{/tr};
 		{literal}
 				alert(message);
 				success = false;
@@ -102,7 +102,7 @@
 				var matching_options = $('#existing-page-src option[value="' + page_name + '"]').attr( 'selected', true );
 
 				if( matching_options.length > 0 ) {
-					var message = {tr}"The page already exists. It was selected in the list below."{/tr};
+					var message = {tr}The page already exists. It was selected in the list below.{/tr};
 					alert( message );
 
 					success = false;
@@ -138,7 +138,7 @@
 	{remarksbox type="error" title="{tr}Error{/tr}"}
 		{tr}No language is assigned to this page.{/tr}
 	{/remarksbox}
-	<strong>{tr}Please select a language before performing translation.{/tr}</strong>
+	<strong>{tr}Please select a language before translating.{/tr}</strong>
 	<form method="post" action="tiki-edit_translation.php" class="form">
 		<div class="input-group">
 			<select name="langpage" class="form-control">

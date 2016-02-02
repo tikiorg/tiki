@@ -154,7 +154,7 @@
 	</tr>
 	<tr>
 		<td>
-			<strong>{tr}Non parsed sections{/tr}</strong> <br/> ~np~ {tr}data{/tr} ~/np~ {tr}Prevents wiki parsing of the enclosed data.{/tr}
+			<strong>{tr}Non-parsed sections{/tr}</strong> <br/> ~np~ {tr}data{/tr} ~/np~ {tr}Prevents wiki parsing of the enclosed data.{/tr}
 		</td>
 	</tr>
 	<tr>
@@ -170,13 +170,13 @@
 	{if $prefs.feature_wiki_monosp eq 'y'}
 		<tr>
 			<td>
-				<strong>{tr}Block Preformatting{/tr}</strong> <br/> {tr}Indent text with any number of spaces to turn it into a monospaced block that still follows other Wiki formatting instructions. It will be indended with the same number of spaces that you used. Note that this mode does not preserve exact spacing and line breaks; use ~pp~...~/pp~ for that.{/tr}
+				<strong>{tr}Block Preformatting{/tr}</strong> <br/> {tr}Indent text with any number of spaces to change it to a monospaced block that still follows other Wiki formatting instructions. It will be indented with the same number of spaces that are used. Note that this mode does not preserve exact spacing and line breaks; use ~pp~...~/pp~ for that.{/tr}
 			</td>
 		</tr>
 	{/if}
 	<tr>
 		<td>
-			<strong>{tr}Direction{/tr}</strong> <br/>{literal}{r2l}{/literal}, {literal}{l2r}{/literal}, {literal}{rm}{/literal}, {literal}{lm}{/literal}{tr}Insert resp. right-to-left and left-to-right text direction DIV (up to end of text) and markers for langages as arabic or hebrew.{/tr}
+			<strong>{tr}Direction{/tr}</strong> <br/>{literal}{r2l}{/literal}, {literal}{l2r}{/literal}, {literal}{rm}{/literal}, {literal}{lm}{/literal}{tr}Insert with respect to right-to-left and left-to-right text direction DIV (up to end of text) and markers for langages as Arabic and Hebrew.{/tr}
 		</td>
 	</tr>
 	<tr>

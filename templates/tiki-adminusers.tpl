@@ -431,10 +431,10 @@
 								{if isset($userinfo.userId) && $userinfo.userId}
 									<p>
 										{icon name='warning' alt="{tr}Warning{/tr}" style="vertical-align:middle"}
-										<em>{tr}Warning: changing the username could require the user to change his password (for user registered with an old Tiki&lt;=1.8){/tr}</em>
+										<em>{tr}Warning: changing the username could require the user to change his or her password (for user registered with an old Tiki&lt;=1.8){/tr}</em>
 										{if $prefs.feature_intertiki_server eq 'y'}
 											<br>
-											<i>{tr}Warning: it will mess with slave intertiki sites that use this one as master{/tr}</i>
+											<i>{tr}Warning: it will create a problem with Intertiki slave sites that use this one as master{/tr}</i>
 										{/if}
 									</p>
 								{/if}
@@ -524,7 +524,7 @@
 								<div class="checkbox">
 									<label>
 										<input type="checkbox" name="need_email_validation" {if ($userinfo.login eq '' and ($prefs.validateUsers eq 'y' or $prefs.validateRegistration eq 'y')) or $userinfo.provpass neq '' or $userinfo.valid neq ''}checked="checked"{/if}>
-										{tr}Send an email to the user in order to allow him to validate his account.{/tr}
+										{tr}Send an email to the user to enable him or her to validate their account.{/tr}
 									</label>
 									{if empty($prefs.sender_email)}
 										<div class="help-block"><span class="highlight">{tr}You need to set <a href="tiki-admin.php?page=general">Sender Email</a>{/tr}</span></div>
@@ -681,7 +681,7 @@
 							<div class="checkbox">
 								<label>
 									<input type="checkbox" name="forcePasswordChange">
-									{tr}User must change password at first login{/tr}
+									{tr}The user must change his or her password the first time they log in{/tr}
 								</label>
 							</div>
 						</div>
@@ -692,7 +692,7 @@
 						<div class="checkbox">
 							<label>
 								<input type="checkbox" name="notification">
-								{tr}Send an email to the user in order to allow him to validate his account.{/tr}
+								{tr}Send an email to the user to enable him or her to validate their account.{/tr}
 							</label>
 						</div>
 					</div>

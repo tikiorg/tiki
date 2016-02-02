@@ -48,7 +48,7 @@
 						</option>
 						{if $prefs.feature_wysiwyg eq 'y'}
 							<option value="wysiwyg"{if $view_mode eq "wysiwyg"} selected{/if}>
-								{tr}WYSIWYG (html mode){/tr}
+								{tr}WYSIWYG (HTML mode){/tr}
 							</option>
 						{/if}
 						{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_htmltowiki eq 'y'}

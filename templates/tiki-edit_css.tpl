@@ -32,7 +32,7 @@
 	{else}
 		{if $try_active}
 			{remarksbox type="tip" title="{tr}Currently trying{/tr}: {$try_theme}{if $try_theme_option}/{$try_theme_option}{/if}" close="n"}
-				<input type="submit" class="btn btn-default btn-sm" name="cancel_try" value="{tr}Cancel Try{/tr}">
+				<input type="submit" class="btn btn-default btn-sm" name="cancel_try" value="{tr}Cancel{/tr}">
 			{/remarksbox}
 		{/if}
 		<div class="form-group clearfix">

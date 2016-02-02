@@ -22,7 +22,7 @@
 			    </div>
 		    </div>
 		    <div class="form-group">
-				<label class="col-sm-3 control-label">{tr}Max impressions{/tr}</label>
+				<label class="col-sm-3 control-label">{tr}Maximum impressions{/tr}</label>
 				<div class="col-sm-7">
 			      	<input type="text" name="maxImpressions" value="{$maxImpressions|escape}" maxlength="7" class="form-control">
 			      	<div class="help-block">
@@ -31,7 +31,7 @@
 			    </div>
 		    </div>
 		    <div class="form-group">
-				<label class="col-sm-3 control-label">{tr}Max impressions for a user{/tr}</label>
+				<label class="col-sm-3 control-label">{tr}Maximum number of impressions for a user{/tr}</label>
 				<div class="col-sm-7">
 			      	<input type="text" name="maxUserImpressions" value="{$maxUserImpressions|escape}" maxlength="7" class="form-control">
   				    <div class="help-block">
@@ -40,7 +40,7 @@
 			    </div>
 		    </div>
 		    <div class="form-group">
-				<label class="col-sm-3 control-label">{tr}Max clicks{/tr}</label>
+				<label class="col-sm-3 control-label">{tr}Maximum clicks{/tr}</label>
 				<div class="col-sm-7">
 			      	<input type="text" name="maxClicks" value="{$maxClicks|escape}" maxlength="7" class="form-control">
 			      	<div class="help-block">
@@ -257,7 +257,7 @@
 {if $zones}
 	<div align="left" class="panel panel-default">
 		<div class="panel-body">
-			<h2>{tr}Remove Zones (you lose entered info for the banner){/tr}</h2>
+			<h2>{tr}Remove zones (info entered for any banner in the zones will be lost){/tr}</h2>
 			<div class="table-responsive">
 				<table class="table table-striped table-hover">
 					<tr>

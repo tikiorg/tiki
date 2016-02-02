@@ -10,7 +10,7 @@
 			<div class="col-sm-8">
 				<input class="form-control" type="text" name="name" id="name" value="{if !empty($smarty.post.name)}{$smarty.post.name}{/if}">
 			{if $prefs.login_is_email eq 'y'}
-				<div class="help-block">{tr}Use your email as login{/tr}</div>
+				<div class="help-block">{tr}Use your email address as your log-in name{/tr}</div>
 			{else}
 				{if $prefs.min_username_length > 1}
 					<div class="highlight">

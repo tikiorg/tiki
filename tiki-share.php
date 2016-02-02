@@ -357,8 +357,8 @@ function checkAddresses($recipients, $error = true)
 			$ok = $ret[0];
 		}
 		if ( $error && !$ok) {
-			$e[] = tra('One of the email addresses you typed is invalid:') . '&nbsp;' . $recipient;
-			$logslib->add_log('share', tra('One of the email addresses you typed is invalid:') . ' ' . $recipient . ' ' . tra('by') . ' ' . $user);
+			$e[] = tra('One of the email addresses that was input is invalid:') . '&nbsp;' . $recipient;
+			$logslib->add_log('share', tra('One of the email addresses that was input is invalid:') . ' ' . $recipient . ' ' . tra('by') . ' ' . $user);
 		}
 	}
 

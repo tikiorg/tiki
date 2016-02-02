@@ -17,7 +17,7 @@ lang = {
 	"Valid User Name" : "Nome de usuário válido",
 	"Passwords match" : "Senhas iguais",
 	"Passwords don't match" : "As senhas não são iguais",
-	"Valid Email" : "E-mail válido",
+	"Valid Email" : "Email válido",
 	"Close" : "Fechar",
 	"Submit" : "Enviar",
 	"Insert" : "Adicionar",

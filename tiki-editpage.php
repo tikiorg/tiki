@@ -606,7 +606,7 @@ if ($prefs['feature_wiki_userpage'] === 'y' && $tiki_p_admin !== 'y' && $page ==
 }
 
 if (strtolower($_REQUEST["page"]) === 'sandbox' && $prefs['feature_sandbox'] !== 'y') {
-	$smarty->assign('msg', tra("The SandBox is disabled"));
+	$smarty->assign('msg', tra("The Sandbox is disabled"));
 	$smarty->display("error.tpl");
 	die;
 }
@@ -622,7 +622,7 @@ if (isset($info['wiki_cache'])) {
 }
 
 if ($info["flag"] === 'L' && !$wikilib->is_editable($page, $user, $info)) {
-	$smarty->assign('msg', tra("Cannot edit page because it is locked"));
+	$smarty->assign('msg', tra("The page cannot be edited because it is locked"));
 	$smarty->display("error.tpl");
 	die;
 }
@@ -1403,7 +1403,7 @@ if ($prefs['feature_multilingual'] === 'y') {
 			// Display an error if the page already exists
 			$smarty->assign(
 				'msg',
-				tra("Page already exists. Go back and choose a different name.") . "<P>" . tra("Page name is") . ": '$page'"
+				tra("That page already exists. Go back and choose a different name.") . "<P>" . tra("The page name is") . ": '$page'"
 			);
 			$smarty->display("error.tpl");
 			die;

@@ -6,8 +6,8 @@
 <div class="help_section">
 {if $prefs.feature_help eq 'y'}
 <p>{tr}For more information, please see{/tr}
-	<a href="{$prefs.helpurl}Wysiwyg+Editor" target="tikihelp" class="tikihelp" title="{tr}Wysiwyg Editor:{/tr} {tr}More help on wysiwyg editing{/tr}">
-		{tr}Wysiwyg Editor{/tr} {icon name='help' style="vertical-align:middle"}
+	<a href="{$prefs.helpurl}Wysiwyg+Editor" target="tikihelp" class="tikihelp" title="{tr}WYSIWYG Editor:{/tr} {tr}More help on WYSIWYG editing{/tr}">
+		{tr}WYSIWYG Editor{/tr} {icon name='help' style="vertical-align:middle"}
 	</a>
 </p>
 {/if}
@@ -19,12 +19,12 @@
 	{tr}To switch modes between WYSIWYG and Wiki edit modes click the {icon name="pencil_go"} button on the toolbar.{/tr}</p>
 <p style="margin-left: 2em; ">
 {if $prefs.wysiwyg_htmltowiki ne 'y'}
-	{tr}<strong>N.B. </strong>Using this button converts the page source from wiki to HTML, or vice versa.
+	{tr}<strong>Note: </strong>Using this button converts the page source from wiki to HTML, or vice versa.
 	The conversion process is not entirely transparent, meaning that you may notice differences between the look of a page in different modes.
 	This will improve in future updates but as the two systems have significant differences in what they can do it is unlikely to ever be totally transparent.{/tr}</p>
 <p>
 	{else}
-		{tr}<strong>N.B. </strong>Using this button changes the editor between WYSIWYG and the usual wiki editor, but leaves the page source in wiki syntax.{/tr}</p>
+		{tr}<strong>Note: </strong>Using this button changes the editor between WYSIWYG and the usual wiki editor, but leaves the page source in wiki syntax.{/tr}</p>
 	{/if}
 <p>
 	{icon name="plugin"} {tr}Wiki plugins can be used and edited in WYSIWYG mode, double click the plugin to bring up the plugin edit popup form.<br>
@@ -53,7 +53,7 @@
 		<p>
 			{tr}<strong>Admins:</strong><br>
 			<em>This new implementation is designed to work best with some site preferences set in a certain way.
-			These can all be found on the <a href="tiki-admin.php?page=wysiwyg">wysiwyg admin page</a>.
+			These can all be found on the <a href="tiki-admin.php?page=wysiwyg">WYSIWYG admin page</a>.
 			A profile to set these up correctly can be found on <a href="http://profiles.tiki.org/WYSIWYG_6x">profiles.tiki.org</a>
 			which can be applied using the <a href="tiki-admin.php?page=profiles">profiles admin page</a>.</em>{/tr}
 		</p>

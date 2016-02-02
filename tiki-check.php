@@ -1783,7 +1783,7 @@ if ($standalone && !$nagios) {
 	if (!$locked) {
 		$render .= '<h2>MySQL or MariaDB Database Properties</h2>';
 		renderTable($mysql_properties);
-		$render .= '<h2>Test sending e-mails</h2>';
+		$render .= '<h2>Test sending emails</h2>';
 		if (isset($_REQUEST['email_test_to'])) {
 			$email_test_headers = 'From: noreply@tiki.org' . "\n";	// needs a valid sender
 			$email_test_headers .= 'Reply-to: '. $_POST['email_test_to'] . "\n";

@@ -67,7 +67,7 @@ if (isset($_REQUEST['send'])) {
 		}
 		if (!$ok) {
 			if (isset($_REQUEST['report']) && $_REQUEST['report'] == 'y') $errors[] = tra("The mail can't be sent. Contact the administrator");
-			else $errors[] = tra('One of the email addresses you typed is invalid') . ': ' . $email;
+			else $errors[] = tra('One of the email addresses that was input is invalid') . ': ' . $email;
 		}
 	}
 	if (empty($_REQUEST['email'])) {

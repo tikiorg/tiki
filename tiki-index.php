@@ -523,7 +523,7 @@ if ( isset($_REQUEST['undo']) ) {
 			$info = $tikilib->get_page_info($page);
 			$pageRenderer->setInfos($info);
 		} else {
-			TikiLib::lib('errorreport')->report(tra('Nothing to undo'));
+			TikiLib::lib('errorreport')->report(tra('There is nothing to undo'));
 		}
 	}
 }
