@@ -55,11 +55,17 @@ class TikiInit
 			require_once $cache;
 			$container = new TikiCachedContainer;
 
-			if (TikiDb::get()) {
-				$container->set('tiki.lib.db', TikiDb::get());
+			/* If the server moved, the container must be recreated */
+			if (TIKI_PATH == $container->getParameter('kernel.root_dir')) {
+				if (TikiDb::get()) {
+					$container->set('tiki.lib.db', TikiDb::get());
+				}
+				return $container;
+			} else {
+				/* This server moved, container must be recreated */
+				unlink($cache);
 			}
 
-			return $container;
 		}
 
 		$path = TIKI_PATH . '/db/config';
@@ -472,6 +478,7 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline)
 			$back.= "</div>";
 			$phpErrors[] = $back;
 		}
+		break;
 	default:
     	break;
 	}
