@@ -1,6 +1,6 @@
 {* $Id$ *}
 {if $mail_action eq 'new'}{tr}The {$prefs.mail_template_custom_text}page "{$mail_page}" was created by {$mail_user|username} at {$mail_date|tiki_short_datetime:"":"n"}{/tr}
-{elseif $mail_action eq 'delete'}{tr}The {$prefs.mail_template_custom_text}page "{$mail_page"} was deleted by {$mail_user|username} at {$mail_date|tiki_short_datetime:"":"n"}{/tr}
+{elseif $mail_action eq 'delete'}{tr}The {$prefs.mail_template_custom_text}page "{$mail_page}" was deleted by {$mail_user|username} at {$mail_date|tiki_short_datetime:"":"n"}{/tr}
 {elseif $mail_action eq 'attach'}{tr}A file was attached to {$prefs.mail_template_custom_text}"{$mail_page}"{/tr}
 {else}{tr}The {$prefs.mail_template_custom_text}page "{$mail_page}" was changed by {$mail_user|username} at {$mail_date|tiki_short_datetime:"":"n"}{/tr}
 {/if}
