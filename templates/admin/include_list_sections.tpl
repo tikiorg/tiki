@@ -18,7 +18,7 @@
 			{else}
 				{assign var=class value="admbox basic btn btn-primary"}
 			{/if}
-				<a href="tiki-admin.php?page={$page}" alt="{$info.title}" class="{$class} tips" title="{$info.title|escape}{if $info.disabled} ({tr}Disabled{/tr}){/if}|{$info.description}">
+				<a href="tiki-admin.php?page={$page}" alt="{$info.title} {$info.description}" class="{$class} tips" title="{$info.title|escape}{if $info.disabled} ({tr}Disabled{/tr}){/if}|{$info.description}">
 					{icon name="admin_$page"}
 					<span class="title">{$info.title|escape}</span>
 				</a>
