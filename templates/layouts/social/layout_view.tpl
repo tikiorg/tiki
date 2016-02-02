@@ -7,6 +7,8 @@
 	<body{html_body_attributes class="navbar-padding"}>
 {$cookie_consent_html}
 
+{include file="layout_fullscreen_check.tpl"}
+
 {if $prefs.feature_ajax eq 'y'}
 	{include file='tiki-ajax_header.tpl'}
 {/if}
