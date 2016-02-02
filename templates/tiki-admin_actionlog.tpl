@@ -278,7 +278,7 @@
                             <td class="checkbox-cell"><input type="checkbox" name="checked[]"
                                                              value="{$actionlog.actionId}"></td>
                         {/if}
-                        <td class="username">{if $actionlog.user}{$actionlog.user|escape}{else}{tr}Anonymous{/tr}{/if}</td>
+                        <td class="username">{if $actionlog.user}{$actionlog.user|username}{else}{tr}Anonymous{/tr}{/if}</td>
                         <td class="date">{$actionlog.lastModif|tiki_short_datetime}</td>
                         <td class="text">
                             {tr}{$actionlog.action|escape}{/tr}

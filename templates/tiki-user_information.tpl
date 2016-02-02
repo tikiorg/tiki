@@ -16,137 +16,140 @@
 	{tab name="{tr}Basic Data{/tr}"}
 		{if $infoPublic eq 'y'}
 			<h2>{$userinfo.login}</h2>
-			<div class="clearfix">
-				<div class="col-sm-8">
-					{if $tiki_p_admin eq 'y' or $userinfo.login eq $user}
-						{if $tiki_p_admin eq 'y'}
-							<a class="link tips" href="tiki-assignuser.php?assign_user={$userinfo.login|escape:"url"}" title=":{tr}Assign group{/tr}">
-								{icon name='group' align="right" alt="{tr}Assign Group{/tr}"}
-							</a>
-						{/if}
-						<a class="link tips" href="tiki-user_preferences.php?userId={$userinfo.userId}" title=":{tr}Change user preferences{/tr}">
-							{icon name='wrench' align="right" alt="{tr}Change user preferences{/tr}"}
+			<div class="pull-right">
+				{if $tiki_p_admin eq 'y' or $userinfo.login eq $user}
+					{if $tiki_p_admin eq 'y'}
+						<a class="link tips" href="tiki-assignuser.php?assign_user={$userinfo.login|escape:"url"}" title=":{tr}Assign group{/tr}">
+							{icon name='group' align="right" alt="{tr}Assign Group{/tr}"}
 						</a>
 					{/if}
-				</div>
+					<a class="link tips" href="tiki-user_preferences.php?userId={$userinfo.userId}" title=":{tr}Change user preferences{/tr}">
+						{icon name='wrench' align="right" alt="{tr}Change user preferences{/tr}"}
+					</a>
+				{/if}
 			</div>
 
-			{if isset($user_picture_id)}
-				<div class="userpicture">
-					{wikiplugin _name="img" fileId="$user_picture_id"}{/wikiplugin}
-				</div>
-			{/if}
 			<div class="row">
 				<div class="col-sm-8 col-sm-offset-1">
 
-			<div class="panel panel-default">
-				<div class="panel-body">
-					{if $avatar}
-						<div class="row margin-bottom-sm">
-							<div class="col-sm-4">{tr}Profile picture{/tr} ({tr}User Icon{/tr}):</div>
-							<div class="col-sm-8">
-								{if $userinfo.login eq $user}<a href="tiki-pick_avatar.php">{/if}
-								{$avatar}
-								{if $userinfo.login eq $user}</a>{/if}
-							</div>
-						</div>
-					{/if}
+					<div class="panel panel-default">
+						<div class="panel-body">
+							{if $avatar}
+								<div class="row margin-bottom-sm">
+									<div class="col-sm-4">{tr}Profile picture{/tr} ({tr}User Icon{/tr}):</div>
+									<div class="col-sm-8">
+										<div class="col-sm-3">
+											{if $userinfo.login eq $user}<a href="tiki-pick_avatar.php">{/if}
+												{$avatar}
+											{if $userinfo.login eq $user}</a>{/if}
+										</div>
+										<div class="col-sm-9">
+											{if isset($user_picture_id)}
+												<div class="userpicture">
+													{wikiplugin _name="img" fileId="$user_picture_id"}{/wikiplugin}
+												</div>
+											{/if}
+										</div>
+									</div>
+								</div>
+							{/if}
 
-					{if $realName}
-						<div class="row margin-bottom-sm">
-							<div class="col-sm-4">{tr}Real Name:{/tr}</div>
-							<div class="col-sm-8">{$realName|escape}</div>
-						</div>
-					{/if}
-					{if $prefs.feature_community_gender eq 'y' and $gender neq 'Hidden' and $gender}
-						<div class="row margin-bottom-sm">
-							<div class="col-sm-4">{tr}Gender:{/tr}</div>
-							<div class="col-sm-8">{tr}{$gender}{/tr}</div>
-						</div>
-					{/if}
-					{if $email_isPublic neq 'n' and $userinfo.email neq ''}
-						<div class="row margin-bottom-sm">
-							<div class="col-sm-4">{tr}Email:{/tr}</div>
-							<div class="col-sm-8">{mailto address=$userinfo.email text=$scrambledEmail encode="javascript"}</div>
-						</div>
-					{elseif $email_isPublic eq 'n' and $userinfo.email neq '' and $tiki_p_admin eq 'y'}
-						<div class="row margin-bottom-sm">
-							<div class="col-sm-4">{tr}Email:{/tr}</div>
-							<div class="col-sm-8">
-								{mailto address=$userinfo.email encode="javascript"}
-								<i>{tr}(non public){/tr}</i>
-							</div>
-						</div>
-					{/if}
-					{if !empty($country) and $country != 'Other'}
-						<div class="row margin-bottom-sm">
-							<div class="col-sm-4">{tr}Country:{/tr}</div>
-							<div class="col-sm-8">{$userinfo.login|countryflag} {tr}{$country|stringfix}{/tr}</div>
-						</div>
-					{/if}
-					{if $prefs.change_theme ne 'n'}
-						<div class="row margin-bottom-sm">
-							<div class="col-sm-4">{tr}Theme:{/tr}</div>
-							<div class="col-sm-8">{$user_style}</div>
-						</div>
-					{/if}
-					{if $prefs.change_language eq 'y'}
-						<div class="row margin-bottom-sm">
-							<div class="col-sm-4">{tr}Language:{/tr}</div>
-							<div class="col-sm-8">{$user_language}</div>
-						</div>
-					{/if}
-					{if $homePage}
-						<div class="row margin-bottom-sm">
-							<div class="col-sm-4">{tr}Homepage:{/tr}</div>
-							<div class="col-sm-8">
-								<a href="{$homePage|escape}" class="link" title="{tr}User's homepage{/tr}">
-									{$homePage|escape}
-								</a>
-							</div>
-						</div>
-					{/if}
-					{if $prefs.feature_score eq 'y'}
-						<div class="row margin-bottom-sm">
-							<div class="col-sm-4">{tr}Score:{/tr}</div>
-							<div class="col-sm-8">{$userinfo.score|star}{$userinfo.score}</div>
-						</div>
-					{/if}
-					{if $prefs.feature_wiki eq 'y' && $prefs.feature_wiki_userpage eq 'y' && ($userPage_exists or $user == $userinfo.login)}
-						<div class="row margin-bottom-sm">
-							<div class="col-sm-4">{tr}Personal Wiki Page:{/tr}</div>
-							<div class="col-sm-8">
-								{if $userPage_exists}
-									<a class="link" href="tiki-index.php?page={$prefs.feature_wiki_userpage_prefix|escape:'url'}{$userinfo.login|escape:'url'}">
-										{$prefs.feature_wiki_userpage_prefix}{$userinfo.login}
-									</a>
-								{elseif $user == $userinfo.login}
-									{$prefs.feature_wiki_userpage_prefix}{$userinfo.login}
-									<a class="link" href="tiki-editpage.php?page={$prefs.feature_wiki_userpage_prefix|escape:'url'}{$userinfo.login|escape:'url'}"
-											title="{tr}Create Page{/tr}">?</a>
-								{else}&nbsp;{/if}
-							</div>
-						</div>
-					{/if}
+							{if $realName}
+								<div class="row margin-bottom-sm">
+									<div class="col-sm-4">{tr}Real Name:{/tr}</div>
+									<div class="col-sm-8">{$realName|escape}</div>
+								</div>
+							{/if}
+							{if $prefs.feature_community_gender eq 'y' and $gender neq 'Hidden' and $gender}
+								<div class="row margin-bottom-sm">
+									<div class="col-sm-4">{tr}Gender:{/tr}</div>
+									<div class="col-sm-8">{tr}{$gender}{/tr}</div>
+								</div>
+							{/if}
+							{if $email_isPublic neq 'n' and $userinfo.email neq ''}
+								<div class="row margin-bottom-sm">
+									<div class="col-sm-4">{tr}Email:{/tr}</div>
+									<div class="col-sm-8">{mailto address=$userinfo.email text=$scrambledEmail encode="javascript"}</div>
+								</div>
+							{elseif $email_isPublic eq 'n' and $userinfo.email neq '' and $tiki_p_admin eq 'y'}
+								<div class="row margin-bottom-sm">
+									<div class="col-sm-4">{tr}Email:{/tr}</div>
+									<div class="col-sm-8">
+										{mailto address=$userinfo.email encode="javascript"}
+										<i>{tr}(non public){/tr}</i>
+									</div>
+								</div>
+							{/if}
+							{if !empty($country) and $country != 'Other'}
+								<div class="row margin-bottom-sm">
+									<div class="col-sm-4">{tr}Country:{/tr}</div>
+									<div class="col-sm-8">{$userinfo.login|countryflag} {tr}{$country|stringfix}{/tr}</div>
+								</div>
+							{/if}
+							{if $prefs.change_theme ne 'n'}
+								<div class="row margin-bottom-sm">
+									<div class="col-sm-4">{tr}Theme:{/tr}</div>
+									<div class="col-sm-8">{$user_style}</div>
+								</div>
+							{/if}
+							{if $prefs.change_language eq 'y'}
+								<div class="row margin-bottom-sm">
+									<div class="col-sm-4">{tr}Language:{/tr}</div>
+									<div class="col-sm-8">{$user_language}</div>
+								</div>
+							{/if}
+							{if $homePage}
+								<div class="row margin-bottom-sm">
+									<div class="col-sm-4">{tr}Homepage:{/tr}</div>
+									<div class="col-sm-8">
+										<a href="{$homePage|escape}" class="link" title="{tr}User's homepage{/tr}">
+											{$homePage|escape}
+										</a>
+									</div>
+								</div>
+							{/if}
+							{if $prefs.feature_score eq 'y'}
+								<div class="row margin-bottom-sm">
+									<div class="col-sm-4">{tr}Score:{/tr}</div>
+									<div class="col-sm-8">{$userinfo.score|star}{$userinfo.score}</div>
+								</div>
+							{/if}
+							{if $prefs.feature_wiki eq 'y' && $prefs.feature_wiki_userpage eq 'y' && ($userPage_exists or $user == $userinfo.login)}
+								<div class="row margin-bottom-sm">
+									<div class="col-sm-4">{tr}Personal Wiki Page:{/tr}</div>
+									<div class="col-sm-8">
+										{if $userPage_exists}
+											<a class="link" href="tiki-index.php?page={$prefs.feature_wiki_userpage_prefix|escape:'url'}{$userinfo.login|escape:'url'}">
+												{$prefs.feature_wiki_userpage_prefix}{$userinfo.login}
+											</a>
+										{elseif $user == $userinfo.login}
+											{$prefs.feature_wiki_userpage_prefix}{$userinfo.login}
+											<a class="link" href="tiki-editpage.php?page={$prefs.feature_wiki_userpage_prefix|escape:'url'}{$userinfo.login|escape:'url'}"
+													title="{tr}Create Page{/tr}">?</a>
+										{else}&nbsp;{/if}
+									</div>
+								</div>
+							{/if}
 
-					<div class="row margin-bottom-sm">
-						<div class="col-sm-4">{tr}Last login:{/tr}</div>
-						<div class="col-sm-8">{$userinfo.lastLogin|tiki_short_datetime}</div>
-					</div>
-
-					{* Custom database fields *}
-					{section name=ir loop=$customfields}
-
-						{if $customfields[ir].show}
 							<div class="row margin-bottom-sm">
-								<div class="col-sm-4">{$customfields[ir].label}:</div>
-								<div class="col-sm-8">{$customfields[ir].value}</div>
+								<div class="col-sm-4">{tr}Last login:{/tr}</div>
+								<div class="col-sm-8">{$userinfo.lastLogin|tiki_short_datetime}</div>
 							</div>
-						{/if}
-					{/section}
+
+							{* Custom database fields *}
+							{section name=ir loop=$customfields}
+
+								{if $customfields[ir].show}
+									<div class="row margin-bottom-sm">
+										<div class="col-sm-4">{$customfields[ir].label}:</div>
+										<div class="col-sm-8">{$customfields[ir].value}</div>
+									</div>
+								{/if}
+							{/section}
+						</div>
+					</div>
 				</div>
 			</div>
-				</div></div>
 			{if $prefs.feature_friends eq 'y'}
 			<h3>{tr}Friendship Network{/tr}</h3>
 				{if $user eq $userinfo.login}
