@@ -495,7 +495,7 @@
 						<div class="col-md-9">
 							<input type="text" name="icon" value="{$icon|escape}" class="form-control">
 						</div>
-					</div
+					</div>
 				{/if}
 				<div class="form-group text-center">
 					<input type="submit" class="btn btn-primary btn-sm" name="save" value="{tr}Save{/tr}">
