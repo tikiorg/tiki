@@ -23,7 +23,7 @@ class TWVersion
 		// Set the development branch.  Valid are:
 		//   stable   : Represents stable releases.
 		//   unstable : Represents candidate and test/development releases.
-		//   trunk     : Represents next generation development version.
+		//   trunk    : Represents next generation development version.
 		$this->branch 	= 'trunk';
 
 		// Set everything else, including defaults.
