@@ -57,6 +57,7 @@
 		Version: 
 		<select name="svntag" class="form-control">
 			<option selected="selected">trunk</option>
+            <option>15.x</option>
             <option>14.x</option>
 			<option>13.x</option>
 			<option>12.x</option>
