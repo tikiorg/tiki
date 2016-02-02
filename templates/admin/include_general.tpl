@@ -83,6 +83,7 @@
 					<input type="text" name="testMail" id="testMail" />
 				</div>
 				{preference name=email_footer}
+				{preference name=mail_template_custom_text}
 			</fieldset>
 			<fieldset>
 				<legend>{tr}Newsletter{/tr}</legend>
