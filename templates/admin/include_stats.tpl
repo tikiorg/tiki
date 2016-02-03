@@ -14,8 +14,8 @@
 
 	{tabset}
 		{tab name="{tr}Tiki Statistics{/tr}"}
+			<h2>{tr}Tiki Statistics{/tr}</h2>
 			<fieldset>
-				<legend>{tr}Tiki Statistics{/tr}</legend>
 				{preference name=feature_stats}
 				{preference name=feature_referer_stats}
 				{preference name=count_admin_pvs}
@@ -23,16 +23,16 @@
 		{/tab}
 
 		{tab name="{tr}Google Analytics{/tr}"}
+			<h2>{tr}Google Analytics{/tr}</h2>
 			<fieldset>
-				<legend>{tr}Google Analytics{/tr}</legend>
 				{preference name=site_google_analytics_account}
 				{preference name=site_google_credentials}
 			</fieldset>
 		{/tab}
 
 		{tab name="{tr}Piwik Analytics{/tr}"}
+			<h2>{tr}Piwik Analytics{/tr}</h2>
 			<fieldset>
-				<legend>{tr}Piwik Analytics{/tr}</legend>
 				{preference name=site_piwik_analytics_server_url}
 				{preference name=site_piwik_site_id}
 			</fieldset>
