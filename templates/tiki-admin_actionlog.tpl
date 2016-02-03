@@ -243,7 +243,7 @@
 							<td class="checkbox"><input type="checkbox" name="checked[]" value="{$actionlog.actionId}"></td>
 						{/if}
 						<td class="username">
-							{if $actionlog.user}{$actionlog.user|escape}{else}{tr}Anonymous{/tr}{/if}
+							{if $actionlog.user}{$actionlog.user|username}{else}{tr}Anonymous{/tr}{/if}
 						</td>
 						<td class="date">
 							{$actionlog.lastModif|tiki_short_datetime}
@@ -455,7 +455,7 @@
 				{cycle values="even,odd" print=false}
 				{foreach item=stat from=$userActions name=userActions}
 					<tr class="{cycle}">
-						<td class="username">{$stat.user|escape}</td>
+						<td class="username">{$stat.user|username}</td>
 						{foreach key=a item=nb from=$stat}
 							{if $a ne 'user'}<td class="integer">{$nb}</td>{/if}
 						{/foreach}
@@ -557,7 +557,7 @@
 				{foreach key=categUser item=stat from=$statUserCateg}
 					<tr class="{cycle}">
 						<td class="text">{$stat.category|escape}</td>
-						<td class="username">{$stat.user|escape}</td>
+						<td class="username">{$stat.user|username}</td>
 						{foreach key=a item=nb from=$stat}
 							{if $a ne 'category' and $a ne 'user'}
 								<td class="integer">{$nb}</td>
