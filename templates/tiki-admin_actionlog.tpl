@@ -523,7 +523,7 @@
 
                     {foreach item=stat from=$userActions name=userActions}
                         <tr>
-                            <td class="username">{$stat.user|escape}</td>
+                            <td class="username">{$stat.user|username}</td>
                             {foreach key=a item=nb from=$stat}
                                 {if $a ne 'user'}
                                     <td class="integer">{$nb}</td>{/if}
@@ -641,7 +641,7 @@
                     {foreach key=categUser item=stat from=$statUserCateg}
                         <tr>
                             <td class="text">{$stat.category|escape}</td>
-                            <td class="username">{$stat.user|escape}</td>
+                            <td class="username">{$stat.user|username}</td>
                             {foreach key=a item=nb from=$stat}
                                 {if $a ne 'category' and $a ne 'user'}
                                     <td class="integer">{$nb}</td>
