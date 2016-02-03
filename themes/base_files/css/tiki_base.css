@@ -1035,6 +1035,7 @@ li.archivedate {
 }
 .sitelogo img {
   margin-top: 10px;
+  margin-left: 20px;
 }
 .pass a,
 .pass a:visited,
@@ -4075,6 +4076,7 @@ h6:hover a.tiki_anchor {
 h1.pagetitle > a {
   padding-left: 0;
   padding-right: 0;
+  margin-top: 0px;
 }
 #cachedpage {
   float: right;
