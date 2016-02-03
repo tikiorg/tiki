@@ -46,7 +46,7 @@
                             <option value="Anonymous">{tr}Anonymous{/tr}</option>
                             {foreach key=ix item=auser from=$users}
                                 <option value="{$auser|escape}"
-                                        {if $selectedUsers[$ix] eq 'y'}selected="selected"{/if}>{$auser|escape}</option>
+                                        {if $selectedUsers[$ix] eq 'y'}selected="selected"{/if}>{$auser|username}</option>
                             {/foreach}
                         </select>
                     </div>
@@ -188,7 +188,7 @@
             &nbsp;&mdash;&nbsp;
             {tr}User:{/tr}
             {foreach key=ix item=auser from=$users}
-                {if $selectedUsers[$ix] eq 'y'} {$auser|escape}{/if}
+                {if $selectedUsers[$ix] eq 'y'} {$auser|username}{/if}
             {/foreach}
         {/if}
 
@@ -408,7 +408,7 @@
                 {tr}User:{/tr}
                 {foreach key=ix item=auser from=$users}
                     {if $selectedUsers[$ix] eq 'y'}
-                        {$auser|escape}
+                        {$auser|username}
                     {/if}
                 {/foreach}
             {/if}
@@ -442,7 +442,7 @@
                     {foreach key=auser item=time from=$logTimes}
                         <tr>
                             {if $selectedUsers|@count gt 0}
-                                <td>{$auser}</td>
+                                <td>{$auser|username}</td>
                             {/if}
                             <td>
                                 {$time.days} {tr}days{/tr} {$time.hours} {tr}hours{/tr} {$time.mins} {tr}mns{/tr}
@@ -696,7 +696,7 @@
                     {foreach from=$userContributions key=user item=contributions}
                         {foreach from=$contributions key=contribution item=stat}
                             <tr>
-                                <td class="username">{$user|escape}</td>
+                                <td class="username">{$user|username}</td>
                                 <td class="text">{$stat.name|escape}</td>
                                 <td class="integer">{$stat.stat.add}</td>
                                 <td class="integer">{$stat.stat.del}</td>
