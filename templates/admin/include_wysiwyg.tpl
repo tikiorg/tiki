@@ -19,7 +19,7 @@
 		{preference name=wikiplugin_wysiwyg}
 	</fieldset>
 	<fieldset>
-		<legend>{tr}Wysiwyg Editor Features{/tr}</legend>
+		<legend>{tr}WYSIWYG Editor Features{/tr}</legend>
 		{preference name=wysiwyg_optional}
 		<div class="adminoptionboxchild" id="wysiwyg_optional_childcontainer">
 			{preference name=wysiwyg_default}

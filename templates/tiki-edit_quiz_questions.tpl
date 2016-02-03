@@ -101,7 +101,7 @@
 			</th>
 
 			<th>{tr}Options{/tr}</th>
-			<th>{tr}maxScore{/tr}</th>
+			<th>{tr}Maximum score{/tr}</th>
 			<th></th>
 		</tr>
 

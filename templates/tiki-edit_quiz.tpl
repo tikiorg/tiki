@@ -178,7 +178,7 @@
 				<label for="quiz-timelimit">
 					<input type="checkbox" name="timeLimited" id="quiz-timelimit"
 						{if $timeLimited eq 'y'}checked="checked"{/if}>
-					{tr}Quiz is time limited{/tr}
+					{tr}Quiz is time-limited{/tr}
 				</label>
 			</div>
 			<div class="form-group">

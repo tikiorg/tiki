@@ -75,9 +75,9 @@
 	</div>
 	{if empty($email)}
 		<div class="form-group">
-			<label class="col-sm-3 col-md-2 control-label" for="email">{tr}E-mail{/tr}</label>
+			<label class="col-sm-3 col-md-2 control-label" for="email">{tr}Email{/tr}</label>
 			<div class="col-sm-7 col-md-6">
-				<input type="email" class="form-control" name="email" id="email" placeholder="E-mail" value="{if not empty($email)}{$email|escape}{/if}">
+				<input type="email" class="form-control" name="email" id="email" placeholder="Email" value="{if not empty($email)}{$email|escape}{/if}">
 			</div>
 		</div>
 	{/if}

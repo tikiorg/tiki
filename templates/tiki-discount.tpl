@@ -100,11 +100,11 @@
 		    </div>
 	    </div>
 	    <div class="form-group">
-			<label class="col-sm-3 control-label">{tr}Max time the discount can be used in the first phase of payment{/tr}</label>
+			<label class="col-sm-3 control-label">{tr}Maximum time the discount can be used in the first phase of payment{/tr}</label>
 			<div class="col-sm-7">
 		      	<input type="text" id="max" name="max" {if !empty($info.max)} value="{$info.max|escape}"{/if} class="form-control">
 		      	<div class="help-block">
-		      		{tr}-1 for illimited{/tr}
+		      		{tr}-1 for unlimited{/tr}
 		      	</div>
 		    </div>
 	    </div>

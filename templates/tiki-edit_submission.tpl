@@ -23,7 +23,7 @@
 {/if}
 
 <div class="t_navbar">
-	{button href="tiki-list_submissions.php" _icon_name="list" _text="{tr}List Submissions{/tr}"}
+	{button href="tiki-list_submissions.php" _icon_name="list" _text="{tr}List submissions{/tr}"}
 </div>
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
@@ -280,7 +280,7 @@
 
 	{if $prefs.feature_cms_emails eq 'y' and $articleId eq 0}
 		<div class="form-group">
-			<label class="col-sm-3 control-label">{tr}Emails to be notified (separated with commas){/tr}</label>
+			<label class="col-sm-3 control-label">{tr}Email addresses to be sent notifications (comma-separated){/tr}</label>
 			<div class="col-sm-7">
 		      	<input type="text" name="emails" value="{$emails|escape}" size="60" class="form-control">
 		      	<br>

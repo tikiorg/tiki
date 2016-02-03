@@ -534,7 +534,7 @@ $smarty->assign('listlanguages', $languages);
 
 $smarty->assign('listpriorities', array('0','1','2','3','4','5','6','7','8','9'));
 $smarty->assign('listprioritycolors', array('fff','fdd','fcc','fbb','faa','f99','e88','d77','c66','b66','a66'));
-$smarty->assign('listroles', array('0'=>'','1'=>tra('required'),'2'=>tra('optional'),'3'=>tra('non participant')));
+$smarty->assign('listroles', array('0'=>'','1'=>tra('required'),'2'=>tra('optional'),'3'=>tra('non-participant')));
 
 
 if ($prefs['feature_theme_control'] == 'y') {

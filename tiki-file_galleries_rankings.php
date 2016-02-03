@@ -21,7 +21,7 @@ if ((isset($tiki_p_list_file_galleries) && $tiki_p_list_file_galleries != 'y') |
 
 $allrankings = array(
 	array(
-	'name' => tra('Top visited file galleries'),
+	'name' => tra('Most-visited file galleries'),
 	'value' => 'filegal_ranking_top_galleries'
 ),
 	array(

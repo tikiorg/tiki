@@ -52,7 +52,7 @@
 	</table>
 </div>
 
-<h2>{tr}Test sending e-mails{/tr}</h2>
+<h2>{tr}Test sending emails{/tr}</h2>
 {tr}To test if your installation is capable of sending emails please visit the <a href="tiki-install.php">Tiki Installer</a>{/tr}.
 
 <h2>{tr}Server Information{/tr}</h2>

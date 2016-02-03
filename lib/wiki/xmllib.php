@@ -47,7 +47,7 @@ class XmlLib extends TikiLib
 		$this->zip = new ZipArchive;
 
 		if (!$this->zip->open($zipFile, ZIPARCHIVE::OVERWRITE)) {
-			$this->errors[] = 'Can not open the file';
+			$this->errors[] = 'The file cannot be opened';
 			$this->errorsArgs[] = $zipFile;
 			return false;
 		}
@@ -258,7 +258,7 @@ class XmlLib extends TikiLib
 		}
 
 		if (!$this->zip->open($zipFile)) {
-			$this->errors[] = 'Can not open the file';
+			$this->errors[] = 'The file cannot be opened';
 			$this->errorsArgs[] = $zipFile;
 			return false;
 		}

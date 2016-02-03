@@ -19,7 +19,7 @@ if ($prefs['feed_image_gallery'] != 'y') {
 }
 
 if (!isset($_REQUEST['galleryId'])) {
-	$errmsg = tra('No galleryId specified');
+	$errmsg = tra('No gallery ID specified');
 	require_once ('tiki-rss_error.php');
 }
 

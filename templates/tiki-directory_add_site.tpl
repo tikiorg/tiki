@@ -49,7 +49,7 @@
 		{/if}
 
 		{* Display a form to add or edit a site *}
-		<h2>{if $siteId}{tr}Edit a site{/tr}{else}{tr}Add a Site{/tr}{/if}</h2>
+		<h2>{if $siteId}{tr}Edit a site{/tr}{else}{tr}Add a site{/tr}{/if}</h2>
 		<form action="tiki-directory_add_site.php" method="post" class="form-horizontal">
 			<input type="hidden" name="parent" value="{$parent|escape}">
 			<input type="hidden" name="siteId" value="{$siteId|escape}">

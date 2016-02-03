@@ -298,7 +298,7 @@ if (!empty($_REQUEST['validate']) && $prefs['feature_file_galleries_save_draft']
 	if ($tiki_p_admin_file_galleries != 'y' && (!$user || $user != $gal_info['user'])) {
 		if ($user != $info['user']) {
 			$smarty->assign('errortype', 401);
-			$smarty->assign('msg', tra('Permission denied you cannot validate files from this gallery'));
+			$smarty->assign('msg', tra("You don't have permission to validate files from this gallery"));
 			$smarty->display('error.tpl');
 			die;
 		}

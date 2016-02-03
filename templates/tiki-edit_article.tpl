@@ -23,7 +23,7 @@
 
 {if !empty($errors)}
 	<div class="alert-warning">
-		{tr}One of the email addresses you typed is invalid{/tr}
+		{tr}One of the email addresses that was input is invalid{/tr}
 		<br>
 		{foreach from=$errors item=m name=errors}
 			{$m}
@@ -375,7 +375,7 @@
 					<label for="emails" class="col-sm-3">{tr}Email{/tr}</label>
 					<div class="col-sm-9">
 						<input type="text" name="emails" value="{$emails|escape}" class="form-control">
-						<span class="help-block">{tr}Emails to be notified (separated with commas){/tr}</span>
+						<span class="help-block">{tr}Email addresses to be sent notifications (comma-separated){/tr}</span>
 						{if !empty($userEmail) and $userEmail neq $prefs.sender_email}
 							{tr}From:{/tr}
 							<label>
@@ -410,7 +410,7 @@
 	<div class="form-group clearfix text-center">
 		<input type="submit" class="wikiaction btn btn-default" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
 		<input type="submit" class="wikiaction btn btn-primary" name="save" value="{tr}Save{/tr}" onclick="this.form.saving=true;needToConfirm=false;">
-		{if $articleId}<input type="submit" class="wikiaction tips btn btn-default" title="{tr}Cancel{/tr}|{tr}Cancel the edit, you will lose your changes.{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}" onclick="needToConfirm=false;">{/if}
+		{if $articleId}<input type="submit" class="wikiaction tips btn btn-default" title="{tr}Cancel{/tr}|{tr}Cancel the edit (changes will be lost).{/tr}" name="cancel_edit" value="{tr}Cancel Edit{/tr}" onclick="needToConfirm=false;">{/if}
 	</div>
 	{if $smarty.session.wysiwyg neq 'y'}
 		{jq}

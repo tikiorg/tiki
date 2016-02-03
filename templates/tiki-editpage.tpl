@@ -68,7 +68,7 @@
 	{/if}
 	{if $page|lower eq 'sandbox'}
 		{remarksbox type='tip' title="{tr}Tip{/tr}"}
-			{tr}The SandBox is a page where you can practice your editing skills, use the preview feature to preview the appearance of the page, no versions are stored for this page.{/tr}
+			{tr}The Sandbox is a page where you can practice editing, etc. and use the preview feature to check the appearance of the page. No versions are stored for this page.{/tr}
 		{/remarksbox}
 	{/if}
 	{if $category_needed eq 'y'}

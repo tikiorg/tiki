@@ -53,17 +53,17 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label">{tr}Children type{/tr}</label>
+		<label class="col-sm-3 control-label">{tr}Child type{/tr}</label>
 		<div class="col-sm-7">
 			<select name="childrenType" class="form-control">
 				<option value='c' {if $info.childrenType eq 'c'}selected="selected"{/if}>{tr}Most visited directory sub-categories{/tr}</option>
-				<option value='d' {if $info.childrenType eq 'd'}selected="selected"{/if}>{tr}Directory Category description{/tr}</option>
+				<option value='d' {if $info.childrenType eq 'd'}selected="selected"{/if}>{tr}Directory category description{/tr}</option>
 				<option value='r' {if $info.childrenType eq 'r'}selected="selected"{/if}>{tr}Random directory sub-categories{/tr}</option>
 			</select>
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 control-label">{tr}Maximum number of children to show{/tr}</label>
+		<label class="col-sm-3 control-label">{tr}Maximum number of child directory categories to show{/tr}</label>
 		<div class="col-sm-7">
 			<select name="viewableChildren" class="form-control">
 				<option value="0" {if $info.viewableChildren eq 0}selected="selected"{/if}>{tr}none{/tr}</option>

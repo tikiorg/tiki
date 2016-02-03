@@ -360,7 +360,7 @@
 						<div class="checkbox">
 							<label>
 								<input type="checkbox" name="userChoice"{if $userChoice eq 'y'} checked="checked"{/if}>
-								{tr}User can assign to the group himself{/tr}
+								{tr}User can assign himself or herself to the group{/tr}
 							</label>
 						</div>
 					</div>

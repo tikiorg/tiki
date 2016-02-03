@@ -53,7 +53,7 @@ if (isset($_REQUEST['trackerId']) && isset($_REQUEST['xuser'])) {
 	$json_data = array();
 	foreach ($stat_array as $k => $v) {
 		if ($k == 'user' && $v != $user) {
-			$json_data['msg'] = tra("Another user is currently exporting that tracker, please try again later.").' '.tra('Or delete the file: '.$monitor_filename);
+			$json_data['msg'] = tra("Another user is currently exporting that tracker. Please try again later.").' '.tra('Or delete the file: '.$monitor_filename);
 			break;
 		} else {
 			$json_data[$k] = $v;

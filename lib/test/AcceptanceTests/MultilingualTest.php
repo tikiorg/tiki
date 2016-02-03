@@ -132,7 +132,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 		$this->select("language_list", "label=English British (en-uk)");
 		$this->type("translation_name", "Multilingual Test Page 1");
 		$this->clickAndWait("//input[@value='Create translation']");
-		$this->assertTrue($this->isTextPresent("Page already exists. Go back and choose a different name."));
+		$this->assertTrue($this->isTextPresent("That page already exists. Go back and choose a different name."));
 
 
 	}
@@ -151,7 +151,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 		$this->select("language_list", "label=English British (en-uk)");
 		$this->type("translation_name", "Multilingual Test Page 1");
 		$this->clickAndWait("//input[@value='Create translation']");
-		$this->assertTrue($this->isTextPresent("Page already exists. Go back and choose a different name."));
+		$this->assertTrue($this->isTextPresent("That page already exists. Go back and choose a different name."));
 		$this->clickAndWait("link=Go back");
 		$this->clickAndWait("link=View Page");
 		//A bug: instead of English it shows English British although the page was not created

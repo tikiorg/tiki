@@ -168,7 +168,7 @@ if (!empty($_REQUEST['debug'])) {
 		$tmpCsv = tempnam($prefs['tmpDir'], 'tracker_'.$_REQUEST['trackerId']) . '.csv';
 		/*debug*/$tmpCsv = $prefs['tmpDir'].'/'.'tracker_'.$_REQUEST['trackerId']. '.csv';
 		if (!($fp = fopen($tmpCsv, 'w'))) {
-			$smarty->assign('msg', tra('Can not open the file'). ' '.$tmpCsv);
+			$smarty->assign('msg', tra('The file cannot be opened'). ' '.$tmpCsv);
 			$smarty->display('error.tpl');
 			die;
 		}			
@@ -179,7 +179,7 @@ if (!empty($_REQUEST['debug'])) {
 		}
 		$tmpZip = $prefs['tmpDir'].'/'.$file;
 		if ( !($archive->open($tmpZip, ZIPARCHIVE::OVERWRITE)) ) {
-			$smarty->assign('msg', tra('Can not open the file'). ' '.$prefs['tmpDir'].'/'.$file);
+			$smarty->assign('msg', tra('The file cannot be opened'). ' '.$prefs['tmpDir'].'/'.$file);
 			$smarty->display('error.tpl');
 			die;
 		}
