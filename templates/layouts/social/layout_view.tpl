@@ -24,8 +24,8 @@
 		{modulelist zone=pagetop}
 	{/if}
 	{error_report}
-					<div class="clearfix">
-						<div class="pull-right">{block name=quicknav}{/block}</div>
+					<div class="pull-right">
+						{block name=quicknav}{/block}
 					</div>
 	{block name=title}{/block}
 	{block name=navigation}{/block}
