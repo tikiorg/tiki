@@ -103,6 +103,7 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 			'article_topline',
 			'article_subtitle',
 			'article_author',
+			'article_linkto',
 
 			'view_permission',
 			'parent_view_permission',

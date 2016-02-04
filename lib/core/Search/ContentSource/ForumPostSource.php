@@ -156,6 +156,8 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 			'root_thread_id',
 			'parent_contributors',
 			'hits',
+			'type',
+			'locked',
 
 			'lastpost_title',
 			'lastpost_modification_date',
@@ -164,6 +166,7 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 			'lastpost_post_snippet',
 			'lastpost_hits',
 			'lastpost_thread_id',
+
 		);
 	}
 
