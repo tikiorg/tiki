@@ -94,6 +94,7 @@ function wikiplugin_poll($data, $params)
     $options = $polllib->list_poll_options($pollId);
 
 	$hasVoted = $tikilib->user_has_voted($user, 'poll' . $pollId);
+	$userVote = $tikilib->get_user_vote('poll' . $pollId, $user);
 	$ret = '';
 	$smarty->assign_by_ref('showresult', $showresult);
 	$smarty->assign_by_ref('showtotal', $showtotal);
@@ -113,6 +114,7 @@ function wikiplugin_poll($data, $params)
 		$total = $polllib->options_percent($poll_info, $options);
 		$poll_info['options'] = $options;
 		$smarty->assign_by_ref('poll_info', $poll_info);
+		$smarty->assign_by_ref('user_vote', $userVote);
 		$ret .= $smarty->fetch('tiki-poll_results_bar.tpl');
 	}
 	return '~np~'.$ret.'~/np~';

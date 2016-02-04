@@ -54,5 +54,13 @@ function prefs_poll_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'poll_percent_decimals' => array(
+			'name' => tra('Percent decimals shown in results'),
+			'description' => tra('Number of decimals after the percent in results'),
+			'type' => 'text',
+			'size' => '2',
+			'filter' => 'digits',
+			'default' => 2,
+		),
 	);
 }

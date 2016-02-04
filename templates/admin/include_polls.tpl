@@ -46,6 +46,7 @@
 					{preference name=poll_list_categories}
 					{preference name=poll_list_objects}
 					{preference name=poll_multiple_per_object}
+					{preference name=poll_percent_decimals}
 				</fieldset>
 			{/tab}
 		{/if}

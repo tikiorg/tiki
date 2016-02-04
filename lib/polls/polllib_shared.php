@@ -421,6 +421,12 @@ class PollLibShared extends TikiLib
 	 */
 	function options_percent(&$poll_info, &$options)
 	{
+		global $prefs;
+		if (!empty($prefs['poll_percent_decimals'])) {
+			$percent_decimals = 2;
+		} else {
+			$percent_decimals = $prefs['poll_percent_decimals'];
+		}
 		$poll_info['votes'] = 0;
 		$total = 0;
 		$isNum = true; // try to find if it is a numeric poll with a title like +1, -2, 1 point...
@@ -433,7 +439,7 @@ class PollLibShared extends TikiLib
 			if ($option['votes'] == 0) {
 				$percent = 0;
 			} else {
-				$percent = number_format($option['votes'] * 100 / $poll_info['votes'], 2);
+				$percent = number_format($option['votes'] * 100 / $poll_info['votes'], $percent_decimals);
 				if ($isNum) {
 					if (preg_match('/^([+-]?[0-9]+).*/', $option['title'], $matches)) {
 						$total += $option['votes'] * $matches[1];
