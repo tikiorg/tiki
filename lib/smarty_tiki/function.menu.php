@@ -95,7 +95,10 @@ function smarty_function_menu($params, $smarty)
 
 				$activeSection = $element;
 				$activeSection['children'] = array();
-			} elseif ($element['type'] == 'o') {
+
+			} elseif ($element['type'] == 'o' || // bootstrap menus don't support more than one item level so include 1, 2 and 3 as options
+					$element['type'] == '1' || $element['type'] == '2' || $element['type'] == '3') {
+
 				if ($activeSection) {
 					$activeSection['children'][] = $element;
 				} else {
