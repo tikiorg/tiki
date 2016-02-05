@@ -20,7 +20,7 @@ function wikiplugin_articles_info()
 			'usePagination' => array(
 				'required' => false,
 				'name' => tra('Use Pagination'),
-				'description' => tr('Activate pagination when articles listing are long. Default is %0', '<code>n</code>'),
+				'description' => tr('Activate pagination when the articles list is long. Default is %0', '<code>n</code>'),
 				'filter' => 'alpha',
 				'default' => 'n',
 				'since' => '1',
@@ -69,7 +69,7 @@ function wikiplugin_articles_info()
 			'categId' => array(
 				'required' => false,
 				'name' => tra('Category ID'),
-				'description' => tra('List of category IDs, separated by %0. Only articles in all these categories are
+				'description' => tra('List of category IDs, separated by "%0". Only articles in all these categories are
 					listed', '<code>|</code>'),
 				'filter' => 'digits',
 				'default' => '',
@@ -90,7 +90,7 @@ function wikiplugin_articles_info()
 				'name' => tra('Sort order'),
 				'description' => tr('The column and order of the sort in %0columnName_asc%1 or %0columnName_desc%1 format.
 					Defaults to %0publishDate_desc%1 (other column examples are %0title%1, %0lang%1, %0articleId%1,
-					%0authorName%1 & %0topicName%1). Use random to have random items.', '<code>', '</code>'),
+					%0authorName%1 & %0topicName%1). Use "random" to have random items.', '<code>', '</code>'),
 				'filter' => 'word',
 				'default' => 'publishDate_desc',
 				'since' => '2.0',
@@ -108,7 +108,7 @@ function wikiplugin_articles_info()
 			'articleId' => array(
 				'required' => false,
 				'name' => tra('Only these articles'),
-				'description' => tr('List of ArticleId to display separated by %0', '<code>|</code>'),
+				'description' => tr('List of article IDs to display, separated by "%0"', '<code>|</code>'),
 				'filter' => 'digits',
 				'separator' => '|',
 				'default' => '',
@@ -118,7 +118,7 @@ function wikiplugin_articles_info()
 			'notArticleId' => array(
 				'required' => false,
 				'name' => tra('Not these articles'),
-				'description' => tra('List of ArticleId that can not be displayed separated by %0', '<code>|</code>'),
+				'description' => tra('List of article IDs to not display, separated by "%0"', '<code>|</code>'),
 				'filter' => 'digits',
 				'separator' => '|',
 				'default' => '',
@@ -217,8 +217,7 @@ function wikiplugin_articles_info()
 			'overrideDates' => array(
 				'required' => false,
 				'name' => tra('Override Dates'),
-				'description' => tra('Whether to obey article type\'s "show before publish" and "show after expiry"
-					settings (not obeyed by default)'),
+				'description' => tra('Whether to comply with the article type\'s "show before publish" and "show after expiration" settings (not complied with by default)'),
 				'filter' => 'alpha',
 				'default' => 'n',
 				'since' => '1',
@@ -230,8 +229,8 @@ function wikiplugin_articles_info()
 			),
 			'containerClass' => array(
 				'required' => false,
-				'name' => tra('Container class'),
-				'description' => tr('CSS Class to add to the container DIV.article. (Default: %0)',
+				'name' => tra('Containing class'),
+				'description' => tr('CSS class to add to the containing "div.article" (default: "%0")',
 					'<code>wikiplugin_articles</code>'),
 				'filter' => 'text',
 				'since' => '1',

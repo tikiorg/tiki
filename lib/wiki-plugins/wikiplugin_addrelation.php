@@ -21,7 +21,7 @@ function wikiplugin_addrelation_info()
 			'qualifier' => array(
 				'required' => true,
 				'name' => tra('Qualifier'),
-				'description' => tra('Relation qualifier. Usually a three part string separated by 2 periods.'),
+				'description' => tra('elation qualifier. Usually a three-part string separated by two periods.'),
 				'filter' => 'attribute_type',
 				'default' => array(),
 				'since' => '8.0',
@@ -72,7 +72,7 @@ function wikiplugin_addrelation_info()
 			),
 			'button_id' => array(
 				'required' => false,
-				'name' => tra('Button Id'),
+				'name' => tra('Button ID'),
 				'description' => tra('A unique ID to distinguish the button from others on the page if there is more than one'),
 				'filter' => 'text',
 				'since' => '8.0',

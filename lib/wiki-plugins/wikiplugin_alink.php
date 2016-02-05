@@ -20,7 +20,7 @@ function wikiplugin_alink_info()
 			'aname' => array(
 				'required' => true,
 				'name' => tra('Anchor Name'),
-				'description' => tra('The anchor name as defined in the ANAME plugin.'),
+				'description' => tra('The anchor name as defined in the Aname plugin.'),
 				'default' => '',
 				'since' => '1',
 			),

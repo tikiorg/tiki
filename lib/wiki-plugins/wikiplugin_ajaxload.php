@@ -8,9 +8,9 @@
 function wikiplugin_ajaxload_info() {
 
 	return array(
-		'name' => tra('AJAX Load'),
+		'name' => tra('Ajax Load'),
 		'documentation' => 'PluginAJAXLoad',
-		'description' => tra('Load data into a DIV using AJAX or in an IFRAME'),
+		'description' => tra('Load data into an HTML div using Ajax or in an iframe'),
 		'prefs' => array('wikiplugin_ajaxload'),
 		'format' => 'html',
 		'iconname' => 'code_file',
@@ -21,7 +21,7 @@ function wikiplugin_ajaxload_info() {
 			'url' => array(
 				'required' => true,
 				'name' => tra('URL'),
-				'description' => tr('Address of the data to load, e.g. %0tiki-index_raw.php?page=Page+Name%1', '<code>',
+				'description' => tr('Address of the data to load, for example, %0tiki-index_raw.php?page=Page+Name%1', '<code>',
 					'</code>'),
 				'filter' => 'url',
 				'since' => '14.1',
@@ -29,7 +29,7 @@ function wikiplugin_ajaxload_info() {
 			'selector' => array(
 				'required' => false,
 				'name' => tra('Selector'),
-				'description' => tr('jQuery selector to retrieve part of the page when using AJAX, e.g.
+				'description' => tr('jQuery selector to retrieve part of the page when using Ajax, for example,
 					%0#page-data%1', '<code>', '</code>'),
 				'filter' => 'none',
 				'default' => '',
@@ -38,7 +38,7 @@ function wikiplugin_ajaxload_info() {
 			'target' => array(
 				'required' => false,
 				'name' => tra('Target'),
-				'description' => tra('Where to load the AJAX data into (will create own DIV if not supplied. When using
+				'description' => tra('Where to load the Ajax data into (will create own DIV if not supplied. When using
 					iframe if JavaScript is disabled it will appear where the plugin is in the page.'),
 				'filter' => 'none',
 				'default' => '',
@@ -47,7 +47,7 @@ function wikiplugin_ajaxload_info() {
 			'id' => array(
 				'required' => false,
 				'name' => tra('Id'),
-				'description' => tra('Id for the DIV or IFRAME.'),
+				'description' => tra('HTML id for the div or iframe.'),
 				'filter' => 'text',
 				'default' => '',
 				'since' => '14.1',
@@ -55,7 +55,7 @@ function wikiplugin_ajaxload_info() {
 			'class' => array(
 				'required' => false,
 				'name' => tra('Class'),
-				'description' => tra('Class for the DIV or IFRAME.'),
+				'description' => tra('Class for the div or iframe.'),
 				'filter' => 'text',
 				'default' => '',
 				'since' => '14.1',

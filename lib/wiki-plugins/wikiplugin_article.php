@@ -19,7 +19,7 @@ function wikiplugin_article_info()
 			'Field' => array(
 				'required' => false,
 				'name' => tra('Field'),
-				'description' => tra('The article field to display. Default field is Heading.'),
+				'description' => tra('The article field (component) to display. The default field is "Heading".'),
 				'filter' => 'word',
 				'default' => 'heading',
 				'since' => '1',
@@ -27,7 +27,7 @@ function wikiplugin_article_info()
 			'Id' => array(
 				'required' => false,
 				'name' => tra('Article ID'),
-				'description' => tra('The article to display. If no value is provided, most recent article will be used.'),
+				'description' => tra('The article to display. If no value is provided, the most recent article will be used.'),
 				'filter' => 'digits',
 				'default' => '',
 				'profile_reference' => 'article',

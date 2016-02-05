@@ -37,7 +37,7 @@ function wikiplugin_addtocart_info()
 			'producttype' => array(
 				'required' => false,
 				'name' => tra('Product Type'),
-				'description' => tra('The product type that is being sold, which will affect fulfillment, e.g. standard product, gift certificate, event ticket'),
+				'description' => tra('The product type that is being sold, which will affect fulfillment, for example, standard product, gift certificate, event ticket'),
 				'filter' => 'text',
 				'default' => '',
 				'since' => '7.0',
@@ -45,7 +45,7 @@ function wikiplugin_addtocart_info()
 			'productclass' => array(
 				'required' => false,
 				'name' => tra('Product Class'),
-				'description' => tra('The class the product belongs to, can be used to limit how gift cards are used'),
+				'description' => tra('The class the product belongs to. Can be used to limit how gift cards are used'),
 				'filter' => 'text',
 				'default' => '',
 				'since' => '7.0',
@@ -53,7 +53,7 @@ function wikiplugin_addtocart_info()
 			'productbundle' => array(
 				'required' => false,
 				'name' => tra('Product Bundle'),
-				'description' => tra('The bundle the product belongs to, can be used to limit how gift cards are used, will automatically add other products in same class to cart'),
+				'description' => tra('The bundle the product belongs to. Can be used to limit how gift cards are used, will automatically add other products in the same class to the cart'),
 				'filter' => 'text',
 				'default' => '',
 				'since' => '7.0',
@@ -61,7 +61,7 @@ function wikiplugin_addtocart_info()
 			'bundleclass' => array(
 				'required' => false,
 				'name' => tra('Bundle Class'),
-				'description' => tra('The class the bundle belongs to, can be used to limit how gift cards are used'),
+				'description' => tra('The class the bundle belongs to. Can be used to limit how gift cards are used'),
 				'filter' => 'text',
 				'default' => '',
 				'since' => '7.0',
@@ -101,8 +101,8 @@ function wikiplugin_addtocart_info()
 			),
 			'autocheckout' => array(
 				'required' => false,
-				'name' => tra('Automatically checkout'),
-				'description' => tra('Automatically checkout for purchase and send user to pay (this is disabled when there is already something in the cart)'),
+				'name' => tra('Automatically check out'),
+				'description' => tra('Automatically check out for purchase and send the user to pay (this is disabled when there is already something in the cart)'),
 				'since' => '7.0',
 				'filter' => 'text',
 				'default' => 'n',
@@ -172,7 +172,7 @@ function wikiplugin_addtocart_info()
 			'ajaxaddtocart' => array(
 				'required' => false,
 				'name' => tra('Ajax add to cart feature'),
-				'description' => tra('Attempts to turn ajax for cart on'),
+				'description' => tra('Attempts to turn on Ajax for the cart'),
 				'filter' => 'alpha',
 				'since' => '7.0',
 				'default' => 'n',
