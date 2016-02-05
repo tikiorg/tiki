@@ -21,7 +21,7 @@ function wikiplugin_annotation_info()
 			'src' => array(
 				'required' => true,
 				'name' => tra('Location'),
-				'description' => tra('Absolute URL to the image or relative path from tiki root.'),
+				'description' => tra('Absolute URL to the image or relative path from Tiki site root.'),
 				'filter' => 'url',
 				'default' => '',
 				'since' => '3.0',

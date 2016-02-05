@@ -20,7 +20,7 @@ function wikiplugin_appframe_info()
 		'params' => array(
 			'min' => array(
 				'required' => false,
-				'name' => tr('Minimal height'),
+				'name' => tr('Minimum height'),
 				'description' => tr('Prevent the frame from becoming any shorter than the specified size.'),
 				'default' => 300,
 				'filter' => 'int',
@@ -28,7 +28,7 @@ function wikiplugin_appframe_info()
 			),
 			'max' => array(
 				'required' => false,
-				'name' => tr('Maximal height'),
+				'name' => tr('Maximum height'),
 				'description' => tr('Prevent the frame from becoming any higher than the specified size.'),
 				'default' => -1,
 				'filter' => 'int',
@@ -59,7 +59,7 @@ function wikiplugin_appframe_info()
 			'fullpage' => array(
 				'required' => false,
 				'name' => tr('Full page'),
-				'description' => tr('Occupy the complete content area of the page.'),
+				'description' => tr('Completely fill the content area of the page.'),
 				'default' => 'n',
 				'since' => '9.0',
 				'options' => array(
@@ -70,7 +70,7 @@ function wikiplugin_appframe_info()
 			'absolute' => array(
 				'required' => false,
 				'name' => tr('Absolute Position'),
-				'description' => tr('Position the app frame to use absolute position and really use all available space.'),
+				'description' => tr('Use all available space for the application frame (by means of CSS absolute positioning).'),
 				'default' => 'n',
 				'since' => '9.0',
 				'options' => array(
@@ -89,7 +89,7 @@ function wikiplugin_appframe_info()
 			'fullscreen' => array(
 				'required' => false,
 				'name' => tr('Full screen'),
-				'description' => tr('Occupy the complete page.'),
+				'description' => tr('Fill the complete page.'),
 				'default' => 'n',
 				'since' => '10.0',
 				'options' => array(
