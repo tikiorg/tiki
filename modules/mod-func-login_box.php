@@ -46,6 +46,11 @@ function module_login_box_info()
 				'description' => tra('Show the "Remember me" checkbox') . ' (y/n)',
 				'filter' => 'alpha',
 			),
+			'show_user_avatar' => array(
+				'name' => tra('Show user avatar'),
+				'description' => tra('Show the user avatar when in pop-up mode') . ' (y/n)',
+				'filter' => 'alpha',
+			),
 			'show_user_name' => array(
 				'name' => tra('Show user name'),
 				'description' => tra('Show the user name when in pop-up mode') . ' (y/n)',
