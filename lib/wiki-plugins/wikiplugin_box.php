@@ -79,8 +79,8 @@ function wikiplugin_box_info()
 				'required' => false,
 				'safe' => true,
 				'name' => tra('Clear'),
-				'description' => tra('Items are not allowed to wrap around the box if this parameter is set to
-					%0 (Yes)', '<code>1</code>'),
+				'description' => tr('Items are not allowed to wrap around the box if this parameter is set to %0 (Yes)',
+					'<code>1</code>'),
 				'since' => '1',
 				'filter' => 'digits',
 				'default' => '',
