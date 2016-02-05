@@ -26,7 +26,7 @@ function wikiplugin_banner_info()
 			'target' => array(
 				'required' => false,
 				'name' => tra('Target'),
-				'description' => tra('Determines the browser behavior once the banner is clicked'),
+				'description' => tra('Determines the browser behavior when the banner is clicked'),
 				'since' => '3.0',
 				'default' => '',
 				'options' => array(

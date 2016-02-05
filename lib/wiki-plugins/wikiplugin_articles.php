@@ -253,7 +253,7 @@ function wikiplugin_articles_info()
 			),
 			'urlparam' => array(
 				'required' => false,
-				'name' => tra('Additional URL Param to the link to read article'),
+				'name' => tra('Additional URL parameter for the link to read the article'),
 				'filter' => 'text',
 				'default' => '',
 				'since' => '6.0',

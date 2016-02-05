@@ -58,7 +58,7 @@ function wikiplugin_gdgraph_info()
 /*			'bg' => array(
 				'required' => false,
 				'name' => tra('Background color'),
-				'description' => tra('As defined by CSS, name or Hex code - not used yet'),
+				'description' => tra('As defined by CSS, name, or color hex code - not used yet'),
 				'filter' => 'text',
 				'default' => '',
 			),*/

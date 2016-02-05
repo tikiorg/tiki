@@ -41,7 +41,7 @@ function wikiplugin_avatar_info()
 			'fullsize' => array(
 				'required' => false,
 				'name' => tra('Full Size'),
-				'description' => tra('If full size images are stored in the File Gallery, show the full size one.'),
+				'description' => tra('If full-size images are stored in the file gallery, show the full-size image.'),
 				'default' => 'n',
 				'since' => '10.0',
 			),
