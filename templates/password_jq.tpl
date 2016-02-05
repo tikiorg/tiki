@@ -33,7 +33,7 @@ The below assumes:
 *}
 {jq}
 	{* Give warning if caps lock is on when user starts typing in characters for a password *}
-	$('#pass1, #pass2').on('keypress', function () {
+	$('#oldpass, #pass1, #pass2').on('keypress', function () {
 		regCapsLock(event);
 	});
 	{* Show strength of the password as it is being typed *}
