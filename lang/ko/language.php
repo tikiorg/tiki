@@ -5557,7 +5557,7 @@ Temporarily adjust the time available during %0. Depending on the volume of data
 "Add Relation" => "관계 추가",
 // "Provide a button to toggle a pre-specified relation" => "Provide a button to toggle a pre-specified relation",
 "Qualifier" => "한정자",
-"elation qualifier. Usually a three-part string separated by two periods" => "관계 한정자. 일반적으로 2 마침표로 분리된 3부분의 문자열임",
+"Relation qualifier. Usually a three-part string separated by two periods" => "관계 한정자. 일반적으로 2 마침표로 분리된 3부분의 문자열임",
 "Source Object" => "소스 개체",
 // "Object identifier as %0type:itemId%1 to start the relation from, will use the current\n\t\t\t\t\tobject if left blank" => "Object identifier as %0type:itemId%1 to start the relation from, will use the current\n\t\t\t\t\tobject if left blank",
 "Target Object" => "목표 개체",

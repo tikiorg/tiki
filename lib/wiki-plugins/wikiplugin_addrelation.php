@@ -21,7 +21,7 @@ function wikiplugin_addrelation_info()
 			'qualifier' => array(
 				'required' => true,
 				'name' => tra('Qualifier'),
-				'description' => tra('elation qualifier. Usually a three-part string separated by two periods.'),
+				'description' => tra('Relation qualifier. Usually a three-part string separated by two periods.'),
 				'filter' => 'attribute_type',
 				'default' => array(),
 				'since' => '8.0',
