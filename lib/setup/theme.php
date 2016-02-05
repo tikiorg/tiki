@@ -118,8 +118,11 @@ if(!empty($theme_option_active)) {
 		$headerlib->add_cssfile($main_theme_custom_css, 53);
 	}
 }
-$theme_path = $themelib->get_theme_path($theme_active, $theme_option_active);
-$custom_css = "{$theme_path}css/custom.css";
+
+$custom_css = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], 'custom.css');
+if (empty($custom_css)) {
+	$custom_css = $themelib->get_theme_path('', '', 'custom.css');
+}
 if (is_readable($custom_css)) {
 	$headerlib->add_cssfile($custom_css, 53);
 }
