@@ -40,8 +40,13 @@ header("Expires: 0");
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header("Pragma: Public");
 
-if ($info["dir"]) {
+// if database has content, means file was uploaded to DB storage
+if (strlen($content) > 0) {
+	echo "$content";
+} else if (file_exists($info["dir"] . $info["path"])) {
+	// Check if file was uploaded to file syste
 	readfile($info["dir"] . $info["path"]);
 } else {
-	echo "$content";
+	// Something is wrong
+	die('File data was not found');
 }
