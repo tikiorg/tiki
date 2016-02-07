@@ -57,7 +57,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 					),
 					'descendants' => array(
 						'name' => tr('All descendants'),
-						'description' => tr('"Display all descendants instead of only first-level descendants'),
+						'description' => tr('Display all descendants instead of only first-level descendants'),
 						'filter' => 'int',
 						'options' => array(
 							0 => tr('First level only'),
