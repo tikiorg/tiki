@@ -455,12 +455,13 @@ function wikiplugin_img_info()
 				'required' => false,
 				'name' => tra('Responsive Image'),
 				'filter' => 'alpha',
-				'description' => tr('Determines whether the image has the %0img-responsive%1 class.', '<code>', '</code>'),
+				'description' => tr('Default set by the admin using a preference and determines whether the image has the %0img-responsive%1 class.', '<code>', '</code>'),
 				'since' => '14.0',
 				'doctype' => 'style',
 				'advanced' => false,
-				'default' => 'y',				
+				'default' => $prefs['image_responsive_class'],				
 				'options' => array(
+					array('text' => tra('Default'), 'value' => $prefs['image_responsive_class']),
 					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n'),
 				),
@@ -558,7 +559,7 @@ function wikiplugin_img( $data, $params )
 	$imgdata['title'] = '';
 	$imgdata['metadata'] = '';
 	$imgdata['alt'] = '';
-	$imgdata['responsive'] = 'y';
+	$imgdata['responsive'] = $prefs['image_responsive_class'];
 	$imgdata['default'] = '';
 	$imgdata['mandatory'] = '';
 	$imgdata['fromFieldId'] = 0;		// "private" params set by Tracker_Field_Files
