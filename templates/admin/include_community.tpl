@@ -100,7 +100,7 @@
 					{preference name=activity_basic_user_friend_add}
 				</div>
 				{preference name=activity_custom_events}
-                {preference name=activity_notifications}
+				{preference name=activity_notifications}
 			</fieldset>
 			<fieldset>
 				<legend>{tr}Goal, Recognition and Rewards{/tr}</legend>
@@ -139,16 +139,18 @@
 			{preference name=highlight_group}
 			{preference name=feature_display_my_to_others}
 			{preference name=user_tracker_infos}
-			{preference name=user_use_gravatar}
 			{preference name=user_who_viewed_my_stuff}
 			{preference name=user_who_viewed_my_stuff_days}
 			{preference name=user_who_viewed_my_stuff_show_others}
-			{preference name=user_store_file_gallery_picture}
-			{preference name=user_small_avatar_size}
-			{preference name=user_small_avatar_square_crop}
-			{preference name=user_picture_gallery_id}
-			{preference name=user_default_picture_id}
-			<input type="hidden" name="userfeatures" />
+			<fieldset>
+				<legend>{tr}Profile picture{/tr}</legend>
+					{preference name=user_use_gravatar}
+					{preference name=user_store_file_gallery_picture}
+					{preference name=user_small_avatar_size}
+					{preference name=user_small_avatar_square_crop}
+					{preference name=user_picture_gallery_id}
+					{preference name=user_default_picture_id}
+			</fieldset>
 			<fieldset>
 				<legend>{tr}Community{/tr}{help url="Community"}</legend>
 				{preference name=feature_community_gender}
@@ -214,6 +216,7 @@
 		{/tab}
 	{/tabset}
 	<div class="t_navbar margin-bottom-md text-center">
+		<input type="hidden" name="userfeatures" />
 		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 	</div>
 </form>

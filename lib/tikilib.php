@@ -1427,7 +1427,7 @@ class TikiLib extends TikiDb_Bridge
 		switch ($type)	{
 			case 'l':
 				if ($libname) {
-					$ret = "<img width='45' height='45' src='" . $libname . "' " . $style . " alt='" . htmlspecialchars($user, ENT_NOQUOTES) . "'>";
+					$ret = "<img class='user-profile-picture img-rounded' width='45' height='45' src='" . $libname . "' " . $style . " alt='" . htmlspecialchars($user, ENT_NOQUOTES) . "'>";
 				}
 				break;
 			case 'u':
@@ -1435,11 +1435,11 @@ class TikiLib extends TikiDb_Bridge
 				$path = $userprefslib->get_public_avatar_path($user);
 
 				if ($path) {
-					$ret = "<img src='" . htmlspecialchars($path, ENT_NOQUOTES) . "' " . $style . " alt='" . htmlspecialchars($user, ENT_NOQUOTES) . "'>";
+					$ret = "<img class='user-profile-picture img-rounded' src='" . htmlspecialchars($path, ENT_NOQUOTES) . "' " . $style . " alt='" . htmlspecialchars($user, ENT_NOQUOTES) . "'>";
 				}
 				break;
 			case 'g':
-				$ret = "<img src='" . htmlspecialchars($url, ENT_NOQUOTES) . "' " . $style . " alt='" . htmlspecialchars($user, ENT_NOQUOTES) . "'>";
+				$ret = "<img class='user-profile-picture img-rounded' src='" . htmlspecialchars($url, ENT_NOQUOTES) . "' " . $style . " alt='" . htmlspecialchars($user, ENT_NOQUOTES) . "'>";
 				break;
 			case 'n':
 			default:
