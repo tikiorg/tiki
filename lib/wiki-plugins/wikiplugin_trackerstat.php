@@ -26,10 +26,10 @@ function wikiplugin_trackerstat_info()
 				'profile_reference' => 'tracker',
 			),
 			'fields' => array(
-				'required' => true,
+				'required' => false,
 				'name' => tra('Fields'),
 				'description' => tra('Colon-separated list of field IDs to be displayed. Example:')
-					. ' <code>2:4:5</code>',
+					. ' <code>2:4:5</code>' . tra('. ') . tra('Leave it empty to display all fields from this tracker.'),
 				'since' => '2.0',
 				'default' => '',
 				'separator' => ':',
