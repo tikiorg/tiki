@@ -1309,10 +1309,9 @@ class TikiLib extends TikiDb_Bridge
 				from `tiki_object_scores` tos
 				where `recipientObjectType`='user'
 				and tos.`id` = (select max(id) from `tiki_object_scores` where `recipientObjectId` = tos.`recipientObjectId` and `recipientObjectType`='user' group by `recipientObjectId`)
-				group by `recipientObjectId` order by `score` desc
-				limit ? offset ?";
+				group by `recipientObjectId` order by `score` desc";
 
-			$result = $this->fetchAll($query, array($limit, $start));
+			$result = $this->fetchAll($query, NULL, $limit, $start);
 		} else {
 			// score expires
 			$query = "select `recipientObjectId` as `login`,
@@ -1324,10 +1323,9 @@ class TikiLib extends TikiDb_Bridge
 				from `tiki_object_scores` tos
 				where `recipientObjectType`='user'
 				and tos.`id` = (select max(id) from `tiki_object_scores` where `recipientObjectId` = tos.`recipientObjectId` and `recipientObjectType`='user' group by `recipientObjectId`)
-				group by `recipientObjectId` order by `score` desc
-				limit ? offset ?";
+				group by `recipientObjectId` order by `score` desc";
 
-				$result = $this->fetchAll($query, array($score_expiry_days, $limit, $start));
+			$result = $this->fetchAll($query, $score_expiry_days, $limit, $start);
 		}
 
 		foreach ( $result as & $res ) {
