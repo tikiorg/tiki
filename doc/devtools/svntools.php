@@ -6,7 +6,7 @@
 // $Id$
 
 define('SVN_MIN_VERSION', 1.3);
-define('TIKISVN', 'svn+ssh://ameoba32@svn.code.sf.net/p/tikiwiki/code');
+define('TIKISVN', 'https://svn.code.sf.net/p/tikiwiki/code');
 
 /**
  * @param $relative
