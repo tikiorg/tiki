@@ -44,7 +44,7 @@ function wikiplugin_div_info()
 			'bg' => array(
 				'required' => false,
 				'name' => tra('Background Color'),
-				'description' => tra('As defined by CSS, name or Hex code.'),
+				'description' => tra('As defined by CSS, name, or color hex code.'),
 				'since' => '1',
 				'filter' => 'text',
 				'accepted' => tra('Valid CSS color name or hex code'),

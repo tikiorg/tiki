@@ -735,6 +735,14 @@ class Services_Tracker_Controller
 				}
 			}
 
+			// test if one item per user
+			if ($definition->getConfiguration('oneUserItem', 'n') == 'y') {
+				$tmp = TikiLib::lib('trk')->get_user_item($trackerId, $definition->getInformation());
+				if ($tmp > 0) {
+					throw new Services_Exception(tr('Item could not be created.'), 400);
+				}
+			}
+
 			$itemId = $this->utilities->insertItem(
 				$definition,
 				array(

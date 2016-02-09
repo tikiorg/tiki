@@ -44,7 +44,7 @@ header("Pragma: Public");
 if (strlen($content) > 0) {
 	echo "$content";
 } else if (file_exists($info["dir"] . $info["path"])) {
-    // Check if file was uploaded to file syste
+	// Check if file was uploaded to file syste
 	readfile($info["dir"] . $info["path"]);
 } else {
 	// Something is wrong

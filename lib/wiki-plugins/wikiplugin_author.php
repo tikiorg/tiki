@@ -19,7 +19,7 @@ function wikiplugin_author_info()
 			'author' => array(
 				'required' => true,
 				'name' => tra('Username'),
-				'description' => tra('User name of the user who wrote the text.'),
+				'description' => tra('Username of the author of the text.'),
 				'since' => '6.0',
 				'default' => '',
 				'filter' => 'username',
@@ -27,7 +27,7 @@ function wikiplugin_author_info()
 			'deleted_by' => array(
 				'required' => false,
 				'name' => tra('Deleted by User'),
-				'description' => tra('User name of the user who deleted the text.'),
+				'description' => tra('Username of the person who deleted the text.'),
 				'since' => '6.0',
 				'default' => '',
 				'filter' => 'username',

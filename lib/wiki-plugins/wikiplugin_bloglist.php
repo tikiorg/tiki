@@ -18,7 +18,7 @@ function wikiplugin_bloglist_info()
 			'Id' => array(
 				'required' => true,
 				'name' => tra('Blog ID'),
-				'description' => tra('The ID number of the blog on the site you wish to list posts from. More than one blog can be provided, separated by colon. Example: 1:5. Limitation: if more than one blog is provided, the private posts (drafts) are not shown.'),
+				'description' => tra('The ID number of the blog on the site to list posts from. More than one blog can be provided, separated by colon. Example: 1:5. Limitation: if more than one blog is provided, the private posts (drafts) are not shown.'),
 				'filter' => 'striptags',
 				'default' => '',
 				'profile_reference' => 'blog',
@@ -92,7 +92,7 @@ function wikiplugin_bloglist_info()
 				'required' => false,
 				'name' => tra('More'),
 				'description' => tra('If not a simple list and Character Count is non-zero, then marking this as yes
-					will put a More link to the full entry (default).'),
+					will put a "More" link to the full entry (default).'),
 				'default' => 'y',
 				'since' => '12.0',
 				'options' => array(
@@ -104,7 +104,7 @@ function wikiplugin_bloglist_info()
 			'showIcons' => array(
 				'required' => false,
 				'name' => tra('Show Icons'),
-				'description' => tra('If not a simple list marking this as no will prevent the "edit" and "print" type
+				'description' => tra('If not a simple list, marking this as no will prevent the "edit" and "print" type
 					icons from displaying (default is to show the icons)'),
 				'default' => 'y',
 				'since' => '12.0',
@@ -164,7 +164,7 @@ function wikiplugin_bloglist($data, $params)
 	$smarty = TikiLib::lib('smarty');
 
 	if (!isset($params['Id'])) {
-		TikiLib::lib('errorreport')->report(tra('missing blog Id for BLOGLIST plugins'));
+		TikiLib::lib('errorreport')->report(tra('Missing blog ID for Bloglist plugin'));
 		return '';
 	}
 	// Sanitize $params['Id'])
