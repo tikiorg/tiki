@@ -103,6 +103,7 @@
 			{* Translation maintenance *}
 			{capture}
 				{if $object_type eq 'wiki page' and $tiki_p_edit eq 'y'}
+					<li role="separator" class="divider"></li>
 					<li>
 						<a class="tips" href="tiki-edit_translation.php?page={$trads[0].objName|escape:url}&no_bl=y" title=":{tr}Translate page{/tr}">
 							{tr}Translate{/tr}
@@ -114,6 +115,7 @@
 						</a>
 					</li>
 				{elseif $object_type eq 'article' and $tiki_p_edit_article eq 'y'}
+					<li role="separator" class="divider"></li>
 					<li>
 						<a href="tiki-edit_article.php?translationOf={$articleId}" title="{tr}Translate article{/tr}">
 						{tr}Translate{/tr}
@@ -127,7 +129,6 @@
 				{/if}
 			{/capture}
 			{if !empty($smarty.capture.default)}{* Only display the header if there's content *}
-				<li role="separator" class="divider"></li>
 				{$smarty.capture.default}
 			{/if}
 		</ul>
