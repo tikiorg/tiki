@@ -87,7 +87,7 @@ class FilegalBatchLib extends FileGalLib
 			$path_parts = pathinfo($file);
 
 			$type = 'application/octet-stream';
-			if ($path_parts['extension']) {
+			if (!empty($path_parts['extension'])) {
 				$ext = strtolower($path_parts['extension']);
 
 				if (isset($mimetypes["$ext"])) {
