@@ -1035,7 +1035,6 @@ li.archivedate {
 }
 .sitelogo img {
   margin-top: 10px;
-  margin-left: 20px;
 }
 .pass a,
 .pass a:visited,
@@ -2891,6 +2890,9 @@ body.tiki.navbar-padding {
 .tiki .table-responsive > .table > tfoot > tr > td {
   white-space: normal;
 }
+.tiki .table-responsive > .table td.action {
+  white-space: nowrap;
+}
 .layout_social a.navbar-brand img,
 .layout_social_modules a.navbar-brand img,
 .layout_fixed_top_modules a.navbar-brand img {
@@ -4076,7 +4078,6 @@ h6:hover a.tiki_anchor {
 h1.pagetitle > a {
   padding-left: 0;
   padding-right: 0;
-  margin-top: 0px;
 }
 #cachedpage {
   float: right;
