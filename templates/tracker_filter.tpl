@@ -66,9 +66,9 @@
 
 							{elseif $field.type eq 'R'}
 								<div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}">
-									{section name=jx loop=$field.options_array}
-										<input type="radio" name="filtervalue[{$fid}]" value="{$field.options_array[jx]|escape}" {if $fid == $filterfield}{if $filtervalue eq $field.options_array[jx]}checked="checked"{/if}{/if}>{$field.options_array[jx]|escape}
-									{/section}
+									{foreach from=$field.possibilities key=radio_key item=radio_value}
+										<input type="radio" name="filtervalue[{$fid}]" value="{$radio_key|escape}" {if $fid == $filterfield}{if $filtervalue eq $radio_key}checked="checked"{/if}{/if}>{$radio_value|escape}
+									{/foreach}
 								</div>
 
 							{elseif $field.type eq 'M'}
