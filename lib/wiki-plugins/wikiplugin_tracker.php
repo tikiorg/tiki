@@ -1095,6 +1095,7 @@ function wikiplugin_tracker($data, $params)
 					$wikioutput = $newpageinfo["data"];
 					$newpagefields = $trklib->get_pretty_fieldIds($outputwiki, 'wiki', $prettyModifier, $trackerId);
 					$tracker_definition = Tracker_Definition::get($trackerId);
+					$wikioutput = str_replace('{$f_itemId}', $rid, $wikioutput);
 					foreach($newpagefields as $lf) {
 						$field = $tracker_definition->getField($lf);
 						$lfpermname = $field['permName'];
