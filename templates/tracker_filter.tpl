@@ -55,9 +55,9 @@
 								<div style="display:{if $filterfield eq $fid}block{else}none{/if};" id="fid{$fid}">
 									<select name="filtervalue[{$fid}]" class="form-control">
 										{if $field.type eq 'D'}<option value="" />{/if}
-										{section name=jx loop=$field.options_array}
-											<option value="{$field.options_array[jx]|escape}" {if $fid == $filterfield}{if $filtervalue eq $field.options_array[jx]}{assign var=gotit value=y}selected="selected"{/if}{/if}>{$field.options_array[jx]|tr_if}</option>
-										{/section}
+										{foreach from=$field.possibilities key=dropdown_key item=dropdown_value}
+											<option value="{$dropdown_key|escape}" {if $fid == $filterfield}{if $filtervalue eq $dropdown_key}{assign var=gotit value=y}selected="selected"{/if}{/if}>{$dropdown_value|tr_if}</option>
+										{/foreach}
 									</select>
 									{if $field.type eq 'D'}
 										<input class="form-control" type="text" name="filtervalue_other"{if $gotit ne 'y'} value="{if $fid == $filterfield}{$filtervalue}{/if}"{/if}>

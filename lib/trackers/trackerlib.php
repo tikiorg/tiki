@@ -1103,6 +1103,7 @@ class TrackerLib extends TikiLib
 				if ( is_array($filterfield) ) {
 					//multiple filter on an exact value or a like value - each value can be simple or an array
 					$ff = (int) $filterfield[$i];
+					$ff_array = $filterfield[$i]; // Need value as array used below
 					$ev = !empty($exactvalue[$i])? $exactvalue[$i]:'';
 					$fv = !empty($filtervalue[$i])?$filtervalue[$i]:'' ;
 				}
@@ -1117,9 +1118,9 @@ class TrackerLib extends TikiLib
 				$cat_table .= " INNER JOIN `tiki_tracker_item_fields` ttif$i ON (ttif$i.`itemId` = ttif$j.`itemId`)";
 				$last++;
 
-				if (isset($ff['sqlsearch']) && is_array($ff['sqlsearch'])) {
-					$mid .= " AND ttif$i.`fieldId` in (".implode(',', array_fill(0, count($ff['sqlsearch']), '?')).')';
-					$bindvars = array_merge($bindvars, $ff['sqlsearch']);
+				if (isset($ff_array['sqlsearch']) && is_array($ff_array['sqlsearch'])) {
+					$mid .= " AND ttif$i.`fieldId` in (".implode(',', array_fill(0, count($ff_array['sqlsearch']), '?')).')';
+					$bindvars = array_merge($bindvars, $ff_array['sqlsearch']);
 				} elseif ( $ff ) {
 					$mid .= " AND ttif$i.`fieldId`=? ";
 					$bindvars[] = $ff;
@@ -1235,7 +1236,7 @@ class TrackerLib extends TikiLib
 							$mid .= " AND ttif$i.`value` in (".implode(',', array_fill(0, count($ev), '?')).")";
 							$bindvars = array_merge($bindvars, array_values($ev));
 						}
-					} elseif (isset($ff['sqlsearch']) && is_array($ff['sqlsearch'])) {
+					} elseif (isset($ff_array['sqlsearch']) && is_array($ff_array['sqlsearch'])) {
 						$mid .= " AND MATCH(ttif$i.`value`) AGAINST(? IN BOOLEAN MODE)";
 						$bindvars[] = $ev;
 					} else {
