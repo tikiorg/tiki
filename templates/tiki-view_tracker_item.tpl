@@ -264,8 +264,6 @@
 								</div>
 							{/foreach}
 
-							{trackerheader level=-1 title='' inTable='formcolor'}
-
 						{else}
 						{* we have a preset template: it could be a wiki:myPage or a tpl:MyTpl.tpl *}
 						{* Note: tracker plugin usally consumes a pagename or a tpl filename without a prefix of tpl: or wiki: as the tracker definition does *}
