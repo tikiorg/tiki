@@ -24,7 +24,7 @@ foreach ($parserlib->plugin_get_list() as $name) {
 	}
 }
 $smarty->assign('plugins', $plugins);
-if (isset($_REQUEST['textareasetup']) && (getCookie('admin_textarea', 'tabs') != 3)) {
+if (isset($_REQUEST['textareasetup']) && (getCookie('admin_textarea', 'tabs') != '#contentadmin_textarea-3')) {
 	// tab=3 is plugins alias tab (TODO improve)
 	ask_ticket('admin-inc-textarea');
 	foreach (glob('temp/cache/wikiplugin_*') as $file) {
@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (isset($_POST['textareasetup'])
 			&& !in_array($_POST['plugin_alias'], $pluginsReal)
 			&& isset($_REQUEST['plugin_alias'])
-			&& (getCookie('admin_textarea', 'tabs') == 3)
+			&& (getCookie('admin_textarea', 'tabs') == '#contentadmin_textarea-3')
 	) {
 		// tab=3 is plugins alias tab (TODO improve)
 		$info = array(

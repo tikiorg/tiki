@@ -6813,3 +6813,6 @@ header.page-header::before,
 .versioncontent {
   margin-top: 10px;
 }
+.control-label.text-left{
+  text-align: left;
+}
