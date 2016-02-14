@@ -975,10 +975,16 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
         ksort ($sheet->dataGrid);
 		foreach( $sheet->dataGrid as $row )
 			if ( is_array( $row ) )
-            {
-                ksort ($row);
-				$total[] = implode( ",", $row );
-            }
+			{
+					ksort ($row);
+					$values = (array)$row;
+					array_walk($values, function(&$item){
+						if (array_key_exists('value', $item)){
+							$item = $item['value'];
+						}
+					});
+					$total[] = implode( ",", $values );
+				}
 
 		if ( is_array( $total ) )
 			$total = implode( "\n", $total );
@@ -1241,7 +1247,14 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
 
         foreach( $sheet->dataGrid as $row )
         {
-            $total[] = implode(';', $row);
+            $values = (array)$row;
+            array_walk($values, function(&$item){
+              if (array_key_exists('value', $item)){
+                $item = $item['value'];
+              }
+            });
+
+            $total[] = implode(';', $values);
         }
 
         if ( is_array( $total ) )
@@ -1623,7 +1636,7 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
 						$out->writeFormula( $row, $col, utf8_decode( $formula ) );
 					}
 					else
-						$out->write( $row, $col, $this->encoding->convert_encoding ( $value ) );
+						$out->write( $row, $col, $this->encoding->convert_encoding ( $value['value'] ) );
 
 					$width = $height = 1;
 					if ( is_array( $sheet->cellInfo[$row][$col] ) )
@@ -1688,7 +1701,7 @@ class TikiSheetOpenOfficeHandler extends TikiSheetDataHandler
 
 		foreach( $sheet->dataGrid as $rowIndex=>$row )
 			foreach( $row as $columnIndex=>$value )
-				$OOoCalc->content->addcellData($rowIndex + 1, $columnIndex + 1, array("DATA" => $value));
+				$OOoCalc->content->addcellData($rowIndex + 1, $columnIndex + 1, array("DATA" => $value['value']));
 
 		$OOoCalc->save();
 		$OOoCalc->close();
@@ -1755,8 +1768,9 @@ class TikiSheetWikiTableHandler extends TikiSheetDataHandler
 				{
 					$line = explode( '|', trim( $line ) );
 
-					foreach( $line as $col => $value )
+					foreach( $line as $col => $cellValue )
 					{
+						$value = $cellValue['value'];
 						$sheet->initCell( $row, $col );
 						$sheet->setValue( $value );
 						if ( isset($value) ) {
