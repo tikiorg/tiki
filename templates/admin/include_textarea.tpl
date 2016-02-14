@@ -421,52 +421,37 @@
 					$('#pluginalias_simple_new').hide();
 					{{/if}}
 				{/jq}
-				<div class="adminoptionbox">
-					<div class="form-group">
-						<label class="control-label col-sm-4">
-							{tr}Argument{/tr}
-						</label>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-sm-1" ></label>
-						<label class="control-label col-sm-4">
-							{tr}Default{/tr}
-						</label>
-					</div>
-				</div><br>
+				<div class="adminoptionbox form-group">
+					<label class="control-label col-sm-4 col-sm-offset-4 text-left">
+						{tr}Argument{/tr}
+					</label>
+					<label class="control-label col-sm-4 text-left">
+						{tr}Default{/tr}
+					</label>
+				</div>
 				{if !empty($plugin_admin.params)}
 					{foreach from=$plugin_admin.params key=token item=value}
 							{if ! $value|is_array}
-								<div class="adminoptionbox">
-									<div class="form-group">
-										<div class="col-sm-4">
-											<input class="form-control" type="text" name="sparams[{$token|escape}][token]" id="sparams_{$token|escape}_token" value="{$token|escape}">
-										</div>
+								<div class="adminoptionbox form-group">
+									<div class="col-sm-4 col-sm-offset-4">
+										<input class="form-control" type="text" name="sparams[{$token|escape}][token]" id="sparams_{$token|escape}_token" value="{$token|escape}">
 									</div>
-									<div class="form-group">
-										<label class="control-label col-sm-1" for="sparams_{$token|escape}_default"></label>
-										<div class="col-sm-4">
-											<input class="form-control" type="text" name="sparams[{$token|escape}][default]" id="sparams_{$token|escape}_default" value="{$value|escape}">
-										</div>
+									<div class="col-sm-4">
+										<input class="form-control" type="text" name="sparams[{$token|escape}][default]" id="sparams_{$token|escape}_default" value="{$value|escape}">
 									</div>
-								</div><br>
+								</div>
 							{/if}
 						{/foreach}
 				{/if}
 				<div class="adminoptionbox hidefirst" id="pluginalias_simple_new">
-					<div class="adminoptionlabel">
-						<div class="form-group">
-							<div class="col-sm-4">
-								<input class="form-control" type="text" name="sparams[__NEW__][token]" id="sparams__NEW__token" value="">
-							</div>
+					<div class="adminoptionlabel form-group">
+						<div class="col-sm-4 col-sm-offset-4">
+							<input class="form-control" type="text" name="sparams[__NEW__][token]" id="sparams__NEW__token" value="">
 						</div>
-						<div class="form-group">
-							<label class="control-label col-sm-1" for="sparams__NEW__default"></label>
-							<div class="col-sm-4">
-								<input class="form-control" type="text" name="sparams[__NEW__][default]" id="sparams__NEW__default" value="">
-							</div>
+						<div class="col-sm-4">
+							<input class="form-control" type="text" name="sparams[__NEW__][default]" id="sparams__NEW__default" value="">
 						</div>
-					</div><br>
+					</div>
 				</div>
 			</fieldset><br>
 
