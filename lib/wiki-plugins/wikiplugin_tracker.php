@@ -465,8 +465,10 @@ function wikiplugin_tracker_info()
 				'name' => tra('Template Page'),
 				'description' => tr('Name of the wiki page containing the template to format the output to wiki page.
 					Must be set for %0 to work. The template can contain variables to represent fields, for example
-					%1 would result in the value of fieldId 6.', '<code>outputtowiki</code>',
-					'<code>{$f_6}</code>'),
+					%1 would result in the value of fieldId 6. Also %2 can be used for the itemId and if you have set
+					%3 to yes, you can use %4 and %5.', '<code>outputtowiki</code>','<code>{$f_6}</code>',
+					'<code>{$f_itemId}</code>','<code>register</code>','<code>{$register_login}</code>',
+					'<code>{$register_email}</code>'),
 				'since' => '6.0',
 				'filter' => 'pagename',
 				'default' => '',
