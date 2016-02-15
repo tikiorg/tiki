@@ -123,7 +123,7 @@
 											{icon name="view" _menu_text='y' _menu_icon='y' alt="{tr}View page{/tr}"}
 										</a>{$liend}
 
-										{if $prefs.feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
+										{if $prefs.feature_wiki_export eq 'y' and $channels[ix].admin_structure eq 'y'}
 											{$libeg}<a href="tiki-admin_structures.php?export={$channels[ix].page_ref_id|escape:"url"}">
 												{icon name="export" _menu_text='y' _menu_icon='y' alt="{tr}Export pages{/tr}"}
 											</a>{$liend}
@@ -135,19 +135,19 @@
 											</a>{$liend}
 										{/if}
 
-										{if $tiki_p_edit_structures == 'y'}
+										{if $channels[ix].edit_structure == 'y'}
 											{$libeg}<a href="tiki-admin_structures.php?export_tree={$channels[ix].page_ref_id|escape:"url"}">
 												{icon name="structure" _menu_text='y' _menu_icon='y' alt="{tr}Dump tree{/tr}"}
 											</a>{$liend}
 										{/if}
 
-										{if $tiki_p_edit_structures == 'y' and $channels[ix].editable == 'y'}
+										{if $channels[ix].edit_structure == 'y'}
 											{$libeg}<a href="tiki-admin_structures.php?remove={$channels[ix].page_ref_id|escape:"url"}">
 												{icon name="remove" _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
 											</a>{$liend}
 										{/if}
 
-										{if $prefs.feature_create_webhelp == 'y' && $tiki_p_edit_structures == 'y'}
+										{if $prefs.feature_create_webhelp == 'y' && $channels[ix].edit_structure == 'y'}
 											{$libeg}<a href="tiki-create_webhelp.php?struct={$channels[ix].page_ref_id|escape:"url"}">
 												{icon name="help" _menu_text='y' _menu_icon='y' alt="{tr}Create WebHelp{/tr}"}
 											</a>{$liend}
@@ -159,7 +159,7 @@
 											</a>{$liend}
 										{/if}
 
-										{if $tiki_p_admin eq 'y'}
+										{if $channels[ix].admin_structure eq 'y'}
 											{$libeg}<a href="tiki-admin_structures.php?zip={$channels[ix].page_ref_id|escape:"url"}">
 												{icon name="zip" _menu_text='y' _menu_icon='y' alt="{tr}XML Zip{/tr}"}
 											</a>{$liend}

@@ -977,7 +977,7 @@ class StructLib extends TikiLib
 		if ( empty( $this->displayLanguageOrder ) ) {
 			$query = 'select `page_ref_id` ';
 			$query .= 'from `tiki_structures` ts, `tiki_pages` tp ';
-			$query .= 'where ts.`page_id`=tp.`page_id` and `pageName`=?';
+			$query .= 'where ts.`page_id`=tp.`page_id` and (tp.`pageName`=? OR tp.`pageSlug`=?)';
 		} else {
 			$query = "
 				SELECT DISTINCT
@@ -988,10 +988,10 @@ class StructLib extends TikiLib
 					LEFT JOIN tiki_translated_objects b ON a.traId = b.traId AND b.type = 'wiki page'
 					LEFT JOIN tiki_pages tp ON ts.page_id = tp.page_id OR b.objId = tp.page_id
 				WHERE
-					pageName = ?";
+					tp.`pageName`=? OR tp.`pageSlug`=?";
 		}
 
-		$result = $this->query($query, array($pageName));
+		$result = $this->query($query, array($pageName,$pageName));
 		while ($res = $result->fetchRow()) {
 			$next_page = $this->s_get_structure_info($res['page_ref_id']);
 			//Add each structure head only once
@@ -1128,6 +1128,16 @@ class StructLib extends TikiLib
 					$res['editable']='y';
 				} else {
 					$res['editable']='n';
+				}
+				if ( $this->user_has_perm_on_object($user, $res['pageName'], 'wiki structure', 'tiki_p_edit_structures') ) {
+					$res['edit_structure'] = 'y';
+				} else {
+					$res['edit_structure'] = 'n';
+				}
+				if ( $this->user_has_perm_on_object($user, $res['pageName'], 'wiki structure', 'tiki_p_admin_structures') ) {
+					$res['admin_structure'] = 'y';
+				} else {
+					$res['admin_structure'] = 'n';
 				}
 				$ret[] = $res;
 
