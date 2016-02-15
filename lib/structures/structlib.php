@@ -988,7 +988,7 @@ class StructLib extends TikiLib
 					LEFT JOIN tiki_translated_objects b ON a.traId = b.traId AND b.type = 'wiki page'
 					LEFT JOIN tiki_pages tp ON ts.page_id = tp.page_id OR b.objId = tp.page_id
 				WHERE
-					tp.`pageName`=? OR tp.`pageSlug=?";
+					tp.`pageName`=? OR tp.`pageSlug`=?";
 		}
 
 		$result = $this->query($query, array($pageName,$pageName));
