@@ -116,6 +116,11 @@
 								</a>
 							{/if}
 						</li>
+						{if !($prefs.flaggedrev_approval neq 'y' or ! $revision_approval or $lastVersion eq $revision_displayed)}
+							{jq}
+								$(".editplugin, .icon_edit_section").hide();
+							{/jq}
+						{/if}
 						{if $prefs.flaggedrev_approval neq 'y' or ! $revision_approval or $lastVersion eq $revision_displayed}
 							{if $editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y' and $machine_translate_to_lang eq ''}
 								<li>
