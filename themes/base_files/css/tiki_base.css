@@ -850,6 +850,12 @@ body.db_error {
 body.fullscreen {
   text-align: left;
 }
+#fullscreenbutton {
+  position: absolute;
+  top: 2px;
+  right: 10px;
+  z-index: 10;
+}
 #show-errors-button {
   z-index: 1024;
 }
