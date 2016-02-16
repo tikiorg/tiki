@@ -2968,6 +2968,9 @@ body.tiki.navbar-padding {
 .tiki .form-horizontal .checkbox input[type="checkbox"] {
   margin-top: .4em;
 }
+.control-label.text-left {
+  text-align: left;
+}
 /* becomes height using padding (so it's divided by 2) */
 /* url(icons/loading.gif); */
 /* Filter widget transition */
