@@ -47,7 +47,7 @@
 							//Create your sharelet with desired properties and set button element to false
 							var object = SHARETHIS.addEntry({ title:'{/literal}{$page|escape:"url"}{literal}'}, {button:false});
 							//Output your customized button
-							document.write('<button class="btn btn-link tips" type="button" id="share" href="#"{/literal} title="{tr}ShareThis{/tr}">{icon name="sharethis"}{literal}</button>');
+							document.write('<a class="btn btn-link tips" id="share" href="#"{/literal} title="{tr}ShareThis{/tr}">{icon name="sharethis"}{literal}</a>');
 							//Tie customized button to ShareThis button functionality.
 							var element = document.getElementById("share");
 							object.attachButton(element);
@@ -240,7 +240,7 @@
 									//Create your sharelet with desired properties and set button element to false
 									var object = SHARETHIS.addEntry({ title:'{/literal}{$page|escape:"url"}{literal}'}, {button:false});
 									//Output your customized button
-									document.write('<button class="btn btn-link tips" type="button" id="share" href="#"{/literal} title="{tr}ShareThis{/tr}">{icon name="sharethis"}{literal}</button>');
+									document.write('<a id="share" href="#"{/literal} title="{tr}ShareThis{/tr}">{icon name="sharethis"} {tr}ShareThis{/tr}{literal}</a>');
 									//Tie customized button to ShareThis button functionality.
 									var element = document.getElementById("share");
 									object.attachButton(element);
