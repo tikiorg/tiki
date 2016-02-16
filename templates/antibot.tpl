@@ -2,13 +2,13 @@
 {if empty($user) || $user eq 'anonymous' || !empty($showantibot)}
 	{$labelclass = 'col-md-3'}
 	{$inputclass = 'col-md-9'}
-	{$captchaclass = 'col-md-5 col-sm-7 col-sm-offset-3'}
+	{$captchaclass = 'col-sm-4 col-sm-offset-3 margin-bottom-sm'}
 	{if $form === 'register'}
 		{$labelclass = 'col-md-4 col-sm-3'}
 		{$inputclass = 'col-md-4 col-sm-6'}
 		{$captchaclass = 'col-md-5 col-sm-7 col-md-offset-4 col-sm-offset-3'}
 	{/if}
-	<div class="form-group antibot">
+	<div class="antibot">
 		{if $captchalib->type eq 'recaptcha' || $captchalib->type eq 'recaptcha20'}
 			<div class="form-group clearfix">
 				<div class="{$captchaclass}">
@@ -53,7 +53,9 @@
 					{/if}
 				</div>
 				{if $captchalib->type eq 'default'}
-					{button _id='captchaRegenerate' _class='' href='#antibot' _text="{tr}Try another code{/tr}" _icon_name="refresh" _onclick="generateCaptcha();return false;"}
+					<div class="col-sm-2">
+						{button _id='captchaRegenerate' _class='' href='#antibot' _text="{tr}Try another code{/tr}" _icon_name="refresh" _onclick="generateCaptcha();return false;"}
+					</div>
 				{/if}
 			</div>
 		{/if}
