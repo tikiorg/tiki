@@ -38,6 +38,24 @@
 					<!--/span -->
 				{/if}
 
+				{* if we want a ShareThis icon and we want it displayed prominently *}
+				{if $prefs.feature_wiki_sharethis eq "y" and $prefs.wiki_sharethis_encourage eq "y"}
+					{* Similar as in the blogs except there can be only one per page, so it is simpler *}
+					<div class="btn-group">
+						{literal}
+						<script type="text/javascript">
+							//Create your sharelet with desired properties and set button element to false
+							var object = SHARETHIS.addEntry({ title:'{/literal}{$page|escape:"url"}{literal}'}, {button:false});
+							//Output your customized button
+							document.write('<button class="btn btn-link tips" type="button" id="share" href="#"{/literal} title="{tr}ShareThis{/tr}">{icon name="sharethis"}{literal}</button>');
+							//Tie customized button to ShareThis button functionality.
+							var element = document.getElementById("share");
+							object.attachButton(element);
+						</script>
+						{/literal}
+					</div>
+				{/if}
+
 				{if $prefs.feature_backlinks eq 'y' and $backlinks|default:null and $tiki_p_view_backlink eq 'y'}
 					<div class="btn-group backlinks">
 						{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
@@ -211,6 +229,23 @@
 									{icon name="envelope"} {tr}Send link{/tr}
 									{assign var="hasPageAction" value="1"}
 								</a>
+							</li>
+						{/if}
+						{* if we want a ShareThis icon and we show it under the single-action icons dropdown singl-click *}
+						{if $prefs.feature_wiki_sharethis eq "y" and $prefs.wiki_sharethis_encourage neq "y"}
+							{* Similar as in the blogs except there can be only one per page, so it is simpler *}
+							<li>
+								{literal}
+								<script type="text/javascript">
+									//Create your sharelet with desired properties and set button element to false
+									var object = SHARETHIS.addEntry({ title:'{/literal}{$page|escape:"url"}{literal}'}, {button:false});
+									//Output your customized button
+									document.write('<button class="btn btn-link tips" type="button" id="share" href="#"{/literal} title="{tr}ShareThis{/tr}">{icon name="sharethis"}{literal}</button>');
+									//Tie customized button to ShareThis button functionality.
+									var element = document.getElementById("share");
+									object.attachButton(element);
+								</script>
+								{/literal}
 							</li>
 						{/if}
 						{if !empty($user) and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}

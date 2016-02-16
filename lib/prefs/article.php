@@ -107,7 +107,7 @@ function prefs_article_list()
 		),
 		'article_sharethis_publisher' => array(
 			'name' => tra('Your ShareThis publisher identifier (optional)'),
-            'description' => tra('set to define your ShareThis publisher identifier'),
+			'description' => tra('Set to define your ShareThis publisher identifier'),
 			'type' => 'text',
 			'size' => '40',
             'hint' => tra('record your ShareThis publisher ID'),

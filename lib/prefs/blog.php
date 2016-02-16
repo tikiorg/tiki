@@ -100,7 +100,7 @@ function prefs_blog_list()
 		),
 		'blog_sharethis_publisher' => array(
 			'name' => tra('Your ShareThis publisher identifier (optional)'),
-            'description' => tra(''),
+			'description' => tra('Set to define your ShareThis publisher identifier'),
 			'type' => 'text',
 			'size' => '40',
 			'default' => '',

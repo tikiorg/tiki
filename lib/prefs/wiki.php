@@ -147,6 +147,12 @@ function prefs_wiki_list($partial = false)
 			),
 			'default' => 'top',
 		),
+		'wiki_sharethis_encourage' => array(
+			'name' => tra('Display ShareThis icon prominently'),
+			'description' => tra('Encourage sharing by showing the ShareThis icon (default is hiding icon in drop-down)'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 		'wiki_cache' => array(
 			'name' => tra('Cache wiki pages (global)'),
 			'description' => tra('Enable page cache globally for wiki pages.'),
