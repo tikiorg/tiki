@@ -1364,7 +1364,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_cms_sharethis' => array(
 			'name' => tra('ShareThis buttons'),
-            'description' => tra('Enable sharing site content via ShareThis'),
+			'description' => tra('Enable sharing site content via ShareThis'),
 			'type' => 'flag',
 			'hint' => tra('Insert a ShareThis button from www.sharethis.com.'),
 			'default' => 'n',
@@ -1528,7 +1528,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_blog_sharethis' => array(
 			'name' => tra('ShareThis buttons'),
-            'description' => tra(''),
+			'description' => tra('Enable sharing site content via ShareThis'),
 			'type' => 'flag',
 			'hint' => tra('Insert a ShareThis button from [http://www.sharethis.com].'),
 			'default' => 'n',
@@ -2320,6 +2320,13 @@ function prefs_feature_list($partial = false)
 			'permission' => array(
 				'textFilter' => 'attach wiki',
 			),
+		),
+		'feature_wiki_sharethis' => array(
+			'name' => tra('ShareThis buttons'),
+			'description' => tra('Enable sharing site content via ShareThis'),
+			'type' => 'flag',
+			'hint' => tra('Insert a ShareThis button from www.sharethis.com.'),
+			'default' => 'n',
 		),
 		'feature_dump' => array(
 			'name' => tra('Dumps'),

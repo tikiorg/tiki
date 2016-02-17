@@ -10,7 +10,7 @@ function prefs_show_list()
 	return array(
 		'show_available_translations' => array(
 			'name' => tra('Display available translations'),
-			'description' => tra('?'),
+			'description' => tra('Display list of available languages and offer to switch languages or translate. This appears on wiki pages and articles action buttons.'),
 			'type' => 'flag',
 			'default' =>'y',
 		),

@@ -140,6 +140,17 @@
 				{preference name=wiki_mandatory_edit_summary}
 				{preference name=wiki_freetags_edit_position}
 			</fieldset>
+
+			<fieldset>
+				<legend>
+					{tr}Sharing on social networks{/tr}{help url="Social+Networks#Using+ShareThis"}
+				</legend>
+				{preference name=feature_wiki_sharethis}
+				<div class="adminoptionboxchild" id="feature_wiki_sharethis_childcontainer">
+					{preference name=blog_sharethis_publisher}
+					{preference name=wiki_sharethis_encourage}
+				</div>
+			</fieldset>
 		{/tab}
 
 		{tab name="{tr}Features{/tr}"}
