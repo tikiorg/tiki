@@ -186,16 +186,26 @@ class Search_Elastic_QueryBuilder
 		if ($node->getType() == 'identifier') {
 			$value = $node->getValue($this->factory)->getValue();
 			return array("match" => array(
-				$node->getField() => array("query" => $value),
+				$node->getField() => array(
+					"query" => $value,
+					"operator" => "and",
+				),
 			));
 		} elseif ($node->getType() == 'multivalue') {
 			$value = $node->getValue($this->factory)->getValue();
 			return array("match" => array(
-				$node->getField() => array("query" => reset($value)),
+				$node->getField() => array(
+					"query" => reset($value),
+					"operator" => "and",
+				),
 			));
 		} else {
 			return array("match" => array(
-				$node->getField() => array("query" => $this->getTerm($node), "boost" => $node->getWeight()),
+				$node->getField() => array(
+					"query" => $this->getTerm($node),
+					"boost" => $node->getWeight(),
+					"operator" => "and",
+				),
 			));
 		}
 	}
