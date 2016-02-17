@@ -3303,9 +3303,9 @@ class TrackerLib extends TikiLib
 
 	public function get_isMain_value($trackerId, $itemId)
 	{
-			global $prefs;
+		global $prefs;
 
-			$query = "select tif.`value` from `tiki_tracker_item_fields` tif, `tiki_tracker_items` i, `tiki_tracker_fields` tf where i.`itemId`=? and i.`itemId`=tif.`itemId` and tf.`fieldId`=tif.`fieldId` and tf.`isMain`=? ";
+		$query = "select tif.`value` from `tiki_tracker_item_fields` tif, `tiki_tracker_items` i, `tiki_tracker_fields` tf where i.`itemId`=? and i.`itemId`=tif.`itemId` and tf.`fieldId`=tif.`fieldId` and tf.`isMain`=? ORDER BY tf.`position`";
 		$result = $this->getOne($query, array( (int) $itemId, "y"));
 
 		if (is_numeric($result) && $this->get_main_field_type($trackerId) == 'r') {
