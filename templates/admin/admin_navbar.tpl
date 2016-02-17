@@ -12,44 +12,43 @@
 					{icon name="filter"} <span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu" role="menu">
-					<li>
-						<form method="post" action="" class="form" role="form">
-							<span class="dropdown-title">{tr}Preference Filters{/tr}</span>
-							{foreach from=$pref_filters key=name item=info}
+					<span class="dropdown-title">{tr}Preference Filters{/tr}</span>
+					<form method="post" action="" class="form" role="form">
+						{foreach from=$pref_filters key=name item=info}
+							<li>
 								<div class="checkbox">
 									<label>
 										<input type="checkbox" class="preffilter {$info.type|escape}" name="pref_filters[]" value="{$name|escape}" {if $info.selected}checked="checked"{/if}>{$info.label|escape}
 									</label>
 								</div>
-							{/foreach}
-							<div class="text-center">
-								<input type="submit" value="{tr}Set as my default{/tr}" class="btn btn-primary btn-sm">
-							</div>
-							{if $prefs.connect_feature eq "y"}
+							</li>
+						{/foreach}
+						<div class="text-center">
+							<input type="submit" value="{tr}Set as my default{/tr}" class="btn btn-primary btn-sm">
+						</div>
+						{if $prefs.connect_feature eq "y"}
 							{capture name=likeicon}{icon name="thumbs-up"}{/capture}
 							<label>
-									<input type="checkbox" id="connect_feedback_cbx" {if !empty($connect_feedback_showing)}checked="checked"{/if}>
-									{tr}Provide Feedback{/tr}
-									<a href="http://doc.tiki.org/Connect" target="tikihelp" class="tikihelp" title="{tr}Provide Feedback:{/tr}
-										{tr}Once selected, some icon/s will be shown next to all features so that you can provide some on-site feedback about them{/tr}.
-										<br/><br/>
-										<ul>
-											<li>{tr}Icon for 'Like'{/tr} {$smarty.capture.likeicon|escape}</li>
+								<input type="checkbox" id="connect_feedback_cbx" {if !empty($connect_feedback_showing)}checked="checked"{/if}>
+								{tr}Provide Feedback{/tr}
+								<a href="http://doc.tiki.org/Connect" target="tikihelp" class="tikihelp" title="{tr}Provide Feedback:{/tr}
+									{tr}Once selected, some icon/s will be shown next to all features so that you can provide some on-site feedback about them{/tr}.
+									<br/><br/>
+									<ul>
+										<li>{tr}Icon for 'Like'{/tr} {$smarty.capture.likeicon|escape}</li>
 <!--											<li>{tr}Icon for 'Fix me'{/tr} <img src=img/icons/connect_fix.png></li> -->
 <!--											<li>{tr}Icon for 'What is this for?'{/tr} <img src=img/icons/connect_wtf.png></li> -->
-										</ul>
-										<br/>
-										{tr}Your votes will be sent when you connect with mother.tiki.org (currently only by clicking the 'Connect > <strong>Send Info</strong>' button){/tr}
-										<br/><br/>
-										{tr}Click to read more{/tr}
-									">
-										{icon name="help"}
-									</a>
-								</label>
-								{$headerlib->add_jsfile("lib/jquery_tiki/tiki-connect.js")}
-							{/if}
-						</form>
-
+									</ul>
+									<br/>
+									{tr}Your votes will be sent when you connect with mother.tiki.org (currently only by clicking the 'Connect > <strong>Send Info</strong>' button){/tr}
+									<br/><br/>
+									{tr}Click to read more{/tr}
+								">
+									{icon name="help"}
+								</a>
+							</label>
+							{$headerlib->add_jsfile("lib/jquery_tiki/tiki-connect.js")}
+						{/if}
 						{jq}
 							var updateVisible = function() {
 								var show = function (selector) {
@@ -90,7 +89,7 @@
 							updateVisible();
 							$('.preffilter').change(updateVisible);
 						{/jq}
-					</li>
+					</form>
 					<li class="divider"></li>
 					<li>
 						<a href="tiki-admin.php?prefrebuild">
