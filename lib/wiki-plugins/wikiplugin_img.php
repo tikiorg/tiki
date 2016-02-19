@@ -1101,6 +1101,8 @@ function wikiplugin_img( $data, $params )
 		$replimg .= ' alt="' . $imgdata['desc'] . '"';
 	} elseif (!empty($dbinfo['description'])) {
 		$replimg .= ' alt="' . $dbinfo['description'] . '"';
+	} elseif (!empty($dbinfo['name'])) {
+		$replimg .= ' alt="' . $dbinfo['name'] . '"';
 	} else {
 		$replimg .= ' alt="Image"';
 	}
