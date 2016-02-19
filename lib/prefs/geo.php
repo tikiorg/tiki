@@ -57,7 +57,7 @@ function prefs_geo_list()
 			'filter' => 'word',
 			'separator' => ',',
 			'default' => array('openstreetmap'),
-			'tags' => array('advanced', 'experimental'),
+			'tags' => array('advanced'),
 		),
 		'geo_google_streetview' => array(
 			'name' => tr('Google Street View'),
