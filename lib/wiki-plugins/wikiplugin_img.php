@@ -1118,18 +1118,16 @@ function wikiplugin_img( $data, $params )
 	//title (also used for description and link title below)
 	//first set description, which is used for title if no title is set
 	if (!empty($imgdata['desc']) || !empty($imgdata['title'])) {
-		$desc = '';
-		$imgname = '';
 		$desconly = '';
+		//attachment database uses comment instead of description or name
+		if (!empty($dbinfo['comment'])) {
+			$desc = $dbinfo['comment'];
+			$imgname = $dbinfo['comment'];
+		} else {
+			$desc = !empty($dbinfo['description']) ? $dbinfo['description'] : '';
+			$imgname = !empty($dbinfo['name']) ? $dbinfo['name'] : '';
+		}
 		if ( !empty($imgdata['desc']) ) {
-			//attachment database uses comment instead of description or name
-			if (!empty($dbinfo['comment'])) {
-				$desc = $dbinfo['comment'];
-				$imgname = $dbinfo['comment'];
-			} elseif (isset($dbinfo)) {
-				$desc = !empty($dbinfo['description']) ? $dbinfo['description'] : '';
-				$imgname = !empty($dbinfo['name']) ? $dbinfo['name'] : '';
-			}
 			switch ($imgdata['desc']) {
 				case 'desc':
 					$desconly = $desc;
