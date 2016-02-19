@@ -121,6 +121,7 @@ function wikiplugin_img_info()
 				'advanced' => true,
 				'options' => array (
 					array('text' => tra(''), 'value' => ''),
+					array('text' => tra('Random'), 'value' => 'random'),
 					array('text' => tra('Created Ascending'), 'value' => 'created_asc'),
 					array('text' => tra('Created Descending'), 'value' => 'created_desc'),
 					array('text' => tra('Name Ascending'), 'value' => 'name_asc'),
@@ -534,7 +535,7 @@ function wikiplugin_img( $data, $params )
 	$imgdata['randomGalleryId'] = '';
 	$imgdata['galleryId'] = '';
 	$imgdata['fgalId'] = '';
-	$imgdata['sort_mode'] = '';
+	$imgdata['sort_mode'] = 'created_desc';
 	$imgdata['attId'] = '';
 	$imgdata['thumb'] = '';
 	$imgdata['button'] = '';
@@ -627,7 +628,7 @@ function wikiplugin_img( $data, $params )
 			$id_list = explode($separator, $imgdata[$id]);
 		} else { //fgalId parameter - show all images in a file gallery
 			$filegallib = TikiLib::lib('filegal');
-			$galdata = $filegallib->get_files(0, -1, 'created_desc', '', $imgdata['fgalId'], false, false, false, true, false, false, false, false, '', true, false, false);
+			$galdata = $filegallib->get_files(0, -1, $imgdata['sort_mode'], '', $imgdata['fgalId'], false, false, false, true, false, false, false, false, '', true, false, false);
 			foreach ($galdata['data'] as $filedata) {
 				$id_list[] = $filedata['id'];
 			}
