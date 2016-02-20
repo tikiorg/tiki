@@ -6632,9 +6632,3 @@ header.page-header::before,
   background-color: #f5f5f5;
   color: #262626;
 }
-.versioncontent {
-  margin-top: 10px;
-}
-.control-label.text-left{
-  text-align: left;
-}
