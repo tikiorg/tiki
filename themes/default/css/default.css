@@ -1222,12 +1222,6 @@ h3,
   margin-top: 20px;
   margin-bottom: 10px;
 }
-h1.pagetitle {
-  margin-top: 0px;
-}
-#error_report+.clearfix {
-  float: right;
-}
 h1 small,
 .h1 small,
 h2 small,
@@ -6809,10 +6803,4 @@ header.page-header::before,
 .dropdown-menu li:focus {
   background-color: #f5f5f5;
   color: #262626;
-}
-.versioncontent {
-  margin-top: 10px;
-}
-.control-label.text-left{
-  text-align: left;
 }

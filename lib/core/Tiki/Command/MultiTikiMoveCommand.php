@@ -84,7 +84,7 @@ class MultiTikiMoveCommand extends Command
 				$dirs = [	// from setup.sh currently
 					'db', 'dump', 'img/wiki', 'img/wiki_up', 'img/trackers',
 					'modules/cache', 'temp', 'temp/cache', 'temp/public',
-					'templates_c', 'templates', 'themes', 'maps', 'whelp',
+					'templates_c', 'templates', 'themes', 'whelp',
 					'mods', 'files', 'tiki_tests/tests',
 					//'temp/unified-index'
 				];
@@ -126,12 +126,12 @@ class MultiTikiMoveCommand extends Command
 					// remove from the from tiki
 					$list = $this->getVirtuals($from);
 					unset($list[array_search($site, $list)]);
-					file_put_contents($from . '/db/virtuals.inc', implode("\n", $list));
+					file_put_contents($from . '/db/virtuals.inc', implode("\n", $list) . "\n");
 
 					// add to the destination
 					$list = $this->getVirtuals($to);
 					$list[] = $site;
-					file_put_contents($to . '/db/virtuals.inc', implode("\n", $list));
+					file_put_contents($to . '/db/virtuals.inc', implode("\n", $list) . "\n");
 
 					if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
 						$output->writeln("<info>Updated both db/virtuals.inc files</info>");

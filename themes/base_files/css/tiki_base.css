@@ -2971,6 +2971,9 @@ body.tiki.navbar-padding {
 .control-label.text-left {
   text-align: left;
 }
+.form-horizontal .control-label.text-left {
+  text-align: left;
+}
 /* becomes height using padding (so it's divided by 2) */
 /* url(icons/loading.gif); */
 /* Filter widget transition */
@@ -3701,6 +3704,9 @@ table.tablesorter thead tr.tablesorter-filter-row {
 }
 .versionav .button {
   margin-bottom: 0;
+}
+.versioncontent {
+  margin-top: 10px;
 }
 #tiki-center .versioncontent {
   padding: 1em;

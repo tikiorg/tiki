@@ -121,6 +121,7 @@ function wikiplugin_img_info()
 				'advanced' => true,
 				'options' => array (
 					array('text' => tra(''), 'value' => ''),
+					array('text' => tra('Random'), 'value' => 'random'),
 					array('text' => tra('Created Ascending'), 'value' => 'created_asc'),
 					array('text' => tra('Created Descending'), 'value' => 'created_desc'),
 					array('text' => tra('Name Ascending'), 'value' => 'name_asc'),
@@ -535,7 +536,7 @@ function wikiplugin_img( $data, $params )
 	$imgdata['randomGalleryId'] = '';
 	$imgdata['galleryId'] = '';
 	$imgdata['fgalId'] = '';
-	$imgdata['sort_mode'] = '';
+	$imgdata['sort_mode'] = 'created_desc';
 	$imgdata['attId'] = '';
 	$imgdata['thumb'] = '';
 	$imgdata['button'] = '';
@@ -628,7 +629,7 @@ function wikiplugin_img( $data, $params )
 			$id_list = explode($separator, $imgdata[$id]);
 		} else { //fgalId parameter - show all images in a file gallery
 			$filegallib = TikiLib::lib('filegal');
-			$galdata = $filegallib->get_files(0, -1, 'created_desc', '', $imgdata['fgalId'], false, false, false, true, false, false, false, false, '', true, false, false);
+			$galdata = $filegallib->get_files(0, -1, $imgdata['sort_mode'], '', $imgdata['fgalId'], false, false, false, true, false, false, false, false, '', true, false, false);
 			foreach ($galdata['data'] as $filedata) {
 				$id_list[] = $filedata['id'];
 			}
@@ -1102,6 +1103,8 @@ function wikiplugin_img( $data, $params )
 		$replimg .= ' alt="' . $imgdata['desc'] . '"';
 	} elseif (!empty($dbinfo['description'])) {
 		$replimg .= ' alt="' . $dbinfo['description'] . '"';
+	} elseif (!empty($dbinfo['name'])) {
+		$replimg .= ' alt="' . $dbinfo['name'] . '"';
 	} else {
 		$replimg .= ' alt="Image"';
 	}
@@ -1117,18 +1120,16 @@ function wikiplugin_img( $data, $params )
 	//title (also used for description and link title below)
 	//first set description, which is used for title if no title is set
 	if (!empty($imgdata['desc']) || !empty($imgdata['title'])) {
-		$desc = '';
-		$imgname = '';
 		$desconly = '';
+		//attachment database uses comment instead of description or name
+		if (!empty($dbinfo['comment'])) {
+			$desc = $dbinfo['comment'];
+			$imgname = $dbinfo['comment'];
+		} else {
+			$desc = !empty($dbinfo['description']) ? $dbinfo['description'] : '';
+			$imgname = !empty($dbinfo['name']) ? $dbinfo['name'] : '';
+		}
 		if ( !empty($imgdata['desc']) ) {
-			//attachment database uses comment instead of description or name
-			if (!empty($dbinfo['comment'])) {
-				$desc = $dbinfo['comment'];
-				$imgname = $dbinfo['comment'];
-			} elseif (isset($dbinfo)) {
-				$desc = !empty($dbinfo['description']) ? $dbinfo['description'] : '';
-				$imgname = !empty($dbinfo['name']) ? $dbinfo['name'] : '';
-			}
 			switch ($imgdata['desc']) {
 				case 'desc':
 					$desconly = $desc;
