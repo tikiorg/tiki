@@ -177,7 +177,7 @@ function wikiplugin_versions($data, $params)
 							;
 		}
 		$data = '<div class="clearfix tabs"><ul class="nav nav-tabs">' . $navbar
-					. '</ul></div><div class="versioncontent">' . $data . "</div>\n</div>"
+					. '</ul></div><div class="versioncontent">' . $data . "</div>"
 					;
 	}
 
