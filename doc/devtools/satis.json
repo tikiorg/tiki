@@ -714,6 +714,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "jquery/photoswipe",
+				"version": "4.1.1",
+				"dist": {
+					"url": "https://github.com/dimsemenov/PhotoSwipe/archive/v4.1.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "morteza/bootstrap-rtl",
 				"version": "3.3.2",
 				"dist": {
