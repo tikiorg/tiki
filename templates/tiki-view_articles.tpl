@@ -22,7 +22,7 @@
 
 			{if $prefs.feature_submissions == 'y' && ($tiki_p_approve_submission == "y"
 			|| $tiki_p_remove_submission == "y" || $tiki_p_edit_submission == "y")}
-				{button href="tiki-list_submissions.php"  _type="text" class="btn btn-link" _icon_name="view" _text="{tr}View Submissions{/tr}"}
+				{button href="tiki-list_submissions.php"  _type="link" class="btn btn-link" _icon_name="view" _text="{tr}View Submissions{/tr}"}
 			{/if}
 			{if $prefs.javascript_enabled != 'y'}
 				{$js = 'n'}

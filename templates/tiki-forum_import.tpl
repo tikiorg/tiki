@@ -3,8 +3,8 @@
 {title help="Forums" admpage="forums"}{tr}Forum Importer{/tr}{/title}
 
 <div class="t_navbar margin-bottom-md form-group">
-	{button href="tiki-admin_forums.php" _type="text" class="btn btn-link" _icon_name="wrench" _text="{tr}Admin{/tr}"}
-	{button href="tiki-forums.php" _type="text" class="btn btn-link" _icon_name="list" _text="{tr}List{/tr}"}
+	{button href="tiki-admin_forums.php" _type="link" class="btn btn-link" _icon_name="wrench" _text="{tr}Admin{/tr}"}
+	{button href="tiki-forums.php" _type="link" class="btn btn-link" _icon_name="list" _text="{tr}List{/tr}"}
 </div>
 {*
  * If this is a new import, start by selecting the import method and we'll

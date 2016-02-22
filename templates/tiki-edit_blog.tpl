@@ -5,7 +5,7 @@
 {/if}
 
 <div class="t_navbar margin-bottom-md">
-	{button href="tiki-list_blogs.php" _type="text" class="btn btn-link" _icon_name="list" _text="{tr}List Blogs{/tr}"}
+	{button href="tiki-list_blogs.php" _type="lionk" class="btn btn-link" _icon_name="list" _text="{tr}List Blogs{/tr}"}
 	{if $blogId > 0}
 		{assign var=thisblogId value=$blogId|sefurl:blog}
 		{button href=$thisblogId class="btn btn-default" _text="{tr}View Blog{/tr}"}
