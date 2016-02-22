@@ -11,13 +11,13 @@
 	{if $headerLinks eq "y"}
 		<div class="t_navbar margin-bottom-md">
 			{if $tiki_p_edit_article eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
-				{button href="tiki-edit_article.php"  _type="text" class="btn btn-link" _icon_name="create" _text="{tr}New Article{/tr}"}
+				{button href="tiki-edit_article.php"  _type="link" class="btn btn-link" _icon_name="create" _text="{tr}New Article{/tr}"}
 			{/if}
 			{if $prefs.feature_submissions == 'y' && $tiki_p_edit_submission == "y" && $tiki_p_edit_article neq 'y' && $tiki_p_admin neq 'y' && $tiki_p_admin_cms neq 'y'}
-				{button href="tiki-edit_submission.php"  _type="text" class="btn btn-link" _icon_name="create" _text="{tr}New Submission{/tr}"}
+				{button href="tiki-edit_submission.php"  _type="link" class="btn btn-link" _icon_name="create" _text="{tr}New Submission{/tr}"}
 			{/if}
 			{if $tiki_p_read_article eq 'y' or $tiki_p_articles_read_heading eq 'y' or $tiki_p_admin eq 'y' or $tiki_p_admin_cms eq 'y'}
-				{button href="tiki-list_articles.php" _type="text" class="btn btn-link" _icon_name="list" _text="{tr}List Articles{/tr}"}
+				{button href="tiki-list_articles.php" _type="link" class="btn btn-link" _icon_name="list" _text="{tr}List Articles{/tr}"}
 			{/if}
 
 			{if $prefs.feature_submissions == 'y' && ($tiki_p_approve_submission == "y"
