@@ -1,0 +1,22 @@
+// $Id$
+// This file is for additional LESS rules beyond what are in variables.less.
+// Image path example:
+// @imagePath: ~"../images/";
+// body {
+//	background-image: url('@{imagePath}bg.jpg');
+// }
+//
+// If Glyphicons should be rendered in a color other than the Bootstrap default or the theme default, uncomment and specify the color.
+// .glyphicon {color: @gray-lighter;}
+
+.topbar,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li {
+	background-color: #4b792e;
+	border-color: #3c6125
+}
+
+h1::before {
+	content: "\2663";
+	margin-right: 10px;
+}

@@ -1075,7 +1075,7 @@ a.flip:hover,
 #rss small {
   font-size: 1em;
 }
-footer.footer .modules > .module {
+footer.footer .modules > .module:not(.panel) {
   padding-left: 15px;
   padding-right: 15px;
 }

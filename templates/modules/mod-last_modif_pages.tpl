@@ -10,7 +10,9 @@
 					{else}
 						href="{$modLastModif[ix].pageName|sefurl}"
 					{/if}
-					title="{$modLastModif[ix].lastModif|tiki_short_datetime}{if $prefs.wiki_authors_style ne 'lastmodif'}, {tr}by{/tr} {$modLastModif[ix].user|username}{/if}{if (strlen($modLastModif[ix].pageName) > $maxlen) && ($maxlen > 0)}, {$modLastModif[ix].pageName|escape}{/if}"
+					{* jquery_timeago doesn't work in a title atribute *}
+					{if $prefs.jquery_timeago eq 'y'}{$sameday='n'}{else}{$sameday=$prefs.tiki_same_day_time_only}{/if}
+					title="{$modLastModif[ix].lastModif|tiki_short_datetime:'':'n'}{if $prefs.wiki_authors_style ne 'lastmodif'}, {tr}by{/tr} {$modLastModif[ix].user|username}{/if}{if (strlen($modLastModif[ix].pageName) > $maxlen) && ($maxlen > 0)}, {$modLastModif[ix].pageName|escape}{/if}"
 				>
 
 					{if $maxlen > 0}{* 0 is default value for maxlen eq to 'no truncate' *}

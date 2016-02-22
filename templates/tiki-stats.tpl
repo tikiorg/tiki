@@ -5,45 +5,45 @@
 {tabset}
 	{tab name="{tr}Tiki Statistics{/tr}"}
 		<div class="t_navbar margin-bottom-md">
-			{button href="site_stats"  _type="text" class="btn btn-link" _icon_name="home" _text="{tr}Site{/tr}"}
+			{button href="site_stats" _type="link" class="btn btn-link" _icon_name="home" _text="{tr}Site{/tr}"}
 			{if $wiki_stats}
-				{button href="#wiki_stats"  _type="text" class="btn btn-link" _icon_name="file-text" _text="{tr}Wiki{/tr}"}
+				{button href="#wiki_stats" _type="link" class="btn btn-link" _icon_name="file-text" _text="{tr}Wiki{/tr}"}
 			{/if}
 			{if $igal_stats}
-				{button href="#igal_stats"  _type="text" class="btn btn-link" _icon_name="file-image-o" _text="{tr}Image galleries{/tr}"}
+				{button href="#igal_stats" _type="link" class="btn btn-link" _icon_name="file-image-o" _text="{tr}Image galleries{/tr}"}
 			{/if}
 			{if $fgal_stats}
-				{button href="#fgal_stats"  _type="text" class="btn btn-link" _icon_name="folder-open-o" _text="{tr}File Galleries{/tr}"}
+				{button href="#fgal_stats" _type="link" class="btn btn-link" _icon_name="folder-open-o" _text="{tr}File Galleries{/tr}"}
 			{/if}
 			{if $cms_stats}
-				{button href="#cms_stats"  _type="text" class="btn btn-link" _icon_name="newspaper-o" _text="{tr}Articles{/tr}"}
+				{button href="#cms_stats" _type="link" class="btn btn-link" _icon_name="newspaper-o" _text="{tr}Articles{/tr}"}
 			{/if}
 			{if $forum_stats}
-				{button href="#forum_stats"  _type="text" class="btn btn-link" _icon_name="comments-o" _text="{tr}Forums{/tr}"}
+				{button href="#forum_stats" _type="link" class="btn btn-link" _icon_name="comments-o" _text="{tr}Forums{/tr}"}
 			{/if}
 			{if $blog_stats}
-				{button href="#blog_stats"  _type="text" class="btn btn-link" _icon_name="bold" _text="{tr}Blogs{/tr}"}
+				{button href="#blog_stats" _type="link" class="btn btn-link" _icon_name="bold" _text="{tr}Blogs{/tr}"}
 			{/if}
 			{if $poll_stats}
-				{button href="#poll_stats"  _type="text" class="btn btn-link" _icon_name="task" _text="{tr}Polls{/tr}"}
+				{button href="#poll_stats" _type="link" class="btn btn-link" _icon_name="task" _text="{tr}Polls{/tr}"}
 			{/if}
 			{if $faq_stats}
-				{button href="#faq_stats"  _type="text" class="btn btn-link" _icon_name="question" _text="{tr}FAQs{/tr}"}
+				{button href="#faq_stats" _type="link" class="btn btn-link" _icon_name="question" _text="{tr}FAQs{/tr}"}
 			{/if}
 			{if $user_stats}
-				{button href="#user_stats"  _type="text" class="btn btn-link" _icon_name="users" _text="{tr}User{/tr}"}
+				{button href="#user_stats" _type="link" class="btn btn-link" _icon_name="users" _text="{tr}User{/tr}"}
 			{/if}
 			{if $quiz_stats}
-				{button href="#quiz_stats"  _type="text" class="btn btn-link" _icon_name="list-ol" _text="{tr}Quizzes{/tr}"}
+				{button href="#quiz_stats" _type="link" class="btn btn-link" _icon_name="list-ol" _text="{tr}Quizzes{/tr}"}
 			{/if}
 			{if $prefs.feature_referer_stats eq 'y' and $tiki_p_view_referer_stats eq 'y'}
-				{button href="tiki-referer_stats.php"  _type="text" class="btn btn-link" _icon_name="link" _text="{tr}Referer stats{/tr}"}
+				{button href="tiki-referer_stats.php" _type="link" class="btn btn-link" _icon_name="link" _text="{tr}Referer stats{/tr}"}
 			{/if}
 			{if $best_objects_stats}
-				{button href="#best_objects_stats"  _type="text" class="btn btn-link" _icon_name="sort-numeric-asc" _text="{tr}Most viewed objects{/tr}"}
+				{button href="#best_objects_stats" _type="link" class="btn btn-link" _icon_name="sort-numeric-asc" _text="{tr}Most viewed objects{/tr}"}
 			{/if}
 			{if $best_objects_stats}
-				{button href="#best_objects_stats_lastweek"  _type="text" class="btn btn-link" _icon_name="sort-numeric-asc" _text="{tr}Most viewed objects in the last 7 days{/tr}"}
+				{button href="#best_objects_stats_lastweek" _type="link" class="btn btn-link" _icon_name="sort-numeric-asc" _text="{tr}Most viewed objects in the last 7 days{/tr}"}
 			{/if}
 		</div>
 
