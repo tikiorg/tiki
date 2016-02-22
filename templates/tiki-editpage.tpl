@@ -260,7 +260,7 @@
 							{if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
 								<fieldset>
 									<legend>{tr}Apply template:{/tr}</legend>
-									<select id="templateId" name="templateId" onchange="javascript:document.getElementById('editpageform').submit();" onclick="needToConfirm = false;">
+									<select id="templateId" name="templateId" onchange="javascript:needToConfirm=false;document.getElementById('editpageform').submit();" onclick="needToConfirm = false;">
 										<option value="0">{tr}none{/tr}</option>
 										{section name=ix loop=$templates}
 										<option value="{$templates[ix].templateId|escape}" {if $templateId eq $templates[ix].templateId}selected="selected"{/if}>{tr}{$templates[ix].name|escape}{/tr}</option>
