@@ -159,6 +159,29 @@
 			{/remarksbox}
 
 			<input type="hidden" name="filegallistprefs" />
+			<div class="adminoptionbox clearfix margin-bottom-md">
+				<label class="col-sm-4 control-label" for="fgal_default_view">
+					{tr}Default View{/tr}
+				</label>
+				<div class="col-sm-8">
+					<select id="fgal_default_view" name="fgal_default_view" class="form-control">
+						<option value="list"{if $prefs.fgal_default_view eq 'list'} selected="selected"{/if}>
+							{tr}List{/tr}
+						</option>
+						<option value="browse"{if $prefs.fgal_default_view eq 'browse'} selected="selected"{/if}>
+							{tr}Browse{/tr}
+						</option>
+						<option value="page"{if $prefs.fgal_default_view eq 'page'} selected="selected"{/if}>
+							{tr}Page{/tr}
+						</option>
+						{if $prefs.fgal_elfinder_feature eq 'y'}
+							<option value="finder"{if $prefs.fgal_default_view eq 'finder'} selected="selected"{/if}>
+								{tr}Finder View{/tr}
+							</option>
+						{/if}
+					</select>
+				</div>
+			</div>
 			<div class="adminoptionbox clearfix">
 				<label for="fgal_sortorder" class="col-sm-4 control-label">{tr}Default sort order{/tr}:</label>
 				<div class="col-sm-8">

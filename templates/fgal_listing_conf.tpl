@@ -3,29 +3,6 @@
 {if is_array($fgal_options) and count($fgal_options) gt 0}
 	{foreach key=key item=item from=$fgal_options}
 		{if $key eq 'default_view'}
-			<div class="form-group">
-				<label class="col-sm-4 control-label" for="fgal_{$key}">
-					{$item.name}
-				</label>
-				<div class="col-sm-8">
-					<select id="fgal_{$key}" name="fgal_{$key}" class="form-control">
-						<option value="list"{if $item.value eq 'list'} selected="selected"{/if}>
-							{tr}List{/tr}
-						</option>
-						<option value="browse"{if $item.value eq 'browse'} selected="selected"{/if}>
-							{tr}Browse{/tr}
-						</option>
-						<option value="page"{if $item.value eq 'page'} selected="selected"{/if}>
-							{tr}Page{/tr}
-						</option>
-						{if $prefs.fgal_elfinder_feature eq 'y'}
-							<option value="finder"{if $item.value eq 'finder'} selected="selected"{/if}>
-								{tr}Finder View{/tr}
-							</option>
-						{/if}
-					</select>
-				</div>
-			</div>
 		{elseif $key eq 'icon_fileId'}
 			<div class="form-group">
 				<label class="col-sm-4 control-label" for="fgal_{$key}">
