@@ -60,7 +60,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 					),
 					'displayParamsForLists' => array(
 						'name' => tr('Display parameters for lists'),
-						'description' => tr('URL-encoded parameters used such as in the {img} plugin, for example,.') . ' "thumb=mouseover&max=60&rel=box[g]"',
+						'description' => tr('URL-encoded parameters used such as in the {img} plugin, for example,.') . ' "thumb=box&max=60"',
 						'filter' => 'text',
 						'legacy_index' => 5,
 					),

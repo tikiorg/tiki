@@ -297,8 +297,7 @@ function wikiplugin_freetagged($data, $params)
 					$obj['description'] = $info['description'];
 					$obj['date'] = $info['lastModif'];
 					include_once 'lib/wiki-plugins/wikiplugin_img.php';
-					$imgparams = array('fileId' => $obj['itemId'], 'rel' => 'box[g]');
-					$imgparams['thumb'] = 'y';
+					$imgparams = array('fileId' => $obj['itemId'], 'thumb' => 'box');
 					if ($max_image_size > 0) {
 						$imgparams['max'] = $max_image_size;
 					}

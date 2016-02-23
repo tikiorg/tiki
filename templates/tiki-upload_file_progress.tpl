@@ -84,7 +84,7 @@
 								{tr}Display thumbnail that enlarges:{/tr}
 							</td>
 							<td>
-								<code>&#x7b;img fileId="{$fileId}" thumb="y" rel="box[g]"}</code>
+								<code>{rdelim}img fileId="{$fileId}" thumb="box"{ldelim}</code>
 							</td>
 						</tr>
 					{/if}

@@ -2515,7 +2515,7 @@ class FileGalLib extends TikiLib
 		}
 		// and no syntax set, return default
 		if (empty($syntax)) {
-			$syntax = '{img fileId="%fileId%" thumb="y" rel="box[g]"}';	// should be a pref
+			$syntax = '{img fileId="%fileId%" thumb="box"}';	// should be a pref
 		}
 
 		if ($fileinfo) {	// if fileinfo provided then process it now
