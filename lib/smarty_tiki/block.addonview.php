@@ -37,8 +37,8 @@ function smarty_block_addonview($params, $content, $smarty, &$repeat)
 	}
 	
 	if ($params['assign']) {
-		$smarty->assign($params['assign'], $functionname($content, $params));
+		$smarty->assign($params['assign'], $functionname($content, $params, $smarty));
 	} else {
-		return $functionname($content, $params);
+		return $functionname($content, $params, $smarty);
 	}
 }
