@@ -80,7 +80,6 @@ $fgal_options = array(
 	'show_explorer' => array('name' => tra('Explorer')),
 	'show_path' => array('name' => tra('Path')),
 	'show_slideshow' => array('name' => tra('Slideshow')),
-	'default_view' => array('name' => tra('Default View')),
 	'icon_fileId' => array('name' => tra('Gallery Icon')),
 );
 

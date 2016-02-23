@@ -226,6 +226,29 @@ if ($(this).val() != '') {
 			{tab name="{tr}Display Settings{/tr}"}
 				<h2>{tr}Display Settings{/tr}</h2><br>
 				<div class="form-group">
+					<label class="col-sm-4 control-label" for="fgal_default_view">
+						{tr}Default View{/tr}
+					</label>
+					<div class="col-sm-8">
+						<select id="fgal_default_view" name="fgal_default_view" class="form-control">
+							<option value="list"{if $gal_info.default_view eq 'list'} selected="selected"{/if}>
+								{tr}List{/tr}
+							</option>
+							<option value="browse"{if $gal_info.default_view eq 'browse'} selected="selected"{/if}>
+								{tr}Browse{/tr}
+							</option>
+							<option value="page"{if $gal_info.default_view eq 'page'} selected="selected"{/if}>
+								{tr}Page{/tr}
+							</option>
+							{if $prefs.fgal_elfinder_feature eq 'y'}
+								<option value="finder"{if $gal_info.default_view eq 'finder'} selected="selected"{/if}>
+									{tr}Finder View{/tr}
+								</option>
+							{/if}
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
 					<label for="sortorder" class="col-sm-4 text-right">{tr}Default sort order{/tr}</label>
 					<div class="col-sm-8">
 						<select name="sortorder" id="sortorder" class="form-control">
@@ -233,14 +256,24 @@ if ($(this).val() != '') {
 								<option value="{$item|escape}" {if $sortorder == $item} selected="selected"{/if}>{$key}</option>
 							{/foreach}
 						</select>
-						<br>
-						<input type="radio" id="sortdirection2" name="sortdirection" value="asc" {if $sortdirection == 'asc'}checked="checked"{/if}>
-						<label for="sortdirection2">{tr}Ascending{/tr}</label>
-						<br>
-						<input type="radio" id="sortdirection1" name="sortdirection" value="desc" {if $sortdirection == 'desc'}checked="checked"{/if}>
-						<label for="sortdirection1">{tr}Descending{/tr}</label>
+						<span class="help-block">
+							<label class="radio-inline" for="fgal_sortdirection1">
+								<input type="radio" id="fgal_sortdirection1" name="fgal_sortdirection" value="desc" {if $sortdirection == 'desc'}checked="checked"{/if} />
+								{tr}Descending{/tr}
+							</label>
+							<label class="radio-inline" for="fgal_sortdirection2">
+								<input type="radio" id="fgal_sortdirection2" name="fgal_sortdirection" value="asc" {if $sortdirection == 'asc'}checked="checked"{/if} />
+								{tr}Ascending{/tr}
+							</label>
+						</span>
 					</div>
 				</div>
+				<hr>
+				<div class="">
+					<label for="" class="control-label">{tr}Select which items to display when listing galleries{/tr}</label>
+					{include file='fgal_listing_conf.tpl'}
+				</div>
+				<hr>
 				<div class="form-group">
 					<label for="max_desc" class="col-sm-4 text-right">{tr}Max description display size{/tr}</label>
 					<div class="col-sm-8">
@@ -252,10 +285,6 @@ if ($(this).val() != '') {
 					<div class="col-sm-8">
 						<input type="text" id="maxRows" name="maxRows" value="{$maxRows|escape}" class="form-control">
 					</div>
-				</div>
-				<div class="">
-					<label for="" class="control-label">{tr}Select which items to display when listing galleries{/tr}</label>
-					{include file='fgal_listing_conf.tpl'}
 				</div>
 			{/tab}
 		{/tabset}
