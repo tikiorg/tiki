@@ -26,26 +26,34 @@ function wikiplugin_quote_info()
 				'filter' => 'text',
 				'default' => '',
 			),
+			'thread_id' => array(
+				'required' => false,
+				'name' => tra('Thread Id for Forum replies'),
+				'description' => tra('The thread Id of the comment being replied to in forums. Overwrites replyto'),
+				'since' => '15',
+				'filter' => '	text',
+				'default' => '',
+			),
 		),
 	);
 }
 
 function wikiplugin_quote($data, $params)
 {
-	$data = trim($data);
-	extract($params, EXTR_SKIP);
-	if (!empty($replyto)) {
-		$caption = $replyto .' '.tra('wrote:');
-	} else {
-		$caption = tra('Quote:');
-	}
-    
-	$begin  = "<div class='quote'><div class='quoteheader'>";
-    $begin .= "$caption</div><div class='quotebody'>";
-	$end = "</div></div>";
+	global $smarty;
 
-	// Prepend any newline char with br
-	$data = preg_replace("/\\n/", "<br />", $data);
-    // Insert "\n" at data begin if absent (so start-of-line-sensitive syntaxes will be parsed OK)
-	return $begin . $data . $end;
+
+	if ($params['thread_id']) {
+		$commentslib = TikiLib::lib('comments');
+		$comment_info = $commentslib->get_comment($params['thread_id']);
+		$replyto = $comment_info['userName'];
+	} elseif ($params['replyto']) {
+		$replyto = $params['replyto'];
+	}
+
+	$smarty->assign('comment_info', $comment_info);
+	$smarty->assign('replyto', $replyto);
+	$smarty->assign('data', trim($data));
+
+	return $smarty->fetch("wiki-plugins/wikiplugin_quote.tpl");
 }

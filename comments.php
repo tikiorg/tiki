@@ -250,7 +250,7 @@ if ($_REQUEST["comments_threadId"] > 0) {
 
 	if ( $comment_info["data"] != ''  ) {
 		if ( ($prefs['feature_forum_parse'] == 'y' || $prefs['section_comments_parse'] == 'y') && $prefs['feature_use_quoteplugin'] == 'y' ) {
-			$comment_info["data"] = "\n{QUOTE(replyto=>" . $comment_info["userName"] . ")}" . $comment_info["data"] . '{QUOTE}';
+			$comment_info["data"] = "\n{QUOTE(thread_id=>" . $_REQUEST["comments_reply_threadId"] . ")}" . $comment_info["data"] . '{QUOTE}';
 		} else {
 			$comment_info["data"] = preg_replace('/\n/', "\n> ", $comment_info["data"]);
 			$comment_info["data"] = "\n> " . $comment_info["data"];
