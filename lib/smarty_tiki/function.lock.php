@@ -64,7 +64,13 @@ function smarty_function_lock($params, $smarty)
 	}
 
 	$attributelib = TikiLib::lib("attribute");
-	$perms = Perms::get($params);
+
+	if ($params['type'] === 'wiki structure') {
+		$type = 'wiki page';	// ugly exception for wiki structures because they use the perms set on the top page
+	} else {
+		$type = $params['type'];
+	}
+	$perms = Perms::get([ 'type' => $type, 'object' => $params['object'] ]);
 
 	if (! empty($params['object'])) {
 		$value = $attributelib->get_attribute($params['type'], $params['object'], $attribute);

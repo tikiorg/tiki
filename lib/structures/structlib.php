@@ -1129,12 +1129,12 @@ class StructLib extends TikiLib
 				} else {
 					$res['editable']='n';
 				}
-				if ( $this->user_has_perm_on_object($user, $res['pageName'], 'wiki structure', 'tiki_p_edit_structures') ) {
+				if ( $this->user_has_perm_on_object($user, $res['pageName'], 'wiki page', 'tiki_p_edit_structures') ) {
 					$res['edit_structure'] = 'y';
 				} else {
 					$res['edit_structure'] = 'n';
 				}
-				if ( $this->user_has_perm_on_object($user, $res['pageName'], 'wiki structure', 'tiki_p_admin_structures') ) {
+				if ( $this->user_has_perm_on_object($user, $res['pageName'], 'wiki page', 'tiki_p_admin_structures') ) {
 					$res['admin_structure'] = 'y';
 				} else {
 					$res['admin_structure'] = 'n';

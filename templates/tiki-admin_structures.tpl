@@ -111,7 +111,7 @@
 							</td>
 							<td class="action">
 								{if $prefs.lock_wiki_structures eq 'y'}
-									{lock type='wiki structure' object=$channels[ix].page_ref_id}
+									{lock type='wiki structure' object=$channels[ix].pageName}
 								{/if}
 
 								{capture name=admin_structure_actions}
@@ -135,13 +135,13 @@
 											</a>{$liend}
 										{/if}
 
-										{if $channels[ix].edit_structure == 'y'}
+										{if $channels[ix].edit_structure == 'y' or $channels[ix].admin_structure == 'y'}
 											{$libeg}<a href="tiki-admin_structures.php?export_tree={$channels[ix].page_ref_id|escape:"url"}">
 												{icon name="structure" _menu_text='y' _menu_icon='y' alt="{tr}Dump tree{/tr}"}
 											</a>{$liend}
 										{/if}
 
-										{if $channels[ix].edit_structure == 'y'}
+										{if $channels[ix].admin_structure == 'y'}
 											{$libeg}<a href="tiki-admin_structures.php?remove={$channels[ix].page_ref_id|escape:"url"}">
 												{icon name="remove" _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
 											</a>{$liend}

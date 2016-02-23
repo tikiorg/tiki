@@ -5369,7 +5369,7 @@ class UsersLib extends TikiLib
 				'name' => 'tiki_p_admin_structures',
 				'description' => tra('Can administer structures'),
 				'level' => 'admin',
-				'type' => 'wiki structure',
+				'type' => 'wiki structure',		// NB "wiki structure" objects use the perms set on the top "wiki page"
 				'admin' => true,
 				'prefs' => array('feature_wiki_structure'),
 				'scope' => 'object',
@@ -5378,7 +5378,7 @@ class UsersLib extends TikiLib
 				'name' => 'tiki_p_edit_structures',
 				'description' => tra('Can create and edit structures'),
 				'level' => 'editors',
-				'type' => 'wiki structure',
+				'type' => 'wiki structure',		// NB "wiki structure" objects use the perms set on the top "wiki page"
 				'admin' => false,
 				'prefs' => array('feature_wiki_structure'),
 				'scope' => 'object',
@@ -5387,7 +5387,7 @@ class UsersLib extends TikiLib
 				'name' => 'tiki_p_lock_structures',
 				'description' => tra('Can lock structures'),
 				'level' => 'editors',
-				'type' => 'wiki structure',
+				'type' => 'wiki structure',		// NB "wiki structure" objects use the perms set on the top "wiki page"
 				'admin' => false,
 				'prefs' => array('feature_wiki_structure', 'lock_wiki_structures'),
 				'scope' => 'object',
@@ -5396,7 +5396,7 @@ class UsersLib extends TikiLib
 				'name' => 'tiki_p_watch_structure',
 				'description' => tra('Can watch structures'),
 				'level' => 'registered',
-				'type' => 'wiki structure',
+				'type' => 'wiki structure',		// NB "wiki structure" objects use the perms set on the top "wiki page"
 				'admin' => false,
 				'prefs' => array('feature_wiki_structure'),
 				'scope' => 'global',

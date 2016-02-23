@@ -216,6 +216,12 @@ foreach ($subtree as $i=>$s) { // dammed recursivite - acn not do a left join
 }
 $smarty->assign('subtree', $subtree);
 
+if ($tikilib->user_watches($user, 'structure_changed', $structure_info['page_ref_id'], 'structure')) {
+	$page_info['watching'] = true;
+}
+$smarty->assign('page_info', $page_info);
+
+
 // Re-categorize
 if ($editable === 'y') {
 	$all_editable = 'y';
