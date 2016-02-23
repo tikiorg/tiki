@@ -57,10 +57,5 @@ function smarty_modifier_userlink($other_user, $class='userlink', $idletime='not
 		TikiLib::lib('smarty')->loadPlugin('smarty_modifier_truncate');
 		$fullname = smarty_modifier_truncate($fullname, $max_length, '...', true);
 	}
-
-	if ($popup === 'y') {
-		return TikiLib::lib('user')->build_userinfo_tag($other_user, $fullname, $class);
-	} else {
-		return $fullname;
-	}
+	return TikiLib::lib('user')->build_userinfo_tag($other_user, $fullname, $class, $popup);
 }
