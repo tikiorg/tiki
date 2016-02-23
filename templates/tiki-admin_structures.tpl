@@ -111,7 +111,7 @@
 							</td>
 							<td class="action">
 								{if $prefs.lock_wiki_structures eq 'y'}
-									{lock type='wiki structure' object=$channels[ix].page_ref_id}
+									{lock type='wiki structure' object=$channels[ix].pageName}
 								{/if}
 
 								{capture name=admin_structure_actions}

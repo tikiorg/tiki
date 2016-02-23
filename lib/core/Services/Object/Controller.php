@@ -98,15 +98,15 @@ class Services_Object_Controller
 		$object = $input->object->text();
 		$value = $input->value->text();
 
-		list($perm, $adminperm, $attribute) = $this->setup_locking($type);
+		list($perm, $adminperm, $attribute, $permtype) = $this->setup_locking($type);
 
-		$perms = Perms::get($type, $object);
+		$perms = Perms::get($permtype, $object);
 		$lockedby = $attributelib->get_attribute($type, $object, $attribute);
 
 
 		if (empty($lockedby) || $perms->$adminperm) {
 
-			Services_Exception_Denied::checkObject($perm, $type, $object);
+			Services_Exception_Denied::checkObject($perm, $permtype, $object);
 
 			if (! empty($object)) {
 				$return = TikiLib::lib('attribute')->set_attribute($type, $object, $attribute, $value);
@@ -130,9 +130,9 @@ class Services_Object_Controller
 		$type = $input->type->text();
 		$object = $input->object->text();
 
-		list($perm, $adminperm, $attribute) = $this->setup_locking($type);
+		list($perm, $adminperm, $attribute, $permtype) = $this->setup_locking($type);
 
-		$perms = Perms::get($type, $object);
+		$perms = Perms::get($permtype, $object);
 		$lockedby = $attributelib->get_attribute($type, $object, $attribute);
 
 		if ($lockedby) {	// it's locked
@@ -150,7 +150,7 @@ class Services_Object_Controller
 				return ['locked' => false];
 
 			} else {
-				Services_Exception_Denied::checkObject($adminperm, $type, $object);
+				Services_Exception_Denied::checkObject($adminperm, $permtype, $object);
 			}
 		}
 		return [];
@@ -178,6 +178,7 @@ class Services_Object_Controller
 		$perm = 'lock';    // default (for wiki page, so not used here yet)
 		$adminperm ='admin';
 		$attribute = 'tiki.object.lock';
+		$permtype = $type;
 
 		switch ($type) {
 			case 'template':
@@ -189,12 +190,13 @@ class Services_Object_Controller
 				Services_Exception_Disabled::check('lock_wiki_structures');
 				$perm = 'lock_structures';
 				$adminperm = 'admin_structures';
+				$permtype = 'wiki page';		// perms for structures are actually from the top wiki page (don't ask)
 				break;
 			default:
 				TikiLib::lib('errorreport')->report(tr('Cannot lock "%0"', $type));
 		}
 
-		return array($perm, $adminperm, $attribute);
+		return array($perm, $adminperm, $attribute, $permtype);
 	}
 }
 

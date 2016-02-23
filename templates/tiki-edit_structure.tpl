@@ -73,7 +73,7 @@
 			</div>
 		</form>
 		{if $prefs.lock_wiki_structures eq 'y'}
-			{lock type='wiki structure' object=$page_ref_id}
+			{lock type='wiki structure' object=$structure_name}
 		{/if}
 	{/if}
 </div>
