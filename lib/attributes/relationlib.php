@@ -197,7 +197,7 @@ class RelationLib extends TikiDb_Bridge
 		$ids = array();
 		if ( $relation_prefix ) {
 			$ids = $this->table->fetchAll(
-				"*",
+				[],
 				array(
 					'relation' => $this->table->like($relation_prefix.".%"),
 					'source_type' => $src_type,
