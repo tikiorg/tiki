@@ -57,7 +57,7 @@
 	{/remarksbox}
 {/if}
 
-<div>
+<div class="admintoclevel" id="topnode_{$page_ref_id}">
 	<h2>{tr}Structure Layout{/tr}</h2>
 	{if $editable eq 'y'}
 		<form action="tiki-edit_structure.php?page_ref_id={$page_ref_id}" method="post" class="form-inline" role="form" style="display: inline-block">
@@ -72,8 +72,38 @@
 				</div>
 			</div>
 		</form>
+		{* modified version of row from structures_toc-leaf.tpl *}
 		{if $prefs.lock_wiki_structures eq 'y'}
 			{lock type='wiki structure' object=$structure_name}
+		{/if}
+		{self_link _script='tiki-index.php' page=$structure_name structure=$structure_name _class="tips" _title=":{tr}View{/tr}" _noauto="y"}
+			{icon name="view"}
+		{/self_link}
+		{if $tiki_p_watch_structure eq 'y'}
+			{if !$page_info.watching}
+				{self_link page_ref_id=$page_ref_id watch_object=$page_ref_id watch_action=add page=$structure_name _class="tips" _title=":{tr}Monitor the structure{/tr}"}
+					{icon name="watch"}
+				{/self_link}
+			{else}
+				{self_link page_ref_id=$page_ref_id watch_object=$page_ref_id watch_action=remove _class="tips" _title=":{tr}Stop Monitoring the structure{/tr}"}
+					{icon name="stop-watching"}
+				{/self_link}
+			{/if}
+		{/if}
+		{if $editable eq 'y'}
+			{if $page_info.flag == 'L'}
+				{capture assign=title}{tr _0=$page_info.user}locked by %0{/tr}{/capture}
+				{icon name='lock' alt="{tr}Locked{/tr}" title=$title}
+			{else}
+				{self_link _script='tiki-editpage.php' page=$structure_name _class='tips' _title=':{tr}Edit page{/tr}'}
+					{icon name="edit"}
+				{/self_link}
+			{/if}
+			{if empty($page)}
+				{self_link _onclick="addNewPage(this);return false;" _class="tips" _title=":{tr}Add new child page{/tr}"}
+					{icon name="add"}
+				{/self_link}
+			{/if}
 		{/if}
 	{/if}
 </div>
