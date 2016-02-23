@@ -89,8 +89,8 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 			'parent_contributors' => $typeFactory->multivalue(array_unique($root_author)),
 			'hits' => $typeFactory->numeric($comment['hits']),
 			'root_thread_id' => $typeFactory->identifier($root_thread_id),
-			'type' => $typeFactory->plaintext($comment['type']),
-			'locked' => $typeFactory->plaintext($comment['locked']),
+			'thread_type' => $typeFactory->identifier($comment['type']),
+			'locked' => $typeFactory->identifier($comment['locked']),
 		);
 
 		$forum_lastPost = $this->getForumLastPostData($objectId, $typeFactory);
