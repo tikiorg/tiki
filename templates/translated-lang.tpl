@@ -8,11 +8,20 @@
 
 {if empty($submenu) || $submenu neq 'y'}
 	<div class="btn-group">
-		{* For all object types: First show the translate icon and on hover the language of the current object *}
-		{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
-		<a class="btn btn-link dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
-			{icon name="translate"}
-		</a>
+		{if $prefs.lang_available_translations_dropdown neq 'y' }
+			{* For all object types: First show the translate icon and on hover the language of the current object *}
+			{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
+			<a class="btn btn-link dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+				{icon name="translate"}
+			</a>
+		{else}
+			<div class="dropdown">
+				{* For all object types: Show everything as a dropdown for visibility *}
+				{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
+				<button class="btn btn-link dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+					{icon name="translate"} {$trads[0].langName|escape} ({$trads[0].lang|escape}) <span class="caret"></span>
+				</button>
+		{/if}
 {else}
 	{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
 	<a tabindex="-1" href="#">
@@ -135,5 +144,8 @@
 	{/if}
 	{if $js == 'n'}</li></ul>{/if}
 {if empty($submenu) || $submenu neq 'y'}
+	{if $prefs.lang_available_translations_dropdown eq 'y' }
+		</div>
+	{/if}
 	</div>
 {/if}

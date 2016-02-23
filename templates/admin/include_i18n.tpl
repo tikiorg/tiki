@@ -47,6 +47,9 @@
 				{preference name=language_inclusion_threshold}
 			</div>
 			{preference name=show_available_translations}
+			<div class="adminoptionboxchild" id="show_available_translations_childcontainer">
+				{preference name=lang_available_translations_dropdown}
+			</div>
 			{preference name=feature_sync_language}
 			{preference name=search_default_interface_language}
 			{preference name=feature_translation}

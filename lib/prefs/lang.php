@@ -50,5 +50,11 @@ function prefs_lang_list()
 			'type' => 'text',
 			'default' => '',
 		),
+		'lang_available_translations_dropdown' => array(
+			'name' => tr('Display available translations as dropdown'),
+			'description' => tr('Rather than show a simple icon for listing available languages or translation options, show a more visible drop-down.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);
 }
