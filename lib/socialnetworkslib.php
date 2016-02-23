@@ -243,7 +243,9 @@ class SocialNetworksLib extends LogsLib
 					$email = $prefs['socialnetworks_facebook_email'] === 'y' ? $fb_profile->email : '';
 					if ($prefs['login_is_email'] == 'y' && $email) {
 						$user = $email;
-					} else {
+					} elseif ($prefs['login_autogenerate'] == 'y') {
+						$user = '';
+					} else{
 						$user = 'fb_' . $fb_profile->id;
 					}
 					$user = $userlib->add_user($user, $randompass, $email);
@@ -443,6 +445,8 @@ class SocialNetworksLib extends LogsLib
 				$email = $prefs['socialnetworks_linkedin_email'] === 'y' ? $linkedin_info->emailAddress : '';
 				if ($prefs['login_is_email'] == 'y' && $email) {
 					$user = $email;
+				} elseif ($prefs['login_autogenerate'] == 'y') {
+					$user = '';
 				} else {
 					$user = 'li_' . $linkedin_info->id;
 				}
