@@ -299,7 +299,16 @@
 						{capture assign=link}
 							{strip}
 								{if $files[changes].isgal eq 1}
-									href="{$files[changes].id|sefurl:'filegallery'}{if !empty($filegals_manager)}&amp;filegals_manager={$filegals_manager|escape}{/if}{if !empty($insertion_syntax)}&amp;insertion_syntax={$insertion_syntax|escape}{/if}"
+									{if empty($filegals_manager)}
+										{$query = ''}
+									{else}
+										{$query = 'filegals_manager='|cat:$filegals_manager}
+									{/if}
+									{if not empty($insertion_syntax)}
+										{if $query}{$query = $query|cat:'&'}{/if}
+										{$query = $query|cat:'insertion_syntax=':cat:$insertion_syntax}
+									{/if}
+									href="{$files[changes].id|sefurl:'filegallery'}{if $query}{if $prefs.feature_sefurl eq 'y'}?{else}&amp;{/if}{$query|escape}{/if}"
 								{else}
 
 									{if !empty($filegals_manager)}
