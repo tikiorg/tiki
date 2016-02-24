@@ -109,6 +109,15 @@
 					</div>
 					<input type="hidden" name="location" id="location" value="{$location|escape}">
 				</div>
+				<div class="form-group">
+					<label class="control-label col-md-4" for="homePage">
+						{tr}Homepage URL:{/tr}
+					</label>
+					<div class="col-md-8 margin-bottom-lg" style="height: 250px;" data-geo-center="{defaultmapcenter}" data-target-field="location">
+						<input type="text" size="40" name="homePage" value="{$user_prefs.homePage|escape}">
+					</div>
+				</div>
+
 				{if $prefs.feature_wiki eq 'y' and $prefs.feature_wiki_userpage eq 'y'}
 					<div class="form-group">
 						<label class="control-label col-md-4">
@@ -319,6 +328,7 @@
 							<br/><strong>{tr}Warning:{/tr}</strong> <i>{tr _0=$display_timezone}Site time zone <strong>%0</strong> is enforced and overrides user preferences{/tr}</i>
 						{/if}
 					</div>
+
 				</div>
 				<div class="clearfix">
 					<div class="checkbox col-md-8 col-md-push-4">
