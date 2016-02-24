@@ -17,6 +17,7 @@ function wikiplugin_annotation_info()
 		'iconname' => 'edit',
 		'introduced' => 2,
 		'tags' => array( 'basic' ),
+		'format' => 'html',
 		'params' => array(
 			'src' => array(
 				'required' => true,
@@ -63,7 +64,6 @@ function wikiplugin_annotation_info()
 
 function wikiplugin_annotation($data, $params)
 {
-	static $first = true;
 	global $page, $tiki_p_edit;
 	$headerlib = TikiLib::lib('header');
 
@@ -118,31 +118,43 @@ FORM;
 		$form = '';
 
 	// inititalise the annotations
-	TikiLib::lib('header')->add_jq_onready('$("#' . $cid . '").imageAnnotation(' . $annotations . ');');
+	$headerlib->add_jq_onready('$("#' . $cid . '").imageAnnotation(' . $annotations . ');');
 
 	$smarty = TikiLib::lib('smarty');
 	$smarty->loadPlugin('smarty_function_icon');
 	$minimize = smarty_function_icon(['name' => 'minimize'], $smarty);
 	$delete = smarty_function_icon(['name' => 'delete'], $smarty);
 
+	$labelStr = tra('Label');
+	$linkStr = tra('Link');
+	$saveStr = tra('Save');
+	$closeStr = tra('Close');
+	$removeStr = tra('Remove');
+
 	return <<<ANNOTATION
-~np~
-<div>
-<div id="$cid" style="background:url({$params['src']}); width:{$params['width']}px; height:{$params['height']}px;position:relative">
-	<div id="$cid-editor" style="display:none;width:250px;height:100px;position:absolute;background:white;border-color:black;border-style:solid;border-width:normal;padding:2px;">
-		<a href="javascript:endEdit('$cid', false);void(0)">$minimize</a>
-		<a href="javascript:handleDelete('$cid');void(0)" style="position:absolute;bottom:0px;right:0px;text-decoration:none;">$delete Delete</a>
-		<form method="post" action="" onsubmit="endEdit('$cid',true);return false;">
-			<div>Label</div>
-			<div><input type="text" name="label" id="$cid-label" style="width:96%" onkeyup="handleCancel(event, '$cid')"/></div>
-			<div style="display:none">Link</div>
-			<div style="display:none"><input type="text" name="link" id="$cid-link" style="width:96%" onkeyup="handleCancel(event, '$cid')"/></div>
-			<div><input type="submit" class="btn btn-default btn-sm" value="Save"/></div>
-		</form>
+<div class="wp-annotation">
+	<div id="$cid" style="background:url({$params['src']}); width:{$params['width']}px; height:{$params['height']}px;">
+		<div class="editor panel">
+			<div class="panel-body">
+				<form method="post" action="#" class="form-horizontal">
+					<label class="form-group">
+						<span class="col-sm-4">{$labelStr}</span>
+						<input class="col-sm-8" type="text" name="label">
+					</label>
+					<label class="form-group">
+						<span class="col-sm-4">{$linkStr}</span>
+						<input class="col-sm-8" type="text" name="link">
+					</label>
+					<div class="form-group">
+						<input type="submit" class="btn btn-default btn-sm" value="{$saveStr}">
+						<a class="btn btn-default btn-sm minimize" href="#">$minimize {$closeStr}</a>
+						<a class="btn btn-default btn-sm delete" href="#">$delete {$removeStr}</a>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
 </div>
-</div>
 $form
-~/np~
 ANNOTATION;
 }
