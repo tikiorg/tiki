@@ -230,7 +230,6 @@ class SocialNetworksLib extends LogsLib
 			if (empty($fb_profile->id)) {
 				return false;
 			}
-			// echo '<!-- $ret=' . var_export($fb_profile, true) . '-->';
 			if (!$user) {
 				if ($prefs['socialnetworks_facebook_login'] != 'y') {
 					return false;
@@ -243,6 +242,8 @@ class SocialNetworksLib extends LogsLib
 					$email = $prefs['socialnetworks_facebook_email'] === 'y' ? $fb_profile->email : '';
 					if ($prefs['login_is_email'] == 'y' && $email) {
 						$user = $email;
+					} else if ($prefs['login_autogenerate'] == 'y') {
+						$user = '';
 					} else {
 						$user = 'fb_' . $fb_profile->id;
 					}
@@ -443,6 +444,8 @@ class SocialNetworksLib extends LogsLib
 				$email = $prefs['socialnetworks_linkedin_email'] === 'y' ? $linkedin_info->emailAddress : '';
 				if ($prefs['login_is_email'] == 'y' && $email) {
 					$user = $email;
+				} else if ($prefs['login_autogenerate'] == 'y') {
+						$user = '';
 				} else {
 					$user = 'li_' . $linkedin_info->id;
 				}
