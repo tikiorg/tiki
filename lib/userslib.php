@@ -2656,7 +2656,7 @@ class UsersLib extends TikiLib
 	 * @param string $class		add a class to the a tag (default userlink)
 	 * @return string           HTML anchor tag
 	 */
-	function build_userinfo_tag($auser = '', $body = '', $class = 'userlink')
+	function build_userinfo_tag($auser = '', $body = '', $class = 'userlink', $show_popover = 'y')
 	{
 		global $user, $prefs;
 
@@ -2686,7 +2686,9 @@ class UsersLib extends TikiLib
 		$url = "tiki-user_information.php?userId=$id";
 		$url = filter_out_sefurl($url);
 		$extra = '';
-		if ($prefs['feature_community_mouseover'] == 'y' && ($this->get_user_preference($auser, 'show_mouseover_user_info', 'y') == 'y' || $prefs['feature_friends'] == 'y')) {
+		if ($show_popover != 'y') {
+			//do nothing for adding a tip
+		} else if ($prefs['feature_community_mouseover'] == 'y' && ($this->get_user_preference($auser, 'show_mouseover_user_info', 'y') == 'y' || $prefs['feature_friends'] == 'y')) {
 			$data = TikiLib::lib('service')->getUrl(array(
 				'controller' => 'user',
 				'action' => 'info',

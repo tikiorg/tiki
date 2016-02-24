@@ -59,7 +59,7 @@ function smarty_modifier_userlink($other_user, $class='userlink', $idletime='not
 	}
 
 	if ($popup === 'y') {
-		return TikiLib::lib('user')->build_userinfo_tag($other_user, $fullname, $class);
+		return TikiLib::lib('user')->build_userinfo_tag($other_user, $fullname, $class, $popover);
 	} else {
 		return $fullname;
 	}
