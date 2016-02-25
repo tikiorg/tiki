@@ -1041,6 +1041,8 @@ li.archivedate {
 }
 .sitelogo img {
   margin-top: 10px;
+}
+.modules > .module .sitelogo img {
   margin-left: 20px;
 }
 .pass a,
