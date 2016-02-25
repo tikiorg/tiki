@@ -14,6 +14,11 @@
 			    <a href="tiki-view_blog_post.php?postId={$postId}&amp;watch_event=blog_comment_changes&amp;watch_object={$postId}&amp;watch_action=remove" class="tips" title=":{tr}Stop Monitoring this Blog{/tr}">{icon name="stop-watching"}</a>
 		    {/if}
 	    {/if}
+			{if $tiki_p_blog_post eq "y" or $tiki_p_blog_admin eq "y" }
+					<a href="tiki-blog_post.php?blogId={$blogId}" class="tips" title=":{tr}Post{/tr}" >
+						{icon name='post'}
+					</a>
+			{/if}
     </div>
 </div>
 
