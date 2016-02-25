@@ -80,7 +80,6 @@
 						</fieldset>
 					</div>
 
-					{if $smod_params.advanced_search_option eq 'y'}
 					{remarksbox type=tip title="{tr}About Unified search engines{/tr}"}
 						<b>{tr}MySQL full-text search{/tr}: </b><br>
 					{tr}Advantages{/tr}: {tr}Fast performance. Works out of the box with Tiki and even on most basic server setups{/tr}.<br>
@@ -92,7 +91,6 @@
 					{tr}Advantages{/tr}: {tr}Most advanced, fast and scalable search engine. Enables some very advanced/new features of Tiki{/tr}.<br>
 					{tr}Disadvantages{/tr}: {tr}Needs to be separately installed from Tiki and requires more configuration{/tr} (See this <a class='alert-link' href='http://doc.tiki.org/ElasticSearch'>{tr}link{/tr}</a> {tr}for more information) {/tr}<br>
 					{/remarksbox}
-					{/if}
 
 					<div class="adminoptionboxchild unified_engine_childcontainer elastic">
 						{preference name="unified_elastic_url"}
