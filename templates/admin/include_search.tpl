@@ -182,6 +182,7 @@
 				{preference name=feature_search_show_object_type}
 				{preference name=feature_search_show_last_modification}
 				{preference name=search_parsed_snippet}
+				{preference name=unified_highlight_results}
 			</fieldset>
 		{/tab}
 

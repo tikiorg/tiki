@@ -205,6 +205,15 @@ function tiki_searchindex_get_results($filter, $postfilter, $offset, $maxRecords
 		}
 	}
 
+
+	if ($prefs['unified_highlight_results'] === 'y') {
+		$query->applyTransform(
+			new \Search\ResultSet\UrlHighlightTermsTransform(
+				$query->getTerms()
+			)
+		);
+	}
+
 	try {
 		if ($prefs['federated_enabled'] == 'y' && ! empty($filter['content'])) {
 			$fed = TikiLib::lib('federatedsearch');
