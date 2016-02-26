@@ -143,7 +143,7 @@ if ($tiki_p_edit_structures == 'y') {
 		// Locking: only needed on new structures, ajax locks existing ones
 		if ($prefs['lock_wiki_structures'] === 'y') {
 			if (!empty($_REQUEST['locked'])) {
-				TikiLib::lib('attribute')->set_attribute('wiki structure', $structure_id, 'tiki.object.lock', $_REQUEST['locked']);
+				TikiLib::lib('attribute')->set_attribute('wiki structure', $_REQUEST['name'], 'tiki.object.lock', $_REQUEST['locked']);
 			}
 		}
 

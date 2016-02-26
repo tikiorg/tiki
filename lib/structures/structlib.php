@@ -696,7 +696,7 @@ class StructLib extends TikiLib
 			$perms = Perms::get('wiki page', $structure_info["pageName"]);
 
 			if ($prefs['lock_wiki_structures'] === 'y') {
-				$lockedby = TikiLib::lib('attribute')->get_attribute('wiki structure', $_REQUEST['page_ref_id'], 'tiki.object.lock');
+				$lockedby = TikiLib::lib('attribute')->get_attribute('wiki structure', $structure_info['pageName'], 'tiki.object.lock');
 				if ($lockedby && $lockedby === $user && $perms->lock_structures || ! $lockedby || $perms->admin_structures) {
 					$editable = $perms->edit_structures;
 				} else {
