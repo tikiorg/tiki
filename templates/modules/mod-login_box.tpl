@@ -48,8 +48,7 @@ if (jqueryTiki.no_cookie) {
 					<fieldset>
 						<legend>{tr}Return to Main User{/tr}</legend>
 						<input type="hidden" name="su" value="revert" />
-						<input type="hidden" name="
-						e" value="auto" />
+						<input type="hidden" name="username" value="auto" />
 						<div class="text-center"><button type="submit" class="btn btn-primary" name="actsu">{tr}Switch{/tr}</button></div>
 					</fieldset>
 				</form>

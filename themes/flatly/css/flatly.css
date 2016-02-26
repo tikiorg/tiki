@@ -7063,6 +7063,11 @@ a.list-group-item-danger.active:focus {
 .popover {
   color: #2c3e50;
 }
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #7b8a8b;
+  }
+}
 .margin-bottom-xs {
   margin-bottom: 6px;
 }

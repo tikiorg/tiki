@@ -30,7 +30,7 @@ function smarty_outputfilter_highlight($source, $smarty)
 	if (empty($_REQUEST['highlight'])) {
 		return $source;
 	}
-	if (!strstr($source, 'id="tiki-center"')) {
+	if (strpos($source, '<article ') === false) {	// the main page contents appears without the col1 but with 2 and 3 appended
 		return $source;
 	}
 	$highlight = $_REQUEST['highlight'];
@@ -39,7 +39,7 @@ function smarty_outputfilter_highlight($source, $smarty)
 		$highlight = str_replace(array('(', ')', '*', '-', '"', '~', '<', '>'), ' ', $highlight);
 	}
 
-	if (isset($prefs['feature_referer_highlight']) && $prefs['feature_referer_highlight'] == 'y') {
+	if ($prefs['feature_referer_highlight'] == 'y') {
 		$refererhi = _refererhi();
 		if (isset($refererhi) && !empty($refererhi)) {
 			if (isset($highlight) && !empty($highlight)) {
@@ -68,12 +68,12 @@ function smarty_outputfilter_highlight($source, $smarty)
 
 	if ( function_exists('mb_eregi') ) {
 		// UTF8 support enabled
-		$result = mb_eregi('^(.*\s+id="tiki-center"[^>]*>)(.*)' . $stop_pattern . '$', $source, $matches);
+		$result = mb_eregi('^(.*<article [^>]*>)(.*)' . $stop_pattern . '$', $source, $matches);
 	} else {
 		// We do not fallback on the preg_match function, since it is limited by 'pcre.backtrack_limit' which is too low by default (100K)
 		//  and this script will not be allowed to change its value on most systems
 		//
-		if ( ( $start = strpos($source, 'id="tiki-center"') ) > 0 ) {
+		if ( ( $start = strpos($source, '<article ') ) > 0 ) {
 			$matches = array(
 				$source,
 				substr($source, 0, $start),
@@ -123,7 +123,7 @@ function _enlightColor($matches)
 				continue;
 			$seaword .= $seasep.preg_quote($word, '~');
 			$seasep ='|';
-			$colword[strtolower($word)] = 'highlight_word_'.$i%5;
+			$colword[strtolower($word)] = 'highlight_word highlight_word_'.$i%5;
 			$i++;
 		}
 		return $seaword;

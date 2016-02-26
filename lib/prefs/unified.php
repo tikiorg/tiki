@@ -274,6 +274,12 @@ function prefs_unified_list()
 				'feature_search',
 			),
 		),
+		'unified_highlight_results' => array(
+			'name' => tra('Highlight results pages'),
+			'description' => tra('Highlight words on the result pages based on the search query.'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);
 }
 

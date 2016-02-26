@@ -335,13 +335,13 @@ link="{tr}List Attachments{/tr}">{icon name="attach"}</a>{$items[user].attachmen
 					{self_link delete=$items[user].itemId _class='tips' _title=":{tr}Remove{/tr}"}{icon name='delete'}{/self_link}
 				{/if}
 				{if $showcloseitem eq 'y' && $items[user].status neq 'c' && ($perms.tiki_p_admin_trackers eq 'y' or ($perms.tiki_p_modify_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or ($perms.tiki_p_modify_tracker_items_pending eq 'y' and $items[user].status eq 'p') or ($perms.tiki_p_modify_tracker_items_closed eq 'y' and $items[user].status eq 'c'))}
-					{self_link closeitem=$items[user].itemId}{tr}Close item{/tr}{/self_link}
+					{self_link closeitem=$items[user].itemId _style='display:inline-block;' _class='text-nowrap btn-xs btn-danger'}{tr}Close item{/tr}{/self_link}
 				{/if}
 				{if $showopenitem eq 'y' && $items[user].status neq 'o' && ($perms.tiki_p_admin_trackers eq 'y' or ($perms.tiki_p_modify_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or ($perms.tiki_p_modify_tracker_items_pending eq 'y' and $items[user].status eq 'p') or ($perms.tiki_p_modify_tracker_items_closed eq 'y' and $items[user].status eq 'c'))}
-					{self_link openitem=$items[user].itemId}{tr}Open item{/tr}{/self_link}
+					{self_link openitem=$items[user].itemId _style='display:inline-block;' _class='text-nowrap btn-xs btn-success'}{tr}Open item{/tr}{/self_link}
 				{/if}
 				{if $showpenditem eq 'y' && $items[user].status neq 'p' && ($perms.tiki_p_admin_trackers eq 'y' or ($perms.tiki_p_modify_tracker_items eq 'y' and $items[user].status ne 'p' and $items[user].status ne 'c') or ($perms.tiki_p_modify_tracker_items_pending eq 'y' and $items[user].status eq 'p') or ($perms.tiki_p_modify_tracker_items_closed eq 'y' and $items[user].status eq 'c'))}
-					{self_link penditem=$items[user].itemId}{tr}Pend item{/tr}{/self_link}
+					{self_link penditem=$items[user].itemId _style='display:inline-block;' _class='text-nowrap btn-xs btn-warning'}{tr}Pend item{/tr}{/self_link}
 				{/if}
 		</td>
 			{/if}
