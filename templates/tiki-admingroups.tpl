@@ -3,8 +3,8 @@
 {title help="Groups+Management" admpage="login"}{tr}Admin groups{/tr}{/title}
 
 <div class="t_navbar margin-bottom-md">
-	{button href="tiki-adminusers.php" class="btn btn-default" _icon_name="user" _text="{tr}Admin Users{/tr}"}
-	{button href="tiki-admingroups.php?clean=y" class="btn btn-default" _icon_name="trash" _text="{tr}Clear cache{/tr}"}
+	{button href="tiki-adminusers.php" class="btn btn-default" _type="link" _icon_name="user" _text="{tr}Admin Users{/tr}"}
+	{button href="tiki-admingroups.php?clean=y" class="btn btn-default" _type="link" _icon_name="trash" _text="{tr}Clear cache{/tr}"}
 	{if $groupname}
 		{if $prefs.feature_tabs ne 'y'}
 			{button href="tiki-admingroups.php?add=1&amp;cookietab=2#tab2" class="btn btn-default" _icon_name="create" _text="{tr}Add New Group{/tr}"}
@@ -12,11 +12,11 @@
 			{button href="tiki-admingroups.php?add=1&amp;cookietab=2" class="btn btn-default" _icon_name="create" _text="{tr}Add New Group{/tr}"}
 		{/if}
 	{/if}
-	<button class="btn btn-default">
+	<button class="btn btn-default btn-link">
 		{permission_link mode=text}
 	</button>
 	{if $prefs.feature_invite eq 'y' and $tiki_p_invite eq 'y'}
-		{button href="tiki-list_invite.php" class="btn btn-default" _icon_name="thumbs-up" _text="{tr}Invitation List{/tr}"}
+		{button href="tiki-list_invite.php" class="btn btn-default" _type="link" _icon_name="thumbs-up" _text="{tr}Invitation List{/tr}"}
 	{/if}
 </div>
 
