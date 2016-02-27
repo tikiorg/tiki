@@ -1059,6 +1059,15 @@ li.login_link ul li a {
 .siteloginbar_popup img {
   height: 24px;
 }
+.navbar-form .siteloginbar_poppedup .form-control,
+.navbar-form .siteloginbar_poppedup .form-group.text-center {
+  width: 100%;
+}
+.box-login_box label {
+  display: block;
+  text-align: right;
+  padding-right: 0;
+}
 .tellafriend,
 .share {
   text-align: right;
@@ -4246,11 +4255,13 @@ div.drillshow {
   display: none;
   width: 400px;
   position: absolute;
-  /*	background:white;
-	border-color:black;
-	border-style:solid;
-	border-width:1px;
-	padding:2px;*/
+}
+.wp-annotation .annotation {
+  border: solid 2px red;
+  position: absolute;
+}
+.wp-annotation .annotation.selected {
+  border-color: green;
 }
 .multilike .horizontal {
   display: inline-block;

@@ -101,7 +101,9 @@ function wikiplugin_annotation($data, $params)
 	$labelSave = tra('Save changes to annotations');
 	$message = tra('Image annotations changed.');
 	
-	if ( $tiki_p_edit == 'y' )
+	if ( $tiki_p_edit == 'y' ) {
+		$editableStr = tra('Editable');
+
 		$form = <<<FORM
 <form method="post" action="tiki-wikiplugin_edit.php">
 	<div style="display:none">
@@ -111,9 +113,16 @@ function wikiplugin_annotation($data, $params)
 		<input type="hidden" name="message" value="$message"/>
 		<textarea id="$cid-content" name="content"></textarea>
 	</div>
-	<p><input type="submit" class="btn btn-default btn-sm" value="$labelSave"/></p>
+	<div class="form-group">
+		<input type="submit" class="btn btn-default btn-sm" value="$labelSave"/>
+		<label>
+			<input type="checkbox" id="$cid-editable">
+			{$editableStr}
+		</label>
+	</div>
 </form>
 FORM;
+	}
 	else
 		$form = '';
 
@@ -131,28 +140,36 @@ FORM;
 	$closeStr = tra('Close');
 	$removeStr = tra('Remove');
 
-	return <<<ANNOTATION
-<div class="wp-annotation">
-	<div id="$cid" style="background:url({$params['src']}); width:{$params['width']}px; height:{$params['height']}px;">
+	if ($tiki_p_edit == 'y') {
+		$editor_form = <<<EDITORFORM
 		<div class="editor panel">
 			<div class="panel-body">
 				<form method="post" action="#" class="form-horizontal">
 					<label class="form-group">
-						<span class="col-sm-4">{$labelStr}</span>
+						<span class="col-sm-4">$labelStr</span>
 						<input class="col-sm-8" type="text" name="label">
 					</label>
 					<label class="form-group">
-						<span class="col-sm-4">{$linkStr}</span>
+						<span class="col-sm-4">$linkStr</span>
 						<input class="col-sm-8" type="text" name="link">
 					</label>
 					<div class="form-group">
-						<input type="submit" class="btn btn-default btn-sm" value="{$saveStr}">
-						<a class="btn btn-default btn-sm minimize" href="#">$minimize {$closeStr}</a>
-						<a class="btn btn-default btn-sm delete" href="#">$delete {$removeStr}</a>
+						<input type="submit" class="btn btn-default btn-sm" value="$saveStr">
+						<a class="btn btn-default btn-sm minimize" href="#">$minimize $closeStr</a>
+						<a class="btn btn-default btn-sm delete" href="#">$delete $removeStr</a>
 					</div>
 				</form>
 			</div>
 		</div>
+EDITORFORM;
+	} else {
+		$editor_form = '';
+	}
+
+	return <<<ANNOTATION
+<div class="wp-annotation">
+	<div id="$cid" style="background:url({$params['src']}); width:{$params['width']}px; height:{$params['height']}px;">
+{$editor_form}
 	</div>
 </div>
 $form
