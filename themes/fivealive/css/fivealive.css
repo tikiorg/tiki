@@ -7515,6 +7515,10 @@ a.admbox.off:active {
 .siteloginbar_popup .btn-link {
   color: #fff;
 }
+.siteloginbar_poppedup li > a,
+.siteloginbar_poppedup label {
+  color: #efefef;
+}
 .box-quickadmin .cssmenu_horiz ul li {
   background: #0e567a;
 }

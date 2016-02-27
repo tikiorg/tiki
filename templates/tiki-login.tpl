@@ -1,6 +1,6 @@
 {* $Id$ *}
 <div class="row">
-	<div class="col-md-4 col-md-offset-4">
+	<div class="col-sm-6 col-sm-offset-3">
 		{module module=login_box
 			mode="module"
 			show_register="y"

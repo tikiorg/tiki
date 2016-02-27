@@ -1059,6 +1059,15 @@ li.login_link ul li a {
 .siteloginbar_popup img {
   height: 24px;
 }
+.navbar-form .siteloginbar_poppedup .form-control,
+.navbar-form .siteloginbar_poppedup .form-group.text-center {
+  width: 100%;
+}
+.box-login_box label {
+  display: block;
+  text-align: right;
+  padding-right: 0;
+}
 .tellafriend,
 .share {
   text-align: right;

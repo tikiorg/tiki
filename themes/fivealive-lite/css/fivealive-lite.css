@@ -7653,8 +7653,9 @@ textarea,
 .postbody-title {
   background: #1a8cbc;
 }
-.siteloginbar_popup .dropdown-menu > li > a {
-  color: #fff;
+.siteloginbar_poppedup li > a,
+.siteloginbar_poppedup label {
+  color: #ffffff;
 }
 header.header .sitetitle,
 header.header .sitesubtitle {

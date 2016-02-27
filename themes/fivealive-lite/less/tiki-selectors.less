@@ -239,8 +239,9 @@ textarea,
 	background: @postbody-title-background; //url('@{imagePath}siteheader.png') no-repeat -480px -200px;
 }
 
-.siteloginbar_popup .dropdown-menu > li > a {
-	color: #fff;
+.siteloginbar_poppedup li > a,
+.siteloginbar_poppedup label {
+	color: @navbar-default-link-color;
 }
 
 // This comes last to enable site title color of theme options under FiveAlive-lite to have priority over the default set by FiveAlive.
