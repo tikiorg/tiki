@@ -128,7 +128,7 @@ function execute_module_translation()
 	$smarty = TikiLib::lib('smarty');
 	$module_reference = array(
 		'name' => 'translation',
-		'params' => '',
+		'params' => array('show_language' => 'n'),
 		'position' => 'r',
 		'ord' => 1,
 		'moduleId' => 0
