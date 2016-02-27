@@ -1208,6 +1208,13 @@ class MultilingualLib extends TikiLib
         global $tracer;
 
         $default_lang = '';
+		//make sure $user_langs is an array
+		if(isset($user_langs) && is_array($user_langs)){
+			$user_langs = $user_langs;
+		}
+		else {
+			$user_langs = $this->preferredLangs(null, null);
+		}
 
         foreach ($user_langs as $a_user_lang)
         {
