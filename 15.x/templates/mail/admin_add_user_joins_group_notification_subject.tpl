@@ -1,1 +1,0 @@
-{$mail_group} - {tr}You have been added{/tr}.
