@@ -1,0 +1,195 @@
+/* Jqui theme (jqui.css) Element theme option (element.css)
+	for Tiki Wiki CMS/Groupware.
+	Thanks to garkpit for the random name. */
+a {
+  color: #2a5385;
+}
+a:hover,
+a:focus {
+  color: #7195c1;
+}
+.btn-default {
+  color: #555555;
+  background-color: #ffffff;
+  border-color: #777777;
+}
+.btn-default:focus,
+.btn-default.focus {
+  color: #555555;
+  background-color: #e6e6e6;
+  border-color: #373737;
+}
+.btn-default:hover {
+  color: #555555;
+  background-color: #e6e6e6;
+  border-color: #585858;
+}
+.btn-default:active,
+.btn-default.active,
+.open > .dropdown-toggle.btn-default {
+  color: #555555;
+  background-color: #e6e6e6;
+  border-color: #585858;
+}
+.btn-default:active:hover,
+.btn-default.active:hover,
+.open > .dropdown-toggle.btn-default:hover,
+.btn-default:active:focus,
+.btn-default.active:focus,
+.open > .dropdown-toggle.btn-default:focus,
+.btn-default:active.focus,
+.btn-default.active.focus,
+.open > .dropdown-toggle.btn-default.focus {
+  color: #555555;
+  background-color: #d4d4d4;
+  border-color: #373737;
+}
+.btn-default:active,
+.btn-default.active,
+.open > .dropdown-toggle.btn-default {
+  background-image: none;
+}
+.btn-default.disabled:hover,
+.btn-default[disabled]:hover,
+fieldset[disabled] .btn-default:hover,
+.btn-default.disabled:focus,
+.btn-default[disabled]:focus,
+fieldset[disabled] .btn-default:focus,
+.btn-default.disabled.focus,
+.btn-default[disabled].focus,
+fieldset[disabled] .btn-default.focus {
+  background-color: #ffffff;
+  border-color: #777777;
+}
+.btn-default .badge {
+  color: #ffffff;
+  background-color: #555555;
+}
+.navbar-default {
+  background-color: #cccccc;
+  border-color: #aaaaaa;
+}
+.navbar-default .navbar-text {
+  color: #363636;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #2a5385;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #7195c1;
+  background-color: #eeaa66;
+}
+.navbar-default .navbar-link {
+  color: #2a5385;
+}
+.navbar-default .navbar-link:hover {
+  color: #7195c1;
+}
+body {
+  color: #333333;
+}
+a,
+a.btn-link {
+  color: #2a5385;
+}
+a:hover,
+a.btn-link:hover,
+a:focus,
+a.btn-link:focus {
+  color: #7195c1;
+}
+#col2 .panel a,
+#col3 .panel a,
+#bottom_modules .panel a,
+#col2 .panel a:visited,
+#col3 .panel a:visited,
+#bottom_modules .panel a:visited {
+  color: #000000;
+}
+.btn,
+.btn-default,
+input[type="reset"],
+input[type="submit"],
+.button input {
+  text-transform: bold;
+}
+.btn.btn-link,
+input[type="submit"].btn-link {
+  background: none;
+}
+.btn:hover,
+.btn-default:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.button input:hover {
+  background: #eeaa66;
+}
+.topbar,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li {
+  color: #363636;
+}
+.topbar > a,
+.topbar .navbar-default .navbar-nav > li > a,
+.topbar .nav > li > a {
+  color: #2a5385;
+}
+.topbar > a:hover,
+.topbar .navbar-default .navbar-nav > li > a:hover,
+.topbar .nav > li > a:hover,
+.topbar > a:focus,
+.topbar .navbar-default .navbar-nav > li > a:focus,
+.topbar .nav > li > a:focus {
+  color: #7195c1;
+}
+/*.navbar-nav > li > a {
+  padding-top: none;
+  padding-bottom: none;}
+
+.navbar-nav > li > a {
+  padding-bottom: 0;
+  padding-top: 0;
+}*/
+.sf-arrows .sf-with-ul:after {
+  border: 5px solid transparent;
+  border-top-color: #2a5385;
+}
+.cssmenu_vert.sf-arrows li > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #2a5385;
+  /* edit this to suit design (no rgba in IE8) */
+}
+.sf-arrows ul .sf-with-ul:after,
+.cssmenu_vert.sf-arrows ul > li > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #2a5385;
+  /* edit this to suit design (no rgba in IE8) */
+}
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #244772;
+}
+.cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
+.cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
+.cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #244772;
+}
+#col2 .cssmenu_vert.sf-arrows li > .sf-with-ul:after,
+#col3 .cssmenu_vert.sf-arrows li > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #000000;
+  /* edit this to suit design (no rgba in IE8) */
+}
+#col2 .cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
+#col3 .cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
+#col2 .cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
+#col3 .cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
+#col2 .cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after,
+#col3 .cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
+  border-color: transparent;
+  border-left-color: #888888;
+}

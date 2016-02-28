@@ -1,0 +1,106 @@
+// $Id$
+//Less file for the jQuery tablesorter plugin
+//custom formatting for individual themes
+
+@ts                 : tablesorter;
+
+.ts-bg() when not (@input-bg = transparent) and (iscolor(@input-bg)) {
+	@ts-bg: @input-bg;
+}
+
+.ts-bg() when not (@body-bg = transparent) and (iscolor(@body-bg)) {
+	@ts-bg: @body-bg;
+}
+
+.ts-bg() when not (@table-bg = transparent) and (iscolor(@table-bg)) {
+	@ts-bg: @table-bg;
+}
+
+.ts-bg() when ((default())) {
+	@ts-bg: #fff;
+}
+
+@borderAndBackground   : @table-border-color;
+@overallBorder         : @borderAndBackground 1px solid;
+
+/* black */
+@unsortedBlack         : url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
+@sortAscBlack          : url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);
+@sortDescBlack         : url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);
+
+/* white */
+@unsortedWhite         : url(data:image/gif;base64,R0lGODlhFQAJAIAAAP///////yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
+@sortAscWhite          : url(data:image/gif;base64,R0lGODlhFQAEAIAAAP///////yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);
+@sortDescWhite         : url(data:image/gif;base64,R0lGODlhFQAEAIAAAP///////yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);
+
+/* automatically choose the correct arrow/text color */
+.unsorted (@a) when (lightness(@a) >= 50%) {
+	background-image: @unsortedBlack;
+}
+
+.unsorted (@a) when (lightness(@a) < 50%) {
+	background-image: @unsortedWhite;
+}
+
+.sortAsc (@a) when (lightness(@a) >= 50%) {
+	background-image: @sortAscBlack;
+}
+
+.sortAsc (@a) when (lightness(@a) < 50%) {
+	background-image: @sortAscWhite;
+}
+
+.sortDesc (@a) when (lightness(@a) >= 50%) {
+	background-image: @sortDescBlack;
+}
+
+.sortDesc (@a) when (lightness(@a) < 50%) {
+	background-image: @sortDescWhite;
+}
+
+.filter-bg (@a) when (lightness(@a) >= 50%) {
+	background-color: darken(spin(@a, -5), 3%);;
+}
+
+.filter-bg (@a) when (lightness(@a) < 50%) {
+	background-color: lighten(spin(@a, -5), 5%);;
+}
+
+.tsFilterInput {
+	border: none;
+	.ts-bg();
+	.filter-bg(@ts-bg);
+}
+
+table.@{ts} {
+	/* style header */
+	thead {
+		tr.@{ts}-headerRow {
+			th.@{ts}-headerUnSorted:not(.sorter-false) {
+				.ts-bg();
+				.unsorted(@ts-bg);
+			}
+			th.@{ts}-headerAsc {
+				.ts-bg();
+				.sortAsc(@ts-bg);
+			}
+			th.@{ts}-headerDesc {
+				.ts-bg();
+				.sortDesc(@ts-bg);
+			}
+		}
+		tr.@{ts}-filter-row {
+			input.@{ts}-filter {
+				.tsFilterInput;
+			}
+			input.dateFrom,
+			input.dateTo {
+				.tsFilterInput;
+			}
+		}
+		tr.@{ts}-headerRow, tr.@{ts}-filter-row {
+			.ts-bg();
+			background-color: @ts-bg;
+		}
+	}
+}

@@ -1,0 +1,26 @@
+// $Id$
+/*! Original theme information:
+ * bootswatch v3.3.6
+ * Homepage: http://bootswatch.com
+ * Copyright 2012-2015 Thomas Park
+ * Licensed under MIT
+ * Based on Bootstrap
+ *
+ * Adapted by the Tiki Community for Tiki Wiki CMS Groupware
+*/
+@import "../../../vendor/twitter/bootstrap/less/bootstrap.less";
+@import "../../base_files/less/bootswatch_overrides.less";
+// So far, just removes the CSS content theme-option-required warning.
+@import "../../base_files/less/tablesorter-custom.less";
+@import "../../base_files/less/tiki-selectors.less";
+// Tiki non-Bootstrap CSS selectors related to color
+@import "../../base_files/less/tiki-variables";
+// Values/definitions for Tiki variables (outside of Bootstrap variables) such as tiki-selectors.less.
+@import "bootswatch.less";
+// defines the theme's CSS values that are outside of variables.less
+@import "variables.less";
+
+// the Bootstrap variables.less file with theme-specific values replacing the defaults
+
+.topbar { border: 1px solid @navbar-default-border; }
+.topbar .navbar-default { border: none; }

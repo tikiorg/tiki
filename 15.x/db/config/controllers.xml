@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony.com/schema/dic/services">
+	<!--
+
+	Important: This file is part of Tiki.
+	           If you want to load additional services, please create
+			   a 'custom.xml' file to avoid conflicts.
+
+	-->
+	<services>
+		<service id="tiki.controller.access" class="Services_Access_Controller"/>
+		<service id="tiki.controller.activitystream" class="Services_ActivityStream_Controller"/>
+		<service id="tiki.controller.article" class="Services_Article_Controller"/>
+		<service id="tiki.controller.attribute" class="Services_Attribute_Controller"/>
+		<service id="tiki.controller.auth_source" class="Services_AuthSource_Controller"/>
+		<service id="tiki.controller.autosave" class="Services_AutoSave_Controller"/>
+		<service id="tiki.controller.bigbluebutton" class="Services_BigBlueButton_Controller"/>
+		<service id="tiki.controller.calendar" class="Services_Calendar_Controller"/>
+		<service id="tiki.controller.category" class="Services_Category_Controller"/>
+		<service id="tiki.controller.comment" class="Services_Comment_Controller"/>
+		<service id="tiki.controller.connect_server" class="Services_Connect_Server"/>
+		<service id="tiki.controller.connect" class="Services_Connect_Client"/>
+		<service id="tiki.controller.contenttemplate" class="Services_ContentTemplate_Controller"/>
+		<service id="tiki.controller.draw" class="Services_Draw_Controller"/>
+		<service id="tiki.controller.edit" class="Services_Edit_Controller"/>
+		<service id="tiki.controller.favorite" class="Services_User_FavoriteController"/>
+        <service id="tiki.controller.forum" class="Services_Forum_Controller"/>
+		<service id="tiki.controller.goal" class="Services_Goal_Controller"/>
+		<service id="tiki.controller.file_finder" class="Services_File_FinderController"/>
+		<service id="tiki.controller.file" class="Services_File_Controller"/>
+		<service id="tiki.controller.jcapture" class="Services_JCapture_Controller"/>
+		<service id="tiki.controller.kaltura" class="Services_Kaltura_Controller"/>
+		<service id="tiki.controller.language" class="Services_Language_Controller"/>
+		<service id="tiki.controller.mailin" class="Services_MailIn_Controller"/>
+		<service id="tiki.controller.managestream" class="Services_ActivityStream_ManageController"/>
+		<service id="tiki.controller.menu" class="Services_Menu_Controller"/>
+		<service id="tiki.controller.module" class="Services_Module_Controller"/>
+		<service id="tiki.controller.monitor" class="Services_User_MonitorController"/>
+		<service id="tiki.controller.mustread" class="Services_MustRead_Controller"/>
+		<service id="tiki.controller.oauth" class="Services_AuthSource_OAuthController"/>
+		<service id="tiki.controller.object" class="Services_Object_Controller"/>
+		<service id="tiki.controller.payment" class="Services_Payment_Controller"/>
+		<service id="tiki.controller.rating" class="Services_Rating_Controller"/>
+		<service id="tiki.controller.relation" class="Services_Relation_Controller"/>
+		<service id="tiki.controller.report" class="Services_Report_Controller"/>
+		<service id="tiki.controller.recommendation_dev" class="Services_Recommendation_DevelopmentController"/>
+		<service id="tiki.controller.score" class="Services_Score_Controller"/>
+		<service id="tiki.controller.search" class="Services_Search_Controller"/>
+		<service id="tiki.controller.search_customsearch" class="Services_Search_CustomSearchController"/>
+		<service id="tiki.controller.search_manifold" class="Services_Search_ManifoldController"/>
+		<service id="tiki.controller.search_stored" class="Services_Search_StoredController"/>
+		<service id="tiki.controller.showtikiorg" class="Services_ShowTikiOrg_Controller"/>
+		<service id="tiki.controller.social" class="Services_User_SocialController"/>
+		<service id="tiki.controller.suite" class="Services_Suite_Controller"/>
+		<service id="tiki.controller.tabular" class="Services_Tracker_TabularController"/>
+		<service id="tiki.controller.tracker" class="Services_Tracker_Controller"/>
+		<service id="tiki.controller.tracker_calendar" class="Services_Tracker_CalendarController"/>
+		<service id="tiki.controller.tracker_sync" class="Services_Tracker_SyncController"/>
+		<service id="tiki.controller.tracker_todo" class="Services_Tracker_TodoController"/>
+		<service id="tiki.controller.translation" class="Services_Language_TranslationController"/>
+		<service id="tiki.controller.user" class="Services_User_Controller"/>
+		<service id="tiki.controller.user_conditions" class="Services_User_ConditionsController"/>
+		<service id="tiki.controller.utilities" class="Services_Utilities_Controller"/>
+		<service id="tiki.controller.vimeo" class="Services_File_VimeoController"/>
+		<service id="tiki.controller.wiki" class="Services_Wiki_Controller"/>
+		<service id="tiki.controller.wiki_structure" class="Services_Wiki_StructureController"/>
+		<service id="tiki.controller.workspace" class="Services_Workspace_Controller"/>
+	</services>
+</container>

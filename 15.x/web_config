@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ [This line is used to check that this configuration file is up to date. Do not edit this line and leave it as the second line.] -->
+<!-- DEVELOPERS: This configuration must be kept synchronized with the configuration for other Web servers. See http://dev.tiki.org/Operating+System+independence#Keep_web.config_and_.htaccess_synchronized -->
+
+<configuration>
+  <system.webServer>
+    <defaultDocument>
+      <!-- Set the default document -->
+      <files>
+        <remove value="index.php" />
+        <add value="index.php" />
+      </files>
+    </defaultDocument>
+	<security>
+		<requestFiltering allowDoubleEscaping="True">
+			<!-- IIS 7 has a default 30MB limit. Use this value by default -->
+			<!-- requestLimits maxAllowedContentLength="30000000" / -->
+			<denyUrlSequences>
+				<add sequence="changelog.txt" />
+				<add sequence="_htaccess" />
+			</denyUrlSequences>
+			<fileExtensions>
+				<add fileExtension=".bak" allowed="false" />
+				<add fileExtension=".inc" allowed="false" />
+				<add fileExtension=".lib" allowed="false" />
+				<add fileExtension=".sh" allowed="false" />
+				<add fileExtension=".tpl" allowed="false" />
+				<add fileExtension=".sql" allowed="false" />
+			</fileExtensions>
+		</requestFiltering>
+	</security>
+    <staticContent>
+    	<remove fileExtension=".woff" /> <!-- In case IIS already has this mime type -->
+   		<mimeMap fileExtension=".woff" mimeType="application/x-font-woff" />
+    	<remove fileExtension=".woff2" /> <!-- In case IIS already has this mime type -->
+   		<mimeMap fileExtension=".woff2" mimeType="application/font-woff2" />   	
+   	</staticContent>
+	<rewrite>
+		<rules>
+		<!--# $Id$ [This line is used to check that this configuration file is up to date. Do not edit this line and leave it as the first line.]-->
+		<!--# These are suggested configuration directives for use with Tiki.-->
+		<!--# They enhance security and permit clean URLs.-->
+		<!--# In your Tiki instance, visit tiki-admin.php?page=sefurl to make Tiki use clean URLs in generated links.-->
+		<!--#-->
+		<!--# To use, ideally, create a symbolic link from .htaccess to _htaccess. This will keep the configuration up-to-date.-->
+		<!--# If you can't, do one of the following:-->
+		<!--# - Copy _htaccess to .htaccess. Note : Do not move (rename) _htaccess, it is required for other uses (like SEFURL).-->
+		<!--# - Add the content of this file to your httpd.conf.-->
+		<!--# This should be repeated when the reference _htaccess file changes (when upgrading Tiki). -->
+		<!--#-->
+		<!--# Please find more info here-->
+		<!--# http://doc.tiki.org/Rewrite+Rules-->
+		<!--# DEVELOPERS: This configuration must be kept synchronized with the configuration for other Web servers. See http://dev.tiki.org/Operating+System+independence#Keep_web.config_and_.htaccess_synchronized-->
+		<!--#Redirect bogus directories, which otherwise cause a broken page to upload very slowly-->
+		<!--#e.g., try yourdomain.com/bogus/ or yourdomain.com/tiki/bogus/ and see what happens-->
+		<!--#The below may not work in all configurations depending on redirects already in place-->
+		<!--#If certain directories containing other programs are legitimate (eg when tiki is installed in a subdirectory),-->
+		<!--#then you will first need a condition like the following-->
+		<!--#RewriteCond %{REQUEST_URI} !(^/otherokaydirectory/)-->
+		<!--#Then use something like this if your tiki program is in a subdirectory-->
+		<!--#RewriteRule ^(.+[^/])/$  /tiki/HomePage [R=301,L]-->
+		<!--#Use this if tiki is installed in the root (above condition probably not necessary in this case)-->
+		<!--#RewriteRule ^(.+[^/])/$  /HomePage [R=301,L]-->
+		<!--# This prevents reading of files with certain extensions.-->
+		<!--# This prevents reading of tags file for developers who run ctags on their server-->
+		<!--#<Files tags>-->
+		<!--#	order deny,allow-->
+		<!--#	deny from all-->
+		<!--#</Files>-->
+		<!--# if using wiki as homepage feature you may avoid the home page name being appended to the url by replacing the previous line with the following line-->
+		<!--#DirectoryIndex tiki-index.php index.php-->
+		<!--# Persistent connections: Allow multiple requests to be sent over -->
+		<!--# the same TCP connection. Enable if you serve a lot of static content -->
+		<!--# but, be aware of the possible disadvantages!-->
+		<!--# http://httpd.apache.org/docs/current/en/mod/core.html#keepalive-->
+		<!--# <IfModule mod_headers.c>-->
+		<!--#    Header set Connection Keep-Alive-->
+		<!--# </IfModule>-->
+		<!--# Using ETags will improve the YSlow scores-->
+		<!--# Expires headers: If the site is in active development, you may want to comment out this section.-->
+		<!--# if you want to use the Web Server Auth-->
+		<!--#AuthType Basic-->
+		<!--#AuthName "Restricted Access"-->
+		<!--#AuthUserFile /etc/httpd/passwords-->
+		<!--#Require valid-user -->
+		<!--# Handling in Tiki errors caught by Apache-->
+		<!--# Tiki can catch some errors and deal with them by redirecting to a similar page, sending you to the search, etc. However, some errors do not reach Tiki and are only caught by Apache (ex.: filenameThatDoesntExist.php). -->
+		<!--# To make Tiki handle errors caught by Apache, uncomment some of the following lines and adapt the page names. You must create the pages before trying to use them. -->
+		<!--#ErrorDocument 404 /tiki-index.php?page=File+not+found-->
+		<!--#ErrorDocument 500 /tiki-index.php?page=Server+error-->
+		<!--# Permanent redirect: Add directive as the example below. This is useful if you were using another Web application or static HTML and you want to avoid broken links.-->
+		<!--# Redirect 301 /oldpage.html /tiki-index.php?page=newpage-->
+		<!--# Tiki requires PHP 5. If your host doesn't offer PHP 5 by default, it's possible that it can be activated by using (uncommenting) the lines below. Check with your host.-->
+		<!--# AddType application/x-httpd-php5 .php-->
+		<!--# AddHandler application/x-httpd-php5 .php-->
+		<!--# to activate the error display, uncomment the following line-->
+		<!--#php_flag display_errors on-->
+		<!--# to set the error_reporting level, uncomment the following line. Values are explained here: http://www.php.net/manual/en/errorfunc.constants.php-->
+		<!--# php_value error_reporting E_ALL-->
+		<!--# increase memory (default is 128M). Use this if you are getting blank pages and strange errors -->
+		<!--# php_value memory_limit 256M-->
+		<!--# increase execution time (default value in apache use to be 30, and in some cases of long wiki pages with many plugins it may take longer)-->
+		<!--#php_value max_execution_time 90-->
+		<!--# increase the maximum file size for uploads allowed by php for Tiki (default value in apache use to be 2M which is usually too low for pdf or documents with some images, screenshots, etc)-->
+		<!--#php_value upload_max_filesize 10M-->
+		<!--#php_value post_max_size 11M-->
+		<!--# This sets the maximum time in seconds a script is allowed to parse input data, like POST and GET. -->
+		<!--#php_value max_input_time 90-->
+		<!--# In some cases you may see open_basedir warnings about Smarty accessing php files that it shouldn't-->
+		<!--# The following line (uncommented) will reset the include path to use only Tiki's files which will solve this in most cases-->
+		<!--#php_value include_path "." -->
+		<!--# some features like assigning perms to a group with a name containing a quote will not work without this-->
+		<!--#php_flag magic_quotes_gpc off-->
+		<!--# Set a timezone (needed for dates and times to work properly in PHP)-->
+		<!--#php_value date.timezone "America/New_York"-->
+		<!--# Set a character set-->
+		<!--#php_value default_charset utf-8-->
+		<!--# You may need to uncomment and fix the RewriteBase value below to suit your installation. e.g. if your Tiki is not installed directly in the web root.-->
+		<!--# And if you get errors like "The requested URL /absolutepath/tiki-index.php was not found on this server",-->
+		<!--# RewriteBase   /tiki-->
+		<!--# Rewrite rules to maintain any hard-coded URLs following http://dev.tiki.org/ImgDirectoryRevamp-->
+		<rule name="Imported Rule 1">
+		  <match url="^img/icons2/(.*)$" ignoreCase="false" />
+		  <action type="Rewrite" url="img/icons/{R:1}" />
+		</rule>
+		<rule name="Imported Rule 2">
+		  <match url="^pics/large/(.*)$" ignoreCase="false" />
+		  <action type="Rewrite" url="img/icons/large/{R:1}" />
+		</rule>
+		<rule name="Imported Rule 3">
+		  <match url="^img/mytiki/(.*)$" ignoreCase="false" />
+		  <action type="Rewrite" url="img/icons/large/{R:1}" />
+		</rule>
+		<rule name="Imported Rule 4">
+		  <match url="^pics/(.*)$" ignoreCase="false" />
+		  <action type="Rewrite" url="img/{R:1}" />
+		</rule>
+		<rule name="Imported Rule 5">
+		  <match url="^images/(.*)$" ignoreCase="false" />
+		  <action type="Rewrite" url="img/icons/{R:1}" />
+		</rule>
+		<!--The rule cannot be converted into an equivalent IIS format because of unsupported flags: E-->
+		<!--#If your website is a checkout-->
+		<rule name="Imported Rule 7" stopProcessing="true">
+		  <match url=".*/\.svn/.*" ignoreCase="false" />
+		  <action type="CustomResponse" statusCode="403" statusReason="Forbidden" statusDescription="Forbidden" />
+		</rule>
+		<rule name="Imported Rule 8" stopProcessing="true">
+		  <match url="(.*)" ignoreCase="false" />
+		  <conditions logicalGrouping="MatchAny">
+			<!--The condition pattern is not supported: -s.-->
+			<!--The condition pattern is not supported: -l.-->
+			<add input="{REQUEST_FILENAME}" matchType="IsFile" ignoreCase="false" />
+			<add input="{REQUEST_FILENAME}" matchType="IsDirectory" ignoreCase="false" />
+		  </conditions>
+		  <action type="None" />
+		</rule>
+		<!--# Rewrite rule to make this Tiki a profiles repository (uncomment to enable)-->
+		<!--# Set the parentId (here set as 1) to the Id of the category containing your profile pages-->
+		<!--# See http://doc.tiki.org/Profiles for more-->
+		<!--# Note: you need to allow tiki_p_view_category and tiki_p_export_wiki for anonymous to be a repository-->
+		<!--#       and enable feature_wiki_export (as well as feature_wiki and feature_categories)-->
+		<!--#RewriteRule ^profiles$             tiki-browse_categories.php?find=&deep=on&type=wiki+page&parentId=1&sort_mode=name_asc&plain&maxRecords=1000000 [L]-->
+		<!--# Rule to make a short link to a list of object to export as a plain text sitemap-->
+		<!--# Set the parentId (here set as 2) to the id of a category containing the objects you wish to be crawled by search engines-->
+		<!--#-->
+		<!--#RewriteRule ^sitemap.txt$          tiki-browse_categories.php?find=&deep=on&type=wiki+page&parentId=2&sort_mode=name_asc&links&maxRecords=1000000 [L]-->
+		<rule name="Imported Rule 9" stopProcessing="true">
+		  <match url=".*" ignoreCase="false" />
+		  <action type="Rewrite" url="route.php" />
+		</rule>
+		</rules>
+	</rewrite>		
+  </system.webServer>
+</configuration>

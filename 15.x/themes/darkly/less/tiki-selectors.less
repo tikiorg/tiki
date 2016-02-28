@@ -1,0 +1,39 @@
+// $Id$ Darkly tiki-selectors less file
+
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	color: @link-color;
+}
+
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {
+	margin: 2px 0 0;
+	background-color: @dropdown-bg;
+	border: 1px solid @dropdown-fallback-border; // IE8 fallback
+	border: 1px solid @dropdown-border;
+	border-radius: @border-radius-base;
+	.box-shadow(0 6px 12px rgba(0, 0, 0, .175));
+	background-clip: padding-box;
+
+	// Links within the dropdown menu
+	> li > a {
+		padding: 3px 20px;
+		font-weight: normal;
+		line-height: @line-height-base;
+		color: @dropdown-link-color;
+		background: @dropdown-bg;
+	}
+}
+
+// Hover/Focus state
+.cssmenu_horiz > li > a,
+.cssmenu_vert > li > a,
+.cssmenu_horiz ul > li > a,
+.cssmenu_vert ul > li > a {
+	&:hover,
+	&:focus {
+		text-decoration: none;
+		color: @dropdown-link-hover-color;
+		background-color: @dropdown-link-hover-bg;
+	}
+}

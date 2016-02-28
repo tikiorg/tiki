@@ -1,0 +1,108 @@
+/* $Id$
+	Jqui theme (jqui.css), Horizons theme option (horizons.css)
+	for Tiki Wiki CMS Groupware.
+	Visit http://themes.tiki.org for more information.
+	(This file was edited directly, not produced by the Less pre-compiler.)
+*/
+
+#col2 a, #col2 a:visited, #col3 a, #col3 a:visited {
+	color: #000;
+}
+ 
+#col2 a:active, #col2 a:hover, #col3 a:active, #col3 a:hover {
+	color: #888;
+}
+
+a, a:visited {
+	color: #850934;
+}
+ 
+a:active, a:hover {
+	color: #c1094c;
+}
+
+/*#top a, #top a:visited {
+	color: #2A5385;
+}*/
+ 
+#top a:active, #top a:hover {
+	color: #050576;
+}
+
+h1,h2,h3,h4,h5,h6, #top .pagetitle a {
+	color: #050576;
+}
+
+#top .pagetitle a {
+	color: #4678B4;
+}
+
+.panel-heading,
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form  {
+	border: none;
+	background: #477d8a;
+	color: #fff;
+	font-size: 1.1em;
+}
+
+.navbar-default .navbar-brand,
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus,
+.navbar-default .navbar-nav > li > a {
+	color: #fff;
+}
+
+.btn {
+	font-weight: bold;
+}
+
+.btn-default,
+.btn-default:visited,
+button,
+input[type="reset"],
+input[type="submit"],
+.button input {
+	border: 1px solid #477d8a;
+	color: #2E4A52;
+	background-color: #C8E3EA;
+	background-image: none;
+}
+
+.btn-default:hover,
+button:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.button input:hover {
+    border: 1px solid #477d8a;
+    font-weight: bold;
+    color: #2E4A52;
+/*	background-color: #C8E3EA; */
+	background-image: none;
+}
+
+.panel-default > .panel-heading,
+h3.box-title,
+.cbox-title {
+	padding: .4em .3em .4em 1em;
+	border: 1px solid #2E4A52;
+	background-color: #477d8a;
+	background-image: none;
+	color: #fff;
+	font-weight: bold;
+	margin: 0;
+	font-size: 1.1em;
+}
+
+.panel-title {
+	color: #fff;
+}
+
+#top_modules .box-quickadmin {
+	background-color: #fff;
+}
+
+.caltable td.calhighlight,
+td.calheadhighlight {
+	background: #c8e3ea;
+}

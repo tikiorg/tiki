@@ -1,0 +1,13 @@
+/* Jqui theme (jqui.css) Flat theme option (flat.css)
+	Thanks to garkpit for the random name.
+	Visit http://themes.tiki.org for more information.*/
+.navbar-default,
+.topbar,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li,
+.panel-heading,
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form,
+.panel-default > .panel-heading {
+  background: #cccccc;
+}

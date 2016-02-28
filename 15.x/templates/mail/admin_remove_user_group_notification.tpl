@@ -1,0 +1,1 @@
+{tr}This is to inform you that you have been removed from {/tr}{$mail_group} by the leader.{tr} If you did not request this removal, or have any questions or concerns, please contact{/tr} {$mail_remuser}. <a href="{$mail_machine}/{$mail_userid}">{$mail_machine}/{$mail_userid}</a>.

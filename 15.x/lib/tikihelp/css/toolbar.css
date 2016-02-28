@@ -1,0 +1,39 @@
+body {
+	font-family: Verdana, Geneva, Arial, sans-serif;
+	background-color: #10387B;
+	padding: 0; 
+	color: white;
+	margin: 0; 
+}
+
+.buttonlink {    
+    font-family: Verdana, Geneva, Arial, sans-serif;	
+    font-size: 10px;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+}
+.buttonlink:hover {    
+    font-family: Verdana, Geneva, Arial, sans-serif;	
+    font-size: 10px;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    background-color:#88A2B9;
+}
+
+
+.button {
+    font-family: Verdana, Geneva, Arial, sans-serif;	
+    font-size: 10px;
+    font-weight: bold;
+    padding-top:2px;
+    padding-bottom:2px;
+    padding-left:2px;
+    padding-right:2px;
+    background-color:#10387B;
+    height: 30px;
+    color: white;
+    vertical-align: middle;
+    text-align: center;
+}

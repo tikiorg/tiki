@@ -1,0 +1,107 @@
+// $Id$
+// This file is for additional LESS rules beyond what are in variables.less.
+// Image path example:
+// @imagePath: ~"tikinewt/images/";
+// body {
+//	background-image: url('@{imagePath}bg.jpg');
+// }
+//
+// If Glyphicons should be rendered in a color other than the Bootstrap default or the theme default, uncomment and specify the color.
+// .glyphicon {color: @gray-lighter;}
+
+@navbar-default-bg: #c7d0d9;
+
+body > .container {
+	border: solid #aaa;
+	border-width: 0 1px;
+	background: #fff;
+}
+
+body > .container, // basic layout (bootstrap)
+.header_container > .container,
+.header_container.container {
+	border: solid #aaa;
+	border-width: 1px 1px 0 1px;
+	margin-top: 20px;
+}
+
+body > .container {
+	.topbar {
+		margin-bottom: 20px;}
+}
+
+.middle_outer > .container {
+	border: solid #aaa;
+	border-width: 0 1px;
+}
+
+.footer_liner > .container {
+	border: solid #aaa;
+	border-width: 0 1px 1px 1px;
+}
+
+#top_modules, #topbar_modules, #pagebottom_modules {
+	margin-left: -10px;
+	margin-right: -10px;
+}
+
+header.container {
+	//  border: 1px solid #aaa;
+	//  border-bottom: none;
+	margin-top: 20px;
+	background: #e9ecef;
+}
+
+// Hover/Focus state
+.cssmenu_horiz > li > a,
+.cssmenu_vert > li > a,
+.cssmenu_horiz ul > li > a,
+.cssmenu_vert ul > li > a {
+	&:hover,
+	&:focus {
+		text-decoration: none;
+		color: @navbar-default-link-hover-color;
+		background-color: @navbar-default-link-hover-bg;
+	}
+}
+
+
+.middle {
+	& > .row {
+		margin-top: 5px;
+		border-right: 6px solid #fff;
+	}
+}
+
+#col1 {
+	background: #f3f6f9;
+	//  margin: 8px 3px 0;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border: 1px solid #8cacbb;
+	margin-bottom: 10px;
+}
+
+#topbar_modules {
+	.navbar {
+		margin-bottom: 0;
+	}
+	.navbar-default {
+		border: none;
+	}
+	.box-search .form-group {
+		margin-bottom: 0;
+	}
+//	background: @navbar-default-bg;
+}
+
+#topbar_modules .navbar {
+	margin-bottom: 0;
+}
+
+footer .container {
+	background: #c7d0d9;
+	border: solid #8cacbb;
+	border-width: 0 1px 1px 1px;
+}
+

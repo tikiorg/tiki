@@ -1,0 +1,1 @@
+ALTER TABLE `tiki_forums` ADD `forumLanguage` varchar(255) default NULL;

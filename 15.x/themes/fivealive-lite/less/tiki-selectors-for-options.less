@@ -1,0 +1,290 @@
+// $Id$
+// This file is for additional LESS rules beyond what are in variables.less.
+// Image path example:
+// body {
+//	background-image: url('@{imagePath}bg.jpg');
+// }
+//
+// If Glyphicons should be rendered in a color other than the Bootstrap default or the theme default, uncomment and specify the color.
+// .glyphicon {color: @gray-lighter;}
+
+@imagePath: ~"../images/";
+
+
+.middle_outer {
+	-webkit-box-shadow: inset 0 24px 0 0 @navbar-default-bg;
+	-moz-box-shadow: inset 0 24px 0 0 @navbar-default-bg;
+	box-shadow: inset 0 24px 0 0 @navbar-default-bg;
+}
+
+.topbar,
+.topbar_container,
+.layout_basic .page-header > .topbar {
+	background: @topbar_container_background;
+}
+
+.top_modules {
+	a {
+		color: #fff;
+	}
+}
+
+// Background color for navbar collapse dropdowns (Tiki's aren't .dropdown li).
+.navbar-collapse.collapse.in {background: @navbar-default-bg;}
+
+.navbar-nav .open .dropdown-menu,
+.navbar-nav .open .dropdown-menu li,
+.navbar-default .navbar-nav > li > a {
+	background: @navbar-default-navbar-nav-li-a-background; // #cdbe23;
+}
+
+.topbar .cssmenu_horiz ul {
+	background: @dropdown-bg;
+}
+
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {
+//	padding: 5px 0;
+//	margin: 2px 0 0; // override default ul
+	background-color: @dropdown-bg; // @navbar-default-navbar-nav-li-a-background;
+	border: 1px solid @dropdown-fallback-border; // IE8 fallback
+	border: 1px solid @dropdown-border;
+	.box-shadow(0 6px 12px rgba(0, 0, 0, .175));
+	background-clip: padding-box;
+	// Links within the dropdown menu
+	> li > a {
+		padding: 3px 20px;
+		font-weight: normal;
+		//    line-height: @line-height-base;
+		color: @dropdown-link-color;
+		background: @dropdown-bg;
+	}
+}
+
+// Hover/Focus state
+.cssmenu_horiz > li > a,
+.cssmenu_vert > li > a,
+.cssmenu_horiz ul > li > a,
+.cssmenu_vert ul > li > a {
+	&:hover,
+	&:focus {
+		text-decoration: none;
+		color: @dropdown-link-hover-color;
+		background-color: @topbar_container_background;
+	}
+}
+
+.topbar .cssmenu_horiz li a:hover {
+	background: @navbar-default-link-hover-bg;
+}
+
+.topbar .navbar-nav > li > a,
+.topbar .navbar > li > a,
+.topbar .cssmenu_horiz > li > a {
+	padding-top: 4px;
+	padding-bottom: 4px;
+	line-height: 1;
+	color: @navbar-default-link-color;
+	//  background: @topbar_container_background; // @dropdown-bg; // @navbar-default-navbar-nav-li-a-background;
+}
+
+// styling for both css and generated arrows
+.sf-arrows .sf-with-ul:after {
+	border: 5px solid transparent;
+	border-top-color: @link-color; // @dropdown-link-color; // /* edit this to suit design (no rgba in IE8) */
+}
+
+// styling for right-facing arrows
+.cssmenu_vert.sf-arrows li > .sf-with-ul:after {
+	border-color: transparent;
+	border-left-color: @link-color; /* edit this to suit design (no rgba in IE8) */
+}
+
+.sf-arrows ul .sf-with-ul:after,
+.cssmenu_vert.sf-arrows ul > li > .sf-with-ul:after {
+	border-color: transparent;
+	border-left-color: @dropdown-link-color; /* edit this to suit design (no rgba in IE8) */
+}
+
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+	border-color: transparent;
+	border-left-color: @dropdown-link-hover-color;
+}
+
+.cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
+.cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
+.cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
+	border-color: transparent;
+	border-left-color: @dropdown-link-hover-color; // white;
+}
+
+
+.topbar .navbar {
+	margin-bottom: 0;
+}
+
+.header_outer,
+.layout_fixed_top_modules .navbar-fixed-top,
+.layout_social_modules .navbar-fixed-top,
+.layout_basic .page-header > .top_modules {
+	// whole width div containing the header strip
+	background: @header_outer-background; // url('@{imagePath}siteheadertile.png') 0 0 no-repeat;
+	border-bottom: 5px solid #000;
+}
+
+.header_container > .header {
+	// inner <header> element that gets .fixedwidth class applied
+	background: none; // @header_container_header-background; // url('@{imagePath}siteheader.png') -248px 0 no-repeat;
+}
+
+header.header .module.secondary_site_menu {
+	background: none;
+}
+
+.page-header {
+	margin-top: 0;
+	margin-bottom: 0;
+	border-bottom: none;
+}
+
+//#top_modules .sitelogo img {max-height: 34px; width: auto; margin-bottom: 1em;}
+
+.form-control,
+select,
+input[type="text"],
+input[type="password"],
+input[type="file"],
+input[type="email"],
+input[type="file"],
+input[type="search"],
+input[type="number"],
+input#login-pass,
+textarea,
+.adminoptionbox option {
+	background-color: @form-control-background; //#f8f9d4;
+	border-color: @form-control-border-colors; // #F5FB86 #FBFBEE #FBFBEE #F5FB86;
+}
+
+.navbar-collapse {
+	border: none;
+}
+
+#col2 .panel,
+#col3 .panel,
+#bottom_modules .panel {
+	border: @side-column-border; // none;
+}
+
+#col2 .panel-default > .panel-heading,
+#col3 .panel-default > .panel-heading,
+#bottom_modules .panel-heading {
+	background: @side-column-panel-heading-background; // #e1d518 url('@{imagePath}siteheader.png') no-repeat -1000px -200px;
+	border-width: @side-column-panel-heading-border-width;
+	border-style: solid;
+	border-color: @side-column-panel-heading-border-color;
+}
+
+#col2 .panel-title,
+#col3 .panel-title {
+	color: @side-column-panel-title-color;
+}
+
+#footer {
+	background: black;
+	color: @footer-color; // #696969;
+	padding: 1px 0 2px 0;
+	width: 100%;
+}
+
+.footer {
+	border-top: 1px solid @footer-border-color; //#ebdc14;
+	border-bottom: 1px solid @footer-border-color; // #ebdc14;
+}
+
+.footer_liner {
+	.panel-title {
+		color: #fff;
+		border-bottom: 1px dotted @footer-border-color;
+	}
+}
+
+.postbody-title {
+	background: @postbody-title-background; //url('@{imagePath}siteheader.png') no-repeat -480px -200px;
+	color: @postbody-title-color;
+}
+
+.postbody-title .title > .panel-title a.link {
+	color: @postbody-title-color;
+}
+
+.siteloginbar_popup .dropdown-menu > li > a {
+	color: #fff;
+}
+
+// This comes last to enable site title color of theme options under FiveAlive-lite to have priority over the default set by FiveAlive.
+header.header {
+	.sitetitle,
+	.sitesubtitle {
+		color: @brand-primary;
+		text-shadow: none;
+	}
+	//  a,
+	//  a:visited {color: @brand-primary;
+	//  }
+}
+
+.searchresults blockquote em,
+.highlight,
+.btn-default.highlight a,
+.btn-default a.highlight {
+	background: @state-danger-bg;
+	color: @state-danger-text;
+	border-color: @state-danger-border;
+}
+
+.btn-default.highlight:hover {
+	background: darken(@state-danger-bg, 15%);
+}
+
+.chosen-container-multi .chosen-choices {
+	background-color: lighten(@input-bg, 10%);
+	color: @input-color;
+	border: 1px solid @input-border;
+}
+
+.chosen-container-single .chosen-single,
+.chosen-container-active.chosen-with-drop .chosen-single,
+.chosen-container .chosen-drop,
+.chosen-container-multi .chosen-choices .search-choice {
+	background-color: @input-bg;
+	color: @input-color;
+	border: 1px solid @input-border;
+}
+
+.chosen-container-single .chosen-search input[type="text"] {
+	background-color: @input-bg;
+	border: 1px solid @input-border;
+}
+
+.chosen-container .chosen-results li.highlighted {
+	background-color: @dropdown-link-hover-bg;
+	color: @dropdown-link-hover-color;
+}
+
+// /* Auto TOC */
+.autotoc > .nav {
+	background: @panel-bg;
+//	border-radius: @panel-border-radius;
+}
+
+.autotoc * {
+	color: @link-color;
+}
+
+.autotoc .nav > li > a:hover,
+.autotoc .nav .nav > li > a:hover {
+	color: @dropdown-link-hover-color;
+	background: @dropdown-link-hover-bg;
+}

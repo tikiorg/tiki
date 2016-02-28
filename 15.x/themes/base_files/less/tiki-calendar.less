@@ -1,0 +1,110 @@
+// $Id$
+// Calendar
+.viewmode {
+	line-height: 1em;
+	padding: 1px;
+	text-align: center;
+	width: 100%;
+	div {
+		display: inline;
+	}
+}
+
+.box-data .calnavigation {
+	font-size: 1.1em;
+	font-weight: 700;
+	margin: -20px 0 0;
+	padding: 4px;
+	text-align: center;
+}
+
+.calhighlight {
+	color: @state-info-text;
+	background: @state-info-bg;
+}
+
+a.fc-event:hover {
+	color: @tooltip-color;
+}
+
+@media (min-width: 768px) {
+	#calendar_dialog .modal-dialog {
+		min-width: 750px;
+		width: 80%;
+	}
+}
+
+.calendarweek {
+	border-bottom: 1px solid @calendarweek-bottom-border-color;
+}
+
+#calprio {
+	color: @text-color;
+}
+.calprio1 {
+	background: @calprio1;
+}
+
+.calprio2 {
+	background: @calprio2;
+}
+
+.calprio3 {
+	background: @calprio3;
+}
+
+.calprio4 {
+	background: @calprio4;
+}
+
+.calprio5 {
+	background: @calprio5;
+}
+
+.calprio6 {
+	background: @calprio6;
+}
+
+.calprio7 {
+	background: @calprio7;
+}
+
+.calprio8 {
+	background: @calprio8;
+}
+
+.calprio9 {
+	background: @calprio9;
+}
+
+.calprio1 a,
+.calprio2 a,
+.calprio3 a,
+.calprio4 a,
+.calprio5 a,
+.calprio6 a,
+.calprio7 a,
+.calprio8 a,
+.calprio9 a {
+	color: @text-color;
+	font-weight: normal;
+}
+
+.status0,
+.status1,
+.status2 {
+	border: 1px solid @text-color;
+	color: @text-color;
+}
+
+.status0 {
+	background: @alert-info-bg;
+}
+
+.status1 {
+	background: @alert-success-bg;
+}
+
+.status2 {
+	background: @alert-danger-bg;
+}

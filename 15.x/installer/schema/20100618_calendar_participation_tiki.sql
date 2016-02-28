@@ -1,0 +1,2 @@
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_calendar_add_my_particip', 'Can add own user to the participants', 'registered', 'calendar', NULL, 'feature_calendar');
+INSERT INTO `users_permissions` (`permName`, `permDesc`, `level`, `type`, `admin`, `feature_check`) VALUES('tiki_p_calendar_add_guest_particip', 'Can add guest to the participants', 'registered', 'calendar', NULL, 'feature_calendar');

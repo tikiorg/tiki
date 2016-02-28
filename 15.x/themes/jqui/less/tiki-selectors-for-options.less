@@ -1,0 +1,201 @@
+// $Id$
+// This file is for additional LESS rules beyond what are in variables.less.
+// Image path example:
+
+// body {
+//	background-image: url('@{imagePath}bg.jpg');
+// }
+//
+// If Glyphicons should be rendered in a color other than the Bootstrap default or the theme default, uncomment and specify the color.
+// .glyphicon {color: @gray-lighter;}
+
+body {
+	color: @text-color;
+}
+
+// Links
+
+a,
+a.btn-link {
+	color: @link-color;
+
+	&:hover,
+	&:focus {
+		color: @link-hover-color;
+	}
+
+	//  &:focus {
+	//    .tab-focus();
+	//  }
+}
+
+
+#col2 .panel,
+#col3 .panel,
+#bottom_modules .panel {
+	a,
+	a:visited {
+		color: @side-column-link-color;
+	}
+}
+
+#col2 .panel-heading,
+#col3 .panel-heading,
+#bottom_modules .panel-heading {
+//	background: @side-column-panel-heading-background; // #e1d518 url('@{imagePath}siteheader.png') no-repeat -1000px -200px;
+//	border-bottom: none;
+}
+
+.form-control,
+select,
+input[type="text"],
+input[type="password"],
+input[type="file"],
+input[type="email"],
+input[type="file"],
+input[type="search"],
+input[type="number"],
+input#login-pass,
+textarea,
+.adminoptionbox option {
+//	background-color: @form-control-background; //#f8f9d4;
+//	border-color: @form-control-border-colors; // #F5FB86 #FBFBEE #FBFBEE #F5FB86;
+}
+
+
+#footer {
+//	background: @footer-background;
+//	color: @footer-color; // #696969;
+}
+
+// @navbar-default-link-background: #bfbd23;
+.navbar-nav .open .dropdown-menu,
+.navbar-nav .open .dropdown-menu li,
+.navbar-default .navbar-nav > li > a {
+//	background: @navbar-default-navbar-nav-li-a-background; // #cdbe23;
+}
+
+.navbar-default .navbar-nav li a:hover {
+//	background: @navbar-default-navbar-nav-li-a-hover-background;
+}
+
+.postbody-title {
+//	background: @postbody-title-background; //url('@{imagePath}siteheader.png') no-repeat -480px -200px;
+}
+
+.btn,
+.btn-default,
+input[type="reset"],
+input[type="submit"],
+.button input {
+//	background: @button-background-gradient;
+	text-transform: @button-text-transform;
+}
+
+.btn.btn-link,
+input[type="submit"].btn-link {
+	background: none;
+}
+
+.btn:hover,
+.btn-default:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.button input:hover {
+	background: @button-hover-background-gradient;
+}
+
+.topbar,
+	//.topbar .cssmenu_horiz ul,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li {
+//	background: @topbar_bg; //  @navbar-default-bg;
+	color: @topbar_color; //  @navbar-default-color;
+	> a {
+		color: @topbar_link_color; // @navbar-default-link-color;
+		//    background: @navbar-default-link-bg;
+//		padding-top: @topbar_link_padding_top; //  @navbar-padding-vertical;
+//		padding-bottom: @topbar_link_padding_bottom; // @navbar-padding-vertical;
+	}
+	> a:hover,
+	> a:focus {
+		color: @topbar_link_hover_color; //  @navbar-default-link-hover-color;
+	}
+}
+
+
+/*.navbar-nav > li > a {
+  padding-top: none;
+  padding-bottom: none;}
+
+.navbar-nav > li > a {
+  padding-bottom: 0;
+  padding-top: 0;
+}*/
+
+
+//.topbar .nav > li > a:hover,
+//.topbar .nav > li > a:focus {
+//	background: @cssmenu_horiz_li_hover_bg;
+//}
+
+//.cssmenu_horiz ul li a,
+//.cssmenu_vert ul li a {
+//	background: @cssmenu_ul_li_a_bg; //   @dropdown-bg;
+//	color: @cssmenu_ul_li_a_color; //  @dropdown-link-color;
+	//  padding-top: ; (tiki-cssmenus.less edited to conform to BS dropdown-link top and bottom padding - 3px.)
+	//  padding-bottom: ;
+//}
+
+//.cssmenu_horiz > ul > li:hover > a,
+//.cssmenu_vert > ul > li:hover > a {
+//	color: @cssmenu_ul_li_hover_a_color; //  @dropdown-link-hover-color;
+//	background: @cssmenu_ul_li_hover_a_bg; //  @dropdown-link-hover-bg;
+//}
+
+// styling for both css and generated arrows
+.sf-arrows .sf-with-ul:after {
+	border: 5px solid transparent;
+	border-top-color: @link-color; // @dropdown-link-color; // /* edit this to suit design (no rgba in IE8) */
+}
+
+// styling for right-facing arrows
+.cssmenu_vert.sf-arrows li > .sf-with-ul:after {
+	border-color: transparent;
+	border-left-color: @link-color; /* edit this to suit design (no rgba in IE8) */
+}
+
+.sf-arrows ul .sf-with-ul:after,
+.cssmenu_vert.sf-arrows ul > li > .sf-with-ul:after {
+	border-color: transparent;
+	border-left-color: @dropdown-link-color; /* edit this to suit design (no rgba in IE8) */
+}
+
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+	border-color: transparent;
+	border-left-color: @dropdown-link-hover-color;
+}
+
+.cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
+.cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
+.cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
+	border-color: transparent;
+	border-left-color: @dropdown-link-hover-color; // white;
+}
+
+#col2,
+#col3 {
+	// styling for right-facing arrows
+	.cssmenu_vert.sf-arrows li > .sf-with-ul:after {
+		border-color: transparent;
+		border-left-color: @side-column-link-color; /* edit this to suit design (no rgba in IE8) */
+	}
+	.cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
+	.cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
+	.cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
+		border-color: transparent;
+		border-left-color: @side-column-link-hover-color; // white;
+	}
+}

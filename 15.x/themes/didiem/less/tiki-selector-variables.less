@@ -1,0 +1,48 @@
+// $Id$ tiki-custom-variables.less file, to provide values for "legacy" Tiki CSS selectors (not covered by Bootstrap).
+// These Didiem values are used by styles/didiem/less/tiki-selectors.less
+
+@imagePath: ~"../images/";
+// Main columns
+@middle_outer_background: url('@{imagePath}topbar.jpg') repeat-x;
+@side-column-border-size: none;
+@side-column-panel-heading-background: #f2f2f2;
+// Site header
+@header_outer-background: transparent;
+@header_container_header-background: transparent;
+@sitetitle-background: none;
+@sitesubtitle-background: none;
+@secondary_site_menu_navbar_background: none;
+// Buttons
+@button-background-gradient: linear-gradient(to bottom, #a1bb87 0%, #8fa872 50%, #a1bb87 100%);
+@button-hover-background-gradient: linear-gradient(to bottom, #8fa872 50%, #8fa872 50%, #a1bb87 100%);
+@button-text-transform: uppercase;
+// Forms
+@form-control-background: #fff;
+@form-control-border-colors: #e0e0e0;
+// Site footer
+@footer-background: #ebebeb;
+@footer-color: #696969;
+@footer-border-color: transparent;
+//#19a5be;
+@footer-link-color: #fff;
+// Topbar and navs
+@navbar-default-navbar-nav-li-a-background: #e7e7e7;
+// linear-gradient(to bottom, #a1bb87 0%, #8fa872 50%, #a1bb87 100%);
+@navbar-default-navbar-nav-li-a-hover-background: linear-gradient(to bottom, #93C44F 0%, #6D9F26 100%);
+// Comments, posts
+@postbody-title-background: #f0f0f0;
+//url('@{imagePath}siteheader.png') no-repeat -480px -200px;
+@postbody-background: #f7f7f7;
+@brand-primary-of-option: @brand-primary;
+// Headings
+@h1-background: url('@{imagePath}h_bullet.jpg') no-repeat 0 50%;
+@h1-padding-left: 19px;
+@h2-background: url('@{imagePath}h_bullet.jpg') no-repeat 0 50%;
+@h2-padding-left: 19px;
+
+.navbar-fixed-top, .navbar-fixed-bottom {
+	left: 0;
+	position: fixed !important;
+	right: 0;
+	z-index: 1030;
+}

@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony.com/schema/dic/services">
+	<!--
+
+	Important: This file is part of Tiki.
+	           If you want to load additional services, please create
+			   a 'custom.xml' file to avoid conflicts.
+
+	-->
+	<services>
+		<!-- Proxy that will be replaced at runtime -->
+		<service id="tiki.lib.db" class="stdclass"/>
+
+		<service id="tiki.lib.access" class="TikiAccessLib">
+			<file>%kernel.root_dir%/lib/tikiaccesslib.php</file>
+		</service>
+		<service id="tiki.lib.activity" class="ActivityLib">
+			<file>%kernel.root_dir%/lib/activity/activitylib.php</file>
+		</service>
+		<service id="tiki.lib.admin" class="AdminLib">
+			<file>%kernel.root_dir%/lib/admin/adminlib.php</file>
+		</service>
+		<service id="tiki.lib.autosave" class="AutoSaveLib">
+			<file>%kernel.root_dir%/lib/ajax/autosave.php</file>
+		</service>
+		<service id="tiki.lib.areas" class="AreasLib">
+			<file>%kernel.root_dir%/lib/perspective/binderlib.php</file>
+		</service>
+		<service id="tiki.lib.art" class="ArtLib">
+			<file>%kernel.root_dir%/lib/articles/artlib.php</file>
+		</service>
+		<service id="tiki.lib.attribute" class="AttributeLib">
+			<file>%kernel.root_dir%/lib/attributes/attributelib.php</file>
+		</service>
+		<service id="tiki.lib.avatar" class="AvatarLib">
+			<file>%kernel.root_dir%/lib/avatarlib.php</file>
+		</service>
+		<service id="tiki.lib.banner" class="BannerLib">
+			<file>%kernel.root_dir%/lib/banners/bannerlib.php</file>
+		</service>
+		<service id="tiki.lib.bigbluebutton" class="BigBlueButtonLib">
+			<file>%kernel.root_dir%/lib/bigbluebuttonlib.php</file>
+		</service>
+		<service id="tiki.lib.blog" class="BlogLib">
+			<file>%kernel.root_dir%/lib/blogs/bloglib.php</file>
+		</service>
+		<service id="tiki.lib.cache" class="CacheLib">
+			<file>%kernel.root_dir%/lib/cache/cachelib.php</file>
+		</service>
+		<service id="tiki.lib.calendar" class="CalendarLib">
+			<file>%kernel.root_dir%/lib/calendar/calendarlib.php</file>
+		</service>
+		<service id="tiki.lib.captcha" class="Captcha">
+			<file>%kernel.root_dir%/lib/captcha/captchalib.php</file>
+		</service>
+		<service id="tiki.lib.cart" class="CartLib">
+			<file>%kernel.root_dir%/lib/payment/cartlib.php</file>
+		</service>
+		<service id="tiki.lib.categ" class="CategLib">
+			<file>%kernel.root_dir%/lib/categories/categlib.php</file>
+		</service>
+		<service id="tiki.lib.comments" class="Comments">
+			<file>%kernel.root_dir%/lib/comments/commentslib.php</file>
+		</service>
+		<service id="tiki.lib.connect" class="Tiki_Connect_Client" />
+		<service id="tiki.lib.connect_server" class="Tiki_Connect_Server" />
+		<service id="tiki.lib.contact" class="ContactLib">
+			<file>%kernel.root_dir%/lib/webmail/contactlib.php</file>
+		</service>
+		<service id="tiki.lib.contribution" class="ContributionLib">
+			<file>%kernel.root_dir%/lib/contribution/contributionlib.php</file>
+		</service>
+		<service id="tiki.lib.credits" class="CreditsLib">
+			<file>%kernel.root_dir%/lib/credits/creditslib.php</file>
+		</service>
+		<service id="tiki.lib.crypt" class="CryptLib">
+			<file>%kernel.root_dir%/lib/crypt/cryptlib.php</file>
+		</service>
+		<service id="tiki.lib.css" class="cssLib">
+			<file>%kernel.root_dir%/lib/csslib.php</file>
+		</service>
+		<service id="tiki.lib.dcs" class="DCSLib">
+			<file>%kernel.root_dir%/lib/dcs/dcslib.php</file>
+		</service>
+		<service id="tiki.lib.edit" class="EditLib">
+			<file>%kernel.root_dir%/lib/wiki/editlib.php</file>
+		</service>
+		<service id="tiki.lib.errorreport" class="ErrorReportLib">
+			<file>%kernel.root_dir%/lib/errorreportlib.php</file>
+		</service>
+		<service id="tiki.lib.events" class="Tiki_Event_Manager" />
+		<service id="tiki.lib.faq" class="FaqLib">
+			<file>%kernel.root_dir%/lib/faqs/faqlib.php</file>
+		</service>
+		<service id="tiki.lib.federatedsearch" class="FederatedSearchLib">
+			<file>%kernel.root_dir%/lib/search/federatedsearchlib.php</file>
+			<argument type="service" id="tiki.lib.unifiedsearch"/>
+		</service>
+		<service id="tiki.lib.flaggedrevision" class="FlaggedRevisionLib">
+			<file>%kernel.root_dir%/lib/wiki/flaggedrevisionlib.php</file>
+		</service>
+		<service id="tiki.lib.filegal" class="FileGalLib">
+			<file>%kernel.root_dir%/lib/filegals/filegallib.php</file>
+		</service>
+		<service id="tiki.lib.filegalbatch" class="FileGalBatchLib">
+			<file>%kernel.root_dir%/lib/filegals/filegalbatchlib.php</file>
+		</service>
+		<service id="tiki.lib.freetag" class="FreetagLib">
+			<file>%kernel.root_dir%/lib/freetag/freetaglib.php</file>
+		</service>
+		<service id="tiki.lib.geo" class="GeoLib">
+			<file>%kernel.root_dir%/lib/geo/geolib.php</file>
+		</service>
+		<service id="tiki.lib.goal" class="GoalLib">
+			<file>%kernel.root_dir%/lib/goal/goallib.php</file>
+		</service>
+		<service id="tiki.lib.goalevent" class="GoalEventLib">
+			<file>%kernel.root_dir%/lib/goal/eventlib.php</file>
+		</service>
+		<service id="tiki.lib.goalreward" class="GoalRewardLib">
+			<file>%kernel.root_dir%/lib/goal/rewardlib.php</file>
+		</service>
+		<service id="tiki.lib.groupalert" class="GroupAlertLib">
+			<file>%kernel.root_dir%/lib/groupalert/groupalertlib.php</file>
+		</service>
+		<service id="tiki.lib.header" class="HeaderLib">
+			<file>%kernel.root_dir%/lib/headerlib.php</file>
+		</service>
+		<service id="tiki.lib.hist" class="HistLib">
+			<file>%kernel.root_dir%/lib/wiki/histlib.php</file>
+		</service>
+		<service id="tiki.lib.iconset" class="IconsetLib">
+			<file>%kernel.root_dir%/lib/theme/iconsetlib.php</file>
+		</service>
+		<service id="tiki.lib.imagegal" class="ImageGalsLib">
+			<file>%kernel.root_dir%/lib/imagegals/imagegallib.php</file>
+		</service>
+		<service id="tiki.lib.kalturaadmin" class="KalturaLib">
+			<file>%kernel.root_dir%/lib/videogals/kalturalib.php</file>
+			<argument type="string">2</argument> <!-- KalturaLib::SESSION_ADMIN -->
+		</service>
+		<service id="tiki.lib.kalturauser" class="KalturaLib">
+			<file>%kernel.root_dir%/lib/videogals/kalturalib.php</file>
+			<argument type="string">0</argument> <!-- KalturaLib::SESSION_USER -->
+		</service>
+		<service id="tiki.lib.language" class="Language">
+			<file>%kernel.root_dir%/lib/language/Language.php</file>
+		</service>
+		<service id="tiki.lib.languagetranslations" class="LanguageTranslations">
+			<file>%kernel.root_dir%/lib/language/LanguageTranslations.php</file>
+		</service>
+		<service id="tiki.lib.ldap" class="LdapLib">
+			<file>%kernel.root_dir%/lib/ldap/ldaplib.php</file>
+		</service>
+		<service id="tiki.lib.login" class="LoginLib">
+			<file>%kernel.root_dir%/lib/loginlib.php</file>
+		</service>
+		<service id="tiki.lib.logs" class="LogsLib">
+			<file>%kernel.root_dir%/lib/logs/logslib.php</file>
+		</service>
+		<service id="tiki.lib.logsqry" class="LogsQueryLib">
+			<file>%kernel.root_dir%/lib/logs/logsquerylib.php</file>
+		</service>
+		<service id="tiki.lib.mailin" class="MailinLib">
+			<file>%kernel.root_dir%/lib/mailin/mailinlib.php</file>
+		</service>
+		<service id="tiki.lib.memcache" class="Memcachelib">
+			<file>%kernel.root_dir%/lib/cache/memcachelib.php</file>
+		</service>
+		<service id="tiki.lib.message" class="Messu">
+			<file>%kernel.root_dir%/lib/messu/messulib.php</file>
+		</service>
+		<service id="tiki.lib.menu" class="MenuLib">
+			<file>%kernel.root_dir%/lib/menubuilder/menulib.php</file>
+		</service>
+		<service id="tiki.lib.mime" class="MimeLib">
+			<file>%kernel.root_dir%/lib/mime/mimelib.php</file>
+		</service>
+		<service id="tiki.lib.mod" class="ModLib">
+			<file>%kernel.root_dir%/lib/modules/modlib.php</file>
+		</service>
+		<service id="tiki.lib.monitor" class="MonitorLib">
+			<file>%kernel.root_dir%/lib/user/monitorlib.php</file>
+		</service>
+		<service id="tiki.lib.monitormail" class="MonitorMailLib">
+			<file>%kernel.root_dir%/lib/user/monitormaillib.php</file>
+		</service>
+		<service id="tiki.lib.multilingual" class="MultilingualLib">
+			<file>%kernel.root_dir%/lib/multilingual/multilinguallib.php</file>
+		</service>
+		<service id="tiki.lib.notification" class="NotificationLib">
+			<file>%kernel.root_dir%/lib/notifications/notificationlib.php</file>
+		</service>
+		<service id="tiki.lib.oauth" class="OAuthLib">
+			<file>%kernel.root_dir%/lib/oauthlib.php</file>
+		</service>
+		<service id="tiki.lib.object" class="ObjectLib">
+			<file>%kernel.root_dir%/lib/objectlib.php</file>
+		</service>
+		<service id="tiki.lib.objectselector" class="Tiki\Object\Selector">
+			<argument type="service" id="tiki.lib.object"/>
+		</service>
+		<service id="tiki.lib.pagecontent" class="PageContentLib">
+			<file>%kernel.root_dir%/lib/rss/pagecontentlib.php</file>
+		</service>
+		<service id="tiki.lib.parser" class="ParserLib">
+			<file>%kernel.root_dir%/lib/parser/parserlib.php</file>
+		</service>
+		<service id="tiki.lib.payment" class="PaymentLib">
+			<file>%kernel.root_dir%/lib/payment/paymentlib.php</file>
+		</service>
+		<service id="tiki.lib.perspective" class="PerspectiveLib">
+			<file>%kernel.root_dir%/lib/perspectivelib.php</file>
+		</service>
+		<service id="tiki.lib.poll" class="PollLib">
+			<file>%kernel.root_dir%/lib/polls/polllib.php</file>
+		</service>
+		<service id="tiki.lib.prefs" class="PreferencesLib">
+			<file>%kernel.root_dir%/lib/prefslib.php</file>
+		</service>
+		<service id="tiki.lib.quantify" class="QuantifyLib">
+			<file>%kernel.root_dir%/lib/wiki/quantifylib.php</file>
+		</service>
+		<service id="tiki.lib.queue" class="QueueLib">
+			<file>%kernel.root_dir%/lib/queuelib.php</file>
+		</service>
+		<service id="tiki.lib.quiz" class="QuizLib">
+			<file>%kernel.root_dir%/lib/quizzes/quizlib.php</file>
+		</service>
+		<service id="tiki.lib.rating" class="RatingLib">
+			<file>%kernel.root_dir%/lib/rating/ratinglib.php</file>
+		</service>
+		<service id="tiki.lib.ratingconfig" class="RatingConfigLib">
+			<file>%kernel.root_dir%/lib/rating/configlib.php</file>
+		</service>
+		<service id="tiki.lib.recommendationcontentbatch" class="Tiki\Recommendation\BatchProcessor">
+			<argument type="service" id="tiki.recommendation.activity.store" />
+			<argument type="service" id="tiki.recommendation.content.set" />
+		</service>
+		<service id="tiki.lib.references" class="ReferencesLib">
+			<file>%kernel.root_dir%/lib/references/referenceslib.php</file>
+		</service>
+		<service id="tiki.lib.registration" class="RegistrationLib">
+			<file>%kernel.root_dir%/lib/registration/registrationlib.php</file>
+		</service>
+		<service id="tiki.lib.relation" class="RelationLib">
+			<file>%kernel.root_dir%/lib/attributes/relationlib.php</file>
+		</service>
+		<service id="tiki.lib.rss" class="RSSLib">
+			<file>%kernel.root_dir%/lib/rss/rsslib.php</file>
+		</service>
+		<service id="tiki.lib.score" class="ScoreLib">
+			<file>%kernel.root_dir%/lib/score/scorelib.php</file>
+		</service>
+		<service id="tiki.lib.scorm" class="ScormLib">
+			<file>%kernel.root_dir%/lib/filegals/scormlib.php</file>
+		</service>
+		<service id="tiki.lib.searchstats" class="SearchStatsLib">
+			<file>%kernel.root_dir%/lib/search/searchstatslib.php</file>
+		</service>
+		<service id="tiki.lib.semantic" class="SemanticLib">
+			<file>%kernel.root_dir%/lib/wiki/semanticlib.php</file>
+		</service>
+		<service id="tiki.lib.service" class="ServiceLib">
+			<file>%kernel.root_dir%/lib/servicelib.php</file>
+		</service>
+		<service id="tiki.lib.slugmanager" class="Tiki\Wiki\SlugManager"/>
+		<service id="tiki.lib.smarty" class="Smarty_Tiki">
+			<file>%kernel.root_dir%/lib/init/smarty.php</file>
+		</service>
+		<service id="tiki.lib.social" class="SocialLib">
+			<file>%kernel.root_dir%/lib/user/sociallib.php</file>
+		</service>
+		<service id="tiki.lib.sheet" class="SheetLib">
+			<file>%kernel.root_dir%/lib/sheet/sheetlib.php</file>
+		</service>
+		<service id="tiki.lib.stats" class="StatsLib">
+			<file>%kernel.root_dir%/lib/stats/statslib.php</file>
+		</service>
+		<service id="tiki.lib.storedsearch" class="StoredSearchLib">
+			<file>%kernel.root_dir%/lib/search/storedsearchlib.php</file>
+		</service>
+		<service id="tiki.lib.struct" class="StructLib">
+			<file>%kernel.root_dir%/lib/structures/structlib.php</file>
+		</service>
+		<service id="tiki.lib.symbols" class="Tiki_Profile_SymbolLoader" />
+		<service id="tiki.lib.tabular" class="Tracker\Tabular\Manager">
+			<argument type="service" id="tiki.lib.db"/>
+		</service>
+		<service id="tiki.lib.template" class="TemplatesLib">
+			<file>%kernel.root_dir%/lib/templates/templateslib.php</file>
+		</service>
+		<service id="tiki.lib.theme" class="ThemeLib">
+			<file>%kernel.root_dir%/lib/theme/themelib.php</file>
+		</service>
+		<service id="tiki.lib.themecontrol" class="ThemeControlLib">
+			<file>%kernel.root_dir%/lib/theme/themecontrollib.php</file>
+		</service>
+		<service id="tiki.lib.tikicalendar" class="TikiCalendarLib">
+			<file>%kernel.root_dir%/lib/calendar/tikicalendarlib.php</file>
+		</service>
+		<service id="tiki.lib.tikidate" class="TikiDate"/>
+		<service id="tiki.lib.todo" class="TodoLib">
+			<file>%kernel.root_dir%/lib/todolib.php</file>
+		</service>
+		<service id="tiki.lib.trk" class="TrackerLib">
+			<file>%kernel.root_dir%/lib/trackers/trackerlib.php</file>
+		</service>
+		<service id="tiki.lib.unifiedsearch" class="UnifiedSearchLib">
+			<file>%kernel.root_dir%/lib/search/searchlib-unified.php</file>
+		</service>
+		<service id="tiki.lib.user" class="UsersLib">
+			<file>%kernel.root_dir%/lib/userslib.php</file>
+		</service>
+		<service id="tiki.lib.usermailin" class="UserMailinLib">
+			<file>%kernel.root_dir%/lib/mailin/usermailinlib.php</file>
+		</service>
+		<service id="tiki.lib.usermodules" class="UserModulesLib">
+			<file>%kernel.root_dir%/lib/usermodules/usermoduleslib.php</file>
+		</service>
+		<service id="tiki.lib.userprefs" class="UserPrefsLib">
+			<file>%kernel.root_dir%/lib/userprefs/userprefslib.php</file>
+		</service>
+		<service id="tiki.lib.validators" class="Validators">
+			<file>%kernel.root_dir%/lib/validatorslib.php</file>
+		</service>
+		<service id="tiki.lib.vimeo" class="VimeoLib">
+			<file>%kernel.root_dir%/lib/filegals/vimeolib.php</file>
+			<argument type="service" id="tiki.lib.oauth"/>
+		</service>
+		<service id="tiki.lib.wiki" class="WikiLib">
+			<file>%kernel.root_dir%/lib/wiki/wikilib.php</file>
+		</service>
+		<service id="tiki.lib.wizard" class="WizardLib">
+			<file>%kernel.root_dir%/lib/wizard/wizardlib.php</file>
+		</service>
+		<service id="tiki.lib.wlte" class="WikiLingoTikiEvents">
+			<file>%kernel.root_dir%/lib/wikiLingo_tiki/WikiLingoTikiEvents.php</file>
+		</service>
+		<service id="tiki.lib.wysiwyg" class="WYSIWYGLib">
+			<file>%kernel.root_dir%/lib/ckeditor_tiki/wysiwyglib.php</file>
+		</service>
+		<service id="tiki.lib.zotero" class="ZoteroLib">
+			<file>%kernel.root_dir%/lib/zoterolib.php</file>
+		</service>
+
+		<service id="tiki.wiki.slug.dash" class="Tiki\Wiki\SlugManager\DashGenerator">
+			<tag name="tiki.wiki.slug.generator"/>
+		</service>
+		<service id="tiki.wiki.slug.underscore" class="Tiki\Wiki\SlugManager\UnderscoreGenerator">
+			<tag name="tiki.wiki.slug.generator"/>
+		</service>
+		<service id="tiki.wiki.slug.urlencode" class="Tiki\Wiki\SlugManager\UrlencodeGenerator">
+			<tag name="tiki.wiki.slug.generator"/>
+		</service>
+
+		<service id="tiki.recommendation.content.set" class="Tiki\Recommendation\EngineSet" />
+		<service id="tiki.recommendation.activity.store" class="Tiki\Recommendation\Store\ActivityStore">
+			<argument type="service" id="tiki.lib.unifiedsearch" />
+			<argument type="service" id="tiki.lib.relation" />
+			<argument type="service" id="tiki.lib.events" />
+		</service>
+
+		<!--
+			 Below are sample configurations you can include in a custom.xml file with the same structure as this one.
+		-->
+
+		<!-- Example recommendation engines
+
+		<service class="My\Custom\Engine123">
+			<tag name="tiki.recommendation.engine" set="content" engine="engine123" weight="10" />
+		</service>
+
+		<service class="Tiki\Recommendation\Engine\UserFavorite">
+			<tag name="tiki.recommendation.engine" set="content" engine="user_favorite" weight="10" />
+			<argument type="service" id="tiki.lib.unifiedsearch"/>
+		</service>
+
+		-->
+
+		<!-- Example statically binded Tiki index
+		<service class="Search\Federated\TikiIndex">
+			<tag name="tiki.federatedsearch.index" index="tikixyz_main"/>
+			<argument type="string">http://example.com/</argument>
+			<argument type="collection">
+				<argument>Anonymous</argument>
+				<argument>Registered</argument>
+			</argument>
+		</service>
+		-->
+
+		<!-- Example statically binded ManifoldCF index
+		<service class="Search\Federated\ManifoldCfIndex">
+			<tag name="tiki.federatedsearch.index" index="manifold"/>
+			<argument type="string">generic</argument>
+			<argument type="string">http://example.com/</argument>
+		</service>
+		-->
+
+		<!-- Example Tracker Section Format registration
+			 Registered templates will register for both view and edit,
+			 unless:
+			 	mode="view" or mode="edit" is specified in the tag portion.
+
+		<service class="stdclass">
+			<tag name="tiki.tracker.sectionformat"
+				layout="custom"
+				template="my-templates/tracker_format_custom.tpl"
+				label="My Custom Template"
+				/>
+		</service>
+		-->
+	</services>
+</container>

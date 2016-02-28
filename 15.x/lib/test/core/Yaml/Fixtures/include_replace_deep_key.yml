@@ -1,0 +1,11 @@
+---
+preferences:
+  feature_something: y
+  level1:
+    something: "abc"
+    level2:
+      level3:
+        feature_abc:
+          - !include feature_abc.yml 1 eq 1
+          - !include feature_xyz.yml
+      something_else: "xyz"

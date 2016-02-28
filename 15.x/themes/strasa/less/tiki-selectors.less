@@ -1,0 +1,173 @@
+// $Id$
+// This file is for additional LESS rules beyond what are in variables.less.
+// Image path example:
+@imagePath: ~"../images/";
+// body {
+//	background-image: url('@{imagePath}bg.jpg');
+// }
+//
+// If Glyphicons should be rendered in a color other than the Bootstrap default or the theme default, uncomment and specify the color.
+// .glyphicon {color: @gray-lighter;}
+
+//@topmodules-row-sidemargins: 0;
+//@topbar-row-sidemargins: -15px;
+
+body {
+	background: url('@{imagePath}body-bg_fw.png') repeat-x #214D68
+}
+
+.container {
+	background: #fff;
+}
+
+.btn-default {
+	border-color: #41cbe7 #223845 #223845 #41cbe7
+}
+
+.top_modules {
+	color: #fff;
+	background: #214d68 url('@{imagePath}headerbg.jpg') repeat-x 0 100%;
+	a,
+	.btn-link {
+		color: #fff;
+	}
+}
+
+.topbar {
+	margin-bottom: 20px;
+}
+
+.navbar-default,
+.topbar,
+.layout_fixed_top_modules #top_modules,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li,
+.siteloginbar_popup .dropdown-menu {
+	background: #2498c7;
+	background: -moz-linear-gradient(top, #2498c7 0%, #047aa8 4%, #1b98c6 39%, #32b5e1 65%, #32bbe9 70%, #44d1fe 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #2498c7), color-stop(4%, #047aa8), color-stop(39%, #1b98c6), color-stop(65%, #32b5e1), color-stop(70%, #32bbe9), color-stop(100%, #44d1fe));
+	background: -webkit-linear-gradient(top, #2498c7 0%, #047aa8 4%, #1b98c6 39%, #32b5e1 65%, #32bbe9 70%, #44d1fe 100%);
+	background: -o-linear-gradient(top, #2498c7 0%, #047aa8 4%, #1b98c6 39%, #32b5e1 65%, #32bbe9 70%, #44d1fe 100%);
+	background: -ms-linear-gradient(top, #2498c7 0%, #047aa8 4%, #1b98c6 39%, #32b5e1 65%, #32bbe9 70%, #44d1fe 100%);
+	background: linear-gradient(to bottom, #2498c7 0%, #047aa8 4%, #1b98c6 39%, #32b5e1 65%, #32bbe9 70%, #44d1fe 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2498c7', endColorstr='#44d1fe', GradientType=0);
+}
+
+.navbar-inverse {
+	background: @btn-primary-bg;
+}
+
+input,
+.jumbotron {
+	border: 1px solid;
+	border-color: #223845 #4d7b9b #4d7b9b #223845;
+}
+
+.wikitext {
+	h1 {
+		color: #000;
+		line-height: .9em;
+	}
+	h2 {
+		color: #309FC0;
+		line-height: .9em;
+		border-bottom: solid 1px #3090C0;
+		text-transform: uppercase;
+	}
+	h3 {
+		color: #303030;
+		//  line-height: .8em;
+		font-style: italic;
+	}
+	h3.panel-title {
+		font-style: normal;
+	}
+	h4 {
+		border-bottom: dashed 1px #CCF0FF;
+		color: #3F3F3F;
+	}
+	h5 {
+		color: #6F6F6F;
+		font-style: italic;
+	}
+	h6 {
+		color: #909090;
+	}
+}
+
+.wikitext.nopagetitle {
+	h1 {
+		color: #309FC0;
+		border-bottom: solid 1px #3090C0;
+		text-transform: uppercase;
+	}
+	h2 {
+		color: #303030;
+		font-style: italic;
+		border-bottom: none;
+		text-transform: none;
+	}
+	h3 {
+		border-bottom: dashed 1px #CCF0FF;
+		color: #3F3F3F;
+		font-style: normal;
+	}
+	h4 {
+		color: #6F6F6F;
+		font-style: italic;
+		border-bottom: none;
+	}
+	h5 {
+		color: #909090;
+	}
+}
+
+h1.pagetitle > a,
+h1.pagetitle > a:visited,
+h1.pagetitle > a:hover {
+	color: #000;
+	text-decoration: none;
+}
+
+#col2 {
+	background: lighten(#42cefb, 15%); // #a7e8fc;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
+	margin-bottom: 20px;
+}
+
+.footer_liner {
+	color: #999;
+	background: #2e3035;
+}
+
+.panel-default.module,
+.panel-default.module > .panel-heading,
+.panel-default.module > .panel-body,
+.panel-default.module > .panel-footer {
+	border: none;
+	background: transparent;
+}
+
+th,
+td.heading {
+	color: #5ae0ff;
+	background: #1b3a50;
+}
+
+th a:link,
+th a:visited,
+td.heading a:link,
+td.heading a:visited {
+	color: #5ae0ff;
+	text-decoration: none;
+}
+
+//.adminanchors a.icon {
+//  color: @navbar-default-link-color;
+//  &:hover {
+//    color: @navbar-default-link-hover-color;
+//  }
+// }

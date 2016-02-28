@@ -1,0 +1,242 @@
+// $Id$
+//Less file for the jQuery tablesorter plugin
+//base formatting that apply to all Tiki themes and included in tiki.less
+
+@ts                 : tablesorter;
+
+@filterTransitionTime  : 0.1s;
+@filterRowHiddenHeight : 4px;
+/* becomes height using padding (so it's divided by 2) */
+
+/* url(icons/loading.gif); */
+@processingIcon        : url('data:image/gif;base64,R0lGODlhFAAUAKEAAO7u7lpaWgAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQBCgACACwAAAAAFAAUAAACQZRvoIDtu1wLQUAlqKTVxqwhXIiBnDg6Y4eyx4lKW5XK7wrLeK3vbq8J2W4T4e1nMhpWrZCTt3xKZ8kgsggdJmUFACH5BAEKAAIALAcAAAALAAcAAAIUVB6ii7jajgCAuUmtovxtXnmdUAAAIfkEAQoAAgAsDQACAAcACwAAAhRUIpmHy/3gUVQAQO9NetuugCFWAAAh+QQBCgACACwNAAcABwALAAACE5QVcZjKbVo6ck2AF95m5/6BSwEAIfkEAQoAAgAsBwANAAsABwAAAhOUH3kr6QaAcSrGWe1VQl+mMUIBACH5BAEKAAIALAIADQALAAcAAAIUlICmh7ncTAgqijkruDiv7n2YUAAAIfkEAQoAAgAsAAAHAAcACwAAAhQUIGmHyedehIoqFXLKfPOAaZdWAAAh+QQFCgACACwAAAIABwALAAACFJQFcJiXb15zLYRl7cla8OtlGGgUADs=');
+
+/* Filter widget transition */
+.filterWidgetTransition {
+	-webkit-transition: line-height @filterTransitionTime ease;
+	-moz-transition: line-height @filterTransitionTime ease;
+	-o-transition: line-height @filterTransitionTime ease;
+	transition: line-height @filterTransitionTime ease;
+}
+
+/*** Arrows ***/
+@arrowPosition         : center right;
+
+/* div around table */
+div.@{ts}-resizable-container {
+	clear: both;
+	width: 100%;
+}
+
+table.@{ts} {
+	width: 100%;
+	margin-bottom: 2px;
+	/* style header */
+	thead {
+		tr.@{ts}-headerRow {
+			th.@{ts}-header {
+				background-repeat: no-repeat;
+				background-position: @arrowPosition;
+				cursor: pointer;
+				i {
+					font-weight: 400;
+					position: absolute;
+					right: 2px;
+					top: 50%;
+					margin-top: -7px; /* half the icon height; older IE doesn't like this */
+					width: 14px;
+					height: 14px;
+					background-repeat: no-repeat;
+					line-height: 14px;
+					display: inline-block;
+				}
+			}
+			th div.@{ts}-header-inner span {
+				padding-right: 10px;
+			}
+			th.sorter-false {
+				cursor: default;
+			}
+		}
+		tr.@{ts}-filter-row {
+			td {
+				text-align: center;
+				line-height: normal;
+				.filterWidgetTransition;
+				input, select {
+					width: 98%;
+					height: auto;
+					margin: 0;
+					-webkit-box-sizing: border-box;
+					-moz-box-sizing: border-box;
+					box-sizing: border-box;
+					.filterWidgetTransition;
+				}
+				label {
+					float: left;
+					clear: both;
+					font-size: 70%;
+				}
+				input.dateFrom,
+				input.dateTo {
+					width: 60px;
+					padding: 0px;
+					font-size: 70%;
+					float: right;
+				}
+				.ui-slider {
+					width: 90%;
+					margin: 13px auto 2px auto; /* add enough top margin so the tooltips will fit */
+					font-size: 0.9em;
+				}
+				.ui-slider .ui-slider-handle {
+					width: 0.9em;
+					height: 0.9em;
+				}
+				.ui-datepicker {
+					font-size: 0.8em;
+				}
+				span.currange {
+					font-size: smaller;
+					font-weight: normal;
+				}
+				/* Add tooltips to slider handles */
+				.value-popup:after {
+					content: attr(data-value);
+					position: absolute;
+					bottom: 15px;
+					left: -3px;
+					min-width: 14px;
+					height: 12px;
+					background-color: #444;
+					background-image: -webkit-gradient(linear, left top, left bottom, from(#444444), to(#999999));
+					background-image: -webkit-linear-gradient(top, #444, #999);
+					background-image: -moz-linear-gradient(top, #444, #999);
+					background-image: -o-linear-gradient(top, #444, #999);
+					background-image: linear-gradient(to bottom, #444, #999);
+					-webkit-border-radius: 3px;
+					border-radius: 3px;
+					-webkit-background-clip: padding-box;
+					background-clip: padding-box;
+					-webkit-box-shadow: 0px 0px 4px 0px #777;
+					box-shadow: 0px 0px 4px 0px #777;
+					border: #444 1px solid;
+					color: #fff;
+					font: bold 0.9em/1em Arial;
+					padding: 1px;
+					text-align: center;
+				}
+				.value-popup:before {
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-top: 8px solid #777;
+					border-left: 8px solid transparent;
+					border-right: 8px solid transparent;
+					top: -8px;
+					left: 50%;
+					margin-left: -8px;
+					margin-top: -1px;
+				}
+			}
+		}
+		tr.@{ts}-filter-row.hideme td {
+			padding: @filterRowHiddenHeight / 2;
+			margin: 0;
+			line-height: 0;
+			cursor: pointer;
+		}
+		tr.@{ts}-filter-row.hideme .@{ts}-filter {
+			height: 1px;
+			min-height: 0;
+			border: 0;
+			padding: 0;
+			margin: 0;
+			/* don't use visibility: hidden because it disables tabbing */
+			opacity: 0;
+			filter: alpha(opacity=0);
+		}
+	}
+	/*no formatting on filter row when filter-false*/
+	thead .disabled {
+		display: none;
+	}
+	tbody {
+		/* rows hidden by filtering (needed for child rows) */
+		tr.filtered {
+			display: none;
+		}
+		td[data-tsmath] {
+			font-weight: bold;
+			text-align: right;
+		}
+	}
+}
+
+table.@{ts}-processing tbody tr td {
+	opacity: .25;
+}
+
+/* pager and other controls above the table */
+div.ts-wrapperdiv {
+	span.@{ts}-column-selector {
+		label {
+			margin: 0 5px;
+		}
+		input[type="checkbox"] {
+			margin-right: 6px;
+		}
+	}
+	select.form-control {
+		width: auto;
+		display: inline;
+		option {
+			font-size: smaller;
+		}
+	}
+	select.form-control, input.form-control {
+		font-size: smaller;
+		height: 22px;
+		padding: 0;
+		margin-left: 0;
+	}
+	div.ts-pager {
+		margin-bottom: 15px;
+		height: 24px;
+		float: right;
+		clear: right;
+		&.ts-pager-bottom {
+			visibility: hidden;
+		}
+		div.btn-group {
+			margin-top: 2px;
+			&.middle {
+				padding-top: 2px;
+			}
+			span {
+				font-size: small;
+				padding-top: 2px;
+				height: 24px;
+				:not(.pagedisplay) {
+					cursor: pointer;
+				}
+				&.first {
+					margin-left: 3px;
+				}
+				&.disabled {
+					opacity: .5;
+				}
+			}
+			label.selectlabels {
+				margin-top: 2px;
+				margin-right: 5px;
+				font-size: smaller;
+			}
+			select.form-control {
+				margin-top: 2px;
+			}
+		}
+	}
+}
+

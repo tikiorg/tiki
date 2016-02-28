@@ -1,0 +1,69 @@
+@side-column-link-color: @link-color;
+@side-column-link-hover-color: @link-hover-color;
+@button-text-transform: normal;
+@button-hover-background-gradient: inherit;
+@topbar_color: #fff;
+@topbar_link_color: #fff;
+@topbar_link_hover_color: inherit;
+@dropdown-link-color: inherit;
+@dropdown-link-hover-color: inherit;
+//body {
+//	color: @text-color;
+//}
+
+#page-data a {
+	font-weight: bold;
+}
+
+#page-data {
+	font-size: 115%;
+}
+
+.navbar-default,
+.topbar,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li,
+.panel-heading,
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+	background: @navbar-default-bg;
+}
+
+.topbar {
+	.nav > li > a {
+		border-right: 1px solid darken(@brand-primary,10%);
+		font-weight: bold;
+	}
+
+	.nav > li:first-of-type > a {
+		border-left: none;
+	}
+}
+
+
+
+.panel {
+	border-radius: @border-radius-base;
+}
+
+.panel-default > .panel-heading {
+	background: @panel-default-heading-bg;
+	margin: 0;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.panel-title {
+	color: @panel-default-color;
+}
+
+.topbar .cssmenu_horiz.sf-arrows > .menuSection0 > .sf-with-ul::after {
+	border: 5px solid transparent;
+	border-top-color: #fff;
+}
+.topbar .cssmenu_horiz.sf-arrows > .menuSection0:hover > .sf-with-ul::after {
+	border: 5px solid transparent;
+	border-top-color: darken(#fff,10%);
+}

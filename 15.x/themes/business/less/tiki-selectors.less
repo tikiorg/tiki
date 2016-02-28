@@ -1,0 +1,196 @@
+// $Id$
+// This file is for additional LESS rules beyond what are in variables.less.
+// Image path example:
+@imagePath: ~"../images/";
+// body {
+//	background-image: url('@{imagePath}bg.jpg');
+// }
+//
+// If Glyphicons should be rendered in a color other than the Bootstrap default or the theme default, uncomment and specify the color.
+// .glyphicon {color: @gray-lighter;}
+
+@topmodules-row-sidemargins: 0;
+@topbar-row-sidemargins: -15px;
+
+.page-header .top_modules {
+	background: #8ba8c8; /* Old browsers */
+	background: -moz-linear-gradient(top, #8ba8c8 0%, #0b346c 0%, #003376 1%, #00366f 1%, #01366c 2%, #023175 3%, #00356e 3%, #003470 60%, #023574 64%, #03357a 64%, #00387b 67%, #00387f 68%, #023b82 71%, #003e85 71%, #003e89 74%, #013e8e 75%, #004394 77%, #024699 81%, #00489d 82%, #01499e 85%, #0049a5 85%, #014aa6 88%, #014ca9 89%, #034eab 92%, #004daa 97%, #004ba6 98%, #003e8d 99%, #003a80 100%, #1e599f 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #8ba8c8), color-stop(0%, #0b346c), color-stop(1%, #003376), color-stop(1%, #00366f), color-stop(2%, #01366c), color-stop(3%, #023175), color-stop(3%, #00356e), color-stop(60%, #003470), color-stop(64%, #023574), color-stop(64%, #03357a), color-stop(67%, #00387b), color-stop(68%, #00387f), color-stop(71%, #023b82), color-stop(71%, #003e85), color-stop(74%, #003e89), color-stop(75%, #013e8e), color-stop(77%, #004394), color-stop(81%, #024699), color-stop(82%, #00489d), color-stop(85%, #01499e), color-stop(85%, #0049a5), color-stop(88%, #014aa6), color-stop(89%, #014ca9), color-stop(92%, #034eab), color-stop(97%, #004daa), color-stop(98%, #004ba6), color-stop(99%, #003e8d), color-stop(100%, #003a80), color-stop(100%, #1e599f)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #8ba8c8 0%, #0b346c 0%, #003376 1%, #00366f 1%, #01366c 2%, #023175 3%, #00356e 3%, #003470 60%, #023574 64%, #03357a 64%, #00387b 67%, #00387f 68%, #023b82 71%, #003e85 71%, #003e89 74%, #013e8e 75%, #004394 77%, #024699 81%, #00489d 82%, #01499e 85%, #0049a5 85%, #014aa6 88%, #014ca9 89%, #034eab 92%, #004daa 97%, #004ba6 98%, #003e8d 99%, #003a80 100%, #1e599f 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #8ba8c8 0%, #0b346c 0%, #003376 1%, #00366f 1%, #01366c 2%, #023175 3%, #00356e 3%, #003470 60%, #023574 64%, #03357a 64%, #00387b 67%, #00387f 68%, #023b82 71%, #003e85 71%, #003e89 74%, #013e8e 75%, #004394 77%, #024699 81%, #00489d 82%, #01499e 85%, #0049a5 85%, #014aa6 88%, #014ca9 89%, #034eab 92%, #004daa 97%, #004ba6 98%, #003e8d 99%, #003a80 100%, #1e599f 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #8ba8c8 0%, #0b346c 0%, #003376 1%, #00366f 1%, #01366c 2%, #023175 3%, #00356e 3%, #003470 60%, #023574 64%, #03357a 64%, #00387b 67%, #00387f 68%, #023b82 71%, #003e85 71%, #003e89 74%, #013e8e 75%, #004394 77%, #024699 81%, #00489d 82%, #01499e 85%, #0049a5 85%, #014aa6 88%, #014ca9 89%, #034eab 92%, #004daa 97%, #004ba6 98%, #003e8d 99%, #003a80 100%, #1e599f 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #8ba8c8 0%, #0b346c 0%, #003376 1%, #00366f 1%, #01366c 2%, #023175 3%, #00356e 3%, #003470 60%, #023574 64%, #03357a 64%, #00387b 67%, #00387f 68%, #023b82 71%, #003e85 71%, #003e89 74%, #013e8e 75%, #004394 77%, #024699 81%, #00489d 82%, #01499e 85%, #0049a5 85%, #014aa6 88%, #014ca9 89%, #034eab 92%, #004daa 97%, #004ba6 98%, #003e8d 99%, #003a80 100%, #1e599f 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#8ba8c8', endColorstr='#1e599f', GradientType=0); /* IE6-9 */
+}
+
+.sitetitles a {
+	color: #fff;
+}
+
+.sitetitles {
+	font-weight: 700
+}
+
+h1.sitetitle {
+	font-size: 24px;
+}
+
+h2.sitesubtitle {
+	font-size: 13px;
+	color: #91BEF5;
+	font-style: italic;
+}
+
+.navbar-default,
+.topbar,
+	// .topbar .cssmenu_horiz ul,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li {
+	background: #1f5daa; /* Old browsers */
+	background: -moz-linear-gradient(top, #1f5daa 0%, #3977c4 2%, #3b7ac7 3%, #3877c6 5%, #3a7cca 7%, #3778c8 9%, #3674c7 19%, #2c6abf 43%, #1c5cb3 69%, #1454ac 93%, #1455a9 97%, #1a57a8 98%, #346dba 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #1f5daa), color-stop(2%, #3977c4), color-stop(3%, #3b7ac7), color-stop(5%, #3877c6), color-stop(7%, #3a7cca), color-stop(9%, #3778c8), color-stop(19%, #3674c7), color-stop(43%, #2c6abf), color-stop(69%, #1c5cb3), color-stop(93%, #1454ac), color-stop(97%, #1455a9), color-stop(98%, #1a57a8), color-stop(100%, #346dba)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #1f5daa 0%, #3977c4 2%, #3b7ac7 3%, #3877c6 5%, #3a7cca 7%, #3778c8 9%, #3674c7 19%, #2c6abf 43%, #1c5cb3 69%, #1454ac 93%, #1455a9 97%, #1a57a8 98%, #346dba 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #1f5daa 0%, #3977c4 2%, #3b7ac7 3%, #3877c6 5%, #3a7cca 7%, #3778c8 9%, #3674c7 19%, #2c6abf 43%, #1c5cb3 69%, #1454ac 93%, #1455a9 97%, #1a57a8 98%, #346dba 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #1f5daa 0%, #3977c4 2%, #3b7ac7 3%, #3877c6 5%, #3a7cca 7%, #3778c8 9%, #3674c7 19%, #2c6abf 43%, #1c5cb3 69%, #1454ac 93%, #1455a9 97%, #1a57a8 98%, #346dba 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #1f5daa 0%, #3977c4 2%, #3b7ac7 3%, #3877c6 5%, #3a7cca 7%, #3778c8 9%, #3674c7 19%, #2c6abf 43%, #1c5cb3 69%, #1454ac 93%, #1455a9 97%, #1a57a8 98%, #346dba 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1f5daa', endColorstr='#346dba', GradientType=0); /* IE6-9 */
+	border-left: 1px solid #3676C4;
+	border-right: 1px solid #1957AA;
+}
+
+.navbar li.dropdown {
+	border-left: 1px solid #3676C4;
+	border-right: 1px solid #1957AA;
+}
+
+//.cssmenu_horiz li:hover,.cssmenu_horiz li.sfHover, .cssmenu_vert li:hover, .cssmenu_vert li.sfHover
+
+// topbar hover
+.topbar .nav > li > a:hover,
+.topbar .nav > li > a:focus,
+.topbar .cssmenu_horiz > li > a:hover,
+.topbar .cssmenu_horiz > li:hover,
+.topbar .cssmenu_horiz li.sfHover:hover,
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+	background: #3270bd; /* Old browsers */
+	background: -moz-linear-gradient(top, #3270bd 0%, #1855a5 2%, #1553a8 3%, #1855ae 5%, #1353ad 7%, #1858af 14%, #1a5ab1 26%, #1d5eb2 29%, #2866bb 53%, #2c6abf 55%, #3a79c9 95%, #3a7ac4 97%, #3777c1 98%, #205ea9 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3270bd), color-stop(2%, #1855a5), color-stop(3%, #1553a8), color-stop(5%, #1855ae), color-stop(7%, #1353ad), color-stop(14%, #1858af), color-stop(26%, #1a5ab1), color-stop(29%, #1d5eb2), color-stop(53%, #2866bb), color-stop(55%, #2c6abf), color-stop(95%, #3a79c9), color-stop(97%, #3a7ac4), color-stop(98%, #3777c1), color-stop(100%, #205ea9)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #3270bd 0%, #1855a5 2%, #1553a8 3%, #1855ae 5%, #1353ad 7%, #1858af 14%, #1a5ab1 26%, #1d5eb2 29%, #2866bb 53%, #2c6abf 55%, #3a79c9 95%, #3a7ac4 97%, #3777c1 98%, #205ea9 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #3270bd 0%, #1855a5 2%, #1553a8 3%, #1855ae 5%, #1353ad 7%, #1858af 14%, #1a5ab1 26%, #1d5eb2 29%, #2866bb 53%, #2c6abf 55%, #3a79c9 95%, #3a7ac4 97%, #3777c1 98%, #205ea9 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #3270bd 0%, #1855a5 2%, #1553a8 3%, #1855ae 5%, #1353ad 7%, #1858af 14%, #1a5ab1 26%, #1d5eb2 29%, #2866bb 53%, #2c6abf 55%, #3a79c9 95%, #3a7ac4 97%, #3777c1 98%, #205ea9 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #3270bd 0%, #1855a5 2%, #1553a8 3%, #1855ae 5%, #1353ad 7%, #1858af 14%, #1a5ab1 26%, #1d5eb2 29%, #2866bb 53%, #2c6abf 55%, #3a79c9 95%, #3a7ac4 97%, #3777c1 98%, #205ea9 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3270bd', endColorstr='#205ea9', GradientType=0); /* IE6-9 */
+}
+
+//.topbar .navbar {
+//  margin-bottom: 0;
+//  border: none;
+//}
+
+.topbar .cssmenu_horiz > li > a,
+.topbar .navbar-default .navbar-nav > li > a {
+	//  color: #fff;
+	text-transform: uppercase;
+	padding-bottom: 15px;
+	padding-top: 15px;
+	font-weight: 700;
+	font-size: 12px;
+}
+
+#col1, #col2, #col3 {
+	padding-top: 1em;
+}
+
+#col1 {
+	background: #fbfbfb url('@{imagePath}image1.jpg') no-repeat;
+	background-size: contain;
+}
+
+#footer .container,
+footer.main-footer .container {
+	min-height: 60px;
+	background: url('@{imagePath}footer.gif') repeat-x;
+}
+
+.module .panel-heading,
+.modal-header {
+	//  background: #3475c6 url('@{imagePath}title_bg.png') no-repeat 0 0;
+	background: #386dbb; /* Old browsers */
+	background: -moz-linear-gradient(top, #386dbb 0%, #3a6fbb 7%, #457bc3 25%, #4c82ca 54%, #2f6dc0 57%, #3371c4 82%, #3574c4 86%, #3574c4 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #386dbb), color-stop(7%, #3a6fbb), color-stop(25%, #457bc3), color-stop(54%, #4c82ca), color-stop(57%, #2f6dc0), color-stop(82%, #3371c4), color-stop(86%, #3574c4), color-stop(100%, #3574c4)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #386dbb 0%, #3a6fbb 7%, #457bc3 25%, #4c82ca 54%, #2f6dc0 57%, #3371c4 82%, #3574c4 86%, #3574c4 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #386dbb 0%, #3a6fbb 7%, #457bc3 25%, #4c82ca 54%, #2f6dc0 57%, #3371c4 82%, #3574c4 86%, #3574c4 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #386dbb 0%, #3a6fbb 7%, #457bc3 25%, #4c82ca 54%, #2f6dc0 57%, #3371c4 82%, #3574c4 86%, #3574c4 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #386dbb 0%, #3a6fbb 7%, #457bc3 25%, #4c82ca 54%, #2f6dc0 57%, #3371c4 82%, #3574c4 86%, #3574c4 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#386dbb', endColorstr='#3574c4', GradientType=0); /* IE6-9 */
+
+	text-transform: uppercase;
+}
+
+h3.panel-title {
+	font-size: 90%;
+	font-weight: 700;
+}
+
+.modal-header {
+	color: @gray-lighter;
+}
+
+.well {
+	background: url('@{imagePath}market.jpg') 0 100% no-repeat;
+	background-size: 100% 100%;
+	color: @gray-base;
+}
+
+#topbar_modules .box-search {
+	background: url('@{imagePath}magnify.png') 0px -7px no-repeat transparent;
+	color: #FFFFFF;
+	display: block;
+	height: 59px;
+	margin-bottom: 0;
+	margin-left: 0;
+	margin-right: 0 !important;
+	margin-top: 7px;
+	padding-left: 29px;
+	padding-right: 4px;
+	position: absolute;
+	right: 0;
+	text-align: right;
+	top: 0;
+	z-index: 2;
+}
+
+.topbar .sf-arrows .sf-with-ul:after {
+	/* order of following 3 rules important for fallbacks to work */
+	border: 5px solid transparent;
+	border-top-color: #fff; /* edit this to suit design (no rgba in IE8) */
+	border-top-color: rgba(255, 255, 255, .5);
+}
+
+.sf-arrows > li > .sf-with-ul:focus:after,
+.sf-arrows > li:hover > .sf-with-ul:after,
+.sf-arrows > .sfHover > .sf-with-ul:after {
+	border-top-color: white; /* IE8 fallback colour */
+}
+
+/* styling for right-facing arrows */
+.sf-arrows ul .sf-with-ul:after {
+	border-color: transparent;
+	border-left-color: #dFeEFF; /* edit this to suit design (no rgba in IE8) */
+	border-left-color: rgba(255, 255, 255, .5);
+}
+
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+	border-left-color: white;
+}
+
+//.cssmenu_horiz li:hover,
+//.cssmenu_horiz li.sfHover,
+//.cssmenu_vert li:hover,
+//.cssmenu_vert li.sfHover {
+//  color: @dropdown-link-hover-color;
+//  background: @dropdown-link-hover-bg;
+//}

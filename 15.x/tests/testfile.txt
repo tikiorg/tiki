@@ -1,0 +1,26 @@
+testing from another pc
+testing from Ottawa
+testfile from robert
+testfile from wikiman
+tesfile changed
+testfile changed by jonnybradley (sf.net had reset my password - huh?)
+pointless change...hi
+This is matthew 3
+adding a new line in 12.x to deliberately cause trouble.
+    jonnyb having survived machine-rebuild (?)
+    First commit on Tiki4x branch
+Second commit on 5.x
+start merge for 5.x
+start merge 6.x
+trying netbeans
+certificate accept
+start merge for 7.x
+start merge for 8.x
+start merge for 9.x
+on the old sf.net repo (just checking)
+test
+this is mick's test
+check merge for 12.x
+this should cause some conflicts
+new lines on the end can also be tricky
+hello world! from mat :) 

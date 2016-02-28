@@ -1,0 +1,133 @@
+// $Id$
+// /* interactive translations */
+#intertrans-indicator {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	z-index: 1000;
+	//  background-color: @alert-success-bg; (this and other color-related rules are moved to tiki-selectors.less)
+	//  color: @alert-success-text;
+}
+
+#intertrans-form {
+	position: fixed;
+	top: 10%;
+	bottom: 10%;
+	left: 10%;
+	right: 10%;
+	overflow: auto;
+	display: none;
+	z-index: 2000;
+	padding: 1em;
+	//  background-color: @panel-bg;
+	//  border: 1px solid @panel-default-border;
+	//  color: @panel-default-text;
+}
+
+#intertrans-form table {
+	width: 98%;
+	padding: 1em;
+}
+
+#intertrans-form table input {
+	width: 100%;
+}
+
+.intertrans td {
+	width: 50%;
+}
+
+// /* tiki-edit_languages.php */
+#edit_translations td {
+	vertical-align: middle;
+}
+
+#edit_translations input {
+	margin: 2px 0 2px 0;
+}
+
+// #edit_translations tr.last {
+//  border-bottom: 2px solid @alert-success-border;
+// }
+
+// /* all_languages */
+ul.all_languages {
+	list-style: none;
+	padding-left: 0;
+}
+
+ul.all_languages > li {
+	//  border: 1px solid @alert-success-border;
+	padding: 1em;
+	margin-bottom: 1ex;
+}
+
+// /* Generic language selection layout for tiki objects (wiki page, article, blogpost, etc)*/
+.lang_select {
+	position: relative;
+	display: inline-block;
+	height: 16px;
+	width: 18px;
+	vertical-align: middle;
+	text-align: left;
+}
+
+.lang_select .clearfix:after {
+	display: inline-block;
+}
+
+.lang_select .selected {
+	font-weight: bold;
+	font-style: italic;
+}
+
+.lang_select .cssmenu_horiz li {
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	width: auto;
+}
+
+.lang_select .cssmenu_horiz li.tabmark {
+	background: none;
+	border: 0;
+	color: inherit;
+	padding: 0;
+	top: 0;
+}
+
+.lang_select .cssmenu_horiz .tabmark span {
+	background: none;
+	position: relative;
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	top: 0;
+	bottom: 0;
+	left: 1px;
+	right: 0;
+}
+
+.lang_select li.tabmark .popup_base a {
+	color: inherit;
+	background: none;
+}
+
+.lang_select .tabcontent h1 {
+	font-size: 1.1em;
+	font-style: italic;
+	font-weight: normal;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-top: 1px;
+	padding-left: 0;
+	padding-bottom: 1px;
+	vertical-align: baseline;
+}
+
+.lang_select .tabcontent h1 a {
+	padding-left: 2px;
+	margin-left: 0;
+	font-style: normal;
+}

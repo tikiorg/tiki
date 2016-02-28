@@ -1,0 +1,204 @@
+// $Id$ tiki-cssmenus.less - imported by tiki_base.less to produce tiki_base.css
+// CSS selectors for the topbar div (legacy Tiki navbar container) and Superfish menus.
+// Variables here are defined by themes/base_files/less/tiki-variables.less and by themes/<themename>/less/tiki-variables.less .
+
+/*** ESSENTIAL STYLES ***/
+.cssmenu_horiz,
+.cssmenu_horiz *,
+.cssmenu_vert,
+.cssmenu_vert * {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.cssmenu_horiz li,
+.cssmenu_vert li {
+	position: relative;
+}
+
+.cssmenu_horiz ul {
+	position: absolute;
+	display: none;
+	top: 100%;
+	left: 0;
+	z-index: 99;
+}
+
+.cssmenu_horiz > li,
+.cssmenu_vert > li {
+	float: left;
+}
+
+.cssmenu_horiz li:hover > ul,
+.cssmenu_horiz li.sfHover > ul,
+.cssmenu_vert li:hover > ul,
+.cssmenu_vert li.sfHover > ul {
+	display: block;
+}
+
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	display: block;
+	position: relative;
+}
+
+.cssmenu_horiz ul ul,
+.cssmenu_vert ul ul {
+	top: 0;
+	left: 100%;
+}
+
+/*** DEMO SKIN ***/
+.cssmenu_horiz,
+.cssmenu_vert {
+	float: left;
+	margin-bottom: 1em;
+}
+
+.cssmenu_horiz ul,
+.cssmenu_vert ul {
+	box-shadow: 2px 2px 6px rgba(0, 0, 0, .2);
+	//  min-width: 12em; /* allow long menu items to determine submenu width */
+	//  *width: 12em; /* no auto sub width for IE7, see white-space comment below */
+}
+
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	//  border-left: 1px solid #fff;
+	//  border-top: 1px solid #dFeEFF; /* fallback colour must use full shorthand */
+	//  border-top: 1px solid rgba(255,255,255,.5);
+	padding: 3px 20px; // match Bootstrap dropdown-menu li.
+	text-decoration: none;
+}
+
+.cssmenu_horiz a:first-of-type,
+.cssmenu_vert a:first-of-type {
+	padding-top: 7px;
+}
+.cssmenu_horiz a:last-of-type,
+.cssmenu_vert a:last-of-type {
+	padding-bottom: 7px;
+ }
+
+// .cssmenu_horiz a,
+// .cssmenu_vert a {
+//  color: @navbar-default-link-color;
+// }
+
+.cssmenu_horiz li,
+.cssmenu_vert li {
+	//  background: inherit;
+	white-space: normal; //  white-space: nowrap; /* no need for Supersubs plugin */
+	//  *white-space: normal; /* ...unless you support IE7 (let it wrap) */
+	-webkit-transition: background .2s;
+	transition: background .2s;
+}
+
+// moved to tiki-selectors.less
+// .cssmenu_horiz ul li,
+// .cssmenu_vert ul li,
+// .cssmenu_horiz ul ul li,
+// .cssmenu_vert ul ul li {
+//   background: @dropdown-bg;
+// }
+//
+// .cssmenu_horiz li:hover,
+// .cssmenu_horiz li.sfHover,
+// .cssmenu_vert li:hover,
+// .cssmenu_vert li.sfHover {
+//   background: @dropdown-link-hover-bg;
+//   /* only transition out, not in */
+//   -webkit-transition: none;
+//   transition: none;
+// }
+/*** arrows (for all except IE7) **/
+.sf-arrows .sf-with-ul {
+	padding-right: 2.5em;
+}
+
+/* styling for both css and generated arrows */
+.sf-arrows .sf-with-ul:after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	right: 1em;
+	margin-top: -3px;
+	height: 0;
+	width: 0;
+	/* order of following 3 rules important for fallbacks to work */
+	//  border: 5px solid transparent;
+	//  border-top-color: @dropdown-link-color; /* edit this to suit design (no rgba in IE8) */
+	//  border-top-color: rgba(255,255,255,.5);
+}
+
+/* styling for right-facing arrows */
+.sf-arrows ul .sf-with-ul:after {
+	margin-top: -5px;
+	margin-right: -3px;
+	//  border-color: transparent; (moved to tiki-selectors.less)
+	//  border-left-color: @dropdown-link-color; // @link-color; /* edit this to suit design (no rgba in IE8) */
+	//  border-left-color: rgba(255,255,255,.5);
+}
+
+// .sf-arrows ul li > .sf-with-ul:focus:after,
+// .sf-arrows ul li:hover > .sf-with-ul:after,
+// .sf-arrows ul .sfHover > .sf-with-ul:after {
+//  border-left-color: @dropdown-link-hover-color;
+// }
+
+.panel-body ul.cssmenu_vert,
+.panel-body ul.cssmenu_horiz,
+.cssmenu_vert li ul,
+.cssmenu_horiz li ul {
+	overflow: visible;
+}
+
+.cssmenu_vert li ul,
+.cssmenu_horiz li ul {
+	display: none;
+}
+
+.cssmenu_vert ul {
+	position: absolute;
+	left: 100%;
+	top: 0;
+	z-index: 99;
+}
+
+.cssmenu_vert > li {
+	float: none;
+}
+
+// .cssmenu_vert li {
+//  width: 100%;
+// }
+
+/*** alter arrow directions ***/
+.cssmenu_vert.sf-arrows > li > .sf-with-ul:after {
+	margin-top: -5px;
+	margin-right: -3px;
+	//  border-color: transparent;
+	//  border-left-color: @dropdown-link-color;
+}
+
+// .cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
+// .cssmenu_vert.sf-arrows li:hover > .sf-with-ul:after,
+// .cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
+//   border-left-color: @dropdown-link-hover-color; // white;
+// }
+
+a.structure-home {
+	padding: 0;
+}
+
+// The purpose here is to map legacy Tiki topbar menu classes to Bootstrap classes.
+
+.topbar {
+	.navbar {
+		margin-bottom: 0;
+	}
+	.navbar-default {
+		border: none;
+	}
+}
