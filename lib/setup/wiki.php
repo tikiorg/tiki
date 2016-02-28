@@ -75,7 +75,7 @@ if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php')
 	if ($check && !$tikilib->page_exists($_REQUEST['page'])) {
 
 		$homePageLang = $prefs['language'];
-		$profilesLink = 'tiki-admin.php?profile=&categories%5B%5D=14.x&categories%5B%5D=Featured+profiles' .
+		$profilesLink = 'tiki-admin.php?profile=&categories%5B%5D=15.x&categories%5B%5D=Featured+profiles' .
 										'&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2';
 
 		// Default HomePage content
