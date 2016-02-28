@@ -3880,4 +3880,4 @@ CREATE TABLE `tiki_tabular_formats` (
 	`format_descriptor` TEXT,
 	`filter_descriptor` TEXT,
 	KEY `tabular_tracker_ix` (`trackerId`)
-);
+) ENGINE=MyISAM;
