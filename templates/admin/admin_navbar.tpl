@@ -31,7 +31,7 @@
 							<label>
 								<input type="checkbox" id="connect_feedback_cbx" {if !empty($connect_feedback_showing)}checked="checked"{/if}>
 								{tr}Provide Feedback{/tr}
-								<a href="http://doc.tiki.org/Connect" target="tikihelp" class="tikihelp" title="{tr}Provide Feedback:{/tr}
+								<a href="https://doc.tiki.org/Connect" target="tikihelp" class="tikihelp" title="{tr}Provide Feedback:{/tr}
 									{tr}Once selected, some icon/s will be shown next to all features so that you can provide some on-site feedback about them{/tr}.
 									<br/><br/>
 									<ul>
@@ -111,7 +111,7 @@
 			<li>
 				<form method="post" action="" class="navbar-form" role="search">
 					{*remarksbox type="note" title="{tr}Development Notice{/tr}"}
-						{tr}This search feature and the <a class="alert-link" href="tiki-edit_perspective.php">perspectives GUI</a> need <a class="alert-link" href="http://dev.tiki.org/Dynamic+Preferences">dev.tiki.org/Dynamic+Preferences</a>. If you search for something and it's not appearing, please help improve keywords/descriptions.{/tr}
+						{tr}This search feature and the <a class="alert-link" href="tiki-edit_perspective.php">perspectives GUI</a> need <a class="alert-link" href="https://dev.tiki.org/Dynamic+Preferences">dev.tiki.org/Dynamic+Preferences</a>. If you search for something and it's not appearing, please help improve keywords/descriptions.{/tr}
 					{/remarksbox*}
 					<div class="form-group">
 						<input type="hidden" name="filters">
