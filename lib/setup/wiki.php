@@ -97,9 +97,9 @@ if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php')
 			$homePageContent .= "</ul>\n\n<br>";
 			$homePageContent .= '<h2>' . tr('Need help?') . "</h2>\n";
 			$homePageContent .= tr('For more information:') . "\n<br>";
-			$homePageContent .= '*' . tr('[http://info.tiki.org/Learn+More|Learn more about Tiki].') . "\n<br>";
-			$homePageContent .= '*' . tr('[http://info.tiki.org/Help+Others|Get help], including the [http://doc.tiki.org|official documentation] and [http://tiki.org/forums|support forums].') . "\n<br>";
-			$homePageContent .= '*' . tr('[http://info.tiki.org/Join+the+community|Join the Tiki community].') . "\n<br>";
+			$homePageContent .= '*' . tr('[https://tiki.org/Introduction|Learn more about Tiki].') . "\n<br>";
+			$homePageContent .= '*' . tr('[https://tiki.org/|Get help], including the [http://doc.tiki.org|official documentation] and [http://tiki.org/forums|support forums].') . "\n<br>";
+			$homePageContent .= '*' . tr('[https://tiki.org/Join|Join the Tiki community].') . "\n<br>";
 		} else {
 			$homePageContent .= '!' . tr('Congratulations') . "\n";
 			$homePageContent .= tr('This is the default homepage for your Tiki. If you are seeing this page, your installation was successful.') . "\n\n";
@@ -113,9 +113,9 @@ if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php')
 			$homePageContent .= "{FANCYLIST}\n\n";
 			$homePageContent .= '!!' . tr('Need help?') . "\n";
 			$homePageContent .= tr('For more information:') . "\n";
-			$homePageContent .= '*' . tr('[http://info.tiki.org/Learn+More|Learn more about Tiki].') . "\n";
-			$homePageContent .= '*' . tr('[http://info.tiki.org/Help+Others|Get help], including the [http://doc.tiki.org|official documentation] and [http://tiki.org/forums|support forums].') . "\n";
-			$homePageContent .= '*' . tr('[http://info.tiki.org/Join+the+community|Join the Tiki community].') . "\n";
+			$homePageContent .= '*' . tr('[https://tiki.org/Introduction|Learn more about Tiki].') . "\n";
+			$homePageContent .= '*' . tr('[https://tiki.org/|Get help], including the [http://doc.tiki.org|official documentation] and [http://tiki.org/forums|support forums].') . "\n";
+			$homePageContent .= '*' . tr('[https://tiki.org/Join|Join the Tiki community].') . "\n";
 		}
 			
 		$tikilib->create_page(
