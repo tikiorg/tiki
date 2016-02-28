@@ -32,7 +32,7 @@
 									{if $show_language eq 'y'}
 										{$better.lang|langname}</a>
 									{else}
-										{$better.page|escape}</a> ({$better.lang}, {$better.lang|langname})
+										{$better.page|escape}</a> ({$better.lang|langname}, {$better.lang})
 									{/if}
 									{/if}
 								</li>
@@ -59,7 +59,7 @@
 										{if $show_language eq 'y'}
 											{$better.lang|langname}</a>
 										{else}
-											{$better.page|escape}</a> ({$better.lang}, {$better.lang|langname})
+											{$better.page|escape}</a> ({$better.lang|langname}, {$better.lang})
 										{/if}
 									{/if}
 								</li>
@@ -82,7 +82,7 @@
 									{if $show_language eq 'y'}
 										{$worst.lang|langname}</a>
 									{else}
-										{$worst.page|escape}</a> ({$worst.lang}, {$worst.lang|langname})
+										{$worst.page|escape}</a> ({$worst.lang|langname}, {$worst.lang})
 									{/if}
 								</li>
 							{/foreach}
@@ -105,7 +105,7 @@
 								{if $show_language eq 'y'}
 									{$worst.lang|langname}</a>
 								{else}
-									{$worst.page|escape}</a> ({$worst.lang}, {$worst.lang|langname})
+									{$worst.page|escape}</a> ({$worst.lang|langname}, {$worst.lang})
 								{/if}
 							</li>
 							{/foreach}
