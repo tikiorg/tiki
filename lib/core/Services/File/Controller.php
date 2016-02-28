@@ -134,7 +134,7 @@ class Services_File_Controller
 						$file['info'] =  $filegallib->get_file_info($file['fileId']);
 						// when stored in the database the file contents is here and should not be sent back to the client
 						$file['info']['data'] = null;
-						$file['syntax'] = $filegallib->getWikiSyntax($file['galleryId'], $file['info']);
+						$file['syntax'] = $filegallib->getWikiSyntax($file['galleryId'], $file['info'], $input->asArray());
 					}
 
 					if ($input->isbatch->word() && stripos($input->type->text(), 'zip') !== false) {
