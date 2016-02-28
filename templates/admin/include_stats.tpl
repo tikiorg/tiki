@@ -1,5 +1,5 @@
-{remarksbox type="tip" title="{tr}Development Notice{/tr}"}
-	{tr}Please see the <a class='alert-link' target='tikihelp' href='http://dev.tiki.org/statistics'>Statistics page</a> on Tiki's developer site.{/tr}
+{remarksbox type="tip" title="{tr}Notice{/tr}"}
+	{tr}This is a new control panel on Tiki and work is still in progress.{/tr}
 {/remarksbox}
 
 <form class="admin form-horizontal" action="tiki-admin.php?page=stats" method="post">
