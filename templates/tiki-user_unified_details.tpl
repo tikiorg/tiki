@@ -250,7 +250,7 @@
 		{* Friends *}
 		<div class="col-md-3 profile-right-bar">
 			{if $user and $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y' and $userinfo['user_allowmsgs'] eq 'y'}
-				<div class="profile-buttons" xmlns="http://www.w3.org/1999/html">
+				<div class="profile-buttons">
 					<a href="{bootstrap_modal controller=user action=send_message userwatch=$userwatch}" class="btn btn-default">
 						<i class="fa fa-envelope-o"></i>
 						{tr}Send me a message{/tr}
