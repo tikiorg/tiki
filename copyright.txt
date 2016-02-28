@@ -125,8 +125,8 @@ SF Role: Developer
 Nickname: amette
 Name: Alexander Mette
 First Commit: 2005-05-19
-Last Commit: 2016-02-15
-Number of Commits: 242
+Last Commit: 2016-02-28
+Number of Commits: 245
 SF Role: Developer
 
 Nickname: amnabilal
@@ -1453,7 +1453,7 @@ Nickname: jonnybradley
 Name: jonny Bradley
 First Commit: 2007-08-15
 Last Commit: 2016-02-28
-Number of Commits: 8704
+Number of Commits: 8706
 SF Role: Admin
 
 Nickname: jorgercosta
