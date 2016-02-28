@@ -57,7 +57,7 @@ svn export $SVNROOT/$RELTAG $MODULE-$VER
 if [ -f $MODULE-$VER/composer.json ]; then
 	wget -N http://getcomposer.org/composer.phar
 	cd $MODULE-$VER
-	php ../composer.phar install --prefer-dist 2>&1 | sed '/Warning: Ambiguous class resolution/d'
+	php ../composer.phar install --prefer-dist --no-dev 2>&1 | sed '/Warning: Ambiguous class resolution/d'
 	cd ..
 fi
 
