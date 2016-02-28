@@ -41,7 +41,7 @@
 
 {title help="Banning"}{tr}Banning system{/tr}{/title}
 
-<div class="t_navbar" xmlns="http://www.w3.org/1999/html">
+<div class="t_navbar">
 	<form action="tiki-admin_banning.php" method="post">
 	<input type="hidden" name="export" value="y">
 		<button name="csv" type="submit" class="btn btn-default">
