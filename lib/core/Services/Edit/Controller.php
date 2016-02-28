@@ -166,11 +166,11 @@ function get_new_preview() {
 	$("body").css("opacity", 0.6);
 	location.reload(true);
 }
-$(window).load(function(){
+$(window).on("load", function(){
 	if (typeof opener != "undefined") {
 		opener.ajaxPreviewWindow = this;
 	}
-}).unload(function(){
+}).on("unload", function(){
 	if (typeof opener.ajaxPreviewWindow != "undefined") {
 		opener.ajaxPreviewWindow = null;
 	}
