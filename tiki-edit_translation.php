@@ -108,7 +108,10 @@ if (count($languages) == 1) {
    $smarty->assign('only_one_language_left', 'y');
 }
 
-smarty_assign_default_target_lang($langpage, $_REQUEST['target_lang'], $trads, $prefs['language']);
+if(isset($_REQUEST['target_lang'])){
+	smarty_assign_default_target_lang($langpage, $_REQUEST['target_lang'], $trads, $prefs['read_language']);
+}
+
 smarty_assign_translation_name();
 
 ask_ticket('edit-translation');
@@ -125,7 +128,7 @@ function execute_module_translation()
 	$smarty = TikiLib::lib('smarty');
 	$module_reference = array(
 		'name' => 'translation',
-		'params' => '',
+		'params' => array('show_language' => 'n'),
 		'position' => 'r',
 		'ord' => 1,
 		'moduleId' => 0

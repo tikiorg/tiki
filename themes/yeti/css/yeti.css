@@ -7116,6 +7116,9 @@ input[type="checkbox"] {
 .modal .close {
   color: #222222;
 }
+.navbar-default .navbar-collapse.collapse.in .dropdown-menu li {
+  background: transparent;
+}
 .margin-bottom-xs {
   margin-bottom: 6px;
 }

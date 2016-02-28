@@ -58,11 +58,14 @@
 				{preference name=mail_crlf}
 				{preference name=zend_mail_handler}
 				<div class="adminoptionboxchild zend_mail_handler_childcontainer smtp">
+					<input type="password" style="display:none" name="zend_mail_smtp_server_autocomplete_off"> {* This is now required so the browser don't store the user's login here *}
 					{preference name=zend_mail_smtp_server}
 					{preference name=zend_mail_smtp_auth}
 					<div class="adminoptionboxchild zend_mail_smtp_auth_childcontainer login plain crammd5">
 						<p>{tr}These values will be stored in plain text in the database:{/tr}</p>
+						<input type="password" style="display:none" name="zend_mail_smtp_user_autocomplete_off"> {* This is now required so the browser don't store the user's login here *}
 						{preference name=zend_mail_smtp_user}
+						<input type="password" style="display:none" name="zend_mail_smtp_pass_autocomplete_off"> {* This is now required so the browser don't store the user's password here *}
 						{preference name=zend_mail_smtp_pass}
 					</div>
 					{preference name=zend_mail_smtp_port}

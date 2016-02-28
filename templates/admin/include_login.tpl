@@ -226,7 +226,9 @@
 			</fieldset>
 			<fieldset>
 				<legend>{tr}LDAP Admin{/tr}</legend>
+				<input type="password" style="display:none" name="auth_ldap_adminuser_autocomplete_off"> {* This is now required so the browser don't store the user's login here *}
 				{preference name=auth_ldap_adminuser}
+				<input type="password" style="display:none" name="auth_ldap_adminpass_autocomplete_off"> {* This is now required so the browser don't store the user's password here *}
 				{preference name=auth_ldap_adminpass}
 			</fieldset>
 		{/tab}

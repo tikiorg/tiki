@@ -6905,6 +6905,9 @@ a.thumbnail.active {
 .popover {
   color: #444444;
 }
+.navbar-default .navbar-collapse.collapse.in .dropdown-menu li {
+  background: transparent;
+}
 .navbar-collapse.collapse.in {
   background: #ad1d28;
 }
