@@ -1,6 +1,6 @@
 {extends 'layout_view.tpl'}
 {block name="title"}
-	{title}{assign var=title value={tr}Tracker Rule{/tr}}{$title|escape}{/title}
+	{title}{assign var=title value="{tr}Tracker Rule{/tr}"}{$title|escape}{/title}
 {/block}
 {block name="content"}
 	<form role="form" class="form-horizontal" method="post" action="{service controller=managestream action=tracker_filter}">
