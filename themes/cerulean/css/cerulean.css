@@ -6945,6 +6945,9 @@ header.page-header::before,
 .panel-info .panel-title {
   color: #fff;
 }
+.navbar-default .navbar-collapse.collapse.in .dropdown-menu li {
+  background: transparent;
+}
 .navbar-collapse.collapse.in {
   background: #2fa4e7;
 }
