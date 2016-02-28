@@ -1527,8 +1527,8 @@ samp {
 code {
   padding: 2px 4px;
   font-size: 90%;
-  color: #c7254e;
-  background-color: #f9f2f4;
+  color: #444444;
+  background-color: #f8f8f8;
   border-radius: 4px;
 }
 kbd {
@@ -6830,7 +6830,6 @@ h1.sitetitle {
 h2.sitesubtitle {
   background: none;
 }
-.btn,
 .btn-default,
 input[type="reset"],
 input[type="submit"],
@@ -6839,7 +6838,7 @@ input[type="submit"],
   text-transform: uppercase;
   border-width: 2px;
 }
-.btn:hover,
+.btn-default:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover,
 .button input:hover {
