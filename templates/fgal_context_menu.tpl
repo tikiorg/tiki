@@ -4,7 +4,6 @@
 		{if $files[$changes].perms.tiki_p_view_file_gallery eq 'y'}
 			{self_link _icon_name='file-archive-open' _menu_text=$menu_text _menu_icon=$menu_icon galleryId=$files[$changes].id}
 				{tr}Open{/tr}
-				{tr}Open{/tr}
 			{/self_link}
 		{/if}
 
