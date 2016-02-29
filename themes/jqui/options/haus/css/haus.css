@@ -53,7 +53,7 @@ h1,h2,h3,h4,h5,h6, #top .pagetitle a {
 #top_modules .box-login_box {
 	bottom: -6px;
 }
-.btn,
+
 .btn-default,
 button,
 input[type="reset"],
@@ -64,7 +64,7 @@ input[type="submit"],
     color: #555555;
 }
 
-.btn:hover,
+
 .btn-default:hover,
 .button a:hover,
 button:hover,
@@ -94,7 +94,7 @@ input[type="submit"]:hover,
   color: #666;
 }
     
-.topbar .cssmenu_horiz {
+/*.topbar .cssmenu_horiz {
     line-height: 0;
-}
+}*/
 
