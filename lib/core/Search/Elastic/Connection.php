@@ -56,7 +56,18 @@ class Search_Elastic_Connection
 		try {
 			return $this->get("/$index/_status");
 		} catch (Exception $e) {
-			TikiLib::lib('errorreport')->report($e->getMessage() . ' for index ' . $index);
+			$message = $e->getMessage();
+
+			// in elastic v2 _status has been replaced by _stats so try that next...
+			if (strpos($message, '[_status]') === false) {	// another error
+				TikiLib::lib('errorreport')->report($message . ' for index ' . $index);
+				return null;
+			}
+		}
+		try {
+			return $this->get("/$index/_stats");	// v2 "Indices Stats" API result
+		} catch (Exception $e) {
+			TikiLib::lib('errorreport')->report($message . ' for index ' . $index);
 			return null;
 		}
 	}
