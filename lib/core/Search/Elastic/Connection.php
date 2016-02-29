@@ -56,6 +56,7 @@ class Search_Elastic_Connection
 		try {
 			return $this->get("/$index/_status");
 		} catch (Exception $e) {
+			TikiLib::lib('errorreport')->report($e->getMessage() . ' for index ' . $index);
 			return null;
 		}
 	}
@@ -352,6 +353,9 @@ class Search_Elastic_Connection
 			throw new Search_Elastic_NotFoundException($content->_type, $content->_id);
 		} elseif (isset($content->error)) {
 			$message = $content->error;
+			if (is_object($message) && !empty($message->reason)) {
+				$message = $message->reason;
+			}
 			if (preg_match('/^MapperParsingException\[No handler for type \[(?P<type>.*)\].*\[(?P<field>.*)\]\]$/', $message, $parts)) {
 				throw new Search_Elastic_MappingException($parts['type'], $parts['field']);
 			} elseif (preg_match('/No mapping found for \[(\S+)\] in order to sort on/', $message, $parts)) {
@@ -368,7 +372,7 @@ class Search_Elastic_Connection
 			} elseif (preg_match('/QueryParsingException\[\[[^\]]*\] \[[^\]]*\] ([^\]]*)\]/', $message, $parts)) {
 				throw new Search_Elastic_QueryParsingException($parts[1]);
 			} else {
-				throw new Search_Elastic_Exception($message->reason, $content->status);
+				throw new Search_Elastic_Exception($content->error->reason, $content->status);
 			}
 		} else {
 			return $content;
