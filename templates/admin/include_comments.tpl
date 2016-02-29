@@ -39,8 +39,6 @@
 	<fieldset>
 		<legend>{tr}Inline comments{/tr}</legend>
 		{preference name=feature_inline_comments}
-		{tr}The feature below must be activated for this feature to work.{/tr}
-		{preference name=feature_wiki_paragraph_formatting}
 	</fieldset>
 	<fieldset>
 		<legend>{tr}Using comments in various features{/tr}</legend>
