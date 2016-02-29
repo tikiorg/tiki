@@ -68,7 +68,11 @@ class Search_Elastic_Connection
 		try {
 			return $this->get("$index/_stats");	// v2 "Indices Stats" API result
 		} catch (Exception $e) {
-			TikiLib::lib('errorreport')->report($e->getMessage() . ' for index ' . $index);
+			$message = $e->getMessage();
+
+			if (strpos($message, 'no such index') === false) {	// suppress no such index "errors"
+				TikiLib::lib('errorreport')->report($message . ' for index ' . $index);
+			}
 			return null;
 		}
 	}
