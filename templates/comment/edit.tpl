@@ -25,7 +25,7 @@
 				<div class="panel-footer">
 					<input type="submit" class="clearfix comment-editclass btn btn-primary btn-sm" value="{tr}Save{/tr}"/>
 					<div class="btn btn-link">
-						<a href="#" onclick="$(this).closest('.comment-container, .ui-dialog-content').reload(); return false;">{tr}Cancel{/tr}</a>
+						<a href="#" onclick="$(this).closest('.comment-container').reload(); $(this).closest('.ui-dialog').remove(); return false;">{tr}Cancel{/tr}</a>
 					</div>
 				</div>
 			</fieldset>
