@@ -4257,11 +4257,11 @@ div.drillshow {
   position: absolute;
 }
 .wp-annotation .annotation {
-  border: solid 2px red;
+  border: solid 2px #a94442;
   position: absolute;
 }
 .wp-annotation .annotation.selected {
-  border-color: green;
+  border-color: #3c763d;
 }
 .multilike .horizontal {
   display: inline-block;

@@ -1531,8 +1531,8 @@ samp {
 code {
   padding: 2px 4px;
   font-size: 90%;
-  color: #c7254e;
-  background-color: #f9f2f4;
+  color: #444444;
+  background-color: #f8f8f8;
   border-radius: 2px;
 }
 kbd {
@@ -7600,5 +7600,5 @@ li.menuoption a {
   font-size: 125%;
 }
 .panel-title a {
-  color: #555;
+  color: #555555;
 }
