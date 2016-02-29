@@ -51,10 +51,11 @@ class Search_Elastic_Connection
 		}
 	}
 
-	function getIndexStatus($index)
+	function getIndexStatus($index = '')
 	{
+		$index = $index ? '/' . $index : '';
 		try {
-			return $this->get("/$index/_status");
+			return $this->get("$index/_status");
 		} catch (Exception $e) {
 			$message = $e->getMessage();
 
@@ -65,7 +66,7 @@ class Search_Elastic_Connection
 			}
 		}
 		try {
-			return $this->get("/$index/_stats");	// v2 "Indices Stats" API result
+			return $this->get("$index/_stats");	// v2 "Indices Stats" API result
 		} catch (Exception $e) {
 			TikiLib::lib('errorreport')->report($message . ' for index ' . $index);
 			return null;
