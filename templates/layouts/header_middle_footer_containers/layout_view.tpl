@@ -24,7 +24,7 @@
     <div class="container clearfix middle" id="middle">
 		<div class="topbar row">
 			{modulelist zone=topbar}
-         </div>
+        </div>
         <div class="row">
             {if zone_is_empty('left') and zone_is_empty('right')}
                 <div class="col-md-12 col1" id="col1">
