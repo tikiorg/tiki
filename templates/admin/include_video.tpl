@@ -82,6 +82,18 @@
 			</div>
 		{/tab}
 
+		{tab name="{tr}Interface{/tr}" key=interface}
+			<h2>{tr}Interface{/tr}</h2>
+			<fieldset class="table clearfix featurelist">
+				<legend> {tr}jQuery plugins and add-ons{/tr} </legend>
+				{preference name=jquery_fitvidjs}
+			</fieldset>
+
+			<div align="center" style="padding:1em;">
+				<input type="submit" class="btn btn-primary btn-sm" name="features" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+			</div>
+		{/tab}
+
 	{/tabset}
 
 </form>
