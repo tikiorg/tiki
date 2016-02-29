@@ -13,7 +13,7 @@
     {include file='tiki-ajax_header.tpl'}
 {/if}
 
-<div class="header_outer {if $prefs.site_layout eq 'moving_headers'}navbar navbar-default{/if}">
+<div class="header_outer">
     <div class="header_container container">
         <header class="header page-header">
             {modulelist zone=top class='row top_modules'}
@@ -83,7 +83,7 @@
             {else}
                 <div class="col-md-6 col-md-push-3 col1" id="col1">
                     {if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
-                        {modulelist zone=pagetop}
+                        {modulelist zone=pagetop class=row}
                     {/if}
                     {error_report}
                     <div class="pull-right">
@@ -93,7 +93,7 @@
                     {block name=navigation}{/block}
                     {block name=content}{/block}
                     {if $prefs.module_zones_pagebottom eq 'fixed' or ($prefs.module_zones_pagebottom ne 'n' && ! zone_is_empty('pagebottom'))}
-                        {modulelist zone=pagebottom}
+                        {modulelist zone=pagebottom class=row}
                     {/if}
                 </div>
                 <div class="col-md-3 col-md-pull-6" id="col2">
@@ -113,7 +113,6 @@
         </div>
     </div>
 </footer>
-
 {include file='footer.tpl'}
 </body>
 </html>

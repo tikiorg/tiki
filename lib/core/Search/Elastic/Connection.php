@@ -51,11 +51,28 @@ class Search_Elastic_Connection
 		}
 	}
 
-	function getIndexStatus($index)
+	function getIndexStatus($index = '')
 	{
+		$index = $index ? '/' . $index : '';
 		try {
-			return $this->get("/$index/_status");
+			return $this->get("$index/_status");
 		} catch (Exception $e) {
+			$message = $e->getMessage();
+
+			// in elastic v2 _status has been replaced by _stats so try that next...
+			if (strpos($message, '[_status]') === false) {	// another error
+				TikiLib::lib('errorreport')->report($message . ' for index ' . $index);
+				return null;
+			}
+		}
+		try {
+			return $this->get("$index/_stats");	// v2 "Indices Stats" API result
+		} catch (Exception $e) {
+			$message = $e->getMessage();
+
+			if (strpos($message, 'no such index') === false) {	// suppress no such index "errors"
+				TikiLib::lib('errorreport')->report($message . ' for index ' . $index);
+			}
 			return null;
 		}
 	}
@@ -352,6 +369,9 @@ class Search_Elastic_Connection
 			throw new Search_Elastic_NotFoundException($content->_type, $content->_id);
 		} elseif (isset($content->error)) {
 			$message = $content->error;
+			if (is_object($message) && !empty($message->reason)) {
+				$message = $message->reason;
+			}
 			if (preg_match('/^MapperParsingException\[No handler for type \[(?P<type>.*)\].*\[(?P<field>.*)\]\]$/', $message, $parts)) {
 				throw new Search_Elastic_MappingException($parts['type'], $parts['field']);
 			} elseif (preg_match('/No mapping found for \[(\S+)\] in order to sort on/', $message, $parts)) {
@@ -368,7 +388,7 @@ class Search_Elastic_Connection
 			} elseif (preg_match('/QueryParsingException\[\[[^\]]*\] \[[^\]]*\] ([^\]]*)\]/', $message, $parts)) {
 				throw new Search_Elastic_QueryParsingException($parts[1]);
 			} else {
-				throw new Search_Elastic_Exception($message->reason, $content->status);
+				throw new Search_Elastic_Exception($content->error->reason, $content->status);
 			}
 		} else {
 			return $content;

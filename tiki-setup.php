@@ -453,6 +453,12 @@ if ( $prefs['feature_jquery_ui'] == 'y' ) {
 		}
 	}
 
+	// restore jquery-ui buttons function, thanks to http://stackoverflow.com/a/23428433/2459703
+	$headerlib->add_js('
+var bootstrapButton = $.fn.button.noConflict() // return $.fn.button to previously assigned value
+$.fn.bootstrapBtn = bootstrapButton            // give $().bootstrapBtn the Bootstrap functionality
+');
+
 	if ( $prefs['feature_jquery_ui_theme'] !== 'none' ) {
 		if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
 			// // cdn for css not working - this is the only css from a cdn anyway - so use local version 
