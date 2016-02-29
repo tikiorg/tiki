@@ -101,7 +101,7 @@ function prefs_geo_list()
 			'description' => tr(''),
 			'type' => 'list',
 			'options' => array(
-					'ol2' => tra('OpenLayers 2.x (pre-Tiki 15.x legacy)'),
+					'ol2' => tra('OpenLayers 2.x (for use up to at least 15.x)'),
 					'ol3' => tra('OpenLayers 3.x (experimental)'),
 				),
 			'default' => 'ol2',
