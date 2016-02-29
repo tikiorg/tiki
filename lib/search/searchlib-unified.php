@@ -69,9 +69,9 @@ class UnifiedSearchLib
 
 				$index = $this->getIndex();
 				$index = new Search_Index_TypeAnalysisDecorator($index);
-				$indexer = $this->buildIndexer($index);				
+				$indexer = $this->buildIndexer($index);
 				$indexer->update($toProcess);
-				
+
 				// Detect newly created identifier fields
 				$initial = array_flip($prefs['unified_identifier_fields']);
 				$collected = array_flip($index->getIdentifierFields());
@@ -81,7 +81,7 @@ class UnifiedSearchLib
 				if (count($combined) > count($initial)) {
 					$tikilib = TikiLib::lib('tiki');
 					$tikilib->set_preference('unified_identifier_fields', array_keys($combined));
-				}				
+				}
 			} catch (Exception $e) {
 				// Re-queue pulled messages for next update
 				foreach ($toProcess as $message) {
@@ -626,11 +626,17 @@ class UnifiedSearchLib
 				$info[tr('Cluster Status')] = $cluster->status;
 				$info[tr('Cluster Node Count')] = $cluster->number_of_nodes;
 
-				$status = $connection->rawApi('/_status');
+				$status = $connection->getIndexStatus();
+
 				foreach ($status->indices as $indexName => $data) {
 					if (strpos($indexName, $prefs['unified_elastic_index_prefix']) === 0) {
-						$info[tr('Index %0', $indexName)] = tr('%0 documents, totaling %1', 
-							$data->docs->num_docs, $data->index->primary_size);
+						if (isset($data->primaries)) {	// v2
+							$info[tr('Index %0', $indexName)] = tr('%0 documents, totaling %1 bytes',
+								$data->primaries->docs->count, number_format($data->primaries->store->size_in_bytes));
+						} else {					// v1
+							$info[tr('Index %0', $indexName)] = tr('%0 documents, totaling %1 bytes',
+								$data->docs->num_docs, number_format($data->index->primary_size_in_bytes));
+						}
 					}
 				}
 
