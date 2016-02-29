@@ -706,11 +706,17 @@ class UnifiedSearchLib
 						$info[tr('Node %0', $node->name)] = tr('Using %0, since %1', $node->jvm->mem->heap_used, $node->jvm->uptime);
 					}
 				} else {
-					$status = $connection->rawApi('/_status');
+					$status = $connection->getIndexStatus();
+
 					foreach ($status->indices as $indexName => $data) {
 						if (strpos($indexName, $prefs['unified_elastic_index_prefix']) === 0) {
-							$info[tr('Index %0', $indexName)] = tr('%0 documents, totaling %1 bytes', 
-								$data->docs->num_docs, number_format($data->index->primary_size_in_bytes));
+							if (isset($data->primaries)) {	// v2
+								$info[tr('Index %0', $indexName)] = tr('%0 documents, totaling %1 bytes',
+									$data->primaries->docs->count, number_format($data->primaries->store->size_in_bytes));
+							} else {					// v1
+								$info[tr('Index %0', $indexName)] = tr('%0 documents, totaling %1 bytes',
+									$data->docs->num_docs, number_format($data->index->primary_size_in_bytes));
+							}
 						}
 					}
 

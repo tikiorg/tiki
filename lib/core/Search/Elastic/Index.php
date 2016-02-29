@@ -35,7 +35,13 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 
 	function exists()
 	{
-		return (bool) $this->connection->getIndexStatus($this->index);
+		$indexStatus = $this->connection->getIndexStatus($this->index);
+
+		if (is_object($indexStatus)) {
+			return !empty($indexStatus->indices->{$this->index});
+		} else {
+			return (bool) $indexStatus;
+		}
 	}
 
 	function addDocument(array $data)
