@@ -94,25 +94,30 @@ class Search_MySql_Index implements Search_Index_Interface
 				$this->table->expr($condition),
 			);
 
-			$scoreField = null;
+			$scoreFields = [];
 			$indexes = $this->builder->getRequiredIndexes();
 			foreach ($indexes as $index) {
 				$this->table->ensureHasIndex($index['field'], $index['type']);
 
-				if (! $scoreField && $index['type'] == 'fulltext') {
-					$scoreField = $index['field'];
+				if (! in_array($index, $scoreFields) && $index['type'] == 'fulltext') {
+					$scoreFields[] = $index;
 				}
 			}
 
 			$this->table->flush();
 
-			$order = $this->getOrderClause($query, (bool) $scoreField);
+			$order = $this->getOrderClause($query, (bool) $scoreFields);
 
 			$selectFields = $this->table->all();
 
-			if ($scoreField) {
-				$str = $this->db->qstr(implode(' ', $words));
-				$selectFields['score'] = $this->table->expr("ROUND(MATCH(`$scoreField`) AGAINST ($str),2)");
+			if ($scoreFields) {
+				$str = $this->db->qstr(implode(' ', array_unique($words)));
+				$scoreCalc = '';
+				foreach($scoreFields as $field) {
+					$scoreCalc .= $scoreCalc ? ' + ' : '';
+					$scoreCalc .= "ROUND(MATCH(`{$field['field']}`) AGAINST ($str),2) * {$field['weight']}";
+				}
+				$selectFields['score'] = $this->table->expr($scoreCalc);
 			}
 			$count = $this->table->fetchCount($conditions);
 			$entries = $this->table->fetchAll($selectFields, $conditions, $resultCount, $resultStart, $order);
