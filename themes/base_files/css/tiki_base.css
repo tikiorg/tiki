@@ -4234,7 +4234,6 @@ body.tiki_wiki #comments {
 .table-responsive > .table > tbody > tr > td.text-left {
   white-space: normal;
 }
-.diffdeleted,
 .diffinldel {
   text-decoration: line-through;
 }

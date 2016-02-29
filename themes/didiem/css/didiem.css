@@ -6783,10 +6783,6 @@ textarea,
   border-top: 1px solid transparent;
   border-bottom: 1px solid transparent;
 }
-.footer_liner h3.panel-title {
-  color: #fff;
-  border-bottom: 1px dotted transparent;
-}
 .footer_liner legend,
 .footer_liner a,
 .footer_liner a:visited {
