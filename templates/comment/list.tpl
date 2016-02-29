@@ -32,7 +32,7 @@
 				<a class="btn btn-primary custom-handling" href="{service controller=comment action=post type=$type objectId=$objectId}" data-target="#add-comment-zone-{$objectId|replace:' ':''|replace:',':''}">{tr}Post new comment{/tr}</a>
 			</div>
 		</div>
-		<div id="add-comment-zone-{$objectId|replace:' ':''|replace:',':''}" class="comment-form"></div>
+		<div id="add-comment-zone-{$objectId|replace:' ':''|replace:',':''}" class="add-comment-zone"></div>
 	{/if}
 
 	{if $prefs.feature_inline_comments eq 'y'}
