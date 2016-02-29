@@ -278,7 +278,7 @@ if (jqueryTiki.no_cookie) {
 			</select>
 		{/if}
 		{if $prefs.socialnetworks_facebook_login eq 'y' and $mode neq "header" and empty($user)}
-			<div style="text-align: center"><a href="tiki-socialnetworks.php?request_facebook=true"><img src="http://developers.facebook.com/images/devsite/login-button.png"></a></div>
+			<div style="text-align: center"><a href="tiki-socialnetworks.php?request_facebook=true"><img src="https://developers.facebook.com/docs/facebook-login/web/login-button"></a></div>
 		{/if}
 		{if $prefs.socialnetworks_linkedin_login eq 'y' and $mode neq "header" and empty($user)}
 			<div style="text-align: center; margin-top:8px"><a href="tiki-socialnetworks_linkedin.php?connect=y"><img width="154px" src="https://content.linkedin.com/content/dam/developer/global/en_US/site/img/signin-button.png"></a></div>

@@ -894,13 +894,6 @@ body.tiki_wiki #comments {
 //   color: @state-success-text;
 // }
 
-.diffdeleted,
-	//{
-	//   background: @state-danger-bg;
-	//   color: @state-danger-text;
-	//  text-decoration: line-through;
-	//}
-
 .diffinldel {
 	//  background: @state-warning-bg;
 	text-decoration: line-through;
@@ -969,11 +962,11 @@ div.drillshow {
 }
 
 .wp-annotation .annotation {
-	border: solid 2px red;
+	border: solid 2px @state-danger-text;
 	position: absolute;
 }
 
 .wp-annotation .annotation.selected {
-	border-color: green;
+	border-color: @state-success-text;
 }
 

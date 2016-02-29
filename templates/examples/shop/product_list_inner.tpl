@@ -22,7 +22,7 @@
 					<p style="font-size: 1.1em;"><strong>{$row.price}</strong></p>
 					{if $row.stock|nonp gt 0}
 						{include file="templates/examples/shop/add_to_cart.tpl"}
-						<meta itemprop="acceptedPaymentMethod" content="http://purl.org/goodrelations/v1#PayPal">
+						<meta itemprop="acceptedPaymentMethod" content="http://www.heppnetz.de/ontologies/goodrelations/v1#PayPal">
 						<meta itemprop="availability" content="InStock">
 					{else}
 						<em>Awaiting stock</em>

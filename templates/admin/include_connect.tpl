@@ -7,16 +7,16 @@
 		<fieldset>
 			<legend><strong>{tr}Join the community!{/tr}</strong></legend>
 			<p>{tr}Tiki Wiki CMS Groupware is Free and Open Source Software (FOSS). It is a community-driven project which exists and improves thanks to the participation of people just like YOU.{/tr}</p>
-			<p>{button href="http://info.tiki.org/Join+the+community" _text="{tr}Join the Community{/tr}"}</p>
+			<p>{button href="https://tiki.org/Join" _text="{tr}Join the Community{/tr}"}</p>
 		</fieldset>
 		<fieldset>
 			<legend><strong>{tr}Tiki news{/tr}</strong></legend>
 			<p>
 				{tr}Embedded RSS feed from info.tiki.org TODO, meanwhile{/tr}
-				{button href="http://info.tiki.org/tiki-articles_rss.php?ver=2" _text="Add RSS"}
+				{button href="https://tiki.org/tiki-articles_rss.php?ver=2" _text="Add RSS"}
 			</p>
 			<p>
-				{tr}Tiki Newsletter{/tr} {button _text="{tr}Subscribe{/tr}" href="http://tiki.org/tiki-newsletters.php?nlId=6&info=1"}
+				{tr}Tiki Newsletter{/tr} {button _text="{tr}Subscribe{/tr}" href="https://tiki.org/tiki-admin_newsletter_subscriptions.php?nlId=6&info=1"}
 			</p>
 		</fieldset>
 		<fieldset>
@@ -36,13 +36,13 @@
 		<fieldset>
 			<legend><strong>{tr}Help improve Tiki{/tr}</strong></legend>
 			<p>
-				{tr}Submit a feature request or bug report.{/tr} {button _text="{tr}Visit Tiki development site{/tr}" href="http://dev.tiki.org/Report+a+Bug"}
+				{tr}Submit a feature request or bug report.{/tr} {button _text="{tr}Visit Tiki development site{/tr}" href="https://dev.tiki.org/Make+a+wish"}
 			</p>
 		</fieldset>
 		<fieldset>
 			<legend><strong>{tr}Make a financial contribution to the Tiki Association{/tr}</strong></legend>
 			<p>
-				<a href="http://tiki.org/Donation">
+				<a href="https://tiki.org/Donation">
 					<img src="img/tiki/Tiki_Contribute_Button.png" alt="{tr}Contribute to Tiki{/tr}">
 				</a>
 			</p>
@@ -64,7 +64,7 @@
 						{tr}Icons will appear next to all the preferences where you can 'like', request a 'fix' or ask 'what is this for?'{/tr}<br>
 						{tr}Your votes are sent when you connect with mother.tiki.org (currently only by clicking the '<strong>Send Info</strong>' button){/tr}
 					</p>
-					<p>{tr}For more info{/tr} <a href="http://doc.tiki.org/Connect">{tr}click here{/tr}</a></p>
+					<p>{tr}For more info{/tr} <a href="https://doc.tiki.org/Connect">{tr}click here{/tr}</a></p>
 				{/remarksbox}
 				{preference name="connect_feature"}
 				<div class="adminoptionboxchild" id="connect_feature_childcontainer">

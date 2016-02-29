@@ -76,7 +76,7 @@ class TWVersion
 				23=>'Altair',		// 12.x
 				24=>'Fomalhaut',	// 13.x
 				25=>'Peony',		// 14.x
-				26=>'Star TBA',		// 15.x
+				26=>'Situla',		// 15.x
 		);
 	}
 
@@ -228,6 +228,7 @@ class TWVersion
 				'14.0',
 				'14.1',
 				'14.2',
+				'15.0alpha',
 			);
 	}
 

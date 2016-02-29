@@ -122,7 +122,7 @@ function showWebmailMessage(inMsg) {
 	\$('#$divId .mod_webmail_list').hide();
 });
 
-\$(window).unload( function() {
+\$(window).on('unload', function() {
 	// doesn't seem to help - gets processed after doRefreshWebmail anyway
 	cancelRefreshWebmail();
 });
