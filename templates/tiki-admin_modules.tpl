@@ -5,16 +5,16 @@
 
 <div class="t_navbar margin-bottom-md">
 	{button href="tiki-admin_modules.php?clear_cache=1" _icon_name="trash" _text="{tr}Clear Cache{/tr}"}
-	{if $tiki_p_edit_menu eq 'y'}
-		{button href="tiki-admin_menus.php" _icon_name="menu" _text="{tr}Admin Menus{/tr}"}
-	{/if}
 	{if empty($smarty.request.show_hidden_modules)}
 		{button show_hidden_modules="y" _icon_name="ok" _text="{tr}Show hidden modules{/tr}"}
 	{else}
 		{button show_hidden_modules="" _icon_name="disable" _text="{tr}Hide hidden modules{/tr}"}
 	{/if}
-	{button href="./" _icon_name="disable" _text="{tr}Exit Modules{/tr}"}
 	{button _text="{tr}Save{/tr}" _type="primary" _icon_name="floppy" _id="save_modules" _ajax="n"}
+	{if $tiki_p_edit_menu eq 'y'}
+		{button href="tiki-admin_menus.php" _icon_name="menu" _type="link" _text="{tr}Admin Menus{/tr}"}
+	{/if}
+	{button href="./" _icon_name="disable" _type="link" _text="{tr}Exit Modules{/tr}"}
 </div>
 
 {if !empty($missing_params)}

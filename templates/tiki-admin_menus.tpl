@@ -6,7 +6,7 @@
 		<a class="btn btn-default" href="{bootstrap_modal controller=menu action=manage_menu}">
 			{icon name="create"} {tr}Create Menu{/tr}
 		</a>
-		{button href="tiki-admin_modules.php" _icon_name="cogs" _text="{tr}Modules{/tr}"}
+		{button href="tiki-admin_modules.php" _icon_name="cogs" _type="link" _text="{tr}Modules{/tr}"}
 	</div>
 {/if}
 {include file='find.tpl'}

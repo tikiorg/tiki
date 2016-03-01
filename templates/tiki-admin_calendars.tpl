@@ -397,12 +397,12 @@
 				<label class="col-sm-3 control-label">
 					{tr}Default event status:{/tr}
 				</label>
-				<div class="col-sm-2">
+				<div class="col-sm-3">
 					{html_options class="form-control" name='options[defaulteventstatus]' options=$eventstatus selected=$defaulteventstatus}
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="checkbox col-sm-3 col-sm-offset-3">
+				<div class="checkbox col-sm-4 col-sm-offset-3">
 					<label class="control-label">
 						<input type="checkbox" name="show[status]" value="on"{if $info.show_status eq 'y'} checked="checked"{/if}>
 						{tr}Show in popup view{/tr}
@@ -410,7 +410,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="checkbox col-sm-3 col-sm-offset-3">
+				<div class="checkbox col-sm-4 col-sm-offset-3">
 					<label class="control-label">
 						<input type="checkbox" name="show[status_calview]" value="on"{if $info.show_status_calview ne 'n'} checked="checked"{/if}>
 						{tr}Show in calendar view{/tr}

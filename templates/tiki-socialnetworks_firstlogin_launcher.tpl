@@ -8,7 +8,9 @@ if ($("form > input[name=origin]:hidden").length === 0) {	// lightweight fix to 
 			iframe: true,
 			scrolling: false,
 			width: 650,
-			height: 600
+			height: 650,
+			escKey: false,
+			overlayClose: false
 		});
 	}, 1000);
 }

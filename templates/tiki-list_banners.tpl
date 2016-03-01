@@ -6,7 +6,7 @@
 
 {if $tiki_p_admin_banners eq 'y'}
 	<div class="t_navbar margin-bottom-md">
-		{button href="tiki-edit_banner.php" class="btn btn-default" _text="{tr}Create banner{/tr}"}
+		{button href="tiki-edit_banner.php" class="btn btn-link" _type="link" _icon_name="sticky-note-o" _text="{tr}Create banner{/tr}"}
 	</div>
 {/if}
 

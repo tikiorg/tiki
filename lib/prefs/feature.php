@@ -330,7 +330,7 @@ function prefs_feature_list($partial = false)
 			'tags' => array('basic'),
 		),
 		'feature_faqs' => array(
-			'name' => tra('FAQ'),
+			'name' => tra('FAQs'),
 			'description' => tra('Frequently asked questions and answers'),
 			'warning' => tra('There has been discussion about this feature being retired, so keep in mind that normal wiki pages can be used to create and display FAQs.'),
 			'help' => 'FAQ',
@@ -2827,6 +2827,7 @@ function prefs_feature_list($partial = false)
 			'description' => tra('Enable/disable inline comments.'),
 			'dependencies' => array(
 				'feature_wiki_comments',
+				'feature_wiki_paragraph_formatting',
 			),
 			'type' => 'flag',
 			'default' => 'n',

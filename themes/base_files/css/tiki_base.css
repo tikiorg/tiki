@@ -2974,7 +2974,7 @@ body.tiki.navbar-padding {
 .img-thumbnail.media-object {
   max-width: none;
 }
-.tiki .form-horizontal input[type="checkbox"] {
+.tiki .form-horizontal .form-group label + div > input[type="checkbox"] {
   margin-top: .8em;
 }
 .tiki .form-horizontal .checkbox input[type="checkbox"] {

@@ -28,16 +28,15 @@
 
 	{if $allow_post}
 		<div class="submit">
-			<h3>
-				<div class="button buttons comment-form {if $prefs.wiki_comments_form_displayed_default eq 'y'}autoshow{/if}">
-					<a class="btn btn-primary custom-handling" href="{service controller=comment action=post type=$type objectId=$objectId}" data-target="#add-comment-zone-{$objectId|replace:' ':''|replace:',':''}">{tr}Post new comment{/tr}</a>
-				</div>
+			<div class="button buttons comment-form {if $prefs.wiki_comments_form_displayed_default eq 'y'}autoshow{/if}">
+				<a class="btn btn-primary custom-handling" href="{service controller=comment action=post type=$type objectId=$objectId}" data-target="#add-comment-zone-{$objectId|replace:' ':''|replace:',':''}">{tr}Post new comment{/tr}</a>
+			</div>
 		</div>
-		<div id="add-comment-zone-{$objectId|replace:' ':''|replace:',':''}" class="comment-form"></div>
+		<div id="add-comment-zone-{$objectId|replace:' ':''|replace:',':''}" class="add-comment-zone"></div>
 	{/if}
 
 	{if $prefs.feature_inline_comments eq 'y'}
-		<a id="note-editor-comment" class="alert alert-warning" href="#">{tr}Add Comment{/tr}</a>
+		<a id="note-editor-comment" class="alert alert-info" style="display:none;" href="#">{tr}Add Comment{/tr}</a>
 	{/if}
 
 	<script type="text/javascript">
