@@ -170,7 +170,9 @@ require_once ('lib/setup/tikiIndex.php');
 if ($prefs['useGroupHome'] == 'y') {
 	require_once ('lib/setup/default_homepage.php');
 }
-
+if ($prefs['tracker_force_fill'] == 'y') {
+	require_once ('lib/setup/tracker_force_fill.php');
+}
 // change $prefs['tikiIndex'] if feature_sefurl is enabled (e.g. tiki-index.php?page=HomePage becomes HomePage)
 if ($prefs['feature_sefurl'] == 'y' && ! defined('TIKI_CONSOLE')) {
 	//TODO: need a better way to know which is the type of the tikiIndex URL (wiki page, blog, file gallery etc)

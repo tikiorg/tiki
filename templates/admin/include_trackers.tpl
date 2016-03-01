@@ -82,6 +82,13 @@
 
 					</table>
 			</fieldset>
+			<fieldset class="admin">
+				<legend>{tr}Tracker Force-Fill Feature{/tr}</legend>
+				{preference name=tracker_force_fill}
+				{preference name=tracker_force_tracker_id}
+				{preference name=tracker_force_mandatory_field}
+				{preference name=tracker_force_tracker_fields}
+			</fieldset>
 		{/tab}
 
 		{tab name="{tr}Plugins{/tr}"}

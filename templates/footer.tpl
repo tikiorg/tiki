@@ -23,6 +23,9 @@
 		</div>
 	</div>
 </div>
+{if isset($force_fill_action)}
+	{include file="tiki-tracker_force_fill.tpl"}
+{/if}
 {if $module_pref_errors|default:null}
 	<div class="container modules">
 		{remarksbox type="warning" title="{tr}Module errors{/tr}"}
