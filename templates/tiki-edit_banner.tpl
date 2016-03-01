@@ -139,29 +139,16 @@
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<h4>{tr}Show the banner only on:{/tr}</h4>
+			<div class="col-sm-12">
 			<div class="form-group">
-				<div class="col-sm-1 col-sm-offset-2">
 			      	<label class="checkbox-inline"><input type="checkbox" name="Dmon" {if $Dmon eq 'y'}checked="checked"{/if}>{tr}Mon{/tr}</label>
-			    </div>
-			    <div class="col-sm-1">
 			      	<label class="checkbox-inline"><input type="checkbox" name="Dtue" {if $Dtue eq 'y'}checked="checked"{/if}>{tr}Tue{/tr}</label>
-			    </div>
-			    <div class="col-sm-1">
 			      	<label class="checkbox-inline"><input type="checkbox" name="Dwed" {if $Dwed eq 'y'}checked="checked"{/if}>{tr}Wed{/tr}</label>
-			    </div>
-			    <div class="col-sm-1">
 			      	<label class="checkbox-inline"><input type="checkbox" name="Dthu" {if $Dthu eq 'y'}checked="checked"{/if}>{tr}Thu{/tr}</label>
-			    </div>
-			    <div class="col-sm-1">
 			      	<label class="checkbox-inline"><input type="checkbox" name="Dfri" {if $Dfri eq 'y'}checked="checked"{/if}>{tr}Fri{/tr}</label>
-			    </div>
-			    <div class="col-sm-1">
 			      	<label class="checkbox-inline"><input type="checkbox" name="Dsat" {if $Dsat eq 'y'}checked="checked"{/if}>{tr}Sat{/tr}</label>
-			    </div>
-			    <div class="col-sm-1">
 			      	<label class="checkbox-inline"><input type="checkbox" name="Dsun" {if $Dsun eq 'y'}checked="checked"{/if}>{tr}Sun{/tr}</label>
-			    </div>
-		    </div>
+		    </div></div>
 		</div>
 	</div>
 
@@ -215,21 +202,25 @@
 		    <div class="form-group">
 			    <label class="col-sm-3 control-label">{tr}Movie URL{/tr}</label>
 			    <div class="col-sm-7 margin-bottom-sm">
-			    	 <input type="text" size="50" name="movieUrl" value="{$movie.movie|escape}" class="form-control">
+			    	 <input type="text" name="movieUrl" value="{$movie.movie|escape}" class="form-control">
 			    </div>
+			</div>
+			<div class="form-group">
 			    <label class="col-sm-3 control-label">{tr}Movie Size{/tr}</label>
 			    <div class="col-sm-3">
-			    	<input type="text" size="4" name="movieWidth" value="{$movie.width|escape}" class="form-control" placeholder="{tr}width in pixels{/tr}">
+			    	<input type="text" name="movieWidth" value="{$movie.width|escape}" class="form-control" placeholder="{tr}width in pixels{/tr}">
 			    	<div class="help-block">
 						{tr}Pixels{/tr}
 					</div>
 			    </div>
 			    <div class="col-sm-3">
-			    	<input type="text" size="4" name="movieHeight" value="{$movie.height|escape}" class="form-control" placeholder="{tr}height in pixels{/tr}">
+			    	<input type="text" name="movieHeight" value="{$movie.height|escape}" class="form-control" placeholder="{tr}height in pixels{/tr}">
 			    	<div class="help-block">
 						{tr}Pixels{/tr}
 					</div>
 		    	</div>
+			</div>
+			<div class="form-group">
 	    		<label class="col-sm-3 control-label">{tr}FlashPlugin min version{/tr}</label>
 			    <div class="col-sm-7 margin-bottom-sm">
 			    	<input type="text" name="movieVersion" value="{$movie.version|escape}" class="form-control">
@@ -251,7 +242,7 @@
 		    </div>
 		</div>
 	</div>
-	<input type="submit" class="btn btn-default btn-sm" name="save" value="{tr}Save the Banner{/tr}">
+	<input type="submit" class="btn btn-default" name="save" value="{tr}Save the Banner{/tr}">
 </form>
 
 {if $zones}
