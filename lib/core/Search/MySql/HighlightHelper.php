@@ -14,9 +14,13 @@ class Search_MySql_HighlightHelper implements Zend\Filter\FilterInterface
 	function __construct(array $words)
 	{
 		$this->words = $words;
+
+		$counter = -1;
+
 		$this->replacements = array_map(
-			function ($word) {
-				return "<b class=\"highlight_word highlight_word_0\">$word</b>";
+			function ($word) use (& $counter) {
+				$counter++;
+				return "<b class=\"highlight_word highlight_word_$counter\">$word</b>";
 			}, $this->words
 		);
 		$this->snippetHelper = new Search_ResultSet_SnippetHelper;
