@@ -164,9 +164,9 @@ if (jqueryTiki.no_cookie) {
 		{/if}
 		<div class="user form-group clearfix">
 			{if !isset($module_logo_instance)}{assign var=module_logo_instance value=' '}{/if}
-			<label class="col-sm-4" for="login-user_{$module_logo_instance}">{if $prefs.login_is_email eq 'y'}{tr}Email:{/tr}{else}{tr}Username{/tr}{if $prefs.login_allow_email eq 'y'} {tr}or e-mail address{/tr}{/if}:</label>{/if}</label>
+			<label{if $mode eq "popup"} class="col-sm-4"{/if} for="login-user_{$module_logo_instance}">{if $prefs.login_is_email eq 'y'}{tr}Email:{/tr}{else}{tr}Username{/tr}{if $prefs.login_allow_email eq 'y'} {tr}or e-mail address{/tr}{/if}:</label>{/if}</label>
 			{if !isset($loginuser) or $loginuser eq ''}
-				<div class="col-sm-8">
+				<div{if $mode eq "popup"} class="col-sm-8"{/if}>
 					<input class="form-control" type="text" name="user" id="login-user_{$module_logo_instance}" {if !empty($error_login)} value="{$error_user|escape}"{elseif !empty($adminuser)} value="{$adminuser|escape}"{/if}/>
 				</div>
 				{jq}if ($('#login-user_{{$module_logo_instance}}:visible').length) {if ($("#login-user_{{$module_logo_instance}}").offset().top < $(window).height()) {$('#login-user_{{$module_logo_instance}}')[0].focus();} }{/jq}
@@ -176,15 +176,15 @@ if (jqueryTiki.no_cookie) {
 		</div>
 		{if $prefs.feature_challenge eq 'y'} <!-- quick hack to make challenge/response work until 1.8 tiki auth overhaul -->
 			<div class="email form-group clearfix">
-				<label class="col-sm-4" for="login-email_{$module_logo_instance}">{tr}eMail:{/tr}</label>
-				<div class="col-sm-8">
+				<label{if $mode eq "popup"} class="col-sm-4"{/if} for="login-email_{$module_logo_instance}">{tr}eMail:{/tr}</label>
+				<div{if $mode eq "popup"} class="col-sm-8"{/if}>
 					<input class="form-control" type="text" name="email" id="login-email_{$module_logo_instance}">
 				</div>
 			</div>
 		{/if}
 		<div class="pass form-group clearfix">
-			<label class="col-sm-4" for="login-pass_{$module_logo_instance}">{tr}Password:{/tr}</label>
-			<div class="col-sm-8">
+			<label{if $mode eq "popup"} class="col-sm-4"{/if} for="login-pass_{$module_logo_instance}">{tr}Password:{/tr}</label>
+			<div{if $mode eq "popup"} class="col-sm-8"{/if}>
 				<input onkeypress="capLock(event, this)" type="password" name="pass" class="form-control col-sm-8" id="login-pass_{$module_logo_instance}">
 				<div class="divCapson" style="display:none;">
 					{icon name='error' istyle="vertical-align:middle"} {tr}CapsLock is on.{/tr}
