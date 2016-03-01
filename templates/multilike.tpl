@@ -1,4 +1,8 @@
-<div class="multilike">
+{if $show_in_popup}
+<a role="button" class="btn btn-default btn-multilike" data-target="#ml{$type}{$object}" data-placement="{$popup_placement}">Like</a>
+<div class="screen hide">{* screen/hide the multilike inline, so that it only shows in the popup *}
+{/if}
+<div id="ml{$type}{$object}" class="multilike">
 	{if $show_likes}
 	<div class="likes {$orientation}">
 		<div class="mini-counts">
@@ -48,5 +52,17 @@
 			{/foreach}
 		</div>
 	</div>
-
 </div>
+{if $show_in_popup}
+</div>
+{jq}
+	$('a.btn-multilike').click(function(){
+		$(this).popover({
+			content: $($(this).data('target')),
+			placement: $(this).data('placement'),
+			html: true
+		});
+		$(this).popover("toggle");
+	});
+{/jq}
+{/if}

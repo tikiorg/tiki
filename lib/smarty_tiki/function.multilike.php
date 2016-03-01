@@ -23,18 +23,18 @@ function smarty_function_multilike( $params, $smarty )
 	if (empty($config)) {
 		return tr("Multivalue configuration not found");
 	}
-
 	$totalCount = 0;
 	$totalPoints = 0;
 	$buttons = array();
 	foreach ($config['labels'] as $key=>$label) {
 		$button = array();
 		$button['index'] = $key;
+		$button['id'] = $config['ids'][$key];
 		if (isset($config['values'])) {
 			$button['value'] = $config['values'][$key];
 		}
 		$button['label'] = $label;
-		$button['relation'] = $params['relation_prefix'].".".$button['index'];
+		$button['relation'] = $params['relation_prefix'].".".$button['id'];
 
 		//get existing stats
 		$button['count'] = $relationlib->get_relation_count($button['relation'], $params['type'], $params['object']);
@@ -47,6 +47,7 @@ function smarty_function_multilike( $params, $smarty )
 		// set whether already selected
 		if ($relationlib->get_relation_id( $button['relation'], "user", $user, $params['type'], $params['object'] )) {
 			$button['selected'] = 1;
+			$smarty->assign('has_selection', 1);
 		} else {
 			$button['selected'] = 0;
 		}
@@ -63,6 +64,14 @@ function smarty_function_multilike( $params, $smarty )
 
 	if(!empty($params['showOptionTotals'])) {
 		$smarty->assign("show_option_totals", true);
+	}
+
+	if(!empty($params['showInPopup']) && $params['showInPopup'] == 'y') {
+		$smarty->assign("show_in_popup", true);
+	}
+	$smarty->assign("popup_placement","left"); //default
+	if(!empty($params['popupPlacement'])) {
+		$smarty->assign("popup_placement", $params['popupPlacement']);
 	}
 
 	if(!empty($params['showPoints']) && strtolower($params['showPoints']) != 'n') {
@@ -122,6 +131,10 @@ function get_multivalues_from_pref() {
 			$config['values'] = array_map('trim', explode(',', $config['values']));
 		}
 		$config['labels'] = array_map('trim', explode(',', $config['labels']));
+		if (empty($config['ids'])){
+			return;
+		}
+		$config['ids'] = array_map('trim', explode(',', $config['ids']));
 		$configurations[] = $config;
 	}
 	return $configurations;
