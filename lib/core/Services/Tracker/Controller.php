@@ -769,16 +769,44 @@ class Services_Tracker_Controller
 			}
 		}
 
+		$editableFields = $input->editable->none();
+		if (empty($editableFields)) {
+			//if editable fields, show all fields in the form (except the ones from forced which have been removed).
+			$displayedFields = $processedFields;
+		} else {
+			// if editableFields is set, only add the field if found in the editableFields array
+			$displayedFields = array();
+			foreach ($processedFields as $k => $f) {
+				$permName = $f['permName'];
+				if (in_array($permName, $editableFields)) {
+					$displayedFields[] = $f;
+				}
+			}
+		}
+		$status = $input->status->word();
+		if ( $status === null) { // '=== null' means status was not set. if status is set to "", it skips the status and uses the default
+			$status = $itemObject->getDisplayedStatus();
+		} else {
+			$status = $input->status->word();
+		}
+
+		$title = $input->title->none();
+		if ( empty($title) ) { // '=== null' means status was not set. if status is set to "", it skips the status and uses the default
+			$title = tr('Create Item');
+		} else {
+			$title = $title;
+		}
+
 		return array(
-			'title' => tr('Create Item'),
+			'title' => $title,
 			'trackerId' => $trackerId,
 			'trackerName' => $trackerName,
 			'itemId' => $itemId,
-			'fields' => $processedFields,
+			'fields' => $displayedFields,
 			'forced' => $forced,
 			'trackerLogo' => $definition->getConfiguration('logo'),
 			'modal' => $input->modal->int(),
-			'status' => $itemObject->getDisplayedStatus(),
+			'status' => $status,
 			'format' => $input->format->word(),
 		);
 	}
@@ -928,7 +956,7 @@ class Services_Tracker_Controller
 
 		/* Allow overriding of default wording in the template */
 		if (empty($input->title->text())) {
-			$title = tr('Update');
+			$title = tr('Update Item');
 		} else {
 			$title = $input->title->text();
 		}
@@ -946,7 +974,7 @@ class Services_Tracker_Controller
 			$button_label = $input->button_label->text();
 		}
 
-		if (empty($input->skip_form->word())) {
+		if ($input->status->word() === null) {
 			$status = $itemObject->getDisplayedStatus();
 		} else {
 			$status = $input->status->word();
