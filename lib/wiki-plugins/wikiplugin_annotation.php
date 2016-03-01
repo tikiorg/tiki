@@ -58,6 +58,29 @@ function wikiplugin_annotation_info()
 					array('text' => tra('Center'), 'value' => 'center'), 
 				),
 			),
+			'class' => array(
+				'required' => false,
+				'name' => tra('CSS Class'),
+				'description' => tra('Class of the containing DIV element.'),
+				'filter' => 'text',
+				'default' => '',
+				'since' => '15.0',
+				'advanced' => true,
+			),
+			'showlist' => array(
+				'required' => false,
+				'name' => tra('Show List'),
+				'description' => tra('Show the list of annotations below the image.') . ' ' . tra('(y/n)'),
+				'filter' => 'alpha',
+				'default' => 'y',
+				'since' => '15.0',
+				'advanced' => true,
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n'),
+				),
+			),
 		)
 	);
 }
@@ -67,7 +90,12 @@ function wikiplugin_annotation($data, $params)
 	global $page, $tiki_p_edit;
 	$headerlib = TikiLib::lib('header');
 
-	$params = array_merge(array( 'align' => 'left' ), $params);
+	$defaults = array();
+	$plugininfo = wikiplugin_annotation_info();
+	foreach ($plugininfo['params'] as $key => $param) {
+		$defaults["$key"] = $param['default'];
+	}
+	$params = array_merge($defaults, $params);
 
 	$annotations = array();
 	foreach ( explode("\n", $data) as $line ) {
@@ -105,7 +133,7 @@ function wikiplugin_annotation($data, $params)
 		$editableStr = tra('Editable');
 
 		$form = <<<FORM
-<form method="post" action="tiki-wikiplugin_edit.php">
+<form method="post" action="tiki-wikiplugin_edit.php" class="form">
 	<div style="display:none">
 		<input type="hidden" name="page" value="$page"/>
 		<input type="hidden" name="type" value="annotation"/>
@@ -131,8 +159,8 @@ FORM;
 
 	$smarty = TikiLib::lib('smarty');
 	$smarty->loadPlugin('smarty_function_icon');
-	$minimize = smarty_function_icon(['name' => 'minimize'], $smarty);
-	$delete = smarty_function_icon(['name' => 'delete'], $smarty);
+	$close = smarty_function_icon(['name' => 'close'], $smarty);
+	$delete = smarty_function_icon(['name' => 'trash'], $smarty);
 
 	$labelStr = tra('Label');
 	$linkStr = tra('Link');
@@ -145,18 +173,26 @@ FORM;
 		<div class="editor panel">
 			<div class="panel-body">
 				<form method="post" action="#" class="form-horizontal">
-					<label class="form-group">
-						<span class="col-sm-4">$labelStr</span>
-						<input class="col-sm-8" type="text" name="label">
-					</label>
-					<label class="form-group">
-						<span class="col-sm-4">$linkStr</span>
-						<input class="col-sm-8" type="text" name="link">
-					</label>
 					<div class="form-group">
-						<input type="submit" class="btn btn-default btn-sm" value="$saveStr">
-						<a class="btn btn-default btn-sm minimize" href="#">$minimize $closeStr</a>
-						<a class="btn btn-default btn-sm delete" href="#">$delete $removeStr</a>
+						<label style="width:100%">
+							<span class="col-sm-3">$labelStr</span>
+							<span class="col-sm-9"><textarea name="label" class="form-control"></textarea></span>
+						</label>
+					</div>
+					<div class="form-group">
+						<label style="width:100%">
+							<span class="col-sm-3">$linkStr</span>
+							<span class="col-sm-9"><input type="text" name="link" class="form-control"></span>
+						</label>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9 col-sm-offset-3">
+							<input type="submit" class="btn btn-default btn-sm" value="$saveStr">
+							<div class="pull-right">
+								<a class="btn btn-default btn-sm minimize" href="#" title="$closeStr">$close</a>
+								<a class="btn btn-default btn-sm delete" href="#" title="$removeStr">$delete</a>
+							</div>
+						</div>
 					</div>
 				</form>
 			</div>
@@ -166,11 +202,18 @@ EDITORFORM;
 		$editor_form = '';
 	}
 
+	if ($params['showlist'] === 'y') {
+		$list_div = '<div class="list-box"><div>';
+	} else {
+		$list_div = '';
+	}
+
 	return <<<ANNOTATION
-<div class="wp-annotation">
+<div class="wp-annotation {$params['class']}">
 	<div id="$cid" style="background:url({$params['src']}); width:{$params['width']}px; height:{$params['height']}px;">
 {$editor_form}
 	</div>
+	{$list_div}
 </div>
 $form
 ANNOTATION;
