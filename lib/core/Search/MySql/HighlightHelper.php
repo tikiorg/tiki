@@ -16,7 +16,7 @@ class Search_MySql_HighlightHelper implements Zend\Filter\FilterInterface
 		$this->words = $words;
 		$this->replacements = array_map(
 			function ($word) {
-				return "<b style=\"color: rgb(60, 118, 61);background: rgb(223, 240, 216);\">$word</b>";
+				return "<b class=\"highlight_word highlight_word_0\">$word</b>";
 			}, $this->words
 		);
 		$this->snippetHelper = new Search_ResultSet_SnippetHelper;
