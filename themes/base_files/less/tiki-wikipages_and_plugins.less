@@ -962,11 +962,13 @@ div.drillshow {
 }
 
 .wp-annotation .annotation {
-	border: solid 2px @state-danger-text;
+	border: dashed 1px rgba(255, 255, 255, 0.5);
+	background: rgba(255, 200, 40, 0.1);
 	position: absolute;
+	cursor: pointer;
 }
 
 .wp-annotation .annotation.selected {
-	border-color: @state-success-text;
+	border: dashed 1px rgba(69, 255, 97, 0.68);
+	background: rgba(85, 255, 68, 0.25);
 }
-
