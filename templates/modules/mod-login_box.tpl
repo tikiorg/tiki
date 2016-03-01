@@ -162,7 +162,7 @@ if (jqueryTiki.no_cookie) {
 				{else}{$error_login|escape}{/if}
 			{/remarksbox}
 		{/if}
-		<div class="user form-group">
+		<div class="user form-group clearfix">
 			{if !isset($module_logo_instance)}{assign var=module_logo_instance value=' '}{/if}
 			<label class="col-sm-4" for="login-user_{$module_logo_instance}">{if $prefs.login_is_email eq 'y'}{tr}Email:{/tr}{else}{tr}Username{/tr}{if $prefs.login_allow_email eq 'y'} {tr}or e-mail address{/tr}{/if}:</label>{/if}</label>
 			{if !isset($loginuser) or $loginuser eq ''}
@@ -175,14 +175,14 @@ if (jqueryTiki.no_cookie) {
 			{/if}
 		</div>
 		{if $prefs.feature_challenge eq 'y'} <!-- quick hack to make challenge/response work until 1.8 tiki auth overhaul -->
-			<div class="email form-group">
+			<div class="email form-group clearfix">
 				<label class="col-sm-4" for="login-email_{$module_logo_instance}">{tr}eMail:{/tr}</label>
 				<div class="col-sm-8">
 					<input class="form-control" type="text" name="email" id="login-email_{$module_logo_instance}">
 				</div>
 			</div>
 		{/if}
-		<div class="pass form-group">
+		<div class="pass form-group clearfix">
 			<label class="col-sm-4" for="login-pass_{$module_logo_instance}">{tr}Password:{/tr}</label>
 			<div class="col-sm-8">
 				<input onkeypress="capLock(event, this)" type="password" name="pass" class="form-control col-sm-8" id="login-pass_{$module_logo_instance}">
