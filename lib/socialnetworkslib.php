@@ -260,7 +260,7 @@ class SocialNetworksLib extends LogsLib
 					$ret = $userlib->get_usertrackerid("Registered");
 					$userTracker = $ret['usersTrackerId'];
 					$userField = $ret['usersFieldId'];
-					if ($userTracker && $userField) {
+					if ($prefs['socialnetworks_facebook_create_user_trackeritem'] == 'y' && $userTracker && $userField) {
 						$definition = Tracker_Definition::get($userTracker);
 						$utilities = new Services_Tracker_Utilities();
 						$fields = array('ins_'.$userField => $user);
@@ -273,6 +273,7 @@ class SocialNetworksLib extends LogsLib
 							array(
 								'status' => '',
 								'fields' => $fields,
+								'validate' => false,
 							)
 						);
 					}
@@ -462,7 +463,7 @@ class SocialNetworksLib extends LogsLib
 				$ret = $userlib->get_usertrackerid("Registered");
 				$userTracker = $ret['usersTrackerId'];
 				$userField = $ret['usersFieldId'];
-				if ($userTracker && $userField) {
+				if ($prefs['socialnetworks_linkedin_create_user_trackeritem'] == 'y' && $userTracker && $userField) {
 					$definition = Tracker_Definition::get($userTracker);
 					$utilities = new Services_Tracker_Utilities();
 					$fields = array('ins_'.$userField => $user);
@@ -475,6 +476,7 @@ class SocialNetworksLib extends LogsLib
 						array(
 							'status' => '',
 							'fields' => $fields,
+							'validate' => false,
 						)
 					);
 				}

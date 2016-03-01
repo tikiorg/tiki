@@ -10,7 +10,7 @@ class Services_Tracker_Utilities
 	function insertItem($definition, $item)
 	{
 		$newItem = $this->replaceItem($definition, 0, $item['status'], $item['fields'], [
-			'validate' => true,
+			'validate' => isset($item['validate']) ? $item['validate'] : true,
 			'skip_categories' => false,
 			'bulk_import' => false,
 		]);

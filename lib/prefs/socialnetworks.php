@@ -113,6 +113,17 @@ function prefs_socialnetworks_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'socialnetworks_facebook_create_user_trackeritem' => array(
+			'name' => tra('Create a user tracker item on registration'),
+			'description' => tra("Sets whether a tracker item should be created for the user upon registration"),
+			'keywords' => 'social networks',
+			'type' => 'flag',
+			'default' => 'n',
+			'dependencies' => array(
+				'userTracker',
+				'socialnetworks_facebook_autocreateuser',
+			),
+		),
 		'socialnetworks_facebook_names' => array(
 			'name' => tra('First and last name tracker field IDs to set on creation'),
 			'description' => tra("Comma-separated. First name field followed by last name field. eg '2,3'"),
@@ -121,7 +132,7 @@ function prefs_socialnetworks_list()
 			'default' => 'n',
 			'dependencies' => array(
 				'userTracker',
-				'socialnetworks_facebook_autocreateuser',
+				'socialnetworks_facebook_create_user_trackeritem',
 			),
 		),
 		'socialnetworks_bitly_login' => array(
@@ -190,6 +201,17 @@ function prefs_socialnetworks_list()
 			),
 			'default' => 'n',
 		),
+		'socialnetworks_linkedin_create_user_trackeritem' => array(
+			'name' => tra('Create a user tracker item on registration'),
+			'description' => tra("Sets whether a tracker item should be created for the user upon registration"),
+			'keywords' => 'social networks',
+			'type' => 'flag',
+			'default' => 'n',
+			'dependencies' => array(
+				'userTracker',
+				'socialnetworks_linkedin_autocreateuser',
+			),
+		),
 		'socialnetworks_linkedin_names' => array(
 			'name' => tra('First and last name tracker field IDs to set on creation'),
 			'description' => tra("Comma-separated. First name field followed by last name field. eg '2,3'"),
@@ -198,7 +220,7 @@ function prefs_socialnetworks_list()
 			'default' => '',
 			'dependencies' => array(
 				'userTracker',
-				'socialnetworks_linkedin_autocreateuser',
+				'socialnetworks_linkedin_create_user_trackeritem',
 			),
 		),
 	);

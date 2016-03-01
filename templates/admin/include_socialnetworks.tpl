@@ -47,6 +47,7 @@
 				<div class="adminoptionboxchild" id="socialnetworks_facebook_autocreateuser_childcontainer">
 					{preference name=socialnetworks_facebook_firstloginpopup}
 					{preference name=socialnetworks_facebook_email}
+					{preference name=socialnetworks_facebook_create_user_trackeritem}
 					{preference name=socialnetworks_facebook_names}
 				</div>
 				{remarksbox type="note" title="{tr}Note{/tr}"}
@@ -91,6 +92,7 @@
 			{preference name=socialnetworks_linkedin_autocreateuser}
 			<div class="adminoptionboxchild" id="socialnetworks_linkedin_autocreateuser_childcontainer">
 				{preference name=socialnetworks_linkedin_email}
+				{preference name=socialnetworks_linkedin_create_user_trackeritem}
 				{preference name=socialnetworks_linkedin_names}
 			</div>
 		</div>
