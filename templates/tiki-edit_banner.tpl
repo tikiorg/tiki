@@ -1,5 +1,5 @@
 {* $Id$ *}
-{title help="Banners"}{tr}Edit or create banners{/tr}{/title}
+{title help="Banners"}{tr}Create or edit banners{/tr}{/title}
 
 <div class="t_navbar margin-bottom-md">
 	{button href="tiki-list_banners.php" _class="btn btn-link" _type="link" _icon_name="list" _text="{tr}List banners{/tr}"}
