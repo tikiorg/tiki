@@ -133,7 +133,7 @@ function wikiplugin_annotation($data, $params)
 		$editableStr = tra('Editable');
 
 		$form = <<<FORM
-<form method="post" action="tiki-wikiplugin_edit.php" class="form">
+<form method="post" action="tiki-wikiplugin_edit.php" class="form save-annotations">
 	<div style="display:none">
 		<input type="hidden" name="page" value="$page"/>
 		<input type="hidden" name="type" value="annotation"/>
@@ -214,7 +214,7 @@ EDITORFORM;
 {$editor_form}
 	</div>
 	{$list_div}
+	{$form}
 </div>
-$form
 ANNOTATION;
 }
