@@ -111,7 +111,7 @@ class Search_MySql_Index implements Search_Index_Interface
 			$selectFields = $this->table->all();
 
 			if ($scoreFields) {
-				$str = $this->db->qstr(implode(' ', array_unique($words)));
+				$str = $this->db->qstr(implode(' ', $words));
 				$scoreCalc = '';
 				foreach($scoreFields as $field) {
 					$scoreCalc .= $scoreCalc ? ' + ' : '';
@@ -174,7 +174,7 @@ class Search_MySql_Index implements Search_Index_Interface
 			function ($node) use (& $words, $factory) {
 				if ($node instanceof Search_Expr_Token && $node->getField() !== 'searchable') {
 					$word = $node->getValue($factory)->getValue();
-					if (is_string($word)) {
+					if (is_string($word) && !in_array($word, $words)) {
 						$words[] = $word;
 					}
 				}

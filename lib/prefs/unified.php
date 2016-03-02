@@ -31,6 +31,7 @@ function prefs_unified_list()
 			'description' => tra('Highlight the result snippet based on the search query. Enabling this option will impact performance, but improve user experience.'),
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'unified_lucene_max_result' => array(
 			'name' => tra('Lucene maximum results'),
@@ -278,7 +279,8 @@ function prefs_unified_list()
 			'name' => tra('Highlight results pages'),
 			'description' => tra('Highlight words on the result pages based on the search query.'),
 			'type' => 'flag',
-			'default' => 'n',
+			'default' => 'y',
+			'tags' => array('basic'),
 		),
 	);
 }

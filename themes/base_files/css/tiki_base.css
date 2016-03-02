@@ -1063,7 +1063,7 @@ li.login_link ul li a {
 .navbar-form .siteloginbar_poppedup .form-group.text-center {
   width: 100%;
 }
-.box-login_box label {
+.box-login_box .siteloginbar_poppedup label {
   display: block;
   text-align: right;
   padding-right: 0;
@@ -4256,11 +4256,14 @@ div.drillshow {
   position: absolute;
 }
 .wp-annotation .annotation {
-  border: solid 2px #a94442;
+  border: dashed 1px rgba(255, 255, 255, 0.5);
+  background: rgba(255, 200, 40, 0.1);
   position: absolute;
+  cursor: pointer;
 }
 .wp-annotation .annotation.selected {
-  border-color: #3c763d;
+  border: dashed 1px rgba(69, 255, 97, 0.68);
+  background: rgba(85, 255, 68, 0.25);
 }
 .multilike .horizontal {
   display: inline-block;
