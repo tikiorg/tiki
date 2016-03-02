@@ -3984,9 +3984,6 @@ div.tiki_plugin {
   position: fixed !important;
   z-index: 100 !important;
 }
-.TextArea-fullscreen #editwiki_toolbar {
-  width: 100% !important;
-}
 .TextArea-fullscreen .ui-wrapper {
   width: auto !important;
   height: 100% !important;
@@ -3994,6 +3991,9 @@ div.tiki_plugin {
 .TextArea-fullscreen .ui-wrapper #editwiki {
   position: absolute !important;
   width: 100% !important;
+}
+.TextArea-fullscreen .edit-zone-footer {
+  background: #ffffff;
 }
 .TextArea-fullscreen .actions,
 .CodeMirror-fullscreen .actions {
@@ -4030,6 +4030,8 @@ div.tiki_plugin {
   top: 0;
   right: 0;
   opacity: 1;
+  background: #d9edf7;
+  height: 100% !important;
 }
 #diff_history {
   overflow-x: hidden;
@@ -4312,4 +4314,3 @@ div.drillshow {
 .multilike .rate div .count {
   font-size: 0.8em;
 }
-/* End of file */

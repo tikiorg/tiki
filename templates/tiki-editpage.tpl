@@ -120,7 +120,7 @@
 		<div id="diff_outer">
 			{if $translation_mode == 'y'}
 				<div class="translation_message">
-					<h2>{tr}Translate from:{/tr} {$source_page|escape}</h2>
+					<h2>{icon name="language"} {tr}Translate from:{/tr} {$source_page|escape}</h2>
 					{tr}Changes that need to be translated are highlighted below.{/tr}
 				</div>
 			{/if}
@@ -214,7 +214,7 @@
 							{/if}
 					{/if}
 					{if $page|lower neq 'sandbox'}
-						<fieldset>
+						<fieldset class="edit-zone-footer">
 							<label for="comment">{tr}Describe the change you made{/tr} {help url='Editing+Wiki+Pages' desc="{tr}Edit comment: Enter some text to describe the changes you are currently making{/tr}"}</label>
 							<input class="form-control wikiedit" type="text" id="comment" name="comment" value="{$commentdata|escape}">
 							{if isset($show_watch) && $show_watch eq 'y'}

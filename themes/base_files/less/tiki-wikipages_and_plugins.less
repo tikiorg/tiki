@@ -518,10 +518,6 @@ div.tiki_plugin {
 	z-index: 100 !important;
 }
 
-.TextArea-fullscreen #editwiki_toolbar {
-	width: 100% !important;
-}
-
 .TextArea-fullscreen .ui-wrapper {
 	width: auto !important;
 	height: 100% !important;
@@ -534,6 +530,10 @@ div.tiki_plugin {
 .TextArea-fullscreen .ui-wrapper #editwiki {
 	position: absolute !important;
 	width: 100% !important;
+}
+
+.TextArea-fullscreen .edit-zone-footer {
+	background: @body-bg;
 }
 
 .TextArea-fullscreen .actions,
@@ -578,6 +578,8 @@ div.tiki_plugin {
 	top: 0;
 	right: 0;
 	opacity: 1;
+	background: @state-info-bg;
+	height: 100% !important;
 }
 
 #diff_history {
