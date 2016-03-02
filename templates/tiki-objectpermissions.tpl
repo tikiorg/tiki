@@ -46,7 +46,7 @@
 							{if $tiki_p_admin eq 'y'}{tr}To edit category permissions{/tr} {self_link _script='tiki-admin_categories.php'}{tr}click here{/tr}{/self_link}.{/if}
 						{/remarksbox}
 					{elseif $permissions_displayed eq 'parent'}
-						{remarksbox type="note" title="{tr}Note{/tr}"}
+						{remarksbox type="warning" title="{tr}Warning{/tr}" highlight="y"}}
 							{tr}No direct permissions yet applied to this object. Global permissions apply.{/tr}<br>
 							{if $tiki_p_admin eq 'y'}{tr}To edit global permissions{/tr} {self_link objectType='global' permType=$permType}{tr}click here{/tr}{/self_link}.{/if}
 							<br><br>
