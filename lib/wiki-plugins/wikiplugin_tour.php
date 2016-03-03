@@ -90,24 +90,39 @@ function wikiplugin_tour_info()
 				'required' => false,
 				'description' => tra('Setting to true removes the pointer on the popup and centers it on the page'),
 				'since' => '15.0',
-				'filter' => 'int',
-				'default' => '0',
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n'),
+				),
 			),
 			'backdrop' => array(
 				'name' => tra('Backdrop'),
 				'required' => false,
 				'description' => tra('Show a dark backdrop behind the popover and its element, highlighting the current step.'),
 				'since' => '15.0',
-				'filter' => 'int',
-				'default' => '0',
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n'),
+				),
 			),
 			'show_once' => array(
 				'name' => tra('Only Show Once'),
 				'required' => false,
-				'description' => tra('Set to 1 to only show once. tour_id should also be set if there are multiple tours.'),
+				'description' => tra('Set to y to only show once. tour_id should also be set if there are multiple tours.'),
 				'since' => '15.0',
-				'filter' => 'int',
-				'default' => '0',
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n'),
+				),
 			),
 			'tour_id' => array(
 				'name' => tra('Tour ID'),
@@ -138,30 +153,24 @@ function wikiplugin_tour($data, $params)
 	}
 	$params = array_merge($defaults, $params);
 
-	if ($params['show_once']) {
+	$cookie_id = 'tour'.md5($params['tour_id']);
+	if (getCookie($cookie_id, 'tours') == 'y') {
+		$dontStart = true;
+	} else {
+		$dontStart = false;
 
-		$cookie_id = 'tour'.md5($params['tour_id']);
-
-		if ($_COOKIE[$cookie_id] == 'y') {
-			return '';
+		if ($params['show_once'] === 'y') {
+			setCookieSection($cookie_id, 'y', 'tours');
 		}
-		setcookie($cookie_id,'y');
 	}
 
 	static $id = 0;
 	$unique = 'wptour_' . ++$id;
 	static $wp_tour = array('steps' => array());
 
-	$params['template'] = "<div class='popover tour'>
-  <div class='arrow'></div>
-  <h3 class='popover-title'></h3>
-  <div class='popover-content'></div>
-  <div class='popover-navigation'>
-    <button class='btn btn-default' data-role='prev'>« ".tr('Prev')."</button>
-    <button class='btn btn-default' data-role='next'>".tr('Next')." »</button>
-    <button class='btn btn-default' data-role='end'>".tr('Close Tour')."</button>
-  </div>
-</div>";
+	if (!isset($wp_tour['start'])) {
+		$wp_tour['start'] = $params['start'];
+	}
 
 	$headerlib = TikiLib::lib('header');
 	$headerlib->add_jsfile('vendor/sorich87/bootstrap-tour/build/js/bootstrap-tour.js')
@@ -171,7 +180,7 @@ function wikiplugin_tour($data, $params)
 	$headerlib->add_jq_onready('var tour;
 ', 11);
 
-	if ($params['start'] === 'y') {
+	if ($wp_tour['start'] === 'y' && ! $dontStart) {
 		$headerlib->add_jq_onready('
 if (tour) {
 	// Start the tour
@@ -186,11 +195,8 @@ if (tour) {
 
 	$html = '';
 
-	if ($params['orphan'] == 1) {
-		$params['orphan'] = true;
-	} else {
-		$params['orphan'] = false;
-	}
+	$params['orphan']   = ($params['orphan'] === 'y');
+	$params['backdrop'] = ($params['backdrop'] === 'y');
 
 	if (empty($params['element']) && !$params['orphan']) {
 		$params['element'] = "#$unique";
@@ -203,7 +209,11 @@ if (tour) {
 					'_id' => $unique . '_restart',
 					'href' => '#',
 				], $smarty);
-			$headerlib->add_jq_onready('$("#' . $unique . '_restart").click(function() { tour.restart(); return false;});', 13);
+			$headerlib->add_jq_onready('$("#' . $unique . '_restart").click(function() {
+	tour.goTo(0);
+	tour.restart();
+	return false;
+});', 13);
 		}
 	}
 	$params['content'] = TikiLib::lib('parser')->parse_data($data);
