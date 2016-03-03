@@ -277,12 +277,14 @@ if (jqueryTiki.no_cookie) {
 				{/foreach}
 			</select>
 		{/if}
-		{if $prefs.socialnetworks_facebook_login eq 'y' and $mode neq "header" and empty($user)}
-			<div style="text-align: center"><a href="tiki-socialnetworks.php?request_facebook=true"><img src="https://developers.facebook.com/docs/facebook-login/web/login-button"></a></div>
-		{/if}
-		{if $prefs.socialnetworks_linkedin_login eq 'y' and $mode neq "header" and empty($user)}
-			<div style="text-align: center; margin-top:8px"><a href="tiki-socialnetworks_linkedin.php?connect=y"><img width="154px" src="https://content.linkedin.com/content/dam/developer/global/en_US/site/img/signin-button.png"></a></div>
-		{/if}
+		<div class="social-buttons">
+			{if $prefs.socialnetworks_facebook_login eq 'y' and $mode neq "header" and empty($user)}
+				{button _icon_name='facebook' _text="{tr}Log in via Facebook{/tr}" _class='btn btn-social btn-facebook' _script='tiki-socialnetworks.php' request_facebook=true _title="{tr}Log in via Facebook{/tr}"}
+			{/if}
+			{if $prefs.socialnetworks_linkedin_login eq 'y' and $mode neq "header" and empty($user)}
+				{button _icon_name='linkedin' _text="{tr}Log in via LinkedIn{/tr}" _class='btn btn-social btn-linkedin' _script='tiki-socialnetworks.php' connect='y' _title="{tr}Log in via LinkedIn{/tr}"}
+			{/if}
+		</div>
 		{$close_tags}
 		{if $prefs.auth_method eq 'openid' and !$user and (!isset($registration) || $registration neq 'y')}
 			<form method="get" action="tiki-login_openid.php">

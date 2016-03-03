@@ -930,6 +930,128 @@ select.form-control.date {
   width: auto;
   display: inline;
 }
+.social-buttons {
+  margin: 0 auto;
+  width: 250px;
+}
+.btn.btn-social {
+  margin-bottom: 6px;
+  display: block;
+}
+.btn-social.btn-facebook {
+  color: #ffffff;
+  background-color: #3b5998;
+  border-color: #344e86;
+}
+.btn-social.btn-facebook:focus,
+.btn-social.btn-facebook.focus {
+  color: #ffffff;
+  background-color: #2d4373;
+  border-color: #10182a;
+}
+.btn-social.btn-facebook:hover {
+  color: #ffffff;
+  background-color: #2d4373;
+  border-color: #23345a;
+}
+.btn-social.btn-facebook:active,
+.btn-social.btn-facebook.active,
+.open > .dropdown-toggle.btn-social.btn-facebook {
+  color: #ffffff;
+  background-color: #2d4373;
+  border-color: #23345a;
+}
+.btn-social.btn-facebook:active:hover,
+.btn-social.btn-facebook.active:hover,
+.open > .dropdown-toggle.btn-social.btn-facebook:hover,
+.btn-social.btn-facebook:active:focus,
+.btn-social.btn-facebook.active:focus,
+.open > .dropdown-toggle.btn-social.btn-facebook:focus,
+.btn-social.btn-facebook:active.focus,
+.btn-social.btn-facebook.active.focus,
+.open > .dropdown-toggle.btn-social.btn-facebook.focus {
+  color: #ffffff;
+  background-color: #23345a;
+  border-color: #10182a;
+}
+.btn-social.btn-facebook:active,
+.btn-social.btn-facebook.active,
+.open > .dropdown-toggle.btn-social.btn-facebook {
+  background-image: none;
+}
+.btn-social.btn-facebook.disabled:hover,
+.btn-social.btn-facebook[disabled]:hover,
+fieldset[disabled] .btn-social.btn-facebook:hover,
+.btn-social.btn-facebook.disabled:focus,
+.btn-social.btn-facebook[disabled]:focus,
+fieldset[disabled] .btn-social.btn-facebook:focus,
+.btn-social.btn-facebook.disabled.focus,
+.btn-social.btn-facebook[disabled].focus,
+fieldset[disabled] .btn-social.btn-facebook.focus {
+  background-color: #3b5998;
+  border-color: #344e86;
+}
+.btn-social.btn-facebook .badge {
+  color: #3b5998;
+  background-color: #ffffff;
+}
+.btn-social.btn-linkedin {
+  color: #ffffff;
+  background-color: #4875b4;
+  border-color: #4169a2;
+}
+.btn-social.btn-linkedin:focus,
+.btn-social.btn-linkedin.focus {
+  color: #ffffff;
+  background-color: #395d90;
+  border-color: #1c2e47;
+}
+.btn-social.btn-linkedin:hover {
+  color: #ffffff;
+  background-color: #395d90;
+  border-color: #2f4d76;
+}
+.btn-social.btn-linkedin:active,
+.btn-social.btn-linkedin.active,
+.open > .dropdown-toggle.btn-social.btn-linkedin {
+  color: #ffffff;
+  background-color: #395d90;
+  border-color: #2f4d76;
+}
+.btn-social.btn-linkedin:active:hover,
+.btn-social.btn-linkedin.active:hover,
+.open > .dropdown-toggle.btn-social.btn-linkedin:hover,
+.btn-social.btn-linkedin:active:focus,
+.btn-social.btn-linkedin.active:focus,
+.open > .dropdown-toggle.btn-social.btn-linkedin:focus,
+.btn-social.btn-linkedin:active.focus,
+.btn-social.btn-linkedin.active.focus,
+.open > .dropdown-toggle.btn-social.btn-linkedin.focus {
+  color: #ffffff;
+  background-color: #2f4d76;
+  border-color: #1c2e47;
+}
+.btn-social.btn-linkedin:active,
+.btn-social.btn-linkedin.active,
+.open > .dropdown-toggle.btn-social.btn-linkedin {
+  background-image: none;
+}
+.btn-social.btn-linkedin.disabled:hover,
+.btn-social.btn-linkedin[disabled]:hover,
+fieldset[disabled] .btn-social.btn-linkedin:hover,
+.btn-social.btn-linkedin.disabled:focus,
+.btn-social.btn-linkedin[disabled]:focus,
+fieldset[disabled] .btn-social.btn-linkedin:focus,
+.btn-social.btn-linkedin.disabled.focus,
+.btn-social.btn-linkedin[disabled].focus,
+fieldset[disabled] .btn-social.btn-linkedin.focus {
+  background-color: #4875b4;
+  border-color: #4169a2;
+}
+.btn-social.btn-linkedin .badge {
+  color: #4875b4;
+  background-color: #ffffff;
+}
 .box-quickadmin li {
   font-size: 0.9em;
 }
