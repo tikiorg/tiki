@@ -28,6 +28,11 @@ class Captcha_ReCaptcha20 extends Zend\Captcha\ReCaptcha
             return false;
         }
 
+        if (! extension_loaded('curl')) {
+            $this->error('ReCaptcha 2 requires the PHP CURL extension');
+            return false;
+        }
+
         // Google request was cached
         if (in_array($value[$this->_RESPONSE], $_SESSION['recaptcha_cache'])) {
             return true;
