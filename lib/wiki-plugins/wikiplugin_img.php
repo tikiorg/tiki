@@ -107,6 +107,102 @@ function wikiplugin_img_info()
 				'default' => '',
 				'parent' => array('name' => 'type', 'value' => 'attId'),
 			),
+			'thumb' => array(
+				'required' => false,
+				'name' => tra('Thumbnail'),
+				'description' => tr('Makes the image a thumbnail with various options.'),
+				'since' => '4.0',
+				'doctype' => 'link',
+				'filter' => 'alpha',
+				'default' => '',
+				'options' => array(
+					array('text' => tra('None'), 'value' => ''),
+					array('text' => tra('Simple - links to full size image on a new page'), 'value' => 'y'),
+					array('text' => tra('"Lightbox" - enlarges in an overlay box when clicked'), 'value' => 'box'),
+					array('text' => tra('Mouseover - enlarges in a popup when moused over'), 'value' => 'mouseover'),
+					array('text' => tra('Mouseover (sticky)'), 'value' => 'mousesticky'),
+					array('text' => tra('Popup - enlarges in a separate window'), 'value' => 'popup'),
+					array('text' => tra('Download'), 'value' => 'download'),
+					array('text' => tra('Zoombox - enlarges in a popup with a zoom option'), 'value' => 'zoombox'),
+				),
+			),
+			'link' => array(
+				'required' => false,
+				'name' => tra('Link'),
+				'description' => tr('Causes the image to be a link to this address. Overrides %0thumb%1 unless %0thumb%1 is
+					set to %0mouseover%1 or %0mousesticky%1', '<code>', '</code>'),
+				'since' => '3.0',
+				'doctype' => 'link',
+				'filter' => 'url',
+				'default' => '',
+			),
+			'height' => array(
+				'required' => false,
+				'name' => tra('Image Height'),
+				'description' => tr('Height in pixels or percent. Syntax: %0100%1 or %0100px%1 means 100 pixels;
+					%050%%1 means 50 percent.', '<code>', '</code>'),
+				'since' => '3.0',
+				'doctype' => 'size',
+				'filter' => 'text',
+				'default' => '',
+			),
+			'width' => array(
+				'required' => false,
+				'name' => tra('Image Width'),
+				'description' => tr('Width in pixels or percent. Syntax: %0100%1 or %0100px%1 means 100 pixels;
+					%050%%1 means 50 percent.', '<code>', '</code>'),
+				'since' => '3.0',
+				'doctype' => 'size',
+				'filter' => 'text',
+				'default' => '',
+			),
+			'max' => array(
+				'required' => false,
+				'name' => tra('Maximum Size'),
+				'description' => tra('Maximum height or width in pixels (largest dimension is scaled). Overrides height
+					and width settings.'),
+				'since' => '4.0',
+				'doctype' => 'size',
+				'filter' => 'digits',
+				'default' => '',
+			),
+			'desc' => array(
+				'required' => false,
+				'name' => tra('Caption'),
+				'since' => '3.0',
+				'doctype' => 'text',
+				'filter' => 'text',
+				'description' => tr('Image caption. Use %0name%1 or %0desc%1 or %0namedesc%1 for Tiki name and
+					description properties, %0idesc%1 or %0ititle%1 for metadata from the image itself, otherwise
+					enter your own description.', '<code>', '</code>'),
+				'default' => '',
+			),
+			'alt' => array(
+				'required' => false,
+				'name' => tra('Alternate Text'),
+				'filter' => 'text',
+				'description' => tra('Alternate text that displays when image does not load. Set to "Image" by default.'),
+				'since' => '3.0',
+				'doctype' => 'text',
+				'default' => 'Image',
+			),
+			'responsive' => array(
+				'required' => false,
+				'name' => tra('Responsive Image'),
+				'filter' => 'alpha',
+				'description' => tr('Determines whether the image will resize itself to the screen width using the %0img-responsive%1 class.', '<code>', '</code>'),
+				'since' => '14.0',
+				'doctype' => 'style',
+				'advanced' => false,
+				'default' => 'y',
+				'options' => array(
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n'),
+				),
+			),
+
+			///// advanced parameters ///////
+
 			'sort_mode' => array(
 				'required' => false,
 				'name' => tra('Sort Mode'),
@@ -162,38 +258,6 @@ function wikiplugin_img_info()
 					array('text' => tra('Archive ID Descending'), 'value' => 'archiveId_desc'),
 				),
 			),
-			'thumb' => array(
-				'required' => false,
-				'name' => tra('Thumbnail'),
-				'description' => tr('Makes the image a thumbnail that enlarges to full size when clicked or moused over
-					(unless %0 is set to another target). Values function as follows:', '<code>link</code>') . '<br />'
-					. '<code>y</code> - ' . tr('Enlarges on a new page (depends on browser and preference settings).
-						Enlarges in a popup box when %0', '<code>rel="box"</code>') . '<br />'
-					. '<code>box</code> - ' . tra('Enlarges in a popup box when clicked') . '<br />'
-					. '<code>mouseover</code> - ' . tr('Enlarges in a popup when moused over. Images larger than 400px
-						will fall back to %0', '<code>mousesticky</code>') . '<br />'
-					. '<code>mousesticky</code> - ' . tra('Enlarges in a popup when moused over that stays open until
-						second mouseover or click') . '<br />'
-					. '<code>popup</code> - ' . tra('Enlarges in a separate window or tab (depending on browser settings') . '<br />'
-					. '<code>browse</code>, <code>browsepopup</code> - ' . tr('For image gallery images only: galery
-						browse page opens (in a new tab or window if %0 is used)', '<code>browsepopup</code>') . '<br />'
-					. '<code>download</code> - ' . tra('Dialog box for downloading the image appears when clicked
-						 (file gallery and attachment images only)') . '<br />'
-					. '<code>zoombox</code> - ' . tra('Enlarges in a popup with a zoom option when clicked') . '<br />',
-				'since' => '4.0',
-				'doctype' => 'link',
-				'filter' => 'alpha',
-				'default' => '',
-				'options' => array(
-					array('text' => tra('None'), 'value' => ''),
-					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('Box'), 'value' => 'box'),
-					array('text' => tra('Mouseover'), 'value' => 'mouseover'),
-					array('text' => tra('Mouseover (Sticky)'), 'value' => 'mousesticky'),
-					array('text' => tra('Popup'), 'value' => 'popup'),
-					array('text' => tra('Download'), 'value' => 'download'),
-				),
-			),
 			'button' => array(
 				'required' => false,
 				'name' => tra('Enlarge Button'),
@@ -215,16 +279,6 @@ function wikiplugin_img_info()
 					array('text' => tra('Download'), 'value' => 'download'),
 				),
 			),
-			'link' => array(
-				'required' => false,
-				'name' => tra('Link'),
-				'description' => tr('Causes the image to be a link to this address. Overrides %0thumb%1 unless %0thumb%1 is
-					set to %0mouseover%1 or %0mousesticky%1', '<code>', '</code>'),
-				'since' => '3.0',
-				'doctype' => 'link',
-				'filter' => 'url',
-				'default' => '',
-			),
 			'rel' => array(
 				'required' => false,
 				'name' => tra('Link Relation'),
@@ -244,36 +298,6 @@ function wikiplugin_img_info()
 				'since' => '3.0',
 				'doctype' => 'link',
 				'advanced' => true,
-				'default' => '',
-			),
-			'height' => array(
-				'required' => false,
-				'name' => tra('Image Height'),
-				'description' => tr('Height in pixels or percent. Syntax: %0100%1 or %0100px%1 means 100 pixels;
-					%050%%1 means 50 percent.', '<code>', '</code>'),
-				'since' => '3.0',
-				'doctype' => 'size',
-				'filter' => 'text',
-				'default' => '',
-			),
-			'width' => array(
-				'required' => false,
-				'name' => tra('Image Width'),
-				'description' => tr('Width in pixels or percent. Syntax: %0100%1 or %0100px%1 means 100 pixels;
-					%050%%1 means 50 percent.', '<code>', '</code>'),
-				'since' => '3.0',
-				'doctype' => 'size',
-				'filter' => 'text',
-				'default' => '',
-			),
-			'max' => array(
-				'required' => false,
-				'name' => tra('Maximum Size'),
-				'description' => tra('Maximum height or width in pixels (largest dimension is scaled). Overrides height
-					and width settings.'),
-				'since' => '4.0',
-				'doctype' => 'size',
-				'filter' => 'digits',
 				'default' => '',
 			),
 			'hspace' => array(
@@ -406,17 +430,6 @@ function wikiplugin_img_info()
 				'advanced' => true,
 				'default' => '',
 			),
-			'desc' => array(
-				'required' => false,
-				'name' => tra('Caption'),
-				'since' => '3.0',
-				'doctype' => 'text',
-				'filter' => 'text',
-				'description' => tr('Image caption. Use %0name%1 or %0desc%1 or %0namedesc%1 for Tiki name and
-					description properties, %0idesc%1 or %0ititle%1 for metadata from the image itself, otherwise
-					enter your own description.', '<code>', '</code>'),
-				'default' => '',
-			),
 			'title' => array(
 				'required' => false,
 				'name' => tra('Link Title'),
@@ -443,29 +456,6 @@ function wikiplugin_img_info()
 					array('text' => tra('View'), 'value' => 'view'),
 				),
 			),
-			'alt' => array(
-				'required' => false,
-				'name' => tra('Alternate Text'),
-				'filter' => 'text',
-				'description' => tra('Alternate text that displays when image does not load. Set to "Image" by default.'),
-				'since' => '3.0',
-				'doctype' => 'text',
-				'default' => 'Image',
-			),
-			'responsive' => array(
-				'required' => false,
-				'name' => tra('Responsive Image'),
-				'filter' => 'alpha',
-				'description' => tr('Determines whether the image has the %0img-responsive%1 class.', '<code>', '</code>'),
-				'since' => '14.0',
-				'doctype' => 'style',
-				'advanced' => false,
-				'default' => 'y',				
-				'options' => array(
-					array('text' => tra('Yes'), 'value' => 'y'),
-					array('text' => tra('No'), 'value' => 'n'),
-				),
-			),	
 			'default' => array(
 				'required' => false,
 				'name' => tra('Default Settings'),
