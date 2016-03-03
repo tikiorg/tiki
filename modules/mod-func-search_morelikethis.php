@@ -65,7 +65,15 @@ function module_search_morelikethis($mod_reference, $module_params)
 		$typefilters = array_map('trim', $typefilters);
 	}
 
-	if ($object = current_object()) {
+	$object = array();
+	if ($module_params['object'] && $module_params['type']) {
+		$object['object'] = $module_params['object'];
+		$object['type'] = $module_params['type'];
+	} else {
+		$object = current_object();
+	}
+
+	if (!empty($object)) {
 		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 
 		$query = $unifiedsearchlib->buildQuery(array());
