@@ -33,6 +33,20 @@ function module_search_morelikethis_info()
 				'description' => tra('Comma separated text search filters to use. Use = to separate field and value.'),
 				'filter' => 'text',
 			),
+			'object' => array(
+				'required' => false,
+				'name' => tra('Object id of item you want to get similar items to'),
+				'description' => tra('The object id of the item. If none is provided, Tiki will attempt to resolve the current object.'),
+				'filter' => 'text',
+				'since' => '16'
+			),
+			'type' => array(
+				'required' => false,
+				'name' => tra('Object type of item you want to get similar items to'),
+				'description' => tra('The object type of the item (eg. "trackeritem"). If none is provided, Tiki will attempt to resolve the current object.'),
+				'filter' => 'text',
+				'since' => '16'
+			),
 		),
 		'common_params' => array('nonums', 'rows')
 	);
