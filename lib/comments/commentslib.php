@@ -2571,7 +2571,7 @@ class Comments extends TikiLib
 			'object' => $object[1],
 		);
 		$this->table('tiki_comments')->update($data, array('threadId' => $threadId));
-		$this->table('tiki_comments')->update($data, array('parentId' => $threadId));
+		$this->table('tiki_comments')->updateMultiple($data, array('parentId' => $threadId));
 	}
 
     /**
