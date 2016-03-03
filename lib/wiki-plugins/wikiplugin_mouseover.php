@@ -10,7 +10,7 @@ function wikiplugin_mouseover_info()
 	global $prefs;
 	include_once('lib/prefs/jquery.php');
 	$jqprefs = prefs_jquery_list();
-	$jqjx = array();
+	$jqfx = array();
 	foreach ($jqprefs['jquery_effect']['options'] as $k => $v) {
 		$jqfx[] = array('text' => $v, 'value' => $k);
 	}
@@ -86,7 +86,7 @@ function wikiplugin_mouseover_info()
 					cursor. Default: %00%1', '<code>', '</code>'),
 				'since' => '3.0',
 				'filter' => 'int',
-				'default' => 0,
+				'default' => 24,
 				'advanced' => true,
 			),
 			'parse' => array(
@@ -227,7 +227,7 @@ function wikiplugin_mouseover( $data, $params )
 	$width = isset( $params['width'] ) ? (int) $params['width'] : 400;
 	$height = isset( $params['height'] ) ? (int) $params['height'] : 200;
 	$offsetx = isset( $params['offsetx'] ) ? (int) $params['offsetx'] : 5;
-	$offsety = isset( $params['offsety'] ) ? (int) $params['offsety'] : 0;
+	$offsety = isset( $params['offsety'] ) ? (int) $params['offsety'] : 24;
 	$parse = ! isset($params['parse']) || (strcasecmp($params['parse'], 'n') != 0);
 	$sticky = isset($params['sticky']) && $params['sticky'] == 'y';
 	$padding = isset( $params['padding'] ) ? 'padding: '.$params['padding'].'px;' : '';
@@ -278,10 +278,10 @@ function wikiplugin_mouseover( $data, $params )
 	}
 
 	$js = "\$('#$id-link').mouseover(function(event) {
-	var pos = $('#tiki-center').position();
-	var top = event.pageY;
-	var left = event.pageX;
-	\$('#$id').css('position', 'absolute').css('left', left + $offsetx).css('top', top + $offsety); showJQ('#$id', '$effect', '$speed'); $closeDelayStr });";
+	var pos  = $(this).position();
+	\$('#$id').css('position', 'absolute').css('left', pos.left + $offsetx + 'px').css('top', pos.top + $offsety + 'px');
+	showJQ('#$id', '$effect', '$speed'); $closeDelayStr });
+";
 	if ($sticky) {
 		$js .= "\$('#$id').click(function(event) { hideJQ('#$id', '$effect', '$speed'); }).css('cursor','pointer');\n";
 	} else {

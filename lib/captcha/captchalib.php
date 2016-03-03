@@ -175,7 +175,7 @@ class Captcha
 		if ($access->is_xml_http_request()) {
 			if ($this->type == 'recaptcha20') {
 				return $this->captcha->renderAjax();
-			} else {
+			} else if ($this->type == 'recaptcha') {
 				$params = json_encode($this->captcha->getService()->getOptions());
 				$id = 1;
 				TikiLib::lib('header')->add_js('
@@ -184,6 +184,8 @@ Recaptcha.create("' . $this->captcha->getPubKey() . '",
   );
 ', 100);
 				return '<div id="captcha' . $id . '"></div>';
+			} else {
+				return $this->captcha->render();
 			}
 		} else {
 			if ($this->captcha instanceof Captcha_ReCaptcha20) {
