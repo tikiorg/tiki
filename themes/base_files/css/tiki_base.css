@@ -2986,6 +2986,16 @@ body.tiki.navbar-padding {
 .form-horizontal .control-label.text-left {
   text-align: left;
 }
+.affix-top {
+  position: static;
+}
+.affix {
+  position: fixed;
+  top: 20px;
+}
+.affix-bottom {
+  position: absolute;
+}
 /* becomes height using padding (so it's divided by 2) */
 /* url(icons/loading.gif); */
 /* Filter widget transition */
@@ -3828,6 +3838,9 @@ div.tiki_plugin {
   padding-left: 19px;
   border-left: 1px solid #cccccc;
 }
+.autotoc > .nav > li > .nav > li {
+  padding-bottom: 5px;
+}
 .autotoc .nav > .active:focus > a,
 .autotoc .nav > .active:hover > a,
 .autotoc .nav > .active > a {
@@ -3840,6 +3853,9 @@ div.tiki_plugin {
 .autotoc .nav .nav {
   padding-bottom: 0;
   list-style: none;
+}
+.autotoc .nav .nav .nav {
+  display: none;
 }
 .autotoc .nav .nav > li > a {
   padding-top: 1px;
@@ -3860,6 +3876,13 @@ div.tiki_plugin {
 .autotoc .nav .nav > li > a:focus,
 .autotoc .nav .nav > li > a:hover {
   padding-left: 29px;
+}
+.autotoc .nav .nav .nav > li > a:focus,
+.autotoc .nav .nav .nav > li > a:hover {
+  padding-left: 40px;
+}
+.autotoc .nav .nav > .active > ul {
+  display: block;
 }
 .autotoc .nav .nav > .active:focus > a,
 .autotoc .nav .nav > .active:hover > a,
@@ -4314,3 +4337,4 @@ div.drillshow {
 .multilike .rate div .count {
   font-size: 0.8em;
 }
+/* End of file */
