@@ -7577,8 +7577,7 @@ ul.all_languages > li {
 }
 .autotoc .nav > li > a:hover,
 .autotoc .nav .nav > li > a:hover {
-  color: #ffffff;
-  background: transparent;
+  color: #18bc9c;
 }
 .plugin-form-float {
   background: #ffffff;
