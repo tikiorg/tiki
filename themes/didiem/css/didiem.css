@@ -7372,8 +7372,7 @@ ul.all_languages > li {
 }
 .autotoc .nav > li > a:hover,
 .autotoc .nav .nav > li > a:hover {
-  color: #000000;
-  background: linear-gradient(to bottom, #93c44f 0%, #6d9f26 100%);
+  color: #8bbb47;
 }
 .plugin-form-float {
   background: #ffffff;
