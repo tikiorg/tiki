@@ -78,13 +78,12 @@ if (jqueryTiki.no_cookie) {
 					{if $module_params.show_user_name eq 'y'}{$user|username:n:n:n}{/if}
 					{if $module_params.show_user_avatar neq 'y' and $module_params.show_user_name neq 'y'}{tr}Log out{/tr}{/if}
 					<span class="caret"></span>
+					<span class="sr-only">{tr}Toggle Dropdown{/tr}</span>
 				</button>
-				<ul class="clearfix dropdown-menu pull-right">
-
+				<ul class="dropdown-menu">
 						<li>
-							<a href="tiki-user_information.php">{tr}My Account{/tr}</a>
+						<a href="tiki-user_information.php" title="{tr}My Account{/tr}">{tr}My Account{/tr}</a>
 						</li>
-
 					<li>
 						<a href="tiki-logout.php" title="{tr}Log out{/tr}">{tr}Log out{/tr}</a>
 					</li>
