@@ -570,7 +570,18 @@ function wikiplugin_img( $data, $params )
 		if (!empty($imgdata['mandatory'])) $imgdata = apply_default_and_mandatory($imgdata, 'mandatory');
 	}
 
-//////////////////////////////////////////////////// Error messages and clean javascript //////////////////////////////
+	// Before it was possible to specify many image types at once and Tiki will guess which one to use.
+	// Now there is "type" field that clearly identifies image type.
+	// Code below leaves image param that is related to "type", removing all others,  this way code is not confused if
+	// several parameters are passed
+	$info = wikiplugin_img_info();
+	foreach($info['params']['type']['options'] as $type) {
+		if (!empty($type['value']) && $type['value'] != $imgdata['type'] && !empty($imgdata[$type['value']])) {
+			$imgdata[$type['value']] = null;
+		}
+	}
+
+	//////////////////////////////////////////////////// Error messages and clean javascript //////////////////////////////
 	// Must set at least one image identifier
 	$set = !empty($imgdata['fileId']) + !empty($imgdata['id']) + !empty($imgdata['src']) + !empty($imgdata['attId'])
 		+ !empty($imgdata['randomGalleryId']) + !empty($imgdata['fgalId']);
