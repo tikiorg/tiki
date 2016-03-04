@@ -123,9 +123,6 @@ class Search_Formatter_Builder
 			}
 			$abuilder = new Search_Formatter_ArrayBuilder;
 			$outputData = $abuilder->getData($output->getBody());
-			foreach ($arguments as $key=>$arg) {
-				$outputData[$key] = $arg;
-			}
 			foreach ($this->paginationArguments as $k => $v) {
 				$outputData[$k] = $this->paginationArguments[$k];
 			}
