@@ -72,12 +72,13 @@ if (jqueryTiki.no_cookie) {
 		{elseif $mode eq "header"}
 			<span style="white-space: nowrap">{$user|userlink}</span> <a href="tiki-logout.php" title="{tr}Log out{/tr}">{tr}Log out{/tr}</a>
 		{elseif $mode eq "popup"}
-			<div class="siteloginbar_popup dropdown pull-right">
-				{if $module_params.show_user_name eq 'y'}{$user|avatarize}{/if}
-				<a href="tiki-logout.php" class="dropdown-toggle login_link btn btn-link" data-toggle="dropdown">
-					{if $module_params.show_user_name eq 'y'}{$user|username}{else}{$user|avatarize:n:n:n}{/if}
+			<div class="siteloginbar_popup dropdown pull-right" role="group">
+				<button type="button" class="dropdown-toggle login_link btn btn-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					{if $module_params.show_user_avatar eq 'y'}{$user|avatarize:n:n:n:n}{/if}
+					{if $module_params.show_user_name eq 'y'}{$user|username:n:n:n}{/if}
+					{if $module_params.show_user_avatar neq 'y' and $module_params.show_user_name neq 'y'}{tr}Log out{/tr}{/if}
 					<span class="caret"></span>
-				</a>
+				</button>
 				<ul class="clearfix dropdown-menu pull-right">
 
 						<li>

@@ -638,6 +638,8 @@ class ToolbarCkOnly extends Toolbar
 			case 'Format':
 			case 'JustifyLeft':
 			case 'Paste':
+			case 'PasteText':
+			case 'PasteFromWord':
 			case 'Redo':
 			case 'RemoveFormat':
 			case 'ShowBlocks':
