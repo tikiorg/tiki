@@ -7565,7 +7565,9 @@ textarea,
 }
 .footer_liner legend,
 .footer_liner a,
-.footer_liner a:visited {
+.footer_liner a:visited,
+.footer_liner a.btn-default,
+.footer_liner a.btn-default:visited {
   color: #a9a9a9;
 }
 /*header.header .sitetitles {
@@ -7583,6 +7585,12 @@ header.header a,
 header.header a:visited {
   color: #fff !important;
   text-decoration: none;
+}
+.navbar-fixed-top .sitesubtitle,
+.layout_social .topbar_modules .sitesubtitle,
+.layout_social_modules .topbar_modules .sitesubtitle,
+.layout_fixed_top_modules #top_modules .sitesubtitle {
+  color: #fff;
 }
 .navbar-default .navbar-nav > li > a {
   margin-right: inherit;

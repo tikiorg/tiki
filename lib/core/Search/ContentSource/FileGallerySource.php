@@ -27,6 +27,8 @@ class Search_ContentSource_FileGallerySource implements Search_ContentSource_Int
 
 		$data = array(
 			'title' => $typeFactory->sortable($item['name']),
+			'creation_date' => $typeFactory->timestamp($item['created']),
+			'modification_date' => $typeFactory->timestamp($item['lastModif']),
 			'description' => $typeFactory->plaintext($item['description']),
 			'language' => $typeFactory->identifier('unknown'),
 

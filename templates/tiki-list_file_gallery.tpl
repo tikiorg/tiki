@@ -178,11 +178,18 @@
 {if isset($fileChangedMessage) and $fileChangedMessage neq ''}
 	{remarksbox type="note" title="{tr}Note{/tr}"}
 		{$fileChangedMessage}
-		<form method="post" action="{$smarty.server.PHP_SELF}{if !empty($filegals_manager) and $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">
+		<form method="post"
+				action="{$smarty.server.PHP_SELF}{if !empty($filegals_manager) and $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}"
+				class="form-inline">
 			<input type="hidden" name="galleryId" value="{$galleryId|escape}">
 			<input type="hidden" name="fileId" value="{$fileId|escape}">
-			{tr}Your comment{/tr} ({tr}optional{/tr}): <input type="text" name="comment" size="40">
-			{icon name='ok' _tag='input_image'}
+			<div class="form-group">
+				<label>
+					{tr}Your comment{/tr} ({tr}optional{/tr}):
+					<input type="text" name="comment" size="30" class="form-input">
+				</label>
+				<button type="submit" class="btn btn-default btn-sm">{icon name='ok'} {tr}Save{/tr}</button>
+			</div>
 		</form>
 	{/remarksbox}
 {/if}

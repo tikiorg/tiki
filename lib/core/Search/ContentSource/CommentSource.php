@@ -43,6 +43,7 @@ class Search_ContentSource_CommentSource implements Search_ContentSource_Interfa
 		$data = array(
 			'title' => $typeFactory->sortable($comment['title']),
 			'language' => $typeFactory->identifier('unknown'),
+			'creation_date' => $typeFactory->timestamp($comment['commentDate']),
 			'modification_date' => $typeFactory->timestamp($comment['commentDate']),
 			'contributors' => $typeFactory->multivalue(array($comment['userName'])),
 
