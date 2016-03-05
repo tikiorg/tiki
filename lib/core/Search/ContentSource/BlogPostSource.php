@@ -35,6 +35,7 @@ class Search_ContentSource_BlogPostSource implements Search_ContentSource_Interf
 		$data = array(
 			'title' => $typeFactory->sortable($post['title']),
 			'language' => $typeFactory->identifier('unknown'),
+			'creation_date' => $typeFactory->timestamp($post['created']),
 			'modification_date' => $typeFactory->timestamp($post['created']),
 			'contributors' => $typeFactory->multivalue(array($post['user'])),
 

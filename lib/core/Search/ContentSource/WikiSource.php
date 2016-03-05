@@ -57,6 +57,7 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 		$data = array(
 			'title' => $typeFactory->sortable($info['pageName']),
 			'language' => $typeFactory->identifier(empty($info['lang']) ? 'unknown' : $info['lang']),
+			'creation_date' => $typeFactory->timestamp($info['created']),
 			'modification_date' => $typeFactory->timestamp($info['lastModif']),
 			'description' => $typeFactory->plaintext($info['description']),
 			'contributors' => $typeFactory->multivalue($contributors),

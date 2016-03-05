@@ -27,6 +27,7 @@ class Search_ContentSource_ForumSource implements Search_ContentSource_Interface
 
 		$data = array(
 			'title' => $typeFactory->sortable($item['name']),
+			'creation_date' => $typeFactory->timestamp($item['created']),
 			'description' => $typeFactory->plaintext($item['description']),
 			'language' => $typeFactory->identifier($item['forumLanguage'] ?: 'unknown'),
 

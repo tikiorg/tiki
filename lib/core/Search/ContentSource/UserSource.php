@@ -89,6 +89,7 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 
 		$data = array(
 			'title' => $typeFactory->sortable($name),
+			'creation_date' => $typeFactory->timestamp($detail['created']),
 			'wiki_content' => $typeFactory->wikitext($content),
 			'user_country' => $typeFactory->sortable($country),
 			'user_gender' => $typeFactory->sortable($gender),

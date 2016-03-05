@@ -44,6 +44,7 @@ class Search_ContentSource_FileSource implements Search_ContentSource_Interface,
 		$data = array(
 			'title' => $typeFactory->sortable(empty($file['name'])?$file['filename']:$file['name']),
 			'language' => $typeFactory->identifier('unknown'),
+			'creation_date' => $typeFactory->timestamp($file['created']),
 			'modification_date' => $typeFactory->timestamp($file['lastModif']),
 			'contributors' => $typeFactory->multivalue(array_unique(array($file['author'], $file['user'], $file['lastModifUser']))),
 			'description' => $typeFactory->plaintext($file['description']),

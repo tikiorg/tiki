@@ -73,6 +73,7 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 		$data = array(
 			'title' => $typeFactory->sortable($comment['title']),
 			'language' => $typeFactory->identifier($forum_language),
+			'creation_date' => $typeFactory->timestamp($comment['commentDate']),
 			'modification_date' => $typeFactory->timestamp($lastModification),
 			'contributors' => $typeFactory->multivalue(array_unique($author)),
 

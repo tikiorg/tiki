@@ -56,6 +56,7 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 		$data = array(
 			'title' => $typeFactory->sortable($article['title']),
 			'language' => $typeFactory->identifier($article['lang'] ? $article['lang'] : 'unknown'),
+			'creation_date' => $typeFactory->timestamp($article['created']),
 			'modification_date' => $typeFactory->timestamp($article['publishDate']),
 			'contributors' => $typeFactory->multivalue(array($article['author'])),
 			'description' => $typeFactory->plaintext($article['heading']),
