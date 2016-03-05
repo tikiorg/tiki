@@ -97,7 +97,7 @@
 					class="tips"
 					title="{tr}Actions{/tr}"
 					href="#"
-					{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"}{/if}
+					{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"}{/if}
 					style="padding:0; margin:0; border:0"
 				>
 					{icon name="wrench"}
@@ -156,7 +156,7 @@
 					class="tips"
 					title="{tr}More information{/tr}"
 					href="#"
-					{if $js === 'y'}{popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.over_more_info|escape:"javascript"|escape:"html"}{/if}
+					{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.over_more_info|escape:"javascript"|escape:"html"}{/if}
 					style="padding:0; margin:0; border:0"
 				>
 					{icon name="information"}

@@ -260,7 +260,7 @@
 				{if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' )
 					and (!isset($gal_info.show_action) or $gal_info.show_action neq 'n') and $prefs.javascript_enabled eq 'y'}
 					<td style="white-space: nowrap">
-						<a class="fgalname tips" title="{tr}Actions{/tr}" href="#" {popup delay="0|2000" fullhtml="1" center=true text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">
+						<a class="fgalname tips" title="{tr}Actions{/tr}" href="#" {popup fullhtml="1" center=true text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">
 							{icon name='wrench' alt="{tr}Actions{/tr}"}
 						</a>
 					</td>
