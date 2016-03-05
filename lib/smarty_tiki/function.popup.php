@@ -120,6 +120,9 @@ function smarty_function_popup($params, $smarty)
 			$delay = '{"show":"'. (int) $explode[0] . '", "hide":"' . (int) $explode[1] . '"}';
 		}
 		$retval .= ' data-delay=\'' . $delay . '\'';
+	} else {
+		// add a short default close delay so you can hover over the popover
+		$retval .= ' data-delay=\'{"show":"0","hide":"10"}\'';
 	}
 
 	return $retval;

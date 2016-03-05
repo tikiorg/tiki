@@ -131,7 +131,7 @@
 				{assign var=nbCols value=$nbCols+1}
 				<th style="width:1%">
 					{if !empty($other_columns)}
-						<a href='#' {popup delay="0|2000" fullhtml="1" text=$smarty.capture.over_other_columns|escape:"javascript"|escape:"html"} title="{tr}Other Sorts{/tr}">
+						<a href='#' {popup fullhtml="1" text=$smarty.capture.over_other_columns|escape:"javascript"|escape:"html"} title="{tr}Other Sorts{/tr}">
 					{/if}
 					{icon name='ranking' alt="{tr}Other Sorts{/tr}" title=''}
 					{if !empty($other_columns)}
