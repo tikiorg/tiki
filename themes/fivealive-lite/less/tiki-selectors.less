@@ -106,14 +106,12 @@ body.tiki.navbar-padding,
 }
 
 #col2 .panel,
-#col3 .panel,
-#bottom_modules .panel {
+#col3 .panel {
 	border: @side-column-border; // none;
 }
 
 #col2 .panel-default > .panel-heading,
-#col3 .panel-default > .panel-heading,
-#bottom_modules .panel-heading {
+#col3 .panel-default > .panel-heading {
 	background: @side-column-panel-heading-background; // #e1d518 url('@{imagePath}siteheader.png') no-repeat -1000px -200px;
 	border-width: @side-column-panel-heading-border-width;
 	border-style: solid;
@@ -193,6 +191,10 @@ textarea,
 }
 
 .footer_liner {
+	.panel-default,
+	.panel-default > .panel-heading {
+		border: none;
+	}
 	h3.panel-title {
 		color: #fff;
 		border-bottom: 1px dotted @footer-border-color;

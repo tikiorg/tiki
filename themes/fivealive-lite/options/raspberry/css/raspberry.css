@@ -694,13 +694,11 @@ textarea,
   border: none;
 }
 #col2 .panel,
-#col3 .panel,
-#bottom_modules .panel {
+#col3 .panel {
   border: none;
 }
 #col2 .panel-default > .panel-heading,
-#col3 .panel-default > .panel-heading,
-#bottom_modules .panel-heading {
+#col3 .panel-default > .panel-heading {
   background: #ffffff;
   border-width: 0 0 1px 0;
   border-style: solid;
@@ -720,9 +718,18 @@ textarea,
   border-top: 1px solid #eb0a82;
   border-bottom: 1px solid #eb0a82;
 }
-.footer_liner .panel-title {
+.footer_liner .panel,
+.footer_liner .panel-default,
+.footer_liner .panel-heading {
+  background: transparent;
+}
+.footer_liner h3.panel-title {
   color: #fff;
   border-bottom: 1px dotted #eb0a82;
+}
+.footer_liner a.btn-default,
+.footer_liner a.btn-default:visited {
+  color: #e6e6e6;
 }
 .postbody-title {
   background: url('../images/siteheader.png') no-repeat -480px -200px;
