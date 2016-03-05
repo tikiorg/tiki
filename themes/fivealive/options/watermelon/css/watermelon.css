@@ -622,6 +622,10 @@ textarea,
 .footer_liner a:visited {
   color: #eb1e41;
 }
+.footer_liner a.btn-default,
+.footer_liner a.btn-default:visited {
+  color: #696969;
+}
 .navbar-nav .open .dropdown-menu,
 .navbar-nav .open .dropdown-menu li,
 .navbar-default .navbar-nav > li > a {

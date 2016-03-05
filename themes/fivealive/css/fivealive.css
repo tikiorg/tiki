@@ -7565,7 +7565,9 @@ textarea,
 }
 .footer_liner legend,
 .footer_liner a,
-.footer_liner a:visited {
+.footer_liner a:visited,
+.footer_liner a.btn-default,
+.footer_liner a.btn-default:visited {
   color: #a9a9a9;
 }
 /*header.header .sitetitles {
