@@ -419,7 +419,6 @@ class ArtLib extends TikiLib
 			'body' => $body,
 			'publishDate' => (int) $publishDate,
 			'expireDate' => (int) $expireDate,
-			'created' => (int) $this->now,
 			'author' => $user,
 			'type' => $type,
 			'rating' => (float) $rating,
@@ -450,6 +449,8 @@ class ArtLib extends TikiLib
 			$smarty->assign('mail_old_data', $oldArticle['heading'] . "\n----------------------\n" . $oldArticle['body']);
 
 		} else {
+			$info['created'] = (int) $this->now;
+
 			$articleId = $article_table->insert($info);
 
 			global $prefs;
