@@ -773,6 +773,7 @@ header.header .sitesubtitle {
 }
 .autotoc > .nav {
   background: #ffffff;
+  border-color: #7a04b5;
 }
 .autotoc * {
   color: #7a04b5;
