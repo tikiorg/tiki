@@ -639,6 +639,7 @@ function wikiplugin_img( $data, $params )
 		foreach ($id_list as $i => $value) {
 			$params[$id] = trim($value);
 			$params['fgalId'] = '';
+			$params['type'] = 'fileId';
 			$repl .= wikiplugin_img($data, $params);
 		}
 		if (strpos($repl, $notice) !== false) {
