@@ -359,12 +359,12 @@ if (empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcase
 		}
 	} else {
 		$likepages = array_unique(array_merge($likepages, $referencedPages));
-	}
 
-	$smarty->assign_by_ref('likepages', $likepages);
-	//$smarty->assign('create', $isUserPage? 'n': 'y');
-	//$smarty->assign('filter', array('content' => $page,));
-	//$access->display_error($page, tra('Page cannot be found'), '404');
+		$smarty->assign_by_ref('likepages', $likepages);
+		$smarty->assign('create', $isUserPage? 'n': 'y');
+		$smarty->assign('filter', array('content' => $page,));
+		$access->display_error($page, tra('Page cannot be found'), '404');
+	}
 }
 
 if ( empty($info)
