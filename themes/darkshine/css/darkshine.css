@@ -7456,6 +7456,9 @@ a.admbox.off:active {
   background: #fff;
   color: #333;
 }
+.dropdown-menu {
+  color: #333333;
+}
 .margin-bottom-xs {
   margin-bottom: 5px;
 }
@@ -7537,6 +7540,9 @@ h2.sitesubtitle {
 .layout_social > .container {
   background: #f3f3f3;
   border: 15px solid #600000;
+}
+.top_modules div:not(.panel) .btn-link {
+  color: #fe9b27;
 }
 .btn-default {
   background: #ffd19f;

@@ -7370,6 +7370,9 @@ a.admbox.off:active {
   background: #1d9ccf;
   color: #fff;
 }
+.dropdown-menu {
+  color: #333333;
+}
 body {
   background: url('../images/body-bg_fw.png') repeat-x #214D68;
 }
@@ -7480,7 +7483,7 @@ h1.pagetitle > a:hover {
   border-bottom-right-radius: 8px;
   margin-bottom: 20px;
 }
-.footer_liner {
+#bottom_modules {
   color: #999;
   background: #2e3035;
 }

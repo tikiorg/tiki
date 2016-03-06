@@ -7457,6 +7457,9 @@ a.admbox.off:active {
   background: #fff;
   color: #42281d;
 }
+.dropdown-menu {
+  color: #515151;
+}
 .margin-bottom-xs {
   margin-bottom: 5px;
 }
