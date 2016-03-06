@@ -747,6 +747,9 @@ a.admbox.off:active {
 .dropdown-menu {
   color: #333333;
 }
+.tiki .col1 .table-responsive {
+  border: 1px solid #ddd;
+}
 .button.highlight {
   background: inherit;
 }
@@ -931,6 +934,12 @@ select.form-control.date {
   margin-left: 0;
   width: auto;
   display: inline;
+}
+#col1 {
+  z-index: 1;
+}
+textarea.wikiedit {
+  z-index: 2;
 }
 .box-quickadmin li {
   font-size: 0.9em;
@@ -2895,7 +2904,6 @@ body.tiki.navbar-padding {
   overflow-y: hidden;
   overflow-x: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
-  border: 1px solid #ddd;
   -webkit-overflow-scrolling: touch;
 }
 .tiki .table-responsive > .table {
