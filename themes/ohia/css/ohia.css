@@ -7371,22 +7371,32 @@ h6 a.tiki_anchor:hover {
 .diffadded .diffchar {
   color: #cce5cc;
 }
+.searchresults blockquote em.hlt1,
+.searchresults blockquote em.hlt6,
 .highlight_word_0 {
   color: #aad4ab;
   background: #3d6c2a;
 }
+.searchresults blockquote em.hlt2,
+.searchresults blockquote em.hlt7,
 .highlight_word_1 {
   color: #aad0e2;
   background: #1b6083;
 }
+.searchresults blockquote em.hlt3,
+.searchresults blockquote em.hlt8,
 .highlight_word_2 {
   color: #deceb3;
   background: #9c8611;
 }
+.searchresults blockquote em.hlt4,
+.searchresults blockquote em.hlt9,
 .highlight_word_3 {
   color: #ebcdcc;
   background: #712d2d;
 }
+.searchresults blockquote em.hlt5,
+.searchresults blockquote em.hlt10,
 .highlight_word_4 {
   color: #ebd7cc;
   background: #71442d;
