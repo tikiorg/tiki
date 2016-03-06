@@ -335,30 +335,36 @@ if (empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcase
 					} else if (count($items)) {
 						$suffix = $items[0];
 					} else {
-						$msg = tra('There are no items in the tracker with this title');
-						$smarty->assign('msg', $msg);
-						$smarty->display('error.tpl');
-						die;
+						// check for a number then the item title
+						$suffix = preg_replace('/(\d+).*/', '$1', $suffix);
+
+						if (!$suffix) {
+							$msg = tra('There are no items in the tracker with this title');
+							$smarty->assign('msg', $msg);
+							$smarty->display('error.tpl');
+							die;
+						}
 					}
 				}
 				if (ctype_digit($suffix)) {
-					if ($prefs['feature_sefurl'] == 'y') {
-						$url = $url . '?itemId=' . $suffix;
-					} else {
-						$url = $url . '&itemId=' . $suffix;
-					}
+					$_REQUEST['itemId'] = $suffix;
+					$_REQUEST['page'] = $newPage;
+					$_GET['itemId'] = $suffix;	// \ParserLib::parse_wiki_argvariable uses $_GET
+					$_GET['page'] = $newPage;
+					$page = $newPage;
+					$info = $tikilib->get_page_info($_REQUEST['page']);
+
 				}
 			}
 		}
-		$access->redirect($url);
 	} else {
 		$likepages = array_unique(array_merge($likepages, $referencedPages));
 	}
 
 	$smarty->assign_by_ref('likepages', $likepages);
-	$smarty->assign('create', $isUserPage? 'n': 'y');
-	$smarty->assign('filter', array('content' => $page,));
-	$access->display_error($page, tra('Page cannot be found'), '404');
+	//$smarty->assign('create', $isUserPage? 'n': 'y');
+	//$smarty->assign('filter', array('content' => $page,));
+	//$access->display_error($page, tra('Page cannot be found'), '404');
 }
 
 if ( empty($info)
