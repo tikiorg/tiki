@@ -486,7 +486,7 @@
 										{/if}
 
 										{if $tiki_p_edit_structures eq 'y'}
-											<a href="tiki-admin_structures.php" class="btn btn-default">
+											<a href="tiki-admin_structures.php" class="btn btn-link">
 												{icon name="cog"} {tr}Manage structures{/tr}
 											</a>
 										{/if}
@@ -584,7 +584,7 @@
 								<div class="form-group">
 									<label for="" class="col-sm-2 control-label">{tr}Language{/tr}</label>
 									<div class="col-sm-10">
-									    <select name="lang" id="lang" class="form-control">
+									    <select name="lang" id="lang" class="form-control margin-bottom-sm">
 										    <option value=""{if empty($lang)} selected="selected"{/if}>{tr}Unknown{/tr}</option>
 										    {section name=ix loop=$languages}
 											    <option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
@@ -701,7 +701,7 @@
 							<div class="form-group">
 								<label for="" class="col-sm-2 control-label">{tr}Wiki preferences{/tr}</label>
 								<div class="col-sm-10">
-									<a href="tiki-admin.php?page=wiki" class="btn btn-default">
+									<a href="tiki-admin.php?page=wiki" class="btn btn-link">
 										{icon name="cog"} {tr}Admin Wiki Preferences{/tr}
 									</a>
 								</div>
