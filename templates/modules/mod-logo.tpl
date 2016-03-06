@@ -1,13 +1,13 @@
 {* $Id$ *}
 {strip}
 	{tikimodule error=$module_params.error title=$tpl_module_title name="logo" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
-		<div {if $module_params.bgcolor ne ''} style="background-color: {$module_params.bgcolor};" {/if} class="pull-left {$module_params.class_image|escape}">
-			{if $module_params.src}
-                <a href="{$module_params.link}" title="{$module_params.title_attr|escape}">
+		{if $module_params.src}
+			<div {if $module_params.bgcolor ne ''} style="background-color: {$module_params.bgcolor};" {/if} class="pull-left {$module_params.class_image|escape}">
+		        <a href="{$module_params.link}" title="{$module_params.title_attr|escape}">
 					<img src="{$module_params.src}" alt="{$module_params.alt_attr|escape}" style="width: 100%; height: auto">
 				</a>
-			{/if}
-		</div>
+			</div>
+		{/if}
 		{if !empty($module_params.sitetitle) or !empty($module_params.sitesubtitle)}
 			<div class="pull-left {$module_params.class_titles|escape}">
 				{if !empty($module_params.sitetitle)}
