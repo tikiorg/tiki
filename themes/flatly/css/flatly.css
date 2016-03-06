@@ -7812,6 +7812,9 @@ a.admbox.off:active {
 .dropdown-menu {
   color: #7b8a8b;
 }
+.tiki .col1 .table-responsive {
+  border: 1px solid #ecf0f1;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */

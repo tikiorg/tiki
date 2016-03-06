@@ -7544,6 +7544,9 @@ a.admbox.off:active {
 .dropdown-menu {
   color: #ffffff;
 }
+.tiki .col1 .table-responsive {
+  border: 1px solid #ddd;
+}
 .topbar,
 .topbar .navbar-default .navbar-nav > li,
 .topbar .nav > li {

@@ -7642,6 +7642,9 @@ a.admbox.off:active {
 .dropdown-menu {
   color: #444;
 }
+.tiki .col1 .table-responsive {
+  border: 1px solid #0d747c;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */

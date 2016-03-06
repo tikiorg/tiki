@@ -7460,6 +7460,9 @@ a.admbox.off:active {
 .dropdown-menu {
   color: #333333;
 }
+.tiki .col1 .table-responsive {
+  border: 1px solid #c3d8ed;
+}
 .margin-bottom-xs {
   margin-bottom: 5px;
 }

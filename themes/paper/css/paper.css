@@ -8281,6 +8281,9 @@ a.admbox.off:active {
 .dropdown-menu {
   color: #666;
 }
+.tiki .col1 .table-responsive {
+  border: 1px solid #ddd;
+}
 .tiki .chosen-container-single .chosen-single,
 .tiki .chosen-container-active.chosen-with-drop .chosen-single,
 .tiki .chosen-container .chosen-drop,

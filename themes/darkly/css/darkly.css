@@ -7830,6 +7830,9 @@ a.admbox.off:active {
 .dropdown-menu {
   color: #EBEBEB;
 }
+.tiki .col1 .table-responsive {
+  border: 1px solid #464545;
+}
 .cssmenu_horiz a,
 .cssmenu_vert a {
   color: #0ce3ac;
