@@ -574,10 +574,12 @@ function wikiplugin_img( $data, $params )
 	// Now there is "type" field that clearly identifies image type.
 	// Code below leaves image param that is related to "type", removing all others,  this way code is not confused if
 	// several parameters are passed
-	$info = wikiplugin_img_info();
-	foreach($info['params']['type']['options'] as $type) {
-		if (!empty($type['value']) && $type['value'] != $imgdata['type'] && !empty($imgdata[$type['value']])) {
-			$imgdata[$type['value']] = null;
+	if (!empty($imgdata['type'])) {
+		$info = wikiplugin_img_info();
+		foreach ($info['params']['type']['options'] as $type) {
+			if (!empty($type['value']) && $type['value'] != $imgdata['type'] && !empty($imgdata[$type['value']])) {
+				$imgdata[$type['value']] = null;
+			}
 		}
 	}
 
