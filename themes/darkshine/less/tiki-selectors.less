@@ -44,11 +44,17 @@ h2.sitesubtitle {
 	}
 }
 
+.topbar.row {
+	border: solid #600;
+	border-width: 15px 15px 0 15px;
+}
+
 #middle,
 .row-middle,
 .layout_social > .container {
 	background: #f3f3f3;
-	border: 15px solid #600000;
+	border: solid #600;
+	border-width: 0 15px;
 }
 
 .top_modules div:not(.panel) .btn-link { color: #fe9b27; }
@@ -204,6 +210,12 @@ footer.footer {
 	}
 }
 
+#bottom_modules {
+	background: #000;
+	border: solid #600;
+	border-width: 0 15px;
+}
+
 .main-footer,
 footer.footer {
 	color: lighten(#9d9d9d, 15%);
@@ -224,3 +236,5 @@ footer.footer {
 	background: #f3f3f3;
 	color: @text-color;
 }
+
+.tablesorter-header {color: #e5e5e5; }

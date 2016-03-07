@@ -7548,11 +7548,16 @@ h2.sitesubtitle {
 .layout_fixed_top_modules h2.sitesubtitle {
   margin-top: 20px;
 }
+.topbar.row {
+  border: solid #600;
+  border-width: 15px 15px 0 15px;
+}
 #middle,
 .row-middle,
 .layout_social > .container {
   background: #f3f3f3;
-  border: 15px solid #600000;
+  border: solid #600;
+  border-width: 0 15px;
 }
 .top_modules div:not(.panel) .btn-link {
   color: #fe9b27;
@@ -7677,6 +7682,11 @@ footer.footer .panel-default > .panel-heading {
   background-color: transparent;
   border-color: transparent;
 }
+#bottom_modules {
+  background: #000;
+  border: solid #600;
+  border-width: 0 15px;
+}
 .main-footer,
 footer.footer {
   color: #c3c3c3;
@@ -7706,4 +7716,7 @@ footer.footer h5 {
 #autosave_preview {
   background: #f3f3f3;
   color: #333333;
+}
+.tablesorter-header {
+  color: #e5e5e5;
 }
