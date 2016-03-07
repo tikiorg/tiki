@@ -7371,22 +7371,32 @@ h6 a.tiki_anchor:hover {
 .diffadded .diffchar {
   color: #4d984e;
 }
+.searchresults blockquote em.hlt1,
+.searchresults blockquote em.hlt6,
 .highlight_word_0 {
   color: #3c763d;
   background: #dff0d8;
 }
+.searchresults blockquote em.hlt2,
+.searchresults blockquote em.hlt7,
 .highlight_word_1 {
   color: #31708f;
   background: #d9edf7;
 }
+.searchresults blockquote em.hlt3,
+.searchresults blockquote em.hlt8,
 .highlight_word_2 {
   color: #8a6d3b;
   background: #fcf8e3;
 }
+.searchresults blockquote em.hlt4,
+.searchresults blockquote em.hlt9,
 .highlight_word_3 {
   color: #a94442;
   background: #f2dede;
 }
+.searchresults blockquote em.hlt5,
+.searchresults blockquote em.hlt10,
 .highlight_word_4 {
   color: #a96642;
   background: #f2e5de;
@@ -7455,6 +7465,12 @@ a.admbox.off:active {
 .tiki .ui-widget button {
   background: #ffffff;
   color: #333333;
+}
+.dropdown-menu {
+  color: #333333;
+}
+.tiki .col1 .table-responsive {
+  border: 1px solid #dddddd;
 }
 .margin-bottom-xs {
   margin-bottom: 5px;
@@ -7532,11 +7548,19 @@ h2.sitesubtitle {
 .layout_fixed_top_modules h2.sitesubtitle {
   margin-top: 20px;
 }
+.topbar.row {
+  border: solid #600;
+  border-width: 15px 15px 0 15px;
+}
 #middle,
 .row-middle,
 .layout_social > .container {
   background: #f3f3f3;
-  border: 15px solid #600000;
+  border: solid #600;
+  border-width: 0 15px;
+}
+.top_modules div:not(.panel) .btn-link {
+  color: #fe9b27;
 }
 .btn-default {
   background: #ffd19f;
@@ -7658,6 +7682,11 @@ footer.footer .panel-default > .panel-heading {
   background-color: transparent;
   border-color: transparent;
 }
+#bottom_modules {
+  background: #000;
+  border: solid #600;
+  border-width: 0 15px;
+}
 .main-footer,
 footer.footer {
   color: #c3c3c3;
@@ -7683,4 +7712,11 @@ footer.footer h4,
 .main-footer h5,
 footer.footer h5 {
   color: #f0ad4e;
+}
+#autosave_preview {
+  background: #f3f3f3;
+  color: #333333;
+}
+.tablesorter-header {
+  color: #e5e5e5;
 }

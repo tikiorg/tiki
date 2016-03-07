@@ -7606,22 +7606,32 @@ h6 a.tiki_anchor:hover {
 .diffadded .diffchar {
   color: #58a959;
 }
+.searchresults blockquote em.hlt1,
+.searchresults blockquote em.hlt6,
 .highlight_word_0 {
   color: #ffffff;
   background: #469408;
 }
+.searchresults blockquote em.hlt2,
+.searchresults blockquote em.hlt7,
 .highlight_word_1 {
   color: #ffffff;
   background: #029acf;
 }
+.searchresults blockquote em.hlt3,
+.searchresults blockquote em.hlt8,
 .highlight_word_2 {
   color: #ffffff;
   background: #9b479f;
 }
+.searchresults blockquote em.hlt4,
+.searchresults blockquote em.hlt9,
 .highlight_word_3 {
   color: #ffffff;
   background: #d9831f;
 }
+.searchresults blockquote em.hlt5,
+.searchresults blockquote em.hlt10,
 .highlight_word_4 {
   color: #ffffff;
   background: #d9c11f;
@@ -7690,6 +7700,12 @@ a.admbox.off:active {
 .tiki .ui-widget button {
   background: #474949;
   color: #ffffff;
+}
+.dropdown-menu {
+  color: #444444;
+}
+.tiki .col1 .table-responsive {
+  border: 1px solid #dddddd;
 }
 /* black */
 /* white */

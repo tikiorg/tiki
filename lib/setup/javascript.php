@@ -55,9 +55,10 @@ if (empty($javascript_enabled_detect) && $feature_no_cookie) {
 
 	if ( strpos($_SERVER['PHP_SELF'], 'tiki-download') === false &&
 			strpos($_SERVER['PHP_SELF'], 'tiki-ajax_services.php') === false &&
-			strpos($_SERVER['PHP_SELF'], 'tiki-jsmodule.php') === false &&
-			strpos($_SERVER['PHP_SELF'], 'tiki-jsplugin.php') === false &&
-			strpos($_SERVER['PHP_SELF'], 'tiki-install.php') === false) {
+			strpos($_SERVER['PHP_SELF'], 'tiki-jsmodule.php')      === false &&
+			strpos($_SERVER['PHP_SELF'], 'tiki-jsplugin.php')      === false &&
+			strpos($_SERVER['PHP_SELF'], 'tiki-login.php')         === false &&
+			strpos($_SERVER['PHP_SELF'], 'tiki-install.php')       === false) {
 
 		$javascript_enabled_detect++;
 		setCookieSection('javascript_enabled_detect', $javascript_enabled_detect, '', $plus_one_year);

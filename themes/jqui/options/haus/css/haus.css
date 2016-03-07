@@ -84,7 +84,8 @@ input[type="submit"]:hover,
 }
 
 .btn-link, .btn-link:hover, .btn-link:focus, .btn-link:active {
-  border-color: transparent;
+	border-color: transparent;
+	color: #212121;
 }
 
 .navbar-default .navbar-nav > li > a,

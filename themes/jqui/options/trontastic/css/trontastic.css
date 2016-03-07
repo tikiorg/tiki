@@ -120,7 +120,8 @@ body {
 #footer a:visited {
   color: #B8EC79;
 }
-#col1 {
+#col1,
+#autosave_preview {
   border: 1px solid #4a4a4a;
   background: #000000 url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') 50% top repeat-x;
   color: #f3fce8;
@@ -175,6 +176,9 @@ body {
 }
 .btn-link:hover {
   color: #a0e64c;
+}
+.top_modules div:not(.panel) .btn-link {
+  color: #000;
 }
 a.admbox.off {
   border: 1px solid #555555;

@@ -116,26 +116,47 @@ function module_last_youtube_playlist_videos($mod_reference, $module_params)
 	$smarty = TikiLib::lib('smarty');
 	if (!empty($module_params['id'])) {
 		$id = $module_params['id'];
-		// Catch common error on param values and convert into the right ones
-		if ($params['allowFullScreen'] == 'y') {
-			$params['allowFullScreen'] = 'true';
-		} else if ($params['allowFullScreen'] == 'n') {
-			$params['allowFullScreen'] = 'false';
-		}
+
 		require_once('lib/wiki-plugins/wikiplugin_youtube.php');
+
+		$client = new Google_Client();
+		$client->setScopes('https://www.googleapis.com/auth/youtube');
+
+		// TODO: Add "dev_key" to documentation, without key API uses public API call limit
+		// and it is usually exceeded
+		if (!empty($module_params['dev_key'])) {
+			$client->setDeveloperKey($module_params['dev_key']);
+		}
+
+		// Define an object that will be used to make all API requests.
+		$youtube = new Google_Service_YouTube($client);
+
+		/*
+		 * TODO: orderby is not supported by V3 API, probably sort locally
 		if (!empty($module_params['orderby'])) {
 			$orderby = $module_params['orderby'];
 			$feedUrl = 'http://gdata.youtube.com/feeds/api/playlists/' . $id . '?orderby='. $orderby;
 		} else {
 			$feedUrl = 'http://gdata.youtube.com/feeds/api/playlists/' . $id . '?orderby=position';
 		}
-		$yt = new \ZendGData\YouTube();
-		$yt->setMajorProtocolVersion(2);
-		$yt->setHttpClient($tikilib->get_http_client());
+		*/
 	
 		try {
-			$playlistVideoFeed = $yt->getPlaylistVideoFeed($feedUrl);
-			$data[$id]['info']['title'] = $playlistVideoFeed->title->text;
+			// Get playlist information
+			// DOC: https://developers.google.com/youtube/v3/docs/playlists/list
+			$playlists = $youtube->playlists->listPlaylists("snippet", array(
+				'id' => $module_params['id'],
+				'hl' => $prefs['language']
+			));
+
+			// Get playlist content
+			// DOC: https://developers.google.com/youtube/v3/docs/playlistItems/list
+			$playlistItems = $youtube->playlistItems->listPlaylistItems('snippet', array(
+				'playlistId' => $module_params['id'],
+				'maxResults' => 50 // What if more items available?
+			));
+
+			$data[$id]['info']['title'] = $playlists[0]["snippet"]["localized"]['title'];
 	
 			// Prepare params for video display
 			$params = array();
@@ -146,11 +167,11 @@ function module_last_youtube_playlist_videos($mod_reference, $module_params)
 			// Get information from all videos from playlist
 			// Limit to $module_rows first videos if $module_rows is set
 			$count_videos = 1;
-			foreach ($playlistVideoFeed as $videoEntry) {
-				$videoId = $videoEntry->getVideoId();
-				$data[$id]['videos'][$videoId]['title'] = $videoEntry->getVideoTitle();
-				$data[$id]['videos'][$videoId]['uploaded'] = $videoEntry->mediaGroup->uploaded->text;
-				$data[$id]['videos'][$videoId]['description'] = $videoEntry->getVideoDescription();
+			foreach ($playlistItems as $videoEntry) {
+				$videoId = $videoEntry['snippet']['resourceId']['videoId'];
+				$data[$id]['videos'][$videoId]['title'] = $videoEntry['snippet']['title'];
+				$data[$id]['videos'][$videoId]['uploaded'] = $videoEntry['snippet']['publishedAt'];
+				$data[$id]['videos'][$videoId]['description'] = $videoEntry['snippet']['description'];
 				$params['movie'] = $videoId;
 				$pluginstr = wikiplugin_youtube('', $params);
 				$len = strlen($pluginstr);

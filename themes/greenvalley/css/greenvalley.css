@@ -4503,7 +4503,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
   color: #555555;
-  background-color: #e7e7e7;
+  background-color: transparent;
 }
 .navbar-default .navbar-nav > .disabled > a,
 .navbar-default .navbar-nav > .disabled > a:hover,
@@ -4512,11 +4512,11 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   background-color: transparent;
 }
 .navbar-default .navbar-toggle {
-  border-color: #dddddd;
+  border-color: transparent;
 }
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:focus {
-  background-color: #dddddd;
+  background-color: transparent;
 }
 .navbar-default .navbar-toggle .icon-bar {
   background-color: #888888;
@@ -4528,7 +4528,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
-  background-color: #e7e7e7;
+  background-color: transparent;
   color: #555555;
 }
 @media (max-width: 767px) {
@@ -4544,7 +4544,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
     color: #555555;
-    background-color: #e7e7e7;
+    background-color: transparent;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a,
   .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover,
@@ -7372,22 +7372,32 @@ h6 a.tiki_anchor:hover {
 .diffadded .diffchar {
   color: #4d984e;
 }
+.searchresults blockquote em.hlt1,
+.searchresults blockquote em.hlt6,
 .highlight_word_0 {
   color: #3c763d;
   background: #dff0d8;
 }
+.searchresults blockquote em.hlt2,
+.searchresults blockquote em.hlt7,
 .highlight_word_1 {
   color: #31708f;
   background: #d9edf7;
 }
+.searchresults blockquote em.hlt3,
+.searchresults blockquote em.hlt8,
 .highlight_word_2 {
   color: #8a6d3b;
   background: #fcf8e3;
 }
+.searchresults blockquote em.hlt4,
+.searchresults blockquote em.hlt9,
 .highlight_word_3 {
   color: #a94442;
   background: #f2dede;
 }
+.searchresults blockquote em.hlt5,
+.searchresults blockquote em.hlt10,
 .highlight_word_4 {
   color: #a96642;
   background: #f2e5de;
@@ -7456,6 +7466,12 @@ a.admbox.off:active {
 .tiki .ui-widget button {
   background: #ffffff;
   color: #42281d;
+}
+.dropdown-menu {
+  color: #515151;
+}
+.tiki .col1 .table-responsive {
+  border: 1px solid #53b042;
 }
 .margin-bottom-xs {
   margin-bottom: 5px;
@@ -7559,17 +7575,20 @@ table.tablesorter thead tr.tablesorter-filter-row {
   text-shadow: 1px 1px 0 #ffffff;
 }
 .panel-default > .panel-heading {
-  height: 52px;
+  min-height: 52px;
   padding-top: 6px;
-  background: url('../images/box_header3.png') no-repeat 50% 0%;
-  background-size: cover;
+  background: #02913d url('../images/box_header_bg.png') repeat-x 55% 100%;
   text-align: center;
+  border: 1px solid #8bc541;
 }
 .panel-title {
   font-size: 1.2em;
   font-weight: 700;
   color: #FFFFFF;
   text-shadow: #666 0px 2px 3px;
+}
+.panel-title:before {
+  content: url('../images/box_title_flower.png') no-repeat 0% 100%;
 }
 .btn-default,
 input[type="reset"],
@@ -7611,4 +7630,8 @@ footer.footer {
 .articletitle .titleb {
   color: #996633;
   font-size: 0.9em;
+}
+#autosave_preview {
+  background: url('../images/page_background_ltr.jpg') repeat;
+  color: #515151;
 }

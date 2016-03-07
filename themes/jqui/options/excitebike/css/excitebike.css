@@ -142,11 +142,14 @@ body.cke_show_borders {
 .panel-primary .panel-title {
   color: #fff;
 }
+.panel-default > .panel-heading {
+  color: #e69700;
+}
 .topbar .panel-heading,
 .topbar .navbar-default .navbar-collapse,
 .topbar .navbar-default .navbar-form {
   border: none;
-  background: transparent;
+  background-color: transparent !important;
 }
 .topbar a,
 .topbar > a,
