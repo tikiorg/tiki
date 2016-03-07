@@ -4034,6 +4034,11 @@ div.tiki_plugin {
   color: #563d7c;
   text-decoration: none;
 }
+@media (max-width: 767px) {
+  .autotoc > .nav {
+    display: none !important;
+  }
+}
 /* end autotoc */
 .plugin-form-float {
   position: fixed;
