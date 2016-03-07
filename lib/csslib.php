@@ -92,15 +92,15 @@ class cssLib extends TikiLib
 				// hide layouts that are for internal use only
 				continue;
 			} elseif ($layoutName == 'basic') {
-				$selectable_layouts[$layoutName] = tra('Standard Bootstrap');
+				$selectable_layouts[$layoutName] = tra('Basic Bootstrap');
 			} elseif ($layoutName == 'classic') {
-				$selectable_layouts[$layoutName] = tra('Classic Tiki with shadows');
-			} elseif ($layoutName == 'header_middle_footer_containers') {
-				$selectable_layouts[$layoutName] = tra('3 separate header, middle, footer containers');
+				$selectable_layouts[$layoutName] = tra('Classic Tiki (3 containers - header, middle, footer)');
 			} elseif ($layoutName == 'header_middle_footer_containers_3-6-3') {
-				$selectable_layouts[$layoutName] = tra('3 separate header, middle, footer containers with 3-6-3 columns');
+				$selectable_layouts[$layoutName] = tra('Wider side columns (3 containers - header, middle, footer)');
 			} elseif ($layoutName == 'social') {
-				$selectable_layouts[$layoutName] = tra('Social networking style');
+				$selectable_layouts[$layoutName] = tra('Fixed top navbar (uses site icon + "topbar" module zone)');
+			} elseif ($layoutName == 'fixed_top_modules') {
+				$selectable_layouts[$layoutName] = tra('Fixed top navbar (uses "top" module zone)');
 			} else {
 				$selectable_layouts[$layoutName] = $layoutLabel;
 			} 
