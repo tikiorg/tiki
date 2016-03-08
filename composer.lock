@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bfd4d9e8cfb0fc6b850ce9b1cee2ae1d",
-    "content-hash": "35102cf240a59554e494ec4a936378b2",
+    "hash": "49382c7ca2508ca65d505d810ab26e83",
+    "content-hash": "1ee6b4f44f9f88fd79b6c8ecca590bf6",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -320,16 +320,16 @@
         },
         {
             "name": "components/jquery",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/jquery.git",
-                "reference": "d8b2ac0c1978e9ed8602789123976b1c7161ef96"
+                "reference": "7894addbce3c4de6f82449610e6f8e168b49e9b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/components/jquery/zipball/d8b2ac0c1978e9ed8602789123976b1c7161ef96",
-                "reference": "d8b2ac0c1978e9ed8602789123976b1c7161ef96",
+                "url": "https://api.github.com/repos/components/jquery/zipball/7894addbce3c4de6f82449610e6f8e168b49e9b0",
+                "reference": "7894addbce3c4de6f82449610e6f8e168b49e9b0",
                 "shasum": ""
             },
             "type": "component",
@@ -358,7 +358,7 @@
             ],
             "description": "jQuery JavaScript Library",
             "homepage": "http://jquery.com",
-            "time": "2016-01-08 23:29:41"
+            "time": "2016-02-24 08:16:25"
         },
         {
             "name": "cwspear/bootstrap-hover-dropdown",
@@ -1029,6 +1029,47 @@
             "type": "library"
         },
         {
+            "name": "nnnick/chartjs",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nnnick/Chart.js.git",
+                "reference": "d17c76ea1a5c393b62f07303cc2f96f11ae73b5b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nnnick/Chart.js/zipball/d17c76ea1a5c393b62f07303cc2f96f11ae73b5b",
+                "reference": "d17c76ea1a5c393b62f07303cc2f96f11ae73b5b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "release/2.0": "v2.0-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "NICK DOWNIE",
+                    "email": "hello@nickdownie.com"
+                }
+            ],
+            "description": "Simple HTML5 charts using the canvas element.",
+            "homepage": "http://www.chartjs.org/",
+            "keywords": [
+                "JS",
+                "chart"
+            ],
+            "time": "2016-03-02 21:24:35"
+        },
+        {
             "name": "openlayers/ol3",
             "version": "3.6.0",
             "dist": {
@@ -1343,13 +1384,13 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sorich87/bootstrap-tour.git",
-                "reference": "3fb065d60470f2e2db765214f036e1bae8853e19"
+                "reference": "3f34ae2ccb0a3e8d78bdb5b4ab6665dfa4a517ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/sorich87-bootstrap-tour-3fb065d60470f2e2db765214f036e1bae8853e19-zip-e0e695.zip",
-                "reference": "3fb065d60470f2e2db765214f036e1bae8853e19",
-                "shasum": "6a060f30c063bdb9c42e4947ac589f72c05d19d1"
+                "url": "https://composer.tiki.org/dist/sorich87-bootstrap-tour-3f34ae2ccb0a3e8d78bdb5b4ab6665dfa4a517ce-zip-50d8a6.zip",
+                "reference": "3f34ae2ccb0a3e8d78bdb5b4ab6665dfa4a517ce",
+                "shasum": "1abe94b0ff590eb02a0e214cb522ac47270124bf"
             },
             "type": "component",
             "notification-url": "https://packagist.org/downloads/",
@@ -1362,7 +1403,7 @@
                 "bootstrap",
                 "tour"
             ],
-            "time": "2015-12-10 15:21:29"
+            "time": "2016-02-14 14:12:43"
         },
         {
             "name": "svg-edit/svg-edit",
@@ -1542,16 +1583,16 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.8.2",
+            "version": "v2.8.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "637b64d0ee10f44ae98dbad651b1ecdf35a11e8c"
+                "reference": "65cb36b6539b1d446527d60457248f30d045464d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/637b64d0ee10f44ae98dbad651b1ecdf35a11e8c",
-                "reference": "637b64d0ee10f44ae98dbad651b1ecdf35a11e8c",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/65cb36b6539b1d446527d60457248f30d045464d",
+                "reference": "65cb36b6539b1d446527d60457248f30d045464d",
                 "shasum": ""
             },
             "require": {
@@ -1587,7 +1628,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2016-01-13 10:28:07"
+            "time": "2016-02-22 15:02:30"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -2234,33 +2275,33 @@
         },
         {
             "name": "zendframework/zend-json",
-            "version": "2.6.0",
+            "version": "2.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-json.git",
-                "reference": "e2945611a98e1fefcaaf69969350a0bfa6a8d574"
+                "reference": "4c8705dbe4ad7d7e51b2876c5b9eea0ef916ba28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-json/zipball/e2945611a98e1fefcaaf69969350a0bfa6a8d574",
-                "reference": "e2945611a98e1fefcaaf69969350a0bfa6a8d574",
+                "url": "https://api.github.com/repos/zendframework/zend-json/zipball/4c8705dbe4ad7d7e51b2876c5b9eea0ef916ba28",
+                "reference": "4c8705dbe4ad7d7e51b2876c5b9eea0ef916ba28",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5"
+                "php": "^5.5 || ^7.0"
             },
             "require-dev": {
                 "fabpot/php-cs-fixer": "1.7.*",
                 "phpunit/phpunit": "~4.0",
-                "zendframework/zend-http": "~2.5",
-                "zendframework/zend-server": "~2.5",
-                "zendframework/zend-stdlib": "~2.5",
-                "zendframework/zendxml": "~1.0"
+                "zendframework/zend-http": "^2.5.4",
+                "zendframework/zend-server": "^2.6.1",
+                "zendframework/zend-stdlib": "^2.5 || ^3.0",
+                "zendframework/zendxml": "^1.0.2"
             },
             "suggest": {
-                "zendframework/zend-http": "Zend\\Http component",
-                "zendframework/zend-server": "Zend\\Server component",
-                "zendframework/zend-stdlib": "To use the cache for Zend\\Server",
+                "zendframework/zend-http": "Zend\\Http component, required to use Zend\\Json\\Server",
+                "zendframework/zend-server": "Zend\\Server component, required to use Zend\\Json\\Server",
+                "zendframework/zend-stdlib": "Zend\\Stdlib component, for use with caching Zend\\Json\\Server responses",
                 "zendframework/zendxml": "To support Zend\\Json\\Json::fromXml() usage"
             },
             "type": "library",
@@ -2285,7 +2326,7 @@
                 "json",
                 "zf2"
             ],
-            "time": "2015-11-18 13:59:33"
+            "time": "2016-02-04 21:20:26"
         },
         {
             "name": "zendframework/zend-loader",
@@ -3468,6 +3509,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "jcapture-applet/jcapture-applet": 20,
+        "nnnick/chartjs": 20,
         "sorich87/bootstrap-tour": 20,
         "zendframework/zendsearch": 5,
         "bafs/testify": 20
