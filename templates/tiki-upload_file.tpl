@@ -187,9 +187,9 @@
 					{else}
 						{if count($galleries) eq 0}
 							{if !empty($galleryId)}
-							<input type="hidden" name="galleryId" value="{$galleryId}">
+								<input type="hidden" name="galleryId[]" value="{$galleryId}">
 							{else}
-							<input type="hidden" name="galleryId" value="{$treeRootId}">
+								<input type="hidden" name="galleryId[]" value="{$treeRootId}">
 							{/if}
 						{elseif empty($groupforalert)}
 							<div class="form-group">
@@ -206,7 +206,7 @@
 								</div>
 							</div>
 						{else}
-							<input type="hidden" name="galleryId" value="{$galleryId}">
+							<input type="hidden" name="galleryId[]" value="{$galleryId}">
 						{/if}
 					{/if}
 
@@ -286,7 +286,7 @@
 					{include file='categorize.tpl'}<br/>
 				{/if}
 			{else}
-				<input type="hidden" name="galleryId" value="{$galleryId}">
+				<input type="hidden" name="galleryId[]" value="{$galleryId}">
 			{/if}
 			{if $prefs.javascript_enabled eq 'y' and !$editFileId}
 				<input type="hidden" name="upload">
