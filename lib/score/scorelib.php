@@ -85,6 +85,9 @@ class ScoreLib extends TikiLib
 		}
 		$query = "select `pointsBalance` from `tiki_object_scores` where `recipientObjectId`=? and `recipientObjectType`='user' order by id desc";
 		$total_score = $this->getOne($query, array($user));
+		if (empty($total_score)) {
+			$total_score = 0;
+		}
 		//if points don't expire, return total score; otherwise
 		if (empty($score_expiry_days)) {
 			return $total_score;
@@ -389,6 +392,35 @@ class ScoreLib extends TikiLib
 		$query = "SELECT pointsBalance FROM `tiki_object_scores` WHERE recipientObjectType=? and recipientObjectId=? order by id desc";
 		$result = $this->getOne($query, [$recipientType,$recipient]);
 
+		if (empty($result)) {
+			return 0;
+		}
+		return $result;
+	}
+
+	/**
+	 * This retrieves the score of a given object.
+	 * @param $recipientType
+	 * @param $recipient
+	 * @return bool|mixed
+	 */
+	function getGroupedPointsBalance($recipientType,$recipient) {
+		$query = "SELECT ruleId, SUM(pointsAssigned) as 'points' FROM `tiki_object_scores` WHERE recipientObjectType=? and recipientObjectId=? group by ruleId";
+		$result = $this->fetchAll($query, [$recipientType,$recipient]);
+
+		if (empty($result)) {
+			return 0;
+		}
+		return $result;
+	}
+
+	function getPointsBalanceForRuleId($recipientType,$recipient, $ruleId) {
+		$query = "SELECT SUM(pointsAssigned) FROM `tiki_object_scores` WHERE recipientObjectType=? and recipientObjectId=? and ruleId=? group by ruleId";
+		$result = $this->getOne($query, [$recipientType,$recipient,$ruleId]);
+
+		if (empty($result)) {
+			return 0;
+		}
 		return $result;
 	}
 
