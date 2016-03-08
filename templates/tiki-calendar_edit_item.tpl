@@ -527,7 +527,9 @@ $(".start.time select, .duration.time select, #start").change(function () {
 	$("select[name=end_Minute]").val(fNum(times.end.getMinutes())).trigger("chosen:updated");
 	$("#end").next()
 		.datepicker("setDate", $.datepicker.formatDate($("#end").next().datepicker("option", "dateFormat"), times.end))
-		.datepicker("show").datepicker("hide");
+		.datepicker("refresh");
+	$("#end").val(times.end.getTime() / 1000);
+	$("#start").val(times.start.getTime() / 1000);
 });
 $(".end.time select, #end").change(function () {
 	var times = getEventTimes(),
@@ -538,13 +540,19 @@ $(".end.time select, #end").change(function () {
 		$("select[name=start_Minute]").val(fNum(times.end.getMinutes())).trigger("chosen:updated");
 		$("#start").next()
 			.datepicker("setDate", $.datepicker.formatDate($("#start").next().datepicker("option", "dateFormat"), times.end))
-			.datepicker("show").datepicker("hide");
+			.datepicker( "refresh" );
+		$("#start").val(times.end.getTime() / 1000);
 		s = e;
 	}
 	times.duration = new Date(e - s);
 	$("select[name=duration_Hour]").val(fNum(times.duration.getHours())).trigger("chosen:updated");
 	$("select[name=duration_Minute]").val(fNum(times.duration.getMinutes())).trigger("chosen:updated");
 }).change();	// set duration on load
+// reset confirm
+window.needToConfirm = false;
+$("input, select, textarea", "#editcalitem").change(function () {
+	window.needToConfirm = true;
+});
 			{/jq}
 			{if $edit or !empty($calitem.parsed)}
 				<div class="form-group">

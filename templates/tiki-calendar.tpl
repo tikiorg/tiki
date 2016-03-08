@@ -227,12 +227,11 @@
 							dataType: 'html',
 							url: event.url + '&isModal=1',
 							success: function(data){
-								//$( "#calendar_dialog" ).html(data);
-								$( "#calendar_dialog_content" ).html(data);
-								$( "#calendar_dialog h1, #calendar_dialog .navbar" ).remove();
-								$( "#calendar_dialog .modal-title" ).html(event.title);
-								$( "#calendar_dialog" ).modal();
-								//$( "#calendar_dialog" ).dialog({ modal: true, title: event.title, width: 'auto', height: 'auto', position: 'center' });
+								var $dialog = $( "#calendar_dialog" ).remove()
+								$( "#calendar_dialog_content", $dialog ).html(data);
+								$( "#calendar_dialog h1, #calendar_dialog .navbar", $dialog ).remove();
+								$( "#calendar_dialog .modal-title", $dialog ).html(event.title);
+								$dialog.appendTo("body").modal({backdrop:"static"});
 								$this.tikiModal();
 							}
 						});
