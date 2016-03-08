@@ -51,9 +51,9 @@ function wikiplugin_box_info()
 				'description' => tra('Aligns the text within the box (left-aligned by default)'),
 				'since' => '1',
 				'filter' => 'alpha',
-				'default' => '',
+				'default' => 'left',
 				'options' => array(
-					array('text' => '', 'value' => ''),
+					array('text' => tra('Left'), 'value' => 'left'),
 					array('text' => tra('Right'), 'value' => 'right'),
 					array('text' => tra('Center'), 'value' => 'center'),
 				),
@@ -97,12 +97,14 @@ function wikiplugin_box_info()
 				'description' => tra('Apply custom CSS class to the box.'),
 				'since' => '1',
 				'filter' => 'text',
+				'default' => '',
 				'accepted' => tra('Valid CSS class'),
 			),
 			'style' => array(
 				'required' => false,
+				'safe' => true,
 				'name' => tra('CSS Style'),
-				'description' => tra('Enter CSS styling tags for the div type used.'),
+				'description' => tra('Enter CSS styling tags for the div type used e.g. padding: 5px'),
 				'since' => '13.0',
 				'filter' => 'text',
 				'default' => '',
@@ -114,6 +116,7 @@ function wikiplugin_box_info()
 				'description' => tra('ID'),
 				'since' => '1',
 				'filter' => 'text',
+				'default' => '',
 			),
 
 		),
@@ -128,17 +131,18 @@ function wikiplugin_box($data, $params)
 	// if (substr($data, 0, 2) == "\r\n") $data = substr($data, 2);
 
 	extract($params, EXTR_SKIP);
-	$bg   = (isset($bg))    ? " background:$bg" : "";
+	$bg   = (isset($bg))    ? " background: $bg;" : "";
+	$align = (isset($align)) ? " text-align: $align;" : "";
 	$id = (isset($id)) ? " id=\"$id\" ":'';
 	$class = (isset($class))? ' '.$class: ' ';
-	$w = (isset($width)) ? " width:$width"  : "";
+	$w = (isset($width)) ? " width: $width;"  : "";
 	$f = (isset($float) && ($float == "left" || $float == "right")) ? " float:$float" : "";
-	$c = (isset($clear))    ? " clear:both" : "";
-	$style = (isset($style)) ? $style : "";
+	$c = (isset($clear))    ? " clear:both;" : "";
+	$style = (isset($style)) ? "$style;" : "";
 	if (empty($float)) {
-	$begin = "<div class='panel panel-default$class' $id style='$bg;$f;margin:0;$w;$c;$style'>";
+	$begin = "<div class='panel panel-default$class' $id style='$bg margin:0; $w $c $style $align'>";
     } else {
-	$begin = "<div class='panel panel-default$class' $id style='$bg;$f;margin:1em;margin-$float:0;$w;$c;$style'>";
+	$begin = "<div class='panel panel-default$class' $id style='$bg $f; margin:1em; margin-$float:0; $w $c $style $align'>";
 	}
 
 	if (isset($title)) {
