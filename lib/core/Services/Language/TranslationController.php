@@ -127,6 +127,30 @@ class Services_Language_TranslationController
 		);
 	}
 
+	function action_translate($input)
+	{
+		Services_Exception_Disabled::check('feature_machine_translation');
+
+		global $prefs;
+
+		$content = $input->content->rawhtml_unsafe();
+		if (!empty($input->lang->text())) {
+			$lang = $input->lang->text();
+		} else {
+			$lang = $prefs['language'];
+		}
+
+		$factory = new Multilingual_MachineTranslation;
+		$impl = $factory->getDetectImplementation($lang);
+
+		$content = $impl->translateText($content);
+
+		return array(
+			'content' => $content,
+			'target' => $lang
+		);
+	}
+
 	private function getObjectFilter($type)
 	{
 		switch ($type) {
