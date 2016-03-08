@@ -33,7 +33,7 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 
 		$expr = new Search_Expr_And(
 			array(
-				new Search_Expr_Or(
+				new Search_Expr_ImplicitPhrase(
 					array(
 						new Search_Expr_Token('hello', 'plaintext', 'contents'),
 						new Search_Expr_Token('world', 'plaintext', 'contents'),
@@ -262,13 +262,13 @@ class Search_QueryTest extends PHPUnit_Framework_TestCase
 			array(
 				new Search_Expr_Or(
 					array(
-						new Search_Expr_Or(
+						new Search_Expr_ImplicitPhrase(
 							array(
 								new Search_Expr_Token('hello', 'plaintext', 'contents'),
 								new Search_Expr_Token('world', 'plaintext', 'contents'),
 							)
 						),
-						new Search_Expr_Or(
+						new Search_Expr_ImplicitPhrase(
 							array(
 								new Search_Expr_Token('hello', 'plaintext', 'title'),
 								new Search_Expr_Token('world', 'plaintext', 'title'),

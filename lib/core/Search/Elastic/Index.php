@@ -157,10 +157,38 @@ class Search_Elastic_Index implements Search_Index_Interface
 		$builder = new Search_Elastic_FacetBuilder($this->facetCount);
 		$facetPart = $builder->build($query->getFacets());
 
+		$builder = new Search_Elastic_RescoreQueryBuilder;
+		$rescorePart = $builder->build($query->getExpr());
+
+		$builder = new Search_Elastic_QueryBuilder;
+		$builder->setDocumentReader($this->createDocumentReader());
+		$queryPart = $builder->build($query->getExpr());
+
+		$indices = [$this->index];
+
+/*	this part handles federated searching, not backported currently
+	so just comment it out
+
+		$foreign = array_map(function ($query) use ($builder) {
+			return $builder->build($query->getExpr());
+		}, $query->getForeignQueries());
+
+		foreach ($foreign as $indexName => $foreignQuery) {
+			$indices[] = $indexName;
+			$queryPart = ['query' => [
+				'indices' => [
+					'index' => $indexName,
+					'query' => $foreignQuery['query'],
+					'no_match_query' => $queryPart['query'],
+				],
+			]];
+		}*/
+
 		$fullQuery = array_merge(
 			$queryPart,
 			$orderPart,
 			$facetPart,
+			$rescorePart,
 			array(
 				"from" => $resultStart,
 				"size" => $resultCount,
