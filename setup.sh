@@ -513,7 +513,7 @@ composer_core()
 	N=0
 	if exists php;
 	then
-		until php -dmemory_limit=-1 temp/composer.phar install --prefer-dist
+		until ${PHPCLI} -dmemory_limit=-1 temp/composer.phar install --prefer-dist --no-dev 2>&1 | sed '/Warning: Ambiguous class resolution/d'
 		# setting memory_limit here prevents suhosin ALERT - script tried to increase memory_limit to 536870912 bytes
 		do
 			if [ $N -eq 7 ];
