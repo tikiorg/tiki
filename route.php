@@ -253,7 +253,8 @@ if (is_null($base) || is_null($path)) {
 tiki_route($path);
 
 if ($inclusion) {
-	$_SERVER['PHP_SELF'] = $inclusion;
+	$_SERVER['PHP_SELF'] = $base . $inclusion;
+	$_SERVER['SCRIPT_NAME'] = $base . basename($inclusion);
 	include __DIR__ . '/' . $inclusion;
 } else {
 	error_log("No route found - full:$full query:{$_SERVER['QUERY_STRING']}");
