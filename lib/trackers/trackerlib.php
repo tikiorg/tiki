@@ -5249,17 +5249,18 @@ class TrackerLib extends TikiLib
 		// preset $item = array('itemId' => value). Either from param or empty
 		$item = isset($params['item']) ? $params['item'] : array();
 
-		// check wether we have a value assigned to $fields. 
+		// if we have an itemId, pass it to our new item structure
+		if (isset($params['itemId'])) {
+			$item['itemId'] = $params['itemId'];
+		}
+
+		// check wether we have a value assigned to $fields.
 		// This might be the case if $fields was passed through $params and not from the tracker definition.
 		// Build the $items['fieldId'] = value structure 
 		if (isset($field['value'])) {
 			$item[$field['fieldId']] = $field['value'];
-		}
-
-		
-		// if we have an itemId, pass it to our new item structure
-		if (isset($params['itemId'])) {
-			$item['itemId'] = $params['itemId'];
+		} else if (isset($item['itemId'])) {
+			$item[$field['fieldId']] = $this->get_item_value(null,$item['itemId'],$field['fieldId']);
 		}
 
 		// get the handler for the specific fieldtype.
