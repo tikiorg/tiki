@@ -57,7 +57,7 @@ class Search_MySql_QueryBuilder
 				// $fields[0] can be i.e  'allowed_users', 'allowed_groups'
 				$query = $this->fieldBuilder->build($node, $this->factory);
 				$str = $this->db->qstr($query);
-				$this->requireIndex($fields[0], 'fulltext');
+				$this->requireIndex($fields[0], 'fulltext', $node->getWeight());
 				$type = $this->fieldBuilder->isInverted()
 					? 'NOT MATCH'
 					: 'MATCH';
@@ -80,16 +80,16 @@ class Search_MySql_QueryBuilder
 			return 'NOT (' . reset($childNodes) . ')';
 		} elseif ($node instanceof Token) {
 			$value = $this->getQuoted($node);
-			$this->requireIndex($node->getField(), 'index');
+			$this->requireIndex($node->getField(), 'index', $node->getWeight());
 			return "`{$node->getField()}` = $value";
 		} elseif ($node instanceof Initial) {
 			$value = $this->getQuoted($node, '%');
-			$this->requireIndex($node->getField(), 'index');
+			$this->requireIndex($node->getField(), 'index', $node->getWeight());
 			return "`{$node->getField()}` LIKE $value";
 		} elseif ($node instanceof Range) {
 			$from = $this->getQuoted($node->getToken('from'));
 			$to = $this->getQuoted($node->getToken('to'));
-			$this->requireIndex($node->getField(), 'index');
+			$this->requireIndex($node->getField(), 'index', $node->getWeight());
 			return "`{$node->getField()}` BETWEEN $from AND $to";
 		} else {
 			// Throw initial exception if fallback fails
@@ -97,9 +97,9 @@ class Search_MySql_QueryBuilder
 		}
 	}
 
-	private function requireIndex($field, $type)
+	private function requireIndex($field, $type, $weight = 1.0)
 	{
-		$this->indexes[$field . $type] = array('field' => $field, 'type' => $type);
+		$this->indexes[$field . $type] = array('field' => $field, 'type' => $type, 'weight' => $weight);
 	}
 
 	private function getFields($node)
