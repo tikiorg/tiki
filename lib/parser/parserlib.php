@@ -2933,8 +2933,8 @@ if ( \$('#$id') ) {
 						$do_center = 0;
 						$title_text = preg_replace('/<div style="text-align: center;">(.*)<\/div>/', '\1', $title_text, 1, $do_center);
 
-						// prevent widow words on headings - thanks http://davidwalsh.name/prevent-widows-php-javascript
-						$title_text = preg_replace( '/([^\s])\s+([^\s]+)\s*$/', '$1&nbsp;$2', $title_text);
+						// prevent widow words on headings - originally from http://davidwalsh.name/prevent-widows-php-javascript
+						$title_text = preg_replace( '/^\s*(.+\s+\S+)\s+(\S+)\s*$/sumU', '$1&nbsp;$2', $title_text);
 
 						$style = $do_center ? ' style="text-align: center;"' : '';
 

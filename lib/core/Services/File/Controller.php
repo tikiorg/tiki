@@ -111,14 +111,31 @@ class Services_File_Controller
 
 		if (isset($_FILES['files']) && is_array($_FILES['files']['tmp_name'])) {
 
-			// a few other params that are still arrays but shouldn't be
-			$input->offsetSet('galleryId', $input->galleryId->asArray()[0]);
-			$input->offsetSet('hit_limit', $input->hit_limit->asArray()[0]);
-			$input->offsetSet('isbatch', $input->isbatch->asArray()[0]);
-			$input->offsetSet('deleteAfter', $input->deleteAfter->asArray()[0]);
-			$input->offsetSet('author', $input->author->asArray()[0]);
-			$input->offsetSet('user', $input->user->asArray()[0]);
-			$input->offsetSet('listtoalert', $input->listtoalert->asArray()[0]);
+			// a few other params that are still arrays but shouldn't be (mostly)
+			if (is_array($input->galleryId->asArray())) {
+				$input->offsetSet('galleryId', $input->galleryId->asArray()[0]);
+			}
+			if (is_array($input->hit_limit->asArray())) {
+				$input->offsetSet('hit_limit', $input->hit_limit->asArray()[0]);
+			}
+			if (is_array($input->isbatch->asArray())) {
+				$input->offsetSet('isbatch', $input->isbatch->asArray()[0]);
+			}
+			if (is_array($input->deleteAfter->asArray())) {
+				$input->offsetSet('deleteAfter', $input->deleteAfter->asArray()[0]);
+			}
+			if (is_array($input->deleteAfter_unit->asArray())) {
+				$input->offsetSet('deleteAfter_unit', $input->deleteAfter_unit->asArray()[0]);
+			}
+			if (is_array($input->author->asArray())) {
+				$input->offsetSet('author', $input->author->asArray()[0]);
+			}
+			if (is_array($input->user->asArray())) {
+				$input->offsetSet('user', $input->user->asArray()[0]);
+			}
+			if (is_array($input->listtoalert->asArray())) {
+				$input->offsetSet('listtoalert', $input->listtoalert->asArray()[0]);
+			}
 
 			for ($i = 0; $i < count($_FILES['files']['tmp_name']); $i++) {
 				if (is_uploaded_file($_FILES['files']['tmp_name'][$i])) {
