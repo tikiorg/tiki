@@ -104,6 +104,8 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 			'searchable' => $typeFactory->identifier($this->userIsIndexed($detail) ? 'y' : 'n'),
 			'groups' => $typeFactory->multivalue($detail['groups']),
 			'_extra_groups' => array('Registered'), // Add all registered to allowed groups
+
+			'view_permission' => $typeFactory->identifier('tiki_p_list_users'),
 		);
 
 		$data = array_merge($data, $this->getTrackerFieldsForUser($objectId, $typeFactory));
