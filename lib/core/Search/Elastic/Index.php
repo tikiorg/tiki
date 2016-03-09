@@ -173,7 +173,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 					],
 					'sortable' => [
 						'tokenizer' => 'keyword',
-						'filter' => ['lowercase'],
+						'filter' => ['lowercase', 'asciifolding'],
 					],
 				],
 				'filter' => [
