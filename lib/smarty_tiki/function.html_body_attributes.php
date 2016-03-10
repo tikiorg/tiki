@@ -28,7 +28,7 @@ function smarty_function_html_body_attributes($params, $smarty)
 
 	//filename of script called (i.e. tiki-index, tiki-user_information, tiki-view_forum, etc), then sanitize chars
 	$script_filename = pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_FILENAME);
-	$class .= filter_var($script_filename, FILTER_SANITIZE_SPECIAL_CHARS, array(FILTER_FLAG_STRIP_LOW,FILTER_FLAG_STRIP_HIGH));
+	$class .= ' ' . filter_var($script_filename, FILTER_SANITIZE_SPECIAL_CHARS, array(FILTER_FLAG_STRIP_LOW,FILTER_FLAG_STRIP_HIGH)) . ' ';
 	
 	if (isset($section_class)) {
 		$class .= $section_class;
