@@ -211,7 +211,7 @@
 						{/remarksbox}
 					{/if}
 					<p>{tr}Tiki uses the GD library to process images for the Image Gallery and CAPTCHA support.{/tr}</p>
-					<p>{tr}By default Tiki save your images and files in the database to make the setup as easiest as possible.{/tr}<br />{tr}This setting can be changed later in the Admin Control Panels, File Galleries section General Settings.{/tr}<br />{tr}If you need to store a lot of files you may consider switching from "Store to database" to "Store to directory".{/tr}</p>
+					<p>{tr}By default Tiki save your images and files in the database to make the setup as easy as possible.{/tr}<br />{tr}This setting can be changed later in the Control Panels, File Galleries section General Settings.{/tr}<br />{tr}If you need to store a lot of files you should consider switching from "Store to database" to "Store to directory".{/tr}</p>
 					<form action="tiki-install.php" method="post" role="form">
 						<div class="form-group text-center">
 							<input type="hidden" name="install_step" value="3">
