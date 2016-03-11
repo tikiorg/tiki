@@ -279,10 +279,10 @@ if (jqueryTiki.no_cookie) {
 		{/if}
 		<div class="social-buttons">
 			{if $prefs.socialnetworks_facebook_login eq 'y' and $mode neq "header" and empty($user)}
-				{button _icon_name='facebook' _text="{tr}Log in via Facebook{/tr}" _class='btn btn-social btn-facebook' _script='tiki-socialnetworks.php' request_facebook=true _title="{tr}Log in via Facebook{/tr}"}
+				{button _icon_name='facebook' _text="{tr}Log in via Facebook{/tr}" _class='btn btn-social btn-facebook' _script='tiki-socialnetworks.php' _auto_args=request_facebook request_facebook=true _title="{tr}Log in via Facebook{/tr}"}
 			{/if}
 			{if $prefs.socialnetworks_linkedin_login eq 'y' and $mode neq "header" and empty($user)}
-				{button _icon_name='linkedin' _text="{tr}Log in via LinkedIn{/tr}" _class='btn btn-social btn-linkedin' _script='tiki-socialnetworks.php' connect='y' _title="{tr}Log in via LinkedIn{/tr}"}
+				{button _icon_name='linkedin' _text="{tr}Log in via LinkedIn{/tr}" _class='btn btn-social btn-linkedin' _script='tiki-socialnetworks.php' _auto_args=connect connect='y' _title="{tr}Log in via LinkedIn{/tr}"}
 			{/if}
 		</div>
 		{$close_tags}
