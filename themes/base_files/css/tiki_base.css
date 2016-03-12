@@ -3915,9 +3915,9 @@ div.tiki_plugin {
   font-weight: 500;
 }
 /* reset tabs styling */
-.autotoc .nav-tabs > li.active > a,
-.autotoc .nav-tabs > li.active > a:hover,
-.autotoc .nav-tabs > li.active > a:focus {
+.autotoc > ul > li.active > a,
+.autotoc > ul > li.active > a:hover,
+.autotoc > ul > li.active > a:focus {
   color: inherit;
   background-color: inherit;
   border-bottom-color: transparent;
