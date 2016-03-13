@@ -45,7 +45,7 @@ function smarty_function_icon($params, $smarty)
 	$cachelib = TikiLib::lib('cache');
 
 	if (empty($tc_theme)) {
-		$current_theme = $prefs['theme'];
+		$current_theme = !empty($prefs['theme']) ? $prefs['theme'] : '';
 		$current_theme_option = isset($prefs['theme_option']) ? $prefs['theme_option'] : '';
 	} else {
 		$current_theme = $tc_theme;
