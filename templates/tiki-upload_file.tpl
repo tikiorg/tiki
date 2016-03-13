@@ -61,10 +61,10 @@
 	{/if}
 	</h2>
 
-	<table border="0" cellspacing="4" cellpadding="4">
+	<table class="table">
 		{section name=ix loop=$uploads}
-			<tr class="{cycle values="odd,even"}">
-				<td style="text-align: center">
+			<tr>
+				<td class="text-center">
 					<img src="{$uploads[ix].fileId|sefurl:thumbnail}">
 				</td>
 				<td>
