@@ -919,6 +919,9 @@ if ($dbcon) {
 	$smarty->assign('tikidb_oldPerms', $oldPerms);
 
 	if ($install_step == '6' && $has_tiki_db) {
+		if (isset($_POST['install_type']) && $_POST['install_type'] === 'scratch') {
+			require_once('lib/setup/prefs.php');
+		}
 		update_preferences($prefs);
 		$smarty->assign('admin_email', get_admin_email());
 		$smarty->assign('upgradefix', (empty($dbversion_tiki) || $dbversion_tiki[0] < 4) ? 'y' : 'n');
