@@ -23,7 +23,7 @@ class IconsetLib
 		$iconset = new Iconset($this->loadFile('themes/base_files/iconsets/default.php'));
 		
 		//override the default icons with theme specific icons or with site icon set setting
-		if ($prefs['theme_iconset'] === 'theme_specific_iconset') {
+		if (isset($prefs['theme_iconset']) && $prefs['theme_iconset'] === 'theme_specific_iconset') {
 			$filename = $themelib->get_theme_path($theme, '', str_replace('-', '_', $theme) . '.php');
 			if ($filename) {
 				$iconset1 = new Iconset($this->loadFile($filename));
@@ -34,7 +34,7 @@ class IconsetLib
 				$iconset1 = new Iconset($this->loadFile($filename));
 				$iconset->merge($iconset1);
 			}
-		} else if ($prefs['theme_iconset'] !== 'default') {
+		} else if (isset($prefs['theme_iconset']) && $prefs['theme_iconset'] !== 'default') {
 			$filename = "themes/base_files/iconsets/{$prefs['theme_iconset']}.php";
 			$iconset1 = new Iconset($this->loadFile($filename));
 			$iconset->merge($iconset1);
