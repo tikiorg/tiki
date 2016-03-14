@@ -75,7 +75,7 @@
 							{tr}Display full size:{/tr}
 						</td>
 						<td>
-							<code>&#x7b;img fileId="{$fileId}"}</code>
+							<code>{ldelim}img fileId="{$fileId}"{rdelim}</code>
 						</td>
 					</tr>
 					{if $prefs.feature_shadowbox eq 'y'}
@@ -84,7 +84,7 @@
 								{tr}Display thumbnail that enlarges:{/tr}
 							</td>
 							<td>
-								<code>{rdelim}img fileId="{$fileId}" thumb="box"{ldelim}</code>
+								<code>{ldelim}img fileId="{$fileId}" thumb="box"{rdelim}</code>
 							</td>
 						</tr>
 					{/if}
