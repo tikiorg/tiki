@@ -89,7 +89,7 @@
 											<span class="help-block">
 												{if $channels[user].url}
 													{tr}URL:{/tr}
-													<a href="{$channels[user].url|escape:'url'}"
+													<a href="{$channels[user].sefurl|escape}"
 													   class="link tips" target="_blank"
 													   title=":{$channels[user].canonic|escape}">{$channels[user].canonic|truncate:40:' ...'|escape}</a>
 												{/if}
