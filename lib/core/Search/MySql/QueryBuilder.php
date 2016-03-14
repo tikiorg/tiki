@@ -12,6 +12,7 @@ use Search_Expr_Not as NotX;
 use Search_Expr_Range as Range;
 use Search_Expr_Initial as Initial;
 use Search_Expr_MoreLikeThis as MoreLikeThis;
+use Search_Expr_ImplicitPhrase as ImplicitPhrase;
 
 class Search_MySql_QueryBuilder
 {
