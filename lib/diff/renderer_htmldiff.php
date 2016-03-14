@@ -14,7 +14,7 @@ include_once("Renderer.php");
 
 class Text_Diff_Renderer_htmldiff extends Tiki_Text_Diff_Renderer
 {
-	function Text_Diff_Renderer_htmldiff($context_lines = 0, $words = 0)
+	function __construct($context_lines = 0, $words = 0)
 	{
 		$this->_leading_context_lines = $context_lines;
 		$this->_trailing_context_lines = $context_lines;

@@ -17,7 +17,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 class Text_Diff_Renderer_bytes extends Text_Diff_Renderer
 {
-    function Text_Diff_Renderer_bytes($first = -1)
+    function __construct($first = -1)
     {
         $this->_addBytes = 0;
         $this->_delBytes = 0;

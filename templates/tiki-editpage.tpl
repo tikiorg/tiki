@@ -265,9 +265,27 @@
 				{if !empty($showPropertiesTab)}
 					{tab name="{tr}Properties{/tr}"}
 						<h2>{tr}Properties{/tr}</h2>
+						<div class="t_navbar margin-bottom-md clearfix">
+							{if $tiki_p_admin_wiki eq "y"}
+								<a href="tiki-admin.php?page=wiki" class="btn btn-link">
+									{icon name="cog"} {tr}Wiki Preferences{/tr}
+								</a>
+								{permission_link mode=text permType=wiki}
+							{/if}
+							{if $tiki_p_edit_content_templates eq 'y'}
+								<a href="tiki-admin_content_templates.php" class="btn btn-link" onclick="needToConfirm = true;">
+									{icon name="cog"} {tr}Content Templates{/tr}
+								</a>
+							{/if}
+							{if $tiki_p_edit_structures eq 'y'}
+								<a href="tiki-admin_structures.php" class="btn btn-link">
+									{icon name="structure"} {tr}Structures{/tr}
+								</a>
+							{/if}
+						</div>
 						{if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
 							<div class="form-group">
-								<label for="templateId" class="col-md-4 control-label">{tr}Apply template{/tr}</label>
+								<label for="templateId" class="col-md-4 control-label">{tr}Apply content template{/tr}</label>
 								<div class="col-md-8">
 									<select class="form-control" id="templateId" name="templateId" onchange="needToConfirm=false;$('#editpageform').submit();">
 										<option value="0">{tr}none{/tr}</option>
@@ -275,20 +293,13 @@
 												<option value="{$templates[ix].templateId|escape}" {if $templateId eq $templates[ix].templateId}selected="selected"{/if}>{tr}{$templates[ix].name|escape}{/tr}</option>
 											{/section}
 									</select>
-									{if $tiki_p_edit_content_templates eq 'y'}
-										<span class="help-block">
-											<a href="tiki-admin_content_templates.php" class="btn btn-link" onclick="needToConfirm = true;">
-												{icon name="cog"} {tr}Content Templates{/tr}
-											</a>
-										</span>
-									{/if}
 								</div>
 							</div>
 						{/if}
 						{if $prefs.feature_wiki_usrlock eq 'y' && ($tiki_p_lock eq 'y' || $tiki_p_admin_wiki eq 'y')}
 							<div class="form-group">
 								<label for="lock_it" class="col-md-4 control-label">{tr}Lock this page{/tr}</label>
-								<div class="col-md-8 checkbox">
+								<div class="col-md-8">
 									<input type="checkbox" id="lock_it" name="lock_it" {if $lock_it eq 'y'}checked="checked"{/if}>
 								</div>
 							</div>
@@ -296,7 +307,7 @@
 						{if $prefs.feature_wikilingo eq 'y'}
 							<div class="form-group">
 								<label for="wiki-parser" class="col-md-4 control-label">{tr}Choose your parser{/tr}</label>
-								<div class="col-md-8 checkbox">
+								<div class="col-md-8">
 									<select id="wiki-parser-choice" name="wiki_parser" onchange="window.update_output_type(this);">
 										<option value="">{tr}tiki Wiki Syntax Parser {/tr}</option>
 										<option value="wikiLingo" {if $outputType eq 'wikiLingo' or $quickedit eq TRUE}selected="selected"{/if}>{tr}wikiLingo{/tr}</option>
@@ -307,7 +318,7 @@
 						{if $prefs.wiki_comments_allow_per_page neq 'n'}
 							<div class="form-group">
 								<label for="comments_enabled" class="col-md-4 control-label">{tr}Allow comments on this page{/tr}</label>
-								<div class="col-md-8 checkbox">
+								<div class="col-md-8">
 									<input type="checkbox" id="comments_enabled" name="comments_enabled" {if $comments_enabled eq 'y'}checked="checked"{/if}>
 								</div>
 							</div>
@@ -315,11 +326,11 @@
 						{if $prefs.feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y' and ($wysiwyg neq 'y' or $prefs.wysiwyg_htmltowiki eq 'y')}
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="allowhtml">{tr}Allow HTML{/tr}</label>
-								<div class="col-md-8 checkbox">
+								<div class="col-md-8">
 									<input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}>
-									{remarksbox type=tip title="{tr}Tip{/tr}"}
-										{tr }Per-page option: HTML tags are used to create elements of the wiki page, instead of being displayed as code.{/tr}
-									{/remarksbox}
+									<span class="help-block">
+										{tr}HTML tags are used to create elements of the wiki page, instead of being displayed as code.{/tr}
+									</span>
 								</div>
 							</div>
 							{if $prefs.ajax_autosave eq "y"}
@@ -335,33 +346,29 @@
 						{if $prefs.feature_wiki_import_html eq 'y'}
 							<div class="form-group">
 								<label for="suck_url" class="col-md-4 control-label">{tr}Import HTML{/tr}</label>
-								<div class="col-md-8 form-group">
-									<div class="col-md-4">
-										<input class="form-control wikiedit" type="text" id="suck_url" name="suck_url" value="{$suck_url|escape}">
-									</div>
-								<input type="submit" class="wikiaction btn btn-default" name="do_suck" value="{tr}Import{/tr}" onclick="needToConfirm=false;">
-								<label><input type="checkbox" name="parsehtml" {if $parsehtml eq 'y'}checked="checked"{/if}>&nbsp;
-								{tr}Try to convert HTML to wiki{/tr}. </label>
+								<div class="col-md-8 form-inline">
+									<input class="form-control wikiedit" type="text" id="suck_url" name="suck_url" value="{$suck_url|escape}">
+									<input type="submit" class="wikiaction btn btn-default" name="do_suck" value="{tr}Import{/tr}" onclick="needToConfirm=false;">
+									<label><input type="checkbox" name="parsehtml" {if $parsehtml eq 'y'}checked="checked"{/if}>&nbsp;
+									{tr}Try to convert HTML to wiki{/tr}</label>
 								</div>
 							</div>
 						{/if}
 						{if $prefs.feature_wiki_import_page eq 'y'}
-							<div class="form-group">
+							<div class="form-group clearfix">
 								<label for="userfile1" class="col-md-4 control-label">{tr}Import page{/tr}</label>
-								<div class="col-md-8 form-group">
-									<div class="col-md-6">
-										<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
-										<input class="form-control" id="userfile1" name="userfile1" type="file">
-									</div>
+								<div class="col-md-8 form-inline">
+									<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
+									<input class="form-control" id="userfile1" name="userfile1" type="file">
 									<input type="submit" class="wikiaction btn btn-default" name="attach" value="{tr}Import{/tr}" onclick="javascript:needToConfirm=false;insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file', 'page2', 'attach_comment'); return true;">
 								</div>
 							</div>
 						{/if}
 						{if $prefs.feature_wiki_export eq 'y' and $tiki_p_export_wiki eq 'y'}
 							<div class="form-group">
-								<label for="" class="col-md-4 control-label">{tr}Export pages{/tr}</label>
+								<label for="" class="col-md-4 control-label">{tr}Export page{/tr}</label>
 								<div class="col-md-8">
-									<a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}&amp;all=1" class="btn btn-default">{tr}export all versions{/tr}</a>
+									<a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}&amp;all=1" class="btn btn-default">{icon name="export"} {tr}Export all versions{/tr}</a>
 								</div>
 							</div>
 						{/if}
@@ -371,22 +378,10 @@
 								<input type="hidden" name="hasAlreadyInserted2" value="">
 								<input type="hidden" id="page2" name="page2" value="{$page}">
 								<div class="form-group clearfix">
-									<label for="attach-upload" class="col-md-4 control-label">{tr}Attachments{/tr}</label>
-									<div class="col-md-8">
-										<div class="form-group">
-											<label for="attach-comment" class="control-label col-md-4">{tr}Upload file{/tr}</label>
-											<div class="col-md-8">
-												<input name="userfile2" type="file" id="attach-upload" class="btn btn-default">
-											</div>
-										</div>
-										<div class="form-group">
-											<label for="attach-comment" class="col-md-4 control-label">{tr}Comment{/tr}</label>
-											<div class="col-md-8">
-												<input type="text" name="attach_comment" class="form-control" maxlength="250" id="attach-comment">
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6 col-md-push-4">
+									<label for="attach-upload" class="col-md-4 control-label">{tr}Attach file{/tr}</label>
+									<div class="col-md-8 form-inline">
+										<input name="userfile2" type="file" id="attach-upload" class="form-control">
+										<input type="text" name="attach_comment" class="form-control" maxlength="250" id="attach-comment" placeholder="{tr}Comment{/tr}">
 										<input type="submit" class="wikiaction btn btn-default" name="attach" value="{tr}Attach{/tr}" onclick="javascript:needToConfirm=false;insertImgFile('editwiki','userfile2','hasAlreadyInserted2','file', 'page2', 'attach_comment'); return true;">
 									</div>
 								</div>
@@ -442,37 +437,34 @@
 								{/if}
 							{/if}
 							{if $prefs.feature_wiki_icache eq 'y'}
-								<fieldset class="clearfix">
-									<legend>{tr}Cache{/tr}</legend>
-									<select id="wiki_cache" name="wiki_cache">
-										<option value="0" {if $prefs.wiki_cache eq 0}selected="selected"{/if}>0 ({tr}no cache{/tr})</option>
-										<option value="60" {if $prefs.wiki_cache eq 60}selected="selected"{/if}>1 {tr}minute{/tr}</option>
-										<option value="300" {if $prefs.wiki_cache eq 300}selected="selected"{/if}>5 {tr}minutes{/tr}</option>
-										<option value="600" {if $prefs.wiki_cache eq 600}selected="selected"{/if}>10 {tr}minute{/tr}</option>
-										<option value="900" {if $prefs.wiki_cache eq 900}selected="selected"{/if}>15 {tr}minutes{/tr}</option>
-										<option value="1800" {if $prefs.wiki_cache eq 1800}selected="selected"{/if}>30 {tr}minute{/tr}</option>
-										<option value="3600" {if $prefs.wiki_cache eq 3600}selected="selected"{/if}>1 {tr}hour{/tr}</option>
-										<option value="7200" {if $prefs.wiki_cache eq 7200}selected="selected"{/if}>2 {tr}hours{/tr}</option>
-									</select>
-									{if $prefs.wiki_cache == 0}{remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}Only cache a page if it should look the same to all groups authorized to see it.{/tr}{/remarksbox}{/if}
-								</fieldset>
+								<div class="form-group">
+									<label for="wiki_cache" class="control-label col-md-4">{tr}Cache{/tr}</label>
+									<div class="col-md-8">
+										<select id="wiki_cache" name="wiki_cache" class="form-control">
+											<option value="0" {if $prefs.wiki_cache eq 0}selected="selected"{/if}>0 ({tr}no cache{/tr})</option>
+											<option value="60" {if $prefs.wiki_cache eq 60}selected="selected"{/if}>1 {tr}minute{/tr}</option>
+											<option value="300" {if $prefs.wiki_cache eq 300}selected="selected"{/if}>5 {tr}minutes{/tr}</option>
+											<option value="600" {if $prefs.wiki_cache eq 600}selected="selected"{/if}>10 {tr}minute{/tr}</option>
+											<option value="900" {if $prefs.wiki_cache eq 900}selected="selected"{/if}>15 {tr}minutes{/tr}</option>
+											<option value="1800" {if $prefs.wiki_cache eq 1800}selected="selected"{/if}>30 {tr}minute{/tr}</option>
+											<option value="3600" {if $prefs.wiki_cache eq 3600}selected="selected"{/if}>1 {tr}hour{/tr}</option>
+											<option value="7200" {if $prefs.wiki_cache eq 7200}selected="selected"{/if}>2 {tr}hours{/tr}</option>
+										</select>
+										{if $prefs.wiki_cache == 0}
+											{remarksbox type="warning" title="{tr}Warning{/tr}" close="n"}{tr}Only cache a page if it should look the same to all groups authorized to see it.{/tr}{/remarksbox}
+										{/if}
+									</div>
+								</div>
 							{/if}
-							{if $prefs.feature_wiki_structure eq 'y'}
+							{if $prefs.feature_wiki_structure eq 'y' && $showstructs|@count gt 0}
 								<div class="form-group">
 									<label class="col-md-4 control-label">{tr}Structures{/tr}</label>
 									<div class="col-md-8" id="showstructs">
-										{if $showstructs|@count gt 0}
-											<ul>
-												{foreach from=$showstructs item=page_info}
-													<li>{$page_info.pageName}{if !empty(${$page_info.outputType}.page_alias)}({$page_info.page_alias}){/if}</li>
-												{/foreach}
-											</ul>
-										{/if}
-										{if $tiki_p_edit_structures eq 'y'}
-											<a href="tiki-admin_structures.php" class="btn btn-link">
-												{icon name="cog"} {tr}Manage structures{/tr}
-											</a>
-										{/if}
+										<ul>
+											{foreach from=$showstructs item=page_info}
+												<li>{$page_info.pageName}{if !empty(${$page_info.outputType}.page_alias)}({$page_info.page_alias}){/if}</li>
+											{/foreach}
+										</ul>
 									</div>
 								</div>
 							{/if}
@@ -503,9 +495,6 @@
 											<option value="lastmodif"{if $wiki_authors_style eq 'lastmodif'} selected="selected"{/if}>{tr}Page last modified on{/tr}</option>
 											<option value="none"{if $wiki_authors_style eq 'none'} selected="selected"{/if}>{tr}no (disabled){/tr}</option>
 										</select>
-										<span class="help-block">
-											{permission_link mode=text permType=wiki}
-										</span>
 									</div>
 								</div>
 							{/if}
@@ -560,10 +549,12 @@
 												{tr}Title{/tr}
 												<input type="text" name="poll_title" size="22">
 											{else}
-												{tr}There is no available poll template.{/tr}
-												{if $tiki_p_admin_polls ne 'y'}
-													{tr}Please ask an administrator to create one.{/tr}
-												{/if}
+												{remarksbox type="info" title="{tr}Information{/tr}" close="n"}
+													{tr}There is no available poll template.{/tr}
+													{if $tiki_p_admin_polls ne 'y'}
+														{tr}Please ask an administrator to create one.{/tr}
+													{/if}
+												{/remarksbox}
 											{/if}
 										</div>
 									{/if}
@@ -668,16 +659,6 @@
 									</div>
 								</div>
 							</fieldset>
-						{/if}
-						{if $tiki_p_admin_wiki eq "y"}
-							<div class="form-group">
-								<label for="" class="col-md-4 control-label">{tr}Wiki preferences{/tr}</label>
-								<div class="col-md-8">
-									<a href="tiki-admin.php?page=wiki" class="btn btn-link">
-										{icon name="cog"} {tr}Wiki Preferences{/tr}
-									</a>
-								</div>
-							</div>
 						{/if}
 					{/tab}{* end properties tab *}
 				{else}

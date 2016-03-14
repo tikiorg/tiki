@@ -30,7 +30,7 @@ class Text_Diff
      *                           lines from a file.
      * @param array $to_lines    An array of strings.
      */
-    function Text_Diff($from_lines, $to_lines)
+    function __construct($from_lines, $to_lines)
     {
         array_walk($from_lines, array($this, '_trimNewlines'));
         array_walk($to_lines, array($this, '_trimNewlines'));
@@ -221,13 +221,13 @@ class Text_MappedDiff extends Text_Diff
      * @param array $mapped_to_lines    This array should have the same number
      *                                  of elements as $to_lines.
      */
-    function Text_MappedDiff($from_lines, $to_lines,
+    function __construct($from_lines, $to_lines,
                              $mapped_from_lines, $mapped_to_lines)
     {
 //        assert(count($from_lines) == count($mapped_from_lines));
 //        assert(count($to_lines) == count($mapped_to_lines));
 
-        parent::Text_Diff($mapped_from_lines, $mapped_to_lines);
+        parent::__construct($mapped_from_lines, $mapped_to_lines);
 
         $xi = $yi = 0;
         for ($i = 0, $count_edits = count($this->edits); $i < $count_edits; $i++) {
@@ -762,7 +762,7 @@ class Text_Diff_Op
  */
 class Text_Diff_Op_copy extends Text_Diff_Op
 {
-    function Text_Diff_Op_copy($orig, $final = false)
+    function __construct($orig, $final = false)
     {
         if (!is_array($final)) {
             $final = $orig;
@@ -785,7 +785,7 @@ class Text_Diff_Op_copy extends Text_Diff_Op
  */
 class Text_Diff_Op_delete extends Text_Diff_Op
 {
-    function Text_Diff_Op_delete($lines)
+    function __construct($lines)
     {
         $this->orig = $lines;
         $this->final = false;
@@ -805,7 +805,7 @@ class Text_Diff_Op_delete extends Text_Diff_Op
  */
 class Text_Diff_Op_add extends Text_Diff_Op
 {
-    function Text_Diff_Op_add($lines)
+    function __construct($lines)
     {
         $this->final = $lines;
         $this->orig = false;
@@ -825,7 +825,7 @@ class Text_Diff_Op_add extends Text_Diff_Op
  */
 class Text_Diff_Op_change extends Text_Diff_Op
 {
-    function Text_Diff_Op_change($orig, $final)
+    function __construct($orig, $final)
     {
         $this->orig = $orig;
         $this->final = $final;

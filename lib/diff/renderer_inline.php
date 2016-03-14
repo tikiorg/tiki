@@ -19,7 +19,7 @@ require "renderer_sidebyside.php";
 class Text_Diff_Renderer_inline extends Text_Diff_Renderer_sidebyside
 {
 
-    function Text_Diff_Renderer_inline($context_lines = 4, $words = 1)
+    function __construct($context_lines = 4, $words = 1)
     {
         $this->_leading_context_lines = $context_lines;
         $this->_trailing_context_lines = $context_lines;
