@@ -923,6 +923,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "jquery/plugins/chosen",
+				"version": "1.5.1",
+				"dist": {
+					"url": "https://github.com/harvesthq/chosen/releases/download/v1.5.1/chosen_v1.5.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "jquery/plugins/cluetip",
 				"version": "1.2.8",
 				"dist": {
