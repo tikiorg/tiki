@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ecab3287e9e010185ed9a0bd9141e752",
-    "content-hash": "60846fa740d6177007e88fee0c911e13",
+    "hash": "aca0a0c21b9c56939a229f16b1f198cc",
+    "content-hash": "92a01ac8f884160dfb81ed6f61f2dc18",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -771,12 +771,12 @@
         },
         {
             "name": "jquery/plugins/chosen",
-            "version": "1.3.0",
+            "version": "1.5.1",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-chosen-1.3.0.zip",
+                "url": "https://composer.tiki.org/dist/jquery-plugins-chosen-1.5.1.zip",
                 "reference": null,
-                "shasum": "4560ad07439cc49e2d4eaa1d432c1d0663d1f804"
+                "shasum": "be674a5c357433d7083014c25cbd741847b56a8f"
             },
             "type": "library"
         },
@@ -3470,12 +3470,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/BafS/Testify.php.git",
-                "reference": "10f801fdbdf25173b887798398dc6faa3d5dde53"
+                "reference": "52dda3459096976689d255d44250c6f8f30e62a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BafS/Testify.php/zipball/10f801fdbdf25173b887798398dc6faa3d5dde53",
-                "reference": "10f801fdbdf25173b887798398dc6faa3d5dde53",
+                "url": "https://api.github.com/repos/BafS/Testify.php/zipball/52dda3459096976689d255d44250c6f8f30e62a0",
+                "reference": "52dda3459096976689d255d44250c6f8f30e62a0",
                 "shasum": ""
             },
             "require": {
@@ -3497,7 +3497,7 @@
                 "testing",
                 "unit"
             ],
-            "time": "2015-12-03 13:19:19"
+            "time": "2016-03-14 11:52:02"
         },
         {
             "name": "doctrine/instantiator",
@@ -3991,16 +3991,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.8.23",
+            "version": "4.8.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "6e351261f9cd33daf205a131a1ba61c6d33bd483"
+                "reference": "a1066c562c52900a142a0e2bbf0582994671385e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6e351261f9cd33daf205a131a1ba61c6d33bd483",
-                "reference": "6e351261f9cd33daf205a131a1ba61c6d33bd483",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a1066c562c52900a142a0e2bbf0582994671385e",
+                "reference": "a1066c562c52900a142a0e2bbf0582994671385e",
                 "shasum": ""
             },
             "require": {
@@ -4059,7 +4059,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-02-11 14:56:33"
+            "time": "2016-03-14 06:16:08"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
