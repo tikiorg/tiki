@@ -17,15 +17,13 @@
 			{button href="tiki-admingroups.php" class="btn btn-default" _type="link" _icon_name="group" _text="{tr}Admin Groups{/tr}"}
 		{/if}
 		{if $tiki_p_admin eq 'y'}
-			<button class="btn btn-default btn-link  ">
-				{permission_link mode=text}
-			</button>
+			{permission_link mode=button_link}
 		{/if}
 		{if isset($userinfo.userId)}
 			{button href="?add=1" class="btn btn-default" _text="{tr}Add a New User{/tr}"}
 		{/if}
 		{if $prefs.feature_invite eq 'y' and $tiki_p_invite eq 'y'}
-			{button href="tiki-list_invite.php" class="btn btn-default btn-link" _icon_name="thumbs-up" _text="{tr}Invitation List{/tr}"}
+			{button href="tiki-list_invite.php" _type="link" _icon_name="thumbs-up" _text="{tr}Invitation List{/tr}"}
 		{/if}
 	</div>
 

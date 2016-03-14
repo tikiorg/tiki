@@ -22,6 +22,7 @@ class Services_ShowTikiOrg_Controller
 		$fieldId = $input->fieldId->int();
 		$command = $input->command->word();
 		$svntag = $input->svntag->text();
+		$creator = $input->username->text();
 
 		$item = Tracker_Item::fromId($id);
 		if (!$item->canViewField($fieldId)) {
@@ -102,6 +103,8 @@ class Services_ShowTikiOrg_Controller
 		}
 
 		if (!empty($command)) {
+			global $user;
+
 			if (($command == 'update' || $command == 'reset' || $command == 'destroy') && !TikiLib::lib('user')->user_has_permission($user, 'tiki_p_admin') && $user != $creator) {
 				throw new Services_Exception_Denied;
 			}

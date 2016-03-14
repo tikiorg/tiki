@@ -14,6 +14,7 @@
 	</a>
 {elseif $permission_link.mode eq 'button_link'}
 	<a class="tips btn btn-link{if !empty($permission_link.addclass)} {$permission_link.addclass}{/if}" href="{$permission_link.url|escape}">
+		{icon name="permission"}
 		{$permission_link.label|escape}
 		{if $permission_link.count}
 			 <span class="badge">{$permission_link.count|escape}</span>

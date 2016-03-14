@@ -270,7 +270,7 @@
 								<a href="tiki-admin.php?page=wiki" class="btn btn-link">
 									{icon name="cog"} {tr}Wiki Preferences{/tr}
 								</a>
-								{permission_link mode=text permType=wiki}
+								{permission_link mode=button_link permType=wiki}
 							{/if}
 							{if $tiki_p_edit_content_templates eq 'y'}
 								<a href="tiki-admin_content_templates.php" class="btn btn-link" onclick="needToConfirm = true;">
