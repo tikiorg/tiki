@@ -15,7 +15,6 @@
 	{/remarksbox}
 {elseif !empty($moveWikiUp)}
 {/if}
-
 {if !empty($errorsWikiUp)}
 	{remarksbox type="errors" title="{tr}Errors{/tr}"}
 		<ul>
@@ -25,16 +24,13 @@
 		</ul>
 	{/remarksbox}
 {/if}
-
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
 	{tr}Use the 'Quick Edit' module to easily create or edit wiki pages.{/tr} <a class="btn btn-default" href="tiki-admin_modules.php">{icon name="module"} {tr}Modules{/tr}</a>
 {/remarksbox}
-
 <form class="form-horizontal" action="tiki-admin.php?page=wiki" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<div class="heading input_submit_container text-right">
 	</div>
-
 	<div class="t_navbar margin-bottom-md clearfix">
 		{button _icon_name='admin_wiki' _text="{tr}Pages{/tr}" _class='btn btn-link' _script='tiki-listpages.php' _title="{tr}List wiki pages{/tr}"}
 		{if $prefs.feature_wiki_structure eq "y" and $tiki_p_view eq "y"}
@@ -44,18 +40,14 @@
 			<input type="submit" class="btn btn-primary btn-sm" name="wikisetprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
 		</div>
 	</div>
-
 	{tabset name="admin_wiki"}
-
 		{tab name="{tr}General Preferences{/tr}"}
 			<h2>{tr}General Preferences{/tr}</h2>
-
 			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_wiki visible="always"}
 				{preference name=wiki_url_scheme}
 			</fieldset>
-
 			<fieldset class="table">
 				<legend>{tr}Plugins{/tr}</legend>
 				{preference name=wikiplugin_author}
@@ -70,9 +62,7 @@
 				{preference name=wikiplugin_titlesearch}
 				{preference name=wikiplugin_wantedpages}
 			</fieldset>
-
 			{preference name=wikiHomePage}
-
 			<fieldset>
 				<legend>{tr}Page display{/tr}</legend>
 				{preference name=feature_wiki_description label="{tr}Description{/tr}"}
@@ -81,41 +71,33 @@
 				{preference name=feature_wiki_pageid label="{tr}Page ID{/tr}"}
 				{preference name=wiki_show_version label="{tr}Page version{/tr}"}
 				{preference name=wiki_authors_style label="{tr}List authors{/tr}"}
-
 				<div class="adminoptionboxchild">
 					{preference name=wiki_authors_style_by_page label="{tr}Allow override per page{/tr}"}
 				</div>
-
 				{preference name=feature_wiki_show_hide_before}
 				{preference name=wiki_actions_bar}
 				{preference name=wiki_page_navigation_bar}
 				{preference name=wiki_topline_position}
 				{preference name=page_bar_position}
 				{preference name=wiki_encourage_contribution}
-
-				{preference name=wiki_auto_toc}
-				<div class="adminoptionbox clearfix" id="wiki_auto_toc_childcontainer">
-					<fieldset>
-						<legend>{tr}Auto TOC options{/tr}</legend>
-							{preference name=wiki_inline_auto_toc}
-							{preference name=wiki_inline_toc_pos}
-					</fieldset>
-				</div>
-
 				{preference name=wiki_page_hide_title}
 			</fieldset>
-
+			<fieldset>
+				<legend>{tr}Automatic Table of Contents{/tr}</legend>
+				{preference name=wiki_auto_toc}
+				<div class="adminoptionbox clearfix" id="wiki_auto_toc_childcontainer">
+					{preference name=wiki_inline_auto_toc}
+					{preference name=wiki_inline_toc_pos}
+				</div>
+			</fieldset>
 			<fieldset>
 				<legend>{tr}Page name{/tr}</legend>
-
 				{preference name=wiki_page_regex}
 				{preference name=wiki_badchar_prevent}
 				{preference name=wiki_pagename_strip}
 			</fieldset>
-
 			<fieldset>
-				<legend>{tr}Edit{/tr}</legend>
-
+				<legend>{tr}Editing{/tr}</legend>
 				{preference name=feature_wiki_templates}
 				<div class="adminoptionboxchild" id="feature_wiki_templates_childcontainer">
 					{preference name=lock_content_templates}
@@ -127,12 +109,10 @@
 				{preference name=feature_wiki_allowhtml}
 				{preference name=feature_wysiwyg}
 				{preference name=wiki_timeout_warning}
-
 				{preference name=wiki_edit_section}
 				<div class="adminoptionboxchild" id="wiki_edit_section_childcontainer">
 					{preference name=wiki_edit_section_level}
 				</div>
-
 				{preference name=wiki_edit_icons_toggle}
 				{preference name=wiki_edit_minor}
 				{preference name=feature_wiki_mandatory_category}
@@ -140,7 +120,6 @@
 				{preference name=wiki_mandatory_edit_summary}
 				{preference name=wiki_freetags_edit_position}
 			</fieldset>
-
 			<fieldset>
 				<legend>
 					{tr}Sharing on social networks{/tr}{help url="Social+Networks#Using+ShareThis"}
@@ -152,18 +131,15 @@
 				</div>
 			</fieldset>
 		{/tab}
-
 		{tab name="{tr}Features{/tr}"}
 			<h2>{tr}Features{/tr}</h2>
 			<input type="hidden" name="wikifeatures" />
-
 			{preference name=feature_sandbox}
 			{preference name=feature_references}
 			{preference name=wiki_pagination}
 			<div class="adminoptionboxchild" id="wiki_pagination_childcontainer">
 				{preference name=wiki_page_separator}
 			</div>
-
 			{preference name=feature_dump}
 			<div class="adminoptionboxchild" id="feature_dump_childcontainer">
 				<div class="adminoptionbox clearfix">
@@ -199,7 +175,6 @@
 						<input type="submit" class="btn btn-default btn-sm" name="removetag" value="{tr}Remove{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if} />
 					</div>
 				</div>
-
 				{button href="tiki-admin.php?page=wiki&amp;dump=1" _text="{tr}Generate dump{/tr}"}
 				{if $tikidomain}
 					{button href="dump/$tikidomain/new.tar" _text="{tr}Download last dump{/tr}"}
@@ -207,20 +182,17 @@
 					{button href="dump/new.tar" _text="{tr}Download last dump{/tr}"}
 				{/if}
 			</div>
-
 			{preference name=feature_wiki_export}
 			<div class="adminoptionboxchild col-md-8 col-sm-offset-4" id="feature_wiki_export_childcontainer">
 				{permission_link mode=button permType=wiki textFilter=export showDisabled=y label="{tr}Export permissions{/tr}"}
 				{permission_link mode=button permType=wiki textFilter=picture showDisabled=y label="{tr}Picture permissions{/tr}"}
 				{button href="tiki-export_wiki_pages.php" _text="{tr}Export Wiki Pages{/tr}"}
 			</div>
-
 			{preference name=feature_wikiwords}
 			<div class="adminoptionboxchild" id="feature_wikiwords_childcontainer">
 				{preference name=feature_wikiwords_usedash}
 				{preference name=feature_wiki_plurals}
 			</div>
-
 			{preference name=feature_history}
 			<div class="adminoptionboxchild" id="feature_history_childcontainer">
 				<div class="col-sm-offset-4 col-sm-8" style="margin-bottom:10px">
@@ -233,7 +205,6 @@
 				{preference name=feature_wiki_history_full}
 				{preference name=feature_page_contribution}
 			</div>
-
 			{preference name=feature_wiki_discuss}
 			<div class="adminoptionboxchild" id="feature_wiki_discuss_childcontainer">
 				{preference name=wiki_forum_id}
@@ -242,12 +213,10 @@
 				</div>
 				{preference name=wiki_discuss_visibility}
 			</div>
-
 			{preference name=feature_source}
 			<div class="adminoptionboxchild col-md-8 col-sm-offset-4" id="feature_source_childcontainer">
 				{permission_link mode=button permType=wiki textFilter=source showDisabled=y}
 			</div>
-
 			{preference name=feature_wiki_ratings}
 			<div class="adminoptionboxchild col-sm-offset-4 col-sm-8" id="feature_wiki_ratings_childcontainer">
 				{permission_link mode=button permType=wiki textFilter=ratings showDisabled=y}
@@ -256,7 +225,6 @@
 			<div class="adminoptionboxchild" id="wiki_simple_ratings_childcontainer">
 				{preference name=wiki_simple_ratings_options}
 			</div>
-
 			{preference name=feature_backlinks}
 			<div class="adminoptionboxchild" id="feature_backlinks_childcontainer">
 				{preference name=wiki_backlinks_name_len}
@@ -264,7 +232,6 @@
 					{permission_link mode=button permType=wiki textFilter=backlinks showDisabled=y}
 				</div>
 			</div>
-
 			{preference name=feature_semantic}
 			{preference name=wiki_prefixalias_tokens}
 			{preference name=feature_likePages}
@@ -297,7 +264,6 @@
 			</div>
 			{preference name=feature_print_indexed}
 			{preference name=feature_wiki_mindmap}
-
 			<div class="adminoptionbox clearfix">
 				<fieldset>
 					<legend>{tr}Attachments{/tr}</legend>
@@ -401,19 +367,16 @@
 				</div>
 			</fieldset>
 		{/tab}
-
 		{tab name="{tr}Flagged Revision{/tr}"}
 			<h2>{tr}Flagged Revision{/tr}</h2>
 			<fieldset>
 				<legend>{tr}Revision Approval{/tr}</legend>
-
 				{preference name=flaggedrev_approval}
 				<div id="flaggedrev_approval_childcontainer">
 					{preference name=flaggedrev_approval_categories}
 				</div>
 			</fieldset>
 		{/tab}
-
 		{tab name="{tr}Page Listings{/tr}"}
 			<h2>{tr}Page Listings{/tr}</h2>
 			<input type="hidden" name="wikilistprefs" />
@@ -422,7 +385,6 @@
 			{preference name=feature_listorphanPages}
 			{preference name=feature_listorphanStructure}
 			{preference name=gmap_page_list}
-
 			<div class="adminoptionbox clearfix">
 				<fieldset>
 					<legend>{tr}Configuration{/tr}</legend>
@@ -434,12 +396,10 @@
 						{preference name=wiki_list_sortdirection}
 					</div>
 					{preference name=wiki_list_id}
-
 					{preference name=wiki_list_name}
 					<div class="adminoptionboxchild" id="wiki_list_name_childcontainer">
 						{preference name=wiki_list_name_len}
 					</div>
-
 					{preference name=wiki_list_hits}
 					{preference name=wiki_list_lastmodif}
 					{preference name=wiki_list_creator}
@@ -453,7 +413,6 @@
 					<div class="adminoptionboxchild" id="wiki_list_description_childcontainer">
 						{preference name=wiki_list_description_len}
 					</div>
-
 					{preference name=wiki_list_status}
 					{preference name=wiki_list_versions}
 					{preference name=wiki_list_links}
@@ -466,7 +425,6 @@
 				</fieldset>
 			</div>
 		{/tab}
-
 		{tab name="{tr}Tools{/tr}"}
 			<h2>{tr}Tools{/tr}</h2>
 			<a href="tiki-search_replace.php">{tr}Mass search and replace{/tr}</a><br>
