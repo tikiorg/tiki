@@ -257,35 +257,33 @@
 			<form method="get" action="tiki-admin.php">
 				<input type="hidden" name="ticket" value="{$ticket|escape}">
 				<h4>{tr}Find Profiles{/tr} <small>{tr}Search by name, types and repository{/tr}</small></h4>
-				<div class="table-responsive">
-					<table class="table">
-						<tr>
-							<td class="col-lg-6">
-								<div class="form-group">
-									<label class="control-label" for="profile">{tr}Profile name{/tr} </label>
-									<input type="text" class="form-control" name="profile" placeholder="{tr}Find{/tr}..." id="profile" value="{if isset($profile)}{$profile|escape}{/if}" /></div>
-								</div>
-								{if isset($category_list) and count($category_list) gt 0}
-									<div class="form-group">
-										<label class="control-label" for="categories">{tr}Profile Types{/tr}</label>
-										<select multiple="multiple" name="categories[]" id="categories" class="form-control" style="min-height: 8em; max-height: 15em">
-											{foreach item=cat from=$category_list}
-												<option value="{$cat|escape}"{if !empty($categories) and in_array($cat, $categories)} selected="selected"{/if}>{$cat|escape}</option>
-											{/foreach}
-										</select>
-									</div>
-								{/if}
-								<div class="form-group">
-									<label class="control-label" for="repository">{tr}Profile Repository{/tr}</label>
-									<select name="repository" id="repository" class="form-control">
-										<option value="">{tr}All{/tr}</option>
-										{foreach item=source from=$sources}
-											<option value="{$source.url|escape}"{if isset($repository) && $repository eq $source.url} selected="selected"{/if}>{$source.short|escape}</option>
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label class="control-label" for="profile">{tr}Profile name{/tr} </label>
+							<input type="text" class="form-control" name="profile" placeholder="{tr}Find{/tr}..." id="profile" value="{if isset($profile)}{$profile|escape}{/if}" />
+						</div>
+						{if isset($category_list) and count($category_list) gt 0}
+							<div class="form-group">
+								<label class="control-label" for="categories">{tr}Profile Types{/tr}</label>
+									<select multiple="multiple" name="categories[]" id="categories" class="form-control" style="min-height: 8em; max-height: 15em">
+										{foreach item=cat from=$category_list}
+											<option value="{$cat|escape}"{if !empty($categories) and in_array($cat, $categories)} selected="selected"{/if}>{$cat|escape}</option>
 										{/foreach}
 									</select>
-								</div>
-								<input type="hidden" name="page" value="profiles"/>
-									{jq}
+							</div>
+						{/if}
+						<div class="form-group">
+							<label class="control-label" for="repository">{tr}Profile Repository{/tr}</label>
+							<select name="repository" id="repository" class="form-control">
+								<option value="">{tr}All{/tr}</option>
+								{foreach item=source from=$sources}
+									<option value="{$source.url|escape}"{if isset($repository) && $repository eq $source.url} selected="selected"{/if}>{$source.short|escape}</option>
+								{/foreach}
+							</select>
+						</div>
+						<input type="hidden" name="page" value="profiles"/>
+								{jq}
 										if ($("#profile-0").length > 0) {
 											$(".quickmode_notes").hide();
 											$(window).scrollTop($("#step2").offset().top);
@@ -300,12 +298,12 @@
 											}
 										});
 									{/jq}
-								</div>
-							<div class="form-group text-center">
-								<input type="submit" class="btn btn-primary" name="list" value="{tr}Find{/tr}" />
-							</div>
-						</td>
-						<td class="col-lg-6">
+
+						<div class="form-group text-center">
+							<input type="submit" class="btn btn-primary" name="list" value="{tr}Find{/tr}" />
+						</div>
+					</div>
+					<div class="col-sm-6">
 							{remarksbox type="info" title="{tr}Suggested Profiles{/tr}" close="n"}
 								{assign var=profilesFilterUrlStart value='tiki-admin.php?profile=&categories%5B%5D='}
 								{assign var=profilesFilterUrlMid value='.x&categories%5B%5D='}
@@ -335,9 +333,8 @@
 									<br>{tr}Learning Profiles will allow you to quickly evaluate specific features in Tiki.{/tr}
 								</p>
 							{/remarksbox}
-						</td>
-					</tr>
-				</table>
+					</div>
+
 				</div>
 			</form>
 			<a id="step2"></a>
