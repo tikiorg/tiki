@@ -6,17 +6,13 @@
 //
 // This is a oopy of vendor/alxlit/bootstrap-chosen/bootstrap-chosen.less except for having the import statement commented out.
 // A separate file, tiki-variables.less, provides values for this file.
+// also commented out .chosen-container .chosen-results { position: relative } as it now makes scrolling go wrong (no fix upstream as yet)
 //
 
 //@import "bootstrap-chosen-variables.less";
 
-.chosen-select {
-	width: 100%;
-}
-
-.chosen-select-deselect {
-	width: 100%;
-}
+.chosen-select { width: 100%; }
+.chosen-select-deselect { width: 100%; }
 
 .chosen-container {
 	display: inline-block;
@@ -46,7 +42,7 @@
 		margin: 0 4px 4px 0;
 		max-height: 240px;
 		padding: 0 0 0 4px;
-		position: relative;
+		//position: relative; commented out for Tiki 15
 		overflow-x: hidden;
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
@@ -447,6 +443,21 @@
 		direction: rtl;
 		padding: 4px 5px 4px 20px;
 	}
+}
+
+.input-group {
+  .chosen-container:last-child {
+    .chosen-single, .chosen-default, .chosen-choices {
+      border-top-left-radius: 0px;
+      border-bottom-left-radius: 0px;
+    }
+  }
+  .chosen-container:not(:last-child) {
+    .chosen-single, .chosen-default, .chosen-choices {
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
+  }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 2dppx) {
