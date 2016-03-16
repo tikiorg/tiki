@@ -2,7 +2,7 @@
 {title help="Menus" url="tiki-admin_menu_options.php?menuId=$menuId" admpage="general&amp;cookietab=3"}{tr}Menu{/tr}: {$editable_menu_info.name}{/title}
 
 <div class="t_navbar margin-bottom-md">
-	<a class="btn btn-default" href="tiki-admin_menus.php">
+	<a class="btn btn-link" href="tiki-admin_menus.php">
 		{icon name="list"} {tr}List Menus{/tr}
 	</a>
 	{if $tiki_p_edit_menu eq 'y'}
