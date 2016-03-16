@@ -21,7 +21,7 @@
 		<div class="form-group col-lg-12 clearfix">
 			{if $prefs.feature_search eq 'y'}
 				<a role="link" href="tiki-searchindex.php" class="btn btn-link">{icon name="search"} {tr}Search{/tr}</a>
-				<a role="link" href="{bootstrap_modal controller=search action=rebuild}" class="btn btn-link">{icon name="cog"} {tr}Rebuild Index{/tr}</a>
+				<a role="link" href="{bootstrap_modal controller=search action=rebuild}" class="btn btn-default">{icon name="cog"} {tr}Rebuild Index{/tr}</a>
 			{/if}
 			<div class="pull-right">
 				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">

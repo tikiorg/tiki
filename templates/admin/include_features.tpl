@@ -25,7 +25,7 @@
 			<h2>{tr}Global features{/tr}</h2>
 
 			<fieldset>
-				<legend>{tr}Main feature{/tr}</legend>
+				<legend>{tr}Main features{/tr}</legend>
 
 				<div class="admin clearfix form-group featurelist">
 					{preference name=feature_wiki}
@@ -47,7 +47,7 @@
 			</fieldset>
 
 			<fieldset>
-				<legend>{tr}Additional{/tr}</legend>
+				<legend>{tr}Additional features{/tr}</legend>
 
 				<div class="admin clearfix form-group featurelist">
 					{preference name=feature_surveys}

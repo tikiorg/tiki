@@ -50,14 +50,14 @@
 		</div>
 		{if $tiki_p_admin_calendar eq 'y' or $tiki_p_admin eq 'y'}
 			{if $displayedcals|@count eq 1}
-				{button href="tiki-admin_calendars.php?calendarId={$displayedcals[0]}" _text="{tr}Edit{/tr}" _icon_name="edit"}
+				{button href="tiki-admin_calendars.php?calendarId={$displayedcals[0]}" _type="link" _text="{tr}Edit{/tr}" _icon_name="edit"}
 			{/if}
-			{button href="tiki-admin_calendars.php?cookietab=1" _text="{tr}Admin{/tr}" _icon_name="admin"}
+			{button href="tiki-admin_calendars.php?cookietab=1" _type="link" _text="{tr}Admin{/tr}" _icon_name="admin"}
 		{/if}
 
 {* avoid Add Event being shown if no calendar is displayed *}
 		{if $tiki_p_add_events eq 'y'}
-			{button href="tiki-calendar_edit_item.php" _text="{tr}Add Event{/tr}" _icon_name="create"}
+			{button href="tiki-calendar_edit_item.php" _type="link" _text="{tr}Add Event{/tr}" _icon_name="create"}
 		{/if}
 
 		{if $tiki_p_view_events eq 'y' and $prefs.calendar_export eq 'y'}

@@ -3,7 +3,7 @@
 	<div class="row">
 		<div class="form-group col-lg-12 clearfix">
 			<a role="link" class="btn btn-link" href="tiki-directory_admin.php" title="{tr}List{/tr}">
-				{icon name="list"} {tr}Directories{/tr}
+				{icon name="list"} {tr}Directory{/tr}
 			</a>
 			<div class="pull-right">
 				<input type="submit" class="btn btn-primary btn-sm" name="directory" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">

@@ -4,7 +4,7 @@
 	<div class="row">
 		<div class="form-group col-lg-12">
 			<a role="link" href="tiki-list_comments.php" class="btn btn-link" title="{tr}List{/tr}">{icon name="list"} {tr}Comments{/tr}</a>
-			{permission_link mode=link addclass="btn btn-link" textFilter=comment showDisabled=y}
+			{permission_link mode=link addclass="btn btn-link" _iconname="key" textFilter=comment showDisabled=y}
 			<div class="pull-right">
 				<input type="submit" class="btn btn-primary btn-sm" name="commentssetprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 			</div>

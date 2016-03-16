@@ -7,8 +7,8 @@
 {title help="Quiz"}{tr}Admin Quizzes{/tr}{/title}
 
 <div class="t_navbar margin-bottom-md">
-	{button href="tiki-list_quizzes.php" class="btn btn-default" _text="{tr}List Quizzes{/tr}"}
-	{button href="tiki-quiz_stats.php" class="btn btn-default" _text="{tr}Quiz Stats{/tr}"}
+	{button href="tiki-list_quizzes.php" class="btn btn-link" _type="link" _icon_name="list" _text="{tr}List Quizzes{/tr}"}
+	{button href="tiki-quiz_stats.php" class="btn btn-link" _type="link" _icon_name="bar-chart" _text="{tr}Quiz Stats{/tr}"}
 </div>
 
 {tabset}
