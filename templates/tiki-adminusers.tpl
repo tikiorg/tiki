@@ -730,7 +730,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-4 col-md-4 control-label" for="tempuser_groups">{tr}Groups (comma separated){/tr}</label>
+					<label class="col-sm-4 col-md-4 control-label" for="tempuser_groups">{tr}Groups names (comma separated){/tr}</label>
 					<div class="col-sm-8 col-md-8">
 						<input type="text" class="form-control" name="tempuser_groups" id="tempuser_groups" />
 					</div>
