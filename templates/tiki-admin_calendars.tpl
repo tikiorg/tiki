@@ -67,7 +67,7 @@
 						{tr}Lang{/tr}
 					</a>
 				</th>
-				<th>{tr}Url{/tr}</th>
+				<th>{tr}URL{/tr}</th>
 				<th>
 					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'custompriorities_desc'}custompriorities_asc{else}custompriorities_desc{/if}">
 						{tr}Prio{/tr}

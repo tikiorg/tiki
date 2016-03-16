@@ -36,7 +36,7 @@
 	<table class="table table-striped table-hover">
 	<tr>
 		<th>{tr}Name{/tr}</th>
-		<th>{tr}Url{/tr}</th>
+		<th>{tr}URL{/tr}</th>
 		<th></th>
 	</tr>
 

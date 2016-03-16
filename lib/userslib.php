@@ -3176,7 +3176,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_autoapprove_submission',
-				'description' => tra('Submitted articles automatically approved'),
+				'description' => tra('Submitted articles are automatically approved'),
 				'level' => 'editors',
 				'type' => 'articles',
 				'admin' => false,
@@ -3257,7 +3257,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_topic_read',
-				'description' => tra('Can read a topic (Applies only to individual topic perms)'),
+				'description' => tra('Can read a topic (applies only to individual topic permissions)'),
 				'level' => 'basic',
 				'type' => 'articles',
 				'admin' => false,
@@ -3410,7 +3410,7 @@ class UsersLib extends TikiLib
 			),
 			array(
 				'name' => 'tiki_p_calendar_add_my_particip',
-				'description' => tra('Can add own user to the participants'),
+				'description' => tra('Can add himself or herself to the participants'),
 				'level' => 'registered',
 				'type' => 'calendar',
 				'admin' => false,

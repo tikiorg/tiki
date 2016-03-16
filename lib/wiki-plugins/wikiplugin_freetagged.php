@@ -57,7 +57,7 @@ function wikiplugin_freetagged_info()
 			),
 			'maxRecords' => array(
 				'required' => false,
-				'name' => tra('Max Records'),
+				'name' => tra('Maximum Records'),
 				'description' => tra('Default -1 (all)'),
 				'since' => '5.0',
 				'filter' => 'int',

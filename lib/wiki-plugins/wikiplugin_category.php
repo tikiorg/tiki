@@ -181,7 +181,7 @@ function wikiplugin_category_info()
 			),		
 			'maxRecords' => array(
 				'required' => false,
-				'name' => tra('Max Records'),
+				'name' => tra('Maximum Records'),
 				'description' => tr('Maximum number of objects to list (default is %0)', '<code>50</code>'),
 				'since' => '6.1',
 				'default' => '50',

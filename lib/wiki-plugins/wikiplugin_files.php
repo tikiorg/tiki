@@ -20,7 +20,7 @@ function wikiplugin_files_info()
 		'params' => array(
 			'galleryId' => array(
 				'required' => false,
-				'name' => tra('File Galleries ID'),
+				'name' => tra('File Galleries IDs'),
 				'description' => tra('To list only files contained in these file galleries (multiple IDs separated by
 					colon)') . ($prefs['feature_use_fgal_for_user_files'] === 'y' ? '.<br> ' . tr('Or enter a username
 					for user files (hint: enter %0 for current logged in user).', '<code>{{user}}</code>')
@@ -70,8 +70,8 @@ function wikiplugin_files_info()
 					array('text' => tra('Name Descending'), 'value' => 'name_desc'),
 					array('text' => tra('Created Ascending'), 'value' => 'created_asc'),
 					array('text' => tra('Created Descending'), 'value' => 'created_desc'),
-					array('text' => tra('Last Modified Ascending'), 'value' => 'lastModif_asc'),
-					array('text' => tra('Last Modified Descending'), 'value' => 'lastModif_desc'),
+					array('text' => tra('Last modified Ascending'), 'value' => 'lastModif_asc'),
+					array('text' => tra('Last modified Descending'), 'value' => 'lastModif_desc'),
 					array('text' => tra('File Name Ascending'), 'value' => 'filename_asc'),
 					array('text' => tra('File Name Descending'), 'value' => 'filename_desc'),
 					array('text' => tra('File Size Ascending'), 'value' => 'filesize_asc'),
@@ -156,7 +156,7 @@ function wikiplugin_files_info()
 			'showicon' => array(
 				'required' => false,
 				'name' => tra('Show Icon'),
-				'description' => tra('Show an icon for each file depicting the file type'),
+				'description' => tra('Show the file-type icon for each file'),
 				'since' => '3.0',
 				'filter' => 'alpha',
 				'default' => 'n',

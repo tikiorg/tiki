@@ -61,7 +61,7 @@ function wikiplugin_code_info()
 			'rtl' => array(
 				'required' => false,
 				'name' => tra('Right to Left'),
-				'description' => tra('Switch the text display from left to right to right to left  (left to right by default)'),
+				'description' => tra('Switch the text display from left to right, to right to left (left to right by default)'),
 				'since' => '1',
 				'options' => array(
 					array('text' => '', 'value' => ''),

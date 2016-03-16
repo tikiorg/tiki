@@ -263,7 +263,7 @@ class Services_User_Controller
 			$result['error'] = tra("You cannot see this user's data.");
 			if ($user) {
 				$result['error'] .= '<br>' .
-					tra('You need to set your own info to be shown on mouseover.') . '<br>' .
+					tra('You need to set "Show my information on mouseover".') . '<br>' .
 					'<a href="tiki-user_preferences.php?cookietab=2">' . tra('Click here') . '</a>';
 			} else {
 				$result['error'] .= '<br>' . tra('You need to log in.');

@@ -28,7 +28,7 @@ function wikiplugin_convene_info()
 			'calendarid' => array(
 				'required' => false,
 				'name' => tra('Calendar ID'),
-				'description' => tra('ID number for the site calendar where to store the date for the events with maximum votes'),
+				'description' => tra('ID number of the site calendar in which to store the date for the events with the most votes'),
 				'since' => '9.0',
 				'filter' => 'digits',
 				'default' => '',
@@ -428,7 +428,7 @@ FORM;
 			});
 		} else {
 			$('#conveneBlank$i').each(function() {
-				$('<div />').text(tr("Login to edit Convene")).appendTo(this);
+				$('<div />').text(tr("Log in to edit Convene")).appendTo(this);
 			});
 		}
 

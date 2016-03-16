@@ -20,7 +20,7 @@ function wikiplugin_checkreferer_info()
 			'referer_list' => array(
 				'required' => true,
 				'name' => tra('Referer List'),
-				'description' => tra('Comma separated list of domains to check'),
+				'description' => tra('Comma-separated list of domains to check'),
 				'since' => '14.0',
 				'separator' => ',',
 				'filter' => 'text',

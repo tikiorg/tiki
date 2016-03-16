@@ -145,8 +145,8 @@ function prefs_site_list()
 			'options' => $available_admin_layouts,
 		),
 		'site_layout_per_object' => array(
-			'name' => tr('Allow per-object layout'),
-			'description' => tr('Allows objects to define an alternate layout for their rendering.'),
+			'name' => tr('Enable layout per page, etc.'),
+			'description' => tr('Specify an alternate layout for a particular wiki page, etc.'),
 			'tags' => array('experimental'),
 			'type' => 'flag',
 			'default' => 'n',

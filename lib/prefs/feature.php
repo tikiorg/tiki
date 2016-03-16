@@ -163,7 +163,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_file_galleries_templates' => array(
-			'name' => tra('File Galleries configuration templates'),
+			'name' => tra('File gallery configuration templates'),
             'description' => tra(''),
 			'type' => 'flag',
 			'keywords' => tra('template'),
@@ -387,7 +387,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_references' => array(
-			'name' => tra('Wiki References'),
+			'name' => tra('Wiki references'),
 			'description' => tra('Permits using references and the reference library.'),
 			'type' => 'flag',
 			'dependencies' => array(
@@ -635,8 +635,8 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_print_indexed' => array(
-			'name' => tra('Print Indexed'),
-			'description' => tra('Print Indexed'),
+			'name' => tra('Print indexed'),
+			'description' => tra('Print indexed'),
 			'help' => 'Print+Indexed',
 			'type' => 'flag',
 			'default' => 'n',
@@ -745,7 +745,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_referer_stats' => array(
-			'name' => tra('Referer Stats'),
+			'name' => tra('Referer stats'),
 			'description' => tra('Record domain name of sites that send visitors to this Tiki.'),
 			'help' => 'Stats',
 			'keywords' => 'stat analytics referrer refferer refferrer',
@@ -1762,8 +1762,8 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_sitelogo' => array(
-			'name' => tra('Site Logo and Title'),
-            'description' => tra('display a site logo image and/or title'),
+			'name' => tra('Site logo and title'),
+            'description' => tra('Display a site logo image and/or title'),
 			'type' => 'flag',
 			'warning' => tra('This setting is expected to be moved from here to the admin-modules page .'),
 			'default' => 'y',

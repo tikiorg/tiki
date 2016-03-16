@@ -99,5 +99,5 @@ function module_last_tracker_items($mod_reference, $module_params)
 	}
 	$smarty->assign('tpl_module_title', tra("Last Items"));
 	if (!strcasecmp($module_params['sort_mode'], 'lastModif_desc'))
-		$smarty->assign('tpl_module_title', tra("Last Modified Items"));
+		$smarty->assign('tpl_module_title', tra("Last modified Items"));
 }

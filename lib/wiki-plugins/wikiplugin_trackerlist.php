@@ -187,7 +187,7 @@ function wikiplugin_trackerlist_info()
 			 ),
 			 'showlastmodifby' => array(
 				 'required' => false,
-				 'name' => tra('Last Modified By'),
+				 'name' => tra('Last modified by'),
 				 'description' => tra('Last modified by user display is based on tracker settings unless overridden here'),
 				 'since' => '14.0',
 				 'doctype' => 'show',

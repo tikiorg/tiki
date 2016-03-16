@@ -23,10 +23,10 @@ $fgal_listing_conf = array(
 	'description' => array('name' => tra('Description')),
 	'size' => array('name' => tra('Size')),
 	'created' => array('name' => tra('Created').' / '.tra('Uploaded')),
-	'lastModif' => array('name' => tra('Last Modified'), 'key' => 'show_modified'),
+	'lastModif' => array('name' => tra('Last modified'), 'key' => 'show_modified'),
 	'creator' => array('name' => tra('Uploaded by')), //this used to be Creator but updated Nov2010
 	'author' => array('name' => tra('Creator')),  //this used to be Author but updated Nov2010
-	'last_user' => array('name' => tra('Last Modified by')), //this used to be 'Last editor' but updated Nov2010
+	'last_user' => array('name' => tra('Last modified by')), //this used to be 'Last editor' but updated Nov2010
 	'comment' => array('name' => tra('Comment')),
 	'files' => array('name' => tra('Files')),
 	'hits' => array('name' => tra('Hits')),
@@ -80,7 +80,7 @@ $fgal_options = array(
 	'show_explorer' => array('name' => tra('Explorer')),
 	'show_path' => array('name' => tra('Path')),
 	'show_slideshow' => array('name' => tra('Slideshow')),
-	'icon_fileId' => array('name' => tra('Gallery Icon')),
+	'icon_fileId' => array('name' => tra('Gallery icon')),
 );
 
 if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') {

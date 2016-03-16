@@ -19,7 +19,7 @@ function wikiplugin_draw_info()
 			'id' => array(
 				'required' => false,
 				'name' => tra('Drawing ID'),
-				'description' => tra('Internal ID of the file id'),
+				'description' => tra('Internal ID of the file ID'),
 				'filter' => 'digits',
 				'accepted' => ' ID number',
 				'default' => '',
@@ -29,7 +29,7 @@ function wikiplugin_draw_info()
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
-				'description' => tr('Width in pixels or percentage. Default value is page width. e.g. %0 or %1',
+				'description' => tr('Width in pixels or percentage. Default value is page width, for example, %0 or %1',
 					'<code>200px</code>', '<code>100%</code>'),
 				'filter' => 'text',
 				'accepted' => 'Number of pixels followed by \'px\' or percent followed by % (e.g. "200px" or "100%").',

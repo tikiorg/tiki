@@ -110,7 +110,7 @@ function wikiplugin_datachannel_info()
 			'price' => array(
 				'required' => false,
 				'name' => tra('Price'),
-				'description' => tr('Price to execute the datachannel (%0).', $prefs['payment_currency']),
+				'description' => tr('Price to execute the data channel (%0).', $prefs['payment_currency']),
 				'since' => '6.0',
 				'prefs' => array('payment_feature'),
 				'default' => '',
@@ -309,7 +309,7 @@ function wikiplugin_datachannel( $data, $params )
 			
 			if (!empty($params['price'])) {
 				$paymentlib = TikiLib::lib('payment');
-				$desc = empty($params['paymentlabel'])? tr('Datachannel:', $prefs['site_language']) . ' ' . $params['channel'] : $params['paymentlabel'];
+				$desc = empty($params['paymentlabel'])? tr('Data channel:', $prefs['site_language']) . ' ' . $params['channel'] : $params['paymentlabel'];
 				$posts = array();
 				foreach ($input as $key => $post) {
 					$posts[$key] = $post;

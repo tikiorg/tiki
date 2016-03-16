@@ -96,7 +96,7 @@ function wikiplugin_div_info()
 			'clear' => array(
 				'required' => false,
 				'name' => tra('Clear'),
-				'description' => tra('Items are not allowed to wrap around the side(s) this parameter is set to.'),
+				'description' => tra('Content cannot wrap around this object because of what the parameter is set to.'),
 				'since' => '1',
 				'filter' => 'text',
 				'safe' => true,
@@ -121,7 +121,7 @@ function wikiplugin_div_info()
 			'id' => array(
 				'required' => false,
 				'name' => tra('HTML ID'),
-				'description' => tra('Sets the div\'s id attribute, as defined by HTML.'),
+				'description' => tra("Sets the id attribute of the div, as defined by HTML."),
 				'since' => '1',
 				'filter' => 'text',
 				'safe' => true,

@@ -26,7 +26,7 @@ class Tracker_Field_Location extends Tracker_Field_Abstract implements Tracker_F
 				'params' => array(
 					'use_as_item_location' => array(
 						'name' => tr('Use as item location'),
-						'description' => tr('When enabled, records the field\'s value as the item\'s geolocation to be displayed on locator maps.'),
+						'description' => tr("When enabled, the field's value is recorded as the item's geolocation to be displayed on locator maps."),
 						'filter' => 'int',
 						'options' => array(
 							0 => tr('No'),
