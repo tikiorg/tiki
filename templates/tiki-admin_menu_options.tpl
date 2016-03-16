@@ -433,7 +433,7 @@
 					<label class="control-label col-md-3" for="menu_groupname">{tr}Group:{/tr}</label>
 
 					<div class="col-md-9">
-						<select id="menu_groupname" name="groupname[]" class="form-control" multiple="multiple">
+						<select id="menu_groupname" name="groupname[]" class="form-control margin-bottom-md" multiple="multiple">
 							<option value="">&nbsp;</option>
 							{foreach key=k item=i from=$option_groups}
 								<option value="{$k|escape}" {$i}>{$k|escape}</option>{/foreach}
