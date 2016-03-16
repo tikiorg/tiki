@@ -1,7 +1,7 @@
 {title}{tr}Object Permissions List{/tr}{/title}
 
 <div class="t_navbar">
-	{button href="tiki-objectpermissions.php" class="btn btn-default" _icon_name="permission" _text="{tr}Manage permissions{/tr}"}
+	{button href="tiki-objectpermissions.php" class="btn btn-link" _type="link" _icon_name="permission" _text="{tr}Manage permissions{/tr}"}
 </div>
 
 {if !empty($feedbacks)}

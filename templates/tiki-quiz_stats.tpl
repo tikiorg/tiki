@@ -2,8 +2,8 @@
 {title help="Quiz"}{tr}Stats for quizzes{/tr}{/title}
 
 <div class="t_navbar margin-bottom-md">
-	{button href="tiki-list_quizzes.php" class="btn btn-default" _text="{tr}List Quizzes{/tr}"}
-	{button href="tiki-edit_quiz.php" class="btn btn-default" _text="{tr}Admin Quizzes{/tr}"}
+	{button href="tiki-list_quizzes.php" class="btn btn-link" _type="link" _icon_name="list" _text="{tr}List Quizzes{/tr}"}
+	{button href="tiki-edit_quiz.php" class="btn btn-link" _type="link" _icon_name="gear" _text="{tr}Admin Quizzes{/tr}"}
 </div>
 
 <h2>{tr}Quizzes{/tr}</h2>
