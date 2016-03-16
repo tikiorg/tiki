@@ -1,13 +1,3 @@
-.tabrow {
-	position: relative;
-	left: 0;
-	margin: 0;
-	height: 24px !important;
-	font-size: 11px;
-	padding: 1px 10px 4px 10px;
-	clear: both;
-}
-
 .tabrow a {
 	text-decoration: none;
 }
