@@ -6,7 +6,7 @@
 
 <div class="t_navbar margin-bottom-md">
 	{if !empty($calendarId) && $tiki_p_admin_calendar eq 'y'}
-		<a role="button" href="tiki-admin_calendars.php?cookietab=2" class="btn btn-default">
+		<a role="link" href="tiki-admin_calendars.php?cookietab=2" class="btn btn-link">
 			{icon name="create"} {tr}Create Calendar{/tr}
 		</a>
 	{/if}
