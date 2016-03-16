@@ -23,8 +23,8 @@ class CacheClearCommand extends Command
 			->addArgument(
 				'cache',
 				InputArgument::OPTIONAL,
-				'Type of cache to clear (public, private, templates, modules)',
-				'private'
+				'Type of cache to clear (public, private, templates, modules, all)',
+				'all'
 			)
 			->addOption(
 				'all',
@@ -58,6 +58,9 @@ class CacheClearCommand extends Command
 			case 'modules':
 				$output->writeln('Clearing module caches');
 				return $cachelib->empty_cache('modules_cache');
+			case 'all':
+				$output->writeln('Clearing all caches');
+				return $cachelib->empty_cache();
 			case '':
 				return $output->writeln('Missing parameter.');
 			default:
