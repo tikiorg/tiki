@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title help="Directory" admpage="directory"}{tr}Directory Administration{/tr}{/title}
+{title help="Directory" admpage="directory"}{tr}Admin Directory{/tr}{/title}
 
 {include file='tiki-directory_admin_bar.tpl'} <br>
 <h2>{tr}Statistics{/tr}</h2>
