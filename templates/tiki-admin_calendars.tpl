@@ -21,8 +21,8 @@
 </div>
 
 {tabset name='tabs_admin_calendars'}
-	{tab name="{tr}List of Calendars{/tr}"}
-		<h2>{tr}List of Calendars{/tr}</h2>
+	{tab name="{tr}Calendars{/tr}"}
+		<h2>{tr}Calendars{/tr}</h2>
 
 		{include file='find.tpl' find_in="<ul><li>{tr}Calendar name{/tr}</li></ul>"}
 		{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
