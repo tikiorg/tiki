@@ -93,7 +93,7 @@ class Search_MySql_QueryBuilder
 			return "`{$node->getField()}` BETWEEN $from AND $to";
 		} else {
 			// Throw initial exception if fallback fails
-			throw $exception ?: new Exception(tr('Feature not supported: ' . get_class($node)));
+			throw $exception ?: new Exception(tr('Feature not supported: %0', get_class($node)));
 		}
 	}
 
