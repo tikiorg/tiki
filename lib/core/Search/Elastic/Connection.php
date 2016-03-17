@@ -388,7 +388,7 @@ class Search_Elastic_Connection
 			} elseif (preg_match('/QueryParsingException\[\[[^\]]*\] \[[^\]]*\] ([^\]]*)\]/', $message, $parts)) {
 				throw new Search_Elastic_QueryParsingException($parts[1]);
 			} else {
-				throw new Search_Elastic_Exception($content->error->reason, $content->status);
+				throw new Search_Elastic_Exception($message, $content->status);
 			}
 		} else {
 			return $content;

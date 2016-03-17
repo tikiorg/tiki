@@ -3883,7 +3883,7 @@ class Comments extends TikiLib
 		$query = "select * from tiki_comments where parentId=? order by commentDate desc limit 1";
 		$ret = $this->fetchAll($query, array($threadId));
 
-		if(is_array($ret)) {
+		if(is_array($ret) && isset($ret[0])) {
 			return $ret[0];
 		}
 	}
