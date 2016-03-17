@@ -245,12 +245,12 @@
 						dataType: 'html',
 						url: 'tiki-calendar_edit_item.php?fullcalendar=y&todate=' + date.getTime()/1000 + '&isModal=1',
 						success: function(data){
-							//$( "#calendar_dialog" ).html(data);
-							$( "#calendar_dialog_content" ).html(data);
-							$( "#calendar_dialog h1, #calendar_dialog .navbar" ).remove();
-							$( "#calendar_dialog .modal-title" ).html('{tr}Add Event{/tr}');
-							$( "#calendar_dialog" ).modal();
-							//$( "#calendar_dialog" ).dialog({ modal: true, title: '{tr}Add Event{/tr}', width: 'auto', height: 'auto', position: 'center' });
+							var $dialog = $( "#calendar_dialog" ).remove()
+							$( "#calendar_dialog_content", $dialog ).html(data);
+							$( "#calendar_dialog h1, #calendar_dialog .navbar", $dialog ).remove();
+							$( "#calendar_dialog .modal-title", $dialog ).html(event.title);
+							$dialog.appendTo("body").modal({backdrop:"static"});
+							$this.tikiModal();
 						}
 					});
 					return false;
