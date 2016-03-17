@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2015 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -388,7 +388,7 @@ class Search_Elastic_Connection
 			} elseif (preg_match('/QueryParsingException\[\[[^\]]*\] \[[^\]]*\] ([^\]]*)\]/', $message, $parts)) {
 				throw new Search_Elastic_QueryParsingException($parts[1]);
 			} else {
-				throw new Search_Elastic_Exception($content->error->reason, $content->status);
+				throw new Search_Elastic_Exception($message, $content->status);
 			}
 		} else {
 			return $content;
