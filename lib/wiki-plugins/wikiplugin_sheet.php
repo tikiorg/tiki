@@ -19,10 +19,10 @@ function wikiplugin_sheet_info()
 		'params' => array(
 			'id' => array(
 				'required' => false,
-				'name' => tra('Sheet ID'),
+				'name' => tra('Spreadsheet ID'),
 				'description' => tr('Internal ID of the TikiSheet. Either %0id%1 or %0url%1 is required.', '<code>', '</code>'),
 				'filter' => 'digits',
-				'accepted' => 'Sheet ID number',
+				'accepted' => 'Spreadsheet ID number',
 				'default' => '',
 				'since' => '1',
 				'profile_reference' => 'sheet',
@@ -53,7 +53,7 @@ function wikiplugin_sheet_info()
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
-				'description' => tr('Width in pixels or percentage. Default value is page width. e.g. %0200px%1 or
+				'description' => tr('Width in pixels or percentage. Default value is page width, for example, %0200px%1 or
 					%0100%%1', '<code>', '</code>'),
 				'filter' => 'text',
 				'accepted' => 'Number of pixels followed by \'px\' or percent followed by %).',

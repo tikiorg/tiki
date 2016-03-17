@@ -30,7 +30,7 @@ function wikiplugin_slider_info()
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
-				'description' => tr('Width in pixels or percentage. Default value is page width. e.g. %0 or %1',
+				'description' => tr('Width in pixels or percentage. Default value is page width, for example, %0 or %1',
 					'<code>200px</code>', '<code>100%</code>'),
 				'since' => '8.0',
 				'filter' => 'text',

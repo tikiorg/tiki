@@ -71,7 +71,7 @@ function wikiplugin_gauge_info()
 			'labelsize' => array(
 				'required' => false,
 				'name' => tra('Label Width'),
-				'description' => tra('Width in pixels allocated to the label.'),
+				'description' => tra('Label width, in pixels.'),
 				'since' => '1',
 				'filter' => 'digits',
 				'default' => 50

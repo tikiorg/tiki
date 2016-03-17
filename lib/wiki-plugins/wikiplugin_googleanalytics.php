@@ -19,7 +19,7 @@ function wikiplugin_googleanalytics_info()
 			'account' => array(
 				'required' => true,
 				'name' => tra('Account Number'),
-				'description' => tr('The account number for the site. Your account number from google looks like
+				'description' => tr('The account number for the site. Your account number from Google looks like
 					%0. All you need to enter is %1', 'UA-XXXXXXX-YY','<code>XXXXXXX-YY</code>'),
 				'since' => '3.0',
 				'filter' => 'text',

@@ -40,7 +40,7 @@ function wikiplugin_group_info()
 			'notgroups' => array(
 				'required' => false,
 				'name' => tra('Denied Groups'),
-				'description' => tra('Pipe separated list of groups denied from viewing the block.'),
+				'description' => tra('Pipe-separated list of groups not allowed to view the block.'),
 				'since' => '1',
 				'filter' => 'groupname',
 				'default' => ''

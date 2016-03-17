@@ -4,9 +4,9 @@
 		<div class="articletopline">{$topline|escape}</div>
 	{/if}
 	<header class="articletitle">
-		<h2>
+		<h1>
 			{object_link type=article id=$articleId title=$arttitle}
-		</h2>
+		</h1>
 		{if $show_subtitle eq 'y' and $subtitle}
 			<div class="articlesubtitle">{$subtitle|escape}</div>
 		{/if}

@@ -79,7 +79,7 @@ function wikiplugin_mail_info()
 			'showuser' => array(
 				'required' => false,
 				'name' => tra('User Emails'),
-				'description' => tra('Show a box for user to enter emails'),
+				'description' => tra('Show a box for user to enter email addresses'),
 				'since' => '5.0',
 				'filter' => 'alpha',
 				'default' => 'y',

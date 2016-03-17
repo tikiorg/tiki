@@ -9080,7 +9080,7 @@ class KalturaEntryResource extends KalturaContentResource
 	public $entryId = null;
 
 	/**
-	 * ID of the source flavor params, set to null to use the source flavor
+	 * ID of the source flavor params. Set to null to use the source flavor
 	 *
 	 * @var int
 	 */

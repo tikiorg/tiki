@@ -19,7 +19,7 @@ function wikiplugin_networkcondition_info()
 			'ipv4list' => array(
 				'required' => false,
 				'name' => tra('IPv4 List'),
-				'description' => tra("Comma separated list of IPv4 addresses to match against the visitor's address."),
+				'description' => tra("Comma-separated list of IPv4 addresses to match against the visitor's address."),
 				'since' => '11.0',
 				'default' => '',
 				'filter' => 'text',

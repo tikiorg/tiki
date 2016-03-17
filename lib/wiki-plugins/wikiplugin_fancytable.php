@@ -34,7 +34,7 @@ function wikiplugin_fancytable_info()
 			 ),
 			 'headaligns' => array(
 				 'required' => false,
-				 'name' => tra('Header Horizontal Align'),
+				 'name' => tra('Header Horizontal Alignment'),
 				 'description' => tr('Horizontal alignments for header cells separated by %0. Choices: %1', '<code>|</code>',
 					 '<code>left</code>, <code>right</code>, <code>center</code>, <code>justify</code>'),
 				 'default' => '',
@@ -43,7 +43,7 @@ function wikiplugin_fancytable_info()
 			 ),
 			 'headvaligns' => array(
 				 'required' => false,
-				 'name' => tra('Header Vertical Align'),
+				 'name' => tra('Header Vertical Alignment'),
 				 'description' => tr('Vertical alignments for header cells separated by %0. Choices: %1', '<code>|</code>',
 					 '<code>top</code>, <code>middle</code>, <code>bottom</code>, <code>baseline</code>'),
 				 'default' => '',
@@ -137,7 +137,7 @@ function wikiplugin_fancytable($data, $params)
 				$msg = '<em>' . tra('The jQuery Sortable Tables feature must be activated for the sort feature to work.')
 					. '</em>';
 			} elseif ($prefs['javascript_enabled'] !== 'y') {
-				$msg =  '<em>' . tra('Javascript must be enabled for the sort feature to work.') . '</em>';
+				$msg =  '<em>' . tra('JavaScript must be enabled for the sort feature to work.') . '</em>';
 			} else {
 				$msg = '<em>' . tra('Unable to load the jQuery Sortable Tables feature.') . '</em>';
 			}

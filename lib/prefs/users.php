@@ -63,7 +63,7 @@ function prefs_users_list()
 			'default' => 'n',
 		),
 		'users_prefs_diff_versions' => array(
-			'name' => tra('Use new diff any version interface'),
+			'name' => tra('Use interface that shows differences in any versions'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_wiki',

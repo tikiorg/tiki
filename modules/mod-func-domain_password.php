@@ -27,7 +27,7 @@ function module_domain_password_info()
 			),
 			'use_currentuser' => array(
 				'name' => tra('Use current user'),
-				'description' => tra('Use the currently logged in user. The username is not editable. (y/n) Default: y'),
+				'description' => tra('Use the currently logged-in user. The username is not editable. (y/n) Default: y'),
 			),
 			'can_update' => array(
 				'name' => tra('Can Update'),

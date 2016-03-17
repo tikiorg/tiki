@@ -45,7 +45,7 @@ function wikiplugin_lsdir_info()
 					array('text' => tra('File Size'), 'value' => 'size'), 
 					array('text' => tra('Last Access'), 'value' => 'atime'), 
 					array('text' => tra('Last Metadata Change'), 'value' => 'ctime'), 
-					array('text' => tra('Last Modified'), 'value' => 'mtime'), 
+					array('text' => tra('Last modified'), 'value' => 'mtime'), 
 				)
 			),
 			'filter' => array(

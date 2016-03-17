@@ -42,7 +42,7 @@ function wikiplugin_localfiles_info()
 			'icons' => array(
 				'required' => false,
 				'name' => tra('Show Icons'),
-				'description' => tra('Show mime-type icons.'),
+				'description' => tra('Show MIME file-type icons.'),
 				'since' => '12.0',
 				'filter' => 'alpha',
 				'default' => 'y',

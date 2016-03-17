@@ -1390,7 +1390,7 @@ class AccountingLib extends LogsLib
 			$errors[] = htmlspecialchars($idname) . ' (' . htmlspecialchars($id) . ')'
 				. tra('is not a number.');
 		} elseif ($id <= 0) {
-			$errors[] = htmlspecialchars($idname) . ' ' . tra('must be > 0.');
+			$errors[] = htmlspecialchars($idname) . ' ' . tra('must be greater than 0.');
 		} else {
 			//static whitelist based on usage of the validateId function in accountinglib.php
 			$tablesWhitelist = array(

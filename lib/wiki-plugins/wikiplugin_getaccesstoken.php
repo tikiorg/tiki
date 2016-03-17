@@ -21,7 +21,7 @@ function wikiplugin_getaccesstoken_info()
 			'entry' => array(
 				'required' => true,
 				'name' => tra('Entry Patg'),
-				'description' => tra('The path or part of the path for which the token is for'),
+				'description' => tra('The path or part of the path that the token is for'),
 				'since' => '7.0',
 				'filter' => 'text',
 				'default' => ''
@@ -29,7 +29,7 @@ function wikiplugin_getaccesstoken_info()
 			'keys' => array(
 				'required' => false,
 				'keys' => tra('Query Keys'),
-				'description' => tra('Query string parameter keys for which the token is for, separated by colon'),
+				'description' => tra('Query string parameter keys that the token is for, separated by a colon (:)'),
 				'since' => '7.0',
 				'filter' => 'text',
 				'default' => '',
@@ -38,7 +38,7 @@ function wikiplugin_getaccesstoken_info()
 			'values' => array(
 				'required' => false,
 				'name' => tra('Query Values'),
-				'description' => tra('Query string parameter values for which the token is for, separated by colon'),
+				'description' => tra('Query string parameter values that the token is for, separated by a colon (:)'),
 				'since' => '7.0',
 				'filter' => 'text',
 				'default' => '',

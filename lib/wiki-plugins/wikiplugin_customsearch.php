@@ -31,7 +31,7 @@ function wikiplugin_customsearch_info()
 			'tpl' => array(
 				'required' => false,
 				'name' => tra('Template file'),
-				'description' => tra('TPL file where search user interface template is found'),
+				'description' => tra('Smarty template (.tpl) file where search user interface template is found'),
 				'since' => '12.2',
 				'default' => '',
 			),
@@ -79,7 +79,7 @@ function wikiplugin_customsearch_info()
 			'callbackscript' => array(
 				'required' => false,
 				'name' => tra('Custom JavaScript Page'),
-				'description' => tra('The wiki page on which custom JavaScript that is to be executed on return of AJAX results'),
+				'description' => tra('The wiki page on which custom JavaScript is to be executed on return of Ajax results'),
 				'since' => '8.0',
 				'filter' => 'pagename',
 				'default' => '',
@@ -87,7 +87,7 @@ function wikiplugin_customsearch_info()
 			'destdiv' => array(
 				'required' => false,
 				'name' => tra('Destination Div'),
-				'description' => tra('Id of a pre-existing div to contain the search results'),
+				'description' => tra('The id of an existing div to contain the search results'),
 				'since' => '9.0',
 				'filter' => 'text',
 				'default' => '',

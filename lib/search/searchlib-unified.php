@@ -665,7 +665,7 @@ class UnifiedSearchLib
 		if($tiki_p_admin != 'y') {
 			$errlib->report(tr('Contact the site administrator. The index needs rebuilding.'));
 		} else {
-			$errlib->report('<a title="' . tr("Rebuild Search index") .'" href="tiki-admin.php?page=search&rebuild=now">'. tr("Click here to rebuild index") . '</a>');
+			$errlib->report('<a title="' . tr("Rebuild search index") .'" href="tiki-admin.php?page=search&rebuild=now">'. tr("Click here to rebuild index") . '</a>');
 		}
 
 

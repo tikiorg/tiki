@@ -28,7 +28,7 @@
 					<th class="text-center">{tr}Code{/tr}</th>
 					<th class="text-center">{tr}Value{/tr}</th>
 					<th class="text-center">{tr}Created{/tr}</th>
-					<th class="text-center">{tr}Max{/tr}</th>
+					<th class="text-center">{tr}Maximum{/tr}</th>
 					<th class="text-center">{tr}Comment{/tr}</th>
 					<th class="text-center"></th>
 				</tr>

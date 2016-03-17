@@ -63,8 +63,8 @@ function wikiplugin_memberlist_info()
 			'membersOnly' => array(
 				'required' => false,
 				'name' => tra('Members Only'),
-				'description' => tr('Only shows groups containing a certain user. Enter %0%user%%1 to show groups for
-					the current logged in user.', '<code>', '</code>'),
+				'description' => tr('Show only groups containing a certain user. Enter %0%user%%1 to show groups for
+					the current logged-in user.', '<code>', '</code>'),
 				'since' => '8.0',
 				'default' => '',
 				'filter' => 'username',
@@ -94,7 +94,7 @@ function wikiplugin_memberlist_info()
 				'required' => false,
 				'name' => tra('Set as Default Group'),
 				'description' => tra('Adds possibility to set group as default group. This automatically adds the user
-					to the group. "Forced" option will not propose simple addition in group.'),
+					to the group. "Required" option will not propose simple addition in group.'),
 				'since' => '9.2',
 				'default' => 'n',
 				'filter' => 'alpha',
@@ -102,7 +102,7 @@ function wikiplugin_memberlist_info()
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Not suggested'), 'value' => 'n'),
 					array('text' => tra('Suggested'), 'value' => 'both'),
-					array('text' => tra('Forced'), 'value' => 'y')
+					array('text' => tra('Required'), 'value' => 'y')
 				),
 			),
 			'including' => array(

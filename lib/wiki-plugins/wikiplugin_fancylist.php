@@ -20,7 +20,7 @@ function wikiplugin_fancylist_info()
 			'div' => array(
 				'required' => false,
 				'name' => tra('Use Div'),
-				'description' => tra('Use the HTML tag div instead of the HTML tag for lists (ol)'),
+				'description' => tra('Use the HTML div tag instead of the HTML ordered list tag (ol)'),
 				'since' => '3.0',
 				'default' => '',
 				'filter' => 'digits',

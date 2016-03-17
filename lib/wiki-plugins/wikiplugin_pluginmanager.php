@@ -53,7 +53,7 @@ class WikiPluginPluginManager extends PluginsLib
 		extract($params, EXTR_SKIP);
 
 		if (!empty($module) && !empty($plugin)) {
-			return $this->error(tra('The module or plugin parameter must be set, but not both.'));
+			return $this->error(tra('Either the module or plugin parameter must be set, but not both.'));
 		} elseif (!empty($module)) {
 			$aPrincipalField = array('field' => 'plugin', 'name' => 'Module');
 			$helppath = $helpurl . $aPrincipalField['name'] . ' ';
@@ -389,7 +389,7 @@ function wikiplugin_pluginmanager_info()
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Description'), 'value' => 'description'), 
-					array('text' => tra('Description & Parameters'), 'value' => 'description|parameters'), 
+					array('text' => tra('Description and Parameters'), 'value' => 'description|parameters'), 
 					array('text' => tra('Description & Parameter Info'), 'value' => 'description|paraminfo'), 
 					array('text' => tra('Parameters & Parameter Info'), 'value' => 'parameters|paraminfo'), 
 					array('text' => tra('All'), 'value' => 'description|parameters|paraminfo')

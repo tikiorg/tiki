@@ -37,7 +37,7 @@ function wikiplugin_dialog_info()
 			'actions' => array(
 				'required' => false,
 				'name' => tra('Button Actions'),
-				'description' => tra('JS to perform on 1st button click.'),
+				'description' => tra('JavaScript to perform on first button click.'),
 				'since' => '8.0',
 				'filter' => 'rawhtml_unsafe',
 				'separator' => ',',
@@ -114,7 +114,7 @@ function wikiplugin_dialog_info()
 			'openAction' => array(
 				'required' => false,
 				'name' => tra('Open Action'),
-				'description' => tra('JS to execute when dialog opens.'),
+				'description' => tra('JavaScript to execute when dialog opens.'),
 				'since' => '8.0',
 				'filter' => 'rawhtml_unsafe',
 				'default' => '',

@@ -18,7 +18,7 @@ function prefs_url_list()
 			'default' => '',
 		),
 		'url_anonymous_page_not_found' => array(
-			'name' => tra('URL an anonymous is redirected when page not found'),
+			'name' => tra('The URL that the anonymous user is redirected to when a page is not found'),
 			'type' => 'text',
 			'default' => '',
 		),

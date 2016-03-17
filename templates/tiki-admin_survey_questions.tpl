@@ -136,7 +136,7 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="col-sm-3">
-                            <label class="control-label">{tr}Max{/tr}</label>
+                            <label class="control-label">{tr}Maximum{/tr}</label>
                         </div>
                         <div class="col-sm-9">
                             <input type="text" name="max_answers" maxlength="4" value="{$info.max_answers}" class="form-control">

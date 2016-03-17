@@ -27,8 +27,8 @@ function wikiplugin_playscorm_info() {
                         ),
 			'moodle_url' => array(
 				'required' => true,
-				'name' => tra('Moodle Url'),
-				'description' => tra('URL where the moodle instance is at'),
+				'name' => tra('Moodle URL'),
+				'description' => tra('Web address of the Moodle instance'),
 				'since' => '12.0',
 				'filter' => 'url',
 				'default' => '',

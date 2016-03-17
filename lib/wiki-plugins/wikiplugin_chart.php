@@ -18,7 +18,7 @@ function wikiplugin_chart_info()
 		'params' => array(
 			'id' => array(
 				'required' => true,
-				'name' => tra('Sheet ID'),
+				'name' => tra('Spreadsheet ID'),
 				'description' => tra('Data sheet ID'),
 				'since' => '2.0',
 				'filter' => 'digits',

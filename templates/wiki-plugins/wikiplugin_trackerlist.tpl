@@ -122,7 +122,7 @@
 								{/if}
 								{if $showlastmodifby eq 'y'}
 									{$postcols = $postcols + 1}
-									<th>{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='lastModifBy' session_filters='y'}{tr}Last Modified By{/tr}{/self_link}</th>
+									<th>{self_link _sort_arg='tr_sort_mode'|cat:$iTRACKERLIST _sort_field='lastModifBy' session_filters='y'}{tr}Last modified by{/tr}{/self_link}</th>
 								{/if}
 								{if $tracker_info.useComments eq 'y' and ($tracker_info.showComments eq 'y' || $tracker_info.showLastComment eq 'y') and $perms.tiki_p_tracker_view_comments ne 'n'}
 									{$postcols = $postcols + 1}

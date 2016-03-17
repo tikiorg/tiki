@@ -93,14 +93,14 @@ function wikiplugin_listpages_info()
 			),
 			'includetag' => array(
 				'required' => false,
-				'name' => tra('Include Freetag'),
+				'name' => tra('Include Tag'),
 				'description' => tr('Only pages with specific tag (separate tags using %0)', '<code>;</code>'),
 				'since' => '10.3',
 				'advanced' => true,
 			),
 			'excludetag' => array(
 				'required' => false,
-				'name' => tra('Exclude Freetag'),
+				'name' => tra('Exclude Tag'),
 				'description' => tr('Only pages with specific tag excluded (separate tags using %0)', '<code>;</code>'),
 				'since' => '10.3',
 				'advanced' => true,
@@ -122,20 +122,20 @@ function wikiplugin_listpages_info()
 			'find' => array(
 				'required' => false,
 				'name' => tra('Find'),
-				'description' => tra('Only pages with names similar the text entered for this parameter will be listed'),
+				'description' => tra('Only pages with names similar to the text entered for this parameter will be listed'),
 				'since' => '2.0',
 			),
 			'lang' => array(
 				'required' => false,
 				'name' => tra('Language'),
-				'description' => tra('Two letter language code to filter pages listed.'),
+				'description' => tra('Two-letter language code to filter pages listed.'),
 				'since' => '3.0',
 				'filter' => 'alpha',
 			),
 			'langOrphan' => array(
 				'required' => false,
 				'name' => tra('Orphan Language'),
-				'description' => tra('Two letter language code to filter pages listed. Only pages not available in the
+				'description' => tra('Two-letter language code to filter pages listed. Only pages not available in the
 					provided language will be listed.'),
 				'since' => '3.0',
 				'filter' => 'alpha',
@@ -143,7 +143,7 @@ function wikiplugin_listpages_info()
 			'translations' => array(
 				'required' => false,
 				'name' => tra('Load Translations'),
-				'description' => tra('User or pipe separated list of two letter language codes for additional languages
+				'description' => tra('User- or pipe-separated list of two-letter language codes for additional languages
 					to display. If the language parameter is not defined, the first element of this list will be used
 					as the primary filter.'),
 				'since' => '3.0',
@@ -151,7 +151,7 @@ function wikiplugin_listpages_info()
 			'translationOrphan' => array(
 				'required' => false,
 				'name' => tra('No translation'),
-				'description' => tra('User or pipe separated list of two letter language codes for additional languages
+				'description' => tra('User- or pipe-separated list of two-letter language codes for additional languages
 					to display. List pages with no language or with a missing translation in one of the language'),
 				'since' => '7.0',
 			),

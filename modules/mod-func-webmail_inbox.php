@@ -37,37 +37,37 @@ function module_webmail_inbox_info()
 				'filter' => 'striptags'
 			),
 			'trackerId' => array(
-				'name' => tra('Tracker Id'),
-				'description' => tra('GroupMail: Tracker Id (to store GroupMail activity)'),
+				'name' => tra('Tracker ID'),
+				'description' => tra('GroupMail: Tracker ID (to store GroupMail activity)'),
 				'filter' => 'int',
 				'profile_reference' => 'tracker',
 			),
 			'fromFId' => array(
-				'name' => tra('From Field Id'),
+				'name' => tra('From Field ID'),
 				'description' => tra('GroupMail: From Field (Id of field in tracker to store email From header)'),
 				'filter' => 'int',
 				'profile_reference' => 'tracker_field',
 			),
 			'subjectFId' => array(
-				'name' => tra('Subject Field Id'),
+				'name' => tra('Subject Field ID'),
 				'description' => tra('GroupMail: Subject Field (Id of field in tracker to store email Subject header)'),
 				'filter' => 'int',
 				'profile_reference' => 'tracker_field',
 			),
 			'messageFId' => array(
-				'name' => tra('Message Field Id'),
+				'name' => tra('Message Field ID'),
 				'description' => tra('GroupMail: Message Field (Id of field in tracker to store email message identifier)'),
 				'filter' => 'int',
 				'profile_reference' => 'tracker_field',
 			),
 			'contentFId' => array(
-				'name' => tra('Content Field Id'),
+				'name' => tra('Content Field ID'),
 				'description' => tra('GroupMail: Content Field (Id of field in tracker to store email message body content)'),
 				'filter' => 'int',
 				'profile_reference' => 'tracker_field',
 			),
 			'accountFId' => array(
-				'name' => tra('Account Field Id'),
+				'name' => tra('Account Field ID'),
 				'description' => tra('GroupMail: Account Field (Id of field in tracker to store Webmail account name)'),
 				'filter' => 'int',
 				'profile_reference' => 'tracker_field',
@@ -79,7 +79,7 @@ function module_webmail_inbox_info()
 				'profile_reference' => 'tracker_field',
 			),
 			'operatorFId' => array(
-				'name' => tra('Operator Field Id'),
+				'name' => tra('Operator Field ID'),
 				'description' => tra('GroupMail: Operator Field (Id of field in tracker to store operator name (username))'),
 				'filter' => 'int',
 				'profile_reference' => 'tracker_field',

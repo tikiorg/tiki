@@ -35,7 +35,7 @@ function prefs_unified_list()
 		),
 		'unified_lucene_max_result' => array(
 			'name' => tra('Lucene maximum results'),
-			'description' => tra('Maximum amount of results to expose. Results further than these will need a more refined query to be reached.'),
+			'description' => tra('Maximum number of results to produce. Results beyond these will need a more refined query to be reached.'),
 			'type' => 'text',
 			'filter' => 'int',
 			'default' => 200,

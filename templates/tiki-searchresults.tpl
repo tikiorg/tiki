@@ -124,7 +124,7 @@
 									<option value="forums">{tr}Forums{/tr}</option>
 								{/if}
 								{if $prefs.feature_faqs eq 'y'}
-									<option value="faqs">{tr}Faqs{/tr}</option>
+									<option value="faqs">{tr}FAQs{/tr}</option>
 								{/if}
 								{if $prefs.feature_blogs eq 'y'}
 									<option value="blogs">{tr}Blogs{/tr}</option>

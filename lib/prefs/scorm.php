@@ -9,8 +9,8 @@ function prefs_scorm_list()
 {
 	return array(
 		'scorm_enabled' => array(
-			'name' => tra('SCORM Support'),
-			'description' => tra('Handle SCORM package files on upload. SCORM is a standard used in Learning Management Systems.'),
+			'name' => tra('SCORM support'),
+			'description' => tra('Handle SCORM package files on upload. SCORM is a standard used in learning management systems.'),
 			'dependencies' => array(
 				'feature_file_galleries',
 				'feature_trackers',

@@ -20,7 +20,7 @@ function wikiplugin_ftp_info()
 			'server' => array(
 				'required' => true,
 				'name' => tra('Server Name'),
-				'description' => tra('Name of the server where the FTP account is housed. Example: ')
+				'description' => tra('Name of the server for the FTP account. Example: ')
 					. '<code>ftp.myserver.com</code>',
 				'since' => '3.0',
 				'filter' => 'text',
@@ -29,7 +29,7 @@ function wikiplugin_ftp_info()
 			'user' => array(
 				'required' => true,
 				'name' => tra('Username'),
-				'description' => tra('User name needed to access the FTP account'),
+				'description' => tra('Username for the FTP account'),
 				'since' => '3.0',
 				'filter' => 'username',
 				'default' => ''
@@ -37,7 +37,7 @@ function wikiplugin_ftp_info()
 			'password' =>array(
 				'required' => true,
 				'name' => tra('Password'),
-				'description' => tra('Password needed to access the FTP account'),
+				'description' => tra('Password for the FTP account'),
 				'since' => '3.0',
 				'filter' => 'text',
 				'default' => ''

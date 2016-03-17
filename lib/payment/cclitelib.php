@@ -186,7 +186,7 @@ class CCLiteLib extends TikiDb_Bridge
 	 * @amount		amount (decimal/float for cost, or email for adduser command)
 	 * @currency	currency (same as currency "name" in cclite (not "code" yet)
 	 * 				defaults to registry currency
-	 * @main_user	source of payment - uses logged in user if empty
+	 * @main_user	source of payment - uses logged-in user if empty
 	 *
 	 * @return		result from cclite server (html hopefully)
 	 */

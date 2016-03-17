@@ -89,7 +89,7 @@ function wikiplugin_galleriffic_info()
 			),
 			'numThumbs' => array(
 				'required' => false,
-				'name' => tra('Number of Thumbnails'),
+				'name' => tra('Number of thumbnails'),
 				'description' => tra('The number of thumbnails to show per page'),
 				'since' => '9.2',
 				'filter' => 'digits',
@@ -147,7 +147,7 @@ function wikiplugin_galleriffic($data, $params)
 	$headerlib->add_jsfile('vendor/jquery/plugins/galleriffic/js/jquery.galleriffic.js');
 	$headerlib->add_jsfile('vendor/jquery/plugins/galleriffic/js/jquery.opacityrollover.js');
 	$playLinkText = tra('Play Slideshow');
-	$pauseLinkText = tra('Pause SlideShow');
+	$pauseLinkText = tra('Pause Slideshow');
 	$prevLinkText = '&lsaquo; '.tra('Previous Photo');
 	$nextLinkText = tra('Next Photo').' &rsaquo;';
 	$nextPageLinkText = tra('Next').' &rsaquo;';

@@ -47,7 +47,7 @@ function wikiplugin_comment_info()
 				'description' => tra('Object ID'),
 				'since' => '8.0',
 				'filter' => 'digits',
-				'default' => tr('The current wiki page you have added the plugin to'),
+				'default' => tr('The current wiki page to which you have added the plugin'),
 				'profile_reference' => 'type_in_param',
 			),
 		)

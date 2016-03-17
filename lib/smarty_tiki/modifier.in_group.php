@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * 		{if 'Group Name'|in_group:'testuser'}...
  *
  * @param string $group		group name to test (string being "modified")
- * @param string $auser		user name to check if not current logged in user
+ * @param string $auser		user name to check if not current logged-in user
  * @return bool
  * @throws Exception
  */
