@@ -10,7 +10,7 @@ function wikiplugin_exercise_info()
 	return array(
 		'name' => tra('Exercise'),
 		'documentation' => tra('PluginExercise'),
-		'description' => tra('Create an exercise for a user to complete and grade'),
+		'description' => tra('Create an exercise/test with questions and grade'),
 		'prefs' => array('wikiplugin_exercise'),
 		'filter' => 'text',
 		'format' => 'html',
@@ -28,7 +28,7 @@ function wikiplugin_exercise_info()
 			'incorrect' => array(
 				'required' => false,
 				'name' => tr('Incorrect'),
-				'description' => tr('Alternative answers to provide'),
+				'description' => tr('Wrong answer to suggest. Several wrong answers can be suggested (+ separated)'),
 				'since' => '9.0',
 				'filter' => 'text',
 			),
