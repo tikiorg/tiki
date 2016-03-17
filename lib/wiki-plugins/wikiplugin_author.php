@@ -10,7 +10,7 @@ function wikiplugin_author_info()
 	return array(
 		'name' => tra('Author'),
 		'documentation' => 'PluginAuthor',
-		'description' => tra('Add pop-ups and color coding that identifies authors'),
+		'description' => tra('Add popups and color coding that identifies authors'),
 		'prefs' => array('wikiplugin_author'),
 		'body' => tra('text'),
 		'iconname' => 'pencil',

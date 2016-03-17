@@ -231,7 +231,7 @@
 				</label>
 			</div>
 			<div class="form-group">
-				<label for="showPopup">{tr}List detail pop-up{/tr}</label>
+				<label for="showPopup">{tr}List detail popup{/tr}</label>
 				{object_selector_multi type=trackerfield tracker_id=$info.trackerId _simplevalue=$info.showPopup _separator="," _simplename="showPopup"}
 			</div>
 			<div class="checkbox">

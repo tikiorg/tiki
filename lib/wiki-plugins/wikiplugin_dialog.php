@@ -11,7 +11,7 @@ function wikiplugin_dialog_info()
 		'name' => tra('Dialog'),
 		'documentation' => 'PluginDialog',
 		'validate' => 'all',
-		'description' => tra('Create a custom pop-up dialog box'),
+		'description' => tra('Create a custom popup dialog box'),
 		'prefs' => array( 'wikiplugin_dialog', 'feature_jquery_ui' ),
 		'iconname' => 'link-external',
 		'introduced' => 8,

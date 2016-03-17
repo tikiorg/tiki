@@ -8,7 +8,7 @@
 function wikiplugin_subscribenewsletter_info()
 {
 	return array(
-		'name' => tra('Subscribe newsletter'),
+		'name' => tra('Subscribe to newsletter'),
 		'documentation' => 'PluginSubscribeNewsletter',
 		'description' => tra('Allow users to subscribe to a newsletter'),
 		'prefs' => array('feature_newsletters', 'wikiplugin_subscribenewsletter'),

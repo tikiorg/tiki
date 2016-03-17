@@ -35,7 +35,7 @@ function wikiplugin_trackerprefill_info()
 			'urlparams' => array(
 				'required' => false,
 				'name' => tra('URL Parameters'),
-				'description' => tr('Parameters to pass in the url, e.g. %0&my_parameter1=123&my_parameter2=q%1',
+				'description' => tr('Parameters to pass in the URL, for example, %0&my_parameter1=123&my_parameter2=q%1',
 					'<code>', '</code>'),
 				'since' => '6.0',
 				'filter' => 'striptags',

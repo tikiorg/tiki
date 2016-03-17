@@ -79,7 +79,7 @@ function wikiplugin_rss_info()
 				'required' => false,
 				'name' => tra('Icon'),
 				'filter' => 'url',
-				'description' => tra('Url to a favicon to put before each entry'),
+				'description' => tra('URL to a favicon to put before each entry'),
 				'since' => '5.0',
 				'default' => '',
 			),
