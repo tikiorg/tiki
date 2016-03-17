@@ -762,8 +762,8 @@ function wikiplugin_tracker($data, $params)
 		$outf = array();
 		$auto_fieldId = array();
 		$hidden_fieldId = array();
-		if (!empty($fields)  || !empty($wiki) || !empty($tpl)) {
-			if ($registration == 'y' && $prefs["user_register_prettytracker"] == 'y' && !empty($prefs["user_register_prettytracker_tpl"])) {
+		if (!empty($fields)  || !empty($wiki) || !empty($tpl) ||  !empty($prefs['user_register_prettytracker_tpl'])) {
+			if (isset($registration) && $registration == 'y' && $prefs["user_register_prettytracker"] == 'y' && !empty($prefs["user_register_prettytracker_tpl"])) {
 				$registrationlib = TikiLib::lib('registration');
 				$smarty->assign('listgroups', $registrationlib->merged_prefs['choosable_groups']);
 				$smarty->assign('register_login', $smarty->fetch('register-login.tpl'));
@@ -777,7 +777,13 @@ function wikiplugin_tracker($data, $params)
 					$smarty->assign('form', 'register');
 					$smarty->assign('register_antibot', $smarty->fetch('antibot.tpl'));
 				}
-				$wiki = $prefs["user_register_prettytracker_tpl"];
+				if (empty($wiki) && empty($tpl)) {	// no template in params?
+					if (preg_match('/\.tpl$/i', $prefs['user_register_prettytracker_tpl'])) {	// ends in .tpl?
+						$tpl = $prefs['user_register_prettytracker_tpl'];
+					} else {
+						$wiki = $prefs['user_register_prettytracker_tpl'];
+					}
+				}
 			}
 			if (!empty($wiki)) {
 				$outf = $trklib->get_pretty_fieldIds($wiki, 'wiki', $prettyModifier, $trackerId);
