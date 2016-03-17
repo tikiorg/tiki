@@ -41,7 +41,7 @@ function wikiplugin_showreference_info()
 			'hlevel' => array(
 				'required' => false,
 				'name' => tra('Header Tag'),
-				'description' => tr('The html header tag level of the title. Default: %01%1', '<code>', '</code>'),
+				'description' => tr('The HTML header tag level of the title. Default: %01%1', '<code>', '</code>'),
 				'since' => '10.0',
 				'options' => array(
 					array('text' => '', 'value' => ''),

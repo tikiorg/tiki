@@ -117,7 +117,7 @@ function wikiplugin_snarf_info()
 			),
 			'cache' => array(
 				'required' => false,
-				'name' => tra('Cache Url'),
+				'name' => tra('Cache URL'),
 				'description' => tr('Cache time in minutes. Default is to use site preference, Set to %0 for no cache.',
 					'<code>0</code>'),
 				'since' => '5.0',
@@ -127,7 +127,7 @@ function wikiplugin_snarf_info()
 			'ajax' => array(
 				'required' => false,
 				'name' => tra('Label'),
-				'description' => tra('Text to click on to fetch the url via ajax'),
+				'description' => tra('Text to click on to fetch the URL via Ajax'),
 				'since' => '6.0',
 				'default' => '',
 				'filter' => 'text'

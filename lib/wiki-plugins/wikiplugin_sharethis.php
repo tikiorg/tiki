@@ -28,11 +28,11 @@ function wikiplugin_sharethis_info()
 				'filter' => 'word',
 				'options' => array(
 					array('text' => '', 'value' => ''),
-					array('text' => tra('Aim'), 'value' => 'aim'),
-					array('text' => tra('Aim and Email'), 'value' => 'aim|email'),
-					array('text' => tra('Aim and Sms'), 'value' => 'aim|sms'),
+					array('text' => tra('AIM'), 'value' => 'aim'),
+					array('text' => tra('AIM and Email'), 'value' => 'aim|email'),
+					array('text' => tra('AIM and SMS'), 'value' => 'aim|sms'),
 					array('text' => tra('Email'), 'value' => 'email'),
-					array('text' => tra('Email and Sms'), 'value' => 'email|sms'),
+					array('text' => tra('Email and SMS'), 'value' => 'email|sms'),
 				)
 			),
 			'style' => array(
@@ -130,8 +130,8 @@ function wikiplugin_sharethis_info()
 			),
 			'popup' => array(
 				'required' => false,
-				'name' => tra('Pop-up'),
-				'description' => tra('Set whether the widget will show in a pop-up window.'),
+				'name' => tra('Popup'),
+				'description' => tra('Set whether the widget will show in a popup window.'),
 				'since' => '3.0',
 				'advanced' => true,
 				'filter' => 'word',

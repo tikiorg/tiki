@@ -30,7 +30,7 @@ function wikiplugin_tabs_info()
 			'tabs' => array(
 				'required' => true,
 				'name' => tra('Tab Titles'),
-				'description' => tra('Pipe separated list of tab titles. Example:') . '<code>tab 1|tab 2|tab 3</code>',
+				'description' => tra('Pipe-separated list of tab titles. Example:') . '<code>tab 1|tab 2|tab 3</code>',
 				'since' => '4.0',
 				'filter' => 'text',
 				'default' => '',
@@ -38,7 +38,7 @@ function wikiplugin_tabs_info()
 			'toggle' => array(
 				'required' => false,
 				'name' => tra('Toggle Tabs'),
-				'description' => tra('Allow toggling from tabs to no tabs view'),
+				'description' => tra('Allow toggling between tabs and no-tabs view'),
 				'since' => '8.0',
 				'default' => 'y',
 				'filter' => 'alpha',
@@ -90,7 +90,7 @@ function wikiplugin_tabs($data, $params)
 	if (!empty($params['tabs'])) {
 		$tabs = explode('|', $params['tabs']);
 	} else {
-		return "''".tra("No tab title specified. At least one has to be set to make the tabs appear.")."''";
+		return "''".tra("No tab title specified. At least one must be specified in order for the tabs to appear.")."''";
 	}
 	if (!empty($data)) {
 		$data = $tikilib->parse_data($data, array('suppress_icons' => true, 'inside_pretty' => $inside_pretty));

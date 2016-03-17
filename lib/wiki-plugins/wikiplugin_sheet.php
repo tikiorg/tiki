@@ -12,7 +12,7 @@ function wikiplugin_sheet_info()
 		'documentation' => 'PluginSheet',
 		'description' => tra('Display data from a TikiSheet'),
 		'prefs' => array( 'wikiplugin_sheet', 'feature_sheet' ),
-		'body' => tra('Sheet Heading'),
+		'body' => tra('Spreadsheet Heading'),
 		'iconname' => 'table',
 		'introduced' => 1,
 		'tags' => array( 'basic' ),

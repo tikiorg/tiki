@@ -46,7 +46,7 @@ function wikiplugin_trackertoggle_info()
 			'id' => array(
 				'required' => true,
 				'name' => tra('ID'),
-				'description' => tra('Html ID of the element that is toggled'),
+				'description' => tra('HTML id of the element that is toggled'),
 				'since' => '7.0',
 				'filter' => 'text',
 			),

@@ -249,7 +249,7 @@ function wikiplugin_trackeritemfield($data, $params)
 		}
 
 		if (! $itemObject->canViewField($fieldId)) {
-			return WikiParser_PluginOutput::error(tr('Permission denied'), tr('You are not allowed to view this field.'));
+			return WikiParser_PluginOutput::error(tr('Permission denied'), tr("You don't have permission to view this field."));
 		}
 
 		if (empty($test))

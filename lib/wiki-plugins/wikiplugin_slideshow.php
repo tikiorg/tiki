@@ -56,11 +56,11 @@ function wikiplugin_slideshow_info()
 			),
 			'backgroundurl' => array(
 				'required' => false,
-				'name' => tra('Background Url Location'),
+				'name' => tra('Background URL location'),
 				'description' => tr('URL of the background image to use in your slideshow, overrides %0',
 					'<code>backgroundcolor</code>'),
 				'filter' => 'url',
-				'accepted' => tra('Valid url'),
+				'accepted' => tra('Valid URL'),
 				'default' => '',
 				'since' => '7.0',
 			),

@@ -40,7 +40,7 @@ function wikiplugin_trackercomments_info()
 			'view' => array(
 				'required' => false,
 				'name' => tra('View'),
-				'description' => tra('Enter a user name to select the items of the current user'),
+				'description' => tra('Enter a username to select the items of the current user'),
 				'since' => '5.0',
 				'accepted' => tra('a user name'),
 				'filter' => 'text',

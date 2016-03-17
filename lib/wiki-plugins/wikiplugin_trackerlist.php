@@ -746,7 +746,7 @@ function wikiplugin_trackerlist_info()
 				 'options' => array(
 					 array('text' => '', 'value' => ''),
 					 array('text' => tra('Month'), 'value' => 'month'),
-					 array('text' => tra('Bimester'), 'value' => 'bimester'),
+					 array('text' => tra('Two months'), 'value' => 'bimester'),
 					 array('text' => tra('Trimester'), 'value' => 'trimester'),
 					 array('text' => tra('Quarter'), 'value' => 'quarter'),
 					 array('text' => tra('Semester'), 'value' => 'semester'),
@@ -756,7 +756,7 @@ function wikiplugin_trackerlist_info()
 			 'calendarpopup' => array(
 				 'required' => false,
 				 'name' => tra('Calendar Popup'),
-				 'description' => tr('Calendar items will pop-up, overrides the %0stickypopup%1 parameter if turned off
+				 'description' => tr('Calendar items will popup, overrides the %0stickypopup%1 parameter if turned off
 					(default is to pop up).', '<code>', '</code>'),
 				 'since' => '6.0',
 				 'doctype' => 'calendar',
@@ -771,7 +771,7 @@ function wikiplugin_trackerlist_info()
 			 'calendarstickypopup' => array(
 				 'required' => false,
 				 'name' => tra('Sticky Popup'),
-				 'description' => tra('Calendar item pop-ups will stay open if set to y (Yes). Not sticky by default'),
+				 'description' => tra('Calendar item popups will stay open if set to y (Yes). Not sticky by default'),
 				 'since' => '6.0',
 				 'doctype' => 'calendar',
 				 'filter' => 'alpha',
@@ -832,8 +832,8 @@ function wikiplugin_trackerlist_info()
 					 array('text' => '', 'value' => ''),
 					 array('text' => tra('Plus Month'), 'value' => '+month'),
 					 array('text' => tra('Minus Month'), 'value' => '-month'),
-					 array('text' => tra('Plus Bimester'), 'value' => '+bimester'),
-					 array('text' => tra('Minus Bimester'), 'value' => '-bimester')
+					 array('text' => tra('Plus Two months'), 'value' => '+bimester'),
+					 array('text' => tra('Minus Two months'), 'value' => '-bimester')
 				 )
 			 ),
 			 'displaysheet' => array(

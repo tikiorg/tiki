@@ -1,6 +1,5 @@
-{tr}You have been invited to access{/tr} {$mail_machine} {tr}by{/tr} {$mail_sender}.
+{tr _0=$mail_machine _1=$mail_sender}You have been invited to access %0 by %1.{/tr}
 <br /><br />
-{tr}Your token for accessing the site is{/tr} {$token_url}.
+{tr _0=$token_url}Your token for accessing the site is %0{/tr}
 <br /><br />
-{tr}Your access is valid until{/tr} {$token_expiry}
-
+{tr _0=$token_expiry}Your access is valid until %0.{/tr}
