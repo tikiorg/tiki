@@ -22,7 +22,6 @@ lang = {
 "Insert" : "Einfügen",
 "Replace" : "Ersetzen",
 "Match" : "Stimmen überein",
-"Passwords match" : "Passwörter stimmen überein",
 "Do not match" : "Stimmen nicht überein",
 "Passwords don't match" : "Passwörter stimmen nicht überein",
 "Advanced options" : "Erweiterte Optionen",
