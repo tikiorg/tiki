@@ -34,7 +34,7 @@ lang = {
 "Unassign module" : "ביטול הקצאת מודול",
 "Edit module" : "ערוך מודול",
 "Edit module:" : "ערוך מודול:",
-"Favorite" : "הוסף למועדפים"
+"Favorite" : "הוסף למועדפים",
 "What address are you looking for?" : "מה כתובת שאתה מחפש?",
 "Filter:" : "סנן:",
 "Please enter a page name" : "אנא הכנס שם דף",
