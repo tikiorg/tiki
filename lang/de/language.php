@@ -786,7 +786,7 @@ $lang = array(
 "Indexing failed while processing \"%0\" (type %1) with the error \"%2\"" => "Indexierung beim Bearbeiten von \"%0\" (Typ %1) fehlgeschlagen. Der Fehler war \"%2\"",
 // "Object %0 type %1 returned null from getDocument function" => "Object %0 type %1 returned null from getDocument function",
 "Could not perform index modification: %0" => "Konnte die folgende Index-Modifizierung nicht durchführen: %0 ",
-// "Feature not supported: ' . get_class(\$node)));\n\t\t}\n\t}\n\n\tprivate function requireIndex(\$field, \$type, \$weight = 1.0)\n\t{\n\t\t\$this->indexes[\$field . \$type] = array('field' => \$field, 'type' => \$type, 'weight' => \$weight);\n\t}\n\n\tprivate function getFields(\$node)\n\t{\n\t\t\$fields = array();\n\t\t\$node->walk(\n\t\t\tfunction (\$node) use (& \$fields) {\n\t\t\t\tif (method_exists(\$node, 'getField" => "Feature not supported: ' . get_class(\$node)));\n\t\t}\n\t}\n\n\tprivate function requireIndex(\$field, \$type, \$weight = 1.0)\n\t{\n\t\t\$this->indexes[\$field . \$type] = array('field' => \$field, 'type' => \$type, 'weight' => \$weight);\n\t}\n\n\tprivate function getFields(\$node)\n\t{\n\t\t\$fields = array();\n\t\t\$node->walk(\n\t\t\tfunction (\$node) use (& \$fields) {\n\t\t\t\tif (method_exists(\$node, 'getField",
+// "Feature not supported: %0" => "Feature not supported: %0",
 "Field %0 does not exist in the current index" => "Das Feld %0 existiert im aktiven Index nicht",
 "Missing objectype or qualifier for relation filter" => "Objekttyp oder Kennzeichner fehlt für Verhältnis-Filter",
 // "The range filter is missing \\\"from\\\" or \\\"to\\\"" => "The range filter is missing \\\"from\\\" or \\\"to\\\"",
