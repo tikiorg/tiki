@@ -40,23 +40,11 @@ $pluginsAlias = WikiPlugin_Negotiator_Wiki_Alias::getList();
 $pluginsReal = $parserlib->plugin_get_list(true, false);
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$cachelib = TikiLib::lib('cache');
-	$areanames = array(
-		'editwiki',
-		'editpost',
-		'editpost2',
-		'blogedit',
-		'faqans',
-		'body',
-		'description',
-		'trackerDescription'
-	);
-	$langLib = TikiLib::lib('language');
-	$languages = $langLib->list_languages();
+	$languages = TikiLib::lib('language')->list_languages();
+
 	foreach ($languages as $tlang) {
-		foreach ($areanames as $an) {
-			$cachetag = 'plugindesc' . $tlang['value'] . $an . '_js=' . $prefs['javascript_enabled'];
-			$cachelib->invalidate($cachetag);
-		}
+		$cachetag = 'plugindesc' . $tlang['value'] . '_js=' . $prefs['javascript_enabled'];
+		$cachelib->invalidate($cachetag);
 	}
 	if (isset($_POST['enable'])) {
 		if (!is_array($_POST['enabled'])) {

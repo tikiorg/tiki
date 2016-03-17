@@ -11,14 +11,14 @@
 
 {tr}You can view the comment by following this link:{/tr}
 {if $objecttype eq 'wiki'}
-{$mail_machine_raw}/tiki-index.php?page={$mail_objectname|escape:"url"}#comments
+{$mail_machine_raw}/{$mail_objectname|sefurl}#comments
 {* Blog comment mail *}
 {elseif $objecttype eq 'blog'}
-{$mail_machine_raw}/tiki-view_blog_post.php?postId={$mail_objectid}#comments
+{$mail_machine_raw}/{$mail_objectid|sefurl:'blogpost'}#comments
 {elseif $objecttype eq 'article'}
-{$mail_machine_raw}/tiki-read_article.php?articleId={$mail_objectid}#comments
+{$mail_machine_raw}/{$mail_objectid|sefurl:'article'}#comments
 {elseif $objecttype eq 'trackeritem'}
-{$mail_machine_raw}/tiki-view_tracker_item.php?itemId={$mail_objectid}
+{$mail_machine_raw}/{$mail_objectid|sefurl:'trackeritem'}
 {/if}
 
 {tr}Title:{/tr} {$mail_title}
