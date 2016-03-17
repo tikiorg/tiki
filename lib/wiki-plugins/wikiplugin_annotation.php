@@ -81,6 +81,20 @@ function wikiplugin_annotation_info()
 					array('text' => tra('No'), 'value' => 'n'),
 				),
 			),
+			'showlink' => array(
+				'required' => false,
+				'name' => tra('Show Link'),
+				'description' => tra('Show the link below the label in the popups.') . ' ' . tra('(y/n)'),
+				'filter' => 'alpha',
+				'default' => 'n',
+				'since' => '15.0',
+				'advanced' => true,
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n'),
+				),
+			),
 		)
 	);
 }
@@ -155,7 +169,9 @@ FORM;
 		$form = '';
 
 	// inititalise the annotations
-	$headerlib->add_jq_onready('$("#' . $cid . '").imageAnnotation(' . $annotations . ');');
+	$showlink = $params['showlink'] === 'y' ? 'true' : 'false';
+
+	$headerlib->add_jq_onready('$("#' . $cid . '").imageAnnotation(' . $annotations . ', ' . $showlink . ');');
 
 	$smarty = TikiLib::lib('smarty');
 	$smarty->loadPlugin('smarty_function_icon');
