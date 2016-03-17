@@ -38,7 +38,7 @@ function wikiplugin_flash_info()
 			'movie' => array(
 				'required' => true,
 				'name' => tra('Movie URL'),
-				'description' => tr('Complete URL to the movie to include. e.g. %0', '<code>files/test.swf</code>'),
+				'description' => tr('URL to the movie to include, for example, %0', '<code>files/test.swf</code>'),
 				'since' => '1',
 				'parent' => array('name' => 'type', 'value' => 'url'),
 				'filter' => 'url',
@@ -47,7 +47,7 @@ function wikiplugin_flash_info()
 			'fileId' => array(
 				'required' => true,
 				'name' => tra('File Gallery Podcast ID'),
-				'description' => tra('Id of a file from a podcast gallery - will work only with podcast gallery'),
+				'description' => tra('ID of a file from a podcast gallery - will work only with podcast gallery'),
 				'since' => '5.0',
 				'parent' => array('name' => 'type', 'value' => 'fileId'),
 				'default' => '',
@@ -57,7 +57,7 @@ function wikiplugin_flash_info()
 			'youtube' => array(
 				'required' => true,
 				'name' => tra('YouTube URL'),
-				'description' => tra('Entire URL to the YouTube video.') . ' ' . tra('Example:')
+				'description' => tra('Complete URL to the YouTube video.') . ' ' . tra('Example:')
 					. ' <code>http://www.youtube.com/watch?v=1i2ZnU4iR24</code>',
 				'since' => '6.1',
 				'parent' => array('name' => 'type', 'value' => 'youtube'),
@@ -67,7 +67,7 @@ function wikiplugin_flash_info()
 			'vimeo' => array(
 				'required' => true,
 				'name' => tra('Vimeo URL'),
-				'description' => tra('Entire URL to the Vimeo video.') . ' ' . tra('Example:')
+				'description' => tra('Complete URL to the Vimeo video.') . ' ' . tra('Example:')
 					. ' <code>http://vimeo.com/3319966</code>',
 				'since' => '6.1',
 				'parent' => array('name' => 'type', 'value' => 'vimeo'),

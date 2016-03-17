@@ -383,7 +383,7 @@ class Comments extends TikiLib
 			}
 			// Check permissions
 			if ($prefs['forum_inbound_mail_ignores_perms'] !== 'y') {
-			 	// store currently logged in user to restore later as setting the Perms_Context overwrites the global $user
+			 	// store currently logged-in user to restore later as setting the Perms_Context overwrites the global $user
 				$currentUser = $user;
 				// N.B. Perms_Context needs to be assigned to a variable or it gets destructed immediately and does nothing
 				/** @noinspection PhpUnusedLocalVariableInspection */

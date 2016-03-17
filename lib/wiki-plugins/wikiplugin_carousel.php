@@ -23,7 +23,7 @@ function wikiplugin_carousel_info()
 				'default' => 'fgalId',
 				'options' => array(
 					array('text' => tra('Select an option'), 'value' => ''),
-					array('text' => tra('All the images in a File Gallery'), 'value' => 'fgalId'),
+					array('text' => tra('All the images in a file gallery'), 'value' => 'fgalId'),
 					array('text' => tra('A list of file IDs'), 'value' => 'fileIds'),
 				),
 			),

@@ -23,7 +23,7 @@ function wikiplugin_vimeo_info()
 			'url' => array(
 				'required' => $prefs['vimeo_upload'] !== 'y',
 				'name' => tra('URL'),
-				'description' => tra('Entire URL to the Vimeo video. Example:') . ' <code>http://vimeo.com/3319966</code>'
+				'description' => tra('Complete URL to the Vimeo video. Example:') . ' <code>http://vimeo.com/3319966</code>'
 					.	($prefs['vimeo_upload'] === 'y' ? ' ' . tra('or leave blank to upload one.') : ''),
 				'since' => '6.1',
 				'filter' => 'url',

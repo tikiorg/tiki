@@ -106,7 +106,7 @@ function wikiplugin_module_info()
 			),
 			'nobox' => array(
 				'name' => tra('No Box'),
-				'description' => 'y|n '.tra('Show only the content with no box surrounding it.'),
+				'description' => 'y|n '.tra('Show only the content with no title or borders, etc. around the content.'),
 				'since' => '9.0',
 				'section' => 'appearance',
 				'filter' => 'alpha',
@@ -119,8 +119,8 @@ function wikiplugin_module_info()
 			),
 			'decoration' => array(
 				'required' => false,
-				'name' => tra('Decoration'),
-				'description' => tra('Show box decorations (default is to show them)'),
+				'name' => tra('Title, background, etc'),
+				'description' => tra('Show module title (heading) background, etc. (default is to show them)'),
 				'since' => '1',
 				'advanced' => true,
 				'filter' => 'digits',
@@ -159,7 +159,7 @@ function wikiplugin_module_info()
 			'module_style' => array(
 				'required' => false,
 				'name' => tra('Module Style'),
-				'description' => tr('Inline CSS for the containing DIV element, e.g. %0max-width:80%%1',
+				'description' => tr('Inline CSS for the containing div element, for example, %0max-width:80%%1',
 					'<code>', '</code>'),
 				'since' => '9.0',
 				'filter' => 'text',

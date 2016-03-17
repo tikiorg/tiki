@@ -18,7 +18,7 @@ function wikiplugin_groupstat_info()
 			'groups' => array(
 				'required' => false,
 				'name' => tra('Groups'),
-				'description' => tra('Groups separated by :. If empty, all groups will be listed.'),
+				'description' => tra('Groups, separated by ":". If empty, all groups will be listed.'),
 				'since' => '4.0',
 			),
 			'percent_of' => array(

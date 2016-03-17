@@ -1944,7 +1944,7 @@ class UsersLib extends TikiLib
 
 	/**
 	 * @param string $edited_user : username (login) of the user that might be edited
-	 * @param string $editing_user : username of user doing the editing (or logged in user if omitted)
+	 * @param string $editing_user : username of user doing the editing (or logged-in user if omitted)
 	 * @return bool : true if $editing_user can edit $edited_user
 	 */
 	function user_can_be_edited($edited_user, $editing_user = '')

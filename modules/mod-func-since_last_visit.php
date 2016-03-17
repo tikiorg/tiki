@@ -18,7 +18,7 @@ function module_since_last_visit_info()
 {
 	return array(
 		'name' => tra('Since Last Visit (Simple)'),
-		'description' => tra('Displays to logged in users the number of new or updated objects since their last login date and time.')
+		'description' => tra('Displays to logged-in users the number of new or updated objects since their last login date and time.')
 	);
 }
 

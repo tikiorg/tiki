@@ -19,7 +19,7 @@ function wikiplugin_footnote_info()
 		'params' => array(
 			'sameas' => array(
 				'required' => false,
-				'name' => tra('Sameas'),
+				'name' => tra('Same as'),
 				'description' => tra('Tag to existing footnote'),
 				'since' => '5.0',
 				'default' => '',

@@ -24,7 +24,7 @@ class WizardLib extends TikiLib
 	 * 
 	 * Use the start functions, e.g. startAdminWizard, to start the wizard manually, not this function
 	 *
-	 * @param mixed $user The logged in user
+	 * @param mixed $user The logged-in user
 	 * @param string $homePageUrl The return URL
 	 * @param bool $force Force the opening of the admin wizard
 	 * @return none

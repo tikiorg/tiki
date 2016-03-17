@@ -836,7 +836,7 @@ class ModLib extends TikiLib
 					'section' => 'appearance',
 				),
 				'decorations' => array(
-					'name' => tra('Decorations'),
+					'name' => tra('Title, background, etcs'),
 					'description' => 'y|n '. tra('Show module decorations'),
 					'section' => 'appearance',
 				),

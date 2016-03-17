@@ -151,7 +151,7 @@ function wikiplugin_paypal_info()
 			),
 			'business' => array(
 				'required' => false,
-				'name' => tra('Business Id'),
+				'name' => tra('Business ID'),
 				'description' => tra('PayPal business name/ID') . ' ' . tra('(Uses value in admin/payment if not set here)'),
 				'since' => '11.0',
 				'filter' => 'text',

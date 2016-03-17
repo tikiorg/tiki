@@ -275,7 +275,7 @@ function wikiplugin_articles_info()
 			'translationOrphan' => array(
 				'required' => false,
 				'name' => tra('No translation'),
-				'description' => tra('User or pipe separated list of two letter language codes for additional languages
+				'description' => tra('User- or pipe-separated list of two-letter language codes for additional languages
 					to display. List pages with no language or with a missing translation in one of the language'),
 				'filter' => 'alpha',
 				'separator' => '|',

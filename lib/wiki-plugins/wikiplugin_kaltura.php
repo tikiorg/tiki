@@ -187,7 +187,7 @@ REG
 			);
 
 		} else if (!empty($user)) {
-			$html = '<span class="alert-warning">' . tra('Media id or permission to upload video is required') . '</span>';
+			$html = '<span class="alert-warning">' . tra('Media ID or permission to upload video is required') . '</span>';
 		} else {
 			$html = '<span class="alert-warning">' . tra('Log in to upload video') . '</span>';
 		}

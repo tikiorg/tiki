@@ -23,7 +23,7 @@ function wikiplugin_files_info()
 				'name' => tra('File Galleries IDs'),
 				'description' => tra('To list only files contained in these file galleries (multiple IDs separated by
 					colon)') . ($prefs['feature_use_fgal_for_user_files'] === 'y' ? '.<br> ' . tr('Or enter a username
-					for user files (hint: enter %0 for current logged in user).', '<code>{{user}}</code>')
+					for user files (hint: enter %0 for current logged-in user).', '<code>{{user}}</code>')
 					: ''),
 				'since' => '3.0',
 				'default' => '',
@@ -266,7 +266,7 @@ function wikiplugin_files_info()
 			'showlockedby' => array(
 				'required' => false,
 				'name' => tra('Show Locked By'),
-				'description' => tra('For locked files, show the user name of the user who locked it (not shown by default)'),
+				'description' => tra('For locked files, show the username of the user who locked it (not shown by default)'),
 				'since' => '3.0',
 				'filter' => 'alpha',
 				'default' => 'n',
@@ -280,7 +280,7 @@ function wikiplugin_files_info()
 			'showauthor' => array(
 				'required' => false,
 				'name' => tra('Show author'),
-				'description' => tra('Show the user name of the user who is the author of the file (not shown by default)'),
+				'description' => tra('Show the username of the user who is the author of the file (not shown by default)'),
 				'since' => '3.0',
 				'filter' => 'alpha',
 				'default' => 'n',
@@ -294,7 +294,7 @@ function wikiplugin_files_info()
 			'showcreator' => array(
 				'required' => false,
 				'name' => tra('Show Creator'),
-				'description' => tra('Show the user name of the user who is the creator of the file (not shown by default)'),
+				'description' => tra('Show the username of the user who is the creator of the file (not shown by default)'),
 				'since' => '3.0',
 				'default' => 'n',
 				'advanced' => true,
@@ -348,7 +348,7 @@ function wikiplugin_files_info()
 			'slideshow' => array(
 				'required' => false,
 				'name' => tra('Show Slideshow'),
-				'description' => tra('Show a link that produces a pop-up slide show when clicked (not set by default)'),
+				'description' => tra('Show a link that produces a popup slideshow when clicked (not set by default)'),
 				'since' => '3.0',
 				'filter' => 'alpha',
 				'default' => 'n',
@@ -381,7 +381,7 @@ function wikiplugin_files_info()
 			),
 			'showcomment' => array(
 				'required' => false,
-				'name' => tra('Show Comment'),
+				'name' => tra('Show Comments'),
 				'description' => tra('Show comments for each file (not shown by default)'),
 				'since' => '5.0',
 				'filter' => 'alpha',
@@ -396,7 +396,7 @@ function wikiplugin_files_info()
 			'showlasteditor' => array(
 				'required' => false,
 				'name' => tra('Show Last Editor'),
-				'description' => tra('Show the user name of the user who last modified the file (shown by default)'),
+				'description' => tra('Show the username of the user who last modified the file (shown by default)'),
 				'since' => '5.0',
 				'default' => 'y',
 				'filter' => 'alpha',
@@ -408,7 +408,7 @@ function wikiplugin_files_info()
 			),
 			'showthumb' => array(
 				'required' => false,
-				'name' => tra('Show Image Thumb'),
+				'name' => tra('Show image thumbnail'),
 				'description' => tra('Show Image thumb'),
 				'since' => '8.0',
 				'default' => 'n',
@@ -429,7 +429,7 @@ function wikiplugin_files_info()
 			'showupload' => array(
 				'required' => false,
 				'name' => tra('Show Upload'),
-				'description' => tra('Show a simple upload form to the gallery (not shown by default)'),
+				'description' => tra('Show a simple form to upload files to the gallery (not shown by default)'),
 				'since' => '6.0',
 				'filter' => 'alpha',
 				'default' => 'n',
@@ -464,8 +464,8 @@ function wikiplugin_files_info()
 			),
 			'withsubgals' => array(
 				'required' => false,
-				'name' => tra('With sub-galleries'),
-				'description' => tra('With sub-galleries'),
+				'name' => tra('With subgalleries'),
+				'description' => tra('With subgalleries'),
 				'since' => '8.0',
 				'filter' => 'alpha',
 				'default' => 'y',

@@ -9,7 +9,7 @@
 function wikiplugin_param_info()
 {
 	return array(
-		'name' => tra('Param'),
+		'name' => tra('Parameter'),
 		'documentation' => 'PluginParam',
 		'description' => tra('Display content based on URL parameters'),
 		'prefs' => array( 'wikiplugin_param' ),

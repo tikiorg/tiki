@@ -1371,7 +1371,7 @@ function wikiplugin_tracker($data, $params)
 			$_REQUEST['error'] = 'y';
 
 			if(count($field_errors['err_mandatory']) > 0) {
-				$msg = tra('Following mandatory fields are missing');
+				$msg = tra('The following mandatory fields are missing');
 					foreach ($field_errors['err_mandatory'] as $err) {
 						$msg .= '<br>&nbsp;&nbsp;&nbsp;&nbsp;' . $err['name'];
 			}

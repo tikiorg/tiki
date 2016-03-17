@@ -19,7 +19,7 @@ function wikiplugin_mono_info()
 			'font' => array(
 				'required' => false,
 				'name' => tra('Font'),
-				'description' => tra('Font name as known in browsers.'),
+				'description' => tra('Font name as recognized by browsers.'),
 				'since' => '1',
 				'default' => 'monospace',
 				'filter' => 'text',
