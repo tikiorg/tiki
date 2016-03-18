@@ -306,7 +306,7 @@ function prefs_fgal_list()
 			'description' => tra('Where ViewerJS is installed'),
 			'type' => 'text',
 			'filter' => 'url',
-			'default' => 'vendor/ViewerJS/ViewerJS/index.html',
+			'default' => 'files/viewerjs/ViewerJS/index.html',
 			'help' => 'ViewerJS',
 			'tags' => array('experimental'),
 			'dependencies' => array('fgal_viewerjs_feature'),
