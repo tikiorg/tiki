@@ -358,10 +358,8 @@ if (empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcase
 		}
 		// $info not found in prefixes but $newPage and $url was found so just a plain alias
 		if (!$info) {
-			$_REQUEST['page'] = $newPage;
-			$_GET['page'] = $newPage;
-			$page = $newPage;
-			$info = $tikilib->get_page_info($_REQUEST['page']);
+			$url = $wikilib->sefurl($newPage);
+			$access->redirect($base_url . $url, '', 301);	// permanent redirect
 		}
 	} else {
 		$likepages = array_unique(array_merge($likepages, $referencedPages));
