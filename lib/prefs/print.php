@@ -17,6 +17,7 @@ function prefs_print_list()
 				'webkit' => tra('WebKit (wkhtmltopdf)'),
 				'weasyprint' => tra('WeasyPrint'),
 				'webservice' => tra('Webservice'),
+				'mpdf' => tra('mPDF'),
 			),
 			'default' => 'none',
 		),
@@ -45,6 +46,15 @@ function prefs_print_list()
 			'help' => 'weasyprint',
 			'dependencies' => array('auth_token_access'),
 			'default' => '',
+		),
+		'print_pdf_mpdf_path' => array(
+			'name' => tra('mPDF path'),
+			'description' => tra('Path to of the mPDF install.'),
+			'type' => 'text',
+			'size' => 50,
+			'help' => 'weasyprint',
+			'dependencies' => array('auth_token_access'),
+			'default' => 'files/mpdf/',
 		),
 	);
 }
