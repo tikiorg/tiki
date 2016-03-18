@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title help="Groups+Management" admpage="login"}{tr}Admin groups{/tr}{/title}
+{title help="Groups Management" admpage="login"}{tr}Admin groups{/tr}{/title}
 
 <div class="t_navbar margin-bottom-md">
 	{button href="tiki-adminusers.php" class="btn btn-default" _type="link" _icon_name="user" _text="{tr}Admin Users{/tr}"}

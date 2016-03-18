@@ -1,4 +1,4 @@
-{title help="User+Calendar" url="tiki-minical.php?view=$view"}{tr}Mini Calendar{/tr}{/title}
+{title help="User Calendar" url="tiki-minical.php?view=$view"}{tr}Mini Calendar{/tr}{/title}
 
 {include file='tiki-mytiki_bar.tpl'}
 

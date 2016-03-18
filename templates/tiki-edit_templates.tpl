@@ -1,5 +1,5 @@
 {if isset($template)}
-	{title help="Edit+Templates" url="tiki-edit_templates.php?mode=listing&template=$template"}
+	{title help="Edit Templates" url="tiki-edit_templates.php?mode=listing&template=$template"}
 		{if $prefs.feature_edit_templates ne 'y' or $tiki_p_edit_templates ne 'y'}
 			{tr}View template:{/tr}
 		{else}
@@ -8,7 +8,7 @@
 		{$template}
 	{/title}
 {else}
-	{title help="Edit+Templates"}{tr}Edit templates{/tr}{/title}
+	{title help="Edit Templates"}{tr}Edit templates{/tr}{/title}
 {/if}
 
 <div class="t_navbar margin-bottom-md">

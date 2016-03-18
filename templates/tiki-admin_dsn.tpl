@@ -1,4 +1,4 @@
-{title help="Admin+DSN"}{tr}Admin Content Sources{/tr}{/title}
+{title help="Admin DSN"}{tr}Admin Content Sources{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
 	{tr}Use Admin DSN to define the database to be used by the SQL plugin.{/tr}

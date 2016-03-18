@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title admpage="wiki" help="Using+Wiki+Pages#Last_Changes" url="tiki-lastchanges.php?days=$days"}{tr}Last Changes{/tr}{/title}
+{title admpage="wiki" help="Using Wiki Pages#Last_Changes" url="tiki-lastchanges.php?days=$days"}{tr}Last Changes{/tr}{/title}
 
 <div class="t_navbar btn-group margin-bottom-md">
 	{if $days eq '1'}{assign var=thisclass value='active'}{else}{assign var=thisclass value=''}{/if}

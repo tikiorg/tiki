@@ -1,8 +1,8 @@
 {* $Id$ *}
 {if $userwatch ne $user}
-	{title help="User+Preferences"}{tr}User Preferences:{/tr} {$userwatch}{/title}
+	{title help="User Preferences"}{tr}User Preferences:{/tr} {$userwatch}{/title}
 {else}
-	{title help="User+Preferences"}{tr}User Preferences{/tr}{/title}
+	{title help="User Preferences"}{tr}User Preferences{/tr}{/title}
 {/if}
 {if $userwatch eq $user or $userwatch eq ""}
 	{include file='tiki-mytiki_bar.tpl'}

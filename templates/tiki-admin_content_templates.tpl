@@ -1,4 +1,4 @@
-{title help='Content+Templates' url='tiki-admin_content_templates.php'}{tr}Content templates{/tr}{/title}
+{title help='Content Templates' url='tiki-admin_content_templates.php'}{tr}Content templates{/tr}{/title}
 
 
 {tabset}

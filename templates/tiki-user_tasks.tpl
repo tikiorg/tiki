@@ -1,4 +1,4 @@
-{title help="User+Tasks"}{tr}Tasks{/tr}{/title}
+{title help="User Tasks"}{tr}Tasks{/tr}{/title}
 
 {include file='tiki-mytiki_bar.tpl'}
 

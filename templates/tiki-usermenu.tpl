@@ -1,4 +1,4 @@
-{title help="User+Menu"}{tr}User Menu{/tr}{/title}
+{title help="User Menu"}{tr}User Menu{/tr}{/title}
 
 {include file='tiki-mytiki_bar.tpl'}
 <br>

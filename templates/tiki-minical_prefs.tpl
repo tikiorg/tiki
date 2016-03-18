@@ -1,4 +1,4 @@
-{title help="User+Calendar"}{tr}Mini Calendar: Preferences{/tr}{/title}
+{title help="User Calendar"}{tr}Mini Calendar: Preferences{/tr}{/title}
 
 {include file='tiki-mytiki_bar.tpl'}
 

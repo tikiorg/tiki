@@ -1,4 +1,4 @@
-{title help="Image+Galleries"}{tr}Browsing Gallery:{/tr} {$name}{/title}
+{title help="Image Galleries"}{tr}Browsing Gallery:{/tr} {$name}{/title}
 
 <div class="galdesc">
 	{$description}
