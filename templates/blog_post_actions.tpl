@@ -1,4 +1,4 @@
-<div class="actions pull-right btn-group">
+<div class="actions pull-right btn-group dropup">
 	<a class="btn btn-link" data-toggle="dropdown" href="#">
 		{icon name="wrench"}
 	</a>
