@@ -311,7 +311,6 @@ if (empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcase
 
 	/* if we have exactly one match, redirect to it */
 	if (isset($newPage) && !$isUserPage) {
-		$url = $wikilib->sefurl($newPage);
 
 		// Process prefix alias with itemId append for pretty tracker pages
 		$prefixes = explode(',', $prefs['wiki_prefixalias_tokens']);
@@ -356,6 +355,13 @@ if (empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcase
 					$info = $tikilib->get_page_info($_REQUEST['page']);
 				}
 			}
+		}
+		// $info not found in prefixes but $newPage and $url was found so just a plain alias
+		if (!$info) {
+			$_REQUEST['page'] = $newPage;
+			$_GET['page'] = $newPage;
+			$page = $newPage;
+			$info = $tikilib->get_page_info($_REQUEST['page']);
 		}
 	} else {
 		$likepages = array_unique(array_merge($likepages, $referencedPages));
