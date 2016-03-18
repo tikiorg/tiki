@@ -1,5 +1,5 @@
 {* $Id$ *}
-{title help="Theme+Control"}{tr}Theme Control{/tr}: {tr}Categories{/tr}{/title}
+{title help="Theme Control"}{tr}Theme Control{/tr}: {tr}Categories{/tr}{/title}
 <div class="t_navbar btn-group">
 	{button href="tiki-theme_control_objects.php" class="btn btn-default" _text="{tr}Control by Objects{/tr}"}
 	{button href="tiki-theme_control_sections.php" class="btn btn-default" _text="{tr}Control by Sections{/tr}"}

@@ -10,7 +10,7 @@
 	{$liend = ''}
 {/if}
 {if !$tsAjax}
-	{title help="Users+Management" admpage="login" url="tiki-adminusers.php"}{tr}Admin Users{/tr}{/title}
+	{title help="Users Management" admpage="login" url="tiki-adminusers.php"}{tr}Admin Users{/tr}{/title}
 
 	<div class="t_navbar margin-bottom-md">
 		{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}

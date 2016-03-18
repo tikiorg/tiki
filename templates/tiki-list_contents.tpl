@@ -1,4 +1,4 @@
-{title help="Dynamic+Content"}{tr}Dynamic Content System{/tr}{/title}
+{title help="Dynamic Content"}{tr}Dynamic Content System{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To use content blocks in a text area (Wiki page, etc), a <a class="rbox-link" href="tiki-admin_modules.php">module</a> or a template, use {literal}{content id=x}{/literal}, where x is the ID of the content block.{/tr} {tr}You can also use {literal}{content label=x}{/literal}, where x is the label of the content block.{/tr}{/remarksbox}
 {tabset}

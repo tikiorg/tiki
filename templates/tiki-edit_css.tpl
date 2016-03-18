@@ -1,4 +1,4 @@
-{title help="Edit+CSS"}{tr}Edit CSS{/tr}{/title}
+{title help="Edit CSS"}{tr}Edit CSS{/tr}{/title}
 <div class="t_navbar">
 	{if ($prefs.feature_view_tpl eq 'y' || $prefs.feature_edit_templates eq 'y') && $tiki_p_edit_templates == 'y'}
 		{button href="tiki-edit_templates.php" class="btn btn-default" _text="{tr}View Templates{/tr}"}

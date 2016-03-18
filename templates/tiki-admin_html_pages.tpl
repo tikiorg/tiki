@@ -1,4 +1,4 @@
-{title help="Html+Pages"}{tr}Admin HTML pages{/tr}{/title}
+{title help="Html Pages"}{tr}Admin HTML pages{/tr}{/title}
 
 {if $pageName ne ''}
 	<div class="navt_bar">

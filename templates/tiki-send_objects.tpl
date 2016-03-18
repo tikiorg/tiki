@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title help="Communication+Center"}{tr}Send objects{/tr}{/title}
+{title help="Communication Center"}{tr}Send objects{/tr}{/title}
 
 {if $msg}
 	<div class="panel panel-default">

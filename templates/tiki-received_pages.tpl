@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title help="Communication+Center"}{tr}Received Pages{/tr}{/title}
+{title help="Communication Center"}{tr}Received Pages{/tr}{/title}
 
 {if !empty($errors)}
 	<div class="alert alert-warning">

@@ -1,6 +1,6 @@
 {*Smarty template*}
 
-{title help="User+Files"}{tr}User Files{/tr}{/title}
+{title help="User Files"}{tr}User Files{/tr}{/title}
 
 {include file='tiki-mytiki_bar.tpl'}
 

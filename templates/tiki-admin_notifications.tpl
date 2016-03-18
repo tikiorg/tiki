@@ -1,5 +1,5 @@
 {* $Id$ *}
-{title help="Mail+Notifications"}{tr}Mail notifications{/tr}{/title}
+{title help="Mail Notifications"}{tr}Mail notifications{/tr}{/title}
 
 {if empty($prefs.sender_email)}
 	{remarksbox type="warning" title="{tr}Warning{/tr}"}

@@ -1,4 +1,4 @@
-{title help="External+Wikis" admpage="textarea"}{tr}Admin External Wikis{/tr}{/title}
+{title help="External Wikis" admpage="textarea"}{tr}Admin External Wikis{/tr}{/title}
 
 <h2>{tr}Create/Edit External Wiki{/tr}</h2>
 <form action="tiki-admin_external_wikis.php" method="post" class="form-horizontal" role="form">
