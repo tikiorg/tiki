@@ -19,6 +19,10 @@ interface Search_Type_Factory_Interface
 	function numeric($value);
 	// tokenized - indexed - unstored in database
 	function multivalue($values);
+	// tokenized - indexed - unstored in database
+	function object($values);
+	// tokenized - indexed - unstored in database
+	function nested($values);
 	// tokenized - indexed - stored in database
 	function sortable($value);
 }
