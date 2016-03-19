@@ -109,29 +109,33 @@ class Table_Check
 		if (!empty($paramstr)) {
 			$ret = explode('|', $paramstr);
 			foreach ($ret as $key => $pipe) {
+				$key = trim($key);
+				$pipe = trim($pipe);
 				$ret[$key] = strpos($pipe, ';') !== false ? explode(';', $pipe) : $pipe;
 				if (!is_array($ret[$key])) {
 					if (strpos($ret[$key], ':') !== false) {
 						$colon = explode(':', $ret[$key]);
 						unset($ret[$key]);
-						if ($colon[1] == 'nofilter') {
+						if (trim($colon[1]) == 'nofilter') {
 							$colon[1] = false;
 						}
-						$ret[$key][$colon[0]] = $colon[1];
+						$ret[$key][$colon[0]] = trim($colon[1]);
 					}
 				} elseif (is_array($ret[$key])) {
 					foreach ($ret[$key] as $key2 => $subparam) {
+						$key2 = trim($key);
+						$subparam = trim($subparam);
 						if (strpos($subparam, ':') !== false) {
 							$colon = explode(':', $subparam);
 							unset($ret[$key][$key2]);
 							if (in_array($colon[0], ['expand', 'option']))
 							{
-								if ($colon[0] == 'option') {
+								if (trim($colon[0]) == 'option') {
 									$colon[0] = 'options';
 								}
-								$ret[$key][$colon[0]][] = $colon[1];
+								$ret[$key][$colon[0]][] = trim($colon[1]);
 							} else {
-								$ret[$key][$colon[0]] = $colon[1];
+								$ret[$key][$colon[0]] = trim($colon[1]);
 							}
 						}
 					}
