@@ -25,33 +25,32 @@ class Table_Code_Bind extends Table_Code_Manager
 
 	public function setCode()
 	{
-		$jq = [];
 		//make pager controls at bottom of table visible when number of rows is greater than 15
 		if (parent::$pager) {
-			$bind = [
+			$bindtr = [
 				//re-binding in some cases since ajax tbody refresh disconnects binding
 				'$(\'' . parent::$tid . '\').tiki_popover();',
-				'if (c.pager.endRow - c.pager.startRow > 15) {',
+				'if (this.config.pager.endRow - this.config.pager.startRow > 15) {',
 				'	$(\'div#' . parent::$s['pager']['controls']['id']
-				. '.ts-pager-bottom\').css(\'visibility\', \'visible\');',
+				. '.ts-pager-bottom\').css(\'display\', \'block\');',
 				'} else {',
 				'	$(\'div#' . parent::$s['pager']['controls']['id']
-				. '.ts-pager-bottom\').css(\'visibility\', \'hidden\');',
+				. '.ts-pager-bottom\').css(\'display\', \'none\');',
 				'}',
 			];
-			$jq[] = $this->iterate(
-				$bind, '.bind(\'pagerComplete\', function(e, c){', $this->nt . '})', $this->nt2, '', '');
 		}
 		//workaround since the processing formatting is not being applied upon sort (reported as bug #769)
 		if (parent::$ajax) {
-			$bind = ['$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 0.25);'];
-			$jq[] = $this->iterate($bind, '.bind(\'sortStart\', function(e, c){', $this->nt . '})', $this->nt2, '', '');
+			$bindss = ['$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 0.25);'];
+			$jq[] = $this->iterate($bindss, '.bind(\'sortStart\', function(e, c){', $this->nt . '})', $this->nt2, '', '');
 
 			global $prefs;
 			if ($prefs['jquery_timeago'] === 'y') {	// re-attach timeago for ajax calls
-				$jq[] = '.bind("pagerComplete", function(){ $("time.timeago", "' . parent::$tid . '").timeago(); })';
+				$bindtr[] = '$(\'time.timeago\', \'' . parent::$tid . '\').timeago();';
 			}
 		}
+		$bindtr[] = '$(\'div#' . parent::$id . '\').css(\'visibility\', \'visible\');';
+		$jq[] = $this->iterate($bindtr, '.bind(\'tablesorter-ready\', function(){', $this->nt . '})', $this->nt2, '', '');
 
 		if (count($jq) > 0) {
 			$code = $this->iterate($jq, '', ';', $this->nt, '', '');

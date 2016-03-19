@@ -3220,7 +3220,7 @@ div.ts-wrapperdiv div.ts-pager {
   clear: right;
 }
 div.ts-wrapperdiv div.ts-pager.ts-pager-bottom {
-  visibility: hidden;
+  display: none;
 }
 div.ts-wrapperdiv div.ts-pager div.btn-group {
   margin-top: 2px;
