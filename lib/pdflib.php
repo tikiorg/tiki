@@ -264,14 +264,15 @@ class PdfGenerator
 			}
 		}
 
-		// Define relative path from this script to mPDF
-//		define('_MPDF_PATH', $this->location);
 		include($this->location . 'mpdf.php');
-
 		$mpdf = new mPDF('');
 		$mpdf->useSubstitutions = true;					// optional - just as an example
 		$mpdf->SetHeader($url . '||Page {PAGENO}');		// optional - just as an example
 		$mpdf->CSSselectMedia = 'print';				// assuming you used this in the document header
+
+		$mpdf->autoScriptToLang = true;
+		$mpdf->autoLangToFont = true;
+
 		$mpdf->setBasePath($url);
 		$mpdf->WriteHTML($html);
 
