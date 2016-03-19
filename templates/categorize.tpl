@@ -1,9 +1,10 @@
+{* $Id$ *}
 {if $prefs.feature_categories eq 'y' and $tiki_p_modify_object_categories eq 'y' and (count($categories) gt 0 or $tiki_p_admin_categories eq 'y')}
 	{if !isset($labelcol)}
-		{$labelcol = '3'}
+		{$labelcol = '4'}
 	{/if}
 	{if !isset($inputcol)}
-		{$inputcol = '9'}
+		{$inputcol = '8'}
 	{/if}
 	{if !isset($notable) || $notable neq 'y'}
 		<!-- div class="form-horizontal" -->
@@ -30,15 +31,13 @@
 			<div class="clearfix">
 				{if $tiki_p_admin_categories eq 'y'}
 					<div class="pull-right">
-						<a class="btn btn-default btn-sm tips" href="tiki-admin_categories.php" title=":{tr}Admin Categories{/tr}">
+						<a class="btn btn-link btn-sm tips" href="tiki-admin_categories.php" title=":{tr}Admin Categories{/tr}">
 							{icon name="cog"} {tr}Categories{/tr}
 						</a>
 					</div>
 				{/if}
-
 				{select_all checkbox_names='cat_categories[]' label="{tr}Select/deselect all categories{/tr}"}
 			</div> {* end .clear *}
-
 		{else}
 			<div class="clearfix">
 				{if $tiki_p_admin_categories eq 'y'}
@@ -52,13 +51,12 @@
 			{tr}No categories defined{/tr}
 		{/if}
 	</div> {* end #multiselect *}
-	    </div>
-    </div>{* end #categorizator *}
+		</div>
+	</div>{* end #categorizator *}
 	{if !isset($notable) || $notable neq 'y'}
 		</div> {* end .form-group *}
 	{/if}
 {/if}
-
 {if $prefs.feature_theme_control_autocategorize eq 'y'}
 	{jq}
 		if ('{{$smarty.session.tc_theme_cat}}') {
