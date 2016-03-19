@@ -74,9 +74,6 @@ class Table_Code_Manager extends Table_Code_Abstract
 		foreach (self::$code as $section) {
 			$parts .= $section;
 		}
-		//unhide div holding the table
-		$parts .= $this->nt . '$(\'div#' . self::$id . '\').css(\'visibility\', \'visible\');';
-
 		self::$code = $parts;
 	}
 }

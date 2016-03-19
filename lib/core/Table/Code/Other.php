@@ -187,7 +187,6 @@ class Table_Code_Other extends Table_Code_Manager
 		//add math total column if set
 		if (!empty(parent::$s['math']['totals']['row'])) {
 			foreach(parent::$s['math']['totals']['row'] as $total) {
-				$label = $total['label'] ? $total['label'] : tr('Total');
 				$class = parent::$s['ajax']['type'] !== false ? ' class="sorter-false filter-false"' : '';
 				$jq[] = $this->nt . '$(\'' . parent::$tid . '\').find(\'thead tr\').append(\'<th' . $class . '>'
 					. $total['label'] . '</th>\');'
