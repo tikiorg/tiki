@@ -114,7 +114,7 @@
 			</div>
 		{/if}
 		<div class="form-group">
-			<label class="col-md-4 control-label" for="blogpriv">{tr}Mark entry as private{/tr}</label>
+			<label class="col-md-4 control-label" for="blogpriv">{tr}Private{/tr}</label>
 			<div class="col-md-8">
 				<input type="checkbox" name="blogpriv" id="blogpriv" {if $blogpriv eq 'y'}checked="checked"{/if}>
 			</div>
