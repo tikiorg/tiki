@@ -95,7 +95,7 @@
 						{if $cal.show_calname eq 'y'} {icon name="list-alt" class="tips" title="{tr}Name{/tr}:{tr}Field will show in popup{/tr}"}{/if}
 					</td>
 					<td class="text">
-						{$cal.customlocations|yesno}{if $cal.show_location eq 'y'}{icon name="list-alt" class="tips" title="{tr}Custom locations{/tr}:{tr}Field will show in popup{/tr}"}{/if}
+						{$cal.customlocations|yesno}{if $cal.show_location eq 'y'}{icon name="list-alt" class="tips" title="{tr}Custom location{/tr}:{tr}Field will show in popup{/tr}"}{/if}
 					</td>
 					<td class="text">
 						{$cal.customparticipants|yesno}{if $cal.show_participants eq 'y'}{icon name="list-alt" class="tips" title="{tr}Custom participants{/tr}:{tr}Field will show in popup{/tr}"}{/if}
@@ -203,7 +203,7 @@
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label" for="customlocations">
-					{tr}Custom Locations{/tr}
+					{tr}Custom location{/tr}
 				</label>
 				<div class="col-sm-2">
 					<select name="customlocations" id="customlocations" class="form-control">
@@ -220,7 +220,7 @@
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label" for="customparticipants">
-					{tr}Custom Participants{/tr}
+					{tr}Custom participants{/tr}
 				</label>
 				<div class="col-sm-2">
 					<select name="customparticipants" id="customparticipants" class="form-control">
@@ -237,7 +237,7 @@
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label" for="customcategories">
-					{tr}Custom Classifications{/tr}
+					{tr}Custom classification{/tr}
 				</label>
 				<div class="col-sm-2">
 					<select name="customcategories" id="customcategories" class="form-control">
@@ -254,7 +254,7 @@
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label" for="customlanguages">
-					{tr}Custom Languages{/tr}
+					{tr}Custom language{/tr}
 				</label>
 				<div class="col-sm-2">
 					<select name="customlanguages" id="customlanguages" class="form-control">
@@ -289,7 +289,7 @@
 			{if $prefs.feature_newsletters eq 'y'}
 				<div class="form-group">
 					<label class="col-sm-3 control-label" for="customsubscription">
-						{tr}Custom Subscription List{/tr}
+						{tr}Custom subscription list{/tr}
 					</label>
 					<div class="col-sm-2">
 						<select name="customsubscription" id="customsubscription" class="form-control">
@@ -301,7 +301,7 @@
 			{/if}
 			<div class="form-group">
 				<label class="col-sm-3 control-label" for="custompriorities">
-					{tr}Custom Priorities{/tr}
+					{tr}Custom priority{/tr}
 				</label>
 				<div class="col-sm-2">
 					<select name="custompriorities" id="custompriorities" class="form-control">
@@ -353,7 +353,7 @@
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label" for="customcategories">
-					{tr}Standard Colors{/tr}
+					{tr}Standard color{/tr}
 				</label>
 				<div class="col-sm-2">
 					<select class="form-control" id="customcategories" name="options[customcolors]" onChange="javascript:document.getElementById('fgColorField').disabled=(this.options[this.selectedIndex].value != 0);document.getElementById('bgColorField').disabled=(this.options[this.selectedIndex].value != 0);">
@@ -372,7 +372,7 @@
 					{tr}Custom foreground color{/tr}
 				</label>
 				<div class="col-sm-9">
-					<input id="fgColorField" type="text" name="options[customfgcolor]" value="{$customfgcolor}" size="6"> <i>{tr}Ex:{/tr} FFFFFF</i>
+					<input id="fgColorField" type="text" name="options[customfgcolor]" value="{$customfgcolor}" size="6"> <i>{tr}Example:{/tr} FFFFFF</i>
 				</div>
 			</div>
 			<div class="form-group">
@@ -380,7 +380,7 @@
 					{tr}Custom background color{/tr}
 				</label>
 				<div class="col-sm-9">
-					<input id="bgColorField" type="text" name="options[custombgcolor]" value="{$custombgcolor}" size="6"> <i>{tr}Ex:{/tr} 000000</i>
+					<input id="bgColorField" type="text" name="options[custombgcolor]" value="{$custombgcolor}" size="6"> <i>{tr}Example:{/tr} 000000</i>
 				</div>
 			</div>
 			<div class="form-group">
@@ -443,7 +443,7 @@
 			{/if}
 			<div class="form-group">
 				<label class="col-sm-3 control-label" for="allday">
-					{tr}Default event to all day{/tr}
+					{tr}Default length of events is all day{/tr}
 				</label>
 				<div class="col-sm-9">
 					<input type="checkbox" id="allday" name="allday"{if $info.allday eq 'y'} checked="checked"{/if}>

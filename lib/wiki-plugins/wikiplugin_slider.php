@@ -12,7 +12,7 @@ function wikiplugin_slider_info()
 		'documentation' => 'PluginSlider',
 		'description' => tra('Embed a mini-slideshow of content on a page'),
 		'prefs' => array( 'wikiplugin_slider' ),
-		'body' => tra('Content separated by /////'),
+		'body' => tra('Content separated by "/////"'),
 		'iconname' => 'tv',
 		'introduced' => 8,
 		'tags' => array( 'basic' ),
@@ -20,7 +20,7 @@ function wikiplugin_slider_info()
 			'titles' => array(
 				'required' => false,
 				'name' => tra('Slider Titles'),
-				'description' => tr('Pipe separated list of slider titles. Example:')
+				'description' => tr('Pipe-separated list of slider titles. Example:')
 					. '<code>slider 1|slider 2|slider 3</code>',
 				'since' => '8.0',
 				'filter' => 'text',

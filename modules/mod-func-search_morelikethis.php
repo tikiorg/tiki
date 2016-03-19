@@ -24,13 +24,13 @@ function module_search_morelikethis_info()
 			'typefilters' => array(
 				'required' => false,
 				'name' => tra('Object Type Filters'),
-				'description' => tra('Comma separated types to allow.'),
+				'description' => tra('Comma-separated types to allow.'),
 				'filter' => 'text',
 			),
 			'textfilters' => array(
 				'required' => false,
 				'name' => tra('Text Search Filters'),
-				'description' => tra('Comma separated text search filters to use. Use = to separate field and value.'),
+				'description' => tra('Comma-separated text search filters to use. Use "=" to separate field and value.'),
 				'filter' => 'text',
 			),
 		),

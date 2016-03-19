@@ -12,7 +12,7 @@ function wikiplugin_tabs_info()
 		'documentation' => 'PluginTabs',
 		'description' => tra('Arrange content in tabs'),
 		'prefs' => array( 'wikiplugin_tabs' ),
-		'body' => tra('Tabs content separated by /////'),
+		'body' => tra('Tabs content, separated by "/////"'),
 		'iconname' => 'th-large',
 		'introduced' => 4,
 		'filter' => 'wikicontent',

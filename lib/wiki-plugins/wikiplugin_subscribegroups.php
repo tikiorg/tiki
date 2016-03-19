@@ -79,7 +79,7 @@ function wikiplugin_subscribegroups_info()
 			'groups' => array(
 				'required' => false,
 				'name' => tra('Groups'),
-				'description' => tra('Colon separated list of groups. By default the list of groups available to the user.'),
+				'description' => tra('Colon-separated list of groups. By default the list of groups available to the user.'),
 				'since' => '2.0',
 				'default' => '',
 			),

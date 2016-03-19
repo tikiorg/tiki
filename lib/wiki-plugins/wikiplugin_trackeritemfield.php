@@ -48,7 +48,7 @@ function wikiplugin_trackeritemfield_info()
 			'fields' => array(
 				'required' => false,
 				'name' => tra('Fields'),
-				'description' => tra('Colon separated list of field IDs. Default is all fields'),
+				'description' => tra('Colon-separated list of field IDs. Default is all fields'),
 				'since' => '2.0',
 				'default' => '',
 				'filter' => 'text',

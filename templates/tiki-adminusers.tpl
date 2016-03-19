@@ -724,13 +724,13 @@
 			{/remarksbox}
 			<form class="form-horizontal" name="tempuser" id="tempuser" method="post">
 				<div class="form-group">
-					<label class="col-sm-4 col-md-4 control-label" for="tempuser_emails">{tr}Emails (comma separated){/tr}</label>
+					<label class="col-sm-4 col-md-4 control-label" for="tempuser_emails">{tr}Email addresses (comma-separated){/tr}</label>
 					<div class="col-sm-8 col-md-8">
 						<input type="text" class="form-control" name="tempuser_emails" id="tempuser_emails" />
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-4 col-md-4 control-label" for="tempuser_groups">{tr}Groups (comma separated){/tr}</label>
+					<label class="col-sm-4 col-md-4 control-label" for="tempuser_groups">{tr}Groups (comma-separated){/tr}</label>
 					<div class="col-sm-8 col-md-8">
 						<input type="text" class="form-control" name="tempuser_groups" id="tempuser_groups" />
 					</div>

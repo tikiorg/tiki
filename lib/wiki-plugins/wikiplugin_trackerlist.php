@@ -319,7 +319,7 @@ function wikiplugin_trackerlist_info()
 			 'filterfield' => array(
 				 'required' => false,
 				 'name' => tra('Filter Field'),
-				 'description' => tra('Colon separated list of fields to allow filtering on.'),
+				 'description' => tra('Colon-separated list of fields to allow filtering on.'),
 				 'since' => '1',
 				 'doctype' => 'filter',
 				 'filter' => 'digits',

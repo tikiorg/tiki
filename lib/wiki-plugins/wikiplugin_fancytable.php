@@ -35,7 +35,7 @@ function wikiplugin_fancytable_info()
 			 'headaligns' => array(
 				 'required' => false,
 				 'name' => tra('Header Horizontal Alignment'),
-				 'description' => tr('Horizontal alignments for header cells separated by %0. Choices: %1', '<code>|</code>',
+				 'description' => tr('Horizontal alignments for header cells, separated by %0. Choices: %1', '<code>|</code>',
 					 '<code>left</code>, <code>right</code>, <code>center</code>, <code>justify</code>'),
 				 'default' => '',
 				 'since' => '4.1',
@@ -44,7 +44,7 @@ function wikiplugin_fancytable_info()
 			 'headvaligns' => array(
 				 'required' => false,
 				 'name' => tra('Header Vertical Alignment'),
-				 'description' => tr('Vertical alignments for header cells separated by %0. Choices: %1', '<code>|</code>',
+				 'description' => tr('Vertical alignments for header cells, separated by %0". Choices: %1', '<code>|</code>',
 					 '<code>top</code>, <code>middle</code>, <code>bottom</code>, <code>baseline</code>'),
 				 'default' => '',
 				 'since' => '4.1',
@@ -53,7 +53,7 @@ function wikiplugin_fancytable_info()
 			 'colwidths' => array(
 				 'required' => false,
 				 'name' => tra('Column Widths'),
-				 'description' => tr('Column widths followed by px for pixels or % for percentages. Each column
+				 'description' => tr('Column widths followed by "px" for pixels or "%" for percentages. Each column
 				    separated by %0.', '<code>|</code>'),
 				 'default' => '',
 				 'since' => '4.1'
@@ -61,7 +61,7 @@ function wikiplugin_fancytable_info()
 			 'colaligns' => array(
 				 'required' => false,
 				 'name' => tra('Cell Horizontal Align'),
-				 'description' => tr('Table body column horizontal alignments separated by %0. Choices: %1', '<code>|</code>',
+				 'description' => tr('Table body column horizontal alignments, separated by %0. Choices: %1', '<code>|</code>',
 					 '<code>left</code>, <code>right</code>, <code>center</code>, <code>justify</code>'),
 				 'default' => '',
 				 'since' => '4.1',
@@ -70,7 +70,7 @@ function wikiplugin_fancytable_info()
 			 'colvaligns' => array(
 				 'required' => false,
 				 'name' => tra('Cell Vertical Align'),
-				 'description' => tr('Table body column vertical alignments separated by %0. Choices: %1', '<code>|</code>',
+				 'description' => tr('Table body column vertical alignments, separated by %0. Choices: %1', '<code>|</code>',
 					 '<code>top</code>, <code>middle</code>, <code>bottom</code>, <code>baseline</code>'),
 				 'default' => '',
 				 'since' => '4.1',

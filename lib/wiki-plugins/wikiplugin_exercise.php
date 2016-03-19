@@ -28,7 +28,7 @@ function wikiplugin_exercise_info()
 			'incorrect' => array(
 				'required' => false,
 				'name' => tr('Incorrect'),
-				'description' => tr('Wrong answer to suggest. Several wrong answers can be suggested (+ separated)'),
+				'description' => tr('Incorrect answer to suggest. Several incorrect answers can be suggested (separated by "+")'),
 				'since' => '9.0',
 				'filter' => 'text',
 			),
