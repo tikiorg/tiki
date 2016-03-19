@@ -60,7 +60,7 @@
 				</th>
 				<th>
 					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customcategories_desc'}customcategories_asc{else}customcategories_desc{/if}">
-						{tr}Category{/tr}
+						{tr}Classification{/tr}
 					</a>
 				</th>
 				<th>
@@ -107,7 +107,7 @@
 						{$cal.customlanguages|yesno}{if $cal.show_language eq 'y'}{icon name="list-alt" class="tips" title="{tr}Custom languages{/tr}:{tr}Field will show in popup{/tr}"}{/if}
 					</td>
 					<td class="text">
-						{$cal.customurl|yesno}{if $cal.show_url eq 'y'}{icon name="list-alt" class="tips" title="{tr}Custom url{/tr}:{tr}Field will show in popup{/tr}"}{/if}
+						{$cal.customurl|yesno}{if $cal.show_url eq 'y'}{icon name="list-alt" class="tips" title="{tr}Custom URL{/tr}:{tr}Field will show in popup{/tr}"}{/if}
 					</td>
 					<td class="text">{$cal.custompriorities|yesno}</td>
 					<td class="text">{$cal.customsubscription|yesno}</td>
