@@ -1,6 +1,13 @@
-<div class="actions pull-right btn-group dropup">
+{* $Id$ *}
+<div class="actions blogpostactions pull-right btn-group">
+	{if $prefs.javascript_enabled != 'y'}
+		{$js = 'n'}
+	{else}
+		{$js = 'y'}
+	{/if}
+	{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
 	<a class="btn btn-link" data-toggle="dropdown" href="#">
-		{icon name="wrench"}
+		{icon name="menu-extra"}
 	</a>
 	<ul class="dropdown-menu">
 		<li class="dropdown-title">
@@ -55,4 +62,5 @@
 			</li>
 		{/if}
 	</ul>
+	{if $js == 'n'}</li></ul>{/if}
 </div>

@@ -21,7 +21,7 @@
 {/if}
 
 {foreach from=$listpages item=post_info}
-	<article class="blogpost post panel panel-default {if !empty($container_class)} {$container_class}{/if}">
+	<article class="blogpost {if !empty($container_class)} {$container_class}{/if}">
 		{include file='blog_wrapper.tpl' blog_post_context=$request_context}
 	</article>
 {/foreach}
