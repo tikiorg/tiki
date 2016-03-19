@@ -113,15 +113,6 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 							),
 						),
 					);
-				} elseif ($entry instanceof Search_Type_Object) {
-					return array(
-						"type" => "object",
-					);
-				} elseif ($entry instanceof Search_Type_Nested) {
-					return array(
-						"type" => "nested",
-						"dynamic" =>  true,
-					);
 				} elseif ($entry instanceof Search_Type_DateTime) {
 					return array(
 						"type" => "date",

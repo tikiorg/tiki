@@ -41,16 +41,6 @@ class Search_Elastic_TypeFactory implements Search_Type_Factory_Interface
 		return new Search_Type_MultivaluePlain(array_values((array) $values));
 	}
 
-	function object($value)
-	{
-		return new Search_Type_Object($value);
-	}
-
-	function nested($value)
-	{
-		return new Search_Type_Nested($value);
-	}
-
 	function sortable($value)
 	{
 		return new Search_Type_PlainShortText($value);

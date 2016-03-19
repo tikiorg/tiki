@@ -41,9 +41,6 @@ class Search_Indexer
 
 	public function addGlobalSource(Search_GlobalSource_Interface $globalSource)
 	{
-		if (is_a($globalSource, "Search_GlobalSource_RelationSource")){
-			$globalSource->setContentSources($this->contentSources);
-		}
 		$this->globalSources[] = $globalSource;
 	}
 
