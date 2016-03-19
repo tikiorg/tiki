@@ -20,6 +20,7 @@ function prefs_print_list()
 				'mpdf' => tra('mPDF'),
 			),
 			'default' => 'none',
+			'help' => 'PDF',
 		),
 		'print_pdf_webservice_url' => array(
 			'name' => tra('Webservice URL'),
@@ -52,7 +53,7 @@ function prefs_print_list()
 			'description' => tra('Path to of the mPDF install.'),
 			'type' => 'text',
 			'size' => 50,
-			'help' => 'weasyprint',
+			'help' => 'mPDF',
 			'dependencies' => array('auth_token_access'),
 			'default' => 'files/mpdf/',
 		),

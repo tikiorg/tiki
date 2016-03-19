@@ -27,7 +27,7 @@ class PdfGenerator
 				$this->mode = 'webkit';
 				$this->location = $path;
 			} else {
-				TikiLib::lib('errorreport')->report(tr('PDF webkit path found: %0', $path));
+				TikiLib::lib('errorreport')->report(tr('PDF webkit path not found: "%0"', $path));
 			}
 		} else if ($prefs['print_pdf_from_url'] == 'weasyprint') {
 			$path = $prefs['print_pdf_weasyprint_path'];
@@ -35,7 +35,7 @@ class PdfGenerator
 				$this->mode = 'weasyprint';
 				$this->location = $path;
 			} else {
-				TikiLib::lib('errorreport')->report(tr('PDF weasyprint path not found: %0', $path));
+				TikiLib::lib('errorreport')->report(tr('PDF WeasyPrint path not found: "%0"', $path));
 			}
 		} elseif ( $prefs['print_pdf_from_url'] == 'webservice' ) {
 			$path = $prefs['path'];
@@ -49,13 +49,13 @@ class PdfGenerator
 			$path = $prefs['print_pdf_mpdf_path'];
 			if ( ! empty($path) && is_readable($path) ) {
 				if (! is_writable($path . 'graph_cache') || ! is_writable($path . 'tmp') ||! is_writable($path . 'ttfontdata')) {
-					TikiLib::lib('errorreport')->report(tr('PDF mPDF %0,%1 and %2 must be writable', 'graph_cache', 'tmp', 'ttfontdata'));
+					TikiLib::lib('errorreport')->report(tr('mPDF "%0","%1" and "%2" directories must be writable', 'graph_cache', 'tmp', 'ttfontdata'));
 				} else {
 					$this->mode = 'mpdf';
 					$this->location = $path;
 				}
 			} else {
-				TikiLib::lib('errorreport')->report(tr('PDF mPDF path not found: %0', $path));
+				TikiLib::lib('errorreport')->report(tr('mPDF path not found: "%0"', $path));
 			}
 		}
 	}
