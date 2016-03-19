@@ -464,41 +464,37 @@ class Table_Plugin
 
 		//tstotals
 		if (!empty($tstotals)) {
-			switch ($tstotals) {
-				case 'y':
-					$s['math']['totals'][0] = ['type' => 'col', 'formula' => 'sum', 'filter' => '',
-						'label' => tr('Page totals')];
-					break;
-				default:
-					$tst = Table_Check::parseParam($tstotals);
-					if (is_array($tst)) {
-						foreach ($tst as $key => $tinfo) {
-							if (!empty($tinfo['type'] && in_array($tinfo['type'], ['col', 'row', 'all']))) {
-								$s['math']['totals'][$tinfo['type']][$key]['formula'] = !empty($tinfo['formula'])
-									&& in_array($tinfo['formula'], $this->mathtypes) ? $tinfo['formula'] : 'sum';
-								if (!empty($tinfo['filter']) && isset($this->totalfilters[$tinfo['filter']])) {
-									if ($server === 'y') {
-										$s['math']['totals'][$tinfo['type']][$key]['filter'] = '';
-										$labelfilter = '';
-									} else {
-										$s['math']['totals'][$tinfo['type']][$key]['filter'] = $this->totalfilters[$tinfo['filter']];
-										$labelfilter = $tinfo['filter'];
-									}
-								} else {
-									$s['math']['totals'][$tinfo['type']][$key]['filter'] = '';
-									$labelfilter = '';
-								}
-								if (isset($tinfo['label'])) {
-									$s['math']['totals'][$tinfo['type']][$key]['label'] = $tinfo['label'];
-								} else {
-									$map = ['col' => 'Column', 'row' => 'Row', 'all' => 'Table'];
-									$label = $map[$tinfo['type']] . ' '
-										. $s['math']['totals'][$tinfo['type']][$key]['formula'] . ' ' . $labelfilter;
-									$s['math']['totals'][$tinfo['type']][$key]['label'] = tr($label);
-								}
+			if (trim($tstotals) === 'y') {
+				$tstotals = 'type:col;formula:sum;label:' . tr('Page totals');
+			}
+			$tst = Table_Check::parseParam($tstotals);
+			if (is_array($tst)) {
+				foreach ($tst as $key => $tinfo) {
+					if (!empty($tinfo['type'] && in_array($tinfo['type'], ['col', 'row', 'all']))) {
+						$s['math']['totals'][$tinfo['type']][$key]['formula'] = !empty($tinfo['formula'])
+							&& in_array($tinfo['formula'], $this->mathtypes) ? $tinfo['formula'] : 'sum';
+						if (!empty($tinfo['filter']) && isset($this->totalfilters[$tinfo['filter']])) {
+							if ($server === 'y') {
+								$s['math']['totals'][$tinfo['type']][$key]['filter'] = '';
+								$labelfilter = '';
+							} else {
+								$s['math']['totals'][$tinfo['type']][$key]['filter'] = $this->totalfilters[$tinfo['filter']];
+								$labelfilter = $tinfo['filter'];
 							}
+						} else {
+							$s['math']['totals'][$tinfo['type']][$key]['filter'] = '';
+							$labelfilter = '';
+						}
+						if (isset($tinfo['label'])) {
+							$s['math']['totals'][$tinfo['type']][$key]['label'] = $tinfo['label'];
+						} else {
+							$map = ['col' => 'Column', 'row' => 'Row', 'all' => 'Table'];
+							$label = $map[$tinfo['type']] . ' '
+								. $s['math']['totals'][$tinfo['type']][$key]['formula'] . ' ' . $labelfilter;
+							$s['math']['totals'][$tinfo['type']][$key]['label'] = tr($label);
 						}
 					}
+				}
 			}
 		}
 
