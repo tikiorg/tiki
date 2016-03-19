@@ -12,16 +12,16 @@
 {if $prefs.feature_ajax eq 'y'}
     {include file='tiki-ajax_header.tpl'}
 {/if}
-<div class="middle_outer">
+<div class="middle_outer" id="middle_outer">
     <div class="fixed-topbar"></div>
     <div class="container clearfix middle" id="middle">
         <div class="topbar_wrapper">
-			<div class="topbar row">
-				{modulelist zone=topbar}
+            <div class="topbar row" id="topbar">
+                {modulelist zone=topbar}
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" id="row-middle">
             {if zone_is_empty('left') and zone_is_empty('right')}
                 <div class="col-md-12 col1" id="col1">
                     {if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
@@ -111,8 +111,7 @@
         </div>
     </footer>
 
-
-<nav class="navbar {* navbar-inverse *}navbar-default navbar-fixed-top" role="navigation">
+<nav class="navbar {* navbar-inverse *}navbar-default navbar-fixed-top" role="navigation" id="navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             {if $module_params.navbar_toggle neq 'n'}
@@ -130,6 +129,7 @@
         </div>
     </div>
 </nav>
+
 {include file='footer.tpl'}
 </body>
 <script type="text/javascript">

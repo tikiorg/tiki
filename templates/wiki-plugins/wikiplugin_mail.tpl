@@ -79,7 +79,7 @@
 				{if $params.showuser eq 'y'}
 					<div class="row">
 						<input type="text" size="80" name="mail_user" value="{$mail_user}">
-						{remarksbox type='tip' title="{tr}Tip{/tr}"}{tr}Email separated by comma{/tr}{/remarksbox}
+						{remarksbox type='tip' title="{tr}Tip{/tr}"}{tr}Email address (if more than one, separated by ","){/tr}{/remarksbox}
 					</div>
 				{/if}
 				{if $params.showgroupdd eq 'y'}

@@ -18,7 +18,7 @@ function wikiplugin_category_info()
 			'id' => array(
 				'required' => false,
 				'name' => tra('Category IDs'),
-				'description' => tr('List of category IDs separated by + signs. ex: %0. Default will use category
+				'description' => tr('List of category IDs separated by "+", for example, %0. Default will use category
 					of the current page.', '<code>1+2+3</code>'),
 				'since' => '1',
 				'filter' => 'digits',
@@ -29,7 +29,7 @@ function wikiplugin_category_info()
 			'types' => array(
 				'required' => false,
 				'name' => tra('Types'),
-				'description' => tra('List of object types to include in the list separated by plus signs. Example: ')
+				'description' => tra('List of object types to include in the list, separated by "+", for example, ')
 					. '<code>article+blog+blog post+fgal</code>',
 				'since' => '1',
 				'accepted' => 'article, blog, blog post, fgal, forum, igal, newsletter, event, poll, quiz, survey,

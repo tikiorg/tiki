@@ -60,7 +60,7 @@
 			{/if}
 		</div>
 		{*	{if isset($find_in)}{help url="#" desc="{tr}Find in:{/tr} {$find_in}"}{/if} *}
-		<div class="find-parameters form-horizontal col-sm-10 small {if $prefs.javascript_enabled eq 'n' or (!empty($find_type) or !empty($find_topic) or !empty($find_lang) or !empty($find_langOrphan) or !empty($find_show_categories) or !empty($find_categId) or !empty($find_orphans) or !empty($find_other_val) or $maxRecords ne $prefs.maxRecords)}visible{else}hidden{/if}"> {* TODO: figure out why "or !empty($find_show_categories_multi)" does not work *}
+		<div style="line-height: 1.7;" class="find-parameters col-sm-10 small {if $prefs.javascript_enabled eq 'n' or (!empty($find_type) or !empty($find_topic) or !empty($find_lang) or !empty($find_langOrphan) or !empty($find_show_categories) or !empty($find_categId) or !empty($find_orphans) or !empty($find_other_val) or $maxRecords ne $prefs.maxRecords)}visible{else}hidden{/if}"> {* TODO: figure out why "or !empty($find_show_categories_multi)" does not work *}
 			{if !empty($types) and ( !isset($types_tag) or $types_tag eq 'select' )}
 				<div class="form-group">
 					<label class="control-label col-sm-4">
