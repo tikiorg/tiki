@@ -13,19 +13,19 @@
     {include file='tiki-ajax_header.tpl'}
 {/if}
 
-<div class="header_outer">
+<div class="header_outer" id="header_outer">
     <div class="header_container container">
-        <header class="header page-header">
+        <header class="header page-header" id="page-header">
             {modulelist zone=top class='row top_modules'}
         </header>
     </div>
 </div>
-<div class="middle_outer">
+<div class="middle_outer" id="middle_outer">
     <div class="container clearfix middle" id="middle">
-		<div class="topbar row">
+		<div class="topbar row" id="topbar">
 			{modulelist zone=topbar}
         </div>
-        <div class="row">
+        <div class="row" id="row-middle">
             {if zone_is_empty('left') and zone_is_empty('right')}
                 <div class="col-md-12 col1" id="col1">
                     {if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}

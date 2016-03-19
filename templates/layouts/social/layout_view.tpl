@@ -15,7 +15,7 @@
 
 		<div class="container">
 
-			<div class="row">
+			<div class="row" id="row-middle">
 
 				<div class="{if	zone_is_empty('left') and zone_is_empty('right')}col-md-12 {elseif 
 						zone_is_empty('left')}col-md-9 {elseif 
@@ -63,7 +63,7 @@
 			</div>
 		</footer>
 
-		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar-fixed-top">
 			<div class="container">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse"

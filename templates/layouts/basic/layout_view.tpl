@@ -14,14 +14,14 @@
 {/if}
 
 <div class="container">
-    <div class="page-header">
-            {modulelist zone=top class='row top_modules'}
-        <div class="topbar row">
+    <div class="page-header" id="page-header">
+        {modulelist zone=top class='row top_modules'}
+        <div class="topbar row" id="topbar">
             {modulelist zone=topbar}
         </div>
     </div>
 
-    <div class="row row-middle">
+    <div class="row row-middle" id="row-middle">
         {if zone_is_empty('left') and zone_is_empty('right')}
             <div class="col-md-12 col1" id="col1">
                 {if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}

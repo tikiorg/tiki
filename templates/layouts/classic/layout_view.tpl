@@ -18,10 +18,10 @@
 
     {if $prefs.feature_layoutshadows eq 'y'}
     <div id="header-shadow">{eval var=$prefs.header_shadow_start}{/if}
-        <div class="header_outer">
+        <div class="header_outer" id="header_outer">
             <div class="header_container">
                 <div class="container">
-                    <header class="header page-header">
+                    <header class="header page-header" id="page-header">
                         {modulelist zone=top class='row top_modules'}
                     </header>
                 </div>
@@ -29,12 +29,12 @@
         </div>
         {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.header_shadow_end}</div>{/if}
 
-    <div class="middle_outer">
+    <div class="middle_outer" id="middle_outer" >
         <div class="container clearfix middle" id="middle">
-			<div class="row topbar">
-				{modulelist zone=topbar}
+            <div class="row topbar" id="topbar">
+                {modulelist zone=topbar}
             </div>
-            <div class="row">
+            <div class="row" id="row-middle">
                 {if zone_is_empty('left') and zone_is_empty('right')}
                     <div class="col-md-12 col1" id="col1">
 
