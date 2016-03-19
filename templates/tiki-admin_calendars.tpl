@@ -35,6 +35,7 @@
 			{$libeg = ''}
 			{$liend = ''}
 		{/if}
+		<div class="table-responsive">
 		<table class="table table-striped table-hover">
 			<tr>
 				<th>
@@ -49,7 +50,7 @@
 				</th>
 				<th>
 					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customlocations_desc'}customlocations_asc{else}customlocations_desc{/if}">
-						{tr}Loc{/tr}
+						{tr}Location{/tr}
 					</a>
 				</th>
 				<th>
@@ -59,18 +60,18 @@
 				</th>
 				<th>
 					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customcategories_desc'}customcategories_asc{else}customcategories_desc{/if}">
-						{tr}Cat{/tr}
+						{tr}Category{/tr}
 					</a>
 				</th>
 				<th>
 					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customlanguages_desc'}customlanguages_asc{else}customlanguages_desc{/if}">
-						{tr}Lang{/tr}
+						{tr}Language{/tr}
 					</a>
 				</th>
 				<th>{tr}URL{/tr}</th>
 				<th>
 					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'custompriorities_desc'}custompriorities_asc{else}custompriorities_desc{/if}">
-						{tr}Prio{/tr}
+						{tr}Priority{/tr}
 					</a>
 				</th>
 				<th>
@@ -80,7 +81,7 @@
 				</th>
 				<th>
 					<a href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'personal_desc'}personal_asc{else}personal_desc{/if}">
-						{tr}Perso{/tr}
+						{tr}Personal{/tr}
 					</a>
 				</th>
 				<th></th>
@@ -148,7 +149,7 @@
 				{norecords _colspan=12}
 			{/foreach}
 		</table>
-
+		</div>
 		{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 	{/tab}
 
