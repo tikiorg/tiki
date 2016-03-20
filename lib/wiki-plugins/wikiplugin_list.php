@@ -51,8 +51,9 @@ function wikiplugin_list($data, $params)
 
 	$builder = new Search_Query_WikiBuilder($query);
 	$builder->enableAggregate();
-	if ($tsret['max']) {
-		$builder->wpquery_pagination_max($query, $tsret['max']);
+	if (!empty($tsret['max']) || !empty($_GET['numrows'])) {
+		$max = !empty($_GET['numrows']) ? $_GET['numrows'] : $tsret['max'];
+		$builder->wpquery_pagination_max($query, $max);
 	}
 	$builder->apply($matches);
 	$paginationArguments = $builder->getPaginationArguments();
