@@ -536,6 +536,9 @@ function iconset_default()
 			),
 			//thumbs-down in defaults
 			//thumbs-up in defaults
+			'time' => array(
+				'id' => 'clock-o',
+			),
 			'title' => array(
 				'id' => 'text-width',
 			),

@@ -6,5 +6,5 @@
 {tr}Date:{/tr} {$mail_date|tiki_short_datetime:"":"n"}
 
 You can view the updated file gallery at:
-{$mail_machine}/tiki-list_file_gallery.php?galleryId={$galleryId}
+{$mail_machine}/{$galleryId|sefurl:'file gallery'}
 

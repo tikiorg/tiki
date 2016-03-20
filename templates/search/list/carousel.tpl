@@ -1,6 +1,6 @@
 {* $Id$ *}
 {if $carousel and $carousel.id}{$containerId = $carousel.id}{else}{$containerId = 'wp_list_carousel'}{/if}
-<div id="{$containerId}" class="carousel slide" data-ride="carousel"{if $carousel and $carousel.interval} data-interval="{$carousel.interval}"{/if}>
+<div id="{$containerId}" class="carousel slide" data-ride="carousel"{if $carousel and $carousel.interval} data-interval="{$carousel.interval}"{/if}{if $carousel and isset($carousel.pause)} data-pause="{$carousel.pause}"{/if}>
 	{* Indicators *}
 	<ol class="carousel-indicators">
 		{foreach from=$results item=row}
