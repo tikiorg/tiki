@@ -246,7 +246,7 @@ class Table_Plugin
 				'name' => tra('Total Format'),
 				'description' => tr('Format for table totals (click %0 for patterns). Example:',
 					'<a href="http://mottie.github.io/tablesorter/docs/example-widget-math.html#mask_examples">here</a>')
-					. ' <code>format:#,###.</code><br>',
+					. ' <code>#,###.</code><br>',
 			),
 			'tstotaloptions' => array(
 				'required' => false,
@@ -256,7 +256,7 @@ class Table_Plugin
 					. tr('overrides the default number format set in %0', 'tstotalformat') . '<br>'
 					. '<strong>ignore</strong> - ' . tr('column will be excluded from total calculations set in the %0
 					parameter. Remember to include any columns that will be added for row totals set in the %0
-					parameter.', '<code>tstotals</code>') . '<br>' . tr('Example:') . '<code>ignore|ignore|format:#,###.</code>',
+					parameter.', '<code>tstotals</code>') . '<br>' . tr('Example:') . '<code>ignore|ignore|#,###.</code>',
 				'since' => '15.0',
 				'doctype' => 'tablesorter',
 				'default' => '',
