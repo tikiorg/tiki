@@ -24,7 +24,7 @@ function prefs_article_list()
 	return array(
 		'article_comments_per_page' => array(
 			'name' => tra('Default number per page'),
-            'description' => tra('Sets the number of comments per page (default = 10)'),
+			'description' => tra('Sets the number of comments per page (default = 10)'),
 			'type' => 'text',
 			'size' => '5',
 			'filter' => 'digits',
@@ -32,7 +32,7 @@ function prefs_article_list()
 		),
 		'article_comments_default_ordering' => array(
 			'name' => tra('Default Ordering'),
-            'description' => tra('sSets the default ordering filter for comments (default = points_desc)'),
+			'description' => tra('sSets the default ordering filter for comments (default = points_desc)'),
 			'type' => 'list',
 			'options' => $comment_sort_orders,
 			'default' => 'points_desc',
@@ -65,7 +65,7 @@ function prefs_article_list()
 		),
 		'article_image_size_x' => array(
 			'name' => tra('Default maximum width for custom article images'),
-            'description' => tra('Sets the maximum width of article image'),
+			'description' => tra('Sets the maximum width of article image'),
 			'type' => 'text',
 			'size' => 3,
 			'filter' => 'int',
@@ -74,7 +74,7 @@ function prefs_article_list()
 		),
 		'article_image_size_y' => array(
 			'name' => tra('Default maximum height for custom article images'),
-            'description' => tra('Sets the maximum height of article images'),
+			'description' => tra('Sets the maximum height of article images'),
 			'type' => 'text',
 			'size' => 3,
 			'filter' => 'int',
@@ -83,7 +83,7 @@ function prefs_article_list()
 		),
 		'article_default_list_image_size_x' => array(
 			'name' => tra('Default maximum width for custom article images in list mode (on View Articles)'),
-            'description' => tra('Sets the default maximum width of custom article images in list mode (on View Articles page)'),
+			'description' => tra('Sets the default maximum width of custom article images in list mode (on View Articles page)'),
 			'type' => 'text',
 			'size' => 3,
 			'filter' => 'int',
@@ -92,7 +92,7 @@ function prefs_article_list()
 		),
 		'article_default_list_image_size_y' => array(
 			'name' => tra('Default maximum height of custom article images in list mode (on View Articles page)'),
-            'description' => tra('Sets the default maximum height of custom article images in list mode (on View Articles page)'),
+			'description' => tra('Sets the default maximum height of custom article images in list mode (on View Articles page)'),
 			'type' => 'text',
 			'size' => 3,
 			'filter' => 'int',
@@ -110,7 +110,7 @@ function prefs_article_list()
 			'description' => tra('Set to define your ShareThis publisher identifier'),
 			'type' => 'text',
 			'size' => '40',
-            'hint' => tra('record your ShareThis publisher ID'),
+			'hint' => tra('record your ShareThis publisher ID'),
 			'default' => '',
 		),
 		'article_related_articles' => array(
@@ -128,6 +128,15 @@ function prefs_article_list()
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('experimental'),
+		),
+		'article_feature_copyrights' => array(
+			'name' => tra('Article copyright'),
+			'description' => tra('Enables adding of copyright information for articles'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_articles',
+			),
+			'default' => 'n',
 		),
 	);
 }

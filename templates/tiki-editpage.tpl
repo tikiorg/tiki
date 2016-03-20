@@ -389,40 +389,6 @@
 						{/if}
 						{* merged tool and property tabs for tiki 6 *}
 						{if $page|lower neq 'sandbox'}
-							{if $prefs.wiki_feature_copyrights eq 'y'}
-								<div class="form-group">
-									<label for="" class="col-md-4 control-label">{tr}Copyright{/tr}</label>
-									<div class="col-md-8">
-										<div class="form-group">
-											<label class="col-md-4 control-label" for="copyrightTitle">{tr}Title{/tr}</label>
-											<div class="col-md-8">
-												<input class="form-control wikiedit" type="text" id="copyrightTitle" name="copyrightTitle" value="{$copyrightTitle|escape}">
-												{if !empty($copyrights)}
-													<td rowspan="3"><a href="copyrights.php?page={$page|escape}">{tr}To edit the copyright notices{/tr}</a></td>
-												{/if}
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="col-md-4 control-label" for="copyrightYear">{tr}Year{/tr}</label>
-											<div class="col-md-8">
-												<input size="4" class="form-control wikiedit" type="text" id="copyrightYear" name="copyrightYear" value="{$copyrightYear|escape}">
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="col-md-4 control-label" for="copyrightAuthors">{tr}Authors{/tr}</label>
-											<div class="col-md-8">
-												<input class="form-control wikiedit" id="copyrightAuthors" name="copyrightAuthors" type="text" value="{$copyrightAuthors|escape}">
-											</div>
-										</div>
-										<div class="form-group">
-											<label class="col-md-4 control-label" for="copyrightHolder">{tr}Copyright Holder{/tr}</label>
-											<div class="col-md-8">
-												<input class="form-control wikiedit" id="copyrightHolder" name="copyrightHolder" type="text" value="{$copyrightHolder|escape}">
-											</div>
-										</div>
-									</div>
-								</div>
-							{/if}
 							{if $prefs.wikiplugin_addreference eq 'y' && $showBiblioSection}
 								<div class="form-group">
 									<label for="" class="col-md-4 control-label">{tr}Bibliography{/tr}</label>
@@ -469,6 +435,38 @@
 								</div>
 							{/if}
 							{if $prefs.wiki_feature_copyrights eq 'y'}
+								<div class="form-group">
+									<label for="" class="col-md-4 control-label">{tr}Copyright{/tr}</label>
+									<div class="col-md-8">
+										<div class="form-group">
+											<label class="col-md-4 control-label" for="copyrightTitle">{tr}Title{/tr}</label>
+											<div class="col-md-8">
+												<input class="form-control wikiedit" type="text" id="copyrightTitle" name="copyrightTitle" value="{$copyrightTitle|escape}">
+												{if !empty($copyrights)}
+													<td rowspan="3"><a href="copyrights.php?page={$page|escape}">{tr}To edit the copyright notices{/tr}</a></td>
+												{/if}
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-4 control-label" for="copyrightYear">{tr}Year{/tr}</label>
+											<div class="col-md-8">
+												<input size="4" class="form-control wikiedit" type="text" id="copyrightYear" name="copyrightYear" value="{$copyrightYear|escape}">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-4 control-label" for="copyrightAuthors">{tr}Authors{/tr}</label>
+											<div class="col-md-8">
+												<input class="form-control wikiedit" id="copyrightAuthors" name="copyrightAuthors" type="text" value="{$copyrightAuthors|escape}">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-4 control-label" for="copyrightHolder">{tr}Copyright Holder{/tr}</label>
+											<div class="col-md-8">
+												<input class="form-control wikiedit" id="copyrightHolder" name="copyrightHolder" type="text" value="{$copyrightHolder|escape}">
+											</div>
+										</div>
+									</div>
+								</div>
 								<div class="form-group">
 									<label class="col-md-4 control-label">{tr}License{/tr}</label>
 									<div class="col-md-8">

@@ -182,7 +182,7 @@ function prefs_wiki_list($partial = false)
 			'default' => 'n',
 		),
 		'wiki_feature_copyrights' => array(
-			'name' => tra('Wiki'),
+			'name' => tra('Wiki copyright'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'feature_wiki',
