@@ -83,7 +83,7 @@ class Search_Formatter_Plugin_SmartyTemplate implements Search_Formatter_Plugin_
 		$tsettings = $entries->getTsSettings();
 		if (is_array($tsettings)) {
 			$smarty->assign('tstotals', $tsettings['math']['totals']);
-			$smarty->assign('tsignore', $tsettings['math']['ignore']);
+			$smarty->assign('tscols', $tsettings['columns']);
 		}
 
 		return $smarty->fetch($this->templateFile);

@@ -169,6 +169,7 @@ class Search_Formatter_Builder
 				$GLOBALS['requestUri'],
 				$this->count,
 				isset($args['tstotals']) ? $args['tstotals'] : null,
+				isset($args['tstotalformat']) ? $args['tstotalformat'] : null,
 				isset($args['tstotaloptions']) ? $args['tstotaloptions'] : null
 			);
 			if (is_array($ts->settings)) {
