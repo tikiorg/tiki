@@ -7,5 +7,5 @@
 {tr}File Description:{/tr} {$fdescription}
 
 You can download the new file at:
-{$mail_machine}/tiki-list_file_gallery.php?galleryId={$galleryId}
+{$mail_machine}/{$galleryId|sefurl:'file gallery'}
 
