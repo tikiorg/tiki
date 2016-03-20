@@ -241,17 +241,22 @@ class Table_Plugin
 				'filter' => 'striptags',
 				'advanced' => true,
 			),
+			'tstotalformat' => array(
+				'required' => false,
+				'name' => tra('Total Format'),
+				'description' => tr('Format for table totals (click %0 for patterns). Example:',
+					'<a href="http://mottie.github.io/tablesorter/docs/example-widget-math.html#mask_examples">here</a>')
+					. ' <code>format:#,###.</code><br>',
+			),
 			'tstotaloptions' => array(
 				'required' => false,
 				'name' => tra('Total Options'),
-				'description' => tr('Options for totals which are set in the %0 parameter:', '<code>tstotals</code>')
-					. '<br><strong>format</strong> - ' . tr('sets the number format (click %0 for patterns).
-					Example:', '<a href="http://mottie.github.io/tablesorter/docs/example-widget-math.html#mask_examples">here</a>')
-					. ' <code>format:$#,##0.00</code><br>'
-					. '<strong>ignore</strong> - ' . tr('indicate comma-separated columns (by number starting
-					with 0) that should be excluded from all total calculations set in the %0 parameter. Remember to
-					include any columns that will be added for row totals set in the %0 parameter. Example:',
-					'<code>tstotals</code>') . '<code>ignore:0,1,4</code><br>',
+				'description' => tr('Pipe-separated options for totals for each column which are set in the %0 parameter:',
+					'<code>tstotals</code>') . '<br><strong>format</strong> - '
+					. tr('overrides the default number format set in %0', 'tstotalformat') . '<br>'
+					. '<strong>ignore</strong> - ' . tr('column will be excluded from total calculations set in the %0
+					parameter. Remember to include any columns that will be added for row totals set in the %0
+					parameter.', '<code>tstotals</code>') . '<br>' . tr('Example:') . '<code>ignore|ignore|format:#,###.</code>',
 				'since' => '15.0',
 				'doctype' => 'tablesorter',
 				'default' => '',
@@ -281,7 +286,7 @@ class Table_Plugin
 	 */
 	public function setSettings ($id = null, $server = 'n', $sortable = 'n', $sortList = null, $tsortcolumns = null,
 		$tsfilters = null, $tsfilteroptions = null, $tspaginate = null, $tscolselect = null, $ajaxurl = null,
-		$totalrows = null, $tstotals = null, $tstotaloptions = null)
+		$totalrows = null, $tstotals = null, $tstotalformat = null, $tstotaloptions = null)
 	{
 		$s = array();
 
@@ -498,16 +503,20 @@ class Table_Plugin
 			}
 		}
 
+		//tstotalformat
+		if (!empty($tstotalformat)) {
+			$s['math']['format'] = $tstotalformat;
+		}
+
 		//tstotaloptions
 		if (!empty($tstotaloptions)) {
 			$tsto = Table_Check::parseParam($tstotaloptions);
-			if (is_array($tsto[0])) {
-				foreach($tsto[0] as $option => $string) {
-					if (in_array($option, ['format', 'ignore'])) {
-						if ($option == 'ignore') {
-							$string = explode(',', $string);
-						}
-						$s['math'][$option] = $string;
+			if (is_array($tsto)) {
+				foreach($tsto as $col => $option) {
+					if ($option === 'ignore') {
+						$s['columns'][$col]['math']['ignore'] = true;
+					} elseif (!empty($option)) {
+						$s['columns'][$col]['math']['format'] = $option;
 					}
 				}
 			}

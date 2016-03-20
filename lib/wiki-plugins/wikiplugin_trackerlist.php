@@ -1976,6 +1976,7 @@ function wikiplugin_trackerlist($data, $params)
 					$GLOBALS['requestUri'],
 					$items['cant'],
 					isset($tstotals) ? $tstotals : null,
+					isset($tstotalformat) ? $tstotalformat : null,
 					isset($tstotaloptions) ? $tstotaloptions : null
 				);
 				//loads the jquery tablesorter code

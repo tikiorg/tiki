@@ -32,7 +32,7 @@ class Table_Totals
 				$smarty = TikiLib::lib('smarty');
 				$smarty->assign('fieldcount', $count);
 				$smarty->assign('tstotals', $s['math']['totals']);
-				$smarty->assign('tsignore', $s['math']['ignore']);
+				$smarty->assign('tscols', $s['columns']);
 				return $smarty->fetch('tablesorter/totals.tpl');
 			}
 		} else {
@@ -49,7 +49,7 @@ class Table_Totals
 			if (!empty($s['math'])) {
 				$smarty = TikiLib::lib('smarty');
 				$smarty->assign('tstotals', $s['math']['totals']);
-				$smarty->assign('tsignore', $s['math']['ignore']);
+				$smarty->assign('tscols', $s['columns']);
 			}
 		}
 	}

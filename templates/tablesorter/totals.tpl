@@ -24,12 +24,17 @@
 					{/if}
 					{for $i=1 to $fieldcount}
 						{$index = $i - 1 + $precols}
-						{if in_array($index, $tsignore)}
+						{if isset($tscols.$index.math.ignore) && $tscols.$index.math.ignore}
 							{$ignore = 1}
+							{$format = 0}
+						{elseif !empty($tscols.$index.math.format)}
+							{$ignore = 0}
+							{$format = " data-tsmath-mask='{$tscols.$index.math.format}'"}
 						{else}
 							{$ignore = 0}
+							{$format = 0}
 						{/if}
-						<th {if !empty($info.formula) && !$ignore}data-tsmath="col-{$info.formula|escape}" class="text-right"{if !empty($info.filter)} data-tsmath-filter="{$info.filter}"{/if}{/if} data-index="{$index}">
+						<th {if !empty($info.formula) && !$ignore}data-tsmath="col-{$info.formula|escape}" class="text-right"{if !empty($info.filter)} data-tsmath-filter="{$info.filter}"{/if}{if $format}{$format}{/if}{/if} data-index="{$index}">
 							{if $i === 1 && $ignore && empty($precols)}
 								{$info.label|escape}
 							{/if}
@@ -55,7 +60,13 @@
 				<tr class="ts-foot-row">
 					{$allcols = $precols + $fieldcount + $postcols + $rowtotal}
 					{for $i=1 to $allcols}
-						<th {if $i == $allcols && !empty($tableinfo.formula)}data-tsmath="all-{$tableinfo.formula}" class="text-right"{if !empty($tableinfo.filter)} data-tsmath-filter="{$tableinfo.filter}"{/if}{/if}>
+						{$index = $i -1}
+						{if !empty($tscols.$index.math.format)}
+							{$format = " data-tsmath-mask='{$tscols.$index.math.format}'"}
+						{else}
+							{$format = 0}
+						{/if}
+						<th {if $i == $allcols && !empty($tableinfo.formula)}data-tsmath="all-{$tableinfo.formula}" class="text-right"{if !empty($tableinfo.filter)} data-tsmath-filter="{$tableinfo.filter}"{/if}{if $format}{$format}{/if}{/if}>
 							{if $i === 1}
 								{$tableinfo.label|escape}
 							{/if}

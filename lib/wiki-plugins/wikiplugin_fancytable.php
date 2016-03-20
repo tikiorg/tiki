@@ -119,6 +119,7 @@ function wikiplugin_fancytable($data, $params)
 				null,
 				null,
 				isset($tstotals) ? $tstotals : null,
+				isset($tstotalformat) ? $tstotalformat : null,
 				isset($tstotaloptions) ? $tstotaloptions : null
 			);
 			if (is_array($ts->settings)) {
