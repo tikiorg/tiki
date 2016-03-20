@@ -16,6 +16,7 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 	private $filters = array();
 	private $id;
 	private $tsOn;
+	private $tsettings;
 
 	public static function create($list)
 	{
@@ -45,6 +46,7 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 		$return->id = $this->id;
 		$return->tsOn = $this->tsOn;
 		$return->count = $this->count;
+		$return->tsettings = $this->tsettings;
 
 		return $return;
 	}
@@ -74,9 +76,19 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 		$this->tsOn = $tsOn;
 	}
 
+	function setTsSettings($tsettings)
+	{
+		$this->tsettings = $tsettings;
+	}
+
 	function getTsOn()
 	{
 		return $this->tsOn;
+	}
+
+	function getTsSettings()
+	{
+		return $this->tsettings;
 	}
 
 	function getEstimate()
