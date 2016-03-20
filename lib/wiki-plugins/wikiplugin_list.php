@@ -80,6 +80,8 @@ function wikiplugin_list($data, $params)
 	$builder->setTsOn($tsret['tsOn']);
 	$builder->apply($matches);
 
+	$result->setTsSettings($builder->getTsSettings());
+
 	$formatter = $builder->getFormatter();
 
 	$result->setTsOn($tsret['tsOn']);

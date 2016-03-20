@@ -45,7 +45,6 @@ class Search_Formatter_Plugin_SmartyTemplate implements Search_Formatter_Plugin_
 
 	function renderEntries(Search_ResultSet $entries)
 	{
-		global $tikipath;
 		$smarty = new Smarty_Tiki;
 
 		if ( $this->changeDelimiters ) {
@@ -81,6 +80,11 @@ class Search_Formatter_Plugin_SmartyTemplate implements Search_Formatter_Plugin_
 		$smarty->assign('maxRecords', $entries->getMaxRecords());
 		$smarty->assign('id', $entries->getId());
 		$smarty->assign('tsOn', $entries->getTsOn());
+		$tsettings = $entries->getTsSettings();
+		if (is_array($tsettings)) {
+			$smarty->assign('tstotals', $tsettings['math']['totals']);
+			$smarty->assign('tsignore', $tsettings['math']['ignore']);
+		}
 
 		return $smarty->fetch($this->templateFile);
 	}
