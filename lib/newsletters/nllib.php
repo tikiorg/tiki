@@ -1343,10 +1343,12 @@ class NlLib extends TikiLib
 		$zmail = $cache['zmail'];
 
 		$textPart = new Zend\Mime\Part($cache['text'] . strip_tags($unsubmsg));
+		$textPart->setCharset('UTF-8');
 		$textPart->setType(Zend\Mime\Mime::TYPE_TEXT);
 		$emailMimeParts[] = $textPart;
 
 		$htmlPart = new Zend\Mime\Part($html);
+		$htmlPart->setCharset('UTF-8');
 		$htmlPart->setType(Zend\Mime\Mime::TYPE_HTML);
 		$emailMimeParts[] = $htmlPart;
 
@@ -1354,6 +1356,7 @@ class NlLib extends TikiLib
 		$emailBody->setParts($emailMimeParts);
 
 		$zmail->setBody($emailBody);
+		$zmail->setEncoding('UTF-8');
 
 		$zmail->getHeaders()->removeHeader('to');
 		$zmail->getHeaders()->removeHeader('cc');
