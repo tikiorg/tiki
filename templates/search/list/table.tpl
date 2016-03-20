@@ -46,7 +46,7 @@
 		{foreach from=$results item=row}
 			<tr>
 				{foreach from=$column item=col}
-					{if $col.mode eq 'raw'}
+					{if isset($col.mode) && $col.mode eq 'raw'}
 						<td>{if !empty($row[$col.field])}{$row[$col.field]}{/if}</td>
 					{else}
 						<td>{if !empty($row[$col.field])}{$row[$col.field]|escape}{/if}</td>
