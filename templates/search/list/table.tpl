@@ -55,7 +55,7 @@
 			</tr>
 		{/foreach}
 		</tbody>
-		{if $tstotals && $tsOn}
+		{if !empty($tstotals) && $tsOn}
 			{include file="../../tablesorter/totals.tpl" fieldcount="{$fieldcount}"}
 		{/if}
 	</table>
