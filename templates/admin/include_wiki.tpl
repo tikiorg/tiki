@@ -264,6 +264,7 @@
 			</div>
 			{preference name=feature_print_indexed}
 			{preference name=feature_wiki_mindmap}
+			{preference name=wiki_feature_copyrights}
 			<div class="adminoptionbox clearfix">
 				<fieldset>
 					<legend>{tr}Attachments{/tr}</legend>

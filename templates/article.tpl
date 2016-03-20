@@ -172,7 +172,7 @@
 	{/if}
 
 	{capture name='copyright_section'}
-		{include file='show_copyright.tpl'}
+		{include file='show_copyright.tpl' copyright_context="article"}
 	{/capture}
 
 	{* When copyright section is not empty show it *}
