@@ -1489,7 +1489,11 @@ class NlLib extends TikiLib
 
 			if ($prefs['newsletter_throttle'] === 'y' && 0 >= --$throttleLimit) {
 				$rate = (int) $prefs['newsletter_pause_length'];
-				print '<div class="throttle" data-edition="' . $info['editionId'] . '" data-rate="' . $rate . '">' . tr('Limiting the email send rate. Resuming in %0 seconds.', $rate) . '</div>';
+				$replytoData = '';
+				if (!empty($info['replyto'])) {
+					$replytoData = ' data-replyto="' . $info['replyto'] . '"';
+				}
+				print '<div class="throttle" data-edition="' . $info['editionId'] . '"' . $replytoData . ' data-rate="' . $rate . '">' . tr('Limiting the email send rate. Resuming in %0 seconds.', $rate) . '</div>';
 				exit;
 			}
 		}
