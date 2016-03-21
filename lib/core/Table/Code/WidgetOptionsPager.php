@@ -57,6 +57,7 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 				}
 				$addcol = implode($this->nt, $addcol);
 			}
+			$total = !empty(parent::$s['total']) ? parent::$s['total'] : 0;
 			$ap = array(
 				//parse HTML string from entire page
 				'var parsedpage = $.parseHTML(data), table = $(parsedpage).find(\'' . parent::$tid . '\'), r = {};',
@@ -64,7 +65,7 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 				'r.rows = $(table).find(\'tbody tr\');',
 				!empty($addcol) ? $addcol : null,
 				//tablesorter needs total rows
-				'r.total = \'' . parent::$s['total'] . '\';',
+				'r.total = \'' . $total . '\';',
 				//extract number of filtered rows for use in row count display
 				'r.filteredRows = $(table).data(\'count\');',
 				'r.headers = null;',

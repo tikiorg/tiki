@@ -26,8 +26,8 @@ function prefs_wiki_list($partial = false)
 
 	$wiki_sort_columns = array_merge(
 		array(
+			'lastModif' => tra('Last Modified'),
 			'pageName' => tra('Name'),
-			'lastModif' => tra('LastModif'),
 			'created' => tra('Created'),
 			'creator' => tra('Creator'),
 			'hits' => tra('Hits'),
@@ -483,7 +483,7 @@ function prefs_wiki_list($partial = false)
 			'name' => tra('Default sort order'),
 			'type' => 'list',
 			'options' => $wiki_sort_columns,
-			'default' => 'lastmodif',
+			'default' => 'lastModif',
 		),
 		'wiki_list_sortdirection' => array(
 			'name' => tra('Sort Direction'),

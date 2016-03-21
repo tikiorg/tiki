@@ -74,9 +74,9 @@ if (jqueryTiki.no_cookie) {
 		{elseif $mode eq "popup"}
 			<div class="siteloginbar_popup dropdown pull-right" role="group">
 				<button type="button" class="dropdown-toggle login_link btn btn-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					{if $module_params.show_user_avatar eq 'y'}{$user|avatarize:n:n:n:n}{/if}
-					{if $module_params.show_user_name eq 'y'}{$user|username:n:n:n}{/if}
-					{if $module_params.show_user_avatar neq 'y' and $module_params.show_user_name neq 'y'}{tr}Log out{/tr}{/if}
+					{if isset($module_params.show_user_avatar) && $module_params.show_user_avatar eq 'y'}{$user|avatarize:n:n:n:n}{/if}
+					{if isset($module_params.show_user_name) && $module_params.show_user_name eq 'y'}{$user|username:n:n:n}{/if}
+					{if (!isset($module_params.show_user_avatar) || $module_params.show_user_avatar neq 'y') and (!isset($module_params.show_user_name) || $module_params.show_user_name neq 'y')}{tr}Log out{/tr}{/if}
 					<span class="caret"></span>
 					<span class="sr-only">{tr}Toggle Dropdown{/tr}</span>
 				</button>
