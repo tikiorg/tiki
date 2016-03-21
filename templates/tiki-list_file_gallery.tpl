@@ -59,9 +59,11 @@
 			</li>
 			<li class="divider"></li>
 			{if $edit_mode neq 'y' or $dup_mode neq 'y'}
-				<li>
-					<a href="tiki-list_file_gallery.php?edit_mode=1&galleryId={$galleryId}">{icon name="edit"} {tr}Edit{/tr}</a>
-				</li>
+				{if $tiki_p_create_file_galleries eq 'y' or (not empty($user) and $user eq $gal_info.user and $gal_info.type eq 'user' and $tiki_p_userfiles eq 'y')}
+					<li>
+						<a href="tiki-list_file_gallery.php?edit_mode=1&galleryId={$galleryId}">{icon name="edit"} {tr}Edit{/tr}</a>
+					</li>
+				{/if}
 			{/if}
 			{if $tiki_p_create_file_galleries eq 'y' and $dup_mode ne 'y' and $gal_info.type neq 'user'}
 				<li>
@@ -131,7 +133,7 @@
 		{if $tiki_p_create_file_galleries eq 'y' and $edit_mode ne 'y'}
 			{button _keepall='y' _icon_name="create" _type="link" _text="{tr}Create{/tr}" edit_mode=1 parentId=$galleryId cookietab=1}
 		{/if}
-		{if $tiki_p_admin_file_galleries eq 'y' or ($user eq $gal_info.user and $gal_info.type eq 'user' and $tiki_p_userfiles)}
+		{if $tiki_p_admin_file_galleries eq 'y' or (not empty($user) and $user eq $gal_info.user and $gal_info.type eq 'user' and $tiki_p_userfiles eq 'y')}
 			{if $edit_mode eq 'y' or $dup_mode eq 'y'}
 				{button _keepall='y'  _icon_name="view" _text="{tr}Browse{/tr}" galleryId=$galleryId}
 			{/if}

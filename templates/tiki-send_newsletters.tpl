@@ -144,7 +144,8 @@
 
 	<div id="sendingArea" style="display:none">
 		<h3>{tr}Sending Newsletter{/tr} ...</h3>
-        <h5> ... {tr}sending to {$subscribers} addresses{/tr}</h5>
+        <h5> ...  {if $prefs.newsletter_throttle eq 'y'}throttled {/if}{tr}sending to {$subscribers} addresses{/tr}</h5>
+		{if $replyto ne ''}<h5> ... {tr}with the 'Reply To' email set to: {$replyto}{/tr}</h5>{/if}
 		<div id="confirmed"></div>
 		<iframe id="resultIframe" name="resultIframe" frameborder="0" style="width: 600px; height: 400px"></iframe>
 		{jq}
@@ -152,7 +153,7 @@
 				var root = this.contentDocument.documentElement, iframe = this;
 				$('#confirmed').append($('.confirmation', root));
 				$('.throttle', root).each(function () {
-					var url = 'tiki-send_newsletters.php?resume=' + $(this).data('edition');
+					var url = 'tiki-send_newsletters.php?resume=' + $(this).data('edition') + '&replyto=' + $(this).data('replyto');
 					setTimeout(function () {
 						$(iframe).attr('src', url);
 					}, parseInt($(this).data('rate'), 10) * 1000);
