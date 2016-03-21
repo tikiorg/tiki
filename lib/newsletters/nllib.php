@@ -1196,7 +1196,7 @@ class NlLib extends TikiLib
 		return $retval;
 	}
 
-	private function get_edition_mail($editionId, $target, $is_html = null)
+	private function get_edition_mail($editionId, $target, $is_html = null, $replyTo=null)
 	{
 		global $prefs, $base_url;
 		static $mailcache = array();
@@ -1266,8 +1266,8 @@ class NlLib extends TikiLib
 			include_once 'lib/mail/maillib.php';
 			$zmail = tiki_get_admin_mail();
 
-			if (!empty($info['replyto'])) {
-				$zmail->setReplyTo($info['replyto']);
+			if (!empty($replyTo)) {
+				$zmail->setReplyTo($replyTo);
 			}
 
 			foreach ($info['files'] as $f) {
@@ -1396,7 +1396,7 @@ class NlLib extends TikiLib
 			}
 
 			try {
-				$zmail = $this->get_edition_mail($info['editionId'], $us, $info['is_html']);
+				$zmail = $this->get_edition_mail($info['editionId'], $us, $info['is_html'], $info['replyto']);
 				if (!$zmail) {
 					continue;
 				}
@@ -1432,7 +1432,11 @@ class NlLib extends TikiLib
 
 			if ($prefs['newsletter_throttle'] === 'y' && 0 >= --$throttleLimit) {
 				$rate = (int) $prefs['newsletter_pause_length'];
-				print '<div class="throttle" data-edition="' . $info['editionId'] . '" data-rate="' . $rate . '">' . tr('Limiting the email send rate. Resuming in %0 seconds.', $rate) . '</div>';
+				$replytoData = '';
+				if (!empty($info['replyto'])) {
+					$replytoData = ' data-replyto="' . $info['replyto'] . '"';
+				}
+				print '<div class="throttle" data-edition="' . $info['editionId'] . '"' . $replytoData . ' data-rate="' . $rate . '">' . tr('Limiting the email send rate. Resuming in %0 seconds.', $rate) . '</div>';
 				exit;
 			}
 		}
