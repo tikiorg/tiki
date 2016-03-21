@@ -1230,7 +1230,7 @@ class NlLib extends TikiLib
 		return $retval;
 	}
 
-	private function get_edition_mail($editionId, $target, $is_html = null)
+	private function get_edition_mail($editionId, $target, $is_html = null, $replyTo=null)
 	{
 		global $prefs, $base_url;
 		static $mailcache = array();
@@ -1303,8 +1303,8 @@ class NlLib extends TikiLib
 			$zmail = tiki_get_admin_mail();
 			$emailMimeParts = array();
 
-			if (!empty($info['replyto'])) {
-				$zmail->setReplyTo($info['replyto']);
+			if (!empty($replyTo)) {
+				$zmail->setReplyTo($replyTo);
 			}
 
 			foreach ($info['files'] as $f) {
@@ -1453,7 +1453,7 @@ class NlLib extends TikiLib
 			}
 
 			try {
-				$zmail = $this->get_edition_mail($info['editionId'], $us, $info['is_html']);
+				$zmail = $this->get_edition_mail($info['editionId'], $us, $info['is_html'], $info['replyto']);
 				if (!$zmail) {
 					continue;
 				}
