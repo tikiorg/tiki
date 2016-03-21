@@ -35,6 +35,10 @@ abstract class Table_Settings_Abstract
 			'type' => 'reset',				//choices: boolean true, boolean false, save, reset, savereset.
 			'group' => true,				//overall switch to allow or disallow group headings
 //			'multisort' => false,			//multisort on by default - set to false to disable
+//			'initial' => [                  //to set initial sort icons in standard tables since sortList doesn't use selectors yet
+//				'id' => 'abc',              //id of the th element that the table is sorted by on server side
+//				'dir' => 'asc'              //direction of the default initial server-side sort
+//			]
 		),
 		//overall filter settings for the table or external filters - individual column settings are under columns below
 		'filters' => array(

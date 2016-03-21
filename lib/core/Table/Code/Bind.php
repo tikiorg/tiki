@@ -39,8 +39,8 @@ class Table_Code_Bind extends Table_Code_Manager
 				'}',
 			];
 		}
-		//workaround since the processing formatting is not being applied upon sort (reported as bug #769)
 		if (parent::$ajax) {
+			//workaround since the processing formatting is not being applied upon sort (reported as bug #769)
 			$bindss = ['$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 0.25);'];
 			$jq[] = $this->iterate($bindss, '.bind(\'sortStart\', function(e, c){', $this->nt . '})', $this->nt2, '', '');
 
@@ -48,6 +48,17 @@ class Table_Code_Bind extends Table_Code_Manager
 			if ($prefs['jquery_timeago'] === 'y') {	// re-attach timeago for ajax calls
 				$bindtr[] = '$(\'time.timeago\', \'' . parent::$tid . '\').timeago();';
 			}
+		}
+		//reflect initial sort order in standard ajax tables - workaround until selectors can be used in sortList
+		if (isset(parent::$s['sorts']['initial'])) {
+			$init = parent::$s['sorts']['initial'];
+			$click = ['asc' => 'desc', 'desc' => 'asc'];
+			$add = 'tablesorter-header' . ucfirst($init['dir']) . ' sortInitialOrder-' . $click[$init['dir']];
+			$bindtr[] = 'var asc = $(\'' . parent::$tid . ' > thead > tr > th.tablesorter-headerAsc\').length, '
+				. $this->nt2 . 'desc = $(\'' . parent::$tid . ' > thead > tr > th.tablesorter-headerDesc\').length;'
+				. $this->nt2 . 'if (asc === 0 && desc === 0) {' . $this->nt3 .
+				'$(\'' . parent::$tid . ' > thead > tr > th#' . $init['id'] .'\').addClass(\''
+					. $add . '\').removeClass(\'tablesorter-headerUnSorted\');' . $this->nt2 . '}';
 		}
 		$bindtr[] = '$(\'div#' . parent::$id . '\').css(\'visibility\', \'visible\');';
 		$jq[] = $this->iterate($bindtr, '.bind(\'tablesorter-ready\', function(){', $this->nt . '})', $this->nt2, '', '');
