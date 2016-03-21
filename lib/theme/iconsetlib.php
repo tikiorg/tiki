@@ -242,8 +242,8 @@ class Iconset
 				} else {
 					TikiLib::lib('errorreport')->report(tr('Icon set: Class not defined for icon %0', $name));
 				}
-				if ((!empty($sizeuser) && $sizeuser != 1)) {
-					$styleparams[] = 'font-size:' . ($sizeuser * 100) . '%';
+				if ((!empty($size) && $size != 1)) {
+					$styleparams[] = 'font-size:' . ($size * 100) . '%';
 				}
 				$style = $this->setStyle($styleparams);
 				$html = "<$tag class=\"icon icon-$name $icon_class $custom_class\" $style $title $id></$tag>";
