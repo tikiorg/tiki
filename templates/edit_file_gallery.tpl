@@ -1,5 +1,5 @@
 {* $Id$ *}
-{if $tiki_p_create_file_galleries eq 'y' or ($user eq $gal_info.user and $gal_info.type eq 'user' and $tiki_p_userfiles)}
+{if $tiki_p_create_file_galleries eq 'y' or (not empty($user) and $user eq $gal_info.user and $gal_info.type eq 'user' and $tiki_p_userfiles eq 'y')}
 	{if isset($individual) and $individual eq 'y'}
 		{remarksbox type="tip" title="{tr}Permissions{/tr}"}
 			{tr}There are individual permissions set for this file gallery{/tr}. {permission_link mode=icon type="file gallery" permType="file galleries" id=$galleryId title=$name label="{tr}Manage Permissions{/tr}"}
