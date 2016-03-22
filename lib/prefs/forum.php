@@ -144,6 +144,13 @@ function prefs_forum_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'forum_quote_prevent_nesting' => array(
+			'name' => tra('Prevent Nesting of Quote wikiplugins when replying'),
+			'description' => tra('Strips quote plugin in reply to prevent quote wikiplugin nesting'),
+			'type' => 'flag',
+			'default' => 'n',
+			'dependencies' => array('feature_use_quoteplugin'),
+		),
 		'forum_available_categories' => array(
 			'name' => tr('Forum post categories'),
 			'description' => tr('Categories available in the category picker for forum posts.'),

@@ -250,6 +250,9 @@ if ($_REQUEST["comments_threadId"] > 0) {
 
 	if ( $comment_info["data"] != ''  ) {
 		if ( ($prefs['feature_forum_parse'] == 'y' || $prefs['section_comments_parse'] == 'y') && $prefs['feature_use_quoteplugin'] == 'y' ) {
+			if ($prefs['forum_quote_prevent_nesting'] == 'y') {
+				$comment_info["data"] = trim(preg_replace("/{QUOTE\(.*?\)}(.|\n)*?{QUOTE}/", "", $comment_info["data"])); //strip quotes to prevent nesting
+			}
 			$comment_info["data"] = "\n{QUOTE(thread_id=>" . $_REQUEST["comments_reply_threadId"] . ")}" . $comment_info["data"] . '{QUOTE}';
 		} else {
 			$comment_info["data"] = preg_replace('/\n/', "\n> ", $comment_info["data"]);
