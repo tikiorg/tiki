@@ -142,6 +142,14 @@ function prefs_unified_list()
 			'type' => 'flag',
 			'default' => 'y',
 		),
+		'unified_relation_object_indexing' => array(
+			'name' => tra('Relation types to index within object.'),
+			'description' => tra('Comma-separated relation types for which objects should be indexed in their related objects. (ElasticSearch needed)'),
+			'type' => 'textarea',
+			'dependencies' => array(
+				'unified_elastic_index_current',
+			),
+		),
 		'unified_cached_formatters' => array(
 			'name' => tra('Search formatters to cache'),
 			'description' => tra('Search formatters to cache the output of'),

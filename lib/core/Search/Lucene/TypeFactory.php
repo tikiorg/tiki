@@ -42,6 +42,17 @@ class Search_Lucene_TypeFactory implements Search_Type_Factory_Interface
 		return new Search_Type_MultivalueText((array) $values);
 	}
 
+	/* Not supported in Lucene indexes - use elasticsearch*/
+	function object($values)
+	{
+		return null;
+	}
+	/* Not supported in Lucene indexes - use elasticsearch */
+	function nested($values)
+	{
+		return null;
+	}
+
 	function sortable($value)
 	{
 		return new Search_Type_ShortText($value);

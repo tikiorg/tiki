@@ -8,10 +8,15 @@
 class Search_GlobalSource_RelationSource implements Search_GlobalSource_Interface
 {
 	private $relationlib;
+	private $contentSources;
 
 	function __construct()
 	{
 		$this->relationlib = TikiLib::lib('relation');
+	}
+
+	function setContentSources($contentSources) {
+		$this->contentSources = $contentSources;
 	}
 
 	function getProvidedFields()
@@ -29,25 +34,61 @@ class Search_GlobalSource_RelationSource implements Search_GlobalSource_Interfac
 
 	function getData($objectType, $objectId, Search_Type_Factory_Interface $typeFactory, array $data = array())
 	{
-
+		global $prefs;
 		if (isset($data['relations']) || isset($data['relation_types'])) {
 			return array();
 		}
 
 		$relations = array();
-
+		$relation_objects = array();
 		$types = array();
+
+		$relation_objects_to_index = array();
+		if ($prefs['unified_engine']  == 'elastic'){ // only index full objects in elasticsearch
+			$relation_objects_to_index = array_map('trim', explode(',', $prefs['unified_relation_object_indexing']));
+		}
 
 		$from = $this->relationlib->get_relations_from($objectType, $objectId);
 		foreach ($from as $rel) {
 			$relations[] = Search_Query_Relation::token($rel['relation'], $rel['type'], $rel['itemId']);
 			$types[] = $rel['relation'];
+
+			if (in_array($rel['relation'], $relation_objects_to_index)) {
+				$contentSource = $this->contentSources[$rel['type']]; //new Search_ContentSource_TrackerItemSource();
+				$data = $contentSource->getDocument($rel['itemId'], $typeFactory);
+				$permissionSource = new Search_GlobalSource_PermissionSource(Perms::getInstance());
+				$data = array_merge($data,
+					$permissionSource->getData($rel['type'], $rel['itemId'], $typeFactory, $data));
+				foreach($data as &$item){
+					if ($item instanceof Search_Type_Interface){
+						$item = $item->getValue();
+					}
+				}
+				$data['relation'] = $rel['relation'];
+				$relation_objects[] = $data;
+			}
 		}
 
 		$to = $this->relationlib->get_relations_to($objectType, $objectId);
 		foreach ($to as $rel) {
 			$relations[] = Search_Query_Relation::token($rel['relation'] . '.invert', $rel['type'], $rel['itemId']);
-			$types[] = $rel['relation'] . '.invert';
+			$rel_type = $rel['relation'] . '.invert';
+			$types[] = $rel_type;
+
+			if (in_array($rel_type, $relation_objects_to_index)) {
+				$contentSource = $this->contentSources[$rel['type']]; //new Search_ContentSource_TrackerItemSource();
+				$data = $contentSource->getDocument($rel['itemId'], $typeFactory);
+				$permissionSource = new Search_GlobalSource_PermissionSource(Perms::getInstance());
+				$data = array_merge($data,
+					$permissionSource->getData($rel['type'], $rel['itemId'], $typeFactory, $data));
+				foreach($data as &$item){
+					if ($item instanceof Search_Type_Interface){
+						$item = $item->getValue();
+					}
+				}
+				$data['relation'] = $rel['relation'];
+				$relation_objects[] = $data;
+			}
 		}
 
 		//take the type array and get a count of each indiv. type
@@ -60,6 +101,7 @@ class Search_GlobalSource_RelationSource implements Search_GlobalSource_Interfac
 
 		return array(
 			'relations' => $typeFactory->multivalue($relations),
+			'relation_objects' => $typeFactory->nested($relation_objects),
 			'relation_types' => $typeFactory->multivalue(array_unique($types)),
 			'relation_count' => $typeFactory->multivalue($rel_count),
 		);

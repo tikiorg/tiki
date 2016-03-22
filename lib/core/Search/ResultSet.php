@@ -35,6 +35,7 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 		$this->estimate = $count;
 		$this->offset = $offset;
 		$this->maxRecords = $maxRecords;
+		$this->checkNestedObjectPerms();
 	}
 
 	function replaceEntries($list)
@@ -199,6 +200,24 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 	{
 		foreach ($this as & $entry) {
 			$entry = $transform($entry);
+		}
+	}
+	/**  When relations have indexed relation objects, remove them from the resultset if user doesn't have
+	 * proper permissions */
+	function checkNestedObjectPerms(){
+		global $user;
+		$user_groups = array_keys(TikiLib::lib('user')->get_user_groups_inclusion($user));
+		foreach($this as &$item){//for each element in resultset
+			if (isset($item['relation_objects'])){
+				foreach ($item['relation_objects'] as $key => $obj) {
+					$in_group = array_intersect($obj->allowed_groups,$user_groups);
+					$in_user = in_array($user, $obj->allowed_users);
+					if (!$in_group && !$in_user){
+						unset($item['relation_objects'][$key]);
+					}
+				}
+				$item['relation_objects'] = array_values($item['relation_objects']); //rebase keys
+			}
 		}
 	}
 
