@@ -1078,12 +1078,12 @@ include_once ('fgal_listing_conf.php');
 
 $find_durations = array();
 if (isset($_REQUEST['view']) && $_REQUEST['view'] == 'admin') {
-	$find_durations[] = array('label' => tra('Not modified since')
+	$find_durations[] = array('label' => tra('Not modified for')
 													, 'prefix' => 'find_lastModif'
 													, 'default' => empty($_REQUEST['find_lastModif'])?'':$_REQUEST['find_lastModif']
 													, 'default_unit' => empty($_REQUEST['find_lastModif_unit']) ? 'week' : $_REQUEST['find_lastModif_unit']
 													);
-	$find_durations[] = array('label' => tra('Not downloaded since')
+	$find_durations[] = array('label' => tra('Not downloaded for')
 													, 'prefix' => 'find_lastDownload'
 													, 'default' => empty($_REQUEST['find_lastDownload']) ? '' : $_REQUEST['find_lastDownload']
 													, 'default_unit' => empty($_REQUEST['find_lastDownload_unit']) ? 'week' : $_REQUEST['find_lastDownload_unit']

@@ -48,8 +48,8 @@ function module_menu_info()
 				'default' => 'y',
 			),
 			'navbar_brand' => array(
-				'name' => tra('The URL of the navbar brand(logo)'),
-				'description' => tra('Used in Bootstrap navbar menus, if there is a Brand logo to be attached to the menu').' ( y / n )',
+				'name' => tra('The URL of the navbar brand (logo)'),
+				'description' => tra('Used in Bootstrap navbar menus, if there is a Brand logo to be attached to the menu'),
 				'default' => '',
 			),
 			'navbar_class' => array(
