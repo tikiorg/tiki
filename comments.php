@@ -176,25 +176,26 @@ if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == 
 	$forum_info = $commentslib->get_forum($_REQUEST['forumId']);
 	$threadId = $commentslib->post_in_forum($forum_info, $_REQUEST, $feedbacks, $errors);
 	if (!empty($threadId) && empty($errors)) {
-		$url = "tiki-view_forum_thread.php?forumId=" . $_REQUEST['forumId'] . "&comments_parentId=" . $_REQUEST['comments_parentId'];
+		$url = "tiki-view_forum_thread.php?forumId=" . $_REQUEST['forumId'] . "&comments_parentId=" . $_REQUEST['comments_parentId'] . "&threadId=" . $threadId;
 		if (!empty($_REQUEST['comments_threshold'])) {
-			$url .= "&amp;comments_threshold=".$_REQUEST['comments_threshold'];
+			$url .= "&comments_threshold=".$_REQUEST['comments_threshold'];
 		}
 		if (!empty($_REQUEST['comments_offset'])) {
-			$url .= "&amp;comments_offset=".$_REQUEST['comments_offset'];
+			$url .= "&comments_offset=".$_REQUEST['comments_offset'];
 		}
 		if (!empty($_REQUEST['comments_per_page'])) {
-			$url .= "&amp;comments_per_page=".$_REQUEST['comments_per_page'];
+			$url .= "&comments_per_page=".$_REQUEST['comments_per_page'];
 		}
 		if (!empty($_REQUEST['thread_style'])) {
-			$url .= "&amp;thread_style=".$_REQUEST['thread_style'];
+			$url .= "&thread_style=".$_REQUEST['thread_style'];
 		}
 		if (!empty($_REQUEST['thread_sort_mode'])) {
-			$url .= "&amp;thread_sort_mode=".$_REQUEST['thread_sort_mode'];
+			$url .= "&thread_sort_mode=".$_REQUEST['thread_sort_mode'];
 		}
 		if (!empty($feedbacks)) {
 			$_SESSION['feedbacks'] = $feedbacks;
 		}
+		$url .= "#threadId".$threadId; //place anchor on newly created message
 
 		//Watches
 		if ( $prefs['feature_user_watches'] == 'y') {

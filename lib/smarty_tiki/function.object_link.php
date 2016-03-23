@@ -334,6 +334,6 @@ function smarty_function_object_link_forumpost( $smarty, $object, $title = null,
 		}
 	}
 
-	return "<a href='tiki-view_forum_thread.php?comments_parentId=" . $comment['threadId']. "'>" .$comment['title'] . "</a>";
+	return "<a href='tiki-view_forum_thread.php?threadId=" . $comment['threadId']. "'>" .$comment['title'] . "</a>";
 }
 
