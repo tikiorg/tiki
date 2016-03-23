@@ -111,19 +111,61 @@ function wikiplugin_vimeo_info()
 				'advanced' => true
 			),
 			'useFroogaloopApi' => array(
-                                'required' => false,
-                                'name' => tra('Froogaloop API'),
-                                'description' => tra('Use Vimeo Froogaloop API'),
+				'required' => false,
+				'name' => tra('Froogaloop API'),
+				'description' => tra('Use Vimeo Froogaloop API'),
 				'since' => '14.0',
-                                'filter' => 'alpha',
-                                'options' => array(
-                                        array('text' => '', 'value' => ''),
-                                        array('text' => tra('Yes'), 'value' => 'true'),
-                                        array('text' => tra('No'), 'value' => 'false'),
-                                ),
-                                'default' => '',
-                                'advanced' => true
-                        ),
+				'filter' => 'alpha',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'true'),
+					array('text' => tra('No'), 'value' => 'false'),
+				),
+				'default' => '',
+				'advanced' => true,
+			),
+			'showTitle' => array(
+				'required' => false,
+				'name' => tra('Show Title'),
+				'description' => tra('Show the Video Title') . ' ' . tra('(default is to show)'),
+				'since' => '15.0',
+				'filter' => 'alpha',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'true'),
+					array('text' => tra('No'), 'value' => 'false'),
+				),
+				'default' => '',
+				'advanced' => true,
+			),
+			'showByline' => array(
+				'required' => false,
+				'name' => tra('Show Byline') . ' ' . tra('(default is to show)'),
+				'description' => tra("Show the creator's byline"),
+				'since' => '15.0',
+				'filter' => 'alpha',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'true'),
+					array('text' => tra('No'), 'value' => 'false'),
+				),
+				'default' => '',
+				'advanced' => true,
+			),
+			'showPortrait' => array(
+				'required' => false,
+				'name' => tra('Show Portrait') . ' ' . tra('(default is to show)'),
+				'description' => tra("Show the creator's profile picture"),
+				'since' => '15.0',
+				'filter' => 'alpha',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'true'),
+					array('text' => tra('No'), 'value' => 'false'),
+				),
+				'default' => '',
+				'advanced' => true,
+			),
 		),
 	);
 }
@@ -149,7 +191,21 @@ function vimeo_iframe($data, $params) {
 	if (!isset($vimeoId)) {
 		return '';
 	}
-	$url = '//player.vimeo.com/video/' . $vimeoId; 
+	$url = '//player.vimeo.com/video/' . $vimeoId;
+
+	$args = [];
+	if (!empty($params['showTitle']) && $params['showTitle'] === 'false') {
+		$args['title'] = 0;
+	}
+	if (!empty($params['showByline']) && $params['showByline'] === 'false') {
+		$args['byline'] = 0;
+	}
+	if (!empty($params['showPortrait']) && $params['showPortrait'] === 'false') {
+		$args['portrait'] = 0;
+	}
+	if ($args) {
+		$url .= '?' . http_build_query($args);
+	}
 
 	$output = '<iframe data-fileid="' . $params['vimeo_fileId'] . '" id="' . $params['player_id'] . '" src="' . $url . '" width="' . $width . '" height="' . $height . '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
 	return $output;
