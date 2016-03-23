@@ -47,6 +47,8 @@
 				{preference name=tracker_legacy_insert}
 				{preference name=tracker_status_in_objectlink}
 				{preference name=tracker_always_notify}
+				{preference name=feature_sefurl_tracker_prefixalias}
+				{preference name=tracker_prefixalias_on_links}
 			</fieldset>
 
 			<fieldset class="admin">
