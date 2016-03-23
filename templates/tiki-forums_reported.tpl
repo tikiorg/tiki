@@ -44,7 +44,7 @@
 					<input type="checkbox" name="msg[{$items[ix].threadId}]">
 				</td>
 				<td class="text">
-					<a class="link" href="tiki-view_forum_thread.php?topics_offset=0&amp;topics_sort_mode=commentDate_desc&amp;topics_threshold=0&amp;topics_find=&amp;forumId={$items[ix].forumId}&amp;comments_parentId={$items[ix].parentId}">{$items[ix].title|escape}</a>
+					{object_link id=$items[ix].threadId type=forumpost} (thread {$items[ix].threadId})
 				</td>
 				<td style="text-align:left;">
 					{$items[ix].user|username}

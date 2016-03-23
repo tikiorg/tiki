@@ -40,7 +40,7 @@ class Services_Utilities_Controller
 		$toList = json_decode($input->offsetGet('ajaxtoList'));
 		$input->replaceFilters(['ajaxtype' => 'word',]);
 		return [
-			'ajaxtitle' => $input->offsetGet('ajaxtitle'),
+			'title' => $input->offsetGet('ajaxtitle'),
 			'ajaxtype' => $input->offsetGet('ajaxtype'),
 			'ajaxicon' => $input->offsetGet('ajaxicon'),
 			'ajaxheading' => $input->offsetGet('ajaxheading'),
