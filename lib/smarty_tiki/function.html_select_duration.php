@@ -51,14 +51,14 @@ function smarty_function_html_select_duration($params, $smarty)
 		$selected = 604800;
 	}
 	$id = !empty($params['id']) ? ' id="' . $params['id'] . '" ' : '';
-	$html_result .= '<div class="col-sm-1">';
-	$html_result .= '<input ' . $id . 'name="'.$params['prefix'].'" type="text" size="5" value="'.$params['default'].'" class="form-control"></div>';
+	$html_result .= '<div class="row"><div class="col-sm-5">';
+	$html_result .= '<input ' . $id . 'name="'.$params['prefix'].'" type="text" value="'.$params['default'].'" class="form-control"></div>';
 	if (strstr($params['prefix'], '[]')) {
 		$prefix = str_replace('[]', '_unit[]', $params['prefix']);
 	} else {
 		$prefix = $params['prefix'].'_unit';
 	}
-	$html_result .= '<div class="col-sm-2"><select name="'.$prefix.'" class="form-control">';
+	$html_result .= '<div class="col-sm-7"><select name="'.$prefix.'" class="form-control">';
 
 	$html_result .= smarty_function_html_options(
 		array(
@@ -69,7 +69,7 @@ function smarty_function_html_select_duration($params, $smarty)
 		$smarty
 	);
 
-	$html_result .= '</select></div>';
+	$html_result .= '</select></div></div>';
 	return $html_result;
 }
 

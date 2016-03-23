@@ -31,7 +31,7 @@
 *}
 
 <div class="find clearfix">
-	<form method="post" class="form" role="form">
+	<form method="post" class="form form-horizontal" role="form">
 	{if !isset($map_only) or $map_only ne 'y'}
 		{if !empty($filegals_manager)}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}">{/if}
 		{query _type='form_input' maxRecords='NULL' type='NULL' types='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' cat_categories='NULL' filegals_manager='NULL' save='NULL' offset=0 searchlist='NULL' searchmap='NULL'}
@@ -60,7 +60,7 @@
 			{/if}
 		</div>
 		{*	{if isset($find_in)}{help url="#" desc="{tr}Find in:{/tr} {$find_in}"}{/if} *}
-		<div style="line-height: 1.7;" class="find-parameters col-sm-10 small {if $prefs.javascript_enabled eq 'n' or (!empty($find_type) or !empty($find_topic) or !empty($find_lang) or !empty($find_langOrphan) or !empty($find_show_categories) or !empty($find_categId) or !empty($find_orphans) or !empty($find_other_val) or $maxRecords ne $prefs.maxRecords)}visible{else}hidden{/if}"> {* TODO: figure out why "or !empty($find_show_categories_multi)" does not work *}
+		<div class="find-parameters col-sm-12 {if $prefs.javascript_enabled eq 'n' or (!empty($find_type) or !empty($find_topic) or !empty($find_lang) or !empty($find_langOrphan) or !empty($find_show_categories) or !empty($find_categId) or !empty($find_orphans) or !empty($find_other_val) or $maxRecords ne $prefs.maxRecords)}visible{else}hidden{/if}"> {* TODO: figure out why "or !empty($find_show_categories_multi)" does not work *}
 			{if !empty($types) and ( !isset($types_tag) or $types_tag eq 'select' )}
 				<div class="form-group">
 					<label class="control-label col-sm-4">
@@ -229,38 +229,42 @@
 			{/if}
 			{if !empty($find_durations)}
 				{foreach key=key item=duration from=$find_durations}
-					<label class="find_duration">
-					{tr}{$duration.label}{/tr}
-					{html_select_duration prefix=$duration.prefix default=$duration.default default_unit=$duration.default_unit}
+					<div class="form-group">
+					<label class="find_duration control-label col-sm-6">
+						{tr}{$duration.label}{/tr}
 					</label>
+					<div class="col-sm-6">
+						{html_select_duration prefix=$duration.prefix default=$duration.default default_unit=$duration.default_unit}
+					</div>
+						</div>
 				{/foreach}
 			{/if}
 			{if !empty($show_find_orphans) and $show_find_orphans eq 'y'}
-				<div class="form-group find-orphans">
-					<label class="find_orphans control-label col-sm-4" for="find_orphans">
-						{tr}Orphans{/tr}
-					</label>
-					<div class="col-sm-8">
-						<input type="checkbox" name="find_orphans" id="find_orphans" {if isset($find_orphans) and $find_orphans eq 'y'}checked="checked"{/if}>
+				<div class="form-group find-orphans" style="margin-top: -15px;">
+					<div class="checkbox col-sm-push-4">
+						<label class="find_orphans control-label" style="padding-left: 0; font-weight: bold;" for="find_orphans">
+							{tr}Orphans{/tr}
+							<input type="checkbox" style="margin-left: 30px;" name="find_orphans" id="find_orphans" {if isset($find_orphans) and $find_orphans eq 'y'}checked="checked"{/if}>
+						</label>
 					</div>
 				</div>
 			{/if}
 			{if !empty($find_other)}
 				<div class="form-group find-other">
-					<label class="find_other control-label col-sm-4" for="find_other">
+					<label class="find_other control-label col-sm-6" for="find_other">
 						{tr}{$find_other}{/tr}
 					</label>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						<input type="text" name="find_other" id="find_other" value="{if !empty($find_other_val)}{$find_other_val|escape}{/if}" class="form-control input-sm">
 					</div>
 				</div>
 			{/if}
 			{if isset($find_show_num_rows) && $find_show_num_rows eq 'y'}
 				<div class="form-group findnumrows">
-					<label class="control-label col-sm-4" for="findnumrows">
+					<label class="control-label col-sm-6" for="findnumrows">
 						{tr}Displayed rows{/tr}
 					</label>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						<input type="text" name="maxRecords" id="findnumrows" value="{$maxRecords|escape}" size="3" class="form-control input-sm">
 					</div>
 				</div>
