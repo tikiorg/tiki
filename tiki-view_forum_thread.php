@@ -65,6 +65,15 @@ if (!isset($_REQUEST['topics_sort_mode']) || empty($_REQUEST['topics_sort_mode']
 } else {
 	$smarty->assign('topics_sort_mode_param', '&amp;topics_sort_mode=' . $_REQUEST['topics_sort_mode']);
 }
+if ( !empty($_REQUEST['thread_sort_mode']) ) {
+	$thread_sort_mode = $_REQUEST['thread_sort_mode'];
+} elseif ( !empty($forum_info['threadOrdering']) ) {
+	$thread_sort_mode = $forum_info['threadOrdering'];
+} else {
+	$thread_sort_mode = 'commentDate_asc';
+}
+$smarty->assign_by_ref('thread_sort_mode', $thread_sort_mode);
+
 if (!isset($_REQUEST['topics_find'])) {
 	$_REQUEST['topics_find'] = '';
 }
@@ -96,15 +105,6 @@ if ( $forum_info['is_flat'] == 'y') {
 	if ($thread_info['parentId'] > 0) {
 		$anchored_post = $_REQUEST['threadId'];
 		$root_thread_id = $thread_info['parentId'];
-
-		$thread_sort_mode = $forum_info['threadOrdering'];
-		if (empty($thread_sort_mode)) {
-			if ( !empty($_REQUEST['thread_sort_mode'])) {
-				$thread_sort_mode = $_REQUEST['thread_sort_mode'];
-			} else {
-				$thread_sort_mode = 'commentDate_asc';
-			}
-		}
 		//gets the position/page offset of the requested post within the parent
 		$resPos = $commentslib->get_comment_position($anchored_post,$root_thread_id,$thread_sort_mode,$forum_info['commentsPerPage']);
 		//find the needed comments_offset to set to the right page
@@ -259,8 +259,6 @@ if ($tiki_p_admin_forum != 'y' && $thread_info['locked'] == 'y') {
 
 $smarty->assign_by_ref('thread_info', $thread_info);
 $comments_per_page = $forum_info['commentsPerPage'];
-$thread_sort_mode = $forum_info['threadOrdering'];
-$smarty->assign_by_ref('thread_sort_mode', $thread_sort_mode);
 $thread_style = $forum_info['threadStyle'];
 $comments_vars = array(
 	'forumId'
