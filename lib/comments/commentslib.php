@@ -41,9 +41,8 @@ class Comments extends TikiLib
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
-
-			$mid = " and `reason` like ? or `user` like ?";
-			$bindvars=array($forumId, $findesc, $findesc);
+			$mid = " and (`reason` like ? or `user` like ? or tfr.`threadId` = ?)";
+			$bindvars=array($forumId, $findesc, $findesc, $find);
 		} else {
 			$mid = "";
 			$bindvars=array($forumId);
