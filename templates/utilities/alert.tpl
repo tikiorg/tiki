@@ -29,7 +29,7 @@
 			<h5>
 				{$ajaxtimeoutMsg|escape}
 			</h5>
-		{/if}<br>
+		{/if}
 		{if !empty($ajaxtimer)}
 			<div style="text-align: center">
 				<em>{tr}Redirecting in {/tr}</em>
