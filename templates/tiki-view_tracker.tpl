@@ -276,6 +276,7 @@
 												href="#"
 												{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.view_tracker_actions|escape:"javascript"|escape:"html"}{/if}
 												style="padding:0; margin:0; border:0"
+												onclick="return false;"
 											>
 												{icon name='wrench'}
 											</a>
