@@ -226,15 +226,29 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			// the labels on the select will not necessarily be the title field, so offer the object_selector the correct format string
 			$displayFieldsListArray = $this->getDisplayFieldsListArray();
 			$definition = Tracker_Definition::get($this->getOption('trackerId'));
+			if (! $definition) {
+				$message = tr('ItemLink: Tracker %0 not found for field "%1"', $this->getOption('trackerId'), $this->getConfiguration('permName'));
+				return '<div class="alert alert-danger">' . $message . '</div>';	// display config errors instead of the field
+			}
 			if ($displayFieldsListArray) {
 				array_walk($displayFieldsListArray, function(& $field) use ($definition) {
-					$field = $definition->getField($field);
-					$field = '{tracker_field_' . $field['permName'] . '}';
+					$fieldArray = $definition->getField($field);
+					if (! $fieldArray) {
+						$message = tr('ItemLink: Field %0 not found for field "%1"', $field, $this->getConfiguration('permName'));
+						$field = '<div class="alert alert-danger">' . $message . '</div>';
+					} else {
+						$field = '{tracker_field_' . $fieldArray['permName'] . '}';
+					}
 				});
 				$format = implode(' ', $displayFieldsListArray);
 			} else {
-				$field = $definition->getField($this->getOption('fieldId'));
-				$format = '{tracker_field_' . $field['permName'] . '}';
+				$fieldArray = $definition->getField($this->getOption('fieldId'));
+				if (! $fieldArray) {
+					$message = tr('ItemLink: Field %0 not found for field "%1"', $this->getOption('fieldId'), $this->getConfiguration('permName'));
+					$format = '<div class="alert alert-danger">' . $message . '</div>';
+				} else {
+					$format = '{tracker_field_' . $fieldArray['permName'] . '}';
+				}
 			}
 
 
