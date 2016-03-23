@@ -42,39 +42,43 @@
 		{if $js == 'n'}</li></ul>{/if}
 	</div>
 	{if $tiki_p_list_image_galleries eq 'y'}
-		{button href="tiki-galleries.php" class="btn btn-default" _icon_name='list' _text="{tr}List Galleries{/tr}"}
+		{button href="tiki-galleries.php" class="btn btn-link" _type="text" _icon_name='list' _text="{tr}List Galleries{/tr}"}
 	{/if}
 	{if $system eq 'n'}
 		{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
-			{button href="tiki-galleries.php?edit_mode=1&amp;galleryId=$galleryId" class="btn btn-default" _icon_name='edit' _text="{tr}Edit Gallery{/tr}"}
-			{button href="tiki-browse_gallery.php?galleryId=$galleryId&amp;rebuild=$galleryId" class="btn btn-default" _icon_name='cog' _text="{tr}Rebuild Thumbnails{/tr}"}
+			{button href="tiki-galleries.php?edit_mode=1&amp;galleryId=$galleryId" class="btn btn-link" _type="text" _icon_name='edit' _text="{tr}Edit Gallery{/tr}"}
 		{/if}
 
 		{if $tiki_p_upload_images eq 'y'}
 			{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
-				{button href="tiki-upload_image.php?galleryId=$galleryId" class="btn btn-default" _icon_name='upload' _text="{tr}Upload Image{/tr}"}
+				{button href="tiki-upload_image.php?galleryId=$galleryId" class="btn btn-link" _type="text" _icon_name='upload' _text="{tr}Upload Image{/tr}"}
 			{/if}
 		{/if}
 
 		{if $prefs.feature_gal_batch eq "y" and $tiki_p_batch_upload_image_dir eq 'y'}
 			{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
-				{button href="tiki-batch_upload.php?galleryId=$galleryId" class="btn btn-default" _icon_name='file-archive' _text="{tr}Directory Batch{/tr}"}
+				{button href="tiki-batch_upload.php?galleryId=$galleryId" class="btn btn-link" _type="text" _icon_name='file-archive' _text="{tr}Directory Batch{/tr}"}
 			{/if}
 		{/if}
 
 		{if $tiki_p_assign_perm_image_gallery eq 'y'}
 			{assign var=thisname value=$name|escape:"url"}
-			{permission_link mode=text type="image gallery" permType="image galleries" addclass="btn btn-default" id=$galleryId title=$thisname}
+			{permission_link mode=text type="image gallery" permType="image galleries" addclass="btn btn-link" _type="text" id=$galleryId title=$thisname}
 		{/if}
 	{/if}
 
 	{if $tiki_p_admin_galleries eq 'y'}
-		{button href="tiki-list_gallery.php?galleryId=$galleryId" class="btn btn-default" _icon_name='list' _text="{tr}List Gallery{/tr}"}
-		{button href="tiki-show_all_images.php?id=$galleryId" class="btn btn-default" _icon_name='image' _text="{tr}All Images{/tr}"}
+		{button href="tiki-list_gallery.php?galleryId=$galleryId" class="btn btn-link" _type="text" _icon_name='list' _text="{tr}List Gallery{/tr}"}
+		{button href="tiki-show_all_images.php?id=$galleryId" class="btn btn-link" _type="text" _icon_name='image' _text="{tr}All Images{/tr}"}
 	{/if}
 
 	{if $prefs.feed_image_gallery eq 'y'}
-		{button href="tiki-image_gallery_rss.php?galleryId=$galleryId" class="btn btn-default" _icon_name='rss' _text="{tr}RSS{/tr}"}
+		{button href="tiki-image_gallery_rss.php?galleryId=$galleryId" class="btn btn-link" _type="text" _icon_name='rss' _text="{tr}RSS{/tr}"}
+	{/if}
+	{if $system eq 'n'}
+		{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
+			{button href="tiki-browse_gallery.php?galleryId=$galleryId&amp;rebuild=$galleryId" class="btn btn-default" _icon_name='cog' _text="{tr}Rebuild Thumbnails{/tr}"}
+		{/if}
 	{/if}
 </div>
 
@@ -99,6 +103,7 @@
 	</div>
 {/if}
 
+<div class="margin-bottom-md">
 <span class="sorttitle">{tr}Sort Images by{/tr}</span>
 [ <span class="sortoption"><a class="gallink" href="{$galleryId|sefurl:gallery:with_next}offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></span>
 | <span class="sortoption"><a class="gallink" href="{$galleryId|sefurl:gallery:with_next}offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Date{/tr}</a></span>
@@ -115,17 +120,18 @@
 	{$libeg = ''}
 	{$liend = ''}
 {/if}
+</div>
 
 <div class="thumbnails">
-	<table class="galtable" cellpadding="0" cellspacing="0">
-		<tr>
+	<div class="row">
+
 			{if $num_objects > 0}
 				{foreach from=$subgals key=key item=item}
-					<td align="center" {if (($key / $rowImages) % 2)}class="oddthumb"{else}class="eventhumb"{/if}>
-						&nbsp;&nbsp;<br>
-						<a href="{$item.galleryId|sefurl:gallery}"><img alt="{tr}subgallery{/tr} {$item.name}" class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1"></a>
+					<div class="col-xs-6 col-md-3" {*{if (($key / $rowImages) % 2)}"col-xs-6 col-md-3 oddthumb"{else}"col-xs-6 col-md-3 eventhumb"{/if}*}>
+						<div class="thumbnail text-center">
+						<a href="{$item.galleryId|sefurl:gallery}"><img alt="{tr}subgallery{/tr} {$item.name}" class="" src="show_image.php?id={$item.imageId}&amp;thumb=1"></a>
 						<br>
-						<small class="caption">
+						<div class="caption">
 							{tr}Subgallery:{/tr}
 							{if $showname=='y' || $showfilename=='y'}{$item.name}<br>{/if}
 							{if $showimageid=='y'}{tr}ID:{/tr} {$item.galleryId}<br>{/if}
@@ -142,15 +148,18 @@
 							{if $showuser=='y'}{tr}User:{/tr} {$item.user|userlink}<br>{/if}
 							{if $showxysize=='y' || $showfilesize=='y'}({$item.images} Images){/if}
 							{if $showhits=='y'}[{$item.hits} {if $item.hits == 1}{tr}Hit{/tr}{else}{tr}Hits{/tr}{/if}]<br>{/if}
-						</small>
-					</td>
-					{if $key%$rowImages eq $rowImages2}
-						</tr><tr>
-					{/if}
+						</div>
+
+					</div></div>
+				{*	{if $key%$rowImages eq $rowImages2}
+						<div></div>
+					{/if}*}
+
 				{/foreach}
 				{foreach from=$images key=key item=item}
-					<td align="center" {if ((($key +$num_subgals) / $rowImages) % 2)}class="oddthumb"{else}class="eventhumb"{/if}>
-						&nbsp;&nbsp;<br>
+		<div class="col-xs-6 col-md-3"{* {if ((($key +$num_subgals) / $rowImages) % 2)}oddthumb"{else}eventhumb"{/if}*}>
+			<div class="thumbnail text-center">
+
 						{if $prefs.feature_shadowbox eq 'y'}
 							<a href="show_image.php?id={$item.imageId}&amp;scalesize={$defaultscale}" data-box="lightbox[gallery];type=img" title="{if $item.description neq ''}{$item.description}{elseif $item.name neq ''}{$item.name}{else}{$item.filename}{/if}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if} class="linkmenu tips">
 								<img class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1">
@@ -160,8 +169,8 @@
 								<img class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1">
 							</a>
 						{/if}
-						<br>
-						<small class="caption">
+
+						<div class="caption">
 							{if $prefs.gal_image_mouseover neq 'only'}
 								{if $showname=='y'}{$item.name}<br>{/if}
 								{if $showfilename=='y'}{tr}Filename:{/tr} {$item.filename}<br>{/if}
@@ -226,17 +235,17 @@
 								<ul class="dropdown-menu" role="menu">{$smarty.capture.image_actions}</ul></li></ul>
 							{/if}
 							<br>
-						</small>
-					</td>
+						</div>
+					</div>
+				</div>
 					{if ($key + $num_subgals) % $rowImages eq $rowImages2}
-						</tr><tr>
+						</div><div>
 					{/if}
 				{/foreach}
 			{else}
 				{norecords _colspan=6}
 			{/if}
-		</tr>
-	</table>
+		</div>
 </div>
 
 {pagination_links cant=$cant step=$maxImages offset=$offset}{/pagination_links}
@@ -257,48 +266,26 @@
 	<div id="comment-container"></div>
 {/if}
 
-<div class="table-responsive">
-	<table class="table noslideshow">
-		<tr>
-			<td class="even" colspan="2" style="border:0px; font-size:x-small">
-				{tr}You can view this gallery's configured image (first, random, etc.) in your browser using:{/tr}
-			</td>
-		<tr>
-			<td width="6px" style="border:0px">
-			</td>
-			<td style="border:0px; font-size:x-small">
+<div class="alert alert-info">
+
+				{tr}You can view this gallery's configured image (first, random, etc.) in your browser using:{/tr}<br><br>
+
+
 				<a class="gallink" href="{$base_url}show_image.php?galleryId={$galleryId}">
 					{$base_url}show_image.php?galleryId={$galleryId}
-				</a>
-			</td>
-		</tr>
-		<tr>
-			<td class="even" style="border-bottom:0px; font-size:x-small" colspan="2">
-				{tr}You can include the gallery's image in an HTML page using:{/tr}
-			</td>
-		</tr>
-		<tr>
-			<td style="border:0px" width="6px"></td>
-			<td style="border:0px; font-size:x-small">
-				<code>&lt;img src="{$base_url}show_image.php?galleryId={$galleryId}" /&gt;</code>
-			</td>
-		</tr>
-		<tr>
-			<td class="even" style="border-bottom:0px; font-size:x-small" colspan="2">
-				{tr}You can include the image in a tiki page using:{/tr}
-			</td>
-		<tr>
-			<td width="6px" style="border:0px">
-			</td>
-			<td style="border:0px; font-size:x-small">
-				<code>
+				</a><br><br>
+
+				{tr}You can include the gallery's image in an HTML page using:{/tr}<br><br>
+
+				<code>&lt;img src="{$base_url}show_image.php?galleryId={$galleryId}" /&gt;</code><br><br>
+
+				{tr}You can include the image in a tiki page using:{/tr}<br><br>
+
+
 					{if $resultscale == $defaultscale or !$resultscale}
-						{literal}{{/literal}img src=show_image.php?galleryId={$galleryId} {literal}}{/literal}<br>
+						{literal}<code>{{/literal}img src=show_image.php?galleryId={$galleryId} {literal}}</code>{/literal}<br>
 					{else}
-						{literal}{{/literal}img src={$base_url}show_image.php?galleryId={$galleryId}{literal}}{/literal}<br>
+						{literal}<code>{{/literal}img src={$base_url}show_image.php?galleryId={$galleryId}{literal}}</code>{/literal}
 					{/if}
-				</code>
-			</td>
-		</tr>
-	</table>
+
 </div>
