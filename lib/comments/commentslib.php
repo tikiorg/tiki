@@ -3754,12 +3754,12 @@ class Comments extends TikiLib
 	 */
 	function get_comment_position($comment_id, $parent_id, $sort_mode, $max_per_page, $show_approved='y'){
 
-		$bindvars = array($parent_id, $sort_mode);
+		$bindvars = array($parent_id);
 		$query = "SELECT `threadId` FROM `tiki_comments` tc WHERE (tc.`parentId`=?)";
 		if ($show_approved == "y") {
 			$query .= " AND tc.`approved` = 'y'";
 		}
-		$query .= " ORDER BY ?";
+		$query .= " ORDER BY " . $this->convertSortMode($sort_mode);
 		$results = $this->fetchAll($query, $bindvars);
 
 		$position = 0;
