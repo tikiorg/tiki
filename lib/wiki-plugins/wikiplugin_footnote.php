@@ -25,6 +25,14 @@ function wikiplugin_footnote_info()
 				'default' => '',
 				'filter' => 'int',
 			),
+			'tip' => array(
+				'required' => false,
+				'name' => tra('Show text on mouseover'),
+				'description' => tra('Extra text which is shown on mouse over'),
+				'since' => '16.0',
+				'default' => '',
+				'filter' => 'text',
+			),
 			'class' => array(
 				'required' => false,
 				'name' => tra('Class'),
@@ -42,26 +50,27 @@ function wikiplugin_footnote($data, $params)
 	if (! isset($GLOBALS['footnoteCount'])) {
 		$GLOBALS['footnoteCount'] = 0;
 		$GLOBALS['footnotesData'] = array();
-        $GLOBALS['footnotesClass'] = array();
+		$GLOBALS['footnotesClass'] = array();
 	}
 
 	if (! empty($data)) {
 		$data = trim($data);
 		if (! isset($GLOBALS['footnotesData'][$data])) {
-            $GLOBALS['footnoteCount']++;
+			$GLOBALS['footnoteCount']++;
 			$GLOBALS['footnotesData'][$GLOBALS['footnoteCount']] = $data;
-		    $GLOBALS['footnotesClass'][$GLOBALS['footnoteCount']] = $params["class"];
-        
-        }
+			$GLOBALS['footnotesClass'][$GLOBALS['footnoteCount']] = $params["class"];
+		}
 
 		$number = $GLOBALS['footnoteCount'];
 	} elseif (isset($params['sameas'])) {
 		$number = $params['sameas'];
 	}
-    if (isset($params["class"])){
-    $class= ' class="'.$params["class"].'"';
-    }
-	$html = '~np~' . "<sup class=\"footnote$number\"><a id=\"ref_footnote$number\" href=\"#footnote$number\"$class>$number</a></sup>" . '~/np~';
+	if (isset($params["class"])){
+		$class= ' class="tips '.$params["class"].'"';
+	} else {
+		$class= ' class="tips"';
+	}
+	$html = '~np~' . "<sup class=\"footnote$number\"><a id=\"ref_footnote$number\" href=\"#footnote$number\"$class title=\":" . htmlspecialchars($params["tip"],ENT_QUOTES) . "\" >[$number]</a></sup>" . '~/np~';
 
 	return $html;
 }
