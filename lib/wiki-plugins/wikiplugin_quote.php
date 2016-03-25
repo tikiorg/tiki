@@ -17,6 +17,7 @@ function wikiplugin_quote_info()
 		'introduced' => 1,
 		'filter' => 'text',
 		'tags' => array( 'basic' ),
+		'url' -> 'URL',
 		'params' => array(
 			'replyto' => array(
 				'required' => false,
@@ -38,7 +39,7 @@ function wikiplugin_quote_info()
 	);
 }
 
-function wikiplugin_quote($data, $params)
+function wikiplugin_quote($data, $params, $url='')
 {
 	global $smarty;
 
@@ -54,6 +55,7 @@ function wikiplugin_quote($data, $params)
 	$smarty->assign('comment_info', $comment_info);
 	$smarty->assign('replyto', $replyto);
 	$smarty->assign('data', trim($data));
+	$smarty->assign('url', trim($url));
 
 	return $smarty->fetch("wiki-plugins/wikiplugin_quote.tpl");
 }

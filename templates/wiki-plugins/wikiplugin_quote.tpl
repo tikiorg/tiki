@@ -9,4 +9,9 @@
 	<div class='quotebody'>
 		{$data}
 	</div>
+	{if $url}
+	<p>
+		Source: <a target="_blank" class="wiki external" href="{$url}">{$url}<img src="img/icons/external_link.gif" alt=" " width="15" height="14" title=" " class="icon"></a>
+	</p>
+	{/if}
 </div>
