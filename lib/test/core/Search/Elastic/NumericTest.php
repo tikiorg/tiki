@@ -8,7 +8,7 @@ class Search_Elastic_NumericTest extends Search_Index_NumericTest
 
 		$status = $connection->getStatus();
 		if (! $status->ok) {
-			$this->markTestSkipped('ElasticSearch needs to be available on localhost:9200 for the test to run.');
+			$this->markTestSkipped('Elasticsearch needs to be available on localhost:9200 for the test to run.');
 		}
 
 		$this->index = new Search_Elastic_Index($connection, 'test_index');

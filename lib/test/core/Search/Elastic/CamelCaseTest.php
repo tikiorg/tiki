@@ -15,7 +15,7 @@ class Search_Elastic_CamelCaseTest extends PHPUnit_Framework_TestCase
 
 		$status = $connection->getStatus();
 		if (! $status->ok) {
-			$this->markTestSkipped('ElasticSearch needs to be available on localhost:9200 for the test to run.');
+			$this->markTestSkipped('Elasticsearch needs to be available on localhost:9200 for the test to run.');
 		}
 
 		$this->connection = $connection;

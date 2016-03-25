@@ -13,7 +13,7 @@ class Search_Elastic_ProtocolTest extends PHPUnit_Framework_TestCase
 		$status = $connection->getStatus();
 
 		if (! $status->ok) {
-			$this->markTestSkipped('ElasticSearch needs to be available on localhost:9200 for the test to run.');
+			$this->markTestSkipped('Elasticsearch needs to be available on localhost:9200 for the test to run.');
 		}
 
 		$this->assertEquals(200, $status->status);

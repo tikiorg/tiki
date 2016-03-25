@@ -23,7 +23,7 @@ class Search_Elastic_IncrementalUpdateTest extends Search_Index_IncrementalUpdat
 
 		$status = $connection->getStatus();
 		if (! $status->ok) {
-			$this->markTestSkipped('ElasticSearch needs to be available on localhost:9200 for the test to run.');
+			$this->markTestSkipped('Elasticsearch needs to be available on localhost:9200 for the test to run.');
 		}
 
 		return new Search_Elastic_Index($connection, 'test_index');

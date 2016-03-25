@@ -684,7 +684,7 @@ class UnifiedSearchLib
 				$connection = $this->getElasticConnection(true);
 				$root = $connection->rawApi('');
 				$info[tr('Client Node')] = $root->name;
-				$info[tr('ElasticSearch Version')] = $root->version->number;
+				$info[tr('Elasticsearch Version')] = $root->version->number;
 				$info[tr('Lucene Version')] = $root->version->lucene_version;
 
 				$cluster = $connection->rawApi('/_cluster/health');

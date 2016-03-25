@@ -81,7 +81,7 @@ class Services_Search_ManifoldController
 				];
 			} catch (Search_Elastic_MappingException $e) {
 				if ($e->getType() == 'attachment') {
-					throw new Services_Exception_NotAvailable('Attachment field plugin not installed on ElasticSearch server.');
+					throw new Services_Exception_NotAvailable('Attachment field plugin not installed on Elasticsearch server.');
 				} else {
 					throw $e;
 				}

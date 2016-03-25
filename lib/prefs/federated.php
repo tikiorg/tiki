@@ -13,11 +13,11 @@ function prefs_federated_list()
 			'description' => tr('Search through alternate site indices.'),
 			'type' => 'flag',
 			'default' => 'n',
-			'hint' => tr('ElasticSearch is required'),
+			'hint' => tr('Elasticsearch is required'),
 			'dependencies' => ['feature_search'],
 		],
 		'federated_elastic_url' => array(
-			'name' => tra('ElasticSearch Tribe Node URL'),
+			'name' => tra('Elasticsearch Tribe Node URL'),
 			'description' => tra('URL of the tribe client node accessing multiple clusters.'),
 			'type' => 'text',
 			'filter' => 'url',
