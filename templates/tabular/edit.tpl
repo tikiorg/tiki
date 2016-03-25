@@ -206,7 +206,7 @@
 						</tfoot>
 					</table>
 					<div class="help-block">
-						<p>{tr}Filters will be available in parial export menus.{/tr}</p>
+						<p>{tr}Filters will be available in partial export menus.{/tr}</p>
 					</div>
 				</div>
 			</div>
