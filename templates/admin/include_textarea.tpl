@@ -47,7 +47,7 @@
 				{preference name=feature_wikilingo}
 			</fieldset>
 
-			<fieldset class="table featurelist">
+			<fieldset class="margin-bottom-md featurelist">
 				<legend>{tr}Plugins{/tr}</legend>
 				{preference name=wikiplugin_showreference}
 				{preference name=wikiplugin_addreference}
@@ -149,24 +149,24 @@
 				{/remarksbox}
 			{/if}
 
-			<fieldset class="table">
+			<fieldset class="margin-bottom-lg">
 				<legend>{tr}Plugin preferences{/tr}</legend>
 				{preference name=wikipluginprefs_pending_notification}
 			</fieldset>
 
-			<fieldset class="table">
+			<fieldset class="margin-bottom-lg">
 				<legend>{tr}Edit plugin icons{/tr}</legend>
 				{preference name=wiki_edit_plugin}
 				{preference name=wiki_edit_icons_toggle}
 			</fieldset>
 
-			<fieldset class="table" id="plugins">
+			<fieldset class="margin-bottom-lg" id="plugins">
 				<legend>{tr}Plugins{/tr}</legend>
-				<fieldset class="table donthide">
+				<fieldset class="margin-bottom-lg donthide">
 					{listfilter selectors='#plugins > fieldset' exclude=".donthide"}
 				</fieldset>
 				{foreach from=$plugins key=plugin item=info}
-					<fieldset class="table">
+					<fieldset class="margin-bottom-lg">
 						<legend>
 							{if $info.iconname}{icon name=$info.iconname}{else}{icon name='plugin'}{/if} {$info.name|escape}
 						</legend>
