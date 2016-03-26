@@ -94,6 +94,15 @@
 					</div>
 					<input type="hidden" name="location" id="location" value="{$location|escape}">
 				</div>
+				<div class="form-group">
+					<label class="control-label for="homePage">
+						{tr}Homepage URL:{/tr}
+					</label>
+					<div class="margin-bottom-lg">
+						<input type="text" class="form-control" id="homePage" name="homePage" value="{$user_prefs.homePage|escape}">
+					</div>
+				</div>
+
 				{if $prefs.feature_wiki eq 'y' and $prefs.feature_wiki_userpage eq 'y'}
 					<div class="form-group">
 						<label class="control-label">{tr}Your Personal Wiki Page{/tr}</label>
