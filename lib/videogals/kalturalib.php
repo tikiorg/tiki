@@ -21,17 +21,7 @@ class KalturaLib
 	
 	function __construct($session_type)
 	{
-		global $prefs;
-		$smarty = TikiLib::lib('smarty');
-		if (substr($prefs['kaltura_kServiceUrl'], -1) != '/') {
-			$prefs['kaltura_kServiceUrl'] = $prefs['kaltura_kServiceUrl'] . '/';
-			TikiLib::lib('tiki')->set_preference('kaltura_kServiceUrl', $prefs['kaltura_kServiceUrl']);
-		}
-
-		$smarty->assign('kServiceUrl', $prefs['kaltura_kServiceUrl']);
-		
 		$this->sessionType = $session_type;
-
 	}
 
 	public function getSessionKey()
