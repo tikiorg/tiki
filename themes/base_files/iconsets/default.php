@@ -242,6 +242,9 @@ function iconset_default()
 			'contacts' => array(
 				'id' => 'group',
 			),
+			'content-template' => array(
+				'id' => 'file-o',
+			),
 			//copy in defaults
 			'create' => array(
 				'id' => 'plus',
@@ -586,6 +589,9 @@ function iconset_default()
 			'watch-group' => array(
 				'id' => 'group',
 			),
+			'wiki' => array(
+				'id' => 'file-text-o',
+			),
 			'wizard' => array(
 				'id' => 'magic',
 			),
@@ -593,7 +599,7 @@ function iconset_default()
 				'id' => 'file-word-o',
 			),
 			'wysiwyg' => array(
-				'id' => 'file-text-o',
+				'id' => 'file-text',
 			),
 			'zip' => array(
 				'id' => 'file-zip-o',

@@ -274,13 +274,19 @@
 							{/if}
 							{if $tiki_p_edit_content_templates eq 'y'}
 								<a href="tiki-admin_content_templates.php" class="btn btn-link" onclick="needToConfirm = true;">
-									{icon name="cog"} {tr}Content Templates{/tr}
+									{icon name="content-template"} {tr}Content Templates{/tr}
 								</a>
 							{/if}
 							{if $tiki_p_edit_structures eq 'y'}
 								<a href="tiki-admin_structures.php" class="btn btn-link">
 									{icon name="structure"} {tr}Structures{/tr}
 								</a>
+							{/if}
+							{if $prefs.feature_copyright eq 'y' and $prefs.wiki_feature_copyrights eq 'y'}
+								{if !empty($copyrights)}
+									<a href="copyrights.php?page={$page|escape}" class="btn btn-link">{icon name="copyright"} {tr}Copyright notices{/tr}</a>
+								{/if}
+								<a href="{$prefs.wikiLicensePage|sefurl}" class="btn btn-link">{icon name="wiki"} {tr}Copyright page{/tr}</a>
 							{/if}
 						</div>
 						{if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
@@ -434,17 +440,14 @@
 									</div>
 								</div>
 							{/if}
-							{if $prefs.wiki_feature_copyrights eq 'y'}
-								<div class="form-group">
+							{if $prefs.feature_copyright eq 'y' and $prefs.wiki_feature_copyrights eq 'y'}
+								<div class="form-group clearfix">
 									<label for="" class="col-md-4 control-label">{tr}Copyright{/tr}</label>
 									<div class="col-md-8">
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="copyrightTitle">{tr}Title{/tr}</label>
 											<div class="col-md-8">
 												<input class="form-control wikiedit" type="text" id="copyrightTitle" name="copyrightTitle" value="{$copyrightTitle|escape}">
-												{if !empty($copyrights)}
-													<td rowspan="3"><a href="copyrights.php?page={$page|escape}">{tr}To edit the copyright notices{/tr}</a></td>
-												{/if}
 											</div>
 										</div>
 										<div class="form-group">
@@ -465,17 +468,13 @@
 												<input class="form-control wikiedit" id="copyrightHolder" name="copyrightHolder" type="text" value="{$copyrightHolder|escape}">
 											</div>
 										</div>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-md-4 control-label">{tr}License{/tr}</label>
-									<div class="col-md-8">
-										<a href="{$prefs.wikiLicensePage|sefurl}">{tr}{$prefs.wikiLicensePage}{/tr}</a>
-										{if $prefs.wikiSubmitNotice neq ""}
-											{remarksbox type="note" title="{tr}Important:{/tr}"}
-												<strong>{tr}{$prefs.wikiSubmitNotice}{/tr}</strong>
-											{/remarksbox}
-										{/if}
+										<div class="form-group">
+											{if $prefs.wikiSubmitNotice neq ""}
+												{remarksbox type="note" title="{tr}Important:{/tr}"}
+													{tr}{$prefs.wikiSubmitNotice}{/tr}
+												{/remarksbox}
+											{/if}
+										</div>
 									</div>
 								</div>
 							{/if}
@@ -505,7 +504,7 @@
 									<label for="" class="col-md-4 control-label">{tr}Description{/tr}</label>
 								{/if}
 								<div class="col-md-8">
-									<input style="width:98%;" type="text" id="description" name="description" value="{$description|escape}">
+									<input class="form-control" type="text" id="description" name="description" value="{$description|escape}">
 								</div>
 							</div>
 						{/if}

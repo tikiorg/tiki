@@ -15,6 +15,13 @@ if ($prefs['feature_kaltura'] === 'y') {
 	$kalturaadminlib = TikiLib::lib('kalturaadmin');
 
 	if ($kalturaadminlib->getSessionKey()) {
+
+		// make sure service url ends in a slash
+		if (substr($prefs['kaltura_kServiceUrl'], -1) != '/') {
+			$prefs['kaltura_kServiceUrl'] = $prefs['kaltura_kServiceUrl'] . '/';
+			TikiLib::lib('tiki')->set_preference('kaltura_kServiceUrl', $prefs['kaltura_kServiceUrl']);
+		}
+
 		// contribution wizard
 		$kcwDefault = $prefs['kaltura_kcwUIConf'];
 		if (empty($kcwDefault) || !empty($_REQUEST['kcw_rebuild'])) {
