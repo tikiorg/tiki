@@ -111,6 +111,12 @@ class Tracker_field_Image extends Tracker_Field_File
 				die;
 			}
 		}
+
+		// "Blank" means remove image
+		if (!empty($requestData[$ins_id]) && $requestData[$ins_id] == 'blank') {
+			return array( 'value' => 'blank' );
+		}
+
 		if (!empty($requestData)) {
 			return parent::getFieldData($requestData);
 		} else {
