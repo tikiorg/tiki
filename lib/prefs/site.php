@@ -131,6 +131,7 @@ function prefs_site_list()
 			'name' => tr('Site layout'),
 			'description' => tr('Changes the template for the overall site layout'),
 			'type' => 'list',
+			'help' => 'https://themes.tiki.org/Layout+Templates',
 			'default' => 'basic',
 			'help' => 'Site Layout',
 			'tags' => array('advanced'),
