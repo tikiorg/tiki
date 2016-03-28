@@ -48,15 +48,20 @@ class MailQueueSendCommand extends Command
             }
 
             if ($title == 'mail error' || $prefs['log_mail'] == 'y') {
-            	foreach ($mail->getRecipients() as $u) {
-            		$logslib->add_log($title, $u . '/' . $mail->getSubject());
-            	}
+                foreach($mail->getTo() as $destination){
+                    $logslib->add_log($title, $destination->getEmail() . '/' . $mail->getSubject());
+                }
+                foreach($mail->getCc() as $destination){
+                    $logslib->add_log($title, $destination->getEmail() . '/' . $mail->getSubject());
+                }
+                foreach($mail->getBcc() as $destination){
+                    $logslib->add_log($title, $destination->getEmail() . '/' . $mail->getSubject());
+                }
             }
 
             if ($title == 'mail error') {
             	$query = 'UPDATE tiki_mail_queue SET attempts = attempts + 1 WHERE messageId = ?';
             	$output->writeln('Failed.');
-            	print_r($mailer->errors);
             } else {
             	$query = 'DELETE FROM tiki_mail_queue WHERE messageId = ?';
             	$output->writeln('Sent.');
