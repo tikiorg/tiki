@@ -1,9 +1,9 @@
 /*!
  * elFinder - file manager for web
- * Version 2.x github.com/jonnybradley/elFinder (2015-01-26)
+ * Version 2.1.x github.com/jonnybradley/elFinder (2016-03-13)
  * http://elfinder.org
  * 
- * Copyright 2009-2015, Studio 42
+ * Copyright 2009-2016, Studio 42
  * Licensed under a 3 clauses BSD license
  */
 
@@ -184,10 +184,10 @@ div.elfinder-cwd-wrapper-list tr.ui-state-default td {
 }
 div.elfinder-cwd-wrapper-list tr.ui-state-default td span.ui-icon {
 	position: absolute;
-	top: -5px;
+	top: 0.4em;
 	left: 0;
 	right: 0;
-	margin: auto;
+	margin: auto 0px auto auto;
 }
 
 
@@ -297,6 +297,7 @@ div.elfinder-cwd-wrapper-list tr.ui-state-default td span.ui-icon {
 }
 
 /* dir/file permissions and symlink markers */
+.elfinder-lock,
 .elfinder-perms,
 .elfinder-symlink {
 	position:absolute;
@@ -318,12 +319,22 @@ div.elfinder-cwd-wrapper-list tr.ui-state-default td span.ui-icon {
 /* write only */
 .elfinder-wo .elfinder-perms { background-position:0 -80px;}
 
+/* locked */
+.elfinder-lock {
+	background-position:0 -656px;
+}
+
 /* drag helper */
 .elfinder-drag-helper {
 	width:60px;
 	height:50px;
 	padding:0 0 0 25px;
 	z-index:100000;
+}
+.elfinder-drag-helper.html5-native {
+	position: absolute;
+	top: -1000px;
+	left: -1000px;
 }
 
 /* drag helper "plus" icon */
@@ -371,9 +382,10 @@ div.elfinder-cwd-wrapper-list tr.ui-state-default td span.ui-icon {
 	padding:7px 12px;
 }
 
-
-
-
+/* for html5 drag and drop */
+[draggable=true] {
+	-khtml-user-drag: element;
+}
 
 
 /* File: /css/contextmenu.css */
@@ -411,6 +423,9 @@ div.elfinder-cwd-wrapper-list tr.ui-state-default td span.ui-icon {
 	top:50%;
 	margin-top:-8px;
 	display:none;
+}
+.elfinder-contextmenu-item.elfinder-touch {
+	padding:12px 30px;
 }
 
 /* text in item */
@@ -484,12 +499,17 @@ div.elfinder-cwd-wrapper-list tr.ui-state-default td span.ui-icon {
 	-webkit-user-select: none;
 	user-select: none;
 	-webkit-tap-highlight-color:rgba(0,0,0,0);
+	-webkit-touch-callout:none;
+	user-select:          none;
+	-webkit-user-select:  none;
+	-moz-user-select:     none;
+	-khtml-user-select:   none;
 }
 
 /* container active on dropenter */
 .elfinder .elfinder-cwd-wrapper.elfinder-droppable-active {
-	padding:0;
-	border:2px solid #8cafed;
+	outline: 2px solid #8cafed;
+	outline-offset: -2px;
 }
 
 
@@ -525,7 +545,9 @@ div.elfinder-cwd-wrapper-list tr.ui-state-default td span.ui-icon {
 /* file name place */
 .elfinder-cwd-view-icons .elfinder-cwd-filename {
 	text-align:center;
-	white-space:pre;
+	max-height:32px;
+	white-space:pre-wrap;
+	word-break:normal;
 	overflow:hidden;
 	text-overflow:ellipsis;
     -o-text-overflow:ellipsis;
@@ -538,6 +560,7 @@ div.elfinder-cwd-wrapper-list tr.ui-state-default td span.ui-icon {
 
 /* permissions/symlink markers */
 .elfinder-cwd-view-icons .elfinder-perms { bottom:4px; right:2px; }
+.elfinder-cwd-view-icons .elfinder-lock { top:-3px; right:-2px; }
 .elfinder-cwd-view-icons .elfinder-symlink { bottom:6px; left:0px; }
 
 /* icon/thumbnail */
@@ -630,6 +653,7 @@ div.elfinder-cwd-wrapper-list tr.ui-state-default td span.ui-icon {
 .elfinder-cwd-icon-xml               { background-position: 0 -1000px; }
 .elfinder-cwd-icon-zip, 
 .elfinder-cwd-icon-x-zip, 
+.elfinder-cwd-icon-x-xz, 
 .elfinder-cwd-icon-x-7z-compressed   { background-position: 0 -1050px; }
 .elfinder-cwd-icon-x-gzip,  
 .elfinder-cwd-icon-x-tar             { background-position: 0 -1100px; }
@@ -643,6 +667,15 @@ div.elfinder-cwd-wrapper-list tr.ui-state-default td span.ui-icon {
 /* textfield inside icon */
 .elfinder-cwd input { width:100%; border:0px solid; margin:0; padding:0; }
 .elfinder-cwd-view-icons input {text-align:center; }
+.elfinder-cwd-view-icons textarea {
+	width: 100%;
+	border: 0px solid;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	overflow: hidden;
+	resize: none;
+}
 
 .elfinder-cwd-view-icons { text-align:center; }
 
@@ -657,8 +690,24 @@ div.elfinder-cwd-wrapper-list tr.ui-state-default td span.ui-icon {
 	border: 0 solid;
 	margin: 0 0 10px 0;
 	border-spacing: 0;
+	box-sizing: padding-box;
+	padding: 2px;
 }
 .elfinder .elfinder-cwd table thead tr { border-left:0 solid; border-top:0 solid; border-right:0 solid; }
+
+.elfinder .elfinder-cwd table thead td {
+	padding: 4px 14px;
+}
+.elfinder .elfinder-cwd table thead td.ui-state-active {
+	background: #ebf1f6;
+	background: -moz-linear-gradient(top,  #ebf1f6 0%, #abd3ee 50%, #89c3eb 51%, #d5ebfb 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ebf1f6), color-stop(50%,#abd3ee), color-stop(51%,#89c3eb), color-stop(100%,#d5ebfb));
+	background: -webkit-linear-gradient(top,  #ebf1f6 0%,#abd3ee 50%,#89c3eb 51%,#d5ebfb 100%);
+	background: -o-linear-gradient(top,  #ebf1f6 0%,#abd3ee 50%,#89c3eb 51%,#d5ebfb 100%);
+	background: -ms-linear-gradient(top,  #ebf1f6 0%,#abd3ee 50%,#89c3eb 51%,#d5ebfb 100%);
+	background: linear-gradient(to bottom,  #ebf1f6 0%,#abd3ee 50%,#89c3eb 51%,#d5ebfb 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebf1f6', endColorstr='#d5ebfb',GradientType=0 );
+}
 
 .elfinder .elfinder-cwd table td { 
 	padding:4px 12px;
@@ -667,7 +716,18 @@ div.elfinder-cwd-wrapper-list tr.ui-state-default td span.ui-icon {
 	text-align:right;
 	cursor:default;
 	border:0 solid;
-	
+}
+
+.elfinder .elfinder-cwd table td div { 
+	box-sizing: content-box;
+}
+
+.elfinder .elfinder-cwd tr.elfinder-touch td {
+	padding: 10px 12px;
+}
+
+.elfinder .elfinder-cwd tr.elfinder-cwd-file.elfinder-touch td {
+	padding: 13px 12px;
 }
 
 .elfinder-ltr .elfinder-cwd table td { text-align:right; }
@@ -685,9 +745,11 @@ div.elfinder-cwd-wrapper-list tr.ui-state-default td span.ui-icon {
 
 /* premissions/symlink marker */
 .elfinder-cwd-view-list .elfinder-perms, 
+.elfinder-cwd-view-list .elfinder-lock,
 .elfinder-cwd-view-list .elfinder-symlink { top:50%; margin-top:-6px; }
 /* markers in ltr/rtl enviroment */
 .elfinder-ltr .elfinder-cwd-view-list .elfinder-perms   { left:7px;  }
+.elfinder-ltr .elfinder-cwd-view-list .elfinder-lock    { left:9px; top:0px; }
 .elfinder-ltr .elfinder-cwd-view-list .elfinder-symlink { left:-7px; }
 
 /* file icon */
@@ -758,6 +820,7 @@ div.elfinder-cwd-wrapper-list tr.ui-state-default td span.ui-icon {
 
 .std42-dialog .ui-dialog-buttonpane button { margin:0 0 0 .4em;	padding:0; outline:0px solid; }
 .std42-dialog .ui-dialog-buttonpane button span { padding:2px 9px; }
+.std42-dialog .ui-dialog-buttonpane button span.ui-icon { padding: 2px; }
 
 .elfinder-dialog .ui-resizable-e, 
 .elfinder-dialog .ui-resizable-s { width:0; height:0;}
@@ -781,11 +844,11 @@ div.elfinder-cwd-wrapper-list tr.ui-state-default td span.ui-icon {
 
 /*********************** ERROR DIALOG **************************/
 
-.ui-dialog.elfinder-dialog-error .ui-dialog-content,
-.ui-dialog.elfinder-dialog-confirm .ui-dialog-content { padding-left: 56px; min-height:35px; }
+.elfinder-dialog-error .ui-dialog-content,
+.elfinder-dialog-confirm .ui-dialog-content { padding-left: 56px; min-height:35px; }
 
-.elfinder-rtl .ui-dialog.elfinder-dialog-error .ui-dialog-content,
-.elfinder-rtl .ui-dialog.elfinder-dialog-confirm .ui-dialog-content { padding-left:0; padding-right: 56px; }
+.elfinder-rtl .elfinder-dialog-error .ui-dialog-content,
+.elfinder-rtl .elfinder-dialog-confirm .ui-dialog-content { padding-left:0; padding-right: 56px; }
 
 /*********************** NOTIFY DIALOG **************************/
 
@@ -839,6 +902,7 @@ div.elfinder-cwd-wrapper-list tr.ui-state-default td span.ui-icon {
 .elfinder-dialog-icon-prepare,
 .elfinder-dialog-icon-move        { background-position: 0 -128px;}
 .elfinder-dialog-icon-upload      { background-position: 0 -160px; }
+.elfinder-dialog-icon-chunkmerge  { background-position: 0 -160px; }
 .elfinder-dialog-icon-rm          { background-position: 0 -192px; }
 .elfinder-dialog-icon-download    { background-position: 0 -260px; }
 .elfinder-dialog-icon-save        { background-position: 0 -295px; }
@@ -850,6 +914,7 @@ div.elfinder-cwd-wrapper-list tr.ui-state-default td span.ui-icon {
 .elfinder-dialog-icon-loadimg,
 .elfinder-dialog-icon-netmount,
 .elfinder-dialog-icon-netunmount,
+.elfinder-dialog-icon-chmod,
 .elfinder-dialog-icon-dim         { background-position: 0 -434px; }
 
 /*********************** CONFIRM DIALOG **************************/
@@ -901,6 +966,8 @@ div.elfinder-cwd-wrapper-list tr.ui-state-default td span.ui-icon {
 	text-align:center;
 	padding:2em 0;
 	border:3px dashed #aaa;
+	height: 1em;
+	overflow: hidden;
 }
 
 .elfinder-upload-dropbox.ui-state-hover {
@@ -1001,6 +1068,11 @@ div.elfinder-cwd-wrapper-list tr.ui-state-default td span.ui-icon {
 	user-select: none;
 	-webkit-tap-highlight-color:rgba(0,0,0,0);
 /*	border:1px solid #111;*/
+	-webkit-touch-callout:none;
+	user-select:          none;
+	-webkit-user-select:  none;
+	-moz-user-select:     none;
+	-khtml-user-select:   none;
 }
 
 
@@ -1028,7 +1100,9 @@ div.elfinder-cwd-wrapper-list tr.ui-state-default td span.ui-icon {
 	outline:0px solid;
 	border:1px solid transparent;
 	cursor:default;
-	
+}
+.elfinder-navbar-dir.elfinder-touch {
+	padding: 12px 12px;
 }
 
 /* ltr/rtl enviroment */
@@ -1078,7 +1152,13 @@ div.elfinder-cwd-wrapper-list tr.ui-state-default td span.ui-icon {
 
 /* root folder */
 .elfinder-tree   .elfinder-navbar-root .elfinder-navbar-icon { background-position:0 0; }
-.elfinder-places .elfinder-navbar-root .elfinder-navbar-icon { background-position:0 -48px; }
+.elfinder-places .elfinder-navbar-root .elfinder-navbar-icon { background-position:0 -704px; }
+
+/* root icon of each volume */
+.elfinder-tree .elfinder-navbar-root-local   .elfinder-navbar-icon { background-image:url("../img/volume_icon_local.png"); }
+.elfinder-tree .elfinder-navbar-root-ftp     .elfinder-navbar-icon { background-image:url("../img/volume_icon_ftp.png"); }
+.elfinder-tree .elfinder-navbar-root-sql     .elfinder-navbar-icon { background-image:url("../img/volume_icon_sql.png"); }
+.elfinder-tree .elfinder-navbar-root-dropbox .elfinder-navbar-icon { background-image:url("../img/volume_icon_dropbox.png"); }
 
 /* icon in active/hove/dropactive state */
 .ui-state-active           .elfinder-navbar-icon, 
@@ -1110,14 +1190,22 @@ div.elfinder-cwd-wrapper-list tr.ui-state-default td span.ui-icon {
 /* permissions marker */
 .elfinder-navbar .elfinder-perms { top:50%; margin-top:-8px; }
 
+/* locked marker */
+.elfinder-navbar .elfinder-lock { top:-2px; }
+
 /* permissions/symlink markers ltr/rtl enviroment */
 .elfinder-ltr .elfinder-navbar .elfinder-perms   { left:  18px; }
 .elfinder-rtl .elfinder-navbar .elfinder-perms   { right: 18px; }
+.elfinder-ltr .elfinder-navbar .elfinder-lock    { left:  18px; }
+.elfinder-rtl .elfinder-navbar .elfinder-lock    { right: 18px; }
 .elfinder-ltr .elfinder-navbar .elfinder-symlink { left:  8px; }
 .elfinder-rtl .elfinder-navbar .elfinder-symlink { right: 8px; }
 
+/* navbar input */
+.elfinder-navbar input { width:100%; border:0px solid; margin:0; padding:0; }
+
 /* resizable */
-.elfinder-navbar .ui-resizable-handle { width:12px; background:transparent url('../img/resize.png') center center no-repeat; left:0; }
+.elfinder-navbar .ui-resizable-handle { width:12px; background:transparent url('../img/resize.png') center center no-repeat; }
 .elfinder-nav-handle-icon {
 	position:absolute;
 	top:50%;
@@ -1425,6 +1513,12 @@ embed.elfinder-quicklook-preview-audio {
 	border-right:0 solid transparent;
 	border-bottom:0 solid transparent;
 	border-left:0 solid transparent;
+	
+	-webkit-touch-callout:none;
+	user-select:          none;
+	-webkit-user-select:  none;
+	-moz-user-select:     none;
+	-khtml-user-select:   none;
 }
 
 .elfinder-statusbar a { text-decoration:none; }
@@ -1566,6 +1660,10 @@ embed.elfinder-quicklook-preview-audio {
 .elfinder-button-icon-sort      { background-position: 0 -577px; }
 .elfinder-button-icon-rotate-r  { background-position: 0 -625px; }
 .elfinder-button-icon-rotate-l  { background-position: 0 -641px; }
+.elfinder-button-icon-netmount  { background-position: 0 -688px; }
+.elfinder-button-icon-netunmount { background-position: 0 -96px; }
+.elfinder-button-icon-places    { background-position: 0 -704px; }
+.elfinder-button-icon-chmod     { background-position: 0  -48px; }
 
 /* button with dropdown menu*/
 .elfinder .elfinder-menubutton { overflow:visible; }
@@ -1628,6 +1726,23 @@ embed.elfinder-quicklook-preview-audio {
 	min-height: 30px;
 	float:right;
 	width:202px;
+	overflow: visible;
+}
+
+.elfinder .elfinder-button-search .elfinder-button-menu {
+	font-size: 8pt;
+	text-align: center;
+	width: 100%;
+}
+
+.elfinder .elfinder-button-search .elfinder-button-menu div {
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 5px;
+}
+
+.elfinder .elfinder-button-search .elfinder-button-menu div .ui-state-hover {
+	border: 1px solid;
 }
 
 /* ltr/rte enviroment */
