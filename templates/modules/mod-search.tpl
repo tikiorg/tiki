@@ -3,19 +3,19 @@
 	{if $tiki_p_search eq 'y'}
 		{tikimodule error=$module_error title=$smod_params.title name="search" flip=$smod_params.flip decorations=$smod_params.decorations nobox=$smod_params.nobox notitle=$smod_params.notitle}
 			{if $smod_params.tiki_search neq 'none'}
-				<form class="form" id="search-module-form{$search_mod_usage_counter}" method="get" action="{$smod_params.search_action}"{if $smod_params.use_autocomplete eq 'y'} onsubmit="return submitSearch{$search_mod_usage_counter}()"{/if}>
-					<div style="position: relative">
+				<form class="form-inline" id="search-module-form{$search_mod_usage_counter}" method="get" action="{$smod_params.search_action}"{if $smod_params.use_autocomplete eq 'y'} onsubmit="return submitSearch{$search_mod_usage_counter}()"{/if}>
+<div style="position: relative;">
 						<div class="form-group{if $smod_params.compact eq "y"} col-sm-9{/if}">
-							<input class="form-control" id="search_mod_input_{$search_mod_usage_counter}" name="{if $smod_params.search_action eq 'tiki-searchindex.php'}filter~content{else}find{/if}" {if !empty($smod_params.input_size)}size="{$smod_params.input_size}" style="width: auto"{/if} type="text" accesskey="s" value="{$smod_params.input_value|escape}" />
+							<input class="form-control" id="search_mod_input_{$search_mod_usage_counter}" name="{if $smod_params.search_action eq 'tiki-searchindex.php'}filter~content{else}find{/if}" {if !empty($smod_params.input_size)}size="{$smod_params.input_size}" style="width: auto"{/if} type="text" accesskey="s" value="{$smod_params.input_value|escape}" />&nbsp;
 						</div>
 						{if $smod_params.show_object_filter eq 'y'}
 							<div class="form-group clearfix">
-								<div class="col-md-2 control-label">
-									{tr}in:{/tr}
-								</div>
-								<div class="col-md-10">
+								<label for="filterType">
+									{tr}in{/tr}&nbsp;
+								</label>
+
 									{if $smod_params.search_action eq 'tiki-searchindex.php'}
-										<select name="filter~type" class="form-control" {*style="width:{$smod_params.select_size}em;"*}>
+										<select id="filterType" name="filter~type" class="form-control" {*style="width:{$smod_params.select_size}em;"*}>
 											<option value="">{tr}Entire Site{/tr}</option>
 											{if $prefs.feature_wiki eq 'y'}<option value="wiki page"{if $smod_params.where eq "wiki page"} selected="selected"{/if}>{tr}Wiki Pages{/tr}</option>{/if}
 											{if $prefs.feature_blogs eq 'y'}<option value="blog post"{if $smod_params.where eq "blog post"} selected="selected"{/if}>{tr}Blog Posts{/tr}</option>{/if}
@@ -45,7 +45,7 @@
 											{if $prefs.feature_trackers eq 'y'}<option value="trackers"{if $smod_params.where eq "trackers"} selected="selected"{/if}>{tr}Trackers{/tr}</option>{/if}
 										</select>
 									{/if}
-								</div>
+
 							</div>
 						{elseif !empty($prefs.search_default_where)}
 							{if is_array($prefs.search_default_where)}
@@ -59,21 +59,26 @@
 
 						{if $smod_params.tiki_search neq 'y'}
 							{if $smod_params.advanced_search_option eq 'y'}
-								<label for="boolean">{tr}Advanced:{/tr}<input type="checkbox" name="boolean" id="boolean"{if $smod_params.advanced_search eq "y"} checked="checked"{/if} /></label>
+								<div class="checkbox">
+									<label for="boolean"><input type="checkbox" name="boolean" id="boolean"{if $smod_params.advanced_search eq "y"} checked="checked"{/if} />{tr}Advanced{/tr}
+										{if $smod_params.advanced_search_help eq 'y'}
+											<a href="{bootstrap_modal controller=search action=help}">{icon name='help'} {tr}Search Help{/tr}</a>
+										{/if}
+
+									</label>
+								</div>
 							{else}
 								{if $smod_params.advanced_search eq "y"}<input type="hidden" name="boolean" value="on" />{/if}
 							{/if}
 							<input type="hidden" name="boolean_last" value="{$smod_params.advanced_search}" />
-							{if $smod_params.advanced_search_help eq 'y'}
-								<a href="{bootstrap_modal controller=search action=help}">{tr}Search Help{/tr} {icon name='help'}</a>
-							{/if}
+
 						{/if}
 						{if $smod_params.compact eq "y"}
-							<div class="col-sm-3" style="padding: 0 3px;">
+
 								<button type="submit" class="btn btn-default search_mod_magnifier">
 									{icon name="search"}
 								</button>
-							</div>
+
 							<div class="btn-group search_mod_buttons box" style="display:none;position:absolute;right:0;top:2.5em;z-index:2;white-space:nowrap;">
 						{else}
 							<div class="btn-group">
@@ -129,7 +134,7 @@ $("#search_mod_input_{{$search_mod_usage_counter}}")
 );
 							{/jq}
 						{/if}
-					</div>
+							</div>
 				</form>
 				{jq notonready=true}
 					function submitSearch{{$search_mod_usage_counter}}() {
