@@ -46,6 +46,27 @@ class Services_User_MonitorController
 		);
 	}
 
+	function action_set_component_last_view($input) {
+		global $user;
+
+		if(!$user) return;
+
+		$tikiLib = TikiLib::lib('tiki');
+		
+		$component = $input->component->text();
+		$id = $input->id->int();
+
+		$prefName = "last_viewed_";
+
+		if(!empty($id)) {
+			$prefName .= $component."_".$id;
+		} else {
+			$prefName .= $component;
+		}
+
+		$tikiLib->set_user_preference($user, $prefName, time());
+	}
+	
 	function action_stream($input)
 	{
 		$loginlib = TikiLib::lib('login');
