@@ -501,9 +501,7 @@ class Services_Forum_Controller
 			if (!empty($info['title'])){
 				$ret[(int) $id] = $info['title'];
 			} else {
-				//if no title, show a snippet of the post.
-				include_once("lib/smarty_tiki/modifier.truncate.php");
-				$ret[(int) $id] = smarty_modifier_truncate($info['parsed']);
+				$ret[(int) $id] = $tikilib->get_snippet($info['data'], "", false, "", 60);
 			}
 		}
 		return $ret;
