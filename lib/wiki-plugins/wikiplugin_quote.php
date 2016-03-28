@@ -17,7 +17,7 @@ function wikiplugin_quote_info()
 		'introduced' => 1,
 		'filter' => 'text',
 		'tags' => array( 'basic' ),
-		'url' -> 'URL',
+		'url' => 'URL',
 		'params' => array(
 			'replyto' => array(
 				'required' => false,
