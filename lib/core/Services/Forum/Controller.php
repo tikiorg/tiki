@@ -498,7 +498,11 @@ class Services_Forum_Controller
 	{
 		foreach ($topicIds as $id) {
 			$info = $this->lib->get_comment($id);
-			$ret[(int) $id] = $info['title'];
+			if (!empty($info['title'])){
+				$ret[(int) $id] = $info['title'];
+			} else {
+				$ret[(int) $id] = $tikilib->get_snippet($info['data'], "", false, "", 60);
+			}
 		}
 		return $ret;
 	}
