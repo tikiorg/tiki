@@ -498,7 +498,13 @@ class Services_Forum_Controller
 	{
 		foreach ($topicIds as $id) {
 			$info = $this->lib->get_comment($id);
-			$ret[(int) $id] = $info['title'];
+			if (!empty($info['title'])){
+				$ret[(int) $id] = $info['title'];
+			} else {
+				//if no title, show a snippet of the post.
+				include_once("lib/smarty_tiki/modifier.truncate.php");
+				$ret[(int) $id] = smarty_modifier_truncate($info['parsed']);
+			}
 		}
 		return $ret;
 	}
