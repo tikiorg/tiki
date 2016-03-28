@@ -170,7 +170,9 @@ class Table_Code_MainOptions extends Table_Code_Manager
 		}
 
 		//Sort list
-		if (parent::$sorts && parent::$sortcol) {
+		if (!empty(parent::$s['sorts']['sortlist'])) {
+			$mo[] = 'sortList : [[' . parent::$s['sorts']['sortlist']['col'] . ',' . parent::$s['sorts']['sortlist']['dir']. ']]';
+		} elseif (parent::$sorts && parent::$sortcol) {
 			$sl = '';
 			$i = 0;
 			foreach (parent::$s['columns'] as $col => $info) {

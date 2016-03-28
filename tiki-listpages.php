@@ -481,6 +481,47 @@ if (!empty($multiprint_pages)) {
 		} else {
 			$ts_langs = array();
 		}
+		//workaround to set initial sort order until this can be done in tablesorter using sortList with selectors
+		$cols = [
+			//pref => sort_mode
+			'id' => 'page_id',
+			'name' => 'pageName',
+			'hits' => 'hits',
+			'lastmodif' => 'lastModif',
+			'comment' => 'comment',
+			'creator' => 'creator',
+			'user' => 'user',
+			'lastver' => 'version',
+			'status' => 'flag',
+			'versions' => 'version',
+			'links' => 'links',
+			'backlinks' => 'backlinks',
+			'size' => 'page_size',
+		];
+		///replicate column filtering from tiki-listpages_content.tpl for the relevant columns
+		foreach($cols as $pref => $fieldname) {
+			$prefstr = 'wiki_list_' . $pref;
+			if ($prefs[$prefstr] !== 'y') {
+				unset($cols[$pref]);
+			}
+		}
+		$cols = array_values($cols);
+		///add checkbox column
+		$remperm = Perms::get()->remove;
+		if ($remperm || $prefs['feature_wiki_multiprint'] === 'y') {
+			array_unshift($cols, 'checkbox');
+		}
+		if (strpos($sort_mode, '_desc') !== false) {
+			$pos = strlen($sort_mode) - 5;
+			$sortdir = 1;
+		} elseif(strpos($sort_mode, '_asc') !== false) {
+			$pos = strlen($sort_mode) - 4;
+			$sortdir = 0;
+		}
+		///set sort column
+		$sort = substr($sort_mode, 0, $pos);
+		$sortcol = array_search($sort, $cols);
+
 		$settings = array(
 			'id' => $ts_tableid,
 			'total' 	=> $listpages['cant'],
@@ -505,6 +546,11 @@ if (!empty($multiprint_pages)) {
 				),
 			),
 		);
+
+		if ($sortcol !== false) {
+			$settings['sorts']['sortlist']['col'] = $sortcol;
+			$settings['sorts']['sortlist']['dir'] = $sortdir;
+		}
 		Table_Factory::build('TikiListpages', $settings);
 	}
 
