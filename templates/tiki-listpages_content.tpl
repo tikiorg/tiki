@@ -142,7 +142,7 @@
 				{if $prefs.wiki_list_size eq 'y'}
 					{assign var='cntcol' value=$cntcol+1}
 					<th id="size">
-						{self_link _sort_arg='sort_mode' _sort_field='size' _title="{tr}Page size{/tr}"}{tr}Size{/tr}{/self_link}
+						{self_link _sort_arg='sort_mode' _sort_field='page_size' _title="{tr}Page size{/tr}"}{tr}Size{/tr}{/self_link}
 					</th>
 				{/if}
 
