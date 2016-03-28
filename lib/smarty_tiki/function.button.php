@@ -111,7 +111,7 @@ function smarty_function_button($params, $smarty)
 	if (!$disabled) {
 		$flip_id = '';
 		if ( ! empty($params['_flip_id']) ) {
-			$params['_onclick'] = "javascript:flip('"
+			$params['_onclick'] = "flip('"
 				. $params['_flip_id']
 				. "');flip('"
 				. $params['_flip_id']
