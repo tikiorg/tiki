@@ -30,7 +30,7 @@ function prefs_file_list()
 			'name' => tra('Use jQuery Upload'),
             'description' => tra('Use the improved Tiki 15+ upload page'),
 			'type' => 'flag',
-			'default' => 'n',
+			'default' => 'y',
 			'tags' => array('experimental'),
 			'dependencies' => array(
 				'feature_file_galleries',
