@@ -26,16 +26,16 @@
   background: #d9edf7;
 }
 a.fc-event:hover {
-  color: #ffffff;
+  color: #fff;
 }
 .filter .fancyfilter {
-  border: thin solid #cccccc /*black*/;
+  border: thin solid #ccc /*black*/;
 }
 .filter .fancyfilter .token {
-  background: #ffffff;
+  background: #fff;
 }
 .note-list .postbody-title {
-  background: #ffffff;
+  background: #fff;
   color: #333333;
 }
 .post-approved-n {
@@ -67,7 +67,7 @@ a.fc-event:hover {
 }
 .cssmenu_horiz ul li a,
 .cssmenu_vert ul li a {
-  background: #ffffff;
+  background: #fff;
   color: #333333;
 }
 .cssmenu_horiz > ul > li:hover > a,
@@ -106,12 +106,12 @@ a.fc-event:hover {
 .topbar .navbar-default .navbar-nav > li,
 .topbar .nav > li {
   background: #f8f8f8;
-  color: #777777;
+  color: #777;
 }
 .topbar > a,
 .topbar .navbar-default .navbar-nav > li > a,
 .topbar .nav > li > a {
-  color: #777777;
+  color: #777;
   padding-top: 15px;
   padding-bottom: 15px;
 }
@@ -121,18 +121,18 @@ a.fc-event:hover {
 .topbar > a:focus,
 .topbar .navbar-default .navbar-nav > li > a:focus,
 .topbar .nav > li > a:focus {
-  color: #333333;
+  color: #333;
 }
 .topbar .cssmenu_horiz ul {
-  background: #ffffff;
+  background: #fff;
 }
 .topbar .cssmenu_horiz.sf-arrows > .menuSection0 > .sf-with-ul:after {
   border: 5px solid transparent;
-  border-top-color: #777777;
+  border-top-color: #777;
 }
 .topbar .cssmenu_horiz.sf-arrows > .menuSection0:hover > .sf-with-ul:after,
 .topbar .cssmenu_horiz.sf-arrows > .menuSection0.sfhover > .sf-with-ul:after {
-  border-top-color: #333333;
+  border-top-color: #333;
 }
 /* order of following 3 rules important for fallbacks to work */
 .dropdown-menu .dropdown-title,
@@ -162,14 +162,14 @@ table.treetable.objectperms td.removed {
 }
 .progressContainer {
   border: solid 1px rgba(0, 0, 0, 0.2);
-  background-color: #ffffff;
+  background-color: #fff;
 }
 .filter-panel-heading a:after {
   color: #555555;
 }
 .olControlMousePosition {
   background: rgba(0, 0, 0, 0.75);
-  color: #ffffff;
+  color: #fff;
 }
 .olControlScaleLineTop,
 .olControlScaleLineBottom {
@@ -228,7 +228,7 @@ body.fullscreen {
   color: #a94442;
 }
 #debugconsole {
-  background: #222222;
+  background: #222;
   color: #9d9d9d;
   border: 2px solid #080808;
 }
@@ -236,10 +236,10 @@ body.fullscreen {
   color: #9d9d9d;
 }
 #debugconsole a {
-  color: #ffffff;
+  color: #fff;
 }
 #debugconsole a.btn {
-  color: #777777;
+  color: #777;
 }
 a.icon,
 img.icon {
@@ -250,20 +250,20 @@ div #metadata div.tabs {
   background-color: transparent;
 }
 .openid_url {
-  background: #ffffff url('../../../img/icons/login-OpenID-bg.gif') 1px 1px no-repeat;
+  background: #fff url('../../../img/icons/login-OpenID-bg.gif') 1px 1px no-repeat;
 }
 input:-webkit-autofill {
-  background-color: #ffffff !important;
+  background-color: #fff !important;
   /* needs important because Chrome has it already important */
   background-image: none !important;
   color: #555555 !important;
   /* the Google guys forgot the number-one rule... when they specify background they should specify forgeround color too ;) */
 }
 #cboxTitle {
-  background-color: #ffffff;
+  background-color: #fff;
 }
 #captchaImg {
-  border: 1px solid #dddddd;
+  border: 1px solid #ddd;
 }
 form.simple label.error {
   background: url('../../../img/icons/error.png') no-repeat 0 4px;
@@ -273,14 +273,14 @@ form.simple label .warning {
   color: #a94442;
 }
 .tiki-modal .mask {
-  background-color: #ffffff;
+  background-color: #fff;
 }
 .ui-dialog {
-  background: #ffffff;
+  background: #fff;
   color: #333333;
 }
 .box-quickadmin .cssmenu_horiz ul li {
-  background-color: #ffffff;
+  background-color: #fff;
 }
 .box-switch_lang .box-data img.highlight {
   border: 0.1em solid #ebccd1;
@@ -294,7 +294,7 @@ div.cvsup {
 .layout_social .topbar_modules h1.sitetitle,
 .layout_social_modules .topbar_modules h1.sitetitle,
 .layout_fixed_top_modules #top_modules h1.sitetitle {
-  color: #777777;
+  color: #777;
 }
 .layout_social .topbar_modules .navbar-inverse .navbar-collapse,
 .layout_social_modules .topbar_modules .navbar-inverse .navbar-collapse,
@@ -355,13 +355,13 @@ div.cvsup {
   color: #333333;
 }
 .webmail_item {
-  border: 1px solid #dddddd;
+  border: 1px solid #ddd;
 }
 .webmail_list .odd {
   background: #f9f9f9;
 }
 .webmail_list .button {
-  background: #ffffff;
+  background: #fff;
   border: 1px solid #337ab7;
 }
 .webmail_list .webmail_read {
@@ -375,16 +375,16 @@ div.cvsup {
   color: #8a6d3b;
 }
 .webmail_message {
-  background: #ffffff;
+  background: #fff;
 }
 .webmail_message_headers {
-  background: #ffffff;
+  background: #fff;
 }
 .webmail_message_headers th {
   background: transparent;
 }
 .tiki_sheet table td {
-  border: 1px solid #dddddd;
+  border: 1px solid #ddd;
 }
 .odd {
   background: transparent;
@@ -401,12 +401,12 @@ div.cvsup {
   border-left: medium double #777777;
 }
 .toolbars-picker {
-  background: #ffffff;
+  background: #fff;
   border: thin solid #333333;
   color: #333333;
 }
 .toolbars-picker a {
-  border: 1px solid #ffffff;
+  border: 1px solid #fff;
   color: #333333;
 }
 .toolbars-picker a:hover {
@@ -423,8 +423,8 @@ div.cvsup {
   color: #3c763d;
 }
 #intertrans-form {
-  background-color: #ffffff;
-  border: 1px solid #dddddd;
+  background-color: #fff;
+  border: 1px solid #ddd;
   color: #333333;
 }
 #edit_translations tr.last {
@@ -434,7 +434,7 @@ ul.all_languages > li {
   border: 1px solid #d6e9c6;
 }
 .plugin-mouseover {
-  background: #ffffff;
+  background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.2);
 }
 .mandatory_note {
@@ -503,8 +503,8 @@ ul.all_languages > li {
   border-color: #faebcc;
 }
 .autotoc > .nav {
-  background: #ffffff;
-  border: 1px solid #dddddd;
+  background: #fff;
+  border: 1px solid #ddd;
   border-radius: 4px;
 }
 .autotoc * {
@@ -515,12 +515,12 @@ ul.all_languages > li {
   color: #23527c;
 }
 .plugin-form-float {
-  background: #ffffff;
+  background: #fff;
   color: #333333;
   border: solid 2px #333333;
 }
 body.wikitext {
-  background: #ffffff;
+  background: #fff;
   color: #333333;
 }
 .editable-inline {
@@ -552,11 +552,11 @@ body.wikitext {
 }
 .TextArea-fullscreen .actions,
 .CodeMirror-fullscreen .actions {
-  background-color: #ffffff;
+  background-color: #fff;
   border-top: #eeeeee 1px solid;
 }
 #autosave_preview {
-  background-color: #ffffff;
+  background-color: #fff;
   color: #333333;
 }
 #autosave_preview_grippy {
@@ -600,24 +600,24 @@ h6 a.tiki_anchor:hover {
 }
 .imgbox {
   border: 1px solid rgba(0, 0, 0, 0.2);
-  background-color: #ffffff;
+  background-color: #fff;
 }
 .ic_button {
-  border: 2px solid #dddddd;
+  border: 2px solid #ddd;
 }
 .ic_active {
   border: 2px solid #337ab7;
 }
 .ic_caption {
-  background: #222222;
+  background: #222;
   color: #9d9d9d;
 }
 .wp-cookie-consent-required {
   color: #a94442;
 }
 .wp-sign {
-  color: #ffffff;
-  background-color: #000000;
+  color: #fff;
+  background-color: #000;
 }
 .wp-sign a,
 .wp-sign a:visited {
@@ -696,19 +696,19 @@ div.drillshow {
 .chosen-container-multi .chosen-choices {
   background-color: #ffffff;
   color: #555555;
-  border: 1px solid #cccccc;
+  border: 1px solid #ccc;
 }
 .chosen-container-single .chosen-single,
 .chosen-container-active.chosen-with-drop .chosen-single,
 .chosen-container .chosen-drop,
 .chosen-container-multi .chosen-choices .search-choice {
-  background-color: #ffffff;
+  background-color: #fff;
   color: #555555;
-  border: 1px solid #cccccc;
+  border: 1px solid #ccc;
 }
 .chosen-container-single .chosen-search input[type="text"] {
-  background-color: #ffffff;
-  border: 1px solid #cccccc;
+  background-color: #fff;
+  border: 1px solid #ccc;
 }
 .chosen-container .chosen-results li.highlighted {
   background-color: #f5f5f5;
@@ -730,38 +730,38 @@ a.admbox.off:active {
   color: #999999;
 }
 .tiki .ui-widget-content {
-  background: #ffffff;
+  background: #fff;
   color: #333333;
   border: 1px solid rgba(0, 0, 0, 0.2);
 }
 .tiki .ui-widget-header {
-  background: #ffffff;
+  background: #fff;
   color: #333333;
   border: 1px solid rgba(0, 0, 0, 0.2);
 }
 .tiki .ui-dialog-content {
-  background: #ffffff;
+  background: #fff;
   color: #333333;
 }
 .tiki .ui-dialog-content select,
 .tiki .ui-dialog-content input,
 .tiki .ui-dialog-content optgroup,
 .tiki .ui-dialog-content textarea {
-  background: #ffffff;
+  background: #fff;
   color: #555555;
 }
 .tiki .ui-widget button {
-  background: #ffffff;
-  color: #333333;
+  background: #fff;
+  color: #333;
 }
 .dropdown-menu {
   color: #333333;
 }
 .tiki .col1 .table-responsive {
-  border: 1px solid #dddddd;
+  border: 1px solid #ddd;
 }
 code {
-  color: #444444;
+  color: #444;
   background: #f8f8f8;
   border: 1px solid #dddddd;
   border-radius: 1px;
@@ -1023,6 +1023,9 @@ li.archivedate {
 }
 .box-search .search_mod_magnifier {
   padding: 6px;
+}
+.box-search .panel-body * {
+  margin-bottom: .3em;
 }
 .box-forums_most_read_topics .hits {
   font-style: italic;
@@ -2122,7 +2125,7 @@ label.aclabel {
   background: #d9edf7;
 }
 a.fc-event:hover {
-  color: #ffffff;
+  color: #fff;
 }
 @media (min-width: 768px) {
   #calendar_dialog .modal-dialog {
@@ -2131,37 +2134,37 @@ a.fc-event:hover {
   }
 }
 .calendarweek {
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid #ddd;
 }
 #calprio {
   color: #333333;
 }
 .calprio1 {
-  background: #dae0e0;
+  background: #DAE0E0;
 }
 .calprio2 {
-  background: #dadcdc;
+  background: #DADCDC;
 }
 .calprio3 {
-  background: #dad0d0;
+  background: #DAD0D0;
 }
 .calprio4 {
-  background: #dacaca;
+  background: #DACACA;
 }
 .calprio5 {
-  background: #dac0d0;
+  background: #DAC0D0;
 }
 .calprio6 {
-  background: #dababa;
+  background: #DABABA;
 }
 .calprio7 {
-  background: #dab0b0;
+  background: #DAB0B0;
 }
 .calprio8 {
-  background: #daaaaa;
+  background: #DAAAAA;
 }
 .calprio9 {
-  background: #da9a9a;
+  background: #DA9A9A;
 }
 .calprio1 a,
 .calprio2 a,
@@ -2435,7 +2438,7 @@ fieldset.dropzone {
   color: black;
 }
 .webmail_item {
-  border: 1px solid #dddddd;
+  border: 1px solid #ddd;
   padding: 0 1px;
 }
 .webmail_refresh_message {
@@ -2955,7 +2958,7 @@ body.tiki.navbar-padding {
 .layout_social .navbar-inverse a:hover,
 .layout_social_modules .navbar-inverse a:hover,
 .layout_fixed_top_modules .navbar-inverse a:hover {
-  color: #ffffff;
+  color: #fff;
   text-decoration: none;
 }
 .layout_social .navbar-inverse .sitetitle a,
@@ -2966,7 +2969,7 @@ body.tiki.navbar-padding {
 .layout_social .navbar-inverse .sitetitle a:hover,
 .layout_social_modules .navbar-inverse .sitetitle a:hover,
 .layout_fixed_top_modules .navbar-inverse .sitetitle a:hover {
-  color: #ffffff;
+  color: #fff;
   text-decoration: none;
 }
 .layout_social h1.sitetitle,
@@ -3131,10 +3134,10 @@ table.tablesorter thead tr.tablesorter-filter-row td .value-popup:after {
   height: 12px;
   background-color: #444;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#444444), to(#999999));
-  background-image: -webkit-linear-gradient(top, #444444, #999999);
-  background-image: -moz-linear-gradient(top, #444444, #999999);
-  background-image: -o-linear-gradient(top, #444444, #999999);
-  background-image: linear-gradient(to bottom, #444444, #999999);
+  background-image: -webkit-linear-gradient(top, #444, #999);
+  background-image: -moz-linear-gradient(top, #444, #999);
+  background-image: -o-linear-gradient(top, #444, #999);
+  background-image: linear-gradient(to bottom, #444, #999);
   -webkit-border-radius: 3px;
   border-radius: 3px;
   -webkit-background-clip: padding-box;
@@ -3280,7 +3283,7 @@ table.tablesorter thead tr.tablesorter-filter-row input.dateTo {
 }
 table.tablesorter thead tr.tablesorter-headerRow,
 table.tablesorter thead tr.tablesorter-filter-row {
-  background-color: #ffffff;
+  background-color: #fff;
 }
 .chosen-select {
   width: 100%;
@@ -3295,8 +3298,8 @@ table.tablesorter thead tr.tablesorter-filter-row {
   vertical-align: middle;
 }
 .chosen-container .chosen-drop {
-  background: #ffffff;
-  border: 1px solid #cccccc;
+  background: #fff;
+  border: 1px solid #ccc;
   border-bottom-right-radius: 4px;
   border-bottom-left-radius: 4px;
   -webkit-box-shadow: 0 8px 8px rgba(0, 0, 0, .25);
@@ -3384,11 +3387,11 @@ table.tablesorter thead tr.tablesorter-filter-row {
   background: url("../../../vendor/alxlit/bootstrap-chosen/chosen-sprite.png") no-repeat -22px -3px;
 }
 .chosen-container-single .chosen-single {
-  background-color: #ffffff;
+  background-color: #fff;
   -webkit-background-clip: padding-box;
   -moz-background-clip: padding;
   background-clip: padding-box;
-  border: 1px solid #cccccc;
+  border: 1px solid #ccc;
   border-top-right-radius: 4px;
   border-top-left-radius: 4px;
   border-bottom-right-radius: 4px;
@@ -3453,8 +3456,8 @@ table.tablesorter thead tr.tablesorter-filter-row {
   z-index: 1000;
 }
 .chosen-container-single .chosen-search input[type="text"] {
-  background: url("../../../vendor/alxlit/bootstrap-chosen/chosen-sprite.png") no-repeat 100% -20px, #ffffff;
-  border: 1px solid #cccccc;
+  background: url("../../../vendor/alxlit/bootstrap-chosen/chosen-sprite.png") no-repeat 100% -20px, #fff;
+  border: 1px solid #ccc;
   border-top-right-radius: 4px;
   border-top-left-radius: 4px;
   border-bottom-right-radius: 4px;
@@ -3478,8 +3481,8 @@ table.tablesorter thead tr.tablesorter-filter-row {
   left: -9000px;
 }
 .chosen-container-multi .chosen-choices {
-  background-color: #ffffff;
-  border: 1px solid #cccccc;
+  background-color: #fff;
+  border: 1px solid #ccc;
   border-top-right-radius: 4px;
   border-top-left-radius: 4px;
   border-bottom-right-radius: 4px;
@@ -3522,7 +3525,7 @@ table.tablesorter thead tr.tablesorter-filter-row {
   -moz-background-clip: padding;
   background-clip: padding-box;
   background-color: #eeeeee;
-  border: 1px solid #cccccc;
+  border: 1px solid #ccc;
   border-top-right-radius: 4px;
   border-top-left-radius: 4px;
   border-bottom-right-radius: 4px;
@@ -3572,7 +3575,7 @@ table.tablesorter thead tr.tablesorter-filter-row {
   transition: border linear .2s, box-shadow linear .2s;
 }
 .chosen-container-active.chosen-with-drop .chosen-single {
-  background-color: #ffffff;
+  background-color: #fff;
   border: 1px solid #66afe9;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
@@ -3663,7 +3666,7 @@ table.tablesorter thead tr.tablesorter-filter-row {
   border-right: none;
 }
 .chosen-rtl .chosen-search input[type="text"] {
-  background: url("../../../vendor/alxlit/bootstrap-chosen/chosen-sprite.png") no-repeat -28px -20px, #ffffff;
+  background: url("../../../vendor/alxlit/bootstrap-chosen/chosen-sprite.png") no-repeat -28px -20px, #fff;
   direction: rtl;
   padding: 4px 5px 4px 20px;
 }
@@ -3877,7 +3880,7 @@ div.tiki_plugin {
 .autotoc .nav > li > a:focus,
 .autotoc .nav > li > a:hover {
   padding-left: 19px;
-  border-left: 1px solid #cccccc;
+  border-left: 1px solid #ccc;
 }
 .autotoc > .nav > li > .nav > li {
   padding-bottom: 5px;
@@ -3888,7 +3891,7 @@ div.tiki_plugin {
   padding-left: 18px;
   font-weight: 700;
   border: none;
-  border-left: 2px solid #cccccc;
+  border-left: 2px solid #ccc;
   background-color: transparent;
 }
 .autotoc .nav .nav {
@@ -4062,7 +4065,7 @@ div.tiki_plugin {
   width: 100% !important;
 }
 .TextArea-fullscreen .edit-zone-footer {
-  background: #ffffff;
+  background: #fff;
 }
 .TextArea-fullscreen .actions,
 .CodeMirror-fullscreen .actions {
