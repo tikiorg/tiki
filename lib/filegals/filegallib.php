@@ -306,6 +306,7 @@ class FileGalLib extends TikiLib
 		}
 		$name = trim(strip_tags($name));
 		$description = strip_tags($description);
+		$filename = $this->truncate_filename($filename);
 
 		$checksum = $this->get_file_checksum($galleryId, $path, $data);
 
@@ -1110,6 +1111,7 @@ class FileGalLib extends TikiLib
 		if (! $this->is_filename_valid($filename)) {
 			return false;
 		}
+		$filename = $this->truncate_filename($filename);
 
 		if (0 === strpos($type, 'image/')) {
 			$this->transformImage($path, $data, $size, $gal_info, $type, $metadata);
@@ -3599,6 +3601,9 @@ class FileGalLib extends TikiLib
 			$title = preg_replace('/[\-_]+/', ' ', $title); // turn _ etc into spaces
 			$title = ucwords($title);
 		}
+		if (strlen($title) > 200) {				// trim to length of name column in database
+			$title = substr($title, 0, 200);
+		}
 		return $title;
 	}
 
@@ -4049,6 +4054,23 @@ class FileGalLib extends TikiLib
 
 		return true;
 	}
+
+	/**
+	 * truncate a filename to the max length of filename column in database (varchar 80)
+	 * remove chars in the middle to preserve the start and the extension
+	 *
+	 * @param $filename string
+	 * @return string
+	 */
+
+	private function truncate_filename($filename) {
+		if (strlen($filename) > 80) {
+			$filename = substr($filename, 0, 38) . '...' . substr($filename, strlen($filename) - 38);
+		}
+
+		return $filename;
+	}
+
 	function moveAllWikiUpToFgal($fgalId, &$errors, &$feedbacks)
 	{
 		$tikilib = TikiLib::lib('tiki');
