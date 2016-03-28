@@ -1028,9 +1028,17 @@ function wikiplugin_img( $data, $params )
 		if (!empty($fwidth) && !empty($fheight) && !empty($imgdata_dim)) {		// change svg attributes to show at the correct size
 			$svgAttributes = $imgdata_dim . ' viewBox="0 0 ' . $fwidth . ' ' . $fheight . '" preserveAspectRatio="xMinYMin meet"';
 			$repldata = preg_replace('/width="'.$fwidth.'" height="'.$fheight.'"/', $svgAttributes, $repldata);
+			if ($repldata === null) {
+				// if preg_replace fails restore original SVG data
+				TikiLib::lib('errorreport')->report(tr('SVG Image replace error "%0"', preg_last_error()));
+				$repldata = $dbinfo['data'];
+			}
 		}
 		$replimg = '<div type="image/svg+xml" ';
-		$imgdata['class'] .= ' table-responsive svgImage pluginImg' . $imgdata['fileId'];
+		$imgdata['class'] .= ' svgImage pluginImg' . $imgdata['fileId'];
+		if ($imgdata['responsive'] == 'y') {
+			$imgdata['class'] .= ' table-responsive';
+		}
 		$imgdata['class'] = trim($imgdata['class']);
 	} else {
 		$tagName = 'img';
