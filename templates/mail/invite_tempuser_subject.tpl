@@ -1,1 +1,1 @@
-{tr _0=$server_name}Your temporary access to %0{/tr}
+{tr _0=$$mail_site}Your temporary access to %0{/tr}
