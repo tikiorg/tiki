@@ -116,7 +116,6 @@
 				{* all single-action icons under one dropdown*}
 				{assign var="hasPageAction" value="0"}
 				{capture name="pageActions"}
-				{capture "pageActions"}
 					{if $js == 'n'}<ul class="cssmenu_horiz"><li>{/if}
 					<a class="btn btn-link" data-toggle="dropdown" data-hover="dropdown" href="#">
 						{icon name='menu-extra'}
