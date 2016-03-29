@@ -1,1 +1,1 @@
-{tr _0=$mail_site}Your temporary access to %0{/tr}
+{tr _0=$prefs.browsertitle}Your temporary access to %0{/tr}
