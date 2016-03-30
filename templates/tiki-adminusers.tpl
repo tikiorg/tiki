@@ -761,7 +761,7 @@
 					<div class="form-group">
 						<label class="col-sm-4 col-md-4 control-label" for="tempuser_path">{tr}Autologin (non-SEFURL) path{/tr}</label>
 						<div class="col-sm-8 col-md-8">
-							<input type="text" class="form-control" name="tempuser_path" id="tempuser_path" placeholder="tiki-index.php"/>
+							<input type="text" class="form-control" name="tempuser_path" id="tempuser_path" placeholder="index.php"/>
 						</div>
 					</div>
 					<div class="form-group">
