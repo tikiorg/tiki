@@ -723,6 +723,13 @@
 				{/remarksbox}
 				{$temp_users_enabled = false}
 			{/if}
+			{if $prefs['user_unique_email'] === 'y'}
+				{remarksbox type="warning" title="{tr}Feature Conflict{/tr}"}
+					{tr}This feature currently is incompatible with the "User e-mails must be unique" feature{/tr}
+					<a href="tiki-admin.php?lm_criteria=user_unique_email&exact">{tr}Turn it off here.{/tr}</a>
+				{/remarksbox}
+				{$temp_users_enabled = false}
+			{/if}
 			{if $temp_users_enabled}
 				{remarksbox type="info" title="Temporary Users"}
 					<p>{tr}Temporary users cannot login the usual way but instead do so via an autologin URL that is associated with a token.{/tr} {tr}An email will be sent out to invited users containing this URL. You will receive a copy of the email yourself.{/tr}</p>
