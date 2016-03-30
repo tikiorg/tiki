@@ -76,9 +76,9 @@ php console.php -n database:update
 echo "Update search index"
 php console.php -n index:rebuild
 echo "Update memcache prefix"
-$MYSQLCOMMAND $DOGFOODMYSQLDB -e "update tiki_preferences set value = \"DOGFOODtiki_\" where name = \"memcache_prefix\";"
+$mysql_command $TIKI_DBNAME -e "update tiki_preferences set value = \"DOGFOODtiki_\" where name = \"memcache_prefix\";"
 echo "Remove cdn"
-$MYSQLCOMMAND $DOGFOODMYSQLDB -e "update tiki_preferences set value = \"\" where name = \"tiki_cdn\";"
+$mysql_command $TIKI_DBNAME -e "update tiki_preferences set value = \"\" where name = \"tiki_cdn\";"
 echo "Upgrading HTACCESS"
 rm .htaccess
 sh htaccess.sh on
