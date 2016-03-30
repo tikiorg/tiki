@@ -7893,7 +7893,7 @@ class UsersLib extends TikiLib
 
 	/**
 	 * This is a function to automatically login a user programatically
-	 * @param $uname The user account name to log the user in as
+	 * @param string $uname The user account name to log the user in as
 	 * @return bool true means that successfully logged in or already logged in. false means no such user.
 	 */
 	function autologin_user($uname)
