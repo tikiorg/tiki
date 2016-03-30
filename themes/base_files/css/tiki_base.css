@@ -960,6 +960,9 @@ textarea.wikiedit {
 .dropdown-menu > li > .btn {
   text-align: left;
 }
+.modal-dialog #alert-wrapper .alert {
+  margin-bottom: 0;
+}
 .box-quickadmin li {
   font-size: 0.9em;
 }
