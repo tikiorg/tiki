@@ -1,4 +1,4 @@
-CREATE TABLE `tiki_output` (
+CREATE TABLE IF NOT EXISTS `tiki_output` (
   `entityId` varchar(160) NOT NULL default '',
   `objectType` varchar(32) NOT NULL default '',
   `outputType` varchar(32) NOT NULL default '',

@@ -1,4 +1,4 @@
-CREATE TABLE `tiki_search_queries` (
+CREATE TABLE IF NOT EXISTS `tiki_search_queries` (
 	`queryId` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`userId` INT NOT NULL,
 	`lastModif` INT,

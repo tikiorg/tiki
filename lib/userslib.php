@@ -7893,7 +7893,7 @@ class UsersLib extends TikiLib
 
 	/**
 	 * This is a function to automatically login a user programatically
-	 * @param $uname The user account name to log the user in as
+	 * @param string $uname The user account name to log the user in as
 	 * @return bool true means that successfully logged in or already logged in. false means no such user.
 	 */
 	function autologin_user($uname)
@@ -7924,7 +7924,7 @@ class UsersLib extends TikiLib
 	 * @param string $path Users will have to autologin using this path on the site using the token
 	 * @throws Exception
 	 */
-	function invite_tempuser($emails, $groups, $timeout, $prefix = 'guest', $path = 'tiki-index.php') {
+	function invite_tempuser($emails, $groups, $timeout, $prefix = 'guest', $path = 'index.php') {
 		global $smarty, $user, $prefs;
 		include_once ('lib/webmail/tikimaillib.php');
 

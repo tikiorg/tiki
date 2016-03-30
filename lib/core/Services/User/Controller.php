@@ -917,7 +917,7 @@ class Services_User_Controller
 				'action' => 'modal_alert',
 				'ajaxtype' => 'feedback',
 				'ajaxheading' => tra('Success'),
-				'ajaxmsg' => 'Your invite has been sent.',
+				'ajaxmsg' => tra('Your invite has been sent.'),
 				'ajaxdismissible' => 'n',
 			)
 		);

@@ -214,7 +214,7 @@ class AuthTokens
 
 	/**
 	 * This is a function that includes a security token into a provided URL
-	 * @param $url The URL where the token is valid.
+	 * @param string $url The URL where the token is valid.
 	 * @param array $groups The groups from which the person using the token will have permissions for.
 	 * @param string $email The email that the token was sent to, for recording purpose. If there are multiple
 	 * emails, it currently saves as comma separated list but exploding will need to trim spaces.

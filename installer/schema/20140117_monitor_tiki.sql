@@ -1,4 +1,4 @@
-CREATE TABLE `tiki_user_monitors` (
+CREATE TABLE IF NOT EXISTS `tiki_user_monitors` (
 	`monitorId` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`userId` INT NOT NULL,
 	`event` VARCHAR(50) NOT NULL,
