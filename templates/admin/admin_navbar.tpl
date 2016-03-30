@@ -109,13 +109,10 @@
 		{include file="admin/admin_navbar_menu.tpl"}
 		<ul class="nav navbar-nav navbar-right">
 			<li>
-				<form method="post" action="" class="navbar-form" role="search">
-					{*remarksbox type="note" title="{tr}Development Notice{/tr}"}
-						{tr}This search feature and the <a class="alert-link" href="tiki-edit_perspective.php">perspectives GUI</a> need <a class="alert-link" href="https://dev.tiki.org/Dynamic+Preferences">dev.tiki.org/Dynamic+Preferences</a>. If you search for something and it's not appearing, please help improve keywords/descriptions.{/tr}
-					{/remarksbox*}
+				<form method="post" action="" class="navbar-form" role="form">
 					<div class="form-group">
 						<input type="hidden" name="filters">
-						<input type="text" name="lm_criteria" value="{$lm_criteria|escape}" class="form-control" placeholder="{tr}Search preferences{/tr}..." autofocus>
+						<input type="text" name="lm_criteria" value="{$lm_criteria|escape}" class="form-control" placeholder="{tr}Search preferences{/tr}..." autofocus="autofocus">
 					</div>
 					<button type="submit" class="btn btn-default" {if $indexNeedsRebuilding} class="tips" title="{tr}Configuration search{/tr}|{tr}Note: The search index needs rebuilding, this will take a few minutes.{/tr}"{/if}>{icon name="search"}</button>
 				</form>
