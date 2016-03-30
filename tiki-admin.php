@@ -614,16 +614,6 @@ if ($prefs['feature_version_checks'] == 'y' || $forcecheck) {
 	);
 }
 
-if (isset($_REQUEST['lm_criteria']) && isset($_REQUEST['exact'])) {
-	$headerlib = TikiLib::lib('header');
-	$headerlib->add_jq_onready(
-		"$('body,html')
-			.animate({scrollTop: $('." . htmlspecialchars($_REQUEST['lm_criteria']). "')
-					.addClass('ui-state-highlight')
-					.offset().top - 10}, 1);"
-	);
-}
-
 foreach ($admin_icons as &$admin_icon) {
 	$admin_icon = array_merge(array( 'disabled' => false, 'description' => ''), $admin_icon);
 }

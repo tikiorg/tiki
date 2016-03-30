@@ -889,7 +889,7 @@ class Services_User_Controller
 			$prefix = 'guest';
 		}
 		if (empty($path)) {
-			$path = 'tiki-index.php';
+			$path = 'index.php';
 		}
 
 		$groups = explode(',', $groups);
