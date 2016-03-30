@@ -42,4 +42,5 @@ fi
 time=$(date +%Y%m%d%H%M%S)
 filename=$TIKI_DBNAME-$time.sql
 mysql_command="mysqldump $db_user $db_passwd $db_host --single-transaction  $TIKI_DBNAME > $filename"
-echo $mysql_command
+$mysql_command
+[ $? -eq 0 ] &&  echo Please copy the  $filename file to your new deployment and import it with tiki.import tool
