@@ -226,7 +226,7 @@ class TikiInit
 
 	static function getCredentialsFile()
 	{
-		global $default_api_tiki, $api_tiki, $db_tiki, $dbversion_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $tikidomain, $tikidomainslash;
+		global $default_api_tiki, $api_tiki, $db_tiki, $dbversion_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki, $tikidomain, $tikidomainslash, $dbfail_url;
 		// Please use the local.php file instead containing these variables
 		// If you set sessions to store in the database, you will need a local.php file
 		// Otherwise you will be ok.
@@ -240,6 +240,7 @@ class TikiInit
 		$pass_tiki		= '';
 		$dbs_tiki			= 'tiki';
 		$tikidomain		= '';
+		$dbfail_url		= '';
 
 		/*
 		SVN Developers: Do not change any of the above.
