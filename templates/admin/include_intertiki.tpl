@@ -140,7 +140,7 @@
 			    <div class="form-group">
 					<label class="col-sm-3 control-label">{tr}Intertiki Server enabled{/tr}</label>
 					<div class="col-sm-7">
-					      <input type="checkbox" name="feature_intertiki_sharedcookie" {if $prefs.feature_intertiki_sharedcookie eq 'y'}checked="checked"{/if}/>
+					      <input type="checkbox" name="feature_intertiki_server" {if $prefs.feature_intertiki_server eq 'y'}checked="checked"{/if}/>
 				    </div>
 			    </div>
 			    <div class="form-group">
