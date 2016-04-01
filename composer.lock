@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1c19756307ca51152812d3301fab70fd",
-    "content-hash": "0ee0da5bcb490bb1a6cb123264b31c01",
+    "hash": "92f45611b736c7f1b1c7cd2a43aa98f6",
+    "content-hash": "e82b0b9e56732b7289921371d21a2d3f",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -628,23 +628,23 @@
         },
         {
             "name": "jquery/jquery",
-            "version": "2.2.0",
+            "version": "2.2.2",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-2.2.0.zip",
+                "url": "https://composer.tiki.org/dist/jquery-jquery-2.2.2.zip",
                 "reference": null,
-                "shasum": "61f9e3c849159d7a20877c5616853c952c278b8d"
+                "shasum": "09390bd40059f71014e11a0810b77b575b001020"
             },
             "type": "library"
         },
         {
             "name": "jquery/jquery-min",
-            "version": "2.2.0",
+            "version": "2.2.2",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-min-2.2.0.zip",
+                "url": "https://composer.tiki.org/dist/jquery-jquery-min-2.2.2.zip",
                 "reference": null,
-                "shasum": "6e61221ff6dc79962f154472237e3e94f87985e2"
+                "shasum": "910c7483da12b97aa9897e5ed59ee349b6b1cacf"
             },
             "type": "library"
         },
@@ -870,23 +870,23 @@
         },
         {
             "name": "jquery/plugins/migrate",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-migrate-1.3.0.zip",
+                "url": "https://composer.tiki.org/dist/jquery-plugins-migrate-1.4.0.zip",
                 "reference": null,
-                "shasum": "6478ba95f12bf423525409a118e3738290a29261"
+                "shasum": "8b221dbfdcc2b72916feffb1ff67bd809d9c4c43"
             },
             "type": "library"
         },
         {
             "name": "jquery/plugins/migrate-min",
-            "version": "1.2.1",
+            "version": "1.4.0",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-migrate-min-1.2.1.zip",
+                "url": "https://composer.tiki.org/dist/jquery-plugins-migrate-min-1.4.0.zip",
                 "reference": null,
-                "shasum": "531760d6f1b8c0b0d14cf76930b19c1dfac28ee1"
+                "shasum": "a3c52e52092a8e4c46076582dad6fb5c37771645"
             },
             "type": "library"
         },
@@ -1034,12 +1034,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nnnick/Chart.js.git",
-                "reference": "6507f5c0872705c7853dd5a0a6d112ea9d843e7e"
+                "reference": "d7117bc79235f23832cec04568cad8a808f82737"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nnnick/Chart.js/zipball/6507f5c0872705c7853dd5a0a6d112ea9d843e7e",
-                "reference": "6507f5c0872705c7853dd5a0a6d112ea9d843e7e",
+                "url": "https://api.github.com/repos/nnnick/Chart.js/zipball/d7117bc79235f23832cec04568cad8a808f82737",
+                "reference": "d7117bc79235f23832cec04568cad8a808f82737",
                 "shasum": ""
             },
             "require": {
@@ -1067,7 +1067,7 @@
                 "JS",
                 "chart"
             ],
-            "time": "2016-03-11 18:29:30"
+            "time": "2016-03-13 14:20:24"
         },
         {
             "name": "openlayers/ol3",
@@ -1583,16 +1583,16 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.8.3",
+            "version": "v2.8.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "65cb36b6539b1d446527d60457248f30d045464d"
+                "reference": "f08ffdf229252cd2745558cb2112df43903bcae4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/65cb36b6539b1d446527d60457248f30d045464d",
-                "reference": "65cb36b6539b1d446527d60457248f30d045464d",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/f08ffdf229252cd2745558cb2112df43903bcae4",
+                "reference": "f08ffdf229252cd2745558cb2112df43903bcae4",
                 "shasum": ""
             },
             "require": {
@@ -1628,7 +1628,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2016-02-22 15:02:30"
+            "time": "2016-03-27 10:20:16"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -4595,16 +4595,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.0.3",
+            "version": "v3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "b5ba64cd67ecd6887f63868fa781ca094bd1377c"
+                "reference": "0047c8366744a16de7516622c5b7355336afae96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/b5ba64cd67ecd6887f63868fa781ca094bd1377c",
-                "reference": "b5ba64cd67ecd6887f63868fa781ca094bd1377c",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/0047c8366744a16de7516622c5b7355336afae96",
+                "reference": "0047c8366744a16de7516622c5b7355336afae96",
                 "shasum": ""
             },
             "require": {
@@ -4640,7 +4640,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-02-23 15:16:06"
+            "time": "2016-03-04 07:55:57"
         }
     ],
     "aliases": [],
