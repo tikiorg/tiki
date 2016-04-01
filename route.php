@@ -213,7 +213,7 @@ default:
 	// Fix $_SERVER['REQUEST_URI', which is ASCII encoded on IIS
 	//	Convert the SERVER variable itself, to fix $_SERVER['REQUEST_URI'] access everywhere
 	//	route.php comes first in the processing.  Avoid dependencies.
-	if (strpos($_SERVER['SERVER_SOFTWARE'],'IIS') !== false) {
+	if (isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'],'IIS') !== false) {
 		if (mb_detect_encoding($_SERVER['REQUEST_URI'], 'UTF-8', true) == false) {
 			$_SERVER['REQUEST_URI'] = utf8_encode($_SERVER['REQUEST_URI']);
 		}
