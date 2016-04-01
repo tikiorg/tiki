@@ -140,7 +140,7 @@
 			    <div class="form-group">
 					<label class="col-sm-3 control-label">{tr}Intertiki Server enabled{/tr}</label>
 					<div class="col-sm-7">
-					      <input type="checkbox" name="feature_intertiki_sharedcookie" {if $prefs.feature_intertiki_sharedcookie eq 'y'}checked="checked"{/if}/>
+					      <input type="checkbox" name="feature_intertiki_server" {if $prefs.feature_intertiki_server eq 'y'}checked="checked"{/if}/>
 				    </div>
 			    </div>
 			    <div class="form-group">
@@ -183,7 +183,8 @@
 											<input type="text" class="form-control" id="known_hosts_name" name="known_hosts[{$k}][name]" value="{$i.name}" />
 										</td>
 										<td>
-											<input type="text" class="form-control" id="known_hosts_key" name="known_hosts[{$k}][key]" value="{$i.key}"  />
+											<input type="text" class="form-control tips" id="known_hosts_key" name="known_hosts[{$k}][key]" value="{$i.key}"
+												   readonly="readonly" title="|{tr}To change the host key you need to remove and add it as a new one{/tr}" />
 										</td>
 										<td>
 											<input type="text" class="form-control" id="known_hosts_ip" name="known_hosts[{$k}][ip]" value="{$i.ip}"  />

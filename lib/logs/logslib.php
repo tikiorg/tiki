@@ -152,7 +152,10 @@ class LogsLib extends TikiLib
 			$logObject = $this->action_must_be_logged($action, $objectType);
 		}
 
-		$logCateg = $prefs['feature_categories'] == 'y'? $this->action_must_be_logged('*', 'category'): false;
+        $logCateg = false;
+        if (isset($prefs['feature_categories']))
+            $logCateg = $prefs['feature_categories'] == 'y'? $this->action_must_be_logged('*', 'category'): false;
+
 		if (!$logObject && !$logCateg) {
 			return 0;
 		}
@@ -270,9 +273,11 @@ class LogsLib extends TikiLib
 
 		// for previous compatibility
 		// the new action are added with a if ($feature..)
-		if ($prefs['feature_actionlog'] != 'y') {
-			return true;
-		}
+        if (isset($prefs['feature_actionlog']))
+            if ($prefs['feature_actionlog'] != 'y') {
+                return true;
+        }
+
 
 		if ( !isset($is_viewed) ) {
 			$logActions = $this->get_all_actionlog_conf();
