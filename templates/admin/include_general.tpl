@@ -5,7 +5,8 @@
 	<div class="t_navbar margin-bottom-md">
 		{button _class="btn btn-link tips" _type="text" href="tiki-install.php" _icon_name="database" _text="{tr}Tiki installer{/tr}" _title=":{tr}Reset or upgrade your database{/tr}"}
 		{button _class="btn btn-link tips" _type="text" href="tiki-admin_menus.php" _icon_name="menu" _text="{tr}Menus{/tr}" _title=":{tr}Create and edit menus{/tr}"}
-		{button _class="btn btn-link tips" href="tiki-admin.php?page=general&amp;forcecheck=1" _icon_name="search" _text="{tr}Check for updates now{/tr}" _title=":{tr}Check for updates now{/tr}"}
+		{button _class="btn btn-link tips" _type="text" href="tiki-admin.php?page=general&amp;forcecheck=1" _icon_name="search" _text="{tr}Check for updates now{/tr}" _title=":{tr}Check for updates now{/tr}"}
+		{button _class="btn btn-link tips" _type="text" href="tiki-check.php" _icon_name="heartbeat" _text="{tr}Server Fitness{/tr}" _title=":{tr}Check if your server meets the requirements for running Tiki{/tr}"}
 		<div class="pull-right">
 			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
 		</div>
@@ -18,9 +19,6 @@
 	{tabset name="admin_general"}
 		{tab name="{tr}General Preferences{/tr}"}
 			<h2>{tr}General Preferences{/tr}</h2>
-			{remarksbox type="info" title="{tr}Server Fitness{/tr}" close="n"}
-				{tr}To check if your server meets the requirements for running Tiki please visit <a href="tiki-check.php" class="alert-link">Tiki Server Compatibility Check</a>{/tr}.
-			{/remarksbox}
 			<fieldset>
 				<legend>{tr}Release Check{/tr}</legend>
 				{remarksbox type="info" title="{tr}Tiki version{/tr}" close="n"}
