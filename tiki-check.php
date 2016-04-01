@@ -524,7 +524,7 @@ if (empty($s) || ! is_writable($s)) {
 }
 
 // test session work
-session_start();
+@session_start();
 
 if (empty($_SESSION['tiki-check'])) {
 	$php_properties['session'] = array(
