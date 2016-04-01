@@ -1272,6 +1272,17 @@
 				}
 			}
 		},
+	  {
+		"type": "package",
+		"package": {
+		  "name": "jquery/plugins/tablesorter",
+		  "version": "2.25.7",
+		  "dist": {
+			"url": "https://github.com/Mottie/tablesorter/archive/v2.25.7.zip",
+			"type": "zip"
+		  }
+		}
+	  },
 		{
 			"type": "package",
 			"package": {
