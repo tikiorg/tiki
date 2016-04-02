@@ -212,7 +212,7 @@ if (! $db && ! defined('TIKI_IN_INSTALLER')) {
 	if(!empty($dbfail_url)) {
 		header('location: '.$dbfail_url);
 	} else {
-		header('location: tiki-install.php');
+		header('location: ' . $tikiroot . 'tiki-db_connection_error.html');
 	}
 	exit;
 } elseif ($db) {
