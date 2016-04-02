@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8b1dcb3e6a6c3867eee55b34a2a34581",
-    "content-hash": "908b4c3003011a64faa3edb0913e3840",
+    "hash": "c647dc6d2342fc555a1612dce2a65a27",
+    "content-hash": "1067ca8a83ce1e81e84167972aea715b",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -925,10 +925,10 @@
         },
         {
             "name": "jquery/plugins/tablesorter",
-            "version": "2.25.5",
+            "version": "2.25.7",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/Mottie/tablesorter/archive/v2.25.5.zip",
+                "url": "https://github.com/Mottie/tablesorter/archive/v2.25.7.zip",
                 "reference": null,
                 "shasum": null
             },
