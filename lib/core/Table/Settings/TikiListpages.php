@@ -150,7 +150,7 @@ class Table_Settings_TikiListpages extends Table_Settings_Standard
 				),
 				'priority' => 6,
 			),
-			'links' => array(
+			'#links' => array(
 				'sort' => array(
 					'type' => 'digits',
 					'ajax' => 'links',
@@ -175,7 +175,7 @@ class Table_Settings_TikiListpages extends Table_Settings_Standard
 			'#size' => array(
 				'sort' => array(
 					'type' => 'digits',
-					'ajax' => 'size',
+					'ajax' => 'page_size',
 					'group' => 'number-10'
 				),
 				'filter' => array(
@@ -245,23 +245,7 @@ class Table_Settings_TikiListpages extends Table_Settings_Standard
 	 */
 	protected function getTableSettings()
 	{
-		//change columns based on prefs to be consistent with tiki-adminusers.tpl
 		global $prefs;
-		$perms = Perms::get();
-		//
-		//set initial sort order based on user preferences or default
-		$field = !empty($prefs['wiki_list_sortorder']) ? $prefs['wiki_list_sortorder'] : 'lastmodif';
-		$dir = !empty($prefs['wiki_list_sortdirection']) ? $prefs['wiki_list_sortdirection'] : 'desc';
-		$sortfield = array(
-			'pageName'  => '#pagename',
-			'lastModif' => '#lastmodif',
-			'creator'   => '#creator',
-			'hits'      => '#hits',
-			'user'      => '#lastauthor',
-			'page_size' => '#size',
-		);
-		$this->ts['columns'][$sortfield[$field]]['sort']['dir'] = $dir;
-
 		if ($prefs['wiki_list_comment'] === 'y') {
 			$this->ts['columns']['#lastmodif']['sort']['type'] = 'text';
 			$this->ts['columns']['#lastmodif']['sort']['group'] = 'word';
