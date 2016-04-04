@@ -99,11 +99,16 @@ function smarty_block_textarea($params, $content, $smarty, $repeat)
 	$editWarning = $prefs['wiki_timeout_warning'] === 'y' && isset($tmp_var) && $tmp_var !== 'sandbox';
 	if ($params['_simple'] === 'n' && $editWarning) {
 		$remrepeat = false;
+		if ($prefs['ajax_autosave'] === 'y' and $section === 'wiki page') {
+			$hint = '<strong>Save</strong> your work to restart the edit session timer';
+		} else {
+			$hint = '<strong>Preview</strong> (if available) or <strong>Save</strong> your work to restart the edit session timer';
+		}
 		$html .= smarty_block_remarksbox(
 			array( 'type'=>'warning', 'title'=>tra('Warning')),
 			'<p>' . tra('This edit session will expire in') .
 			' <span id="edittimeout">' . (ini_get('session.gc_maxlifetime') / 60) .'</span> '. tra('minutes') . '. ' .
-			tra('<strong>Preview</strong> (if available) or <strong>Save</strong> your work to restart the edit session timer') . '</p>',
+			tra($hint) . '</p>',
 			$smarty,
 			$remrepeat
 		)."\n";
