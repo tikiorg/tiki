@@ -305,7 +305,8 @@ table.treetable.objectperms td.removed {
 }
 
 // print mode only - to make sure print templates will use and print on seamless white bg color
-html#print {
+html#print,
+body.print * { // wiki page print view
 	background: #fff;
 	color: #000;
 }

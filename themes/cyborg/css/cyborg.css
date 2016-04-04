@@ -6746,7 +6746,6 @@ header.page-header::before,
   padding: 0;
   margin: 2px 0 0;
   background-color: #222;
-  border: 1px solid #444;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 4px;
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
@@ -7043,7 +7042,8 @@ table.treetable.objectperms td.removed {
   padding: 15px;
   border: 1px solid #6e2caf;
 }
-html#print {
+html#print,
+body.print * {
   background: #fff;
   color: #000;
 }

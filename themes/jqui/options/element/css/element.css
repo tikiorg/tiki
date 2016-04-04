@@ -9,25 +9,25 @@ a:focus {
   color: #7195c1;
 }
 .btn-default {
-  color: #555555;
-  background-color: #ffffff;
-  border-color: #777777;
+  color: #555;
+  background-color: #fff;
+  border-color: #777;
 }
 .btn-default:focus,
 .btn-default.focus {
-  color: #555555;
+  color: #555;
   background-color: #e6e6e6;
   border-color: #373737;
 }
 .btn-default:hover {
-  color: #555555;
+  color: #555;
   background-color: #e6e6e6;
   border-color: #585858;
 }
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
-  color: #555555;
+  color: #555;
   background-color: #e6e6e6;
   border-color: #585858;
 }
@@ -40,7 +40,7 @@ a:focus {
 .btn-default:active.focus,
 .btn-default.active.focus,
 .open > .dropdown-toggle.btn-default.focus {
-  color: #555555;
+  color: #555;
   background-color: #d4d4d4;
   border-color: #373737;
 }
@@ -58,16 +58,16 @@ fieldset[disabled] .btn-default:focus,
 .btn-default.disabled.focus,
 .btn-default[disabled].focus,
 fieldset[disabled] .btn-default.focus {
-  background-color: #ffffff;
-  border-color: #777777;
+  background-color: #fff;
+  border-color: #777;
 }
 .btn-default .badge {
-  color: #ffffff;
-  background-color: #555555;
+  color: #fff;
+  background-color: #555;
 }
 .navbar-default {
-  background-color: #cccccc;
-  border-color: #aaaaaa;
+  background-color: #ccc;
+  border-color: #aaa;
 }
 .navbar-default .navbar-text {
   color: #363636;
@@ -78,7 +78,7 @@ fieldset[disabled] .btn-default.focus {
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
   color: #7195c1;
-  background-color: #eeaa66;
+  background-color: #ea6;
 }
 .navbar-default .navbar-link {
   color: #2a5385;
@@ -105,7 +105,7 @@ a.btn-link:focus {
 #col2 .panel a:visited,
 #col3 .panel a:visited,
 #bottom_modules .panel a:visited {
-  color: #000000;
+  color: #000;
 }
 .btn,
 .btn-default,
@@ -123,7 +123,7 @@ input[type="submit"].btn-link {
 input[type="reset"]:hover,
 input[type="submit"]:hover,
 .button input:hover {
-  background: #eeaa66;
+  background: #ea6;
 }
 .topbar,
 .topbar .navbar-default .navbar-nav > li,
@@ -181,7 +181,7 @@ input[type="submit"]:hover,
 #col2 .cssmenu_vert.sf-arrows li > .sf-with-ul:after,
 #col3 .cssmenu_vert.sf-arrows li > .sf-with-ul:after {
   border-color: transparent;
-  border-left-color: #000000;
+  border-left-color: #000;
   /* edit this to suit design (no rgba in IE8) */
 }
 #col2 .cssmenu_vert.sf-arrows li > .sf-with-ul:focus:after,
@@ -191,5 +191,5 @@ input[type="submit"]:hover,
 #col2 .cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after,
 #col3 .cssmenu_vert.sf-arrows .sfHover > .sf-with-ul:after {
   border-color: transparent;
-  border-left-color: #888888;
+  border-left-color: #888;
 }

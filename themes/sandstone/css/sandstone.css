@@ -7166,7 +7166,8 @@ table.treetable.objectperms td.removed {
   padding: 15px;
   border: 1px solid transparent;
 }
-html#print {
+html#print,
+body.print * {
   background: #fff;
   color: #000;
 }
