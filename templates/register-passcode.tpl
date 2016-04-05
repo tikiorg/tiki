@@ -1,6 +1,6 @@
 {* $Id$ *}
 {if $prefs.user_register_prettytracker eq 'y' and $prefs.user_register_prettytracker_tpl}
-	<input type="password" name="passcode" id="passcode" onkeypress="regCapsLock(event)">
+	<input type="password" name="passcode" id="passcode" onkeypress="regCapsLock(event)" class="form-control" >
 	&nbsp;<strong class='mandatory_star'>*</strong>
 {else}
 	{if $prefs.useRegisterPasscode eq 'y'}
