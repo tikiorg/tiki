@@ -57,7 +57,21 @@ if (jqueryTiki.no_cookie) {
 					<fieldset>
 						<legend>{tr}Switch User{/tr}</legend>
 						<div class="form-group">
-							<label for="login-switchuser_{$module_logo_instance}">{tr}Username{/tr} {if $prefs.login_allow_email eq 'y'} {tr}or e-mail address{/tr}{/if}:</label>
+							<label for="login-switchuser_{$module_logo_instance}">
+								{if $prefs.login_is_email eq 'y'}
+									{tr}Email:{/tr}
+								{else}
+									{if $prefs.login_allow_email eq 'y'}
+										{tr}Email address or {/tr}
+									{/if}
+									{if $prefs.login_autogenerate eq 'y'}
+										{tr}User account ID{/tr}
+									{else}
+										{tr}Username{/tr}
+									{/if}
+									:
+								{/if}
+							</label>
 							<input type="hidden" name="su" value="1" class="form-control" />
 							{if $prefs.feature_help eq 'y'}
 								{help url="Switch+User" desc="{tr}Help{/tr}" desc="{tr}Switch User:{/tr}{tr}Enter a username and click 'Switch'.<br>Useful for testing permissions.{/tr}"}
@@ -164,7 +178,21 @@ if (jqueryTiki.no_cookie) {
 		{/if}
 		<div class="user form-group clearfix">
 			{if !isset($module_logo_instance)}{assign var=module_logo_instance value=' '}{/if}
-			<label for="login-user_{$module_logo_instance}">{if $prefs.login_is_email eq 'y'}{tr}Email:{/tr}{else}{tr}Username{/tr}{if $prefs.login_allow_email eq 'y'} {tr}or e-mail address{/tr}{/if}:</label>{/if}</label>
+			<label for="login-user_{$module_logo_instance}">
+				{if $prefs.login_is_email eq 'y'}
+					{tr}Email:{/tr}
+				{else}
+					{if $prefs.login_allow_email eq 'y'}
+						{tr}Email address or {/tr}
+					{/if}
+					{if $prefs.login_autogenerate eq 'y'}
+						{tr}User account ID{/tr}
+					{else}
+						{tr}Username{/tr}
+					{/if}
+					:
+				{/if}
+			</label>
 			{if !isset($loginuser) or $loginuser eq ''}
 				<div>
 					<input class="form-control" type="text" name="user" id="login-user_{$module_logo_instance}" {if !empty($error_login)} value="{$error_user|escape}"{elseif !empty($adminuser)} value="{$adminuser|escape}"{/if}/>
