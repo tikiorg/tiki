@@ -7509,6 +7509,14 @@ form.simple label .warning {
   background: #272B30;
   color: #C8C8C8;
 }
+.cssmenu_horiz ul li.selected a,
+.cssmenu_vert ul li.selected a,
+.cssmenu_horiz ul li a:hover,
+.cssmenu_vert ul li a:hover {
+  text-decoration: none;
+  color: #fff;
+  background-color: #272B30;
+}
 .box-quickadmin .cssmenu_horiz ul li {
   background-color: #272B30;
 }

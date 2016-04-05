@@ -4495,14 +4495,14 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-  color: #fff;
+  color: #e6e6e6;
   background-color: transparent;
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
-  color: #555;
-  background-color: #385c7e;
+  color: #e6e6e6;
+  background-color: transparent;
 }
 .navbar-default .navbar-nav > .disabled > a,
 .navbar-default .navbar-nav > .disabled > a:hover,
@@ -4527,8 +4527,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
-  background-color: #385c7e;
-  color: #555;
+  background-color: transparent;
+  color: #e6e6e6;
 }
 @media (max-width: 767px) {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
@@ -4536,14 +4536,14 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
-    color: #fff;
+    color: #e6e6e6;
     background-color: transparent;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
-    color: #555;
-    background-color: #385c7e;
+    color: #e6e6e6;
+    background-color: transparent;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a,
   .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover,
@@ -4556,14 +4556,14 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   color: #fff;
 }
 .navbar-default .navbar-link:hover {
-  color: #fff;
+  color: #e6e6e6;
 }
 .navbar-default .btn-link {
   color: #fff;
 }
 .navbar-default .btn-link:hover,
 .navbar-default .btn-link:focus {
-  color: #fff;
+  color: #e6e6e6;
 }
 .navbar-default .btn-link[disabled]:hover,
 fieldset[disabled] .navbar-default .btn-link:hover,
@@ -6833,7 +6833,7 @@ a.fc-event:hover {
 .topbar > a:focus,
 .topbar .navbar-default .navbar-nav > li > a:focus,
 .topbar .nav > li > a:focus {
-  color: #fff;
+  color: #e6e6e6;
 }
 .topbar .cssmenu_horiz ul {
   background: #a8cce2;
@@ -6844,7 +6844,7 @@ a.fc-event:hover {
 }
 .topbar .cssmenu_horiz.sf-arrows > .menuSection0:hover > .sf-with-ul:after,
 .topbar .cssmenu_horiz.sf-arrows > .menuSection0.sfhover > .sf-with-ul:after {
-  border-top-color: #fff;
+  border-top-color: #e6e6e6;
 }
 /* order of following 3 rules important for fallbacks to work */
 .dropdown-menu .dropdown-title,
@@ -6991,6 +6991,14 @@ form.simple label .warning {
 .ui-dialog {
   background: #e6f3f6;
   color: #333333;
+}
+.cssmenu_horiz ul li.selected a,
+.cssmenu_vert ul li.selected a,
+.cssmenu_horiz ul li a:hover,
+.cssmenu_vert ul li a:hover {
+  text-decoration: none;
+  color: #262626;
+  background-color: #5bacd7;
 }
 .box-quickadmin .cssmenu_horiz ul li {
   background-color: #e6f3f6;
@@ -7530,15 +7538,15 @@ header.container {
   margin-top: 30px;
   border-bottom: none;
 }
-.page-header .top_modules {
+.top_modules {
   background: url('../images/header.jpg') repeat-x bottom;
 }
-.page-header .top_modules a,
-.page-header .top_modules .btn-link {
+.top_modules a,
+.top_modules .btn-link {
   color: #f5f5f5;
 }
-.page-header .top_modules a:hover,
-.page-header .top_modules .btn-link:hover {
+.top_modules a:hover,
+.top_modules .btn-link:hover {
   color: #dcdcdc;
 }
 .navbar-fixed-top .container {

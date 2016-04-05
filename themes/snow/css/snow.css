@@ -6993,6 +6993,14 @@ form.simple label .warning {
   background: #fefeff;
   color: #333333;
 }
+.cssmenu_horiz ul li.selected a,
+.cssmenu_vert ul li.selected a,
+.cssmenu_horiz ul li a:hover,
+.cssmenu_vert ul li a:hover {
+  text-decoration: none;
+  color: #262626;
+  background-color: url('../images/flakesptn3.jpg') transparent;
+}
 .box-quickadmin .cssmenu_horiz ul li {
   background-color: #fefeff;
 }

@@ -604,6 +604,10 @@ hr {
   color: #fff;
   background: #771437;
 }
+.topbar .cssmenu_horiz li.selected a,
+.cssmenu_horiz ul li.selected a {
+  background: #61102d;
+}
 .cssmenu_horiz > li > a:hover,
 .cssmenu_vert > li > a:hover,
 .cssmenu_horiz ul > li > a:hover,

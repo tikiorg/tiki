@@ -6791,7 +6791,7 @@ textarea,
 .navbar-nav .open .dropdown-menu,
 .navbar-nav .open .dropdown-menu li,
 .navbar-default .navbar-nav > li > a {
-  background: #e7e7e7;
+  background: #aaa;
 }
 .topbar .navbar-default .navbar-nav > li a:hover,
 .topbar .nav > li:hover,
@@ -7139,6 +7139,14 @@ form.simple label .warning {
 .ui-dialog {
   background: #fff;
   color: #363636;
+}
+.cssmenu_horiz ul li.selected a,
+.cssmenu_vert ul li.selected a,
+.cssmenu_horiz ul li a:hover,
+.cssmenu_vert ul li a:hover {
+  text-decoration: none;
+  color: #f2f2f2;
+  background-color: #6D9F26;
 }
 .box-quickadmin .cssmenu_horiz ul li {
   background-color: #fff;

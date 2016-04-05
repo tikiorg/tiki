@@ -7167,6 +7167,14 @@ form.simple label .warning {
   background: #fff;
   color: #777;
 }
+.cssmenu_horiz ul li.selected a,
+.cssmenu_vert ul li.selected a,
+.cssmenu_horiz ul li a:hover,
+.cssmenu_vert ul li a:hover {
+  text-decoration: none;
+  color: #fff;
+  background-color: #EB6864;
+}
 .box-quickadmin .cssmenu_horiz ul li {
   background-color: #fff;
 }
@@ -7685,4 +7693,14 @@ table.tablesorter thead tr.tablesorter-filter-row input.dateTo {
 table.tablesorter thead tr.tablesorter-headerRow,
 table.tablesorter thead tr.tablesorter-filter-row {
   background-color: #fff;
+}
+.cssmenu_vert,
+.cssmenu_horiz {
+  font-size: 18px;
+  font-family: "News Cycle", "Arial Narrow Bold", sans-serif;
+  font-weight: 700;
+}
+.cssmenu_vert li ul,
+.cssmenu_horiz li ul {
+  font-size: 15px;
 }

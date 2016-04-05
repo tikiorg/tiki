@@ -6906,6 +6906,14 @@ form.simple label .warning {
   background: #214d68;
   color: #333333;
 }
+.cssmenu_horiz ul li.selected a,
+.cssmenu_vert ul li.selected a,
+.cssmenu_horiz ul li a:hover,
+.cssmenu_vert ul li a:hover {
+  text-decoration: none;
+  color: #262626;
+  background-color: #f5f5f5;
+}
 .box-quickadmin .cssmenu_horiz ul li {
   background-color: #214d68;
 }
@@ -7431,6 +7439,11 @@ body {
 }
 .navbar-inverse {
   background: #069;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  background: transparent;
 }
 input,
 .jumbotron {
