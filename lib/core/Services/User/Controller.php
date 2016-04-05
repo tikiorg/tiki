@@ -924,40 +924,6 @@ class Services_User_Controller
 
 	}
 
-	function action_upload_avatar( $input ) {
-		global $user;
-		$userwatch = $input->user->none();
-
-		if (!$userwatch) {
-			$errormsg = tra('You must set a user for whom to set an avatar.');
-			throw new Services_Exception($errormsg);
-		}
-
-		if ($user != $userwatch && Perms::get()->admin != 'y') {
-			$errormsg = tra('You do not have the permission to change the avatar.');
-			throw new Services_Exception($errormsg);
-		}
-		$this->access->check_feature('feature_userPreferences');
-		$this->access->check_user($user);
-
-		if($_SERVER['REQUEST_METHOD'] === 'POST') {
-			if (empty($_FILES['userfile'])) {
-				$errormsg = tra('You must select an avatar to upload.');
-				throw new Services_Exception($errormsg);
-			}
-			$name = $_FILES['userfile']['name'];
-
-			$avatarlib = TikiLib::lib('avatar');
-			$avatarlib->set_avatar_from_url($_FILES['userfile']['tmp_name'], $userwatch, $name);
-			return true;
-		} else {
-			return array(
-				"title" => tra("Upload Avatar"),
-				"userwatch" => $userwatch,
-			);
-		}
-	}
-
 
 	private function removeUsers(array $users, $page = false, $trackerIds = [], $files = false)
 	{
