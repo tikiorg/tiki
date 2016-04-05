@@ -2618,6 +2618,13 @@ fieldset.dropzone {
 .user-info .friendship li span {
   padding-right: .5em;
 }
+/* avatar upload */
+.user-avatar-preview {
+  margin-right: 1em;
+}
+.user-avatar-preview img {
+  width: 100%;
+}
 /* webmail & groupmail */
 .box-webmail_inbox img.icon {
   vertical-align: middle;
