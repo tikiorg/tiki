@@ -92,6 +92,7 @@ class TikiDate
 		'Libya',
 		'localtime',	// because PHP Fatal error was observed in Apache2 logfile
 				// not mentioned here: https://bugs.php.net/bug.php?id=66985
+		'leap-seconds.list', // same here
 		'MST7MDT',
 		'Navajo',
 		'NZ-CHAT',

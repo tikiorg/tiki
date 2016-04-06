@@ -8,25 +8,25 @@ a:focus {
   color: #9a6500;
 }
 .btn-default {
-  color: #ffffff;
+  color: #fff;
   background-color: #2293f7;
   border-color: #2293f7;
 }
 .btn-default:focus,
 .btn-default.focus {
-  color: #ffffff;
+  color: #fff;
   background-color: #087ade;
   border-color: #055194;
 }
 .btn-default:hover {
-  color: #ffffff;
+  color: #fff;
   background-color: #087ade;
   border-color: #0874d4;
 }
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
-  color: #ffffff;
+  color: #fff;
   background-color: #087ade;
   border-color: #0874d4;
 }
@@ -39,7 +39,7 @@ a:focus {
 .btn-default:active.focus,
 .btn-default.active.focus,
 .open > .dropdown-toggle.btn-default.focus {
-  color: #ffffff;
+  color: #fff;
   background-color: #0767bc;
   border-color: #055194;
 }
@@ -62,17 +62,17 @@ fieldset[disabled] .btn-default.focus {
 }
 .btn-default .badge {
   color: #2293f7;
-  background-color: #ffffff;
+  background-color: #fff;
 }
 .navbar-default {
   background-color: #e69700;
   border-color: #e69700;
 }
 .navbar-default .navbar-text {
-  color: #ffffff;
+  color: #fff;
 }
 .navbar-default .navbar-nav > li > a {
-  color: #ffffff;
+  color: #fff;
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
@@ -80,7 +80,7 @@ fieldset[disabled] .btn-default.focus {
   background-color: transparent;
 }
 .navbar-default .navbar-link {
-  color: #ffffff;
+  color: #fff;
 }
 .navbar-default .navbar-link:hover {
   color: #e6e6e6;
@@ -125,7 +125,7 @@ input[type="password"],
 select,
 textarea,
 body.cke_show_borders {
-  background: #ffffff;
+  background: #fff;
   color: #000;
 }
 .topbar,
@@ -137,7 +137,7 @@ body.cke_show_borders {
   font-weight: bold;
   color: #fff;
   outline: none;
-  background: #e69700 url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_diagonals-thick_20_e69700_40x40.png') repeat 50% 50%;
+  background: #E69700 url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_diagonals-thick_20_e69700_40x40.png') repeat 50% 50%;
 }
 .panel-primary .panel-title {
   color: #fff;
@@ -224,18 +224,18 @@ body.cke_show_borders {
 .topbar .sf-arrows ul .sf-with-ul:after,
 .topbar .cssmenu_vert.sf-arrows ul > li > .sf-with-ul:after {
   border-color: transparent;
-  border-left-color: #222222;
+  border-left-color: #222;
   /* edit this to suit design (no rgba in IE8) */
 }
 .wikitext {
   border: #eee solid .5em;
-  background: #eeeeee url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_inset-hard_100_eeeeee_1x100.png') 50% bottom repeat-x;
+  background: #eee url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_inset-hard_100_eeeeee_1x100.png') 50% bottom repeat-x;
 }
 h1.pagetitle {
   display: block;
   border: 1px solid #1484e6;
   color: #fff;
-  background: #1484e6 url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_diagonals-thick_22_1484e6_40x40.png') repeat scroll 50% 50%;
+  background: #1484E6 url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_diagonals-thick_22_1484e6_40x40.png') repeat scroll 50% 50%;
   font-weight: bold;
   font-size: 14px;
   padding: 10px;
@@ -253,7 +253,7 @@ h1.pagetitle > a:hover {
 .panel {
   border: 1px solid #aaa;
   color: #222;
-  background: #eeeeee url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_inset-hard_100_eeeeee_1x100.png') 50% bottom repeat-x;
+  background: #eee url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_inset-hard_100_eeeeee_1x100.png') 50% bottom repeat-x;
 }
 .panel a {
   color: #e69700;
@@ -262,7 +262,7 @@ h1.pagetitle > a:hover {
   font-weight: bold;
 }
 .panel-heading {
-  background: #f9f9f9 url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_highlight-soft_100_f9f9f9_1x100.png') repeat-x 50% 50%;
+  background: #F9F9F9 url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_highlight-soft_100_f9f9f9_1x100.png') repeat-x 50% 50%;
   border: 1px solid #ccc;
   text-align: center;
 }
@@ -277,10 +277,10 @@ h1.pagetitle > a:hover {
 }
 .panel-danger > .panel-heading {
   background: #d9534f;
-  color: #ffffff;
+  color: #fff;
 }
 .panel-default.panel-accordian > .panel-heading {
-  background: #e69700 url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_diagonals-thick_20_e69700_40x40.png') 50% 50%;
+  background: #E69700 url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_diagonals-thick_20_e69700_40x40.png') 50% 50%;
   border: 1px solid #E69700;
 }
 .panel-default.panel-accordian > .panel-heading .panel-title > a {
@@ -309,7 +309,7 @@ h1.pagetitle > a:hover {
   font-weight: bold;
   color: #fff;
   outline: none;
-  background: #e69700 url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_diagonals-thick_20_e69700_40x40.png') 50% 50%;
+  background: #E69700 url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_diagonals-thick_20_e69700_40x40.png') 50% 50%;
 }
 .errors a,
 .errors a:visited,
@@ -327,7 +327,7 @@ tr.diffheader {
   border: 1px solid #e69700;
   font-weight: bold;
   color: #fff;
-  background: #e69700 url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_diagonals-thick_20_e69700_40x40.png') repeat 50% 50%;
+  background: #E69700 url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_diagonals-thick_20_e69700_40x40.png') repeat 50% 50%;
 }
 th a,
 th a:link,
@@ -374,7 +374,7 @@ li.even {
   font-weight: bold;
   color: #ffffff !important;
   outline: none;
-  background: #e69700 url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_diagonals-thick_20_e69700_40x40.png') 50% 50%;
+  background: #E69700 url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_diagonals-thick_20_e69700_40x40.png') 50% 50%;
 }
 .tabactive a {
   color: #fff;
@@ -384,7 +384,7 @@ li.even {
   padding: 1em;
   margin-bottom: 1em;
   color: #222;
-  background: #eeeeee url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_inset-hard_100_eeeeee_1x100.png') 50% bottom repeat-x;
+  background: #eee url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_inset-hard_100_eeeeee_1x100.png') 50% bottom repeat-x;
 }
 .post .postbody-title .title a.link,
 .postbody-title .panel-title {
@@ -393,23 +393,23 @@ li.even {
 .post .postbody {
   border: 1px solid #aaa;
   color: #222;
-  background: #eeeeee url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_inset-hard_100_eeeeee_1x100.png') 50% bottom repeat-x;
+  background: #eee url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_inset-hard_100_eeeeee_1x100.png') 50% bottom repeat-x;
 }
 .postbody-title {
   border: 1px solid #E69700;
   font-weight: bold;
   color: #fff;
   outline: none;
-  background: #e69700 url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_diagonals-thick_20_e69700_40x40.png') repeat 50% 50%;
+  background: #E69700 url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_diagonals-thick_20_e69700_40x40.png') repeat 50% 50%;
 }
 .forum_actions {
-  background: #c5ddfc url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_diagonals-small_25_c5ddfc_40x40.png') 50% 50%;
+  background: #C5DDFC url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_diagonals-small_25_c5ddfc_40x40.png') 50% 50%;
   border: 1px solid #FFFFFF;
   color: #333333;
 }
 .caltable .even,
 .caltable .odd {
-  background: #1484e6 url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_diagonals-thick_22_1484e6_40x40.png') 50% 50%;
+  background: #1484E6 url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_diagonals-thick_22_1484e6_40x40.png') 50% 50%;
   border: 1px solid #fff;
   color: #fff;
   font-weight: bold;
@@ -464,7 +464,7 @@ h1 a.pagetitle,
   display: block;
   border: 1px solid #1484e6;
   color: #fff;
-  background: #1484e6 url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_diagonals-thick_22_1484e6_40x40.png') 50% 50%;
+  background: #1484E6 url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_diagonals-thick_22_1484e6_40x40.png') 50% 50%;
   font-weight: bold;
   font-size: 14px;
   padding: 10px;

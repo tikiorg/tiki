@@ -22,7 +22,7 @@ function wikiplugin_annotation_info()
 			'src' => array(
 				'required' => true,
 				'name' => tra('Location'),
-				'description' => tra('Absolute URL to the image or relative path from Tiki site root.'),
+				'description' => tra('Absolute URL to the image, relative path from Tiki site root or an image from the file gallery <code>display1</code>.'),
 				'filter' => 'url',
 				'default' => '',
 				'since' => '3.0',

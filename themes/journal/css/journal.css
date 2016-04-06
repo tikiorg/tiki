@@ -6737,7 +6737,6 @@ header.page-header::before,
   padding: 0;
   margin: 2px 0 0;
   background-color: #fff;
-  border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 4px;
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
@@ -7105,7 +7104,8 @@ table.treetable.objectperms td.removed {
   padding: 15px;
   border: 1px solid #bce8f1;
 }
-html#print {
+html#print,
+body.print * {
   background: #fff;
   color: #000;
 }
@@ -7166,6 +7166,14 @@ form.simple label .warning {
 .ui-dialog {
   background: #fff;
   color: #777;
+}
+.cssmenu_horiz ul li.selected a,
+.cssmenu_vert ul li.selected a,
+.cssmenu_horiz ul li a:hover,
+.cssmenu_vert ul li a:hover {
+  text-decoration: none;
+  color: #fff;
+  background-color: #EB6864;
 }
 .box-quickadmin .cssmenu_horiz ul li {
   background-color: #fff;
@@ -7685,4 +7693,14 @@ table.tablesorter thead tr.tablesorter-filter-row input.dateTo {
 table.tablesorter thead tr.tablesorter-headerRow,
 table.tablesorter thead tr.tablesorter-filter-row {
   background-color: #fff;
+}
+.cssmenu_vert,
+.cssmenu_horiz {
+  font-size: 18px;
+  font-family: "News Cycle", "Arial Narrow Bold", sans-serif;
+  font-weight: 700;
+}
+.cssmenu_vert li ul,
+.cssmenu_horiz li ul {
+  font-size: 15px;
 }

@@ -69,10 +69,10 @@ fieldset[disabled] .btn-default.focus {
   border-color: #2d4789;
 }
 .navbar-default .navbar-text {
-  color: #ffffff;
+  color: #fff;
 }
 .navbar-default .navbar-nav > li > a {
-  color: #ffffff;
+  color: #fff;
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
@@ -80,7 +80,7 @@ fieldset[disabled] .btn-default.focus {
   background-color: #395bb0;
 }
 .navbar-default .navbar-link {
-  color: #ffffff;
+  color: #fff;
 }
 .navbar-default .navbar-link:hover {
   color: #e6e6e6;
@@ -127,12 +127,12 @@ input[type="submit"]:hover,
 .topbar,
 .topbar .navbar-default .navbar-nav > li,
 .topbar .nav > li {
-  color: #ffffff;
+  color: #fff;
 }
 .topbar > a,
 .topbar .navbar-default .navbar-nav > li > a,
 .topbar .nav > li > a {
-  color: #ffffff;
+  color: #fff;
 }
 .topbar > a:hover,
 .topbar .navbar-default .navbar-nav > li > a:hover,
@@ -226,7 +226,7 @@ input[type="submit"]:hover,
   border-bottom-right-radius: 0;
 }
 .panel-title {
-  color: #ffffff;
+  color: #fff;
 }
 .topbar .cssmenu_horiz.sf-arrows > .menuSection0 > .sf-with-ul::after {
   border: 5px solid transparent;

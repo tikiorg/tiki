@@ -99,7 +99,6 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 				} elseif ($entry instanceof Search_Type_Whole || $entry instanceof Search_Type_MultivaluePlain) {
 					return array(
 						"type" => "string",
-						"term_vector" => "with_positions_offsets",
 						"index" => "not_analyzed",
 						"fields" => array(
 							"sort" => array(

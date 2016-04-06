@@ -7,7 +7,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="generator" content="Tiki Wiki CMS Groupware - http://tiki.org">
+<meta name="generator" content="Tiki Wiki CMS Groupware - https://tiki.org">
 
 {* --- Canonical URL --- *}
 {include file="canonical.tpl"}

@@ -6929,7 +6929,8 @@ table.treetable.objectperms td.removed {
   padding: 15px;
   border: 1px solid #bce8f1;
 }
-html#print {
+html#print,
+body.print * {
   background: #fff;
   color: #000;
 }
@@ -6990,6 +6991,14 @@ form.simple label .warning {
 .ui-dialog {
   background: #f4f4f4;
   color: #222222;
+}
+.cssmenu_horiz ul li.selected a,
+.cssmenu_vert ul li.selected a,
+.cssmenu_horiz ul li a:hover,
+.cssmenu_vert ul li a:hover {
+  text-decoration: none;
+  color: #404040;
+  background-color: #f5f5f5;
 }
 .box-quickadmin .cssmenu_horiz ul li {
   background-color: #f4f4f4;
@@ -7531,6 +7540,12 @@ header.container {
 .cssmenu_vert > li > a:focus,
 .cssmenu_horiz ul > li > a:focus,
 .cssmenu_vert ul > li > a:focus {
+  text-decoration: none;
+  color: #333;
+  background-color: #e9ecef;
+}
+.cssmenu_horiz ul li.selected a,
+.cssmenu_vert ul li.selected a {
   text-decoration: none;
   color: #333;
   background-color: #e9ecef;

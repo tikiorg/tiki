@@ -305,7 +305,8 @@ table.treetable.objectperms td.removed {
 }
 
 // print mode only - to make sure print templates will use and print on seamless white bg color
-html#print {
+html#print,
+body.print * { // wiki page print view
 	background: #fff;
 	color: #000;
 }
@@ -385,6 +386,17 @@ form.simple label .warning {
 	background: @body-bg;
 	color: @text-color;
 }
+
+.cssmenu_horiz ul li.selected a,
+.cssmenu_vert ul li.selected a,
+.cssmenu_horiz ul li a:hover,
+.cssmenu_vert ul li a:hover {
+	text-decoration: none;
+	color: @dropdown-link-hover-color;
+	background-color: @dropdown-link-hover-bg;
+}
+
+
 
 // tiki-modules.less
 .box-quickadmin .cssmenu_horiz ul li {

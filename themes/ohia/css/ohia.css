@@ -6929,7 +6929,8 @@ table.treetable.objectperms td.removed {
   padding: 15px;
   border: 1px solid #155865;
 }
-html#print {
+html#print,
+body.print * {
   background: #fff;
   color: #000;
 }
@@ -6990,6 +6991,14 @@ form.simple label .warning {
 .ui-dialog {
   background: #242424;
   color: #eeeeee;
+}
+.cssmenu_horiz ul li.selected a,
+.cssmenu_vert ul li.selected a,
+.cssmenu_horiz ul li a:hover,
+.cssmenu_vert ul li a:hover {
+  text-decoration: none;
+  color: #eeeeee;
+  background-color: transparent;
 }
 .box-quickadmin .cssmenu_horiz ul li {
   background-color: #242424;

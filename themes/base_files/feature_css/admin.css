@@ -23,11 +23,12 @@ a.admbox .icon {
 }
 a.admbox span.title {
 	position: absolute;
-	top: 50px;
+	top: 47px;
 	left: 0;
 	text-align: center;
 	width: 100%;
 	margin: .1em;
+	white-space: normal;
 }
 
 a.admbox.off img {
