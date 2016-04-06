@@ -19,7 +19,7 @@ function smarty_modifier_tiki_short_datetime($string, $intro='', $same='y')
 	$date = smarty_modifier_tiki_date_format($string, $prefs['short_date_format']);
 	$time = smarty_modifier_tiki_date_format($string, $prefs['short_time_format']);
 
-	$intro = !empty($intro) ?: tra($intro) . ' ';
+	$intro = !empty($intro) ? tra($intro) . ' ' : '';
 
 	if ($prefs['jquery_timeago'] === 'y' && $same === 'y') {
 		TikiLib::lib('header')->add_jq_onready('$("time.timeago").timeago();');
