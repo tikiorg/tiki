@@ -55,7 +55,6 @@ function module_login_box_info()
 				'name' => tra('Show user name'),
 				'description' => tra('Show the user name when in popup mode') . ' (y/n)',
 				'filter' => 'alpha',
-				'default' => 'y'
 			),
 		)
 	);
@@ -95,9 +94,5 @@ function module_login_box($mod_reference, &$module_params)
 		$module_params['show_forgot'] = 'y';
 	} else {
 		$module_params['show_forgot'] = 'n';
-	}
-
-	if (!isset($module_params['show_user_name']) || $module_params['show_user_name'] == '') {
-		$module_params['show_user_name'] = 'y';
 	}
 }

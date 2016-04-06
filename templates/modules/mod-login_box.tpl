@@ -82,7 +82,7 @@ if (jqueryTiki.no_cookie) {
 				</button>
 				<ul class="dropdown-menu">
 					<li>
-						<a href="tiki-user_information.php" title="{tr}My Account{/tr}">{tr}My Account{/tr}</a>
+						<a href="tiki-user_information.php" title="{tr}My Account{/tr}">{if isset($module_params.show_user_name) && $module_params.show_user_name eq 'y'}{tr}My Account{/tr}{else}{tr}{$user|username|escape:"html"}{/tr}{/if}</a>
 					</li>
 					<li>
 						<a href="tiki-logout.php" title="{tr}Log out{/tr}">{tr}Log out{/tr}</a>
