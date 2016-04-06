@@ -136,18 +136,17 @@ class TikiDate
     static function getTimeZoneList()
 	{
 		$tz = array();
+		$now = new DateTime('now', new DateTimeZone('GMT'));
 		$tz_list = DateTimeZone::listIdentifiers(DateTimeZone::ALL_WITH_BC);
 		ksort($tz_list);
 
 		foreach ($tz_list as $tz_id) {
-			try {
-				$timezone = new DateTimeZone($tz_id);
-				$tmp_now = new DateTime('now', $timezone);
-				$tmp = $tmp_now->getOffset() - 3600 * $tmp_now->format('I');
-				$tz[$tz_id]['offset'] = $tmp * 1000;
-			} catch (Exception $e) {
-				TikiLib::lib('errorreport')->report(tr('Invalid timezone: %0', $tz_id));
+			if (in_array($tz_id, TikiDate::$deprecated_tz)) {
+				continue; // Workaround PHP5.5 no more this timezone https://bugs.php.net/bug.php?id=66985
 			}
+			$tmp_now = new DateTime('now', new DateTimeZone($tz_id));
+			$tmp = $tmp_now->getOffset() - 3600*$tmp_now->format('I');
+			$tz[$tz_id]['offset'] = $tmp * 1000;
 		}
 		return $tz;
 	}
