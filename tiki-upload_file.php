@@ -89,7 +89,7 @@ if (isset($_REQUEST['galleryId'][1])) {
 	foreach ($_REQUEST['galleryId'] as $i => $gal) {
 		if (!$i) continue;
 		// TODO get the good gal_info
-		$perms = $tikilib->get_perm_object($_REQUEST['galleryId'][$i], 'file gallery', $gal_info, false);
+		$perms = $tikilib->get_perm_object($_REQUEST['galleryId'][$i], 'file gallery', isset($gal_info) ? $gal_info : '', false);
 		$access->check_permission('tiki_p_upload_files');
 	}
 }
@@ -189,7 +189,7 @@ $smarty->assign('editFileId', (int) $fileId);
 $smarty->assign('galleryId', empty( $_REQUEST['galleryId'][0] ) ? '' : $_REQUEST['galleryId'][0]);
 
 if ( empty( $fileId ) ) {
-	if ($gal_info['type'] == 'user') {
+	if (isset($gal_info['type']) && $gal_info['type'] == 'user') {
 		$galleries = $filegallib->getSubGalleries($requestGalleryId, true, 'userfiles');
 	} else {
 		$galleries = $filegallib->getSubGalleries($requestGalleryId, true, 'upload_files');

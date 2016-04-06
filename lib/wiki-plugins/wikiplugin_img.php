@@ -422,7 +422,7 @@ function wikiplugin_img_info()
 			'class' => array(
 				'required' => false,
 				'name' => tra('CSS Class'),
-				'filter' => 'style',
+				'filter' => 'text',
 				'description' => tr('CSS class to apply to the image. %0class="fixedSize"%1 prevents the image from being
 					automatically resized and relocated in Tiki SlideShows', '<code>', '</code>'),
 				'since' => '3.0',
