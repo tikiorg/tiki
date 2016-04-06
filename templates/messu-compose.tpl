@@ -32,7 +32,7 @@
 	<form action="messu-compose.php" method="post" class="form-horizontal" role="form">
 		<div class="form-group">
 			<label class="col-sm-2 control-label" for="mess-composeto">{tr}To{/tr}
-				{help url="Inter-User+Messages#Composing_messages" desc="{tr}To: Multiple addresses can be separated with a semicolon (";") or comma (","){/tr}"}
+				{help url="Inter-User+Messages#Composing_messages" desc="{tr}To: Multiple addresses can be separated with a semicolon (';') or comma (','){/tr}"}
 			</label>
 			<div class="col-sm-10">
 				<input type="text" class="username form-control" name="to" id="mess-composeto" value="{$to|escape}">
@@ -42,7 +42,7 @@
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 control-label" for="mess-composecc">{tr}CC{/tr}
-				{help url="Inter-User+Messages#Composing_messages" desc="{tr}CC: Multiple addresses can be separated with a semicolon (";") or comma (","){/tr}"}
+				{help url="Inter-User+Messages#Composing_messages" desc="{tr}CC: Multiple addresses can be separated with a semicolon (';') or comma (','){/tr}"}
 			</label>
 			<div class="col-sm-10">
 				<input type="text" class="username form-control" name="cc" id="mess-composecc" value="{$cc|escape}">
@@ -50,10 +50,10 @@
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 control-label" for="mess-composebcc">{tr}BCC{/tr}
-				{help url="Inter-User+Messages#Composing_messages" desc="{tr}BCC: Multiple addresses can be separated with a semicolon (";") or comma (","){/tr}"}
+				{help url="Inter-User+Messages#Composing_messages" desc="{tr}BCC: Multiple addresses can be separated with a semicolon (';') or comma (','){/tr}"}
 			</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" name="bcc" id="mess-composebcc" value="{$bcc|escape}" class="username">
+				<input type="text" class="form-control username" name="bcc" id="mess-composebcc" value="{$bcc|escape}">
 			</div>
 		</div>
 		<div class="form-group">
