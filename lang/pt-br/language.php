@@ -5190,7 +5190,6 @@ $lang = array(
 "Page '%0' cannot be found" => "Não foi possível encontrar a página '%0'",
 "You do not have permission to view this section" => "Permissão negada: você não pode ver esta seção",
 // "For the security of your password, direct access to the feed is only available via HTTPS" => "For the security of your password, direct access to the feed is only available via HTTPS",
-// "Invalid timezone: %0" => "Invalid timezone: %0",
 // "Help link" => "Help link",
 "You are banned from" => "Você foi banido(a) de",
 "wiki" => "wiki",

@@ -5193,7 +5193,6 @@ $lang = array(
 // "Page '%0' cannot be found" => "Page '%0' cannot be found",
 "You do not have permission to view this section" => "Magasabb szintű jogosultágra van szükség a szekció megtekintéséhez",
 // "For the security of your password, direct access to the feed is only available via HTTPS" => "For the security of your password, direct access to the feed is only available via HTTPS",
-// "Invalid timezone: %0" => "Invalid timezone: %0",
 "Help link" => "Súgó",
 "You are banned from" => "Kitiltottak innen:",
 "wiki" => "wiki",

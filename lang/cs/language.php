@@ -5189,7 +5189,6 @@ $lang = array(
 // "Page '%0' cannot be found" => "Page '%0' cannot be found",
 "You do not have permission to view this section" => "Nemáte dostatečná oprávnění k prohlížení této části webu",
 // "For the security of your password, direct access to the feed is only available via HTTPS" => "For the security of your password, direct access to the feed is only available via HTTPS",
-// "Invalid timezone: %0" => "Invalid timezone: %0",
 // "Help link" => "Help link",
 "You are banned from" => "Máte zamezený přístup na",
 "wiki" => "Wiki",

@@ -316,7 +316,7 @@ class EditLibTest extends TikiTestCase
 	}
 
 
-	function testSpanNestedTitle, background, etcs()
+	function testSpanNestedTitle()
 	{
 		$this->markTestIncomplete('Work in progress.');
 		$ex = '--===text===--';
