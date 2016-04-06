@@ -5193,7 +5193,6 @@ $lang = array(
 "Page '%0' cannot be found" => "'%0' 페이지가 발견되지 않았습니다",
 "You do not have permission to view this section" => "이 부분을 볼 권한이 없습니다",
 "For the security of your password, direct access to the feed is only available via HTTPS" => "귀하의 비밀번호의 보안을 위하여, 피드로의 집적 접근은 https 를 통해서만 사용가능합니다",
-// "Invalid timezone: %0" => "Invalid timezone: %0",
 "Help link" => "도움말 링크",
 "You are banned from" => "다음에서 차단되었습니다",
 "wiki" => "위키",

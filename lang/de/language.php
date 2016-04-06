@@ -5193,7 +5193,6 @@ $lang = array(
 "Page '%0' cannot be found" => "Seite '%0' wurde nicht gefunden",
 "You do not have permission to view this section" => "Zugriff verweigert. Du kannst diesen Bereich nicht betrachten",
 "For the security of your password, direct access to the feed is only available via HTTPS" => "Zur Sicherheit für Dein Passwort besteht Zugriff auf den Feed nur via HTTPS",
-// "Invalid timezone: %0" => "Invalid timezone: %0",
 "Help link" => "Hilfelink",
 "You are banned from" => "Du wurdest verbannt von",
 "wiki" => "Wiki",
