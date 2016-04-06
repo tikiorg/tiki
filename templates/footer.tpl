@@ -74,6 +74,17 @@
 	{$headerlib->output_js_config()}
 	{$headerlib->output_js_files()}
 	{$headerlib->output_js()}
+	{* some js to enabled falsely detected js disabled browsers to be rechecked *}
+	{if $prefs.javascript_enabled eq 'n' and $prefs.disableJavascript eq 'n'}
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+if (confirm("A problem occurred while detecting JavaScript on this page, click ok to retry.")) {ldelim}
+	document.cookie = "javascript_enabled_detect=";
+	location = location.href;
+{rdelim}
+//--><!]]>
+</script>
+	{/if}
 {/if}
 {if $prefs.feature_endbody_code}
 	{eval var=$prefs.feature_endbody_code}
