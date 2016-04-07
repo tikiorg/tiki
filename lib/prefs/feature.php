@@ -107,6 +107,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'keywords' => 'CRUD',
 			'default' => 'n',
+			'tags' => array('basic'),
 			'admin' => 'trackers',
 			'view' => 'tiki-list_trackers.php',
 			'module' => 'tracker',
