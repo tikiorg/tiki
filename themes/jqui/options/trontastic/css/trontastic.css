@@ -450,3 +450,6 @@ td.calheadhighlight a:visited {
 .caltable .calmodfocus {
   text-decoration: underline;
 }
+.blog-postbody-title a {
+  color: #000;
+}

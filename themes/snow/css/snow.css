@@ -7588,6 +7588,9 @@ header.container {
 .panel-footer {
   background: url('../images/flakesptn3.jpg');
 }
+.blog-postbody-title h2.panel-title {
+  font-size: 20px;
+}
 #col2 .panel,
 #col3 .panel,
 #col2 .panel-default,

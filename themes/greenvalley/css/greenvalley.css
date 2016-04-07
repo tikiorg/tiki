@@ -7659,3 +7659,8 @@ footer.footer {
   background: url('../images/page_background_ltr.jpg') repeat;
   color: #515151;
 }
+.postbody-title .title > .panel-title a.link,
+.panel-default > .panel-heading .blog-postbody-title,
+.panel-default > .panel-heading a {
+  color: #fff;
+}
