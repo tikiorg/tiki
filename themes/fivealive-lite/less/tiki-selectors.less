@@ -77,8 +77,16 @@ body.tiki.navbar-padding,
 	background: @topbar_container_background;
 }
 
-.layout_basic .topbar,
-.layout_basic.tiki .row.topbar,
+header.header {
+	.sitetitle,
+	.sitesubtitle {
+		color: @header-color;
+		text-shadow: none;
+	}
+}
+
+//.layout_basic .topbar,
+//.layout_basic.tiki .row.topbar,
 .layout_fixed_top_modules .navbar-fixed-top .navbar {
 	margin-bottom: 0;
 }
@@ -129,7 +137,10 @@ body.tiki.navbar-padding,
 	// whole width div containing the header strip
 	background: @header_outer-background; // url('@{imagePath}siteheadertile.png') 0 0 no-repeat;
 	border-bottom: 5px solid #000;
+	color: #000;
 }
+
+.header_outer a { color: #fff; }
 
 .header_container > .header {
 	// inner <header> element that gets .fixedwidth class applied
@@ -249,8 +260,10 @@ textarea,
 // This comes last to enable site title color of theme options under FiveAlive-lite to have priority over the default set by FiveAlive.
 header.header {
 	.sitetitle,
-	.sitesubtitle {
-		color: @brand-primary;
+	.sitesubtitle,
+	a,
+	.btn-link {
+		color: #fff;
 		text-shadow: none;
 	}
 }

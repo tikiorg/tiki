@@ -240,16 +240,19 @@ textarea,
 }
 
 // This comes last to enable site title color of theme options under FiveAlive-lite to have priority over the default set by FiveAlive.
+.layout_basic .page-header > .top_modules,
 header.header {
-	.sitetitle,
-	.sitesubtitle {
-		color: @brand-primary;
-		text-shadow: none;
-	}
-	//  a,
-	//  a:visited {color: @brand-primary;
-	//  }
-}
+	a,
+	.btn-link,
+	 .sitetitle,
+	 .sitesubtitle {
+		 color: @header-color;
+		 text-shadow: none;
+	 }
+	 //  a,
+	 //  a:visited {color: @brand-primary;
+	 //  }
+ }
 
 .searchresults blockquote em,
 .highlight,

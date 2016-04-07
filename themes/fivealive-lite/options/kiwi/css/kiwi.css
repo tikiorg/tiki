@@ -749,9 +749,15 @@ textarea,
 .siteloginbar_popup .dropdown-menu > li > a {
   color: #fff;
 }
+.layout_basic .page-header > .top_modules a,
+header.header a,
+.layout_basic .page-header > .top_modules .btn-link,
+header.header .btn-link,
+.layout_basic .page-header > .top_modules .sitetitle,
 header.header .sitetitle,
+.layout_basic .page-header > .top_modules .sitesubtitle,
 header.header .sitesubtitle {
-  color: #638637;
+  color: #fff;
   text-shadow: none;
 }
 .searchresults blockquote em,
