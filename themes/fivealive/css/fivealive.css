@@ -7532,7 +7532,7 @@ code {
   /* 2nd whole width div for background image tricks */
   background: url('../images/header_left.png') 0 100% no-repeat;
 }
-.header_container {
+.header_container .container {
   /* inner <header> element that gets .fixedwidth class applied */
   background: url('../images/siteheader.jpg') 0 0 no-repeat;
 }
