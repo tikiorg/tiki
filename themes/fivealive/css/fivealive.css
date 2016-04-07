@@ -7641,6 +7641,9 @@ header.header a:visited {
 .calhighlight {
   background: #ddf4ef;
 }
+.popover {
+  color: #333333;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */

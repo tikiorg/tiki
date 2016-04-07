@@ -31,6 +31,12 @@
 				<legend>{tr}Registration{/tr} &amp; {tr}Log in{/tr}</legend>
 				{preference name=allowRegister}
 				<div class="adminoptionboxchild" id="allowRegister_childcontainer">
+					<div class="col-sm-8 col-sm-offset-4">
+						{remarksbox type="note" title="{tr}Note{/tr}" close="n"}
+							{tr}By default anonymous must enter anti-bot code (CAPTCHA).{/tr}
+							{tr}You can change this setting in the Admin, <a href="tiki-admin.php?page=security#content_admin1-2">Security section</a>{/tr}
+						{/remarksbox}
+					</div>
 					{preference name=validateUsers}
 					{preference name=validateEmail}
 					{preference name=validateRegistration}

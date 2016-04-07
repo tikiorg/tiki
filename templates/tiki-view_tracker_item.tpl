@@ -75,7 +75,8 @@
 			{if $js == 'n'}</li></ul>{/if}
 		</div>
 		{if $canModify && $prefs.tracker_legacy_insert neq 'y'}
-			<a class="btn btn-default" href="{bootstrap_modal controller=tracker action=update_item trackerId=$trackerId itemId=$itemId}">{icon name="edit"} {tr}Edit{/tr}</a>
+			{if not empty($smarty.request.from)}{$from = $smarty.request.from}{else}{$from=''}{/if}
+			<a class="btn btn-default" href="{bootstrap_modal controller=tracker action=update_item trackerId=$trackerId itemId=$itemId redirect=$from}">{icon name="edit"} {tr}Edit{/tr}</a>
 		{/if}
 	
 		{* only include actions bar if no custom view template is assigned *}

@@ -81,6 +81,14 @@ if (isset($_REQUEST['su'])) {
 			$smarty->display('error.tpl');
 			exit;
 		}
+		if ($prefs['user_show_realnames'] == 'y') {
+			$finalusers = $userlib->find_best_user(array($_REQUEST['username']), '', 'login');
+			if (count($finalusers[0]) === 1 && !empty($finalusers[0])) {
+				$_REQUEST['username'] = $finalusers[0];
+			} else {
+				$_REQUEST['username'] = '';
+			}
+		}
 		if ($userlib->user_exists($_REQUEST['username'])) {
 			$loginlib->switchUser($_REQUEST['username']);
 		}

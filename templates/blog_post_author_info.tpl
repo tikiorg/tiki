@@ -9,6 +9,6 @@
 		{$post_info.user|userlink}
 	{/if}
 	{if $blog_data.add_date eq 'y'}
-		{icon name="calendar" iclass="tips" ititle=":{tr}Publish Date{/tr}"} {$post_info.created|tiki_short_date}
+		<span style="font-size: 80%">{icon name="clock-o" iclass="tips" ititle=":{tr}Publish Date{/tr}"}</span> {$post_info.created|tiki_long_date}
 	{/if}
 </div>

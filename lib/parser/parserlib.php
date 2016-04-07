@@ -1071,7 +1071,7 @@ if ( \$('#$id') ) {
 					$arg_str .= $argKey.'='.implode($sep, $argValue).'&';
 				} else {
 					// even though args are now decoded we still need to escape double quotes
-					$argValue =  addslashes($argValue);
+					$argValue =  addcslashes($argValue, '"');
 
 					$ck_editor_plugin .= $argKey.'="'.$argValue.'" ';
 					$arg_str .= $argKey.'='.$argValue.'&';

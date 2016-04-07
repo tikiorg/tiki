@@ -139,7 +139,7 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 					}
 				} else {
 					if (stripos($longusr, $_REQUEST['q']) !== false) {
-						$finalusers[] = $usr;
+						$finalusers[] = $longusr;
 					}
 				}
 				$done[$usr] = $longusr;

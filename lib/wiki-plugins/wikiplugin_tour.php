@@ -60,7 +60,7 @@ function wikiplugin_tour_info()
 			'start' => array(
 				'name' => tra('Start'),
 				'required' => false,
-				'description' => tra('Start the tour on page load?'),
+				'description' => tra('Start the tour on page load? If "No", then a start button can be made with "Restart Button", below.'),
 				'since' => '15.0',
 				'filter' => 'alpha',
 				'default' => 'y',

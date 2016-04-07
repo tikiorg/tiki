@@ -7592,6 +7592,13 @@ h3.panel-title {
 .sf-arrows ul .sfHover > .sf-with-ul:after {
   border-left-color: white;
 }
+.postbody-title .title > .panel-title a.link,
+.panel-default > .panel-heading a {
+  color: #ffffff;
+}
+.popover {
+  color: #9f9f9f;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */
