@@ -637,6 +637,13 @@ textarea,
 .postbody-title {
   background: url('../images/siteheader.jpg') no-repeat -480px -200px;
 }
+.postbody-title .title > .panel-title a.link,
+.panel-default > .panel-heading a {
+  color: #fff;
+}
+.blog-postbody-title h2.panel-title {
+  font-size: 20px;
+}
 .siteloginbar_popup .dropdown-menu > li > a {
   color: #fff;
 }

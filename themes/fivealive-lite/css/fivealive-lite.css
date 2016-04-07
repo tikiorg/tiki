@@ -7694,6 +7694,9 @@ header.header .sitesubtitle {
   color: #1174a5;
   text-shadow: none;
 }
+.popover {
+  color: #333333;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */
