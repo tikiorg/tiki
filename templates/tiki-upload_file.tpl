@@ -250,7 +250,7 @@
 							<div class="col-sm-9">
 								<select id="filetype" class="form-control" name="filetype[]">
 									{foreach $mimetypes as $type}
-										<option value="{$type}"{if $fileInfo.filetype eq $type && $fileInfo.extension eq $type@key} selected="selected"{/if}>
+										<option value="{$type}"{if $fileInfo.filetype|lower eq $type && $fileInfo.extension|lower eq $type@key} selected="selected"{/if}>
 											{$type|truncate:60} (*.{$type@key})
 										</option>
 									{/foreach}
