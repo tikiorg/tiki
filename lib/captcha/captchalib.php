@@ -192,6 +192,10 @@ Recaptcha.create("' . $this->captcha->getPubKey() . '",
 				return $this->captcha->render();
 			} else if ($this->captcha instanceof Zend\Captcha\ReCaptcha){
 				return $this->captcha->getService()->getHtml();
+			} else if ($this->captcha instanceof Zend\Captcha\Dumb){
+				return $this->captcha->getLabel() . ': <b>'
+				. strrev($this->captcha->getWord())
+				. '</b>';
 			}
 			return $this->captcha->render();
 		}
