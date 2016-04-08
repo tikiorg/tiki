@@ -35,7 +35,7 @@
 				<em>{tr}Redirecting in {/tr}</em>
 				<span id="timer-seconds">
 						<em>
-							{$timer}
+							{$ajaxtimer}
 						</em>
 				</span> <em>{tr}seconds{/tr}</em>
 			</div>
