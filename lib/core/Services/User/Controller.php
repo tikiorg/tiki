@@ -919,6 +919,7 @@ class Services_User_Controller
 				'ajaxheading' => tra('Success'),
 				'ajaxmsg' => tra('Your invite has been sent.'),
 				'ajaxdismissible' => 'y',
+				'ajaxtimer' => 5,
 			)
 		);
 
