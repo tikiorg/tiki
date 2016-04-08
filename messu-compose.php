@@ -145,6 +145,9 @@ if (isset($_REQUEST['send'])) {
 	if (count($users) > 0) {
 		$users_formatted = array();
 		foreach ($users as $rawuser)
+			if ($prefs['user_selector_realnames_messu'] == 'y') {
+					$rawuser = $userlib->clean_user($rawuser, ! $check_user_show_realnames, $login_fallback);
+				}
 			$users_formatted[] = htmlspecialchars($rawuser);
 		$message.= tra("Message has been sent to: ") . implode(',', $users_formatted) . "<br />";
 	} else {
