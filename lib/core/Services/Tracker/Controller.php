@@ -541,7 +541,7 @@ class Services_Tracker_Controller
 	function action_get_item_inputs($input)
 	{
 		$trackerId = $input->trackerId->int();
-		$trackerName = $input->trackerName->string();
+		$trackerName = $input->trackerName->text();
 		$itemId = $input->itemId->int();
 		$byName = $input->byName->bool();
 		$defaults = $input->defaults->array();
@@ -1805,7 +1805,7 @@ class Services_Tracker_Controller
 			$transaction = $tikilib->begin();
 			$installer = new Tiki_Profile_Installer;
 
-			$yaml = $input->yaml->string();
+			$yaml = $input->yaml->text();
 			$name = "tracker_import:" . md5($yaml);
 			$profile = Tiki_Profile::fromString('{CODE(caption="yaml")}' . "\n" . $yaml . "\n" . '{CODE}', $name);
 

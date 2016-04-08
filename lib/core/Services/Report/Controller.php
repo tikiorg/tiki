@@ -20,7 +20,7 @@ class Services_Report_Controller
 
 		$reportFullscreen = true;
 		$index = $input->index->int();
-		$values = $input->values->string();
+		$values = $input->values->text();
 		
 		include_once 'tiki-edit_report.php';
 	}

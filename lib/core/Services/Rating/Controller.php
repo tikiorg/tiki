@@ -9,7 +9,7 @@ class Services_Rating_Controller
 {
 	function action_vote($input)
 	{
-		$type = $input->type->string();
+		$type = $input->type->text();
 		$id = $input->id->id();
 
 		$rating_value = $input->rating_value->array();
