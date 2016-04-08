@@ -7931,7 +7931,7 @@ class UsersLib extends TikiLib
 		$mail = new TikiMail();
 		foreach ($emails as $email) {
 			if (!validate_email($email)) {
-				throw new Exception(tra('Invalid email address %1.', $email));
+				throw new Exception(tr('Invalid email address "%0"', $email));
 			}
 		}
 		$foo = parse_url($_SERVER['REQUEST_URI']);
@@ -7955,12 +7955,7 @@ class UsersLib extends TikiLib
 			$mail->setHtml($smarty->fetch('mail/invite_tempuser.tpl'));
 
 			if (!$mail->send($email)) {
-				$errormsg = tra('Unable to send mail');
-				if (Perms::get()->admin) {
-					$mailerrors = print_r($mail->errors, true);
-					$errormsg .= $mailerrors;
-				}
-				throw new Exception($errormsg);
+				throw new Exception(tr('Unable to send mail to invite "%0"', $email));
 			}
 			$smarty->assign_by_ref('user', $user);
 		}

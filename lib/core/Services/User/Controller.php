@@ -897,14 +897,14 @@ class Services_User_Controller
 		$groups = array_map('trim', $groups);
 		$emails = array_map('trim', $emails);
 		if ($expiry > 0) {
-			$expiry = $expiry * 3600 * 24; //translate hour input to seconds
+			$expiry = $expiry * 3600 * 24; //translate day input to seconds
 		} else if ($expiry != -1) {
 			throw new Services_Exception(tra('Please specify validity period'));
 		}
 
 		foreach($groups as $grp) {
 			if (!TikiLib::lib('user')->group_exists($grp)) {
-				throw new Services_Exception(tra('The group %0 does not exist', $grp));
+				throw new Services_Exception(tr('The group %0 does not exist', $grp));
 			}
 		}
 
@@ -918,7 +918,7 @@ class Services_User_Controller
 				'ajaxtype' => 'feedback',
 				'ajaxheading' => tra('Success'),
 				'ajaxmsg' => tra('Your invite has been sent.'),
-				'ajaxdismissible' => 'n',
+				'ajaxdismissible' => 'y',
 			)
 		);
 
