@@ -58,12 +58,12 @@ class Services_User_Controller
 			return array('result' => json_encode(array(tr("secure connection required"))));
 		}
 
-		$name = $input->name->string();
-		$pass = $input->pass->string();
-		$passAgain = $input->passAgain->string();
-		$captcha = $input->captcha->arra();
-		$antibotcode = $input->antibotcode->string();
-		$email = $input->email->string();
+		$name = $input->name->text();
+		$pass = $input->pass->text();
+		$passAgain = $input->passAgain->text();
+		$captcha = $input->captcha->array();
+		$antibotcode = $input->antibotcode->text();
+		$email = $input->email->text();
 
 		if ($prefs['user_unique_email'] == 'y' && TikiLib::lib('user')->get_user_by_email($email)) {
 			$errormsg = tra('We were unable to create your account because this email is already in use.');
@@ -879,11 +879,11 @@ class Services_User_Controller
 	function action_invite_tempuser($input)
 	{
 		Services_Exception_Denied::checkGlobal('admin_users');
-		$emails = $input->tempuser_emails->string();
-		$groups = $input->tempuser_groups->string();
+		$emails = $input->tempuser_emails->text();
+		$groups = $input->tempuser_groups->text();
 		$expiry = $input->tempuser_expiry->int();
-		$prefix = $input->tempuser_prefix->string();
-		$path = $input->tempuser_path->string();
+		$prefix = $input->tempuser_prefix->text();
+		$path = $input->tempuser_path->text();
 
 		if (empty($prefix)) {
 			$prefix = 'guest';
@@ -897,14 +897,14 @@ class Services_User_Controller
 		$groups = array_map('trim', $groups);
 		$emails = array_map('trim', $emails);
 		if ($expiry > 0) {
-			$expiry = $expiry * 3600 * 24; //translate hour input to seconds
+			$expiry = $expiry * 3600 * 24; //translate day input to seconds
 		} else if ($expiry != -1) {
 			throw new Services_Exception(tra('Please specify validity period'));
 		}
 
 		foreach($groups as $grp) {
 			if (!TikiLib::lib('user')->group_exists($grp)) {
-				throw new Services_Exception(tra('The group %0 does not exist', $grp));
+				throw new Services_Exception(tr('The group %0 does not exist', $grp));
 			}
 		}
 
@@ -918,7 +918,7 @@ class Services_User_Controller
 				'ajaxtype' => 'feedback',
 				'ajaxheading' => tra('Success'),
 				'ajaxmsg' => tra('Your invite has been sent.'),
-				'ajaxdismissible' => 'n',
+				'ajaxdismissible' => 'y',
 			)
 		);
 

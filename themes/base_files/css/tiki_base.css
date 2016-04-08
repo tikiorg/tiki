@@ -784,6 +784,9 @@ span.highlight {
 div.highlight {
   display: inline-block;
 }
+div.highlight.adminoptionbox {
+  display: block;
+}
 .rating .highlight {
   padding: inherit;
 }
