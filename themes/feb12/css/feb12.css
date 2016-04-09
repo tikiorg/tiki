@@ -7606,6 +7606,7 @@ header.container {
 .topbar .cssmenu_horiz > li > a:hover,
 .topbar .cssmenu_horiz > li:hover,
 .topbar .cssmenu_horiz li.sfHover:hover,
+.topbar .cssmenu_horiz li.selected > a,
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus,
 #topbar_modules .navbar-default .navbar-nav > .active > a,
@@ -7635,6 +7636,7 @@ header.container {
 }
 .middle {
   background: #fff url('../images/page.jpg') repeat-x;
+  padding-bottom: 20px;
 }
 #col1,
 #col3 {
