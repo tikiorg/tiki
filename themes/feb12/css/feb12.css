@@ -7660,6 +7660,9 @@ header.container {
   font-weight: 700;
   font-size: 1.2em;
 }
+.module legend {
+  font-size: 15px;
+}
 .topbar + .row,
 .layout_social > .container {
   background: #fff url('../images/page.jpg') repeat-x;
