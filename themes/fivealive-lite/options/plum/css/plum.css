@@ -565,9 +565,9 @@ hr {
   background-color: #c9302c;
 }
 .middle_outer {
-  -webkit-box-shadow: inset 0 24px 0 0 #15001f;
-  -moz-box-shadow: inset 0 24px 0 0 #15001f;
-  box-shadow: inset 0 24px 0 0 #15001f;
+  -webkit-box-shadow: inset 0 27px 0 0 #15001f;
+  -moz-box-shadow: inset 0 27px 0 0 #15001f;
+  box-shadow: inset 0 27px 0 0 #15001f;
 }
 .topbar,
 .topbar_container,
@@ -709,7 +709,10 @@ textarea,
   border-color: #49006c;
 }
 #col2 .panel-title,
-#col3 .panel-title {
+#col3 .panel-title,
+a.flipmoduletitle,
+#col2 .panel-default > .panel-heading a,
+#col3 .panel-default > .panel-heading a {
   color: #49006c;
 }
 #footer {
