@@ -152,12 +152,14 @@
 					{/if}
 					{if $prefs.fgal_delete_after eq 'y'}
 						<div class="form-group">
-							<label for="deleteAfter" class="col-sm-3 control-label">{tr}File can be deleted after{/tr}</label>
+							<label for="deleteAfter" class="col-md-4 control-label">{tr}File can be deleted after{/tr}</label>
+							<div class="col-md-8">
 								{if $editFileId}
 									{html_select_duration prefix='deleteAfter' id="deleteAfter" default_value=$fileInfo.deleteAfter}
 								{else}
 									{html_select_duration prefix='deleteAfter[]' id="deleteAfter" default_unit=week}
 								{/if}
+							</div>
 						</div>
 					{/if}
 					{if $editFileId}
