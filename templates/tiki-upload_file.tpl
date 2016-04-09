@@ -1,19 +1,15 @@
 {* $Id$ *}
-
 {if !empty($filegals_manager) and !isset($smarty.request.simpleMode)}
 	{assign var=simpleMode value='y'}
 {else}
 	{assign var=simpleMode value='n'}
 {/if}
-
 {title help="File Galleries" admpage="fgal"}{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}{/title}
-
 {if !empty($galleryId) or (isset($galleries) and count($galleries) > 0 and $tiki_p_list_file_galleries eq 'y') or (isset($uploads) and count($uploads) > 0)}
 	<div class="t_navbar margin-bottom-md">
 		{if !empty($galleryId)}
 			{button galleryId="$galleryId" href="tiki-list_file_gallery.php" class="btn btn-default" _text="{tr}Browse Gallery{/tr}"}
 		{/if}
-
 		{if isset($galleries) and count($galleries) > 0 and $tiki_p_list_file_galleries eq 'y'}
 			{if !empty($filegals_manager)}
 				{assign var=fgmanager value=$filegals_manager|escape}
@@ -34,7 +30,6 @@
 		{/if}
 	</div>
 {/if}
-
 {if isset($errors) and count($errors) > 0}
 	<div class="alert alert-danger">
 		<h2>{tr}Errors detected{/tr}</h2>
@@ -44,14 +39,11 @@
 		{button href="#upload" _text="{tr}Retry{/tr}"}
 	</div>
 {/if}
-
-
 {if $prefs.javascript_enabled eq 'y'}
 	<div id='progress'>
 		<div id='progress_0'></div>
 	</div>
 {/if}
-
 {if isset($uploads) and count($uploads) > 0}
 	<h2>
 	{if count($uploads) eq 1}
@@ -60,7 +52,6 @@
 		{tr}The following files have been successfully uploaded:{/tr}
 	{/if}
 	</h2>
-
 	<table class="table">
 		{section name=ix loop=$uploads}
 			<tr>
@@ -87,8 +78,6 @@
 			</tr>
 		{/section}
 	</table>
-	<br>
-
 	<h2>{tr}Upload File{/tr}</h2>
 {elseif isset($fileChangedMessage)}
 	<div align="center">
@@ -97,7 +86,6 @@
 		</div>
 	</div>
 {/if}
-
 {if $editFileId and isset($fileInfo.lockedby) and $fileInfo.lockedby neq ''}
 	{remarksbox type="note" title="{tr}Info{/tr}" icon="lock"}
 		{if $user eq $fileInfo.lockedby}
@@ -107,18 +95,15 @@
 		{/if}
 	{/remarksbox}
 {/if}
-
 <div>
-
 	{capture name=upload_file assign=upload_str}
-
 		<div class="fgal_file">
 			<div class="fgal_file_c1">
 				{if $prefs.file_galleries_use_jquery_upload neq 'y' or $editFileId}
 					{if $simpleMode neq 'y'}
 						<div class="form-group">
-							<label for="name" class="col-sm-3 control-label">{tr}File title{/tr}</label>
-							<div class="col-sm-9">
+							<label for="name" class="col-md-4 control-label">{tr}File title{/tr}</label>
+							<div class="col-md-8">
 								<input class="form-control" type="text" id="name" name="name[]"
 									{if isset($fileInfo) and $fileInfo.name}
 										value="{$fileInfo.name|escape}"
@@ -131,8 +116,8 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="description" class="col-sm-3 control-label">{tr}File description{/tr}</label>
-							<div class="col-sm-9">
+							<label for="description" class="col-md-4 control-label">{tr}File description{/tr}</label>
+							<div class="col-md-4">
 								<textarea class="form-control" rows="2" cols="40" id="description" name="description[]">{if isset($fileInfo.description)}{$fileInfo.description|escape}{/if}</textarea>
 								{if isset($gal_info.type) and ($gal_info.type eq "podcast" or $gal_info.type eq "vidcast")}
 									<br><em>{tr}Required for podcasts{/tr}.</em>
@@ -142,12 +127,11 @@
 					{/if}
 					{if $prefs.javascript_enabled neq 'y' || !$editFileId}
 						<div class="form-group">
-							<label for="userfile" class="col-sm-3 control-label">{tr}Upload from disk{/tr}</label>
-							<div class="col-sm-9">
+							<label for="userfile" class="col-md-4 control-label">{tr}Upload from disk{/tr}</label>
+							<div class="col-md-8">
 								{if $editFileId}
 									{$fileInfo.filename|escape}
 								{/if}
-
 								<input id="userfile" name="userfile[]" type="file" size="40">
 							</div>
 						</div>
@@ -155,20 +139,17 @@
 				{else}{* file_galleries_use_jquery_upload = y *}
 					{filegal_uploader}
 				{/if}
-
 			</div>
-
 			{if $simpleMode neq 'y'}
 				<div class="fgal_file_c2">
 					{if !$editFileId and $tiki_p_batch_upload_files eq 'y'}
 						<div class="form-group">
-							<label for="isbatch" class="col-sm-9 col-sm-offset-3">
+							<label for="isbatch" class="col-md-8 col-md-offset-4">
 								<input type="checkbox" id="isbatch" name="isbatch[]">
 								{tr}Unzip zip files{/tr}
 							</label>
 						</div>
 					{/if}
-
 					{if $prefs.fgal_delete_after eq 'y'}
 						<div class="form-group">
 							<label for="deleteAfter" class="col-sm-3 control-label">{tr}File can be deleted after{/tr}</label>
@@ -179,7 +160,6 @@
 								{/if}
 						</div>
 					{/if}
-
 					{if $editFileId}
 						<input type="hidden" name="galleryId" value="{$galleryId}">
 						<input type="hidden" name="fileId" value="{$editFileId}">
@@ -193,8 +173,8 @@
 							{/if}
 						{elseif empty($groupforalert)}
 							<div class="form-group">
-								<label for="galleryId" class="col-sm-3 control-label">{tr}File gallery{/tr}</label>
-								<div class="col-sm-9">
+								<label for="galleryId" class="col-md-4 control-label">{tr}File gallery{/tr}</label>
+								<div class="col-md-8">
 									<select id="galleryId" name="galleryId[]" class="form-control">
 										<option value="{$treeRootId}" {if $treeRootId eq $galleryId}selected="selected"{/if} style="font-style:italic; border-bottom:1px dashed #666;">{tr}Root{/tr}</option>
 										{section name=idx loop=$galleries}
@@ -209,18 +189,16 @@
 							<input type="hidden" name="galleryId[]" value="{$galleryId}">
 						{/if}
 					{/if}
-
 					<div class="form-group">
-						<label for="user" class="col-sm-3 control-label">{tr}Uploaded by{/tr}</label>
-						<div class="col-sm-9">
+						<label for="user" class="col-md-4 control-label">{tr}Uploaded by{/tr}</label>
+						<div class="col-md-8">
 							{user_selector id='user' name='user[]' select=$fileInfo.user editable=$tiki_p_admin_file_galleries}
 						</div>
 					</div>
-
 					{if $prefs.feature_file_galleries_author eq 'y'}
 						<div class="form-group">
-							<label for="author" class="col-sm-3 control-label">{tr}Creator{/tr}</label>
-							<div class="col-sm-9">
+							<label for="author" class="col-md-4 control-label">{tr}Creator{/tr}</label>
+							<div class="col-md-8">
 								<input type="text" id="author"name="author[]" value="{$fileInfo.author|escape}"><br>
 								<span class="description">{tr}Creator of file, if different from the 'Uploaded by' user{/tr}</span>
 							</div>
@@ -229,8 +207,8 @@
 					{if !empty($groupforalert)}
 						{if $showeachuser eq 'y'}
 							<div class="form-group">
-								<label class="col-sm-3 control-label">{tr}Choose users to alert{/tr}</label>
-								<div class="col-sm-9">
+								<label class="col-md-4 control-label">{tr}Choose users to alert{/tr}</label>
+								<div class="col-md-8">
 									{section name=idx loop=$listusertoalert}
 										<label>
 											<input type="checkbox" name="listtoalert[]" value="{$listusertoalert[idx].user|escape}"> {$listusertoalert[idx].user|escape}
@@ -246,8 +224,8 @@
 					{/if}
 					{if $editFileId}
 						<div class="form-group">
-							<label for="filetype" class="col-sm-3 control-label">{tr}File Type{/tr}</label>
-							<div class="col-sm-9">
+							<label for="filetype" class="col-md-4 control-label">{tr}File Type{/tr}</label>
+							<div class="col-md-8">
 								<select id="filetype" class="form-control" name="filetype[]">
 									{foreach $mimetypes as $type}
 										<option value="{$type}"{if $fileInfo.filetype|lower eq $type && $fileInfo.extension|lower eq $type@key} selected="selected"{/if}>
@@ -262,8 +240,8 @@
 				<div class="fgal_file_c3">
 					{if $prefs.fgal_limit_hits_per_file eq 'y'}
 						<div class="form-group">
-							<label for="hit_limit" class="col-sm-3 form-label">{tr}Maximum number of downloads{/tr}</label>
-							<div class="col-sm-9">
+							<label for="hit_limit" class="col-md-4 form-label">{tr}Maximum number of downloads{/tr}</label>
+							<div class="col-md-8">
 								<input type="text" id="hit_limit" name="hit_limit[]" value="{$hit_limit|default:0}">
 								<br><em>{tr}Use{/tr} {tr}-1 for no limit{/tr}.</em>
 							</div>
@@ -271,12 +249,11 @@
 					{else}
 						<input type="hidden" id="hit_limit" name="hit_limit[]" value="{$hit_limit|default:-1}">
 					{/if}
-
 					{* We want comments only on updated files *}
 					{if $prefs.javascript_enabled neq 'y' && $editFileId}
 						<div class="form-group">
-							<label for="comment" class="col-sm-3 form-label">{tr}Comment{/tr}</label>
-							<div class="col-sm-9">
+							<label for="comment" class="col-md-4 form-label">{tr}Comment{/tr}</label>
+							<div class="col-md-8">
 								<input type="text" id="comment" name="comment[]" value="" size="40">
 							</div>
 						</div>
@@ -293,7 +270,6 @@
 			{/if}
 		</div>
 	{/capture}
-
 	<div id="form">
 		<form method="post"
 			action='tiki-upload_file.php'
@@ -311,13 +287,11 @@
 			{if isset($token_id) and $token_id neq ''}
 				<input type="hidden" value="{$token_id}" name="TOKEN">
 			{/if}
-
 			{$upload_str}
-
 			{if $editFileId}
 				{include file='categorize.tpl'}<br>
 				<div id="page_bar" class="form-group">
-					<div class="col-sm-9 col-sm-offset-3">
+					<div class="col-md-8 col-md-push-4">
 						<input name="upload" type="submit" class="btn btn-default" value="{tr}Save{/tr}">
 					</div>
 				</div>
@@ -327,16 +301,15 @@
 					{$upload_str}
 					{include file='categorize.tpl'}<br>
 					<div id="page_bar" class="form-group">
-						<div class="col-sm-9 col-sm-offset-3">
+						<div class="col-md-8 col-md-offset-4">
 							<input type="submit" class="btn btn-default btn-sm" name="upload" value="{tr}Upload{/tr}">
 						</div>
 					</div>
 				{/if}
 			{/if}
-
 			{if !$editFileId && $prefs.file_galleries_use_jquery_upload neq 'y'}
 				<div id="page_bar" class="form-group">
-					<div class="col-sm-9 col-sm-offset-3">
+					<div class="col-md-8 col-md-offset-4">
 						<input type="submit" class="btn btn-primary btn-sm"
 							onClick="upload_files(); return false"
 							id="btnUpload"
@@ -349,30 +322,27 @@
 			{/if}
 		</form>
 	</div>
-
 	{if !empty($fileInfo.lockedby) and $user ne $fileInfo.lockedby}
 		{icon name="lock"}
 		<span class="attention">{tr}The file has been locked by {$fileInfo.lockedby}{/tr}</span>
 	{/if}
 	<br>
-
 	{if !$editFileId}
-		{remarksbox type="note" title="{tr}Information{/tr}"}
-			{tr}Maximum file size is around:{/tr}
-			{if $tiki_p_admin eq 'y'}<a title="{$max_upload_size_comment}">{/if}
-				{$max_upload_size|kbsize:true:0}
-			{if $tiki_p_admin eq 'y'}</a>
-				{if $is_iis}<br>{tr}Note: You are running IIS{/tr}. {tr}maxAllowedContentLength also limits upload size{/tr}. {tr}Please check web.config in the Tiki root folder{/tr}{/if}
-			{/if}
-		{/remarksbox}
+		<div class="col-md-8 col-md-offset-4">
+			{remarksbox type="note" title="{tr}Information{/tr}"}
+				{tr}Maximum file size is around:{/tr}
+				{if $tiki_p_admin eq 'y'}<a title="{$max_upload_size_comment}">{/if}
+					{$max_upload_size|kbsize:true:0}
+				{if $tiki_p_admin eq 'y'}</a>
+					{if $is_iis}<br>{tr}Note: You are running IIS{/tr}. {tr}maxAllowedContentLength also limits upload size{/tr}. {tr}Please check web.config in the Tiki root folder{/tr}{/if}
+				{/if}
+			{/remarksbox}
+		</div>
 	{/if}
-
 </div>
-
 {if not empty($metarray) and $metarray|count gt 0}
 	{include file='metadata/meta_view_tabs.tpl'}
 {/if}
-
 {if ! $editFileId and $prefs.file_galleries_use_jquery_upload neq 'y'}
 	{if $prefs.feature_jquery_ui eq 'y'}
 		{jq}$('.datePicker').datepicker({minDate: 0, maxDate: '+1m', dateFormat: 'dd/mm/yy'});{/jq}
@@ -380,20 +350,16 @@
 	{jq notonready=true}
 		$('#file_0').ajaxForm({target: '#progress_0', forceSync: true});
 		var nb_upload = 1;
-
 		function add_upload_file() {
 			var clone = $('#form form').eq(0).clone().resetForm().attr('id', 'file_' + nb_upload).ajaxForm({target: '#progress_' + nb_upload, forceSync: true});
 			clone.insertAfter($('#form form').eq(-1));
 			document.getElementById('progress').innerHTML += "<div id='progress_"+nb_upload+"'></div>";
 			nb_upload += 1;
 		}
-
 		function upload_files(){
 			$("#form form").each(function(n) {
 				if ($(this).find('input[name="userfile\\[\\]"]').val() != '') {
-
 					var $progress = $('#progress_'+n).html("<img src='img/spinner.gif'>{tr}Uploading file...{/tr}");
-
 					$( document ).ajaxError(function(event, jqxhr, ajaxSettings, thrownError ) {
 						$progress.hide();
 						show('form');
@@ -408,7 +374,6 @@
 			hide('form');
 		}
 	{/jq}
-
 	{if $prefs.fgal_upload_from_source eq 'y' and $tiki_p_upload_files eq 'y'}
 		<form class="remote-upload" method="post" action="{service controller=file action=remote}">
 			<h3>{tr}Upload from URL{/tr}</h3>
@@ -443,7 +408,6 @@
 						alert(tr("A remote file upload error occurred:") + "\n\"" + e.statusText + "\" (" + e.status + ")");
 					}
 				});
-
 				$('input', this).prop('disabled', true);
 				return false;
 			});
@@ -466,6 +430,4 @@
 			{/jq}
 		{/if}
 	{/if}
-
 {/if}
-
