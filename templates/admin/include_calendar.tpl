@@ -1,20 +1,17 @@
 <form class="form-horizontal" action="tiki-admin.php?page=calendar" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			<a role="link" class="btn btn-link" href="tiki-admin_calendars.php" title="{tr}List{/tr}">
-				{icon name="list"} {tr}Calendars{/tr}
-			</a>
-			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm" name="calprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-			</div>
+	<div class="t_navbar margin-bottom-md clearfix">
+		<a role="link" class="btn btn-link" href="tiki-admin_calendars.php" title="{tr}List{/tr}">
+			{icon name="list"} {tr}Calendars{/tr}
+		</a>
+		<div class="pull-right">
+			<input type="submit" class="btn btn-primary btn-sm" name="calprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
 		</div>
 	</div>
 	<fieldset>
 		<legend>{tr}Activate the feature{/tr}</legend>
 		{preference name=feature_calendar visible="always"}
 	</fieldset>
-
 	<fieldset>
 		<legend>{tr}Plugins{/tr}</legend>
 		{preference name=wikiplugin_calendar}
@@ -22,7 +19,6 @@
 		{preference name=wikiplugin_mcalendar}
 		{preference name=wikiplugin_addtogooglecal}
 	</fieldset>
-
 	<fieldset>
 		<legend>{tr}General settings{/tr}{help url="Calendar+Admin"}</legend>
 		<div class="adminoptionbox">
@@ -54,7 +50,6 @@
 				{/if}
 			</div>
 		</div>
-
 		{preference name=calendar_view_mode}
 		{preference name=calendar_list_begins_focus}
 		{preference name=calendar_firstDayofWeek}
@@ -64,7 +59,6 @@
 		{preference name=calendar_export_item}
 		{preference name=calendar_addtogooglecal}
 		{preference name=calendar_fullcalendar}
-
 		<div class="adminoptionbox">
 			<div class="adminoption">
 				<input type="checkbox" id="feature_jscalendar" name="feature_jscalendar" {if $prefs.feature_jscalendar eq 'y'}checked="checked" {/if}onclick="flip('usejscalendar');" />
@@ -79,7 +73,6 @@
 			{preference name=calendar_start_year}
 			{preference name=calendar_end_year}
 		</div>
-
 		{preference name=calendar_sticky_popup}
 		{preference name=feature_action_calendar}
 		{preference name=calendar_view_tab}
@@ -87,11 +80,7 @@
 		{preference name=calendar_description_is_html}
 		{preference name=calendar_watch_editor}
 	</fieldset>
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm" name="calprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-			</div>
-		</div>
+	<div class="t_navbar margin-bottom-md text-center">
+		<input type="submit" class="btn btn-primary btn-sm" name="calprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
 	</div>
 </form>

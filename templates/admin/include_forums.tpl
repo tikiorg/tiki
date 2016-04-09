@@ -1,31 +1,26 @@
 {* $Id$ *}
 <form class="form-horizontal" method="post" action="tiki-admin.php?page=forums">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			<a role="button" class="btn btn-link" href="tiki-admin_forums.php" title="{tr}List{/tr}">
-				{icon name="list"} {tr}Forums{/tr}
-			</a>
-			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
+	<div class="t_navbar margin-bottom-md clearfix">
+		<a role="button" class="btn btn-link tips" href="tiki-admin_forums.php" title=":{tr}List{/tr}">
+			{icon name="list"} {tr}Forums{/tr}
+		</a>
+		<div class="pull-right">
+			<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 		</div>
 	</div>
-
 	{tabset name="admin_forums"}
 		{tab name="{tr}General Settings{/tr}"}
 			<h2>{tr}General Settings{/tr}</h2>
-
 			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_forums visible="always"}
 				{preference name=home_forum}
 				{preference name=forum_image_file_gallery}
 			</fieldset>
-
 			<fieldset>
 				<legend>
-					{tr}Features{/tr}{help url="Forum"}
+					{tr}Features{/tr}
 				</legend>
 				<input type="hidden" name="forumprefs" />
 				{preference name=feature_forum_rankings}
@@ -50,7 +45,6 @@
 				{preference name=forum_inbound_mail_parse_html}
 				{preference name=forum_match_regex}
 			</fieldset>
-
 			<fieldset>
 				<legend>{tr}Threads{/tr}</legend>
 				<input type="hidden" name="forumthreadprefs" />
@@ -64,7 +58,6 @@
 				{preference name=forum_thread_style}
 				{preference name=forum_thread_sort_mode}
 			</fieldset>
-
 			<fieldset>
 				<legend>{tr}Searches{/tr}</legend>
 				{preference name=feature_forums_name_search}
@@ -77,12 +70,10 @@
 				{preference name=feature_forum_post_index}
 			</fieldset>
 		{/tab}
-
-		{tab name="{tr}Forums Listing{/tr}"}
-			<h2>{tr}Forums Listing{/tr}</h2>
+		{tab name="{tr}Forum Listing{/tr}"}
+			<h2>{tr}Forum Listing{/tr}</h2>
 			<input type="hidden" name="forumlistprefs" />
 			{preference name=forums_ordering}
-			{tr}Select which items to display when listing forums:{/tr}
 			{preference name=forum_list_topics}
 			{preference name=forum_list_posts}
 			{preference name=forum_list_ppd}
@@ -92,21 +83,13 @@
 			<div class="adminoptionboxchild" id="forum_list_desc_childcontainer">
 				{preference name=forum_list_description_len}
 			</div>
-
 			{preference name=forum_category_selector_in_list}
 			<div class="adminoptionboxchild" id="forum_category_selector_in_list_childcontainer">
 				{preference name=forum_available_categories}
 			</div>
 		{/tab}
-
 	{/tabset}
-
-	<br>{* I cheated. *}
-	<div class="row">
-		<div class="form-group col-lg-12 clearfix">
-			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
-			</div>
-		</div>
+	<div class="t_navbar margin-bottom-md text-center">
+		<input type="submit" class="btn btn-primary btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 	</div>
 </form>
