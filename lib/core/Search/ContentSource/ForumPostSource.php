@@ -139,6 +139,7 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 		return array(
 			'title',
 			'language',
+			'creation_date',
 			'modification_date',
 			'contributors',
 

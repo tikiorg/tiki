@@ -121,22 +121,26 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 	{
 		$fields = array(
 			'title',
-			'hash',
-			'url',
 			'language',
+			'creation_date',
 			'modification_date',
 			'description',
 			'contributors',
 
 			'wiki_content',
 			'wiki_keywords',
-			'wiki_approval_state',
 
 			'view_permission',
+			'hash',
+			'url',
 		);
 
 		if ($this->quantifylib) {
 			$fields[] = 'wiki_uptodateness';
+		}
+
+		if ($this->flaggedrevisionlib) {
+			$fields[] = 'wiki_approval_state';
 		}
 
 		return $fields;

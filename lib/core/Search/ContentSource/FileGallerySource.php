@@ -48,6 +48,8 @@ class Search_ContentSource_FileGallerySource implements Search_ContentSource_Int
 			'title',
 			'description',
 			'language',
+			'creation_date',
+			'modification_date',
 
 			'gallery_id',
 

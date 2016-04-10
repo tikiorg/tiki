@@ -45,6 +45,7 @@ class Search_ContentSource_ForumSource implements Search_ContentSource_Interface
 	{
 		return array(
 			'title',
+			'creation_date',
 			'description',
 			'language',
 

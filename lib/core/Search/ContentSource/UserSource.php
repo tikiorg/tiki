@@ -91,6 +91,7 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 			'title' => $typeFactory->sortable($name),
 			'creation_date' => $typeFactory->timestamp($detail['info']['created']),
 			'wiki_content' => $typeFactory->wikitext($content),
+
 			'user_country' => $typeFactory->sortable($country),
 			'user_gender' => $typeFactory->sortable($gender),
 			'user_homepage' => $typeFactory->sortable($homePage),
@@ -99,8 +100,10 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 			'user_language' => $typeFactory->multivalue($user_language),
 			'user_style' => $typeFactory->sortable($user_style),
 			'user_page' => $typeFactory->sortable($userPage),
+
 			'geo_located' => $typeFactory->identifier(empty($loc) ? 'n' : 'y'),
 			'geo_location' => $typeFactory->identifier($loc),
+
 			'searchable' => $typeFactory->identifier($this->userIsIndexed($detail) ? 'y' : 'n'),
 			'groups' => $typeFactory->multivalue($detail['groups']),
 			'_extra_groups' => array('Registered'), // Add all registered to allowed groups
@@ -132,13 +135,24 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 
 		$data = array(
 			'title',
+			'creation_date',
 			'wiki_content',
+
+			'user_country',
+			'user_gender',
+			'user_homepage',
+			'user_realName',
+			'user_allowmsgs',
+			'user_language',
+			'user_style',
+			'user_page',
 
 			'geo_located',
 			'geo_location',
-			'user_country',
 
 			'searchable',
+			'groups',
+			'_extra_groups',
 		);
 
 		foreach ($this->getAllIndexableHandlers() as $baseKey => $handler) {

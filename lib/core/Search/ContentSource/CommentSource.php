@@ -67,6 +67,7 @@ class Search_ContentSource_CommentSource implements Search_ContentSource_Interfa
 		return array(
 			'title',
 			'language',
+			'creation_date',
 			'modification_date',
 			'contributors',
 			'url',

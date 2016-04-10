@@ -88,6 +88,7 @@ class Search_ContentSource_ArticleSource implements Search_ContentSource_Interfa
 		return array(
 			'title',
 			'language',
+			'creation_date',
 			'modification_date',
 			'contributors',
 			'description',

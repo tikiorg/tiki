@@ -69,6 +69,7 @@ class Search_ContentSource_FileSource implements Search_ContentSource_Interface,
 		return array(
 			'title',
 			'language',
+			'creation_date',
 			'modification_date',
 			'contributors',
 			'description',
