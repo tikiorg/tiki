@@ -807,3 +807,7 @@ header.header .sitesubtitle {
   color: #f2f2f2;
   background: #b25025;
 }
+.footer_liner a.btn-default,
+.footer_liner a.btn-default:visited {
+  color: #242424 !important;
+}

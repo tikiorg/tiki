@@ -612,7 +612,7 @@ textarea,
 }
 #footer {
   background: black;
-  color: #696969;
+  color: #f4f4f4;
   padding: 1px 0 2px 0;
   width: 100%;
 }
@@ -631,7 +631,7 @@ textarea,
 }
 .footer_liner a.btn-default,
 .footer_liner a.btn-default:visited {
-  color: #696969;
+  color: #f4f4f4;
 }
 .navbar-nav .open .dropdown-menu,
 .navbar-nav .open .dropdown-menu li,
@@ -764,4 +764,11 @@ header.header .sitesubtitle {
 .autotoc .nav .nav > li > a:hover {
   color: #f2f2f2;
   background: #003c4a;
+}
+#col2 .panel-title,
+#col3 .panel-title,
+a.flipmoduletitle,
+#col2 .panel-default > .panel-heading a,
+#col3 .panel-default > .panel-heading a {
+  color: #19a5be;
 }

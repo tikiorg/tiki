@@ -7644,6 +7644,9 @@ header.header a:visited {
 .popover {
   color: #333333;
 }
+.module legend {
+  font-size: 15px;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */
