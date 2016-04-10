@@ -173,8 +173,8 @@ class Tracker_Field_Articles extends Tracker_Field_Abstract
 
 		$articleInfo = $this->articleSource->getProvidedFields();
 		$data = array();
-		foreach ($articleInfo as $key=>$v) {
-			$data[$k] = $baseKey."_".$v;
+		foreach ($articleInfo as $k => $v) {
+			$data[$k] = $baseKey . '_' . $v;
 		}
 		$data[] = $baseKey;
 

@@ -57,6 +57,7 @@ class Search_ContentSource_BlogPostSource implements Search_ContentSource_Interf
 		return array(
 			'title',
 			'language',
+			'creation_date',
 			'modification_date',
 			'contributors',
 
