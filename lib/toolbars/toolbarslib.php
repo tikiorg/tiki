@@ -1209,16 +1209,29 @@ class ToolbarDialog extends Toolbar
 			$iconname = 'link-external-alt';
 			$icon = tra('img/icons/page_link.png');
 			$wysiwyg = 'Object Link';
+
+			$smarty = TikiLib::lib('smarty');
+			$smarty->loadPlugin('smarty_function_object_selector');
+			$object_selector = smarty_function_object_selector([
+				'_id' => 'tbOLinkObjectSelector',
+				'_class' => 'ui-widget-content ui-corner-all',
+//				'_format' => '{title}',
+				'_filter' => ['type' => ''],
+				'_parent' => 'tbOLinkObjectType',
+				'_parentkey' => 'type',
+			], $smarty);
+
 			$list = array(tra('Object Link'),
 						'<label for="tbOLinkDesc">' . tra("Show this text") . '</label>',
 						'<input type="text" id="tbOLinkDesc" />',
 						'<label for="tbOLinkObjectType">' . tra("Types of object") . '</label>',
 						'<select id="tbOLinkObjectType" class="ui-widget-content ui-corner-all" style="width: 98%">' .
-							'<option value="">' . tra('All') . '</option>' .
+							'<option value="*">' . tra('All') . '</option>' .
 							$options .
 						'</select>',
 						'<label for="tbOLinkObjectSelector">' . tra("Link to this object") . '</label>',
-						'<input type="text" id="tbOLinkObjectSelector" class="ui-widget-content ui-corner-all" style="width: 98%" />',
+						$object_selector,
+//						'<input type="text" id="tbOLinkObjectSelector" class="ui-widget-content ui-corner-all" style="width: 98%" />',
 						'{"open": function () { dialogObjectLinkOpen(area_id); },
 						"buttons": { "' . tra("Cancel") . '": function() { dialogSharedClose(area_id,this); },'.
 									'"' . tra("Insert") . '": function() { dialogObjectLinkInsert(area_id,this); }}}'
