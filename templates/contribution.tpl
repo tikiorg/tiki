@@ -26,9 +26,9 @@
 				</td>
 			</tr>
 		{/if}
+	{elseif $tiki_p_admin eq 'y'}
+		{tr}No records found{/tr}
 	{else}
 		<tr><td>&nbsp;</td></tr>
 	{/if}
-{elseif $tiki_p_admin eq 'y'}
-	{tr}No records found{/tr}
 {/if}

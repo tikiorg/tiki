@@ -6766,6 +6766,10 @@ header.page-header::before,
   color: #141414;
   background-color: #eeeeee;
 }
+.topbar .nav > li.selected > a,
+.topbar .nav > li.selected > a:hover {
+  background: #eeeeee;
+}
 .sf-arrows .sf-with-ul:after {
   border: 5px solid transparent;
   border-top-color: #666;
