@@ -7441,8 +7441,11 @@ body {
   background: #069;
 }
 .navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .active > a:hover,
-.navbar-default .navbar-nav > .active > a:focus {
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .active > a:focus,
+.navbar-default .navbar-nav > .open > a:focus {
   background: transparent;
 }
 input,
