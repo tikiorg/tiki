@@ -7544,11 +7544,11 @@ header.container {
   color: #333;
   background-color: #e9ecef;
 }
-.cssmenu_horiz ul li.selected a,
-.cssmenu_vert ul li.selected a {
+.cssmenu_horiz li.selected a,
+.cssmenu_vert li.selected a {
   text-decoration: none;
   color: #333;
-  background-color: #e9ecef;
+  background-color: #b3bfcc;
 }
 .middle > .row {
   margin-top: 5px;
@@ -7577,6 +7577,9 @@ footer .container {
   background: #c7d0d9;
   border: solid #8cacbb;
   border-width: 0 1px 1px 1px;
+}
+#bottom_modules {
+  padding-top: 15px;
 }
 /* black */
 /* white */

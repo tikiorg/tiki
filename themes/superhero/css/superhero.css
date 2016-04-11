@@ -7844,3 +7844,10 @@ table.tablesorter thead tr.tablesorter-headerRow,
 table.tablesorter thead tr.tablesorter-filter-row {
   background-color: #2B3E50;
 }
+.cssmenu_horiz a {
+  font-size: 12px;
+}
+.nav.cssmenu_horiz > li > a {
+  padding-top: 11px;
+  padding-bottom: 11px;
+}

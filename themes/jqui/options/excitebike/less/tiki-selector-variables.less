@@ -120,7 +120,8 @@ body.cke_show_borders {
 
 
 .dropdown-menu > li > a:hover,
-.dropdown-menu > li > a:focus {
+.dropdown-menu > li > a:focus,
+.topbar .cssmenu_horiz li ul li > a:hover {
 	background-color: #E69700;
 	color: #fff;
 	text-decoration: none;
@@ -133,26 +134,26 @@ body.cke_show_borders {
 }
 
 .cssmenu_horiz a,
-.cssmenu_vert a,
+.cssmenu_vert a/*,
 .topbar .cssmenu_horiz li ul li a,
-.topbar .cssmenu_horiz li:hover ul li a {
+.topbar .cssmenu_horiz li:hover ul li a*/ {
 	background: none;
 }
 
-.topbar .cssmenu_horiz li:hover a,
-.topbar .cssmenu_horiz li ul li a:hover {
+.topbar .cssmenu_horiz li:hover > a {
 	text-decoration: underline;
 }
 
 .cssmenu_horiz li ul li,
 .cssmenu_vert li ul li {
-	background: #e8a119;
+	background: #fff;
 	border: none;
+	font-weight: normal;
 }
 
 .cssmenu_vert li:hover ul li a,
 .cssmenu_vert li.sfHover ul li a {
-	color: #fff;
+	color: #000;
 }
 
 .topbar .cssmenu_horiz li:hover ul ul,
