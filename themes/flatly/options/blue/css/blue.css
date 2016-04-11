@@ -21,6 +21,15 @@ a:hover, a:active, a:focus {
 }
 
 .navbar-default,
-.navbar-inverse {
+.navbar-inverse,
+.topbar,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li {
     background-color: #2b6288;
+}
+
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+    background: #000;
 }
