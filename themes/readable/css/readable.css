@@ -7729,3 +7729,9 @@ table.tablesorter thead tr.tablesorter-filter-row {
 .topbar .cssmenu_horiz > li > a {
   margin: 12px 6px;
 }
+.topbar .nav > li > a {
+  border: 1px solid transparent;
+}
+.topbar .nav > li > a:hover {
+  border: 1px solid #ddd;
+}
