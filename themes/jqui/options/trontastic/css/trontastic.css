@@ -288,10 +288,12 @@ blockquote.pull-right {
 .topbar .navbar-default .navbar-nav > li,
 .topbar .nav > li,
 .cssmenu_horiz a,
-.cssmenu_vert a,
-.topbar .cssmenu_horiz li ul li a,
-.topbar .cssmenu_horiz li:hover ul li a {
+.cssmenu_vert a {
   background: none;
+}
+.topbar .cssmenu_horiz li ul li a:hover,
+.topbar .cssmenu_horiz li:hover ul li {
+  background-color: #f5f5f5;
 }
 .panel,
 .panel-default,

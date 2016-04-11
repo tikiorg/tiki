@@ -7511,6 +7511,9 @@ code {
 .topbar .nav > li:first-of-type > a {
   border-left: none;
 }
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus,
 .navbar-default,
 .topbar,
 .topbar .navbar-default .navbar-nav > li,
