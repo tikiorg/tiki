@@ -141,23 +141,21 @@
 				{/if}
 				{if $prefs.userTracker eq 'y' && $usertrackerId}
 					<div class="form-group">
-						<div class="col-md-12">
-							{if $tiki_p_admin eq 'y' and !empty($userwatch) and $userwatch neq $user}
-								<label class="control-label">{tr}User's personal tracker information{/tr}</label>
-								<div class="col-md-12">
-									<a class="link" href="tiki-view_tracker_item.php?trackerId={$usertrackerId}&user={$userwatch|escape:url}&view=+user">
-										{tr}View extra information{/tr}
-									</a>
-								</div>
-							{else}
-								<label class="control-label">{tr}Your personal tracker information{/tr}</label>
-								<div class="col-md-12">
-									<a class="link" href="tiki-view_tracker_item.php?view=+user">
-										{tr}View extra information{/tr}
-									</a>
-								</div>
-							{/if}
-						</div>
+						{if $tiki_p_admin eq 'y' and !empty($userwatch) and $userwatch neq $user}
+							<label class="control-label col-md-4">{tr}User's personal tracker information{/tr}</label>
+							<div class="col-md-8">
+								<a class="link" href="tiki-view_tracker_item.php?trackerId={$usertrackerId}&user={$userwatch|escape:url}&view=+user">
+									{tr}View extra information{/tr}
+								</a>
+							</div>
+						{else}
+							<label class="control-label col-md-4">{tr}Your personal tracker information{/tr}</label>
+							<div class="col-md-8">
+								<a class="link" href="tiki-view_tracker_item.php?view=+user">
+									{tr}View extra information{/tr}
+								</a>
+							</div>
+						{/if}
 					</div>
 				{/if}
 				{* Custom fields *}
