@@ -7545,6 +7545,13 @@ body > .container {
   background: #222;
   border-color: transparent;
 }
+.cssmenu_horiz li.selected a,
+.cssmenu_horiz li.selected a:hover,
+.cssmenu_vert li.selected a {
+  text-decoration: none;
+  color: #333;
+  background-color: #e7e7e7;
+}
 #col1 {
   margin-left: -1px;
   margin-right: -1px;
