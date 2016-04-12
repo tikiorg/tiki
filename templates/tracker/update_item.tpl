@@ -42,5 +42,7 @@
 				<input type="submit" class="btn btn-primary" value="{$button_label}" onclick="needToConfirm=false;">
 			</div>
 		</form>
+		{* Don't warn on leaving page if the modal is closed without saving *}
+		{jq}$(".modal.fade.in").one("hide.bs.modal", function () {window.needToConfirm=false;});{/jq}
 	{/if}
 {/block}

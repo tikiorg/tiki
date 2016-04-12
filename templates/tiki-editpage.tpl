@@ -570,8 +570,7 @@
 											{/section}
 										</select>
 										<span class="help-block">
-											{tr _0="tiki-edit_translation.php?no_bl=y&amp;page={$page|escape:url}"}To translate, do not change the language and the content.
-											Instead, <a class="alert-link" href="%0">create a new translation</a> in the new language.{/tr}
+											{tr _0="tiki-edit_translation.php?no_bl=y&amp;page={$page|escape:url}"}To translate, do not change the language and the content. Instead, <a class="alert-link" href="%0">create a new translation</a> in the new language.{/tr}
 											{if $translationOf}
 												<input type="hidden" name="translationOf" value="{$translationOf|escape}">
 											{/if}
