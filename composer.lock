@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "de3a7d1c6eb4e74404d722327d85cc75",
-    "content-hash": "90e2356a10a7345924a3705054ace5a6",
+    "hash": "87f18c4a71720d92daf71d4212531468",
+    "content-hash": "9772ca220ac10c64f672b4ead06a459d",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -451,17 +451,17 @@
         },
         {
             "name": "ezyang/htmlpurifier",
-            "version": "v4.6.0",
+            "version": "v4.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ezyang/htmlpurifier.git",
-                "reference": "6f389f0f25b90d0b495308efcfa073981177f0fd"
+                "reference": "ae1828d955112356f7677c465f94f7deb7d27a40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/ezyang-htmlpurifier-6f389f0f25b90d0b495308efcfa073981177f0fd-zip-4891c9.zip",
-                "reference": "6f389f0f25b90d0b495308efcfa073981177f0fd",
-                "shasum": "63142b23b610d5310ee5cadee25fde4e15675816"
+                "url": "https://composer.tiki.org/dist/ezyang-htmlpurifier-ae1828d955112356f7677c465f94f7deb7d27a40-zip-ca0362.zip",
+                "reference": "ae1828d955112356f7677c465f94f7deb7d27a40",
+                "shasum": "610bd96d15685b8e8353c5383ef21aef91d5c419"
             },
             "require": {
                 "php": ">=5.2"
@@ -491,7 +491,7 @@
             "keywords": [
                 "html"
             ],
-            "time": "2013-11-30 08:25:19"
+            "time": "2015-08-05 01:03:42"
         },
         {
             "name": "fortawesome/font-awesome",
@@ -1034,12 +1034,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nnnick/Chart.js.git",
-                "reference": "d7117bc79235f23832cec04568cad8a808f82737"
+                "reference": "4495b63d0ace32c5e714748a8c34ad83ef04a5a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nnnick/Chart.js/zipball/d7117bc79235f23832cec04568cad8a808f82737",
-                "reference": "d7117bc79235f23832cec04568cad8a808f82737",
+                "url": "https://api.github.com/repos/nnnick/Chart.js/zipball/4495b63d0ace32c5e714748a8c34ad83ef04a5a9",
+                "reference": "4495b63d0ace32c5e714748a8c34ad83ef04a5a9",
                 "shasum": ""
             },
             "require": {
@@ -1067,7 +1067,7 @@
                 "JS",
                 "chart"
             ],
-            "time": "2016-03-13 14:20:24"
+            "time": "2016-04-05 13:47:25"
         },
         {
             "name": "openlayers/ol3",
