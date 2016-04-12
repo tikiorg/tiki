@@ -1026,7 +1026,7 @@ $subGalleries = $filegallib->getSubGalleries(( isset($_REQUEST['parentId']) && $
 $smarty->assign('treeRootId', $subGalleries['parentId']);
 
 if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y'
-	|| $_REQUEST['fgal_actions'] === 'movesel_x' || isset($_REQUEST["edit_mode"]))
+	|| $_REQUEST['fgal_actions'] === 'movesel_x' || isset($_REQUEST["edit_mode"]) || isset($_REQUEST['dup_mode']))
 {
 	$gals = array();
 	foreach ($subGalleries['data'] as $gal) {
