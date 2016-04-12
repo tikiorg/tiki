@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c647dc6d2342fc555a1612dce2a65a27",
-    "content-hash": "1067ca8a83ce1e81e84167972aea715b",
+    "hash": "43db760020251e6bce66643282607cc1",
+    "content-hash": "a32a4a8bccc30a2b6b7207ce873bf146",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -451,17 +451,17 @@
         },
         {
             "name": "ezyang/htmlpurifier",
-            "version": "v4.6.0",
+            "version": "v4.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ezyang/htmlpurifier.git",
-                "reference": "6f389f0f25b90d0b495308efcfa073981177f0fd"
+                "reference": "ae1828d955112356f7677c465f94f7deb7d27a40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/ezyang-htmlpurifier-6f389f0f25b90d0b495308efcfa073981177f0fd-zip-4891c9.zip",
-                "reference": "6f389f0f25b90d0b495308efcfa073981177f0fd",
-                "shasum": "63142b23b610d5310ee5cadee25fde4e15675816"
+                "url": "https://composer.tiki.org/dist/ezyang-htmlpurifier-ae1828d955112356f7677c465f94f7deb7d27a40-zip-ca0362.zip",
+                "reference": "ae1828d955112356f7677c465f94f7deb7d27a40",
+                "shasum": "610bd96d15685b8e8353c5383ef21aef91d5c419"
             },
             "require": {
                 "php": ">=5.2"
@@ -491,7 +491,7 @@
             "keywords": [
                 "html"
             ],
-            "time": "2013-11-30 08:25:19"
+            "time": "2015-08-05 01:03:42"
         },
         {
             "name": "fortawesome/font-awesome",

@@ -23,7 +23,7 @@
 		"codemirror/codemirror": "4.12.0",
 		"cwspear/bootstrap-hover-dropdown": "2.1.3",
 		"dompdf/dompdf": "0.6.1",
-		"ezyang/htmlpurifier": "4.6.0",
+		"ezyang/htmlpurifier": "4.7.0",
 		"google/apiclient":"1.1.6",
 		"jcapture-applet/jcapture-applet": "dev-master",
 		"jquery/jquery": "2.2.2",
