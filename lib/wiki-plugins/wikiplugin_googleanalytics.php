@@ -14,7 +14,7 @@ function wikiplugin_googleanalytics_info()
 		'prefs' => array( 'wikiplugin_googleanalytics' ),
 		'iconname' => 'chart',
 		'format' => 'html',
-		'introduced' => 3,
+		'introduced' => 14,
 		'params' => array(
 			'account' => array(
 				'required' => true,
