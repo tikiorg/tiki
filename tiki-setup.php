@@ -533,7 +533,7 @@ if ($prefs['jquery_timeago'] === 'y') {
 	if (is_readable($timeago_locale)) {
 		$headerlib->add_jsfile($timeago_locale);	// TODO handle zh-CN and zh-TW
 	}
-	$headerlib->add_jq_onready('$("time.timeago").timeago();');
+	$headerlib->add_jq_onready('$("time.timeago").timeago(); jQuery.timeago.settings.allowFuture = true;');
 }
 
 if ( $prefs['feature_jquery_validation'] == 'y' ) {
