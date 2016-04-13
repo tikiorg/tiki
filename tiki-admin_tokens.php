@@ -70,6 +70,12 @@ $tokens = $tokenlib->getTokens();
 foreach ($tokens as $key => $token) {
 	$tokens[$key]['groups'] = join(', ', json_decode($token['groups']));
 	$tokens[$key]['parameters'] = (array) json_decode($token['parameters']);
+	if ($token['timeout'] == -1) {
+		$tokens[$key]['expires'] = '';
+	} else {
+		$tokens[$key]['expires'] = date('c', strtotime($token['creation']) + $token['timeout']);
+	}
+	$tokens[$key]['entry'] = preg_replace('#^' . preg_quote($tikiroot) . '#', '', $token['entry']);
 }
 
 $smarty->assign('tokens', $tokens);
