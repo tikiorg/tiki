@@ -5,7 +5,7 @@
 		{/self_link}
 	</div>
 {/if}
-<div id="thumbnails" style="float:left">
+<div id="thumbnails"{* style="float:left"*}>
 
 	{section name=changes loop=$files}
 
@@ -160,7 +160,7 @@
 			</div> {* thumbactions *}
 			{/if}
 		{/capture}
-			<div id="{$checkname}_{$files[changes].id}" class="clearfix thumbnailcontener{if $is_checked eq 'y'} thumbnailcontenerchecked{/if}{if $files[changes].isgal eq 1} subgallery{/if}" {if $view eq 'page'}style="float:left"{else}style="width:{$thumbnailcontener_size}px"{/if}>
+			<div id="{$checkname}_{$files[changes].id}" class="clearfix thumbnailcontener{if $is_checked eq 'y'} thumbnailcontenerchecked{/if}{if $files[changes].isgal eq 1} subgallery{/if}" style="{if $view eq 'browse'}float:left;{/if}{if $view neq 'page'}width:{$thumbnailcontener_size}px{/if}">
 				<div class="thumbnail" style="float:left; {if $view neq 'page'}width:{$thumbnailcontener_size}px{/if}">
 					<div class="thumbnailframe" style="width:100%;height:{if $view != 'page'}{$thumbnailcontener_size}px{else}100%{/if}{if $show_infos neq 'y'};margin-bottom:4px{/if}">
 						<div class="thumbimage">
@@ -198,7 +198,7 @@
 										{if $key_type neq 'image/svg' and $key_type neq 'image/svg+xml'}
 											{if $imagetypes eq 'y' or $prefs.theme_iconset eq 'legacy'}
 												{if $view eq 'page'}
-													<img src="tiki-download_file.php?fileId={$files[changes].id}&preview" alt="" style="max-width:{$maxWidth}">
+													<img src="tiki-download_file.php?fileId={$files[changes].id}&preview" alt="" style="width:{$maxWidth};max-width: 100%;">
 												{else}
 													<img src="{$files[changes].id|sefurl:thumbnail}" alt="" style="max-height:{$thumbnailcontener_size}px">
 												{/if}
