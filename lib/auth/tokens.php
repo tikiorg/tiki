@@ -83,35 +83,25 @@ class AuthTokens
 			array( $token )
 		)->fetchRow();
 
-		global $prefs, $full;		// $full defined in route.php
-		if ( $data['entry'] != $entry && ($prefs['feature_sefurl'] !== 'y' || $data['entry']  !== urldecode($full)) ) {
+		global $prefs, $full, $smarty, $tikiroot;		// $full defined in route.php
+		$sefurl = '';
+
+		if ($prefs['feature_sefurl'] === 'y') {
+			$sefurl = substr($full, strlen($tikiroot)) . '?' . http_build_query($_GET);
+			$sefurlTypeMap = $this->getSefurlTypeMap();
+
+			$smarty->loadPlugin('smarty_modifier_sefurl');
+			$sefurl = $tikiroot . smarty_modifier_sefurl($sefurl, $sefurlTypeMap[$_GET[0]]);
+		}
+
+		// entry doesn't match "or" sefurl feature is in use but that also doesn't match
+		if ( $data['entry'] != $entry && $sefurl && $data['entry']  !== $sefurl ) {
 			return null;
 		}
 
 		$registered = (array) json_decode($data['parameters'], true);
 
-		if ($prefs['feature_sefurl'] === 'y') {    // filter out the usual sefurl parameters that would be missing from the URI
-			$usedInRequest = [
-				'page',
-				'articleId',
-				'blogId', 'postId',
-				'parentId',
-				'fileId', 'galleryId',
-				'forumId',
-				'nlId',
-				'trackerId', 'itemId',
-				'sheetId',
-				'userId',
-				'calIds',
-			];
-
-			$usedInRequest = array_diff($usedInRequest, array_keys($registered));       // params that are actually used and need to be checked
-			$parameters = array_diff_key($parameters, array_flip($usedInRequest));					// remove params that aren't used
-		}
-
-		if ( ! $this->allPresent($registered, $parameters)
-				|| ! $this->allPresent($parameters, $registered)
-		) {
+		if ( ! $this->allPresent($registered, $parameters) || ! $this->allPresent($parameters, $registered) ) {
 			return null;
 		}
 
@@ -155,6 +145,32 @@ class AuthTokens
 		}
 
 		return true;
+	}
+
+	/**
+	 * Provide mapping between item key and object type
+	 * TODO centralise this info in objectlib.php (?) and decide on one word or two for each
+	 *
+	 * @return array
+	 */
+	private function getSefurlTypeMap()
+	{
+		return [
+			'page'      => 'wiki page',
+			'articleId' => 'article',
+			'blogId'    => 'blog',
+			'postId'    => 'blog post',
+			'parentId'  => 'category',
+			'fileId'    => 'file',
+			'galleryId' => 'file gallery',
+			'forumId'   => 'forum',
+			'nlId'      => 'newsletter',
+			'trackerId' => 'tracker',
+			'itemId'    => 'trackeritem',
+			'sheetId'   => 'sheet',
+			'userId'    => 'user',
+			'calIds'    => 'calendar',
+		];
 	}
 
 	function createToken( $entry, array $parameters, array $groups, array $arguments = array() )
@@ -227,12 +243,45 @@ class AuthTokens
 	function includeToken( $url, array $groups = array(), $email = '', $timeout = 0, $hits = 0, $createUser = false, $userPrefix = 'guest')
 	{
 		$data = parse_url($url);
+		$longurl = '';
 
 		if ( isset($data['query']) ) {
 			parse_str($data['query'], $args);
-			unset( $args['TOKEN'] );
+			unset($args['TOKEN']);
 		} else {
-			$args = array();
+			global $prefs, $sefurl_regex_out;
+			include_once 'tiki-sefurl.php';
+			if ($prefs['feature_sefurl'] === 'y' && !empty($sefurl_regex_out)) {
+				global $base_url;
+
+				$short = substr($url, strlen($base_url));
+				$is_numeric = preg_match('/\d+/', $short);
+
+				foreach (array_reverse($sefurl_regex_out) as $regex) {	// wiki is the first one and will match anything
+					if ($is_numeric) {
+						$replace = '(\d+)';	// match digits
+					} else {
+						$replace ='(.+)';	// or anything (for wiki pages)
+					}
+					$pattern = str_replace('$1', $replace, $regex['right']);
+
+					if (preg_match('/' . $pattern . '/', $short, $matches)) {
+						$longurl = preg_replace('/' . preg_quote($replace) . '/', $matches[1], $regex['left']);
+						$longurl = $base_url . stripcslashes($longurl);	// add back the beginning and get rid of the \ infront of the ?
+						break;
+					}
+				}
+
+				if ($longurl) {
+					$longdata = parse_url($longurl);
+					parse_str($longdata['query'], $args);
+				} else {
+					$args = array();
+				}
+
+			} else {
+				$args = array();
+			}
 		}
 
 		$settings = array('email'=>$email);
@@ -246,6 +295,9 @@ class AuthTokens
 		$settings['userPrefix'] = $userPrefix;
 
 		$token = $this->createToken($data['path'], $args, $groups, $settings);
+		if ($longurl) {	// sefurl was used so the args should be reset now the token has been created
+			$args = array();
+		}
 		$args['TOKEN'] = $token;
 
 		$query = '?' . http_build_query($args, '', '&');

@@ -7962,7 +7962,7 @@ class UsersLib extends TikiLib
 	}
 
 	/**
-	 * @param $uname The username of the temporary user to remove (or disable depending on the pref)
+	 * @param string $uname The username of the temporary user to remove (or disable depending on the pref)
 	 *
 	 */
 	function remove_temporary_user($uname) {
