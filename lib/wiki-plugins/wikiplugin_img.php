@@ -1219,8 +1219,8 @@ function wikiplugin_img( $data, $params )
 			if ($imgdata['thumb'] == 'mouseover') {
 				$popup_params['trigger'] = 'hover';
 			} 
-			// avoid big images will not be closeable on hover. Fallback to require a click to open and a second click somewhere to close.
-			if ($fwidth > 400 || $fheight > 400) {
+			// avoid big images will not be closeable on hover if repsonsive is not set. Fallback to require a click to open and a second click somewhere to close.
+			if ((isset($imgdata['responsive']) && $imgdata['responsive'] != 'y') && ($fwidth > 400 || $fheight > 400)) {
 				$popup_params['trigger'] = 'focus';
 			}
 			
