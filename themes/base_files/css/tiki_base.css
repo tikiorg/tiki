@@ -1839,8 +1839,11 @@ table.treetable tr.expanded span.indenter a {
 .thumbnailcontener {
   margin: 1px;
   text-align: center;
-  display: inline-block;
+  display: block;
   vertical-align: top;
+}
+.thumbnailcontener .thumbnail {
+  display: block;
 }
 .tree li {
   display: block;
