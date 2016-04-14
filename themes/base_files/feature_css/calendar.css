@@ -104,7 +104,7 @@
 
 #filtercal {
 	position: absolute;
-	z-index: 2 !important;
+	z-index: 9 !important;
 	right: 190px;
 }
 
