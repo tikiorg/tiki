@@ -930,7 +930,25 @@ class EditLib
 
 					switch ($c[$i]["data"]["name"]) {
 						// Tags we don't want at all.
-						case "meta": $c[$i]["content"] = '';
+						case "meta":
+						case 'link':
+							$c[$i]["content"] = '';
+							break;
+						case 'script':
+							$c[$i]['content'] = '';
+							if (!isset($c[$i]['pars']['src'])) {
+								$i++;
+								while ($c[$i]['data']['name'] !== 'script' && $c[$i]['data']['type'] !== 'close' && $i <= $c['contentpos']) {
+									$i++;    // skip contents of script tag
+								}
+							}
+							break;
+						case 'style':
+							$c[$i]['content'] = '';
+							$i++;
+							while ($c[$i]['data']['name'] !== 'style' && $c[$i]['data']['type'] !== 'close' && $i <= $c['contentpos']) {
+								$i++;    // skip contents of script tag
+							}
 							break;
 
 						// others we do want
