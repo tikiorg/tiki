@@ -8,7 +8,7 @@
 {/jq}
 
 <div class="toolbars-admin clearfix">
-	<form name="toolbars" method="post" action="tiki-admin_toolbars.php" onsubmit="return saveRows()">
+	<form class="form-horizontal" name="toolbars" method="post" action="tiki-admin_toolbars.php" onsubmit="return saveRows()">
 		<div>
 			<div class="adminoptionbox form-group">
 				<div class="adminoptionlabel">
@@ -29,7 +29,7 @@
 					{tr}Comments{/tr}
 				</label>
 				<div class="col-sm-8">
-					<input id="comments" name="comments" type="checkbox" class="form-control" onchange="toolbars_autoreload()" {if $comments eq 'on'}checked="checked" {/if}>
+					<input id="comments" name="comments" type="checkbox" onchange="toolbars_autoreload()" {if $comments eq 'on'}checked="checked" {/if}>
 				</div>
 			</div>
 			<div class="adminoptionbox form-group">
@@ -67,7 +67,7 @@
 			<div class="form-group">
 				<label for="autoreload" class="control-label col-sm-4">{tr}Auto Reloading{/tr}</label>
 				<div class="col-sm-8">
-					<input id="autoreload" name="autoreload" type="checkbox" class="form-control" {if $autoreload eq 'on'}checked="checked"{/if}>
+					<input id="autoreload" name="autoreload" type="checkbox" {if $autoreload eq 'on'}checked="checked"{/if}>
 				</div>
 			</div>
 			<div class="adminoptionbox form-group">
