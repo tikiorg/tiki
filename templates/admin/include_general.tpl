@@ -237,16 +237,15 @@
 				{preference name=tiki_domain_redirects}
 				{preference name=feature_redirect_on_error}
 				{preference name='feature_wiki_1like_redirection'}
-				<div class="well well-sm">
-					{preference name='permission_denied_login_box' mode='invert'}
-					<div class="adminoptionboxchild" id="permission_denied_login_box_childcontainer">
-						<div class="text-center">
-							<strong>{tr}or{/tr}</strong>
-						</div>
-						</br>
-						{preference name=permission_denied_url}
+				<hr>
+				{preference name='permission_denied_login_box' mode='invert'}
+				<div class="adminoptionboxchild" id="permission_denied_login_box_childcontainer">
+					<div style="text-indent: 28%">
+						<strong>{tr}or{/tr}</strong>
 					</div>
+					{preference name=permission_denied_url}
 				</div>
+				<hr>
 				{preference name='url_anonymous_page_not_found'}
 				{preference name='url_after_validation'}
 				{preference name='feature_alternate_registration_page'}
