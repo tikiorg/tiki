@@ -190,3 +190,7 @@ body.tiki.navbar-padding {
 .affix-top {position: static; }
 .affix { position: fixed; top: 20px; }
 .affix-bottom { position: absolute; }
+
+// default width "auto" causes the input to overflow outside of narrow divs.
+.col-sm-2 .form-inline .form-control,
+.col-md-2 .form-inline .form-control { width: 100%; }
