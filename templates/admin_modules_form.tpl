@@ -52,25 +52,21 @@
 				</div>
 			{/if}
 			<div class="admin2cols adminoptionbox clearfix">
-				<div class="q1">
-					<label for="groups">{tr}Groups{/tr}</label>
-				</div>
-				<div class="description q234">
-					<select multiple="multiple" id="groups" name="groups[]">
-						{section name=ix loop=$groups}
-							<option value="{$groups[ix].groupName|escape}" {if $groups[ix].selected eq 'y'}selected="selected"{/if}>{$groups[ix].groupName|escape}</option>
-						{/section}
-					</select>
-					{if $prefs.jquery_ui_chosen ne 'y'}
-						{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
-					{/if}
-					{if $prefs.modallgroups eq 'y'}
-						<div class="panel panel-default"><div class="panel-body">
-							{icon name="information" style="vertical-align:middle;float:left"} {tr}The{/tr} <a class="rbox-link" href="tiki-admin.php?page=module">{tr}Display Modules to All Groups{/tr}</a> {tr}setting will override your selection of specific groups.{/tr}
-						</div></div>
-						<br>
-					{/if}
-				</div>
+				<label for="groups">{tr}Groups{/tr}</label>
+				<select multiple="multiple" id="groups" name="groups[]" class="form-control">
+					{section name=ix loop=$groups}
+						<option value="{$groups[ix].groupName|escape}" {if $groups[ix].selected eq 'y'}selected="selected"{/if}>{$groups[ix].groupName|escape}</option>
+					{/section}
+				</select>
+				{if $prefs.jquery_ui_chosen ne 'y'}
+					{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
+				{/if}
+				{if $prefs.modallgroups eq 'y'}
+					<div class="panel panel-default"><div class="panel-body">
+						{icon name="information" style="vertical-align:middle;float:left"} {tr}The{/tr} <a class="rbox-link" href="tiki-admin.php?page=module">{tr}Display Modules to All Groups{/tr}</a> {tr}setting will override your selection of specific groups.{/tr}
+					</div></div>
+					<br>
+				{/if}
 			</div>
 			{if $prefs.user_assigned_modules eq 'y'}
 				<div class="admin2cols adminoptionbox clearfix">
@@ -100,12 +96,9 @@
 					<fieldset id="param_section_{$sect}">
 						{foreach from=$params key=name item=param}
 							<div class="admin2cols adminoptionbox clearfix">
-								<div class="q1">
-									<label for="assign_params[{$name|escape}]">{$param.name|escape}{if $param.required} <span class="attention">({tr}required{/tr})</span>{/if}</label>
-								</div>
-								<div class="description q234">
-									<input type="text" id="assign_params[{$name|escape}]" name="assign_params[{$name|escape}]" value="{$param.value|escape}"{if !empty($param.filter)} class="{$param.filter}" {/if}>
-									<br>
+								<label for="assign_params[{$name|escape}]">{$param.name|escape}{if $param.required} <span class="attention">({tr}required{/tr})</span>{/if}</label>
+								<input type="text" id="assign_params[{$name|escape}]" name="assign_params[{$name|escape}]" value="{$param.value|escape}"{if !empty($param.filter)} class="{$param.filter} form-control"{else} class="{$param.filter} form-control"{/if}>
+								<div class="description margin-bottom-sm">
 									{$param.description|escape}
 									{if !empty($param.default)} - {tr}Default:{/tr} {$param.default|escape}{/if}
 								</div>
@@ -116,16 +109,12 @@
 				{autocomplete element=".pagename" type="pagename" options="multiple: true, multipleSeparator:';'"}
 			{else}
 				<div class="admin2cols adminoptionbox clearfix">
-					<div class="q1">
-						<a title="{tr}Parameters{/tr}" {popup text="{tr}Params: specific params to the module and/or general params ('lang', 'flip', 'title', 'decorations', 'section', 'overflow', 'page', 'nobox', 'bgcolor', 'color', 'theme', 'notitle', 'nopage'). Separator between params:'&amp;'. E.g. maxlen=15&amp;nonums=y.{/tr}" width=200 center=true}>
-							<label for="assign_params">{tr}Parameters{/tr}</label>
-						</a>
-						&nbsp;{help url="Module+Parameters" desc="{tr}Enter the parameters in URL format, e.g. 'nobox=y&class=rbox-data'{/tr}"}
-					</div>
-					<div class="q234">
-						<textarea id="assign_params" name="assign_params" rows="1" cols="60" >{$assign_params|escape}</textarea>
-						{self_link um_edit=$assign_name cookietab="2" _anchor="editcreate"}{tr}Edit custom module{/tr} {icon name="next"}{/self_link}
-					</div>
+					<a title="{tr}Parameters{/tr}" {popup text="{tr}Params: specific params to the module and/or general params ('lang', 'flip', 'title', 'decorations', 'section', 'overflow', 'page', 'nobox', 'bgcolor', 'color', 'theme', 'notitle', 'nopage'). Separator between params:'&amp;'. E.g. maxlen=15&amp;nonums=y.{/tr}" width=200 center=true}>
+						<label for="assign_params">{tr}Parameters{/tr}</label>
+					</a>
+					<textarea id="assign_params" name="assign_params" rows="1" cols="60" class="form-control">{$assign_params|escape}</textarea>
+					{help url="Module+Parameters" desc="{tr}Enter the parameters in URL format, e.g. 'nobox=y&class=rbox-data'{/tr}"}
+					{self_link um_edit=$assign_name cookietab="2" _anchor="editcreate"}{tr}Edit custom module{/tr} {icon name="next"}{/self_link}
 				</div>
 			{/if}
 		<div class="form-group clearfix">
