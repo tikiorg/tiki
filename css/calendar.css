@@ -465,7 +465,7 @@ a.viewmodeoff img {
 #filtercal {
 	background: #FFF;
 	position: absolute;
-	z-index: 2 !important;
+	z-index: 9 !important;
 	border: 1px solid #000;
 	right: 190px;
 }
