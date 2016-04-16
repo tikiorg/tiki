@@ -53,7 +53,7 @@
 			{/if}
 			<div class="admin2cols adminoptionbox clearfix">
 				<label for="groups">{tr}Groups{/tr}</label>
-				<select multiple="multiple" id="groups" name="groups[]" class="form-control">
+				<select multiple="multiple" id="groups" name="groups[]" class="form-control margin-bottom-md">
 					{section name=ix loop=$groups}
 						<option value="{$groups[ix].groupName|escape}" {if $groups[ix].selected eq 'y'}selected="selected"{/if}>{$groups[ix].groupName|escape}</option>
 					{/section}
