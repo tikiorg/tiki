@@ -724,7 +724,7 @@ class Services_Tracker_Controller
 		global $prefs;
 		if ($prefs['feature_jquery_validation'] === 'y') {
 			$validationjs = TikiLib::lib('validators')->generateTrackerValidateJS($definition->getFields());
-			TikiLib::lib('header')->add_jq_onready('$("#insertItemForm' . $trackerId . '").validate({' . $validationjs . $this->get_validation_options());
+			TikiLib::lib('header')->add_jq_onready('$("#insertItemForm' . $trackerId . '").validate({' . $validationjs . $this->get_validation_options('#insertItemForm' . $trackerId));
 		}
 
 		$itemId = 0;
@@ -1942,9 +1942,9 @@ class Services_Tracker_Controller
 		];
 	}
 
-	function get_validation_options()
+	function get_validation_options($formId='')
 	{
-		return ',
+		$jsString = ',
 		errorClass: "label label-warning",
 		errorPlacement: function(error,element) {
 			if ($(element).parents(".input-group").length > 0) {
@@ -1963,6 +1963,14 @@ class Services_Tracker_Controller
 		},
 		ignore: ".ignore"
 		});';
+
+		if ($formId){
+			$jsString .= "\n" . '
+				$("' . $formId . '").on("click.validate", ":submit", function(){$("' . $formId . '").find("[name^=other_ins_]").each(function(key, item){$(item).data("tiki_never_visited","")})});
+			';
+		}
+
+		return $jsString;
 	}	
 }
 

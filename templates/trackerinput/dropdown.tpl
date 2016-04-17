@@ -59,15 +59,21 @@
 				{{/if}}
 				$select.change(function() {
 					if ($select.val() != '{tr}other{/tr}') {
+						$other.data('tiki_never_visited', '');
 						$other.val('').parent().hide();
 					} else {
+						$other.data('tiki_never_visited', 'tiki_never_visited');
 						$other.parent().show();
 					}
 				});
 				$other.change(function(){
+					$other.data('tiki_never_visited', '');
 					if ($(this).val()) {
 						$select.val(tr('other')).trigger('chosen:updated');
 					}
+				});
+				$other.focusout(function(){
+					$other.data('tiki_never_visited', '');
 				});
 			});
 			{/jq}
