@@ -433,15 +433,6 @@ a.admbox.off img {
 .profile_export_list {
 	height: 30em;
 	overflow: auto;
-	list-style: none;
-	padding: 0;
-}
-
-.profile_export_list li {
-	padding: 0.4em 2em;
-}
-#export_to_yaml label {
-	margin-left: 1em;
 }
 
 #export_to_yaml .wikitext {
