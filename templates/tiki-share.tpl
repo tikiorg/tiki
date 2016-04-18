@@ -75,12 +75,19 @@
 				</label>
 				<div class="col-sm-9">
 					<a href="{$prefix}{$url}">{$prefix}{$url}</a>
-					{if $report != 'y'}
-						<span class="help-block">
-							{tr}Short link{/tr}:{$shorturl}
-						</span>
-					{/if}
 				</div>
+			</div>
+			<div class="form-group">
+				{if $report != 'y' and $shorturl neq $prefix|cat:$url}
+					<label for="url" class="control-label col-sm-3">
+						{tr}Short link{/tr}
+					</label>
+					<div class="col-sm-9">
+						<span class="help-block">
+							<a href="{$shorturl}">{$shorturl}</a>
+						</span>
+					</div>
+				{/if}
 			</div>
 		{/if}
 		<div class="panel panel-default">
