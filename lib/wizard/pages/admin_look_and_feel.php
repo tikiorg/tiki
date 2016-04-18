@@ -99,6 +99,10 @@ class AdminWizardLookAndFeel extends Wizard
 					}
 				}
 			}
+			//encode $theme_layouts into json to allow js below to fetch layouts based on theme selected by user
+			$theme_layouts_js = json_encode($theme_layouts);
+			$js .= $theme_layouts_js . ";";
+
 			// JS to handle theme/option changes client-side
 			// the var (theme_options) has to be declared in the same block for AJAX call scope
 			$none = json_encode(tr('None'));

@@ -1961,8 +1961,11 @@ table.treetable tr.expanded span.indenter a {
 .thumbnailcontener {
   margin: 1px;
   text-align: center;
-  display: inline-block;
+  display: block;
   vertical-align: top;
+}
+.thumbnailcontener .thumbnail {
+  display: block;
 }
 .tree li {
   display: block;
@@ -3178,6 +3181,10 @@ body.tiki.navbar-padding {
 }
 .affix-bottom {
   position: absolute;
+}
+.col-sm-2 .form-inline .form-control,
+.col-md-2 .form-inline .form-control {
+  width: 100%;
 }
 /* becomes height using padding (so it's divided by 2) */
 /* url(icons/loading.gif); */

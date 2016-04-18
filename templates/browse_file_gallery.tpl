@@ -5,6 +5,12 @@
 		{/self_link}
 	</div>
 {/if}
+{jq}
+	// Make nice rows of thumbnails even when there is description or long titles
+	$('.thumbnailcontener').height(
+		Math.max.apply(null, $('.thumbnailcontener').map(function(index, el) { return $(el).height(); }).get())
+	);
+{/jq}
 <div id="thumbnails"{* style="float:left"*}>
 
 	{section name=changes loop=$files}

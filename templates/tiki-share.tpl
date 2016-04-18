@@ -36,6 +36,9 @@
 				{/foreach}
 			</div>
 		{/if}
+		{if not empty($back_url)}
+			{button _type='link' href=$back_url _text='{tr}Back{/tr}'}
+		{/if}
 	</div>
 {/if}
 
@@ -75,12 +78,19 @@
 				</label>
 				<div class="col-sm-9">
 					<a href="{$prefix}{$url}">{$prefix}{$url}</a>
-					{if $report != 'y'}
-						<span class="help-block">
-							{tr}Short link{/tr}:{$shorturl}
-						</span>
-					{/if}
 				</div>
+			</div>
+			<div class="form-group">
+				{if $report != 'y' and $shorturl neq $prefix|cat:$url}
+					<label for="url" class="control-label col-sm-3">
+						{tr}Short link{/tr}
+					</label>
+					<div class="col-sm-9">
+						<span class="help-block">
+							<a href="{$shorturl}">{$shorturl}</a>
+						</span>
+					</div>
+				{/if}
 			</div>
 		{/if}
 		<div class="panel panel-default">
@@ -346,7 +356,7 @@
 						<label class="radio-inline">
 							<input class="share-forum-hide" type="radio" name="do_forum" value="0" checked="checked" {if $prefs.disableJavascript!='y'}onclick="toggleBlock('forumtable')" {/if}>
 							{tr}No{/tr}
-						</radio>
+						</label>
 					{else}
 						{remarksbox type="note" title="{tr}Post on forum{/tr}" close="n"}
 							{tr}There is no forum where you can post a message.{/tr}
@@ -388,7 +398,8 @@
 			{include file='antibot.tpl'}
 		{/if}
 		<div class="submit text-center">
-			<input type="hidden" name="url" value="{$url|escape:url}">
+			<input type="hidden" name="url" value="{$url|escape}">
+			<input type="hidden" name="back_url" value="{$back_url|escape}">
 			<input type="hidden" name="report" value="{$report}">
 			<button type="submit" class="btn btn-primary" name="send">
 				{icon name="share"} {tr}Share{/tr}
