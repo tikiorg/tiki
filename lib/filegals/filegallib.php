@@ -2125,9 +2125,12 @@ class FileGalLib extends TikiLib
 				$this->parentObjects($list, 'tiki_comments', 'threadId', 'object');
 				$filtered = Perms::filter(array('type'=>'forum'), 'object', $list, array('object' => 'object'), str_replace('tiki_p_', '', $map['forum']));
 			} elseif ($type == 'trackeritem') {
-				$this->parentObjects($list, 'tiki_tracker_items', 'itemId', 'trackerId');
-				$filtered = Perms::filter(array('type'=>'tracker'), 'object', $list, array('object' => 'trackerId'), str_replace('tiki_p_', '', $map['tracker']));
-				//NEED to check item perm
+				foreach ($list as $object) {
+					$item = Tracker_Item::fromId($object['itemId']);
+					if ($item->canView()) {
+						return false;
+					}
+				}
 			} else {
 				$filtered = Perms::filter(array('type'=>$type), 'object', $list, array('object' => 'itemId'), str_replace('tiki_p_', '', $map[$type]));
 			}
