@@ -53,7 +53,8 @@ class BackupDBCommand extends Command
 
 		$dateFormat = $input->getArgument('dateFormat');
 		if (! $dateFormat) {
-			$dateFormat = 'Y-m-d_H:i:s';
+			$windows = strtoupper(substr(PHP_OS, 0, 3)) == 'WIN';
+			$dateFormat = $windows ? 'Y-m-d_His' : 'Y-m-d_H:i:s';
 		}
 
 		$user_tiki = $pass_tiki = $host_tiki = $dbs_tiki = '';

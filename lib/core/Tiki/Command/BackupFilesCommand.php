@@ -107,7 +107,9 @@ class BackupFilesCommand extends Command
 			return;
 		}
 
-		$tarLocation = $path . '/' . $dbs_tiki . '_' . date( 'Y-m-d_H:i:s' ) . '.tar.bz2';
+		$windows = strtoupper(substr(PHP_OS, 0, 3)) == 'WIN';
+		$dateFormat = $windows ? 'Y-m-d_His' : 'Y-m-d_H:i:s';
+		$tarLocation = $path . '/' . $dbs_tiki . '_' . date( $dateFormat ) . '.tar.bz2';
 		$tar = escapeshellarg( $tarLocation );
 		$command = "tar -cjf $tar $source";
 		exec( $command );
