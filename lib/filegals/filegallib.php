@@ -2087,43 +2087,52 @@ class FileGalLib extends TikiLib
 		$query = 'select tob.* from `tiki_file_backlinks` tfb left join `tiki_objects` tob on (tob.`objectId`=tfb.`objectId`) where `fileId`=? order by '.$this->convertSortMode($sort_mode);
 		return $this->fetchAll($query, array((int)$fileId));
 	}
-	// can not see a file if all its backlinks are not viewable
+
+	/**
+	 * "can not see a file if all its backlinks are not viewable"
+	 *
+	 * Checks if a file is used in various object types and all the uses of it are "private"
+	 *
+	 * @param int $fileId    numeric id of the file in question
+	 *
+	 * @return bool          true:  if all the uses of a file are _not_ visible to the current user,
+	 *                       false: if any objects using of the file are visible or the file is not used
+	 *
+	 * @throws Exception
+	 */
+
 	function hasOnlyPrivateBacklinks($fileId)
 	{
 		$objects = $this->getFileBacklinks($fileId);
 		if (empty($objects)) {
 			return false;
 		}
+		$pobjects = [];
 		foreach ($objects as $object) {
 			$pobjects[$object['type']][] = $object;
 		}
-		$objectlib = TikiLib::lib('object');
+
 		$map = ObjectLib::map_object_type_to_permission();
 		foreach ($pobjects as $type=>$list) {
 			if ($type == 'blog post') {
 				$this->parentObjects($list, 'tiki_blog_posts', 'postId', 'blogId');
-				$f = Perms::filter(array('type'=>'blog'), 'object', $list, array('object' => 'blogId'), str_replace('tiki_p_', '', $map['blog']));
+				$filtered = Perms::filter(array('type'=>'blog'), 'object', $list, array('object' => 'blogId'), str_replace('tiki_p_', '', $map['blog']));
 			} elseif (strstr($type, 'comment')) {
 				$this->parentObjects($list, 'tiki_comments', 'threadId', 'object');
 				$t = str_replace(' comment', '', $type);
-				$f = Perms::filter(array('type'=>$t), 'object', $list, array('object' => 'object'), str_replace('tiki_p_', '', $map[$t]));
+				$filtered = Perms::filter(array('type'=>$t), 'object', $list, array('object' => 'object'), str_replace('tiki_p_', '', $map[$t]));
 			} elseif ($type == 'forum post') {
 				$this->parentObjects($list, 'tiki_comments', 'threadId', 'object');
-				$f = Perms::filter(array('type'=>'forum'), 'object', $list, array('object' => 'object'), str_replace('tiki_p_', '', $map['forum']));
+				$filtered = Perms::filter(array('type'=>'forum'), 'object', $list, array('object' => 'object'), str_replace('tiki_p_', '', $map['forum']));
 			} elseif ($type == 'trackeritem') {
 				$this->parentObjects($list, 'tiki_tracker_items', 'itemId', 'trackerId');
-				$f = Perms::filter(array('type'=>'tracker'), 'object', $list, array('object' => 'trackerId'), str_replace('tiki_p_', '', $map['tracker']));
+				$filtered = Perms::filter(array('type'=>'tracker'), 'object', $list, array('object' => 'trackerId'), str_replace('tiki_p_', '', $map['tracker']));
 				//NEED to check item perm
 			} else {
-				$f = Perms::filter(array('type'=>$type), 'object', $list, array('object' => 'itemId'), str_replace('tiki_p_', '', $map[$type]));
+				$filtered = Perms::filter(array('type'=>$type), 'object', $list, array('object' => 'itemId'), str_replace('tiki_p_', '', $map[$type]));
 			}
-			$debug=0;
-			if (!empty($debug)) {
-				echo "<br />FILE$fileId";
-				if (!empty($f)) echo 'OK-';else echo 'NO-';
-				foreach ($list as $l) echo $l['type'].': '.$l['itemId'].'('.$l['href'].')'.',';
-			}
-			if (!empty($f)) {
+
+			if (!empty($filtered)) {	// some objects linkling to this file are visible
 				return false;
 			}
 		}
