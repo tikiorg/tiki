@@ -140,6 +140,7 @@ if ($report != 'y') {
 $smarty->assign('url', $_REQUEST['url']);
 $smarty->assign('prefix', $tikilib->httpPrefix(true));
 $smarty->assign_by_ref('url_for_friend', $url_for_friend);
+$smarty->assign('back_url', isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '');
 
 if (!empty($_REQUEST['subject'])) {
 	$subject = $_REQUEST['subject'];
@@ -316,6 +317,7 @@ if (isset($_REQUEST['send'])) {
 			$access->redirect($_REQUEST['url'], tra('Your link was sent.'));
 		}
 		$smarty->assign('sent', true);
+		$smarty->assign('back_url', $_REQUEST['back_url']);
 	}
 	$smarty->assign_by_ref('errors', $errors);
 } else {
