@@ -324,7 +324,7 @@ if (!empty($multiprint_pages)) {
 	}
 
 	$smarty->assign('initial', $initial);
-	if (isset($_REQUEST['exact_match'])) {
+	if (isset($_REQUEST['exact_match']) && $_REQUEST['exact_match']) == 'y' ) {
 		$exact_match = true;
 		$smarty->assign('exact_match', 'y');
 	} else {
