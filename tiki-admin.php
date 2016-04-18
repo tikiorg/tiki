@@ -552,6 +552,15 @@ if (isset($_REQUEST['page'])) {
 	$helpDescription = tr("Help on %0 Config", $admintitle);
 
 	$smarty->assign('include', $adminPage);
+	if ( substr($adminPage, 0, 3) == 'ta_' && !file_exists("admin/include_$adminPage.tpl")) {
+		$addonadmintplfile = $utilities->getAddonFilePath("templates/admin/include_$adminPage.tpl");
+		if (!file_exists($addonadmintplfile)) {
+			$smarty->assign('include', 'missing_addon_page');
+		}
+		if (!$utilities->checkAddonActivated(substr($adminPage, 3))) {
+			$smarty->assign('include', 'addon_inactive');
+		}
+	}
 
 	if (!empty($changes) && key_check(null, false)) {
 		$access->redirect($_SERVER['REQUEST_URI'], '', 200);
