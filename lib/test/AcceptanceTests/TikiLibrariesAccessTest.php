@@ -9,7 +9,6 @@
  * @group gui
  */
 
-require_once 'TikiTestCase.php';
 
 /* 
  * This test case verifies that we can access various Tiki libraries

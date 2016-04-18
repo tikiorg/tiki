@@ -9,11 +9,8 @@
  * Parent class of all Selenium test cases.
  */
 
-//require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
-require_once 'TikiAcceptanceTestDBRestorer.php';
 
-
-class TikiSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase
+class TikiSeleniumTestCase extends PHPUnit_Extensions_Selenium2TestCase
 {
 	protected $backupGlobals = FALSE;
 	var $current_test_db; 
