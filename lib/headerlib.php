@@ -1141,7 +1141,7 @@ var script = document.createElement("script");
 
 window.onload = loadScript;');
 			} else {
-				$this->add_jsfile($url, 'external');
+				$this->add_jsfile_external($url, true);
 			}
 		}
 
