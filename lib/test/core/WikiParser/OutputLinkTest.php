@@ -20,7 +20,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link = new WikiParser_OutputLink;
 		$link->setIdentifier('Test');
 
-		$this->assertLinkIs('Test<a href="tiki-editpage.php?page=Test" title="Create page: Test" class="wiki wikinew">?</a>', $link->getHtml());
+		$this->assertLinkIs('<a class="wiki wikinew text-danger tips" href="tiki-editpage.php?page=Test" title="Create page: Test">Test</a>', $link->getHtml());
 	}
 
 	function testCreateLinkWithLanguage()
@@ -30,7 +30,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setIdentifier('Test');
 		$link->setLanguage('fr');
 
-		$this->assertLinkIs('Test<a href="tiki-editpage.php?page=Test&amp;lang=fr" title="Create page: Test" class="wiki wikinew">?</a>', $link->getHtml());
+		$this->assertLinkIs('<a href="tiki-editpage.php?page=Test&lang=fr" title="Create page: Test" class="wiki wikinew text-danger tips">Test</a>', $link->getHtml());
 	}
 
 	function testCreateLinkWithDescription()
@@ -40,7 +40,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setIdentifier('Test');
 		$link->setDescription('Hello World');
 
-		$this->assertLinkIs('Hello World<a href="tiki-editpage.php?page=Test" title="Create page: Test" class="wiki wikinew">?</a>', $link->getHtml());
+		$this->assertLinkIs('<a class="wiki wikinew text-danger tips" href="tiki-editpage.php?page=Test" title="Create page: Test">Hello World</a>', $link->getHtml());
 	}
 
 	function testCreateLinkWithRelationType()
@@ -50,7 +50,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setIdentifier('Test');
 		$link->setQualifier('real');
 
-		$this->assertLinkIs('Test<a href="tiki-editpage.php?page=Test" title="Create page: Test" class="wiki wikinew real">?</a>', $link->getHtml());
+		$this->assertLinkIs('<a class="wiki wikinew text-danger tips real" href="tiki-editpage.php?page=Test" title="Create page: Test">Test</a>', $link->getHtml());
 	}
 
 	function testPageDoesExist()
@@ -109,7 +109,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setWikiLookup(array($this, 'getPageInfo'));
 		$link->setWikiLinkBuilder(array($this, 'getWikiLink'));
 
-		$this->assertLinkIs('out:Test<a href="tiki-editpage.php?page=out%3ATest" title="Create page: out:Test" class="wiki wikinew">?</a>', $link->getHtml());
+		$this->assertLinkIs('<a class="wiki wikinew text-danger tips" href="tiki-editpage.php?page=out%3ATest" title="Create page: out:Test">out:Test</a>', $link->getHtml());
 	}
 
 	function testWithDefinedExternal()
@@ -166,7 +166,7 @@ class WikiParser_OutputLinkTest extends TikiTestCase
 		$link->setNamespace('HelloWorld', '_');
 		$link->setIdentifier('Test');
 
-		$this->assertLinkIs('Test<a href="tiki-editpage.php?page=HelloWorld_Test" title="Create page: HelloWorld_Test" class="wiki wikinew">?</a>', $link->getHtml());
+		$this->assertLinkIs('<a class="wiki wikinew text-danger tips" href="tiki-editpage.php?page=HelloWorld_Test" title="Create page: HelloWorld_Test">Test</a>', $link->getHtml());
 	}
 
 	function testRenderLinkWithinSameNamespace()
