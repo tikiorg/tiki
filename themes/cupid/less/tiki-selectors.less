@@ -1,0 +1,85 @@
+// $Id$
+// This file is for additional Less rules beyond what are in bootstrap-variables.less.
+
+@imagePath: ~"../images/";
+//body {
+//	background-image: url('@{imagePath}bg.jpg');
+//}
+
+body > .container {
+	.topbar {
+		margin-bottom: 20px;}
+}
+
+a:focus {
+	outline: thin dotted;
+	outline: 5px auto -webkit-focus-ring-color;
+	outline-offset: -2px
+}
+
+.img-thumbnail {
+	background-color: #fce0ec;
+	border: 1px solid #dddddd;
+	border-radius: 0;
+	-webkit-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+	font-family: "Bitter", Georgia, "Times New Roman", Times, serif;
+}
+
+h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small, .h2 small, .h3 small, .h4 small, .h5 small, .h6 small, h1 .small, h2 .small, h3 .small, h4 .small, h5 .small, h6 .small, .h1 .small, .h2 .small, .h3 .small, .h4 .small, .h5 .small, .h6 .small {
+	color: #f0569f
+}
+
+.navbar,
+.btn {
+	font-family: "Bitter", Georgia, "Times New Roman", Times, serif
+}
+
+
+h1, h2 {
+	position: relative;
+	padding: 0.2em 1.2em;
+	margin-left: 1em;
+	margin-right: 50px;
+	margin-bottom: 0.6em;
+	background-color: #f49ac0;
+	color: #fff
+}
+
+h1:before, h2:before {
+	content: "♥";
+	position: absolute;
+	left: -0.3em;
+	top: -0.42em;
+	color: #f0569f;
+	font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 3.6em
+}
+
+h1:after, h2:after {
+	content: "";
+	position: absolute;
+	width: 0;
+	height: 0;
+	right: 0;
+	top: 0;
+	border-top: 0.75em solid transparent;
+	border-bottom: 0.75em solid transparent;
+	border-right: 0.75em solid #fce0ec
+}
+
+.help-block {
+	color: #f0569f
+}
+
+.panel-heading {
+	border-top-right-radius: -1px;
+	border-top-left-radius: -1px
+}
+
+.panel-default > .panel-heading * {
+	color: #ffffff;
+}
