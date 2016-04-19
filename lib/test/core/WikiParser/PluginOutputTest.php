@@ -18,7 +18,7 @@ class WikiParser_PluginOutputTest extends PHPUnit_Framework_TestCase
 	{
 		$output = WikiParser_PluginOutput::wiki('^Hello world!^');
 
-		$this->assertContains('<div class="panel panel-default"><div class="panel-body">Hello world!</div></div>', $output->toHtml());
+		$this->assertContains('<div class="well">Hello world!</div>', $output->toHtml());
 	}
 
 	function testHtmlToWikiOutput()
