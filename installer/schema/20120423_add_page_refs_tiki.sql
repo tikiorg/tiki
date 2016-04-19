@@ -1,4 +1,4 @@
-CREATE TABLE `tiki_page_references` (
+CREATE TABLE IF NOT EXISTS `tiki_page_references` (
   `ref_id` INT(14) NOT NULL AUTO_INCREMENT,
   `page_id` INT(14) DEFAULT NULL,
   `biblio_code` VARCHAR(50) DEFAULT NULL,

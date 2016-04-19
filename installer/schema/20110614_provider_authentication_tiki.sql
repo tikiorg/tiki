@@ -1,5 +1,5 @@
 
-CREATE TABLE `tiki_source_auth` (
+CREATE TABLE IF NOT EXISTS `tiki_source_auth` (
 	`identifier` VARCHAR(50) PRIMARY KEY,
 	`scheme` VARCHAR(20) NOT NULL,
 	`domain` VARCHAR(200) NOT NULL,

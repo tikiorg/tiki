@@ -1,4 +1,4 @@
-CREATE TABLE `tiki_user_mailin_struct` (
+CREATE TABLE IF NOT EXISTS `tiki_user_mailin_struct` (
 	`mailin_struct_id` int(12) NOT NULL auto_increment,
 	`username` varchar(200) NOT NULL,
 	`subj_pattern` varchar(255) NULL,
