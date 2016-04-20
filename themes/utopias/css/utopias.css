@@ -7485,7 +7485,8 @@ a.admbox.off:active {
 .tiki .col1 .table-responsive {
   border: 1px solid #ddd;
 }
-code {
+code,
+pre.codelisting {
   color: #444;
   background: #f8f8f8;
   border: 1px solid #dddddd;

@@ -9,8 +9,6 @@
  * @group gui
  */
 
-require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
-require_once 'TikiSeleniumTestCase.php';
 
 class AcceptanceTests_SearchTest extends TikiSeleniumTestCase
 {

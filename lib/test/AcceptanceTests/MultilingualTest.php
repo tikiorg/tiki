@@ -13,7 +13,6 @@
  * @group gui
  */
 
-require_once 'TikiSeleniumTestCase.php';
 
 class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 {

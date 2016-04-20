@@ -67,7 +67,7 @@ class TestRunnerWithBaseline {
     {
         global $tracer;
 
-        $cmd_line = "../../vendor/bin/phpunit --verbose";
+        $cmd_line = "../../bin/phpunit --verbose";
 
         if ($this->phpunit_options != '')
         {
@@ -79,7 +79,7 @@ class TestRunnerWithBaseline {
             $cmd_line = "$cmd_line --filter ".$this->filter;
         }
 
-        $cmd_line = $cmd_line." --log-json \"".$this->logpath_current()."\" .";
+        $cmd_line = 'php ' . $cmd_line." --log-json \"".$this->logpath_current()."\" .";
 
         $this->do_echo( "
 ********************************************************************
