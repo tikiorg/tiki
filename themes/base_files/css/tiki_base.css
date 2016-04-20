@@ -1848,6 +1848,7 @@ dl.note-list {
 }
 #note-editor-comment {
   padding: 0;
+  z-index: 2;
 }
 .subcomment {
   margin-left: 10px;
