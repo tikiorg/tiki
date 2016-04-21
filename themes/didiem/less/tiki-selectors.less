@@ -80,19 +80,19 @@ textarea,
 	border-bottom: 1px solid @footer-border-color; // #ebdc14;
 }
 
-.footer_liner {
+//.footer_liner {
 //	h3.panel-title {
 //		color: #fff;
 //		border-bottom: 1px dotted @footer-border-color;
 //	}
-	//#ebdc14;
-	legend,
-	a,
-	a:visited {
-		color: @footer-link-color;
-	}
-	// #a9a9a9;
-}
+//	//#ebdc14;
+//	legend,
+//	a,
+//	a:visited {
+//		color: @footer-link-color;
+//	}
+//	// #a9a9a9;
+//}
 
 // @navbar-default-link-background: #bfbd23;
 .navbar-nav .open .dropdown-menu,
@@ -101,11 +101,26 @@ textarea,
 	background: @navbar-default-navbar-nav-li-a-background; // #cdbe23;
 }
 
+
+.navbar-nav .open .dropdown-menu,
+.navbar-nav .open .dropdown-menu li
+// .navbar-default .navbar-nav > li > a
+	{
+	background: #aaa;
+}
+
 .topbar .navbar-default .navbar-nav > li a:hover,
 .topbar .nav > li:hover,
 .topbar .cssmenu_horiz li:hover,
-.navbar-default .navbar-nav li a:hover {
+.navbar-default .navbar-nav li a:hover,
+.navbar-default .navbar-nav li.active a,
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus,
+
+li.selected > a {
 	background: @navbar-default-navbar-nav-li-a-hover-background;
+	color: #fff;
 }
 
 .postbody-title {

@@ -7553,31 +7553,14 @@ h3.panel-title {
   background-size: 100% 100%;
   color: #4a4a4a;
 }
-#topbar_modules .box-search {
-  color: #FFFFFF;
-  display: block;
-  height: 59px;
-  margin-bottom: 0;
-  margin-left: 0;
-  margin-right: 0 !important;
-  margin-top: 7px;
-  padding-left: 29px;
-  padding-right: 4px;
-  position: absolute;
-  right: 0;
-  text-align: right;
-  top: 0;
-  z-index: 2;
-}
 .magnifying_glass {
-  float: left;
-  background: url('../images/magnify.png') 0px -7px no-repeat transparent;
-}
-#topbar_modules .box-search .form-inline .form-group {
-  display: block;
-}
-#topbar_modules .box-search .form-control {
-  z-index: 1;
+  background: url('../images/magnifyT.png') no-repeat;
+  height: 59px;
+  width: 59px;
+  position: absolute;
+  top: -3px;
+  left: -45px;
+  z-index: 2;
 }
 .topbar .sf-arrows .sf-with-ul:after {
   /* order of following 3 rules important for fallbacks to work */

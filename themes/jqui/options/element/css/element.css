@@ -125,6 +125,9 @@ input[type="submit"]:hover,
 .button input:hover {
   background: #ea6;
 }
+.btn-link:hover {
+  background: none;
+}
 .topbar,
 .topbar .navbar-default .navbar-nav > li,
 .topbar .nav > li {
