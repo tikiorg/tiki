@@ -1262,7 +1262,7 @@ h6 .small,
 }
 h1,
 .h1 {
-  font-size: 41px;
+  font-size: 38px;
 }
 h2,
 .h2 {
@@ -7562,8 +7562,11 @@ h6 .small,
 .h6 .small {
   color: #f0569f;
 }
+.nav,
 .navbar,
-.btn {
+.btn,
+.cssmenu_horiz,
+.cssmenu_vert {
   font-family: "Bitter", Georgia, "Times New Roman", Times, serif;
 }
 h1,
