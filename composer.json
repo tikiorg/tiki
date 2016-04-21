@@ -5,7 +5,6 @@
 	"homepage": "https://tiki.org",
 	"minimum-stability": "stable",
 	"require": {
-		"ext-intl" : "*",
 		"twitter/bootstrap": "3.3.6",
 		"fortawesome/font-awesome": "4.5.0",
 		"adodb/adodb": "5.18",

@@ -23,9 +23,9 @@ class TikiFilter
 		switch( $filter )
 		{
 		case 'alpha':
-			return new Zend\I18n\Filter\Alpha;
+			return new TikiFilter_Alpha;
 		case 'alnum':
-			return new Zend\I18n\Filter\Alnum;
+			return new TikiFilter_Alnum;
 		case 'digits':
 			return new Zend\Filter\Digits;
 		case 'int':
