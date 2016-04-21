@@ -4654,8 +4654,6 @@
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": {
-        "ext-intl": "*"
-    },
+    "platform": [],
     "platform-dev": []
 }

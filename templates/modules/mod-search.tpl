@@ -150,7 +150,7 @@ $("#search_mod_input_{{$search_mod_usage_counter}}")
 							$f.attr('action', '{{$smod_params.search_action|escape:javascript}}');
 						}
 						$exact = $f.find("input[name=exact_match]");
-						if ($exact.val() != "On") {
+						if ($exact.val() != "y") {
 							$exact.remove(); // seems exact_match is true even if empty
 						}
 						return true;
@@ -158,7 +158,7 @@ $("#search_mod_input_{{$search_mod_usage_counter}}")
 				{/jq}
 				{if $smod_params.use_autocomplete eq 'y'}
 					{capture name="selectFn"}select: function(event, item) {ldelim}
-						$('#search-module-form{$search_mod_usage_counter}').data('page_selected', item.item.value).find("input[name=exact_match]").val("On");
+						$('#search-module-form{$search_mod_usage_counter}').data('page_selected', item.item.value).find("input[name=exact_match]").val("y");
 						{rdelim}, open: function(event, item) {ldelim}
 						$(".search_mod_buttons", "#search-module-form{$search_mod_usage_counter}").hide();
 						{rdelim}, close: function(event, item) {ldelim}

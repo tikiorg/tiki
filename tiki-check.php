@@ -788,9 +788,9 @@ if ($s) {
 	);
 } else {
 	$php_properties['intl'] = array(
-		'fitness' => tra('bad'),
+		'fitness' => tra('ugly'),
 		'setting' => 'Not available',
-		'message' => tra("intl extension is required for Tiki 15 onwards.")
+		'message' => tra("intl extension is preferred for Tiki 15 onwards.")
 	);
 }
 
