@@ -44,6 +44,7 @@ lang = {
 	"To My Location" : "Localiser ma position",
 	"StreetView is not available at this specific point on the map. Zoom in as needed and make sure to click on a blue line." : "La fonction StreetView n'est pas disponible à cet endroit précis sur la carte. Approchez votre zoom au besoin et assurez-vous de cliquer sur une ligne bleue.",
 	"Browse Files" : "Parcourir la liste des fichiers",
+	"Page only allowed once in a structure" : "Page autorisée une seule fois dans une structure",
 	// remember the IE does not support ending comma on last item
 	 "Bogus entry" : "bogus entry"
 };
