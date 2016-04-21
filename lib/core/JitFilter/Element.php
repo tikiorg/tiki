@@ -7,8 +7,8 @@
 
 /**
  * Class JitFilter_Element
- * @method Zend\I18n\Filter\Alpha alpha
- * @method Zend\I18n\Filter\Alnum alnum
+ * @method Zend\I18n\Filter\Alpha|TikiFilter_Alpha alpha
+ * @method Zend\I18n\Filter\Alnum|TikiFilter_Alnum alnum
  * @method Zend\Filter\Digits digits
  * @method Zend\Filter\ToInt int
  * @method Zend\Filter\StripTags username
