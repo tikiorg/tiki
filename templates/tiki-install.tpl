@@ -747,12 +747,12 @@
 					{/if}
 
 					<p>
-						{if isset($smarty.post.scratch)}
+						{if $install_type eq 'scratch'}
 							{tr}If this is your first install, your admin password is <strong>admin</strong>.{/tr}
 						{/if}
 						{tr}You can now log in into Tiki as user <strong>admin</strong> and start configuring the application.{/tr}
 					</p>
-					{if isset($smarty.post.scratch)}
+					{if $install_type eq 'scratch'}
 						<h3>{icon name='information'} {tr}Installation{/tr}</h3>
 						<p>{tr}If this is a first time installation, go to <strong>tiki-admin.php</strong> after login to start configuring your new Tiki installation.{/tr}</p>
 					{/if}
