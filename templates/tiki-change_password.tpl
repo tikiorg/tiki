@@ -96,7 +96,7 @@
 				{/if}
 			</div>
 			<div class="panel-footer text-center">
-				<input type="submit" class="btn btn-primary" name="change" onclick="return match_pass();" value="{tr}Apply{/tr}"><span id="validate"></span>
+				<input type="submit" class="btn btn-primary" name="change" onclick="return checkPasswordsMatch('#pass2', '#pass1', '#mypassword2_text');" value="{tr}Apply{/tr}"><span id="validate"></span>
 			</div>
 		</div>
 	</form>
