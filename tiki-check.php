@@ -1648,6 +1648,7 @@ if ($s == 1) {
 	);
 }
 
+if ($standalone || (!empty($prefs) && $prefs['fgal_enable_auto_indexing'] === 'y')) {
 	// adapted from \FileGalLib::get_file_handlers
 	$fh_possibilities = array(
 		'application/ms-excel' => array('xls2csv %1'),
@@ -1694,7 +1695,7 @@ if ($s == 1) {
 				break;
 			}
 		}
-		if (! $file_handler['fitness']) {
+		if (!$file_handler['fitness']) {
 			$file_handler['fitness'] = 'ugly';
 			$fh_commands = '';
 			foreach ($options as $opt) {
@@ -1705,7 +1706,7 @@ if ($s == 1) {
 		}
 		$file_handlers[$type] = $file_handler;
 	}
-
+}
 
 
 if (!$standalone) {

@@ -53,16 +53,25 @@ function prefs_search_list()
 			'name' => tra('Category filter'),
 			'type' => 'flag',
 			'default' => 'n',
+			'dependencies' => array(
+				'feature_categories',
+			),
+			'tags' => array('basic'),
 		),
 		'search_show_tag_filter' => array(
 			'name' => tra('Tag filter'),
 			'type' => 'flag',
 			'default' => 'n',
+			'dependencies' => array(
+				'feature_freetags',
+			),
+			'tags' => array('basic'),
 		),
 		'search_show_sort_order' => array(
 			'name' => tra('Sort order'),
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'search_use_facets' => array(
 			'name' => tra('Use facets for default search interface'),

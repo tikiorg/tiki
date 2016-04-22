@@ -267,6 +267,11 @@
 <h2>{tr}File Gallery Search Indexing{/tr}</h2>
 {icon name='help' href='https://doc.tiki.org/Search+within+files'} <em>{tr _0='<a href="https://doc.tiki.org/Search+within+files">' _1='</a>'}More information %0 here %1{/tr}</em>
 {if $prefs.fgal_enable_auto_indexing eq 'y'}
+	{if $security.shell_exec.setting eq 'Disabled'}
+		{remarksbox type='error' title='{tr}Command Missing{/tr}' close='n'}
+			<p>{tr}The command "shell_exec" is required for file gallery search indexing{/tr}</p>
+		{/remarksbox}
+	{/if}
 	<div class="table-responsive">
 		<table class="table">
 			<tr>
