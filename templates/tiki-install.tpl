@@ -581,7 +581,6 @@
 											<div style="margin-left:1em"><label for="proxy_port">{tr}Port{/tr}</label><input type="text" class="form-control" size="40" name="proxy_port" id="proxy_port" value="{$prefs.proxy_port|escape}"></div>
 											<div style="margin-left:1em"><label for="proxy_user">{tr}Proxy username{/tr}</label><input type="text" class="form-control" size="40" name="proxy_user" id="proxy_user" value="{$prefs.proxy_user|escape}"></div>
 											<div style="margin-left:1em"><label for="proxy_pass">{tr}Proxy password{/tr}</label><input type="text" class="form-control" size="40" name="proxy_pass" id="proxy_pass" value="{$prefs.proxy_pass|escape}"></div>
-											</div>
 										</div>
 									</div>
 								</div>
@@ -748,12 +747,12 @@
 					{/if}
 
 					<p>
-						{if isset($smarty.post.scratch)}
+						{if $install_type eq 'scratch'}
 							{tr}If this is your first install, your admin password is <strong>admin</strong>.{/tr}
 						{/if}
 						{tr}You can now log in into Tiki as user <strong>admin</strong> and start configuring the application.{/tr}
 					</p>
-					{if isset($smarty.post.scratch)}
+					{if $install_type eq 'scratch'}
 						<h3>{icon name='information'} {tr}Installation{/tr}</h3>
 						<p>{tr}If this is a first time installation, go to <strong>tiki-admin.php</strong> after login to start configuring your new Tiki installation.{/tr}</p>
 					{/if}

@@ -265,30 +265,36 @@
 </form>
 
 <h2>{tr}File Gallery Search Indexing{/tr}</h2>
-<em>More info <a href="https://doc.tiki.org/Search+within+files">here</a></em>
-<div class="table-responsive">
-	<table class="table">
-		<tr>
-			<th>{tr}Mimetype{/tr}</th>
-			<th>{tr}Tiki Fitness{/tr}</th>
-			<th>{tr}Explanation{/tr}</th>
-		</tr>
-
-		{foreach from=$file_handlers key=key item=item}
+{icon name='help' href='https://doc.tiki.org/Search+within+files'} <em>{tr _0='<a href="https://doc.tiki.org/Search+within+files">' _1='</a>'}More information %0 here %1{/tr}</em>
+{if $prefs.fgal_enable_auto_indexing eq 'y'}
+	<div class="table-responsive">
+		<table class="table">
 			<tr>
-				<td class="text">{$key}</td>
-				<td class="text">
-					<span class="text-{$fmap[$item.fitness]['class']}">
-						{icon name="{$fmap[$item.fitness]['icon']}"} {$item.fitness}
-					</span>
-				</td>
-				<td class="text">{$item.message|escape}</td>
+				<th>{tr}Mimetype{/tr}</th>
+				<th>{tr}Tiki Fitness{/tr}</th>
+				<th>{tr}Explanation{/tr}</th>
 			</tr>
-		{foreachelse}
-			{norecords _colspan=3}
-		{/foreach}
-	</table>
-</div>
+
+			{foreach from=$file_handlers key=key item=item}
+				<tr>
+					<td class="text">{$key}</td>
+					<td class="text">
+						<span class="text-{$fmap[$item.fitness]['class']}">
+							{icon name="{$fmap[$item.fitness]['icon']}"} {$item.fitness}
+						</span>
+					</td>
+					<td class="text">{$item.message|escape}</td>
+				</tr>
+			{foreachelse}
+				{norecords _colspan=3}
+			{/foreach}
+		</table>
+	</div>
+{else}
+	{remarksbox type='info' title='{tr}Feature disabled{/tr}' close='n'}
+		<p>{tr _0='<a href="tiki-admin.php?page=fgal">' _1='</a>'}Go to the %0 File Gallery Control Panel %1 (with advanced preferences showing) to enable{/tr}</p>
+	{/remarksbox}
+{/if}
 
 <h2>{tr}MySQL Variable Information{/tr}</h2>
 <div class="table-responsive">
