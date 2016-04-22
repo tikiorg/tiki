@@ -1942,7 +1942,7 @@ if ($standalone && !$nagios) {
 	update_overall_status($security, "PHP Security");
 	$return = json_encode($monitoring_info);
 	echo $return;
-} else {
+} else {	// not stand-alone
 	if (isset($_REQUEST['acknowledge']) || empty($last_state)) {
 		$tiki_check_status = array();
 		function process_acks(&$check_group, $check_group_name) {
@@ -1991,7 +1991,9 @@ if ($standalone && !$nagios) {
 	$smarty->assign_by_ref('security', $security);
 	$smarty->assign_by_ref('mysql_variables', $mysql_variables);
 	$smarty->assign_by_ref('mysql_crashed_tables', $mysql_crashed_tables);
-	$smarty->assign_by_ref('file_handlers', $file_handlers);
+	if ($prefs['fgal_enable_auto_indexing'] === 'y') {
+		$smarty->assign_by_ref('file_handlers', $file_handlers);
+	}
 	// disallow robots to index page:
 
 	$fmap = array(
