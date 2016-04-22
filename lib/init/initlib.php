@@ -44,25 +44,33 @@ class TikiInit
 
 	static function getContainer()
 	{
+		/** @var ContainerBuilder $container */
 		static $container;
 
 		if ($container) {
 			return $container;
 		}
 
+		require_once 'lib/setup/twversion.class.php';
+		$TWV = new TWVersion();
+		$version = $TWV->getVersion();
+
 		$cache = TIKI_PATH . '/temp/cache/container.php';
 		if (is_readable($cache)) {
 			require_once $cache;
 			$container = new TikiCachedContainer;
 
-			/* If the server moved, the container must be recreated */
-			if (TIKI_PATH == $container->getParameter('kernel.root_dir')) {
+			/* If the server moved or was upgraded, the container must be recreated */
+			if (TIKI_PATH == $container->getParameter('kernel.root_dir') &&
+					$container->hasParameter('tiki.version') &&					// no version before 15.0
+					$container->getParameter('tiki.version') === $version)
+			{
 				if (TikiDb::get()) {
 					$container->set('tiki.lib.db', TikiDb::get());
 				}
 				return $container;
 			} else {
-				/* This server moved, container must be recreated */
+				/* This server moved or was upgraded, container must be recreated */
 				unlink($cache);
 			}
 
@@ -77,6 +85,8 @@ class TikiInit
 		$container->addCompilerPass(new \Tracker\CompilerPass);
 
 		$container->setParameter('kernel.root_dir', TIKI_PATH);
+		$container->setParameter('tiki.version', $version);
+
 		$loader = new XmlFileLoader($container, new FileLocator($path));
 
 		$loader->load('tiki.xml');
