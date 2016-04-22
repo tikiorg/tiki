@@ -1949,8 +1949,8 @@ if ($standalone && !$nagios) {
 			global $tiki_check_status;
 			foreach($check_group as $key => $value) {
 				$formkey = str_replace(array('.',' '), '_', $key);
-				if (isset($check_group["$key"]['fitness']) &&
-					($check_group["$key"]['fitness'] === 'good' || $check_group["$key"]['fitness'] === 'safe') || $_REQUEST["$formkey"] === "on")
+				if (isset($check_group["$key"]['fitness']) && ($check_group["$key"]['fitness'] === 'good' || $check_group["$key"]['fitness'] === 'safe') ||
+					(isset($_REQUEST["$formkey"]) && $_REQUEST["$formkey"] === "on"))
 				{
 					$check_group["$key"]['ack'] = true;
 				} else {
