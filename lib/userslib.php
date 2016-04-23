@@ -7955,7 +7955,12 @@ class UsersLib extends TikiLib
 			$mail->setHtml($smarty->fetch('mail/invite_tempuser.tpl'));
 
 			if (!$mail->send($email)) {
-				throw new Exception(tr('Unable to send mail to invite "%0"', $email));
+				$errormsg = tr('Unable to send mail to invite "%0"', $email);
+				if (Perms::get()->admin) {
+					$mailerrors = print_r($mail->errors, true);
+					$errormsg .= $mailerrors;
+				}
+				throw new Exception($errormsg);
 			}
 			$smarty->assign_by_ref('user', $user);
 		}
