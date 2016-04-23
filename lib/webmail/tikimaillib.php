@@ -17,6 +17,7 @@ class TikiMail
 	 * @var \Zend\Mail\Message
 	 */
 	private $mail;
+	public $errors;
 
 	/**
 	 * @param null $user	to username
@@ -29,11 +30,14 @@ class TikiMail
 		$userlib = TikiLib::lib('user');
 
 		$to = '';
+		$this->errors = [];
 		if (!empty($user)) {
 			if ($userlib->user_exists($user)) {
 				$to = $userlib->get_user_email($user);
 			} else {
-				trigger_error('User not found');
+				$str = tra('Mail to: User not found');
+				trigger_error($str);
+				$this->errors = [$str];
 				return;
 			}
 		}
@@ -183,17 +187,22 @@ class TikiMail
 			$tikilib->query($query, $bindvars, -1, 0);
             $title = 'mail';
         } else {
-    		try {
-					tiki_send_email($this->mail);
 
+    		try {
+				tiki_send_email($this->mail);
     			$title = 'mail';
+				$error = '';
+
     		} catch (Zend\Mail\Exception\ExceptionInterface $e) {
     			$title = 'mail error';
+				$error = $e->getMessage();
+				$this->errors[] = $error;
+				$error = ' [' . $error . ']';
     		}
 
     		if ($title == 'mail error' || $prefs['log_mail'] == 'y') {
     			foreach ($recipients as $u) {
-    				$logslib->add_log($title, $u . '/' . $this->mail->getSubject());
+    				$logslib->add_log($title, $u . '/' . $this->mail->getSubject() . $error);
     			}
     		}
         }
