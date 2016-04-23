@@ -909,8 +909,8 @@ class PreferencesLib
 	/***
 	 * Store 10 most recently changed prefs for quickadmin module menu
 	 *
-	 * @param $name			preference name
-	 * @param null $auser	optional user
+	 * @param string $name        preference name
+	 * @param string $auser       optional user
 	 */
 
 	public function addRecent($name, $auser = null)

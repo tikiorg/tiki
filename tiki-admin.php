@@ -28,10 +28,10 @@ $logslib = TikiLib::lib('logs');
 /**
  * Display feedback on prefs changed
  *
- * @param $name		Name of feature
- * @param $message	Other message
- * @param $st		Type of change (0=disabled, 1=enabled, 2=changed, 3=info, 4=reset)
- * @param $num		unknown
+ * @param string $name		Name of feature
+ * @param string $message	Other message
+ * @param int $st		    Type of change (0=disabled, 1=enabled, 2=changed, 3=info, 4=reset)
+ * @param int $num		    unknown
  * @return void
  */
 function add_feedback( $name, $message, $st, $num = null )
