@@ -90,7 +90,7 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '', $all_lan
 
 		case 'trackeritem':
 			$replacementpage = '';
-			if ($prefs["feature_sefurl_tracker_prefixalias"] == 'y') {
+			if ($prefs["feature_sefurl_tracker_prefixalias"] == 'y' && $prefs['tracker_prefixalias_on_links'] == 'y') {
 				$trklib = TikiLib::lib('trk');
 				$replacementpage = $trklib->get_trackeritem_pagealias($source);
 			}
