@@ -117,5 +117,12 @@ function prefs_tracker_list()
 			'default' => 'y',
 			'dependencies' => ['feature_trackers'],
 		),
+		'tracker_prefixalias_on_links' => array(
+			'name' => tr('Tracker item links use prefix alias'),
+			'description' => tr('Links for tracker items will use the prefix alias automatically everywhere.'),
+			'type' => 'flag',
+			'default' => 'y',
+			'dependencies' => ['feature_trackers','feature_sefurl', 'feature_sefurl_tracker_prefixalias'],
+		),
 	);
 }
