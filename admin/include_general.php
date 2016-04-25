@@ -60,7 +60,7 @@ if (!empty($_REQUEST['testMail']) && key_check(null, false)) {
 		$msg = tra('Unable to send mail');
 		if ($tiki_p_admin == 'y') {
 			$mailerrors = print_r($mail->errors, true);
-			$msg .= $mailerrors;
+			$msg .= '<br>' . $mailerrors;
 		}
 		$smarty->assign('error_msg', $msg);
 	} else {

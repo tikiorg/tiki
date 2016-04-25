@@ -7,9 +7,11 @@
 
 class Services_Relation_Controller
 {
+	private $access;
+
 	function setUp()
 	{
-
+		$this->access = TikiLib::lib('access');
 	}
 
 	/**
@@ -26,6 +28,10 @@ class Services_Relation_Controller
 		$target_id = $input->target_id->none();
 		$source_type = $input->source_type->none();
 		$source_id = $input->source_id->none();
+
+		// todo - set perms mapping ability for relations to manage permissions on different types of relations.
+		// currently this is only used by the multilike feature so tiki_p_post_comments permission is noted in documentation
+		$this->access->check_permission('tiki_p_post_comments', 'Post a comment', $target_type, $target_id);
 
 		// ensure the target, source, and relation info are passed to the service
 		if (! $target_type || ! $target_id || ! $source_type || ! $source_id || ! $relation) {
@@ -90,6 +96,9 @@ class Services_Relation_Controller
 		$target_id = $input->target_id->none();
 		$source_type = $input->source_type->none();
 		$source_id = $input->source_id->none();
+
+		// todo - set perms mapping ability for relations to manage permissions on different types of relations.
+		$this->access->check_permission('tiki_p_post_comments', 'Post a comment', $target_type, $target_id);
 
 		// ensure the target, source, and relation info are passed to the service
 		if (! $target_type || ! $target_id || ! $source_type || ! $source_id || ! $relation_prefix) {

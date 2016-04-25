@@ -90,7 +90,7 @@ if (empty($_REQUEST['report']) || $_REQUEST['report'] != 'y') {
 } else {
 	$report='y';
 }
-$smarty->assign('report', $_REQUEST['report']);
+$smarty->assign('report', isset($_REQUEST['report']) ? $_REQUEST['report'] : '');
 
 $errors = array();
 $ok = true;
