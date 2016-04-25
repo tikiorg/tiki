@@ -42,6 +42,7 @@ function prefs_user_list($partial = false)
 		'user_assigned_modules' => array(
 			'name' => tra('Users can configure modules'),
 			'help' => 'Users+Configure+Modules',
+			'tags' => array('experimental'),	// This feature seems broken and will mess the display of the adventurous user. See https://dev.tiki.org/item5871
 			'type' => 'flag',
 			'default' => 'n',
 		),	
