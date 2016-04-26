@@ -41,7 +41,7 @@
 				</a>
 			{/section}
 		</div>
-		{if $struct_editable eq 'y'}
+		{if $struct_editable eq 'a'}
 			<div class="pull-right">
 				<form action="tiki-editpage.php" method="post" role="form" class="form-inline">
 					<div class="form-group">
@@ -65,6 +65,10 @@
 					</div>
 				</form>
 			</div>
+		{else}
+			{if $struct_editable eq 'y'}
+							<span class="pull-right">{self_link _script="tiki-edit_structure.php" page_ref_id=$home_info.page_ref_id _class="tips" _title="{tr}Manage Stucture{/tr}:{$home_info.pageName} ($cur_pos)"}{icon name="structure"}{/self_link}</span>
+			{/if}
 		{/if}
 	</div>
 </div>
