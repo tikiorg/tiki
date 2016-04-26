@@ -24,7 +24,7 @@
 
 		</div>
   		<div style="float: left;">
-{if $struct_editable eq 'y'}
+{if $struct_editable eq 'a'}
 	<form action="tiki-editpage.php" method="post">
 		<div class="form">
 			<input type="hidden" name="current_page_id" value="{$page_info.page_ref_id}">
@@ -44,7 +44,14 @@
 	<div>
 	{self_link  _script="tiki-edit_structure.php" page_ref_id=$home_info.page_ref_id _alt="{tr}Structure{/tr}" _title="{tr}Structure{/tr} ($cur_pos)"}{icon _id='chart_organisation' alt="{tr}Structure{/tr}" title="{tr}Structure{/tr} ($cur_pos)"}{/self_link}&nbsp;&nbsp;
 {else}
+	{if $struct_editable eq 'y'}
 		</div>
+		</div>
+		<div>
+		{self_link  _script="tiki-edit_structure.php" page_ref_id=$home_info.page_ref_id _alt="{tr}Structure{/tr}" _title="{tr}Structure{/tr} ($cur_pos)"}{icon _id='chart_organisation' alt="{tr}Structure{/tr}" title="{tr}Structure{/tr} ($cur_pos)"}{/self_link}&nbsp;&nbsp;
+	{else}
+	</div>
+	{/if}
 {/if}
 	    {section loop=$structure_path name=ix}
 	      {if $structure_path[ix].parent_id}&nbsp;{$prefs.site_crumb_seper}&nbsp;{/if}
