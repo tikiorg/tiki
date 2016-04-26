@@ -24,6 +24,10 @@
 {tabset name="admin_rssmodules"}
 
 	{tab name="{tr}External Feeds{/tr}"}
+		<a class="btn btn-primary pull-right" href="tiki-admin_rssmodules.php?offset={$offset|escape}&amp;sort_mode={$sort_mode|escape}&amp;refresh_all=y"
+			data-toggle="tooltip" data-placement="top" title="Please be patient, this may take a while.">
+			{icon name="refresh" _menu_text='y' _menu_icon='y' alt="{tr}Refresh All feeds{/tr}"}
+		</a>
 		<h2>{tr}External Feeds{/tr}</h2>
 		<div align="center">
 			{if $channels or ($find ne '')}
@@ -244,6 +248,17 @@
 						{/foreach}
 					</select>
 				</p>
+				{if $prefs.feature_multilingual eq 'y'}
+				<p>
+					<label for="article_language">{tr}Language{/tr}</label>
+					<select name="a_lang" id="article_language">
+							<option value="">{tr}Not set{/tr}</option>
+							{section name=ix loop=$languages}
+								<option value="{$languages[ix].value|escape}"{if $articleConfig.a_lang|escape eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
+							{/section}
+						</select>
+				</p>
+				{/if}
 				<h3>{tr}Custom Settings for Source Categories{/tr}</h3>
 				{if !$sourcecats}
 					<p>{tr}No source categories detected for this feed{/tr}</p>

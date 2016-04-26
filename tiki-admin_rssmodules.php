@@ -88,6 +88,7 @@ if ( isset($_REQUEST['article']) && $prefs['feature_articles'] == 'y' ) {
 				'custom_rating' => $jitPost->custom_rating->asArray(),
 				'submission' => isset( $_POST['submission'] ),
 				'custom_priority' => $jitPost->custom_priority->asArray(),
+				'a_lang' => $jitPost->a_lang->word(),
 			)
 		);
 		$cookietab = 1;
@@ -156,6 +157,12 @@ if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
 } else {
 	$find = '';
+}
+if ($prefs['feature_multilingual'] == 'y') {
+	$languages = array();
+	$langLib = TikiLib::lib('language');
+	$languages = $langLib->list_languages();
+	$smarty->assign_by_ref('languages', $languages);
 }
 $smarty->assign('find', $find);
 $smarty->assign_by_ref('sort_mode', $sort_mode);

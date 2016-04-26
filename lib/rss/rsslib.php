@@ -400,6 +400,16 @@ class RSSLib extends TikiDb_Bridge
 		$this->update_feeds(array( $rssId ), true);
 	}
 
+	function refresh_all_rss_modules()
+	{
+		$mods = $this->list_rss_modules();
+		$feeds = [];
+		foreach ($mods['data'] as $mod) {
+			$feeds[] = $mod['rssId'];
+		}
+		$this->update_feeds($feeds, true);
+	}
+
 	function clear_rss_cache($rssId)
 	{
 		$this->items->deleteMultiple(array('rssId' => (int) $rssId));
@@ -731,7 +741,7 @@ class RSSLib extends TikiDb_Bridge
 				'',
 				$data['url'],
 				'',
-				'',
+				$configuration['a_lang'],
 				$configuration['rating']
 			);
 
@@ -774,7 +784,7 @@ class RSSLib extends TikiDb_Bridge
 				'',
 				$data['url'],
 				'',
-				'',
+				$configuration['a_lang'],
 				$configuration['rating']
 			);
 
