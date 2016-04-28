@@ -73,7 +73,17 @@ function smarty_function_html_body_attributes($params, $smarty)
 			}
 		}
 	}
-	
+
+	if (!empty($page) && $page == $prefs['tikiIndex']) {
+		$class .= ' homepage';
+	}
+
+	if (!empty($pageLang)) {
+		$class .= ' ' . $pageLang;
+	} else {
+		$class .= ' ' . $prefs['language'];
+	}
+
 	if (!empty($onload)) {
 		$back .= ' onload="' . $onload . '"';
 	}
