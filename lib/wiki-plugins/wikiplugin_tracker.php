@@ -1175,10 +1175,22 @@ function wikiplugin_tracker($data, $params)
 					if (!empty($emailOptions[2])) { //tpl
 						$emailOptions[2] = preg_split('/ *, */', $emailOptions[2]);
 						foreach ($emailOptions[2] as $ieo=>$eo) {
-							if (!preg_match('/\.tpl$/', $eo)) {
-								$emailOptions[2][$ieo] = $eo.'.tpl';
+							if (strpos($eo, 'wiki:') !== 0) {
+								if (!preg_match('/\.tpl$/', $eo)) {
+									$emailOptions[2][$ieo] = $eo . '.tpl';
+								}
+								$tplSubject[$ieo] = str_replace('.tpl', '_subject.tpl', $emailOptions[2][$ieo]);
+							} else {
+								if (! $tikilib->page_exists(substr($eo, 5))) {
+									TikiLib::lib('errorreport')->report(tr('Missing wiki email template page "%0"', htmlspecialchars($wiki)));
+									$emailOptions[2][$ieo] = 'tracker_changed_notification.tpl';
+								} else {
+									$subject_name = str_replace('tpl', 'subject tpl', $emailOptions[2][$ieo]);
+									if ($tikilib->page_exists(substr($subject_name, 5))) {
+										$tplSubject[$ieo] = $subject_name;
+									}
+								}
 							}
-							$tplSubject[$ieo] = str_replace('.tpl', '_subject.tpl', $emailOptions[2][$ieo]);
 						}
 					} else {
 						$emailOptions[2] = array('tracker_changed_notification.tpl');
@@ -1190,15 +1202,23 @@ function wikiplugin_tracker($data, $params)
 					$smarty->assign('mail_date', $tikilib->now);
 					$smarty->assign('mail_itemId', $rid);
 					foreach ($emailOptions[1] as $ieo=>$ueo) {
-						@$mail_data = $smarty->fetch('mail/'.$tplSubject[$itpl]);
-						if (empty($mail_data))
-							$mail_data = tra('Tracker was modified at '). $_SERVER["SERVER_NAME"];
-						$mail->setSubject($mail_data);
-						$mail_data = $smarty->fetch('mail/'.$emailOptions[2][$itpl]);
-						if ($emailformat == 'html') {
-						$mail->setHtml($mail_data);
+						$mailDir = strpos($tplSubject[$itpl], 'wiki:') !== 0 ? 'mail/' : '';
+						@$mail_data = $smarty->fetch($mailDir .$tplSubject[$itpl]);
+						if (empty($mail_data)) {
+							$mail_data = tra('Tracker was modified at '). $_SERVER['SERVER_NAME'];
 						} else {
-						$mail->setText($mail_data);
+							$mail_data = trim(str_replace('&nbsp;', ' ', strip_tags($mail_data)));	// tidy
+						}
+						$mail->setSubject($mail_data);
+						$mailDir = strpos($emailOptions[2][$itpl], 'wiki:') !== 0 ? 'mail/' : '';	// wiki pages dont start with wiki:
+						$mail_data = $smarty->fetch($mailDir .$emailOptions[2][$itpl]);
+						if ($emailformat == 'html') {
+							$mail->setHtml($mail_data, strip_tags($mail_data));
+						} else {
+							if (strpos($emailOptions[2][$itpl], 'wiki:') === 0) {
+								$mail_data =  str_replace('&nbsp;', ' ', strip_tags($mail_data));
+							}
+							$mail->setText($mail_data);
 						}
 						try {
 							$mail->send($ueo);
