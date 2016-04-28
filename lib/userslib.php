@@ -1496,7 +1496,7 @@ class UsersLib extends TikiLib
 
 		$ret = true;
 		$ret &= $this->ldap_sync_user($user, $pass);
-		$ret &= $this->ldap_sync_groups($user, $pass);
+		$ret &= $this->_ldap_sync_groups($user, $pass);
 
 		// Invalidate cache
 		$cachelib = TikiLib::lib('cache');

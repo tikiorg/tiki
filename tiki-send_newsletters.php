@@ -422,7 +422,7 @@ if ( isset($_REQUEST["send"]) && ! empty($_REQUEST["sendingUniqId"]) || $resend 
 if (isset($_REQUEST['resume'])) {
 	// for this throttle resume case the editionId, sendfrom and replyto addresses (if used) are added to the tiki-send_newsletter.php URL in the .tpl
 	$edition_info = $nllib->get_edition($_REQUEST['resume']);
-	// if they are set the replyto and sendfrom parameter contents are added to edition_info 
+	// if they are set the replyto and sendfrom parameter contents are added to edition_info  
 	if (!empty($_REQUEST['replyto']) &&  $_REQUEST['replyto'] != "undefined") { 
 		$edition_info['replyto'] = $_REQUEST['replyto'];  
 	}
