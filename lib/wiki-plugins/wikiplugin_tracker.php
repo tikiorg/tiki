@@ -860,7 +860,12 @@ function wikiplugin_tracker($data, $params)
 		} else {
 			$unfiltered = array('data' => array());
 			foreach ($outf as $fieldId) {
-				$unfiltered['data'][] = $definition->getField($fieldId);
+				$fieldTemp = $definition->getField($fieldId);
+				if ($fieldTemp) {
+					$unfiltered['data'][] = $fieldTemp;
+				} else {
+					TikiLib::lib('errorreport')->report(tr('Tracker: Field #%0 not found in fields parameter or template', $fieldId));
+				}
 			}
 		}
 
