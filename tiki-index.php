@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  * Tiki's entry point.
  *
