@@ -153,7 +153,7 @@ function wikiplugin_tracker_info()
                                         I.e., the first template will be used for the first to, the second template if exists will be used
                                         for the second from (otherwise the last given template will be used). Each template needs two files, one for the subject one for the body. The subject will be named
                                         template_subject.tpl. All the templates must be in the %0templates/mail%1 directory. Example:
-                                        %0webmaster@my.com|a@my.com,b@my.com|templatea.tpl,templateb.tpl%1 (%0templates/mail/template_tracker_modified.tpl%1
+                                        %0webmaster@my.com|a@my.com,b@my.com|templatea.tpl,templateb.tpl%1 (%0templates/mail/tracker_changed_notification.tpl%1
                                         is the default from which you can get inspiration). Please note that you need to have an email
                                         address in the normal "Copy activity to email" property in the Tracker notifications panel as well',
                                         '<code>', '</code>'),
