@@ -6,14 +6,14 @@
 {else}{tr}An anonymous user{/tr}{/if}
 {tr}Title:{/tr} {$mail_title}
 {tr}Date:{/tr} {$mail_date|tiki_short_datetime:"":"n"}
-{$mail_machine}/{$topicId|sefurl:"forum post"}{if $threadId}#threadId{$threadId}{/if}
+{$mail_machine}/{$topicId|sefurl:"forum post"}{if $threadId}#threadId={$threadId}{/if}
 
 {if $mail_contributions}{tr}Contribution:{/tr} {$mail_contributions}{/if}
 {else}
 {if $mail_author}"{$mail_author|username}"{else}{tr}An anonymous user{/tr}{/if} {tr}has posted a reply to a thread you're watching.
 You can view the thread and reply at the following URL:{/tr}
 
-{$mail_machine}/{$topicId|sefurl:"forum post"}{if $threadId}#threadId{$threadId}{/if}
+{$mail_machine}/{$topicId|sefurl:"forum post"}{if $threadId}#threadId={$threadId}{/if}
 {/if}
 
 

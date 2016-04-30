@@ -110,7 +110,7 @@ if ( $forum_info['is_flat'] == 'y') {
 		//find the needed comments_offset to set to the right page
 		$_REQUEST['comments_offset'] = $resPos['page_offset'] * $forum_info['commentsPerPage'];
 		//note the #thread anchor added at the end of the URL to fetch the specific post
-		$url = "tiki-view_forum_thread.php?forumId=" . $_REQUEST['forumId'] . "&comments_parentId=" . $root_thread_id . "&comments_offset=" . $_REQUEST['comments_offset'] . "#threadId".$anchored_post;
+		$url = "tiki-view_forum_thread.php?forumId=" . $_REQUEST['forumId'] . "&comments_parentId=" . $root_thread_id . "&comments_offset=" . $_REQUEST['comments_offset'] . "#threadId=".$anchored_post;
 		header('location: ' . $url);
 		die;
 	}

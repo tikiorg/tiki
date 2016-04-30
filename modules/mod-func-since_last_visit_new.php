@@ -236,7 +236,7 @@ function module_since_last_visit_new($mod_reference, $params = null)
 				$ret['items']['posts']['list'][$count]['href']
 					= 'tiki-view_forum_thread.php?forumId=' . $res['object'] . '&comments_parentId=';
 				if ($res['parentId']) {
-					$ret['items']['posts']['list'][$count]['href'].=$res['parentId'].'#threadId'.$res['threadId'];
+					$ret['items']['posts']['list'][$count]['href'].=$res['parentId'].'#threadId='.$res['threadId'];
 				} else {
 					$ret['items']['posts']['list'][$count]['href'].=$res['threadId'];
 				}

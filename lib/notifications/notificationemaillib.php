@@ -843,12 +843,13 @@ function sendCommentNotification($type, $id, $title, $content, $commentId=null)
 			$smarty->assign('mail_item_title', $trklib->get_isMain_value($trackerId, $id));
 		}
 
-		// Blog comment mail
+		// General comment mail
 		$smarty->assign('mail_objectid', $id);
 		$smarty->assign('objecttype', $type);
 		$smarty->assign('mail_user', $user);
 		$smarty->assign('mail_title', $title);
 		$smarty->assign('mail_comment', $content);
+		$smarty->assign('comment_id', $commentId);
 
 		sendEmailNotification($watches, null, 'user_watch_comment_subject.tpl', null, 'user_watch_comment.tpl');
 	}

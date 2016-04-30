@@ -195,7 +195,7 @@ if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == 
 		if (!empty($feedbacks)) {
 			$_SESSION['feedbacks'] = $feedbacks;
 		}
-		$url .= "#threadId".$threadId; //place anchor on newly created message
+		$url .= "#threadId=".$threadId; //place anchor on newly created message
 
 		//Watches
 		if ( $prefs['feature_user_watches'] == 'y') {

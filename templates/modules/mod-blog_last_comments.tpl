@@ -16,9 +16,9 @@
 			{else}
 				{$comments[ix].userName|userlink}
 			{/if}
-			{tr}on{/tr} <a class="linkmodule" href="tiki-view_blog_post.php?postId={$comments[ix].postId}&amp;comzone=show#threadId{$comments[ix].threadId}" title="{tr}Published on{/tr} {$comments[ix].commentData|tiki_short_date}">{$comments[ix].title|escape}{if $comments[ix].priv eq 'y'} ({tr}private{/tr}){/if}</a>
+			{tr}on{/tr} <a class="linkmodule" href="tiki-view_blog_post.php?postId={$comments[ix].postId}&amp;comzone=show#threadId={$comments[ix].threadId}" title="{tr}Published on{/tr} {$comments[ix].commentData|tiki_short_date}">{$comments[ix].title|escape}{if $comments[ix].priv eq 'y'} ({tr}private{/tr}){/if}</a>
 		{else}
-			<a class="linkmodule clearfix" href="tiki-view_blog_post.php?postId={$comments[ix].postId}&amp;comzone=show#threadId{$comments[ix].threadId}" title="{tr}Published on{/tr} {$comments[ix].commentDate|tiki_short_datetime}, {tr}by{/tr} {$comments[ix].userName}{if $moretooltips eq 'y'} {tr}on blogpost{/tr} {$comments[ix].title}{/if}">
+			<a class="linkmodule clearfix" href="tiki-view_blog_post.php?postId={$comments[ix].postId}&amp;comzone=show#threadId={$comments[ix].threadId}" title="{tr}Published on{/tr} {$comments[ix].commentDate|tiki_short_datetime}, {tr}by{/tr} {$comments[ix].userName}{if $moretooltips eq 'y'} {tr}on blogpost{/tr} {$comments[ix].title}{/if}">
 				{if $moretooltips ne 'y'}{$comments[ix].title}{if $comments[ix].priv eq 'y'} ({tr}private{/tr}){/if}:{/if}
 				{if $comments[ix].commentTitle ne ''}<span class="commentTitle">{$comments[ix].commentTitle}</span>{else}{tr}Untitled{/tr}{/if}
 			</a>
