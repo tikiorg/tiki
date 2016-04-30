@@ -627,7 +627,7 @@ class LogsLib extends TikiLib
 	{
 		if (preg_match('/comments_parentId=([0-9\-+]+)/', $action['comment'], $matches)) {
 			return $matches[1];
-		} elseif (preg_match('/#threadId([0-9\-+]+)/', $action['comment'], $matches)) {
+		} elseif (preg_match('/#threadId=?([0-9\-+]+)/', $action['comment'], $matches)) {
 			return $matches[1];
 		} elseif (preg_match('/sheetId=([0-9]+)/', $action['comment'], $matches)) {
 			return $matches[1];

@@ -11,14 +11,14 @@
 
 {tr}You can view the comment by following this link:{/tr}
 {if $objecttype eq 'wiki'}
-{$mail_machine_raw}/{$mail_objectname|sefurl}#comments
+{$mail_machine_raw}/{$mail_objectname|sefurl}#threadId={$comment_id}
 {* Blog comment mail *}
 {elseif $objecttype eq 'blog'}
-{$mail_machine_raw}/{$mail_objectid|sefurl:'blogpost'}#comments
+{$mail_machine_raw}/{$mail_objectid|sefurl:'blogpost'}#threadId={$comment_id}
 {elseif $objecttype eq 'article'}
-{$mail_machine_raw}/{$mail_objectid|sefurl:'article'}#comments
+{$mail_machine_raw}/{$mail_objectid|sefurl:'article'}#threadId={$comment_id}
 {elseif $objecttype eq 'trackeritem'}
-{$mail_machine_raw}/{$mail_objectid|sefurl:'trackeritem'}
+{$mail_machine_raw}/{$mail_objectid|sefurl:'trackeritem'}#threadId={$comment_id}
 {/if}
 
 {tr}Title:{/tr} {$mail_title}

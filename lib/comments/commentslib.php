@@ -2936,7 +2936,7 @@ class Comments extends TikiLib
 					($parentId == 0)? 'Posted': 'Replied',
 					$object[1],
 					'comment',
-					'type='.$object[0].'&amp;add='.$l.'#threadId'.$threadId,
+					'type='.$object[0].'&amp;add='.$l.'#threadId='.$threadId,
 					'',
 					'',
 					'',
