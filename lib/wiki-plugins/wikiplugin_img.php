@@ -194,9 +194,9 @@ function wikiplugin_img_info()
 				'since' => '14.0',
 				'doctype' => 'style',
 				'advanced' => false,
-				'default' => $prefs['image_responsive_class'],
+				'default' => '',
 				'options' => array(
-					array('text' => tra('Default'), 'value' => $prefs['image_responsive_class']),
+					array('text' => tra('Default'), 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n'),
 				),
