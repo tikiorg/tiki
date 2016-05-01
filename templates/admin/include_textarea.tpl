@@ -152,6 +152,7 @@
 			<fieldset class="margin-bottom-lg">
 				<legend>{tr}Plugin preferences{/tr}</legend>
 				{preference name=wikipluginprefs_pending_notification}
+				{preference name=image_responsive_class}
 			</fieldset>
 
 			<fieldset class="margin-bottom-lg">

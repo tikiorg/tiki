@@ -194,8 +194,9 @@ function wikiplugin_img_info()
 				'since' => '14.0',
 				'doctype' => 'style',
 				'advanced' => false,
-				'default' => 'y',
+				'default' => '',
 				'options' => array(
+					array('text' => tra('Default'), 'value' => ''),
 					array('text' => tra('Yes'), 'value' => 'y'),
 					array('text' => tra('No'), 'value' => 'n'),
 				),
@@ -549,7 +550,7 @@ function wikiplugin_img( $data, $params )
 	$imgdata['title'] = '';
 	$imgdata['metadata'] = '';
 	$imgdata['alt'] = '';
-	$imgdata['responsive'] = 'y';
+	$imgdata['responsive'] = $prefs['image_responsive_class'];
 	$imgdata['default'] = '';
 	$imgdata['mandatory'] = '';
 	$imgdata['fromFieldId'] = 0;		// "private" params set by Tracker_Field_Files

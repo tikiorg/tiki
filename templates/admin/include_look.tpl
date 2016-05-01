@@ -220,6 +220,7 @@
 				{preference name=iepngfix_selectors}
 				{preference name=iepngfix_elements}
 			</div>
+			{preference name=image_responsive_class}
 			<div class="adminoptionbox">
 				<fieldset>
 					<legend>{tr}Favicon{/tr}</legend>
