@@ -1238,17 +1238,3 @@ function histlib_strip_irrelevant( $data )
 	return $data;
 }
 
-function rollback_page_to_version($page, $version, $check_key = true, $keep_lastModif = false)
-{
-	global $prefs;
-	$histlib = TikiLib::lib('hist');
-	$tikilib = TikiLib::lib('tiki');
-	$access = TikiLib::lib('access');
-
-	if ($check_key) {
-		$access->check_authenticity();
-	}		
-	$histlib->use_version($page, $version, '', $keep_lastModif);
-	
-	$tikilib->invalidate_cache($page);
-}

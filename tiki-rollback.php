@@ -43,9 +43,12 @@ $tikilib->get_perm_object($page, 'wiki page', $info);
 $access->check_permission(array('tiki_p_rollback', 'tiki_p_edit'));
 
 if (isset($_REQUEST["rollback"])) {
-	require_once('lib/diff/difflib.php');
-	$categlib = TikiLib::lib('categ');
-	rollback_page_to_version($_REQUEST['page'], $_REQUEST['version']);
+
+	$access->check_authenticity(tr('Are you sure you want to roll back "%0" to version #%1?', $page, $version));
+
+	$histlib->use_version($page, $version, '');
+	$tikilib->invalidate_cache($page);
+
 	header("location: tiki-index.php?page=" . urlencode($page));
 	die;
 }
