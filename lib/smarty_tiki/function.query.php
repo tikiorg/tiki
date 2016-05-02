@@ -43,14 +43,14 @@ function smarty_function_query($params, $smarty)
 	} else {
 		// Not using _REQUEST here, because it is sometimes directly modified in scripts
 		if ( $request === NULL ) {
-			if (!empty($_GET) && !empty($_POST)) {
-				$request = array_merge($_GET, $_POST);
-			} else if (!empty($_GET)) {
-				$request = $_GET;
-			} else if (!empty($_POST)) {
-				$request = $_POST;
-			} else {
-				$request = array();
+			// make a copy of the $_GET and $_POST arrays as it seems php7 assigns these by reference now
+			// and so they get directly modified below instead of just the query string being set
+			$request = [];
+			foreach($_GET as $k => $v) {
+				$request[$k] = $v;
+			}
+			foreach($_POST as $k => $v) {
+				$request[$k] = $v;
 			}
 		}
 		$query = $request;
