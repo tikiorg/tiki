@@ -28,7 +28,7 @@ if (!isset($_REQUEST["page"])) {
 	$smarty->assign_by_ref('page', $_REQUEST["page"]);
 }
 
-$auto_query_args = array('page', 'oldver', 'newver', 'compare', 'diff_style', 'show_translation_history', 'show_all_versions', 'history_offset', 'paginate', 'history_pagesize');
+$auto_query_args = array('page', 'oldver', 'newver', 'diff_style', 'paginate', 'history_offset');
 
 // Now check permissions to access this page
 if (!isset($_REQUEST["source"])) {
@@ -94,9 +94,12 @@ $smarty->assign('history_offset', $history_offset);
 
 if (isset($_REQUEST['history_pagesize']) && $paginate) {
 	$history_pagesize = $_REQUEST['history_pagesize'];
+} else if (isset($_SESSION['history_pagesize'])) {
+	$history_pagesize = $_SESSION['history_pagesize'];
 } else {
 	$history_pagesize = $prefs['maxRecords'];
 }
+$_SESSION['history_pagesize'] = $history_pagesize;
 $smarty->assign('history_pagesize', $history_pagesize);
 
 // fetch page history, but omit the actual page content (to save memory)
@@ -127,8 +130,11 @@ if ($prefs['flaggedrev_approval'] == 'y') {
 }
 
 if (!isset($_REQUEST['show_all_versions'])) {
-	$_REQUEST['show_all_versions'] = "y";
+	$_SESSION['show_all_versions'] = "y";
+} else {
+	$_SESSION['show_all_versions'] =$_REQUEST['show_all_versions'];
 }
+
 $sessions = array();
 if (count($history) > 0) {
 	$lastuser = '';		// calculate edit session info
@@ -164,7 +170,7 @@ if (count($history) > 0) {
 			$h['session'] = '';
 		}
 	}
-	if ($_REQUEST['show_all_versions'] == "n") {
+	if ($_SESSION['show_all_versions'] == "n") {
 		for ($i = 0, $cnt = count($history); $i < $cnt; $i++) {	// remove versions inside sessions
 			if (!empty($history[$i]['session']) && $i < $cnt - 1) {
 				$seshend = $history[$i]['session'];
@@ -181,7 +187,7 @@ if (count($history) > 0) {
 		}
 	}
 }
-$smarty->assign('show_all_versions', $_REQUEST['show_all_versions']);
+$smarty->assign('show_all_versions', $_SESSION['show_all_versions']);
 $history_versions = array();
 $history_sessions = array();
 reset($history);
@@ -214,7 +220,7 @@ if (isset($_REQUEST['bothver_idx'])) {
 	}
 	$_REQUEST['oldver_idx'] = $_REQUEST['bothver_idx'] - 1;
 	$_REQUEST['newver_idx'] = $_REQUEST['bothver_idx'];
-	if ($_REQUEST['show_all_versions'] == 'n' && !empty($history_sessions[$_REQUEST['bothver_idx']])) {
+	if ($_SESSION['show_all_versions'] == 'n' && !empty($history_sessions[$_REQUEST['bothver_idx']])) {
 		$_REQUEST['oldver_idx'] = $_REQUEST['bothver_idx'];
 	}
 }
@@ -235,7 +241,7 @@ if (isset($_REQUEST['newver_idx'])) {
 }
 if (isset($_REQUEST['oldver_idx'])) {
 	$oldver = $history_versions[$_REQUEST['oldver_idx']];
-	if ($_REQUEST['show_all_versions'] == 'n' && !empty($history_sessions[$_REQUEST['oldver_idx']])) {
+	if ($_SESSION['show_all_versions'] == 'n' && !empty($history_sessions[$_REQUEST['oldver_idx']])) {
 		$oldver = $history_sessions[$_REQUEST['oldver_idx']];
 	}
 } else {
@@ -254,6 +260,9 @@ if (isset($_REQUEST['oldver_idx'])) {
 if ($_REQUEST['oldver_idx'] + 1 == $_REQUEST['newver_idx']) {
 	$_REQUEST['bothver_idx'] = $_REQUEST['newver_idx'];
 }
+$_REQUEST['oldver'] = $oldver;
+$_REQUEST['newver'] = $newver;
+
 // source view
 if (isset($_REQUEST['source_idx'])) {
 	$source = $history_versions[$_REQUEST['source_idx']];
@@ -390,7 +399,8 @@ if ($prefs['feature_multilingual'] == 'y') {
 	}
 }
 $current_version = $info["version"];
-$not_comparing = empty($_REQUEST['compare']) ? 'true' : 'false';
+$comparing = isset($_REQUEST['newver']) || isset($_REQUEST['oldver']);
+$not_comparing = $comparing ? 'false' : 'true';
 
 $headerlib->add_jq_onready(
 <<<JS
@@ -420,7 +430,7 @@ if (\$("input[name=newver][checked=checked]").length) {
 }
 JS
 );
-if (isset($_REQUEST["compare"])) {
+if ($comparing) {
 	histlib_helper_setup_diff($page, $oldver, $newver);
 
 	if (isset($approved_versions)) {

@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title admpage="wiki"}{tr}History:{/tr} {$page}{/title}
+{title admpage="wiki" url='tiki-pagehistory.php?page='|cat:$page|escape}{tr}History:{/tr} {$page}{/title}
 
 <div class="t_navbar margin-bottom-md">
 	{assign var=thispage value=$page|escape:url}
@@ -125,7 +125,7 @@
 				{/if}
 			</div>
 			{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit eq 'y'}
-				<div class="col-sm-6 pull-left" style="margin-bottom: 10px">
+				<div class="col-sm-6 pull-left margin-bottom-sm">
 					<div class="input-group input-group-sm">
 						<span class="input-group-addon">
 							{icon name='admin_i18n' class='tips' title=":{tr}Translation{/tr}"}
@@ -137,8 +137,6 @@
 						</select>
 						<div class="input-group-btn">
 							<input type="submit" class="btn btn-primary btn-sm" name="update_translation" value="{tr}Update Translation{/tr}"/>
-						</div>
-						<div class="input-group-btn">
 							{if $show_translation_history}
 								<input type="hidden" name="show_translation_history" value="1">
 								{button show_translation_history=0 _text="{tr}Hide translation history{/tr}" _auto_args="*" _class="btn btn-default btn-sm"}
