@@ -130,9 +130,9 @@ if ($prefs['flaggedrev_approval'] == 'y') {
 }
 
 if (!isset($_REQUEST['show_all_versions'])) {
-	$_SESSION['show_all_versions'] = "y";
+	$_SESSION['show_all_versions'] = isset($_SESSION['show_all_versions']) ? $_SESSION['show_all_versions'] : 'y';
 } else {
-	$_SESSION['show_all_versions'] =$_REQUEST['show_all_versions'];
+	$_SESSION['show_all_versions'] = $_REQUEST['show_all_versions'];
 }
 
 $sessions = array();
@@ -399,7 +399,7 @@ if ($prefs['feature_multilingual'] == 'y') {
 	}
 }
 $current_version = $info["version"];
-$comparing = isset($_REQUEST['newver']) || isset($_REQUEST['oldver']);
+$comparing = isset($_GET['newver']) || isset($_GET['oldver']);
 $not_comparing = $comparing ? 'false' : 'true';
 
 $headerlib->add_jq_onready(

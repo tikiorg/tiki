@@ -7,9 +7,9 @@
 	{button href="tiki-index.php?page=$thispage" class="btn btn-default" _text="{tr}View page{/tr}" _icon_name="view"}
 	{if !isset($noHistory)}
 		{if $show_all_versions eq "y"}
-			{button _text="{tr}Collapse Into Edit Sessions{/tr}" show_all_versions="n" href="?clear_versions=1" _auto_args="*" class="btn btn-default" _icon_name="expanded"}
+			{button _text="{tr}Collapse Into Edit Sessions{/tr}" href="?clear_versions=1&show_all_versions=n" _auto_args="*" class="btn btn-default" _icon_name="expanded"}
 		{else}
-			{button _text="{tr}Show All Versions{/tr}" show_all_versions="y" href="?clear_versions=1" _auto_args="*" class="btn btn-default" _icon_name="collapsed"}
+			{button _text="{tr}Show All Versions{/tr}" href="?clear_versions=1&show_all_versions=y" _auto_args="*" class="btn btn-default" _icon_name="collapsed"}
 		{/if}
 	{/if}
 </div>
