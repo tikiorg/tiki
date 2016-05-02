@@ -28,16 +28,7 @@ if (!isset($_REQUEST["page"])) {
 	$smarty->assign_by_ref('page', $_REQUEST["page"]);
 }
 
-$real_compare = !empty($_REQUEST['compare']);
-$auto_query_args = array('page', 'oldver', 'newver', 'show_all_versions');
-foreach ($auto_query_args as $key => $value ) {
-	if(isset($_GET[$value])){
-		if($value != 'page'){
-			$_REQUEST["compare"]="Compare";
-			$_REQUEST["diff_style"]=(isset($_REQUEST["diff_style"]))?$_REQUEST["diff_style"]:"sidediff";
-		}
-	}
-}
+$auto_query_args = array('page', 'oldver', 'newver', 'compare', 'diff_style', 'show_translation_history', 'show_all_versions', 'history_offset', 'paginate', 'history_pagesize');
 
 // Now check permissions to access this page
 if (!isset($_REQUEST["source"])) {
@@ -91,9 +82,7 @@ if ($prefs['feature_contribution'] == 'y') {
 	}
 }
 
-$paginate = !isset($_REQUEST['source']) && !isset($_REQUEST['source_idx'])  && !$real_compare
-		&& !isset($_REQUEST['bothver_idx']) && ((isset($_REQUEST['paginate']) && $_REQUEST['paginate'] == 'on')
-		|| !isset($_REQUEST['paginate']));
+$paginate = (isset($_REQUEST['paginate']) && $_REQUEST['paginate'] == 'on') || !isset($_REQUEST['diff_style']);
 $smarty->assign('paginate', $paginate);
 
 if (isset($_REQUEST['history_offset']) && $paginate) {
@@ -112,10 +101,6 @@ $smarty->assign('history_pagesize', $history_pagesize);
 
 // fetch page history, but omit the actual page content (to save memory)
 $history = $histlib->get_page_history($page, false, $history_offset, $paginate ? $history_pagesize : -1);
-// To avoid duplicate current version
-if(!$paginate) {
-	unset($history[0]);
-}
 $smarty->assign('history_cant', $histlib->get_nb_history($page) - 1);
 
 if ($prefs['flaggedrev_approval'] == 'y') {
@@ -206,7 +191,7 @@ foreach ($history as &$h) {	// as $h has been used by reference before it needs 
 }
 $history_versions = array_reverse($history_versions);
 $history_sessions = array_reverse($history_sessions);
-$history_versions[] = $info["version"];	// current is last one
+$history_versions[] = (int) $info['version'];	// current is last one
 $history_sessions[] = 0;
 $smarty->assign_by_ref('history', $history);
 
