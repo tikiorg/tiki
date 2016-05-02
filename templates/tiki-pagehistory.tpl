@@ -116,16 +116,14 @@
 		<input type="hidden" name="page" value="{$page|escape}">
 		<input type="hidden" name="history_offset" value="{$history_offset}">
 		<div class="clearfix">
-			{if $paginate}
-				<div class="pull-left col-sm-9" style="margin-bottom: 10px">
-					<input type="checkbox" name="paginate" id="paginate"{if $paginate} checked="checked"{/if}>
-					<label for="paginate">{tr}Enable pagination{/tr}</label>
-					{if $paginate}
-						<input type="text" name="history_pagesize" id="history_pagesize" value="{$history_pagesize}" size="5">
-						<label for="history_pagesize">{tr}per page{/tr}</label>
-					{/if}
-				</div>
-			{/if}
+			<div class="pull-left col-sm-9" style="margin-bottom: 10px">
+				<input type="checkbox" name="paginate" id="paginate"{if $paginate} checked="checked"{/if}>
+				<label for="paginate">{tr}Enable pagination{/tr}</label>
+				{if $paginate}
+					<input type="text" name="history_pagesize" id="history_pagesize" value="{$history_pagesize}" size="5">
+					<label for="history_pagesize">{tr}per page{/tr}</label>
+				{/if}
+			</div>
 			{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit eq 'y'}
 				<div class="col-sm-6 pull-left" style="margin-bottom: 10px">
 					<div class="input-group input-group-sm">
