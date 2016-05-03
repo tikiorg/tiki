@@ -36,7 +36,7 @@ function wikiplugin_files_info()
 				'description' => tra('To restrict files listed to those belonging to one or more categories. Enter a
 					single category or ID or list of them separated by colon'),
 				'since' => '3.0',
-				'default' => '',
+				'default' => NULL,
 				'filter' => 'text',
 				'accepted' => tra('Valid category IDs separated by colons'),
 				'advanced' => true,
@@ -310,7 +310,7 @@ function wikiplugin_files_info()
 				'description' => tra('Show the name of the parent gallery'),
 				'since' => '3.0',
 				'filter' => 'alpha',
-				'default' => '',
+				'default' => 'n',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
@@ -482,7 +482,7 @@ function wikiplugin_files_info()
 }
 function wikiplugin_files($data, $params)
 {
-	global $prefs, $tiki_p_admin, $tiki_p_admin_files_galleries, $user, $info;
+	global $prefs, $tiki_p_admin, $tiki_p_admin_files_galleries, $user;
 	if ($prefs['feature_file_galleries'] != 'y') {
 		return('');
 	}
@@ -491,11 +491,41 @@ function wikiplugin_files($data, $params)
 	$smarty = TikiLib::lib('smarty');
 
 	// set defaults for all params
-	$plugininfo = wikiplugin_files_info();
-	$default = array();
-	foreach ($plugininfo['params'] as $key => $param) {
-		$default["$key"] = $param['default'];
-	}
+	$default = array(
+	'galleryId'=>'',
+	'categId' => NULL,
+	'fileId' => '',
+	'sort' => 'name_asc',
+	'showaction' => 'n',
+	'showfind' =>  'n',
+	'showfindisrecursive'=>'y',
+	'showtitle' => 'y',
+	'showid' => 'y',
+	'showicon' => 'n',
+	'showname' => 'y',
+	'showfilename' => 'y',
+	'showsize' => 'y',
+	'showdescription' => 'y',
+	'showcreated' => 'n',
+	'showmodified' => 'n',
+	'showhits' => 'n',
+	'showlockedby' => 'n',
+	'showauthor' => 'n',
+	'showcreator' => 'n',
+	'showgallery' => 'n',
+	'showfiles' => 'n',
+	'showsource' => 'n',
+	'slideshow' => 'n',
+	'slidewidth' => 600,
+	'slideheight' => 500,
+	'showcomment' => 'n',
+	'showlasteditor' => 'y',
+	'showthumb' => 'n', 
+	'creator'=>'', 
+	'showupload' => 'n', 
+	'max' => -1, 
+	'recursive' => 'n', 
+	'withsubgals'=>'y');
 	$params = array_merge($default, $params);
 	$filter = '';
 	extract($params, EXTR_SKIP);
