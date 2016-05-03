@@ -364,6 +364,7 @@ function wikiplugin_slider($data, $params)
 	foreach ($plugininfo['params'] as $key => $param) {
 		$default["$key"] = $param['default'];
 	}
+	$params = array_merge($default, $params);
 	extract($params, EXTR_SKIP);
 
 	$headerlib->add_jsfile('vendor/jquery/plugins/anythingslider/js/swfobject.js');
