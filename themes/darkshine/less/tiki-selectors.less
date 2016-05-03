@@ -6,7 +6,8 @@
 // If Glyphicons should be rendered in a color other than the Bootstrap default or the theme default, uncomment and specify the color.
 // .glyphicon {color: @gray-lighter;}
 
-body {
+body,
+body.fullscreen {
 	background: #90140c url('@{imagePath}stripes.png') repeat-x 50% 0;
 }
 
@@ -49,7 +50,9 @@ h2.sitesubtitle {
 	border-width: 15px 15px 0 15px;
 }
 
-.topbar a { color: @navbar-default-link-color; }
+.topbar a {
+	color: @navbar-default-link-color;
+}
 
 #middle,
 .row-middle,
@@ -59,7 +62,11 @@ h2.sitesubtitle {
 	border-width: 0 15px;
 }
 
-.top_modules div:not(.panel) .btn-link { color: #fe9b27; }
+.top_modules div:not(.panel) .btn-link,
+#fullscreenbutton a {
+	color: #fe9b27;
+}
+
 
 //.btn-default {
 //  background: #fea841;
@@ -148,7 +155,9 @@ h2.sitesubtitle {
 	background: #fff;
 }
 
-.table .table { background: #f3f3f3; }
+.table .table {
+	background: #f3f3f3;
+}
 
 .cssmenu_horiz a,
 .cssmenu_vert a {
@@ -241,4 +250,6 @@ footer.footer {
 	color: @text-color;
 }
 
-.tablesorter-header {color: #e5e5e5; }
+.tablesorter-header {
+	color: #e5e5e5;
+}

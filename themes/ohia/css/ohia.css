@@ -7661,3 +7661,9 @@ footer.footer .modules a:visited {
   color: #eeeeee;
   background-color: transparent;
 }
+body.fullscreen {
+  background: #242424;
+}
+body.fullscreen .container {
+  border: none;
+}

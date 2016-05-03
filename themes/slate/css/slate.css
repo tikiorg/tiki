@@ -8062,3 +8062,6 @@ table.tablesorter thead tr.tablesorter-filter-row {
 .navbar-default .navbar-form {
   background-image: linear-gradient(to bottom, #484E55, #3A3F44 60%, #313539);
 }
+body.fullscreen {
+  background: #272B30;
+}

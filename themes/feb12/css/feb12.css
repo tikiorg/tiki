@@ -7644,6 +7644,12 @@ header.container {
   padding-top: 30px;
   background: #fff url('../images/page.jpg') repeat-x;
 }
+body.fullscreen {
+  background: #fff url('../images/page.jpg') repeat-x;
+}
+body.fullscreen .container {
+  border: none;
+}
 #col2 {
   background: #A8CCE2 url('../images/columnbg.jpg') repeat-x;
 }

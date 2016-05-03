@@ -4,6 +4,13 @@
   border: 1px solid #6C7B8C;
   box-shadow: none !important;
 }
+body.fullscreen {
+  background: #B1C1DB url('../../../images/flakesptn.jpg') !important;
+}
+body.fullscreen .container {
+  background: none !important;
+  border: none;
+}
 .panel {
   background: url('../../../images/flakesptn2.jpg');
 }
