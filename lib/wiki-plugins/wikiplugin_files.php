@@ -26,7 +26,7 @@ function wikiplugin_files_info()
 					for user files (hint: enter %0 for current logged-in user).', '<code>{{user}}</code>')
 					: ''),
 				'since' => '3.0',
-				'default' => '',
+				'default' => NULL,
 				'separator' => ':',
 				'profile_reference' => 'file_gallery',
 			),
@@ -51,7 +51,7 @@ function wikiplugin_files_info()
 				'type' => 'fileId',
 				'area' => 'fgal_picker_id',
 				'accepted' => tra('Valid file IDs separated by colons'),
-				'default' => '',
+				'default' => NULL,
 				'filter' => 'text',
 				'separator' => ':',
 				'profile_reference' => 'file',
@@ -491,41 +491,11 @@ function wikiplugin_files($data, $params)
 	$smarty = TikiLib::lib('smarty');
 
 	// set defaults for all params
-	$default = array(
-	'galleryId'=>'',
-	'categId' => NULL,
-	'fileId' => '',
-	'sort' => 'name_asc',
-	'showaction' => 'n',
-	'showfind' =>  'n',
-	'showfindisrecursive'=>'y',
-	'showtitle' => 'y',
-	'showid' => 'y',
-	'showicon' => 'n',
-	'showname' => 'y',
-	'showfilename' => 'y',
-	'showsize' => 'y',
-	'showdescription' => 'y',
-	'showcreated' => 'n',
-	'showmodified' => 'n',
-	'showhits' => 'n',
-	'showlockedby' => 'n',
-	'showauthor' => 'n',
-	'showcreator' => 'n',
-	'showgallery' => 'n',
-	'showfiles' => 'n',
-	'showsource' => 'n',
-	'slideshow' => 'n',
-	'slidewidth' => 600,
-	'slideheight' => 500,
-	'showcomment' => 'n',
-	'showlasteditor' => 'y',
-	'showthumb' => 'n', 
-	'creator'=>'', 
-	'showupload' => 'n', 
-	'max' => -1, 
-	'recursive' => 'n', 
-	'withsubgals'=>'y');
+	$plugininfo = wikiplugin_files_info();
+	$default = array();
+	foreach ($plugininfo['params'] as $key => $param) {
+		$default["$key"] = $param['default'];
+	}
 	$params = array_merge($default, $params);
 	$filter = '';
 	extract($params, EXTR_SKIP);
