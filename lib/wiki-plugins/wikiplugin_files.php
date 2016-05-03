@@ -310,6 +310,7 @@ function wikiplugin_files_info()
 				'description' => tra('Show the name of the parent gallery'),
 				'since' => '3.0',
 				'filter' => 'alpha',
+				'default' => '',
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
@@ -424,6 +425,7 @@ function wikiplugin_files_info()
 				'name' => tra('Creator'),
 				'description' => tra('Show only files created by this user'),
 				'since' => '5.0',
+				'default' => '',
 				'advanced' => true,
 			),
 			'showupload' => array(
@@ -488,7 +490,12 @@ function wikiplugin_files($data, $params)
 	$tikilib = TikiLib::lib('tiki');
 	$smarty = TikiLib::lib('smarty');
 
-	$default = array('showfind'=>'n', 'showtitle'=>'y', 'showupload' => 'n', 'showgallery' => 'n', 'max' => -1, 'showthumb' => 'n', 'recursive' => 'n', 'withsubgals'=>'y');
+	// set defaults for all params
+	$plugininfo = wikiplugin_files_info();
+	$default = array();
+	foreach ($plugininfo['params'] as $key => $param) {
+		$default["$key"] = $param['default'];
+	}
 	$params = array_merge($default, $params);
 	$filter = '';
 	extract($params, EXTR_SKIP);
