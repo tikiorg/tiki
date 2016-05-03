@@ -482,7 +482,7 @@ function wikiplugin_files_info()
 }
 function wikiplugin_files($data, $params)
 {
-	global $prefs, $tiki_p_admin, $tiki_p_admin_files_galleries, $user;
+	global $prefs, $tiki_p_admin, $tiki_p_admin_files_galleries, $user, $info;
 	if ($prefs['feature_file_galleries'] != 'y') {
 		return('');
 	}
