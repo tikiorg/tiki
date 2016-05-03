@@ -50,14 +50,16 @@ function wikiplugin_footnote($data, $params)
 		if (! isset($GLOBALS['footnotesData'][$data])) {
             $GLOBALS['footnoteCount']++;
 			$GLOBALS['footnotesData'][$GLOBALS['footnoteCount']] = $data;
-		    $GLOBALS['footnotesClass'][$GLOBALS['footnoteCount']] = $params["class"];
-        
+		    if (isset($params["class"])){
+		    	$GLOBALS['footnotesClass'][$GLOBALS['footnoteCount']] = $params["class"];
+			}        
         }
 
 		$number = $GLOBALS['footnoteCount'];
 	} elseif (isset($params['sameas'])) {
 		$number = $params['sameas'];
 	}
+	$class= '';
     if (isset($params["class"])){
     $class= ' class="'.$params["class"].'"';
     }
