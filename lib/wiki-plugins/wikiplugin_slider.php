@@ -357,6 +357,13 @@ function wikiplugin_slider($data, $params)
 {
 	$tikilib = TikiLib::lib('tiki');
 	$headerlib = TikiLib::lib('header');
+	
+	// set default params
+	$plugininfo = wikiplugin_slider_info();
+	$default = array();
+	foreach ($plugininfo['params'] as $key => $param) {
+		$default["$key"] = $param['default'];
+	}
 	extract($params, EXTR_SKIP);
 
 	$headerlib->add_jsfile('vendor/jquery/plugins/anythingslider/js/swfobject.js');
