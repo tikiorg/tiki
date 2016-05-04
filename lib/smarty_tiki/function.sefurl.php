@@ -16,6 +16,7 @@ if (!function_exists('smarty_function_sefurl')) {
 	{
 		global $prefs;
 		$wikilib = TikiLib::lib('wiki');
+		$url = '';
 	
 		// structure only yet
 		if (isset($params['structure'])) {
@@ -23,7 +24,10 @@ if (!function_exists('smarty_function_sefurl')) {
 				$url = 'tiki-index.php?page=' . urlencode($params['page']) . '&amp;structure=' . urlencode($params['structure']);
 			} else {
 				$url = $wikilib->sefurl($params['page']);
-				$url .= (strpos($url, '?') === false ? '?' : '&amp;') . 'structure=' . urlencode($params['structure']);
+				$structs = TikiLib::lib('struct')->get_page_structures($params['page']);
+				if ($prefs['feature_wiki_open_as_structure'] === 'n' || count($structs) > 1) {
+					$url .= (strpos($url, '?') === false ? '?' : '&amp;') . 'structure=' . urlencode($params['structure']);
+				}
 			}
 			if (isset($_REQUEST['no_bl']) && $_REQUEST['no_bl'] === 'y') {
 				$url .= (strpos($url, '?') === false ? '?' : '&amp;') . 'latest=1';
