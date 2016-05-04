@@ -58,18 +58,21 @@ function wikiplugin_footnote($data, $params)
 		if (! isset($GLOBALS['footnotesData'][$data])) {
 			$GLOBALS['footnoteCount']++;
 			$GLOBALS['footnotesData'][$GLOBALS['footnoteCount']] = $data;
-			$GLOBALS['footnotesClass'][$GLOBALS['footnoteCount']] = $params["class"];
-		}
+		    if (isset($params["class"])){
+		    	$GLOBALS['footnotesClass'][$GLOBALS['footnoteCount']] = $params["class"];
+			}        
+        }
 
 		$number = $GLOBALS['footnoteCount'];
 	} elseif (isset($params['sameas'])) {
 		$number = $params['sameas'];
 	}
-	if (isset($params["class"])){
+	$class= '';
+    if (isset($params["class"])){
 		$class= ' class="tips '.$params["class"].'"';
 	} else {
 		$class= ' class="tips"';
-	}
+    }
 	$html = '~np~' . "<sup class=\"footnote$number\"><a id=\"ref_footnote$number\" href=\"#footnote$number\"$class title=\":" . htmlspecialchars($params["tip"],ENT_QUOTES) . "\" >[$number]</a></sup>" . '~/np~';
 
 	return $html;

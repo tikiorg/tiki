@@ -7532,7 +7532,8 @@ table.tablesorter thead tr.tablesorter-headerRow,
 table.tablesorter thead tr.tablesorter-filter-row {
   background-color: #90140C;
 }
-body {
+body,
+body.fullscreen {
   background: #90140c url('../images/stripes.png') repeat-x 50% 0;
 }
 .sitetitle {
@@ -7578,7 +7579,8 @@ h2.sitesubtitle {
   border: solid #600;
   border-width: 0 15px;
 }
-.top_modules div:not(.panel) .btn-link {
+.top_modules div:not(.panel) .btn-link,
+#fullscreenbutton a {
   color: #fe9b27;
 }
 .btn-default {

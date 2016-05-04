@@ -7897,6 +7897,9 @@ pre.codelisting {
   color: #fff;
   background-color: #375a7f;
 }
+body.fullscreen {
+  background: #222222;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */

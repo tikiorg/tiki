@@ -7586,6 +7586,9 @@ h1::before {
   content: "\2663";
   margin-right: 10px;
 }
+body.fullscreen {
+  background: #538935;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */

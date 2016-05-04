@@ -7764,3 +7764,6 @@ table.tablesorter thead tr.tablesorter-filter-row {
 .topbar .navbar-default {
   border: none;
 }
+body.fullscreen {
+  background: #FCFCFC;
+}

@@ -7500,7 +7500,8 @@ pre.codelisting {
 .margin-bottom-lg {
   margin-bottom: 44px;
 }
-body {
+body,
+body.fullscreen {
   background-image: url('../images/474747_5e5e5e_40.png');
 }
 .container {

@@ -888,7 +888,7 @@ body.fullscreen {
   position: absolute;
   top: 2px;
   right: 10px;
-  z-index: 10;
+  z-index: 1040;
 }
 #show-errors-button {
   z-index: 1024;

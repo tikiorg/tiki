@@ -7792,3 +7792,6 @@ a.list-group-item-danger.active:focus {
 .topbar .navbar-default {
   border: none;
 }
+body.fullscreen {
+  background: #060606;
+}

@@ -7852,3 +7852,6 @@ table.tablesorter thead tr.tablesorter-filter-row {
   padding-top: 11px;
   padding-bottom: 11px;
 }
+body.fullscreen {
+  background: #2B3E50;
+}

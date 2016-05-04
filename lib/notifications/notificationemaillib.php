@@ -566,13 +566,19 @@ function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $nam
 		include_once('lib/webmail/tikimaillib.php');
 		$smarty->assign('galleryName', $galleryName);
 		$smarty->assign('galleryId', $galleryId);
+		$smarty->assign('fileId', $fileId);
 		$smarty->assign('fname', $name);
 		$smarty->assign('filename', $filename);
 		$smarty->assign('fdescription', $description);
 		$smarty->assign('mail_date', $tikilib->now);
 		$smarty->assign('author', $user);
-		$foo = parse_url($_SERVER["REQUEST_URI"]);
-		$machine = $tikilib->httpPrefix(true) . dirname($foo["path"]);
+		global $url_host;
+		if (empty($_SERVER['argc']) && !empty($url_host)) {
+			$foo = parse_url($_SERVER['REQUEST_URI']);
+			$machine = $tikilib->httpPrefix(true) . dirname($foo['path']);
+		} else {
+			$machine = '';		// console command
+		}
 		$smarty->assign('mail_machine', $machine);
 
 		foreach ($nots as $not) {

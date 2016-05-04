@@ -7536,6 +7536,10 @@ table.tablesorter thead tr.tablesorter-filter-row {
 .header_outer {
   margin-top: 24px;
 }
+body.fullscreen .header_outer,
+body.fullscreen #footer {
+  display: none;
+}
 .page-header .top_modules {
   min-height: 175px;
   background: url('../images/header_background_ltr.jpg') 50% 0 no-repeat;

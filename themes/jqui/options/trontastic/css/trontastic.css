@@ -126,6 +126,15 @@ body {
   background: #000 url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') 50% top repeat-x;
   color: #f3fce8;
 }
+body.fullscreen {
+  background: #000 url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') 50% top repeat-x;
+}
+body.fullscreen #col1,
+body.fullscreen #middle,
+body.fullscreen .topbar {
+  background: transparent;
+  border: none;
+}
 .btn-default,
 .btn-primary,
 .btn-success,

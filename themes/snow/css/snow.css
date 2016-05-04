@@ -7533,7 +7533,8 @@ table.tablesorter thead tr.tablesorter-headerRow,
 table.tablesorter thead tr.tablesorter-filter-row {
   background-color: #fefeff;
 }
-body {
+body,
+body.fullscreen {
   background: url('../images/flakesptn2.jpg');
   background-attachment: fixed;
 }

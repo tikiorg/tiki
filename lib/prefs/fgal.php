@@ -287,8 +287,6 @@ function prefs_fgal_list()
 			'filter' => 'alpha',
 			'default' => 'n',
 			'help' => 'elFinder',
-			'warning' => tra('Experimental'),
-			'tags' => array('experimental'),
 			'dependencies' => array('feature_jquery_ui'),
 		),
 		'fgal_viewerjs_feature' => array(

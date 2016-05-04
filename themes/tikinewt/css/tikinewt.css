@@ -7582,6 +7582,20 @@ footer .container {
 #bottom_modules {
   padding-top: 15px;
 }
+body.fullscreen {
+  background: #f3f6f9;
+}
+body.fullscreen #col1,
+body.fullscreen .middle_outer > .container,
+body.fullscreen .middle > .row,
+body.fullscreen body > .container,
+body.fullscreen .header_container > .container,
+body.fullscreen .header_container.container {
+  border: none;
+}
+body.fullscreen #footer {
+  display: none;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */

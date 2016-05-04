@@ -42,16 +42,16 @@ class Iptc
 				'binary' => true,
 				'mandatory' => true,
 				'options' => array(
-					00 => 'No ObjectData',
-					01 => 'IPTC-NAA Digital Newsphoto Parameter Record',
-					02 => 'IPTC7901 Recommended Message Format',
-					03 => 'Tagged Image File Format (Adobe/Aldus Image data)',
-					04 => 'Illustrator (Adobe Graphics data)',
-					05 => 'AppleSingle (Apple Computer Inc)',
-					06 => 'NAA 89-3 (ANPA 1312)',
-					07 => 'MacBinary II',
-					08 => 'IPTC Unstructured Character Oriented File Format (UCOFF)',
-					09 => 'United Press International ANPA 1312 variant',
+					 0 => 'No ObjectData',
+					 1 => 'IPTC-NAA Digital Newsphoto Parameter Record',
+					 2 => 'IPTC7901 Recommended Message Format',
+					 3 => 'Tagged Image File Format (Adobe/Aldus Image data)',
+					 4 => 'Illustrator (Adobe Graphics data)',
+					 5 => 'AppleSingle (Apple Computer Inc)',
+					 6 => 'NAA 89-3 (ANPA 1312)',
+					 7 => 'MacBinary II',
+					 8 => 'IPTC Unstructured Character Oriented File Format (UCOFF)',
+					 9 => 'United Press International ANPA 1312 variant',
 					10 => 'United Press International Down-Load Message',
 					11 => 'JPEG File Interchange (JFIF)',
 					12 => 'Photo-CD Image-Pac (Eastman Kodak)',
@@ -80,30 +80,30 @@ class Iptc
 				'binary' => true,
 				'mandatory' => true,
 				'options' => array(
-					00 => 1,
-					01 => array(
+					0 => 1,
+					1 => array(
 						//mapping from appendix A of http://www.iptc.org/std/IIM/4.1/specification/IIMV4.1.pdf
 						//if 1#022 = 01 and 1#020 = one of the following
-						01 => '1',
-						03 => '5.0',
-						04 => '1.40',
-						05 => '2',
-						06 => '1',
+						 1 => '1',
+						 3 => '5.0',
+						 4 => '1.40',
+						 5 => '2',
+						 6 => '1',
 						11 => '1.02',
 						20 => '3.1',
 					),
-					02 => array(
-						01 => '2',
-						03 => '6.0',
+					2 => array(
+						 1 => '2',
+						 3 => '6.0',
 						20 => '4.0',
 						21 => '2.0',
 					),
-					03 => array(
+					3 => array(
 						01 => '3',
 						20 => '5.0',
 					),
-					04 => array(
-						01 => '4',
+					4 => array(
+						 1 => '4',
 						02 => '4',
 						20 => '5.5',
 					),
@@ -290,9 +290,9 @@ class Iptc
 				'label' => 'Action Advised',
 				'maxlen' => 2,
 				'options' => array(
-					01 => 'Object Kill',
-					02 => 'Object Replace',
-					03 => 'Object Append',
+					1 => 'Object Kill',
+					2 => 'Object Replace',
+					3 => 'Object Append',
 				),
 			),
 			//2#045, 2#047 and 2#050, when repeated, will be repeated together, i.e. in sequential triplets
@@ -535,16 +535,16 @@ class Iptc
 				'mandatory' => false,	//mandatory if 2#202 exists
 				//same as 1#020
 				'options' => array(
-					00 => 'No ObjectData',
-					01 => 'IPTC-NAA Digital Newsphoto Parameter Record',
-					02 => 'IPTC7901 Recommended Message Format',
-					03 => 'Tagged Image File Format (Adobe/Aldus Image data)',
-					04 => 'Illustrator (Adobe Graphics data)',
-					05 => 'AppleSingle (Apple Computer Inc)',
-					06 => 'NAA 89-3 (ANPA 1312)',
-					07 => 'MacBinary II',
-					08 => 'IPTC Unstructured Character Oriented File Format (UCOFF)',
-					09 => 'United Press International ANPA 1312 variant',
+					 0 => 'No ObjectData',
+					 1 => 'IPTC-NAA Digital Newsphoto Parameter Record',
+					 2 => 'IPTC7901 Recommended Message Format',
+					 3 => 'Tagged Image File Format (Adobe/Aldus Image data)',
+					 4 => 'Illustrator (Adobe Graphics data)',
+					 5 => 'AppleSingle (Apple Computer Inc)',
+					 6 => 'NAA 89-3 (ANPA 1312)',
+					 7 => 'MacBinary II',
+					 8 => 'IPTC Unstructured Character Oriented File Format (UCOFF)',
+					 9 => 'United Press International ANPA 1312 variant',
 					10 => 'United Press International Down-Load Message',
 					11 => 'JPEG File Interchange (JFIF)',
 					12 => 'Photo-CD Image-Pac (Eastman Kodak)',
@@ -573,31 +573,31 @@ class Iptc
 				'binary' => true,
 				'mandatory' => false,	//mandatory if 2#202 exists
 				'options' => array(
-					00 => 1,
-					01 => array(
+					0 => 1,
+					1 => array(
 						//mapping from appendix A of http://www.iptc.org/std/IIM/4.1/specification/IIMV4.1.pdf
 						//if 1#022 = 01 and 1#020 = one of the following
-						01 => '1',
-						03 => '5.0',
-						04 => '1.40',
-						05 => '2',
-						06 => '1',
+						 1 => '1',
+						 3 => '5.0',
+						 4 => '1.40',
+						 5 => '2',
+						 6 => '1',
 						11 => '1.02',
 						20 => '3.1',
 					),
-					02 => array(
-						01 => '2',
-						03 => '6.0',
+					2 => array(
+						 1 => '2',
+						 3 => '6.0',
 						20 => '4.0',
 						21 => '2.0',
 					),
-					03 => array(
-						01 => '3',
+					3 => array(
+						 1 => '3',
 						20 => '5.0',
 					),
-					04 => array(
-						01 => '4',
-						02 => '4',
+					4 => array(
+						 1 => '4',
+						 2 => '4',
 						20 => '5.5',
 					),
 				),

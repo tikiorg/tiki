@@ -7611,6 +7611,9 @@ h2:after {
 .panel-default > .panel-heading * {
   color: #ffffff;
 }
+body.fullscreen {
+  background: #fce0ec;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */
