@@ -7862,6 +7862,17 @@ pre.codelisting {
   border: 1px solid #ffffff;
   border-radius: 1px;
 }
+.edit-menu {
+  position: absolute;
+  top: 6px;
+  right: 2px;
+  z-index: 1000;
+}
+@media (max-width: 767px) {
+  .navbar-collapse .edit-menu {
+    top: 48px;
+  }
+}
 .cssmenu_horiz a,
 .cssmenu_vert a {
   color: #0ce3ac;
