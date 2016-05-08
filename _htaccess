@@ -157,6 +157,10 @@ FileETag none
 # Set a character set
 #php_value default_charset utf-8
 
+# Turning on user and object information to be passed to server logs
+#SetEnv TIKI_HEADER_REPORT_USER on
+#SetEnv TIKI_HEADER_REPORT_OBJECT on
+
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
