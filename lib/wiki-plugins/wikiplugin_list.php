@@ -121,13 +121,7 @@ function applyTablesorter(WikiParser_PluginMatcher $matches, Search_Query $query
 					$ret['max'] = (int) $tsp[0]['max'];
 				}
 			}
-		}
-	}
-
-		foreach ($matches as $match) {
-		$name = $match->getName();
-		if ($name == 'column') {
-			$cols[] = $match;
+		} elseif ($name == 'column') {
 			$args[] = $parser->parse($match->getArguments());
 		}
 	}
