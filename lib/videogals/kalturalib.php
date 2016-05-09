@@ -344,7 +344,7 @@ class KalturaLib
 			$kpager->pageIndex = 0;
 			$kpager->pageSize = count($movies);
 
-			$kfilter = new KalturaMixEntryFilter();
+			$kfilter = new KalturaMediaEntryFilter();
 			$kfilter->idIn = implode(',', $movies);
 			
 			$mediaList = array();

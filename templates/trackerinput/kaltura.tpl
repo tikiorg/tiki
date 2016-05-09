@@ -7,16 +7,14 @@
 			</label>
 		</li>
 	{/foreach}
-	<li>
-		<a class="add-kaltura-media" href="{service controller=kaltura action=upload}" data-target-name="{$field.ins_id|escape}[]">{tr}Add Media{/tr}</a>
-		{foreach from=$data.extras item=entryId}
-			<input type="hidden" name="{$field.ins_id|escape}[]" value="{$entryId|escape}">
-		{/foreach}
-		{if $data.extras|count}
-			<span class="highlight">+{$data.extras|count}</span>
-		{/if}
-	</li>
 </ol>
+<a class="add-kaltura-media btn btn-default btn-sm" href="{service controller=kaltura action=upload}" data-target-name="{$field.ins_id|escape}[]">{tr}Add Media{/tr}</a>
+{foreach from=$data.extras item=entryId}
+	<input type="hidden" name="{$field.ins_id|escape}[]" value="{$entryId|escape}">
+{/foreach}
+{if $data.extras|count}
+	<span class="highlight">+{$data.extras|count}</span>
+{/if}
 {jq}
 $('.add-kaltura-media').click(function () {
 	var link = this;
