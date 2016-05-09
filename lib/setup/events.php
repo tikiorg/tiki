@@ -213,6 +213,11 @@ function tiki_setup_events()
 		});
 	}
 
+	// If the parameter is supplied by the web server, Tiki will expose events as a response header
+	if (! empty($_SERVER['TIKI_HEADER_REPORT_EVENTS']) && strtolower($_SERVER['TIKI_HEADER_REPORT_EVENTS']) != 'off') {
+		$events->bindPriority(999, 'tiki.eventlog.commit', 'tiki_header_report_event');
+	}
+
 	// Chain events
 	$events->bind('tiki.object.categorized', 'tiki.save');
 
@@ -356,5 +361,18 @@ function tiki_save_refresh_index($args)
 		require_once('lib/search/refresh-functions.php');
 		$isBulk = isset($args['bulk_import']) && $args['bulk_import'];
 		refresh_index($args['type'], $args['object'], ! $isBulk);
+	}
+}
+
+function tiki_header_report_event()
+{
+	$events = TikiLib::events();
+	$encoded = json_encode($events->getEventLog());
+	header("X-Tiki-Events:$encoded");
+	if (! empty($_SERVER['TIKI_HEADER_REPORT_USER']) && strtolower($_SERVER['TIKI_HEADER_REPORT_USER']) != 'off') {
+		global $user;
+		if ($user) {
+			header('X-Remote-User: ' . $user);
+		}
 	}
 }

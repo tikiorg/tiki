@@ -11,6 +11,7 @@ class Tiki_Event_Manager
 	private $priorities = array();
 	private $currentPriority = false;
 	private $counter = 0;
+	private $eventLog = array();
 
 	function reset()
 	{
@@ -108,6 +109,29 @@ class Tiki_Event_Manager
 			'nodes' => array_values(array_unique($nodes)),
 			'edges' => $edges,
 		);
+	}
+
+	/**
+	 * Adds an event and its arguments into an event log in this object
+	 * that will eventually be pushed out to the web server log.
+	 * Needs to be activated via setting TIKI_HEADER_REPORT_EVENTS as a
+	 * server environment variable
+	 */
+	function logEvent($event, $args)
+	{
+		$eventKey = str_replace(".", "_", $event);
+		$this->eventLog[$eventKey] = $args;
+	}
+
+	/**
+	 * Gets the log of events that have been triggered for the purposer
+	 * of pushing out to the web server log.
+	 * Needs to be activated via setting TIKI_HEADER_REPORT_EVENTS as a
+	 * server environment variable
+	 */
+	function getEventLog()
+	{
+		return $this->eventLog;
 	}
 }
 

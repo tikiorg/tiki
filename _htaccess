@@ -160,6 +160,7 @@ FileETag none
 # Turning on user and object information to be passed to server logs
 #SetEnv TIKI_HEADER_REPORT_USER on
 #SetEnv TIKI_HEADER_REPORT_OBJECT on
+#SetEnv TIKI_HEADER_REPORT_EVENTS on
 
 <IfModule mod_rewrite.c>
 RewriteEngine On
