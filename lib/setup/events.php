@@ -201,21 +201,17 @@ function tiki_setup_events()
 
 	// If the parameter is supplied by the web server, Tiki will expose the username as a response header
 	if (! empty($_SERVER['TIKI_HEADER_REPORT_USER']) && strtolower($_SERVER['TIKI_HEADER_REPORT_USER']) != 'off') {
-		$events->bind('tiki.process.render', function () {
-			global $user;
-			if ($user) {
-				header('X-Remote-User: ' . $user);
-			}
-		});
+		global $user;
+		if ($user) {
+			header('X-Remote-User: ' . $user);
+		}
 	}
 
 	// If the parameter is supplied by the web server, Tiki will expose the object type and id as a response header
 	if (! empty($_SERVER['TIKI_HEADER_REPORT_OBJECT']) && strtolower($_SERVER['TIKI_HEADER_REPORT_OBJECT']) != 'off') {
-		$events->bind('tiki.process.render', function () {
-			if (function_exists('current_object') && $object = current_object()) {
-				header("X-Current-Object: {$object['type']}:{$object['object']}");
-			}
-		});
+		if (function_exists('current_object') && $object = current_object()) {
+			header("X-Current-Object: {$object['type']}:{$object['object']}");
+		}
 	}
 
 	// If the parameter is supplied by the web server, Tiki will expose events as a response header
