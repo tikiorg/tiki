@@ -194,6 +194,11 @@ function tiki_setup_events()
 		TikiLib::lib('score')->bindEvents($events);
 	}
 
+	// If the parameter is supplied by the web server, Tiki will expose a Tiki identifier as a response header
+	if (! empty($_SERVER['TIKI_HEADER_REPORT_ID'])) {
+		header('X-Tiki-Id: ' . $_SERVER['TIKI_HEADER_REPORT_ID']);
+	}
+
 	// If the parameter is supplied by the web server, Tiki will expose the username as a response header
 	if (! empty($_SERVER['TIKI_HEADER_REPORT_USER']) && strtolower($_SERVER['TIKI_HEADER_REPORT_USER']) != 'off') {
 		$events->bind('tiki.process.render', function () {
@@ -368,7 +373,7 @@ function tiki_header_report_event()
 {
 	$events = TikiLib::events();
 	$encoded = json_encode($events->getEventLog());
-	header("X-Tiki-Events:$encoded");
+	header('X-Tiki-Events: ' . $encoded);
 	if (! empty($_SERVER['TIKI_HEADER_REPORT_USER']) && strtolower($_SERVER['TIKI_HEADER_REPORT_USER']) != 'off') {
 		global $user;
 		if ($user) {
