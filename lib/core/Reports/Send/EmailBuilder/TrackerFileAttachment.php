@@ -29,14 +29,14 @@ class Reports_Send_EmailBuilder_TrackerFileAttachment extends Reports_Send_Email
 		if ($mainFieldValue) {
 			$output = tr(
 				'%0 attached a file (%1) to tracker item %2',
-				"<u>{$change['user']}</u>",
+				"<u>{$change['data']['user']}</u>",
 				"<a href=\"{$base_url}tiki-download_item_attachment.php?attId={$change['data']['attachment']['attId']}\">{$change['data']['attachment']['filename']}</a>",
 				"<a href='{$base_url}tiki-view_tracker_item.php?itemId=$itemId'>$mainFieldValue</a>"
 			);
 		} else {
 			$output = tr(
 				'%0 attached a file (%1) to tracker item %2',
-				"<u>{$change['user']}</u>",
+				"<u>{$change['data']['user']}</u>",
 				"<a href=\"{$base_url}tiki-download_item_attachment.php?attId={$change['data']['attachment']['attId']}\">{$change['data']['attachment']['filename']}</a>",
 				"<a href='{$base_url}tiki-view_tracker_item.php?itemId=$itemId'>$itemId</a>"
 			);

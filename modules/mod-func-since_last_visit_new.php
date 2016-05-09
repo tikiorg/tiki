@@ -261,10 +261,11 @@ function module_since_last_visit_new($mod_reference, $params = null)
 		$query = 'select `pageName`, `user`, `lastModif` from `tiki_pages` where `lastModif`>? order by `lastModif` desc';
 		$result = $tikilib->query($query, array((int) $last), $resultCount);
 
+		$smarty->loadPlugin('smarty_modifier_sefurl');
 		$count = 0;
 		while ($res = $result->fetchRow()) {
 			if ($userlib->user_has_perm_on_object($user, $res['pageName'], 'wiki page', 'tiki_p_view')) {
-				$ret['items']['pages']['list'][$count]['href']  = filter_out_sefurl('tiki-index.php?page=' . urlencode($res['pageName']));;
+				$ret['items']['pages']['list'][$count]['href']  = smarty_modifier_sefurl($res['pageName']);
 				$ret['items']['pages']['list'][$count]['title'] = $tikilib->get_short_datetime($res['lastModif']) .' '. tra('by') .' '. smarty_modifier_username($res['user']);
 				$ret['items']['pages']['list'][$count]['label'] = $res['pageName'];
 				$count++;

@@ -572,8 +572,7 @@ function sendFileGalleryEmailNotification($event, $galleryId, $galleryName, $nam
 		$smarty->assign('fdescription', $description);
 		$smarty->assign('mail_date', $tikilib->now);
 		$smarty->assign('author', $user);
-		global $url_host;
-		if (empty($_SERVER['argc']) && !empty($url_host)) {
+		if (php_sapi_name() !== 'cli') {
 			$foo = parse_url($_SERVER['REQUEST_URI']);
 			$machine = $tikilib->httpPrefix(true) . dirname($foo['path']);
 		} else {
