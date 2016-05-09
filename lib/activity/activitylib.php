@@ -120,13 +120,33 @@ class ActivityLib
 	 * @param $event
 	 * @param $arguments
 	 */
-	function logEvent($event, $arguments)
+	function logEvent($event, $arguments, $includes = array(), $excludes = array())
 	{
 		if (!$event) {
 			return; // prevent false recording of test runs
 		}
+
+		if ($includes) {
+			// if includes is provided, then everything is excluded by default
+			$clean_args = array();
+			foreach ($arguments as $k => $v) {
+				if (in_array($k, $includes)) {
+					$clean_args[$k] = $v;
+				}
+			}
+		} else if ($excludes) {
+			$clean_args = array();
+			foreach ($arguments as $k => $v) {
+				if (!in_array($k, $excludes)) {
+					$clean_args[$k] = $v;
+				}
+			}
+		} else {
+			$clean_args = $arguments;
+		}
+
 		$events = TikiLib::events();
-		$events->logEvent($event, $arguments);
+		$events->logEvent($event, $clean_args);
 		$events->trigger('tiki.eventlog.commit');
 	}
 

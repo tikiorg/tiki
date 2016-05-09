@@ -24,7 +24,21 @@ class Tiki_Event_Function_EventLog extends Math_Formula_Function
 		$event = $this->evaluateChild($element[0]);
 		$arguments = $this->evaluateChild($element[1]);
 
-		$this->recorder->logEvent($event, $arguments);
+		$includes = array();
+		$excludes = array();
+		$includes_or_excludes = array();
+		if (isset($element[2])) {
+			$includes_or_excludes = explode("&", $element[2]);
+		} 
+		foreach ($includes_or_excludes as $rule) {
+			if (substr($rule, 0, 1) == '+') {
+				$includes[] = substr($rule, 1);
+			} else if (substr($rule, 0, 1) == '-') {
+				$excludes[] = substr($rule, 1);
+			}
+		}	
+
+		$this->recorder->logEvent($event, $arguments, $includes, $excludes);
 
 		return 1;
 	}
