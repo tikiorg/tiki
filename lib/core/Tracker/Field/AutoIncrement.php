@@ -154,5 +154,16 @@ class Tracker_Field_AutoIncrement extends Tracker_Field_Abstract implements Trac
 
 		return $filters;
 	}
+
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
+	{
+		$item = $this->getValue();
+		$baseKey = $this->getBaseKey();
+
+		$out = array(
+			$baseKey => $typeFactory->numeric($item),
+		);
+		return $out;
+	}
 }
 
