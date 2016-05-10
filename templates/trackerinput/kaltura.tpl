@@ -3,6 +3,7 @@
 		<li>
 			<label>
 				<input type="checkbox" name="{$field.ins_id|escape}[]" value="{$movie.id|escape}" checked="checked">
+				<input type="hidden" name="old_{$field.ins_id|escape}[]" value="{$movie.id|escape}">
 				{$movie.name|escape}
 			</label>
 		</li>

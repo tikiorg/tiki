@@ -27,6 +27,6 @@ $(".media", ".kaltura-media-list").click(function () {
 		;
 	$('#{{$formId}}').append(hidden);
 	$(this).parents(".ui-dialog-content").data("ui-dialog").close();
-});
+}).css("cursor", "pointer");
 {/jq}
 {/block}

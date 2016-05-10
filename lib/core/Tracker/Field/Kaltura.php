@@ -31,8 +31,12 @@ class Tracker_Field_Kaltura extends Tracker_Field_Abstract implements Tracker_Fi
 
 	function getFieldData(array $requestData = array())
 	{
-		if (isset($requestData[$this->getInsertId()])) {
-			$value = implode(',', $requestData[$this->getInsertId()]);
+		$insertId = $this->getInsertId();
+
+		if (isset($requestData[$insertId])) {
+			$value = implode(',', $requestData[$insertId]);
+		} else if (!empty($requestData['old_' . $insertId])) {    // all entries removed
+			$value = '';
 		} else {
 			$value = $this->getValue();
 		}
