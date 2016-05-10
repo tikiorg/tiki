@@ -76,7 +76,7 @@ function wikiplugin_mediaplayer_info()
 			'type' => array(
 				'required' => false,
 				'name'=> tra('File type'),
-				'description' => tr('File type for source URL, e.g. %0mp4%1. Specify one of the supported file types when
+				'description' => tr('File type for source URL, e.g. %0mp4%1, %0pdf%1, %0odp%1 (through ViewerJS), etc. Specify one of the supported file types when
 					the URL of the file is missing the file extension. This is the case for File Gallery files which
 					have a URL such as %0tiki-download_file.php?fileId=4&display%1 or %0display4%1 if you have Clean URLs
 					enabled.', '<code>', '</code>'),
@@ -121,7 +121,7 @@ function wikiplugin_mediaplayer_info()
 						'text' => 'Multi', 'value' => 'multi'
 					),
 					array(
-						'text' => 'Native (HTML5)', 'value' => 'native'
+						'text' => 'Native Video (HTML5)', 'value' => 'native'
 					)
 				)
 			),
@@ -239,9 +239,9 @@ function wikiplugin_mediaplayer($data, $params)
 				} 
 			} );";
 
-		// check for support for PDF
+		// check for support for PDF or ODF as indicated here http://viewerjs.org
 
-		if ($params['type'] === 'pdf') {
+		if ($params['type'] === 'pdf' || $params['type'] === 'odt' || $params['type'] === 'ods' || $params['type'] === 'odp' || $params['type'] === 'viewerjs' ) {
 			if ($prefs['fgal_viewerjs_feature'] === 'y') {
 
 				$src = \ZendOpenId\OpenId::absoluteUrl($params['src']);
@@ -251,7 +251,7 @@ function wikiplugin_mediaplayer($data, $params)
 
 				return $out;
 
-			} else {
+			} elseif ($params['type'] === 'pdf') {
 
 				$js = '
 var found = false;
