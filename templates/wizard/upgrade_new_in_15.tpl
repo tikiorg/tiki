@@ -99,6 +99,33 @@
 				</div>
 		</fieldset>
 		<fieldset class="table clearfix featurelist">
+		<legend>{tr}Statistics Control Panel{/tr}</legend>
+		{tr}This is a new control panel on Tiki and work is still in progress.{/tr}
+			{tabset}
+				{tab name="{tr}Tiki Statistics{/tr}"}
+					<fieldset>
+						{preference name=feature_stats}
+						{preference name=feature_referer_stats}
+						{preference name=count_admin_pvs}
+					</fieldset>
+				{/tab}
+
+				{tab name="{tr}Google Analytics{/tr}"}
+					<fieldset>
+						{preference name=site_google_analytics_account}
+						{preference name=site_google_credentials}
+					</fieldset>
+				{/tab}
+
+				{tab name="{tr}Piwik Analytics{/tr}"}
+					<fieldset>
+						{preference name=site_piwik_analytics_server_url}
+						{preference name=site_piwik_site_id}
+					</fieldset>
+				{/tab}
+			{/tabset}
+		</fieldset>
+		<fieldset class="table clearfix featurelist">
 			<legend>{tr}Other new features{/tr}</legend>
 				{preference name="header_custom_less" syntax="css"}
 				{preference name=user_multilike_config}
@@ -126,6 +153,9 @@
 				{preference name=wikiplugin_datachannel}
 				{preference name=wikiplugin_list}
 				{preference name=wikiplugin_tracker}
+				{preference name=wikiplugin_mediaplayer}
+				{preference name=feature_jquery_tablesorter}
+				{preference name=feature_wiki_structure}
 				{preference name='file_galleries_use_jquery_upload'}
 				{preference name='feature_file_galleries_batch'}
 				<div class="adminoptionboxchild" id="feature_file_galleries_batch_childcontainer">
