@@ -84,9 +84,9 @@ class Tracker_Field_Kaltura extends Tracker_Field_Abstract implements Tracker_Fi
 	function renderOutput($context = array())
 	{
 		if ($context['list_mode'] === 'y') {
-			$otherParams = $this->getOption('displayParamsForLists');
+			$otherParams = $this->getOption('displayParamsForLists', []);
 		} else {
-			$otherParams = $this->getOption('displayParams');
+			$otherParams = $this->getOption('displayParams', []);
 		}
 
 		if ($otherParams) {
@@ -100,7 +100,7 @@ class Tracker_Field_Kaltura extends Tracker_Field_Abstract implements Tracker_Fi
 
 		foreach( $movieIds as $id ) {
 			$params = array_merge($otherParams, ['id' => $id]);
-			$output .= wikiplugin_kaltura([], $params);
+			$output .= wikiplugin_kaltura('', $params);
 		}
 
 		return $output;
