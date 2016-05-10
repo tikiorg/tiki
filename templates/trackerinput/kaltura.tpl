@@ -9,6 +9,7 @@
 	{/foreach}
 </ol>
 <a class="add-kaltura-media btn btn-default btn-sm" href="{service controller=kaltura action=upload}" data-target-name="{$field.ins_id|escape}[]">{tr}Add Media{/tr}</a>
+<a class="list-kaltura-media btn btn-default btn-sm" href="{service controller=kaltura action=list}" data-target-name="{$field.ins_id|escape}[]">{tr}List Media{/tr}</a>
 {foreach from=$data.extras item=entryId}
 	<input type="hidden" name="{$field.ins_id|escape}[]" value="{$entryId|escape}">
 {/foreach}
@@ -40,6 +41,24 @@ $('.add-kaltura-media').click(function () {
 		},
 		close: function () {
 			$("#bootstrap-modal").show();
+		}
+	});
+	return false;
+});
+$('.list-kaltura-media').click(function () {
+	var link = this;
+	var $bsModal = $("#bootstrap-modal").hide();
+	$(this).serviceDialog({
+		title: $(link).text(),
+		width: 710,
+		height: 450,
+		hideButtons: true,
+		data: {
+			targetName: $(link).data('target-name'),
+			formId: $(this).parents('form').attr('id')
+		},
+		close: function () {
+			$bsModal.show();
 		}
 	});
 	return false;
