@@ -291,7 +291,7 @@ function prefs_fgal_list()
 		),
 		'fgal_viewerjs_feature' => array(
 			'name' => tra('Use Viewer JS'),
-			'description' => tra('Uses ViewerJS from http://viewerjs.org if available (needs a separate install due to licensing restrictions)'),
+			'description' => tra('Uses ViewerJS from http://viewerjs.org if available (needs a separate install due to licensing restrictions), and allows displaying ODF files (odt, ods, odp) as well as pdf in web pages'),
 			'type' => 'flag',
 			'filter' => 'alpha',
 			'default' => 'n',
