@@ -24,6 +24,16 @@ class Tracker_Field_Kaltura extends Tracker_Field_Abstract implements Tracker_Fi
 				'tags' => array('advanced'),
 				'default' => 'n',
 				'params' => array(
+					'displayParams' => array(
+						'name' => tr('Display parameters'),
+						'description' => tr('URL-encoded parameters used in the {kaltura} plugin, for example,.') . ' "width=800&height=600"',
+						'filter' => 'text',
+					),
+					'displayParamsForLists' => array(
+						'name' => tr('Display parameters for lists'),
+						'description' => tr('URL-encoded parameters used in the {kaltura} plugin, for example,.') . ' "width=240&height=80"',
+						'filter' => 'text',
+					),
 				),
 			),
 		);
@@ -73,13 +83,27 @@ class Tracker_Field_Kaltura extends Tracker_Field_Abstract implements Tracker_Fi
 
 	function renderOutput($context = array())
 	{
-		return $this->renderTemplate(
-			'trackeroutput/kaltura.tpl',
-			$context,
-			array(
-				'movieIds' => array_filter(explode(',', $this->getValue())),
-			)
-		);
+		if ($context['list_mode'] === 'y') {
+			$otherParams = $this->getOption('displayParamsForLists');
+		} else {
+			$otherParams = $this->getOption('displayParams');
+		}
+
+		if ($otherParams) {
+			parse_str($otherParams, $otherParams);
+		}
+
+		include_once 'lib/wiki-plugins/wikiplugin_kaltura.php';
+
+		$movieIds = array_filter(explode(',', $this->getValue()));
+		$output = '';
+
+		foreach( $movieIds as $id ) {
+			$params = array_merge($otherParams, ['id' => $id]);
+			$output .= wikiplugin_kaltura([], $params);
+		}
+
+		return $output;
 	}
 
 	function importRemote($value)
