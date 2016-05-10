@@ -8,7 +8,7 @@
 {block name="content"}
 <div class="kaltura-media-list">
 	{foreach $entries as $item}
-		<div class="media">
+		<div class="media" data-id="{$item->id}">
 			<div class="media-left">
 				<img class="athumb media-object" src="{$item->thumbnailUrl}" alt="{$item->description}" height="80" width="120">
 			</div>
