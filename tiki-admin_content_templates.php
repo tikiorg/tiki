@@ -10,7 +10,7 @@
 
 $section = 'admin';
 require_once ('tiki-setup.php');
-$access->check_feature(array('feature_wiki_templates','feature_cms_templates'), '', 'features', true);
+$access->check_feature(array('feature_wiki_templates','feature_cms_templates','feature_file_galleries_templates'), '', 'features', true);
 
 $templateslib = TikiLib::lib('template');
 
@@ -283,7 +283,7 @@ if ($_REQUEST['templateId']) {
 		}
 	}
 } else {
-	$canEdit = $tiki_p_admin_content_templates === 'y';	// create
+	$canEdit = ($tiki_p_admin_content_templates === 'y') || ($tiki_p_admin === 'y');	// create
 }
 $smarty->assign('canEdit', $canEdit);
 
