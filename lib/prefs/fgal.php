@@ -235,7 +235,7 @@ function prefs_fgal_list()
 			'name' => tra('Allow searching for existing files in the tracker files field'),
 			'description' => tra('Search files using the search index.'),
 			'type' => 'flag',
-			'default' => 'n',
+			'default' => 'y',
 			'dependencies' => array('feature_search'),
 		),
 		'fgal_fix_mime_type' => array(
