@@ -22,18 +22,10 @@
 			</fieldset>
 			<fieldset class="table">
 				<legend>{tr}Tracker settings{/tr}</legend>
-				{preference name=user_selector_threshold}
-				{preference name=user_selector_realnames_tracker}
-				{preference name=tiki_object_selector_threshold}
 				{preference name=feature_reports}
 				{preference name="tracker_remote_sync"}
 				{preference name="tracker_tabular_enabled"}
-				{preference name="tracker_refresh_itemlink_detail"}
 				{preference name="tracker_clone_item"}
-				{preference name="wikiplugin_insert"}
-				<div class="adminoptionboxchild" id="wikiplugin_insert_childcontainer">
-					{preference name=tracker_insert_allowed}
-				</div>
 				{preference name=allocate_memory_tracker_export_items}
 				{preference name=allocate_time_tracker_export_items}
 				{preference name=allocate_time_tracker_clear_items}
@@ -42,13 +34,22 @@
 				<div class="adminoptionboxchild" id="ajax_inline_edit_childcontainer">
 					{preference name=ajax_inline_edit_trackerlist}
 				</div>
-				{preference name=tracker_change_field_type}
 				{preference name=tracker_show_comments_below}
 				{preference name=tracker_legacy_insert}
 				{preference name=tracker_status_in_objectlink}
 				{preference name=tracker_always_notify}
 				{preference name=feature_sefurl_tracker_prefixalias}
 				{preference name=tracker_prefixalias_on_links}
+			</fieldset>
+			<fieldset class="table">
+				<legend>{tr}Field settings{/tr}</legend>
+				{preference name=user_selector_threshold}
+				{preference name=user_selector_realnames_tracker}
+				{preference name=tiki_object_selector_threshold}
+				{preference name="tracker_refresh_itemlink_detail"}
+				{preference name=fgal_tracker_existing_search}
+				{preference name=unified_trackerfield_keys}
+				{preference name=tracker_change_field_type}
 			</fieldset>
 
 			<fieldset class="admin">
@@ -90,6 +91,10 @@
 			<h2>{tr}Plugins{/tr}</h2>
 			<fieldset class="table">
 				<legend>{tr}Plugins{/tr}</legend>
+				{preference name=wikiplugin_insert}
+				<div class="adminoptionboxchild" id="wikiplugin_insert_childcontainer">
+					{preference name=tracker_insert_allowed}
+				</div>
 				{preference name=wikiplugin_tracker}
 				{preference name=wikiplugin_trackerlist}
 				{preference name=wikiplugin_trackerfilter}
