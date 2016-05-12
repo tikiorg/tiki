@@ -1147,6 +1147,7 @@ function wikiplugin_tracker($data, $params)
 				// send emails if email param is set and tracker_always_notify or something was changed (mail_data is set in \TrackerLib::send_replace_item_notifications)
 				if (!empty($email) && ($prefs['tracker_always_notify'] === 'y' || !empty($smarty->getTemplateVars('mail_data')))) {
 					// expose the pretty tracker fields to the email tpls
+					$item = $trklib->get_tracker_item($rid);	// get the new item values
 					foreach ($flds['data'] as $f) {
 						$prettyout = strip_tags(wikiplugin_tracker_render_value($f, $item));
 						$smarty->assign('f_' . $f['fieldId'], $prettyout);
@@ -1154,7 +1155,17 @@ function wikiplugin_tracker($data, $params)
 					}
 					$emailOptions = preg_split("#\|#", $email);
 					if (is_numeric($emailOptions[0])) {
-						$emailOptions[0] = $trklib->get_item_value($trackerId, $rid, $emailOptions[0]);
+						$f = array();
+						foreach( $flds['data'] as $f) {
+							if ($f['fieldId'] == $emailOptions[0]) {
+								break;
+							}
+						}
+						if ($f && $f['type'] === 'l') {
+							$emailOptions[0] = wikiplugin_tracker_render_value($f, $item);
+						} else {
+							$emailOptions[0] = $trklib->get_item_value($trackerId, $rid, $emailOptions[0]);
+						}
 					}
 					if (empty($emailOptions[0])) { // from
 						$emailOptions[0] = $prefs['sender_email'];
@@ -1164,8 +1175,19 @@ function wikiplugin_tracker($data, $params)
 					} else {
 						$emailOptions[1] = preg_split('/ *, */', $emailOptions[1]);
 						foreach ($emailOptions[1] as $key=>$email) {
-							if (is_numeric($email))
-								$emailOptions[1][$key] = $trklib->get_item_value($trackerId, $rid, $email);
+							if (is_numeric($email)) {
+								$f = array();
+								foreach( $flds['data'] as $f) {
+									if ($f['fieldId'] == $email) {
+										break;
+									}
+								}
+								if ($f && $f['type'] === 'l') {
+									$emailOptions[1][$key] = wikiplugin_tracker_render_value($f, $item);
+								} else {
+									$emailOptions[1][$key] = $trklib->get_item_value($trackerId, $rid, $email);
+								}
+							}
 						}
 					}
 					include_once('lib/webmail/tikimaillib.php');
@@ -1743,7 +1765,12 @@ function wikiplugin_tracker($data, $params)
 							$back.= '<div class="' . $inputclass . ' tracker_input_value tracker_field' . $f['fieldId'] . '">'; // '</td><td class="tracker_input_value">';
 						}
 
-						$back .= wikiplugin_tracker_render_input($f, $item, $dynamicSave)."</div>"; // chibaguy added /divs
+					if ($f['type'] === 'l') {	// items list fields, show output
+						$back .= wikiplugin_tracker_render_value($f, $item);
+					} else {
+						$back .= wikiplugin_tracker_render_input($f, $item, $dynamicSave);
+					}
+						$back .= '</div>'; // chibaguy added /divs
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y' && $registration == 'y') {
 							$back.= '<div class="col-md-1 col-sm-1"><span class="text-danger tips" title=":'
 								. tra('This field is mandatory') . '">*</span></div>';
