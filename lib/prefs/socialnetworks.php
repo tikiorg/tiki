@@ -40,6 +40,22 @@ function prefs_socialnetworks_list()
 			'size' => 60,
 			'default' => '',
 		),
+		'socialnetworks_facebook_site_name' => array(
+			'name' => tra('Site Name'),
+			'description' => tra('Default og:sitename to be used on every page of your tiki'),
+			'keywords' => 'social networks',
+			'type' => 'text',
+			'size' => 60,
+			'default' => '',
+		),
+		'socialnetworks_facebook_site_image' => array(
+			'name' => tra('Site Image'),
+			'description' => tra('Default og:image to be used on every page of your tiki, must be url'),
+			'keywords' => 'social networks',
+			'type' => 'text',
+			'size' => 60,
+			'default' => '',
+		),
 		'socialnetworks_facebook_login' => array(
 			'name' => tra('Login using Facebook'),
 			'description' => tra('Allow users to log in using Facebook'),
