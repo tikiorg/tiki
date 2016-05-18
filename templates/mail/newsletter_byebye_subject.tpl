@@ -1,1 +1,1 @@
-{tr}Bye bye from %s at %s{/tr}
+{* $Id$ *}{tr}Bye bye from %s at %s{/tr}

@@ -1,7 +1,7 @@
-{tr}Hi{/tr},
+{* $Id$ *}{tr}Hi{/tr},
 
 {if $mail_again}
-{tr}{$mail_user} <{$mail_email}> has requested a new password on {$mail_site}, but you need to validate his account first{/tr}
+{tr}{$mail_user} <{$mail_email}> has requested a new password on {$mail_site}, but you need to validate his {$prefs.mail_template_custom_text}account first{/tr}
 {else}
 {$mail_user} <{$mail_email}> {tr}has requested an account on{/tr} {$mail_site}
 {if isset($chosenGroup)}
@@ -15,7 +15,7 @@
 {/foreach}
 {/if}
 
-{tr}To validate that account, please follow the link:{/tr}
+{tr}To validate that {$prefs.mail_template_custom_text}account, please follow the link:{/tr}
 {$validation_url}
 
 {tr}Assign to a group:{/tr} {$assignuser_url}

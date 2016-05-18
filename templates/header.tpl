@@ -9,8 +9,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="generator" content="Tiki Wiki CMS Groupware - https://tiki.org">
 
+{* --- SocialNetwork:Domain ---*}
+<meta content="{$base_url_canonical}" property="article:publisher">
+<meta content="{$base_url_canonical}" name="twitter:domain"> {* may be obsolete when using twitter:card *}
+
+
 {* --- Canonical URL --- *}
 {include file="canonical.tpl"}
+
 
 {if !empty($forum_info.name) & $prefs.metatag_threadtitle eq 'y'}
 	<meta name="keywords" content="{tr}Forum{/tr} {$forum_info.name|escape} {$thread_info.title|escape} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag|escape} {/foreach}{/if}">
@@ -24,16 +30,16 @@
 {/if}
 {if isset($section) and $section eq "blogs"}
 	{if empty($blog_data.title)}
-	<meta name="description" content="Blog listing">
+	<meta name="description" content="Blog listing" property="og:description">
 	{elseif empty($postId)}
-	<meta name="description" content="{$blog_data.title|escape}">
+	<meta name="description" content="{$blog_data.title|escape}" property="og:description">
 	{else}
-	<meta name="description" content="{$post_info.title|escape} - {$blog_data.title|escape}">
+	<meta name="description" content="{$post_info.title|escape} - {$blog_data.title|escape}" property="og:description">
 	{/if}
 {elseif $prefs.metatag_pagedesc eq 'y' and not empty($description)}
-	<meta name="description" content="{$description|escape}">
+	<meta name="description" content="{$description|escape}" property="og:description">
 {elseif $prefs.metatag_description ne '' or empty($description)}
-	<meta name="description" content="{$prefs.metatag_description|escape}">
+	<meta name="description" content="{$prefs.metatag_description|escape}" property="og:description">
 {/if}
 {if $prefs.metatag_geoposition neq ''}
 	<meta name="geo.position" content="{$prefs.metatag_geoposition|escape}">
@@ -56,6 +62,11 @@
 {if $prefs.metatag_revisitafter neq ''}
 	<meta name="revisit-after" content="{$prefs.metatag_revisitafter|escape}">
 {/if}
+
+{* --- SocialNetwork:site_name --- *}
+<meta content="{if $prefs.socialnetworks_facebook_site_name neq ''}{$prefs.socialnetworks_facebook_site_name}{else}{$prefs.browsertitle|tr_if|escape}{/if}" property="og:site_name">
+<meta content="{if $prefs.socialnetworks_facebook_site_name neq ''}{$prefs.socialnetworks_facebook_site_name}{else}{$prefs.browsertitle|tr_if|escape}{/if}" name="twitter:site">
+
 
 {* --- tiki block --- *}
 <title>{strip}
@@ -109,6 +120,87 @@
 	{if $prefs.site_title_location eq 'after'} {$prefs.site_nav_seper} {$prefs.browsertitle|tr_if|escape}{/if}
 {/if}
 {/strip}</title>
+
+{* --- SocialNetwork:title --- *}
+<meta content="{strip}
+		{if !empty($sswindowtitle)}
+			{if $sswindowtitle eq 'none'}
+				&nbsp;
+			{else}
+				{$sswindowtitle|escape}
+			{/if}
+		{else}
+			{if $prefs.site_title_location eq 'before'}{$prefs.browsertitle|tr_if|escape} {$prefs.site_nav_seper} {/if}
+			{capture assign="page_description_title"}
+				{if ($prefs.feature_breadcrumbs eq 'y' or $prefs.site_title_breadcrumb eq "desc") && isset($trail)}
+					{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}
+				{/if}
+			{/capture}
+			{if isset($structure) and $structure eq 'y'} {* get the alias name if item is a wiki page and it is in a structure *}
+				{section loop=$structure_path name=ix}
+					{assign var="aliasname" value={$structure_path[ix].page_alias}}
+				{/section}
+			{/if}
+			{if !empty($page_description_title)}
+				{$page_description_title}
+			{else}
+				{if !empty($tracker_item_main_value)}
+					{$tracker_item_main_value|truncate:255|escape}
+				{elseif !empty($title) and !is_array($title)}
+					{$title|escape}
+				{elseif !empty($aliasname)}
+					{$aliasname|escape}
+				{elseif !empty($page)}
+					{$page|escape}
+				{elseif !empty($description)}{$description|escape}
+					{* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
+				{elseif !empty($arttitle)}
+					{$arttitle|escape}
+				{elseif !empty($thread_info.title)}
+					{$thread_info.title|escape}
+				{elseif !empty($forum_info.name)}
+					{$forum_info.name|escape}
+				{elseif !empty($categ_info.name)}
+					{$categ_info.name|escape}
+				{elseif !empty($userinfo.login)}
+					{$userinfo.login|username}
+				{elseif !empty($tracker_info.name)}
+					{$tracker_info.name|escape}
+				{elseif !empty($headtitle)}
+					{$headtitle|stringfix:"&nbsp;"|escape}{* use $headtitle last if feature specific title not found *}
+				{/if}
+			{/if}
+			{if $prefs.site_title_location eq 'after'} {$prefs.site_nav_seper} {$prefs.browsertitle|tr_if|escape}{/if}
+		{/if}
+	{/strip}
+" property="og:title">
+
+{* --- SocialNetwork:type --- *}
+
+{if $prefs.feature_canonical_url eq 'y' and isset($mid)}
+	{if $mid eq 'tiki-view_blog.tpl'}
+		<meta content="article" property="og:type">
+	{elseif $mid eq 'tiki-view_blog_post.tpl'}
+		<meta content="article" property="og:type">
+	{elseif $mid eq 'tiki-read_article.tpl'}
+		<meta content="article" property="og:type">
+	{/if}
+{/if}
+
+{* To be added someday when using cart feature: product, product.group, product.item *}
+{* May be usefull too : profile *}
+
+{* --- SocialNetwork:image --- *}
+
+{if $prefs.feature_canonical_url eq 'y' and isset($mid)}
+	{if $mid eq 'tiki-view_blog.tpl'}
+	{elseif $mid eq 'tiki-view_blog_post.tpl'}
+{* --- Article --- *}
+	{elseif $mid eq 'tiki-read_article.tpl'}
+		<meta content="{if $prefs.socialnetworks_facebook_site_image neq ''}{$prefs.socialnetworks_facebook_site_image}{else}{$base_url_canonical}{if $hasImage eq 'y'}article_image.php?image_type=article&amp;id={$articleId}{else}article_image.php?image_type=topic&amp;id={$topicId}{/if}{/if}" property="og:image">
+		<meta content="{if $prefs.socialnetworks_facebook_site_image neq ''}{$prefs.socialnetworks_facebook_site_image}{else}{$base_url_canonical}{if $hasImage eq 'y'}article_image.php?image_type=article&amp;id={$articleId}{else}article_image.php?image_type=topic&amp;id={$topicId}{/if}{/if}" name="twitter:image">
+	{/if}
+{/if}
 
 {if $prefs.site_favicon}
 	<link rel="icon" href="{$prefs.site_favicon|escape}">

@@ -1,4 +1,4 @@
-{tr}Wiki page renamed{/tr} {tr}by{/tr} {$mail_user|username}.
+{* $Id$ *}{$prefs.mail_template_custom_text}{tr}Wiki page renamed{/tr} {tr}by{/tr} {$mail_user|username}.
 
 {tr}Date:{/tr} {$mail_date|tiki_short_datetime:"":"n"}
 

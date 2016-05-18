@@ -1,4 +1,4 @@
-{tr}Somebody or you tried to subscribe this email address at our site:{/tr} {$server_name}
+{* $Id$ *}{tr}Somebody or you tried to subscribe this email address at our {$prefs.mail_template_custom_text}site:{/tr} {$server_name}
 {tr}To the newsletter:{/tr} {$info.name}
 
 {tr}Description:{/tr}
