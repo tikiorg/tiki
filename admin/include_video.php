@@ -26,6 +26,7 @@ if ($prefs['feature_kaltura'] === 'y') {
 		$kcwDefault = $prefs['kaltura_kcwUIConf'];
 		if (empty($kcwDefault) || !empty($_REQUEST['kcw_rebuild'])) {
 			$kcwDefault = $kalturaadminlib->updateStandardTikiKcw();
+			$cachelib->invalidate($kalturaadminlib::CONFIGURATION_LIST);
 		}
 		if ($kcwDefault) {
 			$kcwText = "<div class='adminoptionbox'>KCW Configuration ID: $kcwDefault (automatically configured)</div>";
