@@ -28,6 +28,7 @@
 {if $prefs.metatag_author neq ''}
 	<meta name="author" content="{$prefs.metatag_author|escape}">
 {/if}
+
 {if isset($section) and $section eq "blogs"}
 	{if empty($blog_data.title)}
 	<meta name="description" content="Blog listing" property="og:description">
@@ -41,6 +42,7 @@
 {elseif $prefs.metatag_description ne '' or empty($description)}
 	<meta name="description" content="{$prefs.metatag_description|escape}" property="og:description">
 {/if}
+
 {if $prefs.metatag_geoposition neq ''}
 	<meta name="geo.position" content="{$prefs.metatag_geoposition|escape}">
 {/if}
@@ -65,7 +67,7 @@
 
 {* --- SocialNetwork:site_name --- *}
 <meta content="{if $prefs.socialnetworks_facebook_site_name neq ''}{$prefs.socialnetworks_facebook_site_name}{else}{$prefs.browsertitle|tr_if|escape}{/if}" property="og:site_name">
-<meta content="{if $prefs.socialnetworks_facebook_site_name neq ''}{$prefs.socialnetworks_facebook_site_name}{else}{$prefs.browsertitle|tr_if|escape}{/if}" name="twitter:site">
+<meta content="{if $prefs.socialnetworks_twitter_site neq ''}{$prefs.socialnetworks_twitter_site}{else}{$prefs.browsertitle|tr_if|escape}{/if}" name="twitter:site">
 
 
 {* --- tiki block --- *}
@@ -198,7 +200,7 @@
 {* --- Article --- *}
 	{elseif $mid eq 'tiki-read_article.tpl'}
 		<meta content="{if $prefs.socialnetworks_facebook_site_image neq ''}{$prefs.socialnetworks_facebook_site_image}{else}{$base_url_canonical}{if $hasImage eq 'y'}article_image.php?image_type=article&amp;id={$articleId}{else}article_image.php?image_type=topic&amp;id={$topicId}{/if}{/if}" property="og:image">
-		<meta content="{if $prefs.socialnetworks_facebook_site_image neq ''}{$prefs.socialnetworks_facebook_site_image}{else}{$base_url_canonical}{if $hasImage eq 'y'}article_image.php?image_type=article&amp;id={$articleId}{else}article_image.php?image_type=topic&amp;id={$topicId}{/if}{/if}" name="twitter:image">
+		<meta content="{if $prefs.socialnetworks_twitter_site_image neq ''}{$prefs.socialnetworks_twitter_site_image}{else}{$base_url_canonical}{if $hasImage eq 'y'}article_image.php?image_type=article&amp;id={$articleId}{else}article_image.php?image_type=topic&amp;id={$topicId}{/if}{/if}" name="twitter:image">
 	{/if}
 {/if}
 

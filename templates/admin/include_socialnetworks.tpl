@@ -16,6 +16,10 @@
 		{/tab}
 		{tab name="{tr}Twitter{/tr}"}
 			<h2>{tr}Twitter{/tr}</h2>
+			<div class="adminoptionbox">
+				{preference name=socialnetworks_twitter_site}
+				{preference name=socialnetworks_twitter_site_image}
+			</div>
 			{remarksbox type="note" title="{tr}Note{/tr}"}
 				<p>
 					{tr}To use Twitter integration, you must register this site as an application at{/tr}
@@ -31,6 +35,10 @@
 		{/tab}
 		{tab name="{tr}Facebook{/tr}"}
 			<h2>{tr}Facebook{/tr}</h2>
+			<div class="adminoptionbox">
+				{preference name=socialnetworks_facebook_site_name}
+				{preference name=socialnetworks_facebook_site_image}
+			</div>
 			{remarksbox type="note" title="{tr}Note{/tr}"}
 				<p>
 					{tr}To use Facebook integration, you must register this site as an application at{/tr}
@@ -42,8 +50,6 @@
 			<div class="adminoptionbox">
 				{preference name=socialnetworks_facebook_application_secr}
 				{preference name=socialnetworks_facebook_application_id}
-				{preference name=socialnetworks_facebook_site_name}
-				{preference name=socialnetworks_facebook_site_image}
 				{preference name=socialnetworks_facebook_login}
 				{preference name=socialnetworks_facebook_autocreateuser}
 				<div class="adminoptionboxchild" id="socialnetworks_facebook_autocreateuser_childcontainer">
