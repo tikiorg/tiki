@@ -2901,7 +2901,7 @@ function prefs_feature_list($partial = false)
 			'description' => tra('Ask a different set of fields for the User Details section in the User Wizard than the ones shown in the Registration form'),
 			'help' => 'User+Wizard',
 			'type' => 'flag',
-			'default' => 'y',
+			'default' => 'n',
 		),
 		'feature_userWizardUsersFieldIds' => array(
 			'name' => tra('Tracker fields presented in the User Wizard as User Details'),
