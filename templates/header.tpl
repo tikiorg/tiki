@@ -37,9 +37,20 @@
 	{else}
 	<meta name="description" content="{$post_info.title|escape} - {$blog_data.title|escape}" property="og:description">
 	{/if}
+{elseif isset($section) and $section eq "cms"}
+	{* --- Article description --- *}
+	{if $heading neq ''}
+		<meta name="description" content="{$heading|truncate:150|escape}" property="og:description">
+	{elseif $body neq ''}
+		<meta name="description" content="{$body|truncate:150|escape}" property="og:description">
+	{elseif empty($prefs.metatag_description)}
+		<meta name="description" content="Articles listing at {$prefs.browsertitle|tr_if|escape}" property="og:description">
+	{else}
+		<meta name="description" content="{$prefs.metatag_description|escape}" property="og:description">
+	{/if}
 {elseif $prefs.metatag_pagedesc eq 'y' and not empty($description)}
 	<meta name="description" content="{$description|escape}" property="og:description">
-{elseif $prefs.metatag_description ne '' or empty($description)}
+{elseif not empty($prefs.metatag_description)}
 	<meta name="description" content="{$prefs.metatag_description|escape}" property="og:description">
 {/if}
 
