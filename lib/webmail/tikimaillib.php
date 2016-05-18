@@ -178,7 +178,15 @@ class TikiMail
 
 		$this->mail->getHeaders()->removeHeader('to');
 		foreach ((array) $recipients as $to) {
-			$this->mail->addTo($to);
+			try {
+				$this->mail->addTo($to);
+			} catch (Zend\Mail\Exception\InvalidArgumentException $e) {
+				$title = 'mail error';
+				$error = $e->getMessage();
+				$this->errors[] = $error;
+				$error = ' [' . $error . ']';
+				$logslib->add_log($title, $to . '/' . $this->mail->getSubject() . $error);
+			}
 		}
 
         if ($prefs['zend_mail_handler'] == 'smtp' && $prefs['zend_mail_queue'] == 'y') {
