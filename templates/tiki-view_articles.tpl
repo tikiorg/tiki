@@ -126,7 +126,7 @@
 						{/if}
 						{if $listpages[ix].show_pubdate eq 'y'}
 							<span class="pubdate">
-								{tr}Published At:{/tr} {$listpages[ix].publishDate|tiki_short_datetime}
+								{if $prefs.jquery_timeago neq 'y'){tr}Published At:{/tr}{/if} {$listpages[ix].publishDate|tiki_short_datetime}
 							</span>
 							{if $listpages[ix].show_expdate eq 'y' or $listpages[ix].show_reads eq 'y'}
 								-
