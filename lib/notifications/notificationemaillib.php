@@ -373,7 +373,11 @@ function sendWikiEmailNotification(
 			$mail = new TikiMail($not['user']);
 			$mail->setSubject(sprintf($mail_subject, $pageName));
 			$mail->setText($mail_data);
-			$mail->send(array($not['email']));
+			if (! $mail->send(array($not['email'])) && Perms::get()->admin) {
+				foreach ($mail->errors as $err) {
+					TikiLib::lib('errorreport')->report($err);
+				}
+			}
 
 		}
 	}
