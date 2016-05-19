@@ -6,7 +6,7 @@
 
 {tab name="{tr}Report{/tr}"}
 <h2>{tr}Report{/tr}</h2>
-<form method="get" action="tiki-admin_actionlog.php#Report" class="form-horizontal">
+<form method="get" action="tiki-admin_actionlog.php#List" class="form-horizontal">
     <h2>{tr}Filter{/tr}</h2>
     {if empty($nbViewedConfs)}
         {button _text="{tr}Please select some actions to be reported.{/tr}" href="tiki-admin_actionlog.php?cookietab=2"}
@@ -180,10 +180,7 @@
 </form>
 
 {if isset($actionlogs)}
-    {if !empty($actionlogs)}
-        {button href="#Statistics" _auto_args="*" _text="{tr}See Statistics{/tr}"}
-    {/if}
-    <h2 id="List">{tr}List{/tr}
+    <h2 id="List">{tr}List{/tr}</h2>
         {if $selectedUsers}
             &nbsp;&mdash;&nbsp;
             {tr}User:{/tr}
@@ -203,7 +200,6 @@
         {if $reportCategory}
             &nbsp;&mdash;&nbsp;{tr}Category:{/tr} {$reportCateg}
         {/if}
-    </h2>
     {if $maxRecords gt 0}
         {if $cant gt $maxRecords}
             {self_link max=-1}{tr}All{/tr}{/self_link}
@@ -213,6 +209,9 @@
     {/if}
     {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
     {tr}Records:{/tr} {$cant}
+    {if !empty($actionlogs)}
+        <a href="#Statistics">{tr}See Statistics{/tr}</a><br/>
+    {/if}
     {* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
     {if $prefs.javascript_enabled !== 'y'}
         {$js = 'n'}
