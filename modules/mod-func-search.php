@@ -139,8 +139,6 @@ function module_search($mod_reference, $smod_params) 	// modifies $smod_params s
 	$smarty->assign_by_ref('smod_params', $smod_params);
 
 	// Deal with the two search types (sigh). If the requested search type is disabled but the other one is enabled, use it as a fallback.
-	$smod_params['tiki_search'] = isset($smod_params['tiki_search']) && $smod_params['tiki_search'] == 'y';
-
 	if ($prefs['feature_search'] == 'n' && $prefs['feature_search_fulltext'] == 'n') {
 		$smod_params['tiki_search'] = 'none';
 		$smarty->assign('module_error', tra('Search is disabled.'));
@@ -176,7 +174,7 @@ function module_search($mod_reference, $smod_params) 	// modifies $smod_params s
 		'default_button' => 'search',
 		'input_size' => 0,
 		'select_size' => 10,
-		'search_action' => $smod_params['tiki_search'] ? 'tiki-searchindex.php' : 'tiki-searchresults.php',
+		'search_action' => $smod_params['tiki_search'] === 'y' ? 'tiki-searchindex.php' : 'tiki-searchresults.php',
 		'search_submit' => tra('Search'),
 		'go_action' => 'tiki-listpages.php',
 		'go_submit' => tra('Titles'),
