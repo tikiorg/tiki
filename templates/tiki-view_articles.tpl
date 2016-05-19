@@ -134,7 +134,7 @@
 						{/if}
 						{if $listpages[ix].show_expdate eq 'y'}
 							<span class="expdate">
-								{tr}Expires At:{/tr} {$listpages[ix].expireDate|tiki_short_datetime}
+								{tr}Expires{/tr} {$listpages[ix].expireDate|tiki_short_datetime}
 							</span>
 							{if $listpages[ix].show_reads eq 'y'}
 								-
