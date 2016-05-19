@@ -100,10 +100,10 @@
                         <label>{tr}Units{/tr}</label>
                     </div>
                     <div class="form-group col-sm-4 col-sm-offset-1">
-                        <label>{tr}kb{/tr}</label>
+                        <label>{tr}bytes{/tr}</label>
                         <input class="radio" type="radio" name="unit"
                                value="bytes"{if $unit ne 'kb'} checked="checked"{/if}>
-                        <label>{tr}bytes{/tr}</label>
+                        <label>{tr}kb{/tr}</label>
                         <input type="radio" name="unit" value="kb"{if $unit eq 'kb'} checked="checked"{/if}>
                     </div>
                 </div>
