@@ -386,7 +386,15 @@ class Installer extends TikiDb_Bridge
 	{
 		return count($this->patches) > 0 ;
 	} // }}}
+ function checkInstallerLocked() // {{{
+	{
+		$iniFile = __DIR__ . '/../db/lock';
 
+		
+		if (!is_readable($iniFile)) {
+			return 1;
+		}
+	}
 	private function getBaseImage() // {{{
 	{
 		$iniFile = __DIR__ . '/../db/install.ini';
