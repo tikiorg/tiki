@@ -30,6 +30,9 @@ Disallow: /temp/cache/
 Disallow: /temp/mail_attachs/
 Disallow: /temp/unified-index/
 Disallow: /temp/composer.phar
+Disallow: /popups/
+Disallow: /styles/
+Disallow: /temp/
 Disallow: /templates/
 Disallow: /templates_c/
 Disallow: /tests/
@@ -47,7 +50,6 @@ Disallow: /tiki-index.php?page=SandBox
 Disallow: /tiki-index_p.php
 Disallow: /tiki-install.php
 Disallow: /tiki-lastchanges.php
-Disallow: /tiki-list_file_gallery.php
 Disallow: /tiki-likepages.php
 Disallow: /tiki-listpages.php
 Disallow: /tiki-login_scr.php
@@ -66,6 +68,39 @@ Disallow: /tiki-tell_a_friend.php
 Disallow: /tiki-user_information.php
 Disallow: /tiki-view_cache.php
 Disallow: /tiki-index_raw.php
+
+
+# additional pages that should not be indexd in general
+
+Disallow: /tiki-remind_password.php
+Disallow: /tiki-translation-manage
+
+#remove pages in favour of the SEF counterpart
+Disallow: /tiki-forums.php
+Disallow: /tiki-view_forum.php
+Disallow: /tiki-index.php
+Disallow: /tiki-read_article.php
+Disallow: /tiki-view_blog.php
+Disallow: /tiki-list_file_gallery.php
+#Disallow: /tiki-view_forum_thread.php  #only enable after forum SEF bug is fixed. Will prevent indexing
+
+#filer out multiple views
+Disallow: /*sort_mode=*
+Disallow: /*latest=1*
+Disallow: /*PHPSESSID=
+Disallow: /*display=print*
+Disallow: /*show_comzone=*
+Disallow: /*page_ref_id=*
+Disallow: /*topics_offset=-1* # to fix a display error, can be removed when 
+Disallow: /*show_details=*
+Disallow: /*offset=0*
+
+#This option will filer out multiple views of Structured Wiki Pages
+#only enable if "Open page as structure" is enabled under Admin-Wiki, so the structure is not passed via the url.
+#if Existing links in your pages use the structure= in our pages, it may cause problem with Google Crawling the website
+
+#Disallow: /*structure=* 
+
 
 # Disallow mobile
 Disallow: /tiki-*.php?*mode=mobile*
