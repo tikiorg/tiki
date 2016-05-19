@@ -3,10 +3,10 @@
 	{if $tiki_p_search eq 'y'}
 		{tikimodule error=$module_error title=$smod_params.title name="search" flip=$smod_params.flip decorations=$smod_params.decorations nobox=$smod_params.nobox notitle=$smod_params.notitle}
 			{if $smod_params.tiki_search neq 'none'}
-				<form class="form-inline navbar-form" id="search-module-form{$search_mod_usage_counter}" method="get" action="{$smod_params.search_action}"{if $smod_params.use_autocomplete eq 'y'} onsubmit="return submitSearch{$search_mod_usage_counter}()"{/if}>
+				<form class="form-inline" id="search-module-form{$search_mod_usage_counter}" method="get" action="{$smod_params.search_action}"{if $smod_params.use_autocomplete eq 'y'} onsubmit="return submitSearch{$search_mod_usage_counter}()"{/if}>
 <div style="position: relative;">
-						<div class="form-group">
-							<input style="width: 72%;float:left;" placeholder="{tr}Find{/tr}" class="form-control" id="search_mod_input_{$search_mod_usage_counter}" name="{if $smod_params.search_action eq 'tiki-searchindex.php'}filter~content{else}find{/if}" {if !empty($smod_params.input_size)}size="{$smod_params.input_size}" style="width: auto"{/if} type="text" accesskey="s" value="{$smod_params.input_value|escape}" />&nbsp;
+					<div class="{if $smod_params.compact eq "y"}btn-group{else}form-group{/if}" style="margin-left:-7px;margin-right:-7px;">
+						<input style="float:left;{if $smod_params.compact eq "y"}width:72%;border-bottom-right-radius:0;border-top-right-radius: 0;{/if}" placeholder="{tr}Find{/tr}" class="form-control" id="search_mod_input_{$search_mod_usage_counter}" name="{if $smod_params.search_action eq 'tiki-searchindex.php'}filter~content{else}find{/if}" {if !empty($smod_params.input_size)}size="{$smod_params.input_size}" style="width: auto"{/if} type="text" accesskey="s" value="{$smod_params.input_value|escape}" />&nbsp;
 					{*	</div> *}
 						{if $smod_params.show_object_filter eq 'y'}
 							<label class="control-label" for="filterType">
@@ -57,12 +57,11 @@
 						{/if}
 
 							{if $smod_params.compact eq "y"}
-							<div style="width: 25%; float:left; text-align:center">
 
 							<button type="submit" class="btn btn-default search_mod_magnifier">
 								{icon name="search"}
 							</button>
-								</div>
+					</div>
 
 							<div class="btn-group search_mod_buttons box" style="display:none;position:absolute;left:2.5em;top:2.5em;z-index:2;white-space:nowrap;">
 								{else}
@@ -72,7 +71,7 @@
 										<input type="hidden" name="filter~{$key|escape}" value="{$filter|escape}"/>
 									{/foreach}
 									{if $smod_params.show_search_button eq 'y'}
-										<input type = "submit" class="btn btn-default btn-sm tips{if $smod_params.default_button eq 'search'} button_default{/if}"
+										<input type = "submit" class="btn btn-default btn-sm tips{if $smod_params.default_button eq 'search'} button_default{/if}{if $smod_params.compact eq "y"} bottom{else} btn-xs{/if}"
 											   name = "search" value = "{$smod_params.search_submit|escape}"
 											   title="{tr}Search{/tr}|{tr}Search for text throughout the site.{/tr}"
 											   {if $smod_params.compact eq "y"}data-placement="bottom"{/if}
@@ -80,7 +79,7 @@
 										/>
 									{/if}
 									{if $smod_params.show_go_button eq 'y'}
-										<input type = "submit" class="btn btn-default btn-sm tips{if $smod_params.compact eq "y"} bottom{/if}{if $smod_params.default_button eq 'go'} button_default{/if}"
+										<input type = "submit" class="btn btn-default btn-sm tips{if $smod_params.compact eq "y"} bottom{else} btn-xs{/if}{if $smod_params.default_button eq 'go'} button_default{/if}"
 											   name = "go" value = "{$smod_params.go_submit|escape}"
 											   title="{tr}Search{/tr}|{tr}Go directly to a page, or search in page titles if exact match is not found.{/tr}"
 											   {if $smod_params.compact eq "y"}data-placement="bottom"{/if}
@@ -92,7 +91,7 @@
 										<input type="hidden" name="exact_match" value="" />
 									{/if}
 									{if $smod_params.show_edit_button eq 'y' and $tiki_p_edit eq 'y'}
-										<input type = "submit" class = "btn btn-default btn-sm tips{if $smod_params.compact eq "y"} bottom{/if}{if $smod_params.default_button eq 'edit'} button_default{/if}"
+										<input type = "submit" class = "btn btn-default btn-sm tips{if $smod_params.compact eq "y"} bottom{else} btn-xs{/if}{if $smod_params.default_button eq 'edit'} button_default{/if}"
 											   name = "edit" value = "{$smod_params.edit_submit|escape}"
 											   title="{tr}Search{/tr}|{tr}Edit existing page or create a new one.{/tr}"
 											   {if $smod_params.compact eq "y"}data-placement="bottom"{/if}
@@ -140,8 +139,9 @@ $("#search_mod_input_{{$search_mod_usage_counter}}")
 	$(".search_mod_magnifier", $(this).parent()).mouseover();}
 );
 							{/jq}
+						{else}
+					</div>
 						{/if}
-							</div>
 				</form>
 				{jq notonready=true}
 					function submitSearch{{$search_mod_usage_counter}}() {
