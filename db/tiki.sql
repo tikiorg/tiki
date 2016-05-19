@@ -2970,6 +2970,9 @@ INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Re
 INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Created', 'category', 'y');
 INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Updated', 'category', 'y');
 INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Removed', 'category', 'y');
+INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Created', 'calendar event', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Updated', 'calendar event', 'n');
+INSERT IGNORE INTO tiki_actionlog_conf(action, `objectType`, status) VALUES ('Removed', 'calendar event', 'n');
 
 DROP TABLE IF EXISTS `tiki_freetags`;
 CREATE TABLE `tiki_freetags` (

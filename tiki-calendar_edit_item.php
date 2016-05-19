@@ -279,12 +279,12 @@ if (isset($_POST['act'])) {
 				}
 				$calRecurrence->setUser($save['user']);
 				$calRecurrence->save($_POST['affect'] == 'all');
-				// Save the ip at the log for the addition of new calendar items when done by anonymous users
-				if (empty($user) && empty($save['calitemId']) && $caladd["$newcalid"]['tiki_p_add_events']) {
-					$logslib->add_log('calendar', 'Recurrent calendar item starting on '.$_POST['startPeriod'].' added to calendar '.$save['calendarId']);
+				// Save the ip at the log for the addition of new calendar items
+				if ($prefs['feature_actionlog'] == 'y' && empty($save['calitemId']) && $caladd["$newcalid"]['tiki_p_add_events']) {
+					$logslib->add_action('Created', 'recurrent event starting on '.$_POST['startPeriod'].' in calendar '.$save['calendarId'], 'calendar event');
 				}
-				if (empty($user) && !empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events']) {
-					$logslib->add_log('calendar', 'Recurrent calendar item starting on '.$_POST['startPeriod'].' changed in calendar '.$save['calendarId']);
+				if ($prefs['feature_actionlog'] == 'y' && !empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events']) {
+					$logslib->add_action('Updated', 'recurrent event starting on '.$_POST['startPeriod'].' in calendar '.$save['calendarId'], 'calendar event');
 				}
 				header('Location: tiki-calendar.php?todate='.$save['start']);
 				die;
@@ -296,12 +296,12 @@ if (isset($_POST['act'])) {
 					$save['changed'] = true;
 				}
 				$calitemId = $calendarlib->set_item($user, $save['calitemId'], $save);
-				// Save the ip at the log for the addition of new calendar items when done by anonymous users
-				if (empty($user) && empty($save['calitemId']) && $caladd["$newcalid"]['tiki_p_add_events']) {
-					$logslib->add_log('calendar', 'Calendar item '.$calitemId.' added to calendar '.$save['calendarId']);
+				// Save the ip at the log for the addition of new calendar items
+				if ($prefs['feature_actionlog'] == 'y' && empty($save['calitemId']) && $caladd["$newcalid"]['tiki_p_add_events']) {
+					$logslib->add_action('Created', 'event '.$calitemId.' in calendar '.$save['calendarId'], 'calendar event');
 				}
-				if (empty($user) && !empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events']) {
-					$logslib->add_log('calendar', 'Calendar item '.$calitemId.' changed in calendar '.$save['calendarId']);
+				if ($prefs['feature_actionlog'] == 'y' && !empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events']) {
+					$logslib->add_action('Updated', 'event '.$calitemId.' in calendar '.$save['calendarId'], 'calendar event');
 				}
 				if ($prefs['feature_groupalert'] == 'y') {
 					$groupalertlib->Notify($_REQUEST['listtoalert'], "tiki-calendar_edit_item.php?viewcalitemId=".$calitemId);
@@ -334,8 +334,8 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	$access->check_authenticity();
 	$calitem = $calendarlib->get_item($_REQUEST['calitemId']);
 	$calendarlib->drop_item($user, $_REQUEST["calitemId"]);
-	if (empty($user)) {
-		$logslib->add_log('calendar', 'Calendar item '.$_REQUEST['calitemId'].' deleted');
+	if ($prefs['feature_actionlog'] == 'y') {
+		$logslib->add_action('Removed', 'event '.$_REQUEST['calitemId'], 'calendar event');
 	}
 	$_REQUEST["calitemId"] = 0;
 	header('Location: tiki-calendar.php?todate='.$calitem['start']);
@@ -344,8 +344,8 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	// There is no check for valid antibot code if anonymous allowed to delete events since this comes from a JS button at the tpl and bots are not know to use JS
 	$calRec = new CalRecurrence($_REQUEST['recurrenceId']);
 	$calRec->delete();
-	if (empty($user)) {
-		$logslib->add_log('calendar', 'Recurrent calendar items (recurrenceId = '.$_REQUEST["recurrenceId"].') deleted');
+	if ($prefs['feature_actionlog'] == 'y') {
+		$logslib->add_action('Removed', 'recurrent event (recurrenceId = '.$_REQUEST["recurrenceId"].')', 'calendar event');
 	}
     $_REQUEST["recurrenceTypeId"] = 0;
     $_REQUEST["calitemId"] = 0;
@@ -360,8 +360,8 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
   } else {
     $calendarlib->drop_item($user, $_REQUEST['drop']);
   }
-	if (empty($user)) {
-		$logslib->add_log('calendar', 'Calendar item/s '.$_REQUEST['calitemId'].' droped');
+	if ($prefs['feature_actionlog'] == 'y') {
+		$logslib->add_action('Removed (dropped)', 'event/s '.$_REQUEST['calitemId'], 'calendar event');
 	}
 	header('Location: tiki-calendar.php');
 	die;
