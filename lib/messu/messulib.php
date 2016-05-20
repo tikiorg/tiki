@@ -266,13 +266,21 @@ class Messu extends TikiLib
 	 * Get the number of messages in the users mailbox or mail archive (from
 	 * which depends on $dbsource)
 	 */
-	function count_messages($user, $dbsource = 'messages')
+	function count_messages($user, $dbsource = 'messages', $unreadOnly=false, $newSince=0)
 	{
-		if ($dbsource == '')
+		if ($dbsource == '') {
 			$dbsource = 'messages';
+		}
 
 		$bindvars = array($user);
 		$query_cant = 'select count(*) from `messu_' . $dbsource . '` where `user`=?';
+		if ($unreadOnly == true) {
+			$query_cant .= ' and `isRead`="n"';
+		}
+		if (!empty($newSince)) {
+			$query_cant .= ' and `date` >= ?';
+			$bindvars[] = $newSince;
+		}
 		$cant = $this->getOne($query_cant, $bindvars);
 		return $cant;
 	}

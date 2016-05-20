@@ -876,6 +876,22 @@ class Services_User_Controller
 		}
 	}
 
+	function action_get_message_count($input) {
+		global $user;
+
+		$sinceDate = null;
+		if ($input->sinceDate->int()) {
+			$sinceDate = $input->sinceDate->int();
+		}
+
+		$unread = null;
+		if ($input->unread->bool()) {
+			$unread = $input->unread->bool();
+		}
+		$messagelib = TikiLib::lib("message");
+		return (int) $messagelib->count_messages($user, 'messages', $unread, $sinceDate);
+	}
+
 	function action_invite_tempuser($input)
 	{
 		Services_Exception_Denied::checkGlobal('admin_users');
