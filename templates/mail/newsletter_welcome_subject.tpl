@@ -1,1 +1,1 @@
-{tr}Welcome to %s at %s{/tr}
+{* $Id$ *}{tr}Welcome to %s at %s{/tr}
