@@ -10,9 +10,30 @@
 User-agent: *
 # Uncomment the following line to indicate to robots __not__ to crawl your site.
 # Disallow: /
-#
+
+#  == Begin SEF URL Section ==
+#remove pages in favour of the SEF counterpart (Enable only after SEF URL’s are enabled in tiki will otherwise prevent indexing.)
+#Disallow: /tiki-forums.php
+#Disallow: /tiki-view_forum.php
+#Disallow: /tiki-index.php
+#Disallow: /tiki-read_article.php
+#Disallow: /tiki-view_blog.php
+#Disallow: /tiki-list_file_gallery.php
+#  == End SEF URL Section ==
+
+#Disallow: /tiki-view_forum_thread.php  #Do Not Enable until bug5204 is fixed. Will prevent indexing. Add to SEF URL Section when bug is fixed.
+
+#This option will filer out multiple views of Structured Wiki Pages
+#only enable if "Open page as structure" is enabled under Admin-Wiki, so the structure is not passed via the url.
+#If existing links in your pages use the structure= in our pages, it may cause problem with Google Crawling the website.
+
+#Disallow: /*structure=* 
+
+
 # This is to slow down any crawling so as not to put pressure on your server
 Crawl-Delay: 30
+
+#filter out crawling that applies in all situations
 Disallow: /addons/
 Disallow: /admin/
 Disallow: /backup/
@@ -70,15 +91,8 @@ Disallow: /tiki-view_cache.php
 Disallow: /tiki-index_raw.php
 Disallow: /tiki-remind_password.php
 Disallow: /tiki-translation-manage
-
-#remove pages in favour of the SEF counterpart (Enable only after SEF URL’s are enabled in tiki will otherwise prevent indexing.)
-#Disallow: /tiki-forums.php
-#Disallow: /tiki-view_forum.php
-#Disallow: /tiki-index.php
-#Disallow: /tiki-read_article.php
-#Disallow: /tiki-view_blog.php
-#Disallow: /tiki-list_file_gallery.php
-#Disallow: /tiki-view_forum_thread.php  #Do Not Enable until forum SEF bug is fixed. Will prevent indexing.
+Disallow: /tiki-*.php?*fullscreen=y*
+Disallow: /*&fullscreen=y*
 
 #filer out multiple views
 Disallow: /*sort_mode=*
@@ -87,21 +101,10 @@ Disallow: /*PHPSESSID=
 Disallow: /*display=print*
 Disallow: /*show_comzone=*
 Disallow: /*page_ref_id=*
-Disallow: /*topics_offset=-1* # to fix a display error, can be removed when bug is fixed 
+Disallow: /*topics_offset=-1* # to fix a display error, can be removed when bug5204 is fixed 
 Disallow: /*show_details=*
 Disallow: /*offset=0*
-
-#This option will filer out multiple views of Structured Wiki Pages
-#only enable if "Open page as structure" is enabled under Admin-Wiki, so the structure is not passed via the url.
-#If existing links in your pages use the structure= in our pages, it may cause problem with Google Crawling the website.
-
-#Disallow: /*structure=* 
-
 
 # Disallow mobile
 Disallow: /tiki-*.php?*mode=mobile*
 Disallow: /*&mode=mobile*
-
-# Disallow fullscreen mode
-Disallow: /tiki-*.php?*fullscreen=y*
-Disallow: /*&fullscreen=y*
