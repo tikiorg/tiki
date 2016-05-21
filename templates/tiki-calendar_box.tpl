@@ -37,6 +37,7 @@
 	{if $show_description eq 'y'}
 		<div class="panel-body">
 			{$celldescription|truncate:250:'...'}
+			Created by:{$celluser}
 		</div>
 		<br>
 	{/if}
