@@ -1,4 +1,4 @@
-{tr}You sent a request with the subject:{/tr} {$subject}
+{* $Id$ *}{tr}You sent a {$prefs.mail_template_custom_text}request with the subject:{/tr} {$subject}
 
 {tr}Use the subject to indicate the operation to apply:{/tr}
 {tr}GET:WikiName to get a wiki page{/tr}
