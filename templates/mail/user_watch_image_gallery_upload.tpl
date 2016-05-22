@@ -1,5 +1,5 @@
 {* $Id$ *}
-{tr}A new file was posted to image gallery:{/tr} {$galleryName}
+{tr}A new file was posted to {$prefs.mail_template_custom_text}image gallery:{/tr} {$galleryName}
 
 {tr}Posted by:{/tr} {$author|username}
 {tr}Date:{/tr} {$mail_date|tiki_short_datetime:"":"n"}
