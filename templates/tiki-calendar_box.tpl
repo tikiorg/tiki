@@ -33,11 +33,11 @@
 	<a href="tiki-calendar_edit_item.php?viewcalitemId={$cellid}" title="{tr}Details{/tr}"{if isset($cellstatus) and $cellstatus eq '2'} style="text-decoration:line-through"{/if}>
 		{$cellname|escape}
 	</a>
-	<br><br>
+	<br>
 	{if $show_description eq 'y'}
 		<div class="panel-body">
-			{$celldescription|truncate:250:'...'}
-			Created by:{$celluser}
+			{$celldescription|truncate:250:'...'}<br/><br/>
+			<strong>Created by:{$celluser}</strong>
 		</div>
 		<br>
 	{/if}
