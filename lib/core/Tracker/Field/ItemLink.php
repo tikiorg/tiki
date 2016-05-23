@@ -126,11 +126,11 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 					),
 					'displayOneItem' => array(
 						'name' => tr('One item per value'),
-						'description' => tr('Display only one random item per label'),
+						'description' => tr('Display only one item for each label (at random, needed for filtering records in a dynamic items list) or all items'),
 						'filter' => 'alpha',
 						'options' => array(
 							'multi' => tr('Displays all the items for a same label with a notation value (itemId)'),
-							'one' => tr('Only one random item for each label'),
+							'one' => tr('Display only one item for each label'),
 						),
 						'legacy_index' => 11,
 					),
