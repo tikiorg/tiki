@@ -200,15 +200,20 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 	function useSelector()
 	{
 		global $prefs;
-		if ($this->getOption('selectMultipleValues')) {
-			return false;
-		}
 
 		if ($prefs['feature_search'] != 'y') {
 			return false;
 		}
 
-		if ('crossSelect' == $this->getOption('preSelectFieldMethod')) {
+		if ($this->getOption('selectMultipleValues')) {
+			return false;
+		}
+
+		if ($this->getOption('displayOneItem') === 'one') {
+			return false;
+		}
+
+		if ($this->getOption('preSelectFieldMethod' === 'crossSelect')) {
 			return false;
 		}
 
@@ -247,7 +252,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 					$message = tr('ItemLink: Field %0 not found for field "%1"', $this->getOption('fieldId'), $this->getConfiguration('permName'));
 					$format = '<div class="alert alert-danger">' . $message . '</div>';
 				} else {
-					$format = '{tracker_field_' . $fieldArray['permName'] . '}';
+					$format = '{tracker_field_' . $fieldArray['permName'] . '} (itemId:{object_id})';
 				}
 			}
 
