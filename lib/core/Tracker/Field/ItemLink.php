@@ -126,11 +126,11 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 					),
 					'displayOneItem' => array(
 						'name' => tr('One item per value'),
-						'description' => tr('Display only one random item per label'),
+						'description' => tr('Display only one item for each label (at random, needed for filtering records in a dynamic items list) or all items'),
 						'filter' => 'alpha',
 						'options' => array(
 							'multi' => tr('Displays all the items for a same label with a notation value (itemId)'),
-							'one' => tr('Only one random item for each label'),
+							'one' => tr('Display only one item for each label'),
 						),
 						'legacy_index' => 11,
 					),
@@ -200,15 +200,20 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 	function useSelector()
 	{
 		global $prefs;
-		if ($this->getOption('selectMultipleValues')) {
-			return false;
-		}
 
 		if ($prefs['feature_search'] != 'y') {
 			return false;
 		}
 
-		if ('crossSelect' == $this->getOption('preSelectFieldMethod')) {
+		if ($this->getOption('selectMultipleValues')) {
+			return false;
+		}
+
+		if ($this->getOption('displayOneItem') === 'one') {
+			return false;
+		}
+
+		if ($this->getOption('preSelectFieldMethod' === 'crossSelect')) {
 			return false;
 		}
 
@@ -247,7 +252,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 					$message = tr('ItemLink: Field %0 not found for field "%1"', $this->getOption('fieldId'), $this->getConfiguration('permName'));
 					$format = '<div class="alert alert-danger">' . $message . '</div>';
 				} else {
-					$format = '{tracker_field_' . $fieldArray['permName'] . '}';
+					$format = '{tracker_field_' . $fieldArray['permName'] . '} (itemId:{object_id})';
 				}
 			}
 

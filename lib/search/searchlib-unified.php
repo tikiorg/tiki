@@ -890,6 +890,10 @@ class UnifiedSearchLib
 			$this->initQuery($query);
 		}
 
+		if (!is_array($filter)) {
+			throw new Exception('Invalid filter type provided in query. It must be an array.');
+		}
+
 		if (isset($filter['type']) && $filter['type']) {
 			$query->filterType($filter['type']);
 		}

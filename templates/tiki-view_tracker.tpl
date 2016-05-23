@@ -1,5 +1,5 @@
 {* $Id$ *}
-{title url="tiki-view_tracker.php?trackerId=$trackerId" adm="trackers"}{$tracker_info.name}{/title}
+{title url=$trackerId|sefurl:'tracker' adm="trackers"}{$tracker_info.name}{/title}
 {if !empty($tracker_info.description)}
 	{if $tracker_info.descriptionIsParsed eq 'y'}
 		<div class="description help-block">{wiki}{$tracker_info.description}{/wiki}</div>
