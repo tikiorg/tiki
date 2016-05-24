@@ -134,6 +134,7 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 			     && $key != 'title'
 			     && $key != 'title_initial'
 			     && $key != 'title_firstword'
+			     && $key != 'description'
 				 && ! empty($value) // Skip empty
 				 && ! is_array($value) // Skip arrays, multivalues fields are not human readable
 				 && ! preg_match('/token[a-z]{8,}/', $value)	// tokens
