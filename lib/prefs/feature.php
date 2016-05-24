@@ -1499,7 +1499,6 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 			'tags' => array('basic'),
-			'tags' => array('basic'),
 		),
 		'feature_blog_rankings' => array(
 			'name' => tra('Rankings'),
