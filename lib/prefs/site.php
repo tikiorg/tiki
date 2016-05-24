@@ -171,6 +171,17 @@ function prefs_site_list()
 				'site_piwik_analytics_server_url',
 			),
 		),
+		'site_piwik_code' => array(
+			'name' => tra('Piwik JavaScript Tracking Code'),
+			'description' => tra('Code placed on every page of your website before the </body> tag'),
+			'type' => 'textarea',
+			'size' => '6',
+			'filter' => 'rawhtml_unsafe',
+			'default' => '',
+			'dependencies' => array(
+				'site_piwik_analytics_server_url',
+			),
+		),
 		'site_google_credentials' => array(
 			'name' => tra('Google Authentication Credentials File'),
 			'description' => tr('Path to you Google Service Account credentials JSON file.'),
