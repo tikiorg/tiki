@@ -6,7 +6,7 @@
 			{foreach from=$sents item=sent}
 				<li>{$sent|escape}</li>
 			{/foreach}
-		<ul>
+		</ul>
 	{/remarksbox}
 {/if}
 {if !empty($mail_error)}
@@ -35,62 +35,59 @@
 			<p><input name="sendmailload{{$ipluginmail}}" type="submit" class="btn btn-default" value="{$mail_label_name|escape}" /></p>
 			<div style="display: none;">
 		{/if}
-		<div id="wikiplugin_mail" class="col-md-6 centered">
-			<form method="post">
+		<div id="wikiplugin_mail" class="">
+			<form method="post" class="form-horizontal">
 				{if $params.showuserdd eq 'y' or $params.showrealnamedd eq 'y'}
-					<div class="row">
-						<label for="mail_user_dd{$ipluginmail}">{tr}Send to users:{/tr}</label>
-					</div>
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="mail_user_dd{$ipluginmail}">{tr}Send to users:{/tr}</label>
 				{/if}
 
 				{if $params.showuserdd eq 'y'}
-					<div class="row">
-						<select name="mail_user_dd[]" id="mail_user_dd{$ipluginmail}" multiple="multiple" size="8">
-							<option value="" />
-							{foreach from=$users item=muser}
-								<option value="{$muser.userId}"{if in_array($muser.userId, $mail_user_dd)} selected="selected"{/if}>{$muser.login|escape}</option>
-							{/foreach}
-						</select>
-					</div>
-					<div class="row">
-						{remarksbox type='tip' title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
+						<div class="col-sm-8 margin-bottom-sm">
+							<select class="form-control" name="mail_user_dd[]" id="mail_user_dd{$ipluginmail}" multiple="multiple">
+								<option value="" />
+								{foreach from=$users item=muser}
+									<option value="{$muser.userId}"{if in_array($muser.userId, $mail_user_dd)} selected="selected"{/if}>{$muser.login|escape}</option>
+								{/foreach}
+							</select>
+						</div>
+						<div class="form-group">
+							{remarksbox type='tip' title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
+						</div>
 					</div>
 				{/if}
 
 				{if $params.showrealnamedd eq 'y'}
-					<div class="row">
-						<select name="mail_user_dd[]" id="mail_user_dd{$ipluginmail}" multiple="multiple" size="8">
-							<option value="" />
-							{foreach from=$names item=muser}
-								<option value="{$muser.userId}"{if in_array($muser.userId, $mail_user_dd)} selected="selected"{/if}>{$muser.login|username:true:false}</option>
-							{/foreach}
-						</select>
-					</div>
-					<div class="row">
-						{remarksbox type='tip' title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
+						<div class="col-sm-8">
+							<select name="mail_user_dd[]" id="mail_user_dd{$ipluginmail}" multiple="multiple" class="form-control">
+								<option value="" />
+								{foreach from=$names item=muser}
+									<option value="{$muser.userId}"{if in_array($muser.userId, $mail_user_dd)} selected="selected"{/if}>{$muser.login|username:true:false}</option>
+								{/foreach}
+							</select>
+						</div>
+						<div class="form-group">
+							{remarksbox type='tip' title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple options{/tr}{/remarksbox}
+						</div>
 					</div>
 				{/if}
 
 				{if $params.showuser eq 'y'}
-					<div class="row">
-						<label for="mail_user{$ipluginmail}">{tr}Send to:{/tr}</label>
-					</div>
-				{/if}
-				{if $params.showuser eq 'y'}
-					<div class="row">
-						<input type="text" size="80" name="mail_user" value="{$mail_user}">
-						{remarksbox type='tip' title="{tr}Tip{/tr}"}{tr}Email address (if more than one, separated by ","){/tr}{/remarksbox}
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="mail_user{$ipluginmail}">{tr}Send to:{/tr}</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control margin-bottom-sm" id="mail_user" name="mail_user" value="{$mail_user}">
+							{remarksbox type='tip' title="{tr}Tip{/tr}"}{tr}Email address (if more than one, separated by ","){/tr}{/remarksbox}
+						</div>
 					</div>
 				{/if}
 				{if $params.showgroupdd eq 'y'}
-					<div class="row">
-						<label for="mail_group_dd{$ipluginmail}">{tr}Send to groups:{/tr}</label>
-					</div>
-					<div class="row">
+					<div class="form-group">
+						<label class="col-sm-4 control-label" for="mail_group_dd{$ipluginmail}">{tr}Send to groups:{/tr}</label>
 						{foreach from=$groups key=groupname item=gps name=mailgroups}
-							<div class="wpmailgroup" style="vertical-align: top;">
+							<div class="wpmailgroup col-sm-8 margin-bottom-sm">
 								{if !empty($groupname)}{$groupname|escape}{/if}
-								<select name="mail_group_dd[][]" id="mail_group_dd{$ipluginmail}" multiple="multiple" size="8">
+								<select name="mail_group_dd[][]" class="form-control" id="mail_group_dd{$ipluginmail}" multiple="multiple">
 									<option value="" />
 									{foreach from=$gps item=mgroup}
 										{if $mgroup eq 'Anonymous'}
@@ -107,24 +104,30 @@
 					</div>
 				{/if}
 
-				<div class="row">
-					<label for="mail_subject{$ipluginmail}">{tr}Subject:{/tr}</label><br />
-					<input type="text" id="mail_subject{$ipluginmail}" name="mail_subject" value="{$mail_subject}" size="80">
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="mail_subject{$ipluginmail}">{tr}Subject:{/tr}</label>
+					<div class="col-sm-8">
+						<input class="form-control" type="text" id="mail_subject{$ipluginmail}" name="mail_subject" value="{$mail_subject}">
+					</div>
 				</div>
 
-				<div class="row">
-					<label for="mail_mess{$ipluginmail}">{tr}Message:{/tr}</label><br />
-					<textarea id="mail_mess{$ipluginmail}" name="mail_mess" value="{$mail_mess}" rows="20" cols="80"></textarea>
+				<div class="form-group">
+					<label class="col-sm-4 control-label" for="mail_mess{$ipluginmail}">{tr}Message:{/tr}</label>
+					<div class="col-sm-8">
+						<textarea class="form-control" id="mail_mess{$ipluginmail}" name="mail_mess" value="{$mail_mess}"></textarea>
+					</div>
 				</div>
 
-				<div class="row">
+				<div class="form-group text-center margin-bottom-sm">
 					{if $bypass_preview != 'y'}
 						<input type="submit" class="btn btn-default" name="mail_preview{$ipluginmail}" value="{tr}Preview Mail{/tr}">
 					{else}
 						<input type="submit" class="btn btn-default" value="{tr}Send Mail{/tr}">
 						<input type="hidden" name="mail_send{$ipluginmail}" value="{tr}Send Mail{/tr}">
 					{/if}
-					{remarksbox type='info'}{tr}You will receive a copy of the email yourself. Please give it a few minutes.{/tr}{/remarksbox}
+				</div>
+				<div class="col-sm-8 col-sm-push-2">
+						{remarksbox type='info'}{tr}You will receive a copy of the email yourself. Please give it a few minutes.{/tr}{/remarksbox}
 				</div>
 			</form>
 		</div>
