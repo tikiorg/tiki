@@ -121,26 +121,32 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 	function highlight($content)
 	{
 		if ($this->highlightHelper) {
-			// Build the content string based on heuristics
+
 			$text = '';
-			foreach ($content as $key => $value) {
-				if ($key != 'object_type' // Skip internal values
-				 && $key != 'object_id'
-				 && $key != 'parent_object_type'
-				 && $key != 'parent_object_id'
-				 && $key != 'relevance'
-				 && $key != 'score'
-				 && $key != 'url'
-			     && $key != 'title'
-			     && $key != 'title_initial'
-			     && $key != 'title_firstword'
-				 && ! empty($value) // Skip empty
-				 && ! is_array($value) // Skip arrays, multivalues fields are not human readable
-				 && ! preg_match('/token[a-z]{8,}/', $value)	// tokens
-				 && ! preg_match('/\d{4}-\d{2}-\d{2} \d{2}\:\d{2}\:\d{2}/', $value)	// dates
-				 && ! preg_match('/^[\w-]+$/', $value)) { // Skip anything that looks like a single token
-					$text .= "\n$value";
+			
+			if (empty($content['contents'])) {
+				// Build the content string based on heuristics
+				foreach ($content as $key => $value) {
+					if ($key != 'object_type' // Skip internal values
+						&& $key != 'object_id'
+						&& $key != 'parent_object_type'
+						&& $key != 'parent_object_id'
+						&& $key != 'relevance'
+						&& $key != 'score'
+						&& $key != 'url'
+						&& $key != 'title'
+						&& $key != 'title_initial'
+						&& $key != 'title_firstword'
+						&& !empty($value) // Skip empty
+						&& !is_array($value) // Skip arrays, multivalues fields are not human readable
+						&& !preg_match('/token[a-z]{8,}/', $value)    // tokens
+						&& !preg_match('/\d{4}-\d{2}-\d{2} \d{2}\:\d{2}\:\d{2}/', $value)    // dates
+						&& !preg_match('/^[\w-]+$/', $value)) { // Skip anything that looks like a single token
+						$text .= "\n$value";
+					}
 				}
+			} else {
+				$text = $content['contents'];
 			}
 
 			if (! empty($text)) {
