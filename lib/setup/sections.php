@@ -188,7 +188,7 @@ if ( ! empty($section_class) ) {
 
 function current_object()
 {
-	global $section, $sections, $cat_type, $cat_objid, $postId;
+	global $section, $sections, $cat_type, $cat_objid, $postId, $prefs;
 
 	if ($section == 'blogs' && !empty($postId)) { // blog post check the category on the blog - but freetags are on blog post
 		return array(
@@ -240,6 +240,10 @@ function current_object()
 				$k = $_REQUEST[ $info['key'] ][0];
 			} else {
 				$k = $_REQUEST[ $info['key'] ];
+				// when using wiki_url_scheme the page request var is the page slug, not the page/object name
+				if ($prefs['wiki_url_scheme'] !== 'urlencode' && $info['objectType'] === 'wiki page') {
+					$k = TikiLib::lib('wiki')->get_page_by_slug($k);
+				}
 			}
 			return array(
 				'type' => $info['objectType'],
