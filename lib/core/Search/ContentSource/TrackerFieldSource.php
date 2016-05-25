@@ -39,6 +39,7 @@ class Search_ContentSource_TrackerFieldSource implements Search_ContentSource_In
 			'description' => $typeFactory->plaintext($field['description']),
 			'tracker_id' => $typeFactory->identifier($field['trackerId']),
 			'tracker_name' => $typeFactory->sortable($trackername),
+			'position' => $typeFactory->numeric($field['position']),
 
 			'searchable' => $typeFactory->identifier('n'),
 

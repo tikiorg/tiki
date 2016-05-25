@@ -64,6 +64,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'profile_reference' => 'tracker_field',
 						'parent' => 'trackerId',
 						'parentkey' => 'tracker_id',
+						'sort_order' => 'position_nasc',
 					),
 					'status' => array(
 						'name' => tr('Status Filter'),

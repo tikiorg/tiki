@@ -345,6 +345,7 @@ class Services_Tracker_Controller
 				$param['selector_type'] = $lib->getSelectorType($param['profile_reference']);
 				$param['parent'] = isset($param['parent']) ? "#option-{$param['parent']}" : null;
 				$param['parentkey'] = isset($param['parentkey']) ? $param['parentkey'] : null;
+				$param['sort_order'] = isset($param['sort_order']) ? $param['sort_order'] : null;
 			} else {
 				$param['selector_type'] = null;
 			}

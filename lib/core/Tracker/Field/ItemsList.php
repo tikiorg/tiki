@@ -53,6 +53,9 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract implements Tracker_
 						'separator' => '|',
 						'legacy_index' => 3,
 						'profile_reference' => 'tracker_field',
+						'parent' => 'trackerId',
+						'parentkey' => 'tracker_id',
+						'sort_order' => 'position_nasc',
 					),
 					'linkToItems' => array(
 						'name' => tr('Display'),
