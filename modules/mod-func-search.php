@@ -145,7 +145,7 @@ function module_search($mod_reference, $smod_params) 	// modifies $smod_params s
 		return;
 	} else if ($prefs['feature_search'] == 'n' && $smod_params['tiki_search'] == 'y') {
 		$smod_params['tiki_search'] = 'n';
-	} else if ($prefs['feature_search_fulltext'] == 'n' && $smod_params['tiki_search'] != 'y') {
+	} else if ($prefs['feature_search_fulltext'] == 'n' && (empty($smod_params['tiki_search']) || $smod_params['tiki_search'] != 'y')) {
 		$smod_params['tiki_search'] = 'y';
 	}
 
