@@ -22,7 +22,8 @@ class Search_MySql_TypeFactory implements Search_Type_Factory_Interface
 		if (is_numeric($value)) {
 			return new Search_Type_Timestamp(gmdate('Y-m-d H:i:s', $value));
 		} else {
-			return new Search_Type_Timestamp('0000-00-00 00:00:00');
+			// if mysql sql_mode is set to NO_ZERO_IN_DATE or NO_ZERO_DATE then'0000-00-00 00:00:00' produces errors
+			return null;
 		}
 
 	}
