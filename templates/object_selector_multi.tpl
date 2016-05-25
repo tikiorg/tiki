@@ -17,6 +17,7 @@
 	{if $object_selector_multi.parent}data-parent="{$object_selector_multi.parent|escape}"{/if}
 	{if $object_selector_multi.parentkey}data-parentkey="{$object_selector_multi.parentkey|escape}"{/if}
 	{if $object_selector_multi.format}data-format="{$object_selector_multi.format|escape}"{/if}
+	{if $object_selector_multi.sort}data-sort="{$object_selector_multi.sort|escape}"{/if}
 	data-filters="{$object_selector_multi.filter|escape}"
 	data-threshold="{$object_selector_multi.threshold|default:$prefs.tiki_object_selector_threshold|escape}"
 >{"\n"|implode:$object_selector_multi.current_selection}</textarea>

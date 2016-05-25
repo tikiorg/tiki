@@ -485,12 +485,12 @@
 								</div>
 							</div>
 						</div>
-						{if ! ( $prefs.auth_method eq 'ldap' and ( $prefs.ldap_create_user_tiki eq 'n' or $prefs.ldap_skip_admin eq 'y' ) and $prefs.ldap_create_user_ldap eq 'n' )}
+						{if $prefs.generate_password eq 'y' and not ( $prefs.auth_method eq 'ldap' and ( $prefs.ldap_create_user_tiki eq 'n' or $prefs.ldap_skip_admin eq 'y' ) and $prefs.ldap_create_user_ldap eq 'n')}
 							<div class="form-group">
-								<div class="col-sm-3 col-sm-offset-3 col-md-2 col-md-offset-2">
+								<div class="col-sm-3 col-sm-offset-3 col-md-3 col-md-offset-2">
 									<span id="genPass">{button href="#" _text="{tr}Generate a password{/tr}"}</span>
 								</div>
-								<div class="col-sm-3 col-md-2">
+								<div class="col-sm-3 col-md-3">
 									<input id='genepass' class="form-control" name="genepass" type="text" tabindex="0" style="display:none">
 								</div>
 							</div>
