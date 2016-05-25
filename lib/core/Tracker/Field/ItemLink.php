@@ -332,20 +332,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		$smarty = TikiLib::lib('smarty');
 
 		$item = $this->getValue();
-
-		if (! is_array($item)) {
-			// single value item field
-			$items = array($item);
-		} else {
-			// item field has multiple values
-			$items = $item;
-		}
-
-		$labels = array();
-		foreach ($items as $i) {
-			$labels[] = $this->getItemLabel($i, $context);
-		}
-		$label = implode(', ', $labels);
+		$label = $this->renderInnerOutput($context);
 
 		if ($item && !is_array($item) && $context['list_mode'] !== 'csv' && $this->getOption('fieldId')) {
 			$smarty->loadPlugin('smarty_function_object_link');
@@ -364,7 +351,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			} else if ($this->getOption('linkToItem')) {
 				return smarty_function_object_link(array('type' => 'trackeritem',	'id' => $item,	'title' => $label), $smarty);
 			} else {
-				return $label;
+				return parent::renderOutput($context);
 			}
 		} elseif ($context['list_mode'] == 'csv' && $item) {
 			if ($label) {
@@ -375,6 +362,27 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		} elseif ($label) {
 			return $label;
 		}
+	}
+
+	function renderInnerOutput($context = []) {
+
+		$item = $this->getValue();
+
+		if (! is_array($item)) {
+			// single value item field
+			$items = array($item);
+		} else {
+			// item field has multiple values
+			$items = $item;
+		}
+
+		$labels = array();
+		foreach ($items as $i) {
+			$labels[] = $this->getItemLabel($i, $context);
+		}
+		$label = implode(', ', $labels);
+
+		return $label;
 	}
 
 	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
