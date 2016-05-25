@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1cb87bb858afca8a1145dee39fb4bf65",
-    "content-hash": "055d0f9ee0e2ab563d1d76e953846726",
+    "hash": "9c88302946dd17be14daca8af05ca249",
+    "content-hash": "2fd9d11f56e65fbc89498a2184f0c997",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -1339,17 +1339,17 @@
         },
         {
             "name": "sorich87/bootstrap-tour",
-            "version": "dev-master",
+            "version": "v0.10.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sorich87/bootstrap-tour.git",
-                "reference": "b25a72efa4093c4cecb33c43538f825713108bbe"
+                "reference": "1ea8bbc5c0ed0e0fd7c0d7f786747a61677639ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/sorich87-bootstrap-tour-b25a72efa4093c4cecb33c43538f825713108bbe-zip-b3a8eb.zip",
-                "reference": "b25a72efa4093c4cecb33c43538f825713108bbe",
-                "shasum": "cdb35bc91a3e6e41c4fd0a4767f757a52cd43538"
+                "url": "https://composer.tiki.org/dist/sorich87-bootstrap-tour-1ea8bbc5c0ed0e0fd7c0d7f786747a61677639ce-zip-017d85.zip",
+                "reference": "1ea8bbc5c0ed0e0fd7c0d7f786747a61677639ce",
+                "shasum": "3e8592afeb348813bf7c9fe2cc5d5ce05ae54bd1"
             },
             "type": "component",
             "notification-url": "https://packagist.org/downloads/",
@@ -1362,7 +1362,7 @@
                 "bootstrap",
                 "tour"
             ],
-            "time": "2016-05-16 16:37:04"
+            "time": "2016-02-12 11:59:46"
         },
         {
             "name": "svg-edit/svg-edit",
@@ -4609,7 +4609,6 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "jcapture-applet/jcapture-applet": 20,
-        "sorich87/bootstrap-tour": 20,
         "zendframework/zendsearch": 5,
         "bafs/testify": 20
     },
