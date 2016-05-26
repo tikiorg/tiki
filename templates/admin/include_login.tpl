@@ -31,12 +31,6 @@
 				<legend>{tr}Registration{/tr} &amp; {tr}Log in{/tr}</legend>
 				{preference name=allowRegister}
 				<div class="adminoptionboxchild" id="allowRegister_childcontainer">
-					<div class="col-sm-8 col-sm-offset-4">
-						{remarksbox type="note" title="{tr}Note{/tr}" close="n"}
-							{tr}By default anonymous must enter anti-bot code (CAPTCHA).{/tr}
-							{tr}You can change this setting in the Admin, <a href="tiki-admin.php?page=security#content_admin1-2">Security section</a>{/tr}
-						{/remarksbox}
-					</div>
 					{preference name=validateUsers}
 					{preference name=validateEmail}
 					{preference name=validateRegistration}
@@ -61,6 +55,26 @@
 					{/if}
 					{preference name=generate_password}
 					{preference name=http_referer_registration_check}
+					<fieldset>
+						<legend>{tr}CAPTCHA{/tr}</legend>
+						{preference name=feature_antibot}
+						<div class="adminoptionboxchild" id="feature_antibot_childcontainer">
+							{preference name=captcha_wordLen}
+							{preference name=captcha_width}
+							{preference name=captcha_noise}
+							{preference name=recaptcha_enabled}
+							<div class="adminoptionboxchild" id="recaptcha_enabled_childcontainer">
+								{preference name=recaptcha_pubkey}
+								{preference name=recaptcha_privkey}
+								{preference name=recaptcha_theme}
+								{preference name=recaptcha_version}
+							</div>
+							{preference name=captcha_questions_active}
+							<div class="adminoptionboxchild" id="captcha_questions_active_childcontainer">
+								{preference name=captcha_questions}
+							</div>
+					</fieldset>
+					<legend>{tr}Group and Tracker login setting{/tr}</legend>
 					<div class="adminoptionbox form-group">
 						<label for="registration_choices" class="col-sm-4 control-label">{tr}Users can select a group to join at registration:{/tr}</label>
 						<div class="col-sm-8 adminoptionlabel">
@@ -99,6 +113,7 @@
 					{preference name=user_tracker_auto_assign_item_field}
 				</div>
 				{preference name=groupTracker}
+				<legend>{tr}Other login setting{/tr}</legend>
 				{preference name=email_due}
 				{preference name=unsuccessful_logins}
 				{preference name=unsuccessful_logins_invalid}
