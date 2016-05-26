@@ -229,9 +229,39 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
 	{
 		$baseKey = $this->getBaseKey();
+
+		$value = $this->getValue();
+
+		if ($this->getOption('showRealname')) {
+			TikiLib::lib('smarty')->loadPlugin('smarty_modifier_username');
+			$realName = smarty_modifier_username($value);
+		} else {
+			$realName = $value;	// add the _text option even if not using showRealname so we don't need to check
+		}
+
 		return array(
 			$baseKey => $typeFactory->identifier($this->getValue()),
+			"{$baseKey}_text" => $typeFactory->sortable($realName),
 		);
+
+	}
+
+	/**
+	 * tell the indexer about the real name _text field if using showRealname
+	 *
+	 * @return array
+	 */
+	function getGlobalFields()
+	{
+		$baseKey = $this->getBaseKey();
+
+		$data = [$baseKey => true];
+
+		if ($this->getOption('showRealname')) {
+			$data["{$baseKey}_text"] = true;
+		}
+
+		return $data;
 	}
 
 	/**
