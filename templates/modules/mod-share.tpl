@@ -57,7 +57,7 @@
 
 	{if (isset($module_params.linkedin) and $module_params.linkedin neq 'n')}
 		<div class="linkedin-root mod-share-item">
-			<script src="http://platform.linkedin.com/in.js" type="text/javascript"></script>
+			<script src="https://platform.linkedin.com/in.js" type="text/javascript"></script>
 			<script type="IN/Share"{$li_data_attributes}></script>
 		</div>
 	{/if}
