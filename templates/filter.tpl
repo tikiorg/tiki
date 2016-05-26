@@ -52,10 +52,10 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label" for="filter-categories">{tr}Categories{/tr}</label>
 				<div class="col-sm-4">
-					<a class="category-lookup btn btn-default" href="#">{tr}Lookup{/tr}</a>
+					<a class="category-lookup btn btn-default margin-bottom-sm" href="#">{tr}Lookup{/tr}</a>
 					<input type="text" name="filter~categories" id="filter-categories" class="category-wizard form-control" value="{$filter_categories|escape}">
 				</div>
-				<div class="col-sm-2 checkbox">
+				<div class="col-sm-5 checkbox">
 					<label for="filter-deep">
 						<input type="checkbox" name="filter~deep" id="filter-deep" {if $filter_deep} checked="checked"{/if}> {tr}Deep search{/tr}
 					</label>
