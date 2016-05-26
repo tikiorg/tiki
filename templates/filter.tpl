@@ -33,7 +33,7 @@
 					<select name="filter~type" id="filter-type" class="form-control">
 						<option value="">{tr}Any{/tr}</option>
 						{foreach from=$filter_types key=k item=t}
-							<option value="{$k|escape}"{if $t eq $filter_type} selected="selected"{/if}>{$t|escape}</option>
+							<option value="{$k|escape}"{if $k eq $filter_type} selected="selected"{/if}>{$t|escape}</option>
 						{/foreach}
 					</select>
 				</div>
