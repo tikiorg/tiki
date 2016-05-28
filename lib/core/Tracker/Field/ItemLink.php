@@ -66,6 +66,11 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'parentkey' => 'tracker_id',
 						'sort_order' => 'position_nasc',
 					),
+					'displayFieldsListFormat' => array(
+						'name' => tr('Format for Customising Multiple Fields'),
+						'description' => tr('Uses the translate function to replace %0 etc with the field values. E.g. "%0 any text %1"'),
+						'filter' => 'text',
+					),
 					'status' => array(
 						'name' => tr('Status Filter'),
 						'description' => tr('Limit the available items to a selected set'),
@@ -246,13 +251,18 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						$field = '{tracker_field_' . $fieldArray['permName'] . '}';
 					}
 				});
-				$format = implode(' ', $displayFieldsListArray);
+				if ($format = $this->getOption('displayFieldsListFormat')) {
+					$format = tra($format, '', false, $displayFieldsListArray);
+
+				} else {
+					$format = implode(' ', $displayFieldsListArray);
+				}
 			} else {
 				$fieldArray = $definition->getField($this->getOption('fieldId'));
 				if (! $fieldArray) {
 					$message = tr('ItemLink: Field %0 not found for field "%1"', $this->getOption('fieldId'), $this->getConfiguration('permName'));
 					$format = '<div class="alert alert-danger">' . $message . '</div>';
-				} else {
+				} else if (! $format = $this->getOption('displayFieldsListFormat')) {
 					$format = '{tracker_field_' . $fieldArray['permName'] . '} (itemId:{object_id})';
 				}
 			}
@@ -513,7 +523,15 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 
 			if (count($parts)) {
-				$label = $trklib->concat_item_from_fieldslist($trackerId, $itemId, $parts, $status, ' ', $context['list_mode'], $this->getOption('linkToItem'));
+				$label = $trklib->concat_item_from_fieldslist($trackerId,
+					$itemId,
+					$parts,
+					$status,
+					' ',
+					$context['list_mode'],
+					$this->getOption('linkToItem'),
+					$this->getOption('displayFieldsListFormat')
+				);
 			} else {
 				$label = TikiLib::lib('object')->get_title('trackeritem', $itemId);
 			}

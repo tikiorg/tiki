@@ -757,9 +757,10 @@ class TrackerLib extends TikiLib
 		}
 	}
 
-	public function concat_item_from_fieldslist($trackerId,$itemId,$fieldsId,$status='o',$separator=' ',$list_mode='', $strip_tags = false)
+	public function concat_item_from_fieldslist($trackerId, $itemId, $fieldsId, $status='o', $separator=' ', $list_mode='', $strip_tags = false, $format= '')
 	{
 		$res='';
+		$values = [];
 		if (is_string($fieldsId)) {
 			$fieldsId = preg_split('/\|/', $fieldsId, -1, PREG_SPLIT_NO_EMPTY);
 		}
@@ -768,11 +769,20 @@ class TrackerLib extends TikiLib
 			$myfield = $definition->getField($field);
 
 			$myfield['value'] = $this->get_item_value($trackerId, $itemId, $field);
+			$value = trim($this->field_render_value(array('field' => $myfield, 'process' => 'y', 'list_mode' => $list_mode)));
 
-			if ($k > 0) {
-				$res .= $separator;
+			if ($format) {
+				$values[] = $value;
+			} else {
+				if ($k > 0) {
+					$res .= $separator;
+				}
+				$res .= $value;
 			}
-			$res .= trim($this->field_render_value(array('field' => $myfield, 'process' => 'y', 'list_mode' => $list_mode)));
+		}
+		if ($format) {
+			// use the underlying translation function to replace the %0 etc placeholders (and translate if necessary)
+			$res = tra($format, '', false, $values);
 		}
 		if ($strip_tags) {
 			$res = strip_tags($res);
