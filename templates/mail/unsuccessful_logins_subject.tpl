@@ -1,1 +1,1 @@
-{tr}Confirm your account at %s{/tr}
+{* $Id$ *}{tr}Confirm your {$prefs.mail_template_custom_text}account at %s{/tr}
