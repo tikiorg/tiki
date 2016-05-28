@@ -1,4 +1,4 @@
-{$mail_data.name}
+{* $Id$ *}{$prefs.mail_template_custom_text}{$mail_data.name}
 ---
 
 {$mail_data.description}
