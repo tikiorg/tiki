@@ -1,1 +1,1 @@
-{tr}Wiki page renamed{/tr}
+{* $Id$ *}{$prefs.mail_template_custom_text}{tr}Wiki page renamed{/tr}
