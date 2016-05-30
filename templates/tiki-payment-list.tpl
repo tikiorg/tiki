@@ -13,7 +13,7 @@
 			<td class="id">{$payment.paymentRequestId}</td>
 			<td class="text">{if $payment.paymentRequestId eq $smarty.request.invoice}<strong>{$payment.description|escape}</strong>{else}{self_link invoice=$payment.paymentRequestId}{$payment.description|escape}{/self_link}{/if}</td>
 			<td class="integer">{$payment.amount|escape}&nbsp;{$payment.currency|escape}</td>
-			<td class="date">{$payment.request_date|tiki_short_date|escape}</td>
+			<td class="date">{if $prefs.jquery_timeago eq 'y'}{$payment.request_date|tiki_short_date}{else}{$payment.request_date|tiki_short_date|escape}{/if}</td>
 			{if $tiki_p_admin eq 'y'}<td class="text">{$payment.user|userlink}</td>{/if}
 			<td class="action">
 				{self_link invoice=$payment.paymentRequestId _icon_name='textfile' _class=tips _title=":{tr}View payment request{/tr}"}
