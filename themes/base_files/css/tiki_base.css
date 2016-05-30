@@ -3030,6 +3030,9 @@ body.tiki.navbar-padding {
   margin-bottom: 0;
   min-height: 32px;
 }
+#topbar_modules_social {
+  float: left;
+}
 .img-thumbnail.media-object {
   max-width: none;
 }
