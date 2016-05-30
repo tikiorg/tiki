@@ -259,6 +259,11 @@
 														{$libeg}<a href="{bootstrap_modal controller=user action=manage_groups checked=$username all_groups=$all_groups offset=$offset sort_mode=$sort_mode numrows=$numrows}">
 															{icon name="group" _menu_text='y' _menu_icon='y' alt="{tr}Add or remove from a group{/tr}"}
 														</a>{$liend}
+														{$libeg}
+															<a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Edit group expiry{/tr}">
+																{icon name='time'  _menu_text='y' _menu_icon='y' alt='{tr}Edit group expiry{/tr}'}
+															</a>
+														{$liend}
 														{$libeg}<a href="{query _type='relative' user=$users[user].userId}">
 															{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit account settings{/tr}"}
 														</a>{$liend}
