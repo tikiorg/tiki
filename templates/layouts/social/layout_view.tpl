@@ -77,7 +77,6 @@
 				</div> {* navbar-header *}
 
 				<div class="collapse navbar-collapse" id="navbar-collapse-social">
-						{modulelist zone="topbar" id="topbar_modules_social"}
 
 						<ul class="nav navbar-nav navbar-right">
 {if $user}
@@ -113,6 +112,7 @@
 	{/if}
 {/if}
 						</ul>
+					{modulelist zone="topbar" id="topbar_modules_social" style="float:left"}
 				</div> {* navbar-collapse-social *}
 			</div> {* container *}
 

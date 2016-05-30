@@ -57,6 +57,11 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract implements Tracker_
 						'parentkey' => 'tracker_id',
 						'sort_order' => 'position_nasc',
 					),
+					'displayFieldIdThereFormat' => array(
+						'name' => tr('Format for customising fields to display'),
+						'description' => tr('Uses the translate function to replace %0 etc with the field values. E.g. "%0 any text %1"'),
+						'filter' => 'text',
+					),
 					'linkToItems' => array(
 						'name' => tr('Display'),
 						'description' => tr('How the link to the items should be rendered'),
@@ -313,7 +318,16 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract implements Tracker_
 		$trklib = TikiLib::lib('trk');
 		foreach ($items as $itemId) {
 			if ($displayFields && $displayFields[0]) {
-				$list[$itemId] = $trklib->concat_item_from_fieldslist($trackerId, $itemId, $displayFields, $status, ' ', $context['list_mode'], $this->getOption('linkToItems'));
+				$list[$itemId] = $trklib->concat_item_from_fieldslist(
+					$trackerId,
+					$itemId,
+					$displayFields,
+					$status,
+					' ',
+					$context['list_mode'],
+					$this->getOption('linkToItems'),
+					$this->getOption('displayFieldIdThereFormat')
+				);
 			} else {
 				$list[$itemId] = $trklib->get_isMain_value($trackerId, $itemId);
 			}
