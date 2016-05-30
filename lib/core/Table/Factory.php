@@ -30,7 +30,7 @@ class Table_Factory
 	 *      the various sections of jQuery code and then put the sections together to create the final complete code
 	 * The Table_Manager class then loads the complete jQuery code into the header
 	 *
-	 * @param        $name			must correspond to a file in Table/Settings
+	 * @param string $name			must correspond to a file in Table/Settings
 	 * @param null   $settings		optional user-defined settings array which will override defaults
 	 * 									- can be partial, ie only part of the array defined
 	 * @param string $type			used along with $name to tell this function which class to call
