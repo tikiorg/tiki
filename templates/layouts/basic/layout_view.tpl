@@ -27,7 +27,7 @@
                 {if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
                     {modulelist zone=pagetop}
                 {/if}
-                {error_report}
+                {feedback}
                 <div class="pull-right">
                     {block name=quicknav}{/block}
                 </div>
@@ -43,7 +43,7 @@
                 {if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
                     {modulelist zone=pagetop}
                 {/if}
-                {error_report}
+                {feedback}
                 <div class="pull-right">
                     {block name=quicknav}{/block}
                 </div>
@@ -62,7 +62,7 @@
                 {if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
                     {modulelist zone=pagetop}
                 {/if}
-                {error_report}
+                {feedback}
                 <div class="pull-right">
                     {block name=quicknav}{/block}
                 </div>
@@ -81,7 +81,7 @@
                 {if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
                     {modulelist zone=pagetop}
                 {/if}
-                {error_report}
+                {feedback}
                 <div class="pull-right">
                     {block name=quicknav}{/block}
                 </div>

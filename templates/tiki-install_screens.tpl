@@ -5,7 +5,6 @@
 	</head>
 	<body class="tiki fixed_width">
 
-
 {$mid_data}
 
 
