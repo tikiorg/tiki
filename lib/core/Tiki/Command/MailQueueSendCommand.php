@@ -43,7 +43,7 @@ class MailQueueSendCommand extends Command
             try {
                 tiki_send_email($mail);
                 $title = 'mail';
-            } catch (Zend\Mail\Exception\ExceptionInterface $e) {
+            } catch (\Zend\Mail\Exception\ExceptionInterface $e) {
                 $title = 'mail error';
             }
 
