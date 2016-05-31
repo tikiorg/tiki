@@ -142,15 +142,6 @@ function update_button_install() {
 </form>
 {/if}
 <br>
-{if $tikifeedback}
-	<br>
-	{section name=n loop=$tikifeedback}
-		<div class="alert {if $tikifeedback[n].num > 0} alert-warning{/if}">
-			{if $tikifeedback[n].num > 0}{icon name='remove' alt="Alert" style="vertical-align:middle;"}{/if}{$tikifeedback[n].mes}
-		</div><br>
-	{/section}
-{/if}
-
 {if not $installask}
 	<form method="get" action="tiki-mods.php">
 		{tr}Find{/tr}

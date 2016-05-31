@@ -71,7 +71,7 @@ if (isset($_REQUEST['mvimg']) && isset($_REQUEST['move_gallery'])) {
 		if ($mvresult['timeout']) {
 			$mvmsg.= ' ' . tra('a timeout occurred. Hit the reload button to move the rest');
 		}
-		$tikifeedback[]['mes'] = $mvmsg;
+		Feedback::note($mvmsg);
 	}
 }
 
@@ -109,7 +109,7 @@ if (isset($_REQUEST['mvimg']) && isset($_REQUEST['move_gallery'])) {
 		if ($mvresult['timeout']) {
 			$mvmsg .= ' ' . tra('a timeout occurred. Hit the reload button to move the rest');
 		}
-		$tikifeedback[]['mes'] = $mvmsg;
+		Feedback::note($mvmsg);
 	}
 }
 

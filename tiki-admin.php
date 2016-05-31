@@ -13,13 +13,6 @@ $section = 'admin';
 require_once ('tiki-setup.php');
 $adminlib = TikiLib::lib('admin');
 
-if (! empty($_SESSION['tikifeedback'])) {
-	$tikifeedback = $_SESSION['tikifeedback'];
-	$_SESSION['tikifeedback'] = array();
-} else {
-	$tikifeedback = array();
-	$_SESSION['tikifeedback'] = array();
-}
 $auto_query_args = array('page');
 
 $access->check_permission('tiki_p_admin');
@@ -37,13 +30,12 @@ $logslib = TikiLib::lib('logs');
 function add_feedback( $name, $message, $st, $num = null )
 {
 	TikiLib::lib('prefs')->addRecent($name);
-
-	$_SESSION['tikifeedback'][] = array(
-		'num' => $num,
+	
+	Feedback::add(['num' => $num,
 		'mes' => $message,
 		'st' => $st,
 		'name' => $name,
-	);
+		'tpl' => 'pref',], 'session');
 }
 
 /**
@@ -639,7 +631,6 @@ $smarty->assign('mysqlSSL', $isSSL);
 
 $smarty->assign('admin_icons', $admin_icons);
 
-$smarty->assign_by_ref('tikifeedback', $tikifeedback);
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template

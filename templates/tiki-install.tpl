@@ -81,7 +81,7 @@
 		</div>
 
 		<div class="col-md-9 install-steps">
-
+			{feedback}
 			{if $install_step eq '0' or !$install_step}{* start of installation *}
 				<div class="install-step0">
 					<h1 class="pagetitle">{tr}Welcome{/tr}</h1>
@@ -250,18 +250,6 @@
 							<hr>
 							<a href="#" onclick="$('#installer_3_new_db_form').toggle();return false;" class="btn btn-link">{tr}Modify database connection{/tr}</a>
 						</div>
-					{/if}
-					{if $tikifeedback}
-						<br>
-						{section name=n loop=$tikifeedback}
-							<div class="alert {if $tikifeedback[n].num > 0} alert-warning{/if}">
-								{if $tikifeedback[n].num > 0}
-									{icon name="error"} {$tikifeedback[n].mes}
-								{else}
-									{icon name="ok"} {$tikifeedback[n].mes}
-								{/if}
-							</div>
-						{/section}
 					{/if}
 					<div id="installer_3_new_db_form"{if $dbcon eq 'y'} style="display:none;"{/if}>
 						<p>{tr}Use this page to create a new database connection, or use the <a href="https://doc.tiki.org/Manual+Installation" target="_blank" title="manual installation">manual installation process</a>.{/tr} <a href="https://doc.tiki.org/Manual+Installation" target="_blank" title="{tr}Help{/tr}">{icon name="help"}</a></p>

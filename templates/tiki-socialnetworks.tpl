@@ -4,12 +4,6 @@
 
 {include file='tiki-mytiki_bar.tpl'}
 
-{if $tikifeedback}
-	<div class="alert alert-warning">
-		{section name=n loop=$tikifeedback}<div>{$tikifeedback[n].mes}</div>{/section}
-	</div>
-{/if}
-
 {tabset name="mytiki_user_preference"}
 	{tab name="{tr}Accounts{/tr}"}
 		<h2>{tr}Accounts{/tr}</h2>

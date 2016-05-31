@@ -22,11 +22,6 @@
 	}
 </script>
 
-{if $tikifeedback}
-	<br>
-	{section name=n loop=$tikifeedback}<div class="alert alert-info {if $tikifeedback[n].num > 0} alert-warning{/if}">{$tikifeedback[n].mes}</div>{/section}
-	<br>
-{/if}
 <p>{tr}Configure how your mailed-in wiki pages are to be linked / organized.{/tr}</p>
 
 {tabset name="user_mailin"}

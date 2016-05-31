@@ -51,41 +51,28 @@ if (isset($_REQUEST["add"])) {
 		if ($userlib->user_exists($_REQUEST['login'])) {
 			$login = $_REQUEST['login'];
 		} else {
-			$tikifeedback[] = array(
-				'num' => 0,
-				'mes' => tra("Invalid username")
-			);
+			Feedback::error(tra('Invalid username'));
 			$save = false;
 		}
 	} elseif (!empty($_REQUEST['email'])) {
 		if (validate_email($_REQUEST['email'], $prefs['validateEmail'])) {
 			$email = $_REQUEST['email'];
 		} else {
-			$tikifeedback[] = array(
-				'num' => 0,
-				'mes' => tra("Invalid email")
-			);
+			Feedback::error(tra('Invalid email'));
 			$save = false;
 		}
 	} else {
-		$tikifeedback[] = array(
-			'num' => 0,
-			'mes' => tra("You need to provide a username or an email")
-		);
+		Feedback::error(tra('You need to provide a username or an email'));
 		$save = false;
 	}
 	if ($save and isset($_REQUEST['event']) and isset($watches[$_REQUEST['event']])) {
 		$result = $tikilib->add_user_watch($login, $_REQUEST["event"], $watches[$_REQUEST['event']]['object'], $watches[$_REQUEST['event']]['type'], $watches[$_REQUEST['event']]['label'], $watches[$_REQUEST['event']]['url'], isset($email) ? $email : NULL);
 		if (!$result) {
-			$tikifeedback[] = array(
-				'mes' => tra("The user has no email set. No notifications will be sent.")
-			);			
+			Feedback::error(tra('The user has no email set. No notifications will be sent.'));
 		}
 	}
 }
-if (!empty($tikifeedback)) {
-	$smarty->assign_by_ref('tikifeedback', $tikifeedback);
-}
+
 if (isset($_REQUEST["removeevent"]) && isset($_REQUEST['removetype'])) {
 	$access->check_authenticity();
 	if ($_REQUEST['removetype'] == 'user') {

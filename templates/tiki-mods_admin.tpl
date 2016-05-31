@@ -5,7 +5,7 @@
 	{button href="tiki-mods.php" class="btn btn-default" _text="{tr}Mods Install/uninstall{/tr}"}
 </div>
 
-{section name=n loop=$tikifeedback}<div class="alert{if $tikifeedback[n].num > 0} alert-warning{/if}">{$tikifeedback[n].mes}</div>{/section}
+
 <br>
 <form method="post" action="tiki-mods_admin.php" class="form-horizontal">
 	<div class="form-group">
@@ -35,4 +35,3 @@
 	    </div>
     </div>
 </form>
-

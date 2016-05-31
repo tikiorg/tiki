@@ -8,13 +8,6 @@
 	{button class="btn btn-default" _text="{tr}Export through Action Log{/tr}" href="tiki-admin_actionlog.php#Report"}
 *}</div>
 
-{if $tikifeedback}
-	<br>
-	{section name=n loop=$tikifeedback}
-		<div class="alert {if $tikifeedback[n].num > 0} alert-warning{/if}">{$tikifeedback[n].mes}</div>
-	{/section}
-{/if}
-
 <form method="get" action="tiki-syslog.php">
 	<label>{tr}Clean logs older than{/tr}&nbsp;
 	<input type="text" name="months" size="4"></label> {tr}months{/tr}

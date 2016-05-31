@@ -124,29 +124,6 @@
 	{/if}
 </nav>
 
-{if $tikifeedback}
-	{remarksbox type="feedback" title="{tr}The following list of changes has been applied{/tr}"}
-		<ul class="list-unstyled">
-		{section name=n loop=$tikifeedback}
-			<li>
-			{if $tikifeedback[n].st eq 0}
-				{icon name="disable"}
-			{elseif $tikifeedback[n].st eq 1}
-				{icon name="ok"}
-			{elseif $tikifeedback[n].st eq 2}
-				{icon name="edit"}
-			{elseif $tikifeedback[n].st eq 4}
-				{icon name="undo"}
-			{else}
-				{icon name="information"}
-			{/if}
-				{if $tikifeedback[n].st ne 3}{tr}Preference{/tr} {/if}<strong>{tr}{$tikifeedback[n].mes|stringfix}{/tr}</strong>
-				{if $tikifeedback[n].st ne 3}(<small>{tr}Preference name:{/tr} {$tikifeedback[n].name})</small>{/if}
-			</li>
-		{/section}
-		</ul>
-	{/remarksbox}
-{/if}
 {if isset($csrferror)}
 	{remarksbox type="error" title="{tr}Potential Cross-Site Request Forgery{/tr}"}
 		{$csrferror}

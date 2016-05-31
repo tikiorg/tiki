@@ -16,7 +16,6 @@
 	{/if}
 	{button href="tiki-view_forum.php?forumId=$forumId" class="btn btn-default" _text="{tr}Topic List{/tr}"}
 </div>
-{include file="utilities/feedback.tpl"}
 {if $post_reported eq 'y'}
 	{remarksbox type=warning title="{tr}The post has been reported and will be reviewed by a moderator.{/tr}"}{/remarksbox}
 {/if}

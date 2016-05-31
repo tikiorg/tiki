@@ -20,7 +20,6 @@
 		{/if}
 	</div>
 {/if}
-{include file='utilities/feedback.tpl'}
 {tabset}
 
 	{tab name="{tr}Forums{/tr}"}

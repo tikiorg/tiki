@@ -124,7 +124,6 @@
 		<a class="link" href="{$forumId|sefurl:'forum'}">{$forum_info.name|addongroupname|escape}</a>
 	</div>
 
-	{include file='utilities/feedback.tpl'}
 	{if $tiki_p_forum_post_topic eq 'y'}
 		{if $comment_preview eq 'y'}
 			<br><br>

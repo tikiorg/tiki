@@ -8,13 +8,6 @@
 {/if}
 
 <h2>{tr}Add notification{/tr}</h2>
-{if !empty($tikifeedback)}
-	<div class="alert alert-info alert-dismissable">
-		{section name=ix loop=$tikifeedback}
-			{icon name='remove' alt="{tr}Alert{/tr}" style="vertical-align:middle"} {$tikifeedback[ix].mes}.
-		{/section}
-	</div>
-{/if}
 <form action="tiki-admin_notifications.php" method="post" class="form-horizontal" role="form">
 	<input type="hidden" name="find" value="{$find|escape}">
 	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">

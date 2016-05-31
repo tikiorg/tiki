@@ -33,7 +33,6 @@
 			{if $prefs.feature_intertiki_import_preferences eq 'y'}{tr}Since this Tiki site is in slave mode and imports preferences, the master user preferences will be automatically reimported at each login{/tr}{/if}
 		{/remarksbox}
 	{/if}
-	{include file='utilities/feedback.tpl'}
 	{if !empty($added) or !empty($discarded) or !empty($discardlist)}
 		{remarksbox type="feedback" title="{tr}Batch Upload Results{/tr}"}
 			{tr}Updated users{/tr} {$added}

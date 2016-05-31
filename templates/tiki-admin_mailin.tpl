@@ -87,9 +87,6 @@
 	</table>
 	<a href="{bootstrap_modal controller=mailin action=replace_account}" class="btn btn-default">{icon name="add"} {tr}Add Account{/tr}</a>
 	{button _icon_name="cog" _text="{tr}Admin Mail-in Routes{/tr}" _type="link" href="tiki-admin_mailin_routes.php"}
-	{if $tikifeedback}
-		{section name=n loop=$tikifeedback}<div class="alert {if $tikifeedback[n].num > 0} alert-warning{/if}">{$tikifeedback[n].mes}</div>{/section}
-	{/if}
 
 	<h2>{tr}Check Mail-in accounts{/tr}</h2>
 	<form class="form-horizontal" action="tiki-admin_mailin.php" method="post">

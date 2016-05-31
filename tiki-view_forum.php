@@ -480,9 +480,9 @@ if ($prefs['feature_forum_parse'] == 'y') {
 }
 
 $session = isset($_GET['deleted_parentId']) && !empty($_SESSION['ajaxpost' . $_GET['deleted_parentId']]) ?: false;
-if (isset($_POST['ajaxtype']) || $session) {
+if (!isset($_POST['ajaxtype']) && $session) {
 	$smarty->assign('ajaxfeedback', 'y');
-	$posted = isset($_POST['ajaxtype']) ? $_POST : $_SESSION['ajaxpost' . $_GET['deleted_parentId']];
+	$posted = $_SESSION['ajaxpost' . $_GET['deleted_parentId']];
 	if ($session) {
 		unset($_SESSION['ajaxpost' . $_GET['deleted_parentId']]);
 	}

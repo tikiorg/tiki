@@ -42,8 +42,6 @@ if ( $prefs['log_sql'] == 'y' && $api_tiki == 'adodb' ) {
 	$ADODB_PERF_MIN = $prefs['log_sql_perf_min'];
 }
 
-$tikifeedback = array();
-
 // TODO: check this only once per session or only if a feature ask for it
 TikiSetup::check($tikidomain);
 

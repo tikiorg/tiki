@@ -276,7 +276,6 @@ if (isset($_REQUEST['focus'])) {
 }
 $smarty->assign('focus', $focus);
 $smarty->assign('more', $more);
-$smarty->assign('tikifeedback', $feedback);
 $smarty->assign('types', $types);
 $smarty->assign('versions', $versions);
 $smarty->assign('mid', 'tiki-mods.tpl');

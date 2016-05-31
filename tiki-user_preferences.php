@@ -282,7 +282,7 @@ if (isset($_REQUEST['chgadmin'])) {
 	}
 	if (!empty($_REQUEST['email']) && ($prefs['login_is_email'] != 'y' || $user == 'admin') && $_REQUEST['email'] != $userlib->get_user_email($userwatch)) {
 		$userlib->change_user_email($userwatch, $_REQUEST['email'], $pass);
-		$tikifeedback[] = array('num' => 1, 'mes' => sprintf(tra("Email is set to %s"), $_REQUEST['email']));
+		Feedback::success(sprintf(tra('Email is set to %s'), $_REQUEST['email']));
 		if ($prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster']) && $prefs['feature_intertiki_import_preferences'] == 'y') { //send to the master
 			$userlib->interSendUserInfo($prefs['interlist'][$prefs['feature_intertiki_mymaster']], $userwatch);
 		}
@@ -306,8 +306,7 @@ if (isset($_REQUEST['chgadmin'])) {
 			$cryptlib = TikiLib::lib('crypt');
 			$cryptlib->onChangeUserPassword($_REQUEST["pass"], $_REQUEST["pass1"]);
 		}
-
-		$tikifeedback[] = array('num' => 1, 'mes' => sprintf(tra('Password has been changed')));
+		Feedback::success(sprintf(tra('Password has been changed')));
 	}
 }
 if (isset($_REQUEST['deleteaccount']) && $tiki_p_delete_account == 'y') {
@@ -450,7 +449,6 @@ $smarty->assign('userPageExists', 'n');
 if ($prefs['feature_wiki'] == 'y' and $prefs['feature_wiki_userpage'] == 'y') {
 	if ($tikilib->page_exists($prefs['feature_wiki_userpage_prefix'] . $user)) $smarty->assign('userPageExists', 'y');
 }
-$smarty->assign_by_ref('tikifeedback', $tikifeedback);
 include_once ('tiki-section_options.php');
 ask_ticket('user-prefs');
 $smarty->assign('mid', 'tiki-user_preferences.tpl');

@@ -164,8 +164,6 @@ class UserWizardPreferencesParams extends Wizard
 		if ($prefs['feature_wiki'] == 'y' and $prefs['feature_wiki_userpage'] == 'y') {
 			if ($tikilib->page_exists($prefs['feature_wiki_userpage_prefix'] . $user)) $smarty->assign('userPageExists', 'y');
 		}
-		$smarty->assign_by_ref('tikifeedback', $tikifeedback);
-		
 		return true;		
 	}
 

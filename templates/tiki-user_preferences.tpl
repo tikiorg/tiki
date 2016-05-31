@@ -14,13 +14,6 @@
 		{button href="tiki-user_information.php?view_user=$thisuser" _type="link" _text="{tr}User Information{/tr}"}
 	</div>
 {/if}
-{if $tikifeedback}
-	<div class="simplebox highlight">
-		{section name=n loop=$tikifeedback}
-			<div>{$tikifeedback[n].mes}</div>
-		{/section}
-	</div>
-{/if}
 {tabset name="mytiki_user_preference"}
 	{if $prefs.feature_userPreferences eq 'y'}
 		{tab name="{tr}Personal Information{/tr}"}

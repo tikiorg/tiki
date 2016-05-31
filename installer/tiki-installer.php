@@ -526,7 +526,6 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 		}
 	);
 
-	global $tikifeedback;
 	$dbcon = false;
 	try {
 		$dbTiki = $initializer->getConnection(
@@ -539,7 +538,7 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 			)
 		);
 	} catch (Exception $e) {
-		$tikifeedback[] = array( 'num' => 1, 'mes' => $e->getMessage() );
+		Feedback::error($e->getMessage());
 	}
 	$dbcon = ! empty($dbTiki);
 
@@ -557,22 +556,22 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 				)
 			);
 		} catch (Exception $e) {
-			$tikifeedback[] = array( 'num' => 1, 'mes' => $e->getMessage() );
+			Feedback::error($e->getMessage());
 		}
 		$dbcon = ! empty($dbTiki);
 		// First check that suggested database name will not cause issues
 		$dbname_clean = preg_replace('/[^a-z0-9$_-]/', "", $dbname);
 		if ($dbname_clean != $dbname) {
-			$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Some invalid characters were detected in database name. Please use alphanumeric characters or _ or -.", '', false, array($dbname_clean)) );
+			Feedback::error(tra("Some invalid characters were detected in database name. Please use alphanumeric characters or _ or -.", '', false, [$dbname_clean]));
 			$dbcon = false;
 		} elseif ($dbcon) {
 			$error = '';
 			$sql="CREATE DATABASE IF NOT EXISTS `$dbname_clean` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;";
 			$dbTiki->queryError($sql, $error);
 			if ( empty($error) ) {
-				$tikifeedback[] = array( 'num' => 0, 'mes'=> tra("Database `%0` was created.", '', false, array($dbname_clean)) );
+				Feedback::success(tra("Database `%0` was created.", '', false, [$dbname_clean]));
 			} else {
-				$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Database `%0` creation failed. You need to create the database.", '', false, array($dbname_clean)) );
+				Feedback::error(tra("Database `%0` creation failed. You need to create the database.", '', false, [$dbname_clean]));
 			}
 
 			try {
@@ -587,10 +586,10 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 						);
 				$dbcon = ! empty($dbTiki);
 			} catch (Exception $e) {
-				$tikifeedback[] = array( 'num' => 1, 'mes' => $e->getMessage() );
+				Feedback::error($e->getMessage());
 			}
 		} else {
-			$tikifeedback[] = array( 'num' => 1, 'mes'=> tra("Database `%0`. Unable to connect to database.", '', false, array($dbname_clean)) );
+			Feedback::error(tra("Database `%0`. Unable to connect to database.", '', false, [$dbname_clean]));
 		}
 	}
 
@@ -889,7 +888,7 @@ if (
 		}
 	} else {
 		$dbcon = false;
-		$tikifeedback[] = array('num'=>1, 'mes'=>tra("No database name specified"));
+		Feedback::error(tra('No database name specified'));
 	}
 }
 // Mark that InnoDB is to be used, if selected
@@ -1067,8 +1066,6 @@ if ($install_step == '8') {
 	}
 	exit;
 }
-
-$smarty->assignByRef('tikifeedback', $tikifeedback);
 
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 

@@ -22,7 +22,7 @@ if (isset($_REQUEST['save'])) {
 		if (is_dir($_REQUEST['mods_dir'])) {
 			$tikilib->set_preference('mods_dir', $_REQUEST['mods_dir']);
 		} else {
-			$tikifeedback[] = array('num' => 1, 'mes' => "Directory " . $_REQUEST['mods_dir'] . " not found.");
+			Feedback::warning(tr('Directory %0 not found.', $_REQUEST['mods_dir']));
 		}
 	} else {
 		$tikilib->set_preference('mods_dir', 'mods');
@@ -33,7 +33,6 @@ if (isset($_REQUEST['save'])) {
 		$tikilib->set_preference('mods_server', 'http://mods.tiki.org');
 	}
 }
-$smarty->assign('tikifeedback', $tikifeedback);
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('mid', 'tiki-mods_admin.tpl');
