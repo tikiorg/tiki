@@ -298,7 +298,7 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 					and in_array($field.fieldId, $listfields) and ($field.type ne 'p' or $field.options_array[0] ne 'password')
 					and (empty($field.visibleBy) or in_array($default_group, $field.visibleBy) or $perms.tiki_p_admin_trackers eq 'y')}
 		<td class={if $field.type eq 'n' or $field.type eq 'q' or $field.type eq 'b'}"numeric"{else}"auto"{/if} {if $field.type eq 'b'} style="padding-right:5px;{$tdinstyle}"{else}{$tdstyle}{/if}>
-			{if isset($rowurl)}<a href="{$rowurl|replacei:'#itemId':$items[user].itemId}" {$tdastyle}>{/if}
+			{if $rowurl}<a href="{$rowurl|replacei:'#itemId':$items[user].itemId}" {$tdastyle}>{/if}
 					{if $field.isHidden eq 'c' and $fieldr and $perms.tiki_p_admin_trackers ne 'y'}
 					{elseif isset($perms)}
 						{trackeroutput item=$items[user] field=$field list_mode=$list_mode showlinks=$showlinks showpopup=$showpopup popupfields=$popupfields url=$txturl editable=in_array($field.fieldId, $editableFields)
@@ -307,23 +307,23 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 					{else}
 						{trackeroutput item=$items[user] field=$field list_mode=$list_mode reloff=$itemoff showlinks=$showlinks showpopup=$showpopup popupfields=$popupfields url=$txturl editable=in_array($field.fieldId, $editableFields)}
 					{/if}
-			{if isset($rowurl)}&nbsp;</a>{/if}
+			{if $rowurl}&nbsp;</a>{/if}
 		</td>
 				{/if}
 			{/foreach}
 {* ------------------------------------ *}
 
 			{if $showcreated eq 'y'}
-		<td {$tdstyle}>{if isset($rowurl)}<a href="{$rowurl|replacei:'#itemId':$items[user].itemId}" {$tdastyle}>{/if}{if $tracker_info.showCreatedFormat}{$items[user].created|tiki_date_format:$tracker_info.showCreatedFormat}{else}{$items[user].created|tiki_short_datetime}{/if}{if isset($rowurl)}</a>{/if}</td>
+		<td {$tdstyle}>{if $rowurl}<a href="{$rowurl|replacei:'#itemId':$items[user].itemId}" {$tdastyle}>{/if}{if $tracker_info.showCreatedFormat}{$items[user].created|tiki_date_format:$tracker_info.showCreatedFormat}{else}{$items[user].created|tiki_short_datetime}{/if}{if $rowurl}</a>{/if}</td>
 			{/if}
 			{if $showlastmodif eq 'y'}
-		<td {$tdstyle}>{if isset($rowurl)}<a href="{$rowurl|replacei:'#itemId':$items[user].itemId}" {$tdastyle}>{/if}{if $tracker_info.showLastModifFormat}{$items[user].lastModif|tiki_date_format:$tracker_info.showLastModifFormat}{else}{$items[user].lastModif|tiki_short_datetime}{/if}{if isset($rowurl)}</a>{/if}</td>
+		<td {$tdstyle}>{if $rowurl}<a href="{$rowurl|replacei:'#itemId':$items[user].itemId}" {$tdastyle}>{/if}{if $tracker_info.showLastModifFormat}{$items[user].lastModif|tiki_date_format:$tracker_info.showLastModifFormat}{else}{$items[user].lastModif|tiki_short_datetime}{/if}{if $rowurl}</a>{/if}</td>
 			{/if}
 			{if $showlastmodifby eq 'y'}
-		<td {$tdstyle}>{if isset($rowurl)}<a href="{$rowurl|replacei:'#itemId':$items[user].itemId}" {$tdastyle}>{/if}{$items[user].lastModifBy}{if isset($rowurl)}</a>{/if}</td>
+		<td {$tdstyle}>{if $rowurl}<a href="{$rowurl|replacei:'#itemId':$items[user].itemId}" {$tdastyle}>{/if}{$items[user].lastModifBy}{if $rowurl}</a>{/if}</td>
 			{/if}
 			{if $tracker_info.useComments eq 'y' and ($tracker_info.showComments eq 'y' or $tracker_info.showLastComment eq 'y') and $perms.tiki_p_tracker_view_comments ne 'n'}
-		<td style="text-align:center;{$tdinstyle}">{if isset($rowurl)}<a href="{$rowurl|replacei:'#itemId':$items[user].itemId}" {$tdastyle}>{/if}{if $tracker_info.showComments eq 'y'}{$items[user].comments}{/if}{if $tracker_info.showComments eq 'y' and $tracker_info.showLastComment eq 'y'}<br>{/if}{if $tracker_info.showLastComment eq 'y' and !empty($items[user].lastComment)}{$items[user].lastComment.userName|escape}-{$items[user].lastComment.commentDate|tiki_short_date}{/if}{if isset($rowurl)}</a>{/if}</td>
+		<td style="text-align:center;{$tdinstyle}">{if $rowurl}<a href="{$rowurl|replacei:'#itemId':$items[user].itemId}" {$tdastyle}>{/if}{if $tracker_info.showComments eq 'y'}{$items[user].comments}{/if}{if $tracker_info.showComments eq 'y' and $tracker_info.showLastComment eq 'y'}<br>{/if}{if $tracker_info.showLastComment eq 'y' and !empty($items[user].lastComment)}{$items[user].lastComment.userName|escape}-{$items[user].lastComment.commentDate|tiki_short_date}{/if}{if $rowurl}</a>{/if}</td>
 			{/if}
 			{if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}
 		<td style="text-align:center;"><a href="tiki-view_tracker_item.php?trackerId={$listTrackerId}&amp;itemId={$items[user].itemId}&amp;show=att"
