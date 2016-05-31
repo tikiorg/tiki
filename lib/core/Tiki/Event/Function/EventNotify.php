@@ -81,10 +81,8 @@ class Tiki_Event_Function_EventNotify extends Math_Formula_Function
                 }
                 break;
             default:
-                TikiLib::lib('errorreport')->report(tr(
-                    'Problem finding the associated user. %0 is not recognized. See EventNotify.php',
-                    $userarr[0]
-                ));
+                Feedback::error(tr('Problem finding the associated user. %0 is not recognized. See EventNotify.php',
+                    $userarr[0]), 'session');
                 break;
         }
 

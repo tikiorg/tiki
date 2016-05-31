@@ -374,9 +374,7 @@ function sendWikiEmailNotification(
 			$mail->setSubject(sprintf($mail_subject, $pageName));
 			$mail->setText($mail_data);
 			if (! $mail->send(array($not['email'])) && Perms::get()->admin) {
-				foreach ($mail->errors as $err) {
-					TikiLib::lib('errorreport')->report($err);
-				}
+				Feedback::error(['mes' => $mail->errors], 'session');
 			}
 
 		}

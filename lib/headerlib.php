@@ -1098,7 +1098,7 @@ class HeaderLib
 					unlink($css_file);
 				}
 
-				TikiLib::lib('errorreport')->report(tra('Custom Less compilation failed with error:') . $e->getMessage());
+				Feedback::error(tra('Custom Less compilation failed with error:') . $e->getMessage(), 'sessiom');
 				$css_files = array(
 					$themeLib->get_theme_path($themename, '', $themename . '.css'),
 					$themeLib->get_theme_path($themename, $themeoptionname, ($themeoptionname ?: $themename) . '.css'),

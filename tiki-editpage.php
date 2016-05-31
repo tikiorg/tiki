@@ -1358,8 +1358,7 @@ if (
 			$url .= (strpos($url, '?') === false ? '?' : '&') . 'latest=1';
 		}
 	}
-
-	$_SESSION['saved_msg'] = $_REQUEST["page"];
+	Feedback::success(sprintf(tra('Page %s saved (version %d).'), $_REQUEST["page"], $info['version']), 'session');
 
 	if (!empty($_REQUEST['hdr'])) {
 		$tmp = $tikilib->parse_data($edit);			// fills $anch[] so page refreshes at the section being edited

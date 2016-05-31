@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 			foreach ($profilefeedback as $feedback) {
 				if (strpos($feedback, tra('An error occurred: ')) === 0) {
-					TikiLib::lib('errorreport')->report($feedback);
+					Feedback::error($feedback, 'session');
 				}
 			}
 

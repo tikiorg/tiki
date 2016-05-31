@@ -71,12 +71,13 @@ class IndexRebuildCommand extends Command
 			}
 			return(0);
 		} else {
-			$errlib = \TikiLib::lib('errorreport');
-
-			foreach ($errlib->get_errors() as $message) {
-				$output->writeln("<info>$message</info>");
+			$errors = \Feedback::get();
+			if (is_array($errors)) {
+				foreach ($errors as $message) {
+					$output->writeln("<info>$message</info>");
+				}
+				$output->writeln("\n<error>Search index rebuild failed. Last messages shown above.</error>");
 			}
-			$output->writeln("\n<error>Search index rebuild failed. Last messages shown above.</error>");
 			return(1);
 		}
 	}

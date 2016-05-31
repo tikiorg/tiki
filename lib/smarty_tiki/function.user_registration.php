@@ -14,15 +14,15 @@ function smarty_function_user_registration($params, $smarty)
 	if ($prefs['allowRegister'] != 'y') {
 		return;
 	}
-
-	$errorreportlib = TikiLib::lib('errorreport');
-
+	
 	$_VALID = tra("Please enter a valid %s.  No spaces, more than %d characters and contain %s");
 	$smarty->assign('_PROMPT_UNAME', sprintf($_VALID, tra("username"), $registrationlib->merged_prefs['min_username_length'], "0-9,a-z,A-Z"));
 	$smarty->assign('_PROMPT_PASS', sprintf($_VALID, tra("password"), $registrationlib->merged_prefs['min_pass_length'], "0-9,a-z,A-Z"));
 	$smarty->assign('min_username_length', $registrationlib->merged_prefs['min_username_length']);
 	$smarty->assign('min_pass_length', $registrationlib->merged_prefs['min_pass_length']);
-	if (is_a($registrationlib->merged_prefs, "RegistrationError")) $errorreportlib->report($registrationlib->merged_prefs->msg);
+	if (is_a($registrationlib->merged_prefs, "RegistrationError")) {
+		Feedback::error(['mes' => $registrationlib->merged_prefs->msg], 'session');
+	} 
 	$smarty->assignByRef('merged_prefs', $registrationlib->merged_prefs);
 	$smarty->assign('allowRegister', 'y'); // Used for OpenID associations
 	$smarty->assign('openid_associate', 'n');
@@ -58,14 +58,14 @@ function smarty_function_user_registration($params, $smarty)
 		$cookie_name = $prefs['session_cookie_name'];
 
 		if ( ini_get('session.use_cookie') && ! isset( $_COOKIE[$cookie_name] ) ) {
-			$errorreportlib->report(tra("Cookies must be enabled to log in to this site"));
+			Feedback::error(tra("Cookies must be enabled to log in to this site"), 'session');
 			return '';
 		}
 
 		if ($registrationlib->merged_prefs['http_referer_registration_check'] === 'y') {
 			global $base_host;
 			if (!isset($_SERVER['HTTP_REFERER']) || strpos($_SERVER['HTTP_REFERER'], $base_host) === false) {
-				$errorreportlib->report(tra('Request not from this host.'));
+				Feedback::error(tra('Request not from this host.'), 'session');
 				return '';
 			}
 		}
@@ -81,10 +81,10 @@ function smarty_function_user_registration($params, $smarty)
 			$_REQUEST['valerror'] = $result;
 			if (is_array($result)) {
 				foreach ($result as $r) {
-					$errorreportlib->report($r->msg);
+					Feedback::error(['mes' => $r->msg], 'session');
 				}
 			} elseif (is_a($result, 'RegistrationError')) {
-				$errorreportlib->report($result->msg);
+				Feedback::error(['mes' => $result->msg], 'session');
 			} elseif (is_string($result) && $registrationlib->merged_prefs['userTracker'] !== 'y') {	// more to do for usertrackers
 				return $result;
 			} elseif (!empty($result['msg']) && $registrationlib->merged_prefs['userTracker'] !== 'y') {
@@ -145,10 +145,10 @@ function smarty_function_user_registration($params, $smarty)
 				$result = $registrationlib->register_new_user($_REQUEST);
 				if (is_array($result)) {
 					foreach ($result as $r) {
-						$errorreportlib->report($r->msg);
+						Feedback::error(['mes' => $r->msg], 'session');
 					}
 				} else if (is_a($result, 'RegistrationError')) {
-					$errorreportlib->report($result->msg);
+					Feedback::error(['mes' => $result->msg], 'session');
 				} else {
 					$user = ''; // reset $user
 					return $result;
@@ -161,10 +161,10 @@ function smarty_function_user_registration($params, $smarty)
 			$result = $registrationlib->register_new_user($_REQUEST);
 			if (is_array($result)) {
 				foreach ($result as $r) {
-					$errorreportlib->report($r->msg);
+					Feedback::error(['mes' => $r->msg], 'session');
 				}
 			} else if (is_a($result, 'RegistrationError')) {
-				$errorreportlib->report($result->msg);
+				Feedback::error(['mes' => $result->msg], 'session');
 			} else {
 				$user = ''; // reset $user
 				return $result;

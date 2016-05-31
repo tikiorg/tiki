@@ -61,7 +61,7 @@ class Search_Elastic_Connection
 
 			// in elastic v2 _status has been replaced by _stats so try that next...
 			if (strpos($message, '[_status]') === false) {	// another error
-				TikiLib::lib('errorreport')->report($message . ' for index ' . $index);
+				Feedback::error($message . ' for index ' . $index, 'session');
 				return null;
 			}
 		}
@@ -71,7 +71,7 @@ class Search_Elastic_Connection
 			$message = $e->getMessage();
 
 			if (strpos($message, 'no such index') === false) {	// suppress no such index "errors"
-				TikiLib::lib('errorreport')->report($message . ' for index ' . $index);
+				Feedback::error($message . ' for index ' . $index, 'session');
 			}
 			return null;
 		}

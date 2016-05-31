@@ -252,7 +252,8 @@ class TikiFilter_PreventXss implements Zend\Filter\FilterInterface
 		$val = preg_replace($patterns, $replacements, $val);
 
 		if ($val === null) {
-			TikiLib::lib('errorreport')->report(tr('Filter error: "%0"', array_flip(get_defined_constants(true)['pcre'])[preg_last_error()]));
+			Feedback::error(tr('Filter error: "%0"', 
+				array_flip(get_defined_constants(true)['pcre'])[preg_last_error()]), 'session');
 		}
 		if ($val_before == $val) {
 			// no replacements were made, so exit the loop

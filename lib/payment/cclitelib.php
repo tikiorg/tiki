@@ -52,7 +52,7 @@ class CCLiteLib extends TikiDb_Bridge
 		if (!empty($this->registries)) {
 			return $this->registries[0];	// default if not specified in plugins etc
 		} else {
-			TikiLib::lib('errorreport')->report(tra('No registries specified in admin/payment/cclite.'));
+			Feedback::error(tra('No registries specified in admin/payment/cclite.'), 'session');
 		}
 	}
 

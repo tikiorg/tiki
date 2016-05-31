@@ -65,7 +65,7 @@ try {
 	$smarty->assign('filelist', $filelist);
 
 } catch (Exception $e) {
-	TikiLib::lib('errorreport')->report($e->getMessage());
+	Feedback::error($e->getMessage());
 }
 
 $smarty->assign('feedback', $feedback);

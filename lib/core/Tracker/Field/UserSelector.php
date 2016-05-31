@@ -100,7 +100,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 					}
 					if (empty($data['value'])) {
 						$data['value'] = $this->getValue();
-						TikiLib::lib('errorreport')->report(tr('User "%0" not found', $auser));
+						Feedback::error(tr('User "%0" not found', $auser), 'session');
 					}
 				}
 			} else {

@@ -233,7 +233,7 @@ class FileGalLib extends TikiLib
 					$errMsg = tra('Vimeo error:') . ' ' . tra($result['err']['msg']) .
 						'<br>' . tra($result['err']['expl']) .
 						'<br>' . tr('File "%0" removed (id %1) Remote link was: "%2"', $fileInfo['name'], $fileInfo['fileId'], $url);
-					TikiLib::lib('errorreport')->report($errMsg);
+					Feedback::error($errMsg, 'session');
 					// just report the error and continue to delete the tiki file for now
 				}
 			}
@@ -288,7 +288,7 @@ class FileGalLib extends TikiLib
 		global $prefs, $user;
 
 		if (! $this->is_filename_valid($filename)) {
-			TikiLib::lib('errorreport')->report(tr('`%0` does not match acceptable naming patterns.', $filename));
+			Feedback::error(tr('`%0` does not match acceptable naming patterns.', $filename), 'session');
 			return false;
 		}
 
@@ -1069,7 +1069,7 @@ class FileGalLib extends TikiLib
 			} else {
 				$path = '';		// something wrong?
 				if (empty($file['data'])) {
-					TikiLib::lib('errorreport')->report(tr('Error duplicating file %0', $id));
+					Feedback::error(tr('Error duplicating file %0', $id), 'session');
 				}
 			}
 		}
@@ -1472,8 +1472,8 @@ class FileGalLib extends TikiLib
 		try {
 			$content = $parseApp($wrapper);
 		} catch (Exception $e) {
-			TikiLib::lib('errorreport')->report(tr('Processing search text from a "%0" file in gallery #%1', $type, $galleryId) .
-				'<br>' . $e->getMessage());
+			Feedback::error(tr('Processing search text from a "%0" file in gallery #%1', $type, $galleryId) . '<br>' 
+				. $e->getMessage(), 'session');
 			$content = '';
 		}
 		return $content;

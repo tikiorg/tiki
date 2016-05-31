@@ -334,7 +334,7 @@ function wikiplugin_googlechart_authenticate($credentials_file) {
 
 		} catch (Exception $e) {
 
-			TikiLib::lib('errorreport')->report(tr('googlechart exception: %0', $e->getMessage()));
+			Feedback::error(tr('googlechart exception: %0', $e->getMessage()));
 
 			return false;
 		}

@@ -109,7 +109,7 @@ function applyTablesorter(WikiParser_PluginMatcher $matches, Search_Query $query
 			$ajax = !empty($tsargs['server']) && $tsargs['server'] === 'y';
 			$ret['tsOn'] = Table_Check::isEnabled($ajax);
 			if (!$ret['tsOn']) {
-				TikiLib::lib('errorreport')->report(tra('List plugin: Feature "jQuery Sortable Tables" (tablesorter) is not enabled'));
+				Feedback::error(tra('List plugin: Feature "jQuery Sortable Tables" (tablesorter) is not enabled'));
 				return $ret;
 			}
 			if (isset($tsargs['tsortcolumns'])) {

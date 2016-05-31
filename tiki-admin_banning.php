@@ -43,9 +43,9 @@ if (isset($_REQUEST["import"]) && isset($_FILES["fileCSV"])) {
 if (isset($_REQUEST['save'])) {
 	check_ticket('admin-banning');
 	if ($_REQUEST['mode'] === 'user' && empty($_REQUEST['userreg'])) {
-		TikiLib::lib('errorreport')->report(tra("Not saved:") . ' ' . tra("Username pattern empty"));
+		Feedback::error(tra("Not saved:") . ' ' . tra("Username pattern empty"));
 	} else if ($_REQUEST['mode'] === 'ip' && $_REQUEST['ip1'] == 255 && $_REQUEST['ip2'] == 255 && $_REQUEST['ip3'] == 255 && $_REQUEST['ip4'] == 255) {
-		TikiLib::lib('errorreport')->report(tra("Not saved:") . ' ' . tra("Default IP pattern still set"));
+		Feedback::error(tra("Not saved:") . ' ' . tra("Default IP pattern still set"));
 	} else {
 
 		$_REQUEST['use_dates'] = isset($_REQUEST['use_dates']) ? 'y' : 'n';

@@ -192,7 +192,7 @@ class Messu extends TikiLib
 					}
 
 				} catch (Zend\Mail\Exception\ExceptionInterface $e) {
-					TikiLib::lib('errorreport')->report($e->getMessage());
+					Feedback::error($e->getMessage(), 'session');
 					return false;
 				}
 			}

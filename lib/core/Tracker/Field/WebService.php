@@ -135,7 +135,8 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 					['data' => [$thisField]]
 				);
 				if (!$itemId) {
-					TikiLib::lib('errorreport')->report(tr('Error updating Webservice field %0', $this->getConfiguration('permName')));
+					Feedback::error(tr('Error updating Webservice field %0', $this->getConfiguration('permName')), 
+						'session');
 					// try and restore previous data
 					$response->data = json_decode($this->getValue());
 				}

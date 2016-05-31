@@ -57,7 +57,7 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 
 		if (!empty($value) && !is_int((int) $value)) {	// prevent corrupted date values getting saved (e.g. from inline edit sometimes)
 			$value = '';
-			TikiLib::lib('errorreport')->report(tr('Date Picker Field: "%0" is not a valid internal date value', $value));
+			Feedback::error(tr('Date Picker Field: "%0" is not a valid internal date value', $value), 'session');
 		}
 		return array(
 			'value' => $value,

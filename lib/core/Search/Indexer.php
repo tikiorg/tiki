@@ -100,8 +100,9 @@ class Search_Indexer
 			try {
 				$this->searchIndex->addDocument($entry);
 			} catch (Exception $e) {
-				$msg = tr('Indexing failed while processing "%0" (type %1) with the error "%2"', $objectId, $objectType, $e->getMessage());
-				TikiLib::lib('errorreport')->report($msg);
+				$msg = tr('Indexing failed while processing "%0" (type %1) with the error "%2"', $objectId, $objectType, 
+					$e->getMessage());
+				Feedback::error($msg, 'session');
 				$this->log->err($msg);
 			}
 		}
@@ -122,7 +123,8 @@ class Search_Indexer
 
 			if (false !== $data = $contentSource->getDocument($objectId, $typeFactory)) {
 				if ($data === null) {
-					TikiLib::lib('errorreport')->report(tr('Object %0 type %1 returned null from getDocument function', $objectId, $objectType));
+					Feedback::error(tr('Object %0 type %1 returned null from getDocument function', $objectId, 
+						$objectType), 'session');
 					$data = array();
 				}
 				if (! is_int(key($data))) {

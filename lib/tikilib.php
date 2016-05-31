@@ -508,7 +508,7 @@ class TikiLib extends TikiDb_Bridge
 			}
 			return $connectionMap[$name];
 		} catch (Exception $e) {
-			TikiLib::lib('errorreport')->report($e->getMessage());
+			Feedback::error($e->getMessage(), 'session');
 		}
 	}
 

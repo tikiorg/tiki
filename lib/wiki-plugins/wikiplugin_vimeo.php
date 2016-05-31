@@ -248,7 +248,7 @@ function wikiplugin_vimeo($data, $params)
 				}
 				$out .= vimeo_iframe($data, $params);
 			} else {
-				TikiLib::lib('errorreport')->report(tr('Vimeo video not found for file #%0', $fileId));
+				Feedback::error(tr('Vimeo video not found for file #%0', $fileId));
 			}
 		}
 

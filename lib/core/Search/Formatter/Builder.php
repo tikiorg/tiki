@@ -115,12 +115,12 @@ class Search_Formatter_Builder
 			} elseif ($arguments['template'] == 'count') {
 				$arguments['template'] = dirname(__FILE__) . '/../../../../templates/search/list/count.tpl';
 			} elseif (!file_exists($arguments['template'])) {
-                $temp = $smarty->get_filename($arguments['template']);
-                if (empty($temp)){ //if get_filename cannot find template, return error
-                    TikiLib::lib('errorreport')->report(tr('Missing template "%0"', $arguments['template']));
-                    return '';
-                }
-                $arguments['template'] = $temp;
+				$temp = $smarty->get_filename($arguments['template']);
+				if (empty($temp)){ //if get_filename cannot find template, return error
+					Feedback::error(tr('Missing template "%0"', $arguments['template']), 'session');
+					return '';
+				}
+				$arguments['template'] = $temp;
 			}
 			$abuilder = new Search_Formatter_ArrayBuilder;
 			$outputData = $abuilder->getData($output->getBody());

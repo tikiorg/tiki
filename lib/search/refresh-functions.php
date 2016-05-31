@@ -36,12 +36,11 @@ function refresh_index($object_type, $object_id = null, $process = true)
 
 		} catch (ZendSearch\Lucene\Exception\ExceptionInterface $e) {
 
-			$errlib = TikiLib::lib('errorreport');
 			$message = $e->getMessage();
 			if (empty($message)) {
 				$message = tra('Try rebuilding or optimizing the index on the search admin page');
 			}
-			$errlib->report(tr('Search index could not be updated: %0', $message));
+			Feedback::error(tr('Search index could not be updated: %0', $message), 'session');
 		}
 	}
 

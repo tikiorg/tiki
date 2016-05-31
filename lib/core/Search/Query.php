@@ -141,7 +141,7 @@ class Search_Query implements Search_Query_Interface
 			if ($from2) {
 				$from = $from2;
 			} else {
-				TikiLib::lib('errorreport')->report(tra('filterRange: "from" value not parsed'));
+				Feedback::error(tra('filterRange: "from" value not parsed'), 'session');
 			}
 		}
 		if (!is_numeric($to)) {
@@ -149,7 +149,7 @@ class Search_Query implements Search_Query_Interface
 			if ($to2) {
 				$to = $to2;
 			} else {
-				TikiLib::lib('errorreport')->report(tra('filterRange: "to" value not parsed'));
+				Feedback::error(tra('filterRange: "to" value not parsed'), 'session');
 			}
 		}
 
@@ -303,7 +303,7 @@ class Search_Query implements Search_Query_Interface
 			$this->sortOrder = null;
 			$resultset = $index->find($this, $this->start, $this->count);
 		} catch(Exception $e) {
-			TikiLib::lib('errorreport')->report($e->getMessage());
+			Feedback::error($e->getMessage(), 'session');
 			return Search_ResultSet::create([]);
 		}
 

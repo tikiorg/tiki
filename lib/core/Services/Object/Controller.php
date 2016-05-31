@@ -112,7 +112,7 @@ class Services_Object_Controller
 				$return = TikiLib::lib('attribute')->set_attribute($type, $object, $attribute, $value);
 
 				if (!$return) {
-					TikiLib::lib('errorreport')->report(tr('Invalid attribute name "%0"', $attribute));
+					Feedback::error(tr('Invalid attribute name "%0"', $attribute), 'session');
 				}
 			}
 
@@ -143,7 +143,7 @@ class Services_Object_Controller
 					$res = $attributelib->set_attribute($type, $object, $attribute, '');
 
 					if (!$res) {
-						TikiLib::lib('errorreport')->report(tr('Invalid attribute name "%0"', $attribute));
+						Feedback::error(tr('Invalid attribute name "%0"', $attribute), 'session');
 					}
 				}
 
@@ -157,14 +157,14 @@ class Services_Object_Controller
 	}
 
 	/**
-	 * Generic function to allow consistently formatted errors from javascript using ErrorReportLib
+	 * Generic function to allow consistently formatted errors from javascript using Feedback
 	 *
 	 * @param $input JitFilter filtered input object
 	 */
 	function action_report_error($input)
 	{
-		TikiLib::lib('errorreport')->report($input->message->text());
-		TikiLib::lib('errorreport')->send_headers();
+		Feedback::error($input->message->text(), 'session');
+		Feedback::send_headers();
 	}
 
 	/**
@@ -193,7 +193,7 @@ class Services_Object_Controller
 				$permtype = 'wiki page';		// perms for structures are actually from the top wiki page (don't ask)
 				break;
 			default:
-				TikiLib::lib('errorreport')->report(tr('Cannot lock "%0"', $type));
+				Feedback::error(tr('Cannot lock "%0"', $type), 'session');
 		}
 
 		return array($perm, $adminperm, $attribute, $permtype);

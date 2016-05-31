@@ -164,7 +164,7 @@ function wikiplugin_bloglist($data, $params)
 	$smarty = TikiLib::lib('smarty');
 
 	if (!isset($params['Id'])) {
-		TikiLib::lib('errorreport')->report(tra('Missing blog ID for Bloglist plugin'));
+		Feedback::error(tra('Missing blog ID for Bloglist plugin'));
 		return '';
 	}
 	// Sanitize $params['Id'])

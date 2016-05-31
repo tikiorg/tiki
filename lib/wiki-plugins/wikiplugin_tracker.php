@@ -866,7 +866,7 @@ function wikiplugin_tracker($data, $params)
 				if ($fieldTemp) {
 					$unfiltered['data'][] = $fieldTemp;
 				} else {
-					TikiLib::lib('errorreport')->report(tr('Tracker: Field #%0 not found in fields parameter or template', $fieldId));
+					Feedback::error(tr('Tracker: Field #%0 not found in fields parameter or template', $fieldId));
 				}
 			}
 		}
@@ -1207,7 +1207,7 @@ function wikiplugin_tracker($data, $params)
 								$tplSubject[$ieo] = str_replace('.tpl', '_subject.tpl', $emailOptions[2][$ieo]);
 							} else {
 								if (! $tikilib->page_exists(substr($eo, 5))) {
-									TikiLib::lib('errorreport')->report(tr('Missing wiki email template page "%0"', htmlspecialchars($wiki)));
+									Feedback::error(tr('Missing wiki email template page "%0"', htmlspecialchars($wiki)));
 									$emailOptions[2][$ieo] = 'tracker_changed_notification.tpl';
 								} else {
 									$subject_name = str_replace('tpl', 'subject tpl', $emailOptions[2][$ieo]);
@@ -1428,17 +1428,17 @@ function wikiplugin_tracker($data, $params)
 
 			if(count($field_errors['err_mandatory']) > 0) {
 				$msg = tra('The following mandatory fields are missing');
-					foreach ($field_errors['err_mandatory'] as $err) {
-						$msg .= '<br>&nbsp;&nbsp;&nbsp;&nbsp;' . $err['name'];
+				foreach ($field_errors['err_mandatory'] as $err) {
+					$msg .= '<br>&nbsp;&nbsp;&nbsp;&nbsp;' . $err['name'];
+				}
+				Feedback::error($msg);
 			}
-			TikiLib::lib('errorreport')->report($msg);
-					}
 			if(count($field_errors['err_value']) > 0) {
 				$msg = tra('Following fields are incorrect');
 				foreach ($field_errors['err_value'] as $err) {
 					$msg .= '<br>&nbsp;&nbsp;&nbsp;&nbsp;' . $err['name'];
 				}
-				TikiLib::lib('errorreport')->report($msg);
+				Feedback::error($msg);
 			}
 
 			if ($registration && !empty($userField) && isset($_REQUEST['name'])

@@ -1031,7 +1031,7 @@ function wikiplugin_img( $data, $params )
 			$repldata = preg_replace('/width="'.$fwidth.'" height="'.$fheight.'"/', $svgAttributes, $repldata);
 			if ($repldata === null) {
 				// if preg_replace fails restore original SVG data
-				TikiLib::lib('errorreport')->report(tr('SVG Image replace error "%0"', preg_last_error()));
+				Feedback::error(tr('SVG Image replace error "%0"', preg_last_error()));
 				$repldata = $dbinfo['data'];
 			}
 		}

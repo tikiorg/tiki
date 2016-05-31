@@ -225,7 +225,7 @@ if ($fullscreen) {
 	$('.header_outer').hide();
 	$('#topbar_modules').hide();
 	$('#footer').hide();
-	$('#error_report').hide();
+	$('#tikifeedback').hide();
 	$('.share').hide();
 	$('.tellafriend').hide();
 }

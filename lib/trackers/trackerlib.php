@@ -1407,7 +1407,7 @@ class TrackerLib extends TikiLib
 				$mem = TikiLib::lib('tiki')->get_memory_avail();
 				if ($mem < 1048576 * 10) {	// Less than 10MB left?
 					// post an error even though it doesn't get displayed when using export as the output goes into the output file
-					TikiLib::lib('errorreport')->report(tr('Tracker list_items ran out of memory after %0 items.', count($ret)));
+					Feedback::error(tr('Tracker list_items ran out of memory after %0 items.', count($ret)), 'session');
 					break;
 				}
 
@@ -1859,7 +1859,6 @@ class TrackerLib extends TikiLib
 	{
 		$tikilib = TikiLib::lib('tiki');
 		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
-		$errorreport = TikiLib::lib('errorreport');
 
 		$items = $this->items();
 		$itemFields = $this->itemFields();
@@ -1876,7 +1875,7 @@ class TrackerLib extends TikiLib
 		}
 		$max = count($header);
 		if ($max === 1 and strpos($header, "\t") !== false) {
-			$errorreport->report(tr('No fields found in header, not a comma separated values file?'));
+			Feedback::error(tr('No fields found in header, not a comma separated values file?'), 'session');
 			return 0;
 		}
 		for ($i = 0; $i < $max; $i++) {
@@ -1958,7 +1957,8 @@ class TrackerLib extends TikiLib
 					)
 				);
 				if (empty($itemId) || $itemId < 1) {
-					$errorreport->report(tr('Problem inserting tracker item: trackerId=%0, created=%1, lastModif=%2, status=%3', $trackerId, $created, $lastModif, $status));
+					Feedback::error(tr('Problem inserting tracker item: trackerId=%0, created=%1, lastModif=%2, status=%3',
+						$trackerId, $created, $lastModif, $status), 'session');
 				} else {
 					// deal with autoincrement fields
 					foreach ($auto_fields as $afield) {
@@ -2039,14 +2039,9 @@ class TrackerLib extends TikiLib
 									if ($val !== null) {
 										$data[$i] = $val;
 									} else {
-										$errorreport->report(
-											tr(
-												'Problem converting tracker item link field: trackerId=%0, fieldId=%1, itemId=%2',
-												$trackerId,
-												$field['fieldId'],
-												$itemId
-											)
-										);
+										Feedback::error(
+											tr('Problem converting tracker item link field: trackerId=%0, fieldId=%1, itemId=%2',
+												$trackerId, $field['fieldId'], $itemId), 'session');
 									}
 								}
 								break;
@@ -2065,23 +2060,23 @@ class TrackerLib extends TikiLib
 									try {
 										$results = $query->search($unifiedsearchlib->getIndex());
 									} catch (Search_Elastic_TransportException $e) {
-										$errorreport->report('Search functionality currently unavailable.');
+										Feedback::error(tr('Search functionality currently unavailable.'), 'session');
 									} catch (Exception $e) {
-										$errorreport->report($e->getMessage());
+										Feedback::error($e->getMessage(), 'session');
 									}
 
 									if (count($results)) {
 										$data[$i] = $results[0]['object_id'];
 										TikiLib::lib('relation')->add_relation($field['options_map']['relation'], 'trackeritem', $itemId, $results[0]['object_type'], $data[$i]);
 									} else {
-										$errorreport->report(
+										Feedback::error(
 											tr(
 												'Problem converting tracker relation field: trackerId=%0, fieldId=%1, itemId=%2 from value "%3"',
 												$trackerId,
 												$field['fieldId'],
 												$itemId,
 												$data[$i]
-											)
+											), 'session'
 										);
 									}
 								}

@@ -92,21 +92,19 @@ class Services_Tracker_Utilities
 			return $newItem;
 		}
 
-		$errorreportlib = TikiLib::lib('errorreport');
 		if (count($errors['err_mandatory']) > 0) {
 			$names = array();
 			foreach ($errors['err_mandatory'] as $f) {
 				$names[] = $f['name'];
 			}
-
-			$errorreportlib->report(tr('The following mandatory fields are missing: %0', implode(', ', $names)));
+			Feedback::error(tr('The following mandatory fields are missing: %0', implode(', ', $names)), 'session');
 		}
 
 		foreach ($errors['err_value'] as $f) {
 			if (! empty($f['errorMsg'])) {
-				$errorreportlib->report(tr('Invalid value in %0: %1', $f['name'], $f['errorMsg']));
+				Feedback::error(tr('Invalid value in %0: %1', $f['name'], $f['errorMsg']), 'session');
 			} else {
-				$errorreportlib->report(tr('Invalid value in %0', $f['name']));
+				Feedback::error(tr('Invalid value in %0', $f['name']), 'session');
 			}
 		}
 

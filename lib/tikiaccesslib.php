@@ -401,9 +401,8 @@ class TikiAccessLib extends TikiLib
 		}
 
 		if ( $this->is_serializable_request() ) {
-			$errorreport = TikiLib::lib('errorreport');
-			$errorreport->report($errortitle);
-			$errorreport->send_headers();
+			Feedback::error($errortitle, 'session');
+			Feedback::send_headers();
 
 			$this->output_serialized($detail);
 		} elseif ($this->is_xml_http_request()) {

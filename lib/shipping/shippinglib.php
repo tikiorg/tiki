@@ -94,7 +94,7 @@ class ShippingLib
 				return $provider;
 			}
 		}
-		TikiLib::lib('errorreport')->report(tr('Problem reading custom shipping provider "%0"', $name));
+		Feedback::error(tr('Problem reading custom shipping provider "%0"', $name), 'session');
 	}
 
 }

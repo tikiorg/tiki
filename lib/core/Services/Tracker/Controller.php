@@ -193,7 +193,7 @@ class Services_Tracker_Controller
 			}
 		}
 		if (!empty($missing)) {
-			TikiLib::lib('errorreport')->report(tr('Warning: Required field types not enabled: %0', implode(', ', $missing)));
+			Feedback::error(tr('Warning: Required field types not enabled: %0', implode(', ', $missing)), 'session');
 		}
 
 		return array(
@@ -245,16 +245,15 @@ class Services_Tracker_Controller
 			$hasLink = $hasLink || $isMain;
 		}
 
-		$errorreport = TikiLib::lib('errorreport');
 		if (! $hasList) {
-			$errorreport->report(tr('Tracker contains no listed field, no meaningful information will be provided in the default list.'));
+			Feedback::error(tr('Tracker contains no listed field, no meaningful information will be provided in the default list.'), 'session');
 		}
 
 		if (! $hasLink) {
-			$errorreport->report(tr('The tracker contains no field in the title, so no link will be generated.'));
+			Feedback::error(tr('The tracker contains no field in the title, so no link will be generated.'), 'session');
 		}
 
-		$errorreport->send_headers();
+		Feedback::send_headers();
 		$tx->commit();
 
 		return array(

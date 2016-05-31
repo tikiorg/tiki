@@ -106,7 +106,6 @@ class Services_File_Controller
 	{
 		global $user;
 		$filegallib = TikiLib::lib('filegal');
-		$errorreportlib = TikiLib::lib('errorreport');
 		$output = ['files' => []];
 
 		if (isset($_FILES['files']) && is_array($_FILES['files']['tmp_name'])) {
@@ -167,17 +166,15 @@ class Services_File_Controller
 									$errors
 								);
 							} catch (Exception $e) {
-								$errorreportlib->report($e->getMessage());
+								Feedback::error($e->getMessage(), 'session');
 							}
 							if ($errors) {
-								foreach ($errors as $error) {
-									$errorreportlib->report($error);
-								}
+								Feedback::error(['mes' => $errors], 'session');
 							} else {
 								$file['syntax'] = tr('Batch file processed: "%0"', $file['name']);	// cheeky?
 							}
 						} else {
-							$errorreportlib->report(tra('You don\'t have permission to upload zipped file packages'));
+							Feedback::error(tra('You don\'t have permission to upload zipped file packages'), 'session');
 						}
 					}
 

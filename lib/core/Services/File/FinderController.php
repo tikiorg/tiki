@@ -93,7 +93,7 @@ class Services_File_FinderController
 		if ($startGallery) {
 			$gal_info = TikiLib::lib('filegal')->get_file_gallery_info($startGallery);
 			if (!$gal_info) {
-				TikiLib::lib('errorreport')->report(tr('Gallery ID %0 not found', $startGallery));
+				Feedback::error(tr('Gallery ID %0 not found', $startGallery), 'session');
 				$startGallery = $prefs['fgal_root_id'];
 			}
 		}

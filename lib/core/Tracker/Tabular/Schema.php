@@ -89,7 +89,7 @@ class Schema
 			try {
 				$col = $this->addColumn($column['field'], $column['mode']);
 			} catch (Exception\FieldNotFound $e) {
-				\TikiLib::lib('errorreport')->report($e->getMessage());	// TODO make error message appear when exporting
+				\Feedback::error($e->getMessage(), 'session'); // TODO make error message appear when exporting
 				continue;
 			}
 			$col->setExportOnly(! empty($column['isExportOnly']));

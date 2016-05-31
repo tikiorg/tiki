@@ -240,7 +240,7 @@ class Iconset
 					$space = !empty($icon_class) ? ' ' : '';
 					$icon_class .= $space . $prepend . $icon['id'] . $append;
 				} else {
-					TikiLib::lib('errorreport')->report(tr('Icon set: Class not defined for icon %0', $name));
+					Feedback::error(tr('Icon set: Class not defined for icon %0', $name), 'session');
 				}
 				if ((!empty($size) && $size != 1)) {
 					$styleparams[] = 'font-size:' . ($size * 100) . '%';

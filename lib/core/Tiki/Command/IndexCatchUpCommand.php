@@ -33,7 +33,6 @@ class IndexCatchUpCommand extends Command
 		$amount = (int) $input->getArgument('amount');
 
 		$unifiedsearchlib = \TikiLib::lib('unifiedsearch');
-		$errlib = \TikiLib::lib('errorreport');
 
 		try {
 			$output->writeln('Started processing queue...');
@@ -46,11 +45,14 @@ class IndexCatchUpCommand extends Command
 		} catch (ZendSearch\Lucene\Exception\ExceptionInterface $e) {
 
 			$msg = tr('Search index could not be updated: %0', $e->getMessage());
-			$errlib->report($msg);
+			\Feedback::error($msg, 'session');
 		}
-
-		foreach ($errlib->get_errors() as $message) {
-			$output->writeln("<error>$message</error>");
+		
+		$errors = \Feedback::get();
+		if (is_array($errors)){
+			foreach ($errors as $message) {
+				$output->writeln("<error>$message</error>");
+			}
 		}
 	}
 }

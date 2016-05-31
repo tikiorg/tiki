@@ -60,7 +60,6 @@ class UnifiedSearchLib
 
 		$queuelib = TikiLib::lib('queue');
 		$toProcess = $queuelib->pull(self::INCREMENT_QUEUE, $count);
-		$errlib = TikiLib::lib('errorreport');
 		$access = TikiLib::lib('access');
 		$access->preventRedirect(true);
 
@@ -98,9 +97,9 @@ class UnifiedSearchLib
 					$queuelib->push(self::INCREMENT_QUEUE, $message);
 				}
 
-				$errlib->report(
+				Feedback::error(
 					tr('The search index could not be updated. The site is misconfigured. Contact an administrator.') .
-					'<br />' . $e->getMessage()
+					'<br />' . $e->getMessage(), 'session'
 				);
 			}
 
@@ -159,8 +158,6 @@ class UnifiedSearchLib
     function rebuild($loggit = 0)
 	{
 		global $prefs;
-		$errlib = TikiLib::lib('errorreport');
-
 		switch ($prefs['unified_engine']) {
 		case 'lucene':
 			$index_location = $this->getIndexLocation('data');
@@ -168,7 +165,7 @@ class UnifiedSearchLib
 			$swapName = $this->getIndexLocation('data-old');
 
 			if ($this->rebuildInProgress()) {
-				$errlib->report(tr('Rebuild in progress.'));
+				Feedback::error(tr('Rebuild in progress.'), 'session');
 				return false;
 			}
 
@@ -242,10 +239,7 @@ class UnifiedSearchLib
 
 			$tikilib->set_preference('unified_identifier_fields', $index->getIdentifierFields());
 		} catch (Exception $e) {
-			$errlib->report(
-				tr('The search index could not be rebuilt.') .
-				'<br />' . $e->getMessage()
-			);
+			Feedback::error(tr('The search index could not be rebuilt.') . '<br />' . $e->getMessage(), 'session');
 		}
 
 		// Force destruction to clear locks
@@ -262,12 +256,14 @@ class UnifiedSearchLib
 			// Current to -old
 			if (file_exists($index_location)) {
 				if (! rename($index_location, $swapName)) {
-					$errlib->report(tr('The active index could not be removed, probably due to a file permission issue.'));
+					Feedback::error(tr('The active index could not be removed, probably due to a file permission issue.'), 
+						'session');
 				}
 			}
 			// -new to current
 			if (! rename($tempName, $index_location)) {
-				$errlib->report(tr('The new index could not be made active, probably due to a file permission issue.'));
+				Feedback::error(tr('The new index could not be made active, probably due to a file permission issue.'), 
+					'session');
 			}
 
 			// Destroy old
@@ -290,7 +286,7 @@ class UnifiedSearchLib
 
 		if ($oldIndex) {
 			if (! $oldIndex->destroy()) {
-				$errlib->report(tr('Failed to delete the old index.'));
+				Feedback::error(tr('Failed to delete the old index.'), 'session');
 			}
 		}
 
@@ -661,11 +657,11 @@ class UnifiedSearchLib
 		}
 
 		// Do nothing, provide a fake index.
-		$errlib = TikiLib::lib('errorreport');
 		if($tiki_p_admin != 'y') {
-			$errlib->report(tr('Contact the site administrator. The index needs rebuilding.'));
+			Feedback::error(tr('Contact the site administrator. The index needs rebuilding.'), 'session');
 		} else {
-			$errlib->report('<a title="' . tr("Rebuild search index") .'" href="tiki-admin.php?page=search&rebuild=now">'. tr("Click here to rebuild index") . '</a>');
+			Feedback::error('<a title="' . tr("Rebuild search index") .'" href="tiki-admin.php?page=search&rebuild=now">'
+				. tr("Click here to rebuild index") . '</a>', 'session');
 		}
 
 

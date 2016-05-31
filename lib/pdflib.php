@@ -27,7 +27,7 @@ class PdfGenerator
 				$this->mode = 'webkit';
 				$this->location = $path;
 			} else {
-				TikiLib::lib('errorreport')->report(tr('PDF webkit path not found: "%0"', $path));
+				Feedback::error(tr('PDF webkit path not found: "%0"', $path), 'session');
 			}
 		} else if ($prefs['print_pdf_from_url'] == 'weasyprint') {
 			$path = $prefs['print_pdf_weasyprint_path'];
@@ -35,7 +35,7 @@ class PdfGenerator
 				$this->mode = 'weasyprint';
 				$this->location = $path;
 			} else {
-				TikiLib::lib('errorreport')->report(tr('PDF WeasyPrint path not found: "%0"', $path));
+				Feedback::error(tr('PDF WeasyPrint path not found: "%0"', $path), 'session');
 			}
 		} elseif ( $prefs['print_pdf_from_url'] == 'webservice' ) {
 			$path = $prefs['path'];
@@ -43,19 +43,20 @@ class PdfGenerator
 				$this->mode = 'webservice';
 				$this->location = $path;
 			} else {
-				TikiLib::lib('errorreport')->report(tr('PDF webservice URL empty'));
+				Feedback::error(tr('PDF webservice URL empty'), 'session');
 			}
 		} elseif ( $prefs['print_pdf_from_url'] == 'mpdf' ) {
 			$path = $prefs['print_pdf_mpdf_path'];
 			if ( ! empty($path) && is_readable($path) ) {
 				if (! is_writable($path . 'graph_cache') || ! is_writable($path . 'tmp') ||! is_writable($path . 'ttfontdata')) {
-					TikiLib::lib('errorreport')->report(tr('mPDF "%0","%1" and "%2" directories must be writable', 'graph_cache', 'tmp', 'ttfontdata'));
+					Feedback::error(tr('mPDF "%0","%1" and "%2" directories must be writable', 'graph_cache', 'tmp', 
+						'ttfontdata'), 'session');
 				} else {
 					$this->mode = 'mpdf';
 					$this->location = $path;
 				}
 			} else {
-				TikiLib::lib('errorreport')->report(tr('mPDF path not found: "%0"', $path));
+				Feedback::error(tr('mPDF path not found: "%0"', $path), 'session');
 			}
 		}
 	}
@@ -259,7 +260,7 @@ class PdfGenerator
 
 			if (!$html) {
 				$err = curl_error($ch);
-				TikiLib::lib('errorreport')->report($err ? $err : tr('mPDF: An error occurred retrieving page %0', $url));
+				Feedback::error($err ? $err : tr('mPDF: An error occurred retrieving page %0', $url), 'session');
 				return '';
 			}
 		}

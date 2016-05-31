@@ -2873,7 +2873,7 @@ class Comments extends TikiLib
 		);
 
 		if ($approved === false) {
-			TikiLib::lib('errorreport')->report(tr('Your comment was rejected.'));
+			Feedback::error(tr('Your comment was rejected.'), 'session');
 			return false;
 		}
 
@@ -3068,7 +3068,7 @@ class Comments extends TikiLib
 				)
 			);
 		} catch (Exception $e) {
-			TikiLib::lib('errorreport')->report(tr('Cannot perform spam check: %0', $e->getMessage()));
+			Feedback::error(tr('Cannot perform spam check: %0', $e->getMessage()), 'session');
 			return false;
 		}
 	}

@@ -153,7 +153,7 @@ class Search_Query_WikiBuilder
 	function wpquery_filter_relation($query, $value, $arguments)
 	{
 		if (! isset($arguments['qualifier'], $arguments['objecttype'])) {
-			TikiLib::lib('errorreport')->report(tr('Missing objectype or qualifier for relation filter.'));
+			Feedback::error(tr('Missing objectype or qualifier for relation filter.'), 'session');
 		}
 
 		/* custom mani for OR operation in relation filter */
@@ -192,7 +192,7 @@ class Search_Query_WikiBuilder
 			$arguments['to'] = $arguments['from'] + $arguments['gap'];
 		}
 		if (! isset($arguments['from'], $arguments['to'])) {
-			TikiLib::lib('errorreport')->report(tr('The range filter is missing \"from\" or \"to\".'));
+			Feedback::error(tr('The range filter is missing \"from\" or \"to\".'), 'session');
 		}
 		$query->filterRange($arguments['from'], $arguments['to'], $value);
 	}
@@ -200,7 +200,7 @@ class Search_Query_WikiBuilder
 	function wpquery_filter_textrange($query, $value, array $arguments)
 	{
 		if (! isset($arguments['from'], $arguments['to'])) {
-			TikiLib::lib('errorreport')->report(tr('The range filter is missing \"from\" or \"to\".'));
+			Feedback::error(tr('The range filter is missing \"from\" or \"to\".'), 'session');
 		}
 		$query->filterTextRange($arguments['from'], $arguments['to'], $value);
 	}

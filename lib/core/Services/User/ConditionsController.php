@@ -91,10 +91,10 @@ class Services_User_ConditionsController
 					$this->approveVersion($hash);
 					TikiLib::lib('access')->redirect($origin);
 				} else {
-					TikiLib::lib('errorreport')->report(tr('The terms and conditions were modified while you were reading them.'));
+					Feedback::error(tr('The terms and conditions were modified while you were reading them.'), 'session');
 				}
 			} else {
-				TikiLib::lib('errorreport')->report(tr('You are required to approve the terms of use to continue.'));
+				Feedback::error(tr('You are required to approve the terms of use to continue.'), 'session');
 			}
 		}
 
@@ -122,7 +122,7 @@ class Services_User_ConditionsController
 				$this->setBirthDate($user, $inputBirthDate);
 				TikiLib::lib('access')->redirect($origin);
 			} else {
-				TikiLib::lib('errorreport')->report(tr('You must enter your date of birth to continue.'));
+				Feedback::error(tr('You must enter your date of birth to continue.'), 'session');
 			}
 		}
 

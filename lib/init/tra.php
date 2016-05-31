@@ -258,7 +258,7 @@ function check_file_BOM($filename, $try_to_fix = true) {
 	if ($BOM_found) {
 		$message = 'Warning: File "' . $filename . '" contains a BOM which cannot be fixed. Please re-edit and save as "UTF-8 without BOM"';
 		if (Perms::get()->admin) {
-			TikiLib::lib('errorreport')->report($message);
+			Feedback::error($message, 'session');
 		}
 		trigger_error($message);
 	}

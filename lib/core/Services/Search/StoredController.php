@@ -157,9 +157,9 @@ class Services_Search_StoredController
 
 			return $query->search($unifiedsearchlib->getIndex());
 		} catch (Search_Elastic_TransportException $e) {
-			TikiLib::lib('errorreport')->report('Search functionality currently unavailable.');
+			Feedback::error(tr('Search functionality currently unavailable.'), 'session');
 		} catch (Exception $e) {
-			TikiLib::lib('errorreport')->report($e->getMessage());
+			Feedback::error($e->getMessage(), 'session');
 		}
 	}
 	
