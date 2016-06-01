@@ -256,8 +256,8 @@ CREATE TABLE `tiki_banning` (
   `ip3` char(3) default NULL,
   `ip4` char(3) default NULL,
   `user` varchar(200) default '',
-  `date_from` timestamp NOT NULL,
-  `date_to` timestamp NOT NULL,
+  `date_from` timestamp NULL,
+  `date_to` timestamp NULL,
   `use_dates` char(1) default NULL,
   `created` int(14) default NULL,
   `message` text,
@@ -2387,7 +2387,7 @@ DROP TABLE IF EXISTS `tiki_user_login_cookies`;
 CREATE TABLE `tiki_user_login_cookies` (
     `userId` INT NOT NULL,
     `secret` CHAR(64) NOT NULL,
-    `expiration` TIMESTAMP NOT NULL,
+    `expiration` TIMESTAMP NULL,
     PRIMARY KEY (`userId`, `secret`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -3362,8 +3362,8 @@ CREATE TABLE `tiki_payment_requests` (
     `amount_paid` DECIMAL(7,2) NOT NULL DEFAULT 0.0,
     `currency` CHAR(3) NOT NULL,
     `request_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `due_date` TIMESTAMP NOT NULL,
-	`authorized_until` TIMESTAMP NULL,
+    `due_date` TIMESTAMP NULL,
+    `authorized_until` TIMESTAMP NULL,
     `cancel_date` TIMESTAMP NULL,
     `description` VARCHAR(100) NOT NULL,
     `actions` TEXT,
@@ -3610,8 +3610,8 @@ CREATE TABLE `tiki_acct_book` (
   `bookId` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `bookName` varchar(255) NOT NULL,
   `bookClosed` enum('y','n') NOT NULL DEFAULT 'n',
-  `bookStartDate` date NOT NULL,
-  `bookEndDate` date NOT NULL,
+  `bookStartDate` date NULL,
+  `bookEndDate` date NULL,
   `bookCurrency` varchar(3) NOT NULL DEFAULT 'EUR',
   `bookCurrencyPos` int(11) NOT NULL,
   `bookDecimals` int(11) NOT NULL DEFAULT '2',
@@ -3640,7 +3640,7 @@ DROP TABLE IF EXISTS `tiki_acct_journal`;
 CREATE TABLE `tiki_acct_journal` (
   `journalBookId` int(10) unsigned NOT NULL,
   `journalId` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `journalDate` date NOT NULL DEFAULT '0000-00-00',
+  `journalDate` date NULL,
   `journalDescription` varchar(255) NOT NULL,
   `journalCancelled` int(1) NOT NULL DEFAULT '0',
   `journalTs` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -3651,7 +3651,7 @@ DROP TABLE IF EXISTS `tiki_acct_stack`;
 CREATE TABLE `tiki_acct_stack` (
   `stackBookId` int(10) unsigned NOT NULL,
   `stackId` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `stackDate` date NOT NULL DEFAULT '0000-00-00',
+  `stackDate` date NULL,
   `stackDescription` varchar(255) NOT NULL,
   `stackTs` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`stackId`)
@@ -3673,8 +3673,8 @@ CREATE TABLE `tiki_acct_statement` (
   `statementBookId` int(10) unsigned NOT NULL,
   `statementAccountId` int(10) unsigned NOT NULL DEFAULT '0',
   `statementId` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `statementBookingDate` date NOT NULL,
-  `statementValueDate` date NOT NULL,
+  `statementBookingDate` date NULL,
+  `statementValueDate` date NULL,
   `statementBookingText` varchar(255) NOT NULL,
   `statementReason` varchar(255) NOT NULL,
   `statementCounterpart` varchar(63) NOT NULL,
