@@ -65,6 +65,8 @@ class Search_GlobalSource_RelationSource implements Search_GlobalSource_Interfac
 					}
 				}
 				$data['relation'] = $rel['relation'];
+				$data['object_type'] = $rel['type'];
+				$data['object_id'] = $rel['itemId'];
 				$relation_objects[] = $data;
 			}
 		}
@@ -87,6 +89,8 @@ class Search_GlobalSource_RelationSource implements Search_GlobalSource_Interfac
 					}
 				}
 				$data['relation'] = $rel['relation'];
+				$data['object_type'] = $rel['type'];
+				$data['object_id'] = $rel['itemId'];
 				$relation_objects[] = $data;
 			}
 		}
