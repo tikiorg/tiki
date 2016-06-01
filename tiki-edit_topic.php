@@ -25,7 +25,7 @@ if ($topic_info == DB_ERROR) {
   die;
 }
 $smarty->assign_by_ref('topic_info', $topic_info);
-
+$errors = false;
 if (isset($_REQUEST["edittopic"])) {
   if (isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
     $fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
@@ -44,7 +44,8 @@ if (isset($_REQUEST["edittopic"])) {
   }
 	if (isset($_REQUEST['email']) && !empty($_REQUEST['email'])) {
 		if (!validate_email($_REQUEST['email'])) {
-			$errors[] = tra('Invalid email');
+			Feedback::error(tra('Invalid email'));
+			$errors = true;
 			$smarty->assign('email', $_REQUEST['email']);
 		} else {
 			$tikilib->add_user_watch('admin', 'topic_article_created', $_REQUEST['topicid'], 'cms', $topic_info['name'], 'tiki-edit_topic.php?topicId='.$_REQUEST['topicid'], $_REQUEST['email']);
@@ -55,8 +56,6 @@ if (isset($_REQUEST["edittopic"])) {
 	if (empty($errors)) {
 		header("Location: tiki-admin_topics.php");
 		die;
-	} else {
-		$smarty->assign_by_ref('errors', $errors);
 	}
 }
 include_once ('tiki-section_options.php');

@@ -101,7 +101,7 @@ if (!isset($_REQUEST['sort_modes'])) {
 $structures = $tikilib->list_received_pages(0, -1, $sort_modes, $find, 's');
 $smarty->assign_by_ref('structures', $structures['data']);
 if (!empty($errors)) {
-	$smarty->assign_by_ref('errors', $errors);
+	Feedback::error(['mes' => $errors]);
 }
 ask_ticket('received-pages');
 // Display the template

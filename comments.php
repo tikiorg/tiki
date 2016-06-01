@@ -209,9 +209,8 @@ if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == 
 		header('location: ' . $url);
 		die;
 	}
-
-	$smarty->assign_by_ref('errors', $errors);
-	$smarty->assign_by_ref('feedbacks', $feedbacks);
+	Feedback::warning($errors);
+	Feedback::note($feedbacks);
 
 	if ( isset( $pageCache ) ) {
 		$pageCache->invalidate();

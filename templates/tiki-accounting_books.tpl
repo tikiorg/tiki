@@ -1,13 +1,4 @@
 {* $Id$ *}
-{if !empty($errors)}
-	<div class="alert alert-warning">
-		{icon name='error' alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}
-		{foreach from=$errors item=m name=errors}
-			{$m}
-			{if !$smarty.foreach.errors.last}<br>{/if}
-		{/foreach}
-	</div>
-{/if}
 {tabset}
 	{tab name="{tr}My books{/tr}"}
 		<h2>{tr}My books{/tr}</h2>

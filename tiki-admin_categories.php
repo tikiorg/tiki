@@ -495,7 +495,9 @@ if ($prefs['feature_search'] !== 'y' || $prefs['unified_add_to_categ_search'] !=
 }
 
 ask_ticket('admin-categories');
-if (!empty($errors)) $smarty->assign('errors', $errors);
+if (!empty($errors)) {
+	Feedback::warning($errors);
+}
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template

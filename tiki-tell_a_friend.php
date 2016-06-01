@@ -124,7 +124,7 @@ if (isset($_REQUEST['send'])) {
 			$errors = tra("The mail can't be sent. Contact the administrator");
 		}
 	}
-	$smarty->assign_by_ref('errors', $errors);
+	Feedback::error(['mes' => $errors]);
 	$smarty->assign('errortype', 'no_redirect_login');
 } else {
 	$smarty->assign_by_ref('name', $user);

@@ -43,7 +43,7 @@ switch ($_REQUEST['action']) {
 					);
 					if (!is_numeric($bookId)) {
 						$errors[]=tra($bookId);
-						$smarty->assign('errors', $errors);
+						Feedback::error($errors);
 						$smarty->assign('bookName', $_REQUEST['bookName']);
 						$smarty->assign('bookStartDate', $_REQUEST['bookStartDate']);
 						$smarty->assign('bookEndDate', $_REQUEST['bookEndDate']);

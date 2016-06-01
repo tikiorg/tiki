@@ -238,14 +238,15 @@ if (isset($_REQUEST['ispublished'])) {
 	}
 }
 
-$errors = array();
+$errors = false;
 if (empty($_REQUEST['emails']) || $prefs['feature_cms_emails'] != 'y')
 $emails = '';
 elseif (!empty($_REQUEST['emails'])) {
 	$emails = explode(',', $_REQUEST['emails']);
 	foreach ($emails as $email) {
 		if (!validate_email($email, $prefs['validateEmail']))
-			$errors[] = tra('Invalid email:').' '.$email;
+			Feedback::warning(tra('Invalid email:').' '.$email);
+			$errors = true;
 	}
 }
 
@@ -687,7 +688,6 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 	header('location: '.$url);
 	exit;
 }
-$smarty->assign_by_ref('errors', $errors);
 
 // Set date to today before it's too late
 $_SESSION['thedate'] = $tikilib->now;

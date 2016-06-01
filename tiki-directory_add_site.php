@@ -99,7 +99,7 @@ if (isset($_REQUEST["save"])) {
 		$smarty->assign('save', 'y');
 	} else {
 		$info["isValid"] = 'n';
-		$smarty->assign('msg', $msg);
+		Feedback::warning($msg);
 	}
 	$info = array();
 	$info["name"] = $_REQUEST['name'];

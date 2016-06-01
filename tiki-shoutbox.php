@@ -46,7 +46,7 @@ if ($tiki_p_post_shoutbox == 'y') {
 	if (isset($_REQUEST["save"]) && !empty($_REQUEST['message'])) {
 		check_ticket('shoutbox');
 		if (($prefs['feature_antibot'] == 'y' && empty($user)) && !$captchalib->validate()) {
-			$smarty->assign('msg', $captchalib->getErrors());
+			Feedback::error(['mes' => $captchalib->getErrors()]);
 			if (!empty($_REQUEST['message'])) $smarty->assign_by_ref('message', $_REQUEST['message']);
 		} else {
 			$shoutboxlib->replace_shoutbox($_REQUEST['msgId'], $owner, $_REQUEST['message'], ($_REQUEST['tweet']==1));

@@ -3,12 +3,6 @@
 {title help="Articles"}{tr}Admin Article Topics{/tr}{/title}
 <h2>{tr}Edit article topic{/tr}</h2>
 
-{if !empty($errors)}
-	{remarksbox type=error title="{tr}Error{/tr}"}
-		{section name=ix loop=$errors}{$errors[ix]}{/section}
-	{/remarksbox}
-{/if}
-
 <form enctype="multipart/form-data" action="tiki-edit_topic.php" method="post" role="form">
 	<table class="table">
 		<tr>

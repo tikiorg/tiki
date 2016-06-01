@@ -161,22 +161,6 @@
 	{/if}
 {/if} {* end read comment *}
 {if $section eq 'forums'}<a id="comments"></a>{/if}
-{if !empty($errors)}
-	{remarksbox type="warning" title="{tr}Errors{/tr}"}
-		{foreach from=$errors item=error name=error}
-			{if !$smarty.foreach.error.first}<br>{/if}
-			{$error|escape}
-		{/foreach}
-	{/remarksbox}
-{/if}
-{if !empty($feedbacks)}
-	{remarksbox type="note"}
-		{foreach from=$feedbacks item=feedback name=feedback}
-			{$feedback|escape}
-			{if !$smarty.foreach.feedback.first}<br>{/if}
-		{/foreach}
-	{/remarksbox}
-{/if}
 
 {* Post dialog *}
 {block name=post_form}
@@ -254,7 +238,7 @@
 								{/if}
 								{textarea rows="10" codemirror='true' syntax='tiki' id="editpost2" class="form-control" name="comments_data" _wysiwyg=n}{strip}
 									{*If set to reply not empty, if you are editing a post, or previewing, put the contents in the text area.*}
-									{if ($prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || $comment_preview eq 'y' || !empty($errors)}
+									{if ($prefs.feature_forum_replyempty ne 'y') || $edit_reply > 0 || $comment_preview eq 'y' || !empty($tikifeedback)}
 										{$comment_data}
 									{/if}
 								{/strip}{/textarea}

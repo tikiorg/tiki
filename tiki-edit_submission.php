@@ -18,7 +18,7 @@ if ($prefs['feature_freetags'] == 'y') {
 
 $access->check_feature('feature_submissions');
 $access->check_permission('tiki_p_submit_article');
-$errors = array();
+$errors = false;
 
 $auto_query_args = array('subId');
 
@@ -187,7 +187,8 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST["submitarticle"]))
 			&& $prefs['feature_antibot'] == 'y'
 			&& !$captchalib->validate()
 ) {
-	$errors[] = $captchalib->getErrors();
+	Feedback::error(['mes' => $captchalib->getErrors()]);
+	$errors = true;
 }
 
 $topics = $artlib->list_topics();
@@ -577,7 +578,6 @@ $smarty->assign('siteTimeZone', $prefs['display_timezone']);
 $wikilib = TikiLib::lib('wiki');
 $plugins = $wikilib->list_plugins(true, 'body');
 $smarty->assign_by_ref('plugins', $plugins);
-$smarty->assign('errors', $errors);
 
 $smarty->assign('showtags', 'n');
 $smarty->assign('qtcycle', '');

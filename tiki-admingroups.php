@@ -357,7 +357,7 @@ if (!empty($_REQUEST['group']) && isset($_REQUEST['import'])) {
 		$data = fgetcsv($fhandle, 1000);
 	}
 	if (!empty($errors)) {
-		$smarty->assign_by_ref('errors', $errors);
+		Feedback::error($errors);
 	}
 	$cookietab = 4;
 }

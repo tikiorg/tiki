@@ -72,10 +72,6 @@
 
 {if $faq_info.canSuggest eq 'y' and $tiki_p_suggest_faq eq 'y'}
 	<div class="faq_suggestions" id="faqsugg" style="display:{if !empty($error)}block{else}none{/if};">
-		{if !empty($error)}
-			<br>
-			<div class="alert alert-warning">{icon name="error" alt="{tr}Error{/tr}" style="vertical-align:middle"} {$error}</div>
-		{/if}
 		<br>
 		<form action="tiki-view_faq.php" method="post">
 			<input type="hidden" name="faqId" value="{$faqId|escape}">

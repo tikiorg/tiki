@@ -48,8 +48,7 @@ if (isset($_REQUEST["sugg"])) {
 	check_ticket('view-faq');
 	if ($tiki_p_suggest_faq == 'y') {
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && !$captchalib->validate()) {
-			$error = $captchalib->getErrors();
-			$smarty->assign('error', $error);
+			Feedback::error(['mes' => $captchalib->getErrors()]);
 			// Save the pending question and answer if antibot code is wrong
 			$smarty->assign('pendingquestion', $_REQUEST["suggested_question"]);
 			$smarty->assign('pendinganswer', $_REQUEST["suggested_answer"]);
@@ -57,8 +56,7 @@ if (isset($_REQUEST["sugg"])) {
 			if (!empty($_REQUEST["suggested_question"])) {
 				$faqlib->add_suggested_faq_question($_REQUEST["faqId"], $_REQUEST["suggested_question"], $_REQUEST["suggested_answer"], $user);
 			} else {
-				$error = tra('You must suggest a question; please try again.');
-				$smarty->assign('error', $error);
+				Feedback::error(tra('You must suggest a question; please try again.'));
 				// Save the pending answer if question is empty
 				$smarty->assign('pendinganswer', $_REQUEST["suggested_answer"]);
 			}

@@ -16,16 +16,6 @@
 	<h2>{tr}Preview{/tr}</h2>
 	{include file='article.tpl'}
 {/if}
-{if !empty($errors)}
-	<div class="alert-warning">
-		{tr}One of the email addresses that was input is invalid{/tr}
-		<br>
-		{foreach from=$errors item=m name=errors}
-			{$m}
-			{if !$smarty.foreach.errors.last}<br>{/if}
-		{/foreach}
-	</div>
-{/if}
 <form enctype="multipart/form-data" method="post" action="tiki-edit_article.php" id='editpageform' role="form" class="form form-horizontal">
 	<input type="hidden" name="articleId" value="{$articleId|escape}">
 	<input type="hidden" name="previewId" value="{$previewId|escape}">

@@ -59,7 +59,7 @@ if (isset($_REQUEST['send'])) {
 		} else {
 			$message = $captchalib->getErrors();
 		}
-		$smarty->assign('errorMessage', $message);
+		Feedback::error(['mes' => $message, 'title' => tr('Invalid')]);
 	} else {
 		$access->check_ticket();
 		$body = tr("%0 sent you a message:", $from) . "\n" . $body;
@@ -76,7 +76,7 @@ if (isset($_REQUEST['send'])) {
 		if ($contact_name == '') $contact_name = $prefs['contact_user'];
 		$message = tra('Message sent to'). ': ' . $contact_name . '<br />';
 		$smarty->assign('sent', 1);
-		$smarty->assign('message', $message);
+		Feedback::success($message);
 	}
 }
 

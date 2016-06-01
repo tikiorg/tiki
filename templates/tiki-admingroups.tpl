@@ -544,13 +544,6 @@
 			{* ----------------------- tab with import/export --------------------------------------- *}
 			<form method="post" action="tiki-admingroups.php" enctype="multipart/form-data" class="form-horizontal">
 				<input type="hidden" name="group" value="{$groupname|escape}">
-				{if $errors}
-					<div class="simple highlight">
-						{foreach from=$errors item=e}
-							{$e}<br>
-						{/foreach}
-					</div>
-				{/if}
 
 				<h2>{tr}Download CSV export{/tr}</h2>
                 <div class="form-group">

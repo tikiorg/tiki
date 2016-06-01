@@ -1,13 +1,5 @@
 {title}{tr}Discounts{/tr}{/title}
 
-{if !empty($errors)}
-	{remarksbox type='errors' title="{tr}Errors{/tr}"}
-		{foreach from=$errors item=error}
-			{$error|escape}<br/>
-		{/foreach}
-	{/remarksbox}
-{/if}
-
 {tabset}
 
 {tab name="{tr}List{/tr}"}

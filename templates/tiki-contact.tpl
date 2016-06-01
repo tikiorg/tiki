@@ -1,12 +1,7 @@
 {title}{tr}Contact Us{/tr}{/title}
 
-{if $sent eq '1'}
-	{remarksbox icon="accept" title="{tr}Success{/tr}"}{$message}{/remarksbox}
-{else}
+{if !$sent}
 	<h2>{tr}Send a message to us{/tr}</h2>
-	{if isset($errorMessage)}
-		{remarksbox title="Invalid" type="errors"}{$errorMessage}{/remarksbox}
-	{/if}
 	<form class="form form-horizontal" method="post" action="tiki-contact.php">
 		{ticket}
 		<input type="hidden" name="to" value="{$prefs.contact_user|escape}">

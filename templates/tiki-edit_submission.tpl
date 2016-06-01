@@ -2,14 +2,6 @@
 {* Note: if you edit this file, make sure to make corresponding edits on tiki-edit_article.tpl *}
 
 {include file='tiki-articles-js.tpl'}
-{if !empty($errors)}
-	{remarksbox type='errors' title="{tr}Errors{/tr}"}
-		{foreach from=$errors item=m name=errors}
-			{$m}
-			{if !$smarty.foreach.errors.last}<br>{/if}
-		{/foreach}
-	{/remarksbox}
-{/if}
 {if $preview}
 	<h2>{tr}Preview{/tr}</h2>
 

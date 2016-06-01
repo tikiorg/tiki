@@ -20,7 +20,7 @@
 						{/if}
 							{foreach $item.mes as $mes}
 								<li>
-									{$mes|escape}
+									{$mes}
 								</li>
 							{/foreach}
 						</ul>

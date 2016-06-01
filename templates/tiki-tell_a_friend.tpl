@@ -23,16 +23,6 @@
 	</div>
 {/if}
 
-{if !empty($errors)}
-	<div class="alert alert-warning">
-		{icon name='error' alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}
-		{foreach from=$errors item=m name=errors}
-			{$m}
-			{if !$smarty.foreach.errors.last}<br>{/if}
-		{/foreach}
-	</div>
-{/if}
-
 <form method="post" action="tiki-tell_a_friend.php" id="tellafriend" class="form-horizontal">
 	<input type="hidden" name="url" value="{$url|escape:url}">
 	<div class="form-group">
