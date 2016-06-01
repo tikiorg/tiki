@@ -86,6 +86,17 @@ class CleanVendors
 		self::deleteDirectory($vendors . 'player/flv/mtasc');
 		self::deleteDirectory($vendors . 'player/mp3/classes');
 		self::deleteDirectory($vendors . 'player/mp3/mtasc');
+		self::deleteFile(     $vendors . 'player/flv/build.xml');
+		self::deleteFile(     $vendors . 'player/flv/flv_stream.php');
+		self::deleteFile(     $vendors . 'player/flv/template_default/compileTemplateDefault.bat');
+		self::deleteFile(     $vendors . 'player/flv/template_default/compileTemplateDefault.sh');
+		self::deleteFile(     $vendors . 'player/flv/template_default/rorobong.jpg');
+		self::deleteFile(     $vendors . 'player/flv/template_default/TemplateDefault.as');
+		self::deleteFile(     $vendors . 'player/mp3/build.xml');
+		self::deleteFile(     $vendors . 'player/mp3/template_default/compileTemplateDefault.bat');
+		self::deleteFile(     $vendors . 'player/mp3/template_default/compileTemplateDefault.sh');
+		self::deleteFile(     $vendors . 'player/mp3/template_default/TemplateDefault.as');
+		self::deleteFile(     $vendors . 'player/mp3/template_default/test.mp3');
 	}
 
 	private static function deleteDirectory($path)
