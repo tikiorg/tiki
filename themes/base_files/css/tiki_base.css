@@ -219,11 +219,11 @@ table.treetable.objectperms td.removed {
 }
 html#print,
 body.print * {
-  background: #fff;
-  color: #000;
+  background: #ffffff;
+  color: #000000;
 }
 body.fullscreen {
-  background: #fff;
+  background: #ffffff;
 }
 .attention {
   color: #a94442;
@@ -251,7 +251,7 @@ div #metadata div.tabs {
   background-color: transparent;
 }
 .openid_url {
-  background: #fff url('../../../img/icons/login-OpenID-bg.gif') 1px 1px no-repeat;
+  background: #ffffff url('../../../img/icons/login-OpenID-bg.gif') 1px 1px no-repeat;
 }
 input:-webkit-autofill {
   background-color: #fff !important;
@@ -771,7 +771,7 @@ a.admbox.off:active {
 }
 code,
 pre.codelisting {
-  color: #444;
+  color: #444444;
   background: #f8f8f8;
   border: 1px solid #dddddd;
   border-radius: 1px;
@@ -2108,7 +2108,7 @@ ul.tree {
   padding: 0;
 }
 .jSBarTopParent .jSBarController {
-  height: 0px !important;
+  height: 0 !important;
 }
 .plugin-sample {
   padding: 5px;
@@ -2159,31 +2159,31 @@ a.fc-event:hover {
   color: #333333;
 }
 .calprio1 {
-  background: #DAE0E0;
+  background: #dae0e0;
 }
 .calprio2 {
-  background: #DADCDC;
+  background: #dadcdc;
 }
 .calprio3 {
-  background: #DAD0D0;
+  background: #dad0d0;
 }
 .calprio4 {
-  background: #DACACA;
+  background: #dacaca;
 }
 .calprio5 {
-  background: #DAC0D0;
+  background: #cac0d0;
 }
 .calprio6 {
-  background: #DABABA;
+  background: #dababa;
 }
 .calprio7 {
-  background: #DAB0B0;
+  background: #cab0b0;
 }
 .calprio8 {
-  background: #DAAAAA;
+  background: #daaaaa;
 }
 .calprio9 {
-  background: #DA9A9A;
+  background: #da9a9a;
 }
 .calprio1 a,
 .calprio2 a,
@@ -2454,7 +2454,7 @@ fieldset.dropzone {
   background: #eeeeee;
 }
 .readlink {
-  color: black;
+  color: #000000;
 }
 .webmail_item {
   border: 1px solid #ddd;
@@ -2649,7 +2649,7 @@ body > .ui-front {
   border-radius: 16px;
   bottom: auto !important;
   display: block;
-  font-family: Arial;
+  font-family: Arial sans-serif;
   font-size: smaller;
   padding: 0 8px;
   position: absolute;
@@ -3165,20 +3165,20 @@ table.tablesorter thead tr.tablesorter-filter-row td .value-popup:after {
   left: -3px;
   min-width: 14px;
   height: 12px;
-  background-color: #444;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#444444), to(#999999));
-  background-image: -webkit-linear-gradient(top, #444, #999);
-  background-image: -moz-linear-gradient(top, #444, #999);
-  background-image: -o-linear-gradient(top, #444, #999);
-  background-image: linear-gradient(to bottom, #444, #999);
+  background-color: #444444;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#444444444 444), to(#999999999 999));
+  background-image: -webkit-linear-gradient(top, #444444, #999999);
+  background-image: -moz-linear-gradient(top, #444444, #999999);
+  background-image: -o-linear-gradient(top, #444444, #999999);
+  background-image: linear-gradient(to bottom, #444444, #999999);
   -webkit-border-radius: 3px;
   border-radius: 3px;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
-  -webkit-box-shadow: 0px 0px 4px 0px #777;
-  box-shadow: 0px 0px 4px 0px #777;
-  border: #444 1px solid;
-  color: #fff;
+  -webkit-box-shadow: 0 0 4px 0 #777777;
+  box-shadow: 0 0 4px 0 #777777;
+  border: #444444 1px solid;
+  color: #ffffff;
   font: bold 0.9em/1em Arial;
   padding: 1px;
   text-align: center;
@@ -3188,7 +3188,7 @@ table.tablesorter thead tr.tablesorter-filter-row td .value-popup:before {
   position: absolute;
   width: 0;
   height: 0;
-  border-top: 8px solid #777;
+  border-top: 8px solid #777777;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
   top: -8px;
@@ -3370,7 +3370,7 @@ table.tablesorter thead tr.tablesorter-filter-row {
 .chosen-container .chosen-results li.group-result {
   display: list-item;
   cursor: default;
-  color: #999;
+  color: #999999;
   font-weight: bold;
 }
 .chosen-container .chosen-results li.group-option {
@@ -3551,7 +3551,7 @@ table.tablesorter thead tr.tablesorter-filter-row {
   outline: 0;
 }
 .chosen-container-multi .chosen-choices .search-field .default {
-  color: #999;
+  color: #999999;
 }
 .chosen-container-multi .chosen-choices .search-choice {
   -webkit-background-clip: padding-box;
@@ -3636,7 +3636,7 @@ table.tablesorter thead tr.tablesorter-filter-row {
   transition: border linear .2s, box-shadow linear .2s;
 }
 .chosen-container-active .chosen-choices .search-field input[type="text"] {
-  color: #111 !important;
+  color: #111111 !important;
 }
 .chosen-container-active.chosen-with-drop .chosen-choices {
   border-bottom-right-radius: 0;
@@ -4389,7 +4389,7 @@ div.drillshow {
   min-width: 38px;
   margin: 0 3px 0 0;
   font-size: 0.9em;
-  color: #777;
+  color: #777777;
   padding: 5px 5px 6px 5px;
   text-align: center;
 }
@@ -4397,18 +4397,18 @@ div.drillshow {
 .multilike .points .mini-counts {
   font-size: 1.4em;
   font-weight: 300;
-  color: #777;
+  color: #777777;
   margin-bottom: 4px;
   text-align: center;
 }
 .multilike .rate {
   font-size: 0.9em;
-  color: #555;
+  color: #555555;
   padding-left: 10px;
   vertical-align: super;
 }
 .multilike .rate div {
-  padding: 5px 0px 0px 0px;
+  padding: 5px 0 0 0;
 }
 .multilike .rate div .title {
   font-weight: 300;

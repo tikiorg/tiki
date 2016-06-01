@@ -1527,7 +1527,7 @@ samp {
 code {
   padding: 2px 4px;
   font-size: 90%;
-  color: #444;
+  color: #444444;
   background-color: #f8f8f8;
   border-radius: 0;
 }
@@ -7201,11 +7201,11 @@ table.treetable.objectperms td.removed {
 }
 html#print,
 body.print * {
-  background: #fff;
-  color: #000;
+  background: #ffffff;
+  color: #000000;
 }
 body.fullscreen {
-  background: #fff;
+  background: #ffffff;
 }
 .attention {
   color: #fff;
@@ -7233,7 +7233,7 @@ div #metadata div.tabs {
   background-color: transparent;
 }
 .openid_url {
-  background: #fff url('../../../img/icons/login-OpenID-bg.gif') 1px 1px no-repeat;
+  background: #ffffff url('../../../img/icons/login-OpenID-bg.gif') 1px 1px no-repeat;
 }
 input:-webkit-autofill {
   background-color: #fff !important;
@@ -7753,7 +7753,7 @@ a.admbox.off:active {
 }
 code,
 pre.codelisting {
-  color: #444;
+  color: #444444;
   background: #f8f8f8;
   border: 1px solid #dddddd;
   border-radius: 1px;

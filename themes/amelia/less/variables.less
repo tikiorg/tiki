@@ -6,32 +6,32 @@
 //
 //## Gray and brand colors for use across Bootstrap.
 
-@gray-base: #000;
-@gray-darker: #111;
+@gray-base: #000000;
+@gray-darker: #111111;
 // #222
-@gray-dark: #444;
+@gray-dark: #444444;
 // #333
 @gray: lighten(#000, 33.5%);
 // #555
-@gray-light: #bbb;
+@gray-light: #bbbbbb;
 // #999
-@gray-lighter: #ddd;
+@gray-lighter: #dddddd;
 // #eee
 
-@brand-primary: #AD1D28;
-@brand-success: #48CA3B;
-@brand-info: #4D3A7D;
-@brand-warning: #DEBB27;
-@brand-danger: #DF6E1E;
+@brand-primary: #ad1d28;
+@brand-success: #48ca3b;
+@brand-info: #4d3a7d;
+@brand-warning: #debb27;
+@brand-danger: #df6e1e;
 
 //== Scaffolding
 //
 //## Settings for some of the most global styles.
 
 //** Background color for `<body>`.
-@body-bg: #108A93;
+@body-bg: #108a93;
 //** Global text color on `<body>`.
-@text-color: #fff;
+@text-color: #FFF;
 
 //** Global textual link color.
 @link-color: lighten(@brand-warning, 15%);
@@ -115,7 +115,7 @@
 @border-radius-small: 3px;
 
 //** Global color for active items (e.g., navs or dropdowns).
-@component-active-color: #fff;
+@component-active-color: #ffffff;
 //** Global background color for active items (e.g., navs or dropdowns).
 @component-active-bg: lighten(@body-bg, 10%);
 
@@ -154,7 +154,7 @@
 @btn-default-bg: @gray-lighter;
 @btn-default-border: @btn-default-bg;
 
-@btn-primary-color: #fff;
+@btn-primary-color: #ffffff;
 @btn-primary-bg: @brand-primary;
 @btn-primary-border: @btn-primary-bg;
 
@@ -181,14 +181,14 @@
 //##
 
 //** `<input>` background color
-@input-bg: #fff;
+@input-bg: #ffffff;
 //** `<input disabled>` background color
 @input-bg-disabled: @gray-lighter;
 
 //** Text color for `<input>`s
 @input-color: @gray-dark;
 //** `<input>` border color
-@input-border: #ccc;
+@input-border: #cccccc;
 
 // TODO: Rename `@input-border-radius` to `@input-border-radius-base` in v4
 //** Default `.form-control` border radius
@@ -227,7 +227,7 @@
 //## Dropdown menu container and contents.
 
 //** Background for the dropdown menu.
-@dropdown-bg: #fff;
+@dropdown-bg: #ffffff;
 //** Dropdown menu `border-color`.
 @dropdown-border: rgba(0, 0, 0, .15);
 //** Dropdown menu `border-color` **for IE8**.
@@ -238,12 +238,12 @@
 //** Dropdown link text color.
 @dropdown-link-color: @gray-dark;
 //** Hover color for dropdown links.
-@dropdown-link-hover-color: #fff;
+@dropdown-link-hover-color: #ffffff;
 //** Hover background for dropdown links.
 @dropdown-link-hover-bg: @dropdown-link-active-bg;
 
 //** Active dropdown menu item text color.
-@dropdown-link-active-color: #fff;
+@dropdown-link-active-color: #ffffff;
 //** Active dropdown menu item background color.
 @dropdown-link-active-bg: @component-active-bg;
 
@@ -254,7 +254,7 @@
 @dropdown-header-color: @gray-lighter;
 
 //** Deprecated `@dropdown-caret-color` as of v3.1.0
-@dropdown-caret-color: #000;
+@dropdown-caret-color: #000000;
 
 //-- Z-index master list
 //
@@ -359,12 +359,12 @@
 @navbar-default-border: darken(@navbar-default-bg, 6.5%);
 
 // Navbar links
-@navbar-default-link-color: #fff;
-@navbar-default-link-hover-color: #fff;
+@navbar-default-link-color: #ffffff;
+@navbar-default-link-hover-color: #ffffff;
 @navbar-default-link-hover-bg: lighten(@navbar-default-bg, 10%);
-@navbar-default-link-active-color: #fff;
+@navbar-default-link-active-color: #ffffff;
 @navbar-default-link-active-bg: @navbar-default-link-hover-bg;
-@navbar-default-link-disabled-color: #ccc;
+@navbar-default-link-disabled-color: #cccccc;
 @navbar-default-link-disabled-bg: transparent;
 
 // Navbar brand label
@@ -374,7 +374,7 @@
 
 // Navbar toggle
 @navbar-default-toggle-hover-bg: @navbar-default-link-hover-bg;
-@navbar-default-toggle-icon-bar-bg: #fff;
+@navbar-default-toggle-icon-bar-bg: #ffffff;
 @navbar-default-toggle-border-color: @navbar-default-link-hover-bg;
 
 // Inverted navbar
@@ -384,22 +384,22 @@
 @navbar-inverse-border: darken(@navbar-inverse-bg, 10%);
 
 // Inverted navbar links
-@navbar-inverse-link-color: #fff;
-@navbar-inverse-link-hover-color: #fff;
+@navbar-inverse-link-color: #ffffff;
+@navbar-inverse-link-hover-color: #ffffff;
 @navbar-inverse-link-hover-bg: lighten(@navbar-inverse-bg, 10%);
-@navbar-inverse-link-active-color: #fff;
+@navbar-inverse-link-active-color: #ffffff;
 @navbar-inverse-link-active-bg: @navbar-inverse-link-hover-bg;
-@navbar-inverse-link-disabled-color: #444;
+@navbar-inverse-link-disabled-color: #444444;
 @navbar-inverse-link-disabled-bg: transparent;
 
 // Inverted navbar brand label
 @navbar-inverse-brand-color: @navbar-inverse-link-color;
-@navbar-inverse-brand-hover-color: #fff;
+@navbar-inverse-brand-hover-color: #ffffff;
 @navbar-inverse-brand-hover-bg: none;
 
 // Inverted navbar toggle
 @navbar-inverse-toggle-hover-bg: @navbar-inverse-link-hover-bg;
-@navbar-inverse-toggle-icon-bar-bg: #fff;
+@navbar-inverse-toggle-icon-bar-bg: #ffffff;
 @navbar-inverse-toggle-border-color: @navbar-inverse-link-hover-bg;
 
 //== Navs
@@ -419,7 +419,7 @@
 @nav-tabs-link-hover-border-color: transparent;
 
 @nav-tabs-active-link-hover-bg: @nav-link-hover-bg;
-@nav-tabs-active-link-hover-color: #fff;
+@nav-tabs-active-link-hover-color: #ffffff;
 @nav-tabs-active-link-hover-border-color: transparent;
 
 @nav-tabs-justified-link-border-color: transparent;
@@ -428,7 +428,7 @@
 //== Pills
 @nav-pills-border-radius: @border-radius-base;
 @nav-pills-active-link-hover-bg: @component-active-bg;
-@nav-pills-active-link-hover-color: #fff;
+@nav-pills-active-link-hover-color: #ffffff;
 
 //== Pagination
 //
