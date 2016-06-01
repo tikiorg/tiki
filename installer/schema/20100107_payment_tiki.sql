@@ -5,7 +5,7 @@ CREATE TABLE `tiki_payment_requests` (
 	`amount_paid` DECIMAL(7,2) NOT NULL DEFAULT 0.0,
 	`currency` CHAR(3) NOT NULL,
 	`request_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`due_date` TIMESTAMP NOT NULL,
+	`due_date` TIMESTAMP NULL,
 	`cancel_date` TIMESTAMP NULL,
 	`description` VARCHAR(100) NOT NULL,
 	`actions` TEXT,
