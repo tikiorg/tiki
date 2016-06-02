@@ -78,7 +78,7 @@ fieldset[disabled] .btn-default.focus {
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
   color: #7195c1;
-  background-color: #eeaa66;
+  background-color: #ea6;
 }
 .navbar-default .navbar-link {
   color: #2a5385;
@@ -123,7 +123,7 @@ input[type="submit"].btn-link {
 input[type="reset"]:hover,
 input[type="submit"]:hover,
 .button input:hover {
-  background: #eeaa66;
+  background: #ea6;
 }
 .btn-link:hover {
   background: none;

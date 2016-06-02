@@ -572,10 +572,10 @@ hr {
 .topbar,
 .topbar_container,
 .layout_basic .page-header > .topbar {
-  background: #ffc506;
+  background: #FFC506;
 }
 .top_modules a {
-  color: #fff;
+  color: #ffffff;
 }
 .navbar-collapse.collapse.in {
   background: #ffc506;
@@ -618,7 +618,7 @@ hr {
 .cssmenu_vert ul > li > a:focus {
   text-decoration: none;
   color: #f2f2f2;
-  background-color: #ffc506;
+  background-color: #FFC506;
 }
 .topbar .cssmenu_horiz li a:hover {
   background: #e4af00;
@@ -666,7 +666,7 @@ hr {
 .layout_social_modules .navbar-fixed-top,
 .layout_basic .page-header > .top_modules {
   background: #e4af00;
-  border-bottom: 5px solid #000;
+  border-bottom: 5px solid #000000;
 }
 .header_container > .header {
   background: none;
@@ -731,7 +731,7 @@ a.flipmoduletitle,
   background: transparent;
 }
 .footer_liner h3.panel-title {
-  color: #fff;
+  color: #ffffff;
   border-bottom: 1px dotted #ffc506;
 }
 .footer_liner a.btn-default,
@@ -750,7 +750,7 @@ a.flipmoduletitle,
   font-size: 20px;
 }
 .siteloginbar_popup .dropdown-menu > li > a {
-  color: #fff;
+  color: #ffffff;
 }
 .layout_basic .page-header > .top_modules a,
 header.header a,

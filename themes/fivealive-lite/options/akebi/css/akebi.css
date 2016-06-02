@@ -572,10 +572,10 @@ hr {
 .topbar,
 .topbar_container,
 .layout_basic .page-header > .topbar {
-  background: #18a3bb;
+  background: #18A3BB;
 }
 .top_modules a {
-  color: #fff;
+  color: #ffffff;
 }
 .navbar-collapse.collapse.in {
   background: #18a3bb;
@@ -618,7 +618,7 @@ hr {
 .cssmenu_vert ul > li > a:focus {
   text-decoration: none;
   color: #f2f2f2;
-  background-color: #18a3bb;
+  background-color: #18A3BB;
 }
 .topbar .cssmenu_horiz li a:hover {
   background: #14899e;
@@ -666,7 +666,7 @@ hr {
 .layout_social_modules .navbar-fixed-top,
 .layout_basic .page-header > .top_modules {
   background: #117485;
-  border-bottom: 5px solid #000;
+  border-bottom: 5px solid #000000;
 }
 .header_container > .header {
   background: none;
@@ -692,7 +692,7 @@ input#login-pass,
 textarea,
 .adminoptionbox option {
   background-color: #ddf8f9;
-  border-color: #b4f3fb #ffffff #ffffff #b4f3fb;
+  border-color: #b4f3fb #fff #fff #b4f3fb;
 }
 .navbar-collapse {
   border: none;
@@ -731,7 +731,7 @@ a.flipmoduletitle,
   background: transparent;
 }
 .footer_liner h3.panel-title {
-  color: #fff;
+  color: #ffffff;
   border-bottom: 1px dotted #19a5be;
 }
 .footer_liner a.btn-default,
@@ -750,7 +750,7 @@ a.flipmoduletitle,
   font-size: 20px;
 }
 .siteloginbar_popup .dropdown-menu > li > a {
-  color: #fff;
+  color: #ffffff;
 }
 .layout_basic .page-header > .top_modules a,
 header.header a,

@@ -605,7 +605,7 @@ input#login-pass,
 textarea,
 .adminoptionbox option {
   background-color: #ddf8f9;
-  border-color: #b4f3fb #ffffff #ffffff #b4f3fb;
+  border-color: #b4f3fb #fff #fff #b4f3fb;
 }
 .navbar-collapse {
   border: none;
@@ -621,7 +621,7 @@ textarea,
   border-bottom: 1px solid #19a5be;
 }
 .footer_liner h3.panel-title {
-  color: #fff;
+  color: #ffffff;
   border-bottom: 1px dotted #19a5be;
 }
 .footer_liner legend,
@@ -652,7 +652,7 @@ textarea,
   font-size: 20px;
 }
 .siteloginbar_popup .dropdown-menu > li > a {
-  color: #fff;
+  color: #ffffff;
 }
 header.header .sitetitle,
 header.header .sitesubtitle {

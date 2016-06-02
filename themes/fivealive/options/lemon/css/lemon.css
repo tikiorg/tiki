@@ -622,7 +622,7 @@ textarea,
   border-bottom: 1px solid #ffc506;
 }
 .footer_liner h3.panel-title {
-  color: #fff;
+  color: #ffffff;
   border-bottom: 1px dotted #ffc506;
 }
 .footer_liner legend,
@@ -653,7 +653,7 @@ textarea,
   font-size: 20px;
 }
 .siteloginbar_popup .dropdown-menu > li > a {
-  color: #fff;
+  color: #ffffff;
 }
 header.header .sitetitle,
 header.header .sitesubtitle {

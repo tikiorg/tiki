@@ -1,6 +1,6 @@
-@import url(http://fonts.googleapis.com/css?family=Play);
 /* Jqui theme (jqui.css) Trontastic theme option (trontastic.css)
 	Visit http://themes.tiki.org for more information.*/
+@import url(http://fonts.googleapis.com/css?family=Play);
 a {
   color: #b8ec79;
 }
@@ -100,7 +100,7 @@ body {
 .header-container a,
 .page-header a:visited,
 .header-container a:visited {
-  color: #222;
+  color: #222222;
 }
 .layout_social > .container,
 #middle,
@@ -109,7 +109,7 @@ body {
 }
 .layout_basic #footer,
 #footer .container {
-  background: #000000 url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') 50% 50% repeat-x;
+  background: #000 url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') 50% 50% repeat-x;
   color: #c6e99c;
 }
 #footer a:link,
@@ -123,11 +123,11 @@ body {
 #col1,
 #autosave_preview {
   border: 1px solid #4a4a4a;
-  background: #000000 url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') 50% top repeat-x;
+  background: #000 url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') 50% top repeat-x;
   color: #f3fce8;
 }
 body.fullscreen {
-  background: #000000 url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') 50% top repeat-x;
+  background: #000 url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') 50% top repeat-x;
 }
 body.fullscreen #col1,
 body.fullscreen #middle,
@@ -187,7 +187,7 @@ body.fullscreen .topbar {
   color: #a0e64c;
 }
 .top_modules div:not(.panel) .btn-link {
-  color: #000;
+  color: #000000;
 }
 a.admbox.off {
   border: 1px solid #555555;
@@ -198,9 +198,9 @@ a.admbox.off:hover {
   color: #b8ec79;
 }
 .admbox.btn-primary:hover {
-  background: #222;
-  color: #fff;
-  border-color: #fff;
+  background: #222222;
+  color: #ffffff;
+  border-color: #ffffff;
 }
 .well {
   background: #484848;
@@ -213,10 +213,10 @@ pre,
   font-size: 15px;
 }
 a.list-group-item .list-group-item-heading {
-  color: #fff;
+  color: #ffffff;
 }
 .list-group-item {
-  background-color: #222;
+  background-color: #222222;
   border: 1px solid #4a4a4a;
 }
 a.list-group-item:hover .list-group-item-heading,
@@ -239,8 +239,8 @@ blockquote.pull-right {
 }
 .topbar,
 .navbar-default {
-  border: 1px solid #222;
-  background: #000000 url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') 50% 50% repeat-x;
+  border: 1px solid #222222;
+  background: #000 url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') 50% 50% repeat-x;
   color: #c6e99c;
 }
 .navbar .navbar-form,
@@ -259,7 +259,7 @@ blockquote.pull-right {
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
-  background-color: #222;
+  background-color: #222222;
   color: #b8ec79;
 }
 .navbar-default .navbar-nav > li > a,
@@ -276,12 +276,12 @@ blockquote.pull-right {
 }
 .topbar .cssmenu_horiz.sf-arrows > .menuSection0:hover > .sf-with-ul:after,
 .topbar .cssmenu_horiz.sf-arrows > .menuSection0.sfhover > .sf-with-ul:after {
-  border-top-color: #fff;
+  border-top-color: #ffffff;
 }
 .cssmenu_horiz > ul > li > a,
 .cssmenu_vert ul a {
-  background: #fff;
-  color: #222;
+  background: #ffffff;
+  color: #222222;
 }
 .cssmenu_vert.sf-arrows li > .sf-with-ul:after {
   border-color: transparent;
@@ -312,12 +312,12 @@ blockquote.pull-right {
 .modal,
 .modal-body {
   border: 1px solid #4a4a4a;
-  background: #000000 url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') 50% top repeat-x;
+  background: #000 url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') 50% top repeat-x;
   color: #f3fce8;
 }
 .panel-footer,
 .modal-footer {
-  background-color: #222;
+  background-color: #222222;
   border-top: 1px solid #4a4a4a;
 }
 .panel-heading,
@@ -326,13 +326,13 @@ td.heading,
 tr.diffheader,
 .popover-title,
 .modal-header {
-  border: 1px solid #000;
+  border: 1px solid #000000;
   background: #9fda58 url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png') 50% 50% repeat-x;
   color: #222222;
   font-weight: bold;
 }
 .panel-accordian .panel-heading h4.panel-title a {
-  color: #222;
+  color: #222222;
 }
 .panel-accordian .panel-heading h4.panel-title a:hover,
 .panel-accordian .panel-heading h4.panel-title a:focus {
@@ -343,13 +343,13 @@ tr.diffheader,
   font-size: 17px;
 }
 .table-striped {
-  color: #222;
+  color: #222222;
   border: 1px solid #95da58;
 }
 .table-striped > tbody > tr:nth-of-type(odd),
 .tablesorter tr.odd td {
   background: #c6e99c;
-  color: #222;
+  color: #222222;
 }
 .table-striped > tbody > tr:nth-of-type(odd) a,
 .tablesorter tr.odd td a {
@@ -358,7 +358,7 @@ tr.diffheader,
 .table-striped > tbody > tr:nth-of-type(even),
 .tablesorter tr.even td {
   background: #b0e077;
-  color: #222;
+  color: #222222;
 }
 .table-striped > tbody > tr:nth-of-type(even) a,
 .tablesorter tr.even td a {
@@ -384,16 +384,16 @@ tr.diffheader {
   border: none;
 }
 .post .postbody-title .title a {
-  color: #222;
+  color: #222222;
 }
 .post .postbody {
   border: 1px solid #4a4a4a;
   background: #000000 url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') 50% top repeat-x;
-  color: #fff;
+  color: #ffffff;
 }
 .postbody-title {
   background: #9fda58 url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png') 50% 50% repeat-x;
-  color: #222;
+  color: #222222;
 }
 .help-block {
   color: #8d8d8d;
@@ -406,7 +406,7 @@ textarea,
 .chosen-container-active.chosen-with-drop .chosen-single,
 .chosen-container .chosen-drop,
 .chosen-container-multi .chosen-choices .search-choice {
-  background: #fbf9ee url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_95_f6ecd5_500x100.png') repeat-x 50% 60%;
+  background: #FBF9EE url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_95_f6ecd5_500x100.png') repeat-x 50% 60%;
   border: 1px solid #FCEFA1;
   color: #363636;
 }
@@ -431,7 +431,7 @@ textarea,
 }
 .caltable .even,
 .caltable .odd {
-  background: #0a0a0a url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') repeat-x scroll 50% 50%;
+  background: #0A0A0A url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') repeat-x scroll 50% 50%;
   border: 1px solid #1B1613;
   color: #B8EC79;
 }
@@ -446,12 +446,12 @@ textarea,
 .caltable td.calhighlight a:visited,
 td.calheadhighlight {
   background: #9fda58 url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_85_9fda58_500x100.png') 50% 50% repeat-x;
-  color: #000;
+  color: #000000;
 }
 td.calheadhighlight,
 td.calheadhighlight a:link,
 td.calheadhighlight a:visited {
-  background: #0a0a0a url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') repeat-x scroll 50% 50%;
+  background: #0A0A0A url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') repeat-x scroll 50% 50%;
   font-weight: bold;
   color: #b8ec79;
 }
@@ -462,5 +462,5 @@ td.calheadhighlight a:visited {
   text-decoration: underline;
 }
 .blog-postbody-title a {
-  color: #000;
+  color: #000000;
 }

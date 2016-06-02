@@ -7,7 +7,7 @@
 //
 //## Gray and brand colors for use across Bootstrap.
 
-@gray-base: #000;
+@gray-base: #000000;
 @gray-darker: lighten(#000, 13.5%);
 // #222
 @gray-dark: lighten(#000, 20%);
@@ -117,7 +117,7 @@
 @border-radius-small: 3px;
 
 //** Global color for active items (e.g., navs or dropdowns).
-@component-active-color: #fff;
+@component-active-color: #ffffff;
 //** Global background color for active items (e.g., navs or dropdowns).
 @component-active-bg: @navbar-default-bg;
 
@@ -161,19 +161,19 @@
 @btn-primary-bg: @btn-default-bg;
 @btn-primary-border: @btn-default-border;
 
-@btn-success-color: #fff;
+@btn-success-color: #ffffff;
 @btn-success-bg: @brand-success;
 @btn-success-border: darken(@btn-success-bg, 5%);
 
-@btn-info-color: #fff;
+@btn-info-color: #ffffff;
 @btn-info-bg: @brand-info;
 @btn-info-border: darken(@btn-info-bg, 5%);
 
-@btn-warning-color: #fff;
+@btn-warning-color: #ffffff;
 @btn-warning-bg: @brand-warning;
 @btn-warning-border: darken(@btn-warning-bg, 5%);
 
-@btn-danger-color: #fff;
+@btn-danger-color: #ffffff;
 @btn-danger-bg: @brand-danger;
 @btn-danger-border: darken(@btn-danger-bg, 5%);
 
@@ -214,7 +214,7 @@
 //** Small `.form-control` height
 @input-height-small: (floor(@font-size-small * @line-height-small) + (@padding-small-vertical * 2) + 2);
 
-@legend-color: #fff;
+@legend-color: #ffffff;
 @legend-border-color: #e5e5e5;
 
 //** Background color for textual input addons
@@ -234,7 +234,7 @@
 //** Dropdown menu `border-color`.
 @dropdown-border: rgba(0, 0, 0, .15);
 //** Dropdown menu `border-color` **for IE8**.
-@dropdown-fallback-border: #ccc;
+@dropdown-fallback-border: #cccccc;
 //** Divider color for between dropdown items.
 @dropdown-divider-bg: #e5e5e5;
 
@@ -257,7 +257,7 @@
 @dropdown-header-color: @gray-light;
 
 //** Deprecated `@dropdown-caret-color` as of v3.1.0
-@dropdown-caret-color: #000;
+@dropdown-caret-color: #000000;
 
 //-- Z-index master list
 //
@@ -368,7 +368,7 @@
 @navbar-default-link-active-color: #f4f4f4;
 @navbar-default-link-active-bg: transparent;
 // darken(@navbar-default-bg, 6.5%);
-@navbar-default-link-disabled-color: #ccc;
+@navbar-default-link-disabled-color: #cccccc;
 @navbar-default-link-disabled-bg: transparent;
 
 // Navbar brand label
@@ -378,35 +378,35 @@
 
 // Navbar toggle
 @navbar-default-toggle-hover-bg: transparent;
-//#ddd;
-@navbar-default-toggle-icon-bar-bg: #888;
-@navbar-default-toggle-border-color: #ddd;
+//#dddddd;
+@navbar-default-toggle-icon-bar-bg: #888888;
+@navbar-default-toggle-border-color: #dddddd;
 
 // Inverted navbar
 // Reset inverted navbar basics
 @navbar-inverse-color: @gray-light;
-@navbar-inverse-bg: #222;
+@navbar-inverse-bg: #222222;
 @navbar-inverse-border: darken(@navbar-inverse-bg, 10%);
 
 // Inverted navbar links
 @navbar-inverse-link-color: @gray-light;
-@navbar-inverse-link-hover-color: #fff;
+@navbar-inverse-link-hover-color: #ffffff;
 @navbar-inverse-link-hover-bg: transparent;
 @navbar-inverse-link-active-color: @navbar-inverse-link-hover-color;
 @navbar-inverse-link-active-bg: darken(@navbar-inverse-bg, 10%);
-@navbar-inverse-link-disabled-color: #444;
+@navbar-inverse-link-disabled-color: #444444;
 @navbar-inverse-link-disabled-bg: transparent;
 
 // Inverted navbar brand label
 @navbar-inverse-brand-color: @navbar-inverse-link-color;
-@navbar-inverse-brand-hover-color: #fff;
+@navbar-inverse-brand-hover-color: #ffffff;
 @navbar-inverse-brand-hover-bg: transparent;
 
 // Inverted navbar toggle
 @navbar-inverse-toggle-hover-bg: transparent;
-//#333;
-@navbar-inverse-toggle-icon-bar-bg: #fff;
-@navbar-inverse-toggle-border-color: #333;
+//#333333;
+@navbar-inverse-toggle-icon-bar-bg: #ffffff;
+@navbar-inverse-toggle-border-color: #333333;
 
 //== Navs
 //
@@ -421,15 +421,15 @@
 @nav-disabled-link-hover-color: @gray-light;
 
 //== Tabs
-@nav-tabs-border-color: #ddd;
+@nav-tabs-border-color: #dddddd;
 
 @nav-tabs-link-hover-border-color: @gray-lighter;
 
 @nav-tabs-active-link-hover-bg: @body-bg;
 @nav-tabs-active-link-hover-color: @gray;
-@nav-tabs-active-link-hover-border-color: #ddd;
+@nav-tabs-active-link-hover-border-color: #dddddd;
 
-@nav-tabs-justified-link-border-color: #ddd;
+@nav-tabs-justified-link-border-color: #dddddd;
 @nav-tabs-justified-active-link-border-color: @body-bg;
 
 //== Pills
@@ -447,15 +447,15 @@
 
 @pagination-hover-color: @link-hover-color;
 @pagination-hover-bg: @dropdown-link-hover-bg;
-@pagination-hover-border: #ddd;
+@pagination-hover-border: #dddddd;
 
-@pagination-active-color: #fff;
+@pagination-active-color: #ffffff;
 @pagination-active-bg: @brand-primary;
 @pagination-active-border: @brand-primary;
 
 @pagination-disabled-color: @gray-light;
-@pagination-disabled-bg: #fff;
-@pagination-disabled-border: #ddd;
+@pagination-disabled-bg: #ffffff;
+@pagination-disabled-border: #dddddd;
 
 //== Pager
 //
@@ -509,9 +509,9 @@
 //** Tooltip max width
 @tooltip-max-width: 200px;
 //** Tooltip text color
-@tooltip-color: #fff;
+@tooltip-color: #ffffff;
 //** Tooltip background color
-@tooltip-bg: #000;
+@tooltip-bg: #000000;
 @tooltip-opacity: .9;
 
 //** Tooltip arrow width
@@ -524,13 +524,13 @@
 //##
 
 //** Popover body background color
-@popover-bg: #fff;
+@popover-bg: #ffffff;
 //** Popover maximum width
 @popover-max-width: 276px;
 //** Popover border color
 @popover-border-color: rgba(0, 0, 0, .2);
 //** Popover fallback border color
-@popover-fallback-border-color: #ccc;
+@popover-fallback-border-color: #cccccc;
 
 //** Popover title background color
 @popover-title-bg: darken(@popover-bg, 3%);
@@ -565,9 +565,9 @@
 @label-danger-bg: @brand-danger;
 
 //** Default label text color
-@label-color: #fff;
+@label-color: #ffffff;
 //** Default text color of a linked label
-@label-link-hover-color: #fff;
+@label-link-hover-color: #ffffff;
 
 //== Modals
 //
@@ -586,7 +586,7 @@
 //** Modal content border color
 @modal-content-border-color: rgba(0, 0, 0, .2);
 //** Modal content border color **for IE8**
-@modal-content-fallback-border-color: #999;
+@modal-content-fallback-border-color: #999999;
 
 //** Modal backdrop background color
 @modal-backdrop-bg: darken(#d9534f, 30%);
@@ -695,10 +695,10 @@
 @panel-footer-bg: darken(#5e0000, 10%);
 
 @panel-default-text: #f4f4f4;
-@panel-default-border: #333;
+@panel-default-border: #333333;
 @panel-default-heading-bg: #5E0000;
 
-@panel-primary-text: #fff;
+@panel-primary-text: #ffffff;
 @panel-primary-border: @brand-primary;
 @panel-primary-heading-bg: @brand-primary;
 
@@ -727,7 +727,7 @@
 //** Thumbnail background color
 @thumbnail-bg: @body-bg;
 //** Thumbnail border color
-@thumbnail-border: #ddd;
+@thumbnail-border: #dddddd;
 //** Thumbnail border radius
 @thumbnail-border-radius: @border-radius-base;
 
@@ -740,22 +740,22 @@
 //
 //##
 
-@well-bg: #000;
+@well-bg: #000000;
 @well-border: darken(@well-bg, 7%);
 
 //== Badges
 //
 //##
 
-@badge-color: #fff;
+@badge-color: #ffffff;
 //** Linked badge text color on hover
-@badge-link-hover-color: #fff;
+@badge-link-hover-color: #ffffff;
 @badge-bg: @gray-light;
 
 //** Badge text color in active nav link
 @badge-active-color: @link-color;
 //** Badge background color in active nav link
-@badge-active-bg: #fff;
+@badge-active-bg: #ffffff;
 
 @badge-font-weight: bold;
 @badge-line-height: 1;
@@ -782,23 +782,23 @@
 
 @carousel-text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
 
-@carousel-control-color: #fff;
+@carousel-control-color: #ffffff;
 @carousel-control-width: 15%;
 @carousel-control-opacity: .5;
 @carousel-control-font-size: 20px;
 
-@carousel-indicator-active-bg: #fff;
-@carousel-indicator-border-color: #fff;
+@carousel-indicator-active-bg: #ffffff;
+@carousel-indicator-border-color: #ffffff;
 
-@carousel-caption-color: #fff;
+@carousel-caption-color: #ffffff;
 
 //== Close
 //
 //##
 
 @close-font-weight: bold;
-@close-color: #000;
-@close-text-shadow: 0 1px 0 #fff;
+@close-color: #000000;
+@close-text-shadow: 0 1px 0 #ffffff;
 
 //== Code
 //
@@ -807,12 +807,12 @@
 @code-color: #c7254e;
 @code-bg: #f9f2f4;
 
-@kbd-color: #fff;
-@kbd-bg: #333;
+@kbd-color: #ffffff;
+@kbd-bg: #333333;
 
 @pre-bg: #f5f5f5;
 @pre-color: @gray-dark;
-@pre-border-color: #ccc;
+@pre-border-color: #cccccc;
 @pre-scrollable-max-height: 340px;
 
 //== Type

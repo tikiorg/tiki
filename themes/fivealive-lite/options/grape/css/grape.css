@@ -575,7 +575,7 @@ hr {
   background: #8e286a;
 }
 .top_modules a {
-  color: #fff;
+  color: #ffffff;
 }
 .navbar-collapse.collapse.in {
   background: #8e286a;
@@ -666,7 +666,7 @@ hr {
 .layout_social_modules .navbar-fixed-top,
 .layout_basic .page-header > .top_modules {
   background: #8e286a;
-  border-bottom: 5px solid #000;
+  border-bottom: 5px solid #000000;
 }
 .header_container > .header {
   background: none;
@@ -731,7 +731,7 @@ a.flipmoduletitle,
   background: transparent;
 }
 .footer_liner h3.panel-title {
-  color: #fff;
+  color: #ffffff;
   border-bottom: 1px dotted #a52873;
 }
 .footer_liner a.btn-default,
@@ -750,7 +750,7 @@ a.flipmoduletitle,
   font-size: 20px;
 }
 .siteloginbar_popup .dropdown-menu > li > a {
-  color: #fff;
+  color: #ffffff;
 }
 .layout_basic .page-header > .top_modules a,
 header.header a,
