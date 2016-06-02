@@ -212,6 +212,9 @@ class Search_ResultSet extends ArrayObject implements JsonSerializable
 	function checkNestedObjectPerms(){
 		global $user;
 		$user_groups = array_keys(TikiLib::lib('user')->get_user_groups_inclusion($user));
+		if (empty($user_groups)) {
+			$user_groups = ['Anonymous'];
+		}
 		foreach($this as &$item){//for each element in resultset
 			if (isset($item['relation_objects'])){
 				foreach ($item['relation_objects'] as $key => $obj) {
