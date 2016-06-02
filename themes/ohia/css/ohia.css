@@ -7615,7 +7615,7 @@ header.container,
 }
 footer.footer .modules {
   background-image: url('../images/header.png');
-  color: #F4F4F4;
+  color: #f4f4f4;
   font-size: 0.9em;
   min-height: 90px;
 }
@@ -7628,7 +7628,7 @@ footer.footer .modules a:visited {
 }
 .popover-title {
   background-color: #696969;
-  border-bottom: 1px solid #EBEBEB;
+  border-bottom: 1px solid #ebebeb;
 }
 .cssmenu_horiz li ul,
 .cssmenu_vert li ul {
