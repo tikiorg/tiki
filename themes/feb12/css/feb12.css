@@ -7636,16 +7636,16 @@ header.container {
   border: none;
 }
 .middle {
-  background: #fff url('../images/page.jpg') repeat-x;
+  background: #ffffff url('../images/page.jpg') repeat-x;
   padding-bottom: 20px;
 }
 #col1,
 #col3 {
   padding-top: 30px;
-  background: #fff url('../images/page.jpg') repeat-x;
+  background: #ffffff url('../images/page.jpg') repeat-x;
 }
 body.fullscreen {
-  background: #fff url('../images/page.jpg') repeat-x;
+  background: #ffffff url('../images/page.jpg') repeat-x;
 }
 body.fullscreen .container {
   border: none;
@@ -7672,7 +7672,7 @@ body.fullscreen .container {
 }
 .topbar + .row,
 .layout_social > .container {
-  background: #fff url('../images/page.jpg') repeat-x;
+  background: #ffffff url('../images/page.jpg') repeat-x;
 }
 .topbar + .row {
   border-width: 0 1px;

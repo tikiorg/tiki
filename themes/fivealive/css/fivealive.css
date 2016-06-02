@@ -7610,12 +7610,12 @@ header.header .sitetitles {
 }
 header.header .sitetitle,
 header.header .sitesubtitle {
-  color: #fff !important;
+  color: #ffffff !important;
   text-shadow: #143c64 3px 2px 0 !important;
 }
 header.header a,
 header.header a:visited {
-  color: #fff !important;
+  color: #ffffff !important;
   text-decoration: none;
 }
 .navbar-fixed-top .sitesubtitle,

@@ -7598,11 +7598,11 @@ header.header .sitesubtitle {
   background: #ffffff;
   border-width: 0 0 1px 0;
   border-style: solid;
-  border-color: #1174A5;
+  border-color: #1174a5;
 }
 #col2 .panel-title,
 #col3 .panel-title {
-  color: #1174A5;
+  color: #1174a5;
 }
 .header_outer,
 .layout_basic .page-header > .top_modules {
@@ -7649,7 +7649,7 @@ textarea,
   border: none;
 }
 #footer {
-  background: black;
+  background: #000000;
   color: #696969;
   padding: 1px 0 2px 0;
   width: 100%;
