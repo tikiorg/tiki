@@ -45,6 +45,8 @@
 					<div class="form-group">
 						<label class="col-md-4 control-label" for="oldpass">{tr}Old Password{/tr}</label>
 						<div class="col-md-8">
+							<input style="display:none">{* This seems to be required for the Chromium browser to prevent replacing the admin password in a new install from console.php with some password stored in the user's browser *}
+							<input type="password" style="display:none" name="oldpass_autocomplete_off">{* This seems to be required for the Chromium browser to prevent replacing the admin password in a new install from console.php with some password stored in the user's browser *}
 							<input type="password" class="form-control" name="oldpass" id="oldpass" placeholder="Old Password">
 						</div>
 					</div>
