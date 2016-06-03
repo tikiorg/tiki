@@ -31,7 +31,7 @@ class Comments extends TikiLib
 			'threadId' => $threadId,
 			'user' => $user,
 		);
-		$reported->delete($data);
+		$reported->delete(array('threadId' => $data['threadId']));
 
 		$reported->insert(array_merge($data, array('timestamp' => $this->now, 'reason' => $reason)));
 	}
