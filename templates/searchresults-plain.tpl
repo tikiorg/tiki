@@ -56,9 +56,7 @@
 		</blockquote>
 	</li>
 	{foreachelse}
-			<li>{if strlen($words)<4} {remarksbox type="warning" title="{tr}Suggestion{/tr}"}
-		You searched for a term less than 4 characters. Please use at least 4 characters to get search results.
-	{/remarksbox}{/if}	{tr}No pages matched the search criteria test{/tr} </li>
+			<li>{tr}No pages matched the search criteria test{/tr} </li>
 	{/foreach}
 </ul>
 {pagination_links resultset=$results}{/pagination_links}
