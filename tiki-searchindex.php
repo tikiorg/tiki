@@ -112,7 +112,7 @@ if (count($filter) || count($postfilter)) {
 			$plugin->setData(
 				array(
 					'prefs' => $prefs,
-					'words' => $filter['content'] //passing search term to display message in case user has searched less than 4 characeters
+					
 				)
 			);
 			$fields = array(
