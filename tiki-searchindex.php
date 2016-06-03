@@ -112,6 +112,7 @@ if (count($filter) || count($postfilter)) {
 			$plugin->setData(
 				array(
 					'prefs' => $prefs,
+					'words' => $filter['content'] //passing search term to display message in case user has searched less than 4 characeters
 				)
 			);
 			$fields = array(
@@ -224,9 +225,9 @@ function tiki_searchindex_get_results($filter, $postfilter, $offset, $maxRecords
 
 		return $resultset;
 	} catch (Search_Elastic_TransportException $e) {
-		Feedback::error(tr('Search functionality currently unavailable.'), 'session');
+		TikiLib::lib('errorreport')->report('Search functionality currently unavailable.');
 	} catch (Exception $e) {
-		Feedback::error($e->getMessage(), 'session');
+		TikiLib::lib('errorreport')->report($e->getMessage());
 	}
 
 	return new Search_ResultSet(array(), 0, 0, -1);

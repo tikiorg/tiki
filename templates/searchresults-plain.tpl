@@ -51,12 +51,14 @@
 			<p>{$result.highlight}</p>
 
 			{if $prefs.feature_search_show_last_modification eq 'y'}
-				<div class="searchdate small">{tr}Last modification:{/tr} {$result.modification_date|tiki_short_datetime}</div>
+				<div class="searchdate small">{tr}Last modification:{/tr} {$result.modification_date|tiki_long_datetime}</div>
 			{/if}
 		</blockquote>
 	</li>
 	{foreachelse}
-		<li>{tr}No pages matched the search criteria{/tr}</li>
+			<li>{if strlen($words)<4} {remarksbox type="warning" title="{tr}Suggestion{/tr}"}
+		You searched for a term less than 4 characters. Please use at least 4 characters to get search results.
+	{/remarksbox}{/if}	{tr}No pages matched the search criteria test{/tr} </li>
 	{/foreach}
 </ul>
 {pagination_links resultset=$results}{/pagination_links}

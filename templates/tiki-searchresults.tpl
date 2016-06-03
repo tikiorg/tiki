@@ -209,8 +209,9 @@
 				{/if}
 			</li>
 		{sectionelse}
-			<li>	{tr}No pages matched the search criteria{/tr}</li>
-		{/section}
+<li>{if strlen($words)<4} {remarksbox type="warning" title="{tr}Suggestion{/tr}"}
+		You searched for a term less than 4 characters. Please use at least 4 characters to get search results.
+	{/remarksbox}{/if}	{tr}No pages matched the search criteria{/tr} </li>		{/section}
 	</ul>
 	{pagination_links cant=$cant step=$maxRecords offset=$offset _keepall=true}{/pagination_links}
 {/if}
