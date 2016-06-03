@@ -12,6 +12,9 @@
 	{elseif $mid eq 'tiki-view_forum_thread.tpl'}
 		<link rel="canonical" href="{$base_url_canonical}{$comments_parentId|sefurl:forumthread}">
 		<meta content="{$base_url_canonical}{$comments_parentId|sefurl:forumthread}" property="og:url">
+	{elseif $mid eq 'tiki-print_forum_thread.tpl'}
+		<link rel="canonical" href="{$base_url_canonical}{$comments_parentId|sefurl:forumthread}">
+		<meta content="{$base_url_canonical}{$comments_parentId|sefurl:forumthread}" property="og:url">    
 	{elseif $mid eq 'tiki-view_blog.tpl'}
 		<link rel="canonical" href="{$base_url_canonical}{$blogId|sefurl:blog}">
 		<meta content="{$base_url_canonical}{$blogId|sefurl:blog}" property="og:url">
