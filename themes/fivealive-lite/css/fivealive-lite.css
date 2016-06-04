@@ -7676,7 +7676,8 @@ textarea,
   padding-top: 2px;
 }
 .topbar .form-control,
-.topbar .btn {
+.topbar .btn,
+.topbar label {
   font-size: 12px;
   height: 20px;
   padding-top: 1px;
@@ -7706,6 +7707,9 @@ header.header .btn-link {
 }
 .popover {
   color: #333333;
+}
+label a:hover {
+  text-decoration: none;
 }
 /* black */
 /* white */

@@ -574,7 +574,10 @@ hr {
 .layout_basic .page-header > .topbar {
   background: #cdbe23;
 }
-.top_modules a {
+.top_modules a,
+.topbar a,
+.top_modules label,
+.topbar label {
   color: #ffffff;
 }
 .navbar-collapse.collapse.in {
