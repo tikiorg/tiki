@@ -233,7 +233,7 @@ input[type="submit"]:hover,
 }
 .topbar .cssmenu_horiz.sf-arrows > .menuSection0 > .sf-with-ul::after {
   border: 5px solid transparent;
-  border-top-color: #fff;
+  border-top-color: #ffffff;
 }
 .topbar .cssmenu_horiz.sf-arrows > .menuSection0:hover > .sf-with-ul::after {
   border: 5px solid transparent;

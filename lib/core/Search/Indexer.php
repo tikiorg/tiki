@@ -82,9 +82,9 @@ class Search_Indexer
 
 	public function update(array $objectList)
 	{
-		$this->searchIndex->invalidateMultiple($objectList);
 
 		foreach ($objectList as $object) {
+			$this->searchIndex->invalidateMultiple(array($object));
 			$this->addDocument($object['object_type'], $object['object_id']);
 		}
 

@@ -4,7 +4,7 @@
 		{tikimodule error=$module_error title=$smod_params.title name="search" flip=$smod_params.flip decorations=$smod_params.decorations nobox=$smod_params.nobox notitle=$smod_params.notitle}
 			{if $smod_params.tiki_search neq 'none'}
 				<form class="form-inline" id="search-module-form{$search_mod_usage_counter}" method="get" action="{$smod_params.search_action}"{if $smod_params.use_autocomplete eq 'y'} onsubmit="return submitSearch{$search_mod_usage_counter}()"{/if}>
-<div style="position: relative;">
+					<div style="position: relative;">
 					<div class="{if $smod_params.compact eq "y"}btn-group{else}form-group{/if}" style="margin-left:-7px;margin-right:-7px;">
 						<input style="float:left;{if $smod_params.compact eq "y"}width:72%;border-bottom-right-radius:0;border-top-right-radius: 0;{/if}" placeholder="{tr}Find{/tr}" class="form-control" id="search_mod_input_{$search_mod_usage_counter}" name="{if $smod_params.search_action eq 'tiki-searchindex.php'}filter~content{else}find{/if}" {if !empty($smod_params.input_size)}size="{$smod_params.input_size}" style="width: auto"{/if} type="text" accesskey="s" value="{$smod_params.input_value|escape}" />&nbsp;
 					{*	</div> *}
@@ -105,7 +105,7 @@
 
 						{if $smod_params.tiki_search neq 'y'}
 							{if $smod_params.advanced_search_option eq 'y'}
-								<div class="checkbox" style="padding-left: 6px; padding-right: 6px;">
+								<div class="checkbox" style="padding-left: 6px; padding-right: 6px; display: inline-block;">
 									<label for="boolean"><input type="checkbox" name="boolean" id="boolean"{if $smod_params.advanced_search eq "y"} checked="checked"{/if} /> {tr}Advanced{/tr}
 										{if $smod_params.advanced_search_help eq 'y'}
 											<a href="{bootstrap_modal controller=search action=help}">{icon name='help'} {tr}Search Help{/tr}</a>

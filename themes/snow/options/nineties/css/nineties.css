@@ -1,7 +1,7 @@
 /* Nineties theme option for the Snow theme for Tiki Wiki CMS Groupware.  */
 .container {
   background: #b1c1db url('../../../images/flakesptn.jpg') !important;
-  border: 1px solid #6C7B8C;
+  border: 1px solid #6c7b8c;
   box-shadow: none !important;
 }
 body.fullscreen {
