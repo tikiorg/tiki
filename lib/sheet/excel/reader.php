@@ -121,7 +121,7 @@ class Spreadsheet_Excel_Reader
 			0x2c => '$%1.2f', //"$#,##0.00;($#,##0.00)",
 			0x30 => '%1.0f'); //"##0.0E0";
 
-	function Spreadsheet_Excel_Reader(){
+	function __construct(){
 		$this->_ole = new R_OLE();
 
 	}

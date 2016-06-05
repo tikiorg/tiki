@@ -947,7 +947,7 @@ if (isset($_GET['slideshow'])) {
 $smarty->assign('thumbnail_size', $prefs['fgal_thumb_max_size']);
 
 if (isset($_REQUEST['show_details'])) {
-	$show_details = $_REQUEST['show_details'];
+	$show_details = $_REQUEST['show_details'] === 'y' ? 'y' : 'n';
 	setCookieSection('show_details', $show_details);
 } else {
 	$show_details = getCookie('show_details', null, 'n');

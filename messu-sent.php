@@ -62,7 +62,11 @@ if (isset($_REQUEST['filter'])) {
 }
 if (!isset($_REQUEST["priority"])) $_REQUEST["priority"] = '';
 if (!isset($_REQUEST["flag"])) $_REQUEST["flag"] = '';
-if (!isset($_REQUEST["flagval"])) $_REQUEST["flagval"] = '';
+if (!isset($_REQUEST["flagval"])) {
+	$_REQUEST["flagval"] = '';
+} else {
+	$_REQUEST["flagval"] = $_REQUEST["flagval"] === 'y' ? 'y' : 'n';
+}
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'date_desc';
 } else {

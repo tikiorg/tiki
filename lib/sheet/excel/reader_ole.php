@@ -41,7 +41,7 @@ class R_OLE
     var $data = '';
     
     
-    function R_OLE(){
+    function __construct(){
         
         
     }
