@@ -351,10 +351,6 @@ if ($prefs['feature_freetags'] == 'y') {
 	$tags = $freetaglib->get_tags_on_object($cat_objid, $cat_type);
 	$smarty->assign('freetags', $tags);
 }
-if (isset($_SESSION['feedbacks'])) {
-	$smarty->assign('feedbacks', $_SESSION['feedbacks']);
-	unset($_SESSION['feedbacks']);
-}
 $defaultRows = $prefs['default_rows_textarea_forumthread'];
 $smarty->assign('forum_mode', 'y');
 
@@ -375,19 +371,6 @@ if (!empty($_REQUEST['view_atts']) && $_REQUEST['view_atts'] == 'y') {
 	$atts['maxRecords'] = $fa_maxRecords;
 	$smarty->assign_by_ref('atts', $atts);
 	$smarty->assign_by_ref('view_atts', $_REQUEST['view_atts']);
-}
-
-if (isset($_POST['ajaxtype'])) {
-	$smarty->assign('ajaxfeedback', 'y');
-	$ajaxpost = array_intersect_key($_POST, [
-		'ajaxtype' => '',
-		'ajaxheading' => '',
-		'ajaxitems' => '',
-		'ajaxmsg' => '',
-		'ajaxtoMsg' => '',
-		'ajaxtoList' => '',
-	]);
-	$smarty->assign($ajaxpost);
 }
 
 // Display the template

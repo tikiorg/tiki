@@ -372,7 +372,7 @@ function wikiplugin_datachannel( $data, $params )
 					$access->redirect($url);
 				}
 			}
-			$smarty->assign('datachannel_feedbacks', array_merge($installer->getFeedback(), $profile->getFeedback()));
+			Feedback::note(['mes' => array_merge($installer->getFeedback(), $profile->getFeedback())]);
 		}
 
 		$smarty->assign('datachannel_inputfields', $inputfields);

@@ -1,10 +1,3 @@
-{if !empty($datachannel_feedbacks)}
-{remarksbox type='note' title="{tr}Feedback{/tr}"}
-	{foreach from=$datachannel_feedbacks item=feedback}
-		{$feedback|escape}<br>
-	{/foreach}
-{/remarksbox}
-{/if}
 <form method="post" action="#{$datachannel_execution}"{$form_class_attr}{$datachannel_form_onsubmit}>
 	{foreach from=$datachannel_fields key=name item=label}
 		{if $label eq "external"}

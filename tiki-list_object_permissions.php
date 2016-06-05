@@ -254,8 +254,8 @@ foreach ($types as $type) {
      		break;
 	}
 }
+Feedback::note(['mes' => $feedbacks]);
 $smarty->assign_by_ref('res', $res);
-$smarty->assign_by_ref('feedbacks', $feedbacks);
 $smarty->assign_by_ref('filterGroup', $filterGroup);
 $smarty->assign_by_ref('all_groups', $all_groups);
 

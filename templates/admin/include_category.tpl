@@ -1,10 +1,4 @@
 {* $Id$ *}
-{if !empty($feedbacks) || !empty($assignWikiCategories)}
-	{remarksbox type="feedback" title="{tr}Feedback{/tr}"}
-		{tr}Ok{/tr}
-	{/remarksbox}
-{/if}
-
 <form class="form-horizontal" action="tiki-admin.php?page=category" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<input type="hidden" name="categorysetup" />

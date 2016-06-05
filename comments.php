@@ -192,9 +192,6 @@ if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == 
 		if (!empty($_REQUEST['thread_sort_mode'])) {
 			$url .= "&thread_sort_mode=".$_REQUEST['thread_sort_mode'];
 		}
-		if (!empty($feedbacks)) {
-			$_SESSION['feedbacks'] = $feedbacks;
-		}
 		$url .= "#threadId=".$threadId; //place anchor on newly created message
 
 		//Watches
@@ -209,9 +206,12 @@ if ( isset($_REQUEST['comments_objectId']) && $_REQUEST['comments_objectId'] == 
 		header('location: ' . $url);
 		die;
 	}
-	Feedback::warning($errors);
-	Feedback::note($feedbacks);
-
+	if (!empty($errors)) {
+		Feedback::warning(['mes' => $errors]);
+	}
+	if (!empty($feedbacks)) {
+		Feedback::note(['mes' => $feedbacks]);
+	}
 	if ( isset( $pageCache ) ) {
 		$pageCache->invalidate();
 	}

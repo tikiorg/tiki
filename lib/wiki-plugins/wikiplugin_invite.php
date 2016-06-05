@@ -62,7 +62,6 @@ function wikiplugin_invite( $data, $params)
 		}
 	}
 	$errors = array();
-	$feedbacks = array();
 	if (isset($_REQUEST['invite'])) {
 		if (empty($_REQUEST['email'])) {
 			$errors[] = tra('The following mandatory fields are missing').' '.tra('Email address');

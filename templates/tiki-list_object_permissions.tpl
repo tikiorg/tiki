@@ -4,14 +4,6 @@
 	{button href="tiki-objectpermissions.php" class="btn btn-link" _type="link" _icon_name="permission" _text="{tr}Manage permissions{/tr}"}
 </div>
 
-{if !empty($feedbacks)}
-	{remarksbox type="note" title="{tr}Feedback{/tr}"}
-		{foreach from=$feedbacks item=feedback name=feedback}
-			{if !$smarty.foreach.feedback.first}<br>{/if}
-			{$feedback|escape}
-		{/foreach}
-	{/remarksbox}
-{/if}
 <br>
 {if $all_groups|@count >= 5}
 	{$size = 6}

@@ -25,6 +25,6 @@ if (!empty($_REQUEST['assignWikiCategories']) && $prefs['category_defaults']) {
 			$categlib->update_object_categories($categories, $page['pageName'], 'wiki page', $page['description'], $page['pageName'], $page['href']);
 		}
 	}
-	$smarty->assign('assignWikiCategories', 'y');
+	Feedback::success(tr('Category defaults successfully applied.'));
 }
 ask_ticket('admin-inc-category');
