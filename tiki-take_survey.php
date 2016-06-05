@@ -141,6 +141,6 @@ $smarty->assign('showToolBars', $showToolBars);
 include_once ('tiki-section_options.php');
 ask_ticket('take-survey');
 // Display the template
-$smarty->assign('error_msg', $error_msg);
+Feedback::error(['mes' => $error_msg]);
 $smarty->assign('mid', 'tiki-take_survey.tpl');
 $smarty->display("tiki.tpl");

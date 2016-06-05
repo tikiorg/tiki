@@ -62,7 +62,7 @@ if (!empty($_REQUEST['testMail']) && key_check(null, false)) {
 			$mailerrors = print_r($mail->errors, true);
 			$msg .= '<br>' . $mailerrors;
 		}
-		$smarty->assign('error_msg', $msg);
+		Feedback::warning($msg);
 	} else {
 		 add_feedback('testMail', tra('Test mail sent to') . ' ' . $_REQUEST['testMail'], 3);
 	}

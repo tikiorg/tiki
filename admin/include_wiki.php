@@ -31,10 +31,15 @@ if (!empty($_REQUEST['moveWikiUp'])) {
 		$errorsWikiUp[] = tra('You must set a home file gallery');
 	} else {
 		$filegallib->moveAllWikiUpToFgal($prefs['home_file_gallery'], $errorsWikiUp, $feedbacksWikiUp);
-		$smarty->assign_by_ref('feedbacksWikiUp', $feedbacksWikiUp);
-		$smarty->assign_by_ref('moveWikiUp', $_REQUEST['moveWikiUp']);
 	}
-	$smarty->assign_by_ref('errorsWikiUp', $errorsWikiUp);
+	if (!empty($errorsWikiUp)) {
+		Feedback::error(['mes' => $errorsWikiUp]);
+	}
+	if (!empty($feedbacksWikiUp)) {
+		Feedback::success(['mes' => $feedbacksWikiUp, 'title' => tr('The following pages were modified')]);
+	} else {
+		Feedback::note(tr('Nothing was changed (no images in wiki_up were found in Wiki pages).'));
+	}
 }
 
 // Included for the forum dropdown

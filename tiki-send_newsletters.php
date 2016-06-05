@@ -217,7 +217,11 @@ if (!empty($_FILES) && !empty($_FILES['newsletterfile'])) {
 				'savestate' => 'phptmp',
 			);
 		} else {
-			$smarty->assign('upload_err_msg', tra('A problem occurred during file uploading') . '<br />' . tra('File which was causing trouble was at rank') . '&nbsp;' . ($i + 1) . '<br />' . tra('The error was:') . '&nbsp;<strong>' . $tikilib->uploaded_file_error($_FILES['newsletterfile']['error'][$i]) . '</strong>');
+			$error['title'] = tra('A problem occurred during file uploading');
+			$error['mes'] = tra('File causing trouble was at rank') . ' ' . ($i + 1);
+			$error['mes'] = tr('The error was %0', 
+				$tikilib->uploaded_file_error($_FILES['newsletterfile']['error'][$i]));
+			Feedback::error($error);
 		}
 	}
 }

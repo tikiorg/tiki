@@ -1,21 +1,4 @@
 {* $Id$ *}
-{if !empty($errors)}
-	{remarksbox type="errors" title="{tr}Errors{/tr}"}
-		{foreach from=$errors item=error}
-			{$error|escape}
-			<br>
-		{/foreach}
-	{/remarksbox}
-{/if}
-{if !empty($feedbacks)}
-	{remarksbox type="note" title="{tr}Feedback{/tr}"}
-		{foreach from=$feedbacks item=feedback}
-			{$feedback|escape}
-			<br>
-		{/foreach}
-	{/remarksbox}
-{/if}
-
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
 	{tr}To create or remove file galleries, select{/tr} <a class="rbox-link" href="tiki-list_file_gallery.php">{tr}File Galleries{/tr}</a> {tr}from the application menu{/tr}.
 	<hr>

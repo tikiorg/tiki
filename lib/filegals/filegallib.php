@@ -3588,8 +3588,7 @@ class FileGalLib extends TikiLib
 				die;
 			}
 		}
-
-		$smarty->assign('errors', $errors);
+		Feedback::error(['mes' => $errors]);
 		$smarty->assign('uploads', $uploads);
 
 		if (!empty($params['returnUrl'])) {

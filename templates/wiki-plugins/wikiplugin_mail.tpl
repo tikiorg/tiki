@@ -9,11 +9,6 @@
 		</ul>
 	{/remarksbox}
 {/if}
-{if !empty($mail_error)}
-	{remarksbox type='errors' title="{tr}Errors{/tr}"}
-		{tr}Error{/tr}
-	{/remarksbox}
-{/if}
 {if $preview}
 	<form method="post" class="margin-bottom-md">
 		<h3>{tr}Message preview:{/tr}</h3>

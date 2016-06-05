@@ -22,17 +22,6 @@
 				<td class="pwddom_domain_name">{$domain}</td>
 			{/if}
 		</tr>
-		{if !empty($errors[{$dompwdCount}])}
-			<tr>
-				<td colspan="2">
-					<span id="error" class="alert-warning">
-						{foreach from=$errors[{$dompwdCount}] item=error}
-							{$error|escape}<br>
-						{/foreach}
-					</span>
-				</td>
-			</tr>
-		{/if}
 		{if !empty($user)}
 			<tr>
 				<td>{tr}User{/tr}</td>

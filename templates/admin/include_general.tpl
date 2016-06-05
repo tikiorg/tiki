@@ -11,11 +11,6 @@
 			<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
 		</div>
 	</div>
-	{if !empty($error_msg)}
-		{remarksbox type='warning' title="{tr}Warning{/tr}" icon='error'}
-			{$error_msg}
-		{/remarksbox}
-	{/if}
 	{tabset name="admin_general"}
 		{tab name="{tr}General Preferences{/tr}"}
 			<h2>{tr}General Preferences{/tr}</h2>

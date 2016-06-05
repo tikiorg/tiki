@@ -19,12 +19,6 @@
 	</div>
 {/if}
 
-{if $upload_err_msg neq ''}
-	{remarksbox type='warning' title="{tr}Warning{/tr}" icon='error'}
-		{$upload_err_msg}
-	{/remarksbox}
-{/if}
-
 {if $mailto_link}
 	{remarksbox type=info title="External Client"}
 		{tr}You can also send newsletters using an external client:{/tr}
@@ -40,7 +34,7 @@
 	{if $errors}
 		{remarksbox type='warning' title="{tr}Errors{/tr}" icon='error'}
 			<div class="table-responsive">
-				<table class="table">
+				<table class="table table-striped table-hover">
 					<tr>
 						<th>{tr}User{/tr}</th>
 						<th>{tr}Email{/tr}</th>

@@ -22,7 +22,7 @@ if (isset($_REQUEST['import'])) {
 	} elseif (is_uploaded_file($_FILES['zip']['tmp_name'])) {
 		$zipFile = $_FILES['zip']['tmp_name'];
 	} else {
-		$smarty->assign('error', tra('Error'));
+		$error = tra('Unable to locate import file.');
 		$zipFile = '';
 	}
 	if ($zipFile) {
@@ -30,11 +30,18 @@ if (isset($_REQUEST['import'])) {
 		$xmllib = new XmlLib;
 		$config = array();
 		if ($xmllib->import_pages($zipFile, $config)) {
-			$smarty->assign('msg', tra('Operations executed successfully'));
+
+			$success = tra('Operations executed successfully');
 		} else {
-			$smarty->assign('error', $xmllib->get_error());
+			$error = $xmllib->get_error();
 		}
 	}
+	if (isset($success)) {
+		Feedback::success(['mes' => $success]);
+	}
+	if (isset($error)) {
+		Feedback::error(['mes' => $error]);
+	} 
 }
 ask_ticket('import_xml_zip');
 $smarty->assign('mid', 'tiki-import_xml_zip.tpl');

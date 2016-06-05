@@ -202,6 +202,6 @@ function module_domain_password($mod_reference, $module_params)
 		}
 	}
 	if (!empty($errors[$cntModule])) {
-		$smarty->assign('errors', $errors);
+		Feedback::error(['mes' => $errors[$cntModule]]);
 	}
 }

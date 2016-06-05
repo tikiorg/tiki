@@ -31,10 +31,6 @@
 	</tr>
 </table>
 
-{if !empty($conmsg)}
-	{remarksbox type='warning' title="{tr}Error{/tr}"}{$conmsg}{/remarksbox}
-{/if}
-
 <hr/>
 
 {if $locSection eq 'settings'}

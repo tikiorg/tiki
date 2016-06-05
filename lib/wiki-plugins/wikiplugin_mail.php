@@ -232,7 +232,9 @@ function wikiplugin_mail($data, $params)
 		}
 		unset($_SESSION['wikiplugin_mail_to']);
 	}
-	$smarty->assign_by_ref('mail_error', $mail_error);
+	if ($mail_error) {
+		Feedback::error(tr('Mail send was unsuccessful.'));
+	} 
 	if ($preview || $mail_error) {
 		$smarty->assign('mail_user', isset($_REQUEST['mail_user'])? $_REQUEST['mail_user']:'');
 		$smarty->assign('mail_user_dd', isset($_REQUEST['mail_user_dd'])? $_REQUEST['mail_user_dd']:array());

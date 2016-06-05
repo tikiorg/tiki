@@ -169,8 +169,12 @@ if (isset($_REQUEST['comments_postComment'])) {
 		$cat_objid = $threadId;
 		include_once ('freetag_apply.php');
 	}
-	$smarty->assign_by_ref('errors', $errors);
-	$smarty->assign_by_ref('feedbacks', $feedbacks);
+	if (!empty($errors)) {
+		Feedback::error(['mes' => $errors]);
+	}
+	if (!empty($feedbacks)) {
+		Feedback::success(['mes' => $feedbacks]);
+	}
 }
 
 // Here we send the user to the right thread/topic if it already exists; this

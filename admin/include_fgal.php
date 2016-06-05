@@ -59,10 +59,10 @@ if (!empty($_REQUEST['move'])) {
 		$errors = $filegallib->moveFiles($_REQUEST['move'], $feedbacks);
 	}
 	if (!empty($errors)) {
-		$smarty->assign_by_ref('errors', $errors);
+		Feedback::error(['mes' => $errors]);
 	}
 	if (!empty($feedbacks)) {
-		$smarty->assign_by_ref('feedbacks', $feedbacks);
+		Feedback::note(['mes' => $feedbacks]);
 	}
 }
 

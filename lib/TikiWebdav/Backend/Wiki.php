@@ -467,7 +467,6 @@ class TikiWebdav_Backends_Wiki extends ezcWebdavSimpleBackend
 		print_debug('getCollectionMembers ' . $path . "\n");
 
 		$contents = array();
-		$errors = array();
 
 		if ($path !== '/') {
 			return $contents;

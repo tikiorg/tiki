@@ -1,29 +1,5 @@
 {* $Id$ *}
 
-{if !empty($feedbacksWikiUp) || !empty($moveWikiUp)}
-	{remarksbox type="feedback" title="{tr}Feedback{/tr}"}
-		{if !empty($feedbacksWikiUp)}
-			{tr}The following pages were modified:{/tr}
-			<ul>
-				{foreach from=$feedbacksWikiUp item=f}
-					<li>{$f|escape}</li>
-				{/foreach}
-			</ul>
-		{else}
-			{tr}Nothing was changed (no images in wiki_up were found in Wiki pages).{/tr}
-		{/if}
-	{/remarksbox}
-{elseif !empty($moveWikiUp)}
-{/if}
-{if !empty($errorsWikiUp)}
-	{remarksbox type="errors" title="{tr}Errors{/tr}"}
-		<ul>
-			{foreach from=$errorsWikiUp item=f}
-				<li>{$f|escape}</li>
-			{/foreach}
-		</ul>
-	{/remarksbox}
-{/if}
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
 	{tr}Use the 'Quick Edit' module to easily create or edit wiki pages.{/tr} <a class="btn btn-default" href="tiki-admin_modules.php">{icon name="module"} {tr}Modules{/tr}</a>
 {/remarksbox}

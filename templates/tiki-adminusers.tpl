@@ -33,37 +33,6 @@
 			{if $prefs.feature_intertiki_import_preferences eq 'y'}{tr}Since this Tiki site is in slave mode and imports preferences, the master user preferences will be automatically reimported at each login{/tr}{/if}
 		{/remarksbox}
 	{/if}
-	{if !empty($added) or !empty($discarded) or !empty($discardlist)}
-		{remarksbox type="information" title="{tr}Batch Upload Results{/tr}"}
-			{tr}Updated users{/tr} {$added}
-			{if $discarded != ""}- {tr}Rejected users{/tr} {$discarded}{/if}
-			<br>
-			<br>
-			{if $discardlist != ''}
-				<div class="table-responsive">
-					<table class="table">
-						<tr>
-							<th>{tr}Username{/tr}</th>
-							<th>{tr}Reason{/tr}</th>
-						</tr>
-						{section name=reject loop=$discardlist}
-							<tr class="odd">
-								<td class="username">{$discardlist[reject].login}</td>
-								<td class="text">{$discardlist[reject].reason}</td>
-							</tr>
-						{/section}
-					</table>
-				</div>
-			{/if}
-
-			{if $batcherrors}
-				<br>
-				{section name=ix loop=$batcherrors}
-					{$batcherrors[ix]}<br>
-				{/section}
-			{/if}
-		{/remarksbox}
-	{/if}
 {/if}
 {tabset name='tabs_adminusers'}
 

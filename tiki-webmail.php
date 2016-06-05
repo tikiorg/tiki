@@ -113,7 +113,7 @@ if ($_REQUEST['locSection'] == 'read') {
 		$mail = $webmaillib->get_mail_storage($current);
 	} catch (Exception $e) {
 		// do something better with the error
-		$smarty->assign('conmsg', tra('There was a problem connecting to that account.').'<br />'.$e->getMessage());
+		Feedback::error(tra('There was a problem connecting to that account:') . ' ' . $e->getMessage());
 	}
 
 	if (isset($_REQUEST['delete_one'])) {
@@ -124,7 +124,7 @@ if ($_REQUEST['locSection'] == 'read') {
 			$webmaillib->remove_webmail_message($current['accountId'], $user, $aux['realmsgid']);
 			unset($_REQUEST['msgid']);
 		} catch (Exception $e) {
-			$smarty->assign('conmsg', tra('There was a problem deleting that email message.').'<br />'.$e->getMessage());
+			Feedback::error(tra('There was a problem deleting that email message:') . ' ' . $e->getMessage());
 		}
 	}
 
@@ -326,8 +326,8 @@ END;
 		$webmail_list = $webmaillib->refresh_mailbox($user, $current['accountId'], $webmail_reload);
 	} catch (Exception $e) {
 		$err = $e->getMessage();
-
-		$urlq = http_build_query(array('locSection'=>'settings', 'conmsg'=>$err), '', '&');
+		Feedback::error(['mes' => $e->getMessage()], 'session');
+		$urlq = http_build_query(array('locSection'=>'settings'), '', '&');
 		handleWebmailRedirect($urlq);
 	}
 
@@ -336,7 +336,7 @@ END;
 		$mail = $webmaillib->get_mail_storage($current);
 	} catch (Exception $e) {
 		// do something better with the error
-		$smarty->assign('conmsg', tra('There was a problem connecting to that account.').'<br />'.$e->getMessage());
+		Feedback::error(tra('There was a problem connecting to that account:') . ' ' . $e->getMessage());
 	}
 
 	// The user just clicked on one of the flags, so set up for flag change
@@ -369,7 +369,7 @@ END;
 				}
 			}
 			if (!empty($err)) {
-				$smarty->assign('conmsg', tra('There was a problem while trying to delete these email messages.').'<br />'.$err);
+				Feedback::error(tra('There was a problem while trying to delete these email messages:') . ' ' . $err);
 			}
 		}
 	}
@@ -381,7 +381,8 @@ END;
 		try {
 			$mail->removeMessage($_REQUEST['msgdel']);
 		} catch (Exception $e) {
-			$smarty->assign('conmsg', tra('TThere was a problem while trying to delete this email message.').'<br />'.$e->getMessage());
+			Feedback::error(tra('There was a problem while trying to delete this email message:') . ' ' 
+				. $e->getMessage());
 		}
 	}
 
@@ -391,9 +392,8 @@ END;
 		try {
 			$webmail_list = $webmaillib->refresh_mailbox($user, $current['accountId'], true);	// really need a smarter way of caching the whole mailbox...
 		} catch (Exception $e) {
-			$err = $e->getMessage();
-
-			$urlq = http_build_query(array('locSection'=>'settings', 'conmsg'=>$err), '', '&');
+			Feedback::error(['mes' => $e->getMessage()], 'session');
+			$urlq = http_build_query(array('locSection'=>'settings'), '', '&');
 			handleWebmailRedirect($urlq);
 		}
 
@@ -590,12 +590,7 @@ END;
 		$headerlib->add_jq_onready($js);
 	}
 	$headerlib->add_js('if (webmailTimeoutId) {window.clearTimeout(webmailTimeoutId);}', 0);
-
-	if (isset($_REQUEST['conmsg'])) {
-		check_ticket('webmail');
- 		$smarty->assign('conmsg', $_REQUEST['conmsg']);
-	}
-
+	
 	if (isset($_REQUEST['cancel_acc'])) {
 		check_ticket('webmail');
 	 	unset($_REQUEST['cancel_acc']);

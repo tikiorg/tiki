@@ -4,9 +4,6 @@
 	{if !isset($show_name) or $show_name eq 'y'}
 		{title url="tiki-take_survey.php?surveyId=$surveyId"}{$survey_info.name}{/title}
 	{/if}
-	{if $error_msg neq ''}
-		{remarksbox type="warning" title="{tr}Warning{/tr}"}{$error_msg}{/remarksbox}
-	{/if}
 	<div class="surveyquestions">
 		<div class="description help-block questionblock page0">{wiki}{$survey_info.description}{/wiki}</div>
 		{$pageCount=0}

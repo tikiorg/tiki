@@ -7,17 +7,6 @@
 		{icon name="structure"} {tr}Structures{/tr}
 	</a>
 </div>
-
-{if $error}
-	{remarksbox type='errors' title="{tr}Errors{/tr}"}
-		{$error}
-	{/remarksbox}
-{/if}
-{if $msg}
-	{remarksbox type='feedback' title="{tr}Feedback{/tr}"}
-		{$msg}
-	{/remarksbox}
-{/if}
 <form class="form-horizontal" enctype='multipart/form-data' method="post">
 	<div class="form-group">
 		<div class="col-sm-12">

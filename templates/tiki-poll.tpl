@@ -1,9 +1,3 @@
-{if !empty($msg_poll)}
-	{remarksbox type="errors"}
-		{$msg_poll}
-	{/remarksbox}
-{/if}
-
 {if $showtitle ne 'n'}{$menu_info.title|escape}<br>{/if}
 <form method="post" action="{$ownurl}">
 	<input type="hidden" name="polls_pollId" value="{$menu_info.pollId|escape}">

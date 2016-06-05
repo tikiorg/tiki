@@ -2,15 +2,6 @@
 
 {title help="Communication Center"}{tr}Received Pages{/tr}{/title}
 
-{if !empty($errors)}
-	<div class="alert alert-warning">
-		{foreach item=error from=$errors}
-			{tr}{$error.error}{/tr} {$error.param}
-			<br>
-		{/foreach}
-	</div>
-{/if}
-
 {if $receivedPageId > 0 or $view eq 'y'}
 	<h2>{tr}Preview{/tr}</h2>
 	<div class="wikitext">{$parsed}</div>

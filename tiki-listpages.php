@@ -170,7 +170,7 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST['checked'])) {
 						die;
 					}
 				} else {
-					$smarty->assign('error', $xmllib->get_error());
+					Feedback::error(['mes' => $xmllib->get_error()]);
 				}
 			}
 			break;

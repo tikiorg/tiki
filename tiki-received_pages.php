@@ -21,7 +21,7 @@ if (isset($_REQUEST["accept"])) {
 	// CODE TO ACCEPT A PAGE HERE
 	if (!$commlib->accept_page($_REQUEST["accept"])) {
 		$info = $commlib->get_received_page($_REQUEST['accept']);
-		$errors[] = array('error' => 'Page already exists');
+		$errors[] = tr('Page already exists');
 	}
 }
 if ($_REQUEST["receivedPageId"]) {
@@ -65,7 +65,7 @@ if (!empty($_REQUEST['checked']) && (!empty($_REQUEST['prefix']) || !empty($_REQ
 	foreach ($_REQUEST['checked'] as $page) {
 		$newpage = empty($_REQUEST['postfix']) ? $_REQUEST['prefix'] . $page : $page . $_REQUEST['postfix'];
 		if ($tikilib->page_exists($newpage)) {
-			$errors[] = array('error' => 'Page already exists', 'param' => $page);
+			$errors[] = tr('Page already exists') . ' ' . $page;
 		}
 	}
 	if (empty($errors)) {

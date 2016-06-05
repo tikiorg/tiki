@@ -549,7 +549,7 @@ class SurveyLib extends TikiLib
 
 		if (count($errors) > 0) {
 			if ($error_msg !== null) {
-				$error_msg = implode('<br />', $errors);
+				$error_msg = $errors;
 			}
 			return false;
 		} else {

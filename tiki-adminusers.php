@@ -221,16 +221,18 @@ function batchImportUsers()
 		}
 		$added++;
 	}
-	$smarty->assign('added', $added);
+	Feedback::success(tr('Users added:') . ' ' . $added);
 
 	if (count($discarded)) {
-		$smarty->assign('discarded', count($discarded));
-		$smarty->assign_by_ref('discardlist', $discarded);
+		foreach ($discarded as $key => $value) {
+			$df[] = $discarded[$key]['login'] . ' (' .  $discarded[$key]['reason'] . ')';
+		}
+		Feedback::warning(['mes' => $df, 'title' =>  tr('%0 users not added', count($discarded))]);
 	}
 
 	if (count($errors)) {
 		array_unique($errors);
-		$smarty->assign_by_ref('batcherrors', $errors);
+		Feedback::error(['mes' => $errors]);
 	}
 }
 

@@ -1,12 +1,4 @@
 {* $Id$ *}
-{if $errors}
-	{remarksbox type="feedback"}
-		{foreach from=$errors item=error}
-			{$error|escape}<br>
-		{/foreach}
-	{/remarksbox}
-{/if}
-
 <form method="post">
 <div class="table-responsive">
 <table class="table invite">

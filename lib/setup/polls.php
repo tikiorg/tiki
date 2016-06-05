@@ -13,23 +13,23 @@ if ( isset($_REQUEST['pollVote']) && !empty($_REQUEST['polls_pollId']) ) {
 	$voted = false;
 	if (empty($_REQUEST['polls_optionId'])) {
 		$ok = false;
-		$smarty->assign('msg_poll', tra('You must choose an option'));
+		$error = tra('You must choose an option');
 	} elseif ( $tiki_p_vote_poll == 'y' && ($prefs['feature_poll_anonymous'] == 'y' || $user || $prefs['feature_antibot'] == 'y')) {
 		$captchalib = TikiLib::lib('captcha');
 		if (empty($user) && empty($_COOKIE)) {
 			$ok = false;
-			$smarty->assign('msg_poll', tra('For you to vote, cookies must be allowed'));
+			$error = tra('For you to vote, cookies must be allowed');
 			$smarty->assign_by_ref('polls_optionId', $_REQUEST['polls_optionId']);
 		} elseif (($prefs['feature_antibot'] == 'y' && empty($user)) && (!$captchalib->validate())) {
 			$ok = false;
-			$smarty->assign('msg_poll', $captchalib->getErrors());
+			$errors = $captchalib->getErrors();
 			$smarty->assign_by_ref('polls_optionId', $_REQUEST['polls_optionId']);
 		} else {
 			$polllib = TikiLib::lib('poll');
 			$poll = $polllib->get_poll($_REQUEST['polls_pollId']);
 			if ( empty($poll) || $poll['active'] == 'x' ) {
 				$ok = false;
-				$smarty->assign('msg_poll', tra('This poll is closed.'));
+				$error =  tra('This poll is closed.');
 				$smarty->assign_by_ref('polls_optionId', $_REQUEST['polls_optionId']);
 			} else {
 				$previous_vote = $polllib->get_user_vote('poll' . $_REQUEST['polls_pollId'], $user);
@@ -38,6 +38,9 @@ if ( isset($_REQUEST['pollVote']) && !empty($_REQUEST['polls_pollId']) ) {
 				}
 			}
 		}
+	}
+	if (!empty($error)) {
+		Feedback::error($error);
 	}
 	if ( $ok && ! isset($_REQUEST['wikipoll']) && $tiki_p_view_poll_results == 'y' && empty($_REQUEST['showresult'])) {
 		header('location: tiki-poll_results.php?pollId='.$_REQUEST['polls_pollId']);
