@@ -196,7 +196,7 @@ class TikiSheet
 	/** TikiSheet
 	 * Initializes the data container.
 	 */
-	function TikiSheet() {
+	function __construct() {
 		$this->dataGrid = array();
 		$this->calcGrid = array();
 		$this->cellInfo = array();
@@ -1122,7 +1122,7 @@ class TikiSheetSimpleArrayHandler extends TikiSheetDataHandler
 {
 	public $values = array();
 
-	function TikiSheetSimpleArrayHandler( $simpleArray = array() )
+	function __construct( $simpleArray = array() )
 	{
 		$this->values = $simpleArray['values'];
 		$this->name = $simpleArray['name'];
