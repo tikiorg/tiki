@@ -77,8 +77,8 @@
 {/if}
 
 {* --- SocialNetwork:site_name --- *}
-<meta content="{if $prefs.socialnetworks_facebook_site_name neq ''}{$prefs.socialnetworks_facebook_site_name}{else}{$prefs.browsertitle|tr_if|escape}{/if}" property="og:site_name">
-<meta content="{if $prefs.socialnetworks_twitter_site neq ''}{$prefs.socialnetworks_twitter_site}{else}{$prefs.browsertitle|tr_if|escape}{/if}" name="twitter:site">
+<meta content="{if not empty($prefs.socialnetworks_facebook_site_name)}{$prefs.socialnetworks_facebook_site_name}{else}{$prefs.browsertitle|tr_if|escape}{/if}" property="og:site_name">
+<meta content="{if not empty($prefs.socialnetworks_twitter_site)}{$prefs.socialnetworks_twitter_site}{else}{$prefs.browsertitle|tr_if|escape}{/if}" name="twitter:site">
 
 
 {* --- tiki block --- *}
@@ -210,8 +210,8 @@
 	{elseif $mid eq 'tiki-view_blog_post.tpl'}
 {* --- Article --- *}
 	{elseif $mid eq 'tiki-read_article.tpl'}
-		<meta content="{if $prefs.socialnetworks_facebook_site_image neq ''}{$prefs.socialnetworks_facebook_site_image}{else}{$base_url_canonical}{if $hasImage eq 'y'}article_image.php?image_type=article&amp;id={$articleId}{else}article_image.php?image_type=topic&amp;id={$topicId}{/if}{/if}" property="og:image">
-		<meta content="{if $prefs.socialnetworks_twitter_site_image neq ''}{$prefs.socialnetworks_twitter_site_image}{else}{$base_url_canonical}{if $hasImage eq 'y'}article_image.php?image_type=article&amp;id={$articleId}{else}article_image.php?image_type=topic&amp;id={$topicId}{/if}{/if}" name="twitter:image">
+		<meta content="{if not empty($prefs.socialnetworks_facebook_site_image)}{$prefs.socialnetworks_facebook_site_image}{else}{$base_url_canonical}{if $hasImage eq 'y'}article_image.php?image_type=article&amp;id={$articleId}{else}article_image.php?image_type=topic&amp;id={$topicId}{/if}{/if}" property="og:image">
+		<meta content="{if not empty($prefs.socialnetworks_twitter_site_image)}{$prefs.socialnetworks_twitter_site_image}{else}{$base_url_canonical}{if $hasImage eq 'y'}article_image.php?image_type=article&amp;id={$articleId}{else}article_image.php?image_type=topic&amp;id={$topicId}{/if}{/if}" name="twitter:image">
 	{/if}
 {/if}
 
