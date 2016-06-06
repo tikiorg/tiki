@@ -10,7 +10,7 @@
 		</div>
 	</form>
 	<h4>{tr}Export Tracker Items{/tr}</h4>
-	<form class="simple no-ajax" action="{service controller=tracker action=export_items trackerId=$trackerId}" method="post">
+	<form class="simple no-ajax" action="{service controller=tracker action=export_items trackerId=$trackerId filterfield=$filterfield filtervalue=$filtervalue}" method="post">
 		<label>
 			{tr}Filename{/tr}
 			<input type="text" value="Tracker_{$trackerId|escape}.csv" disabled="disabled">

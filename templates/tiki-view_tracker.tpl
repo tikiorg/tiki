@@ -34,7 +34,7 @@
 		{/jq}
 	{/if}
 	{if $tiki_p_export_tracker eq "y"}
-		<a title="{tr}Export{/tr}" class="export dialog" href="{service controller=tracker action=export trackerId=$trackerId}">{icon _id='disk' align="right" alt="{tr}Export{/tr}"}</a>
+		<a title="{tr}Export{/tr}" class="export dialog" href="{service controller=tracker action=export trackerId=$trackerId filterfield=$filterfield filtervalue=$filtervalue}">{icon _id='disk' align="right" alt="{tr}Export{/tr}"}</a>
 		{jq}
 			$('.export.dialog').click(function () {
 				var link = this;
@@ -43,7 +43,9 @@
 					data: {
 						controller: 'tracker',
 						action: 'export',
-						trackerId: {{$trackerId}}
+						trackerId: {{$trackerId}},
+						filterfield: '{{$filterfield}}',
+						filtervalue: '{{$filtervalue}}'
 					}
 				});
 				return false;
