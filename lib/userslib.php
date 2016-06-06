@@ -2501,18 +2501,20 @@ class UsersLib extends TikiLib
 	 * Get the user's home page and checks for grouphome pref
 	 *
 	 * @param string $user        User login
-	 * @return string             Home page or other feature url
+	 * @return string             Home page
 	 */
 	function get_user_default_homepage2($user)
 	{
 		global $prefs;
-		$p = $prefs['tikiIndex'];
 
 		if ($prefs['useGroupHome'] == 'y') {
 			$groupHome = $this->get_user_default_homepage($user);
-			if (!empty($groupHome)) {
+			if (!empty($groupHome))
 				$p = $groupHome;
-			}
+			else
+				$p = $prefs['wikiHomePage'];
+		} else {
+			$p = $prefs['wikiHomePage'];
 		}
 
 		return $p;
