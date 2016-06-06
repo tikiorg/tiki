@@ -1800,11 +1800,17 @@ function wikiplugin_trackerlist($data, $params)
 			if (is_array($filterfield)) {
 				foreach ($filterfield as $i=>$fieldId) {
 					$exportParams["f_$fieldId"] = empty($filtervalue[$i]) ? $exactvalue[$i] : $filtervalue[$i];
+					if (!empty($filtervalue[$i])){
+						$exportParams["x_$fieldId"] = 't'; // hint exporter that is not a exact match
+					}
 				}
 			} elseif (!empty($filterfield)) {
 				$exportParams["f_$filterfield"] = empty($filtervalue) ? $exactvalue : $filtervalue;
+				if (!empty($filtervalue)){
+					$exportParams["x_$filterfield"] = 't'; // hint exporter that is not a exact match
+				}
 			}
-			$exportUrl = smarty_function_service($exportParams, $smarty);
+			$exportUrl = 'tiki-export_tracker.php?' . http_build_query($exportParams);
 			$smarty->assign('exportUrl', $exportUrl);
 		}
 

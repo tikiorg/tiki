@@ -79,7 +79,7 @@
 			{/if}
 			{if $tiki_p_export_tracker eq "y"}
 				<li>
-					<a class="export dialog" href="{service controller=tracker action=export trackerId=$trackerId}">
+					<a class="export dialog" href="{service controller=tracker action=export trackerId=$trackerId filterfield=$filterfield filtervalue=$filtervalue}">
 						{icon name="export"} {tr}Export{/tr}
 					</a>
 				</li>
@@ -91,7 +91,9 @@
 							data: {
 								controller: 'tracker',
 								action: 'export',
-								trackerId: {{$trackerId}}
+								trackerId: {{$trackerId}},
+								filterfield: '{{$filterfield}}',
+								filtervalue: '{{$filtervalue}}'
 							}
 						});
 						return false;
