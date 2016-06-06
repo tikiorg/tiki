@@ -8,7 +8,7 @@
 {block name="content"}
 <div class="kaltura-media-list">
 	{foreach $entries as $item}
-		<div class="media" data-id="{$item->id}">
+		<div class="media" data-id="{$item->id}" data-name="{$item->name}">
 			<div class="media-left">
 				<img class="athumb media-object" src="{$item->thumbnailUrl}" alt="{$item->description}" height="80" width="120">
 			</div>
@@ -26,6 +26,10 @@ $(".media", ".kaltura-media-list").click(function () {
 		.attr('value', $(this).data('id'))
 		;
 	$('#{{$formId}}').append(hidden);
+
+	$("a[data-target-name='{{$targetName}}']").parent().find("ol").append($('<li>')
+		.text($(this).data('name')));
+
 	$(this).parents(".ui-dialog-content").data("ui-dialog").close();
 }).css("cursor", "pointer");
 {/jq}
