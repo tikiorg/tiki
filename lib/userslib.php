@@ -2497,18 +2497,22 @@ class UsersLib extends TikiLib
 		return $this->get_page_name_from_id($bestLangPageId);
 	}
 
+	/**
+	 * Get the user's home page and checks for grouphome pref
+	 *
+	 * @param string $user        User login
+	 * @return string             Home page or other feature url
+	 */
 	function get_user_default_homepage2($user)
 	{
 		global $prefs;
+		$p = $prefs['tikiIndex'];
 
 		if ($prefs['useGroupHome'] == 'y') {
 			$groupHome = $this->get_user_default_homepage($user);
-			if (!empty($groupHome))
+			if (!empty($groupHome)) {
 				$p = $groupHome;
-			else
-				$p = $prefs['wikiHomePage'];
-		} else {
-			$p = $prefs['wikiHomePage'];
+			}
 		}
 
 		return $p;
