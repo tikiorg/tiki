@@ -1454,6 +1454,8 @@ class Services_Tracker_Controller
 	function action_export($input)
 	{
 		$trackerId = $input->trackerId->int();
+		$filterField = $input->filterfield->string();
+		$filterValue = $input->filtervalue->string();
 
 		$perms = Perms::get('tracker', $trackerId);
 		if (! $perms->export_tracker) {
@@ -1485,6 +1487,8 @@ class Services_Tracker_Controller
 			'trackerId' => $trackerId,
 			'export' => $out,
 			'fields' => $definition->getFields(),
+			'filterfield' => $filterField,
+			'filtervalue' => $filterValue,
 			'recordsMax' => $definition->getConfiguration('items'),
 		);
 	}
@@ -1517,6 +1521,9 @@ class Services_Tracker_Controller
 				if (0 === count($fields)) {
 					$fields = $definition->getFields();
 				}
+
+				$filterField = $input->filterfield->string();
+				$filterValue = $input->filtervalue->string();
 
 				$showItemId = $input->showItemId->int();
 				$showStatus = $input->showStatus->int();
@@ -1580,7 +1587,7 @@ class Services_Tracker_Controller
 				$writeCsv($header);
 
 				/** @noinspection PhpParamsInspection */
-				$items = $trklib->list_items($trackerId, $recordsOffset, $recordsMax, 'itemId_asc', $fields);
+				$items = $trklib->list_items($trackerId, $recordsOffset, $recordsMax, 'itemId_asc', $fields, $filterField, $filterValue);
 
 				$smarty = TikiLib::lib('smarty');
 				$smarty->loadPlugin('smarty_modifier_tiki_short_datetime');

@@ -383,6 +383,12 @@ function wikiplugin_trackerfilter($data, $params)
 				$smarty->assign_by_ref('f_fields', $f_fields);
 			}
 			$filters = array();	// clear out filters set up earlier which default to all fields if not exporting
+		} else {
+			$f_fields = array();
+			foreach($formats as $fid => $fformat){
+				$f_fields['x_'.$fid] = $fformat;  // x_ is for not exact
+			}
+			$smarty->assign_by_ref('f_fields', $f_fields);
 		}
 	}
 	if ($displayList == 'n' || !empty($_REQUEST['filter']) || $noflipflop == 'y' || $prefs['javascript_enabled'] != 'y' || (isset($_SESSION['tiki_cookie_jar']["show_trackerFilter$iTrackerFilter"]) && $_SESSION['tiki_cookie_jar']["show_trackerFilter$iTrackerFilter"] == 'y')) {
