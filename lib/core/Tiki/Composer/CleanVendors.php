@@ -26,7 +26,7 @@ class CleanVendors
 		self::deleteDirectory($vendors . 'codemirror/codemirror/mode/tiki');
 		self::deleteDirectory($vendors . 'jarnokurlin/fullcalendar/demos');
 		self::deleteDirectory($vendors . 'jcapture-applet/jcapture-applet/src');
-		self::deleteDirectory($vendors . 'jcapture-applet/jcapture-applet/applet.php');
+		self::deleteFile     ($vendors . 'jcapture-applet/jcapture-applet/applet.php');
 		self::deleteDirectory($vendors . 'jquery/jquery-mobile/demos');
 		self::deleteDirectory($vendors . 'jquery/jquery-s5/lib/dompdf/www');
 		self::deleteFile(     $vendors . 'jquery/jquery-sheet/jquery-1.5.2.js');
