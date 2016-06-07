@@ -251,5 +251,16 @@ $("input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFieldI
 		}
 	}
 
+	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
+	{
+		$item = $this->getValue();
+		$baseKey = $this->getBaseKey();
+
+		$out = array(
+			$baseKey => $typeFactory->identifier($item),
+			"{$baseKey}_text" => $typeFactory->sortable($this->renderInnerOutput()),
+		);
+		return $out;
+	}
 }
 
