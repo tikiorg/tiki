@@ -93,7 +93,7 @@
 								action: 'export',
 								trackerId: {{$trackerId}},
 								filterfield: '{{$filterfield}}',
-								filtervalue: '{{$filtervalue}}'
+								filtervalue: {{$filtervalue|json_encode}}
 							}
 						});
 						return false;
