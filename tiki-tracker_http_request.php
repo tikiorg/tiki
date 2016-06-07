@@ -79,9 +79,7 @@ switch ($filterFieldHere['type']) {
 	
 	case 'r': // r = itemlink - disallow itemlink/category, allow itemlink/itemlink, itemlink/simplefield types like text
 		switch ($filterFieldThere['type']) {
-			case 'r': // r = itemlink tested 
-			break;
-			
+			case 'r': // r = itemlink tested
 			case 't': // textfield tested
 			default:
 				$handler = $trklib->get_field_handler($filterFieldHere);
