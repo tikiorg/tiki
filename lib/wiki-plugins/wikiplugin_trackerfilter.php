@@ -466,7 +466,7 @@ function wikiplugin_trackerfilter_build_trackerlist_filter($input, $formats, &$f
 				} else {
 					$ffs[] = $fieldId;
 				}
-				if (isset($formats[$fieldId]) && ($formats[$fieldId] == 't' || $formats[$fieldId] == 'i')) {
+				if (isset($formats[$fieldId]) && ($formats[$fieldId] == 't' || $formats[$fieldId] == 'm' || $formats[$fieldId] == 'i')) {
 					$exactValues[] = '';
 					$values[] = ($formats[$fieldId] == 'i')? "$val%": $val;
 				} else {
@@ -599,6 +599,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, array $listfields=ar
 			case 'd': // drop down list
 			case 'y': // country
 			case 'g': // group selector
+			case 'M': // Multiple Values
 				$formats[$fieldId] = 'd';
     			break;
 			case 'R': // radio
@@ -646,6 +647,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, array $listfields=ar
 			case 'd': // drop down list
 			case 'R': // radio buttons
 			case '*': // stars
+			case 'M': // Multiple Values
 				$cumul = '';
 				foreach ($field['options_array'] as $val) {
 					$sval = strip_tags($tikilib->parse_data($val, array('parsetoc' => false)));

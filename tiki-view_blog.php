@@ -53,6 +53,16 @@ if (!$blog_data) {
 	$smarty->display("error.tpl");
 	die;
 }
+
+// We need to figure out in which section and theme we are before any call to tiki-modules.php
+// which needs $tc_theme for deciding on the visible modules everywhere in the page 
+include_once ('tiki-section_options.php');
+if ($prefs['feature_theme_control'] == 'y') {
+	$cat_type = 'blog';
+	$cat_objid = $_REQUEST['blogId'];
+	include ('tiki-tc.php');
+}
+
 $bloglib->add_blog_hit($_REQUEST["blogId"]);
 $smarty->assign('blogId', $_REQUEST["blogId"]);
 $blog_data["blogId"] = $_REQUEST["blogId"];
@@ -125,12 +135,6 @@ $smarty->assign('maxRecords', $maxRecords);
 // If there're more records then assign next_offset
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 $smarty->assign_by_ref('cant', $listpages["cant"]);
-include_once ('tiki-section_options.php');
-if ($prefs['feature_theme_control'] == 'y') {
-	$cat_type = 'blog';
-	$cat_objid = $_REQUEST['blogId'];
-	include ('tiki-tc.php');
-}
 if ($user && $prefs['feature_notepad'] == 'y' && $tiki_p_notepad == 'y' && isset($_REQUEST['savenotepad'])) {
 	check_ticket('blog');
 	$post_info = $bloglib->get_post($_REQUEST['savenotepad']);
