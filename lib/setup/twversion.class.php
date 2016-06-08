@@ -231,6 +231,7 @@ class TWVersion
 				'15.0alpha',
 				'15.0beta',
 				'15.0',
+				'15.1',
 			);
 	}
 
