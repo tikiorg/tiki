@@ -1287,7 +1287,26 @@ class BlogLib extends TikiDb_Bridge
 			}
 			unset( $arrString );
 		}
-  		return( $blogItems );
+		return( $blogItems );
 	}
+
+	/**
+	 * Return blogId from postId
+	 *
+	 * @param int $postId
+	 *
+	 * @return int $blogId or false
+	 */
+	function get_blogId_from_post($postId) {
+		$query = "SELECT `blogId` FROM `tiki_blog_posts` WHERE postId=?";
+		$result = $this->query($query, array($postId));
+		if ($result->numRows()) {
+			$res = $result->fetchRow();
+			return $res['blogId'];
+		} else {
+			return false;
+		}
+	}
+
 }
 
