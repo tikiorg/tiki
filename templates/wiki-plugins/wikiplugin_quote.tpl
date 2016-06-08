@@ -3,7 +3,7 @@
 		{if $replyto}
 			{$replyto|username} {tr}wrote{/tr} on {$comment_info.commentDate|tiki_short_date}:
 		{else}
-			{tr}Quote:{/tr}
+			<i class="fa fa-quote-left" aria-hidden="true"></i>	{tr}Quote:{/tr}
 		{/if}
 	</div>
 	<div class='quotebody'>
