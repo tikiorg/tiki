@@ -11,10 +11,11 @@ class Services_Module_Controller
 	function action_execute($input)
 	{
 		$modlib = TikiLib::lib('mod');
+		$result = '';
 
 		$modname = $input->module->text();
 		if ($modname) {
-			$params = (array) $input->params->array();
+			$params = $input->isArray('params') ? $input->params->asArray() : array();
 
 			$moduleId = $input->moduleId->int();
 

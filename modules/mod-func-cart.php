@@ -98,7 +98,7 @@ function module_cart($mod_reference, & $module_params)
 
 	$module_params = array_merge($defaults, $module_params);
 
-	if ($jitRequest->update->text() && $cart = $jitRequest->cart->array()) {
+	if ($jitRequest->update->text() && $cart = $jitRequest->cart->asArray()) {
 		foreach ($cart as $code => $quantity) {
 			$cartlib->update_quantity($code, $quantity);
 		}

@@ -91,6 +91,7 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 				'list_mode' => $this->list_mode,
 				'editable' => $this->editable,
 				'editgroup' => $this->group,
+				'showpopup' => $field['isMain'],
 			)
 		);
 		return '~np~' . $rendered . '~/np~';
