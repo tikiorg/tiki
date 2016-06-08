@@ -4272,9 +4272,11 @@ body.tiki_wiki #comments {
   margin-left: -3px;
 }
 .quoteheader {
-  background: url('../../../img/icons/quoteleft.gif') no-repeat;
-  padding-left: 50px;
   height: 35px;
+}
+.quoteheader .fa {
+  font-size: 34px;
+  color: #aaaaaa;
 }
 .quotebody {
   margin-left: 35px;

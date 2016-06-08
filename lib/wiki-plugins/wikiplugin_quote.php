@@ -41,6 +41,7 @@ function wikiplugin_quote($data, $params)
 	}
     
 	$begin  = "<div class='quote'><div class='quoteheader'>";
+	$begin .= "<i class=\"fa fa-quote-left\" aria-hidden=\"true\"></i> ";
     $begin .= "$caption</div><div class='quotebody'>";
 	$end = "</div></div>";
 
