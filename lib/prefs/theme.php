@@ -77,6 +77,15 @@ function prefs_theme_list($partial = false)
 			'default' => '',
 			'tags' => array('basic'),
 		),
+		'theme_option_includes_main' => array(
+			'name' => tra('Option theme includes main theme css'),
+			'type' => 'flag',
+			'help' => 'Themes',
+			'description' => tra('Don\'t include the main theme css file because its contents are included in the options\'s css'),
+			'options' => $theme_options,
+			'default' => 'n',
+			'tags' => array('basic'),
+		),
 		'theme_iconset' => array(
 			'name' => tr('Icons'),
 			'description' => tr('Icon set used by the site.'),

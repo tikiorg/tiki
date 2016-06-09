@@ -92,7 +92,10 @@ else {
 	//first load the main theme css
 	$theme_css = $themelib->get_theme_css($theme_active);
 	if ($theme_css) {
-		$headerlib->add_cssfile($theme_css);
+		// exclude the main theme css if the option's css also includes it (pref is set)
+		if ($prefs['theme_option_includes_main'] != 'y' || empty($theme_option_active)) {
+			$headerlib->add_cssfile($theme_css);
+		}
 		//than load the theme option css file if needed
 		if (!empty($theme_option_active)) {
 			$option_css = $themelib->get_theme_css($theme_active, $theme_option_active);

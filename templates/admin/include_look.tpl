@@ -28,6 +28,7 @@
 				<div class="col-md-9 col-md-pull-1 adminoptionbox">
 					{preference name=theme}
 					{preference name=theme_option}
+					{preference name=theme_option_includes_main}
 				</div>
 			</div>
 			<div class="adminoptionbox theme_childcontainer custom_url">
