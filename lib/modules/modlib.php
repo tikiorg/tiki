@@ -640,7 +640,12 @@ class ModLib extends TikiLib
 			return true;
 		}
 
-		$categories = (array) $params['category'];
+		// Multi-value params of custom modules need transformation into an array
+		if ( is_array($params['category']) ) {
+			$categories = (array) $params['category'];
+		} else {
+			$categories = explode(';',$params['category']);
+		}
 
 		return ! $this->matches_any_in_category_list($categories, $catIds, ! empty($params['subtree']));
 	}
@@ -666,7 +671,12 @@ class ModLib extends TikiLib
 			return false;
 		}
 
-		$categories = (array) $params['nocategory'];
+		// Multi-value params of custom modules need transformation into an array
+		if ( is_array($params['nocategory']) ) {
+			$categories = (array) $params['nocategory'];
+		} else {
+			$categories = explode(';',$params['nocategory']);
+		}
 
 		return $this->matches_any_in_category_list($categories, $catIds, ! empty($params['subtree']));
 	}
