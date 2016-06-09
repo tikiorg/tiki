@@ -124,6 +124,15 @@
 					{/if}
 				</div>
 			</div>
+            <div class="form-group">
+            	<label class="control-label col-md-3">{tr}Created by{/tr}</label>
+				<div class="col-md-9">
+				  <span class="summary">
+							{$calitem.user|escape}
+				  </span>
+					
+				</div>
+            </div>
 			{if $edit or $recurrence.id gt 0}
 				<div class="form-group">
 					<label class="control-label col-md-3">{tr}Recurrence{/tr}</label>
