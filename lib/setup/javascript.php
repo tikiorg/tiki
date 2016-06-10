@@ -61,7 +61,9 @@ if (empty($javascript_enabled_detect) && $feature_no_cookie) {
 			strpos($_SERVER['PHP_SELF'], 'tiki-install.php')       === false) {
 
 		$javascript_enabled_detect++;
-		setCookieSection('javascript_enabled_detect', $javascript_enabled_detect, '', $plus_one_year);
+		if ($prefs['javascript_assume_enabled'] != 'y') {
+			setCookieSection('javascript_enabled_detect', $javascript_enabled_detect, '', $plus_one_year);
+		}
 	}
 } else if ($js_cookie !== 'y') {	// no js cookie detected
 	$prefs['javascript_enabled'] = 'n';

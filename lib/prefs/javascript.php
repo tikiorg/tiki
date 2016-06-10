@@ -20,5 +20,12 @@ function prefs_javascript_list()
 			'default' => 'none',
 			'tags' => array('basic'),
 		),
+		'javascript_assume_enabled' => array(
+			'name' => tra('Assume JavaScript is enabled even if not supported'),
+			'description' => tra('Assume JavaScript is enabled even if not supported, could be useful for load testing using tools like JMeter.'),
+			'type' => 'flag',
+			'default' => 'n',
+			'tags' => array('advanced'),
+		),
 	);
 }
