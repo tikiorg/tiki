@@ -83,7 +83,7 @@ class Search_MySql_Index implements Search_Index_Interface
 	}
 
 	function find(Search_Query_Interface $query, $resultStart, $resultCount)
-	{
+	{ 
 		try {
 			$words = $this->getWords($query->getExpr());
 
@@ -92,7 +92,7 @@ class Search_MySql_Index implements Search_Index_Interface
 				$this->table->expr($condition),
 			);
 
-			$scoreFields = [];
+			$scoreFields = array();
 			$indexes = $this->builder->getRequiredIndexes();
 			foreach ($indexes as $index) {
 				$this->table->ensureHasIndex($index['field'], $index['type']);

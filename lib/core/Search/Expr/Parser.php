@@ -38,14 +38,14 @@ class Search_Expr_Parser
 		$tokens = array_values($tokens);
 
 		if (count($tokens) === 0) {
-			return new Search_Expr_ImplicitPhrase([]);
+			return new Search_Expr_ImplicitPhrase(array());
 		} elseif (count($tokens) === 1) {
 			return reset($tokens);
 		}
 
 		// Separate the implicit phrase tokens into tokens of the same type.
 		// Explicit Token Token Explicit -> (Explicit (Token Token) Explicit)
-		$parts = [];
+		$parts = array();
 		$key = 0;
 		$initialClass = get_class(reset($tokens));
 
