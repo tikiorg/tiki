@@ -564,7 +564,7 @@ class Services_User_Controller
 				$users = json_decode($input['items'], true);
 				$add_remove = $input->add_remove->word();
 			//single user removed from a particular group
-			} else {
+			} elseif (!empty($extra['add_remove'])) {
 				$groups = json_decode($input['items'], true);
 				$users[] = $extra['user'];
 				$add_remove = $extra['add_remove'];
