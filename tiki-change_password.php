@@ -74,7 +74,7 @@ if (isset($_REQUEST["change"])) {
 		}
 	}
 	// Check that provided user name could log in with old password, otherwise display error and exit
-	list($isvalid, $_REQUEST["user"], $error) = $userlib->validate_user($_REQUEST["user"], $_REQUEST["oldpass"]);
+	list($isvalid, $_REQUEST["user"], $error) = $userlib->validate_user($_REQUEST["user"], $_REQUEST["oldpass"], '', '');
 	if (!$isvalid) {
 		$smarty->assign('msg', tra("Invalid old password"));
 		$smarty->assign('errortype', 'no_redirect_login');

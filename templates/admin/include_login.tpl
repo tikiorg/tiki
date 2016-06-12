@@ -119,6 +119,7 @@
 				{preference name=unsuccessful_logins_invalid}
 				{preference name=eponymousGroups}
 				{preference name=desactive_login_autocomplete}
+				{preference name=feature_challenge}
 				{preference name=login_multiple_forbidden}
 				{preference name=login_grab_session}
 				{preference name=session_protected}

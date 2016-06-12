@@ -2374,6 +2374,14 @@ function prefs_feature_list($partial = false)
 			'help' => 'Advanced+Wiki+Syntax+usage+examples',
 			'default' => 'n',
 		),
+		'feature_challenge' => array(
+			'name' => tra('Use challenge/response authentication'),
+            'description' => tra(''),
+			'type' => 'flag',
+			'hint' => tra('Confirm that the Admin account has a valid email address or you will not be able to log in'),
+			'default' => 'n',
+			'warning' => tr('Deprecated: This feature is unmaintained and may not be reliable'),
+		),
 		'feature_show_stay_in_ssl_mode' => array(
 			'name' => tra('Users can choose to stay in SSL mode after an HTTPS login'),
             'description' => tra(''),

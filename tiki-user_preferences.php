@@ -272,7 +272,7 @@ if (isset($_REQUEST['chgadmin'])) {
 		if ($prefs['feature_intertiki'] == 'y' && !empty($prefs['feature_intertiki_mymaster'])) {
 			if ($ok = $userlib->intervalidate($prefs['interlist'][$prefs['feature_intertiki_mymaster']], $userwatch, $pass)) if ($ok->faultCode()) $ok = false;
 		} else {
-			list($ok, $userwatch, $error) = $userlib->validate_user($userwatch, $pass);
+			list($ok, $userwatch, $error) = $userlib->validate_user($userwatch, $pass, '', '');
 		}
 		if (!$ok) {
 			$smarty->assign('msg', tra("Invalid password. Your current password is required to change administrative information"));

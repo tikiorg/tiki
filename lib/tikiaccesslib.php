@@ -593,7 +593,7 @@ class TikiAccessLib extends TikiLib
 
 		$attempt = $_SERVER['PHP_AUTH_USER'] ;
 		$pass = $_SERVER['PHP_AUTH_PW'] ;
-		list($res, $rest) = $userlib->validate_user_tiki($attempt, $pass);
+		list($res, $rest) = $userlib->validate_user_tiki($attempt, $pass, false, false);
 
 		if ($res == USER_VALID) {
 			global $_permissionContext;

@@ -140,12 +140,29 @@ if (jqueryTiki.no_cookie) {
 		{/if}
 
 		<form name="loginbox" class="form{if $mode eq "header"} form-inline{/if}" id="loginbox-{$module_logo_instance}" action="{$login_module.login_url|escape}"
-				method="post" 
+				method="post" {if $prefs.feature_challenge eq 'y'}onsubmit="doChallengeResponse(this)"{/if}
 				{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}
 		>
 		{capture assign="close_tags"}</form>{$close_tags}{/capture}
 
-
+		{if $prefs.feature_challenge eq 'y'}
+			<script type='text/javascript' src="vendor/jquery/md5/js/md5.js"></script>
+			{jq notonready=true}
+				function doChallengeResponse(form) {
+					var $form = $(form), hashstr, str;
+					hashstr= $("input[name=user]", $form).val() +
+								$("input[name=pass]", $form).val() +
+								$("input[name=email]", $form).val();
+					str = $("input[name=user]", $form).val() + md5(hashstr) + $("input[name=challenge]", $form).val();
+					$("input[name=response]", $form).val(md5(str));
+					//$("input[name=pass]", $form).val(""); // (form does not submit without password)
+					$form.submit();
+					return false;
+				}
+			{/jq}
+			<input type="hidden" name="challenge" value="{$challenge|escape}" />
+			<input type="hidden" name="response" value="" />
+		{/if}
 		{if !empty($urllogin)}<input type="hidden" name="url" value="{$urllogin|escape}" />{/if}
 		{if $module_params.nobox neq 'y'}
 			<fieldset>
@@ -184,6 +201,14 @@ if (jqueryTiki.no_cookie) {
 				<input class="form-control" type="hidden" name="user" id="login-user_{$module_logo_instance}" value="{$loginuser|escape}" /><b>{$loginuser|escape}</b>
 			{/if}
 		</div>
+		{if $prefs.feature_challenge eq 'y'} <!-- quick hack to make challenge/response work until 1.8 tiki auth overhaul -->
+			<div class="email form-group clearfix">
+				<label for="login-email_{$module_logo_instance}">{tr}eMail:{/tr}</label>
+				<div>
+					<input class="form-control" type="text" name="email" id="login-email_{$module_logo_instance}">
+				</div>
+			</div>
+		{/if}
 		<div class="pass form-group clearfix">
 			<label for="login-pass_{$module_logo_instance}">{tr}Password:{/tr}</label>
 			<div>
