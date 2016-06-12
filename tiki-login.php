@@ -96,8 +96,6 @@ if (isset($_REQUEST['su'])) {
 }
 $requestedUser = isset($_REQUEST['user']) ? $_REQUEST['user'] : false;
 $pass = isset($_REQUEST['pass']) ? $_REQUEST['pass'] : false;
-$challenge = isset($_REQUEST['challenge']) ? $_REQUEST['challenge'] : false;
-$response = isset($_REQUEST['response']) ? $_REQUEST['response'] : false;
 $isvalid = false;
 $isdue = false;
 // admin is always local
@@ -198,7 +196,7 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 	}
 } else {
 	// Verify user is valid
-	$ret = $userlib->validate_user($requestedUser, $pass, $challenge, $response);
+	$ret = $userlib->validate_user($requestedUser, $pass);
 	if (count($ret) == 3) {
 		$ret[] = null;
 	}

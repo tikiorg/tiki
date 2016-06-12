@@ -476,7 +476,7 @@ if (($prefs['auth_method'] == 'ws') and (isset($_SERVER['REMOTE_USER']))) {
 // Check for Shibboleth Login
 if ($prefs['auth_method'] == 'shib' and isset($_SERVER['REMOTE_USER'])) {
 	// Validate the user (if not created create it)
-	if ($userlib->validate_user($_SERVER['REMOTE_USER'], "", "", "")) {
+	if ($userlib->validate_user($_SERVER['REMOTE_USER'], "",)) {
 		$_SESSION["$user_cookie_site"] = $_SERVER['REMOTE_USER'];
 	}
 }

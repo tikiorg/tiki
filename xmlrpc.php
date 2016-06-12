@@ -67,7 +67,7 @@ function getUserInfo($params)
 	$passwordp = $params->getParam(2);
 	$password = $passwordp->scalarval();
 
-	list($ok, $username, $e) = $userlib->validate_user($username, $password, '', '');
+	list($ok, $username, $e) = $userlib->validate_user($username, $password);
 
 	if ($ok) {
 		$myStruct = new XML_RPC_Value(
@@ -122,7 +122,7 @@ function newPost($params)
 	$content = preg_replace('#<title>(.*)</title>#', '', $content);
 
 	// Now check if the user is valid and if the user can post a submission
-	list($ok, $username, $e) = $userlib->validate_user($username, $password, '', '');
+	list($ok, $username, $e) = $userlib->validate_user($username, $password);
 
 	if (!$ok) {
 		return new XML_RPC_Response(0, 101, 'Invalid username or password');
@@ -190,7 +190,7 @@ function editPost($params)
 	$content = preg_replace('#<title>(.*)</title>#', '', $content);
 
 	// Now check if the user is valid and if the user can post a submission
-	list($ok, $username, $e) = $userlib->validate_user($username, $password, '', '');
+	list($ok, $username, $e) = $userlib->validate_user($username, $password);
 
 	if (!$ok) {
 		return new XML_RPC_Response(0, 101, 'Invalid username or password');
@@ -247,7 +247,7 @@ function deletePost($params)
 	$publish = $passp->scalarval();
 
 	// Now check if the user is valid and if the user can post a submission
-	list($ok, $username, $e) = $userlib->validate_user($username, $password, '', '');
+	list($ok, $username, $e) = $userlib->validate_user($username, $password);
 
 	if (!$ok) {
 		return new XML_RPC_Response(0, 101, 'Invalid username or password');
@@ -295,7 +295,7 @@ function getPost($params)
 	$password = $passwordp->scalarval();
 
 	// Now check if the user is valid and if the user can post a submission
-	list($ok, $username, $e) = $userlib->validate_user($username, $password, '', '');
+	list($ok, $username, $e) = $userlib->validate_user($username, $password);
 
 	if (!$ok) {
 		return new XML_RPC_Response(0, 101, 'Invalid username or password');
@@ -365,7 +365,7 @@ function getRecentPosts($params)
 	$number = $passp->scalarval();
 
 	// Now check if the user is valid and if the user can post a submission
-	list($ok, $username, $e) = $userlib->validate_user($username, $password, '', '');
+	list($ok, $username, $e) = $userlib->validate_user($username, $password);
 
 	if (!$ok) {
 		return new XML_RPC_Response(0, 101, 'Invalid username or password');

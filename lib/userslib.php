@@ -328,21 +328,6 @@ class UsersLib extends TikiLib
 		return $r;
 	}
 
-	function generate_challenge()
-	{
-		$val = md5($this->genPass());
-
-		return $val;
-	}
-
-	function validate_hash($user, $hash)
-	{
-		return $this->getOne(
-			'select count(*) from `users_users` where binary `login` = ? and `hash`=?',
-			array($user, $hash)
-		);
-	}
-
 	/**
 	 * Force a logout for the specified user
 	 * @param $user
@@ -362,7 +347,7 @@ class UsersLib extends TikiLib
 
 	// For each auth method, validate user in auth, if valid, verify tiki user exists and create if necessary (as configured)
 	// Once complete, update_lastlogin and return result, username and login message.
-	function validate_user($user, $pass, $challenge = '', $response = '', $validate_phase=false)
+	function validate_user($user, $pass, $validate_phase=false)
 	{
 		global $prefs;
 		
@@ -410,7 +395,7 @@ class UsersLib extends TikiLib
 		// first attempt a login via the standard Tiki system
 		//
 		if (!($auth_shib || $auth_cas) || $user == 'admin') { //redflo: does this mean, that users in cas and shib are not replicated to tiki tables? Does this work well?
-			list($result, $user) = $this->validate_user_tiki($user, $pass, $challenge, $response, $validate_phase);
+			list($result, $user) = $this->validate_user_tiki($user, $pass, $validate_phase);
 		} else {
 			$result = NULL;
 		}
@@ -1545,7 +1530,7 @@ class UsersLib extends TikiLib
 	 * @param user: username
 	 * @param pass: password
 	 */
-	function validate_user_tiki($user, $pass, $challenge, $response, $validate_phase = false)
+	function validate_user_tiki($user, $pass, $validate_phase = false)
 	{
 		global $prefs;
 
@@ -1584,7 +1569,6 @@ class UsersLib extends TikiLib
 		$user = $res['login'];
 
 		// next verify the password with every hashes methods
-		if ($prefs['feature_challenge'] == 'n' || empty($response)) {
 			if (!empty($res['valid']) && $pass == $res['valid']) // used for validation of user account before activation
 				return array(USER_VALID, $user);
 
@@ -1609,26 +1593,7 @@ class UsersLib extends TikiLib
 				return array(USER_PREVIOUSLY_VALIDATED, $user);
 			}
 			return array(PASSWORD_INCORRECT, $user);
-		} else {
-			// Use challenge-reponse method
-			// Compare pass against md5(user,challenge,hash)
-			$hash = $this->getOne('select `hash` from `users_users` where binary `login`=?', array($user));
-
-			if (!isset($_SESSION["challenge"]))
-				return array(false, $user);
-
-			//print("pass: $pass user: $user hash: $hash <br />");
-			//print("challenge: ".$_SESSION["challenge"]." challenge: $challenge<br />");
-			//print("response : $response<br />");
-			if ($response == md5($user . $hash . $_SESSION["challenge"])) {
-				$this->update_lastlogin($user);
-				return array(USER_VALID, $user);
-			} else {
-				return array(false, $user);
-			}
-		}
-
-		return array(PASSWORD_INCORRECT, $user);
+	
 	}
 
 	/**
