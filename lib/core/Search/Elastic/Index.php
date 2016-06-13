@@ -164,7 +164,7 @@ class Search_Elastic_Index implements Search_Index_Interface
 		$builder->setDocumentReader($this->createDocumentReader());
 		$queryPart = $builder->build($query->getExpr());
 
-		$indices = [$this->index];
+		$indices = array($this->index);
 
 /*	this part handles federated searching, not backported currently
 	so just comment it out

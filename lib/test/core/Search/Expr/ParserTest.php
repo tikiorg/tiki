@@ -25,13 +25,13 @@ class Search_Expr_ParserTest extends PHPUnit_Framework_TestCase
 	{
 		$result = $this->parser->parse('"hello world" test again');
 		$this->assertEquals(
-			new Search_Expr_ImplicitPhrase([
+			new Search_Expr_ImplicitPhrase(array(
 				new Search_Expr_ExplicitPhrase('hello world'),
-				new Search_Expr_ImplicitPhrase([
+				new Search_Expr_ImplicitPhrase(array(
 					new Search_Expr_Token('test'),
 					new Search_Expr_Token('again'),
-				]),
-			]),
+				)),
+			)),
 			$result
 		);
 	}
@@ -40,12 +40,12 @@ class Search_Expr_ParserTest extends PHPUnit_Framework_TestCase
 	{
 		$result = $this->parser->parse('hello world test again');
 		$this->assertEquals(
-			new Search_Expr_ImplicitPhrase([
+			new Search_Expr_ImplicitPhrase(array(
 				new Search_Expr_Token('hello'),
 				new Search_Expr_Token('world'),
 				new Search_Expr_Token('test'),
 				new Search_Expr_Token('again'),
-			]),
+			)),
 			$result
 		);
 	}
@@ -54,10 +54,10 @@ class Search_Expr_ParserTest extends PHPUnit_Framework_TestCase
 	{
 		$result = $this->parser->parse('(test again)');
 		$this->assertEquals(
-			new Search_Expr_ImplicitPhrase([
+			new Search_Expr_ImplicitPhrase(array(
 				new Search_Expr_Token('test'),
 				new Search_Expr_Token('again'),
-			]),
+			)),
 			$result
 		);
 	}
@@ -66,19 +66,19 @@ class Search_Expr_ParserTest extends PHPUnit_Framework_TestCase
 	{
 		$result = $this->parser->parse('(hello (bob roger)) (test again)');
 		$this->assertEquals(
-			new Search_Expr_ImplicitPhrase([
-				new Search_Expr_ImplicitPhrase([
+			new Search_Expr_ImplicitPhrase(array(
+				new Search_Expr_ImplicitPhrase(array(
 					new Search_Expr_Token('hello'),
-					new Search_Expr_ImplicitPhrase([
+					new Search_Expr_ImplicitPhrase(array(
 						new Search_Expr_Token('bob'),
 						new Search_Expr_Token('roger'),
-					]),
-				]),
-				new Search_Expr_ImplicitPhrase([
+					)),
+				)),
+				new Search_Expr_ImplicitPhrase(array(
 					new Search_Expr_Token('test'),
 					new Search_Expr_Token('again'),
-				]),
-			]),
+				)),
+			)),
 			$result
 		);
 	}
@@ -196,10 +196,10 @@ class Search_Expr_ParserTest extends PHPUnit_Framework_TestCase
 		$result = $this->parser->parse('bob AND test again');
 
 		$this->assertEquals(
-			new Search_Expr_ImplicitPhrase([
+			new Search_Expr_ImplicitPhrase(array(
 				$this->parser->parse('bob AND test'),
 				$this->parser->parse('again'),
-			]),
+			)),
 			$result
 		);
 	}

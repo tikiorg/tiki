@@ -25,16 +25,16 @@ class Search_Elastic_RescoreQueryBuilderTest extends PHPUnit_Framework_TestCase
 		$query = $builder->build(new ExplicitPhrase('Hello', 'plaintext', 'contents', 1.5));
 
 		$this->assertEquals(
-			['rescore' => [
+			array('rescore' => array(
 				'window_size' => 50,
-				'query' => [
-					'rescore_query' => ['bool' => ['should' => [
-						["match_phrase" => [
-							"contents" => ["query" => "hello", "boost" => 1.5, 'slop' => 50],
-						]],
-					]]],
-				]
-			]], $query
+				'query' => array(
+					'rescore_query' => array('bool' => array('should' => array(
+						array("match_phrase" => array(
+							"contents" => array("query" => "hello", "boost" => 1.5, 'slop' => 50),
+						)),
+					))),
+				)
+			)), $query
 		);
 	}
 
@@ -51,11 +51,11 @@ class Search_Elastic_RescoreQueryBuilderTest extends PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals(
-			[
-				["match_phrase" => [
-						"contents" => ["query" => "hello", "boost" => 1.5, 'slop' => 50],
-				]],
-			], $query['rescore']['query']['rescore_query']['bool']['should']
+			array(
+				array("match_phrase" => array(
+						"contents" => array("query" => "hello", "boost" => 1.5, 'slop' => 50),
+				)),
+			), $query['rescore']['query']['rescore_query']['bool']['should']
 		);
 	}
 
@@ -73,11 +73,11 @@ class Search_Elastic_RescoreQueryBuilderTest extends PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals(
-			[
-				["match_phrase" => [
-						"contents" => ["query" => "hello world", "boost" => 1.0, 'slop' => 50],
-				]],
-			], $query['rescore']['query']['rescore_query']['bool']['should']
+			array(
+				array("match_phrase" => array(
+						"contents" => array("query" => "hello world", "boost" => 1.0, 'slop' => 50),
+				)),
+			), $query['rescore']['query']['rescore_query']['bool']['should']
 		);
 	}
 
@@ -95,14 +95,14 @@ class Search_Elastic_RescoreQueryBuilderTest extends PHPUnit_Framework_TestCase
 		);
 
 		$this->assertEquals(
-			[
-				["match_phrase" => [
-						"contents" => ["query" => "hello", "boost" => 1.0, 'slop' => 50],
-				]],
-				["match_phrase" => [
-						"contents" => ["query" => "world", "boost" => 1.5, 'slop' => 50],
-				]],
-			], $query['rescore']['query']['rescore_query']['bool']['should']
+			array(
+				array("match_phrase" => array(
+						"contents" => array("query" => "hello", "boost" => 1.0, 'slop' => 50),
+				)),
+				array("match_phrase" => array(
+						"contents" => array("query" => "world", "boost" => 1.5, 'slop' => 50),
+				)),
+			), $query['rescore']['query']['rescore_query']['bool']['should']
 		);
 	}
 
@@ -121,14 +121,14 @@ class Search_Elastic_RescoreQueryBuilderTest extends PHPUnit_Framework_TestCase
 
 		// Notice how AND does not matter when ranking
 		$this->assertEquals(
-			[
-				["match_phrase" => [
-						"contents" => ["query" => "hello", "boost" => 1.0, 'slop' => 50],
-				]],
-				["match_phrase" => [
-						"contents" => ["query" => "world", "boost" => 1.5, 'slop' => 50],
-				]],
-			], $query['rescore']['query']['rescore_query']['bool']['should']
+			array(
+				array("match_phrase" => array(
+						"contents" => array("query" => "hello", "boost" => 1.0, 'slop' => 50),
+				)),
+				array("match_phrase" => array(
+						"contents" => array("query" => "world", "boost" => 1.5, 'slop' => 50),
+				)),
+			), $query['rescore']['query']['rescore_query']['bool']['should']
 		);
 	}
 
@@ -190,11 +190,11 @@ class Search_Elastic_RescoreQueryBuilderTest extends PHPUnit_Framework_TestCase
 		$builder = new QueryBuilder;
 		$builder->setDocumentReader(
 			function ($type, $object) {
-				return [
+				return array(
 					'object_type' => $type,
 					'object_id' => $object,
 					'contents' => 'hello world',
-				];
+				);
 			}
 		);
 

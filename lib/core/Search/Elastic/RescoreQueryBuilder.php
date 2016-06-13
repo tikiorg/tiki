@@ -35,22 +35,22 @@ class Search_Elastic_RescoreQueryBuilder
 
 	function build(Search_Expr_Interface $expr)
 	{
-		$this->accumulate = [];
+		$this->accumulate = array();
 
 		$expr->walk($this);
 
-		$query = [
-			'rescore' => [
+		$query = array(
+			'rescore' => array(
 				'window_size' => 50,
-				'query' => [
-					'rescore_query' => [
-						'bool' => [
+				'query' => array(
+					'rescore_query' => array(
+						'bool' => array(
 							'should' => array_values($this->accumulate),
-						],
-					],
-				],
-			],
-		];
+						),
+					),
+				),
+			),
+		);
 
 		return $query;
 	}
@@ -81,15 +81,15 @@ class Search_Elastic_RescoreQueryBuilder
 		$this->cancelNode($node);
 
 		$hash = spl_object_hash($node);
-		$this->accumulate[$hash] = [
-			'match_phrase' => [
-				$field => [
+		$this->accumulate[$hash] = array(
+			'match_phrase' => array(
+				$field => array(
 					'query' => $phrase,
 					'boost' => $boost,
 					'slop' => 50,
-				],
-			],
-		];
+				),
+			),
+		);
 	}
 
 	function __invoke($node, $childNodes)
@@ -111,7 +111,7 @@ class Search_Elastic_RescoreQueryBuilder
 			if ($first && $first instanceof Token) {
 				$firstType = $first->getType();
 				$firstField = $first->getField();
-				$terms = [];
+				$terms = array();
 				foreach ($childNodes as $child) {
 					if ($child instanceof Token && $firstType == $child->getType() && $firstField == $child->getField()) {
 						$terms[] = $this->getTerm($child);
