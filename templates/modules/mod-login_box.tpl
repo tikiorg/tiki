@@ -165,27 +165,10 @@ if (jqueryTiki.tooltips) {
 								{capture assign="close_tags"}</li></ul></li></ul></div>{$close_tags}{/capture}
 		{/if}
 		<form name="loginbox" id="loginbox-{$module_logo_instance}" action="{$login_module.login_url|escape}"
-				method="post" {if $prefs.feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}
+				method="post"
 				{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
 		{capture assign="close_tags"}</form>{$close_tags}{/capture}
-		{if $prefs.feature_challenge eq 'y'}
-			<script type='text/javascript' src="lib/md5.js"></script>
-			{jq notonready=true}
-function doChallengeResponse() {
-	hashstr = document.loginbox.user.value +
-				document.loginbox.pass.value +
-				document.loginbox.email.value;
-	str = document.loginbox.user.value + 
-			MD5(hashstr) + document.loginbox.challenge.value;
-	document.loginbox.response.value = MD5(str);
-	document.loginbox.pass.value='';
-	document.loginbox.submit();
-	return false;
-}
-			{/jq}
-			<input type="hidden" name="challenge" value="{$challenge|escape}" />
-			<input type="hidden" name="response" value="" />
-		{/if}
+
 		{if !empty($urllogin)}<input type="hidden" name="url" value="{$urllogin|escape}" />{/if}
 		{if $module_params.nobox neq 'y'}
 			<fieldset>
