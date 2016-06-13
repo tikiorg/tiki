@@ -9229,7 +9229,6 @@ $lang = array(
 // "Join the discussion" => "Join the discussion",
 // "%0 replied to a thread" => "%0 replied to a thread",
 // "%0 corrected a message" => "%0 corrected a message",
-// "%0 requested an action from you" => "%0 requested an action from you",
 // "%0 triggered your %1 priority saved filter" => "%0 triggered your %1 priority saved filter",
 // "Critical Priority" => "Critical Priority",
 // "See your saved filter" => "See your saved filter",
