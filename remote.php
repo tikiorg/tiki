@@ -97,7 +97,7 @@ function validate($params)
 		return new XML_RPC_Response(0, 101, $msg);
 	}
 
-	list($isvalid, $dummy, $error) = $userlib->validate_user($login, $pass, '', '');
+	list($isvalid, $dummy, $error) = $userlib->validate_user($login, $pass);
 
 	if (!$isvalid) {
 		$msg = tra('Invalid username or password');

@@ -192,9 +192,6 @@ if (!empty($varcheck_errors)) {
 	$smarty->display('error_raw.tpl');
 	die;
 }
-if ($prefs['feature_challenge'] == 'y') {
-	require_once ('lib/setup/challenge.php');
-}
 if ($prefs['feature_usermenu'] == 'y') {
 	require_once ('lib/setup/usermenu.php');
 }
