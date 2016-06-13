@@ -88,11 +88,11 @@ if ($isInstalled) {
 	$console->add(new Tiki\Command\BackupFilesCommand);
 	$console->add(new Tiki\Command\ProfileBaselineCommand);
 } else {
-	$console->add(new Tiki\Command\UnavailableCommand('cache:clear'));
-	$console->add(new Tiki\Command\UnavailableCommand('less:compile'));
-	$console->add(new Tiki\Command\UnavailableCommand('database:backup'));
-	$console->add(new Tiki\Command\UnavailableCommand('backup:files'));
-	$console->add(new Tiki\Command\UnavailableCommand('profile:baseline'));
+	$console->add(new Tiki\Command\UnavailableCommand('cache:clear'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('less:compile'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('database:backup'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('backup:files'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('profile:baseline'))->ignoreValidationErrors();
 }
 
 if ($isInstalled && ! $installer->requiresUpdate()) {
@@ -117,26 +117,26 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\TrackerImportCommand);
 	$console->add(new Tiki\Command\TrackerClearCommand);
 } else {
-	$console->add(new Tiki\Command\UnavailableCommand('addon:install'));
-	$console->add(new Tiki\Command\UnavailableCommand('addon:remove'));
-	$console->add(new Tiki\Command\UnavailableCommand('addon:upgrade'));
-	$console->add(new Tiki\Command\UnavailableCommand('daily-report:send'));
-	$console->add(new Tiki\Command\UnavailableCommand('goal:check'));
-	$console->add(new Tiki\Command\UnavailableCommand('files:batchupload'));
-	$console->add(new Tiki\Command\UnavailableCommand('files:deleteold'));
-	$console->add(new Tiki\Command\UnavailableCommand('index:rebuild'));
-	$console->add(new Tiki\Command\UnavailableCommand('index:optimize'));
-	$console->add(new Tiki\Command\UnavailableCommand('index:catch-up'));
-	$console->add(new Tiki\Command\UnavailableCommand('mail-in:poll'));
-	$console->add(new Tiki\Command\UnavailableCommand('mail-queue:send'));
-	$console->add(new Tiki\Command\UnavailableCommand('notification:digest'));
-	$console->add(new Tiki\Command\UnavailableCommand('profile:forget'));
-	$console->add(new Tiki\Command\UnavailableCommand('profile:apply'));
-	$console->add(new Tiki\Command\UnavailableCommand('profile:export:init'));
-	$console->add(new Tiki\Command\UnavailableCommand('recommendation:batch'));
-	$console->add(new Tiki\Command\UnavailableCommand('rss:refresh'));
-	$console->add(new Tiki\Command\UnavailableCommand('tracker:import'));
-	$console->add(new Tiki\Command\UnavailableCommand('tracker:clear'));
+	$console->add(new Tiki\Command\UnavailableCommand('addon:install'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('addon:remove'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('addon:upgrade'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('daily-report:send'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('goal:check'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('files:batchupload'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('files:deleteold'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('index:rebuild'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('index:optimize'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('index:catch-up'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('mail-in:poll'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('mail-queue:send'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('notification:digest'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('profile:forget'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('profile:apply'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('profile:export:init'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('recommendation:batch'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('rss:refresh'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('tracker:import'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('tracker:clear'))->ignoreValidationErrors();
 }
 
 if (file_exists('profiles/info.ini')) {
@@ -170,7 +170,7 @@ if (file_exists('profiles/info.ini')) {
 if (is_file('db/redact/local.php') && ($site == 'redact') ) {
 	$console->add(new Tiki\Command\RedactDBCommand);
 } else {
-	$console->add(new Tiki\Command\UnavailableCommand('database:redact'));
+	$console->add(new Tiki\Command\UnavailableCommand('database:redact'))->ignoreValidationErrors();
 }
 
 $console->run();
