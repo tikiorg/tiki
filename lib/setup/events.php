@@ -334,6 +334,9 @@ function tiki_setup_events()
 	$events->bind('tiki.mustread.completed', 'tiki.save');
 	$events->bind('tiki.mustread.required', 'tiki.save');
 
+	// As PHP's register_shutdown_function might change the working directory, change it back to avoid bugs.
+	$events->bindPriority(-20, 'tiki.process.shutdown', 'tiki_shutdown_cwd');
+
 	if (function_exists('fastcgi_finish_request')) {
 		// If available, try to send everything to the user at this point
 		$events->bindPriority(-10, 'tiki.process.shutdown', 'fastcgi_finish_request');
@@ -348,6 +351,16 @@ function tiki_setup_events()
 	//Check the Addons to see if there are any events to bind
 	$api = new TikiAddons_Api_Events();
 	$api->bindEvents($events);
+}
+
+function tiki_shutdown_cwd()
+{
+	global $tikipath;
+	if ($currentdir = getcwd()) {
+		if ($currentdir != $tikipath) {
+			chdir($tikipath);
+		}
+	}
 }
 
 function tiki_save_refresh_index($args)
