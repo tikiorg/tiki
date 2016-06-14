@@ -1125,8 +1125,8 @@ class UsersLib extends TikiLib
 		if ($prefs['auth_ldap_debug'] == 'y') {
 			$logslib->add_log('ldap', 'UserLib::disable_tiki_auth()');
 		}
-		$query = 'update `users_users` set `password`=?, `hash`=? where binary `login` = ?';
-		$result = $this->query($query, array('', '', $user));
+		$query = 'update `users_users` set `hash`=? where binary `login` = ?';
+		$result = $this->query($query, array('', $user));
 	}
 
 	/**
@@ -1894,7 +1894,6 @@ class UsersLib extends TikiLib
 				// Filter out sensitive data
 				unset($res['email']);
 				unset($res['hash']);
-				unset($res['password']);
 				unset($res['provpass']);
 			}
 
@@ -6213,10 +6212,6 @@ class UsersLib extends TikiLib
 			}
 		}
 
-		if ( $prefs['feature_clear_passwords'] == 'n' ) {
-			$pass = '';
-		}
-
 		if ( $pass_first_login ) {
 			$new_pass_confirm = 0;
 		} else {
@@ -6227,7 +6222,6 @@ class UsersLib extends TikiLib
 		$userId = $userTable->insert(
 			array(
 				'login' => $user,
-				'password' => $pass,
 				'email' => $email,
 				'provpass' => $provpass,
 				'registrationDate' => (int) $this->now,
@@ -6373,14 +6367,12 @@ class UsersLib extends TikiLib
 
 	function get_user_password($user)
 	{
-		$query = 'select `password`,`provpass` from `users_users` where binary `login`=?';
+		$query = 'select `provpass` from `users_users` where binary `login`=?';
 
 		$result = $this->query($query, array($user));
 		$res = $result->fetchRow();
-		if (empty($res['provpass']))
-			return $res['password'];
-		else
-			return $res['provpass'];
+
+		return $res['provpass'];
 	}
 
 	function get_user_email($user)
@@ -6554,8 +6546,8 @@ class UsersLib extends TikiLib
 		$pass = $this->getOne($query, array($user));
 		if (($pass <> '') && ($actpass == md5($pass))) {
 			$hash = password_hash($pass, PASSWORD_DEFAULT);
-			$query = 'update `users_users` set `password`=?, `hash`=?, `pass_confirm`=? where `login`=?';
-			$result = $this->query($query, array('', $hash, (int)$this->now, $user));
+			$query = 'update `users_users` set `hash`=?, `pass_confirm`=? where `login`=?';
+			$result = $this->query($query, array($hash, (int)$this->now, $user));
 			return $pass;
 		}
 		return false;
@@ -6626,27 +6618,21 @@ class UsersLib extends TikiLib
 
 	function change_user_password($user, $pass, $pass_first_login=false)
 	{
-		global $prefs;
 
 		$hash = password_hash($pass, PASSWORD_DEFAULT);
 		$new_pass_confirm = $this->now;
-		$provpass = $pass;
-
-		if ($prefs['feature_clear_passwords'] == 'n') {
-			$pass = '';
-		}
 
 		if ($pass_first_login) {
-			if (!empty($provpass)) {
-				$query = 'update `users_users` set `hash`=? ,`password`=? ,`pass_confirm`=?, `provpass`=?, `pass_confirm`=? where binary `login`=?';
-				$this->query($query, array($hash, $pass, $new_pass_confirm, $provpass, 0, $user));
+			if (!empty($pass)) {
+				$query = 'update `users_users` set `hash`=? ,`pass_confirm`=?, `provpass`=?, `pass_confirm`=? where binary `login`=?';
+				$this->query($query, array($hash, $new_pass_confirm, $pass, 0, $user));
 			} else {
 				$query = 'update `users_users` set `pass_confirm`=? where binary `login`=?';
 				$this->query($query, array(0, $user));
 			}
 		} else {
-			$query = 'update `users_users` set `hash`=? ,`password`=? ,`pass_confirm`=?, `provpass`=? where binary `login`=?';
-			$this->query($query, array($hash, $pass, $new_pass_confirm, '',	$user));
+			$query = 'update `users_users` set `hash`=? ,`pass_confirm`=?, `provpass`=? where binary `login`=?';
+			$this->query($query, array($hash, $new_pass_confirm, '',	$user));
 		}
 		// invalidate the cache so that after a fresh install, the admin (who has no user details at the install) can log in
 		$cachelib = TikiLib::lib('cache');
@@ -6852,19 +6838,6 @@ class UsersLib extends TikiLib
 
 		$q = array();
 		$bindvars = array();
-
-		if (isset($u['password'])) {
-			if ($prefs['feature_clear_passwords'] == 's') {
-				$q[] = '`password` = ?';
-				$bindvars[] = strip_tags($u['password']);
-			}
-
-			// I don't think there are currently cases where login and email are undefined
-			//$hash = md5($u['login'] . $u['password'] . $u['email']);
-			$hash = password_hash($u['password'], PASSWORD_DEFAULT);
-			$q[] = '`hash` = ?';
-			$bindvars[] = $hash;
-		}
 
 		if (isset($u['email'])) {
 			if ($prefs['user_unique_email'] == 'y' && $this->other_user_has_email($u['login'], $u['email'])) {
@@ -7136,7 +7109,6 @@ class UsersLib extends TikiLib
 				)
 			);
 
-			$smarty->assign('mail_pass', $pass);
 			$mail_data = $smarty->fetch("mail/$mailTemplate.tpl");
 			$mail = new TikiMail();
 			$mail->setText($mail_data);
@@ -7227,7 +7199,6 @@ class UsersLib extends TikiLib
 		$apass = $this->renew_user_password($user);
 		$apass = md5($apass);
 		$smarty->assign('mail_apass', $apass);
-		$smarty->assign('mail_pass', $_REQUEST['pass']);
 		$smarty->assign('mail_ip', $tikilib->get_ip_address());
 		$smarty->assign('user', $user);
 		$mail = new TikiMail();

@@ -173,14 +173,6 @@
 			</fieldset>
 			<fieldset>
 				<legend>{tr}Password{/tr}</legend>
-				{if $prefs.feature_clear_passwords eq 'y'} {* deprecated *}
-					{preference name='feature_clear_passwords'}
-					<div class="adminoptionboxchild" id='feature_clear_passwords_childcontainer'>
-						{remarksbox type='warning' title="{tr}Security risk{/tr}" close="n"}
-							{tr}Store passwords in plain text is activated. You should never set this unless you know what you are doing.{/tr}
-						{/remarksbox}
-					</div>
-				{/if}
 				{preference name=forgotPass}
 				{preference name=change_password}
 				{preference name=pass_chr_num}

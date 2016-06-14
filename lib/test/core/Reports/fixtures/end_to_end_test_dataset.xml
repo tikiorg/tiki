@@ -159,13 +159,11 @@
 				<field name="userId">2</field>
 				<field name="email">test@test.com</field>
 				<field name="login">test</field>
-				<field name="password"></field>
 				<field name="provpass"></field>
 				<field name="default_group" xsi:nil="true" />
 				<field name="lastLogin">1332769871</field>
 				<field name="currentLogin">1332770006</field>
 				<field name="registrationDate">1332769843</field>
-				<field name="challenge" xsi:nil="true" />
 				<field name="pass_confirm">1332769843</field>
 				<field name="email_confirm">1332769843</field>
 				<field name="hash">asdf</field>

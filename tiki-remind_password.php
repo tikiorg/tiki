@@ -57,13 +57,9 @@ if (isset($_REQUEST["remind"])) {
 	} else {
 		include_once ('lib/webmail/tikimaillib.php');
 		$name = $_REQUEST['name'];
-		if ($prefs['feature_clear_passwords'] == 'y') {
-			$pass = $userlib->get_user_password($name);
-			$smarty->assign('clearpw', 'y');
-		} else {
-			$pass = $userlib->renew_user_password($name);
-			$smarty->assign('clearpw', 'n');
-		}
+		
+		$pass = $userlib->renew_user_password($name);
+		
 		$languageEmail = $tikilib->get_user_preference($name, "language", $prefs['site_language']);
 		// Now check if the user should be notified by email
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
@@ -72,8 +68,6 @@ if (isset($_REQUEST["remind"])) {
 		$smarty->assign('mail_machine', $machine);
 		$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 		$smarty->assign('mail_user', $name);
-		$smarty->assign('mail_same', $prefs['feature_clear_passwords']);
-		$smarty->assign('mail_pass', $pass);
 		$smarty->assign('mail_apass', md5($pass));
 		$smarty->assign('mail_ip', $tikilib->get_ip_address());
 		$mail_data = sprintf($smarty->fetchLang($languageEmail, 'mail/password_reminder_subject.tpl'), $_SERVER["SERVER_NAME"]);
@@ -92,11 +86,9 @@ if (isset($_REQUEST["remind"])) {
 		// Just show "success" message and no form
 		$smarty->assign('showmsg', 'y');
 		$smarty->assign('showfrm', 'n');
-		if ($prefs['feature_clear_passwords'] == 'y') {
-			$tmp = tra("A password reminder email has been sent ");
-		} else {
-			$tmp = tra("An email with a link to reset your password has been sent ");
-		}
+
+		$tmp = tra("An email with a link to reset your password has been sent ");
+		
 		if ($prefs['login_is_email'] == 'y') $tmp.= tra("to the email");
 		else $tmp.= tra("to the registered email address for");
 		$tmp.= " " . $name . ". ";

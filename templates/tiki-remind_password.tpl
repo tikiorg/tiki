@@ -43,7 +43,7 @@
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-3 col-md-offset-2 col-sm-10">
-				<input type="submit" class="btn btn-default" name="remind" value="{if $prefs.feature_clear_passwords eq 'y'}{tr}Send me my Password{/tr}{else}{tr}Request Password Reset{/tr}{/if}">
+				<input type="submit" class="btn btn-default" name="remind" value="Request Password Reset">
 			</div>
 		</div>
 	</form>

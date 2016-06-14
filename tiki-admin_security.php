@@ -118,13 +118,6 @@ if ($prefs['wikiplugin_sql'] == 'y') {
 		'message' => tra('The "SQL Wikiplugin" is activated. It can be used by wiki editors to execute SQL commands.')
 	);
 }
-if ($prefs['feature_clear_passwords'] == 'y') {
-	$tikisettings['feature_clear_passwords'] = array(
-		'risk' => tra('unsafe') ,
-		'setting' => tra('Enabled') ,
-		'message' => tra('Store passwords in plain text is activated. You should never set this unless you know what you are doing.')
-	);
-}
 if ($prefs['https_login'] != 'required') {
 	$tikisettings['https_login'] = array(
 		'risk' => tra('risky') ,
