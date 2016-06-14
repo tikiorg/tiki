@@ -6365,16 +6365,6 @@ class UsersLib extends TikiLib
 		return true;
 	}
 
-	function get_user_password($user)
-	{
-		$query = 'select `provpass` from `users_users` where binary `login`=?';
-
-		$result = $this->query($query, array($user));
-		$res = $result->fetchRow();
-
-		return $res['provpass'];
-	}
-
 	function get_user_email($user)
 	{
 		global $prefs;
