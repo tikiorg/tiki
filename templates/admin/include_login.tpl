@@ -182,7 +182,6 @@
 					</div>
 				{/if}
 				{preference name=forgotPass}
-				{preference name=feature_crypt_passwords}
 				{preference name=change_password}
 				{preference name=pass_chr_num}
 				{preference name=pass_chr_case}

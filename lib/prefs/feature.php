@@ -1695,19 +1695,6 @@ function prefs_feature_list($partial = false)
 			'perspective' => false,
 			'default' => 'n',
 		),
-
-		'feature_crypt_passwords' => array(
-			'name' => tra('Encryption method'),
-            'description' => tra(''),
-			'type' => 'list',
-			'options' => array(
-				'crypt-md5' => 'crypt-md5',
-				'crypt-des' => 'crypt-des',
-				'tikihash' => tra('tikihash (old)'),
-			),
-			'perspective' => false,
-			'default' => (CRYPT_MD5 == 1)? 'crypt-md5': 'tikihash',
-		),
 		'feature_editcss' => array(
 			'name' => tra('Edit CSS'),
 			'description' => tra('Edit CSS files directly in the browser.'),

@@ -1568,30 +1568,42 @@ class UsersLib extends TikiLib
 		$res = $result->fetchRow();
 		$user = $res['login'];
 
-		// next verify the password with every hashes methods
-			if (!empty($res['valid']) && $pass == $res['valid']) // used for validation of user account before activation
-				return array(USER_VALID, $user);
+		// check for account flags
+			if ($res['waiting'] == 'u'){				// if account is in validation mode.
 
-			if ($res['waiting'] == 'u')
-				return array(ACCOUNT_WAITING_USER, $user);
+				if ($pass == $res['valid']) 			// if user sucessfully provies code from email
+					return array(USER_VALID, $user);
+				else
+					return array(ACCOUNT_WAITING_USER, $user);  // if code validation fails, (or user tries to log in before verifying)
+			}
+
 			if ($res['waiting'] == 'a')
 				return array(ACCOUNT_DISABLED, $user);
 
-			if ($res['hash'] == md5($user.$pass.trim($res['email']))) // very old method md5(user.pass.email), for compatibility
-				return array(USER_VALID, $user);
+			if ($validate_phase)									 
+				return array(USER_PREVIOUSLY_VALIDATED, $user);		// if email verifycation code is used an a validated account, deny.
 
-			if ($res['hash'] == md5($user.$pass)) // old method md5(user.pass), for compatibility
-				return array(USER_VALID, $user);
 
-			if ($res['hash'] == md5($pass)) // normal method md5(pass)
-				return array(USER_VALID, $user);
+		// next verify the password with every hashes methods
 
-			if ($this->hash_pass($pass, $res['hash']) == $res['hash']) // new method (crypt-md5) and tikihash method (md5(pass))
-				return array(USER_VALID, $user);
-
-			if ($validate_phase && empty($res['waiting'])) {
-				return array(USER_PREVIOUSLY_VALIDATED, $user);
+			
+			if ($res['hash'][0] == '$'){				// if password was created by crypt (old tiki hash) or password_hash (current tiki hash)
+				
+				if (password_verify($pass,$res['hash'])){  
+					return array(USER_VALID, $user);
+				}else return array(PASSWORD_INCORRECT, $user);      // if the password was incorrect, dont give the md5's a spin
 			}
+
+			if ($res['hash'] == md5($pass)) // very method md5(pass), for compatibility
+				return array(USER_VALID, $user);
+
+			if ($res['hash'] == md5($user.$pass)) // ancient method md5(user.pass), for compatibility
+				return array(USER_VALID, $user);
+
+			if ($res['hash'] == md5($user.$pass.trim($res['email']))) // very ancient method md5(user.pass.email), for compatibility
+				return array(USER_VALID, $user);
+
+
 			return array(PASSWORD_INCORRECT, $user);
 	
 	}
@@ -6114,63 +6126,6 @@ class UsersLib extends TikiLib
 		return TikiLib::lib('relation')->get_relation_id('tiki.user.banned', 'user', $user, 'group', $group) > 0;
 	}
 
-	function hash_pass($pass, $salt = NULL)
-	{
-		global $prefs;
-
-		$hashmethod=$prefs['feature_crypt_passwords'];
-
-		if (!is_null($salt)) {
-			$len=strlen($salt);
-			if ($len == 13) { // CRYPT_STD_DES
-				$hashmethod='crypt-des';
-			} else if ($len == 34) { // CRYPT_MD5
-				$hashmethod='crypt-md5';
-			} else if ($len == 32) { // md5()
-				$hashmethod='tikihash';
-			} else if ($len == 0) { // password is disabled in tiki -> external authentification
-				$hashmethod='pass_disabled';
-			} else {
-				die('Unknown password format');
-			}
-		}
-
-		switch($hashmethod) {
-
-			case 'crypt':
-				return crypt($pass);
-
-			case 'crypt-des':
-				if (CRYPT_STD_DES != 1)
-					die('CRYPT_STD_DES not implemented on this system');
-
-				if (is_null($salt)) {
-					$letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./';
-					$salt = '';
-					for ($i=0; $i<2; $i++)
-						$salt .= $letters[rand(0, strlen($letters) - 1)];
-				}
-				return crypt($pass, $salt);
-
-			case 'crypt-md5':
-				if (CRYPT_MD5 != 1)
-					die('CRYPT_MD5 not implemented on this system');
-
-				if (is_null($salt)) {
-					$letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./';
-					$salt = '$1$';
-					for ($i=0; $i<8; $i++)
-						$salt .= $letters[rand(0, strlen($letters) - 1)];
-					$salt .= '$';
-				}
-				return crypt($pass, $salt);
-
-			case 'pass_disabled': // md5(someting) is not empty string
-			case 'tikihash':
-			default:
-				return md5($pass);
-		}
-	}
 
 	function confirm_user($user)
 	{
@@ -6250,7 +6205,7 @@ class UsersLib extends TikiLib
 		// Generate a unique hash; this is also done below in set_user_fields()
 		$lastLogin = null;
 		if (empty($openid_url)) {
-			$hash = $this->hash_pass($pass);
+			$hash = password_hash($pass, PASSWORD_DEFAULT);
 		} else {
 			$hash = '';
 			if (!isset($prefs['validateRegistration']) || $prefs['validateRegistration'] != 'y') {
@@ -6400,7 +6355,7 @@ class UsersLib extends TikiLib
 		// lfagundes - only if pass is provided, admin doesn't need it
 		// is this still necessary?
 		if (!empty($pass)) {
-			$hash = $this->hash_pass($pass);
+			$hash = password_hash($pass, PASSWORD_DEFAULT);
 			$query = 'update `users_users` set `hash`=? where binary `login`=?';
 			$result = $this->query($query, array($hash, $user));
 		}
@@ -6598,7 +6553,7 @@ class UsersLib extends TikiLib
 		$query = 'select `provpass` from `users_users` where `login`=?';
 		$pass = $this->getOne($query, array($user));
 		if (($pass <> '') && ($actpass == md5($pass))) {
-			$hash = $this->hash_pass($pass);
+			$hash = password_hash($pass, PASSWORD_DEFAULT);
 			$query = 'update `users_users` set `password`=?, `hash`=?, `pass_confirm`=? where `login`=?';
 			$result = $this->query($query, array('', $hash, (int)$this->now, $user));
 			return $pass;
@@ -6673,7 +6628,7 @@ class UsersLib extends TikiLib
 	{
 		global $prefs;
 
-		$hash = $this->hash_pass($pass);
+		$hash = password_hash($pass, PASSWORD_DEFAULT);
 		$new_pass_confirm = $this->now;
 		$provpass = $pass;
 
@@ -6906,7 +6861,7 @@ class UsersLib extends TikiLib
 
 			// I don't think there are currently cases where login and email are undefined
 			//$hash = md5($u['login'] . $u['password'] . $u['email']);
-			$hash = $this->hash_pass($u['password']);
+			$hash = password_hash($u['password'], PASSWORD_DEFAULT);
 			$q[] = '`hash` = ?';
 			$bindvars[] = $hash;
 		}
