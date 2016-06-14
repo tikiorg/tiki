@@ -1589,7 +1589,7 @@ class UsersLib extends TikiLib
 			
 			if ($res['hash'][0] == '$'){				// if password was created by crypt (old tiki hash) or password_hash (current tiki hash)
 				
-				if (password_verify($pass,$res['hash'])){  
+				if (password_verify($pass,$res['hash'])){
 					return array(USER_VALID, $user);
 				}else return array(PASSWORD_INCORRECT, $user);      // if the password was incorrect, dont give the md5's a spin
 			}
@@ -6612,10 +6612,10 @@ class UsersLib extends TikiLib
 		$hash = password_hash($pass, PASSWORD_DEFAULT);
 		$new_pass_confirm = $this->now;
 
-		if ($pass_first_login) {
+		if ($pass_first_login) {					// if true, set pass_confirm to force passord change upon next login
 			if (!empty($pass)) {
-				$query = 'update `users_users` set `hash`=? ,`pass_confirm`=?, `provpass`=?, `pass_confirm`=? where binary `login`=?';
-				$this->query($query, array($hash, $new_pass_confirm, $pass, 0, $user));
+				$query = 'update `users_users` set `hash`=? , `provpass`=?, `pass_confirm`=? where binary `login`=?';
+				$this->query($query, array($hash, $pass, 0, $user));
 			} else {
 				$query = 'update `users_users` set `pass_confirm`=? where binary `login`=?';
 				$this->query($query, array(0, $user));
