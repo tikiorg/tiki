@@ -329,10 +329,10 @@ class PaymentLib extends TikiDb_Bridge
 					continue;
 				}
 
-				if ($amount) {
+				if ($received['amount']) {
 					// When electing to capture a specific amount, assume that amount is the total to be paid.
 					$table = $this->table('tiki_payment_requests');
-					$table->update(['amount' => (float) $amount], ['paymentRequestId' => $paymentId]);
+					$table->update(['amount' => (float) $received['amount']], ['paymentRequestId' => $paymentId]);
 				}
 
 				if ($gateway = $this->gateway($received['type'])) {

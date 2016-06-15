@@ -225,7 +225,7 @@ function wikiplugin_addtocart( $data, $params )
 		$p = trim($p);			// remove some line ends picked up in pretty tracker
 	}
 
-	$params['price'] = preg_replace('/[^\d^\.^,]/', '', $params['price']);
+	$params['price'] = preg_replace('/[^-?\d^\.^,]/', '', $params['price']);
 
 	$smarty->assign('params', $params);
 
