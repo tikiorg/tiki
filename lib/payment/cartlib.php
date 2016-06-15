@@ -598,6 +598,9 @@ class CartLib
 		foreach ( $_SESSION['cart'] as $info ) {
 			$total += floatval($info['quantity']) * floatval($info['price']);
 		}
+		if ($total < 0) {
+			$total = 0;
+		}
 
 		$this->total_no_discount = $total;
 
@@ -1061,7 +1064,7 @@ class CartLib
 			$info['hash'] = md5($code.time());
 			$info['code'] = $code;
 			$info['quantity'] = $quantity;
-			$info['price'] = number_format(abs($info['price']), 2, '.', '');
+			$info['price'] = number_format($info['price'], 2, '.', '');
 			$info['inputedprice'] = number_format(abs($childInputedPrice), 2, '.', '');
 
 			if ( ! isset( $info['href'] ) ) {
