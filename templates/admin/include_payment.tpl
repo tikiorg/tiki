@@ -59,7 +59,7 @@
 							{preference name=payment_israelpost_request_preauth}
 						</div>
 					{/accordion_group}
-					{accordion_group title="{tr}Ccline{/tr}"}
+					{accordion_group title="{tr}Cclite{/tr}"}
 						<div class="admin payment">
 							{remarksbox title="{tr}Experimental{/tr}" type="warning" icon="bricks"}
 								{tr}Cclite is for creating and managing alternative or complementary trading currencies and groups{/tr}
