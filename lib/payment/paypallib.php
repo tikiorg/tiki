@@ -128,8 +128,7 @@ class PaypalLib extends TikiDb_Bridge
 	{
 		global $prefs;
 
-		$client = TikiLib::lib('tiki')->get_http_client();
-		$client->setUri($prefs['payment_paypal_environment']);
+		$client = TikiLib::lib('tiki')->get_http_client($prefs['payment_paypal_environment']);
 
 		$base = array( 'cmd' => '_notify-validate' );
 
