@@ -41,7 +41,8 @@ function smarty_function_payment( $params, $smarty )
 				$info['state'] == 'past' &&
 				$prefs['payment_user_only_his_own_past'] != 'y'
 			) ||
-			$theguy
+			$theguy ||
+			$objectperms->payment_admin
 		)
 	) {
 		if ($prefs['payment_system'] == 'cclite' && isset($_POST['cclite_payment_amount']) && $_POST['cclite_payment_amount'] == $info['amount_remaining']) {
