@@ -1534,35 +1534,32 @@ class UsersLib extends TikiLib
 	{
 		global $prefs;
 
+		$userUpper =TikiLib::strtoupper($user);
 		// first verify that the user exists
-		$query = 'select * from `users_users` where binary `login` = ?';
-		$result = $this->query($query, array($user));
+		$query = 'select `userId`,`login`,`waiting`, `hash`, `email`,`valid` from `users_users` where upper(`login`) = ?';
+		$result = $this->query($query, array($userUpper));
 
-		if (! $result->numRows()) {
-			$query = 'select * from `users_users` where upper(`login`) = ?';
-			$result = $this->query($query, array(TikiLib::strtoupper($user)));
-
-			switch ($result->numRows()) {
-				case 0:
-					if ($prefs['login_allow_email']) {
-						//if users can login with email
-						$query = 'select * from `users_users` where upper(`email`) = ?';
-						$result = $this->query($query, array(TikiLib::strtoupper($user)));
-						if ($result->numRows() > 1) {
-							return array(EMAIL_AMBIGUOUS, $user);	
-						} elseif ($result->numRows() > 0) {
-							break;
-						}
+		
+		switch ($result->numRows()) {													
+			case 0:
+				if ($prefs['login_allow_email']) {								//if no users found, check check if email is being used to login
+					$query = 'select `userId`,`login`,`waiting`, `hash`, `email`,`valid` from `users_users` where upper(`email`) = ?';
+					$result = $this->query($query, array($userUpper));
+					if ($result->numRows() > 1) {
+						return array(EMAIL_AMBIGUOUS, $user);					// if there is more than one user with that email
+					} elseif ($result->numRows() == 1) {
+						break;													// if there is only one user, exit switch
 					}
-					return array(USER_NOT_FOUND, $user);
+				}
+				return array(USER_NOT_FOUND, $user);
 
-				case 1:
-					break;
+			case 1:
+				break;
 
-				default:
-					return array(USER_AMBIGOUS, $user);
-			}
+			default:
+				return array(USER_AMBIGOUS, $user);
 		}
+	
 
 
 		$res = $result->fetchRow();
@@ -1590,23 +1587,45 @@ class UsersLib extends TikiLib
 			if ($res['hash'][0] == '$'){				// if password was created by crypt (old tiki hash) or password_hash (current tiki hash)
 				
 				if (password_verify($pass,$res['hash'])){
+					if (password_needs_rehash($res['hash'], PASSWORD_DEFAULT))
+						$this->set_user_password($res['userId'],$pass);			//if its a old hash style, rehash it in a more secure way
 					return array(USER_VALID, $user);
 				}else return array(PASSWORD_INCORRECT, $user);      // if the password was incorrect, dont give the md5's a spin
 			}
 
-			if ($res['hash'] == md5($pass)) // very method md5(pass), for compatibility
+			if ($res['hash'] == md5($pass)){ 						// very method md5(pass), for compatibility
+				$this->set_user_password($res['userId'],$pass);
 				return array(USER_VALID, $user);
-
-			if ($res['hash'] == md5($user.$pass)) // ancient method md5(user.pass), for compatibility
+			}
+			if ($res['hash'] == md5($user.$pass)){ 					// ancient method md5(user.pass), for compatibility
+				$this->set_user_password($res['userId'],$pass);
 				return array(USER_VALID, $user);
-
-			if ($res['hash'] == md5($user.$pass.trim($res['email']))) // very ancient method md5(user.pass.email), for compatibility
+			}
+			if ($res['hash'] == md5($user.$pass.trim($res['email']))){ // very ancient method md5(user.pass.email), for compatibility
+				$this->set_user_password($res['userId'],$pass);
 				return array(USER_VALID, $user);
-
+			}
 
 			return array(PASSWORD_INCORRECT, $user);
 	
 	}
+
+
+	/**
+	 * Stores a users passowrd in the database
+	 *
+	 * @param userId: the database column id of the user.
+	 * @param pass: the clear text password to be hashed and stored
+	 */
+	private function set_user_password($userId, $pass){   // sets a suer passwod given a username and password
+
+		$hash = password_hash($pass, PASSWORD_DEFAULT);
+		$query = 'update `users_users` set `hash`=? where `userId`=?';
+		$result = $this->query($query, array($hash, $userId));
+
+	//todo: a little error checking woul be nice.
+	}
+ 
 
 	/**
 	 * Synchronizes Tiki user and group info from LDAP.
