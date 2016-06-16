@@ -723,6 +723,7 @@ if ($max_execution_time != 0) {
 include_once ('lib/setup/twversion.class.php');
 $TWV = new TWVersion();
 $smarty->assign('tiki_version_name', preg_replace('/^(\d+\.\d+)([^\d])/', '\1 \2', $TWV->version));
+$smarty->assign('tiki_version_short', preg_replace('/^(\d+)\..*$/', '\1', $TWV->version));
 
 // Available DB Servers
 $dbservers = array();
