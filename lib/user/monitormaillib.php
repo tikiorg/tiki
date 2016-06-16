@@ -50,7 +50,7 @@ class MonitorMailLib
 			]);
 
 			$html = $this->applyStyle($html);
-			$title = tr('Notification Digest');
+			$title = TikiLib::lib('smarty')->fetchLang($language, 'monitor/notification_email_digest_subject.tpl');	
 
 			$this->send($info['email'], $title, $html);
 
@@ -86,8 +86,7 @@ class MonitorMailLib
 
 	private function renderTitle($language, $mail)
 	{
-		// FIXME : Needs a better title
-		return tra('Notification', $language);
+		return TikiLib::lib('smarty')->fetchLang($language, 'monitor/notification_email_subject.tpl'); 
 	}
 
 	/**
