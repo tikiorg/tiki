@@ -131,6 +131,10 @@ function get_multivalues_from_pref() {
 			$config['values'] = array_map('trim', explode(',', $config['values']));
 		}
 		$config['labels'] = array_map('trim', explode(',', $config['labels']));
+		foreach ($config['labels'] as &$label) {
+		       $label = tra($label);   
+		}
+		unset($label);
 		if (empty($config['ids'])){
 			return;
 		}
