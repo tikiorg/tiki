@@ -66,7 +66,7 @@ function prefs_socialnetworks_list()
 		),
 		'socialnetworks_facebook_site_image' => array(
 			'name' => tra('Site Image'),
-			'description' => tra('Default og:image to be used on every page of your tiki, must be url'),
+			'description' => tra('Default og:image for sections without images (not articles, blogs, etc.), must be url and minimum image size is 200 x 200 pixels'),
 			'keywords' => 'social networks',
 			'type' => 'text',
 			'size' => 60,
