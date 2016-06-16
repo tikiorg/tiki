@@ -353,6 +353,7 @@ if (empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcase
 					$smarty->assign('canonical_ending', urlencode(trim(substr($page, strlen($newPage)))));
 					$page = $newPage;
 					$info = $tikilib->get_page_info($_REQUEST['page']);
+					unset($_REQUEST['sort_mode']); // prevent invalid sort_mode when coming from tracker listing to cause search fatal error in any LIST plugins
 				}
 			}
 		}
