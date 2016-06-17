@@ -247,7 +247,7 @@ function wikiplugin_mediaplayer($data, $params)
 				$src = \ZendOpenId\OpenId::absoluteUrl($params['src']);
 				$src = $prefs['fgal_viewerjs_uri'] . '#' . $src;
 
-				$out = "<iframe width=\"{$params['width']}\" height=\"{$params['height']}\" src=\"{$src}\"></iframe>";
+				$out = "<iframe width=\"{$params['width']}\" height=\"{$params['height']}\" src=\"{$src}\" allowfullscreen webkitallowfullscreen></iframe>";
 
 				return $out;
 
