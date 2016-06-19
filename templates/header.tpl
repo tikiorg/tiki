@@ -31,26 +31,35 @@
 {if isset($section) and $section eq "blogs"}
 	{if empty($blog_data.title)}
 	<meta name="description" content="Blog listing" property="og:description">
+	<meta name="twitter:description" content="Blog listing">
 	{elseif empty($postId)}
 	<meta name="description" content="{$blog_data.title|escape}" property="og:description">
+	<meta name="twitter:description" content="{$blog_data.title|escape}">
 	{else}
 	<meta name="description" content="{$post_info.title|escape} - {$blog_data.title|escape}" property="og:description">
+	<meta name="twitter:description" content="{$post_info.title|escape} - {$blog_data.title|escape}">
 	{/if}
 {elseif isset($section) and $section eq "cms"}
 	{* --- Article description --- *}
 	{if $heading neq ''}
 		<meta name="description" content="{$heading|truncate:150|escape}" property="og:description">
+		<meta name="twitter:description" content="{$heading|truncate:150|escape}">
 	{elseif $body neq ''}
 		<meta name="description" content="{$body|truncate:150|escape}" property="og:description">
+		<meta name="twitter:description" content="{$body|truncate:150|escape}">
 	{elseif empty($prefs.metatag_description)}
 		<meta name="description" content="Articles listing at {$prefs.browsertitle|tr_if|escape}" property="og:description">
+		<meta name="twitter:description" content="Articles listing at {$prefs.browsertitle|tr_if|escape}">
 	{else}
 		<meta name="description" content="{$prefs.metatag_description|escape}" property="og:description">
+		<meta name="twitter:description" content="{$prefs.metatag_description|escape}">
 	{/if}
 {elseif $prefs.metatag_pagedesc eq 'y' and not empty($description)}
 	<meta name="description" content="{$description|escape}" property="og:description">
+	<meta name="twitter:description" content="{$description|escape}">
 {elseif not empty($prefs.metatag_description)}
 	<meta name="description" content="{$prefs.metatag_description|escape}" property="og:description">
+	<meta name="twitter:description" content="{$prefs.metatag_description|escape}">
 {/if}
 
 {if $prefs.metatag_geoposition neq ''}
@@ -79,6 +88,8 @@
 <meta content="{if not empty($prefs.socialnetworks_facebook_site_name)}{$prefs.socialnetworks_facebook_site_name}{else}{$prefs.browsertitle|tr_if|escape}{/if}" property="og:site_name">
 <meta content="{if not empty($prefs.socialnetworks_twitter_site)}{$prefs.socialnetworks_twitter_site}{else}{$prefs.browsertitle|tr_if|escape}{/if}" name="twitter:site">
 
+{* --- SocialNetwork: fb:app_id ---*}
+{if not empty($prefs.socialnetworks_facebook_application_id)}<meta content="{$prefs.socialnetworks_facebook_application_id}" property="fb:app_id">{/if}
 
 {* --- tiki block --- *}
 <title>{strip}
@@ -134,6 +145,7 @@
 {/strip}</title>
 
 {* --- SocialNetwork:title --- *}
+{* Facebook *}
 <meta content="{strip}
 		{if !empty($sswindowtitle)}
 			{if $sswindowtitle eq 'none'}
@@ -187,6 +199,60 @@
 	{/strip}
 " property="og:title">
 
+{* Twitter *}
+<meta content="{strip}
+		{if !empty($sswindowtitle)}
+			{if $sswindowtitle eq 'none'}
+				&nbsp;
+			{else}
+				{$sswindowtitle|escape}
+			{/if}
+		{else}
+			{if $prefs.site_title_location eq 'before'}{$prefs.browsertitle|tr_if|escape} {$prefs.site_nav_seper} {/if}
+			{capture assign="page_description_title"}
+				{if ($prefs.feature_breadcrumbs eq 'y' or $prefs.site_title_breadcrumb eq "desc") && isset($trail)}
+					{breadcrumbs type=$prefs.site_title_breadcrumb loc="head" crumbs=$trail}
+				{/if}
+			{/capture}
+			{if isset($structure) and $structure eq 'y'} {* get the alias name if item is a wiki page and it is in a structure *}
+				{section loop=$structure_path name=ix}
+					{assign var="aliasname" value={$structure_path[ix].page_alias}}
+				{/section}
+			{/if}
+			{if !empty($page_description_title)}
+				{$page_description_title}
+			{else}
+				{if !empty($tracker_item_main_value)}
+					{$tracker_item_main_value|truncate:255|escape}
+				{elseif !empty($title) and !is_array($title)}
+					{$title|escape}
+				{elseif !empty($aliasname)}
+					{$aliasname|escape}
+				{elseif !empty($page)}
+					{$page|escape}
+				{elseif !empty($description)}{$description|escape}
+					{* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
+				{elseif !empty($arttitle)}
+					{$arttitle|escape}
+				{elseif !empty($thread_info.title)}
+					{$thread_info.title|escape}
+				{elseif !empty($forum_info.name)}
+					{$forum_info.name|escape}
+				{elseif !empty($categ_info.name)}
+					{$categ_info.name|escape}
+				{elseif !empty($userinfo.login)}
+					{$userinfo.login|username}
+				{elseif !empty($tracker_info.name)}
+					{$tracker_info.name|escape}
+				{elseif !empty($headtitle)}
+					{$headtitle|stringfix:"&nbsp;"|escape}{* use $headtitle last if feature specific title not found *}
+				{/if}
+			{/if}
+			{if $prefs.site_title_location eq 'after'} {$prefs.site_nav_seper} {$prefs.browsertitle|tr_if|escape}{/if}
+		{/if}
+	{/strip}
+" name="twitter:title">
+
 {* --- SocialNetwork:type --- *}
 
 {if $prefs.feature_canonical_url eq 'y' and isset($mid)}
@@ -203,6 +269,8 @@
 
 {* To be added someday when using cart feature: product, product.group, product.item *}
 {* May be usefull too : profile *}
+
+<meta name="twitter:card" content="summary">
 
 {* --- SocialNetwork:image --- *}
 
