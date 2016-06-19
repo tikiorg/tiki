@@ -322,7 +322,7 @@ class Services_User_Controller
 					$msg = tra('Are you sure you want to delete the following users?');
 				}
 				//provide redirect if js is not enabled
-				$referer = Services_Utilities_Controller::noJsPath();
+				$referer = Services_Utilities::noJsPath();
 				return [
 					'modal' => '1',
 					'controller' => 'access',
@@ -502,7 +502,7 @@ class Services_User_Controller
 			$selected = $input->asArray('checked');
 			if (count($selected) > 0) {
 				//provide redirect if js is not enabled
-				$referer = Services_Utilities_Controller::noJsPath();
+				$referer = Services_Utilities::noJsPath();
 				//remove from group icon clicked for a specific user
 				if (isset($input['groupremove'])) {
 					$items = $input->asArray('groupremove');
@@ -644,7 +644,7 @@ class Services_User_Controller
 				$all_groups = $this->lib->list_all_groups();
 				$all_groups = array_combine($all_groups, $all_groups);
 				//provide redirect if js is not enabled
-				$referer = Services_Utilities_Controller::noJsPath();
+				$referer = Services_Utilities::noJsPath();
 				return [
 					'FORWARD' => [
 						'controller' => 'access',
@@ -732,7 +732,7 @@ class Services_User_Controller
 			$users = $input->asArray('checked');
 			if (count($users) > 0) {
 				//provide redirect if js is not enabled
-				$referer = Services_Utilities_Controller::noJsPath();
+				$referer = Services_Utilities::noJsPath();
 				return [
 					'title' => tra('Send wiki page content by email to selected users'),
 					'confirmAction' => $input->action->word(),

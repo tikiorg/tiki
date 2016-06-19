@@ -12,7 +12,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 }
 
 /**
- * Class Services_Utilities_Controller
+ * Class Services_Utilities
  */
 class Services_Utilities_Controller
 {
@@ -52,17 +52,5 @@ class Services_Utilities_Controller
 			'ajaxtimer' => $input->offsetGet('ajaxtimer'),
 			'ajaxdismissible' => $input->offsetGet('ajaxdismissible'),
 		];
-	}
-
-	static function noJsPath ()
-	{
-		global $prefs;
-		if ($prefs['javascript_enabled'] !== 'y') {
-			global $base_url;
-			$referer = substr($_SERVER['HTTP_REFERER'], strlen($base_url));
-		} else {
-			$referer = '';
-		}
-		return $referer;
 	}
 }

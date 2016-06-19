@@ -87,7 +87,7 @@ class Services_Forum_Controller
 						$customMsg = count($items) === 1 ? tra('Merge this topic:') : tra('Merge these topics:');
 					}
 					//provide redirect if js is not enabled
-					$referer = Services_Utilities_Controller::noJsPath();
+					$referer = Services_Utilities::noJsPath();
 					return [
 						'FORWARD' => [
 							'controller' => 'access',
@@ -177,7 +177,7 @@ class Services_Forum_Controller
 				$customMsg = count($items) === 1 ? tra('Move this topic:') : tra('Move these topics:');
 				$toMsg = tr('From the %0 forum to the below forum:', $fromName);
 				//provide redirect if js is not enabled
-				$referer = Services_Utilities_Controller::noJsPath();
+				$referer = Services_Utilities::noJsPath();
 				return [
 					'FORWARD' => [
 						'controller' => 'access',
@@ -263,7 +263,7 @@ class Services_Forum_Controller
 					$object = count($items) > 1 ? 'topics' : 'topic';
 				}
 				//provide redirect if js is not enabled
-				$referer = Services_Utilities_Controller::noJsPath();
+				$referer = Services_Utilities::noJsPath();
 				return [
 					'FORWARD' => [
 						'controller' => 'access',
@@ -336,7 +336,7 @@ class Services_Forum_Controller
 			if (isset($input['remove_attachment'])) {
 				$items[$input->remove_attachment->int()] = $input['filename'];
 				//provide redirect if js is not enabled
-				$referer = Services_Utilities_Controller::noJsPath();
+				$referer = Services_Utilities::noJsPath();
 				return [
 					'FORWARD' => [
 						'controller' => 'access',
@@ -429,7 +429,7 @@ class Services_Forum_Controller
 				$items = $this->getForumNames($selected);
 				$object = count($items) > 1 ? 'forums' : 'forum';
 				//provide redirect if js is not enabled
-				$referer = Services_Utilities_Controller::noJsPath();
+				$referer = Services_Utilities::noJsPath();
 				return [
 					'FORWARD' => [
 						'controller' => 'access',
@@ -542,7 +542,7 @@ class Services_Forum_Controller
 			if (count($selected) > 0) {
 				$items = $this->getTopicTitles($selected);
 				$object = count($items) > 1 ? 'topics' : 'topic';
-				$referer = Services_Utilities_Controller::noJsPath();
+				$referer = Services_Utilities::noJsPath();
 				return [
 					'FORWARD' => [
 						'controller' => 'access',
@@ -607,7 +607,7 @@ class Services_Forum_Controller
 				$topicId = $input->comments_parentId->int();
 				$items = $this->getTopicTitles([$topicId]);
 				//provide redirect if js is not enabled
-				$referer = Services_Utilities_Controller::noJsPath();
+				$referer = Services_Utilities::noJsPath();
 				return [
 					'FORWARD' => [
 						'controller' => 'access',
