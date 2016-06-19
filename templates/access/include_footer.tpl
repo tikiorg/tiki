@@ -11,12 +11,5 @@
 			{/if}
 		</button>
 	</div>
-{*If js is enabled, the layouts/internal/modal.tpl will be used which already has buttons*}
-{else}
-	{jq}
-	$('form.confirm-action').submit(function () {
-		confirmAction(this);
-		return false;
-	});
-	{/jq}
 {/if}
+{* If js is enabled, the layouts/internal/modal.tpl will be used which already has buttons *}
