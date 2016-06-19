@@ -553,7 +553,7 @@ class Services_User_Controller
 					];
 				}
 			} else {
-				throw new Services_Exception(tra('No users were selected. Please select one or more users.'), 409);
+				Services_Utilities::modalException(tra('No users were selected. Please select one or more users.'));
 			}
 		//after confirm submit - perform action and return success feedback
 		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -585,7 +585,9 @@ class Services_User_Controller
 									$logmsg = sprintf(tra('%s %s assigned to %s %s.'), tra('user'), $assign_user, tra('group'), $group);
 									$logslib->add_log('adminusers', $logmsg, $user);
 								} else {
-									throw new Services_Exception(tra('An error occurred. The group assignment failed'), 400);
+									Feedback::error(['mes' => tra('An error occurred. The group assignment failed.')],
+										'session');
+									return Services_Utilities::closeModal($extra['referer']);
 								}
 							} elseif ($add_remove === 'remove') {
 								$this->lib->remove_user_from_group($assign_user, $group);
@@ -594,16 +596,12 @@ class Services_User_Controller
 								$logslib->add_log('adminusers', $logmsg, $user);
 							}
 						} else {
-							throw new Services_Exception_Denied();
+							Feedback::error(['mes' => tra('Permission denied')], 'session');
+							return Services_Utilities::closeModal($extra['referer']);
 						}
 					}
 				}
 				//return to page
-				//if javascript is not enabled
-				if (!empty($extra['referer'])) {
-					$this->access->redirect($extra['referer'], tra('Selected user(s) group assignment(s) changed'), null,
-						'feedback');
-				}
 				if (count($users) === 1) {
 					$msg = tra('The following user:');
 					$helper = 'Has';
@@ -614,20 +612,20 @@ class Services_User_Controller
 				$verb = $add_remove == 'add' ? 'added to' : 'removed from';
 				$grpcnt = count($groups) === 1 ? 'group' : 'groups';
 				$toMsg = tr('%0 been %1 the following %2:', tra($helper), tra($verb), tra($grpcnt));
-				return [
-					'extra' => 'post',
-					'feedback' => [
-						'ajaxtype' => 'feedback',
-						'ajaxheading' => tra('Success'),
-						'ajaxitems' => $users,
-						'ajaxmsg' => $msg,
-						'ajaxtoMsg' => $toMsg,
-						'ajaxtoList' => $groups,
-						'modal' => '1',
-					]
+				$tikifeedback = [
+					'tpl' => 'action',
+					'mes' => $msg,
+					'type' => 'success',
+					'heading' => tra('Success'),
+					'items' => $users,
+					'toMsg' => $toMsg,
+					'toList' => $groups,
 				];
+				Feedback::success($tikifeedback, 'session');
+				return Services_Utilities::refresh($extra['referer']);
 			} else {
-				throw new Services_Exception(tra('No groups were selected. Please select one or more groups.'), 409);
+				Feedback::error(['mes' => tra('No groups were selected. Please select one or more groups.')], 'session');
+				return Services_Utilities::closeModal($extra['referer']);
 			}
 		}
 	}
