@@ -7,5 +7,10 @@
 		{include file='access/include_items.tpl'}
 		{include file='access/include_hidden.tpl'}
 	</form>
+	{if !empty($help)}
+		<span class="help-block">
+			{$help|escape}
+		</span>
+	{/if}
 	{include file='access/include_footer.tpl'}
 {/block}
