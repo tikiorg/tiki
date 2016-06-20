@@ -81,6 +81,7 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 			'forum_section' => $typeFactory->identifier($forum_info['section']),
 
 			'post_content' => $typeFactory->wikitext($content),
+			'post_author' => $typeFactory->wikitext($comment['userName']),
 			'post_snippet' => $typeFactory->plaintext($snippet),
 			'parent_thread_id' => $typeFactory->identifier($comment['parentId']),
 
@@ -90,6 +91,8 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 			'parent_contributors' => $typeFactory->multivalue(array_unique($root_author)),
 			'hits' => $typeFactory->numeric($comment['hits']),
 			'root_thread_id' => $typeFactory->identifier($root_thread_id),
+			'thread_type' => $typeFactory->identifier($comment['type']),
+			'locked' => $typeFactory->identifier($comment['locked']),
 		);
 
 		$forum_lastPost = $this->getForumLastPostData($objectId, $typeFactory);
@@ -144,6 +147,7 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 			'contributors',
 
 			'post_content',
+			'post_author',
 			'post_snippet',
 			'forum_id',
 			'forum_section',
@@ -156,6 +160,8 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 			'root_thread_id',
 			'parent_contributors',
 			'hits',
+			'type',
+			'locked',
 
 			'lastpost_title',
 			'lastpost_modification_date',
@@ -164,6 +170,7 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 			'lastpost_post_snippet',
 			'lastpost_hits',
 			'lastpost_thread_id',
+
 		);
 	}
 
