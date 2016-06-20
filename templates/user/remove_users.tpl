@@ -54,7 +54,7 @@
 				<div>
 					<input class="form-control" type="checkbox" id="ban_users" name="ban_users">
 					<div class="help-block">
-						{tr}Ban these users{/tr}
+						{tr}Checking this option and clicking OK will redirect you to a form where the selected users are marked for IP Banning.{/tr}
 					</div>
 				</div>
 			</div>

@@ -295,7 +295,7 @@ class Services_User_Controller
 	 */
 	public function action_no_action($input)
 	{
-		throw new Services_Exception(tra('No action was selected. Please select an action before clicking OK.'), 409);
+		Services_Utilities::modalException(tra('No action was selected. Please select an action before clicking OK.'));
 	}
 
 	/**
@@ -337,7 +337,7 @@ class Services_User_Controller
 					'confirm' => 'y',
 				];
 			} else {
-				throw new Services_Exception(tra('No users were selected. Please select one or more users.'), 409);
+				Services_Utilities::modalException(tra('No users were selected. Please select one or more users.'));
 			}
 		//after confirm submit - perform action and return success feedback
 		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -357,59 +357,35 @@ class Services_User_Controller
 			// do the deleting...
 			$this->removeUsers($items, $remove_pages, $remove_items, $remove_files);
 
+			//prepare feedback
+			if (count($items) === 1) {
+				$msg = tra('The following user has been deleted:');
+				$toMsg = tra('Submit form below to ban this user.');
+			} else {
+				$msg = tra('The following users have been deleted:');
+				$toMsg = tra('Submit form below to ban these users.');
+			}
+			$tikifeedback = [
+				'tpl' => 'action',
+				'mes' => $msg,
+				'items' => $items,
+			];
+			//redirect to banning page if selected
 			if ($input->ban_users->word()) {
-				$mass_ban_ip = implode('|', $items);
-				//if javascript is not enabled
+				$tikifeedback['toMsg'] = $toMsg;
+				Feedback::success($tikifeedback, 'session');
+				$url = 'tiki-admin_banning.php?mass_ban_ip_users=' . implode('|', $items);
 				global $prefs;
 				if ($prefs['javascript_enabled'] !== 'y') {
-					$this->access->redirect('tiki-admin_banning.php?mass_ban_ip_users=' . $mass_ban_ip);
-				}
-				if (count($items) === 1) {
-					$msg = tra('The following user has been deleted:');
-					$timeoutmsg = tra('You will be redirected in a few seconds to a form where this user\'s IP has been preselected for banning.');
+					$this->access->redirect($url);
 				} else {
-					$msg = tra('The following users have been deleted:');
-					$timeoutmsg = tra('You will be redirected in a few seconds to a form where these users\' IPs have been preselected for banning.');
+					return ['url' => $url];
 				}
-				return [
-					'url' => 'tiki-admin_banning.php?mass_ban_ip_users=' . $mass_ban_ip,
-					'FORWARD' => [
-						'controller' => 'utilities',
-						'action' => 'modal_alert',
-						'ajaxtype' => 'feedback',
-						'ajaxheading' => tra('Success'),
-						'ajaxitems' => json_encode($items),
-						'ajaxmsg' => $msg,
-						'ajaxtimeoutMsg' => $timeoutmsg,
-						'ajaxtimer' => 8,
-						'modal' => '1'
-					]
-				];
-
+			//refresh page
 			} else {
-
-				//return to page
-				//if javascript is not enabled
+				Feedback::success($tikifeedback, 'session');
 				$extra = json_decode($input['extra'], true);
-				if (!empty($extra['referer'])) {
-					$this->access->redirect($extra['referer'], tra('Selected user(s) deleted'), null,
-						'feedback');
-				}
-				if (count($items) === 1) {
-					$msg = tra('The following user has been deleted:');
-				} else {
-					$msg = tra('The following users have been deleted:');
-				}
-				return [
-					'extra' => 'post',
-					'feedback' => [
-						'ajaxtype' => 'feedback',
-						'ajaxheading' => tra('Success'),
-						'ajaxitems' => $items,
-						'ajaxmsg' => $msg,
-					],
-				];
-
+				return Services_Utilities::refresh($extra['referer']);
 			}
 		}
 	}
@@ -434,8 +410,10 @@ class Services_User_Controller
 			if (count($items) > 0) {
 				if (count($items) === 1) {
 					$msg = tra('Are you sure you want to ban the following user\'s IP?');
+					$help = tra('Clicking OK will redirect you to a form where this user\'s is preselected for IP banning.');
 				} else {
 					$msg = tra('Are you sure you want to ban the following users\' IPs?');
+					$help = tra('Clicking OK will redirect you to a form where these users\' are preselected for IP banning.');
 				}
 				return [
 					'FORWARD' => [
@@ -447,6 +425,7 @@ class Services_User_Controller
 						'customMsg' => $msg,
 						'items' => $items,
 						'ticket' => $check['ticket'],
+						'help' => $help,
 						'modal' => '1',
 					]
 				];
@@ -456,30 +435,13 @@ class Services_User_Controller
 		//after confirm submit - perform action and return success feedback
 		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST') {
 			$items = json_decode($input['items'], true);
-			$mass_ban_ip = implode('|', $items);
-			//if javascript is not enabled
+			$url = 'tiki-admin_banning.php?mass_ban_ip_users=' . implode('|', $items);
 			global $prefs;
 			if ($prefs['javascript_enabled'] !== 'y') {
-				$this->access->redirect('tiki-admin_banning.php?mass_ban_ip_users=' . $mass_ban_ip);
-			}
-			if (count($items) === 1) {
-				$msg = tra('You will be redirected in a few seconds to a form where the following user\'s IP has been preselected for banning:');
+				$this->access->redirect($url);
 			} else {
-				$msg = tra('You will be redirected in a few seconds to a form where the following users\' IPs have been preselected for banning:');
+				return ['url' => $url];
 			}
-			return [
-				'url' => 'tiki-admin_banning.php?mass_ban_ip_users=' . $mass_ban_ip,
-				'FORWARD' => [
-					'controller' => 'utilities',
-					'action' => 'modal_alert',
-					'ajaxtype' => 'feedback',
-					'ajaxheading' => tra('Success'),
-					'ajaxitems' => json_encode($items),
-					'ajaxmsg' => $msg,
-					'ajaxtimer' => 8,
-					'modal' => '1'
-				]
-			];
 		}
 	}
 
@@ -615,8 +577,6 @@ class Services_User_Controller
 				$tikifeedback = [
 					'tpl' => 'action',
 					'mes' => $msg,
-					'type' => 'success',
-					'heading' => tra('Success'),
 					'items' => $users,
 					'toMsg' => $toMsg,
 					'toList' => $groups,
