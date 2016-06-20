@@ -2,7 +2,7 @@
 
 <div id="alert-wrapper">
 	{foreach $fb as $item}
-		{remarksbox type="{$item.type}" title="{$item.heading}"}
+		{remarksbox type="{$item.type}" title="{$item.title}"}
 			{if !empty($item.mes)}
 				{$item.mes|escape}
 			{/if}
