@@ -3885,6 +3885,8 @@ class Comments extends TikiLib
 
 		if(is_array($ret) && isset($ret[0])) {
 			return $ret[0];
+		} else {
+			return [];
 		}
 	}
 }
