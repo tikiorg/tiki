@@ -17,7 +17,7 @@
 		{tab name="{tr}Twitter{/tr}"}
 			<h2>{tr}Twitter{/tr}</h2>
 			<div class="adminoptionbox">
-				{preference name=socialnetworks_twitter_site}
+				{preference name=socialnetworks_twitter_site_name}
 				{preference name=socialnetworks_twitter_site_image}
 			</div>
 			{remarksbox type="note" title="{tr}Note{/tr}"}
