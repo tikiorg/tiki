@@ -29,7 +29,7 @@
 				<div class="col-md-12" id="col1">
 					{block name=title}{/block}
 					{block name=navigation}{/block}
-					{error_report}
+					{feedback}
 					{block name=content}{/block}
 				</div>
 			</div>
