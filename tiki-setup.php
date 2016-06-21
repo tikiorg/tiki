@@ -20,10 +20,11 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	header('location: index.php');
 	exit;
 }
-if (version_compare(PHP_VERSION, '5.5.0', '<') && php_sapi_name() != 'cli') {
-	header('location: tiki-install.php');
-	exit;
-} elseif (version_compare(PHP_VERSION, '5.5.0', '<') && php_sapi_name() == 'cli') {
+if (version_compare(PHP_VERSION, '5.5.0', '<')){
+	if(php_sapi_name() != 'cli') {					// if not running a command line version of php, show requirements
+		header('location: tiki-install.php');
+		exit;
+	}
 	// This is command-line. No 'location' command make sense here. Let admins access what works and deal with the rest.
 	echo "Warning: Tiki13 and above expects PHP 5.5.0 and above. You are running " . phpversion() . " at your own risk\n";
 }
@@ -222,12 +223,12 @@ if (!empty($_SESSION['interactive_translation_mode']) && ($_SESSION['interactive
 if ($prefs['feature_freetags'] == 'y') {
 	require_once ('lib/setup/freetags.php');
 }
-if ($prefs['feature_areas'] == 'y' && $prefs['feature_categories'] == 'y' && $prefs['categories_used_in_tpl'] == 'y') {
+if ($prefs['feature_categories'] == 'y'){
 	require_once ('lib/setup/categories.php');
-	$areaslib = TikiLib::lib('areas');
-	$areaslib->HandleObjectCategories($objectCategoryIdsNoJail);
-} elseif ($prefs['feature_categories'] == 'y') {
-	require_once ('lib/setup/categories.php');
+	if ($prefs['feature_areas'] == 'y' &&  $prefs['categories_used_in_tpl'] == 'y') {
+		$areaslib = TikiLib::lib('areas');
+		$areaslib->HandleObjectCategories($objectCategoryIdsNoJail);
+	}
 }
 if ($prefs['feature_userlevels'] == 'y') {
 	require_once ('lib/setup/userlevels.php');
@@ -462,13 +463,13 @@ if (typeof $.fn.button.noConflict === "function") {
 ');
 
 	if ( $prefs['feature_jquery_ui_theme'] !== 'none' ) {
-		if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {
-			// // cdn for css not working - this is the only css from a cdn anyway - so use local version 
+		// cdn for css not working - this is the only css from a cdn anyway - so use local version 
+		//if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'jquery' ) {			
 			// $headerlib->add_cssfile("$url_scheme://code.jquery.com/ui/$headerlib->jqueryui_version/themes/{$prefs['feature_jquery_ui_theme']}/jquery-ui.css");
 			$headerlib->add_cssfile('vendor/jquery/jquery-ui-themes/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css');
-		} else {
-			$headerlib->add_cssfile('vendor/jquery/jquery-ui-themes/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css');
-		}
+	//	} else {
+	//		$headerlib->add_cssfile('vendor/jquery/jquery-ui-themes/themes/' . $prefs['feature_jquery_ui_theme'] . '/jquery-ui.css');
+	//	}
 	}
 
 	if ( $prefs['feature_jquery_autocomplete'] == 'y' ) {
