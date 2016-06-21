@@ -283,7 +283,7 @@ class FileGalLib extends TikiLib
 	}
 
 	function insert_file($galleryId, $name, $description, $filename, $data, $size, $type, $creator, $path, $comment='',
-						 $author=null, $created='', $lockedby=NULL, $deleteAfter=NULL, $id=0, $metadata = null)
+						 $author=null, $created='', $lockedby=NULL, $deleteAfter=NULL, $id=0, $metadata = null,$image_x=NULL,$image_y=NULL)
 	{
 		global $prefs, $user;
 
@@ -294,7 +294,7 @@ class FileGalLib extends TikiLib
 
 		$gal_info = $this->get_file_gallery_info((int)$galleryId);
 		if (0 === strpos($type, 'image/')) {
-			$this->transformImage($path, $data, $size, $gal_info, $type, $metadata);
+			$this->transformImage($path, $data, $size, $gal_info, $type,$metadata,$image_x,$image_y);
 		}
 
 		$smarty = TikiLib::lib('smarty');
@@ -3484,10 +3484,20 @@ class FileGalLib extends TikiLib
 							}
 						} else {
 							$title = $this->getTitleFromFilename($params["name"][$key]);
+							  if(!$params['imagesize'][$key])		
+							  {		
+		 						$image_x=$params["image_max_size_x"];		
+		   						$image_y=$params["image_max_size_y"];		
+										
+		  					  }		
+							else{		
+								 $image_x=$gal_info["image_max_size_x"];		
+		                         $image_y=$gal_info["image_max_size_y"];		
+								}
 							$fileId = $this->insert_file(
 								$params["galleryId"][$key], $title,
 								$params["description"][$key], $name, $data, $size, $type, $params['user'][$key],
-								$fhash . $extension, '', $params['author'][$key], '', '', $deleteAfter, '', $filemeta
+								$fhash . $extension, '', $params['author'][$key], '', '', $deleteAfter, '', $filemeta,$image_x,$image_y
 							);
 						}
 						if (!$fileId) {
@@ -3618,7 +3628,7 @@ class FileGalLib extends TikiLib
 		return $title;
 	}
 
-	private function transformImage($path, & $data, & $size, $gal_info, $type, & $metadata)
+	private function transformImage($path, & $data, & $size, $gal_info, $type, & $metadata,$image_size_x=null,$image_size_y=null)
 	{
 		$imageReader = $this->getImageReader($type);
 		$imageWriter = $this->getImageWriter($type);
@@ -3628,7 +3638,7 @@ class FileGalLib extends TikiLib
 		}
 
 		// If it's an image format we can handle and gallery has limits on image sizes
-		if (! $gal_info["image_max_size_x"] && ! $gal_info["image_max_size_y"]) {
+		if (! ($gal_info["image_max_size_x"] && ! $gal_info["image_max_size_y"]) && ($image_size_x==null && $image_size_y==null)) {
 			return;
 		}
 
@@ -3639,17 +3649,23 @@ class FileGalLib extends TikiLib
 			$savedir = $this->get_gallery_save_dir($gal_info['galleryId'], $gal_info);
 			$work_file = $savedir . $path;
 		}
-
+        if(is_null($image_size_x))		
+           $image_size_x=$gal_info["image_max_size_x"];		
+		if(is_null($image_size_y))		
+           $image_size_y=$gal_info["image_max_size_y"];		
+				
+		
 		$image_size_info = getimagesize($work_file);
 		$image_x = $image_size_info[0];
 		$image_y = $image_size_info[1];
-		if ($gal_info["image_max_size_x"]) {
-			$rx=$image_x/$gal_info["image_max_size_x"];
+		if ($image_size_x) {		
+			$rx=$image_x/ $image_size_x;
 		} else {
 			$rx=0;
 		}
-		if ($gal_info["image_max_size_y"]) {
-			$ry=$image_y/$gal_info["image_max_size_y"];
+		if ( $image_size_y) {
+			$ry=$image_y/ $image_size_y;
+
 		} else {
 			$ry=0;
 		}
@@ -3787,7 +3803,7 @@ class FileGalLib extends TikiLib
 		);
 	}
 
-	function upload_single_file($gal_info, $name, $size, $type, $data, $asuser = null)
+	function upload_single_file($gal_info, $name, $size, $type, $data, $asuser = null,$image_x=null,$image_y=null)
 	{
 		global $user;
 		if (empty($asuser) || ! Perms::get()->admin) {
@@ -3798,7 +3814,7 @@ class FileGalLib extends TikiLib
 		}
 
 		$tx = $this->begin();
-		$ret = $this->insert_file($gal_info['galleryId'], $name, '', $name, $data, $size, $type, $asuser, $fhash, '');
+		$ret = $this->insert_file($gal_info['galleryId'], $name, '', $name, $data, $size, $type, $asuser, $fhash,'','','','','','','',$image_x,$image_y);
 		$tx->commit();
 
 		return $ret;

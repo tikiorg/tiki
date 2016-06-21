@@ -162,6 +162,9 @@ if ( $isUpload ) {
 		'listtoalert',
 		'insertion_syntax',
 		'filetype',
+		'imagesize',		
+		'image_max_size_x',		
+		'image_max_size_y'
 	);
 
 	$uploadParams = array(
