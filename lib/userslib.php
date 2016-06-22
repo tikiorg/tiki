@@ -2080,6 +2080,7 @@ class UsersLib extends TikiLib
 		$userid = $this->get_user_id($user);
 		$query = 'delete from `users_usergroups` where `userId` = ?';
 		$result = $this->query($query, array($userid));
+		TikiLib::events()->trigger('tiki.user.update', array('type' => 'user', 'object' => $user));
 	}
 
 	function get_groups_userchoice()
@@ -2259,6 +2260,9 @@ class UsersLib extends TikiLib
 		$this->query('delete from `tiki_user_mailin_struct` where `username` = ?', array($user));
 
 		$cachelib->invalidate('userslist');
+
+		TikiLib::events()->trigger('tiki.user.delete', array('type' => 'user', 'object' => $user));
+
 		return true;
 	}
 

@@ -308,6 +308,7 @@ function tiki_setup_events()
 	$events->bind('tiki.user.groupleave', 'tiki.user.update');
 	$events->bind('tiki.user.update', 'tiki.user.save');
 	$events->bind('tiki.user.create', 'tiki.user.save');
+	$events->bind('tiki.user.delete', 'tiki.save');
 
 	$events->bind('tiki.user.follow.add', 'tiki.user.network');
 	$events->bind('tiki.user.follow.incoming', 'tiki.user.network');
