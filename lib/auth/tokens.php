@@ -94,8 +94,13 @@ class AuthTokens
 			$sefurl = $tikiroot . smarty_modifier_sefurl($sefurl, $sefurlTypeMap[$_GET[0]]);
 		}
 
+		// add an extra conversion to prevent false positives due to former missmatches
+		// in cases of "/tikiroot/My Page" vs "/tikiroot/My+Page"
+		$entry = substr($data['entry'], strlen($tikiroot));
+		$entry_encoded = urlencode($entry);
+		$full_entry_encoded = $tikiroot . $entry_encoded;
 		// entry doesn't match "or" sefurl feature is in use but that also doesn't match
-		if ( $data['entry'] != $entry && $sefurl && $data['entry']  !== $sefurl ) {
+		if ( $data['entry'] != $entry && $sefurl && $data['entry']  !== $sefurl && $full_entry_encoded !== $sefurl ) {
 			return null;
 		}
 
