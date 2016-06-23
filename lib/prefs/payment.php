@@ -33,9 +33,9 @@ function prefs_payment_list()
 			'default' => 'paypal',
 		),
 		'payment_paypal_business' => array(
-			'name' => tra('Paypal Business ID'),
-			'description' => tra('Enable payments through PayPal.'),
-			'hint' => tra('Primary email of your PayPal account'),
+			'name' => tra('Paypal ID'),
+			'description' => tra('Enable payments through PayPal.') . ' ' . tra('This account can be either Personal, Business Standard, or Business Pro. A Personal account allows to receive small payments from shopping carts. A Business Standard account allows also to receive periodic payments through Plugin GroupMembership or receive bigger amounts. And a Business Pro account allows further customizations. See paypal.com for more information and exact fees depending on your country and business type.'),
+			'hint' => tra('Primary email of your PayPal account') . ' ' . tra('(Personal or Business).'),
 			'type' => 'text',
 			'filter' => 'email',
 			'dependencies' => array( 'payment_feature' ),
@@ -44,9 +44,9 @@ function prefs_payment_list()
 		),
 
         'payment_paypal_password' => array(
-            'name' => tra('Paypal Business Password'),
-            'description' => tra('The PayPal password associated with your PayPal Pro business account.'),
-            'hint' => tra('Primary password of your PayPal Pro business account'),
+            'name' => tra('Paypal Business Password') . ' ' . tr('(*)'),
+            'description' => tra('The PayPal password associated with your PayPal Pro business account') . '. ' . tra('(*) This is NOT needed for Paypal Personal or Paypal Standard Business accounts.'),
+            'hint' => tra('Primary password of your PayPal Pro business account') . ' ' . tr('(*) OPTIONAL'),
             'type' => 'password',
             'filter' => 'text',
             'dependencies' => array( 'payment_feature' ),
@@ -56,9 +56,9 @@ function prefs_payment_list()
         ),
 
         'payment_paypal_signature' => array(
-            'name' => tra('Paypal Business Signature'),
-            'description' => tra('Your API signature associated with your PayPal Pro business account'),
-            'hint' => tra('Your API signature associated with your PayPal Pro business account'),
+            'name' => tra('Paypal Business Signature'). ' ' . tr('(*)'),
+            'description' => tra('Your API signature associated with your PayPal Pro business account') . '. ' . tra('(*) This is NOT needed for Paypal Personal or Paypal Standard Business accounts.'),
+            'hint' => tra('Your API signature associated with your PayPal Pro business account') . ' ' . tr('(*) OPTIONAL'),
             'type' => 'text',
             'filter' => 'text',
             'dependencies' => array( 'payment_feature' ),
