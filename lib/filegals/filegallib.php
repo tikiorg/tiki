@@ -310,13 +310,25 @@ class FileGalLib extends TikiLib
 
 		$checksum = $this->get_file_checksum($galleryId, $path, $data);
 
-		if ( $prefs['fgal_allow_duplicates'] !== 'y' && !empty($data) ) {
+		// are dupes allowed? if not, then cleanup and stop:
+		if ( $prefs['fgal_allow_duplicates'] !== 'y') {
 			$conditions = array('hash' => $checksum);
 
 			if ( $prefs['fgal_allow_duplicates'] === 'different_galleries' ) {
-				$conditions['galleryId'] = $galleryId;
+					$conditions['galleryId'] = $galleryId;
 			}
 			if ( $filesTable->fetchCount($conditions) ) {
+				// uploaded file was saved to folder already (eg by jquery upload),
+				// so we need to remove it again or we'll have tons of
+				// unreferenced junk files in the folder
+				if (empty($data)) {
+					$savedir = $this->get_gallery_save_dir($galleryId);
+					if (false !== $savedir) {
+						if ( filesize($savedir . $path) > 0 ) {
+								@unlink($savedir . $path);
+						}
+					}
+				}
 				return false;
 			}
 		}
