@@ -34,7 +34,7 @@ class Services_Forum_Controller
 	 */
 	public function action_no_action($input)
 	{
-		throw new Services_Exception(tra('No action was selected. Please select an action before clicking OK.'), 409);
+		Services_Utilities::modalException(tra('No action was selected. Please select an action before clicking OK.'));
 	}
 
 	/**
@@ -107,10 +107,10 @@ class Services_Forum_Controller
 						]
 					];
 				} else {
-					throw new Services_Exception(tra('All topics or posts were selected, leaving none to merge with. Please make your selection again.'), 409);
+					Services_Utilities::modalException(tra('All topics or posts were selected, leaving none to merge with. Please make your selection again.'));
 				}
 			} else {
-				throw new Services_Exception(tra('No topics were selected. Please select the topics you wish to merge before clicking the merge button.'), 409);
+				Services_Utilities::modalException(tra('No topics were selected. Please select the topics you wish to merge before clicking the merge button.'));
 			}
 		//second pass - after popup modal form has been submitted
 		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -122,28 +122,22 @@ class Services_Forum_Controller
 					$this->lib->set_parent($id, $toId);
 				}
 			}
-			//return to page
-			//if javascript is not enabled
 			$extra = json_decode($input['extra'], true);
-			if (!empty($extra['referer'])) {
-				$this->access->redirect($extra['referer'], tra('Topic(s) merged'), null,
-					'feedback');
-			}
 			$toComment = $this->getTopicTitles([$toId]);
+			//prepare feedback
 			if (count($items) == 1) {
 				$msg = tr('The following post has been merged with the %0 topic:', $toComment[$toId]);
 			} else {
 				$msg = tr('The following posts have been merged with the %0 topic:', $toComment[$toId]);
 			}
-			return [
-				'extra' => 'post',
-				'feedback' => [
-					'ajaxtype' => 'feedback',
-					'ajaxheading' => tra('Success'),
-					'ajaxitems' => $items,
-					'ajaxmsg' => $msg,
-				]
+			$feedback = [
+				'tpl' => 'action',
+				'mes' => $msg,
+				'items' => $items,
 			];
+			Feedback::success($feedback, 'session');
+			//return to page
+			return Services_Utilities::refresh($extra['referer']);
  		}
 	}
 
@@ -199,7 +193,7 @@ class Services_Forum_Controller
 					]
 				];
 			} else {
-				throw new Services_Exception(tra('No topics were selected. Please select the topics you wish to move before clicking the move button.'), 409);
+				Services_Utilities::modalException(tra('No topics were selected. Please select the topics you wish to move before clicking the move button.'));
 			}
 			//second pass - after popup modal form has been submitted
 		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -216,27 +210,21 @@ class Services_Forum_Controller
 				$this->lib->forum_prune($extra['forumId']);
 				$this->lib->forum_prune($toId);
 			}
-			//return to page
-			//if javascript is not enabled
-			if (!empty($extra['referer'])) {
-				$this->access->redirect($extra['referer'], tra('Topic(s) moved'), null,
-					'feedback');
-			}
+			//prepare feedback
 			$toName = $toList[$toId];
 			if (count($items) == 1) {
 				$msg = tr('The following topic has been moved to the %0 forum:', $toName);
 			} else {
 				$msg = tr('The following topics have been moved to the %0 forum:', $toName);
 			}
-			return [
-				'extra' => 'post',
-				'feedback' => [
-					'ajaxtype' => 'feedback',
-					'ajaxheading' => tra('Success'),
-					'ajaxitems' => $items,
-					'ajaxmsg' => $msg,
-				]
+			$feedback = [
+				'tpl' => 'action',
+				'mes' => $msg,
+				'items' => $items,
 			];
+			Feedback::success($feedback, 'session');
+			//return to page
+			return Services_Utilities::refresh($extra['referer']);
 		}
 	}
 
@@ -283,7 +271,7 @@ class Services_Forum_Controller
 					]
 				];
 			} else {
-				throw new Services_Exception(tra('No topics were selected. Please select the topics you wish to delete before clicking the delete button.'), 409);
+				Services_Utilities::modalException(tra('No topics were selected. Please select the topics you wish to delete before clicking the delete button.'));
 			}
 		//second pass - after popup modal form has been submitted
 		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -296,27 +284,20 @@ class Services_Forum_Controller
 			}
 			$extra = json_decode($input['extra'], true);
 			$this->lib->forum_prune((int) $extra['forumId']);
-			//return to page
-			//if javascript is not enabled
-			if (!empty($extra['referer'])) {
-				$this->access->redirect($extra['referer'], tra('Topic(s) deleted'), null,
-					'feedback');
-			}
+			//prepare feedback
 			if (count($items) == 1) {
 				$msg = tra('The following topic has been deleted:');
 			} else {
 				$msg = tra('The following topics have been deleted:');
 			}
-			return [
-				'extra' => 'post',
-				'feedback' => [
-					'forumId' => $extra['forumId'],
-					'ajaxtype' => 'feedback',
-					'ajaxheading' => tra('Success'),
-					'ajaxitems' => $items,
-					'ajaxmsg' => $msg,
-				]
+			$feedback = [
+				'tpl' => 'action',
+				'mes' => $msg,
+				'items' => $items,
 			];
+			Feedback::success($feedback, 'session');
+			//return to page
+			return Services_Utilities::refresh($extra['referer']);
 		}
 	}
 
@@ -353,7 +334,7 @@ class Services_Forum_Controller
 					]
 				];
 			} else {
-				throw new Services_Exception(tra('No attachments were selected. Please select an attachment to delete.'), 409);
+				Services_Utilities::modalException(tra('No attachments were selected. Please select an attachment to delete.'));
 			}
 		//second pass - after popup modal form has been submitted
 		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -364,27 +345,20 @@ class Services_Forum_Controller
 					$this->lib->remove_thread_attachment($id);
 				}
 			}
-			//return to page
-			//if javascript is not enabled
-			$extra = json_decode($input['extra'], true);
-			if (!empty($extra['referer'])) {
-				$this->access->redirect($extra['referer'], tra('Attachment(s) deleted'), null,
-					'feedback');
-			}
+			//prepare feedback
 			if (count($items) == 1) {
 				$msg = tra('The following attachment has been deleted:');
 			} else {
 				$msg = tra('The following attachments have been deleted:');
 			}
-			return [
-				'extra' => 'post',
-				'feedback' => [
-					'ajaxtype' => 'feedback',
-					'ajaxheading' => tra('Success'),
-					'ajaxitems' => $items,
-					'ajaxmsg' => $msg,
-				]
+			$feedback = [
+				'tpl' => 'action',
+				'mes' => $msg,
+				'items' => $items,
 			];
+			Feedback::success($feedback, 'session');
+			//return to page
+			return Services_Utilities::refresh($extra['referer']);
 		}
 	}
 
@@ -446,7 +420,7 @@ class Services_Forum_Controller
 					]
 				];
 			} else {
-				throw new Services_Exception(tra('No forums were selected. Please select a forum to delete.'), 409);
+				Services_Utilities::modalException(tra('No forums were selected. Please select a forum to delete.'));
 			}
 		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST') {
 			$items = json_decode($input['items'], true);
@@ -455,27 +429,20 @@ class Services_Forum_Controller
 					$this->lib->remove_forum($id);
 				}
 			}
-			//return to page
-			//if javascript is not enabled
-			$extra = json_decode($input['extra'], true);
-			if (!empty($extra['referer'])) {
-				$this->access->redirect($extra['referer'], tra('Forum(s) deleted'), null,
-					'feedback');
-			}
+			//prepare feedback
 			if (count($items) === 1) {
 				$msg = tra('The following forum has been deleted:');
 			} else {
 				$msg = tra('The following forums have been deleted:');
 			}
-			return [
-				'extra' => 'post',
-				'feedback' => [
-					'ajaxtype' => 'feedback',
-					'ajaxheading' => tra('Success'),
-					'ajaxitems' => $items,
-					'ajaxmsg' => $msg,
-				]
+			$feedback = [
+				'tpl' => 'action',
+				'mes' => $msg,
+				'items' => $items,
 			];
+			Feedback::success($feedback, 'session');
+			//return to page
+			return Services_Utilities::refresh($extra['referer']);
 		}
 	}
 
@@ -501,7 +468,7 @@ class Services_Forum_Controller
 			if (!empty($info['title'])){
 				$ret[(int) $id] = $info['title'];
 			} else {
-				$ret[(int) $id] = $tikilib->get_snippet($info['data'], "", false, "", 60);
+				$ret[(int) $id] = TikiLib::lib('tiki')->get_snippet($info['data'], "", false, "", 60);
 			}
 		}
 		return $ret;
@@ -559,34 +526,31 @@ class Services_Forum_Controller
 					]
 				];
 			} else {
-				throw new Services_Exception(tr('No topics were selected. Please select the topics you wish to %0 before clicking the %0 button.', tra($type)), 409);
+				Services_Utilities::modalException(tr('No topics were selected. Please select the topics you wish to %0 before clicking the %0 button.', tra($type)));
 			}
 		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST') {
 			$items = json_decode($input['items'], true);
 			$fn = $type . '_comment';
+			//do the locking/unlocking
 			foreach ($items as $id => $topic) {
 				$this->lib->$fn($id);
 			}
 			$extra = json_decode($input['extra'], true);
+			//prepare feedback
 			$typedone = $type == 'lock' ? tra('locked') : tra('unlocked');
-			if (!empty($extra['referer'])) {
-				$this->access->redirect($extra['referer'], tr('Topic(s) %0', $typedone), null,
-					'feedback');
-			}
 			if (count($items) == 1) {
 				$msg = tr('The following topic has been %0:', $typedone);
 			} else {
 				$msg = tr('The following topics have been %0:', $typedone);
 			}
-			return [
-				'extra' => 'post',
-				'feedback' => [
-					'ajaxtype' => 'feedback',
-					'ajaxheading' => tra('Success'),
-					'ajaxitems' => $items,
-					'ajaxmsg' => $msg,
-				]
+			$feedback = [
+				'tpl' => 'action',
+				'mes' => $msg,
+				'items' => $items,
 			];
+			Feedback::success($feedback, 'session');
+			//return to page
+			return Services_Utilities::refresh($extra['referer']);
 		}
 	}
 
@@ -627,7 +591,7 @@ class Services_Forum_Controller
 					]
 				];
 			} else {
-				throw new Services_Exception(tr('No threads were selected. Please select the threads you wish to %0.', tra($type)), 409);
+				Services_Utilities::modalException(tr('No threads were selected. Please select the threads you wish to %0.', tra($type)));
 			}
 		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST') {
 			//perform archive/unarchive
