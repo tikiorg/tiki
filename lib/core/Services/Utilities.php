@@ -36,6 +36,27 @@ class Services_Utilities
 	}
 
 	/**
+	 * Handle feedback after a non-modal form is clicked
+	 * Send feedback using Feedback class (using 'session' for the method parameter) first before using this.
+	 * Improves handling when javascript is not enabled compared to throwing a Services Exception because it takes the
+	 * user back to the page where the action was initiated and shows the error message there.
+	 * 
+	 * @param bool $referer
+	 * @throws Exception
+	 */
+	static function exit ($referer = false)
+	{
+		//no javascript
+		if (!empty($referer)) {
+			TikiLib::lib('access')->redirect($referer);
+		//javascript
+		} else {
+			Feedback::send_headers();
+			die;
+		}
+	}
+
+	/**
 	 * Handle Feedback message after a modal is clicked.
 	 * Send feedback using Feedback class (using 'session' for the method parameter) first before using this.
 	 * Improves handling when javascript is not enabled compared to throwing a Services Exception because it takes the

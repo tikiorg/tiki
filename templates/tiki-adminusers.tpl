@@ -748,9 +748,9 @@
 						<div class="col-sm-10 col-sm-offset-4 col-md-10 col-md-offset-4">
 							<input
 								type="submit"
-								class="btn btn-primary confirm-submit"
+								class="btn btn-primary service-submit"
 								form="tempuser"
-								formaction="{bootstrap_modal controller=user action=invite_tempuser}"
+								formaction="{service controller=user action=invite_tempuser}"
 								value="{tr}Invite{/tr}"
 							>
 						</div>

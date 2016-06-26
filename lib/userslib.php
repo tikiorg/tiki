@@ -7837,11 +7837,14 @@ class UsersLib extends TikiLib
 	function invite_tempuser($emails, $groups, $timeout, $prefix = 'guest', $path = 'index.php') {
 		global $smarty, $user, $prefs;
 		include_once ('lib/webmail/tikimaillib.php');
+		$referer = Services_Utilities::noJsPath();
 
 		$mail = new TikiMail();
 		foreach ($emails as $email) {
 			if (!validate_email($email)) {
-				throw new Exception(tr('Invalid email address "%0"', $email));
+				$mes = empty($email) ? tr('Email address is required.') : tr('Invalid email address "%0"', $email);
+				Feedback::error($mes);
+				Services_Utilities::exit($referer);
 			}
 		}
 		$foo = parse_url($_SERVER['REQUEST_URI']);
@@ -7870,7 +7873,8 @@ class UsersLib extends TikiLib
 					$mailerrors = print_r($mail->errors, true);
 					$errormsg .= $mailerrors;
 				}
-				throw new Exception($errormsg);
+				Feedback::error($errormsg);
+				Services_Utilities::exit($referer);
 			}
 			$smarty->assign_by_ref('user', $user);
 		}

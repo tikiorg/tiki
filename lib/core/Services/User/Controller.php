@@ -355,37 +355,40 @@ class Services_User_Controller
 			$remove_files = ! empty($input->remove_files->word());
 
 			// do the deleting...
-			$this->removeUsers($items, $remove_pages, $remove_items, $remove_files);
+			$extra = json_decode($input['extra'], true);
+			$del = $this->removeUsers($items, $remove_pages, $remove_items, $remove_files, $extra['referer']);
 
-			//prepare feedback
-			if (count($items) === 1) {
-				$msg = tra('The following user has been deleted:');
-				$toMsg = tra('Submit form below to ban this user.');
-			} else {
-				$msg = tra('The following users have been deleted:');
-				$toMsg = tra('Submit form below to ban these users.');
-			}
-			$tikifeedback = [
-				'tpl' => 'action',
-				'mes' => $msg,
-				'items' => $items,
-			];
-			//redirect to banning page if selected
-			if ($input->ban_users->word()) {
-				$tikifeedback['toMsg'] = $toMsg;
-				Feedback::success($tikifeedback, 'session');
-				$url = 'tiki-admin_banning.php?mass_ban_ip_users=' . implode('|', $items);
-				global $prefs;
-				if ($prefs['javascript_enabled'] !== 'y') {
-					$this->access->redirect($url);
+			if ($del) {
+				//prepare feedback
+				if (count($items) === 1) {
+					$msg = tra('The following user has been deleted:');
+					$toMsg = tra('Submit form below to ban this user.');
 				} else {
-					return ['url' => $url];
+					$msg = tra('The following users have been deleted:');
+					$toMsg = tra('Submit form below to ban these users.');
 				}
-			//refresh page
-			} else {
-				Feedback::success($tikifeedback, 'session');
-				$extra = json_decode($input['extra'], true);
-				return Services_Utilities::refresh($extra['referer']);
+				$feedback = [
+					'tpl' => 'action',
+					'mes' => $msg,
+					'items' => $items,
+				];
+
+				//redirect to banning page if selected
+				if ($input->ban_users->word()) {
+					$feedback['toMsg'] = $toMsg;
+					Feedback::success($feedback, 'session');
+					$url = 'tiki-admin_banning.php?mass_ban_ip_users=' . implode('|', $items);
+					global $prefs;
+					if ($prefs['javascript_enabled'] !== 'y') {
+						$this->access->redirect($url);
+					} else {
+						return ['url' => $url];
+					}
+					//refresh page
+				} else {
+					Feedback::success($feedback, 'session');
+					return Services_Utilities::refresh($extra['referer']);
+				}
 			}
 		}
 	}
@@ -430,9 +433,9 @@ class Services_User_Controller
 					]
 				];
 			} else {
-				throw new Services_Exception(tra('No users were selected. Please select one or more users.'), 409);
+				Services_Utilities::modalException(tra('No users were selected. Please select one or more users.'));
 			}
-		//after confirm submit - perform action and return success feedback
+		//after confirm submit - redirect to banning page with users preselected
 		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST') {
 			$items = json_decode($input['items'], true);
 			$url = 'tiki-admin_banning.php?mass_ban_ip_users=' . implode('|', $items);
@@ -563,7 +566,7 @@ class Services_User_Controller
 						}
 					}
 				}
-				//return to page
+				//prepare feedback
 				if (count($users) === 1) {
 					$msg = tra('The following user:');
 					$helper = 'Has';
@@ -574,14 +577,15 @@ class Services_User_Controller
 				$verb = $add_remove == 'add' ? 'added to' : 'removed from';
 				$grpcnt = count($groups) === 1 ? 'group' : 'groups';
 				$toMsg = tr('%0 been %1 the following %2:', tra($helper), tra($verb), tra($grpcnt));
-				$tikifeedback = [
+				$feedback = [
 					'tpl' => 'action',
 					'mes' => $msg,
 					'items' => $users,
 					'toMsg' => $toMsg,
 					'toList' => $groups,
 				];
-				Feedback::success($tikifeedback, 'session');
+				Feedback::success($feedback, 'session');
+				//return to page
 				return Services_Utilities::refresh($extra['referer']);
 			} else {
 				Feedback::error(['mes' => tra('No groups were selected. Please select one or more groups.')], 'session');
@@ -590,6 +594,16 @@ class Services_User_Controller
 		}
 	}
 
+	/**
+	 * Admin user "perform with checked" action to assign the default group for a user or users
+	 *
+	 * @param $input
+	 * @return array
+	 * @throws Exception
+	 * @throws Services_Exception
+	 * @throws Services_Exception_BadRequest
+	 * @throws Services_Exception_Denied
+	 */
 	function action_default_groups($input)
 	{
 		Services_Exception_Denied::checkGlobal('admin_users');
@@ -620,14 +634,16 @@ class Services_User_Controller
 					]
 				];
 			} else {
-				throw new Services_Exception(tra('No users were selected. Please select one or more users.'), 409);
+				Services_Utilities::modalException(tra('No users were selected. Please select one or more users.'));
 			}
 		//after confirm submit - perform action and return success feedback
 		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST') {
 			$groups = isset($input['checked_groups']) ? $input->asArray('checked_groups')
 				: $input->asArray('toId');
 			$users = json_decode($input['items'], true);
+			$extra = json_decode($input['extra'], true);
 			if (!empty($users) && !empty($groups)) {
+				//perform action
 				global $user;
 				$logslib = TikiLib::lib('logs');
 				$userGroups = $this->lib->get_user_groups_inclusion($user);
@@ -643,34 +659,29 @@ class Services_User_Controller
 						}
 					}
 				}
-				//return to page
-				//if javascript is not enabled
-				$extra = json_decode($input['extra'], true);
-				if (!empty($extra['referer'])) {
-					$this->access->redirect($extra['referer'], tra('Default group(s) assigned'), null,
-						'feedback');
-				}
+				//prepare feedback
 				$msg = count($users) === 1 ? tra('For the following user:') : tra('For the following users:');
 				$toMsg = tra('The following group has been set as the default group:');
-				return [
-					'extra' => 'post',
-					'feedback' => [
-						'ajaxtype' => 'feedback',
-						'ajaxheading' => tra('Success'),
-						'ajaxitems' => $users,
-						'ajaxmsg' => $msg,
-						'ajaxtoMsg' => $toMsg,
-						'ajaxtoList' => $groups,
-						'modal' => '1',
-					]
+				$feedback = [
+					'tpl' => 'action',
+					'mes' => $msg,
+					'items' => $users,
+					'toMsg' => $toMsg,
+					'toList' => $groups,
 				];
+				Feedback::success($feedback, 'session');
+				//return to page
+				return Services_Utilities::refresh($extra['referer']);
 			} else {
-				throw new Services_Exception(tra('No groups were selected. Please select one or more groups.'), 409);
+				Feedback::error(['mes' => tra('No groups were selected. Please select one or more groups.')], 'session');
+				return Services_Utilities::closeModal($extra['referer']);
 			}
 		}
 	}
 
 	/**
+	 * Admin user "perform with checked" action to email a wiki page to a user
+	 *
 	 * @param $input JitFilter
 	 * @return array
 	 * @throws Exception
@@ -703,25 +714,30 @@ class Services_User_Controller
 					'confirm' => 'y',
 				];
 			} else {
-				throw new Services_Exception(tra('No users were selected. Please select one or more users.'), 409);
+				Services_Utilities::modalException(tra('No users were selected. Please select one or more users.'));
 			}
 		//after confirm submit - perform action and return success feedback
 		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST') {
 			$wikiTpl = $input['wikiTpl'];
 			$tikilib = TikiLib::lib('tiki');
 			$pageinfo = $tikilib->get_page_info($wikiTpl);
+			$extra = json_decode($input['extra'], true);
 			if (!$pageinfo) {
-				throw new Services_Exception_NotFound(tra('Page not found'));
+				Feedback::error(tra('Page not found'), 'session');
+				return Services_Utilities::closeModal($extra['referer']);
 			}
 			if (empty($pageinfo['description'])) {
-				throw new Services_Exception(tra('The page does not have a description, which is mandatory to perform this action.'));
+				Feedback::error(tra('The page does not have a description, which is mandatory to perform this action.'),
+					'session');
+				return Services_Utilities::closeModal($extra['referer']);
 			}
 			$bcc = $input['bcc'];
 			include_once ('lib/webmail/tikimaillib.php');
 			$mail = new TikiMail();
 			if (!empty($bcc)) {
 				if (!validate_email($bcc)) {
-					throw new Services_Exception(tra('Invalid bcc email address.'));
+					Feedback::error(tra('Invalid bcc email address'), 'session');
+					return Services_Utilities::closeModal($extra['referer']);
 				}
 				$mail->setBcc($bcc);
 				$bccmsg = tr('and blind copied (bcc) to %0', $bcc);
@@ -740,7 +756,8 @@ class Services_User_Controller
 				$mail->setSubject($pageinfo['description']);
 				$text = $smarty->fetch('wiki:' . $wikiTpl);
 				if (empty($text)) {
-					throw new Services_Exception(tra('The template page has no text or the text cannot be extracted.'));
+					Feedback::error(tra('The template page has no text or the text cannot be extracted.'), 'session');
+					return Services_Utilities::closeModal($extra['referer']);
 				}
 				$mail->setHtml($text);
 				if (!$mail->send($this->lib->get_user_email($mail_user))) {
@@ -749,47 +766,42 @@ class Services_User_Controller
 						$mailerrors = print_r($mail->errors, true);
 						$errormsg .= $mailerrors;
 					}
-					throw new Services_Exception($errormsg);
+					Feedback::error($errormsg, 'session');
+					return Services_Utilities::closeModal($extra['referer']);
 				} else {
 					if (!empty($bcc))
 						$logmsg = sprintf(tra('Mail sent to user %s'), $mail_user);
-					$logmsg = !empty($bccmsg) ? $logmsg . ' ' . $bccmsg : $logmsg;
+						$logmsg = !empty($bccmsg) ? $logmsg . ' ' . $bccmsg : $logmsg;
 					if (!empty($msg)) {
 						$logslib->add_log('adminusers', $logmsg, $user);
 					}
 				}
 				$smarty->assign_by_ref('user', $user);
 			}
-			//return to page
-			//if javascript is not enabled
-			$extra = json_decode($input['extra'], true);
-			if (!empty($extra['referer'])) {
-				$this->access->redirect($extra['referer'], tra('Page sent'), null,
-					'feedback');
-			}
+			//prepare feedback
 			$msg = count($users) === 1 ? tr('The page %0 has been emailed to the following user:', $wikiTpl)
 				: tr('The page %0 has been emailed to the following users:', $wikiTpl);
 			$toMsg = !empty($bcc) ? tr('And blind copied to %0.', $bcc) : '';
-			return [
-				'extra' => 'post',
-				'feedback' => [
-					'ajaxtype' => 'feedback',
-					'ajaxheading' => tra('Success'),
-					'ajaxitems' => $users,
-					'ajaxmsg' => $msg,
-					'ajaxtoMsg' => $toMsg,
-					'modal' => '1',
-				]
+			$feedback = [
+				'tpl' => 'action',
+				'mes' => $msg,
+				'items' => $users,
+				'toMsg' => $toMsg,
 			];
+			Feedback::success($feedback, 'session');
+			//return to page
+			return Services_Utilities::refresh($extra['referer']);
 		}
 	}
 
 	function action_send_message($input) {
 		global $smarty, $user;
 		$userlib = TikiLib::lib('user');
+		$referer = Services_Utilities::noJsPath();
 		//ensures a user was selected to send a message to.
 		if (empty($input->userwatch->text())) {
-			throw new Services_Exception(tra('No user was selected.'));
+			Feedback::error(tra('No user was selected.'), 'session');
+			return Services_Utilities::closeModal($referer);
 		}
 		//sets default priority for the message to 3 if no priority was given
 		if (!empty($input->priority->text())) {
@@ -800,31 +812,21 @@ class Services_User_Controller
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			if (empty($input->subject->text()) && empty($input->body->text())) {
-				$smarty->assign('message', tra('ERROR: Either the subject or body must be non-empty'));
-				$smarty->display("tiki.tpl");
-				die;
-			}
-			//if message is successfully sent
-			if (TikiLib::lib('message')->post_message($input->userwatch->text(), $user, $input->to->text(), '', $input->subject->text(), $input->body->text(), $priority, '', isset($input->replytome) ? 'y' : '', isset($input->bccme) ? 'y' : '')) {
-				$message = tra('Your Message was successfully sent to') . ' ' . $userlib->clean_user($input->userwatch->text());
-				$type = "feedback";
-				$heading = "Success!";
+				Feedback::error(tra('Message not sent - no subject or body.'), 'session');
 			} else {
-				$message = tra('An error occurred, please check your mail settings and try again');
-				$type= "error";
-				$heading = "Error!";
+				//if message is successfully sent
+				if (TikiLib::lib('message')->post_message($input->userwatch->text(), $user, $input->to->text(), '',
+					$input->subject->text(), $input->body->text(), $priority, '', isset($input->replytome) ? 'y' : '',
+					isset($input->bccme) ? 'y' : ''))
+				{
+					$message = tr('Your message was successfully sent to %0,',
+						$userlib->clean_user($input->userwatch->text()));
+					Feedback::success($message, 'session');
+				} else {
+					Feedback::error(tra('An error occurred, please check your mail settings and try again.'), 'session');
+				}
 			}
-			return array(
-				'modal' => '1',
-				'FORWARD' => array(
-					'controller' => 'utilities',
-					'action' => 'modal_alert',
-					'ajaxheading' => $heading,
-					'ajaxtype' => $type,
-					'ajaxmsg' => $message,
-					'ajaxdismissible' => 'n',
-				)
-			);
+			return Services_Utilities::closeModal($referer);
 		} else {
 			return array(
 				'title' => tra("Send Me a Message"),
@@ -858,6 +860,7 @@ class Services_User_Controller
 		$expiry = $input->tempuser_expiry->int();
 		$prefix = $input->tempuser_prefix->text();
 		$path = $input->tempuser_path->text();
+		$referer = Services_Utilities::noJsPath();
 
 		if (empty($prefix)) {
 			$prefix = 'guest';
@@ -873,30 +876,21 @@ class Services_User_Controller
 		if ($expiry > 0) {
 			$expiry = $expiry * 3600 * 24; //translate day input to seconds
 		} else if ($expiry != -1) {
-			throw new Services_Exception(tra('Please specify validity period'));
+			Feedback::error(tra('Please specify validity period'), 'session');
+			Services_Utilities::exit($referer);
 		}
 
 		foreach($groups as $grp) {
 			if (!TikiLib::lib('user')->group_exists($grp)) {
-				throw new Services_Exception(tr('The group %0 does not exist', $grp));
+				Feedback::error(tr('The group %0 does not exist', $grp), 'session');
+				Services_Utilities::exit($referer);
 			}
 		}
 
 		TikiLib::lib('user')->invite_tempuser($emails, $groups, $expiry, $prefix, $path);
-
-		return array(
-			'modal' => '1',
-			'FORWARD' => array(
-				'controller' => 'utilities',
-				'action' => 'modal_alert',
-				'ajaxtype' => 'feedback',
-				'ajaxheading' => tra('Success'),
-				'ajaxmsg' => tra('Your invite has been sent.'),
-				'ajaxdismissible' => 'y',
-				'ajaxtimer' => 5,
-			)
-		);
-
+		
+		Feedback::success(tra('Your invite has been sent.'), 'session');
+		Services_Utilities::exit($referer);
 	}
 
 	function action_upload_avatar( $input ) {
@@ -933,7 +927,7 @@ class Services_User_Controller
 		}
 	}
 
-	private function removeUsers(array $users, $page = false, $trackerIds = [], $files = false)
+	private function removeUsers(array $users, $page = false, $trackerIds = [], $files = false, $referer = false)
 	{
 		global $user;
 		foreach ($users as $deleteuser) {
@@ -947,7 +941,9 @@ class Services_User_Controller
 					$tikilib = TikiLib::lib('tiki');
 					$res = $tikilib->remove_all_versions($page);
 					if ($res !== true) {
-						throw new Services_Exception_NotFound(tr('An error occurred. User %0 could not be deleted', $deleteuser));
+						Feedback::error(tr('An error occurred. User %0 could not be deleted', $deleteuser), 'session');
+						Services_Utilities::closeModal($referer);
+						return false;
 					}
 				}
 
@@ -981,7 +977,9 @@ class Services_User_Controller
 					$logslib = TikiLib::lib('logs');
 					$logslib->add_log('adminusers', sprintf(tra('Deleted account %s'), $deleteuser), $user);
 				} else {
-					throw new Services_Exception_NotFound(tr('An error occurred. User %0 could not be deleted', $deleteuser));
+					Feedback::error(tr('An error occurred. User %0 could not be deleted', $deleteuser), 'session');
+					Services_Utilities::closeModal($referer);
+					return false;
 				}
 			}
 		}
