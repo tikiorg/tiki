@@ -57,6 +57,42 @@ function prefs_print_list()
 			'dependencies' => array('auth_token_access'),
 			'default' => 'vendor_custom/mpdf/',
 		),
+		'print_wiki_authors' => array(
+			'name' => tra('Print wiki authors'),
+            'description' => tra('Include wiki authors and date in wiki page print outs.'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_wiki',
+			),
+			'default' => 'n',
+		),
+		'print_original_url_wiki' => array(
+			'name' => tra('Print original wiki URL'),
+            'description' => tra('Include orginal wiki page URL in print outs.'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_wiki',
+			),
+			'default' => 'y',
+		),
+		'print_original_url_tracker' => array(
+			'name' => tra('Print original tracker item URL'),
+            'description' => tra('Include orginal wiki page URL in print outs.'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_trackers',
+			),
+			'default' => 'y',
+		),
+		'print_original_url_forum' => array(
+			'name' => tra('Print original forum post URL'),
+            'description' => tra('Include orginal forum post URL in print outs.'),
+			'type' => 'flag',
+			'dependencies' => array(
+				'feature_forums',
+			),
+			'default' => 'y',
+		),
 	);
 }
 

@@ -71,8 +71,9 @@
 				{preference name=feature_wiki_pageid label="{tr}Page ID{/tr}"}
 				{preference name=wiki_show_version label="{tr}Page version{/tr}"}
 				{preference name=wiki_authors_style label="{tr}List authors{/tr}"}
-				<div class="adminoptionboxchild">
+				<div class="adminoptionbox wiki_authors_style_childcontainer classic business collaborative lastmodif">
 					{preference name=wiki_authors_style_by_page label="{tr}Allow override per page{/tr}"}
+					{preference name=print_wiki_authors}
 				</div>
 				{preference name=feature_wiki_show_hide_before}
 				{preference name=wiki_actions_bar}

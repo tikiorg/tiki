@@ -185,7 +185,7 @@ Note: The show content block must be defined at root level to use the include. A
 
 		{include file='show_copyright.tpl' copyright_context="wiki"}
 
-		{if $print_page eq 'y'}
+		{if $print_page eq 'y' and $prefs.print_original_url_wiki eq 'y'}
 			<br>
 			{tr}The original document is available at{/tr} <a href="{$base_url|escape}{$page|sefurl}">{$base_url|escape}{$page|sefurl}</a>
 		{/if}
