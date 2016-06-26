@@ -101,7 +101,7 @@ if (isset($_REQUEST['display']) && $_REQUEST['display'] == 'pdf') {
 	$generator = new PdfGenerator();
 	$pdf = $generator->getPdf('tiki-print.php', array('page' => $page));
 	if (empty($pdf)) {
-		echo "Unable to generate PDF";
+		$access->display_error($page, "Unable to generate PDF");
 	} else {
 		$length = strlen($pdf);
 		header('Cache-Control: private, must-revalidate');

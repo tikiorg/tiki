@@ -177,6 +177,9 @@
 				<div class="adminoptionboxchild print_pdf_from_url_childcontainer webservice">
 					{preference name=print_pdf_webservice_url}
 				</div>
+				<div class="adminoptionboxchild print_pdf_from_url_childcontainer mpdf">
+					{preference name=print_pdf_mpdf_path}
+				</div>
 			</fieldset>
 			<fieldset>
 				<legend>{tr}Terms and Conditions{/tr}</legend>
