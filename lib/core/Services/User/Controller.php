@@ -832,6 +832,7 @@ class Services_User_Controller
 				'title' => tra("Send Me a Message"),
 				'userwatch' => $input->userwatch->text(),
 				'priority' => $priority,
+				'referer' => $referer
 			);
 		}
 	}

@@ -41,6 +41,11 @@
 			</label>
 		</div>
 		<div class="submit">
+			{if $referer}
+				<a class="btn btn-default" href="{$referer}">
+					{tr}Back{/tr}
+				</a>
+			{/if}
 			<input type="submit" class="btn btn-primary" name="send" value="{tr}Send{/tr}">
 		</div>
 	</form>
