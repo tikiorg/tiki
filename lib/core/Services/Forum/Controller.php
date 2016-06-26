@@ -599,28 +599,21 @@ class Services_Forum_Controller
 			$extra = json_decode($input['extra'], true);
 			$fn = $type . '_thread';
 			$this->lib->$fn($extra['comments_parentId']);
-			//return to page
+			//prepare feedback
 			$typedone = $type == 'archive' ? tra('archived') : tra('unarchived');
-			//if javascript is not enabled
-			$extra = json_decode($input['extra'], true);
-			if (!empty($extra['referer'])) {
-				$this->access->redirect($extra['referer'], tr('Topic(s) %0', $typedone), null,
-					'feedback');
-			}
 			if (count($items) == 1) {
 				$msg = tr('The following thread has been %0:', $typedone);
 			} else {
 				$msg = tr('The following thread have been %0:', $typedone);
 			}
-			return [
-				'extra' => 'post',
-				'feedback' => [
-					'ajaxtype' => 'feedback',
-					'ajaxheading' => tra('Success'),
-					'ajaxitems' => $items,
-					'ajaxmsg' => $msg,
-				]
+			$feedback = [
+				'tpl' => 'action',
+				'mes' => $msg,
+				'items' => $items,
 			];
+			Feedback::success($feedback, 'session');
+			//return to page
+			return Services_Utilities::refresh($extra['referer']);
 		}
 	}
 }
