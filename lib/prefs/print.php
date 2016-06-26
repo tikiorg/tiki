@@ -55,7 +55,7 @@ function prefs_print_list()
 			'size' => 50,
 			'help' => 'mPDF',
 			'dependencies' => array('auth_token_access'),
-			'default' => 'files/mpdf/',
+			'default' => 'vendor_custom/mpdf/',
 		),
 	);
 }

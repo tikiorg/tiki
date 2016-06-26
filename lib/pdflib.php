@@ -47,6 +47,9 @@ class PdfGenerator
 			}
 		} elseif ( $prefs['print_pdf_from_url'] == 'mpdf' ) {
 			$path = $prefs['print_pdf_mpdf_path'];
+			if (substr($path, -1) !== '/') {
+				$path .= '/';
+			}
 			if ( ! empty($path) && is_readable($path) ) {
 				if (! is_writable($path . 'graph_cache') || ! is_writable($path . 'tmp') ||! is_writable($path . 'ttfontdata')) {
 					TikiLib::lib('errorreport')->report(tr('mPDF "%0","%1" and "%2" directories must be writable', 'graph_cache', 'tmp', 'ttfontdata'));
