@@ -1642,7 +1642,6 @@ body.tiki_forums .normal {
 }
 .sub_comment_area {
   clear: both;
-  background: url('../../../img/edge.gif') no-repeat top left;
 }
 .forum_actions .actions {
   clear: both;
@@ -3881,7 +3880,6 @@ table.wikiplugin_tracker td {
 }
 .structuremenu .menuSection .option,
 .structuremenu .menuSection .optionline {
-  background: transparent url('../../../img/h_trenner.gif') center left no-repeat;
   padding-left: 21px;
 }
 .tiki_plugin {
