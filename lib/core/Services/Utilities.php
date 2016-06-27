@@ -44,7 +44,7 @@ class Services_Utilities
 	 * @param bool $referer
 	 * @throws Exception
 	 */
-	static function exit ($referer = false)
+	static function sendFeedback ($referer = false)
 	{
 		//no javascript
 		if (!empty($referer)) {

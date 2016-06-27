@@ -7844,7 +7844,7 @@ class UsersLib extends TikiLib
 			if (!validate_email($email)) {
 				$mes = empty($email) ? tr('Email address is required.') : tr('Invalid email address "%0"', $email);
 				Feedback::error($mes);
-				Services_Utilities::exit($referer);
+				Services_Utilities::sendFeedback($referer);
 			}
 		}
 		$foo = parse_url($_SERVER['REQUEST_URI']);
@@ -7874,7 +7874,7 @@ class UsersLib extends TikiLib
 					$errormsg .= $mailerrors;
 				}
 				Feedback::error($errormsg);
-				Services_Utilities::exit($referer);
+				Services_Utilities::sendFeedback($referer);
 			}
 			$smarty->assign_by_ref('user', $user);
 		}
