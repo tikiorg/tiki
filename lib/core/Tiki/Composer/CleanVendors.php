@@ -310,6 +310,7 @@ class CleanVendors
 						$fs->remove($path);
 					}
 				}
+				self:self::removeStandard($dir);
 			}
 		}
 	}
