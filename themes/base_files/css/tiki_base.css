@@ -3378,6 +3378,15 @@ table.tablesorter thead tr.tablesorter-filter-row {
 .chosen-container .chosen-results li.active-result {
   cursor: pointer;
   display: list-item;
+  background-position-y: 50% !important;
+}
+.chosen-container .chosen-results li.active-result.result-selected {
+  display: list-item;
+  color: inherit;
+}
+.chosen-container .chosen-results li.active-result:hover {
+  display: inherit;
+  color: #ffffff;
 }
 .chosen-container .chosen-results li.highlighted {
   background-color: #337ab7;
@@ -3417,6 +3426,9 @@ table.tablesorter thead tr.tablesorter-filter-row {
 }
 .chosen-container .chosen-results-scroll-up span {
   background: url("../../../vendor/alxlit/bootstrap-chosen/chosen-sprite.png") no-repeat -22px -3px;
+}
+.chosen-container .chosen-results .active-result.highlighted {
+  background-color: #337ab7 !important;
 }
 .chosen-container-single .chosen-single {
   background-color: #fff;

@@ -73,6 +73,15 @@
 			&.active-result {
 				cursor: pointer;
 				display: list-item;
+				background-position-y: 50% !important;
+				&.result-selected {
+					display: list-item;
+					color: inherit; // @text-color;
+				}
+				&:hover {
+					display: inherit;
+					color: spin(@chosen-background,180);
+				}
 			}
 
 			&.highlighted {
@@ -127,6 +136,8 @@
 		}
 	}
 }
+
+.chosen-container .chosen-results .active-result.highlighted { background-color: @link-color !important; }
 
 .chosen-container-single {
 	.chosen-single {
