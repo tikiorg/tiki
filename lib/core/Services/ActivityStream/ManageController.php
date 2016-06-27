@@ -65,23 +65,16 @@ class Services_ActivityStream_ManageController
 	/**
 	 * Delete a recorded activity from tiki_activity_stream table
 	 */
-	function action_deleteactivity(JitRequest $request)
+	function action_deleteactivity(JitFilter $request)
 	{
 		$id = $request->activityId->int();
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$this->lib->deleteActivity($id);
-			return array(
-				'modal' => '1',
-				'FORWARD' => array(
-					'controller' => 'utilities',
-					'action' => 'modal_alert',
-					'ajaxtype' => 'feedback',
-					'ajaxheading' => tra('Delete Activity'),
-					'ajaxmsg' => 'Your activity (id:'.$id.') was successfully deleted',
-					'ajaxdismissible' => 'n',
-				)
-			);
+			Feedback::success(tr('Your activity (id:'.$id.') was successfully deleted'), 'session');
+			//return to page
+			$referer = Services_Utilities::noJsPath();
+			return Services_Utilities::refresh($referer);
 		}
 
 		return array(
