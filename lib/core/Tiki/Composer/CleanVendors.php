@@ -305,6 +305,8 @@ class CleanVendors
 		$fs->remove($vendors . 'symfony/filesystem/Tests');
 		$fs->remove($vendors . 'blueimp/javascript-load-image/js/demo.js');
 		$fs->remove($vendors . 'blueimp/javascript-load-image/css/demo.css');
+		$fs->remove($vendors . 'blueimp/jquery-file-upload/cors');
+		$fs->remove($vendors . 'blueimp/jquery-file-upload/server');
 		$fs->remove($vendors . 'Sam152/Javascript-Equal-Height-Responsive-Rows/demo.html');
 		$fs->remove($vendors . 'jquery/jtrack/demo.html');
 
