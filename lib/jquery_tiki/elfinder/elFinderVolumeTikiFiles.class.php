@@ -955,9 +955,9 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 			$image_y=$gal_info["image_max_size_y"];
 			
 			if(!$image_x)
-			   $image_x=640;
+			   $image_x=NULL;
 			if(!$image_y) 
-			   $image_y=480;  
+			   $image_y=NULL;  
 			
 			$fileId = $this->filegallib->upload_single_file(
 				array(

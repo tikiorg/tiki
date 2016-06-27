@@ -32,6 +32,9 @@ class Services_File_Controller
 			'typeFilter' => $input->type->text(),
 			'uploadInModal' => $input->uploadInModal->int(),
 			'files' => $this->getFilesInfo((array) $input->file->int()),
+			'image_max_size_x'=>$input->image_max_size_x->text(),
+			'image_max_size_y'=>$input->image_max_size_y->text()
+			
 		);
 	}
 

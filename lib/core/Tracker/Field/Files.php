@@ -121,7 +121,23 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 							'y' => tr('Yes'),
 						),
 						'legacy_index' => 11,
-					)
+					),
+					'image_x' => array(
+						'name' => tr('Max. image width'),
+						'description' => tr('Leave blank for unlimited, enter value in px to resize large images'),
+						'filter' => 'text',
+						'default' => '',
+						'legacy_index' => 12,
+					),
+					'image_y' => array(
+						'name' => tr('Max. image height'),
+						'description' => tr('Leave blank for unlimited, enter value in px to resize large images'),
+						'filter' => 'text',
+						'legacy_index' => 13,
+					),
+					
+					
+					
 				),
 			),
 		);
@@ -221,6 +237,8 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			'firstfile' => $firstfile,
 			'value' => $value,
 			'filter' => $this->getOption('filter'),
+			'image_x'=>$this->getOption('image_x'),
+			'image_y'=>$this->getOption('image_y'),
 			'gallerySearch' => $gallery_list,
 		);
 	}
@@ -238,7 +256,9 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 				$defaultGalleryId = 0;
 			}
 			$deepGallerySearch = $this->getOption('galleryId');
-
+            $image_x=$this->getOption('image_x');
+			$image_y=$this->getOption('image_y');
+			
 			$context['onclick'] = 'return openElFinderDialog(this, {
 	defaultGalleryId:' . $defaultGalleryId . ',
 	deepGallerySearch: ' . $deepGallerySearch . ',
@@ -248,7 +268,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 		}
 
 		return $this->renderTemplate('trackerinput/files.tpl', $context, array(
-			'replaceFile' => 'y' == $this->getOption('replace', 'n'),
+			'replaceFile' => 'y' == $this->getOption('replace', 'n')
 		));
 	}
 
