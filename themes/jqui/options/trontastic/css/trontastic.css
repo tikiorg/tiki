@@ -1,6 +1,6 @@
+@import url(http://fonts.googleapis.com/css?family=Play);
 /* Jqui theme (jqui.css) Trontastic theme option (trontastic.css)
 	Visit http://themes.tiki.org for more information.*/
-@import url(http://fonts.googleapis.com/css?family=Play);
 a {
   color: #b8ec79;
 }
@@ -236,7 +236,7 @@ blockquote.pull-right {
 .topbar,
 .navbar-default {
   border: 1px solid #222222;
-  background: #000 url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') 50% 50% repeat-x;
+  background: #000000 url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') 50% 50% repeat-x;
   color: #c6e99c;
 }
 .navbar .navbar-form,
@@ -308,7 +308,7 @@ blockquote.pull-right {
 .modal,
 .modal-body {
   border: 1px solid #4a4a4a;
-  background: #000 url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') 50% top repeat-x;
+  background: #000000 url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') 50% top repeat-x;
   color: #f3fce8;
 }
 .panel-footer,
@@ -427,7 +427,7 @@ textarea,
 }
 .caltable .even,
 .caltable .odd {
-  background: #0A0A0A url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') repeat-x scroll 50% 50%;
+  background: #0a0a0a url('../../../../../vendor/jquery/jquery-ui-themes/themes/trontastic/images/ui-bg_gloss-wave_55_000000_500x100.png') repeat-x scroll 50% 50%;
   border: 1px solid #1B1613;
   color: #b8ec79;
 }
