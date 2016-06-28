@@ -1573,7 +1573,7 @@ function wikiplugin_tracker($data, $params)
 			$validationjs = $validatorslib->generateTrackerValidateJS($flds['data'], $fields_prefix, $customvalidation, $customvalidation_m);
 
 			if (!empty($params['_ajax_form_ins_id']) && $params['_ajax_form_ins_id'] === 'group') {
-				$headerlib->add_jq_onready("var ajaxTrackerValidation_group={validation:{" . $validationjs  . '};');		// return clean rules and messages object for ajax
+				$headerlib->add_jq_onready("var ajaxTrackerValidation_group={validation:{" . $validationjs  . '}};');		// return clean rules and messages object for ajax
 			} else {
 				$smarty->assign('validationjs', $validationjs);
 				$back .= $smarty->fetch('tracker_validator.tpl');
