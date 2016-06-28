@@ -62,10 +62,6 @@ $("input[name='chosenGroup']").change(function() {
 		$("#registerTracker").html(data['res']).tikiModal();
 		$("input[name^=captcha]").parents("tr").show();
 		$("input[name=register]").prop("disabled", false);
-		if (data['validation']) {
-			var $v = $("#registerTracker").parents('form').validate();
-			$.extend( true, $v.settings, data['validation'] );
-		}
 		$("#registerTracker").parents("table:first").css({borderSpacing:"0 !important",borderCollapse:"collapse !important"});
 		$("tr td:first", "#registerTracker").width($("#registerTracker").parents('table:first').find("td:first").width());
 	});
