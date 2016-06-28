@@ -1328,7 +1328,7 @@ mark,
   color: #999999;
 }
 .text-primary {
-  color: #6C839B;
+  color: #6c839b;
 }
 a.text-primary:hover,
 a.text-primary:focus {
@@ -1364,7 +1364,7 @@ a.text-danger:focus {
 }
 .bg-primary {
   color: #fff;
-  background-color: #6C839B;
+  background-color: #6c839b;
 }
 a.bg-primary:hover,
 a.bg-primary:focus {
@@ -3105,7 +3105,7 @@ fieldset[disabled] .btn-default.focus {
 }
 .btn-primary {
   color: #ffffff;
-  background-color: #6C839B;
+  background-color: #6c839b;
   border-color: #60768d;
 }
 .btn-primary:focus,
@@ -3153,11 +3153,11 @@ fieldset[disabled] .btn-primary:focus,
 .btn-primary.disabled.focus,
 .btn-primary[disabled].focus,
 fieldset[disabled] .btn-primary.focus {
-  background-color: #6C839B;
+  background-color: #6c839b;
   border-color: #60768d;
 }
 .btn-primary .badge {
-  color: #6C839B;
+  color: #6c839b;
   background-color: #ffffff;
 }
 .btn-success {
@@ -3556,7 +3556,7 @@ tbody.collapse.in {
   color: #ffffff;
   text-decoration: none;
   outline: 0;
-  background-color: #6C839B;
+  background-color: #6c839b;
 }
 .dropdown-menu > .disabled > a,
 .dropdown-menu > .disabled > a:hover,
@@ -4002,7 +4002,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   max-width: none;
 }
 .nav-tabs {
-  border-bottom: 1px solid #6C839B;
+  border-bottom: 1px solid #6c839b;
 }
 .nav-tabs > li {
   float: left;
@@ -4015,14 +4015,14 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   border-radius: 1px 1px 0 0;
 }
 .nav-tabs > li > a:hover {
-  border-color: #8a9db0 #8a9db0 #6C839B;
+  border-color: #8a9db0 #8a9db0 #6c839b;
 }
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
   color: #555555;
   background-color: #f4f4f4;
-  border: 1px solid #6C839B;
+  border: 1px solid #6c839b;
   border-bottom-color: transparent;
   cursor: default;
 }
@@ -4083,7 +4083,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-pills > li.active > a:hover,
 .nav-pills > li.active > a:focus {
   color: #ffffff;
-  background-color: #6C839B;
+  background-color: #6c839b;
 }
 .nav-stacked > li {
   float: none;
@@ -4740,8 +4740,8 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .pagination > .active > span:focus {
   z-index: 3;
   color: #ffffff;
-  background-color: #6C839B;
-  border-color: #6C839B;
+  background-color: #6c839b;
+  border-color: #6c839b;
   cursor: default;
 }
 .pagination > .disabled > span,
@@ -4858,7 +4858,7 @@ a.label:focus {
   background-color: #808080;
 }
 .label-primary {
-  background-color: #6C839B;
+  background-color: #6c839b;
 }
 .label-primary[href]:hover,
 .label-primary[href]:focus {
@@ -5115,7 +5115,7 @@ a.thumbnail.active {
   line-height: 17px;
   color: #ffffff;
   text-align: center;
-  background-color: #6C839B;
+  background-color: #6c839b;
   -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
   -webkit-transition: width 0.6s ease;
@@ -5675,22 +5675,22 @@ button.list-group-item-danger.active:focus {
   border-bottom-color: #acccdd;
 }
 .panel-primary {
-  border-color: #6C839B;
+  border-color: #6c839b;
 }
 .panel-primary > .panel-heading {
   color: #ffffff;
-  background-color: #6C839B;
-  border-color: #6C839B;
+  background-color: #6c839b;
+  border-color: #6c839b;
 }
 .panel-primary > .panel-heading + .panel-collapse > .panel-body {
-  border-top-color: #6C839B;
+  border-top-color: #6c839b;
 }
 .panel-primary > .panel-heading .badge {
-  color: #6C839B;
+  color: #6c839b;
   background-color: #ffffff;
 }
 .panel-primary > .panel-footer + .panel-collapse > .panel-body {
-  border-bottom-color: #6C839B;
+  border-bottom-color: #6c839b;
 }
 .panel-success {
   border-color: #d6e9c6;
@@ -7083,7 +7083,7 @@ div.cvsup {
 }
 .webmail_list .button {
   background: #f4f4f4;
-  border: 1px solid #6C839B;
+  border: 1px solid #6c839b;
 }
 .webmail_list .webmail_read {
   background: #d9edf7;
@@ -7327,7 +7327,7 @@ h6 a.tiki_anchor:hover {
   border: 2px solid #dddddd;
 }
 .ic_active {
-  border: 2px solid #6C839B;
+  border: 2px solid #6c839b;
 }
 .ic_caption {
   background: #222222;

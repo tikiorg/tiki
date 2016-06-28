@@ -252,7 +252,7 @@ h1.pagetitle > a:hover {
 .panel {
   border: 1px solid #aaaaaa;
   color: #222222;
-  background: #eee url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_inset-hard_100_eeeeee_1x100.png') 50% bottom repeat-x;
+  background: #eeeeee url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_inset-hard_100_eeeeee_1x100.png') 50% bottom repeat-x;
 }
 .panel a {
   color: #e69700;

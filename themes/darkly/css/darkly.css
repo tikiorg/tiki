@@ -1,10 +1,10 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:400,700,400italic");
 /*!
  * Bootstrap v3.3.6 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
-@import url("https://fonts.googleapis.com/css?family=Lato:400,700,400italic");
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -1554,7 +1554,7 @@ pre {
   word-break: break-all;
   word-wrap: break-word;
   color: #303030;
-  background-color: #EBEBEB;
+  background-color: #ebebeb;
   border: 1px solid #cccccc;
   border-radius: 4px;
 }
@@ -2577,7 +2577,7 @@ output {
 .form-control[disabled],
 .form-control[readonly],
 fieldset[disabled] .form-control {
-  background-color: #EBEBEB;
+  background-color: #ebebeb;
   opacity: 1;
 }
 .form-control[disabled],
@@ -3541,7 +3541,7 @@ tbody.collapse.in {
   clear: both;
   font-weight: normal;
   line-height: 1.42857143;
-  color: #EBEBEB;
+  color: #ebebeb;
   white-space: nowrap;
 }
 .dropdown-menu > li > a:hover,
@@ -4057,11 +4057,11 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs.nav-justified > .active > a,
 .nav-tabs.nav-justified > .active > a:hover,
 .nav-tabs.nav-justified > .active > a:focus {
-  border: 1px solid #EBEBEB;
+  border: 1px solid #ebebeb;
 }
 @media (min-width: 768px) {
   .nav-tabs.nav-justified > li > a {
-    border-bottom: 1px solid #EBEBEB;
+    border-bottom: 1px solid #ebebeb;
     border-radius: 4px 4px 0 0;
   }
   .nav-tabs.nav-justified > .active > a,
@@ -4125,11 +4125,11 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs-justified > .active > a,
 .nav-tabs-justified > .active > a:hover,
 .nav-tabs-justified > .active > a:focus {
-  border: 1px solid #EBEBEB;
+  border: 1px solid #ebebeb;
 }
 @media (min-width: 768px) {
   .nav-tabs-justified > li > a {
-    border-bottom: 1px solid #EBEBEB;
+    border-bottom: 1px solid #ebebeb;
     border-radius: 4px 4px 0 0;
   }
   .nav-tabs-justified > .active > a,
@@ -5102,7 +5102,7 @@ a.thumbnail.active {
   overflow: hidden;
   height: 21px;
   margin-bottom: 21px;
-  background-color: #EBEBEB;
+  background-color: #ebebeb;
   border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -5259,7 +5259,7 @@ button.list-group-item {
 .list-group-item.disabled,
 .list-group-item.disabled:hover,
 .list-group-item.disabled:focus {
-  background-color: #EBEBEB;
+  background-color: #ebebeb;
   color: #999999;
   cursor: not-allowed;
 }
@@ -6748,7 +6748,7 @@ header.page-header::before,
   padding: 3px 20px;
   font-weight: normal;
   line-height: 1.42857143;
-  color: #EBEBEB;
+  color: #ebebeb;
 }
 .cssmenu_horiz > li > ul {
   border-top-left-radius: 0;
@@ -6773,12 +6773,12 @@ header.page-header::before,
 }
 .sf-arrows .sf-with-ul:after {
   border: 5px solid transparent;
-  border-top-color: #EBEBEB;
+  border-top-color: #ebebeb;
 }
 .sf-arrows ul .sf-with-ul:after,
 .cssmenu_vert.sf-arrows > li > .sf-with-ul:after {
   border-color: transparent;
-  border-left-color: #EBEBEB;
+  border-left-color: #ebebeb;
 }
 .sf-arrows ul li > .sf-with-ul:focus:after,
 .sf-arrows ul li:hover > .sf-with-ul:after,
@@ -6794,7 +6794,7 @@ header.page-header::before,
 }
 .dropdown-menu li {
   background-color: #303030;
-  color: #EBEBEB;
+  color: #ebebeb;
 }
 .dropdown-menu li:hover,
 .dropdown-menu li:focus {
@@ -7154,7 +7154,7 @@ a.fc-event:hover {
 .cssmenu_horiz ul li a,
 .cssmenu_vert ul li a {
   background: #303030;
-  color: #EBEBEB;
+  color: #ebebeb;
 }
 .cssmenu_horiz > ul > li:hover > a,
 .cssmenu_vert > ul > li:hover > a {
@@ -7173,7 +7173,7 @@ a.fc-event:hover {
 .sf-arrows ul .sf-with-ul:after,
 .cssmenu_vert.sf-arrows ul > li > .sf-with-ul:after {
   border-color: transparent;
-  border-left-color: #EBEBEB;
+  border-left-color: #ebebeb;
   /* edit this to suit design (no rgba in IE8) */
 }
 .sf-arrows ul li > .sf-with-ul:focus:after,
@@ -7223,10 +7223,10 @@ a.fc-event:hover {
 /* order of following 3 rules important for fallbacks to work */
 .dropdown-menu .dropdown-title,
 .dropdown-menu li label {
-  color: #EBEBEB;
+  color: #ebebeb;
 }
 .thumbinfosothers {
-  color: #EBEBEB;
+  color: #ebebeb;
 }
 table.treetable.objectperms td.added {
   background-color: #00bc8c;
@@ -7290,7 +7290,7 @@ table.treetable.objectperms td.removed {
   background: transparent url('../../../img/overlay-light.png');
 }
 #ajaxLoading {
-  color: #EBEBEB;
+  color: #ebebeb;
   background: transparent url('../../../img/loading-light.gif') no-repeat 50% 50%;
 }
 #cookie_consent_div {
@@ -7444,7 +7444,7 @@ div.cvsup {
   background: #999999;
 }
 .messureadbody {
-  background: #EBEBEB;
+  background: #ebebeb;
 }
 .readlink {
   color: #ffffff;
@@ -7510,8 +7510,8 @@ div.cvsup {
   color: #ffffff;
 }
 .textarea-toolbar > div {
-  background-color: #EBEBEB;
-  border: outset 1px #EBEBEB;
+  background-color: #ebebeb;
+  border: outset 1px #ebebeb;
 }
 #intertrans-indicator {
   background-color: #00bc8c;
@@ -7648,14 +7648,14 @@ body.wikitext {
 .TextArea-fullscreen .actions,
 .CodeMirror-fullscreen .actions {
   background-color: #222222;
-  border-top: #EBEBEB 1px solid;
+  border-top: #ebebeb 1px solid;
 }
 #autosave_preview {
   background-color: #222222;
   color: #ffffff;
 }
 #autosave_preview_grippy {
-  background-color: #EBEBEB;
+  background-color: #ebebeb;
   background-image: url('../../../img/icons/shading.png');
 }
 h1:hover a.tiki_anchor,
@@ -7664,7 +7664,7 @@ h3:hover a.tiki_anchor,
 h4:hover a.tiki_anchor,
 h5:hover a.tiki_anchor,
 h6:hover a.tiki_anchor {
-  color: #EBEBEB;
+  color: #ebebeb;
 }
 h1 a.tiki_anchor:hover,
 h2 a.tiki_anchor:hover,
@@ -7675,7 +7675,7 @@ h6 a.tiki_anchor:hover {
   color: #464545;
 }
 .wiki .namespace {
-  background: #EBEBEB;
+  background: #ebebeb;
 }
 .site_report a {
   border-left: 1px solid #464545;
@@ -7745,7 +7745,7 @@ h6 a.tiki_anchor:hover {
   background: #f39c12;
 }
 .diffbody {
-  background: #EBEBEB;
+  background: #ebebeb;
   color: #222222;
 }
 .diffchar {
@@ -7850,7 +7850,7 @@ a.admbox.off:active {
   color: #ffffff;
 }
 .dropdown-menu {
-  color: #EBEBEB;
+  color: #ebebeb;
 }
 .tiki .col1 .table-responsive {
   border: 1px solid #464545;
@@ -7882,7 +7882,7 @@ pre.codelisting {
   padding: 3px 20px;
   font-weight: normal;
   line-height: 1.42857143;
-  color: #EBEBEB;
+  color: #ebebeb;
   background: #303030;
 }
 .cssmenu_horiz > li > a:hover,

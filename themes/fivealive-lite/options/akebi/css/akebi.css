@@ -572,7 +572,7 @@ hr {
 .topbar,
 .topbar_container,
 .layout_basic .page-header > .topbar {
-  background: #18A3bb;
+  background: #18a3bb;
 }
 .top_modules a,
 .topbar a,
@@ -621,7 +621,7 @@ hr {
 .cssmenu_vert ul > li > a:focus {
   text-decoration: none;
   color: #f2f2f2;
-  background-color: #18A3bb;
+  background-color: #18a3bb;
 }
 .topbar .cssmenu_horiz li a:hover {
   background: #14899e;

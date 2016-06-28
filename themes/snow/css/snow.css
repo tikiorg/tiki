@@ -1,5 +1,5 @@
-/*  The Snow theme style sheet for Tiki Wiki CMS Groupware. */
 @import url("//fonts.googleapis.com/css?family=Simonetta");
+/*  The Snow theme style sheet for Tiki Wiki CMS Groupware. */
 /*!
  * Bootstrap v3.3.6 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
@@ -3520,7 +3520,7 @@ tbody.collapse.in {
   text-align: left;
   background-color: #ebf2f9;
   border: 1px solid #c3d8ed;
-  border: 1px solid #6A6A6A;
+  border: 1px solid #6a6a6a;
   border-radius: 4px;
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
@@ -6776,7 +6776,7 @@ a.fc-event:hover {
 }
 .cssmenu_horiz ul,
 .cssmenu_vert ul {
-  border: #6A6A6A;
+  border: #6a6a6a;
 }
 .cssmenu_horiz ul li a,
 .cssmenu_vert ul li a {
@@ -7678,7 +7678,7 @@ header.container {
   margin: 2px 0 0;
   background: url('../images/flakesptn2.jpg');
   border: 1px solid #c3d8ed;
-  border: 1px solid #6A6A6A;
+  border: 1px solid #6a6a6a;
   border-radius: 4px;
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);

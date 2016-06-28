@@ -605,7 +605,7 @@ input#login-pass,
 textarea,
 .adminoptionbox option {
   background-color: #ddf8f9;
-  border-color: #b4f3fb #fff #fff #b4f3fb;
+  border-color: #b4f3fb #ffffff #ffffff #b4f3fb;
 }
 .navbar-collapse {
   border: none;
