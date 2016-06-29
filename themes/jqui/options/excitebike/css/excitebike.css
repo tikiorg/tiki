@@ -227,7 +227,7 @@ body.cke_show_borders {
   /* edit this to suit design (no rgba in IE8) */
 }
 .wikitext {
-  border: #eee solid .5em;
+  border: #eeeeee solid .5em;
   background: #eeeeee url('../../../../../vendor/jquery/jquery-ui-themes/themes/excite-bike/images/ui-bg_inset-hard_100_eeeeee_1x100.png') 50% bottom repeat-x;
 }
 h1.pagetitle {
