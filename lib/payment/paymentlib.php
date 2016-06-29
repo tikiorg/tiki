@@ -80,6 +80,16 @@ class PaymentLib extends TikiDb_Bridge
 
 		$all = $this->fetchAll($data, array(), $max, $offset);
 
+		foreach($all as & $payment) {
+
+			if (empty($payment['payer'])) {	// anonymous
+				$details = json_decode($payment['payment_detail'], true);
+				if ($details && !empty($details['payer_email'])) {
+					$payment['payer_email'] = $details['payer_email'];
+				}
+			}
+		}
+
 		return array(
 			'cant' => $this->getOne($count),
 			'data' => Perms::filter(
