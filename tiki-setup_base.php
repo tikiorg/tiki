@@ -217,6 +217,8 @@ if (isset($_SERVER["REQUEST_URI"])) {
 			}
 		} catch( Zend\Session\Exception\ExceptionInterface $e ) {
 			// Ignore
+		} catch( Zend\Stdlib\Exception\InvalidArgumentException $e ) {
+			// Ignore
 		}
 	}
 }
