@@ -215,6 +215,12 @@ function prefs_payment_list()
 			'type' => 'flag',
 			'default' => 'n',
 		),
+		'payment_anonymous_allowed' => array(
+			'name' => tra('Anonymous users can pay outstanding invoices'),
+			'description' => tra('Anonymous users can see outstanding invoices to pay them through a simple shopping cart (without the need to setup the advanced cart)'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 		'payment_cart_inventory' => array(
 			'name' => tra('Manage product inventory'),
 			'description' => tra('Activate product inventory feature. This requires a products tracker to be set up properly, and the item ID must be the product code'),
