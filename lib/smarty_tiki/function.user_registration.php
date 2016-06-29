@@ -124,12 +124,52 @@ function smarty_function_user_registration($params, $smarty)
 			}
 			if ($registrationlib->merged_prefs["user_register_prettytracker"] == 'y' && !empty($registrationlib->merged_prefs["user_register_prettytracker_tpl"])) {
 				if (substr($registrationlib->merged_prefs["user_register_prettytracker_tpl"], -4) == ".tpl") {
-					$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'y', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => tra('Register'), 'registration' => 'y', 'tpl' => $registrationlib->merged_prefs["user_register_prettytracker_tpl"], 'userField' => $re['usersFieldId'], 'outputwiki' => $outputwiki, 'outputtowiki' => $outputtowiki));
+					$userTrackerData = wikiplugin_tracker('',
+						array(
+							'trackerId' => $re['usersTrackerId'],
+							'fields' => $re['registrationUsersFieldIds'],
+							'showdesc' => 'y',
+							'showmandatory' => 'y',
+							'embedded' => 'n',
+							'action' => tra('Register'),
+							'registration' => 'y',
+							'tpl' => $registrationlib->merged_prefs["user_register_prettytracker_tpl"],
+							'userField' => $re['usersFieldId'],
+							'outputwiki' => $outputwiki,
+							'outputtowiki' => $outputtowiki,
+							'chosenGroup' => $chosenGroup,
+						));
 				} else {
-					$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'y', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => tra('Register'), 'registration' => 'y', 'wiki' => $registrationlib->merged_prefs["user_register_prettytracker_tpl"], 'userField' => $re['usersFieldId'],'outputwiki' => $outputwiki, 'outputtowiki' => $outputtowiki));
+					$userTrackerData = wikiplugin_tracker('',
+						array(
+							'trackerId' => $re['usersTrackerId'],
+							'fields' => $re['registrationUsersFieldIds'],
+							'showdesc' => 'y',
+							'showmandatory' => 'y',
+							'embedded' => 'n',
+							'action' => tra('Register'),
+							'registration' => 'y',
+							'wiki' => $registrationlib->merged_prefs["user_register_prettytracker_tpl"],
+							'userField' => $re['usersFieldId'],
+							'outputwiki' => $outputwiki,
+							'outputtowiki' => $outputtowiki,
+							'chosenGroup' => $chosenGroup,
+						));
 				}
 			} else {
-				$userTrackerData = wikiplugin_tracker('', array('trackerId' => $re['usersTrackerId'], 'fields' => $re['registrationUsersFieldIds'], 'showdesc' => 'y', 'showmandatory' => 'y', 'embedded' => 'n', 'action' => tra('Register'), 'registration' => 'y', 'userField' => $re['usersFieldId']));
+				$userTrackerData = wikiplugin_tracker('',
+					array(
+						'trackerId' => $re['usersTrackerId'],
+						'fields' => $re['registrationUsersFieldIds'],
+						'showdesc' => 'y',
+						'showmandatory' => 'y',
+						'embedded' => 'n',
+						'action' => tra('Register'),
+						'registration' => 'y',
+						'userField' => $re['usersFieldId'],
+						'chosenGroup' => $chosenGroup,
+					)
+				);
 			}
 			$tr = TikiLib::lib('trk')->get_tracker($re['usersTrackerId']);
 			if (!empty($tr['description'])) {

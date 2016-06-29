@@ -7143,25 +7143,29 @@ class UsersLib extends TikiLib
 					}
 
 					$definition = Tracker_Definition::get($re['usersTrackerId']);
-					$items = $trklib->list_items(
-						$re['usersTrackerId'],
-						0,
-						1,
-						'',
-						$listfields,
-						$definition->getUserField(),
-						'',
-						'',
-						'',
-						$name,
-						'',
-						null,
-						true,
-						true
-					);
+					if ($definition) {
+						$items = $trklib->list_items(
+							$re['usersTrackerId'],
+							0,
+							1,
+							'',
+							$listfields,
+							$definition->getUserField(),
+							'',
+							'',
+							'',
+							$name,
+							'',
+							null,
+							true,
+							true
+						);
 
-					if (isset($items['data'][0]))
-						$smarty->assign_by_ref('item', $items['data'][0]);
+						if (isset($items['data'][0]))
+							$smarty->assign_by_ref('item', $items['data'][0]);
+					} else {
+						TikiLib::lib('errorreport')->report(tr('No user tracker found with id #%0', $re['usersTrackerId']));
+					}
 				}
 			}
 			$mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');
