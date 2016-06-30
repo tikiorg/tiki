@@ -48,6 +48,7 @@ class CleanVendors
 		self::deleteDirectory($vendors . 'jquery/jquery-ui/demos');
 		self::deleteDirectory($vendors . 'jquery/jquery-ui/tests');
 		self::deleteDirectory($vendors . 'jquery/jquery-ui/themes');
+		self::deleteFile(     $vendors . 'jquery/jtrack/demo.html');
 		self::deleteDirectory($vendors . 'jquery/photoswipe/examples');
 		self::deleteDirectory($vendors . 'jquery/plugins/anythingslider/demos');
 		self::deleteDirectory($vendors . 'jquery/plugins/brosho/__MACOSX');
@@ -98,6 +99,10 @@ class CleanVendors
 		self::deleteFile(     $vendors . 'player/mp3/template_default/compileTemplateDefault.sh');
 		self::deleteFile(     $vendors . 'player/mp3/template_default/TemplateDefault.as');
 		self::deleteFile(     $vendors . 'player/mp3/template_default/test.mp3');
+		self::deleteDirectory($vendors . 'symfony/console/Symfony/Component/Console/Tests');
+		self::deleteFile(     $vendors . 'svg-edit/svg-edit/embedapi.html');
+		self::deleteFile(     $vendors . 'svg-edit/svg-edit/extensions/imagelib/index.html');
+		self::deleteFile(     $vendors . 'svg-edit/svg-edit/browser-not-supported.html');
 	}
 
 	private static function deleteDirectory($path)
