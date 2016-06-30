@@ -69,7 +69,7 @@ class PdfGenerator
      * @param array $params
      * @return mixed
      */
-    function getPdf( $file, array $params )
+    function getPdf( $file, array $params, $pdata='' )
 	{
 		global $prefs, $base_url, $tikiroot;
 
@@ -86,7 +86,7 @@ class PdfGenerator
 
 		$url = $base_url . $file . '?' . http_build_query($params, '', '&');
 
-		return $this->{$this->mode}( $url );
+		return $this->{$this->mode}( $url,str_replace("tiki-download_file.php?","tiki-download_file.php?genPDF=1&",$pdata));
 	}
 
     /**
@@ -191,13 +191,14 @@ class PdfGenerator
 	 * @param $url string - address of the item to print as PDF
 	 * @return string     - contents of the PDF
 	 */
-	private function mpdf($url)
+	private function mpdf($url,$parsedData='')
 	{
 		if (!extension_loaded('curl')) {
 			TikiLib::lib('reporterror')->report(tra('mPDF: CURL PHP extension not available'));
 			return '';
 		}
-
+        // $ckfile=session_save_path()."/".session_id(); 
+		
 		// To prevent anyone else using your script to create their PDF files - TODO?
 		//if (!preg_match("/^$base_url/", $url)) { die("Access denied"); }
 
@@ -207,14 +208,16 @@ class PdfGenerator
 		    $cookie[] = "{$key}={$value}";
 		};
 		$cookie = implode(';', $cookie);
-
-		$ckfile = tempnam("/tmp", 'curl_cookies_');
+        $ckfile = tempnam("/tmp", 'curl_cookies_');
 		file_put_contents($ckfile, $cookie);
 
 		$curl_log = fopen('temp/curl_debug.txt', 'w+'); // open file for READ and write
 */
-
-		$options = array(
+      if($parsedData!='')
+	      $html=$parsedData;
+	   else
+	   {	  
+        $options = array(
 			CURLOPT_RETURNTRANSFER => true,     // return web page
 			CURLOPT_HEADER => false,     		// return headers in addition to content
 			CURLINFO_HEADER_OUT => true,
@@ -229,12 +232,12 @@ class PdfGenerator
 
 			CURLOPT_SSL_VERIFYPEER => false,	// Disabled SSL Cert checks
 			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            //CURLOPT_COOKIEFILE => $ckfile,
+			//CURLOPT_COOKIEJAR => $ckfile,
 
 /*			CURLOPT_COOKIE => $cookie,
 			//CURLOPT_COOKIESESSION => true,	// no difference
-			//CURLOPT_COOKIEFILE => $ckfile,
-			CURLOPT_COOKIEJAR => $ckfile,
-
+			
 			CURLOPT_VERBOSE => true,
 			CURLOPT_STDERR => $curl_log,
 */
@@ -267,6 +270,7 @@ class PdfGenerator
 				return '';
 			}
 		}
+	   }
 
 		include($this->location . 'mpdf.php');
 		$mpdf = new mPDF('');

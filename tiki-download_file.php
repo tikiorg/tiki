@@ -78,7 +78,8 @@ if (!$skip) {
 	if ( ! is_array($info) ) {
 		$access->display_error(NULL, tra('File has been deleted'), 404);
 	}
-
+    if(!isset($_REQUEST['genPDF']))
+	{
 	if ( $prefs['auth_token_access'] != 'y' || !$is_token_access ) {
 		// Check permissions except if the user comes with a valid Token
 
@@ -105,6 +106,7 @@ if (!$skip) {
 			}
 		}
 	}
+  }
 }
 
 //if the file is remote, display, and don't cache

@@ -105,9 +105,9 @@ $smarty->assign('display', isset($_REQUEST['display']) ? $_REQUEST['display'] : 
 if (isset($_REQUEST['display']) && $_REQUEST['display'] == 'pdf') {
 	require_once 'lib/pdflib.php';
 	$generator = new PdfGenerator();
-	$pdf = $generator->getPdf('tiki-print.php', array('page' => $page));
+	$pdf = $generator->getPdf('tiki-print.php', array('page' => $page),$pdata);
 	if (empty($pdf)) {
-		$access->display_error($page, "Unable to generate PDF");
+//		$access->display_error($page, "Unable to generate PDF");
 	} else {
 		$length = strlen($pdf);
 		header('Cache-Control: private, must-revalidate');
