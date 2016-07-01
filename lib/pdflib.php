@@ -85,8 +85,10 @@ class PdfGenerator
 		}
 
 		$url = $base_url . $file . '?' . http_build_query($params, '', '&');
-
-		return $this->{$this->mode}( $url,str_replace("tiki-download_file.php?","tiki-download_file.php?genPDF=1&",$pdata));
+        $session_params = session_get_cookie_params();
+		echo str_replace("tiki-download_file.php?","tiki-download_file.php?genPDF=1&sid=".session_id()."&",$pdata);
+		//echo $session_params['path'];
+	//	return $this->{$this->mode}( $url,str_replace("tiki-download_file.php?","tiki-download_file.php?genPDF=1&sid=".session_id(),$pdata));
 	}
 
     /**
