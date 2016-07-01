@@ -203,8 +203,7 @@ if ( isset( $_REQUEST['lm_preference'] ) ) {
 			}
 		}
 	} else {
-		$smarty->assign('csrferror',
-			tr('Bad request - potential cross-site request forgery (CSRF) detected. Operation blocked. The security ticket may have expired - try reloading the page in this case.'));
+		Feedback::error(tr('Bad request - potential cross-site request forgery (CSRF) detected. Operation blocked. The security ticket may have expired - try reloading the page in this case.'));
 	}
 }
 
@@ -217,16 +216,14 @@ if ( isset( $_REQUEST['lm_criteria'] ) ) {
 		$results = $prefslib->getMatchingPreferences($_REQUEST['lm_criteria'], $temp_filters);
 		$results = array_slice($results, 0, 50);
 		$smarty->assign('lm_searchresults', $results);
-		$smarty->assign('lm_error', '');
 	} catch(ZendSearch\Lucene\Exception\ExceptionInterface $e) {
-		$smarty->assign('lm_criteria', $_REQUEST['lm_criteria']);
-		$smarty->assign('lm_error', $e->getMessage());
+		Feedback::warning(['mes' => $e->getMessage(), 'title' => tr('Search error')]);
+		$smarty->assign('lm_criteria', '');
 		$smarty->assign('lm_searchresults', '');
 	}
 } else {
 	$smarty->assign('lm_criteria', '');
 	$smarty->assign('lm_searchresults', '');
-	$smarty->assign('lm_error', '');
 }
 
 $smarty->assign('indexNeedsRebuilding', $prefslib->indexNeedsRebuilding());

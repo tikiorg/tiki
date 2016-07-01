@@ -124,11 +124,6 @@
 	{/if}
 </nav>
 
-{if isset($csrferror)}
-	{remarksbox type="error" title="{tr}Potential Cross-Site Request Forgery{/tr}"}
-		{$csrferror}
-	{/remarksbox}
-{/if}
 {* show an alert if the CSRF ticket has timed out - hard coded to 15 minutes in lib/tikiticketlib.php->key_check *}
 {jq}setTimeout(function () {
 		$("form", "#col1").mouseup(function() {
@@ -150,11 +145,7 @@
 		});
 	}, 1000 * 60 * 15);
 {/jq}
-{if $lm_error}
-	{remarksbox type="warning" title="{tr}Search error{/tr}"}
-		{$lm_error}
-	{/remarksbox}
-{elseif $lm_searchresults}
+{if $lm_searchresults}
 	<div class="panel panel-default" id="pref_searchresults">
 		<div class="panel-heading">
 			<h3 class="panel-title">{tr}Preference Search Results{/tr}<button type="button" id="pref_searchresults-close" class="close" aria-hidden="true">&times;</button></h3>
