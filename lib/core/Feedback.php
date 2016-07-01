@@ -161,7 +161,7 @@ class Feedback
 
 	/**
 	 * Gets feedback that has been added to either the global PHP $_SESSION['tikifeedback'] or Smarty {$tikifeedback}
-	 * variable, or that has been added to the $_POST variable through ajax
+	 * variable
 	 *
 	 * This function is mainly used and already included in the Smarty {feedback} function included in the basic
 	 * layout_view templates to retrieve and display any feedback that has been added. Normally there isn't a need for
@@ -214,23 +214,6 @@ class Feedback
 			}
 			if (!empty($fbbytpl)) {
 				$result = $fbbytpl;
-			}
-		}
-		
-		//handle feedback posted through ajax
-		if (isset($_POST['ajaxtype'])) {
-			$smarty->assign('ajaxfeedback', 'y');
-			$ajaxpost = array_intersect_key($_POST, [
-				'ajaxtype' => '',
-				'ajaxheading' => '',
-				'ajaxitems' => '',
-				'ajaxmsg' => '',
-				'ajaxtoMsg' => '',
-				'ajaxtoList' => '',
-			]);
-			$smarty->assign($ajaxpost);
-			if ($result === false) {
-				$result = true;
 			}
 		}
 		return $result;
