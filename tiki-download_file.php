@@ -81,7 +81,7 @@ if (!$skip) {
     if(isset($_REQUEST['genPDF']))
 	{
 		
-		if(!file_exists( session_save_path().'\\'.$_REQUEST['sid']) || !isset($_REQUEST['sid']))
+		if(!file_exists( session_save_path().'/'.$_REQUEST['sid']) || !isset($_REQUEST['sid']))
 		  {
 			$access->display_error('', tra('Permission denied'), 401);  
 			  }
