@@ -120,7 +120,7 @@
 				<input type="checkbox" name="paginate" id="paginate"{if $paginate} checked="checked"{/if}>
 				<label for="paginate">{tr}Enable pagination{/tr}</label>
 				{if $paginate}
-					<input type="text" name="history_pagesize" id="history_pagesize" value="{$history_pagesize}" size="5">
+					<input type="text" name="history_pagesize" id="history_pagesize" value="{$history_pagesize}" class="form-control" style="width: 5em; display: inline-block">
 					<label for="history_pagesize">{tr}per page{/tr}</label>
 				{/if}
 			</div>
