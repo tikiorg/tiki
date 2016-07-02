@@ -439,12 +439,7 @@ class Services_User_Controller
 		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST') {
 			$items = json_decode($input['items'], true);
 			$url = 'tiki-admin_banning.php?mass_ban_ip_users=' . implode('|', $items);
-			global $prefs;
-			if ($prefs['javascript_enabled'] !== 'y') {
-				$this->access->redirect($url);
-			} else {
-				return ['url' => $url];
-			}
+			Services_Utilities::redirect($url);
 		}
 	}
 

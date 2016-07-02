@@ -101,6 +101,26 @@ class Services_Utilities
 	}
 
 	/**
+	 * Handle a redirect depending on whether javascript is enabled or not
+	 * Send any feedback using Feedback class (using 'session' for the method parameter) first before using this.
+	 * 
+	 * @param $url
+	 * @return array
+	 * @throws Exception
+	 */
+	static function redirect ($url)
+	{
+		//no javascript
+		global $prefs;
+		if ($prefs['javascript_enabled'] !== 'y') {
+			TikiLib::lib('access')->redirect($url);
+		//javascript
+		} else {
+			return ['url' => $url];
+		}
+	}
+
+	/**
 	 * Handle exception when initially clicking a modal service action according to whether javascript is enabled or not.
 	 * Improves handling when javascript is not enabled compared to throwing a Services Exception because it takes the
 	 * user back to the page where the action was initiated and shows the error message there.
