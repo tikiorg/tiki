@@ -16,6 +16,8 @@ use Tiki\FileGallery\FileWrapper\WrapperInterface as FileWrapper;
 
 class FileGalLib extends TikiLib
 {
+	private $wikiupMoved = [];
+
 	function isPodCastGallery($galleryId, $gal_info=null)
 	{
 		if (empty($gal_info))
@@ -4110,19 +4112,44 @@ class FileGalLib extends TikiLib
 		return $filename;
 	}
 
-	function moveAllWikiUpToFgal($fgalId, &$errors, &$feedbacks)
+	function moveAllWikiUpToFgal($fgalId)
 	{
 		$tikilib = TikiLib::lib('tiki');
 
 		$maxRecords = 100;
+		$pageback = [];
 		// The outer loop attemps to limit memory usage by fetching pages gradually
 		for ($offset = 0; $pages = $tikilib->list_pages($offset, $maxRecords), !empty($pages['data']); $offset += $maxRecords) {
 			foreach ($pages['data'] as $page) {
-				$this->moveWikiUpToFgal($page, $fgalId, $errors, $feedbacks);
+				$pageback[] = $this->moveWikiUpToFgal($page, $fgalId);
 			}
 		}
+		$pageback = array_filter($pageback);
+		if (!empty($pageback)) {
+			foreach($pageback as $res) {
+				foreach ($res as $type => $array) {
+					foreach($array as $value) {
+						$fb[$type][] = $value;
+					}
+				}
+			}
+			if (!empty($fb)) {
+				$galinfo = $this->get_file_gallery_info($fgalId);
+				$titles = [
+					'success' => tr('Images successfully moved to file gallery %0', $galinfo['name']),
+					'error' => tr('Images could not be opened or uploaded'),
+				];
+				foreach($fb as $type2 => $mes2) {
+					Feedback::$type2(['mes' => $mes2, 'title' => $titles[$type2]], 'session');
+				}
+			}
+		} else {
+			Feedback::note(['mes' => tr('No changes were made since no images in wiki_up were found in Wiki pages.'),
+				'title' => tr('No images found')], 'session');
+		}
+		$this->wikiupMoved = [];
 	}
-	function moveWikiUpToFgal($page_info, $fgalId, &$errors, &$feedbacks)
+	function moveWikiUpToFgal($page_info, $fgalId)
 	{
 		global $user;
 		$tikilib = TikiLib::lib('tiki');
@@ -4130,9 +4157,10 @@ class FileGalLib extends TikiLib
 		$argumentParser = new WikiParser_PluginArgumentParser;
 		$files = array();
 		if (strpos($page_info['data'], 'img/wiki_up') === false) {
-			return;
+			return false;
 		}
 		$matches = WikiParser_PluginMatcher::match($page_info['data']);
+		$feedback = [];
 		foreach ($matches as $match) {
 			$modif = false;
 			$plugin_name = $match->getName();
@@ -4140,20 +4168,39 @@ class FileGalLib extends TikiLib
 				$arguments = $argumentParser->parse($match->getArguments());
 				$newArgs = array();
 				foreach ($arguments as $key=>$val) {
-					if ($key == 'src') {
-						if (false === $data = @file_get_contents($val)) {
-							$errors[] = tra('Cannot open this file:').' '.$val.' '.tra('Page:').' '.$page_info['pageName'];
-							continue;
-						}
-						$name = preg_replace('|.*/([^/]*)|', '$1', $val);
-						$fileId = $this->insert_file($fgalId, $name, 'Used in '.$page_info['pageName'], $name, $data, strlen($data), $mimelib->from_path($name, $val), $user, '', 'wiki_up conversion');
-						if (empty($fileId)) {
-							$errors[] = tra('Cannot upload this file').' '.$val.' '.tra('Page:').' '.$page_info['pageName'];
-							continue;
+					if ($key === 'src' && strpos($val, 'img/wiki_up') !== false) {
+						//first time the wiki_up file is found
+						if (!isset($this->wikiupMoved[$val])) {
+							if (false === $data = @file_get_contents($val)) {
+								$feedback['error'][] = tr('%0 on page %1 could not be opened', $val, $page_info['pageName']);
+								continue;
+							}
+							$name = preg_replace('|.*/([^/]*)|', '$1', $val);
+							$fileId = $this->insert_file($fgalId, $name, 'Used in '.$page_info['pageName'], $name, $data,
+								strlen($data), $mimelib->from_path($name, $val), $user, '', 'wiki_up conversion');
+							if (empty($fileId)) {
+								$feedback['error'][] = tr('%0 on page %1 could not be uploaded into the file gallery',
+									$val, $page_info['pageName']);
+								continue;
+								continue;
+							} else {
+								$files[] = $val;
+								$modif = true;
+								$newArgs[] = 'fileId="' . $fileId . '"';
+								//save wiki_up file name and fileId pair in case there are more instances using this file
+								$this->wikiupMoved[$val] = $fileId;
+								$feedback['success'][] = tr('%0 used on page %1 was moved and given the file ID %2.',
+									$name, $page_info['pageName'], $fileId);
+							}
+						//wiki_up file was already moved to file galleries
 						} else {
+							$name = preg_replace('|.*/([^/]*)|', '$1', $val);
 							$files[] = $val;
 							$modif = true;
-							$newArgs[] = 'fileId="'.$fileId.'"';
+							$fileId = $this->wikiupMoved[$val];
+							$newArgs[] = 'fileId="' . $fileId . '"';
+							$feedback['success'][] = tr('%0 used on page %1 was moved and given the file ID %2.',
+								$name, $page_info['pageName'], $fileId);
 						}
 					} else
 						$newArgs[] = "$key=\"$val\"";
@@ -4164,12 +4211,14 @@ class FileGalLib extends TikiLib
 			}
 		}
 		if (!empty($files)) {
-			$tikilib->update_page($page_info['pageName'], $matches->getText(), 'wiki_up conversion', $user, $tikilib->get_ip_address());
+			$tikilib->update_page($page_info['pageName'], $matches->getText(), 'wiki_up conversion', $user,
+				$tikilib->get_ip_address());
+			$files = array_unique($files);
 			foreach ($files as $file) {
 				unlink($file);
 			}
-			$feedbacks[] = $page_info['pageName'];
 		}
+		return $feedback;
 	}
 
 	function fixMime($fileData)

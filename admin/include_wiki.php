@@ -25,20 +25,12 @@ if (isset($_REQUEST['dump'])) {
 if (!empty($_REQUEST['moveWikiUp'])) {
 	check_ticket('admin-inc-wiki');
 	$filegallib = TikiLib::lib('filegal');
-	$errorsWikiUp = $feedbacksWikiUp = array();
+	$errorsWikiUp = array();
 	$info = $filegallib->get_file_gallery_info($prefs['home_file_gallery']);
 	if (empty($info)) {
-		$errorsWikiUp[] = tra('You must set a home file gallery');
+		Feedback::error(tra('You must set a home file gallery'), 'session');
 	} else {
-		$filegallib->moveAllWikiUpToFgal($prefs['home_file_gallery'], $errorsWikiUp, $feedbacksWikiUp);
-	}
-	if (!empty($errorsWikiUp)) {
-		Feedback::error(['mes' => $errorsWikiUp]);
-	}
-	if (!empty($feedbacksWikiUp)) {
-		Feedback::success(['mes' => $feedbacksWikiUp, 'title' => tr('The following pages were modified')]);
-	} else {
-		Feedback::note(tr('Nothing was changed (no images in wiki_up were found in Wiki pages).'));
+		$filegallib->moveAllWikiUpToFgal($prefs['home_file_gallery']);
 	}
 }
 
