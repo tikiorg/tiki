@@ -231,22 +231,22 @@ if ($user != $thread_info['userName']) {
 	);
 }
 
-if (empty($thread_info) && empty($_POST['ajaxtype'])) {
-	$smarty->assign('msg', tra("Incorrect thread"));
-	$smarty->display("error.tpl");
-	die;
-} elseif (!empty($_POST['ajaxtype']) && empty($thread_info)) {
-	$ajaxpost = array_intersect_key($_POST, [
-		'ajaxtype' => '',
-		'ajaxheading' => '',
-		'ajaxitems' => '',
-		'ajaxmsg' => '',
-		'ajaxtoMsg' => '',
-		'ajaxtoList' => '',
-	]);
-	$keys = array_keys($_POST['ajaxitems']);
-	$_SESSION['ajaxpost' . $keys[0]] = $ajaxpost;
-	header('location: ' . 'tiki-view_forum.php?forumId=' . $_POST['forumId'] . '&deleted_parentId=' . $keys[0]);
+if (empty($thread_info)) {
+	$forumId = '';
+	//thread might be missing due to a successful delete of a post
+	if (!empty($_SESSION['tikifeedback'][0]['deleted_forumId'])) {
+		$forumId = $_SESSION['tikifeedback'][0]['deleted_forumId'];
+	} elseif (!empty($_REQUEST['forumId'])) {
+		$forumId = $_REQUEST['forumId'];
+		Feedback::error(tr('Thread %0 does not exist.', $comments_parentId));
+	}
+	if (!empty($forumId)) {
+		TikiLib::lib('access')->redirect('tiki-view_forum.php?forumId=' . $forumId);
+	} else {
+		$smarty->assign('msg', tr('Thread %0 does not exist.', $comments_parentId));
+		$smarty->display("error.tpl");
+		die;
+	}
 }
 
 if (!empty($thread_info['parentId'])) {

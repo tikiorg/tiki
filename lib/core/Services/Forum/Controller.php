@@ -294,6 +294,7 @@ class Services_Forum_Controller
 				'tpl' => 'action',
 				'mes' => $msg,
 				'items' => $items,
+				'deleted_forumId' => $extra['forumId']
 			];
 			Feedback::success($feedback, 'session');
 			//return to page

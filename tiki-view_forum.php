@@ -483,24 +483,6 @@ if ($prefs['feature_forum_parse'] == 'y') {
 	$smarty->assign_by_ref('plugins', $plugins);
 }
 
-$session = isset($_GET['deleted_parentId']) && !empty($_SESSION['ajaxpost' . $_GET['deleted_parentId']]) ?: false;
-if (!isset($_POST['ajaxtype']) && $session) {
-	$smarty->assign('ajaxfeedback', 'y');
-	$posted = $_SESSION['ajaxpost' . $_GET['deleted_parentId']];
-	if ($session) {
-		unset($_SESSION['ajaxpost' . $_GET['deleted_parentId']]);
-	}
-	$ajaxpost = array_intersect_key($posted, [
-		'ajaxtype' => '',
-		'ajaxheading' => '',
-		'ajaxitems' => '',
-		'ajaxmsg' => '',
-		'ajaxtoMsg' => '',
-		'ajaxtoList' => '',
-	]);
-	$smarty->assign($ajaxpost);
-}
-
 ask_ticket('view-forum');
 if ($tsAjax) {
 	$smarty->display('tiki-view_forum.tpl');
