@@ -5,6 +5,7 @@
 <div class="t_navbar margin-bottom-md">
 	{assign var=thispage value=$page|escape:url}
 	{button href="tiki-index.php?page=$thispage" class="btn btn-default" _text="{tr}View page{/tr}" _icon_name="view"}
+	{button href="tiki-editpage.php?page=$thispage" class="btn btn-default" _text="{tr}Edit page{/tr}" _icon_name="edit"}
 	{if !isset($noHistory)}
 		{if $show_all_versions eq "y"}
 			{button _text="{tr}Collapse Into Edit Sessions{/tr}" href="?clear_versions=1&show_all_versions=n" _auto_args="*" class="btn btn-default" _icon_name="expanded"}
@@ -112,7 +113,7 @@
 			{tr}History{/tr}
 		</h2>
 	{/if}
-	<form id="pagehistory" class="form-horizontal confirm-form" action="tiki-pagehistory.php?page={$page}">
+	<form id="pagehistory" class="form-horizontal" action="tiki-pagehistory.php?page={$page}">
 		<input type="hidden" name="page" value="{$page|escape}">
 		<input type="hidden" name="history_offset" value="{$history_offset}">
 		<div class="clearfix">
@@ -491,16 +492,16 @@
 				</table>
 			</div>
 			<div class="input-group col-sm-6">
-				<select class="form-control" name="confirmAction">
-					<option value="" selected="selected">
+				<select class="form-control" name="action">
+					<option value="no_action" selected="selected">
 						{tr}Select action to perform with checked{/tr}...
 					</option>
-					<option value="delete">
+					<option value="remove_page_versions">
 						{tr}Remove{/tr}
 					</option>
 				</select>
 				<span class="input-group-btn">
-					<button type="submit" form="pagehistory" class="btn btn-primary">
+					<button type="submit" form="pagehistory" formaction="{bootstrap_modal controller=wiki}" class="btn btn-primary confirm-submit">
 						{tr}OK{/tr}
 					</button>
 				</span>
