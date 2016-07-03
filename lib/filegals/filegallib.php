@@ -4182,7 +4182,6 @@ class FileGalLib extends TikiLib
 								$feedback['error'][] = tr('%0 on page %1 could not be uploaded into the file gallery',
 									$val, $page_info['pageName']);
 								continue;
-								continue;
 							} else {
 								$files[] = $val;
 								$modif = true;
@@ -4215,7 +4214,9 @@ class FileGalLib extends TikiLib
 				$tikilib->get_ip_address());
 			$files = array_unique($files);
 			foreach ($files as $file) {
-				unlink($file);
+				if (file_exists($file)) {
+					unlink($file);
+				}
 			}
 		}
 		return $feedback;
