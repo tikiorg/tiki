@@ -84,8 +84,10 @@ class Search_Formatter_DataSource_Declarative implements Search_Formatter_DataSo
 
 	private function obtainFromGlobalSource($globalSource, $type, $object, & $missingFields, $data)
 	{
-		if (in_array('highlight', $missingFields)) {
-			$missingFields = array_merge($missingFields, array_keys($globalSource->getGlobalFields()));
+		if (is_array($missingFields)) {
+			if (in_array('highlight', $missingFields)) {
+				$missingFields = array_merge($missingFields, array_keys($globalSource->getGlobalFields()));
+			}
 		}
 
 		if ($this->sourceProvidesValue($globalSource, $missingFields)) {
