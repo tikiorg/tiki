@@ -3410,9 +3410,9 @@ class TrackerLib extends TikiLib
 		$cat_name = $this->get_isMain_value(null, $itemId);
 
 		// The following needed to ensure category field exist for item (to be readable by list_items)
-		$smarty = TikiLib::lib('smarty');
-		$smarty->loadPlugin('smarty_modifier_sefurl');
-		$cat_href = smarty_modifier_sefurl($itemId, 'trackeritem');
+		// Update 2016: Needs to be the non-sefurl in case the feature is disabled later as this is stored in tiki_objects
+		// and used in tiki-browse_categories.php and other places
+		$cat_href = "tiki-view_tracker_item.php?itemId=$itemId";
 
 		$categlib->update_object_categories($ins_categs, $itemId, 'trackeritem', $cat_desc, $cat_name, $cat_href, $managed_categories, $override_perms);
 	}
