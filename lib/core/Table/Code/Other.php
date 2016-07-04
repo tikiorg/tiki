@@ -191,7 +191,7 @@ class Table_Code_Other extends Table_Code_Manager
 				$jq[] = $this->nt . '$(\'' . parent::$tid . '\').find(\'thead tr\').append(\'<th' . $class . '>'
 					. $total['label'] . '</th>\');'
 					. $this->nt . '$(\'' . parent::$tid . '\').find(\'tbody tr\').append(\'<td data-tsmath="row-'
-					. $total['formula'] . '"></td>\')'
+					. $total['formula'] . '" data-tsmath-filter="*"></td>\')'
 					. $this->nt . '$(\'' . parent::$tid . '\').find(\'tfoot tr:not(.ts-foot-row)\').append(\'<th></th>\');';
 			}
 		}
