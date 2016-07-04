@@ -184,6 +184,9 @@ if (!empty($page_ref_id)) {
 }
 
 $page = $_REQUEST['page'];
+if ($prefs['wiki_url_scheme'] !== 'urlencode') {
+	$page = TikiLib::lib('wiki')->get_page_by_slug($page);
+}
 $smarty->assign_by_ref('page', $page);
 
 $cat_type = 'wiki page';
