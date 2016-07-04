@@ -1544,8 +1544,9 @@ class ToolbarFileGallery extends Toolbar
 					);
 				};'
 			);
-			return 'var area_id = editor.name;
-				openElFinderDialog(
+			return '
+			var area_id = (typeof editor === \'undefined\' ?  \'' . $areaId . '\' : editor.name);
+			openElFinderDialog(
 				this,
 				{
 					defaultGalleryId: ' . (empty($prefs['home_file_gallery']) ? $prefs['fgal_root_id'] : $prefs['home_file_gallery']) . ',
