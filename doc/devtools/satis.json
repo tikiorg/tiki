@@ -1265,24 +1265,24 @@
 			"type": "package",
 			"package": {
 				"name": "jquery/plugins/tablesorter",
-				"version": "2.25.0",
+				"version": "2.25.7",
 				"dist": {
-					"url": "https://github.com/Mottie/tablesorter/archive/v2.25.0.zip",
+					"url": "https://github.com/Mottie/tablesorter/archive/v2.25.7.zip",
 					"type": "zip"
 				}
 			}
 		},
-	  {
-		"type": "package",
-		"package": {
-		  "name": "jquery/plugins/tablesorter",
-		  "version": "2.25.7",
-		  "dist": {
-			"url": "https://github.com/Mottie/tablesorter/archive/v2.25.7.zip",
-			"type": "zip"
-		  }
-		}
-	  },
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/tablesorter",
+				"version": "2.26.5",
+				"dist": {
+					"url": "https://github.com/Mottie/tablesorter/archive/v2.26.5.zip",
+					"type": "zip"
+				}
+			}
+		},
 		{
 			"type": "package",
 			"package": {
