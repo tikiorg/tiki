@@ -5,6 +5,7 @@
 <div class="t_navbar margin-bottom-md">
 	{assign var=thispage value=$page|escape:url}
 	{button href="tiki-index.php?page=$thispage" class="btn btn-default" _text="{tr}View page{/tr}" _icon_name="view"}
+	{button href="tiki-editpage.php?page=$thispage" class="btn btn-default" _text="{tr}Edit page{/tr}" _icon_name="edit"}
 	{if !isset($noHistory)}
 		{if $show_all_versions eq "y"}
 			{button _text="{tr}Collapse Into Edit Sessions{/tr}" href="?clear_versions=1&show_all_versions=n" _auto_args="*" class="btn btn-default" _icon_name="expanded"}
