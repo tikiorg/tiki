@@ -8300,6 +8300,12 @@ a.admbox.off:active {
   background: #ffffff;
   color: #444444;
 }
+.tiki .modal-content .ui-state-default {
+  color: #2196f3;
+}
+.tiki .modal-content .ui-state-hover:hover {
+  color: #0a6ebd;
+}
 .dropdown-menu {
   color: #666666;
 }
