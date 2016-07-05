@@ -873,20 +873,20 @@ class Services_User_Controller
 			$expiry = $expiry * 3600 * 24; //translate day input to seconds
 		} else if ($expiry != -1) {
 			Feedback::error(tra('Please specify validity period'), 'session');
-			Services_Utilities::exit($referer);
+			Services_Utilities::redirect($referer);
 		}
 
 		foreach($groups as $grp) {
 			if (!TikiLib::lib('user')->group_exists($grp)) {
 				Feedback::error(tr('The group %0 does not exist', $grp), 'session');
-				Services_Utilities::exit($referer);
+				Services_Utilities::redirect($referer);
 			}
 		}
 
 		TikiLib::lib('user')->invite_tempuser($emails, $groups, $expiry, $prefix, $path);
-		
+
 		Feedback::success(tra('Your invite has been sent.'), 'session');
-		Services_Utilities::exit($referer);
+		Services_Utilities::redirect($referer);
 	}
 
 	function action_upload_avatar( $input ) {
