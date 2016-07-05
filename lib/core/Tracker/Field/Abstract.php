@@ -98,13 +98,10 @@ abstract class Tracker_Field_Abstract implements Tracker_Field_Interface, Tracke
 		// create the link and if required the mouseover popup
 		if ($this->isLink($context)) {
 			$itemId = $this->getItemId();
-			$query = $_GET;
-			unset($query['trackerId']);
-			if (isset($query['page'])) {
-				$query['from'] = $query['page'];
-				unset($query['page']);
+			$query = array();
+			if (isset($_GET['page'])) {
+				$query['from'] = $_GET['page'];
 			}
-
 
 			$classList = array('tablename');
 			$metadata = TikiLib::lib('object')->get_metadata('trackeritem', $itemId, $classList);
