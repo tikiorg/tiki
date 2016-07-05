@@ -14,7 +14,7 @@
 					<input type="hidden" name="galleryId" value="{$galleryId|escape}"/>
 					<input type="hidden" name="type" value="{$typeFilter|escape}"/>
 				</div>
-				<button class="btn btn-default">Search</button>
+				<button class="btn btn-default">{tr}Search{/tr}</button>
 			</form>
 			<h4>{tr}Select files{/tr}</h4>
 			<div class="gallery-list">
