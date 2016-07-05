@@ -153,11 +153,23 @@ class Search_Query implements Search_Query_Interface
 			}
 		}
 
+		/* make the range filter work regardless of ordering - if from > to, swap */
+		if ($to < $from) {
+			$temp = $to;
+			$to = $from;
+			$from = $temp;
+		}
 		$this->addPart(new Search_Expr_Range($from, $to), 'timestamp', $field);
 	}
 
 	function filterTextRange($from, $to, $field = 'title')
 	{
+		/* make the range filter work regardless of ordering - if from > to, swap */
+		if ( strcmp($from, $to) > 0 ) {
+			$temp = $to;
+			$to = $from;
+			$from = $temp;
+		}
 		$this->addPart(new Search_Expr_Range($from, $to), 'plaintext', $field);
 	}
 
