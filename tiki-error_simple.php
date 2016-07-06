@@ -5,13 +5,16 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+require_once 'tiki-filter-base.php';
+$filter = \TikiFilter::get('xss');
+
 if (!empty($_REQUEST['error'])) {
-	$error = substr($_REQUEST["error"], 0, 256);
+	$error = $filter->filter(substr($_REQUEST["error"], 0, 256));
 } else {
 	$error = 'There was an unspecified error.  Please go back and try again.';
 }
 if (!empty($_REQUEST['title'])) {
-	$title = $_REQUEST['title'];
+	$title = $filter->filter($_REQUEST['title']);
 } else {
 	$title = 'Maintenance';
 }
