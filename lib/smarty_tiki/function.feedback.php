@@ -20,6 +20,9 @@ function smarty_function_feedback($params, $smarty)
 				$("ul", "#tikifeedback").append($(error).find("li"));
 				$("ul", "#tikifeedback").removeClass("list-unstyled");
 			}
+			$("html, body").animate({
+				scrollTop: $("div#tikifeedback").offset().top
+			}, 500);
 		}
 		$("#tikifeedback .clear").on("click", function () {
 			$("#tikifeedback").empty();
