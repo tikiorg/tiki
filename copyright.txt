@@ -12,8 +12,8 @@ This is how we implement the Tiki Social Contract.
 http://tiki.org/Social+Contract
 
 List of members of the Community
-As of 2016-06-08, the community has:
-  * 602 members on SourceForge.net,
+As of 2016-07-06, the community has:
+  * 603 members on SourceForge.net,
   * 319 of those people who made at least one code commit
 
 This list is automatically generated and alphabetically sorted
@@ -132,8 +132,8 @@ SF Role: Developer
 Nickname: amnabilal
 Name: Amna Bilal
 First Commit: 2016-05-19
-Last Commit: 2016-06-07
-Number of Commits: 12
+Last Commit: 2016-07-02
+Number of Commits: 25
 SF Role: Developer
 
 Nickname: amotl
@@ -497,8 +497,8 @@ Number of Commits: 1631
 Nickname: chealer
 Name: Philippe Cloutier
 First Commit: 2003-09-27
-Last Commit: 2015-11-10
-Number of Commits: 1846
+Last Commit: 2016-06-15
+Number of Commits: 1847
 SF Role: Developer
 
 Nickname: chessy
@@ -508,8 +508,8 @@ SF Role: Developer
 Nickname: chibaguy
 Name: Gary Cunningham-Lee
 First Commit: 2006-02-04
-Last Commit: 2016-06-08
-Number of Commits: 3104
+Last Commit: 2016-07-06
+Number of Commits: 3124
 SF Role: Admin
 
 Nickname: chris_holman
@@ -764,8 +764,8 @@ SF Role: Developer
 Nickname: drsassafras
 Name: Dr. Sassafras
 First Commit: 2014-04-03
-Last Commit: 2016-05-20
-Number of Commits: 12
+Last Commit: 2016-07-03
+Number of Commits: 24
 SF Role: Developer
 
 Nickname: duebel
@@ -1013,6 +1013,10 @@ Last Commit: 2015-06-16
 Number of Commits: 4
 SF Role: Developer
 
+Nickname: fvtorres
+Name: Fernando Vergos Torres
+SF Role: Developer
+
 Nickname: garem
 Name: Alain Gaeremynck
 SF Role: Developer
@@ -1059,7 +1063,7 @@ Number of Commits: 543
 SF Role: Admin, Developer
 
 Nickname: ggd
-Name: Gour
+Name: SaÅ¡a JaniÅ¡ka
 SF Role: Developer
 
 Nickname: ggeller
@@ -1460,8 +1464,8 @@ SF Role: Developer
 Nickname: jonnybradley
 Name: jonny Bradley
 First Commit: 2007-08-15
-Last Commit: 2016-06-08
-Number of Commits: 9221
+Last Commit: 2016-07-06
+Number of Commits: 9306
 SF Role: Admin
 
 Nickname: jorgercosta
@@ -1547,8 +1551,8 @@ SF Role: Developer
 Nickname: jyhem
 Name: Jean-Marc Libs
 First Commit: 2006-12-11
-Last Commit: 2016-06-08
-Number of Commits: 1151
+Last Commit: 2016-06-20
+Number of Commits: 1156
 SF Role: Admin
 
 Nickname: k2s
@@ -1722,8 +1726,8 @@ SF Role: Developer
 Nickname: lindonb
 Name: lindon
 First Commit: 2009-05-10
-Last Commit: 2016-06-05
-Number of Commits: 1941
+Last Commit: 2016-07-06
+Number of Commits: 1982
 SF Role: Developer
 
 Nickname: llunax
@@ -1798,8 +1802,8 @@ SF Role: Developer
 Nickname: luciash
 Name: luciash d&#39; being
 First Commit: 2003-08-05
-Last Commit: 2016-05-13
-Number of Commits: 1392
+Last Commit: 2016-07-04
+Number of Commits: 1415
 SF Role: Admin
 
 Nickname: lueders
@@ -2231,8 +2235,8 @@ SF Role: Developer
 Nickname: nkoth
 Name: Nelson
 First Commit: 2007-05-17
-Last Commit: 2016-06-01
-Number of Commits: 2113
+Last Commit: 2016-06-30
+Number of Commits: 2129
 SF Role: Admin
 
 Nickname: normandaoust
@@ -2279,8 +2283,8 @@ SF Role: Developer
 Nickname: ohertel
 Name: Oliver Hertel
 First Commit: 2003-03-16
-Last Commit: 2016-04-06
-Number of Commits: 400
+Last Commit: 2016-06-26
+Number of Commits: 401
 SF Role: Admin
 
 Nickname: oldelvet
@@ -2361,8 +2365,8 @@ SF Role: Developer
 Nickname: patrick-proulx
 Name: Patrick Proulx
 First Commit: 2013-07-14
-Last Commit: 2016-06-03
-Number of Commits: 212
+Last Commit: 2016-07-05
+Number of Commits: 216
 SF Role: Developer
 
 Nickname: patrickallard
@@ -3156,11 +3160,9 @@ Number of Commits: 3
 SF Role: Developer
 
 Nickname: wings-of-glory
-Name: A. Zargamy
 First Commit: 2008-09-07
 Last Commit: 2008-09-18
 Number of Commits: 3
-SF Role: Developer
 
 Nickname: wolff_borg
 First Commit: 2003-08-07
@@ -3181,8 +3183,8 @@ SF Role: Developer
 Nickname: xavidp
 Name: Xavier de Pedro
 First Commit: 2005-07-08
-Last Commit: 2016-06-08
-Number of Commits: 1817
+Last Commit: 2016-07-04
+Number of Commits: 1846
 SF Role: Admin
 
 Nickname: xbtheria
@@ -3218,8 +3220,8 @@ SF Role: Developer
 Nickname: yonixxx
 Name: Bernard Sfez
 First Commit: 2008-02-25
-Last Commit: 2016-06-01
-Number of Commits: 230
+Last Commit: 2016-07-05
+Number of Commits: 236
 SF Role: Admin, Developer
 
 Nickname: ysoya
