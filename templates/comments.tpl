@@ -171,12 +171,12 @@
 	{else}
 		<div id="form">
 			{if $post_reply > 0 || $edit_reply > 0 || $comment_preview}
-			{* posting, editing or previewing a reply: show form *}
-			<div id='{$postclass}open' class="threadpost">
-				{else}
+				{* posting, editing or previewing a reply: show form *}
+				<div id='{$postclass}open' class="threadpost">
+			{else}
 				<input type="button" name="comments_postComment" value="{tr}New Reply{/tr}" onclick="flip('{$postclass}');">
 				<div id='{$postclass}' class="threadpost">
-					{/if}
+			{/if}
 
 					<div>
 						<h3>
@@ -298,7 +298,7 @@
 						</div>
 					</form>
 					{assign var=tips_title value="{tr}Posting replies{/tr}"}
-				</div>
+
 			</div>
 		</div>
 	{/if}
