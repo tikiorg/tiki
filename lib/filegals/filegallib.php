@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 class FileGalLib extends TikiLib
 {
 
-	private $wikiupMoved = [];
+	private $wikiupMoved = array();
 
 	function isPodCastGallery($galleryId, $gal_info=null)
 	{
@@ -4017,7 +4017,7 @@ class FileGalLib extends TikiLib
 				$this->moveWikiUpToFgal($page, $fgalId, $errors, $feedbacks);
 			}
 		}
-		$this->wikiupMoved = [];
+		$this->wikiupMoved = array();
 	}
 	function moveWikiUpToFgal($page_info, $fgalId, &$errors, &$feedbacks)
 	{
