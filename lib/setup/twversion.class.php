@@ -27,7 +27,7 @@ class TWVersion
 		$this->branch 	= 'stable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '12.8';	// needs to have no spaces for releases
+		$this->version 	= '12.9';	// needs to have no spaces for releases
 		$this->star	= 'Altair';
 		$this->releases	= array();
 
@@ -215,6 +215,7 @@ class TWVersion
 				'12.6',
 				'12.7',
 				'12.8',
+				'12.9',
 			);
 	}
 
