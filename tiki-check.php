@@ -21,6 +21,17 @@ isset($_REQUEST['nagios']) ? $nagios = true : $nagios = false;
 file_exists('tiki-check.php.lock') ? $locked = true : $locked = false;
 $font = 'lib/captcha/DejaVuSansMono.ttf';
 
+$inputConfiguration = array(
+	array(
+		'staticKeyFilters' => array(
+			'dbhost' => 'text',
+			'dbuser' => 'text',
+			'dbpass' => 'text',
+			'email_test_to' => 'email',
+		),
+	),
+);
+
 if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) {
 	$standalone = false;
 	require_once ('tiki-setup.php');
