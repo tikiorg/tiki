@@ -7411,6 +7411,9 @@ pre.codelisting {
 body {
   background: #214d68 url('../images/body-bg_fw.png') repeat-x;
 }
+body.tiki.navbar-padding {
+  padding-top: 84px;
+}
 .container,
 #autosave_preview {
   background: #ffffff;
@@ -7454,6 +7457,11 @@ body {
 .navbar-default .navbar-nav > .active > a:focus,
 .navbar-default .navbar-nav > .open > a:focus {
   background: transparent;
+}
+.navbar-fixed-top .container,
+.navbar-fixed-top .container .navbar-default {
+  background: transparent;
+  border: none;
 }
 input,
 .jumbotron {
