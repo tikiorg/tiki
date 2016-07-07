@@ -941,13 +941,13 @@ if ($s) {
 	$php_properties['libxml'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Loaded',
-		'message' => tra('This extension is needed for WebDAV and the dom extension (see below).')
+		'message' => tra('This extension is needed for the dom extension (see below).')
 	);
 } else {
 	$php_properties['libxml'] = array(
 		'fitness' => tra('bad'),
 		'setting' => 'Not available',
-		'message' => tra('This extension is needed for WebDAV and the dom extension (see below).')
+		'message' => tra('This extension is needed for the dom extension (see below).')
 	);
 }
 
@@ -957,15 +957,13 @@ if ($s) {
 	$php_properties['dom'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Loaded',
-		'message' => tra('This extension is needed for many features such as:') . '<br>' .
-			tra('bigbluebutton, machine translation, SCORM & meta-data in file galleries, wiki importers, custom search, Kaltura and others.')
+		'message' => tra('This extension is needed by Tiki')
 	);
 } else {
 	$php_properties['dom'] = array(
 		'fitness' => tra('bad'),
 		'setting' => 'Not available',
-		'message' => tra('This extension is needed for many features such as:') . '<br>' .
-			tra('bigbluebutton, machine translation, SCORM & meta-data in file galleries, wiki importers, custom search, Kaltura and others.')
+		'message' => tra('This extension is needed by Tiki')
 	);
 }
 
