@@ -87,7 +87,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 					),
 					'browseGalleryId' => array(
 						'name' => tr('Browse Gallery ID'),
-						'description' => tr('File gallery browse files. Use 0 for root file gallery. (requires elFinder feature - experimental)'),
+						'description' => tr('File gallery browse files. Use 0 for root file gallery. (requires elFinder feature - experimental)') . '. ' . tr('Restrict permissions to view the file gallery to hide the button.') ,
 						'filter' => 'int',
 						'legacy_index' => 8,
 						'profile_reference' => 'file_gallery',

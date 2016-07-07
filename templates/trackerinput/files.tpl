@@ -37,7 +37,7 @@
 			{/if}
 		{/if}
 	{/if}
-	{if $prefs.fgal_tracker_existing_search eq 'y'}
+	{if $prefs.fgal_tracker_existing_search eq 'y' && $tiki_p_view_file_gallery eq 'y'}
 		{if $prefs.fgal_elfinder_feature eq 'y'}
 			{button href='tiki-list_file_gallery.php' _text="{tr}Browse files{/tr}"
 			_onclick=$context.onclick
