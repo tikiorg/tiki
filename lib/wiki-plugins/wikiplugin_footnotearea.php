@@ -15,21 +15,37 @@ function wikiplugin_footnotearea_info()
 		'iconname' => 'superscript',
 		'format' => 'html',
 		'introduced' => 3,
-		'params' => array(),
+		'params' => array(
+        'class' => array(
+          'required' => false,
+          'name' => tra('Class'),
+          'description' => tra('Filter footnotearea by footnote class'),
+          'since' => '14.0',
+          'default' => '',
+          'filter' => 'alnum',
+          'accepted' => tra('Valid CSS class'),
+        ),
+		),
 	);
 }
 
 function wikiplugin_footnotearea($data, $params)
 {
 
-	$html = '<div class="footnotearea">';
-	$html .= '<hr />';
+	if ( isset($params['class']) ) {
+		$html = '<div class="footnotearea ' . $params['class'] . '">';
+	} else {
+		$html = '<div class="footnotearea">';
+	}
 
 	foreach ($GLOBALS["footnotesData"] as $number => $data) {
-        $class = "onefootnote";
-        if (isset($GLOBALS["footnotesClass"][$number])){
-            $class .= " ".$GLOBALS["footnotesClass"][$number];
-        }
+		if ( isset($params['class']) && $GLOBALS["footnotesClass"][$number] != $params['class'] ) {
+			continue;
+		}
+		$class = "onefootnote";
+		if (isset($GLOBALS["footnotesClass"][$number])){
+			$class .= " ".$GLOBALS["footnotesClass"][$number];
+		}
 		$html .= '<div class="'.$class.'" id="footnote' . $number . '">';
 		$html .= '<a href="#ref_footnote' . $number . '">'. $number . '.</a> ';
 		$html .= '~/np~' . $data . '~np~';
