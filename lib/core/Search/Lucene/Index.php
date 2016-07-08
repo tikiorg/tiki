@@ -316,7 +316,7 @@ class Search_Lucene_Index implements Search_Index_Interface
 	{
 		$term = null;
 
-		if ($node instanceof ImplicitPhrase) {
+		if ($node instanceof Search_Expr_ImplicitPhrase) {
 			$node = $node->getBasicOperator();
 		}
 
@@ -356,7 +356,7 @@ class Search_Lucene_Index implements Search_Index_Interface
 		} elseif ($node instanceof Search_Expr_Token) {
 			$term = $this->buildTerm($node);
 		} else {
-			throw new Exception(tr('Feature not supported.'));
+			throw new Exception(tr('Feature not supported: ' . get_class($node)));
 		}
 
 		if ($term && method_exists($term, 'getBoost')) {
