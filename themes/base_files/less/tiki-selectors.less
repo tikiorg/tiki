@@ -280,6 +280,13 @@ table.treetable.objectperms td.removed {
 	background: darken(@state-danger-bg, 15%);
 }
 
+// Smarty {button} maeks .btn-default but sometimes .btn-link is added by hand. Actually Smarty {button} probably should make just .btn.
+.btn-default.btn-link,
+.btn-default.btn-link:hover {
+	background: transparent;
+	border: none;
+}
+
 // Ajax, jquery. etc.
 // Ajax Loading Overlay
 #ajaxLoadingBG {

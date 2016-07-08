@@ -7416,6 +7416,11 @@ table.treetable.objectperms td.removed {
 .btn-default.highlight:hover {
   background: #e80d00;
 }
+.btn-default.btn-link,
+.btn-default.btn-link:hover {
+  background: transparent;
+  border: none;
+}
 #ajaxLoadingBG {
   background: transparent url('../../../img/overlay-light.png');
 }
