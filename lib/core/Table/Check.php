@@ -23,6 +23,27 @@ class Table_Check
 	public static $dir = [0 => 'asc', 1 => 'desc'];
 
 	/**
+	 * Sets values used in setting tablesorter code
+	 * 
+	 * @param $tableid
+	 * @param bool $ajax
+	 * @return mixed
+	 * @throws Exception
+	 */
+	static public function setVars($tableid, $ajax = false)
+	{
+		$ret['enabled'] = self::isEnabled($ajax);
+		$ret['ajax'] = self::isAjaxCall();
+		static $iid = 0;
+		++$iid;
+		$ret['tableid'] = $tableid . $iid;
+		$smarty = TikiLib::lib('smarty');
+		$smarty->assign('ts', $ret);
+		return $ret;
+	}
+
+	
+	/**
 	 * Checks to see if necessary preferences are set to allow tablesorter to be used either with or without ajax
 	 *
 	 * @param bool $ajax    if set to true will check that appropriate preference is set to be able to use ajax
