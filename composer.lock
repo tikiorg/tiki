@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "af2ed59783f3162180757c75bcf8e554",
-    "content-hash": "63d480acf2144808fa8d6d4e5dcb8a48",
+    "hash": "d6e9300be4b08d6d54d22f5902a2def8",
+    "content-hash": "7dae9740ddab51e5ce8a8aa81f46fc7f",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -952,10 +952,10 @@
         },
         {
             "name": "jquery/plugins/tablesorter",
-            "version": "2.25.7",
+            "version": "2.26.5",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/Mottie/tablesorter/archive/v2.25.7.zip",
+                "url": "https://github.com/Mottie/tablesorter/archive/v2.26.5.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -1061,12 +1061,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/chartjs/Chart.js.git",
-                "reference": "4504455231cd8db19b692a265f9494e0779e3b01"
+                "reference": "3cdd66ca581ee11233c2f40984a84eea540856e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chartjs/Chart.js/zipball/4504455231cd8db19b692a265f9494e0779e3b01",
-                "reference": "4504455231cd8db19b692a265f9494e0779e3b01",
+                "url": "https://api.github.com/repos/chartjs/Chart.js/zipball/3cdd66ca581ee11233c2f40984a84eea540856e1",
+                "reference": "3cdd66ca581ee11233c2f40984a84eea540856e1",
                 "shasum": ""
             },
             "require": {
@@ -1094,7 +1094,7 @@
                 "JS",
                 "chart"
             ],
-            "time": "2016-06-26 18:01:01"
+            "time": "2016-07-05 02:57:40"
         },
         {
             "name": "openlayers/ol3",
@@ -2883,16 +2883,16 @@
         },
         {
             "name": "zendframework/zend-session",
-            "version": "2.7.2",
+            "version": "2.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-session.git",
-                "reference": "f44101f8e8bc95090ef1b59ffb0f1c03d70d7bed"
+                "reference": "346e9709657b81a5d53d70ce754730a26d1f02f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-session/zipball/f44101f8e8bc95090ef1b59ffb0f1c03d70d7bed",
-                "reference": "f44101f8e8bc95090ef1b59ffb0f1c03d70d7bed",
+                "url": "https://api.github.com/repos/zendframework/zend-session/zipball/346e9709657b81a5d53d70ce754730a26d1f02f2",
+                "reference": "346e9709657b81a5d53d70ce754730a26d1f02f2",
                 "shasum": ""
             },
             "require": {
@@ -2945,7 +2945,7 @@
                 "session",
                 "zf2"
             ],
-            "time": "2016-06-24 15:52:13"
+            "time": "2016-07-05 18:32:50"
         },
         {
             "name": "zendframework/zend-soap",
