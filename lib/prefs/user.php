@@ -211,8 +211,6 @@ function prefs_user_list($partial = false)
 				'user_trackersync_trackers',
 			),
 			'default' => '',
-			'profile_reference' => 'tracker_field',
-			'format' => $fieldFormat,
 		),
 		'user_trackersync_geo' => array(
 			'name' => tra('Synchronize long/lat/zoom to location field'),
