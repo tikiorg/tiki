@@ -515,8 +515,9 @@ class Table_Plugin
 				foreach($tsto as $col => $option) {
 					if ($option === 'ignore') {
 						$s['columns'][$col]['math']['ignore'] = true;
+					//only other option is format
 					} elseif (!empty($option)) {
-						$s['columns'][$col]['math']['format'] = $option;
+						$s['columns'][$col]['math']['format'] = $option['format'];
 					}
 				}
 			}
