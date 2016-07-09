@@ -1,5 +1,5 @@
 {* $Id$ *}
-{if !$tsAjax}
+{if !$ts.ajax}
 	{block name=title}
 		{title help="forums" admpage="forums"}{tr}Forums{/tr}{/title}
 	{/block}
@@ -11,7 +11,7 @@
 			{button href="tiki-forum_rankings.php" _type="link" class="btn btn-link" _icon_name="ranking" _text="{tr}Rankings{/tr}"}
 		{/if}
 	</div>
-	{if !$tsOn}
+	{if !$ts.enabled}
 		{if $channels or ($find ne '')}
 			{if $prefs.feature_forums_search eq 'y' or $prefs.feature_forums_name_search eq 'y'}
 				{if $prefs.feature_forums_name_search eq 'y'}
@@ -64,8 +64,8 @@
 	{$libeg = ''}
 	{$liend = ''}
 {/if}
-<div id="{$ts_tableid}-div" class="{if $js === 'y'}table-responsive{/if} ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}> {*the table-responsive class cuts off dropdown menus *}
-	<table id="{$ts_tableid}" class="table table-striped table-hover table-forum normal" data-count="{$cant|escape}">
+<div id="{$ts.tableid}-div" class="{if $js === 'y'}table-responsive{/if} ts-wrapperdiv" {if $ts.enabled}style="visibility:hidden;"{/if}> {*the table-responsive class cuts off dropdown menus *}
+	<table id="{$ts.tableid}" class="table table-striped table-hover table-forum normal" data-count="{$cant|escape}">
 		{block name=forum-header}
 		<thead>
 			<tr>
@@ -180,7 +180,7 @@
 				</tr>
 				{/block}
 			{sectionelse}
-				{if !$tsOn || ($tsOn && $tsAjax)}
+				{if !$ts.enabled || ($ts.enabled && $ts.ajax)}
 					{norecords _colspan=$numbercol _text="{tr}No forums found{/tr}"}
 				{else}
 					{norecords _colspan=$numbercol _text="{tr}Loading{/tr}..."}
@@ -189,6 +189,6 @@
 		</tbody>
 	</table>
 </div>
-{if !$tsOn}
+{if !$ts.enabled}
 	{pagination_links cant=$cant step=$prefs.maxRecords offset=$offset}{/pagination_links}
 {/if}

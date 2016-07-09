@@ -50,21 +50,14 @@ $channels = $commentslib->list_forums($offset, $maxRecords, $sort_mode, $find);
 Perms::bulk(array( 'type' => 'forum' ), 'object', $channels['data'], 'forumId');
 
 //add tablesorter sorting and filtering
-$tsOn = Table_Check::isEnabled(true);
-$smarty->assign('tsOn', $tsOn);
-$tsAjax = Table_Check::isAjaxCall();
-$smarty->assign('tsAjax', $tsAjax);
-static $iid = 0;
-++$iid;
-$ts_tableid = 'forums' . $iid;
-$smarty->assign('ts_tableid', $ts_tableid);
+$ts = Table_Check::setVars('forums', true);
 //initialize tablesorter
-if ($tsOn && !$tsAjax) {
+if ($ts['enabled'] && !$ts['ajax']) {
 	//set tablesorter code
 	Table_Factory::build(
 		'TikiForums',
 		array(
-			'id' => $ts_tableid,
+			'id' => $ts['tableid'],
 			'total' => $channels["cant"],
 		)
 	);
@@ -86,7 +79,7 @@ if ($tsOn && !$tsAjax) {
 }
 ask_ticket('forums');
 // Display the template
-if ($tsAjax) {
+if ($ts['ajax']) {
 	$smarty->display('tiki-forums.tpl');
 } else {
 	$smarty->assign('mid', 'tiki-forums.tpl');
