@@ -258,21 +258,14 @@ for ($i = 0; $i < $max; $i++) {
 }
 
 //add tablesorter sorting and filtering
-$tsOn = Table_Check::isEnabled(true);
-$smarty->assign('tsOn', $tsOn);
-$tsAjax = Table_Check::isAjaxCall();
-$smarty->assign('tsAjax', $tsAjax);
-static $iid = 0;
-++$iid;
-$ts_tableid = 'adminforums' . $iid;
-$smarty->assign('ts_tableid', $ts_tableid);
+$ts = Table_Check::setVars('adminforums', true);
 //initialize tablesorter
-if ($tsOn && !$tsAjax) {
+if ($ts['enabled'] && !$ts['ajax']) {
 	//set tablesorter code
 	Table_Factory::build(
 		'TikiAdminForums',
 		array(
-			'id' => $ts_tableid,
+			'id' => $ts['tableid'],
 			'total' => $channels['cant'],
 		)
 	);
@@ -438,7 +431,7 @@ ask_ticket('admin-forums');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
-if ($tsAjax) {
+if ($ts['ajax']) {
 	$smarty->display('tiki-admin_forums.tpl');
 } else {
 	$smarty->assign('mid', 'tiki-admin_forums.tpl');
