@@ -78,16 +78,9 @@ if ($tiki_p_admin_forum != 'y' && $user) {
 $access->check_permission(array('tiki_p_forum_read'), '', 'forum', $_REQUEST['forumId']);
 
 //add tablesorter sorting and filtering
-$tsOn = Table_Check::isEnabled(true);
-$smarty->assign('tsOn', $tsOn);
-$tsAjax = Table_Check::isAjaxCall();
-$smarty->assign('tsAjax', $tsAjax);
-static $iid = 0;
-++$iid;
-$ts_tableid = 'viewforum' . $_REQUEST['forumId'] . '-' . $iid;
-$smarty->assign('ts_tableid', $ts_tableid);
+$ts = Table_Check::setVars('viewforum' . $_REQUEST['forumId'] . '-', true);
 
-if (!$tsOn || ($tsOn && $tsAjax)) {
+if (!$ts['enabled'] || ($ts['enabled'] && $ts['ajax'])) {
 	$commentslib->forum_add_hit($_REQUEST["forumId"]);
 }
 
@@ -350,12 +343,12 @@ $comments_cant = $commentslib->count_forum_topics(
 	$reply_state
 );
 //initialize tablesorter
-if ($tsOn && !$tsAjax) {
+if ($ts['enabled'] && !$ts['ajax']) {
 	//set tablesorter code
 	Table_Factory::build(
 		'TikiViewforum',
 		array(
-			'id' => $ts_tableid,
+			'id' => $ts['tableid'],
 			'total' => $comments_cant,
 			'pager' => array(
 				'max' => $_REQUEST['comments_per_page'],
@@ -367,6 +360,7 @@ if ($tsOn && !$tsAjax) {
 			),
 		)
 	);
+	$comments_coms = [];
 }
 
 
@@ -484,7 +478,7 @@ if ($prefs['feature_forum_parse'] == 'y') {
 }
 
 ask_ticket('view-forum');
-if ($tsAjax) {
+if ($ts['ajax']) {
 	$smarty->display('tiki-view_forum.tpl');
 } else {
 	$smarty->assign('mid', 'tiki-view_forum.tpl');

@@ -8,7 +8,7 @@
 	{$libeg = ''}
 	{$liend = ''}
 {/if}
-{if !$tsAjax}
+{if !$ts.ajax}
 	{$forum_info.name|addonnavbar:'forum'}
 	{block name=title}
 		{title help="forums" admpage="forums" url=$forum_info.forumId|sefurl:'forum'}{$forum_info.name|addongroupname}{/title}
@@ -476,8 +476,8 @@
 	<input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}">
 	<input type="hidden" name="forumId" value="{$forumId|escape}">
 	{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
-	<div id="{$ts_tableid}-div" class="{if $js === 'y'}table-responsive{/if} ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}>
-		<table id="{$ts_tableid}" class="table normal table-striped table-hover table-forum" data-count="{$comments_cant|escape}">
+	<div id="{$ts.tableid}-div" class="{if $js === 'y'}table-responsive{/if} ts-wrapperdiv" {if $ts.enabled}style="visibility:hidden;"{/if}>
+		<table id="{$ts.tableid}" class="table normal table-striped table-hover table-forum" data-count="{$comments_cant|escape}">
 			{block name=forum-header}
 			<thead>
 				<tr>
@@ -716,7 +716,7 @@
 					</tr>
 					{/block}
 				{sectionelse}
-					{if !$tsOn || ($tsOn && $tsAjax)}
+					{if !$ts.enabled || ($ts.enabled && $ts.ajax)}
 						{norecords _colspan=$cntcol _text="No topics found"}
 					{else}
 						{norecords _colspan=$cntcol _text="Retrieving topics..."}
@@ -726,8 +726,8 @@
 		</table>
 	</div>
 </form>
-{if !$tsAjax}
-	{if !$tsOn}
+{if !$ts.ajax}
+	{if !$ts.enabled}
 		{pagination_links cant=$comments_cant step=$comments_per_page offset=$comments_offset offset_arg='comments_offset'}{/pagination_links}
 	{/if}
 	{if $forum_info.forum_last_n > 0 && count($last_comments)}
@@ -754,7 +754,7 @@
 		<br>
 	{/if}
 
-	{if !$tsOn}
+	{if !$ts.enabled}
 		<div class="col-md-8" styles="padding-top:15px">
 			<div class="panel panel-default" id="filter-panel">
 				<div class="panel-heading filter-panel-heading">
