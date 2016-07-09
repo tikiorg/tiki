@@ -775,6 +775,7 @@ function prefs_feature_list($partial = false)
 			'help' => 'My Account',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feature_minical' => array(
 			'name' => tra('Mini Calendar'),
@@ -789,6 +790,7 @@ function prefs_feature_list($partial = false)
 			'help' => 'User+Preferences',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'feature_notepad' => array(
 			'name' => tra('User Notepad'),

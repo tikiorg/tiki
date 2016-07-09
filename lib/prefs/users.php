@@ -61,6 +61,7 @@ function prefs_users_list()
 			'type' => 'flag',
 			'description' => tra('Use the 12-hour clock (with AM and PM) in some edit screens to set the time for publishing new or edited blog posts, articles, etc.'),
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'users_prefs_diff_versions' => array(
 			'name' => tra('Use interface that shows differences in any versions'),
@@ -174,6 +175,7 @@ function prefs_users_list()
 				'feature_wiki',
 			),
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'users_prefs_mytiki_blogs' => array(
 			'name' => tra('My blogs'),
@@ -182,6 +184,7 @@ function prefs_users_list()
 				'feature_blogs',
 			),
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'users_prefs_mytiki_gals' => array(
 			'name' => tra('My galleries'),
@@ -190,6 +193,7 @@ function prefs_users_list()
 				'feature_galleries',
 			),
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'users_prefs_mytiki_msgs' => array(
 			'name' => tra('My messages'),
@@ -198,6 +202,7 @@ function prefs_users_list()
 				'feature_messages',
 			),
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'users_prefs_mytiki_tasks' => array(
 			'name' => tra('My tasks'),
@@ -206,6 +211,7 @@ function prefs_users_list()
 				'feature_tasks',
 			),
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'users_prefs_mytiki_forum_topics' => array(
 			'name' => tra('My forum topics'),
@@ -214,6 +220,7 @@ function prefs_users_list()
 				'feature_forums',
 			),
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'users_prefs_mytiki_forum_replies' => array(
 			'name' => tra('My forum replies'),
@@ -222,6 +229,7 @@ function prefs_users_list()
 				'feature_forums',
 			),
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'users_prefs_mytiki_items' => array(
 			'name' => tra('My items'),
@@ -230,6 +238,7 @@ function prefs_users_list()
 				'feature_trackers',
 			),
 			'default' => 'y',
+			'tags' => array('basic'),
 		),
 		'users_prefs_mailCharset' => array(
 			'name' => tra('Character set for mail'),

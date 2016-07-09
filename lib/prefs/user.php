@@ -18,6 +18,7 @@ function prefs_user_list($partial = false)
 			'help' => 'User+Preferences',
 			'type' => 'flag',
 			'default' => 'n',
+			'tags' => array('basic'),
 		),
 		'user_unique_email' => array(
 			'name' => tra('User e-mails must be unique'),
@@ -258,6 +259,7 @@ function prefs_user_list($partial = false)
 			'type' => 'flag',
 			'dependencies' => array('feature_jquery_autocomplete', 'user_show_realnames', 'feature_trackers'),
 			'default' => 'n',
+
 		),
 		'user_selector_realnames_messu' => array(
 			'name' => tra('Show user\'s real name instead of log-in name in the autocomplete selector in the messaging feature'),
