@@ -27,39 +27,34 @@
 {if $prefs.metatag_author neq ''}
 	<meta name="author" content="{$prefs.metatag_author|escape}">
 {/if}
-
+	{* --- Blog description --- *}
 {if isset($section) and $section eq "blogs"}
-	{if empty($blog_data.title)}
-	<meta name="description" content="Blog listing" property="og:description">
-	<meta name="twitter:description" content="Blog listing">
-	{elseif empty($postId)}
-	<meta name="description" content="{$blog_data.title|escape}" property="og:description">
-	<meta name="twitter:description" content="{$blog_data.title|escape}">
+	{if not empty($post_info.parsed_excerpt)}
+		{$description = $post_info.parsed_excerpt|strip_tags|truncate:200|escape}
+	{elseif not empty($post_info.parsed_data|strip_tags)}
+		{$description = $post_info.parsed_data|strip_tags|truncate:200|escape}
 	{else}
-	<meta name="description" content="{$post_info.title|escape} - {$blog_data.title|escape}" property="og:description">
-	<meta name="twitter:description" content="{$post_info.title|escape} - {$blog_data.title|escape}">
+		{$description = $post_info.title|cat:' - '|cat:$blog_data.title|escape}
 	{/if}
-{elseif isset($section) and $section eq "cms"}
 	{* --- Article description --- *}
-	{if $heading neq ''}
-		<meta name="description" content="{$heading|truncate:150|escape}" property="og:description">
-		<meta name="twitter:description" content="{$heading|truncate:150|escape}">
-	{elseif $body neq ''}
-		<meta name="description" content="{$body|truncate:150|escape}" property="og:description">
-		<meta name="twitter:description" content="{$body|truncate:150|escape}">
-	{elseif empty($prefs.metatag_description)}
-		<meta name="description" content="Articles listing at {$prefs.browsertitle|tr_if|escape}" property="og:description">
-		<meta name="twitter:description" content="Articles listing at {$prefs.browsertitle|tr_if|escape}">
-	{else}
-		<meta name="description" content="{$prefs.metatag_description|escape}" property="og:description">
-		<meta name="twitter:description" content="{$prefs.metatag_description|escape}">
+{elseif isset($section) and $section eq "cms"}
+	{if not empty($heading)}
+		{$description = $heading|truncate:200|escape}
+	{elseif not empty ($body)}
+		{$description = $body|truncate:200|escape}
 	{/if}
 {elseif $prefs.metatag_pagedesc eq 'y' and not empty($description)}
-	<meta name="description" content="{$description|escape}" property="og:description">
-	<meta name="twitter:description" content="{$description|escape}">
+	{$description = $description|escape}
 {elseif not empty($prefs.metatag_description)}
-	<meta name="description" content="{$prefs.metatag_description|escape}" property="og:description">
-	<meta name="twitter:description" content="{$prefs.metatag_description|escape}">
+	{$description = $prefs.metatag_description|escape}
+{/if}
+
+{if not empty($description|trim)}
+	<meta name="description" content="{$description}" property="og:description">
+	<meta name="twitter:description" content="{$description}">
+	{else}
+	<meta name="description" content="{$prefs.browsertitle|tr_if|escape} {$prefs.site_nav_seper} {$title}" property="og:description">
+	<meta name="twitter:description" content="{$prefs.browsertitle|tr_if|escape} {$prefs.site_nav_seper} {$title} ">
 {/if}
 
 {if $prefs.metatag_geoposition neq ''}
