@@ -276,6 +276,8 @@ if ($tsOn && !$tsAjax) {
 			'total' => $channels['cant'],
 		)
 	);
+	//rows returned need to be empty on first pass for tablesorter pagination to work right
+	$channels['data'] = [];
 }
 
 $smarty->assign_by_ref('channels', $channels["data"]);

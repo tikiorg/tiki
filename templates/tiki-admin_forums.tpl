@@ -43,12 +43,10 @@
 					{$numbercol = 0}
 					<thead>
 						<tr>
-							{if $channels}
-								{$numbercol = $numbercol+1}
-								<th id="checkbox" style="text-align:center">
-									{select_all checkbox_names='checked[]'}
-								</th>
-							{/if}
+							{$numbercol = $numbercol+1}
+							<th id="checkbox" style="text-align:center">
+								{select_all checkbox_names='checked[]'}
+							</th>
 							<th id="name">
 								{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}
 								{$numbercol = $numbercol+1}

@@ -360,18 +360,23 @@ if (!empty($multiprint_pages)) {
 	if (!isset($listpages_orphans)) {
 		$listpages_orphans = false;
 	}
-	$listpages = $tikilib->list_pages(
-		$offset,
-		$maxRecords,
-		$sort_mode,
-		$find,
-		$initial,
-		$exact_match,
-		false,
-		true,
-		$listpages_orphans,
-		$filter
-	);
+	if (!$tsOn || ($tsOn && $tsAjax)) {
+		$listpages = $tikilib->list_pages(
+			$offset,
+			$maxRecords,
+			$sort_mode,
+			$find,
+			$initial,
+			$exact_match,
+			false,
+			true,
+			$listpages_orphans,
+			$filter
+		);
+	} else {
+		//get count only on first pass with tablesorter on so pagination works right
+		$listpages = $tikilib->list_pages(null, null, null, null, null, null, null, null, null, null, true);
+	}
 
 	possibly_look_for_page_aliases($find);
 	// Only show the 'Actions' column if the user can do at least one action on one of the listed pages

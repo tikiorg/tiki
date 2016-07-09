@@ -575,6 +575,7 @@ if (!$tsOn || ($tsOn && $tsAjax)) {
 }
 if ($tsOn && !$tsAjax) {
 	$users['cant'] = $userlib->count_users('');
+	//rows returned need to be empty on first pass for tablesorter pagination to work right
 	$users['data'] = $users['cant'] > 0 ? true : false;
 	//delete anonymous out of group list used for dropdown
 	$ts_groups = array_flip($all_groups);
