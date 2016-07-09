@@ -2713,6 +2713,7 @@ CREATE TABLE `users_users` (
   `userId` int(8) NOT NULL auto_increment,
   `email` varchar(200) default NULL,
   `login` varchar(200) NOT NULL default '',
+  `password` varchar(30) default '',
   `provpass` varchar(30) default NULL,
   `default_group` varchar(255),
   `lastLogin` int(14) default NULL,
