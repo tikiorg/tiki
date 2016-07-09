@@ -9,7 +9,7 @@
 	{$libeg = ''}
 	{$liend = ''}
 {/if}
-{if !$tsAjax}
+{if !$ts.ajax}
 	{title help="Users Management" admpage="login" url="tiki-adminusers.php"}{tr}Admin Users{/tr}{/title}
 
 	<div class="t_navbar margin-bottom-md">
@@ -38,9 +38,9 @@
 
 	{* ---------------------- tab with list -------------------- *}
 	{tab name="{tr}Users{/tr}"}
-		{if !$tsAjax}
+		{if !$ts.ajax}
 			<h2>{tr}Users{/tr}</h2>
-			{if !$tsOn}
+			{if !$ts.enabled}
 				<form method="get" class="form-horizontal small" action="tiki-adminusers.php">
 					<div class="form-group">
 						<label class="control-label col-sm-4" for="find">{tr}Find{/tr}</label>
@@ -112,18 +112,18 @@
 					</div>
 				</form>
 			{/if}
-			{if ($cant > $numrows or !empty($initial)) && !$tsOn}
+			{if ($cant > $numrows or !empty($initial)) && !$ts.enabled}
 				{initials_filter_links}
 			{/if}
 			<form class="form-horizontal" name="checkform" id="checkform" method="post">
-				<div id="{$ts_tableid}-div" {if $tsOn}style="visibility:hidden;"{/if}>
+				<div id="{$ts.tableid}-div" {if $ts.enabled}style="visibility:hidden;"{/if}>
 					<div class="{if $js === 'y'}table-responsive{/if} user-table ts-wrapperdiv">
 		{/if}
 						{* Use css menus as fallback for item dropdown action menu if javascript is not being used *}
-						<table id="{$ts_tableid}" class="table normal table-striped table-hover" data-count="{$cant|escape}">
+						<table id="{$ts.tableid}" class="table normal table-striped table-hover" data-count="{$cant|escape}">
 							{* Note: th element ids here need to match those at /lib/core/Table/Settings/TikiAdminusers.php
 							for tablesorter to work properly *}
-							{if !$tsAjax}
+							{if !$ts.ajax}
 								<thead>
 									<tr>
 										<th id="checkbox">
@@ -295,7 +295,7 @@
 										</tr>
 									{/if}
 								{sectionelse}
-									{if !$tsOn || ($tsOn && $tsAjax)}
+									{if ! $ts.enabled || ($ts.enabled && $ts.ajax)}
 										{norecords _colspan=8 _text="No user records found"}
 									{else}
 										{norecords _colspan=8 _text="Retrieving user records..."}
@@ -303,7 +303,7 @@
 								{/section}
 							</tbody>
 						</table>
-					{if !$tsAjax}
+					{if !$ts.ajax}
 					</div>
 					{if $users}
 						<div class="input-group col-sm-6">
@@ -348,12 +348,12 @@
 				<input type="hidden" name="numrows" value="{$numrows|escape}">
 				<input type="hidden" name="sort_mode" value="{$sort_mode|escape}">
 			</form>
-		{if !$tsOn}
+		{if !$ts.enabled}
 			{pagination_links cant=$cant step=$numrows offset=$offset}{/pagination_links}
 		{/if}
 	{/if}
 		{/tab}
-	{if !$tsAjax}
+	{if !$ts.ajax}
 
 		{* ---------------------- tab with form -------------------- *}
 		<a id="tab2" ></a>

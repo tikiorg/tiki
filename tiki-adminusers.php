@@ -371,14 +371,14 @@ if (!isset($_REQUEST['sort_mode'])) {
 }
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
-if (!isset($_REQUEST['numrows'])) {
+if (empty($_REQUEST['numrows'])) {
 	$numrows = $maxRecords;
 } else {
 	$numrows = $_REQUEST['numrows'];
 }
 $smarty->assign_by_ref('numrows', $numrows);
 
-if (!isset($_REQUEST['offset'])) {
+if (empty($_REQUEST['offset'])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST['offset'];
@@ -548,17 +548,9 @@ if ($tiki_p_admin == 'y') {
 }
 
 //add tablesorter sorting and filtering
-$tsOn = Table_Check::isEnabled(true);
+$ts = Table_Check::setVars('adminusers', true);
 
-$smarty->assign('tsOn', $tsOn);
-$tsAjax = Table_Check::isAjaxCall();
-$smarty->assign('tsAjax', $tsAjax);
-static $iid = 0;
-++$iid;
-$ts_tableid = 'adminusers' . $iid;
-$smarty->assign('ts_tableid', $ts_tableid);
-
-if (!$tsOn || ($tsOn && $tsAjax)) {
+if (!$ts['enabled'] || ($ts['enabled'] && $ts['ajax'])) {
 	$users = $userlib->get_users(
 		$offset,
 		$numrows,
@@ -573,7 +565,7 @@ if (!$tsOn || ($tsOn && $tsAjax)) {
 		!empty($_REQUEST['filterNeverLoggedIn'])
 	);
 }
-if ($tsOn && !$tsAjax) {
+if ($ts['enabled'] && !$ts['ajax']) {
 	$users['cant'] = $userlib->count_users('');
 	//rows returned need to be empty on first pass for tablesorter pagination to work right
 	$users['data'] = $users['cant'] > 0 ? true : false;
@@ -585,7 +577,7 @@ if ($tsOn && !$tsAjax) {
 	Table_Factory::build(
 		'TikiAdminusers',
 		array(
-			'id' => $ts_tableid,
+			'id' => $ts['tableid'],
 			'total' => $users['cant'],
 			'columns' => array(
 				 '#groups' => array(
@@ -619,7 +611,7 @@ $smarty->assign('uses_tabs', 'y');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('mid', 'tiki-adminusers.tpl');
-if ($tsAjax) {
+if ($ts['ajax']) {
 	$smarty->display('tiki-adminusers.tpl');
 } else {
 	$smarty->display('tiki.tpl');
