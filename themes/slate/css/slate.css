@@ -8031,6 +8031,12 @@ pre.codelisting {
     top: 48px;
   }
 }
+.adminoptionboxchild {
+  border-bottom: 1px solid #1c1e22;
+}
+.adminoptionboxchild legend {
+  font-size: 19px;
+}
 .margin-bottom-xs {
   margin-bottom: 5px;
 }

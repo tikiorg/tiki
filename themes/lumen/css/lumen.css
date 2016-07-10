@@ -8014,6 +8014,12 @@ pre.codelisting {
     top: 48px;
   }
 }
+.adminoptionboxchild {
+  border-bottom: 1px solid #eeeeee;
+}
+.adminoptionboxchild legend {
+  font-size: 19px;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */

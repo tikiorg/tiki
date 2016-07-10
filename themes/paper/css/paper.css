@@ -8335,6 +8335,12 @@ pre.codelisting {
     top: 48px;
   }
 }
+.adminoptionboxchild {
+  border-bottom: 1px solid #eeeeee;
+}
+.adminoptionboxchild legend {
+  font-size: 18px;
+}
 .tiki .chosen-container-single .chosen-single,
 .tiki .chosen-container-active.chosen-with-drop .chosen-single,
 .tiki .chosen-container .chosen-drop,

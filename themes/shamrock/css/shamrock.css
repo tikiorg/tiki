@@ -7598,6 +7598,12 @@ pre.codelisting {
     top: 48px;
   }
 }
+.adminoptionboxchild {
+  border-bottom: 1px solid #76a547;
+}
+.adminoptionboxchild legend {
+  font-size: 21px;
+}
 .topbar,
 .topbar .navbar-default .navbar-nav > li,
 .topbar .nav > li {

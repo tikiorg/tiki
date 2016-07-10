@@ -7517,6 +7517,12 @@ pre.codelisting {
     top: 48px;
   }
 }
+.adminoptionboxchild {
+  border-bottom: 1px solid #f49ac0;
+}
+.adminoptionboxchild legend {
+  font-size: 22px;
+}
 .margin-bottom-xs {
   margin-bottom: 6px;
 }

@@ -7919,6 +7919,12 @@ pre.codelisting {
     top: 48px;
   }
 }
+.adminoptionboxchild {
+  border-bottom: 1px solid #dddddd;
+}
+.adminoptionboxchild legend {
+  font-size: 21px;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */
