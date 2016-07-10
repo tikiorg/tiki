@@ -787,6 +787,12 @@ pre.codelisting {
   border: 1px solid #dddddd;
   border-radius: 1px;
 }
+.adminoptionboxchild {
+  border-bottom: 1px solid #eeeeee;
+}
+.adminoptionboxchild legend {
+  font-size: 19px;
+}
 .button.highlight {
   background: inherit;
 }
@@ -2599,6 +2605,13 @@ img.pref_dependency {
   width: auto;
   display: inline;
   margin: 0 1em;
+}
+.adminoptionboxchild {
+  padding-left: 4em;
+  margin-bottom: 2em;
+}
+.adminoptionboxchild legend {
+  margin-bottom: 0;
 }
 form.simple label.error {
   padding: 4px 0 0 20px;

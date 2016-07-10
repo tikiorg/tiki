@@ -7616,6 +7616,12 @@ pre.codelisting {
   border: 1px solid #ffffff;
   border-radius: 1px;
 }
+.adminoptionboxchild {
+  border-bottom: 1px solid #282828;
+}
+.adminoptionboxchild legend {
+  font-size: 19px;
+}
 .margin-bottom-xs {
   margin-bottom: 5px;
 }

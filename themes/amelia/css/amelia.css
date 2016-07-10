@@ -7685,6 +7685,12 @@ pre.codelisting {
   border: 1px solid #ffffff;
   border-radius: 1px;
 }
+.adminoptionboxchild {
+  border-bottom: 1px solid #0d747c;
+}
+.adminoptionboxchild legend {
+  font-size: 19px;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */

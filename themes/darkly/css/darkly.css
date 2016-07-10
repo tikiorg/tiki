@@ -7873,6 +7873,12 @@ pre.codelisting {
   border: 1px solid #ffffff;
   border-radius: 1px;
 }
+.adminoptionboxchild {
+  border-bottom: 1px solid #464545;
+}
+.adminoptionboxchild legend {
+  font-size: 21px;
+}
 .cssmenu_horiz a,
 .cssmenu_vert a {
   color: #0ce3ac;

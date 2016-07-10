@@ -7413,6 +7413,12 @@ pre.codelisting {
   border: 1px solid #ffffff;
   border-radius: 1px;
 }
+.adminoptionboxchild {
+  border-bottom: 1px solid #eeeeee;
+}
+.adminoptionboxchild legend {
+  font-size: 19px;
+}
 body {
   background: #214d68 url('../images/body-bg_fw.png') repeat-x;
 }

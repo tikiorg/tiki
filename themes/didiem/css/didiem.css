@@ -7652,6 +7652,12 @@ pre.codelisting {
   border: 1px solid #ffffff;
   border-radius: 1px;
 }
+.adminoptionboxchild {
+  border-bottom: 1px solid #eeeeee;
+}
+.adminoptionboxchild legend {
+  font-size: 19px;
+}
 .navbar-fixed-top,
 .navbar-fixed-bottom {
   left: 0;
