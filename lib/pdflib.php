@@ -86,9 +86,7 @@ class PdfGenerator
 
 		$url = $base_url . $file . '?' . http_build_query($params, '', '&');
         $session_params = session_get_cookie_params();
-		//echo str_replace("tiki-download_file.php?","tiki-download_file.php?genPDF=1&sid=".session_id()."&",$pdata);
-		//echo $session_params['path'];
-	return $this->{$this->mode}( $url,str_replace("display","display&genPDF=1&sid=".session_id(),$pdata));	}
+	return $this->{$this->mode}( $url,$pdata);	}
 
     /**
      * @param $url
@@ -273,6 +271,7 @@ class PdfGenerator
 		}
 	   }
 
+
 		include($this->location . 'mpdf.php');
 		$mpdf = new mPDF('');
 		$mpdf->useSubstitutions = true;					// optional - just as an example
@@ -284,8 +283,8 @@ class PdfGenerator
 
 		$mpdf->setBasePath($url);
 		$mpdf->WriteHTML($html);
-
-		return $mpdf->Output('', 'S');					// Return as a string
+		
+         return $mpdf->Output('', 'S');					// Return as a string
 	}
 }
 

@@ -78,19 +78,7 @@ if (!$skip) {
 	if ( ! is_array($info) ) {
 		$access->display_error(NULL, tra('File has been deleted'), 404);
 	}
-    if(isset($_REQUEST['genPDF']))
-	{
-		
-		if(!file_exists( session_save_path().'/sess_'.$_REQUEST['sid']) || !isset($_REQUEST['sid']))
-		  {
-			$access->display_error('', tra('Permission denied'), 401);  
-			  }
-	
-		
-		}
-	else
-	{
-	if ( $prefs['auth_token_access'] != 'y' || !$is_token_access ) {
+   if ( $prefs['auth_token_access'] != 'y' || !$is_token_access ) {
 		// Check permissions except if the user comes with a valid Token
 
 		if ($tiki_p_admin_file_galleries != 'y' && $info['backlinkPerms'] == 'y' && $filegallib->hasOnlyPrivateBacklinks($info['fileId'])) {
@@ -116,7 +104,7 @@ if (!$skip) {
 			}
 		}
 	}
-  }
+  
   
 }
 
