@@ -1,4 +1,14 @@
-{if $force_fill_action eq 'new'}
+{if $force_fill_action eq 'avatar'}
+	{jq}
+		$.openModal({
+			remote: $.service(
+				'user', 
+				'upload_avatar',
+				{ user: "{{$user}}" }
+			)       
+		});
+	{/jq}
+{elseif $force_fill_action eq 'new'}
 	{jq}
 		$.openModal({
 			remote: $.service(
@@ -11,7 +21,7 @@
 					status:"",
 					title:"Please fill in the following information"
 				}
-			),
+			)
 		});
 	{/jq}
 {else}
@@ -27,7 +37,7 @@
 					status:"",
 					title:"Please fill in the following information"
 				}
-			),
+			)
 		});
 	{/jq}
 {/if}

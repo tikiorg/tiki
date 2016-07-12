@@ -112,6 +112,13 @@
 					{preference name=user_trackersync_lang}
 					{preference name=user_tracker_auto_assign_item_field}
 				</div>
+				{preference name=user_force_avatar_upload}
+				{preference name=tracker_force_fill}
+				<div class="adminoptionboxchild" id="tracker_force_fill_childcontainer">
+					{preference name=tracker_force_tracker_id}
+					{preference name=tracker_force_mandatory_field}
+					{preference name=tracker_force_tracker_fields}
+				</div>	
 				{preference name=groupTracker}
 				<legend>{tr}Other login setting{/tr}</legend>
 				{preference name=email_due}

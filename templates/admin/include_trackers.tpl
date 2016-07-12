@@ -91,6 +91,7 @@
 				{preference name=tracker_force_tracker_id}
 				{preference name=tracker_force_mandatory_field}
 				{preference name=tracker_force_tracker_fields}
+				{preference name=user_force_avatar_upload}
 			</fieldset>
 		{/tab}
 

@@ -311,6 +311,13 @@ function prefs_user_list($partial = false)
 			'size' => 5,
 			'default' => ''
 		),
+		'user_force_avatar_upload' => array(
+			'name' => tr('Force users to upload an avatar.'),
+			'description' => tr("Forces a user to upload an avatar if they haven't already by prompting them with a modal"),
+			'type' => 'flag',
+			'tags' => array('advanced'),
+			'default' => 'n'
+		),
 	);
 }
 
