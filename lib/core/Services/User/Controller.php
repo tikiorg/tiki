@@ -906,9 +906,9 @@ class Services_User_Controller
 		$this->access->check_user($user);
 
 		if($_SERVER['REQUEST_METHOD'] === 'POST') {
-			if (empty($_FILES['userfile'])) {
+			if (empty($_FILES['userfile']['name'])) {
 				$errormsg = tra('You must select an avatar to upload.');
-				throw new Services_Exception($errormsg);
+				throw new Services_Exception($errormsg, 400);
 			}
 			$name = $_FILES['userfile']['name'];
 
