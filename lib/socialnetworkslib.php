@@ -83,6 +83,8 @@ class SocialNetworksLib extends LogsLib
 
 		try {
 			$consumer = new ZendOAuth\Consumer($this->options);
+			$httpClient = TikiLib::lib('tiki')->get_http_client();
+			$consumer->setHttpClient($httpClient);
 			$token = $consumer->getRequestToken();
 			$_SESSION['TWITTER_REQUEST_TOKEN'] = serialize($token);
 			$consumer->redirect();
@@ -115,6 +117,8 @@ class SocialNetworksLib extends LogsLib
 		$this->options['consumerSecret'] = $prefs['socialnetworks_twitter_consumer_secret'];
 
 		$consumer = new ZendOAuth\Consumer($this->options);
+		$httpClient = TikiLib::lib('tiki')->get_http_client();
+		$consumer->setHttpClient($httpClient);
 		$token = $consumer->getAccessToken($_GET, unserialize($_SESSION['TWITTER_REQUEST_TOKEN']));
 		unset($_SESSION['TWITTER_REQUEST_TOKEN']);
 		$this->set_user_preference($user, 'twitter_token', serialize($token));
@@ -544,6 +548,7 @@ class SocialNetworksLib extends LogsLib
 		$this->options['callbackUrl'] = $this->getURL();
 		$this->options['consumerKey'] = $prefs['socialnetworks_twitter_consumer_key'];
 		$this->options['consumerSecret'] = $prefs['socialnetworks_twitter_consumer_secret'];
+		$httpClient = TikiLib::lib('tiki')->get_http_client();
 		$twitter = new ZendService\Twitter\Twitter(
 			array(
 				'oauthOptions' => array(
@@ -551,7 +556,9 @@ class SocialNetworksLib extends LogsLib
 					'consumerSecret' => $prefs['socialnetworks_twitter_consumer_secret'],
 				),
 				'accessToken' => $token
-			)
+			),
+			null,
+			$httpClient
 		);
 
 		try {
@@ -590,6 +597,7 @@ class SocialNetworksLib extends LogsLib
 		$this->options['callbackUrl'] = $this->getURL();
 		$this->options['consumerKey'] = $prefs['socialnetworks_twitter_consumer_key'];
 		$this->options['consumerSecret'] = $prefs['socialnetworks_twitter_consumer_secret'];
+		$httpClient = TikiLib::lib('tiki')->get_http_client();
 		$twitter = new ZendService\Twitter\Twitter(
 			array(
 				'oauthOptions' => array(
@@ -597,7 +605,9 @@ class SocialNetworksLib extends LogsLib
 					'consumerSecret' => $prefs['socialnetworks_twitter_consumer_secret'],
 				),
 				'accessToken' => $token
-			)
+			),
+			null,
+			$httpClient
 		);
 		try {
 			$response = $twitter->statuses->destroy($id);
@@ -827,6 +837,7 @@ class SocialNetworksLib extends LogsLib
 
 		$token = unserialize($token);
 
+		$httpClient = TikiLib::lib('tiki')->get_http_client();
 		$twitter = new ZendService\Twitter\Twitter(
 			array(
 				'oauthOptions' => array(
@@ -834,7 +845,9 @@ class SocialNetworksLib extends LogsLib
 					'consumerSecret' => $prefs['socialnetworks_twitter_consumer_secret'],
 				),
 				'accessToken' => $token
-			)
+			),
+			null,
+			$httpClient
 		);
 
 		if ($timelineType=='friends') {
