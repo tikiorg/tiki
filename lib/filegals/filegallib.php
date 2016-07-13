@@ -3828,7 +3828,7 @@ class FileGalLib extends TikiLib
 		}
 
 		$tx = $this->begin();
-		$ret = $this->insert_file($gal_info['galleryId'], $name, '', $name, $data, $size, $type, $asuser, $fhash,'','','','','','','',$image_x,$image_y);
+		$ret = $this->insert_file($gal_info['galleryId'], $name, '', $name, $data, $size, $type, $asuser, $fhash,'','','',NULL,NULL,'','',$image_x,$image_y);
 		$tx->commit();
 
 		return $ret;
