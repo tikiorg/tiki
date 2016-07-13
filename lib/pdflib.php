@@ -86,6 +86,9 @@ class PdfGenerator
 
 		$url = $base_url . $file . '?' . http_build_query($params, '', '&');
         $session_params = session_get_cookie_params();
+		//need to hide edit icons appearing in pdf
+	//	$pdata=preg_replace('<img src="img/icons/page_edit.png" alt="Edit" width="16" height="16" title="" class="icon tips" data-original-title="" data-pin-nopin="true" aria-describedby="popover768086" style="display: inline-block;">', '', $pdata); 
+		//$pdata=str_replace('class="editplugin tips"','class="editplugin tips" style=display:none',str_replace('src="img/icons/page_edit.png"','src=""',$pdata));
 	return $this->{$this->mode}( $url,$pdata);	}
 
     /**
@@ -196,22 +199,6 @@ class PdfGenerator
 			TikiLib::lib('reporterror')->report(tra('mPDF: CURL PHP extension not available'));
 			return '';
 		}
-        // $ckfile=session_save_path()."/".session_id(); 
-		
-		// To prevent anyone else using your script to create their PDF files - TODO?
-		//if (!preg_match("/^$base_url/", $url)) { die("Access denied"); }
-
-/*		FIXME later, cookie auth not working yet
-		$cookie = [];
-		foreach ($_COOKIE as $key => $value) {
-		    $cookie[] = "{$key}={$value}";
-		};
-		$cookie = implode(';', $cookie);
-        $ckfile = tempnam("/tmp", 'curl_cookies_');
-		file_put_contents($ckfile, $cookie);
-
-		$curl_log = fopen('temp/curl_debug.txt', 'w+'); // open file for READ and write
-*/
       if($parsedData!='')
 	      $html=$parsedData;
 	   else
@@ -231,15 +218,6 @@ class PdfGenerator
 
 			CURLOPT_SSL_VERIFYPEER => false,	// Disabled SSL Cert checks
 			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            //CURLOPT_COOKIEFILE => $ckfile,
-			//CURLOPT_COOKIEJAR => $ckfile,
-
-/*			CURLOPT_COOKIE => $cookie,
-			//CURLOPT_COOKIESESSION => true,	// no difference
-			
-			CURLOPT_VERBOSE => true,
-			CURLOPT_STDERR => $curl_log,
-*/
 		);
 
 		// For $_POST i.e. forms with fields
@@ -270,7 +248,9 @@ class PdfGenerator
 			}
 		}
 	   }
-
+       //getting n replacing images
+	   $tempImgArr=array();
+	   $this->_getImages($html,$tempImgArr);
 
 		include($this->location . 'mpdf.php');
 		$mpdf = new mPDF('');
@@ -282,9 +262,66 @@ class PdfGenerator
 		$mpdf->autoLangToFont = true;
 
 		$mpdf->setBasePath($url);
-		$mpdf->WriteHTML($html);
 		
-         return $mpdf->Output('', 'S');					// Return as a string
+		$stylesheet = file_get_contents('themes/base_files/css/tiki_base.css'); // external css
+        $mpdf->WriteHTML($stylesheet,1);
+		
+		
+		//getting main theme css
+		global $prefs;
+	    $themeLib = TikiLib::lib('theme');
+        $themecss=$themeLib->get_theme_path($prefs['theme'], '', $prefs['theme'] . '.css');
+		$stylesheet = file_get_contents($themecss); // external css
+        $mpdf->WriteHTML($stylesheet.'@page {background:#fff;color:#000;} p,.print{color:#000;} .editplugin{display:none;visibility:hidden}',1);
+		 
+		$stylesheet = file_get_contents('vendor/fortawesome/font-awesome/css/font-awesome.min.css'); // external css
+        $mpdf->WriteHTML($stylesheet,1);
+		$mpdf->WriteHTML('<html><body class="print">'.$html."</body></html>");
+		
+	    $this->clearTempImg($tempImgArr);
+       return $mpdf->Output('', 'S');					// Return as a string
 	}
+	
+	function _getImages(&$html,&$tempImgArr)
+	{
+			$doc = new DOMDocument();
+			@$doc->loadHTML($html);
+
+			$tags = $doc->getElementsByTagName('img');
+
+			foreach ($tags as $tag) {
+       			$imgSrc=$tag->getAttribute('src');
+				//replacing image with new temp image, all these images will be unlinked after pdf creation
+				$newFile=$this->file_get_contents_by_fget($imgSrc);
+				//replacing old protected image path with temp image
+				$html=str_replace($imgSrc,$newFile,$html);
+				$tempImgArr[]=$newFile;
+				}	
+		}
+	
+	function file_get_contents_by_fget($url){
+		global $base_url;
+		if(! file_exists ('pdfimg'))
+		{
+			mkdir('pdfimg');
+			chmod('pdfimg',0777);
+			
+			}
+	$opts = array('http' => array('header'=> 'Cookie: ' . $_SERVER['HTTP_COOKIE']."\r\n"));
+	$context = stream_context_create($opts);
+	session_write_close();
+	$data=file_get_contents($base_url.$url, false, $context);
+	$newFile='pdfimg/pdfimg'.rand(9999,999999).'.jpg';
+	file_put_contents($newFile, $data);
+	chmod($newFile,0777);
+    return $newFile;
+
+	}
+	
+  function clearTempImg($tempImgArr){
+	   foreach ($tempImgArr as $tempImg) {
+        unlink($tempImg);
+}
+	  }	
 }
 
