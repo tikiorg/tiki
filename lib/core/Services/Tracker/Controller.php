@@ -65,6 +65,14 @@ class Services_Tracker_Controller
 
 		$name = $input->name->text();
 		$permName = $input->permName->word();
+		// Ensure that PermName is no longer than 50 characters, which seems to be the maximum allowed
+		// by MySQL Full Text Search as Unified Search Index. We could allow longer permanent names when other
+		// search index engines are the ones being used, but this will probably only delay the problem until the admin
+		// wants to change the search engine for some reason (some constrains in Lucene or Elastic Search,
+		// as experience demonstrated in some production sites in real use cases over long periods of time).
+		// And to increase chances to avoid conflict when long names only differ in the end of the long string,
+		// where some meaningful info resides, we'll get the first 40 chars, 1 underscore and the last 9 chars.
+		$permName = (strlen($permName) > 50) ? substr($permName,0,40) . '_' . substr($permName,-9): $permName;
 		$type = $input->type->text();
 		$description = $input->description->text();
 		$wikiparse = $input->description_parse->int();
