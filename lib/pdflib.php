@@ -253,7 +253,7 @@ class PdfGenerator
 	   $this->_getImages($html,$tempImgArr);
 
 		include($this->location . 'mpdf.php');
-		$mpdf = new mPDF('');
+		$mpdf = new mPDF('utf-8');
 		$mpdf->useSubstitutions = true;					// optional - just as an example
 		$mpdf->SetHeader($url . '||Page {PAGENO}');		// optional - just as an example
 		$mpdf->CSSselectMedia = 'print';				// assuming you used this in the document header
