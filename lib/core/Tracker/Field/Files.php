@@ -247,6 +247,8 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 	{
 		global $prefs;
 
+		$context['canBrowse'] = false;
+
 		if ($prefs['fgal_tracker_existing_search']) {
 			if ($this->getOption('browseGalleryId')) {
 				$defaultGalleryId = $this->getOption('browseGalleryId');
@@ -265,6 +267,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 	getFileCallback: function(file,elfinder){ window.handleFinderFile(file,elfinder); },
 	eventOrigin:this
 });';
+			$context['canBrowse'] = Perms::get(['type' => 'file gallery', 'object' => $defaultGalleryId])->view_file_gallery;
 		}
 
 		return $this->renderTemplate('trackerinput/files.tpl', $context, array(
