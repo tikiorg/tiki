@@ -24,7 +24,7 @@
 			)
 		});
 	{/jq}
-{else}
+{elseif $force_fill_action eq 'update'}
 	{jq}
 		$.openModal({
 			remote: $.service(
