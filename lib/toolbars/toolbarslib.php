@@ -1384,7 +1384,8 @@ class ToolbarDialog extends Toolbar
 				"window.dialogData[$this->index] = " . json_encode($this->list) . ";",
 				1 + $this->index
 			);
-			$this->setupCKEditorTool($this->getSyntax($areaId), $this->wysiwyg, $this->label, $this->icon);
+			$syntax = str_replace('\'' . $areaId . '\'', 'editor.name', $this->getSyntax($areaId));
+			$this->setupCKEditorTool($syntax, $this->wysiwyg, $this->label, $this->icon);
 		}
 		return $this->wysiwyg;
 	} // }}}
@@ -1839,7 +1840,7 @@ class ToolbarWikiplugin extends Toolbar
 	function getWysiwygToken( $areaId, $add_js = true ) // {{{
 	{
 		if (!empty($this->wysiwyg) && $add_js) {
-			$js = "popup_plugin_form('{$areaId}','{$this->pluginName}');";
+			$js = "popup_plugin_form(editor.name,'{$this->pluginName}');";
 			//CKEditor needs image icons so get legacy plugin icons for the toolbar
 			if (!$this->icon && !empty($this->iconname)) {
 				$iconsetlib = TikiLib::lib('iconset');
