@@ -243,6 +243,7 @@ class Services_File_FinderController
 	 */
 	function elFinderAccess($attr, $path, $data, $volume)
 	{
+		global $prefs;
 
 		$ar = explode('_', $path);
 		$visible = true;		// for now
@@ -268,7 +269,7 @@ class Services_File_FinderController
 		switch($attr) {
 			case 'read':
 				if ($isgal) {
-					return $visible && $perms['tiki_p_view_file_gallery'] === 'y';
+					return $visible && ($perms['tiki_p_view_file_gallery'] === 'y' || $id == $prefs['fgal_root_id']);
 				} else {
 					return $visible && $perms['tiki_p_download_files'] === 'y';
 				}
