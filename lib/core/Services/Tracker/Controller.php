@@ -25,11 +25,11 @@ class Services_Tracker_Controller
 		$item = Tracker_Item::fromId($input->id->int());
 			
 		if (! $item) {
-			throw new Services_Exception_NotFound('Item not found');
+			throw new Services_Exception_NotFound(tr('Item not found'));
 		}
 
 		if (! $item->canView()) {
-			throw new Services_Exception_Denied('Permission denied');
+			throw new Services_Exception_Denied(tr('Permission denied'));
 		}
 
 		$definition = $item->getDefinition();
@@ -889,7 +889,7 @@ class Services_Tracker_Controller
 					'action' => 'modal_alert',
 					'ajaxtype' => 'feedback',
 					'ajaxheading' => tra('Success'),
-					'ajaxmsg' => 'Your item has been updated.',
+					'ajaxmsg' => tra('Your item has been updated.'),
 					'ajaxdismissible' => 'n',
 					'ajaxtimer' => 5,
 				)
