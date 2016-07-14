@@ -25,6 +25,10 @@ class Search_ContentSource_CategorySource implements Search_ContentSource_Interf
 		
 		$item = $lib->get_category($objectId);
 
+		if (! $item) {
+			return false;
+		}
+
 		$data = array(
 			'title' => $typeFactory->sortable($item['name']),
 			'description' => $typeFactory->plaintext($item['description']),

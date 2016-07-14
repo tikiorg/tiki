@@ -37,6 +37,10 @@ class Search_ContentSource_CommentSource implements Search_ContentSource_Interfa
 		$commentslib = TikiLib::lib('comments');
 		$comment = $commentslib->get_comment($objectId);
 
+		if (! $comment) {
+			return false;
+		}
+
 		$url = $commentslib->getHref($comment['objectType'], $comment['object'], $objectId);
 		$url = str_replace('&amp;', '&', $url);
 

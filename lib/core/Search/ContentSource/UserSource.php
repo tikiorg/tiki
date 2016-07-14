@@ -35,6 +35,10 @@ class Search_ContentSource_UserSource implements Search_ContentSource_Interface
 
 		$detail = $this->user->get_user_details($objectId, false);
 
+		if (empty($detail['info'])) {
+			return false;
+		}
+
 		$name = $objectId;
 		if (! empty($detail['preferences']['realName'])) {
 			$name = $detail['preferences']['realName'];

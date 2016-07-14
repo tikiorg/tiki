@@ -41,6 +41,10 @@ class Search_ContentSource_FileSource implements Search_ContentSource_Interface,
 
 		$file = $filegallib->get_file_info($objectId, true, false);
 
+		if (! $file) {
+			return false;
+		}
+
 		$data = array(
 			'title' => $typeFactory->sortable(empty($file['name'])?$file['filename']:$file['name']),
 			'language' => $typeFactory->identifier('unknown'),

@@ -40,6 +40,10 @@ class Search_ContentSource_ForumPostSource implements Search_ContentSource_Inter
 		$commentslib->extras_enabled(false);
 		$comment = $commentslib->get_comment($objectId);
 
+		if (! $comment) {
+			return false;
+		}
+
 		$root_thread_id = $commentslib->find_root($comment['parentId']);
 		if ($comment['parentId']) {
 			$root = $commentslib->get_comment($root_thread_id);
