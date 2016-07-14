@@ -279,13 +279,13 @@ class PdfGenerator
 		$mpdf->WriteHTML('<html><body class="print">'.$html."</body></html>");
 		
 	    $this->clearTempImg($tempImgArr);
-       return $mpdf->Output('', 'S');					// Return as a string
+        return $mpdf->Output('', 'S');					// Return as a string
 	}
 	
 	function _getImages(&$html,&$tempImgArr)
 	{
 			$doc = new DOMDocument();
-			@$doc->loadHTML($html);
+			@$doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
 
 			$tags = $doc->getElementsByTagName('img');
 
@@ -294,9 +294,10 @@ class PdfGenerator
 				//replacing image with new temp image, all these images will be unlinked after pdf creation
 				$newFile=$this->file_get_contents_by_fget($imgSrc);
 				//replacing old protected image path with temp image
-				$html=str_replace($imgSrc,$newFile,$html);
+				$tag->setAttribute('src',$newFile);
 				$tempImgArr[]=$newFile;
 				}	
+				$html=@$doc->saveHTML();
 		}
 	
 	function file_get_contents_by_fget($url){
