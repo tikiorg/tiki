@@ -250,7 +250,7 @@
 															{icon name="post" _menu_text='y' _menu_icon='y' alt="{tr}View/Edit{/tr}"}
 														</a>{$liend}
 													{/if}
-													{if $tiki_p_create_tracker_items eq 'y'}
+													{if $tiki_p_create_tracker_items eq 'y' and $prefs.tracker_clone_item eq 'y'}
 														{$libeg}<a href="{bootstrap_modal controller=tracker action=clone_item trackerId=$trackerId itemId=$items[user].itemId}"
 															onclick="$('[data-toggle=popover]').popover('hide');"
 														>
