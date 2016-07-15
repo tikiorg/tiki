@@ -272,12 +272,11 @@ class PdfGenerator
 	    $themeLib = TikiLib::lib('theme');
         $themecss=$themeLib->get_theme_path($prefs['theme'], '', $prefs['theme'] . '.css');
 		$stylesheet = file_get_contents($themecss); // external css
-        $mpdf->WriteHTML($stylesheet.'@page {background:#fff;color:#000;} p,.print{color:#000;} .editplugin{display:none;visibility:hidden}',1);
+        $mpdf->WriteHTML($stylesheet.'@page,body.print* {background:#fff;color:#000;} p,.print{color:#000;} .editplugin{display:none;visibility:hidden}',1);
 		 
 		$stylesheet = file_get_contents('vendor/fortawesome/font-awesome/css/font-awesome.min.css'); // external css
         $mpdf->WriteHTML($stylesheet,1);
 		$mpdf->WriteHTML('<html><body class="print">'.$html."</body></html>");
-		
 	    $this->clearTempImg($tempImgArr);
         return $mpdf->Output('', 'S');					// Return as a string
 	}
@@ -294,7 +293,8 @@ class PdfGenerator
 				//replacing image with new temp image, all these images will be unlinked after pdf creation
 				$newFile=$this->file_get_contents_by_fget($imgSrc);
 				//replacing old protected image path with temp image
-				$tag->setAttribute('src',$newFile);
+				if($newFile!='')
+				   $tag->setAttribute('src',$newFile);
 				$tempImgArr[]=$newFile;
 				}	
 				$html=@$doc->saveHTML();
@@ -302,19 +302,40 @@ class PdfGenerator
 	
 	function file_get_contents_by_fget($url){
 		global $base_url;
+		
+		//check if image is internal with full path
+		$internalImg=0;
+		  if(substr($url,0,strlen($base_url))==$base_url)  
+		    $internalImg=1;
+		 
+		//checking for external images
+		$checkURL = parse_url($url);
+		
+		
+        //not replacing in case of external image
+       if(($checkURL['scheme'] == 'https' || $checkURL['scheme'] == 'http') && !$internalImg){
+          return '';
+		  }
+	
+	    if(!$internalImg)
+		  $url=$base_url.$url;	  
+		
 		if(! file_exists ('pdfimg'))
 		{
 			mkdir('pdfimg');
 			chmod('pdfimg',0777);
 			
 			}
+			
 	$opts = array('http' => array('header'=> 'Cookie: ' . $_SERVER['HTTP_COOKIE']."\r\n"));
 	$context = stream_context_create($opts);
 	session_write_close();
-	$data=file_get_contents($base_url.$url, false, $context);
+	$data=file_get_contents($url, false, $context);
 	$newFile='pdfimg/pdfimg'.rand(9999,999999).'.jpg';
 	file_put_contents($newFile, $data);
 	chmod($newFile,0777);
+	
+	
     return $newFile;
 
 	}
