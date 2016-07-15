@@ -277,6 +277,7 @@ class PdfGenerator
 		$stylesheet = file_get_contents('vendor/fortawesome/font-awesome/css/font-awesome.min.css'); // external css
         $mpdf->WriteHTML($stylesheet,1);
 		$mpdf->WriteHTML('<html><body class="print">'.$html."</body></html>");
+	//	echo $html;
 	    $this->clearTempImg($tempImgArr);
         return $mpdf->Output('', 'S');					// Return as a string
 	}
@@ -320,10 +321,10 @@ class PdfGenerator
 	    if(!$internalImg)
 		  $url=$base_url.$url;	  
 		
-		if(! file_exists ('pdfimg'))
+		if(! file_exists ('temp/pdfimg'))
 		{
-			mkdir('pdfimg');
-			chmod('pdfimg',0777);
+			mkdir('temp/pdfimg');
+			chmod('temp/pdfimg',0777);
 			
 			}
 			
@@ -331,7 +332,7 @@ class PdfGenerator
 	$context = stream_context_create($opts);
 	session_write_close();
 	$data=file_get_contents($url, false, $context);
-	$newFile='pdfimg/pdfimg'.rand(9999,999999).'.jpg';
+	$newFile='temp/pdfimg/pdfimg'.rand(9999,999999).'.png';
 	file_put_contents($newFile, $data);
 	chmod($newFile,0777);
 	
