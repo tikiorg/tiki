@@ -17,16 +17,9 @@
 			<input type="hidden" name="find" value="{$find|escape}">
 			<input type="hidden" name="maxRecords" value="{$maxRecords|escape}">
 		</form>
-		{if isset($error) and $error}
-			<div class="alert alert-warning">
-				{$error}
-			</div>
-		{/if}
-
 		{if isset($mapview) and $mapview}
 			{wikiplugin _name="map" scope=".listpagesmap .geolocated" width="400" height="400"}{/wikiplugin}
 		{/if}
-
 		<div id="tiki-listpages-content">
 			{if $aliases}
 				<div class="aliases">
