@@ -211,9 +211,8 @@
 															{if $what eq 'included'}<span class="label label-info">{tr}Included{/tr}</span>{/if}
 															{if $grs eq $users[user].default_group}<small>({tr}default{/tr})</small>{/if}
 															{if $what ne 'included' and $grs != "Registered"}
-																<a href="{bootstrap_modal controller=user action=manage_groups checked=$username groupremove=$grs offset=$offset sort_mode=$sort_mode numrows=$numrows}">
-																	{icon name="remove"}
-																</a>
+																{* keep link code on one line to avoid stray underlining *}
+																<a href="{bootstrap_modal controller=user action=manage_groups checked=$username groupremove=$grs offset=$offset sort_mode=$sort_mode numrows=$numrows}">{icon name="remove"}</a>
 															{/if}
 															{if !$smarty.foreach.gr.last}<br>{/if}
 														{/if}
