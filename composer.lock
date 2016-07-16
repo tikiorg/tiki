@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d6e9300be4b08d6d54d22f5902a2def8",
-    "content-hash": "7dae9740ddab51e5ce8a8aa81f46fc7f",
+    "hash": "471359c825a4bcb0df2ebfb4e12e41c0",
+    "content-hash": "d754d5da8a063a30f5ed11b890c50b3c",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -952,10 +952,10 @@
         },
         {
             "name": "jquery/plugins/tablesorter",
-            "version": "2.26.5",
+            "version": "2.26.6",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/Mottie/tablesorter/archive/v2.26.5.zip",
+                "url": "https://github.com/Mottie/tablesorter/archive/v2.26.6.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -1061,12 +1061,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/chartjs/Chart.js.git",
-                "reference": "3cdd66ca581ee11233c2f40984a84eea540856e1"
+                "reference": "885eeb091a0908cf80767f2af515ac73f3abe52d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chartjs/Chart.js/zipball/3cdd66ca581ee11233c2f40984a84eea540856e1",
-                "reference": "3cdd66ca581ee11233c2f40984a84eea540856e1",
+                "url": "https://api.github.com/repos/chartjs/Chart.js/zipball/885eeb091a0908cf80767f2af515ac73f3abe52d",
+                "reference": "885eeb091a0908cf80767f2af515ac73f3abe52d",
                 "shasum": ""
             },
             "require": {
@@ -1094,7 +1094,7 @@
                 "JS",
                 "chart"
             ],
-            "time": "2016-07-05 02:57:40"
+            "time": "2016-07-12 15:33:48"
         },
         {
             "name": "openlayers/ol3",
