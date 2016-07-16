@@ -41,6 +41,9 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 
 		//ajax settings
 		if (parent::$ajax) {
+			$total = !empty(parent::$s['total']) ? parent::$s['total'] : 0;
+			$p[] = $pre . 'processAjaxOnInit: false';
+			$p[] = $pre . 'initialRows: {total: ' . $total . ', filtered: ' . $total . '}';
 			$p[] = $pre . 'ajaxObject: {dataType: \'html\'}';
 			$p[] = $pre . 'ajaxUrl : \'' . parent::$s['ajax']['url']['file']
 				. parent::$s['ajax']['url']['query'] . '\'';
@@ -57,7 +60,6 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 				}
 				$addcol = implode($this->nt, $addcol);
 			}
-			$total = !empty(parent::$s['total']) ? parent::$s['total'] : 0;
 			$ap = array(
 				//parse HTML string from entire page
 				'var parsedpage = $.parseHTML(data), table = $(parsedpage).find(\'' . parent::$tid . '\'), r = {};',
@@ -95,7 +97,7 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 				}
 				$numrows = !empty(parent::$s['ajax']['numrows']) ? parent::$s['ajax']['numrows'] : 'numrows';
 				$ca = array(
-					'var vars = {}, urlparams, oneparam, size, sort, sorts, sortindex, sortkey, filterindex, filterkey,
+					'var vars = {}, urlparams, oneparam, sort, sorts, sortindex, sortkey, filterindex, filterkey,
 					offset, filtered, colfilters, extfilters, params = [], dir, newurl, p = table.config.pager,
 					requiredparams;',
 					//parse out url parameters
@@ -132,7 +134,7 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 					'	if ($.inArray(value, extfilters) > -1) {',
 					'		params.push(decodeURIComponent(value));',
 					'	} else if (key in colfilters) {',
-					'		colfilters[key][value] ? params.push(colfilters[key][value]) : params.push(colfilters[key]
+					'		colfilters[key] == value ? params.push(colfilters[key][value]) : params.push(colfilters[key]
 								+ \'=\' + value);',
 					'	}',
 					'});',
@@ -147,13 +149,11 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 					'	});',
 					'}',
 					//offset parameter
-					'size = parseInt(p.$size.val());',
-					'filtered = typeof p.ajaxData === \'undefined\' ? 0 : p.ajaxData.filtered;',
-					'offset = ((p.page * size) >= filtered) ? \'\' : offset = \'&'
-						. parent::$s['ajax']['offset'] . '=\' + (p.page * size); ',
+					'offset = ((p.page * p.size) >= p.filteredRows) ? \'\' : offset = \'&'
+						. parent::$s['ajax']['offset'] . '=\' + (p.page * p.size); ',
 					//build url, starting with no parameters
 					'newurl = url.slice(0,url.indexOf(\'?\'));',
-					'newurl = newurl + \'?' . $numrows . '=\' + size + offset + \'&tsAjax=y\';',
+					'newurl = newurl + \'?' . $numrows . '=\' + p.size + offset + \'&tsAjax=y\';',
 					'$.each(params, function(key, value) {',
 					'	newurl = newurl + \'&\' + value;',
 					'});',
@@ -161,16 +161,10 @@ class Table_Code_WidgetOptionsPager extends Table_Code_WidgetOptions
 				);
 			} else {
 				$ca = array(
-					'var p = table.config.pager, size = parseInt(p.$size.val()), filtered, offset, total;',
-					'if (typeof p.ajaxData === \'undefined\') {',
-					'	filtered = 0;',
-					'} else {',
-					'	filtered = typeof p.ajaxData.filteredRows === \'undefined\' ? 0 : p.ajaxData.filteredRows;',
-					'	total = typeof p.ajaxData.total === \'undefined\' ? 0 : p.ajaxData.total;',
-					'}',
-					'offset = ((p.page * size) >= filtered) ? \'\' : \''
-						. '&' . parent::$s['ajax']['offset'] . '\' + \'=\' + (p.page * size);',
-					'return url + \'&tsAjax=y\' + offset + \'&numrows=\' + size;'
+					'var p = table.config.pager, offset;',
+					'offset = ((p.page * p.size) >= p.filteredRows) ? \'\' : \''
+						. '&' . parent::$s['ajax']['offset'] . '\' + \'=\' + (p.page * p.size);',
+					'return url + \'&tsAjax=y\' + offset + \'&numrows=\' + p.size;'
 				);
 			}
 			if (count($ca) > 0) {

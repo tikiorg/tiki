@@ -73,14 +73,6 @@ abstract class Table_Settings_Abstract
 			'offset' => 'offset'
 			//url sort and filter params manipulated on the server side if set to false
 			'custom' => false,
-			//total count of all records - needs to be a hidden input returned by ajax in order for pager to work
-			'servercount' => array(
-				'id' => $ts_countid,
-			),
-			//record offset - needs to be a hidden input returned by ajax in order for pager to work properly
-			'serveroffset' => array(
-				'id' => $ts_offsetid,
-			),
 		),
 		//set whether column, page or subtotals will be added
 		'math' => array(
