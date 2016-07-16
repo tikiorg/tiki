@@ -241,6 +241,8 @@ $smarty->assign('find', $find);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 if (isset($_REQUEST['numrows'])) {
 	$maxRecords = $_REQUEST['numrows'];
+} else {
+	$maxRecords = $prefs['maxRecords'];
 }
 $channels = $commentslib->list_forums($offset, $maxRecords, $sort_mode, $find);
 $max = count($channels["data"]);
@@ -256,23 +258,6 @@ for ($i = 0; $i < $max; $i++) {
 		$channels["data"][$i]["individual"] = 'n';
 	}
 }
-
-//add tablesorter sorting and filtering
-$ts = Table_Check::setVars('adminforums', true);
-//initialize tablesorter
-if ($ts['enabled'] && !$ts['ajax']) {
-	//set tablesorter code
-	Table_Factory::build(
-		'TikiAdminForums',
-		array(
-			'id' => $ts['tableid'],
-			'total' => $channels['cant'],
-		)
-	);
-	//rows returned need to be empty on first pass for tablesorter pagination to work right
-	$channels['data'] = [];
-}
-
 $smarty->assign_by_ref('channels', $channels["data"]);
 $smarty->assign_by_ref('cant', $channels["cant"]);
 $cat_type = 'forum';
@@ -304,6 +289,20 @@ if (preg_match('/^([\d\.]+)([gmk])?$/i', $maxAttachSize, $matches) && !empty($ma
 			$maxAttachSize*= 1024;
 	}
 }
+
+//add tablesorter sorting and filtering
+$ts = Table_Check::setVars('adminforums', true);
+if ($ts['enabled'] && !$ts['ajax']) {
+	//set tablesorter code
+	Table_Factory::build(
+		'TikiAdminForums',
+		array(
+			'id' => $ts['tableid'],
+			'total' => $channels['cant'],
+		)
+	);
+}
+
 $smarty->assign_by_ref('maxAttachSize', $maxAttachSize);
 
 $oneday = 60 * 60 * 24;

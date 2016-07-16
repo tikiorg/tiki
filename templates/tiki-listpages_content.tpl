@@ -11,7 +11,7 @@
 	{$liend = ''}
 {/if}
 
-{if !$tsOn && ($cant_pages > 1 or $initial or $find)}
+{if !$ts.enabled && ($cant_pages > 1 or $initial or $find)}
 	{initials_filter_links}
 {/if}
 
@@ -35,8 +35,8 @@
 {/if}
 
 {assign var='pagefound' value='n'}
-<div id="{$ts_tableid}-div" class="{if $js === 'y'}table-responsive{/if} ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}> {*the table-responsive class cuts off dropdown menus *}
-	<table id="{$ts_tableid}" class="table normal table-striped table-hover" data-count="{$cant|escape}">
+<div id="{$ts.tableid}-div" class="{if $js === 'y'}table-responsive{/if} ts-wrapperdiv" {if $ts.enabled}style="visibility:hidden;"{/if}> {*the table-responsive class cuts off dropdown menus *}
+	<table id="{$ts.tableid}" class="table normal table-striped table-hover" data-count="{$cant|escape}">
 		<thead>
 			<tr>
 				{if isset($checkboxes_on) and $checkboxes_on eq 'y'}
@@ -420,7 +420,7 @@
 		</tbody>
 	</table>
 </div>
-{if !$tsAjax}
+{if !$ts.ajax}
 	{if $checkboxes_on eq 'y' && count($listpages) > 0} {* what happens to the checked items? *}
 		<p align="left"> {*on the left to have it close to the checkboxes*}
 			<label for="submit_mult">{tr}Perform action with checked:{/tr}</label>
@@ -474,7 +474,7 @@
 		</form>
 	{/if}
 
-	{if !isset($tsOn) or !$tsOn}
+	{if !isset($ts.enabled) or !$ts.enabled}
 		{pagination_links cant=$cant step=$maxRecords offset=$offset clean=$clean}{/pagination_links}
 	{/if}
 {/if}

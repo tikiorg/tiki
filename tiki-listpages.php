@@ -190,16 +190,8 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST['checked'])) {
 }
 
 //add tablesorter sorting and filtering
-$tsOn = Table_Check::isEnabled(true);
-$smarty->assign('tsOn', $tsOn);
-$tsAjax = Table_Check::isAjaxCall();
-$smarty->assign('tsAjax', $tsAjax);
-static $iid = 0;
-++$iid;
-$ts_tableid = 'listpages' . $iid;
-$smarty->assign('ts_tableid', $ts_tableid);
-
-if ($tsAjax) {
+$ts = Table_Check::setVars('listpages', true);
+if ($ts['ajax']) {
 	if (!empty($_REQUEST['categPath_ts']) || !empty($_REQUEST['categ_ts'])) {
 		if (!empty($_REQUEST['categPath_ts'])) {
 			$req = $_REQUEST['categPath_ts'];
@@ -360,23 +352,18 @@ if (!empty($multiprint_pages)) {
 	if (!isset($listpages_orphans)) {
 		$listpages_orphans = false;
 	}
-	if (!$tsOn || ($tsOn && $tsAjax)) {
-		$listpages = $tikilib->list_pages(
-			$offset,
-			$maxRecords,
-			$sort_mode,
-			$find,
-			$initial,
-			$exact_match,
-			false,
-			true,
-			$listpages_orphans,
-			$filter
-		);
-	} else {
-		//get count only on first pass with tablesorter on so pagination works right
-		$listpages = $tikilib->list_pages(null, null, null, null, null, null, null, null, null, null, true);
-	}
+	$listpages = $tikilib->list_pages(
+		$offset,
+		$maxRecords,
+		$sort_mode,
+		$find,
+		$initial,
+		$exact_match,
+		false,
+		true,
+		$listpages_orphans,
+		$filter
+	);
 
 	possibly_look_for_page_aliases($find);
 	// Only show the 'Actions' column if the user can do at least one action on one of the listed pages
@@ -451,7 +438,7 @@ if (!empty($multiprint_pages)) {
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 	// Exact match and single result, go to page directly
-	if ( count($listpages['data']) == 1 && !$tsAjax) {
+	if ( count($listpages['data']) == 1 && !$ts['ajax']) {
 		$result = reset($listpages['data']);
 		if ( TikiLib::strtolower($find) == TikiLib::strtolower($result['pageName']) ) {
 			$wikilib = TikiLib::lib('wiki');
@@ -460,7 +447,7 @@ if (!empty($multiprint_pages)) {
 		}
 	}
 
-	if ($tsOn && !$tsAjax) {
+	if ($ts['enabled'] && !$ts['ajax']) {
 		//create dropdown lists for category name and path filters
 		$cnames = array();
 		$cpaths = array();
@@ -528,7 +515,7 @@ if (!empty($multiprint_pages)) {
 		$sortcol = array_search($sort, $cols);
 
 		$settings = array(
-			'id' => $ts_tableid,
+			'id' => $ts['tableid'],
 			'total' 	=> $listpages['cant'],
 			'vars'	=> array(
 				'show_actions' => $show_actions,
@@ -594,7 +581,7 @@ if (!empty($multiprint_pages)) {
 		}
 	} else {
 		// Display the template
-		if ($tsAjax) {
+		if ($ts['ajax']) {
 			$smarty->display($listpages_orphans ? 'tiki-orphan_pages.tpl' : 'tiki-listpages.tpl');
 		} else {
 			$smarty->assign('mid', ($listpages_orphans ? 'tiki-orphan_pages.tpl' : 'tiki-listpages.tpl'));

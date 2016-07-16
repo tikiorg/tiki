@@ -546,29 +546,30 @@ if ($tiki_p_admin == 'y') {
 		$all_groups[] = $g;
 	}
 }
+//get users
+$users = $userlib->get_users(
+	$offset,
+	$numrows,
+	$sort_mode,
+	$find,
+	$initial,
+	true,
+	$filterGroup,
+	$filterEmail,
+	!empty($_REQUEST['filterEmailNotConfirmed']),
+	!empty($_REQUEST['filterNotValidated']),
+	!empty($_REQUEST['filterNeverLoggedIn'])
+);
+$smarty->assign_by_ref('users', $users['data']);
+$smarty->assign_by_ref('cant', $users['cant']);
+
+if (isset($_REQUEST['add'])) {
+	$cookietab = '2';
+}
 
 //add tablesorter sorting and filtering
 $ts = Table_Check::setVars('adminusers', true);
-
-if (!$ts['enabled'] || ($ts['enabled'] && $ts['ajax'])) {
-	$users = $userlib->get_users(
-		$offset,
-		$numrows,
-		$sort_mode,
-		$find,
-		$initial,
-		true,
-		$filterGroup,
-		$filterEmail,
-		!empty($_REQUEST['filterEmailNotConfirmed']),
-		!empty($_REQUEST['filterNotValidated']),
-		!empty($_REQUEST['filterNeverLoggedIn'])
-	);
-}
 if ($ts['enabled'] && !$ts['ajax']) {
-	$users['cant'] = $userlib->count_users('');
-	//rows returned need to be empty on first pass for tablesorter pagination to work right
-	$users['data'] = $users['cant'] > 0 ? true : false;
 	//delete anonymous out of group list used for dropdown
 	$ts_groups = array_flip($all_groups);
 	unset($ts_groups['Anonymous']);
@@ -580,21 +581,14 @@ if ($ts['enabled'] && !$ts['ajax']) {
 			'id' => $ts['tableid'],
 			'total' => $users['cant'],
 			'columns' => array(
-				 '#groups' => array(
-					 'filter' => array(
-						 'options' => $ts_groups
-				 	)
+				'#groups' => array(
+					'filter' => array(
+						'options' => $ts_groups
+					)
 				)
-			 ),
+			),
 		)
 	);
-}
-
-$smarty->assign_by_ref('users', $users['data']);
-$smarty->assign_by_ref('cant', $users['cant']);
-
-if (isset($_REQUEST['add'])) {
-	$cookietab = '2';
 }
 
 if (count($errors) > 0) {

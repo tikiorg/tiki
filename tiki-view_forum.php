@@ -319,7 +319,6 @@ if (!isset($_REQUEST['reply_state']))
 else
 	$reply_state = $_REQUEST['reply_state'];
 
-//need the info on all threads so leave this even on initial non-ajax load
 $comments_coms = $commentslib->get_forum_topics(
 	$_REQUEST['forumId'],
 	$comments_offset,
@@ -342,27 +341,6 @@ $comments_cant = $commentslib->count_forum_topics(
 	$type_param,
 	$reply_state
 );
-//initialize tablesorter
-if ($ts['enabled'] && !$ts['ajax']) {
-	//set tablesorter code
-	Table_Factory::build(
-		'TikiViewforum',
-		array(
-			'id' => $ts['tableid'],
-			'total' => $comments_cant,
-			'pager' => array(
-				'max' => $_REQUEST['comments_per_page'],
-			),
-			'ajax' => array(
-				'requiredparams' => array(
-					'forumId' => $_REQUEST['forumId'],
-				),
-			),
-		)
-	);
-	$comments_coms = [];
-}
-
 
 $last_comments = $commentslib->get_last_forum_posts($_REQUEST['forumId'], $forum_info['forum_last_n']);
 
@@ -475,6 +453,26 @@ if ($prefs['feature_forum_parse'] == 'y') {
 	$wikilib = TikiLib::lib('wiki');
 	$plugins = $wikilib->list_plugins(true, 'editpost');
 	$smarty->assign_by_ref('plugins', $plugins);
+}
+
+//initialize tablesorter
+if ($ts['enabled'] && !$ts['ajax']) {
+	//set tablesorter code
+	Table_Factory::build(
+		'TikiViewforum',
+		array(
+			'id' => $ts['tableid'],
+			'total' => $comments_cant,
+			'pager' => array(
+				'max' => $_REQUEST['comments_per_page'],
+			),
+			'ajax' => array(
+				'requiredparams' => array(
+					'forumId' => $_REQUEST['forumId'],
+				),
+			),
+		)
+	);
 }
 
 ask_ticket('view-forum');
