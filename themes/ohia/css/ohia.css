@@ -7440,6 +7440,9 @@ div.drillshow {
   background-color: transparent;
   color: #eeeeee;
 }
+.tiki .chosen-container .active-result {
+  color: #cfcfcf;
+}
 .breadcrumb {
   font-style: normal;
   font-size: 90%;
