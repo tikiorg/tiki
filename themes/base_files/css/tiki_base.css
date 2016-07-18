@@ -2171,6 +2171,14 @@ a.fc-event:hover {
     width: 80%;
   }
 }
+#calendar_dialog .modal-content h1.pagetitle {
+  padding: 15px;
+  margin: 0;
+  font-size: 18px;
+}
+#calendar_dialog .modal-content .modal-header {
+  margin-top: -63px;
+}
 .calendarweek {
   border-bottom: 1px solid #ddd;
 }
