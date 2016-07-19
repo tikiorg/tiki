@@ -117,8 +117,6 @@
 			{$aliasname|escape}
 		{elseif !empty($page)}
 			{$page|escape}
-		{elseif !empty($description)}{$description|escape}
-		{* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
 		{elseif !empty($arttitle)}
 			{$arttitle|escape}
 		{elseif !empty($thread_info.title)}
@@ -133,6 +131,9 @@
 			{$tracker_info.name|escape}
 		{elseif !empty($headtitle)}
 			{$headtitle|stringfix:"&nbsp;"|escape}{* use $headtitle last if feature specific title not found *}
+		{elseif !empty($description)}
+			{$description|escape}{* use description if nothing else is found but this is likely to contain tiki markup *}
+			{* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
 		{/if}
 	{/if}
 	{if $prefs.site_title_location eq 'after'} {$prefs.site_nav_seper} {$prefs.browsertitle|tr_if|escape}{/if}
