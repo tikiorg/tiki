@@ -76,10 +76,10 @@
 								{if $it.tiki_p_add_events eq 'y'}
 									{$calstyle = ''}
 									{if not empty($it.custombgcolor)}
-										{$calstyle='background-color:#'|cat:$it.custombgcolor}
+										{$calstyle='background-color:#'|cat:$it.custombgcolor|cat:';'}
 									{/if}
 									{if not empty($it.customfgcolor)}
-										{$calstyle='color:#'|cat:$it.customfgcolor}
+										{$calstyle=$calstyle|cat:'color:#'|cat:$it.customfgcolor}
 									{/if}
 									{if $calstyle}
 										{$calstyle = ' style="'|cat:$calstyle|cat:'"'}
