@@ -27,32 +27,33 @@
 {if $prefs.metatag_author neq ''}
 	<meta name="author" content="{$prefs.metatag_author|escape}">
 {/if}
-	{* --- Blog description --- *}
+
+{* --- Blog description --- *}
 {if isset($section) and $section eq "blogs"}
 	{if not empty($post_info.parsed_excerpt)}
-		{$description = $post_info.parsed_excerpt|strip_tags|truncate:200|escape}
+		{$metatag_description = $post_info.parsed_excerpt|strip_tags|truncate:200|escape}
 	{elseif not empty($post_info.parsed_data|strip_tags)}
-		{$description = $post_info.parsed_data|strip_tags|truncate:200|escape}
+		{$metatag_description = $post_info.parsed_data|strip_tags|truncate:200|escape}
 	{else}
-		{$description = $post_info.title|cat:' - '|cat:$blog_data.title|escape}
+		{$metatag_description = $post_info.title|cat:' - '|cat:$blog_data.title|escape}
 	{/if}
 	{* --- Article description --- *}
 {elseif isset($section) and $section eq "cms"}
 	{if not empty($heading)}
-		{$description = $heading|truncate:200|escape}
+		{$metatag_description = $heading|truncate:200|escape}
 	{elseif not empty ($body)}
-		{$description = $body|truncate:200|escape}
+		{$metatag_description = $body|truncate:200|escape}
 	{/if}
-{elseif $prefs.metatag_pagedesc eq 'y' and not empty($description)}
-	{$description = $description|escape}
+{elseif $prefs.metatag_pagedesc eq 'y' and not empty($metatag_description)}
+	{$metatag_description = $metatag_description|escape}
 {elseif not empty($prefs.metatag_description)}
-	{$description = $prefs.metatag_description|escape}
+	{$metatag_description = $prefs.metatag_description|escape}
 {/if}
 
-{if not empty($description|trim)}
-	<meta name="description" content="{$description}" property="og:description">
-	<meta name="twitter:description" content="{$description}">
-	{else}
+{if not empty($metatag_description|trim)}
+	<meta name="description" content="{$metatag_description}" property="og:description">
+	<meta name="twitter:description" content="{$metatag_description}">
+{else}
 	<meta name="description" content="{$prefs.browsertitle|tr_if|escape} {$prefs.site_nav_seper} {$title}" property="og:description">
 	<meta name="twitter:description" content="{$prefs.browsertitle|tr_if|escape} {$prefs.site_nav_seper} {$title} ">
 {/if}
