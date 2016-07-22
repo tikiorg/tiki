@@ -206,6 +206,12 @@ function wikiplugin_mediaplayer($data, $params)
 		'width' => 320,
 		'height' => 240,
 	);
+	if (preg_match('/webm/', $params['type']) >0 && $params['type'] != 'video/webm') {
+		$params['type'] = 'video/webm';
+	}
+	if ($params['type'] == 'video/webm'){
+		$params['style'] = 'native';
+	}
 	if (!empty($params['flv'])) {
 		$params = array_merge($defaults_flv, $params);
 	} elseif (!empty($params['mp3'])) {
