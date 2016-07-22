@@ -3548,7 +3548,7 @@ tbody.collapse.in {
 .dropdown-menu > li > a:focus {
   text-decoration: none;
   color: #f2f2f2;
-  background-color: #6D9F26;
+  background-color: #6d9f26;
 }
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover,
@@ -6938,7 +6938,7 @@ a.fc-event:hover {
 .cssmenu_horiz > ul > li:hover > a,
 .cssmenu_vert > ul > li:hover > a {
   color: #f2f2f2;
-  background: #6D9F26;
+  background: #6d9f26;
 }
 .sf-arrows .sf-with-ul:after {
   border: 5px solid transparent;
@@ -7156,7 +7156,7 @@ form.simple label .warning {
 .cssmenu_vert ul li a:hover {
   text-decoration: none;
   color: #f2f2f2;
-  background-color: #6D9F26;
+  background-color: #6d9f26;
 }
 .box-quickadmin .cssmenu_horiz ul li {
   background-color: #ffffff;
@@ -7409,6 +7409,7 @@ body.wikitext {
 }
 .editable-inline.loaded {
   background: transparent;
+  position: absolute;
 }
 .editable-inline.failure {
   background: transparent url('../../../img/icons/lock_gray.png') no-repeat top right;
@@ -7590,7 +7591,7 @@ div.drillshow {
   border: 1px solid #e0e0e0;
 }
 .chosen-container .chosen-results li.highlighted {
-  background-color: #6D9F26;
+  background-color: #6d9f26;
   color: #f2f2f2;
 }
 .tiki .chosen-container .active-result {

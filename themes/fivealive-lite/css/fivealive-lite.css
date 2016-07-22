@@ -6913,6 +6913,11 @@ table.treetable.objectperms td.removed {
 .btn-default.highlight:hover {
   background: #dca7a7;
 }
+.btn-default.btn-link,
+.btn-default.btn-link:hover {
+  background: transparent;
+  border: none;
+}
 #ajaxLoadingBG {
   background: transparent url('../../../img/overlay-light.png');
 }
@@ -7252,6 +7257,7 @@ body.wikitext {
 }
 .editable-inline.loaded {
   background: transparent;
+  position: absolute;
 }
 .editable-inline.failure {
   background: transparent url('../../../img/icons/lock_gray.png') no-repeat top right;
@@ -7436,6 +7442,9 @@ div.drillshow {
   background-color: #0e567a;
   color: #ffffff;
 }
+.tiki .chosen-container .active-result {
+  color: #555555;
+}
 .breadcrumb {
   font-style: normal;
   font-size: 90%;
@@ -7476,6 +7485,12 @@ a.admbox.off:active {
   background: #2098cd;
   color: #ffffff;
 }
+.tiki .modal-content .ui-state-default {
+  color: #1174a5;
+}
+.tiki .modal-content .ui-state-hover:hover {
+  color: #0a4360;
+}
 .dropdown-menu {
   color: #eeeeee;
 }
@@ -7488,6 +7503,12 @@ pre.codelisting {
   background: #f8f8f8;
   border: 1px solid #dddddd;
   border-radius: 1px;
+}
+.adminoptionboxchild {
+  border-bottom: 1px solid #eeeeee;
+}
+.adminoptionboxchild legend {
+  font-size: 19px;
 }
 .margin-bottom-xs {
   margin-bottom: 5px;
