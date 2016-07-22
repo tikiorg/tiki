@@ -324,7 +324,7 @@ class PdfGenerator
 		if(! file_exists ('temp/pdfimg'))
 		{
 			mkdir('temp/pdfimg');
-			chmod('temp/pdfimg',0777);
+			chmod('temp/pdfimg',0755);
 			
 			}
 			
@@ -334,7 +334,7 @@ class PdfGenerator
 	$data=file_get_contents($url, false, $context);
 	$newFile='temp/pdfimg/pdfimg'.rand(9999,999999).'.png';
 	file_put_contents($newFile, $data);
-	chmod($newFile,0777);
+	chmod($newFile,0755);
 	
 	
     return $newFile;
