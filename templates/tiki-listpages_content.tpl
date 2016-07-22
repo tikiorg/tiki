@@ -31,7 +31,7 @@
 
 
 {if isset($checkboxes_on) and $checkboxes_on eq 'y'}
-	<form name="checkboxes_on" method="post">
+	<form name="checkboxes_on" method="post" action="/tiki-listpages.php">
 {/if}
 
 {assign var='pagefound' value='n'}
@@ -471,6 +471,7 @@
 	{/if}
 
 	{if $checkboxes_on eq 'y'}
+		<input type="hidden" name="current_url" value="{$current_url}">
 		</form>
 	{/if}
 

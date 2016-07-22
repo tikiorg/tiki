@@ -187,6 +187,9 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST['checked'])) {
 			}
 			break;
 	}
+    if (isset($_POST["current_url"])) {
+        header("Location: " . $_POST["current_url"]);
+    }
 }
 
 //add tablesorter sorting and filtering
