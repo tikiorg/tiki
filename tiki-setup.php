@@ -171,7 +171,7 @@ require_once ('lib/setup/tikiIndex.php');
 if ($prefs['useGroupHome'] == 'y') {
 	require_once ('lib/setup/default_homepage.php');
 }
-if (isset($prefs['user_force_avatar_upload']) && $prefs['user_force_avatar_upload'] == 'y') {
+if ($prefs['user_force_avatar_upload']) {
         require_once ('lib/setup/avatar_force_upload.php');
 }
 if ($prefs['tracker_force_fill'] == 'y') {
