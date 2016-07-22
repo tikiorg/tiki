@@ -5063,9 +5063,6 @@ a.thumbnail.active {
   border-color: #3db5d8;
   color: #ffffff;
 }
-.alert-info input {
-  color: #222222; !important;
-}
 .alert-info hr {
   border-top-color: #2aabd2;
 }
@@ -6854,7 +6851,6 @@ header.page-header::before,
   background-color: #333333;
 }
 .navbar-default .dropdown-menu > li > a,
-.navbar-default .dropdown-menu > li > a:hover,
 .navbar-default .dropdown-menu > li > a:focus {
   color: #ffffff;
 }
@@ -7125,6 +7121,12 @@ input[type="checkbox"] {
 }
 .navbar-default .navbar-collapse.collapse.in .dropdown-menu li {
   background: transparent;
+}
+.alert-info input {
+  color: #222222 !important;
+}
+.navbar-default .dropdown-menu > li > a:hover {
+  color: #ffffff;
 }
 .margin-bottom-xs {
   margin-bottom: 6px;
