@@ -40,9 +40,9 @@
 	{* --- Article description --- *}
 {elseif isset($section) and $section eq "cms"}
 	{if not empty($heading)}
-		{$metatag_description = $heading|truncate:200|escape}
+		{$metatag_description = $parsed_heading|truncate:200|strip_tags|escape}
 	{elseif not empty ($body)}
-		{$metatag_description = $body|truncate:200|escape}
+		{$metatag_description = $parsed_body|truncate:200|strip_tags|escape}
 	{/if}
 {elseif $prefs.metatag_pagedesc eq 'y' and not empty($metatag_description)}
 	{$metatag_description = $metatag_description|escape}
