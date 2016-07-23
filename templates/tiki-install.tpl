@@ -650,6 +650,12 @@
 									<span class="help-block">
 										{tr}This is the email address for your administrator account.{/tr}
 									</span>
+									{remarksbox type=error title="{tr}Subscribe to Tiki Releases newsletter{/tr}" close="n"}
+									{tr}It is highly recommended for Tiki admins and Tiki system maintainers to subscribe to the Tiki Releases newsletter.{/tr}<br>
+									{tr}This newsletter is used to send important notice about Tiki releases and critical security releases.{/tr}<br>
+									{tr}We don't share subscribed emails and we send very few newsletter a year using this list.{/tr}<br>
+									{tr}Please use the following link and subscribe	:{/tr} <a href="https://tiki.org/tiki-newsletters.php?nlId=8&info=1" title="Subscribe" target="_blank" class="alert-link">{tr}Tiki Releases newsletter{/tr}</a>
+									{/remarksbox}
 								</div>
 							</fieldset>
 							{if not empty($htaccess_options)}
