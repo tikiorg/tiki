@@ -7128,6 +7128,9 @@ input[type="checkbox"] {
 .navbar-default .dropdown-menu > li > a:hover {
   color: #ffffff;
 }
+.navbar-default .dropdown-menu > .active > a {
+  color: #bdbdbd;
+}
 .margin-bottom-xs {
   margin-bottom: 6px;
 }
