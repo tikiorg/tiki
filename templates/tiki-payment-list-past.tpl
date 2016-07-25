@@ -4,6 +4,7 @@
 		<tr>
 			<th id="id">{tr}ID{/tr}</th>
 			<th id="description">{tr}Description{/tr}</th>
+			{if $ts.enabled}<th id="detail">{tr}Detail{/tr}</th>{/if}
 			<th id="amount">{tr}Amount{/tr}</th>
 			<th id="pmt_date">{tr}Date Paid{/tr}</th>
 			<th id="pmt_type">{tr}Type{/tr}</th>
@@ -25,6 +26,11 @@
 					{/if}
 					{/self_link}
 				</td>
+				{if $ts.enabled}
+					<td>
+						{$payment.request_detail}
+					</td>
+				{/if}
 				<td class="integer">{$payment.amount|escape}&nbsp;{$payment.currency|escape}</td>
 				<td class="date">{if !empty($payment.payment_date)}{$payment.payment_date|tiki_short_date|escape}{/if}</td>
 				<td class="text">{$payment.type|escape}</td>

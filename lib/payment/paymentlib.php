@@ -16,6 +16,9 @@ class PaymentLib extends TikiDb_Bridge
 		'description' => [
 			'table' => 'tpr',
 		],
+		'detail' => [
+			'table' => 'tpr',
+		],
 		'amount' => [
 			'table' => 'tpr',
 		],
@@ -113,6 +116,9 @@ class PaymentLib extends TikiDb_Bridge
 
 	function get_past( $offset, $max, $ofUser = '', $filter = [], $sort = null )
 	{
+		global $prefs;
+		$parserlib = TikiLib::lib('parser');
+
 		$conditions = 'tpr.`amount` <= tpr.`amount_paid` AND tpr.`cancel_date` IS NULL';
 		if ($ofUser) {
 			$conditions .= " AND uu.`login` = " . $this->qstr($ofUser);
@@ -126,7 +132,7 @@ class PaymentLib extends TikiDb_Bridge
 			' LEFT JOIN `users_users` uup ON (uup.`userId` = tp.`userId`) WHERE ' . $conditions;
 
 		$data = 'SELECT tpr.*, uu.`login` as `user`, tp.`type`, tp.`payment_date`,' .
-			' tp.`details` as `payment_detail`, uup.`login` as `payer`' .
+			' tp.`details` as `payment_detail`, tpr.`detail` as `request_detail`, uup.`login` as `payer`' .
 			' FROM `tiki_payment_requests` tpr' .
 			' LEFT JOIN `users_users` uu ON (uu.`userId` = tpr.`userId`)' .
 			' LEFT JOIN `tiki_payment_received` tp ON (tp.`paymentRequestId`=tpr.`paymentRequestId` AND tp.`status` = "paid")' .
@@ -141,6 +147,10 @@ class PaymentLib extends TikiDb_Bridge
 				if ($details && !empty($details['payer_email'])) {
 					$payment['payer_email'] = $details['payer_email'];
 				}
+			}
+
+			if (!empty($payment['request_detail']) && $prefs['feature_jquery_tablesorter']) {
+				$payment['request_detail'] = strip_tags(str_replace(['</td>','</td></tr>'], [' </td>','<br></td></tr>'], $parserlib->parse_data($payment['request_detail'])), '<a><br>');
 			}
 		}
 
@@ -486,7 +496,7 @@ class PaymentLib extends TikiDb_Bridge
 					$table = $this->setTable($field);
 					$col = $this->setField($field);
 					$ret .= " AND " . $table . '.`' . $col . '`';
-					if ($field == 'description') {
+					if ($field == 'description' || $field == 'detail') {
 						$ret .= " LIKE '%" . $value . "%'";
 					} elseif (in_array($field, ['payment_date', 'request_date'])) {
 						$ret .= ' ' . $value;

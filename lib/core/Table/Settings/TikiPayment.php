@@ -50,6 +50,17 @@ class Table_Settings_TikiPayment extends Table_Settings_Standard
 					'type' => 'text',
 					'ajax' =>'filter_description',
 				),
+				'priority' => 4,
+			),
+			'#detail' => array(
+				'sort' => array(
+					'type' => 'text',
+					'ajax' =>'detail',
+				),
+				'filter' => array(
+					'type' => 'text',
+					'ajax' =>'filter_detail',
+				),
 				'priority' => 6,
 			),
 			'#amount' => array(
@@ -75,6 +86,17 @@ class Table_Settings_TikiPayment extends Table_Settings_Standard
 				'priority' => 5,
 			),
 			'#user' => array(
+				'sort' => array(
+					'type' => 'text',
+					'ajax' =>'login',
+				),
+				'filter' => array(
+					'type' => 'text',
+					'ajax' =>'filter_login',
+				),
+				'priority' => 5,
+			),
+			'#payer' => array(
 				'sort' => array(
 					'type' => 'text',
 					'ajax' =>'login',

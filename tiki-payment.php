@@ -44,6 +44,7 @@ $inputConfiguration = array(
 				'numrows' => 'digits',
 				'filter_paymentRequestId' => 'digits',
 				'filter_description' => 'text',
+				'filter_detail' => 'text',
 				'filter_amount' => 'text',
 				//need to allow <= and >= for these - will filter later
 				'filter_request_date' => 'none',
