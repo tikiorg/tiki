@@ -102,6 +102,9 @@ function applyTablesorter(WikiParser_PluginMatcher $matches, Search_Query $query
 {
 	$ret = ['max' => false, 'tsOn' => false];
 	$parser = new WikiParser_PluginArgumentParser;
+	$args = [];
+	$tsenabled = Table_Check::isEnabled();
+
 	foreach ($matches as $match) {
 		$name = $match->getName();
 		if ($name == 'tablesorter') {
@@ -123,6 +126,23 @@ function applyTablesorter(WikiParser_PluginMatcher $matches, Search_Query $query
 			}
 		} elseif ($name == 'column') {
 			$args[] = $parser->parse($match->getArguments());
+		} elseif ($name == 'format' && $tsenabled) {
+			// if fields have been "formatted" then get the original field name to filter on
+			$formatArgs = $parser->parse($match->getArguments());
+
+			$subPlugins = WikiParser_PluginMatcher::match($match->getBody());
+			foreach ($subPlugins as $subPlugin) {
+				if ($subPlugin->getName() === 'display') {
+					$displayArgs = $parser->parse($subPlugin->getArguments());
+					foreach($args as & $arg) {
+						if ($arg['field'] === $formatArgs['name']) {
+							$arg['field'] = $displayArgs['name'];
+							break;
+						}
+					}
+					break;	// will only work with the first display subplugin
+				}
+			}
 		}
 	}
 
