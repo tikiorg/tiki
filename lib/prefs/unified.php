@@ -146,6 +146,7 @@ function prefs_unified_list()
 			'name' => tra('Relation types to index within object.'),
 			'description' => tra('Comma-separated relation types for which objects should be indexed in their related objects. (Elasticsearch needed)'),
 			'type' => 'textarea',
+			'default' => '',
 			'dependencies' => array(
 				'unified_elastic_index_current',
 			),
