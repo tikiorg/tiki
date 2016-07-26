@@ -135,16 +135,18 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 				$thisField = $definition->getField($this->getConfiguration('fieldId'));
 				$thisField['value'] = json_encode($response->data);
 
-				$itemId = TikiLib::lib('trk')->replace_item(
-					$definition->getConfiguration('trackerId'),
-					$this->getItemId(),
-					['data' => [$thisField]]
-				);
-				if (!$itemId) {
-					Feedback::error(tr('Error updating Webservice field %0', $this->getConfiguration('permName')), 
-						'session');
-					// try and restore previous data
-					$response->data = json_decode($this->getValue());
+				if ($thisField['value'] != $oldValue) {
+					$itemId = TikiLib::lib('trk')->replace_item(
+						$definition->getConfiguration('trackerId'),
+						empty($this->getItemId()) ? $_REQUEST['itemId'] : $this->getItemId(),
+						['data' => [$thisField]]
+					);
+					if (!$itemId) {
+						Feedback::error(tr('Error updating Webservice field %0', $this->getConfiguration('permName')),
+							'session');
+						// try and restore previous data
+						$response->data = json_decode($this->getValue());
+					}
 				}
 			}
 		}
