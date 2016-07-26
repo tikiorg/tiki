@@ -322,7 +322,9 @@ class Search_Query implements Search_Query_Interface
 		$resultset->applyTransform(function ($entry) {
 			if (! isset($entry['_index']) || ! isset($this->foreignQueries[$entry['_index']])) {
 				foreach ($this->transformations as $trans) {
-					$entry = $trans($entry);
+					if (is_callable($trans)) {
+						$entry = $trans($entry);
+					}
 				}
 			}
 
@@ -333,7 +335,9 @@ class Search_Query implements Search_Query_Interface
 			$resultset->applyTransform(function ($entry) use ($query, $indexName) {
 				if (isset($entry['_index']) && $entry['_index'] == $indexName) {
 					foreach ($query->transformations as $trans) {
-						$entry = $trans($entry);
+						if (is_callable($trans)) {
+							$entry = $trans($entry);
+						}
 					}
 				}
 
@@ -351,7 +355,9 @@ class Search_Query implements Search_Query_Interface
 
 		foreach ($res as $row) {
 			foreach ($this->transformations as $trans) {
-				$row = $trans($row);
+				if (is_callable($trans)) {
+					$row = $trans($row);
+				}
 			}
 
 			yield $row;
