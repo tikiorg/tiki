@@ -638,6 +638,15 @@ function prefs_wiki_list($partial = false)
 				'wiki_inline_auto_toc',
 			),
 		),
+		'wiki_inline_toc_offset' => array(
+			'name' => tr('Inline table of contents offset'),
+			'description' => tr('Offset for inline table of contents. Useful when there is a fixed navbar (Default is 10)'),
+			'type' => 'text',
+			'default' => '10',
+			'dependencies' => array(
+				'wiki_inline_auto_toc',
+			),
+		),
 		'wiki_page_hide_title' => array(
 			'name' => tr('Hide title per wiki page'),
 			'description' => tr('Allow the title to be hidden for individual wiki pages'),

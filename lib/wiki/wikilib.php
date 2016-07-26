@@ -1492,6 +1492,10 @@ class WikiLib extends TikiLib
 				}
 				// Add Auto TOC if enabled
 				if ($isAutoTocActive) {
+					//Set offset property prior to loading autoToc.js 	
+					//Still need to pass this variable to autoToc.js
+					$autoToc_offset = $prefs['wiki_inline_toc_offset'];
+
 					// Enable Auto TOC
 					$headerlib->add_jsfile('lib/jquery_tiki/autoToc.js');
 
