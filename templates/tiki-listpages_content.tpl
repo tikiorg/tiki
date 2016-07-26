@@ -29,9 +29,9 @@
 	<p>{tr}Found{/tr} &quot;{$find|escape}&quot; {tr}in{/tr} {$listpages|@count} {tr}pages{/tr}.</p>
 {/if}
 
-
+	{* Action attribute has to be set explicitly so that plugins could get use of it *}
 {if isset($checkboxes_on) and $checkboxes_on eq 'y'}
-	<form name="checkboxes_on" method="post">
+	<form name="checkboxes_on" method="post" action="tiki-listpages.php">
 {/if}
 
 {assign var='pagefound' value='n'}
