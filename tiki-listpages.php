@@ -187,16 +187,6 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST['checked'])) {
 			}
 			break;
 	}
-    /*
-        The 6 lines below are currently for the Plugin List Pages (redirects to the page where plugin is located and action was
-        initiated from)
-     */
-    if ($_SESSION["redirect_required"]) {
-        $_SESSION["redirect_required"] = false;
-        $currentPage = $_SESSION["redirectPageName"];
-        $wikilib = TikiLib::lib('wiki');
-        header('Location: ' . $wikilib->sefurl($currentPage, '', $all_langs));
-    }
 }
 
 //add tablesorter sorting and filtering

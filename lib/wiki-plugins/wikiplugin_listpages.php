@@ -399,8 +399,6 @@ function wikiplugin_listpages($data, $params)
 				$listpages['data'][$i]['snippet'] = $tikilib->get_snippet($page['data'], $page['outputType'], ! empty($page['is_html']), '', $length, $start, $end);
 			}
 		}
-        $_SESSION["redirectPageName"] = $_REQUEST["page"];
-        $_SESSION["redirect_required"] = true;
 		$ret = $smarty->fetch('tiki-listpages_content.tpl');
 	}
 
