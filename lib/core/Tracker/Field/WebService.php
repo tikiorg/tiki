@@ -85,6 +85,7 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 		}
 		$cacheSeconds = $this->getOption('cacheSeconds');
 		$lastRefreshed = empty($oldData) ? 0 : strtotime($oldData['tiki_updated']);
+		$itemId = 0;	// itemId once saved after updating data
 
 		if (! $cacheSeconds || TikiLib::lib('tiki')->now > $lastRefreshed + $cacheSeconds) {
 			$ws_params = array();
@@ -107,6 +108,11 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 								$value = TikiLib::lib('trk')->get_field_value($field, $itemData);
 							} else {
 								$itemUser = '';
+
+								if (empty($itemData['itemId'])) {
+									$itemData['itemId'] = $_REQUEST['itemId'];	// when editing an item the itemId doesn't seem to be available?
+								}
+
 								$value = TikiLib::lib('trk')->get_item_fields(
 									$definition->getConfiguration('trackerId'),
 									$itemData['itemId'],
@@ -125,7 +131,7 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 
 			$response->data['tiki_updated'] = gmdate('c');
 
-			if (empty($context['search_render']) || $context['search_render'] !== 'y') {
+			if ((empty($context['search_render']) || $context['search_render'] !== 'y') && $response->data['status'] === 'OK') {
 				$thisField = $definition->getField($this->getConfiguration('fieldId'));
 				$thisField['value'] = json_encode($response->data);
 
@@ -141,7 +147,8 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 					$response->data = json_decode($this->getValue());
 				}
 			}
-		} else {
+		}
+		if (! $itemId) {
 			$response = OIntegrate_Response::create($oldData, false);
 			unlink($template->getTemplateFile());
 			$template = $webservice->getTemplate($this->getOption('template'));
@@ -166,6 +173,9 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 					strip_tags(
 							implode(' ', array_filter($value, 'is_string'))
 					)
+			),
+			"{$baseKey}_json" => $typeFactory->plaintext(
+					json_encode($value)
 			),
 		);
 	}
