@@ -187,8 +187,14 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST['checked'])) {
 			}
 			break;
 	}
-    if (isset($_POST["current_url"])) {
-        header("Location: " . $_POST["current_url"]);
+    /*
+        The 6 lines below are currently for the Plugin List Pages (redirects to the page where plugin is located and action was
+        initiated from)
+     */
+    if (isset($_POST["redirectTo"]) && strlen($_POST["redirectTo"]) > 0){
+        $currentPage = $_POST["redirectTo"];
+        $wikilib = TikiLib::lib('wiki');
+        header('Location: ' . $wikilib->sefurl($currentPage, '', $all_langs));
     }
 }
 
