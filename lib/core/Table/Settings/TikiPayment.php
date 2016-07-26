@@ -39,7 +39,7 @@ class Table_Settings_TikiPayment extends Table_Settings_Standard
 					'type' => 'text',
 					'ajax' =>'filter_paymentRequestId',
 				),
-				'priority' => 'critical',
+				'priority' => 3,
 			),
 			'#description' => array(
 				'sort' => array(
@@ -50,7 +50,7 @@ class Table_Settings_TikiPayment extends Table_Settings_Standard
 					'type' => 'text',
 					'ajax' =>'filter_description',
 				),
-				'priority' => 4,
+				'priority' => 2,
 			),
 			'#detail' => array(
 				'sort' => array(
@@ -74,6 +74,17 @@ class Table_Settings_TikiPayment extends Table_Settings_Standard
 				),
 				'priority' => 'critical',
 			),
+			'#pmt_type' => array(
+				'sort' => array(
+					'type' => 'text',
+					'ajax' =>'type',
+				),
+				'filter' => array(
+					'type' => 'date',
+					'ajax' =>'filter_type',
+				),
+				'priority' => 6,
+			),
 			'#req_date' => array(
 				'sort' => array(
 					'type' => 'dateFormat-yyyy-mm-dd',
@@ -82,6 +93,17 @@ class Table_Settings_TikiPayment extends Table_Settings_Standard
 				'filter' => array(
 					'type' => 'date',
 					'ajax' =>'filter_request_date',
+				),
+				'priority' => 5,
+			),
+			'#pmt_date' => array(
+				'sort' => array(
+					'type' => 'dateFormat-yyyy-mm-dd',
+					'ajax' =>'payment_date',
+				),
+				'filter' => array(
+					'type' => 'date',
+					'ajax' =>'filter_payment_date',
 				),
 				'priority' => 5,
 			),
@@ -114,7 +136,7 @@ class Table_Settings_TikiPayment extends Table_Settings_Standard
 				'filter' => array(
 					'type' => false,
 				),
-				'priority' => 1,
+				'priority' => 'critical',
 			),
 		),
 	);

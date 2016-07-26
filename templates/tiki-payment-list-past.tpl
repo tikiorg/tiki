@@ -32,7 +32,7 @@
 					</td>
 				{/if}
 				<td class="integer">{$payment.amount|escape}&nbsp;{$payment.currency|escape}</td>
-				<td class="date">{if !empty($payment.payment_date)}{$payment.payment_date|tiki_short_date|escape}{/if}</td>
+				<td class="date">{if !empty($payment.payment_date)}{$payment.payment_date|tiki_short_date}{/if}</td>
 				<td class="text">{$payment.type|escape}</td>
 				{if $tiki_p_admin eq 'y'}
 					<td class="text">
