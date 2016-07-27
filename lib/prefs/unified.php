@@ -198,7 +198,7 @@ function prefs_unified_list()
 		),
 		'unified_included_plugins' => array(
 			'name' => tra('Except included plugins'),
-			'description' => tra('List of plugin names that are required to be included while indexing, when excluding all.'),
+			'description' => tra('List of plugin names that are required to be included while indexing, when excluding all.'). ' ' . tra('Example: fancytable,list,trackerlist,trackerfilter .'),
 			'type' => 'text',
 			'filter' => 'word',
 			'separator' => ',',
