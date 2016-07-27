@@ -14,7 +14,7 @@ $interactive_collected_strings = array();
 
 /**
  * needs a description
- * @param $content
+ * @param string $content
  * @return mixed|string
  */function tr($content)
 {
