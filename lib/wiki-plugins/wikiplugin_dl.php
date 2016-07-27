@@ -32,7 +32,7 @@ function wikiplugin_dl($data, $params)
 	$lines = explode("\n", $data);
 
 	foreach ($lines as $line) {
-		$parts = explode(":", $line);
+		$parts = explode(":", $line, 2);
 
 		if (isset($parts[0]) && isset($parts[1])) {
 			$result .= '<dt>' . $parts[0] . '</dt><dd>' . $parts[1] . '</dd>';
