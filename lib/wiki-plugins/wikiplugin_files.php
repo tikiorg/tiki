@@ -188,7 +188,6 @@ function wikiplugin_files_info()
 				'since' => '3.0',
 				'filter' => 'alpha',
 				'default' => 'y',
-				'advanced' => true,
 				'options' => array(
 					array('text' => '', 'value' => ''), 
 					array('text' => tra('Yes'), 'value' => 'y'), 
