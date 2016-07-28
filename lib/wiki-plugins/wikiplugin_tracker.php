@@ -1197,15 +1197,16 @@ function wikiplugin_tracker($data, $params)
 					$mail = new TikiMail();
 					$mail->setFrom($emailOptions[0]);
 
+					// collect the subject templates if they exist
 					if (!empty($emailOptions[2])) { //tpl
 						$emailOptions[2] = preg_split('/ *, */', $emailOptions[2]);
 						foreach ($emailOptions[2] as $ieo=>$eo) {
 							if (strpos($eo, 'wiki:') !== 0) {
-								if (!preg_match('/\.tpl$/', $eo)) {
+								if (!preg_match('/\.tpl$/', $eo)) {		// template file
 									$emailOptions[2][$ieo] = $eo . '.tpl';
 								}
 								$tplSubject[$ieo] = str_replace('.tpl', '_subject.tpl', $emailOptions[2][$ieo]);
-							} else {
+							} else {	// wiki template
 								if (! $tikilib->page_exists(substr($eo, 5))) {
 									Feedback::error(tr('Missing wiki email template page "%0"', htmlspecialchars($wiki)));
 									$emailOptions[2][$ieo] = 'tracker_changed_notification.tpl';
@@ -1223,24 +1224,25 @@ function wikiplugin_tracker($data, $params)
 					if (empty($tplSubject)) {
 						$tplSubject = array('tracker_changed_notification_subject.tpl');
 					}
-					$itpl = 0;
+					$templateCounter = 0;
+					$subjectCounter = 0;
 					$smarty->assign('mail_date', $tikilib->now);
 					$smarty->assign('mail_itemId', $rid);
 					foreach ($emailOptions[1] as $ieo=>$ueo) {
-						$mailDir = strpos($tplSubject[$itpl], 'wiki:') !== 0 ? 'mail/' : '';
-						@$mail_data = $smarty->fetch($mailDir .$tplSubject[$itpl]);
+						$mailDir = strpos($tplSubject[$subjectCounter], 'wiki:') !== 0 ? 'mail/' : '';
+						@$mail_data = $smarty->fetch($mailDir .$tplSubject[$subjectCounter]);
 						if (empty($mail_data)) {
 							$mail_data = tra('Tracker was modified at '). $_SERVER['SERVER_NAME'];
 						} else {
 							$mail_data = trim(str_replace('&nbsp;', ' ', strip_tags($mail_data)));	// tidy
 						}
 						$mail->setSubject($mail_data);
-						$mailDir = strpos($emailOptions[2][$itpl], 'wiki:') !== 0 ? 'mail/' : '';	// wiki pages dont start with wiki:
-						$mail_data = $smarty->fetch($mailDir .$emailOptions[2][$itpl]);
+						$mailDir = strpos($emailOptions[2][$templateCounter], 'wiki:') !== 0 ? 'mail/' : '';	// wiki pages dont start with wiki:
+						$mail_data = $smarty->fetch($mailDir .$emailOptions[2][$templateCounter]);
 						if ($emailformat == 'html') {
 							$mail->setHtml($mail_data, strip_tags($mail_data));
 						} else {
-							if (strpos($emailOptions[2][$itpl], 'wiki:') === 0) {
+							if (strpos($emailOptions[2][$templateCounter], 'wiki:') === 0) {
 								$mail_data =  str_replace('&nbsp;', ' ', strip_tags($mail_data));
 							}
 							$mail->setText($mail_data);
@@ -1260,8 +1262,11 @@ function wikiplugin_tracker($data, $params)
 							$logslib = TikiLib::lib('logs');
 							$logslib->add_log('mail', 'plugin tracker email sent / '.$emailOptions[1][$ieo].' / item'.$rid);
 						}
-						if (isset($tplSubject[$itpl+1])) {
-							++$itpl;
+						if (isset($emailOptions[2][$templateCounter + 1])) {
+							++$templateCounter;
+						}
+						if (isset($tplSubject[$subjectCounter + 1])) {
+							++$subjectCounter;
 						}
 					}
 				}
