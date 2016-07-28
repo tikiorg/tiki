@@ -45,6 +45,7 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 						'filter' => 'word',
 						'options' => array(
 							'' => tr('Links'),
+							'barelink' => tr('Bare Links'),
 							'img' => tr('Images'),
 							'vimeo' => tr('Vimeo'),
 							'googleviewer' => tr('Google Viewer'),
@@ -341,6 +342,12 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 						$smarty->assign('files', $files);
 						$ret = $smarty->fetch('trackeroutput/files_googleviewer.tpl');
 					}
+				} else if ($this->getOption('displayMode') == 'barelink') {					
+						$smarty = TikiLib::lib('smarty');
+						$smarty->loadPlugin('smarty_function_object_link');
+						foreach ($this->getConfiguration('files') as $fileId => $file) {
+							$ret .= 'dl' . $file['fileId'];
+						}
 				}
 				$ret = preg_replace('/~\/?np~/', '', $ret);
 			} else {
