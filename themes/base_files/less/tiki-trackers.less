@@ -67,3 +67,35 @@
 .tracker-field-h a {
   font-weight: bold;
 }
+
+
+[class*="tracker-status"] {
+	&:before {
+		display: inline-block;
+		font: normal normal normal 14px/1 FontAwesome;
+		font-size: inherit;
+		text-rendering: auto;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		width: 1.28571429em;
+		text-align: center;
+	}
+	&.highlighted:before {
+		color: inherit;
+	}
+}
+
+.tracker-status-open:before {
+	content: "\f10c";
+	color: green;
+}
+
+.tracker-status-pending:before {
+	content: "\f042";
+	color: orange;
+}
+
+.tracker-status-closed:before {
+	content: "\f05c";
+	color: grey;
+}
