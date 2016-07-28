@@ -209,6 +209,7 @@ jqueryTiki.shortTimeFormat = "'.$prefs['short_time_format_js'].'";
 jqueryTiki.username = "' . $user . '";
 jqueryTiki.userRealName = "' . TikiLib::lib('user')->clean_user($user) . '";
 jqueryTiki.userAvatar = "' . $base_url . TikiLib::lib('userprefs')->get_public_avatar_path($user) . '";
+jqueryTiki.autoToc_offset = ' . $prefs['wiki_inline_toc_offset'] . ';
 ';
 
 	if ($prefs['feature_calendar'] === 'y') {
