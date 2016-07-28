@@ -24,7 +24,7 @@
 			</div>
 		{/if}
 		{if isset($messageSent)}
-			<div>{tr}The link was sent as message to{/tr} {$messageto|escape}</div>
+			<div>{tr}The link was sent as message to{/tr} {$messageSentTo|escape}</div>
 		{/if}
 		{if isset($threadId) and $threadId>0}
 			<div>
@@ -68,7 +68,7 @@
 				{tr}Text{/tr}
 			</label>
 			<div class="col-sm-9">
-				<textarea name="comment" class="form-control" rows="5" id='comment'>{$comment|escape|@default:"{tr}I found an interesting page that I thought you would like.{/tr}"}</textarea>
+				<textarea name="comment" class="form-control" rows="5" id='comment'>{$comment|escape|@default:"{tr}Access rights are granted for the page.{/tr}"}</textarea>
 			</div>
 		</div>
 		{if $prefs.share_display_links eq 'y'}
