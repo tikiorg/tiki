@@ -30,8 +30,8 @@
 			</div>
 		</form>
 	{else}
-		<form method="post" class="confirm-action" action="{service controller=tracker action=update_item format=$format}" id="updateItemForm{$trackerId|escape}">
-			{trackerfields trackerId=$trackerId fields=$fields status=$status itemId=$itemId format=$format}
+		<form method="post" class="confirm-action" action="{service controller=tracker action=update_item format=$format editItemPretty=$editItemPretty}" id="updateItemForm{$trackerId|escape}">
+			{trackerfields trackerId=$trackerId fields=$fields status=$status itemId=$itemId format=$format editItemPretty=$editItemPretty}
 			<div class="submit">
 				<input type="hidden" name="itemId" value="{$itemId|escape}">
 				<input type="hidden" name="trackerId" value="{$trackerId|escape}">
