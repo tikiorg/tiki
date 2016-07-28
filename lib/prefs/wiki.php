@@ -642,6 +642,7 @@ function prefs_wiki_list($partial = false)
 			'name' => tr('Inline table of contents offset'),
 			'description' => tr('Offset for inline table of contents. Useful when there is a fixed navbar (Default is 10)'),
 			'type' => 'text',
+			'filter' => 'digits',
 			'default' => '10',
 			'dependencies' => array(
 				'wiki_inline_auto_toc',
