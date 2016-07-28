@@ -149,7 +149,7 @@ if (isset($_REQUEST['send'])) {
 					$rawuser = $userlib->clean_user($rawuser, ! $check_user_show_realnames, $login_fallback);
 				}
 			$users_formatted[] = htmlspecialchars($rawuser);
-		$message.= tra("Message has been sent to: ") . implode(',', $users_formatted) . "<br />";
+        $message.= tra("Message has been sent to: ") . implode(',  ', $users) . "<br />";
 	} else {
 		$message.= tra('ERROR: No valid users to send the message');
 		$smarty->assign('message', $message);

@@ -66,7 +66,6 @@ if (empty($_REQUEST['report']) || $_REQUEST['report'] != 'y') {
 	} else {
 		$smarty->assign('send_msg', false);
 	}
-	$smarty->assign('messageto', (isset($_REQUEST['messageto'])?$_REQUEST['messageto']:''));
 
 	if (isset($prefs['feature_forums']) and $prefs['feature_forums'] == 'y') {
 		$commentslib = TikiLib::lib('comments'); // not done in commentslib
@@ -469,10 +468,15 @@ function sendMessage($recipients, $subject)
 
 	$ok = true;
 	if (!is_array($recipients)) {
-		$arr_to = preg_split('/\s*(?<!\\\);\s*/', $recipients);
+		$arr_to = preg_split('/\s*(?<!\\\)[;,]\s*/', $recipients);
 	} else {
 		$arr_to = $recipients;
 	}
+    if ($prefs['user_selector_realnames_messu'] == 'y') {
+        $groups = '';
+        $arr_to = $userlib->find_best_user($arr_to, $groups, 'login');
+    }
+
 	$users = array();
 
 	foreach ($arr_to as $a_user) {
@@ -534,6 +538,10 @@ function sendMessage($recipients, $subject)
 		$_REQUEST['priority'],
 		isset($_REQUEST['replyto_hash']) ? $_REQUEST['replyto_hash'] : ''
 	);
+
+    // Assign users e-mail was sent to a SMARTY variable to be displayed:
+    $users_string = implode(',  ', $users);
+    $smarty->assign('messageSentTo', $users_string);
 
 	if ($prefs['feature_actionlog'] == 'y') {
 		$logslib->add_action('Posted', '', 'message', 'add=' . strlen($_REQUEST['body']));
