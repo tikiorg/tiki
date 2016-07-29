@@ -26,6 +26,18 @@ class Table_Settings_TikiPaymentPast extends Table_Settings_TikiPayment
 	protected function getTableSettings()
 	{
 		unset ($this->ts['columns']['#req_date']);
+		$this->ts['columns']['#detail'] = [
+			'sort' => [
+				'type' => 'text',
+				'ajax' => 'detail',
+			],
+			'filter' => [
+				'type' => 'text',
+				'ajax' => 'filter_detail',
+			],
+			'priority' => 6,
+			'hidden' => true,
+		];
 		$this->ts['columns']['#pmt_date'] = [
 			'sort' => [
 				'type' => 'dateFormat-yyyy-mm-dd',
