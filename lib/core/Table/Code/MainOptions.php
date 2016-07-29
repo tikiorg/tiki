@@ -76,6 +76,9 @@ class Table_Code_MainOptions extends Table_Code_Manager
 				if (isset($info['priority'])) {
 					$allcols[$col]['attr']['data-priority'] = $info['priority'];
 				}
+				if (! empty($info['hidden'])) {
+					$allcols[$col]['addClass'][] = 'columnSelector-false';
+				}
 			}
 		}
 		unset($col, $info);

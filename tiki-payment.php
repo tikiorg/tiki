@@ -12,7 +12,6 @@
 if ( isset( $_GET['ipn'] ) ) {
 	$ipn_data = $_POST;
 }
-
 $inputConfiguration = array(
 		array(
 			'staticKeyFilters' => array(
@@ -25,6 +24,7 @@ $inputConfiguration = array(
 				'offset_overdue' => 'digits',
 				'offset_past' => 'digits',
 				'offset_canceled' => 'digits',
+				'offset_authorized' => 'digits',
 				'invoice' => 'digits',
 				'cancel' => 'digits',
 				'note' => 'striptags',
@@ -38,6 +38,20 @@ $inputConfiguration = array(
 				'daconfirm' => 'word',				// ticketlib
 				'ticket' => 'word',
 				'returnurl' => 'url',
+				'tsAjax' => 'word',
+				'list_type' => 'word',
+				'sort_mode' => 'text',
+				'numrows' => 'digits',
+				'filter_paymentRequestId' => 'digits',
+				'filter_description' => 'text',
+				'filter_detail' => 'text',
+				'filter_amount' => 'text',
+				//need to allow <= and >= for these - will filter later
+				'filter_request_date' => 'none',
+				'filter_payment_date' => 'none',
+				'filter_type' => 'text',
+				'filter_login' => 'text',
+				'filter_payer' => 'text',
 			),
 			'staticKeyFiltersForArrays' => array('cart' => 'digits',),	// params for cart module
 			'catchAllUnset' => null,
@@ -168,7 +182,44 @@ function fetch_payment_list($type)
 	$offsetKey = 'offset_' . $type;
 	$method = 'get_' . $type;
 	$offset = isset($_REQUEST[$offsetKey]) ? intval($_REQUEST[$offsetKey]) : 0;
-	$max = intval($prefs['maxRecords']);
+	$max = !empty($_REQUEST['numrows']) ? $_REQUEST['numrows'] : intval($prefs['maxRecords']);
+
+	if (!empty($_REQUEST)) {
+		$fields = array_keys($paymentlib->fieldmap);
+		foreach ($fields as $field) {
+			if (array_key_exists('filter_' . $field, $_REQUEST)) {
+				$filter[$field] = $_REQUEST['filter_' . $field];
+			}
+		}
+	}
+	$filter = !empty($filter) ? $filter : [];
+	$dfields = ['request_date', 'payment_date'];
+	foreach ($dfields as $dfield) {
+		if (!empty($filter[$dfield])) {
+			$datefilter = explode(' - ', $filter[$dfield]);
+			if (count($datefilter) === 2) {
+				$tsfrom =  intval(substr($datefilter[0], 0, 10));
+				$fromobj = new DateTime("@$tsfrom");
+				$tsto =  intval(substr($datefilter[1], 0, 10));
+				$toobj = new DateTime("@$tsto");
+				$filter[$dfield] = '>= \'' . $fromobj->format('Y-m-d H:i:s') . '\' AND '
+					. $paymentlib->fieldmap[$dfield]['table'] . '.`' . $dfield . '` <= \''
+					. $toobj->format('Y-m-d H:i:s') . '\'';
+			} else {
+				$ts = intval(substr($filter[$dfield], 2, 10));
+				$dateobj = new DateTime("@$ts");
+				$op = substr($filter[$dfield], 0, 2);
+				$op = in_array($op, ['<=', '>=']) ?  $op : '';
+				if ($op) {
+					$filter[$dfield] = substr($filter[$dfield], 0, 2) . ' \'' . $dateobj->format('Y-m-d H:i:s') . '\'';
+				} else {
+					unset($filter[$dfield]);
+				}
+			}
+		}
+	}
+
+	$sort = !empty($_REQUEST['sort_mode']) ? $_REQUEST['sort_mode'] : null;
 
 	$forUser = '';
 	if (!$globalperms->payment_admin
@@ -182,12 +233,35 @@ function fetch_payment_list($type)
 	) {
 		$forUser = $user;
 	}
-	$data = $paymentlib->$method($offset, $max, $forUser);
+	$data = $paymentlib->$method($offset, $max, $forUser, $filter, $sort);
 	$data['offset'] = $offset;
 	$data['offset_arg'] = "offset_$type";
 	$data['max'] = $max;
-
 	$smarty->assign($type, $data);
+
+	//add tablesorter sorting and filtering
+	$ts['enabled'] = Table_Check::isEnabled(true);
+	$ts['ajax'] = Table_Check::isAjaxCall();
+	static $iid = 0;
+	++$iid;
+	$ts['tableid'] = 'pmt_' . $type . $iid;
+	$smarty->assign('ts', $ts);
+
+	if ($ts['enabled'] && !$ts['ajax']) {
+		$tableclass = $type == 'past' ? 'TikiPaymentPast' : 'TikiPayment';
+		Table_Factory::build(
+			$tableclass,
+			array(
+				'id' => 'pmt_' . $type,
+				'total' => $data['cant'],
+				'ajax' => array(
+					'requiredparams' => array(
+						'list_type' => $type,
+					),
+				)
+			)
+		);
+	}
 }
 
 if ( $prefs['feature_categories'] == 'y' && $globalperms->payment_request ) {
@@ -202,12 +276,20 @@ if ( isset($_REQUEST['invoice']) ) {
 	$smarty->assign('invoice', $_REQUEST['invoice']);
 }
 
-fetch_payment_list('outstanding');
-fetch_payment_list('overdue');
-fetch_payment_list('past');
-fetch_payment_list('canceled');
-fetch_payment_list('authorized');
+if (Table_Check::isEnabled(true) && Table_Check::isAjaxCall()) {
+	$types = ['outstanding', 'overdue', 'past', 'canceled', 'authorized'];
+	if (!empty($_REQUEST['list_type']) && in_array($_REQUEST['list_type'], $types)) {
+		fetch_payment_list($_REQUEST['list_type']);
+	}
+	$smarty->display('tiki-payment.tpl');
+} else {
+	fetch_payment_list('outstanding');
+	fetch_payment_list('overdue');
+	fetch_payment_list('past');
+	fetch_payment_list('canceled');
+	fetch_payment_list('authorized');
+	$smarty->assign('mid', 'tiki-payment.tpl');
+	$smarty->display('tiki.tpl');
+}
 
-$smarty->assign('mid', 'tiki-payment.tpl');
-$smarty->display('tiki.tpl');
 
