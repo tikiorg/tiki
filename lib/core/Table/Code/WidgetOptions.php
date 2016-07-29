@@ -27,6 +27,7 @@ class Table_Code_WidgetOptions extends Table_Code_Manager
 	{
 		$wo[] = 'stickyHeaders : \'ts-stickyHeader\'';
 		$wo[] = 'resizable : true';
+		$wo[] = 'columnSelector_mediaqueryHidden : true';
 		//sort
 		if (parent::$sorts) {
 			//row grouping
