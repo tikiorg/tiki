@@ -62,6 +62,7 @@ class Table_Settings_TikiPayment extends Table_Settings_Standard
 					'ajax' =>'filter_detail',
 				),
 				'priority' => 6,
+				'hidden' => true,
 			),
 			'#amount' => array(
 				'sort' => array(
