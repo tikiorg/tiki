@@ -7629,8 +7629,12 @@ body.wikitext {
   display: inline-block;
 }
 .editable-inline.loaded {
-  background: transparent;
+  background: #fff;
   position: absolute;
+  padding: 6px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  z-index: 1001;
 }
 .editable-inline.failure {
   background: transparent url('../../../img/icons/lock_gray.png') no-repeat top right;
