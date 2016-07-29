@@ -230,7 +230,7 @@ function wikiplugin_trackerfilter($data, $params)
 					});'
 	);
 	if ($prefs['jquery_ui_chosen'] === 'y') {
-		$headerlib->add_css('@media (min-width: 768px) { .trackerfilter form .table-responsive { overflow-x: visible; overflow-y: visible; }} /* jquery_ui_chosen specific: edit this in wikiplugin_trackerfilter.php */');
+		$headerlib->add_css('@media (min-width: 768px) { .tiki .trackerfilter form .table-responsive { overflow-x: visible; overflow-y: visible; }} /* jquery_ui_chosen specific: edit this in wikiplugin_trackerfilter.php */');
 	} // TODO: move the CSS to less and add class html attribute in wikiplugin_trackerfilter.tpl instead
 
 	if (!empty($_REQUEST['tracker_filters']) && count($_REQUEST['tracker_filters']) > 0) {
