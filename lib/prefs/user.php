@@ -316,7 +316,8 @@ function prefs_user_list($partial = false)
 			'description' => tr("Forces a user to upload an avatar if they haven't already by prompting them with a modal"),
 			'type' => 'flag',
 			'tags' => array('advanced'),
-			'default' => 'n'
+			'default' => 'n',
+			'dependencies' => array('feature_userPreferences'),
 		),
 	);
 }
