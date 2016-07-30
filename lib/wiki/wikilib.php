@@ -1499,24 +1499,24 @@ class WikiLib extends TikiLib
 					$isAddInlineToc = isset($prefs['wiki_inline_auto_toc']) ? $prefs['wiki_inline_auto_toc'] === 'y' : false;
 					if ($isAddInlineToc) {
 						// Enable static, inline TOC
-						$headerlib->add_css('div#outerToc-static {display: block;}');
+						$headerlib->add_css('#autotoc {display: block;}');
 
 						// Postion TOC top/left/right
-						$tocPos = !empty($prefs['wiki_inline_toc_pos']) ? $prefs['wiki_inline_toc_pos'] : 'right';
+						$tocPos = !empty($prefs['wiki_toc_pos']) ? $prefs['wiki_toc_pos'] : 'right';
 						switch(strtolower($tocPos)) {
 							case 'top':
-								$headerlib->add_css('div#outerToc-static {border: 0px;}');
+								$headerlib->add_css('#autotoc {border: 0px;}');
 								break;
 							case 'left':
-								$headerlib->add_css('div#outerToc-static {float: left;}');
+								$headerlib->add_css('#autotoc {float: left;}');
 								break;
 							case 'right':
 							default:
-								$headerlib->add_css('div#outerToc-static {float: right;}');
+								$headerlib->add_css('#autotoc {float: right;}');
 								break;
 						}
 					} else {
-						$headerlib->add_css('div#outerToc-static {display: none;}');
+						//$headerlib->add_css('#autotoc {display: none;}');
 					}
 				}
 			}

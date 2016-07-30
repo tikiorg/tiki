@@ -3258,7 +3258,7 @@ body.tiki.navbar-padding {
 }
 .affix {
   position: fixed;
-  top: 20px;
+  top: 10px;
 }
 .affix-bottom {
   position: absolute;

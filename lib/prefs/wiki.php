@@ -629,23 +629,23 @@ function prefs_wiki_list($partial = false)
 				'wiki_auto_toc',
 			),
 		),
-		'wiki_inline_toc_pos' => array(
-			'name' => tr('Inline table of contents position'),
-			'description' => tr('Position for inline table of contents. One of top, left, right (right is the default)'),
+		'wiki_toc_pos' => array(
+			'name' => tr('Table of contents position'),
+			'description' => tr('Position for table of contents. One of top, left, right (right is the default)'),
 			'type' => 'text',
 			'default' => 'right',
 			'dependencies' => array(
-				'wiki_inline_auto_toc',
+				'wiki_auto_toc',
 			),
 		),
-		'wiki_inline_toc_offset' => array(
-			'name' => tr('Inline table of contents offset'),
-			'description' => tr('Offset for inline table of contents. Useful when there is a fixed navbar (Default is 10)'),
+		'wiki_toc_offset' => array(
+			'name' => tr('Table of contents offset'),
+			'description' => tr('Offset for table of contents. Useful when there is a fixed navbar (Default is 10)'),
 			'type' => 'text',
 			'filter' => 'digits',
 			'default' => '10',
 			'dependencies' => array(
-				'wiki_inline_auto_toc',
+				'wiki_auto_toc',
 			),
 		),
 		'wiki_page_hide_title' => array(
