@@ -1499,9 +1499,9 @@ class WikiLib extends TikiLib
 					$isAddInlineToc = isset($prefs['wiki_inline_auto_toc']) ? $prefs['wiki_inline_auto_toc'] === 'y' : false;
 					if ($isAddInlineToc) {
 						// Enable static, inline TOC
-						$headerlib->add_css('#autotoc {display: block;}');
+						//$headerlib->add_css('#autotoc {display: block;}');
 
-						// Postion TOC top/left/right
+						// Postion inline TOC top/left/right
 						$tocPos = !empty($prefs['wiki_toc_pos']) ? $prefs['wiki_toc_pos'] : 'right';
 						switch(strtolower($tocPos)) {
 							case 'top':
@@ -1515,8 +1515,9 @@ class WikiLib extends TikiLib
 								$headerlib->add_css('#autotoc {float: right;}');
 								break;
 						}
-					} else {
-						//$headerlib->add_css('#autotoc {display: none;}');
+					} else {//Not inline TOC
+						//$headerlib->add_css('#autotoc {display: block;}');
+						$headerlib->add_css('.affix {top:' . $prefs["wiki_toc_offset"] . 'px;}');
 					}
 				}
 			}
