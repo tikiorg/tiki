@@ -52,36 +52,53 @@
 		{/permission}
 		{permission name=payment_request}
 			{tab name="{tr}Request{/tr}"}
-				<form method="post" action="">
+				<form method="post" action=""><br>
+					<div class="form-group">
+						<label class="col-sm-3 control-label text-right" for="description">
+							{tr}Description{/tr}
+						</label>
+						<div class="col-sm-8 input-group">
+							<input class="form-control" type="text" id="description" name="description">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label text-right" for="detail">
+							{tr}Detail{/tr}
+						</label>
+						<div class="col-sm-8 input-group">
+							<textarea class="form-control" id="detail" name="detail" style="width: 100%;" rows="6"></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label text-right" for="amount">
+							{tr}Amount{/tr}
+						</label>
+						<div class="col-sm-8 input-group">
+							<input type="text" id="amount" name="amount" class="form-control text-right">
+							<span class="input-group-addon">
+								{$prefs.payment_currency|escape}
+							</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label text-right" for="payable">
+							{tr}Payable within{/tr}
+						</label>
+					</div>
+					<div class="col-sm-8 input-group">
+						<input type="text" id="payable" class="text-right form-control" name="payable" value="{$prefs.payment_default_delay|escape}">
+						<span class="input-group-addon">
+							{tr}days{/tr}
+						</span>
+					</div><br>
 					{if $prefs.feature_categories eq 'y'}
-						<fieldset>
-							<legend>{tr}Categories{/tr}</legend>
-							{include file="categorize.tpl" notable=y}
-						</fieldset>
+						{include file="categorize.tpl" labelcol=3 labelclass='text-right' inputcol=8 inputgroup=y}
 					{/if}
-					<fieldset>
-						<label for="description">{tr}Description:{/tr}</label>
-						<input type="text" id="description" name="description">
-					</fieldset>
-
-					<fieldset>
-						<label for="detail">{tr}Detail:{/tr}</label>
-						<textarea id="detail" name="detail" style="width: 100%;" rows="10"></textarea>
-					</fieldset>
-
-					<fieldset>
-						<label for="amount">{tr}Amount:{/tr}</label>
-						<input type="text" id="amount" name="amount" class="text-right">
-						{$prefs.payment_currency|escape}
-					</fieldset>
-
-					<fieldset>
-						<label for="payable">{tr}Payable within:{/tr}</label>
-						<input type="text" id="payable" class="text-right" name="payable" value="{$prefs.payment_default_delay|escape}">
-						{tr}days{/tr}
-					</fieldset>
-
-					<p><input type="submit" class="btn btn-default btn-sm" name="request" value="{tr}Request{/tr}"></p>
+					<div class="form-group">
+						<div class="col-sm-8 col-sm-offset-3 input-group">
+							<input type="submit" class="btn btn-primary" name="request" value="{tr}Request{/tr}">
+						</div>
+					</div>
 				</form>
 			{/tab}
 		{/permission}
