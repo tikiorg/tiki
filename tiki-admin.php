@@ -247,7 +247,7 @@ if (isset($_REQUEST['prefrebuild'])) {
 $admin_icons = array(
 	"general" => array(
 		'title' => tr('General'),
-		'description' => tr('Global site configuration, date formats, admin password, etc.'),
+		'description' => tr('Global site configuration, date formats, etc.'),
 		'help' => 'General Admin',
 	),
 	"features" => array(
