@@ -19,7 +19,7 @@
 				<td class="id">{$payment.paymentRequestId}</td>
 				<td class="text">
 					{self_link invoice=$payment.paymentRequestId}
-					{if $payment.paymentRequestId eq $smarty.request.invoice}
+					{if isset($smarty.request.invoice) && $payment.paymentRequestId eq $smarty.request.invoice}
 						<strong>{$payment.description|escape}</strong>
 					{else}
 						{$payment.description|escape}

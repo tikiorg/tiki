@@ -90,8 +90,8 @@
 						<span class="input-group-addon">
 							{tr}days{/tr}
 						</span>
-					</div>
-					{if $prefs.feature_categories eq 'y'}<br>
+					</div><br>
+					{if $prefs.feature_categories eq 'y'}
 						{include file="categorize.tpl" labelcol=3 labelclass='text-right' inputcol=8 inputgroup=y}
 					{/if}
 					<div class="form-group">
