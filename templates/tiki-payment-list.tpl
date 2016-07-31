@@ -7,7 +7,7 @@
 			<th id="amount">{tr}Amount{/tr}</th>
 			<th id="req_date">{tr}Request Date{/tr}</th>
 			{if $tiki_p_admin eq 'y'}<th id="user">{tr}User{/tr}</th>{/if}
-			<th id="actions">{tr}Actions{/tr}</th>
+			<th id="actions"></th>
 		</tr>
 		</thead>
 		<tbody>
@@ -19,14 +19,28 @@
 					<td class="date">{if !empty($payment.request_date)}{if $prefs.jquery_timeago eq 'y'}{$payment.request_date|tiki_short_date}{else}{$payment.request_date|tiki_short_date|escape}{/if}{/if}</td>
 					{if $tiki_p_admin eq 'y'}<td class="text">{$payment.user|userlink}</td>{/if}
 					<td class="action">
-						{self_link invoice=$payment.paymentRequestId _icon_name='textfile' _class=tips _title=":{tr}View payment request{/tr}"}
-						{/self_link}
-						{permission type=payment object=$payment.paymentRequestId name=payment_admin}
-						{permission_link type="payment" id=$payment.paymentRequestId title=$payment.description}
-						{/permission}
-						{if $cancel and ($payment.user eq $user or $tiki_p_payment_admin)}
-							{self_link _ajax=n cancel=$payment.paymentRequestId _icon_name='remove' _class='tips' _title=":{tr}Cancel this payment request{/tr}"}
-							{/self_link}
+						{capture name=pmt_actions}
+							{strip}
+								{$libeg}{self_link invoice=$payment.paymentRequestId _icon_name='textfile' _menu_text='y' _menu_icon='y'}{tr}View payment request{/tr}{/self_link}{$liend}
+								{permission type=payment object=$payment.paymentRequestId name=payment_admin}
+									{$libeg}{permission_link type="payment" id=$payment.paymentRequestId title=$payment.description mode=text}{$liend}
+								{/permission}
+								{if $cancel and ($payment.user eq $user or $tiki_p_payment_admin)}
+									{$libeg}{self_link _ajax=n cancel=$payment.paymentRequestId _icon_name='remove' _menu_text='y' _menu_icon='y'}{tr}Cancel this payment request{/tr}{/self_link}{$liend}
+								{/if}
+							{/strip}
+						{/capture}
+						{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+						<a
+							class="tips"
+							title="{tr}Actions{/tr}" href="#"
+							{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.pmt_actions|escape:"javascript"|escape:"html"}{/if}
+							style="padding:0; margin:0; border:0"
+						>
+							{icon name='settings'}
+						</a>
+						{if $js === 'n'}
+							<ul class="dropdown-menu" role="menu">{$smarty.capture.pmt_actions}</ul></li></ul>
 						{/if}
 					</td>
 				</tr>

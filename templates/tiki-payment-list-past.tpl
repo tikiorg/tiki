@@ -55,14 +55,28 @@
 					</td>
 				{/if}
 				<td class="action">
-					{self_link invoice=$payment.paymentRequestId _icon_name="textfile" _class=tips _title=":{tr}View payment info{/tr}"}
-					{/self_link}
-					{permission type=payment object=$payment.paymentRequestId name=payment_admin}
-					{permission_link type=payment id=$payment.paymentRequestId title=$payment.description}
-					{/permission}
-					{if isset($cancel) and ($payment.user eq $user or $tiki_p_payment_admin)}
-						{self_link _ajax=n cancel=$payment.paymentRequestId _icon_name='remove' _class=tips _title=":{tr}Cancel this payment request{/tr}"}
-						{/self_link}
+					{capture name=past_actions}
+						{strip}
+							{$libeg}{self_link invoice=$payment.paymentRequestId _icon_name="textfile" _menu_text='y' _menu_icon='y'}{tr}View payment info{/tr}{/self_link}{$liend}
+							{permission type=payment object=$payment.paymentRequestId name=payment_admin}
+								{$libeg}{permission_link type=payment id=$payment.paymentRequestId title=$payment.description mode=text}{$liend}
+							{/permission}
+							{if isset($cancel) and ($payment.user eq $user or $tiki_p_payment_admin)}
+								{$libeg}{self_link _ajax=n cancel=$payment.paymentRequestId _icon_name='remove' _menu_text='y' _menu_icon='y'}{tr}Cancel this payment request{/tr}{/self_link}{$liend}
+							{/if}
+						{/strip}
+					{/capture}
+					{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+					<a
+						class="tips"
+						title="{tr}Actions{/tr}" href="#"
+						{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.past_actions|escape:"javascript"|escape:"html"}{/if}
+						style="padding:0; margin:0; border:0"
+					>
+						{icon name='settings'}
+					</a>
+					{if $js === 'n'}
+						<ul class="dropdown-menu" role="menu">{$smarty.capture.past_actions}</ul></li></ul>
 					{/if}
 				</td>
 			</tr>
