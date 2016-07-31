@@ -23,7 +23,7 @@ function smarty_block_permission($params, $content, $smarty, &$repeat)
 	if ( $repeat ) return;
 
 	// Removing and Modifying a tracker item require a special permissions check
-	if ( $params['type'] == 'trackeritem' ) {
+	if ( !empty($params['type']) && $params['type'] == 'trackeritem' ) {
 		$removePerms = ['remove_tracker_items','remove_tracker_items_pending','remove_tracker_items_closed'];
 		$modifyPerms = ['modify_tracker_items','modify_tracker_items_pending','modify_tracker_items_closed'];
 
