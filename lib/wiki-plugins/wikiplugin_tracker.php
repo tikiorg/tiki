@@ -284,8 +284,8 @@ function wikiplugin_tracker_info()
 				'default' => '',
 				'options' => array(
 					array('text' => '', 'value' => ''),
-					array('text' => tra('lastModif - Ascending'), 'value' => 'lastModifAsc'),//Not working
-					array('text' => tra('lastModif - Descending'), 'value' => 'lastModifDesc'),//Not working
+					//array('text' => tra('lastModif - Ascending'), 'value' => 'lastModifAsc'),//Not working
+					//array('text' => tra('lastModif - Descending'), 'value' => 'lastModifDesc'),//Not working
 					array('text' => tra('creationDate - Ascending'), 'value' => 'creationAsc'),
 					array('text' => tra('creationDate - Descending'), 'value' => 'creationDesc')
 				),
