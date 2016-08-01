@@ -88,7 +88,8 @@
 				{preference name=wiki_auto_toc}
 				<div class="adminoptionbox clearfix" id="wiki_auto_toc_childcontainer">
 					{preference name=wiki_inline_auto_toc}
-					{preference name=wiki_inline_toc_pos}
+					{preference name=wiki_toc_pos}
+					{preference name=wiki_toc_offset}
 				</div>
 			</fieldset>
 			<fieldset>

@@ -3117,10 +3117,10 @@ body.tiki.navbar-padding {
 }
 .affix {
   position: fixed;
-  top: 20px;
 }
 .affix-bottom {
   position: absolute;
+  left:0!important;
 }
 .col-sm-2 .form-inline .form-control,
 .col-md-2 .form-inline .form-control {
@@ -3976,6 +3976,7 @@ div.tiki_plugin {
 }
 #autotoc {
   position: relative;
+  padding:0;
 }
 .autotoc.affix {
   top: 0;
