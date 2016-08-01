@@ -1495,11 +1495,17 @@ class WikiLib extends TikiLib
 					// Enable Auto TOC
 					$headerlib->add_jsfile('lib/jquery_tiki/autoToc.js');
 
+					//Get autoToc offset
+					$tocOffset = !empty($prefs['wiki_toc_offset']) ? $prefs['wiki_toc_offset'] : 10;
+
 					// Show/Hide the static inline TOC
 					$isAddInlineToc = isset($prefs['wiki_inline_auto_toc']) ? $prefs['wiki_inline_auto_toc'] === 'y' : false;
 					if ($isAddInlineToc) {
 						// Enable static, inline TOC
 						//$headerlib->add_css('#autotoc {display: block;}');
+
+						//Add top margin
+						$headerlib->add_css('#autotoc {margin-top:' . $tocOffset . 'px;}');
 
 						// Postion inline TOC top/left/right
 						$tocPos = !empty($prefs['wiki_toc_pos']) ? $prefs['wiki_toc_pos'] : 'right';
@@ -1516,8 +1522,9 @@ class WikiLib extends TikiLib
 								break;
 						}
 					} else {//Not inline TOC
-						//$headerlib->add_css('#autotoc {display: block;}');
-						$headerlib->add_css('.affix {top:' . $prefs["wiki_toc_offset"] . 'px;}');
+						//$headerlib->add_css('#autotoc {display: none;}');
+						//Adds the offset for the affix
+						$headerlib->add_css('.affix {top:' . $tocOffset . 'px;}');
 					}
 				}
 			}

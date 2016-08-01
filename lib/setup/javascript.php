@@ -211,7 +211,7 @@ jqueryTiki.userRealName = "' . TikiLib::lib('user')->clean_user($user) . '";
 jqueryTiki.userAvatar = "' . $base_url . TikiLib::lib('userprefs')->get_public_avatar_path($user) . '";
 jqueryTiki.autoToc_inline = ' . (($prefs['wiki_inline_auto_toc'] == 'y') ? 'true' : 'false') . ';
 jqueryTiki.autoToc_pos = "' . $prefs['wiki_toc_pos'] . '";
-jqueryTiki.autoToc_offset = ' . $prefs['wiki_toc_offset'] . ';
+jqueryTiki.autoToc_offset = ' . (!empty($prefs['wiki_toc_offset']) ? $prefs['wiki_toc_offset'] : 10) . ';
 ';
 
 	if ($prefs['feature_calendar'] === 'y') {
