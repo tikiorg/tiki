@@ -615,16 +615,16 @@ function prefs_wiki_list($partial = false)
 		),
 		'wiki_auto_toc' => array(
 			'name' => tr('Wiki auto-toc'),
-			'description' => tr('Automatic table of contents generation for wiki pages. The generated table of contents will display as a fixed-position aside next to the page contents.'),
+			'description' => tr('Automatic table of contents generation for wiki pages. The generated table of contents will display as a fixed-position aside next to the page contents. This setting can be toggled per page, in the page properties.'),
 			'type' => 'flag',
 			'help' => 'Auto TOC',
 			'default' => 'n',
 		),
 		'wiki_inline_auto_toc' => array(
-			'name' => tr('Add inline auto-toc'),
-			'description' => tr('Automatically add an inline table of contents for wiki pages. This setting can be toggled per page, in the page properties'),
+			'name' => tr('Inline auto-toc'),
+			'description' => tr('Change the dispay of the table of contents for wiki pages to inline.'),
 			'type' => 'flag',
-			'default' => 'y',
+			'default' => 'n',
 			'dependencies' => array(
 				'wiki_auto_toc',
 			),
@@ -632,7 +632,12 @@ function prefs_wiki_list($partial = false)
 		'wiki_toc_pos' => array(
 			'name' => tr('Table of contents position'),
 			'description' => tr('Position for table of contents. One of top, left, right (right is the default)'),
-			'type' => 'text',
+			'type' => 'list',
+			'options' => array(
+				'right' => tra('Right'),
+				'left' => tra('Left'),
+				'top' => tra('Top'),
+			),
 			'default' => 'right',
 			'dependencies' => array(
 				'wiki_auto_toc',
@@ -640,7 +645,7 @@ function prefs_wiki_list($partial = false)
 		),
 		'wiki_toc_offset' => array(
 			'name' => tr('Table of contents offset'),
-			'description' => tr('Offset for table of contents. Useful when there is a fixed navbar (Default is 10)'),
+			'description' => tr('Offset for table of contents. Useful when there is a fixed navbar (Default is 10). If used with inline TOC, will behave as a top margin.'),
 			'type' => 'text',
 			'filter' => 'digits',
 			'default' => '10',
