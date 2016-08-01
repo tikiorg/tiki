@@ -1994,6 +1994,9 @@ function wikiplugin_trackerlist($data, $params)
 			//determine whether totals will be added to bottom of table
 			if (isset($ts->settings)) {
 				Table_Totals::setTotals($ts->settings);
+				if (isset($ts->settings['pager']['max']) && $ts->settings['pager']['max'] > 0 && $tsServer) {
+					$items['data'] = array_slice($items['data'], 0, $ts->settings['pager']['max']);
+				}
 			}
 			//handle certain tablesorter sorts
 			if (isset($sortcol) && $items['cant'] > 1) {
