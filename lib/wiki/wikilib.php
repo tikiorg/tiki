@@ -1508,11 +1508,11 @@ class WikiLib extends TikiLib
 								$headerlib->add_css('#autotoc {border: 0px;}');
 								break;
 							case 'left':
-								$headerlib->add_css('#autotoc {float: left;}');
+								$headerlib->add_css('#autotoc {float: left;margin-right:15px;}');
 								break;
 							case 'right':
 							default:
-								$headerlib->add_css('#autotoc {float: right;}');
+								$headerlib->add_css('#autotoc {float: right;margin-left:15px;}');
 								break;
 						}
 					} else {//Not inline TOC
