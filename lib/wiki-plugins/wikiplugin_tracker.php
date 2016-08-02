@@ -251,13 +251,49 @@ function wikiplugin_tracker_info()
 					array('text' => '', 'value' => ''),
 					array('text' => tra('Group'), 'value' => 'group'),
 					array('text' => tra('Page'), 'value' => 'page'),
-					array('text' => tra('User'), 'value' => 'user')
+					array('text' => tra('User'), 'value' => 'user'),
+					array('text' => tra('User&field'), 'value' => 'userandfield')
 				)
 			),
+			'userfieldtofilter' => array(
+				'required' => false,
+				'name' => tra('User field to filter'),
+				'description' => tra('User field to filter user tracker items to:').' <code>view="user&field"</code>',
+				'since' => '15.3',
+				'default' => '',
+			),
+			'fieldtofilter' => array(
+				'required' => false,
+				'name' => tra('Field to filter'),
+				'description' => tra('Field to filter user tracker items to:').' <code>view="user&field"</code>',
+				'since' => '15.3',
+				'default' => '',
+			),
+			'fieldtofiltervalue' => array(
+				'required' => false,
+				'name' => tra('Field to filter Value'),
+				'description' => tra('Value to filter user tracker items to:').' <code>view="user&field"</code>',
+				'since' => '15.3',
+				'default' => '',
+			),
+			'fieldtofiltercriteria' => array(
+				'required' => false,
+				'name' => tra('Criteria'),
+				'description' => tra('If more than one item found, will choose under this criteria. Used in combination with:').'<code>view="user&field"</code>',
+				'since' => '15.3',
+				'default' => '',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					//array('text' => tra('lastModif - Ascending'), 'value' => 'lastModifAsc'),//Not working
+					//array('text' => tra('lastModif - Descending'), 'value' => 'lastModifDesc'),//Not working
+					array('text' => tra('creationDate - Ascending'), 'value' => 'creationAsc'),
+					array('text' => tra('creationDate - Descending'), 'value' => 'creationDesc')
+				),
+			),			
 			'status' => array(
 				'required' => false,
 				'name' => tra('Status'),
-				'description' => tra('Status of the item used in combination with:').' <code>view="user"</code>',
+				'description' => tra('Status of the item used in combination with:').' <code>view="user"</code>'.tra('or').'<code>view="user&field"</code>',
 				'since' => '6.0',
 				'default' => '',
 			),
@@ -625,6 +661,17 @@ function wikiplugin_tracker($data, $params)
 			$itemId = $trklib->get_item_id($trackerId, $gtid['groupFieldId'], $group);
 			$grouptracker = true;
 		}
+		} elseif (!empty($view) && $view == 'userandfield' && $userfieldtofilter && $fieldtofilter && $fieldtofiltervalue) {
+		$trackerinfo = Tracker_Query::tracker($trackerId)
+					->filter(array('field'=>$userfieldtofilter, 'value'=>$user))
+					->filter(array('field'=>$fieldtofilter, 'value'=>$fieldtofiltervalue))
+					->status(strlen($status) >= 1 ? $status : 'opc')
+					->lastModif($fieldtofiltercriteria == 'lastModifAsc' || $fieldtofiltercriteria == 'lastModifDesc' ? true : false)//Not Working
+					->created($fieldtofiltercriteria == 'creationAsc' || $fieldtofiltercriteria == 'creationDesc' ? true : false)
+					->desc($fieldtofiltercriteria == 'creationDesc' || $fieldtofiltercriteria == 'creationDesc' ? true : false)
+					->query();
+		$itemIds = array_keys($trackerinfo);
+		$itemId = $itemIds[0];
 	}
 	if (!isset($trackerId)) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
