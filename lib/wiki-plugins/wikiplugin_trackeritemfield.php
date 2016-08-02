@@ -88,7 +88,7 @@ function wikiplugin_trackeritemfield_info()
 				),
 			),
 			'value' => array(
-				'required' => true,
+				'required' => false,
 				'name' => tra('Value'),
 				'description' => tra('Value to compare against.'),
 				'since' => '2.0',
