@@ -7372,7 +7372,7 @@ body.wikitext {
   display: inline-block;
 }
 .editable-inline.loaded {
-  background: #fff;
+  background: #202020;
   position: absolute;
   padding: 6px;
   border: 1px solid #eee;
