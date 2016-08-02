@@ -345,8 +345,9 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 				} else if ($this->getOption('displayMode') == 'barelink') {					
 						$smarty = TikiLib::lib('smarty');
 						$smarty->loadPlugin('smarty_function_object_link');
+						$smarty->loadPlugin('smarty_modifier_sefurl');
 						foreach ($this->getConfiguration('files') as $fileId => $file) {
-							$ret .= 'dl' . $file['fileId'];
+							$ret .= smarty_modifier_sefurl($file['fileId'], 'file');
 						}
 				}
 				$ret = preg_replace('/~\/?np~/', '', $ret);
