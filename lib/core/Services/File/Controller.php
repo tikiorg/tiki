@@ -84,6 +84,13 @@ class Services_File_Controller
 			throw new Services_Exception(tr('File could not be uploaded. Restrictions apply.'), 406);
 		}
 
+		$cat_type = 'file';
+		$cat_objid = $fileId;
+		$cat_desc = null;
+		$cat_name = $name;
+		$cat_href = "tiki-download_file.php?fileId=$fileId";
+		include('categorize.php');
+
 		return array(
 			'size' => $size,
 			'name' => $name,
