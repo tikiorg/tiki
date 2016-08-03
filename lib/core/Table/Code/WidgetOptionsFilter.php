@@ -26,6 +26,7 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 	protected function getOptionArray()
 	{
 		if (parent::$filters) {
+			$custom_filter = false;
 			$wof[] = 'filter_cssFilter : \'form-control\'';
 			//allows for different label versus value in dropdowns
 			$wof[] = 'filter_selectSourceSeparator : \'|\'';
@@ -68,6 +69,67 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 									}
 								} elseif (!parent::$ajax) {
 									$ffunc[] = $colpointer . ' : true';
+									if( !$custom_filter ) {
+										// 
+										$custom_filter = true;
+										$wof[] = 'filter_matchType : { \'input\': \'exact\', \'select\': \'match\' }';
+										$wof[] = 'filter_selectSource : function( table, column, onlyAvail ) {
+				table = $( table )[0];
+				var rowIndex, tbodyIndex, len, row, cell, cache, indx, child, childLen,
+					c = table.config,
+					wo = c.widgetOptions,
+					arry = [];
+				for ( tbodyIndex = 0; tbodyIndex < c.$tbodies.length; tbodyIndex++ ) {
+					cache = c.cache[tbodyIndex];
+					len = c.cache[tbodyIndex].normalized.length;
+					// loop through the rows
+					for ( rowIndex = 0; rowIndex < len; rowIndex++ ) {
+						// get cached row from cache.row ( old ) or row data object
+						// ( new; last item in normalized array )
+						row = cache.row ?
+							cache.row[ rowIndex ] :
+							cache.normalized[ rowIndex ][ c.columns ].$row[0];
+						// check if has class filtered
+						if ( onlyAvail && row.className.match( wo.filter_filteredRow ) ) {
+							continue;
+						}
+						// get non-normalized cell content
+						if ( wo.filter_useParsedData ||
+							c.parsers[column].parsed ||
+							c.$headerIndexed[column].hasClass( \'filter-parsed\' ) ) {
+							arry[ arry.length ] = \'\' + cache.normalized[ rowIndex ][ column ];
+							// child row parsed data
+							if ( wo.filter_childRows && wo.filter_childByColumn ) {
+								childLen = cache.normalized[ rowIndex ][ c.columns ].$row.length - 1;
+								for ( indx = 0; indx < childLen; indx++ ) {
+									arry[ arry.length ] = \'\' + cache.normalized[ rowIndex ][ c.columns ].child[ indx ][ column ];
+								}
+							}
+						} else {
+							// get raw cached data instead of content directly from the cells
+							// and parse by new line to add rows as separate values
+							cell = cache.normalized[ rowIndex ][ c.columns ].$row.children().eq( column );
+							if( cell.text().match(/[\r\n]/) )
+								arry = arry.concat(cell.text().split(/[\r\n]/));
+							else
+								arry = arry.concat(cell.html().split(/\s*<br\s*\/?>\s*/i));
+							// child row unparsed data
+							if ( wo.filter_childRows && wo.filter_childByColumn ) {
+								childLen = cache.normalized[ rowIndex ][ c.columns ].$row.length;
+								for ( indx = 1; indx < childLen; indx++ ) {
+									cell = cache.normalized[ rowIndex ][ c.columns ].$row.eq( indx ).children().eq( column );
+									if( cell.text().match(/[\r\n]/) )
+										arry = arry.concat(cell.text().split(/[\r\n]/));
+									else
+										arry = arry.concat(cell.html().split(/\s*<br\s*\/?>\s*/i));
+								}
+							}
+						}
+					}
+				}
+				return arry;
+			}';
+									}
 								}
 								break;
 							case 'range' :
