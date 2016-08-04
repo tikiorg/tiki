@@ -29,6 +29,7 @@ class TikiAddons_Addon
 		$this->utilities->checkProfilesInstalled($this->getFolder(), $this->getVersion());
 		if ($this->configuration->smarty) {
 			$this->smarty = new Smarty_Tiki;
+			$this->smarty->assign('base_url', $GLOBALS['base_url']);
 			$this->smarty->assign('prefs', $GLOBALS['prefs']);
 			$this->smarty->assign('user', $GLOBALS['user']);
 			$this->smarty->assign('tikiaddon_package', $this->configuration->package);
