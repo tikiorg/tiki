@@ -144,10 +144,12 @@ class Table_Plugin
 				)
 					. '<br> <b>Text - </b><code>type:text;placeholder:xxxx</code><br>' .
 					tra('(For PluginTrackerlist this will be an exact search, for other plugins partial values will work.)') . '<br>
-					<b>Dropdown - </b><code>type:dropdown;placeholder:****;option:****;option:****;option:****</code> <br>' .
+					<b>Dropdown - </b><code>type:dropdown;placeholder:****;empty:****;option:****;option:****;option:****</code> <br>' .
 					tr('Options generated automatically if not set and the %0server%1 parameter is not %0y%1.', '<code>', '</code>') . '<br>' .
 					tr('Use %0value=Display label%1 to have the option value be different than the displayed label in
-					the dropdown.', '<code>', '</code>') . '<br>
+					the dropdown.', '<code>', '</code>') . '<br>' .
+					tr('Use %0empty:Display label%1 to include an option with the specified label that will filter only empty rows.
+					Only used if other options are not specified manually.', '<code>', '</code>') . '<br>
 					<b>' . tra('Date range - ') . '</b><code>type:date;format:yy-mm-dd;from:2013-06-30;to:2020-12-31</code><br>' .
 					tra('(from and to values set defaults for these fields when user clicks on the input field)') . '<br>
 					<b>' . tra('Numeric range - ') . '</b><code>type:range;from:0;to:50</code><br>

@@ -26,7 +26,6 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 	protected function getOptionArray()
 	{
 		if (parent::$filters) {
-			$custom_filter = false;
 			$wof[] = 'filter_cssFilter : \'form-control\'';
 			//allows for different label versus value in dropdowns
 			$wof[] = 'filter_selectSourceSeparator : \'|\'';
@@ -46,6 +45,7 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 			if (parent::$filtercol) {
 				$ffunc = '';
 				$fform = '';
+				$custom_filter_columns = array();
 				foreach (parent::$s['columns'] as $col => $info) {
 					$info = !empty($info['filter']) ? $info['filter'] : [];
 					$colpointer =  parent::$usecolselector ? (string) '\'' . $col . '\'' : (int) $col;
@@ -68,17 +68,66 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 										$ffunc[] = $colpointer . ' : ' . $options;
 									}
 								} elseif (!parent::$ajax) {
-									$ffunc[] = $colpointer . ' : true';
-									if( !$custom_filter ) {
-										// 
-										$custom_filter = true;
-										$wof[] = 'filter_matchType : { \'input\': \'exact\', \'select\': \'match\' }';
-										$wof[] = 'filter_selectSource : function( table, column, onlyAvail ) {
+									if( array_key_exists('empty', $info) ) {
+										$ffunc[] = $colpointer . ' : {
+					\'(empty)\': function( e, n, f, i, $r, c, data ) {
+						if( typeof e === "Object" && typeof n === "Object" && typeof f === "undefined" ) {
+							// v2.22.0 compatibility
+							c = e;
+							data = n;
+						}
+						if( data.filter === "(empty)" )
+							return ( "" + data.exact ) === "";
+						else
+							return data.isMatch ?
+								( "" + data.iExact ).search( data.iFilter ) >= 0 :
+								data.filter === data.exact;
+					}
+				}';
+										$custom_filter_columns[$col] = $info['empty'];
+									} else {
+										$ffunc[] = $colpointer . ' : true';
+										$custom_filter_columns[$col] = false;
+									}
+								}
+								break;
+							case 'range' :
+								$min = isset($info['from']) ? $info['from'] : 0;
+								$max = isset($info['to']) ? $info['to'] : 100;
+								$valtohead = isset($info['style']) && $info['style'] == 'popup' ? 'false' : 'true';
+								$fform[] = $colpointer . ' : function($cell, indx){return $.tablesorter.filterFormatter.uiRange('
+										. '$cell, indx, {values: [' . $min . ', ' . $max . '], min: ' . $min . ', max: ' . $max
+										. ', delayed: false, valueToHeader: ' . $valtohead . ', exactMatch: true});}';
+								break;
+							case 'date' :
+								$fm = isset($info['from']) ? $info['from'] : '';
+								$to = isset($info['to']) ? $info['to'] : '';
+								$format = isset($info['format']) ? $info['format'] : 'yy-mm-dd';
+								$fform[] = $colpointer . ' : function($cell, indx){return $.tablesorter.filterFormatter.uiDatepicker('
+										. '$cell, indx, {from: \'' . $fm . '\', to: \'' . $to . '\', dateFormat: \'' . $format
+										. '\', changeMonth: true, changeYear: true});}';
+								break;
+						}
+					}
+				}
+				unset($col, $info);
+				if (is_array($ffunc)) {
+					$wof[] = $this->iterate($ffunc, 'filter_functions : {', $this->nt3 . '}', $this->nt4, '');
+				}
+				if (is_array($fform)) {
+					$wof[] = $this->iterate($fform, 'filter_formatter : {', $this->nt3 . '}', $this->nt4, '');
+				}
+				if( $custom_filter_columns ) {
+					$wof[] = 'filter_matchType : { \'input\': \'exact\', \'select\': \'match\' }';
+					$wof[] = 'filter_selectSource : function( table, column, onlyAvail ) {
 				table = $( table )[0];
 				var rowIndex, tbodyIndex, len, row, cell, cache, indx, child, childLen,
 					c = table.config,
 					wo = c.widgetOptions,
 					arry = [];
+				var emptyFilters = ' . json_encode($custom_filter_columns) . ';
+				if( emptyFilters[column] )
+					arry[ arry.length ] = {value: "(empty)", text: emptyFilters[column]};
 				for ( tbodyIndex = 0; tbodyIndex < c.$tbodies.length; tbodyIndex++ ) {
 					cache = c.cache[tbodyIndex];
 					len = c.cache[tbodyIndex].normalized.length;
@@ -130,34 +179,6 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 				return arry;
 			}';
 									}
-								}
-								break;
-							case 'range' :
-								$min = isset($info['from']) ? $info['from'] : 0;
-								$max = isset($info['to']) ? $info['to'] : 100;
-								$valtohead = isset($info['style']) && $info['style'] == 'popup' ? 'false' : 'true';
-								$fform[] = $colpointer . ' : function($cell, indx){return $.tablesorter.filterFormatter.uiRange('
-										. '$cell, indx, {values: [' . $min . ', ' . $max . '], min: ' . $min . ', max: ' . $max
-										. ', delayed: false, valueToHeader: ' . $valtohead . ', exactMatch: true});}';
-								break;
-							case 'date' :
-								$fm = isset($info['from']) ? $info['from'] : '';
-								$to = isset($info['to']) ? $info['to'] : '';
-								$format = isset($info['format']) ? $info['format'] : 'yy-mm-dd';
-								$fform[] = $colpointer . ' : function($cell, indx){return $.tablesorter.filterFormatter.uiDatepicker('
-										. '$cell, indx, {from: \'' . $fm . '\', to: \'' . $to . '\', dateFormat: \'' . $format
-										. '\', changeMonth: true, changeYear: true});}';
-								break;
-						}
-					}
-				}
-				unset($col, $info);
-				if (is_array($ffunc)) {
-					$wof[] = $this->iterate($ffunc, 'filter_functions : {', $this->nt3 . '}', $this->nt4, '');
-				}
-				if (is_array($fform)) {
-					$wof[] = $this->iterate($fform, 'filter_formatter : {', $this->nt3 . '}', $this->nt4, '');
-				}
 			}
 			if (count($wof) > 0) {
 				return $wof;
