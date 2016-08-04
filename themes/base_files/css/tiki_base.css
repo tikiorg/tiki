@@ -2048,7 +2048,7 @@ table.treetable tr.expanded span.indenter a {
   color: inherit;
 }
 .tracker-status-open:before {
-  content: "\f10c";
+  content: "\f111";
   color: green;
 }
 .tracker-status-pending:before {
@@ -3121,7 +3121,7 @@ body.tiki.navbar-padding {
 }
 .affix-bottom {
   position: absolute;
-  left:0!important;
+  left: 0 !important;
 }
 .col-sm-2 .form-inline .form-control,
 .col-md-2 .form-inline .form-control {
