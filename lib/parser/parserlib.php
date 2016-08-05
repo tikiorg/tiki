@@ -2336,7 +2336,7 @@ if ( \$('#$id') ) {
 					$span1 = "<span class='dynavar' style='display:inline;' id='dyn_".$dvar."_display'>$value</span>";
 					$span2 = '';
 				}
-				$html = '<form method="post" name="dyn_vars">' . $span1 . $span2 . '</form>';
+				$html = $span1 . $span2;
 				//It's important to replace only once
 				$dvar_preg = preg_quote($dvar);
 				$data = preg_replace("+$enclose$dvar_preg$enclose+", $html, $data, 1);
