@@ -1828,6 +1828,11 @@ function wikiplugin_tracker($data, $params)
 								. tra('This field is mandatory') . '">*</span></div>';
 						}
 
+					if ($f['type'] === 'j') {
+						$smarty->loadPlugin('smarty_function_js_insert_icon');
+						$back .= smarty_function_js_insert_icon(array('type'=>"jscalendar"), $smarty);
+					}
+
 					if ($isTextOnSameRow) {
 						$back .= '</div>';
 					}
