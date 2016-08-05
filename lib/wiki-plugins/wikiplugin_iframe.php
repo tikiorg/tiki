@@ -127,6 +127,21 @@ function wikiplugin_iframe_info()
 				'since' => '3.0',
 				'default' => '',
 			),
+			'responsive' => array(
+				'safe' => true,
+				'required' => false,
+				'name' => tra('Responsive'),
+				'description' => tra('Make the display responsive so that browsers determine dimensions based on the width of their containing block by creating an intrinsic ratio that will properly scale on any device.'),
+				'since' => '16.0',
+				'filter' => 'word',
+				'default' => '16by9',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('16 by 9'), 'value' => '16by9'),
+					array('text' => tra('4 by 3'), 'value' => '4by4'),
+					array('text' => tra('no'), 'value' => 'no'),
+				)
+			),
 		), 
 	);
 }
@@ -135,7 +150,15 @@ function wikiplugin_iframe($data, $params)
 {
 
 	extract($params, EXTR_SKIP);
-	$ret = '<iframe ';
+	if (isset($responsive) AND $responsive != 'no' AND $responsive != 'n') {
+		if ($responsive == '4by3' ) {
+			$ret = '<div class="embed-responsive embed-responsive-4by3"><iframe class="embed-responsive-item"';
+		} else {
+			$ret = '<div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item"';
+		}
+	} else {
+		$ret = '<iframe ';
+	}
 
 	if (isset($name)) {
 		$ret .= " name=\"$name\"";
@@ -172,6 +195,10 @@ function wikiplugin_iframe($data, $params)
 	if (strpos($src, 'ViewerJS') !== false) {
 		$ret .= " allowfullscreen webkitallowfullscreen";
 	}
-	$ret .= ">$data</iframe>";
+	if (isset($responsive) AND $responsive != 'no' AND $responsive != 'n') {
+		$ret .= ">$data</iframe></div>";
+	} else {
+		$ret .= ">$data</iframe>";
+	}
 	return $ret;
 }
