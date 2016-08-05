@@ -98,46 +98,6 @@
 					{tr}Recommended size: 64x64px.{/tr}
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="sectionFormat">{tr}Section format{/tr}</label>
-				<select name="sectionFormat" class="form-control">
-					{foreach $sectionFormats as $format => $label}
-						<option value="{$format|escape}"{if $info.sectionFormat eq $format} selected="selected"{/if}>{$label|escape}</option>
-					{/foreach}
-				</select>
-				<div class="help-block">
-					<p>{tr}Determines how headers will be rendered when using header fields as form section dividers.{/tr}</p>
-					<p>{tr}Set to <em>Configured</em> to use the two following fields.{/tr}</p>
-				</div>
-			</div>
-			<div class="checkbox">
-				<label>
-					<input type="checkbox" name="useFormClasses" value="1"
-							{if $info.useFormClasses eq 'y'} checked="checked"{/if}>
-					{tr}Use Form Classes{/tr}
-				</label>
-			</div>
-			<div class="form-group">
-				<label for="formClasses">{tr}Input Form Classes{/tr}</label>
-				<input class="form-control" type="text" name="formClasses" value="{$info.formClasses|escape}">
-				<div class="help-block">
-					<p>{tr}Sets classes for form to be used in Tracker Plugin (e.g. form-horizontal or col-md-9).{/tr}</p>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="viewItemPretty">{tr}Template to display an item{/tr}</label>
-				<input class="form-control" type="text" name="viewItemPretty" value="{$info.viewItemPretty|escape}">
-				<div class="help-block">
-					{tr}wiki:pageName for a wiki page or tpl:tplName for a template{/tr}
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="editItemPretty">{tr}Template to edit an item{/tr}</label>
-				<input class="form-control" type="text" name="editItemPretty" value="{$info.editItemPretty|escape}">
-				<div class="help-block">
-					{tr}wiki:pageName for a wiki page or tpl:tplName for a template{/tr}
-				</div>
-			</div>
 			<div class="checkbox">
 				<label>
 					<input type="checkbox" name="showStatus" value="1"
@@ -234,17 +194,52 @@
 				<label for="showPopup">{tr}List detail popup{/tr}</label>
 				{object_selector_multi type=trackerfield tracker_id=$info.trackerId _simplevalue=$info.showPopup _separator="," _simplename="showPopup"}
 			</div>
-			<div class="checkbox">
-				<label>
-					<input type="checkbox" name="adminOnlyViewEditItem" value="1"
-						{if $info.adminOnlyViewEditItem eq 'y'} checked="checked"{/if}>
-					{tr}Restrict non admins to wiki page access only{/tr}
-					<div class="help-block">
-						{tr}Only users with admin tracker permission (tiki_p_admin_trackers) can use the built-in tracker interfaces (tiki-view_tracker.php and tiki-view_tracker_item.php). This is useful if you want the users of these trackers to only access them via wiki pages, where you can use the various tracker plugins to embed forms and reports.{/tr}
-					</div>
-				</label>
-			</div>
 		{/accordion_group}
+	{accordion_group title="{tr}Section Format{/tr}"}
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="form-group">
+					<label for="sectionFormat">{tr}Section format{/tr}</label>
+					<select name="sectionFormat" id="sectionFormat" class="form-control">
+						{foreach $sectionFormats as $format => $label}
+							<option value="{$format|escape}"{if $info.sectionFormat eq $format} selected="selected"{/if}>{$label|escape}</option>
+						{/foreach}
+					</select>
+					<div class="help-block">
+						<p>{tr}Determines how headers will be rendered when using header fields as form section dividers.{/tr}</p>
+						<p>{tr}Set to <em>Configured</em> to use the four following fields.{/tr}</p>
+					</div>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="useFormClasses" value="1" {if $info.useFormClasses eq 'y'} checked="checked"{/if}>
+						{tr}Use Form Classes{/tr}
+					</label>
+				</div>
+				<div class="form-group">
+					<label for="formClasses">{tr}Input Form Classes{/tr}</label>
+					<input class="form-control" type="text" name="formClasses" id="formClasses" value="{$info.formClasses|escape}">
+					<div class="help-block">
+						<p>{tr}Sets classes for form to be used in Tracker Plugin (e.g. form-horizontal or col-md-9).{/tr}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="viewItemPretty">{tr}Template to display an item{/tr}</label>
+					<input class="form-control" type="text" name="viewItemPretty" id="viewItemPretty" value="{$info.viewItemPretty|escape}">
+					<div class="help-block">
+						{tr}wiki:pageName for a wiki page or tpl:tplName for a template{/tr}
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="editItemPretty">{tr}Template to edit an item{/tr}</label>
+					<input class="form-control" type="text" name="editItemPretty" id="editItemPretty" value="{$info.editItemPretty|escape}">
+					<div class="help-block">
+						{tr}wiki:pageName for a wiki page or tpl:tplName for a template{/tr}
+					</div>
+				</div>
+			</div>
+		</div>
+	{/accordion_group}
 		{accordion_group title="{tr}Status{/tr}"}
 			<div class="form-group">
 				<label for="newItemStatus">{tr}New item status{/tr}</label>
@@ -401,6 +396,16 @@
 				<div class="description help-block">
 					{tr}The tracker needs a group field with the auto-assign activated{/tr}
 				</div>
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="adminOnlyViewEditItem" value="1"
+						{if $info.adminOnlyViewEditItem eq 'y'} checked="checked"{/if}>
+					{tr}Restrict non admins to wiki page access only{/tr}
+					<div class="description help-block">
+						{tr}Only users with admin tracker permission (tiki_p_admin_trackers) can use the built-in tracker interfaces (tiki-view_tracker.php and tiki-view_tracker_item.php). This is useful if you want the users of these trackers to only access them via wiki pages, where you can use the various tracker plugins to embed forms and reports.{/tr}
+					</div>
+				</label>
 			</div>
 			<fieldset>
 				<legend>{tr}Creation date constraint{/tr}</legend>
