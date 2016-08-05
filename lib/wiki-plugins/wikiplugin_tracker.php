@@ -1362,6 +1362,10 @@ function wikiplugin_tracker($data, $params)
 							$url[$key] = str_replace('itemId', 'itemId='.$rid, $url[$key]);
 						}
 					}
+					$msg = trim($data);
+					if( empty($msg) )
+						$msg = tr('Form saved successfully.');
+					Feedback::success($msg, 'session');
 					TikiLib::lib('access')->redirect($url[$key]);
 					exit;
 				}
