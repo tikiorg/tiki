@@ -152,9 +152,9 @@ function wikiplugin_iframe($data, $params)
 	extract($params, EXTR_SKIP);
 	if (isset($responsive) AND $responsive != 'no' AND $responsive != 'n') {
 		if ($responsive == '4by3' ) {
-			$ret = '<div class="embed-responsive embed-responsive-4by3"><iframe class="embed-responsive-item"';
+			$ret = '<div class="embed-responsive embed-responsive-4by3"><iframe class="embed-responsive-item" ';
 		} else {
-			$ret = '<div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item"';
+			$ret = '<div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" ';
 		}
 	} else {
 		$ret = '<iframe ';
