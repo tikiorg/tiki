@@ -114,7 +114,8 @@ function smarty_function_trackerfields($params, $smarty)
 	// Compatibility attempt with the legacy $f_X format.
 	// Note: Here we set the the closures for the field, NOT the final values!
 	// The final values are set in trackerlib.php using field_render_value()
-	foreach ($fields as $field) {
+	// Using $params['fields'] as $fields is only the last "section" now
+	foreach ($params['fields'] as $field) {
 		$id = $field['fieldId'];
 		$permName = $field['permName'];
 		$smarty->assign('f_' . $id, $auto['default'][$permName]);
