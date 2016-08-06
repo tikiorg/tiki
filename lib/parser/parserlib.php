@@ -1873,7 +1873,7 @@ if ( \$('#$id') ) {
 				if (isset($matches[2]) && $matches[2]=='nocache') {
 					$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon", $data);
 				} else {
-					$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon $cosa", $data);
+					$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\" data-box=\"$2\">$1</a>$ext_icon $cosa", $data);
 				}
 				$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\]/";
 				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon $cosa", $data);
@@ -1884,7 +1884,7 @@ if ( \$('#$id') ) {
 				$data = str_replace("|nocache", "", $data);
 
 				$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";
-				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon", $data);
+				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\" data-box=\"$2\">$1</a>$ext_icon", $data);
 				$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)([^\]])*\]/";
 				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon", $data);
 				$pattern = "/(?<!\[)\[$link2\]/";
