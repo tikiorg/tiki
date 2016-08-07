@@ -120,7 +120,7 @@ class Smarty_Tiki extends Smarty
 	 * needs a proper description
 	 * @param string $tikidomain
 	 */
-	function Smarty_Tiki($tikidomain = '')
+	function __construct($tikidomain = '')
 	{
 		parent::__construct();
 		global $prefs, $style_base;

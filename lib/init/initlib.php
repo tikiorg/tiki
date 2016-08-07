@@ -33,7 +33,7 @@ class TikiInit
 	/**
 	 * dummy constructor
 	 */
-	function TikiInit()
+	function __construct ()
 	{
 	}
 

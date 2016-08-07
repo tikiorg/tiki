@@ -106,7 +106,7 @@ class TikiDate
 	/**
 	 * Default constructor
 	 */
-	function TikiDate()
+	function __construct()
 	{
 
 		if (function_exists('date_default_timezone_set')) {			// function not available < PHP 5.1

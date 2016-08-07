@@ -40,7 +40,7 @@ class WikipluginDBReportToken
 				return $token->type;
 		}
 	}
-	public function WikipluginDBReportToken($content=null)
+	public function __construct($content=null)
 	{
 		$this->content = $content;
 	}
