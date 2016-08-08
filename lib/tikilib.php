@@ -2031,15 +2031,16 @@ class TikiLib extends TikiDb_Bridge
 	function user_has_voted($user, $id)
 	{
 		global $prefs;
-		if (!isset($_SESSION['votes'])) {
-			return false;
-		}
 
 		$ret = false;
-		$votes = $_SESSION['votes'];
-		if (is_array($votes) && in_array($id, $votes)) { // has already voted in the session (logged or not)
-			$ret = true;
+
+		if (isset($_SESSION['votes'])) {
+			$votes = $_SESSION['votes'];
+			if (is_array($votes) && in_array($id, $votes)) { // has already voted in the session (logged or not)
+				return true;
+			}
 		}
+
 		if (!$user) {
 			if ($prefs['ip_can_be_checked'] != 'y' && !isset($_COOKIE[ session_name() ])) {// cookie has not been activated too bad for him
 				$ret = true;
