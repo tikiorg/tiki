@@ -100,7 +100,7 @@ function wikiplugin_poll($data, $params)
 	$smarty->assign_by_ref('showtotal', $showtotal);
 	$smarty->assign_by_ref('hasVoted', $hasVoted);
 	$smarty->assign_by_ref('showtitle', $showtitle);
-	if (!$hasVoted || $prefs['feature_poll_revote'] == 'y') {
+	if ($poll_info['active'] != 'x' && (!$hasVoted || $prefs['feature_poll_revote'] == 'y')) {
 		$smarty->assign_by_ref('menu_info', $poll_info);
 		$smarty->assign_by_ref('channels', $options);
 		$smarty->assign_by_ref('poll_title', $data);
