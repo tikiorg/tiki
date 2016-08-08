@@ -204,7 +204,9 @@ function smarty_function_object_link_trackeritem( $smarty, $object, $title = nul
 
 	if (($show_status == 'y') && $item && $status = $item->getDisplayedStatus()) {
 		$alt = tr($status);
-		$pre = "<img src=\"img/icons/status_$status.gif\" alt=\"$status\"/>&nbsp;";
+//		$pre = "<img src=\"img/icons/status_$status.gif\" alt=\"$status\"/>&nbsp;";
+		$pre = smarty_function_icon(array('name' => 'status-' . $status, 'iclass' => 'tips', 'ititle' => ':'
+				. ucfirst($status)), $smarty);
 	}
 
 	return $pre . smarty_function_object_link_default($smarty, $object, $title, $type, $url);
