@@ -87,6 +87,7 @@ function prefs_wiki_list($partial = false)
 			'options' => array(
 				'default' => tra('Default'),
 				'above' => tra('Above page'),
+				'inside' => tra('Inside page'),
 			),
 			'default' => 'default',
 		),
