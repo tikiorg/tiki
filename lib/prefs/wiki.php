@@ -80,11 +80,15 @@ function prefs_wiki_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 		),
-		'wiki_page_name_above' => array(
-			'name' => tra('Display page name above page'),
-			'description' => tra('Display page name above page instead of inside page.'),
-			'type' => 'flag',
-			'default' => 'n',
+		'wiki_page_name_position' => array(
+			'name' => tra('Display page name position'),
+			'description' => tra('Display page name position.'),
+			'type' => 'list',
+			'options' => array(
+				'default' => tra('Default'),
+				'above' => tra('Above page'),
+			),
+			'default' => 'default',
 		),
 		'wiki_pagename_strip' => array(
 			'name' => tra('Page name display stripper'),
