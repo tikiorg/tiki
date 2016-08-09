@@ -103,7 +103,7 @@ function wikiplugin_listexecute($data, $params)
 				if (in_array($identifier, $objects) || in_array('ALL', $objects)) {
 					$success = $action->execute($entry);
 
-					if( $success )
+					if( !$success )
 						$errors[] = tr("Error executing action %0 on item %1.", $_POST['list_action'], $entry['title']);
 
 					$reportSource->setStatus($entry['object_type'], $entry['object_id'], $success);
