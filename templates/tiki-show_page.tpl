@@ -21,7 +21,7 @@ Note: The show content block must be defined at root level to use the include. A
 			{/if}
 		{/if}
 
-		{if $prefs.feature_page_title eq 'y'}
+		{if $prefs.feature_page_title eq 'y' and $prefs.wiki_page_name_position eq 'default'}
 			<h1 class="pagetitle">{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs machine_translate=$machine_translate_to_lang source_lang=$pageLang target_lang=$machine_translate_to_lang}</h1>
 		{/if}
 
