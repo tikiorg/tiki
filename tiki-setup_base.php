@@ -76,6 +76,7 @@ $needed_prefs = array(
 	'min_pass_length' => 5,
 	'pass_chr_special' => 'n',
 	'cookie_consent_feature' => 'n',
+	'cookie_consent_disable' => 'n',
 	'cookie_consent_name' => 'tiki_cookies_accepted',
 
 );
@@ -156,9 +157,11 @@ if (empty($tikidomain)) {
 	$tikidomain = "";
 }
 
-if ($prefs['cookie_consent_feature'] === 'y' && empty($_COOKIE[$prefs['cookie_consent_name']])) {
+if ($prefs['cookie_consent_feature'] === 'y' && empty($_COOKIE[$prefs['cookie_consent_name']]) && $prefs['cookie_consent_disable'] !== 'y' ) {
+	// No consent yet
 	$feature_no_cookie = true;
 } else {
+	// Cookie consent not implemented or consent given or consent forced with preference cookie_consent_disable
 	$feature_no_cookie = false;
 }
 
