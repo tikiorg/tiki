@@ -4,8 +4,8 @@
 	<fieldset>
 		<legend>{tr}Get Started{/tr}</legend>
 
-		<p>
-            {icon name="check" size=2} {tr _0=$tiki_version}Congratulations! You now have a working instance of Tiki %0{/tr}.
+		<p class="wizardCongrat text-success">
+            {icon name="check" size=1} {tr _0=$tiki_version}Congratulations! You now have a working instance of Tiki %0{/tr}.
 			{tr}You may <a href="tiki-index.php">start using it right away</a>, or you may configure it to better meet your needs, using one of the configuration helpers below.{/tr}
 		</p>
 

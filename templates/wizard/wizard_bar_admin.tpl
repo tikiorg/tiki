@@ -1,14 +1,14 @@
 {* $Id$ *}
 
 <div class="row form-group">
+	<div class="col-sm-8">
 	{if !isset($showOnLoginDisplayed) or $showOnLoginDisplayed neq 'y'}
-		<div class="col-sm-1">{icon name=wizard}</div>
 		<input type="checkbox" name="showOnLogin" {if isset($showOnLogin) AND $showOnLogin eq true}checked="checked"{/if} /> {tr}Show on admin login{/tr}
 		{assign var="showOnLoginDisplayed" value="y" scope="root"}
 	{else}
 		&nbsp;
 	{/if}
-	&nbsp;&nbsp;
+	</div>&nbsp;&nbsp;
 	{if $prefs.connect_feature eq "y"}
 		{if !isset($provideFeedback) or $provideFeedback neq 'y'}
 			{capture name=likeicon}{icon name="thumbs-up"}{/capture}
@@ -42,6 +42,15 @@
 
 <div class="row form-group">
 	<div class="col-sm-2">
+		<input type="hidden" name="url" value="{$homepageUrl}">
+		<input type="hidden" name="wizard_step" value="{$wizard_step}">
+		{if isset($useDefaultPrefs)}
+			<input type="hidden" name="use-default-prefs" value="{$useDefaultPrefs}">
+		{/if}
+		{if isset($useUpgradeWizard)}
+			<input type="hidden" name="use-upgrade-wizard" value="{$useUpgradeWizard}">
+		{/if}
+		<input type="submit" class="btn btn-primary btn-sm" name="{if isset($firstWizardPage)}use-default-prefs{else}continue{/if}" value="{if isset($lastWizardPage)}{tr}Finish{/tr}{elseif isset($firstWizardPage)}{tr}Start{/tr}{else}{if $isEditable eq true}{tr}Save and Continue{/tr}{else}{tr}Next{/tr}{/if}{/if}" />
 		<input type="submit" class="btn btn-warning btn-sm" name="close" value="{tr}Close{/tr}" />
 		&nbsp;&nbsp;&nbsp;
 		{if !isset($firstWizardPage)}<input type="submit" class="btn btn-default btn-sm" name="back" value="{tr}Back{/tr}" />{/if}
@@ -53,14 +62,5 @@
 		{/if}
 	</div>
 	<div class="col-sm-2">
-		<input type="hidden" name="url" value="{$homepageUrl}">
-		<input type="hidden" name="wizard_step" value="{$wizard_step}">
-		{if isset($useDefaultPrefs)}
-			<input type="hidden" name="use-default-prefs" value="{$useDefaultPrefs}">
-		{/if}
-		{if isset($useUpgradeWizard)}
-			<input type="hidden" name="use-upgrade-wizard" value="{$useUpgradeWizard}">
-		{/if}
-		<input type="submit" class="btn btn-primary btn-sm" name="{if isset($firstWizardPage)}use-default-prefs{else}continue{/if}" value="{if isset($lastWizardPage)}{tr}Finish{/tr}{elseif isset($firstWizardPage)}{tr}Start{/tr}{else}{if $isEditable eq true}{tr}Save and Continue{/tr}{else}{tr}Next{/tr}{/if}{/if}" />
 	</div>
 </div>
