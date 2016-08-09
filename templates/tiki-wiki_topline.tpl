@@ -3,7 +3,7 @@
 	<div class="content">
 		{if !isset($hide_page_header) or !$hide_page_header}
 			<div class="wikiinfo pull-left">
-				{if $prefs.wiki_page_name_above eq 'y' and $print_page ne 'y'}
+				{if ($prefs.wiki_page_name_above eq 'y' or $prefs.wiki_page_name_position eq 'above') and $print_page ne 'y'}
 					<a href="tiki-index.php?page={$page|escape:"url"}" class="titletop" title="{tr}refresh{/tr}">{$page|escape}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{* The hard-coded spaces help selecting the page name for inclusion in a wiki link *}
 				{/if}
 

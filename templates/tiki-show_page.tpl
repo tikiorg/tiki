@@ -21,7 +21,7 @@ Note: The show content block must be defined at root level to use the include. A
 			{/if}
 		{/if}
 
-		{if $prefs.feature_page_title eq 'y'}
+		{if $prefs.feature_page_title eq 'y' and ($prefs.wiki_page_name_position eq 'default' or !$prefs.wiki_page_name_position) and $prefs.wiki_page_name_above neq 'y'}
 			<h1 class="pagetitle">{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs machine_translate=$machine_translate_to_lang source_lang=$pageLang target_lang=$machine_translate_to_lang}</h1>
 		{/if}
 
@@ -130,6 +130,9 @@ Note: The show content block must be defined at root level to use the include. A
 		{/if}
 
 		<div id="page-data" class="clearfix">
+			{if $prefs.feature_page_title eq 'y' and $prefs.wiki_page_name_position eq 'inside'}
+				<h1 class="pagetitle">{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs machine_translate=$machine_translate_to_lang source_lang=$pageLang target_lang=$machine_translate_to_lang}</h1>
+			{/if}
 			{if isset($pageLang) and ($pageLang eq 'ar' or $pageLang eq 'he')}
 				<div style="direction:RTL; unicode-bidi:embed; text-align: right; {if $pageLang eq 'ar'}font-size: large;{/if}">
 					{$parsed}
