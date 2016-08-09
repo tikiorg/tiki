@@ -356,6 +356,7 @@
 					</div>
 					{preference name=namespace_separator}
 					{preference name=namespace_indicator_in_structure}
+					{preference name=namespace_indicator_in_page_title}
 					<div class="col-sm-offset-4 colsm-8">
 						<p><strong>{tr}Settings that may be affected by the namespace separator{/tr}</strong></p>
 						{tr}To use :: as a separator, you should also use ::: as the wiki center tag syntax{/tr}.<br/>
