@@ -40,7 +40,7 @@
 				</div>
 				<div class="col-md-6">
 					<h4>{tr}Post-it Sticky Note{/tr}</h4>
-					(<a href="tiki-admin.php?profile=Post-it_Sticky_Note&show_details_for=Post-it_Sticky_Note&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+					(<a href="tiki-admin.php?profile=Post-it_Sticky_Note_15&show_details_for=Post-it_Sticky_Note_15&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
 					<br>
 					{tr}This profile allows to display a sticky note (a "post-it") in your tiki site{/tr}.
 					<br/>
