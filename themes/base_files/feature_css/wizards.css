@@ -29,6 +29,7 @@
 .adminWizardBody {
     vertical-align: top;
     width:73%;
+	margin-top: 4em;
 }
 
 .adminWizardContent {
@@ -65,5 +66,19 @@
 	top: 0.5em;
 }
 
+/* User Wizard */
 
-/* end Admin WIzard */
+#wizardBody {
+	margin-top: 4em;
+}
+
+#wizardBody .col-sm-12 {
+	margin-top: 1em;
+}
+
+#wizardBody .wizardCongrat {
+	font-size: 1.3em;
+	margin-bottom: 2em;
+}
+
+/* End of file */
