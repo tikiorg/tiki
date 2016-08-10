@@ -600,7 +600,7 @@ class ModLib extends TikiLib
 			}
 		}
 
-		if ( $prefs['cookie_consent_feature'] == 'y' ) {		// check if consent required to show
+		if ( $prefs['cookie_consent_feature'] == 'y' && $prefs['cookie_consent_disable'] !=='y' ) {		// check if consent required to show
 			if (!empty($params['cookie_consent']) && $params['cookie_consent'] === 'y') {
 				global $feature_no_cookie;
 				if ($feature_no_cookie) {
@@ -959,7 +959,7 @@ class ModLib extends TikiLib
 			)
 		);
 
-		if ($prefs['cookie_consent_feature'] === 'y') {
+		if ($prefs['cookie_consent_feature'] === 'y' && $prefs['cookie_consent_disable'] !=='y') {
 			$info['params']['cookie_consent'] = array(
 				'name' => tra('Cookie Consent'),
 				'description' => 'n|y '.tra('Show only if consent to accept cookies has been granted.'),
