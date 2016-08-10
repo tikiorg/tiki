@@ -60,9 +60,11 @@
 						{include file='antibot.tpl'}
 					{/if}
 					<input type="hidden" name="return_url" value="{$return_url|escape}">
-					<input type="submit" class="comment-post btn btn-primary btn-sm" value="{tr}Post{/tr}"/>
-					<div class="btn btn-link">
-						<a href="#" onclick="$(this).closest('.comment-container').reload(); $(this).closest('.ui-dialog').remove(); return false;">{tr}Cancel{/tr}</a>
+					<div class="form-group comment-post">
+						<input type="submit" class="comment-post btn btn-primary btn-sm" value="{tr}Post{/tr}"/>
+						<div class="btn btn-link">
+							<a href="#" onclick="$(this).closest('.comment-container').reload(); $(this).closest('.ui-dialog').remove(); return false;">{tr}Cancel{/tr}</a>
+						</div>
 					</div>
 				</div>
 			</div>
