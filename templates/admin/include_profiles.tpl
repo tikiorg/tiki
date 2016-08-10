@@ -192,6 +192,9 @@
 						body.style.borderWidth = '2px';
 						body.style.borderColor = 'black';
 						body.style.padding = '8px';
+						body.style.resize = 'both';
+						body.style.overflow = 'auto';
+
 
 						cell.appendChild( body );
 
