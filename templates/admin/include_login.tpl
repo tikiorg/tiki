@@ -154,6 +154,7 @@
 						{preference name=cookie_consent_button}
 						{preference name=cookie_consent_mode}
 						{preference name=cookie_consent_dom_id}
+						{preference name=cookie_consent_disable}
 					</div>
 				</fieldset>
 				{preference name=feature_banning}
