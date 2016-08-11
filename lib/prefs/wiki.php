@@ -86,17 +86,6 @@ function prefs_wiki_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 		),
-		'wiki_page_name_position' => array(
-			'name' => tra('Display page name position'),
-			'description' => tra('Display page name position.'),
-			'type' => 'list',
-			'options' => array(
-				'default' => tra('Default'),
-				'above' => tra('Above page'),
-				'inside' => tra('Inside page'),
-			),
-			'default' => 'default',
-		),
 		'wiki_pagename_strip' => array(
 			'name' => tra('Page name display stripper'),
 			'description' => tra('Character to use as a delimiter in the page name. The portion of the name after this character will not be displayed. If the page name display stripper conflicts with the namespace separator, the namespace is used and the page name display is not stripped'),
