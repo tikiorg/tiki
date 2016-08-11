@@ -68,6 +68,7 @@
 				{preference name=feature_wiki_description label="{tr}Description{/tr}"}
 				{preference name=feature_page_title label="{tr}Display page name as page title{/tr}"}
 				{preference name=wiki_page_name_above label="{tr}Display page name above page{/tr}"}
+				{preference name=wiki_page_name_inside label="{tr}Display page name inside page content{/tr}"}
 				{preference name=feature_wiki_pageid label="{tr}Page ID{/tr}"}
 				{preference name=wiki_show_version label="{tr}Page version{/tr}"}
 				{preference name=wiki_authors_style label="{tr}List authors{/tr}"}

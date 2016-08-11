@@ -618,7 +618,7 @@
 								</div>
 							</div>
 						{/if}
-						{if $prefs.wiki_page_hide_title eq 'y' && ($prefs.wiki_page_name_above eq 'y' or $prefs.feature_page_title eq 'y')}
+						{if $prefs.wiki_page_hide_title eq 'y' && ($prefs.wiki_page_name_above eq 'y' or $prefs.feature_page_title eq 'y' or $prefs.wiki_page_name_inside eq 'y')}
 							<div class="form-group clearfix">
 								<label for="page_hide_title" class="col-md-4 control-label">{tr}Show page title{/tr}</label>
 								<div class="col-md-8">
