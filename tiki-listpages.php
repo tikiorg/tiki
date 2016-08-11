@@ -357,7 +357,8 @@ if (!empty($multiprint_pages)) {
 	}
 
 	$smarty->assign('initial', $initial);
-	if (isset($_REQUEST['exact_match']) && $_REQUEST['exact_match'] == 'y' ) {
+	// What a checked checkbox returns is browser dependant. Don't test on the value, just presence
+	if (isset($_REQUEST['exact_match']) ) {
 		$exact_match = true;
 		$smarty->assign('exact_match', 'y');
 	} else {
