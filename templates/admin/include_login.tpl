@@ -100,6 +100,7 @@
 					{preference name=user_register_prettytracker}
 					<div class="adminoptionboxchild" id="user_register_prettytracker_childcontainer">
 						{preference name=user_register_prettytracker_tpl}
+						{preference name=user_register_prettytracker_hide_mandatory}
 					</div>
 					{preference name=user_register_prettytracker_output}
 					<div class="adminoptionboxchild" id="user_register_prettytracker_output_childcontainer">

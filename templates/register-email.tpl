@@ -1,7 +1,7 @@
 {* $Id$ *}
 {if $prefs.user_register_prettytracker eq 'y' and $prefs.user_register_prettytracker_tpl and $prefs.socialnetworks_user_firstlogin != 'y'}
 	<input type="text" id="email" name="email" class="form-control" >
-	&nbsp;<strong class='mandatory_star'>*</strong>
+	{if $prefs.user_register_prettytracker_hide_mandatory neq 'y'}&nbsp;<strong class='mandatory_star'>*</strong>{/if}
 {else}
 	{if $prefs.login_is_email ne 'y'}
 		<div class="form-group">
