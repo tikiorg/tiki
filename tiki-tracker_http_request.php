@@ -35,6 +35,7 @@ $filterFieldValueHere =  isset($_GET["filterFieldValueHere"]) ? $_GET["filterFie
 $filterFieldIdThere = isset($_GET["filterFieldIdThere"]) ? $_GET["filterFieldIdThere"] : null;
 $listFieldIdThere = isset($_GET["listFieldIdThere"]) ? $_GET["listFieldIdThere"] : null;
 $statusThere = isset($_GET["statusThere"]) ? $_GET["statusThere"] : null;
+$mandatory = isset($_GET["mandatory"]) ? $_GET["mandatory"] == 'y' : false;
 // needed when multiple fields are bound to the same selection i.e $filterFieldValueHere
 $insertId = isset($_GET["insertId"]) ? $_GET["insertId"] : null;
 // needed when the default should be passed back to the frontend
@@ -52,6 +53,11 @@ $json_return['request'] = array(
 	'originalValue' => $originalValue
 );
 $json_return['response'] = array();
+
+// give them an option to choose blank value if field is not mandatory
+if( !$mandatory ) {
+	$json_return['response'][] = array('', '');
+}
 
 // if we do not have something to compare with we return empty result
 if (empty($filterFieldValueHere)) {
