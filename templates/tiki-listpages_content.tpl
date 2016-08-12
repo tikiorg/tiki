@@ -420,6 +420,17 @@
 		</tbody>
 	</table>
 </div>
+{if isset($tsOn) }
+	<script>
+		// Otherwise, All pages are displayed, whatever was searched for
+		var myfilter='{$find|escape:javascript}';
+	</script>
+	{jq}
+		(function(window,undefined){
+			window.setTimeout( function(){ $('input[data-column=2]').val(myfilter).trigger('change'); } , 1000 );
+		})(window)
+	{/jq}
+{/if}
 {if !$tsAjax}
 	{if $checkboxes_on eq 'y' && count($listpages) > 0} {* what happens to the checked items? *}
 		<p align="left"> {*on the left to have it close to the checkboxes*}
