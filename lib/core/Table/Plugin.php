@@ -151,7 +151,8 @@ class Table_Plugin
 					tr('Use %0empty:Display label%1 to include an option with the specified label that will filter only empty rows.
 					Only used if other options are not specified manually.', '<code>', '</code>') . '<br>
 					<b>' . tra('Date range - ') . '</b><code>type:date;format:yy-mm-dd;from:2013-06-30;to:2020-12-31</code><br>' .
-					tra('(from and to values set defaults for these fields when user clicks on the input field)') . '<br>
+					tra('(from and to values set defaults for these fields when user clicks on the input field)') .
+					tra('Beware that items with empty date values will not be shown when default date range filters are applied.') . '<br>
 					<b>' . tra('Numeric range - ') . '</b><code>type:range;from:0;to:50</code><br>
 					<b>' . tra('No filter - ') . '</b><code>type:nofilter</code><br>' .
 					tr(
