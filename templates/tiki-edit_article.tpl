@@ -290,7 +290,7 @@
 						{tr}Attach existing article ID as translation{/tr}
 					</label>
 					<div class="col-md-2">
-						<input name="translationOf" type="text" class="form-control">
+						<input name="translationOf" type="text" class="form-control"{if !empty($translations[1].objId)}value="{$translations[1].objId|escape}"{/if}>
 					</div>
 				</div>
 			{/if}
