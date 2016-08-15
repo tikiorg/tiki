@@ -1,13 +1,20 @@
-<form method="post" action="">
+<a name="listexecute_{$iListExecute}"></a>
+{if $errors}
+	{remarksbox type="errors" title="Errors"}
+		{foreach from=$errors item=error}
+			{$error}<br/>
+		{/foreach}
+	{/remarksbox}
+{/if}
+<form method="post" action="#listexecute_{$iListExecute}">
 	<button class="listexecute-select-all">{tr}Select All{/tr}</button>
 	<ol>
 		{foreach from=$results item=entry}
 			<li>
-				{if $entry.report_status eq 'none'}
-					<input type="checkbox" name="objects[]" value="{$entry.object_type|escape}:{$entry.object_id|escape}">
-				{elseif $entry.report_status eq 'success'}
+				<input type="checkbox" name="objects[]" value="{$entry.object_type|escape}:{$entry.object_id|escape}">
+				{if $entry.report_status eq 'success'}
 					{icon name='ok'}
-				{else}
+				{elseif $entry.report_status eq 'error'}
 					{icon name='error'}
 				{/if}
 				{object_link type=$entry.object_type id=$entry.object_id backuptitle=$entry.title}

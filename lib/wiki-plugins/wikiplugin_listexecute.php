@@ -26,6 +26,9 @@ function wikiplugin_listexecute_info()
 
 function wikiplugin_listexecute($data, $params)
 {
+	static $iListExecute = 0;
+	$iListExecute++;
+
 	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 
 	$actions = array();
@@ -82,6 +85,7 @@ function wikiplugin_listexecute($data, $params)
 	$formatter = $builder->getFormatter();
 
 	$reportSource = new Search_Action_ReportingTransform;
+	$errors = array();
 
 	if (isset($_POST['list_action'], $_POST['objects'])) {
 		$action = $_POST['list_action'];
@@ -99,6 +103,9 @@ function wikiplugin_listexecute($data, $params)
 				if (in_array($identifier, $objects) || in_array('ALL', $objects)) {
 					$success = $action->execute($entry);
 
+					if( !$success )
+						$errors[] = tr("Error executing action %0 on item %1.", $_POST['list_action'], $entry['title']);
+
 					$reportSource->setStatus($entry['object_type'], $entry['object_id'], $success);
 				}
 			}
@@ -112,6 +119,8 @@ function wikiplugin_listexecute($data, $params)
 	$plugin->setData(
 		array(
 			'actions' => array_keys($actions),
+			'iListExecute' => $iListExecute,
+			'errors' => $errors
 		)
 	);
 
