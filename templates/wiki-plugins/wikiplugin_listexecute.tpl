@@ -1,11 +1,4 @@
 <a name="listexecute_{$iListExecute}"></a>
-{if $errors}
-	{remarksbox type="errors" title="Errors"}
-		{foreach from=$errors item=error}
-			{$error}<br/>
-		{/foreach}
-	{/remarksbox}
-{/if}
 <form method="post" action="#listexecute_{$iListExecute}">
 	<button class="listexecute-select-all">{tr}Select All{/tr}</button>
 	<ol>
