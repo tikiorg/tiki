@@ -54,10 +54,8 @@ $json_return['request'] = array(
 );
 $json_return['response'] = array();
 
-// give them an option to choose blank value if field is not mandatory
-if( !$mandatory ) {
-	$json_return['response'][] = array('', '');
-}
+// blank value is the default first option here
+$json_return['response'][] = array('', '');
 
 // if we do not have something to compare with we return empty result
 if (empty($filterFieldValueHere)) {
