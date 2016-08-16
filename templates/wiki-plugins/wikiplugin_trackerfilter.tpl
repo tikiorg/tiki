@@ -40,6 +40,7 @@
 			<table class="table">
 				{if isset($line) && $line eq 'y'}<tr>{/if}
 
+				{$jscal = 0}
 				{foreach from=$filters item=filter}
 					{if !isset($line) || $line ne 'y'}<tr>{/if}
 					<td class="tracker_filter_label">
@@ -115,6 +116,7 @@
 						{/if}
 					</td>
 					{if !isset($line) || $line ne 'y'}</tr>{else} {/if}
+					{if $filter.format eq 'j'}{$jscal = 1}{/if}
 				{/foreach}
 				{if (!isset($line) || $line ne 'y') and (!isset($action) || $action neq " ")}<tr>{/if}
 				{if (!isset($action) || $action neq " ") or !empty($export_action)}
@@ -151,3 +153,6 @@
 	</div>
 	{if !empty($dataRes)}<div class="trackerfilter-result">{$dataRes}</div>{/if}
 {/strip}
+{if $jscal}
+	{js_insert_icon type="jscalendar"}
+{/if}
