@@ -1729,6 +1729,8 @@ function wikiplugin_tracker($data, $params)
 		}
 		$backLength0 = strlen($back);
 
+		$datepicker = false;
+
 		foreach ($flds['data'] as $f) {
 
 			if (!in_array($f['fieldId'], $auto_fieldId) && in_array($f['fieldId'], $hidden_fieldId)) {
@@ -1829,8 +1831,7 @@ function wikiplugin_tracker($data, $params)
 						}
 
 					if ($f['type'] === 'j') {
-						$smarty->loadPlugin('smarty_function_js_insert_icon');
-						$back .= smarty_function_js_insert_icon(array('type'=>"jscalendar"), $smarty);
+						$datepicker = true;
 					}
 
 					if ($isTextOnSameRow) {
@@ -1855,6 +1856,12 @@ function wikiplugin_tracker($data, $params)
 				}
 			}
 		}
+
+		if ( $datepicker ) {
+			$smarty->loadPlugin('smarty_function_js_insert_icon');
+			$back .= smarty_function_js_insert_icon(array('type'=>"jscalendar"), $smarty);
+		}
+
 		if ( isset($params['fieldsfill']) && !empty($params['fieldsfill']) && empty($itemId) ) {
 			// $back.= '<tr><td><label for="ins_fill">' . tra("Create multiple items (one per line).") . '</label>';
 			$back.= '<div class="form-group"><label class="col-md-3" for="ins_fill">' . tra("Insert one item per line:") // <tr><td><label for="ins_fill">

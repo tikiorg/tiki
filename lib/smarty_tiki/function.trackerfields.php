@@ -52,6 +52,7 @@ function smarty_function_trackerfields($params, $smarty)
 	$sections = [];
 	$auto = ['input' => [], 'output' => [], 'inline' => []];
 
+	$datepicker = false;
 	foreach ($params['fields'] as $field) {
 		if ($field['type'] == 'h') {
 			$title = tr($field['name']);
@@ -94,6 +95,10 @@ function smarty_function_trackerfields($params, $smarty)
 					'itemId' => $itemId,
 				], $smarty);
 			});
+		}
+
+		if ($field['type'] == 'j') {
+			$datepicker = true;
 		}
 	}
 
@@ -164,6 +169,12 @@ function smarty_function_trackerfields($params, $smarty)
 		$template = $trklib->getSectionFormatTemplate('flat', $params['mode']);
 		$result = $smarty->fetch($template);
 	}
+
+	if ( $datepicker ) {
+		$smarty->loadPlugin('smarty_function_js_insert_icon');
+		$result .= smarty_function_js_insert_icon(array('type'=>"jscalendar"), $smarty);
+	}
+
 	return $result;
 }
 
