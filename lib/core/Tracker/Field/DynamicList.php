@@ -103,6 +103,11 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 		$insertId = $this->getInsertId();
 		$originalValue = $this->getConfiguration('value');
 		
+		if( $filterFieldIdHere == $this->getConfiguration('fieldId') )
+			return tr('*** ERROR: Field ID (This tracker) cannot be the same: %0 ***', $filterFieldIdHere);
+
+		if( !TikiLib::lib('trk')->get_tracker_field($listFieldIdThere) )
+			return tr('*** ERROR: Field %0 not found ***', $listFieldIdThere);
 		
 		TikiLib::lib('header')->add_jq_onready(
 			'
@@ -189,6 +194,8 @@ $("input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFieldI
 			$listFieldThere = $trklib->get_tracker_field($listFieldIdThere);
 		}
 		
+		if( empty($listFieldThere) )
+			return tr('*** ERROR: Field %0 not found ***', $listFieldIdThere);
 		
 		$remoteItemId = $this->getValue();
 		$itemInfo = $trklib->get_tracker_item($remoteItemId);
