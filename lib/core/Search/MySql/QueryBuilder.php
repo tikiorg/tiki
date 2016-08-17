@@ -132,11 +132,6 @@ class Search_MySql_QueryBuilder
 						$fullText = false;
 					}
 				}
-				if ($fullText && method_exists($node, 'getField')) {
-					$field = $node->getField();
-					if( stristr($field, 'email') )
-						$fullText = false;
-				}
 			}
 		);
 
