@@ -51,6 +51,11 @@ class Search_MySql_QueryBuilder
 
 		$fields = $this->getFields($node);
 
+		if ($node instanceof Token && count($fields) == 1 && $this->getQuoted($node) === $this->db->qstr('')) {
+			$value = $this->getQuoted($node);
+			return "(`{$node->getField()}` = $value OR `{$node->getField()}` IS NULL)";
+		}
+
 		try {
 			if (! $node instanceof NotX && count($fields) == 1 && $this->isFullText($node)) {
 				// $query contains the token string to compare against $fields[0] in the unified search table
@@ -139,4 +144,3 @@ class Search_MySql_QueryBuilder
 		return $this->db->qstr($string . $suffix);
 	}
 }
-
