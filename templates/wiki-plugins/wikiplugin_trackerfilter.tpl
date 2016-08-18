@@ -35,7 +35,6 @@
 		{/if}
 		<input type="hidden" name="trackerId" value="{$trackerId}">
 		<input type="hidden" name="iTrackerFilter" value="{$iTrackerFilter}">
-		<input type="hidden" name="tr_offset{$iTrackerFilter}" value="0">
 		{if !empty($count_item)}<input type="hidden" name="count_item" value="{$count_item}">{/if}
 		<div class="table-responsive">
 			<table class="table">
