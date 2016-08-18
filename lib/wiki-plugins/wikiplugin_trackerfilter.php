@@ -251,6 +251,9 @@ function wikiplugin_trackerfilter($data, $params)
 			}
 		}
 	}
+	if ( !empty($_REQUEST['filter']) || !empty($_REQUEST['reset_filter'])) {  // If we set a new filter, reset pagination for this plugin
+		unset($GLOBALS['_REQUEST']["tr_offset$iTrackerFilter"]);
+	}
 
 	if (!isset($filters)) {
 		if (empty($export_action)) {
