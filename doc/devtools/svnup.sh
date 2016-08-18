@@ -34,7 +34,14 @@
 
 rm -f last.log
 svn update > last.log
+
+# update composer and file perms
 bash setup.sh -n fix
+
+# update secdb
+php doc/devtools/release.php --only-secdb --no-check-svn
+
+# update the database
 php console.php database:update
 
 # uncomment the line below to see the list of all files updated. (ex.: if running manually)

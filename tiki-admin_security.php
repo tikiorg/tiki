@@ -248,7 +248,7 @@ function md5_check_dir($dir, &$result)
 	while (false !== ($e = $d->read())) {
 		$entry = $dir . '/' . $e;
 		if (is_dir($entry)) {
-			if ($e != '..' && $e != '.' && $entry != './templates_c') { // do not descend and no checking of templates_c since the file based md5 database would grow to big
+			if ($e != '..' && $e != '.' && $entry != './templates_c' && $entry != './temp') { // do not descend and no checking of templates_c since the file based md5 database would grow to big
 				md5_check_dir($entry, $result);
 			}
 		} else if (preg_match('/\.(sql|css|tpl|js|php)$/', $e)) {
@@ -312,6 +312,7 @@ if (isset($_REQUEST['check_files'])) {
 	require_once ('lib/setup/twversion.class.php');
 	$version = new TWVersion();
 	$tiki_versions = $version->tikiVersions();
+	$tiki_versions[] = $version->version;
 	$result = array();
 	md5_check_dir(".", $result);
 	$smarty->assign('filecheck', true);

@@ -59,6 +59,16 @@ if (! $options['no-check-svn'] && has_uncommited_changes('.')) {
 	error("Uncommited changes exist in the working folder.\n");
 }
 
+if ($options['only-secdb']) {
+	include_once('lib/setup/twversion.class.php');
+	$TWV = new TWVersion();
+
+	write_secdb(ROOT . "/db/tiki-secdb_{$TWV->version}_mysql.sql", ROOT, $TWV->version);
+	exit;
+}
+
+
+
 $script = $_SERVER['argv'][0];
 $version = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : '';
 $subrelease = isset($_SERVER['argv'][2]) ? $_SERVER['argv'][2] : '';
@@ -246,12 +256,18 @@ function write_secdb($file, $root, $version)
 
 	fclose($fp);
 
+	$svn = preg_match('/svn$/', $version);
+
 	if ($file_exists) {
 		info(">> Existing SecDB file '$file' has been updated.");
-		`svn add $file 2> /dev/null`;
+		if (! $svn) {
+			`svn add $file 2> /dev/null`;
+		}
 	} else {
 		info(">> SecDB file '$file' has been created.");
-		`svn add $file`;
+		if (! $svn) {
+			`svn add $file`;
+		}
 	}
 }
 
@@ -264,23 +280,13 @@ function write_secdb($file, $root, $version)
 function md5_check_dir($root, $dir, $version, &$queries)
 {
 	$d = dir($dir);
-	$link = mysqli_connect();
+	$link = null;
 
-	if (mysqli_connect_errno()) {
-		global $phpCommand, $phpCommandArguments;
-		error(
-			"SecDB step failed because some filenames need escaping but no MySQL connection has been found (" . mysqli_connect_error() . ")."
-			. "\nTry this command line instead (replace HOST, USER and PASS by a valid MySQL host, user and password) :"
-			. "\n\n\t" . $phpCommand
-			. " -d mysqli.default_host=HOST -d mysqli.default_user=USER -d mysqli.default_pw=PASS "
-			. $phpCommandArguments . "\n"
-		);
-	}
 	while (false !== ($e = $d->read())) {
 		$entry = $dir . '/' . $e;
 		if (is_dir($entry)) {
 			// do not descend and no CVS/Subversion files
-			if ($e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry!='./templates_c') {
+			if ($e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry != $root . '/templates_c' && $entry != $root . '/temp' && $entry != $root . '/vendor_custom') {
 				md5_check_dir($root, $entry, $version, $queries);
 			}
 		} else {
@@ -288,6 +294,22 @@ function md5_check_dir($root, $dir, $version, &$queries)
 				$file = '.' . substr($entry, strlen($root));
 
 				if (! preg_match('/^[a-zA-Z0-9\/ _+.-]+$/', $file) ) {
+
+					if (! $link) {
+						$link = mysqli_connect();
+
+						if (mysqli_connect_errno()) {
+							global $phpCommand, $phpCommandArguments;
+							error(
+								"SecDB step failed because some filenames need escaping but no MySQL connection has been found (" . mysqli_connect_error() . ")."
+								. "\nTry this command line instead (replace HOST, USER and PASS by a valid MySQL host, user and password) :"
+								. "\n\n\t" . $phpCommand
+								. " -d mysqli.default_host=HOST -d mysqli.default_user=USER -d mysqli.default_pw=PASS "
+								. $phpCommandArguments . "\n"
+							);
+						}
+					}
+
 					$file = @mysqli_real_escape_string($link,$file);
 				}
 
@@ -527,7 +549,8 @@ function get_options()
 		'no-packaging' => false,
 		'no-tagging' => false,
 		'force-yes' => false,
-		'debug-packaging' => false
+		'debug-packaging' => false,
+		'only-secdb' => false,
 	);
 
 	// Environment variables provide default values for parameter options. e.g. export TIKI_NO_SECDB=true

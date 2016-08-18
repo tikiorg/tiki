@@ -37,7 +37,7 @@
 <br>
 <h2>{tr}Security checks{/tr}</h2>
 <div>
-	<a href="tiki-admin_security.php?check_files">{tr}Check all tiki files{/tr}</a>
+	<a href="tiki-admin_security.php?check_files" class="btn btn-default">{tr}Check all tiki files{/tr}</a>
 	<br>
 	{remarksbox type="tip" title="{tr}Info{/tr}"}
 		{tr}Note, that this can take a very long time. You should check your max_execution_time setting in php.ini.{/tr}
@@ -66,7 +66,7 @@
 	</div>
 {/if}
 
-<a href="tiki-admin_security.php?check_file_permissions">{tr}Check file permissions{/tr}</a>
+<a href="tiki-admin_security.php?check_file_permissions" class="btn btn-default">{tr}Check file permissions{/tr}</a>
 
 {remarksbox type="tip" title="{tr}Info{/tr}"}
 	{tr}Note, that this can take a very long time. You should check your max_execution_time setting in php.ini.{/tr}

@@ -94,7 +94,7 @@ class Installer extends TikiDb_Bridge
 		}
 
 		$TWV = new TWVersion;
-		$dbversion_tiki = $TWV->getBaseVersion();
+		$dbversion_tiki = $TWV->version;
 
 		// If a Mysql data file exists, use that. Very fast
 		//	If data file is missing or the batch loader is not available, use the single insert method
