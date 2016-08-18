@@ -1,0 +1,1 @@
+{* $Id$ *}{$mail_real} ({$mail_user}) {tr}user joined{/tr} - {$prefs.mail_template_custom_text}{$mail_group}

@@ -1,0 +1,96 @@
+// $Id$
+// Boxes
+.error .rbox-data .adminoption,
+.error .rbox-data .adminoptionlabel {
+	display: inline;
+}
+
+// Modules
+.modules {
+	position: relative;
+}
+
+h3.panel-title {
+	display: block;
+	padding-top: 0;
+	position: relative; // Needed for module shading icon to work.
+}
+
+.moduleflip,
+.moduleflip img {
+	display: none;
+	position: absolute;
+	right: 1%;
+	top: 0;
+}
+
+a.flipmodtitle .icon {
+	font-size: 80%;
+}
+
+.panel:hover .moduleflip,
+.panel:hover .moduleflip img {
+	display: block;
+}
+
+.panel-body table {
+	width: 100%;
+}
+
+.panel-body a.linkmenu {
+	display: block;
+}
+
+.panel-body ol,
+.panel-body ul {
+	overflow: hidden;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.box-months_links ul {
+	list-style-type: none;
+	padding-left: 0;
+}
+
+.box-months_links ul li {
+	list-style-type: none;
+	padding-left: 0.5em;
+}
+
+.box-months_links ul li li {
+	list-style-type: none;
+	padding-left: 1.3em;
+}
+
+.modcontrols {
+	display: block;
+	float: right;
+	width: 64px;
+	height: 16px;
+}
+
+// MiniChat
+.box-minichat {
+	width: 100%;
+}
+
+.minichat,
+.minichatdiv,
+.minichatchan {
+	overflow: auto;
+}
+
+#autosave_preview > div {
+	height: 30ex;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+// moved to tiki-selectors.less
+// .warning a,
+// .warning a:link,
+// .warning a:visited {
+//  color: @alert-warning-text; // #b93c2e
+//
+// }

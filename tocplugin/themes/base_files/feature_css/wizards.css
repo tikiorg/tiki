@@ -1,0 +1,84 @@
+/* $Id$ */
+
+/* Admin wizard */
+
+.adminWizardLink {
+	float: right;
+}
+.adminWizardPageTitle {
+    text-align:center;
+}
+.adminWizardTable {
+	width:100%;
+}
+.adminWizardTOCTitle {
+	font-weight: bold;
+	text-decoration:underline;
+}
+.adminWizardTOCItem {
+    padding-left:5px;
+}
+.adminWizardTOC {
+	vertical-align: top;
+	width:27%;
+	padding-left:15px;
+}
+.disabledTOCSelection {
+	opacity: 0.5;
+}
+.adminWizardBody {
+    vertical-align: top;
+    width:73%;
+	margin-top: 4em;
+}
+
+.adminWizardContent {
+	vertical-align: top;
+}
+
+.adminWizardContent legend {
+	margin-bottom: 1em;
+	font-weight: bold;
+}
+
+.adminWizardContent fieldset {
+	margin: 1em 0;
+}
+
+.adminWizardIconleft {
+	float: left;
+	margin-right: 10px;
+}
+
+.adminWizardIconright {
+	float: right;
+	margin-left: 10px;
+}
+
+.adminWizardtable {
+	border: 0px;
+	padding-left: 20px;
+}
+
+.adminWizardlookandfell {
+	position: absolute;
+	right: .5em;
+	top: 0.5em;
+}
+
+/* User Wizard */
+
+#wizardBody {
+	margin-top: 4em;
+}
+
+#wizardBody .col-sm-12 {
+	margin-top: 1em;
+}
+
+#wizardBody .wizardCongrat {
+	font-size: 1.3em;
+	margin-bottom: 2em;
+}
+
+/* End of file */

@@ -1,0 +1,1 @@
+update tiki_modules set name='search_box', params='tiki=y' where name='search_new';

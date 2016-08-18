@@ -1,0 +1,1 @@
+{* $Id$ *}{tr}Tiki mail-in auto-reply:{/tr} {tr}{$prefs.mail_template_custom_text}page not found{/tr}

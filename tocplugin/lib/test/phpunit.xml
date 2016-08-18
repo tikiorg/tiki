@@ -1,0 +1,27 @@
+
+<!--
+   Note: When backupGlobals is set to true, phpunit ends up trying to restore
+   the DB connection to its initial state, i.e. an unconnected state.
+
+   This causes some mysqli errors, because Tiki libraries never expect
+   to have to reconnect to the DB.
+-->
+<phpunit bootstrap="bootstrap.php"
+		colors="true"
+		convertErrorsToExceptions="true"
+		convertNoticesToExceptions="true"
+		convertWarningsToExceptions="true"
+		stopOnFailure="false"
+        backupGlobals="false"
+        verbose="true">
+	<php>
+		<ini name="memory_limit" value="-1" />
+	</php>
+	<!--
+		uncomment the logging node below if you need xml coverage info, for IDEs that support phpunit
+		Info from http://www.phpunit.de/manual/3.3/en/phpunit-book.html#appendixes.configuration
+	<logging>
+		<log type="coverage-clover" target="lib/test/clover.xml" />
+	</logging>
+	-->
+</phpunit>

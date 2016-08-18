@@ -1,0 +1,1 @@
+{* $Id$ *}{tr}An object was removed from {$prefs.mail_template_custom_text}category{/tr} {$categoryName}

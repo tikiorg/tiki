@@ -1,0 +1,8 @@
+---
+key_a: value_a
+key_b: [x, y, z]
+key_c:
+  sub_1:
+    - array_1
+    - array_2
+    - array_3
