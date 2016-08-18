@@ -12,6 +12,8 @@
 
 function upgrade_20160817_fix_dymanic_list_field_values_tiki($installer)
 {
+	global $prefs;
+	$prefs['trackerfield_dynamiclist'] = 'y';	// needed for the fieldFactory when in the installer
 
 	/** @var \TrackerLib $trklib */
 	$trklib = TikiLib::lib('trk');
@@ -19,7 +21,7 @@ function upgrade_20160817_fix_dymanic_list_field_values_tiki($installer)
 	$trackerFields = $installer->table('tiki_tracker_fields');
 	$trackerItemFields = $installer->table('tiki_tracker_item_fields');
 
-	$fields = $trackerFields->fetchAll($trackerFields->all(), ['type' => 'w']);
+	$fields = $trackerFields->fetchAll($trackerFields->all(), ['type' => $trackerFields->exactly('w')]);
 
 	foreach ($fields as $field) {
 		$itemFields = $trackerItemFields->fetchAll(['itemId', 'value'], ['fieldId' => $field['fieldId']]);
