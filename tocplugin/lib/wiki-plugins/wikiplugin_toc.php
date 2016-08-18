@@ -25,6 +25,14 @@ function wikiplugin_toc_info()
 				'filter' => 'digits',
 				'default' => 0,
 			),
+			'mindepth' => array(
+				'name' => tra('Minimum Depth'),
+				'description' => tr('Hide number of levels below this number to display. %0 means no limit (and is the default).', '<code>0</code>'),
+				'since' => '15.3.',
+				'required' => false,
+				'filter' => 'digits',
+				'default' => 0,
+			),
 			'structId' => array(
 				'name' => tra('Structure ID'),
 				'description' => tra('By default, structure for the current page will be displayed. Alternate
@@ -111,6 +119,7 @@ function wikiplugin_toc( $data, $params )
 		'type' => 'plain',
 		'structId' => '',
 		'maxdepth' => 0,
+		'mindepth' => 0,
 		'numberPrefix' => '',
 		'pagename' => '',
 	);
@@ -154,14 +163,14 @@ function wikiplugin_toc( $data, $params )
 			$page_info = $structlib->s_get_page_info($pageName_ref_id);
 			$structure_info = $structlib->s_get_structure_info($pageName_ref_id);
 			if (isset($page_info)) {
-				$html = $structlib->get_toc($pageName_ref_id, $order, $showdesc, $shownum, $numberPrefix, $type, '', $maxdepth, $structure_info['pageName']);
+				$html = $structlib->get_toc($pageName_ref_id, $order, $showdesc, $shownum, $numberPrefix, $type, '', $maxdepth, $mindepth, $structure_info['pageName']);
 				return "~np~$button $html $button~/np~";
 			}
 		}
 		return '';
 	} else {
 		$structure_info = $structlib->s_get_structure_info($structId);
-		$html = $structlib->get_toc($structId, $order, $showdesc, $shownum, $numberPrefix, $type, '', $maxdepth, $structure_info['pageName']);
+		$html = $structlib->get_toc($structId, $order, $showdesc, $shownum, $numberPrefix, $type, '', $maxdepth, $mindepth, $structure_info['pageName']);
 
 		return "~np~$button $html $button~/np~";
 	}
