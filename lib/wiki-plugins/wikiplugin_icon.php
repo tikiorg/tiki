@@ -16,6 +16,7 @@ function wikiplugin_icon_info()
 		'tags' => array('basic'),
 		'format' => 'html',
 		'introduced' => 14.1,
+		'extraparams' => true,
 		'params' => array(
 			'name' => array(
 				'required' => true,
