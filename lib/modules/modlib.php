@@ -528,10 +528,12 @@ class ModLib extends TikiLib
 
 			$ok = false;
 			foreach ((array) $params['theme'] as $t) {
+				// remove any css extension
+				$t = preg_replace('/\.css$/i', '', $t);
 				if ( $t{0} != '!' ) { // usual behavior
 					if ( !empty($tc_theme) && $t === $tc_theme ) {
 						$ok = true;
-					} elseif ( $t === $prefs['style'] && empty($tc_theme)) {
+					} elseif ( $t === $prefs['theme'] && empty($tc_theme)) {
 						$ok = true;
 					}
 				} else { // negation behavior
@@ -539,7 +541,7 @@ class ModLib extends TikiLib
 					$ok = true;
 					if ( !empty($tc_theme) && $excluded_theme === $tc_theme ) {
 						return false;
-					} elseif ( $excluded_theme === $prefs['style'] && empty( $tc_theme )) {
+					} elseif ( $excluded_theme === $prefs['theme'] && empty( $tc_theme )) {
 						return false;
 					}
 				}
