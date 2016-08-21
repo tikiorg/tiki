@@ -31,7 +31,7 @@ if ($prefs['feature_areas'] === 'y') {
 	// building overview
 	$areas_table = $areaslib->table('tiki_areas');
 
-	$result = $areas_table->fetchAll(array('categId', 'perspectives', 'exclusive', 'share_common', 'enabled'), $conditions);
+	$result = $areas_table->fetchAll(array('categId', 'perspectives', 'exclusive', 'share_common', 'enabled'));
 	$areas = array();
 	$perspectivelib = TikiLib::lib('perspective');
 	$perspectives = array();
