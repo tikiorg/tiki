@@ -125,14 +125,14 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 					),
 					'image_x' => array(
 						'name' => tr('Max. image width'),
-						'description' => tr('Leave blank for unlimited, enter value in px to resize large images'),
+						'description' => tr('Leave blank to use selected gallery default setting or enter value in px to override gallery settings'),
 						'filter' => 'text',
 						'default' => '',
 						'legacy_index' => 12,
 					),
 					'image_y' => array(
 						'name' => tr('Max. image height'),
-						'description' => tr('Leave blank for unlimited, enter value in px to resize large images'),
+						'description' => tr('Leave blank to use selected gallery default settings or enter value in px to override gallery settings'),
 						'filter' => 'text',
 						'legacy_index' => 13,
 					),
@@ -229,6 +229,18 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			$perms = TikiLib::lib('tiki')->get_local_perms($user, $galleryId, 'file gallery', $galinfo, false);		//get_perm_object($galleryId, 'file gallery', $galinfo);
 			$canUpload = $perms['tiki_p_upload_files'] === 'y';
 		}
+		
+		$image_x=$this->getOption('image_x');
+		$image_y=$this->getOption('image_y');
+		
+		//checking if image_x and image_y are set
+		if(!$image_x)
+		   $image_x=$galinfo['image_max_size_x'];
+		
+		if(!$image_y)
+		   $image_y=$galinfo['image_max_size_y'];
+		   
+			
 
 		return array(
 			'galleryId' => $galleryId,
@@ -238,8 +250,8 @@ class Tracker_Field_Files extends Tracker_Field_Abstract
 			'firstfile' => $firstfile,
 			'value' => $value,
 			'filter' => $this->getOption('filter'),
-			'image_x'=>$this->getOption('image_x'),
-			'image_y'=>$this->getOption('image_y'),
+			'image_x'=>$image_x,
+			'image_y'=>$image_y,
 			'gallerySearch' => $gallery_list,
 		);
 	}
