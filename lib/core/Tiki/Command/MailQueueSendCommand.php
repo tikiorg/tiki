@@ -63,7 +63,7 @@ class MailQueueSendCommand extends Command
 
             if ($error) {
             	$query = 'UPDATE tiki_mail_queue SET attempts = attempts + 1 WHERE messageId = ?';
-            	$output->writeln('Failed.');
+            	$output->writeln('Failed sending mail object id: ' . $message['messageId'] . ' (' . $error . ')');
             } else {
             	$query = 'DELETE FROM tiki_mail_queue WHERE messageId = ?';
             	$output->writeln('Sent.');
