@@ -142,7 +142,7 @@
 			</div>
             <div class="form-group">		
                	<label for="imagesize" class="col-md-8 col-md-offset-4">		
-                 <input type="checkbox" id="imagesize" name="imagesize" checked="checked" value="yes" />{tr}Use Gallery default resize settings for images {if $gal_info["image_max_size_x"]}({$gal_info["image_max_size_x"]}px X {$gal_info["image_max_size_y"]} px){else}<div id="imageResizeInfo">(No resize)</div>{/if}{/tr}
+                 <input type="checkbox" id="imagesize" name="imagesize" checked="checked" value="yes" />{tr}Use Gallery default resize settings for images <span id="imageResizeInfo">{if $gal_info["image_max_size_x"]}({$gal_info["image_max_size_x"]}px X {$gal_info["image_max_size_y"]} px){else}(No resize){/if}</span>{/tr}
                </label>		
              		
             </div>		
