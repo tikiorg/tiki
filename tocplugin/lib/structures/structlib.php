@@ -741,8 +741,19 @@ class StructLib extends TikiLib
 		global $user;
 		$ret='';
 		if ($structure_tree != '') {
-			//(($mindepth <= 0) || ($cur_depth >= $mindepth)) //Where should this go? =S
-			if (($maxdepth <= 0) || ($cur_depth < $maxdepth)) {
+			if ($cur_depth < $mindepth) {
+				if ($cur_depth == 0) {
+					$ret.= $smarty->fetch('structures_toc-startul.tpl')."\n";
+				}
+				foreach ($structure_tree as $leaf) {
+					if (isset($leaf['sub']) && is_array($leaf['sub'])) {
+						$ret .= $this->fetch_toc($leaf['sub'], $showdesc, $numbering, $type, $page, $maxdepth, $mindepth, $cur_depth + 1, $structurePageName)."</li>\n";
+					}
+				}
+				if ($cur_depth == 0) {
+					$ret.= $smarty->fetch('structures_toc-endul.tpl')."\n";
+				}
+			} elseif (($maxdepth <= 0) || ($cur_depth < $maxdepth)) {
 
 				$smarty->assign('toc_type', $type);
 				$ret.= $smarty->fetch('structures_toc-startul.tpl')."\n";
