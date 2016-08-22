@@ -815,6 +815,17 @@ class Services_Tracker_Controller
 			$title = $title;
 		}
 
+		if ($input->format->word()) {
+			$format = $input->format->word();
+		} else {
+			$format = $definition->getConfiguration('sectionFormat');
+		}
+
+		$editItemPretty = '';
+		if ($format === 'config') {
+			$editItemPretty = $definition->getConfiguration('editItemPretty');
+		}
+
 		return array(
 			'title' => $title,
 			'trackerId' => $trackerId,
@@ -825,7 +836,8 @@ class Services_Tracker_Controller
 			'trackerLogo' => $definition->getConfiguration('logo'),
 			'modal' => $input->modal->int(),
 			'status' => $status,
-			'format' => $input->format->word(),
+			'format' => $format,
+			'editItemPretty' => $editItemPretty,
 		);
 	}
 
