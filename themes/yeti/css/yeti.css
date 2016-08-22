@@ -7131,6 +7131,9 @@ input[type="checkbox"] {
 .navbar-default .dropdown-menu > .active > a {
   color: #bdbdbd;
 }
+.popover-content .table {
+  color: #222222;
+}
 .margin-bottom-xs {
   margin-bottom: 6px;
 }
