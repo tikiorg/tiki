@@ -27,6 +27,10 @@ function upgrade_20160817_fix_dymanic_list_field_values_tiki($installer)
 		$itemFields = $trackerItemFields->fetchAll(['itemId', 'value'], ['fieldId' => $field['fieldId']]);
 		$options = json_decode($field['options'], true);
 		$definition = Tracker_Definition::get($options['trackerId']);
+		if (! $definition) {
+			continue;	// linked tracker now missing, so just ignore
+		}
+
 		$fieldFactory = $definition->getFieldFactory();
 
 
