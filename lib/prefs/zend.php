@@ -85,7 +85,8 @@ function prefs_zend_list()
 		),
 		'zend_mail_queue' => array(
 			'name' => tra('Mail Delivery'),
-			'description' => tra('When set to Queue, messages will be stored in the database. Requires using the shell script ./sendmail.php to be run for actual delivery. Only works with SMTP mail.'),
+			'description' => tr('When set to Queue, messages will be stored in the database. Requires using the shell script %0 to be run for actual delivery. Only works with SMTP mail.',
+								'<code>php console.php mail-queue:send</code>'),
 			'type' => 'list',
 			'options' => array(
 				'' => tra('Send immediately'),
