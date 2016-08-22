@@ -69,7 +69,7 @@ class MailQueueSendCommand extends Command
 
             \TikiDb::get()->query($query, array($message['messageId']));
           } else {
-              $output->writeln('ERROR: Unable to unserialize the mail object id:' . $messages['messageId']);
+              $output->writeln('ERROR: Unable to unserialize the mail object id:' . $message['messageId']);
           }
       }
       $output->writeln('Mail queue processed...');
