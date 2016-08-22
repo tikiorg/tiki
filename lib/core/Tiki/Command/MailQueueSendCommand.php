@@ -39,7 +39,7 @@ class MailQueueSendCommand extends Command
           $output->writeln('Sending message '.$message['messageId'].'...');
           $mail = unserialize($message['message']);
 
-          if ($mail) {
+          if ($mail && get_class($mail) === 'Zend\Mail\Message') {
             try {
                 tiki_send_email($mail);
                 $title = 'mail';
@@ -69,7 +69,7 @@ class MailQueueSendCommand extends Command
 
             \TikiDb::get()->query($query, array($message['messageId']));
           } else {
-              $output->writeln('ERROR: Unable to unserialize the mailer object.');
+              $output->writeln('ERROR: Unable to unserialize the mail object id:' . $messages['messageId']);
           }
       }
       $output->writeln('Mail queue processed...');
