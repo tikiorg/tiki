@@ -1218,6 +1218,11 @@ function wikiplugin_tracker($data, $params)
 							$emailOptions[0] = $trklib->get_item_value($trackerId, $rid, $emailOptions[0]);
 						}
 					}
+					if( !empty($emailOptions[0]) && !strstr($emailOptions[0], '@') ) {
+						$email = $userlib->get_user_email($emailOptions[0]);
+						if( $email )
+							$emailOptions[0] = $email;
+					}
 					if (empty($emailOptions[0])) { // from
 						$emailOptions[0] = $prefs['sender_email'];
 					}
