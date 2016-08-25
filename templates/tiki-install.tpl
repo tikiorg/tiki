@@ -775,6 +775,7 @@
 						{if $multi}<input type="hidden" name="multi" value="{$multi}">{/if}
 						{if $lang}<input type="hidden" name="lang" value="{$lang}">{/if}
 						<input type="hidden" name="install_step" value="8">
+						<input type="hidden" name="install_type" value="{$install_type}">
 						<input type="submit" class="btn btn-primary" value="{tr}Continue{/tr}">
 					</div>
 				</form>
