@@ -788,6 +788,17 @@ class Services_Tracker_Controller
 			}
 		}
 
+		if ($input->format->word()) {
+			$format = $input->format->word();
+		} else {
+			$format = $definition->getConfiguration('sectionFormat');
+		}
+
+		$editItemPretty = '';
+		if ($format === 'config') {
+			$editItemPretty = $definition->getConfiguration('editItemPretty');
+		}
+
 		return array(
 			'title' => tr('Create Item'),
 			'trackerId' => $trackerId,
@@ -798,7 +809,8 @@ class Services_Tracker_Controller
 			'trackerLogo' => $definition->getConfiguration('logo'),
 			'modal' => $input->modal->int(),
 			'status' => $itemObject->getDisplayedStatus(),
-			'format' => $input->format->word(),
+			'format' => $format,
+			'editItemPretty' => $editItemPretty,
 		);
 	}
 
