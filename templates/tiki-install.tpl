@@ -22,7 +22,8 @@
 						<li>{if $install_step eq '4'}<strong>{elseif $dbcon eq 'y' or isset($smarty.post.scratch) or isset($smarty.post.update)}<a href="#" onclick="$('#install_step4').submit();return false;" title="{if $tikidb_created}{tr}Install/Upgrade{/tr}{else}{tr}Install{/tr}{/if}">{/if}{if $tikidb_created}<em>{tr}Install/Upgrade{/tr}</em>{else}{tr}Install{/tr}{/if}{if $install_step eq '4'}</strong>{elseif ($dbcon eq 'y') or (isset($smarty.post.scratch)) or (isset($smarty.post.update))}</a>{/if}</li>
 						<li>{if $install_step eq '5'}<strong>{elseif $tikidb_is20}<a href="#" onclick="$('#install_step5').submit();return false;" title="{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}">{/if}{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}{if $install_step eq '5'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
 						<li>{if $install_step eq '6'}<strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}<a href="#" onclick="$('#install_step6').submit();return false;" title="{tr}Configure the General Settings{/tr}">{/if}{tr}Configure the General Settings{/tr}{if $install_step eq '6'}</strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}</a>{/if}</li>
-						<li>{if $install_step eq '7'}<strong>{elseif $tikidb_is20}<a href="#" onclick="$('#install_step7').submit();return false;" title="{tr}Enter Your Tiki{/tr}">{/if}{tr}Enter Your Tiki{/tr}{if $install_step eq '7'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
+						<li>{if $install_step eq '7'}<strong>{elseif $tikidb_is20}<a href="#" onclick="$('#install_step7').submit();return false;" title="{tr}Important Tiki Admin Information{/tr}">{/if}{tr}Important Tiki Admin Information{/tr}{if $install_step eq '7'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
+						<li>{if $install_step eq '8'}<strong>{elseif $tikidb_is20}<a href="#" onclick="$('#install_step8').submit();return false;" title="{tr}Enter Your Tiki{/tr}">{/if}{tr}Enter Your Tiki{/tr}{if $install_step eq '8'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
 					</ol>
 					<form method="post" action="tiki-install.php" id="install_step0">
 						<input type="hidden" name="install_step" value="0">
@@ -61,6 +62,11 @@
 					</form>
 					<form method="post" action="tiki-install.php" id="install_step7">
 						<input type="hidden" name="install_step" value="7">
+						{if $multi}<input type="hidden" name="multi" value="{$multi}">{/if}
+						{if $lang}<input type="hidden" name="lang" value="{$lang}">{/if}
+					</form>
+					<form method="post" action="tiki-install.php" id="install_step8">
+						<input type="hidden" name="install_step" value="8">
 						{if $multi}<input type="hidden" name="multi" value="{$multi}">{/if}
 						{if $lang}<input type="hidden" name="lang" value="{$lang}">{/if}
 					</form>
@@ -211,7 +217,6 @@
 						{/remarksbox}
 					{/if}
 					<p>{tr}Tiki uses the GD library to process images for the Image Gallery and CAPTCHA support.{/tr}</p>
-					<p>{tr}By default Tiki save your images and files in the database to make the setup as easy as possible.{/tr}<br />{tr}This setting can be changed later in the Control Panels, File Galleries section General Settings.{/tr}<br />{tr}If you need to store a lot of files you should consider switching from "Store to database" to "Store to directory".{/tr}</p>
 					<form action="tiki-install.php" method="post" role="form">
 						<div class="form-group text-center">
 							<input type="hidden" name="install_step" value="3">
@@ -650,12 +655,6 @@
 									<span class="help-block">
 										{tr}This is the email address for your administrator account.{/tr}
 									</span>
-									{remarksbox type=error title="{tr}Subscribe to Tiki Releases newsletter{/tr}" close="n"}
-									{tr}It is highly recommended for Tiki admins and Tiki system maintainers to subscribe to the Tiki Releases newsletter.{/tr}<br>
-									{tr}This newsletter is used to send important notice about Tiki releases and critical security releases.{/tr}<br>
-									{tr}We don't share subscribed emails and we send very few newsletter a year using this list.{/tr}<br>
-									{tr}Please use the following link and subscribe	:{/tr} <a href="https://tiki.org/tiki-newsletters.php?nlId=8&info=1" title="Subscribe" target="_blank" class="alert-link">{tr}Tiki Releases newsletter{/tr}</a>
-									{/remarksbox}
 								</div>
 							</fieldset>
 							{if not empty($htaccess_options)}
@@ -722,7 +721,67 @@
 				</div><!-- End of install-step6 -->
 
 			{elseif $install_step eq '7'}
-				<div class="install-step7">
+			<div class="install-step7">
+				<h1>{tr}Important Tiki Admin Information{/tr}</h1>
+				<div class="alert alert-danger">
+					{tr}The following information are critical for your website and data protection and health!{/tr}</br></br>
+					{tr}Unless your are used to work with Tiki and you know the Tiki Community it is <strong>very important</strong> you fully read this page.{/tr}
+					{tr}Doing so, you'll find usefull information to avoid loosing time or data while setting and maitaining your Tiki.{/tr}
+				</div>
+				<form action="tiki-install.php" method="post">
+					<div class="clearfix">
+						<fieldset>
+							<legend>
+								{icon name="shield"} {tr}Subscribe to Tiki Releases newsletter{/tr} - {tr}Critical & Security update{/tr}
+							</legend>
+							{tr}It is highly recommended for Tiki admins and Tiki system maintainers to subscribe to the Tiki Releases newsletter.{/tr}<br>
+							{tr}This newsletter is used to send important notice about Tiki releases and critical security releases.{/tr}<br>
+							{tr}We don't share subscribed emails and we send very few newsletter a year using this list.{/tr}<br>
+							{tr}Please use the following link and subscribe	:{/tr} <a href="https://tiki.org/tiki-newsletters.php?nlId=8&info=1" title="Subscribe" target="_blank" class="text-danger">{tr}Tiki Releases newsletter{/tr}</a>
+						</fieldset>
+						</br>
+						<fieldset>
+							<legend>
+								{icon name="filter"} {tr}Tiki Admin preferences filter{/tr}
+							</legend>
+							{tr}Tiki contains thousands of options and parameters.{/tr} {tr}To avoid submerging your screen on your first visit to the Control Panels we use filters.{/tr}<br />
+							{tr}Those filters: Basic, Advanced, Experimental and Unavailable helps to hide the setting that you don't need to use.{/tr}
+							{tr}When you don't see a setting that you are expecting to find at a certain place, make sure your admin Preference Filters is properly set.{/tr}<br />
+							{tr}You'll find it at the top of the Admin Navigation Bar by clicking on that icon.{/tr} {icon name="filter"}<br />
+						</fieldset>
+						</br>
+						<fieldset>
+							<legend>
+								{icon name="floppy-o"} {tr}Storing your Tiki files{/tr}
+							</legend>
+							{tr}To ease the install process and first access Tiki save your images and files by default in its database.{/tr}<br />
+							{tr}This work perfectly but is not recommended to save many files or images.{/tr}
+							{tr}To avoid working with inflated database and if you need to store a lot of files you should also consider switching from "Store to database" to "Store to directory".{/tr}<br />
+							{tr}This setting can be changed and files previously saved can be moved using the Control Panels, File Galleries section General Settings.{/tr}<br />
+						</fieldset>
+						</br>
+						<fieldset>
+							<legend>
+								{icon name="group"} {tr}Tiki Community{/tr}
+							</legend>
+							{tr}The Tiki Community is a global network of developers, site operators, consultants and end users.{/tr}<br />
+							<a href='https://tiki.org/Join' target='_blank'>{tr}Join the Community{/tr}</a><br />
+							<a href='https://tiki.org/Help' target='_blank'>{tr}Get Help with Tiki{/tr}</a><br />
+							{tr}Tiki is the collective work of hundreds of people. It works because volunteers.{/tr} <a href='https://dev.tiki.org/Commit+Code' target='_blank'>{tr}take the time to make it better.{/tr}</a><br />
+						</fieldset>
+					</div>
+
+					<div align="center" style="margin-top:1em;">
+						{if $multi}<input type="hidden" name="multi" value="{$multi}">{/if}
+						{if $lang}<input type="hidden" name="lang" value="{$lang}">{/if}
+						<input type="hidden" name="install_step" value="8">
+						<input type="submit" class="btn btn-primary" value="{tr}Continue{/tr}">
+					</div>
+				</form>
+			</div><!-- End of install-step7 -->
+
+		{elseif $install_step eq '8'}
+				<div class="install-step8">
 					<h1 class="pagetitle">{tr}Enter Your Tiki{/tr}</h1>
 					<p>{tr}The installation is complete!{/tr} {tr}Your database has been configured and Tiki is ready to run.{/tr} </p>
 					{remarksbox type='tip' title="{tr}Join us!{/tr}" close="n"}
@@ -760,7 +819,7 @@
 								<input type="hidden" name="multi" value="{$multi|escape}">
 							{/if}
 							<input type="hidden" name="install_type" value="{$install_type}">
-							<input type="hidden" name="install_step" value="8">
+							<input type="hidden" name="install_step" value="9">
 							<input type="submit" value="{tr}Enter Tiki and Lock Installer{/tr} ({tr}Recommended{/tr})" class="btn btn-primary">
 						</form>
 						<form method="post" action="tiki-install.php" style="margin-left: 20px; display: inline-block;">
@@ -769,7 +828,7 @@
 								<input type="hidden" name="multi" value="{$multi|escape}">
 							{/if}
 							<input type="hidden" name="install_type" value="{$install_type}">
-							<input type="hidden" name="install_step" value="8">
+							<input type="hidden" name="install_step" value="9">
 							<input type="submit" value="{tr}Enter Tiki Without Locking Installer{/tr}" class="btn btn-default">
 							<br><em><span class="text-warning">{icon name="warning"}</span> {tr}Not recommended due to security risk{/tr}.</em>
 						</form>
@@ -826,7 +885,7 @@
 												</select>
 												<span class="input-group-btn"><input type="submit" class="btn btn-danger btn-sm" name="fix_double_encoding" value="{tr}Click to fix double encoding (dangerous){/tr}"></span>
 											</div>
-											<input type="hidden" name="install_step" value="7">
+											<input type="hidden" name="install_step" value="8">
 										</div>
 									{else}
 										<p>{tr}Oops. You need to make sure client charset is forced to UTF-8. Reset the database connection to continue.{/tr}</p>
@@ -835,7 +894,7 @@
 							</form>
 						{/if}
 					{/if}
-				</div><!-- End of install-step7 -->
+				</div><!-- End of install-step8 -->
 
 			{/if}{* end elseif $install_step... *}
 
