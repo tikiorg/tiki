@@ -7,7 +7,7 @@
 			<span class="icon-bar"></span>
 		</button>
 		<ul class="nav navbar-nav">
-			<li class="dropdown">	
+			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" title="{tr}Settings{/tr}">
 					{icon name="filter"} <span class="caret"></span>
 				</a>
@@ -171,6 +171,6 @@
 	{/jq}
 {elseif $lm_criteria}
 	{remarksbox type="note" title="{tr}No results{/tr}" icon="magnifier"}
-		{tr}No preferences were found for your search query with your current choice of Preference Filters ({icon name="filter"}).{/tr}{if $prefs.unified_engine eq 'lucene'}{tr} Not what you expected? Try {/tr}<a class="alert-link" href="tiki-admin.php?prefrebuild">{tr}rebuild{/tr}</a> {tr}the preferences search index.{/tr}{/if}
+		{tr}No preferences were found for your search query with your <a class='alert-link' target='tikihelp' href='https://doc.tiki.org/Preference+Filters'>current choice of Preference Filters</a> ({icon name="filter"}).{/tr}{if $prefs.unified_engine eq 'lucene'}{tr} Not what you expected? Try {/tr}<a class="alert-link" href="tiki-admin.php?prefrebuild">{tr}rebuild{/tr}</a> {tr}the preferences search index.{/tr}{/if}
 	{/remarksbox}
 {/if}

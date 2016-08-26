@@ -29,7 +29,7 @@
 						{remarksbox type="info" title="{tr}Info{/tr}"}
 							{tr}Once you have the feature '<strong>Categories</strong>' enabled, you will need to define some content categories, and indicate which ones require revision approval for their wiki pages{/tr}.
 							<br><br/>
-							{tr}You will be able to set the category ids here when you come back with Categories enabled, or at the corresponding <a href="tiki-admin.php?page=wiki&cookietab=3" target="_blank">Control Panel</a> with the '<em>Advanced</em>' features shown in the Preference Filters{/tr}.
+							{tr}You will be able to set the category ids here when you come back with Categories enabled, or at the corresponding <a href="tiki-admin.php?page=wiki&cookietab=3" target="_blank">Control Panel</a> with the '<em>Advanced</em>' features shown in the <a class='alert-link' target='tikihelp' href='https://doc.tiki.org/Preference+Filters'>Preference Filters</a>{/tr}.
 						{/remarksbox}
 					{/if}
 				</div>
