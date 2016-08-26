@@ -345,6 +345,10 @@ var customsearch = {
 
 		$(selector).tikiModal(cs.options.searchfadetext);
 
+		var resultsTop = $(cs.options.results).offset().top;
+		if( $(window).scrollTop() > resultsTop )
+			$('html, body').animate({scrollTop: resultsTop + 'px'}, 'fast');
+
 		cs._load(function (data) {
 			$(selector).tikiModal();
 			$(cs.options.results).html(data);
