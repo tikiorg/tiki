@@ -6071,6 +6071,10 @@ JS;
 
 		$delimiter = array_shift($delimiters);
 		$temp = explode($delimiter, $string);
+		
+		if( implode('', $temp) === '' ) // all delimited values are empty => don't parse anymore as wierd results containing delimiter are returned
+			return $temp;
+		
 		$array = array();
 		$keep = false;
 
