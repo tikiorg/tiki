@@ -22,7 +22,7 @@
 						<li>{if $install_step eq '4'}<strong>{elseif $dbcon eq 'y' or isset($smarty.post.scratch) or isset($smarty.post.update)}<a href="#" onclick="$('#install_step4').submit();return false;" title="{if $tikidb_created}{tr}Install/Upgrade{/tr}{else}{tr}Install{/tr}{/if}">{/if}{if $tikidb_created}<em>{tr}Install/Upgrade{/tr}</em>{else}{tr}Install{/tr}{/if}{if $install_step eq '4'}</strong>{elseif ($dbcon eq 'y') or (isset($smarty.post.scratch)) or (isset($smarty.post.update))}</a>{/if}</li>
 						<li>{if $install_step eq '5'}<strong>{elseif $tikidb_is20}<a href="#" onclick="$('#install_step5').submit();return false;" title="{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}">{/if}{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}{if $install_step eq '5'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
 						<li>{if $install_step eq '6'}<strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}<a href="#" onclick="$('#install_step6').submit();return false;" title="{tr}Configure the General Settings{/tr}">{/if}{tr}Configure the General Settings{/tr}{if $install_step eq '6'}</strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}</a>{/if}</li>
-						<li>{if $install_step eq '7'}<strong>{elseif $tikidb_is20}<a href="#" onclick="$('#install_step7').submit();return false;" title="{tr}Important Tiki Admin Information{/tr}">{/if}{tr}Important Tiki Admin Information{/tr}{if $install_step eq '7'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
+						<li>{if $install_step eq '7'}<strong>{elseif $tikidb_is20}<a href="#" onclick="$('#install_step7').submit();return false;" title="{tr}Important Tiki Admin Information{/tr}">{/if}{tr}Last Notes{/tr}{if $install_step eq '7'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
 						<li>{if $install_step eq '8'}<strong>{elseif $tikidb_is20}<a href="#" onclick="$('#install_step8').submit();return false;" title="{tr}Enter Your Tiki{/tr}">{/if}{tr}Enter Your Tiki{/tr}{if $install_step eq '8'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
 					</ol>
 					<form method="post" action="tiki-install.php" id="install_step0">
@@ -722,42 +722,37 @@
 
 			{elseif $install_step eq '7'}
 			<div class="install-step7">
-				<h1>{tr}Important Tiki Admin Information{/tr}</h1>
-				<div class="alert alert-danger">
-					{tr}The following information are critical for your website and data protection and health!{/tr}</br></br>
-					{tr}Unless your are used to work with Tiki and you know the Tiki Community it is <strong>very important</strong> you fully read this page.{/tr}
-					{tr}Doing so, you'll find usefull information to avoid loosing time or data while setting and maitaining your Tiki.{/tr}
-				</div>
+				<h1>{tr}Last Notes{/tr}</h1>
+				{remarksbox type=note title="{tr}Important{/tr}" close="n"}
+					{tr}Read the following information to ensure that your website data stays protected, your site healthy and you don't unnecessarily loose time or data while setting up your Tiki site now or while maintaining it in the future.{/tr}
+				{/remarksbox}
 				<form action="tiki-install.php" method="post">
 					<div class="clearfix">
 						<fieldset>
 							<legend>
 								{icon name="shield"} {tr}Subscribe to Tiki Releases newsletter{/tr} - {tr}Critical & Security update{/tr}
 							</legend>
-							{tr}It is highly recommended for Tiki admins and Tiki system maintainers to subscribe to the Tiki Releases newsletter.{/tr}<br>
-							{tr}This newsletter is used to send important notice about Tiki releases and critical security releases.{/tr}<br>
-							{tr}We don't share subscribed emails and we send very few newsletter a year using this list.{/tr}<br>
+							{tr}It is highly recommended that you subscribe to the Tiki Releases newsletter, so that you receive important notices about new releases and critical security updates.{/tr}
+							{tr}We don't share subscribed emails and we send very few of these newsletters per year.{/tr}<br /><br />
 							{tr}Please use the following link and subscribe	:{/tr} <a href="https://tiki.org/tiki-newsletters.php?nlId=8&info=1" title="Subscribe" target="_blank" class="text-danger">{tr}Tiki Releases newsletter{/tr}</a>
 						</fieldset>
 						</br>
 						<fieldset>
 							<legend>
-								{icon name="filter"} {tr}Tiki Admin preferences filter{/tr}
+								{icon name="magic"}{icon name="filter"} {tr}First Wizards, then Control Panels with Preference Filter{/tr}
 							</legend>
-							{tr}Tiki contains thousands of options and parameters.{/tr} {tr}To avoid submerging your screen on your first visit to the Control Panels we use filters.{/tr}<br />
-							{tr}Those filters: Basic, Advanced, Experimental and Unavailable helps to hide the setting that you don't need to use.{/tr}
-							{tr}When you don't see a setting that you are expecting to find at a certain place, make sure your admin Preference Filters is properly set.{/tr}<br />
-							{tr}You'll find it at the top of the Admin Navigation Bar by clicking on that icon.{/tr} {icon name="filter"}<br />
+							{tr}Tiki contains thousands of options and parameters (what we call "preferences"), which can be overwhelming for a new site administrator.{/tr} {tr}That's why we suggest you to get started using the <a class='alert-link' target='tikihelp' href='https://doc.tiki.org/Wizards'>Wizards</a> first ({icon name='magic'}), and when you need full control of the other options, you will only have the basic preferences displayed by default in a new installation.{/tr}<br /><br />
+							{tr}You can modify the default filter choice at your own convenience to also display Advanced, Experimental or Unavailable preferences in Control Panels.{/tr}
+							{tr}You'll find the <a class='alert-link' target='tikihelp' href='https://doc.tiki.org/Preference+Filters'>Preference Filter</a> at the top of the Navigation Bar in the <a class='alert-link' target='tikihelp' href='https://doc.tiki.org/Control+Panels'>Control Panels</a> by clicking on the funnel icon ({icon name='filter'}) or use the search box provided.{/tr}<br />
 						</fieldset>
 						</br>
 						<fieldset>
 							<legend>
-								{icon name="floppy-o"} {tr}Storing your Tiki files{/tr}
+								{icon name="floppy-o"} {tr}Storing your uploaded files{/tr}
 							</legend>
-							{tr}To ease the install process and first access Tiki save your images and files by default in its database.{/tr}<br />
-							{tr}This work perfectly but is not recommended to save many files or images.{/tr}
-							{tr}To avoid working with inflated database and if you need to store a lot of files you should also consider switching from "Store to database" to "Store to directory".{/tr}<br />
-							{tr}This setting can be changed and files previously saved can be moved using the Control Panels, File Galleries section General Settings.{/tr}<br />
+							{tr}To ease the install process and first access, Tiki saves your uploaded files (office documents, images, pdf, etc. attached to wiki pages, forum posts, tracker items, file galleries, ...) by default in its database.{/tr}
+							{tr}This works perfectly in most cases but it is not the recommended setup if you need to save many thousands of files or more.{/tr} <br /><br />{tr}In that case, consider switching from "<strong>Store to database</strong>" to "<strong>Store to directory</strong>", which you will find in the <em>Configuration Wizard</em> for the most usual features and in the <em>Control Panels</em> for all of them and it will allow you to migrate your currently uploaded files.{/tr}<br />
+							<br />
 						</fieldset>
 						</br>
 						<fieldset>
@@ -765,9 +760,11 @@
 								{icon name="group"} {tr}Tiki Community{/tr}
 							</legend>
 							{tr}The Tiki Community is a global network of developers, site operators, consultants and end users.{/tr}<br />
-							<a href='https://tiki.org/Join' target='_blank'>{tr}Join the Community{/tr}</a><br />
-							<a href='https://tiki.org/Help' target='_blank'>{tr}Get Help with Tiki{/tr}</a><br />
-							{tr}Tiki is the collective work of hundreds of people.{/tr} {tr}It works because volunteers <a href='https://dev.tiki.org/Commit+Code' target='_blank'>take the time to make it better.</a>{/tr}<br />
+							<ul>
+								<li><a href='https://tiki.org/Join' target='_blank'>{tr}Join the Community{/tr}</a></li>
+								<li><a href='https://tiki.org/Help' target='_blank'>{tr}Get Help with Tiki{/tr}</a></li>
+								<li>{tr}Help to improve the <a href='https://dev.tiki.org/' target='_blank'>Code</a> and the <a href='https://doc.tiki.org/' target='_blank'>Documentation</a>{/tr}</li>
+							</ul>
 						</fieldset>
 					</div>
 
@@ -784,14 +781,9 @@
 		{elseif $install_step eq '8'}
 				<div class="install-step8">
 					<h1 class="pagetitle">{tr}Enter Your Tiki{/tr}</h1>
+					{remarksbox type='confirm' title="{tr}Ready to run{/tr}" close="n"}
 					<p>{tr}The installation is complete!{/tr} {tr}Your database has been configured and Tiki is ready to run.{/tr} </p>
-					{remarksbox type='tip' title="{tr}Join us!{/tr}" close="n"}
-						{tr}Tiki is an open source project, you can <a href='https://tiki.org/Join' target='_blank' class="alert-link">join the community</a> and help <a href='https://dev.tiki.org' target='_blank' class="alert-link">develop Tiki</a>.{/tr}
 					{/remarksbox}
-					{remarksbox type='tip' title="{tr}Stay up-to-date{/tr}" close="n"}
-						{tr}Subscribe to the <a href="https://tiki.org/Newsletter" title="Subscribe" target="_blank" class="alert-link">Tiki newsletter</a> or <a href="https://tiki.org/tiki-articles_rss.php" title="RSS" target="_blank" class="alert-link">RSS feed</a> to learn about new releases, security updates, and community news.{/tr}
-					{/remarksbox}
-
 					{if isset($htaccess_error) and $htaccess_error eq 'y'}
 						<h3>{tr}.htaccess File{/tr} <a title="{tr}Help{/tr}" href="https://doc.tiki.org/Installation" target="help">{icon name="help"}</a></h3>
 						{tr}We recommend enabling the <strong>.htaccess</strong> file for your Tiki{/tr}. {tr}This will enable you to use SEFURLs (search engine friendly URLs) and help improve site security{/tr}.
