@@ -767,7 +767,7 @@
 							{tr}The Tiki Community is a global network of developers, site operators, consultants and end users.{/tr}<br />
 							<a href='https://tiki.org/Join' target='_blank'>{tr}Join the Community{/tr}</a><br />
 							<a href='https://tiki.org/Help' target='_blank'>{tr}Get Help with Tiki{/tr}</a><br />
-							{tr}Tiki is the collective work of hundreds of people. It works because volunteers.{/tr} <a href='https://dev.tiki.org/Commit+Code' target='_blank'>{tr}take the time to make it better.{/tr}</a><br />
+							{tr}Tiki is the collective work of hundreds of people.{/tr} {tr}It works because volunteers <a href='https://dev.tiki.org/Commit+Code' target='_blank'>take the time to make it better.</a>{/tr}<br />
 						</fieldset>
 					</div>
 
