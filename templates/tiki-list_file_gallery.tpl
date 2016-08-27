@@ -266,17 +266,43 @@
 		<br>
 	{/if}
 	{if $prefs.fgal_quota_show neq 'n' and $gal_info.quota}
-		<div style="float:right">
+		<div style="float:right; width: 350px;">
+			{if $gal_info.usedSize neq null}
 			{capture name='use'}
-				{math equation="round((100*x)/(1024*1024*y),2)" x=$gal_info.usedSize y=$gal_info.quota}
+				{math equation="round((100*x)/(1024*1024*y),0)" x=$gal_info.usedSize y=$gal_info.quota}
 			{/capture}
-			{if $prefs.fgal_quota_show neq 'y'}
-				<b>{$smarty.capture.use} %</b> {tr}space use on{/tr} <b>{$gal_info.quota} Mo</b>
-				<br>
+			{capture name='left_percent'}
+				{math equation="round(100-(100*x)/(1024*1024*y),0)" x=$gal_info.usedSize y=$gal_info.quota}
+			{/capture}
+			{capture name='left'}
+				{math equation="round(y - x/(1024*1024),0)" y=$gal_info.quota x=$gal_info.usedSize}
+			{/capture}
 			{/if}
-
-			{if $prefs.fgal_quota_show neq 'text_only'}
-				{quotabar length='100' value=$smarty.capture.use}
+			{if $prefs.fgal_quota_show neq 'text_only'}{if $gal_info.usedSize neq null}
+				<div class="progress" style="display:inline-block;float:right;width: 250px;">
+					<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
+						 aria-valuemin="0" aria-valuemax="100" style="width:{$smarty.capture.left_percent|string_format:'%d'}%">
+					</div>
+					<div class="progress-bar progress-bar-danger" role="progressbar" style="width:{$smarty.capture.use|string_format:'%d'}%">
+					</div>
+				</div>
+			{/if}
+				{if $gal_info.usedSize eq null}
+					<div class="progress" style="display:inline-block;float:right; width: 250px;">
+						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
+							 aria-valuemin="0" aria-valuemax="100" style="width:100%">
+						</div>
+						<div class="progress-bar progress-bar-danger" role="progressbar" style="width:0%">
+						</div>
+					</div>
+				{/if}
+			{/if}
+			{if $prefs.fgal_quota_show neq 'y'}
+				{if $gal_info.usedSize eq null}
+					<div style="text-align:center;display:inline-block;float:right;padding-right: 10px;"><strong>{$gal_info.quota} MB</strong> left</div>
+				{else}
+					<div style="text-align:center;display:inline-block;float:right;padding-right: 10px;"><strong>{$smarty.capture.left} MB</strong> left</div>
+				{/if}
 			{/if}
 		</div>
 	{/if}
