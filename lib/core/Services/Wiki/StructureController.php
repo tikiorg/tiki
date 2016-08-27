@@ -33,6 +33,7 @@ class Services_Wiki_StructureController
 				$params->type,
 				$params->page,
 				$params->maxdepth,
+				$params->mindepth,
 				$params->structurePageName
 			);
 			
