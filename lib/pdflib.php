@@ -251,7 +251,7 @@ class PdfGenerator
        //getting n replacing images
 	   $tempImgArr=array();
 	   $this->_getImages($html,$tempImgArr);
-
+       $this->_parseHTML($html);
 		include($this->location . 'mpdf.php');
 		$mpdf = new mPDF('utf-8');
 		$mpdf->useSubstitutions = true;					// optional - just as an example
@@ -277,7 +277,7 @@ class PdfGenerator
 		$stylesheet = file_get_contents('vendor/fortawesome/font-awesome/css/font-awesome.min.css'); // external css
         $mpdf->WriteHTML($stylesheet,1);
 		$mpdf->WriteHTML('<html><body class="print">'.$html."</body></html>");
-	//	echo $html;
+	   // echo $html;
 	    $this->clearTempImg($tempImgArr);
         return $mpdf->Output('', 'S');					// Return as a string
 	}
@@ -341,10 +341,15 @@ class PdfGenerator
 
 	}
 	
-  function clearTempImg($tempImgArr){
+  function clearTempImg($tempImgArr){ 
 	   foreach ($tempImgArr as $tempImg) {
         unlink($tempImg);
-}
-	  }	
+      }
+	  }
+	  
+  function _parseHTML(&$html)
+	{
+		$html=str_replace('style="visibility:hidden" class="ts-wrapperdiv">','style="visibility:visible" class="ts-wrapperdiv">',$html);
+	}
 }
 
