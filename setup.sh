@@ -160,6 +160,7 @@ usage: $0 [<switches>] ${POSSIBLE_COMMANDS}
 -u user      owner of files (default: $AUSER)
 -g group     group of files (default: $AGROUP)
 -v virtuals  list of virtuals (for multitiki, example: "www1 www2")
+-p php       alternate PHP command (default: php)
 -n           not prompt for user and group, assume current
 -d off|on    disable|enable debugging mode (override script default)
 
@@ -182,18 +183,28 @@ set_debug() {
 OPT_AUSER=
 OPT_AGROUP=
 OPT_VIRTUALS=
+OPT_PHPCLI=
 OPT_USE_CURRENT_USER_GROUP=
 
-while getopts "hu:g:v:nd:" OPTION; do
+while getopts "hu:g:v:p:nd:" OPTION; do
 	case $OPTION in
 		h) usage ; exit 0 ;;
 		u) OPT_AUSER=$OPTARG ;;
 		g) OPT_AGROUP=$OPTARG ;;
 		v) OPT_VIRTUALS=$OPTARG ;;
+		p) OPT_PHPCLI=$OPTARG ;;
 		n) OPT_USE_CURRENT_USER_GROUP=1 ;;
 		d) set_debug ;;
 		?) usage ; exit 1 ;;
 	esac
+	if [ -n "$OPT_PHPCLI" ]; then
+		PHPCLI=`which ${OPT_PHPCLI}`
+		if [ ! -n "$PHPCLI" ]; then
+			echo "PHP command: ${OPT_PHPCLI} not found. Please provide an existing command."
+			exit 1
+		fi
+		#echo "PHP command: ${PHPCLI}"
+	fi
 	if [ ${DEBUG} = '1' ] ; then
 		if [ ${ECHOFLAG} = '1' ] ; then
 			ECHOFLAG=0
@@ -595,13 +606,31 @@ composer()
 	#${PHPCLI} ${PHP_OPTION}
 	LOCAL_PHP_VERSION=`${PHPCLI} ${PHP_OPTION} | ${GREP} ^PHP | ${CUT} -c5,7`
 	#echo ${LOCAL_PHP_VERSION}
-	if [ "${LOCAL_PHP_VERSION}" -ge "${REQUIRED_PHP_VERSION}" ] ; then
-		echo "local PHP version ${LOCAL_PHP_VERSION} >= required PHP version ${REQUIRED_PHP_VERSION} - good"
-		composer_core
-	else
-		echo "wrong PHP version ${LOCAL_PHP_VERSION} but >= ${REQUIRED_PHP_VERSION} necessary"
-		exit 1
+	LIKELY_ALTERNATE_PHP_CLI="php55 php5.5 php5.5-cli" # These have been known to exist on some hosting platforms
+	if [ "${LOCAL_PHP_VERSION}" -lt "${REQUIRED_PHP_VERSION}" ] ; then
+		echo "Wrong PHP version: php${LOCAL_PHP_VERSION} < required PHP version.  A version >= php${REQUIRED_PHP_VERSION} is necessary."
+		echo "Searching for typically named alternative PHP version ..."
+		for phptry in $LIKELY_ALTERNATE_PHP_CLI; do
+			PHPTRY=`which $phptry`
+			#echo "debug: $PHPTRY"
+			if [ -n "${PHPTRY}" ]; then
+				echo "... correct PHP version ${phptry} detected and used"
+				PHPCLI="${PHPTRY}"
+				PHPCLIFOUND="y"
+				break
+			fi
+		done
+		if [ ! -n "${PHPCLIFOUND}" ]; then
+			echo "... no alternative php version found." 
+			echo "Please provide an alternative PHP version with the -p option."
+			echo "Example: sh `basename $0` -p php${REQUIRED_PHP_VERSION}."
+			echo "You can use the command-line command 'php[TAB][TAB]' to find out available versions."
+			exit 1
+		fi
 	fi
+	echo "Local PHP version >= required PHP version ${REQUIRED_PHP_VERSION} - good"
+
+	composer_core
 }
 
 
