@@ -1,1 +1,0 @@
-{* $Id$ *}{tr}Your {$prefs.mail_template_custom_text}Gift Certificate Purchase{/tr}

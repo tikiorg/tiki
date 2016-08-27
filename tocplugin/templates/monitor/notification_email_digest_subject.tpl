@@ -1,1 +1,0 @@
-{tr}Notification Digest{/tr}

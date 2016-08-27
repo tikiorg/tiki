@@ -1,4 +1,0 @@
-OpenLayers 2.12 distribution, stripped from development folders and debug versions
-(v2.13.1 wasn't compatible with the tiki implementation)
-
-theme/dark added

@@ -1,1 +1,0 @@
-update tiki_preferences set name='available_themes' where name='available_styles';
