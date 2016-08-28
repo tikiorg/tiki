@@ -558,8 +558,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			$list = TikiLib::lib('trk')->get_all_items(
 				$this->getOption('trackerId'),
 				$this->getOption('fieldId'),
-				$this->getOption('status', 'opc'),
-				false
+				$this->getOption('status', 'opc')
 			);
 		}
 

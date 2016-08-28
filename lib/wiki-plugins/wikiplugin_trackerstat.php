@@ -268,7 +268,7 @@ function wikiplugin_trackerstat($data, $params)
 				$userValues = $trklib->get_filtered_item_values($allFields['data'][$iIp]['fieldId'], $tikilib->get_ip_address(), $allFields['data'][$i]['fieldId']);
 			}
 			
-			$allValues = $trklib->get_all_items($trackerId, $fieldId, $status, $allFields);
+			$allValues = $trklib->get_all_items($trackerId, $fieldId, $status);
 			$j = -1;
 			foreach ($allValues as $value) {
 				$value = trim($value);
