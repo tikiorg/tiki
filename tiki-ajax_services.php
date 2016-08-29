@@ -94,62 +94,66 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 		$contactlib = TikiLib::lib('contact');
 		$listcontact = $contactlib->list_contacts($user);
 		$listusers = $userlib->get_users();
-		
-		$contacts = array();		
-		$query = $_REQUEST['q'];
-				
-		foreach ($listcontact as $key=>$contact) {
-			if (isset($query) && (stripos($contact['firstName'], $query) !== false or stripos($contact['lastName'], $query) !== false or stripos($contact['email'], $query) !== false)) {
-				if ($contact['email']<>'') {
-					 $contacts[] = $contact['email'];
-				}
-			}
-		}
-		foreach ($listusers['data'] as $key=>$contact) {
-			if (isset($query) && (stripos($contact['firstName'], $query) !== false or stripos($contact['login'], $query) !== false or stripos($contact['lastName'], $query) !== false or stripos($contact['email'], $query) !== false)) {
-				if ($prefs['login_is_email'] == 'y') {
-					$contacts[] = $contact['login'];
-				} else {
-					$contacts[] = $contact['email'];
-				}
-			}
-		}
-		$contacts = array_unique($contacts);
-		sort($contacts);
-		$access->output_serialized($contacts);
-		
-	} elseif ($_REQUEST['listonly'] == 'userrealnames') {
-		$groups = '';
-		$listusers = $userlib->get_users_light(0, -1, 'login_asc', '', $groups);
-		$done = array();
-		$finalusers = array();
-		foreach ($listusers as $usrId => $usr) {
-			if (isset($_REQUEST['q'])) {
-				$longusr = $usr . ' (' . $usrId . ')';
-				if (array_key_exists($usr, $done)) {
-					// disambiguate duplicates
-					if (stripos($longusr, $_REQUEST['q']) !== false) {
-						$oldkey = array_search($usr, $finalusers);
-						if ($oldkey !== false) {
-							$finalusers[$oldkey] = $done[$usr];
-						}
-					}
-					if (stripos($longusr, $_REQUEST['q']) !== false) {
-						$finalusers[] = $longusr;
-					}
-				} else {
-					if (stripos($longusr, $_REQUEST['q']) !== false) {
-						$finalusers[] = $longusr;
-					}
-				}
-				$done[$usr] = $longusr;
-			}
-		}
-		
-		// TODO also - proper perms checking
-		// tricker for users? Check the group they're in, then tiki_p_group_view_members
-				
-		$access->output_serialized($finalusers);
+
+        $contacts = array();
+        $query = $_REQUEST['q'];
+        $email_array = explode(',', str_replace(';', ',', $_REQUEST['q']));
+        $last_email = trim(end($email_array));
+
+        foreach ($listcontact as $key=>$contact) {
+            if (isset($last_email) && (stripos($contact['firstName'], $last_email) !== false or stripos($contact['lastName'], $last_email) !== false or stripos($contact['email'], $last_email) !== false)) {
+                if ($contact['email']<>'') {
+                    $contacts[] = $contact['email'];
+                }
+            }
+        }
+        foreach ($listusers['data'] as $key=>$contact) {
+            if (isset($last_email) && (stripos($contact['firstName'], $last_email) !== false or stripos($contact['login'], $last_email) !== false or stripos($contact['lastName'], $last_email) !== false or stripos($contact['email'], $query) !== false)) {
+                if ($prefs['login_is_email'] == 'y') {
+                    $contacts[] = $contact['login'];
+                } else {
+                    $contacts[] = $contact['email'];
+                }
+            }
+        }
+        $contacts = array_unique($contacts);
+        sort($contacts);
+        $access->output_serialized($contacts);
+
+    } elseif ($_REQUEST['listonly'] == 'userrealnames') {
+        $groups = '';
+        $listusers = $userlib->get_users_light(0, -1, 'login_asc', '', $groups);
+        $done = array();
+        $finalusers = array();
+        $names_array = explode(',', str_replace(';', ',', $_REQUEST['q']));
+        $last_name = trim(end($names_array));
+        foreach ($listusers as $usrId => $usr) {
+            if (isset($last_name)) {
+                $longusr = $usr . ' (' . $usrId . ')';
+                if (array_key_exists($usr, $done)) {
+                    // disambiguate duplicates
+                    if (stripos($longusr, $last_name) !== false) {
+                        $oldkey = array_search($usr, $finalusers);
+                        if ($oldkey !== false) {
+                            $finalusers[$oldkey] = $done[$usr];
+                        }
+                    }
+                    if (stripos($longusr, $last_name) !== false) {
+                        $finalusers[] = $longusr;
+                    }
+                } else {
+                    if (stripos($longusr, $last_name) !== false) {
+                        $finalusers[] = $longusr;
+                    }
+                }
+                $done[$usr] = $longusr;
+            }
+        }
+
+        // TODO also - proper perms checking
+        // tricker for users? Check the group they're in, then tiki_p_group_view_members
+
+        $access->output_serialized($finalusers);
 	} elseif ( $_REQUEST['listonly'] == 'tags' ) {
 		$freetaglib = TikiLib::lib('freetag');
 
