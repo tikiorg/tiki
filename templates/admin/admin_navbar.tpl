@@ -77,7 +77,7 @@
 										}
 									});
 
-									show($('.adminoptionbox.preference.modified'))
+									show($('.adminoptionbox.preference.modified'));
 
 									$('input[name="filters"]').val(filters.join(' '));
 									$('.tabset .tabmark a').each(function () {
@@ -161,7 +161,7 @@
 		<form method="post" action="" href="tiki-admin.php" class="table" role="form">
 			<div class="pref_search_results panel-body">
 				{foreach from=$lm_searchresults item=prefName}
-					{preference name=$prefName get_pages="y"}
+					{preference name=$prefName get_pages='y' visible='always'}
 				{/foreach}
 			</div>
 			<div class="panel-footer text-center">
@@ -179,6 +179,7 @@
 	{/jq}
 {elseif $lm_criteria}
 	{remarksbox type="note" title="{tr}No results{/tr}" icon="magnifier"}
-		{tr}No preferences were found for your search query with your <a class='alert-link' target='tikihelp' href='https://doc.tiki.org/Preference+Filters'>current choice of Preference Filters</a> ({icon name="filter"}).{/tr}{if $prefs.unified_engine eq 'lucene'}{tr} Not what you expected? Try {/tr}<a class="alert-link" href="tiki-admin.php?prefrebuild">{tr}rebuild{/tr}</a> {tr}the preferences search index.{/tr}{/if}
+		{tr}No preferences were found for your search query.{/tr}<br>
+		{tr _0='<a class="alert-link" href="tiki-admin.php?prefrebuild">' _1='</a>'}Not what you expected? Try %0rebuilding%1 the preferences search index.{/tr}
 	{/remarksbox}
 {/if}

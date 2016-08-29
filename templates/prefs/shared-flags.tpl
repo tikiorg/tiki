@@ -32,3 +32,14 @@
 {/if}
 
 {$p.pages}
+
+{if not $pref_filters.advanced.selected and in_array('advanced', $p.tags)}
+	<label class="label label-warning tips" title=":{tr}Change your preference filter settings in order to view advanced preferences by default{/tr}">
+		{tr}advanced{/tr}
+	</label>
+{/if}
+{if not $pref_filters.experimental.selected and in_array('experimental', $p.tags)}
+	<label class="label label-danger tips" title=":{tr}Change your preference filter settings in order to view experimental preferences by default{/tr}">
+		{tr}experimental{/tr}
+	</label>
+{/if}
