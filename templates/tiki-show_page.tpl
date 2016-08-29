@@ -114,7 +114,7 @@ Note: The show content block must be defined at root level to use the include. A
 				</div>
 			{/if}
 
-			{if $structure eq 'y' and ($prefs.wiki_structure_bar_position ne 'bottom')}
+			{if $structure eq 'y' and (($prefs.wiki_structure_bar_position ne 'bottom') && ($prefs.wiki_structure_bar_position ne 'none'))}
 				{include file='tiki-wiki_structure_bar.tpl'}
 			{/if}
 
