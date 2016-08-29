@@ -355,6 +355,9 @@ function iconset_default()
 			'keyboard' => array(
 				'id' => 'keyboard-o',
 			),
+			'like' => array(
+				'id' => 'thumbs-up',
+			),
 			//link in defaults
 			'link-external' => array(
 				'id' => 'external-link',
@@ -565,6 +568,9 @@ function iconset_default()
 			//undo in defaults
 			//unlink in defaults
 			//unlock in defaults
+			'unlike' => array(
+				'id' => 'thumbs-down',
+			),
 			'up' => array(
 				'id' => 'sort-asc',
 			),
