@@ -127,15 +127,11 @@ function smarty_function_user_selector($params, $smarty)
 		if ($params['group'] == 'all' && empty($params['groupIds'])) {
 			$usrs = $tikilib->list_users(0, -1, 'login_asc');
 			foreach ($usrs['data'] as $usr) {
-				$users["{$usr['login']}"] = $params['realnames'] === 'y' ? smarty_modifier_username($usr['login']) : $usr;
+				$users["{$usr['login']}"] = $params['realnames'] === 'y' ? smarty_modifier_username($usr['login']) : $usr['login'];
 			}
 		}
 
-		if ($params['realnames'] === 'y') {
-			asort($users, SORT_NATURAL | SORT_FLAG_CASE);
-		} else {
-			asort($users, SORT_NATURAL | SORT_FLAG_CASE);
-		}
+		asort($users, SORT_NATURAL | SORT_FLAG_CASE);
 
 		$ret .= '<select name="' . $params['name'] . '" id="' . $params['id'] . '"' . $sz . $ed . ' style="'.$params['style'].'" class="form-control">';
 		if ($params['allowNone'] === 'y') {
