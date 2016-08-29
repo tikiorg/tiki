@@ -564,6 +564,7 @@ function prefs_wiki_list($partial = false)
 				'top' => tra('Top'),
 				'bottom' => tra('Bottom'),
 				'both' => tra('Both'),
+                'none' => tra('Neither'),
 			),
 			'default' => 'top',
 		),
