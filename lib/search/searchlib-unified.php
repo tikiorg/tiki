@@ -860,7 +860,7 @@ class UnifiedSearchLib
 		$query->setIdentifierFields($prefs['unified_identifier_fields']);
 
 		$categlib = TikiLib::lib('categ');
-		if ($applyJail && $jail = $categlib->get_jail()) {
+		if ($applyJail && $jail = $categlib->get_jail(false)) {
 			$query->filterCategory(implode(' or ', $jail), true);
 		}
 	}

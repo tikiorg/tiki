@@ -5990,17 +5990,23 @@ JS;
 	}
 
 	/**
+	 * @param bool $descendants The default is to get all descendents of the jailed categories, but for unified search
+	 *                          we only need the "root" jailed categories as the search does a deep_categories search on them
 	 * @return array
 	 */
-	function get_jail()
+	function get_jail($descendants = true)
 	{
 		global $prefs;
 		// if jail is zero, we should allow non-categorized objects to be seen as well, i.e. consider as no jail
 		if ( $prefs['feature_categories'] == 'y' && ! empty( $prefs['category_jail'] ) && $prefs['category_jail'] != array(0 => 0) ) {
-			$categlib = TikiLib::lib('categ');
 			$expanded = array();
-			foreach ( $prefs['category_jail'] as $categId ) {
-				$expanded = array_merge($expanded, $categlib->get_category_descendants($categId));
+			if ($descendants) {
+				$categlib = TikiLib::lib('categ');
+				foreach ($prefs['category_jail'] as $categId) {
+					$expanded = array_merge($expanded, $categlib->get_category_descendants($categId));
+				}
+			} else {
+				$expanded = $prefs['category_jail'];
 			}
 			return $expanded;
 		} else {
