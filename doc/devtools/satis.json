@@ -20,6 +20,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "afarkas/html5shiv",
+				"version": "3.6.2",
+				"dist": {
+					"url": "https://github.com/aFarkas/html5shiv/archive/3.6.2.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "alxlit/bootstrap-chosen",
 				"version": "1.0.0",
 				"dist": {
@@ -684,7 +695,7 @@
 				"name": "jquery/plugins/jquery-json",
 				"version": "2.4",
 				"dist": {
-					"url": "http://jquery-json.googlecode.com/files/jquery.json-2.4.js",
+					"url": "https://github.com/Krinkle/jquery-json/releases/download/v2.4.0/jquery.json-2.4.js",
 					"type": "file"
 				}
 			}
@@ -1143,6 +1154,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "jquery/plugins/pxem",
+				"version": "0.1",
+				"dist": {
+					"url": "https://github.com/filamentgroup/jQuery-Pixel-Em-Converter/archive/master.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "jquery/plugins/reflection-jquery",
 				"version": "1.1",
 				"dist": {
@@ -1503,30 +1525,37 @@
 		"jcapture-applet/jcapture-applet": "dev-trunk",
 		"jquery/jquery": ">=1.10.2",
 		"jquery/jquery-min": ">=1.10.2",
+		"jquery/jquery-mobile": ">=1.3.2",
 		"jquery/jquery-s5": ">=1.0.1",
 		"jquery/jquery-sheet": ">=2.0.1",
 		"jquery/jquery-timepicker-addon": ">=1.4",
 		"jquery/jquery-ui": ">=1.10.3",
 		"jquery/jquery-ui-themes": ">=1.10.3",
+		"jquery/jquery-ui-selectmenu": ">=1.3.999",
 		"jquery/jtrack": "1.0",
 		"jquery/md5": "1.1",
 		"jquery/minicart": "2.6.1",
 		"jquery/photoswipe": "3.0.5",
 		"jquery/plugins/anythingslider": ">=1.9.2",
 		"jquery/plugins/async": "1.0",
+		"jquery/plugins/brosho": "0.1",
 		"jquery/plugins/chosen": ">=1.0.0",
+		"jquery/plugins/cluetip": ">=1.2.10",
 		"jquery/plugins/colorbox": ">=1.4.31",
+		"jquery/plugins/colorpicker": ">=0.5",
 		"jquery/plugins/fitvidjs": "1.1.0",
 		"jquery/plugins/form": ">=3.25",
 		"jquery/plugins/galleriffic": "2.0.1",
 		"jquery/plugins/infinitecarousel": "3.0.3",
-		"jquery/plugins/jquery-json": "2.5.1",
+		"jquery/plugins/jquery-json": ">=2.4",
 		"jquery/plugins/jquery-validation": ">=1.11.1",
 		"jquery/plugins/media": "0.98",
 		"jquery/plugins/migrate": ">=1.2.1",
 		"jquery/plugins/migrate-min": ">=1.2.1",
 		"jquery/plugins/nestedsortable": "1.3.4",
+		"jquery/plugins/pxem": "0.1",
 		"jquery/plugins/reflection-jquery": "1.1",
+		"jquery/plugins/sparkline": ">=2.1.1",
 		"jquery/plugins/superfish": ">=1.7.4",
 		"jquery/plugins/tablesorter": ">=2.14.4",
 		"jquery/plugins/tagcanvas": "2.8",
