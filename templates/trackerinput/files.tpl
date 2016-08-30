@@ -29,11 +29,11 @@
 			</fieldset>
 		{else}
 			{if $field.options_map.uploadInModal neq 'n'}
-			<a href="{service controller=file action=uploader uploadInModal=1 galleryId=$field.galleryId limit=$limit|default:100 type=$field.filter}" class="btn btn-default upload-files">{tr}Upload Files{/tr}</a>
+			<a href="{service controller=file action=uploader uploadInModal=1 galleryId=$field.galleryId limit=$limit|default:100 type=$field.filter image_max_size_x=$field.image_x image_max_size_y=$field.image_y}" class="btn btn-default upload-files">{tr}Upload Files{/tr}</a>
 			{else}
 						<div class="upload-files-inline-form"></div>
 
-			<a href="{service controller=file action=uploader uploadInModal=0 galleryId=$field.galleryId limit=$limit|default:100 type=$field.filter}" class="btn btn-default upload-files-inline">{tr}Upload Files{/tr}</a>
+			<a href="{service controller=file action=uploader uploadInModal=0 galleryId=$field.galleryId limit=$limit|default:100 type=$field.filter image_max_size_x=$field.image_x image_max_size_y=$field.image_y}" class="btn btn-default upload-files-inline">{tr}Upload Files{/tr}</a>
 			{/if}
 		{/if}
 	{/if}
@@ -43,7 +43,7 @@
 			_onclick=$context.onclick
 				title="{tr}Browse files{/tr}"}
 		{else}
-			<a href="{service controller=file action=browse galleryId=$galleryId limit=$limit|default:100 type=$field.filter}" class="btn btn-default browse-files">{tr}Browse Files{/tr}</a>
+			<a href="{service controller=file action=browse galleryId=$galleryId limit=$limit|default:100 type=$field.filter image_x=$field.image_x image_y=$field.image_y}" class="btn btn-default browse-files">{tr}Browse Files{/tr}</a>
 		{/if}
 	{/if}
 	{if $prefs.fgal_upload_from_source eq 'y' and $field.canUpload}

@@ -140,6 +140,33 @@
 					{filegal_uploader}
 				{/if}
 			</div>
+              <div class="form-group">		
+               	<label for="imagesize" class="col-md-8 col-md-offset-4">		
+                 <input type="checkbox" id="imagesize" name="imagesize" checked="checked" value="yes" />{tr}Use Gallery default resize settings for images <span id="imageResizeInfo">{if $gal_info["image_max_size_x"]}({$gal_info["image_max_size_x"]}px X {$gal_info["image_max_size_y"]} px){else}(No resize){/if}</span>{/tr}
+               </label>		
+             		
+            </div>		
+            <div id="customsize" style="display:none"><div class="form-group">		
+					<label for="image_max_size_x" class="col-sm-4 text-right">{tr}Maximum width of images{/tr}</label>
+					<div class="col-sm-8">		
+						<div class="input-group col-sm-4">		
+							<input type="text" name="image_max_size_x" id="image_max_size_x" value="{$gal_info["image_max_size_x"]}" class="form-control text-right">		
+							<span class="input-group-addon"> px</span>		
+						</div>		
+						<span class="help-block">{tr}If an image is wider than this, it will be resized. Attention: In this case, the original image will be lost. (0=unlimited){/tr}</span>
+					</div>		
+				</div>		
+            <div class="form-group">		
+					<label for="image_max_size_y" class="col-sm-4 text-right">{tr}Maximum height of images in gallery{/tr}</label>
+					<div class="col-sm-8">		
+						<div class="input-group col-sm-4">		
+							<input type="text" name="image_max_size_y" id="image_max_size_y" value="{$gal_info["image_max_size_y"]}" class="form-control text-right">		
+							<span class="input-group-addon"> px</span>		
+						</div>		
+						<span class="help-block">{tr}If an image is higher than this, it will be resized. Attention: In this case, the original image will be lost. (0=unlimited){/tr}</span>
+					</div>		
+				</div>    		
+          </div>      
 			{if $simpleMode neq 'y'}
 				<div class="fgal_file_c2">
 					{if !$editFileId and $tiki_p_batch_upload_files eq 'y'}
@@ -435,3 +462,27 @@
 		{/if}
 	{/if}
 {/if}
+{jq}		
+   var defaultx= $("#image_max_size_x").attr('value');		
+   var defaulty= $("#image_max_size_y").attr('value');		
+   		
+$("#imagesize").click(function () {		
+	if ($(this).prop("checked")) {		
+		$("#customsize").css("display", "none");		
+        //resetting size to default		
+        $("#image_max_size_x").attr('value',defaultx);		
+        $("#image_max_size_y").attr('value',defaulty);		
+        		
+	} else {		
+		$("#customsize").css("display", "");		
+	}		
+});		
+$("#galleryId").change(function(){		
+$("#image_max_size_x").attr('value','');		
+$("#image_max_size_y").attr('value',"");	
+$("#imageResizeInfo").html('');	
+defaultx='';		
+defaulty='';		
+        		
+});		
+{/jq}
