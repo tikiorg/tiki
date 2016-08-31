@@ -148,7 +148,8 @@ function wikiplugin_tracker_info()
 				'name' => tra('Email'),
                                 'description' => tr('To send an email once the tracker item has been created. Format: %0from', '<code>')
                                         .'|'.tra('to').'|'.tr('template%0', '</code> ') . tr('For %0from%1 and %0to%1, use an email address
-                                        (separate multiple addresses with a comma) or a fieldId of a field containing an email address.
+                                        (separate multiple addresses with a comma), a username or a fieldId of a field containing either an email address or a username.
+                                        When username is being used, the email will be sent to the email address of the user on file.
                                         When sending to several emails using different template, provide the template name for the message body for each email;
                                         I.e., the first template will be used for the first to, the second template if exists will be used
                                         for the second from (otherwise the last given template will be used). Each template needs two files, one for the subject one for the body. The subject will be named
@@ -1214,6 +1215,11 @@ function wikiplugin_tracker($data, $params)
 							$emailOptions[0] = $trklib->get_item_value($trackerId, $rid, $emailOptions[0]);
 						}
 					}
+					if( !empty($emailOptions[0]) && !strstr($emailOptions[0], '@') ) {
+						$email = $userlib->get_user_email($emailOptions[0]);
+						if( $email )
+							$emailOptions[0] = $email;
+					}
 					if (empty($emailOptions[0])) { // from
 						$emailOptions[0] = $prefs['sender_email'];
 					}
@@ -1234,6 +1240,14 @@ function wikiplugin_tracker($data, $params)
 								} else {
 									$emailOptions[1][$key] = $trklib->get_item_value($trackerId, $rid, $email);
 								}
+							}
+						}
+						// emails might be usernames that need conversion to email addresses
+						foreach($emailOptions[1] as $key => $email) {
+							if( !empty($email) && !strstr($email, '@') ) {
+								$email = $userlib->get_user_email($email);
+								if( $email )
+									$emailOptions[1][$key] = $email;
 							}
 						}
 					}
