@@ -53,6 +53,7 @@ class Search_MySql_QueryBuilder
 
 		if ($node instanceof Token && count($fields) == 1 && $this->getQuoted($node) === $this->db->qstr('')) {
 			$value = $this->getQuoted($node);
+			$this->requireIndex($node->getField(), 'index', $node->getWeight());
 			return "(`{$node->getField()}` = $value OR `{$node->getField()}` IS NULL)";
 		}
 
