@@ -1269,7 +1269,7 @@ function wikiplugin_tracker($data, $params)
 								$tplSubject[$ieo] = str_replace('.tpl', '_subject.tpl', $emailOptions[2][$ieo]);
 							} else {	// wiki template
 								if (! $tikilib->page_exists(substr($eo, 5))) {
-									Feedback::error(tr('Missing wiki email template page "%0"', htmlspecialchars($wiki)));
+									Feedback::error(tr('Missing wiki email template page "%0"', htmlspecialchars($eo)), 'session');
 									$emailOptions[2][$ieo] = 'tracker_changed_notification.tpl';
 								} else {
 									$subject_name = str_replace('tpl', 'subject tpl', $emailOptions[2][$ieo]);
