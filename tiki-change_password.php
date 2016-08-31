@@ -102,10 +102,7 @@ if (isset($_REQUEST["change"])) {
 		$cryptlib->onChangeUserPassword($_REQUEST["oldpass"], $_REQUEST["pass"]);
 	}
 
-	$homePageUrl = $userlib->get_user_default_homepage2($_REQUEST['user']);
-	if (!$tikilib->page_exists($homePageUrl)) {
-		$homePageUrl = ''; // will go to the index of the tiki site
-	}
+	$homePageUrl = $prefs['tikiIndex'];	// set up in lib/setup/default_homepage.php
 
 	// Check if a wizard should be run.
 	// If a wizard is run, it will return to the $url location when it has completed. Thus no code after $wizardlib->onLogin will be executed
