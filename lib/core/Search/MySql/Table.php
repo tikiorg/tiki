@@ -82,7 +82,7 @@ class Search_MySql_Table extends TikiDb_Table
 		$this->loadDefinition();
 
 		if (! isset($this->definition[$fieldName])) {
-			throw new Search_MySql_QueryException(tr('Field %0 does not exist in the current index.'));
+			throw new Search_MySql_QueryException(tr('Field %0 does not exist in the current index.', $fieldName));
 		}
 
 		$indexName = $fieldName . '_' . $type;
