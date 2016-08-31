@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "296569b924c7f1d1e6403e729aa9eb79",
-    "content-hash": "3ba52a862bb9231542ba9da8d44f0f6b",
+    "hash": "79157abd1d232706135a83b348939d14",
+    "content-hash": "3106904f2a6aa86e746df986a242d69c",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -262,7 +262,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/components-bootstrap-fe6e7683be66ba45a725816efdb51d4566733043-zip-b28361.zip",
                 "reference": "fe6e7683be66ba45a725816efdb51d4566733043",
-                "shasum": "fd4b8de953bca65a1b683bf576165a65052bd4d8"
+                "shasum": "eb249ae82a07010ca2cb7cf7f9077bd5fa1e17f2"
             },
             "require": {
                 "components/jquery": "1.9.1 - 3"
@@ -330,7 +330,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/components-jquery-39192bee49ceb98f36e9592ee2fc5116a414b6cc-zip-92b012.zip",
                 "reference": "39192bee49ceb98f36e9592ee2fc5116a414b6cc",
-                "shasum": "1b747afbc5fab4fedaba48413969d4f4c5a32dbd"
+                "shasum": "566e31c223ecc4c86b91c50f0667100705a2912e"
             },
             "type": "component",
             "extra": {
@@ -1059,13 +1059,13 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/chartjs/Chart.js.git",
-                "reference": "349a8a33ea2a3216bcb41666afe945944132e1b9"
+                "reference": "0ebe388611a8d394750aa6dba5634db26e378742"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/nnnick-chartjs-349a8a33ea2a3216bcb41666afe945944132e1b9-zip-6d7fc2.zip",
-                "reference": "349a8a33ea2a3216bcb41666afe945944132e1b9",
-                "shasum": "15feec18f2c9c44625c6b55d7d251af0a938c8eb"
+                "url": "https://composer.tiki.org/dist/nnnick-chartjs-0ebe388611a8d394750aa6dba5634db26e378742-zip-e9e8d0.zip",
+                "reference": "0ebe388611a8d394750aa6dba5634db26e378742",
+                "shasum": "772ed77123917636d7ad8655c927aeb40f344ac1"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -1092,7 +1092,7 @@
                 "JS",
                 "chart"
             ],
-            "time": "2016-08-12 16:31:54"
+            "time": "2016-08-27 12:29:09"
         },
         {
             "name": "openlayers/ol3",
@@ -1470,6 +1470,64 @@
                 "tour"
             ],
             "time": "2016-02-12 11:59:46"
+        },
+        {
+            "name": "studio-42/elfinder",
+            "version": "2.1.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Studio-42/elFinder.git",
+                "reference": "02c19ae09a36ec83a837b28eb5b232f5ce7b0bd9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/studio-42-elfinder-02c19ae09a36ec83a837b28eb5b232f5ce7b0bd9-zip-beaa92.zip",
+                "reference": "02c19ae09a36ec83a837b28eb5b232f5ce7b0bd9",
+                "shasum": "584b64cf653366a31ea690d1aa64dbab5ffda6b0"
+            },
+            "require": {
+                "php": ">=5.2"
+            },
+            "suggest": {
+                "barryvdh/elfinder-flysystem-driver": "VolumeDriver for elFinder to use Flysystem as a root.",
+                "dropbox-php/dropbox-php": "elFinder Volume driver `Dropbox` require `dropbox-php/dropbox-php`.",
+                "nao-pon/flysystem-google-drive": "require in GoogleDrive network volume mounting.",
+                "pear/http_oauth": "dropbox-php require `pear/http_oauth` or `PHP OAuth extension`."
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Dmitry Levashov",
+                    "email": "dio@std42.ru",
+                    "homepage": "http://std42.ru"
+                },
+                {
+                    "name": "Troex Nevelin",
+                    "email": "troex@fury.scancode.ru",
+                    "homepage": "http://std42.ru"
+                },
+                {
+                    "name": "Naoki Sawada",
+                    "email": "hypweb@gmail.com",
+                    "homepage": "http://xoops.hypweb.net"
+                },
+                {
+                    "name": "Community contributions",
+                    "homepage": "https://github.com/Studio-42/elFinder/contributors"
+                }
+            ],
+            "description": "File manager for web",
+            "homepage": "http://elfinder.org",
+            "time": "2016-07-25 00:34:19"
         },
         {
             "name": "svg-edit/svg-edit",
@@ -3670,7 +3728,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/bafs-testify-52dda3459096976689d255d44250c6f8f30e62a0-zip-faf2a3.zip",
                 "reference": "52dda3459096976689d255d44250c6f8f30e62a0",
-                "shasum": "fc1b4ce1910fa70978891f757774230000df6a5e"
+                "shasum": "3b1d858982e72740deebab7a8aee0a120f150c11"
             },
             "require": {
                 "php": ">=5.3.0"
@@ -3705,7 +3763,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/doctrine-instantiator-8e884e78f9f0eb1329e445619e04456e64d8051d-zip-681b88.zip",
                 "reference": "8e884e78f9f0eb1329e445619e04456e64d8051d",
-                "shasum": "2e0c587f800f92eaaea87673ce82fd3e834daca8"
+                "shasum": "9600c30f4e1c01c19fef7b9b5e7d0020bb76ff10"
             },
             "require": {
                 "php": ">=5.3,<8.0-DEV"
@@ -3759,7 +3817,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/mikey179-vfsstream-fc0fe8f4d0b527254a2dc45f0c265567c881d07e-zip-a90953.zip",
                 "reference": "fc0fe8f4d0b527254a2dc45f0c265567c881d07e",
-                "shasum": "8a25f38cd2084e3946f1deb27715be11215ebe70"
+                "shasum": "8eda639de7fa5ca5067a49bbc518ecd4b94ca934"
             },
             "require": {
                 "php": ">=5.3.0"
@@ -3789,7 +3847,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/phpdocumentor-reflection-common-144c307535e82c8fdcaacbcfc1d6d8eeb896687c-zip-c3be2d.zip",
                 "reference": "144c307535e82c8fdcaacbcfc1d6d8eeb896687c",
-                "shasum": "534319b01e0ba2a25f0b001fe8ea577ea3f6411b"
+                "shasum": "e131543cafdf0e40339344ae64e877ebd55dcc8d"
             },
             "require": {
                 "php": ">=5.5"
@@ -3843,7 +3901,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/phpdocumentor-reflection-docblock-9270140b940ff02e58ec577c237274e92cd40cdd-zip-550863.zip",
                 "reference": "9270140b940ff02e58ec577c237274e92cd40cdd",
-                "shasum": "e84bbfc31d015a430b78c0786613a0fccc6bd50c"
+                "shasum": "4fa9352938f5366c577ebc8f6a19d84517543cdd"
             },
             "require": {
                 "php": ">=5.5",
@@ -3888,7 +3946,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/phpdocumentor-type-resolver-b39c7a5b194f9ed7bd0dd345c751007a41862443-zip-e34c86.zip",
                 "reference": "b39c7a5b194f9ed7bd0dd345c751007a41862443",
-                "shasum": "7dd749b370d07d01d168d0f6a228c2da481e36ff"
+                "shasum": "a792d3f4e6dae78e34e64a716857a66b12f66b1d"
             },
             "require": {
                 "php": ">=5.5",
@@ -3935,7 +3993,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/phpspec-prophecy-58a8137754bc24b25740d4281399a4a3596058e0-zip-b71cdf.zip",
                 "reference": "58a8137754bc24b25740d4281399a4a3596058e0",
-                "shasum": "096dbc089623b5f4cedaed2e7ab1829569536e1f"
+                "shasum": "b6303a152a186b73484a2d0651aab27e86dec428"
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
@@ -3997,7 +4055,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/phpunit-dbunit-390cefcb101e07e1d6400dbdfc3b90ecf2c1279f-zip-e03a42.zip",
                 "reference": "390cefcb101e07e1d6400dbdfc3b90ecf2c1279f",
-                "shasum": "5e8f511ae014cdf553151be1fc5706c6c5d565d4"
+                "shasum": "18bee3b56ab1129c5062e3c33f9041c3002dba1c"
             },
             "require": {
                 "ext-pdo": "*",
@@ -4052,7 +4110,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/phpunit-php-code-coverage-eabf68b476ac7d0f73793aada060f1c1a9bf8979-zip-36457d.zip",
                 "reference": "eabf68b476ac7d0f73793aada060f1c1a9bf8979",
-                "shasum": "740943b471e3cf35895acf5a891e4b621170759e"
+                "shasum": "8eed712c638698674985209fd37ab7410f606f32"
             },
             "require": {
                 "php": ">=5.3.3",
@@ -4114,7 +4172,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/phpunit-php-file-iterator-6150bf2c35d3fc379e50c7602b75caceaa39dbf0-zip-a7b18d.zip",
                 "reference": "6150bf2c35d3fc379e50c7602b75caceaa39dbf0",
-                "shasum": "6c0c365bed35ad4a93f284a7be8458eb14ba73c4"
+                "shasum": "480c720a10e25120fc869bd72161d62aee4d1446"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -4161,7 +4219,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/phpunit-php-text-template-31f8b717e51d9a2afca6c9f046f5d69fc27c8686-zip-c6bcbd.zip",
                 "reference": "31f8b717e51d9a2afca6c9f046f5d69fc27c8686",
-                "shasum": "018a51f248d6495957bf7ad8a0cc32ecb0523e22"
+                "shasum": "e0435bbd6bafe704614357d644a37353ff4b7e61"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -4202,7 +4260,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/phpunit-php-timer-38e9124049cf1a164f1e4537caf19c99bf1eb260-zip-cb2ac7.zip",
                 "reference": "38e9124049cf1a164f1e4537caf19c99bf1eb260",
-                "shasum": "f8b9251bca1f4a80a92aa0ce5770dad6e33c2be6"
+                "shasum": "b5d8f42e180b98f11b6f28f3795eb45c224f600b"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -4246,7 +4304,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/phpunit-php-token-stream-3144ae21711fb6cac0b1ab4cbe63b75ce3d4e8da-zip-cd5a07.zip",
                 "reference": "3144ae21711fb6cac0b1ab4cbe63b75ce3d4e8da",
-                "shasum": "a52d650d1853e2db77ce37cac7662c9a1f18255e"
+                "shasum": "bd09aac0b42f8aa0a1898580f433c85b859a943b"
             },
             "require": {
                 "ext-tokenizer": "*",
@@ -4295,7 +4353,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/phpunit-phpunit-c062dddcb68e44b563f66ee319ddae2b5a322a90-zip-e04c6d.zip",
                 "reference": "c062dddcb68e44b563f66ee319ddae2b5a322a90",
-                "shasum": "704ce8b94992d45e84d0ef1a29cce2e57d217b7d"
+                "shasum": "667dcf97851e7e66c94dac6e22552a021928b59b"
             },
             "require": {
                 "ext-dom": "*",
@@ -4367,7 +4425,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/phpunit-phpunit-mock-objects-ac8e7a3db35738d56ee9a76e78a4e03d97628983-zip-83ccd8.zip",
                 "reference": "ac8e7a3db35738d56ee9a76e78a4e03d97628983",
-                "shasum": "ee9f57f3a9a2c81b9f9148298c27047890728c16"
+                "shasum": "43d620904735d6ec589acb4bd3476e137fc29908"
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
@@ -4423,7 +4481,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/phpunit-phpunit-selenium-2bad798ec0daf20d2854400e3bc5329ee0a7b2d1-zip-cb6ef8.zip",
                 "reference": "2bad798ec0daf20d2854400e3bc5329ee0a7b2d1",
-                "shasum": "daf5d6cb16b4b5f0e2b9020915b0a8ea965ad31d"
+                "shasum": "b6d1ebdca59415e2634ffdd23acbfae0ff281564"
             },
             "require": {
                 "ext-curl": "*",
@@ -4487,7 +4545,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/sebastian-comparator-937efb279bd37a375bcadf584dec0726f84dbf22-zip-275d2d.zip",
                 "reference": "937efb279bd37a375bcadf584dec0726f84dbf22",
-                "shasum": "3f469376c97f5c4d72dbbb138fba34856e163cbc"
+                "shasum": "1aa14cfd8a708d531c8cb83e2371d40037253a70"
             },
             "require": {
                 "php": ">=5.3.3",
@@ -4551,7 +4609,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/sebastian-diff-13edfd8706462032c2f52b4b862974dd46b71c9e-zip-13c115.zip",
                 "reference": "13edfd8706462032c2f52b4b862974dd46b71c9e",
-                "shasum": "84fc8f87dbc18189794c1eadac79c7dd2bb86318"
+                "shasum": "0f7a90213dfc84562da0826e01a8a87941a92484"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -4603,7 +4661,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/sebastian-environment-4e8f0da10ac5802913afc151413bc8c53b6c2716-zip-65fddb.zip",
                 "reference": "4e8f0da10ac5802913afc151413bc8c53b6c2716",
-                "shasum": "b1885a2705ca3792f3d8f11ab24f4e47f703e984"
+                "shasum": "b893d6bab443d2db4852720cae0b3ca70f88986d"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -4653,7 +4711,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/sebastian-exporter-42c4c2eec485ee3e159ec9884f95b431287edde4-zip-3c7575.zip",
                 "reference": "42c4c2eec485ee3e159ec9884f95b431287edde4",
-                "shasum": "7f52c583bc85c792c7159d23d836c350205c0d9c"
+                "shasum": "c507b8c9965cf28e6862e267f69c34ebf14f7cde"
             },
             "require": {
                 "php": ">=5.3.3",
@@ -4720,7 +4778,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/sebastian-global-state-bc37d50fea7d017d3d340f230811c9f1d7280af4-zip-c4abec.zip",
                 "reference": "bc37d50fea7d017d3d340f230811c9f1d7280af4",
-                "shasum": "84f68f907e6bad13740951d31e508256ecee07ad"
+                "shasum": "1e1c757ffecfe527293c974c4f4d56cb20a00321"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -4771,7 +4829,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/sebastian-recursion-context-913401df809e99e4f47b27cdd781f4a258d58791-zip-205e4a.zip",
                 "reference": "913401df809e99e4f47b27cdd781f4a258d58791",
-                "shasum": "6a784ebd109411a759a0aa82911dc78204138abb"
+                "shasum": "d9f2dd0fe3bb05617311a419fcb81dd246d348e6"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -4824,7 +4882,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/sebastian-version-58b3a85e7999757d6ad81c787a1fbf5ff6c628c6-zip-8093ed.zip",
                 "reference": "58b3a85e7999757d6ad81c787a1fbf5ff6c628c6",
-                "shasum": "6728e10e8cd38a0c46b8adc86d542082a981e141"
+                "shasum": "79371e08c9eb160b13e1ce6562c6aca009c3ddfe"
             },
             "type": "library",
             "autoload": {
@@ -4859,7 +4917,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/symfony-yaml-1819adf2066880c7967df7180f4f662b6f0567ac-zip-f9a05e.zip",
                 "reference": "1819adf2066880c7967df7180f4f662b6f0567ac",
-                "shasum": "53e9e33332185160e08a545634b958ab042fb2cb"
+                "shasum": "7442483f7aba2f07e0927b7438efffaaf9a74b21"
             },
             "require": {
                 "php": ">=5.5.9"
@@ -4908,7 +4966,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/webmozart-assert-30eed06dd6bc88410a4ff7f77b6d22f3ce13dbde-zip-03df59.zip",
                 "reference": "30eed06dd6bc88410a4ff7f77b6d22f3ce13dbde",
-                "shasum": "9e46e06f3e8c6ba771e6a0c170820122e8718d5d"
+                "shasum": "d405bb3c7ffdeb1c613890f4f811ac98e6ac96ff"
             },
             "require": {
                 "php": ">=5.3.3"

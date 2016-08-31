@@ -74,3 +74,29 @@ div.form-group label.error {
 	border-radius: 0;
 	box-shadow: none;
 }
+
+// elFinder tiki overrrides
+
+/* prevents elFinder dialog appearing under the embedded pane */
+.std42-dialog.elfinder-dialog {
+	position:absolute;
+}
+
+// for the error dialogs
+
+.ui-dialog.elfinder-dialog-error .ui-dialog-content,
+.ui-dialog.elfinder-dialog-confirm .ui-dialog-content { padding-left: 56px; min-height:35px; }
+
+.elfinder-rtl .ui-dialog.elfinder-dialog-error .ui-dialog-content,
+.elfinder-rtl .ui-dialog.elfinder-dialog-confirm .ui-dialog-content { padding-left:0; padding-right: 56px; }
+
+// quicklook titlebar was behind the image
+.elfinder-quicklook-titlebar {
+	z-index: 1;
+}
+
+// toolbar layout fix
+.tiki .elfinder .elfinder-button-search {
+	/* search button appears in the middle of the toolbar, not floated right - why? */
+
+}

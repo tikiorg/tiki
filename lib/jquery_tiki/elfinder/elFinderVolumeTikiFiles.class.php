@@ -1136,4 +1136,16 @@ class elFinderVolumeTikiFiles extends elFinderVolumeDriver
 		return false;
 	}
 
+	/**
+	 * Change file mode (chmod)
+	 *
+	 * @param  string $path file path
+	 * @param  string $mode octal string such as '0755'
+	 * @return bool
+	 * @author David Bartle,
+	 **/
+	protected function _chmod($path, $mode)
+	{
+		// Not used in Tiki
+	}
 } // END class

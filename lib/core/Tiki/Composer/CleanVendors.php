@@ -270,6 +270,12 @@ class CleanVendors
 				'rangy-textrange.js',
 			]
 		);
+		self::removeMultiple($vendors . 'studio-42/elfinder',
+			[
+				'files',
+				'elfinder.html',
+			]
+		);
 		$fs->remove($vendors . 'smarty/smarty/distribution/demo');
 		$fs->remove($vendors . 'twitter/bootstrap/docs');
 		$fs->remove($vendors . 'zetacomponents/base/design');

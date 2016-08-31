@@ -364,14 +364,14 @@ if ( isset($prefs['fgal_elfinder_feature']) && $prefs['fgal_elfinder_feature'] =
 	$str = $prefs['tiki_minify_javascript'] === 'y' ? 'min' : 'full';
 	// elfinder is sensible to js compression - problem is inside elfinder
 	// see http://stackoverflow.com/questions/11174170/js-invalid-left-hand-side-expression-in-postfix-operation for more general details
-	$headerlib->add_jsfile('vendor_extra/elfinder/js/elfinder.' . $str . '.js', true)
-			->add_cssfile('vendor_extra/elfinder/css/elfinder.' . $str . '.css')
+	$headerlib->add_jsfile('vendor/studio-42/elfinder/js/elfinder.' . $str . '.js', true)
+			->add_cssfile('vendor/studio-42/elfinder/css/elfinder.' . $str . '.css')
 			->add_jsfile('lib/jquery_tiki/elfinder/tiki-elfinder.js');
 
 	$elFinderLang = str_replace(array('cn', 'pt-br'), array('zh_CN', 'pt_BR'), $language);
 
-	if (file_exists('vendor_extra/elfinder/js/i18n/elfinder.' . $elFinderLang . '.js')) {
-		$headerlib->add_jsfile('vendor_extra/elfinder/js/i18n/elfinder.' . $elFinderLang . '.js');
+	if (file_exists('vendor/studio-42/elfinder/js/i18n/elfinder.' . $elFinderLang . '.js')) {
+		$headerlib->add_jsfile('vendor/studio-42/elfinder/js/i18n/elfinder.' . $elFinderLang . '.js');
 	}
 }
 
