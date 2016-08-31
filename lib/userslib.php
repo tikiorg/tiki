@@ -2447,34 +2447,55 @@ class UsersLib extends TikiLib
 		return $ret;
 	}
 
+	/**
+	 * Returns the wiki page name for the current user and checks for useGroupHome pref
+	 *
+	 * @param string $user  current logged in user
+	 * @return string       page name
+	 */
 	function get_user_default_homepage($user)
 	{
-		$result = $this->get_user_default_group($user);
-		if (!is_null($result)) {
-			$home = $this->get_group_home($result);
-			if ($home != '')
-				return $this->best_multilingual_page($home);
+		global $prefs;
+
+		if ($prefs['useGroupHome'] !== 'y') {
+			return $prefs['wikiHomePage'];
 		}
-		$query = "select g.`groupHome`, g.`groupName`" .
-						" from `users_usergroups` as gu, `users_users` as u, `users_groups`as g" .
-						" where gu.`userId`= u.`userId` and u.`login`=? and gu.`groupName`= g.`groupName` and g.`groupHome` != '' and g.`groupHome` is not null";
 
-		$result = $this->query($query, array($user));
 		$home = '';
-		$group = '';
+		$group = $this->get_user_default_group($user);
 
-		while ($res = $result->fetchRow()) {
-			if ($home != '') {
-				$groups = $this->get_included_groups($res['groupName']);
-				if (in_array($group, $groups)) {
+		if ($group) {
+			$home = $this->get_group_home($group);
+		}
+		if (! $home) {	// work through the other groups this user is a member of
+
+			$query = "select g.`groupHome`, g.`groupName`" .
+				" from `users_usergroups` as gu, `users_users` as u, `users_groups`as g" .
+				" where gu.`userId`= u.`userId` and u.`login`=? and gu.`groupName`= g.`groupName` and g.`groupHome` != '' and g.`groupHome` is not null";
+
+			$result = $this->query($query, array($user));
+
+			while ($res = $result->fetchRow()) {
+				if ($home != '') {
+					$groups = $this->get_included_groups($res['groupName']);
+					if (in_array($group, $groups)) {
+						$home = $res['groupHome'];
+						$group = $res['groupName'];
+					}
+				} else {
 					$home = $res['groupHome'];
 					$group = $res['groupName'];
 				}
 			}
-			$home = $res['groupHome'];
-			$group = $res['groupName'];
+
 		}
-		return $this->best_multilingual_page($home);
+		$home = $this->best_multilingual_page($home);
+
+		if (! TikiLib::lib('tiki')->page_exists($home)) {
+			$home = $prefs['wikiHomePage'];
+		}
+
+		return $home;
 	}
 
 	function best_multilingual_page($page)
@@ -2494,29 +2515,6 @@ class UsersLib extends TikiLib
 		}
 
 		return $this->get_page_name_from_id($bestLangPageId);
-	}
-
-	/**
-	 * Get the user's home page and checks for grouphome pref
-	 *
-	 * @param string $user        User login
-	 * @return string             Home page
-	 */
-	function get_user_default_homepage2($user)
-	{
-		global $prefs;
-
-		if ($prefs['useGroupHome'] == 'y') {
-			$groupHome = $this->get_user_default_homepage($user);
-			if (!empty($groupHome))
-				$p = $groupHome;
-			else
-				$p = $prefs['wikiHomePage'];
-		} else {
-			$p = $prefs['wikiHomePage'];
-		}
-
-		return $p;
 	}
 
 	/* Returns a theme/style for this ithe default group of the current user. */

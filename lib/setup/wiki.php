@@ -37,7 +37,7 @@ if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php')
 ) {
 	$check = false;
 	if (!isset($_REQUEST['page']) && !isset($_REQUEST['page_ref_id']) && !isset($_REQUEST['page_id'])) {
-		$_REQUEST['page'] = $userlib->get_user_default_homepage2($user);
+		$_REQUEST['page'] = $userlib->get_user_default_homepage($user);
 		$check = true;
 	}
 
