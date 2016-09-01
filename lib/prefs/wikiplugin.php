@@ -48,6 +48,7 @@ function prefs_wikiplugin_list($partial = false)
 		'invite' => 'y',
 		'kaltura' => 'y',
 		'lang' => 'y',
+		'list' => 'y',
 		'map' => 'y',
 		'mediaplayer' => 'y',
 		'memberpayment' => 'y',
