@@ -3185,7 +3185,12 @@ div.form-group label.error {
   z-index: 1;
 }
 .tiki .elfinder .elfinder-button-search {
-  /* search button appears in the middle of the toolbar, not floated right - why? */
+  padding-top: 2px;
+}
+.tiki .elfinder .elfinder-button-search input {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
 }
 body:not(.fixed_width) .container {
   padding-left: 15px;
