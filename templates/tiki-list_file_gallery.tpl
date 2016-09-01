@@ -186,12 +186,12 @@
 			<input type="hidden" name="galleryId" value="{$galleryId|escape}">
 			<input type="hidden" name="fileId" value="{$fileId|escape}">
 			<div class="form-group">
-				<label>
-					{tr}Your comment{/tr} ({tr}optional{/tr}):
-					<input type="text" name="comment" size="30" class="form-input">
+				<label for="comment">
+					{tr}Comment{/tr} ({tr}optional{/tr}):
 				</label>
-				<button type="submit" class="btn btn-default btn-sm">{icon name='ok'} {tr}Save{/tr}</button>
+					<input type="text" name="comment" id="comment" class="form-control">
 			</div>
+				<button type="submit" class="btn btn-default btn-sm">{icon name='ok'} {tr}Save{/tr}</button>
 		</form>
 	{/remarksbox}
 {/if}
