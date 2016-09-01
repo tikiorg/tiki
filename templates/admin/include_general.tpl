@@ -224,6 +224,7 @@
 					<legend>{tr}User information display{/tr}</legend>
 					<div class="adminoptionbox">
 						{preference name=user_show_realnames}
+						{preference name='urlOnUsername'}
 						{preference name=user_in_search_result}
 						{preference name=highlight_group}
 						{preference name=feature_display_my_to_others}
