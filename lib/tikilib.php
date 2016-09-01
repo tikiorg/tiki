@@ -6077,10 +6077,7 @@ JS;
 
 		$delimiter = array_shift($delimiters);
 		$temp = explode($delimiter, $string);
-		
-		if( implode('', $temp) === '' ) // all delimited values are empty => don't parse anymore as wierd results containing delimiter are returned
-			return $temp;
-		
+				
 		$array = array();
 		$keep = false;
 
@@ -6088,7 +6085,7 @@ JS;
 
 		foreach ($temp as $v) {
 			$filtered = str_replace($ignore_chars, '', $v);
-			if ($filtered == '') {
+			if ($filtered == '' && $v != '') {
 				if (! $keep) {
 					$array[count($array) - 1] .= $delimiter;
 				}
