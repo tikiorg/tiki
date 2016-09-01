@@ -1129,8 +1129,8 @@ class TrackerLib extends TikiLib
 					//multiple filter on an exact value or a like value - each value can be simple or an array
 					$ff = (int) $filterfield[$i];
 					$ff_array = $filterfield[$i]; // Need value as array used below
-					$ev = !empty($exactvalue[$i])? $exactvalue[$i]:'';
-					$fv = !empty($filtervalue[$i])?$filtervalue[$i]:'' ;
+					$ev = !empty($exactvalue[$i])? $exactvalue[$i] : null;
+					$fv = !empty($filtervalue[$i])? $filtervalue[$i] : null;
 				}
 				$filter = $this->get_tracker_field($ff);
 
@@ -1292,7 +1292,7 @@ class TrackerLib extends TikiLib
 					}
 					$mid .= ')';
 				} elseif (is_null($ev) && is_null($fv)) { // test null value
-					$mid.= " AND ttif$i.`value`=? OR ttif$i.`value` IS NULL";
+					$mid.= " AND ( ttif$i.`value`=? OR ttif$i.`value` IS NULL )";
 					$bindvars[] = '';
 				}
 			}
