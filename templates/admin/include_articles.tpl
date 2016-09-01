@@ -80,10 +80,10 @@
 				<input type="hidden" name="articlesfeatures" />
 				{preference name=article_feature_copyrights}
 			</fieldset>
-			<fieldset>
-				<legend>
-					{tr}Default maximum dimensions of custom images{/tr}
-				</legend>
+			<legend>
+				{tr}Custom (Article Own) images setting{/tr}
+			</legend>
+				{preference name=article_image_file_size_max}
 				{preference name=article_image_size_x}
 				{preference name=article_image_size_y}
 				{preference name=article_default_list_image_size_x}

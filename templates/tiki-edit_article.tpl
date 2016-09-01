@@ -197,11 +197,11 @@
 		{tab name="{tr}Image{/tr}"}
 			<h2>{tr}Image{/tr}</h2>
 			<div class="form-group {if $types.$type.show_image neq 'y'}hidden{/if}">
-				<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+				<input type="hidden" name="MAX_FILE_SIZE" value="{$prefs.article_image_file_size_max}">
 				<label for="userfile1" class="control-label col-md-4">{tr}Own Image{/tr}</label>
 				<div class="col-md-8">
 					<input class="form-control" name="userfile1" type="file" onchange="document.getElementById('useImage').checked = true;">
-					<span class="help-block">{tr}If not the topic image{/tr}</span>
+					<span class="help-block">{tr}If not the topic image{/tr} - {tr}Max file size : {$prefs.article_image_file_size_max/1000} MB{/tr}</span>
 				</div>
 			</div>
 			{if $hasImage eq 'y'}
