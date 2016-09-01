@@ -101,11 +101,11 @@ function prefs_article_list()
 		),
         'article_image_file_size_max' => array(
             'name' => tra('Image article maximum file size'),
-            'description' => tra('Sets the maximum size for an Image Article in kilobyte (default = 2000000)'),
+            'description' => tra('Maximum size for an Image Article in kilobyte (default = 500000). Article images are stored in the database so it should remain low'),
             'type' => 'text',
             'size' => '10',
             'filter' => 'digits',
-            'default' => 2000000,
+            'default' => 500000,
         ),
 		'article_custom_attributes' => array(
 			'name' => tra('Custom attributes for article types'),
