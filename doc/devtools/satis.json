@@ -684,7 +684,7 @@
 				"name": "jquery/plugins/jquery-validation",
 				"version": "1.13.1",
 				"dist": {
-					"url": "http://jqueryvalidation.org/files/jquery-validation-1.13.1.zip",
+					"url": "https://jqueryvalidation.org/files/jquery-validation-1.13.1.zip",
 					"type": "zip"
 				}
 			}
@@ -816,7 +816,7 @@
 				"name": "svg-edit/svg-edit",
 				"version": "2.6",
 				"dist": {
-					"url": "http://svg-edit.googlecode.com/files/svg-edit-2.6.zip",
+					"url": "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/svg-edit/svg-edit-2.6.zip",
 					"type": "zip"
 				}
 			}
