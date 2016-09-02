@@ -717,7 +717,7 @@
 				"name": "jquery/jtrack",
 				"version": "1.0",
 				"dist": {
-					"url": "http://jtrack.googlecode.com/files/jtrack-1.0.zip",
+					"url": "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/jtrack/jtrack-1.0.zip",
 					"type": "zip"
 				}
 			}
@@ -1465,7 +1465,7 @@
 				"name": "simile_timeline/simile_timeline",
 				"version": "2.3.0",
 				"dist": {
-					"url": "http://simile-widgets.googlecode.com/files/timeline_libraries_v2.3.0.zip",
+					"url": "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/simile-widgets/timeline_libraries_v2.3.0.zip",
 					"type": "zip"
 				}
 			}
