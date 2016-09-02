@@ -14,7 +14,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/sam152-javascript-equal-height-responsive-rows-1.0.0.zip",
                 "reference": null,
-                "shasum": "0be77b2e2b6ceca06e5dd28b018ad51f589a770c"
+                "shasum": "5b881751ded5e9d01454b77442e16a66d34c9506"
             },
             "type": "library"
         },
@@ -25,7 +25,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/adodb-adodb-5.18.zip",
                 "reference": null,
-                "shasum": "dad409c584b9bcaaf24e7c8a568a7342a1e9ea8b"
+                "shasum": "a25a0a29bddded00c90971b66403f63786f3a8b8"
             },
             "type": "library"
         },
@@ -41,7 +41,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/afarkas-html5shiv-ed28c56c071bddfe7d635ad88995674957a016be-zip-332fff.zip",
                 "reference": "ed28c56c071bddfe7d635ad88995674957a016be",
-                "shasum": "58c6c5c79f776034729ae7f87d344dab0a7933cb"
+                "shasum": "cd01ebcfbfc2e2a9e5b7230beebe3553959916ed"
             },
             "type": "component",
             "extra": {
@@ -67,7 +67,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/alxlit-bootstrap-chosen-1.0.1.zip",
                 "reference": null,
-                "shasum": "1f80296de6bc167728321e6d01332adee5061a30"
+                "shasum": "b0e6435fbe5a59340195bee1da91b96fae290a26"
             },
             "type": "library"
         },
@@ -78,7 +78,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/blueimp-javascript-canvas-to-blob-2.2.0.zip",
                 "reference": null,
-                "shasum": "5d9bd20613d66de75b89e04f619ff94ae0fc45b9"
+                "shasum": "255e55a1763ba7bcbbfd2b2d5d05f6daba821b11"
             },
             "type": "component"
         },
@@ -89,7 +89,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/blueimp-javascript-load-image-1.14.0.zip",
                 "reference": null,
-                "shasum": "fd4dd083295055b9ebadbbf4d7b3d5f1bda2e91c"
+                "shasum": "66c58ee4007356a9288ebb3ba3da3e74bb942da3"
             },
             "type": "library"
         },
@@ -105,7 +105,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/blueimp-jquery-file-upload-e6236257b91f4824235ec6941f22878eb9bb1ed2-zip-44acc0.zip",
                 "reference": "e6236257b91f4824235ec6941f22878eb9bb1ed2",
-                "shasum": "e39bb4e3da39c0a1acc334ae3aa15b56cd2a22c5"
+                "shasum": "2633d19cb573ea7a7cef8d10d950be894586dec9"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -155,7 +155,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-6b2514e803e1cf1df5df3148198aacfb36a2864f-zip-bc9c14.zip",
                 "reference": "6b2514e803e1cf1df5df3148198aacfb36a2864f",
-                "shasum": "af24f7867beb3a22edc4e4a56f462161c7ec21c3"
+                "shasum": "0d3a793cff3e2fd0d76007250e2d9820b1c98c39"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -191,7 +191,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-plugins-divarea-4.5.6.zip",
                 "reference": null,
-                "shasum": "549337fce4fc79089d6c8245bcd2d5b5ab82c566"
+                "shasum": "e21acce6ff2e1018e952b4d6f75d8b5415a4cfbf"
             },
             "type": "library"
         },
@@ -202,7 +202,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-bootstrapck-1.0.zip",
                 "reference": null,
-                "shasum": "9473b17009b05cd9365e7f08597001703d2dc503"
+                "shasum": "06ed4c5721ceafd61156b471e045ef9021f1100d"
             },
             "type": "library"
         },
@@ -213,7 +213,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-kama-4.5.6.zip",
                 "reference": null,
-                "shasum": "ed917f245e769791867363b037937604d1ef3b08"
+                "shasum": "96d6aea98a105e2ab1290785a3f78627deca881a"
             },
             "type": "library"
         },
@@ -224,7 +224,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-minimalist-1.0.zip",
                 "reference": null,
-                "shasum": "eb5572fa918a5095f8fe1e1a68e890892c596ca4"
+                "shasum": "a5649308a3d237302b8d875beba38168edc47290"
             },
             "type": "library"
         },
@@ -235,7 +235,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-skins-office2013-1.04.zip",
                 "reference": null,
-                "shasum": "99d37c6064b19ec7109a0032ce285d51178d7f62"
+                "shasum": "7257ccdc43420e97a6d0f1dc69bc3ca9d37e693d"
             },
             "type": "library"
         },
@@ -246,7 +246,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/codemirror-codemirror-4.12.0.zip",
                 "reference": null,
-                "shasum": "91005536c0a3244a8663a559c88ecda52ddd3b5d"
+                "shasum": "c98f52c8c79ab4af8dc3fb96334f096f26963c48"
             },
             "type": "library"
         },
@@ -370,7 +370,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/container-interop-container-interop-fc08354828f8fd3245f77a66b9e23a6bca48297e-zip-55a405.zip",
                 "reference": "fc08354828f8fd3245f77a66b9e23a6bca48297e",
-                "shasum": "9498e98ac8888e7235611f16fb420b9df5349a45"
+                "shasum": "0be8a5b63c9c69ff606a97a6f69540338df37532"
             },
             "type": "library",
             "autoload": {
@@ -397,7 +397,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/cwspear-bootstrap-hover-dropdown-e8bc99836b5ab50816786bbaba2dd2c4d6a0d094-zip-868000.zip",
                 "reference": "e8bc99836b5ab50816786bbaba2dd2c4d6a0d094",
-                "shasum": "df2a183a65fa6c3f08263e9c6c5f2cab7d88bbad"
+                "shasum": "c5823bc38b30fd298cf0d0a770464b9519452c35"
             },
             "require": {
                 "components/bootstrap": "~3.0",
@@ -445,7 +445,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/dompdf-dompdf-cf7d8a0a27270418850cc7d7ea532159e5eeb3eb-zip-76f14c.zip",
                 "reference": "cf7d8a0a27270418850cc7d7ea532159e5eeb3eb",
-                "shasum": "69fed8dc43ac575395d9ffcd35886b29b543a1a6"
+                "shasum": "44f3c1701e3c7aba0c6c8c065d593b6344e5040c"
             },
             "require": {
                 "phenx/php-font-lib": "0.2.*"
@@ -486,7 +486,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/ezyang-htmlpurifier-ae1828d955112356f7677c465f94f7deb7d27a40-zip-ca0362.zip",
                 "reference": "ae1828d955112356f7677c465f94f7deb7d27a40",
-                "shasum": "610bd96d15685b8e8353c5383ef21aef91d5c419"
+                "shasum": "8d433f75891498630559a4790dc3844fdc525f8f"
             },
             "require": {
                 "php": ">=5.2"
@@ -530,7 +530,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/fortawesome-font-awesome-fddd2c240452e6c8990c4ef75e0265b455aa7968-zip-85d023.zip",
                 "reference": "fddd2c240452e6c8990c4ef75e0265b455aa7968",
-                "shasum": "7c22c8c15abfd89748245f65605136860fed408f"
+                "shasum": "aac351fc7d3c6bb766ea141e2857820826ac4967"
             },
             "require-dev": {
                 "jekyll": "1.0.2",
@@ -578,7 +578,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/google-apiclient-a25dc9d5c109ebb02945ba1ff6336cc937c27628-zip-f50c1c.zip",
                 "reference": "a25dc9d5c109ebb02945ba1ff6336cc937c27628",
-                "shasum": "61a496fd946d55ea158caca0d8a67bded1a69213"
+                "shasum": "81199c8d3011fcddde596430c3e785d827d4d902"
             },
             "require": {
                 "php": ">=5.2.1"
@@ -621,7 +621,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jcapture-applet-jcapture-applet-dev-trunk-56537c.zip",
                 "reference": "/trunk/@47",
-                "shasum": "9e4e1c4c8b3cac87f9b53f454cd3acffa16e9137"
+                "shasum": "c4d805469564b110239e8841bcbea5c6dba4fb76"
             },
             "type": "library",
             "license": [
@@ -658,7 +658,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-jquery-2.2.2.zip",
                 "reference": null,
-                "shasum": "09390bd40059f71014e11a0810b77b575b001020"
+                "shasum": "3e667e95b47ffe265c36d6ec4d68d276228fad5f"
             },
             "type": "library"
         },
@@ -669,7 +669,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-jquery-min-2.2.2.zip",
                 "reference": null,
-                "shasum": "910c7483da12b97aa9897e5ed59ee349b6b1cacf"
+                "shasum": "e31d434e8163eed24283bf3f1c3cb6244839a66d"
             },
             "type": "library"
         },
@@ -680,7 +680,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-jquery-s5-1.0.1.zip",
                 "reference": null,
-                "shasum": "64f266bd7577add7e7e18360f21f605635a036c2"
+                "shasum": "abe9b6ec2b5a1f82b6d957e1a0d3a874fdf4de0a"
             },
             "type": "library"
         },
@@ -691,7 +691,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-jquery-sheet-3.1.zip",
                 "reference": null,
-                "shasum": "37bc99dc45b07751996f3a9386d1197b66d90730"
+                "shasum": "9ce74dcf186a45995b5cac88cb24bbcfbc7d13e6"
             },
             "type": "library"
         },
@@ -702,7 +702,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-jquery-timepicker-addon-1.5.0.zip",
                 "reference": null,
-                "shasum": "2e55f1050dfb4987c996b7b2899383d3e9e3e718"
+                "shasum": "ac0ab50f85f7bd7966f46621e45cd1f4ebcb02a0"
             },
             "type": "library"
         },
@@ -713,7 +713,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-jquery-ui-1.11.4.zip",
                 "reference": null,
-                "shasum": "2f5e1cfb9b8528547e4b7887205294e1973d6848"
+                "shasum": "45d7803805d4adf74105ea1e2e5bd5fbb3a1fe95"
             },
             "type": "library"
         },
@@ -724,7 +724,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-jquery-ui-themes-1.11.4.zip",
                 "reference": null,
-                "shasum": "edf7d9142d82c8931c335d4198667a634bc7d5ea"
+                "shasum": "76409ecde4300294a775d6aae7e23426f869d5fd"
             },
             "type": "library"
         },
@@ -735,7 +735,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-jtrack-1.0.zip",
                 "reference": null,
-                "shasum": "2722410017cb2eb0ee35c43792811e96e1bd6e65"
+                "shasum": "854c6786c003f8b10f773e89670d4b699e4aa985"
             },
             "type": "library"
         },
@@ -746,7 +746,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-md5-1.1.zip",
                 "reference": null,
-                "shasum": "194f488d26d3e4601a32653ff67ac57c78989d5b"
+                "shasum": "0e0d8f9ef915a7537410905cb88f5a788c779f55"
             },
             "type": "library"
         },
@@ -757,7 +757,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-minicart-2.6.1.zip",
                 "reference": null,
-                "shasum": "2938c5bcda96035aa4219629ddd883ba58ba8153"
+                "shasum": "32a4b34606eeae28e5d22de41fe0e79bcf16377d"
             },
             "type": "library"
         },
@@ -768,7 +768,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-photoswipe-3.0.5.zip",
                 "reference": null,
-                "shasum": "99c093833df3d5676637ba0585ea8b305ff1dc1d"
+                "shasum": "23c1cb6b3c9b3fb38580e5fac09a9ebbc7db7f01"
             },
             "type": "library"
         },
@@ -790,7 +790,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-plugins-async-1.0.zip",
                 "reference": null,
-                "shasum": "7dd1dbc94b1e40fb3138ae67cf5b93149e2c4b8a"
+                "shasum": "4aac613092dfe2d8b53cdd300a4321815cfc53b5"
             },
             "type": "library"
         },
@@ -801,7 +801,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-plugins-chosen-1.5.1.zip",
                 "reference": null,
-                "shasum": "be674a5c357433d7083014c25cbd741847b56a8f"
+                "shasum": "d094c081174b05e15d7b45c716e0f84e619a68b2"
             },
             "type": "library"
         },
@@ -812,7 +812,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-plugins-colorbox-1.5.14.zip",
                 "reference": null,
-                "shasum": "230e1ab09488aac3f2ccaa7eca98819f7788f463"
+                "shasum": "5d5698c17ca75acba72b317366e9d909bcb9f42e"
             },
             "type": "library"
         },
@@ -823,7 +823,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-plugins-fitvidjs-1.1.0.zip",
                 "reference": null,
-                "shasum": "f59bb05b3588ca86d38fa9f5cf4822bb6a10bab2"
+                "shasum": "6b05b97779ba4a13bd38e9123bc9bc8a8e780d39"
             },
             "type": "library"
         },
@@ -834,7 +834,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-plugins-form-3.51.zip",
                 "reference": null,
-                "shasum": "7456f68cf3acdcd0670874fb7ea43e3323b1be82"
+                "shasum": "c83bd7b1195b7332351d166372469a652e7aa35f"
             },
             "type": "library"
         },
@@ -845,7 +845,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-plugins-galleriffic-2.0.1.zip",
                 "reference": null,
-                "shasum": "c02edf52dd0fe155c312132c06793424cf8ae310"
+                "shasum": "79d4a65b66a3716baaffa70f1d433ae4402f6ea5"
             },
             "type": "library"
         },
@@ -856,7 +856,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-plugins-infinitecarousel-3.0.3.zip",
                 "reference": null,
-                "shasum": "d6d09e6d9a2362b2bbcb7a67650dccfaad8ec0ac"
+                "shasum": "53e1855ec72198283235864c47f2edfa49fbb28e"
             },
             "type": "library"
         },
@@ -867,7 +867,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-plugins-jquery-json-2.5.1.zip",
                 "reference": null,
-                "shasum": "2d99a7b26c6aa91f3a7b56a2ae2739c322dbda04"
+                "shasum": "3bac5980f04369bed400b40de040e48def5ad6b7"
             },
             "type": "library"
         },
@@ -876,9 +876,9 @@
             "version": "1.13.1",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-jquery-validation-1.13.1.zip",
+                "url": "https://jqueryvalidation.org/files/jquery-validation-1.13.1.zip",
                 "reference": null,
-                "shasum": "aab2a68903eefb706ba620a2441fb35be62da7b2"
+                "shasum": null
             },
             "type": "library"
         },
@@ -889,7 +889,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-plugins-media-0.98.zip",
                 "reference": null,
-                "shasum": "b6122507403b6481a84b88fc0433a845208e3357"
+                "shasum": "31dced89d078c0e0692f4fca23c8983fed41773e"
             },
             "type": "library"
         },
@@ -900,7 +900,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-plugins-migrate-1.4.0.zip",
                 "reference": null,
-                "shasum": "8b221dbfdcc2b72916feffb1ff67bd809d9c4c43"
+                "shasum": "2ea30f734e4b0603bf4cb8acf2c17ee53eabc979"
             },
             "type": "library"
         },
@@ -911,7 +911,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-plugins-migrate-min-1.4.0.zip",
                 "reference": null,
-                "shasum": "a3c52e52092a8e4c46076582dad6fb5c37771645"
+                "shasum": "c0655c7516d62885d8fc05f7d01fd2056e6cde5a"
             },
             "type": "library"
         },
@@ -922,7 +922,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-plugins-nestedsortable-1.3.4.zip",
                 "reference": null,
-                "shasum": "6d536f147c8df6c6478bbb7e9534c641e5bb45ec"
+                "shasum": "0c0a9d1142980258ee4a83852afd22e5019b862f"
             },
             "type": "library"
         },
@@ -933,7 +933,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-plugins-reflection-jquery-1.1.zip",
                 "reference": null,
-                "shasum": "d5e5767b43046c385b2ab87ec1f0cb60449cb843"
+                "shasum": "ec0a931444216193777f1367fe266223d5e28aac"
             },
             "type": "library"
         },
@@ -944,7 +944,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-plugins-superfish-1.7.5.zip",
                 "reference": null,
-                "shasum": "4e544e80c56a463930e3d772c6690992ef546e5a"
+                "shasum": "7ee79bf4d49ff1e52c72451895d9df3a7315191e"
             },
             "type": "library"
         },
@@ -966,7 +966,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-plugins-tagcanvas-2.8.zip",
                 "reference": null,
-                "shasum": "84c38c6e78d8f154463f8c2abf577a6ceefd2e8f"
+                "shasum": "3efae7757d5ada3c9793be196363ec796d468327"
             },
             "type": "library"
         },
@@ -977,7 +977,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-plugins-timeago-1.4.3.zip",
                 "reference": null,
-                "shasum": "f04242475eefff3af6ccfadbd39628f41601eeb9"
+                "shasum": "c2feb5fd4c7bd4e816b8ba473c06eb4c6bb37a6f"
             },
             "type": "library"
         },
@@ -988,7 +988,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-plugins-treetable-3.1.0.zip",
                 "reference": null,
-                "shasum": "a51739995ae9b4c0af46bb536c7d0599284e298d"
+                "shasum": "558049e73d3a6017d76cc8a5a9d900c968314450"
             },
             "type": "library"
         },
@@ -999,7 +999,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/jquery-plugins-zoom-1.7.13.zip",
                 "reference": null,
-                "shasum": "15a2abe9f3792c1124b016533b7811de8b4b46ce"
+                "shasum": "35e4ed311cae6e3d3191685eee8ba4974551b938"
             },
             "type": "library"
         },
@@ -1015,7 +1015,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/mediumjs-mediumjs-9144a17c135975491ac84ab15e398a1f3a895622-zip-291ef5.zip",
                 "reference": "9144a17c135975491ac84ab15e398a1f3a895622",
-                "shasum": "11583020f07eac0a63ddfd9a049464d3122dd728"
+                "shasum": "ac96f450033cd9a97cf4b7e941fadc64d5134b35"
             },
             "require": {
                 "rangy/rangy": ">=1.3",
@@ -1049,7 +1049,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/morteza-bootstrap-rtl-3.3.2.zip",
                 "reference": null,
-                "shasum": "984bab5847dd2ff4358afe197e707c49dfe9a01f"
+                "shasum": "07d7613a45de9a57732aaaf17bf9603d6cb46465"
             },
             "type": "library"
         },
@@ -1101,7 +1101,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/openlayers-ol3-3.6.0.zip",
                 "reference": null,
-                "shasum": "572876e804d41ae480311c77611fcfc368b8206f"
+                "shasum": "0f020e383df144d6f124d500c692bd756bce2bc8"
             },
             "type": "library"
         },
@@ -1117,7 +1117,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/oyejorge-less-php-a1e2d3c20794b37ac4d0baeb24613e579584033b-zip-8e000d.zip",
                 "reference": "a1e2d3c20794b37ac4d0baeb24613e579584033b",
-                "shasum": "1d1ad0d9a0e4fa69fac4c5ab6d9a97bc37ee77d0"
+                "shasum": "3cafe04ef551800e8fcf0093a55dbfb1fc750a20"
             },
             "require": {
                 "php": ">=5.3"
@@ -1179,7 +1179,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/phenx-php-font-lib-c30c7fc00a6b0d863e9bb4c5d5dd015298b2dc82-zip-44e847.zip",
                 "reference": "c30c7fc00a6b0d863e9bb4c5d5dd015298b2dc82",
-                "shasum": "946cf5adaee797b4ad103d14579fc24e59527534"
+                "shasum": "f193df990ae52932806cbdee2ad9a06990491483"
             },
             "type": "library",
             "autoload": {
@@ -1208,7 +1208,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/phpcas-phpcas-1.3.3.zip",
                 "reference": null,
-                "shasum": "9fe5c595004beed75a7dc540bb6349b5c08ee23b"
+                "shasum": "c8402962cd623e95cb006c0ada8057cd72b7455b"
             },
             "type": "library"
         },
@@ -1224,7 +1224,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/phpseclib-phpseclib-0ea31d9b65d49a8661e93bec19f44e989bd34c69-zip-f0d13e.zip",
                 "reference": "0ea31d9b65d49a8661e93bec19f44e989bd34c69",
-                "shasum": "1ea2379ce2ea5194da96e7d0acfff96c6a464599"
+                "shasum": "785b0f3187506b7206684b06269620b7ff36f9e5"
             },
             "require": {
                 "php": ">=5.0.0"
@@ -1314,7 +1314,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/player-flv-1.0.zip",
                 "reference": null,
-                "shasum": "b99ccccd584ffed52839b8c10d7759af8dcf3f6a"
+                "shasum": "44c34eb301cf29b2ddc1820dbae1a570c7ddbd74"
             },
             "type": "library"
         },
@@ -1325,7 +1325,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/player-mp3-1.0.zip",
                 "reference": null,
-                "shasum": "35c3a1e69a5e389145749a884c488719ab23f2f3"
+                "shasum": "a56ac4687baf282f13e06e38f0d6bfd47f15f306"
             },
             "type": "library"
         },
@@ -1341,7 +1341,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/psr-log-fe0936ee26643249e916849d48e3a51d5f5e278b-zip-e71523.zip",
                 "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
-                "shasum": "c2c58680b9f7103bfb5cc1e20a805e9e5a528a4b"
+                "shasum": "f0ea4482e0bbed55a984cc72187af45b3305eb51"
             },
             "type": "library",
             "autoload": {
@@ -1374,7 +1374,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/rangy-rangy-1.3.0.zip",
                 "reference": null,
-                "shasum": "a00c33e618639a5aa554c03aaffbb328d54355cf"
+                "shasum": "d0c8310f1211576e15b794c58c5823d14e471174"
             },
             "type": "library"
         },
@@ -1385,7 +1385,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/simile_timeline-simile_timeline-2.3.0.zip",
                 "reference": null,
-                "shasum": "5163924138cf6b690d2b6ad69482e48267685264"
+                "shasum": "36727b89e57e093e8bc199e35b94e0d7e60ed00c"
             },
             "type": "library"
         },
@@ -1401,7 +1401,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/smarty-smarty-1f878e6d746ecc8ec8d00d9c75044cf7d23ad94a-zip-13a9f0.zip",
                 "reference": "1f878e6d746ecc8ec8d00d9c75044cf7d23ad94a",
-                "shasum": "112808d8c533b538e4607b412cbba6181169a169"
+                "shasum": "97f18d326c131cf8e82e41065eef14598f0da2de"
             },
             "require": {
                 "php": ">=5.2"
@@ -1456,7 +1456,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/sorich87-bootstrap-tour-1ea8bbc5c0ed0e0fd7c0d7f786747a61677639ce-zip-017d85.zip",
                 "reference": "1ea8bbc5c0ed0e0fd7c0d7f786747a61677639ce",
-                "shasum": "3e8592afeb348813bf7c9fe2cc5d5ce05ae54bd1"
+                "shasum": "5fccd7a2ce9d44a00e785264c2a0da40467b908f"
             },
             "type": "component",
             "notification-url": "https://packagist.org/downloads/",
@@ -1536,7 +1536,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/svg-edit-svg-edit-2.8.1.zip",
                 "reference": null,
-                "shasum": "f3b86ea64efd07864b4efd20331cb668fb12ebc2"
+                "shasum": "bf28235da308dbe3040c5c728f29068be729893e"
             },
             "type": "library"
         },
@@ -1553,7 +1553,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/symfony-config-17330c1d667edbbcca10616df82e8ade03bc1b33-zip-3fa418.zip",
                 "reference": "17330c1d667edbbcca10616df82e8ade03bc1b33",
-                "shasum": "3b2f66c491464d9de0e0f629f8dcde86b5e186b4"
+                "shasum": "0fcf0fd5301cb366d866f4c90e3d3766b912b609"
             },
             "require": {
                 "php": ">=5.3.3",
@@ -1601,7 +1601,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/symfony-console-e44154bfe3e41e8267d7a3794cd9da9a51cfac34-zip-78677b.zip",
                 "reference": "e44154bfe3e41e8267d7a3794cd9da9a51cfac34",
-                "shasum": "8134411883207dfb42cbabf72afa6339f2094182"
+                "shasum": "fd72885fd0a74f3ea5ea3f2ab648606c4e99f703"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -1658,7 +1658,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/symfony-dependency-injection-42bbb43fab66292a1865dc9616c299904c3d4d14-zip-e260de.zip",
                 "reference": "42bbb43fab66292a1865dc9616c299904c3d4d14",
-                "shasum": "f463521124e8c70370aaeaaa7b6c2a54c2173fc8"
+                "shasum": "c18a7b2e18a636c4ec5934835d3616d8b4df246a"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -1717,7 +1717,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/symfony-filesystem-ab4c3f085c8f5a56536845bf985c4cef30bf75fd-zip-02d8cb.zip",
                 "reference": "ab4c3f085c8f5a56536845bf985c4cef30bf75fd",
-                "shasum": "eba7ce75ed484a1f6bf906605fba7aa3b1b44b35"
+                "shasum": "8334fdaa270d2df8294d6d97511bd7b804665f28"
             },
             "require": {
                 "php": ">=5.3.9"
@@ -1767,7 +1767,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/tijsverkoyen-css-to-inline-styles-e53f25f6685d167f80b9d51b91b09aa70ea6c1c9-zip-cd3ab0.zip",
                 "reference": "e53f25f6685d167f80b9d51b91b09aa70ea6c1c9",
-                "shasum": "6c979940b351557e3294fc732ae004e5661fb308"
+                "shasum": "343a48e0583fc8e77d67aa93a32e1d4fda57320b"
             },
             "require": {
                 "php": ">=5.3.0"
@@ -1805,7 +1805,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/twitter-bootstrap-81df608a40bf0629a1dc08e584849bb1e43e0b7a-zip-bc9c50.zip",
                 "reference": "81df608a40bf0629a1dc08e584849bb1e43e0b7a",
-                "shasum": "2d7778dd1745f4202a82f40ee87d3de4a8210aa9"
+                "shasum": "98b93db6b526da2386e9d9bb84506963205a8a72"
             },
             "replace": {
                 "twitter/bootstrap": "self.version"
@@ -1851,7 +1851,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/undojs-undojs-1.zip",
                 "reference": null,
-                "shasum": "d43ace756e718d70fb34145a63e19bb793b0ad84"
+                "shasum": "4c201c0c19135160441a75529cf71f827e3e1d03"
             },
             "type": "library"
         },
@@ -1867,7 +1867,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-captcha-9a1197bc5b8aa4fad104c22f6d9b2a3d4bdda0c6-zip-964e85.zip",
                 "reference": "9a1197bc5b8aa4fad104c22f6d9b2a3d4bdda0c6",
-                "shasum": "ba481a17cd90df97af3bfef8a6e78c8fedbd3360"
+                "shasum": "bfd1165379f6cb2a683194322d34157a25a9d2d5"
             },
             "require": {
                 "php": "^5.6 || ^7.0",
@@ -1924,7 +1924,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-code-95033f061b083e16cdee60530ec260d7d628b887-zip-627e89.zip",
                 "reference": "95033f061b083e16cdee60530ec260d7d628b887",
-                "shasum": "b62bfc4242bb4b78e596ebf91f0bc2ee4fca1653"
+                "shasum": "96c1be133b5ca5ddb03dd9f881abe0676a6afff5"
             },
             "require": {
                 "php": "^5.5 || 7.0.0 - 7.0.4 || ^7.0.6",
@@ -1976,7 +1976,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-config-2920e877a9f6dca9fa8f6bd3b1ffc2e19bb1e30d-zip-cfb12d.zip",
                 "reference": "2920e877a9f6dca9fa8f6bd3b1ffc2e19bb1e30d",
-                "shasum": "e73278a91e8dc55fc62b7263159eaddee59e2b41"
+                "shasum": "2c6c692ee80e6ad9cd784b4512df05974eb8786f"
             },
             "require": {
                 "php": "^5.5 || ^7.0",
@@ -2032,7 +2032,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-crypt-1b2f5600bf6262904167116fa67b58ab1457036d-zip-529b97.zip",
                 "reference": "1b2f5600bf6262904167116fa67b58ab1457036d",
-                "shasum": "736012ab55fdc603bfab2270d47ee094f8394a3c"
+                "shasum": "73ff18d3edb79c0e0f338abf8c486d136e46ff19"
             },
             "require": {
                 "container-interop/container-interop": "~1.0",
@@ -2082,7 +2082,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-escaper-2dcd14b61a72d8b8e27d579c6344e12c26141d4e-zip-0742ef.zip",
                 "reference": "2dcd14b61a72d8b8e27d579c6344e12c26141d4e",
-                "shasum": "e965949da579e0430e0bf972fb5cb77b4e502280"
+                "shasum": "521c958bd350375bc32b870603a884e5dcae44d2"
             },
             "require": {
                 "php": ">=5.5"
@@ -2126,7 +2126,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-eventmanager-3d41b6129fb4916d483671cea9f77e4f90ae85d3-zip-df5f20.zip",
                 "reference": "3d41b6129fb4916d483671cea9f77e4f90ae85d3",
-                "shasum": "99c7d4193368bfc06063cb4b054f304d3ef8256e"
+                "shasum": "870aa953b17f55975d91fbbb66b1e88f6b387ac4"
             },
             "require": {
                 "php": "^5.5 || ^7.0",
@@ -2173,7 +2173,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-feed-12b328d382aa5200f1de53d4147033b885776b67-zip-ec1dc8.zip",
                 "reference": "12b328d382aa5200f1de53d4147033b885776b67",
-                "shasum": "6b7020fef4e5e962df06d38201b4c88a055eb2e3"
+                "shasum": "919150976280326d0e79aa9533231bf28275aada"
             },
             "require": {
                 "php": "^5.5 || ^7.0",
@@ -2234,7 +2234,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-filter-84c50246428efb0a1e52868e162dab3e149d5b80-zip-a06e43.zip",
                 "reference": "84c50246428efb0a1e52868e162dab3e149d5b80",
-                "shasum": "3df3768e2a498500af7a8af370877ba0ea6cdb41"
+                "shasum": "83dff07fac3ea3f2ace3a2333afb69c9831fce80"
             },
             "require": {
                 "php": "^5.5 || ^7.0",
@@ -2294,7 +2294,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-http-98b1cac0bc7a91497c5898184281abcd0e24c8d6-zip-8a2699.zip",
                 "reference": "98b1cac0bc7a91497c5898184281abcd0e24c8d6",
-                "shasum": "5ad60304f1dfbaa498b34b7c71b6f5b515a75ae1"
+                "shasum": "b17a029f78853cb57d4d7260d3f1d842bddb8b90"
             },
             "require": {
                 "php": "^5.5 || ^7.0",
@@ -2344,7 +2344,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-hydrator-22652e1661a5a10b3f564cf7824a2206cf5a4a65-zip-a42ae9.zip",
                 "reference": "22652e1661a5a10b3f564cf7824a2206cf5a4a65",
-                "shasum": "6a355789c7178ec131c0cbde7e5e4ce3316a4507"
+                "shasum": "f5f1ec9387ac0e9b56e415b68597d9a0a889138f"
             },
             "require": {
                 "php": "^5.5 || ^7.0",
@@ -2402,7 +2402,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-i18n-b2db0d8246a865c659f93199f90f5fc2cd2f3cd8-zip-f21086.zip",
                 "reference": "b2db0d8246a865c659f93199f90f5fc2cd2f3cd8",
-                "shasum": "be2646c96d8d0dc6753013f6439073c8a914fde2"
+                "shasum": "563fcef7cdf1c32c5534ea82ee0e3ca63e3be9f2"
             },
             "require": {
                 "php": "^5.5 || ^7.0",
@@ -2469,7 +2469,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-json-4c8705dbe4ad7d7e51b2876c5b9eea0ef916ba28-zip-718720.zip",
                 "reference": "4c8705dbe4ad7d7e51b2876c5b9eea0ef916ba28",
-                "shasum": "f3bc39072581d144712162a3c89dcec6ec332a8c"
+                "shasum": "86e104db56606311a56cd1bde8e745e70f319dfb"
             },
             "require": {
                 "php": "^5.5 || ^7.0"
@@ -2524,7 +2524,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-loader-c5fd2f071bde071f4363def7dea8dec7393e135c-zip-6cb83f.zip",
                 "reference": "c5fd2f071bde071f4363def7dea8dec7393e135c",
-                "shasum": "e469d64b045a8ff38781557fa112ba04834f7ba1"
+                "shasum": "b429a6a30cde741368a176ff0fd89d7fd6dfc6ba"
             },
             "require": {
                 "php": ">=5.3.23"
@@ -2568,7 +2568,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-log-115d75db1f8fb29efbf1b9a49cb91c662b7195dc-zip-7964d2.zip",
                 "reference": "115d75db1f8fb29efbf1b9a49cb91c662b7195dc",
-                "shasum": "dc4d05b75615691a3d797294f0511600f2df6f3d"
+                "shasum": "df41af7198920a75ac494f9ebac3ba619431a77a"
             },
             "require": {
                 "php": "^5.6 || ^7.0",
@@ -2639,7 +2639,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-mail-2e817b58ebaa2b422a25d854106a91f74b6a7976-zip-3e3116.zip",
                 "reference": "2e817b58ebaa2b422a25d854106a91f74b6a7976",
-                "shasum": "b08ad4b79d6d189aa6e042cb6d69f58c4d947d9e"
+                "shasum": "14ba0187641de6a93f6b2a459aac16641555d811"
             },
             "require": {
                 "php": "^5.5 || ^7.0",
@@ -2699,7 +2699,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-math-f4358090d5d23973121f1ed0b376184b66d9edec-zip-c875e3.zip",
                 "reference": "f4358090d5d23973121f1ed0b376184b66d9edec",
-                "shasum": "c67ed4ff968bc7e3ee06acbf8fe6a5f7f1540c35"
+                "shasum": "aac9aba0fba98e22be5798d4ad95131c9abd6463"
             },
             "require": {
                 "php": "^5.5 || ^7.0"
@@ -2749,7 +2749,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-mime-340769c3d962ac4d9d3cf9da7e75419368e56fcc-zip-20700b.zip",
                 "reference": "340769c3d962ac4d9d3cf9da7e75419368e56fcc",
-                "shasum": "fb36c5c37f02afeb2027bf6a09ff797bde1c9553"
+                "shasum": "dc370fd9791a1983e6754da48c580d6e41ef0fbc"
             },
             "require": {
                 "php": "^5.5 || ^7.0",
@@ -2798,7 +2798,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-server-7cb617ca3e9b24579f544a244ee79ae61f480914-zip-c40014.zip",
                 "reference": "7cb617ca3e9b24579f544a244ee79ae61f480914",
-                "shasum": "82be276812dc47d54e00d473ce62cec207d19b18"
+                "shasum": "30e033f0bf2689a74f8b5f63d0c1a0059c1e3754"
             },
             "require": {
                 "php": "^5.6 || ^7.0",
@@ -2844,7 +2844,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-servicemanager-f701b0d322741b0c8d8ca1288f249a49438029cd-zip-f2253c.zip",
                 "reference": "f701b0d322741b0c8d8ca1288f249a49438029cd",
-                "shasum": "e57269cb3c71114338dbd82250caae547ba6cb46"
+                "shasum": "46b001e2f78ebdf2ff8b69710de99bcff64205a2"
             },
             "require": {
                 "container-interop/container-interop": "~1.0",
@@ -2899,7 +2899,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-session-346e9709657b81a5d53d70ce754730a26d1f02f2-zip-8eddc7.zip",
                 "reference": "346e9709657b81a5d53d70ce754730a26d1f02f2",
-                "shasum": "469fbcf90fb5bedf611fc6080a12cbbf814a8ab3"
+                "shasum": "d4f40abce8122c58697c82ab6bb120ee9c00a70b"
             },
             "require": {
                 "php": "^5.5 || ^7.0",
@@ -2965,7 +2965,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-soap-2d6012e7231cce550219eccfc80836a028d20bf1-zip-a7e97a.zip",
                 "reference": "2d6012e7231cce550219eccfc80836a028d20bf1",
-                "shasum": "e371776e7e56b16cdb4625c771f9b251f19ab7d4"
+                "shasum": "a884c469ba33bd0dabe426aa3c77f0905f6a2aa8"
             },
             "require": {
                 "php": "^5.5 || ^7.0",
@@ -3017,7 +3017,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-stdlib-0e44eb46788f65e09e077eb7f44d2659143bcc1f-zip-65b1cb.zip",
                 "reference": "0e44eb46788f65e09e077eb7f44d2659143bcc1f",
-                "shasum": "86b295f520379a888bf363c8682cef22d15f45ca"
+                "shasum": "7240c72fbf29d8bdc16b755ee96cae8376dd8ffa"
             },
             "require": {
                 "php": "^5.5 || ^7.0",
@@ -3076,7 +3076,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-tag-4429ca5016361f12eff920370170391a0f4adbff-zip-0c1020.zip",
                 "reference": "4429ca5016361f12eff920370170391a0f4adbff",
-                "shasum": "10245c16f057224f442a9cf1d29ce81753962c83"
+                "shasum": "9adb8c7393e94184520feec5f469907846171807"
             },
             "require": {
                 "php": "^5.5 || ^7.0",
@@ -3127,7 +3127,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-uri-0bf717a239432b1a1675ae314f7c4acd742749ed-zip-9617a6.zip",
                 "reference": "0bf717a239432b1a1675ae314f7c4acd742749ed",
-                "shasum": "61054f6713a0ee57de905e692c15ebb7eca0f59b"
+                "shasum": "ebdc8f294004f98f1faba2bce9bc78d8fdee5678"
             },
             "require": {
                 "php": "^5.5 || ^7.0",
@@ -3174,7 +3174,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-validator-8ec9f57a717dd37340308aa632f148a2c2be1cfc-zip-0ead33.zip",
                 "reference": "8ec9f57a717dd37340308aa632f148a2c2be1cfc",
-                "shasum": "b9c0879dcb9b2be991dc641a029ebc76a11d9944"
+                "shasum": "29cd34ae03ed46161f337c940ffac460ce12c7a9"
             },
             "require": {
                 "container-interop/container-interop": "^1.1",
@@ -3245,7 +3245,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zend-version-e30c55dc394eaf396f0347887af0a7bef471fe08-zip-7a6e69.zip",
                 "reference": "e30c55dc394eaf396f0347887af0a7bef471fe08",
-                "shasum": "0fd55fcf1057a1350e9b2d944ff5f7478c3aee9a"
+                "shasum": "5c4c818bbca0911bb854f9ac9e841ac6c74b72e2"
             },
             "require": {
                 "php": ">=5.3.23",
@@ -3295,7 +3295,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zendgdata-333312548b2471642284a75d8804957b58fa26ab-zip-d1615a.zip",
                 "reference": "333312548b2471642284a75d8804957b58fa26ab",
-                "shasum": "b328b7da2d339df6aab8914cb69679e9aeeb1cc0"
+                "shasum": "135d848357d0089969d6dc1b704687a5345c4c6c"
             },
             "require": {
                 "php": ">=5.3.3",
@@ -3341,7 +3341,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zendoauth-36defad317aa80ac9366f5e5171dc0316f009f13-zip-846df7.zip",
                 "reference": "36defad317aa80ac9366f5e5171dc0316f009f13",
-                "shasum": "d605334306b49d7ef5efeba3dc37d0292aabf144"
+                "shasum": "0f696fa5577c3cf53c4152d609f6773a052c87a8"
             },
             "require": {
                 "php": ">=5.3.3",
@@ -3388,7 +3388,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zendopenid-16648e1b2acf760d0c67a8c1dd913fed0c0f61f7-zip-038e8c.zip",
                 "reference": "16648e1b2acf760d0c67a8c1dd913fed0c0f61f7",
-                "shasum": "ab590750fb3d401e3e1350b114c9f01ad5dbf31c"
+                "shasum": "4e8e5db7b8c5789f51ee3c7ea19391ff7fe0bec5"
             },
             "require": {
                 "php": ">=5.3.3",
@@ -3434,7 +3434,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zendsearch-c8de2508d3413bf9d701b40c1092c1ffbdd8fc63-zip-2d79c6.zip",
                 "reference": "c8de2508d3413bf9d701b40c1092c1ffbdd8fc63",
-                "shasum": "5f6409f374e20fc04e6817172f5c573a67f4c7ae"
+                "shasum": "6f1a1ac7995651c9e407d40a5e5b077eeca6b76f"
             },
             "require": {
                 "php": ">=5.3.3",
@@ -3470,7 +3470,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zendservice-akismet-fdfc3fc21103cafa4658ed92d813ab38a0f1ddad-zip-89db1d.zip",
                 "reference": "fdfc3fc21103cafa4658ed92d813ab38a0f1ddad",
-                "shasum": "c27d65678e1d59d86ebdc99e66e8632f91b14f6c"
+                "shasum": "d8361d7a5f714852a463f17caafe4f5072785684"
             },
             "require": {
                 "php": ">=5.3.3",
@@ -3513,7 +3513,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zendservice-recaptcha-4324cca8502d9f47b3b43a18acdd3fdbeb965536-zip-8c45bf.zip",
                 "reference": "4324cca8502d9f47b3b43a18acdd3fdbeb965536",
-                "shasum": "31428f0e860c6367c1ca4e7b8f4c75a2b3122ee2"
+                "shasum": "8c6f7b58d2c79f77a48c6648cfe8d3f7809246b5"
             },
             "require": {
                 "php": ">=5.3.3",
@@ -3556,7 +3556,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zendframework-zendservice-twitter-b3be44fa3f2285e4ee9811ce5c518e3eab020732-zip-4f4b9f.zip",
                 "reference": "b3be44fa3f2285e4ee9811ce5c518e3eab020732",
-                "shasum": "b7713232c144e3d81d3767e51ee503968bcd5688"
+                "shasum": "a4272d7dc7966aa6b4aa82ccd5250cf5d0e9e0a8"
             },
             "require": {
                 "php": ">=5.3.3",
@@ -3606,7 +3606,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/zetacomponents-base-52ca69c1de55f3fa4f595779e5bc831da7ee176c-zip-36ef3e.zip",
                 "reference": "52ca69c1de55f3fa4f595779e5bc831da7ee176c",
-                "shasum": "bc977872fbb0aa8476aff86eb169aedbe952227e"
+                "shasum": "09bd8c671de0cc8fc149891ff31915327b5ab018"
             },
             "type": "library",
             "autoload": {
