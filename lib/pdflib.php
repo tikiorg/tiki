@@ -250,9 +250,10 @@ class PdfGenerator
 	   }
        //getting n replacing images
 	   $tempImgArr=array();
+	   $this->_parseHTML($html);
+	
 	   $this->_getImages($html,$tempImgArr);
-       $this->_parseHTML($html);
-		include($this->location . 'mpdf.php');
+     	include($this->location . 'mpdf.php');
 		$mpdf = new mPDF('utf-8');
 		$mpdf->useSubstitutions = true;					// optional - just as an example
 		$mpdf->SetHeader($url . '||Page {PAGENO}');		// optional - just as an example
@@ -277,7 +278,7 @@ class PdfGenerator
 		$stylesheet = file_get_contents('vendor/fortawesome/font-awesome/css/font-awesome.min.css'); // external css
         $mpdf->WriteHTML($stylesheet,1);
 		$mpdf->WriteHTML('<html><body class="print">'.$html."</body></html>");
-	   // echo $html;
+	  //  echo 'after'.$html;
 	    $this->clearTempImg($tempImgArr);
         return $mpdf->Output('', 'S');					// Return as a string
 	}
@@ -343,13 +344,66 @@ class PdfGenerator
 	
   function clearTempImg($tempImgArr){ 
 	   foreach ($tempImgArr as $tempImg) {
-        unlink($tempImg);
+       unlink($tempImg);
       }
 	  }
 	  
   function _parseHTML(&$html)
 	{
+		
 		$html=str_replace('style="visibility:hidden" class="ts-wrapperdiv">','style="visibility:visible" class="ts-wrapperdiv">',$html);
+        $doc = new DOMDocument();
+			$doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+
+			$tables = $doc->getElementsByTagName('table');
+		  
+				foreach ($tables as $table) {
+					$tid= $table->getAttribute("id");
+					if(file_exists("temp/#".$tid."_".session_id().".txt"))
+                        { 
+						    $content=file_get_contents("temp/#".$tid."_".session_id().".txt");
+							//cleaning content
+							$content=cleanContent($content,"input");
+							$content=str_replace("on>click=","",$content);
+							//$content=cleanContent($content,"a");
+
+							//end of cleaning content
+							$table->nodeValue=$content;
+							$html=html_entity_decode($doc->saveHTML()); 
+							
+							//unlink tmp table file
+							unlink("temp/#".$tid."_".session_id().".txt");
+						}
+                }
+			
 	}
 }
+
+function DOMinnerHTML(DOMNode $element) 
+{ 
+    $innerHTML = ""; 
+    $children  = $element->childNodes;
+
+    foreach ($children as $child) 
+    { 
+	    
+        $innerHTML .= $element->ownerDocument->saveHTML($child);
+    }
+
+    return $innerHTML; 
+} 
+
+function cleanContent($content,$tag){
+	$doc = new DOMDocument();
+		
+	$doc->loadHTML($content);
+$list = $doc->getElementsByTagName($tag);
+
+while ($list->length > 0) {
+    $p = $list->item(0);
+    $p->parentNode->removeChild($p);
+}
+  return $doc->saveHTML();
+	
+	}
 
