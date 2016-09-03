@@ -364,6 +364,8 @@ class PdfGenerator
 						    $content=file_get_contents("temp/#".$tid."_".session_id().".txt");
 							//cleaning content
 							$content=cleanContent($content,"input");
+							$content=cleanContent($content,"select");
+							
 							$content=str_replace("on>click=","",$content);
 							//$content=cleanContent($content,"a");
 
