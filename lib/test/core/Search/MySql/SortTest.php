@@ -21,10 +21,5 @@ class Search_MySql_SortTest extends Search_Index_SortTest
 			$this->index->destroy();
 		}
 	}
-
-	function testWeightImpact()
-	{
-		$this->markTestSkipped('Weighting is not supported by MySQL full-text search');
-	}
 }
 
