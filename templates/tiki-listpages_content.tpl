@@ -486,6 +486,11 @@
 	{/if}
 
 	{if !isset($ts.enabled) or !$ts.enabled}
-		{pagination_links cant=$cant step=$maxRecords offset=$offset clean=$clean}{/pagination_links}
+		{if $pluginlistpages eq 'y' and $pagination eq 'y'}
+			{pagination_links cant=$cant step=$maxRecords offset=$offset offset_arg=$offset_arg clean=$clean}{/pagination_links}
+		{elseif $pluginlistpages eq 'y' and $pagination neq 'y'}
+		{else}
+			{pagination_links cant=$cant step=$maxRecords offset=$offset clean=$clean}{/pagination_links}
+		{/if}
 	{/if}
 {/if}
