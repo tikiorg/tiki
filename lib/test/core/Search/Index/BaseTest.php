@@ -144,7 +144,7 @@ abstract class Search_Index_BaseTest extends PHPUnit_Framework_TestCase
 		$formatter = new Search_Formatter($plugin);
 		$output = $formatter->format($resultSet);
 
-		$this->assertContains('<b style="color:black;background-color:#ff66ff">Bonjour</b>', $output);
+		$this->assertContains('<b class="highlight_word highlight_word_1">Bonjour</b>', $output);
 		$this->assertNotContains('<body>', $output);
 	}
 
