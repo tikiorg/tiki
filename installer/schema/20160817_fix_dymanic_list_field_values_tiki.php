@@ -14,6 +14,7 @@ function upgrade_20160817_fix_dymanic_list_field_values_tiki($installer)
 {
 	global $prefs;
 	$prefs['trackerfield_dynamiclist'] = 'y';	// needed for the fieldFactory when in the installer
+	require_once 'lib/init/tra.php';
 
 	/** @var \TrackerLib $trklib */
 	$trklib = TikiLib::lib('trk');

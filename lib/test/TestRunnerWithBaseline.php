@@ -461,7 +461,7 @@ See above details about each error or failure.
         }
         if (preg_match('/--filter/', $phpunit_options))
         {
-            $this->usage("You cannot specify '--filter' option in the '--phpunit-options' option. Instead, the --filter option of $argv[0] directely (i.e., '$argv[0] --filter pattern')");
+            $this->usage("You cannot specify '--filter' option in the '--phpunit-options' option. Instead, the --filter option of {$GLOBALS['argv'][0]} directely (i.e., '{$GLOBALS['argv'][0]} --filter pattern')");
         }
 
 
