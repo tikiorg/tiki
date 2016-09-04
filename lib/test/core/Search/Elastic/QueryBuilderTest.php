@@ -25,7 +25,7 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(
 			array(
 				"match" => array(
-					"contents" => array("query" => "hello", "boost" => 1.5),
+					"contents" => array("query" => "hello", "boost" => 1.5, 'operator' => 'and'),
 				),
 			), $query['query']
 		);
@@ -46,7 +46,7 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(
 			array(
 				"match" => array(
-						"contents" => array("query" => "hello", "boost" => 1.5),
+						"contents" => array("query" => "hello", "boost" => 1.5, 'operator' => 'and'),
 				),
 			), $query['query']
 		);
@@ -71,12 +71,12 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 					"should" => array(
 						array(
 							"match" => array(
-								"contents" => array("query" => "hello", "boost" => 1.5),
+								"contents" => array("query" => "hello", "boost" => 1.5, 'operator' => 'and'),
 							),
 						),
 						array(
 							"match" => array(
-								"contents" => array("query" => "world", "boost" => 1.0),
+								"contents" => array("query" => "world", "boost" => 1.0, 'operator' => 'and'),
 							),
 						),
 					),
@@ -105,12 +105,12 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 					"must" => array(
 						array(
 							"match" => array(
-								"contents" => array("query" => "hello", "boost" => 1.5),
+								"contents" => array("query" => "hello", "boost" => 1.5, 'operator' => 'and'),
 							),
 						),
 						array(
 							"match" => array(
-								"contents" => array("query" => "world", "boost" => 1.0),
+								"contents" => array("query" => "world", "boost" => 1.0, 'operator' => 'and'),
 							),
 						),
 					),
@@ -135,7 +135,7 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 					"must_not" => array(
 						array(
 							"match" => array(
-								"contents" => array("query" => "hello", "boost" => 1.5),
+								"contents" => array("query" => "hello", "boost" => 1.5, 'operator' => 'and'),
 							),
 						),
 					),
@@ -164,19 +164,19 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 					"must" => array(
 						array(
 							"match" => array(
-								"contents" => array("query" => "test", "boost" => 1.0),
+								"contents" => array("query" => "test", "boost" => 1.0, 'operator' => 'and'),
 							),
 						),
 					),
 					"must_not" => array(
 						array(
 							"match" => array(
-								"contents" => array("query" => "hello", "boost" => 1.5),
+								"contents" => array("query" => "hello", "boost" => 1.5, 'operator' => 'and'),
 							),
 						),
 						array(
 							"match" => array(
-								"contents" => array("query" => "world", "boost" => 1.5),
+								"contents" => array("query" => "world", "boost" => 1.5, 'operator' => 'and'),
 							),
 						),
 					),
@@ -196,6 +196,7 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 				"match" => array(
 					"username" => array(
 						"query" => "Some entry",
+						'operator' => 'and'
 					),
 				),
 			), $query['query']
@@ -264,17 +265,17 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 					"should" => array(
 						array(
 							"match" => array(
-								"contents" => array("query" => "hello", "boost" => 1.5),
+								"contents" => array("query" => "hello", "boost" => 1.5, 'operator' => 'and'),
 							),
 						),
 						array(
 							"match" => array(
-								"contents" => array("query" => "world", "boost" => 1.0),
+								"contents" => array("query" => "world", "boost" => 1.0, 'operator' => 'and'),
 							),
 						),
 						array(
 							"match" => array(
-								"contents" => array("query" => "test", "boost" => 1.0),
+								"contents" => array("query" => "test", "boost" => 1.0, 'operator' => 'and'),
 							),
 						),
 					),
@@ -317,12 +318,12 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 								"should" => array(
 									array(
 										"match" => array(
-											"contents" => array("query" => "hello", "boost" => 1.5),
+											"contents" => array("query" => "hello", "boost" => 1.5, 'operator' => 'and'),
 										),
 									),
 									array(
 										"match" => array(
-											"contents" => array("query" => "world", "boost" => 1.0),
+											"contents" => array("query" => "world", "boost" => 1.0, 'operator' => 'and'),
 										),
 									),
 								),
@@ -331,17 +332,17 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 						),
 						array(
 							"match" => array(
-								"contents" => array("query" => "hello", "boost" => 1.5),
+								"contents" => array("query" => "hello", "boost" => 1.5, 'operator' => 'and'),
 							),
 						),
 						array(
 							"match" => array(
-								"contents" => array("query" => "world", "boost" => 1.0),
+								"contents" => array("query" => "world", "boost" => 1.0, 'operator' => 'and'),
 							),
 						),
 						array(
 							"match" => array(
-								"contents" => array("query" => "test", "boost" => 1.0),
+								"contents" => array("query" => "test", "boost" => 1.0, 'operator' => 'and'),
 							),
 						),
 					),
@@ -374,19 +375,19 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 					"should" => array(
 						array(
 							"match" => array(
-								"contents" => array("query" => "foo", "boost" => 1.0),
+								"contents" => array("query" => "foo", "boost" => 1.0, 'operator' => 'and'),
 							),
 						),
 						array(
 							"match" => array(
-								"contents" => array("query" => "baz", "boost" => 1.0),
+								"contents" => array("query" => "baz", "boost" => 1.0, 'operator' => 'and'),
 							),
 						),
 					),
 					'must_not' => array(
 						array(
 							"match" => array(
-								"contents" => array("query" => "bar", "boost" => 1.0),
+								"contents" => array("query" => "bar", "boost" => 1.0, 'operator' => 'and'),
 							),
 						),
 					),
@@ -420,19 +421,19 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 					"must" => array(
 						array(
 							"match" => array(
-								"contents" => array("query" => "foo", "boost" => 1.0),
+								"contents" => array("query" => "foo", "boost" => 1.0, 'operator' => 'and'),
 							),
 						),
 						array(
 							"match" => array(
-								"contents" => array("query" => "baz", "boost" => 1.0),
+								"contents" => array("query" => "baz", "boost" => 1.0, 'operator' => 'and'),
 							),
 						),
 					),
 					'must_not' => array(
 						array(
 							"match" => array(
-								"contents" => array("query" => "bar", "boost" => 1.0),
+								"contents" => array("query" => "bar", "boost" => 1.0, 'operator' => 'and'),
 							),
 						),
 					),
@@ -510,12 +511,12 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 								'must' => array(
 									array(
 										"match" => array(
-											"object_type" => array("query" => "wiki page"),
+											"object_type" => array("query" => "wiki page", 'operator' => 'and'),
 										),
 									),
 									array(
 										"match" => array(
-											"object_id" => array("query" => "A"),
+											"object_id" => array("query" => "A", 'operator' => 'and'),
 										),
 									),
 								),
