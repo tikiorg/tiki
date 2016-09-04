@@ -38,7 +38,12 @@ class Search_Elastic_Connection
 	{
 		try {
 			$result = $this->get('/');
-			if (! isset($result->ok)) {
+
+			if (isset($result->version)) {	// elastic v2
+				$result->ok = true;
+				$result->status = 200;
+
+			} else if (! isset($result->ok)) {
 				$result->ok = $result->status === 200;
 			}
 
@@ -49,6 +54,17 @@ class Search_Elastic_Connection
 				'status' => 0,
 			);
 		}
+	}
+
+	/**
+	 * gets the elasticsearch version string, e.g. 2.2.0
+	 *
+	 * @return float
+	 */
+	function getVersion() {
+		$status = $this->getStatus();
+
+		return (float) $status->version->number;
 	}
 
 	function getIndexStatus($index = '')
