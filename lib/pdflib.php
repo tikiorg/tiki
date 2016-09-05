@@ -278,7 +278,7 @@ class PdfGenerator
 		$stylesheet = file_get_contents('vendor/fortawesome/font-awesome/css/font-awesome.min.css'); // external css
         $mpdf->WriteHTML($stylesheet,1);
 		$mpdf->WriteHTML('<html><body class="print">'.$html."</body></html>");
-	  //  echo 'after'.$html;
+	    //echo 'after'.$html;
 	    $this->clearTempImg($tempImgArr);
         return $mpdf->Output('', 'S');					// Return as a string
 	}
@@ -372,7 +372,7 @@ class PdfGenerator
 							//end of cleaning content
 							$table->nodeValue=$content;
 							$html=html_entity_decode($doc->saveHTML()); 
-							
+						    chmod("temp/#".$tid."_".session_id().".txt",0755);	
 							//unlink tmp table file
 							unlink("temp/#".$tid."_".session_id().".txt");
 						}

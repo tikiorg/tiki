@@ -106,6 +106,7 @@ class Services_AutoSave_Controller
 	   //fwrite($tableFile,$input->tableHTML->text());
 	   fwrite($tableFile,$input->tableHTML->html());
 	   //create session array to hold temp tables for printing, table original name and file name
+	   chmod($tableFile,0755);
 		
 	}
 }
