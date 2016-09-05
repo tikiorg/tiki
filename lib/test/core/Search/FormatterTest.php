@@ -103,6 +103,9 @@ OUT;
 
 		$formatter = new Search_Formatter($plugin);
 
+		// required for the SmartyFormatter since r59367
+		$GLOBALS['base_url'] ='';
+
 		$output = $formatter->format(
 			array(
 				array('object_type' => 'wiki page', 'object_id' => 'HomePage'),
@@ -177,7 +180,6 @@ OUT;
 
 	function testPaginationInformationProvided()
 	{
-		$this->markTestSkipped('Template issues in this context.');
 		$plugin = new Search_Formatter_Plugin_SmartyTemplate(dirname(__FILE__).'/paginate.tpl');
 
 		$formatter = new Search_Formatter($plugin);
@@ -195,7 +197,7 @@ OUT;
 
 		$this->assertContains('>1<', $output);
 		$this->assertContains('>2<', $output);
-		$this->assertContains('>3<', $output);
+		$this->assertContains('<span>3 ', $output);
 		$this->assertNotContains('>4<', $output);
 	}
 
@@ -259,7 +261,7 @@ OUT;
 
 		$expect = <<<OUT
 * ~np~<a href="HomePage" class="" title="Home" data-type="wiki page" data-object="HomePage">Home</a>~/np~
-* ~np~<a href="Some+Page" class="" title="Test" data-type="wiki page" data-object="Some Page">Test</a>~/np~
+* ~np~<a href="Some Page" class="" title="Test" data-type="wiki page" data-object="Some Page">Test</a>~/np~
 
 OUT;
 		$this->assertEquals($expect, $output);
