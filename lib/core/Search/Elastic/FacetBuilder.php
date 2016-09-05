@@ -8,10 +8,12 @@
 class Search_Elastic_FacetBuilder
 {
 	private $count;
+	private $mainKey;
 
-	function __construct($count = 10)
+	function __construct($count = 10, $useAggregations = false)
 	{
 		$this->count = $count;
+		$this->mainKey = $useAggregations ? 'aggregations' : 'facets';
 	}
 
 	function build(array $facets)
@@ -26,7 +28,7 @@ class Search_Elastic_FacetBuilder
 		}
 
 		return array(
-			'facets' => $out,
+			$this->mainKey => $out,
 		);
 	}
 

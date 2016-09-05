@@ -234,7 +234,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 		$builder = new Search_Elastic_OrderBuilder;
 		$orderPart = $builder->build($query->getSortOrder());
 
-		$builder = new Search_Elastic_FacetBuilder($this->facetCount);
+		$builder = new Search_Elastic_FacetBuilder($this->facetCount, $this->connection->getVersion() >= 2.0);
 		$facetPart = $builder->build($query->getFacets());
 
 		$builder = new Search_Elastic_RescoreQueryBuilder;
