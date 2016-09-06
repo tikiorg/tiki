@@ -1421,7 +1421,12 @@ if ($prefs['feature_multilingual'] === 'y') {
 
 	if ( $editlib->isTranslationMode() ) {
 		$histlib = TikiLib::lib('hist');
-		histlib_helper_setup_diff($editlib->sourcePageName, $editlib->oldSourceVersion, $editlib->newSourceVersion);
+		histlib_helper_setup_diff(
+			$editlib->sourcePageName,
+			$editlib->oldSourceVersion,
+			$editlib->newSourceVersion,
+			$_REQUEST['diff_style']
+		);
 		$smarty->assign('diff_oldver', (int) $editlib->oldSourceVersion);
 		$smarty->assign('diff_newver', (int) $editlib->newSourceVersion);
 		$smarty->assign('update_translation', 'y');

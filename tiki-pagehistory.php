@@ -431,7 +431,7 @@ if (\$("input[name=newver][checked=checked]").length) {
 JS
 );
 if ($comparing) {
-	histlib_helper_setup_diff($page, $oldver, $newver);
+	histlib_helper_setup_diff($page, $oldver, $newver, $_REQUEST['diff_style']);
 
 	if (isset($approved_versions)) {
 		$smarty->assign('flaggedrev_compare_approve', ! in_array($newver, $approved_versions));
