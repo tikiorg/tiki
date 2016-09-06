@@ -1,6 +1,6 @@
 <a name="listexecute_{$iListExecute}"></a>
 <form method="post" action="#listexecute_{$iListExecute}">
-	<button class="listexecute-select-all">{tr}Select All{/tr}</button>
+	<button class="listexecute-select-all btn btn-default btn-sm">{tr}Select All{/tr}</button>
 	<ol>
 		{foreach from=$results item=entry}
 			<li>
