@@ -269,5 +269,14 @@ $("input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFieldI
 		);
 		return $out;
 	}
+
+	function getItemList()
+	{
+		return TikiLib::lib('trk')->get_all_items(
+			$this->getOption('trackerId'),
+			$this->getOption('listFieldIdThere'),
+			$this->getOption('statusThere', 'opc')
+		);
+	}
 }
 

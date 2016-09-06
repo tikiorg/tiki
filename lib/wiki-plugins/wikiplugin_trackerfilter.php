@@ -697,7 +697,6 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, array $listfields=ar
 			case 'a': // textarea
 			case 'm': // email
 			case 'y': // country
-			case 'w': //dynamic item lists
 			case 'k': //page selector
 			case 'u': // user
 			case 'g': // group
@@ -723,7 +722,8 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, array $listfields=ar
 					$opts[] = $opt;
 				}
     			break;
-			case 'r':
+			case 'w': //dynamic item lists
+			case 'r': // item link
 				$opts = array();
 				$handler = $trklib->get_field_handler($field);
 				if ($handler) {
