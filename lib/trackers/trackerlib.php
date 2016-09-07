@@ -2327,7 +2327,7 @@ class TrackerLib extends TikiLib
 									}
 								}
 							}
-                        } if (is_array($f['value'])) {
+                        } elseif (is_array($f['value'])) {
 							foreach ($f['value'] as $key=>$val) {
 								foreach ($multi_languages as $num => $tmplang) {
 									if ( $key == $tmplang && empty($val)) {
