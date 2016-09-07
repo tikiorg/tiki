@@ -190,8 +190,8 @@ O;
 	function upgradeMessages()
 	{
 		return array(
-			array('Version 8.2 is no longer supported. A minor upgrade to 8.4 is required.', new Tiki_Version_Upgrade('8.2', '8.4', true)),
-			array('Version 4.3 is no longer supported. A major upgrade to 9.0 is required.', new Tiki_Version_Upgrade('4.3', '9.0', true)),
+			array('Version 8.2 is no longer supported. A minor upgrade to 8.4 is strongly recommended.', new Tiki_Version_Upgrade('8.2', '8.4', true)),
+			array('Version 4.3 is no longer supported. A major upgrade to 9.0 is strongly recommended.', new Tiki_Version_Upgrade('4.3', '9.0', true)),
 			array('Version 8.4 is still supported. However, a major upgrade to 9.0 is available.', new Tiki_Version_Upgrade('8.4', '9.0', false)),
 		);
 	}

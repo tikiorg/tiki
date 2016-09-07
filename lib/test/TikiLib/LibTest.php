@@ -19,6 +19,7 @@ class TikiLib_LibTest extends PHPUnit_Framework_TestCase
 	
 	public function testLib_shouldReturnNullForInvalidClass()
 	{
-		$this->assertNull(TikiLib::lib('invalidClass'));
+		$this->expectException(Exception::class);
+		TikiLib::lib('invalidClass');
 	}
 }

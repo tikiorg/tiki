@@ -30,6 +30,11 @@ class Connect_Client_Test extends TikiTestCase
 
 	public function testBuildConnectData()
 	{
+		global $TWV;
+
+		include_once ('lib/setup/twversion.class.php');
+		$TWV = new TWVersion();
+
 		$data = $this->obj->buildConnectData(); // TODO check status etc
 
 		$this->assertGreaterThan(0, count($data));

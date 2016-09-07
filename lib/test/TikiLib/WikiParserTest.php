@@ -45,8 +45,8 @@ class TikiLib_WikiParserTest extends PHPUnit_Framework_TestCase
 			array('-=foo=-', '<div class="titlebar">foo</div>' . "\n"),	// title bar
 			array('-= foo =-', '<div class="titlebar"> foo </div>' . "\n"),	// title bar
 
-			array('^foo^', '<div class="panel panel-default"><div class="panel-body">foo</div></div><br />' . "\n"),	// box
-			array('^ foo ^', '<div class="panel panel-default"><div class="panel-body"> foo </div></div><br />' . "\n"),	// box
+			array('^foo^', '<div class="well">foo</div><br />' . "\n"),	// box
+			array('^ foo ^', '<div class="well"> foo </div><br />' . "\n"),	// box
 
 			array('::foo::', '<div style="text-align: center;">foo</div><br />' . "\n"),	// center align
 			array(':: foo ::', '<div style="text-align: center;"> foo </div><br />' . "\n"),	// center align
@@ -58,14 +58,14 @@ class TikiLib_WikiParserTest extends PHPUnit_Framework_TestCase
 			//heading 1 with collapsible text open
 			array(
 				"!+foo\nheading text section",
-				"<h1 class=\"showhide_heading\" id=\"foo\">foo</h1><a id=\"flipperidHomePage1\" class=\"link\" href=\"javascript:flipWithSign('idHomePage1')\">[-]</a><div id=\"idHomePage1\" class=\"showhide_heading\" style=\"display:block;\">\nheading text section<br />\n</div>",
+				"<h1 class=\"showhide_heading\" id=\"foo\">foo</h1><a id=\"flipperidHomePage1\" class=\"link\" href=\"#\" onclick=\"flipWithSign('idHomePage1');return false;\">[-]</a><div id=\"idHomePage1\" class=\"showhide_heading\" style=\"display:block;\">\nheading text section<br />\n</div>",
 				array('page' => 'HomePage'),
 			),
 			
 			//heading 1 with collapsible text closed
 			array(
 				"!-foo\nheading text section",
-				"<h1 class=\"showhide_heading\" id=\"foo\">foo</h1><a id=\"flipperidHomePage1\" class=\"link\" href=\"javascript:flipWithSign('idHomePage1')\">[+]</a><div id=\"idHomePage1\" class=\"showhide_heading\" style=\"display:none;\">\nheading text section<br />\n</div>",
+				"<h1 class=\"showhide_heading\" id=\"foo\">foo</h1><a id=\"flipperidHomePage1\" class=\"link\" href=\"#\" onclick=\"flipWithSign('idHomePage1');return false;\">[+]</a><div id=\"idHomePage1\" class=\"showhide_heading\" style=\"display:none;\">\nheading text section<br />\n</div>",
 				array('page' => 'HomePage'),
 			),			
 			
@@ -98,7 +98,7 @@ class TikiLib_WikiParserTest extends PHPUnit_Framework_TestCase
 			array("# foo1\n## foo11\n##foo12\n# bar1\n", "<ol><li> foo1\n<ol><li> foo11\n</li><li>foo12\n</li></ol></li><li> bar1\n</li></ol><br />\n"),	// Nested Numbered list
 			array("# foo\n+ Continuation1\n+Continuation2\n# bar\n", "<ol><li> foo\n<br /> Continuation1\n<br />Continuation2\n</li><li> bar\n</li></ol><br />\n"), // Numbered list with continuation
 
-			array("||r1c1|r1c2\nr2c1|r2c2||", '<table class="wikitable"><tr><td class="wikicell" >r1c1</td><td class="wikicell" >r1c2</td></tr><tr><td class="wikicell" >r2c1</td><td class="wikicell" >r2c2</td></tr></table><br />' . "\n"),
+			array("||r1c1|r1c2\nr2c1|r2c2||", '<table class="wikitable table table-striped table-hover"><tr><td class="wikicell" >r1c1</td><td class="wikicell" >r1c2</td></tr><tr><td class="wikicell" >r2c1</td><td class="wikicell" >r2c2</td></tr></table><br />' . "\n"),
 			array("~pp~foo~/pp~", "<pre>foo</pre><br />\n"),
 		);
 	}
