@@ -105,7 +105,7 @@
 	"require-dev": {
 		"mikey179/vfsStream": "1.1.0",
 		"bafs/testify": "dev-master",
-		"phpunit/phpunit": "4.8.*",
+		"phpunit/phpunit": "^5",
 		"phpunit/phpunit-selenium": ">=1.2",
 		"phpunit/dbunit": ">=1.2"
 	},
