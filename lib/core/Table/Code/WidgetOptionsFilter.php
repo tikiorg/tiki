@@ -44,6 +44,7 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 			//filter_functions and filter_formatter
 			if (parent::$filtercol) {
 				$ffunc = '';
+				$fsource = '';
 				$fform = '';
 				foreach (parent::$s['columns'] as $col => $info) {
 					$info = !empty($info['filter']) ? $info['filter'] : [];
@@ -67,7 +68,32 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 										$ffunc[] = $colpointer . ' : ' . $options;
 									}
 								} elseif (!parent::$ajax) {
-									$ffunc[] = $colpointer . ' : true';
+									if( array_key_exists('empty', $info) )
+										$ffunc[] = $colpointer . ' : {
+					\'(empty)\': function( e, n, f, i, $r, c, data ) {
+						if( typeof e === "Object" && typeof n === "Object" && typeof f === "undefined" ) {
+							// v2.22.0 compatibility
+							c = e;
+							data = n;
+						}
+						if( data.filter === "(empty)" )
+							return ( "" + data.exact ) === "";
+						else
+							return data.isMatch ?
+								( "" + data.iExact ).search( data.iFilter ) >= 0 :
+								data.filter === data.exact;
+					}
+				}';
+									else
+										$ffunc[] = $colpointer . ' : true';
+									$fsource[] = $colpointer . ' : function( table, column, onlyAvail ) {'
+										. $this->nt4 . 'var array = $.tablesorter.filter.getOptions(table, column, onlyAvail);'
+										. $this->nt4 . 'array = array.join(\',\').split(/\s*,\s*/);'
+										. ( array_key_exists('empty', $info) ?
+											$this->nt4 . 'array.push({value: \'(empty)\', text: ' . json_encode($info['empty']) . '});'
+											: '' )
+										. $this->nt4 . 'return array;'
+									. $this->nt3 . '}';
 								}
 								break;
 							case 'range' :
@@ -92,6 +118,9 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 				unset($col, $info);
 				if (is_array($ffunc)) {
 					$wof[] = $this->iterate($ffunc, 'filter_functions : {', $this->nt3 . '}', $this->nt4, '');
+				}
+				if (is_array($fsource)) {
+					$wof[] = $this->iterate($fsource, 'filter_selectSource : {', $this->nt3 . '}', $this->nt4, '');
 				}
 				if (is_array($fform)) {
 					$wof[] = $this->iterate($fform, 'filter_formatter : {', $this->nt3 . '}', $this->nt4, '');
