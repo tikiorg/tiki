@@ -114,12 +114,13 @@ function smarty_function_user_selector($params, $smarty)
 		// NOTE: if groupIds are present, the list of users is limited to those groups regardless of group == 'all'
 		if (!empty($groupNames)) {
 			$groupNames = array_unique($groupNames);
+			$usrs = [];
 			foreach ($groupNames as $groupName) {
 				$group_users = $userlib->get_group_users($groupName);
-				$users = array_merge($users, $group_users);
+				$usrs = array_merge($usrs, $group_users);
 			}
-			$users = array_unique($users);
-			foreach ($users as $usr) {
+			$usrs = array_unique($usrs);
+			foreach ($usrs as $usr) {
 				$users["$usr"] = $params['realnames'] === 'y' ? smarty_modifier_username($usr) : $usr;
 			}
 		}
