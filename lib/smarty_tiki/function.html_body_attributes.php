@@ -60,6 +60,7 @@ function smarty_function_html_body_attributes($params, $smarty)
 
 	if ($prefs['feature_perspective'] == 'y' && isset($_SESSION['current_perspective'])) {
 		$class .= ' perspective' . $_SESSION['current_perspective'];
+		$class .= ' perspective_' . preg_replace("/[^a-z0-9]/", "_", strtolower($_SESSION['current_perspective_name']));
 	}
 
 	if ($categories = $smarty->getTemplateVars('objectCategoryIds')) {
