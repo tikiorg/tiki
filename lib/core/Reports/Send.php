@@ -68,7 +68,7 @@ class Reports_Send
 			$this->tikiPrefs['browsertitle'],
 			TikiLib::date_format($this->tikiPrefs['short_date_format'], $this->dt->format('U'))
 		);
-		if (!is_array($reportCache)) {
+		if (empty($reportCache)) {
 			$subject .= tr('(no changes)');
 		} elseif (count($reportCache) == 1) {
 			$subject .= tr('(1 change)');
