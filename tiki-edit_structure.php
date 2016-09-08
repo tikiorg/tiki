@@ -337,7 +337,7 @@ if ($prefs['feature_jquery_ui'] === 'y') {
 	if (!$structure_id) {
 		$structure_id = $structure_info['page_ref_id'];
 	}
-	$smarty->assign('nodelist', $structlib->get_toc($structure_id, 'asc', false, false, '', 'admin', $page_info['page_ref_id'], 0, 0, ''));
+	$smarty->assign('nodelist', $structlib->get_toc($structure_id, 'asc', false, false, '', 'admin', $page_info['page_ref_id'], 0, 0, 0, ''));
 				// $page_ref_id,$order='asc',$showdesc=false,$numbering=true,$numberPrefix='',$type='plain',$page='',$maxdepth=0,$mindepth=0, $structurePageName=''
 	$smarty->assign('structure_id', $structure_id);
 }
