@@ -118,5 +118,8 @@ $prefs['language'] = 'en';
 $prefs['site_language'] = 'en';
 require_once 'lib/setup/prefs.php';
 
+$builder = new Perms_Builder;
+Perms::set($builder->build());
+
 ini_set('display_errors', 'on');
 error_reporting(CUSTOM_ERROR_LEVEL);
