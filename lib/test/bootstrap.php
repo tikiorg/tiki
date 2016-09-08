@@ -124,8 +124,8 @@ $systemConfiguration = new Zend\Config\Config(
 global $user_overrider_prefs, $prefs;
 $user_overrider_prefs = array();
 $prefs['language'] = 'en';
-$prefs['site_language'] = 'en';
 require_once 'lib/setup/prefs.php';
+$prefs['site_language'] = 'en';
 
 $builder = new Perms_Builder;
 Perms::set($builder->build());

@@ -7482,6 +7482,8 @@ class UsersLib extends TikiLib
 			$date = $this->now;
 			//this is a new membership
 			$new = true;
+		} else {
+			$new = false;
 		}
 		//convert start date to object
 		$rawstartutc = new DateTimeImmutable('@' . $date);
