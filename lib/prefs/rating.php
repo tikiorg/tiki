@@ -86,6 +86,12 @@ function prefs_rating_list()
 			),
 			'default' => ''
 		),		
+		'rating_default_options' => array(
+			'name' => tra('Default rating options'),
+			'description' => tra('List of options available.'),
+			'type' => 'text',
+			'default' => "0,1,2,3,4",
+		),
 	);
 }
 

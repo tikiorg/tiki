@@ -11,9 +11,11 @@ class Rating_AggregationTest extends TikiTestCase
 {
 	function setUp()
 	{
-		global $user; $user = null;
+		global $user, $testhelpers;
 
-		$tikilib = $this->getMock('TikiLib', array('get_ip_address'));
+		$user = null;
+
+		$tikilib = $this->createMock('TikiLib');
 		$tikilib->expects($this->any())->method('get_ip_address')->will($this->returnValue('127.0.0.1'));
 
 		$testableTikiLib = new TestableTikiLib;
@@ -21,6 +23,8 @@ class Rating_AggregationTest extends TikiTestCase
 
 		parent::setUp();
 		TikiDb::get()->query('DELETE FROM `tiki_user_votings` WHERE `id` LIKE ?', array('test.%'));
+
+		$testhelpers = new TestHelpers();
 	}
 
 	function tearDown()
