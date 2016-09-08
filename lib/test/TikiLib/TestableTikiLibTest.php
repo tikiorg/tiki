@@ -31,13 +31,13 @@ class TestableTikiLibTest extends TikiTestCase
 	public function testOverrideLib_shouldWorkWithMockObjects()
 	{
 		$obj = new TestableTikiLib;
-		
-		$calendarlib = $this->getMock('MockCalendarLib', array('get_item'));
+
+		$calendarlib = $this->createMock(get_class(TikiLib::lib('calendar')));
 		$calendarlib->expects($this->never())->method('get_item');
 		
 		$this->assertEquals('CalendarLib', get_class(TikiLib::lib('calendar')));
 		$obj->overrideLibs(array('calendar' => $calendarlib));
-		$this->assertContains('Mock_MockCalendarLib_', get_class(TikiLib::lib('calendar')));
+		$this->assertContains('Mock_CalendarLib_', get_class(TikiLib::lib('calendar')));
 	}
 	
 	public function testOverrideLib_checkIfLibReturnedToOriginalStateAfterLastTest()
