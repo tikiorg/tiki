@@ -37,7 +37,7 @@ define("_ECHOSERVER_HTML_GRAMMARPARSER",1);
 /**********************************************************************************
  * Class constructor
  **********************************************************************************/
-  function HtmlGrammarParser($data) {
+  function __construct($data) {
     $this->firstprev=array("state"=>0,"word"=>"");
     $this->secondprev=array("state"=>0,"word"=>"");
     $this->line=0;

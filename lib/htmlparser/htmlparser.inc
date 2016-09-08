@@ -45,7 +45,7 @@ define("_ECHOSERVER_HTML_PARSER",1);
 /**********************************************************************************
  * Class constructor
  **********************************************************************************/
-  function HtmlParser($data,$grammar,$name="",$datatype=0) {
+  function __construct($data,$grammar,$name="",$datatype=0) {
     $this->dc=array(" ","\t","\r","\n","<",">","\"","'","=","/");
     $this->nc=array("<",">","=","/");
     $this->qc=array("\"","'");
