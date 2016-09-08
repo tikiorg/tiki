@@ -100,7 +100,7 @@ class AuthTokens
 		$entry_encoded_no_tikiroot = urlencode($entry_no_tikiroot);
 		$full_entry_encoded = $tikiroot . $entry_encoded_no_tikiroot;
 		// entry doesn't match "or" sefurl feature is in use but that also doesn't match
-		if ( $data['entry'] != $entry && $sefurl && $data['entry']  !== $sefurl && $full_entry_encoded !== $sefurl ) {
+		if ( $data['entry'] != $entry || ($sefurl && $data['entry']  !== $sefurl && $full_entry_encoded !== $sefurl )) {
 			return null;
 		}
 
@@ -181,7 +181,7 @@ class AuthTokens
 	function createToken( $entry, array $parameters, array $groups, array $arguments = array() )
 	{
 		if ( !empty($arguments['timeout']) ) {
-			$timeout = $arguments['timeout'];
+			$timeout = min($this->maxTimeout, $arguments['timeout']);
 		} else {
 			$timeout = $this->maxTimeout;
 		}
