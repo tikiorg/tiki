@@ -13,28 +13,18 @@
 class EditLib_ParseToWiki_CharacterTest extends TikiTestCase
 {
 
-	private $dir = '';  // the unmodifed directory
 	private $el = null; // the EditLib
-
-
-	function __construct()
-	{
-		$this->dir = getcwd();
-	}
 
 
 	function setUp()
 	{
 		TikiLib::lib('edit');
 		$this->el = new EditLib();
-		chdir($this->dir);
-		chdir('../../'); // the tiki installation directory
 	}
 
 
 	function tearDown()
 	{
-		chdir($this->dir);
 	}
 
 

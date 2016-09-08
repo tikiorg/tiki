@@ -12,30 +12,18 @@
 
 class EditLib_ParseToWiki_LinkTest extends TikiTestCase
 {
-	private $dir = '';  // the unmodifed directory
 	private $el = null; // the EditLib
 	private $ext1 = 'test_ext1'; // name of the external Wiki 1
-
-
-	function __construct()
-	{
-		$this->dir = getcwd();
-	}
-
 
 	function setUp()
 	{
 		TikiLib::lib('edit');
 		$this->el = new EditLib();
-		chdir($this->dir);
-		chdir('../../'); // the tiki installation directory
 	}
 
 
 	function tearDown()
 	{
-		chdir($this->dir);
-
 		/*
 		 * remove the external Wikis defined in the tests 
 		 */

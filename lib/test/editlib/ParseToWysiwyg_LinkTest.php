@@ -13,19 +13,18 @@
 
 class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 {
-	private $dir = '';  // the unmodifed directory
 	private $el = null; // the EditLib
 	private $ext1 = 'test_ext1'; // name of the external Wiki 1
 
 
 	function __construct()
 	{
-		$this->dir = getcwd();
-
 		// we must set the page regex, otherwise the links get not parsed
 		// taken from: 'lib/setup/wiki.php' with  $prefs['wiki_page_regex'] == 'full'
 		global $page_regex;
 		$page_regex = '([A-Za-z0-9_]|[\x80-\xFF])([\.: A-Za-z0-9_\-]|[\x80-\xFF])*([A-Za-z0-9_]|[\x80-\xFF])';
+
+		parent::__construct();
 	}
 
 
@@ -39,15 +38,11 @@ class EditLib_ParseToWysiwyg_LinkTest extends TikiTestCase
 
 		$this->el = TikiLib::lib('edit');
 
-		chdir($this->dir);
-		chdir('../../'); // the tiki installation directory
 	}
 
 
 	function tearDown()
 	{
-		chdir($this->dir);
-
 		/*
 		 * remove the external Wikis defined in the tests 
 		 */

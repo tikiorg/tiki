@@ -13,22 +13,12 @@
 class EditLib_ParseToWiki_TextTest extends TikiTestCase
 {
 
-	private $dir = '';  // the unmodifed directory
 	private $el = null; // the EditLib
-
-
-	function __construct()
-	{
-		$this->dir = getcwd();
-	}
-
 
 	function setUp()
 	{
 		TikiLib::lib('edit');
 		$this->el = new EditLib();
-		chdir($this->dir);
-		chdir('../../'); // the tiki installation directory
 	}
 
 
@@ -37,7 +27,6 @@ class EditLib_ParseToWiki_TextTest extends TikiTestCase
 		global $prefs;
 		// restore preference default state
 		$prefs['feature_use_three_colon_centertag'] = 'n';
-		chdir($this->dir);
 	}
 
 

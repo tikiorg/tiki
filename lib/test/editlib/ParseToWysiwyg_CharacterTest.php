@@ -13,28 +13,19 @@
 class EditLib_ParseToWysiwyg_CharacterTest extends TikiTestCase
 {
 	private $el = null; // the EditLib
-	private $dir = '';  // the unmodifed directory
-	
-	function __construct()
-	{
-		$this->dir = getcwd();
-	}
-		
+
 	function setUp()
 	{
 		TikiLib::lib('edit');
 		$_SERVER['HTTP_HOST'] = ''; // editlib expects that HTTP_HOST is defined
 
 		$this->el = new EditLib();
-		chdir($this->dir);
-		chdir('../../'); // the tiki installation directory
 	}
 	
 		
 	function tearDown()
 	{
-		chdir($this->dir);
-	}	
+	}
 
 
 	function testFontFamily()
