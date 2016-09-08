@@ -93,8 +93,13 @@ class MembershipTest extends TikiTestCase
 	{
 		$id = $this->userlib->get_user_id('membershiptest_b');
 
+		$expires = $this->userlib->getOne(
+			'SELECT `created` FROM `users_usergroups` WHERE `userId` = ? AND `groupName` = "MembershipTest"',
+			array($id)
+		);
+
 		//convert start date to object
-		$rawstartutc = new DateTimeImmutable('@' . $this->userlib->now);
+		$rawstartutc = new DateTimeImmutable('@' . $expires);
 		global $prefs;
 		$tz = TikiDate::TimezoneIsValidId($prefs['server_timezone']) ? $prefs['server_timezone'] : 'UTC';
 		$timezone = new DateTimeZone($tz);
