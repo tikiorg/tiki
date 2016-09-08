@@ -330,6 +330,8 @@ function wikiplugin_trackerfilter($data, $params)
 				$params['exactvalue'] = $exactValues;
 				$params['filtervalue'] = $values;
 			} else {
+				if( !isset($params['exactvalue']) && !isset($params['filtervalue']) )
+					$smarty->assign('msgTrackerFilter', tr('TrackerFilter: Wrong parameter specified - filterfield exists but exactvalue or filtervalue not set.'));
 				$c = count($params['filterfield']);
 				$params['filterfield'] = array_merge($params['filterfield'], $ffs);
 				for ($i = 0; $i < $c; ++$i) {
