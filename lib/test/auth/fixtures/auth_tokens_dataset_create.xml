@@ -13,6 +13,8 @@
 		<field name="email"></field>
 		<field name="parameters">[]</field>
 		<field name="groups">[&quot;Admins&quot;,&quot;Registered&quot;]</field>
+		<field name="createUser">n</field>
+		<field name="userPrefix">_token</field>
 	</row>
 	<row>
 		<field name="tokenId">2</field>
@@ -25,6 +27,8 @@
 		<field name="email"></field>
 		<field name="parameters">[]</field>
 		<field name="groups">[&quot;Admins&quot;,&quot;Registered&quot;]</field>
+		<field name="createUser">n</field>
+		<field name="userPrefix">_token</field>
 	</row>
 	<row>
 		<field name="tokenId">3</field>
@@ -37,6 +41,8 @@
 		<field name="email"></field>
 		<field name="parameters">[]</field>
 		<field name="groups">[&quot;Admins&quot;,&quot;Registered&quot;]</field>
+		<field name="createUser">n</field>
+		<field name="userPrefix">_token</field>
 	</row>
 	<row>
 		<field name="tokenId">4</field>
@@ -49,6 +55,8 @@
 		<field name="email"></field>
 		<field name="parameters">{&quot;page&quot;:&quot;HomePage&quot;}</field>
 		<field name="groups">[&quot;Registered&quot;]</field>
+		<field name="createUser">n</field>
+		<field name="userPrefix"></field>
 	</row>
 	</table_data>
 </database>
