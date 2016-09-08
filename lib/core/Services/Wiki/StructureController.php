@@ -34,6 +34,7 @@ class Services_Wiki_StructureController
 				$params->page,
 				$params->maxdepth,
 				$params->mindepth,
+				$params->mindepthsortalpha,
 				$params->structurePageName
 			);
 			
