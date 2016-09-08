@@ -33,8 +33,8 @@ class Perms_CheckSequenceTest extends TikiTestCase
 		$perms->setCheckSequence(
 			array(
 				new Perms_Check_Direct,
-				$this->mockA = $this->getMock('Perms_Check'),
-				$this->mockB = $this->getMock('Perms_Check'),
+				$this->mockA = $this->createMock('Perms_Check'),
+				$this->mockB = $this->createMock('Perms_Check'),
 			)
 		);
 		Perms::set($perms);

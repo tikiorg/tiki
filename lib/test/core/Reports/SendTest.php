@@ -18,17 +18,17 @@ class Reports_SendTest extends TikiTestCase
 		$this->dt = new DateTime;
 		$this->dt->setTimestamp(strtotime('2012-03-27 15:55:16'));
 		
-		$this->mail = $this->getMock('TikiMail', array('send', 'setSubject', 'setHtml', 'setText', 'setUser'));
+		$this->mail = $this->createMock('TikiMail');
 		$this->builder = $this->getMockBuilder('Reports_Send_EmailBuilder')->disableOriginalConstructor()->getMock();
 		
-		$tikiPrefs = array('short_date_format' => '%Y-%m-%d');
+		$tikiPrefs = array('short_date_format' => '%Y-%m-%d', 'browsertitle' => 'test');
 		
 		$this->obj = new Reports_Send($this->dt, $this->mail, $this->builder, $tikiPrefs);
 	}
 	
 	public function testEmailSubject_noChanges()
 	{
-		$this->mail->expects($this->exactly(2))->method('setSubject')->with('Report from 2012-03-27 (no changes)');
+		$this->mail->expects($this->exactly(2))->method('setSubject')->with('Report on test from 2012-03-27 (no changes)');
 		
 		$userData = array('login' => 'test', 'email' => 'test@test.com');
 		$reportPreferences = array('type' => 'html');
@@ -39,7 +39,7 @@ class Reports_SendTest extends TikiTestCase
 	
 	public function testEmailSubject_oneChange()
 	{
-		$this->mail->expects($this->exactly(1))->method('setSubject')->with('Report from 2012-03-27 (1 change)');
+		$this->mail->expects($this->exactly(1))->method('setSubject')->with('Report on test from 2012-03-27 (1 change)');
 		
 		$userData = array('login' => 'test', 'email' => 'test@test.com');
 		$reportPreferences = array('type' => 'html');
@@ -49,7 +49,7 @@ class Reports_SendTest extends TikiTestCase
 	
 	public function testEmailSubject_multipleChanges()
 	{
-		$this->mail->expects($this->exactly(1))->method('setSubject')->with('Report from 2012-03-27 (2 changes)');
+		$this->mail->expects($this->exactly(1))->method('setSubject')->with('Report on test from 2012-03-27 (2 changes)');
 		
 		$userData = array('login' => 'test', 'email' => 'test@test.com');
 		$reportPreferences = array('type' => 'html');
@@ -68,7 +68,7 @@ class Reports_SendTest extends TikiTestCase
 			->with($userData, $reportPreferences, $reportCache)->will($this->returnValue($emailBody));
 		$this->mail->expects($this->once())->method('setUser')->with('test');
 		$this->mail->expects($this->once())->method('setHtml')->with($emailBody);
-		$this->mail->expects($this->once())->method('setSubject')->with('Report from 2012-03-27 (no changes)');
+		$this->mail->expects($this->once())->method('setSubject')->with('Report on test from 2012-03-27 (no changes)');
 		$this->mail->expects($this->once())->method('send')->with(array('test@test.com'));
 		
 		$this->obj->sendEmail($userData, $reportPreferences, $reportCache);

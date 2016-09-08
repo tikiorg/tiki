@@ -17,7 +17,7 @@ class Perms_MixedTest extends TikiTestCase
 		$perms = new Perms;
 		$perms->setResolverFactories(
 			array(
-				$resolver = $this->getMock('Perms_ResolverFactory'),
+				$resolver = $this->createMock('Perms_ResolverFactory'),
 				new Perms_ResolverFactory_StaticFactory('global', new Perms_Resolver_Default(true)),
 			)
 		);

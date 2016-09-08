@@ -15,12 +15,12 @@ class Reports_EndToEndTest extends TikiDatabaseTestCase
 		$this->dt = new DateTime;
 		$this->dt->setTimestamp(strtotime('2012-03-27 15:55:16'));
 
-		$this->mail = $this->getMock('TikiMail');
+		$this->mail = $this->createMock('TikiMail');
 
-		$this->tikilib = $this->getMock('TikiLib', array('get_user_preference'));
+		$this->tikilib = $this->createMock('TikiLib', array('get_user_preference'));
 
 		$this->overrideLibs = new TestableTikiLib;
-		$this->overrideLibs->overrideLibs(array('calendar' => $this->getMock('MockCalendarLib', array('get_item'))));
+		$this->overrideLibs->overrideLibs(array('calendar' => $this->createMock('MockCalendarLib', array('get_item'))));
 
 		$tikiPrefs = array('short_date_format' => '%Y-%m-%d');
 

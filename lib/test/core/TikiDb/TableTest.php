@@ -13,7 +13,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testInsertOne()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 
 		$query = 'INSERT IGNORE INTO `my_table` (`label`) VALUES (?)';
 
@@ -38,7 +38,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testInsertWithMultipleValues()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 
 		$query = 'INSERT INTO `test_table` (`label`, `description`, `count`) VALUES (?, ?, ?)';
 
@@ -66,7 +66,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testDeletionOnSingleCondition()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 
 		$query = 'DELETE FROM `my_table` WHERE 1=1 AND `some_id` = ? LIMIT 1';
 
@@ -81,7 +81,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testDeletionOnMultipleConditions()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 
 		$query = 'DELETE FROM `other_table` WHERE 1=1 AND `objectType` = ? AND `objectId` = ? LIMIT 1';
 
@@ -101,7 +101,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testDeletionForMultiple()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 
 		$query = 'DELETE FROM `other_table` WHERE 1=1 AND `objectType` = ? AND `objectId` = ?';
 
@@ -121,7 +121,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testDeleteNullCondition()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 
 		$query = 'DELETE FROM `other_table` WHERE 1=1 AND `objectType` = ? AND `objectId` = ? AND (`lang` = ? OR `lang` IS NULL) LIMIT 1';
 
@@ -142,7 +142,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testUpdate()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 
 		$query = 'UPDATE `my_table` SET `title` = ?, `description` = ? WHERE 1=1 AND `objectType` = ? AND `objectId` = ? LIMIT 1';
 
@@ -165,7 +165,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testUpdateMultiple()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 
 		$query = 'UPDATE `my_table` SET `title` = ?, `description` = ? WHERE 1=1 AND `objectType` = ? AND `objectId` = ?';
 
@@ -188,7 +188,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testInsertOrUpdate()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 
 		$query = 'INSERT INTO `my_table` (`title`, `description`, `objectType`, `objectId`) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE `title` = ?, `description` = ?';
 
@@ -222,7 +222,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testExpressionAssign()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 
 		$query = 'UPDATE `my_table` SET `hits` = `hits` + ? WHERE 1=1 AND `fileId` = ? LIMIT 1';
 
@@ -239,7 +239,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testComplexBuilding()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 
 		$query = 'UPDATE `my_table` SET `hits` = `weight` * ? * (`hits` + ?) WHERE 1=1 AND `fileId` = ? LIMIT 1';
 
@@ -259,7 +259,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testComplexCondition()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 
 		$query = 'DELETE FROM `my_table` WHERE 1=1 AND `pageName` = ? AND `modified` < ?';
 
@@ -278,7 +278,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testReadOne()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 
 		$query = 'SELECT `user` FROM `tiki_user_watches` WHERE 1=1 AND `watchId` = ?';
 
@@ -298,7 +298,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testFetchColumn()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 
 		$query = 'SELECT `group` FROM `tiki_group_watches` WHERE 1=1 AND `object` = ? AND `event` = ?';
 
@@ -320,7 +320,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testFetchColumnWithSort()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 
 		$query = 'SELECT `group` FROM `tiki_group_watches` WHERE 1=1 AND `object` = ? AND `event` = ? ORDER BY `group` ASC';
 
@@ -349,7 +349,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 		$query = 'SELECT `user`, `email` FROM `users_users` WHERE 1=1';
 
-		$tikiDb = $this->getMock('TikiDb');
+		$tikiDb = $this->createMock('TikiDb');
 		$tikiDb->expects($this->once())->method('fetchAll')
 			->with($query, array(), -1, -1)
 			->will($this->returnValue($expectedResult));
@@ -368,7 +368,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 		$query = 'SELECT * FROM `users_users` WHERE 1=1';
 
-		$tikiDb = $this->getMock('TikiDb');
+		$tikiDb = $this->createMock('TikiDb');
 		$tikiDb->expects($this->exactly(2))->method('fetchAll')
 			->with($query, array(), -1, -1)
 			->will($this->returnValue($expectedResult));
@@ -381,7 +381,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testFetchRow()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 
 		$query = 'SELECT `user`, `email` FROM `users_users` WHERE 1=1 AND `userId` = ?';
 
@@ -399,7 +399,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testFetchCount()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 
 		$query = 'SELECT COUNT(*) FROM `users_users` WHERE 1=1 AND `userId` = ?';
 
@@ -415,7 +415,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testFetchFullRow()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 
 		$query = 'SELECT * FROM `users_users` WHERE 1=1 AND `userId` = ?';
 
@@ -433,7 +433,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testFetchMap()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 
 		$query = 'SELECT `user`, `email` FROM `users_users` WHERE 1=1 AND `userId` > ? ORDER BY `user` DESC';
 
@@ -460,7 +460,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testAliasField()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 
 		$query = 'SELECT `user`, `email` AS `address` FROM `users_users` WHERE 1=1 AND `userId` > ? ORDER BY `user` DESC';
 
@@ -487,7 +487,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testIncrement()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
 		$this->assertEquals($table->expr('$$ + ?', array(1)), $table->increment(1));
@@ -495,7 +495,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testDecrement()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
 		$this->assertEquals($table->expr('$$ - ?', array(1)), $table->decrement(1));
@@ -503,7 +503,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testNot()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
 		$this->assertEquals($table->expr('$$ <> ?', array(1)), $table->not(1));
@@ -511,7 +511,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testGreaterThan()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
 		$this->assertEquals($table->expr('$$ > ?', array(1)), $table->greaterThan(1));
@@ -519,7 +519,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testLesserThan()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
 		$this->assertEquals($table->expr('$$ < ?', array(1)), $table->lesserThan(1));
@@ -527,7 +527,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testLike()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
 		$this->assertEquals($table->expr('$$ LIKE ?', array('foo%')), $table->like('foo%'));
@@ -535,7 +535,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testInWithEmptyArray()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
 		$this->assertEquals($table->expr('1=0', array()), $table->in(array()));
@@ -543,7 +543,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testInWithData()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
 		$this->assertEquals($table->expr('$$ IN(?, ?, ?)', array(1, 2, 3)), $table->in(array(1, 2, 3)));
@@ -551,7 +551,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testInWithDataNotSensitive()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
 		$this->assertEquals($table->expr('BINARY $$ IN(?, ?, ?)', array(1, 2, 3)), $table->in(array(1, 2, 3), true));
@@ -559,7 +559,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testExactMatch()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
 		$this->assertEquals($table->expr('BINARY $$ = ?', array('foo%')), $table->exactly('foo%'));
@@ -567,7 +567,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testAllFields()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
 		$this->assertEquals(array($table->expr('*', array())), $table->all());
@@ -575,7 +575,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testCountAll()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
 		$this->assertEquals($table->expr('COUNT(*)', array()), $table->count());
@@ -583,7 +583,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testSumField()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
 		$this->assertEquals($table->expr('SUM(`hits`)', array()), $table->sum('hits'));
@@ -591,7 +591,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testMaxField()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
 		$this->assertEquals($table->expr('MAX(`hits`)', array()), $table->max('hits'));
@@ -599,7 +599,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testFindIn()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 
 		$this->assertEquals($table->expr('(`a` LIKE ? OR `b` LIKE ? OR `c` LIKE ?)', array("%X%", "%X%", "%X%")), $table->findIn('X', array('a', 'b', 'c')));
@@ -607,14 +607,14 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 
 	function testEmptyConcat()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 		$this->assertEquals($table->expr('', array()), $table->concatFields(array()));
 	}
 
 	function testEmptyConcatWithMultiple()
 	{
-		$mock = $this->getMock('TikiDb');
+		$mock = $this->createMock('TikiDb');
 		$table = new TikiDb_Table($mock, 'my_table');
 		$this->assertEquals($table->expr('CONCAT(`a`, `b`, `c`)', array()), $table->concatFields(array('a', 'b', 'c')));
 	}

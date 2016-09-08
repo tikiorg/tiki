@@ -16,7 +16,7 @@ class Perms_Check_IndirectTest extends TikiTestCase
 	{
 		$indirect = new Perms_Check_Indirect(array('view' => 'admin_wiki',));
 
-		$mock = $this->getMock('Perms_Resolver');
+		$mock = $this->createMock('Perms_Resolver');
 		$mock->expects($this->never())
 			->method('check');
 
@@ -27,7 +27,7 @@ class Perms_Check_IndirectTest extends TikiTestCase
 	{
 		$indirect = new Perms_Check_Indirect(array('view' => 'admin_wiki',));
 
-		$mock = $this->getMock('Perms_Resolver');
+		$mock = $this->createMock('Perms_Resolver');
 		$mock->expects($this->once())
 			->method('check')
 			->with($this->equalTo('admin_wiki'), $this->equalTo(array('Admins', 'Anonymous')))
@@ -40,7 +40,7 @@ class Perms_Check_IndirectTest extends TikiTestCase
 	{
 		$indirect = new Perms_Check_Indirect(array('view' => 'admin_wiki',));
 
-		$mock = $this->getMock('Perms_Resolver');
+		$mock = $this->createMock('Perms_Resolver');
 		$mock->expects($this->once())
 			->method('check')
 			->with($this->equalTo('admin_wiki'), $this->equalTo(array('Admins', 'Anonymous')))

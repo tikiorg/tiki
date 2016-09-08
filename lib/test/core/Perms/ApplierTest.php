@@ -23,7 +23,7 @@ class Perms_ApplierTest extends TikiTestCase
 		$newSet->add('Registered', 'view');
 		$newSet->add('Registered', 'edit');
 
-		$target = $this->getMock('Perms_Reflection_Container');
+		$target = $this->createMock('Perms_Reflection_Container');
 		$target->expects($this->at(0))
 			->method('getDirectPermissions')
 			->will($this->returnValue($object));
@@ -56,7 +56,7 @@ class Perms_ApplierTest extends TikiTestCase
 		$newSet->add('Editor', 'edit');
 		$newSet->add('Editor', 'view_history');
 
-		$target = $this->getMock('Perms_Reflection_Container');
+		$target = $this->createMock('Perms_Reflection_Container');
 		$target->expects($this->at(0))
 			->method('getDirectPermissions')
 			->will($this->returnValue($object));
@@ -90,7 +90,7 @@ class Perms_ApplierTest extends TikiTestCase
 		$newSet = new Perms_Reflection_PermissionSet;
 		$newSet->add('Anonymous', 'view');
 
-		$target = $this->getMock('Perms_Reflection_Container');
+		$target = $this->createMock('Perms_Reflection_Container');
 		$target->expects($this->at(0))
 			->method('getDirectPermissions')
 			->will($this->returnValue($object));
@@ -118,7 +118,7 @@ class Perms_ApplierTest extends TikiTestCase
 		$newSet->add('Anonymous', 'view');
 		$newSet->add('Registered', 'edit');
 
-		$target = $this->getMock('Perms_Reflection_Container');
+		$target = $this->createMock('Perms_Reflection_Container');
 		$target->expects($this->at(0))
 			->method('getDirectPermissions')
 			->will($this->returnValue($global));
@@ -143,7 +143,7 @@ class Perms_ApplierTest extends TikiTestCase
 		$newSet->add('Anonymous', 'view');
 		$newSet->add('Registered', 'edit');
 
-		$target1 = $this->getMock('Perms_Reflection_Container');
+		$target1 = $this->createMock('Perms_Reflection_Container');
 		$target1->expects($this->at(0))
 			->method('getDirectPermissions')
 			->will($this->returnValue($global));
@@ -154,7 +154,7 @@ class Perms_ApplierTest extends TikiTestCase
 			->method('add')
 			->with($this->equalTo('Registered'), $this->equalTo('edit'));
 
-		$target2 = $this->getMock('Perms_Reflection_Container');
+		$target2 = $this->createMock('Perms_Reflection_Container');
 		$target2->expects($this->at(0))
 			->method('getDirectPermissions')
 			->will($this->returnValue(new Perms_Reflection_PermissionSet));
@@ -181,7 +181,7 @@ class Perms_ApplierTest extends TikiTestCase
 		$before->add('Registered', 'edit');
 		$before->add('Registered', 'view');
 
-		$target = $this->getMock('Perms_Reflection_Container');
+		$target = $this->createMock('Perms_Reflection_Container');
 		$target->expects($this->once())
 			->method('getDirectPermissions')
 			->will($this->returnValue($before));
@@ -219,7 +219,7 @@ class Perms_ApplierTest extends TikiTestCase
 		$newSet->add('Registered', 'edit');
 		$newSet->add('Admins', 'admin');
 
-		$target = $this->getMock('Perms_Reflection_Container');
+		$target = $this->createMock('Perms_Reflection_Container');
 		$target->expects($this->once())
 			->method('getDirectPermissions')
 			->will($this->returnValue($current));
@@ -251,7 +251,7 @@ class Perms_ApplierTest extends TikiTestCase
 		$newSet->add('Registered', 'edit');
 		$newSet->add('Admins', 'admin');
 
-		$target = $this->getMock('Perms_Reflection_Container');
+		$target = $this->createMock('Perms_Reflection_Container');
 		$target->expects($this->once())
 			->method('getDirectPermissions')
 			->will($this->returnValue($current));

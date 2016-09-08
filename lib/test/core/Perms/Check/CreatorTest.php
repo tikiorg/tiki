@@ -14,7 +14,7 @@ class Perms_Check_CreatorTest extends TikiTestCase
 {
 	function testNoActionTakenWhenNoCreator()
 	{
-		$mock = $this->getMock('Perms_Resolver');
+		$mock = $this->createMock('Perms_Resolver');
 		$mock->expects($this->never())
 			->method('check');
 
@@ -24,7 +24,7 @@ class Perms_Check_CreatorTest extends TikiTestCase
 
 	function testNoActionTakenWhenWrongCreator()
 	{
-		$mock = $this->getMock('Perms_Resolver');
+		$mock = $this->createMock('Perms_Resolver');
 		$mock->expects($this->never())
 			->method('check');
 
@@ -34,7 +34,7 @@ class Perms_Check_CreatorTest extends TikiTestCase
 
 	function testCallForwarded()
 	{
-		$mock = $this->getMock('Perms_Resolver');
+		$mock = $this->createMock('Perms_Resolver');
 		$mock->expects($this->once())
 			->method('check')
 			->with($this->equalTo('view_own'), $this->equalTo(array('Registered')))

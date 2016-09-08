@@ -16,7 +16,7 @@ class Perms_Check_DirectTest extends TikiTestCase
 	{
 		$direct = new Perms_Check_Direct;
 
-		$mock = $this->getMock('Perms_Resolver');
+		$mock = $this->createMock('Perms_Resolver');
 		$mock->expects($this->once())
 			->method('check')
 			->with($this->equalTo('view'), $this->equalTo(array('Admins', 'Anonymous')))
@@ -29,7 +29,7 @@ class Perms_Check_DirectTest extends TikiTestCase
 	{
 		$direct = new Perms_Check_Direct;
 
-		$mock = $this->getMock('Perms_Resolver');
+		$mock = $this->createMock('Perms_Resolver');
 		$mock->expects($this->once())
 			->method('check')
 			->with($this->equalTo('view'), $this->equalTo(array('Admins', 'Anonymous')))

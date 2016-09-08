@@ -98,7 +98,7 @@ class Perms_BaseTest extends TikiTestCase
 
 	function testResolverNotCalledTwiceWhenFound()
 	{
-		$mock = $this->getMock('Perms_ResolverFactory');
+		$mock = $this->createMock('Perms_ResolverFactory');
 
 		$mock->expects($this->exactly(2))
 			->method('getHash')
@@ -118,7 +118,7 @@ class Perms_BaseTest extends TikiTestCase
 
 	function testResolverNotCalledTwiceWhenNotFound()
 	{
-		$mock = $this->getMock('Perms_ResolverFactory');
+		$mock = $this->createMock('Perms_ResolverFactory');
 
 		$mock->expects($this->exactly(2))
 			->method('getHash')
@@ -138,9 +138,9 @@ class Perms_BaseTest extends TikiTestCase
 
 	function testBulkLoading()
 	{
-		$mockObject = $this->getMock('Perms_ResolverFactory');
-		$mockCategory = $this->getMock('Perms_ResolverFactory');
-		$mockGlobal = $this->getMock('Perms_ResolverFactory');
+		$mockObject = $this->createMock('Perms_ResolverFactory');
+		$mockCategory = $this->createMock('Perms_ResolverFactory');
+		$mockGlobal = $this->createMock('Perms_ResolverFactory');
 
 		$perms = new Perms;
 		$perms->setResolverFactories(array($mockObject, $mockCategory, $mockGlobal));
@@ -223,7 +223,7 @@ class Perms_BaseTest extends TikiTestCase
 	{
 		$perms = new Perms;
 		$perms->setResolverFactories(
-			array($mock = $this->getMock('Perms_ResolverFactory'))
+			array($mock = $this->createMock('Perms_ResolverFactory'))
 		);
 		Perms::set($perms);
 
@@ -245,7 +245,7 @@ class Perms_BaseTest extends TikiTestCase
 	{
 		$perms = new Perms;
 		$perms->setResolverFactories(
-			array($mock = $this->getMock('Perms_ResolverFactory'))
+			array($mock = $this->createMock('Perms_ResolverFactory'))
 		);
 		Perms::set($perms);
 

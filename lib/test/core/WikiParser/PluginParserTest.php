@@ -24,7 +24,7 @@ class WikiParser_PluginParserTest extends TikiTestCase
 	function testCallToArgumentParser()
 	{
 		$this->markTestIncomplete('Implementation not written yet');
-		$mock = $this->getMock('WikiParser_PluginArgumentParser')
+		$mock = $this->createMock('WikiParser_PluginArgumentParser')
 			->expects($this->once())
 			->method('parse')
 			->with($this->equalTo('hello=world'));
@@ -32,7 +32,7 @@ class WikiParser_PluginParserTest extends TikiTestCase
 		$data = 'This is a {TEST(hello=world)}Hello{TEST} without any changes';
 
 		$parser = new WikiParser_PluginParser;
-		$parser->setPluginRunner($this->getMock('WikiParser_PluginRunner'));
+		$parser->setPluginRunner($this->createMock('WikiParser_PluginRunner'));
 		$parser->setArgumentParser($mock);
 		$parser->parse($data);
 	}
@@ -48,7 +48,7 @@ class WikiParser_PluginParserTest extends TikiTestCase
 	function testFullSyntax()
 	{
 		$this->markTestIncomplete('Implementation not written yet');
-		$mock = $this->getMock('WikiParser_PluginRunner')
+		$mock = $this->createMock('WikiParser_PluginRunner')
 			->expects($this->once())
 			->method('run')
 			->with(
@@ -68,7 +68,7 @@ class WikiParser_PluginParserTest extends TikiTestCase
 	function testShortSyntax()
 	{
 		$this->markTestIncomplete('Implementation not written yet');
-		$mock = $this->getMock('WikiParser_PluginRunner')
+		$mock = $this->createMock('WikiParser_PluginRunner')
 			->expects($this->once())
 			->method('run')
 			->with(
@@ -88,7 +88,7 @@ class WikiParser_PluginParserTest extends TikiTestCase
 	function testShortSyntaxWithoutArguments()
 	{
 		$this->markTestIncomplete('Implementation not written yet');
-		$mock = $this->getMock('WikiParser_PluginRunner')
+		$mock = $this->createMock('WikiParser_PluginRunner')
 			->expects($this->once())
 			->method('run')
 			->with(
@@ -108,7 +108,7 @@ class WikiParser_PluginParserTest extends TikiTestCase
 	function testSkipNoParse()
 	{
 		$this->markTestIncomplete('Implementation not written yet');
-		$mock = $this->getMock('WikiParser_PluginRunner')
+		$mock = $this->createMock('WikiParser_PluginRunner')
 			->expects($this->once())
 			->method('run')
 			->with($this->equalTo('b'), $this->equalTo(null), $this->equalTo(array()))
@@ -124,7 +124,7 @@ class WikiParser_PluginParserTest extends TikiTestCase
 	function testNestingNoSecondCall()
 	{
 		$this->markTestIncomplete('Implementation not written yet');
-		$mock = $this->getMock('WikiParser_PluginRunner')
+		$mock = $this->createMock('WikiParser_PluginRunner')
 			->expects($this->once())
 			->method('run')
 			->with($this->equalTo('a'), $this->equalTo(' {b} '), $this->equalTo(array()))
@@ -140,7 +140,7 @@ class WikiParser_PluginParserTest extends TikiTestCase
 	function testPluginReturningPlugin()
 	{
 		$this->markTestIncomplete('Implementation not written yet');
-		$mock = $this->getMock('WikiParser_PluginRunner')
+		$mock = $this->createMock('WikiParser_PluginRunner')
 			->expects($this->exactly(2))
 			->method('run')
 			->will($this->onConsecutiveCalls('__{b}__', 'hello'));
@@ -154,7 +154,7 @@ class WikiParser_PluginParserTest extends TikiTestCase
 	function testInnerPluginNotExecutedFirst()
 	{
 		$this->markTestIncomplete('Implementation not written yet');
-		$mock = $this->getMock('WikiParser_PluginRunner')
+		$mock = $this->createMock('WikiParser_PluginRunner')
 			->expects($this->exactly(2))
 			->method('run')
 			->will($this->onConsecutiveCalls('__{b}__', 'hello'));
@@ -168,7 +168,7 @@ class WikiParser_PluginParserTest extends TikiTestCase
 	function testPluginReturnsNonParseCode()
 	{
 		$this->markTestIncomplete('Implementation not written yet');
-		$mock = $this->getMock('WikiParser_PluginRunner')
+		$mock = $this->createMock('WikiParser_PluginRunner')
 			->expects($this->once())
 			->method('run')
 			->will($this->returnValue('~np~{b}~/np~'));

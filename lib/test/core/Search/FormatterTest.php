@@ -212,7 +212,7 @@ OUT;
 			array('object_type' => 'wiki page', 'object_id' => 'SomePage', 'description' => 'DEF'),
 		);
 
-		$source = $this->getMock('Search_Formatter_DataSource_Interface');
+		$source = $this->createMock('Search_Formatter_DataSource_Interface');
 		$source->expects($this->any())
 			->method('getData')
 			->will($this->returnCallback(function ($entry, $field) use (& $withData) {
