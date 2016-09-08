@@ -42,7 +42,6 @@ Disallow: /doc/
 Disallow: /dump/
 Disallow: /installer/
 Disallow: /lang/
-Disallow: /lib/
 Disallow: /maps/
 Disallow: /mods/
 Disallow: /modules/
@@ -52,8 +51,6 @@ Disallow: /temp/mail_attachs/
 Disallow: /temp/unified-index/
 Disallow: /temp/composer.phar
 Disallow: /popups/
-Disallow: /styles/
-Disallow: /temp/
 Disallow: /templates/
 Disallow: /templates_c/
 Disallow: /tests/
