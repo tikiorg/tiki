@@ -14,26 +14,16 @@
 class EditLibTest extends TikiTestCase
 {
 	private $el = null; // the EditLib
-	private $dir = '';  // the unmodifed directory
-
-	function __construct()
-	{
-		$this->dir = getcwd();
-	}
-
 
 	function setUp()
 	{
 		TikiLib::lib('edit');
 		$this->el = new EditLib();
-		chdir($this->dir);
-		chdir('../../'); // the tiki installation directory
 	}
 
 
 	function tearDown()
 	{
-		chdir($this->dir);
 	}
 
 
