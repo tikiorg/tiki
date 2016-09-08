@@ -84,6 +84,7 @@ class Tiki_Event_CustomizerTest extends PHPUnit_Framework_TestCase
 			'a' => 2,
 			'b' => 3,
 			'c' => 4,
+			'EVENT_ID' => 1,
 		);
 
 		$this->manager->trigger('tiki.trackeritem.save', $args);
@@ -102,6 +103,7 @@ class Tiki_Event_CustomizerTest extends PHPUnit_Framework_TestCase
 			'a' => 2,
 			'b' => 3,
 			'c' => 4,
+			'EVENT_ID' => 1,
 		);
 
 		$this->manager->bind('tiki.trackeritem.update', 'tiki.trackeritem.save');
@@ -140,6 +142,7 @@ class Tiki_Event_CustomizerTest extends PHPUnit_Framework_TestCase
 			array(
 				'amount' => 5,
 				'test' => 4,
+				'EVENT_ID' => 2,
 			), $this->lastArguments
 		);
 	}

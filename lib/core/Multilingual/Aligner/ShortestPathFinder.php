@@ -5,8 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'Multilingual/Aligner/ShortestPathFinder.php';
-
 /**
  * This class implements the Dijkstra algorithm for finding the shortest path
  * through a graph.

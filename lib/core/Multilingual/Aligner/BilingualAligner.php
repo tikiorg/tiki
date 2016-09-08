@@ -5,7 +5,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-require_once 'Multilingual/Aligner/SentenceSegmentor.php';
 
 class Multilingual_Aligner_BilingualAligner
 {
