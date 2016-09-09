@@ -1200,7 +1200,7 @@ class EditLib
 		include ('lib/htmlparser/htmlparser.inc');
 
 		// Read compiled (serialized) grammar
-		$grammarfile = 'lib/htmlparser/htmlgrammar.cmp';
+		$grammarfile = TIKI_PATH . '/lib/htmlparser/htmlgrammar.cmp';
 		if (!$fp = @fopen($grammarfile, 'r')) {
 			$smarty->assign('msg', tra("Can't parse HTML data - no grammar file"));
 			$smarty->display("error.tpl");
