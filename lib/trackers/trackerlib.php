@@ -3695,9 +3695,10 @@ class TrackerLib extends TikiLib
 			$emails3 = preg_split('/,/', $options['outboundEmail']);
 			foreach ($emails3 as $w) {
 				global $user_preferences;
+				$tikilib = TikiLib::lib('tiki');
 				$userlib = TikiLib::lib('user');
 				$u = $userlib->get_user_by_email($w);
-				$this->get_user_preferences($u, array('user', 'language', 'mailCharset'));
+				$tikilib->get_user_preferences($u, array('user', 'language', 'mailCharset'));
 				if (empty($user_preferences[$u]['language'])) {
 					$user_preferences[$u]['language'] = $prefs['site_language'];
 				}

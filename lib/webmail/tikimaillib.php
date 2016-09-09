@@ -17,6 +17,7 @@ class TikiMail
 	 * @var \Zend\Mail\Message
 	 */
 	private $mail;
+	private $charset;
 	public $errors;
 
 	/**
@@ -25,8 +26,11 @@ class TikiMail
 	 */
 	function __construct($user = null, $from=null)
 	{
+		global $user_preferences, $prefs;
+
 		require_once 'lib/mail/maillib.php';
 
+		$tikilib = TikiLib::lib('tiki');
 		$userlib = TikiLib::lib('user');
 
 		$to = '';
@@ -34,6 +38,8 @@ class TikiMail
 		if (!empty($user)) {
 			if ($userlib->user_exists($user)) {
 				$to = $userlib->get_user_email($user);
+				$tikilib->get_user_preferences($user, array('mailCharset'));
+				$this->charset = $user_preferences[$user]['mailCharset'];
 			} else {
 				$str = tra('Mail to: User not found');
 				trigger_error($str);
@@ -56,6 +62,9 @@ class TikiMail
 		if (! empty($to)) {
 			$this->mail->addTo($to);
 		}
+
+		if( empty($this->charset) )
+			$this->charset = $prefs['users_prefs_mailCharset'];
 	}
 
 	function setUser($user)
@@ -98,11 +107,15 @@ class TikiMail
 			if ($part->getType() == Zend\Mime\Mime::TYPE_HTML){
 				$partHtmlFound = true;
 				$part->setContent($html);
+				if( $this->charset )
+					$part->setCharset($this->charset);
 			}
 			if ($part->getType() == Zend\Mime\Mime::TYPE_TEXT){
 				$partTextFound = true;
 				if ($text){
 					$part->setContent($text);
+					if( $this->charset )
+						$part->setCharset($this->charset);
 				}
 			}
 		}
@@ -110,12 +123,16 @@ class TikiMail
 		if (!$partHtmlFound){
 			$htmlPart = new Zend\Mime\Part($html);
 			$htmlPart->setType(Zend\Mime\Mime::TYPE_HTML);
+			if( $this->charset )
+				$htmlPart->setCharset($this->charset);
 			$parts[] = $htmlPart;
 		}
 
 		if (!$partTextFound && $text){
 			$textPart = new Zend\Mime\Part($text);
 			$textPart->setType(Zend\Mime\Mime::TYPE_TEXT);
+			if( $this->charset )
+				$textPart->setCharset($this->charset);
 			$parts[] = $textPart;
 		}
 
@@ -133,6 +150,8 @@ class TikiMail
 				/* @var $part Zend\Mime\Part */
 				if ($part->getType() == Zend\Mime\Mime::TYPE_TEXT){
 					$part->setContent($text);
+					if( $this->charset )
+						$part->setCharset($this->charset);
 					$textPartFound = true;
 					break;
 				}
@@ -140,11 +159,17 @@ class TikiMail
 			if (!$textPartFound){
 				$part = new Zend\Mime\Part($text);
 				$part->setType(Zend\Mime\Mime::TYPE_TEXT);
+				if( $this->charset )
+					$part->setCharset($this->charset);
 				$parts[] = $part;
 			}
 			$body->setParts($parts);
 		} else {
 			$this->mail->setBody($text);
+			if( $this->charset )
+				$this->mail->getHeaders()->addHeaderLine(
+					'Content-type: text/plain; charset=' . $this->charset
+				);
 		}
 	}
 
