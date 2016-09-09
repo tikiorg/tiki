@@ -34,6 +34,8 @@ User-agent: *
 Crawl-Delay: 30
 
 #filter out crawling that applies in all situations
+Disallow: /temp/
+Allow:    /temp/public/
 Disallow: /addons/
 Disallow: /admin/
 Disallow: /backup/
@@ -46,10 +48,6 @@ Disallow: /maps/
 Disallow: /mods/
 Disallow: /modules/
 Disallow: /permissioncheck/
-Disallow: /temp/cache/
-Disallow: /temp/mail_attachs/
-Disallow: /temp/unified-index/
-Disallow: /temp/composer.phar
 Disallow: /popups/
 Disallow: /templates/
 Disallow: /templates_c/
