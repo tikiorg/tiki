@@ -265,6 +265,10 @@ var customsearch = {
 
 		$(selector).modal(cs.options.searchfadetext);
 
+		var resultsTop = $(cs.options.results).offset().top;
+		if( $(window).scrollTop() > resultsTop )
+			$('html, body').animate({scrollTop: resultsTop + 'px'}, 'fast');
+
 		cs._load(function (data) {
 			$(selector).modal();
 			$(cs.options.results).html(data);
