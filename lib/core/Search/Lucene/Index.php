@@ -257,7 +257,7 @@ class Search_Lucene_Index implements Search_Index_Interface
 	{
 		$data = array();
 		foreach ($document->getFieldNames() as $field) {
-			if (! $document->getField($field)->isTokenized) {
+			if (! $document->getField($field)->isBinary) {
 				$data[$field] = $document->$field;
 			}
 		}
