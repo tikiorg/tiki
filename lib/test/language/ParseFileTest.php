@@ -107,7 +107,11 @@ class Language_FileTest extends TikiTestCase
 			'percentage' =>  42.86,
 		);
 		
-		$obj = $this->getMock('Language_File', array('parse'), array($this->filePath));
+		$obj = $this->getMockBuilder('Language_File')
+					->setMethods(['parse'])
+					->setConstructorArgs([$this->filePath])
+					->getMock();
+
 		$obj->expects($this->never())->method('parse');
 		
 		$reflectionClass = new ReflectionClass($obj);

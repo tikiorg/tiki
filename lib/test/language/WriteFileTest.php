@@ -22,7 +22,10 @@ class Language_WriteFileTest extends TikiTestCase
 		$this->langFile = new vfsStreamFile('language.php');
 		$lang->addChild($this->langFile);
 
-		$this->parseFile = $this->getMock('Language_File', array('getTranslations'), array(vfsStream::url('lang/language.php')));
+		$this->parseFile = $this->getMockBuilder('Language_File')
+								->setMethods( array('getTranslations'))
+								->setConstructorArgs( array(vfsStream::url('lang/language.php')))
+								->getMock();
 
 		$this->filePath = vfsStream::url('lang/language.php');
 
@@ -45,7 +48,11 @@ class Language_WriteFileTest extends TikiTestCase
 	{
 		$this->parseFile->expects($this->once())->method('getTranslations')->will($this->returnValue(array()));
 
-		$obj = $this->getMock('Language_WriteFile', array('fileHeader'), array($this->parseFile));
+		$obj = $this->getMockBuilder('Language_WriteFile')
+					->setMethods( array('fileHeader'))
+					->setConstructorArgs( array($this->parseFile))
+					->getMock();
+
 		$obj->expects($this->once())->method('fileHeader')->will($this->returnValue("// File header\n\n"));
 
 		$strings = array(
@@ -90,7 +97,11 @@ class Language_WriteFileTest extends TikiTestCase
 			)
 		);
 
-		$obj = $this->getMock('Language_WriteFile', array('fileHeader'), array($this->parseFile));
+		$obj = $this->getMockBuilder('Language_WriteFile')
+					->setMethods( array('fileHeader'))
+					->setConstructorArgs( array($this->parseFile))
+					->getMock();
+
 		$obj->expects($this->once())->method('fileHeader')->will($this->returnValue("// File header\n\n"));
 
 		$obj->writeStringsToFile($strings);
@@ -113,7 +124,11 @@ class Language_WriteFileTest extends TikiTestCase
 			)
 		);
 
-		$obj = $this->getMock('Language_WriteFile', array('fileHeader'), array($this->parseFile));
+		$obj = $this->getMockBuilder('Language_WriteFile')
+				->setMethods( array('fileHeader'))
+				->setConstructorArgs( array($this->parseFile))
+				->getMock();
+
 		$obj->expects($this->once())->method('fileHeader')->will($this->returnValue("// File header\n\n"));
 
 		$obj->writeStringsToFile($strings);
@@ -136,7 +151,11 @@ class Language_WriteFileTest extends TikiTestCase
 			)
 		);
 
-		$obj = $this->getMock('Language_WriteFile', array('fileHeader'), array($this->parseFile));
+		$obj = $this->getMockBuilder('Language_WriteFile')
+					->setMethods( array('fileHeader'))
+					->setConstructorArgs( array($this->parseFile))
+					->getMock();
+
 		$obj->expects($this->once())->method('fileHeader')->will($this->returnValue("// File header\n\n"));
 
 		$obj->writeStringsToFile($strings, true);
@@ -161,7 +180,11 @@ class Language_WriteFileTest extends TikiTestCase
 			)
 		);
 
-		$obj = $this->getMock('Language_WriteFile', array('fileHeader'), array($this->parseFile));
+		$obj = $this->getMockBuilder('Language_WriteFile')
+					->setMethods( array('fileHeader'))
+					->setConstructorArgs( array($this->parseFile))
+					->getMock();
+
 		$obj->expects($this->once())->method('fileHeader')->will($this->returnValue("// File header\n\n"));
 
 		$strings['Login:'] = array('name' => 'Login:');
@@ -189,7 +212,11 @@ class Language_WriteFileTest extends TikiTestCase
 			)
 		);
 
-		$obj = $this->getMock('Language_WriteFile', array('fileHeader'), array($this->parseFile));
+		$obj = $this->getMockBuilder('Language_WriteFile')
+					->setMethods( array('fileHeader'))
+					->setConstructorArgs( array($this->parseFile))
+					->getMock();
+
 		$obj->expects($this->once())->method('fileHeader')->will($this->returnValue("// File header\n\n"));
 
 		$strings["Congratulations!\n\nYour server can send emails.\n\n"] = array('name' => "Congratulations!\n\nYour server can send emails.\n\n");
@@ -205,7 +232,11 @@ class Language_WriteFileTest extends TikiTestCase
 		$this->parseFile->expects($this->at(0))
 						->method('getTranslations')->will($this->returnValue(array('Errors' => 'Ошибки',)));
 
-		$obj = $this->getMock('Language_WriteFile', array('fileHeader'), array($this->parseFile));
+		$obj = $this->getMockBuilder('Language_WriteFile')
+					->setMethods( array('fileHeader'))
+					->setConstructorArgs( array($this->parseFile))
+					->getMock();
+
 		$obj->expects($this->any())->method('fileHeader')->will($this->returnValue("// File header\n\n"));
 
 		$strings = array(

@@ -25,9 +25,16 @@ class Language_MergeFilesTest extends TikiTestCase
 
 		$sourceFilePath = vfsStream::url('root/language_source.php');
 		$targetFilePath = vfsStream::url('root/language_target.php');
-		$this->sourceFileObj = $this->getMock('Language_File', array('parse'), array($sourceFilePath));
-		$this->targetFileObj = $this->getMock('Language_File', array('parse'), array($targetFilePath));
-		
+		$this->sourceFileObj = $this->getMockBuilder('Language_File')
+									->setMethods(['parse'])
+									->setConstructorArgs([$sourceFilePath])
+									->getMock();
+
+		$this->targetFileObj = $this->getMockBuilder('Language_File')
+									->setMethods(['parse'])
+									->setConstructorArgs([$targetFilePath])
+									->getMock();
+
 		$this->obj = new Language_MergeFiles($this->sourceFileObj, $this->targetFileObj);
 	}
 
