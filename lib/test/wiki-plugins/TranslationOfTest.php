@@ -68,9 +68,10 @@ class WikiPlugin_TranslationOfTest extends TikiTestCase
 
     public function test_create_page_that_contains_a_TranslationOf_plugin_generates_an_object_relation()
     {
-        global $testhelpers;
+        global $prefs;
 		$tikilib = TikiLib::lib('tiki');
 		$relationlib = TikiLib::lib('relation');
+		$testhelpers = new TestHelpers();
 
         // Make sure the page doesn't exist to start with.
         $tikilib->remove_all_versions($this->page_containing_plugin);
@@ -83,7 +84,9 @@ class WikiPlugin_TranslationOfTest extends TikiTestCase
             "Before creating a page that contains a TranslationOf plugin, there should NOT have been a 'translationof' relation from $this->page_containing_plugin to $link_target_page.");
 
         $page_containing_plugin_content = "{TranslationOf(orig_page=\"$link_source_page\" translation_page=\"$link_target_page\") /}";
-        $tikilib_class = get_class($tikilib);
+        $prefs['wikiplugin_translationof'] = 'y';
+        $prefs['feature_multilingual'] = 'y';
+
         $tikilib->create_page($this->page_containing_plugin, 0, $page_containing_plugin_content, time(), "");
 
         $relation_id = $relationlib->get_relation_id('tiki.wiki.translationof', 'wiki page', $this->page_containing_plugin, 'wiki page', $link_target_page);

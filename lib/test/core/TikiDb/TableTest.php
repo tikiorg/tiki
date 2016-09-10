@@ -18,7 +18,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$query = 'INSERT IGNORE INTO `my_table` (`label`) VALUES (?)';
 
 		$mock->expects($this->once())
-			->method('query')
+			->method('queryException')
 			->with($this->equalTo($query), $this->equalTo(array('hello')));
 
 		$mock->expects($this->once())
@@ -43,7 +43,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$query = 'INSERT INTO `test_table` (`label`, `description`, `count`) VALUES (?, ?, ?)';
 
 		$mock->expects($this->once())
-			->method('query')
+			->method('queryException')
 			->with($this->equalTo($query), $this->equalTo(array('hello', 'world', 15)));
 
 		$mock->expects($this->once())
@@ -71,7 +71,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$query = 'DELETE FROM `my_table` WHERE 1=1 AND `some_id` = ? LIMIT 1';
 
 		$mock->expects($this->once())
-			->method('query')
+			->method('queryException')
 			->with($this->equalTo($query), $this->equalTo(array(15)));
 
 		$table = new TikiDb_Table($mock, 'my_table');
@@ -86,7 +86,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$query = 'DELETE FROM `other_table` WHERE 1=1 AND `objectType` = ? AND `objectId` = ? LIMIT 1';
 
 		$mock->expects($this->once())
-			->method('query')
+			->method('queryException')
 			->with($this->equalTo($query), $this->equalTo(array('wiki page', 'HomePage')));
 
 		$table = new TikiDb_Table($mock, 'other_table');
@@ -106,7 +106,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$query = 'DELETE FROM `other_table` WHERE 1=1 AND `objectType` = ? AND `objectId` = ?';
 
 		$mock->expects($this->once())
-			->method('query')
+			->method('queryException')
 			->with($this->equalTo($query), $this->equalTo(array('wiki page', 'HomePage')));
 
 		$table = new TikiDb_Table($mock, 'other_table');
@@ -126,7 +126,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$query = 'DELETE FROM `other_table` WHERE 1=1 AND `objectType` = ? AND `objectId` = ? AND (`lang` = ? OR `lang` IS NULL) LIMIT 1';
 
 		$mock->expects($this->once())
-			->method('query')
+			->method('queryException')
 			->with($this->equalTo($query), $this->equalTo(array('wiki page', 'HomePage', null)));
 
 		$table = new TikiDb_Table($mock, 'other_table');
@@ -147,7 +147,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$query = 'UPDATE `my_table` SET `title` = ?, `description` = ? WHERE 1=1 AND `objectType` = ? AND `objectId` = ? LIMIT 1';
 
 		$mock->expects($this->once())
-			->method('query')
+			->method('queryException')
 			->with($this->equalTo($query), $this->equalTo(array('hello world', 'foobar', 'wiki page', 'HomePage')));
 
 		$table = new TikiDb_Table($mock, 'my_table');
@@ -170,7 +170,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$query = 'UPDATE `my_table` SET `title` = ?, `description` = ? WHERE 1=1 AND `objectType` = ? AND `objectId` = ?';
 
 		$mock->expects($this->once())
-			->method('query')
+			->method('queryException')
 			->with($this->equalTo($query), $this->equalTo(array('hello world', 'foobar', 'wiki page', 'HomePage')));
 
 		$table = new TikiDb_Table($mock, 'my_table');
@@ -193,7 +193,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$query = 'INSERT INTO `my_table` (`title`, `description`, `objectType`, `objectId`) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE `title` = ?, `description` = ?';
 
 		$mock->expects($this->once())
-			->method('query')
+			->method('queryException')
 			->with(
 				$this->equalTo($query),
 				$this->equalTo(
@@ -227,7 +227,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$query = 'UPDATE `my_table` SET `hits` = `hits` + ? WHERE 1=1 AND `fileId` = ? LIMIT 1';
 
 		$mock->expects($this->once())
-			->method('query')
+			->method('queryException')
 			->with($this->equalTo($query), $this->equalTo(array(5, 42)));
 
 		$table = new TikiDb_Table($mock, 'my_table');
@@ -244,7 +244,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$query = 'UPDATE `my_table` SET `hits` = `weight` * ? * (`hits` + ?) WHERE 1=1 AND `fileId` = ? LIMIT 1';
 
 		$mock->expects($this->once())
-			->method('query')
+			->method('queryException')
 			->with(
 				$this->equalTo($query),
 				$this->equalTo(array(1.5, 5, 42))
@@ -264,7 +264,7 @@ class TikiDb_TableTest extends PHPUnit_Framework_TestCase
 		$query = 'DELETE FROM `my_table` WHERE 1=1 AND `pageName` = ? AND `modified` < ?';
 
 		$mock->expects($this->once())
-			->method('query')
+			->method('queryException')
 			->with($this->equalTo($query), $this->equalTo(array('SomePage', 12345)));
 
 		$table = new TikiDb_Table($mock, 'my_table');

@@ -15,8 +15,8 @@ class TikiFilter_MapTest extends TikiTestCase
 	function testDirect()
 	{
 		$this->assertTrue(TikiFilter::get('digits') instanceof Zend\Filter\Digits);
-		$this->assertTrue(TikiFilter::get('alpha') instanceof Zend\I18n\Filter\Alpha);
-		$this->assertTrue(TikiFilter::get('alnum') instanceof Zend\I18n\Filter\Alnum);
+		$this->assertTrue(TikiFilter::get('alpha') instanceof TikiFilter_Alpha);
+		$this->assertTrue(TikiFilter::get('alnum') instanceof TikiFilter_Alnum);
 		$this->assertTrue(TikiFilter::get('striptags') instanceof Zend\Filter\StripTags);
 		$this->assertTrue(TikiFilter::get('pagename') instanceof Zend\Filter\StripTags);
 		$this->assertTrue(TikiFilter::get('username') instanceof Zend\Filter\StripTags);
@@ -24,7 +24,7 @@ class TikiFilter_MapTest extends TikiTestCase
 		$this->assertTrue(TikiFilter::get('topicname') instanceof Zend\Filter\StripTags);
 		$this->assertTrue(TikiFilter::get('xss') instanceof TikiFilter_PreventXss);
 		$this->assertTrue(TikiFilter::get('word') instanceof TikiFilter_Word);
-		$this->assertTrue(TikiFilter::get('wikicontent') instanceof TikiFilter_RawUnsafe);
+		$this->assertTrue(TikiFilter::get('wikicontent') instanceof TikiFilter_WikiContent);
 	}
 
 	function testKnown()
@@ -34,7 +34,7 @@ class TikiFilter_MapTest extends TikiTestCase
 
 	/**
 	 * Triggered errors become exceptions...
-	 * @expectedException Exception
+	 * @expectedException PHPUnit_Framework_Error
 	 */
 	function testUnknown()
 	{
