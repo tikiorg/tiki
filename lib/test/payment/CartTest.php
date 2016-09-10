@@ -13,7 +13,9 @@ class Payment_CartTest extends TikiTestCase
 	{
 		global $prefs;
 		$prefs['feature_sefurl'] = 'n';
-		$this->obj = $this->getMock('CartLib', array('get_gift_certificate_code'));
+		$this->obj = $this->getMockBuilder('CartLib')
+			->setMethods( array('get_gift_certificate_code'))
+			->getMock();
 		$_SERVER['REQUEST_URI'] = '/tiki-index.php';
 	}
 
@@ -148,7 +150,7 @@ class Payment_CartTest extends TikiTestCase
 			)
 		);
 
-		$this->assertEquals(1.01, $this->obj->get_total());
+		$this->assertEquals(0, $this->obj->get_total());
 	}
 
 	function testZeroQuantityRemovedLine()
