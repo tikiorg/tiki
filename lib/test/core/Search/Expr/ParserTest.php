@@ -244,7 +244,15 @@ class Search_Expr_ParserTest extends PHPUnit_Framework_TestCase
 	{
 		$result = $this->parser->parse('hello and (not )');
 
-		$this->assertEquals($this->parser->parse('hello and ()'), $result);
+		$this->assertEquals(
+			new Search_Expr_And([
+				new Search_Expr_Token('hello'),
+				new Search_Expr_Not(
+					new Search_Expr_Token('')
+				),
+			]),
+			$result
+		);
 	}
 }
 

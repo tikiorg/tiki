@@ -86,7 +86,11 @@ class Reports_UsersTest extends TikiDatabaseTestCase
 
 	public function testAddUserToDailyReport_shouldCallSave()
 	{
-		$obj = $this->createMock('Reports_Users', array('save'), array(), 'Mock_Reports_Users', false);
+		$obj = $this->getMockBuilder('Reports_Users')
+			->setMethods(['save'])
+			->disableOriginalConstructor()
+			->getMock();
+
 		$obj->expects($this->once())->method('save')->with('test', 'daily', 'detailed', 'html', 0);
 		$obj->addUserToDailyReports(array('user' => 'test'));
 	}

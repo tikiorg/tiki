@@ -59,7 +59,6 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		$this->assertEquals(
 			array(
 				array('user' => 'abc', 'id' => 'test.111', 'optionId' => 2),
-				array('user' => 'abc', 'id' => 'test.111', 'optionId' => 3),
 				array('user' => 'abc', 'id' => 'test.112', 'optionId' => 4),
 				array('user' => 'def', 'id' => 'test.111', 'optionId' => 1),
 				array('user' => 'def', 'id' => 'test.112', 'optionId' => 5),
@@ -85,7 +84,6 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		$this->assertEquals(
 			array(
 				array('user' => "anonymous\0$key1", 'id' => 'test.111', 'optionId' => 2),
-				array('user' => "anonymous\0$key1", 'id' => 'test.111', 'optionId' => 3),
 				array('user' => "anonymous\0$key1", 'id' => 'test.112', 'optionId' => 4),
 				array('user' => "anonymous\0$key2", 'id' => 'test.111', 'optionId' => 1),
 				array('user' => "anonymous\0$key2", 'id' => 'test.112', 'optionId' => 5),
@@ -100,7 +98,7 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		$lib = new RatingLib;
 		$this->assertFalse($lib->record_user_vote('abc', 'test', '123', 6));
 
-		$this->assertEquals(range(1, 5), $lib->get_options('test'));
+		$this->assertEquals(['0', '1', '2', '3', '4', '5'], $lib->get_options('test', '123'));
 		$this->assertEquals(
 			array(),
 			$this->getTestData()
@@ -113,7 +111,7 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		$prefs['wiki_simple_ratings_options'] = range(2, 8);
 
 		$lib = new RatingLib;
-		$this->assertEquals(range(2, 8), $lib->get_options('wiki page'));
+		$this->assertEquals(range(2, 8), $lib->get_options('wiki page', 'HomePage'));
 	}
 
 	function testGetArticleRange()
@@ -122,7 +120,7 @@ class Rating_RegisterVoteTest extends TikiTestCase
 		$prefs['article_user_rating_options'] = range(-2, 2);
 
 		$lib = new RatingLib;
-		$this->assertEquals(range(-2, 2), $lib->get_options('article'));
+		$this->assertEquals(range(-2, 2), $lib->get_options('article', 1));
 	}
 
 	function testGetUserVote()
