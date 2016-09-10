@@ -355,7 +355,7 @@ function wikiplugin_listpages($data, $params)
             $offset_pagination = 0;
         }
     }
-
+    if (!empty($_REQUEST['sort_mode'])) $sort = $_REQUEST['sort_mode'];
 
 	$exact_match = ( isset($exact_match) && $exact_match == 'y' );
 	$only_name = ( isset($showNameOnly) && $showNameOnly == 'y' );
@@ -399,12 +399,9 @@ function wikiplugin_listpages($data, $params)
 			}
 			$i++;
 		}
-		sort($listpages['data']);
+        $listpages['data'] = array_merge($listpages['data']);
 		unset($aIncludetag);
 		unset($aExcludetag);
-
-        // Count how many pages are left after tag filtering
-        $listpages['cant'] = count($listpages['data']);
 	}
 
 	if ( is_array($translations) ) {
@@ -423,6 +420,9 @@ function wikiplugin_listpages($data, $params)
 		$smarty->assign('wplp_used', $used);
 	}
 
+    // Count how many pages are left after tag filtering
+    $listpages['cant'] = count($listpages['data']);
+
 	$smarty->assign_by_ref('checkboxes_on', $showCheckbox);
 	$smarty->assign_by_ref('showNumberOfPages', $showNumberOfPages);
 	if (!empty($showPageAlias) && $showPageAlias == 'y')
@@ -437,11 +437,13 @@ function wikiplugin_listpages($data, $params)
 		}
         $smarty->assign("redirectTo", $_REQUEST["page"]);
 
-
+        // Count how many pages are left after sorting
         $smarty->assign("cant", $listpages['cant']);
+        // The following two are for tiki-listpages_content.tpl (pagination)
         $smarty->assign("pluginlistpages", 'y');
         $smarty->assign("pagination", $pagination);
         if ($pagination == 'y'){
+            // Show only x=$MaxRecords number of page entries on this page.
             for ($x = $offset_pagination ; $x < ($offset_pagination + $GLOBALS['maxRecords']) && $x < count($listpages['data']); $x ++){
                 $listpages_for_use[] = $listpages['data'][$x];
             }
