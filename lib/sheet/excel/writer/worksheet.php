@@ -357,7 +357,7 @@ class Spreadsheet_Excel_Writer_Worksheet extends Spreadsheet_Excel_Writer_BIFFwr
     * @param mixed   &$parser      The formula parser created for the Workbook
     * @access private
     */
-    function Spreadsheet_Excel_Writer_Worksheet($BIFF_version, $name,
+    function __construct($BIFF_version, $name,
                                                 $index, &$activesheet,
                                                 &$firstsheet, &$str_total,
                                                 &$str_unique, &$str_table,
