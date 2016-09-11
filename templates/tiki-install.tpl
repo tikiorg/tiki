@@ -759,10 +759,11 @@
 							<legend>
 								{icon name="group"} {tr}Tiki Community{/tr}
 							</legend>
-							{tr}The Tiki Community is a global network of developers, site operators, consultants and end users.{/tr}<br />
+							{tr}The Tiki Community is a global network of developers, site operators, <a href='https://tiki.org/Consultants' target='_blank'>consultants</a> and end users.{/tr}<br />
 							<ul>
 								<li><a href='https://tiki.org/Join' target='_blank'>{tr}Join the Community{/tr}</a></li>
 								<li><a href='https://tiki.org/Help' target='_blank'>{tr}Get Help with Tiki{/tr}</a></li>
+								<li><a href='https://tiki.org/Consultants' target='_blank'>{tr}Hire a Tiki Service Provider{/tr}</a></li>
 								<li>{tr}Help to improve the <a href='https://dev.tiki.org/' target='_blank'>Code</a> and the <a href='https://doc.tiki.org/' target='_blank'>Documentation</a>{/tr}</li>
 							</ul>
 						</fieldset>
