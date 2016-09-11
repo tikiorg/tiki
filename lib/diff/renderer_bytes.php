@@ -23,7 +23,12 @@ class Text_Diff_Renderer_bytes extends Text_Diff_Renderer
         $this->_delBytes = 0;
         $this->_first = $first;
     }
-	function _endDiff() 
+
+	function _startDiff()
+	{
+	}
+
+	function _endDiff()
 	{
         return 'add='.$this->_addBytes.'&amp;del='.$this->_delBytes;
 	}
