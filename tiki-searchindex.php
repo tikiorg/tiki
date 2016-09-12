@@ -149,7 +149,7 @@ $smarty->assign('facets', $facets);
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
-if ($prefs['search_use_facets'] == 'y') {
+if ($prefs['search_use_facets'] == 'y' && $prefs['unified_engine'] === 'elastic') {
 	$smarty->display("tiki-searchfacets.tpl");
 } else {
 	$smarty->display("tiki-searchindex.tpl");
