@@ -12,8 +12,7 @@ class EngineSetTest extends \PHPUnit_Framework_TestCase
 	function testNoEngines()
 	{
 		$engineSet = new EngineSet;
-		$this->assertCount(0, $engineSet->getBasicList());
-		$this->assertCount(0, $engineSet->getGenerator());
+		$this->assertEquals(0, $engineSet->getCount());
 	}
 
 	function testMultipleEngines()
@@ -21,7 +20,7 @@ class EngineSetTest extends \PHPUnit_Framework_TestCase
 		$engineSet = new EngineSet;
 		$engineSet->register('a', new Engine\FakeEngine([]));
 		$engineSet->register('b', new Engine\FakeEngine([]));
-		$this->assertCount(2, $engineSet->getBasicList());
+		$this->assertEquals(2, $engineSet->getCount());
 	}
 
 	function testMultipleWeightedEngines()
@@ -29,7 +28,7 @@ class EngineSetTest extends \PHPUnit_Framework_TestCase
 		$engineSet = new EngineSet;
 		$engineSet->registerWeighted('a', 1, new Engine\FakeEngine([]));
 		$engineSet->registerWeighted('b', 2, new Engine\FakeEngine([]));
-		$this->assertCount(2, $engineSet->getBasicList());
+		$this->assertEquals(2, $engineSet->getCount());
 	}
 
 	function testDuplicateNames()
@@ -37,7 +36,7 @@ class EngineSetTest extends \PHPUnit_Framework_TestCase
 		$engineSet = new EngineSet;
 		$engineSet->register('a', new Engine\FakeEngine([]));
 		$engineSet->register('a', new Engine\FakeEngine([]));
-		$this->assertCount(1, $engineSet->getBasicList());
+		$this->assertEquals(1, $engineSet->getCount());
 	}
 
 	function testRegisterGenerator()

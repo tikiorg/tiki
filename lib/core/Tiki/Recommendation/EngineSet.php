@@ -51,4 +51,8 @@ class EngineSet
 			}
 		}
 	}
+
+	function getCount() {
+		return count($this->engines);
+	}
 }

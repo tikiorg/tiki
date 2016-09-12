@@ -59,7 +59,7 @@ class Search_MySql_LargeDatasetTest extends PHPUnit_Framework_TestCase
 		);
 
 		$query = new Search_Query;
-		for ($i = 0; 1000 > $i; ++$i) {
+		for ($i = 0; 3000 > $i; ++$i) {
 			$document['field_' . $i] = $typeFactory->sortable('test');
 			$query->filterInitial('test', 'field_' . $i);
 		}
