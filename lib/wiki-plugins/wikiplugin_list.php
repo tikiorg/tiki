@@ -47,15 +47,14 @@ function wikiplugin_list($data, $params)
 
 	$matches = WikiParser_PluginMatcher::match($data);
 
-	$tsret = applyTablesorter($matches, $query);
-
 	$builder = new Search_Query_WikiBuilder($query);
 	$builder->enableAggregate();
+	$builder->apply($matches);
+	$tsret = $builder->applyTablesorter($matches);
 	if (!empty($tsret['max']) || !empty($_GET['numrows'])) {
 		$max = !empty($_GET['numrows']) ? $_GET['numrows'] : $tsret['max'];
 		$builder->wpquery_pagination_max($query, $max);
 	}
-	$builder->apply($matches);
 	$paginationArguments = $builder->getPaginationArguments();
 
 	if (!empty($_REQUEST[$paginationArguments['sort_arg']])) {
@@ -89,114 +88,4 @@ function wikiplugin_list($data, $params)
 	$out = $formatter->format($result);
 
 	return $out;
-}
-
-/**
- * Apply tablesorter is enabled
- *
- * @param WikiParser_PluginMatcher $matches
- * @param Search_Query $query
- * @return array
- */
-function applyTablesorter(WikiParser_PluginMatcher $matches, Search_Query $query)
-{
-	$ret = ['max' => false, 'tsOn' => false];
-	$parser = new WikiParser_PluginArgumentParser;
-	$args = [];
-	$tsc = [];
-	$tsenabled = Table_Check::isEnabled();
-
-	foreach ($matches as $match) {
-		$name = $match->getName();
-		if ($name == 'tablesorter') {
-			$tsargs = $parser->parse($match->getArguments());
-			$ajax = !empty($tsargs['server']) && $tsargs['server'] === 'y';
-			$ret['tsOn'] = Table_Check::isEnabled($ajax);
-			if (!$ret['tsOn']) {
-				TikiLib::lib('errorreport')->report(tra('List plugin: Feature "jQuery Sortable Tables" (tablesorter) is not enabled'));
-				return $ret;
-			}
-			if (isset($tsargs['tsortcolumns'])) {
-				$tsc = Table_Check::parseParam($tsargs['tsortcolumns']);
-			}
-			if (isset($tsargs['tspaginate'])) {
-				$tsp = Table_Check::parseParam($tsargs['tspaginate']);
-				if (isset($tsp[0]['max']) && $ajax) {
-					$ret['max'] = (int) $tsp[0]['max'];
-				}
-			}
-		}
-	}
-
-		foreach ($matches as $match) {
-		$name = $match->getName();
-		if ($name == 'column') {
-			$cols[] = $match;
-			$args[] = $parser->parse($match->getArguments());
-		} elseif ($name == 'format' && $tsenabled) {
-			// if fields have been "formatted" then get the original field name to filter on
-			$formatArgs = $parser->parse($match->getArguments());
-
-			$subPlugins = WikiParser_PluginMatcher::match($match->getBody());
-			foreach ($subPlugins as $subPlugin) {
-				if ($subPlugin->getName() === 'display') {
-					$displayArgs = $parser->parse($subPlugin->getArguments());
-					foreach($args as & $arg) {
-						if ($arg['field'] === $formatArgs['name']) {
-							$arg['field'] = $displayArgs['name'];
-							break;
-						}
-					}
-					break;	// will only work with the first display subplugin
-				}
-			}
-		}
-	}
-
-	if (Table_Check::isSort()) {
-		foreach ($_GET['sort'] as $key => $dir) {
-			$n = '';
-			switch ($tsc[$key]['type']) {
-				case 'digit':
-				case 'currency':
-				case 'percent':
-				case 'time':
-				case strpos($tsc[$key]['type'], 'date') !== false:
-					$n = 'n';
-					break;
-			}
-			$query->setOrder($args[$key]['field'] . '_' . $n . Table_Check::$dir[$dir]);
-		}
-	}
-
-	if (Table_Check::isFilter()) {
-		foreach ($_GET['filter'] as $key => $filter) {
-
-			switch ($tsc[$key]['type']) {
-				case 'digit':
-				case strpos($tsc[$key]['type'], 'date') !== false:
-					$from = 0; $to = 0;
-					$timestamps = explode(' - ', $filter);
-					if (count($timestamps) === 2) {
-						$from = $timestamps[0] / 1000;
-						$to = $timestamps[1] / 1000;
-					} else if (strpos($filter, '>=') === 0) {
-						$from = substr($filter, 2) / 1000;
-						$to = 'now';
-					} else if (strpos($filter, '<=') === 0) {
-						$from = '0000-00-00';
-						$to = substr($filter, 2) / 1000;
-					}
-					if ($from && $to) {
-						$query->filterRange($from, $to);
-						break;
-					}	// else fall through to default
-				default:
-					$query->filterContent($filter, $args[$key]['field']);
-					break;
-			}
-		}
-	}
-
-	return $ret;
 }

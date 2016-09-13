@@ -335,5 +335,119 @@ class Search_Query_WikiBuilder
 	{
 		return $this->boost == 1;
 	}
+
+	function applyTablesorter(WikiParser_PluginMatcher $matches, $hasactions = false)
+	{
+		$ret = ['max' => false, 'tsOn' => false];
+		$parser = new WikiParser_PluginArgumentParser;
+		$args = [];
+		$tsc = [];
+		$tsenabled = Table_Check::isEnabled();
+
+		foreach ($matches as $match) {
+			$name = $match->getName();
+			if ($name == 'tablesorter') {
+				$tsargs = $parser->parse($match->getArguments());
+				$ajax = !empty($tsargs['server']) && $tsargs['server'] === 'y';
+				$ret['tsOn'] = Table_Check::isEnabled($ajax);
+				if (!$ret['tsOn']) {
+					TikiLib::lib('errorreport')->report(tra('List plugin: Feature "jQuery Sortable Tables" (tablesorter) is not enabled'));
+					return $ret;
+				}
+				if (isset($tsargs['tsortcolumns'])) {
+					$tsc = Table_Check::parseParam($tsargs['tsortcolumns']);
+				}
+				if (isset($tsargs['tspaginate'])) {
+					$tsp = Table_Check::parseParam($tsargs['tspaginate']);
+					if (isset($tsp[0]['max']) && $ajax) {
+						$ret['max'] = (int) $tsp[0]['max'];
+					}
+				}
+			} elseif ($name == 'column') {
+				$args[] = $parser->parse($match->getArguments());
+			} elseif ($name == 'format' && $tsenabled) {
+				// if fields have been "formatted" then get the original field name to filter on
+				$formatArgs = $parser->parse($match->getArguments());
+
+				$subPlugins = WikiParser_PluginMatcher::match($match->getBody());
+				foreach ($subPlugins as $subPlugin) {
+					if ($subPlugin->getName() === 'display') {
+						$displayArgs = $parser->parse($subPlugin->getArguments());
+						foreach($args as & $arg) {
+							if ($arg['field'] === $formatArgs['name']) {
+								$arg['field'] = $displayArgs['name'];
+								break;
+							}
+						}
+						break;	// will only work with the first display subplugin
+					}
+				}
+			}
+		}
+
+		if (Table_Check::isSort()) {
+			foreach ($_GET['sort'] as $key => $dir) {
+				if( $hasactions ) {
+					$type = $tsc[$key]['type'];
+					$field = @$args[$key-1]['field'];
+				} else {
+					$type = $tsc[$key]['type'];
+					$field = $args[$key]['field'];
+				}
+				if( !$field )
+					continue;
+				$n = '';
+				switch ($type) {
+					case 'digit':
+					case 'currency':
+					case 'percent':
+					case 'time':
+					case strpos($type, 'date') !== false:
+						$n = 'n';
+						break;
+				}
+				$this->query->setOrder($field . '_' . $n . Table_Check::$dir[$dir]);
+			}
+		}
+
+		if (Table_Check::isFilter()) {
+			foreach ($_GET['filter'] as $key => $filter) {
+				if( $hasactions ) {
+					$type = $tsc[$key]['type'];
+					$field = @$args[$key-1]['field'];
+				} else {
+					$type = $tsc[$key]['type'];
+					$field = $args[$key]['field'];
+				}
+				if( !$field )
+					continue;
+				switch ($type) {
+					case 'digit':
+					case strpos($type, 'date') !== false:
+						$from = 0; $to = 0;
+						$timestamps = explode(' - ', $filter);
+						if (count($timestamps) === 2) {
+							$from = $timestamps[0] / 1000;
+							$to = $timestamps[1] / 1000;
+						} else if (strpos($filter, '>=') === 0) {
+							$from = substr($filter, 2) / 1000;
+							$to = 'now';
+						} else if (strpos($filter, '<=') === 0) {
+							$from = '0000-00-00';
+							$to = substr($filter, 2) / 1000;
+						}
+						if ($from && $to) {
+							$this->query->filterRange($from, $to);
+							break;
+						}	// else fall through to default
+					default:
+						$this->query->filterContent($filter, $field);
+						break;
+				}
+			}
+		}
+
+		return $ret;
+	}
 }
 
