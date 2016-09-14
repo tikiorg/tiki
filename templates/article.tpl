@@ -53,7 +53,7 @@
 
 	<div class="articleheading media clearfix">
 
-		<div class="{if $isfloat eq 'y'}pull-left{/if}{*{if $useImage eq 'y' and $hasImage eq 'n'} well well-sm{/if}*}">
+		<div class="pull-left">
 			{capture name=imgTitle}{if $show_image_caption eq 'y' and $image_caption}{$image_caption|escape}{elseif isset($topicName)}{tr}{$topicName}{/tr}{/if}{/capture}
 			{assign var="big_image" value=$prefs.art_header_text_pos eq 'below' && $list_image_x > 0}
 		{*	{if $big_image}
@@ -69,7 +69,7 @@
 				{* display own article image *}
 				<img
 					alt="{$smarty.capture.imgTitle}"
-					class="thumbnail"
+					{*class=""*}
 					src="article_image.php?image_type={if isset($preview) and $imageIsChanged eq 'y'}preview&amp;id={$previewId}{elseif isset($preview) and $subId}submission&amp;id={$subId}{else}article&amp;id={$articleId}{if $image_x > 0}&width={$image_x}{/if}{/if}"
 					{$style=''}
 					{if $image_y > 0}{$style=$style|cat:"max-height:"|cat:$image_y|cat:"px;"}{/if} style="max-width: 100%; height: auto; {$style}"
