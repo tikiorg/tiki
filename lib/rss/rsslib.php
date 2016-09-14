@@ -408,8 +408,6 @@ class RSSLib extends TikiDb_Bridge
 	function clear_rss_cache($rssId)
 	{
 		$this->items->deleteMultiple(array('rssId' => (int) $rssId));
-		$this->modules->update(array('refresh' => 0), array('rssId' => (int) $rssId,));
-
 	}
 
 	/* check if an rss feed name already exists */
