@@ -68,6 +68,8 @@ class Tracker_Field_Location extends Tracker_Field_Abstract implements Tracker_F
 						'separator' => '|',
 						'filter' => 'int',
 						'profile_reference' => 'tracker_field',
+						'parent' => 'input[name=trackerId]',
+						'parentkey' => 'tracker_id',
 						'sort_order' => 'tracker_id',
 					),
 					'sourceSearchEvent' => array(
