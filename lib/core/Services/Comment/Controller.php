@@ -127,6 +127,10 @@ class Services_Comment_Controller
 				$title = 'Untitled ' . TikiLib::lib('tiki')->get_long_datetime(TikiLib::lib('tikidate')->getTime());
 			}
 
+			if (count($errors) === 0 &&  $commentslib->check_for_topic($title, $data) !== false ){
+				$errors[] = tr('Duplicated comment, there is already another comment with the same text');
+			}
+
 			if (count($errors) === 0) {
 				$message_id = ''; // By ref
 				$threadId = $commentslib->post_new_comment(
