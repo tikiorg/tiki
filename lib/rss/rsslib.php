@@ -525,12 +525,20 @@ class RSSLib extends TikiDb_Bridge
 			$authors = $entry->getAuthors();
 
 			$categories = $entry->getCategories();
-		
+
+			$link = $entry->getLink();
+			if (! $link) {
+				$link = '';
+			}
+			$description = $entry->getDescription();
+			if (! $description) {
+				$description = '';
+			}
 			$data = $filter->filter(
 				array(
 					'title' => $entry->getTitle(),
-					'url' => $entry->getLink(),
-					'description' => $entry->getDescription(),
+					'url' => $link,
+					'description' => $description,
 					'content' => $entry->getContent(),
 					'author' => $authors ? implode(', ', $authors->getValues()) : '',
 					'categories' => $categories ? json_encode($categories->getValues()) : json_encode(array()),
