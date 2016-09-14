@@ -405,9 +405,19 @@ class RSSLib extends TikiDb_Bridge
 		$this->update_feeds(array( $rssId ), true);
 	}
 
-	function clear_rss_cache($rssId)
+	/**
+	 * @param int $rssId       feed id
+	 * @param int $olderThan   publication date more than than this number of seconds ago
+	 */
+	function clear_rss_cache($rssId, $olderThan = 0)
 	{
-		$this->items->deleteMultiple(array('rssId' => (int) $rssId));
+		$conditions = array('rssId' => (int)$rssId);
+
+		if ($olderThan) {
+			$conditions['publication_date'] = $this->items->lesserThan(time() - $olderThan);
+		}
+
+		$this->items->deleteMultiple($conditions);
 	}
 
 	/* check if an rss feed name already exists */
