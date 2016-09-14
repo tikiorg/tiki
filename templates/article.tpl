@@ -51,14 +51,14 @@
 
 {*	{if $prefs.art_trailer_pos ne 'between'}{include file='article_trailer.tpl'}{/if} *}
 
-	<div class="articleheading row">
+	<div class="articleheading media clearfix">
 
-		<div class="col-xs-6 col-sm-5 col-md-3{if $isfloat eq 'y'} pull-left{/if}{if $useImage eq 'y' and $hasImage eq 'n'} well well-sm{/if}">
+		<div class="{if $isfloat eq 'y'}pull-left{/if}{*{if $useImage eq 'y' and $hasImage eq 'n'} well well-sm{/if}*}">
 			{capture name=imgTitle}{if $show_image_caption eq 'y' and $image_caption}{$image_caption|escape}{elseif isset($topicName)}{tr}{$topicName}{/tr}{/if}{/capture}
 			{assign var="big_image" value=$prefs.art_header_text_pos eq 'below' && $list_image_x > 0}
-			{if $big_image}
-			<div class="imgbox" style="margin:auto; width:{$width}px">
-			{/if}
+		{*	{if $big_image}
+			<div class="imgbox" style="{if $isfloat eq 'y'}width:{$width}px{/if}">
+			{/if} *}
 
 			{* Show either a topic name, image OR a custom image (if there is a custom image or a topic). If a topic is set, link to it even if we show a custom image. *}
 			{if $topicId}
@@ -69,9 +69,10 @@
 				{* display own article image *}
 				<img
 					alt="{$smarty.capture.imgTitle}"
+					class="thumbnail"
 					src="article_image.php?image_type={if isset($preview) and $imageIsChanged eq 'y'}preview&amp;id={$previewId}{elseif isset($preview) and $subId}submission&amp;id={$subId}{else}article&amp;id={$articleId}{if $image_x > 0}&width={$image_x}{/if}{/if}"
 					{$style=''}
-					{if $image_y > 0}{$style=$style|cat:"max-height:"|cat:$image_y|cat:"px;"}{/if} style="{$style}"
+					{if $image_y > 0}{$style=$style|cat:"max-height:"|cat:$image_y|cat:"px;"}{/if} style="max-width: 100%; height: auto; {$style}"
 				>
 				{else}
 				{* display just the topic name *}
@@ -80,7 +81,7 @@
 			{elseif $topicId}
 				{if $topics[$topicId].image_size > 0}
 				<img
-					{if $big_image}class="cboxElement"{/if}
+					{* {if $big_image}class="cboxElement"{/if} *}
 					alt="{tr}{$topicName}{/tr}"
 					src="article_image.php?image_type=topic&amp;id={$topicId}"
 				>
@@ -90,7 +91,7 @@
 			{/if}
 			{if $topicId}</a>{/if}
 
-			{if $big_image}
+		{*	{if $big_image}
 				{if $show_image_caption eq 'y' and $image_caption || $image_x > 0}
 					<div class="center-block thumbcaption">
 						{if $image_x > 0}<div class="magnify"><a class="internal cboxElement" data-box="box" href="article_image.php?image_type=article&amp;id={$articleId}">{icon name='view' title=$smarty.capture.imgTitle}</a></div>{/if}
@@ -98,16 +99,16 @@
 					</div>
 				{/if}
 			</div> {* class="imgbox" *}
-			{/if}
+		{*	{/if} *}
 		</div>
 			{if $prefs.art_header_text_pos eq 'below' && $list_image_x > 0}
-		<div class="col-xs-12">
+		<div style="width: 100%; float: left;">
 			{elseif $isfloat eq 'n' and $topics[$topicId].image_size > 0}
-		<div class="col-xs-6 col-sm-7 col-md-9">
+		<div class="media-body">
 			{else}
-		<div class="col-sm-7 col-md-9">
+		<div class="articleheadingtext media-body" {if $isfloat eq 'y'}style="display: inline;"{/if}>
 			{/if}
-			<div class="articleheadingtext">
+			{* <div class="articleheadingtext media-body" {if $isfloat eq 'y'}style="display: inline;"{/if}> *}
 				{if $article_attributes}
 					<div class="articleattributes">
 						{foreach from=$article_attributes key=attname item=attvalue}
@@ -116,7 +117,7 @@
 					</div>
 				{/if}
 				{$parsed_heading}
-			</div>
+			{*</div>*}
 		</div>
 
 	</div>
