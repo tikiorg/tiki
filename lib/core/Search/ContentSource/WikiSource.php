@@ -143,6 +143,8 @@ class Search_ContentSource_WikiSource implements Search_ContentSource_Interface
 
 		if ($this->flaggedrevisionlib) {
 			$fields[] = 'wiki_approval_state';
+			$fields[] = 'approved_version';
+			$fields[] = 'approved_user';
 		}
 
 		return $fields;
