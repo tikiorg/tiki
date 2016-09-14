@@ -329,7 +329,7 @@ class TikiLib extends TikiDb_Bridge
 		$attempts = 0;
 		while ($response->isRedirect() && $attempts < 10) { // prevent redirect loop
 			$client->setUri($client->getUri());
-			$response = $client->request();
+			$response = $client->send();
 			$attempts++;
 		}
 
