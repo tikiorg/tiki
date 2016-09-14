@@ -90,6 +90,7 @@ class TikiDate
 		'Japan',
 		'Kwajalein',
 		'Libya',
+		'leap-seconds.list', // because PHP Fatal error was observed in Apache2 logfile
 		'MST7MDT',
 		'Navajo',
 		'NZ-CHAT',
