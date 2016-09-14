@@ -71,6 +71,16 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'description' => tr('Uses the translate function to replace %0 etc with the field values. E.g. "%0 any text %1"'),
 						'filter' => 'text',
 					),
+					'displayFieldsListType' => array(
+						'name' => tr('Multiple Fields display type'),
+						'description' => tr('Display multiple fields as concatenated list in a dropdown or as a table.'),
+						'filter' => 'alpha',
+						'options' => array(
+							'dropdown' => tr('Dropdown'),
+							'table' => tr('Table'),
+						),
+						'legacy_index' => 14,
+					),
 					'status' => array(
 						'name' => tr('Status Filter'),
 						'description' => tr('Limit the available items to a selected set'),
@@ -150,6 +160,24 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						),
 						'legacy_index' => 12,
 					),
+					'sumMultipleValues' => array(
+						'name' => tr('Calculate total amount'),
+						'description' => tr('Choose one of the multiple displayed fields and provide a sum of all selected values.'),
+						'filter' => 'int',
+						'legacy_index' => 15,
+						'profile_reference' => 'tracker_field',
+						'parent' => 'trackerId',
+						'parentkey' => 'tracker_id',
+					),
+					'saveSumToField' => array(
+						'name' => tr('Save total amount field'),
+						'description' => tr('Save the sum to a particular field.'),
+						'filter' => 'int',
+						'legacy_index' => 16,
+						'profile_reference' => 'tracker_field',
+						'parent' => 'input[name=trackerId]',
+						'parentkey' => 'tracker_id',
+					),
 					'indexRemote' => array(
 						'name' => tr('Index remote fields'),
 						'description' => tr('Index one or multiple fields from the master tracker along with the child, separated by |'),
@@ -219,7 +247,11 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			return false;
 		}
 
-		if ($this->getOption('preSelectFieldMethod' === 'crossSelect')) {
+		if ($this->getOption('preSelectFieldMethod') === 'crossSelect') {
+			return false;
+		}
+
+		if ($this->getOption('displayFieldsListType') === 'table') {
 			return false;
 		}
 
@@ -280,6 +312,9 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 		$data = array(
 			'list' => $this->getItemList(),
+			'displayFieldsListType' => $this->getOption('displayFieldsListType'),
+			'sumMultipleValues' => $this->getOption('sumMultipleValues'),
+			'saveSumToField' => $this->getOption('saveSumToField'),
 		);
 
 		$data['selectMultipleValues'] = (bool) $this->getOption('selectMultipleValues');
@@ -320,14 +355,13 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 		$data['filter'] = $this->buildFilter();
 
-		if ($data['crossSelect'] === 'y') {
-			$fullList = $data['list'];
-			if (!empty($preselection) && is_array($preselection)) {
-				$data['remoteData'] = array_intersect_key($fullList, array_flip($preselection));
-			} else {
-				$data['remoteData'] = $fullList;
-			}
+		if ($data['crossSelect'] === 'y' && !empty($preselection) && is_array($preselection)) {
+			if( isset($data['list']['items']) )
+				$data['list']['items'] = array_intersect_key($data['list']['items'], array_flip($preselection));
+			else
+				$data['list'] = array_intersect_key($data['list'], array_flip($preselection));
 		}
+		
 		return $this->renderTemplate('trackerinput/itemlink.tpl', $context, $data);
 	}
 
@@ -547,13 +581,21 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 	function getItemList()
 	{
 		if ($displayFieldsList = $this->getDisplayFieldsListArray()) {
-			$list = TikiLib::lib('trk')->concat_all_items_from_fieldslist(
-				$this->getOption('trackerId'),
-				$displayFieldsList,
-				$this->getOption('status', 'opc'),
-				' ',
-				true
-			);
+			if( $this->getOption('displayFieldsListType') === 'table' ) {
+				$list = TikiLib::lib('trk')->get_all_items_from_fieldslist(
+					$this->getOption('trackerId'),
+					$displayFieldsList,
+					$this->getOption('status', 'opc')
+				);
+			} else {
+				$list = TikiLib::lib('trk')->concat_all_items_from_fieldslist(
+					$this->getOption('trackerId'),
+					$displayFieldsList,
+					$this->getOption('status', 'opc'),
+					' ',
+					true
+				);
+			}
 		} else {
 			$list = TikiLib::lib('trk')->get_all_items(
 				$this->getOption('trackerId'),
