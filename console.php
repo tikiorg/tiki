@@ -114,6 +114,7 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\ProfileExport\Init);
 	$console->add(new Tiki\Command\RecommendationBatchCommand);
 	$console->add(new Tiki\Command\RefreshRssCommand);
+	$console->add(new Tiki\Command\RssClearCacheCommand);
 	$console->add(new Tiki\Command\TrackerImportCommand);
 	$console->add(new Tiki\Command\TrackerClearCommand);
 } else {
@@ -135,6 +136,7 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\UnavailableCommand('profile:export:init'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('recommendation:batch'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('rss:refresh'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('rss:clear'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('tracker:import'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('tracker:clear'))->ignoreValidationErrors();
 }
