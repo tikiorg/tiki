@@ -46,11 +46,15 @@ function smarty_function_query($params, $smarty)
 			// make a copy of the $_GET and $_POST arrays as it seems php7 assigns these by reference now
 			// and so they get directly modified below instead of just the query string being set
 			$request = [];
-			foreach($_GET as $k => $v) {
-				$request[$k] = $v;
+			if (!empty($_GET)) {
+				foreach ($_GET as $k => $v) {
+					$request[$k] = $v;
+				}
 			}
-			foreach($_POST as $k => $v) {
-				$request[$k] = $v;
+			if (!empty($_POST)) {
+				foreach ($_POST as $k => $v) {
+					$request[$k] = $v;
+				}
 			}
 		}
 		$query = $request;
