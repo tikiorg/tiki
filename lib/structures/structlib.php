@@ -683,7 +683,7 @@ class StructLib extends TikiLib
 		}
 		return $back;
 	}
-	public function get_toc($page_ref_id,$order='asc',$showdesc=false,$numbering=true,$numberPrefix='',$type='plain',$page='',$maxdepth=0,$mindepth=0, $mindepthsortalpha=0, $structurePageName='')
+	public function get_toc($page_ref_id,$order='asc',$showdesc=false,$numbering=true,$numberPrefix='',$type='plain',$page='',$maxdepth=0,$mindepth=0, $sortalpha=0, $structurePageName='')
 	{
 		global $user, $prefs;
 
@@ -721,7 +721,7 @@ class StructLib extends TikiLib
 						'page' => $page,
 						'maxdepth' => $maxdepth,
 						'mindepth' => $mindepth,
-						'mindepthsortalpha' => $mindepthsortalpha,
+						'sortalpha' => $sortalpha,
 						'structurePageName' => $structurePageName
 					)
 				);
@@ -730,7 +730,40 @@ class StructLib extends TikiLib
 			}
 		}
 
-		$nodelist = $this->fetch_toc($structure_tree, $showdesc, $numbering, $type, $page, $maxdepth, $mindepth, $mindepthsortalpha, 0, $structurePageName);
+		if ($structure_tree != '') {
+			if ($mindepth > 0) {
+				$currentLevel = $structure_tree;
+				for ($i = 0; $i < $mindepth; $i++) {
+					$deeperLevel = array();
+					if ($currentLevel != '') {
+						foreach ($currentLevel as $leaf) {
+							if (isset($leaf['sub']) && is_array($leaf['sub'])) {
+								foreach ($leaf['sub'] as $sub) {
+									$deeperLevel[] = $sub;
+								}
+							}
+						}
+					}
+					$currentLevel = $deeperLevel;
+				}
+				if ($maxdepth > 0) {
+					$maxdepth = $maxdepth - $mindepth;
+					if ($maxdepth <= 0) {
+						$maxdepth = 1;
+					}
+				}
+			}
+			$structure_tree = $currentLevel;
+			if ($sortalpha == 'alpha'){
+				if ($order == 'asc') {
+					usort($structure_tree, array($this, 'compareByPageName'));
+				} else {
+					usort($structure_tree, array($this, 'compareByPageNameDesc'));
+				}
+			}
+		}
+
+		$nodelist = $this->fetch_toc($structure_tree, $showdesc, $numbering, $type, $page, $maxdepth, 0, $structurePageName);
 		if ($type === 'admin' && empty($nodelist)) {
 			$nodelist = "<ol class='admintoc' style='min-height: 4em;' data-params='$json_params'></ol>";
 		}
@@ -742,39 +775,19 @@ class StructLib extends TikiLib
 		return strcmp($a['pageName'], $b['pageName']);
 	}
 
-	public function fetch_toc($structure_tree,$showdesc,$numbering,$type='plain',$page='',$maxdepth=0,$mindepth=0,$mindepthsortalpha=0,$cur_depth=0,$structurePageName='')
+	public function compareByPageNameDesc($a, $b)
+	{
+		return strcmp($b['pageName'], $a['pageName']);
+	}
+
+	public function fetch_toc($structure_tree,$showdesc,$numbering,$type='plain',$page='',$maxdepth=0,$cur_depth=0,$structurePageName='')
 	{
 		$smarty = TikiLib::lib('smarty');
 		global $user;
 		$ret='';
 		if ($structure_tree != '') {
-			if ($mindepth > 0) {
-				$currentLevel = $structure_tree;
-				for($i=0; $i<$mindepth; $i++){
-					$deeperLevel = array();
-					if ($currentLevel != '') {
-						foreach ($currentLevel as $leaf) {
-							if (isset($leaf['sub']) && is_array($leaf['sub'])) {
-								foreach($leaf['sub'] as $sub){
-									$deeperLevel[] = $sub;
-								}
-							}
-						}
-					}
-					$currentLevel = $deeperLevel;
-				}
-				if ($mindepthsortalpha){
-					usort($currentLevel, array($this, 'compareByPageName'));
-				}
-				if ($maxdepth > 0) {
-					$maxdepth = $maxdepth - $mindepth;
-					if ($maxdepth <= 0 ){
-						$maxdepth = 1;
-					}
-				}
-				$mindepth = 0;
-				$ret .= $this->fetch_toc($currentLevel, $showdesc, $numbering, $type, $page, $maxdepth, $mindepth, $mindepthsortalpha, $cur_depth, $structurePageName);
-			} elseif (($maxdepth <= 0) || ($cur_depth < $maxdepth)) {
+			if (($maxdepth <= 0) || ($cur_depth < $maxdepth)) {
+
 
 				$smarty->assign('toc_type', $type);
 				$ret.= $smarty->fetch('structures_toc-startul.tpl')."\n";
@@ -806,7 +819,7 @@ class StructLib extends TikiLib
 					$smarty->assign('numbering', $numbering);
 					$ret.=$smarty->fetch('structures_toc-leaf.tpl');
 					if (isset($leaf['sub']) && is_array($leaf['sub'])) {
-						$ret.=$this->fetch_toc($leaf['sub'], $showdesc, $numbering, $type, $page, $maxdepth, $mindepth, $mindepthsortalpha, $cur_depth+1, $structurePageName)."</li>\n";
+						$ret.=$this->fetch_toc($leaf['sub'], $showdesc, $numbering, $type, $page, $maxdepth, $cur_depth+1, $structurePageName)."</li>\n";
 					} else {
 						$ret.=str_repeat("\t", ($cur_depth*2)+1)."</li>\n";
 					}
