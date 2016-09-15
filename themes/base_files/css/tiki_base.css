@@ -548,7 +548,7 @@ body.wikitext {
   padding: 6px;
   border: 1px solid #eee;
   border-radius: 4px;
-  z-index: 1001;
+  z-index: 2;
 }
 .editable-inline.failure {
   background: transparent url('../../../img/icons/lock_gray.png') no-repeat top right;
@@ -3894,6 +3894,9 @@ table.tablesorter thead tr.tablesorter-filter-row {
 table.wikiplugin_tracker td {
   vertical-align: top;
   padding-bottom: 1.2em;
+}
+table.wikiplugin_trackerlist {
+  position: relative;
 }
 .wikiplugin_edit textarea {
   width: 99%;

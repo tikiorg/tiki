@@ -154,6 +154,11 @@ var tm = { hour: dt.getHours(), minute: dt.getMinutes(), second: dt.getSeconds()
 			$command . '", "jscalendar", ' . $datepicker_options . ');'
 		);
 	}
+
+	$smarty->loadPlugin('smarty_function_icon');
+	$icon = smarty_function_icon(['name' => 'calendar'], $smarty);
+	$headerlib->add_jq_onready("$('#" . $params['id'] . "').closest('div.jscal').find(' button.ui-datepicker-trigger').empty().append('$icon').addClass('btn btn-sm btn-link').css({'padding' : '0px', 'font-size': '16px'});");
+
 	return '<div class="jscal" style="margin-bottom:10px">' . $html . '</div>';
 }
 
