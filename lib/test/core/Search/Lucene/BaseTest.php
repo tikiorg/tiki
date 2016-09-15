@@ -25,5 +25,10 @@ class Search_Lucene_BaseTest extends Search_Index_BaseTest
 			$this->index->destroy();
 		}
 	}
+
+	protected function highlight($word)
+	{
+		return '<b style="color:black;background-color:#ff66ff">'.$word.'</b>';
+	}
 }
 
