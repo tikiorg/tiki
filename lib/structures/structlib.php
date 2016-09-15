@@ -752,8 +752,8 @@ class StructLib extends TikiLib
 						$maxdepth = 1;
 					}
 				}
+				$structure_tree = $currentLevel;
 			}
-			$structure_tree = $currentLevel;
 			if ($sortalpha == 'alpha'){
 				if ($order == 'asc') {
 					usort($structure_tree, array($this, 'compareByPageName'));
