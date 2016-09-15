@@ -687,6 +687,8 @@ CREATE TABLE `tiki_extwiki` (
   `extwikiId` int(12) NOT NULL auto_increment,
   `name` varchar(200) NOT NULL default '',
   `extwiki` varchar(255) default NULL,
+  `indexname` varchar(255) default NULL,
+  `groups` varchar(1024) default NULL,
   PRIMARY KEY (`extwikiId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
