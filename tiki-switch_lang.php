@@ -69,7 +69,7 @@ if (strstr($orig_url, 'tiki-index.php') || strstr($orig_url, 'tiki-read_article.
                 $type = 'article';
 	} else if (!empty($param['page'])) {
 		$page = $param['page'];
-		$info = $tikilib->get_page_info($page);
+		$info = $tikilib->get_page_info(TikiLib::lib('wiki')->get_page_by_slug($page));
 		$pageId = $info['page_id'];
 		$type = 'wiki page';
 	} else {
@@ -86,7 +86,9 @@ if (strstr($orig_url, 'tiki-index.php') || strstr($orig_url, 'tiki-read_article.
 		} elseif (!empty($param['articleId'])) {
 			$orig_url = preg_replace('/(.*[&?]articleId=)' . $pageId . '(.*)/', '${1}' . $bestLangPageId . '$2', $orig_url);
 		} else {
-			$newPage = urlencode($tikilib->get_page_name_from_id($bestLangPageId));
+			$newPage = $tikilib->get_page_name_from_id($bestLangPageId);
+			$newPage = TikiLib::lib('wiki')->get_slug_by_page($newPage);
+			$newPage = urlencode($newPage);
 			$orig_url = preg_replace('/(.*[&?]page=)'.preg_quote($page).'(.*)/', '${1}'."${newPage}".'$2', $orig_url);
 			$orig_url = preg_replace('/(.*)(tiki-index.php)$/', "$1$2?page=$newPage", $orig_url);
 		}

@@ -86,6 +86,22 @@ class WikiLib extends TikiLib
 		return $slug;
 	}
 
+	/**
+	 * Return a Slug, if set, or the page name supplied as result
+	 *
+	 * @param string $page
+	 * @return string
+	 */
+	function get_slug_by_page($page)
+	{
+		$pages = TikiDb::get()->table('tiki_pages');
+		$slug = $pages->fetchOne('pageSlug', ['pageName' => $page]);
+		if ($slug){
+			return $slug;
+		}
+		return $page;
+	}
+
 	public function get_creator($name)
 	{
 		return $this->getOne('select `creator` from `tiki_pages` where `pageName`=?', array($name));
