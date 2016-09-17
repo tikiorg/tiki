@@ -2994,6 +2994,11 @@ class FileGalLib extends TikiLib
 				$cachelib->cacheItem($cacheName, serialize($fgal_perms), 'fgals_perms_'.$galleryId.'_');
 			}
 
+            // If the current user is the file owner, then list the file (fix for the userfiles - wasn't listing even if trying to list own files)
+            if ($my_user == $res['creator']){
+                $res['perms']['tiki_p_view_file_gallery'] = 'y';
+            }
+            
 			// Don't return the current item, if :
 			//  the user has no rights to view the file gallery AND no rights to list all galleries (in case it's a gallery)
 			if ( ( $res['perms']['tiki_p_view_file_gallery'] != 'y' && ! $this->user_has_perm_on_object($user, $res['id'], $object_type, 'tiki_p_view_file_gallery') )
