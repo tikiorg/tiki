@@ -11,11 +11,11 @@
 		{accordion_group title="{tr}General{/tr}"}
 			<div class="form-group">
 				<label for="name">{tr}Name{/tr}</label>
-				<input class="form-control" type="text" name="name" value="{$info.name|escape}" required="required">
+				<input class="form-control" type="text" name="name" id="name" value="{$info.name|escape}" required="required">
 			</div>
 			<div class="form-group">
 				<label for="description">{tr}Description{/tr}</label>
-				<textarea class="form-control" name="description" rows="4" cols="40">{$info.description|escape}</textarea>
+				<textarea class="form-control" name="description" id="description" rows="4" cols="40">{$info.description|escape}</textarea>
 			</div>
 			<div class="checkbox">
 				<label>
@@ -34,7 +34,7 @@
 			</div>
 			<div class="form-group depends" data-on="useRatings">
 				<label for="ratingOptions">{tr}Rating options{/tr}</label>
-				<input class="form-controls" type="text" name="ratingOptions" value="{$info.ratingOptions|default:'-2,-1,0,1,2'|escape}">
+				<input class="form-controls" type="text" name="ratingOptions" id="ratingOptions" value="{$info.ratingOptions|default:'-2,-1,0,1,2'|escape}">
 			</div>
 			<div class="checkbox depends" data-on="useRatings">
 				<label>
@@ -93,7 +93,7 @@
 		{accordion_group title="{tr}Display{/tr}"}
 			<div class="form-group">
 				<label class="control-label" for="logo">{tr}Logo{/tr}</label>
-				<input class="form-control" type="text" name="logo" value="{$info.logo|escape}">
+				<input class="form-control" type="text" name="logo" id="logo" value="{$info.logo|escape}">
 				<div class="help-block">
 					{tr}Recommended size: 64x64px.{/tr}
 				</div>
@@ -121,7 +121,7 @@
 			</div>
 			<div class="form-group depends" data-on="showCreated">
 				<label for="showCreatedFormat">{tr}Creation date format{/tr}</label>
-				<input type="text" name="showCreatedFormat" value="{$info.showCreatedFormat|escape}">
+				<input type="text" name="showCreatedFormat" id="showCreatedFormat" value="{$info.showCreatedFormat|escape}">
 				<div class="help-block">
 					<a rel="external" class="link" target="strftime" href="http://www.php.net/manual/en/function.strftime.php">{tr}Date and Time Format Help{/tr}</a>
 				</div>
@@ -156,7 +156,7 @@
 			</div>
 			<div class="form-group depends" data-on="showLastModif">
 				<label for="showLastModifFormat">{tr}Modification date format{/tr}</label>
-				<input class="form-control" type="text" name="showLastModifFormat" value="{$info.showLastModifFormat|escape}">
+				<input class="form-control" type="text" name="showLastModifFormat" id="showLastModifFormat" value="{$info.showLastModifFormat|escape}">
 				<div class="help-block">
 					<a class="link" target="strftime" href="http://www.php.net/manual/en/function.strftime.php">{tr}Date and Time Format Help{/tr}</a>
 				</div>
@@ -170,7 +170,7 @@
 			</div>
 			<div class="form-group">
 				<label for="defaultOrderKey">{tr}Default sort order{/tr}</label>
-				<select name="defaultOrderKey" class="form-control">
+				<select name="defaultOrderKey" id="defaultOrderKey" class="form-control">
 					{foreach from=$sortFields key=k item=label}
 						<option value="{$k|escape}" {if $k eq $info.defaultOrderKey} selected="selected"{/if}>{$label|truncate:42:'...'|escape}</option>
 					{/foreach}
@@ -178,7 +178,7 @@
 			</div>
 			<div class="form-group">
 				<label for="defaultOrderDir">{tr}Default sort direction{/tr}</label>
-				<select name="defaultOrderDir" class="form-control">
+				<select name="defaultOrderDir" id="defaultOrderDir" class="form-control">
 					<option value="asc" {if $info.defaultOrderDir eq 'asc'}selected="selected"{/if}>{tr}ascending{/tr}</option>
 					<option value="desc" {if $info.defaultOrderDir eq 'desc'}selected="selected"{/if}>{tr}descending{/tr}</option>
 				</select>
@@ -243,7 +243,7 @@
 		{accordion_group title="{tr}Status{/tr}"}
 			<div class="form-group">
 				<label for="newItemStatus">{tr}New item status{/tr}</label>
-				<select name="newItemStatus" class="form-control">
+				<select name="newItemStatus" id="newItemStatus" class="form-control">
 					{foreach key=st item=stdata from=$statusTypes}
 						<option value="{$st|escape}"
 							{if $st eq $info.newItemStatus} selected="selected"{/if}>
@@ -254,7 +254,7 @@
 			</div>
 			<div class="form-group">
 				<label for="modItemStatus">{tr}Modified item status{/tr}</label>
-				<select name="modItemStatus" class="form-control">
+				<select name="modItemStatus" id="modItemStatus" class="form-control">
 					<option value="">{tr}No change{/tr}</option>
 					{foreach key=st item=stdata from=$statusTypes}
 						<option value="{$st|escape}"
@@ -279,7 +279,7 @@
 		{accordion_group title="{tr}Notifications{/tr}"}
 			<div class="form-group">
 				<label for="outboundEmail">{tr}Copy activity to email{/tr}</label>
-				<input name="outboundEmail" value="{$info.outboundEmail|escape}" class="email_multi form-control" size="60">
+				<input name="outboundEmail" id="outboundEmail" value="{$info.outboundEmail|escape}" class="email_multi form-control" size="60">
 				<div class="help-block">
 					{tr}You can add several email addresses by separating them with commas.{/tr}
 				</div>
@@ -313,8 +313,8 @@
 
 			{if $prefs.feature_groupalert eq 'y'}
 				<div class="form-group">
-					{tr}Group alerted on item modification{/tr}
-					<select name="groupforAlert">
+					<label for="groupforAlert">{tr}Group alerted on item modification{/tr}</label>
+					<select name="groupforAlert" id="groupforAlert">
 						<option value=""></option>
 						{foreach from=$groupList item=g}
 							<option value="{$g|escape}" {if $g eq $groupforAlert}selected="selected"{/if}>{$g|escape}</option>
@@ -322,9 +322,9 @@
 					</select>
 				</div>
 				<div class="checkbox">
-					<input type="checkbox" name="showeachuser" value="1"
+					<input type="checkbox" name="showeachuser" id="showeachuser" value="1"
 						{if $showeachuser eq 'y'}checked="checked"{/if}>
-					{tr}Allow user selection for small groups{/tr}
+					<label for="showeachuser">{tr}Allow user selection for small groups{/tr}</label>
 				</div>
 			{/if}
 		{/accordion_group}
@@ -414,11 +414,11 @@
 				</div>
 				<div class="form-group depends" data-on="start">
 					<label for="startDate">{tr}Date{/tr}</label>
-					<input type="date" name="startDate" value="{$startDate|escape}" class="form-control">
+					<input type="date" name="startDate" id="startDate" value="{$startDate|escape}" class="form-control">
 				</div>
 				<div class="form-group depends" data-on="start">
 					<label for="startTime">{tr}Time{/tr}</label>
-					<input type="time" name="startTime" value="{$startTime|default:'00:00'|escape}" class="form-control">
+					<input type="time" name="startTime" id="startTime" value="{$startTime|default:'00:00'|escape}" class="form-control">
 				</div>
 				<div class="checkbox">
 					<label>
@@ -429,11 +429,11 @@
 				</div>
 				<div class="form-group depends" data-on="end">
 					<label for="endDate">{tr}Date{/tr}</label>
-					<input type="date" name="endDate" value="{$endDate|escape}" class="form-control">
+					<input type="date" name="endDate" id="endDate" value="{$endDate|escape}" class="form-control">
 				</div>
 				<div class="form-group depends" data-on="end">
 					<label for="endTime">{tr}Time{/tr}</label>
-					<input type="time" name="endTime" value="{$endTime|default:'00:00'|escape}" class="form-control">
+					<input type="time" name="endTime" id="endTime" value="{$endTime|default:'00:00'|escape}" class="form-control">
 				</div>
 			</fieldset>
 		{/accordion_group}
@@ -462,7 +462,7 @@
 				</div>
 				<div class="form-group depends" data-on="autoCreateGroup">
 					<label for="autoCreateGroupInc">{tr}Groups will include{/tr}</label>
-					<select name="autoCreateGroupInc" class="form-control">
+					<select name="autoCreateGroupInc" id="autoCreateGroupInc" class="form-control">
 						<option value=""></option>
 						{foreach from=$groupList item=g}
 							<option value="{$g|escape}" {if $g eq $info.autoCreateGroupInc}selected="selected"{/if}>{$g|escape}</option>
