@@ -7,7 +7,7 @@
 {block name=content}
 <div class="panel-body" style="overflow: visible;">
 	<p>
-		<strong>{tr _0=$page|escape}Page: "%0"{/tr}</strong>
+		<strong>{tr}Page:{/tr} "{$page|escape}"</strong>
 	</p>
 	<form method="post" action="tiki-editpage.php?page={$page|escape:'url'}" id='editpageform' name='editpageform'>
 		{* Repeat all arguments from the page creation request *}
