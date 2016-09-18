@@ -138,6 +138,7 @@ class Services_Tracker_Controller
 			'description' => $description,
 			'descriptionIsParsed' => $wikiparse,
 			'modal' => $modal,
+			'fieldPrefix' => $definition->getConfiguration('fieldPrefix'),
 		);
 	}
 
@@ -1360,6 +1361,7 @@ class Services_Tracker_Controller
 				'name' => $name,
 				'description' => $input->description->text(),
 				'descriptionIsParsed' => $input->descriptionIsParsed->int() ? 'y' : 'n',
+				'fieldPrefix' => $input->fieldPrefix->text(),
 				'showStatus' => $input->showStatus->int() ? 'y' : 'n',
 				'showStatusAdminOnly' => $input->showStatusAdminOnly->int() ? 'y' : 'n',
 				'showCreated' => $input->showCreated->int() ? 'y' : 'n',

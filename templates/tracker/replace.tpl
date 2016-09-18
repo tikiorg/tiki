@@ -23,6 +23,10 @@
 					{tr}Description is wiki-parsed{/tr}
 				</label>
 			</div>
+			<div class="form-group">
+				<label for="fieldPrefix">{tr}Field Prefix{/tr}</label>
+				<input class="form-control" type="text" name="fieldPrefix" id="fieldPrefix" value="{$info.fieldPrefix|escape}">
+			</div>
 		{/accordion_group}
 		{accordion_group title="{tr}Features{/tr}"}
 			<div class="checkbox">

@@ -8,15 +8,16 @@
 <form method="post" action="{service controller=tracker action=add_field}">
 	<div class="form-group">
 		<label for="name" class="control-label">{tr}Name{/tr}</label>
-		<input type="text" name="name" value="{$name|escape}" required="required" class="form-control">
+		<input type="text" name="name" id="name" value="{$name|escape}" required="required" class="form-control">
 	</div>
 	<div class="form-group" style="display: none;">
 		<label for="permName" class="control-label">{tr}Permanent name{/tr}</label>
-		<input type="text" name="permName" value="{$permName|escape}" pattern="[a-zA-Z0-9_]+" class="form-control">
+		<input type="text" name="permName" id="permName" value="{$permName|escape}" pattern="[a-zA-Z0-9_]+" class="form-control">
+		<input type="hidden" id="fieldPrefix" value="{$fieldPrefix|escape}">
 	</div>
 	<div class="form-group">
 		<label for="type" class="control-label">{tr}Type{/tr}</label>
-		<select name="type" class="form-control">
+		<select name="type" id="type" class="form-control">
 			{foreach from=$types key=k item=info}
 				<option value="{$k|escape}"
 					{if $type eq $k}selected="selected"{/if}>
@@ -45,7 +46,7 @@
 	{/remarksbox}
 	<div class="form-group">
 		<label for="description" class="control-label">{tr}Description{/tr}</label>
-		<textarea name="description" class="form-control">{$description|escape}</textarea>
+		<textarea name="description" id="description" class="form-control">{$description|escape}</textarea>
 	</div>
 	<div class="checkbox">
 		<label>

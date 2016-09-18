@@ -27,6 +27,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler
 		return array(
 			'name' => '',
 			'description' => '',
+			'fieldPrefix' => '',
 			'show_status' => 'showStatus',
 			'show_status_admin_only' => 'showStatusAdminOnly',
 			'list_default_status' => 'defaultStatus',
