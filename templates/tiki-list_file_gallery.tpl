@@ -1,12 +1,12 @@
 {* $Id$ *}
-{title help="" admpage="fgal"}{tr}File Galleries{/tr}{/title}
+{title help="File Galleries" admpage="fgal"}
 	{if $edit_mode eq 'y' and $galleryId eq 0}
 		{tr}Create a File Gallery{/tr}
 	{else}
 		{if $edit_mode eq 'y'}
 			{tr}Edit Gallery:{/tr}
 		{/if}
-		{$name}
+		{tr}{$name}{/tr}
 	{/if}
 {/title}
 {if $prefs.javascript_enabled != 'y'}
