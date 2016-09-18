@@ -313,8 +313,10 @@ function md5_check_dir($root, $dir, $version, &$queries)
 					$file = @mysqli_real_escape_string($link,$file);
 				}
 
-				$hash = md5_file($entry);
-				$queries[] = "INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('$file', '$hash', '$version', 0);";
+				if (is_readable($entry)) {
+					$hash = md5_file($entry);
+					$queries[] = "INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('$file', '$hash', '$version', 0);";
+				}
 			}
 		}
 	}
