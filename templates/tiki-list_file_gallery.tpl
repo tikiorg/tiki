@@ -1,5 +1,5 @@
 {* $Id$ *}
-{title help="" admpage="fgal"}{tr}File Galleries{/tr}{/title}
+{title help="File Galleries" admpage="fgal"}
 	{if $edit_mode eq 'y' and $galleryId eq 0}
 		{tr}Create a File Gallery{/tr}
 	{else}
