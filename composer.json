@@ -20,7 +20,7 @@
 		"codemirror/codemirror": "4.12.0",
 		"cwspear/bootstrap-hover-dropdown": "^2",
 		"dompdf/dompdf": "0.6.1",
-		"ezyang/htmlpurifier": "4.7.0",
+		"ezyang/htmlpurifier": "^4",
 		"fortawesome/font-awesome": "4.5.0",
 		"google/apiclient":"1.1.6",
 		"jcapture-applet/jcapture-applet": "dev-master",
