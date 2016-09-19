@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "77712f2964b7437d02da02f029e58648",
-    "content-hash": "ce26bad2ec84aa70b80409da44411a06",
+    "hash": "b1ea6929d29682c381dc13d6dbb68389",
+    "content-hash": "630c9739b1e769ee015e3416db999617",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -95,17 +95,17 @@
         },
         {
             "name": "blueimp/jquery-file-upload",
-            "version": "9.11.0",
+            "version": "9.12.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vkhramtsov/jQuery-File-Upload.git",
-                "reference": "e6236257b91f4824235ec6941f22878eb9bb1ed2"
+                "reference": "f60a273f69303b140c5089e5cde1c8a187a94871"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/blueimp-jquery-file-upload-e6236257b91f4824235ec6941f22878eb9bb1ed2-zip-44acc0.zip",
-                "reference": "e6236257b91f4824235ec6941f22878eb9bb1ed2",
-                "shasum": "2633d19cb573ea7a7cef8d10d950be894586dec9"
+                "url": "https://composer.tiki.org/dist/blueimp-jquery-file-upload-f60a273f69303b140c5089e5cde1c8a187a94871-zip-94d2ec.zip",
+                "reference": "f60a273f69303b140c5089e5cde1c8a187a94871",
+                "shasum": "ec88c09049ac62006ac3eac22ead409c8f25f4d9"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -141,7 +141,7 @@
                 "upload",
                 "widget"
             ],
-            "time": "2015-08-11 06:07:24"
+            "time": "2016-06-13 05:52:31"
         },
         {
             "name": "ckeditor/ckeditor",
