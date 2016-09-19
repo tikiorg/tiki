@@ -1059,13 +1059,13 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/chartjs/Chart.js.git",
-                "reference": "7dcbde48f99387b352c4c237cb40931321079e9b"
+                "reference": "894b9928e77f97dba02181e1f9258a44692dc290"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/nnnick-chartjs-7dcbde48f99387b352c4c237cb40931321079e9b-zip-4ee584.zip",
-                "reference": "7dcbde48f99387b352c4c237cb40931321079e9b",
-                "shasum": "34344f0d835e144254ed02bdc40cd00dd8e07c24"
+                "url": "https://composer.tiki.org/dist/nnnick-chartjs-894b9928e77f97dba02181e1f9258a44692dc290-zip-cd9b95.zip",
+                "reference": "894b9928e77f97dba02181e1f9258a44692dc290",
+                "shasum": "5609a742ce8a1ebb4b354c904719b8500279c957"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -1092,7 +1092,7 @@
                 "JS",
                 "chart"
             ],
-            "time": "2016-09-06 19:21:24"
+            "time": "2016-09-13 03:21:40"
         },
         {
             "name": "openlayers/ol3",
@@ -1473,17 +1473,17 @@
         },
         {
             "name": "studio-42/elfinder",
-            "version": "2.1.14",
+            "version": "2.1.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Studio-42/elFinder.git",
-                "reference": "02c19ae09a36ec83a837b28eb5b232f5ce7b0bd9"
+                "reference": "2370a0af78b4ca0f028bacb3fb9c3d092ff0ae81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/studio-42-elfinder-02c19ae09a36ec83a837b28eb5b232f5ce7b0bd9-zip-beaa92.zip",
-                "reference": "02c19ae09a36ec83a837b28eb5b232f5ce7b0bd9",
-                "shasum": "584b64cf653366a31ea690d1aa64dbab5ffda6b0"
+                "url": "https://composer.tiki.org/dist/studio-42-elfinder-2370a0af78b4ca0f028bacb3fb9c3d092ff0ae81-zip-31a130.zip",
+                "reference": "2370a0af78b4ca0f028bacb3fb9c3d092ff0ae81",
+                "shasum": "90f6fcbc112d0f78c085858b94770558fe766259"
             },
             "require": {
                 "php": ">=5.2"
@@ -1527,7 +1527,7 @@
             ],
             "description": "File manager for web",
             "homepage": "http://elfinder.org",
-            "time": "2016-07-25 00:34:19"
+            "time": "2016-09-12 01:53:22"
         },
         {
             "name": "svg-edit/svg-edit",
@@ -3837,16 +3837,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.5.2",
+            "version": "1.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "da8529775f14f4fdae33f916eb0cf65f6afbddbc"
+                "reference": "ea74994a3dc7f8d2f65a06009348f2d63c81e61f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/da8529775f14f4fdae33f916eb0cf65f6afbddbc",
-                "reference": "da8529775f14f4fdae33f916eb0cf65f6afbddbc",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/ea74994a3dc7f8d2f65a06009348f2d63c81e61f",
+                "reference": "ea74994a3dc7f8d2f65a06009348f2d63c81e61f",
                 "shasum": ""
             },
             "require": {
@@ -3875,7 +3875,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2016-09-06 16:07:05"
+            "time": "2016-09-16 13:37:59"
         },
         {
             "name": "phpdocumentor/reflection-common",
