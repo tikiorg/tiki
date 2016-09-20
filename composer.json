@@ -21,7 +21,7 @@
 		"cwspear/bootstrap-hover-dropdown": "^2.2.1",
 		"dompdf/dompdf": "0.6.1",
 		"ezyang/htmlpurifier": "^4.8.0",
-		"fortawesome/font-awesome": "4.5.0",
+		"fortawesome/font-awesome": "^4.6.3",
 		"google/apiclient":"1.1.6",
 		"jcapture-applet/jcapture-applet": "dev-master",
 		"jquery/jquery": "2.2.2",

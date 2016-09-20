@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a2e90b402df825368dc93eae190ec5dc",
-    "content-hash": "5ea980cd67012e1cc86364dd9b93f322",
+    "hash": "5ab0ea66459bc7f05bac80ae9e251c78",
+    "content-hash": "7dcf409b4f01a2c66788798884d49ef0",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -520,17 +520,17 @@
         },
         {
             "name": "fortawesome/font-awesome",
-            "version": "v4.5.0",
+            "version": "v4.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FortAwesome/Font-Awesome.git",
-                "reference": "fddd2c240452e6c8990c4ef75e0265b455aa7968"
+                "reference": "8e241f209faa1dd2182c9fdc9c352d8806504a4e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/fortawesome-font-awesome-fddd2c240452e6c8990c4ef75e0265b455aa7968-zip-85d023.zip",
-                "reference": "fddd2c240452e6c8990c4ef75e0265b455aa7968",
-                "shasum": "aac351fc7d3c6bb766ea141e2857820826ac4967"
+                "url": "https://composer.tiki.org/dist/fortawesome-font-awesome-8e241f209faa1dd2182c9fdc9c352d8806504a4e-zip-1c9628.zip",
+                "reference": "8e241f209faa1dd2182c9fdc9c352d8806504a4e",
+                "shasum": "d86b7b35739a18354b331740bc5e5667a81900fd"
             },
             "require-dev": {
                 "jekyll": "1.0.2",
@@ -539,7 +539,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.0.x-dev"
+                    "dev-master": "4.6.x-dev"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -564,7 +564,7 @@
                 "font",
                 "icon"
             ],
-            "time": "2015-11-30 17:28:02"
+            "time": "2016-05-13 15:42:25"
         },
         {
             "name": "google/apiclient",
@@ -4757,23 +4757,23 @@
         },
         {
             "name": "sebastian/environment",
-            "version": "1.3.7",
+            "version": "1.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "4e8f0da10ac5802913afc151413bc8c53b6c2716"
+                "reference": "be2c607e43ce4c89ecd60e75c6a85c126e754aea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/sebastian-environment-4e8f0da10ac5802913afc151413bc8c53b6c2716-zip-65fddb.zip",
-                "reference": "4e8f0da10ac5802913afc151413bc8c53b6c2716",
-                "shasum": "b893d6bab443d2db4852720cae0b3ca70f88986d"
+                "url": "https://composer.tiki.org/dist/sebastian-environment-be2c607e43ce4c89ecd60e75c6a85c126e754aea-zip-edab34.zip",
+                "reference": "be2c607e43ce4c89ecd60e75c6a85c126e754aea",
+                "shasum": "27219d2b34ba2c09b111eefe940a06774a799975"
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": "^5.3.3 || ^7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.4"
+                "phpunit/phpunit": "^4.8 || ^5.0"
             },
             "type": "library",
             "extra": {
@@ -4803,7 +4803,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2016-05-17 03:18:57"
+            "time": "2016-08-18 05:49:44"
         },
         {
             "name": "sebastian/exporter",
@@ -5101,17 +5101,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.1.3",
+            "version": "v3.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "1819adf2066880c7967df7180f4f662b6f0567ac"
+                "reference": "f291ed25eb1435bddbe8a96caaef16469c2a092d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/symfony-yaml-1819adf2066880c7967df7180f4f662b6f0567ac-zip-f9a05e.zip",
-                "reference": "1819adf2066880c7967df7180f4f662b6f0567ac",
-                "shasum": "7442483f7aba2f07e0927b7438efffaaf9a74b21"
+                "url": "https://composer.tiki.org/dist/symfony-yaml-f291ed25eb1435bddbe8a96caaef16469c2a092d-zip-c46ff9.zip",
+                "reference": "f291ed25eb1435bddbe8a96caaef16469c2a092d",
+                "shasum": "403ebf43640c6211924972aa65a535450109b4aa"
             },
             "require": {
                 "php": ">=5.5.9"
@@ -5146,7 +5146,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-07-17 14:02:08"
+            "time": "2016-09-02 02:12:52"
         },
         {
             "name": "webmozart/assert",
