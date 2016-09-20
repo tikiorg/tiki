@@ -934,9 +934,12 @@ body.fullscreen {
   text-align: left;
 }
 #fullscreenbutton {
-  position: absolute;
-  top: 2px;
-  right: 10px;
+  background-color: rgba(0, 0, 0, 0.25);
+  border-bottom-left-radius: 100%;
+  padding: 5px 5px 15px 15px;
+  position: fixed;
+  right: 0;
+  top: 0;
   z-index: 1040;
 }
 #show-errors-button {
