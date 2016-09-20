@@ -595,6 +595,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 					' ',
 					true
 				);
+				$list = $this->handleDuplicates($list);
 			}
 		} else {
 			$list = TikiLib::lib('trk')->get_all_items(
@@ -602,9 +603,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 				$this->getOption('fieldId'),
 				$this->getOption('status', 'opc')
 			);
+			$list = $this->handleDuplicates($list);
 		}
-
-		$list = $this->handleDuplicates($list);
 
 		return $list;
 	}
