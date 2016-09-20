@@ -66,20 +66,19 @@
 		    <div class="form-group">
 		    	<label class="col-sm-3 control-label">{tr}Add new server{/tr}</label>
 	    			<div class="col-sm-7 margin-bottom-sm">
-	    				<input type="text" name="new[name]" value="" class="form-control"
-	    				placeholder="Server Name"/>
+	    				<input type="text" name="new[name]" value="" class="form-control" placeholder="Server Name"/>
 	    			</div>
 	    			<div class="col-sm-7 col-sm-offset-3 margin-bottom-sm">
-	    				<input type="text" name="new[port]" value="" class="form-control"
-	    				placeholder="Server Port"/>
+	    				<input type="text" name="new[host]" value="" class="form-control" placeholder="Server Host"/>
 	    			</div>
 	    			<div class="col-sm-7 col-sm-offset-3 margin-bottom-sm">
-	    				<input type="text" name="new[path]" value="" class="form-control"
-	    				placeholder="Server Path"/>
+	    				<input type="text" name="new[port]" value="" class="form-control" placeholder="Server Port"/>
 	    			</div>
 	    			<div class="col-sm-7 col-sm-offset-3 margin-bottom-sm">
-	    				<input type="text" name="new[groups]" value="" class="form-control"
-	    				placeholder="Server Groups"/>
+	    				<input type="text" name="new[path]" value="" class="form-control" placeholder="Server Path"/>
+	    			</div>
+	    			<div class="col-sm-7 col-sm-offset-3 margin-bottom-sm">
+	    				<input type="text" name="new[groups]" value="" class="form-control" placeholder="Server Groups"/>
 	    			</div>
 	    	</div>
 	    	<div class="form-group">

@@ -184,6 +184,11 @@ if (isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_key
 					}
 				} else {
 					$groups = preg_split('/\s*,\s*/', $prefs['interlist'][$prefs['feature_intertiki_mymaster']]['groups']);
+					if (empty($groups) || empty($groups[0])) {
+						$smarty->assign('msg', tra('No groups set on Intertiki client.'));
+						$smarty->display('error.tpl');
+						exit;
+					}
 					foreach ($groups as $group) {
 						$userlib->assign_user_to_group($user, trim($group));
 					}
