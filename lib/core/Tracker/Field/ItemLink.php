@@ -160,24 +160,6 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						),
 						'legacy_index' => 12,
 					),
-					'sumMultipleValues' => array(
-						'name' => tr('Calculate total amount'),
-						'description' => tr('Choose one of the multiple displayed fields and provide a sum of all selected values.'),
-						'filter' => 'int',
-						'legacy_index' => 15,
-						'profile_reference' => 'tracker_field',
-						'parent' => 'trackerId',
-						'parentkey' => 'tracker_id',
-					),
-					'saveSumToField' => array(
-						'name' => tr('Save total amount field'),
-						'description' => tr('Save the sum to a particular field.'),
-						'filter' => 'int',
-						'legacy_index' => 16,
-						'profile_reference' => 'tracker_field',
-						'parent' => 'input[name=trackerId]',
-						'parentkey' => 'tracker_id',
-					),
 					'indexRemote' => array(
 						'name' => tr('Index remote fields'),
 						'description' => tr('Index one or multiple fields from the master tracker along with the child, separated by |'),
@@ -313,9 +295,23 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		$data = array(
 			'list' => $this->getItemList(),
 			'displayFieldsListType' => $this->getOption('displayFieldsListType'),
-			'sumMultipleValues' => $this->getOption('sumMultipleValues'),
-			'saveSumToField' => $this->getOption('saveSumToField'),
 		);
+
+		$servicelib = TikiLib::lib('service');
+		if( $this->getItemId() ) {
+			$data['next'] = $servicelib->getUrl(array(
+				'controller' => 'tracker',
+				'action' => 'update_item',
+				'trackerId' => $this->getConfiguration('trackerId'),
+				'itemId' => $this->getItemId(),
+			));
+		} else {
+			$data['next'] = $servicelib->getUrl(array(
+				'controller' => 'tracker',
+				'action' => 'insert_item',
+				'trackerId' => $this->getConfiguration('trackerId'),
+			));
+		}
 
 		$data['selectMultipleValues'] = (bool) $this->getOption('selectMultipleValues');
 

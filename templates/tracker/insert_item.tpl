@@ -21,7 +21,8 @@
 			{if ! $modal}
 				<div class="checkbox">
 					<label>
-						<input type="checkbox" name="next" value="{service controller=tracker action=insert_item trackerId=$trackerId}">
+						<input type="hidden" name="next" value="{$next}">
+						<input type="checkbox" name="next" value="{service controller=tracker action=insert_item trackerId=$trackerId next=$next}">
 						{tr}Create another{/tr}
 					</label>
 				</div>

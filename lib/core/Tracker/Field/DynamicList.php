@@ -38,6 +38,8 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 						'filter' => 'int',
 						'legacy_index' => 1,
 						'profile_reference' => 'tracker_field',
+						'parent' => 'trackerId',
+						'parentkey' => 'tracker_id',
 					),
 					'filterFieldIdHere' => array(
 						'name' => tr('Field ID (This tracker)'),
@@ -45,6 +47,8 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 						'filter' => 'int',
 						'legacy_index' => 2,
 						'profile_reference' => 'tracker_field',
+						'parent' => 'input[name=trackerId]',
+						'parentkey' => 'tracker_id',
 					),
 					'listFieldIdThere' => array(
 						'name' => tr('Listed Field'),
@@ -52,6 +56,8 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 						'filter' => 'int',
 						'legacy_index' => 3,
 						'profile_reference' => 'tracker_field',
+						'parent' => 'trackerId',
+						'parentkey' => 'tracker_id',
 					),
 					'statusThere' => array(
 						'name' => tr('Status Filter'),
@@ -66,6 +72,16 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 							'pc' => tr('pending, closed'),
 						),
 						'legacy_index' => 4,
+					),
+					'hideBlank' => array(
+						'name' => tr('Hide blank'),
+						'description' => tr('Hide first blank option, thus preselecting the first available option.'),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('No'),
+							1 => tr('Yes'),
+						),
+						'legacy_index' => 5,
 					),
 				),
 			),
@@ -102,6 +118,7 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 		$isMandatory = $this->getConfiguration('isMandatory');
 		$insertId = $this->getInsertId();
 		$originalValue = $this->getConfiguration('value');
+		$hideBlank = $this->getConfiguration('hideBlank');
 		
 		if( $filterFieldIdHere == $this->getConfiguration('fieldId') )
 			return tr('*** ERROR: Field ID (This tracker) cannot be the same: %0 ***', $filterFieldIdHere);
@@ -129,6 +146,7 @@ $("input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFieldI
 			mandatory: "' . $isMandatory . '",
 			insertId: "' . $insertId . '",  // need to pass $insertId in case we have more than one field bound to the same eventsource
 			originalValue:  "' . $originalValue . '",
+			hideBlank: '.json_encode($hideBlank).',
 			filterFieldValueHere: $(this).val() // We need the field value for the fieldId filterfield for the item $(this).val
 		},
 		

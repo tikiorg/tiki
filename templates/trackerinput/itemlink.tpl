@@ -3,10 +3,6 @@
 	{if $data.selectMultipleValues}
 		<input type="hidden" name="{$field.ins_id}_old" value="{$field.value|escape}" />
 	{/if}
-	{if $data.sumMultipleValues and $data.saveSumToField}
-		{* needed by inline editor *}
-		<input type="hidden" name="ins_{$data.saveSumToField}" value="" />
-	{/if}
 	{if $data.displayFieldsListType === 'table'}
 	  <div class="table-responsive">
 			<table class="table">
@@ -38,19 +34,6 @@
 				else
 					$(this).closest('form').find(':checkbox:checked[name^={{$field.ins_id}}]').click();
 			});
-			{{if $data.sumMultipleValues and $data.saveSumToField}}
-				$(".{{$field.ins_id}}-checkbox").on('click', function (e) {
-					var total = 0,
-						current = 0;
-					$(".{{$field.ins_id}}-checkbox:checked").each(function(i, ckb) {
-						current = parseFloat($('#il'+ckb.value+'-{{$data.sumMultipleValues}}').text());
-						if( isNaN(current) )
-							current = 0;
-						total += current;
-					});
-					$('input[name=ins_{{$data.saveSumToField}}]').val(total);
-				});
-			{{/if}}
 		{/jq}
 	{else}
 		<select name="{$field.ins_id}{if $data.selectMultipleValues}[]{/if}" {if $data.preselection and $data.crossSelect neq 'y'}disabled="disabled"{/if} {if $data.selectMultipleValues}multiple="multiple"{/if} class="form-control">
@@ -65,7 +48,7 @@
 		</select>
 	{/if}
 	{if $field.options_map.addItems}
-		<a class="btn btn-default insert-tracker-item" href="{service controller=tracker action=insert_item trackerId=$field.options_map.trackerId}">{$field.options_map.addItems|escape}</a>
+		<a class="btn btn-default insert-tracker-item" href="{service controller=tracker action=insert_item trackerId=$field.options_map.trackerId next=$data.next|escape}">{$field.options_map.addItems|escape}</a>
 		{jq}
 			$("select[name={{$field.ins_id}}]").next().clickModal({
 				success: function (data) {

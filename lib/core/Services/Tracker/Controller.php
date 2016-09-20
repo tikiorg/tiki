@@ -844,6 +844,7 @@ class Services_Tracker_Controller
 			'status' => $status,
 			'format' => $format,
 			'editItemPretty' => $editItemPretty,
+			'next' => $input->next->url(),
 		);
 	}
 
