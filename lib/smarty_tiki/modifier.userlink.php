@@ -30,8 +30,10 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * Example: {$userinfo.login|userlink:'link':::25}
  */
 
-function smarty_modifier_userlink($other_user, $class='userlink', $idletime='not_set', $fullname='', $max_length=0, $popup='y')
+function smarty_modifier_userlink($other_user, $class='userlink', $idletime='not_set', $fullname='', $max_length=0, $popup='')
 {
+	global $prefs;
+
 	if (empty($other_user)){
 		return "";
 	}
@@ -56,6 +58,12 @@ function smarty_modifier_userlink($other_user, $class='userlink', $idletime='not
 	if ($max_length) {
 		TikiLib::lib('smarty')->loadPlugin('smarty_modifier_truncate');
 		$fullname = smarty_modifier_truncate($fullname, $max_length, '...', true);
+	}
+
+	if (empty($popup) && $prefs['feature_community_mouseover'] == 'n') {
+		$popup = 'n';
+	} else {
+		$popup = 'y';
 	}
 
 	return TikiLib::lib('user')->build_userinfo_tag($other_user, $fullname, $class, $popup);
