@@ -58,6 +58,15 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 						),
 						'legacy_index' => 3,
 					),
+					'useTimeAgo' => array(
+						'name' => tr('Time Ago'),
+						'description' => tr('Use timeago.js if the feature is enabled'),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('No'),
+							1 => tr('Yes'),
+						),
+					),
 				),
 			),
 		);
@@ -97,10 +106,16 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 
 	function renderInnerOutput($context = array())
 	{
+		global $prefs;
+
 		$tikilib = TikiLib::lib('tiki');
 		$value = $this->getConfiguration('value');
 
 		if ($value) {
+			if ($prefs['jquery_timeago'] === 'y' && $this->getOption('useTimeAgo')) {
+				TikiLib::lib('header')->add_jq_onready('$("time.timeago").timeago();');
+				return '<time class="timeago" datetime="' . TikiLib::date_format('c', $value, false, 5, false) .  '">' . $tikilib->get_short_datetime($value) . '</time>';
+			}
 			$date = $tikilib->get_short_date($value);
 			if ($this->getOption('datetime') == 'd') {
 				return $date;
@@ -115,7 +130,6 @@ class Tracker_Field_DateTime extends Tracker_Field_Abstract implements Tracker_F
 			}
 
 			$current = $tikilib->get_short_date($tikilib->now);
-			global $prefs;
 
 			if ($date == $current && $prefs['tiki_same_day_time_only'] == 'y' ) {
 				return $tikilib->get_short_time($value);

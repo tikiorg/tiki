@@ -37,6 +37,15 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 						),
 						'legacy_index' => 1,
 					),
+					'useTimeAgo' => array(
+						'name' => tr('Time Ago'),
+						'description' => tr('Use timeago.js if the feature is enabled'),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('No'),
+							1 => tr('Yes'),
+						),
+					),
 				),
 			),
 		);
