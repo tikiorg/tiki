@@ -11,21 +11,21 @@ class Math_Formula_Function_Add extends Math_Formula_Function
 	{
 		$list = array();
 
-    foreach ($element as $child) {
-      $child = $this->evaluateChild($child);
+		foreach ($element as $child) {
+			$child = $this->evaluateChild($child);
 
-      if (is_array($child)) {
-        $list = array_merge($list, $child);
-      } else {
-        $list[] = $child;
-      }
-    }
+			if (is_array($child)) {
+				$list = array_merge($list, $child);
+			} else {
+				$list[] = $child;
+			}
+		}
 
-    if (empty($list)) {
-      return 0;
-    } else {
-      return array_sum($list);
-    }
+		if (empty($list)) {
+			return 0;
+		} else {
+			return array_sum($list);
+		}
 	}
 }
 
