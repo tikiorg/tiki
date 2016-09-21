@@ -25,7 +25,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/adodb-adodb-5.18.zip",
                 "reference": null,
-                "shasum": "a25a0a29bddded00c90971b66403f63786f3a8b8"
+                "shasum": "5311e4dd79cd3e841ae55be98c3f6f876bc768a4"
             },
             "type": "library"
         },
@@ -777,7 +777,7 @@
             "version": "1.9.4",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/CSS-Tricks/AnythingSlider/archive/v1.9.4.zip",
+                "url": "https://composer.tiki.org/problematic/AnythingSlider-v1.9.4.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -876,9 +876,9 @@
             "version": "1.13.1",
             "dist": {
                 "type": "zip",
-                "url": "https://jqueryvalidation.org/files/jquery-validation-1.13.1.zip",
+                "url": "https://composer.tiki.org/dist/jquery-plugins-jquery-validation-1.13.1.zip",
                 "reference": null,
-                "shasum": null
+                "shasum": "9c54893a3e580a4a48db7e04699feb4af6f43e80"
             },
             "type": "library"
         },
@@ -953,7 +953,7 @@
             "version": "2.26.6",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/Mottie/tablesorter/archive/v2.26.6.zip",
+                "url": "https://composer.tiki.org/problematic/tablesorter-v2.26.6.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -3676,7 +3676,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zetacomponents/Webdav/zipball/44a182f559e5c7bebccab5a112dd3ba8c84a48c0",
+                "url": "https://composer.tiki.org/problematic/zetacomponents-Webdav-1.1.3-0-g2057c28.zip",
                 "reference": "44a182f559e5c7bebccab5a112dd3ba8c84a48c0",
                 "shasum": ""
             },
