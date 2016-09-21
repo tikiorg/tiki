@@ -60,11 +60,10 @@ function prefs_category_list()
 			'default' => array(''), //empty string needed to keep preference from setting unexpectedly
 		),
 		'category_sort_ascii' => array(
-			'name' => tra('Sort categories by legacy ASCII sequence'),
-			'description' => tra('If turned on, will sort categories taking into account all characters as upper case, in ASCII sequence, will only consider limited set of accented characters. Might be needed to be able to override the normal sort by prepending punctuation characters to category names, such as "-" to sort at the beginning and "[" to sort at the end.'), 
+			'name' => tra('Sort categories case insensitively'),
+			'description' => tra('Ignore case and accents when listing categories. Disable to use the "locale" sort settings.'),
 			'type' => 'flag',
-			'tags' => array('advanced'),
-			'default' => 'n',
+			'default' => 'y',
 		),
 		'category_autogeocode_within' => array(
 			'name' => tra('Automatically geocode items when categorized in'),
