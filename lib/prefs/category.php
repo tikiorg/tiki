@@ -63,7 +63,7 @@ function prefs_category_list()
 			'name' => tra('Sort categories case insensitively'),
 			'description' => tra('Ignore case and accents when listing categories. Disable to use the "locale" sort settings.'),
 			'type' => 'flag',
-			'default' => 'y',
+			'default' => 'n',
 		),
 		'category_autogeocode_within' => array(
 			'name' => tra('Automatically geocode items when categorized in'),
