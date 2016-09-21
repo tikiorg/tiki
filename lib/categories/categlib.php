@@ -170,7 +170,7 @@ class CategLib extends ObjectLib
 		$oldParentId=$oldCategory['parentId'];
 		$oldParentName=$this->get_category_name($oldParentId);
 
-		if (($oldCategoryName != $name || $oldParentId != $parentId) && $this->exist_child_category($parentId, $name)) {
+		if ((strcasecmp($oldCategoryName, $name) !== 0 || $oldParentId != $parentId) && $this->exist_child_category($parentId, $name)) {
 			throw new Exception(tr('A category named %0 already exists in %1.', $name, $this->get_category_name($parentId)));
 		}
 
