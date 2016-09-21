@@ -448,7 +448,11 @@ if ($my and $writerfield) {
 	if (!empty($_REQUEST['filtervalue_other'])) {
 		$filtervalue = $_REQUEST['filtervalue_other'];
 	}
-	$exactvalue = '';
+	$field = $trackerDefinition->getField($filterfield);
+	if( $field && in_array($field['type'], array('d', 'D', 'R')) )
+		$exactvalue = $filtervalue;
+	else
+		$exactvalue = '';
 }
 $smarty->assign('filtervalue', $filtervalue);
 if (is_array($filtervalue)) {
