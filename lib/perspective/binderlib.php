@@ -24,12 +24,15 @@ class AreasLib extends CategLib
 	{
 		$this->areas = $this->table('tiki_areas');
 		$this->cacheAreas();
+
+		parent::__construct();
 	}
 
 	function HandleObjectCategories($objectCategoryIds)
 	{
 		global $prefs;
 		$perspectivelib = TikiLib::lib('perspective');
+		$accesslib = TikiLib::lib('access');
 
 		$current_object = current_object();
 
@@ -60,7 +63,7 @@ class AreasLib extends CategLib
 
 				if (($area && !$area['share_common']) || ($objectArea && $objectArea['exclusive'])) {
 					$perspectivelib->set_perspective($objectPerspective, true);
-					ZendOpenId\OpenId::redirect(ZendOpenId\OpenId::selfUrl());
+					$accesslib->redirect(ZendOpenId\OpenId::selfUrl(), '', 301	);
 				}
 			}
 		}
@@ -70,7 +73,7 @@ class AreasLib extends CategLib
 			if ($area) {
 				if ( !$area['share_common']) {
 					$perspectivelib->set_perspective($objectPerspective, true);
-					ZendOpenId\OpenId::redirect(ZendOpenId\OpenId::selfUrl());
+					$accesslib->redirect(ZendOpenId\OpenId::selfUrl(), '', 301);
 				}
 			}
 		}
