@@ -25,7 +25,7 @@
                 "type": "zip",
                 "url": "https://composer.tiki.org/dist/adodb-adodb-5.18.zip",
                 "reference": null,
-                "shasum": "a25a0a29bddded00c90971b66403f63786f3a8b8"
+                "shasum": "5311e4dd79cd3e841ae55be98c3f6f876bc768a4"
             },
             "type": "library"
         },
@@ -750,7 +750,7 @@
             "version": "1.9.4",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/CSS-Tricks/AnythingSlider/archive/v1.9.4.zip",
+                "url": "https://composer.tiki.org/problematic/AnythingSlider-v1.9.4.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -849,9 +849,9 @@
             "version": "1.13.1",
             "dist": {
                 "type": "zip",
-                "url": "https://jqueryvalidation.org/files/jquery-validation-1.13.1.zip",
+                "url": "https://composer.tiki.org/dist/jquery-plugins-jquery-validation-1.13.1.zip",
                 "reference": null,
-                "shasum": null
+                "shasum": "9c54893a3e580a4a48db7e04699feb4af6f43e80"
             },
             "type": "library"
         },
@@ -926,7 +926,7 @@
             "version": "2.25.7",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/Mottie/tablesorter/archive/v2.25.7.zip",
+                "url": "https://composer.tiki.org/problematic/tablesorter-v2.25.7.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -1543,17 +1543,17 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.8.9",
+            "version": "v2.8.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "ab4c3f085c8f5a56536845bf985c4cef30bf75fd"
+                "reference": "44b499521defddf2eae17a18c811bbdae4f98bdf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/symfony-filesystem-ab4c3f085c8f5a56536845bf985c4cef30bf75fd-zip-02d8cb.zip",
-                "reference": "ab4c3f085c8f5a56536845bf985c4cef30bf75fd",
-                "shasum": "8334fdaa270d2df8294d6d97511bd7b804665f28"
+                "url": "https://composer.tiki.org/dist/symfony-filesystem-44b499521defddf2eae17a18c811bbdae4f98bdf-zip-39489a.zip",
+                "reference": "44b499521defddf2eae17a18c811bbdae4f98bdf",
+                "shasum": "e4d6d7c1dcc77e582c1d95cbd66e4b0e459ef4fc"
             },
             "require": {
                 "php": ">=5.3.9"
@@ -1588,7 +1588,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2016-07-20 05:41:28"
+            "time": "2016-09-06 10:55:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -3413,7 +3413,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zetacomponents/Webdav/zipball/2057c2870cc735893520ce418bd080c1c9f0f72c",
+                "url": "https://composer.tiki.org/problematic/zetacomponents-Webdav-1.1.3-0-g2057c28.zip",
                 "reference": "2057c2870cc735893520ce418bd080c1c9f0f72c",
                 "shasum": ""
             },
@@ -4400,23 +4400,23 @@
         },
         {
             "name": "sebastian/environment",
-            "version": "1.3.7",
+            "version": "1.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "4e8f0da10ac5802913afc151413bc8c53b6c2716"
+                "reference": "be2c607e43ce4c89ecd60e75c6a85c126e754aea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/sebastian-environment-4e8f0da10ac5802913afc151413bc8c53b6c2716-zip-65fddb.zip",
-                "reference": "4e8f0da10ac5802913afc151413bc8c53b6c2716",
-                "shasum": "b893d6bab443d2db4852720cae0b3ca70f88986d"
+                "url": "https://composer.tiki.org/dist/sebastian-environment-be2c607e43ce4c89ecd60e75c6a85c126e754aea-zip-edab34.zip",
+                "reference": "be2c607e43ce4c89ecd60e75c6a85c126e754aea",
+                "shasum": "27219d2b34ba2c09b111eefe940a06774a799975"
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": "^5.3.3 || ^7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.4"
+                "phpunit/phpunit": "^4.8 || ^5.0"
             },
             "type": "library",
             "extra": {
@@ -4446,7 +4446,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2016-05-17 03:18:57"
+            "time": "2016-08-18 05:49:44"
         },
         {
             "name": "sebastian/exporter",
@@ -4656,17 +4656,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.1.3",
+            "version": "v3.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "1819adf2066880c7967df7180f4f662b6f0567ac"
+                "reference": "f291ed25eb1435bddbe8a96caaef16469c2a092d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/symfony-yaml-1819adf2066880c7967df7180f4f662b6f0567ac-zip-f9a05e.zip",
-                "reference": "1819adf2066880c7967df7180f4f662b6f0567ac",
-                "shasum": "7442483f7aba2f07e0927b7438efffaaf9a74b21"
+                "url": "https://composer.tiki.org/dist/symfony-yaml-f291ed25eb1435bddbe8a96caaef16469c2a092d-zip-c46ff9.zip",
+                "reference": "f291ed25eb1435bddbe8a96caaef16469c2a092d",
+                "shasum": "403ebf43640c6211924972aa65a535450109b4aa"
             },
             "require": {
                 "php": ">=5.5.9"
@@ -4701,7 +4701,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-07-17 14:02:08"
+            "time": "2016-09-02 02:12:52"
         },
         {
             "name": "webmozart/assert",
