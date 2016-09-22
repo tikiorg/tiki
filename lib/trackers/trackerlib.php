@@ -823,6 +823,30 @@ class TrackerLib extends TikiLib
 		return $res;
 	}
 
+	public function get_all_items_from_fieldslist($trackerId, $fieldsId, $status='o')
+	{
+		if (is_string($fieldsId)) {
+			$fieldsId = preg_split('/\|/', $fieldsId, -1, PREG_SPLIT_NO_EMPTY);
+		}
+		$res = array(
+			'fields' => array(),
+			'items' => array()
+		);
+		$definition = Tracker_Definition::get($trackerId);
+		foreach ($fieldsId as $field) {
+			if( $myfield = $definition->getField($field) ) {
+				$res['fields'][] = $myfield['name'];
+				$tmp = $this->get_all_items($trackerId, $field, $status);
+				foreach ($tmp as $key => $value) {
+					if( empty($res['items'][$key]) )
+						$res['items'][$key] = array();
+					$res['items'][$key][$field] = $value;
+				}
+			}
+		}
+		return $res;
+	}
+
 
 	public function valid_status($status)
 	{

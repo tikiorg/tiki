@@ -71,6 +71,16 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'description' => tr('Uses the translate function to replace %0 etc with the field values. E.g. "%0 any text %1"'),
 						'filter' => 'text',
 					),
+					'displayFieldsListType' => array(
+						'name' => tr('Multiple Fields display type'),
+						'description' => tr('Display multiple fields as concatenated list in a dropdown or as a table.'),
+						'filter' => 'alpha',
+						'options' => array(
+							'dropdown' => tr('Dropdown'),
+							'table' => tr('Table'),
+						),
+						'legacy_index' => 14,
+					),
 					'status' => array(
 						'name' => tr('Status Filter'),
 						'description' => tr('Limit the available items to a selected set'),
@@ -219,7 +229,11 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			return false;
 		}
 
-		if ($this->getOption('preSelectFieldMethod' === 'crossSelect')) {
+		if ($this->getOption('preSelectFieldMethod') === 'crossSelect') {
+			return false;
+		}
+
+		if ($this->getOption('displayFieldsListType') === 'table') {
 			return false;
 		}
 
@@ -280,7 +294,24 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 		$data = array(
 			'list' => $this->getItemList(),
+			'displayFieldsListType' => $this->getOption('displayFieldsListType'),
 		);
+
+		$servicelib = TikiLib::lib('service');
+		if( $this->getItemId() ) {
+			$data['next'] = $servicelib->getUrl(array(
+				'controller' => 'tracker',
+				'action' => 'update_item',
+				'trackerId' => $this->getConfiguration('trackerId'),
+				'itemId' => $this->getItemId(),
+			));
+		} else {
+			$data['next'] = $servicelib->getUrl(array(
+				'controller' => 'tracker',
+				'action' => 'insert_item',
+				'trackerId' => $this->getConfiguration('trackerId'),
+			));
+		}
 
 		$data['selectMultipleValues'] = (bool) $this->getOption('selectMultipleValues');
 
@@ -320,14 +351,13 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 		$data['filter'] = $this->buildFilter();
 
-		if ($data['crossSelect'] === 'y') {
-			$fullList = $data['list'];
-			if (!empty($preselection) && is_array($preselection)) {
-				$data['remoteData'] = array_intersect_key($fullList, array_flip($preselection));
-			} else {
-				$data['remoteData'] = $fullList;
-			}
+		if ($data['crossSelect'] === 'y' && !empty($preselection) && is_array($preselection)) {
+			if( isset($data['list']['items']) )
+				$data['list']['items'] = array_intersect_key($data['list']['items'], array_flip($preselection));
+			else
+				$data['list'] = array_intersect_key($data['list'], array_flip($preselection));
 		}
+		
 		return $this->renderTemplate('trackerinput/itemlink.tpl', $context, $data);
 	}
 
@@ -547,22 +577,30 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 	function getItemList()
 	{
 		if ($displayFieldsList = $this->getDisplayFieldsListArray()) {
-			$list = TikiLib::lib('trk')->concat_all_items_from_fieldslist(
-				$this->getOption('trackerId'),
-				$displayFieldsList,
-				$this->getOption('status', 'opc'),
-				' ',
-				true
-			);
+			if( $this->getOption('displayFieldsListType') === 'table' ) {
+				$list = TikiLib::lib('trk')->get_all_items_from_fieldslist(
+					$this->getOption('trackerId'),
+					$displayFieldsList,
+					$this->getOption('status', 'opc')
+				);
+			} else {
+				$list = TikiLib::lib('trk')->concat_all_items_from_fieldslist(
+					$this->getOption('trackerId'),
+					$displayFieldsList,
+					$this->getOption('status', 'opc'),
+					' ',
+					true
+				);
+				$list = $this->handleDuplicates($list);
+			}
 		} else {
 			$list = TikiLib::lib('trk')->get_all_items(
 				$this->getOption('trackerId'),
 				$this->getOption('fieldId'),
 				$this->getOption('status', 'opc')
 			);
+			$list = $this->handleDuplicates($list);
 		}
-
-		$list = $this->handleDuplicates($list);
 
 		return $list;
 	}

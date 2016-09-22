@@ -352,7 +352,12 @@ class Services_Tracker_Controller
 			if (isset($param['profile_reference'])) {
 				$lib = TikiLib::lib('object');
 				$param['selector_type'] = $lib->getSelectorType($param['profile_reference']);
-				$param['parent'] = isset($param['parent']) ? "#option-{$param['parent']}" : null;
+				if( isset($param['parent']) ) {
+					if( !preg_match('/[\[\]#\.]/', $param['parent']) )
+						$param['parent'] = "#option-{$param['parent']}";
+				} else {
+					$param['parent'] = null;
+				}
 				$param['parentkey'] = isset($param['parentkey']) ? $param['parentkey'] : null;
 				$param['sort_order'] = isset($param['sort_order']) ? $param['sort_order'] : null;
 			} else {
@@ -811,6 +816,7 @@ class Services_Tracker_Controller
 			'status' => $itemObject->getDisplayedStatus(),
 			'format' => $format,
 			'editItemPretty' => $editItemPretty,
+			'next' => $input->next->url(),
 		);
 	}
 
