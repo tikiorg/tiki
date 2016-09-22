@@ -5095,7 +5095,7 @@ class TrackerLib extends TikiLib
 
 	private function invalidate_field_cache($fieldId)
 	{
-		global $prefs;
+		global $prefs, $user;
 		$multi_languages=$prefs['available_languages'];
 		if (! $multi_languages) {
 			$multi_languages = array();
@@ -5106,13 +5106,13 @@ class TrackerLib extends TikiLib
 		$cachelib = TikiLib::lib('cache');
 
 		foreach ($multi_languages as $lang) {
-			$cachelib->invalidate(md5('trackerfield'.$fieldId.'o'.$lang));
-			$cachelib->invalidate(md5('trackerfield'.$fieldId.'c'.$lang));
-			$cachelib->invalidate(md5('trackerfield'.$fieldId.'p'.$lang));
-			$cachelib->invalidate(md5('trackerfield'.$fieldId.'op'.$lang));
-			$cachelib->invalidate(md5('trackerfield'.$fieldId.'oc'.$lang));
-			$cachelib->invalidate(md5('trackerfield'.$fieldId.'pc'.$lang));
-			$cachelib->invalidate(md5('trackerfield'.$fieldId.'opc'.$lang));
+			$cachelib->invalidate(md5('trackerfield'.$fieldId.'o'.$user.$lang));
+			$cachelib->invalidate(md5('trackerfield'.$fieldId.'c'.$user.$lang));
+			$cachelib->invalidate(md5('trackerfield'.$fieldId.'p'.$user.$lang));
+			$cachelib->invalidate(md5('trackerfield'.$fieldId.'op'.$user.$lang));
+			$cachelib->invalidate(md5('trackerfield'.$fieldId.'oc'.$user.$lang));
+			$cachelib->invalidate(md5('trackerfield'.$fieldId.'pc'.$user.$lang));
+			$cachelib->invalidate(md5('trackerfield'.$fieldId.'opc'.$user.$lang));
 		}
 	}
 
