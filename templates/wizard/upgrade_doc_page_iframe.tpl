@@ -12,30 +12,10 @@
 		<div>
 			<div class="simplebox">
 				<div class='titlebar'>
-					<b>doc.t.o/Tiki15</b>: {tr}To see it in full size out of this frame{/tr}, <a class="wiki external" target="_blank" href="https://doc.tiki.org/tiki-index_p.php?page=Tiki15" rel="external nofollow">{tr}click here{/tr}</a>
+					<b>doc.t.o/Tiki15from12</b>: {tr}To see it in full size out of this frame{/tr}, <a class="wiki external" target="_blank" href="https://doc.tiki.org/tiki-index_p.php?page=Tiki15from12" rel="external nofollow">{tr}click here{/tr}</a>
 					<img src="img/icons/external_link.gif" alt="" width="15" height="14" class="icon" />
 				</div>
-				<p><iframe name="Documentation of Tiki 15" width="100%" height="300" align="middle" frameborder="1" marginheight="0" marginwidth="0" scrolling="auto" src="https://doc.tiki.org/tiki-index_p.php?page=Tiki15"></iframe></p>
-			</div>
-			<br/><br/>
-		</div>
-		<div>
-			<div class="simplebox">
-				<div class='titlebar'>
-					<b>doc.t.o/Tiki14</b>: {tr}To see it in full size out of this frame{/tr}, <a class="wiki external" target="_blank" href="https://doc.tiki.org/tiki-index_p.php?page=Tiki14" rel="external nofollow">{tr}click here{/tr}</a>
-					<img src="img/icons/external_link.gif" alt="" width="15" height="14" class="icon" />
-				</div>
-				<p><iframe name="Documentation of Tiki 14" width="100%" height="300" align="middle" frameborder="1" marginheight="0" marginwidth="0" scrolling="auto" src="https://doc.tiki.org/tiki-index_p.php?page=Tiki14"></iframe></p>
-			</div>
-			<br/><br/>
-		</div>
-		<div>
-			<div class="simplebox">
-				<div class='titlebar'>
-					<b>doc.t.o/Tiki13</b>: {tr}To see it in full size out of this frame{/tr}, <a class="wiki external" target="_blank" href="https://doc.tiki.org/tiki-index_p.php?page=Tiki13" rel="external nofollow">{tr}click here{/tr}</a>
-					<img src="img/icons/external_link.gif" alt="" width="15" height="14" class="icon" />
-				</div>
-				<p><iframe name="Documentation of Tiki 13" width="100%" height="300" align="middle" frameborder="1" marginheight="0" marginwidth="0" scrolling="auto" src="https://doc.tiki.org/tiki-index_p.php?page=Tiki13"></iframe></p>
+				<p><iframe name="Documentation of changes from Tiki 12 to Tiki 15" width="100%" height="300" align="middle" frameborder="1" marginheight="0" marginwidth="0" scrolling="auto" src="https://doc.tiki.org/tiki-index_p.php?page=Tiki15from12"></iframe></p>
 			</div>
 			<br/><br/>
 		</div>
