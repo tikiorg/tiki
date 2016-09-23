@@ -51,7 +51,7 @@
 	{$metatag_description = $prefs.metatag_description|escape}
 {/if}
 
-{if not empty($metatag_description|trim)}
+{if not empty($metatag_description) and not empty($metatag_description|trim)}
 	<meta name="description" content="{$metatag_description}" property="og:description">
 	<meta name="twitter:description" content="{$metatag_description}">
 {else}
