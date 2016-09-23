@@ -365,7 +365,9 @@ function _breadcrumb_getTitle($crumbs, $loc)
 			}
 		}
 	}
-	if (!empty($prefs['wiki_pagename_strip']) || $prefs['namespace_indicator_in_page_title'] == 'y') {
+	if (!empty($prefs['wiki_pagename_strip']) || (!empty($prefs['namespace_indicator_in_page_title'])
+			&& $prefs['namespace_indicator_in_page_title'] == 'y'))
+	{
 		include_once('lib/smarty_tiki/modifier.pagename.php');
 		$ret .= tra(smarty_modifier_pagename($cur_title)).'</a>';
 	} else {
