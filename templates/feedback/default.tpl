@@ -1,12 +1,5 @@
 {* $Id$ *}
 
-<div id="ajax-feedback" style="display:none"></div>
-{if isset($ajaxfeedback) && $ajaxfeedback eq 'y'}
-	<div id="posted-ajax-feedback" class="col-sm-12">
-		{include file="utilities/alert.tpl"}
-	</div>
-{/if}
-
 <div id="tikifeedback">
 	{if !empty($tikifeedback)}
 		{foreach $tikifeedback as $tpl => $fb}
