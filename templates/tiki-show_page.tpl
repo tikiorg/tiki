@@ -126,7 +126,7 @@ Note: The show content block must be defined at root level to use the include. A
 		{/if}
 
 		<div id="page-data" class="clearfix">
-			{if $prefs.wiki_page_name_inside eq 'y'}
+			{if !empty($prefs.wiki_page_name_inside) && $prefs.wiki_page_name_inside eq 'y'}
 				<h1 class="pagetitle">{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs machine_translate=$machine_translate_to_lang source_lang=$pageLang target_lang=$machine_translate_to_lang}</h1>
 			{/if}
 			{if isset($pageLang) and ($pageLang eq 'ar' or $pageLang eq 'he')}
