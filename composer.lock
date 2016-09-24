@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8b6dbf186a6bcb95d4513c87824179e0",
-    "content-hash": "ea3f397cb2b92d3d003534e727ce9abe",
+    "hash": "bb017bbe34d33bd425144420dc65bfac",
+    "content-hash": "38ec6b230a51664382bbe17db8e48af3",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -725,23 +725,23 @@
         },
         {
             "name": "jquery/jquery-ui",
-            "version": "1.11.4",
+            "version": "1.12.1",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-1.11.4.zip",
+                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-1.12.1.zip",
                 "reference": null,
-                "shasum": "45d7803805d4adf74105ea1e2e5bd5fbb3a1fe95"
+                "shasum": "3d124ff8c7d207b04ea56811c9b2cec71675eaea"
             },
             "type": "library"
         },
         {
             "name": "jquery/jquery-ui-themes",
-            "version": "1.11.4",
+            "version": "1.12.1",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-themes-1.11.4.zip",
+                "url": "https://composer.tiki.org/dist/jquery-jquery-ui-themes-1.12.1.zip",
                 "reference": null,
-                "shasum": "76409ecde4300294a775d6aae7e23426f869d5fd"
+                "shasum": "3131f32b9d142de8dfd7624ad10f355ce86d31fe"
             },
             "type": "library"
         },
