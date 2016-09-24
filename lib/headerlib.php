@@ -118,7 +118,7 @@ class HeaderLib
 
 
 	public $jquery_version = '3.1.1';
-	public $jqueryui_version = '1.11.4';
+	public $jqueryui_version = '1.12.1';
 	public $jquerymigrate_version = '3.0.0';
 
 
