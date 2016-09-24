@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3e27db9cdd489bb05b4a0cdb64699bf6",
-    "content-hash": "22623eb3f9eae8b9796fcd6d0011090d",
+    "hash": "8b6dbf186a6bcb95d4513c87824179e0",
+    "content-hash": "ea3f397cb2b92d3d003534e727ce9abe",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -978,12 +978,12 @@
         },
         {
             "name": "jquery/plugins/treetable",
-            "version": "3.1.0",
+            "version": "3.2.0",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-treetable-3.1.0.zip",
+                "url": "https://composer.tiki.org/dist/jquery-plugins-treetable-3.2.0.zip",
                 "reference": null,
-                "shasum": "558049e73d3a6017d76cc8a5a9d900c968314450"
+                "shasum": "3b2eb10e14362c4897c9d11d4279d8a0b171616a"
             },
             "type": "library"
         },

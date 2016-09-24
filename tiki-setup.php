@@ -551,8 +551,8 @@ if ( $prefs['feature_jquery_validation'] == 'y' ) {
 
 // note: jquery.async.js load a copy of jquery
 $headerlib->add_jsfile('vendor/jquery/plugins/async/jquery.async.js');
-$headerlib->add_jsfile('vendor/jquery/plugins/treetable/javascripts/src/jquery.treetable.js');
-$headerlib->add_cssfile('vendor/jquery/plugins/treetable/stylesheets/jquery.treetable.css');
+$headerlib->add_jsfile('vendor/jquery/plugins/treetable/jquery.treetable.js');
+$headerlib->add_cssfile('vendor/jquery/plugins/treetable/css/jquery.treetable.css');
 
 $headerlib->add_jsfile('vendor/cwspear/bootstrap-hover-dropdown/bootstrap-hover-dropdown.js');
 

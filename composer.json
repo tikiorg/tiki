@@ -52,7 +52,7 @@
 		"jquery/plugins/tablesorter": "2.26.6",
 		"jquery/plugins/tagcanvas": "2.8",
 		"jquery/plugins/timeago": ">=1.4.3",
-		"jquery/plugins/treetable": "3.1.0",
+		"jquery/plugins/treetable": "3.2.0",
 		"jquery/plugins/zoom": "1.7.13",
 		"mediumjs/mediumjs": "1.0.1",
 		"morteza/bootstrap-rtl": "3.3.2",
