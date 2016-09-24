@@ -604,6 +604,28 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "jquery/jquery-ui",
+				"version": "1.12.1",
+				"dist": {
+					"url": "http://jqueryui.com/resources/download/jquery-ui-1.12.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-ui-themes",
+				"version": "1.12.1",
+				"dist": {
+					"url": "http://jqueryui.com/resources/download/jquery-ui-themes-1.12.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "jquery/jquery-s5",
 				"version": "1.0.1",
 				"dist": {
