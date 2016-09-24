@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ed1be02ae749d7c43648995296533498",
-    "content-hash": "87c3a9dae7cc1b26fbd7cdeaf3249425",
+    "hash": "3e27db9cdd489bb05b4a0cdb64699bf6",
+    "content-hash": "22623eb3f9eae8b9796fcd6d0011090d",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -320,17 +320,17 @@
         },
         {
             "name": "components/jquery",
-            "version": "3.1.0",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/jquery.git",
-                "reference": "39192bee49ceb98f36e9592ee2fc5116a414b6cc"
+                "reference": "09a1658378bc1f818856086396ebeab7d0ec2276"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/components-jquery-39192bee49ceb98f36e9592ee2fc5116a414b6cc-zip-92b012.zip",
-                "reference": "39192bee49ceb98f36e9592ee2fc5116a414b6cc",
-                "shasum": "566e31c223ecc4c86b91c50f0667100705a2912e"
+                "url": "https://composer.tiki.org/dist/components-jquery-09a1658378bc1f818856086396ebeab7d0ec2276-zip-4b88ad.zip",
+                "reference": "09a1658378bc1f818856086396ebeab7d0ec2276",
+                "shasum": "8917d60095ffc90324f58c9c7d18c0ba23dd1bfe"
             },
             "type": "component",
             "extra": {
@@ -356,7 +356,46 @@
             ],
             "description": "jQuery JavaScript Library",
             "homepage": "http://jquery.com",
-            "time": "2016-07-08 05:56:55"
+            "time": "2016-09-23 06:06:29"
+        },
+        {
+            "name": "components/jquery-migrate",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/components/jquery-migrate.git",
+                "reference": "349e64504a30bf9969c7723711bb5bb707adf450"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/components-jquery-migrate-349e64504a30bf9969c7723711bb5bb707adf450-zip-5de248.zip",
+                "reference": "349e64504a30bf9969c7723711bb5bb707adf450",
+                "shasum": "dafc5a48f8730c95d83289cab165f76da822e3fd"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "jquery-migrate.js"
+                    ],
+                    "files": [
+                        "jquery-migrate.min.js"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "jQuery Foundation and other contributors",
+                    "homepage": "https://github.com/jquery/jquery-migrate/blob/master/AUTHORS.txt"
+                }
+            ],
+            "description": "APIs and features removed from jQuery core",
+            "homepage": "https://github.com/jquery/jquery-migrate",
+            "time": "2016-06-14 06:48:05"
         },
         {
             "name": "container-interop/container-interop",
@@ -652,28 +691,6 @@
             "time": "2014-01-27 14:02:15"
         },
         {
-            "name": "jquery/jquery",
-            "version": "2.2.2",
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-2.2.2.zip",
-                "reference": null,
-                "shasum": "3e667e95b47ffe265c36d6ec4d68d276228fad5f"
-            },
-            "type": "library"
-        },
-        {
-            "name": "jquery/jquery-min",
-            "version": "2.2.2",
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-jquery-min-2.2.2.zip",
-                "reference": null,
-                "shasum": "e31d434e8163eed24283bf3f1c3cb6244839a66d"
-            },
-            "type": "library"
-        },
-        {
             "name": "jquery/jquery-s5",
             "version": "1.0.1",
             "dist": {
@@ -890,28 +907,6 @@
                 "url": "https://composer.tiki.org/dist/jquery-plugins-media-0.98.zip",
                 "reference": null,
                 "shasum": "31dced89d078c0e0692f4fca23c8983fed41773e"
-            },
-            "type": "library"
-        },
-        {
-            "name": "jquery/plugins/migrate",
-            "version": "1.4.0",
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-migrate-1.4.0.zip",
-                "reference": null,
-                "shasum": "2ea30f734e4b0603bf4cb8acf2c17ee53eabc979"
-            },
-            "type": "library"
-        },
-        {
-            "name": "jquery/plugins/migrate-min",
-            "version": "1.4.0",
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-migrate-min-1.4.0.zip",
-                "reference": null,
-                "shasum": "c0655c7516d62885d8fc05f7d01fd2056e6cde5a"
             },
             "type": "library"
         },

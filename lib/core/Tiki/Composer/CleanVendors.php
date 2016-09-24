@@ -292,7 +292,7 @@ class CleanVendors
 		$fs->remove($vendors . 'adodb/adodb/datadict/datadict-informix.inc.php');
 
 		// and cwspear/bootstrap-hover-dropdown includes bootstrap and jquery without asking
-		$fs->remove($vendors . 'components');
+		$fs->remove($vendors . 'components/bootstrap');
 
 		//Remove extra files to keep the system tidy
 		$fs->remove($vendors . 'codemirror/codemirror/doc');
