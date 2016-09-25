@@ -391,7 +391,7 @@ if (version_compare(PHP_VERSION, '5.1.0', '<')) {
 	$php_properties['PHP version'] = array(
 	'fitness' => tra('ugly'),
 	'setting' => phpversion(),
-	'message' => 'You have a somewhat old version of PHP. You can run 12.x LTS or 15.x LTS but not later versions.'
+	'message' => 'You have a somewhat old version of PHP. You can run Tiki 9.x LTS, 12.x LTS or 15.x LTS but not later versions.'
 	);
 } else {
 	$php_properties['PHP version'] = array(
