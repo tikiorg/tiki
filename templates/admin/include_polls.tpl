@@ -20,7 +20,6 @@
 
 	{tabset name="admin_polls_and_surveys"}
 
-		{if $prefs.feature_polls eq "y"}
 			{tab name="{tr}Polls{/tr}"}
 				<h2>{tr}Polls{/tr}</h2>
 				<fieldset>
@@ -49,7 +48,6 @@
 					{preference name=poll_percent_decimals}
 				</fieldset>
 			{/tab}
-		{/if}
 
 		{if $prefs.feature_surveys eq "y"}
 			{tab name="{tr}Surveys{/tr}"}
