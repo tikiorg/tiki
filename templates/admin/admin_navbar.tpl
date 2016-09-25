@@ -136,7 +136,7 @@
 {jq}setTimeout(function () {
 		$("form", "#col1").mouseup(function() {
 			feedback(
-				tr('The security ticket for this page has timed out. Please reload the page to make any changes.'),
+				[tr('The security ticket for this page has timed out. Please reload the page to make any changes.')],
 				'warning',
 				true,
 				tr('Security ticket timed out')
@@ -151,7 +151,7 @@
 			);
 			return false;
 		});
-	}, 1000 * 60 * 15);
+	}, 1000);
 {/jq}
 {if $lm_searchresults}
 	<div class="panel panel-default" id="pref_searchresults">
