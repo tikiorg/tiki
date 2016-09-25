@@ -100,6 +100,28 @@ $php_properties = false;
 // Check error reporting level
 $e = error_reporting();
 $d = ini_get('display_errors');
+$l = ini_get('log_errors');
+if($l) {
+	if (!$d) {
+		$php_properties['Error logging'] = array(
+		'fitness' => tra('info'),
+		'setting' => 'Enabled',
+		'message' => tra('You will get the errors logged, since you have log_errors enabled. You also have display_errors disabled, this a good practice in production, log the errors instead of displaying.')
+		);
+	} else {
+		$php_properties['Error logging'] = array(
+		'fitness' => tra('info'),
+		'setting' => 'Enabled',
+		'message' => tra('You will get the errors logged, since you have log_errors enabled, but you also have display_errors enabled. As a good practice, especially in production, you should log all the errors instead of displaying them.')
+		);
+	}
+} else {
+	$php_properties['Error logging'] = array(
+	'fitness' => tra('info'),
+	'setting' => 'Full',
+	'message' => tra('You will not get your errors logged, since log_errors is not enabled. As a good practice, especially in production, you should log all the errors.')
+	);
+}
 if ( $e == 0 ) {
 	if ($d != 1) {
 		$php_properties['Error reporting'] = array(
