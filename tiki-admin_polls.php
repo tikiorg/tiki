@@ -40,7 +40,7 @@ if (isset($_REQUEST["remove"])) {
 	$access->check_authenticity();
 	$polllib->remove_poll($_REQUEST["remove"]);
 }
-if (isset($_REQUEST["save"])) {
+if (isset($_REQUEST["save"]) || isset($_REQUEST["add"])) {
 	check_ticket('admin-polls');
 	//Convert 12-hour clock hours to 24-hour scale to compute time
 	if (!empty($_REQUEST['Time_Meridian'])) {
