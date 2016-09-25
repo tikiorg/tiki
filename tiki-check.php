@@ -385,7 +385,13 @@ if (version_compare(PHP_VERSION, '5.1.0', '<')) {
 	$php_properties['PHP version'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => phpversion(),
-		'message' => 'You have a somewhat old version of PHP. You can run Tiki 6.x LTS, 9.x LTS or 12.x LTS but not later versions.'
+		'message' => 'You have an old version of PHP. You can run Tiki 6.x LTS, 9.x LTS or 12.x LTS but not later versions.'
+	);
+} elseif (version_compare(PHP_VERSION, '5.6.0', '<')) {
+	$php_properties['PHP version'] = array(
+	'fitness' => tra('ugly'),
+	'setting' => phpversion(),
+	'message' => 'You have a somewhat old version of PHP. You can run Tiki 9.x LTS, 12.x LTS or 15.x LTS but not later versions.'
 	);
 } else {
 	$php_properties['PHP version'] = array(
@@ -941,13 +947,13 @@ if ($s) {
 	$php_properties['libxml'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Loaded',
-		'message' => tra('This extension is needed for WebDAV and the dom extension (see below).')
+		'message' => tra('This extension is needed for the dom extension (see below).')
 	);
 } else {
 	$php_properties['libxml'] = array(
 		'fitness' => tra('bad'),
 		'setting' => 'Not available',
-		'message' => tra('This extension is needed for WebDAV and the dom extension (see below).')
+		'message' => tra('This extension is needed for the dom extension (see below).')
 	);
 }
 
@@ -957,15 +963,13 @@ if ($s) {
 	$php_properties['dom'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Loaded',
-		'message' => tra('This extension is needed for many features such as:') . '<br>' .
-			tra('bigbluebutton, machine translation, SCORM & meta-data in file galleries, wiki importers, custom search, Kaltura and others.')
+		'message' => tra('This extension is needed by Tiki')
 	);
 } else {
 	$php_properties['dom'] = array(
 		'fitness' => tra('bad'),
 		'setting' => 'Not available',
-		'message' => tra('This extension is needed for many features such as:') . '<br>' .
-			tra('bigbluebutton, machine translation, SCORM & meta-data in file galleries, wiki importers, custom search, Kaltura and others.')
+		'message' => tra('This extension is needed by Tiki')
 	);
 }
 
