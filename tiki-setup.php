@@ -352,7 +352,7 @@ if ( isset($prefs['javascript_cdn']) && $prefs['javascript_cdn'] == 'google' ) {
 	$headerlib->add_jsfile_cdn("$url_scheme://code.jquery.com/jquery-migrate-$headerlib->jquerymigrate_version.min.js");
 } else {
 	if ( isset($prefs['tiki_minify_javascript']) && $prefs['tiki_minify_javascript'] === 'y' ) {
-		$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-min/jquery.min.js", true);
+		$headerlib->add_jsfile_dependancy("vendor/components/jquery/jquery.min.js", true);
 		$headerlib->add_jsfile_dependancy("vendor/components/jquery-migrate/jquery-migrate.min.js", true);
 	} else {
 		$headerlib->add_jsfile_dependancy("vendor/components/jquery/jquery.js", true);
