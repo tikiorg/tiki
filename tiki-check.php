@@ -2,7 +2,7 @@
 /**
  * @package tikiwiki
  */
-// (c) Copyright 2002-2013 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -385,7 +385,13 @@ if (version_compare(PHP_VERSION, '5.1.0', '<')) {
 	$php_properties['PHP version'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => phpversion(),
-		'message' => 'You have a somewhat old version of PHP. You can run Tiki 6.x LTS, 9.x LTS or 12.x LTS but not later versions.'
+		'message' => 'You have an old version of PHP. You can run Tiki 6.x LTS, 9.x LTS or 12.x LTS but not later versions.'
+	);
+} elseif (version_compare(PHP_VERSION, '5.6.0', '<')) {
+	$php_properties['PHP version'] = array(
+	'fitness' => tra('ugly'),
+	'setting' => phpversion(),
+	'message' => 'You have a somewhat old version of PHP. You can run Tiki 9.x LTS, 12.x LTS or 15.x LTS but not later versions.'
 	);
 } else {
 	$php_properties['PHP version'] = array(
@@ -488,6 +494,12 @@ if ($s >= 160 * 1024 * 1024) {
 		'setting' => $memory_limit,
 		'message' => tra('Your memory_limit is at').' '.$memory_limit.'. '.tra('This will normally work, but you might run into problems when your site grows.')
 	);
+} elseif ( $s == -1 ) {
+	$php_properties['memory_limit'] = array(
+		'fitness' => tra('ugly') ,
+		'setting' => $memory_limit,
+		'message' => tra("Your memory_limit is unlimited. This is not necessarily bad, but it's a good idea to limit this on productions servers in order to eliminate unexpectedly greedy scripts.")
+	);
 } else {
 	$php_properties['memory_limit'] = array(
 		'fitness' => tra('bad'),
@@ -509,6 +521,40 @@ if ($s != 'files') {
 		'fitness' => tra('good'),
 		'setting' => $s,
 		'message' => tra('Well set! the default setting of \'files\' is needed for Tiki.')
+	);
+}
+
+// session.save_handler
+$s = ini_get('session.save_path');
+if (empty($s) || ! is_writable($s)) {
+	$php_properties['session.save_path'] = array(
+		'fitness' => tra('bad'),
+		'setting' => $s,
+		'message' => tra('Your session.save_path must writable.')
+	);
+} else {
+	$php_properties['session.save_path'] = array(
+		'fitness' => tra('good'),
+		'setting' => $s,
+		'message' => tra('Your session.save_path is writable.')
+	);
+}
+
+// test session work
+@session_start();
+
+if (empty($_SESSION['tiki-check'])) {
+	$php_properties['session'] = array(
+		'fitness' => tra('ugly'),
+		'setting' => tra('empty'),
+		'message' => tra('Your session is empty, try reloading the page and if you see this message again you may have a problem with your server setup.')
+	);
+	$_SESSION['tiki-check'] = 1;
+} else {
+	$php_properties['session'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'ok',
+		'message' => tra('Your appears to work.')
 	);
 }
 
@@ -598,13 +644,13 @@ if ( empty($s) ) {
 	$php_properties['date.timezone'] = array(
 		'fitness' => tra('ugly'),
 		'setting' => $s,
-		'message' => tra('You have no timezone set! While there are a lot of fallbacks in PHP to determine the timezone, the only reliable solution is to set it explicitly in php.ini! Please check the value of date.timezone in php.ini.')
+		'message' => tra('You have no time zone set! While there are a lot of fallbacks in PHP to determine the time zone, the only reliable solution is to set it explicitly in php.ini! Please check the value of date.timezone in php.ini.')
 	);
 } else {
 	$php_properties['date.timezone'] = array(
 		'fitness' => tra('good'),
 		'setting' => $s,
-		'message' => tra('Well done! Having a timezone set protects you from many weird errors.')
+		'message' => tra('Well done! Having a time zone set protects you from many weird errors.')
 	);
 }
 
@@ -695,6 +741,12 @@ if ($s >= 8 * 1024 * 1024) {
 		'setting' => $upload_max_filesize,
 		'message' => tra('Your upload_max_filesize is at').' '.$upload_max_filesize.'. '.tra('You can upload quite big files, but keep in mind to set your script timeouts accordingly.')
 	);
+} else if ($s == 0) {
+	$php_properties['upload_max_filesize'] = array(
+		'fitness' => tra('ugly'),
+		'setting' => $upload_max_filesize,
+		'message' => tra('Your upload_max_filesize is at').' '.$upload_max_filesize.'. '.tra('Upload size is unlimited and this not a wise setting. A user could mistakenly upload a gigantic file which could fill up your disk. You should set this value to your realistic needs.')
+	);
 } else {
 	$php_properties['upload_max_filesize'] = array(
 		'fitness' => tra('ugly'),
@@ -749,13 +801,13 @@ if ($s) {
 	$php_properties['intl'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Loaded',
-		'message' => tra("intl extension will be needed in future versions of Tiki.")
+		'message' => tra("intl extension is required for Tiki 15 onwards.")
 	);
 } else {
 	$php_properties['intl'] = array(
-		'fitness' => tra('info'),
+		'fitness' => tra('ugly'),
 		'setting' => 'Not available',
-		'message' => tra("intl extension will be needed in future versions of Tiki.")
+		'message' => tra("intl extension is preferred for Tiki 15 onwards.")
 	);
 }
 
@@ -895,13 +947,13 @@ if ($s) {
 	$php_properties['libxml'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Loaded',
-		'message' => tra('This extension is needed for WebDAV and the dom extension (see below).')
+		'message' => tra('This extension is needed for the dom extension (see below).')
 	);
 } else {
 	$php_properties['libxml'] = array(
 		'fitness' => tra('bad'),
 		'setting' => 'Not available',
-		'message' => tra('This extension is needed for WebDAV and the dom extension (see below).')
+		'message' => tra('This extension is needed for the dom extension (see below).')
 	);
 }
 
@@ -911,15 +963,13 @@ if ($s) {
 	$php_properties['dom'] = array(
 		'fitness' => tra('good'),
 		'setting' => 'Loaded',
-		'message' => tra('This extension is needed for many features such as:') . '<br>' .
-			tra('bigbluebutton, machine translation, SCORM & meta-data in file galleries, wiki importers, custom search, Kaltura and others.')
+		'message' => tra('This extension is needed by Tiki')
 	);
 } else {
 	$php_properties['dom'] = array(
 		'fitness' => tra('bad'),
 		'setting' => 'Not available',
-		'message' => tra('This extension is needed for many features such as:') . '<br>' .
-			tra('bigbluebutton, machine translation, SCORM & meta-data in file galleries, wiki importers, custom search, Kaltura and others.')
+		'message' => tra('This extension is needed by Tiki')
 	);
 }
 
@@ -950,6 +1000,21 @@ if ($s) {
 		'fitness' => tra('info'),
 		'setting' => 'Not available',
 		'message' => tra('This extension can be used to speed up your Tiki by saving sessions as well as wiki and forum data on a memcached server.')
+	);
+}
+
+$s = extension_loaded('ssh2');
+if ($s) {
+	$php_properties['SSH2'] = array(
+		'fitness' => tra('good'),
+		'setting' => 'Loaded',
+		'message' => tra('This extension is needed for the show.tiki.org tracker field type.')
+	);
+} else {
+	$php_properties['SSH2'] = array(
+		'fitness' => tra('info'),
+		'setting' => 'Not available',
+		'message' => tra('This extension is needed for the show.tiki.org tracker field type.')
 	);
 }
 
@@ -1069,6 +1134,22 @@ if ( $s ) {
 		'setting' => 'Not Available',
 		'message' => tra('The DateTime class is needed for the WebDAV feature.')
 		);
+}
+
+// Xdebug
+$has_xdebug = function_exists('xdebug_get_code_coverage') && is_array(xdebug_get_code_coverage());
+if ($has_xdebug) {
+    $php_properties['Xdebug'] = array(
+        'fitness' => tra('info'),
+		'setting' => 'Loaded',
+        'message' => tra('Xdebug can be very handy for a development server, but it might be better to disable it when on a production server.')
+    );
+} else {
+    $php_properties['Xdebug'] = array(
+		'fitness' => tra('info'),
+        'setting' => 'Not Available',
+        'message' => tra('Xdebug can be very handy for a development server, but it might be better to disable it when on a production server.')
+    );
 }
 
 // Get MySQL properties and check them
@@ -1205,7 +1286,7 @@ if ($connection || !$standalone) {
 		$s = tra('OFF');
 	} else {
 		$msg = tra('MySQL Server does not have SSL activated');
-		$s = '';
+		$s = 'OFF';
 	}
 	$fitness = tra('info');
 	if ($s == tra('ON')) {
@@ -1582,12 +1663,15 @@ if ($s == 1) {
 	);
 }
 
+if ($standalone || (!empty($prefs) && $prefs['fgal_enable_auto_indexing'] === 'y')) {
 	// adapted from \FileGalLib::get_file_handlers
 	$fh_possibilities = array(
 		'application/ms-excel' => array('xls2csv %1'),
+		'application/msexcel' => array('xls2csv %1'),
 		// vnd.openxmlformats are handled natively in Zend
 		//'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => array('xlsx2csv.py %1'),
 		'application/ms-powerpoint' => array('catppt %1'),
+		'application/mspowerpoint' => array('catppt %1'),
 		//'application/vnd.openxmlformats-officedocument.presentationml.presentation' => array('pptx2txt.pl %1 -'),
 		'application/msword' => array('catdoc %1', 'strings %1'),
 		//'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => array('docx2txt.pl %1 -'),
@@ -1601,6 +1685,7 @@ if ($s == 1) {
 		'application/x-msexcel' => array('xls2csv %1'),
 		'application/x-pdf' => array('pstotext %1', 'pdftotext %1 -'),
 		'application/x-troff-man' => array('man -l %1'),
+		'application/zip' => array('unzip -l %1'),
 		'text/enriched' => array('col -b %1', 'strings %1'),
 		'text/html' => array('elinks -dump -no-home %1'),
 		'text/richtext' => array('col -b %1', 'strings %1'),
@@ -1625,7 +1710,7 @@ if ($s == 1) {
 				break;
 			}
 		}
-		if (! $file_handler['fitness']) {
+		if (!$file_handler['fitness']) {
 			$file_handler['fitness'] = 'ugly';
 			$fh_commands = '';
 			foreach ($options as $opt) {
@@ -1636,7 +1721,7 @@ if ($s == 1) {
 		}
 		$file_handlers[$type] = $file_handler;
 	}
-
+}
 
 
 if (!$standalone) {
@@ -1668,9 +1753,6 @@ if (!$standalone) {
 		$dirs[] = 'img/wiki';
 		$dirs[] = 'img/wiki_up';
 	}
-	if ($prefs['feature_maps'] && !empty($prefs['map_path'])) {
-		$dirs[] = $prefs['map_path'];
-	}
 	$dirs = array_unique($dirs);
 	$dirsExist = array();
 	foreach ($dirs as $i => $d) {
@@ -1684,9 +1766,9 @@ if ($standalone && !$nagios) {
 	$render .= '<style type="text/css">td, th { border: 1px solid #000000; vertical-align: baseline; padding: .5em; }</style>';
 //	$render .= '<h1>Tiki Server Compatibility</h1>';
 	if (!$locked) {
-		$render .= '<h2>MySQL or MariaBD Database Properties</h2>';
+		$render .= '<h2>MySQL or MariaDB Database Properties</h2>';
 		renderTable($mysql_properties);
-		$render .= '<h2>Test sending e-mails</h2>';
+		$render .= '<h2>Test sending emails</h2>';
 		if (isset($_REQUEST['email_test_to'])) {
 			$email_test_headers = 'From: noreply@tiki.org' . "\n";	// needs a valid sender
 			$email_test_headers .= 'Reply-to: '. $_POST['email_test_to'] . "\n";
@@ -1855,8 +1937,22 @@ if ($standalone && !$nagios) {
 	$smarty->assign_by_ref('security', $security);
 	$smarty->assign_by_ref('mysql_variables', $mysql_variables);
 	$smarty->assign_by_ref('mysql_crashed_tables', $mysql_crashed_tables);
-	$smarty->assign_by_ref('file_handlers', $file_handlers);
+	if ($prefs['fgal_enable_auto_indexing'] === 'y') {
+		$smarty->assign_by_ref('file_handlers', $file_handlers);
+	}
 	// disallow robots to index page:
+
+	$fmap = array(
+		'good' => array('icon' => 'ok', 'class' => 'success'),
+		'safe' => array('icon' => 'ok', 'class' => 'success'),
+		'bad' => array('icon' => 'ban', 'class' => 'danger'),
+		'unsafe' => array('icon' => 'ban', 'class' => 'danger'),
+		'risky' => array('icon' => 'warning', 'class' => 'warning'),
+		'ugly' => array('icon' => 'warning', 'class' => 'warning'),
+		'info' => array('icon' => 'information', 'class' => 'info'),
+		'unknown' => array('icon' => 'help', 'class' => 'muted'),
+	);
+	$smarty->assign('fmap', $fmap);
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 	$smarty->assign('mid', 'tiki-check.tpl');
 	$smarty->display('tiki.tpl');
