@@ -151,7 +151,7 @@
 			);
 			return false;
 		});
-	}, 1000);
+	}, 1000 * 60 * 15);
 {/jq}
 {if $lm_searchresults}
 	<div class="panel panel-default" id="pref_searchresults">
