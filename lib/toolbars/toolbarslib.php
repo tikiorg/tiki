@@ -561,11 +561,11 @@ class ToolbarCkOnly extends Toolbar
 		case 'showblocks':
 			return new self( 'ShowBlocks', null, 'box' );
 		case 'left':
-			return new self( 'Justify Left', null, 'align-left' );
+			return new self( 'JustifyLeft', null, 'align-left' );
 		case 'right':
-			return new self( 'Justify Right', null, 'align-right' );
+			return new self( 'JustifyRight', null, 'align-right' );
 		case 'full':
-			return new self( 'Justify Block', null, 'align-justify' );
+			return new self( 'JustifyBlock', null, 'align-justify' );
 		case 'indent':
 			return new self( 'Indent', null, 'indent' );
 		case 'outdent':
