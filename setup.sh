@@ -627,10 +627,10 @@ composer()
 			echo "You can use the command-line command 'php[TAB][TAB]' to find out available versions."
 			exit 1
 		fi
+	else
+		echo "Local PHP version >= required PHP version ${REQUIRED_PHP_VERSION} - good"
+		composer_core
 	fi
-	echo "Local PHP version >= required PHP version ${REQUIRED_PHP_VERSION} - good"
-
-	composer_core
 }
 
 
