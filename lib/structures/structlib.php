@@ -1381,24 +1381,7 @@ class StructLib extends TikiLib
 			$this->query($query, array($structure_id, $structure_id, $pos+1, $page_ref_id));
 		}
 	}
-	public function move_to_structure_child($parent_ref_id, $structure_id, $first=true)
-	{
-		$query = "update `tiki_structures` set `pos`=`pos`-1 where `pos`>? and `parent_id`=?";
-		$this->query($query, array((int) $page_info["pos"], (int) $parent_ref_id));
-		if ($first) {
-			$query = "update `tiki_structures` set `pos`=`pos`+1 where `parent_id`=?";
-			$this->query($query, array($structure_id));
-			$pos = 1;
-			$query = "update `tiki_structures` set `structure_id`=?, `parent_id`=?, `pos`=? where `page_ref_id`=?";
-			$this->query($query, array($structure_id, $structure_id, $pos+1, $page_ref_id));
-		} else {
-			$query = "select max(`pos`) from `tiki_structures` where `parent_id`=?";
-			$pos = $this->getOne($query, array($structure_id));
-			$query = "update `tiki_structures` set `structure_id`=?, `parent_id`=?, `pos`=? where `page_ref_id`=?";
-			$this->query($query, array($structure_id, $structure_id, $pos+1, $page_ref_id));
-		}
-		return true;
-	}
+
 	/* transform a structure into a menu */
 	public function to_menu($channels, $structure, $sectionLevel=0, $cumul=0, $params=array())
 	{
