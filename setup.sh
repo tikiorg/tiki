@@ -604,7 +604,7 @@ composer()
 	PHP_OPTION="--version"
 	REQUIRED_PHP_VERSION=56 # minimal version PHP 5.6 but no decimal seperator, no floating point data
 	#${PHPCLI} ${PHP_OPTION}
-	LOCAL_PHP_VERSION=`${PHPCLI} ${PHP_OPTION} | ${GREP} ^PHP | ${CUT} -c5,7`
+	LOCAL_PHP_VERSION=`"${PHPCLI}" ${PHP_OPTION} | ${GREP} ^PHP | ${CUT} -c5,7`
 	#echo ${LOCAL_PHP_VERSION}
 	LIKELY_ALTERNATE_PHP_CLI="php56 php5.6 php5.6-cli" # These have been known to exist on some hosting platforms
 	if [ "${LOCAL_PHP_VERSION}" -lt "${REQUIRED_PHP_VERSION}" ] ; then
