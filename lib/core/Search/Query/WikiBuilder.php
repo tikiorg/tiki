@@ -376,6 +376,10 @@ class Search_Query_WikiBuilder
 						foreach($args as & $arg) {
 							if ($arg['field'] === $formatArgs['name']) {
 								$arg['field'] = $displayArgs['name'];
+								if ($displayArgs['format'] === 'trackerrender') {
+									// this works for many field types, ItemLink, Drowdown, CountrySelector etc but not all (categories notably)
+									$arg['field'] .= '_text';
+								}
 								break;
 							}
 						}
