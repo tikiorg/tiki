@@ -122,7 +122,7 @@
 										{$libeg}<a href='{sefurl page=$channels[ix].pageName structure=$channels[ix].pageName page_ref_id=$channels[ix].page_ref_id}'>
 											{icon name="view" _menu_text='y' _menu_icon='y' alt="{tr}View page{/tr}"}
 										</a>{$liend}
-										{if $channels[ix].admin_structures == 'y'}
+										{if $channels[ix].admin_structures == 'y' or $tiki_p_admin == 'y'}
 											{$libeg}
 												{permission_link mode=text type='wiki structure' id=$channels[ix].page_ref_id title=$channels[ix].pageName}
 											{$liend}
