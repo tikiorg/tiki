@@ -125,6 +125,7 @@ create()
 	then
 		log "SVN upping because this is $SVNTAG"
 		cd $INSTANCE_DIR
+		svn upgrade
 		svn up
 	fi
 
