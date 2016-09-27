@@ -36,9 +36,7 @@ $smarty->assign('structure_id', $structure_info["page_ref_id"]);
 $smarty->assign('structure_name', $structure_info["pageName"]);
 
 $perms = Perms::get((array('type' => 'wiki page', 'object' => $structure_info["pageName"])));
-$structPerms = Perms::get((array('type' => 'wiki structure', 'object' => $structure_info['page_ref_id'])));
 $tikilib->get_perm_object($structure_info["pageName"], 'wiki page', $page_info);	// global perms still needed for logic in categorize.tpl
-$tikilib->get_perm_object($structure_info['page_ref_id'], 'wiki structure', $page_info);	// global perms still needed for logic in categorize.tpl
 
 if ( ! $perms->view ) {
 	$smarty->assign('errortype', 401);
@@ -47,7 +45,7 @@ if ( ! $perms->view ) {
 	die;
 }
 
-if ($perms->edit_structures || $structPerms->edit_structures) {
+if ($perms->edit_structures) {
 	if ($prefs['lock_wiki_structures'] === 'y') {
 		$lockedby = TikiLib::lib('attribute')->get_attribute('wiki structure', $structure_info['pageName'], 'tiki.object.lock');
 		if ($lockedby && $lockedby === $user && $perms->lock_structures || ! $lockedby || $perms->admin_structures) {

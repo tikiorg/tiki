@@ -37,12 +37,16 @@ function smarty_function_permission_link( $params, $smarty )
 {
 	$params = new JitFilter($params);
 	$type = $params->type->text();
+	$objectType = $params->objectType->text();
+	if (! $objectType ) {
+		$objectType = $type;
+	}
 	$id = $params->id->text();
 
 	$objectlib = TikiLib::lib('object');
 	if (isset($params['type'], $params['id'])) {
 		$arguments = [
-			'objectType' => $type,
+			'objectType' => $objectType,
 			'objectId' => $id,
 			'permType' => $type,
 			'objectName' => $params->title->text() ?: $objectlib->get_title($type, $id),

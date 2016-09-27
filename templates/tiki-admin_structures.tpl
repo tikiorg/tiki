@@ -124,7 +124,7 @@
 										</a>{$liend}
 										{if $channels[ix].admin_structure == 'y' or $tiki_p_admin == 'y'}
 											{$libeg}
-												{permission_link mode=text type='wiki structure' id=$channels[ix].page_ref_id title=$channels[ix].pageName}
+												{permission_link mode=text objectType='wiki page' type='wiki structure' id=$channels[ix].pageName title=$channels[ix].pageName}
 											{$liend}
 										{/if}
 

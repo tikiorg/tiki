@@ -80,7 +80,7 @@
 			{icon name="view"}
 		{/self_link}
 		{if $tiki_p_admin_structures == 'y'}
-			{permission_link mode=icon type='wiki structure' id=$page_ref_id title=$structure_name}
+			{permission_link mode=icon objectType='wiki page' type='wiki structure' id=$pageName title=$pageName}
 		{/if}
 		{if $tiki_p_watch_structure eq 'y'}
 			{if !$page_info.watching}
