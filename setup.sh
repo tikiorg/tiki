@@ -198,7 +198,7 @@ while getopts "hu:g:v:p:nd:" OPTION; do
 		?) usage ; exit 1 ;;
 	esac
 	if [ -n "$OPT_PHPCLI" ]; then
-		PHPCLI=`which ${OPT_PHPCLI}`
+		PHPCLI=`which "${OPT_PHPCLI}"`
 		if [ ! -n "$PHPCLI" ]; then
 			echo "PHP command: ${OPT_PHPCLI} not found. Please provide an existing command."
 			exit 1
@@ -522,10 +522,10 @@ composer_core()
 	else
 		# todo : if exists php;
 		if [ ${LOGCOMPOSERFLAG} = "0" ] ; then
-			${PHPCLI} temp/composer.phar self-update
+			"${PHPCLI}" temp/composer.phar self-update
 		fi
 		if [ ${LOGCOMPOSERFLAG} = "1" ] ; then
-			${PHPCLI} temp/composer.phar self-update > ${TIKI_COMPOSER_SELF_UPDATE_LOG}
+			"${PHPCLI}" temp/composer.phar self-update > ${TIKI_COMPOSER_SELF_UPDATE_LOG}
 		fi
 	fi
 
@@ -545,7 +545,7 @@ composer_core()
 	then
 		if [ ${LOGCOMPOSERFLAG} = "0" ] ; then
 			#until php -dmemory_limit=-1 temp/composer.phar install --prefer-dist --no-dev
-			until ${PHPCLI} -dmemory_limit=-1 temp/composer.phar install --prefer-dist --no-dev 2>&1 | sed '/Warning: Ambiguous class resolution/d'
+			until "${PHPCLI}" -dmemory_limit=-1 temp/composer.phar install --prefer-dist --no-dev 2>&1 | sed '/Warning: Ambiguous class resolution/d'
 			# setting memory_limit here prevents suhosin ALERT - script tried to increase memory_limit to 536870912 bytes
 			do
 				if [ $N -eq 7 ];
@@ -560,7 +560,7 @@ composer_core()
 			done
 		fi
 		if [ ${LOGCOMPOSERFLAG} = "1" ] ; then
-			until ${PHPCLI} -dmemory_limit=-1 temp/composer.phar install --prefer-dist --no-dev > ${TIKI_COMPOSER_INSTALL_LOG}
+			until "${PHPCLI}" -dmemory_limit=-1 temp/composer.phar install --prefer-dist --no-dev > ${TIKI_COMPOSER_INSTALL_LOG}
 			# setting memory_limit here prevents suhosin ALERT - script tried to increase memory_limit to 536870912 bytes
 			do
 				if [ $N -eq 7 ];
@@ -577,7 +577,7 @@ composer_core()
 		if [ ${LOGCOMPOSERFLAG} = "2" ] ; then
 			echo "Suppress output lines with 'Warning: Ambiguous class resolution'\n..."
 			#until php -dmemory_limit=-1 temp/composer.phar install --prefer-dist --no-dev | sed '/Warning: Ambiguous class resolution/d'
-			until ${PHPCLI} -dmemory_limit=-1 temp/composer.phar install --prefer-dist --no-dev
+			until "${PHPCLI}" -dmemory_limit=-1 temp/composer.phar install --prefer-dist --no-dev
 			# setting memory_limit here prevents suhosin ALERT - script tried to increase memory_limit to 536870912 bytes
 			do
 				if [ $N -eq 7 ];
