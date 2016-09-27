@@ -122,6 +122,11 @@
 										{$libeg}<a href='{sefurl page=$channels[ix].pageName structure=$channels[ix].pageName page_ref_id=$channels[ix].page_ref_id}'>
 											{icon name="view" _menu_text='y' _menu_icon='y' alt="{tr}View page{/tr}"}
 										</a>{$liend}
+										{if $channels[ix].admin_structures == 'y'}
+											{$libeg}
+												{permission_link mode=text type='wiki structure' id=$channels[ix].page_ref_id title=$channels[ix].pageName}
+											{$liend}
+										{/if}
 
 										{if $prefs.feature_wiki_export eq 'y' and $channels[ix].admin_structure eq 'y'}
 											{$libeg}<a href="tiki-admin_structures.php?export={$channels[ix].page_ref_id|escape:"url"}">

@@ -79,6 +79,9 @@
 		{self_link _script='tiki-index.php' page=$structure_name structure=$structure_name _class="tips" _title=":{tr}View{/tr}" _noauto="y"}
 			{icon name="view"}
 		{/self_link}
+		{if $tiki_p_admin_structures == 'y'}
+			{permission_link mode=icon type='wiki structure' id=$page_ref_id title=$structure_name}
+		{/if}
 		{if $tiki_p_watch_structure eq 'y'}
 			{if !$page_info.watching}
 				{self_link page_ref_id=$page_ref_id watch_object=$page_ref_id watch_action=add page=$structure_name _class="tips" _title=":{tr}Monitor the structure{/tr}"}
