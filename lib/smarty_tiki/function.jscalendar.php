@@ -110,6 +110,10 @@ function smarty_function_jscalendar($params, $smarty)
 	$datepicker_options .= $datepicker_options_common;
 
 	$html = '<input type="hidden" id="' . $params['id'] . '"' . $name  . ' value="'.$params['date'].'">';
+	$html .= '<input type="hidden" id="tzoffset" name="tzoffset" value="">';
+	$headerlib->add_jq_onready('$("input[name=tzoffset]").val((new Date()).getTimezoneOffset());');
+	if( isset($params['isutc']) && $params['isutc'] )
+		$headerlib->add_jq_onready('$("#' . $params['id'] . '").val(' . intval($params['date']) . ' + (new Date()).getTimezoneOffset()*60);');
 	$html .= '<input type="text" style="width:225px" class="form-control" id="' . $params['id'] . '_dptxt" value="">';	// text version of datepicker date
 
 	$display_tz = $tikilib->get_display_timezone();
@@ -124,11 +128,12 @@ function smarty_function_jscalendar($params, $smarty)
 
 	// TODO use a parsed version of $prefs['short_date_format']
 	// Note: JS timestamp is in milliseconds - php is seconds
+	// Note: adding local browser offset if php date is in UTC, see JsCalendar tracker field
 	if (!isset($params['showtime']) || $params['showtime'] === 'n') {
 
 		$command = 'datepicker';
 		$js_val = empty($params['date']) ? '""' : '$.datepicker.formatDate( "' .
-			$prefs['short_date_format_js'] . '", new Date('.$params['date'].'* 1000))';
+			$prefs['short_date_format_js'] . '", new Date('.$params['date'].'* 1000 + '.(isset($params['isutc']) && $params['isutc'] ? '(new Date()).getTimezoneOffset()*60*1000' : '0').'))';
 		$headerlib->add_jq_onready(
 			'$("#' . $params['id'] . '_dptxt").val(' . $js_val . ').tiki("' .
 			$command . '", "jscalendar", ' . $datepicker_options . ');'
@@ -142,7 +147,7 @@ function smarty_function_jscalendar($params, $smarty)
 		$command = 'datetimepicker';
 
 		$js_val1 = empty($params['date']) ? '' : '
-var dt = new Date('.$params['date'].'* 1000);
+var dt = new Date('.$params['date'].'* 1000 + '.(isset($params['isutc']) && $params['isutc'] ? '(new Date()).getTimezoneOffset()*60*1000' : '0').');
 var tm = { hour: dt.getHours(), minute: dt.getMinutes(), second: dt.getSeconds() };
 ';
 		$js_val2 = empty($params['date']) ? '""' : '$.datepicker.formatDate( "' .
