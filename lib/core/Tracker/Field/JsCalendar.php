@@ -70,7 +70,7 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 		}
 
 		// if local browser offset is submitted, convert timestamp to server-based timezone
-		if( isset($requestData['tzoffset']) && $value ) {
+		if( isset($requestData['tzoffset']) && $value && isset($requestData[$ins_id]) ) {
 			$browser_offset = 0 - intval($requestData['tzoffset']) * 60;
 
 			$server_offset = $this->tzServerOffset();	
