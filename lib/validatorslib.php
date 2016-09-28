@@ -166,7 +166,9 @@ invalidHandler: function(event, validator) {
 			$firstError.focus();
 		});
 	}
-}';
+},
+submitHandler: function(){return process_submit(this.currentForm);}
+';
 		return $validationjs;
 	}
 }
