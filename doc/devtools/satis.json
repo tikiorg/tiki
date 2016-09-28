@@ -992,7 +992,7 @@
 				"name": "jquery/plugins/chosen",
 				"version": "1.6.2",
 				"dist": {
-					"url": "https://github.com/harvesthq/chosen/archive/v1.6.2.zip",
+					"url": "https://github.com/harvesthq/chosen/releases/download/v1.6.2/chosen_v1.6.2.zip",
 					"type": "zip"
 				}
 			}
