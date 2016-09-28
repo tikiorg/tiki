@@ -195,7 +195,7 @@ function wikiplugin_tour($data, $params)
 
 	if ($params['show_until_dismiss'] != 'n') {
 		$headerlib->add_jq_onready('
-$(".tour-tour button[data-role=\'end\']").live("click",function() {
+$(".tour-tour button[data-role=\'end\']").on("click",function() {
 	setCookieBrowser("'.$cookie_id.'", "y", "tours", new Date('.$cookie_expiry.'000));
 });
 		', 12);

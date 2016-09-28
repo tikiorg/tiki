@@ -138,7 +138,7 @@
 		return false;
 		});
 
-		$('.Email_add').live('click', function() {
+		$('.Email_add').on('click', function() {
 		$(this).parent().tikiModal('Loading...');
 		setTimeout("$(this).parent().tikiModal();", 1000);
 		var text_area = $(this).parents().find(".text_add").val();;
@@ -147,7 +147,7 @@
 		return false;
 		});
 
-		$('.Email_remove').live('click', function() {
+		$('.Email_remove').on('click', function() {
 		$(this).parent().tikiModal('Loading...');
 		setTimeout("$(this).parent().tikiModal();", 1000);
 		var text_area = $(this).parents().find(".text_remove").val();
@@ -156,14 +156,14 @@
 		return false;
 		});
 
-		$('.silent_add').live('click', function() {
+		$('.silent_add').on('click', function() {
 		$(this).parent().tikiModal('Loading...');
 		setTimeout("$(this).parent().tikiModal();", 1000);
 		$('#{{$execution_key|escape}}_form').submit();
 		return false;
 		});
 
-		$('.silent_remove').live('click', function() {
+		$('.silent_remove').on('click', function() {
 		$(this).parent().tikiModal('Loading...');
 		setTimeout("$(this).parent().tikiModal();", 1000);
 		$('#{{$execution_key|escape}}_form').submit();
