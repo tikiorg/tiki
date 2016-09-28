@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1da92b132396c79c0e5cc4324815e884",
-    "content-hash": "773130b032b068d441140f3f49d22f73",
+    "hash": "50403e431faec9326df6289bbc696976",
+    "content-hash": "839d8c5efac8f41b5c97c503623769b0",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -791,10 +791,10 @@
         },
         {
             "name": "jquery/plugins/anythingslider",
-            "version": "1.9.4",
+            "version": "1.9.6",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/problematic/AnythingSlider-v1.9.4.zip",
+                "url": "https://github.com/CSS-Tricks/AnythingSlider/archive/v1.9.6.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -824,12 +824,12 @@
         },
         {
             "name": "jquery/plugins/colorbox",
-            "version": "1.5.14",
+            "version": "1.6.4",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-colorbox-1.5.14.zip",
+                "url": "https://composer.tiki.org/dist/jquery-plugins-colorbox-1.6.4.zip",
                 "reference": null,
-                "shasum": "5d5698c17ca75acba72b317366e9d909bcb9f42e"
+                "shasum": "d9212931ad81036cfe2ef7be33b7e7cf70a5c02d"
             },
             "type": "library"
         },
@@ -989,12 +989,12 @@
         },
         {
             "name": "jquery/plugins/zoom",
-            "version": "1.7.13",
+            "version": "1.7.18",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-zoom-1.7.13.zip",
+                "url": "https://composer.tiki.org/dist/jquery-plugins-zoom-1.7.18.zip",
                 "reference": null,
-                "shasum": "35e4ed311cae6e3d3191685eee8ba4974551b938"
+                "shasum": "01420db0cef6523d946d724afcc1aa8bcc210a80"
             },
             "type": "library"
         },
