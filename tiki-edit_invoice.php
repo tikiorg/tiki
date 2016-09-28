@@ -140,7 +140,7 @@ $smarty->assign("invoiceItems", $invoiceItems);
 $headerlib->add_jq_onready(
     "function setupTotal() {
 		$('#InvoiceForm :input')
-			.unbind('change')
+			.off('change')
 			.change(function() {
 				findTotal();
 			})

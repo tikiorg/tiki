@@ -87,7 +87,7 @@ $headerlib = TikiLib::lib("header")
 		var jS = $('#timesheetSpreadsheet').getSheet();
 		if (jS) {
 			$('#timesheetSpreadsheet')
-				.unbind('visible')
+				.off('visible')
 				.visible(function() {
 					jS.openSheet(table);
 				});

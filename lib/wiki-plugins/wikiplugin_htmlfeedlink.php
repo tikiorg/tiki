@@ -127,8 +127,8 @@ function wikiplugin_htmlfeedlink($data, $params)
 		}
 
 		$(document)
-			.unbind('plugin_htmlfeedlink_ready')
-			.bind('plugin_htmlfeedlink_ready', function(e) {
+			.off('plugin_htmlfeedlink_ready')
+			.on('plugin_htmlfeedlink_ready', function(e) {
 				var name = $(e.container).find('#param_name input:first');
 				name.hide();
 				var nameSelect = $('<select>')

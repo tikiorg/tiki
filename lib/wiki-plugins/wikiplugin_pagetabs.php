@@ -117,7 +117,7 @@ function wikiplugin_pagetabs($data, $params)
 								.each(function() {
 									$(this).attr("href", ($(this).attr("href") + "").replace("_raw", ""));
 								})
-								.unbind("click")
+								.off("click")
 								.click(function() {
 									var pageAttr = $(this).attr("href").split("=");
 									if (pageAttr.length < 2) return true;
