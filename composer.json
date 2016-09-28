@@ -17,7 +17,7 @@
 		"ckeditor/ckeditor/skins/office2013": "^1",
 		"ckeditor/ckeditor/skins/bootstrapck": "^1",
 		"ckeditor/ckeditor/skins/minimalist": "^1",
-		"codemirror/codemirror": "4.12.0",
+		"codemirror/codemirror": "5.19.0",
 		"components/jquery": "^3.1.0",
 		"components/jquery-migrate": "^3.0.0",
 		"cwspear/bootstrap-hover-dropdown": "^2.2.1",
