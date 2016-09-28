@@ -137,6 +137,8 @@ update()
 	startlog
 	echo "UPDATE" > $INSTANCE_LOCK
 	cd $INSTANCE_DIR
+	log "Doing SVN upgrade (just in case)"
+	svn upgrade
 	log "SVN upping"
 	svn up
 	log "Running setup.sh"
