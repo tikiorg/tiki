@@ -329,6 +329,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "codemirror/codemirror",
+				"version": "5.19.0",
+				"dist": {
+					"url": "https://github.com/codemirror/CodeMirror/archive/5.19.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "dompdf/dompdf",
 				"version": "0.6.1",
 				"dist": {
@@ -912,6 +923,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "jquery/plugins/anythingslider",
+				"version": "1.9.6",
+				"dist": {
+					"url": "https://github.com/CSS-Tricks/AnythingSlider/archive/v1.9.6.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "jquery/plugins/brosho",
 				"version": "0.1",
 				"dist": {
@@ -960,6 +982,17 @@
 				"version": "1.5.1",
 				"dist": {
 					"url": "https://github.com/harvesthq/chosen/releases/download/v1.5.1/chosen_v1.5.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/chosen",
+				"version": "1.6.2",
+				"dist": {
+					"url": "https://github.com/harvesthq/chosen/archive/v1.6.2.zip",
 					"type": "zip"
 				}
 			}
@@ -1026,6 +1059,17 @@
 				"version": "1.5.14",
 				"dist": {
 					"url": "https://github.com/jackmoore/colorbox/archive/1.5.14.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/colorbox",
+				"version": "1.6.4",
+				"dist": {
+					"url": "https://github.com/jackmoore/colorbox/archive/1.6.4.zip",
 					"type": "zip"
 				}
 			}
@@ -1341,6 +1385,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "jquery/plugins/timeago",
+				"version": "1.5.3",
+				"dist": {
+					"url": "https://github.com/rmm5t/jquery-timeago/archive/v1.5.3.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "jquery/plugins/treetable",
 				"version": "3.0.1",
 				"dist": {
@@ -1455,6 +1510,17 @@
 				"version": "1.7.13",
 				"dist": {
 					"url": "https://github.com/jackmoore/zoom/archive/1.7.13.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/zoom",
+				"version": "1.7.18",
+				"dist": {
+					"url": "https://github.com/jackmoore/zoom/archive/1.7.18.zip",
 					"type": "zip"
 				}
 			}
