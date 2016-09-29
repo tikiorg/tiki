@@ -49,7 +49,7 @@ function smarty_function_user_selector($params, $smarty)
 			'user_selector_threshold' => $prefs['user_selector_threshold'],
 			'allowNone' => 'n',
 			'realnames' => 'y',
-			'class' => '',
+			'class' => 'form-control',
 	);
 	
 	$params = array_merge($defaults, $params);
@@ -64,7 +64,7 @@ function smarty_function_user_selector($params, $smarty)
 		$ed = '';
 	}
 	
-	if(isset($params['class'])) {
+	if(! empty($params['class'])) {
 		$class = ' class="'. $params['class'] . '"';
 	} else {
 		$class = '';
@@ -90,9 +90,13 @@ function smarty_function_user_selector($params, $smarty)
 		}
 	}
 
-	$ucant = 0;
 	$users = array();
 	$ret = '';
+	if (! empty($groupNames)) {
+		$ucant = $userlib->count_users_consolidated($groupNames);
+	} else {
+		$ucant = $userlib->count_users('');
+	}
 
 	if ($prefs['feature_jquery_autocomplete'] == 'y' && ($ucant > $prefs['user_selector_threshold'] or $ucant > $params['user_selector_threshold'])) {
 		$ret .= '<input id="' . $params['id'] . '" type="text" name="' . $params['name'] . '" value="' . htmlspecialchars($params['user']) . '"' . $sz . $ed . ' style="'.$params['style'].'"'.$class.' />';
