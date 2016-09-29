@@ -32,6 +32,7 @@ $arrayMandatory = explode(',', $_GET["mandatory"]);
 if (isset($_GET['selected'])) $arraySelected = explode(',', utf8_encode(rawurldecode($_GET["selected"])));
 $arrayFieldlist = explode(',', $_GET["fieldlist"]);
 $arrayFilterfield = explode(',', $_GET["filterfield"]);
+$arrayFiltervalue = explode(',', $_GET["filtervalue"]);
 $arrayStatus = explode(',', $_GET["status"]);
 $arrayItem = explode(',', $_GET['item']);
 header('Cache-Control: no-cache');
@@ -43,7 +44,7 @@ $json_return = array();
 for ($index = 0, $count_arrayTrackerId = count($arrayTrackerId); $index < $count_arrayTrackerId; $index++) {
 	$arrayFieldlistMultiple = explode('|',$arrayFieldlist[$index]);
 	$tikilib->get_perm_object($arrayTrackerId[$index], 'tracker');
-	$filtervalue = utf8_encode(rawurldecode($_GET["filtervalue"]));
+	$filtervalue = $trklib->get_item_value($arrayTrackerId[$index],$arrayFiltervalue[$index],$arrayFilterfield[$index]);
 
 	if (!empty($_GET['item'])) { // we want the value of field filterfield for item 
 		$filtervalue = $trklib-> get_item_value($arrayTrackerId[$index], $arrayItem[$index], $arrayFilterfield[$index]);
@@ -101,9 +102,11 @@ for ($index = 0, $count_arrayTrackerId = count($arrayTrackerId); $index < $count
 
 				}
 				
-				$labelField .= $prefix. $label; 
+				if ($label) {
+					$labelField .= $prefix. $label; 
+				}
 				if (!$prefix) {
-					$prefix = ' ';
+					$prefix = '<br>';
 				}
 				
 			}
