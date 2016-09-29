@@ -98,46 +98,52 @@ class TikiMail
 			$body = new Zend\Mime\Message();
 		}
 
-		$partHtmlFound = false;
-		$partTextFound = false;
+		$partHtml = false;
+		$partText = false;
 
-		$parts = $body->getParts();
-		foreach($parts as $part){
+		$parts = array();
+		foreach($body->getParts() as $part){
 			/* @var $part Zend\Mime\Part */
 			if ($part->getType() == Zend\Mime\Mime::TYPE_HTML){
-				$partHtmlFound = true;
+				$partHtml = $part;
 				$part->setContent($html);
 				if( $this->charset )
 					$part->setCharset($this->charset);
 			}
-			if ($part->getType() == Zend\Mime\Mime::TYPE_TEXT){
-				$partTextFound = true;
+			elseif ($part->getType() == Zend\Mime\Mime::TYPE_TEXT){
+				$partText = $part;
 				if ($text){
 					$part->setContent($text);
 					if( $this->charset )
 						$part->setCharset($this->charset);
 				}
 			}
+			else
+				$parts[] = $part;
 		}
 
-		if (!$partHtmlFound){
-			$htmlPart = new Zend\Mime\Part($html);
-			$htmlPart->setType(Zend\Mime\Mime::TYPE_HTML);
+		if (!$partText && $text){
+			$partText = new Zend\Mime\Part($text);
+			$partText->setType(Zend\Mime\Mime::TYPE_TEXT);
 			if( $this->charset )
-				$htmlPart->setCharset($this->charset);
-			$parts[] = $htmlPart;
+				$partText->setCharset($this->charset);
 		}
-
-		if (!$partTextFound && $text){
-			$textPart = new Zend\Mime\Part($text);
-			$textPart->setType(Zend\Mime\Mime::TYPE_TEXT);
+		$parts[] = $partText;
+		
+		if (!$partHtml){
+			$partHtml = new Zend\Mime\Part($html);
+			$partHtml->setType(Zend\Mime\Mime::TYPE_HTML);
 			if( $this->charset )
-				$textPart->setCharset($this->charset);
-			$parts[] = $textPart;
+				$partHtml->setCharset($this->charset);
+			
 		}
+		$parts[] = $partHtml;
 
 		$body->setParts($parts);
 		$this->mail->setBody($body);
+		// use multipart/alternative for mail clients to display html and fall back to plain text parts
+		if( $text )
+			$this->mail->getHeaders()->get('content-type')->setType('multipart/alternative');
 	}
 
 	function setText($text = '')
