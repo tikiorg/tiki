@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8f4f6b935d82d9c5492fed10915f10e4",
-    "content-hash": "fdf70abbdca7150038e1fd2d7c952447",
+    "hash": "7e64355a86ad2b7577791ce5a9949766",
+    "content-hash": "9a7891878fe0dba5cae3e28bc32c787f",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -794,7 +794,7 @@
             "version": "1.9.6",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/CSS-Tricks/AnythingSlider/archive/v1.9.6.zip",
+                "url": "https://composer.tiki.org/problematic/AnythingSlider-v1.9.6.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -813,12 +813,12 @@
         },
         {
             "name": "jquery/plugins/chosen",
-            "version": "1.5.1",
+            "version": "1.6.2",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/jquery-plugins-chosen-1.5.1.zip",
+                "url": "https://composer.tiki.org/dist/jquery-plugins-chosen-1.6.2.zip",
                 "reference": null,
-                "shasum": "d094c081174b05e15d7b45c716e0f84e619a68b2"
+                "shasum": "a1e21a0b9c628b0fc5c7fbb48a313c7b47f9bd2b"
             },
             "type": "library"
         },
