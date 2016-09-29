@@ -16,7 +16,7 @@
 			{/if}
 		</label>
 		<div id="trackerinput_{$field.fieldId|escape}">
-			{trackerinput field=$field}
+			{trackerinput field=$field item=$item}
 			{if !empty($field.description) && $field.type ne 'S'}
 				{if $field.descriptionIsParsed eq 'y'}
 					<div class="description help-block">{wiki}{$field.description}{/wiki}</div>

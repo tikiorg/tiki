@@ -62,13 +62,18 @@ function smarty_function_trackerfields($params, $smarty)
 		$permName = $field['permName'];
 		
 		$itemId = isset($params['itemId']) ? $params['itemId'] : null;
+		if( $itemId )
+			$item = array('itemId' => $itemId);
+		else
+			$item = array();
+		$smarty->assign('item', $item);
 		
-		
-		$auto['input'][$permName] = new Tiki_Render_Lazy(function () use ($field, $smarty) {
+		$auto['input'][$permName] = new Tiki_Render_Lazy(function () use ($field, $smarty, $item) {
 			return smarty_function_trackerinput([
 				'field' => $field,
 				'showlinks' => 'n',
 				'list_mode' => 'n',
+				'item' => $item,
 			], $smarty);
 		});
 		
