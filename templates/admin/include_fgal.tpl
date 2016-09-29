@@ -52,14 +52,14 @@
 			<div class="adminoptionboxchild fgal_use_db_childcontainer n">
 				{preference name='fgal_use_dir'}
 			</div>
-			<div class="col-lg-8 col-sm-offset-4 margin-bottom-md">
+			<div class="col-sm-8 col-sm-offset-4 margin-bottom-md">
 			{button href="tiki-admin.php?page=fgal&amp;move=to_fs" _text="{tr}Move files from database to directory{/tr}"}
 			{button href="tiki-admin.php?page=fgal&amp;move=to_db" _text="{tr}Move files from directory to database{/tr}"}
 			</div>
 
 			{preference name='fgal_podcast_dir'}
 
-			<input type="hidden" name="filegalfeatures" />
+			<input type="hidden" name="filegalfeatures">
 
 			<fieldset>
 				<legend>{tr}Features{/tr}{help url="File+Gallery+Config"}</legend>

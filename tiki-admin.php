@@ -222,7 +222,7 @@ if ( isset( $_REQUEST['lm_criteria'] ) ) {
 	set_time_limit(0);
 	try {
 		$smarty->assign('lm_criteria', $_REQUEST['lm_criteria']);
-		$results = $prefslib->getMatchingPreferences($_REQUEST['lm_criteria'], $temp_filters);
+		$results = $prefslib->getMatchingPreferences($_REQUEST['lm_criteria']);
 		$results = array_slice($results, 0, 50);
 		$smarty->assign('lm_searchresults', $results);
 		$smarty->assign('lm_error', '');
