@@ -421,7 +421,21 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		foreach ($items as $i) {
 			$labels[] = $this->getItemLabel($i, $context);
 		}
-		$label = implode(', ', $labels);
+
+		if( $this->getOption('displayFieldsListType') === 'table' && $context['list_mode'] !== 'csv' ) {
+			$headers = array();
+			$trackerId = (int) $this->getOption('trackerId');
+			$definition = Tracker_Definition::get($trackerId);
+			if ($fields = $this->getDisplayFieldsListArray()) {
+				foreach ($fields as $fieldId) {
+					$field = $definition->getField($fieldId);
+					$headers[] = $field['name'];
+				}
+			}
+			$label = '<table class="table table-condensed" style="background:none;"><thead><tr><td>'.implode('</td><td>', $headers).'</td></tr></thead><tbody>'.implode('', $labels).'</tbody></table>';
+		} else {
+			$label = implode(', ', $labels);
+		}
 
 		return $label;
 	}
@@ -553,15 +567,27 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 
 			if (count($parts)) {
-				$label = $trklib->concat_item_from_fieldslist($trackerId,
-					$itemId,
-					$parts,
-					$status,
-					' ',
-					$context['list_mode'],
-					$this->getOption('linkToItem'),
-					$this->getOption('displayFieldsListFormat')
-				);
+				if( $this->getOption('displayFieldsListType') === 'table' && $context['list_mode'] !== 'csv' ) {
+					$label = "<tr><td>".$trklib->concat_item_from_fieldslist($trackerId,
+						$itemId,
+						$parts,
+						$status,
+						'</td><td>',
+						$context['list_mode'],
+						false,
+						$this->getOption('displayFieldsListFormat')
+					)."</td></tr>";
+				} else {
+					$label = $trklib->concat_item_from_fieldslist($trackerId,
+						$itemId,
+						$parts,
+						$status,
+						' ',
+						$context['list_mode'],
+						$this->getOption('linkToItem'),
+						$this->getOption('displayFieldsListFormat')
+					);
+				}
 			} else {
 				$label = TikiLib::lib('object')->get_title('trackeritem', $itemId);
 			}
