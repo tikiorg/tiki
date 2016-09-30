@@ -168,7 +168,9 @@ invalidHandler: function(event, validator) {
 			$firstError.focus();
 		});
 	}
-}';
+},
+submitHandler: function(form, event){return process_submit(form);}
+';
 		return $validationjs;
 	}
 }
