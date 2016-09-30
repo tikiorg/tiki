@@ -609,6 +609,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 					$displayFieldsList,
 					$this->getOption('status', 'opc')
 				);
+				array_unshift($list['fields'], '');
 			} else {
 				$list = TikiLib::lib('trk')->concat_all_items_from_fieldslist(
 					$this->getOption('trackerId'),

@@ -4,37 +4,11 @@
 		<input type="hidden" name="{$field.ins_id}_old" value="{$field.value|escape}" />
 	{/if}
 	{if $data.displayFieldsListType === 'table'}
-	  <div class="table-responsive">
-			<table class="table">
-				<thead>
-					<tr>
-						<th><input type="checkbox" name="selectall" value="" class="{$field.ins_id}-select-all"></th>
-						{foreach item=label from=$data.list.fields}
-							<th>{$label|escape}</th>
-						{/foreach}
-					</tr>
-				</thead>
-				<tbody>
-					{foreach key=id item=fields from=$data.list.items}
-						<tr>
-							<td><input type="checkbox" class="{$field.ins_id}-checkbox" name="{$field.ins_id}[]" value="{$id|escape}" {if $data.preselection and $data.crossSelect neq 'y'}disabled="disabled"{/if} {if $data.preselection and !$field.value and $data.preselection eq $id or (($data.selectMultipleValues and is_array($field.value) and in_array($id, $field.value) or $field.value eq $id))}checked="checked"{/if} /></td>
-							{foreach key=fieldId item=label from=$fields}
-								<td id="il{$id|escape}-{$fieldId}">{$label|escape}</td>
-							{/foreach}
-						</tr>
-					{/foreach}
-				</tbody>
-			</table>
-		</div>
-		{jq}
-			$(".{{$field.ins_id}}-select-all").removeClass('{{$field.ins_id}}-select-all')
-			.on('click', function (e) {
-				if( this.checked )
-					$(this).closest('form').find(':checkbox:not(:checked)[name^={{$field.ins_id}}]').click();
-				else
-					$(this).closest('form').find(':checkbox:checked[name^={{$field.ins_id}}]').click();
-			});
-		{/jq}
+		{wikiplugin _name=fancytable head='|'|implode:$data.list.fields sortable="type:reset" sortList="[1,0]" tsfilters="type:nofilter" tsfilteroptions="type:reset" tspaginate="max:5"}
+		{foreach key=id item=fields from=$data.list.items}
+			<input type="checkbox" class="{$field.ins_id}-checkbox" name="{$field.ins_id}[]" value="{$id|escape}" {if $data.preselection and $data.crossSelect neq 'y'}disabled="disabled"{/if} {if $data.preselection and !$field.value and $data.preselection eq $id or (($data.selectMultipleValues and is_array($field.value) and in_array($id, $field.value) or $field.value eq $id))}checked="checked"{/if} />|{'|'|implode:$fields}
+		{/foreach}
+		{/wikiplugin}
 	{else}
 		<select name="{$field.ins_id}{if $data.selectMultipleValues}[]{/if}" {if $data.preselection and $data.crossSelect neq 'y'}disabled="disabled"{/if} {if $data.selectMultipleValues}multiple="multiple"{/if} class="form-control">
 			{if $field.isMandatory ne 'y' || empty($field.value)}
