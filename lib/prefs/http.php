@@ -29,5 +29,50 @@ function prefs_http_list()
 			'type' => 'flag',
 			'default' => 'y',
 		),
+        'http_header_frame_options' => array(
+            'name' => tra('HTTP Header X-Frame Options'),
+            'description' => tra('The X-Frame-Options HTTP response header can be used to indicate whether or not a browser should be allowed to render a page in a &lt;frame&gt;, &lt;iframe&gt; or &lt;object&gt;'),
+            'type' => 'flag',
+            'default' => 'n',
+            'perspective' => false,
+            'tags' => array('basic'),
+        ),
+        'http_header_frame_options_value' => array(
+            'name' => tra('Header Value'),
+            'type' => 'list',
+            'options' => array(
+                'DENY' => tra('DENY'),
+                'SAMEORIGIN' => tra('SAMEORIGIN'),
+            ),
+            'default' => 'DENY',
+            'perspective' => false,
+            'tags' => array('basic'),
+            'dependencies' => array(
+                'http_header_frame_options',
+            ),
+        ),
+        'http_header_xss_protection' => array(
+            'name' => tra('HTTP Header X-XSS-Protection'),
+            'description' => tra('The x-xss-protection header is designed to enable the cross-site scripting (XSS) filter built into modern web browsers'),
+            'type' => 'flag',
+            'default' => 'n',
+            'perspective' => false,
+            'tags' => array('basic'),
+        ),
+        'http_header_xss_protection_value' => array(
+            'name' => tra('Header Value'),
+            'type' => 'list',
+            'options' => array(
+                '0' => tra('0'),
+                '1' => tra('1'),
+                '1;mode:block' => tra('1;mode:block'),
+            ),
+            'default' => '1;mode:block',
+            'perspective' => false,
+            'tags' => array('basic'),
+            'dependencies' => array(
+                'http_header_xss_protection',
+            ),
+        ),
 	);
 }

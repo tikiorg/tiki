@@ -352,6 +352,21 @@ class Smarty_Tiki extends Smarty
 			}
 		}
 
+        /**
+         * Add security headers. By default there headers are not sent.
+         * To change go to admin > security > site access
+         */
+        if (!headers_sent()) {
+            if ($prefs['http_header_frame_options'] == 'y') {
+                $header_value = $prefs['http_header_frame_options_value'];
+                header('X-Frame-Options: ' . $header_value);
+            }
+            if ($prefs['http_header_xss_protection'] == 'y') {
+                $header_value = $prefs['http_header_xss_protection_value'];
+                header('X-XSS-Protection: ' . $header_value);
+            }
+        }
+
 		/**
 		 * By default, display is used with text/html content in UTF-8 encoding
 		 * If you want to output other data from smarty,

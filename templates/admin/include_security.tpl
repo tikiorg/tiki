@@ -163,6 +163,16 @@
 				{preference name=load_threshold}
 				{preference name=site_busy_msg}
 			</div>
+
+			{preference name=http_header_frame_options}
+			<div class="adminoptionboxchild" id="http_header_frame_options_childcontainer">
+				{preference name=http_header_frame_options_value}
+			</div>
+
+			{preference name=http_header_xss_protection}
+			<div class="adminoptionboxchild" id="http_header_xss_protection_childcontainer">
+				{preference name=http_header_xss_protection_value}
+			</div>
 		{/tab}
 
 		{tab name="{tr}Tokens{/tr}"}
