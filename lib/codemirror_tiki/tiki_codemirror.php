@@ -32,7 +32,15 @@ test = { mode: function () {}, indentation: function() {} }
 
 		foreach (glob('vendor/codemirror/codemirror/mode/*', GLOB_ONLYDIR) as $dir) {
 			foreach (glob($dir.'/*.js', GLOB_NOCHECK) as $jsFile) {
-				if(is_file($jsFile)){
+				if(
+					is_file($jsFile) && (
+						$prefs['tiki_minify_javascript'] !== 'y' ||
+						(
+							strpos($jsFile, 'powershell.js') === false		// FIXME temporary workaound for errors in codemirror 5.19.0
+							&& strpos($jsFile, 'swift.js') === false		// FIXME temporary workaound for errors in codemirror 5.19.0
+						)
+					)
+				){
 					$js .= "//" . $jsFile . "\n";
 					$js .= "try {\n" . @file_get_contents($jsFile) . "\n} catch (e) { };\n";
 				}
