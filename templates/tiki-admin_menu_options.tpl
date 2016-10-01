@@ -102,7 +102,7 @@
 												{if $channels[user].groupname}
 													<br>
 													{tr}Groups:{/tr} {$channels[user].groupname|escape}{/if}
-												{if $channels[user].groupname}
+												{if $channels[user].class}
 													<br>
 													{tr}Class:{/tr} {$channels[user].class|escape}{/if}
 											</span>
