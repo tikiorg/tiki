@@ -107,8 +107,11 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\IndexOptimizeCommand);
 	$console->add(new Tiki\Command\IndexCatchUpCommand);
 	$console->add(new Tiki\Command\MailInPollCommand);
-    $console->add(new Tiki\Command\MailQueueSendCommand);
+	$console->add(new Tiki\Command\MailQueueSendCommand);
 	$console->add(new Tiki\Command\NotificationDigestCommand);
+	$console->add(new Tiki\Command\PreferencesGetCommand);
+	$console->add(new Tiki\Command\PreferencesSetCommand);
+	$console->add(new Tiki\Command\PreferencesDeleteCommand);
 	$console->add(new Tiki\Command\ProfileForgetCommand);
 	$console->add(new Tiki\Command\ProfileInstallCommand);
 	$console->add(new Tiki\Command\ProfileExport\Init);
@@ -131,6 +134,9 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\UnavailableCommand('mail-in:poll'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('mail-queue:send'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('notification:digest'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('preferences:get'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('preferences:set'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('preferences:delete'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('profile:forget'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('profile:apply'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('profile:export:init'))->ignoreValidationErrors();
