@@ -312,6 +312,28 @@ select.form-control.date {
 	display: inline;
 }
 
+//CSS-only Masonry Grid Layout for various items
+.masonry {
+	-moz-column-count: auto;
+	-moz-column-gap: 1.5rem;
+	-moz-column-width: 21rem;
+	column-count: auto;
+	column-gap: 1.5rem;
+	column-width: 21rem;
+	font-size: 0; /* this is to prevent displaying of white space rendered by unwanted nbsp e.g. in plugin LIST */
+}
+.masonry > * {
+	display: inline-block;
+	font-size: initial; /* this is to reset the zero font size setting above */
+	width: 100%;
+}
+.masonry * {max-width: 100%}
+.masonry > br, .masonry > .editplugin {display: none !important}
+.masonry > * .img-responsive {margin: auto}
+
+.masonry.nogaps {-moz-column-gap: 0; column-gap: 0}
+.masonry.nogaps > a, .masonry.nogaps > img, .masonry.nogaps img {display: block}
+
 //Social login buttons
 .social-buttons {
   margin: 0 auto;
