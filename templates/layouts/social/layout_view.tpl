@@ -13,7 +13,7 @@
 	{include file='tiki-ajax_header.tpl'}
 {/if}
 
-		<div class="container">
+		<div class="container{if $smarty.session.fullscreen eq 'y'}-fluid{/if}">
 
 			<div class="row" id="row-middle">
 
@@ -54,7 +54,7 @@
 		</div> {* container *}
 
 		<footer class="footer main-footer" id="footer">
-			<div class="container">
+			<div class="container{if $smarty.session.fullscreen eq 'y'}-fluid{/if}">
 				<div class="footer_liner">
 {modulelist zone=bottom class=row} <!-- div.modules -->
 				</div>
@@ -62,7 +62,7 @@
 		</footer>
 
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar-fixed-top">
-			<div class="container">
+			<div class="container{if $smarty.session.fullscreen eq 'y'}-fluid{/if}">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse"
 					data-target="#navbar-collapse-social">

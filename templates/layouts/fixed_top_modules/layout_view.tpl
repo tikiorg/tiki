@@ -14,7 +14,7 @@
 {/if}
 <div class="middle_outer" id="middle_outer">
     <div class="fixed-topbar"></div>
-    <div class="container clearfix middle" id="middle">
+    <div class="container{if $smarty.session.fullscreen eq 'y'}-fluid{/if} clearfix middle" id="middle">
         <div class="topbar_wrapper">
             <div class="topbar row" id="topbar">
                 {modulelist zone=topbar}
@@ -97,14 +97,14 @@
 
     <footer class="footer" id="footer">
         <div class="footer_liner">
-            <div class="container">
+            <div class="container{if $smarty.session.fullscreen eq 'y'}-fluid{/if}">
                 {modulelist zone=bottom class='row row-sidemargins-zero'}
             </div>
         </div>
     </footer>
 
 <nav class="navbar {* navbar-inverse *}navbar-default navbar-fixed-top" role="navigation" id="navbar-fixed-top">
-    <div class="container">
+    <div class="container{if $smarty.session.fullscreen eq 'y'}-fluid{/if}">
         <div class="navbar-header">
             {if $module_params.navbar_toggle neq 'n'}
                 <button type="button" class="navbar-toggle" data-toggle="collapse"

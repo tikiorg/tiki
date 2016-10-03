@@ -14,14 +14,14 @@
 {/if}
 
 <div class="header_outer" id="header_outer">
-    <div class="header_container container">
+    <div class="header_container container{if $smarty.session.fullscreen eq 'y'}-fluid{/if}">
         <header class="header page-header" id="page-header">
             {modulelist zone=top class='row top_modules'}
         </header>
     </div>
 </div>
 <div class="middle_outer" id="middle_outer">
-    <div class="container clearfix middle" id="middle">
+    <div class="container{if $smarty.session.fullscreen eq 'y'}-fluid{/if} clearfix middle" id="middle">
 		<div class="topbar row" id="topbar">
 			{modulelist zone=topbar}
         </div>
@@ -100,7 +100,7 @@
 </div>
 <footer class="footer" id="footer">
     <div class="footer_liner">
-        <div class="container">
+        <div class="container{if $smarty.session.fullscreen eq 'y'}-fluid{/if}">
             {modulelist zone=bottom class='row row-sidemargins-zero'}
         </div>
     </div>

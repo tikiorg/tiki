@@ -13,7 +13,7 @@
     {include file='tiki-ajax_header.tpl'}
 {/if}
 
-<div class="container">
+<div class="container{if $smarty.session.fullscreen eq 'y'}-fluid{/if}">
     <div class="page-header" id="page-header">
         {modulelist zone=top class='row top_modules'}
         <div class="topbar row" id="topbar">

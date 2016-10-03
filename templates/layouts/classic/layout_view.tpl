@@ -20,7 +20,7 @@
     <div id="header-shadow">{eval var=$prefs.header_shadow_start}{/if}
         <div class="header_outer" id="header_outer">
             <div class="header_container">
-                <div class="container">
+                <div class="container{if $smarty.session.fullscreen eq 'y'}-fluid{/if}">
                     <header class="header page-header" id="page-header">
                         {modulelist zone=top class='row top_modules'}
                     </header>
@@ -30,7 +30,7 @@
         {if $prefs.feature_layoutshadows eq 'y'}{eval var=$prefs.header_shadow_end}</div>{/if}
 
     <div class="middle_outer" id="middle_outer" >
-        <div class="container clearfix middle" id="middle">
+        <div class="container{if $smarty.session.fullscreen eq 'y'}-fluid{/if} clearfix middle" id="middle">
             <div class="row topbar" id="topbar">
                 {modulelist zone=topbar}
             </div>
@@ -126,7 +126,7 @@
     <div id="footer-shadow">{eval var=$prefs.footer_shadow_start}{/if}
         <footer class="footer" id="footer">
             <div class="footer_liner">
-                <div class="container" style="padding-left: 0; padding-right: 0;">
+                <div class="container{if $smarty.session.fullscreen eq 'y'}-fluid{/if}" style="padding-left: 0; padding-right: 0;">
                     {modulelist zone=bottom class='row-sidemargins-zero'}
                 </div>
             </div>
