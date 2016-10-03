@@ -4593,6 +4593,9 @@ body.tiki_wiki #comments {
   overflow: auto;
   max-width: 990px;
 }
+.codelisting .CodeMirror-code {
+  font-family: monospace;
+}
 .codelisting .CodeMirror-vscrollbar {
   display: none !important;
   /* we do not need to display vertical scrollbars in code listings - workaround for the "wrongly computed height with scrollbar" bug in CodeMirror */
