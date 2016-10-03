@@ -77,6 +77,18 @@ function wikiplugin_wikidiff_info()
 					array('text' => tra('Side-by-side view'), 'value' => 'sideview'),
 				),
 			),
+			'show_version_info' => array(
+				'required' => false,
+				'name' => tra('Show version info'),
+				'description' => tra('Show the heading "Comparing version X with version Y"'),
+				'since' => 16.0,
+				'default' => 'n',
+				'filter' => 'text',
+				'options' => array(
+					array('text' => tra('No'), 'value' => 'n'),
+					array('text' => tra('Yes'), 'value' => 'y'),
+				)
+			),
 		)
 	);
 }
@@ -90,6 +102,9 @@ function wikiplugin_wikidiff($data, $params)
 		$defaults["$key"] = $param['default'];
 	}
 	$params = array_merge($defaults, $params);
+
+	// Note: the underlying param is the opposite: hide_version_info
+	$params['show_version_info'] = $params['show_version_info'] !== 'n';
 
 	$smarty = TikiLib::lib('smarty');
 	$smarty->loadPlugin('smarty_function_wikidiff');

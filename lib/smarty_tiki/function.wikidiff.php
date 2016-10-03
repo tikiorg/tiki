@@ -28,6 +28,7 @@ function smarty_function_wikidiff($params, $smarty)
 		'oldver' => '',						// int|string   required version or date string (uses strtotime)
 		'newver' => '',						// int|string   version or date string, latest if empty  (uses strtotime)
 		'diff_style' => '',					// string       one of the options for default_wiki_diff_style pref
+		'show_version_info' => false,		// bool         hide the h2 heading "Comparing version X with version Y"
 	];
 
 	$params = array_merge($defaults, $params);
@@ -59,6 +60,8 @@ function smarty_function_wikidiff($params, $smarty)
 		} else {
 			$newver = $params['newver'];
 		}
+
+		$smarty->assign('hide_version_info', ! $params['show_version_info']);
 
 		histlib_helper_setup_diff($params['object_id'], $oldver, $newver, $params['diff_style']);
 
