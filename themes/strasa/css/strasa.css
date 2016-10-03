@@ -7540,6 +7540,9 @@ body {
 body.tiki.navbar-padding {
   padding-top: 84px;
 }
+body.fullscreen.tiki.navbar-padding {
+  padding-top: 0;
+}
 .container,
 #autosave_preview {
   background: #ffffff;

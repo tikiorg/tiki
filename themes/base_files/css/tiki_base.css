@@ -3267,6 +3267,9 @@ legend + * {
 body.tiki.navbar-padding {
   padding-top: 46px;
 }
+body.fullscreen.tiki.navbar-padding {
+  padding-top: 0;
+}
 .panel-body ul.nav {
   overflow: visible;
 }

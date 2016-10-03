@@ -7566,6 +7566,9 @@ body.tiki.navbar-padding h1.sitetitle,
 .layout_social_modules h1.sitetitle {
   line-height: normal;
 }
+body.fullscreen.tiki.navbar-padding {
+  padding-top: 0;
+}
 .layout_social .topbar_modules h1.sitetitle,
 .layout_social_modules .topbar_modules h1.sitetitle,
 .layout_fixed_top_modules #top_modules h1.sitetitle {
