@@ -334,6 +334,19 @@ select.form-control.date {
 .masonry.nogaps {-moz-column-gap: 0; column-gap: 0}
 .masonry.nogaps > a, .masonry.nogaps > img, .masonry.nogaps img {display: block}
 
+.masonry.flex-horiz {
+	display: flex;
+	flex-wrap: wrap;
+}
+.masonry.flex-horiz > * {
+	flex-grow: 1;
+	margin: 0;
+	width: auto;
+}
+.masonry.flex-horiz * {
+	max-width: 100%;
+}
+
 //Social login buttons
 .social-buttons {
   margin: 0 auto;

@@ -1051,6 +1051,18 @@ select.form-control.date {
 .masonry.nogaps img {
   display: block;
 }
+.masonry.flex-horiz {
+  display: flex;
+  flex-wrap: wrap;
+}
+.masonry.flex-horiz > * {
+  flex-grow: 1;
+  margin: 0;
+  width: auto;
+}
+.masonry.flex-horiz * {
+  max-width: 100%;
+}
 .social-buttons {
   margin: 0 auto;
   width: 250px;
