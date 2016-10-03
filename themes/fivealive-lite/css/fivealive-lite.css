@@ -7553,6 +7553,12 @@ input[type="checkbox"].preffilter-toggle-round:checked + label:before {
   box-shadow: inset 0 24px 0 0 #28a7de;
   border-top: 2px solid #ffffff;
 }
+.fullscreen .middle_outer {
+  -webkit-box-shadow: inset 0 3px 0 0 #28a7de;
+  -moz-box-shadow: inset 0 3px 0 0 #28a7de;
+  box-shadow: inset 0 3px 0 0 #28a7de;
+  border-top: none;
+}
 .navbar {
   min-height: 24px;
 }
