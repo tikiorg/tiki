@@ -13,13 +13,17 @@
     {include file='tiki-ajax_header.tpl'}
 {/if}
 <div class="middle_outer" id="middle_outer">
+{if $smarty.session.fullscreen ne 'y'}
     <div class="fixed-topbar"></div>
+{/if}
     <div class="container{if $smarty.session.fullscreen eq 'y'}-fluid{/if} clearfix middle" id="middle">
+{if $smarty.session.fullscreen ne 'y'}
         <div class="topbar_wrapper">
             <div class="topbar row" id="topbar">
                 {modulelist zone=topbar}
             </div>
         </div>
+{/if}
 
         <div class="row" id="row-middle">
             {if zone_is_empty('left') and zone_is_empty('right')}
@@ -95,6 +99,7 @@
     </div>
 </div>
 
+{if $smarty.session.fullscreen ne 'y'}
     <footer class="footer" id="footer">
         <div class="footer_liner">
             <div class="container{if $smarty.session.fullscreen eq 'y'}-fluid{/if}">
@@ -102,7 +107,9 @@
             </div>
         </div>
     </footer>
+{/if}
 
+{if $smarty.session.fullscreen ne 'y'}
 <nav class="navbar {* navbar-inverse *}navbar-default navbar-fixed-top" role="navigation" id="navbar-fixed-top">
     <div class="container{if $smarty.session.fullscreen eq 'y'}-fluid{/if}">
         <div class="navbar-header">
@@ -121,6 +128,7 @@
         </div>
     </div>
 </nav>
+{/if}
 
 {include file='footer.tpl'}
 </body>

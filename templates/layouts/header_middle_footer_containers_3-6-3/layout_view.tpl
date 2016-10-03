@@ -13,6 +13,7 @@
     {include file='tiki-ajax_header.tpl'}
 {/if}
 
+{if $smarty.session.fullscreen ne 'y'}
 <div class="header_outer" id="header_outer">
     <div class="header_container container{if $smarty.session.fullscreen eq 'y'}-fluid{/if}">
         <header class="header page-header" id="page-header">
@@ -20,6 +21,7 @@
         </header>
     </div>
 </div>
+{/if}
 <div class="middle_outer" id="middle_outer">
     <div class="container{if $smarty.session.fullscreen eq 'y'}-fluid{/if} clearfix middle" id="middle">
 		<div class="topbar row" id="topbar">
@@ -98,6 +100,7 @@
         </div>
     </div>
 </div>
+{if $smarty.session.fullscreen ne 'y'}
 <footer class="footer" id="footer">
     <div class="footer_liner">
         <div class="container{if $smarty.session.fullscreen eq 'y'}-fluid{/if}">
@@ -105,6 +108,7 @@
         </div>
     </div>
 </footer>
+{/if}
 {include file='footer.tpl'}
 </body>
 </html>

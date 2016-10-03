@@ -53,6 +53,7 @@
 			</div> {* row *}
 		</div> {* container *}
 
+{if $smarty.session.fullscreen ne 'y'}
 		<footer class="footer main-footer" id="footer">
 			<div class="container{if $smarty.session.fullscreen eq 'y'}-fluid{/if}">
 				<div class="footer_liner">
@@ -77,44 +78,45 @@
 				<div class="collapse navbar-collapse" id="navbar-collapse-social">
 
 						<ul class="nav navbar-nav navbar-right">
-{if $user}
+	{if $user}
 							<li>
 								<a href="{if $prefs.feature_sefurl eq 'y'}logout{else}tiki-logout.php{/if}">{tr}Log out{/tr}</a>
 							</li>
-{else}
+	{else}
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">{tr}Log in{/tr} <span
 								class="caret"></span></a>
 								<ul class="dropdown-menu">
 									<li>
 										<div>
-	{module
-		module=login_box
-		mode="module"
-		show_register=""
-		show_forgot=""
-		error=""
-		flip=""
-		decorations="n"
-		nobox="y"
-		notitle="y"
-	}
+		{module
+			module=login_box
+			mode="module"
+			show_register=""
+			show_forgot=""
+			error=""
+			flip=""
+			decorations="n"
+			nobox="y"
+			notitle="y"
+		}
 										</div>
 									</li>
 								</ul>
 							</li>
-	{if $prefs.allowRegister eq 'y'}
+		{if $prefs.allowRegister eq 'y'}
 							<li>
 								<a href="{if $prefs.feature_sefurl eq 'y'}register{else}tiki-register.php{/if}">{tr}Register{/tr}</a>
 							</li>
+		{/if}
 	{/if}
-{/if}
 						</ul>
 					{modulelist zone="topbar" id="topbar_modules_social" style="float:left"}
 				</div> {* navbar-collapse-social *}
 			</div> {* container *}
 
 		</nav>
+{/if}
 
 {include file='footer.tpl'}
 	</body>
