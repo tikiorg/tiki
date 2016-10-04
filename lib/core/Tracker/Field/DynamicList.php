@@ -146,7 +146,7 @@ $("input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFieldI
 			mandatory: "' . $isMandatory . '",
 			insertId: "' . $insertId . '",  // need to pass $insertId in case we have more than one field bound to the same eventsource
 			originalValue:  "' . $originalValue . '",
-			hideBlank: '.json_encode($hideBlank).',
+			hideBlank: '.intval($hideBlank).',
 			filterFieldValueHere: $(this).val() // We need the field value for the fieldId filterfield for the item $(this).val
 		},
 		
