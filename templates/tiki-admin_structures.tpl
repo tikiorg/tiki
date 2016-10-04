@@ -122,7 +122,7 @@
 										{$libeg}<a href='{sefurl page=$channels[ix].pageName structure=$channels[ix].pageName page_ref_id=$channels[ix].page_ref_id}'>
 											{icon name="view" _menu_text='y' _menu_icon='y' alt="{tr}View page{/tr}"}
 										</a>{$liend}
-										{if $channels[ix].admin_structure == 'y' or $tiki_p_admin == 'y'}
+										{if $channels[ix].admin_structure == 'y' or $tiki_p_admin == 'y'} {* A check for object perm tiki_p_assign_perm_wiki_page if not admin is needed here for WYSIWYCA *}
 											{$libeg}
 												{permission_link mode=text objectType='wiki page' type='wiki structure' id=$channels[ix].pageName title=$channels[ix].pageName}
 											{$liend}
