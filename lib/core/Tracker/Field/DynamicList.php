@@ -118,7 +118,7 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 		$isMandatory = $this->getConfiguration('isMandatory');
 		$insertId = $this->getInsertId();
 		$originalValue = $this->getConfiguration('value');
-		$hideBlank = $this->getConfiguration('hideBlank');
+		$hideBlank = $this->getOption('hideBlank');
 		
 		if( $filterFieldIdHere == $this->getConfiguration('fieldId') )
 			return tr('*** ERROR: Field ID (This tracker) cannot be the same: %0 ***', $filterFieldIdHere);
