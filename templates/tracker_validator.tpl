@@ -6,7 +6,7 @@ $("#editItemForm{{$trackerEditFormId}}").validate({
 		if( typeof nosubmitItemForm{{$trackerEditFormId}} !== "undefined" && nosubmitItemForm{{$trackerEditFormId}} == true ) {
 			return false;
 		} else {
-			process_submit(this.currentForm);
+			return process_submit(this.currentForm);
 		}
 	}
 });
