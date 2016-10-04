@@ -738,7 +738,13 @@ class Services_Tracker_Controller
 
 		global $prefs;
 		if ($prefs['feature_jquery_validation'] === 'y') {
-			$validationjs = TikiLib::lib('validators')->generateTrackerValidateJS($definition->getFields());
+			$validationjs = TikiLib::lib('validators')->generateTrackerValidateJS(
+				$definition->getFields(),
+				'ins_',
+				'',
+				// not custom messages but an extra submit handler that is only needed when called by this service
+				'submitHandler: function(form, event){return process_submit(form);}'
+			);
 			TikiLib::lib('header')->add_jq_onready('$("#insertItemForm' . $trackerId . '").validate({' . $validationjs . $this->get_validation_options('#insertItemForm' . $trackerId));
 		}
 
