@@ -118,7 +118,7 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 		$isMandatory = $this->getConfiguration('isMandatory');
 		$insertId = $this->getInsertId();
 		$originalValue = $this->getConfiguration('value');
-		$hideBlank = $this->getConfiguration('hideBlank');
+		$hideBlank = $this->getOption('hideBlank');
 		
 		if( $filterFieldIdHere == $this->getConfiguration('fieldId') )
 			return tr('*** ERROR: Field ID (This tracker) cannot be the same: %0 ***', $filterFieldIdHere);
@@ -146,7 +146,7 @@ $("input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFieldI
 			mandatory: "' . $isMandatory . '",
 			insertId: "' . $insertId . '",  // need to pass $insertId in case we have more than one field bound to the same eventsource
 			originalValue:  "' . $originalValue . '",
-			hideBlank: '.json_encode($hideBlank).',
+			hideBlank: '.intval($hideBlank).',
 			filterFieldValueHere: $(this).val() // We need the field value for the fieldId filterfield for the item $(this).val
 		},
 		
