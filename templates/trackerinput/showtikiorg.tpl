@@ -109,7 +109,7 @@
 				var debugoutput = data.debugoutput;
 				//$('#testingstatus').html(data.status);
 				$('.showdebugoutput{{$field.fieldId}}_{{$item.itemId}}').html(data.debugoutput);
-				if (data.version == '12.x' || data.version == '15.x' || || data.version == '16.x' data.version == 'trunk') {
+				if (data.version == '12.x' || data.version == '15.x' || data.version == '16.x' || data.version == 'trunk') {
 					$('.buttonupdate{{$field.fieldId}}_{{$item.itemId}}').show();
 				}
 				if (data.status == 'DISCO') {
