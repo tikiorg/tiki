@@ -3475,7 +3475,9 @@ class FileGalLib extends TikiLib
 						$errors[] = tra('Warning: Empty file:') . '  ' . $name . '. ' . tra('Please re-upload the file');
 					}
 
-					if (empty($params['name'][$key])) $params['name'][$key] = $name;
+					if (empty($params['name'][$key])) {
+						$params['name'][$key] = $this->getTitleFromFilename($name);
+					}
 					if (empty($params['user'][$key])) $params['user'][$key] = $user;
 					if (!isset($params['description'][$key])) $params['description'][$key] = '';
 					if (empty($params['author'][$key])) $params['author'][$key] = $user;
@@ -3502,13 +3504,13 @@ class FileGalLib extends TikiLib
 								$this->set_download_limit($editFileId, $params['hit_limit'][$key]);
 							}
 						} else {
-							$title = $this->getTitleFromFilename($params["name"][$key]);
-							  if(!$params['imagesize'][$key])		
-							  {		
+							$title = $params["name"][$key];
+							  if(!$params['imagesize'][$key])
+							  {
 		 						$image_x=$params["image_max_size_x"];		
 		   						$image_y=$params["image_max_size_y"];		
 										
-		  					  }		
+		  					  }
 							else{		
 								 $image_x=$gal_info["image_max_size_x"];		
 		                         $image_y=$gal_info["image_max_size_y"];		
