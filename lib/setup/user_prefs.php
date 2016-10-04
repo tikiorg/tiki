@@ -39,6 +39,7 @@ if ( $user ) {
 	$prefs['user_wiki_watch_editor'] = 'n';
 	$prefs['user_tracker_watch_editor'] = 'n';
 	$prefs['user_comment_watch_editor'] = 'n';
+	$prefs['user_category_watch_editor'] = 'n';
 
 	// Get all user prefs in one query
 	$tikilib->get_user_preferences($user);

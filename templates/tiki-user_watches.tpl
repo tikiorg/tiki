@@ -269,6 +269,14 @@
 				<input type="checkbox" name="user_comment_watch_editor" value="true"
 					   {if $user_comment_watch_editor eq 'y'}checked{/if}> {tr}Comment{/tr}</label>
 		</div>
+		{if $prefs.feature_categories eq 'y'}
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="user_category_watch_editor" value="true"
+						   {if $user_category_watch_editor eq 'y'}checked{/if}> {tr}Category{/tr}
+				</label>
+			</div>
+		{/if}
 
 		<div class="checkbox">
 			<label>
