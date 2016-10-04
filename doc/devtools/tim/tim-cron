@@ -12,6 +12,7 @@ setup
 for BRANCH in $BRANCHES;
 do
 	cd $SVN_CACHE/$BRANCH/
+	svn upgrade > /dev/null
 	svn up > /dev/null
 	touch $SVN_CACHE/$BRANCH.lock
 	tar -czf $SVN_CACHE/tmp_$BRANCH.tgz . && mv $SVN_CACHE/tmp_$BRANCH.tgz $SVN_CACHE/$BRANCH.tar.gz
