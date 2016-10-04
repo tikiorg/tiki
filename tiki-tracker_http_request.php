@@ -57,7 +57,7 @@ $json_return['response'] = array();
 
 if( !$hideBlank ) {
 	// blank value is the default first option here
-	$json_return['response'][] = array('', '');
+	$json_return['response'][] = array('', ' ');
 }
 
 // if we do not have something to compare with we return empty result
