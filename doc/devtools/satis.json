@@ -351,6 +351,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "etdsolutions/pivottable",
+				"version": "2.0.2",
+				"dist": {
+					"url": "https://github.com/etd-framework/pivottable/archive/master.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "jquery/jquery",
 				"version": "2.2.2",
 				"dist": {
@@ -821,7 +832,7 @@
 				}
 			}
 		},
-		{
+	    {
 			"type": "package",
 			"package": {
 				"name": "rangy/rangy",
@@ -1619,6 +1630,7 @@
 		"cwspear/bootstrap-hover-dropdown": ">=2.0.11",
 		"desandro/masonry": "^4.1.1",
 		"dompdf/dompdf": ">=0.6.1",
+        "etdsolutions/pivottable": ">=2.0.2",
 		"ezyang/htmlpurifier": ">=4.5.0",
 		"fortawesome/font-awesome": "^4.5.0",
 		"google/apiclient": "^1.1.6",
