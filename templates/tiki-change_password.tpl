@@ -5,6 +5,7 @@
 {else}
 	{assign var='new_user_validation' value='n'}
 {/if}
+<div class="row">
 <div class="col-md-10 col-md-push-1 clearfix">
 	<form role="form" class="form-horizontal" method="post" action="tiki-change_password.php">
 		<div class="panel panel-default">
@@ -100,4 +101,5 @@
 			</div>
 		</div>
 	</form>
+</div>
 </div>
