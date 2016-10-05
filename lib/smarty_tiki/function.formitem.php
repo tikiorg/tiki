@@ -40,7 +40,12 @@ function smarty_function_formitem($params, $smarty)
 	}
 
     if ($params['_help-popup']){
-        $popup = '<a tabindex="0" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="'.$params['_help-popup'].'"><span class="fa fa-question-circle"></span></a>';
+        if ($params['_help-popup-title']) {
+            $popup_title = $params['_help-popup-title'];
+        } else {
+            $popup_title = 'Dismissible popover';
+        }
+        $popup = '<a tabindex="0" data-toggle="popover" data-trigger="focus" title="'.$params['_help-popup-title'].'" data-content="'.$params['_help-popup'].'"><span class="fa fa-question-circle"></span></a>';
     }
 
 	$smarty->loadPlugin('smarty_block_self_link');
