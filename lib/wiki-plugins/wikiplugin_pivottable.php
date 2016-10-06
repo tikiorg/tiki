@@ -16,10 +16,10 @@ function wikiplugin_pivottable_info()
 		'params' => array(
 			'data' => array(
 				'name' => tr('Fetch data from'),
-				'description' => tr('For example trackerId_1'),
+				'description' => tr('For example tracker:1'),
 			    'required' => true,
 				'default' => 0,
-				'filter' => 'word',
+				'filter' => 'text',
 				
 			),
 			'width' => array(
@@ -60,10 +60,24 @@ function wikiplugin_pivottable_info()
 			),
 			'rendererName' => array(
 				'name' => tr('Renderer Name'),
-				'description' => tr('Options: Table, Area Chart, Bar chart'),
+				'description' => tr('Display format of data'),
 				'since' => '',
 				'required' => false,
 				'filter' => 'text',
+				'default' => 'Table',
+				'options' => array(
+					array('text' => 'Table', 'value' => 'Table'),
+					array('text' => tra('Table Barchart'), 'value' => 'Table Barchart'),
+					array('text' => tra('Heatmap'), 'value' => 'Heatmap'),
+				    array('text' => tra('Row Heatmap'), 'value' => 'Row Heatmap'),
+					array('text' => tra('Col Heatmap'), 'value' => 'Col Heatmap'),
+					array('text' => tra('Line Chart'), 'value' => 'Line Chart'),
+					array('text' => tra('Bar Chart'), 'value' => 'Bar Chart'),
+					array('text' => tra('Stacked Bar Chart'), 'value' => 'Stacked Bar Chart'),
+					array('text' => tra('Area Chart'), 'value' => 'Area Chart'),
+					array('text' => tra('Scatter Chart'), 'value' => 'Scatter Chart')
+				)
+				
 			),
 			'aggregatorName' => array(
 				'name' => tr('Aggregator Name'),
@@ -71,6 +85,28 @@ function wikiplugin_pivottable_info()
 				'since' => '',
 				'required' => false,
 				'filter' => 'text',
+				'default' => 'Count',
+                'options' => array(
+					array('text' => 'Count', 'value' => 'Count'),
+					array('text' => tra('Count Unique Values'), 'value' => 'Count Unique Values'),
+					array('text' => tra('List Unique Values'), 'value' => 'List Unique Values'),
+				    array('text' => tra('Sum'), 'value' => 'Sum'),
+					array('text' => tra('Integer Sum'), 'value' => 'Integer Sum'),
+					array('text' => tra('Average'), 'value' => 'Average'),
+					array('text' => tra('Minimum'), 'value' => 'Minimum'),
+					array('text' => tra('Maximum'), 'value' => 'Maximum'),
+					array('text' => tra('Sum over Sum'), 'value' => 'Sum over Sum'),
+					array('text' => tra('80% Upper Bound'), 'value' => '80% Upper Bound'),
+					array('text' => tra('80% Lower Bound'), 'value' => '80% Lower Bound'),
+					array('text' => tra('Sum as Fraction of Total'), 'value' => 'Sum as Fraction of Total'),
+					array('text' => tra('Sum as Fraction of Rows'), 'value' => 'Sum as Fraction of Rows'),
+					array('text' => tra('Sum as Fraction of Columns'), 'value' => 'Sum as Fraction of Columns'),
+					array('text' => tra('Count as Fraction of Total'), 'value' => 'Count as Fraction of Total'),
+					array('text' => tra('Count as Fraction of Rows'), 'value' => 'Count as Fraction of Rows'),
+					array('text' => tra('Count as Fraction of Columns'), 'value' => 'Count as Fraction of Columns')
+					
+					
+				)
 			),
 			'vals' => array(
 				'name' => tr('Vals'),
@@ -97,17 +133,13 @@ function wikiplugin_pivottable($data, $params)
 	static $id = 0;
 	$headerlib = TikiLib::lib('header');
 	$headerlib->add_cssfile('vendor/etdsolutions/pivottable/pivot.css');
-	$headerlib->add_cssfile('https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css');
 	$headerlib->add_jsfile('vendor/etdsolutions/pivottable/pivot.js', true);
 	$headerlib->add_jsfile('vendor/etdsolutions/pivottable/c3_renderers.js', true);
-	$headerlib->add_jsfile('https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js');
-	$headerlib->add_jsfile('https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js');
 
 	//checking data type
 	
-	$dataId=split("_",$params['data']);
-	
-	if($dataId[0]=="trackerId")
+	$dataId=split(":",$params['data']);
+	if($dataId[0]=="tracker")
 	  {
 		  $trackerId=$dataId[1];
 		  
@@ -117,7 +149,6 @@ function wikiplugin_pivottable($data, $params)
 	$jit = new JitFilter($params);
 	
 	$definition = Tracker_Definition::get($trackerId);
-	$itemObject = Tracker_Item::newItem($trackerId);
 	if (! $definition) {
 		return WikiParser_PluginOutput::userError(tr('Tracker not found.'));
 	}
@@ -146,16 +177,50 @@ function wikiplugin_pivottable($data, $params)
 		$height="1000px";	
 	}
 	
+	//checking if rows and cols are passed
+	if(empty($params['cols']) || empty($params['rows']))
+	   {
+		   $fields=$definition->getFields();
+		   
+		   }
+	
+	//translating permName to field name for columns and rows
+	
 	if (!empty($params['cols'])) {
-	    $cols=$params['cols'];	
+		$cols='';
+		$colNames=split(",",$params['cols']);
+		foreach($colNames as $colName)
+		{
+		   	
+		  $field = $definition->getFieldFromPermName(trim($colName));
+		  if($field)
+		  {
+			 if($cols!='')
+			   $cols.=', ';
+	        $cols.='"'.$field['name'].'"';
+		  }
+		}
+		
 	} else {
-		$cols="";	
+		$cols='"'.$fields[0]['name'].'"';	
 	}
 	
 	if (!empty($params['rows'])) {
-	    $rows=$params['rows'];	
+	    $rows='';
+		$rowNames=split(",",$params['rows']);
+		foreach($rowNames as $rowName)
+		{
+		   	
+		  $field = $definition->getFieldFromPermName(trim($rowName));
+		  if($field)
+		  {
+			 if($rows!='')
+			   $rows.=', ';
+	        $rows.='"'.$field['name'].'"';
+		  }
+		}	
 	} else {
-		$rows="";	
+		$rows='"'.$fields[1]['name'].'"';	
 	}
 	
 	

@@ -39,12 +39,14 @@ class Services_Pivot_Controller
 
 		$fields = array();
 		if ($definition = Tracker_Definition::get($input->trackerId->int())) {
-			foreach ($definition->getPopupFields() as $fieldId) {
+			/*foreach ($definition->getFields() as $fieldId) {
+				
 				if ($field = $definition->getField($fieldId)) {
 					$fields[] = $field;
-				
+				    
 				}
-			}
+			} */
+			$fields=$definition->getFields();
 		}
 
 		$smarty = TikiLib::lib('smarty');
@@ -54,12 +56,11 @@ class Services_Pivot_Controller
 			
 			$item = Tracker_Item::fromId($row['object_id']);
 			
-			$fieldsArr=array("id"=>$row['object_id'],"trackerId"=>$input->trackerId->int(),"title"=>$row['title']);
-			
+			$fieldsArr=array();
 			
 			foreach ($fields as $field) {
-				
 				if ($item->canViewField($field['fieldId'])) {
+                    			
 					
 					$val = trim($trklib->field_render_value(
 						array(
@@ -69,8 +70,9 @@ class Services_Pivot_Controller
 						)
 					));
 					
-						$fieldsArr[$field['name']]=$val;
 					
+						$fieldsArr[$field['name']]=strip_tags($val);
+										
 				}
 			   
 			}
