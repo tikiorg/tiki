@@ -111,8 +111,13 @@ class Tracker_Field_Text extends Tracker_Field_Abstract implements Tracker_Field
 				$post = '<span class="formunit">' . $this->getOption('append') . '</span>';
 			}
 		}
+		$value = parent::renderInnerOutput($context);
+		if ($this->getConfiguration('type') === 't') {	// not TextAreas
+			TikiLib::lib('smarty')->loadPlugin('smarty_modifier_escape');
+			$value = smarty_modifier_escape($value);
+		}
 
-		return $pre . parent::renderInnerOutput($context) . $post;
+		return $pre . $value . $post;
 	}
 
 	function renderOutput($context = array())
