@@ -792,6 +792,8 @@ class Services_Tracker_Controller
 
 				$item = $this->utilities->getItem($trackerId, $itemId);
 				$item['itemTitle'] = $this->utilities->getTitle($definition, $item);
+				$processedItem = $this->utilities->processValues($definition, $item);
+				$item['processedFields'] = $processedItem['fields'];
 
 				return $item;
 			} else {

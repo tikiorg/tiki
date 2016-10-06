@@ -1,5 +1,5 @@
 {* $Id$ *}
-<div class="item-link">
+<div class="item-link" id="il{$field.ins_id}">
 	{if $data.selectMultipleValues}
 		<input type="hidden" name="{$field.ins_id}_old" value="{$field.value|escape}" />
 	{/if}
@@ -9,6 +9,27 @@
 			<input type="checkbox" class="{$field.ins_id}-checkbox" name="{$field.ins_id}[]" value="{$id|escape}" {if $data.preselection and $data.crossSelect neq 'y'}disabled="disabled"{/if} {if $data.preselection and !$field.value and $data.preselection eq $id or (($data.selectMultipleValues and is_array($field.value) and in_array($id, $field.value) or $field.value eq $id))}checked="checked"{/if} />|{'|'|implode:$fields}
 		{/foreach}
 		{/wikiplugin}
+		{if $field.options_map.addItems}
+			<a class="btn btn-default insert-tracker-item" href="{service controller=tracker action=insert_item trackerId=$field.options_map.trackerId next=$data.next|escape}">{$field.options_map.addItems|escape}</a>
+			{jq}
+				$("#il{{$field.ins_id}}")
+					.find('.insert-tracker-item')
+					.clickModal({
+						success: function (data) {
+							var row = '<tr><td><input type="checkbox" class="{{$field.ins_id}}-checkbox" name="{{$field.ins_id}}[]" value="'+data.itemId+'" /></td>';
+							$.each(data.processedFields, function(field, value) {
+								row += '<td>'+value+'</td>';
+							});
+							row += '</tr>';
+							$row = $(row);
+							$('#il{{$field.ins_id}} table')
+								.find('tbody').append($row)
+								.trigger('addRows', [$row, true]);
+							$.closeModal();
+						}
+					});
+			{/jq}
+		{/if}
 	{else}
 		<select name="{$field.ins_id}{if $data.selectMultipleValues}[]{/if}" {if $data.preselection and $data.crossSelect neq 'y'}disabled="disabled"{/if} {if $data.selectMultipleValues}multiple="multiple"{/if} class="form-control">
 			{if $field.isMandatory ne 'y' || empty($field.value)}
@@ -20,20 +41,20 @@
 				</option>
 			{/foreach}
 		</select>
-	{/if}
-	{if $field.options_map.addItems}
-		<a class="btn btn-default insert-tracker-item" href="{service controller=tracker action=insert_item trackerId=$field.options_map.trackerId next=$data.next|escape}">{$field.options_map.addItems|escape}</a>
-		{jq}
-			$("select[name={{$field.ins_id}}]").next().clickModal({
-				success: function (data) {
-					$('<option>')
-						.attr('value', data.itemId)
-						.text(data.itemTitle)
-						.appendTo($(this).prev());
-					$(this).prev().val(data.itemId);
-					$.closeModal();
-				}
-			});
-		{/jq}
+		{if $field.options_map.addItems}
+			<a class="btn btn-default insert-tracker-item" href="{service controller=tracker action=insert_item trackerId=$field.options_map.trackerId next=$data.next|escape}">{$field.options_map.addItems|escape}</a>
+			{jq}
+				$("select[name={{$field.ins_id}}]").next().clickModal({
+					success: function (data) {
+						$('<option>')
+							.attr('value', data.itemId)
+							.text(data.itemTitle)
+							.appendTo($(this).prev());
+						$(this).prev().val(data.itemId);
+						$.closeModal();
+					}
+				});
+			{/jq}
+		{/if}
 	{/if}
 </div>
