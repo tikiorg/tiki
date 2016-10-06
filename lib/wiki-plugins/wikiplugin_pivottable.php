@@ -10,12 +10,13 @@ function wikiplugin_pivottable_info()
 		'name' => tr('Pivot table'),
 		'description' => tr('Create and display data in pivot table for reporting'),
 		'prefs' => array('wikiplugin_pivottable'),
+		'body' => tra('Leave one space in the box below to allow easier editing of current values with the plugin popup helper later on'),
 		'format' => 'html',
 		'iconname' => 'table',
 		'introduced' => 10,
 		'params' => array(
 			'data' => array(
-				'name' => tr('Fetch data from'),
+				'name' => tr('Data source'),
 				'description' => tr('For example tracker:1'),
 			    'required' => true,
 				'default' => 0,
@@ -25,7 +26,7 @@ function wikiplugin_pivottable_info()
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
-				'description' => tr('Width of pivot table'),
+				'description' => tr('Width of pivot table. Units: % or px.'),
 				'since' => '',
 				'filter' => 'word',
 				'default' => '100%',
@@ -34,7 +35,7 @@ function wikiplugin_pivottable_info()
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
-				'description' => tr('Height of pivot table'),
+				'description' => tr('Height of pivot table. Units: px'),
 				'since' => '',
 				'filter' => 'word',
 				'default' => '400px',
@@ -43,7 +44,7 @@ function wikiplugin_pivottable_info()
 			'rows' => array(
 				'required' => false,
 				'name' => tra('Pivot table Rows'),
-				'description' => tr('Will be drived from data, if left blank, first parameter found in data will be used'),
+				'description' => tr('Will be derived from data, if left blank, first parameter found in data will be used. ') . ' ' . tr('Use permanentNames in case of tracker fields.') . ' ' . tr('Separated by colon (:) if more than one.'),
 				'since' => '',
 				'filter' => 'text',
 				'default' => '',
@@ -52,7 +53,7 @@ function wikiplugin_pivottable_info()
 			'cols' => array(
 				'required' => false,
 				'name' => tra('Pivot table Columns'),
-				'description' => tr('Will be drived from data, if left blank, second parameter found in data will be used'),
+				'description' => tr('Will be derived from data, if left blank, second parameter found in data will be used.') . ' ' . tr('Use permanentNames in case of tracker fields.') . ' ' . tr('Separated by colon (:) if more than one.'),
 				'since' => '',
 				'filter' => 'text',
 				'default' => '',
@@ -81,7 +82,7 @@ function wikiplugin_pivottable_info()
 			),
 			'aggregatorName' => array(
 				'name' => tr('Aggregator Name'),
-				'description' => tr('Options: Count, Average'),
+				'description' => tr('Function to apply on the numeric values from the variables selected.'),
 				'since' => '',
 				'required' => false,
 				'filter' => 'text',
@@ -109,8 +110,8 @@ function wikiplugin_pivottable_info()
 				)
 			),
 			'vals' => array(
-				'name' => tr('Vals'),
-				'description' => tr(''),
+				'name' => tr('Values'),
+				'description' => tr('Variable with numeric values on which the formula from the aggregator is applied. It can be left empty if aggregator is related to Counts.') . ' ' . tr('Use permanentNames in case of tracker fields.'),
 				'since' => '',
 				'required' => false,
 				'filter' => 'word',
@@ -188,7 +189,7 @@ function wikiplugin_pivottable($data, $params)
 	
 	if (!empty($params['cols'])) {
 		$cols='';
-		$colNames=split(",",$params['cols']);
+		$colNames=split(":",$params['cols']);
 		foreach($colNames as $colName)
 		{
 		   	
