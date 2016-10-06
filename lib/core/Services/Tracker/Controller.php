@@ -953,9 +953,14 @@ class Services_Tracker_Controller
 
 			TikiLib::lib('unifiedsearch')->processUpdateQueue();
 			Feedback::success(tr('Your item has been updated'), 'session');
-			//return to page
-			$referer = Services_Utilities::noJsPath();
-			return Services_Utilities::refresh($referer);
+
+			if (!$input->redirect) {
+				//return to page
+				$referer = Services_Utilities::noJsPath();
+				return Services_Utilities::refresh($referer);
+			} else {
+				return Services_Utilities::redirect($input->redirect->none());
+			}
 		}
 
 		// sets all fields for the tracker item with their value
