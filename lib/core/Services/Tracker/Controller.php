@@ -201,6 +201,9 @@ class Services_Tracker_Controller
 					$duplicates[$field['fieldId']] = $dupeFields;
 				}
 			}
+			if( $field['type'] == 'i' && $prefs['tracker_legacy_insert'] !== 'y' ) {
+				Feedback::error(tr('You are using the image field type, which is deprecated. It is recommended to activate \'Use legacy tracker insertion screen\' found on the <a href="%0">trackers admin configuration</a> screen.', 'tiki-admin.php?page=trackers'), 'session');
+			}
 		}
 		if (!empty($missing)) {
 			Feedback::error(tr('Warning: Required field types not enabled: %0', implode(', ', $missing)), 'session');
