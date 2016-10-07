@@ -111,23 +111,17 @@ class Search_Elastic_QueryBuilder
 				);
 			}
 		} elseif ($node instanceof NotX) {
-			if (count($childNodes) !== 1 || $childNodes[0]->getValue($this->factory)->getValue()) {
-				$inner = array_map(
-					function ($expr) use ($callback) {
-						return $expr->traverse($callback);
-					}, $childNodes
-				);
-			} else {
-				$inner = ["wildcard" => [
-					$childNodes[0]->getField() => "*",
-				]];
-			}
+			$inner = array_map(
+				function ($expr) use ($callback) {
+					return $expr->traverse($callback);
+				}, $childNodes
+			);
 			return array(
 				'bool' => array(
 					'must_not' => $inner,
 				),
 			);
-			} elseif ($node instanceof Initial) {
+		} elseif ($node instanceof Initial) {
 			return array(
 				'match_phrase_prefix' => array(
 					$node->getField() . '.sort' => array(
