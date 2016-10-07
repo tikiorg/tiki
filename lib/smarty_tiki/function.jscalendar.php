@@ -115,6 +115,10 @@ function smarty_function_jscalendar($params, $smarty)
 	if( isset($params['isutc']) && $params['isutc'] )
 		$headerlib->add_jq_onready('$("#' . $params['id'] . '").val(' . intval($params['date']) . ' + (new Date()).getTimezoneOffset()*60);');
 	$html .= '<input type="text" style="width:225px" class="form-control" id="' . $params['id'] . '_dptxt" value="">';	// text version of datepicker date
+	$headerlib->add_jq_onready('$("#' . $params['id'] . '_dptxt").change(function(e){' .
+		'var inst = $.datepicker._getInst(this);'.
+		'$.datepickerAdjustAltField("'.( !isset($params['showtime']) || $params['showtime'] === 'n' ? 'datepicker' : 'datetimepicker' ).'", inst);'.
+		'})');
 
 	$display_tz = $tikilib->get_display_timezone();
 	if ( $display_tz == '' ) {
