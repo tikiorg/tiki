@@ -125,7 +125,7 @@ function wikiplugin_pivottable_info()
 
 function wikiplugin_pivottable($data, $params)
 {
-	
+	//checking if vendor files are present 
     if (!file_exists('vendor/etdsolutions/pivottable/')) {
 		return WikiParser_PluginOutput::internalError(tr('Missing required files, please make sure plugin files are installed at vendor/etdsolutions/pivottable. <br/><br /> To install, please run composer or download from following url:<a href="https://github.com/nicolaskruchten/pivottable/archive/master.zip" target="_blank">https://github.com/nicolaskruchten/pivottable/archive/master.zip</a>'));
 	}
@@ -143,8 +143,7 @@ function wikiplugin_pivottable($data, $params)
 	if($dataId[0]=="tracker")
 	  {
 		  $trackerId=$dataId[1];
-		  
-		  }
+	  }
 	   
 
 	$jit = new JitFilter($params);
@@ -153,7 +152,7 @@ function wikiplugin_pivottable($data, $params)
 	if (! $definition) {
 		return WikiParser_PluginOutput::userError(tr('Tracker not found.'));
 	}
-
+  
 	if (!empty($params['rendererName'])) {
 	    $rendererName=$params['rendererName'];	
 	} else {
@@ -182,8 +181,7 @@ function wikiplugin_pivottable($data, $params)
 	if(empty($params['cols']) || empty($params['rows']))
 	   {
 		   $fields=$definition->getFields();
-		   
-		   }
+	   }
 	
 	//translating permName to field name for columns and rows
 	
@@ -192,7 +190,6 @@ function wikiplugin_pivottable($data, $params)
 		$colNames=split(":",$params['cols']);
 		foreach($colNames as $colName)
 		{
-		   	
 		  $field = $definition->getFieldFromPermName(trim($colName));
 		  if($field)
 		  {
@@ -208,7 +205,7 @@ function wikiplugin_pivottable($data, $params)
 	
 	if (!empty($params['rows'])) {
 	    $rows='';
-		$rowNames=split(",",$params['rows']);
+		$rowNames=split(":",$params['rows']);
 		foreach($rowNames as $rowName)
 		{
 		   	
@@ -223,11 +220,7 @@ function wikiplugin_pivottable($data, $params)
 	} else {
 		$rows='"'.$fields[1]['name'].'"';	
 	}
-	
-	
-	
-	
-	
+
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign(
 		'pivottable',
@@ -246,15 +239,5 @@ function wikiplugin_pivottable($data, $params)
 	);
 	
 	
-	return $smarty->fetch('wiki-plugins/pivottable.tpl');
+	return $smarty->fetch('wiki-plugins/wikiplugin_pivottable.tpl');
 }
-
-
-
-function wikiplugin_pivottable_get_resources($field)
-{
-	$db = TikiDb::get();
-
-	return $db->fetchAll('SELECT DISTINCT LOWER(value) as id, value as name FROM tiki_tracker_item_fields WHERE fieldId = ? ORDER BY  value', $field['fieldId']);
-}
-
