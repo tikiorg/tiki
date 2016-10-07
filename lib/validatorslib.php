@@ -52,7 +52,7 @@ class Validators
 		return $validators;
 	}
 
-	function generateTrackerValidateJS( $fields_data, $prefix = 'ins_', $custom_rules = '', $custom_messages = '' )
+	function generateTrackerValidateJS( $fields_data, $prefix = 'ins_', $custom_rules = '', $custom_messages = '', $custom_handlers = '' )
 	{
 		$validationjs = 'rules: { ';
 		foreach ($fields_data as $field_value) {
@@ -170,6 +170,9 @@ invalidHandler: function(event, validator) {
 	}
 }
 ';
+		if ($custom_handlers) {
+			$validationjs .= ",\n$custom_handlers";
+		}
 		return $validationjs;
 	}
 }
