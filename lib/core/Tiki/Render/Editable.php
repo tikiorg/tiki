@@ -54,7 +54,9 @@ class Tiki_Render_Editable
 		// block = dialog goes to span as well
 		$tag = ($this->layout == 'block') ? 'div' : 'span';
 		$fieldFetch = smarty_modifier_escape(json_encode($this->fieldFetchUrl));
-		$objectStore = smarty_modifier_escape(json_encode($this->objectStoreUrl));
+		$objectStore = $this->objectStoreUrl;
+		$objectStore['edit'] = 'inline';
+		$objectStore = smarty_modifier_escape(json_encode($objectStore));
 		$label = smarty_modifier_escape($this->label);
 
 		$value = $this->inner;

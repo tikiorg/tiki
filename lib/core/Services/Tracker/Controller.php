@@ -971,15 +971,18 @@ class Services_Tracker_Controller
 			}
 
 			TikiLib::lib('unifiedsearch')->processUpdateQueue();
-			Feedback::success(tr('Your item has been updated'), 'session');
-
-			$redirect = $input->redirect->url();
-			if (! $redirect) {
-				//return to page
-				$referer = Services_Utilities::noJsPath();
-				return Services_Utilities::refresh($referer);
+			Feedback::success(tr('Tracker item %0 has been updated', $itemId), 'session');
+			if (isset($input['edit']) && $input['edit'] === 'inline') {
+				Feedback::send_headers();
 			} else {
-				return Services_Utilities::redirect($redirect);
+				//return to page
+				$redirect = $input->redirect->url();
+				if (! $redirect) {
+					$referer = Services_Utilities::noJsPath();
+					return Services_Utilities::refresh($referer);
+				} else {
+					return Services_Utilities::redirect($redirect);
+				}
 			}
 		}
 
