@@ -111,14 +111,11 @@ function wikiplugin_pivottable_info()
 			),
 			'vals' => array(
 				'name' => tr('Values'),
-				'description' => tr('Variable with numeric values on which the formula from the aggregator is applied. It can be left empty if aggregator is related to Counts.') . ' ' . tr('Use permanentNames in case of tracker fields.'),
+				'description' => tr('Variable with numeric values or tracker field permNames, on which the formula from the aggregator is applied. It can be left empty if aggregator is related to Counts.') . ' ' . tr('Use permanentNames in case of tracker fields, separated by : in case of multiple fields function.'),
 				'since' => '',
 				'required' => false,
-				'filter' => 'word',
+				'filter' => 'text',
 			),
-			
-			
-			
 		),
 	);
 }
@@ -220,6 +217,25 @@ function wikiplugin_pivottable($data, $params)
 	} else {
 		$rows='"'.$fields[1]['name'].'"';	
 	}
+    
+	if (!empty($params['vals'])) {
+	    $vals='';
+		$valNames=split(":",$params['vals']);
+		
+		foreach($valNames as $valName)
+		{
+		   	
+		  $field = $definition->getFieldFromPermName(trim($valName));
+		  if($field)
+		  {
+			 if($vals!='')
+			   $vals.=', ';
+	        $vals.='"'.$field['name'].'"';
+		  }
+		}	
+	} 
+
+
 
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign(
@@ -232,6 +248,7 @@ function wikiplugin_pivottable($data, $params)
 			'body' => $data,
 			'rendererName'=>$rendererName,
 			'aggregatorName'=>$aggregatorName,
+			'vals'=>$vals,
 			'width'=>$width,
 			'height'=>$height,
 
