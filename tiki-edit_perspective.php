@@ -32,6 +32,7 @@ $perspectivelib = TikiLib::lib('perspective');
 $access->check_feature(array('feature_perspective', 'feature_jquery_ui'));
 
 $selectedId = 0;
+$selectedPerspectiveInfo = null;
 
 if ( isset( $_REQUEST['id'] ) ) {
 	$selectedId = $_REQUEST['id'];
@@ -76,10 +77,19 @@ $smarty->assign('count', $tikilib->getOne('SELECT COUNT(*) FROM tiki_perspective
 
 $perspectives = $perspectivelib->list_perspectives($offset, $maxRecords);
 
-if ( $selectedId ) {
-	$info = $perspectivelib->get_perspective($selectedId);
+foreach($perspectives as $key => $perspective) {
+    $perspectiveInfo = $perspectivelib->get_perspective($perspective['perspectiveId']);
 
-	$smarty->assign('perspective_info', $info);
+    if ($selectedId && $selectedId == $perspective['perspectiveId']) {
+        $selectedPerspectiveInfo = $perspectiveInfo;
+    }
+
+    $perspectives[$key] = array_merge($perspective, $perspectiveInfo);
+}
+
+if ( $selectedId && $selectedPerspectiveInfo) {
+
+	$smarty->assign('perspective_info', $selectedPerspectiveInfo);
 
 	if ( isset( $_REQUEST['criteria'] ) ) {
 		$prefslib = TikiLib::lib('prefs');
@@ -87,7 +97,7 @@ if ( $selectedId ) {
 
 		$criteria = $_REQUEST['criteria'];
 		$results = $prefslib->getMatchingPreferences($criteria);
-		$results = array_diff($results, array_keys($info['preferences']));
+		$results = array_diff($results, array_keys($selectedPerspectiveInfo['preferences']));
 
 		foreach ( $results as $name ) {
 			echo smarty_function_preference(array('name' => $name), $smarty);
