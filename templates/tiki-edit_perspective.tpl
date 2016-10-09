@@ -18,6 +18,7 @@
 			<table class="table table-striped table-hover">
 				<tr>
 					<th>{tr}Perspective{/tr}</th>
+					<th>{tr}Preferences{/tr}</th>
 					<th></th>
 				</tr>
 
@@ -33,7 +34,12 @@
 									{icon name='move' _menu_icon='y' alt="{tr}Switch to{/tr}"} {$persp.name|escape}
 								</a>
 							{/if}
-							</td>
+						</td>
+						<td style="font-size:smaller;">
+							{foreach from=$persp.preferences key=name item=val}
+								{$name}={$val}<br>
+							{/foreach}
+						</td>
 						<td class="action">
 							{capture name=perspective_actions}
 								{strip}
