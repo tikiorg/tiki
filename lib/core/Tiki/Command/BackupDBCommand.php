@@ -28,7 +28,7 @@ class BackupDBCommand extends Command
 			->addArgument(
 				'dateFormat',
 				InputArgument::OPTIONAL,
-				'Format to use for the date part of the backup file. Defaults to "Y-m-d_H:i:s" and uses the PHP date function format'
+				'Format to use for the date part of the backup file. Defaults to "Y-m-d_H-i-s" and uses the PHP date function format'
 			)
 		;
 	}
@@ -53,8 +53,7 @@ class BackupDBCommand extends Command
 
 		$dateFormat = $input->getArgument('dateFormat');
 		if (! $dateFormat) {
-			$windows = strtoupper(substr(PHP_OS, 0, 3)) == 'WIN';
-			$dateFormat = $windows ? 'Y-m-d_His' : 'Y-m-d_H:i:s';
+			$dateFormat = 'Y-m-d_H-i-s';
 		}
 
 		$user_tiki = $pass_tiki = $host_tiki = $dbs_tiki = '';
