@@ -807,9 +807,11 @@ class Services_Tracker_Controller
 				$processedItem = $this->utilities->processValues($definition, $item);
 				$item['processedFields'] = $processedItem['fields'];
 
+				Feedback::success(tr('New tracker item %0 succesfully created.', $itemId), 'session');
+
 				return $item;
 			} else {
-				throw new Services_Exception(tr('Item could not be created.'), 400);
+				throw new Services_Exception(tr('Tracker item could not be created.'), 400);
 			}
 		}
 
@@ -966,12 +968,11 @@ class Services_Tracker_Controller
 				)
 			);
 
-			if (false === $result) {
-				throw new Services_Exception(tr('Validation error'), 406);
+			if ($result !== false) {
+				TikiLib::lib('unifiedsearch')->processUpdateQueue();
+				//only need feedback if success - feedback already set if there was an update error
+				Feedback::success(tr('Tracker item %0 has been updated', $itemId), 'session');
 			}
-
-			TikiLib::lib('unifiedsearch')->processUpdateQueue();
-			Feedback::success(tr('Tracker item %0 has been updated', $itemId), 'session');
 			if (isset($input['edit']) && $input['edit'] === 'inline') {
 				Feedback::send_headers();
 			} else {
@@ -1202,6 +1203,8 @@ class Services_Tracker_Controller
 			$this->utilities->removeItem($itemId);
 
 			$tx->commit();
+
+			Feedback::success(tr('Tracker item %0 has been successfully deleted.', $itemId), 'session');
 
 			TikiLib::events()->trigger('tiki.process.redirect'); // wait for indexing to complete before loading of next request to ensure updated info shown
 		}
