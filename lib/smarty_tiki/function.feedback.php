@@ -11,24 +11,24 @@ function smarty_function_feedback($params, $smarty)
 
 	TikiLib::lib('header')->add_js(
 		'
-	$(document).ajaxComplete(function (e, jqxhr) {
-		var error = jqxhr.getResponseHeader("X-Tiki-Feedback");
-		if (error) {
-			if ($("ul", "#tikifeedback").length === 0) {
-				$("#tikifeedback").html(error);
-			} else {
-				$("ul", "#tikifeedback").append($(error).find("li"));
-				$("ul", "#tikifeedback").removeClass("list-unstyled");
-			}
+$(document).ajaxComplete(function (e, jqxhr) {
+	var feedback = jqxhr.getResponseHeader("X-Tiki-Feedback");
+	if (feedback) {
+		$("#tikifeedback").fadeOut(200, function() {
+			$("#tikifeedback").html(feedback);
+			$("#tikifeedback").fadeIn();
+		});
+		if ($("#tikifeedback").position().top < $(window).scrollTop()) {
 			$("html, body").animate({
 				scrollTop: $("div#tikifeedback").offset().top
 			}, 500);
 		}
-		$("#tikifeedback .clear").on("click", function () {
-			$("#tikifeedback").empty();
-			return false;
-		});
+	}
+	$("#tikifeedback .clear").on("click", function () {
+		$("#tikifeedback").empty();
+		return false;
 	});
+});
 	'
 	);
 
