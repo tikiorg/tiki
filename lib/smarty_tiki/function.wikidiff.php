@@ -34,7 +34,7 @@ function smarty_function_wikidiff($params, $smarty)
 	$params = array_merge($defaults, $params);
 
 	if (! $params['object_id']) {
-		return '<span class="text-danger">' . tra('wikidiff: error - only wiki pages supported currently') . '</span>';
+		return '<span class="text-danger">' . tra('wikidiff: error - no object_id specified') . '</span>';
 	}
 
 	if (! $params['oldver']) {
