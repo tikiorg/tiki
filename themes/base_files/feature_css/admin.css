@@ -31,10 +31,10 @@ a.admbox span.title {
 	white-space: normal;
 }
 
-a.admbox.off img {
+/*a.admbox.disabled img {
 	border: none;
 	background-image: url('../../../img/overlay-disabled_item.png');
-}
+}*/
 /* Look & feel thumbnail */
 
 #style_thumb_div {
