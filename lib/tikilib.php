@@ -924,11 +924,13 @@ class TikiLib extends TikiDb_Bridge
 	 */
 	function get_user_event_watches($user, $event, $object)
 	{
-		return $this->table('tiki_user_watches')->fetchFullRow(
+		$userWatches = $this->table('tiki_user_watches');
+		return $userWatches->fetchAll(
+			$userWatches->all(),
 			array(
 				'user' => $user,
 				'event' => $event,
-				'object' => $object,
+				'object' => is_array($object) ? $userWatches->in($object) : $object,
 			)
 		);
 	}
@@ -1094,6 +1096,9 @@ class TikiLib extends TikiDb_Bridge
 						break;
 					case 'user_joins_group':
 						$res['perm']= $this->user_has_perm_on_object($res['user'], $object, 'group', 'tiki_p_group_view_members');
+						break;
+					case 'thread_comment_replied':
+						$res['perm'] = true;
 						break;
 					default:
 						// for security we deny all others.

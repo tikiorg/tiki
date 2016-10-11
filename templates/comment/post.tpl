@@ -53,6 +53,11 @@
 					{/if}
 					{capture name=rows}{if $type eq 'forum'}{$prefs.default_rows_textarea_forum}{else}{$prefs.default_rows_textarea_comment}{/if}{/capture}
 					{textarea codemirror='true' syntax='tiki' name="data" comments="y" _wysiwyg="n" rows=$smarty.capture.rows class="form-control wikiedit" placeholder="{tr}Post new comment{/tr}..."}{$data|escape}{/textarea}
+					{if $prefs.feature_user_watches eq 'y'}
+						<div id="watch_thread_on_reply">
+							<input id="watch_thread" type="checkbox" name="watch" value="y"{if $smarty.request.watch eq 'y'} checked="checked"{/if}> <label for="watch_thread">{tr}Send me an email when someone replies{/tr}</label>
+						</div>
+					{/if}
 				</div>
 				<div class="panel-footer">
 					{if $prefs.feature_antibot eq 'y'}

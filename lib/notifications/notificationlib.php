@@ -174,6 +174,13 @@ class NotificationLib extends TikiLib
 				'object' => '*'
 		);
 
+		$watches['thread_comment_replied'] = array(
+				'label' => tra('User\'s comment is replied') ,
+				'type' => 'comment',
+				'url' => '',
+				'object' => '*'
+		);
+
 		foreach ($watches as $key => $watch) {
 			if (array_key_exists('available', $watch) && !$watch['available']) {
 				unset($watches[$key]);

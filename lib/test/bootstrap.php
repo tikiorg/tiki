@@ -126,6 +126,7 @@ $user_overrider_prefs = array();
 $prefs['language'] = 'en';
 require_once 'lib/setup/prefs.php';
 $prefs['site_language'] = 'en';
+$prefs['zend_mail_handler'] = 'file';
 
 $builder = new Perms_Builder;
 Perms::set($builder->build());

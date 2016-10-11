@@ -3846,6 +3846,22 @@ class Comments extends TikiLib
 	}
 
 	/**
+	 * Get all comment IDs in the tree up to the root threadId
+	 * @param $threadId
+	 * @return array
+	 */
+	function get_root_path($threadId)
+	{
+		$parent = $this->table('tiki_comments')->fetchOne('parentId', array('threadId' => $threadId));
+
+		if ($parent) {
+			return array_merge($this->get_root_path($parent), array($parent));
+		} else {
+			return array();
+		}
+	}
+
+	/**
 	 * Utlity to check whether a user can admin a form, either through permissions or as moderator
 	 *
 	 * @param $forumId
