@@ -14,7 +14,7 @@
 <div class="clearfix">
 	{foreach from=$admin_icons key=page item=info}
 			{if $info.disabled}
-				{assign var=class value="admbox off advanced btn btn-primary"}
+				{assign var=class value="admbox advanced btn btn-primary disabled"}
 			{else}
 				{assign var=class value="admbox basic btn btn-primary"}
 			{/if}
