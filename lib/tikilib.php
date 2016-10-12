@@ -4371,30 +4371,21 @@ class TikiLib extends TikiDb_Bridge
 	}
 
 	/**
-	 * @param string $name           account name
-	 * @param string $domain         domain name, e.g. example.com
-	 * @param string $label
+	 * @param $name
+	 * @param $domain
+	 * @param string $sep
 	 * @return string
 	 */
-	function protect_email($name, $domain, $label = '')
+	function protect_email($name, $domain, $sep = '@')
 	{
 		TikiLib::lib('header')->add_jq_onready(
 			'$(".convert-mailto").removeClass("convert-mailto").each(function () {
 				var address = $(this).data("encode-name") + "@" + $(this).data("encode-domain");
-				$(this).attr("href", "mailto:" + address).text($(this).data("label") || address);
+				$(this).attr("href", "mailto:" + address).text(address);
 			});'
 		);
-
-		$label = htmlspecialchars($label, ENT_QUOTES);
-		$link = "<a class=\"convert-mailto\" href=\"mailto:nospam@example.com\" data-encode-name=\"$name\" data-encode-domain=\"$domain\" data-label=\"$label\">";
-
-		if ($label) {
-			$link .= $label . '</a>';
-		} else {
-			$link .= "$name " . tra("at", "", true) . " $domain</a>";
+		return "<a class=\"convert-mailto\" href=\"mailto:nospam@example.com\" data-encode-name=\"$name\" data-encode-domain=\"$domain\">$name ".tra("at", "", true)." $domain</a>";
 		}
-		return $link;
-	}
 
 	//Updates a dynamic variable found in some object
 	/*Shared*/
