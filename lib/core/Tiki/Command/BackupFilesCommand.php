@@ -25,6 +25,11 @@ class BackupFilesCommand extends Command
 				InputArgument::REQUIRED,	
 				'Path to save backup (relative to console.php, or absolute)' 
 			)
+			->addArgument(
+				'dateFormat',
+				InputArgument::OPTIONAL,
+				'Format to use for the date part of the backup file. Defaults to "Y-m-d_H-i-s" and uses the PHP date function format'
+			)
 			->addOption(
 				'storageonly',
 				null,
@@ -37,7 +42,7 @@ class BackupFilesCommand extends Command
 				InputOption::VALUE_NONE,
 				'Backup only the main directory (ignore linked file gallery folders etc...)'
 			);
-	}	
+	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
@@ -57,6 +62,11 @@ class BackupFilesCommand extends Command
 		if (! is_readable($local)) {
 			$output->writeln('<error>Error: "' . $local . '" not readable.</error>');
 			return;
+		}
+
+		$dateFormat = $input->getArgument('dateFormat');
+		if (! $dateFormat) {
+			$dateFormat = 'Y-m-d_H-i-s';
 		}
 
 		require $local;
@@ -107,7 +117,7 @@ class BackupFilesCommand extends Command
 			return;
 		}
 
-		$tarLocation = $path . '/' . $dbs_tiki . '_' . date( 'Y-m-d_H:i:s' ) . '.tar.bz2';
+		$tarLocation = $path . '/' . $dbs_tiki . '_' . date( $dateFormat ) . '.tar.bz2';
 		$tar = escapeshellarg( $tarLocation );
 		$command = "tar -cjf $tar $source";
 		exec( $command );
