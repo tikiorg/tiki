@@ -109,6 +109,10 @@ function smarty_function_jscalendar($params, $smarty)
 
 	$html = '<input type="hidden" id="' . $params['id'] . '"' . $name  . ' value="'.$params['date'].'" />';
 	$html .= '<input type="text" id="' . $params['id'] . '_dptxt" value="" />';	// text version of datepicker date
+	$headerlib->add_jq_onready('$("#' . $params['id'] . '_dptxt").change(function(e){' .
+		'var inst = $.datepicker._getInst(this);'.
+		'$.datepickerAdjustAltField("'.( !isset($params['showtime']) || $params['showtime'] === 'n' ? 'datepicker' : 'datetimepicker' ).'", inst);'.
+		'})');
 
 	$display_tz = $tikilib->get_display_timezone();
 	if ( $display_tz == '' ) {
