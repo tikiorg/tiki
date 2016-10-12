@@ -1994,7 +1994,7 @@ if ($standalone && !$nagios) {
 		$message = '';
 
 		foreach ($check_group as $property => $values) {
-			if ($values['ack'] != true) {
+			if (!isset($values['ack']) || $values['ack'] != true) {
 				switch($values['fitness']) {
 					case 'ugly':
 						$state = max($state, 1);
