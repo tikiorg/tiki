@@ -19,6 +19,15 @@
 				{/foreach}
 			</ul>
 		{/remarksbox}
+		{remarksbox type='feedback' title="{tr}Execution Statistics{/tr}"}
+			<ul>
+				<li>{tr}Execution time:{/tr} {$execution_time}</li>
+				<li>{tr}Current Memory usage:{/tr} {$memory_usage}</li>
+				<li>{tr}Memory peak usage before indexing:{/tr} {$memory_peak_usage_before}</li>
+				<li>{tr}Memory peak usage after indexing:{/tr} {$memory_peak_usage_after}</li>
+				<li>{tr}Number of queries:{/tr} {$num_queries}</li>
+			</ul>
+		{/remarksbox}
 	{else}
 		<form method="post" class="no-ajax" action="{service controller=search action=rebuild}" onsubmit="$(this).parent().tikiModal('{tr}Rebuilding index...{/tr}')">
 			<div class="form-group">

@@ -5,6 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id: Controller.php 50732 2014-04-10 12:42:56Z lphuberdeau $
 
+use \Symfony\Component\Console\Helper\FormatterHelper;
+
 class Services_Search_Controller
 {
 	function action_help($input)
@@ -16,7 +18,16 @@ class Services_Search_Controller
 
 	function action_rebuild($input)
 	{
+		global $num_queries;
+
 		Services_Exception_Denied::checkGlobal('admin');
+
+		$timer = new \timer();
+		$timer->start();
+
+		$memory_peak_usage_before = memory_get_peak_usage();
+
+		$num_queries_before = $num_queries;
 
 		$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 		$stat = null;
@@ -27,10 +38,17 @@ class Services_Search_Controller
 			TikiLib::lib('cache')->empty_type_cache('search_valueformatter');
 		}
 
+		$num_queries_after = $num_queries;
+
 		return [
 			'title' => tr('Rebuild Index'),
 			'stat' => $stat,
 			'queue_count' => $unifiedsearchlib->getQueueCount(),
+			'execution_time' => FormatterHelper::formatTime($timer->stop()),
+			'memory_usage' => FormatterHelper::formatMemory(memory_get_usage()),
+			'memory_peak_usage_before' => FormatterHelper::formatMemory($memory_peak_usage_before),
+			'memory_peak_usage_after' => FormatterHelper::formatMemory(memory_get_peak_usage()),
+			'num_queries' => ($num_queries_after - $num_queries_before),
 		];
 	}
 
