@@ -3417,6 +3417,7 @@ table.tablesorter thead tr.tablesorter-filter-row {
   margin: 0 4px 4px 0;
   max-height: 240px;
   padding: 0 0 0 4px;
+  position: relative;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
