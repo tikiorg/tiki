@@ -6,7 +6,9 @@
 	<select id="assign_name" name="assign_name" class="form-control">
 		<option value=""></option>
 		{foreach key=name item=info from=$all_modules_info}
+			{if $info.enabled}
 			<option value="{$name|escape}" {if $assign_name eq $name || $assign_selected eq $name}selected="selected"{/if}>{$info.name}</option>
+			{/if}
 		{/foreach}
 	</select>
 	{if isset($assign_info)}<div class="description help-block">{$assign_info.description}{if isset($assign_info.documentation)} {help url=$assign_info.documentation}{/if}</div>{/if}
