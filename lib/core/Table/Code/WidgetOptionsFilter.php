@@ -68,8 +68,7 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 										$ffunc[] = $colpointer . ' : ' . $options;
 									}
 								} elseif (!parent::$ajax) {
-									if( array_key_exists('empty', $info) )
-										$ffunc[] = $colpointer . ' : {
+									$ffunc[] = $colpointer . ' : {
 					\'(empty)\': function( e, n, f, i, $r, c, data ) {
 						if( typeof e === "Object" && typeof n === "Object" && typeof f === "undefined" ) {
 							// v2.22.0 compatibility
@@ -80,12 +79,10 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 							return ( "" + data.exact ) === "";
 						else
 							return data.isMatch ?
-								( "" + data.iExact ).search( data.iFilter ) >= 0 :
+								( "" + data.iExact ).indexOf( data.iFilter ) >= 0 :
 								data.filter === data.exact;
 					}
 				}';
-									else
-										$ffunc[] = $colpointer . ' : true';
 									$fsource[] = $colpointer . ' : function( table, column, onlyAvail ) {'
 										. $this->nt4 . 'var array = $.tablesorter.filter.getOptions(table, column, onlyAvail);'
 										. $this->nt4 . 'array = array.join(\',\').split(/\s*,\s*/);'
