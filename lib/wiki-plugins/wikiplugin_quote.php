@@ -17,7 +17,6 @@ function wikiplugin_quote_info()
 		'introduced' => 1,
 		'filter' => 'text',
 		'tags' => array( 'basic' ),
-		'url' => 'URL',
 		'params' => array(
 			'replyto' => array(
 				'required' => false,
@@ -35,14 +34,23 @@ function wikiplugin_quote_info()
 				'filter' => '	text',
 				'default' => '',
 			),
+			'source_url' => array(
+				'required' => false,
+				'name' => tra('Source URL'),
+				'description' => tra('The URL to the source quoted.'),
+				'since' => '16',
+				'filter' => 'text',
+				'default' => '',
+			),
 		),
 	);
 }
 
-function wikiplugin_quote($data, $params, $url='')
+function wikiplugin_quote($data, $params)
 {
 	global $smarty;
 
+	$source_url = '';
 
 	if ($params['thread_id']) {
 		$commentslib = TikiLib::lib('comments');
@@ -51,11 +59,14 @@ function wikiplugin_quote($data, $params, $url='')
 	} elseif ($params['replyto']) {
 		$replyto = $params['replyto'];
 	}
+	if ($params['source_url']) {
+		$source_url = $params['source_url'];
+	}
 
 	$smarty->assign('comment_info', $comment_info);
 	$smarty->assign('replyto', $replyto);
 	$smarty->assign('data', trim($data));
-	$smarty->assign('url', trim($url));
+	$smarty->assign('source_url', trim($source_url));
 
 	return $smarty->fetch("wiki-plugins/wikiplugin_quote.tpl");
 }
