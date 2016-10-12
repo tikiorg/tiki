@@ -1892,14 +1892,6 @@ if ( \$('#$id') ) {
 			}
 		}
 
-		// protect emails if enabled and not rendering for wysiwyg
-		if ($prefs['feature_wiki_protect_email'] === 'y' && $this->option['ck_editor'] === false) {
-			$pattern = '/<a (.*)href="mailto:(.*)@(.*)".*>(.*)<\/a>/Umis';
-			$data = preg_replace_callback($pattern, function ($match) use ($tikilib) {
-				return $tikilib->protect_email($match[2], $match[3], $match[4]);
-			}, $data);
-		}
-
 		// Handle double square brackets. to display [foo] use [[foo] -rlpowell. Improved by sylvieg to avoid replacing them in [[code]] cases.
 		if (empty($this->option['process_double_brackets']) || $this->option['process_double_brackets'] != 'n') {
 			$data = preg_replace("/\[\[([^\]]*)\](?!\])/", "[$1]", $data);
