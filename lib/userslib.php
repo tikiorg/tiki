@@ -45,6 +45,9 @@ class UsersLib extends TikiLib
 	static $cas_initialized = false;
 	static $userexists_cache = array();
 
+
+
+
 	function __construct()
 	{
 		parent::__construct();
@@ -55,6 +58,7 @@ class UsersLib extends TikiLib
 		$this->groupinclude_cache = array();
 		$this->get_object_permissions_for_user_cache = array();
 	}
+
 
 	function assign_object_permission($groupName, $objectId, $objectType, $permName)
 	{
@@ -6581,50 +6585,58 @@ class UsersLib extends TikiLib
 			$errors[] = tr('Password should be at least %0 characters long', $prefs['min_pass_length']);
 		}
 
-		// Check this code
+        if ($prefs['pass_chr_case'] == 'y') {
+            if (!preg_match_all('/[a-z]+/', $pass) || !preg_match_all('/[A-Z]+/', $pass)) {
+                $errors[] = tra('Password must contain at least one lowercase alphabetical character like "a" and one uppercase character like "A".');
+            }
+        }
+
+        if ($prefs['pass_repetition'] == 'y') {
+            $chars = str_split($pass);
+            $previous = '';
+            foreach ($chars as $char) {
+                if ($char == $previous) {
+                    $errors[] = tra('Password must not contain a consecutive repetition of the same character such as "111" or "aab"');
+                    break;
+                }
+                $previous = $char;
+            }
+        }
+
+        $pass = strtolower($pass); // from here on in, we dont check upper case in the password.
+
+        // Check this code
 		if ($prefs['pass_chr_num'] == 'y') {
-			if (!preg_match_all('/[0-9]+/', $pass, $foo) || !preg_match_all('/[A-Za-z]+/', $pass, $foo)) {
+			if (!preg_match_all('/[0-9]+/', $pass) || !preg_match_all('/[a-z]+/', $pass)) {
 				$errors[] = tra('Password must contain both letters and numbers');
 			}
 		}
 
-		if ($prefs['pass_chr_case'] == 'y') {
-			if (!preg_match_all('/[a-z]+/', $pass, $foo) || !preg_match_all('/[A-Z]+/', $pass, $foo)) {
-				$errors[] = tra('Password must contain at least one lowercase alphabetical character like "a" and one uppercase character like "A".');
-			}
-		}
 
 		if ($prefs['pass_chr_special'] == 'y') {
-			$chars = str_split($pass);
-			$ok = false;
-			foreach ($chars as $char) {
-				if (!preg_match('/[0-9A-Za-z]+/', $char, $foo)) {
-					$ok = true;
-					break;
-				}
-			}
-			if (!$ok) $errors[] = tra('Password must contain at least one special character in lower case like " / $ % ? & * ( ) _ + ...');
-		}
-
-		if ($prefs['pass_repetition'] == 'y') {
-			$chars = str_split($pass);
-			$previous = '';
-			foreach ($chars as $char) {
-				if ($char == $previous) {
-					$errors[] = tra('Password must not contain a consecutive repetition of the same character such as "111" or "aab"');
-					break;
-				}
-				$previous = $char;
+			if (!preg_match_all('/[0-9a-z]+/', $char)) {
+                $errors[] = tra('Password must contain at least one special character in lower case like " / $ % ? & * ( ) _ + ...');
 			}
 		}
 
 		if ($prefs['pass_diff_username'] == 'y') {
-			if (strtolower($user) == strtolower($pass)) {
+			if (strtolower($user) == $pass) {
 				$errors[] = tra('The password must be different from the user\'s log-in name.');
 			}
 		}
 
-		return empty($errors) ? '' : implode(' ', $errors);
+        if ($prefs['pass_blacklist'] != 'n' && isset($prefs['pass_blacklist'])) {
+
+            $query = 'SELECT 1 FROM tiki_password_blacklist WHERE BINARY password=?;';
+            $result = $this->query($query, array($pass));
+            $isCommon = $result->fetchRow();
+            if ($isCommon[1] == 1) {
+                $errors[] = tra('The password is blacklisted because it is too common.');
+            }
+        }
+
+
+        return empty($errors) ? '' : implode(' ', $errors);
 	}
 
 	function change_user_password($user, $pass, $pass_first_login=false)
@@ -7897,6 +7909,8 @@ class UsersLib extends TikiLib
 		}
 	}
 }
+
+
 
 /* For the emacs weenies in the crowd.
 Local Variables:

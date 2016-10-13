@@ -8,6 +8,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+
 $section = 'admin';
 
 require_once ('tiki-setup.php');
@@ -116,39 +117,20 @@ function simple_set_value($feature, $pref = '', $isMultiple = false)
 }
 
 /**
- * simple_set_int
  *
- * @param mixed $feature
- * @access public
- * @return void
- */
-function simple_set_int($feature)
-{
-	global $prefs;
-	$logslib = TikiLib::lib('logs');
-	$tikilib = TikiLib::lib('tiki');
-	$smarty = TikiLib::lib('smarty');
-	if (isset($_REQUEST[$feature]) && is_numeric($_REQUEST[$feature])) {
-		$old = $prefs[$feature];
-		if ($old != $_REQUEST[$feature]) {
-			$tikilib->set_preference($feature, $_REQUEST[$feature]);
-			add_feedback($feature, tr('%0 set', $feature), 2);
-			$logslib->add_action('feature', $feature, 'system', $old . '=>' . $_REQUEST['feature']);
-		}
-	}
-}
-
-/**
- * byref_set_value
+ * populates the passwod blacklist database table with the contents of a file of passwords.
  *
- * @param mixed $feature
- * @param string $pref
- * @access public
- * @return void
+ * @param $filename string the name & path of the saved password
  */
-function byref_set_value($feature, $pref = '')
-{
-	simple_set_value($feature, $pref);
+function loadBlacklist($filename){
+    if (is_readable($filename)){
+        $query = 'DROP TABLE IF EXISTS tiki_password_blacklist;';
+        TikiDb_Bridge::query($query, array());
+        $query = 'CREATE TABLE `tiki_password_blacklist` ( `password` VARCHAR(30) NOT NULL , PRIMARY KEY (`password`) USING HASH)';
+        TikiDb_Bridge::query($query, array());
+        $query = "LOAD DATA INFILE '".$filename."' IGNORE INTO TABLE `tiki_password_blacklist` LINES TERMINATED BY '\n' (`password`);";
+        TikiDb_Bridge::query($query, array());
+    }else Feedback::error(tr('Unable to Populate Blaklist: File dose not exist or is not readable.'));
 }
 
 $crumbs[] = new Breadcrumb(tra('Control Panels'), tra('Sections'), 'tiki-admin.php', 'Admin+Home', tra('Help on Configuration Sections', '', true));
@@ -163,6 +145,18 @@ $prefslib = TikiLib::lib('prefs');
 
 if ( isset ($_REQUEST['pref_filters']) ) {
 	$prefslib->setFilters($_REQUEST['pref_filters']);
+}
+
+
+/**
+ * If blacklist preferences have been updated and its also not being disabled
+ * Then update the database with the selection.
+ **/
+
+
+if (isset($_REQUEST['pass_blacklist']) && $_REQUEST['pass_blacklist'] !=  $GLOBALS['prefs']['pass_blacklist'] && $_REQUEST['pass_blacklist'] != 'n') {
+    $filename = 'lib/pass_blacklists/'.$_REQUEST['pass_blacklist'].'.txt';
+    loadBlacklist(dirname($_SERVER['SCRIPT_FILENAME']).'/'.$filename);
 }
 
 $temp_filters = isset($_REQUEST['filters']) ? explode(' ', $_REQUEST['filters']) : null;

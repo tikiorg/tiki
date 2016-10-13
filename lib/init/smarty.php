@@ -357,11 +357,16 @@ class Smarty_Tiki extends Smarty
          * To change go to admin > security > site access
          */
         if (!headers_sent()) {
-            if ($prefs['http_header_frame_options'] == 'y') {
+            if (!isset($prefs['http_header_frame_options'])) $frame = false;
+            else $frame = $prefs['http_header_frame_options'];
+            if (!isset($prefs['http_header_xss_protection'])) $xss = false;  // prevent smarty E_NOTICE
+            else $xss = $prefs['http_header_xss_protection'];
+
+            if ($frame == 'y') {
                 $header_value = $prefs['http_header_frame_options_value'];
                 header('X-Frame-Options: ' . $header_value);
             }
-            if ($prefs['http_header_xss_protection'] == 'y') {
+            if ($xss == 'y') {
                 $header_value = $prefs['http_header_xss_protection_value'];
                 header('X-XSS-Protection: ' . $header_value);
             }

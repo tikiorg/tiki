@@ -39,12 +39,9 @@ if (isset($_REQUEST['new_prefs'])) {
 	foreach ($pref_toggles as $toggle) {
 		simple_set_toggle($toggle);
 	}
-	$pref_byref_values = array(
-		'server_timezone',
-	);
-	foreach ($pref_byref_values as $britem) {
-		byref_set_value($britem);
-	}
+
+    simple_set_value('server_timezone');
+
 	$tikilib->set_preference('display_timezone', $tikilib->get_preference('server_timezone'));
 	// Special handling for tied fields: tikiIndex, urlIndex and useUrlIndex
 }
