@@ -75,12 +75,7 @@ class Table_Code_WidgetOptionsFilter extends Table_Code_WidgetOptions
 							c = e;
 							data = n;
 						}
-						if( data.filter === "(empty)" )
-							return ( "" + data.exact ) === "";
-						else
-							return data.isMatch ?
-								( "" + data.iExact ).indexOf( data.iFilter ) >= 0 :
-								data.filter === data.exact;
+						return ( "" + data.exact ) === "";
 					}
 				}';
 									$fsource[] = $colpointer . ' : function( table, column, onlyAvail ) {'
