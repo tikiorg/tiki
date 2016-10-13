@@ -7774,7 +7774,6 @@ body.wikitext {
 }
 .editable-inline.loaded {
   background: #2e3338;
-  position: absolute;
   padding: 6px;
   border: 1px solid #eee;
   border-radius: 4px;

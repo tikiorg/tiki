@@ -544,7 +544,6 @@ body.wikitext {
 }
 .editable-inline.loaded {
   background: #ffffff;
-  position: absolute;
   padding: 6px;
   border: 1px solid #eee;
   border-radius: 4px;
@@ -4394,9 +4393,6 @@ div.tiki_plugin {
 }
 .icon_edit_section img.icon {
   margin-top: -1px !important;
-}
-.editable-inline {
-  padding-right: 20px;
 }
 .ui-menu {
   z-index: 10100 !important;
