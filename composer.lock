@@ -320,17 +320,17 @@
         },
         {
             "name": "components/jquery",
-            "version": "3.1.0",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/jquery.git",
-                "reference": "39192bee49ceb98f36e9592ee2fc5116a414b6cc"
+                "reference": "09a1658378bc1f818856086396ebeab7d0ec2276"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/components-jquery-39192bee49ceb98f36e9592ee2fc5116a414b6cc-zip-92b012.zip",
-                "reference": "39192bee49ceb98f36e9592ee2fc5116a414b6cc",
-                "shasum": "566e31c223ecc4c86b91c50f0667100705a2912e"
+                "url": "https://composer.tiki.org/dist/components-jquery-09a1658378bc1f818856086396ebeab7d0ec2276-zip-4b88ad.zip",
+                "reference": "09a1658378bc1f818856086396ebeab7d0ec2276",
+                "shasum": "8917d60095ffc90324f58c9c7d18c0ba23dd1bfe"
             },
             "type": "component",
             "extra": {
@@ -356,7 +356,7 @@
             ],
             "description": "jQuery JavaScript Library",
             "homepage": "http://jquery.com",
-            "time": "2016-07-08 05:56:55"
+            "time": "2016-09-23 06:06:29"
         },
         {
             "name": "cwspear/bootstrap-hover-dropdown",
@@ -1543,7 +1543,7 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.8.11",
+            "version": "v2.8.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
@@ -1759,9 +1759,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-code/zipball/e3b32fa0fa358643aa6880b04944650981208c20",
+                "url": "https://composer.tiki.org/dist/zendframework-zend-code-e3b32fa0fa358643aa6880b04944650981208c20-zip-2948a2.zip",
                 "reference": "e3b32fa0fa358643aa6880b04944650981208c20",
-                "shasum": ""
+                "shasum": "047925b47313281c936af56368b3ef5107883ddf"
             },
             "require": {
                 "php": ">=5.3.23",
@@ -1869,9 +1869,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-crypt/zipball/165ec063868884eb952f6bca258f464f7103b79f",
+                "url": "https://composer.tiki.org/dist/zendframework-zend-crypt-165ec063868884eb952f6bca258f464f7103b79f-zip-fedb91.zip",
                 "reference": "165ec063868884eb952f6bca258f464f7103b79f",
-                "shasum": ""
+                "shasum": "d15f2024aa9fa3b912d61d1bcef63658ab36e7c7"
             },
             "require": {
                 "php": ">=5.3.23",
@@ -1921,9 +1921,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-escaper/zipball/13f468ff824f3c83018b90aff892a1b3201383a9",
+                "url": "https://composer.tiki.org/dist/zendframework-zend-escaper-13f468ff824f3c83018b90aff892a1b3201383a9-zip-ac3a32.zip",
                 "reference": "13f468ff824f3c83018b90aff892a1b3201383a9",
-                "shasum": ""
+                "shasum": "3015520950326d9b78cc669f2c0f1421ce585383"
             },
             "require": {
                 "php": ">=5.3.23"
@@ -1966,9 +1966,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-eventmanager/zipball/c2c46a7a2809b74ceb66fd79f66d43f97e1747b4",
+                "url": "https://composer.tiki.org/dist/zendframework-zend-eventmanager-c2c46a7a2809b74ceb66fd79f66d43f97e1747b4-zip-65245c.zip",
                 "reference": "c2c46a7a2809b74ceb66fd79f66d43f97e1747b4",
-                "shasum": ""
+                "shasum": "7802bfb798a2e9f8b1f252196d4293add1fe0d66"
             },
             "require": {
                 "php": ">=5.3.23",
@@ -2298,9 +2298,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-loader/zipball/5e62c44a4d23c4e09d35fcc2a3b109c944dbdc22",
+                "url": "https://composer.tiki.org/dist/zendframework-zend-loader-5e62c44a4d23c4e09d35fcc2a3b109c944dbdc22-zip-33cbb3.zip",
                 "reference": "5e62c44a4d23c4e09d35fcc2a3b109c944dbdc22",
-                "shasum": ""
+                "shasum": "cdad5d06e80e357955c7217f0cd82dd1fe3bb30a"
             },
             "require": {
                 "php": ">=5.3.23"
@@ -2609,9 +2609,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-servicemanager/zipball/855294e12771b4295c26446b6ed2df2f1785f234",
+                "url": "https://composer.tiki.org/dist/zendframework-zend-servicemanager-855294e12771b4295c26446b6ed2df2f1785f234-zip-a0dd12.zip",
                 "reference": "855294e12771b4295c26446b6ed2df2f1785f234",
-                "shasum": ""
+                "shasum": "a221730cea815ceaa2670be381b79668baf3d762"
             },
             "require": {
                 "php": ">=5.3.23"
@@ -4656,17 +4656,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.1.4",
+            "version": "v3.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "f291ed25eb1435bddbe8a96caaef16469c2a092d"
+                "reference": "368b9738d4033c8b93454cb0dbd45d305135a6d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/symfony-yaml-f291ed25eb1435bddbe8a96caaef16469c2a092d-zip-c46ff9.zip",
-                "reference": "f291ed25eb1435bddbe8a96caaef16469c2a092d",
-                "shasum": "403ebf43640c6211924972aa65a535450109b4aa"
+                "url": "https://composer.tiki.org/dist/symfony-yaml-368b9738d4033c8b93454cb0dbd45d305135a6d3-zip-04aa57.zip",
+                "reference": "368b9738d4033c8b93454cb0dbd45d305135a6d3",
+                "shasum": "bff9cd9d673a6298d2020957b09767246dd46583"
             },
             "require": {
                 "php": ">=5.5.9"
@@ -4701,7 +4701,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-09-02 02:12:52"
+            "time": "2016-09-25 08:27:07"
         },
         {
             "name": "webmozart/assert",
