@@ -42,18 +42,18 @@ function prefs_pass_list()
             'default' => 'n',
         ),
         'pass_blacklist' => array(
-            'name' => tra('Prevent Common Passwords'),
+            'name' => tra('Prevent common passwords'),
             'description' => tra('For improved security, prevent passwords in your password blacklist from being used.'),
             'type' => 'list',
             'default' => 'n',
             'options' => array_merge(array('n' => 'Disable',
-                          'auto' => 'Automatatically Select Blacklist'),
+                          'auto' => 'Automatically select blacklist'),
                 genIndexedBlacks()),
         ),
 
 		'pass_due' => array(
 			'name' => tra('Password expires after'),
-            'description' => tra('password expiry period (in days)'),
+            'description' => tra('password expiration period (in days)'),
 			'type' => 'text',
 			'size' => 5,
 			'filter' => 'int',
