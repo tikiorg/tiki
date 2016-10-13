@@ -51,6 +51,7 @@
 							.text(data.itemTitle)
 							.appendTo($(this).prev());
 						$(this).prev().val(data.itemId);
+						$(this).prev().trigger("change");
 						$.closeModal();
 					}
 				});
