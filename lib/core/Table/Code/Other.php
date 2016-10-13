@@ -130,6 +130,8 @@ class Table_Code_Other extends Table_Code_Manager
 						. $this->nt4 . 'catch(e) {}'
 						. $this->nt4 . '// remove nbsp'
 						. $this->nt4 . 'html = html.replace(\'&nbsp;\', \'\')'
+						. $this->nt4 . '// convert to html entities'
+						. $this->nt4 . 'html = $(\'<div />\').html(html).html()'
 						. $this->nt4 . '// replace <br> and new lines with a comma'
 						. $this->nt4 . 'html = html.replace(/\s*<br\s*\/?>\s*|[\r\n]/g, \',\')'
 						. $this->nt4 . 'html = html.replace(/,{2,}/g, \',\')'
