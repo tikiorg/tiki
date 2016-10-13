@@ -50,6 +50,7 @@ function tiki_route($path)
 		'surveys' => 'tiki-list_surveys.php',
 		'trackers' => 'tiki-list_trackers.php',
 		'users' => 'tiki-list_users.php',
+		'tiki-check' => 'tiki-check.php',
 	);
 
 	foreach ($simple as $key => $file) {

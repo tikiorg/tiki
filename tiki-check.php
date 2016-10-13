@@ -32,6 +32,11 @@ $inputConfiguration = array(
 	),
 );
 
+// reflector for SefURL check
+if ($_REQUEST['tiki-check-ping']){
+	die('pong:' . (int)$_REQUEST['tiki-check-ping']);
+}
+
 if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) {
 	$standalone = false;
 	require_once ('tiki-setup.php');
@@ -100,6 +105,28 @@ $php_properties = false;
 // Check error reporting level
 $e = error_reporting();
 $d = ini_get('display_errors');
+$l = ini_get('log_errors');
+if($l) {
+	if (!$d) {
+		$php_properties['Error logging'] = array(
+		'fitness' => tra('info'),
+		'setting' => 'Enabled',
+		'message' => tra('You will get the errors logged, since you have log_errors enabled. You also have display_errors disabled, this a good practice in production, log the errors instead of displaying.')
+		);
+	} else {
+		$php_properties['Error logging'] = array(
+		'fitness' => tra('info'),
+		'setting' => 'Enabled',
+		'message' => tra('You will get the errors logged, since you have log_errors enabled, but you also have display_errors enabled. As a good practice, especially in production, you should log all the errors instead of displaying them.')
+		);
+	}
+} else {
+	$php_properties['Error logging'] = array(
+	'fitness' => tra('info'),
+	'setting' => 'Full',
+	'message' => tra('You will not get your errors logged, since log_errors is not enabled. As a good practice, especially in production, you should log all the errors.')
+	);
+}
 if ( $e == 0 ) {
 	if ($d != 1) {
 		$php_properties['Error reporting'] = array(
@@ -1408,6 +1435,60 @@ if ( function_exists('apache_get_version')) {
 		}
 	}
 
+	if ($pos = strpos($_SERVER['REQUEST_URI'], 'tiki-check.php')){
+		$sef_test_protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']) ? 'https://' : 'http://';
+		$sef_test_base_url =  $sef_test_protocol . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'], 0, $pos);
+		$sef_test_ping_value = rand();
+		$sef_test_url = $sef_test_base_url . 'tiki-check?tiki-check-ping='.$sef_test_ping_value;
+		$sef_test_folder_created = false;
+		$sef_test_folder_writable = true;
+		if ($standalone){
+			$sef_test_path_current = dirname(__FILE__);
+			$sef_test_dir_name = 'tiki-check-' . $sef_test_ping_value;
+			$sef_test_folder = $sef_test_path_current . DIRECTORY_SEPARATOR . $sef_test_dir_name;
+			if (is_writable($sef_test_path_current)&&!file_exists($sef_test_folder)){
+				if (mkdir($sef_test_folder)){
+					$sef_test_folder_created = true;
+					copy(__FILE__, $sef_test_folder . DIRECTORY_SEPARATOR . 'tiki-check.php');
+					file_put_contents($sef_test_folder . DIRECTORY_SEPARATOR . '.htaccess', "<IfModule mod_rewrite.c>\nRewriteEngine On\nRewriteRule tiki-check$ tiki-check.php [L]\n</IfModule>\n");
+					$sef_test_url = $sef_test_base_url . $sef_test_dir_name .'/tiki-check?tiki-check-ping='.$sef_test_ping_value;
+				}
+			} else {
+				$sef_test_folder_writable = false;
+			}
+		}
+
+		if (!$sef_test_folder_writable){
+			$apache_properties['SefURL Test'] = array(
+			'setting' => tra('Not Working'),
+			'fitness' => tra('info') ,
+			'message' => tra('The automated test could not run, we could not create the required files on the server to run the test. That may only mean that there was no permissions, but you should check your apache configuration. For further information go to Admin->SefURL in your Tiki.')
+			);
+		} else {
+			$pong_value = get_content_from_url($sef_test_url);
+			if ($pong_value != 'fail-no-request-done'){
+				if ('pong:'.$sef_test_ping_value == $pong_value){
+					$apache_properties['SefURL Test'] = array(
+						'setting' => tra('Working'),
+						'fitness' => tra('good') ,
+						'message' => tra('A automated test was done, and looks like your server is configured correctly to handle Search Engine Friendly URLs.')
+					);
+				} else {
+					$apache_properties['SefURL Test'] = array(
+						'setting' => tra('Not Working'),
+						'fitness' => tra('info') ,
+						'message' => tra('A automated test was done, and based on the answer, it seems that your server is not configured correctly to handle Search Engine Friendly URLs. This automated test may fail based on your infrastructure setup, but you should check your apache configuration. For further information go to Admin->SefURL in your Tiki.')
+					);
+				}
+			}
+		}
+		if ($sef_test_folder_created){
+			unlink($sef_test_folder . DIRECTORY_SEPARATOR . 'tiki-check.php');
+			unlink($sef_test_folder . DIRECTORY_SEPARATOR . '.htaccess');
+			rmdir($sef_test_folder);
+		}
+	}
+
 	// mod_expires
 	$s = false;
 	$s = array_search('mod_expires', $apache_modules);
@@ -1913,7 +1994,7 @@ if ($standalone && !$nagios) {
 		$message = '';
 
 		foreach ($check_group as $property => $values) {
-			if ($values['ack'] != true) {
+			if (!isset($values['ack']) || $values['ack'] != true) {
 				switch($values['fitness']) {
 					case 'ugly':
 						$state = max($state, 1);
@@ -2042,6 +2123,25 @@ function check_hasIIS_UrlRewriteModule()
 {
 	return isset($_SERVER['IIS_UrlRewriteModule']) == true;
 }
+
+function get_content_from_url($url)
+{
+	if (function_exists('curl_init') && function_exists('curl_exec')) {
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_URL, $url);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
+		$content = curl_exec($curl);
+		if (curl_getinfo($curl, CURLINFO_HTTP_CODE) != 200) {
+			$content = false;
+		}
+		curl_close($curl);
+	} else {
+		$content = "fail-no-request-done";
+	}
+	return $content;
+}
+
 function createPage($title, $content)
 {
 	echo <<<END
