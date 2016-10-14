@@ -11,7 +11,7 @@
 		{$feedback}
 	{/remarksbox}
 {/if}
-<form action="tiki-admin.php?page=login" class="admin form-horizontal" method="post" name="LogForm" enctype="multipart/form-data">
+<form action="tiki-admin.php?page=login" class="admin form-horizontal" method="post" name="LogForm">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<input type="hidden" name="loginprefs" />
 	<div class="t_navbar margin-bottom-md">
@@ -404,25 +404,27 @@
 				{preference name='auth_ws_create_tiki'}
 			</fieldset>
 		{/tab}
-		{tab name="{tr}Password Blacklist{/tr}"}
+
+    <input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
+</form>
+{tab name="{tr}Password Blacklist{/tr}"}
 			<h2>{tr}Password Blacklist Tools{/tr}</h2>
 			<fieldset>
-				<legend>{tr}Password Blacklist Tools{/tr}{help url="???????" desc="{tr}Tools for custom setup of a password blacklist.{/tr}"}</legend>
-				<input type="hidden" name="password_blacklist" />
+				<legend>{tr}Password Blacklist Tools{/tr}{help url="php.ini#Performance"
+                    desc="realpath_cache_size : {tr}Determines the size of the realpath cache to be used by PHP.{/tr}"}</legend>
 				{if isset($sucess_message)}
 					{remarksbox type="information" title="{tr}Sucess{/tr}" close="n"}
 					{tr}{$sucess_message}{/tr}
 					{/remarksbox}
 				{/if}
 				{remarksbox type="warning" title="{tr}Warning{/tr}" close="y"}
-				{tr}This feature sends password attempts at during password selection through a mysql query. Only enable if you are using mysql encryption
-					or if your mysql server is hosted locally.{/tr}
+                {tr}This feature sends password attempts during registration through a database query. To be completly safe, use mysql encryption
+                    or ensure your mysql server is hosted locally.{/tr}
 				{/remarksbox}
 
 				<div class="form-group">
 					<h3>Upload Word List for Processing</h3>
 					<p>Words currently indexed: {$num_indexed}</p>
-
 					<p>Populate the databse with a word list. Text files wtih one work per line accepted.
 						The word list will be converted to all lowe case. Duplicate entries will be removed.
 						Typically passwords lists should be arranged with the most commonly used passwords first.</p>
@@ -432,33 +434,35 @@
 
 					<p>It is recomended that you delete indexed passwords from your database after your done generating your password lists.
 						They can take up quite a lot of space and serve no pourpose after processing is complete.</p>
-						<input type="file" name="passwordlist" accept="text/plain"><br />
-						<input type="submit" value="Create or Replace Word Index" name="uploadIndex" class="btn btn-primary btn-sm">
-	                    <input type="submit" value="Delete Temporary Index" name="deleteIndex" class="btn btn-primary btn-sm">
-				</div>
-				{if $num_indexed}
-					<div class="form-group">
+
+					<form action="tiki-admin.php?page=login" class="admin form-horizontal" method="post" name="PassForm" enctype="multipart/form-data">
+                        <input type="hidden" name="password_blacklist" />
+                        <input type="file" name="passwordlist" accept="text/plain" /><br />
+						<input type="submit" value="Create or Replace Word Index" name="uploadIndex" class="btn btn-primary btn-sm" />
+	                    <input type="submit" value="Delete Temporary Index" name="deleteIndex" class="btn btn-primary btn-sm" />
+
+                    <p>Blaklist Currently Using: {$file_using}</p>
+                    {if $num_indexed}
 						<h3>Generate and Save a Password Blacklist</h3>
 						Assuming your word list was arranged in order of most commonly used, the 'Limit' field will provide you with that many of the most commonly used passwords.
 						The other fields default to the password standards set in tiki. You should not have to change these, unless you plan on changing your password
 						requirements in the future. Saving places a text file with the generated passwords in your password blacklist folder and enables it as an option for use.
-						Number of passwords (limit): <input type="number" name="limit" value="{$limit}"><br />
+						Number of passwords (limit): <input type="number" name="limit" value="{$limit}" /><br />
 						Typical usage ranges between 1,000 & 10,000, although many more could be used. Twitter blacklists 396.<br />
-						Minmum Password Length: <input type="number" name="length" value="{$length}"><br />
+						Minmum Password Length: <input type="number" name="length" value="{$length}" /><br />
 						The minimum password length for your password. This will filter out any password that has an illegal length.<br />
-						Require Numbers & Letters: <input type="checkbox" name="charnum" {if $charnum ==='y'}checked{/if}><br />
+						Require Numbers & Letters: <input type="checkbox" name="charnum" {if $charnum}checked{/if} /><br />
 						If checked, will filter out any password that does not have both upper and lower case letters.<br />
-						Require Special Characters: <input type="checkbox" name="special" {if $special === 'y'}checked{/if}><br />
+						Require Special Characters: <input type="checkbox" name="special" {if $special}checked{/if} /><br />
 						If checked, will filter out any passwords that do not have special characters.<br />
-						<input type="submit" value="Save & Set as Default" name="saveblacklist" class="btn btn-primary btn-sm">
-						<input type="submit" value="View Password List" name="viewblacklist" class="btn btn-primary btn-sm" formtarget="_blank">
-					</div>
-				{/if}
+						<input type="submit" value="Save & Set as Default" name="saveblacklist" class="btn btn-primary btn-sm" />
+						<input type="submit" value="View Password List" name="viewblacklist" class="btn btn-primary btn-sm" formtarget="_blank" />
+                    {/if}
+                    </form>
+				</div>
 			</fieldset>
 		{/tab}
 
 	{/tabset}
 	<div class="t_navbar margin-bottom-md text-center">
-		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
 	</div>
-</form>

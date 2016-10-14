@@ -10,30 +10,6 @@
  */
 function prefs_pass_list()
 {
-
-    /**
-     * reads available password list files from disk and returns a sorted array of files
-     *
-     * @return array
-     */
-
-    function genIndexedBlacks(){
-
-    $blacklist_options = array_diff(scandir('lib/pass_blacklists', SCANDIR_SORT_ASCENDING), array('..', '.', 'index.php', '.htaccess', '.svn', '.DS_Store', 'readme.txt'));
-    $fileindex = array();
-    foreach ($blacklist_options as $blacklist_file) {
-        $blacklist_file = substr($blacklist_file, 0, -4);
-        $fileindex[$blacklist_file] = explode('-', $blacklist_file);
-        $fileindex[$blacklist_file]['0'] = ' Num & Let '.$fileindex[$blacklist_file]['0'];
-        $fileindex[$blacklist_file]['1'] = ' Special '.$fileindex[$blacklist_file]['1'];
-        $fileindex[$blacklist_file]['2'] = ' Min Len '.$fileindex[$blacklist_file]['2'];
-        $fileindex[$blacklist_file]['3'] = ' Custom '.$fileindex[$blacklist_file]['3'];
-        $fileindex[$blacklist_file]['4'] = ' Word Count '.$fileindex[$blacklist_file]['4'];
-       // $fileindex[$blacklist_file] = implode($fileindex[$blacklist_file]);
-    }
-    return $fileindex;
-}
-
 	return array(
         'pass_chr_num' => array(
             'name' => tra('Require characters and numerals'),
@@ -48,7 +24,7 @@ function prefs_pass_list()
             'default' => 'n',
             'options' => array_merge(array('n' => 'Disable',
                           'auto' => 'Automatically select blacklist'),
-                genIndexedBlacks()),
+                           genIndexedBlacks()),
         ),
 
 		'pass_due' => array(

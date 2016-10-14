@@ -56,7 +56,8 @@ ask_ticket('admin-inc-login');
  * Class blacklist
  */
 
-class blacklist extends TikiLib{
+class blacklist extends TikiLib
+{
 
 
     /**
@@ -73,29 +74,34 @@ class blacklist extends TikiLib{
      */
     public $special;
     /**
-     * @var int the number of passwords to generate (limit)
+     * @var int the number of passwords to generate (limit) or actual number, after the fact.
      */
     public $limit;
+    /**
+     * @var int the actual number of passwords generated.
+     */
+    public $actual;
+
 
     /**
      * Set default values
      *
      * blacklist constructor.
      */
-    public function __construct(){
+    public function __construct()
+    {
         $this->length = $GLOBALS['prefs']['min_pass_length']; // the maximum length of the password
         $this->charnum = $GLOBALS['prefs']['pass_chr_num']; // if the password requires numbers and letters
-        $this->special = $GLOBALS['prefs']['pass_chr_special']; // if the password requries special characters
+        $this->special = $GLOBALS['prefs']['pass_chr_special']; // if the password reburies special characters
         $this->limit = 1000; // the number of passwords to generate (limit)
-
-        parent::__construct();
     }
 
     /**
      * removes the password index databse, if it exists.
      */
-    public function deletePassIndex(){
-        $query ='DROP TABLE IF EXISTS tiki_password_index;';
+    public function deletePassIndex()
+    {
+        $query = 'DROP TABLE IF EXISTS tiki_password_index;';
 
         $this->query($query, array());
 
@@ -104,7 +110,8 @@ class blacklist extends TikiLib{
     /**
      * Creates the word index database table.
      */
-    public function createPassIndex(){
+    public function createPassIndex()
+    {
         $query = 'CREATE TABLE `tiki_password_index` (
                   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
                   `password` VARCHAR(30) NOT NULL , UNIQUE (`password`) ,
@@ -121,14 +128,15 @@ class blacklist extends TikiLib{
      *
      * @param $filename
      */
-    public function loadPassIndex($filename){
+    public function loadPassIndex($filename)
+    {
 
-        $query = "LOAD DATA INFILE '".$filename."' IGNORE INTO TABLE `tiki_password_index` LINES TERMINATED BY '\n' (`password`);";
+        $query = "LOAD DATA INFILE '" . $filename . "' IGNORE INTO TABLE `tiki_password_index` LINES TERMINATED BY '\n' (`password`);";
         $this->query($query, array());
 
         unlink($filename); // delete used temp file.
 
-        $query =  'UPDATE tiki_password_index SET password = LOWER(password), length = CHAR_LENGTH(password), numchar = IF(password REGEXP \'[a-z]\' && password REGEXP \'[0-9]\',1,0), special = password REGEXP \'[!@#$%^&*()=+?><\\,.`;:{}~\\\'/"]\'';
+        $query = 'UPDATE tiki_password_index SET password = LOWER(password), length = CHAR_LENGTH(password), numchar = IF(password REGEXP \'[a-z]\' && password REGEXP \'[0-9]\',1,0), special = password REGEXP \'[!@#$%^&*()=+?><\\,.`;:{}~\\\'/"]\'';
         // the above indexes the password list with length, if the pasword contains both a letter and number, and if it contains special charactes (except for [], casue i couldnt figure it out!
 
         $this->query($query, array());
@@ -141,7 +149,8 @@ class blacklist extends TikiLib{
      *
      * @return int
      */
-    public function passIndexNum(){
+    public function passIndexNum()
+    {
 
         // first check if table exists, and return 0 if it does not.
         $query = 'SELECT 1 FROM information_schema.COLUMNS
@@ -163,9 +172,12 @@ class blacklist extends TikiLib{
      *
      * Generates a formatted list of passwords, with new lines separating each password
      *
-     * @return string password list, if any.
+     * @param $toDisk bool if the file is witten to disk or to screen.
+     *
+     * @return bool true on success and false on failure.
      */
-    public function generatePassList(){
+    public function generatePassList($toDisk)
+    {
 
         $query = 'SELECT password FROM tiki_password_index WHERE length >= ?';
         if ($this->special) $query .= ' && special';
@@ -173,12 +185,24 @@ class blacklist extends TikiLib{
         $query .= ' ORDER BY id ASC LIMIT ' . $this->limit;
 
         $result = $this->query($query, array($this->length));
+        $this->actual = $result->NumRows();
 
-        $passList = '';
-        while ($foo = $result->fetchrow()) {
-            $passList .= $foo['password'] . PHP_EOL;
+        if ($toDisk){
+            $filename = $this->generateBlacklistName();
+            if (file_exists($filename))
+                if (!unlink($filename)) return false; // if the file already exists, then delete, return false on failure.
+            $pointer = @fopen($filename,'x');
+            if (!$pointer) return false;
+            while ($foo = $result->fetchrow()) {
+                if (!fwrite($pointer, $foo['password'] . PHP_EOL)) return false;
+            }
+            fclose($pointer);
+        }else{
+            while ($foo = $result->fetchrow()) {
+                echo $foo['password'] . PHP_EOL;
+            }
         }
-        return $passList;
+        return true;
     }
 
     /**
@@ -189,21 +213,30 @@ class blacklist extends TikiLib{
      * @return string
      *
      */
-    public function generateBlacklistName($asFile = true){
+    public function generateBlacklistName($asFile = true)
+    {
 
         $filename = '';
-        if ($asFile)$filename = 'lib/pass_blacklists/'; // directory
-        $filename .=$this->charnum;
-        $filename .='-'.$this->special;
-        $filename .='-'.$this->length;
-        $filename .='-1-'; // indicates user created file
-        $filename .=$this->limit;
+        if ($asFile) $filename = 'lib/pass_blacklists/'; // directory
+        $filename .= $this->charnum;
+        $filename .= '-' . $this->special;
+        $filename .= '-' . $this->length;
+        $filename .= '-1-'; // indicates user created file
+        $filename .= $this->actual;
         if (!$asFile) return $filename;
         $filename .= '.txt';
+
         return $filename;
     }
-}
 
+    public function whatFileUsing()
+    {
+        if ($GLOBALS['prefs']['pass_blacklist'] == 'n' || !isset($GLOBALS['prefs']['pass_blacklist'])) return 'Disabled';
+        else if ($GLOBALS['prefs']['pass_blacklist'] == 'auto') return readableBlackName(explode('-',$GLOBALS['prefs']['pass_auto_blacklist'])).' - Auto Selected';
+        else return readableBlackName(explode('-',$GLOBALS['prefs']['pass_blacklist']));
+
+    }
+}
 
 $blackL = new blacklist();
 
@@ -218,25 +251,23 @@ if (isset($_POST['uploadIndex'])){
     }
 }else if (isset($_POST['saveblacklist']) || isset($_POST['viewblacklist'])) {
 
-    if ($_POST['charnum']) $blackL->charnum = 1;
+    if (isset($_POST['charnum'])) $blackL->charnum = 1;
     else $blackL->charnum = 0;
 
-    if ($_POST['special']) $blackL->special = 1;
+    if (isset($_POST['special'])) $blackL->special = 1;
     else $blackL->special = 0;
 
     $blackL->length = $_POST['length'];
     $blackL->limit = $_POST['limit'];
-
-    if (isset($_POST['viewblacklist'])) {  // if viewing the passwod list, enter plain text mode, spit out passwords, then exit.
+    if (isset($_POST['viewblacklist'])) {  // if viewing the password list, enter plain text mode, spit out passwords, then exit.
 
         header('Content-type: text/plain');
-        echo $blackL->generatePassList();
+        $blackL->generatePassList(false);
         exit;
     }
     // else if save blacklist chosen
-    $filename = $blackL->generateBlacklistName();
-    if (file_put_contents($filename, $blackL->generatePassList())) {
-        $filename = dirname($_SERVER['SCRIPT_FILENAME']).'/'.$filename;
+    if ($blackL->generatePassList(true)) {
+        $filename = dirname($_SERVER['SCRIPT_FILENAME']).'/'.$blackL->generateBlacklistName();
         $smarty->assign('sucess_message', 'Passwod Blacklist Saved to Disk');
         $blackL->set_preference('pass_blacklist', $blackL->generateBlacklistName(false));
         loadBlacklist($filename);
@@ -247,6 +278,7 @@ if (isset($_POST['uploadIndex'])){
     $blackL->deletePassIndex();
 }
 
+$smarty->assign('file_using',$blackL->whatFileUsing());
 $smarty->assign('length',$blackL->length);
 $smarty->assign('charnum',$blackL->charnum);
 $smarty->assign('special',$blackL->special);
