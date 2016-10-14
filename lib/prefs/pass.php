@@ -24,7 +24,7 @@ function prefs_pass_list()
             'default' => 'n',
             'options' => array_merge(array('n' => 'Disable',
                           'auto' => 'Automatically select blacklist'),
-                           genIndexedBlacks()),
+                           function_exists('genIndexedBlacks') ? genIndexedBlacks() : array()),
         ),
 
 		'pass_due' => array(
