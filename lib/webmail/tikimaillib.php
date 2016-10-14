@@ -128,14 +128,16 @@ class TikiMail
 			if( $this->charset )
 				$partText->setCharset($this->charset);
 		}
-		$parts[] = $partText;
-		
+		if ($partText) {
+			$parts[] = $partText;
+		}
+
 		if (!$partHtml){
 			$partHtml = new Zend\Mime\Part($html);
 			$partHtml->setType(Zend\Mime\Mime::TYPE_HTML);
 			if( $this->charset )
 				$partHtml->setCharset($this->charset);
-			
+
 		}
 		$parts[] = $partHtml;
 
