@@ -95,7 +95,7 @@
         {/if}
     </div>
 
-{if isset($smarty.session.fullscreen) && $smarty.session.fullscreen ne 'y'}
+{if !isset($smarty.session.fullscreen) || $smarty.session.fullscreen ne 'y'}
     <footer class="footer" id="footer">
         <div class="footer_liner">
             {modulelist zone=bottom class='row row-sidemargins-zero'}
