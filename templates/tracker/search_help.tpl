@@ -47,8 +47,8 @@
 
 			<h4>{tr}Finding phrases{/tr}</h4>
 			<p>
-				{tr}Use double quotes ( " " ) around a phrase to find terms in the exact order, exactly as typed.{/tr}&nbsp;
-				{tr}Example: <strong>"Alex Bell"</strong> will not find <strong>Bell Alex</strong> or <strong>Alex G. Bell</strong>. {/tr}
+				{tr}Use double quotes ( <kbd>" "</kbd> ) around a phrase to find terms in the exact order, exactly as typed.{/tr}&nbsp;
+				{tr}Example: <kbd>"Alex Bell"</kbd> will not find <strong>Bell Alex</strong> or <strong>Alex G. Bell</strong>. {/tr}
 			</p>
 
 			<h4>{tr}Using wildcards{/tr}</h4>

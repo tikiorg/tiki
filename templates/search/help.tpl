@@ -32,8 +32,8 @@
 	{tr}Example: <strong>wiki and (forum blog)</strong> will find objects that contain <strong>wiki</strong> and <strong>forum</strong> or that contain <strong>wiki</strong> and <strong>blog</strong> in any order.{/tr}</p>
 
 	<h4>{tr}Finding phrases{/tr}</h4>
-	<p>{tr}Use double quotes ( " " ) around a phrase to find terms in the exact order, next to each other.{/tr}&nbsp;
-	{tr}Example: <strong>"Alex Bell"</strong> will not find <strong>Bell Alex</strong> or <strong>Alex G. Bell</strong> but <strong>Alex Bells</strong>. {/tr}</p>
+	<p>{tr}Use double quotes ( <kbd>" "</kbd> ) around a phrase to find terms in the exact order, next to each other.{/tr}&nbsp;
+	{tr}Example: <kbd>"Alex Bell"</kbd> will not find <strong>Bell Alex</strong> or <strong>Alex G. Bell</strong> but <strong>Alex Bells</strong>. {/tr}</p>
 
 </div>
 {/strip}
