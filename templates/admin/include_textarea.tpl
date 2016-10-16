@@ -47,6 +47,14 @@
 				{preference name=feature_wikilingo}
 			</fieldset>
 
+			<fieldset>
+				<legend>{tr}Typography{/tr}</legend>
+				{preference name=feature_typo_quotes}
+				{preference name=feature_typo_approximative_quotes}
+				{preference name=feature_typo_dashes_and_ellipses}
+				{preference name=feature_typo_smart_nobreak_spaces}
+			</fieldset>
+
 			<fieldset class="margin-bottom-md featurelist">
 				<legend>{tr}Plugins{/tr}</legend>
 				{preference name=wikiplugin_showreference}

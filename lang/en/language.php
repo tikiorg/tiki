@@ -17592,4 +17592,12 @@ $lang = array(
 // "The TikiTest Replay File is Empty" => "The TikiTest Replay File is Empty",
 // "TikiTest Replay" => "TikiTest Replay",
 // "The page is empty" => "The page is empty",
+// "Smart “curly” quotes" => "Smart “curly” quotes",
+// 'Convert \"straight\" quotes to “curly” ones, also convert ’ apostrophe and ‘single’ quotes' => 'Convert \"straight\" quotes to “curly” ones, also convert ’ apostrophe and ‘single’ quotes',
+// "Convert approximative ASCII quotes" => "Convert approximative ASCII quotes",
+// "Convert plain-ASCII quote substitutes `` '' ,, << >> to their typographic equivalent “ ” „ « »" => "Convert plain-ASCII quote substitutes `` '' ,, << >> to their typographic equivalent “ ” „ « »",
+// "Smart em-dash and ellipsis" => "Smart em-dash and ellipsis",
+// "Convert double hyphen \-- to em-dash — and three consecutive dots\... to typographic ellipsis character…" => "Convert double hyphen \-- to em-dash — and three consecutive dots\... to typographic ellipsis character…",
+// "Smart no-break space" => "Smart no-break space",
+// "Prevents line breaks from occuring at unfortunate places in the text by replacing regular space character with no-break spaces where appropriate: around some punctuation, when used as thousand separator, and between a unit abbreviation and the number preceding it." => "Prevents line breaks from occuring at unfortunate places in the text by replacing regular space character with no-break spaces where appropriate: around some punctuation, when used as thousand separator, and between a unit abbreviation and the number preceding it.",
 );

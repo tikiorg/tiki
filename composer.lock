@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a193c3500da0b9c631fdba122c49163b",
-    "content-hash": "c38ebf8c881f70f93ad512ee5d701c0d",
+    "content-hash": "8b94b102c63293573b0b0d0d761a1e6f",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -1114,6 +1113,61 @@
             "time": "2014-12-15 16:35:34"
         },
         {
+            "name": "michelf/php-smartypants",
+            "version": "1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/michelf/php-smartypants.git",
+                "reference": "c53488c95996630e144bb152a6f40f4dc70818b6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/michelf/php-smartypants/zipball/c53488c95996630e144bb152a6f40f4dc70818b6",
+                "reference": "c53488c95996630e144bb152a6f40f4dc70818b6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-lib": "1.6.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Michelf": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Michel Fortin",
+                    "email": "michel.fortin@michelf.ca",
+                    "homepage": "https://michelf.ca/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "John Gruber",
+                    "homepage": "https://daringfireball.net/"
+                }
+            ],
+            "description": "PHP SmartyPants",
+            "homepage": "https://michelf.ca/projects/php-smartypants/",
+            "keywords": [
+                "dashes",
+                "quotes",
+                "spaces",
+                "typographer",
+                "typography"
+            ],
+            "time": "2016-10-15 20:21:52"
+        },
+        {
             "name": "morteza/bootstrap-rtl",
             "version": "3.3.2",
             "dist": {
@@ -1130,13 +1184,13 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/chartjs/Chart.js.git",
-                "reference": "9deebf837188164078b092a19bf3b7add660406f"
+                "reference": "65a06e473560a4d923ed52d4437c3666662d44a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/nnnick-chartjs-9deebf837188164078b092a19bf3b7add660406f-zip-c0d2c5.zip",
-                "reference": "9deebf837188164078b092a19bf3b7add660406f",
-                "shasum": "d14a124794ea9af81978ca28740e13f4b52740dd"
+                "url": "https://composer.tiki.org/dist/nnnick-chartjs-65a06e473560a4d923ed52d4437c3666662d44a6-zip-02013b.zip",
+                "reference": "65a06e473560a4d923ed52d4437c3666662d44a6",
+                "shasum": "7c659b098991356233bd7065d8877f5730906e80"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -1163,7 +1217,7 @@
                 "JS",
                 "chart"
             ],
-            "time": "2016-09-29 21:55:04"
+            "time": "2016-10-08 11:28:45"
         },
         {
             "name": "openlayers/ol3",
@@ -1402,17 +1456,17 @@
         },
         {
             "name": "psr/log",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "5277094ed527a1c4477177d102fe4c53551953e0"
+                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/psr-log-5277094ed527a1c4477177d102fe4c53551953e0-zip-4bd4a1.zip",
-                "reference": "5277094ed527a1c4477177d102fe4c53551953e0",
-                "shasum": "729625b1a4b9c815f073b53c48600dd8708aaf62"
+                "url": "https://composer.tiki.org/dist/psr-log-4ebe3a8bf773a19edfe0a84b6585ba3d401b724d-zip-6434e8.zip",
+                "reference": "4ebe3a8bf773a19edfe0a84b6585ba3d401b724d",
+                "shasum": "d7d5ca97a09a8c7e1252d19f36efc3be89089b3a"
             },
             "require": {
                 "php": ">=5.3.0"
@@ -1445,7 +1499,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-09-19 16:02:08"
+            "time": "2016-10-10 12:19:37"
         },
         {
             "name": "rangy/rangy",
@@ -1553,17 +1607,17 @@
         },
         {
             "name": "studio-42/elfinder",
-            "version": "2.1.15",
+            "version": "2.1.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Studio-42/elFinder.git",
-                "reference": "2370a0af78b4ca0f028bacb3fb9c3d092ff0ae81"
+                "reference": "2b0d0db00079a652bcfb8ee4ad82720c5f6c33dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/studio-42-elfinder-2370a0af78b4ca0f028bacb3fb9c3d092ff0ae81-zip-31a130.zip",
-                "reference": "2370a0af78b4ca0f028bacb3fb9c3d092ff0ae81",
-                "shasum": "90f6fcbc112d0f78c085858b94770558fe766259"
+                "url": "https://composer.tiki.org/dist/studio-42-elfinder-2b0d0db00079a652bcfb8ee4ad82720c5f6c33dc-zip-94c7de.zip",
+                "reference": "2b0d0db00079a652bcfb8ee4ad82720c5f6c33dc",
+                "shasum": "3ae1aa519b771e3a259eb43d66b67766fe903bb1"
             },
             "require": {
                 "php": ">=5.2"
@@ -1607,7 +1661,7 @@
             ],
             "description": "File manager for web",
             "homepage": "http://elfinder.org",
-            "time": "2016-09-12 01:53:22"
+            "time": "2016-10-11 04:44:07"
         },
         {
             "name": "svg-edit/svg-edit",
@@ -4475,17 +4529,17 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.5.6",
+            "version": "5.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "146e0fe0bb7f44d1cefade0c93e86fe0b206dd79"
+                "reference": "60c32c5b5e79c2248001efa2560f831da11cc2d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/phpunit-phpunit-146e0fe0bb7f44d1cefade0c93e86fe0b206dd79-zip-4d05bd.zip",
-                "reference": "146e0fe0bb7f44d1cefade0c93e86fe0b206dd79",
-                "shasum": "fd0624c0f5cf01e72ba2e3dfea6c297c7a19875c"
+                "url": "https://composer.tiki.org/dist/phpunit-phpunit-60c32c5b5e79c2248001efa2560f831da11cc2d7-zip-5497a9.zip",
+                "reference": "60c32c5b5e79c2248001efa2560f831da11cc2d7",
+                "shasum": "55f1d13d6803b2a8b7fd47a840120e05b5296a52"
             },
             "require": {
                 "ext-dom": "*",
@@ -4518,7 +4572,6 @@
                 "ext-pdo": "*"
             },
             "suggest": {
-                "ext-tidy": "*",
                 "ext-xdebug": "*",
                 "phpunit/php-invoker": "~1.1"
             },
@@ -4528,7 +4581,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.5.x-dev"
+                    "dev-master": "5.6.x-dev"
                 }
             },
             "autoload": {
@@ -4554,21 +4607,21 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-10-03 07:48:45"
+            "time": "2016-10-07 13:03:26"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "3.3.1",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "03500345483e1e17b52e2e4d34a89c9408ab2902"
+                "reference": "238d7a2723bce689c79eeac9c7d5e1d623bb9dc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/phpunit-phpunit-mock-objects-03500345483e1e17b52e2e4d34a89c9408ab2902-zip-4f305e.zip",
-                "reference": "03500345483e1e17b52e2e4d34a89c9408ab2902",
-                "shasum": "44d9318b83bb0418469934cd112ae1c007c4438a"
+                "url": "https://composer.tiki.org/dist/phpunit-phpunit-mock-objects-238d7a2723bce689c79eeac9c7d5e1d623bb9dc2-zip-d45e80.zip",
+                "reference": "238d7a2723bce689c79eeac9c7d5e1d623bb9dc2",
+                "shasum": "6f1c3c70b658c7e5f34e597bac8f2d7a023ce2bd"
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
@@ -4613,7 +4666,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2016-10-04 11:03:26"
+            "time": "2016-10-09 07:01:45"
         },
         {
             "name": "phpunit/phpunit-selenium",

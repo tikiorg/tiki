@@ -2894,5 +2894,32 @@ function prefs_feature_list($partial = false)
 			),
 			'default' => '',
 		),						
+		'feature_typo_quotes' => array(
+			'name' => tra('Smart “curly” quotes'),
+			'description' => tra('Convert \"straight\" quotes to “curly” ones, also convert ’ apostrophe and ‘single’ quotes'),
+			'type' => 'flag',
+			'tags' => array('basic'),
+			'default' => 'y',
+		),
+		'feature_typo_approximative_quotes' => array(
+			'name' => tra('Convert approximative ASCII quotes'),
+			'description' => tra('Convert plain-ASCII quote substitutes `` \'\' ,, << >> to their typographic equivalent “ ” „ « »'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
+		'feature_typo_dashes_and_ellipses' => array(
+			'name' => tra('Smart em-dash and ellipsis'),
+			'description' => tra('Convert double hyphen \-- to em-dash — and three consecutive dots\... to typographic ellipsis character…'),
+			'type' => 'flag',
+			'tags' => array('basic'),
+			'default' => 'y',
+		),
+		'feature_typo_smart_nobreak_spaces' => array(
+			'name' => tra('Smart no-break space'),
+			'description' => tra('Prevents line breaks from occuring at unfortunate places in the text by replacing regular space character with no-break spaces where appropriate: around some punctuation, when used as thousand separator, and between a unit abbreviation and the number preceding it.'),
+			'type' => 'flag',
+			'tags' => array('basic'),
+			'default' => 'y',
+		),
 	);
 }

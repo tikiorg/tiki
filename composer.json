@@ -56,6 +56,7 @@
 		"jquery/plugins/treetable": "3.2.0",
 		"jquery/plugins/zoom": "1.7.18",
 		"mediumjs/mediumjs": "1.0.1",
+		"michelf/php-smartypants": "1.7.0",
 		"morteza/bootstrap-rtl": "3.3.2",
 		"nnnick/chartjs": "dev-master",
 		"openlayers/ol3": ">=3.6.0",

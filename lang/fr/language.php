@@ -17624,4 +17624,12 @@ $lang = array(
 "The TikiTest Replay File is Empty" => "Le fichier 'Rejouer le TikiTest' est vide",
 "TikiTest Replay" => "Rejouer TikiTest",
 "The page is empty" => "La page est vide",
+"Smart “curly” quotes" => "Guillemets “courbes” intelligents",
+'Convert \"straight\" quotes to “curly” ones, also convert ’ apostrophe and ‘single’ quotes' => 'Convertit les guillemets \"droits\" en guillements “courbes”, converti aussi l’apostrophe et les guillements ‘simples’',
+"Convert approximative ASCII quotes" => "Conversion des guillements ASCII",
+"Convert plain-ASCII quote substitutes `` '' ,, << >> to their typographic equivalent “ ” „ « »" => "Convertit les guillemets ASCII approximatifs `` '' ,, << >> en leur équivalent typographique “ ” „ « »",
+"Smart em-dash and ellipsis" => "Tiret et points de suspention intelligents",
+"Convert double hyphen \-- to em-dash — and three consecutive dots\... to typographic ellipsis character…" => "Converti le double trait-d'union \-- en tiret long — ainsi que trois points consécutifs\... en caractère typographique de points de suspention…",
+"Smart no-break space" => "Espace insécable intelligent",
+"Prevents line breaks from occuring at unfortunate places in the text by replacing regular space character with no-break spaces where appropriate: around some punctuation, when used as thousand separator, and between a unit abbreviation and the number preceding it." => "Empêche les sauts de lignes à des endroits innapropriés en remplaçant le certains espaces par des espaces insécables à certains endroits : autour de certains signes de ponctuation, lorsqu'utilisé comme sépartateur de millier, ainsi qu'entre une abbréviation unité et la valeur numérique qui la précède.",
 );
