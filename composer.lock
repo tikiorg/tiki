@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8b94b102c63293573b0b0d0d761a1e6f",
+    "content-hash": "398fef501536d322082daee4c010963b",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -1114,16 +1114,16 @@
         },
         {
             "name": "michelf/php-smartypants",
-            "version": "1.7.0",
+            "version": "1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/michelf/php-smartypants.git",
-                "reference": "c53488c95996630e144bb152a6f40f4dc70818b6"
+                "reference": "07021d340f6c08e2c49c442eed3986c4b8d44c52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/michelf/php-smartypants/zipball/c53488c95996630e144bb152a6f40f4dc70818b6",
-                "reference": "c53488c95996630e144bb152a6f40f4dc70818b6",
+                "url": "https://api.github.com/repos/michelf/php-smartypants/zipball/07021d340f6c08e2c49c442eed3986c4b8d44c52",
+                "reference": "07021d340f6c08e2c49c442eed3986c4b8d44c52",
                 "shasum": ""
             },
             "require": {
@@ -1165,7 +1165,7 @@
                 "typographer",
                 "typography"
             ],
-            "time": "2016-10-15 20:21:52"
+            "time": "2016-10-16 21:08:01"
         },
         {
             "name": "morteza/bootstrap-rtl",

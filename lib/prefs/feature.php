@@ -2914,7 +2914,7 @@ function prefs_feature_list($partial = false)
 			'tags' => array('basic'),
 			'default' => 'y',
 		),
-		'feature_typo_smart_nobreak_spaces' => array(
+		'feature_typo_nobreak_spaces' => array(
 			'name' => tra('Smart no-break space'),
 			'description' => tra('Prevents line breaks from occuring at unfortunate places in the text by replacing regular space character with no-break spaces where appropriate: around some punctuation, when used as thousand separator, and between a unit abbreviation and the number preceding it.'),
 			'type' => 'flag',

@@ -52,7 +52,7 @@
 				{preference name=feature_typo_quotes}
 				{preference name=feature_typo_approximative_quotes}
 				{preference name=feature_typo_dashes_and_ellipses}
-				{preference name=feature_typo_smart_nobreak_spaces}
+				{preference name=feature_typo_nobreak_spaces}
 			</fieldset>
 
 			<fieldset class="margin-bottom-md featurelist">
