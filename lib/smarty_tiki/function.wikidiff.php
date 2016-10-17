@@ -49,7 +49,7 @@ function smarty_function_wikidiff($params, $smarty)
 
 		if (! is_numeric($params['oldver'])) {
 			$time = strtotime($params['oldver']);
-			$oldver = $histlib->get_version_by_time($params['object_id'], $time);
+			$oldver = $histlib->get_version_by_time($params['object_id'], $time, 'after');
 		} else {
 			$oldver = $params['oldver'];
 		}
