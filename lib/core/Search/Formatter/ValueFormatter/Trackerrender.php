@@ -66,6 +66,9 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 		// TextArea fields need the raw wiki syntax here for it to get wiki parsed if necessary
 		if ($field['type'] === 'a' && isset($entry[$name . '_raw'])) {
 			$value = $entry[$name . '_raw'];
+		} elseif( in_array($field['type'], array('f', 'j')) ) {
+			$formatter = new Search_Formatter_ValueFormatter_Datetime();
+			$value = $formatter->timestamp($value);
 		}
 		$field['value'] = $value;
 
