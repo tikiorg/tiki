@@ -14,7 +14,7 @@
 					<th>{tr}Timeout{/tr}</th>
 					<th>{tr}Token{/tr}</th>
 					<th>{tr}Creation{/tr}</th>
-					<th>{tr}Hits{/tr}</th>
+					<th>{tr}Hits left{/tr}</th>
 					<th>{tr}Max hits{/tr}</th>
 					<th>{tr}Parameters{/tr}</th>
 					<th>{tr}Groups{/tr}</th>
