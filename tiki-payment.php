@@ -257,7 +257,6 @@ function fetch_payment_list($type)
 		);
 	}
 }
-
 if ( $prefs['feature_categories'] == 'y' && $globalperms->payment_request ) {
 	$cat_type = 'payment';
 	$cat_objid = '';
