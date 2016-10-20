@@ -551,7 +551,7 @@
 									<label for="browsertitle">
 										{tr}Browser title:{/tr}
 									</label>
-									<input class="form-control" type="text" size="40" name="browsertitle" id="browsertitle" onclick="if (this.value=="{tr}My Tiki{/tr}") this.value='';" onfocus="origval=this.value;" onblur="if (this.value=='') this.value=origval;" value="{if $prefs.browsertitle eq ''}{tr}My Tiki{/tr}{else}{$prefs.browsertitle|escape}{/if}">
+									<input class="form-control" type="text" size="40" name="browsertitle" id="browsertitle" onclick="if (this.value=='{tr}My Tiki{/tr}') this.value='';" onfocus="origval=this.value;" onblur="if (this.value=='') this.value=origval;" value="{if $prefs.browsertitle eq ''}{tr}My Tiki{/tr}{else}{$prefs.browsertitle|escape}{/if}">
 									<span class="help-block">
 										{tr}This will appear in the browser title bar.{/tr}
 									</span>
