@@ -1224,7 +1224,7 @@ $headerlib->add_js("var tiki_cookie_jar=new Array();");
 $headerlib->add_cssfile('vendor/twitter/bootstrap/dist/css/bootstrap.css');
 $headerlib->add_cssfile('vendor/fortawesome/font-awesome/css/font-awesome.min.css');
 $headerlib->add_jsfile('lib/tiki-js.js');
-$headerlib->add_jsfile_dependancy("vendor/jquery/jquery-min/jquery-$headerlib->jquery_version.min.js");
+$headerlib->add_jsfile_dependancy("vendor/components/jquery/jquery.min.js");
 $headerlib->add_jsfile('lib/jquery_tiki/tiki-jquery.js');
 	$js = '
 // JS Object to hold prefs for jq
