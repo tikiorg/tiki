@@ -230,10 +230,12 @@ function tr_replace( $content, $args )
 		$out = $content;
 	} else {
 		$needles = array();
-		$replacements = $args;
-
-		foreach ( array_keys($args) as $num )
+		// reverse makes sure %11, %12, etc. are translated
+		$replacements = array_reverse($args);
+		$keys = array_reverse(array_keys($args));
+		foreach ( $keys as $num ) {
 			$needles[] = "%$num";
+		}
 
 		$out = str_replace($needles, $replacements, $content);
 	}
