@@ -44,6 +44,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'profile_reference' => 'tracker_field',
 						'parent' => 'trackerId',
 						'parentkey' => 'tracker_id',
+						'sort_order' => 'position_nasc',
 					),
 					'linkToItem' => array(
 						'name' => tr('Display'),
@@ -120,6 +121,10 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'description' => tr('Preselect item based on value in specified field ID of item being edited'),
 						'filter' => 'int',
 						'legacy_index' => 8,
+						'profile_reference' => 'tracker_field',
+						'parent' => 'input[name=trackerId]',
+						'parentkey' => 'tracker_id',
+						'sort_order' => 'position_nasc',
 					),
 					'preSelectFieldThere' => array(
 						'name' => tr('Preselect based on the value in this remote field'),
@@ -127,6 +132,9 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'filter' => 'int',
 						'legacy_index' => 9,
 						'profile_reference' => 'tracker_field',
+						'parent' => 'trackerId',
+						'parentkey' => 'tracker_id',
+						'sort_order' => 'position_nasc',
 					),
 					'preSelectFieldMethod' => array(
 						'name' => tr('Preselection matching method'),
@@ -346,12 +354,12 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		if ($preselection = $this->getPreselection($linkValue)) {
 			$data['preselection'] = $preselection;
 		} else {
-			$data['preselection'] = '';
+			$preselection = $data['preselection'] = array();
 		}
 
 		$data['filter'] = $this->buildFilter();
 
-		if ($data['crossSelect'] === 'y' && !empty($preselection) && is_array($preselection)) {
+		if ($data['crossSelect'] === 'y' && ( !empty($preselection) || $this->getOption('displayFieldsListType') === 'table' ) && is_array($preselection)) {
 			if( isset($data['list']['items']) )
 				$data['list']['items'] = array_intersect_key($data['list']['items'], array_flip($preselection));
 			else
@@ -432,7 +440,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 					$headers[] = $field['name'];
 				}
 			}
-			$label = '<table class="table table-condensed" style="background:none;"><thead><tr><td>'.implode('</td><td>', $headers).'</td></tr></thead><tbody>'.implode('', $labels).'</tbody></table>';
+			$label = '<table class="table table-condensed" style="background:none;"><thead><tr><td>'.tra($this->getTableDisplayFormat(), '', false, $headers).'</td></tr></thead><tbody>'.implode('', $labels).'</tbody></table>';
 		} else {
 			$label = implode(', ', $labels);
 		}
@@ -575,7 +583,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'</td><td>',
 						$context['list_mode'],
 						false,
-						$this->getOption('displayFieldsListFormat')
+						$this->getTableDisplayFormat()
 					)."</td></tr>";
 				} else {
 					$label = $trklib->concat_item_from_fieldslist($trackerId,
@@ -609,6 +617,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 					$displayFieldsList,
 					$this->getOption('status', 'opc')
 				);
+				$list['fieldPermNames'] = array_keys($list['fields']);
 				array_unshift($list['fields'], '');
 			} else {
 				$list = TikiLib::lib('trk')->concat_all_items_from_fieldslist(
@@ -649,6 +658,15 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		} else {
 			return $list;
 		}
+	}
+
+	private function getTableDisplayFormat() {
+		$format = $this->getOption('displayFieldsListFormat');
+		if( !$format ) {
+			$cnt = count($this->getDisplayFieldsListArray());
+			$format = '%'.implode( ',%', range(0,$cnt-1));
+		}
+		return str_replace( ',', '</td><td>', $format );
 	}
 
 	function importRemote($value)

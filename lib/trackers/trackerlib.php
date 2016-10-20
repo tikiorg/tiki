@@ -835,7 +835,7 @@ class TrackerLib extends TikiLib
 		$definition = Tracker_Definition::get($trackerId);
 		foreach ($fieldsId as $field) {
 			if( $myfield = $definition->getField($field) ) {
-				$res['fields'][] = $myfield['name'];
+				$res['fields'][$myfield['permName']] = $myfield['name'];
 				$tmp = $this->get_all_items($trackerId, $field, $status);
 				foreach ($tmp as $key => $value) {
 					if( empty($res['items'][$key]) )
