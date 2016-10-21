@@ -8,11 +8,11 @@
 function wikiplugin_fluidgrid_info()
 {
 	return array(
-		'name' => tra('fluidgrid'),
+		'name' => tra('Fluid Grid'),
 		'documentation' => 'PluginFluidGrid',
 		'description' => tra('Arrange content into rows and columns using the bootstrap fluid grid'),
 		'prefs' => array( 'wikiplugin_fluidgrid' ),
-		'body' => tra('Leave one space in the box below to allow easier editing of current values with the plugin popup helper later on'),
+		'body' => tra('Text'),
 		'filter' => 'wikicontent',
 		'iconname' => 'table',
 		'introduced' => 1,
