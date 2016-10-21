@@ -12,6 +12,7 @@ function wikiplugin_fluidgrid_info()
 		'documentation' => 'PluginFluidGrid',
 		'description' => tra('Arrange content into rows and columns using the bootstrap fluid grid'),
 		'prefs' => array( 'wikiplugin_fluidgrid' ),
+		'body' => tra('Leave one space in the box below to allow easier editing of current values with the plugin popup helper later on'),
 		'filter' => 'wikicontent',
 		'iconname' => 'table',
 		'introduced' => 1,
