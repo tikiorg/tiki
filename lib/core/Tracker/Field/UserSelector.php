@@ -18,7 +18,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		return array(
 			'u' => array(
 				'name' => tr('User Selector'),
-				'description' => tr('Allows the selection of a user from a list.'),
+				'description' => tr('Allows the selection of a user or users from a list.'),
 				'help' => 'User selector',
 				'prefs' => array('trackerfield_userselector'),
 				'tags' => array('basic'),
@@ -38,7 +38,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 					),
 					'notify' => array(
 						'name' => tr('Email Notification'),
-						'description' => tr('Send an email notification to the user every time the item is modified.'),
+						'description' => tr('Send an email notification to the user(s) every time the item is modified.'),
 						'filter' => 'int',
 						'options' => array(
 							0 => tr('No'),
@@ -46,6 +46,16 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 							2 => tr('Only when other users modify the item'),
 						),
 						'legacy_index' => 1,
+					),
+					'multiple' => array(
+						'name' => tr('Multiple selection'),
+						'description' => tr('Allow selection of multiple users from the list.'),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('No'),
+							1 => tr('Yes'),
+						),
+						'default' => 0,
 					),
 					'groupIds' => array(
 						'name' => tr('Group IDs'),
@@ -87,25 +97,46 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 		if ( isset($requestData[$ins_id])) {
 			if ($autoassign == 0 || $this->canChangeValue()) {
-				$auser = $requestData[$ins_id];
-				$userlib = TikiLib::lib('user');
-				if (! $auser || $userlib->user_exists($auser)) {
-					$data['value'] = $auser;
-				} else {
-					if ($prefs['user_selector_realnames_tracker'] == 'y' && $this->getOption('showRealname')) {
-						$finalusers = $userlib->find_best_user(array($auser), '', 'login');
-						if (!empty($finalusers[0])) {
-							$data['value'] = $finalusers[0];
-						}
-					}
-					if (empty($data['value'])) {
-						$data['value'] = $this->getValue();
-						Feedback::error(tr('User "%0" not found', $auser), 'session');
+				$ausers = $requestData[$ins_id];
+				if( !is_array($ausers) ) {
+					if( strstr($ausers, ',') ) {
+						$ausers = preg_split('/\s*,\s*/', $ausers);
+					} else {
+						$ausers = array($ausers);
 					}
 				}
+				$userlib = TikiLib::lib('user');
+				$users = array();
+				foreach( $ausers as $auser ) {
+					if ($userlib->user_exists($auser)) {
+						$users[] = $auser;
+					} elseif( $auser ) {
+						$finaluser = null;
+						if ($prefs['user_selector_realnames_tracker'] == 'y' && $this->getOption('showRealname')) {
+							$finalusers = $userlib->find_best_user(array($auser), '', 'login');
+							if (!empty($finalusers[0])) {
+								$finaluser = $finalusers[0];
+							}
+						}
+						if (empty($finaluser)) {
+							Feedback::error(tr('User "%0" not found', $auser), 'session');
+						} else {
+							$users[] = $finaluser;
+						}
+					}
+				}
+				$data['value'] = implode(', ', $users);
 			} else {
 				if ($autoassign == 2) {
-					$data['value'] = $user;
+					if( $this->getOption('multiple') ) {
+						$data['value'] = preg_split('/\s*,\s*/', $this->getValue());
+						if( !in_array($user, $data['value']) ) {
+							$data['value'][] = $user;
+						}
+						$data['value'] = implode(', ', $data['value']);
+					} else {
+						$data['value'] = $user;
+					}
 				} elseif ($autoassign == 1) {
 					if (!$this->getItemId() || ($this->getTrackerDefinition()->getConfiguration('userCanTakeOwnership')  == 'y' && !$this->getValue())) {
 						$data['value'] = $user; // the user appropiate the item
@@ -130,19 +161,24 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		$smarty = TikiLib::lib('smarty');
 
 		$value = $this->getConfiguration('value');
+		if( $value ) {
+			$value = preg_split('/\s*,\s*/', $value);
+		} else {
+			$value = array();
+		}
 		$autoassign = (int) $this->getOption('autoassign');
-		if ((empty($value) && $autoassign == 1) || $autoassign == 2) {	// always use $user for last mod autoassign
-			$value = $user;
+		if ((empty($value) && $autoassign == 1) || ($autoassign == 2 && !in_array($user, $value))) {	// always use $user for last mod autoassign
+			$value[] = $user;
 		}
 		if ($autoassign == 0 || $this->canChangeValue()) {
 			$groupIds = $this->getOption('groupIds', '');
 
 			if ($prefs['user_selector_realnames_tracker'] === 'y' && $this->getOption('showRealname')) {
 				$smarty->loadPlugin('smarty_modifier_username');
-				$name = smarty_modifier_username($value);
+				$name = implode(', ', array_map('smarty_modifier_username', $value));
 				$realnames = 'y';
 			} else {
-				$name = $value;
+				$name = implode(', ', $value);
 				$realnames = 'n';
 			}
 
@@ -153,6 +189,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 					'id'  => 'user_selector_' . $this->getConfiguration('fieldId'),
 					'select' => $value,
 					'name' => $this->getConfiguration('ins_id'),
+					'multiple' => ( $this->getOption('multiple') ? 'true' : 'false' ),
 					'editable' => 'y',
 					'allowNone' => 'y',
 					'groupIds' => $groupIds,
@@ -163,11 +200,11 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		} else {
 			if ($this->getOption('showRealname')) {
 				$smarty->loadPlugin('smarty_modifier_username');
-				$out = smarty_modifier_username($value);
+				$out = implode(', ', array_map('smarty_modifier_username', $value));
 			} else {
-				$out = $value; 
+				$out = implode(', ', $value);
 			}	
-			return $out . '<input type="hidden" name="' . $this->getInsertId() . '" value="' . $value . '">';
+			return $out . '<input type="hidden" name="' . $this->getInsertId() . '" value="' . implode(', ', $value) . '">';
 		}
 	}
 
@@ -179,7 +216,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		} else {
 			if ($this->getOption('showRealname')) {
 				TikiLib::lib('smarty')->loadPlugin('smarty_modifier_username');
-				return smarty_modifier_username($value);
+				return implode(', ', array_map('smarty_modifier_username', preg_split('/\s*,\s*/', $value)));
 			} else {
 				return $value;
 			}
@@ -234,7 +271,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 		if ($this->getOption('showRealname')) {
 			TikiLib::lib('smarty')->loadPlugin('smarty_modifier_username');
-			$realName = smarty_modifier_username($value);
+			$realName = implode(', ', array_map('smarty_modifier_username', preg_split('/\s*,\s*/', $value)));
 		} else {
 			$realName = $value;	// add the _text option even if not using showRealname so we don't need to check
 		}
@@ -275,7 +312,15 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		$autoassign = (int) $this->getOption('autoassign');
 
 		if ($autoassign === 1 || $autoassign === 2) {
-			$value = $user;
+			if( $this->getOption('multiple') && $value ) {
+				$value = preg_split('/\s*,\s*/', $value);
+				if( !in_array($user, $value) ) {
+					$value[] = $user;
+				}
+				$value = implode(', ', $value);
+			} else {
+				$value = $user;
+			}
 		}
 
 		return array(
@@ -300,7 +345,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 				$smarty->loadPlugin('smarty_modifier_userlink');
 
 				if ($value) {
-					return smarty_modifier_userlink($value);
+					return implode(', ', array_map('smarty_modifier_userlink', preg_split('/\s*,\s*/', $value)));
 				}
 			})
 			;
@@ -313,7 +358,11 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 				$smarty->loadPlugin('smarty_modifier_username');
 
 				if ($value) {
-					return smarty_modifier_username($value, true, false, false);
+					$value = preg_split('/\s*,\s*/', $value);
+					foreach( $value as &$v ) {
+						$v = smarty_modifier_username($v, true, false, false);
+					}
+					return implode(', ', $value);
 				}
 			})
 			;
@@ -327,11 +376,15 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 				$smarty->loadPlugin('smarty_function_object_link');
 
 				if ($value) {
-					return smarty_function_object_link([
-						'type' => 'trackeritem',
-						'id' => $extra['itemId'],
-						'title' => $value,
-					], $smarty);
+					$value = preg_split('/\s*,\s*/', $value);
+					foreach( $value as &$v ) {
+						$v = smarty_function_object_link([
+							'type' => 'trackeritem',
+							'id' => $extra['itemId'],
+							'title' => $v,
+						], $smarty);
+					}
+					return implode(', ', $value);
 				}
 			})
 			;
@@ -346,11 +399,15 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 				$smarty->loadPlugin('smarty_modifier_username');
 
 				if ($value) {
-					return smarty_function_object_link([
-						'type' => 'trackeritem',
-						'id' => $extra['itemId'],
-						'title' => smarty_modifier_username($value, true, false, false),
-					], $smarty);
+					$value = preg_split('/\s*,\s*/', $value);
+					foreach( $value as &$v ) {
+						$v = smarty_function_object_link([
+							'type' => 'trackeritem',
+							'id' => $extra['itemId'],
+							'title' => smarty_modifier_username($v, true, false, false),
+						], $smarty);
+					}
+					return implode(', ', $value);
 				}
 			})
 			;
