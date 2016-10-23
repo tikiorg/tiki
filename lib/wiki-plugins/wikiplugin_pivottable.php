@@ -76,7 +76,8 @@ function wikiplugin_pivottable_info()
 					array('text' => tra('Bar Chart'), 'value' => 'Bar Chart'),
 					array('text' => tra('Stacked Bar Chart'), 'value' => 'Stacked Bar Chart'),
 					array('text' => tra('Area Chart'), 'value' => 'Area Chart'),
-					array('text' => tra('Scatter Chart'), 'value' => 'Scatter Chart')
+					array('text' => tra('Scatter Chart'), 'value' => 'Scatter Chart'),
+					array('text' => tra('Treemap'), 'value' => 'Treemap')
 				)
 				
 			),
@@ -122,18 +123,22 @@ function wikiplugin_pivottable_info()
 
 function wikiplugin_pivottable($data, $params)
 {
+	
+	//included globals for permission check
+	global $tiki_p_edit,$tiki_p_view_trackers, $user, $page;
+
 	//checking if vendor files are present 
     if (!file_exists('vendor/etdsolutions/pivottable/')) {
 		return WikiParser_PluginOutput::internalError(tr('Missing required files, please make sure plugin files are installed at vendor/etdsolutions/pivottable. <br/><br /> To install, please run composer or download from following url:<a href="https://github.com/nicolaskruchten/pivottable/archive/master.zip" target="_blank">https://github.com/nicolaskruchten/pivottable/archive/master.zip</a>'));
 	}
 
-	
 	static $id = 0;
 	$headerlib = TikiLib::lib('header');
 	$headerlib->add_cssfile('vendor/etdsolutions/pivottable/pivot.css');
 	$headerlib->add_jsfile('vendor/etdsolutions/pivottable/pivot.js', true);
 	$headerlib->add_jsfile('vendor/etdsolutions/pivottable/c3_renderers.js', true);
-
+    $headerlib->add_jsfile('lib/jquery_tiki/wikiplugin-pivottable.js', true);
+	
 	//checking data type
 	
 	$dataId=split(":",$params['data']);
@@ -174,11 +179,8 @@ function wikiplugin_pivottable($data, $params)
 		$height="1000px";	
 	}
 	
-	//checking if rows and cols are passed
-	if(empty($params['cols']) || empty($params['rows']))
-	   {
-		   $fields=$definition->getFields();
-	   }
+    $fields=$definition->getFields();
+	
 	
 	//translating permName to field name for columns and rows
 	
@@ -234,9 +236,26 @@ function wikiplugin_pivottable($data, $params)
 		  }
 		}	
 	} 
-
-
-
+    //parsing array to hold parmNames mapped with field names for save button
+	$fieldsArr=array();
+	foreach($fields as $field)
+	{
+		$fieldsArr[]=array($field['name'],$field['permName']);
+    }
+	
+	
+    //checking if user can see edit button
+	global $wikiplugin_included_page;
+	if (!empty($wikiplugin_included_page)) {
+		$sourcepage = $wikiplugin_included_page;
+	} else {
+		$sourcepage = $page;
+	}
+	$showControls=TikiLib::lib('tiki')->user_has_perm_on_object($user, $sourcepage, 'wikipage', 'tiki_p_edit');
+	
+	//checking if user has view rights on tracker data
+	$showView=TikiLib::lib('tiki')->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_view_trackers');
+	
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign(
 		'pivottable',
@@ -251,6 +270,12 @@ function wikiplugin_pivottable($data, $params)
 			'vals'=>$vals,
 			'width'=>$width,
 			'height'=>$height,
+			'showControls'=>$showControls,
+			'showView'=>$showView,
+			'user'=>$user,
+			'page'=>$sourcepage,
+			'fieldsArr'=>$fieldsArr,
+			'index'=>$id
 
 		)
 	);
