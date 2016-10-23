@@ -37,22 +37,14 @@ if (isset($_REQUEST['pdf'])) {
 	$access->check_feature("feature_slideshow_pdfexport");
 	set_time_limit(777);
 	
-	$_POST["html"] = urldecode($_POST["html"]);
-	
-	define("DOMPDF_ENABLE_REMOTE", true);
-	define('DOMPDF_ENABLE_AUTOLOAD', false);
-	
-	require_once("vendor/dompdf/dompdf/dompdf_config.inc.php");
-	
-	if ( isset( $_POST["html"] ) ) {
-		$dompdf = new DOMPDF();
+	$_POST["html"] = preg_replace('/%u([a-fA-F0-9]{4})/', '&#x\\1;',urldecode($_POST["html"]));
 
-		$dompdf->load_html(urldecode($_REQUEST["html"]));
-		$dompdf->set_paper("letter", (isset($_REQUEST['landscape']) ? "landscape" : "portrait"));
-		$dompdf->render();
-		
-		$dompdf->stream("dompdf_out.pdf", array("Attachment" => false));
-		
+	if ( isset( $_POST["html"] ) ) {
+		$orientation =  isset($_REQUEST['landscape']) ? "L" : "P";
+		$mpdf = new mPDF(null, "letter-" . $orientation);
+		$mpdf->WriteHTML($_POST["html"]);
+		$mpdf->Output();
+
 		exit(0);
 	}
 	die;
