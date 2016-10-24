@@ -64,8 +64,8 @@ function module_groups_emulation($mod_reference, $module_params)
 		$smarty->assign('groups_emulated', unserialize($_SESSION['groups_emulated']));
 	
 	// Admins can see all existing groups
+	$allGroups = array();
 	if ($tiki_p_admin == 'y') {
-		$allGroups = array();
 		$alls = $userlib->get_groups();
 		foreach ($alls['data'] as $g) {
 			$allGroups[$g['groupName']] = "real";
@@ -75,7 +75,11 @@ function module_groups_emulation($mod_reference, $module_params)
 	
 	// Extract list of groups of user, including included groups
 	$userGroups = $userlib->get_user_groups_inclusion($user);
-	$chooseGroups = $userGroups;
+	if ($tiki_p_admin == 'y') {
+		$chooseGroups = $allGroups;
+	} else {
+		$chooseGroups = $userGroups;
+	}
 	$chooseGroups["Anonymous"] = "included";
 	if (isset($user)) {
 		$chooseGroups["Registered"] = "included";
