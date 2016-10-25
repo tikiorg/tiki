@@ -41,11 +41,13 @@ class Search_GlobalSource_FileAttachmentSource implements Search_GlobalSource_In
 		foreach ($relations as $rel) {
 			if ($rel['type'] == 'file') {
 				$files[] = $rel['itemId'];
-				$data = $this->fileSource->getDocument($rel['itemId'], $typeFactory);
-
-				foreach ($this->fileSource->getGlobalFields() as $name => $keep) {
-					$textual[] = $data[$name]->getValue();
-				}
+				if ($data = $this->fileSource->getDocument($rel['itemId'], $typeFactory)) {
+                    foreach ($this->fileSource->getGlobalFields() as $name => $keep) {
+                        $textual[] = $data[$name]->getValue();
+                    }
+                } else {
+                    error_log("File " . $rel['itemId'] . ", referenced from " . $objectType . $objectId . " no longer exists.");
+                }
 			}
 		}
 
