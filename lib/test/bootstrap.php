@@ -127,6 +127,10 @@ $prefs['language'] = 'en';
 require_once 'lib/setup/prefs.php';
 $prefs['site_language'] = 'en';
 $prefs['zend_mail_handler'] = 'file';
+$prefs['feature_typo_quotes'] = 'n';
+$prefs['feature_typo_approximative_quotes'] = 'n';
+$prefs['feature_typo_dashes_and_ellipses'] = 'n';
+$prefs['feature_typo_smart_nobreak_spaces'] = 'n';
 
 $builder = new Perms_Builder;
 Perms::set($builder->build());
