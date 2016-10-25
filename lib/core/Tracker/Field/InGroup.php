@@ -60,26 +60,31 @@ class Tracker_Field_InGroup extends Tracker_Field_Abstract
 	function renderOutput($context = array())
 	{
 		$trklib = TikiLib::lib('trk');
-		$itemUser = $trklib->get_item_creator($this->getConfiguration('trackerId'), $this->getItemId());
+		$itemUsers = $trklib->get_item_creators($this->getConfiguration('trackerId'), $this->getItemId());
 		
-		if (!empty($itemUser)) {
+		if (!empty($itemUsers)) {
 			if (!isset($trklib->tracker_infocache['users_group'][$this->getOption('groupName')])) {
 				$userlib = TikiLib::lib('user');
 				$trklib->tracker_infocache['users_group'][$this->getOption('groupName')] = $userlib->get_users_created_group($this->getOption('groupName'), null, true);
 			}
-			if (isset($trklib->tracker_infocache['users_group'][$this->getOption('groupName')][$itemUser])) {
-				if ($this->getOption('type') == 'date') {
-					$value = $trklib->tracker_infocache['users_group'][$this->getOption('groupName')][$itemUser]['created'];
-				} elseif ($this->getOption('type') == 'expire') {
-					$value = $trklib->tracker_infocache['users_group'][$this->getOption('groupName')][$itemUser]['expire'];
+			foreach( $itemUsers as $itemUser ) {
+				if (isset($trklib->tracker_infocache['users_group'][$this->getOption('groupName')][$itemUser])) {
+					if ($this->getOption('type') == 'date') {
+						$value = $trklib->tracker_infocache['users_group'][$this->getOption('groupName')][$itemUser]['created'];
+					} elseif ($this->getOption('type') == 'expire') {
+						$value = $trklib->tracker_infocache['users_group'][$this->getOption('groupName')][$itemUser]['expire'];
+					} else {
+						$value = 'Yes';
+					}
 				} else {
-					$value = 'Yes';
+					if ($this->getOption('type') == 'date' || $this->getOption('type') == 'expire') {
+						$value = '';
+					} else {
+						$value = 'No';
+					}
 				}
-			} else {
-				if ($this->getOption('type') == 'date' || $this->getOption('type') == 'expire') {
-					$value = '';
-				} else {
-					$value = 'No';
+				if( !empty($value) && $value != 'No' ) {
+					break;
 				}
 			}
 		}

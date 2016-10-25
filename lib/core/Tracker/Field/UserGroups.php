@@ -36,11 +36,13 @@ class Tracker_Field_UserGroups extends Tracker_Field_Abstract
 		$value = array();
 		
 		if ($itemId) {
-			$itemUser = $this->getTrackerDefinition()->getItemUser($itemId);
+			$itemUsers = $this->getTrackerDefinition()->getItemUsers($itemId);
 			
-			if (!empty($itemUser)) {
+			if (!empty($itemUsers)) {
 				$tikilib = TikiLib::lib('tiki');
-				$value = array_diff($tikilib->get_user_groups($itemUser), array('Registered', 'Anonymous'));
+				foreach( $itemUsers as $itemUser ) {
+					$value = array_merge($value, array_diff($tikilib->get_user_groups($itemUser), array('Registered', 'Anonymous')));
+				}
 			}
 		}
 	

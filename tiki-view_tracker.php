@@ -110,8 +110,8 @@ if ($tracker_info['adminOnlyViewEditItem'] === 'y') {
 }
 
 if ($tiki_p_view_trackers != 'y') {
-	$userCreatorFieldId = $writerfield;
-	$groupCreatorFieldId = $writergroupfield;
+	$userCreatorFieldId = $trackerDefinition->getWriterField();
+	$groupCreatorFieldId = $trackerDefinition->getWriterGroupField();
 	if ($user && !$my and ( (isset($tracker_info['writerCanModify']) and $tracker_info['writerCanModify'] == 'y') or
 							(isset($tracker_info['userCanSeeOwn']) and $tracker_info['userCanSeeOwn'] == 'y'))
 							 and !empty($userCreatorFieldId)) {

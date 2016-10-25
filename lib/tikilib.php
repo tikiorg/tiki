@@ -6601,6 +6601,19 @@ JS;
 			}
 		}
 	}
+
+	/**
+	 * @param $arr - array of data to convert to csv
+	 * @return string - csv formatted string
+	 */
+	function str_putcsv($arr) {
+		$fh = fopen('php://temp', 'rw');
+		fputcsv($fh, $arr);
+		rewind($fh);
+		$csv = stream_get_contents($fh);
+		fclose($fh);
+		return $csv;
+	}
 }
 // end of class ------------------------------------------------------
 

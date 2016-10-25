@@ -1425,7 +1425,7 @@ function wikiplugin_tracker($data, $params)
 				foreach ($filter as $f) {
 					$filter2[$f['fieldId']] = $f;
 				}
-				$flds['data'] = $trklib->get_item_fields($trackerId, $itemId, $filter2, $itemUser, true);
+				$flds['data'] = $trklib->get_item_fields($trackerId, $itemId, $filter2, $itemUsers, true);
 			}
 			// todo: apply the values for fields with no values
 		} else {
@@ -1706,8 +1706,8 @@ function wikiplugin_tracker($data, $params)
 		foreach ($flds['data'] as $i=>$f) { // collect additional infos
 			if (in_array($f['fieldId'], $outf)) {
 				$flds['data'][$i]['ins_id'] = ($f['type'] == 'e')?'ins_'.$f['fieldId']: $fields_prefix.$f['fieldId'];
-				if (($f['isHidden'] == 'c' || $f['isHidden'] == 'p') && !empty($itemId) && !isset($item['creator'])) {
-					$item['creator'] = $trklib->get_item_creator($trackerId, $itemId);
+				if (($f['isHidden'] == 'c' || $f['isHidden'] == 'p') && !empty($itemId) && !isset($item['creators'])) {
+					$item['creators'] = $trklib->get_item_creators($trackerId, $itemId);
 				}
 			}
 		}

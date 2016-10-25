@@ -346,8 +346,8 @@ $fields = array();
 $ins_fields = array();
 $usecategs = false;
 $cookietab = 1;
-$itemUser = $trklib->get_item_creator($_REQUEST['trackerId'], $_REQUEST['itemId']);
-$smarty->assign_by_ref('itemUser', $itemUser);
+$itemUsers = $trklib->get_item_creators($_REQUEST['trackerId'], $_REQUEST['itemId']);
+$smarty->assign_by_ref('itemUsers', $itemUsers);
 $plugins_loaded = false;
 
 if (empty($tracker_info)) {

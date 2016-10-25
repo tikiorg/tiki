@@ -49,13 +49,13 @@ class Tracker_Field_UserPreference extends Tracker_Field_Abstract
 			$itemId = $this->getItemId();
 			
 			if ($itemId) {
-				$itemUser = $this->getTrackerDefinition()->getItemUser($itemId);
+				$itemUsers = $this->getTrackerDefinition()->getItemUsers($itemId);
 		
-				if (!empty($itemUser)) {
+				if (!empty($itemUsers)) {
 					if ($this->getOption('type') == 'email') {
-						$value = $userlib->get_user_email($itemUser);
+						$value = $userlib->get_user_email($itemUsers[0]);
 					} else {
-						$value = $userlib->get_user_preference($itemUser, $this->getOption('type'));
+						$value = $userlib->get_user_preference($itemUsers[0], $this->getOption('type'));
 					}
 				}
 			}

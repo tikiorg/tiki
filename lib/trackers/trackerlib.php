@@ -1246,10 +1246,13 @@ class TrackerLib extends TikiLib
 				} elseif ( $filter['type'] == 'usergroups' ) {
 					$definition = Tracker_Definition::get($trackerId);
 					$userFieldId = $definition->getUserField();
-					$cat_table .= " INNER JOIN `tiki_tracker_item_fields` ttifu ON (tti.`itemId`=ttifu.`itemId`) INNER JOIN `users_users` uu ON (ttifu.`value`=uu.`login`) INNER JOIN `users_usergroups` uug ON (uug.`userId`=uu.`userId`)";
+					$cat_table .= " INNER JOIN `tiki_tracker_item_fields` ttifu ON (tti.`itemId`=ttifu.`itemId`) INNER JOIN `users_users` uu ON ttifu.`value` REGEXP CONCAT('[[:<:]]', uu.`login`, '[[:>:]]') INNER JOIN `users_usergroups` uug ON (uug.`userId`=uu.`userId`)";
 					$mid .= ' AND ttifu.`fieldId`=? AND uug.`groupName`=? ';
 					$bindvars[] = $userFieldId;
 					$bindvars[] = empty($ev)?$fv: $ev;
+				} elseif ( $filter['type'] == 'u' && $ev > '') { // user selector and exact value
+					$mid.= " AND ttif$i.`value` REGEXP ? ";
+					$bindvars[] = "[[:<:]]{$ev}[[:>:]]";
 				} elseif ( $filter['type'] == '*') { // star
 					$mid .= " AND ttif$i.`value`*1>=? ";
 					$bindvars[] = $ev;
@@ -1450,9 +1453,9 @@ class TrackerLib extends TikiLib
 					break;
 				}
 
-				$res['itemUser'] = '';
+				$res['itemUsers'] = array();
 				if ($listfields !== null) {
-					$res['field_values'] = $this->get_item_fields($trackerId, $res['itemId'], $listfields, $res['itemUser']);
+					$res['field_values'] = $this->get_item_fields($trackerId, $res['itemId'], $listfields, $res['itemUsers']);
 				}
 	
 				if (! $skip_permission_check) {
@@ -1545,7 +1548,7 @@ class TrackerLib extends TikiLib
 	}
 
 	/* listfields fieldId=>fielddefinition */
-	public function get_item_fields($trackerId, $itemId, $listfields, &$itemUser, $alllang=false)
+	public function get_item_fields($trackerId, $itemId, $listfields, &$itemUsers, $alllang=false)
 	{
 		global $prefs, $user, $tiki_p_admin_trackers;
 
@@ -1554,9 +1557,9 @@ class TrackerLib extends TikiLib
 		$factory = $definition->getFieldFactory();
 
 		$userField = $definition->getUserField();
-		$itemUser = null;
+		$itemUsers = array();
 		if ($userField && isset($info[$userField])) {
-			$itemUser = $info[$userField];
+			$itemUsers = str_getcsv($info[$userField]);
 		}
 
 		$fields = array();
@@ -3589,14 +3592,15 @@ class TrackerLib extends TikiLib
 		}
 	}
 
-	public function get_item_creator($trackerId, $itemId)
+	public function get_item_creators($trackerId, $itemId)
 	{
 		$definition = Tracker_Definition::get($trackerId);
 		if ($fieldId = $definition->getUserField()) {
 			// user creator field
-			return $this->get_item_value($trackerId, $itemId, $fieldId);
+			$creators = $this->get_item_value($trackerId, $itemId, $fieldId);
+			return str_getcsv($creators);
 		} else {
-			return null;
+			return array();
 		}
 	}
 

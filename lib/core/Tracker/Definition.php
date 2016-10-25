@@ -299,17 +299,17 @@ class Tracker_Definition
 	}
 	
 	/**
-	 * Get the name of the item user if any.
-	 * A item user is defined if a 'user selector' field
-	 * exist for this tracker and it has one user selected.
+	 * Get the names of the item user(s) if any.
+	 * An item user is defined if a 'user selector' field
+	 * exist for this tracker and it has at least one user selected.
 	 * 
 	 * @param int $itemId
 	 * @return string item user name
 	 */
-	function getItemUser($itemId)
+	function getItemUsers($itemId)
 	{
 		$trklib = TikiLib::lib('trk');
-		return $trklib->get_item_creator($this->trackerInfo['trackerId'], $itemId);
+		return $trklib->get_item_creators($this->trackerInfo['trackerId'], $itemId);
 	}
 
 	function getSyncInformation()

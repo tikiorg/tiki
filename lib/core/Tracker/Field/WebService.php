@@ -107,7 +107,7 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 							if (isset($itemData[$field['fieldId']])) {
 								$value = TikiLib::lib('trk')->get_field_value($field, $itemData);
 							} else {
-								$itemUser = '';
+								$itemUsers = array();
 
 								if (empty($itemData['itemId'])) {
 									$itemData['itemId'] = $_REQUEST['itemId'];	// when editing an item the itemId doesn't seem to be available?
@@ -117,7 +117,7 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 									$definition->getConfiguration('trackerId'),
 									$itemData['itemId'],
 									[$field],
-									$itemUser
+									$itemUsers
 								);
 								$value = isset($value[0]['value']) ? $value[0]['value'] : '';
 							}

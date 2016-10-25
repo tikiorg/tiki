@@ -21,7 +21,7 @@ class Tracker_Item
 	 */
 	private $definition;
 
-	private $owner;
+	private $owners;
 	private $ownerGroup;
 	private $perms;
 
@@ -140,7 +140,7 @@ class Tracker_Item
 		$users = array();
 
 		if ($this->definition->getConfiguration('writerCan' . $operation, 'n') == 'y') {
-			$users[] = $this->owner;
+			$users = array_unique(array_merge($users, $this->owners));
 		}
 
 		if ($this->definition->getConfiguration('writerGroupCan' . $operation, 'n') == 'y' && $this->ownerGroup && in_array($this->ownerGroup, $this->perms->getGroups())) {
@@ -157,7 +157,7 @@ class Tracker_Item
 			return false;
 		}
 
-		if ($this->definition->getConfiguration('writerCan' . $operation, 'n') == 'y' && $user && $this->owner && $user === $this->owner) {
+		if ($this->definition->getConfiguration('writerCan' . $operation, 'n') == 'y' && $user && $this->owners && in_array($user, $this->owners)) {
 			return true;
 		}
 
@@ -172,7 +172,7 @@ class Tracker_Item
 	{
 		global $user;
 		if ($this->definition->getConfiguration('userCanSeeOwn') == 'y') {
-			return !empty($user) && $user === $this->owner;
+			return !empty($user) && $this->owners && in_array($user, $this->owners);
 		}
 
 		return false;
@@ -180,7 +180,7 @@ class Tracker_Item
 
 	private function initialize()
 	{
-		$this->owner = $this->getItemOwner();
+		$this->owners = $this->getItemOwners();
 		$this->ownerGroup = $this->getItemGroupOwner();
 
 		$this->perms = $this->getItemPermissions();
@@ -217,27 +217,30 @@ class Tracker_Item
 		}
 	}
 
-	private function getItemOwner()
+	private function getItemOwners()
 	{
 		if (!is_object($this->definition)) {
-			return; // TODO: This is a temporary fix, we should be able to getItemOwner always
+			return array(); // TODO: This is a temporary fix, we should be able to getItemOwners always
 		}
 
 		if ($this->isNew()) {
 			global $user;
-			return $user;
+			return array($user);
 		}
 
 
-		if (isset($this->info['itemUser'])) {
+		if (isset($this->info['itemUsers'])) {
 			// Used by TRACKERLIST - not all data is loaded, but this is loaded separately
-			return $this->info['itemUser'];
+			return $this->info['itemUsers'];
 		}
 
 		$userField = $this->definition->getUserField();
 		if ($userField) {
-			return $this->getValue($userField);
+			$owners = $this->getValue($userField);
+			return str_getcsv($owners);
 		}
+
+		return array();
 	}
 
 	private function getItemGroupOwner()
