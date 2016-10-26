@@ -36,14 +36,32 @@ if (!isset($_SESSION["thedate"])) {
 if (isset($_REQUEST['pdf'])) {
 	$access->check_feature("feature_slideshow_pdfexport");
 	set_time_limit(777);
-	
-	$_POST["html"] = preg_replace('/%u([a-fA-F0-9]{4})/', '&#x\\1;',urldecode($_POST["html"]));
+
+	$_POST["html"] = urldecode($_POST["html"]);
 
 	if ( isset( $_POST["html"] ) ) {
-		$orientation =  isset($_REQUEST['landscape']) ? "L" : "P";
-		$mpdf = new mPDF(null, "letter-" . $orientation);
-		$mpdf->WriteHTML($_POST["html"]);
-		$mpdf->Output();
+
+		if (class_exists('mPDF')) { // use mPDF if available
+			$orientation =  isset($_REQUEST['landscape']) ? "L" : "P";
+			$mpdf = new mPDF(null, "letter-" . $orientation);
+			$mpdf->WriteHTML(preg_replace('/%u([a-fA-F0-9]{4})/', '&#x\\1;',$_POST["html"]));
+			$mpdf->Output();
+			exit(0);
+		}
+
+		define("DOMPDF_ENABLE_REMOTE", true);
+		define('DOMPDF_ENABLE_AUTOLOAD', false);
+
+		require_once("vendor/dompdf/dompdf/dompdf_config.inc.php");
+
+		// fallback to DOMPDF
+		$dompdf = new DOMPDF();
+
+		$dompdf->load_html($_POST["html"]);
+		$dompdf->set_paper("letter", (isset($_REQUEST['landscape']) ? "landscape" : "portrait"));
+		$dompdf->render();
+
+		$dompdf->stream("dompdf_out.pdf", array("Attachment" => false));
 
 		exit(0);
 	}
