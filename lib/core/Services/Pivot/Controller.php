@@ -22,9 +22,18 @@ class Services_Pivot_Controller
 		$query = $unifiedsearchlib->buildQuery(array());
  		$query->filterType('trackerItem');
 		$query->filterContent($input->trackerId->word(), 'tracker_id');
+
+        $query->setRange(0, $prefs['unified_lucene_max_result']);
         $result = $query->search($index);
+		
+		$builder = new Search_Query_WikiBuilder($query);
+		$builder->wpquery_list_max($query,count($result));
+		$builder->apply(WikiParser_PluginMatcher::match($body));
+	    
+		
         $response = array();
-        $fields = array();
+
+		$fields = array();
 		
 		//building tracker fields array for mapping with column values
 		if ($definition = Tracker_Definition::get($input->trackerId->int())) {
