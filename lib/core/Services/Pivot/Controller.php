@@ -26,6 +26,7 @@ class Services_Pivot_Controller
         $query->setRange(0, $prefs['unified_lucene_max_result']);
 
 		$builder = new Search_Query_WikiBuilder($query);
+		$builder->wpquery_list_max($query, $prefs['unified_lucene_max_result']);
 		$builder->apply(WikiParser_PluginMatcher::match($body));
 	    
 		$result = $query->search($index);
