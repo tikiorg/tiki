@@ -200,6 +200,32 @@
 							{button _text="{tr}Advanced{/tr}" _id="toggle_diffs" _ajax="n" _class="btn btn-default btn-sm"}
 						</span>
 						{jq}
+	$("form#pagehistory")
+		.each(function store_original_values(i, form){
+			var values = $(form).serializeArray();
+			form.originals = {};
+
+			$(form).find(':input').each(function(i, input){
+				var name = $(input).attr('name');
+				var value = $(input).val();
+				form.originals[name] = value;
+			});
+		})
+		.submit(function submit_changed_values(evt){
+			var always = ['page', 'oldver'];
+			var originals = this.originals || {};
+
+			$(this).find(':input:enabled').each(function(i, input){
+				var name = $(input).attr('name');
+				var value = $(input).val();
+
+				if(always.indexOf(name) === -1 && originals[name] === value) {
+					$(input).attr('disabled', 'disabled')
+							.prop('disabled', 'disabled');
+				}
+			});
+		});
+
 	$("a#toggle_diffs").click(function(e){
 		if ($(this).text() == "{tr}Advanced{/tr}") {
 			$(this).text("{tr}Simple{/tr}");
