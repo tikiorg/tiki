@@ -202,7 +202,6 @@
 						{jq}
 	$("form#pagehistory")
 		.each(function store_original_values(i, form){
-			var values = $(form).serializeArray();
 			form.originals = {};
 
 			$(form).find(':input').each(function(i, input){
