@@ -54,7 +54,7 @@
 		{initials_filter_links _initial='tr_initial'}
 	{/if}
 
-	{if isset($checkbox) && $checkbox && $items|@count gt 0 && empty($tpl)}
+	{if isset($checkbox) && $checkbox && $items|@count gt 0 && empty($tpl) && !$checkbox.embed}
 		<form method="post" action="{if empty($checkbox.action)}#{else}{$checkbox.action}{/if}">
 	{/if}
 
@@ -207,7 +207,9 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 				<br>
 				<input type="submit" class="btn btn-default btn-sm" name="{$checkbox.submit}" value="{tr}{$checkbox.title}{/tr}">
 			{/if}
+			{if !$checkbox.embed}
 			</form>
+			{/if}
 		{/if}
 	{/if}
 
@@ -278,7 +280,8 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 
 	<tr>
 			{if !empty($checkbox)}
-		<td><input type="{$checkbox.type}" name="{$checkbox.name}[]" value="{if $checkbox.ix > -1}{$items[user].field_values[$checkbox.ix].value|escape}{else}{$items[user].itemId}{/if}"></td>
+			{capture assign=cbvalue}{if $checkbox.ix > -1}{$items[user].field_values[$checkbox.ix].value|escape}{else}{$items[user].itemId}{/if}{/capture}
+		<td><input type="{$checkbox.type}" name="{$checkbox.name}[]" value="{$cbvalue}" {if in_array($cbvalue, $checkbox.checked)}checked{/if}></td>
 			{/if}
 			{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $perms.tiki_p_admin_trackers eq 'y'))}
 		<td class="auto" style="width:20px;">

@@ -383,9 +383,12 @@ function wikiplugin_trackerlist_info()
 					. '<code>Tpl</code> - ' . tra('optional template inserted before the submit button and returned') . '<br>'
 					. '<code>SelectType</code> - ' . tr('Leave empty for multiple select, or use %0dropdown%1 or
 						%0radio%1.', '<code>', '</code>') . '<br>'
-					. tr('Format: %0checkbox="FieldId/PostName/Title/Submit/ActionUrl/Tpl/dropdown"%1', '<code>',
+					. '<code>Embed</code> - ' . tra('Set to %0y%1 if the trackerlist table is embedded inside an existing form.
+						ActionUrl is ignored in this case.', '<code>', '</code>') . '<br>'
+					. '<code>Checked</code> - ' . tra('comma separated list of pre-checked items') . '<br>'
+					. tr('Format: %0checkbox="FieldId/PostName/Title/Submit/ActionUrl/Tpl/SelectType/Embed/Checked"%1', '<code>',
 						'</code>') . '<br />'
-					 . tr('Example: %0checkbox="6/to/Email to selected/submit/messu-compose.php//dropdown"%1', '<code>',
+					 . tr('Example: %0checkbox="6/to/Email to selected/submit/messu-compose.php//dropdown//1,2,3"%1', '<code>',
 						 '</code>') . '<br />',
 				 'since' => '1',
 				 'doctype' => 'show',
@@ -1472,6 +1475,16 @@ function wikiplugin_trackerlist($data, $params)
 			}
 			if (isset($cb[6]) && $cb[6] == 'dropdown')
 				$check['dropdown'] = 'y';				// is this actually used?
+			if(isset($cb[7]) && $cb[7] === 'y') {
+				$check['embed'] = true;
+			} else {
+				$check['embed'] = false;
+			}
+			if(!empty($cb[8])) {
+				$check['checked'] = preg_split('/\s*,\s*/', $cb[8]);
+			} else {
+				$check['checked'] = array();
+			}
 
 			$smarty->assign_by_ref('checkbox', $check);
 		}

@@ -353,17 +353,20 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 		if ($preselection = $this->getPreselection($linkValue)) {
 			$data['preselection'] = $preselection;
+			$data['preselection_value'] = TikiLib::lib('trk')->get_item_value($this->getConfiguration('trackerId'), $this->getItemId(), $this->getOption('preSelectFieldHere'));
 		} else {
 			$preselection = $data['preselection'] = array();
+			$data['preselection_value'] = "";
 		}
 
 		$data['filter'] = $this->buildFilter();
 
-		if ($data['crossSelect'] === 'y' && ( !empty($preselection) || $this->getOption('displayFieldsListType') === 'table' ) && is_array($preselection)) {
-			if( isset($data['list']['items']) )
-				$data['list']['items'] = array_intersect_key($data['list']['items'], array_flip($preselection));
-			else
+		if ($data['crossSelect'] === 'y' && !empty($preselection) && is_array($preselection)) {
+			if( $this->getOption('displayFieldsListType') === 'table' ) {
+				// nothing to do, list is loaded dynamically via plugin trackerlist
+			} else {
 				$data['list'] = array_intersect_key($data['list'], array_flip($preselection));
+			}
 		}
 		
 		return $this->renderTemplate('trackerinput/itemlink.tpl', $context, $data);
@@ -612,13 +615,10 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 	{
 		if ($displayFieldsList = $this->getDisplayFieldsListArray()) {
 			if( $this->getOption('displayFieldsListType') === 'table' ) {
-				$list = TikiLib::lib('trk')->get_all_items_from_fieldslist(
+				$list = TikiLib::lib('trk')->get_fields_from_fieldslist(
 					$this->getOption('trackerId'),
-					$displayFieldsList,
-					$this->getOption('status', 'opc')
+					$displayFieldsList
 				);
-				$list['fieldPermNames'] = array_keys($list['fields']);
-				array_unshift($list['fields'], '');
 			} else {
 				$list = TikiLib::lib('trk')->concat_all_items_from_fieldslist(
 					$this->getOption('trackerId'),
@@ -826,12 +826,25 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 	 */
 	private function getDisplayFieldsListArray()
 	{
+		global $user, $tiki_p_admin_trackers;
+
+		$fields = array();
 		$option = $this->getOption('displayFieldsList');
-		if (!empty($option) && (!is_array($option) || !empty($option[0]))) {
-			return $option;
-		} else {
-			return array();
+		if( !is_array($option) ) {
+			$option = array($option);
 		}
+		// filter by user-visible fields
+		$trackerId = (int) $this->getOption('trackerId');
+		$definition = Tracker_Definition::get($trackerId);
+		foreach ($option as $fieldId) {
+			$field = $definition->getField($fieldId);
+			if( $field['isPublic'] == 'y' && ($field['isHidden'] == 'n' || $field['isHidden'] == 'c' || $field['isHidden'] == 'p' || $tiki_p_admin_trackers == 'y')
+				&& $field['type'] != 'x' && $field['type'] != 'h' && ($field['type'] != 'p' || $field['options_array'][0] != 'password')
+				&& (empty($field['visibleBy']) or array_intersect(TikiLib::lib('tiki')->get_user_groups($user), $field['visibleBy']) || $tiki_p_admin_trackers == 'y') ) {
+				$fields[] = $fieldId;
+			}
+		}
+		return $fields;
 	}
 
 	/***

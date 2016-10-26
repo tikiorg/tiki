@@ -4,10 +4,8 @@
 		<input type="hidden" name="{$field.ins_id}_old" value="{$field.value|escape}" />
 	{/if}
 	{if $data.displayFieldsListType === 'table'}
-		{wikiplugin _name=fancytable head='|'|implode:$data.list.fields sortable="type:reset" sortList="[1,0]" tsfilters="type:nofilter" tsfilteroptions="type:reset" tspaginate="max:5"}
-		{foreach key=id item=fields from=$data.list.items}
-			<input type="checkbox" class="{$field.ins_id}-checkbox" name="{$field.ins_id}[]" value="{$id|escape}" {if $data.preselection and $data.crossSelect neq 'y'}disabled="disabled"{/if} {if $data.preselection and !$field.value and $data.preselection eq $id or (($data.selectMultipleValues and is_array($field.value) and in_array($id, $field.value) or $field.value eq $id))}checked="checked"{/if} />|{'|'|implode:$fields|strip}
-		{/foreach}
+		{capture assign=fieldvalue}{if is_array($field.value)}{','|implode:$field.value}{else}{$field.value}{/if}{/capture}
+		{wikiplugin _name=trackerlist trackerId=$field.options_map.trackerId fields=':'|implode:$field.options_map.displayFieldsList editableall="y" showlinks="y" sortable="type:reset" sortList="[1,0]" tsfilters="type:nofilter" tsfilteroptions="type:reset" tspaginate="max:5" checkbox="/"|cat:$field.ins_id|cat:"//////y/"|cat:$fieldvalue filterfield=$field.options_map.preSelectFieldThere exactvalue=$data.preselection_value}
 		{/wikiplugin}
 		{if $field.options_map.addItems}
 			<a class="btn btn-default insert-tracker-item" href="{service controller=tracker action=insert_item trackerId=$field.options_map.trackerId next=$data.next|escape}" data-href="{service controller=tracker action=insert_item trackerId=$field.options_map.trackerId next=$data.next|escape}">{$field.options_map.addItems|escape}</a>
@@ -23,10 +21,12 @@
 					.find('.insert-tracker-item')
 					.clickModal({
 						success: function (data) {
-							var displayed = {{$data.list.fieldPermNames|json_encode}};
-							var row = '<tr><td><input type="checkbox" class="{{$field.ins_id}}-checkbox" name="{{$field.ins_id}}[]" value="'+data.itemId+'" /></td>';
-							$.each(displayed, function(i, field) {
-								row += '<td>'+data.processedFields[field]+'</td>';
+							var displayed = {{$data.list|json_encode}};
+							var row = '<tr><td><input type="checkbox" class="{{$field.ins_id}}-checkbox" name="{{$field.ins_id}}[]" value="'+data.itemId+'" checked /></td>';
+							$.each(displayed, function(fieldId, permName) {
+								if( $('#il{{$field.ins_id}} th').filter(function(i, el){ return $(el).hasClass('field'+fieldId); }).length > 0 ) {
+									row += '<td>'+data.processedFields[permName]+'</td>';
+								}
 							});
 							row += '</tr>';
 							$row = $(row);
