@@ -7806,3 +7806,152 @@ table.tablesorter thead tr.tablesorter-headerRow,
 table.tablesorter thead tr.tablesorter-filter-row {
   background-color: #ffffff;
 }
+.tiki .pvtUi {
+  color: #3e3f3a;
+}
+.tiki table.pvtTable {
+  font-size: 14px;
+}
+.tiki table.pvtTable tr th {
+  background-color: transparent;
+  border: 1px solid #dfd7ca;
+  font-size: 14px;
+  padding: 5px;
+}
+.tiki table.pvtTable tr td {
+  color: #3e3f3a;
+  background-color: transparent;
+  border-color: #dfd7ca;
+}
+.tiki .pvtTotal,
+.tiki .pvtGrandTotal {
+  font-weight: bold;
+}
+.tiki .pvtVals {
+  text-align: center;
+}
+.tiki .pvtAggregator,
+.tiki .pvtRenderer,
+.tiki .pvtSearch,
+.tiki .pvtAttrDropdown {
+  margin-bottom: 5px;
+  background: #ffffff;
+  color: #3e3f3a;
+  border: 1px solid #dfd7ca;
+  border-radius: 4px;
+}
+.tiki .pvtAxisContainer,
+.tiki .pvtVals {
+  border-color: #dfd7ca;
+  background: #ffffff;
+  padding: 5px;
+}
+.tiki .pvtAxisContainer li.pvtPlaceholder {
+  -webkit-border-radius: 5px;
+  padding: 3px 15px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px dashed #dfd7ca;
+}
+.tiki .pvtAxisContainer li span.pvtAttr {
+  -webkit-text-size-adjust: 100%;
+  padding: 2px 5px;
+  white-space: nowrap;
+  background: #3e3f3a;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #ffffff;
+}
+.tiki .pvtTriangle {
+  cursor: pointer;
+  color: grey;
+}
+.tiki .pvtHorizList li {
+  display: inline;
+}
+.tiki .pvtVertList {
+  vertical-align: top;
+}
+.tiki .pvtFilteredAttribute {
+  font-style: italic;
+}
+.tiki .pvtFilterBox {
+  z-index: 100;
+  width: 280px;
+  border: 1px solid #dfd7ca;
+  background-color: #ffffff;
+  position: absolute;
+  padding: 20px;
+  text-align: center;
+}
+.tiki .pvtFilterBox h4 {
+  margin: 0;
+}
+.tiki .pvtFilterBox p {
+  margin: 1em auto;
+}
+.tiki .pvtFilterBox label {
+  font-weight: normal;
+}
+.tiki .pvtFilterBox input[type='checkbox'] {
+  margin-right: 5px;
+}
+.tiki .pvtCheckContainer {
+  text-align: left;
+  overflow: auto;
+  width: 100%;
+  max-height: 200px;
+}
+.tiki .pvtCheckContainer p {
+  margin: 5px;
+}
+.tiki .pvtRendererArea {
+  padding: 5px;
+}
+.tiki .pvtFilterBox button {
+  background: #3e3f3a;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #ffffff;
+}
+.tiki .pvtFilterBox button:hover {
+  background: #3d3f3a;
+}
+.tiki .pvtFilterBox button + button {
+  margin-left: 4px;
+  margin-bottom: 4px;
+}
+.tiki .c3 line,
+.tiki .c3 path,
+.tiki .c3 svg {
+  fill: none;
+  stroke: #3e3f3a;
+}
+.tiki select {
+  font-size: 14px;
+}
+.tiki .ui-state-default,
+.tiki .ui-widget-content .ui-state-default,
+.tiki .ui-widget-header .ui-state-default,
+.tiki .ui-button,
+.tiki html .ui-button.ui-state-disabled:hover,
+.tiki html .ui-button.ui-state-disabled:active {
+  border: 1px solid transparent;
+  background: #3e3f3a;
+  font-weight: normal;
+  color: #ffffff;
+  font-size: 14px;
+}
+.tiki .ui-state-hover,
+.tiki .ui-widget-content .ui-state-hover,
+.tiki .ui-widget-header .ui-state-hover,
+.tiki .ui-state-focus,
+.tiki .ui-widget-content .ui-state-focus,
+.tiki .ui-widget-header .ui-state-focus,
+.tiki .ui-button:hover,
+.tiki .ui-button:focus {
+  border: 1px solid transparent;
+  background: #3e3f3a;
+  font-weight: normal;
+  color: #ffffff;
+}
