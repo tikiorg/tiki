@@ -140,7 +140,7 @@
 		{/if}
 		{if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user or $gal_info.public eq 'y'}
 			{if $tiki_p_upload_files eq 'y'}
-				{button _keepall='y' _icon_name="export"  _type="link" _text="{tr}Upload{/tr}" href="tiki-upload_file.php" galleryId=$galleryId}
+				{button _keepall='y' _icon_name="upload"  _type="link" _text="{tr}Upload{/tr}" href="tiki-upload_file.php" galleryId=$galleryId}
 			{/if}
 			{if $tiki_p_upload_files eq 'y' and $prefs.feature_draw eq 'y'}
 				{button _keepall='y' _icon_name="post"  _type="link" _text="{tr}Draw{/tr}" href="tiki-edit_draw.php" galleryId=$galleryId}
