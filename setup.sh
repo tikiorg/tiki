@@ -162,6 +162,7 @@ usage: $0 [<switches>] ${POSSIBLE_COMMANDS}
 -v virtuals  list of virtuals (for multitiki, example: "www1 www2")
 -n           not prompt for user and group, assume current
 -d off|on    disable|enable debugging mode (override script default)
+-q           quiet (workaround to silence composer, e.g. in cron scripts)
 
 There are some other commands recommended for advanced users only.
 More documentation about this: https://doc.tiki.org/Permission+Check
@@ -183,8 +184,9 @@ OPT_AUSER=
 OPT_AGROUP=
 OPT_VIRTUALS=
 OPT_USE_CURRENT_USER_GROUP=
+OPT_QUIET=
 
-while getopts "hu:g:v:nd:" OPTION; do
+while getopts "hu:g:v:nd:q" OPTION; do
 	case $OPTION in
 		h) usage ; exit 0 ;;
 		u) OPT_AUSER=$OPTARG ;;
@@ -192,6 +194,7 @@ while getopts "hu:g:v:nd:" OPTION; do
 		v) OPT_VIRTUALS=$OPTARG ;;
 		n) OPT_USE_CURRENT_USER_GROUP=1 ;;
 		d) set_debug ;;
+		q) OPT_QUIET="-q" ;;
 		?) usage ; exit 1 ;;
 	esac
 	if [ ${DEBUG} = '1' ] ; then
@@ -511,10 +514,11 @@ composer_core()
 	else
 		# todo : if exists php;
 		if [ ${LOGCOMPOSERFLAG} = "0" ] ; then
-			"${PHPCLI}" temp/composer.phar self-update
+			echo $OPT_QUIET
+			"${PHPCLI}" temp/composer.phar self-update "$OPT_QUIET"
 		fi
 		if [ ${LOGCOMPOSERFLAG} = "1" ] ; then
-			"${PHPCLI}" temp/composer.phar self-update > ${TIKI_COMPOSER_SELF_UPDATE_LOG}
+			"${PHPCLI}" temp/composer.phar self-update "$OPT_QUIET" > ${TIKI_COMPOSER_SELF_UPDATE_LOG}
 		fi
 	fi
 
