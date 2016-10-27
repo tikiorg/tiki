@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "80c1ef7da4aa666056e4295ddcf89781",
-    "content-hash": "694a815e5abe52d448d3d644b537c1eb",
+    "hash": "0432bfecc30e6445e3e601289402a13f",
+    "content-hash": "d9f80beb257c9fc9c08dc8f5ce3a7f74",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -408,17 +408,17 @@
         },
         {
             "name": "dompdf/dompdf",
-            "version": "v0.6.1",
+            "version": "v0.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dompdf/dompdf.git",
-                "reference": "cf7d8a0a27270418850cc7d7ea532159e5eeb3eb"
+                "reference": "cc06008f75262510ee135b8cbb14e333a309f651"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/dompdf-dompdf-cf7d8a0a27270418850cc7d7ea532159e5eeb3eb-zip-76f14c.zip",
-                "reference": "cf7d8a0a27270418850cc7d7ea532159e5eeb3eb",
-                "shasum": "44f3c1701e3c7aba0c6c8c065d593b6344e5040c"
+                "url": "https://composer.tiki.org/dist/dompdf-dompdf-cc06008f75262510ee135b8cbb14e333a309f651-zip-c632c0.zip",
+                "reference": "cc06008f75262510ee135b8cbb14e333a309f651",
+                "shasum": "8fa85f3cab2753efdae966f655b7f44473744ebf"
             },
             "require": {
                 "phenx/php-font-lib": "0.2.*"
@@ -445,7 +445,7 @@
             ],
             "description": "DOMPDF is a CSS 2.1 compliant HTML to PDF converter",
             "homepage": "https://github.com/dompdf/dompdf",
-            "time": "2014-03-11 01:59:52"
+            "time": "2015-12-07 04:07:13"
         },
         {
             "name": "ezyang/htmlpurifier",
