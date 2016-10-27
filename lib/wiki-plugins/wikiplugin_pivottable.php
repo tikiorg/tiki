@@ -251,11 +251,14 @@ function wikiplugin_pivottable($data, $params)
 	} else {
 		$sourcepage = $page;
 	}
-	$showControls=TikiLib::lib('tiki')->user_has_perm_on_object($user, $sourcepage, 'wikipage', 'tiki_p_edit');
-	
+	//checking if user has edit permissions on the wiki page using the current permission library to obey global/categ/object perms
+	$objectperms = Perms::get( array( 'type' => 'wiki page', 'object' => $sourcepage ) );
+	if( $objectperms->edit ) {
+		$showControls = TRUE;
+	}
 	//checking if user has view rights on tracker data
 	$showView=TikiLib::lib('tiki')->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_view_trackers');
-	
+
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign(
 		'pivottable',
