@@ -514,7 +514,6 @@ composer_core()
 	else
 		# todo : if exists php;
 		if [ ${LOGCOMPOSERFLAG} = "0" ] ; then
-			echo $OPT_QUIET
 			"${PHPCLI}" temp/composer.phar self-update "$OPT_QUIET"
 		fi
 		if [ ${LOGCOMPOSERFLAG} = "1" ] ; then
