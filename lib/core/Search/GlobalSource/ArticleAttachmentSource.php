@@ -36,11 +36,13 @@ class Search_GlobalSource_ArticleAttachmentSource implements Search_GlobalSource
 
 		foreach ($relations as $rel) {
 			if ($rel['type'] == 'article') {
-				$data = $this->source->getDocument($rel['itemId'], $typeFactory);
-
-				foreach ($this->source->getGlobalFields() as $name => $keep) {
-					$textual[] = $data[$name]->getValue();
-				}
+				if ($data = $this->source->getDocument($rel['itemId'], $typeFactory)){
+                    foreach ($this->source->getGlobalFields() as $name => $keep) {
+                        $textual[] = $data[$name]->getValue();
+                    }
+                } else {
+                    error_log("File " . $rel['itemId'] . ", referenced from " . $objectType . $objectId . " no longer exists.");
+                }
 			}
 		}
 

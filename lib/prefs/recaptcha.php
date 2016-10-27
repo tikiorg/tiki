@@ -17,14 +17,14 @@ function prefs_recaptcha_list()
 			'default' => 'n',
         ),
 		'recaptcha_pubkey' => array(
-			'name' => tra('Public Key'),
+			'name' => tra('Site key'),
             'type' => 'text',
             'description' => tra('ReCaptcha public key obtained after registering.'),
         	'size' => 60,
 			'default' => '',
 		),
 		'recaptcha_privkey' => array(
-			'name' => tra('Private Key'),
+			'name' => tra('Secret key'),
 			'type' => 'text',
             'description' => tra('ReCaptcha private key obtained after registering.'),
 			'size' => 60,
