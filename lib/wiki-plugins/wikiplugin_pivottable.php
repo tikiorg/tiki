@@ -3,6 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+// $Id: wikiplugin-pivottable.php 57956 2016-03-17 19:58:12Z jonnybradley $
 
 function wikiplugin_pivottable_info()
 {
@@ -18,10 +19,9 @@ function wikiplugin_pivottable_info()
 			'data' => array(
 				'name' => tr('Data source'),
 				'description' => tr('For example tracker:1'),
-			    'required' => true,
+				'required' => true,
 				'default' => 0,
 				'filter' => 'text',
-				
 			),
 			'width' => array(
 				'required' => false,
@@ -30,7 +30,6 @@ function wikiplugin_pivottable_info()
 				'since' => '',
 				'filter' => 'word',
 				'default' => '100%',
-				
 			),
 			'height' => array(
 				'required' => false,
@@ -39,7 +38,6 @@ function wikiplugin_pivottable_info()
 				'since' => '',
 				'filter' => 'word',
 				'default' => '400px',
-				
 			),
 			'rows' => array(
 				'required' => false,
@@ -48,7 +46,6 @@ function wikiplugin_pivottable_info()
 				'since' => '',
 				'filter' => 'text',
 				'default' => '',
-				
 			),
 			'cols' => array(
 				'required' => false,
@@ -57,7 +54,6 @@ function wikiplugin_pivottable_info()
 				'since' => '',
 				'filter' => 'text',
 				'default' => '',
-				
 			),
 			'rendererName' => array(
 				'name' => tr('Renderer Name'),
@@ -70,7 +66,7 @@ function wikiplugin_pivottable_info()
 					array('text' => 'Table', 'value' => 'Table'),
 					array('text' => tra('Table Barchart'), 'value' => 'Table Barchart'),
 					array('text' => tra('Heatmap'), 'value' => 'Heatmap'),
-				    array('text' => tra('Row Heatmap'), 'value' => 'Row Heatmap'),
+					array('text' => tra('Row Heatmap'), 'value' => 'Row Heatmap'),
 					array('text' => tra('Col Heatmap'), 'value' => 'Col Heatmap'),
 					array('text' => tra('Line Chart'), 'value' => 'Line Chart'),
 					array('text' => tra('Bar Chart'), 'value' => 'Bar Chart'),
@@ -79,7 +75,6 @@ function wikiplugin_pivottable_info()
 					array('text' => tra('Scatter Chart'), 'value' => 'Scatter Chart'),
 					array('text' => tra('Treemap'), 'value' => 'Treemap')
 				)
-				
 			),
 			'aggregatorName' => array(
 				'name' => tr('Aggregator Name'),
@@ -88,11 +83,11 @@ function wikiplugin_pivottable_info()
 				'required' => false,
 				'filter' => 'text',
 				'default' => 'Count',
-                'options' => array(
+				'options' => array(
 					array('text' => 'Count', 'value' => 'Count'),
 					array('text' => tra('Count Unique Values'), 'value' => 'Count Unique Values'),
 					array('text' => tra('List Unique Values'), 'value' => 'List Unique Values'),
-				    array('text' => tra('Sum'), 'value' => 'Sum'),
+					array('text' => tra('Sum'), 'value' => 'Sum'),
 					array('text' => tra('Integer Sum'), 'value' => 'Integer Sum'),
 					array('text' => tra('Average'), 'value' => 'Average'),
 					array('text' => tra('Minimum'), 'value' => 'Minimum'),
@@ -106,8 +101,6 @@ function wikiplugin_pivottable_info()
 					array('text' => tra('Count as Fraction of Total'), 'value' => 'Count as Fraction of Total'),
 					array('text' => tra('Count as Fraction of Rows'), 'value' => 'Count as Fraction of Rows'),
 					array('text' => tra('Count as Fraction of Columns'), 'value' => 'Count as Fraction of Columns')
-					
-					
 				)
 			),
 			'vals' => array(
@@ -125,127 +118,202 @@ function wikiplugin_pivottable($data, $params)
 {
 	
 	//included globals for permission check
-	global $tiki_p_edit,$tiki_p_view_trackers, $user, $page;
+	global $prefs, $page, $wikiplugin_included_page;
 
 	//checking if vendor files are present 
-    if (!file_exists('vendor/etdsolutions/pivottable/')) {
+	if (!file_exists('vendor/etdsolutions/pivottable/')) {
 		return WikiParser_PluginOutput::internalError(tr('Missing required files, please make sure plugin files are installed at vendor/etdsolutions/pivottable. <br/><br /> To install, please run composer or download from following url:<a href="https://github.com/nicolaskruchten/pivottable/archive/master.zip" target="_blank">https://github.com/nicolaskruchten/pivottable/archive/master.zip</a>'));
 	}
 
 	static $id = 0;
+	$id++;
+
 	$headerlib = TikiLib::lib('header');
 	$headerlib->add_cssfile('vendor/etdsolutions/pivottable/pivot.css');
 	$headerlib->add_jsfile('vendor/etdsolutions/pivottable/pivot.js', true);
 	$headerlib->add_jsfile('vendor/etdsolutions/pivottable/c3_renderers.js', true);
-    $headerlib->add_jsfile('lib/jquery_tiki/wikiplugin-pivottable.js', true);
+	$headerlib->add_jsfile('lib/jquery_tiki/wikiplugin-pivottable.js', true);
 	
 	//checking data type
 	
-	$dataId=split(":",$params['data']);
-	if($dataId[0]=="tracker")
-	  {
-		  $trackerId=$dataId[1];
-	  }
-	   
-
-	$jit = new JitFilter($params);
+	$dataId = explode(":",$params['data']);
+	if($dataId[0] == "tracker") {
+		$trackerId = $dataId[1];
+	} else {
+		$trackerId = 0;
+	}
 	
 	$definition = Tracker_Definition::get($trackerId);
 	if (! $definition) {
-		return WikiParser_PluginOutput::userError(tr('Tracker not found.'));
+		return WikiParser_PluginOutput::userError(tr('Tracker data source not found.'));
 	}
-  
+
+	//checking if user has view rights on tracker data
+	$perms = Perms::get(array('type' => 'tracker', 'object' => $trackerId));
+	if( !$perms->view_trackers ) {
+		return WikiParser_PluginOutput::userError(tr('You do not have rights to view tracker data.'));
+	}
+
+	$fields = $definition->getFields();
+
+	if( !$perms->admin_trackers ) {
+		foreach( $fields as $key => $field ) {
+			$isHidden = $field['isHidden'];
+			$visibleBy = $field['visibleBy'];
+
+			if ($isHidden == 'y') {
+				// Visible by administrator only
+				unset($fields[$key]);
+			} else {
+				// Permission based on visibleBy apply
+				$commonGroups = array_intersect($visibleBy, $perms->getGroups());
+				if( count($commonGroups) == 0 ) {
+					unset($fields[$key]);
+				}
+			}
+		}
+	}
+	
 	if (!empty($params['rendererName'])) {
-	    $rendererName=$params['rendererName'];	
+		$rendererName=$params['rendererName'];	
 	} else {
 		$rendererName="Table";	
 	}
 	
 	if (!empty($params['aggregatorName'])) {
-	    $aggregatorName=$params['aggregatorName'];	
+		$aggregatorName=$params['aggregatorName'];	
 	} else {
 		$aggregatorName="Count";	
 	}
 	
 	if (!empty($params['width'])) {
-	    $width=$params['width'];	
+		$width=$params['width'];	
 	} else {
 		$width="100%";	
 	}
 	
 	if (!empty($params['height'])) {
-	    $height=$params['height'];	
+		$height=$params['height'];	
 	} else {
 		$height="1000px";	
 	}
-	
-    $fields=$definition->getFields();
-	
+
+	$query = new Search_Query;
+	$query->filterType('trackerItem');
+	$query->filterContent($trackerId, 'tracker_id');
+	$query->setRange(0, $prefs['unified_lucene_max_result']);
+
+	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
+	$unifiedsearchlib->initQuery($query);
+
+	$matches = WikiParser_PluginMatcher::match($data);
+
+	$builder = new Search_Query_WikiBuilder($query);
+	$builder->apply($matches);
+
+	if (! $index = $unifiedsearchlib->getIndex()) {
+		return WikiParser_PluginOutput::userError(tr('Unified search index not found.'));
+	}
+
+	$result = $query->search($index);
+	$result->setId('wppivottable-' . $id);
+
+	$resultBuilder = new Search_ResultSet_WikiBuilder($result);
+	$resultBuilder->apply($matches);
+
+	$columnsListed = false;
+	foreach( $matches as $match ) {
+		if( $match->getName() == 'display' || $match->getName() == 'column' ) {
+			$columnsListed = true;
+		}
+	}
+	if( $columnsListed ) {
+		$plugin = new Search_Formatter_Plugin_JsonTemplate($data);
+		$usedFields = array_keys($plugin->getFields());
+		foreach( $fields as $key => $field ) {
+			if( !in_array('tracker_field_'.$field['permName'], $usedFields) ) {
+				unset($fields[$key]);
+			}
+		}
+		$fields = array_values($fields);
+	} else {
+		$plugin = new Search_Formatter_Plugin_JsonTemplate(implode("", array_map(
+			function($f){
+				return '{display name="tracker_field_'.$f['permName'].'"}';
+			}, $fields)));
+	}
+
+	$builder = new Search_Formatter_Builder;
+	$builder->setId('wppivottable-' . $id);
+	$builder->setCount($result->count());
+	$builder->setFormatterPlugin($plugin);
+
+	$formatter = $builder->getFormatter();
+	$entries = $formatter->getPopulatedList($result);
+	$entries = $plugin->renderEntries($entries);
+
+	$pivotData = array();
+	foreach( $entries as $entry ) {
+		$row = array();
+		foreach( $entry as $field => $value ) {
+			$field = $definition->getFieldFromPermName($field);
+			$row[$field['name']] = $value;
+		}
+		$pivotData[] = $row;
+	}
 	
 	//translating permName to field name for columns and rows
-	
+	$cols = array();
 	if (!empty($params['cols'])) {
-		$cols='';
-		$colNames=split(":",$params['cols']);
+		$colNames = explode(":", $params['cols']);
 		foreach($colNames as $colName)
 		{
-		  $field = $definition->getFieldFromPermName(trim($colName));
-		  if($field)
-		  {
-			 if($cols!='')
-			   $cols.=', ';
-	        $cols.='"'.$field['name'].'"';
-		  }
+			$field = $definition->getFieldFromPermName(trim($colName));
+			if($field)
+			{
+				$cols[] = $field['name'];
+			}
 		}
-		
-	} else {
-		$cols='"'.$fields[0]['name'].'"';	
+	} elseif( !empty($fields) ) {
+		$cols[] = $fields[0]['name'];
 	}
 	
+	$rows = array();
 	if (!empty($params['rows'])) {
-	    $rows='';
-		$rowNames=split(":",$params['rows']);
+		$rowNames = explode(":", $params['rows']);
 		foreach($rowNames as $rowName)
 		{
-		   	
-		  $field = $definition->getFieldFromPermName(trim($rowName));
-		  if($field)
-		  {
-			 if($rows!='')
-			   $rows.=', ';
-	        $rows.='"'.$field['name'].'"';
-		  }
-		}	
-	} else {
-		$rows='"'.$fields[1]['name'].'"';	
+			$field = $definition->getFieldFromPermName(trim($rowName));
+			if($field)
+			{
+				$rows[] = $field['name'];
+			}
+		}
+	} elseif( isset($fields[1]) ) {
+		$rows[] = $fields[1]['name'];
 	}
-    
+
+	$vals = array();
 	if (!empty($params['vals'])) {
-	    $vals='';
-		$valNames=split(":",$params['vals']);
-		
+		$valNames = explode(":", $params['vals']);
 		foreach($valNames as $valName)
 		{
-		   	
-		  $field = $definition->getFieldFromPermName(trim($valName));
-		  if($field)
-		  {
-			 if($vals!='')
-			   $vals.=', ';
-	        $vals.='"'.$field['name'].'"';
-		  }
-		}	
-	} 
-    //parsing array to hold parmNames mapped with field names for save button
+			$field = $definition->getFieldFromPermName(trim($valName));
+			if($field)
+			{
+				$vals[] = $field['name'];
+			}
+		}
+	}
+	
+	//parsing array to hold permNames mapped with field names for save button
 	$fieldsArr=array();
 	foreach($fields as $field)
 	{
-		$fieldsArr[]=array($field['name'],$field['permName']);
-    }
+		$fieldsArr[] = array($field['name'], $field['permName']);
+	}
 	
-	
-    //checking if user can see edit button
-	global $wikiplugin_included_page;
+	//checking if user can see edit button
 	if (!empty($wikiplugin_included_page)) {
 		$sourcepage = $wikiplugin_included_page;
 	} else {
@@ -256,33 +324,26 @@ function wikiplugin_pivottable($data, $params)
 	if( $objectperms->edit ) {
 		$showControls = TRUE;
 	}
-	//checking if user has view rights on tracker data
-	$showView=TikiLib::lib('tiki')->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_view_trackers');
 
 	$smarty = TikiLib::lib('smarty');
-	$smarty->assign(
-		'pivottable',
-		array(
-			'id' => 'pivottable' . ++$id,
-			'trows'=>$rows,
-			'tcolumns'=>$cols,
-			'trackerId' => $trackerId,
-			'body' => $data,
-			'rendererName'=>$rendererName,
-			'aggregatorName'=>$aggregatorName,
-			'vals'=>$vals,
-			'width'=>$width,
-			'height'=>$height,
-			'showControls'=>$showControls,
-			'showView'=>$showView,
-			'user'=>$user,
-			'page'=>$sourcepage,
-			'fieldsArr'=>$fieldsArr,
-			'index'=>$id
-
-		)
-	);
-	
+	$smarty->assign('pivottable', array(
+		'id' => 'pivottable' . $id,
+		'trows'=>$rows,
+		'tcolumns'=>$cols,
+		'trackerId' => $trackerId,
+		'data' => $pivotData,
+		'rendererName'=>$rendererName,
+		'aggregatorName'=>$aggregatorName,
+		'vals'=>$vals,
+		'width'=>$width,
+		'height'=>$height,
+		'showControls'=>$showControls,
+		'showView'=>$showView,
+		'page'=>$sourcepage,
+		'fieldsArr'=>$fieldsArr,
+		'index'=>$id
+	));
 	
 	return $smarty->fetch('wiki-plugins/wikiplugin_pivottable.tpl');
 }
+

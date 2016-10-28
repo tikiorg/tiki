@@ -105,7 +105,7 @@ class Tracker_Definition
 		
 			return $this->fields = $fields['data'];
 		} else {
-			$this->fields = array();
+			return $this->fields = array();
 		}
 	}
 
