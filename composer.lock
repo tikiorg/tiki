@@ -95,17 +95,17 @@
         },
         {
             "name": "blueimp/jquery-file-upload",
-            "version": "9.12.5",
+            "version": "v9.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vkhramtsov/jQuery-File-Upload.git",
-                "reference": "f60a273f69303b140c5089e5cde1c8a187a94871"
+                "reference": "7a1589e7bdeb5d18e9e6b889795b025f1e445985"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/blueimp-jquery-file-upload-f60a273f69303b140c5089e5cde1c8a187a94871-zip-94d2ec.zip",
-                "reference": "f60a273f69303b140c5089e5cde1c8a187a94871",
-                "shasum": "ec88c09049ac62006ac3eac22ead409c8f25f4d9"
+                "url": "https://composer.tiki.org/dist/blueimp-jquery-file-upload-7a1589e7bdeb5d18e9e6b889795b025f1e445985-zip-700593.zip",
+                "reference": "7a1589e7bdeb5d18e9e6b889795b025f1e445985",
+                "shasum": "204f7ac23aab672defacf938cd27b9aa20c6ea41"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -141,7 +141,7 @@
                 "upload",
                 "widget"
             ],
-            "time": "2016-06-13 05:52:31"
+            "time": "2016-10-27 06:29:07"
         },
         {
             "name": "ckeditor/ckeditor",
@@ -635,17 +635,17 @@
         },
         {
             "name": "fortawesome/font-awesome",
-            "version": "v4.6.3",
+            "version": "v4.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FortAwesome/Font-Awesome.git",
-                "reference": "8e241f209faa1dd2182c9fdc9c352d8806504a4e"
+                "reference": "a8386aae19e200ddb0f6845b5feeee5eb7013687"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/fortawesome-font-awesome-8e241f209faa1dd2182c9fdc9c352d8806504a4e-zip-1c9628.zip",
-                "reference": "8e241f209faa1dd2182c9fdc9c352d8806504a4e",
-                "shasum": "d86b7b35739a18354b331740bc5e5667a81900fd"
+                "url": "https://composer.tiki.org/dist/fortawesome-font-awesome-a8386aae19e200ddb0f6845b5feeee5eb7013687-zip-157f5b.zip",
+                "reference": "a8386aae19e200ddb0f6845b5feeee5eb7013687",
+                "shasum": "5f1c16d6318f2a99236a4ffc20f76d4d27cc0d41"
             },
             "require-dev": {
                 "jekyll": "1.0.2",
@@ -679,7 +679,7 @@
                 "font",
                 "icon"
             ],
-            "time": "2016-05-13 15:42:25"
+            "time": "2016-10-24 15:52:54"
         },
         {
             "name": "google/apiclient",
@@ -1185,13 +1185,13 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/chartjs/Chart.js.git",
-                "reference": "65a06e473560a4d923ed52d4437c3666662d44a6"
+                "reference": "80bd08bef9f3447738c8fde4c0d0b436312a2cb9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/nnnick-chartjs-65a06e473560a4d923ed52d4437c3666662d44a6-zip-02013b.zip",
-                "reference": "65a06e473560a4d923ed52d4437c3666662d44a6",
-                "shasum": "7c659b098991356233bd7065d8877f5730906e80"
+                "url": "https://composer.tiki.org/dist/nnnick-chartjs-80bd08bef9f3447738c8fde4c0d0b436312a2cb9-zip-177138.zip",
+                "reference": "80bd08bef9f3447738c8fde4c0d0b436312a2cb9",
+                "shasum": "3b791968f5efd8742e67b7943b8d2aeafa7de2f6"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -1218,7 +1218,7 @@
                 "JS",
                 "chart"
             ],
-            "time": "2016-10-08 11:28:45"
+            "time": "2016-10-23 21:33:25"
         },
         {
             "name": "openlayers/ol3",
@@ -1842,17 +1842,17 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.8.12",
+            "version": "v2.8.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "44b499521defddf2eae17a18c811bbdae4f98bdf"
+                "reference": "a3784111af9f95f102b6411548376e1ae7c93898"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/symfony-filesystem-44b499521defddf2eae17a18c811bbdae4f98bdf-zip-39489a.zip",
-                "reference": "44b499521defddf2eae17a18c811bbdae4f98bdf",
-                "shasum": "e4d6d7c1dcc77e582c1d95cbd66e4b0e459ef4fc"
+                "url": "https://composer.tiki.org/dist/symfony-filesystem-a3784111af9f95f102b6411548376e1ae7c93898-zip-27150f.zip",
+                "reference": "a3784111af9f95f102b6411548376e1ae7c93898",
+                "shasum": "c0b3eb6439c937406029d842821e842edf16fd50"
             },
             "require": {
                 "php": ">=5.3.9"
@@ -1887,7 +1887,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2016-09-06 10:55:00"
+            "time": "2016-10-18 04:28:30"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -4530,17 +4530,17 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.6.1",
+            "version": "5.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "60c32c5b5e79c2248001efa2560f831da11cc2d7"
+                "reference": "cd13b23ac5a519a4708e00736c26ee0bb28b2e01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/phpunit-phpunit-60c32c5b5e79c2248001efa2560f831da11cc2d7-zip-5497a9.zip",
-                "reference": "60c32c5b5e79c2248001efa2560f831da11cc2d7",
-                "shasum": "55f1d13d6803b2a8b7fd47a840120e05b5296a52"
+                "url": "https://composer.tiki.org/dist/phpunit-phpunit-cd13b23ac5a519a4708e00736c26ee0bb28b2e01-zip-53f60b.zip",
+                "reference": "cd13b23ac5a519a4708e00736c26ee0bb28b2e01",
+                "shasum": "48977134b29c95a1792c7b05794bb1e4e308fdfd"
             },
             "require": {
                 "ext-dom": "*",
@@ -4608,7 +4608,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-10-07 13:03:26"
+            "time": "2016-10-25 07:40:25"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -5240,17 +5240,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.1.5",
+            "version": "v3.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "368b9738d4033c8b93454cb0dbd45d305135a6d3"
+                "reference": "7ff51b06c6c3d5cc6686df69004a42c69df09e27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/symfony-yaml-368b9738d4033c8b93454cb0dbd45d305135a6d3-zip-04aa57.zip",
-                "reference": "368b9738d4033c8b93454cb0dbd45d305135a6d3",
-                "shasum": "bff9cd9d673a6298d2020957b09767246dd46583"
+                "url": "https://composer.tiki.org/dist/symfony-yaml-7ff51b06c6c3d5cc6686df69004a42c69df09e27-zip-dc329f.zip",
+                "reference": "7ff51b06c6c3d5cc6686df69004a42c69df09e27",
+                "shasum": "1b17c1ca0377f314b3d30456716898489c0b247f"
             },
             "require": {
                 "php": ">=5.5.9"
@@ -5285,7 +5285,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-09-25 08:27:07"
+            "time": "2016-10-24 18:41:13"
         },
         {
             "name": "webmozart/assert",
