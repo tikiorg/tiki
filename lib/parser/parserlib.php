@@ -1757,7 +1757,6 @@ if ( \$('#$id') ) {
 		if ($prefs['feature_typo_quotes'] == 'y' || $prefs['feature_typo_approximative_quotes'] == 'y' || $prefs['feature_typo_dashes_and_ellipses'] == 'y' || $prefs['feature_typo_nobreak_spaces'] == 'y') {
 			static $sp = null;
 			if ($sp == null) {
-				require_once ('vendor/michelf/php-smartypants/Michelf/SmartyPantsTypographer.inc.php');
 				$sp = new \Michelf\SmartyPantsTypographer("");
 				$sp->decodeEntitiesInConfiguration(); // so we don't litter strings with entities; go UTF-8!
 				// "double" and 'single' quotes (and apostrophes) are replaced with curly ones
