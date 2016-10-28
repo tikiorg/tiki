@@ -174,10 +174,13 @@ class TikiMail
 			$body->setParts($parts);
 		} else {
 			$this->mail->setBody($text);
-			if( $this->charset )
-				$this->mail->getHeaders()->addHeaderLine(
+			if( $this->charset ) {
+				$headers = $this->mail->getHeaders();
+				$headers->removeHeader($headers->get('Content-type'));
+				$headers->addHeaderLine(
 					'Content-type: text/plain; charset=' . $this->charset
 				);
+			}
 		}
 	}
 
