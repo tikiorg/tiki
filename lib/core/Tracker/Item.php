@@ -500,7 +500,7 @@ class Tracker_Item
 				$data = $handler->getFieldData();
 
 				$permName = $field['permName'];
-				$out[$permName] = $data['value'];
+				$out[$permName] = isset($data['value']) ? $data['value'] : null;
 			}
 		}
 
