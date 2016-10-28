@@ -146,19 +146,21 @@ function wikiplugin_tracker_info()
 			'email' => array(
 				'required' => false,
 				'name' => tra('Email'),
-                                'description' => tr('To send an email once the tracker item has been created. Format: %0from', '<code>')
-                                        .'|'.tra('to').'|'.tr('template%0', '</code> ') . tr('For %0from%1 and %0to%1, use an email address
-                                        (separate multiple addresses with a comma), a username or a fieldId of a field containing either an email address or a username.
-                                        When username is being used, the email will be sent to the email address of the user on file.
-                                        When sending to several emails using different template, provide the template name for the message body for each email;
-                                        I.e., the first template will be used for the first to, the second template if exists will be used
-                                        for the second from (otherwise the last given template will be used). Each template needs two files, one for the subject one for the body. The subject will be named
-                                        template_subject.tpl. All the templates must be in the %0templates/mail%1 directory. Example:
-                                        %0webmaster@my.com|a@my.com,b@my.com|templatea.tpl,templateb.tpl%1 (%0templates/mail/tracker_changed_notification.tpl%1
-                                        is the default from which you can get inspiration). Please note that you need to have an email
-                                        address in the normal "Copy activity to email" property in the Tracker notifications panel as well',
-                                        '<code>', '</code>'),
-                                'since' => '2.0',				'default' => '',
+				'description' => tr('To send an email once the tracker item has been created. Format: %0from', '<code>')
+						.'|'.tra('to').'|'.tr('template%0', '</code> ') . tr('For %0from%1 and %0to%1, use an email address
+						(separate multiple addresses with a comma), a username, a fieldId of a field containing either an email address or a username,
+						or "createdBy" or "lastModifBy" for the item creator or modifier.
+						When username is being used, the email will be sent to the email address of the user on file.
+						When sending to several emails using different template, provide the template name for the message body for each email;
+						I.e., the first template will be used for the first to, the second template if exists will be used
+						for the second from (otherwise the last given template will be used). Each template needs two files, one for the subject one for the body. The subject will be named
+						template_subject.tpl. All the templates must be in the %0templates/mail%1 directory. Example:
+						%0webmaster@my.com|a@my.com,b@my.com|templatea.tpl,templateb.tpl%1 (%0templates/mail/tracker_changed_notification.tpl%1
+						is the default from which you can get inspiration). Please note that you need to have an email
+						address in the normal "Copy activity to email" property in the Tracker notifications panel as well',
+						'<code>', '</code>'),
+				'since' => '2.0',
+				'default' => '',
 			),
 			'emailformat' => array(
 				'required' => false,
@@ -2050,6 +2052,11 @@ function wikiplugin_tracker_process_email_recipient($emailOrField, $fields, $ite
 		$email = TikiLib::lib('user')->get_user_email($output);
 		if ( $email ) {
 			$output = $email;
+		} else if ($output === 'createdBy' || $output === 'lastModifBy') {
+			$email = TikiLib::lib('user')->get_user_email($item[$output]);
+			if ($email) {
+				$output = $email;
+			}
 		}
 	}
 	return $output;
