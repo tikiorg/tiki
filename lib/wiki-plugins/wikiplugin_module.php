@@ -371,7 +371,7 @@ function wikiplugin_module($data, $params)
 		}
 	} else {
 		// Display error message
-		$data = "<div class=\"highlight\">" . tra("Sorry, no such module"). "<br /><b>$module</b></div>" . $data;
+		$data = "<div class=\"alert alert-danger\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"" . tra("Close") . "\"><span aria-hidden=\"true\">&times;</span></button>" . tra("Sorry, no such module") . "<br><b>$module</b></div>" . $data;
 	}
 
 	if ($module == 'register') {
