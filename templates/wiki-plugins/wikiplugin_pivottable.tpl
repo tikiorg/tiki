@@ -2,38 +2,37 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
 {jq}
-	var pivotData = {{$pivottable|json_encode}};
-	$('#output_' + pivotData.id).each(function () {
+	var pivotData{{$pivottable.index}} = {{$pivottable.data|json_encode}};
+	$('#output_{{$pivottable.id}}').each(function () {
 		var derivers = $.pivotUtilities.derivers;
 		var renderers = $.extend($.pivotUtilities.renderers, 
 		
 		$.pivotUtilities.c3_renderers);
 
-		$("#output_"+pivotData.id).pivotUI(pivotData.data, {
+		$("#output_{{$pivottable.id}}").pivotUI(pivotData{{$pivottable.index}}, {
 			renderers: renderers,
-			cols: pivotData.tcolumns, rows: pivotData.trows,
-			rendererName: pivotData.rendererName,
-			width: pivotData.width,
-			height: pivotData.height,
-			aggregatorName: pivotData.aggregatorName,
-			vals: pivotData.vals
+			cols: {{$pivottable.tcolumns|json_encode}}, rows: {{$pivottable.trows|json_encode}},
+			rendererName: {{$pivottable.rendererName|json_encode}},
+			width: {{$pivottable.width|json_encode}},
+			height: {{$pivottable.height|json_encode}},
+			aggregatorName: {{$pivottable.aggregatorName|json_encode}},
+			vals: {{$pivottable.vals|json_encode}}
 		});
 
-		$("#pivotEditBtn_"+pivotData.id).on("click", function(){
-			showControls("#output_"+pivotData.id,pivotData.id);
+		$("#pivotEditBtn_{{$pivottable.id}}").on("click", function(){
+			showControls("#output_{{$pivottable.id}}",{{$pivottable.id|json_encode}});
 		});
 
-		$("#restore_"+pivotData.id).on("click", function(){
-			$("#output_"+pivotData.id).pivotUI(pivotData.data,JSON.parse(defaultSettings),true);
-			$("#output_"+pivotData.id+"_opControls").fadeOut();
+		$("#restore_{{$pivottable.id}}").on("click", function(){
+			$("#output_{{$pivottable.id}}").pivotUI(pivotData{{$pivottable.index}},JSON.parse(defaultSettings),true);
+			$("#output_{{$pivottable.id}}_opControls").fadeOut();
 		});
 
-		$("#save_"+pivotData.id).on("click", function(){
-			fieldsArr=pivotData.fieldsArr.toString();
-			saveConfig("#output_"+pivotData.id,"{{$page}}",pivotData.index,pivotData.trackerId,fieldsArr.split(","));
+		$("#save_{{$pivottable.id}}").on("click", function(){
+			saveConfig("#output_{{$pivottable.id}}", "{{$page}}", {{$pivottable.index|json_encode}}, {{$pivottable.trackerId|json_encode}}, {{$pivottable.fieldsArr|json_encode}});
 		});
 
-		createEditBtn(pivotData.id);
+		createEditBtn({{$pivottable.id|json_encode}});
 	});
 {/jq}
 	

@@ -239,7 +239,7 @@ function wikiplugin_pivottable($data, $params)
 	} else {
 		$plugin = new Search_Formatter_Plugin_JsonTemplate(implode("", array_map(
 			function($f){
-				return '{display name="tracker_field_'.$f['permName'].'"}';
+				return '{display name="tracker_field_'.$f['permName'].'" default="&nbsp;"}';
 			}, $fields)));
 	}
 
@@ -310,7 +310,7 @@ function wikiplugin_pivottable($data, $params)
 	$fieldsArr=array();
 	foreach($fields as $field)
 	{
-		$fieldsArr[] = array($field['name'], $field['permName']);
+		$fieldsArr[$field['name']] = $field['permName'];
 	}
 	
 	//checking if user can see edit button
@@ -338,7 +338,6 @@ function wikiplugin_pivottable($data, $params)
 		'width'=>$width,
 		'height'=>$height,
 		'showControls'=>$showControls,
-		'showView'=>$showView,
 		'page'=>$sourcepage,
 		'fieldsArr'=>$fieldsArr,
 		'index'=>$id

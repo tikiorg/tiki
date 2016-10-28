@@ -103,7 +103,7 @@ class Search_Formatter_Plugin_JsonTemplate implements Search_Formatter_Plugin_In
 
 		$field = $arguments['field'];
 
-		return array( str_replace('tracker_field_', '', $name) => $valueFormatter->plain($field) );
+		return array( str_replace('tracker_field_', '', $field) => $valueFormatter->plain($field) );
 	}
 }
 
