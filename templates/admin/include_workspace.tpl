@@ -1,27 +1,23 @@
 {* $Id$ *}
 <form class="form-horizontal" action="tiki-admin.php?page=workspace" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
-	<div class="row">
-		<div class="form-group col-lg-12">
-			{if $prefs.workspace_ui eq "y"}
-				<a class="btn btn-default btn-sm" href="{service controller=workspace action=list_templates}" title="{tr}List{/tr}">
-					{icon name="list"} {tr}Workspace Templates{/tr}
-				</a>
-			{/if}
-			<div class="pull-right">
-				<input type="submit" class="btn btn-primary btn-sm" name="workspacesetprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-			</div>
+	<div class="clearfix margin-bottom-md">
+		{if $prefs.workspace_ui eq "y"}
+			<a class="btn btn-default btn-sm" href="{service controller=workspace action=list_templates}" title="{tr}List{/tr}">
+				{icon name="list"} {tr}Workspace Templates{/tr}
+			</a>
+		{/if}
+		<div class="pull-right">
+			<input type="submit" class="btn btn-primary btn-sm" name="workspacesetprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
 		</div>
 	</div>
 	{tabset name="admin_workspaces_areas"}
 		{tab name="{tr}Workspaces{/tr}"}
 			<h2>{tr}Workspaces{/tr}</h2>
-
 			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=workspace_ui visible="always"}
 			</fieldset>
-
 			<fieldset>
 				<legend>{tr}Dependencies{/tr}</legend>
 				{preference name=namespace_enabled}
@@ -31,12 +27,10 @@
 				{preference name=feature_categories}
 				{preference name=feature_wiki}
 			</fieldset>
-
 			<fieldset>
 				<legend>{tr}Advanced{/tr}</legend>
 				{preference name=workspace_root_category}
 			</fieldset>
-
 			{jq}
 				$('#tiki-center').on('click', '.service-dialog', function () {
 					$(this).serviceDialog({
@@ -55,7 +49,6 @@
 		{/tab}
 		{tab name="{tr}Areas{/tr}"}
 			<h2>{tr}Areas{/tr}</h2>
-
 			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_areas}
@@ -75,7 +68,6 @@
 							<th>{tr}Share Common{/tr}</th>
 							<th>{tr}Description{/tr}</th>
 						</tr>
-
 						{if $areas|count}
 							{foreach from=$areas item=area}
 								<tr class="{cycle}{if $area.enabled neq 'y'} disabled{/if}">
@@ -113,14 +105,9 @@
 			<div class="adminoptionboxchild" id="feature_areas_childcontainer">
 				{preference name=areas_root}
 			</div>
-
 		{/tab}
 	{/tabset}
-	<div class="row">
-		<div class="form-group col-lg-12">
-			<div class="text-center">
-				<input type="submit" class="btn btn-primary btn-sm" name="workspacesetprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
-			</div>
-		</div>
+	<div class="t_navbar margin-bottom-md text-center">
+		<input type="submit" class="btn btn-primary btn-sm tips" name="workspacesetprefs" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
 	</div>
 </form>
