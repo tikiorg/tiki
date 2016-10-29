@@ -369,7 +369,14 @@ function wikiplugin_fluidgrid($data, $params, $pos)
         $w = $w_array[$j] ;
         
         // Get the content
-        $c = ( isset($r[$j]) ) ? trim($r[$j]) : "" ;
+        $c = ( isset($r[$j]) ) ? $r[$j] : "" ;
+        
+        // Remove first <ENTER> if exists.
+        // Do not trim the line break from the end, because this affects the wiki parsing of the cell content.
+        if (substr($c, 0, 2) == "\r\n") 
+        {
+          $c = substr($c, 2) ;
+        }  
         
         if ( $joincols )
         {
