@@ -1663,7 +1663,7 @@ class CategLib extends ObjectLib
 
 	// Change an object's categories
 	// $objId: A unique identifier of an object of the given type, for example "Foo" for Wiki page Foo.
-	function update_object_categories($categories, $objId, $objType, $desc=NULL, $name=NULL, $href=NULL, $managedCategories = null, $override_perms = false)
+	function update_object_categories($categories, $objId, $objType, $desc=NULL, $name=NULL, $href=NULL, $managedCategories = null, $override_perms = false, $parent = null)
 	{
 		global $prefs, $user;
 		$userlib = TikiLib::lib('user');
@@ -1675,7 +1675,7 @@ class CategLib extends ObjectLib
 			}
 		}
 
-		$manip = new Category_Manipulator($objType, $objId);
+		$manip = new Category_Manipulator($objType, $objId, $parent);
 		if ($override_perms) {
 			$manip->overrideChecks();
 		}
