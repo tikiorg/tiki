@@ -87,8 +87,6 @@ if ($isInstalled) {
 	$console->add(new Tiki\Command\BackupDBCommand);
 	$console->add(new Tiki\Command\BackupFilesCommand);
 	$console->add(new Tiki\Command\ProfileBaselineCommand);
-	$console->add(new Tiki\Command\UsersListCommand);
-	$console->add(new Tiki\Command\UsersPasswordCommand);
 } else {
 	$console->add(new Tiki\Command\UnavailableCommand('cache:clear'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('less:compile'))->ignoreValidationErrors();
@@ -123,6 +121,8 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\TrackerImportCommand);
 	$console->add(new Tiki\Command\TrackerClearCommand);
 	$console->add(new Tiki\Command\AdminIndexRebuildCommand);
+	$console->add(new Tiki\Command\UsersListCommand);
+	$console->add(new Tiki\Command\UsersPasswordCommand);
 } else {
 	$console->add(new Tiki\Command\UnavailableCommand('addon:install'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('addon:remove'))->ignoreValidationErrors();
@@ -149,6 +149,8 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\UnavailableCommand('tracker:import'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('tracker:clear'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('admin-index:rebuild'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('users:password'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('users:list'))->ignoreValidationErrors();
 }
 
 if (file_exists('profiles/info.ini')) {
