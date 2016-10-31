@@ -161,26 +161,6 @@
 				{preference name=count_admin_pvs}
 			</fieldset>
 			<fieldset>
-				<legend>{tr}Print{/tr}</legend>
-				{preference name=print_pdf_from_url}
-				<div class="adminoptionboxchild print_pdf_from_url_childcontainer webkit">
-					{preference name=print_pdf_webkit_path}
-				</div>
-				<div class="adminoptionboxchild print_pdf_from_url_childcontainer weasyprint">
-					{preference name=print_pdf_weasyprint_path}
-				</div>
-				<div class="adminoptionboxchild print_pdf_from_url_childcontainer webservice">
-					{preference name=print_pdf_webservice_url}
-				</div>
-				<div class="adminoptionboxchild print_pdf_from_url_childcontainer mpdf">
-					{preference name=print_pdf_mpdf_path}
-				</div>
-				{preference name=print_wiki_authors}
-				{preference name=print_original_url_wiki}
-				{preference name=print_original_url_tracker}
-				{preference name=print_original_url_forum}
-			</fieldset>
-			<fieldset>
 				<legend>{tr}Terms and Conditions{/tr}</legend>
 				{preference name=conditions_enabled}
 				<div class="adminoptionboxchild" id="conditions_enabled_childcontainer">

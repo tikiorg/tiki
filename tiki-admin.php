@@ -593,6 +593,13 @@ $admin_icons = array(
 		'description' => tr('Configure statistics reporting for your site usage'),
 		'help' => 'Statistics',
 	),
+	"print" => array(
+		'title' => tr('Print Settings'),
+		'disabled' => $prefs['feature_calendar'] != 'y',
+		'description' => tr('Settings and features for print versions and pdf generation'),
+		'help' => 'Print',
+	),
+	
 );
 
 if (isset($_REQUEST['page'])) {

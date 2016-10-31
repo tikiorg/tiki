@@ -179,6 +179,10 @@ function iconset_default()
 			'admin_wysiwyg' => array(
 				'id' => 'file-text',
 			),
+			'admin_print' => array(
+				'id' => 'print',
+			),
+			
 			//align-center in defaults
 			//align-justify in defaults
 			//align-left in defaults
