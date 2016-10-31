@@ -87,6 +87,8 @@ if ($isInstalled) {
 	$console->add(new Tiki\Command\BackupDBCommand);
 	$console->add(new Tiki\Command\BackupFilesCommand);
 	$console->add(new Tiki\Command\ProfileBaselineCommand);
+	$console->add(new Tiki\Command\UsersListCommand);
+	$console->add(new Tiki\Command\UsersPasswordCommand);
 } else {
 	$console->add(new Tiki\Command\UnavailableCommand('cache:clear'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('less:compile'))->ignoreValidationErrors();
