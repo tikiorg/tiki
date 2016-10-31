@@ -51,6 +51,7 @@ class InstallCommand extends Command
 			\TikiLib::lib('cache')->empty_cache();
 			initialize_prefs(true);
 			\TikiLib::lib('unifiedsearch')->rebuild();
+			\TikiLib::lib('prefs')->rebuildIndex();
 		} else {
 			$output->writeln('<error>Database already exists.</error>');
 		}

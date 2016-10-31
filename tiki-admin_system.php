@@ -18,6 +18,10 @@ $cachelib = TikiLib::lib('cache');
 if (isset($_GET['do'])) {
 	$cachelib->empty_cache($_GET['do']);
 	if ($_GET['do'] === 'all') {
+
+		// Also rebuild admin index
+		TikiLib::lib('prefs')->rebuildIndex();
+
 		// seems combination of clearing prefs and public now messes up the page, so reload
 		include_once('lib/setup/prefs.php');
 		initialize_prefs();

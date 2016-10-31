@@ -36,6 +36,9 @@ class Services_Search_Controller
 			$stat = $unifiedsearchlib->rebuild(isset($_REQUEST['loggit']));
 
 			TikiLib::lib('cache')->empty_type_cache('search_valueformatter');
+
+			// Also rebuild admin index
+			TikiLib::lib('prefs')->rebuildIndex();
 		}
 
 		$num_queries_after = $num_queries;

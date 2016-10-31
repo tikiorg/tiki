@@ -44,6 +44,9 @@ class CacheClearCommand extends Command
 		if ($all) {
 			$output->writeln('Clearing all caches');
 			$cachelib->empty_cache();
+
+			// Also rebuild admin index
+			\TikiLib::lib('prefs')->rebuildIndex();
 		} else {
 			switch ($type) {
 			case 'public':

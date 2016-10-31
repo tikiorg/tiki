@@ -71,6 +71,9 @@ class IndexRebuildCommand extends Command
 
 		$result = $unifiedsearchlib->rebuild($log);
 
+		// Also rebuild admin index
+		\TikiLib::lib('prefs')->rebuildIndex();
+
 		$queries_after = $num_queries;
 
 		if ($result) {
