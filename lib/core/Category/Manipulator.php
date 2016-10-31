@@ -9,6 +9,7 @@ class Category_Manipulator
 {
 	private $objectType;
 	private $objectId;
+	private $parent;
 
 	private $current = array();
 	private $managed = array();
@@ -22,10 +23,11 @@ class Category_Manipulator
 	private $overrides = array();
 	private $overrideAll = false;
 
-	function __construct($objectType, $objectId)
+	function __construct($objectType, $objectId, $parent = null)
 	{
 		$this->objectType = $objectType;
 		$this->objectId = $objectId;
+		$this->parent = $parent;
 	}
 
 	function addRequiredSet(array $categories, $default, $filter=null, $type=null)
@@ -83,7 +85,8 @@ class Category_Manipulator
 	
 	/*
 	 * Check wether the given permission is allowed for the given categories.
-	 * Note: The group in question requires also the _global_ permission 'modify_object_categories'.
+	 * Note: The group in question requires also the _global_ permission 'modify_object_categories'
+	 * which could be given to a parent object like parent Tracker of a TrackerItem.
 	 * @param array $categories - requested categories
 	 * @param string  $permission - required permission for that category. Ie. 'add_category'
 	 * @return array $authorizedCategories - filterd list of given $categories that have proper permissions set.
@@ -92,6 +95,10 @@ class Category_Manipulator
 	{
 		$objectperms = Perms::get(array('type' => $this->objectType, 'object' => $this->objectId));
 		$canModifyObject = $objectperms->modify_object_categories;
+		if( !$canModifyObject && $this->parent ) {
+			$objectperms = Perms::get(array('type' => $this->parent['objectType'], 'object' => $this->parent['objectId']));
+			$canModifyObject = $objectperms->modify_object_categories;
+		}
 		
 		$out = array();
 		foreach ($categories as $categ) {
