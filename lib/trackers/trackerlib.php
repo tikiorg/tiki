@@ -2356,6 +2356,14 @@ class TrackerLib extends TikiLib
 									}
 								}
 							}
+                        } elseif (is_array($f['value'])) {
+							foreach ($f['value'] as $key=>$val) {
+								foreach ($multi_languages as $num => $tmplang) {
+									if ( $key == $tmplang && empty($val)) {
+										$mandatory_fields[] = $f;
+									}
+								}
+							}
 						} else {
 							$mandatory_fields[] = $f;
 						}
