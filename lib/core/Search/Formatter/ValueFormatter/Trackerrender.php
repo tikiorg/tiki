@@ -63,6 +63,13 @@ class Search_Formatter_ValueFormatter_Trackerrender extends Search_Formatter_Val
 			return $value;
 		}
 		$field = $tracker->getField(substr($name, 14));
+
+		// check translations of multilingual fields
+		global $prefs;
+		if ($field['isMultilingual'] === 'y' && isset($entry[$name . '_' . $prefs['language']])) {
+			$name = $name . '_' . $prefs['language'];
+			$value = $entry[$name];
+		}
 		// TextArea fields need the raw wiki syntax here for it to get wiki parsed if necessary
 		if ($field['type'] === 'a' && isset($entry[$name . '_raw'])) {
 			$value = $entry[$name . '_raw'];
