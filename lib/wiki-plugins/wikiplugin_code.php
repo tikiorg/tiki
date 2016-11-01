@@ -85,6 +85,13 @@ function wikiplugin_code_info()
 				'default' => '0',
 				'advanced' => true,
 			),
+			'theme' => array(
+				'required' => false,
+				'name' => tra('Theme'),
+				'description' => tra('Any supported theme listed at https://codemirror.net/demo/theme.html'),
+				'since' => '1',
+				'filter' => 'text',
+			),
 		),
 	);
 }
@@ -128,10 +135,17 @@ function wikiplugin_code($data, $params)
 		.' white-space:-pre-wrap;'
 		.' white-space:-o-pre-wrap;'
 		.' word-wrap:break-word;';
+
+		if (!isset($theme) && isset($prefs['feature_syntax_highlighter_theme'])) {
+			$theme = $prefs['feature_syntax_highlighter_theme'];
+		}
 	}
+
+
 
 	$out = (isset($caption) ? '<div class="codecaption">'.$caption.'</div>' : "" )
 		. '<pre class="codelisting" '
+		. (isset($theme) ? ' data-theme="' . $theme . '" ' : '')
 		. (isset($colors) ? ' data-syntax="' . $colors . '" ' : '')
 		. (isset($ln) ? ' data-line-numbers="' . $ln . '" ' : '')
 		. (isset($wrap) ? ' data-wrap="' . $wrap . '" ' : '')
