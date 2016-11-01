@@ -77,6 +77,8 @@ class TWVersion
 				24=>'Fomalhaut',	// 13.x
 				25=>'Peony',		// 14.x
 				26=>'Situla',		// 15.x
+				27=>'Tabby\'s',		// 16.x
+				28=>'TBA',			// 17.x
 		);
 	}
 
