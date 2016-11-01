@@ -161,10 +161,12 @@ function wikiplugin_pivottable($data, $params)
 			$isHidden = $field['isHidden'];
 			$visibleBy = $field['visibleBy'];
 
-			if ($isHidden == 'y') {
+			if ($isHidden == 'c') {
+				// creators can see their own items coming from the search index
+			} elseif ($isHidden == 'y') {
 				// Visible by administrator only
 				unset($fields[$key]);
-			} else {
+			} elseif( !empty($visibleBy) ) {
 				// Permission based on visibleBy apply
 				$commonGroups = array_intersect($visibleBy, $perms->getGroups());
 				if( count($commonGroups) == 0 ) {
@@ -228,7 +230,7 @@ function wikiplugin_pivottable($data, $params)
 		}
 	}
 	if( $columnsListed ) {
-		$plugin = new Search_Formatter_Plugin_JsonTemplate($data);
+		$plugin = new Search_Formatter_Plugin_ArrayTemplate($data);
 		$usedFields = array_keys($plugin->getFields());
 		foreach( $fields as $key => $field ) {
 			if( !in_array('tracker_field_'.$field['permName'], $usedFields) ) {
@@ -236,11 +238,13 @@ function wikiplugin_pivottable($data, $params)
 			}
 		}
 		$fields = array_values($fields);
+		$plugin->setFieldPermNames($fields);
 	} else {
-		$plugin = new Search_Formatter_Plugin_JsonTemplate(implode("", array_map(
+		$plugin = new Search_Formatter_Plugin_ArrayTemplate(implode("", array_map(
 			function($f){
 				return '{display name="tracker_field_'.$f['permName'].'" default="&nbsp;"}';
 			}, $fields)));
+		$plugin->setFieldPermNames($fields);
 	}
 
 	$builder = new Search_Formatter_Builder;

@@ -3,17 +3,19 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: JsonTemplate.php 57971 2016-03-17 20:09:05Z jonnybradley $
+// $Id: ArrayTemplate.php 60099 2016-11-01 20:09:05Z kroky6 $
 
-class Search_Formatter_Plugin_JsonTemplate implements Search_Formatter_Plugin_Interface
+class Search_Formatter_Plugin_ArrayTemplate implements Search_Formatter_Plugin_Interface
 {
 	private $template;
 	private $format;
+	private $fieldPermNames;
 
 	function __construct($template)
 	{
 		$this->template = WikiParser_PluginMatcher::match($template);
 		$this->format = self::FORMAT_JSON;
+		$this->fieldPermNames = array();
 	}
 
 	function getFormat()
@@ -47,6 +49,10 @@ class Search_Formatter_Plugin_JsonTemplate implements Search_Formatter_Plugin_In
 		}
 
 		return $fields;
+	}
+
+	function setFieldPermNames($fields) {
+		$this->fieldPermNames = array_map(function($f){ return 'tracker_field_'.$f['permName']; }, $fields);
 	}
 
 	function prepareEntry($valueFormatter)
@@ -85,6 +91,10 @@ class Search_Formatter_Plugin_JsonTemplate implements Search_Formatter_Plugin_In
 
 		$name = $arguments['name'];
 
+		if( !$this->canViewField($name) ) {
+			return array();
+		}
+
 		if (isset($arguments['format'])) {
 			$format = $arguments['format'];
 		} else {
@@ -103,7 +113,15 @@ class Search_Formatter_Plugin_JsonTemplate implements Search_Formatter_Plugin_In
 
 		$field = $arguments['field'];
 
+		if( !$this->canViewField($field) ) {
+			return array();
+		}
+
 		return array( str_replace('tracker_field_', '', $field) => $valueFormatter->plain($field) );
+	}
+
+	private function canViewField($field) {
+		return in_array($field, $this->fieldPermNames);
 	}
 }
 
