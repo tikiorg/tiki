@@ -28,6 +28,7 @@ class Table_Settings_TikiAdminusers extends Table_Settings_Standard
 				0 => array(
 					'type' => 'dropdown',
 					'options' => array(
+						'All users (no filter)' => '',
 						'Email not confirmed' => 'filterEmailNotConfirmed=on',
 						'User not validated' => 'filterNotValidated=on',
 						'Never logged in' => 'filterNeverLoggedIn=on',
