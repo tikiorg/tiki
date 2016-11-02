@@ -86,13 +86,11 @@
 	<input type="submit" class="btn btn-default btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 </form>
 {jq}
-$('.listexecute-select-all').removeClass('listexecute-select-all').on('click', function (e) {
-	if( this.checked ) {
-		$(this).closest('form').find(':checkbox:not(:checked):not(:disabled)').click();
-	} else {
-		$(this).closest('form').find(':checkbox:checked:not(:disabled)').click();
-	}
-	e.preventDefault();
-});
+$('.listexecute-select-all').removeClass('listexecute-select-all')
+	.on('click', function (e) {
+		$(this).closest('form').find('tbody :checkbox:not(:disabled)').each(function () {
+			$(this).prop("checked", ! $(this).prop("checked"));
+		});
+	});
 {/jq}
 {/if}
