@@ -164,7 +164,7 @@ class TikiAccessLib extends TikiLib
 
 		foreach ($permissions as $permission) {
 			if (false !== $objectType) {
-				$applicable = Perms::get($objectType, $objectId);
+				$applicable = Perms::getCombined($objectType, $objectId);
 			} else {
 				$applicable = Perms::get();
 			}
@@ -205,7 +205,7 @@ class TikiAccessLib extends TikiLib
 
 		foreach ($permissions as $permission) {
 			if (false !== $objectType) {
-				$applicable = Perms::get($objectType, $objectId);
+				$applicable = Perms::getCombined($objectType, $objectId);
 			} else {
 				$applicable = Perms::get();
 			}
