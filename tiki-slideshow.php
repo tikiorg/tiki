@@ -41,6 +41,8 @@ if (isset($_REQUEST['pdf'])) {
 
 	if ( isset( $_POST["html"] ) ) {
 
+		require_once 'lib/pdflib.php';
+		PdfGenerator::setupMPDFCacheLocation(); // reuse mPDF settings
 		if (class_exists('mPDF')) { // use mPDF if available
 			$orientation =  isset($_REQUEST['landscape']) ? "L" : "P";
 			$mpdf = new mPDF(null, "letter-" . $orientation);
