@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: wikiplugin_code.php 60114 2016-11-01 18:07:42Z montefuscolo $
+// $Id$
 
 function wikiplugin_shorten_info()
 {
@@ -55,48 +55,48 @@ function wikiplugin_shorten($data, $params)
 		'lessText' => '[-]',
 	);
 
-	$out = '';
-	if(!$shorten_count) {
-		$out .= '<style type="text/css">';
-		$out .= ' .toggle_shorten_text_wrapper { display: none; }';
-		$out .= ' .toggle_shorten_text_button:checked + .toggle_shorten_text_wrapper { display: inline; }';
-		$out .= ' .toggle_shorten_text_button ~ .toggle_shorten_text_more { display: inline; }';
-		$out .= ' .toggle_shorten_text_button ~ .toggle_shorten_text_less { display: none; }';
-		$out .= ' .toggle_shorten_text_button:checked ~ .toggle_shorten_text_more { display: none; }';
-		$out .= ' .toggle_shorten_text_button:checked ~ .toggle_shorten_text_less { display: inline; }';
-		$out .= ' .toggle_shorten_text_more, .toggle_shorten_text_less { cursor: pointer; margin-left: 3px; }';
-		$out .= '</style>';
-	}
-
-	$id = 'toggle_shorten_text-' . ++$shorten_count;
-
 	$length = isset($params['length']) ? $params['length'] : $defaults['length'];
 	$length = (int) sprintf('%d', $length);
 	$length = max(1, $length);
+
 	$match = null;
+	if ( preg_match('/^\s*.{'.$length.'}[^\s]*/', $data, $match) ) {
 
-	$moreText = isset($params['moreText']) ? $params['moreText'] : $defaults['moreText'];
-	$moreText = strip_tags($moreText);
+		$out = '';
+		if(!$shorten_count) {
+			$out .= '<style type="text/css">';
+			$out .= ' .toggle_shorten_text_wrapper { display: none; }';
+			$out .= ' .toggle_shorten_text_button:checked + .toggle_shorten_text_wrapper { display: inline; }';
+			$out .= ' .toggle_shorten_text_button ~ .toggle_shorten_text_more { display: inline; }';
+			$out .= ' .toggle_shorten_text_button ~ .toggle_shorten_text_less { display: none; }';
+			$out .= ' .toggle_shorten_text_button:checked ~ .toggle_shorten_text_more { display: none; }';
+			$out .= ' .toggle_shorten_text_button:checked ~ .toggle_shorten_text_less { display: inline; }';
+			$out .= ' .toggle_shorten_text_more, .toggle_shorten_text_less { cursor: pointer; margin-left: 3px; }';
+			$out .= '</style>';
+		}
 
-	$lessText = isset($params['lessText']) ? $params['lessText'] : $defaults['lessText'];
-	$lessText = strip_tags($lessText);
+		$id = 'toggle_shorten_text-' . ++$shorten_count;
 
-	$html = '<span>';
-	$html .= '<input style="display: none" class="toggle_shorten_text_button" type="checkbox" id="'.$id.'"/>';
-	$html .= '<span class="toggle_shorten_text_wrapper">%s</span>';
-	$html .= '<label class="toggle_shorten_text_more" for="'.$id.'">'.$moreText.'</label>';
-	$html .= '<label class="toggle_shorten_text_less" for="'.$id.'">'.$lessText.'</label>';
-	$html .= '</span>';
+		$moreText = isset($params['moreText']) ? $params['moreText'] : $defaults['moreText'];
+		$moreText = strip_tags($moreText);
 
-	if (preg_match('/^\s+.{'.$length.'}[^\s]*/', $data, $match)) {
+		$lessText = isset($params['lessText']) ? $params['lessText'] : $defaults['lessText'];
+		$lessText = strip_tags($lessText);
+
+		$html = '<span>';
+		$html .= '<input style="display: none" class="toggle_shorten_text_button" type="checkbox" id="'.$id.'"/>';
+		$html .= '<span class="toggle_shorten_text_wrapper">%s</span>';
+		$html .= '<label class="toggle_shorten_text_more" for="'.$id.'">'.$moreText.'</label>';
+		$html .= '<label class="toggle_shorten_text_less" for="'.$id.'">'.$lessText.'</label>';
+		$html .= '</span>';
+
 		$index = strlen($match[0]);
 		$out .= substr($data, 0, $index);
 		$out .= sprintf($html, substr($data, $index));
-	} else {
-		$out .= $data;
+
+		return $out;
 	}
 
-
-	return $out;
+	return $data;
 }
 
