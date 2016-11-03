@@ -8,6 +8,6 @@
 	{if $mode eq 'output'}
 		{trackeroutput field=$field}
 	{else}
-		{trackerinput field=$field}
+		{trackerinput field=$field itemId=$itemId}
 	{/if}
 {/block}

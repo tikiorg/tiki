@@ -110,7 +110,7 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 		// It fixes also the issue that, if more than one dynamic item list fields are set and use the same
 		// $filterFieldIdHere, then the initial value was wrong due to multiple fires of the handler.
 
-		$filterFieldIdHere = $this->getOption('filterFieldIdHere');
+		$filterFieldIdHere = trim($this->getOption('filterFieldIdHere'));
 		$trackerIdThere = $this->getOption('trackerId');
 		$listFieldIdThere = $this->getOption('listFieldIdThere');
 		$filterFieldIdThere = $this->getOption('filterFieldIdThere');
@@ -119,6 +119,14 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 		$insertId = $this->getInsertId();
 		$originalValue = $this->getConfiguration('value');
 		$hideBlank = $this->getOption('hideBlank');
+		
+		$filterFieldValueHere = $originalValue;
+		if( !empty($context['itemId']) ) {
+			$itemInfo = TikiLib::lib('trk')->get_tracker_item( $context['itemId'] );
+			if( !empty($itemInfo) && !empty($itemInfo[$filterFieldIdHere]) ) {
+				$filterFieldValueHere = $itemInfo[$filterFieldIdHere];
+			}
+		}
 		
 		if( $filterFieldIdHere == $this->getConfiguration('fieldId') )
 			return tr('*** ERROR: Field ID (This tracker) cannot be the same: %0 ***', $filterFieldIdHere);
@@ -130,7 +138,7 @@ class Tracker_Field_DynamicList extends Tracker_Field_Abstract
 			'
 var dilIsInit_'. $insertId. ' = false;
 
-$("input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFieldIdHere . ']").change(function(e, val) {
+$("body").on("change", "input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFieldIdHere . ']", function(e, val) {
 	if (val && val == "' . $insertId . '" && dilIsInit_'. $insertId. ') {
 		return; // on init, only fire one time per select trigger eventhandler. otherwise each init would trigger all prev. registered handlers
 	}
@@ -186,6 +194,11 @@ $("input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFieldI
 		} // callback
 	);  // getJSON
 }).trigger("change", "'. $insertId. '"); // closure
+
+if( $("input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFieldIdHere . ']").length == 0 ) {
+	// inline edit fix
+	$("<input type=\"hidden\" name=\"ins_' . $filterFieldIdHere . '\">").val(' . json_encode($filterFieldValueHere) . ').insertBefore("select[name=' . $insertId . ']").trigger("change");
+}
 		'
 		); // add_jq_onready
 

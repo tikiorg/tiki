@@ -1103,6 +1103,7 @@ class Services_Tracker_Controller
 		return array(
 			'field' => $processed,
 			'mode' => $mode,
+			'itemId' => $itemId
 		);
 	}
 
