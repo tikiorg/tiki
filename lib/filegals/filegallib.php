@@ -683,6 +683,9 @@ class FileGalLib extends TikiLib
 			array('anyOf' => $files->expr('(`fileId` = ? OR `archiveId` = ?)', array($file, $file)))
 		);
 
+		require_once('lib/search/refresh-functions.php');
+		refresh_index('files', $file);
+
 		return true;
 	}
 
