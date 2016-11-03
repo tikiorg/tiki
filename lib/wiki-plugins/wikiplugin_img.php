@@ -1506,7 +1506,7 @@ function wikiplugin_img( $data, $params )
 		$perms = TikiLib::lib('tiki')->get_perm_object( $imgdata['fileId'], 'file', $dbinfo );
 		if ($imgdata['fromItemId']) {
 			if ($imgdata['checkItemPerms'] !== 'n') {
-				$perms_Accessor = Perms::get(array('type' => 'tracker item', 'object' => $imgdata['fromItemId']));
+				$perms_Accessor = Perms::getCombined(array('type' => 'trackeritem', 'object' => $imgdata['fromItemId']));
 				$trackerItemPerms = $perms_Accessor->modify_tracker_items;
 			} else {
 				$trackerItemPerms = true;

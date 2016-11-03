@@ -171,7 +171,7 @@ class Services_Language_TranslationController
 	private function canAttach($type, $object)
 	{
 		global $prefs, $user;
-		$perms = Perms::get($type, $object);
+		$perms = Perms::getCombined($type, $object);
 
 		if ($type == 'wiki page' && $perms->edit) {
 			return true;
@@ -197,7 +197,7 @@ class Services_Language_TranslationController
 
 	private function canDetach($type, $object)
 	{
-		$perms = Perms::get($type, $object);
+		$perms = Perms::getCombined($type, $object);
 		return $perms->detach_translation;
 	}
 

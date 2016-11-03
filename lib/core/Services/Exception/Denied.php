@@ -33,7 +33,7 @@ class Services_Exception_Denied extends Services_Exception
 
 	public static function checkObject($perm, $type, $object)
 	{
-		$perms = Perms::get($type, $object);
+		$perms = Perms::getCombined($type, $object);
 		if (! $perms->$perm) {
 			throw new self(tr('Permission denied'));
 		}

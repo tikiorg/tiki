@@ -87,7 +87,7 @@ class Services_Category_Controller
 		$type = $input->type->text();
 		$object = $input->object->text();
 
-		$perms = Perms::get($type, $object);
+		$perms = Perms::getCombined($type, $object);
 		if (! $perms->modify_object_categories) {
 			throw new Services_Exception_Denied('Not allowed to modify categories');
 		}
@@ -173,7 +173,7 @@ class Services_Category_Controller
 
 			if (count($object) == 2) {
 				list($type, $id) = $object;
-				$objectPerms = Perms::get($type, $id);
+				$objectPerms = Perms::getCombined($type, $id);
 
 				if ($objectPerms->modify_object_categories) {
 					$out[] = array('type' => $type, 'id' => $id);
