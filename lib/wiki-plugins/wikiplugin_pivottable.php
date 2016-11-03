@@ -203,7 +203,6 @@ function wikiplugin_pivottable($data, $params)
 	$query = new Search_Query;
 	$query->filterType('trackerItem');
 	$query->filterContent($trackerId, 'tracker_id');
-	$query->setRange(0, $prefs['unified_lucene_max_result']);
 
 	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
 	$unifiedsearchlib->initQuery($query);
@@ -216,6 +215,8 @@ function wikiplugin_pivottable($data, $params)
 	if (! $index = $unifiedsearchlib->getIndex()) {
 		return WikiParser_PluginOutput::userError(tr('Unified search index not found.'));
 	}
+
+	$query->setRange(0, TikiLib::lib('trk')->get_nb_items($trackerId));
 
 	$result = $query->search($index);
 	$result->setId('wppivottable-' . $id);
