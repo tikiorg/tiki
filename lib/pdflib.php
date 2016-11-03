@@ -52,7 +52,9 @@ class PdfGenerator
 			}
 			if ( ! empty($path) && is_readable($path) && file_exists($path . 'mpdf.php')) {
 				self::setupMPDFCacheLocation();
-				include($this->location . 'mpdf.php');
+				if (!class_exists('mPDF')){
+					include_once($path . 'mpdf.php');
+				}
 				if (! is_writable(_MPDF_TEMP_PATH) ||! is_writable(_MPDF_TTFONTDATAPATH)) {
 					Feedback::error(tr('mPDF "%0" and "%1" directories must be writable', 'tmp',
 						'ttfontdata'), 'session');
@@ -285,7 +287,9 @@ class PdfGenerator
 	
 	   $this->_getImages($html,$tempImgArr);
 		self::setupMPDFCacheLocation();
-		include($this->location . 'mpdf.php');
+		if (!class_exists('mPDF')){
+			include_once($this->location . 'mpdf.php');
+		}
 		$mpdf = new mPDF('utf-8');
 		$mpdf->useSubstitutions = true;					// optional - just as an example
 		$mpdf->SetHeader($url . '||Page {PAGENO}');		// optional - just as an example
