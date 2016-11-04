@@ -50,15 +50,14 @@ class FileGalLib extends TikiLib
 
 	private function get_file_checksum($galleryId, $path, $data)
 	{
-		global $prefs;
 		$savedir = $this->get_gallery_save_dir($galleryId);
 
 		if (false !== $savedir) {
 			if ( filesize($savedir . $path) > 0 ) {
-				if ($prefs['feature_draw'] === 'n' || empty($data)) {
+				if (empty($data)) {
 					return md5_file($savedir . $path);
 				} else {
-					return md5($savedir . $path . $data);	// for svg images with a background
+					return md5($savedir . $path . $data);	// for svg images with a background or avatars
 				}
 			} else {
 				return md5(time());
