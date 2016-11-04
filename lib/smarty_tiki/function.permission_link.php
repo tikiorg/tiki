@@ -77,7 +77,7 @@ function smarty_function_permission_link( $params, $smarty )
 		$link = 'tiki-objectpermissions.php';
 	}
 
-	$perms = Perms::get($type, $id);
+	$perms = Perms::getCombined($type, $id);
 	$source = $perms->getResolver()->from();
 
 	return $smarty->fetch('permission_link.tpl', [
