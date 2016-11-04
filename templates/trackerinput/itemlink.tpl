@@ -5,7 +5,7 @@
 	{/if}
 	{if $data.displayFieldsListType === 'table'}
 		{capture assign=fieldvalue}{if is_array($field.value)}{','|implode:$field.value}{else}{$field.value}{/if}{/capture}
-		{wikiplugin _name=trackerlist trackerId=$field.options_map.trackerId fields=':'|implode:$field.options_map.displayFieldsList editableall="y" showlinks="y" sortable="type:reset" sortList="[1,0]" tsfilters="type:nofilter" tsfilteroptions="type:reset" tspaginate="max:5" checkbox="/"|cat:$field.ins_id|cat:"//////y/"|cat:$fieldvalue filterfield=$field.options_map.preSelectFieldThere exactvalue=$data.preselection_value}
+		{wikiplugin _name=trackerlist trackerId=$field.options_map.trackerId fields=':'|implode:$field.options_map.displayFieldsList editableall="y" showlinks="y" sortable="type:reset" sortList="[1,0]" tsfilters="type:nofilter" tsfilteroptions="type:reset" tspaginate="max:5" checkbox="/"|cat:$field.ins_id|cat:"//////y/"|cat:$fieldvalue filterfield=$field.options_map.preSelectFieldThere exactvalue=$data.preselection_value ignoreRequestItemId=y}
 		{/wikiplugin}
 		{if $field.options_map.addItems}
 			<a class="btn btn-default insert-tracker-item" href="{service controller=tracker action=insert_item trackerId=$field.options_map.trackerId next=$data.next|escape}" data-href="{service controller=tracker action=insert_item trackerId=$field.options_map.trackerId next=$data.next|escape}">{$field.options_map.addItems|escape}</a>
