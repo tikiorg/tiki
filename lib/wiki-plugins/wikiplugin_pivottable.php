@@ -148,12 +148,6 @@ function wikiplugin_pivottable($data, $params)
 		return WikiParser_PluginOutput::userError(tr('Tracker data source not found.'));
 	}
 
-	//checking if user has view rights on tracker data
-	$perms = Perms::get(array('type' => 'tracker', 'object' => $trackerId));
-	if( !$perms->view_trackers ) {
-		return WikiParser_PluginOutput::userError(tr('You do not have rights to view tracker data.'));
-	}
-
 	$fields = $definition->getFields();
 
 	if( !$perms->admin_trackers ) {
