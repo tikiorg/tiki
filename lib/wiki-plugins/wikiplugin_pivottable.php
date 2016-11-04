@@ -148,6 +148,8 @@ function wikiplugin_pivottable($data, $params)
 		return WikiParser_PluginOutput::userError(tr('Tracker data source not found.'));
 	}
 
+	$perms = Perms::get(array('type' => 'tracker', 'object' => $trackerId));
+
 	$fields = $definition->getFields();
 
 	if( !$perms->admin_trackers ) {
@@ -322,6 +324,8 @@ function wikiplugin_pivottable($data, $params)
 	$objectperms = Perms::get( array( 'type' => 'wiki page', 'object' => $sourcepage ) );
 	if( $objectperms->edit ) {
 		$showControls = TRUE;
+	} else {
+		$showControls = FALSE;
 	}
 
 	$smarty = TikiLib::lib('smarty');
