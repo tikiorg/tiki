@@ -254,7 +254,7 @@ function wikiplugin_pivottable($data, $params)
 	$builder->setFormatterPlugin($plugin);
 
 	$formatter = $builder->getFormatter();
-	$entries = $formatter->getPopulatedList($result);
+	$entries = $formatter->getPopulatedList($result, false);
 	$entries = $plugin->renderEntries($entries);
 
 	$pivotData = array();

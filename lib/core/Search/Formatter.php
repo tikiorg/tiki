@@ -36,7 +36,7 @@ class Search_Formatter
 		return $this->render($this->plugin, $list, Search_Formatter_Plugin_Interface::FORMAT_WIKI);
 	}
 
-	function getPopulatedList($list)
+	function getPopulatedList($list, $preload = true)
 	{
 		$list = Search_ResultSet::create($list);
 		$defaultValues = $this->plugin->getFields();
@@ -52,9 +52,11 @@ class Search_Formatter
 
 		$enableHighlight = in_array('highlight', $fields);
 		foreach ($list as $pre) {
-			foreach ($fields as $f) {
-				if (isset($pre[$f])) {
-					$pre[$f]; // Dynamic loading if applicable
+			if( $preload ) {
+				foreach ($fields as $f) {
+					if (isset($pre[$f])) {
+						$pre[$f]; // Dynamic loading if applicable
+					}
 				}
 			}
 
