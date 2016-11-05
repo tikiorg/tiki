@@ -61,6 +61,13 @@ class UsersPasswordCommand extends Command
 			exit(1);
 		}
 
+		if ($prefs['auth_method'] != 'tiki'){
+			$output->writeln("<info>\nWarning: Tiki authentication method set to: <options=bold>" . $prefs['auth_method'] . "</>\n"
+			. "Depending on the settings for this authentication method, \n"
+			. "this change of the local password might not be enough for the user to be able to login</info>"
+			. "\n");
+		}
+
 		if ($prefs['feature_user_encryption'] === 'y' && !$input->getOption('force')) {
 			$output->writeln("<error>User encryption feature is enabled.\n" .
 				"Changing the user password might loose encrypted data.\n\n" .
