@@ -595,7 +595,6 @@ $admin_icons = array(
 	),
 	"print" => array(
 		'title' => tr('Print Settings'),
-		'disabled' => $prefs['feature_calendar'] != 'y',
 		'description' => tr('Settings and features for print versions and pdf generation'),
 		'help' => 'Print',
 	),

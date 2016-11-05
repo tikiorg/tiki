@@ -17,16 +17,30 @@
 				<div class="adminoptionboxchild print_pdf_from_url_childcontainer mpdf">
 					{preference name=print_pdf_mpdf_path}
 				</div>
-				</fieldset>
-			    <fieldset>
-			
-                <legend>{tr}Print Version Settings{/tr}</legend>
-				
-                {preference name=print_wiki_authors}
-				{preference name=print_original_url_wiki}
-				{preference name=print_original_url_tracker}
-				{preference name=print_original_url_forum}
 			</fieldset>
+			    
+            <fieldset>
+              <legend>{tr}Wiki Print Version{/tr}</legend>
+              {preference name=print_wiki_authors}
+			  {preference name=feature_wiki_print}
+			   <div class="adminoptionboxchild" id="feature_wiki_print_childcontainer">
+				{preference name=feature_wiki_multiprint}
+			   </div>
+			   {preference name=feature_print_indexed}
+			   {preference name=print_original_url_wiki}
+            </fieldset>
+            
+            <fieldset>
+              <legend>{tr}Articles{/tr}</legend>
+                  {preference name=feature_cms_print}
+			</fieldset>
+            	
+            <fieldset>
+              <legend>{tr}Miscellous Settings{/tr}</legend>
+                {preference name=print_original_url_tracker}
+				{preference name=print_original_url_forum}
+                
+            </fieldset>
 	<div class="t_navbar margin-bottom-md text-center">
 		<input type="submit" class="btn btn-primary btn-sm tips" title=":{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}" />
 	</div>

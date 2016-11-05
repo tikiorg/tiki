@@ -50,7 +50,7 @@
 				{preference name=wiki_authors_style label="{tr}List authors{/tr}"}
 				<div class="adminoptionbox wiki_authors_style_childcontainer classic business collaborative lastmodif">
 					{preference name=wiki_authors_style_by_page label="{tr}Allow override per page{/tr}"}
-					{preference name=print_wiki_authors}
+					
 				</div>
 				{preference name=feature_wiki_show_hide_before}
 				{preference name=wiki_actions_bar}
@@ -237,11 +237,6 @@
 				{permission_link mode=button permType=wiki textFilter=lock showDisabled=y}
 			</div>
 			{preference name=wiki_creator_admin}
-			{preference name=feature_wiki_print}
-			<div class="adminoptionboxchild" id="feature_wiki_print_childcontainer">
-				{preference name=feature_wiki_multiprint}
-			</div>
-			{preference name=feature_print_indexed}
 			{preference name=feature_wiki_mindmap}
 			{preference name=wiki_feature_copyrights}
 			<div class="adminoptionbox clearfix">
