@@ -40,6 +40,7 @@ function wikiplugin_archivebuilder( $data, $params )
 
 		$handlers = array(
 			'tracker-attachments' => 'wikiplugin_archivebuilder_trackeratt',
+			'tracker-files' => 'wikiplugin_archivebuilder_trackerfiles',
 			'page-as-pdf' => 'wikiplugin_archivebuilder_pagetopdf',
 		);
 
@@ -101,6 +102,9 @@ function wikiplugin_archivebuilder_trackeratt( $basepath, $trackerItem )
 	}
 
 	$basepath = rtrim($basepath, '/') . '/';
+	if ($basepath == '/'){
+		$basepath = '';
+	}
 
 	$attachments = array();
 
@@ -112,6 +116,46 @@ function wikiplugin_archivebuilder_trackeratt( $basepath, $trackerItem )
 		$attachments[$name] = wikiplugin_archivebuilder_tracker_get_attbody($complete);
 	}
 	
+	return $attachments;
+}
+
+function wikiplugin_archivebuilder_trackerfiles($basepath, $trackerItem)
+{
+	$trklib = TikiLib::lib('trk');
+	$data = $trklib->get_tracker_item($trackerItem);
+
+	$item = Tracker_Item::fromInfo($data);
+
+	if (! $item->canView()) {
+		return array();
+	}
+
+	$basepath = rtrim($basepath, '/') . '/';
+	if ($basepath == '/'){
+		$basepath = '';
+	}
+
+	$attachments = array();
+
+	/** @var FileGalLib $fileGal */
+	$fileGal = TikiLib::lib('filegal');
+	/** @var Tracker_Definition $definition */
+	$definition = $fields = $item->getDefinition();
+	$fields = $definition->getFields();
+	foreach($fields as $field) {
+		if($field['type'] == 'FG') {
+			if (isset($data[$field['fieldId']])){
+				$value = $data[$field['fieldId']];
+				foreach(explode(',', $value) as $fileId){
+					$file = $fileGal->get_file($fileId);
+					if (count($file)){
+						$name = $basepath . ($field['permName'] ? : $field['fieldId']) . '/' . $file['filename'];
+						$attachments[$name] = $file['data'];
+					}
+				}
+			}
+		}
+	}
 	return $attachments;
 }
 
