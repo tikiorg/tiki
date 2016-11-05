@@ -42,7 +42,7 @@ class Table_Code_Bind extends Table_Code_Manager
 		if (parent::$ajax) {
 			//workaround since the processing formatting is not being applied upon sort (reported as bug #769)
 			$bindss = ['$(\'' . parent::$tid . ' tbody tr td\').css(\'opacity\', 0.25);'];
-			$jq[] = $this->iterate($bindss, '.bind(\'sortStart\', function(e, c){', $this->nt . '})', $this->nt2, '', '');
+			$jq[] = $this->iterate($bindss, '.on(\'sortStart\', function(e, c){', $this->nt . '})', $this->nt2, '', '');
 
 			global $prefs;
 			if ($prefs['jquery_timeago'] === 'y') {	// re-attach timeago for ajax calls
@@ -51,7 +51,7 @@ class Table_Code_Bind extends Table_Code_Manager
 		}
 		$bindtr[] = '$(\'div#' . parent::$id . '\').css(\'visibility\', \'visible\');';
 		$bindup = 'storeSortTable(\''.parent::$tid.'\',$(\'' . parent::$tid . '\').html());';
-		$jq[] = $this->iterate($bindtr, '.bind(\'tablesorter-ready\', function(){', $this->nt . '})', $this->nt2, '', '');
+		$jq[] = $this->iterate($bindtr, '.on(\'tablesorter-ready\', function(){', $this->nt . '})', $this->nt2, '', '');
         $jq[] = "$('.icon-pdf').parent().click(function(){".$bindup."})";
 
 		if (count($jq) > 0) {
