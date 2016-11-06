@@ -36,7 +36,7 @@
 			</fieldset>
             	
             <fieldset>
-              <legend>{tr}Miscellous Settings{/tr}</legend>
+              <legend>{tr}Miscellaneous Settings{/tr}</legend>
                 {preference name=print_original_url_tracker}
 				{preference name=print_original_url_forum}
                 
