@@ -1566,7 +1566,7 @@ class UsersLib extends TikiLib
 		$user = $res['login'];
 
 		// check for account flags
-			if ($res['waiting'] == 'u'){				// if account is in validation mode.
+			if ($res['waiting'] == 'u' || 'a'){				// if account is in validation mode.
 
 				if ($pass == $res['valid']) 			// if user sucessfully provies code from email
 					return array(USER_VALID, $user);
