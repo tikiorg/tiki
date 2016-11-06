@@ -212,6 +212,8 @@ function wikiplugin_fluidgrid($data, $params, $pos)
     // Handle the column widths.
     //
     // There are several cases:
+    // (not in the order in which they must be handled)
+    //
     // (1) Colsize is not present
     //     - Share out the space as evenly as possible
     //
@@ -226,15 +228,37 @@ function wikiplugin_fluidgrid($data, $params, $pos)
     //     - Assign the specified sizes and share out the remaining
     //       units among the unsized columns
     //  
+    // The remaining cases are for some degree of compatibility with the 
+    // SPLIT plugin.  
+    //  
     // (4) Colsize is present
-    //     It specifies the size of all columns
+    //     It specifies the size of all columns in PIXELS
     //     The total size is > 12
     //     - Use the size as an approximate weighting
     //  
     // (5) Colsize is present
-    //     It does not specifiy the size of all columns
+    //     It specifies the size of some but not all columns in PIXELS
     //     The total size is > 12
-    //     - Use the size as an approximate weighting
+    //     - Use the size as an approximate weighting, with a minimum size of 1.
+    //  
+    // (6) Colsize is present
+    //     All columns are specified in PERCENT.
+    //     - Use the size as an approximate weighting, relative to 100, with a 
+    //       minimum size of 1.
+    //     - The total can be less than 12, e.g. two columns with 25%|25%
+    //       should translate to 3|3 and not 6|6 
+    //  
+    // (7) Colsize is present
+    //     Some columns are specified in PERCENT, the rest are not specified.
+    //     - Use the size as an approximate weighting, relative to 100, with a 
+    //       minimum size of 1.
+    //     - Columns with an unspecified width should fill up remaining space,
+    //       e.g. 3 columns with 25%|25% should translate to 3|3|6
+    //  
+    // (8) Colsize is present
+    //     Some columns are specified in PERCENT, some are specified in PIXELS.
+    //     - Ingore the pixel values. Handle as above.
+    //       (I don't have a good idea how to handle this case!) 
     //  
 
     // We will store the final widths in this array
@@ -243,12 +267,25 @@ function wikiplugin_fluidgrid($data, $params, $pos)
     if ( isset($colsize) ) 
     {
       // colsize is specified
+     
+      // Check for a percent symbol on any column 
+	  $percent = ( strpos($colsize,'%') !== false ) ;
+      
       // Count the total size and the number of unsized columns
       $tdsize   = explode("|", $colsize);
       $tdtotal  = 0 ;
       $tdnosize = 0 ;
       $s_array  = array() ;
 
+      // There are two parts to this algorithm:
+      // [1] Gathering information
+      // [2] Setting the final column sizes
+
+      // [1] Gathering information
+      // In this stage we read the colsize values and initialize
+      // $s_array   = colsize values
+      // $tdtotal   = total weighting
+      // $tdnosize  = count of columns without a specified size
       for ( $i=0 ; $i<$maxcols ; $i++ ) 
       {
         if ( isset ( $tdsize[$i] ) && ( trim ( $tdsize[$i] ) != '' ) ) 
@@ -259,20 +296,36 @@ function wikiplugin_fluidgrid($data, $params, $pos)
             // treat 0 as unsized
             $s_array[$i] = 0 ;
             $tdnosize++ ;
-          }  
+          }
+          else if ( $percent && ( strpos($w,'%') === false ) )
+          {
+            // Percentage mode, but percent symbol not present.
+            $s_array[$i] = 0 ;
+            $tdnosize++ ;
+          }
           else
           {
+            // Normal case. Save the width and increment the total.
             $s_array[$i] =  $w ;
             $tdtotal     += $w ;
           }  
         }
         else
         {
+          // Size not specified for this column.
           $s_array[$i] = 0 ;
           $tdnosize++ ;
         }
       }
+
+      if ( $percent )
+      {
+        // In percentage mode, the total wighting is always 100
+        $tdtotal = 100 ;
+      }
       
+      // [2] Setting the final column sizes
+      // In this stage we store the final column sizes in $w_array
       if ( ( $tdtotal + $tdnosize ) <= 12 )
       {
         // Use the values as specified.
@@ -307,6 +360,8 @@ function wikiplugin_fluidgrid($data, $params, $pos)
         $i = 0 ;
         $j = $maxcols ; 
         $h = 0 ;
+        $pcfill = true ;
+        
         while ( $j < 12 )
         {
           // Increment the width if it is underweight
@@ -329,10 +384,24 @@ function wikiplugin_fluidgrid($data, $params, $pos)
               // Store the current position
               $h = $j ;
             }
+            else if ( $pcfill )
+            {
+              // In percentage mode, change 0% weighted columns to 100%
+              // so that they take up the remaining space.
+              $pcfill = false ;
+              for ( $k=0 ; $k<$maxcols ; $k++ ) 
+              {
+                if ( $s_array[$k] == 0 )
+                {
+                  $s_array[$k] = 100 ;
+                } 
+              }
+            }
             else
             {
-              // We get here if the alogrithm fails.
-              // This should be dead code, but that's better then an endless loop.   
+              // We get here in percentage mode, if the size is specified for
+              // all columns, but the total is less than 100%, e.g. two columns 
+              // with 25%|25%, will result in 3|3.
               break ;
             }
           }    
