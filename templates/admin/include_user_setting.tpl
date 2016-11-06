@@ -87,7 +87,7 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}Messaging and Notifications{/tr}"}
-			<h2>{tr}Messaging and Notifications{/tr}{help url="Date+and+Time"}</h2>
+			<h2>{tr}Messaging and Notifications{/tr}</h2>
 			<fieldset>
 				<legend>{tr}Messages{/tr}</legend>
 				<div class="adminoptionbox">
@@ -135,7 +135,7 @@
 			</fieldset>
 		{/tab}
 		{tab name="{tr}User Files{/tr}"}
-			<h2>{tr}User Files{/tr}{help url="Date+and+Time"}</h2>
+			<h2>{tr}User Files{/tr}</h2>
 			<fieldset>
 				<legend>{tr}Activate the feature{/tr}</legend>
 				{preference name=feature_userfiles visible="always"}
