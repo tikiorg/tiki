@@ -23,7 +23,7 @@ function wikiplugin_tag_info()
 				'name' => tra('Tag Name'),
 				'description' => tr('Any valid HTML tag, 0% by default', '<code>span</code>'),
 				'since' => '1',
-				'filter' => 'alpha',
+				'filter' => 'text',
 				'default' => 'span',
 			),
 			'style' => array(
