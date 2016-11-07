@@ -81,6 +81,7 @@ class Captcha_ReCaptcha20 extends Zend\Captcha\ReCaptcha
      */
     public function render()
     {
+    	TikiLib::lib('header')->add_css('.g-recaptcha-response {display:none !important;}');
         return '<div class="g-recaptcha" data-sitekey="' . $this->getPubkey() . '" id="antibotcode"></div>';
     }
 
