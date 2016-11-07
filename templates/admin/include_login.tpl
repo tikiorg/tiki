@@ -337,6 +337,69 @@
 				</div>
 			</fieldset>
 		{/tab}
+
+		{tab name="{tr}SAML2{/tr}"}
+			<fieldset>
+				<legend>{tr}SAML2{/tr}{help url="AuthSAML" desc="{tr}based on Onelogin's php-saml {/tr}"}</legend>
+				<input type="hidden" name="auth_saml" />
+				<input type="hidden" name="action" value="login" />
+				{if $prefs.auth_method ne 'saml'}
+					{remarksbox type="warning" title="{tr}Warning{/tr}" close="n"}
+						{tr}You must change the Authentication Method to SAML for these changes to take effect{/tr}
+					{/remarksbox}
+				{/if}
+
+				<fieldset>
+					<legend>{tr}IDENTITY PROVIDER SETTINGS{/tr}</legend>
+					{preference name=saml_idp_entityid}
+					{preference name=saml_idp_sso}
+					{preference name=saml_idp_slo}
+					{preference name=saml_idp_x509cert}
+				</fieldset>
+				<fieldset>
+					<legend>{tr}OPTIONS{/tr}</legend>
+						{preference name=saml_options_autocreate}
+						{preference name=saml_options_sync_group}
+						{preference name=saml_options_slo}
+						{preference name=saml_options_skip_admin}
+						{preference name=saml_option_account_matcher}
+						{preference name=saml_option_default_group}
+						{preference name=saml_option_login_link_text}
+				</fieldset>
+				<fieldset>
+					<legend>{tr}ATTRIBUTE MAPPING{/tr}</legend>
+						{preference name=saml_attrmap_username}
+						{preference name=saml_attrmap_mail}
+						{preference name=saml_attrmap_group}
+				</fieldset>
+				<fieldset>
+					<legend>{tr}GROUP MAPPING{/tr}</legend>
+						{preference name=saml_groupmap_admins}
+						{preference name=saml_groupmap_registered}
+				</fieldset>
+				<fieldset>
+					<legend>{tr}ADVANCED SETTINGS{/tr}</legend>
+						{preference name=saml_advanced_debug}
+						{preference name=saml_advanced_strict}
+						{preference name=saml_advanced_sp_entity_id}
+						{preference name=saml_advanced_nameidformat}
+						{preference name=saml_advanced_requestedauthncontext}
+						{preference name=saml_advanced_nameid_encrypted}
+						{preference name=saml_advanced_authn_request_signed}
+						{preference name=saml_advanced_logout_request_signed}
+						{preference name=saml_advanced_logout_response_signed}
+						{preference name=saml_advanced_metadata_signed}
+						{preference name=saml_advanced_want_message_signed}
+						{preference name=saml_advanced_want_assertion_signed}
+						{preference name=saml_advanced_want_assertion_encrypted}
+						{preference name=saml_advanced_retrieve_parameters_from_server}
+						{preference name=saml_advanced_sp_x509cert}
+						{preference name=saml_advanced_sp_privatekey}
+						{preference name=saml_advanced_sign_algorithm}
+				</fieldset>
+			</fieldset>
+		{/tab}
+
 		{tab name="{tr}CAS{/tr}"}
 			<h2>{tr}CAS{/tr}</h2>
 			<input type="hidden" name="auth_cas" />

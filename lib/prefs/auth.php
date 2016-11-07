@@ -20,6 +20,7 @@ function prefs_auth_list()
 				'pam' => tra('Tiki and PAM'),
 				'ldap' => tra('Tiki and LDAP'),
 				'cas' => tra('CAS (Central Authentication Service)'),
+				'saml' => tra('SAML'),
 				'shib' => tra('Shibboleth'),
 				'ws' => tra('Web Server'),
 				'phpbb' => tra('phpBB'),

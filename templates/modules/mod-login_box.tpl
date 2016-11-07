@@ -127,6 +127,17 @@ if (jqueryTiki.no_cookie) {
 		{if $prefs.shib_skip_admin eq 'y'}
 			<br><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Log in as admin{/tr}</a>
 		{/if}
+	{elseif $prefs.auth_method eq 'saml' && $showloginboxes neq 'y'}
+		<b><a class="linkmodule" href="tiki-login.php?auth=saml">{tr}
+		{if $prefs.saml_option_login_link_text eq ''}
+			Log in through SAML2 IdP
+		{else}
+			{$prefs.saml_option_login_link_text}
+		{/if}
+		{/tr}</a></b>
+		{if $prefs.saml_options_skip_admin eq 'y'}
+			<br /><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Log in as admin{/tr}</a>
+		{/if}
 	{else}
 		{assign var='close_tags' value=''}
 		{if $mode eq "popup"}

@@ -488,6 +488,8 @@ if ($prefs['auth_method'] == 'shib' and isset($_SERVER['REMOTE_USER'])) {
 
 $userlib->check_cas_authentication($user_cookie_site);
 
+$userlib->check_saml_authentication($user_cookie_site);
+
 // if the username is already saved in the session, pull it from there
 if (isset($_SESSION["$user_cookie_site"])) {
 	$user = $_SESSION["$user_cookie_site"];

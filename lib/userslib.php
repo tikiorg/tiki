@@ -220,6 +220,15 @@ class UsersLib extends TikiLib
 		}
 		return $userexists_cache[$user];
 	}
+	function user_exists_by_email($email)
+	{
+		if (!isset($userexists_cache[$email])) {
+			$query = 'select count(*) from `users_users` where upper(`email`) = ?';
+			$result = $this->getOne($query, array(TikiLib::strtoupper($email)));
+			$userexists_cache[$email] = $result;
+		}
+		return $userexists_cache[$email];
+	}
 	function get_user_real_case($user)
 	{
 		$query = 'select `login` from `users_users` where upper(`login`) = ?';
@@ -278,6 +287,22 @@ class UsersLib extends TikiLib
 				$lslib->set_operator_status($user, 'offline');
 			}
 		}
+
+		if ($prefs['auth_method'] === 'saml' && $prefs['saml_options_slo'] == 'y') {
+			$saml_instance = $this->get_saml_auth();
+			if (isset($saml_instance)) {
+				$nameId = null;
+				$sessionIndex = null;
+				if (isset($_SESSION['saml_nameid'])) {
+					$nameId = $_SESSION['saml_nameid']; 
+				}
+				if (isset($_SESSION['saml_sessionindex'])) {
+					$sessionIndex = $_SESSION['saml_sessionindex'];
+				}				
+				$saml_instance->logout(null, array(), $nameId, $sessionIndex);
+			}
+		}
+
 		setcookie($user_cookie_site, '', -3600, $prefs['cookie_path'], $prefs['cookie_domain']);
 		/* change group home page or deactivate if no page is set */
 		if (!empty($redir)) {
@@ -305,9 +330,9 @@ class UsersLib extends TikiLib
 
 		if ($prefs['auth_method'] === 'ws') {
 			header('Location: ' . str_replace('//', '//admin:@', $url)); // simulate a fake login to logout the user
-		} else {
-			header('Location: ' . $url);
 		}
+
+		header('Location: ' . $url);
 		return;
 	}
 
@@ -396,9 +421,14 @@ class UsersLib extends TikiLib
 		$shib_create_tiki = ($prefs['shib_create_user_tiki'] == 'y');
 		$shib_skip_admin = ($prefs['shib_skip_admin'] == 'y');
 
+		// see if we are to use SAML
+		$auth_saml = ($prefs['auth_method'] == 'saml');
+ 		$saml_create_tiki = (isset($prefs['saml_options_autocreates']) && $prefs['saml_options_autocreates'] == 'y');
+ 		$saml_skip_admin = (isset($prefs['saml_options_skip_admin']) && $prefs['saml_options_skip_admin'] == 'y');
+
 		// first attempt a login via the standard Tiki system
 		//
-		if (!($auth_shib || $auth_cas) || $user == 'admin') { //redflo: does this mean, that users in cas and shib are not replicated to tiki tables? Does this work well?
+		if (!($auth_shib || $auth_cas || $auth_saml) || $user == 'admin') { //redflo: does this mean, that users in cas and shib are not replicated to tiki tables? Does this work well?
 			list($result, $user) = $this->validate_user_tiki($user, $pass, $validate_phase);
 		} else {
 			$result = NULL;
@@ -438,10 +468,11 @@ class UsersLib extends TikiLib
 		// if we are using tiki auth or if we're using an alternative auth except for admin
 
 		// todo: bad hack. better search for a more general solution here
-		if ((!$auth_ldap && !$auth_pam && !$auth_cas && !$auth_shib && !$auth_phpbb)
+		if ((!$auth_ldap && !$auth_pam && !$auth_cas && !$auth_shib&& !$auth_saml && !$auth_phpbb)
 				|| (
 						( ($auth_ldap && $skip_admin)
 							|| ($auth_shib && $shib_skip_admin)
+							|| ($auth_saml && $saml_skip_admin)
 							|| ($auth_pam && $pam_skip_admin)
 							|| ($auth_cas && $cas_skip_admin)
 							|| ($auth_phpbb && $phpbb_skip_admin)
@@ -685,7 +716,135 @@ class UsersLib extends TikiLib
 					exit;
 				}
 			}
+		} else if ($auth_saml) {
+			// next see if we need to check SAML
+			if (isset($_SESSION['samlUserdata']) && !empty($_SESSION['samlUserdata']) ||
+				isset($_SESSION['samlNameId']) && !empty($_SESSION['samlNameId'])
+				) {
+				
+				$saml_username = $saml_email = '';
+				$saml_groups = array();
 
+				if (empty($_SESSION['samlUserdata'])) {
+					$saml_username = $_SESSION['samlNameId'];
+					$saml_email = $saml_username;
+				} else {
+					$usernameMapping = isset($prefs['saml_attrmap_username'])? $prefs['saml_attrmap_username'] : '';
+					$emailMapping = isset($prefs['saml_attrmap_mail'])? $prefs['saml_attrmap_mail']: '';
+					$groupMapping = isset($prefs['saml_attrmap_group'])? $prefs['saml_attrmap_group']: '';
+
+					if (!empty($usernameMapping) && isset($_SESSION['samlUserdata'][$usernameMapping]) && !empty($_SESSION['samlUserdata'][$usernameMapping][0])) {
+						$saml_username = $_SESSION['samlUserdata'][$usernameMapping][0];
+					}
+
+					if (!empty($emailMapping) && isset($_SESSION['samlUserdata'][$emailMapping]) && !empty($_SESSION['samlUserdata'][$usernameMapping][0])) {
+						$saml_email = $_SESSION['samlUserdata'][$emailMapping][0];
+					}
+
+					if (!empty($groupMapping) && isset($_SESSION['samlUserdata'][$groupMapping]) && !empty($_SESSION['samlUserdata'][$groupMapping])) {
+						$group_values = $_SESSION['samlUserdata'][$groupMapping];
+
+						foreach($group_values as $group_value) {
+							if (isset($prefs['saml_groupmap_admins']) && !empty($prefs['saml_groupmap_admins'])) {
+								if (strpos($prefs['saml_groupmap_admins'], $group_value) !== false) {
+									$saml_groups[] = "Admins";
+								}
+							}
+							if (isset($prefs['saml_groupmap_registered']) && !empty($prefs['saml_groupmap_registered'])) {
+								if (strpos($prefs['saml_groupmap_registered'], $group_value) !== false) {
+									$saml_groups[] = "Registered";
+								}
+							}
+						}
+					}
+
+					// Code SAML Custom role here
+				}
+
+				$matcher = isset($prefs['saml_option_account_matcher'])? $prefs['saml_option_account_matcher'] : 'email';
+
+				if ($matcher == 'email') {
+					if (empty($saml_email)) {
+						echo "The email could not be retrieved from the IdP and is required";
+						exit();
+					} else {
+						$username = $this->get_user_by_email($saml_email);
+						if ($this->user_exists($username)) {
+							$userTikiPresent = true;
+						} else {
+							$userTikiPresent = false;
+							if (!isset($prefs['saml_options_autocreate']) || $prefs['saml_options_autocreate'] != 'y') {
+								echo 'The user [ ' . $saml_email . ' ] is not registered with this wiki and autocreate is disabled.';
+								exit();
+							}
+						}
+					}
+				} else {
+					if (empty($saml_username)) {
+						echo "The username could not be retrieved from the IdP and is required";
+						exit();
+					} else {
+						$username = $saml_username;
+						if ($this->user_exists($saml_username)) {
+							$userTikiPresent = true;
+						} else {
+							$userTikiPresent = false;
+
+							if (!isset($prefs['saml_options_autocreate']) || $prefs['saml_options_autocreate'] != 'y') {
+								echo 'The user [ ' . $saml_username . ' ] is not registered with this wiki and autocreate is disabled.';
+								exit();
+							}
+						}
+					}
+				}
+
+				if (empty($username)) {
+					$username = $saml_username;
+				}
+
+				$cookie_site = preg_replace("/[^a-zA-Z0-9]/", "", $prefs['cookie_name']);
+				$user_cookie_site = 'tiki-user-' . $cookie_site;
+				$_SESSION["$user_cookie_site"] = $username;
+
+				$randompass = $this->genPass();
+				if (!$userTikiPresent) {
+					// Create user
+					if (empty($saml_groups)) {
+						if (isset($prefs['saml_option_default_group']) && !empty($prefs['saml_option_default_group'])) {
+							$saml_groups[] = $prefs['saml_option_default_group'];
+						}
+					}
+
+					$result = $this->add_user($username, $randompass, $saml_email, '', false, NULL, NULL, NULL, $saml_groups);
+
+					if (!$result) {
+						echo 'The user [ ' . $username . '|' .$saml_email. ' ] is not registered with this wiki and the creation process failed.';
+						exit();
+					}
+
+					// if it worked ok, just log in
+					if ($result == USER_VALID) {
+						// before we log in, update the login counter
+						return array($this->update_lastlogin($username), $username, $result);
+					} elseif ($result == SERVER_ERROR) {
+						// check the notification status for this type of error
+						return array(false, $username, $result);
+					} else {
+						// otherwise don't log in.
+						return array(false, $username, $result);
+					}
+				} else {
+					// Update user
+					if ($username != 'admin') { // Prevent change groups of the admin account
+						if (isset($prefs['saml_options_sync_group']) && $prefs['saml_options_sync_group'] == 'y') {
+							if (!empty($saml_groups)) {
+								$this->assign_user_to_groups($username, $saml_groups);
+							}
+						}
+					}
+					return array($this->update_lastlogin($username), $username, USER_VALID);
+				}
+			}
 		} else if ($auth_ldap) {
 			// next see if we need to check LDAP
 			// check the user account
@@ -978,6 +1137,147 @@ class UsersLib extends TikiLib
 		}
 
 	}
+
+	/**
+	 * Get php-saml auth object
+	 */
+	function check_saml_authentication($user_cookie_site) {
+		global $prefs, $base_url;
+
+		$clicked_on_saml_link = false;
+		ini_set('display_errors', 1);
+		ini_set('display_startup_errors', 1);
+		error_reporting(E_ALL);
+		// Check endpoints
+		if (array_key_exists('auth', $_REQUEST) && $_REQUEST['auth'] == 'saml') {
+			$saml_instance = $this->get_saml_auth();
+			$saml_instance->login();
+		} else if (array_key_exists('saml_metadata', $_REQUEST)) {
+			$samlSettingsInfo = $this->get_saml_settings();
+			$saml_settings = new OneLogin_Saml2_Settings($samlSettingsInfo, true);
+			$metadata = $saml_settings->getSPMetadata();
+			$errors = $saml_settings->validateMetadata($metadata);
+			if (empty($errors)) {
+				header('Content-Type: text/xml');
+				echo $metadata;
+				exit();
+			} else {
+				throw new OneLogin_Saml2_Error(
+					'Invalid SP metadata: '.implode(', ', $errors),
+					OneLogin_Saml2_Error::METADATA_SP_INVALID
+				);
+			}
+		}
+		else if (array_key_exists('saml_acs', $_REQUEST)) {
+			$clicked_on_saml_link = true;
+			$saml_instance = $this->get_saml_auth();
+			$saml_instance->processResponse();
+			$errors = $saml_instance->getErrors();
+			if (!empty($errors)) {
+				print_r('<p>'.implode(', ', $errors).'</p>');
+				exit();
+			}
+			if (!$saml_instance->isAuthenticated()) {
+				echo "<p>SAML Login failed. User not authenticated</p>";
+				exit();
+			}
+
+			$_SESSION['samlUserdata'] = $saml_instance->getAttributes();
+			$_SESSION['samlNameId'] = $saml_instance->getNameId();
+			$_SESSION['samlSessionIndex'] = $saml_instance->getSessionIndex();
+/*
+			if (isset($_POST['RelayState']) && OneLogin_Saml2_Utils::getSelfURL() != $_POST['RelayState']) {
+				$saml_instance->redirectTo($_POST['RelayState']);
+			}
+*/
+		} else if (array_key_exists('saml_sls', $_REQUEST)) {
+			$saml_instance = $this->get_saml_auth();
+
+			$saml_instance->processSLO(false);
+			$errors = $saml_instance->getErrors();
+			if (!empty($errors)) {
+				print_r('<p>'.implode(', ', $errors).'</p>');
+				exit();
+			} else {
+				unset($_SESSION['samlUserdata']);
+				unset($_SESSION['samlNameId']);
+				unset($_SESSION['samlSessionIndex']);
+			}
+		}
+
+		$already_logged_as_admin = isset($_SESSION["$user_cookie_site"]) && $_SESSION["$user_cookie_site"] == 'admin';
+		$force_saml_login = !(isset($prefs['saml_options_skip_admin']) && $prefs['saml_options_skip_admin'] == 'y');
+
+		if ($clicked_on_saml_link || ($force_saml_login && !$already_logged_as_admin)) {
+			$this->validate_user("", "", "", "");
+		}
+	}
+
+	/**
+	 * Get php-saml auth object
+	 */
+	function get_saml_auth() {
+		$samlSettingsInfo = $this->get_saml_settings();
+
+		try {
+			$auth = new OneLogin_Saml2_Auth($samlSettingsInfo);
+		} catch (Exception $e) {
+			print_r("There is a problem with the SAML settings, review them: ". $e->getMessage());
+			exit();
+		}
+
+		return $auth;
+	}
+
+	/**
+	 * Build a settingsInfo array based on SAML settings store at Tiki
+	 */
+	function get_saml_settings() {
+		global $prefs;
+		global $base_url;
+
+		$samlSettingsInfo = array (
+			'strict' => isset($prefs['saml_advanced_strict']) && $prefs['saml_advanced_strict'] == 'y'? true : false,
+			'debug' => isset($prefs['saml_advanced_debug']) && $prefs['saml_advanced_debug'] == 'y'? true : false,
+			'sp' => array (
+				'entityId' => (!empty($prefs['saml_advanced_sp_entity_id'])? $prefs['saml_advanced_sp_entity_id'] : 'php-saml'),
+				'assertionConsumerService' => array (
+					'url' => $base_url . 'tiki-login.php?saml_acs'
+				),
+				'singleLogoutService' => array (
+					'url' => $base_url . 'tiki-login.php?saml_sls'
+				),
+				'NameIDFormat' => (!empty($prefs['saml_advanced_nameidformat'])? $prefs['saml_advanced_nameidformat'] : 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified'),
+				'x509cert' => isset($prefs['saml_advanced_sp_x509cert']) ? $prefs['saml_advanced_sp_x509cert'] : '',
+				'privateKey' => isset($prefs['saml_advanced_sp_privatekey']) ? $prefs['saml_advanced_sp_privatekey'] : '',
+			),
+			'idp' => array (
+				'entityId' => isset($prefs['saml_idp_entityid']) ? $prefs['saml_idp_entityid'] : '',
+				'singleSignOnService' => array (
+					'url' => isset($prefs['saml_idp_sso']) ? $prefs['saml_idp_sso'] : '',
+				),
+				'singleLogoutService' => array (
+					'url' => isset($prefs['saml_idp_slo']) ? $prefs['saml_idp_slo'] : '',
+				),
+				'x509cert' => isset($prefs['saml_idp_x509cert']) ? $prefs['saml_idp_x509cert']: '',
+				'lowercaseUrlencoding' => isset($prefs['saml_advanced_idp_lowercase_url_encoding']) && $prefs['saml_advanced_idp_lowercase_url_encoding'] == 'y'? true: false,
+			),
+			'security' => array (
+				'signMetadata' => isset($prefs['saml_advanced_metadata_signed']) && $prefs['saml_advanced_metadata_signed'] == 'y'? true: false,
+				'nameIdEncrypted' => isset($prefs['saml_advanced_nameid_encrypted']) && $prefs['saml_advanced_nameid_encrypted'] == 'y'? true: false,
+				'authnRequestsSigned' => isset($prefs['saml_advanced_authn_request_signed']) && $prefs['saml_advanced_authn_request_signed'] == 'y'? true: false,
+				'logoutRequestSigned' => isset($prefs['saml_advanced_logout_request_signed']) && $prefs['saml_advanced_logout_request_signed'] == 'y'? true: false,
+				'logoutResponseSigned' => isset($prefs['saml_advanced_logout_response_signed']) && $prefs['saml_advanced_logout_response_signed'] == 'y'? true: false,
+				'wantMessagesSigned' => isset($prefs['saml_advanced_want_message_signed']) && $prefs['saml_advanced_want_message_signed'] == 'y'? true: false,
+				'wantAssertionsSigned' => isset($prefs['saml_advanced_want_assertion_signed']) && $prefs['saml_advanced_want_assertion_signed'] == 'y'? true: false,
+				'wantAssertionsEncrypted' => isset($prefs['saml_advanced_want_assertion_encrypted']) && $prefs['saml_advanced_want_assertion_encrypted'] == 'y'? true: false,
+				'requestedAuthnContext' => isset($prefs['saml_advanced_requestedauthncontext']) && $prefs['saml_advanced_requestedauthncontext'],
+        		'signatureAlgorithm' => isset($prefs['saml_advanced_sign_algorithm'])? $prefs['saml_advanced_sign_algorithm'] : 'http://www.w3.org/2000/09/xmldsig#rsa-sha1',
+			)
+		);
+		return $samlSettingsInfo;
+	}
+
 
 	/**
 	 * Initiates the Tiki LDAP library.
