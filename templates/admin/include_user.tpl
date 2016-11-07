@@ -1,5 +1,5 @@
 {* $Id$ *}
-<form class="form-horizontal" action="tiki-admin.php?page=user_setting" class="admin" method="post">
+<form class="form-horizontal" action="tiki-admin.php?page=user" class="admin" method="post">
 	<input type="hidden" name="ticket" value="{$ticket|escape}">
 	<input type="hidden" name="new_prefs" />
 	{tabset name="admin_user_setting"}

@@ -249,7 +249,7 @@ $admin_icons = array(
 		'description' => tr('User registration, remember me cookie settings and authentication methods'),
 		'help' => 'Login Config',
 	),
-    "user_setting" => array(
+    "user" => array(
         'title' => tr('User Setting'),
         'description' => tr('User related preferences like info and picture, features, messages and notification, files, etc'),
         'help' => 'User Setting',
