@@ -327,11 +327,11 @@ $admin_icons = array(
 		'description' => tr('User registration, remember me cookie settings and authentication methods'),
 		'help' => 'Login Config',
 	),
-	"community" => array(
-		'title' => tr('Community'),
-		'description' => tr('User specific features and settings'),
-		'help' => 'Community',
-	),
+    "user" => array(
+        'title' => tr('User Setting'),
+        'description' => tr('User related preferences like info and picture, features, messages and notification, files, etc'),
+        'help' => 'User Setting',
+    ),
 	"profiles" => array(
 		'title' => tr('Profiles'),
 		'description' => tr('Repository configuration, browse and apply profiles'),
@@ -515,12 +515,6 @@ $admin_icons = array(
 		'description' => tr('Message settings'),
 		'help' => 'Inter-User Messages',
 	),
-	"userfiles" => array(
-		'title' => tr('User Files'),
-		'disabled' => $prefs['feature_userfiles'] != 'y',
-		'description' => tr('User files settings'),
-		'help' => 'User Files',
-	),
 	"webmail" => array(
 		'title' => tr('Webmail'),
 		'disabled' => $prefs['feature_webmail'] != 'y',
@@ -581,6 +575,11 @@ $admin_icons = array(
 		'description' => tr('Configure social networks integration'),
 		'help' => 'Social Networks',
 	),
+    "community" => array(
+        'title' => tr('Community'),
+        'description' => tr('User specific features and settings'),
+        'help' => 'Community',
+    ),
 	"share" => array(
 		'title' => tr('Share'),
 		'disabled' => $prefs['feature_share'] != 'y',

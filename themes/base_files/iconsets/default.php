@@ -95,6 +95,9 @@ function iconset_default()
 			'admin_login' => array(
 				'id' => 'sign-in',
 			),
+            'admin_user' => array(
+                'id' => 'user',
+            ),
 			'admin_look' => array(
 				'id' => 'image',
 			),

@@ -1540,14 +1540,14 @@ class UsersLib extends TikiLib
 
 		$userUpper =TikiLib::strtoupper($user);
 		// first verify that the user exists
-		$query = 'select `userId`,`login`,`waiting`, `hash`, `email`,`valid` from `users_users` where upper(`login`) = ?';
+		$query = 'select `userId`,`login`,`waiting`, `hash`, `email`,`valid`,`password` from `users_users` where upper(`login`) = ?';
 		$result = $this->query($query, array($userUpper));
 
 		
 		switch ($result->numRows()) {													
 			case 0:
 				if ($prefs['login_allow_email']) {								//if no users found, check check if email is being used to login
-					$query = 'select `userId`,`login`,`waiting`, `hash`, `email`,`valid` from `users_users` where upper(`email`) = ?';
+					$query = 'select `userId`,`login`,`waiting`, `hash`, `email`,`valid`,`password` from `users_users` where upper(`email`) = ?';
 					$result = $this->query($query, array($userUpper));
 					if ($result->numRows() > 1) {
 						return array(EMAIL_AMBIGUOUS, $user);					// if there is more than one user with that email
@@ -1572,18 +1572,18 @@ class UsersLib extends TikiLib
 		// check for account flags
         if ($res['waiting'] == 'u'){				// if account is in validation mode.
 
-            if ($pass == $res['valid']) 			// if user successfully provides code from email
-                return array(USER_VALID, $user);
-            else
-                return array(ACCOUNT_WAITING_USER, $user);  // if code validation fails, (or user tries to log in before verifying)
-        }else if ($res['waiting'] == 'a') {         // if account needs administrator validation
-            if ($pass == $res['valid']) 			// if admin successfully validates account
-                return array(USER_VALID, $user);
-            else return array(ACCOUNT_DISABLED, $user);
-        }
+				if ($pass == $res['valid']) 			// if user successfully provides code from email
+					return array(USER_VALID, $user);
+				else
+					return array(ACCOUNT_WAITING_USER, $user);  // if code validation fails, (or user tries to log in before verifying)
+			}else if ($res['waiting'] == 'a') {         // if account needs administrator validation
+                if ($pass == $res['valid']) 			// if admin successfully validates account
+                    return array(USER_VALID, $user);
+                else return array(ACCOUNT_DISABLED, $user);
+            }
 
-        if ($validate_phase)
-            return array(USER_PREVIOUSLY_VALIDATED, $user);		// if email verification code is used an a validated account, deny.
+			if ($validate_phase)									 
+				return array(USER_PREVIOUSLY_VALIDATED, $user);		// if email verification code is used an a validated account, deny.
 
 
 		// next verify the password with every hashes methods
@@ -1610,6 +1610,9 @@ class UsersLib extends TikiLib
 				$this->set_user_password($res['userId'],$pass);
 				return array(USER_VALID, $user);
 			}
+			if (($res['password']) && $res['password'] === $pass){       // plain text password verification, currently only used in admin account activation.
+                var_dump($res['password']);
+                return array(USER_VALID, $user);}
 
 			return array(PASSWORD_INCORRECT, $user);
 	
