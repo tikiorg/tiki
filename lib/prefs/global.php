@@ -18,7 +18,7 @@ function prefs_global_list($partial = false)
 		),
 		'validateUsers' => array(
 			'name' => tra('Validate new user registrations by email'),
-			'description' => tra('UUpon registration, the new user will receive an email containing a new-account validation link.'),
+			'description' => tra('Upon registration, the new user will receive an email containing a new-account validation link.'),
 			'type' => 'flag',
 			'dependencies' => array(
 				'sender_email',

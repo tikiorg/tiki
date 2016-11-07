@@ -328,9 +328,9 @@ $admin_icons = array(
 		'help' => 'Login Config',
 	),
     "user" => array(
-        'title' => tr('User Setting'),
+        'title' => tr('User Settings'),
         'description' => tr('User related preferences like info and picture, features, messages and notification, files, etc'),
-        'help' => 'User Setting',
+        'help' => 'User Settings',
     ),
 	"profiles" => array(
 		'title' => tr('Profiles'),
