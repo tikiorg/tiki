@@ -1536,14 +1536,14 @@ class UsersLib extends TikiLib
 
 		$userUpper =TikiLib::strtoupper($user);
 		// first verify that the user exists
-		$query = 'select `userId`,`login`,`waiting`, `hash`, `email`,`valid`,`password` from `users_users` where upper(`login`) = ?';
+		$query = 'select `userId`,`login`,`waiting`, `hash`, `email`,`valid` from `users_users` where upper(`login`) = ?';
 		$result = $this->query($query, array($userUpper));
 
 		
 		switch ($result->numRows()) {													
 			case 0:
 				if ($prefs['login_allow_email']) {								//if no users found, check check if email is being used to login
-					$query = 'select `userId`,`login`,`waiting`, `hash`, `email`,`valid`,`password` from `users_users` where upper(`email`) = ?';
+					$query = 'select `userId`,`login`,`waiting`, `hash`, `email`,`valid` from `users_users` where upper(`email`) = ?';
 					$result = $this->query($query, array($userUpper));
 					if ($result->numRows() > 1) {
 						return array(EMAIL_AMBIGUOUS, $user);					// if there is more than one user with that email
