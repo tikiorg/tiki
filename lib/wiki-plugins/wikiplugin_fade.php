@@ -14,6 +14,7 @@ function wikiplugin_fade_info()
 		'prefs' => array('wikiplugin_fade'),
 		'body' => tra('Wiki syntax containing the content that can be hidden or shown.'),
 		'filter' => 'wikicontent',
+		'format' => 'html',
 		'iconname' => 'wizard',
 		'introduced' => 3,
 		'tags' => array( 'basic' ),
@@ -63,6 +64,27 @@ function wikiplugin_fade_info()
 					'<code>fast</code>', '<code>alow</code>'),
 				'advanced' => true,
 			),
+            'bootstrap' => array(
+                'required' => false,
+                'name' => tra('Use Boostrap'),
+                'description' => tra('Use Boostrap collapsible box'),
+                'since' => '17',
+                'filter' => 'alpha',
+                'default' => 'n',
+                'options' => array(
+                    array('text' => '', 'value' => ''), 
+                    array('text' => tra('Yes'), 'value' => 'y'), 
+                    array('text' => tra('No'), 'value' => 'n')
+                )
+            ),
+			'class' => array(
+				'required' => false,
+				'name' => tra('CSS Class'),
+				'description' => tra('Apply custom CSS class.'),
+				'since' => '17',
+				'filter' => 'text',
+				'default' => '',
+			),
 		)
 	);
 }
@@ -97,8 +119,23 @@ function wikiplugin_fade( $body, $params )
 		$div_class = 'wpfade-div-plain';
 	}
 		
+  	// We specify format html, so parse the contained wiki text
 	$body = trim($body);
 	$body = $tikilib->parse_data($body);
+
+	if ($params['bootstrap'] == 'y') 
+    {
+      return "<div class='panel panel-default" . ( isset($params['class']) ? ' '.$params['class'] : '' ) . "'>"
+                ."<div class='panel-heading'>"
+                  ."<a data-toggle='collapse' href='#" . $unique . "'>" . htmlspecialchars($params['label']) . "<span class='icon icon-menu-extra fa fa-chevron-down fa-fw' style='float:right'></span>" . "</a>"
+                ."</div>"
+                ."<div id='" . $unique . "' class='panel-collapse collapse'>"
+                  ."<div class='panel-body'>" . $body . "</div>"
+                ."</div>" 
+              ."</div>" ;
+    }
+    else
+    {
 	$jq = '
 				$(document).ready(function(){
 					$(\'#' . $unique_link . '\').toggle(
@@ -116,10 +153,12 @@ function wikiplugin_fade( $body, $params )
 	$headerlib = TikiLib::lib('header');
 	$headerlib->add_jq_onready($jq);
 	//wrapping in an extra div makes animation smoother	
-	return '~np~<div>' . "\r\t" . '<span class="' . $span_class . '">' . "\r\t\t" 
+    	return ( isset($params['class']) ? "<div class='" . $params['class'] . "'>": "<div>" ) 
+            . "\r\t" . '<span class="' . $span_class . '">' . "\r\t\t" 
 		. '<a id="' . $unique_link . '" class=' . $a_class_hidden . '>' . "\r\t\t\t" . htmlspecialchars($params['label']) . "\r\t\t" 
 		. '</a>' . "\r\t" . '</span>' . "\r\t" . '<div id="' . $unique . '" class="' . $div_class . '">' . "\r\t\t\t" 
-		. $body . "\r\t" . '</div>' . "\r" . '</div>' . "\r" . '~/np~';
+    		. $body . "\r\t" . '</div>' . "\r" . '</div>' . "\r";
+    }
 }
 
 function validate_speed($speed_param)
