@@ -9,6 +9,8 @@
  */
 // $Id$
 
+require_once('lib/init/typography.php');
+
 global $interactive_collected_strings;
 $interactive_collected_strings = array();
 
@@ -54,58 +56,11 @@ function tra($content, $lg = '', $unused = false, $args = array())
 	}
 
 	$out = tra_impl($content, $lang, $args);
-	$out = tra_typography($out, $lang);
+	$out = typography($out, $lang, true);
 
 	record_string($content, $out);
 
 	return $out;
-}
-
-function tra_typography($content, $lang)
-{
-	global $prefs;
-
-	if (isset($prefs['feature_typo_quotes']) &&
-		(
-			$prefs['feature_typo_quotes'] == 'y' || $prefs['feature_typo_approximative_quotes'] == 'y' ||
-			$prefs['feature_typo_dashes_and_ellipses'] == 'y' || $prefs['feature_typo_nobreak_spaces'] == 'y'
-		)
-	) {
-		static $sp = null;
-		if ($sp == null) {
-			$sp = new \Michelf\SmartyPantsTypographer("");
-			$sp->decodeEntitiesInConfiguration(); // so we don't litter strings with entities; go UTF-8!
-			// "double" and 'single' quotes (and apostrophes) are replaced with curly ones
-			if ($prefs['feature_typo_quotes'] == 'y') {
-				$sp->do_quotes = 1;
-			}
-			// ``approximative'' ,,quotes`` <<are>> >>replaced<< with typographic ones		
-			if ($prefs['feature_typo_approximative_quotes'] == 'y') {
-				// IGNORED FOR FOR TIKI LOCALIZED STRINGS
-				// because localized strings doesn't contain this kind of quote
-			}
-			// double hyphen -- converted to em dash
-			if ($prefs['feature_typo_dashes_and_ellipses'] == 'y') {
-				$sp->do_dashes = 1;
-				$sp->do_ellipses = 1;
-			}
-			// replace normal spaces with no-break spaces (will not insert a space)
-			if ($prefs['feature_typo_nobreak_spaces'] == 'y') {
-				$sp->do_space_colon = 1;
-				$sp->do_space_semicolon = 1;
-				$sp->do_space_marks = 1;
-				$sp->do_space_frenchquote = 1;
-				$sp->do_space_thousand = 1;
-				$sp->do_space_unit = 1;
-			}
-		}
-		// temporarily wrap smarty tags in HTML-like tags SmartyPants will recognize
-		// so that quotes used to delimit tag attributes are ignored.
-		$content = preg_replace('/{(?:.+?|"[^"]*"|\'[^\']*\')+?}/', '<$SMARTYPANTSESCAPE \0$>', $content);
-		$content = $sp->transform($content);
-		$content = preg_replace('/<\$SMARTYPANTSESCAPE ({(?:.+?|"[^"]*"|\'[^\']*\')+?})\$>/', '\1', $content);
-	}
-	return $content;
 }
 
 /**
