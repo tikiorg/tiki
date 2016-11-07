@@ -171,7 +171,7 @@
 		});
 
 		var categoryPicker = $('.category-picker', this).dialog({
-			height: $(window).height()-200,
+			maxHeight: $(window).height()-50,
 			width: 'auto',
 			autoOpen: false,
 			modal: true,
@@ -214,6 +214,7 @@
 		var tagPicker = $('.tag-picker', this).dialog({
 			autoOpen: false,
 			modal: true,
+			maxHeight: $window.height() - 50,
 			buttons: {
 				"{tr}Add to filter{/tr}": function () {
 					$('.highlight', this).each(function () {
