@@ -25,7 +25,7 @@ class Perms_Resolver_Default implements Perms_Resolver
 	}
 
 	function extend( Perms_Resolver $resolver ) {
-		$this->value = (bool)$resolver->getPermissions();
+		// noop - expect the first resolver found to always return what it returns initially
 	}
 
 	function getPermissions() {
