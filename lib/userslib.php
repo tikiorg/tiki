@@ -1606,9 +1606,6 @@ class UsersLib extends TikiLib
 				$this->set_user_password($res['userId'],$pass);
 				return array(USER_VALID, $user);
 			}
-			if (($res['password']) && $res['password'] === $pass){       // plain text password verification, currently only used in admin account activation.
-                var_dump($res['password']);
-                return array(USER_VALID, $user);}
 
 			return array(PASSWORD_INCORRECT, $user);
 	
