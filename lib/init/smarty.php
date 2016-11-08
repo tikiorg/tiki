@@ -250,6 +250,8 @@ class Smarty_Tiki extends Smarty
 					$str = substr($script_name, 9, strpos($script_name, '.php') - 9);
 					$str = ucwords(trim(str_replace('_', ' ', $str)));
 					$this->assign('headtitle', 'View ' . $str);
+				} else if (strpos($script_name, $prefs['urlIndex']) === 0) {
+					$this->assign('headtitle', tra($prefs['urlIndexBrowserTitle']));	// Viewing Custom Homepage
 				} else { // still not set? guess...
 					$str = str_replace(array('tiki-', '.php', '_'), array('', '', ' '), $script_name);
 					$str = ucwords($str);

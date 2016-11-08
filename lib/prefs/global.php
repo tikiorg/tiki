@@ -356,6 +356,17 @@ function prefs_global_list($partial = false)
 			'default' => 7200,
 			'tags' => array('basic'),
 		),
+		'urlIndexBrowserTitle' => array(
+			'name' => tra('Homepage Browser title'),
+			'description' => tra('Customize Browser title for the custom homepage'),
+			'type' => 'text',
+			'size' => 50,
+			'default' => 'Homepage',
+			'tags' => array('basic'),
+			'dependencies' => array(
+				'useUrlIndex',
+			),
+		),
 		'urlIndex' => array(
 			'name' => tra('Homepage URL'),
             'description' => tra(''),

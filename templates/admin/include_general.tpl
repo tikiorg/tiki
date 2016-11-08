@@ -206,6 +206,7 @@
 				{preference name=useUrlIndex}
 				<div class="adminoptionboxchild" id="useUrlIndex_childcontainer">
 					{preference name=urlIndex}
+					{preference name=urlIndexBrowserTitle}
 				</div>
 				{preference name=wikiHomePage}
 				{preference name=home_blog}
