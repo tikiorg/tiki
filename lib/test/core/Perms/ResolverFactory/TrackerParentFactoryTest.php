@@ -50,7 +50,7 @@ class Perms_ResolverFactory_TrackerParentFactoryTest extends PHPUnit_Framework_T
 	{
 		$factory = new Perms_ResolverFactory_TrackerParentFactory;
 
-		$this->assertEquals('object:trackeritem:123', $factory->getHash(array('type' => 'trackeritem', 'object' => '123')));
+		$this->assertEquals('object:trackeritemparent:123', $factory->getHash(array('type' => 'trackeritem', 'object' => '123')));
 	}
 
 	function testHashMissingType()

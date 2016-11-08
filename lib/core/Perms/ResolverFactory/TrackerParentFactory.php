@@ -16,7 +16,7 @@ class Perms_ResolverFactory_TrackerParentFactory implements Perms_ResolverFactor
 	function getHash( array $context )
 	{
 		if ( isset( $context['type'], $context['object'] ) && $context['type'] === 'trackeritem' ) {
-			return 'object:' . $context['type'] . ':' . $this->cleanObject($context['object']);
+			return 'object:trackeritemparent:' . $this->cleanObject($context['object']);
 		} else {
 			return '';
 		}
@@ -84,7 +84,11 @@ class Perms_ResolverFactory_TrackerParentFactory implements Perms_ResolverFactor
 
 		$this->bulk($context, 'object', array( $context['object'] ));
 
-		$perms = $this->known[$hash];
+		if( isset($this->known[$hash]) ) {
+			$perms = $this->known[$hash];
+		} else {
+			$perms = array();
+		}
 
 		if ( count($perms) == 0 ) {
 			return null;
