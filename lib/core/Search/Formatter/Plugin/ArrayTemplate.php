@@ -77,7 +77,7 @@ class Search_Formatter_Plugin_ArrayTemplate implements Search_Formatter_Plugin_I
 			unset($arguments['format']);
 			unset($arguments['name']);
 			unset($arguments['field']);
-			$entry[str_replace('tracker_field_', '', $field)] = $valueFormatter->$format($field, $arguments);
+			$entry[str_replace('tracker_field_', '', $field)] = trim($valueFormatter->$format($field, $arguments));
 		}
 		return $entry;
 	}

@@ -153,9 +153,14 @@ function wikiplugin_pivottable($data, $params)
 	$fields = $definition->getFields();
 
 	if( !$perms->admin_trackers ) {
+		$hasFieldPermissions = false;
 		foreach( $fields as $key => $field ) {
 			$isHidden = $field['isHidden'];
 			$visibleBy = $field['visibleBy'];
+
+			if( $isHidden != 'n' || !empty($visibleBy) ) {
+				$hasFieldPermissions = true;
+			}
 
 			if ($isHidden == 'c') {
 				// creators can see their own items coming from the search index
@@ -169,6 +174,9 @@ function wikiplugin_pivottable($data, $params)
 					unset($fields[$key]);
 				}
 			}
+		}
+		if( !$hasFieldPermissions && !$perms->view_trackers ) {
+			return WikiParser_PluginOutput::userError(tr('You do not have rights to view tracker data.'));
 		}
 	}
 	
@@ -239,7 +247,7 @@ function wikiplugin_pivottable($data, $params)
 	} else {
 		$plugin = new Search_Formatter_Plugin_ArrayTemplate(implode("", array_map(
 			function($f){
-				return '{display name="tracker_field_'.$f['permName'].'" default="&nbsp;"}';
+				return '{display name="tracker_field_'.$f['permName'].'" default=" "}';
 			}, $fields)));
 		$plugin->setFieldPermNames($fields);
 	}
