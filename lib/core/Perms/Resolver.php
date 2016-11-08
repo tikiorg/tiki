@@ -21,6 +21,18 @@ interface Perms_Resolver
 	 */
 	function check( $permission, array $groups );
 
+	/*
+	 * Extend resolver permissions with another resolver
+	 * @param Perms_Resolver $resolver - the other resolver
+	 */
+	function extend( Perms_Resolver $resolver );
+
+	/*
+	 * Retrieve the current permissions of this resolver
+	 * @return mixed - permission list or value depending on resolver type
+	 */
+	function getPermissions();
+
 	
 	/*
 	 * Get name of the object type the permissons to check belong to : i.e 'object', 'category'

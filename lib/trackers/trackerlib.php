@@ -3423,7 +3423,7 @@ class TrackerLib extends TikiLib
 			);
 		}
 
-		$this->update_item_categories($itemId, $managed_categories, $ins_categs, $override_perms, array('objectType' => 'tracker', 'objectId' => $trackerId));
+		$this->update_item_categories($itemId, $managed_categories, $ins_categs, $override_perms);
 
 		$items = $this->findLinkedItems(
 			$itemId,
@@ -3436,7 +3436,7 @@ class TrackerLib extends TikiLib
 		$index = $prefs['feature_search'] === 'y' && $prefs['unified_incremental_update'] === 'y';
 
 		foreach ($items as $child) {
-			$this->update_item_categories($child, $managed_categories, $ins_categs, $override_perms, array('objectType' => 'tracker', 'objectId' => $trackerId));
+			$this->update_item_categories($child, $managed_categories, $ins_categs, $override_perms);
 
 			if ($index) {
 				$searchlib->invalidateObject('trackeritem', $child);
@@ -3444,7 +3444,7 @@ class TrackerLib extends TikiLib
 		}
 	}
 
-	private function update_item_categories($itemId, $managed_categories, $ins_categs, $override_perms, $parent)
+	private function update_item_categories($itemId, $managed_categories, $ins_categs, $override_perms)
 	{
 		$categlib = TikiLib::lib('categ');
 		$cat_desc = '';
@@ -3455,7 +3455,7 @@ class TrackerLib extends TikiLib
 		// and used in tiki-browse_categories.php and other places
 		$cat_href = "tiki-view_tracker_item.php?itemId=$itemId";
 
-		$categlib->update_object_categories($ins_categs, $itemId, 'trackeritem', $cat_desc, $cat_name, $cat_href, $managed_categories, $override_perms, $parent);
+		$categlib->update_object_categories($ins_categs, $itemId, 'trackeritem', $cat_desc, $cat_name, $cat_href, $managed_categories, $override_perms);
 	}
 
 	public function move_up_last_fields($trackerId, $fieldId, $delta=1)

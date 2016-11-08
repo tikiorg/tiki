@@ -126,13 +126,41 @@ class Perms_BaseTest extends TikiTestCase
 
 		$mock->expects($this->once())
 			->method('getResolver')
-			->will($this->returnValue(null));
+			->will($this->returnValue(false));
 
 		$perms = new Perms;
 		$perms->setResolverFactories(array($mock,));
 		Perms::set($perms);
 
 		Perms::get();
+		Perms::get();
+	}
+
+	function testResolverExtension() {
+		$resolverMock = $this->createMock('Perms_Resolver_Static');
+		$resolverMock->expects($this->once())
+			->method('extend')
+			->with($this->equalTo($resolverMock));
+
+		$objectFactory = $this->createMock('Perms_ResolverFactory');
+		$objectFactory->expects($this->once())
+			->method('getHash')
+			->will($this->returnValue('123'));
+		$objectFactory->expects($this->once())
+			->method('getResolver')
+			->will($this->returnValue($resolverMock));
+
+		$globalFactory = $this->createMock('Perms_ResolverFactory');
+		$globalFactory->expects($this->once())
+			->method('getHash')
+			->will($this->returnValue('222'));
+		$globalFactory->expects($this->once())
+			->method('getResolver')
+			->will($this->returnValue($resolverMock));
+
+		$perms = new Perms;
+		$perms->setResolverFactories(array($objectFactory, $globalFactory));
+		Perms::set($perms);
 		Perms::get();
 	}
 

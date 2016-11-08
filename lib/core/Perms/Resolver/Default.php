@@ -24,6 +24,14 @@ class Perms_Resolver_Default implements Perms_Resolver
 		return $this->value;
 	}
 
+	function extend( Perms_Resolver $resolver ) {
+		$this->value = (bool)$resolver->getPermissions();
+	}
+
+	function getPermissions() {
+		return $this->value;
+	}
+
 	function from()
 	{
 		return 'system';

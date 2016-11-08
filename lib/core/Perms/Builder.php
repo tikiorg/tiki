@@ -83,6 +83,7 @@ class Perms_Builder
 	{
 		$factories = array(
 			new Perms_ResolverFactory_ObjectFactory,
+			new Perms_ResolverFactory_TrackerParentFactory
 		);
 
 		if ($this->categories) {
