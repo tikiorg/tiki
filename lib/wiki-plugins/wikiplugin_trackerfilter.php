@@ -439,6 +439,9 @@ function wikiplugin_trackerfilter_build_trackerlist_filter($input, $formats, &$f
 			if (!is_array($val)) {
 				$val = urldecode($val);
 			}
+			if( $val === '-Blank (no data)-' ) {
+				$val = '';
+			}
 			$fieldId = substr($key, 2);
 			$field = $tracker_definition->getField($fieldId);
 
@@ -670,6 +673,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, array $listfields=ar
 					}
 					$opts[] = $opt;
 				}
+				$opts[] = wikiplugin_trackerFilter_add_empty_option($fieldId);
     			break;
 			case 'c': // checkbox
 				$opt['id'] = 'y';
@@ -723,6 +727,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, array $listfields=ar
 					}
 					$opts[] = $opt;
 				}
+				$opts[] = wikiplugin_trackerFilter_add_empty_option($fieldId);
     			break;
 			case 'w': //dynamic item lists
 			case 'r': // item link
@@ -747,6 +752,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, array $listfields=ar
 						$opts[] = $opt;
 					}
 				}
+				$opts[] = wikiplugin_trackerFilter_add_empty_option($fieldId);
     			break;
 
 			case 'f':
@@ -842,4 +848,13 @@ function wikiplugin_trackerFilter_build_urlquery($params)
 		$urlquery['sort_mode'] = $params['sort_mode'];
 	}
 	return $urlquery;
+}
+
+function wikiplugin_trackerFilter_add_empty_option($fieldId) {
+	$empty = '-Blank (no data)-';
+	return array(
+		'id' => $empty,
+		'name' => $empty,
+		'selected' => (!empty($_REQUEST['f_'.$fieldId]) && ((!is_array($_REQUEST['f_'.$fieldId]) && $_REQUEST['f_'.$fieldId] === $empty) || (is_array($_REQUEST['f_'.$fieldId]) && in_array($empty, $_REQUEST['f_'.$fieldId])))) ? 'y' : 'n'
+	);
 }
