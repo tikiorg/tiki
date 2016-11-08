@@ -14204,7 +14204,7 @@ $lang = array(
 // "Use this page to create a new database connection, or use the <a href=\"https://doc.tiki.org/Manual+Installation\" target=\"_blank\" title=\"manual installation\">manual installation process</a>" => "Use this page to create a new database connection, or use the <a href=\"https://doc.tiki.org/Manual+Installation\" target=\"_blank\" title=\"manual installation\">manual installation process</a>",
 "Database information" => "Configuration de la base de données",
 "Enter your database connection information" => "Entrez les informations pour se connecter à la base de données",
-"Database type" => "Type de la base de données",
+"DBMS driver" => "Pilote SGBD",
 "Select the type of database to use with Tiki" => "Selectionnez le type de base de données à utiliser avec Tiki",
 "Only databases supported by your PHP installation are listed here. If your database is not in the list, try to install the appropriate PHP extension." => "Les seuls moteurs de bases de données qui sont listés ici sont ceux acceptés par votre installation PHP. Si votre moteur de base de données ne figure pas dans cette liste, essayez d'installer les bonnes extensions PHP.",
 "Host name" => "Nom d'hôte",

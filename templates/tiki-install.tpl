@@ -270,7 +270,7 @@
 								<legend>{tr}Database information{/tr}</legend>
 								<p>{tr}Enter your database connection information.{/tr}</p>
 								<div class="form-group">
-									<label for="db">{tr}Database type:{/tr}</label>
+									<label for="db">{tr}DBMS driver:{/tr}</label>
 									<div style="margin-left:1em">
 										<select class=form-control name="db" id="db">
 											{foreach key=dsn item=dbname from=$dbservers}
