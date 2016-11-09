@@ -83,6 +83,11 @@ if ($prefs['feature_wiki_structure'] == 'y') {
 	}
 }
 $pdata = $tikilib->parse_data($info["data"], array('is_html' => $info["is_html"], 'print' => 'y', 'namespace' => $info["namespace"]));
+
+//replacing bootstrap classes for print version.
+
+$pdata=str_replace(array('col-sm','col-md','col-lg'),'col-xs',$pdata);
+
 $smarty->assign_by_ref('parsed', $pdata);
 $smarty->assign_by_ref('lastModif', $info["lastModif"]);
 if (empty($info["user"])) {

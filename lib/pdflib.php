@@ -232,6 +232,7 @@ class PdfGenerator
 			TikiLib::lib('reporterror')->report(tra('mPDF: CURL PHP extension not available'));
 			return '';
 		}
+		
       if($parsedData!='')
 	      $html=$parsedData;
 	   else
@@ -299,22 +300,15 @@ class PdfGenerator
 		$mpdf->autoLangToFont = true;
 
 		$mpdf->setBasePath($url);
-		
-		$stylesheet = file_get_contents('themes/base_files/css/tiki_base.css'); // external css
-        $mpdf->WriteHTML($stylesheet,1);
-		
-		
-		//getting main theme css
+       //getting main theme css
 		global $prefs;
 	    $themeLib = TikiLib::lib('theme');
         $themecss=$themeLib->get_theme_path($prefs['theme'], '', $prefs['theme'] . '.css');
-		$stylesheet = file_get_contents($themecss); // external css
-        $mpdf->WriteHTML($stylesheet.'@page,body.print* {background:#fff;color:#000;} p,.print{color:#000;} .editplugin{display:none;visibility:hidden}',1);
-		 
-		$stylesheet = file_get_contents('vendor/fortawesome/font-awesome/css/font-awesome.min.css'); // external css
+		$stylesheet1 = file_get_contents('themes/base_files/css/tiki_base.css'); // external css
         $mpdf->WriteHTML($stylesheet,1);
-		$mpdf->WriteHTML('<html><body class="print">'.$html."</body></html>");
-	    //echo 'after'.$html;
+		$stylesheet2 = file_get_contents($themecss).'@page,body.print* {background:#fff;color:#000;} p,.print{color:#000;} .editplugin{display:none;visibility:hidden}'; // external css
+        $stylesheet3 = file_get_contents('vendor/fortawesome/font-awesome/css/font-awesome.min.css'); // external css
+        $mpdf->WriteHTML('<style>'.$stylesheet1.$stylesheet2.$stylesheet3.$this->bootstrapReplace().'</style><html><body class="print">'.$html."</body></html>");
 	    $this->clearTempImg($tempImgArr);
         return $mpdf->Output('', 'S');					// Return as a string
 	}
@@ -336,84 +330,74 @@ class PdfGenerator
 				$tempImgArr[]=$newFile;
 				}	
 				$html=@$doc->saveHTML();
-		}
+	}
 	
-	function file_get_contents_by_fget($url){
+	function file_get_contents_by_fget($url)
+    {
 		global $base_url;
-		
 		//check if image is internal with full path
 		$internalImg=0;
 		  if(substr($url,0,strlen($base_url))==$base_url)  
 		    $internalImg=1;
-		 
 		//checking for external images
 		$checkURL = parse_url($url);
-		
-		
-        //not replacing in case of external image
+	    //not replacing in case of external image
        if(($checkURL['scheme'] == 'https' || $checkURL['scheme'] == 'http') && !$internalImg){
           return '';
-		  }
-	
-	    if(!$internalImg)
+	   }
+	   if(!$internalImg)
 		  $url=$base_url.$url;	  
-		
-		if(! file_exists ('temp/pdfimg'))
-		{
-			mkdir('temp/pdfimg');
-			chmod('temp/pdfimg',0755);
-			
-			}
-			
-	$opts = array('http' => array('header'=> 'Cookie: ' . $_SERVER['HTTP_COOKIE']."\r\n"));
-	$context = stream_context_create($opts);
-	session_write_close();
-	$data=file_get_contents($url, false, $context);
-	$newFile='temp/pdfimg/pdfimg'.rand(9999,999999).'.png';
-	file_put_contents($newFile, $data);
-	chmod($newFile,0755);
-	
-	
-    return $newFile;
+	   if(! file_exists ('temp/pdfimg'))
+	   {
+		 mkdir('temp/pdfimg');
+		 chmod('temp/pdfimg',0755);
+	   }
+	   $opts = array('http' => array('header'=> 'Cookie: ' . $_SERVER['HTTP_COOKIE']."\r\n"));
+	   $context = stream_context_create($opts);
+	   session_write_close();
+	   $data=file_get_contents($url, false, $context);
+	   $newFile='temp/pdfimg/pdfimg'.rand(9999,999999).'.png';
+	   file_put_contents($newFile, $data);
+	   chmod($newFile,0755);
+       return $newFile;
 
 	}
 	
-  function clearTempImg($tempImgArr){ 
+    function clearTempImg($tempImgArr){ 
 	   foreach ($tempImgArr as $tempImg) {
        unlink($tempImg);
-      }
-	  }
+       }
+	}
 	  
-  function _parseHTML(&$html)
+    function _parseHTML(&$html)
 	{
-		
-		$html=str_replace('style="visibility:hidden" class="ts-wrapperdiv">','style="visibility:visible" class="ts-wrapperdiv">',$html);
-        $doc = new DOMDocument();
-			$doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
-
-			$tables = $doc->getElementsByTagName('table');
-		  
-				foreach ($tables as $table) {
-					$tid= $table->getAttribute("id");
-					if(file_exists("temp/#".$tid."_".session_id().".txt"))
-                        { 
-						    $content=file_get_contents("temp/#".$tid."_".session_id().".txt");
-							//cleaning content
-							$content=cleanContent($content,"input");
-							$content=cleanContent($content,"select");
-							
-							$content=str_replace("on>click=","",$content);
-							//$content=cleanContent($content,"a");
-
-							//end of cleaning content
-							$table->nodeValue=$content;
-							$html=html_entity_decode($doc->saveHTML()); 
-						    chmod("temp/#".$tid."_".session_id().".txt",0755);	
-							//unlink tmp table file
-							unlink("temp/#".$tid."_".session_id().".txt");
-						}
-                }
+	   $html=str_replace('style="visibility:hidden" class="ts-wrapperdiv">','style="visibility:visible" class="ts-wrapperdiv">',$html);
+       $doc = new DOMDocument();
+	   $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+        
+	   $tables = $doc->getElementsByTagName('table');
+		foreach ($tables as $table) {
+		   $tid= $table->getAttribute("id");
+		   if(file_exists("temp/#".$tid."_".session_id().".txt"))
+           { 
+			   $content=file_get_contents("temp/#".$tid."_".session_id().".txt");
+			   //cleaning content
+			   $content=cleanContent($content,"input");
+			   $content=cleanContent($content,"select");
+			   $content=str_replace("on>click=","",$content);
+			   //end of cleaning content
+			   $table->nodeValue=$content;
+			   $html=html_entity_decode($doc->saveHTML()); 
+			   chmod("temp/#".$tid."_".session_id().".txt",0755);	
+			   //unlink tmp table file
+			   unlink("temp/#".$tid."_".session_id().".txt");
+			}
+        }
 			
+	 }
+	 
+	 function bootstrapReplace(){
+	    return ".col-xs-12 {width: 90%;}.col-xs-11 {width: 81.66666667%;}.col-xs-10 {width: 74.33333333%;}.col-xs-9 {width: 66.5%;}.col-xs-8 {width: 59.02666667%;}.col-xs-7 {width: 51.33333333%;}.col-xs-6 {width: 45%;}.col-xs-5 {width: 36.51666667%;}.col-xs-4 {width: 29.01333333%;}.col-xs-3{width: 20.5%;}.col-xs-2 {width: 14%;}.col-xs-1 {width: 7.03333333%;}";	 
 	}
 }
 
@@ -433,15 +417,13 @@ function DOMinnerHTML(DOMNode $element)
 
 function cleanContent($content,$tag){
 	$doc = new DOMDocument();
-		
 	$doc->loadHTML($content);
-$list = $doc->getElementsByTagName($tag);
-
-while ($list->length > 0) {
-    $p = $list->item(0);
-    $p->parentNode->removeChild($p);
-}
-  return $doc->saveHTML();
+    $list = $doc->getElementsByTagName($tag);
+    while ($list->length > 0) {
+       $p = $list->item(0);
+       $p->parentNode->removeChild($p);
+    }
+    return $doc->saveHTML();
 	
-	}
+}
 
