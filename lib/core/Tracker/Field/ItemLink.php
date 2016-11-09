@@ -838,7 +838,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		$definition = Tracker_Definition::get($trackerId);
 		foreach ($option as $fieldId) {
 			$field = $definition->getField($fieldId);
-			if( $field['isPublic'] == 'y' && ($field['isHidden'] == 'n' || $field['isHidden'] == 'c' || $field['isHidden'] == 'p' || $tiki_p_admin_trackers == 'y')
+			if( $field['isPublic'] == 'y' && ($field['isHidden'] == 'n' || $field['isHidden'] == 'c' || $field['isHidden'] == 'p' || $field['isHidden'] == 'a' || $tiki_p_admin_trackers == 'y')
 				&& $field['type'] != 'x' && $field['type'] != 'h' && ($field['type'] != 'p' || $field['options_array'][0] != 'password')
 				&& (empty($field['visibleBy']) or array_intersect(TikiLib::lib('tiki')->get_user_groups($user), $field['visibleBy']) || $tiki_p_admin_trackers == 'y') ) {
 				$fields[] = $fieldId;

@@ -95,7 +95,7 @@
 								{/if}
 								{foreach key=jx item=ix from=$fields}
 									{$fieldcount = $fieldcount + 1}
-									{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $perms.tiki_p_admin_trackers eq 'y')
+									{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $ix.isHidden eq 'a' or $perms.tiki_p_admin_trackers eq 'y')
 										and $ix.type ne 'x' and $ix.type ne 'h' and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password')
 										and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) or $perms.tiki_p_admin_trackers eq 'y')}
 										{if $ix.type eq 'l'}
@@ -160,7 +160,7 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 						{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $perms.tiki_p_admin_trackers eq 'y'))}<td></td>{/if}
 						{if $showitemrank eq 'y'}<td></td>{/if}
 						{foreach key=jx item=ix from=$fields}
-							{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $perms.tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h'
+							{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $ix.isHidden eq 'a' or $perms.tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h'
 								and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy)
 								or $perms.tiki_p_admin_trackers eq 'y')}
 								{if isset($computedFields[$ix.fieldId])}
@@ -297,7 +297,7 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 			{if !isset($list_mode)}{assign var=list_mode value="y"}{/if}
 			{foreach from=$items[user].field_values item=field}
 				{if $field.isPublic eq 'y' and ($field.isHidden eq 'n' or $field.isHidden eq 'c'
-					or $field.isHidden eq 'p' or $perms.tiki_p_admin_trackers eq 'y') and $field.type ne 'x' and $field.type ne 'h'
+					or $field.isHidden eq 'p' or $field.isHidden eq 'a' or $perms.tiki_p_admin_trackers eq 'y') and $field.type ne 'x' and $field.type ne 'h'
 					and in_array($field.fieldId, $listfields) and ($field.type ne 'p' or $field.options_array[0] ne 'password')
 					and (empty($field.visibleBy) or in_array($default_group, $field.visibleBy) or $perms.tiki_p_admin_trackers eq 'y')}
 		<td class={if $field.type eq 'n' or $field.type eq 'q' or $field.type eq 'b'}"numeric"{else}"auto"{/if} {if $field.type eq 'b'} style="padding-right:5px;{$tdinstyle}"{else}{$tdstyle}{/if}>

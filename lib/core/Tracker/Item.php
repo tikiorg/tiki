@@ -319,8 +319,8 @@ class Tracker_Item
 		$isHidden = $field['isHidden'];
 		$editableBy = $field['editableBy'];
 
-		if ($isHidden == 'i') {
-			// Immutable after creation
+		if ($isHidden == 'i' || $isHidden == 'a') {
+			// Immutable or editable by admin only after creation
 			return $this->isNew();
 		} elseif ($isHidden == 'c') {
 			// Creator or creator group check when field can be modified by creator only
