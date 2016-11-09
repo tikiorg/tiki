@@ -14,7 +14,7 @@
 # sh doc/devtools/svnup.sh
 #
 # You should also put the following line on a cron (to update your database): 
-# php installer/shell.php
+# php console.php -n database:update
 # 
 # It's possible you may need to update your permissions with "sh setup.sh". 
 # This is an interactive script so you need to set groups, etc to have in cron.
