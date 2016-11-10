@@ -14,7 +14,7 @@ might be enough to get you running Tiki. For more details, please see:
 
 Before you get started, it is a good idea to know:
 
-    * Your database name, database user name and password
+    * Your database schema name, database user name and password
     * Your Apache user and group ID (e.g. www-user and www-data)
 		If not, Tiki will detect
 
@@ -49,10 +49,10 @@ Step three: create the database
 * create a database for Tiki
   - either using PhpMyAdmin and MySQL
   - or on the command line "mysqladmin create dbname"
-    the database name is usually called "tiki" 
+    the database schema name is usually called "tiki"
 
 Be sure to record the following items:
-	- The database name 
+	- The database schema name
 	- The user name and password that has admin authority in the database.
 
 

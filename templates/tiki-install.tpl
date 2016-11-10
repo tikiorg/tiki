@@ -240,7 +240,7 @@
 						{remarksbox type=confirm title="{tr}Success{/tr}" close="n"}
 							{if $dbname}
 								{tr}Tiki found an existing database connection in your local.php file.{/tr}
-								<strong>{tr _0=$dbname}Database name: &quot;%0&quot;{/tr}</strong>
+								<strong>{tr _0=$dbname}Schema name: &quot;%0&quot;{/tr}</strong>
 							{else}
 								{tr}Tiki found an automatic database connection for your environment.{/tr}
 							{/if}
@@ -283,8 +283,8 @@
 											{icon name="help"}
 										</a>
 										<div style="display:none" id="db_help">
-											<p>{tr}Select the type of database to use with Tiki.{/tr}</p>
-											<p>{tr}Only databases supported by your PHP installation are listed here. If your database is not in the list, try to install the appropriate PHP extension.{/tr}</p>
+											<p>{tr}Select the database driver to use with Tiki.{/tr}</p>
+											<p>{tr}Only drivers supported by your PHP installation are listed here. If your driver is not in the list, try to install the appropriate PHP extension.{/tr}</p>
 										</div>
 									</div>
 								</div>
@@ -303,15 +303,15 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="name">{tr}Database name:{/tr}</label>
+									<label for="name">{tr}Schema name:{/tr}</label>
 									<div style="margin-left:1em;">
 										<input type="text" class=form-control id="name" name="name" size="40" value="{if isset($smarty.request.name)}{$smarty.request.name|escape:"html"}{elseif isset($preconfigname)}{$preconfigname|escape:"html"}{/if}" />
 										<a href="javascript:void(0)" onclick="flip('name_help');" title="{tr}Help{/tr}">
 											{icon name="help"}
 										</a>
-										<br><em>{tr}Enter the name of the database that Tiki will use (if already created) or create (if permitted).{/tr}</em>
+										<br><em>{tr}Name of the database schema to be used. This schema will be created if it does not exist and permissions allow creation.{/tr}</em>
 										<div style="margin-left:1em;display:none;" id="name_help">
-											<p>{tr}You can create the database using Adminer, phpMyAdmin, cPanel, or ask your hosting provider. If the database doesn't exist and the supplied username has permissions, the database will be created.{/tr}</p>
+											<p>{tr}You can create the database schema using Adminer, MySQL Workbench, phpMyAdmin, cPanel, or ask your hosting provider. If the schema doesn't exist and the supplied username has permissions, it will be created.{/tr}</p>
 											<p>{tr}If you are using a database which is already being used for something else (not recommended), check db/tiki.sql to make sure the table names used by Tiki are not already used.{/tr}</p>
 										</div>
 									</div>
