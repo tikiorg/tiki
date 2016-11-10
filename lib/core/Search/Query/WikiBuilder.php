@@ -179,11 +179,14 @@ class Search_Query_WikiBuilder
 
 	function wpquery_filter_range($query, $value, array $arguments)
 	{
-		if ($arguments['from'] == 'now') {
-			$arguments['from'] = TikiLib::lib('tiki')->now;
+		if( isset($arguments['from']) && !is_numeric($arguments['from']) ) {
+			$arguments['from'] = strtotime($arguments['from']);
 		}
-		if ($arguments['to'] == 'now') {
-			$arguments['to'] = TikiLib::lib('tiki')->now;
+		if( isset($arguments['to']) && !is_numeric($arguments['to']) ) {
+			$arguments['to'] = strtotime($arguments['to']);
+		}
+		if( isset($arguments['gap']) && !is_numeric($arguments['gap']) ) {
+			$arguments['gap'] = strtotime($arguments['gap']) - time();
 		}
 		if (! isset($arguments['from']) && isset($arguments['to'], $arguments['gap'])) {
 			$arguments['from'] = $arguments['to'] - $arguments['gap'];
