@@ -305,7 +305,7 @@ class PdfGenerator
 	    $themeLib = TikiLib::lib('theme');
         $themecss=$themeLib->get_theme_path($prefs['theme'], '', $prefs['theme'] . '.css');
 		$stylesheet1 = file_get_contents('themes/base_files/css/tiki_base.css'); // external css
-        $mpdf->WriteHTML($stylesheet,1);
+       
 		$stylesheet2 = file_get_contents($themecss).'@page,body.print* {background:#fff;color:#000;} p,.print{color:#000;} .editplugin{display:none;visibility:hidden}'; // external css
         $stylesheet3 = file_get_contents('vendor/fortawesome/font-awesome/css/font-awesome.min.css'); // external css
         $mpdf->WriteHTML('<style>'.$stylesheet1.$stylesheet2.$stylesheet3.$this->bootstrapReplace().'</style><html><body class="print">'.$html."</body></html>");
