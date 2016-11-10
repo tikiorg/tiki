@@ -16,7 +16,7 @@
 				<div class="panel-body">
 					<ol>
 						<li>{if $install_step eq '0'}<strong>{else}<a href="#" onclick="$('#install_step0').submit();return false;" title="{tr}Welcome{/tr} / {tr}Restart the installer.{/tr}">{/if}{tr}Welcome{/tr}{if $install_step eq '0'}</strong>{else}</a>{/if}</li>
-						<li>{if $install_step eq '1'}<strong>{else}<a href="#" onclick="$('#install_step1').submit();return false;" title="{tr}Read the License{/tr}">{/if}{tr}Read the License{/tr}{if $install_step eq '1'}</strong>{else}</a>{/if}</li>
+						<li>{if $install_step eq '1'}<strong>{else}<a href="#" onclick="$('#install_step1').submit();return false;" title="{tr}License{/tr}">{/if}{tr}License{/tr}{if $install_step eq '1'}</strong>{else}</a>{/if}</li>
 						<li>{if $install_step eq '2'}<strong>{elseif $install_step ge '3' or $dbcon eq 'y'}<a href="#" onclick="$('#install_step2').submit();return false;" title="{tr}Review the System Requirements{/tr}">{/if}{tr}Review the System Requirements{/tr}{if $install_step eq '2'}</strong>{elseif $install_step ge '3' or $dbcon eq 'y'}</a>{/if}</li>
 						<li>{if $install_step eq '3'}<strong>{elseif $dbcon eq 'y'}<a href="#" onclick="$('#install_step3').submit();return false;" title="{tr}Database Connection{/tr}">{/if}{if $dbcon eq 'y'}{tr}Reset the Database Connection{/tr}{else}{tr}Database Connection{/tr}{/if}{if $install_step eq '3'}</strong>{elseif $dbcon eq 'y'}</a>{/if}</li>
 						<li>{if $install_step eq '4'}<strong>{elseif $dbcon eq 'y' or isset($smarty.post.scratch) or isset($smarty.post.update)}<a href="#" onclick="$('#install_step4').submit();return false;" title="{if $tikidb_created}{tr}Install/Upgrade{/tr}{else}{tr}Install{/tr}{/if}">{/if}{if $tikidb_created}<em>{tr}Install/Upgrade{/tr}</em>{else}{tr}Install{/tr}{/if}{if $install_step eq '4'}</strong>{elseif ($dbcon eq 'y') or (isset($smarty.post.scratch)) or (isset($smarty.post.update))}</a>{/if}</li>
@@ -127,7 +127,7 @@
 
 			{elseif $install_step eq '1'}
 				<div class="install-step1">
-					<h1>{tr}Read the License{/tr}</h1>
+					<h1>{tr}License{/tr}</h1>
 					<p>{tr}Tiki is software distributed under the LGPL license.{/tr} </p>
 					<div align="center" style="margin-top:1em;">
 						<iframe src="license.txt" width="700" height="300" style="width:700px;height:300px"> </iframe>
