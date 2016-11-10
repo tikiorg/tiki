@@ -352,16 +352,16 @@ $admin_icons = array(
 		'description' => tr('Module appearance settings'),
 		'help' => 'Module',
 	),
-	"metatags" => array(
-		'title' => tr('Meta Tags'),
-		'description' => tr('Information to include in the header of each page'),
-		'help' => 'Meta Tags',
-	),
-	"i18n" => array(
-		'title' => tr('i18n'),
-		'description' => tr('Internationalization and localization - multilingual features'),
-		'help' => 'i18n',
-	),
+    "i18n" => array(
+        'title' => tr('i18n'),
+        'description' => tr('Internationalization and localization - multilingual features'),
+        'help' => 'i18n',
+    ),
+    "metatags" => array(
+        'title' => tr('Meta Tags'),
+        'description' => tr('Information to include in the header of each page'),
+        'help' => 'Meta Tags',
+    ),
 	"maps" => array(
 		'title' => tr('Maps'),
 		'description' => tr('Settings and features for maps'),
