@@ -916,7 +916,11 @@ class TrackerLib extends TikiLib
 
 			$itemObject = Tracker_Item::fromId($itemId);
 
-			if ($itemObject->canView()) {
+			if (! $itemObject) {
+
+				Feedback::error(tr('TrackerLib::get_all_items: No item for itemId %0', $itemId), 'session');
+
+			} else if ($itemObject->canView()) {
 
 				$field['value'] = $res['value'];
 

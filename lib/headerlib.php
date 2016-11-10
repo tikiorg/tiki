@@ -1121,8 +1121,7 @@ class HeaderLib
 		$google = array_intersect(array('google_street', 'google_physical', 'google_satellite', 'google_hybrid'), $enabled);
 		if (count($google) > 0 || $prefs['geo_google_streetview'] == 'y') {
 			$args = array(
-				'v' => '3.3',
-				'sensor' => 'false',
+				'v' => '3',
 			);
 
 			if (! empty($prefs['gmap_key'])) {

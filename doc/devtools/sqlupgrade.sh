@@ -13,7 +13,7 @@
 # it has to be launched from tiki root dir
 #
 # 2010-10-04: If this script is not working for you, just use: 
-# php installer/shell.php
+# php console.php -n database:update
 # 
 
 FIND='/usr/bin/find'

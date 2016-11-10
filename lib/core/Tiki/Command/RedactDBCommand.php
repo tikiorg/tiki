@@ -46,7 +46,7 @@ class RedactDBCommand extends Command
 		$query = "UPDATE users_users SET email = ? WHERE login='admin';";
 		$bindvars = array('admin@example.com');
 		$result = $tikilib->query($query, $bindvars);
-		$query = "UPDATE `users_users` SET `password`='admin', `hash`= md5('admin') WHERE `login`='admin'";
+		$query = "UPDATE `users_users` SET `hash`= md5('admin') WHERE `login`='admin'";
 		$result = $tikilib->query($query);
 
 		// first get valid prefix
@@ -133,8 +133,6 @@ class RedactDBCommand extends Command
 		}
 		$query = "UPDATE `users_users` SET `provpass` = '';";
 		$result = $tikilib->query($query);		
-		$query = "UPDATE `users_users` SET `password` = '';";
-		$result = $tikilib->query($query);
 
 		// Remove user web-mail accounts
 		$output->writeln('<info>Removing user mail accounts.</info>');
