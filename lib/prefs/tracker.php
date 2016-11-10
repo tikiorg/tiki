@@ -107,7 +107,7 @@ function prefs_tracker_list()
 			'type' => 'flag',
 			'default' => 'n',
 			'dependencies' => ['feature_trackers'],
-			'tags' => ['advanced', 'experimental'],
+			'tags' => ['advanced'],
             'help' => 'Tracker+Tabular',
 		),
 		'tracker_always_notify' => array(
