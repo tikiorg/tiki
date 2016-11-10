@@ -262,7 +262,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						$message = tr('ItemLink: Field %0 not found for field "%1"', $field, $this->getConfiguration('permName'));
 						$field = '<div class="alert alert-danger">' . $message . '</div>';
 					} else {
-						$field = '{tracker_field_' . $fieldArray['permName'] . '}';
+						$field = '{tracker_field_' . $this->getFieldReference($fieldArray) . '}';
 					}
 				});
 				if ($format = $this->getOption('displayFieldsListFormat')) {
@@ -277,7 +277,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 					$message = tr('ItemLink: Field %0 not found for field "%1"', $this->getOption('fieldId'), $this->getConfiguration('permName'));
 					$format = '<div class="alert alert-danger">' . $message . '</div>';
 				} else if (! $format = $this->getOption('displayFieldsListFormat')) {
-					$format = '{tracker_field_' . $fieldArray['permName'] . '} (itemId:{object_id})';
+					$format = '{tracker_field_' . $this->getFieldReference($fieldArray) . '} (itemId:{object_id})';
 				}
 			}
 
@@ -359,6 +359,23 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		}
 		
 		return $this->renderTemplate('trackerinput/itemlink.tpl', $context, $data);
+	}
+
+	/**
+	 * gets the field permName or fieldId depending on unified_trackerfield_keys
+	 *
+	 * @param $fieldArray
+	 * @return string
+	 */
+	private function getFieldReference($fieldArray)
+	{
+		global $prefs;
+
+		if ($prefs['unified_trackerfield_keys'] === 'fieldId') {
+			return $fieldArray['fieldId'];
+		} else {
+			return $fieldArray['permName'];
+		}
 	}
 
 	private function buildFilter()
