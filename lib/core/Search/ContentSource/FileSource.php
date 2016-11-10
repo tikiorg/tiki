@@ -45,6 +45,11 @@ class Search_ContentSource_FileSource implements Search_ContentSource_Interface,
 			return false;
 		}
 
+		if (!empty($file['name'])) {
+			// Many files when uploaded have underscore in the file name and makes search difficult
+			$file['name'] = str_replace('_', ' ', $file['name']);
+		}
+
 		$data = array(
 			'title' => $typeFactory->sortable(empty($file['name'])?$file['filename']:$file['name']),
 			'language' => $typeFactory->identifier('unknown'),
