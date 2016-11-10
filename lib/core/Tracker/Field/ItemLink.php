@@ -250,6 +250,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 
 	function renderInput($context = array())
 	{
+		$trackerPerms = Perms::get('tracker', $this->getOption('trackerId'));
+
 		if ($this->useSelector()) {
 			$value = $this->getValue();
 			$placeholder =  tr(TikiLib::lib('object')->get_title('tracker', $this->getOption('trackerId')));
@@ -295,6 +297,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 				'status' => $status,
 				'selector_value' => $value,
 				'format' => $format,
+				'createTrackerItems' => $trackerPerms->create_tracker_items,
 			]);
 			
 			return $template;
@@ -303,6 +306,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		$data = array(
 			'list' => $this->getItemList(),
 			'displayFieldsListType' => $this->getOption('displayFieldsListType'),
+			'createTrackerItems' => $trackerPerms->create_tracker_items,
 		);
 
 		$servicelib = TikiLib::lib('service');
