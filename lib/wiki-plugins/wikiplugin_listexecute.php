@@ -98,6 +98,18 @@ function wikiplugin_listexecute($data, $params)
 
 	$formatter = $builder->getFormatter();
 
+	if( !$customOutput ) {
+		$plugin = new Search_Formatter_Plugin_SmartyTemplate('templates/wiki-plugins/wikiplugin_listexecute.tpl');
+		$plugin->setFields(array('report_status' => null));
+		$plugin->setData(
+			array(
+				'actions' => array_keys($actions),
+				'iListExecute' => $iListExecute
+			)
+		);
+		$formatter = new Search_Formatter($plugin);
+	}
+
 	if (isset($_POST['list_action'], $_POST['objects'])) {
 		$action = $_POST['list_action'];
 		$objects = (array) $_POST['objects'];
@@ -126,18 +138,6 @@ function wikiplugin_listexecute($data, $params)
 
 			$result->applyTransform($reportSource);
 		}
-	}
-
-	if( !$customOutput ) {
-		$plugin = new Search_Formatter_Plugin_SmartyTemplate('templates/wiki-plugins/wikiplugin_listexecute.tpl');
-		$plugin->setFields(array('report_status' => null));
-		$plugin->setData(
-			array(
-				'actions' => array_keys($actions),
-				'iListExecute' => $iListExecute
-			)
-		);
-		$formatter = new Search_Formatter($plugin);
 	}
 
 	return $formatter->format($result);
