@@ -98,6 +98,12 @@ function wikiplugin_listexecute($data, $params)
 
 	$formatter = $builder->getFormatter();
 
+	if( !$customOutput ) {
+		$plugin = new Search_Formatter_Plugin_SmartyTemplate('templates/wiki-plugins/wikiplugin_listexecute.tpl');
+		$plugin->setFields(array('report_status' => null));
+		$formatter = new Search_Formatter($plugin);
+	}
+
 	$errors = array();
 	
 	if (isset($_POST['list_action'], $_POST['objects'])) {
@@ -131,8 +137,6 @@ function wikiplugin_listexecute($data, $params)
 	}
 
 	if( !$customOutput ) {
-		$plugin = new Search_Formatter_Plugin_SmartyTemplate('templates/wiki-plugins/wikiplugin_listexecute.tpl');
-		$plugin->setFields(array('report_status' => null));
 		$plugin->setData(
 			array(
 				'actions' => array_keys($actions),
