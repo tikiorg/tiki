@@ -7,6 +7,22 @@
 
 function wikiplugin_code_info()
 {
+	global $tikipath;
+	$themes = array();
+	$themes_folder = rtrim($tikipath, '/') . '/vendor/codemirror/codemirror/theme';
+
+	if ( is_dir($themes_folder) ) {
+		foreach ( scandir($themes_folder) as $file ) {
+			$match = null;
+			if ( preg_match('/(.*)(\.css)$/', $file, $match) ) {
+				$themes[] = array(
+					'text' => $match[1],
+					'value' => $match[1]
+				);
+			}
+		}
+	}
+
 	return array(
 		'name' => tra('Code'),
 		'documentation' => 'PluginCode',
@@ -88,8 +104,9 @@ function wikiplugin_code_info()
 			'theme' => array(
 				'required' => false,
 				'name' => tra('Theme'),
-				'description' => tra('Any supported theme listed at https://codemirror.net/demo/theme.html'),
-				'since' => '1',
+				'description' => tra('XAny supported theme listed at https://codemirror.net/demo/theme.html'),
+				'since' => '17',
+				'options' => $themes,
 				'filter' => 'text',
 			),
 		),
