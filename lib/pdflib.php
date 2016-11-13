@@ -50,15 +50,20 @@ class PdfGenerator
 			if (substr($path, -1) !== '/') {
 				$path .= '/';
 			}
-			if ( ! empty($path) && is_readable($path) ) {
-				if (! is_writable($path . 'graph_cache') || ! is_writable($path . 'tmp') ||! is_writable($path . 'ttfontdata')) {
-					TikiLib::lib('errorreport')->report(tr('mPDF "%0","%1" and "%2" directories must be writable', 'graph_cache', 'tmp', 'ttfontdata'));
+			if ( ! empty($path) && is_readable($path) && file_exists($path . 'mpdf.php')) {
+				self::setupMPDFCacheLocation();
+				if (!class_exists('mPDF')){
+					include_once($path . 'mpdf.php');
+				}
+				if (! is_writable(_MPDF_TEMP_PATH) ||! is_writable(_MPDF_TTFONTDATAPATH)) {
+					Feedback::error(tr('mPDF "%0" and "%1" directories must be writable', 'tmp',
+					'ttfontdata'), 'session');
 				} else {
 					$this->mode = 'mpdf';
 					$this->location = $path;
 				}
 			} else {
-				TikiLib::lib('errorreport')->report(tr('mPDF path not found: "%0"', $path));
+				Feedback::error(tr('mPDF not found in path: "%0"', $path), 'session');
 			}
 		}
 	}
@@ -187,6 +192,35 @@ class PdfGenerator
 	}
 
 	/**
+	 * Setup mPDF Cache locations to a folder (mpdf) inside the filesystem cache
+	 */
+	static public function setupMPDFCacheLocation()
+	{
+		// set cache paths
+		$cache = new CacheLibFileSystem();
+		$mPDFBaseCachePath = $cache->folder . '/mpdf/';
+		if (!is_dir($mPDFBaseCachePath)) {
+			mkdir($mPDFBaseCachePath);
+			chmod($mPDFBaseCachePath, 0777);
+		}
+
+		$constantsAndDirectories = array(
+			'_MPDF_TEMP_PATH'      => 'tmp/',
+			'_MPDF_TTFONTDATAPATH' => 'ttfontdata/',
+		);
+
+		foreach ($constantsAndDirectories as $constant => $directory) {
+			if (!is_dir($mPDFBaseCachePath . $directory)) {
+				mkdir($mPDFBaseCachePath . $directory);
+				chmod($mPDFBaseCachePath . $directory, 0777);
+			}
+			if (!defined($constant)) {
+				define($constant, $mPDFBaseCachePath . $directory);
+			}
+		}
+	}
+
+	/**
 	 * @param $url string - address of the item to print as PDF
 	 * @return string     - contents of the PDF
 	 */
@@ -267,7 +301,10 @@ class PdfGenerator
 			}
 		}
 
-		include($this->location . 'mpdf.php');
+		self::setupMPDFCacheLocation();
+		if (!class_exists('mPDF')){
+			include_once($this->location . 'mpdf.php');
+		}
 		$mpdf = new mPDF('');
 		$mpdf->useSubstitutions = true;					// optional - just as an example
 		$mpdf->SetHeader($url . '||Page {PAGENO}');		// optional - just as an example
