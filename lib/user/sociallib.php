@@ -114,11 +114,11 @@ class SocialLib
 			}
 		}
 
+		$tx->commit();
+
 		require_once('lib/search/refresh-functions.php');
 		refresh_index('user', $user);
 		refresh_index('user', $newFriend);
-
-		$tx->commit();
 
 		return true;
 	}
@@ -160,6 +160,10 @@ class SocialLib
 
 			$tx->commit();
 
+			require_once('lib/search/refresh-functions.php');
+			refresh_index('user', $user);
+			refresh_index('user', $newFriend);
+			
 			return true;
 		}
 
