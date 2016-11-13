@@ -123,13 +123,41 @@ function wikiplugin_fade( $body, $params )
 	$body = trim($body);
 	$body = $tikilib->parse_data($body);
 
+    // Both variants will need $headerlib
+    $headerlib = TikiLib::lib('header');
+
 	if ($params['bootstrap'] == 'y') 
     {
-      return "<div class='panel panel-default" . ( isset($params['class']) ? ' '.$params['class'] : '' ) . "'>"
+      $unique_outer = $unique . '-outer';
+      $unique_inner = $unique . '-inner';
+  
+      // The java script is used to toggle the chevron icon from down to up.
+      //
+      // It is based on the suggestion by zessz here
+      // http://stackoverflow.com/a/18337268/1626109
+      // and the working example here
+      // http://jsfiddle.net/zessx/R6EAW/12/
+      //
+      // It might not be necessary to go back to the 'panel-heading' before 
+      // going forward to the icon. 
+      
+      $jq = "function toggleChevron(e) 
+             {
+               $(e.target)
+                  .prev('.panel-heading')
+                  .find('span.icon')
+                  .toggleClass('fa-chevron-down fa-chevron-up');
+             }
+             $('#" . $unique_outer. "').on('hide.bs.collapse', toggleChevron);
+             $('#" . $unique_outer. "').on('show.bs.collapse', toggleChevron);" ;  
+ 
+      $headerlib->add_jq_onready($jq);
+    
+      return "<div id='" . $unique_outer . "' class='panel panel-default" . ( isset($params['class']) ? ' '.$params['class'] : '' ) . "'>"
                 ."<div class='panel-heading'>"
-                  ."<a data-toggle='collapse' href='#" . $unique . "'>" . htmlspecialchars($params['label']) . "<span class='icon icon-menu-extra fa fa-chevron-down fa-fw' style='float:right'></span>" . "</a>"
+                  ."<a data-toggle='collapse' href='#" . $unique_inner . "'>" . htmlspecialchars($params['label']) . "<span class='icon icon-menu-extra fa fa-chevron-down fa-fw' style='float:right'></span>" . "</a>"
                 ."</div>"
-                ."<div id='" . $unique . "' class='panel-collapse collapse'>"
+                ."<div id='" . $unique_inner . "' class='panel-collapse collapse'>"
                   ."<div class='panel-body'>" . $body . "</div>"
                 ."</div>" 
               ."</div>" ;
@@ -150,7 +178,6 @@ function wikiplugin_fade( $body, $params )
 					);
 					return false;
 				});';
-	$headerlib = TikiLib::lib('header');
 	$headerlib->add_jq_onready($jq);
 	//wrapping in an extra div makes animation smoother	
     	return ( isset($params['class']) ? "<div class='" . $params['class'] . "'>": "<div>" ) 
