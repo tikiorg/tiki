@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fef031fdade6e8e3d87d18285b44bfa0",
-    "content-hash": "d2db8966855d3f8c8d642b0b28a16e1a",
+    "content-hash": "7ecad9adfee7193fa125e34d151a9069",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -95,17 +94,17 @@
         },
         {
             "name": "blueimp/jquery-file-upload",
-            "version": "v9.13.0",
+            "version": "v9.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vkhramtsov/jQuery-File-Upload.git",
-                "reference": "7a1589e7bdeb5d18e9e6b889795b025f1e445985"
+                "reference": "47572698d781eff2ec7127484d8291f951808d61"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/blueimp-jquery-file-upload-7a1589e7bdeb5d18e9e6b889795b025f1e445985-zip-700593.zip",
-                "reference": "7a1589e7bdeb5d18e9e6b889795b025f1e445985",
-                "shasum": "204f7ac23aab672defacf938cd27b9aa20c6ea41"
+                "url": "https://composer.tiki.org/dist/blueimp-jquery-file-upload-47572698d781eff2ec7127484d8291f951808d61-zip-e882bd.zip",
+                "reference": "47572698d781eff2ec7127484d8291f951808d61",
+                "shasum": "8dbf184395c5ae9f29df22b0bc0627869d4cfc3b"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -141,7 +140,7 @@
                 "upload",
                 "widget"
             ],
-            "time": "2016-10-27 06:29:07"
+            "time": "2016-11-03 09:01:26"
         },
         {
             "name": "ckeditor/ckeditor",
@@ -1115,27 +1114,22 @@
         },
         {
             "name": "michelf/php-smartypants",
-            "version": "1.7.1",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/michelf/php-smartypants.git",
-                "reference": "07021d340f6c08e2c49c442eed3986c4b8d44c52"
+                "reference": "d1b0848f26ff6e2260da2eb75ea9175d84c53878"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/michelf-php-smartypants-07021d340f6c08e2c49c442eed3986c4b8d44c52-zip-cc0378.zip",
-                "reference": "07021d340f6c08e2c49c442eed3986c4b8d44c52",
-                "shasum": "fd16ea89c3ffc122e64c6ed7f149ec744a23ec0c"
+                "url": "https://api.github.com/repos/michelf/php-smartypants/zipball/d1b0848f26ff6e2260da2eb75ea9175d84c53878",
+                "reference": "d1b0848f26ff6e2260da2eb75ea9175d84c53878",
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-lib": "1.6.x-dev"
-                }
-            },
             "autoload": {
                 "psr-0": {
                     "Michelf": ""
@@ -1166,7 +1160,7 @@
                 "typographer",
                 "typography"
             ],
-            "time": "2016-10-16 21:08:01"
+            "time": "2016-11-13 21:14:11"
         },
         {
             "name": "morteza/bootstrap-rtl",
@@ -1185,13 +1179,13 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/chartjs/Chart.js.git",
-                "reference": "80bd08bef9f3447738c8fde4c0d0b436312a2cb9"
+                "reference": "efced4780ce2697d0d44bf1e32a4e2efebaa18e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/nnnick-chartjs-80bd08bef9f3447738c8fde4c0d0b436312a2cb9-zip-177138.zip",
-                "reference": "80bd08bef9f3447738c8fde4c0d0b436312a2cb9",
-                "shasum": "3b791968f5efd8742e67b7943b8d2aeafa7de2f6"
+                "url": "https://composer.tiki.org/dist/nnnick-chartjs-efced4780ce2697d0d44bf1e32a4e2efebaa18e2-zip-6000f0.zip",
+                "reference": "efced4780ce2697d0d44bf1e32a4e2efebaa18e2",
+                "shasum": "41befc034a75901d443d6d6899ed8fff8cbcf4a8"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -1218,7 +1212,7 @@
                 "JS",
                 "chart"
             ],
-            "time": "2016-10-23 21:33:25"
+            "time": "2016-11-08 00:16:45"
         },
         {
             "name": "onelogin/php-saml",
@@ -4035,16 +4029,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.5.4",
+            "version": "1.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "ea74994a3dc7f8d2f65a06009348f2d63c81e61f"
+                "reference": "399c1f9781e222f6eb6cc238796f5200d1b7f108"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/ea74994a3dc7f8d2f65a06009348f2d63c81e61f",
-                "reference": "ea74994a3dc7f8d2f65a06009348f2d63c81e61f",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/399c1f9781e222f6eb6cc238796f5200d1b7f108",
+                "reference": "399c1f9781e222f6eb6cc238796f5200d1b7f108",
                 "shasum": ""
             },
             "require": {
@@ -4073,7 +4067,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2016-09-16 13:37:59"
+            "time": "2016-10-31 17:19:45"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -4340,17 +4334,17 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "4.0.1",
+            "version": "4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "5f3f7e736d6319d5f1fc402aff8b026da26709a3"
+                "reference": "6cba06ff75a1a63a71033e1a01b89056f3af1e8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/phpunit-php-code-coverage-5f3f7e736d6319d5f1fc402aff8b026da26709a3-zip-53898c.zip",
-                "reference": "5f3f7e736d6319d5f1fc402aff8b026da26709a3",
-                "shasum": "1a59bc792a0ed3e7312a4221e5189b32baea3789"
+                "url": "https://composer.tiki.org/dist/phpunit-php-code-coverage-6cba06ff75a1a63a71033e1a01b89056f3af1e8d-zip-9d5cbc.zip",
+                "reference": "6cba06ff75a1a63a71033e1a01b89056f3af1e8d",
+                "shasum": "49f44805f642d888b29c5186ae1c3af3ade652c6"
             },
             "require": {
                 "php": "^5.6 || ^7.0",
@@ -4399,7 +4393,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-07-26 14:39:29"
+            "time": "2016-11-01 05:06:24"
         },
         {
             "name": "phpunit/php-file-iterator",

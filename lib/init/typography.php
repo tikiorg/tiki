@@ -93,6 +93,7 @@ function get_typography_parser($lang, $ui_flag)
 	// "double" and 'single' quotes (and apostrophes) are replaced with curly ones
 	if ($prefs['feature_typo_quotes'] != 'y') {
 		$sp->do_quotes = 0;
+		$sp->do_geresh_gershayim = 0;
 	}
 	// ``approximative'' ,,quotes`` <<are>> >>replaced<< with typographic ones		
 	// Note: always disabled for ui strings
