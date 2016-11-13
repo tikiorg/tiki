@@ -264,7 +264,6 @@ $headerlib->add_js('
 ask_ticket('index-raw');
 
 // Display the Index Template
-$smarty->assign('dblclickedit', 'y');
 $smarty->assign('mid', 'tiki-show_page_raw.tpl');
 
 // use tiki_full to include include CSS and JavaScript

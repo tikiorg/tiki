@@ -109,7 +109,6 @@ $pageRenderer->runSetups();
 ask_ticket('index-raw');
 
 // Display the Index Template
-$smarty->assign('dblclickedit', 'y');
 
 // If the url has the param "download", ask the browser to download it (instead of displaying it)
 if ( isset($_REQUEST['download']) && $_REQUEST['download'] !== 'n' ) {

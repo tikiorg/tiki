@@ -48,14 +48,6 @@ function prefs_users_list()
 			'default' => 'private',
 			'tags' => array('basic'),
 		),
-		'users_prefs_user_dbl' => array(
-			'name' => tra('Use double-click to edit pages'),
-			'type' => 'flag',
-			'dependencies' => array(
-				'feature_wiki',
-			),
-			'default' => 'n',
-		),
 		'users_prefs_display_12hr_clock' => array(
 			'name' => tra('Use 12-hour clock for time selectors'),
 			'type' => 'flag',

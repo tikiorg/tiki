@@ -70,7 +70,6 @@ function key_get($area = null, $confirmation_text = '', $confirmaction = '',  $r
 
 			// Display the confirmation in the main tiki.tpl template
 			$smarty->assign('post', $_POST);
-			$smarty->assign('dblclickedit', 'n');
 			$smarty->assign('print_page', 'n');
 			$smarty->assign('confirmation_text', $confirmation_text);
 			$smarty->assign('confirmaction', $confirmaction);

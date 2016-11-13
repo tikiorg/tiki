@@ -29,7 +29,6 @@
 					{preference name=change_theme}
 					{preference name=users_prefs_userbreadCrumb}
 					{preference name=users_prefs_tasks_maxRecords}
-					{preference name=users_prefs_user_dbl}
 					{preference name=users_prefs_diff_versions}
 				</div>
 				</fieldset>

@@ -337,13 +337,6 @@
 							</label>
 						</div>
 					{/if}
-					{if $prefs.feature_wiki eq 'y'}
-						<div class="checkbox col-md-8 col-md-push-4">
-							<label>
-								<input type="checkbox" name="user_dbl" {if $user_prefs.user_dbl eq 'y'}checked="checked"{/if}>{tr}Use double-click to edit pages{/tr}
-							</label>
-						</div>
-					{/if}
 				</div>
 				{if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 					<legend>{tr}User Messages{/tr}</legend>

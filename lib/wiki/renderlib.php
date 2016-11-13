@@ -287,7 +287,6 @@ class WikiRenderer
 		$this->smartyassign('page', $this->page);
 		$this->smartyassign('show_page', 'y');
 
-		$this->smartyassign('dblclickedit', 'y');
 		$this->smartyassign('print_page', 'n');
 		$this->smartyassign('beingEdited', 'n');
 		$this->smartyassign('categorypath', $prefs['feature_categorypath']);

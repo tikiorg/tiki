@@ -117,13 +117,6 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 		$tikilib->set_user_preference($userwatch, 'display_timezone', $_REQUEST['display_timezone']);
 	}
 	$tikilib->set_user_preference($userwatch, 'user_information', $_REQUEST['user_information']);
-	if (isset($_REQUEST['user_dbl']) && $_REQUEST['user_dbl'] == 'on') {
-		$tikilib->set_user_preference($userwatch, 'user_dbl', 'y');
-		$smarty->assign('user_dbl', 'y');
-	} else {
-		$tikilib->set_user_preference($userwatch, 'user_dbl', 'n');
-		$smarty->assign('user_dbl', 'n');
-	}
 	if (isset($_REQUEST['display_12hr_clock']) && $_REQUEST['display_12hr_clock'] == 'on') {
 		$tikilib->set_user_preference($userwatch, 'display_12hr_clock', 'y');
 		$smarty->assign('display_12hr_clock', 'y');
@@ -364,7 +357,6 @@ if (isset($user_preferences[$userwatch]['email is public'])) {
 	$user_preferences[$userwatch]['email_isPublic'] = $user_preferences[$userwatch]['email is public'];
 }
 $tikilib->get_user_preference($userwatch, 'mailCharset', $prefs['default_mail_charset']);
-$tikilib->get_user_preference($userwatch, 'user_dbl', 'y');
 $tikilib->get_user_preference($userwatch, 'display_12hr_clock', 'n');
 $userinfo = $userlib->get_user_info($userwatch);
 $smarty->assign_by_ref('userinfo', $userinfo);

@@ -130,15 +130,6 @@
 						</td>
 					</tr>
 				{/if}
-
-				{if $prefs.feature_wiki eq 'y'}
-					<tr>
-						<td>{tr}Use double-click to edit pages:{/tr}</td>
-						<td>
-							<input type="checkbox" name="user_dbl" {if $user_dbl eq 'y'}checked="checked"{/if}>
-						</td>
-					</tr>
-				{/if}
 			</table>
 		</fieldset>
 

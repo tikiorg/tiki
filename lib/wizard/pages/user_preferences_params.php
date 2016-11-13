@@ -91,10 +91,8 @@ class UserWizardPreferencesParams extends Wizard
 		
 		$mailCharset = $tikilib->get_user_preference($userwatch, 'mailCharset', $prefs['default_mail_charset']);
 		$smarty->assign('mailCharset', $mailCharset);
-		$user_dbl = $tikilib->get_user_preference($userwatch, 'user_dbl', 'n');
 		$userbreadCrumb = $tikilib->get_user_preference($userwatch, 'userbreadCrumb', $prefs['site_userbreadCrumb']);
 		$smarty->assign('userbreadCrumb', $userbreadCrumb);
-		$smarty->assign('user_dbl', $user_dbl);
 		$display_12hr_clock = $tikilib->get_user_preference($userwatch, 'display_12hr_clock', 'n');
 		$smarty->assign('display_12hr_clock', $display_12hr_clock);
 		$userinfo = $userlib->get_user_info($userwatch);
@@ -232,11 +230,6 @@ class UserWizardPreferencesParams extends Wizard
 			$tikilib->set_user_preference($userwatch, 'display_timezone', $_REQUEST['display_timezone']);
 		}
 
-		if (isset($_REQUEST['user_dbl']) && $_REQUEST['user_dbl'] == 'on') {
-			$tikilib->set_user_preference($userwatch, 'user_dbl', 'y');
-		} else {
-			$tikilib->set_user_preference($userwatch, 'user_dbl', 'n');
-		}
 		if (isset($_REQUEST['display_12hr_clock']) && $_REQUEST['display_12hr_clock'] == 'on') {
 			$tikilib->set_user_preference($userwatch, 'display_12hr_clock', 'y');
 		} else {
