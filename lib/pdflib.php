@@ -397,7 +397,7 @@ class PdfGenerator
 	 }
 	 
 	 function bootstrapReplace(){
-	    return ".col-xs-12 {width: 90%;}.col-xs-11 {width: 81.66666667%;}.col-xs-10 {width: 74.33333333%;}.col-xs-9 {width: 66.5%;}.col-xs-8 {width: 59.02666667%;}.col-xs-7 {width: 51.33333333%;}.col-xs-6 {width: 45%;}.col-xs-5 {width: 36.51666667%;}.col-xs-4 {width: 29.01333333%;}.col-xs-3{width: 20.5%;}.col-xs-2 {width: 14%;}.col-xs-1 {width: 7.03333333%;}";	 
+	    return ".col-xs-12 {width: 90%;}.col-xs-11 {width: 81.66666667%;}.col-xs-10 {width: 72%;}.col-xs-9 {width: 64%;}.col-xs-8 {width: 57%;}.col-xs-7 {width: 49%;}.col-xs-6 {width: 42%;}.col-xs-5 {width: 35%;}.col-xs-4 {width: 28%;}.col-xs-3{width: 20%;}.col-xs-2 {width: 12.2%;}.col-xs-1 {width: 3.92%;}";	 
 	}
 }
 
