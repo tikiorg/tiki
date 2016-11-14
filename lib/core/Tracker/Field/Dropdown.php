@@ -141,7 +141,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 
 	private function getValueLabel($value)
 	{
-		$possibilities = $this->getConfiguration('possibilities');
+		$possibilities = $this->getPossibilities();
 		if (isset($possibilities[$value])) {
 			return $possibilities[$value];
 		} else {
