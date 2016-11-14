@@ -56,14 +56,13 @@ class PdfGenerator
 					include_once($path . 'mpdf.php');
 				}
 				if (! is_writable(_MPDF_TEMP_PATH) ||! is_writable(_MPDF_TTFONTDATAPATH)) {
-					Feedback::error(tr('mPDF "%0" and "%1" directories must be writable', 'tmp',
-					'ttfontdata'), 'session');
+					TikiLib::lib('errorreport')->report(tr('mPDF "%0" and "%1" directories must be writable', 'tmp', 'ttfontdata'));
 				} else {
 					$this->mode = 'mpdf';
 					$this->location = $path;
 				}
 			} else {
-				Feedback::error(tr('mPDF not found in path: "%0"', $path), 'session');
+				TikiLib::lib('errorreport')->report(tr('mPDF not found in path: "%0"', $path));
 			}
 		}
 	}
