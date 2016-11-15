@@ -36,6 +36,7 @@ class Search_Action_FileGalleryImageOverlay implements Search_Action_Action
           'object_id' => true,
           'field' => true,
           'value' => true,
+          'error_if_missing' => false,
         );
     }
 
@@ -79,6 +80,12 @@ class Search_Action_FileGalleryImageOverlay implements Search_Action_Action
 
         //At the moment there is only support for ImageMagik, so check if is available
         if (!class_exists('Imagick') || !class_exists('ImagickDraw')) {
+            static $firstError = true;
+            if ($firstError) {
+                Feedback::error(tr('filegal_image_overlay requires Imagick, please review your server setup!'));
+                $firstError = false;
+            }
+
             return false;
         }
 
@@ -94,7 +101,7 @@ class Search_Action_FileGalleryImageOverlay implements Search_Action_Action
         $object_id = $data->object_id->int();
         $field = $data->field->word();
         $value = $data->value->text();
-        $in_place = $data->in_place->text();
+        $error_if_missing = $data->error_if_missing->text();
 
         if ('tracker_field_' === substr($field, 0, 14)) {
             $field = substr($field, 14);
@@ -116,12 +123,41 @@ class Search_Action_FileGalleryImageOverlay implements Search_Action_Action
             return true;
         }
 
+        if ($error_if_missing == 'y') {
+            $error_if_missing = true;
+        } else {
+            $error_if_missing = false;
+        }
+
         $newFileList = array();
         foreach (explode(',', $fileList) as $fileId) {
             $file = $fileGal->get_file($fileId);
+            if (substr($file['filetype'], 0, 6) != 'image/') {
+                $newFileList[] = $fileId;
+                continue;
+            }
             $galInfo = $fileGal->get_file_gallery_info($file['galleryId']);
             $newUser = $user ?: $file['user'];
-            $overlayString = $this->generateString($value, $file, $galInfo, $info, $fieldDefinition);
+            $overlayString = $this->generateString(
+              $value,
+              $file,
+              $galInfo,
+              $info,
+              $fieldDefinition,
+              $error_if_missing,
+              $missingKeys
+            );
+            if ($overlayString === false) {
+                Feedback::error(
+                  tr(
+                    'filegal_image_overlay: Problem processing image "%0", the following values form the template are empty: %1',
+                    $file['filename'],
+                    implode(', ', $missingKeys)
+                  )
+                );
+                $newFileList[] = $fileId;
+                continue;
+            }
             $newImage = $this->addTextToImage($file['data'], $overlayString);
             if ($newImage) {
                 $newFileList[] = $fileGal->update_single_file(
@@ -159,15 +195,25 @@ class Search_Action_FileGalleryImageOverlay implements Search_Action_Action
     /**
      * Generate a string based on the template provided
      *
-     * @param $template The template (see $replaceKeys)
-     * @param $fileData File Details
-     * @param $galleryData Gallery Details
-     * @param $itemData Item Details
-     * @param $fieldData Field Details
-     * @return string
+     * @param string $template The template (see $replaceKeys)
+     * @param array $fileData File Details
+     * @param array $galleryData Gallery Details
+     * @param array $itemData Item Details
+     * @param array $fieldData Field Details
+     * @param boolean $checkMissing If enable function will return false if some element of the template has a empty value
+     * @param array $missingTemplateKeys The keys missing
+     *
+     * @return string|false
      */
-    protected function generateString($template, $fileData, $galleryData, $itemData, $fieldData)
-    {
+    protected function generateString(
+      $template,
+      $fileData,
+      $galleryData,
+      $itemData,
+      $fieldData,
+      $checkMissing = false,
+      &$missingTemplateKeys = array()
+    ) {
         $dataValues = array(
           'file' => $fileData,
           'gallery' => $galleryData,
@@ -181,6 +227,19 @@ class Search_Action_FileGalleryImageOverlay implements Search_Action_Action
         foreach ($this->replaceKeys as $search => $dataKey) {
             list($data, $key) = explode('.', $dataKey);
             $values[$search] = (isset($dataValues[$data]) && isset($dataValues[$data][$key])) ? $dataValues[$data][$key] : '';
+        }
+
+        if ($checkMissing) {
+            foreach ($values as $key => $value) {
+                if (strpos($template, $key) !== false) {
+                    if (empty($value)) {
+                        $missingTemplateKeys[] = $key;
+                    }
+                }
+            }
+            if (count($missingTemplateKeys)) {
+                return false;
+            }
         }
 
         return str_replace(array_keys($values), array_values($values), $template);
@@ -202,6 +261,14 @@ class Search_Action_FileGalleryImageOverlay implements Search_Action_Action
         $image = new Imagick();
         $image->readImageBlob($imageString);
         $height = $image->getimageheight();
+
+        $draw = new ImagickDraw();
+        $draw->setFillColor('#000000');
+        $draw->setStrokeColor(new ImagickPixel('#000000'));
+        $draw->setStrokeWidth(3);
+        $draw->setFont($font);
+        $draw->setFontSize(12);
+        $image->annotateImage($draw, $padLeft, $height - $padBottom, 0, $text);
 
         $draw = new ImagickDraw();
         $draw->setFillColor('#ffff00');
@@ -271,7 +338,7 @@ class Search_Action_FileGalleryImageOverlay implements Search_Action_Action
         list($degrees, $minutes, $seconds) = $coordinate;
 
         $sign = ($hemisphere == 'W' || $hemisphere == 'S') ? -1 : 1;
-        $coordinateDD = sprintf("%.4f",$sign * ($degrees + $minutes / 60 + $seconds / 3600));
+        $coordinateDD = sprintf("%.4f", $sign * ($degrees + $minutes / 60 + $seconds / 3600));
 
         //normalize
         $minutes += 60 * ($degrees - floor($degrees));

@@ -133,7 +133,7 @@ class Search_Action_FileGalleryRename implements Search_Action_Action
 
         }
 
-        if (!$in_place && ($prefs['fgal_keep_fileId'] == 'n')) {
+        if (!$in_place && ($prefs['fgal_keep_fileId'] != 'y')) {
             // new IDs are generated to for the last version we updated
             $utilities = new Services_Tracker_Utilities;
             $utilities->updateItem(
