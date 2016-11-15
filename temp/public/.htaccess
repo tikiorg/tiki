@@ -1,6 +1,11 @@
 <FilesMatch ".*">
-	order deny,allow
-	allow from all
+    <IfModule mod_authz_core.c>
+       Require all granted
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+      order deny,allow
+      allow from all
+    </IfModule>
 </FilesMatch>
 <IfModule mod_expires.c>
 <FilesMatch "avatar_.*\.jpg$">

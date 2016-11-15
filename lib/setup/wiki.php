@@ -72,7 +72,7 @@ if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php')
 	}
 
 	// If the HomePage does not exist, create it
-	if ($check && !$tikilib->page_exists($_REQUEST['page'])) {
+	if ($check && !empty($_REQUEST['page']) && !$tikilib->page_exists($_REQUEST['page'])) {
 
 		$homePageLang = $prefs['language'];
 		$profilesLink = 'tiki-admin.php?profile=&categories%5B%5D=15.x&categories%5B%5D=Featured+profiles' .
