@@ -28,19 +28,34 @@
 
 # This prevents reading of files with certain extensions.
 <FilesMatch "\.(bak|inc|lib|sh|tpl|sql)$">
-	order deny,allow
-	deny from all
+    <IfModule mod_authz_core.c>
+       Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        order deny,allow
+        deny from all
+    </IfModule>
+</FilesMatch>
+<FilesMatch "(changelog.txt|_htaccess)$">
+    <IfModule mod_authz_core.c>
+       Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        order deny,allow
+        deny from all
+    </IfModule>
 </FilesMatch>
 
-<FilesMatch "(changelog.txt|_htaccess)$">
-	order deny,allow
-	deny from all
-</FilesMatch>
 
 # This prevents reading of tags file for developers who run ctags on their server
 #<Files tags>
-#	order deny,allow
-#	deny from all
+#    <IfModule mod_authz_core.c>
+#       Require all denied
+#    </IfModule>
+#    <IfModule !mod_authz_core.c>
+#        order deny,allow
+#        deny from all
+#    </IfModule>
 #</Files>
 
 <IfModule mod_dir.c>
