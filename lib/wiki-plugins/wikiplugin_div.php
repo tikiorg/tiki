@@ -26,7 +26,7 @@ function wikiplugin_div_info()
 				'name' => tra('Type'),
 				'description' => tr('Indicate the type of HTML tag to use (default is %0)', '<code>div</code>'),
 				'since' => '1',
-				'filter' => 'alpha',
+				'filter' => 'text',
 				'safe' => true,
 				'default' => 'div',
 				'options' => array(
@@ -39,6 +39,12 @@ function wikiplugin_div_info()
 					array('text' => tra('Teletype'), 'value' => 'tt'),
 					array('text' => tra('Paragraph'), 'value' => 'p'),
 					array('text' => tra('Block quote'), 'value' => 'blockquote'),
+					array('text' => tra('H1'), 'value' => 'h1'),
+					array('text' => tra('H2'), 'value' => 'h2'),
+					array('text' => tra('H3'), 'value' => 'h3'),
+					array('text' => tra('H4'), 'value' => 'h4'),
+					array('text' => tra('H5'), 'value' => 'h5'),
+					array('text' => tra('H6'), 'value' => 'h6'),
 				),
 			),
 			'bg' => array(
@@ -179,7 +185,7 @@ function wikiplugin_div($data, $params)
 		// If any other unsafe parameters are created, unset them here
 		$style = '';
 	}
-	$possibletypes = array('div','span','pre','b','i','tt','p','blockquote');
+	$possibletypes = array('div','span','pre','b','i','tt','p','blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6');
 	$t    = (isset($type) and in_array($type, $possibletypes)) ? "$type"  : "div";
 	$c    = (isset($class)) ? " class='$class'"  : "";
 	$id   = (isset($id)) ? " id='$id'"  : "";
