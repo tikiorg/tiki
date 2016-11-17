@@ -663,6 +663,8 @@ class Comments extends TikiLib
 		);
 
 		if ($qId) {
+			unset($data['timestamp']);
+
 			$queue->update($data, array('qId' => $qId));
 
 			return $qId;
@@ -3517,7 +3519,7 @@ class Comments extends TikiLib
 				$params['comment_topictype'],
 				$params['comment_topicsmiley'],
 				$params['comment_topicsummary'],
-				$params['comments_title'],
+				isset($parent_comment_info['title']) ? $parent_comment_info['title'] : $params['comments_title'],	
 				$in_reply_to,
 				$params['anonymous_name'],
 				$params['freetag_string'],
