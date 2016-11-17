@@ -26,7 +26,8 @@ function sendForumEmailNotification(
 				$inReplyTo = '',
 				$threadId,
 				$parentId,
-				$contributions='')
+				$contributions='',
+				$queueId=0)
 {
 	global $prefs;
 	$userlib = TikiLib::lib('user');
@@ -204,6 +205,10 @@ function sendForumEmailNotification(
 			$mail = new TikiMail();
 			$mail->setUser($not['user']);
 			if ($event == 'forum_post_queued') {
+				if ($prefs['forum_moderator_email_approve'] == 'y') {
+					$smarty->assign('queueId', $queueId);
+					$smarty->assign('approvalhash', md5($queueId . $title . $data . $author));
+				}
 				$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_forum_queued_subject.tpl");
 			} else {
 				$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_forum_subject.tpl");

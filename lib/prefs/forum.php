@@ -190,5 +190,18 @@ function prefs_forum_list()
 			'default' => 'n',
 			'dependencies' => array('feature_forum_parse'),
 		),
+		'forum_moderator_notification' => array(
+			'name' => tr('Send moderation email'),
+			'description' => tr('Send email to forum moderators when post is queued'),
+			'type' => 'flag',
+			'default' => 'y',
+		),
+		'forum_moderator_email_approve' => array(
+			'name' => tr('Approve link in moderation email'),
+			'description' => tr('Include a link for forum moderators to approve queue from email'),
+			'type' => 'flag',
+			'default' => 'n',	
+			'dependencies' => array('forum_moderator_notification'),
+		),
 	);
 }

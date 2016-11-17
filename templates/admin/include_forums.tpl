@@ -45,6 +45,8 @@
 				{preference name=forum_inbound_mail_ignores_perms}
 				{preference name=forum_inbound_mail_parse_html}
 				{preference name=forum_match_regex}
+				{preference name=forum_moderator_notification}
+				{preference name=forum_moderator_email_approve}
 			</fieldset>
 			<fieldset>
 				<legend>{tr}Threads{/tr}</legend>

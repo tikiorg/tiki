@@ -3559,23 +3559,25 @@ class Comments extends TikiLib
 				isset($params['comments_threadId']) ? $params['comments_threadId'] : 0
 			);
 
-			// Deal with mail notifications.
-			include_once('lib/notifications/notificationemaillib.php');
-			sendForumEmailNotification(
-				'forum_post_queued',
-				$forum_info['forumId'],
-				$forum_info,
-				$params['comments_title'],
-				$params['comments_data'],
-				$user,
-				$params['comments_title'],
-				$message_id,
-				$in_reply_to,
-				!empty($params['comments_threadId']) ? $params['comments_threadId'] : 0,
-				isset($params['comments_parentId']) ? $params['comments_parentId'] : 0,
-				isset($params['contributions'])? $params['contributions'] : ''
-			);
-
+			if ($prefs['forum_moderator_notification'] == 'y') {
+				// Deal with mail notifications.
+				include_once('lib/notifications/notificationemaillib.php');
+				sendForumEmailNotification(
+					'forum_post_queued',
+					$forum_info['forumId'],
+					$forum_info,
+					$params['comments_title'],
+					$params['comments_data'],
+					$user,
+					$params['comments_title'],
+					$message_id,
+					$in_reply_to,
+					!empty($params['comments_threadId']) ? $params['comments_threadId'] : 0,
+					isset($params['comments_parentId']) ? $params['comments_parentId'] : 0,
+					isset($params['contributions'])? $params['contributions'] : '',
+					$qId
+				);
+			}
 		} else { // not in queue mode
 			$qId = 0;
 
