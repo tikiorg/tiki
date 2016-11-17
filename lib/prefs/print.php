@@ -64,8 +64,8 @@ function prefs_print_list()
 			'tags' => array('advanced'),
 			'type' => 'list',
 			'options' => array(
-			    '-P' => tra('Portrait'),
-				'-L' => tra('Landscape'),
+			    'P' => tra('Portrait'),
+				'L' => tra('Landscape'),
 			),
 			'default' => '-P',
 		),

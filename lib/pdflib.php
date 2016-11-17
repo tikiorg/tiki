@@ -246,13 +246,25 @@ class PdfGenerator
 		if (!class_exists('mPDF')){
 			include_once($this->location . 'mpdf.php');
 		}
-		$orientation=$prefs['print_pdf_mpdf_orientation'];
-		$pageSize=$prefs['print_pdf_mpdf_size'];
-		$mpdf=new mPDF('utf-8',$pageSize,'','',$prefs['print_pdf_mpdf_margin_left'],$prefs['print_pdf_mpdf_margin_right'] , $prefs['print_pdf_mpdf_margin_top'] , $prefs['print_pdf_mpdf_margin_bottom'] , $prefs['print_pdf_mpdf_margin_header'] , $prefs['print_pdf_mpdf_margin_footer'] ,$orientation);
+		//checking preferences 
+		$orientation=$prefs['print_pdf_mpdf_orientation']!=''?$prefs['print_pdf_mpdf_orientation']:'P';
+		$pageSize=$prefs['print_pdf_mpdf_size']!=''?$prefs['print_pdf_mpdf_size']:'A4';
+		$marginLeft=$prefs['print_pdf_mpdf_margin_left']!=''?$prefs['print_pdf_mpdf_margin_left']:'10';
+		$marginRight=$prefs['print_pdf_mpdf_margin_right']!=''?$prefs['print_pdf_mpdf_margin_right']:'10';
+		$marginTop=$prefs['print_pdf_mpdf_margin_top']!=''?$prefs['print_pdf_mpdf_margin_top']:'10';
+		$marginBottom=$prefs['print_pdf_mpdf_margin_bottom']!=''?$prefs['print_pdf_mpdf_margin_bottom']:'10';
+		$marginHeader=$prefs['print_pdf_mpdf_margin_header']!=''?$prefs['print_pdf_mpdf_margin_header']:'5';
+		$marginFooter=$prefs['print_pdf_mpdf_margin_footer']!=''?$prefs['print_pdf_mpdf_margin_footer']:'5';
+		
+		$mpdf=new mPDF('utf-8',$pageSize,'','',$marginLeft,$marginRight , $marginTop , $marginBottom , $marginHeader , $marginFooter ,$orientation);
 	    
-		$mpdf->SetHeader($prefs['print_pdf_mpdf_header']);
-        $mpdf->SetFooter($prefs['print_pdf_mpdf_footer']);
-				//password protection
+		//setting header and footer
+		if($prefs['print_pdf_mpdf_header'])
+	      $mpdf->SetHeader($prefs['print_pdf_mpdf_header']);
+        if($prefs['print_pdf_mpdf_footer'])
+		$mpdf->SetFooter($prefs['print_pdf_mpdf_footer']);
+		
+		//password protection
 		if($prefs['print_pdf_mpdf_password'])
 		   $mpdf->SetProtection(array(), 'UserPassword', $prefs['print_pdf_mpdf_password']);
 		   
