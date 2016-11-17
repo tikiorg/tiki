@@ -8,7 +8,7 @@
 	{else}
 		<input type="number" name="quantity" value="1" min="1" style="width: 3em;">
 	{/if}
-	<input type="image" src="{$wppaypal_button}" border="0" name="submit" alt="{$wppaypal_title|escape}">
-	<img alt="" border="0" src="{$wppaypal_pixel}" width="1" height="1">
+	<input type="image" src="{$wppaypal_button}" name="submit" alt="{$wppaypal_title|escape}">
+	<img src="{$wppaypal_pixel}" width="1" height="1">
 </form>
 

@@ -140,7 +140,7 @@ $smarty->assign('thumbSizeY', $_REQUEST['thumbSizeY']);
 $smarty->assign('scaleSize', $_REQUEST['scaleSize']);
 
 if ($imagegallib->havegd) {
-	$gdlib = tra('Detected, Version:') . ' ' . $imagegallib->gdversion . ' (' . tra('Test Image') . ': <img src="tiki-testGD.php" alt="" />)';
+	$gdlib = tra('Detected, Version:') . ' ' . $imagegallib->gdversion . ' (' . tra('Test Image') . ': <img src="tiki-testGD.php" />)';
 } else {
 	$gdlib = tra('Not detected.');
 }

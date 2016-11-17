@@ -586,7 +586,7 @@
 						{if $forum_info.topic_smileys eq 'y'}
 							<td class="icon">
 								{if strlen($comments_coms[ix].smiley) > 0}
-									<img src='img/smiles/{$comments_coms[ix].smiley}' alt=''>
+									<img src='img/smiles/{$comments_coms[ix].smiley}'>
 								{else}
 									&nbsp;{$comments_coms[ix].smiley}
 								{/if}

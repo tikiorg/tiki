@@ -177,7 +177,7 @@
 										{if empty($files[changes].icon_fileId)}
 											{icon name="admin_fgal" size=3}
 										{else}
-											<img src="{$files[changes].icon_fileId|sefurl:thumbnail}" alt="">
+											<img src="{$files[changes].icon_fileId|sefurl:thumbnail}">
 										{/if}
 									</a>
 								{else}
@@ -204,15 +204,15 @@
 										{if $key_type neq 'image/svg' and $key_type neq 'image/svg+xml'}
 											{if $imagetypes eq 'y' or $prefs.theme_iconset eq 'legacy'}
 												{if $view eq 'page'}
-													<img src="tiki-download_file.php?fileId={$files[changes].id}&preview" alt="" style="width:{$maxWidth};max-width: 100%;">
+													<img src="tiki-download_file.php?fileId={$files[changes].id}&preview" style="width:{$maxWidth};max-width: 100%;">
 												{else}
-													<img src="{$files[changes].id|sefurl:thumbnail}" alt="" style="max-height:{$thumbnailcontener_size}px">
+													<img src="{$files[changes].id|sefurl:thumbnail}" style="max-height:{$thumbnailcontener_size}px">
 												{/if}
 											{else}
 												{$files[changes].filename|iconify:$key_type:null:3}
 											{/if}
 										{else}
-											<object data="{$files[changes].id|sefurl:thumbnail}" alt="" style="width:{$thumbnail_size}px;height:{$thumbnailcontener_size}px;" type="{$key_type}"></object>
+											<object data="{$files[changes].id|sefurl:thumbnail}" style="width:{$thumbnail_size}px;height:{$thumbnailcontener_size}px;" type="{$key_type}"></object>
 										{/if}
 									</a>
 								{/if}

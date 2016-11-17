@@ -197,7 +197,7 @@
 					{tr}Once you have defined the settings below, each new item in this rss feed will generate a new article{/tr}.
 					<a target="tikihelp" href="https://doc.tiki.org/Article+generator" class="tikihelp" style="float:none" title="{tr}Article Generator:{/tr}
 						{tr}From the point when you defined the settings onwards, new items in the feed become articles each time the feed is refreshed. But only new ones.{/tr}">
-						<img src="img/icons/help.png" alt="" width="16" height="16" class="icon" />
+						<img src="img/icons/help.png" width="16" height="16" class="icon" />
 					</a>
 					<hr>
 					{tr}You can enable <strong>Show source</strong> for the <a href="tiki-article_types.php" target="_blank">article type</a> (hidden by default), to allow users to read the full content{/tr}.

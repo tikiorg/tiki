@@ -45,7 +45,7 @@
 		<h2>{if $user eq $userwatch}{tr}Pick user profile picture from the library{/tr}{else}{tr}Pick user profile picture{/tr}{/if} <a href="tiki-pick_avatar.php?showall=n">{tr}Hide all{/tr}</a> {$numav} {tr}icons{/tr}</h2>
 		<div class="table normal">
 			{section name=im loop=$avatars}
-				<a href="tiki-pick_avatar.php?showall=n&amp;avatar={$avatars[im]|escape:"url"}&amp;uselib=use"><img src="{$avatars[im]}" alt=''></a>
+				<a href="tiki-pick_avatar.php?showall=n&amp;avatar={$avatars[im]|escape:"url"}&amp;uselib=use"><img src="{$avatars[im]}"></a>
 			{/section}
 		</div>
 	{else}

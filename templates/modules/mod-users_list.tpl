@@ -68,10 +68,10 @@
 				{if $module_params_users_list.userPage eq 'y' or $module_params_users_list.log eq 'y'}
 					<td>
 						{if $module_params_users_list.userPage eq 'y' and $users[ix].userPage}
-							<a href="tiki-index.php?page={$users[ix].userPage}" title="{$users[ix].userPage}"><img src="pics/icons/magnifier.png" width="16" height="16" border="0" alt="{$users[ix].userPage}" /></a>
+							<a href="tiki-index.php?page={$users[ix].userPage}" title="{$users[ix].userPage}"><img src="pics/icons/magnifier.png" width="16" height="16" alt="{$users[ix].userPage}" /></a>
 						{/if}
 						{if $module_params_users_list.log eq 'y'}
-							<a href="tiki-admin_actionlog.php?selectedUsers[]={$users[ix].user|escape:"url"}&amp;list=y" title="{tr}Logs{/tr}"><img src="pics/icons/table.png" width="16" height="16" border="0" alt="{tr}Logs{/tr}" /></a>
+							<a href="tiki-admin_actionlog.php?selectedUsers[]={$users[ix].user|escape:"url"}&amp;list=y" title="{tr}Logs{/tr}"><img src="pics/icons/table.png" width="16" height="16" alt="{tr}Logs{/tr}" /></a>
 						{/if}
 					</td>
 				{/if}
