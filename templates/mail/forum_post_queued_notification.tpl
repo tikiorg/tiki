@@ -13,6 +13,8 @@
 
 {if $mail_contributions}{tr}Contribution:{/tr} {$mail_contributions}{/if}
 {else}
+{tr}Topic:{/tr} {$mail_topic|escape}
+
 {if $mail_author}"{$mail_author|username}"{else}{tr}An anonymous user{/tr}{/if} {tr}has posted a reply to a thread that requires moderation.
 You can approve or reject the post at the following URL:{/tr}
 

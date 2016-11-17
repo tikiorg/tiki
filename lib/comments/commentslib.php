@@ -3569,7 +3569,7 @@ class Comments extends TikiLib
 					$params['comments_title'],
 					$params['comments_data'],
 					$user,
-					$params['comments_title'],
+					isset($parent_comment_info['title']) ? $parent_comment_info['title'] : $params['comments_title'],	
 					$message_id,
 					$in_reply_to,
 					!empty($params['comments_threadId']) ? $params['comments_threadId'] : 0,
