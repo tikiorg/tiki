@@ -75,10 +75,7 @@ class Search_Action_TrackerItemModify implements Search_Action_Action
 				$data = [];
 				foreach ($runner->inspect() as $fieldName) {
 					if( is_string($fieldName) || is_numeric($fieldName) ) {
-						$field = $definition->getFieldFromPermName($fieldName);
-						if( $field && isset($info[$field['fieldId']]) ) {
-							$data[$fieldName] = $info[$field['fieldId']];
-						}
+						$data[$fieldName] = $trklib->field_render_value(array('trackerId' => $info['trackerId'], 'permName' => $fieldName, 'item' => $info, 'process' => 'y'));
 					}
 				}
 				$runner->setVariables($data);
