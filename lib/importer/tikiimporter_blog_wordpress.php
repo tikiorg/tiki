@@ -773,7 +773,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 		}
 
 		foreach ($commentNode->childNodes as $node) {
-			if ($node instanceof DOMElement) {
+			if (isset($node->{'tagName'}) && isset($node->{'textContent'})) {
 				switch ($node->tagName) {
 					case 'wp:comment_author':
 						$comment['author'] = $node->textContent;
