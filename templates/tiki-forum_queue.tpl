@@ -154,7 +154,7 @@
 						{else}
 							[{tr}New Topic{/tr}]
 						{/if}
-						<b><a class="link" href="tiki-forum_queue.php?forumId={$forumId}&amp;qId={$items[ix].qId}">{$items[ix].title|escape}</a></b>
+						<b><a class="link" href="tiki-forum_queue.php?forumId={$forumId}&amp;qId={$items[ix].qId}">{if !empty($items[ix].title)}{$items[ix].title|escape}{else}{tr}Untitled{/tr}{/if}</a></b>
 						by {$items[ix].user|username} on {$items[ix].timestamp|tiki_short_datetime}
 						<br>
 						{if $items[ix].parentId eq 0 and $forum_info.topic_summary eq 'y'}
