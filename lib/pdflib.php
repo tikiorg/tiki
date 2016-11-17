@@ -228,6 +228,7 @@ class PdfGenerator
 	 */
 	private function mpdf($url,$parsedData='')
 	{
+		global $prefs;
 		if (!extension_loaded('curl')) {
 			TikiLib::lib('reporterror')->report(tra('mPDF: CURL PHP extension not available'));
 			return '';
@@ -235,53 +236,7 @@ class PdfGenerator
 		
       if($parsedData!='')
 	      $html=$parsedData;
-	   else
-	   {	  
-        $options = array(
-			CURLOPT_RETURNTRANSFER => true,     // return web page
-			CURLOPT_HEADER => false,     		// return headers in addition to content
-			CURLINFO_HEADER_OUT => true,
-			CURLOPT_ENCODING => "",       		// handle all encodings
-			CURLOPT_HTTPHEADER => ['Expect:'],	// remove Expect header to avoid 100 Continue situations?
-
-			CURLOPT_FOLLOWLOCATION => true,     // follow redirects
-			CURLOPT_AUTOREFERER => true,		// set referer on redirect
-			CURLOPT_MAXREDIRS => 10,			// stop after 10 redirects
-			CURLOPT_CONNECTTIMEOUT => 10,		// timeout on connect
-			CURLOPT_TIMEOUT => 30,				// timeout on response
-
-			CURLOPT_SSL_VERIFYPEER => false,	// Disabled SSL Cert checks
-			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-		);
-
-		// For $_POST i.e. forms with fields
-		if (count($_POST) > 0) {
-			$ch = curl_init($url);
-
-			curl_setopt_array( $ch, $options );
-
-			$formvars = [];
-			foreach ($_POST AS $name => $post) {
-				$formvars = [ $name => $post . " \n" ];
-			}
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $formvars);
-			$html = curl_exec($ch);
-			curl_close($ch);
-		} else {
-			$ch = curl_init($url);
-
-			curl_setopt_array($ch, $options );
-
-			$html = curl_exec($ch);
-			curl_close($ch);
-
-			if (!$html) {
-				$err = curl_error($ch);
-				Feedback::error($err ? $err : tr('mPDF: An error occurred retrieving page %0', $url), 'session');
-				return '';
-			}
-		}
-	   }
+	  
        //getting n replacing images
 	   $tempImgArr=array();
 	   $this->_parseHTML($html);
@@ -291,24 +246,27 @@ class PdfGenerator
 		if (!class_exists('mPDF')){
 			include_once($this->location . 'mpdf.php');
 		}
-		$mpdf = new mPDF('utf-8');
-		$mpdf->useSubstitutions = true;					// optional - just as an example
-		$mpdf->SetHeader($url . '||Page {PAGENO}');		// optional - just as an example
+		$orientation=$prefs['print_pdf_mpdf_orientation'];
+		$pageSize=$prefs['print_pdf_mpdf_size'];
+		$mpdf=new mPDF('utf-8',$pageSize,'','',$prefs['print_pdf_mpdf_margin_left'],$prefs['print_pdf_mpdf_margin_right'] , $prefs['print_pdf_mpdf_margin_top'] , $prefs['print_pdf_mpdf_margin_bottom'] , $prefs['print_pdf_mpdf_margin_header'] , $prefs['print_pdf_mpdf_margin_footer'] ,$orientation);
+	    
+		$mpdf->SetHeader($prefs['print_pdf_mpdf_header']);
+        $mpdf->SetFooter($prefs['print_pdf_mpdf_footer']);
+				//password protection
+		if($prefs['print_pdf_mpdf_password'])
+		   $mpdf->SetProtection(array(), 'UserPassword', $prefs['print_pdf_mpdf_password']);
+		   
+		
+		
 		$mpdf->CSSselectMedia = 'print';				// assuming you used this in the document header
 
-		$mpdf->autoScriptToLang = true;
-		$mpdf->autoLangToFont = true;
-
-		$mpdf->setBasePath($url);
-       //getting main theme css
-		global $prefs;
-	    $themeLib = TikiLib::lib('theme');
+		//getting main theme css
+		$themeLib = TikiLib::lib('theme');
         $themecss=$themeLib->get_theme_path($prefs['theme'], '', $prefs['theme'] . '.css');
 		$stylesheet1 = file_get_contents('themes/base_files/css/tiki_base.css'); // external css
-       
-		$stylesheet2 = file_get_contents($themecss).'@page,body.print* {background:#fff;color:#000;} p,.print{color:#000;} .editplugin{display:none;visibility:hidden}'; // external css
-        $stylesheet3 = file_get_contents('vendor/fortawesome/font-awesome/css/font-awesome.min.css'); // external css
-        $mpdf->WriteHTML('<style>'.$stylesheet1.$stylesheet2.$stylesheet3.$this->bootstrapReplace().'</style><html><body class="print">'.$html."</body></html>");
+        $stylesheet2 = file_get_contents($themecss); // external css
+
+        $mpdf->WriteHTML('<style>'.$stylesheet1.$stylesheet2.$this->bootstrapReplace().'</style>'.$html."");
 	    $this->clearTempImg($tempImgArr);
         return $mpdf->Output('', 'S');					// Return as a string
 	}
@@ -397,7 +355,7 @@ class PdfGenerator
 	 }
 	 
 	 function bootstrapReplace(){
-	    return ".col-xs-12 {width: 90%;}.col-xs-11 {width: 81.66666667%;}.col-xs-10 {width: 72%;}.col-xs-9 {width: 64%;}.col-xs-8 {width: 57%;}.col-xs-7 {width: 49%;}.col-xs-6 {width: 42%;}.col-xs-5 {width: 35%;}.col-xs-4 {width: 28%;}.col-xs-3{width: 20%;}.col-xs-2 {width: 12.2%;}.col-xs-1 {width: 3.92%;}";	 
+	    return ".col-xs-12 {width: 90%;}.col-xs-11 {width: 81.66666667%;}.col-xs-10 {width: 72%;}.col-xs-9 {width: 64%;}.col-xs-8 {width: 57%;}.col-xs-7 {width: 49%;}.col-xs-6 {width: 42%;}.col-xs-5 {width: 35%;}.col-xs-4 {width: 28%;}.col-xs-3{width: 20%;}.col-xs-2 {width: 12.2%;}.col-xs-1 {width: 3.92%;}'@page,body.print* {background:#fff;color:#000;} p,.print{color:#000;} .editplugin{display:none;visibility:hidden}'";	 
 	}
 }
 

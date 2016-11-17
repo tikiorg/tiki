@@ -16,7 +16,19 @@
 				</div>
 				<div class="adminoptionboxchild print_pdf_from_url_childcontainer mpdf">
 					{preference name=print_pdf_mpdf_path}
+                    {preference name=print_pdf_mpdf_orientation}
+                    {preference name=print_pdf_mpdf_size}
+                    {preference name=print_pdf_mpdf_header}
+                    {preference name=print_pdf_mpdf_footer}
+                    {preference name=print_pdf_mpdf_margin_left}
+                    {preference name=print_pdf_mpdf_margin_right}
+					{preference name=print_pdf_mpdf_margin_top}
+                    {preference name=print_pdf_mpdf_margin_bottom}
+                    {preference name=print_pdf_mpdf_margin_header}
+                    {preference name=print_pdf_mpdf_margin_footer}
+                    {preference name=print_pdf_mpdf_password}
 				</div>
+               
 			</fieldset>
 			    
             <fieldset>
