@@ -71,6 +71,9 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'name' => tr('Format for Customising Multiple Fields'),
 						'description' => tr('Uses the translate function to replace %0 etc with the field values. E.g. "%0 any text %1"'),
 						'filter' => 'text',
+						'depends' => array(
+							'field' => 'displayFieldsList'
+						),
 					),
 					'displayFieldsListType' => array(
 						'name' => tr('Multiple Fields display type'),
@@ -79,6 +82,9 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'options' => array(
 							'dropdown' => tr('Dropdown'),
 							'table' => tr('Table'),
+						),
+						'depends' => array(
+							'field' => 'displayFieldsList'
 						),
 						'legacy_index' => 14,
 					),
@@ -115,6 +121,9 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'filter' => 'pagename',
 						'legacy_index' => 7,
 						'profile_reference' => 'wiki_page',
+						'depends' => array(
+							'field' => 'addItems'
+						),
 					),
 					'preSelectFieldHere' => array(
 						'name' => tr('Preselect item based on value in this field'),
@@ -135,6 +144,9 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'parent' => 'trackerId',
 						'parentkey' => 'tracker_id',
 						'sort_order' => 'position_nasc',
+						'depends' => array(
+							'field' => 'preSelectFieldHere'
+						),
 					),
 					'preSelectFieldMethod' => array(
 						'name' => tr('Preselection matching method'),
@@ -145,6 +157,9 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 							'partial' => tr('Field here is part of field there'),
 							'domain' => tr('Match domain, used for URL fields'),
 							'crossSelect' => tr('Cross select. Load all matching items in the remote tracker'),
+						),
+						'depends' => array(
+							'field' => 'preSelectFieldHere'
 						),
 						'legacy_index' => 10,
 					),
