@@ -87,7 +87,7 @@ function prefs_print_list()
 		),
 		'print_pdf_mpdf_header' => array(
 			'name' => tra('PDF header text'),
-			'description' => tra('Possible values, custom text, {PAGENO},{PAGETITLE},{DATE}'),
+			'description' => tra('Possible values, custom text, {PAGENO},{PAGETITLE},{DATE j-m-Y}'),
 			'tags' => array('basic'),
 			'type' => 'text',
 			'default' => '',
@@ -105,7 +105,7 @@ function prefs_print_list()
 			'description' => tra('Numeric value.For example 10'),
 			'tags' => array('advanced'),
 			'type' => 'text',
-			'default' => '0',
+			'default' => '10',
 			'size' => '2',
 			'filter' => 'digits',
 			
@@ -115,7 +115,7 @@ function prefs_print_list()
 			'description' => tra('Numeric value, no need to add px. For example 10'),
 			'tags' => array('advanced'),
 			'type' => 'text',
-			'default' => '0',
+			'default' => '10',
 			'size' => '2',
 			'filter' => 'digits',
 			
@@ -125,7 +125,7 @@ function prefs_print_list()
 			'description' => tra('Numeric value, no need to add px. For example 10'),
 			'tags' => array('advanced'),
 			'type' => 'text',
-			'default' => '0',
+			'default' => '10',
 			'size' => '2',
 			'filter' => 'digits',
 			
@@ -135,7 +135,7 @@ function prefs_print_list()
 			'description' => tra('Numeric value, no need to add px. For example 10'),
 			'tags' => array('advanced'),
 			'type' => 'text',
-			'default' => '0',
+			'default' => '10',
 			'size' => '2',
 			'filter' => 'digits',
 		
@@ -145,7 +145,7 @@ function prefs_print_list()
 			'description' => tra('Only applicable if header is set. Numeric value, no need to add px. For example 10'),
 			'tags' => array('advanced'),
 			'type' => 'text',
-			'default' => '0',
+			'default' => '5',
 			'size' => '2',
 			'filter' => 'digits',
 			'shorthint' => tra('Warning: Header can overlap text if top margin is not set properly')
@@ -155,7 +155,7 @@ function prefs_print_list()
 			'description' => tra('Only applicable if footer is set.Numeric value, no need to add px. For example 10'),
 			'tags' => array('advanced'),
 			'type' => 'text',
-			'default' => '0',
+			'default' => '5',
 			'size' => '2',
 			'filter' => 'digits',
 			'shorthint' => tra('Warning: Footer can overlap text if bottom margin is not set properly')
