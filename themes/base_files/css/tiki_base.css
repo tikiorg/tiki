@@ -2966,6 +2966,9 @@ body:not(.fixed_width) .container {
   padding-right: 15px;
   width: auto;
 }
+.row-middle {
+  word-wrap: break-word;
+}
 .row.row-sidemargins-zero {
   margin-left: 0;
   margin-right: 0;
