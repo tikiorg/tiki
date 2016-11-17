@@ -4,10 +4,7 @@
 		<input type="hidden" name="{$field.ins_id}_old" value="{$field.value|escape}" />
 	{/if}
 	{if $data.displayFieldsListType === 'table'}
-		{capture assign=fieldvalue}{if is_array($field.value)}{','|implode:$field.value}{else}{$field.value}{/if}{/capture}
-		{capture assign=itemUrl}{service controller=tracker action=update_item trackerId=$field.options_map.trackerId itemId="#itemId"}{/capture}
-		{wikiplugin _name=trackerlist trackerId=$field.options_map.trackerId fields=':'|implode:$field.options_map.displayFieldsList editableall="y" showlinks="y" sortable="type:reset" sortList="[1,0]" tsfilters="type:nofilter" tsfilteroptions="type:reset" tspaginate="max:5" checkbox="/"|cat:$field.ins_id|cat:"//////y/"|cat:$fieldvalue filterfield=$field.options_map.preSelectFieldThere exactvalue=$data.preselection_value ignoreRequestItemId=y url=$itemUrl}
-		{/wikiplugin}
+		{wikiplugin _name=trackerlist _compactArguments_=$data.trackerListOptions}{/wikiplugin}
 		{if $field.options_map.addItems and $data.createTrackerItems}
 			<a class="btn btn-default insert-tracker-item" href="{service controller=tracker action=insert_item trackerId=$field.options_map.trackerId next=$data.next|escape}" data-href="{service controller=tracker action=insert_item trackerId=$field.options_map.trackerId next=$data.next|escape}">{$field.options_map.addItems|escape}</a>
 			{if $field.options_map.preSelectFieldThere}
@@ -23,7 +20,10 @@
 					.clickModal({
 						success: function (data) {
 							var displayed = {{$data.list|json_encode}};
-							var row = '<tr><td><input type="checkbox" class="{{$field.ins_id}}-checkbox" name="{{$field.ins_id}}[]" value="'+data.itemId+'" checked /></td>';
+							var row = '<tr>';
+							if( {{$data.trackerListOptions.checkbox|json_encode}} ) {
+								row += '<td><input type="checkbox" class="{{$field.ins_id}}-checkbox" name="{{$field.ins_id}}[]" value="'+data.itemId+'" checked /></td>';
+							}
 							$.each(displayed, function(fieldId, permName) {
 								if( $('#il{{$field.ins_id}} th').filter(function(i, el){ return $(el).hasClass('field'+fieldId); }).length > 0 ) {
 									row += '<td>'+data.processedFields[permName]+'</td>';

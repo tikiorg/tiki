@@ -88,6 +88,17 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						),
 						'legacy_index' => 14,
 					),
+					'trackerListOptions' => array(
+						'name' => tr('Plugin TrackerList options'),
+						'description' => tr('Override one or more options of Plugin TrackerList to customize displayed table at item edit time (e.g. editable, tsfilters, etc.)'),
+						'filter' => 'text',
+						'type' => 'textarea',
+						'depends' => array(
+							'field' => 'displayFieldsListType',
+							'value' => 'table'
+						),
+						'legacy_index' => 15,
+					),
 					'status' => array(
 						'name' => tr('Status Filter'),
 						'description' => tr('Limit the available items to a selected set'),
@@ -385,6 +396,41 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 				// nothing to do, list is loaded dynamically via plugin trackerlist
 			} else {
 				$data['list'] = array_intersect_key($data['list'], array_flip($preselection));
+			}
+		}
+
+		if( $data['displayFieldsListType'] === 'table' ) {
+			$data['trackerListOptions'] = array(
+				'trackerId' => $this->getOption('trackerId'),
+				'fields' => implode(':', $this->getOption('displayFieldsList')),
+				'editableall' => 'y',
+				'showlinks' => 'y',
+				'sortable' => 'type:reset',
+				'sortList' => '[1,0]',
+				'tsfilters' => 'type:nofilter',
+				'tsfilteroptions' => 'type:reset',
+				'tspaginate' => 'max:5',
+				'checkbox' => '/'.$this->getInsertId().'//////y/'.implode(',', is_array($this->getValue()) ? $this->getValue() : array($this->getValue())),
+				'filterfield' => $this->getOption('preSelectFieldThere'),
+				'exactvalue' => $data['preselection_value'],
+				'ignoreRequestItemId' => 'y',
+				'url' => $servicelib->getUrl(array(
+					'controller' => 'tracker',
+					'action' => 'update_item',
+					'trackerId' => $this->getOption('trackerId'),
+					'itemId' => '#itemId',
+				))
+			);
+			if( $this->getOption('trackerListOptions') ) {
+				$parser = new WikiParser_PluginArgumentParser();
+				$arguments = $parser->parse($this->getOption('trackerListOptions'));
+				$data['trackerListOptions'] = array_merge($data['trackerListOptions'], $arguments);
+				if( !empty($arguments['editable']) && empty($arguments['editableall']) ) {
+					$data['trackerListOptions']['editableall'] = 'n';
+				}
+				if( isset($arguments['checkbox']) && empty($arguments['checkbox']) ) {
+					unset($data['trackerListOptions']['checkbox']);
+				}
 			}
 		}
 		

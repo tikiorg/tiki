@@ -30,6 +30,10 @@ function smarty_block_wikiplugin( $params, $content, $smarty, $repeat = false )
 	$name = $params['_name'];
 	unset( $params['_name'] );
 
+	if( !empty($params['_compactArguments_']) ) {
+		$params = $params['_compactArguments_'];
+	}
+
 	$parserlib = TikiLib::lib('parser');
 	$out = $parserlib->plugin_execute(
 		$name,
