@@ -7,8 +7,8 @@
 
 /** \brief send the email notifications dealing with the forum changes to
  * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
- * \param $event = 'forum_post_topic' or 'forum_post_thread'
- * \param $object = forumId watch if forum_post_topic or topicId watch if forum_post_thread
+ * \param $event = 'forum_post_topic' or 'forum_post_thread' or 'forum_post_queued'
+ * \param $object = forumId watch if forum_post_topic (and forum_post_queued) or topicId watch if forum_post_thread
  * \param $threadId = topicId if forum_post_thread
  * \param $title of the message
  * \param $topicName name of the parent topic
@@ -34,7 +34,7 @@ function sendForumEmailNotification(
 	$smarty = TikiLib::lib('smarty');
 
 	// Per-forum From address overrides global default.
-	if ( $forum_info['outbound_from'] ) {
+	if ( $forum_info['outbound_from'] && ($event == 'forum_post_thread' || $event == 'forum_post_topic')) {
 		$author = $userlib->clean_user($author);
 		$my_sender = $forum_info['outbound_from'];
 	} else {
@@ -42,7 +42,7 @@ function sendForumEmailNotification(
 	}
 
 	//outbound email ->  will be sent in utf8 - from sender_email
-	if ($forum_info['outbound_address']) {
+	if ($forum_info['outbound_address'] && ($event == 'forum_post_thread' || $event == 'forum_post_topic')) {
 		include_once('lib/webmail/tikimaillib.php');
 		$mail = new TikiMail();
 		$mail->setSubject($title);
@@ -124,6 +124,28 @@ function sendForumEmailNotification(
 		}
 	}
 
+	// Moderation email
+	if ($event == 'forum_post_queued') {
+		$nots = array();
+		if (!empty($forum_info['moderator'])) {
+			$not['email'] = $userlib->get_user_email($forum_info['moderator']); 
+			$not['user'] = $forum_info['moderator'];
+			$not['language'] = $tikilib->get_user_preference($forum_info['moderator'], "language", $defaultLanguage);
+			$nots[] = $not;
+		}
+		if (!empty($forum_info['moderator_group'])) {
+			$moderators = $userlib->get_members($forum_info['moderator_group']);
+			foreach ($moderators as $mod) {
+				if ($mod != $nots[0]['user']) { // avoid duplication
+					$not['email'] = $userlib->get_user_email($mod);
+					$not['user'] = $mod;
+					$not['language'] = $tikilib->get_user_preference($mod, "language", $defaultLanguage);
+					$nots[] = $not;
+				}
+			}
+		}
+	}
+
 	// Special forward address
 	//TODO: merge or use the admin notification feature
 	if ($forum_info["useMail"] == 'y') {
@@ -181,9 +203,17 @@ function sendForumEmailNotification(
 		foreach ($nots as $not) {
 			$mail = new TikiMail();
 			$mail->setUser($not['user']);
-			$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_forum_subject.tpl");
+			if ($event == 'forum_post_queued') {
+				$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_forum_queued_subject.tpl");
+			} else {
+				$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_forum_subject.tpl");
+			}
 			$mail->setSubject($mail_data);
-			$mail_data = $smarty->fetchLang($not['language'], "mail/forum_post_notification.tpl");
+			if ($event == 'forum_post_queued') {
+				$mail_data = $smarty->fetchLang($not['language'], "mail/forum_post_queued_notification.tpl");
+			} else {
+				$mail_data = $smarty->fetchLang($not['language'], "mail/forum_post_notification.tpl");
+			}
 			$mail->setText($mail_data);
 			$mail->send(array($not['email']));
 		}
