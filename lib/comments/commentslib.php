@@ -675,6 +675,12 @@ class Comments extends TikiLib
 
 			return $qId;
 		} else {
+			if ($threadId) {
+				// Existing thread being updated so delete previous queue before adding new one
+				if ($toDelete = TikiLib::lib('attribute')->get_attribute('forum post', $threadId, 'tiki.forumpost.queueid')) {
+					$this->remove_queued($toDelete);
+				}
+			}
 			$qId = $queue->insert($data);
 		}
 
