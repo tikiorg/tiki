@@ -6869,7 +6869,8 @@ class UsersLib extends TikiLib
 		return false;
 	}
 
-	/* Tests the password against policy enforcement (Admin->Login), namelly:
+   /**
+    * Tests the password against policy enforcement (Admin->Login), namely
 	* $min_pass_length
 	* $pass_chr_num
 	* $pass_ud_chr_num
@@ -6926,7 +6927,7 @@ class UsersLib extends TikiLib
 			}
 		}
 
-        if ($prefs['pass_blacklist'] != 'n' && isset($prefs['pass_blacklist'])) {
+        if ($prefs['pass_blacklist'] === 'y') {
 
             $query = 'SELECT 1 FROM tiki_password_blacklist WHERE BINARY password=?;';
             $result = $this->query($query, array($pass));

@@ -232,8 +232,8 @@ class blacklist extends TikiLib
     public function whatFileUsing()
     {
         if ($GLOBALS['prefs']['pass_blacklist'] == 'n' || !isset($GLOBALS['prefs']['pass_blacklist'])) return 'Disabled';
-        else if ($GLOBALS['prefs']['pass_blacklist'] == 'auto') return readableBlackName(explode('-',$GLOBALS['prefs']['pass_auto_blacklist'])).' - Auto Selected';
-        else return readableBlackName(explode('-',$GLOBALS['prefs']['pass_blacklist']));
+        else if ($GLOBALS['prefs']['pass_blacklist_file'] == 'auto') return readableBlackName(explode('-',$GLOBALS['prefs']['pass_auto_blacklist'])).' - Auto Selected';
+        else return readableBlackName(explode('-',$GLOBALS['prefs']['pass_blacklist_file']));
 
     }
 }

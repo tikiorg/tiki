@@ -17,16 +17,21 @@ function prefs_pass_list()
             'type' => 'flag',
             'default' => 'n',
         ),
+        'pass_blacklist_file' => array(
+            'name' => tra('Password file used'),
+            'description' => tra('The automatically selected file is recommended unless you generate your own blacklist file.'),
+            'type' => 'list',
+            'default' => 'auto',
+            'filter' => 'striptags',
+            'options' => array_merge(array('auto' => 'Automatically select blacklist'),
+                           function_exists('genIndexedBlacks') ? genIndexedBlacks() : array()),
+        ),
         'pass_blacklist' => array(
             'name' => tra('Prevent common passwords'),
             'description' => tra('For improved security, prevent passwords in your password blacklist from being used.'),
-            'type' => 'list',
+            'type' => 'flag',
             'default' => 'n',
-            'options' => array_merge(array('n' => 'Disable',
-                          'auto' => 'Automatically select blacklist'),
-                           function_exists('genIndexedBlacks') ? genIndexedBlacks() : array()),
         ),
-
 		'pass_due' => array(
 			'name' => tra('Password expires after'),
             'description' => tra('password expiration period (in days)'),

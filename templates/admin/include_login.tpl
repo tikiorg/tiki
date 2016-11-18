@@ -473,6 +473,11 @@
 {tab name="{tr}Password Blacklist{/tr}"}
 			<h2>{tr}Password Blacklist Tools{/tr}</h2>
 			<fieldset>
+				<fieldset>
+					<legend>{tr}Password{/tr}</legend>
+
+					{preference name=pass_blacklist_file}
+
 				<legend>{tr}Password Blacklist Tools{/tr}{help url="php.ini#Performance"
                     desc="realpath_cache_size : {tr}Determines the size of the realpath cache to be used by PHP.{/tr}"}</legend>
 				{if isset($sucess_message)}

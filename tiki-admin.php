@@ -156,6 +156,15 @@ function genIndexedBlacks($returnFormatted = true){
     return $fileindex;
 }
 
+/**
+ * Formatts a blacklist file name into a human readable description.
+ *
+ * @param $NameArray array of blacklist file specifycations
+ *
+ * @return string
+ *
+ */
+
 function readableBlackName($NameArray){
 
     $readable = 'Num & Let: ' . $NameArray['0'];
@@ -190,7 +199,6 @@ function selectBestBlacklist(){
     if ($_POST['pass_chr_special'] == 'on') $special = true;
     $length = $_POST['min_pass_length'];
 
-
     foreach ($fileIndex as $file){
         if ($file[0] == $chrnum &&       // first qualify the options
             $file[1] == $special &&
@@ -204,6 +212,7 @@ function selectBestBlacklist(){
             }
         }
     }
+
     return $bestFile;
 }
 
@@ -228,21 +237,28 @@ if ( isset ($_REQUEST['pref_filters']) ) {
  * Then update the database with the selection.
  **/
 
-if (isset($_POST['pass_blacklist']) && $_POST['pass_blacklist'] != 'n') { // if pass_blacklist is turned on, or is being turned on & the page has _POST set (filters out a double page load)
-    if ($_POST['pass_blacklist'] === 'auto') {
+
+
+if (isset($_POST['pass_blacklist'])) {                                                  // if preferences were updated and blacklist feature is enabled (or is being enabled)
+    $pass_blacklist_file = $jitPost->pass_blacklist_file->striptags();
+    if ($pass_blacklist_file === 'auto') {
         if ($_POST['min_pass_length']  != $GLOBALS['prefs']['min_pass_length'] ||
             $_POST['pass_chr_num']     != $GLOBALS['prefs']['pass_chr_num']    ||
-            $_POST['pass_chr_special'] != $GLOBALS['prefs']['pass_chr_special']){     // if blacklist is auto and an option is changed that could effect the selection
+            $_POST['pass_chr_special'] != $GLOBALS['prefs']['pass_chr_special']){       // if blacklist is auto and an option is changed that could effect the selection
+            echo 'here';
             $prefname = implode('-',selectBestBlacklist());
+            echo 'here';
             $filename = 'lib/pass_blacklists/' . $prefname . '.txt';
             $tikilib->set_preference('pass_auto_blacklist', $prefname);
             loadBlacklist(dirname($_SERVER['SCRIPT_FILENAME']) . '/' . $filename);
         }
-    }else if ($_POST['pass_blacklist'] != $GLOBALS['prefs']['pass_blacklist']) {  // if blacklist has been changed to a manual selection
-        $filename = 'lib/pass_blacklists/' . $_REQUEST['pass_blacklist'] . '.txt';
+    }else if ($pass_blacklist_file != $GLOBALS['prefs']['pass_blacklist_file']){        // if manual selection mode has been changed
+        $filename = 'lib/pass_blacklists/' . $pass_blacklist_file . '.txt';
         loadBlacklist(dirname($_SERVER['SCRIPT_FILENAME']) . '/' . $filename);
+
     }
 }
+
 $temp_filters = isset($_REQUEST['filters']) ? explode(' ', $_REQUEST['filters']) : null;
 $smarty->assign('pref_filters', $prefslib->getFilters($temp_filters));
 
