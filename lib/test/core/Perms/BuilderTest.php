@@ -99,8 +99,9 @@ class Perms_BuilderTest extends PHPUnit_Framework_TestCase
 				array_filter(
 					array(
 						new Perms_ResolverFactory_ObjectFactory,
-						new Perms_ResolverFactory_TrackerParentFactory,
 						$categories ? new Perms_ResolverFactory_CategoryFactory : null,
+						new Perms_ResolverFactory_ObjectFactory('parent'),
+						$categories ? new Perms_ResolverFactory_CategoryFactory('parent') : null,
 						new Perms_ResolverFactory_GlobalFactory,
 					)
 				)

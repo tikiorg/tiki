@@ -42,18 +42,5 @@ class Perms_Resolver_StaticTest extends TikiTestCase
 		$this->assertTrue($static->check('edit', array('Anonymous', 'Registered')));
 		$this->assertEquals(array('Anonymous', 'Registered'), $static->applicableGroups());
 	}
-
-	function testExtension() {
-		$objectStatic = new Perms_Resolver_Static(array(
-			'Anonymous' => array('view'),
-			'Registered' => array('view', 'edit'),
-		));
-		$globalStatic = new Perms_Resolver_Static(array(
-			'Anonymous' => array('view', 'create')
-		));
-		$objectStatic->extend($globalStatic);
-		$this->assertTrue($objectStatic->check('view', array('Anonymous')));
-		$this->assertTrue($objectStatic->check('create', array('Anonymous')));
-	}
 }
 

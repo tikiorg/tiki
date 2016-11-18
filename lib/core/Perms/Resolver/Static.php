@@ -28,32 +28,6 @@ class Perms_Resolver_Static implements Perms_Resolver
 		}
 		$this->from = $from;
 	}
-
-	/*
-	 * Extend $known permissions with those from another resolver effectively merging
-	 * the two arrays.
-	 * @param Perms_Resolver $resolver - the other resolver (usually higher level)
-	 */
-	function extend( Perms_Resolver $resolver ) {
-		$known = $resolver->getPermissions();
-		if( !is_array($known) ) {
-			return;
-		}
-		foreach( $known as $group => $perms ) {
-			if( !isset($this->known[$group]) ) {
-				$this->known[$group] = array();
-			}
-			$this->known[$group] = array_merge($this->known[$group], $perms);
-		}
-	}
-
-	/* Retrieve known permissions. Primarily used to extend other resolvers.
-	 * @return array - the known permissions for this resolver
-	 */
-	function getPermissions() {
-		return $this->known;
-	}
-
 	
 	/*
 	 * Check if a specific permission like 'add_object' exist in any of the groups

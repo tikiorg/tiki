@@ -334,19 +334,13 @@ class Perms
 			$hash = $factory->getHash($context);
 
 			if( isset($this->hashes[$hash]) ) {
-				$resolver = $this->hashes[$hash];
+				$finalResolver = $this->hashes[$hash];
 			} else {
-				$resolver = $toSet[$hash] = $factory->getResolver($context);
+				$finalResolver = $toSet[$hash] = $factory->getResolver($context);
 			}
 
-			if( !$resolver ) {
-				continue;
-			}
-
-			if( !$finalResolver ) {
-				$finalResolver = $resolver;
-			} else {
-				$finalResolver->extend($resolver);
+			if( $finalResolver ) {
+				break;
 			}
 		}
 

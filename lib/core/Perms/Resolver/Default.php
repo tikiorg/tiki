@@ -24,14 +24,6 @@ class Perms_Resolver_Default implements Perms_Resolver
 		return $this->value;
 	}
 
-	function extend( Perms_Resolver $resolver ) {
-		// noop - expect the first resolver found to always return what it returns initially
-	}
-
-	function getPermissions() {
-		return $this->value;
-	}
-
 	function from()
 	{
 		return 'system';
