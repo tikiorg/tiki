@@ -23,13 +23,15 @@ class TikiFilter
 		switch( $filter )
 		{
 		case 'alpha':
-			return new TikiFilter_Alpha;
+			return new TikiFilter_Alpha;    // Removes all but alphabetic characters.
+        case 'word':
+            return new TikiFilter_Word;     // A single word of alphabetic characters (im pretty sure) ?I18n?
 		case 'alnum':
-			return new TikiFilter_Alnum;
+			return new TikiFilter_Alnum;    // Only alphabetic characters and digits. All other characters are suppressed. I18n support
 		case 'digits':
-			return new Zend\Filter\Digits;
+			return new Zend\Filter\Digits;  // Removes everything except for digits eg. '12345 to 67890' returns 1234567890
 		case 'int':
-			return new Zend\Filter\ToInt;
+			return new Zend\Filter\ToInt;   // Allows you to transform a sclar value which contains into an integer. eg. '-4 is less than 0' returns -4
 		case 'isodate':
 			return new TikiFilter_IsoDate;
 		case 'isodatetime':
@@ -47,13 +49,11 @@ class TikiFilter
 		case 'datetime':
 			// Use striptags
 		case 'striptags':
-			return new Zend\Filter\StripTags;
-		case 'word':
-			return new TikiFilter_Word;
+			return new Zend\Filter\StripTags;   // Strips XML and HTML tags
 		case 'xss':
-			return new TikiFilter_PreventXss;
+			return new TikiFilter_PreventXss;   // Leave everything except for potentially malicious HTML
 		case 'purifier':
-			return new TikiFilter_HtmlPurifier('temp/cache');
+			return new TikiFilter_HtmlPurifier('temp/cache');  // Strips non-valid HTML and potentially malicious HTML.
 		case 'wikicontent':
 			return new TikiFilter_WikiContent;
 		case 'rawhtml_unsafe':
