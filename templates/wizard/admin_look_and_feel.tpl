@@ -62,10 +62,5 @@
 			<legend>{tr}Logo{/tr}</legend>
 			{preference name=sitelogo_src}
 		</fieldset>
-		<fieldset>
-			<legend>{tr}Favicon{/tr}</legend>
-			{preference name=site_favicon}
-			{preference name=site_favicon_type}
-		</fieldset>
 	</div>
 </div>

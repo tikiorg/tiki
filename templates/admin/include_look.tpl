@@ -225,13 +225,6 @@
 			</div>
 			{preference name=image_responsive_class}
 			<div class="adminoptionbox">
-				<fieldset>
-					<legend>{tr}Favicon{/tr}</legend>
-					{preference name=site_favicon}
-					{preference name=site_favicon_type}
-				</fieldset>
-			</div>
-			<div class="adminoptionbox">
 				<fieldset class="table">
 					<legend>{tr}Context Menus{/tr} (<small>{tr}Currently used in File Galleries only{/tr}.</small>)</legend>
 					{preference name=use_context_menu_icon}

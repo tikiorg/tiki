@@ -311,12 +311,6 @@ function get_default_prefs()
 
 	// Special default values
 
-	global $tikidomain;
-	if ( is_file('styles/'.$tikidomain.'/'.$prefs['site_favicon']) )
-		$prefs['site_favicon'] = 'styles/'.$tikidomain.'/'.$prefs['site_favicon'];
-	elseif ( ! is_file($prefs['site_favicon']) )
-		$prefs['site_favicon'] = false;
-
 	$_SESSION['tmpDir'] = class_exists('TikiInit') ? TikiInit::tempdir() : '/tmp';
 
 	$prefs['feature_bidi'] = 'n';

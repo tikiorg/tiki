@@ -32,7 +32,7 @@
 	</p>
 	{/if}
 	<p>
-		<a href="http://tiki.org" title="{tr}The Tiki Community{/tr}" target="_blank"><img src="favicon.png" alt="{tr}The Tiki Community{/tr}" style="border:0;margin-right:2px;vertical-align:middle" align="left"></a>{tr}To learn more, visit: <a href="http://tiki.org" title="The Tiki Community" target="_blank">http://tiki.org</a>{/tr}.
+		<a href="http://tiki.org" title="{tr}The Tiki Community{/tr}" target="_blank"><img src="img/favicon/favicon-16x16.png" alt="{tr}The Tiki Community{/tr}" style="border:0;margin-right:2px;vertical-align:middle" align="left"></a>{tr}To learn more, visit: <a href="http://tiki.org" title="The Tiki Community" target="_blank">http://tiki.org</a>{/tr}.
 	</p>
 	<p>
 		<a href="http://doc.tiki.org" title="{tr}Tiki Documentation{/tr}" target="_blank"><img src="img/icons/help.png" alt="{tr}Tiki Documentation{/tr}" style="border:0px;margin-right:2px;vertical-align:middle" align="left"></a>{tr}For help, visit <a href="http://doc.tiki.org" title="Tiki Documentation" target="_blank">http://doc.tiki.org</a>{/tr}.

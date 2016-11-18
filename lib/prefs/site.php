@@ -78,26 +78,6 @@ function prefs_site_list()
 			),
 			'default' => 'invertfull',
 		),
-		'site_favicon' => array(
-			'name' => tra('Favicon icon file name'),
-			'type' => 'text',
-			'size' => '50',
-			'default' => 'favicon.png',
-			'tags' => array('basic'),
-		),
-		'site_favicon_type' => array(
-			'name' => tra('Favicon MIME type'),
-			'type' => 'list',
-			'description' => tra('Typical file extensions:<table><tr><td>image/jpeg</td><td><strong>.jpg</strong></td></tr><tr><td>imp/png</td><td><strong>.png</strong></td></tr><tr><td>img/gif</td><td><strong>.gif</strong></td></tr><tr><td>image/vnd.microsoft.icon</td><td><strong>.ico</strong></td></tr></table>'),
-			'options' => array(
-				'image/jpeg' => tra('image/jpeg'),
-				'image/png' => tra('image/png'),
-				'image/gif' => tra('image/gif'),
-				'image/vnd.microsoft.icon' => tra('image/vnd.microsoft.icon'),
-			),
-			'default' => 'image/png',
-			'tags' => array('basic'),
-		),
 		'site_terminal_active' => array(
 			'name' => tra('Site terminal'),
 			'description' => tra('Allows users to be directed to a specific perspective depending on the origin IP address. Can be used inside intranets to use different configurations for users depending on their departements or discriminate people in web contexts. Unspecified IPs will fall back to default behavior, including multi-domain handling. Manually selected perspectives take precedence over this.'),
