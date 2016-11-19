@@ -587,11 +587,11 @@ class ToolbarCkOnly extends Toolbar
 				return null;
 			}
 		case 'autosave':
-			return new self( 'autosave', 'lib/ckeditor_tiki/plugins/autosave/images/ajaxAutoSaveDirty.gif', 'floppy');
+			return new self( 'autosave', 'img/ckeditor/ajaxSaveDirty.gif', 'floppy');
 		case 'inlinesave':
-			return new self( 'Inline save', 'lib/ckeditor_tiki/plugins/inlinesave/images/ajaxSaveDirty.gif');
+			return new self( 'Inline save', 'img/ckeditor/ajaxSaveDirty.gif');
 		case 'inlinecancel':
-			return new self( 'Inline cancel', 'lib/ckeditor_tiki/plugins/inlinecancel/images/cross.png');
+			return new self( 'Inline cancel', 'img/icons/cross.png');
 		case 'sub':
 			return new self( 'Subscript', null, 'subscript' );
 		case 'sup':
