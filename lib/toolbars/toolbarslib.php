@@ -512,7 +512,7 @@ class ToolbarCkOnly extends Toolbar
 	function __construct( $token, $icon = '', $iconname = '' ) // {{{
 	{
 		if (empty($icon)) {
-			$img_path = 'lib/ckeditor_tiki/ckeditor-icons/' . strtolower($token) . '.gif';
+			$img_path = 'img/ckeditor/' . strtolower($token) . '.png';
 			if (is_file($img_path)) {
 				$icon = $img_path;
 			} else {
