@@ -107,6 +107,7 @@ if (isset($_REQUEST['create'])) {
 	deldirfiles("$base/pages/img/wiki_up");
 	// Copy base files to the webhelp directory
 	copys('lib/tikihelp', "$base/");
+    copys('img/tikihelp', "$base/icons");
 
 	$structlib->structure_to_webhelp($struct, $dir, $top);
 	$smarty->assign('generated', 'y');
