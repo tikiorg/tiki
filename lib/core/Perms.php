@@ -333,10 +333,15 @@ class Perms
 		foreach ($this->factories as $factory) {
 			$hash = $factory->getHash($context);
 
+			if (!$hash) {
+				continue;
+			}
+
 			if( isset($this->hashes[$hash]) ) {
 				$finalResolver = $this->hashes[$hash];
 			} else {
-				$finalResolver = $toSet[$hash] = $factory->getResolver($context);
+				$toSet[] = $hash;
+				$finalResolver = $factory->getResolver($context);
 			}
 
 			if( $finalResolver ) {
@@ -349,8 +354,8 @@ class Perms
 			$this->hashes = array();
 		}
 
-		foreach ($toSet as $hash => $resolver) {
-			$this->hashes[$hash] = $resolver;
+		foreach ($toSet as $hash) {
+			$this->hashes[$hash] = $finalResolver;
 		}
 
 		return $finalResolver;
