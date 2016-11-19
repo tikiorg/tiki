@@ -259,9 +259,9 @@ class ImageAbstract
 			}
 		}
 
-		$name = "lib/images/icons/$extension.$format";
+		$name = "img/icons/mime/large/$extension.$format";
 		if ( ! file_exists($name) ) {
-			$name = "lib/images/icons/unknown.$format";
+			$name = "img/icons/mime/large/unknown.$format";
 		}
 
 		if ( ! $keep_original && $format != 'svg' ) {
