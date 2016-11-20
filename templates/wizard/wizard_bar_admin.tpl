@@ -50,10 +50,13 @@
 		{if isset($useUpgradeWizard)}
 			<input type="hidden" name="use-upgrade-wizard" value="{$useUpgradeWizard}">
 		{/if}
-		<input type="submit" class="btn btn-primary btn-sm" name="{if isset($firstWizardPage)}use-default-prefs{else}continue{/if}" value="{if isset($lastWizardPage)}{tr}Finish{/tr}{elseif isset($firstWizardPage)}{tr}Start{/tr}{else}{if $isEditable eq true}{tr}Save and Continue{/tr}{else}{tr}Next{/tr}{/if}{/if}" />
-		<input type="submit" class="btn btn-warning btn-sm" name="close" value="{tr}Close{/tr}" />
-		&nbsp;&nbsp;&nbsp;
-		{if !isset($firstWizardPage)}<input type="submit" class="btn btn-default btn-sm" name="back" value="{tr}Back{/tr}" />{/if}
+		<div class="margin-bottom-sm clearfix">
+			{if !isset($firstWizardPage)}<input type="submit" class="btn btn-default" name="back" title="{tr}Return to previous page{/tr}" value="{tr}Back{/tr}" />{/if}
+			<input type="submit" class="btn btn-warning"  style="float:right;" name="close" title="{tr}Leave the Wizard{/tr}" value="{tr}Close{/tr}" />
+		</div>
+		<input type="submit" class="btn btn-success btn-block" name="{if isset($firstWizardPage)}use-default-prefs{else}continue{/if}" value="{if isset($lastWizardPage)}{tr}Finish{/tr}{elseif isset($firstWizardPage)}{tr}Start{/tr}{else}{if $isEditable eq true}{tr}Save and Continue{/tr}{else}{tr}Next{/tr}{/if}{/if}" />
+				&nbsp;&nbsp;&nbsp;
+
 	</div>
 	<div class="col-sm-8 text-center">
 		{if !isset($showWizardPageTitle) or $showWizardPageTitle neq 'y'}
