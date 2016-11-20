@@ -253,10 +253,8 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 
 	public function testExtractInfoPage()
 	{
-		$this->markTestSkipped('2016-09-26 Skipped as dependency injection has stopped mock objects working like this.');
-
 		$obj = $this->getMockBuilder('TikiImporter_Blog_Wordpress')
-			->setMethods( array('extractComments', 'parseContent', 'identifyInternalLinks'))
+			->setMethods( array('extractComment', 'parseContent', 'identifyInternalLinks'))
 			->getMock();
 		$obj->expects($this->exactly(0))->method('extractComment')->will($this->returnValue(true));
 		$obj->expects($this->any())->method('parseContent')->will($this->returnValue('Test'));
