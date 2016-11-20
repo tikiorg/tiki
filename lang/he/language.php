@@ -12218,8 +12218,7 @@ $lang = array(
 // "{\$hiddenContributors} more contributors" => "{\$hiddenContributors} more contributors",
 "low" => "נמוך",
 "Sites" => "אתרים",
-// "Sites to validate" => "Sites tsvn info
-//o validate",
+// "Sites to validate" => "Sites to validate",
 // "Visited links" => "Visited links",
 "Pass" => "סיסמה",
 "By" => "על ידי",
