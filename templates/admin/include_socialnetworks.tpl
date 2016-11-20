@@ -48,8 +48,8 @@
 				</p>
 			{/remarksbox}
 			<div class="adminoptionbox">
-				{preference name=socialnetworks_facebook_application_secr}
 				{preference name=socialnetworks_facebook_application_id}
+				{preference name=socialnetworks_facebook_application_secr}
 				{preference name=socialnetworks_facebook_login}
 				{preference name=socialnetworks_facebook_autocreateuser}
 				<div class="adminoptionboxchild" id="socialnetworks_facebook_autocreateuser_childcontainer">
