@@ -19,13 +19,13 @@ class AdminIndexRebuildCommand extends Command
 	protected function configure()
 	{
 		$this
-			->setName('admin-index:rebuild')
-			->setDescription('Fully rebuild the admin index');
+			->setName('preferences:rebuild-index')
+			->setDescription('Fully rebuild the preferences index');
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		\TikiLib::lib('prefs')->rebuildIndex();
-		$output->writeln('Admin index was rebuilt successfully.');
+		$output->writeln('Preferences index was rebuilt successfully.');
 	}
 }

@@ -150,7 +150,7 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\UnavailableCommand('rss:clear'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('tracker:import'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('tracker:clear'))->ignoreValidationErrors();
-	$console->add(new Tiki\Command\UnavailableCommand('admin-index:rebuild'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('preferences:rebuild-index'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('users:password'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('users:list'))->ignoreValidationErrors();
 }
