@@ -794,7 +794,7 @@ class TikiImporter_Blog_Wordpress extends TikiImporter_Blog
 						$comment['data'] = $node->textContent;
 						break;
 					case 'wp:comment_approved':
-						$comment['approved'] = $node->textContent;
+						$comment['approved'] = (int) $node->textContent;
 						break;
 					case 'wp:comment_type':
 						$comment['type'] = $node->textContent;

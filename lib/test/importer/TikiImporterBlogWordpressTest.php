@@ -321,7 +321,6 @@ class TikiImporter_Blog_Wordpress_Test extends TikiImporter_TestCase
 
 	public function testExtractCommentShouldReturnCommentArray()
 	{
-        $this->markTestSkipped("As of 2013-09-30, this test is broken. Skipping it for now.");
         $expectedResult = array(
 			'author' => 'rodrigo',
 			'author_email' => 'test@test.com',
