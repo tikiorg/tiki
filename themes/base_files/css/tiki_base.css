@@ -1199,6 +1199,9 @@ textarea.wikiedit {
 fieldset {
   display: table-column;
 }
+.icon-link-external {
+  font-size: 80%;
+}
 .box-quickadmin li {
   font-size: 0.9em;
 }
