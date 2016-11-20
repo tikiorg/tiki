@@ -2104,6 +2104,15 @@ if ($standalone && !$nagios) {
 		'unknown' => array('icon' => 'help', 'class' => 'muted'),
 	);
 	$smarty->assign('fmap', $fmap);
+
+	if(class_exists('BOMChecker_Scanner')){
+		$BOMScanner = new BOMChecker_Scanner();
+		$BOMFiles = $BOMScanner->scan();
+		$BOMTotalScannedFiles = $BOMScanner->scannedFiles;
+		$smarty->assign('bom_total_files_scanned', $BOMTotalScannedFiles);
+		$smarty->assign('bom_detected_files', $BOMFiles);
+	}
+
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 	$smarty->assign('mid', 'tiki-check.tpl');
 	$smarty->display('tiki.tpl');

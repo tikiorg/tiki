@@ -322,3 +322,14 @@
 
 <h2>{tr}PHP Info{/tr}</h2>
 {tr}For more detailed information about your PHP installation see <a href="tiki-phpinfo.php">Admin->phpinfo</a>{/tr}.
+
+<h2>{tr}BOM Detected Files{/tr}</h2>
+<p>{tr}Scanned files:{/tr} {$bom_total_files_scanned}</p>
+<p>{tr}BOM files detected:{/tr}</p>
+<ul>
+	{foreach from=$bom_detected_files item=file}
+		<li>
+			{$file}
+		</li>
+	{/foreach}
+</ul>

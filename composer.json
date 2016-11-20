@@ -116,6 +116,7 @@
 	},
 	"autoload": {
 		"psr-0": {
+			"BOMChecker": "lib/core/",
 			"Horde": "lib/core/",
 			"TikiFilter": "lib/core/",
 			"DeclFilter": "lib/core/",
