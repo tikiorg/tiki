@@ -75,7 +75,7 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 
 		$key = $this->objectKey($context);
 
-		if ( count($this->knownObjects[$key]) > 0 ) {
+		if ( isset($this->knownObjects[$key]) && count($this->knownObjects[$key]) > 0 ) {
 			return 'category:' . implode(':', $this->knownObjects[$key]);
 		}
 	}
