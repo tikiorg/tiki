@@ -31,18 +31,18 @@
 {* --- Blog description --- *}
 {if isset($section) and $section eq "blogs"}
 	{if not empty($post_info.parsed_excerpt)}
-		{$metatag_description = $post_info.parsed_excerpt|strip_tags|truncate:200|escape}
+		{$metatag_description = $post_info.parsed_excerpt|strip_tags:false|truncate:200|escape}
 	{elseif not empty($post_info.parsed_data|strip_tags)}
-		{$metatag_description = $post_info.parsed_data|strip_tags|truncate:200|escape}
+		{$metatag_description = $post_info.parsed_data|strip_tags:false|truncate:200|escape}
 	{else}
 		{$metatag_description = $post_info.title|cat:' - '|cat:$blog_data.title|escape}
 	{/if}
 	{* --- Article description --- *}
 {elseif isset($section) and $section eq "cms"}
 	{if not empty($heading)}
-		{$metatag_description = $parsed_heading|truncate:200|strip_tags|escape}
+		{$metatag_description = $parsed_heading|strip_tags:false|truncate:200|escape}
 	{elseif not empty ($body)}
-		{$metatag_description = $parsed_body|truncate:200|strip_tags|escape}
+		{$metatag_description = $parsed_body|strip_tags:false|truncate:200|escape}
 	{/if}
 {elseif $prefs.metatag_pagedesc eq 'y' and not empty($metatag_description)}
 	{$metatag_description = $metatag_description|escape}
