@@ -4267,6 +4267,10 @@ table.wikiplugin_trackerlist {
 .trackerCategoryName {
   white-space: nowrap;
 }
+ol.bbb-recordings {
+  overflow: auto;
+  max-height: 40em;
+}
 .structuremenu .menuSection {
   margin-left: 6px;
 }
