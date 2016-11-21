@@ -3104,26 +3104,26 @@ fieldset[disabled] .btn-default.focus {
   background-color: #333333;
 }
 .btn-primary {
-  color: #333333;
-  background-color: #0001a6;
+  color: #0001a6;
+  background-color: #eeeeee;
   border-color: #0001a6;
 }
 .btn-primary:focus,
 .btn-primary.focus {
-  color: #333333;
-  background-color: #000173;
+  color: #0001a6;
+  background-color: #d5d5d5;
   border-color: #000027;
 }
 .btn-primary:hover {
-  color: #333333;
-  background-color: #000173;
+  color: #0001a6;
+  background-color: #d5d5d5;
   border-color: #000169;
 }
 .btn-primary:active,
 .btn-primary.active,
 .open > .dropdown-toggle.btn-primary {
-  color: #333333;
-  background-color: #000173;
+  color: #0001a6;
+  background-color: #d5d5d5;
   border-color: #000169;
 }
 .btn-primary:active:hover,
@@ -3135,8 +3135,8 @@ fieldset[disabled] .btn-default.focus {
 .btn-primary:active.focus,
 .btn-primary.active.focus,
 .open > .dropdown-toggle.btn-primary.focus {
-  color: #333333;
-  background-color: #00004f;
+  color: #0001a6;
+  background-color: #c3c3c3;
   border-color: #000027;
 }
 .btn-primary:active,
@@ -3153,12 +3153,12 @@ fieldset[disabled] .btn-primary:focus,
 .btn-primary.disabled.focus,
 .btn-primary[disabled].focus,
 fieldset[disabled] .btn-primary.focus {
-  background-color: #0001a6;
+  background-color: #eeeeee;
   border-color: #0001a6;
 }
 .btn-primary .badge {
-  color: #0001a6;
-  background-color: #333333;
+  color: #eeeeee;
+  background-color: #0001a6;
 }
 .btn-success {
   color: #333333;
@@ -7512,6 +7512,19 @@ pre.codelisting {
 }
 .adminoptionboxchild legend {
   font-size: 18px;
+}
+input[type="checkbox"].preffilter-toggle-round + label {
+  background-color: #999999;
+}
+input[type="checkbox"].preffilter-toggle-round + label:before {
+  color: #333333;
+  background-color: #ffffff;
+  border-color: #cccccc;
+}
+input[type="checkbox"].preffilter-toggle-round:checked + label:before {
+  color: #0001a6;
+  background-color: #eeeeee;
+  border-color: #0001a6;
 }
 .margin-bottom-xs {
   margin-bottom: 5px;

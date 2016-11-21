@@ -8017,6 +8017,19 @@ pre.codelisting {
 .adminoptionboxchild legend {
   font-size: 19px;
 }
+input[type="checkbox"].preffilter-toggle-round + label {
+  background-color: #999999;
+}
+input[type="checkbox"].preffilter-toggle-round + label:before {
+  color: #555555;
+  background-color: #eeeeee;
+  border-color: #e2e2e2;
+}
+input[type="checkbox"].preffilter-toggle-round:checked + label:before {
+  color: #ffffff;
+  background-color: #158cba;
+  border-color: #127ba3;
+}
 /* black */
 /* white */
 /* automatically choose the correct arrow/text color */

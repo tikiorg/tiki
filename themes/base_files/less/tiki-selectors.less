@@ -1106,3 +1106,25 @@ pre.codelisting {
 		font-size: @secondary-legend-font-size;
 	}
 }
+
+// Admin navbar switch
+
+input[type="checkbox"].preffilter-toggle-round + label {
+	background-color: @gray-light;
+}
+
+input[type="checkbox"].preffilter-toggle-round + label:before {
+	color: @btn-default-color;
+	background-color: @btn-default-bg;
+	border-color: @btn-default-border;
+}
+
+input[type="checkbox"].preffilter-toggle-round + label:after {
+}
+
+input[type="checkbox"].preffilter-toggle-round:checked + label:before {
+	color: @btn-primary-color;
+	background-color: @btn-primary-bg;
+	border-color: @btn-primary-border;
+}
+

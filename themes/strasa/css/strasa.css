@@ -7513,6 +7513,19 @@ pre.codelisting {
 .adminoptionboxchild legend {
   font-size: 19px;
 }
+input[type="checkbox"].preffilter-toggle-round + label {
+  background-color: #999999;
+}
+input[type="checkbox"].preffilter-toggle-round + label:before {
+  color: #ffffff;
+  background-color: #1d9ccf;
+  border-color: #223845;
+}
+input[type="checkbox"].preffilter-toggle-round:checked + label:before {
+  color: #ffffff;
+  background-color: #006699;
+  border-color: #005580;
+}
 body {
   background: #214d68 url('../images/body-bg_fw.png') repeat-x;
 }
