@@ -35,7 +35,7 @@ function wikiplugin_archivebuilder( $data, $params )
 
 	$archive = md5(serialize(array( $data, $params )));
 
-	if ( isset( $_POST[$archive] ) ) {
+	if ( isset( $_REQUEST[$archive] ) ) {
 		$files = array();
 
 		$handlers = array(
@@ -82,11 +82,28 @@ function wikiplugin_archivebuilder( $data, $params )
 		exit;
 	} else {
 		$label = tra('Download archive');
-		return <<<FORM
-<form method="post" action="">
-	<input type="submit" class="btn btn-default btn-sm" name="$archive" value="$label" />
-</form>
-FORM;
+
+		$urlParts = parse_url($_SERVER['REQUEST_URI']);
+		$path = isset($urlParts['path'])?$urlParts['path']:'/';
+		if(isset($urlParts['query'])){
+			parse_str($urlParts['query'],$archiveParams);
+		} else {
+			$archiveParams = array();
+		}
+		if (isset($_GET['trackerId'])){
+			$archiveParams['trackerId'] = $_GET['trackerId'];
+		}
+		if (isset($_GET['fieldId'])){
+			$archiveParams['fieldId'] = $_GET['fieldId'];
+		}
+		if (isset($_GET['itemId'])){
+			$archiveParams['itemId'] = $_GET['itemId'];
+		}
+		$archiveParams[$archive] = $label;
+		$archiveParamStr = http_build_query($archiveParams, null, '&');
+
+		$downloadLink = '<a href='.$path.'?'.$archiveParamStr.' class="btn btn-default btn-sm">'.$label.'</a>';
+		return $downloadLink;
 	}
 }
 
