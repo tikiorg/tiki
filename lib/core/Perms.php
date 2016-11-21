@@ -333,10 +333,6 @@ class Perms
 		foreach ($this->factories as $factory) {
 			$hash = $factory->getHash($context);
 
-			if (!$hash) {
-				continue;
-			}
-
 			if( isset($this->hashes[$hash]) ) {
 				$finalResolver = $this->hashes[$hash];
 			} else {
