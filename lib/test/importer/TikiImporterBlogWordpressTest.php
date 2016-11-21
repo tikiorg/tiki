@@ -472,15 +472,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 
 	public function testDownloadAttachment()
 	{
-		$this->markTestSkipped('2016-09-26 Skipped as dependency injection has stopped mock objects working like this.');
-
-		$filegallib = TikiLib::lib('filegal');
-
-		$filegallib = $this->getMockBuilder('FileGalLib')
-			->setMethods( array('insert_file'))
-			->getMock();
-		$filegallib->expects($this->exactly(3))->method('insert_file')->will($this->returnValue(1));
-
+		$last_id = TikiDb::get()->getOne('SELECT max(fileId) FROM tiki_files');
 		$adapter = new Zend\Http\Client\Adapter\Test();
 
 		$adapter->setResponse(
@@ -508,7 +500,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 
         $expectedResult = array(
         	array(
-        		'fileId' => 1,
+        		'fileId' => $last_id + 1,
         		'oldUrl' => 'http://example.com/files/tadv2.jpg',
         		'sizes' => array(
 					'thumbnail' => array(
@@ -524,7 +516,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 				),
         	),
         	array(
-        		'fileId' => 1,
+        		'fileId' => $last_id + 2,
         		'oldUrl' => 'http://example.com/files/1881232-hostelaria-las-torres-0.jpg',
         		'sizes' => array(
 					'thumbnail' => array(
@@ -540,7 +532,7 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 				),
         	),
         	array(
-        		'fileId' => 1,
+        		'fileId' => $last_id + 3,
         		'oldUrl' => 'http://example.com/files/1881259-caminhando-no-gelo-no-vale-do-sil-ncio-0.jpg',
         		'sizes' => array(
 					'thumbnail' => array(
