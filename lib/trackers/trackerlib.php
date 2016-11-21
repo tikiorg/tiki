@@ -1565,15 +1565,45 @@ class TrackerLib extends TikiLib
 			}
 
 			$fopt['trackerId'] = $trackerId;
+			$fopt['itemId'] = (int)$itemId;
 
 			$handler = $factory->getHandler($fopt, $info);
 			if ($handler) {
+				$get = $this->extend_GET($fopt); // extend context
 				$fopt = array_merge($fopt, $handler->getFieldData());
 				$fields[] = $fopt;
+				$this->restore_GET($get); // restore context
 			}
 		}
 
 		return($fields);
+	}
+
+	/**
+	 * Make sure $_GET is extended with the $fopt (in get_item_fields) before calling $handler->getFieldData()
+	 * Some trackers use tiki syntax replacement, that uses $_GET in ParserLib::parse_wiki_argvariable, extending
+	 * with $fopt makes sure that that the wiki syntax parser gets the right context variables
+	 *
+	 * @param Array $array Values to add to $_GET
+	 * @return Array a copy of the original $_GET array
+	 */
+	protected function extend_GET($array)
+	{
+		$get = $_GET;
+		foreach($array as $key=>$value){
+			$_GET[$key] = $value;
+		}
+		return $get;
+	}
+
+	/**
+	 * Use to restore the $_GET context with the copy of $_GET returned by self::extend_GET
+	 *
+	 * @param Array $get the array to restore as $_GET
+	 */
+	protected function restore_GET($get)
+	{
+		$_GET = $get;
 	}
 
 	public function replace_item($trackerId, $itemId, $ins_fields, $status = '', $ins_categs = 0, $bulk_import = false)
