@@ -72,8 +72,8 @@ function wikiplugin_fade_info()
                 'filter' => 'alpha',
                 'default' => 'n',
                 'options' => array(
-                    array('text' => '', 'value' => ''), 
-                    array('text' => tra('Yes'), 'value' => 'y'), 
+                    array('text' => '', 'value' => ''),
+                    array('text' => tra('Yes'), 'value' => 'y'),
                     array('text' => tra('No'), 'value' => 'n')
                 )
             ),
@@ -126,11 +126,11 @@ function wikiplugin_fade( $body, $params )
     // Both variants will need $headerlib
     $headerlib = TikiLib::lib('header');
 
-	if ($params['bootstrap'] == 'y') 
+	if ($params['bootstrap'] == 'y')
     {
       $unique_outer = $unique . '-outer';
       $unique_inner = $unique . '-inner';
-  
+
       // The java script is used to toggle the chevron icon from down to up.
       //
       // It is based on the suggestion by zessz here
@@ -138,9 +138,9 @@ function wikiplugin_fade( $body, $params )
       // and the working example here
       // http://jsfiddle.net/zessx/R6EAW/12/
       //
-      // It might not be necessary to go back to the 'panel-heading' before 
-      // going forward to the icon. 
-      
+      // It might not be necessary to go back to the 'panel-heading' before
+      // going forward to the icon.
+
       $jq = "function toggleChevron(e) 
              {
                $(e.target)
@@ -149,17 +149,17 @@ function wikiplugin_fade( $body, $params )
                   .toggleClass('fa-chevron-down fa-chevron-up');
              }
              $('#" . $unique_outer. "').on('hide.bs.collapse', toggleChevron);
-             $('#" . $unique_outer. "').on('show.bs.collapse', toggleChevron);" ;  
- 
+             $('#" . $unique_outer. "').on('show.bs.collapse', toggleChevron);" ;
+
       $headerlib->add_jq_onready($jq);
-    
+
       return "<div id='" . $unique_outer . "' class='panel panel-default" . ( isset($params['class']) ? ' '.$params['class'] : '' ) . "'>"
                 ."<div class='panel-heading'>"
                   ."<a data-toggle='collapse' href='#" . $unique_inner . "'>" . htmlspecialchars($params['label']) . "<span class='icon icon-menu-extra fa fa-chevron-down fa-fw' style='float:right'></span>" . "</a>"
                 ."</div>"
                 ."<div id='" . $unique_inner . "' class='panel-collapse collapse'>"
                   ."<div class='panel-body'>" . $body . "</div>"
-                ."</div>" 
+                ."</div>"
               ."</div>" ;
     }
     else
@@ -180,8 +180,8 @@ function wikiplugin_fade( $body, $params )
 				});';
 	$headerlib->add_jq_onready($jq);
 	//wrapping in an extra div makes animation smoother	
-    	return ( isset($params['class']) ? "<div class='" . $params['class'] . "'>": "<div>" ) 
-            . "\r\t" . '<span class="' . $span_class . '">' . "\r\t\t" 
+    	return ( isset($params['class']) ? "<div class='" . $params['class'] . "'>": "<div>" )
+            . "\r\t" . '<span class="' . $span_class . '">' . "\r\t\t"
 		. '<a id="' . $unique_link . '" class=' . $a_class_hidden . '>' . "\r\t\t\t" . htmlspecialchars($params['label']) . "\r\t\t" 
 		. '</a>' . "\r\t" . '</span>' . "\r\t" . '<div id="' . $unique . '" class="' . $div_class . '">' . "\r\t\t\t" 
     		. $body . "\r\t" . '</div>' . "\r" . '</div>' . "\r";

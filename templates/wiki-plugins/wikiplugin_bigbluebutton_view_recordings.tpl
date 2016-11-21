@@ -1,6 +1,6 @@
 {if $bbb_recordings}
 	<p>{tr}Current recordings:{/tr}</p>
-	<ol>
+	<ol class="bbb-recordings">
 		{foreach from=$bbb_recordings item=recording}
 			{if $recording.published}
 			<li>

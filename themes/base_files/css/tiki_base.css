@@ -1196,6 +1196,13 @@ textarea.wikiedit {
 .modal-dialog #alert-wrapper .alert {
   margin-bottom: 0;
 }
+fieldset {
+  display: table-column;
+}
+.tiki .icon-link-external {
+  font-size: 70%;
+  margin-left: 1px;
+}
 .box-quickadmin li {
   font-size: 0.9em;
 }
@@ -4270,6 +4277,10 @@ table.wikiplugin_trackerlist {
 }
 .trackerCategoryName {
   white-space: nowrap;
+}
+ol.bbb-recordings {
+  overflow: auto;
+  max-height: 40em;
 }
 .structuremenu .menuSection {
   margin-left: 6px;
