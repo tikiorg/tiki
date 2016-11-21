@@ -27,8 +27,8 @@ class TWVersion
 		$this->branch 	= 'stable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '16.0svn';	// needs to have no spaces for releases
-		$this->star	= '?';
+		$this->version 	= '16.0beta';	// needs to have no spaces for releases
+		$this->star	= 'Tabby\'s';
 		$this->releases	= array();
 
 		// Check for Subversion or not
@@ -241,6 +241,7 @@ class TWVersion
 				'15.0',
 				'15.1',
 				'15.2',
+				'16.0beta',
 			);
 	}
 
