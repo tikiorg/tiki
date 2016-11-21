@@ -456,18 +456,12 @@ Estou a disposição para te ajudar com mais informações. Abraços, Rodrigo.',
 
 	function testCreateFileGallery()
 	{
-		$this->markTestSkipped('2016-09-26 Skipped as dependency injection has stopped mock objects working like this.');
-
-		$filegallib = TikiLib::lib('filegal');
-
-		$filegallib = $this->getMockBuilder('FileGalLib')
-			->setMethods( array('replace_file_gallery'))
-			->getMock();
-		$filegallib->expects($this->once())->method('replace_file_gallery')->will($this->returnValue(3));
+		$last_id = TikiDb::get()->getOne('SELECT max(galleryId) FROM tiki_file_galleries');
 
 		$this->obj->blogInfo['title'] = 'Test';
+		$filegalId = $this->obj->createFileGallery();
 
-		$this->assertEquals(3, $this->obj->createFileGallery());
+		$this->assertEquals($last_id + 1, $filegalId);
 	}
 
 	public function testDownloadAttachment()
