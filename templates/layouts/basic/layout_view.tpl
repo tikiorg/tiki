@@ -95,14 +95,14 @@
                 {/if}
             </div>
             {if $prefs.feature_left_column eq 'user'}
-                {$icon_name = (not empty($smarty.cookies.hide_left_zone)) ? 'plus-circle' : 'minus-circle'}
+                {$icon_name = (not empty($smarty.cookies.hide_zone_left)) ? 'plus-circle' : 'minus-circle'}
                 {icon name=$icon_name class='toggle_zone left' href='#'}
             {/if}
             <div class="col-md-2 col-md-pull-8" id="col2">
                 {modulelist zone=left}
             </div>
             {if $prefs.feature_right_column eq 'user'}
-                {$icon_name = (not empty($smarty.cookies.hide_right_zone)) ? 'plus-circle' : 'minus-circle'}
+                {$icon_name = (not empty($smarty.cookies.hide_zone_right)) ? 'plus-circle' : 'minus-circle'}
                 {icon name=$icon_name class='toggle_zone right' href='#'}
             {/if}
             <div class="col-md-2" id="col3">
