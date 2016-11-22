@@ -1036,7 +1036,7 @@ class FileGalLib extends TikiLib
 		return $files->fetchAll($fields, $conditions, $numrows);
 	}
 
-	function update_file($id, $name, $description, $user, $comment = NULL)
+	function update_file($id, $name, $description, $user, $comment = NULL, $filename = NULL)
 	{
 
 		// Update the fields in the database
@@ -1048,6 +1048,10 @@ class FileGalLib extends TikiLib
 		);
 		if ( ! is_null($comment) ) {
 			$updateData['comment'] = $comment;
+		}
+
+		if ( ! is_null($filename) ) {
+			$updateData['filename'] = $filename;
 		}
 
 		$files = $this->table('tiki_files');
