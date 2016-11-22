@@ -3444,6 +3444,30 @@ body.fullscreen.tiki.navbar-padding {
 .col-md-2 .form-inline .form-control {
   width: 100%;
 }
+.hide_zone_left #col2,
+.hide_zone_right #col3 {
+  display: none;
+}
+.hide_zone_left .col-md-8.col-md-push-2.col1 {
+  left: 0;
+  width: 83.3334%;
+}
+.hide_zone_right .col-md-8.col-md-push-2.col1 {
+  width: 83.3334%;
+}
+.hide_zone_left.hide_zone_right .col-md-8.col-md-push-2.col1 {
+  width: 100%;
+}
+.hide_zone_right #col2 {
+  right: 83.3334%;
+}
+.hide_zone_left .col-md-9.col-md-push-3.col1 {
+  left: 0;
+  width: 100%;
+}
+.hide_zone_right .col-md-9.col1 {
+  width: 100%;
+}
 /* becomes height using padding (so it's divided by 2) */
 /* url(icons/loading.gif); */
 /* Filter widget transition */
@@ -4831,5 +4855,129 @@ div.drillshow {
 }
 .multilike .rate div .count {
   font-size: 0.8em;
+}
+.tiki .pvtUi {
+  color: #333333;
+}
+.tiki table.pvtTable {
+  font-size: 14px;
+}
+.tiki table.pvtTable tr th {
+  background-color: transparent;
+  border: 1px solid #dddddd;
+  font-size: 14px;
+  padding: 5px;
+}
+.tiki table.pvtTable tr td {
+  color: #333333;
+  background-color: transparent;
+  border-color: #dddddd;
+}
+.tiki .pvtTotal,
+.tiki .pvtGrandTotal {
+  font-weight: bold;
+}
+.tiki .pvtVals {
+  text-align: center;
+}
+.tiki .pvtAggregator,
+.tiki .pvtRenderer,
+.tiki .pvtSearch,
+.tiki .pvtAttrDropdown {
+  margin-bottom: 5px;
+  background: #ffffff;
+  color: #555555;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+}
+.tiki .pvtAxisContainer,
+.tiki .pvtVals {
+  border-color: #dddddd;
+  background: #ffffff;
+  padding: 5px;
+}
+.tiki .pvtAxisContainer li.pvtPlaceholder {
+  -webkit-border-radius: 5px;
+  padding: 3px 15px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px dashed #dddddd;
+}
+.tiki .pvtAxisContainer li span.pvtAttr {
+  -webkit-text-size-adjust: 100%;
+  padding: 2px 5px;
+  white-space: nowrap;
+  background: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  color: #333333;
+}
+.tiki .pvtTriangle {
+  cursor: pointer;
+  color: grey;
+}
+.tiki .pvtHorizList li {
+  display: inline;
+}
+.tiki .pvtVertList {
+  vertical-align: top;
+}
+.tiki .pvtFilteredAttribute {
+  font-style: italic;
+}
+.tiki .pvtFilterBox {
+  z-index: 100;
+  width: 280px;
+  border: 1px solid #dddddd;
+  background-color: #ffffff;
+  position: absolute;
+  padding: 20px;
+  text-align: center;
+}
+.tiki .pvtFilterBox h4 {
+  margin: 0;
+}
+.tiki .pvtFilterBox p {
+  margin: 1em auto;
+}
+.tiki .pvtFilterBox label {
+  font-weight: normal;
+}
+.tiki .pvtFilterBox input[type='checkbox'] {
+  margin-right: 5px;
+}
+.tiki .pvtCheckContainer {
+  text-align: left;
+  overflow: auto;
+  width: 100%;
+  max-height: 200px;
+}
+.tiki .pvtCheckContainer p {
+  margin: 5px;
+}
+.tiki .pvtRendererArea {
+  padding: 5px;
+}
+.tiki .pvtFilterBox button {
+  background: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  color: #333333;
+}
+.tiki .pvtFilterBox button:hover {
+  background: #ffffff;
+}
+.tiki .pvtFilterBox button + button {
+  margin-left: 4px;
+  margin-bottom: 4px;
+}
+.tiki .c3 line,
+.tiki .c3 path,
+.tiki .c3 svg {
+  fill: none;
+  stroke: #333333;
+}
+.tiki select {
+  font-size: 14px;
 }
 /* End of file */

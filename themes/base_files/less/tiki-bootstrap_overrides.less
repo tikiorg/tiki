@@ -200,3 +200,40 @@ body.fullscreen.tiki.navbar-padding {
 // default width "auto" causes the input to overflow outside of narrow divs.
 .col-sm-2 .form-inline .form-control,
 .col-md-2 .form-inline .form-control { width: 100%; }
+
+
+///// User layout columns (module zones) switching / toggling (resurrected feature)
+
+// When hidden we simply do not display the columns
+.hide_zone_left #col2,
+.hide_zone_right #col3 {
+	display: none;
+}
+
+// Overrides in case of 3-col layout
+.hide_zone_left .col-md-8.col-md-push-2.col1 { // when left col is hidden
+	left: 0;
+	width: 83.3334%; // TODO: make it computed less variable
+}
+.hide_zone_right .col-md-8.col-md-push-2.col1 { // when right col is hidden
+	width: 83.3334%; // TODO: make it computed less variable
+}
+.hide_zone_left.hide_zone_right .col-md-8.col-md-push-2.col1 { // when both are hidden
+	width: 100%;
+}
+
+.hide_zone_right #col2 {
+	right: 83.3334%; // TODO: make it computed less variable
+}
+
+// Overrides in case of 2-col layout with no right column
+.hide_zone_left .col-md-9.col-md-push-3.col1 {
+	left: 0;
+	width: 100%;
+}
+
+// Overrides in case of 2-col layout with no left colum
+.hide_zone_right .col-md-9.col1 {
+	width: 100%;
+}
+
