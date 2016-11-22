@@ -51,6 +51,16 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract
 						),
 						'default' => 0,
 						'legacy_index' => 2,
+					),
+					'notify' => array(
+						'name' => tr('Email Notification'),
+						'description' => tr('Add selected group to group monitor the item. Group watches feature must be enabled.'),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('No'),
+							1 => tr('Yes'),
+						),
+						'legacy_index' => 3,
 					)
 				),
 			),
@@ -118,6 +128,28 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract
 					TikiLib::lib('user')->assign_user_to_group($creator, $value);
 					TikiLib::lib('user')->set_default_group($creator, $value);
 				}
+			}
+		}
+
+		if( $this->getOption('notify') && $prefs['feature_group_watches'] == 'y' ) {
+			$objectId = $this->getItemId();
+			$watchEvent = 'tracker_item_modified';
+			$objectType = 'tracker '.$this->getConfiguration('trackerId');
+
+			$tikilib = TikiLib::lib('tiki');
+			$old_watches = $tikilib->get_groups_watching($objectId, $watchEvent, $objectType);
+
+			foreach( $old_watches as $key => $group ) {
+				if( $group != $value ) {
+					$tikilib->remove_group_watch($group, $watchEvent, $objectId, $objectType);
+				}
+			}
+
+			if( !empty($value) && !in_array($value, $old_watches) ) {
+				$trackerInfo = $this->getTrackerDefinition()->getInformation();
+				$objectName = $trackerInfo['name'];
+				$objectHref = 'tiki-view_tracker_item.php?trackerId='.$this->getConfiguration('trackerId').'&itemId='.$this->getItemId();
+				$tikilib->add_group_watch($value, $watchEvent, $objectId, $objectType, $objectName, $objectHref);
 			}
 		}
 
