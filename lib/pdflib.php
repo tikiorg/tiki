@@ -249,14 +249,21 @@ class PdfGenerator
 		//checking preferences 
 		$orientation=$prefs['print_pdf_mpdf_orientation']!=''?$prefs['print_pdf_mpdf_orientation']:'P';
 		
-		$pageSize=$prefs['print_pdf_mpdf_size']!=''?$prefs['print_pdf_mpdf_size']:'A4';
+		$pageSize=$prefs['print_pdf_mpdf_size']!=''?$prefs['print_pdf_mpdf_size']:'Letter';
+		
+		//custom size needs to be passed for Tabloid
+		if($prefs['print_pdf_mpdf_size']=="Tabloid")
+		  $pageSize=array(279,432);
+		elseif($orientation=='L')
+		  $pageSize=$pageSize.'-'.$orientation;
+		
 		$marginLeft=$prefs['print_pdf_mpdf_margin_left']!=''?$prefs['print_pdf_mpdf_margin_left']:'10';
 		$marginRight=$prefs['print_pdf_mpdf_margin_right']!=''?$prefs['print_pdf_mpdf_margin_right']:'10';
 		$marginTop=$prefs['print_pdf_mpdf_margin_top']!=''?$prefs['print_pdf_mpdf_margin_top']:'10';
 		$marginBottom=$prefs['print_pdf_mpdf_margin_bottom']!=''?$prefs['print_pdf_mpdf_margin_bottom']:'10';
 		$marginHeader=$prefs['print_pdf_mpdf_margin_header']!=''?$prefs['print_pdf_mpdf_margin_header']:'5';
 		$marginFooter=$prefs['print_pdf_mpdf_margin_footer']!=''?$prefs['print_pdf_mpdf_margin_footer']:'5';
-	  	$mpdf=new mPDF('utf-8',$pageSize.'-'.$orientation,'','',$marginLeft,$marginRight , $marginTop , $marginBottom , $marginHeader , $marginFooter ,$orientation);
+	  	$mpdf=new mPDF('utf-8',$pageSize,'','',$marginLeft,$marginRight , $marginTop , $marginBottom , $marginHeader , $marginFooter ,$orientation);
 	    
 		//setting header and footer
 		if($prefs['print_pdf_mpdf_header'])
@@ -278,7 +285,7 @@ class PdfGenerator
 		$stylesheet1 = file_get_contents('themes/base_files/css/tiki_base.css'); // external css
         $stylesheet2 = file_get_contents($themecss); // external css
 
-        $mpdf->WriteHTML('<style>'.$stylesheet1.$stylesheet2.$this->bootstrapReplace().'</style>'.$html."");
+        $mpdf->WriteHTML('<style>'.$stylesheet1.$stylesheet2.$this->bootstrapReplace().'</style>'.$html);
 	    $this->clearTempImg($tempImgArr);
         return $mpdf->Output('', 'S');					// Return as a string
 	}
