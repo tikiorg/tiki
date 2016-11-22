@@ -3476,6 +3476,9 @@ body.fullscreen.tiki.navbar-padding {
   .hide_zone_right #col3 {
     display: block;
   }
+  .hide_zone_right #col2 {
+    right: auto;
+  }
   .toggle_zone {
     display: none;
   }
