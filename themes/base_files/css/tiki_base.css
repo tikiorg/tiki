@@ -3468,6 +3468,18 @@ body.fullscreen.tiki.navbar-padding {
 .hide_zone_right .col-md-9.col1 {
   width: 100%;
 }
+@media (max-width: 991px) {
+  #col1 {
+    width: 100%;
+  }
+  .hide_zone_left #col2,
+  .hide_zone_right #col3 {
+    display: block;
+  }
+  .toggle_zone {
+    display: none;
+  }
+}
 /* becomes height using padding (so it's divided by 2) */
 /* url(icons/loading.gif); */
 /* Filter widget transition */
