@@ -98,7 +98,7 @@ function wikiplugin_archivebuilder( $data, $params )
 		}
 		if (isset($_GET['itemId'])){
 			$archiveParams['itemId'] = $_GET['itemId'];
-			$path = 'item' . $_GET['itemId'];
+			$path = 'tiki-view_tracker_item.php';
 		}
 		$archiveParams[$archive] = $label;
 		$archiveParamStr = http_build_query($archiveParams, null, '&');
