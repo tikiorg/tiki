@@ -3189,6 +3189,8 @@ class Comments extends TikiLib
 		$comments->deleteMultiple(array('threadId' => $threadOrParent));
 		//TODO in a forum, when the reply to a post (not a topic) id deletd, the replies to this post are not deleted
 
+		$this->remove_stale_comment_watches();
+
 		$this->remove_reported($threadId);
 
 		$atts = $this->table('tiki_forum_attachments')->fetchAll(array('attId'), array('threadId' => $threadId));

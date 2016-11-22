@@ -131,6 +131,16 @@ class TrackerLib extends TikiLib
 		return $this->table('tiki_tracker_item_field_logs', false);
 	}
 
+	private function groupWatches()
+	{
+		return $this->table('tiki_group_watches');
+	}
+
+	private function userWatches()
+	{
+		return $this->table('tiki_user_watches');
+	}
+
 	public function remove_field_images($fieldId)
 	{
 		$itemFields = $this->itemFields();
@@ -2543,7 +2553,11 @@ class TrackerLib extends TikiLib
 		$this->itemFields()->deleteMultiple(array('itemId' => (int) $itemId));
 		$this->comments()->deleteMultiple(array('object' => (int) $itemId, 'objectType' => 'trackeritem'));
 		$this->attachments()->deleteMultiple(array('itemId' => (int) $itemId));
+		$this->groupWatches()->deleteMultiple(array('object' => (int) $itemId, 'event' => 'tracker_item_modified'));
+		$this->userWatches()->deleteMultiple(array('object' => (int) $itemId, 'event' => 'tracker_item_modified'));		
 		$this->items()->delete(array('itemId' => (int) $itemId));
+
+		$this->remove_stale_comment_watches();
 
 		// ---- delete image from disk -------------------------------------
 		foreach ($imgList as $img) {

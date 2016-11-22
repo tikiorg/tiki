@@ -806,6 +806,12 @@ class TikiLib extends TikiDb_Bridge
 		$this->query($query, array($event,$object,$type));
 	}
 
+	function remove_stale_comment_watches()
+	{
+		$query = "DELETE FROM `tiki_user_watches` WHERE `event` = 'thread_comment_replied' AND `object` NOT IN (SELECT `threadId` FROM `tiki_comments`)";
+		$this->query($query);
+	}
+
 	/**
 	 * @param $group
 	 * @param $event
