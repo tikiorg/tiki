@@ -42,7 +42,7 @@
             <div class="col-md-12 text-right">
             {if $prefs.feature_right_column eq 'user'}
                 {$icon_name = (not empty($smarty.cookies.hide_zone_right)) ? 'toggle-left' : 'toggle-right'}
-                {icon name=$icon_name class='toggle_zone right' href='#'}
+                {icon name=$icon_name class='toggle_zone right' href='#' title='{tr}Toggle right modules{/tr}'}
             {/if}
             </div>
             <div class="col-md-9 col1" id="col1">
@@ -65,7 +65,7 @@
             <div class="col-md-12 text-left">
             {if $prefs.feature_left_column eq 'user'}
                 {$icon_name = (not empty($smarty.cookies.hide_zone_left)) ? 'toggle-right' : 'toggle-left'}
-                {icon name=$icon_name class='toggle_zone left' href='#'}
+                {icon name=$icon_name class='toggle_zone left' href='#' title='{tr}Toggle left modules{/tr}'}
             {/if}
             </div>
             <div class="col-md-9 col-md-push-3 col1" id="col1">
@@ -88,13 +88,13 @@
             <div class="col-md-6 text-left">
             {if $prefs.feature_left_column eq 'user'}
                 {$icon_name = (not empty($smarty.cookies.hide_zone_left)) ? 'toggle-right' : 'toggle-left'}
-                {icon name=$icon_name class='toggle_zone left' href='#'}
+                {icon name=$icon_name class='toggle_zone left' href='#' title='{tr}Toggle left modules{/tr}'}
             {/if}
             </div>
             <div class="col-md-6 text-right">
             {if $prefs.feature_right_column eq 'user'}
                 {$icon_name = (not empty($smarty.cookies.hide_zone_right)) ? 'toggle-left' : 'toggle-right'}
-                {icon name=$icon_name class='toggle_zone right' href='#'}
+                {icon name=$icon_name class='toggle_zone right' href='#' title='{tr}Toggle right modules{/tr}'}
             {/if}
             </div>
             <div class="col-md-8 col-md-push-2 col1" id="col1">
