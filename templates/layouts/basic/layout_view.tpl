@@ -39,6 +39,12 @@
                 {/if}
             </div>
         {elseif zone_is_empty('left') or $prefs.feature_left_column eq 'n'}
+            <div class="col-md-12 text-left">
+            {if $prefs.feature_right_column eq 'user'}
+                {$icon_name = (not empty($smarty.cookies.hide_zone_right)) ? 'toggle-left' : 'toggle-right'}
+                {icon name=$icon_name class='toggle_zone right' href='#'}
+            {/if}
+            </div>
             <div class="col-md-9 col1" id="col1">
                 {if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
                     {modulelist zone=pagetop}
@@ -52,14 +58,16 @@
                     {modulelist zone=pagebottom}
                 {/if}
             </div>
-            {if $prefs.feature_right_column eq 'user'}
-                {$icon_name = (not empty($smarty.cookies.hide_right_zone)) ? 'plus-circle' : 'minus-circle'}
-                {icon name=$icon_name class='toggle_zone right' href='#'}
-            {/if}
             <div class="col-md-3" id="col3">
                 {modulelist zone=right}
             </div>
         {elseif zone_is_empty('right') or $prefs.feature_right_column eq 'n'}
+            <div class="col-md-12 text-right">
+            {if $prefs.feature_left_column eq 'user'}
+                {$icon_name = (not empty($smarty.cookies.hide_zone_left)) ? 'toggle-right' : 'toggle-left'}
+                {icon name=$icon_name class='toggle_zone left' href='#'}
+            {/if}
+            </div>
             <div class="col-md-9 col-md-push-3 col1" id="col1">
                 {if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
                     {modulelist zone=pagetop}
@@ -73,14 +81,22 @@
                     {modulelist zone=pagebottom}
                 {/if}
             </div>
-            {if $prefs.feature_left_column eq 'user'}
-                {$icon_name = (not empty($smarty.cookies.hide_left_zone)) ? 'plus-circle' : 'minus-circle'}
-                {icon name=$icon_name class='toggle_zone left' href='#'}
-            {/if}
             <div class="col-md-3 col-md-pull-9" id="col2">
                 {modulelist zone=left}
             </div>
         {else}
+            <div class="col-md-6 text-left">
+            {if $prefs.feature_left_column eq 'user'}
+                {$icon_name = (not empty($smarty.cookies.hide_zone_left)) ? 'toggle-right' : 'toggle-left'}
+                {icon name=$icon_name class='toggle_zone left' href='#'}
+            {/if}
+            </div>
+            <div class="col-md-6 text-right">
+            {if $prefs.feature_right_column eq 'user'}
+                {$icon_name = (not empty($smarty.cookies.hide_zone_right)) ? 'toggle-left' : 'toggle-right'}
+                {icon name=$icon_name class='toggle_zone right' href='#'}
+            {/if}
+            </div>
             <div class="col-md-8 col-md-push-2 col1" id="col1">
                 {if $prefs.module_zones_pagetop eq 'fixed' or ($prefs.module_zones_pagetop ne 'n' && ! zone_is_empty('pagetop'))}
                     {modulelist zone=pagetop}
@@ -94,17 +110,9 @@
                     {modulelist zone=pagebottom}
                 {/if}
             </div>
-            {if $prefs.feature_left_column eq 'user'}
-                {$icon_name = (not empty($smarty.cookies.hide_zone_left)) ? 'plus-circle' : 'minus-circle'}
-                {icon name=$icon_name class='toggle_zone left' href='#'}
-            {/if}
             <div class="col-md-2 col-md-pull-8" id="col2">
                 {modulelist zone=left}
             </div>
-            {if $prefs.feature_right_column eq 'user'}
-                {$icon_name = (not empty($smarty.cookies.hide_zone_right)) ? 'plus-circle' : 'minus-circle'}
-                {icon name=$icon_name class='toggle_zone right' href='#'}
-            {/if}
             <div class="col-md-2" id="col3">
                 {modulelist zone=right}
             </div>
