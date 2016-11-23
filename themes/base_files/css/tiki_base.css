@@ -1560,6 +1560,9 @@ h3.panel-title {
   right: 1%;
   top: 0;
 }
+.flipmodtitle.close {
+  line-height: 0.75;
+}
 a.flipmodtitle .icon {
   font-size: 80%;
 }
