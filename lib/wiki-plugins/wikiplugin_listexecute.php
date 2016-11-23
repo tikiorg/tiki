@@ -41,7 +41,7 @@ function wikiplugin_listexecute($data, $params)
 			'email' => 'Search_Action_EmailAction',
 			'wiki_approval' => 'Search_Action_WikiApprovalAction',
 			'tracker_item_modify' => 'Search_Action_TrackerItemModify',
-			'filegal_rename' => 'Search_Action_FileGalleryRename',
+			'filegal_change_filename' => 'Search_Action_FileGalleryChangeFilename',
 			'filegal_image_overlay' => 'Search_Action_FileGalleryImageOverlay',
 		)
 	);
