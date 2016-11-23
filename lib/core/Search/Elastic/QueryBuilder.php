@@ -169,10 +169,10 @@ class Search_Elastic_QueryBuilder
 		} elseif ($node instanceof Distance) {
 			return [
 				'geo_distance' => [
-					"distance" => $node->getDistance(),
+					'distance' => $node->getDistance(),
 					$node->getField() => [
-						"lat" => $node->getLat(),
-						"lon" => $node->getLon(),
+						'lat' => $node->getLat(),
+						'lon' => $node->getLon(),
 					]
 				]
 			];

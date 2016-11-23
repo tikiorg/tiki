@@ -22,12 +22,8 @@ class Search_Expr_Distance implements Search_Expr_Interface
 		$this->weight = (float) $weight;
 	}
 
-	/*
-	 * url for testing tiki-searchindex.php?filter~distance~distance=1000m&filter~distance~lat=51.4139354&filter~distance~lon=-0.2333563
-	 */
-
 	/**
-	 * @return mixed
+	 * @return string
 	 */
 	public function getDistance()
 	{
