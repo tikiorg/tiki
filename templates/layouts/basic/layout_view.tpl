@@ -39,7 +39,7 @@
                 {/if}
             </div>
         {elseif zone_is_empty('left') or $prefs.feature_left_column eq 'n'}
-            <div class="col-md-12 text-left">
+            <div class="col-md-12 text-right">
             {if $prefs.feature_right_column eq 'user'}
                 {$icon_name = (not empty($smarty.cookies.hide_zone_right)) ? 'toggle-left' : 'toggle-right'}
                 {icon name=$icon_name class='toggle_zone right' href='#'}
@@ -62,7 +62,7 @@
                 {modulelist zone=right}
             </div>
         {elseif zone_is_empty('right') or $prefs.feature_right_column eq 'n'}
-            <div class="col-md-12 text-right">
+            <div class="col-md-12 text-left">
             {if $prefs.feature_left_column eq 'user'}
                 {$icon_name = (not empty($smarty.cookies.hide_zone_left)) ? 'toggle-right' : 'toggle-left'}
                 {icon name=$icon_name class='toggle_zone left' href='#'}
