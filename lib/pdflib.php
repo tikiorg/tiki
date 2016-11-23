@@ -264,7 +264,11 @@ class PdfGenerator
 		$marginHeader=$prefs['print_pdf_mpdf_margin_header']!=''?$prefs['print_pdf_mpdf_margin_header']:'5';
 		$marginFooter=$prefs['print_pdf_mpdf_margin_footer']!=''?$prefs['print_pdf_mpdf_margin_footer']:'5';
 	  	$mpdf=new mPDF('utf-8',$pageSize,'','',$marginLeft,$marginRight , $marginTop , $marginBottom , $marginHeader , $marginFooter ,$orientation);
-	    
+	  
+	    //for Cantonese support
+	    $mpdf->autoScriptToLang = true;
+		$mpdf->autoLangToFont = true;
+		
 		//setting header and footer
 		if($prefs['print_pdf_mpdf_header'])
 	      $mpdf->SetHeader($prefs['print_pdf_mpdf_header']);
