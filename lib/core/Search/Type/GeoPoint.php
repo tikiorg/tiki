@@ -7,20 +7,15 @@
 
 class Search_Type_GeoPoint implements Search_Type_Interface
 {
-	private $lat;
-	private $lon;
+	private $value;
 
-	function __construct(array $values)
+	function __construct($value)
 	{
-		$this->lat = isset($values['lat']) ? (float) $values['lat'] : null;
-		$this->lon = isset($values['lon']) ? (float) $values['lon'] : null;
+		$this->value = $value;
 	}
 
 	function getValue()
 	{
-		return [
-			'lat' => $this->lat,
-			'lon' => $this->lon,
-		];
+		return $this->value;
 	}
 }
