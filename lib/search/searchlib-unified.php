@@ -949,6 +949,14 @@ class UnifiedSearchLib
 			unset($filter['not_prefix']);
 		}
 
+		if (isset($filter['distance']) && is_array($filter['distance']) &&
+					isset($filter['distance']['distance'], $filter['distance']['lat'], $filter['distance']['lon'])) {
+
+			$query->filterDistance($filter['distance']['distance'], $filter['distance']['lat'], $filter['distance']['lon']);
+
+			unset($filter['distance']);
+		}
+
 		unset($filter['type']);
 		unset($filter['categories']);
 		unset($filter['deep']);

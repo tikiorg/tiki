@@ -53,6 +53,12 @@ class Search_Lucene_TypeFactory implements Search_Type_Factory_Interface
 		return null;
 	}
 
+	/* Not supported in Lucene indexes - use elasticsearch */
+	function geopoint($values)
+	{
+		return null;
+	}
+
 	function sortable($value)
 	{
 		return new Search_Type_ShortText($value);

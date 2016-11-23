@@ -13,6 +13,7 @@ use Search_Expr_Range as Range;
 use Search_Expr_Initial as Initial;
 use Search_Expr_MoreLikeThis as MoreLikeThis;
 use Search_Expr_ImplicitPhrase as ImplicitPhrase;
+use Search_Expr_Distance as Distance;
 
 class Search_Elastic_QueryBuilder
 {
@@ -165,6 +166,16 @@ class Search_Elastic_QueryBuilder
 					'boost' => $node->getWeight(),
 				),
 			);
+		} elseif ($node instanceof Distance) {
+			return [
+				'geo_distance' => [
+					"distance" => $node->getDistance(),
+					$node->getField() => [
+						"lat" => $node->getLat(),
+						"lon" => $node->getLon(),
+					]
+				]
+			];
 		} else {
 			throw new Exception(tr('Feature not supported.'));
 		}

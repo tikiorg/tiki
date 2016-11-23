@@ -121,6 +121,11 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 						"type" => "nested",
 						"dynamic" =>  true,
 					);
+				} elseif ($entry instanceof Search_Type_GeoPoint) {
+					return array(
+						"type" => "geo_point",
+						"index" => "not_analyzed",
+					);
 				} elseif ($entry instanceof Search_Type_DateTime) {
 					return array(
 						"type" => "date",

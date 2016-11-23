@@ -273,6 +273,14 @@ class Search_Query_WikiBuilder
 		}
 	}
 
+	function wpquery_filter_distance($query, $value, array $arguments)
+	{
+		if (! isset($arguments['distance'], $arguments['lat'], $arguments['lon'])) {
+			Feedback::error(tr('The distance filter is missing \"distance\", \"lat\" or \"lon\".'), 'session');
+		}
+		$query->filterDistance($value, $arguments['lat'], $arguments['lon']);
+	}
+
 	function wpquery_sort_mode($query, $value, array $arguments)
 	{
 		if ($value == 'randommode') {

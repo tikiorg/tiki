@@ -47,6 +47,11 @@ class Search_Type_Factory_Direct implements Search_Type_Factory_Interface
 		return new Search_Type_Nested($values);
 	}
 
+	function geopoint($values)
+	{
+		return new Search_Type_GeoPoint($values);
+	}
+
 	function sortable($value)
 	{
 		return new Search_Type_Whole($value);

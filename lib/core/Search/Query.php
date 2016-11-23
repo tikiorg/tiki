@@ -234,6 +234,11 @@ class Search_Query implements Search_Query_Interface
 		$this->expr->addPart($part);
 	}
 
+	function filterDistance($distance, $lat, $lon, $field = 'geo_point')
+	{
+		$this->addPart(new Search_Expr_Distance($distance, $lat, $lon), 'geo_distance', $field);
+	}
+
 	private function addPart($query, $type, $field)
 	{
 		if (is_string($field)) {
