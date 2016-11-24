@@ -1487,6 +1487,8 @@ function wikiplugin_trackerlist($data, $params)
 			}
 
 			$smarty->assign_by_ref('checkbox', $check);
+		} else {
+			$smarty->clear_assign('checkbox');
 		}
 
 		if (isset($_REQUEST["tr_sort_mode$iTRACKERLIST"])) {
