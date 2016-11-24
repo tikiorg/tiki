@@ -218,11 +218,6 @@ function wikiplugin_mouseover( $data, $params )
 	$smarty = TikiLib::lib('smarty');
 	$default = array('parse'=>'y', 'parselabel'=>'y');
 	$params = array_merge($default, $params);
-	if ( ! isset($params['url']) ) {
-		$url = 'javascript:void(0)';
-	} else {
-		$url = $params['url'];
-	}
 
 	$width = isset( $params['width'] ) ? (int) $params['width'] : 400;
 	$height = isset( $params['height'] ) ? (int) $params['height'] : 200;
@@ -241,6 +236,12 @@ function wikiplugin_mouseover( $data, $params )
 	} else {
 		$label = !empty( $params['label'] ) ? $params['label'] : $data;
 		$text = !empty( $params['text'] ) ? $params['text'] : $data;
+	}
+
+	$url = '';
+	if ( isset($params['url']) ) {
+		$url = $params['url'];
+		$url = htmlentities($url, ENT_QUOTES, 'UTF-8');
 	}
 
 	$text = trim($text);
@@ -267,9 +268,8 @@ function wikiplugin_mouseover( $data, $params )
 	static $lastval = 0;
 	$id = "mo" . ++$lastval;
 
-	$url = htmlentities($url, ENT_QUOTES, 'UTF-8');
-
 	$headerlib = TikiLib::lib('header');
+	$headerlib->add_css('.plugin-mouseover-anchor:not([href]) { cursor: help; }');
 
 	if ($closeDelay && $sticky) {
 		$closeDelayStr = "setTimeout(function() {hideJQ('#$id', '$effect', '$speed')}, ".($closeDelay * 1000).");";
@@ -292,8 +292,9 @@ function wikiplugin_mouseover( $data, $params )
 	$bgcolor   =  isset($params['bgcolor'])   ? ("background-color: " . $params['bgcolor'] . ';') : '';
 	$textcolor =  isset($params['textcolor']) ? ("color:" . $params['textcolor'] . ';') : '';
 	$class     = !isset( $params['class'] )   ? 'class="plugin-mouseover"' : 'class="plugin-mouseover '.$params['class'].'"';
+	$href      = $url ? 'href="' . $url . '"' : '';
 
-	$html = "~np~<$tag id=\"$id-link\" href=\"$url\">$label</$tag>".
+	$html = "~np~<$tag id=\"$id-link\" $href class=\"plugin-mouseover-anchor\">$label</$tag>".
 		"<span id=\"$id\" $class style=\"width: {$width}px; " . (isset($params['height']) ? "height: {$height}px; " : "") ."{$bgcolor} {$textcolor} {$padding} \">$text</span>~/np~";
 
 	return $html;
