@@ -668,7 +668,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						'</td><td>',
 						$context['list_mode'],
 						false,
-						$this->getTableDisplayFormat()
+						$this->getTableDisplayFormat(),
+						$item
 					)."</td></tr>";
 				} else {
 					$label = $trklib->concat_item_from_fieldslist($trackerId,
@@ -678,7 +679,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 						' ',
 						$context['list_mode'],
 						$this->getOption('linkToItem'),
-						$this->getOption('displayFieldsListFormat')
+						$this->getOption('displayFieldsListFormat'),
+						$item
 					);
 				}
 			} else {
