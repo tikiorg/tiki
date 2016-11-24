@@ -1770,7 +1770,7 @@ class UsersLib extends TikiLib
 			} else {
 				$mid .= ' and uu.`login` like ?';
 			}
-			$bindvars[] = array($findesc);
+			$bindvars[] = $findesc;
 		}
 
 		$query = "select uu.`login` from `users_users` uu $mid order by " . $this->convertSortMode($sort_mode);
