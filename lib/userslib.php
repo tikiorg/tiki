@@ -1813,7 +1813,7 @@ class UsersLib extends TikiLib
 			$bindvars=array();
 		}
 
-		$query = 'select `login` from `users_users` $mid order by ' . $this->convertSortMode($sort_mode);
+		$query = "select `login` from `users_users` $mid order by " . $this->convertSortMode($sort_mode);
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$ret = array();
 
