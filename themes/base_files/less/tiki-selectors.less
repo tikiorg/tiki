@@ -1098,15 +1098,21 @@ pre.codelisting {
 	border-radius: 1px;
 }
 
+
+// edit menu contextual icons
 .edit-menu {
-  position: absolute;
-  top: 6px;
-  right: 2px;
-  z-index: 1000;
+	position: absolute;
+	top: 6px;
+	right: 2px;
+}
+
+@media (min-width: @screen-md-min) {
+	.edit-menu { display: none; }
+	.navbar-default:hover .edit-menu { display: block; }
 }
 
 @media (max-width: @screen-xs-max) {
-  .navbar-collapse .edit-menu { top: 48px; }
+	.navbar-default .edit-menu { top: 48px; }
 }
 
 

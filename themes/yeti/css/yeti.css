@@ -7928,10 +7928,17 @@ pre.codelisting {
   position: absolute;
   top: 6px;
   right: 2px;
-  z-index: 1000;
+}
+@media (min-width: 992px) {
+  .edit-menu {
+    display: none;
+  }
+  .navbar-default:hover .edit-menu {
+    display: block;
+  }
 }
 @media (max-width: 767px) {
-  .navbar-collapse .edit-menu {
+  .navbar-default .edit-menu {
     top: 48px;
   }
 }
