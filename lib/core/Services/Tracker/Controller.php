@@ -2027,6 +2027,21 @@ class Services_Tracker_Controller
 		}
 
 		return $jsString;
-	}	
+	}
+
+	function action_itemslist_output($input) {
+		$trklib = TikiLib::lib('trk');
+		$field = $trklib->get_tracker_field($input->field->int());
+		if( !$field ) {
+			return '';
+		}
+		$fieldHandler = $trklib->get_field_handler($field, array(
+			$input->fieldIdHere->int() => $input->value->text()
+		));
+		if( !$fieldHandler ) {
+			return '';
+		}
+		return $fieldHandler->renderOutput();
+	}
 }
 
