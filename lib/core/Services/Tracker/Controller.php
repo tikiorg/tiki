@@ -807,7 +807,7 @@ class Services_Tracker_Controller
 				$processedItem = $this->utilities->processValues($definition, $item);
 				$item['processedFields'] = $processedItem['fields'];
 
-				Feedback::success(tr('New tracker item %0 succesfully created.', $itemId), 'session');
+				Feedback::success(tr('New tracker item %0 successfully created.', $itemId), 'session');
 
 				return $item;
 			} else {
