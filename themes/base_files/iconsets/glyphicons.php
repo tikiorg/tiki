@@ -431,6 +431,12 @@ function iconset_glyphicons()
 			'toggle-on' => array(
 				'id' => 'play',
 			),
+            'toggle-left' => array(
+                'id' => 'step-backward',
+            ),
+            'toggle-right' => array(
+                'id' => 'step-forward',
+            ),
 			'trackers' => array(
 				'id' => 'tasks',
 			),
