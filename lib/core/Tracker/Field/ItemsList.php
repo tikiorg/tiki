@@ -38,6 +38,9 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract implements Tracker_
 						'filter' => 'int',
 						'legacy_index' => 1,
 						'profile_reference' => 'tracker_field',
+						'parent' => 'trackerId',
+						'parentkey' => 'tracker_id',
+						'sort_order' => 'position_nasc',
 					),
 					'fieldIdHere' => array(
 						'name' => tr('Value Field ID'),
@@ -45,6 +48,9 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract implements Tracker_
 						'filter' => 'int',
 						'legacy_index' => 2,
 						'profile_reference' => 'tracker_field',
+						'parent' => 'input[name=trackerId]',
+						'parentkey' => 'tracker_id',
+						'sort_order' => 'position_nasc',
 					),
 					'displayFieldIdThere' => array(
 						'name' => tr('Fields to display'),
@@ -112,49 +118,35 @@ class Tracker_Field_ItemsList extends Tracker_Field_Abstract implements Tracker_
 
 	function renderInput($context = array())
 	{
-		TikiLib::lib('header')->add_jq_onready(
-			'
-$("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . $this->getOption('fieldIdHere') . ']").change(function(e, val) {
-  $.getJSON(
-    "tiki-tracker_http_request_itemslist.php",
-    {
-      trackerIdList: ' . $this->getOption('trackerId') . ',
-      fieldlist: "' . implode('|',$this->getOption('displayFieldIdThere')) . '",
-      filterfield: ' . $this->getOption('fieldIdThere') . ',
-      filtervalue: $(this).find("option:selected").val() ,
-			status: "' . $this->getOption('status') . '",
-			mandatory: "' . $this->getConfiguration('isMandatory') . '"
-    },
-    function(data, status) {
+		if( empty($this->getOption('fieldIdHere')) ) {
+			return $this->renderOutput();
+		} else {
+			TikiLib::lib('header')->add_jq_onready(
+				'
+$("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . $this->getOption('fieldIdHere') . ']").change(function(e) {
+	$.getJSON(
+		"tiki-ajax_services.php",
+		{
+			controller: "tracker",
+			action: "itemslist_output",
+			field: "' . $this->getConfiguration('fieldId') . '",
+			fieldIdHere: "' . $this->getOption('fieldIdHere') . '",
+			value: $(this).val()
+		},
+		function(data, status) {
 			$ddl = $("div[name=' . $this->getInsertId() . ']");
-      $ddl.empty();
-      var v, l;
-      if (data) {
-        $.each( data, function (i,data) {
-          if (data && data.length > 1) {
-            v = data[0];
-            label = data[1];
-          } else {
-            v = "";
-            label = "";
-          }
-          $ddl.append(
-            $("<div class=\"tracker_field_itemslist tracker_field" + v + "\" />")
-            .html(label)
-          );
-        });
-      }
-      if (jqueryTiki.chosen) {	// I only left this because I have no clue what it does
-        $ddl.trigger("chosen:updated");
-      }
-      $ddl.trigger("change");
-    }
-  );
-}).trigger("change", [""]);
-		'
-		);
-
-		return '<div name="' . $this->getInsertId() . '"></div>';
+			$ddl.html(data);
+			if (jqueryTiki.chosen) {
+				$ddl.trigger("chosen:updated");
+			}
+			$ddl.trigger("change");
+		}
+	);
+}).trigger("change");
+			'
+			);
+			return '<div name="' . $this->getInsertId() . '"></div>';
+		}
 	}
 
 	function renderOutput( $context = array() )
@@ -307,8 +299,12 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 		}
 
 		if ($technique == 'id') {
-			$itemId = $this->getItemId(); 
-			$items = $trklib->get_items_list($trackerId, $filterFieldIdThere, $itemId, $status);
+			$itemId = $this->getItemId();
+			if( !$itemId ) {
+				$items = array();
+			} else {
+				$items = $trklib->get_items_list($trackerId, $filterFieldIdThere, $itemId, $status);
+			}
 		} else {
 			// when this is an item link or dynamic item list field, localvalue contains the target itemId
 			$localValue = $this->getData($filterFieldIdHere); 
@@ -318,7 +314,6 @@ $("input[name=ins_' . $this->getOption('fieldIdHere') . '], select[name=ins_' . 
 				$itemId = $this->getItemId();
 				$localValue = $trklib->get_item_value($trackerId, $itemId, $filterFieldIdHere);
 			}
-			
 			// r = item link - not sure this is working 
 			if ($filterFieldHere['type'] == 'r' && isset($filterFieldHere['options_array'][0]) && isset($filterFieldHere['options_array'][1])) {
 				$localValue = $trklib->get_item_value($filterFieldHere['options_array'][0], $localValue, $filterFieldHere['options_array'][1]);
