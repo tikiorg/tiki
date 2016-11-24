@@ -55,15 +55,21 @@ if (isset($_REQUEST['controller'], $_REQUEST['action'])) {
 if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 	$access->check_feature('feature_jquery_autocomplete');
 
+	$query = $jitRequest->q->text();
+
 	$sep = '|';
 	if ( isset( $_REQUEST['separator'] ) ) {
 		$sep = $_REQUEST['separator'];
 	}
-	$p = strrpos($_REQUEST['q'], $sep);
+	$p = strrpos($query, $sep);
 	if ($p !== false) {
-		$_REQUEST['q'] = substr($_REQUEST['q'], $p + 1);
+		$query = substr($query, $p + 1);
 	}
 
+	if (empty($query)) {
+		$access->output_serialized([]);
+		return;
+	}
 	if ($_REQUEST['listonly'] == 'groups') {
 		$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 		
@@ -72,34 +78,29 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 		
 		$grs = array();
 		foreach ($listgroups['data'] as $gr) {
-			if (isset($_REQUEST['q']) && stripos($gr['groupName'], $_REQUEST['q']) !== false) {
+			if (isset($query) && stripos($gr['groupName'], $query) !== false) {
 				$grs[] = $gr['groupName'];
 			}
 		}
 		$access->output_serialized($grs);
 	} elseif ($_REQUEST['listonly'] == 'users') {
-		$listusers = $userlib->get_users_names();
+		$names_array = explode(',', str_replace(';', ',', $query));
+		$last_name = trim(end(array_filter($names_array)));
+
+		$listusers = $userlib->get_users_names(0, 100, 'login_asc', $last_name);
 		
-		// TODO also - proper perms checking
-		// tricker for users? Check the group they're in, then tiki_p_group_view_members
-		
-		$usrs = array();
-		foreach ($listusers as $usr) {
-			if (isset($_REQUEST['q']) && stripos($usr, $_REQUEST['q']) !== false) {
-				$usrs[] = $usr;
-			}
-		}
-		$access->output_serialized($usrs);
+		$access->output_serialized($listusers);
+
 	} elseif ($_REQUEST['listonly'] == 'usersandcontacts') {
+
+		$email_array = explode(',', str_replace(';', ',', $query));
+		$last_email = trim(end($email_array));
+
 		$contactlib = TikiLib::lib('contact');
 		$listcontact = $contactlib->list_contacts($user);
-		$listusers = $userlib->get_users();
+		$listusers = $userlib->get_users(0, 100, 'login_asc', '', '', false, '', $last_email);
 
         $contacts = array();
-        $query = $_REQUEST['q'];
-        $email_array = explode(',', str_replace(';', ',', $_REQUEST['q']));
-        $last_email = trim(end($email_array));
-
         foreach ($listcontact as $key=>$contact) {
             if (isset($last_email) && (stripos($contact['firstName'], $last_email) !== false or stripos($contact['lastName'], $last_email) !== false or stripos($contact['email'], $last_email) !== false)) {
                 if ($contact['email']<>'') {
@@ -121,12 +122,12 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
         $access->output_serialized($contacts);
 
     } elseif ($_REQUEST['listonly'] == 'userrealnames') {
+		$names_array = explode(',', str_replace(';', ',', $query));
+		$last_name = trim(end($names_array));
         $groups = '';
-        $listusers = $userlib->get_users_light(0, -1, 'login_asc', '', $groups);
+		$listusers = $userlib->get_users_light(0, -1, 'login_asc', $last_name, $groups);
         $done = array();
         $finalusers = array();
-        $names_array = explode(',', str_replace(';', ',', $_REQUEST['q']));
-        $last_name = trim(end($names_array));
         foreach ($listusers as $usrId => $usr) {
             if (isset($last_name)) {
                 $longusr = $usr . ' (' . $usrId . ')';
@@ -150,14 +151,11 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
             }
         }
 
-        // TODO also - proper perms checking
-        // tricker for users? Check the group they're in, then tiki_p_group_view_members
-
         $access->output_serialized($finalusers);
 	} elseif ( $_REQUEST['listonly'] == 'tags' ) {
 		$freetaglib = TikiLib::lib('freetag');
 
-		$tags = $freetaglib->get_tags_containing($_REQUEST['q']);
+		$tags = $freetaglib->get_tags_containing($query);
 		$access->output_serialized($tags);
 	} elseif ( $_REQUEST['listonly'] == 'icons' ) {
 
@@ -166,16 +164,16 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
 		$icons = array();
 		$style_dir = $tikilib->get_style_path($prefs['style'], $prefs['style_option']);
 		if ($style_dir && is_dir($style_dir . $dir)) {
-			read_icon_dir($style_dir . $dir, $icons, $max);
+			read_icon_dir($style_dir . $dir, $icons, $max, $query);
 		}
-		read_icon_dir($dir, $icons, $max);
+		read_icon_dir($dir, $icons, $max, $query);
 		$access->output_serialized($icons);
 	} elseif ( $_REQUEST['listonly'] == 'shipping' && $prefs['shipping_service'] == 'y' ) {
 		global $shippinglib; require_once 'lib/shipping/shippinglib.php';
 
 		$access->output_serialized($shippinglib->getRates($_REQUEST['from'], $_REQUEST['to'], $_REQUEST['packages']));
 	} elseif (  $_REQUEST['listonly'] == 'trackername' ) {
-		$trackers = TikiLib::lib('trk')->get_trackers_containing($_REQUEST['q']);
+		$trackers = TikiLib::lib('trk')->get_trackers_containing($query);
 		$access->output_serialized($trackers);
 	}
 } elseif ($access->is_serializable_request() && isset($_REQUEST['zotero_tags'])) { // Handle Zotero Requests
@@ -200,13 +198,13 @@ if ($access->is_serializable_request() && isset($_REQUEST['listonly'])) {
  * @param $icons
  * @param $max
  */
-function read_icon_dir($dir, &$icons, $max)
+function read_icon_dir($dir, &$icons, $max, $query)
 {
 	$fp = opendir($dir);
 	while (false !== ($f = readdir($fp))) {
 		preg_match('/^([^\.].*)\..*$/', $f, $m);
 		if (count($m) > 0 && count($icons) < $max &&
-				stripos($m[1], $_REQUEST['q']) !== false &&
+				stripos($m[1], $query) !== false &&
 				!in_array($dir . '/' . $f, $icons)) {
 			
 			$icons[] = $dir . '/' . $f;
