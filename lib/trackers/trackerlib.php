@@ -757,7 +757,7 @@ class TrackerLib extends TikiLib
 		}
 	}
 
-	public function concat_item_from_fieldslist($trackerId, $itemId, $fieldsId, $status='o', $separator=' ', $list_mode='', $strip_tags = false, $format= '')
+	public function concat_item_from_fieldslist($trackerId, $itemId, $fieldsId, $status='o', $separator=' ', $list_mode='', $strip_tags = false, $format= '', $item = array())
 	{
 		$res='';
 		$values = [];
@@ -769,7 +769,7 @@ class TrackerLib extends TikiLib
 			$myfield = $definition->getField($field);
 
 			$myfield['value'] = $this->get_item_value($trackerId, $itemId, $field);
-			$value = trim($this->field_render_value(array('field' => $myfield, 'process' => 'y', 'list_mode' => $list_mode)));
+			$value = trim($this->field_render_value(array('field' => $myfield, 'process' => 'y', 'list_mode' => $list_mode, 'item' => $item)));
 
 			if ($format) {
 				$values[] = $value;
