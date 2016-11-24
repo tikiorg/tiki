@@ -239,6 +239,36 @@ body.fullscreen.tiki.navbar-padding {
 	width: 100%;
 }
 
+// Start overrides for wide side columns layout
+// Overrides in case of 3-col layout
+.hide_zone_left .col-md-6.col-md-push-3.col1 { // when left col is hidden
+	left: 0;
+	width: 75%; // 83.3334%; // TODO: make it computed less variable?
+}
+.hide_zone_right .col-md-6.col-md-push-3.col1 { // when right col is hidden
+	width: 75%; // 83.3334%; // TODO: make it computed less variable?
+}
+.hide_zone_left.hide_zone_right .col-md-6.col-md-push-3.col1 { // when both are hidden
+	width: 100%;
+}
+
+.hide_zone_right #col2 {
+	right: 75%; // 83.3334%; // TODO: make it computed less variable?
+}
+
+// Overrides in case of 2-col layout with no right column
+.hide_zone_left .col-md-9.col-md-push-3.col1 {
+	left: 0;
+	width: 100%;
+}
+
+// Overrides in case of 2-col layout with no left column
+.hide_zone_right .col-md-9.col1 {
+	width: 100%;
+}
+// End overrides for wide side column layout
+
+
 @media (max-width: @screen-sm-max) {
 	#col1 {
 		width: 100%;
