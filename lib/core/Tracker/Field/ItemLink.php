@@ -428,8 +428,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 				if( !empty($arguments['editable']) && empty($arguments['editableall']) ) {
 					$data['trackerListOptions']['editableall'] = 'n';
 				}
-				if( isset($arguments['checkbox']) && empty($arguments['checkbox']) ) {
-					unset($data['trackerListOptions']['checkbox']);
+				if( isset($arguments['checkbox']) && ( empty($arguments['checkbox']) || $arguments['checkbox'] == 'n' ) ) {
+					$data['trackerListOptions']['checkbox'] = '/'.$this->getInsertId().'//////y/'.implode(',', $data['preselection']);
 				}
 			}
 		}
