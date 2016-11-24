@@ -59,7 +59,7 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract
 
 	function getFieldData(array $requestData = array())
 	{
-		global $tiki_p_admin_trackers, $group, $user;
+		global $tiki_p_admin, $tiki_p_admin_trackers, $group, $user;
 		
 		$ins_id = $this->getInsertId();
 
@@ -67,8 +67,12 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract
 		
 		$groupId = $this->getOption('groupId');
 		if (empty($groupId)) {
-			$data['list'] = array_keys(TikiLib::lib('user')->get_user_groups_inclusion($user));
-			sort($data['list']);
+			if ($tiki_p_admin === 'y') {
+				$data['list'] = TikiLib::lib('user')->list_all_groups();
+			} else {
+				$data['list'] = array_keys(TikiLib::lib('user')->get_user_groups_inclusion($user));
+				sort($data['list']);
+			}
 		} else {
 			$group_info = TikiLib::lib('user')->get_groupId_info($groupId);
 			$data['list'] =	TikiLib::lib('user')->get_including_groups($group_info['groupName']);
