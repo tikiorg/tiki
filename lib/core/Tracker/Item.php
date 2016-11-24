@@ -206,14 +206,7 @@ class Tracker_Item
 	{
 		if (! $this->isNew()) {
 			$itemId = $this->info['itemId'];
-
-			$perms = Perms::get('trackeritem', $itemId);
-			$resolver = $perms->getResolver();
-			if (method_exists($resolver, 'from') && $resolver->from() != '') {
-				// Item permissions are valid if they are assigned directly to the object or category, otherwise
-				// tracker permissions are better than global ones.
-				return $perms;
-			}
+			return Perms::get('trackeritem', $itemId);
 		}
 	}
 

@@ -126,7 +126,7 @@ class Perms_BaseTest extends TikiTestCase
 
 		$mock->expects($this->once())
 			->method('getResolver')
-			->will($this->returnValue(null));
+			->will($this->returnValue(false));
 
 		$perms = new Perms;
 		$perms->setResolverFactories(array($mock,));

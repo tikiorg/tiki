@@ -21,7 +21,6 @@ interface Perms_Resolver
 	 */
 	function check( $permission, array $groups );
 
-	
 	/*
 	 * Get name of the object type the permissons to check belong to : i.e 'object', 'category'
 	 * @return $string name of object type

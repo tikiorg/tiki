@@ -82,11 +82,17 @@ class Perms_Builder
 	private function getFactories()
 	{
 		$factories = array(
-			new Perms_ResolverFactory_ObjectFactory,
+			new Perms_ResolverFactory_ObjectFactory
 		);
 
 		if ($this->categories) {
 			$factories[] = new Perms_ResolverFactory_CategoryFactory;
+		}
+
+		$factories[] = new Perms_ResolverFactory_ObjectFactory('parent');
+
+		if ($this->categories) {
+			$factories[] = new Perms_ResolverFactory_CategoryFactory('parent');
 		}
 
 		$factories[] = new Perms_ResolverFactory_GlobalFactory;

@@ -27,6 +27,12 @@
  *
  * Because permissions are applied to all decendents, only the direct categories
  * are considered when resolving permissions.
+ *
+ * Parent parameter can be passed during initialization to configure
+ * Factory to return parent object permissions. Currently only supports
+ * TrackerItem parents (i.e. Trackers) category permissions. Parent
+ * perissions are retrieved by loading categories for the parent and then
+ * checking their permissions.
  */
 
 /**
@@ -38,6 +44,11 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 {
 	private $knownObjects = array();
 	private $knownCategories = array();
+	private $parent = '';
+
+	public function __construct($parent = '') {
+		$this->parent = $parent;
+	}
 
 	function clear()
 	{
@@ -64,7 +75,7 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 
 		$key = $this->objectKey($context);
 
-		if ( count($this->knownObjects[$key]) > 0 ) {
+		if ( isset($this->knownObjects[$key]) && count($this->knownObjects[$key]) > 0 ) {
 			return 'category:' . implode(':', $this->knownObjects[$key]);
 		}
 	}
@@ -72,6 +83,11 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 	function bulk( array $baseContext, $bulkKey, array $values )
 	{
 		if ( ! isset($baseContext['type']) || $bulkKey != 'object' ) {
+			return $values;
+		}
+
+		// only trackeritem parents supported for now
+		if( $this->parent && $baseContext['type'] !== 'trackeritem' ) {
 			return $values;
 		}
 
@@ -129,12 +145,24 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 		}
 
 		$db = TikiDb::get();
-		$bindvars = array($baseContext['type']);
-		$result = $db->fetchAll(
-			'SELECT `categId`, `itemId` FROM `tiki_category_objects` INNER JOIN `tiki_objects` ON `catObjectId` = `objectId` WHERE `type` = ? AND ' .
-			$db->in('itemId', array_keys($objects), $bindvars) . ' ORDER BY `catObjectId`, `categId`',
-			$bindvars
-		);
+
+		if( $baseContext['type'] === 'trackeritem' && $this->parent ) {
+			$bindvars = array();
+			$result = $db->fetchAll(
+				"SELECT co.`categId`, ti.`itemId` FROM `tiki_tracker_items` ti
+				INNER JOIN `tiki_objects` o ON ti.`trackerId` = o.`itemId` AND o.`type` = 'tracker'
+				INNER JOIN `tiki_category_objects` co ON co.`catObjectId` = o.`objectId` WHERE " .
+				$db->in('ti.itemId', array_keys($objects), $bindvars) . " ORDER BY co.`catObjectId`, co.`categId`",
+				$bindvars
+			);
+		} else {
+			$bindvars = array($baseContext['type']);
+			$result = $db->fetchAll(
+				'SELECT `categId`, `itemId` FROM `tiki_category_objects` INNER JOIN `tiki_objects` ON `catObjectId` = `objectId` WHERE `type` = ? AND ' .
+				$db->in('itemId', array_keys($objects), $bindvars) . ' ORDER BY `catObjectId`, `categId`',
+				$bindvars
+			);
+		}
 
 		$categories = array();
 
@@ -245,7 +273,7 @@ class Perms_ResolverFactory_CategoryFactory implements Perms_ResolverFactory
 
 	private function objectKey( $context )
 	{
-		return $context['type'] . $this->cleanObject($context['object']);
+		return $context['type'] . $this->parent . $this->cleanObject($context['object']);
 	}
 
 	private function cleanObject($name)

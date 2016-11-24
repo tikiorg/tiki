@@ -9,7 +9,6 @@ class Category_Manipulator
 {
 	private $objectType;
 	private $objectId;
-	private $parent;
 
 	private $current = array();
 	private $managed = array();
@@ -23,11 +22,10 @@ class Category_Manipulator
 	private $overrides = array();
 	private $overrideAll = false;
 
-	function __construct($objectType, $objectId, $parent = null)
+	function __construct($objectType, $objectId)
 	{
 		$this->objectType = $objectType;
 		$this->objectId = $objectId;
-		$this->parent = $parent;
 	}
 
 	function addRequiredSet(array $categories, $default, $filter=null, $type=null)
@@ -95,11 +93,7 @@ class Category_Manipulator
 	{
 		$objectperms = Perms::get(array('type' => $this->objectType, 'object' => $this->objectId));
 		$canModifyObject = $objectperms->modify_object_categories;
-		if( !$canModifyObject && $this->parent ) {
-			$objectperms = Perms::get(array('type' => $this->parent['objectType'], 'object' => $this->parent['objectId']));
-			$canModifyObject = $objectperms->modify_object_categories;
-		}
-		
+
 		$out = array();
 		foreach ($categories as $categ) {
 			$perms = Perms::get(array('type' => 'category', 'object' => $categ));
