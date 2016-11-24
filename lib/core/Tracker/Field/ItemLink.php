@@ -577,7 +577,8 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 					' ',
 					$context['list_mode'],
 					$this->getOption('linkToItem'),
-					$this->getOption('displayFieldsListFormat')
+					$this->getOption('displayFieldsListFormat'),
+					$item
 				);
 			} else {
 				$label = TikiLib::lib('object')->get_title('trackeritem', $itemId);
