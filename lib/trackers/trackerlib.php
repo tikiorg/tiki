@@ -3854,8 +3854,11 @@ class TrackerLib extends TikiLib
 						continue;
 					}
 					foreach( str_getcsv($f['value']) as $fieldUser ) {
-						$tikilib->get_user_preferences($fieldUser, array('email', 'user', 'language', 'mailCharset'));
-						$emails[] = array('email'=>$userlib->get_user_email($fieldUser), 'user'=>$fieldUser, 'language'=>$user_preferences[$f['value']]['language'], 'mailCharset'=>$user_preferences[$f['value']]['mailCharset']);
+						$email = $userlib->get_user_email($fieldUser);
+						if( !empty($fieldUser) && !empty($email) ) {
+							$tikilib->get_user_preferences($fieldUser, array('email', 'user', 'language', 'mailCharset'));
+							$emails[] = array('email'=>$email, 'user'=>$fieldUser, 'language'=>$user_preferences[$fieldUser]['language'], 'mailCharset'=>$user_preferences[$fieldUser]['mailCharset']);
+						}
 					}
 				}
 			}
