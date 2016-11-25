@@ -41,7 +41,7 @@
 </div>
 
 <div class="row form-group">
-	<div class="col-sm-2">
+	<div class="col-sm-2 pull-right">
 		<input type="hidden" name="url" value="{$homepageUrl}">
 		<input type="hidden" name="wizard_step" value="{$wizard_step}">
 		{if isset($useDefaultPrefs)}
@@ -64,6 +64,6 @@
 			{assign var="showWizardPageTitle" value="y" scope="root"}
 		{/if}
 	</div>
-	<div class="col-sm-2">
+	<div class="col-sm-2 pull-right">
 	</div>
 </div>
