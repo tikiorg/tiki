@@ -11,10 +11,6 @@
 .adminWizardTable {
 	width:100%;
 }
-.adminWizardTOCTitle {
-	font-weight: bold;
-	text-decoration:underline;
-}
 .adminWizardTOCItem {
     padding-left:5px;
 }
