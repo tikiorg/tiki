@@ -259,7 +259,7 @@ div #metadata div.tabs {
   background: #ffffff url('../../../img/icons/login-OpenID-bg.gif') 1px 1px no-repeat;
 }
 input:-webkit-autofill {
-  background-color: #fff !important;
+  background-color: #ffffff !important;
   /* needs important because Chrome has it already important */
   background-image: none !important;
   color: #555555 !important;
@@ -1136,7 +1136,7 @@ fieldset[disabled] .btn-social.btn-facebook.focus {
 }
 .btn-social.btn-linkedin {
   color: #ffffff;
-  background-color: #4875B4;
+  background-color: #4875b4;
   border-color: #4169a2;
 }
 .btn-social.btn-linkedin:focus,
@@ -1184,11 +1184,11 @@ fieldset[disabled] .btn-social.btn-linkedin:focus,
 .btn-social.btn-linkedin.disabled.focus,
 .btn-social.btn-linkedin[disabled].focus,
 fieldset[disabled] .btn-social.btn-linkedin.focus {
-  background-color: #4875B4;
+  background-color: #4875b4;
   border-color: #4169a2;
 }
 .btn-social.btn-linkedin .badge {
-  color: #4875B4;
+  color: #4875b4;
   background-color: #ffffff;
 }
 #col1 {
@@ -3440,7 +3440,7 @@ body.fullscreen.tiki.navbar-padding {
 }
 .affix-bottom {
   position: absolute;
-  left: 0!important;
+  left: 0 !important;
 }
 .col-sm-2 .form-inline .form-control,
 .col-md-2 .form-inline .form-control {
@@ -3480,7 +3480,7 @@ body.fullscreen.tiki.navbar-padding {
 .hide_zone_left.hide_zone_right .col-md-6.col-md-push-3.col1 {
   width: 100%;
 }
-.hide_zone_right #col2 {
+.hide_zone_right #col2.col-md-3.col-md-pull-6 {
   right: 75%;
 }
 .hide_zone_left .col-md-9.col-md-push-3.col1 {
@@ -3609,7 +3609,7 @@ table.tablesorter thead tr.tablesorter-filter-row td .value-popup:after {
   min-width: 14px;
   height: 12px;
   background-color: #444444;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#444444444 444), to(#999999999 999));
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#444444 444), to(#999999 999));
   background-image: -webkit-linear-gradient(top, #444444, #999999);
   background-image: -moz-linear-gradient(top, #444444, #999999);
   background-image: -o-linear-gradient(top, #444444, #999999);

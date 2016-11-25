@@ -14,7 +14,7 @@
 	<div class="row">
 		{if !empty($wizard_toc)}
 			<div class="col-sm-4">
-				<span class="adminWizardTOCTitle">{if $useDefaultPrefs}{tr}Profiles Wizard{/tr}{elseif $useUpgradeWizard}{tr}Upgrade Wizard{/tr}{else}{tr}Configuration Wizard{/tr}{/if} - {tr}steps{/tr}:</span>
+				<h3 class="adminWizardTOCTitle">{if $useDefaultPrefs}{tr}Profiles Wizard{/tr}{elseif $useUpgradeWizard}{tr}Upgrade Wizard{/tr}{else}{tr}Configuration Wizard{/tr}{/if} - {tr}steps{/tr}:</h3>
 				<ol>
 					{$wizard_toc}
 				</ol>
