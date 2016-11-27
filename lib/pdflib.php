@@ -16,10 +16,11 @@ class PdfGenerator
     /**
      *
      */
-    function __construct()
+	function __construct()
 	{
 		global $prefs;
 		$this->mode = 'none';
+		$this->error = false;
 
 		if ( $prefs['print_pdf_from_url'] == 'webkit' ) {
 			$path = $prefs['print_pdf_webkit_path'];
@@ -27,7 +28,11 @@ class PdfGenerator
 				$this->mode = 'webkit';
 				$this->location = $path;
 			} else {
-				Feedback::error(tr('PDF webkit path not found: "%0"', $path), 'session');
+				if (!empty($path)) {
+					$this->error = tr('PDF webkit path "%0" not found.', $path);
+				} else {
+					$this->error = tr('The PDF webkit path has not been set.');
+				}
 			}
 		} else if ($prefs['print_pdf_from_url'] == 'weasyprint') {
 			$path = $prefs['print_pdf_weasyprint_path'];
@@ -35,7 +40,11 @@ class PdfGenerator
 				$this->mode = 'weasyprint';
 				$this->location = $path;
 			} else {
-				Feedback::error(tr('PDF WeasyPrint path not found: "%0"', $path), 'session');
+				if (!empty($path)) {
+					$this->error = tr('PDF WeasyPrint path "%0" not found.', $path);
+				} else {
+					$this->error = tr('The PDF WeasyPrint path has not been set.');
+				}
 			}
 		} elseif ( $prefs['print_pdf_from_url'] == 'webservice' ) {
 			$path = $prefs['path'];
@@ -43,7 +52,11 @@ class PdfGenerator
 				$this->mode = 'webservice';
 				$this->location = $path;
 			} else {
-				Feedback::error(tr('PDF webservice URL empty'), 'session');
+				if (!empty($path)) {
+					$this->error = tr('PDF webservice URL "%0" not found.', $path);
+				} else {
+					$this->error = tr('The PDF webservice URL has not been set.');
+				}
 			}
 		} elseif ( $prefs['print_pdf_from_url'] == 'mpdf' ) {
 			$path = $prefs['print_pdf_mpdf_path'];
@@ -56,15 +69,27 @@ class PdfGenerator
 					include_once($path . 'mpdf.php');
 				}
 				if (! is_writable(_MPDF_TEMP_PATH) ||! is_writable(_MPDF_TTFONTDATAPATH)) {
-					Feedback::error(tr('mPDF "%0" and "%1" directories must be writable', 'tmp',
-						'ttfontdata'), 'session');
+					$this->error = tr('mPDF "%0" and "%1" directories must be writable', 'tmp',
+						'ttfontdata');
 				} else {
 					$this->mode = 'mpdf';
 					$this->location = $path;
 				}
 			} else {
-				Feedback::error(tr('mPDF not found in path: "%0"', $path), 'session');
+				if (!empty($path)) {
+					$this->error = tr('mPDF not found in path "%0"', $path);
+				} else {
+					$this->error = tr('The mPDF path has not been set.');
+				}
 			}
+		}
+		if ($this->error) {
+			global $tiki_p_admin;
+			$a1 = $tiki_p_admin === 'y' ? '<a href="tiki-admin.php?page=print">' : '';
+			$a2 = $tiki_p_admin === 'y' ? '</a>' : '';
+			$this->error = tr('PDF generation failed.') . ' ' . $this->error . ' '
+				. tr('This can be set by the administrator in the %0control panels%1.',
+					$a1, $a2);
 		}
 	}
 

@@ -198,18 +198,21 @@ function wikiplugin_archivebuilder_pagetopdf( $file, $pageName )
 
 	require_once 'lib/pdflib.php';
 	$generator = new PdfGenerator;
-	$params = array( 'page' => $pageName );
-
-	$args = func_get_args();
-	$args = array_slice($args, 2);
-
-	foreach ( $args as $arg ) {
-		list( $key, $value ) = explode('=', $arg, 2);
-		$params[$key] = $value;
+	if (!empty($generator->error)) {
+		Feedback::error($generator->error, 'session');
+		$access = Tikilib::lib('access');
+		$access->redirect($_SERVER['HTTP_REFERER']);
+	} else {
+		$params = array( 'page' => $pageName );
+		$args = func_get_args();
+		$args = array_slice($args, 2);
+		foreach ( $args as $arg ) {
+			list( $key, $value ) = explode('=', $arg, 2);
+			$params[$key] = $value;
+		}
+		return array(
+			$file => $generator->getPdf('tiki-print.php', $params),
+		);
 	}
-
-	return array(
-		$file => $generator->getPdf('tiki-print.php', $params),
-	);
 }
 
