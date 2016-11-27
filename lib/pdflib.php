@@ -84,12 +84,9 @@ class PdfGenerator
 			}
 		}
 		if ($this->error) {
-			global $tiki_p_admin;
-			$a1 = $tiki_p_admin === 'y' ? '<a href="tiki-admin.php?page=print">' : '';
-			$a2 = $tiki_p_admin === 'y' ? '</a>' : '';
 			$this->error = tr('PDF generation failed.') . ' ' . $this->error . ' '
-				. tr('This can be set by the administrator in the %0control panels%1.',
-					$a1, $a2);
+				. tr('This is set by the administrator (search for %0pdf%1 in the settings control panels to locate the setting).',
+					'<em>', '</em>');
 		}
 	}
 
