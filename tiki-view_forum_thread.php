@@ -390,17 +390,20 @@ if (isset($_REQUEST['display'])) {
 	if ($_REQUEST['display'] == 'pdf') {
 		require_once 'lib/pdflib.php';
 		$generator = new PdfGenerator();
-		$pdf = $generator->getPdf('tiki-view_forum_thread.php', array('display' => 'print', 'comments_parentId' => $_REQUEST['comments_parentId'], 'forumId' => $_REQUEST['forumId']));
-
-		header('Cache-Control: private, must-revalidate');
-		header('Pragma: private');
-		header("Content-Description: File Transfer");
-		header('Content-disposition: attachment; filename="'. $thread_info['title'] . '.pdf"');
-		header("Content-Type: application/pdf");
-		header("Content-Transfer-Encoding: binary");
-		header('Content-Length: '. strlen($pdf));
-		echo $pdf;
-
+		if (!empty($generator->error)) {
+			Feedback::error($generator->error, 'session');
+			$access->redirect($_SERVER['HTTP_REFERER']);
+		} else {
+			$pdf = $generator->getPdf('tiki-view_forum_thread.php', array('display' => 'print', 'comments_parentId' => $_REQUEST['comments_parentId'], 'forumId' => $_REQUEST['forumId']));
+			header('Cache-Control: private, must-revalidate');
+			header('Pragma: private');
+			header("Content-Description: File Transfer");
+			header('Content-disposition: attachment; filename="'. $thread_info['title'] . '.pdf"');
+			header("Content-Type: application/pdf");
+			header("Content-Transfer-Encoding: binary");
+			header('Content-Length: '. strlen($pdf));
+			echo $pdf;
+		}
 	} else {
 		$smarty->display('tiki-print.tpl');
 	}
