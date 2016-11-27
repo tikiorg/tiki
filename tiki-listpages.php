@@ -124,7 +124,7 @@ if (!empty($_REQUEST['submit_mult']) && isset($_REQUEST['checked'])) {
 				$multiprint_pages[] = $check;
 			}
 
-			header('Location: tiki-print_multi_pages.php?display=pdf&printpages=' . urlencode(serialize($multiprint_pages)));
+			header('Location: tiki-print_multi_pages.php?display=pdf&printpages=' . urlencode(json_encode($multiprint_pages)));
 			die;
 
 		case 'unlock_pages':
