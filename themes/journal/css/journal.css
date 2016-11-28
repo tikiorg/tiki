@@ -7758,7 +7758,8 @@ table.tablesorter thead tr.tablesorter-filter-row {
   font-size: 15px;
 }
 .tiki table.pvtTable tr th {
-  background-color: transparent;
+  background-color: #336699;
+  color: #3a87ad;
   border: 1px solid #dddddd;
   font-size: 15px;
   padding: 5px;
