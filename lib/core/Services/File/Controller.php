@@ -171,7 +171,7 @@ class Services_File_Controller
 						$file['syntax'] = $filegallib->getWikiSyntax($file['galleryId'], $file['info'], $input->asArray());
 					}
 
-					if ($input->isbatch->word() && stripos($input->type->text(), 'zip') !== false) {
+					if ($input->isbatch->word() && stripos($_FILES['data']['type'], 'zip') !== false) {
 						$errors = [];
 						$perms = Perms::get(['type' => 'file', 'object' => $file['fileId']]);
 						if ($perms->batch_upload_files) {
