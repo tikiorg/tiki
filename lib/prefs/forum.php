@@ -17,7 +17,7 @@ function prefs_forum_list()
 			'dependencies' => ['feature_file_galleries'],
 		),
 		'forum_comments_no_title_prefix' => array(
-			'name' => tra("Do not start messages titles with 'Re: '"),
+			'name' => tra("Do not start messages titles with 'Re:'"),
             'description' => tra(''),
 			'type' => 'flag',
 			'default' => 'n',
