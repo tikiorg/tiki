@@ -31,7 +31,6 @@ function prefs_file_list()
             'description' => tra('Use the improved Tiki 15+ upload page'),
 			'type' => 'flag',
 			'default' => 'y',
-			'tags' => array('experimental'),
 			'dependencies' => array(
 				'feature_file_galleries',
 				'feature_jquery_ui',
