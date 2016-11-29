@@ -335,7 +335,8 @@ function wikiplugin_trackerlist_info()
 					. '<code>*value</code> - ' . tra('text that ends in "value"') . '<br>'
 					. '<code>value*</code> - ' . tra('text that begins with "value"') . '<br>'
 					. '<code>#user</code> - ' . tra('the current user\'s login name') . '<br>'
-					. '<code>#group_default</code> - ' . tra('the current user\'s default group') . '<br>',
+					. '<code>#group_default</code> - ' . tra('the current user\'s default group') . '.<br>'
+					 . tr('To filter by empty/non-empty values, use parameter %0exactvalue%1 instead', '<code>', '</code>') . '<br>',
 				 'since' => '1',
 				 'doctype' => 'filter',
 				 'accepted' => tra('any text'),
@@ -353,6 +354,7 @@ function wikiplugin_trackerlist_info()
 					 . '<code>preference(name)</code> - ' . tra('match against the value of a Tiki preference') . '<br>'
 					 . '<code>notpreference(name)</code> - ' . tra('match if value does not equal a Tiki preference value') . '<br>'
 					 . '<code>not(value)</code> - ' . tra('match if the field does not equal "value"') . '<br>'
+					 . '<code>not()</code> - ' . tr('match for non empty values (opposite with %0exactvalue%1="")', '<code>', '</code>') . '<br>'
 					 . '<code>field(x, itemid)</code> - ' . tr('match field with ID x in item with ID itemid.
 						%0field(x)%1 can be used if the %0itemId%1 URL parameter is set', '<code>', '</code>') . '<br>'
 					 . '<code>notfield(x, itemid)</code> - ' . tr('match if not equal to field with ID x in item with ID itemid
