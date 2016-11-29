@@ -45,7 +45,7 @@ var CHECKBOX_LIST = [{{section name=user loop=$items}'sites[{$items[user].siteId
 					<td class="text">{$items[user].name}</td>
 					<td class="text"><a href="{$items[user].url}" target="_blank">{$items[user].url}</a></td>
 					{if $prefs.directory_country_flag eq 'y'}
-						<td class="icon"><img src='img/flags/{$items[user].country}.gif' alt='{$items[user].country}'></td>
+						<td class="icon"><img src='img/flags/{$items[user].country}.png' alt='{$items[user].country}'></td>
 					{/if}
 					<td class="integer">{$items[user].hits}</td>
 					<td class="action">

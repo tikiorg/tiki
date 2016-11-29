@@ -5691,7 +5691,7 @@ class TikiLib extends TikiDb_Bridge
 		$flags = array();
 		$h = opendir("img/flags/");
 		while ($file = readdir($h)) {
-			if (strstr($file, ".gif")) {
+			if (strstr($file, ".png")) {
 				$parts = explode('.', $file);
 				$flags[] = $parts[0];
 			}

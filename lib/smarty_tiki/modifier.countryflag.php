@@ -31,5 +31,5 @@ function smarty_modifier_countryflag($user)
 	if ($flag == 'Other' || empty($flag))
 		return '';
 	return "<img alt='" . tra(str_replace('_', ' ', $flag)) . "' src='img/flags/" . str_replace(' ', '_', $flag) .
-		".gif' title='" . tra(str_replace('_', ' ', $flag)) . "' />";
+		".png' title='" . tra(str_replace('_', ' ', $flag)) . "' />";
 }

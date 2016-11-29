@@ -631,7 +631,7 @@ function iconset_legacy()
 			'smile' => array(
 				'prepend' => 'img/smiles/',
 				'id' => 'icon_smile',
-				'append' => '.gif'
+				'append' => '.png'
 			),
 			'sort' => array(
 				'id' => 'resultset',

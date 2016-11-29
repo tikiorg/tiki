@@ -100,7 +100,7 @@ class Tracker_Field_CountrySelector extends Tracker_Field_Abstract implements Tr
 	{
 		$smarty = TikiLib::lib('smarty');
 		$smarty->loadPlugin('smarty_modifier_escape');
-		return '<img src="img/flags/'.smarty_modifier_escape($code).'.gif" title="'.smarty_modifier_escape($label).'" alt="'.smarty_modifier_escape($label).'" />';
+		return '<img src="img/flags/'.smarty_modifier_escape($code).'.png" title="'.smarty_modifier_escape($label).'" alt="'.smarty_modifier_escape($label).'" />';
 	}
 	
 	function renderInput($context = array())

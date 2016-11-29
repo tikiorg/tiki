@@ -43,13 +43,13 @@ function wikiplugin_translated($data, $params)
 
 	$h = opendir("img/flags/");
 	while ($file = readdir($h)) {
-		if (substr($file, 0, 1) != '.' and substr($file, -4, 4) == '.gif') {
+		if (substr($file, 0, 1) != '.' and substr($file, -4, 4) == '.png') {
 			$avflags[] = substr($file, 0, strlen($file)-4);
 		}
 	}
 	if (isset($flag)) {
 		if (in_array($flag, $avflags)) { 
-			$img = "<img src='img/flags/$flag.gif' width='18' height='13' vspace='0' hspace='3' alt='$lang' align='baseline' /> "; 
+			$img = "<img src='img/flags/$flag.png' width='18' height='13' vspace='0' hspace='3' alt='$lang' align='baseline' /> ";
 		}
 	}
 
