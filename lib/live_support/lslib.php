@@ -5,6 +5,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+global $access;
 $access->check_script($_SERVER['SCRIPT_NAME'], basename(__FILE__));
 
 class Lslib extends TikiLib
