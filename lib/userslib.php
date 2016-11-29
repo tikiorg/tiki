@@ -2212,6 +2212,24 @@ class UsersLib extends TikiLib
 		return $list;
 	}
 
+	function list_all_groups_with_permission() {
+		$groups = array_map( function($g) {
+			return array('groupName' => $g);
+		}, $this->list_all_groups() );
+		
+		$filtered = Perms::filter(
+			array( 'type' => 'group' ), 
+			'object',
+			$groups,
+			array( 'object' => 'groupName' ),
+			'group_view'
+		);
+
+		return array_map(function($g) {
+			return $g['groupName'];
+		}, $filtered);
+	}
+
 
 	function remove_user($user)
 	{
