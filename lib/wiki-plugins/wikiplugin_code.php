@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -58,7 +58,7 @@ function wikiplugin_code_info()
 				'required' => false,
 				'name' => tra('Colors'),
 				'description' => tra('Any supported language listed at http://codemirror.net/mode/'),
-				'since' => '1',
+				'since' => '17',
 				'advanced' => false,
 			),
 			'ln' => array(
@@ -117,15 +117,15 @@ function wikiplugin_code($data, $params)
 {
 	global $prefs;
 	static $code_count;
-	
+
 	$defaults = array(
 		'wrap' => '1',
 		'mediawiki' => '0',
 		'ishtml' => false
 	);
-	
+
 	$params = array_merge($defaults, $params);
-	
+
 	extract($params, EXTR_SKIP);
 	$code = trim($data);
 	if ($mediawiki =='1') {
@@ -137,13 +137,13 @@ function wikiplugin_code($data, $params)
 
 	$id = 'codebox'.++$code_count;
 	$boxid = " id=\"$id\" ";
-	
+
 	$out = $code;
-	
+
 	if (isset($colors) && $colors == '1') {	// remove old geshi setting as it upsets codemirror
 		unset( $colors );
 	}
-	
+
 	//respect wrap setting when Codemirror is off and set to wrap when Codemirror is on to avoid broken view while
 	//javascript loads
 	if ((isset($prefs['feature_syntax_highlighter']) && $prefs['feature_syntax_highlighter'] == 'y') || $wrap == 1) {
@@ -174,4 +174,3 @@ function wikiplugin_code($data, $params)
 
 	return $out;
 }
-
