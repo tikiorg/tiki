@@ -333,6 +333,11 @@ class Perms
 		foreach ($this->factories as $factory) {
 			$hash = $factory->getHash($context);
 
+			// no hash returned by factory means factory does not support that context
+			if (!$hash) {
+				continue;
+			}
+
 			if( isset($this->hashes[$hash]) ) {
 				$finalResolver = $this->hashes[$hash];
 			} else {
