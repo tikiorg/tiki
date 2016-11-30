@@ -405,64 +405,64 @@
 			hide('form');
 		}
 	{/jq}
-	{if $prefs.fgal_upload_from_source eq 'y' and $tiki_p_upload_files eq 'y'}
-		<form class="remote-upload" method="post" action="{service controller=file action=remote}">
-			<h3>{tr}Upload from URL{/tr}</h3>
-			<p>
-				<input type="hidden" name="galleryId" value="{$galleryId|escape}">
-				<label>{tr}URL:{/tr} <input type="url" name="url" placeholder="http://" size="40"></label>
-				{if $prefs.vimeo_upload eq 'y'}
-					<label>{tr}Reference:{/tr}
-						<input type="checkbox" name="reference" value="1" class="tips" title="{tr}Upload from URL{/tr}|{tr}Keeps a reference to the remote file{/tr}">
-					</label>
-				{/if}
-				<input type="submit" class="btn btn-default btn-sm" value="{tr}Add{/tr}">
-			</p>
-			<div class="result"></div>
-		</form>
-		{jq}
-			$('.remote-upload').submit(function () {
-				var form = this;
-				$.ajax({
-					method: 'POST',
-					url: $(form).attr('action'),
-					data: $(form).serialize(),
-					dataType: 'html',
-					success: function (data) {
-						$('.result', form).html(data);
-						$(form.url).val('');
-					},
-					complete: function () {
-						$('input', form).prop('disabled', false);
-					},
-					error: function (e) {
-						alert(tr("A remote file upload error occurred:") + "\n\"" + e.statusText + "\" (" + e.status + ")");
-					}
-				});
-				$('input', this).prop('disabled', true);
-				return false;
-			});
-		{/jq}
-		{if $prefs.vimeo_upload eq 'y'}
-			<fieldset>
-				<h3>{tr}Upload Video{/tr}</h3>
-				{wikiplugin _name='vimeo'}{/wikiplugin}
-			</fieldset>
-			{jq}
-				var handleVimeoFile = function (link, data) {
-					if (data != undefined) {
-					$("#form").hide();
-					$("#progress").append(
-						$("<p> {tr}Video file uploaded:{/tr} " + data.file + "</p>")
-							.prepend($("<img src='img/icons/vimeo.png' width='16' height='16'>"))
-						);
-					}
+{/if}
+{if not $editFileId and $prefs.fgal_upload_from_source eq 'y' and $tiki_p_upload_files eq 'y'}
+	<form class="remote-upload" method="post" action="{service controller=file action=remote}">
+		<h3>{tr}Upload from URL{/tr}</h3>
+		<p>
+			<input type="hidden" name="galleryId" value="{$galleryId|escape}">
+			<label>{tr}URL:{/tr} <input type="url" name="url" placeholder="http://" size="40"></label>
+			{if $prefs.vimeo_upload eq 'y'}
+				<label>{tr}Reference:{/tr}
+					<input type="checkbox" name="reference" value="1" class="tips" title="{tr}Upload from URL{/tr}|{tr}Keeps a reference to the remote file{/tr}">
+				</label>
+			{/if}
+			<input type="submit" class="btn btn-default btn-sm" value="{tr}Add{/tr}">
+		</p>
+		<div class="result"></div>
+	</form>
+	{jq}
+		$('.remote-upload').submit(function () {
+			var form = this;
+			$.ajax({
+				method: 'POST',
+				url: $(form).attr('action'),
+				data: $(form).serialize(),
+				dataType: 'html',
+				success: function (data) {
+					$('.result', form).html(data);
+					$(form.url).val('');
+				},
+				complete: function () {
+					$('input', form).prop('disabled', false);
+				},
+				error: function (e) {
+					alert(tr("A remote file upload error occurred:") + "\n\"" + e.statusText + "\" (" + e.status + ")");
 				}
-			{/jq}
-		{/if}
+			});
+			$('input', this).prop('disabled', true);
+			return false;
+		});
+	{/jq}
+	{if $prefs.vimeo_upload eq 'y'}
+		<fieldset>
+			<h3>{tr}Upload Video{/tr}</h3>
+			{wikiplugin _name='vimeo'}{/wikiplugin}
+		</fieldset>
+		{jq}
+			var handleVimeoFile = function (link, data) {
+				if (data != undefined) {
+				$("#form").hide();
+				$("#progress").append(
+					$("<p> {tr}Video file uploaded:{/tr} " + data.file + "</p>")
+						.prepend($("<img src='img/icons/vimeo.png' width='16' height='16'>"))
+					);
+				}
+			}
+		{/jq}
 	{/if}
 {/if}
-{jq}		
+{jq}
    var defaultx= $("#image_max_size_x").attr('value');		
    var defaulty= $("#image_max_size_y").attr('value');		
    		
