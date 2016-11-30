@@ -6488,9 +6488,12 @@ class UsersLib extends TikiLib
 	function get_user_email($user)
 	{
 		global $prefs;
-		return ($prefs['login_is_email'] == 'y' && $user != 'admin')
-						? $user
-						: $this->getOne('select `email` from `users_users` where binary `login`=?', array($user));
+
+		if (($prefs['login_is_email'] == 'y' && $user != 'admin')) {
+			return $this->user_exists($user) ? $user : '';
+		} else {
+			return $this->getOne('select `email` from `users_users` where binary `login`=?', array($user));
+		}
 	}
 
 	function get_userId_what($userIds, $what = 'email')
