@@ -2130,11 +2130,23 @@ class UsersLib extends TikiLib
 
 	function get_members($group)
 	{
-		$users = $this->fetchAll('SELECT login FROM `users_usergroups` ug INNER JOIN `users_users` u ON u.userId = ug.userId WHERE ug.groupName = ?', [$group]);
+		if( !is_array($group) ) {
+			$group = array($group);
+		}
+		$users = $this->fetchAll('SELECT ug.groupName, u.login FROM `users_usergroups` ug INNER JOIN `users_users` u ON u.userId = ug.userId WHERE ug.groupName IN ('
+			.implode(',', array_fill(0, count($group), '?')).')', $group);
 
-		return array_map(function ($row) {
-			return $row['login'];
-		}, $users);
+		if( count($group) == 1 ) {
+			return array_map(function ($row) {
+				return $row['login'];
+			}, $users);
+		} else {
+			$grouped = array();
+			foreach( $users as $row ) {
+				$grouped[$row['groupName']][] = $row['login'];
+			}
+			return $grouped;
+		}
 	}
 
 	function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '', $initial = '', $inclusion=false,

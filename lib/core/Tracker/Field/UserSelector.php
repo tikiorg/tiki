@@ -53,7 +53,8 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 						'filter' => 'int',
 						'options' => array(
 							0 => tr('No'),
-							1 => tr('Yes'),
+							1 => tr('Yes (complete list)'),
+							2 => tr('Yes (filterable by group)'),
 						),
 						'default' => 0,
 					),
@@ -178,21 +179,57 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 				$realnames = 'n';
 			}
 
-			$smarty->loadPlugin('smarty_function_user_selector');
-			return smarty_function_user_selector(
-				array(
-					'user' => $name,
-					'id'  => 'user_selector_' . $this->getConfiguration('fieldId'),
-					'select' => $value,
-					'name' => $this->getConfiguration('ins_id'),
-					'multiple' => ( $this->getOption('multiple') ? 'true' : 'false' ),
-					'editable' => 'y',
-					'allowNone' => 'y',
-					'groupIds' => $groupIds,
-					'realnames' => $realnames,
-				),
-				$smarty
-			);
+			if( $this->getOption('multiple') == 2 ) {
+				$userlib = TikiLib::lib('user');
+				if( !empty($groupIds) ) {
+					$groupIds = explode('|', $groupIds);
+				}
+				$groups = $userlib->list_all_groups_with_permission();
+				$groups = $userlib->get_group_info($groups);
+				if( !empty($groupIds) ) {
+					$groups = array_filter($groups, function($group) use ($groupIds) {
+						return in_array($group['id'], $groupIds);
+					});
+				}
+				$groups = array_map(function($group) {
+					return $group['groupName'];
+				}, $groups);
+				$selected_groups = array();
+				$users = $userlib->get_members($groups);
+				foreach( $users as $group => &$usrs ) {
+					if( array_intersect($value, $usrs) ) {
+						$selected_groups[] = $group;
+					}
+					if( $this->getOption('showRealname') ) {
+						$smarty->loadPlugin('smarty_modifier_username');
+						$usrs = array_combine($usrs, array_map('smarty_modifier_username', $usrs));
+					} else {
+						$usrs = array_combine($usrs, $usrs);
+					}
+				}
+				return $this->renderTemplate('trackerinput/userselector_grouped.tpl', $context, array(
+					'groups' => $groups,
+					'users' => $users,
+					'selected_users' => $value,
+					'selected_groups' => $selected_groups,
+				));
+			} else {
+				$smarty->loadPlugin('smarty_function_user_selector');
+				return smarty_function_user_selector(
+					array(
+						'user' => $name,
+						'id'  => 'user_selector_' . $this->getConfiguration('fieldId'),
+						'select' => $value,
+						'name' => $this->getConfiguration('ins_id'),
+						'multiple' => ( $this->getOption('multiple') ? 'true' : 'false' ),
+						'editable' => 'y',
+						'allowNone' => 'y',
+						'groupIds' => $groupIds,
+						'realnames' => $realnames,
+					),
+					$smarty
+				);
+			}
 		} else {
 			if ($this->getOption('showRealname')) {
 				$smarty->loadPlugin('smarty_modifier_username');
