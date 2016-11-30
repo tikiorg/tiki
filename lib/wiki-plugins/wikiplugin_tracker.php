@@ -146,19 +146,21 @@ function wikiplugin_tracker_info()
 			'email' => array(
 				'required' => false,
 				'name' => tra('Email'),
-                                'description' => tr('To send an email once the tracker item has been created. Format: %0from', '<code>')
-                                        .'|'.tra('to').'|'.tr('template%0', '</code> ') . tr('For %0from%1 and %0to%1, use an email address
-                                        (separate multiple addresses with a comma), a username or a fieldId of a field containing either an email address or a username.
-                                        When username is being used, the email will be sent to the email address of the user on file.
-                                        When sending to several emails using different template, provide the template name for the message body for each email;
-                                        I.e., the first template will be used for the first to, the second template if exists will be used
-                                        for the second from (otherwise the last given template will be used). Each template needs two files, one for the subject one for the body. The subject will be named
-                                        template_subject.tpl. All the templates must be in the %0templates/mail%1 directory. Example:
-                                        %0webmaster@my.com|a@my.com,b@my.com|templatea.tpl,templateb.tpl%1 (%0templates/mail/tracker_changed_notification.tpl%1
-                                        is the default from which you can get inspiration). Please note that you need to have an email
-                                        address in the normal "Copy activity to email" property in the Tracker notifications panel as well',
-                                        '<code>', '</code>'),
-                                'since' => '2.0',				'default' => '',
+				'description' => tr('To send an email once the tracker item has been created. Format: %0from', '<code>')
+						.'|'.tra('to').'|'.tr('template%0', '</code> ') . tr('For %0from%1 and %0to%1, use an email address
+						(separate multiple addresses with a comma), a username, a fieldId of a field containing either an email address or a username,
+						or "createdBy" or "lastModifBy" for the item creator or modifier.
+						When username is being used, the email will be sent to the email address of the user on file.
+						When sending to several emails using different template, provide the template name for the message body for each email;
+						I.e., the first template will be used for the first to, the second template if exists will be used
+						for the second from (otherwise the last given template will be used). Each template needs two files, one for the subject one for the body. The subject will be named
+						template_subject.tpl. All the templates must be in the %0templates/mail%1 directory. Example:
+						%0webmaster@my.com|a@my.com,b@my.com|templatea.tpl,templateb.tpl%1 (%0templates/mail/tracker_changed_notification.tpl%1
+						is the default from which you can get inspiration). Please note that you need to have an email
+						address in the normal "Copy activity to email" property in the Tracker notifications panel as well',
+						'<code>', '</code>'),
+				'since' => '2.0',
+				'default' => '',
 			),
 			'emailformat' => array(
 				'required' => false,
@@ -1201,56 +1203,28 @@ function wikiplugin_tracker($data, $params)
 						$smarty->assign('f_' . $f['fieldId'], $prettyout);
 						$smarty->assign('f_' . $f['permName'], $prettyout);
 					}
+					// $email param in the form of: "from|to|template"
 					$emailOptions = preg_split("#\|#", $email);
-					if (is_numeric($emailOptions[0])) {
-						$f = array();
-						foreach( $flds['data'] as $f) {
-							if ($f['fieldId'] == $emailOptions[0]) {
-								break;
-							}
-						}
-						if ($f && $f['type'] === 'l') {
-							$emailOptions[0] = wikiplugin_tracker_render_value($f, $item);
-						} else {
-							$emailOptions[0] = $trklib->get_item_value($trackerId, $rid, $emailOptions[0]);
-						}
-					}
-					if( !empty($emailOptions[0]) && !strstr($emailOptions[0], '@') ) {
-						$email = $userlib->get_user_email($emailOptions[0]);
-						if( $email )
-							$emailOptions[0] = $email;
-					}
-					if (empty($emailOptions[0])) { // from
+
+					// from:
+					$emailOptions[0] = wikiplugin_tracker_process_email_recipient($emailOptions[0], $flds['data'], $item, $trackerId, $rid);
+
+					if (empty($emailOptions[0])) { // from is empty
 						$emailOptions[0] = $prefs['sender_email'];
 					}
-					if (empty($emailOptions[1])) { // to
+
+					// to:
+					if (empty($emailOptions[1])) { // to is empty?
 						$emailOptions[1][0] = $prefs['sender_email'];
 					} else {
-						$emailOptions[1] = preg_split('/ *, */', $emailOptions[1]);
-						foreach ($emailOptions[1] as $key=>$email) {
-							if (is_numeric($email)) {
-								$f = array();
-								foreach( $flds['data'] as $f) {
-									if ($f['fieldId'] == $email) {
-										break;
-									}
-								}
-								if ($f && $f['type'] === 'l') {
-									$emailOptions[1][$key] = wikiplugin_tracker_render_value($f, $item);
-								} else {
-									$emailOptions[1][$key] = $trklib->get_item_value($trackerId, $rid, $email);
-								}
-							}
-						}
-						// emails might be usernames that need conversion to email addresses
-						foreach($emailOptions[1] as $key => $email) {
-							if( !empty($email) && !strstr($email, '@') ) {
-								$email = $userlib->get_user_email($email);
-								if( $email )
-									$emailOptions[1][$key] = $email;
-							}
+						// multiple recipients can be separated by a comma
+						$emailOptions[1] = explode(',', $emailOptions[1]);
+
+						foreach ($emailOptions[1] as & $recipient) {
+							$recipient = wikiplugin_tracker_process_email_recipient(trim($recipient), $flds['data'], $item, $trackerId, $rid);
 						}
 					}
+
 					include_once('lib/webmail/tikimaillib.php');
 					$mail = new TikiMail();
 					$mail->setFrom($emailOptions[0]);
@@ -2033,6 +2007,52 @@ function wikiplugin_tracker_render_value($f, $item)
 
 	$handler = $trklib->get_field_handler($f, $item);
 	return $handler->renderOutput(array('inTable' => 'n'));
+}
+
+/**
+ * Convert an email parameter componenet into a real email address
+ *
+ * @param string $emailOrField   int for a fieldId, string for a username or email already
+ * @param array $fields          tracker fields
+ * @param array $item            item field values
+ * @param int $trackerId
+ * @param int $itemId
+ *
+ * @return bool|mixed
+ */
+function wikiplugin_tracker_process_email_recipient($emailOrField, $fields, $item, $trackerId, $itemId)
+{
+	$output = $emailOrField;
+
+	// numeric so is a fieldId
+	if (is_numeric($emailOrField)) {
+		$f = array();
+		foreach( $fields as $f) {
+			if ($f['fieldId'] == $emailOrField) {
+				break;
+			}
+		}
+		if ($f && $f['type'] === 'l') {
+			$output = wikiplugin_tracker_render_value($f, $item);
+		} else {
+			$output = TikiLib::lib('trk')->get_item_value($trackerId, $itemId, $emailOrField);
+		}
+		$output = trim($output);
+	}
+
+	// string but not an email yet, therefore a username
+	if( !empty($output) && !strstr($output, '@') ) {
+		$email = TikiLib::lib('user')->get_user_email($output);
+		if ( $email ) {
+			$output = $email;
+		} else if ($output === 'createdBy' || $output === 'lastModifBy') {
+			$email = TikiLib::lib('user')->get_user_email($item[$output]);
+			if ($email) {
+				$output = $email;
+			}
+		}
+	}
+	return $output;
 }
 
 function wikiplugin_tracker_save($trackerSavedState)
