@@ -31,11 +31,7 @@
 </form>
 {jq}
 $('.listexecute-select-all').removeClass('listexecute-select-all').on('click', function (e) {
-	if( this.checked ) {
-		$(this).closest('form').find(':checkbox:not(:checked):not(:disabled)').click();
-	} else {
-		$(this).closest('form').find(':checkbox:checked:not(:disabled)').click();
-	}
+	$(this).closest('form').find(':checkbox:not(:checked):not(:disabled)').prop('checked', true);
 	e.preventDefault();
 });
 {/jq}
