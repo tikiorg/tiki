@@ -12,6 +12,7 @@ class Search_Query_Order
 
 	const MODE_NUMERIC = 'numeric';
 	const MODE_TEXT = 'text';
+	const MODE_DISTANCE = 'distance';
 
 	const ORDER_ASC = 'asc';
 	const ORDER_DESC = 'desc';
@@ -19,12 +20,14 @@ class Search_Query_Order
 	private $field;
 	private $mode;
 	private $order;
+	private $arguments;
 
-	function __construct($field, $mode, $order)
+	function __construct($field, $mode, $order, array $arguments = [])
 	{
 		$this->field = $field;
 		$this->mode = $mode;
 		$this->order = $order;
+		$this->arguments = $arguments;
 	}
 
 	function getField()
@@ -40,6 +43,11 @@ class Search_Query_Order
 	function getMode()
 	{
 		return $this->mode;
+	}
+
+	function getArguments()
+	{
+		return $this->arguments;
 	}
 
 	public static function getDefault()

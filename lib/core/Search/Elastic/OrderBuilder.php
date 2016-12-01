@@ -17,6 +17,20 @@ class Search_Elastic_OrderBuilder
 				$component = array(
 					"$field.nsort" => $order->getOrder(),
 				);
+			} else if ($order->getMode() == Search_Query_Order::MODE_DISTANCE) {
+				$arguments = $order->getArguments();
+
+				$component = [
+					"_geo_distance" => [
+						'geo_point' => [
+							'lat' => $arguments['lat'],
+							'lon' => $arguments['lon'],
+						],
+						'order' => $arguments['order'],
+						'unit' => $arguments['unit'],
+						'distance_type' => $arguments['distance_type'],
+					],
+				];
 			} else {
 				$component = array(
 					"$field.sort" => $order->getOrder(),
