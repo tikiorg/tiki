@@ -103,4 +103,9 @@
 			{/if}
 		</table>
 	</div>
+	{if $prefs.wikiplugin_wikidiff eq 'y'}
+		{remarksbox type='tip' title='{tr}Example wikidiff plugin syntax{/tr}'}
+			<code>{ldelim}wikidiff object_id="{$page}" oldver="{$old.version}" newver="{$new.version}" diff_style="{$diff_style}" show_version_info="{if empty($hide_version_info)}y{else}n{/if}"{rdelim}</code>
+		{/remarksbox}
+	{/if}
 {/if}
