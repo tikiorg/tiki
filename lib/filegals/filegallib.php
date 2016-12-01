@@ -3841,7 +3841,7 @@ class FileGalLib extends TikiLib
 		}
 
 		$tx = $this->begin();
-		$ret = $this->insert_file($gal_info['galleryId'], $name, '', $name, $data, $size, $type, $asuser, $fhash,'','','',NULL,NULL,'','',$image_x,$image_y);
+		$ret = $this->insert_file($gal_info['galleryId'], $name, '', $name, $data, $size, $type, $asuser, $fhash, '', NULL, '', NULL, NULL, 0, NULL, $image_x, $image_y);
 		$tx->commit();
 
 		return $ret;
@@ -3935,6 +3935,7 @@ class FileGalLib extends TikiLib
 
 			$result = $response->getBody();
 			if ($disposition = $response->getHeaders()->get('Content-Disposition')) {
+				$disposition = method_exists($disposition, 'toString') ? $disposition->toString() : $disposition;
 				if (preg_match('/filename=[\'"]?([^;\'"]+)[\'"]?/i', $disposition, $parts)) {
 					$name = $parts[1];
 				}
@@ -3949,6 +3950,7 @@ class FileGalLib extends TikiLib
 
 			// Check cache-control for max-age, which has priority
 			if ($cacheControl = $response->getHeaders()->get('Cache-Control')) {
+				$cacheControl = method_exists($cacheControl, 'toString') ? $cacheControl->toString() : $cacheControl;
 				if (preg_match('/max-age=(\d+)/', $cacheControl, $parts)) {
 					$expiryDate = time() + $parts[1];
 				}
@@ -3963,6 +3965,10 @@ class FileGalLib extends TikiLib
 				$name = tr('unknown');
 			}
 
+			if( $etag = $response->getHeaders()->get('Etag') ) {
+				$etag = method_exists($etag, 'toString') ? $etag->toString() : $etag;
+			}
+
 			TikiLib::lib('logs')->add_action($action, $url, 'url', 'success=' . $response->getStatusCode());
 			return array(
 				'data' => $result,
@@ -3970,7 +3976,7 @@ class FileGalLib extends TikiLib
 				'type' => $type,
 				'name' => $name,
 				'expires' => $expiryDate,
-				'etag' => $response->getHeaders()->get('Etag'),
+				'etag' => $etag,
 			);
 		} catch (Zend\Http\Exception\ExceptionInterface $e) {
 			TikiLib::lib('logs')->add_action($action, $url, 'url', 'error=' . $e->getMessage());
