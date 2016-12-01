@@ -197,3 +197,90 @@ body.tiki.navbar-padding {
 // default width "auto" causes the input to overflow outside of narrow divs.
 .col-sm-2 .form-inline .form-control,
 .col-md-2 .form-inline .form-control { width: 100%; }
+
+
+///// User layout columns (module zones) switching / toggling (resurrected feature)
+
+// When hidden we simply do not display the columns
+.hide_zone_left #col2,
+.hide_zone_right #col3 {
+	display: none;
+}
+
+// percentage(( (100 * 10) / @grid-columns )); // why 83.3334% values below? when one col of md-2 of 12 grid is hidden it shows 10 grid-columns which is 83.33333333% - it will be different number if @grid-columns variable changes or #col2 and #col3 will span to more than 2 grid columns
+
+// Overrides in case of 3-col layout
+.hide_zone_left .col-md-8.col-md-push-2.col1 { // when left col is hidden
+	left: 0;
+	width: 83.3334%; // TODO: make it computed less variable?
+}
+.hide_zone_right .col-md-8.col-md-push-2.col1 { // when right col is hidden
+	width: 83.3334%; // TODO: make it computed less variable?
+}
+.hide_zone_left.hide_zone_right .col-md-8.col-md-push-2.col1 { // when both are hidden
+	width: 100%;
+}
+
+.hide_zone_right #col2 {
+	right: 83.3334%; // TODO: make it computed less variable?
+}
+
+// Overrides in case of 2-col layout with no right column
+.hide_zone_left .col-md-9.col-md-push-3.col1 {
+	left: 0;
+	width: 100%;
+}
+
+// Overrides in case of 2-col layout with no left colum
+.hide_zone_right .col-md-9.col1 {
+	width: 100%;
+}
+
+// Start overrides for wide side columns layout
+// Overrides in case of 3-col layout
+.hide_zone_left .col-md-6.col-md-push-3.col1 { // when left col is hidden
+	left: 0;
+	width: 75%; // 83.3334%; // TODO: make it computed less variable?
+}
+.hide_zone_right .col-md-6.col-md-push-3.col1 { // when right col is hidden
+	width: 75%; // 83.3334%; // TODO: make it computed less variable?
+}
+.hide_zone_left.hide_zone_right .col-md-6.col-md-push-3.col1 { // when both are hidden
+	width: 100%;
+}
+
+.hide_zone_right #col2.col-md-3.col-md-pull-6 {
+	right: 75%; // TODO: make it computed less variable?
+}
+
+// Overrides in case of 2-col layout with no right column
+.hide_zone_left .col-md-9.col-md-push-3.col1 {
+	left: 0;
+	width: 100%;
+}
+
+// Overrides in case of 2-col layout with no left column
+.hide_zone_right .col-md-9.col1 {
+	width: 100%;
+}
+// End overrides for wide side column layout
+
+
+@media (max-width: @screen-sm-max) {
+	#col1 {
+		width: 100%;
+	}
+	.hide_zone_left #col2,
+	.hide_zone_right #col3 {
+		display: block;
+	}
+	.hide_zone_right #col2 {
+		right: auto;
+	}
+	.toggle_zone {
+		display: none;
+	}
+}
+
+///// END of User layout columns
+

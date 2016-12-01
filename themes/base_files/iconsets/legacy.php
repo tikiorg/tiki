@@ -731,6 +731,12 @@ function iconset_legacy()
 			'toggle-on' => array(
 				'id' => 'delete',
 			),
+            'toggle-left' => array(
+                'id' => 'resultset_first',
+            ),
+            'toggle-right' => array(
+                'id' => 'resultset_last',
+            ),
 			'trackers' => array(
 				'id' => 'database',
 			),

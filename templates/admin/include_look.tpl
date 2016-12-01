@@ -88,8 +88,10 @@
 					<legend>{tr}Module zone visibility{/tr}</legend>
 					{if !$smarty.get.Zone_options}
 						{remarksbox type="tip" title="{tr}Hint{/tr}"}
-							Module zone visibility options may not be supported anymore from Tiki 13+, but you can still access them in case you are upgrading from an earlier version. <a href="tiki-admin.php?page=look&Zone_options=y#contentadmin_look-2" class="alert-link">Show module visibility options</a>
+							Some module zone visibility options may not be supported anymore from Tiki 13+, but you can still access them in case you are upgrading from an earlier version. <a href="tiki-admin.php?page=look&Zone_options=y#contentadmin_look-2" class="alert-link">Show all module visibility options</a>
 						{/remarksbox}
+						{preference name=feature_left_column}
+						{preference name=feature_right_column}
 					{else}
 						{preference name=module_zones_top}
 						{preference name=module_zones_topbar}

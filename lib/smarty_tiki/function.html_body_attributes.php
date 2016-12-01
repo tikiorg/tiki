@@ -71,6 +71,14 @@ function smarty_function_html_body_attributes($params, $smarty)
 		}
 	}
 	
+	if (getCookie('hide_zone_left')) {
+		$class .= ' hide_zone_left';
+	}
+
+	if (getCookie('hide_zone_right')) {
+		$class .= ' hide_zone_right';
+	}
+
 	if (!empty($onload)) {
 		$back .= ' onload="' . $onload . '"';
 	}

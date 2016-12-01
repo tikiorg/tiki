@@ -3205,6 +3205,65 @@ body.tiki.navbar-padding {
 .col-md-2 .form-inline .form-control {
   width: 100%;
 }
+.hide_zone_left #col2,
+.hide_zone_right #col3 {
+  display: none;
+}
+.hide_zone_left .col-md-8.col-md-push-2.col1 {
+  left: 0;
+  width: 83.3334%;
+}
+.hide_zone_right .col-md-8.col-md-push-2.col1 {
+  width: 83.3334%;
+}
+.hide_zone_left.hide_zone_right .col-md-8.col-md-push-2.col1 {
+  width: 100%;
+}
+.hide_zone_right #col2 {
+  right: 83.3334%;
+}
+.hide_zone_left .col-md-9.col-md-push-3.col1 {
+  left: 0;
+  width: 100%;
+}
+.hide_zone_right .col-md-9.col1 {
+  width: 100%;
+}
+.hide_zone_left .col-md-6.col-md-push-3.col1 {
+  left: 0;
+  width: 75%;
+}
+.hide_zone_right .col-md-6.col-md-push-3.col1 {
+  width: 75%;
+}
+.hide_zone_left.hide_zone_right .col-md-6.col-md-push-3.col1 {
+  width: 100%;
+}
+.hide_zone_right #col2.col-md-3.col-md-pull-6 {
+  right: 75%;
+}
+.hide_zone_left .col-md-9.col-md-push-3.col1 {
+  left: 0;
+  width: 100%;
+}
+.hide_zone_right .col-md-9.col1 {
+  width: 100%;
+}
+@media (max-width: 991px) {
+  #col1 {
+    width: 100%;
+  }
+  .hide_zone_left #col2,
+  .hide_zone_right #col3 {
+    display: block;
+  }
+  .hide_zone_right #col2 {
+    right: auto;
+  }
+  .toggle_zone {
+    display: none;
+  }
+}
 /* becomes height using padding (so it's divided by 2) */
 /* url(icons/loading.gif); */
 /* Filter widget transition */
