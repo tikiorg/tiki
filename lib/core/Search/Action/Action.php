@@ -15,5 +15,7 @@ interface Search_Action_Action
 	function validate(JitFilter $data);
 
 	function execute(JitFilter $data);
+
+  function requiresInput(JitFilter $data);
 }
 

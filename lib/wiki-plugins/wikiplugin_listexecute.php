@@ -89,7 +89,7 @@ function wikiplugin_listexecute($data, $params)
 	$dataSource = $unifiedsearchlib->getDataSource();
 	$builder = new Search_Formatter_Builder;
 	$builder->setPaginationArguments($paginationArguments);
-	$builder->setActions(array_keys($actions)	);
+	$builder->setActions($actions);
 	$builder->setId('wplistexecute-' . $iListExecute);
 	$builder->setCount($result->count());
 	$builder->setTsOn($tsret['tsOn']);
@@ -105,7 +105,7 @@ function wikiplugin_listexecute($data, $params)
 		$plugin->setFields(array('report_status' => null));
 		$plugin->setData(
 			array(
-				'actions' => array_keys($actions),
+				'actions' => $actions,
 				'iListExecute' => $iListExecute
 			)
 		);
@@ -127,10 +127,14 @@ function wikiplugin_listexecute($data, $params)
 			foreach ($list as $entry) {
 				$identifier = "{$entry['object_type']}:{$entry['object_id']}";
 				if (in_array($identifier, $objects) || in_array('ALL', $objects)) {
+					if( isset($_POST['list_input']) ) {
+						$entry['value'] = $_POST['list_input'];
+					}
+					
 					$success = $action->execute($entry);
-
-					if( !$success )
+					if( !$success ) {
 						Feedback::error(tr("Error executing action %0 on item %1.", $_POST['list_action'], $entry['title']));
+					}
 
 					$reportSource->setStatus($entry['object_type'], $entry['object_id'], $success);
 				}

@@ -67,6 +67,10 @@ class Search_Action_EmailAction implements Search_Action_Action
 		}
 	}
 
+	function requiresInput(JitFilter $data) {
+		return false;
+	}
+
 	private function parse($content)
 	{
 		$content = "~np~$content~/np~";

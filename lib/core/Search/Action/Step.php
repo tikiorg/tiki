@@ -12,5 +12,7 @@ interface Search_Action_Step
 	function validate(array $entry);
 
 	function execute(array $entry);
+
+  function requiresInput();
 }
 

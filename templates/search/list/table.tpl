@@ -1,6 +1,6 @@
 {* $Id$ *}
 {if $actions}
-<form method="post" action="#{$id}">
+<form method="post" action="#{$id}" class="form-inline" id="listexecute-{$iListExecute}">
 {/if}
 <div {if $id}id="{$id}-div" {/if}class="table-responsive ts-wrapperdiv" {if $tsOn}style="visibility:hidden;"{/if}>
 	<table {if $id}id="{$id}" {/if}class="table normal table-hover table-striped" data-count="{$count}">
@@ -77,12 +77,13 @@
 	</table>
 </div>
 {if $actions}
-	<select name="list_action">
+	<select name="list_action" class="form-control">
 		<option></option>
 		{foreach from=$actions item=action}
-			<option value="{$action|escape}">{$action|escape}</option>
+			<option value="{$action->getName()|escape}" data-input="{$action->requiresInput()}">{$action->getName()|escape}</option>
 		{/foreach}
 	</select>
+	<input type="text" name="list_input" value="" class="form-control" style="display:none">
 	<input type="submit" class="btn btn-default btn-sm" title="{tr}Apply Changes{/tr}" value="{tr}Apply{/tr}">
 </form>
 {jq}
@@ -92,5 +93,12 @@ $('.listexecute-select-all').removeClass('listexecute-select-all')
 			$(this).prop("checked", ! $(this).prop("checked"));
 		});
 	});
+$('#listexecute-{{$iListExecute}}').find('select[name=list_action]').on('change', function() {
+	if( $(this).find('option:selected').data('input') ) {
+		$(this).siblings('input[name=list_input]').show();
+	} else {
+		$(this).siblings('input[name=list_input]').hide();
+	}
+});
 {/jq}
 {/if}

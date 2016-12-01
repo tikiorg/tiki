@@ -27,5 +27,9 @@ class Search_Action_UnknownStep implements Search_Action_Step
 	function execute(array $entry)
 	{
 	}
+
+	function requiresInput() {
+		return false;
+	}
 }
 

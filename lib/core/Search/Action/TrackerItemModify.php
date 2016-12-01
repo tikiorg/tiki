@@ -100,5 +100,9 @@ class Search_Action_TrackerItemModify implements Search_Action_Action
 
 		return true;
 	}
+
+	function requiresInput(JitFilter $data) {
+		return empty($data->value->text());
+	}
 }
 

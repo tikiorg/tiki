@@ -67,6 +67,15 @@ class Search_Action_ActionStep implements Search_Action_Step
 		return false;
 	}
 
+	function requiresInput()
+	{
+		if ($entry = $this->prepare(array('object_type' => '', 'object_id' => ''))) {
+			return $this->action->requiresInput($entry);
+		}
+
+		return false;
+	}
+
 	private function prepare($entry)
 	{
 		$out = array();

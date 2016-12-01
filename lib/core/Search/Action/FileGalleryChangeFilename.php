@@ -151,6 +151,10 @@ class Search_Action_FileGalleryChangeFilename implements Search_Action_Action
         return true;
     }
 
+    function requiresInput(JitFilter $data) {
+        return false;
+    }
+
     /**
      * Generate a string based on the template provided
      *
