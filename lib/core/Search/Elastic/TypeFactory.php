@@ -51,6 +51,11 @@ class Search_Elastic_TypeFactory implements Search_Type_Factory_Interface
 		return new Search_Type_Nested($value);
 	}
 
+	function geopoint($value)
+	{
+		return new Search_Type_GeoPoint($value);
+	}
+
 	function sortable($value)
 	{
 		return new Search_Type_PlainShortText($value);

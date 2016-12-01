@@ -5,14 +5,15 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
-use Search_Expr_Token as Token;
 use Search_Expr_And as AndX;
-use Search_Expr_Or as OrX;
-use Search_Expr_Not as NotX;
-use Search_Expr_Range as Range;
+use Search_Expr_Distance as Distance;
+use Search_Expr_ImplicitPhrase as ImplicitPhrase;
 use Search_Expr_Initial as Initial;
 use Search_Expr_MoreLikeThis as MoreLikeThis;
-use Search_Expr_ImplicitPhrase as ImplicitPhrase;
+use Search_Expr_Not as NotX;
+use Search_Expr_Or as OrX;
+use Search_Expr_Range as Range;
+use Search_Expr_Token as Token;
 
 class Search_Elastic_QueryBuilder
 {
@@ -165,6 +166,16 @@ class Search_Elastic_QueryBuilder
 					'boost' => $node->getWeight(),
 				),
 			);
+		} elseif ($node instanceof Distance) {
+			return [
+				'geo_distance' => [
+					'distance' => $node->getDistance(),
+					$node->getField() => [
+						'lat' => $node->getLat(),
+						'lon' => $node->getLon(),
+					]
+				]
+			];
 		} else {
 			throw new Exception(tr('Feature not supported.'));
 		}

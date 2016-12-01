@@ -25,4 +25,6 @@ interface Search_Type_Factory_Interface
 	function nested($values);
 	// tokenized - indexed - stored in database
 	function sortable($value);
+	// tokenized - indexed - unstored in database (?)
+	function geopoint($value);
 }

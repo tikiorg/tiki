@@ -15,11 +15,23 @@ class Search_GlobalSource_Geolocation implements Search_GlobalSource_Interface
 
 		$geolib = TikiLib::lib('geo');
 		$coordinates = $geolib->get_coordinates_string($objectType, $objectId);
+
+		$coordsArray = (array) $geolib->get_coordinates($objectType, $objectId);
+
+		if (isset($coordsArray['lat'], $coordsArray['lon'])) {
+			unset($coordsArray['zoom']);
+			$coordsArray['lat'] = (float) $coordsArray['lat'];
+			$coordsArray['lon'] = (float) $coordsArray['lon'];
+		} else {
+			$coordsArray = null;
+		}
+
 		$alreadyLocated = isset($data['geo_located']) && $data['geo_located'] == 'y';
 
 		return array(
 			'geo_located' => $typeFactory->identifier(($coordinates || $alreadyLocated) ? 'y' : 'n'),
 			'geo_location' => $typeFactory->identifier($coordinates),
+			'geo_point' => $typeFactory->geopoint($coordsArray),
 		);
 	}
 
