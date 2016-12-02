@@ -301,6 +301,21 @@ class Search_Query_WikiBuilder
 			} else {
 				return;
 			}
+		} else if ($value === 'distance') {
+			if (isset($arguments['lat'], $arguments['lon'])) {
+
+				$arguments = array_merge([	// defaults
+					'order' => 'asc',
+					'unit' => 'km',
+					'distance_type' => 'sloppy_arc',
+				], $arguments);
+
+				$value = new Search_Query_Order('geo_point', 'distance', $arguments['order'], $arguments);
+
+			} else {
+				Feedback::error(tr('Distance sort: Missing lat or lon arguments'), 'session');
+				return;
+			}
 		}
 		$query->setOrder($value);
 	}
