@@ -12,7 +12,7 @@
 {/if}
 
 {if $tiki_p_list_trackers eq 'y'}
-	<a class="btn btn-default" href="tiki-list_trackers.php">
+	<a class="btn btn-default" href="{if $prefs.feature_sefurl eq 'y'}trackers{else}tiki-list_trackers.php{/if}">
 		{icon name="trackers"} {tr}Trackers{/tr}
 	</a>
 {/if}

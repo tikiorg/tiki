@@ -144,7 +144,7 @@
 										{icon name='calendar' _menu_text='y' _menu_icon='y' alt="{tr}Events{/tr}"}
 									</a>{$liend}
 								{/if}
-								{$libeg}<a href="tiki-view_tracker.php?trackerId={$tracker.trackerId}">
+								{$libeg}<a href="{$tracker.trackerId|sefurl:'tracker'}">
 									{icon name='view' _menu_text='y' _menu_icon='y' alt="{tr}View{/tr}"}
 								</a>{$liend}
 								{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
@@ -184,7 +184,7 @@
 										data-target="#bootstrap-modal"
 										onclick="$('[data-toggle=popover]').popover('hide');"
 									>
-										{icon name='settings' _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
+										{icon name='settings' _menu_text='y' _menu_icon='y' alt="{tr}Properties{/tr}"}
 									</a>{$liend}
 									{$libeg}{permission_link mode=text type=tracker permType=trackers id=$tracker.trackerId}{$liend}
 									{if $tracker.items > 0}
