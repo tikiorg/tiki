@@ -155,6 +155,9 @@ function smarty_function_trackerfields($params, $smarty)
 	$trklib->registerSectionFormat('config', 'view', $viewItemPretty, tr('Configured'));
 	$template = $trklib->getSectionFormatTemplate($sectionFormat, $params['mode']);
 
+	// smarty doesn't use tpl: as a resource prefix any more
+	$template = stripos($template, 'tpl:') === 0 ? substr($template, 4) : $template;
+
 	$trklib->unregisterSectionFormat('config');
 
 	try {
