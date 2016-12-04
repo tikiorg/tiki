@@ -123,7 +123,7 @@ class AreasLib extends CategLib
 	function update_areas()
 	{
 		global $prefs;
-		$this->areas->deleteMultiple();	// empty areas table before rebuilding
+		$this->areas->deleteMultiple([]);	// empty areas table before rebuilding
 		$areas = array();
 		$descendants = $this->get_category_descendants($prefs['areas_root']);
 		if (is_array($descendants)) {
