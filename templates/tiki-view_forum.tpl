@@ -717,9 +717,9 @@
 					{/block}
 				{sectionelse}
 					{if !$ts.enabled || ($ts.enabled && $ts.ajax)}
-						{norecords _colspan=$cntcol _text="No topics found"}
+						{norecords _colspan=$cntcol _text="{tr}No topics found{/tr}"}
 					{else}
-						{norecords _colspan=$cntcol _text="Retrieving topics..."}
+						{norecords _colspan=$cntcol _text="{tr}Retrieving topics...{/tr}"}
 					{/if}
 				{/section}
 			</tbody>
