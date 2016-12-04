@@ -146,7 +146,7 @@ if (isset($_REQUEST['status'])) {
 	$_REQUEST['status'] = 'o';
 }
 foreach ($status_raw as $let => $sta) {
-	if ((isset($$sta['perm']) and $$sta['perm'] == 'y') or ($my or $ours)) {
+	if ((isset($sta['perm']) and $sta['perm'] == 'y') or ($my or $ours)) {
 		if (in_array($let, $sts)) {
 			$sta['class'] = 'statuson';
 			$sta['statuslink'] = str_replace($let, '', implode('', $sts));
