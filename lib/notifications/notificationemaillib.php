@@ -647,6 +647,14 @@ function sendCategoryEmailNotification($values)
 			$nots = $tikilib->get_event_watches($event, $categoryId);
 		}
 
+		if ($prefs['user_category_watch_editor'] != "y") {
+			for ($i = count($nots) - 1; $i >=0; --$i)
+				if ($nots[$i]['user'] == $user) {
+					unset($nots[$i]);
+					break;
+				}
+		}
+
 		for ($i = count($nots) - 1; $i >=0; --$i) {
 			$nots[$i]['language'] = $tikilib->get_user_preference($nots[$i]['user'], "language", $defaultLanguage);
 		}

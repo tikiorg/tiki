@@ -23,6 +23,7 @@
 						<p><input type="checkbox" name="user_wiki_watch_editor" {if $user_wiki_watch_editor eq 'y'}checked{/if}> {tr}Wiki{/tr}</p>
 						<p><input type="checkbox" name="user_article_watch_editor" {if $user_article_watch_editor eq 'y'}checked{/if}> {tr}Article{/tr}</p>
 						<p><input type="checkbox" name="user_blog_watch_editor" {if $user_blog_watch_editor eq 'y'}checked{/if}> {tr}Blog{/tr}</p>
+						<p><input type="checkbox" name="user_category_watch_editor" {if $user_category_watch_editor eq 'y'}checked{/if}> {tr}Category{/tr}</p>
 					</td>
 					<td style="width:4%">
 						&nbsp;
