@@ -313,9 +313,11 @@ class Tiki_Profile_Writer
 	private function generateTemporaryReference($type, $id)
 	{
 		// Find existing entry for unknown reference
-		foreach ($this->data['unknown_objects'] as $entry) {
-			if ($entry['type'] == $type && $entry['id'] == $id) {
-				return $entry['token'];
+		if( is_array($this->data['unknown_objects']) ) {
+			foreach ($this->data['unknown_objects'] as $entry) {
+				if ($entry['type'] == $type && $entry['id'] == $id) {
+					return $entry['token'];
+				}
 			}
 		}
 
