@@ -108,7 +108,12 @@ class OIntegrate
 		$response = new OIntegrate_Response;
 		$response->contentType = $contentType;
 		$response->cacheControl = $cacheControl;
-		$response->data = $this->unserialize($contentType->getMediaType(), $content);
+		if ($contentType) {
+			$mediaType = $contentType->getMediaType();
+		} else {
+			$mediaType = '';
+		}
+		$response->data = $this->unserialize($mediaType, $content);
 
 		$filter = new DeclFilter;
 		$filter->addCatchAllFilter('xss');
