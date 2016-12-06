@@ -78,7 +78,7 @@ class Category_ManipulatorTest extends TikiTestCase
 			array(
 				new Perms_ResolverFactory_TestFactory(
 					array('type', 'object'),
-					array('wiki page:Hello World' => new Perms_Resolver_Default(false),)
+					array('test:wiki page:Hello World' => new Perms_Resolver_Default(false),)
 				),
 				new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
 			)
@@ -102,7 +102,7 @@ class Category_ManipulatorTest extends TikiTestCase
 			array(
 				new Perms_ResolverFactory_TestFactory(
 					array('type', 'object'),
-					array('category:4' => new Perms_Resolver_Default(false),)
+					array('test:category:4' => new Perms_Resolver_Default(false),)
 				),
 				new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
 			)
@@ -126,7 +126,7 @@ class Category_ManipulatorTest extends TikiTestCase
 			array(
 				new Perms_ResolverFactory_TestFactory(
 					array('type', 'object'),
-					array('category:3' => new Perms_Resolver_Default(false),)
+					array('test:category:3' => new Perms_Resolver_Default(false),)
 				),
 				new Perms_ResolverFactory_StaticFactory('root', new Perms_Resolver_Default(true)),
 			)

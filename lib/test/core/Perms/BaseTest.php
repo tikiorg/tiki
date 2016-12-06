@@ -61,20 +61,20 @@ class Perms_BaseTest extends TikiTestCase
 				new Perms_ResolverFactory_TestFactory(
 					array('object'),
 					array(
-						'a' => $rA = new Perms_Resolver_Default(true),
-						'b' => $rB = new Perms_Resolver_Default(true),
+						'test:a' => $rA = new Perms_Resolver_Default(true),
+						'test:b' => $rB = new Perms_Resolver_Default(true),
 					)
 				),
 				new Perms_ResolverFactory_TestFactory(
 					array('category'),
 					array(
-						'1' => $r1 = new Perms_Resolver_Default(true),
-						'2' => $r2 = new Perms_Resolver_Default(true),
+						'test:1' => $r1 = new Perms_Resolver_Default(true),
+						'test:2' => $r2 = new Perms_Resolver_Default(true),
 					)
 				),
 				new Perms_ResolverFactory_TestFactory(
 					array(),
-					array('' => $rG = new Perms_Resolver_Default(true),)
+					array('test:' => $rG = new Perms_Resolver_Default(true),)
 				),
 			)
 		);
@@ -90,7 +90,7 @@ class Perms_BaseTest extends TikiTestCase
 			'testObjectB' => array(array('object' => 'b'), 'rB'),
 			'testCategoryIgnoredWhenObjectMatches' => array(array('object' => 'b', 'category' => '1'), 'rB'),
 			'testCategoryObtainOnObjectMiss' => array(array('object' => 'c', 'category' => '1'), 'r1'),
-			'testCategoryOnly' => array(array('category' => 2), 'r2'),
+			'testCategoryOnly' => array(array('category' => '2'), 'r2'),
 			'testObjectAndCategoryMiss' => array(array('object' => 'd', 'category' => '3'), 'rG'),
 			'testNoContext' => array(array(), 'rG'),
 		);
@@ -183,11 +183,11 @@ class Perms_BaseTest extends TikiTestCase
 				new Perms_ResolverFactory_TestFactory(
 					array('object'),
 					array(
-						'A' => new Perms_Resolver_Default(true),
-						'B' => new Perms_Resolver_Default(true),
-						'C' => new Perms_Resolver_Default(false),
-						'D' => new Perms_Resolver_Default(false),
-						'E' => new Perms_Resolver_Default(true),
+						'test:A' => new Perms_Resolver_Default(true),
+						'test:B' => new Perms_Resolver_Default(true),
+						'test:C' => new Perms_Resolver_Default(false),
+						'test:D' => new Perms_Resolver_Default(false),
+						'test:E' => new Perms_Resolver_Default(true),
 					)
 				),
 			)
@@ -228,7 +228,7 @@ class Perms_BaseTest extends TikiTestCase
 		Perms::set($perms);
 
 		$mock->expects($this->once())
-			->method('getResolver')
+			->method('getHash')
 			->with($this->equalTo(array('type' => 'wiki page', 'object' => 'Hello World', 'creator' => 'admin')))
 			->will($this->returnValue(null));
 		$mock->expects($this->once())
