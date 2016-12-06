@@ -45,7 +45,7 @@ class Tiki_Profile_Writer_SearchFieldHelper
 
 		if (isset($args['content'], $args['field'])) {
 			// Expect all fields to be compatible, use the first one
-			$field = reset(explode(',', $args['field']));
+			$field = explode(',', $args['field'])[0];
 			if ($type = $this->getTypeForField($field)) {
 				$args['content'] = Tiki_Profile_Writer_Helper::uniform_string($type, $writer, $args['content']);
 			}
@@ -53,6 +53,18 @@ class Tiki_Profile_Writer_SearchFieldHelper
 
 		if (isset($args['relation'], $args['objecttype'])) {
 			$args['relation'] = Tiki_Profile_Writer_Helper::uniform_string($args['objecttype'], $writer, $args['relation']);
+		}
+
+		return $args;
+	}
+
+	function replaceStepReferences(Tiki_Profile_Writer $writer, $args) {
+		if( isset($args['action'], $args['field'], $args['value']) && $args['action'] == 'tracker_item_modify' ) {
+			$trklib = TikiLib::lib('trk');
+			$field = $trklib->get_field_by_perm_name($args['field']);
+			if( $field && isset($field['type']) && $field['type'] == 'e' ) { // category field
+				$args['value'] = Tiki_profile_Writer_Helper::uniform_string('category', $writer, $args['value']);
+			}
 		}
 
 		return $args;

@@ -101,7 +101,7 @@ class Tiki_Profile_Writer_Helper
 		return self::uniform_string('tracker_field', $writer, $value);
 	}
 
-	public function uniform_string($type, Tiki_Profile_Writer $writer, $value)
+	public static function uniform_string($type, Tiki_Profile_Writer $writer, $value)
 	{
 		return preg_replace_callback(
 			'/(\d+)/',
@@ -133,6 +133,12 @@ class Tiki_Profile_Writer_Helper
 			if ($name === 'filter') {
 				$args = $dataSource->replaceFilterReferences($writer, $args);
 				$match->replaceWithPlugin('filter', $args, $match->getBody());
+				$justReplaced = true;
+			}
+
+			if( $name === 'step' ) {
+				$args = $dataSource->replaceStepReferences($writer, $args);
+				$match->replaceWithPlugin('step', $args, $match->getBody());
 				$justReplaced = true;
 			}
 		}

@@ -158,6 +158,9 @@ class Tiki_Profile_Writer
 	 */
 	function removeUnknown($type, $id, $replacement)
 	{
+		if( !is_array($this->data['unknown_objects']) ) {
+			return;
+		}
 		foreach ($this->data['unknown_objects'] as $key => $entry) {
 			if ($entry['type'] == $type && $entry['id'] == $id) {
 				$token = $entry['token'];
