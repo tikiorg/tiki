@@ -330,9 +330,10 @@ class UsersLib extends TikiLib
 
 		if ($prefs['auth_method'] === 'ws') {
 			header('Location: ' . str_replace('//', '//admin:@', $url)); // simulate a fake login to logout the user
+		} else {
+			header('Location: ' . $url);
 		}
 
-		header('Location: ' . $url);
 		return;
 	}
 
@@ -746,12 +747,12 @@ class UsersLib extends TikiLib
 
 						foreach($group_values as $group_value) {
 							if (isset($prefs['saml_groupmap_admins']) && !empty($prefs['saml_groupmap_admins'])) {
-								if (strpos($prefs['saml_groupmap_admins'], $group_value) !== false) {
+								if (strcasecmp($prefs['saml_groupmap_admins'], $group_value) == 0) {
 									$saml_groups[] = "Admins";
 								}
 							}
 							if (isset($prefs['saml_groupmap_registered']) && !empty($prefs['saml_groupmap_registered'])) {
-								if (strpos($prefs['saml_groupmap_registered'], $group_value) !== false) {
+								if (strcasecmp($prefs['saml_groupmap_registered'], $group_value) == 0) {
 									$saml_groups[] = "Registered";
 								}
 							}
@@ -1145,9 +1146,7 @@ class UsersLib extends TikiLib
 		global $prefs, $base_url;
 
 		$clicked_on_saml_link = false;
-		ini_set('display_errors', 1);
-		ini_set('display_startup_errors', 1);
-		error_reporting(E_ALL);
+
 		// Check endpoints
 		if (array_key_exists('auth', $_REQUEST) && $_REQUEST['auth'] == 'saml') {
 			$saml_instance = $this->get_saml_auth();
@@ -1171,7 +1170,12 @@ class UsersLib extends TikiLib
 		else if (array_key_exists('saml_acs', $_REQUEST)) {
 			$clicked_on_saml_link = true;
 			$saml_instance = $this->get_saml_auth();
-			$saml_instance->processResponse();
+			try {
+				$saml_instance->processResponse();
+			} catch (Exception $e) {
+				print_r($e->getMessage());
+				exit();
+			}
 			$errors = $saml_instance->getErrors();
 			if (!empty($errors)) {
 				print_r('<p>'.implode(', ', $errors).'</p>');
@@ -1193,7 +1197,12 @@ class UsersLib extends TikiLib
 		} else if (array_key_exists('saml_sls', $_REQUEST)) {
 			$saml_instance = $this->get_saml_auth();
 
-			$saml_instance->processSLO(false);
+			try {
+				$saml_instance->processSLO(false);
+			} catch (Exception $e) {
+				print_r($e->getMessage());
+				exit();
+			}
 			$errors = $saml_instance->getErrors();
 			if (!empty($errors)) {
 				print_r('<p>'.implode(', ', $errors).'</p>');
