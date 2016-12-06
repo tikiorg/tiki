@@ -121,8 +121,14 @@ class OIntegrate
 		$response->schemaDocumentation = $httpResponse->getHeaders()->get('OIntegrate-SchemaDocumentation');
 
 		global $prefs;
-		// Respect cache duration asked for
-		$maxage = $cacheControl->getDirective('max-age');
+		if (empty($cacheControl)) {
+			$maxage = 0;
+			$nocache = false;
+		} else {
+			// Respect cache duration and no-cache asked for
+			$maxage = $cacheControl->getDirective('max-age');
+			$nocache = $cacheControl->getDirective('no-cache');
+		}
 		if ( $maxage ) {
 			$expiry = time() + $maxage;
 
@@ -131,7 +137,7 @@ class OIntegrate
 				serialize(array('expires' => $expiry, 'data' => $response))
 			);
 		// Unless service specifies not to cache result, apply a default cache
-		} elseif ( $cacheControl->getDirective('no-cache') !== null && $prefs['webservice_consume_defaultcache'] > 0 ) {
+		} elseif ( $nocache !== null && $prefs['webservice_consume_defaultcache'] > 0 ) {
 			$expiry = time() + $prefs['webservice_consume_defaultcache'];
 
 			$cachelib->cacheItem($url, serialize(array('expires' => $expiry, 'data' => $response)));
