@@ -34,7 +34,7 @@ class Perms_ResolverFactory_TestFactory implements Perms_ResolverFactory
 			}
 		}
 
-		return implode(':', $parts);
+		return 'test:'.implode(':', $parts);
 	}
 
 	function getResolver( array $context )

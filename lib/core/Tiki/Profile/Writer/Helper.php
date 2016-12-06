@@ -78,6 +78,17 @@ class Tiki_Profile_Writer_Helper
 					$body = $writer->getReference($info['profile_reference'], $body);
 				}
 
+				if( $pluginName == 'jq') {
+					// Handle ins_FIELDID JQ references
+					$body = preg_replace_callback(
+						'/ins_(\d+)/',
+						function ($args) use ($writer) {
+							return 'ins_' . $writer->getReference('tracker_field', $args[1]);
+						},
+						$body
+					);
+				}
+
 				$match->replaceWithPlugin($pluginName, $params, $body);
 				$justReplaced = true;
 			}
@@ -101,7 +112,7 @@ class Tiki_Profile_Writer_Helper
 		return self::uniform_string('tracker_field', $writer, $value);
 	}
 
-	public function uniform_string($type, Tiki_Profile_Writer $writer, $value)
+	public static function uniform_string($type, Tiki_Profile_Writer $writer, $value)
 	{
 		return preg_replace_callback(
 			'/(\d+)/',
@@ -133,6 +144,12 @@ class Tiki_Profile_Writer_Helper
 			if ($name === 'filter') {
 				$args = $dataSource->replaceFilterReferences($writer, $args);
 				$match->replaceWithPlugin('filter', $args, $match->getBody());
+				$justReplaced = true;
+			}
+
+			if( $name === 'step' ) {
+				$args = $dataSource->replaceStepReferences($writer, $args);
+				$match->replaceWithPlugin('step', $args, $match->getBody());
 				$justReplaced = true;
 			}
 		}
