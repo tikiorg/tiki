@@ -78,6 +78,17 @@ class Tiki_Profile_Writer_Helper
 					$body = $writer->getReference($info['profile_reference'], $body);
 				}
 
+				if( $pluginName == 'jq') {
+					// Handle ins_FIELDID JQ references
+					$body = preg_replace_callback(
+						'/ins_(\d+)/',
+						function ($args) use ($writer) {
+							return 'ins_' . $writer->getReference('tracker_field', $args[1]);
+						},
+						$body
+					);
+				}
+
 				$match->replaceWithPlugin($pluginName, $params, $body);
 				$justReplaced = true;
 			}
