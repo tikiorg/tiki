@@ -166,7 +166,13 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 		$baseKey = $this->getBaseKey();
 		$value = json_decode($this->getValue(), true);
 
-		$value = isset($value['result']) ? $value['result'] : [];
+		if (isset($value['result'])) {
+			$value = $value['result'];
+		} else if (isset($value['data'])) {
+			$value = $value['data'];
+		} else {
+			$value = [];
+		}
 
 		return array(
 			$baseKey => $typeFactory->multivalue(array_filter($value, 'is_string')),
