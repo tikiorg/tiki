@@ -131,7 +131,7 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 
 			$response->data['tiki_updated'] = gmdate('c');
 
-			if ((empty($context['search_render']) || $context['search_render'] !== 'y') && $response->data['status'] === 'OK') {
+			if ((empty($context['search_render']) || $context['search_render'] !== 'y') && ($response->data['status'] === 'OK' || $response->data['hasErrors'] === false)) {
 				$thisField = $definition->getField($this->getConfiguration('fieldId'));
 				$thisField['value'] = json_encode($response->data);
 
