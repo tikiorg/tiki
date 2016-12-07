@@ -256,6 +256,7 @@ function wikiplugin_trackerlist_info()
 				 'since' => '1',
 				 'filter' => 'word',
 				 'default' => '',
+				 'profile_reference' => 'tracker_field_string',
 			 ),
 			 'sortchoice' => array(
 				 'required' => false,
