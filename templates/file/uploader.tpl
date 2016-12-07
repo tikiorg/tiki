@@ -17,7 +17,7 @@
 
 			<input type="file" name="file[]" {if $limit !== 1}multiple{/if} {if $typeFilter}accept="{$typeFilter|escape}"{/if} />
 			<p class="drop-message text-center">
-				{tr}Or drop files here from your file manager.{/tr}
+				{if $limit !== 1}{tr}Or drop files here from your file manager.{/tr}{else}{tr}Or drop file here from your file manager.{/tr}{/if}
 			</p>
 		</form>
 		<form class="file-uploader-result" method="post" action="{service controller=file action=uploader galleryId=$galleryId}">
@@ -41,7 +41,7 @@
 			<input type="file" name="file[]" {if $limit !== 1}multiple{/if} {if $typeFilter}accept="{$typeFilter|escape}"{/if} />
            
 			<p class="drop-message text-center">
-				{tr}Or drop files here from your file manager.{/tr}
+				{if $limit !== 1}{tr}Or drop files here from your file manager.{/tr}{else}{tr}Or drop file here from your file manager.{/tr}{/if}
 			</p>
 		</div>
 
