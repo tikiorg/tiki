@@ -15,7 +15,7 @@
 			</div>
             {if $image_max_size_x || $image_max_size_y }{remarksbox type="note" title="{tr}Note{/tr}"}{tr}Images will be resized to {if $image_max_size_x} {$image_max_size_x}px in width{/if}{if $image_max_size_y}  and {$image_max_size_y}px in height{/if} {/tr}{/remarksbox}{else}{remarksbox type="note" title="{tr}Note{/tr}"}{tr}Images will not be resized, for resizing edit this tracker field and set image max width and height in "Options for files" section.{/tr}{/remarksbox}{/if}
 
-			<input type="file" name="file[]" {if $limit gt 1}multiple{/if} {if $typeFilter}accept="{$typeFilter|escape}"{/if} />
+			<input type="file" name="file[]" {if $limit !== 1}multiple{/if} {if $typeFilter}accept="{$typeFilter|escape}"{/if} />
 			<p class="drop-message text-center">
 				{tr}Or drop files here from your file manager.{/tr}
 			</p>
@@ -38,7 +38,7 @@
 				</div>
 			</div>
                         {if $image_max_size_x || $image_max_size_y }{remarksbox type="note" title="{tr}Note{/tr}"}{tr}Images will be resized to {if $image_max_size_x} {$image_max_size_x}px in width{/if}{if $image_max_size_y}  and {$image_max_size_y}px in height{/if} {/tr}{/remarksbox}{else}{remarksbox type="note" title="{tr}Note{/tr}"}{tr}Images will not be resized, for resizing edit this tracker field and set image max width and height in "Options for files" section.{/tr}{/remarksbox}{/if}
-			<input type="file" name="file[]" {if $limit gt 1}multiple{/if} {if $typeFilter}accept="{$typeFilter|escape}"{/if} />
+			<input type="file" name="file[]" {if $limit !== 1}multiple{/if} {if $typeFilter}accept="{$typeFilter|escape}"{/if} />
            
 			<p class="drop-message text-center">
 				{tr}Or drop files here from your file manager.{/tr}
