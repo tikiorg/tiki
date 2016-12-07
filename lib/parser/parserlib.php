@@ -1563,6 +1563,9 @@ if ( \$('#$id') ) {
 			}
 		}
 
+		// remove tiki comments first
+		$data = preg_replace(';~tc~(.*?)~/tc~;s', '', $data);
+
 		$this->parse_wiki_argvariable($data);
 
 		/* <x> XSS Sanitization handling */
@@ -1596,8 +1599,7 @@ if ( \$('#$id') ) {
 			$data = preg_replace("#(?<!<!|//)--([^\s>].+?)--#", "<strike>$1</strike>", $data);
 		}
 
-		// Handle comment sections
-		$data = preg_replace(';~tc~(.*?)~/tc~;s', '', $data);
+		// Handle html comment sections
 		$data = preg_replace(';~hc~(.*?)~/hc~;s', '<!-- $1 -->', $data);
 
 		// Replace special characters
