@@ -104,15 +104,15 @@ class Tiki_Profile_Writer_Helper
 			$content
 		);
 
-		// handle [links] plugin_tracker field references
+		// handle [links] plugin_tracker references
 		if( $info = $parserlib->plugin_info('tracker') ) {
 			$info['params']['prefills'] = array('profile_reference' => 'tracker_field');
 			foreach( $info['params'] as $paramName => $paramInfo ) {
-				if( isset($paramInfo['profile_reference']) && $paramInfo['profile_reference'] == 'tracker_field' ) {
+				if( isset($paramInfo['profile_reference']) && in_array($paramInfo['profile_reference'], array('tracker_field', 'tracker')) ) {
 					$content = preg_replace_callback(
 						"/(?<!\[)(\[[^\]]+\b)($paramName=((\d+:?)+))([^\]]+\])/",
-						function ($args) use ($writer, $paramName) {
-							return $args[1]."$paramName=".self::tracker_field_string($writer, $args[3]).array_pop($args);
+						function ($args) use ($writer, $paramName, $paramInfo) {
+							return $args[1]."$paramName=".self::uniform_string($paramInfo['profile_reference'], $writer, $args[3]).array_pop($args);
 						},
 						$content
 					);
