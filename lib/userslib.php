@@ -6958,7 +6958,7 @@ class UsersLib extends TikiLib
 
 
 		if ($prefs['pass_chr_special'] == 'y') {
-			if (!preg_match_all('/[0-9a-z]+/', $char)) {
+			if (preg_match_all('/^[0-9a-z]+$/', $pass) > 0) {
                 $errors[] = tra('Password must contain at least one special character in lower case like " / $ % ? & * ( ) _ + ...');
 			}
 		}
