@@ -1,7 +1,7 @@
 {* $Id$ *}
 <div class="actions">
 	<input type="hidden" name="no_bl" value="y">
-	<input type="submit" class="wikiaction btn btn-default" title="{tr}Preview your changes.{/tr}" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
+	<input type="submit" class="wikiaction btn btn-default previewBtn" title="{tr}Preview your changes.{/tr}" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;">
 	{if $prefs.feature_wikilingo eq "y"}
 		{if $wysiwyg eq 'y'}
 			{jq}
@@ -34,18 +34,6 @@
 						$doc.trigger('saveWikiLingo', [false, $('#editwiki').trigger('sync').val(), $('#editpageform')]);
 						return false;
 					}
-				});
-			{/jq}
-		{/if}
-	{else}
-		{if $prefs.ajax_autosave eq "y"}
-			{jq}
-				$("input[name=preview]").click(function(){
-					auto_save('editwiki');
-					if (!ajaxPreviewWindow) {
-						$('#autosave_preview').slideDown('slow', function(){ ajax_preview( 'editwiki', autoSaveId, true );});
-					}
-					return false;
 				});
 			{/jq}
 		{/if}

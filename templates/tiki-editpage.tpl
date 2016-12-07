@@ -44,13 +44,15 @@
 			{/if}
 		{else}
 			{jq} $(".previewBtn").click(function(){
+				auto_save('editwiki', autoSaveId);
 				if ($('#autosave_preview:visible').length === 0) {
-					auto_save('editwiki', autoSaveId);
 					if (!ajaxPreviewWindow) {
+						setCookie("preview_diff_style", "", "preview", "session");
+						$("#preview_diff_style").val("").trigger("chosen:updated");
 						$('#autosave_preview').slideDown('slow', function(){ ajax_preview( 'editwiki', autoSaveId, true );});
 					}
 				} else {
-					$('#autosave_preview').slideUp('slow');
+					ajax_preview( 'editwiki', autoSaveId, true );
 				}
 				return false;
 			});{/jq}
