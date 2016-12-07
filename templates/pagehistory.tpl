@@ -1,4 +1,4 @@
-{if (!empty($diff_style) and $old and $new or $diffdata) && $old.version !== $new.version}
+{if not empty($diff_style) and (($old and $new && $old.version !== $new.version) or not empty($diffdata))}
 	{if (not isset($translation_mode) or $translation_mode ne 'y') and empty($hide_version_info)}
 		<h2>{tr}Comparing version {$old.version} with version {$new.version}{/tr}</h2>
 	{/if}
@@ -103,7 +103,7 @@
 			{/if}
 		</table>
 	</div>
-	{if $prefs.wikiplugin_wikidiff eq 'y'}
+	{if $prefs.wikiplugin_wikidiff eq 'y' and $old}
 		{remarksbox type='tip' title='{tr}Example wikidiff plugin syntax{/tr}'}
 			<code>{ldelim}wikidiff object_id="{$page}" oldver="{$old.version}" newver="{$new.version}" diff_style="{$diff_style}" show_version_info="{if empty($hide_version_info)}y{else}n{/if}"{rdelim}</code>
 		{/remarksbox}

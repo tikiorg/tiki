@@ -152,7 +152,8 @@ class Services_Edit_Controller
 					$data = diff2($diffold, $diffnew, $diffstyle);
 					$smarty->assign_by_ref('diffdata', $data);
 
-					$smarty->assign('translation_mode', 'y');
+					$smarty->assign('translation_mode', 'y');	// disables the headings etc
+					$smarty->assign('show_version_info', 'n');	// disables the headings etc
 					$data = $smarty->fetch('pagehistory.tpl');
 				} else {
 					$data = $tikilib->parse_data($data, $options);
@@ -178,7 +179,7 @@ $(window).on("load", function(){
 '
 				);
 				$smarty->assign('headtitle', tra('Preview'));
-				$data = '<div id="c1c2"><div id="wrapper"><div id="col1"><div id="tiki-center" class="wikitext">';
+				$data = '<div class="container"><div class="row row-middle"><div class="col-sm-12"><div class="wikitext">';
 				if (TikiLib::lib('autosave')->has_autosave($input->editor_id->text(), $input->autoSaveId->text())) {
 					$parserlib = TikiLib::lib('parser');
 					$data .= $parserlib->parse_data(
@@ -200,7 +201,7 @@ $(window).on("load", function(){
 				$_SERVER['HTTP_X_REQUESTED_WITH'] = 'xmlhttprequest';	// to fool Services_Broker into putputting full page
 			}
 
-			if ($prefs['feature_wiki_footnotes']) {
+			if ($prefs['feature_wiki_footnotes'] === 'y') {
 
 				$footnote = $input->footnote->text();
 				if ($footnote) {
