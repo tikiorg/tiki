@@ -227,6 +227,20 @@ function wikiplugin_trackerlist_info()
 					 array('text' => tra('No'), 'value' => 'n')
 				 )
 			 ),
+			 'showcomments' => array(
+				 'required' => false,
+				 'name' => tra('Show Comments'),
+				 'description' => tra('Show comments count or last comment date and user depending on tracker preferences'),
+				 'since' => '16.0',
+				 'doctype' => 'show',
+				 'filter' => 'alpha',
+				 'default' => 'y',
+				 'options' => array(
+					 array('text' => '', 'value' => ''),
+					 array('text' => tra('Yes'), 'value' => 'y'),
+					 array('text' => tra('No'), 'value' => 'n')
+				 )
+			 ),
 			 'status' => array(
 				 'required' => false,
 				 'name' => tra('Status Filter'),
@@ -1399,6 +1413,10 @@ function wikiplugin_trackerlist($data, $params)
 			$showpagination = 'y';
 		}
 		$smarty->assign_by_ref('showpagination', $showpagination);
+		if (!isset($showcomments)) {
+			$showcomments = 'y';
+		}
+		$smarty->assign_by_ref('showcomments', $showcomments);
 		if (!isset($sortchoice)) {
 			$sortchoice = '';
 		} else {
@@ -2048,7 +2066,7 @@ function wikiplugin_trackerlist($data, $params)
 				}
 			}
 			
-			if (!empty($items['data']) && ($definition->isEnabled('useComments') && $definition->isEnabled('showComments') || $definition->isEnabled('showLastComment') )) {
+			if (!empty($items['data']) && $showcomments != 'n' && ($definition->isEnabled('useComments') && $definition->isEnabled('showComments') || $definition->isEnabled('showLastComment') )) {
 				foreach ($items['data'] as $itkey=>$oneitem) {
 					if ($definition->isEnabled('showComments')) {
 						$items['data'][$itkey]['comments'] = $trklib->get_item_nb_comments($items['data'][$itkey]['itemId']);
