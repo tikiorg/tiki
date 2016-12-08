@@ -1,3 +1,5 @@
+Most icons directly in this directory are part of the Silk icon set. The icons in this set are 16 pixels high and wide and in the PNG format. The contents of Silk's "README" file follow.
+--------------------------------------------------------
 Silk icon set 1.3
 
 _________________________________________
