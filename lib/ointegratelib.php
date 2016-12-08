@@ -220,8 +220,7 @@ class OIntegrate_Response
 	public $contentType = null;
 	public $cacheControl = null;
 	public $data;
-
-	private $errors = array();
+	public $errors = array();
 
     /**
      * @param $data
