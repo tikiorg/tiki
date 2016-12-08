@@ -31,20 +31,26 @@ class Search_Action_EmailAction implements Search_Action_Action
 		try {
 			$mail = tiki_get_admin_mail();
 
-			if ($replyto = $data->replyto->email()) {
+			if ($replyto = $this->dereference($data->replyto->text())) {
 				$mail->setReplyTo($replyto);
 			}
 
-			foreach ($data->to->email() as $to) {
-				$mail->addTo($this->stripNp($to));
+			foreach ($data->to->text() as $to) {
+				if( $to = $this->dereference($to) ) {
+					$mail->addTo($to);
+				}
 			}
 
-			foreach ($data->cc->email() as $cc) {
-				$mail->addCc($this->stripNp($cc));
+			foreach ($data->cc->text() as $cc) {
+				if( $cc = $this->dereference($cc) ) {
+					$mail->addCc($cc);
+				}
 			}
 
-			foreach ($data->bcc->email() as $bcc) {
-				$mail->addBcc($this->stripNp($bcc));
+			foreach ($data->bcc->text() as $bcc) {
+				if( $bcc = $this->dereference($bcc) ) {
+					$mail->addBcc($bcc);
+				}
 			}
 
 			$content = $this->parse($data->content->none());
@@ -87,6 +93,18 @@ class Search_Action_EmailAction implements Search_Action_Action
 	private function stripNp($content)
 	{
 		return str_replace(array('~np~', '~/np~'), '', $content);
+	}
+
+	private function dereference($email_or_username) {
+		if( empty($email_or_username) ) {
+			return null;
+		}
+		$email_or_username = $this->stripNp($email_or_username);
+		if( strstr($email_or_username, '@') ) {
+			return $email_or_username;
+		} else {
+			return TikiLib::lib('user')->get_user_email($email_or_username);
+		}
 	}
 }
 
