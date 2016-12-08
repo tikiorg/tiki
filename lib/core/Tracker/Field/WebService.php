@@ -66,15 +66,22 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 	function renderOutput($context = array())
 	{
 
-		if (!$this->getOption('service') || !$this->getOption('template')) {
+		$name = $this->getOption('service');
+		$tpl = $this->getOption('template');
+
+		if (!$name || !$tpl) {
 			return false;
 		}
 
 		require_once 'lib/webservicelib.php';
 
-		if (!($webservice = Tiki_Webservice::getService($this->getOption('service')))  ||
-			!($template = $webservice->getTemplate($this->getOption('template'))) ) {
-				return false;
+		if (!($webservice = Tiki_Webservice::getService($name))) {
+			Feedback::error(tr('Webservice %0 not found', $name), 'session');
+			return false;
+		}
+		if (! $template = $webservice->getTemplate($tpl)) {
+			Feedback::error(tr('Webservice template %0 not found', $tpl), 'session');
+			return false;
 		}
 
 		$oldValue = $this->getValue();
@@ -129,9 +136,32 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 
 			$response = $webservice->performRequest($ws_params);
 
-			$response->data['tiki_updated'] = gmdate('c');
+			// deal with various types of error coming from different types of webservice
+			$error = '';
+			if ($response->errors) {
+				$error = implode(',', $response->errors);
+			} else if (! empty($response->data['error'])) {
+				if (isset($response->data['error']['message'])) {
+					$error = $response->data['error']['message'];	// e.g. facebook graph api
+				} else {
+					$error = $response->data['error'];
+				}
+			} else if (isset($response->data['status']) && $response->data['status'] !== 'OK') {
+				$error = $response->data['status'];					// e.g. google places api
+			} else if (!empty($response->data['hasErrors'])) {
+				if (!empty($response->data['errorCode'])) {			// others
+					$error = tr('Unknown webservice error (code: %0)', $response->data['errorCode']);
+				} else {
+					$error = tr('Unknown webservice error');
+				}
+			}
+			if ($error) {
+				Feedback::error($error, 'session');
 
-			if ((empty($context['search_render']) || $context['search_render'] !== 'y') && ($response->data['status'] === 'OK' || $response->data['hasErrors'] === false)) {
+			} else if (empty($context['search_render']) || $context['search_render'] !== 'y') {
+
+				$response->data['tiki_updated'] = gmdate('c');
+
 				$thisField = $definition->getField($this->getConfiguration('fieldId'));
 				$thisField['value'] = json_encode($response->data);
 
@@ -152,9 +182,8 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 		if (! $itemId) {
 			$response = OIntegrate_Response::create($oldData, false);
 			unlink($template->getTemplateFile());
-			$template = $webservice->getTemplate($this->getOption('template'));
+			$template = $webservice->getTemplate($tpl);
 		}
-
 
 		$output = $template->render($response, 'html');
 
@@ -171,7 +200,7 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 		} else if (isset($value['data'])) {
 			$value = $value['data'];
 		} else {
-			$value = [];
+			unset($value['tiki_updated']);	// index the whole response
 		}
 
 		return array(
