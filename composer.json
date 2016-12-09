@@ -55,6 +55,7 @@
 		"jquery/plugins/timeago": ">=1.4.3",
 		"jquery/plugins/treetable": "3.2.0",
 		"jquery/plugins/zoom": "1.7.18",
+		"matthiasmullie/minify": "~1.3",
 		"mediumjs/mediumjs": "1.0.1",
 		"michelf/php-smartypants": "1.8.0",
 		"morteza/bootstrap-rtl": "3.3.2",

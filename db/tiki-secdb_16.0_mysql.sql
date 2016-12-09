@@ -2106,8 +2106,6 @@ INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/mime/mimetypes.php', 'c5966fdedccd2c91c3cfaa129ced4278', '16.0', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/minical/index.php', 'c01433db61bc628e392d9f864a6342f3', '16.0', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/minical/minicallib.php', 'dcd00011e1d043e5083344f86803e8af', '16.0', 0);
-INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/minify/JSMin.php', 'fb980778f519bdaf0ce71bff534c22a1', '16.0', 0);
-INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/minify/index.php', '906cfa2fc80569b6548c6efc8fac3e3d', '16.0', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/mods/index.php', '5111f80e87662c342fbe7b6d41bf172d', '16.0', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/mods/modslib.php', '6438c30a8c7a46fa538e2c3b6b6344ce', '16.0', 0);
 INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('./lib/modules/index.php', '5111f80e87662c342fbe7b6d41bf172d', '16.0', 0);
