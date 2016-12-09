@@ -19,14 +19,20 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	exit;
 }
 
-// Deprecated in favor of key_get($area)
+/**
+ * @param $area
+ * @deprecated in favor of key_get($area)
+ */
 function ask_ticket($area)
 {
 	$_SESSION['antisurf'] = $area;
 	return true;
 }
 
-// Deprecated in favor of key_check($area)
+/**
+ * @param $area
+ * @deprecated in favor of key_check($area)
+ */
 function check_ticket($area)
 {
 	if (!isset($_SESSION['antisurf'])) {
@@ -49,7 +55,7 @@ function check_ticket($area)
 	return true;
 }
 
-// new valid functions for ticketing:
+// newer valid functions for ticketing:
 // * @param string $area is not used any longer
 function key_get($area = null, $confirmation_text = '', $confirmaction = '',  $returnHtml = true)
 {
