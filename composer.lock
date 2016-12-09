@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9824ab12afb100a71f78e0f3f457765f",
-    "content-hash": "cda841040dabe3801f87b2a20706befd",
+    "hash": "0cec51bcfaf352a4a61d64e7882f7ab3",
+    "content-hash": "14822ac052b691fdb5a3ceca29e9b7cd",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -95,17 +95,17 @@
         },
         {
             "name": "blueimp/jquery-file-upload",
-            "version": "v9.14.1",
+            "version": "v9.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vkhramtsov/jQuery-File-Upload.git",
-                "reference": "71d67a9c277e29efcf5935cd2409009c0f841a57"
+                "reference": "47572698d781eff2ec7127484d8291f951808d61"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/blueimp-jquery-file-upload-71d67a9c277e29efcf5935cd2409009c0f841a57-zip-79e976.zip",
-                "reference": "71d67a9c277e29efcf5935cd2409009c0f841a57",
-                "shasum": "64b3d0d12c838fb9c71bb70dd5bc3e972da258ff"
+                "url": "https://composer.tiki.org/dist/blueimp-jquery-file-upload-47572698d781eff2ec7127484d8291f951808d61-zip-e882bd.zip",
+                "reference": "47572698d781eff2ec7127484d8291f951808d61",
+                "shasum": "8dbf184395c5ae9f29df22b0bc0627869d4cfc3b"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -141,21 +141,21 @@
                 "upload",
                 "widget"
             ],
-            "time": "2016-11-21 05:38:19"
+            "time": "2016-11-03 09:01:26"
         },
         {
             "name": "ckeditor/ckeditor",
-            "version": "4.6.1",
+            "version": "4.5.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ckeditor/ckeditor-releases.git",
-                "reference": "075b649ec6b160ae9fe78c393dca28024bb7aa14"
+                "reference": "48155a1e1c7e84736b5a166ad3f33acea2a51255"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/075b649ec6b160ae9fe78c393dca28024bb7aa14",
-                "reference": "075b649ec6b160ae9fe78c393dca28024bb7aa14",
-                "shasum": ""
+                "url": "https://composer.tiki.org/dist/ckeditor-ckeditor-48155a1e1c7e84736b5a166ad3f33acea2a51255-zip-b8a8cf.zip",
+                "reference": "48155a1e1c7e84736b5a166ad3f33acea2a51255",
+                "shasum": "e80c36fb70ee82e2826ddd0c7ae8af9469d608fc"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -182,7 +182,7 @@
                 "text",
                 "wysiwyg"
             ],
-            "time": "2016-12-08 15:32:52"
+            "time": "2016-09-07 13:32:39"
         },
         {
             "name": "ckeditor/ckeditor/plugins/divarea",
@@ -999,112 +999,6 @@
             "type": "library"
         },
         {
-            "name": "matthiasmullie/minify",
-            "version": "1.3.42",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/matthiasmullie/minify.git",
-                "reference": "b473affbb76ae6ec4e46d368b5081b5bfcdd3ed2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/b473affbb76ae6ec4e46d368b5081b5bfcdd3ed2",
-                "reference": "b473affbb76ae6ec4e46d368b5081b5bfcdd3ed2",
-                "shasum": ""
-            },
-            "require": {
-                "ext-pcre": "*",
-                "matthiasmullie/path-converter": "~1.0",
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "~1.0",
-                "matthiasmullie/scrapbook": "~1.0",
-                "phpunit/phpunit": "~4.8"
-            },
-            "bin": [
-                "bin/minifycss",
-                "bin/minifyjs"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "MatthiasMullie\\Minify\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Matthias Mullie",
-                    "email": "minify@mullie.eu",
-                    "homepage": "http://www.mullie.eu",
-                    "role": "Developer"
-                }
-            ],
-            "description": "CSS & JS minifier",
-            "homepage": "http://www.minifier.org",
-            "keywords": [
-                "JS",
-                "css",
-                "javascript",
-                "minifier",
-                "minify"
-            ],
-            "time": "2016-11-23 10:16:14"
-        },
-        {
-            "name": "matthiasmullie/path-converter",
-            "version": "1.0.8",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/matthiasmullie/path-converter.git",
-                "reference": "7c36e5cafa95dd20008d19b153b506cffa8c2848"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/path-converter/zipball/7c36e5cafa95dd20008d19b153b506cffa8c2848",
-                "reference": "7c36e5cafa95dd20008d19b153b506cffa8c2848",
-                "shasum": ""
-            },
-            "require": {
-                "ext-pcre": "*",
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.8"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "MatthiasMullie\\PathConverter\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Matthias Mullie",
-                    "email": "pathconverter@mullie.eu",
-                    "homepage": "http://www.mullie.eu",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Relative path converter",
-            "homepage": "http://github.com/matthiasmullie/path-converter",
-            "keywords": [
-                "converter",
-                "path",
-                "paths",
-                "relative"
-            ],
-            "time": "2016-04-27 10:38:05"
-        },
-        {
             "name": "mediumjs/mediumjs",
             "version": "1.0.1",
             "source": {
@@ -1160,13 +1054,13 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/chartjs/Chart.js.git",
-                "reference": "152ce9c9f83e3678aee663ee250d7cda06bb3b99"
+                "reference": "efced4780ce2697d0d44bf1e32a4e2efebaa18e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/nnnick-chartjs-152ce9c9f83e3678aee663ee250d7cda06bb3b99-zip-ed0c2c.zip",
-                "reference": "152ce9c9f83e3678aee663ee250d7cda06bb3b99",
-                "shasum": "de292a3504e31ad50f58a94e500babc42b78b439"
+                "url": "https://composer.tiki.org/dist/nnnick-chartjs-efced4780ce2697d0d44bf1e32a4e2efebaa18e2-zip-6000f0.zip",
+                "reference": "efced4780ce2697d0d44bf1e32a4e2efebaa18e2",
+                "shasum": "41befc034a75901d443d6d6899ed8fff8cbcf4a8"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -1193,7 +1087,7 @@
                 "JS",
                 "chart"
             ],
-            "time": "2016-12-03 22:42:33"
+            "time": "2016-11-08 00:16:45"
         },
         {
             "name": "openlayers/ol3",
@@ -1583,17 +1477,17 @@
         },
         {
             "name": "studio-42/elfinder",
-            "version": "2.1.18",
+            "version": "2.1.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Studio-42/elFinder.git",
-                "reference": "4f8b5564d9dfaaa4b3693a5d09b20129c147a791"
+                "reference": "2b0d0db00079a652bcfb8ee4ad82720c5f6c33dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/studio-42-elfinder-4f8b5564d9dfaaa4b3693a5d09b20129c147a791-zip-bf4fdd.zip",
-                "reference": "4f8b5564d9dfaaa4b3693a5d09b20129c147a791",
-                "shasum": "dbe2ef4345b4881ef5ba4357db3e4159b2dd9337"
+                "url": "https://composer.tiki.org/dist/studio-42-elfinder-2b0d0db00079a652bcfb8ee4ad82720c5f6c33dc-zip-94c7de.zip",
+                "reference": "2b0d0db00079a652bcfb8ee4ad82720c5f6c33dc",
+                "shasum": "3ae1aa519b771e3a259eb43d66b67766fe903bb1"
             },
             "require": {
                 "php": ">=5.2"
@@ -1637,7 +1531,7 @@
             ],
             "description": "File manager for web",
             "homepage": "http://elfinder.org",
-            "time": "2016-11-21 12:44:59"
+            "time": "2016-10-11 04:44:07"
         },
         {
             "name": "svg-edit/svg-edit",
@@ -1817,7 +1711,7 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.8.14",
+            "version": "v2.8.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
@@ -4144,28 +4038,27 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "v1.6.2",
+            "version": "v1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "6c52c2722f8460122f96f86346600e1077ce22cb"
+                "reference": "58a8137754bc24b25740d4281399a4a3596058e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/6c52c2722f8460122f96f86346600e1077ce22cb",
-                "reference": "6c52c2722f8460122f96f86346600e1077ce22cb",
-                "shasum": ""
+                "url": "https://composer.tiki.org/dist/phpspec-prophecy-58a8137754bc24b25740d4281399a4a3596058e0-zip-b71cdf.zip",
+                "reference": "58a8137754bc24b25740d4281399a4a3596058e0",
+                "shasum": "b6303a152a186b73484a2d0651aab27e86dec428"
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
                 "php": "^5.3|^7.0",
                 "phpdocumentor/reflection-docblock": "^2.0|^3.0.2",
                 "sebastian/comparator": "^1.1",
-                "sebastian/recursion-context": "^1.0|^2.0"
+                "sebastian/recursion-context": "^1.0"
             },
             "require-dev": {
-                "phpspec/phpspec": "^2.0",
-                "phpunit/phpunit": "^4.8 || ^5.6.5"
+                "phpspec/phpspec": "^2.0"
             },
             "type": "library",
             "extra": {
@@ -4203,28 +4096,28 @@
                 "spy",
                 "stub"
             ],
-            "time": "2016-11-21 14:58:47"
+            "time": "2016-06-07 08:13:47"
         },
         {
             "name": "phpunit/dbunit",
-            "version": "2.0.3",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/dbunit.git",
-                "reference": "5c35d74549c21ba55d0ea74ba89d191a51f8cf25"
+                "reference": "390cefcb101e07e1d6400dbdfc3b90ecf2c1279f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/phpunit-dbunit-5c35d74549c21ba55d0ea74ba89d191a51f8cf25-zip-00f3ea.zip",
-                "reference": "5c35d74549c21ba55d0ea74ba89d191a51f8cf25",
-                "shasum": "7d64dd296d8e266e095fbe8376d6851a93fd86f9"
+                "url": "https://composer.tiki.org/dist/phpunit-dbunit-390cefcb101e07e1d6400dbdfc3b90ecf2c1279f-zip-e03a42.zip",
+                "reference": "390cefcb101e07e1d6400dbdfc3b90ecf2c1279f",
+                "shasum": "18bee3b56ab1129c5062e3c33f9041c3002dba1c"
             },
             "require": {
                 "ext-pdo": "*",
                 "ext-simplexml": "*",
-                "php": "^5.4 || ^7.0",
-                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0",
-                "symfony/yaml": "^2.1 || ^3.0"
+                "php": ">=5.4",
+                "phpunit/phpunit": "~4|~5",
+                "symfony/yaml": "~2.1|~3.0"
             },
             "bin": [
                 "dbunit"
@@ -4258,21 +4151,21 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-12-02 14:39:14"
+            "time": "2015-11-03 11:17:01"
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "4.0.3",
+            "version": "4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "903fd6318d0a90b4770a009ff73e4a4e9c437929"
+                "reference": "6cba06ff75a1a63a71033e1a01b89056f3af1e8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/phpunit-php-code-coverage-903fd6318d0a90b4770a009ff73e4a4e9c437929-zip-096537.zip",
-                "reference": "903fd6318d0a90b4770a009ff73e4a4e9c437929",
-                "shasum": "82da5c36ab7c4a8e8103067e74e1709aff6b3e22"
+                "url": "https://composer.tiki.org/dist/phpunit-php-code-coverage-6cba06ff75a1a63a71033e1a01b89056f3af1e8d-zip-9d5cbc.zip",
+                "reference": "6cba06ff75a1a63a71033e1a01b89056f3af1e8d",
+                "shasum": "49f44805f642d888b29c5186ae1c3af3ade652c6"
             },
             "require": {
                 "php": "^5.6 || ^7.0",
@@ -4321,21 +4214,21 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-11-28 16:00:31"
+            "time": "2016-11-01 05:06:24"
         },
         {
             "name": "phpunit/php-file-iterator",
-            "version": "1.4.2",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
-                "reference": "3cc8f69b3028d0f96a9078e6295d86e9bf019be5"
+                "reference": "6150bf2c35d3fc379e50c7602b75caceaa39dbf0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/phpunit-php-file-iterator-3cc8f69b3028d0f96a9078e6295d86e9bf019be5-zip-184bc9.zip",
-                "reference": "3cc8f69b3028d0f96a9078e6295d86e9bf019be5",
-                "shasum": "c37edfa89c213814606b2c8974df746b71cb9c98"
+                "url": "https://composer.tiki.org/dist/phpunit-php-file-iterator-6150bf2c35d3fc379e50c7602b75caceaa39dbf0-zip-a7b18d.zip",
+                "reference": "6150bf2c35d3fc379e50c7602b75caceaa39dbf0",
+                "shasum": "480c720a10e25120fc869bd72161d62aee4d1446"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -4368,7 +4261,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2016-10-03 07:40:28"
+            "time": "2015-06-21 13:08:43"
         },
         {
             "name": "phpunit/php-text-template",
@@ -4457,17 +4350,17 @@
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "1.4.9",
+            "version": "1.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "3b402f65a4cc90abf6e1104e388b896ce209631b"
+                "reference": "3144ae21711fb6cac0b1ab4cbe63b75ce3d4e8da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/phpunit-php-token-stream-3b402f65a4cc90abf6e1104e388b896ce209631b-zip-6915ed.zip",
-                "reference": "3b402f65a4cc90abf6e1104e388b896ce209631b",
-                "shasum": "21e248f20e30963b7e57c48d05b9092d77ca8668"
+                "url": "https://composer.tiki.org/dist/phpunit-php-token-stream-3144ae21711fb6cac0b1ab4cbe63b75ce3d4e8da-zip-cd5a07.zip",
+                "reference": "3144ae21711fb6cac0b1ab4cbe63b75ce3d4e8da",
+                "shasum": "bd09aac0b42f8aa0a1898580f433c85b859a943b"
             },
             "require": {
                 "ext-tokenizer": "*",
@@ -4502,21 +4395,21 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2016-11-15 14:06:22"
+            "time": "2015-09-15 10:49:45"
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.7.3",
+            "version": "5.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "de164acc2f2bb0b79beb892a36260264b2a03233"
+                "reference": "cd13b23ac5a519a4708e00736c26ee0bb28b2e01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/phpunit-phpunit-de164acc2f2bb0b79beb892a36260264b2a03233-zip-412a3d.zip",
-                "reference": "de164acc2f2bb0b79beb892a36260264b2a03233",
-                "shasum": "92768e9a0979a90ba894aeadf01ce784651f2f84"
+                "url": "https://composer.tiki.org/dist/phpunit-phpunit-cd13b23ac5a519a4708e00736c26ee0bb28b2e01-zip-53f60b.zip",
+                "reference": "cd13b23ac5a519a4708e00736c26ee0bb28b2e01",
+                "shasum": "48977134b29c95a1792c7b05794bb1e4e308fdfd"
             },
             "require": {
                 "ext-dom": "*",
@@ -4526,18 +4419,18 @@
                 "ext-xml": "*",
                 "myclabs/deep-copy": "~1.3",
                 "php": "^5.6 || ^7.0",
-                "phpspec/prophecy": "^1.6.2",
-                "phpunit/php-code-coverage": "^4.0.3",
+                "phpspec/prophecy": "^1.3.1",
+                "phpunit/php-code-coverage": "^4.0.1",
                 "phpunit/php-file-iterator": "~1.4",
                 "phpunit/php-text-template": "~1.2",
                 "phpunit/php-timer": "^1.0.6",
                 "phpunit/phpunit-mock-objects": "^3.2",
-                "sebastian/comparator": "~1.2.2",
+                "sebastian/comparator": "~1.1",
                 "sebastian/diff": "~1.2",
-                "sebastian/environment": "^1.3.4 || ^2.0",
-                "sebastian/exporter": "~2.0",
+                "sebastian/environment": "^1.3 || ^2.0",
+                "sebastian/exporter": "~1.2",
                 "sebastian/global-state": "~1.0",
-                "sebastian/object-enumerator": "~2.0",
+                "sebastian/object-enumerator": "~1.0",
                 "sebastian/resource-operations": "~1.0",
                 "sebastian/version": "~1.0|~2.0",
                 "symfony/yaml": "~2.1|~3.0"
@@ -4558,7 +4451,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.7.x-dev"
+                    "dev-master": "5.6.x-dev"
                 }
             },
             "autoload": {
@@ -4584,27 +4477,27 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-12-09 02:48:53"
+            "time": "2016-10-25 07:40:25"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "3.4.3",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "3ab72b65b39b491e0c011e2e09bb2206c2aa8e24"
+                "reference": "238d7a2723bce689c79eeac9c7d5e1d623bb9dc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/phpunit-phpunit-mock-objects-3ab72b65b39b491e0c011e2e09bb2206c2aa8e24-zip-3b7026.zip",
-                "reference": "3ab72b65b39b491e0c011e2e09bb2206c2aa8e24",
-                "shasum": "0f8e8c6ca6d72bed098016b8cd6c11ee4a993bb1"
+                "url": "https://composer.tiki.org/dist/phpunit-phpunit-mock-objects-238d7a2723bce689c79eeac9c7d5e1d623bb9dc2-zip-d45e80.zip",
+                "reference": "238d7a2723bce689c79eeac9c7d5e1d623bb9dc2",
+                "shasum": "6f1c3c70b658c7e5f34e597bac8f2d7a023ce2bd"
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
                 "php": "^5.6 || ^7.0",
                 "phpunit/php-text-template": "^1.2",
-                "sebastian/exporter": "^1.2 || ^2.0"
+                "sebastian/exporter": "^1.2"
             },
             "conflict": {
                 "phpunit/phpunit": "<5.4.0"
@@ -4643,7 +4536,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2016-12-08 20:27:08"
+            "time": "2016-10-09 07:01:45"
         },
         {
             "name": "phpunit/phpunit-selenium",
@@ -4756,22 +4649,22 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "1.2.2",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "6a1ed12e8b2409076ab22e3897126211ff8b1f7f"
+                "reference": "937efb279bd37a375bcadf584dec0726f84dbf22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/sebastian-comparator-6a1ed12e8b2409076ab22e3897126211ff8b1f7f-zip-60a9ca.zip",
-                "reference": "6a1ed12e8b2409076ab22e3897126211ff8b1f7f",
-                "shasum": "82a21a717edc081380b6196f6958fdd7798f7132"
+                "url": "https://composer.tiki.org/dist/sebastian-comparator-937efb279bd37a375bcadf584dec0726f84dbf22-zip-275d2d.zip",
+                "reference": "937efb279bd37a375bcadf584dec0726f84dbf22",
+                "shasum": "1aa14cfd8a708d531c8cb83e2371d40037253a70"
             },
             "require": {
                 "php": ">=5.3.3",
                 "sebastian/diff": "~1.2",
-                "sebastian/exporter": "~1.2 || ~2.0"
+                "sebastian/exporter": "~1.2"
             },
             "require-dev": {
                 "phpunit/phpunit": "~4.4"
@@ -4816,7 +4709,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2016-11-19 09:18:40"
+            "time": "2015-07-26 15:48:44"
         },
         {
             "name": "sebastian/diff",
@@ -4922,21 +4815,21 @@
         },
         {
             "name": "sebastian/exporter",
-            "version": "2.0.0",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/exporter.git",
-                "reference": "ce474bdd1a34744d7ac5d6aad3a46d48d9bac4c4"
+                "reference": "42c4c2eec485ee3e159ec9884f95b431287edde4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/ce474bdd1a34744d7ac5d6aad3a46d48d9bac4c4",
-                "reference": "ce474bdd1a34744d7ac5d6aad3a46d48d9bac4c4",
-                "shasum": ""
+                "url": "https://composer.tiki.org/dist/sebastian-exporter-42c4c2eec485ee3e159ec9884f95b431287edde4-zip-3c7575.zip",
+                "reference": "42c4c2eec485ee3e159ec9884f95b431287edde4",
+                "shasum": "c507b8c9965cf28e6862e267f69c34ebf14f7cde"
             },
             "require": {
                 "php": ">=5.3.3",
-                "sebastian/recursion-context": "~2.0"
+                "sebastian/recursion-context": "~1.0"
             },
             "require-dev": {
                 "ext-mbstring": "*",
@@ -4945,7 +4838,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev"
+                    "dev-master": "1.3.x-dev"
                 }
             },
             "autoload": {
@@ -4985,7 +4878,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2016-11-19 08:54:04"
+            "time": "2016-06-17 09:04:28"
         },
         {
             "name": "sebastian/global-state",
@@ -5040,21 +4933,21 @@
         },
         {
             "name": "sebastian/object-enumerator",
-            "version": "2.0.0",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/object-enumerator.git",
-                "reference": "96f8a3f257b69e8128ad74d3a7fd464bcbaa3b35"
+                "reference": "d4ca2fb70344987502567bc50081c03e6192fb26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/object-enumerator/zipball/96f8a3f257b69e8128ad74d3a7fd464bcbaa3b35",
-                "reference": "96f8a3f257b69e8128ad74d3a7fd464bcbaa3b35",
+                "url": "https://api.github.com/repos/sebastianbergmann/object-enumerator/zipball/d4ca2fb70344987502567bc50081c03e6192fb26",
+                "reference": "d4ca2fb70344987502567bc50081c03e6192fb26",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.6",
-                "sebastian/recursion-context": "~2.0"
+                "sebastian/recursion-context": "~1.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "~5"
@@ -5062,7 +4955,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev"
+                    "dev-master": "1.0.x-dev"
                 }
             },
             "autoload": {
@@ -5082,21 +4975,21 @@
             ],
             "description": "Traverses array structures and object graphs to enumerate all referenced objects",
             "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
-            "time": "2016-11-19 07:35:10"
+            "time": "2016-01-28 13:25:10"
         },
         {
             "name": "sebastian/recursion-context",
-            "version": "2.0.0",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/recursion-context.git",
-                "reference": "2c3ba150cbec723aa057506e73a8d33bdb286c9a"
+                "reference": "913401df809e99e4f47b27cdd781f4a258d58791"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/2c3ba150cbec723aa057506e73a8d33bdb286c9a",
-                "reference": "2c3ba150cbec723aa057506e73a8d33bdb286c9a",
-                "shasum": ""
+                "url": "https://composer.tiki.org/dist/sebastian-recursion-context-913401df809e99e4f47b27cdd781f4a258d58791-zip-205e4a.zip",
+                "reference": "913401df809e99e4f47b27cdd781f4a258d58791",
+                "shasum": "d9f2dd0fe3bb05617311a419fcb81dd246d348e6"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -5107,7 +5000,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev"
+                    "dev-master": "1.0.x-dev"
                 }
             },
             "autoload": {
@@ -5135,7 +5028,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2016-11-19 07:33:16"
+            "time": "2015-11-11 19:50:13"
         },
         {
             "name": "sebastian/resource-operations",
@@ -5216,31 +5109,25 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.2.0",
+            "version": "v3.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "f2300ba8fbb002c028710b92e1906e7457410693"
+                "reference": "7ff51b06c6c3d5cc6686df69004a42c69df09e27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/symfony-yaml-f2300ba8fbb002c028710b92e1906e7457410693-zip-5d35f8.zip",
-                "reference": "f2300ba8fbb002c028710b92e1906e7457410693",
-                "shasum": "44f9f7567a7b000f8dd545ec461d0ab14f03ddc9"
+                "url": "https://composer.tiki.org/dist/symfony-yaml-7ff51b06c6c3d5cc6686df69004a42c69df09e27-zip-dc329f.zip",
+                "reference": "7ff51b06c6c3d5cc6686df69004a42c69df09e27",
+                "shasum": "1b17c1ca0377f314b3d30456716898489c0b247f"
             },
             "require": {
                 "php": ">=5.5.9"
             },
-            "require-dev": {
-                "symfony/console": "~2.8|~3.0"
-            },
-            "suggest": {
-                "symfony/console": "For validating YAML files using the lint command"
-            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.2-dev"
+                    "dev-master": "3.1-dev"
                 }
             },
             "autoload": {
@@ -5267,7 +5154,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-11-18 21:17:59"
+            "time": "2016-10-24 18:41:13"
         },
         {
             "name": "webmozart/assert",
