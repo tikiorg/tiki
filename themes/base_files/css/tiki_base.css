@@ -1206,7 +1206,7 @@ textarea.wikiedit {
 fieldset {
   display: table-column;
 }
-.tiki .icon-link-external {
+.tiki .wiki.external + .icon-link-external {
   font-size: 70%;
   margin-left: 1px;
 }
