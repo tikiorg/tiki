@@ -1675,6 +1675,7 @@
 		"jquery/plugins/treetable": ">=3.0.2",
 		"jquery/plugins/zoom": ">=1.7.10",
 		"legolasbo/photoswipe": "^4.1.1",
+		"matthiasmullie/minify": ">=1.3.42",
 		"mediumjs/mediumjs": "1.0.1",
 		"morteza/bootstrap-rtl": ">=3.3.2",
 		"nnnick/chartjs": "dev-master",

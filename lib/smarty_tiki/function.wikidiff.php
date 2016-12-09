@@ -42,7 +42,10 @@ function smarty_function_wikidiff($params, $smarty)
 	}
 
 	if ($params['object_type'] === 'wiki page') {
-		$html = '';
+		$info = TikiLib::lib('tiki')->get_page_info($params['object_id'], false);
+		if (! $info) {
+			return '<span class="text-danger">' . tr('wikidiff: error - page "%0" not found', $params['object_id']) . '</span>';
+		}
 
 		$smarty = TikiLib::lib('smarty');
 		$histlib = TikiLib::lib('hist');
