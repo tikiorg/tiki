@@ -597,7 +597,6 @@ class HeaderLib
  		}
 
  		// file does not exist - create it
- 		require_once 'lib/minify/JSMin.php';
  		$minifiedAll = '';
  		// show all relevant messages about the JS files on top - will be prepended to the output
  		$topMsg = "/**** start overview of included js files *****/\n";
@@ -612,7 +611,7 @@ class HeaderLib
 				$msg = '';
 				// if the name contains not  'min' and that file is not blacklisted for minification assume it is minified
 				// preferable is to set $skip_minify proper
-				if (!preg_match('/min\.f$/', $f) && $this->skip_minify[$f] !== true) {
+				if (!preg_match('/\bmin\./', $f) && $this->skip_minify[$f] !== true) {
 					set_time_limit(600);
 					try {
 						// to optimize processing time for changed js requirements, cache the minified version of each file
@@ -623,16 +622,15 @@ class HeaderLib
 						if (file_exists($minifyFile)) {
 							$temp = file_get_contents($minifyFile);
 						} else {
-							$content = file_get_contents($f);
-							$temp = JSMin::minify($content);
-							file_put_contents($minifyFile, $temp);
-							chmod($file, 0644);
+							$minifier = new MatthiasMullie\Minify\JS($f);
+							$temp = $minifier->minify($minifyFile);
+							chmod($minifyFile, 0644);
 						}
 						$msg .= "\n/* rank:$rank - minify:ok. $f */\n";
 						$topMsg .= $msg;
 						$minified .= $msg;
 						$minified .= $temp;
-					} catch (JSMinException $e) {
+					} catch (Exception $e) {
 						$content = file_get_contents($f);
 						$error = $e->getMessage();
 						$msg .= "\n/* rank:$rank - minify:error ($error) - adding raw file. $f */\n";
