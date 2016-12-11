@@ -68,28 +68,28 @@ class Language_WriteFile
 		
 		$this->translations = $this->parseFile->getTranslations();
 
-        $punctuations = array(':', '!', ';', '.', ',', '?'); // Should stay synchronized with tra_impl() (in lib/init/tra.php)
-        $entries = array();
-        foreach ($strings as $string) {
-            if (isset($this->translations[$string['name']])) {
-                $string['translation'] = $this->translations[$string['name']];
-            } else {
-                // Handle punctuations at the end of the string (cf. comments in lib/init/tra.php)
-                // For example, if the string is 'Login:', we put 'Login' for translation instead
-                // (except if we already have an explicit translation for 'Login:', in which case we don't reach this else)
-                $stringLength = strlen($string['name']);
-                $stringLastChar = $string['name'][$stringLength - 1];
+		$punctuations = array(':', '!', ';', '.', ',', '?'); // Should stay synchronized with tra_impl() (in lib/init/tra.php)
+		$entries = array();
+		foreach ($strings as $string) {
+			if (isset($this->translations[$string['name']])) {
+				$string['translation'] = $this->translations[$string['name']];
+			} else {
+				// Handle punctuations at the end of the string (cf. comments in lib/init/tra.php)
+				// For example, if the string is 'Login:', we put 'Login' for translation instead
+				// (except if we already have an explicit translation for 'Login:', in which case we don't reach this else)
+				$stringLength = strlen($string['name']);
+				$stringLastChar = $string['name'][$stringLength - 1];
 
-                if (in_array($stringLastChar, $punctuations) ) {
-                    $trimmedString = substr($string['name'], 0, $stringLength - 1);
-                    $string['name'] = $trimmedString;
-                    if (isset($this->translations[$trimmedString])) {
-                        $string['translation'] = $this->translations[$trimmedString];
-                    }
-                }
-            }
-            $entries[$string['name']] = $string;
-        }
+				if (in_array($stringLastChar, $punctuations) ) {
+					$trimmedString = substr($string['name'], 0, $stringLength - 1);
+					$string['name'] = $trimmedString;
+					if (isset($this->translations[$trimmedString])) {
+						$string['translation'] = $this->translations[$trimmedString];
+					}
+				}
+			}
+			$entries[$string['name']] = $string;
+		}
 
 
 		$handle = fopen($this->tmpFilePath, 'w');
