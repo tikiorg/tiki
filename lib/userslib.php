@@ -7676,6 +7676,9 @@ class UsersLib extends TikiLib
 		$finalusers = array();
 		foreach ($usrs as $u) {
 			$u = trim($u);
+			if (!$u) {
+				continue;
+			}
 			if ($u == 'admin') {
 				$finalusers[] = $u;
 			} elseif ($key == 'userId' && preg_match('/\(([0-9]+)\)$/', $u, $matches)) {
