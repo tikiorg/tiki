@@ -792,7 +792,7 @@
 							</div>
 							{if $prefs.feature_forum_topics_archiving eq 'y'}
 								<div class="form-group">
-									<label class="col-md-4 control-label input-sm" for="show_archived">Show archived posts</label>
+									<label class="col-md-4 control-label input-sm" for="show_archived">{tr}Show archived posts{/tr}</label>
 									<div class="col-md-8">
 										<input type="checkbox" id="show_archived" name="show_archived" {if $show_archived eq 'y'}checked="checked"{/if}>
 									</div>
@@ -800,21 +800,21 @@
 							{/if}
 							{if $user}
 								<div class="form-group">
-									<label class="col-md-4 control-label input-sm" for="filter_poster">Containing posts by</label>
+									<label class="col-md-4 control-label input-sm" for="filter_poster">{tr}Containing posts by{/tr}</label>
 									<div class="col-md-8">
 										<select id="filter_poster" class="form-control input-sm" name="poster">
 											<option value=""{if empty($smarty.request.poster)} selected="selected"{/if}>
-												All posts
+												{tr}All posts{/tr}
 											</option>
 											<option value="_me" {if isset($smarty.request.poster) and $smarty.request.poster eq '_me'} selected="selected"{/if}>
-												Me
+												{tr}Me{/tr}
 											</option>
 										</select>
 									</div>
 								</div>
 							{/if}
 							<div class="form-group">
-								<label class="col-md-4 control-label input-sm" for="filter_type">Type</label>
+								<label class="col-md-4 control-label input-sm" for="filter_type">{tr}Type{/tr}</label>
 								<div class="col-md-8">
 									<select id="filter_type" name="filter_type" class="form-control input-sm">
 										<option value=""{if empty($smarty.request.filter_type)}selected="selected"{/if}>
@@ -836,7 +836,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-md-4 control-label input-sm" for="filter_replies">Replies</label>
+								<label class="col-md-4 control-label input-sm" for="filter_replies">{tr}Replies{/tr}</label>
 								<div class="col-md-8">
 									<select id="filter_replies" name="reply_state" class="form-control input-sm">
 										<option value=""{if empty($smarty.request.reply_state)} selected="selected"{/if}>
