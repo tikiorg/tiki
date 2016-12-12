@@ -761,7 +761,7 @@
 				<div class="panel-heading filter-panel-heading">
 					<h4 class="panel-title">
 						<a data-toggle="collapse" href="#filterCollapse" class="collapsed">
-							Filter Posts
+							{tr}Filter Posts{/tr}
 						</a>
 					</h4>
 				</div>
