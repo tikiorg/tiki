@@ -230,7 +230,7 @@ class Tracker_Item
 		$userField = $this->definition->getUserField();
 		if ($userField) {
 			$owners = $this->getValue($userField);
-			return str_getcsv($owners);
+			return TikiLib::lib('trk')->parse_user_field($owners);
 		}
 
 		return array();

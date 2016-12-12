@@ -100,7 +100,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 			if ($autoassign == 0 || $this->canChangeValue()) {
 				$ausers = $requestData[$ins_id];
 				if( !is_array($ausers) ) {
-					$ausers = str_getcsv($ausers);
+					$ausers = TikiLib::lib('trk')->parse_user_field($ausers);
 				}
 				$userlib = TikiLib::lib('user');
 				$users = array();
@@ -126,7 +126,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 			} else {
 				if ($autoassign == 2) {
 					if( $this->getOption('multiple') ) {
-						$data['value'] = str_getcsv($this->getValue());
+						$data['value'] = TikiLib::lib('trk')->parse_user_field($this->getValue());
 						if( !in_array($user, $data['value']) ) {
 							$data['value'][] = $user;
 						}
@@ -159,7 +159,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 		$value = $this->getConfiguration('value');
 		if( $value ) {
-			$value = str_getcsv($value);
+			$value = TikiLib::lib('trk')->parse_user_field($value);
 		} else {
 			$value = array();
 		}
@@ -249,9 +249,9 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 		} else {
 			if ($this->getOption('showRealname')) {
 				TikiLib::lib('smarty')->loadPlugin('smarty_modifier_username');
-				return implode(', ', array_map('smarty_modifier_username', str_getcsv($value)));
+				return implode(', ', array_map('smarty_modifier_username', TikiLib::lib('trk')->parse_user_field($value)));
 			} else {
-				return implode(', ', str_getcsv($value));
+				return implode(', ', TikiLib::lib('trk')->parse_user_field($value));
 			}
 		}
 	}
@@ -304,9 +304,9 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 		if ($this->getOption('showRealname')) {
 			TikiLib::lib('smarty')->loadPlugin('smarty_modifier_username');
-			$realName = implode(', ', array_map('smarty_modifier_username', str_getcsv($value)));
+			$realName = implode(', ', array_map('smarty_modifier_username', TikiLib::lib('trk')->parse_user_field($value)));
 		} else {
-			$realName = implode(', ', str_getcsv($value));	// add the _text option even if not using showRealname so we don't need to check
+			$realName = implode(', ', TikiLib::lib('trk')->parse_user_field($value));	// add the _text option even if not using showRealname so we don't need to check
 		}
 
 		return array(
@@ -346,7 +346,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 
 		if ($autoassign === 1 || $autoassign === 2) {
 			if( $this->getOption('multiple') && $value ) {
-				$value = str_getcsv($value);
+				$value = TikiLib::lib('trk')->parse_user_field($value);
 				if( !in_array($user, $value) ) {
 					$value[] = $user;
 				}
@@ -378,7 +378,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 				$smarty->loadPlugin('smarty_modifier_userlink');
 
 				if ($value) {
-					return implode(', ', array_map('smarty_modifier_userlink', str_getcsv($value)));
+					return implode(', ', array_map('smarty_modifier_userlink', TikiLib::lib('trk')->parse_user_field($value)));
 				}
 			})
 			;
@@ -391,7 +391,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 				$smarty->loadPlugin('smarty_modifier_username');
 
 				if ($value) {
-					$value = str_getcsv($value);
+					$value = TikiLib::lib('trk')->parse_user_field($value);
 					foreach( $value as &$v ) {
 						$v = smarty_modifier_username($v, true, false, false);
 					}
@@ -409,7 +409,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 				$smarty->loadPlugin('smarty_function_object_link');
 
 				if ($value) {
-					$value = str_getcsv($value);
+					$value = TikiLib::lib('trk')->parse_user_field($value);
 					foreach( $value as &$v ) {
 						$v = smarty_function_object_link([
 							'type' => 'trackeritem',
@@ -432,7 +432,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 				$smarty->loadPlugin('smarty_modifier_username');
 
 				if ($value) {
-					$value = str_getcsv($value);
+					$value = TikiLib::lib('trk')->parse_user_field($value);
 					foreach( $value as &$v ) {
 						$v = smarty_function_object_link([
 							'type' => 'trackeritem',

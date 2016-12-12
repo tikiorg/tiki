@@ -1564,7 +1564,7 @@ class TrackerLib extends TikiLib
 		$userField = $definition->getUserField();
 		$itemUsers = array();
 		if ($userField && isset($info[$userField])) {
-			$itemUsers = str_getcsv($info[$userField]);
+			$itemUsers = $this->parse_user_field($info[$userField]);
 		}
 
 		$fields = array();
@@ -3637,7 +3637,7 @@ class TrackerLib extends TikiLib
 		if ($fieldId = $definition->getUserField()) {
 			// user creator field
 			$creators = $this->get_item_value($trackerId, $itemId, $fieldId);
-			return str_getcsv($creators);
+			return $this->parse_user_field($creators);
 		} else {
 			return array();
 		}
@@ -3853,7 +3853,7 @@ class TrackerLib extends TikiLib
 						// Don't send email to oneself
 						continue;
 					}
-					foreach( str_getcsv($f['value']) as $fieldUser ) {
+					foreach( $this->parse_user_field($f['value']) as $fieldUser ) {
 						$email = $userlib->get_user_email($fieldUser);
 						if( !empty($fieldUser) && !empty($email) ) {
 							$tikilib->get_user_preferences($fieldUser, array('email', 'user', 'language', 'mailCharset'));
@@ -5625,6 +5625,12 @@ class TrackerLib extends TikiLib
 				$catlib->update_object_categories($categories, $articleId, 'article');
 			}
 		}
+	}
+
+	public function parse_user_field($value) {
+		return array_map(function($user) {
+			return trim($user);
+		}, str_getcsv($value));
 	}
 }
 
