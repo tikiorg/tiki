@@ -193,7 +193,8 @@ $("body").on("change", "input[name=ins_' . $filterFieldIdHere . '], select[name=
 			$ddl.trigger("change");
 		} // callback
 	);  // getJSON
-}).trigger("change", "'. $insertId. '"); // closure
+});
+$("input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFieldIdHere . ']").trigger("change", "'. $insertId. '"); // closure
 
 if( $("input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFieldIdHere . ']").length == 0 ) {
 	// inline edit fix
