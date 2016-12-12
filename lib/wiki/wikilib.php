@@ -217,8 +217,10 @@ class WikiLib extends TikiLib
 	public function wiki_duplicate_page($name, $copyName = null)
 	{
 		$tikilib = TikiLib::lib('tiki');
+		$categlib = TikiLib::lib('categ');
 
 		$info = $tikilib->get_page_info($name);
+		$categories = $categlib->get_object_categories('wiki page', $name);
 
 		if (!$info) {
 			return false;
@@ -228,7 +230,7 @@ class WikiLib extends TikiLib
 			$copyName = $name . ' (' . $tikilib->now . ')';
 		}
 
-		return $tikilib->create_page(
+		$copyPage = $tikilib->create_page(
 			$copyName,
 			0,
 			$info['data'],
@@ -240,6 +242,14 @@ class WikiLib extends TikiLib
 			$info['lang'],
 			$info['is_html']
 		);
+
+		if (is_array($categories)) {
+			foreach ($categories as $catId) {
+				$categlib->categorizePage($copyName, $catId);
+			}
+		}
+
+		return $copyPage;
 	}
 
 	// This method renames a wiki page
