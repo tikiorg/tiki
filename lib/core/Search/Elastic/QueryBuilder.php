@@ -18,13 +18,15 @@ class Search_Elastic_QueryBuilder
 {
 	private $factory;
 	private $documentReader;
+	private $index;
 
-	function __construct()
+	function __construct(Search_Elastic_Index $index = null)
 	{
 		$this->factory = new Search_Elastic_TypeFactory;
 		$this->documentReader = function ($type, $object) {
 			return null;
 		};
+		$this->index = $index;
 	}
 
 	function build(Search_Expr_Interface $expr)
@@ -111,22 +113,18 @@ class Search_Elastic_QueryBuilder
 				);
 			}
 		} elseif ($node instanceof NotX) {
-
-			if (count($childNodes) === 1 &&		// single child node token looking for 'NOT ""'
-				get_class($childNodes[0]) === 'Search_Expr_Token' &&
-				empty($childNodes[0]->getValue($this->factory)->getValue())
-			) {
-				return [
-					"wildcard" => [
-						$childNodes[0]->getField() => "*",	// anything goes (except empty)
-					],
-				];
-			} else {
-				$inner = array_map(
-					function ($expr) use ($callback) {
-						return $expr->traverse($callback);
-					}, $childNodes
+			$inner = array_map(
+				function ($expr) use ($callback) {
+				return $expr->traverse($callback);
+				}, $childNodes
+			);
+			if( count($inner) == 1 && isset($inner[0]['bool']) && isset($inner[0]['bool']['must_not']) ) {
+				return array(
+					'bool' => array(
+						'must' => $inner[0]['bool']['must_not'],
+					),
 				);
+			} else {
 				return array(
 					'bool' => array(
 						'must_not' => $inner,
@@ -195,8 +193,32 @@ class Search_Elastic_QueryBuilder
 
 	private function handleToken($node)
 	{
+		$value = $node->getValue($this->factory)->getValue();
+		if( $value === '' ) {
+			$mapping = $this->index ? $this->index->getFieldMapping($node->getField()) : new stdClass;
+			if( isset($mapping->type) && $mapping->type === 'date' ) {
+				return array(
+					"bool" => array(
+						"must_not" => array(
+							array(
+								"exists" => array("field" => $node->getField())
+							)
+						)
+					)
+				);
+			} else {
+				return array(
+					"bool" => array(
+						"must_not" => array(
+							array(
+								"wildcard" => array($node->getField() => "*")
+							)
+						)
+					)
+				);
+			}
+		}
 		if ($node->getType() == 'identifier') {
-			$value = $node->getValue($this->factory)->getValue();
 			return array("match" => array(
 				$node->getField() => array(
 					"query" => $value,
@@ -204,7 +226,6 @@ class Search_Elastic_QueryBuilder
 				),
 			));
 		} elseif ($node->getType() == 'multivalue') {
-			$value = $node->getValue($this->factory)->getValue();
 			return array("match" => array(
 				$node->getField() => array(
 					"query" => reset($value),

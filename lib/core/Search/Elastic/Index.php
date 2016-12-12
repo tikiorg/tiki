@@ -240,7 +240,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 		$builder = new Search_Elastic_RescoreQueryBuilder;
 		$rescorePart = $builder->build($query->getExpr());
 
-		$builder = new Search_Elastic_QueryBuilder;
+		$builder = new Search_Elastic_QueryBuilder($this);
 		$builder->setDocumentReader($this->createDocumentReader());
 		$queryPart = $builder->build($query->getExpr());
 
@@ -375,7 +375,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 		$builder = new Search_Elastic_OrderBuilder;
 		$orderPart = $builder->build($query->getSortOrder());
 
-		$builder = new Search_Elastic_QueryBuilder;
+		$builder = new Search_Elastic_QueryBuilder($this);
 		$builder->setDocumentReader($this->createDocumentReader());
 		$queryPart = $builder->build($query->getExpr());
 
@@ -446,7 +446,7 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 
 	function store($name, Search_Expr_Interface $expr)
 	{
-		$builder = new Search_Elastic_QueryBuilder;
+		$builder = new Search_Elastic_QueryBuilder($this);
 		$builder->setDocumentReader($this->createDocumentReader());
 		$doc = $builder->build($expr);
 
@@ -461,6 +461,22 @@ class Search_Elastic_Index implements Search_Index_Interface, Search_Index_Query
 	function setFacetCount($count)
 	{
 		$this->facetCount = (int) $count;
+	}
+
+	public function getFieldMapping($field) {
+		$index = $this->index;
+		try {
+			$mapping = $this->connection->rawApi("/$index/_mapping/field/$field");
+		} catch (Search_Elastic_Exception $e) {
+			$mapping = false;
+		}
+		if( is_object($mapping) ) {
+			$mapping = reset($mapping);
+			$mapping = isset($mapping->mappings) ? $mapping->mappings : $mapping; // v2 vs v5
+			$mapping = reset($mapping);
+			return $mapping->$field->mapping->$field;
+		}
+		return new stdClass;
 	}
 }
 

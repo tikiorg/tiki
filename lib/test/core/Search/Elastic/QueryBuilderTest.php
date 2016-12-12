@@ -526,5 +526,281 @@ class Search_Elastic_QueryBuilderTest extends PHPUnit_Framework_TestCase
 			), $query['query']
 		);
 	}
+
+	function testEmptyString() {
+		$builder = new QueryBuilder;
+		
+		$query = $builder->build(new Token('', 'identifier', 'contents'));
+
+		$this->assertEquals(
+			array(
+				"bool" => array(
+					"must_not" => array(
+						array(
+							"wildcard" => array(
+								"contents" => '*',
+							),
+						),
+					),
+				),
+			), $query['query']
+		);
+	}
+
+	function testEmptyStringWithAnd() {
+		$builder = new QueryBuilder;
+		
+		$query = $builder->build(
+			new AndX(
+				array(
+					new Token('', 'identifier', 'contents'),
+					new Token('Hello', 'plaintext', 'field', 1.5)
+				)
+			)
+		);
+
+		$this->assertEquals(
+			array(
+				"bool" => array(
+					"must" => array(
+						array(
+							"match" => array(
+								"field" => array("query" => "hello", "operator" => "and", "boost" => 1.5)
+							),
+						),
+					),
+					"must_not" => array(
+						array(
+							"wildcard" => array(
+								"contents" => '*',
+							),
+						),
+					),
+				),
+			), $query['query']
+		);
+	}
+
+	function testEmptyStringWithOr() {
+		$builder = new QueryBuilder;
+		
+		$query = $builder->build(
+			new OrX(
+				array(
+					new Token('', 'identifier', 'contents'),
+					new Token('Hello', 'plaintext', 'field', 1.5)
+				)
+			)
+		);
+
+		$this->assertEquals(
+			array(
+				"bool" => array(
+					"should" => array(
+						array(
+							"bool" => array(
+								"must_not" => array(
+									array(
+										"wildcard" => array(
+											"contents" => '*',
+										),
+									),
+								),
+							),
+						),
+						array(
+							"match" => array(
+								"field" => array("query" => "hello", "operator" => "and", "boost" => 1.5)
+							),
+						),
+					),
+					"minimum_number_should_match" => 1
+				),
+			), $query['query']
+		);
+	}
+
+	function testEmptyStringWithNot() {
+		$builder = new QueryBuilder;
+		
+		$query = $builder->build(
+			new AndX(
+				array(
+					new Token('', 'identifier', 'contents'),
+					new NotX(
+						new Token('Hello', 'plaintext', 'field', 1.5)
+					),
+				)
+			)
+		);
+
+		$this->assertEquals(
+			array(
+				"bool" => array(
+					"must_not" => array(
+						array(
+							"wildcard" => array(
+								"contents" => '*',
+							),
+						),
+						array(
+							"match" => array(
+								"field" => array("query" => "hello", "operator" => "and", "boost" => 1.5)
+							),
+						),
+					),
+				),
+			), $query['query']
+		);
+	}
+
+	function testNonEmptyString() {
+		$builder = new QueryBuilder;
+		
+		$query = $builder->build(
+			new NotX(
+				new Token('', 'identifier', 'contents')
+			)
+		);
+
+		$this->assertEquals(
+			array(
+				"bool" => array(
+					"must" => array(
+						array(
+							"wildcard" => array(
+								"contents" => '*',
+							),
+						),
+					),
+				),
+			), $query['query']
+		);
+	}
+
+	function testNonEmptyStringWithAnd() {
+		$builder = new QueryBuilder;
+		
+		$query = $builder->build(
+			new AndX(
+				array(
+					new NotX(
+						new Token('', 'identifier', 'contents')
+					),
+					new Token('Hello', 'plaintext', 'field', 1.5)
+				)
+			)
+		);
+
+		$this->assertEquals(
+			array(
+				"bool" => array(
+					"must" => array(
+						array(
+							"wildcard" => array(
+								"contents" => '*',
+							),
+						),
+						array(
+							"match" => array(
+								"field" => array("query" => "hello", "operator" => "and", "boost" => 1.5)
+							),
+						),
+					),
+				),
+			), $query['query']
+		);
+	}
+
+	function testNonEmptyStringWithNot() {
+		$builder = new QueryBuilder;
+		
+		$query = $builder->build(
+			new AndX(
+				array(
+					new NotX(
+						new Token('', 'identifier', 'contents')
+					),
+					new NotX(
+						new Token('Hello', 'plaintext', 'field', 1.5)
+					),
+				)
+			)
+		);
+
+		$this->assertEquals(
+			array(
+				"bool" => array(
+					"must" => array(
+						array(
+							"wildcard" => array(
+								"contents" => '*',
+							),
+						),
+					),
+					"must_not" => array(
+						array(
+							"match" => array(
+								"field" => array("query" => "hello", "operator" => "and", "boost" => 1.5)
+							),
+						),
+					),
+				),
+			), $query['query']
+		);
+	}
+
+	function testEmptyDate() {
+		$builder = new QueryBuilder($this->dateFieldMappingIndexMock());
+		
+		$query = $builder->build(new Token('', 'identifier', 'field_date'));
+
+		$this->assertEquals(
+			array(
+				"bool" => array(
+					"must_not" => array(
+						array(
+							"exists" => array(
+								"field" => 'field_date',
+							),
+						),
+					),
+				),
+			), $query['query']
+		);
+	}
+
+	function testNonEmptyDate() {
+		$builder = new QueryBuilder($this->dateFieldMappingIndexMock());
+		
+		$query = $builder->build(
+			new NotX(
+				new Token('', 'identifier', 'field_date')
+			)
+		);
+
+		$this->assertEquals(
+			array(
+				"bool" => array(
+					"must" => array(
+						array(
+							"exists" => array(
+								"field" => 'field_date',
+							),
+						),
+					),
+				),
+			), $query['query']
+		);
+	}
+
+	private function dateFieldMappingIndexMock() {
+		$mockIndex = $this->createMock('Search_Elastic_Index');
+		$mockIndex->expects($this->any())
+			->method('getFieldMapping')
+			->with('field_date')
+			->will($this->returnValue((object)array('type' => 'date')));
+		return $mockIndex;
+	}
 }
 
