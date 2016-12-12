@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -14,7 +14,7 @@ function wikiplugin_shorten_info()
 		'prefs' => array('wikiplugin_shorten'),
 		'body' => tra('Code to be displayed'),
 		'iconname' => 'shorten',
-		'introduced' => 1,
+		'introduced' => 17,
 		'filter' => 'rawhtml_unsafe',
 		'format' => 'html',
 		'tags' => array( 'basic' ),
@@ -99,4 +99,3 @@ function wikiplugin_shorten($data, $params)
 
 	return $data;
 }
-
