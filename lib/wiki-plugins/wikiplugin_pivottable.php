@@ -205,7 +205,7 @@ function wikiplugin_pivottable($data, $params)
 	}
 
 	$query = new Search_Query;
-	$query->filterType('trackerItem');
+	$query->filterType('trackeritem');
 	$query->filterContent($trackerId, 'tracker_id');
 
 	$unifiedsearchlib = TikiLib::lib('unifiedsearch');
