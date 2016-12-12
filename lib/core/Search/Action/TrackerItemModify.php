@@ -102,7 +102,7 @@ class Search_Action_TrackerItemModify implements Search_Action_Action
 	}
 
 	function requiresInput(JitFilter $data) {
-		return empty($data->value->text());
+		return empty($data->value->text()) && empty($data->calc->text());
 	}
 }
 
