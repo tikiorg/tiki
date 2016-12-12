@@ -1,7 +1,7 @@
 <div class='quote'>
 	<div class='quoteheader'>
 		{if $replyto}
-			{$replyto|username} {tr}wrote{/tr} on {$comment_info.commentDate|tiki_short_date}:
+			{$replyto|username} {tr}wrote{/tr} {tr}on{/tr} {$comment_info.commentDate|tiki_short_date}:
 		{else}
 			<i class="fa fa-quote-left" aria-hidden="true"></i>
 		{/if}

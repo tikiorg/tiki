@@ -12,9 +12,26 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 }
 
 if (isset($_REQUEST['userfeatures'])) {
-	check_ticket('admin-inc-community');
+	check_ticket('admin-inc-user');
 }
 
-$smarty->assign('event_graph', TikiLib::events()->getEventGraph());
+$command_parts = [
+	realpath(__DIR__ . '/../console.php'),
+	'notification:digest',
+	$url_host,
+	7,
+];
 
-ask_ticket('admin-inc-community');
+if ($url_port) {
+	$command_parts[] = '--port=' . $url_port;
+}
+if ($tikiroot != '/') {
+	$command_parts[] = '--path=' . $tikiroot;
+}
+if ($url_scheme == 'https') {
+	$command_parts[] = '--ssl';
+}
+$command = implode(' ', $command_parts);
+$smarty->assign('monitor_command', $command);
+
+ask_ticket('admin-inc-user');
