@@ -26,7 +26,7 @@ class Search_Elastic_OrderBuilder
 							'lat' => $arguments['lat'],
 							'lon' => $arguments['lon'],
 						],
-						'order' => $arguments['order'],
+						'order' => $order->getOrder(),
 						'unit' => $arguments['unit'],
 						'distance_type' => $arguments['distance_type'],
 					],
