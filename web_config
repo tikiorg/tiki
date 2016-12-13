@@ -11,6 +11,12 @@
         <add value="index.php" />
       </files>
     </defaultDocument>
+    <httpProtocol>
+     <customHeaders>
+       <add name="access-control-allow-origin" value="*" />
+       <add name="access-control-allow-headers" value="content-type" />
+     </customHeaders>
+    </httpProtocol>
 	<security>
 		<requestFiltering allowDoubleEscaping="True">
 			<!-- IIS 7 has a default 30MB limit. Use this value by default -->
