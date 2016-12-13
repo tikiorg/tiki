@@ -283,7 +283,6 @@ class TikiLib extends TikiDb_Bridge
 	{
 		$url = $arguments['url'];
 
-		$client->setCookieJar();
 		$client->setUri($this->urlencode_accent($url)); // Zend\Http\Client seems to fail with accents in urls
 		$client->setMethod(Zend\Http\Request::METHOD_GET);
 		$response = $client->send();
@@ -302,7 +301,6 @@ class TikiLib extends TikiDb_Bridge
 		$url = $arguments['post_url'];
 		unset($arguments['post_url']);
 
-		$client->setCookieJar();
 		$client->setUri($this->urlencode_accent($url)); // Zend\Http\Client seems to fail with accents in urls
 		$client->setMethod(Zend\Http\Request::METHOD_GET);
 		$response = $client->send();
