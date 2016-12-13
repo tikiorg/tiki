@@ -315,11 +315,16 @@ function wikiplugin_pivottable($data, $params)
 		}
 	}
 	
-	//parsing array to hold permNames mapped with field names for save button
+	// parsing array to hold permNames mapped with field names for save button
+	// and list of date fields for custom sorting
 	$fieldsArr=array();
+	$dateFields = array();
 	foreach($fields as $field)
 	{
 		$fieldsArr[$field['name']] = $field['permName'];
+		if( $field['type'] == 'f' ) {
+			$dateFields[] = $field['name'];
+		}
 	}
 	
 	//checking if user can see edit button
@@ -351,6 +356,7 @@ function wikiplugin_pivottable($data, $params)
 		'showControls'=>$showControls,
 		'page'=>$sourcepage,
 		'fieldsArr'=>$fieldsArr,
+		'dateFields' => $dateFields,
 		'index'=>$id
 	));
 	

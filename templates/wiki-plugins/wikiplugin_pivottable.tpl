@@ -16,7 +16,14 @@
 			width: {{$pivottable.width|json_encode}},
 			height: {{$pivottable.height|json_encode}},
 			aggregatorName: {{$pivottable.aggregatorName|json_encode}},
-			vals: {{$pivottable.vals|json_encode}}
+			vals: {{$pivottable.vals|json_encode}},
+			sorters: function(attr) {
+				if($.inArray(attr, {{$pivottable.dateFields|json_encode}}) > -1) {
+					return function(a, b) {
+						return Date.parse(a) - Date.parse(b);
+					}
+				}
+			}
 		});
 
 		$("#pivotEditBtn_{{$pivottable.id}}").on("click", function(){
