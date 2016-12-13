@@ -934,6 +934,47 @@ updateDateRange_$fieldid();
 	return $picker;
 }
 
+function cs_design_distance($id, $fieldname, $fieldid, $arguments, $default, &$script)
+{
+	$document = new DOMDocument;
+	$distanceElement = $document->createElement('input');
+	cs_design_setbasic($distanceElement, $fieldid . '_dist', $fieldname, $arguments);
+	$latElement = $document->createElement('input');
+	cs_design_setbasic($latElement, $fieldid . '_lat', $fieldname, $arguments);
+	$lonElement = $document->createElement('input');
+	cs_design_setbasic($lonElement, $fieldid . '_lon', $fieldname, $arguments);
+
+	if (!empty($default)) {
+		$arguments['default'] = $default;
+	}
+	$script .= "
+(function (id, config, fieldname) {
+	var fields = $('input[name=$fieldname]');
+	fields.change(function() {
+		var filter = {
+			config: config,
+			name: 'distance',
+			value: fields.map(function () {return $(this).val();}).get().join()
+		};
+		customsearch.add($(this).attr('name'), filter);
+	}).change();
+	
+})('$fieldid', " . json_encode($arguments) . ", " . json_encode($fieldname) . ");
+";
+
+	$arguments = new JitFilter($arguments);
+
+	$distanceElement->setAttribute('value', $arguments->_distance->text());
+	$latElement->setAttribute('value', $arguments->_lat->text());
+	$lonElement->setAttribute('value', $arguments->_lon->text());
+
+	$document->appendChild($distanceElement);
+	$document->appendChild($latElement);
+	$document->appendChild($lonElement);
+
+	return $document->saveHTML();
+}
+
 function cs_design_store($id, $fieldname, $fieldid, $arguments, $default, &$script)
 {
 	global $prefs;
