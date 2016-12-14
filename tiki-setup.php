@@ -365,7 +365,7 @@ if (isset($_REQUEST['geo_zoomlevel_to_found_location'])) {
 } else {
 	$zoomToFoundLocation = isset($prefs['geo_zoomlevel_to_found_location']) ? $prefs['geo_zoomlevel_to_found_location'] : 'street';
 }
-$headerlib->add_js('var zoomToFoundLocation = "'.$zoomToFoundLocation.'";');	// Set the zoom option after searching for a location
+$headerlib->add_js('var zoomToFoundLocation = "'. addslashes($zoomToFoundLocation) .'";');	// Set the zoom option after searching for a location
 
 $headerlib->add_jsfile('lib/jquery_tiki/tiki-maps.js');
 $headerlib->add_jsfile('vendor/jquery/plugins/jquery-json/jquery.json-2.4.js');
