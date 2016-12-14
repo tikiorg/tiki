@@ -33,7 +33,7 @@ class Search_Expr_Distance implements Search_Expr_Interface
 	/**
 	 * @return float
 	 */
-	public function getLat(): float
+	public function getLat()
 	{
 		return $this->lat;
 	}
@@ -41,7 +41,7 @@ class Search_Expr_Distance implements Search_Expr_Interface
 	/**
 	 * @return float
 	 */
-	public function getLon(): float
+	public function getLon()
 	{
 		return $this->lon;
 	}
