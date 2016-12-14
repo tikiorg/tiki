@@ -18,7 +18,7 @@
     <div class="form-group">
 		<label class="col-sm-3 control-label">{tr}Data{/tr}</label>
 		<div class="col-sm-7">
-	      	{textarea rows="20" cols="80" name="data" _simple="y" class="form-control"}{$info.data|escape}{/textarea}
+	      	{textarea rows="20" cols="80" name="data" _simple="y" class="form-control"}{$info.data}{/textarea}
 	    </div>
     </div>
     <div class="form-group">
