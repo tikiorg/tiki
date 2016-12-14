@@ -43,6 +43,16 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 						'filter' => 'url',
 						'legacy_index' => 2,
 					),
+					'requireParams' => array(
+						'name' => tr('Require parameters'),
+						'description' => tr('Do not execute the request if parameters are missing or empty'),
+						'filter' => 'word',
+						'options' => array(
+							'' => tra('All required') . ' ' . tra('(default)'),
+							'first' => tr('First only required'),
+							'none' => tr('No parameters required'),
+						),
+					),
 					'cacheSeconds' => array(
 						'name' => tr('Cache time'),
 						'description' => tr('Time in seconds to cache the result for before trying again.'),
@@ -99,7 +109,12 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 			$definition = $this->getTrackerDefinition();
 
 			if ($this->getOption('params')) {
+				// FIXME replacements such as %facebookId% get url encoded using this so fail
 				parse_str($this->getOption('params'), $ws_params);
+
+				$count = 0;
+				$requireParams = $this->getOption('requireParams');
+
 				foreach ($ws_params as $ws_param_name => &$ws_param_value) {
 					if (preg_match('/(.*)%(.*)%(.*)/', $ws_param_value, $matches)) {
 						$ws_param_field_name = $matches[2];
@@ -130,6 +145,12 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 							}
 							$ws_params[$ws_param_name] = preg_replace('/%' . $ws_param_field_name . '%/', $value, $ws_param_value);
 						}
+						if (empty($ws_params[$ws_param_name])) {
+							if (empty($requireParams) || ($count === 0 && $requireParams === 'first')) {
+								return '';
+							}
+						}
+						$count++;
 					}
 				}
 			}
