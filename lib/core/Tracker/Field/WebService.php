@@ -76,11 +76,11 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 		require_once 'lib/webservicelib.php';
 
 		if (!($webservice = Tiki_Webservice::getService($name))) {
-			Feedback::error(tr('Webservice %0 not found', $name), 'session');
+			TikiLib::lib('errorreport')->report(tr('Webservice %0 not found', $name));
 			return false;
 		}
 		if (! $template = $webservice->getTemplate($tpl)) {
-			Feedback::error(tr('Webservice template %0 not found', $tpl), 'session');
+			TikiLib::lib('errorreport')->report(tr('Webservice template %0 not found', $tpl));
 			return false;
 		}
 
@@ -156,7 +156,7 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 				}
 			}
 			if ($error) {
-				Feedback::error($error, 'session');
+				TikiLib::lib('errorreport')->report($error);
 
 			} else if (empty($context['search_render']) || $context['search_render'] !== 'y') {
 
