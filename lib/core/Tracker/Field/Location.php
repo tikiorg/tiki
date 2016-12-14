@@ -188,7 +188,7 @@ class Tracker_Field_Location extends Tracker_Field_Abstract implements Tracker_F
 
 			if (! $fieldArray) {
 				$message = tr('Location: Field %0 not found for field "%1"', $field, $this->getConfiguration('permName'));
-				Feedback::error($message);
+				TikiLib::lib('errorreport')->report($message);
 			} else {
 
 				$factory = $definition->getFieldFactory();
@@ -206,7 +206,7 @@ class Tracker_Field_Location extends Tracker_Field_Abstract implements Tracker_F
 			if ($geo) {
 				$out = $geo['lon'] . ',' . $geo['lat'] . ',' . $prefs['gmap_defaultz'];
 			} else {
-				Feedback::error(tr('Could not find a location for "%0"', $address));
+				TikiLib::lib('errorreport')->report(tr('Could not find a location for "%0"', $address));
 			}
 		}
 
