@@ -10,7 +10,7 @@ function prefs_global_list($partial = false)
 	return array(
 		'browsertitle' => array(
 			'name' => tra('Browser title'),
-			'description' => tra('LVisible label in the browser\'s title bar on all pages. Also appears in search engine results.'),
+			'description' => tra('Visible label in the browser\'s title bar on all pages. Also appears in search engine results.'),
 			'type' => 'text',
 			'default' => '',
 			'tags' => array('basic'),

@@ -3035,6 +3035,7 @@ class UsersLib extends TikiLib
 		$extra = '';
 		if ($show_popup == "n") {
 			//do nothing for adding a tip
+			$title = '';
 		} elseif ($prefs['feature_community_mouseover'] == 'y' && ($this->get_user_preference($auser, 'show_mouseover_user_info', 'y') == 'y' || $prefs['feature_friends'] == 'y')) {
 			$data = TikiLib::lib('service')->getUrl(array(
 				'controller' => 'user',
