@@ -65,6 +65,7 @@ class Search_Formatter_Plugin_ArrayTemplate implements Search_Formatter_Plugin_I
 	function prepareEntry($valueFormatter)
 	{
 		$entry = array();
+		$searchRow = $valueFormatter->getPlainValues();
 		foreach ($this->fields as $field => $arguments) {
 			if( !$this->canViewField($field) ) {
 				continue;
@@ -77,7 +78,12 @@ class Search_Formatter_Plugin_ArrayTemplate implements Search_Formatter_Plugin_I
 			unset($arguments['format']);
 			unset($arguments['name']);
 			unset($arguments['field']);
-			$entry[str_replace('tracker_field_', '', $field)] = trim($valueFormatter->$format($field, $arguments));
+			if( isset($searchRow[$field.'_text']) ) {
+				$searchField = $field.'_text';
+			} else {
+				$searchField = $field;
+			}
+			$entry[str_replace('tracker_field_', '', $field)] = trim($valueFormatter->$format($searchField, $arguments));
 		}
 		return $entry;
 	}
