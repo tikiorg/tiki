@@ -565,7 +565,7 @@ class TikiLib extends TikiDb_Bridge
                     }
 
 		}
-		if (isset($_SERVER['REMOTE_ADDR']) && filter_var($ip, FILTER_VALIDATE_IP)) {
+		if (isset($_SERVER['REMOTE_ADDR']) && filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP)) {
 			return $_SERVER['REMOTE_ADDR'];
 		} else {
 			return '0.0.0.0';
