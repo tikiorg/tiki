@@ -17,6 +17,7 @@
 			height: {{$pivottable.height|json_encode}},
 			aggregatorName: {{$pivottable.aggregatorName|json_encode}},
 			vals: {{$pivottable.vals|json_encode}},
+			inclusions: {{$pivottable.inclusions}},
 			sorters: function(attr) {
 				if($.inArray(attr, {{$pivottable.dateFields|json_encode}}) > -1) {
 					return function(a, b) {

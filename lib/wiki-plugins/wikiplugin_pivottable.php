@@ -110,6 +110,13 @@ function wikiplugin_pivottable_info()
 				'required' => false,
 				'filter' => 'text',
 			),
+			'inclusions' => array(
+				'name' => tr('Inclusions'),
+				'description' => tr('Filter values for fields in rows or columns. Contains JSON encoded object of arrays of strings.'),
+				'since' => '',
+				'required' => false,
+				'filter' => 'text',
+			),
 		),
 	);
 }
@@ -314,7 +321,9 @@ function wikiplugin_pivottable($data, $params)
 			}
 		}
 	}
-	
+
+	$inclusions = !empty($params['inclusions']) ? $params['inclusions'] : '{}';
+
 	// parsing array to hold permNames mapped with field names for save button
 	// and list of date fields for custom sorting
 	$fieldsArr=array();
@@ -357,6 +366,7 @@ function wikiplugin_pivottable($data, $params)
 		'page'=>$sourcepage,
 		'fieldsArr'=>$fieldsArr,
 		'dateFields' => $dateFields,
+		'inclusions' => $inclusions,
 		'index'=>$id
 	));
 	
