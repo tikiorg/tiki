@@ -219,11 +219,9 @@ class WikiLib extends TikiLib
 		global $user;
 
 		$tikilib = TikiLib::lib('tiki');
-		$categlib = TikiLib::lib('categ');
 		$userlib = TikiLib::lib('user');
 
 		$info = $tikilib->get_page_info($name);
-		$categories = $categlib->get_object_categories('wiki page', $name);
 
 		if (!$info) {
 			return false;
@@ -246,9 +244,21 @@ class WikiLib extends TikiLib
 			$info['is_html']
 		);
 
-		if ( $userlib->user_has_permission($user, 'tiki_p_add_object') ) {
+		if ($userlib->user_has_permission($user, 'tiki_p_add_object')) {
+			$categlib = TikiLib::lib('categ');
+			$categories = $categlib->get_object_categories('wiki page', $name);
+
 			foreach ($categories as $catId) {
 				$categlib->categorizePage($copyName, $catId);
+			}
+		}
+
+		if ($userlib->user_has_permission($user, 'tiki_p_freetags_tag')) {
+			$freetaglib = TikiLib::lib('freetag');
+			$freetags = $freetaglib->get_tags_on_object($name, 'wiki page');
+
+			foreach ($freetags['data'] as $tag) {
+				$freetaglib->tag_object($user, $copyName, 'wiki page', $tag['tag']);
 			}
 		}
 
