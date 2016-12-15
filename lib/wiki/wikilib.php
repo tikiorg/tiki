@@ -216,8 +216,11 @@ class WikiLib extends TikiLib
 	 */
 	public function wiki_duplicate_page($name, $copyName = null)
 	{
+		global $user;
+
 		$tikilib = TikiLib::lib('tiki');
 		$categlib = TikiLib::lib('categ');
+		$userlib = TikiLib::lib('user');
 
 		$info = $tikilib->get_page_info($name);
 		$categories = $categlib->get_object_categories('wiki page', $name);
@@ -243,7 +246,7 @@ class WikiLib extends TikiLib
 			$info['is_html']
 		);
 
-		if (is_array($categories)) {
+		if ( $userlib->user_has_permission($user, 'tiki_p_add_object') ) {
 			foreach ($categories as $catId) {
 				$categlib->categorizePage($copyName, $catId);
 			}
