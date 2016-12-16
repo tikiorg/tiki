@@ -49,5 +49,9 @@ class Search_Action_WikiApprovalAction implements Search_Action_Action
 
 		return true;
 	}
+
+	function requiresInput(JitFilter $data) {
+		return false;
+	}
 }
 

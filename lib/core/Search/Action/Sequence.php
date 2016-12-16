@@ -58,5 +58,13 @@ class Search_Action_Sequence
 
 		return $success;
 	}
-}
 
+	function requiresInput() {
+		foreach ($this->steps as $step) {
+			if ($step->requiresInput()) {
+				return true;
+			}
+		}
+		return false;
+	}
+}
