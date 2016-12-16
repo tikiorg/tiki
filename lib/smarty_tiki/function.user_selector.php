@@ -63,6 +63,11 @@ function smarty_function_user_selector($params, $smarty)
 	} else {
 		$ed = '';
 	}
+	if( $params['multiple'] === 'true' ) {
+		$mt = ' multiple="multiple"';
+	} else {
+		$mt = '';
+	}
 	
 	if(! empty($params['class'])) {
 		$class = ' class="'. $params['class'] . '"';
@@ -138,14 +143,15 @@ function smarty_function_user_selector($params, $smarty)
 
 		asort($users, SORT_NATURAL | SORT_FLAG_CASE);
 
-		$ret .= '<select name="' . $params['name'] . '" id="' . $params['id'] . '"' . $sz . $ed . ' style="'.$params['style'].'" class="form-control">';
+		$ret .= '<select name="' . $params['name'] . ( $params['multiple'] === 'true' ? '[]' : '' ) . '" id="' . $params['id'] . '"' . $sz . $ed . $mt . ' style="'.$params['style'].'" class="form-control">';
 		if ($params['allowNone'] === 'y') {
 			$ret .= '<option value=""' . (empty($params['user']) ? ' selected="selected"' : '') . ' >' . tra('None') .'</option>';
 		}
 		foreach ($users as $usr => $usersname) {
-			if ($params['editable'] == 'y' || $usr == $params['user'] || (isset($params['select']) && $params['select'] === $usr)) {
+			$selected = isset($params['select']) && ( $params['select'] === $usr || (is_array($params['select']) && in_array($usr, $params['select'])) );
+			if ($params['editable'] == 'y' || $usr == $params['user'] || $selected) {
 				if (isset($params['select'])) {
-					$ret .= '<option value="' . htmlspecialchars($usr) . '"' . ($usr == $params['select'] ? ' selected="selected"' : '') . ' >' . $usersname .'</option>';
+					$ret .= '<option value="' . htmlspecialchars($usr) . '"' . ($selected ? ' selected="selected"' : '') . ' >' . $usersname .'</option>';
 				} else {
 					$ret .= '<option value="' . htmlspecialchars($usr) . '"' . ($usr == $params['user'] ? ' selected="selected"' : '') . ' >' . $usersname .'</option>';
 				}

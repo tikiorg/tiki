@@ -110,12 +110,14 @@ class Tracker_Field_GroupSelector extends Tracker_Field_Abstract
 			}
 		}
 		if ($this->getOption('assign')) {
-			$creator = TikiLib::lib('trk')->get_item_creator($this->getConfiguration('trackerId'), $this->getItemId());
-			if (empty($creator)) $creator = $user;
+			$creators = TikiLib::lib('trk')->get_item_creators($this->getConfiguration('trackerId'), $this->getItemId());
+			if (empty($creators)) $creators = array($user);
 			$ginfo = TikiLib::lib('user')->get_group_info($value);
-			if ($ginfo['userChoice'] == 'y') {
-				TikiLib::lib('user')->assign_user_to_group($creator, $value);
-				TikiLib::lib('user')->set_default_group($creator, $value);
+			foreach( $creators as $creator ) {
+				if ($ginfo['userChoice'] == 'y') {
+					TikiLib::lib('user')->assign_user_to_group($creator, $value);
+					TikiLib::lib('user')->set_default_group($creator, $value);
+				}
 			}
 		}
 

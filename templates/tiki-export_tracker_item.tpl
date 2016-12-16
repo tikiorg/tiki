@@ -49,7 +49,7 @@
 		{if !empty($listfields)}
 			{if $comma eq 'y'}{$separator}{else}{assign var='comma' value='y'}{/if}
 			{foreach item=field_value from=$item.field_values name=list}
-				{if $field_value.isHidden ne 'c' or ($field_value.isHidden eq 'c' and ($item.itemUser eq $user or $tiki_p_admin_trackers eq 'y'))}
+				{if $field_value.isHidden ne 'c' or ($field_value.isHidden eq 'c' and (in_array($user, $item.itemUsers) or $tiki_p_admin_trackers eq 'y'))}
 					{capture name="line"}
 						{trackeroutput field=$field_value item=$item list_mode='csv' showlinks='n'}
 					{/capture}

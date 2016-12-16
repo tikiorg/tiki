@@ -74,6 +74,20 @@
 							<div class="help-block">{tr}Separate multiple with &quot;{$def.separator}&quot;{/tr}</div>
 						{/if}
 					{/if}
+					{if $def.depends}
+					{jq}
+						$("input[name='option~{{$def.depends.field|escape}}'],textarea[name='option~{{$def.depends.field|escape}}'],select[name='option~{{$def.depends.field|escape}}']")
+						.change(function(){
+							var val = $(this).val();
+							var fg = $("input[name='option~{{$param|escape}}'],textarea[name='option~{{$param|escape}}'],select[name='option~{{$param|escape}}']").closest('.form-group');
+							if( val === {{$def.depends.value|json_encode}} || ( !{{$def.depends.value|json_encode}} && val ) ) {
+								fg.show();
+							} else {
+								fg.hide();
+							}
+						}).change();
+					{/jq}
+					{/if}
 				</div>
 			{/foreach}
 
@@ -111,6 +125,7 @@
 					<option value="r"{if $field.isHidden eq 'r'} selected="selected"{/if}>{tr}Visible by all but not in RSS feeds{/tr}</option>
 					<option value="y"{if $field.isHidden eq 'y'} selected="selected"{/if}>{tr}Visible after creation by administrators only{/tr}</option>
 					<option value="p"{if $field.isHidden eq 'p'} selected="selected"{/if}>{tr}Editable by administrators only{/tr}</option>
+					<option value="a"{if $field.isHidden eq 'a'} selected="selected"{/if}>{tr}Editable after creation by administrators only{/tr}</option>
 					<option value="c"{if $field.isHidden eq 'c'} selected="selected"{/if}>{tr}Editable by administrators and creator only{/tr}</option>
 					<option value="i"{if $field.isHidden eq 'i'} selected="selected"{/if}>{tr}Immutable after creation{/tr}</option>
 				</select>

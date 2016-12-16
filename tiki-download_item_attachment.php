@@ -30,10 +30,10 @@ if (empty($info)) {
 	die;
 }
 $itemInfo = $trklib->get_tracker_item($info["itemId"]);
-$itemUser = $trklib->get_item_creator($itemInfo['trackerId'], $itemInfo['itemId']);
+$itemUsers = $trklib->get_item_creators($itemInfo['trackerId'], $itemInfo['itemId']);
 
 if (isset($info['user']) && $info['user'] == $user) {
-} elseif (!empty($itemUser) && $user == $itemUser) {
+} elseif (!empty($itemUsers) && in_array($user, $itemUsers)) {
 } elseif ((isset($itemInfo['status']) and $itemInfo['status'] == 'p' && !$tikilib->user_has_perm_on_object($user, $itemInfo['trackerId'], 'tracker', 'tiki_p_view_trackers_pending'))
 	||  (isset($itemInfo['status']) and $itemInfo['status'] == 'c' && !$tikilib->user_has_perm_on_object($user, $itemInfo['trackerId'], 'tracker', 'tiki_p_view_trackers_closed'))
 	||  ($tiki_p_admin_trackers != 'y' && !$tikilib->user_has_perm_on_object($user, $itemInfo['trackerId'], 'tracker', 'tiki_p_view_trackers'))

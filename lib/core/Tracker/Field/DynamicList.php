@@ -185,7 +185,8 @@ $("input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFieldI
 			$ddl.trigger("change");
 		} // callback
 	);  // getJSON
-}).trigger("change", "'. $insertId. '"); // closure
+});
+$("input[name=ins_' . $filterFieldIdHere . '], select[name=ins_' . $filterFieldIdHere . ']").trigger("change", "'. $insertId. '"); // closure
 		'
 		); // add_jq_onready
 

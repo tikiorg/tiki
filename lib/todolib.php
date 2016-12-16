@@ -309,9 +309,9 @@ class TodoLib
 		$tikilib = TikiLib::lib('tiki');
 		foreach ($objects as $object) {
 			// get the creator
-			$u = $object['field_values'][0]['value'];
-			if (empty($u)) {
-				$u = $object['itemUser'];
+			$creators = array($object['field_values'][0]['value']);
+			if (empty($creators)) {
+				$creators = $object['itemUsers'];
 			}
 			if (!empty($todo['to']['body'])) { // assign whatever needed
 				$smarty->assign('todo_itemId', $object['itemId']);
@@ -321,8 +321,10 @@ class TodoLib
 				$smarty->assign('todo_after', $todo['to']['before']);
 				$smarty->assign('todo_desc', $trklib->get_isMain_value($object['trackerId'], $object['itemId']));
 			}
-			// mail creator
-			$this->mailTodo($todo, array('user'=>$u), 'Tracker item status will be changed');
+			foreach( $creators as $creator ) {
+				// mail creator
+				$this->mailTodo($todo, array('user'=>$creator), 'Tracker item status will be changed');
+			}
 			//register as been mailed
 			$this->addNotif($todo['todoId'], 'trackeritem', $object['itemId']);
 		}
