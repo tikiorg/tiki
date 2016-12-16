@@ -57,6 +57,13 @@ function prefs_print_list()
 			'dependencies' => array('auth_token_access'),
 			'default' => 'vendor_custom/mpdf/',
 		),
+		'print_pdf_mpdf_printfriendly' => array(
+			'name' => tra('Print Friendly PDF'),
+			'description' => tra('Useful for dark themes, Enabling this option will change theme background color to white and text / headings color to black. If turned off, theme colors will be retained in pdf'),
+			'type' => 'flag',
+			'default' => 'y'
+			
+		),
 		
 		'print_pdf_mpdf_orientation' => array(
 			'name' => tra('PDF Orientation'),
@@ -71,8 +78,8 @@ function prefs_print_list()
 		),
 		'print_pdf_mpdf_size' => array(
 			'name' => tra('PDF page size'),
-			'description' => tra('ISO Standard sizes: A0,A1,A2,A3,A4,A5 or North American paper sizes: Letter, Legal, Tabloid/Ledger(for ledger select landscape orientation)'),
-			'tags' => array('advanced'),
+			'description' => tra('ISO Standard sizes: A0, A1, A2, A3, A4, A5 or North American paper sizes: Letter, Legal, Tabloid/Ledger (for ledger, select landscape orientation)'),
+			'tags' => array('advanced'), 
 			'type' => 'list',
 			'options' => array(
 			    'Letter' => tra('Letter'),
@@ -86,7 +93,7 @@ function prefs_print_list()
 				'A5' => tra('A5'),
 				'A6' => tra('A6'),
 			),
-			'default' => 'Letter',
+			'default' => 'A4',
 		),
 		'print_pdf_mpdf_header' => array(
 			'name' => tra('PDF header text'),

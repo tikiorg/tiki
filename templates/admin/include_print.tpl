@@ -16,6 +16,7 @@
 				</div>
 				<div class="adminoptionboxchild print_pdf_from_url_childcontainer mpdf">
 					{preference name=print_pdf_mpdf_path}
+                    {preference name=print_pdf_mpdf_printfriendly}
                     {preference name=print_pdf_mpdf_orientation}
                     {preference name=print_pdf_mpdf_size}
                     {preference name=print_pdf_mpdf_header}

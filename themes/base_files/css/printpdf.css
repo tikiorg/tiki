@@ -1,0 +1,32 @@
+@charset "utf-8";
+/* CSS Document */
+//
+// media print stuff (for tiki-print only)
+//
+html { background:#fff; color:#000; }
+body { background:#fff; color:#000 }
+body h1, body h2, body h3,
+body h4, body h5, body h6 { page-break-after:avoid; color:#000 }
+body .alert { display:none; }
+a { text-decoration:none; color:#000 }
+p{color:#000;}
+img.icon { display:none; } 
+.editplugin{display:none;visibility:hidden}
+
+.text-danger, .text-danger:hover{color:#000}
+
+table td { color:#000; }
+  .table th {
+    padding:0.5em; color:#000; background-color:#ccc;
+    vertical-align:bottom; border-bottom:2px solid #696969;
+  }
+  .table td {
+    padding:0.5em; background-color:#fff;
+    vertical-align:top; border-top:1px solid #696969; border-bottom:none;
+  }
+  .table td.odd { color:#000; background-color:#FAFAFA; }
+  .table td.even { color:#000 }
+  .normal td, .table td.odd, .table td.even { padding:0.5em; }
+  table a, .table a{ color:#000 }
+  
+   .table-striped {border:1px solid #ccc;} .table-striped td { padding: 8px; line-height: 1.42857143;vertical-align: center;border-top: 1px solid #ccc; } .table-striped th { padding: 10px; line-height: 1.42857143;vertical-align: center; background-color:#ccc } .table-striped .odd { padding:10px;} .table-striped .even { padding:10px; background-color:#eee; }

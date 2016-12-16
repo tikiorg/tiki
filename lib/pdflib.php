@@ -305,14 +305,23 @@ class PdfGenerator
 		
 		$mpdf->CSSselectMedia = 'print';				// assuming you used this in the document header
 
-		//getting main theme css
+		//getting main base css file
+		$basecss = file_get_contents('themes/base_files/css/tiki_base.css'); // external css
+        
+		//getting theme css
 		$themeLib = TikiLib::lib('theme');
         $themecss=$themeLib->get_theme_path($prefs['theme'], '', $prefs['theme'] . '.css');
-		$stylesheet1 = file_get_contents('themes/base_files/css/tiki_base.css'); // external css
-        $stylesheet2 = file_get_contents($themecss); // external css
+		$themecss = file_get_contents($themecss); // external css
+		
+		//checking if print friendly option is enabled, then attach print css otherwise theme styles will be retained by theme css
+		if($prefs['print_pdf_mpdf_printfriendly']=='y')
+		{
+			 $printcss = file_get_contents('themes/base_files/css/printpdf.css'); // external css
+        
+		}
 
-       //  echo '<style>'.$stylesheet1.$stylesheet2.$this->bootstrapReplace().'</style>'.$html;
-        $mpdf->WriteHTML('<style>'.$stylesheet1.$stylesheet2.$this->bootstrapReplace().'</style>'.$html);
+		
+        $mpdf->WriteHTML('<style>'.$basecss.$themecss.$printcss.$this->bootstrapReplace().'</style>'.$html);
 	    $this->clearTempImg($tempImgArr);
         return $mpdf->Output('', 'S');					// Return as a string
 	}
@@ -401,7 +410,7 @@ class PdfGenerator
 	 }
 	 
 	 function bootstrapReplace(){
-	    return ".col-xs-12 {width: 90%;}.col-xs-11 {width: 81.66666667%;}.col-xs-10 {width: 72%;}.col-xs-9 {width: 64%;}.col-xs-8 {width: 57%;}.col-xs-7 {width: 49%;}.col-xs-6 {width: 42%;}.col-xs-5 {width: 35%;}.col-xs-4 {width: 28%;}.col-xs-3{width: 20%;}.col-xs-2 {width: 12.2%;}.col-xs-1 {width: 3.92%;}'@page,body.print* {background:#fff;color:#000;} p,.print{color:#000;} .editplugin{display:none;visibility:hidden} .table-striped {border:1px solid #ccc;} .table-striped td { padding: 8px; line-height: 1.42857143;vertical-align: center;border-top: 1px solid #ccc; } .table-striped th { padding: 10px; line-height: 1.42857143;vertical-align: center; background-color:#ccc } .table-striped .odd { padding:10px;} .table-striped .even { padding:10px; background-color:#eee; }";	 
+	    return ".col-xs-12 {width: 90%;}.col-xs-11 {width: 81.66666667%;}.col-xs-10 {width: 72%;}.col-xs-9 {width: 64%;}.col-xs-8 {width: 57%;}.col-xs-7 {width: 49%;}.col-xs-6 {width: 42%;}.col-xs-5 {width: 35%;}.col-xs-4 {width: 28%;}.col-xs-3{width: 20%;}.col-xs-2 {width: 12.2%;}.col-xs-1 {width: 3.92%;}    .table-striped {border:1px solid #ccc;} .table-striped td { padding: 8px; line-height: 1.42857143;vertical-align: center;border-top: 1px solid #ccc; color:#000; } .table-striped th { padding: 10px; line-height: 1.42857143;vertical-align: center; background-color:#ccc; color:#000  } .table-striped .odd { color:#000;padding:10px;} .table-striped .even { padding:10px; background-color:#eee; }.odd { padding:10px; background-color:#fff; } .table-striped a{color:#000}";	 
 	}
 }
 
