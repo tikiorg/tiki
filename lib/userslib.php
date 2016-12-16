@@ -766,8 +766,8 @@ class UsersLib extends TikiLib
 
 				if ($matcher == 'email') {
 					if (empty($saml_email)) {
-						echo "The email could not be retrieved from the IdP and is required";
-						exit();
+						Feedback::error(tra("The email could not be retrieved from the IdP and is required"));
+						return array(false, $username, SERVER_ERROR);
 					} else {
 						$username = $this->get_user_by_email($saml_email);
 						if ($this->user_exists($username)) {
@@ -775,15 +775,15 @@ class UsersLib extends TikiLib
 						} else {
 							$userTikiPresent = false;
 							if (!isset($prefs['saml_options_autocreate']) || $prefs['saml_options_autocreate'] != 'y') {
-								echo 'The user [ ' . $saml_email . ' ] is not registered with this wiki and autocreate is disabled.';
-								exit();
+								Feedback::error(tr('The user [ %0 ] is not registered with this wiki and autocreate is disabled.', $saml_email));
+								return array(false, $username, USER_NOT_FOUND);
 							}
 						}
 					}
 				} else {
 					if (empty($saml_username)) {
-						echo "The username could not be retrieved from the IdP and is required";
-						exit();
+						Feedback::error(tra("The username could not be retrieved from the IdP and is required"));
+						return array(false, $username, SERVER_ERROR);
 					} else {
 						$username = $saml_username;
 						if ($this->user_exists($saml_username)) {
@@ -792,8 +792,8 @@ class UsersLib extends TikiLib
 							$userTikiPresent = false;
 
 							if (!isset($prefs['saml_options_autocreate']) || $prefs['saml_options_autocreate'] != 'y') {
-								echo 'The user [ ' . $saml_username . ' ] is not registered with this wiki and autocreate is disabled.';
-								exit();
+								Feedback::error(tr('The user [ %0 ] is not registered with this wiki and autocreate is disabled.', $saml_username));
+								return array(false, $username, USER_NOT_FOUND);
 							}
 						}
 					}
@@ -819,8 +819,8 @@ class UsersLib extends TikiLib
 					$result = $this->add_user($username, $randompass, $saml_email, '', false, NULL, NULL, NULL, $saml_groups);
 
 					if (!$result) {
-						echo 'The user [ ' . $username . '|' .$saml_email. ' ] is not registered with this wiki and the creation process failed.';
-						exit();
+						Feedback::error(tr('The user [ %0|%1 ] is not registered with this wiki and the creation process failed.', $username, $saml_email));
+						return array(false, $username, SERVER_ERROR);
 					}
 
 					// if it worked ok, just log in
@@ -1173,17 +1173,17 @@ class UsersLib extends TikiLib
 			try {
 				$saml_instance->processResponse();
 			} catch (Exception $e) {
-				print_r($e->getMessage());
-				exit();
+				Feedback::error($e->getMessage());
+				return;
 			}
 			$errors = $saml_instance->getErrors();
 			if (!empty($errors)) {
-				print_r('<p>'.implode(', ', $errors).'</p>');
-				exit();
+				Feedback::error(implode(', ', $errors));
+				return;
 			}
 			if (!$saml_instance->isAuthenticated()) {
-				echo "<p>SAML Login failed. User not authenticated</p>";
-				exit();
+				Feedback::error(tra("SAML Login failed. User not authenticated"));
+				return;
 			}
 
 			$_SESSION['samlUserdata'] = $saml_instance->getAttributes();
@@ -1200,13 +1200,13 @@ class UsersLib extends TikiLib
 			try {
 				$saml_instance->processSLO(false);
 			} catch (Exception $e) {
-				print_r($e->getMessage());
-				exit();
+				Feedback::error($e->getMessage());
+				return;
 			}
 			$errors = $saml_instance->getErrors();
 			if (!empty($errors)) {
-				print_r('<p>'.implode(', ', $errors).'</p>');
-				exit();
+				Feedback::error(implode(', ', $errors));
+				return;
 			} else {
 				unset($_SESSION['samlUserdata']);
 				unset($_SESSION['samlNameId']);
