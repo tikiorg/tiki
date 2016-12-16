@@ -10,7 +10,6 @@ body h4, body h5, body h6 { page-break-after:avoid; color:#000 }
 body .alert { display:none; }
 a { text-decoration:none; color:#000 }
 p{color:#000;}
-img.icon { display:none; } 
 .editplugin{display:none;visibility:hidden}
 
 .text-danger, .text-danger:hover{color:#000}
