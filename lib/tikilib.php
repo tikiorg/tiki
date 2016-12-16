@@ -525,23 +525,47 @@ class TikiLib extends TikiDb_Bridge
 	/*shared*/
 	// Returns IP address or IP address forwarded by the proxy if feature load balancer is set
 	/**
+     * @param $firewall true to detect ip behind a firewall
 	 * @return null|string
 	 */
-	function get_ip_address()
+	function get_ip_address($firewall = 0)
 	{
 		global $prefs;
-		if (isset($prefs['feature_loadbalancer']) && $prefs['feature_loadbalancer'] == "y") {
-			$ip = null;
+		if ($firewall || (isset($prefs['feature_loadbalancer']) && $prefs['feature_loadbalancer'] === "y")) {
 
-			if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-				$fwips = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
-				$ip = $fwips[0];
-			}
-			if ((empty($ip) || strtolower($ip) == 'unknown') && isset($_SERVER['REMOTE_ADDR'])) {
-				$ip = $_SERVER['REMOTE_ADDR'];
-			}
-			return $ip;
-		} elseif (isset($_SERVER['REMOTE_ADDR'])) {
+		    $header_checks = array(
+                'HTTP_CF_CONNECTING_IP',
+                'HTTP_CLIENT_IP',
+                'HTTP_PRAGMA',
+                'HTTP_XONNECTION',
+                'HTTP_CACHE_INFO',
+                'HTTP_XPROXY',
+                'HTTP_PROXY',
+                'HTTP_PROXY_CONNECTION',
+                'HTTP_VIA',
+                'HTTP_X_COMING_FROM',
+                'HTTP_COMING_FROM',
+                'HTTP_X_FORWARDED_FOR',
+                'HTTP_X_FORWARDED',
+                'HTTP_X_CLUSTER_CLIENT_IP',
+                'HTTP_FORWARDED_FOR',
+                'HTTP_FORWARDED',
+                'HTTP_CACHE_CONTROL',
+                'HTTP_X_REAL_IP',
+                'REMOTE_ADDR');
+
+            foreach ($header_checks as $key)
+                if (array_key_exists($key, $_SERVER) === true)
+                    foreach (explode(',', $_SERVER[$key]) as $ip){
+                        $ip = trim($ip);
+
+                        //filter the ip with filter functions
+                        if (filter_var($ip, FILTER_VALIDATE_IP) !== false)
+                            return $ip;
+                    }
+
+		}
+		if (isset($_SERVER['REMOTE_ADDR']) && filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP)) {
 			return $_SERVER['REMOTE_ADDR'];
 		} else {
 			return '0.0.0.0';
