@@ -79,14 +79,24 @@ class Tiki_Profile_Writer_Helper
 				}
 
 				if( $pluginName == 'jq') {
-					// Handle ins_FIELDID JQ references
+					// Handle ins_FIELDID|user_selector_FIELDID|trackerinput_FIELDID JQ references
 					$body = preg_replace_callback(
-						'/ins_(\d+)/',
+						'/(ins|user_selector|trackerinput)_(\d+)/',
 						function ($args) use ($writer) {
-							return 'ins_' . $writer->getReference('tracker_field', $args[1]);
+							return $args[1] . '_' . $writer->getReference('tracker_field', $args[2]);
 						},
 						$body
 					);
+
+					// handle inline JQ comment references
+					$lines = preg_split("/[\r\n]+/", $body);
+					foreach( $lines as &$line ) {
+						if( preg_match('#//\s*profile_reference=(.*)$#', $line, $m) ) {
+							$reference = $m[1];
+							$line = self::uniform_string($reference, $writer, $line);
+						}
+					}
+					$body = implode("\n", $lines);
 				}
 
 				$match->replaceWithPlugin($pluginName, $params, $body);
