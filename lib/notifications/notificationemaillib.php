@@ -781,12 +781,14 @@ function sendStructureEmailNotification($params)
 }
 
 /**
- * @param $type Type of the object commented on, 'wiki' or 'article'
+ * @param $type Type of the object commented on, 'wiki', 'article', 'blog', 'trackeritem'
  * @param $id Identifier of the object commented on. For articles, their id and for wiki pages, their name
  * @param $title Comment title
  * @param $content Comment content
+ * @param $commentId Comment ID just posted
+ * @param $anonymousName Name of the user when comment is submitting by an anonymous user (or anonymously by an existing user)
  */
-function sendCommentNotification($type, $id, $title, $content, $commentId=null)
+function sendCommentNotification($type, $id, $title, $content, $commentId, $anonymousName)
 {
 	global $user, $prefs;
 	$smarty = TikiLib::lib('smarty');
@@ -815,10 +817,18 @@ function sendCommentNotification($type, $id, $title, $content, $commentId=null)
 		$watches = $tikilib->get_event_watches($events, $id);
 	}
 
-	$watches2 = $tikilib->get_event_watches('comment_post', $commentId);
-
-	if (!empty($watches2)) {
-		$watches = array_merge($watches, $watches2);
+	// get individual comment reply watches
+	$comments_list = TikiLib::lib('comments')->get_root_path($commentId);
+	foreach( $comments_list as $threadId ) {
+		$watches2 = $tikilib->get_event_watches('thread_comment_replied', $threadId);
+		if (!empty($watches2)) {
+			// make sure we add unique email addresses to send the notification to
+			foreach( $watches2 as $userWatch ) {
+				if( !in_array( $userWatch['email'], array_map(function($w){ return $w['email']; }, $watches) ) ) {
+					$watches[] = $userWatch;
+				}
+			}
+		}
 	}
 
 	if ($type != 'wiki'|| $prefs['wiki_watch_editor'] != 'y') {
@@ -836,7 +846,6 @@ function sendCommentNotification($type, $id, $title, $content, $commentId=null)
 		} elseif ($type == 'article') {
 			$artlib = TikiLib::lib('art');
 			$smarty->assign('mail_objectname', $artlib->get_title($id));
-			$smarty->assign('mail_objectid', $id);
 		} elseif ($type == 'trackeritem') {
 			if ($prefs['feature_daily_report_watches'] == 'y') {
 				$reportsManager = Reports_Factory::build('Reports_Manager');
@@ -853,19 +862,24 @@ function sendCommentNotification($type, $id, $title, $content, $commentId=null)
 			}
 
 			$tracker = $trklib->get_tracker($trackerId);
-			$smarty->assign('mail_objectid', $id);
 			$smarty->assign('mail_objectname', $tracker['name']);
 			$smarty->assign('mail_item_title', $trklib->get_isMain_value($trackerId, $id));
+		} elseif ($type == 'blog') {
+			$bloglib = TikiLib::lib('blog');
+			$blog_post = $bloglib->get_post($id);
+			$smarty->assign('mail_objectname', $blog_post['title']);
 		}
 
 		// General comment mail
 		$smarty->assign('mail_objectid', $id);
 		$smarty->assign('objecttype', $type);
-		$smarty->assign('mail_user', $user);
+		$smarty->assign('mail_user', empty($anonymousName) ? $user : $anonymousName);
 		$smarty->assign('mail_title', $title);
 		$smarty->assign('mail_comment', $content);
 		$smarty->assign('comment_id', $commentId);
 
-		sendEmailNotification($watches, null, 'user_watch_comment_subject.tpl', null, 'user_watch_comment.tpl');
+		return sendEmailNotification($watches, null, 'user_watch_comment_subject.tpl', null, 'user_watch_comment.tpl');
 	}
+
+	return 0;
 }

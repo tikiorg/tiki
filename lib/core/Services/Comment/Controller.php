@@ -83,6 +83,7 @@ class Services_Comment_Controller
 
 		$title = trim($input->title->text());
 		$data = trim($input->data->wikicontent());
+		$watch = $input->watch->text();
 		$contributions = array();
 		$anonymous_name = '';
 		$anonymous_email = '';
@@ -91,7 +92,7 @@ class Services_Comment_Controller
 		if (empty($user) || $prefs['feature_comments_post_as_anonymous'] == 'y') {
 			$anonymous_name = $input->anonymous_name->text();
 			$anonymous_email = $input->anonymous_email->email();
-			$anonymous_website = $input->anonymous_website->website();
+			$anonymous_website = $input->anonymous_website->url();
 		}
 
 		if ($input->post->int()) {
@@ -150,6 +151,57 @@ class Services_Comment_Controller
 					$anonymous_email,
 					$anonymous_website
 				);
+				// Set watch if requested
+				if ($prefs['feature_user_watches'] == 'y' && $watch == 'y') {
+					// ensure subcomments are not watched when parent comments are watched
+					// so we don't fill the user_watches table unnecessary
+					$comments_list = $commentslib->get_root_path($threadId);
+					$watch_user = empty($anonymous_email) ? $user : $anonymous_name . ' ' . tra('(not registered)');
+					if( !TikiLib::lib('tiki')->get_user_event_watches($watch_user, 'thread_comment_replied', $comments_list) ) {
+						if ($type == 'wiki page') {
+							$wikilib = TikiLib::lib('wiki');
+							$parent_name = $objectId;
+							$notification_url = $wikilib->sefurl($objectId);
+						} elseif ($type == 'article') {
+							$artlib = TikiLib::lib('art');
+							$parent_name = $artlib->get_title($objectId);
+							$notification_url = 'tiki-read_article.php?articleId='.$objectId;
+						} elseif ($type == 'trackeritem') {
+							$trk = Tikilib::lib('trk');
+							$trackerId = $trk->get_tracker_for_item($objectId);
+							$parent_name = $trk->get_isMain_value($trackerId, $objectId);
+							$notification_url = 'tiki-view_tracker_item.php?itemId='.$objectId;
+						} elseif ($type == 'blog post') {
+							$bloglib = TikiLib::lib('blog');
+							$blog_post = $bloglib->get_post($objectId);
+							$parent_name = $blog_post['title'];
+							$notification_url = 'tiki-view_blog_post.php?postId='.$objectId;
+						} else {
+							$parent_name = '';
+							$notification_url = '';
+						}
+						if (!empty($anonymous_email)) { // Add an anonymous watch, if email address supplied.
+							TikiLib::lib('tiki')->add_user_watch(
+								$anonymous_name . ' ' . tra('(not registered)'),
+								'thread_comment_replied',
+								$threadId,
+								'comment',
+								$parent_name . ':' . $title,
+								$notification_url,
+								$anonymous_email
+							);
+						} elseif ($user) {
+							TikiLib::lib('tiki')->add_user_watch(
+								$user,
+								'thread_comment_replied',
+								$threadId,
+								'comment',
+								$parent_name . ':' . $title,
+								$notification_url
+							);
+						}
+					}
+				}
 
 				$feedback = array();
 
@@ -160,18 +212,19 @@ class Services_Comment_Controller
 				if ($threadId) {
 					$this->rememberCreatedComment($threadId);
 
+					$emailType = '';
 					if ($prefs['wiki_watch_comments'] == 'y' && $type == 'wiki page') {
-						require_once('lib/notifications/notificationemaillib.php');
-						sendCommentNotification('wiki', $objectId, $title, $data);
+						$emailType = 'wiki';
 					} else if ($type == 'article') {
-						require_once('lib/notifications/notificationemaillib.php');
-						sendCommentNotification('article', $objectId, $title, $data);
+						$emailType = 'article';
 					} elseif ($prefs['feature_blogs'] == 'y' && $type == 'blog post') { // Blog comment mail
-						require_once('lib/notifications/notificationemaillib.php');
-						 sendCommentNotification('blog', $objectId, $title, $data);
+						$emailType = 'blog';
 					} elseif ($type == 'trackeritem') {
+						$emailType = 'trackeritem';
+					}
+					if( $emailType ) {
 						require_once('lib/notifications/notificationemaillib.php');
-						sendCommentNotification('trackeritem', $objectId, $title, $data, $threadId);
+						sendCommentNotification($emailType, $objectId, $title, $data, $threadId, $anonymous_name);
 					}
 
 					$access = TikiLib::lib('access');
@@ -238,6 +291,8 @@ class Services_Comment_Controller
 
 	function action_remove($input)
 	{
+		global $prefs, $user;
+
 		$threadId = $input->threadId->int();
 		$confirmation = $input->confirm->int();
 		$status = '';
@@ -253,6 +308,15 @@ class Services_Comment_Controller
 			if ($confirmation) {
 				$commentslib = TikiLib::lib('comments');
 				$commentslib->remove_comment($threadId);
+
+				if($prefs['feature_user_watches'] && $user) {
+					TikiLib::lib('tiki')->remove_user_watch_object(
+						'thread_comment_replied',
+						$threadId,
+						'comment'
+					);
+				}
+
 				$status = 'DONE';
 			}
 		} else {
