@@ -337,6 +337,12 @@ class CleanVendors
 				'browser-not-supported.html',
 			]
 		);
+		self::removeMultiple($vendors . 'etdsolutions',
+			[
+				'jquery',
+				'jquery-ui',
+			]
+		);
 	}
 
 	private static function addIndexFile($path)

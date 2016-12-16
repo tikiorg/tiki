@@ -514,6 +514,82 @@
             "time": "2015-12-07 04:07:13"
         },
         {
+            "name": "etdsolutions/jquery",
+            "version": "3.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/etd-framework/jquery.git",
+                "reference": "b9a30373401c53769aae8e5253d2005d7b256989"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/etd-framework/jquery/zipball/b9a30373401c53769aae8e5253d2005d7b256989",
+                "reference": "b9a30373401c53769aae8e5253d2005d7b256989",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Shim repository for jQuery",
+            "homepage": "http://jquery.com",
+            "time": "2016-09-23 06:07:30"
+        },
+        {
+            "name": "etdsolutions/jquery-ui",
+            "version": "1.11.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/etd-framework/jquery-ui.git",
+                "reference": "af173f45b7af91a42c88e23955784a09ba96eb44"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/etd-framework/jquery-ui/zipball/af173f45b7af91a42c88e23955784a09ba96eb44",
+                "reference": "af173f45b7af91a42c88e23955784a09ba96eb44",
+                "shasum": ""
+            },
+            "require": {
+                "etdsolutions/jquery": ">=1.6"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Shim repository for jQuery UI",
+            "homepage": "http://jqueryui.com",
+            "time": "2015-05-13 14:14:41"
+        },
+        {
+            "name": "etdsolutions/pivottable",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/etd-framework/pivottable.git",
+                "reference": "6b5986ee329c0c9ade4c9316f22e7af2ef9a33c1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/etdsolutions-pivottable-6b5986ee329c0c9ade4c9316f22e7af2ef9a33c1-zip-bf5ea7.zip",
+                "reference": "6b5986ee329c0c9ade4c9316f22e7af2ef9a33c1",
+                "shasum": "7f0a0ad26d3a5e304e6d9129f989d1ead46826d5"
+            },
+            "require": {
+                "etdsolutions/jquery": ">=1.8.3",
+                "etdsolutions/jquery-ui": ">=1.9.2"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Shim repository for PivotTable.js",
+            "homepage": "http://nicolas.kruchten.com/pivottable",
+            "time": "2016-05-27 15:01:02"
+        },
+        {
             "name": "ezyang/htmlpurifier",
             "version": "v4.8.0",
             "source": {

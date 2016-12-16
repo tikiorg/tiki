@@ -9,6 +9,7 @@ interface Search_Formatter_Plugin_Interface
 {
 	const FORMAT_WIKI = 'wiki';
 	const FORMAT_HTML = 'html';
+  const FORMAT_ARRAY = 'array';
 
 	function getFields();
 
