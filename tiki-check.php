@@ -33,7 +33,7 @@ $inputConfiguration = array(
 );
 
 // reflector for SefURL check
-if ($_REQUEST['tiki-check-ping']){
+if (isset($_REQUEST['tiki-check-ping'])){
 	die('pong:' . (int)$_REQUEST['tiki-check-ping']);
 }
 
