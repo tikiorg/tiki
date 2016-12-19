@@ -712,6 +712,18 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, array $listfields=ar
 				} else {
 					$res = $trklib->list_tracker_field_values($trackerId, $fieldId);
 				}
+				if( $field['type'] == 'u' ) {
+					$res = array_unique(
+						call_user_func_array('array_merge',
+							array_map(
+								function($users) use ($trklib) {
+									return $trklib->parse_user_field($users);
+								}, $res
+							)
+						)
+					);
+					sort($res, SORT_NATURAL);
+				}
 				foreach ($res as $val) {
 					$sval = strip_tags($tikilib->parse_data($val, array('parsetoc'=> false)));
 					$opt['id'] = $val;
