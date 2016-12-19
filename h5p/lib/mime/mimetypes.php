@@ -172,6 +172,7 @@ $mimetypes = array(
 	"htc" => "text/x-component",
 	"h" => "text/x-chdr",
 	"h++" => "text/x-c++hdr",
+	"h5p" => "application/zip",
 	"html" => "text/html",
 	"htm" => "text/html",
 	"hxx" => "text/x-c++hdr",

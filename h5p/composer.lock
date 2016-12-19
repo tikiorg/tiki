@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "90bb411e86fb7e2e78f8fc29503c8cbe",
-    "content-hash": "f7b2cfc235192776b9621bab70380775",
+    "hash": "9da1c7d8804c803e56f6b1d19eec5305",
+    "content-hash": "c2391cf5aa97dd906f307305479e3bde",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -523,9 +523,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/etd-framework/jquery/zipball/b9a30373401c53769aae8e5253d2005d7b256989",
+                "url": "https://composer.tiki.org/dist/etdsolutions-jquery-b9a30373401c53769aae8e5253d2005d7b256989-zip-c8a4bd.zip",
                 "reference": "b9a30373401c53769aae8e5253d2005d7b256989",
-                "shasum": ""
+                "shasum": "fed18c065659cf90030dde2b5b05728b825ff5c2"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -546,9 +546,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/etd-framework/jquery-ui/zipball/af173f45b7af91a42c88e23955784a09ba96eb44",
+                "url": "https://composer.tiki.org/dist/etdsolutions-jquery-ui-af173f45b7af91a42c88e23955784a09ba96eb44-zip-a2837d.zip",
                 "reference": "af173f45b7af91a42c88e23955784a09ba96eb44",
-                "shasum": ""
+                "shasum": "a339de5dd4ad04cc435b8f31961d3208e8a6df52"
             },
             "require": {
                 "etdsolutions/jquery": ">=1.6"
@@ -723,6 +723,117 @@
                 "google"
             ],
             "time": "2015-10-16 22:11:08"
+        },
+        {
+            "name": "h5p/h5p-core",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/h5p/h5p-php-library.git",
+                "reference": "28e34c1c093815aa0243581a17d9c2ecf13b3859"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/h5p/h5p-php-library/zipball/28e34c1c093815aa0243581a17d9c2ecf13b3859",
+                "reference": "28e34c1c093815aa0243581a17d9c2ecf13b3859",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "h5p.classes.php",
+                    "h5p-development.class.php",
+                    "h5p-file-storage.interface.php",
+                    "h5p-default-storage.class.php",
+                    "h5p-event-base.class.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Svein-Tore Griff With",
+                    "email": "with@joubel.com",
+                    "homepage": "http://joubel.com",
+                    "role": "CEO"
+                },
+                {
+                    "name": "Frode Petterson",
+                    "email": "frode.petterson@joubel.com",
+                    "homepage": "http://joubel.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "H5P Core functionality in PHP",
+            "homepage": "https://h5p.org",
+            "keywords": [
+                "content",
+                "h5p",
+                "hvp",
+                "interactive",
+                "quiz"
+            ],
+            "time": "2016-12-14 15:21:42"
+        },
+        {
+            "name": "h5p/h5p-editor",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/h5p/h5p-editor-php-library.git",
+                "reference": "2ef69695150d3c1183bec390edf4f0702963330a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/h5p/h5p-editor-php-library/zipball/2ef69695150d3c1183bec390edf4f0702963330a",
+                "reference": "2ef69695150d3c1183bec390edf4f0702963330a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "h5peditor.class.php",
+                    "h5peditor-file.class.php",
+                    "h5peditor-storage.interface.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Svein-Tore Griff With",
+                    "email": "with@joubel.com",
+                    "homepage": "http://joubel.com",
+                    "role": "CEO"
+                },
+                {
+                    "name": "Frode Petterson",
+                    "email": "frode.petterson@joubel.com",
+                    "homepage": "http://joubel.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "H5P Editor functionality in PHP",
+            "homepage": "https://h5p.org",
+            "keywords": [
+                "content",
+                "editor",
+                "h5p",
+                "hvp",
+                "interactive",
+                "quiz"
+            ],
+            "time": "2016-12-19 14:38:23"
         },
         {
             "name": "jcapture-applet/jcapture-applet",
@@ -4686,17 +4797,17 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.7.3",
+            "version": "5.7.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "de164acc2f2bb0b79beb892a36260264b2a03233"
+                "reference": "af91da3f2671006ff5d0628023de3b7ac4d1ef09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/phpunit-phpunit-de164acc2f2bb0b79beb892a36260264b2a03233-zip-412a3d.zip",
-                "reference": "de164acc2f2bb0b79beb892a36260264b2a03233",
-                "shasum": "92768e9a0979a90ba894aeadf01ce784651f2f84"
+                "url": "https://composer.tiki.org/dist/phpunit-phpunit-af91da3f2671006ff5d0628023de3b7ac4d1ef09-zip-626239.zip",
+                "reference": "af91da3f2671006ff5d0628023de3b7ac4d1ef09",
+                "shasum": "7152a650386126c8cb7ed9afbe71356269c4859a"
             },
             "require": {
                 "ext-dom": "*",
@@ -4716,7 +4827,7 @@
                 "sebastian/diff": "~1.2",
                 "sebastian/environment": "^1.3.4 || ^2.0",
                 "sebastian/exporter": "~2.0",
-                "sebastian/global-state": "~1.0",
+                "sebastian/global-state": "^1.0 || ^2.0",
                 "sebastian/object-enumerator": "~2.0",
                 "sebastian/resource-operations": "~1.0",
                 "sebastian/version": "~1.0|~2.0",
@@ -4764,7 +4875,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-12-09 02:48:53"
+            "time": "2016-12-13 16:19:44"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -5511,6 +5622,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "h5p/h5p-core": 20,
+        "h5p/h5p-editor": 20,
         "jcapture-applet/jcapture-applet": 20,
         "nnnick/chartjs": 20,
         "zendframework/zendsearch": 5,

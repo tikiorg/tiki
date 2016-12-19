@@ -26,6 +26,8 @@
 		"etdsolutions/pivottable":"2.0.2",
 		"fortawesome/font-awesome": "^4.6.3",
 		"google/apiclient":"1.1.6",
+		"h5p/h5p-core":"dev-master",
+		"h5p/h5p-editor":"dev-master",
 		"jcapture-applet/jcapture-applet": "dev-master",
 		"jquery/jquery-s5": "1.0.1",
 		"jquery/jquery-sheet": "3.1",
