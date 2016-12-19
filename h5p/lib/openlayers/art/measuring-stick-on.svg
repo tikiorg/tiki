@@ -1,0 +1,13 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="28.4" height="28" viewBox="0 0 28.4 28" overflow="visible" enable-background="new 0 0 28.375 28" xml:space="preserve">
+  <path fill="none" stroke="#00008B" stroke-width="1.5" d="M27.9 1.4 0 1.4 0 27.5 1 27.6 1 0.5"/>
+  <line fill="none" stroke="#FFFFFF" x1="0.9" y1="27.5" x2="27.9" y2="27.5"/>
+  <rect x="0.9" y="1" fill="#ADD8E6" width="27.1" height="26"/>
+  <line fill="none" stroke="#FFFFFF" x1="27.9" y1="26.9" x2="27.9" y2="0.9"/>
+  <line fill="none" stroke="#00008B" x1="1.4" y1="0.5" x2="27.4" y2="0.5"/>
+  <line fill="none" stroke="#00008B" x1="0.9" y1="1" x2="0.9" y2="27"/>
+  <rect x="4.3" y="12.2" transform="matrix(0.7933 -0.6088 0.6088 0.7933 -5.9776 11.7065)" fill="#FFBF00" width="20" height="5"/>
+  <line fill="#FFBF00" stroke="#000000" x1="7.4" y1="16.8" x2="9.7" y2="19.8"/>
+  <line fill="#FFBF00" stroke="#000000" x1="10.9" y1="14" x2="13.3" y2="17"/>
+  <line fill="#FFBF00" stroke="#000000" x1="14.3" y1="11.4" x2="16.7" y2="14.4"/>
+  <line fill="#FFBF00" stroke="#000000" x1="17.7" y1="8.9" x2="20" y2="11.9"/>
+</svg>

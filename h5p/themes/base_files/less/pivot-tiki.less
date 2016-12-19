@@ -1,0 +1,158 @@
+.tiki {
+	.pvtUi {
+		color: @pvt-color;
+	}
+
+	table.pvtTable {
+		font-size: @pvt-font-size;
+	}
+
+	table.pvtTable tr th {
+		background-color: @pvt-table-th-bg;
+		color: @pvt-table-th-color;
+		border: 1px solid @pvt-table-border-color;
+		font-size: @pvt-font-size;
+		padding: 5px;
+	}
+
+	//table.pvtTable .pvtColLabel {text-align: center;}
+	//table.pvtTable .pvtTotalLabel {text-align: right;}
+
+	table.pvtTable tr td {
+		color: @pvt-color;
+		//	padding: 5px;
+		background-color: @pvt-table-bg;
+		border-color: @pvt-table-border-color;
+		//	vertical-align: top;
+		//	text-align: right;
+	}
+
+	.pvtTotal,
+	.pvtGrandTotal {
+		font-weight: bold;
+	}
+
+	.pvtVals {
+		text-align: center;
+	}
+	.pvtAggregator,
+	.pvtRenderer,
+	.pvtSearch,
+	.pvtAttrDropdown {
+		margin-bottom: 5px;
+		background: @pvtAggregator-bg;
+		color: @pvtAggregator-color;
+		border: 1px solid @pvtAggregator-border;
+		border-radius: @pvtAggregator-border-radius;
+	}
+
+	.pvtAxisContainer,
+	.pvtVals {
+		border-color: @pvt-table-border-color;
+		background: @pvt-bg;
+		padding: 5px;
+		//	min-width: 20px;
+		//	min-height: 20px;
+	}
+	//.pvtAxisContainer li {
+	//	padding: 8px 6px;
+	//	list-style-type: none;
+	//	cursor:move;
+	//}
+	.pvtAxisContainer li.pvtPlaceholder {
+		-webkit-border-radius: 5px;
+		padding: 3px 15px;
+		-moz-border-radius: 5px;
+		border-radius: 5px;
+		border: 1px dashed @pvt-table-border-color;
+	}
+
+	.pvtAxisContainer li span.pvtAttr {
+		-webkit-text-size-adjust: 100%;
+//		background: @table-bg;
+//		border: 1px solid @pvt-table-border-color;
+		padding: 2px 5px;
+		white-space: nowrap;
+//		-webkit-border-radius: 5px;
+//		-moz-border-radius: 5px;
+//		border-radius: 5px;
+		background: @btn-default-bg;
+		border: 1px solid @btn-default-border;
+		border-radius: @btn-border-radius-base;
+		color: @pvtAttr-color;
+	}
+
+	.pvtTriangle {
+		cursor: pointer;
+		color: grey;
+	}
+
+	.pvtHorizList li {
+		display: inline;
+	}
+	.pvtVertList {
+		vertical-align: top;
+	}
+
+	.pvtFilteredAttribute {
+		font-style: italic
+	}
+
+	.pvtFilterBox {
+		z-index: 100;
+		width: 280px;
+		border: 1px solid @pvt-table-border-color;
+		background-color: @pvt-modal-content-bg;
+		position: absolute;
+		padding: 20px;
+		text-align: center;
+	}
+
+	.pvtFilterBox h4 {
+		margin: 0;
+	}
+	.pvtFilterBox p {
+		margin: 1em auto;
+	}
+	.pvtFilterBox label {
+		font-weight: normal;
+	}
+	.pvtFilterBox input[type='checkbox'] {
+		margin-right: 5px;
+	}
+
+	.pvtCheckContainer {
+		text-align: left;
+		overflow: auto;
+		width: 100%;
+		max-height: 200px;
+	}
+	.pvtCheckContainer p {
+		margin: 5px;
+	}
+
+	.pvtRendererArea {
+		padding: 5px;
+	}
+	.pvtFilterBox button {
+		background: @pvtFilterBox-button-bg;
+		border: 1px solid @btn-default-border;
+		border-radius: @btn-border-radius-base;
+		color: @pvtFilterBox-button-color;
+		&:hover {
+			background: @pvtFilterBox-button-hover-bg;
+		}
+		& + button {
+			margin-left: 4px;
+			margin-bottom: 4px;
+		}
+	}
+
+	.c3 line, .c3 path, .c3 svg {
+		fill: none;
+		stroke: @c3-color;
+	}
+	select {
+		font-size: @pvtSelect-font-size;
+	}
+}

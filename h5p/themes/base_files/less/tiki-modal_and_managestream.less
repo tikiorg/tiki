@@ -1,0 +1,77 @@
+// $Id$
+
+@imagePathToIcons: ~"../../img/icons/";
+
+form.simple label.error {
+	//  background: url('@{imagePath}error.png') no-repeat 0 4px; (moved to tiki-selectors.less)
+	//  color: @state-danger-text;
+	padding: 4px 0 0 20px;
+	margin-left: 0.5em;
+}
+
+form.simple label {
+	clear: both;
+	padding-top: 1em;
+}
+
+form.simple label.depends {
+	padding-left: 20px;
+}
+
+form.simple label .description {
+	padding-left: 20px;
+}
+
+form.simple label .warning {
+	padding-top: 12px;
+	//  color: @state-danger-text;
+}
+
+form.simple textarea,
+form.simple input[type="text"],
+form.simple input[type="file"],
+form.simple input[type="url"],
+form.simple input[type="email"],
+form.simple input[type="number"],
+form.simple select {
+	display: block;
+	clear: left;
+	width: 100%;
+}
+
+form.simple textarea.export {
+	height: 320px;
+}
+
+// /* $.fn.modal */
+.tiki-modal {
+	position: absolute;
+	text-align: center;
+}
+
+.tiki-modal .mask {
+	position: absolute;
+	//  background-color: @body-bg;
+	display: none;
+	width: 100%;
+	height: auto;
+}
+
+.tiki-modal .dialog {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	font-weight: bold;
+}
+
+// /* end $.fn.modal */
+
+// .ui-dialog {
+//  background: @body-bg;
+//  color: @text-color;
+// }
+
+body > .ui-front {
+	/* bs .modal has z-index: 1050, need body specified so as to override jquery-ui.css */
+	z-index: 2000;
+}

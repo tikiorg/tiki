@@ -1,0 +1,1 @@
+{* $Id$ *}{tr}New {$prefs.mail_template_custom_text}blog post at %s{/tr}

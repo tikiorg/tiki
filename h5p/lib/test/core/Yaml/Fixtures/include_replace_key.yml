@@ -1,0 +1,6 @@
+---
+preferences:
+  feature_abc:
+    - !include feature_abc.yml 1 eq 1
+    - !include feature_xyz.yml
+  feature_something: y

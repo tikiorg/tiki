@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20.5" height="24.5" viewBox="0 0 20.5 24.5">
+<style>
+  .a{
+    fill:none;
+    stroke:#000;
+  }
+</style>
+    <rect x="0.3" y="0.3" width="20" height="24" style="opacity:0;stroke:#000"/>
+        <polygon points="10.1 0.6 19.9 7.7 10.1 24 0.6 7.6 " fill="#90EE90"/>
+        <polyline points="10 24.2 10.1 24 19.9 7.7 20.1 7.5 " class="a"/>
+        <polyline points="10.1 24.2 10.1 24 0.6 7.6 0.5 7.4 " class="a"/>
+        <polyline points="0.4 7.7 0.6 7.6 10.1 0.6 10.3 0.5 " class="a"/>
+        <polyline points="9.9 0.5 10.1 0.6 19.9 7.7 20.1 7.8 " class="a"/>
+    <ellipse cx="10.1" cy="9.3" rx="1.5" ry="1.5" stroke="#000"/>
+</svg>
+ 

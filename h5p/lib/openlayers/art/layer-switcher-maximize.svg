@@ -1,0 +1,29 @@
+<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" width="18" height="18">
+<style>
+.s0{
+  fill:#00008b;
+}
+.s1{
+  display:none;
+}
+
+</style>  <g>
+    <g transform="matrix(-7.849624e-17,1,-1,-7.849624e-17,18,0)">
+      <path transform="matrix(0,-1.00316,1.00316,0,-2.844e-2,18.02844)" d="M18 9A9 9 0 1 1 0 9 9 9 0 1 1 18 9z" fill="#00008b"/>
+      <rect transform="matrix(0,-1,1,0,0,0)" y="0" x="-9" height="18" width="9" fill="#00008b"/>
+    </g>
+  </g>
+  <g>
+    <text xml:space="preserve" x="1.5" y="-3.3" transform="scale(1,-1)" style="fill:#fff;font-family:Helvetica;font-size:18;font-weight:bold;line-height:125;stroke-linejoin:round;stroke:#fff;text-align:start;text-anchor:start;writing-mode:lr-tb">
+      <tspan x="1.5" y="-3.3">
+        +
+      </tspan>
+    </text>
+  </g>
+  <g display="none">
+    <path d="M3 9C3 9.5 3.2 9.9 3.6 10.2 3.6 10.3 3.9 10.5 4.5 10.8L8.2 13.2C8.3 13.3 8.4 13.4 8.6 13.5 8.8 13.5 9 13.6 9.2 13.6 9.6 13.6 9.9 13.4 10.2 13.2 10.4 13 10.6 12.7 10.6 12.3 10.6 11.9 10.3 11.5 9.8 11.2L8.6 10.4 14.5 10.4C15 10.4 15.4 10.3 15.7 10 16 9.8 16.1 9.4 16.1 9 16.1 8.5 16 8.2 15.7 8 15.4 7.7 15 7.6 14.5 7.6L8.6 7.6 10 6.7C10.2 6.6 10.3 6.4 10.4 6.3 10.5 6.1 10.5 5.9 10.5 5.7 10.5 5.3 10.4 5 10.1 4.8 9.9 4.6 9.5 4.4 9.1 4.4 8.8 4.4 8.4 4.6 8.1 4.8L4 7.5C3.6 7.7 3.4 8 3.3 8.2 3.1 8.4 3 8.7 3 9L3 9" style="fill-opacity:1;fill:#fff;font-family:Verdana;font-size:12;line-height:125;text-align:start;text-anchor:start;writing-mode:lr-tb"/>
+  </g>
+  <g display="none">
+    <path d="M9.3 9.6L5.5 7.4 1.7 5.2 5.5 3 9.3 0.8 9.3 5.2 9.3 9.6z" transform="matrix(0.000000,-1.331000,1.331000,0.000000,2.038879,16.92102)" style="fill-opacity:1;fill:#fff"/>
+  </g>
+</svg>

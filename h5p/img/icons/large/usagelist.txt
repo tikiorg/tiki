@@ -1,0 +1,59 @@
+#
+# maybe this list helps if you want to replace images with your own set
+#
+tiki-admin-include-anchors.tpl  img/icons/large/boot.png        Features
+tiki-admin-include-anchors.tpl  img/icons/large/icon-configuration.png        General
+tiki-admin-include-anchors.tpl  img/icons/large/stock_quit.png        Login
+tiki-admin-include-anchors.tpl  img/icons/large/wikipages.png        Wiki
+tiki-admin-include-anchors.tpl  img/icons/large/stock_select-color.png        Image Galleries
+tiki-admin-include-anchors.tpl  img/icons/large/stock_bold.png        Articles
+tiki-admin-include-anchors.tpl  img/icons/large/blogs.png        Blogs
+tiki-admin-include-anchors.tpl  img/icons/large/stock_index.png        Forums
+tiki-admin-include-anchors.tpl  img/icons/large/gnome-fs-server.png        Directory
+tiki-admin-include-anchors.tpl  img/icons/large/file-manager.png        File Galleries
+tiki-admin-include-anchors.tpl  img/icons/large/stock_dialog_question.png        FAQs
+tiki-admin-include-anchors.tpl  img/icons/large/maps.png        Maps
+tiki-admin-include-anchors.tpl  img/icons/large/gnome-settings-font.png        Trackers
+tiki-admin-include-anchors.tpl  img/icons/large/date.png        Calendar
+tiki-admin-include-anchors.tpl  img/icons/large/userfiles.png        User files
+tiki-admin-include-anchors.tpl  img/icons/large/stock_missing-image.png        Polls
+tiki-admin-include-anchors.tpl  img/icons/large/xfce4-appfinder.png        Search
+tiki-admin-include-anchors.tpl  img/icons/large/evolution.png        Webmail
+tiki-admin-include-anchors.tpl  img/icons/large/gnome-globe.png        RSS
+tiki-admin-include-anchors.tpl  img/icons/large/stock_about.png        Score
+tiki-admin-include-anchors.tpl  img/icons/large/metatags.png        Meta Tags
+tiki-admin-include-anchors.tpl  img/icons/large/users.png        Community
+tiki-admin-include-anchors.tpl  img/icons/large/gnome-settings-background.png        Site Identity
+tiki-admin-include-anchors.tpl  img/icons/large/intertiki.png        InterTiki
+tiki-admin-include-anchors.tpl  img/icons/large/vcard.png        Tags
+tiki-admin-include-anchors.tpl  img/icons/large/google_maps.png        Google Maps
+tiki-admin-include-anchors.tpl  img/icons/large/i18n.png        i18n
+tiki-admin-imclude-anchors.tpl	img/icons/large/socialnetworks.png	Social networks
+tiki-admin-include-list-sections.tpl  img/icons/large/boot48x48.png        Features
+tiki-admin-include-list-sections.tpl  img/icons/large/icon-configuration48x48.png        General
+tiki-admin-include-list-sections.tpl  img/icons/large/stock_quit48x48.png        Login
+tiki-admin-include-list-sections.tpl  img/icons/large/wikipages48x48.png        Wiki
+tiki-admin-include-list-sections.tpl  img/icons/large/stock_select-color48x48.png        Image Galleries
+tiki-admin-include-list-sections.tpl  img/icons/large/stock_bold48x48.png        Articles
+tiki-admin-include-list-sections.tpl  img/icons/large/blogs48x48.png        Blogs
+tiki-admin-include-list-sections.tpl  img/icons/large/stock_index48x48.png        Forums
+tiki-admin-include-list-sections.tpl  img/icons/large/gnome-fs-server48x48.png        Directory
+tiki-admin-include-list-sections.tpl  img/icons/large/file-manager48x48.png        File Galleries
+tiki-admin-include-list-sections.tpl  img/icons/large/stock_dialog_question48x48.png        FAQs
+tiki-admin-include-list-sections.tpl  img/icons/large/maps48x48.png        Maps
+tiki-admin-include-list-sections.tpl  img/icons/large/gnome-settings-font48x48.png        Trackers
+tiki-admin-include-list-sections.tpl  img/icons/large/date48x48.png        Calendar
+tiki-admin-include-list-sections.tpl  img/icons/large/userfiles48x48.png        User files
+tiki-admin-include-list-sections.tpl  img/icons/large/stock_missing-image48x48.png        Polls
+tiki-admin-include-list-sections.tpl  img/icons/large/xfce4-appfinder48x48.png        Search
+tiki-admin-include-list-sections.tpl  img/icons/large/evolution48x48.png        Webmail
+tiki-admin-include-list-sections.tpl  img/icons/large/gnome-globe48x48.png        RSS
+tiki-admin-include-list-sections.tpl  img/icons/large/stock_about48x48.png        Score
+tiki-admin-include-list-sections.tpl  img/icons/large/metatags48x48.png        Meta Tags
+tiki-admin-include-list-sections.tpl  img/icons/large/users48x48.png        Community
+tiki-admin-include-list-sections.tpl  img/icons/large/gnome-settings-background48x48.png        Site Identity
+tiki-admin-include-list-sections.tpl  img/icons/large/intertiki48x48.png        InterTiki
+tiki-admin-include-list-sections.tpl  img/icons/large/vcard48x48.png        Tags
+tiki-admin-include-list-sections.tpl  img/icons/large/google_maps48x48.png        Google Maps
+tiki-admin-include-list-sections.tpl  img/icons/large/i18n48x48.png        i18n
+tiki-admin-include-list-sections.tpl  img/icons/large/socialnetworks.png Social networks

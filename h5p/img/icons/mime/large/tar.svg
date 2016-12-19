@@ -1,0 +1,36 @@
+<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="145.3" width="144.1" id="svg1" version="1">
+  <metadata id="metadata33"/>
+  <defs id="defs3">
+    <linearGradient id="linearGradient850">
+      <stop id="stop851" offset="0" style="stop-color:#fbffff;stop-opacity:0"/>
+      <stop id="stop852" offset="1" style="stop-color:#ffffff;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.794075,0,0,1.072367,-1.4146384,-1.7419334)" y2="11.5" x2="22.4" y1="74.5" x1="78.7" id="linearGradient859" xlink:href="#linearGradient850"/>
+    <linearGradient id="linearGradient839">
+      <stop id="stop840" offset="0" style="stop-color:#46a046;stop-opacity:1"/>
+      <stop id="stop841" offset="0.4" style="stop-color:#df421e;stop-opacity:1"/>
+      <stop id="stop842" offset="0.7" style="stop-color:#ada7c8;stop-opacity:1"/>
+      <stop id="stop843" offset="1" style="stop-color:#eed680;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="linearGradient833">
+      <stop id="stop834" offset="0" style="stop-color:#00ff00;stop-opacity:1"/>
+      <stop id="stop837" offset="0.3" style="stop-color:#ff0000;stop-opacity:1"/>
+      <stop id="stop838" offset="0.8" style="stop-color:#7f8cff;stop-opacity:1"/>
+      <stop id="stop835" offset="1" style="stop-color:#ffff00;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.674011,0,0,1.263393,-1.4146384,-1.7419334)" y2="16.5" x2="110.2" y1="79.3" x1="157.2" id="linearGradient836" xlink:href="#linearGradient850"/>
+    <linearGradient y2="0" x2="0" y1="0.7" x1="0.6" id="linearGradient855" xlink:href="#linearGradient850"/>
+    <linearGradient y2="0.3" x2="0.7" y1="0.9" x1="0.4" id="linearGradient853" xlink:href="#linearGradient850"/>
+  </defs>
+  <path id="path874" d="M74.5 5.8L5.8 23.2 5.9 114.1 5.9 114.1 5.9 114.3 6.2 114.3 74.3 139.5 138.4 113.1 138.4 107.8 138.4 23.2 74.5 5.8z" style="fill:none;font-family:Trek;font-size:40;stroke-linejoin:round;stroke-opacity:0.5;stroke-width:11.5;stroke:#000"/>
+  <path id="path633" d="M138.3 23.2L138.3 107.8 76.5 94.2 74.4 5.8 138.3 23.2z" style="fill:#515151;font-size:12;stroke-linecap:round;stroke-linejoin:round;stroke-width:6.9;stroke:#000"/>
+  <path id="path631" d="M5.7 23.2L74.4 5.8 78.8 97.3 5.8 114.3 5.7 23.2z" style="fill:#4a494d;font-size:12;stroke-linecap:round;stroke-linejoin:round;stroke-width:6.9;stroke:#000"/>
+  <path id="path640" d="M74.3 44.4L138.3 23.2 74.4 5.8 5.7 23.2 74.3 44.4z" style="fill:#9db8d2;font-size:12;stroke-linecap:round;stroke-linejoin:round;stroke-width:6.9;stroke:#000"/>
+  <path id="path627" d="M138.3 23.2L138.3 113.1 74.3 139.6 74.3 44.4 138.3 23.2z" style="fill:#4b6983;font-size:12;stroke-linecap:round;stroke-linejoin:round;stroke-width:6.9;stroke:#000"/>
+  <path id="path629" d="M74.3 44.4L74.3 139.6 5.8 114.1 5.7 23.2 74.3 44.4z" style="fill:#7590ae;font-size:12;stroke-linecap:round;stroke-linejoin:round;stroke-width:6.9;stroke:#000"/>
+  <path id="path892" d="M74.2 9.4L9.4 25.9 9.4 110.5C76.8 137 88 154.3 70.8 41.9 131.9 19.4 74.2 9.4 74.2 9.4z" fill="url(#linearGradient859)"/>
+  <path id="path849" d="M77.8 47L77.8 133.5C78.1 133.5 105 123.4 117.4 110.7 130.1 100.3 134.4 79.2 134.4 79.2L134.4 27.5 77.8 47z" style="fill-opacity:0.8;fill:url(#linearGradient836)"/>
+  <path id="path852" d="M74.3 44.4L74.3 139.6 5.8 114.1 5.7 23.2 74.3 44.4z" style="fill:none;font-size:12;stroke-linecap:round;stroke-linejoin:round;stroke-width:6.9;stroke:#000"/>
+  <rect rx="7.4" y="66.2" x="21.6" ry="7.4" height="43.4" width="102.2" id="rect853" style="fill:#fff;stroke-width:3.5;stroke:#000"/>
+  <path id="path909" d="M102.8 91.2L96.2 91.2 96.2 102.5 90 102.5 90 73.8 106.7 73.8C109.4 73.8 111.5 74.5 113 75.8 114.6 77.3 115.4 79.5 115.4 82.5 115.4 83.7 115.3 84.7 115.1 85.5 114.9 86.4 114.5 87.1 114.1 87.9 113.2 89.2 111.9 90.1 110 90.8L109.9 90.8 116.1 102.5 108.8 102.5 102.8 91.2zM96.2 78.7L96.2 86.7 103.4 86.7C104.9 86.7 105.9 86.4 106.7 85.9 107.6 85.3 108 84.2 108 82.7 108 81.3 107.6 80.3 106.7 79.7 105.9 79.1 104.8 78.7 103.4 78.7L96.2 78.7zM57.6 102.5L69.9 73.8 76.2 73.8 88.5 102.5 81.9 102.5 79.1 95.5 67.1 95.5 64.2 102.5 57.6 102.5zM73.1 80.8L68.9 91 77.2 91 73.1 80.8zM29.6 73.8L55.4 73.8 55.4 78.7 45.6 78.7 45.6 102.5 39.4 102.5 39.4 78.7 29.6 78.7 29.6 73.8z" style="font-family:Trek;font-size:40;stroke-width:1"/>
+</svg>

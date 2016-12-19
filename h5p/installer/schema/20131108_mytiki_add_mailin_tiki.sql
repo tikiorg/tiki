@@ -1,0 +1,1 @@
+INSERT INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','Mail-in','tiki-user_mailin.php',88,'feature_mytiki,feature_mailin','','Registered',0);

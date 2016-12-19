@@ -1,0 +1,42 @@
+<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="145" width="144" id="svg1" version="1">
+  <metadata id="metadata33"/>
+  <defs id="defs3">
+    <linearGradient id="linearGradient850">
+      <stop id="stop851" offset="0" style="stop-color:#fbffff;stop-opacity:0"/>
+      <stop id="stop852" offset="1" style="stop-color:#ffffff;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.79345,0,0,1.071523,-1.4135274,-1.7405754)" y2="12" x2="22" y1="74" x1="79" id="linearGradient859" xlink:href="#linearGradient850"/>
+    <linearGradient id="linearGradient839">
+      <stop id="stop840" offset="0" style="stop-color:#46a046;stop-opacity:1"/>
+      <stop id="stop841" offset="0" style="stop-color:#df421e;stop-opacity:1"/>
+      <stop id="stop842" offset="1" style="stop-color:#ada7c8;stop-opacity:1"/>
+      <stop id="stop843" offset="1" style="stop-color:#eed680;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="linearGradient833">
+      <stop id="stop834" offset="0" style="stop-color:#00ff00;stop-opacity:1"/>
+      <stop id="stop837" offset="0" style="stop-color:#ff0000;stop-opacity:1"/>
+      <stop id="stop838" offset="1" style="stop-color:#7f8cff;stop-opacity:1"/>
+      <stop id="stop835" offset="1" style="stop-color:#ffff00;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.67348,0,0,1.262399,-1.4135274,-1.7405754)" y2="17" x2="110" y1="79" x1="157" id="linearGradient836" xlink:href="#linearGradient850"/>
+    <linearGradient y2="0" x2="0" y1="1" x1="1" id="linearGradient855" xlink:href="#linearGradient850"/>
+    <linearGradient y2="0" x2="1" y1="1" x1="0" id="linearGradient853" xlink:href="#linearGradient850"/>
+  </defs>
+  <path id="path874" d="M74 6L6 23 6 114 6 114 6 114 6 114 74 139 138 113 138 108 138 23 74 6z" style="fill:none;font-family:Trek;font-size:40;stroke-linejoin:round;stroke-opacity:0.5;stroke-width:11.5;stroke:#000"/>
+  <path id="path633" d="M138 23L138 108 76 94 74 6 138 23z" style="fill:#515151;font-size:12;stroke-linecap:round;stroke-linejoin:round;stroke-width:6.9;stroke:#000"/>
+  <path id="path631" d="M6 23L74 6 79 97 6 114 6 23z" style="fill:#4a494d;font-size:12;stroke-linecap:round;stroke-linejoin:round;stroke-width:6.9;stroke:#000"/>
+  <path id="path640" d="M74 44L138 23 74 6 6 23 74 44z" style="fill:#9db8d2;font-size:12;stroke-linecap:round;stroke-linejoin:round;stroke-width:6.9;stroke:#000"/>
+  <path id="path627" d="M138 23L138 113 74 139 74 44 138 23z" style="fill:#4b6983;font-size:12;stroke-linecap:round;stroke-linejoin:round;stroke-width:6.9;stroke:#000"/>
+  <path id="path629" d="M74 44L74 139 6 114 6 23 74 44z" style="fill:#7590ae;font-size:12;stroke-linecap:round;stroke-linejoin:round;stroke-width:6.9;stroke:#000"/>
+  <path id="path892" d="M74 9L9 26 9 110C77 137 88 154 71 42 132 19 74 9 74 9z" fill="url(#linearGradient859)"/>
+  <path id="path849" d="M78 47L78 133C78 133 105 123 117 111 130 100 134 79 134 79L134 27 78 47z" style="fill-opacity:0.8;fill:url(#linearGradient836)"/>
+  <path id="path852" d="M74 44L74 139 6 114 6 23 74 44z" style="fill:none;font-size:12;stroke-linecap:round;stroke-linejoin:round;stroke-width:6.9;stroke:#000"/>
+  <rect rx="7" y="66" x="22" ry="7" height="43" width="102" id="rect853" style="fill:#fff;stroke-width:3.5;stroke:#000"/>
+  <text xml:space="preserve" x="50" y="103" id="text2407" style="fill:#000;font-family:Bitstream Vera Sans;font-size:40">
+    <tspan id="tspan2409" x="50" y="103" font-weight="bold">
+      
+      7z
+    
+    </tspan>
+  </text>
+</svg>

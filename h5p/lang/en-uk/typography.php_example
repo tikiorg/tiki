@@ -1,0 +1,47 @@
+<?php
+// (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
+// 
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
+// Typographic adjustments are applied to text everywhere on in Tiki. It provides:
+// - smart quotes, replacing " with “” or other smart quotes
+// - typographic elipsis and dash
+// - smart no-break spacing automatically finding cases where spaces should become unbreakable.
+//
+// This is the language-specific configuration.
+// You can uncomment settings and change values as desired for a particular language.
+// For the settings to take effect, this configuration file must be named typography.php
+
+$typography = array(
+
+ // quotation marks to use for replacing " and '
+//  "smart_doublequote_open" => "&#8220;",
+//  "smart_doublequote_close" => "&#8221;",
+//  "smart_singlequote_open" => "&#8216;",
+//  "smart_singlequote_close" => "&#8216;", // also apostrophe
+ 
+ // spacing options:
+ //   1: to change space existing space (if present) to no-break space
+ //   2: to force-insert a space
+ //  -1: to force-remove the space
+//  "do_space_colon" => 1, // space before a colon_:
+//  "do_space_semicolon" => 1, // space before a semicolon_;
+//  "do_space_marks" => 1, // space before (or inside) question marks and exlamation marks (like ¡_this_!)
+//  "do_space_emdash" => 1, // space around an em dash
+//  "do_space_endash" => 1, // space around an em dash
+//  "do_space_frenchquote" => 1, // space inside «_french quotes_»
+//  "do_space_thousand" => 1, // space as a thousand separator: 10_000 (cannot force insert)
+//  "do_space_unit" => 1, // space preceding common unit abbreviations: 1_kg
+ 
+ // replacement space character to use for each spacing rule above
+//  "space_emdash" => " ",
+//  "space_endash" => " ",
+//  "space_colon" => "&#160;",
+//  "space_semicolon" => "&#160;",
+//  "space_marks" => "&#160;",
+//  "space_frenchquote" => "&#160;",
+//  "space_thousand" => "&#160;",
+//  "space_unit" => "&#160;",
+
+);

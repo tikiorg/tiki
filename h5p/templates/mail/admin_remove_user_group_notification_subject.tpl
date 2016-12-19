@@ -1,0 +1,1 @@
+{* $Id$ *}{$prefs.mail_template_custom_text}{$mail_group} - {tr}You have been removed from it{/tr}.

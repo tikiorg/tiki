@@ -1,0 +1,154 @@
+// $Id$
+
+@imagePath: ~"../../img/";
+
+//***** Forums *****/
+body.tiki_forums .normal {
+	margin: auto;
+}
+
+#forumpostopen {
+	display: block;
+}
+
+.post .postbody {
+	clear: both;
+	margin: 0;
+	padding: 0;
+}
+
+.post .postbody .content {
+	padding: 0 3px 3px 3px;
+	margin: 0;
+	text-align: left;
+}
+
+.post .postbody-title {
+	overflow: hidden;
+}
+
+.post .postbody-title .checkbox {
+	float: left;
+}
+
+.post .postbody-title .title {
+	margin-left: 5px;
+	margin-top: 3px;
+}
+
+.post .author_post_info {
+	padding-left: 4px;
+	padding-bottom: 4px;
+}
+
+.post .author_info .icons {
+	display: block;
+}
+
+.post .author_info .icons .actions {
+	margin-right: 10px;
+}
+
+.commentStyle_headers .author_info {
+	float: left;
+}
+
+.post .postbody .attachments {
+	clear: both;
+	margin-top: 5px;
+}
+
+.post .postbody .attachments img {
+	vertical-align: text-bottom;
+}
+
+.post .postfooter .rating {
+	display: inline;
+}
+
+.post .avatar {
+	float: right;
+	margin-bottom: 5px;
+	margin-left: 4px;
+	padding: 3px
+}
+
+.post .forumDeliberationRatingForm {
+	width: 100%;
+	float: none !important;
+	text-align: right;
+}
+
+.postfooter-nav {
+	width: 100%;
+	display: block;
+	margin-top: 1em;
+}
+
+.postfooter-nav .postfooter-nav-prev {
+	text-align: left;
+	float: left;
+	width: 50%;
+}
+
+.postfooter-nav .postfooter-nav-next {
+	text-align: right;
+	float: right;
+	width: 50%;
+}
+
+.sub_comment {
+	padding-left: 20px;
+}
+
+.sub_comment_area {
+	clear: both;
+	background: url('@{imagePath}edge.gif') no-repeat top left;
+}
+
+.forum_actions .actions {
+	clear: both;
+	padding: 3px;
+	vertical-align: middle;
+}
+
+.forum_actions .actions .action {
+	margin-right: 10px;
+}
+
+.forum_actions .headers {
+	vertical-align: bottom;
+}
+
+.forum_actions .headers .title {
+	float: left;
+	border-bottom: 0;
+	padding: 1px;
+}
+
+.forum_actions .headers .infos {
+	float: right;
+	padding-top: 2px;
+}
+
+.nb_replies {
+	white-space: nowrap;
+}
+
+.post_preview,
+.top_post {
+	margin-bottom: 15px;
+}
+
+//* Forum filter collapsible panel. Adds +/-*/
+.filter-panel-heading a:after {
+	font-family: 'Glyphicons Halflings';
+	content: "\2212";
+	float: left;
+	margin-right: 15px;
+	//  color: @gray; (moved to tiki-selectors.less)
+}
+
+.filter-panel-heading a.collapsed:after {
+	content: "\2b";
+}

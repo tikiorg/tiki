@@ -1,0 +1,1 @@
+{* $Id$ *}{tr}User joined{/tr} {$prefs.mail_template_custom_text}{$mail_group}

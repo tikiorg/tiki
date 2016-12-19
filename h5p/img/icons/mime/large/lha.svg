@@ -1,0 +1,34 @@
+<svg xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="145.2" width="144" id="svg1" version="1">
+  <metadata id="metadata31"/>
+  <defs id="defs3">
+    <linearGradient id="linearGradient850">
+      <stop id="stop851" offset="0" style="stop-color:#fbffff;stop-opacity:0"/>
+      <stop id="stop852" offset="1" style="stop-color:#ffffff;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.79345,0,0,1.071523,-1.4135274,-1.7405744)" y2="11.5" x2="22.4" y1="74.5" x1="78.7" id="linearGradient859" xlink:href="#linearGradient850"/>
+    <linearGradient id="linearGradient839">
+      <stop id="stop840" offset="0" style="stop-color:#46a046;stop-opacity:1"/>
+      <stop id="stop841" offset="0.4" style="stop-color:#df421e;stop-opacity:1"/>
+      <stop id="stop842" offset="0.7" style="stop-color:#ada7c8;stop-opacity:1"/>
+      <stop id="stop843" offset="1" style="stop-color:#eed680;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="linearGradient833">
+      <stop id="stop834" offset="0" style="stop-color:#00ff00;stop-opacity:1"/>
+      <stop id="stop837" offset="0.3" style="stop-color:#ff0000;stop-opacity:1"/>
+      <stop id="stop838" offset="0.8" style="stop-color:#7f8cff;stop-opacity:1"/>
+      <stop id="stop835" offset="1" style="stop-color:#ffff00;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.67348,0,0,1.262399,-1.4135274,-1.7405744)" y2="16.5" x2="110.2" y1="79.3" x1="157.2" id="linearGradient836" xlink:href="#linearGradient850"/>
+    <linearGradient y2="0" x2="0" y1="0.7" x1="0.6" id="linearGradient855" xlink:href="#linearGradient850"/>
+    <linearGradient y2="0.3" x2="0.7" y1="0.9" x1="0.4" id="linearGradient853" xlink:href="#linearGradient850"/>
+  </defs>
+  <path id="path874" d="M74.5 5.8L5.8 23.2 5.9 114 5.9 114 5.9 114.2 6.2 114.2 74.3 139.4 138.3 113 138.3 107.7 138.3 23.2 74.5 5.8z" style="fill:none;font-family:Trek;font-size:40;stroke-linejoin:round;stroke-opacity:0.5;stroke-width:11.5;stroke:#000"/>
+  <path id="path633" d="M138.2 23.2L138.2 107.7 76.4 94.2 74.4 5.8 138.2 23.2z" style="fill:#515151;font-size:12;stroke-linecap:round;stroke-linejoin:round;stroke-width:6.9;stroke:#000"/>
+  <path id="path631" d="M5.7 23.2L74.4 5.8 78.8 97.2 5.8 114.2 5.7 23.2z" style="fill:#4a494d;font-size:12;stroke-linecap:round;stroke-linejoin:round;stroke-width:6.9;stroke:#000"/>
+  <path id="path640" d="M74.2 44.3L138.2 23.2 74.4 5.8 5.7 23.2 74.2 44.3z" style="fill:#9db8d2;font-size:12;stroke-linecap:round;stroke-linejoin:round;stroke-width:6.9;stroke:#000"/>
+  <path id="path627" d="M138.2 23.2L138.2 113 74.2 139.5 74.2 44.3 138.2 23.2z" style="fill:#4b6983;font-size:12;stroke-linecap:round;stroke-linejoin:round;stroke-width:6.9;stroke:#000"/>
+  <path id="path629" d="M74.2 44.3L74.2 139.5 5.8 114.1 5.7 23.2 74.2 44.3z" style="fill:#7590ae;font-size:12;stroke-linecap:round;stroke-linejoin:round;stroke-width:6.9;stroke:#000"/>
+  <path id="path892" d="M74.1 9.4L9.4 25.9 9.4 110.4C76.8 136.9 88 154.2 70.8 41.9 131.8 19.4 74.1 9.4 74.1 9.4z" fill="url(#linearGradient859)"/>
+  <path id="path849" d="M77.8 47L77.8 133.4C78 133.4 104.9 123.3 117.3 110.6 130 100.2 134.3 79.2 134.3 79.2L134.3 27.5 77.8 47z" style="fill-opacity:0.8;fill:url(#linearGradient836)"/>
+  <path id="path852" d="M74.2 44.3L74.2 139.5 5.8 114.1 5.7 23.2 74.2 44.3z" style="fill:none;font-size:12;stroke-linecap:round;stroke-linejoin:round;stroke-width:6.9;stroke:#000"/>
+</svg>

@@ -1,0 +1,1 @@
+INSERT IGNORE INTO `tiki_menu_options` (`menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (42,'o','External Wikis','tiki-admin_external_wikis.php',1102,'','tiki_p_admin','',0);

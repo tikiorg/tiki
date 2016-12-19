@@ -1,0 +1,1768 @@
+{
+	"name": "Tiki",
+	"homepage": "http://composer.tiki.org",
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "https://packagist.org"
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "adodb/adodb",
+				"version": "5.18",
+				"dist": {
+					"url": "http://downloads.sourceforge.net/project/adodb/adodb-php5-only/adodb-518-for-php5/adodb518a.tgz",
+					"type": "tar"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "afarkas/html5shiv",
+				"version": "3.6.2",
+				"dist": {
+					"url": "https://github.com/aFarkas/html5shiv/archive/3.6.2.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "alxlit/bootstrap-chosen",
+				"version": "1.0.0",
+				"dist": {
+					"url": "https://github.com/alxlit/bootstrap-chosen/archive/v1.0.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "alxlit/bootstrap-chosen",
+				"version": "1.0.1",
+				"dist": {
+					"url": "https://github.com/alxlit/bootstrap-chosen/archive/v1.0.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "blueimp/javascript-load-image",
+				"version": "1.14.0",
+				"dist": {
+					"url": "https://github.com/blueimp/JavaScript-Load-Image/archive/1.14.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "blueimp/javascript-canvas-to-blob",
+				"type": "component",
+				"version": "2.2.0",
+				"dist": {
+					"url": "https://github.com/blueimp/JavaScript-Canvas-to-Blob/archive/2.2.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "blueimp/jquery-file-upload",
+				"version": "9.11.0",
+				"dist": {
+					"url": "https://github.com/blueimp/jQuery-File-Upload/archive/9.11.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor",
+				"version": "4.1.1",
+				"dist": {
+					"url": "https://github.com/ckeditor/ckeditor-releases/archive/4.1.1/full.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor/skins/kama",
+				"version": "4.1.1",
+				"dist": {
+					"url": "http://download.ckeditor.com/kama/releases/kama_4.1.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor/plugins/divarea",
+				"version": "4.1.1",
+				"dist": {
+					"url": "http://download.ckeditor.com/divarea/releases/divarea_4.1.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor",
+				"version": "4.3.4",
+				"dist": {
+					"url": "https://github.com/ckeditor/ckeditor-releases/archive/4.3.4/full.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor/skins/kama",
+				"version": "4.3.4",
+				"dist": {
+					"url": "http://download.ckeditor.com/kama/releases/kama_4.3.4.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor/plugins/divarea",
+				"version": "4.3.4",
+				"dist": {
+					"url": "http://download.ckeditor.com/divarea/releases/divarea_4.3.4.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor",
+				"version": "4.4.7",
+				"dist": {
+					"url": "https://github.com/ckeditor/ckeditor-releases/archive/full/4.4.7.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor/skins/kama",
+				"version": "4.4.7",
+				"dist": {
+					"url": "http://download.ckeditor.com/kama/releases/kama_4.4.7.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor/skins/office2013",
+				"version": "1.04",
+				"dist": {
+					"url": "http://download.ckeditor.com/office2013/releases/office2013_1.04.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor/skins/bootstrapck",
+				"version": "1.0",
+				"dist": {
+					"url": "http://download.ckeditor.com/bootstrapck/releases/bootstrapck_1.0_0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor/skins/minimalist",
+				"version": "1.0",
+				"dist": {
+					"url": "http://download.ckeditor.com/minimalist/releases/minimalist_1.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor/plugins/divarea",
+				"version": "4.4.7",
+				"dist": {
+					"url": "http://download.ckeditor.com/divarea/releases/divarea_4.4.7.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor",
+				"version": "4.4.8",
+				"dist": {
+					"url": "https://github.com/ckeditor/ckeditor-releases/archive/full/4.4.8.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor/skins/kama",
+				"version": "4.4.8",
+				"dist": {
+					"url": "http://download.ckeditor.com/kama/releases/kama_4.4.8.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor/plugins/divarea",
+				"version": "4.4.8",
+				"dist": {
+					"url": "http://download.ckeditor.com/divarea/releases/divarea_4.4.8.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor",
+				"version": "4.5.6",
+				"dist": {
+					"url": "https://github.com/ckeditor/ckeditor-releases/archive/full/4.5.6.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor/skins/kama",
+				"version": "4.5.6",
+				"dist": {
+					"url": "http://download.ckeditor.com/kama/releases/kama_4.5.6.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "ckeditor/ckeditor/plugins/divarea",
+				"version": "4.5.6",
+				"dist": {
+					"url": "http://download.ckeditor.com/divarea/releases/divarea_4.5.6.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "codemirror/codemirror",
+				"version": "2.25",
+				"dist": {
+					"url": "http://codemirror.net/codemirror-2.25.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "codemirror/codemirror",
+				"version": "3.19.0",
+				"dist": {
+					"url": "https://github.com/marijnh/CodeMirror/archive/3.19.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "codemirror/codemirror",
+				"version": "3.24.0",
+				"dist": {
+					"url": "https://github.com/marijnh/CodeMirror/archive/3.24.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "codemirror/codemirror",
+				"version": "4.12.0",
+				"dist": {
+					"url": "https://github.com/codemirror/CodeMirror/archive/4.12.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "codemirror/codemirror",
+				"version": "5.19.0",
+				"dist": {
+					"url": "https://github.com/codemirror/CodeMirror/archive/5.19.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "dompdf/dompdf",
+				"version": "0.6.1",
+				"dist": {
+					"url": "https://github.com/dompdf/dompdf/archive/v0.6.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery",
+				"version": "2.2.2",
+				"dist": {
+					"url": "http://code.jquery.com/jquery-2.2.2.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-min",
+				"version": "2.2.2",
+				"dist": {
+					"url": "http://code.jquery.com/jquery-2.2.2.min.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery",
+				"version": "1.9.1",
+				"dist": {
+					"url": "http://code.jquery.com/jquery-1.9.1.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-min",
+				"version": "1.9.1",
+				"dist": {
+					"url": "http://code.jquery.com/jquery-1.9.1.min.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery",
+				"version": "1.10.2",
+				"dist": {
+					"url": "http://code.jquery.com/jquery-1.10.2.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-min",
+				"version": "1.10.2",
+				"dist": {
+					"url": "http://code.jquery.com/jquery-1.10.2.min.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery",
+				"version": "1.11.0",
+				"dist": {
+					"url": "http://code.jquery.com/jquery-1.11.0.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-min",
+				"version": "1.11.0",
+				"dist": {
+					"url": "http://code.jquery.com/jquery-1.11.0.min.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery",
+				"version": "1.11.2",
+				"dist": {
+					"url": "http://code.jquery.com/jquery-1.11.2.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-min",
+				"version": "1.11.2",
+				"dist": {
+					"url": "http://code.jquery.com/jquery-1.11.2.min.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-sheet",
+				"version": "2.0.1",
+				"dist": {
+					"url": "http://sourceforge.net/projects/tikiwiki/files/vendors_abandoned/jquery-sheet-2.0.1.0-2.0.1.zip/download",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-sheet",
+				"version": "3.1",
+				"dist": {
+					"url": "https://github.com/Spreadsheets/jQuery.sheet/archive/3.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-mobile",
+				"version": "1.3.2",
+				"dist": {
+					"url": "http://jquerymobile.com/resources/download/jquery.mobile-1.3.2.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-mobile",
+				"version": "1.4.5",
+				"dist": {
+					"url": "http://jquerymobile.com/resources/download/jquery.mobile-1.4.5.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-ui",
+				"version": "1.10.2",
+				"dist": {
+					"url": "http://jqueryui.com/resources/download/jquery-ui-1.10.2.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-ui-themes",
+				"version": "1.10.2",
+				"dist": {
+					"url": "http://jqueryui.com/resources/download/jquery-ui-themes-1.10.2.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-ui",
+				"version": "1.10.3",
+				"dist": {
+					"url": "http://jqueryui.com/resources/download/jquery-ui-1.10.3.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-ui-themes",
+				"version": "1.10.3",
+				"dist": {
+					"url": "http://jqueryui.com/resources/download/jquery-ui-themes-1.10.3.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-ui",
+				"version": "1.10.4",
+				"dist": {
+					"url": "http://jqueryui.com/resources/download/jquery-ui-1.10.4.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-ui-themes",
+				"version": "1.10.4",
+				"dist": {
+					"url": "http://jqueryui.com/resources/download/jquery-ui-themes-1.10.4.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-ui",
+				"version": "1.11.3",
+				"dist": {
+					"url": "http://jqueryui.com/resources/download/jquery-ui-1.11.3.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-ui-themes",
+				"version": "1.11.3",
+				"dist": {
+					"url": "http://jqueryui.com/resources/download/jquery-ui-themes-1.11.3.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-ui",
+				"version": "1.11.4",
+				"dist": {
+					"url": "http://jqueryui.com/resources/download/jquery-ui-1.11.4.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-ui-themes",
+				"version": "1.11.4",
+				"dist": {
+					"url": "http://jqueryui.com/resources/download/jquery-ui-themes-1.11.4.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-ui",
+				"version": "1.12.1",
+				"dist": {
+					"url": "http://jqueryui.com/resources/download/jquery-ui-1.12.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-ui-themes",
+				"version": "1.12.1",
+				"dist": {
+					"url": "http://jqueryui.com/resources/download/jquery-ui-themes-1.12.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-s5",
+				"version": "1.0.1",
+				"dist": {
+					"url": "https://github.com/robertleeplummerjr/jQuery.s5/archive/1.0.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-timepicker-addon",
+				"version": "1.4",
+				"dist": {
+					"url": "http://github.com/trentrichardson/jQuery-Timepicker-Addon/archive/v1.4.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-timepicker-addon",
+				"version": "1.4.4",
+				"dist": {
+					"url": "http://github.com/trentrichardson/jQuery-Timepicker-Addon/archive/v1.4.4.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-timepicker-addon",
+				"version": "1.5.0",
+				"dist": {
+					"url": "https://github.com/trentrichardson/jQuery-Timepicker-Addon/archive/v1.5.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-timepicker-addon",
+				"version": "1.6.1",
+				"dist": {
+					"url": "https://github.com/trentrichardson/jQuery-Timepicker-Addon/archive/v1.6.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jquery-ui-selectmenu",
+				"version": "1.3.999",
+				"dist": {
+					"url": "https://github.com/fnagel/jquery-ui/archive/selectmenu.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/jquery-validation",
+				"version": "1.11.1",
+				"dist": {
+					"url": "http://sourceforge.net/projects/tikiwiki/files/vendors_abandoned/jquery-validation-1.11.1.zip/download",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/jquery-validation",
+				"version": "1.13.1",
+				"dist": {
+					"url": "https://jqueryvalidation.org/files/jquery-validation-1.13.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/jquery-json",
+				"version": "2.4",
+				"dist": {
+					"url": "https://github.com/Krinkle/jquery-json/releases/download/v2.4.0/jquery.json-2.4.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/jquery-json",
+				"version": "2.5.1",
+				"dist": {
+					"url": "https://github.com/Krinkle/jquery-json/archive/v2.5.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/jtrack",
+				"version": "1.0",
+				"dist": {
+					"url": "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/jtrack/jtrack-1.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/photoswipe",
+				"version": "3.0.5",
+				"dist": {
+					"url": "http://github.com/downloads/codecomputerlove/PhotoSwipe/code.photoswipe-3.0.5.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/photoswipe",
+				"version": "4.1.1",
+				"dist": {
+					"url": "https://github.com/dimsemenov/PhotoSwipe/archive/v4.1.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "morteza/bootstrap-rtl",
+				"version": "3.3.2",
+				"dist": {
+					"url": "https://github.com/morteza/bootstrap-rtl/archive/v3.3.2.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "openlayers/ol3",
+				"version": "3.6.0",
+				"dist": {
+					"url": "https://github.com/openlayers/ol3/releases/download/v3.6.0/v3.6.0-dist.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "phpcas/phpcas",
+				"version": "1.3.2",
+				"dist": {
+					"url": "http://downloads.jasig.org/cas-clients/php/1.3.2/CAS-1.3.2.tgz",
+					"type": "tar"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "phpcas/phpcas",
+				"version": "1.3.3",
+				"dist": {
+					"url": "http://downloads.jasig.org/cas-clients/php/1.3.3/CAS-1.3.3.tgz",
+					"type": "tar"
+				}
+			}
+		},
+	    {
+			"type": "package",
+			"package": {
+				"name": "rangy/rangy",
+				"version": "1.2.3",
+				"dist": {
+					"url": "https://github.com/timdown/rangy/archive/1.2.3.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "rangy/rangy",
+				"version": "1.3.0",
+				"dist": {
+					"url": "https://github.com/timdown/rangy/releases/download/1.3.0/rangy-1.3.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "svg-edit/svg-edit",
+				"version": "2.6",
+				"dist": {
+					"url": "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/svg-edit/svg-edit-2.6.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "svg-edit/svg-edit",
+				"version": "2.8.1",
+				"dist": {
+					"url": "https://github.com/SVG-Edit/svgedit/releases/download/svg-edit-2.8.1/svg-edit-2.8.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/md5",
+				"version": "1.1",
+				"dist": {
+					"url": "https://github.com/blueimp/JavaScript-MD5/archive/1.1.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/async",
+				"version": "1.0",
+				"dist": {
+					"url": "http://mess.genezys.net/jquery/jquery.async.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/anythingslider",
+				"version": "1.9.1",
+				"dist": {
+					"url": "https://github.com/CSS-Tricks/AnythingSlider/archive/v1.9.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/anythingslider",
+				"version": "1.9.2",
+				"dist": {
+					"url": "https://github.com/CSS-Tricks/AnythingSlider/archive/v1.9.2.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/anythingslider",
+				"version": "1.9.4",
+				"dist": {
+					"url": "https://github.com/CSS-Tricks/AnythingSlider/archive/v1.9.4.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/anythingslider",
+				"version": "1.9.6",
+				"dist": {
+					"url": "https://github.com/CSS-Tricks/AnythingSlider/archive/v1.9.6.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/brosho",
+				"version": "0.1",
+				"dist": {
+					"url": "https://github.com/downloads/mustardamus/brosho-plugin/brosho-0.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/chosen",
+				"version": "0.9.13",
+				"dist": {
+					"url": "https://github.com/harvesthq/chosen/archive/v0.9.13.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/chosen",
+				"version": "1.0.0",
+				"dist": {
+					"url": "https://github.com/harvesthq/chosen/releases/download/1.0.0/chosen_v1.0.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/chosen",
+				"version": "1.3.0",
+				"dist": {
+					"url": "https://github.com/harvesthq/chosen/releases/download/v1.3.0/chosen_v1.3.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/chosen",
+				"version": "1.5.1",
+				"dist": {
+					"url": "https://github.com/harvesthq/chosen/releases/download/v1.5.1/chosen_v1.5.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/chosen",
+				"version": "1.6.2",
+				"dist": {
+					"url": "https://github.com/harvesthq/chosen/releases/download/v1.6.2/chosen_v1.6.2.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/cluetip",
+				"version": "1.2.8",
+				"dist": {
+					"url": "https://github.com/kswedberg/jquery-cluetip/archive/1.2.8.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/cluetip",
+				"version": "1.2.10",
+				"dist": {
+					"url": "https://github.com/kswedberg/jquery-cluetip/archive/1.2.10.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/colorbox",
+				"version": "1.4.14",
+				"dist": {
+					"url": "https://github.com/jackmoore/colorbox/archive/1.4.14.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/colorbox",
+				"version": "1.4.31",
+				"dist": {
+					"url": "https://github.com/jackmoore/colorbox/archive/1.4.31.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/colorbox",
+				"version": "1.5.8",
+				"dist": {
+					"url": "https://github.com/jackmoore/colorbox/archive/1.5.8.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/colorbox",
+				"version": "1.5.14",
+				"dist": {
+					"url": "https://github.com/jackmoore/colorbox/archive/1.5.14.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/colorbox",
+				"version": "1.6.4",
+				"dist": {
+					"url": "https://github.com/jackmoore/colorbox/archive/1.6.4.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/fitvidjs",
+				"version": "1.1.0",
+				"dist": {
+					"url": "https://github.com/davatron5000/FitVids.js/archive/v1.1.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/form",
+				"version": "3.25.0",
+				"dist": {
+					"url": "https://github.com/malsup/form/archive/3.25.0-2013.01.18.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/form",
+				"version": "3.51",
+				"dist": {
+					"url": "https://github.com/malsup/form/archive/3.51.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/galleriffic",
+				"version": "2.0.1",
+				"dist": {
+					"url": "http://www.twospy.com/galleriffic/galleriffic-2.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/infinitecarousel",
+				"version": "3.0.3",
+				"dist": {
+					"url": "http://www.catchmyfame.com/jquery/jquery.infinitecarousel3.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/media",
+				"version": "0.98",
+				"dist": {
+					"url": "https://github.com/malsup/media/archive/master.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/migrate",
+				"version": "1.1.1",
+				"dist": {
+					"url": "http://code.jquery.com/jquery-migrate-1.1.1.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/migrate-min",
+				"version": "1.1.1",
+				"dist": {
+					"url": "http://code.jquery.com/jquery-migrate-1.1.1.min.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/migrate",
+				"version": "1.2.1",
+				"dist": {
+					"url": "http://code.jquery.com/jquery-migrate-1.2.1.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/migrate-min",
+				"version": "1.2.1",
+				"dist": {
+					"url": "http://code.jquery.com/jquery-migrate-1.2.1.min.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/migrate",
+				"version": "1.4.0",
+				"dist": {
+					"url": "http://code.jquery.com/jquery-migrate-1.4.0.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/migrate-min",
+				"version": "1.4.0",
+				"dist": {
+					"url": "http://code.jquery.com/jquery-migrate-1.4.0.min.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/nestedsortable",
+				"version": "1.3.4",
+				"dist": {
+					"url": "https://github.com/mjsarfatti/nestedSortable/archive/v1.3.4.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/pxem",
+				"version": "0.1",
+				"dist": {
+					"url": "https://github.com/filamentgroup/jQuery-Pixel-Em-Converter/archive/master.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/reflection-jquery",
+				"version": "1.1",
+				"dist": {
+					"url": "http://www.digitalia.be/download/reflection-jquery.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/superfish",
+				"version": "1.7.2",
+				"dist": {
+					"url": "https://github.com/joeldbirch/superfish/archive/1.7.2.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/superfish",
+				"version": "1.7.4",
+				"dist": {
+					"url": "https://github.com/joeldbirch/superfish/archive/1.7.4.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/superfish",
+				"version": "1.7.5",
+				"dist": {
+					"url": "https://github.com/joeldbirch/superfish/archive/1.7.5.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/tablesorter",
+				"version": "2.9.1",
+				"dist": {
+					"url": "https://github.com/Mottie/tablesorter/archive/v2.9.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/tablesorter",
+				"version": "2.14.1",
+				"dist": {
+					"url": "https://github.com/Mottie/tablesorter/archive/v2.14.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/tablesorter",
+				"version": "2.14.4",
+				"dist": {
+					"url": "https://github.com/Mottie/tablesorter/archive/v2.14.4.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/tablesorter",
+				"version": "2.17.2",
+				"dist": {
+					"url": "https://github.com/Mottie/tablesorter/archive/v2.17.2.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/tablesorter",
+				"version": "2.21.2",
+				"dist": {
+					"url": "https://github.com/Mottie/tablesorter/archive/v2.21.2.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/tablesorter",
+				"version": "2.25.7",
+				"dist": {
+					"url": "https://github.com/Mottie/tablesorter/archive/v2.25.7.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/tablesorter",
+				"version": "2.26.6",
+				"dist": {
+					"url": "https://github.com/Mottie/tablesorter/archive/v2.26.6.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/tablesorter",
+				"version": "2.27.7",
+				"dist": {
+					"url": "https://github.com/Mottie/tablesorter/archive/v2.27.7.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/tagcanvas",
+				"version": "2.8",
+				"dist": {
+					"url": "http://www.goat1000.com/jquery.tagcanvas.js?2.8.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/timeago",
+				"version": "1.4.3",
+				"dist": {
+					"url": "https://github.com/rmm5t/jquery-timeago/archive/v1.4.3.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/timeago",
+				"version": "1.5.3",
+				"dist": {
+					"url": "https://github.com/rmm5t/jquery-timeago/archive/v1.5.3.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/treetable",
+				"version": "3.0.1",
+				"dist": {
+					"url": "https://github.com/ludo/jquery-treetable/archive/3.0.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/treetable",
+				"version": "3.0.2",
+				"dist": {
+					"url": "https://github.com/ludo/jquery-treetable/archive/3.0.2.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/treetable",
+				"version": "3.1.0",
+				"dist": {
+					"url": "https://github.com/ludo/jquery-treetable/archive/3.1.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/treetable",
+				"version": "3.2.0",
+				"dist": {
+					"url": "https://github.com/ludo/jquery-treetable/archive/3.2.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/sparkline",
+				"version": "2.1.1",
+				"dist": {
+					"url": "http://omnipotent.net/jquery.sparkline/2.1.1/jquery.sparkline.min.js",
+					"type": "file"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/minicart",
+				"version": "2.6",
+				"dist": {
+					"url": "https://github.com/jeffharrell/MiniCart/archive/2.6.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/minicart",
+				"version": "2.6.1",
+				"dist": {
+					"url": "https://github.com/jeffharrell/MiniCart/archive/2.6.1.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/minicart",
+				"version": "3.0.6",
+				"dist": {
+					"url": "https://github.com/jeffharrell/minicart/archive/v3.0.6.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/colorpicker",
+				"version": "0.5",
+				"dist": {
+					"url": "http://www.eyecon.ro/colorpicker/colorpicker.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/zoom",
+				"version": "1.7.10",
+				"dist": {
+					"url": "https://github.com/jackmoore/zoom/archive/1.7.10.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/zoom",
+				"version": "1.7.13",
+				"dist": {
+					"url": "https://github.com/jackmoore/zoom/archive/1.7.13.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "jquery/plugins/zoom",
+				"version": "1.7.18",
+				"dist": {
+					"url": "https://github.com/jackmoore/zoom/archive/1.7.18.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "player/mp3",
+				"version": "1.0",
+				"dist": {
+					"url": "https://github.com/neolao/mp3-player/archive/master.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "player/flv",
+				"version": "1.0",
+				"dist": {
+					"url": "https://github.com/neolao/flv-player/archive/master.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
+				"version": "1.0.0",
+				"dist": {
+					"url": "https://github.com/Sam152/Javascript-Equal-Height-Responsive-Rows/archive/1.0.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "simile_timeline/simile_timeline",
+				"version": "2.3.0",
+				"dist": {
+					"url": "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/simile-widgets/timeline_libraries_v2.3.0.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "smarty/smarty",
+				"version": "3.1.21",
+				"dist": {
+					"url": "https://github.com/smarty-php/smarty/archive/v3.1.21.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "svn",
+			"url": "http://svn.code.sf.net/p/jcapture-applet/code/trunk@47"
+		},
+		{
+			"type": "package",
+			"package": {
+				"name": "undojs/undojs",
+				"version": "1",
+				"dist": {
+					"url": "https://github.com/koogle/undojs/archive/master.zip",
+					"type": "zip"
+				}
+			}
+		}
+	],
+	"require": {
+		"Sam152/Javascript-Equal-Height-Responsive-Rows": ">=1.0.0",
+		"adodb/adodb": ">=5.18",
+		"afarkas/html5shiv": ">=3.6.2",
+		"alxlit/bootstrap-chosen": ">=1.0.0",
+		"blueimp/jquery-file-upload": ">=9.10.4",
+		"blueimp/javascript-load-image": ">=1.14.0",
+		"blueimp/javascript-canvas-to-blob": ">=2.2.0",
+		"bombayworks/zendframework1": ">=1.12.3",
+		"ckeditor/ckeditor": "*",
+		"ckeditor/ckeditor/skins/kama": "*",
+		"ckeditor/ckeditor/skins/bootstrapck": "*",
+		"ckeditor/ckeditor/skins/minimalist": "*",
+		"ckeditor/ckeditor/skins/office2013": "*",
+		"ckeditor/ckeditor/plugins/divarea": "*",
+		"codemirror/codemirror": ">=3.19",
+		"components/bootstrap": ">=3.3.7",
+		"components/jquery": ">=3.1.0",
+		"components/jquery-migrate": ">=3.0.0",
+		"container-interop/container-interop": ">=1.0",
+		"cwspear/bootstrap-hover-dropdown": ">=2.0.11",
+		"desandro/masonry": ">=4.1.1",
+		"dompdf/dompdf": ">=0.6.1",
+		"etdsolutions/pivottable": ">=2.0.2",
+		"etdsolutions/jquery": ">=3.1.1",
+		"etdsolutions/jquery-ui": ">=1.11.4",
+		"ezyang/htmlpurifier": ">=4.5.0",
+		"fortawesome/font-awesome": ">=4.5.0",
+		"google/apiclient": ">=1.1.6",
+		"jcapture-applet/jcapture-applet": "dev-trunk",
+		"jquery/jquery": ">=1.10.2",
+		"jquery/jquery-min": ">=1.10.2",
+		"jquery/jquery-mobile": ">=1.3.2",
+		"jquery/jquery-s5": ">=1.0.1",
+		"jquery/jquery-sheet": ">=2.0.1",
+		"jquery/jquery-timepicker-addon": ">=1.4",
+		"jquery/jquery-ui": ">=1.10.3",
+		"jquery/jquery-ui-themes": ">=1.10.3",
+		"jquery/jquery-ui-selectmenu": ">=1.3.999",
+		"jquery/jtrack": ">=1.0",
+		"jquery/md5": ">=1.1",
+		"jquery/minicart": ">=2.6.1",
+		"jquery/photoswipe": ">=3.0.5",
+		"jquery/plugins/anythingslider": ">=1.9.2",
+		"jquery/plugins/async": ">=1.0",
+		"jquery/plugins/brosho": ">=0.1",
+		"jquery/plugins/chosen": ">=1.0.0",
+		"jquery/plugins/cluetip": ">=1.2.10",
+		"jquery/plugins/colorbox": ">=1.4.31",
+		"jquery/plugins/colorpicker": ">=0.5",
+		"jquery/plugins/fitvidjs": ">=1.1.0",
+		"jquery/plugins/form": ">=3.25",
+		"jquery/plugins/galleriffic": ">=2.0.1",
+		"jquery/plugins/infinitecarousel": ">=3.0.3",
+		"jquery/plugins/jquery-json": ">=2.4",
+		"jquery/plugins/jquery-validation": ">=1.11.1",
+		"jquery/plugins/media": ">=0.98",
+		"jquery/plugins/migrate": ">=1.2.1",
+		"jquery/plugins/migrate-min": ">=1.2.1",
+		"jquery/plugins/nestedsortable": ">=1.3.4",
+		"jquery/plugins/pxem": ">=0.1",
+		"jquery/plugins/reflection-jquery": ">=1.1",
+		"jquery/plugins/sparkline": ">=2.1.1",
+		"jquery/plugins/superfish": ">=1.7.4",
+		"jquery/plugins/tablesorter": ">=2.14.4",
+		"jquery/plugins/tagcanvas": ">=2.8",
+		"jquery/plugins/timeago": ">=1.4.3",
+		"jquery/plugins/treetable": ">=3.0.2",
+		"jquery/plugins/zoom": ">=1.7.10",
+		"legolasbo/photoswipe": ">=4.1.1",
+		"matthiasmullie/minify": ">=1.3.42",
+		"mediumjs/mediumjs": ">=1.0.1",
+		"michelf/php-smartypants": ">=1.7.1",
+		"morteza/bootstrap-rtl": ">=3.3.2",
+		"myclabs/deep-copy": ">=1.3.0",
+		"nnnick/chartjs": "dev-master",
+		"openlayers/ol3": ">=3.6.0",
+		"oyejorge/less.php": ">=1.7.0.10",
+		"paragonie/random_compat": ">=2.0.2",
+		"phenx/php-font-lib": ">=0.2.2",
+		"phpcas/phpcas": ">=1.3.2",
+		"onelogin/php-saml": ">=2.10.0",
+		"phpseclib/phpseclib": ">=0.3.1",
+		"player/flv": ">=1.0",
+		"player/mp3": ">=1.0",
+		"psr/log": ">=1.0",
+		"rangy/rangy": ">=1.2.3",
+		"simile_timeline/simile_timeline": ">=2.3.0",
+		"smarty/smarty": ">=3.1.14",
+		"sorich87/bootstrap-tour": ">0.10.2",
+		"studio-42/elfinder": ">=2.1",
+		"svg-edit/svg-edit": ">=2.6",
+		"symfony/config": ">=2.4.3",
+		"symfony/console": ">=2.4.1",
+		"symfony/dependency-injection": ">=2.4.3",
+		"symfony/filesystem": ">=2.3",
+		"tijsverkoyen/css-to-inline-styles": ">=1.2.1",
+		"twitter/bootstrap": ">=3.3.6",
+		"undojs/undojs": "1",
+		"zendframework/zend-captcha": "~2.4",
+		"zendframework/zend-code": "~2.4",
+		"zendframework/zend-config": "~2.4",
+		"zendframework/zend-crypt": "~2.4",
+		"zendframework/zend-escaper": "~2.4",
+		"zendframework/zend-eventmanager": "~2.4",
+		"zendframework/zend-feed": "~2.4",
+		"zendframework/zend-filter": "~2.4",
+		"zendframework/zend-http": "~2.4",
+		"zendframework/zend-hydrator": "~1.1",
+		"zendframework/zend-i18n": "~2.4",
+		"zendframework/zend-json": "~2.4",
+		"zendframework/zend-loader": "~2.4",
+		"zendframework/zend-log": "~2.4",
+		"zendframework/zend-mail": "~2.4",
+		"zendframework/zend-math": "~2.4",
+		"zendframework/zend-mime": "~2.4",
+		"zendframework/zend-server": "~2.4",
+		"zendframework/zend-servicemanager": ">=2.4",
+		"zendframework/zend-session": "~2.4",
+		"zendframework/zend-soap": "~2.4",
+		"zendframework/zend-stdlib": "~2.4",
+		"zendframework/zend-tag": "~2.4",
+		"zendframework/zend-uri": "~2.4",
+		"zendframework/zend-validator": "~2.4",
+		"zendframework/zend-version": "~2.4",
+		"zendframework/zendgdata": "~2.0",
+		"zendframework/zendoauth": "~2.0",
+		"zendframework/zendopenid": "~2.0",
+		"zendframework/zendsearch": "~2.0",
+		"zendframework/zendservice-akismet": "~2.0",
+		"zendframework/zendservice-recaptcha": "~2.0",
+		"zendframework/zendservice-twitter": "~2.0",
+		"zetacomponents/base": ">=1.8",
+		"zetacomponents/webdav": ">=1.1.3",
+		"bafs/testify": "dev-master",
+		"doctrine/instantiator": ">=1.0.5",
+		"mikey179/vfsStream": ">=v1.1.0",
+		"phpdocumentor/reflection-common": ">=1.0",
+		"phpdocumentor/reflection-docblock": ">=3.1.0",
+		"phpdocumentor/type-resolver": ">=0.2",
+		"phpspec/prophecy": ">=v1.6.1",
+		"phpunit/dbunit": ">=2.0.2",
+		"phpunit/php-code-coverage": ">=2.2.4",
+		"phpunit/php-file-iterator": ">=1.4.1",
+		"phpunit/php-text-template": ">=1.2.1",
+		"phpunit/php-timer": ">=1.0.8",
+		"phpunit/php-token-stream": ">=1.4.8",
+		"phpunit/phpunit": ">=4.8.27",
+		"phpunit/phpunit-mock-objects": ">=2.3.8",
+		"phpunit/phpunit-selenium": ">=2.0.2",
+		"sebastian/code-unit-reverse-lookup": ">=1.0.0",
+		"sebastian/comparator": ">=1.2.0",
+		"sebastian/diff": ">=1.4.1",
+		"sebastian/environment": ">=1.3.7",
+		"sebastian/exporter": ">=1.2.2",
+		"sebastian/global-state": ">=1.1.1",
+		"sebastian/object-enumerator": ">=2.0.0",
+		"sebastian/recursion-context": ">=1.0.2",
+		"sebastian/resource-operations": ">=1.0.0",
+		"sebastian/version": ">=1.0.6",
+		"symfony/yaml": ">=3.1.3",
+		"webmozart/assert": ">=1.0.2"
+	},
+	"archive": {
+		"directory": "dist",
+		"format": "zip",
+		"prefix-url": "https://composer.tiki.org",
+		"skip-dev": false
+	}
+}

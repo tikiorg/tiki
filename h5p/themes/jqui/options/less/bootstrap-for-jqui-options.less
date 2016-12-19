@@ -1,0 +1,569 @@
+// Links
+
+a {
+	color: @link-color;
+
+	&:hover,
+	&:focus {
+		color: @link-hover-color;
+	}
+
+	//  &:focus {
+	//    .tab-focus();
+	//  }
+}
+
+// Alternate buttons
+// --------------------------------------------------
+
+.btn-default {
+	.button-variant(@btn-default-color; @btn-default-bg; @btn-default-border);
+}
+
+.btn-primary {
+	.button-variant(@btn-primary-color; @btn-primary-bg; @btn-primary-border);
+}
+
+//fieldset {
+//  border: 1px solid @fieldset-border-color;
+//}
+
+// Horizontal rules
+
+hr {
+	border-top: 1px solid @hr-border;
+}
+
+// Alerts
+// Alternate styles
+//
+// Generate contextual modifier classes for colorizing the alert.
+/*
+.alert-success {
+  .alert-variant(@alert-success-bg; @alert-success-border; @alert-success-text);
+}
+.alert-info {
+  .alert-variant(@alert-info-bg; @alert-info-border; @alert-info-text);
+}
+.alert-warning {
+  .alert-variant(@alert-warning-bg; @alert-warning-border; @alert-warning-text);
+}
+.alert-danger {
+  .alert-variant(@alert-danger-bg; @alert-danger-border; @alert-danger-text);
+}
+*/
+
+// Tables
+.table {
+	// Cells
+	> thead,
+	> tbody,
+	> tfoot {
+		> tr {
+			> th,
+			> td {
+				border-top: 1px solid @table-border-color;
+			}
+		}
+	}
+	// Bottom align for column headings
+	> thead > tr > th {
+		border-bottom: 2px solid @table-border-color;
+	}
+	// Remove top border from thead by default
+	> caption + thead,
+	> colgroup + thead,
+	> thead:first-child {
+		> tr:first-child {
+			> th,
+			> td {
+				border-top: 0;
+			}
+		}
+	}
+	// Account for multiple tbody instances
+	> tbody + tbody {
+		border-top: 2px solid @table-border-color;
+	}
+
+	// Nesting
+	.table {
+		background-color: @body-bg;
+	}
+
+	// Bordered version
+	//
+	// Add borders all around the table and between all the columns.
+
+	.table-bordered {
+		border: 1px solid @table-border-color;
+		> thead,
+		> tbody,
+		> tfoot {
+			> tr {
+				> th,
+				> td {
+					border: 1px solid @table-border-color;
+				}
+			}
+		}
+	}
+
+	// Zebra-striping
+	//
+	// Default zebra-stripe styles (alternating gray and transparent backgrounds)
+
+	.table-striped {
+		> tbody > tr:nth-child(odd) {
+			> td,
+			> th {
+				background-color: @table-bg-accent;
+			}
+		}
+	}
+
+	// Hover effect
+	//
+	// Placed here since it has to come after the potential zebra striping
+
+	.table-hover {
+		> tbody > tr:hover {
+			> td,
+			> th {
+				background-color: @table-bg-hover;
+			}
+		}
+	}
+}
+
+// Table backgrounds
+//
+// Exact selectors below required to override `.table-striped` and prevent
+// inheritance to nested tables.
+
+// Generate the contextual variants
+// .table-row-variant(active; @table-bg-active);
+// .table-row-variant(success; @state-success-bg);
+// .table-row-variant(info; @state-info-bg);
+// .table-row-variant(warning; @state-warning-bg);
+// .table-row-variant(danger; @state-danger-bg);
+
+.form-control {
+	color: @input-color;
+	background-color: @input-bg;
+	background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+	border: 1px solid @input-border;
+}
+
+// Alternate navbars
+// --------------------------------------------------
+.navbar {
+	position: relative;
+	min-height: @navbar-height; // Ensure a navbar always shows (e.g., without a .navbar-brand in collapsed mode)
+	//  margin-bottom: @navbar-margin-bottom;
+	border: 1px solid transparent;
+}
+
+// Default navbar
+.navbar-default {
+	background-color: @navbar-default-bg;
+	border-color: @navbar-default-border;
+
+	.navbar-brand {
+		color: @navbar-default-brand-color;
+		&:hover,
+		&:focus {
+			color: @navbar-default-brand-hover-color;
+			background-color: @navbar-default-brand-hover-bg;
+		}
+	}
+
+	.navbar-text {
+		color: @navbar-default-color;
+	}
+
+	.navbar-nav {
+		> li > a {
+			color: @navbar-default-link-color;
+
+			&:hover,
+			&:focus {
+				color: @navbar-default-link-hover-color;
+				background-color: @navbar-default-link-hover-bg;
+			}
+		}
+		> .active > a {
+			&,
+			&:hover,
+			&:focus {
+				color: @navbar-default-link-active-color;
+				background-color: @navbar-default-link-active-bg;
+			}
+		}
+		> .disabled > a {
+			&,
+			&:hover,
+			&:focus {
+				color: @navbar-default-link-disabled-color;
+				background-color: @navbar-default-link-disabled-bg;
+			}
+		}
+	}
+
+	.navbar-toggle {
+		border-color: @navbar-default-toggle-border-color;
+		&:hover,
+		&:focus {
+			background-color: @navbar-default-toggle-hover-bg;
+		}
+		.icon-bar {
+			background-color: @navbar-default-toggle-icon-bar-bg;
+		}
+	}
+
+	.navbar-collapse,
+	.navbar-form {
+		border-color: @navbar-default-border;
+	}
+
+	// Dropdown menu items
+	.navbar-nav {
+		// Remove background color from open dropdown
+		> .open > a {
+			&,
+			&:hover,
+			&:focus {
+				background-color: @navbar-default-link-active-bg;
+				color: @navbar-default-link-active-color;
+			}
+		}
+
+		//    @media (max-width: @grid-float-breakpoint-max) {
+		// Dropdowns get custom display when collapsed
+		.open .dropdown-menu {
+			> li > a {
+				color: @navbar-default-link-color;
+				&:hover,
+				&:focus {
+					color: @navbar-default-link-hover-color;
+					background-color: @navbar-default-link-hover-bg;
+				}
+			}
+			> .active > a {
+				&,
+				&:hover,
+				&:focus {
+					color: @navbar-default-link-active-color;
+					background-color: @navbar-default-link-active-bg;
+				}
+			}
+			> .disabled > a {
+				&,
+				&:hover,
+				&:focus {
+					color: @navbar-default-link-disabled-color;
+					background-color: @navbar-default-link-disabled-bg;
+				}
+			}
+		}
+	}
+	//  }
+
+	// Links in navbars
+	//
+	// Add a class to ensure links outside the navbar nav are colored correctly.
+
+	.navbar-link {
+		color: @navbar-default-link-color;
+		&:hover {
+			color: @navbar-default-link-hover-color;
+		}
+	}
+
+}
+
+// Inverse navbar
+
+.navbar-inverse {
+	background-color: @navbar-inverse-bg;
+	border-color: @navbar-inverse-border;
+
+	.navbar-brand {
+		color: @navbar-inverse-brand-color;
+		&:hover,
+		&:focus {
+			color: @navbar-inverse-brand-hover-color;
+			background-color: @navbar-inverse-brand-hover-bg;
+		}
+	}
+
+	.navbar-text {
+		color: @navbar-inverse-color;
+	}
+
+	.navbar-nav {
+		> li > a {
+			color: @navbar-inverse-link-color;
+
+			&:hover,
+			&:focus {
+				color: @navbar-inverse-link-hover-color;
+				background-color: @navbar-inverse-link-hover-bg;
+			}
+		}
+		> .active > a {
+			&,
+			&:hover,
+			&:focus {
+				color: @navbar-inverse-link-active-color;
+				background-color: @navbar-inverse-link-active-bg;
+			}
+		}
+		> .disabled > a {
+			&,
+			&:hover,
+			&:focus {
+				color: @navbar-inverse-link-disabled-color;
+				background-color: @navbar-inverse-link-disabled-bg;
+			}
+		}
+	}
+
+	// Darken the responsive nav toggle
+	.navbar-toggle {
+		border-color: @navbar-inverse-toggle-border-color;
+		&:hover,
+		&:focus {
+			background-color: @navbar-inverse-toggle-hover-bg;
+		}
+		.icon-bar {
+			background-color: @navbar-inverse-toggle-icon-bar-bg;
+		}
+	}
+
+	.navbar-collapse,
+	.navbar-form {
+		border-color: darken(@navbar-inverse-bg, 7%);
+	}
+}
+
+// The dropdown menu (ul)
+.dropdown-menu {
+	background-color: @dropdown-bg;
+	border: 1px solid @dropdown-border;
+	// Dividers (basically an hr) within the dropdown
+	// .divider {
+	//   .nav-divider(@dropdown-divider-bg);
+	//}
+
+	// Links within the dropdown menu
+	> li > a {
+		color: @dropdown-link-color;
+	}
+}
+
+// Hover/Focus state
+.dropdown-menu > li > a {
+	&:hover,
+	&:focus {
+		color: @dropdown-link-hover-color;
+		background-color: @dropdown-link-hover-bg;
+	}
+}
+
+// Active state
+.dropdown-menu > .active > a {
+	&,
+	&:hover,
+	&:focus {
+		color: @dropdown-link-active-color;
+		background-color: @dropdown-link-active-bg;
+	}
+}
+
+// Disabled state
+//
+// Gray out text and ensure the hover/focus state remains gray
+
+.dropdown-menu > .disabled > a {
+	&,
+	&:hover,
+	&:focus {
+		color: @dropdown-link-disabled-color;
+	}
+}
+
+// Nuke hover/focus effects
+.dropdown-menu > .disabled > a {
+	&:hover,
+	&:focus {
+		background-color: transparent;
+		background-image: none; // Remove CSS gradient
+	}
+}
+
+// Pills
+// -------------------------
+.nav-pills {
+	> li {
+		// Active state
+		&.active > a {
+			&,
+			&:hover,
+			&:focus {
+				color: @nav-pills-active-link-hover-color;
+				background-color: @nav-pills-active-link-hover-bg;
+			}
+		}
+	}
+}
+
+// Pagination (multiple pages)
+// --------------------------------------------------
+.pagination {
+	> li {
+		> a,
+		> span {
+			color: @pagination-color;
+			background-color: @pagination-bg;
+			border: 1px solid @pagination-border;
+		}
+	}
+
+	> li > a,
+	> li > span {
+		&:hover,
+		&:focus {
+			color: @pagination-hover-color;
+			background-color: @pagination-hover-bg;
+			border-color: @pagination-hover-border;
+		}
+	}
+
+	> .active > a,
+	> .active > span {
+		&,
+		&:hover,
+		&:focus {
+			color: @pagination-active-color;
+			background-color: @pagination-active-bg;
+			border-color: @pagination-active-border;
+		}
+	}
+
+	> .disabled {
+		> span,
+		> span:hover,
+		> span:focus,
+		> a,
+		> a:hover,
+		> a:focus {
+			color: @pagination-disabled-color;
+			background-color: @pagination-disabled-bg;
+			border-color: @pagination-disabled-border;
+		}
+	}
+}
+
+//
+// Panels
+// --------------------------------------------------
+
+// Base class
+.panel {
+	//  margin-bottom: @line-height-computed;
+	background-color: @panel-bg;
+}
+
+// Optional heading
+.panel-heading {
+	border-bottom: 1px solid transparent;
+	// .border-top-radius((@panel-border-radius - 1));
+
+	> .dropdown .dropdown-toggle {
+		color: inherit;
+	}
+}
+
+// Within heading, strip any `h*` tag of its default margins for spacing.
+.panel-title {
+	color: inherit;
+
+	> a {
+		color: inherit;
+	}
+}
+
+// Optional footer (stays gray in every modifier class)
+.panel-footer {
+	background-color: @panel-footer-bg;
+	border-top: 1px solid @panel-inner-border;
+}
+
+// Contextual variations
+.panel-default {
+	.panel-variant(@panel-default-border; @panel-default-text; @panel-default-heading-bg; @panel-default-border);
+}
+
+.panel-primary {
+	.panel-variant(@panel-primary-border; @panel-primary-text; @panel-primary-heading-bg; @panel-primary-border);
+}
+
+.panel-success {
+	.panel-variant(@panel-success-border; @panel-success-text; @panel-success-heading-bg; @panel-success-border);
+}
+
+.panel-info {
+	.panel-variant(@panel-info-border; @panel-info-text; @panel-info-heading-bg; @panel-info-border);
+}
+
+.panel-warning {
+	.panel-variant(@panel-warning-border; @panel-warning-text; @panel-warning-heading-bg; @panel-warning-border);
+}
+
+.panel-danger {
+	.panel-variant(@panel-danger-border; @panel-danger-text; @panel-danger-heading-bg; @panel-danger-border);
+}
+
+//
+// Labels
+// --------------------------------------------------
+
+.label {
+	color: @label-color;
+
+	// Add hover effects, but only for links
+	&[href] {
+		&:hover,
+		&:focus {
+			color: @label-link-hover-color;
+		}
+	}
+}
+
+// Colors
+// Contextual variations (linked labels get darker on :hover)
+
+.label-default {
+	.label-variant(@label-default-bg);
+}
+
+.label-primary {
+	.label-variant(@label-primary-bg);
+}
+
+.label-success {
+	.label-variant(@label-success-bg);
+}
+
+.label-info {
+	.label-variant(@label-info-bg);
+}
+
+.label-warning {
+	.label-variant(@label-warning-bg);
+}
+
+.label-danger {
+	.label-variant(@label-danger-bg);
+}

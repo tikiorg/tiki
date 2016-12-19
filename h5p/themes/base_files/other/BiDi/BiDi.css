@@ -1,0 +1,519 @@
+/* BiDi specific layout modifications */
+
+/* GENERAL LAYOUT EXPLANATION
+ *
+ * BiDi layout modifications relay on the fact that the Tiki application is
+ * enclosed as a whole in tiki-main or tiki-clean. Thus it mirrors the entire
+ * output by setting the directionality property of this DIV element.
+ * Other modifications include overriding all left text-alignments and
+ * turning them into right text-alignments.
+*/
+
+/* Notice : BiDi layout modifications are general and try to address to all the themes. 
+ * BiDi is set by default to work with the default theme of Tiki, FiveAlive Blueberry.
+ * BiDi file is read only and used when RTL (Right To Left) language is detected.
+ * It is located at "/styles/BiDi/".
+ */
+ 
+ /* RTL Theme specifics CSS files.
+  * From Tiki12 theme specific RTL stylesheet can be
+  * applied. Place the -rtl.css file within the same directory
+  * of your theme so you'll have "/styles/mytheme.css" and "/styles/mytheme-rtl.css"
+  * Common use is to place graphics within your theme elements. "/styles/mytheme/"
+  * This is experimental and we keep improving as we plan to integrate bootstrap soon.
+  * Any help will be appreciated (please contact). Team : Bsfez/yonixxx.
+ */
+
+/***** XHTML Elements (body tag here, others follow Layout) *****/
+
+html[dir="rtl"] * {
+    direction: rtl;
+    text-align: right; /* If at least latest version of IE supported that, it would be better to use CSS3's text-align: start / end everywhere to avoid this */
+}
+
+/* Hebrew and Arabic characters display smaller than latin characters */
+/* set here a different font size for RTL only - Note that latin char will look bigger than hebrew if mixed (numbers) */
+body {
+    font-size: 102% !important;
+}
+
+/***** Layout *****/
+
+
+/* This div encloses the "clean" Tiki screens */
+div#tiki-clean {
+    direction: rtl !important;
+}
+
+/* Col reversing; This is one col only specific and must be edited if otherwise */
+
+#col2 {
+    float: right !important;
+}
+
+#col3 {
+    float: left !important;
+    margin-left:0 !important;
+}
+
+html[dir="rtl"] #showhide_left_column {
+    float: right !important;
+}
+html[dir="rtl"] #showhide_right_column {
+    float: left !important;
+}
+
+/***** Box *****/
+.box {
+    text-align: right !important;
+}
+
+/* This div encloses the images in box */
+ul li div.image {
+	float: right !important;
+	margin-left:5px !important;
+}
+
+/***** Header graphic adaptation - could be not portable *****/
+/* ===>> This is given as example and used with Tiki <<=== */
+/* ===>>default theme each header should be adapted <<=== */
+
+/** header banner comment or set to none both if you customise theme **/
+#header {
+    background: url('../../../fivealive/options/blueberry/rtl/siteheader_rtl.jpg') 50% 0 no-repeat !important;
+}
+
+.header_container {
+    background: url("../../../fivealive/images/header_left.png") no-repeat scroll 100% 0 transparent !important;
+}
+
+/** Logo position **/
+#top_modules .box-logo {
+    float: right !important;
+    margin-right: 10px !important;
+}
+
+/** Logo Box **/
+
+.sitelogo {
+	float: right !important;
+}
+
+/* Login box left tag should be equal to col width */
+#top_modules .box-login_box {
+	right: auto !important;
+    left: 200px;
+}
+
+.siteloginbar_popup ul.siteloginbar_poppedup {
+    width: 12em !important;
+}
+
+.siteloginbar_popup * {
+    margin: 0;
+}
+
+/* site login popup content */
+.siteloginbar_popup label {
+    float: right !important;
+}
+
+#loginbox.forms fieldset input#sl-login-user,
+#loginbox.forms fieldset input#sl-login-pass,
+#loginbox.forms fieldset input.wikiaction {
+	float: left !important;
+	direction: rtl !important;
+	text-align: right !important;
+}
+
+#siteloginbar_popup .pass a {
+	width: 100% !important;
+	text-align: center !important;
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+.siteloginbar_popup .pass {
+    float: none !important;
+    width: 100% !important;
+    text-align: right !important;
+}
+
+/* Sitelogin Popup moved left Fivealive theme */
+#siteloginbar_popup {
+    right: 865px !important;
+}
+
+/* Sitelogin hover panel moved right inside the body Fivealive theme - could be not portable */
+#login_link .cbox {
+	position:relative;
+	left: 170px;
+}
+
+#logout_link .cbox {
+	position:relative;
+	left: 200px;
+}
+
+ul.sf-shadow ul {background-image:none}
+
+/** Admin module **/
+#top_modules .box-quickadmin {
+    left: 10px;
+    margin-right: 640px;
+}
+
+#quickadmin ul.recent-prefs {
+    left: auto !important;
+}
+
+/***** CSS menu *****/
+/* Menu alignment */
+.cssmenu_horiz li, .cssmenu_vert li {
+    float: right !important;
+}
+
+.cssmenu_horiz a, .cssmenu_vert a, .cssmenu_horiz ul li a {
+    padding-right: 0.5em;
+    line-height: 16px;
+    text-decoration: none !important;
+}
+
+/* Hebrew and Arabic are smaller so we reset font size */
+.menuText {
+    font-size: 1em !important;
+}
+
+/* Menu adjustment Fivealive theme - Could require editing depending the theme you are using */
+/* moving away menu item from indicator and keep text in the center */
+.topbar .cssmenu_horiz li a {
+	background-position: 0 50% !important;
+}
+
+/** Vertical Menu **/
+
+.cssmenu_vert a.sf-with-ul {
+    padding-right: 0;
+    padding-left: 2.25em;
+}
+
+/* Reseting the position for sub item without indicator  */
+.topbar .cssmenu_horiz li ul li a {
+    padding-right: 0.5em !important;
+}
+
+/* Repositionning sub-menu */
+.cssmenu_vert li ul {
+	right: 140px !important;
+}
+
+/* Indicator reversing and repositioning*/
+.cssmenu_horiz li li a > .sf-sub-indicator {
+	right: 120px;
+    top: 14px;
+	-moz-transform: scaleX(-1);
+	-o-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+	filter: FlipH;
+	-ms-filter: "FlipH";
+}
+
+.cssmenu_vert a > .sf-sub-indicator {
+    right: 120px;
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+}
+
+.sf-sub-indicator {
+    text-indent: 999em;
+}
+
+/* Submenu alignment */
+
+.cssmenu_horiz li:hover ul,
+.cssmenu_horiz li.sfHover ul,
+.cssmenu_vert li:hover ul,
+.cssmenu_vert li.sfHover ul {
+	left: auto; right: 0;
+}
+
+/* menulevel2 adjustment */
+.cssmenu_horiz li ul li ul {
+	left:-13em !important;
+	padding: 0 8px 9px 0;
+	width: 13em !important;
+	background: url(../../../../img/superfish/shadow.png) no-repeat bottom right;
+}
+
+/***** My Account User Preferences *****/
+.tabcontent .floatleft {
+    float: right !important;
+}
+
+.tabcontent .floatright {
+    float: left !important;
+}
+
+#user_information .tabcontent .floatright {
+	float: none !important;
+	padding-right: 15em;
+}
+
+/***** Wiki page *****/
+div.tabstoggle {
+    float: left !important;
+}
+
+.tabs .container {
+	float: right !important;
+	width: auto !important;
+	margin-right: -2px
+}
+
+.tabstoggle .button {
+    right:24px;
+}
+
+.tabcontent table {
+    text-align: right !important;
+}
+
+#page-bar {
+    float: right !important;
+}
+
+/***** File gallery  *****/
+#thumbnails {
+    float: none !important;
+}
+
+/* Popup content - width is a tweak for the scroll right masking part of the table */
+.opaque {
+	text-align: right !important;
+	direction: rtl !important;
+	width: 96%;
+}
+
+/* Flip the navigation arrows */
+.fgallisting img.icon, .mini a.prevnext img.icon {
+	-moz-transform: scaleX(-1);
+	-o-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+	filter: FlipH;
+	-ms-filter: "FlipH";
+}
+
+/***** Article *****/
+
+.articletitle {
+    text-align: right !important;
+}
+
+img.articleimage {
+    padding: 2px 2px 2px 20px !important;
+}
+
+/* Comment */
+.post .postbody .content, .post .author, .dirsite {
+    text-align: right !important;
+}
+
+/***** Calendar *****/
+/* keep date in the calendar in the right direction */
+.calId1 {
+    direction:rtl;
+}
+
+/* Flip the calendar navigation arrows */
+#calscreen .viewmode img.icon {
+	-moz-transform: scaleX(-1) !important;
+	-o-transform: scaleX(-1) !important;
+	-webkit-transform: scaleX(-1) !important;
+	transform: scaleX(-1) !important;
+	filter: FlipH !important;
+	-ms-filter: "FlipH" !important;
+}
+
+/***** Tables *****/
+table {
+    width: 100%;
+}
+
+table.formcolor {
+    width: 98%;
+}
+
+/* When modules display a list of items each item is enclosed in a cell with the following style */
+td.module {
+    text-align: right !important;
+}
+
+/* Cells in forms without background color (inside a div for example) */
+td.form {
+    text-align: right !important;
+}
+
+/* Cells in forms using a background color */
+td.formcolor, td.galform, td.editblogform, td.editfgalform, td.comform, td.forumform {
+    text-align: right !important;
+}
+
+/* Odd rows in several listings */
+td.odd, td.gallistnameodd, td.gallistdescriptionodd, td.gallistcreatedodd, td.gallistlastModifodd, td.gallistuserodd,
+	td.gallistimagesodd, td.gallisthitsodd, td.gallistactionsodd, td.listgalidodd, td.listgalnameodd, td.listgalcreatedodd,
+	td.listgalhitsodd, td.listgaluserodd, td.listgalfilesizeodd, td.bloglistnameodd, td.bloglistdescriptionodd,
+	td.bloglistcreatedodd, td.bloglistlastModifodd, td.bloglistuserodd, td.bloglistpublicodd, td.bloglistpostsodd,
+	td.bloglistvisitsodd, td.bloglistactivityodd, td.bloglistactionsodd, td.listfgalnameodd, td.listfgaldescriptionodd,
+	td.listfgalcreatedodd, td.listfgallastModifodd, td.listfgaluserodd, td.listfgalfilesodd, td.listfgalvisitsodd,
+	td.listfgalactionsodd, td.listfilesnameodd, td.listfilesdescriptionodd, td.listfilesidodd, td.listfilesfilenameodd,
+	td.listfilesfilesizeodd, td.listfilescreatedodd, td.listfilesdlsodd, td.listfilesnameodd, td.listfilesuserodd,
+	td.listfilesactionsodd, td.listarttitleodd, td.listarttopicodd, td.listartpublishDateodd, td.listartauthorodd,
+	td.listartreadsodd, td.listarthasimageodd, td.listartuseimageodd, td.listartactionsodd, td.listartsizeodd, td.forumstableodd,
+	td.forumstableinfoodd, td.topictitleodd, td.topicrepliesodd, td.topicreadsodd, td.topicscoreodd, td.topiclastpostodd,
+	td.topicauthorodd {
+    text-align: right !important;
+}
+
+/* Even rows in several listings */
+td.even, td.gallistnameeven, td.gallistdescriptioneven, td.gallistcreatedeven, td.gallistlastModifeven, td.gallistusereven,
+	td.gallistimageseven, td.gallisthitseven, td.gallistactionseven, td.listgalideven, td.listgalnameeven, td.listgalcreatedeven,
+	td.listgalhitseven, td.listgalusereven, td.listgalfilesizeeven, td.bloglistnameeven, td.bloglistdescriptioneven,
+	td.bloglistcreatedeven, td.bloglistlastModifeven, td.bloglistusereven, td.bloglistpubliceven, td.bloglistpostseven,
+	td.bloglistvisitseven, td.bloglistactivityeven, td.bloglistactionseven, td.listfgalnameeven, td.listfgaldescriptioneven,
+	td.listfgalcreatedeven, td.listfgallastModifeven, td.listfgalusereven, td.listfgalfileseven, td.listfgalvisitseven,
+	td.listfgalactionseven, td.listfilesnameeven, td.listfilesdescriptioneven, td.listfilesideven, td.listfilesfilenameeven,
+	td.listfilesfilesizeeven, td.listfilescreatedeven, td.listfilesdlseven, td.listfilesnameeven, td.listfilesusereven,
+	td.listfilesactionseven, td.listarttitleeven, td.listarttopiceven, td.listartpublishDateeven, td.listartauthoreven,
+	td.listartreadseven, td.listarthasimageeven, td.listartuseimageeven, td.listartactionseven, td.listartsizeeven,
+	td.forumstableeven, td.forumstableinfoeven, td.topictitleeven, td.topicreplieseven, td.topicreadseven, td.topicscoreeven,
+	td.topiclastposteven, td.topicauthoreven {
+    text-align: right !important;
+}
+
+td.third {
+    text-align: right !important;
+}
+
+/* Browsing an image */
+td.imageinfo {
+    text-align: right !important;
+}
+
+/* Inside chat */
+td.tdchatform {
+    text-align: right !important;
+}
+
+.tellafriend, .share {
+    text-align:right;
+}
+
+/***** plugin *****/
+/* Wikitracker plugin - Could require editing depending the theme you are using */
+.wikiplugin_tracker h6 {
+    text-align: right !important;
+}
+
+.ui-dialog {
+direction: rtl !important;
+text-align: right !important;
+}
+
+.ui-dialog-title {float: right !important}
+.ui-dialog-titlebar-close {
+	left: 0.3em !important;
+	right: auto !important;
+}
+
+/***** module *****/
+/* Share module */
+#pagetop_modules .mod-share-item {
+    float: right !important;
+    text-align: right !important;
+}
+
+/* If an rtl language is set for the Facebook language module setting this will avoid collision */
+#pagetop_modules .fb_edge_widget_with_comment {
+    right: 8px !important;
+}
+
+/***** Miscellaneous *****/
+/* Rss icons */
+#rss {
+    text-align: right !important;
+}
+
+/* Trackers */
+table.normal th.auto {
+    text-align: right;
+}
+
+/* Toolbars items */
+.toolbars-admin ul#full-list-w.full, .toolbars-admin ul#full-list-p.full, .toolbars-admin ul#full-list-c.full {
+    padding-right: 0;
+}
+
+/***** Admin *****/
+#wizardBody .adminoption {
+    float: right;
+    margin-right: 0;
+    margin-left: 1em;
+}
+
+/*#wizardBody .adminoptionlabel {
+    text-align: right !important;
+}*/
+
+#wizardBody .adminoptionbox {
+    text-align: right !important;
+}
+
+/***** User Wizard *****/
+
+.userWizardIconleft {
+    float:right;
+    margin-left: 10px;
+    margin-right: 0;
+}
+
+.userWizardIconright {
+    float: left;
+    margin-left: 0;
+    margin-right: 10px;
+}
+
+/***** Admin Wizard *****/
+#wizardBody .adminWizardIconleft {
+    float:right;
+    margin-left: 10px;
+    margin-right: 0;
+}
+
+#wizardBody .adminWizardIconright {
+    float:left;
+    margin-right: 10px;
+    margin-left: 0;
+}
+
+.adminWizardtable {
+    padding-left:0 !important;
+    padding-right:20px;
+}
+
+#wizardBody .adminWizardlookandfell {
+    right: auto;
+    left: .5em;
+}
+
+/* Overrides for main page content in non-RTL languages (only when lang attr is set on it) */
+#role_main[lang]:not([lang=ar]):not([lang=he]):not([lang=fa]):not([lang=ku]):not([lang=ug]) * {
+    direction: ltr;
+    text-align: left;
+}
+

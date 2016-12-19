@@ -1,0 +1,29 @@
+// $Id$
+@web-font-path: "https://fonts.googleapis.com/css?family=Lato:300,400,700";
+
+.web-font(@path) {
+	@import url("@{path}");
+}
+.web-font(@web-font-path);
+@import "../../../vendor/twitter/bootstrap/less/bootstrap.less";
+@import "../../base_files/less/bootswatch_overrides.less";
+// So far, just removes the CSS content theme-option-required warning.
+@import "bootswatch.less";
+// defines the theme's CSS values that are outside of variables.less
+@import "../../base_files/less/tiki-variables";
+// Values/definitions for Tiki variables (outside of Bootstrap variables) such as tiki-selectors.less.
+@import "../../base_files/less/tiki-selectors.less";
+// Tiki non-Bootstrap CSS selectors
+@import "../../base_files/less/external-scripts.less";
+@import "variables.less";
+
+// the Bootstrap variables.less file with theme-specific values replacing the defaults
+
+.cssmenu_horiz a { font-size: 12px; }
+
+.nav.cssmenu_horiz > li > a {
+	padding-top: 11px;
+	padding-bottom: 11px;
+}
+
+body.fullscreen { background: @body-bg; }

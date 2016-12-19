@@ -1,0 +1,1 @@
+{* $Id$ *}{tr}The leader of {/tr}{$prefs.mail_template_custom_text}{$mail_group} {tr}has added you. To visit it, logon and go to the home page {/tr}<a href="{$mail_machine}/{$mail_url}">{$mail_machine}/{$mail_url}</a>
