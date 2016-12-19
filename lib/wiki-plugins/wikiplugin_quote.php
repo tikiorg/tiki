@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -42,6 +42,14 @@ function wikiplugin_quote_info()
 				'filter' => 'text',
 				'default' => '',
 			),
+			'date' => array(
+				'required' => false,
+				'name' => tra('Date'),
+				'description' => tra('The date when quote was made.') . tr(' (%0YYYY-MM-DD%1)', '<code>', '</code>'),
+				'filter' => 'date',
+				'default' => '',
+				'since' => '16',
+			),
 		),
 	);
 }
@@ -49,8 +57,13 @@ function wikiplugin_quote_info()
 function wikiplugin_quote($data, $params)
 {
 	global $smarty;
+	global $prefs;
 
 	$source_url = '';
+
+	$date = null;
+	$date_order = strtr($prefs['display_field_order'], 'DM', 'dm');
+	$date_format = '%' . join('/%', str_split($date_order, 1));
 
 	if ($params['thread_id']) {
 		$commentslib = TikiLib::lib('comments');
@@ -62,7 +75,12 @@ function wikiplugin_quote($data, $params)
 	if ($params['source_url']) {
 		$source_url = $params['source_url'];
 	}
+	if ($params['date']) {
+		$date = strtotime($params['date']);
+	}
 
+	$smarty->assign('date', $date);
+	$smarty->assign('date_format', $date_format);
 	$smarty->assign('comment_info', $comment_info);
 	$smarty->assign('replyto', $replyto);
 	$smarty->assign('data', trim($data));
