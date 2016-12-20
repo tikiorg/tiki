@@ -938,10 +938,19 @@ function cs_design_distance($id, $fieldname, $fieldid, $arguments, $default, &$s
 {
 	$document = new DOMDocument;
 	$distanceElement = $document->createElement('input');
+	if (!empty($arguments['id'])) {
+		$arguments['id'] = $fieldid . '_dist';
+	}
 	cs_design_setbasic($distanceElement, $fieldid . '_dist', $fieldname, $arguments);
 	$latElement = $document->createElement('input');
+	if (!empty($arguments['id'])) {
+		$arguments['id'] = $fieldid . '_lat';
+	}
 	cs_design_setbasic($latElement, $fieldid . '_lat', $fieldname, $arguments);
 	$lonElement = $document->createElement('input');
+	if (!empty($arguments['id'])) {
+		$arguments['id'] = $fieldid . '_lon';
+	}
 	cs_design_setbasic($lonElement, $fieldid . '_lon', $fieldname, $arguments);
 
 	if (!empty($default)) {
