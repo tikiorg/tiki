@@ -5,6 +5,7 @@
 # Keep track of h5p content entities > Pending in Tiki: Add FileId
 CREATE TABLE tiki_h5p_contents (
 	id           INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	file_id			 INT UNSIGNED NOT NULL,	# reference to the file gallery object in tiki_files table
 	created_at   TIMESTAMP    NULL,
 	updated_at   TIMESTAMP    NULL,
 	user_id      INT UNSIGNED NOT NULL,
