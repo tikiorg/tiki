@@ -5,8 +5,8 @@
 # Keep track of h5p content entities
 CREATE TABLE tiki_h5p_contents (
 	id           INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	created_at   TIMESTAMP    NOT NULL DEFAULT 0,
-	updated_at   TIMESTAMP    NOT NULL DEFAULT 0,
+	created_at   TIMESTAMP    NULL,
+	updated_at   TIMESTAMP    NULL,
 	user_id      INT UNSIGNED NOT NULL,
 	title        VARCHAR(255) NOT NULL,
 	library_id   INT UNSIGNED NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE tiki_h5p_contents_user_data (
 	data           LONGTEXT         NOT NULL,
 	preload        TINYINT UNSIGNED NOT NULL DEFAULT 0,
 	invalidate     TINYINT UNSIGNED NOT NULL DEFAULT 0,
-	updated_at     TIMESTAMP        NOT NULL DEFAULT 0,
+	updated_at     TIMESTAMP        NULL,
 	PRIMARY KEY (content_id, user_id, sub_content_id, data_id)
 )	ENGINE = MyISAM;
 
@@ -77,8 +77,8 @@ CREATE TABLE tiki_h5p_results (
 # Keep track of h5p libraries
 CREATE TABLE tiki_h5p_libraries (
 	id               INT UNSIGNED  NOT NULL AUTO_INCREMENT,
-	created_at       TIMESTAMP     NOT NULL,
-	updated_at       TIMESTAMP     NOT NULL,
+	created_at       TIMESTAMP     NULL,
+	updated_at       TIMESTAMP     NULL,
 	name             VARCHAR(127)  NOT NULL,
 	title            VARCHAR(255)  NOT NULL,
 	major_version    INT UNSIGNED  NOT NULL,
