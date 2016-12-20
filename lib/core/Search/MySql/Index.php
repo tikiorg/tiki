@@ -51,7 +51,7 @@ class Search_MySql_Index implements Search_Index_Interface
 		if ($value instanceof Search_Type_Whole) {
 			$this->table->ensureHasField($name, 'TEXT');
 		} elseif ($value instanceof Search_Type_Numeric) {
-			$this->table->ensureHasField($name, 'TEXT');
+			$this->table->ensureHasField($name, 'FLOAT');
 		} elseif ($value instanceof Search_Type_PlainShortText) {
 			$this->table->ensureHasField($name, 'TEXT');
 		} elseif ($value instanceof Search_Type_PlainText) {
