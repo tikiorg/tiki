@@ -21,7 +21,7 @@
 			sorters: function(attr) {
 				if($.inArray(attr, {{$pivottable.dateFields|json_encode}}) > -1) {
 					return function(a, b) {
-						return Date.parse(a) - Date.parse(b);
+						return ( Date.parse(a) || 0 ) - ( Date.parse(b) || 0 );
 					}
 				}
 			}
