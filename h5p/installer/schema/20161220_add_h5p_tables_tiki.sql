@@ -2,7 +2,7 @@
  * Initial setup of H5P tables
  */
 
-# Keep track of h5p content entities
+# Keep track of h5p content entities > Pending in Tiki: Add FileId
 CREATE TABLE tiki_h5p_contents (
 	id           INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	created_at   TIMESTAMP    NULL,
@@ -33,46 +33,7 @@ CREATE TABLE tiki_h5p_contents_libraries (
 	PRIMARY KEY (content_id, library_id, dependency_type)
 )	ENGINE = MyISAM;
 
-# Keep track of data/state when users use content (contents >-< users)
-CREATE TABLE tiki_h5p_contents_user_data (
-	content_id     INT UNSIGNED     NOT NULL,
-	user_id        INT UNSIGNED     NOT NULL,
-	sub_content_id INT UNSIGNED     NOT NULL,
-	data_id        VARCHAR(127)     NOT NULL,
-	data           LONGTEXT         NOT NULL,
-	preload        TINYINT UNSIGNED NOT NULL DEFAULT 0,
-	invalidate     TINYINT UNSIGNED NOT NULL DEFAULT 0,
-	updated_at     TIMESTAMP        NULL,
-	PRIMARY KEY (content_id, user_id, sub_content_id, data_id)
-)	ENGINE = MyISAM;
 
-# Create a relation between tags and content
-CREATE TABLE tiki_h5p_contents_tags (
-	content_id INT UNSIGNED NOT NULL,
-	tag_id     INT UNSIGNED NOT NULL,
-	PRIMARY KEY (content_id, tag_id)
-)	ENGINE = MyISAM;
-
-# Keep track of tags
-CREATE TABLE tiki_h5p_tags (
-	id   INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	name VARCHAR(31)  NOT NULL,
-	PRIMARY KEY (id)
-)	ENGINE = MyISAM;
-
-# Keep track of results (contents >-< users)
-CREATE TABLE tiki_h5p_results (
-	id         INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	content_id INT UNSIGNED NOT NULL,
-	user_id    INT UNSIGNED NOT NULL,
-	score      INT UNSIGNED NOT NULL,
-	max_score  INT UNSIGNED NOT NULL,
-	opened     INT UNSIGNED NOT NULL,
-	finished   INT UNSIGNED NOT NULL,
-	time       INT UNSIGNED NOT NULL,
-	PRIMARY KEY (id),
-	KEY content_user (content_id, user_id)
-)	ENGINE = MyISAM;
 
 # Keep track of h5p libraries
 CREATE TABLE tiki_h5p_libraries (
@@ -106,7 +67,53 @@ CREATE TABLE tiki_h5p_libraries_libraries (
 	PRIMARY KEY (library_id, required_library_id)
 )	ENGINE = MyISAM;
 
-# Keep track of h5p library translations
+############## Potentially optional libraries from here downwards- to be re-assessed
+############## whether they can be integrated/reusing tiki tables or if they need added to Tiki
+
+/*
+
+# Keep track of data/state when users use content (contents >-< users)
+CREATE TABLE tiki_h5p_contents_user_data (
+	content_id     INT UNSIGNED     NOT NULL,
+	user_id        INT UNSIGNED     NOT NULL,
+	sub_content_id INT UNSIGNED     NOT NULL,
+	data_id        VARCHAR(127)     NOT NULL,
+	data           LONGTEXT         NOT NULL,
+	preload        TINYINT UNSIGNED NOT NULL DEFAULT 0,
+	invalidate     TINYINT UNSIGNED NOT NULL DEFAULT 0,
+	updated_at     TIMESTAMP        NULL,
+	PRIMARY KEY (content_id, user_id, sub_content_id, data_id)
+)	ENGINE = MyISAM;
+
+# Create a relation between tags and content -> Reusing Tags or categories in Tiki?
+CREATE TABLE tiki_h5p_contents_tags (
+	content_id INT UNSIGNED NOT NULL,
+	tag_id     INT UNSIGNED NOT NULL,
+	PRIMARY KEY (content_id, tag_id)
+)	ENGINE = MyISAM;
+
+# Keep track of tags -> Reusing Tags or categories in Tiki?
+CREATE TABLE tiki_h5p_tags (
+	id   INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	name VARCHAR(31)  NOT NULL,
+	PRIMARY KEY (id)
+)	ENGINE = MyISAM;
+
+# Keep track of results (contents >-< users)  -> Reusing Action log in Tiki?
+CREATE TABLE tiki_h5p_results (
+	id         INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	content_id INT UNSIGNED NOT NULL,
+	user_id    INT UNSIGNED NOT NULL,
+	score      INT UNSIGNED NOT NULL,
+	max_score  INT UNSIGNED NOT NULL,
+	opened     INT UNSIGNED NOT NULL,
+	finished   INT UNSIGNED NOT NULL,
+	time       INT UNSIGNED NOT NULL,
+	PRIMARY KEY (id),
+	KEY content_user (content_id, user_id)
+)	ENGINE = MyISAM;
+
+# Keep track of h5p library translations  -> Reusing Custom translations in Tiki?
 CREATE TABLE tiki_h5p_libraries_languages (
 	library_id    INT UNSIGNED NOT NULL,
 	language_code VARCHAR(31)  NOT NULL,
@@ -114,7 +121,7 @@ CREATE TABLE tiki_h5p_libraries_languages (
 	PRIMARY KEY (library_id, language_code)
 )	ENGINE = MyISAM;
 
-# Keep track of logged h5p EVENTS
+# Keep track of logged h5p EVENTS -> Action log
 CREATE TABLE tiki_h5p_events (
 	id              INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	user_id         INT UNSIGNED NOT NULL,
@@ -128,7 +135,7 @@ CREATE TABLE tiki_h5p_events (
 	PRIMARY KEY (id)
 )	ENGINE = MyISAM;
 
-# A SET of GLOBAL counters TO keep track of H5P USAGE
+# A SET of GLOBAL counters TO keep track of H5P USAGE -> Tiki Statistics or others?
 CREATE TABLE tiki_h5p_counters (
 	type            VARCHAR(63)  NOT NULL,
 	library_name    VARCHAR(127) NOT NULL,
@@ -137,9 +144,11 @@ CREATE TABLE tiki_h5p_counters (
 	PRIMARY KEY (type, library_name, library_version)
 )	ENGINE = MyISAM;
 
+# Tiki has a cache library
 CREATE TABLE tiki_h5p_libraries_cachedassets (
 	library_id INT UNSIGNED NOT NULL,
 	hash       VARCHAR(64)  NOT NULL,
 	PRIMARY KEY (library_id, hash)
 ) ENGINE = MyISAM;
 
+*/
