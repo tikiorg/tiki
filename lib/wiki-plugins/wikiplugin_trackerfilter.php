@@ -25,6 +25,7 @@ function wikiplugin_trackerfilter_info()
 					. '<br /><code>T</code> - ' . tr('exact text match')
 					. '<br /><code>i</code> - ' . tr('initials')
 					. '<br /><code>sqlsearch</code> - ' . tr('advanced search')
+					. '<br /><code>range</code> - ' . tr('range search (from/to)')
 					. '<br /><code>></code>, <code>><</code>, <code>>>=</code>, <code>><=</code> - ' . tr('greater
 						than, less than, greater than or equal, less than or equal.') . '<br />'
 					. tr('Example:') . ' <code>2/d:4/r:5:(6:7)/sqlsearch</code>',
@@ -443,7 +444,7 @@ function wikiplugin_trackerfilter_build_trackerlist_filter($input, $formats, &$f
 				$val = '';
 			}
 			$fieldId = substr($key, 2);
-			$field = $tracker_definition->getField($fieldId);
+			$field = $tracker_definition->getField(intval($fieldId));
 
 			if ($fieldId == 'status')
 				continue;
@@ -469,6 +470,16 @@ function wikiplugin_trackerfilter_build_trackerlist_filter($input, $formats, &$f
 
 				$values[] = "%$val%";
 			} else {
+				if( preg_match("/\d+_(from|to)/", $fieldId, $m) ) { // range filter
+					$fieldId = intval($fieldId);
+					
+					$handler = $trklib->get_field_handler($field);
+					$input['ins_'.$fieldId] = $val;
+					$data = $handler->getFieldData($input);
+					$val = $data['value'];
+					
+					$formats[$fieldId] = ( $m[1] == 'from' ? '>=' : '<=' );
+				}
 				if (!is_numeric($fieldId)) { // composite filter
 					$ffs[] = array('sqlsearch'=>explode(':', str_replace(array('(', ')'), '', $fieldId)));
 				} else {
@@ -634,6 +645,18 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, array $listfields=ar
 		$opts = array();
 		if ($formats[$fieldId] == 't' || $formats[$fieldId] == 'T' || $formats[$fieldId] == 'i') {
 			$selected = empty($_REQUEST['f_'.$fieldId])? '': $_REQUEST['f_'.$fieldId];
+		} elseif( $formats[$fieldId] == 'range' ) {
+			$handler = $trklib->get_field_handler($field);
+			$_REQUEST['ins_'.$fieldId] = empty($_REQUEST['f_'.$fieldId.'_from']) ? '' : $_REQUEST['f_'.$fieldId.'_from'];
+			$data = $handler->getFieldData($_REQUEST);
+			$field['ins_id'] = 'f_'.$field['fieldId'].'_from';
+			$field['value'] = $data['value'];
+			$opts['from'] = $field;
+			$_REQUEST['ins_'.$fieldId] = empty($_REQUEST['f_'.$fieldId.'_to']) ? '' : $_REQUEST['f_'.$fieldId.'_to'];
+			$data = $handler->getFieldData($_REQUEST);
+			$field['ins_id'] = 'f_'.$field['fieldId'].'_to';
+			$field['value'] = $data['value'];
+			$opts['to'] = $field;
 		} else {
 			$selected = false;
 			switch ($field['type']){
@@ -854,7 +877,12 @@ function wikiplugin_trackerFilter_build_urlquery($params)
 	if (!empty($filterfield)) {
 		$urlquery['filterfield'] = implode(':', $filterfield);
 		$urlquery['filtervalue'] = implode(':', $filtervalue);
-		$urlquery['exactvalue'] = implode(':', $exactvalue);
+		$urlquery['exactvalue'] = implode(':', array_map(
+			function($ev){
+				return is_array($ev) ?
+					key($ev).reset($ev)
+					: $ev;
+			}, $exactvalue));
 	}
 	if (!empty($params['sort_mode'])) {
 		$urlquery['sort_mode'] = $params['sort_mode'];
