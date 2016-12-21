@@ -65,6 +65,12 @@ class PdfGenerator
 			}
 			if ( ! empty($path) && is_readable($path) && file_exists($path . 'mpdf.php')) {
 				self::setupMPDFCacheLocation();
+				
+				//setting up dir for custom fonts and mpdf default fonts
+				define('_MPDF_TTFONTPATH',TIKI_PATH.'/lib/pdf/fontdata/fontttf/');
+		        define('_MPDF_SYSTEM_TTFONTS', $path. '/ttfonts/');
+		
+				
 				if (!class_exists('mPDF')){
 					include_once($path . 'mpdf.php');
 				}
@@ -264,9 +270,10 @@ class PdfGenerator
 	   $this->_parseHTML($html);
 	
 	   $this->_getImages($html,$tempImgArr);
-		self::setupMPDFCacheLocation();
+	    
+	   self::setupMPDFCacheLocation();
 		if (!class_exists('mPDF')){
-			include_once($this->location . 'mpdf.php');
+	    	include_once($this->location . 'mpdf.php');
 		}
 		//checking preferences 
 		$orientation=$prefs['print_pdf_mpdf_orientation']!=''?$prefs['print_pdf_mpdf_orientation']:'P';
@@ -285,9 +292,20 @@ class PdfGenerator
 		$marginBottom=$prefs['print_pdf_mpdf_margin_bottom']!=''?$prefs['print_pdf_mpdf_margin_bottom']:'10';
 		$marginHeader=$prefs['print_pdf_mpdf_margin_header']!=''?$prefs['print_pdf_mpdf_margin_header']:'5';
 		$marginFooter=$prefs['print_pdf_mpdf_margin_footer']!=''?$prefs['print_pdf_mpdf_margin_footer']:'5';
+
 	  	$mpdf=new mPDF('utf-8',$pageSize,'','',$marginLeft,$marginRight , $marginTop , $marginBottom , $marginHeader , $marginFooter ,$orientation);
-	  
-	    //for Cantonese support
+	    
+		//custom fonts add, currently fontawesome support is added, more fonts can be added in future
+		$custom_fontdata = array(
+		 'fontawesome'=>array( 
+            'R' => "fontawesome.ttf",
+            'I' => "fontawesome.ttf",
+        ));
+		
+		//calling function to add custom fonts
+		add_custom_font_to_mpdf($mpdf, $custom_fontdata);
+	    
+		//for Cantonese support
 	    $mpdf->autoScriptToLang = true;
 		$mpdf->autoLangToFont = true;
 		
@@ -319,9 +337,11 @@ class PdfGenerator
 			 $printcss = file_get_contents('themes/base_files/css/printpdf.css'); // external css
         
 		}
-
-		
-        $mpdf->WriteHTML('<style>'.$basecss.$themecss.$printcss.$this->bootstrapReplace().'</style>'.$html);
+        $facss = file_get_contents('vendor/fortawesome/font-awesome/css/font-awesome.css'); // external css
+       // $facss=str_replace(":before","",$facss);
+		//$html='<span style="font-family: FontAwesome;">&#xf095;</span>';
+		//echo '<style>'.$basecss.$themecss.$printcss.$facss.$this->bootstrapReplace().'</style>'.$html;
+        $mpdf->WriteHTML('<style>'.$basecss.$themecss.$printcss.$facss.$this->bootstrapReplace().'</style>'.$html);
 	    $this->clearTempImg($tempImgArr);
         return $mpdf->Output('', 'S');					// Return as a string
 	}
@@ -341,8 +361,10 @@ class PdfGenerator
 				if($newFile!='')
 				   $tag->setAttribute('src',$newFile);
 				$tempImgArr[]=$newFile;
-				}	
-				$html=@$doc->saveHTML();
+				}
+			
+			
+		   	
 	}
 	
 	function file_get_contents_by_fget($url)
@@ -406,6 +428,29 @@ class PdfGenerator
 			   unlink("temp/#".$tid."_".session_id().".txt");
 			}
         }
+		
+		//font awesome code insertion
+		   $xpath = new DOMXpath($doc);
+		   $faCodes=file_get_contents('lib/pdf/fontdata/fa-codes.json');
+		   $jfo = json_decode($faCodes,true);
+		   $fadivs = $xpath->query('//*[contains(@class, "fa")]');
+		     
+           for ($i = 0; $i < $fadivs->length; $i++) {
+               $fadiv = $fadivs->item($i);
+               $faClass=str_replace(array("fa ","-"),"",$fadiv->getAttribute('class'));
+			   $faCode=$doc->createElement('span',$jfo[$faClass][codeValue]);
+			   $faCode->setAttribute("style","font-family: FontAwesome;float:left");
+			  
+			   //span with fontawesome code inserted before fa div
+			   $fadiv->parentNode->insertBefore($faCode,$fadiv);
+			   $fadiv->parentNode->removeChild($fadiv);
+           }
+		   			
+				$html=@$doc->saveHTML();
+				
+				//& sign added in fa unicodes for proper printing in pdf
+				$html=str_replace('#x',"&#x",$html);
+			
 			
 	 }
 	 
@@ -440,3 +485,18 @@ function cleanContent($content,$tag){
 	
 }
 
+function add_custom_font_to_mpdf(&$mpdf, $fonts_list) {
+    // Logic from line 1146 mpdf.pdf - $this->available_unifonts = array()...       
+    foreach ($fonts_list as $f => $fs) {
+        // add to fontdata array
+        echo $mpdf->fontdata['fontawesome']['R'];
+        $mpdf->fontdata[$f] = $fs;
+
+        // add to available fonts array
+        if (isset($fs['R']) && $fs['R']) { $mpdf->available_unifonts[] = $f; }
+        if (isset($fs['B']) && $fs['B']) { $mpdf->available_unifonts[] = $f.'B'; }
+        if (isset($fs['I']) && $fs['I']) { $mpdf->available_unifonts[] = $f.'I'; }
+        if (isset($fs['BI']) && $fs['BI']) { $mpdf->available_unifonts[] = $f.'BI'; }
+    }
+    $mpdf->default_available_fonts = $mpdf->available_unifonts;
+}
