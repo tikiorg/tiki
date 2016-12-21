@@ -19,7 +19,7 @@ class Search_Formatter_ValueFormatter_Categoryname extends Search_Formatter_Valu
 	function render($name, $value, array $entry)
 	{
 		$categlib = TikiLib::lib('categ');
-		$categories = $categlib->get_names((array)$value);
+		$categories = $categlib->get_names(is_array($value) ? $value : explode(' ', $value)); // category_text fields have values separated by space
 		return implode($this->separator, $categories);
 	}
 }
