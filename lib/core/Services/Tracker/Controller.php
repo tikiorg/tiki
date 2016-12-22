@@ -634,6 +634,7 @@ class Services_Tracker_Controller
 
 		$itemObject->asNew();
 		$itemData = $itemObject->getData($input);
+		$processedFields = array();
 
 		$id = 0;
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -676,7 +677,10 @@ class Services_Tracker_Controller
 			}
 
 			$transaction->commit();
-		}
+
+			$processedItem = $this->utilities->processValues($definition, $itemData);
+			$processedFields = $processedItem['fields'];
+		}				
 
 		return array(
 			'title' => tr('Duplicate Item'),
@@ -684,7 +688,8 @@ class Services_Tracker_Controller
 			'itemId' => $itemId,
 			'created' => $id,
 			'data' => $itemData['fields'],
-			'fields' => $itemObject->prepareInput(new JitFilter(array())),
+			'fields' => $itemObject->prepareInput($input),
+			'processedFields' => $processedFields,
 		);
 	}
 
