@@ -106,6 +106,7 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\IndexRebuildCommand);
 	$console->add(new Tiki\Command\IndexOptimizeCommand);
 	$console->add(new Tiki\Command\IndexCatchUpCommand);
+	$console->add(new Tiki\Command\ListExecuteCommand);
 	$console->add(new Tiki\Command\MailInPollCommand);
     $console->add(new Tiki\Command\MailQueueSendCommand);
 	$console->add(new Tiki\Command\NotificationDigestCommand);
@@ -128,6 +129,7 @@ if ($isInstalled && ! $installer->requiresUpdate()) {
 	$console->add(new Tiki\Command\UnavailableCommand('index:rebuild'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('index:optimize'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('index:catch-up'))->ignoreValidationErrors();
+	$console->add(new Tiki\Command\UnavailableCommand('list:execute'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('mail-in:poll'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('mail-queue:send'))->ignoreValidationErrors();
 	$console->add(new Tiki\Command\UnavailableCommand('notification:digest'))->ignoreValidationErrors();
