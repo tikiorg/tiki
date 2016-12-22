@@ -399,6 +399,12 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			}
 		}
 
+		if( $this->getOption('preSelectFieldThere') ) {
+			$data['predefined'] = $this->getItemsToClone();
+		} else {
+			$data['predefined'] = array();
+		}
+
 		if( $data['displayFieldsListType'] === 'table' ) {
 			$data['trackerListOptions'] = array(
 				'trackerId' => $this->getOption('trackerId'),
@@ -1080,6 +1086,28 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		}
 
 		return $collection;
+	}
+
+	/**
+	 * Retrieve remote tracker items that should be available to be cloned instead of starting
+	 * with an empty item when user wants to add a new remote item.
+	 * @return array - formatter: itemId => item label
+	 */
+	private function getItemsToClone() {
+		$trackerId = $this->getOption('trackerId');
+		$definition = Tracker_Definition::get($trackerId);
+		$utilities = new Services_Tracker_Utilities;
+		$result = array();
+
+		$predefined = TikiLib::lib('trk')->get_all_item_id($trackerId, $this->getOption('preSelectFieldThere'), '*');
+		foreach( $predefined as $itemId ) {
+			$item = $utilities->getItem($trackerId, $itemId);
+			$result[$itemId] = $utilities->getTitle($definition, $item);
+		}
+		$result = $this->handleDuplicates($result);
+		asort($result);
+
+		return $result;
 	}
 }
 
