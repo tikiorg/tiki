@@ -470,15 +470,22 @@ function wikiplugin_trackerfilter_build_trackerlist_filter($input, $formats, &$f
 
 				$values[] = "%$val%";
 			} else {
-				if( preg_match("/\d+_(from|to)/", $fieldId, $m) ) { // range filter
+				if( preg_match("/\d+_(from|to)(Month|Day|Year|Hour|Minute|Second)?/", $fieldId, $m) ) { // range filter
 					$fieldId = intval($fieldId);
-					
-					$handler = $trklib->get_field_handler($field);
-					$input['ins_'.$fieldId] = $val;
-					$data = $handler->getFieldData($input);
-					$val = $data['value'];
-					
 					$formats[$fieldId] = ( $m[1] == 'from' ? '>=' : '<=' );
+
+					if( !empty($m[2]) ) {
+						if( $m[2] != 'Year' ) {
+							continue;
+						} else {
+							$val = $trklib->build_date($_REQUEST, $trklib->get_tracker_field($fieldId), 'f_'.$fieldId.'_'.$m[1]);
+						}
+					} else {
+						$handler = $trklib->get_field_handler($field);
+						$input['ins_'.$fieldId] = $val;
+						$data = $handler->getFieldData($input);
+						$val = $data['value'];
+					}
 				}
 				if (!is_numeric($fieldId)) { // composite filter
 					$ffs[] = array('sqlsearch'=>explode(':', str_replace(array('(', ')'), '', $fieldId)));
@@ -646,14 +653,23 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, array $listfields=ar
 		if ($formats[$fieldId] == 't' || $formats[$fieldId] == 'T' || $formats[$fieldId] == 'i') {
 			$selected = empty($_REQUEST['f_'.$fieldId])? '': $_REQUEST['f_'.$fieldId];
 		} elseif( $formats[$fieldId] == 'range' ) {
+			// map f_ID_from/to request vars to ins_ ones for tracker fields to parse them
+			$from_input = $_REQUEST;
+			$to_input = $_REQUEST;
+			foreach( array('', 'Month', 'Day', 'Year', 'Hour', 'Minute') as $suffix ) {
+				if( isset($from_input['f_'.$fieldId.'_from'.$suffix]) ) {
+					$from_input['ins_'.$fieldId.$suffix] = $from_input['f_'.$fieldId.'_from'.$suffix];
+				}
+				if( isset($to_input['f_'.$fieldId.'_to'.$suffix]) ) {
+					$to_input['ins_'.$fieldId.$suffix] = $to_input['f_'.$fieldId.'_to'.$suffix];
+				}
+			}
 			$handler = $trklib->get_field_handler($field);
-			$_REQUEST['ins_'.$fieldId] = empty($_REQUEST['f_'.$fieldId.'_from']) ? '' : $_REQUEST['f_'.$fieldId.'_from'];
-			$data = $handler->getFieldData($_REQUEST);
+			$data = $handler->getFieldData($from_input);
 			$field['ins_id'] = 'f_'.$field['fieldId'].'_from';
 			$field['value'] = $data['value'];
 			$opts['from'] = $field;
-			$_REQUEST['ins_'.$fieldId] = empty($_REQUEST['f_'.$fieldId.'_to']) ? '' : $_REQUEST['f_'.$fieldId.'_to'];
-			$data = $handler->getFieldData($_REQUEST);
+			$data = $handler->getFieldData($to_input);
 			$field['ins_id'] = 'f_'.$field['fieldId'].'_to';
 			$field['value'] = $data['value'];
 			$opts['to'] = $field;
