@@ -396,12 +396,14 @@ class PdfGenerator
     function _parseHTML(&$html)
 	{
 		
-	   $html=str_replace('style="visibility:hidden" class="ts-wrapperdiv">','style="visibility:visible" class="ts-wrapperdiv">',$html);
+	   //$html=str_replace('style="visibility:hidden" class="ts-wrapperdiv">','style="visibility:visible" class="ts-wrapperdiv">',$html);
        $doc = new DOMDocument();
 	   
 	   
 	   $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
         
+	
+		
 	   $tables = $doc->getElementsByTagName('table');
 	   
 	   $tempValue=array();
@@ -438,8 +440,20 @@ class PdfGenerator
 			}
 		}
 			    
-		//font awesome code insertion
 		   $xpath = new DOMXpath($doc);
+		   
+		   //making tablesorter wrapper divs visible
+		   $wrapperdivs = $xpath->query('//*[contains(@class, "ts-wrapperdiv")]');
+		   for ($i = 0; $i < $wrapperdivs->length; $i++) {
+			   $wrapperdiv = $wrapperdivs->item($i);
+              
+			   $wrapperdiv->setAttribute("style","visibility:visible");
+			  
+		   }
+		   
+		   
+		   //font awesome code insertion
+         
 		   $jfo = json_decode($faCodes,true);
 		   $fadivs = $xpath->query('//*[contains(@class, "fa")]');
 		   
