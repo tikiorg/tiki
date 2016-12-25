@@ -118,10 +118,7 @@ class PdfGenerator
 
 		$url = $base_url . $file . '?' . http_build_query($params, '', '&');
         $session_params = session_get_cookie_params();
-		//need to hide edit icons appearing in pdf
-	//	$pdata=preg_replace('<img src="img/icons/page_edit.png" alt="Edit" width="16" height="16" title="" class="icon tips" data-original-title="" data-pin-nopin="true" aria-describedby="popover768086" style="display: inline-block;">', '', $pdata); 
-		//$pdata=str_replace('class="editplugin tips"','class="editplugin tips" style=display:none',str_replace('src="img/icons/page_edit.png"','src=""',$pdata));
-	return $this->{$this->mode}( $url,$pdata);	}
+   	    return $this->{$this->mode}( $url,$pdata);	}
 
     /**
      * @param $url
@@ -319,8 +316,6 @@ class PdfGenerator
 		if($prefs['print_pdf_mpdf_password'])
 		   $mpdf->SetProtection(array(), 'UserPassword', $prefs['print_pdf_mpdf_password']);
 		   
-		
-		
 		$mpdf->CSSselectMedia = 'print';				// assuming you used this in the document header
 
 		//getting main base css file
@@ -338,9 +333,6 @@ class PdfGenerator
         
 		}
         $facss = file_get_contents('vendor/fortawesome/font-awesome/css/font-awesome.css'); // external css
-       // $facss=str_replace(":before","",$facss);
-		//$html='<span style="font-family: FontAwesome;">&#xf095;</span>';
-		//echo '<style>'.$basecss.$themecss.$printcss.$facss.$this->bootstrapReplace().'</style>'.$html;
         $mpdf->WriteHTML('<style>'.$basecss.$themecss.$printcss.$facss.$this->bootstrapReplace().'</style>'.$html);
 	    $this->clearTempImg($tempImgArr);
         return $mpdf->Output('', 'S');					// Return as a string
@@ -362,9 +354,6 @@ class PdfGenerator
 				   $tag->setAttribute('src',$newFile);
 				$tempImgArr[]=$newFile;
 				}
-			
-			
-		   	
 	}
 	
 	function file_get_contents_by_fget($url)
@@ -406,34 +395,57 @@ class PdfGenerator
 	  
     function _parseHTML(&$html)
 	{
+		
 	   $html=str_replace('style="visibility:hidden" class="ts-wrapperdiv">','style="visibility:visible" class="ts-wrapperdiv">',$html);
        $doc = new DOMDocument();
+	   
+	   
 	   $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
         
 	   $tables = $doc->getElementsByTagName('table');
+	   
+	   $tempValue=array();
+	   $sortedContent=array();
+	   
 		foreach ($tables as $table) {
+	       	
+		   $content='';
+		   
 		   $tid= $table->getAttribute("id");
 		   if(file_exists("temp/#".$tid."_".session_id().".txt"))
-           { 
+           {
+			   
+			   
+			    
 			   $content=file_get_contents("temp/#".$tid."_".session_id().".txt");
-			   //cleaning content
-			   $content=cleanContent($content,"input");
-			   $content=cleanContent($content,"select");
+			   //formating content
+			   $tableTag="<table";	
+			      if ($table->hasAttributes()) {
+                       foreach ($table->attributes as $attr) {
+                            $tableTag.=" ".$attr->nodeName."=\"".$attr->nodeValue."\"";
+	                   }
+                  }
+			   $tableTag.=">";
+			   $content=$tableTag.$content.'</table>';
 			   $content=str_replace("on>click=","",$content);
 			   //end of cleaning content
-			   $table->nodeValue=$content;
-			   $html=html_entity_decode($doc->saveHTML()); 
+			   $sortedContent[]=$content;
+			   $tempValue[]=$tableTag;
+			   $table->nodeValue="";
 			   chmod("temp/#".$tid."_".session_id().".txt",0755);	
 			   //unlink tmp table file
 			   unlink("temp/#".$tid."_".session_id().".txt");
 			}
-        }
-		
+		}
+			    
 		//font awesome code insertion
 		   $xpath = new DOMXpath($doc);
-		   $faCodes=file_get_contents('lib/pdf/fontdata/fa-codes.json');
 		   $jfo = json_decode($faCodes,true);
 		   $fadivs = $xpath->query('//*[contains(@class, "fa")]');
+		   
+		   //loading json file if there is any font-awesome tag in html
+		   if($fadivs->length)
+		     $faCodes=file_get_contents('lib/pdf/fontdata/fa-codes.json');
 		     
            for ($i = 0; $i < $fadivs->length; $i++) {
                $fadiv = $fadivs->item($i);
@@ -446,11 +458,18 @@ class PdfGenerator
 			   $fadiv->parentNode->removeChild($fadiv);
            }
 		   			
-				$html=@$doc->saveHTML();
+			$html=@$doc->saveHTML();
 				
-				//& sign added in fa unicodes for proper printing in pdf
-				$html=str_replace('#x',"&#x",$html);
-			
+			//& sign added in fa unicodes for proper printing in pdf
+			$html=str_replace('#x',"&#x",$html);
+			//replacing temp table with sorted content
+			for($i=0;$i<count($sortedContent);$i++)
+			{
+			    $html=str_replace($tempValue[$i],$sortedContent[$i],$html);
+				$html=cleanContent($html,array("input","select"));
+
+		    }
+					
 			
 	 }
 	 
@@ -459,28 +478,18 @@ class PdfGenerator
 	}
 }
 
-function DOMinnerHTML(DOMNode $element) 
-{ 
-    $innerHTML = ""; 
-    $children  = $element->childNodes;
 
-    foreach ($children as $child) 
-    { 
-	    
-        $innerHTML .= $element->ownerDocument->saveHTML($child);
-    }
-
-    return $innerHTML; 
-} 
-
-function cleanContent($content,$tag){
+function cleanContent($content,$tagArr){
 	$doc = new DOMDocument();
 	$doc->loadHTML($content);
-    $list = $doc->getElementsByTagName($tag);
-    while ($list->length > 0) {
-       $p = $list->item(0);
-       $p->parentNode->removeChild($p);
-    }
+	foreach($tagArr as $tag)
+	{
+       $list = $doc->getElementsByTagName($tag);
+       while ($list->length > 0) {
+          $p = $list->item(0);
+          $p->parentNode->removeChild($p);
+       }
+	}
     return $doc->saveHTML();
 	
 }
@@ -489,7 +498,6 @@ function add_custom_font_to_mpdf(&$mpdf, $fonts_list) {
     // Logic from line 1146 mpdf.pdf - $this->available_unifonts = array()...       
     foreach ($fonts_list as $f => $fs) {
         // add to fontdata array
-        echo $mpdf->fontdata['fontawesome']['R'];
         $mpdf->fontdata[$f] = $fs;
 
         // add to available fonts array
@@ -500,3 +508,4 @@ function add_custom_font_to_mpdf(&$mpdf, $fonts_list) {
     }
     $mpdf->default_available_fonts = $mpdf->available_unifonts;
 }
+
