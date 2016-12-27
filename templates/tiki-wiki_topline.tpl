@@ -127,7 +127,7 @@
 						<li class="divider"></li>
 						<li>
 							{if $pdf_export eq 'y'}
-								<a href="tiki-print.php?{query display="pdf" page=$page}">
+								<a href="tiki-print.php?{query _keepall='y' display="pdf" page=$page}">
 									{icon name="pdf"} {tr}PDF{/tr}
 									{assign var="hasPageAction" value="1"}
 								</a>
