@@ -332,8 +332,7 @@ class PdfGenerator
 			 $printcss = file_get_contents('themes/base_files/css/printpdf.css'); // external css
         
 		}
-        $facss = file_get_contents('vendor/fortawesome/font-awesome/css/font-awesome.css'); // external css
-        $mpdf->WriteHTML('<style>'.$basecss.$themecss.$printcss.$facss.$this->bootstrapReplace().'</style>'.$html);
+        $mpdf->WriteHTML('<style>'.$basecss.$themecss.$printcss.$this->bootstrapReplace().'</style>'.$html);
 	    $this->clearTempImg($tempImgArr);
         return $mpdf->Output('', 'S');					// Return as a string
 	}
@@ -454,13 +453,14 @@ class PdfGenerator
 		   
 		   //font awesome code insertion
          
-		   $jfo = json_decode($faCodes,true);
 		   $fadivs = $xpath->query('//*[contains(@class, "fa")]');
 		   
 		   //loading json file if there is any font-awesome tag in html
 		   if($fadivs->length)
+		   {
 		     $faCodes=file_get_contents('lib/pdf/fontdata/fa-codes.json');
-		     
+		     $jfo = json_decode($faCodes,true);
+	 
            for ($i = 0; $i < $fadivs->length; $i++) {
                $fadiv = $fadivs->item($i);
                $faClass=str_replace(array("fa ","-"),"",$fadiv->getAttribute('class'));
@@ -471,6 +471,7 @@ class PdfGenerator
 			   $fadiv->parentNode->insertBefore($faCode,$fadiv);
 			   $fadiv->parentNode->removeChild($fadiv);
            }
+		   }
 		   			
 			$html=@$doc->saveHTML();
 				
