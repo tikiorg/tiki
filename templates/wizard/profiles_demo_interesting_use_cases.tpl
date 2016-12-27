@@ -22,7 +22,7 @@
 			<div class="row">
 				<div class="col-md-6">
 					<h4>{tr}Bug Tracker{/tr}</h4>
-					(<a href="tiki-admin.php?profile=Bug_Tracker&show_details_for=Bug_Tracker&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
+					(<a href="tiki-admin.php?profile=Bug_Tracker_16&show_details_for=Bug_Tracker_16&categories%5B%5D={$tikiMajorVersion}.x&repository=http%3a%2f%2fprofiles.tiki.org%2fprofiles&page=profiles&preloadlist=y&list=List#step2" target="_blank">{tr}apply profile now{/tr}</a>)
 					<br>
 					{tr}This profile allows you to see a tracker in action with some demo data, and a custom interface in a wiki page to add new items, as well as having them listed for you below.{/tr}
 					<br/>
