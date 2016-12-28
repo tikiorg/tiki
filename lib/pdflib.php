@@ -65,12 +65,12 @@ class PdfGenerator
 			}
 			if ( ! empty($path) && is_readable($path) && file_exists($path . 'mpdf.php')) {
 				self::setupMPDFCacheLocation();
-				
+
 				//setting up dir for custom fonts and mpdf default fonts
 				define('_MPDF_TTFONTPATH',TIKI_PATH.'/lib/pdf/fontdata/fontttf/');
 		        define('_MPDF_SYSTEM_TTFONTS', $path. '/ttfonts/');
-		
-				
+
+
 				if (!class_exists('mPDF')){
 					include_once($path . 'mpdf.php');
 				}
@@ -118,7 +118,7 @@ class PdfGenerator
 
 		$url = $base_url . $file . '?' . http_build_query($params, '', '&');
         $session_params = session_get_cookie_params();
-   	    return $this->{$this->mode}( $url,$pdata);	}
+	return $this->{$this->mode}( $url,$pdata);	}
 
     /**
      * @param $url
@@ -258,31 +258,31 @@ class PdfGenerator
 			TikiLib::lib('reporterror')->report(tra('mPDF: CURL PHP extension not available'));
 			return '';
 		}
-		
+
       if($parsedData!='')
 	      $html=$parsedData;
-	  
+
        //getting n replacing images
 	   $tempImgArr=array();
 	   $this->_parseHTML($html);
 	
 	   $this->_getImages($html,$tempImgArr);
-	    
+
 	   self::setupMPDFCacheLocation();
 		if (!class_exists('mPDF')){
 	    	include_once($this->location . 'mpdf.php');
 		}
-		//checking preferences 
+		//checking preferences
 		$orientation=$prefs['print_pdf_mpdf_orientation']!=''?$prefs['print_pdf_mpdf_orientation']:'P';
-		
+
 		$pageSize=$prefs['print_pdf_mpdf_size']!=''?$prefs['print_pdf_mpdf_size']:'Letter';
-		
+
 		//custom size needs to be passed for Tabloid
 		if($prefs['print_pdf_mpdf_size']=="Tabloid")
 		  $pageSize=array(279,432);
 		elseif($orientation=='L')
 		  $pageSize=$pageSize.'-'.$orientation;
-		
+
 		$marginLeft=$prefs['print_pdf_mpdf_margin_left']!=''?$prefs['print_pdf_mpdf_margin_left']:'10';
 		$marginRight=$prefs['print_pdf_mpdf_margin_right']!=''?$prefs['print_pdf_mpdf_margin_right']:'10';
 		$marginTop=$prefs['print_pdf_mpdf_margin_top']!=''?$prefs['print_pdf_mpdf_margin_top']:'10';
@@ -291,21 +291,21 @@ class PdfGenerator
 		$marginFooter=$prefs['print_pdf_mpdf_margin_footer']!=''?$prefs['print_pdf_mpdf_margin_footer']:'5';
 
 	  	$mpdf=new mPDF('utf-8',$pageSize,'','',$marginLeft,$marginRight , $marginTop , $marginBottom , $marginHeader , $marginFooter ,$orientation);
-	    
+
 		//custom fonts add, currently fontawesome support is added, more fonts can be added in future
 		$custom_fontdata = array(
-		 'fontawesome'=>array( 
+		 'fontawesome'=>array(
             'R' => "fontawesome.ttf",
             'I' => "fontawesome.ttf",
         ));
-		
+
 		//calling function to add custom fonts
 		add_custom_font_to_mpdf($mpdf, $custom_fontdata);
-	    
+
 		//for Cantonese support
 	    $mpdf->autoScriptToLang = true;
 		$mpdf->autoLangToFont = true;
-		
+
 		//setting header and footer
 		if($prefs['print_pdf_mpdf_header'])
 	      $mpdf->SetHeader($prefs['print_pdf_mpdf_header']);
@@ -315,22 +315,22 @@ class PdfGenerator
 		//password protection
 		if($prefs['print_pdf_mpdf_password'])
 		   $mpdf->SetProtection(array(), 'UserPassword', $prefs['print_pdf_mpdf_password']);
-		   
+
 		$mpdf->CSSselectMedia = 'print';				// assuming you used this in the document header
 
 		//getting main base css file
 		$basecss = file_get_contents('themes/base_files/css/tiki_base.css'); // external css
-        
+
 		//getting theme css
 		$themeLib = TikiLib::lib('theme');
         $themecss=$themeLib->get_theme_path($prefs['theme'], '', $prefs['theme'] . '.css');
 		$themecss = file_get_contents($themecss); // external css
-		
+
 		//checking if print friendly option is enabled, then attach print css otherwise theme styles will be retained by theme css
 		if($prefs['print_pdf_mpdf_printfriendly']=='y')
 		{
 			 $printcss = file_get_contents('themes/base_files/css/printpdf.css'); // external css
-        
+
 		}
         $mpdf->WriteHTML('<style>'.$basecss.$themecss.$printcss.$this->bootstrapReplace().'</style>'.$html);
 	    $this->clearTempImg($tempImgArr);
@@ -386,7 +386,7 @@ class PdfGenerator
 
 	}
 	
-    function clearTempImg($tempImgArr){ 
+    function clearTempImg($tempImgArr){
 	   foreach ($tempImgArr as $tempImg) {
        unlink($tempImg);
        }
@@ -397,30 +397,30 @@ class PdfGenerator
 		
 	   //$html=str_replace('style="visibility:hidden" class="ts-wrapperdiv">','style="visibility:visible" class="ts-wrapperdiv">',$html);
        $doc = new DOMDocument();
-	   
-	   
+
+
 	   $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
-        
-	
-		
+
+
+
 	   $tables = $doc->getElementsByTagName('table');
-	   
+
 	   $tempValue=array();
 	   $sortedContent=array();
-	   
+
 		foreach ($tables as $table) {
-	       	
+
 		   $content='';
-		   
+
 		   $tid= $table->getAttribute("id");
 		   if(file_exists("temp/#".$tid."_".session_id().".txt"))
            {
-			   
-			   
-			    
+
+
+
 			   $content=file_get_contents("temp/#".$tid."_".session_id().".txt");
 			   //formating content
-			   $tableTag="<table";	
+			   $tableTag="<table";
 			      if ($table->hasAttributes()) {
                        foreach ($table->attributes as $attr) {
                             $tableTag.=" ".$attr->nodeName."=\"".$attr->nodeValue."\"";
@@ -433,48 +433,48 @@ class PdfGenerator
 			   $sortedContent[]=$content;
 			   $tempValue[]=$tableTag;
 			   $table->nodeValue="";
-			   chmod("temp/#".$tid."_".session_id().".txt",0755);	
+			   chmod("temp/#".$tid."_".session_id().".txt",0755);
 			   //unlink tmp table file
 			   unlink("temp/#".$tid."_".session_id().".txt");
 			}
 		}
-			    
+
 		   $xpath = new DOMXpath($doc);
-		   
+
 		   //making tablesorter wrapper divs visible
 		   $wrapperdivs = $xpath->query('//*[contains(@class, "ts-wrapperdiv")]');
 		   for ($i = 0; $i < $wrapperdivs->length; $i++) {
 			   $wrapperdiv = $wrapperdivs->item($i);
-              
+
 			   $wrapperdiv->setAttribute("style","visibility:visible");
-			  
+
 		   }
-		   
-		   
+
+
 		   //font awesome code insertion
-         
+
 		   $fadivs = $xpath->query('//*[contains(@class, "fa")]');
-		   
+
 		   //loading json file if there is any font-awesome tag in html
 		   if($fadivs->length)
 		   {
 		     $faCodes=file_get_contents('lib/pdf/fontdata/fa-codes.json');
 		     $jfo = json_decode($faCodes,true);
-	 
+
            for ($i = 0; $i < $fadivs->length; $i++) {
                $fadiv = $fadivs->item($i);
                $faClass=str_replace(array("fa ","-"),"",$fadiv->getAttribute('class'));
 			   $faCode=$doc->createElement('span',$jfo[$faClass][codeValue]);
 			   $faCode->setAttribute("style","font-family: FontAwesome;float:left");
-			  
+
 			   //span with fontawesome code inserted before fa div
 			   $fadiv->parentNode->insertBefore($faCode,$fadiv);
 			   $fadiv->parentNode->removeChild($fadiv);
            }
 		   }
-		   			
+
 			$html=@$doc->saveHTML();
-				
+
 			//& sign added in fa unicodes for proper printing in pdf
 			$html=str_replace('#x',"&#x",$html);
 			//replacing temp table with sorted content
@@ -484,12 +484,12 @@ class PdfGenerator
 				$html=cleanContent($html,array("input","select"));
 
 		    }
-					
-			
+
+
 	 }
-	 
+
 	 function bootstrapReplace(){
-	    return ".col-xs-12 {width: 90%;}.col-xs-11 {width: 81.66666667%;}.col-xs-10 {width: 72%;}.col-xs-9 {width: 64%;}.col-xs-8 {width: 57%;}.col-xs-7 {width: 49%;}.col-xs-6 {width: 42%;}.col-xs-5 {width: 35%;}.col-xs-4 {width: 28%;}.col-xs-3{width: 20%;}.col-xs-2 {width: 12.2%;}.col-xs-1 {width: 3.92%;}    .table-striped {border:1px solid #ccc;} .table-striped td { padding: 8px; line-height: 1.42857143;vertical-align: center;border-top: 1px solid #ccc; color:#000; } .table-striped th { padding: 10px; line-height: 1.42857143;vertical-align: center; background-color:#ccc; color:#000  } .table-striped .odd { color:#000;padding:10px;} .table-striped .even { padding:10px; background-color:#eee; }.odd { padding:10px; background-color:#fff; } .table-striped a{color:#000} .trackerfilter form{display:none;}";	 
+	    return ".col-xs-12 {width: 90%;}.col-xs-11 {width: 81.66666667%;}.col-xs-10 {width: 72%;}.col-xs-9 {width: 64%;}.col-xs-8 {width: 57%;}.col-xs-7 {width: 49%;}.col-xs-6 {width: 42%;}.col-xs-5 {width: 35%;}.col-xs-4 {width: 28%;}.col-xs-3{width: 20%;}.col-xs-2 {width: 12.2%;}.col-xs-1 {width: 3.92%;}    .table-striped {border:1px solid #ccc;} .table-striped td { padding: 8px; line-height: 1.42857143;vertical-align: center;border-top: 1px solid #ccc; color:#000; } .table-striped th { padding: 10px; line-height: 1.42857143;vertical-align: center; background-color:#ccc; color:#000  } .table-striped .odd { color:#000;padding:10px;} .table-striped .even { padding:10px; background-color:#eee; }.odd { padding:10px; background-color:#fff; } .table-striped a{color:#000} .trackerfilter form{display:none;}";
 	}
 }
 
@@ -510,7 +510,7 @@ function cleanContent($content,$tagArr){
 }
 
 function add_custom_font_to_mpdf(&$mpdf, $fonts_list) {
-    // Logic from line 1146 mpdf.pdf - $this->available_unifonts = array()...       
+    // Logic from line 1146 mpdf.pdf - $this->available_unifonts = array()...
     foreach ($fonts_list as $f => $fs) {
         // add to fontdata array
         $mpdf->fontdata[$f] = $fs;
