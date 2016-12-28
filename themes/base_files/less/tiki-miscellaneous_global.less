@@ -377,5 +377,12 @@ textarea.wikiedit {
 	margin-bottom: 0;
 }
 
+// Workaround for Firefox bug (https://bugzilla.mozilla.org/show_bug.cgi?id=504622) @todo remove when Firefox 53 is released
+@-moz-document url-prefix() {
+	fieldset {
+		display: table-cell;
+	}
+}
+
 // Reduce visual size of external link icon to a little over the x height of text
 .tiki .wiki.external + .icon-link-external { font-size: 70%; margin-left: 1px;}

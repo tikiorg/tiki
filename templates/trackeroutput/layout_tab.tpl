@@ -5,7 +5,7 @@
 				{if ! $pos}
 					{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
 						{assign var=ustatus value=$info.status|default:"p"}
-						<dt>{tr}Status{/tr}</dt>
+						<dt title="{tr}Status{/tr}">{tr}Status{/tr}</dt>
 						<dd>
 							{icon name=$status_types.$ustatus.iconname}
 							{$status_types.$ustatus.label}
@@ -13,7 +13,7 @@
 					{/if}
 				{/if}
 				{foreach from=$sect.fields item=field}
-					<dt>{$field.name|tra|escape}</dt>
+					<dt title="{$field.name|tra|escape}">{$field.name|tra|escape}</dt>
 					<dd>{trackeroutput field=$field item=$item_info showlinks=n list_mode=n}</dd>
 				{/foreach}
 			</dl>
