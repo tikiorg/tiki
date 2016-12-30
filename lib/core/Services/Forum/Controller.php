@@ -359,6 +359,7 @@ class Services_Forum_Controller
 			];
 			Feedback::success($feedback, 'session');
 			//return to page
+			$extra = json_decode($input['extra'], true);
 			return Services_Utilities::refresh($extra['referer']);
 		}
 	}
@@ -443,6 +444,7 @@ class Services_Forum_Controller
 			];
 			Feedback::success($feedback, 'session');
 			//return to page
+			$extra = json_decode($input['extra'], true);
 			return Services_Utilities::refresh($extra['referer']);
 		}
 	}
