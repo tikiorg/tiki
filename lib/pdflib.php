@@ -332,7 +332,7 @@ class PdfGenerator
 			 $printcss = file_get_contents('themes/base_files/css/printpdf.css'); // external css
 
 		}
-        $mpdf->WriteHTML('<style>'.$basecss.$themecss.$printcss.$this->bootstrapReplace().'</style>'.$html);
+		$mpdf->WriteHTML('<style>'.$basecss.$themecss.$printcss.$this->bootstrapReplace().'</style>'.$html);
 	    $this->clearTempImg($tempImgArr);
         return $mpdf->Output('', 'S');					// Return as a string
 	}
@@ -463,13 +463,20 @@ class PdfGenerator
 
            for ($i = 0; $i < $fadivs->length; $i++) {
                $fadiv = $fadivs->item($i);
-               $faClass=str_replace(array("fa ","-"),"",$fadiv->getAttribute('class'));
-			   $faCode=$doc->createElement('span',$jfo[$faClass][codeValue]);
-			   $faCode->setAttribute("style","font-family: FontAwesome;float:left");
-
-			   //span with fontawesome code inserted before fa div
-			   $fadiv->parentNode->insertBefore($faCode,$fadiv);
-			   $fadiv->parentNode->removeChild($fadiv);
+               $faClass=split(" ",str_replace(array("fa ","-"),"",$fadiv->getAttribute('class')));
+			  
+			   foreach($faClass as $class)
+			   {
+				   if($jfo[$class][codeValue])
+				   {
+			           $faCode=$doc->createElement('span',$jfo[$class][codeValue]);
+					   $faCode->setAttribute("style","font-family: FontAwesome;float:left;".$fadiv->getAttribute('style'));
+					   //span with fontawesome code inserted before fa div
+					   $fadiv->parentNode->insertBefore($faCode,$fadiv);
+					   $fadiv->parentNode->removeChild($fadiv);
+				   }
+			   }
+			 
            }
 		   }
 
