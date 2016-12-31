@@ -14,15 +14,16 @@ function wikiplugin_fluidgrid_info()
         'prefs' => array( 'wikiplugin_fluidgrid' ),
         'body' => tra('Text'),
         'filter' => 'wikicontent',
+		'format' => 'html',
         'iconname' => 'table',
-        'introduced' => 1,
+        'introduced' => 17,
         'tags' => array( 'basic' ),
         'params' => array(
             'joincols' => array(
                 'required' => false,
                 'name' => tra('Join Columns'),
                 'description' => tra('Merge empty cells into the cell to their left'),
-                'since' => '1',
+                'since' => '17',
                 'filter' => 'alpha',
                 'default' => 'y',
                 'options' => array(
@@ -35,7 +36,7 @@ function wikiplugin_fluidgrid_info()
                 'required' => false,
                 'name' => tra('Device size'),
                 'description' => tra('Specify the device size below which the cells will be stacked vertically'),
-                'since' => '1',
+                'since' => '17',
                 'filter' => 'alpha',
                 'default' => 'sm',
                 'options' => array(
@@ -50,7 +51,7 @@ function wikiplugin_fluidgrid_info()
                 'required' => false,
                 'name' => tra('Column Sizes'),
                 'description' => tra('Specify all column widths in units which add up to 12'),
-                'since' => '1',
+                'since' => '17',
                 'seprator' => '|',
                 'filter' => 'text',
                 'default' => '',
@@ -59,7 +60,7 @@ function wikiplugin_fluidgrid_info()
                 'required' => false,
                 'name' => tra('First'),
                 'description' => tra('Cells specified are ordered first left to right across rows (default) or top to bottom down columns'),
-                'since' => '1',
+                'since' => '17',
                 'filter' => 'alpha',
                 'default' => 'line',
                 'options' => array(
@@ -72,7 +73,7 @@ function wikiplugin_fluidgrid_info()
                 'required' => false,
                 'name' => tra('Custom Class'),
                 'description' => tra('Add a class to customize the design'),
-                'since' => '3.0',
+                'since' => '17',
                 'filter' => 'text',
                 'default' => '',
             ),
@@ -103,6 +104,8 @@ function wikiplugin_fluidgrid_rollback($data, $hashes)
  */
 function wikiplugin_fluidgrid($data, $params, $pos)
 {
+    global $tikilib;
+
     //
     // The following function uses a regular expression in the form
     // "/pattern/ismU"
@@ -122,8 +125,6 @@ function wikiplugin_fluidgrid($data, $params, $pos)
     // Will it handle a second level of nested plugins of the same type, 
     // e.g. {SPIIT()}...{SPLIT()}...{SPIIT}...{SPLIT}
     //
-    global $tikilib, $tiki_p_admin_wiki, $tiki_p_admin, $section;
-    global $replacement;
     preg_match_all('/{(FLUIDGRID|SPLIT|CODE|HTML|FADE|JQ|JS|MOUSEOVER|VERSIONS).+{\1}/ismU', $data, $matches);
     $hashes = array();
     foreach ($matches[0] as $match) {
@@ -440,13 +441,6 @@ function wikiplugin_fluidgrid($data, $params, $pos)
         // Get the content
         $c = ( isset($r[$j]) ) ? $r[$j] : "" ;
         
-        // Remove first <ENTER> if exists.
-        // Do not trim the line break from the end, because this affects the wiki parsing of the cell content.
-        if (substr($c, 0, 2) == "\r\n") 
-        {
-          $c = substr($c, 2) ;
-        }  
-        
         if ( $joincols )
         {
           // Check for empty columns to the right
@@ -463,9 +457,18 @@ function wikiplugin_fluidgrid($data, $params, $pos)
           }  
         }
         
-        // Generate some output
-        $result .= "<div class='col-" . $devicesize . "-" . $w . "'>\n" . $c . "</div>" ;
-
+        // My current understanding is as follows.
+        // If you specify 'format' => 'html', then you must call
+        //    $tikilib->parse_data() 
+        //    to process the wiki syntax in the body text.  
+        // If you specify 'format' => 'wiki', then the returned text will 
+        //    be parsed as wiki text, but this is potentially dangerous,
+        //    because it is a mixture of html and wiki syntax. 
+      	$c = trim($c);
+        $c = wikiplugin_fluidgrid_rollback($c, $hashes);
+      	$c = $tikilib->parse_data($c);
+        $result .= "<div class='col-" . $devicesize . "-" . $w . "'>" . $c . "</div>" ;
+        
         // Increment the column number (because we are using while, not for)
         $j++ ;            
       }
@@ -477,5 +480,5 @@ function wikiplugin_fluidgrid($data, $params, $pos)
     // Close HTML table (no \n at end!)
     $result .= "</div>";
 
-    return wikiplugin_fluidgrid_rollback($result, $hashes);
+    return $result;
 }
