@@ -64,14 +64,7 @@ if (isset($_REQUEST['preview'], $_REQUEST['flaggedrev'], $_REQUEST['page']) && $
 }
 
 $smarty->assign_by_ref('info', $info);
-// If the page doesn't exist then display an error
-//check_page_exits($page);
-if (isset($_REQUEST["confirmAction"]) && $_REQUEST["confirmAction"] === 'delete' && isset($_REQUEST["checked"]) && $info["flag"] != 'L') {
-	check_ticket('page-history');
-	foreach ($_REQUEST["checked"] as $version) {
-		$histlib->remove_version($_REQUEST["page"], $version);
-	}
-}
+
 if ($prefs['feature_contribution'] == 'y') {
 	$contributionlib = TikiLib::lib('contribution');
 	$contributions = $contributionlib->get_assigned_contributions($page, 'wiki page');
@@ -449,8 +442,6 @@ if ($info["flag"] == 'L') {
 if (isset($_REQUEST['nohistory'])) {
 	$smarty->assign('noHistory', true);
 }
-
-ask_ticket('page-history');
 
 TikiLib::events()->trigger(
 	'tiki.wiki.view',

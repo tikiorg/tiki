@@ -91,8 +91,7 @@ class PdfGenerator
 		}
 		if ($this->error) {
 			$this->error = tr('PDF generation failed.') . ' ' . $this->error . ' '
-				. tr('This is set by the administrator (search for %0pdf%1 in the settings control panels to locate the setting).',
-					'<em>', '</em>');
+				. tr('This is set by the administrator (search for "pdf" in the settings control panels to locate the setting).');
 		}
 	}
 
@@ -115,7 +114,9 @@ class PdfGenerator
 				array('timeout' => 120)
 			);
 		}
-
+		if (is_array($params['printpages'])) {
+			$params['printpages'] = implode('&', $params['printpages']);
+		}
 		$url = $base_url . $file . '?' . http_build_query($params, '', '&');
         $session_params = session_get_cookie_params();
 	return $this->{$this->mode}( $url,$pdata);	}
@@ -394,7 +395,7 @@ class PdfGenerator
 	  
     function _parseHTML(&$html)
 	{
-		
+
 	   //$html=str_replace('style="visibility:hidden" class="ts-wrapperdiv">','style="visibility:visible" class="ts-wrapperdiv">',$html);
        $doc = new DOMDocument();
 

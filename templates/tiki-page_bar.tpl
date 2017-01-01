@@ -3,10 +3,14 @@
 	{capture assign=more_section}
 		{if $page|lower ne 'sandbox'}
 			{if $tiki_p_remove eq 'y' && (isset($editable) and $editable)}
-				<li>{button _keepall='y' _type="link" href="tiki-removepage.php" page=$page version="last" _text="{tr}Remove{/tr}"}</li>
+				<li>
+					<a class="btn btn-link" href="{bootstrap_modal controller=wiki action=remove_pages checked=$page version='last'}">
+						{tr}Remove{/tr}
+					</a>
+				</li>
 			{/if}
 			{if $tiki_p_admin_wiki eq 'y' or $tiki_p_assign_perm_wiki_page eq 'y'}
-				<li>{permission_link mode=button_link type="wiki page" id=$page permType=wiki title=$page}</li>
+				<li>{permission_link mode=button type="wiki page" id=$page permType=wiki title=$page}</li>
 			{/if}
 			{if $prefs.feature_page_contribution eq 'y' and $tiki_p_page_contribution_view eq 'y'}
 				<li>{button _keepall='y' href="tiki-page_contribution.php" page=$page _type="link" _text="{tr}Contributions by author{/tr}"}</li>

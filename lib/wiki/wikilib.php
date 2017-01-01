@@ -859,6 +859,7 @@ class WikiLib extends TikiLib
 		$logslib = TikiLib::lib('logs');
 		$logslib->add_action('Removed last version', $page, 'wiki page', $comment);
 		//get_strings tra("Removed last version");
+		return true;
 	}
 
 	/**
