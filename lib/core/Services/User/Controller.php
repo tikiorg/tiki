@@ -317,20 +317,18 @@ class Services_User_Controller
 			$items = $input->asArray('checked');
 			if (count($items) > 0) {
 				if (count($items) === 1) {
-					$msg = tra('Are you sure you want to delete the following user?');
+					$msg = tra('Delete the following user?');
 				} else {
-					$msg = tra('Are you sure you want to delete the following users?');
+					$msg = tra('Delete the following users?');
 				}
 				//provide redirect if js is not enabled
 				$referer = Services_Utilities::noJsPath();
 				return [
 					'modal' => '1',
-					'controller' => 'access',
-					'action' => 'confirm',
-					'title' => tra('Please confirm deletion'),
 					'confirmAction' => $input->action->word(),
 					'confirmController' => 'user',
 					'customMsg' => $msg,
+					'confirmButton' => tra('Delete'),
 					'items' => $items,
 					'extra' => ['referer' => $referer],
 					'ticket' => $check['ticket'],
@@ -412,20 +410,20 @@ class Services_User_Controller
 			$items = $input->asArray('checked');
 			if (count($items) > 0) {
 				if (count($items) === 1) {
-					$msg = tra('Are you sure you want to ban the following user\'s IP?');
+					$msg = tra('Ban the following user\'s IP?');
 					$help = tra('Clicking OK will redirect you to a form where this user\'s is preselected for IP banning.');
 				} else {
-					$msg = tra('Are you sure you want to ban the following users\' IPs?');
+					$msg = tra('Ban the following users\' IPs?');
 					$help = tra('Clicking OK will redirect you to a form where these users\' are preselected for IP banning.');
 				}
 				return [
 					'FORWARD' => [
 						'controller' => 'access',
 						'action' => 'confirm',
-						'title' => tra('Please confirm ban'),
 						'confirmAction' => $input->action->word(),
 						'confirmController' => 'user',
 						'customMsg' => $msg,
+						'confirmButton' => tra('Ban'),
 						'items' => $items,
 						'ticket' => $check['ticket'],
 						'help' => $help,
@@ -470,10 +468,9 @@ class Services_User_Controller
 						'FORWARD' => [
 							'controller' => 'access',
 							'action' => 'confirm',
-							'title' => tra('Please confirm removal from group'),
 							'confirmAction' => $input->action->word(),
 							'confirmController' => 'user',
-							'customMsg' => tr('Are you sure you want to remove user %0 from the following group:',
+							'customMsg' => tr('Remove user %0 from the following group?',
 								$selected[0]),
 							'items' => $items,
 							'extra' => [
