@@ -60,10 +60,7 @@ function wikiplugin_quote($data, $params)
 	global $prefs;
 
 	$source_url = '';
-
 	$date = null;
-	$date_order = strtr($prefs['display_field_order'], 'DM', 'dm');
-	$date_format = '%' . join('/%', str_split($date_order, 1));
 
 	if ($params['thread_id']) {
 		$commentslib = TikiLib::lib('comments');
@@ -80,7 +77,6 @@ function wikiplugin_quote($data, $params)
 	}
 
 	$smarty->assign('date', $date);
-	$smarty->assign('date_format', $date_format);
 	$smarty->assign('comment_info', $comment_info);
 	$smarty->assign('replyto', $replyto);
 	$smarty->assign('data', trim($data));
