@@ -8,17 +8,9 @@
 class Services_Wiki_Controller
 {
 
-	private $access;
-	private $lib;
-	private $tikilib;
-
-
 	function setUp()
 	{
 		Services_Exception_Disabled::check('feature_wiki');
-		$this->tikilib = TikiLib::lib('tiki');
-		$this->lib = TikiLib::lib('wiki');
-		$this->access = TikiLib::lib('access');
 	}
 
 	/**
@@ -29,12 +21,12 @@ class Services_Wiki_Controller
 	function action_get_page($input)
 	{
 		$page = $input->page->text();
-		$info = $this->lib->get_page_info($page);
+		$info = TikiLib::lib('wiki')->get_page_info($page);
 		if (!$info) {
 			throw new Services_Exception_NotFound(tr('Page "%0" not found', $page));
 		}
 		$canBeRefreshed = false;
-		$data = $this->lib->get_parse($page, $canBeRefreshed);
+		$data = TikiLib::lib('wiki')->get_parse($page, $canBeRefreshed);
 		return array('data' => $data);
 	}
 
@@ -71,7 +63,7 @@ class Services_Wiki_Controller
 				$pages->update(['pageSlug' => $slug], ['pageName' => $page]);
 			}
 
-			$this->access->redirect('tiki-admin.php?page=wiki');
+			TikiLib::lib('access')->redirect('tiki-admin.php?page=wiki');
 		}
 
 		return array(
@@ -107,8 +99,8 @@ class Services_Wiki_Controller
 			if (count($fitems) > 0) {
 				$v = $input->version->text();
 				if (count($fitems) == 1) {
-					$pinfo = $this->tikilib->get_page_info($fitems[0]);
-					$one = $pinfo['version'] == 1;
+					$versions = TikiLib::lib('hist')->get_nb_history($fitems[0]);
+					$one = $versions == 1;
 				} else {
 					$one = false;
 				}
@@ -124,7 +116,7 @@ class Services_Wiki_Controller
 				//provide redirect if js is not enabled
 				$referer = Services_Utilities::noJsPath();
 				return [
-					'title' => tra('Please confirm deletion'),
+					'title' => tra('Please confirm'),
 					'confirmAction' => $input->action->word(),
 					'confirmController' => 'wiki',
 					'customMsg' => $msg,
@@ -154,15 +146,20 @@ class Services_Wiki_Controller
 			$all = $all || ($extra['version'] === 'all' && !$last);
 			$last = $last || ($extra['version'] === 'last' && !$all);
 			$error = false;
+			$count = count($items);
 			foreach ($items as $page) {
 				$result = false;
 				if ($all || $extra['one']) {
-					$result = $this->tikilib->remove_all_versions($page);
+					//get page info before deletion in case this was the page the user was on
+					//used later to redirect to the tiki index page
+					if (count($items) === 1) {
+						$allinfo = TikiLib::lib('tiki')->get_page_info($page);
+					}
+					$result = TikiLib::lib('tiki')->remove_all_versions($page);
 				} elseif ($last) {
-					$result = $this->lib->remove_last_version($page);
+					$result = TikiLib::lib('wiki')->remove_last_version($page);
 				} elseif (!empty($extra['version']) && is_numeric($extra['version'])) {
-					$histlib = TikiLib::lib('hist');
-					$result = $histlib->remove_version($page, $extra['version']);
+					$result = TikiLib::lib('hist')->remove_version($page, $extra['version']);
 				}
 				if (!$result) {
 					$error = true;
@@ -186,7 +183,7 @@ class Services_Wiki_Controller
 					$vdesc = tr('Version %0', $extra['version']);
 					$verb = 'has';
 				}
-				if (count($items) === 1) {
+				if ($count === 1) {
 					$msg = tr('%0 of the following page %1 been deleted:', $vdesc, $verb);
 				} else {
 					$msg = tr('%0 of the following pages %1 been deleted:', $vdesc, $verb);
@@ -199,16 +196,13 @@ class Services_Wiki_Controller
 				Feedback::success($feedback, 'session');
 			}
 			//return to page
-			$pagespace = isset($page) ? str_replace(' ', '+', $page) : false;
-			if (count($items) === 1 && $pagespace && strpos($_SERVER['HTTP_REFERER'], $pagespace) !== false
-				&& $this->tikilib->get_page_info($page, false, true) === false
-			) {
-				//go to tiki index if the page the user was on has been deleted. avoids no page found error.
+			if (isset($allinfo) && strpos($_SERVER['HTTP_REFERER'], $allinfo['pageSlug']) !== false
+			&& TikiLib::lib('tiki')->get_page_info($page, false, true) === false) {
+				//go to tiki index if the page the user was on has been deleted - avoids no page found error.
 				global $prefs, $base_url;
 				return Services_Utilities::redirect($base_url . $prefs['tikiIndex']);
-			} else {
-				return Services_Utilities::refresh($extra['referer']);
 			}
+			return Services_Utilities::refresh($extra['referer']);
 		}
 	}
 
@@ -235,7 +229,6 @@ class Services_Wiki_Controller
 					'FORWARD' => [
 						'controller' => 'access',
 						'action' => 'confirm',
-						'title' => tra('Please confirm deletion'),
 						'confirmAction' => $input->action->word(),
 						'confirmController' => 'wiki',
 						'customMsg' => $msg,
@@ -256,7 +249,7 @@ class Services_Wiki_Controller
 			$items = json_decode($input['items'], true);
 			$extra = json_decode($input['extra'], true);
 			$histlib = TikiLib::lib('hist');
-			$pageinfo = $this->tikilib->get_page_info($extra['page']);
+			$pageinfo = TikiLib::lib('tiki')->get_page_info($extra['page']);
 			$error = false;
 			if ($pageinfo['flag'] != 'L') {
 				$result = false;
@@ -317,7 +310,6 @@ class Services_Wiki_Controller
 					'FORWARD' => [
 						'controller' => 'access',
 						'action' => 'confirm',
-						'title' => tra('Please confirm'),
 						'confirmAction' => $input->action->word(),
 						'confirmController' => 'wiki',
 						'customMsg' => $msg,
@@ -369,7 +361,6 @@ class Services_Wiki_Controller
 						'FORWARD' => [
 							'controller' => 'access',
 							'action' => 'confirm',
-							'title' => tra('Please confirm'),
 							'confirmAction' => $input->action->word(),
 							'confirmController' => 'wiki',
 							'customMsg' => $msg,
@@ -418,7 +409,7 @@ class Services_Wiki_Controller
 			$items = $input->asArray('checked');
 			$fitems = Perms::simpleFilter(['type' => 'wiki page'], 'pageName', 'lock', $items);
 			foreach ($fitems as $key => $page) {
-				if ($this->lib->is_locked($page)) {
+				if (TikiLib::lib('wiki')->is_locked($page)) {
 					unset($fitems[$key]);
 				}
 			}
@@ -434,7 +425,6 @@ class Services_Wiki_Controller
 					'FORWARD' => [
 						'controller' => 'access',
 						'action' => 'confirm',
-						'title' => tra('Please confirm'),
 						'confirmAction' => $input->action->word(),
 						'confirmController' => 'wiki',
 						'customMsg' => $msg,
@@ -463,7 +453,7 @@ class Services_Wiki_Controller
 			$extra = json_decode($input['extra'], true);
 			$errorpages = [];
 			foreach ($items as $page) {
-				$res = $this->lib->lock_page($page);
+				$res = TikiLib::lib('wiki')->lock_page($page);
 				if (!$res) {
 					$errorpages[] = $page;
 				}
@@ -516,7 +506,7 @@ class Services_Wiki_Controller
 			$admin = Perms::get()->admin_wiki;
 			global $user;
 			foreach ($fitems as $key => $page) {
-				$pinfo = $this->tikilib->get_page_info($page);
+				$pinfo = TikiLib::lib('tiki')->get_page_info($page);
 				if (
 					!($pinfo['flag'] == 'L' &&
 						($admin || ($user == $pinfo['lockedby']) || (!$pinfo['lockedby'] && $user == $pinfo['user']))
@@ -537,7 +527,6 @@ class Services_Wiki_Controller
 					'FORWARD' => [
 						'controller' => 'access',
 						'action' => 'confirm',
-						'title' => tra('Please confirm'),
 						'confirmAction' => $input->action->word(),
 						'confirmController' => 'wiki',
 						'customMsg' => $msg,
@@ -566,7 +555,7 @@ class Services_Wiki_Controller
 			$extra = json_decode($input['extra'], true);
 			$errorpages = [];
 			foreach ($items as $page) {
-				$res = $this->lib->unlock_page($page);
+				$res = TikiLib::lib('wiki')->unlock_page($page);
 				if (!$res) {
 					$errorpages[] = $page;
 				}
@@ -628,7 +617,6 @@ class Services_Wiki_Controller
 					'FORWARD' => [
 						'controller' => 'access',
 						'action' => 'confirm',
-						'title' => tra('Please confirm'),
 						'confirmAction' => $input->action->word(),
 						'confirmController' => 'wiki',
 						'customMsg' => $msg,
@@ -689,7 +677,6 @@ class Services_Wiki_Controller
 					'FORWARD' => [
 						'controller' => 'access',
 						'action' => 'confirm',
-						'title' => tra('Please confirm'),
 						'confirmAction' => $input->action->word(),
 						'confirmController' => 'wiki',
 						'customMsg' => $msg,
@@ -710,10 +697,10 @@ class Services_Wiki_Controller
 			$extra = json_decode($input['extra'], true);
 			$errorpages = [];
 			foreach ($items as $page) {
-				$pageinfo = $this->tikilib->get_page_info($page);
+				$pageinfo = TikiLib::lib('tiki')->get_page_info($page);
 				if ($pageinfo) {
 					$pageinfo['data'] = "!$page\r\n" . $pageinfo['data'];
-					$table = $this->tikilib->table('tiki_pages');
+					$table = TikiLib::lib('tiki')->table('tiki_pages');
 					$table->update(['data' => $pageinfo['data']], ['page_id' => $pageinfo['page_id']]);
 				} else {
 					$errorpages[] = $page;

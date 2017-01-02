@@ -93,9 +93,13 @@
 				{/if}
 				{if $prefs.feature_wiki_usrlock eq 'y' and $user and $tiki_p_lock eq 'y'}
 					{if !$lock}
-						{button _keepall='y' href="tiki-index.php" page=$page action="lock" _text="{tr}Lock{/tr}"}
+						<a class="btn btn-default" href="{bootstrap_modal controller=wiki action=lock_pages checked=$page}">
+							{tr}Lock{/tr}
+						</a>
 					{elseif $tiki_p_admin_wiki eq 'y' or $user eq $page_user}
-						{button _keepall='y' href="tiki-index.php" page=$page action="unlock" _text="{tr}Unlock{/tr}"}
+						<a class="btn btn-default" href="{bootstrap_modal controller=wiki action=unlock_pages checked=$page}">
+							{tr}Unlock{/tr}
+						</a>
 					{/if}
 				{/if}
 				{if $prefs.feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
