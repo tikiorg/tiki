@@ -45,7 +45,7 @@ function wikiplugin_quote_info()
 			'date' => array(
 				'required' => false,
 				'name' => tra('Date'),
-				'description' => tra('The date when quote was made.') . tr(' (%0YYYY-MM-DD%1)', '<code>', '</code>'),
+				'description' => tra('Date when the statement quoted was made') . ' (<code>' . tr('YYYY-MM-DD') . '</code>)',
 				'filter' => 'date',
 				'default' => '',
 				'since' => '16',
