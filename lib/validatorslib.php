@@ -165,7 +165,7 @@ invalidHandler: function(event, validator) {
 
 		if ($firstError.parents(".tab-content").length > 0) {
 			$tab = $firstError.parents(".tab-pane");
-			$(\'a[href="#\' + $tab.attr("id") + \'"]\').click();
+			$(\'a[href="#\' + $tab.attr("id") + \'"]\').tab("show");
 		}
 
 		$container.animate({
