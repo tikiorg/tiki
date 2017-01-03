@@ -265,10 +265,9 @@ class PdfGenerator
 
        //getting n replacing images
 	   $tempImgArr=array();
+       $this->_getImages($html,$tempImgArr);
+       
 	   $this->_parseHTML($html);
-	
-	   $this->_getImages($html,$tempImgArr);
-
 	   self::setupMPDFCacheLocation();
 		if (!class_exists('mPDF')){
 	    	include_once($this->location . 'mpdf.php');
@@ -347,13 +346,19 @@ class PdfGenerator
 
 			foreach ($tags as $tag) {
        			$imgSrc=$tag->getAttribute('src');
+				
 				//replacing image with new temp image, all these images will be unlinked after pdf creation
 				$newFile=$this->file_get_contents_by_fget($imgSrc);
 				//replacing old protected image path with temp image
 				if($newFile!='')
 				   $tag->setAttribute('src',$newFile);
+				   
+				   
 				$tempImgArr[]=$newFile;
 				}
+				
+				$html=@$doc->saveHTML();
+				
 	}
 	
 	function file_get_contents_by_fget($url)
@@ -423,7 +428,7 @@ class PdfGenerator
 			for($i=0;$i<count($sortedContent);$i++)
 			{
 			    $html=str_replace($tempValue[$i],$sortedContent[$i],$html);
-				$html=cleanContent($html,array(array("input","tablesorter-filter","class")));
+				$html=cleanContent($html,array(array("input","tablesorter-filter","class"),array("select","tablesorter-filter","class")));
 
 		    }
 			
