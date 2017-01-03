@@ -690,6 +690,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, array $listfields=ar
 					}
 					$opts[] = $opt;
 				}
+				$opts[] = wikiplugin_trackerFilter_add_empty_option($fieldId);
     			break;
 			case 'd': // drop down list
 			case 'R': // radio buttons
