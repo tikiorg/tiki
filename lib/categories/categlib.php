@@ -1997,13 +1997,5 @@ class CategLib extends ObjectLib
 
 		return $this->parentCategories[$categId];
 	}
-
-	function get_names($categoryIds) {
-		if( !$categoryIds ) {
-			$categoryIds = array(0);
-		}
-		$query = "SELECT `categId`, `name` FROM `tiki_categories` WHERE `categId` IN (".str_repeat("?,", count($categoryIds)-1)."?) ORDER BY `name`";
-		return $this->fetchMap($query, $categoryIds);
-	}
 }
 
