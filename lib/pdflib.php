@@ -335,7 +335,7 @@ class PdfGenerator
 		}
 		$mpdf->WriteHTML('<style>'.$basecss.$themecss.$printcss.$this->bootstrapReplace().'</style>'.$html);
 	    $this->clearTempImg($tempImgArr);
-        return $mpdf->Output('', 'S');					// Return as a string
+		return $mpdf->Output('', 'S');					// Return as a string
 	}
 	
 	function _getImages(&$html,&$tempImgArr)
@@ -395,77 +395,60 @@ class PdfGenerator
 	  
     function _parseHTML(&$html)
 	{
-
-	   //$html=str_replace('style="visibility:hidden" class="ts-wrapperdiv">','style="visibility:visible" class="ts-wrapperdiv">',$html);
-       $doc = new DOMDocument();
-
-
-	   $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
-
-
-
-	   $tables = $doc->getElementsByTagName('table');
-
+	   $doc = new DOMDocument();
+       $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+       $tables = $doc->getElementsByTagName('table');
+       
 	   $tempValue=array();
 	   $sortedContent=array();
-
-		foreach ($tables as $table) {
-
-		   $content='';
-
-		   $tid= $table->getAttribute("id");
-		   if(file_exists("temp/#".$tid."_".session_id().".txt"))
-           {
-
-
-
-			   $content=file_get_contents("temp/#".$tid."_".session_id().".txt");
-			   //formating content
-			   $tableTag="<table";
-			      if ($table->hasAttributes()) {
-                       foreach ($table->attributes as $attr) {
-                            $tableTag.=" ".$attr->nodeName."=\"".$attr->nodeValue."\"";
-	                   }
-                  }
-			   $tableTag.=">";
-			   $content=$tableTag.$content.'</table>';
-			   $content=str_replace("on>click=","",$content);
-			   //end of cleaning content
-			   $sortedContent[]=$content;
-			   $tempValue[]=$tableTag;
-			   $table->nodeValue="";
-			   chmod("temp/#".$tid."_".session_id().".txt",0755);
-			   //unlink tmp table file
-			   unlink("temp/#".$tid."_".session_id().".txt");
-			}
+       foreach ($tables as $table) {
+	     $this->sortContent($table,$tempValue,$sortedContent,'table');
+		 
 		}
-
-		   $xpath = new DOMXpath($doc);
-
-		   //making tablesorter wrapper divs visible
-		   $wrapperdivs = $xpath->query('//*[contains(@class, "ts-wrapperdiv")]');
+		$xpath = new DOMXpath($doc);
+        $customdivs = $xpath->query('//*[contains(@class, "customsearch_results")]');
+	   for ($i = 0; $i < $customdivs->length; $i++) {
+         $customdiv = $customdivs->item($i);
+         $this->sortContent($customdiv,$tempValue,$sortedContent,'div');
+	   }
+	   //making tablesorter wrapper divs visible
+		$wrapperdivs = $xpath->query('//*[contains(@class, "ts-wrapperdiv")]');
 		   for ($i = 0; $i < $wrapperdivs->length; $i++) {
 			   $wrapperdiv = $wrapperdivs->item($i);
+        	   $wrapperdiv->setAttribute("style","visibility:visible");
+        }
 
-			   $wrapperdiv->setAttribute("style","visibility:visible");
+	   $html=@$doc->saveHTML();
+  	   //replacing temp table with sorted content
+			for($i=0;$i<count($sortedContent);$i++)
+			{
+			    $html=str_replace($tempValue[$i],$sortedContent[$i],$html);
+				$html=cleanContent($html,array(array("input","tablesorter-filter","class")));
 
-		   }
+		    }
+			
+			//font awesome support call
+			$this->fontawesome($html);
+			//& sign added in fa unicodes for proper printing in pdf
+            $html=str_replace('#x',"&#x",$html); 
 
-
-		   //font awesome code insertion
-
-		   $fadivs = $xpath->query('//*[contains(@class, "fa")]');
-
-		   //loading json file if there is any font-awesome tag in html
-		   if($fadivs->length)
-		   {
-		     $faCodes=file_get_contents('lib/pdf/fontdata/fa-codes.json');
-		     $jfo = json_decode($faCodes,true);
-
-           for ($i = 0; $i < $fadivs->length; $i++) {
+	 }
+	 
+	 function fontawesome(&$html)
+	 {
+	   $doc = new DOMDocument();
+       $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+	   $xpath = new DOMXpath($doc);
+      //font awesome code insertion
+	   $fadivs = $xpath->query('//*[contains(@class, "fa")]');
+	   //loading json file if there is any font-awesome tag in html
+	    if($fadivs->length)
+		{
+		 $faCodes=file_get_contents('lib/pdf/fontdata/fa-codes.json');
+		 $jfo = json_decode($faCodes,true);
+         for ($i = 0; $i < $fadivs->length; $i++) {
                $fadiv = $fadivs->item($i);
                $faClass=split(" ",str_replace(array("fa ","-"),"",$fadiv->getAttribute('class')));
-			  
 			   foreach($faClass as $class)
 			   {
 				   if($jfo[$class][codeValue])
@@ -478,43 +461,73 @@ class PdfGenerator
 				   }
 			   }
 			 
-           }
-		   }
+         }
+		}
 
-			$html=@$doc->saveHTML();
-
-			//& sign added in fa unicodes for proper printing in pdf
-			$html=str_replace('#x',"&#x",$html);
-			//replacing temp table with sorted content
-			for($i=0;$i<count($sortedContent);$i++)
-			{
-			    $html=str_replace($tempValue[$i],$sortedContent[$i],$html);
-				$html=cleanContent($html,array("input","select"));
-
-		    }
-
-
-	 }
+       $html=@$doc->saveHTML();
+     }
 
 	 function bootstrapReplace(){
 	    return ".col-xs-12 {width: 90%;}.col-xs-11 {width: 81.66666667%;}.col-xs-10 {width: 72%;}.col-xs-9 {width: 64%;}.col-xs-8 {width: 57%;}.col-xs-7 {width: 49%;}.col-xs-6 {width: 42%;}.col-xs-5 {width: 35%;}.col-xs-4 {width: 28%;}.col-xs-3{width: 20%;}.col-xs-2 {width: 12.2%;}.col-xs-1 {width: 3.92%;}    .table-striped {border:1px solid #ccc;} .table-striped td { padding: 8px; line-height: 1.42857143;vertical-align: center;border-top: 1px solid #ccc; color:#000; } .table-striped th { padding: 10px; line-height: 1.42857143;vertical-align: center; background-color:#ccc; color:#000  } .table-striped .odd { color:#000;padding:10px;} .table-striped .even { padding:10px; background-color:#eee; }.odd { padding:10px; background-color:#fff; } .table-striped a{color:#000} .trackerfilter form{display:none;}";
 	}
+	
+	function sortContent(&$table,&$tempValue,&$sortedContent,$tag)
+	{
+	   $content='';
+	   $tid= $table->getAttribute("id");
+		   if(file_exists("temp/#".$tid."_".session_id().".txt"))
+           {
+			   $content=file_get_contents("temp/#".$tid."_".session_id().".txt");
+			   //formating content
+			   $tableTag="<".$tag;
+			      if ($table->hasAttributes()) {
+                       foreach ($table->attributes as $attr) {
+                            $tableTag.=" ".$attr->nodeName."=\"".$attr->nodeValue."\"";
+	                   }
+                  }
+			   $tableTag.=">";
+
+			   $content=$tableTag.$content.'</'.$tag.'>';
+			   //end of cleaning content
+			   $sortedContent[]=str_replace('<sc<x>ript type="text/javascript">
+<!--//--><![CDATA[//><!--
+$(document).ready(function(){
+// jq_onready 0 
+$(".convert-mailto").removeClass("convert-mailto").each(function () {
+				var address = $(this).data("encode-name") + "@" + $(this).data("encode-domain");
+				$(this).attr("href", "mailto:" + address).text(address);
+			});
+});
+//--><!]]>
+</script>',"",$content);
+			   $tempValue[]=$tableTag;
+			   $table->nodeValue="";
+			   chmod("temp/#".$tid."_".session_id().".txt",0755);
+			   //unlink tmp table file
+			   unlink("temp/#".$tid."_".session_id().".txt");
+			}
+		}
+
+		
+		
 }
 
 
 function cleanContent($content,$tagArr){
 	$doc = new DOMDocument();
 	$doc->loadHTML($content);
+	$xpath = new DOMXpath($doc);
+       
+	   
 	foreach($tagArr as $tag)
 	{
-       $list = $doc->getElementsByTagName($tag);
-       while ($list->length > 0) {
-          $p = $list->item(0);
-          $p->parentNode->removeChild($p);
+	  $list = $xpath->query('//'.$tag[0].'[contains(concat(\' \', normalize-space(@'.$tag[2].'), \' \'), "' .$tag[1]. '")]');
+      for ($i = 0; $i < $list->length; $i++) {
+          $p = $list->item($i);
+	      $p->parentNode->removeChild($p);
        }
 	}
     return $doc->saveHTML();
-	
 }
 
 function add_custom_font_to_mpdf(&$mpdf, $fonts_list) {
