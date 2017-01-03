@@ -1191,6 +1191,12 @@ class TrackerLib extends TikiLib
 						$value = array($value['not']);
 						$not = 'not';
 					}
+					if( empty($not) && count($value) == 1 && ( empty($value[0]) || ( is_array($value[0]) && count($value[0]) == 1 && empty($value[0][0]) ) ) ) {
+						$cat_table .= " left JOIN `tiki_objects` tob$ff ON (tob$ff.`itemId` = tti.`itemId` AND tob$ff.`type` = 'trackeritem')"
+							." left JOIN `tiki_category_objects` tco$ff ON (tob$ff.`objectId` = tco$ff.`catObjectId`)";
+						$mid .= " AND tco$ff.`categId` IS NULL ";
+						continue;
+					}
 					if (empty($not)) {
 						$cat_table .= " INNER JOIN `tiki_objects` tob$ff ON (tob$ff.`itemId` = tti.`itemId`)"
 							." INNER JOIN `tiki_category_objects` tco$ff ON (tob$ff.`objectId` = tco$ff.`catObjectId`)";
