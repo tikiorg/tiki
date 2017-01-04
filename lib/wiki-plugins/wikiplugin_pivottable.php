@@ -22,6 +22,8 @@ function wikiplugin_pivottable_info()
 				'required' => true,
 				'default' => 0,
 				'filter' => 'text',
+				'profile_reference' => 'tracker',
+				'separator' => ':',
 			),
 			'width' => array(
 				'required' => false,
