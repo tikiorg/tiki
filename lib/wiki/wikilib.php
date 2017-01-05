@@ -214,9 +214,10 @@ class WikiLib extends TikiLib
 	 * @param string $copyName
 	 * @return bool
 	 */
-	public function wiki_duplicate_page($name, $copyName = null)
+	public function wiki_duplicate_page($name, $copyName = null, $dupCateg=true, $dupTags=true)
 	{
 		global $user;
+		global $prefs;
 
 		$tikilib = TikiLib::lib('tiki');
 		$userlib = TikiLib::lib('user');
@@ -244,7 +245,7 @@ class WikiLib extends TikiLib
 			$info['is_html']
 		);
 
-		if ($userlib->user_has_permission($user, 'tiki_p_add_object')) {
+		if ($dupCateg && $prefs['feature_categories'] === 'y' && $userlib->user_has_permission($user, 'tiki_p_add_object')) {
 			$categlib = TikiLib::lib('categ');
 			$categories = $categlib->get_object_categories('wiki page', $name);
 
@@ -253,7 +254,7 @@ class WikiLib extends TikiLib
 			}
 		}
 
-		if ($userlib->user_has_permission($user, 'tiki_p_freetags_tag')) {
+		if ($dupTags && $prefs['feature_freetags'] === 'y' && $userlib->user_has_permission($user, 'tiki_p_freetags_tag')) {
 			$freetaglib = TikiLib::lib('freetag');
 			$freetags = $freetaglib->get_tags_on_object($name, 'wiki page');
 
