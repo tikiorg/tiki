@@ -5,6 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+use Symfony\Component\Yaml\Yaml;
+
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
 	header('location: index.php');
@@ -277,18 +279,18 @@ $smarty->assign('export_type', $_REQUEST['export_type']);
 
 if (isset($_REQUEST['export'])) {
 	if ($_REQUEST['export_type'] === 'prefs') {
-		$export_yaml = Horde_Yaml::dump(
+		$export_yaml = Yaml::dump(
 			array( 'preferences' => $_REQUEST['prefs_to_export'] ),
-			array('indent' => 1, 'wordwrap' => 0)
+			20, 1, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK
 		);
 	} else if ($_REQUEST['export_type'] === 'modules') {
 		$modules_to_export = array();
 		foreach ($_REQUEST['modules_to_export'] as $k => $v) {
 			$modules_to_export[] = $assigned_modules_for_export[$k];
 		}
-		$export_yaml = Horde_Yaml::dump(
+		$export_yaml = Yaml::dump(
 			array( 'objects' => $modules_to_export),
-			array('indent' => 1, 'wordwrap' => 0)
+			20, 1, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK
 		);
 	} else {
 		$export_yaml = '';		// something went wrong?

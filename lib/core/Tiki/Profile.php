@@ -5,6 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+use Symfony\Component\Yaml\Yaml;
+
 class Tiki_Profile
 {
 	const SHORT_PATTERN = '/^\$((([\w\.\/-]+):)?((\w+):))?(\w+)$/';
@@ -264,7 +266,7 @@ class Tiki_Profile
 		$profile->transport = new Tiki_Profile_Transport_File($path, $name);
 
 		if (file_exists($ymlPath)) {
-			$profile->data = Horde_Yaml::load(file_get_contents($ymlPath));
+			$profile->data = Yaml::parse(file_get_contents($ymlPath));
 
 			$profile->fetchExternals();
 			$profile->getObjects();
@@ -331,7 +333,7 @@ class Tiki_Profile
 				|| $match->getName() == 'profile' ) {
 				$yaml = $match->getBody();
 
-				$data = Horde_Yaml::load($yaml);
+				$data = Yaml::parse($yaml);
 
 				foreach ( $data as $key => $value ) {
 					if ( array_key_exists($key, $this->data) )

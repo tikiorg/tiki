@@ -5,6 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+use Symfony\Component\Yaml\Yaml;
+
 class Tiki_Profile_Writer
 {
 	private $data;
@@ -18,7 +20,7 @@ class Tiki_Profile_Writer
 		$this->externalWriter = new Tiki_Profile_Writer_ExternalWriter("$directory/$profileName");
 		if (file_exists($this->filePath)) {
 			$content = file_get_contents($this->filePath);
-			$this->data = Horde_Yaml::load($content);
+			$this->data = Yaml::parse($content);
 		} else {
 			$this->data = array(
 				'permissions' => array(),
@@ -337,7 +339,7 @@ class Tiki_Profile_Writer
 	 */
 	function save()
 	{
-		file_put_contents($this->filePath, Horde_Yaml::dump($this->quoteArray($this->data)));
+		file_put_contents($this->filePath, Yaml::dump($this->quoteArray($this->data), 20, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK));
 		$this->externalWriter->apply();
 	}
 
@@ -388,6 +390,6 @@ class Tiki_Profile_Writer
 		$clone = clone $this;
 		$clone->clean();
 
-		return Horde_Yaml::dump($clone->data);
+		return Yaml::dump($clone->data, 20, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
 	}
 }
