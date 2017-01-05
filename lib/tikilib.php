@@ -6640,7 +6640,7 @@ JS;
 		rewind($fh);
 		$csv = stream_get_contents($fh);
 		fclose($fh);
-		return $csv;
+		return trim($csv);
 	}
 }
 // end of class ------------------------------------------------------
