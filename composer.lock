@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a6d0a3be9ac0b592857fe37373187ab8",
-    "content-hash": "6bcfa870d8172076911ee15fc51fa0d7",
+    "hash": "3edf4881597089044443f839bba7384a",
+    "content-hash": "ccfe0fa489524a5972868ff1f2e42f38",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -95,17 +95,17 @@
         },
         {
             "name": "blueimp/jquery-file-upload",
-            "version": "v9.14.1",
+            "version": "v9.14.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vkhramtsov/jQuery-File-Upload.git",
-                "reference": "71d67a9c277e29efcf5935cd2409009c0f841a57"
+                "reference": "f5b2f44dcd92e33b7fb6c3e630fddf2b990fbfce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/blueimp-jquery-file-upload-71d67a9c277e29efcf5935cd2409009c0f841a57-zip-79e976.zip",
-                "reference": "71d67a9c277e29efcf5935cd2409009c0f841a57",
-                "shasum": "64b3d0d12c838fb9c71bb70dd5bc3e972da258ff"
+                "url": "https://composer.tiki.org/dist/blueimp-jquery-file-upload-f5b2f44dcd92e33b7fb6c3e630fddf2b990fbfce-zip-b33932.zip",
+                "reference": "f5b2f44dcd92e33b7fb6c3e630fddf2b990fbfce",
+                "shasum": "d4e4912a539c3d4ee9364a4a4658479cfb44320b"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -141,7 +141,7 @@
                 "upload",
                 "widget"
             ],
-            "time": "2016-11-21 05:38:19"
+            "time": "2016-12-21 05:40:37"
         },
         {
             "name": "ckeditor/ckeditor",
@@ -523,9 +523,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/etd-framework/jquery/zipball/b9a30373401c53769aae8e5253d2005d7b256989",
+                "url": "https://composer.tiki.org/dist/etdsolutions-jquery-b9a30373401c53769aae8e5253d2005d7b256989-zip-c8a4bd.zip",
                 "reference": "b9a30373401c53769aae8e5253d2005d7b256989",
-                "shasum": ""
+                "shasum": "fed18c065659cf90030dde2b5b05728b825ff5c2"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -546,9 +546,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/etd-framework/jquery-ui/zipball/af173f45b7af91a42c88e23955784a09ba96eb44",
+                "url": "https://composer.tiki.org/dist/etdsolutions-jquery-ui-af173f45b7af91a42c88e23955784a09ba96eb44-zip-a2837d.zip",
                 "reference": "af173f45b7af91a42c88e23955784a09ba96eb44",
-                "shasum": ""
+                "shasum": "a339de5dd4ad04cc435b8f31961d3208e8a6df52"
             },
             "require": {
                 "etdsolutions/jquery": ">=1.6"
@@ -1236,13 +1236,13 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/chartjs/Chart.js.git",
-                "reference": "6f40d04964c621bf5903720c4a0be12de66df236"
+                "reference": "7c3e71d58b6cb4b169ef03ca22f7bf2cfd09b912"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/nnnick-chartjs-6f40d04964c621bf5903720c4a0be12de66df236-zip-fd56fe.zip",
-                "reference": "6f40d04964c621bf5903720c4a0be12de66df236",
-                "shasum": "16cf15fa3800188c3ef71d00f7e2b68d7c282cc1"
+                "url": "https://composer.tiki.org/dist/nnnick-chartjs-7c3e71d58b6cb4b169ef03ca22f7bf2cfd09b912-zip-584b07.zip",
+                "reference": "7c3e71d58b6cb4b169ef03ca22f7bf2cfd09b912",
+                "shasum": "31ed9cd1cca753a918cc445988753c892599f9d2"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -1269,7 +1269,7 @@
                 "JS",
                 "chart"
             ],
-            "time": "2016-12-07 23:47:30"
+            "time": "2017-01-02 18:26:51"
         },
         {
             "name": "openlayers/ol3",
@@ -1939,6 +1939,61 @@
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
             "time": "2016-10-18 04:28:30"
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "v3.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "a7095af4b97a0955f85c8989106c249fa649011f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/symfony-yaml-a7095af4b97a0955f85c8989106c249fa649011f-zip-e73217.zip",
+                "reference": "a7095af4b97a0955f85c8989106c249fa649011f",
+                "shasum": "58983b3d476fa37b3b6ba6f2f93066a093a3dc7a"
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "symfony/console": "~2.8|~3.0"
+            },
+            "suggest": {
+                "symfony/console": "For validating YAML files using the lint command"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Yaml\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Yaml Component",
+            "homepage": "https://symfony.com",
+            "time": "2016-12-10 10:07:06"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -2815,17 +2870,17 @@
         },
         {
             "name": "zendframework/zend-mail",
-            "version": "2.7.1",
+            "version": "2.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-mail.git",
-                "reference": "2e817b58ebaa2b422a25d854106a91f74b6a7976"
+                "reference": "8210faa6865f94962f9a5c76269703bfdcf2fa4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/zendframework-zend-mail-2e817b58ebaa2b422a25d854106a91f74b6a7976-zip-3e3116.zip",
-                "reference": "2e817b58ebaa2b422a25d854106a91f74b6a7976",
-                "shasum": "14ba0187641de6a93f6b2a459aac16641555d811"
+                "url": "https://composer.tiki.org/dist/zendframework-zend-mail-8210faa6865f94962f9a5c76269703bfdcf2fa4c-zip-76b2e6.zip",
+                "reference": "8210faa6865f94962f9a5c76269703bfdcf2fa4c",
+                "shasum": "8d31126854f4e6265ebb51eb39be42c208e3cdcf"
             },
             "require": {
                 "php": "^5.5 || ^7.0",
@@ -2871,7 +2926,7 @@
                 "mail",
                 "zf2"
             ],
-            "time": "2016-05-09 21:52:30"
+            "time": "2016-12-19 22:46:35"
         },
         {
             "name": "zendframework/zend-math",
@@ -3020,17 +3075,17 @@
         },
         {
             "name": "zendframework/zend-servicemanager",
-            "version": "3.1.1",
+            "version": "3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-servicemanager.git",
-                "reference": "f701b0d322741b0c8d8ca1288f249a49438029cd"
+                "reference": "8a6078959a2e8c3717ee4945d4a2d9f3ddf81d38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/zendframework-zend-servicemanager-f701b0d322741b0c8d8ca1288f249a49438029cd-zip-f2253c.zip",
-                "reference": "f701b0d322741b0c8d8ca1288f249a49438029cd",
-                "shasum": "46b001e2f78ebdf2ff8b69710de99bcff64205a2"
+                "url": "https://composer.tiki.org/dist/zendframework-zend-servicemanager-8a6078959a2e8c3717ee4945d4a2d9f3ddf81d38-zip-a7d159.zip",
+                "reference": "8a6078959a2e8c3717ee4945d4a2d9f3ddf81d38",
+                "shasum": "e1504766e905f3e5cf111895f4f6cf909a4f0756"
             },
             "require": {
                 "container-interop/container-interop": "~1.0",
@@ -3043,7 +3098,7 @@
                 "ocramius/proxy-manager": "^1.0 || ^2.0",
                 "phpbench/phpbench": "^0.10.0",
                 "phpunit/phpunit": "^4.6 || ^5.2.10",
-                "squizlabs/php_codesniffer": "^2.5.1"
+                "zendframework/zend-coding-standard": "~1.0.0"
             },
             "suggest": {
                 "ocramius/proxy-manager": "ProxyManager 1.* to handle lazy initialization of services",
@@ -3071,7 +3126,7 @@
                 "servicemanager",
                 "zf"
             ],
-            "time": "2016-07-15 14:59:51"
+            "time": "2016-12-19 19:51:37"
         },
         {
             "name": "zendframework/zend-session",
@@ -4338,17 +4393,17 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "4.0.3",
+            "version": "4.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "903fd6318d0a90b4770a009ff73e4a4e9c437929"
+                "reference": "c14196e64a78570034afd0b7a9f3757ba71c2a0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/phpunit-php-code-coverage-903fd6318d0a90b4770a009ff73e4a4e9c437929-zip-096537.zip",
-                "reference": "903fd6318d0a90b4770a009ff73e4a4e9c437929",
-                "shasum": "82da5c36ab7c4a8e8103067e74e1709aff6b3e22"
+                "url": "https://composer.tiki.org/dist/phpunit-php-code-coverage-c14196e64a78570034afd0b7a9f3757ba71c2a0a-zip-36cc45.zip",
+                "reference": "c14196e64a78570034afd0b7a9f3757ba71c2a0a",
+                "shasum": "9e27bdc28949a39d5b56aea1c064eeba209a7239"
             },
             "require": {
                 "php": "^5.6 || ^7.0",
@@ -4397,7 +4452,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-11-28 16:00:31"
+            "time": "2016-12-20 15:22:42"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -4582,17 +4637,17 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.7.3",
+            "version": "5.7.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "de164acc2f2bb0b79beb892a36260264b2a03233"
+                "reference": "50fd2be8f3e23e91da825f36f08e5f9633076ffe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/phpunit-phpunit-de164acc2f2bb0b79beb892a36260264b2a03233-zip-412a3d.zip",
-                "reference": "de164acc2f2bb0b79beb892a36260264b2a03233",
-                "shasum": "92768e9a0979a90ba894aeadf01ce784651f2f84"
+                "url": "https://composer.tiki.org/dist/phpunit-phpunit-50fd2be8f3e23e91da825f36f08e5f9633076ffe-zip-7a9a78.zip",
+                "reference": "50fd2be8f3e23e91da825f36f08e5f9633076ffe",
+                "shasum": "c894b54eb86f618ed088f8bf895bffc12066ddc7"
             },
             "require": {
                 "ext-dom": "*",
@@ -4612,7 +4667,7 @@
                 "sebastian/diff": "~1.2",
                 "sebastian/environment": "^1.3.4 || ^2.0",
                 "sebastian/exporter": "~2.0",
-                "sebastian/global-state": "~1.0",
+                "sebastian/global-state": "^1.0 || ^2.0",
                 "sebastian/object-enumerator": "~2.0",
                 "sebastian/resource-operations": "~1.0",
                 "sebastian/version": "~1.0|~2.0",
@@ -4660,7 +4715,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-12-09 02:48:53"
+            "time": "2016-12-28 07:18:51"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -5297,61 +5352,6 @@
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
             "time": "2016-10-03 07:35:21"
-        },
-        {
-            "name": "symfony/yaml",
-            "version": "v3.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/yaml.git",
-                "reference": "a7095af4b97a0955f85c8989106c249fa649011f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/symfony-yaml-a7095af4b97a0955f85c8989106c249fa649011f-zip-e73217.zip",
-                "reference": "a7095af4b97a0955f85c8989106c249fa649011f",
-                "shasum": "58983b3d476fa37b3b6ba6f2f93066a093a3dc7a"
-            },
-            "require": {
-                "php": ">=5.5.9"
-            },
-            "require-dev": {
-                "symfony/console": "~2.8|~3.0"
-            },
-            "suggest": {
-                "symfony/console": "For validating YAML files using the lint command"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.2-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Yaml\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Yaml Component",
-            "homepage": "https://symfony.com",
-            "time": "2016-12-10 10:07:06"
         },
         {
             "name": "webmozart/assert",

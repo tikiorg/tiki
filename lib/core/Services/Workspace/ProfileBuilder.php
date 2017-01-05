@@ -5,6 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+use Symfony\Component\Yaml\Yaml;
+
 class Services_Workspace_ProfileBuilder
 {
 	private $objects = array();
@@ -129,7 +131,7 @@ class Services_Workspace_ProfileBuilder
 			}
 		);
 
-		$yaml = Horde_Yaml::dump($data);
+		$yaml = Yaml::dump($data, 20, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
 		return <<<SYNTAX
 
 ^The following profile was auto-generated. It may hurt your eyes when you try reading it.^

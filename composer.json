@@ -75,6 +75,7 @@
 		"symfony/console": "2.6.4",
 		"symfony/dependency-injection": "2.6.4",
 		"symfony/config": "2.6.4",
+		"symfony/yaml": "~3.2.1",
 		"tijsverkoyen/css-to-inline-styles": "1.2.1",
 		"twitter/bootstrap": "^3.3.6",
 		"undojs/undojs": "1",
@@ -115,7 +116,6 @@
 	},
 	"autoload": {
 		"psr-0": {
-			"Horde": "lib/core/",
 			"TikiFilter": "lib/core/",
 			"DeclFilter": "lib/core/",
 			"JisonParser": "lib/core/",

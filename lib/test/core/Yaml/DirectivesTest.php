@@ -5,6 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+use Symfony\Component\Yaml\Yaml;
+
 class Yaml_DirectivesTest extends PHPUnit_Framework_TestCase
 {
 	/**
@@ -22,7 +24,7 @@ class Yaml_DirectivesTest extends PHPUnit_Framework_TestCase
 	public function testNoChangeIfNoDirective()
 	{
 		$yamlString = file_get_contents($this->fixtures . 'no_directives.yml');
-		$yaml = Horde_Yaml::load($yamlString);
+		$yaml = Yaml::parse($yamlString);
 
 		$yamlJson = json_encode($yaml);
 		$this->directives->process($yaml);
@@ -35,10 +37,10 @@ class Yaml_DirectivesTest extends PHPUnit_Framework_TestCase
 	public function testInclude($yamlFile, $yamlResultFile)
 	{
 		$yamlString = file_get_contents($this->fixtures . $yamlFile);
-		$yaml = Horde_Yaml::load($yamlString);
+		$yaml = Yaml::parse($yamlString);
 
 		$yamlResultString = file_get_contents($this->fixtures . $yamlResultFile);
-		$yamlResult = Horde_Yaml::load($yamlResultString);
+		$yamlResult = Yaml::parse($yamlResultString);
 
 
 		$this->directives->process($yaml);

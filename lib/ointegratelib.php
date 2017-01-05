@@ -5,6 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+use Symfony\Component\Yaml\Yaml;
+
 /**
  *
  */
@@ -176,10 +178,7 @@ class OIntegrate
 			$out = json_decode($fixed, true);
 			return $out;
 		case 'text/x-yaml':
-			require_once 'core/Horde/Yaml.php';
-			require_once 'core/Horde/Yaml/Loader.php';
-			require_once 'core/Horde/Yaml/Node.php';
-			return Horde_Yaml::load($data);
+			return Yaml::parse($data);
 		default:
 			// Attempt anything...
 			if ( $out = $this->unserialize('application/json', $data) ) {
