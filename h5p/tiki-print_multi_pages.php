@@ -100,11 +100,11 @@ if (isset($_REQUEST['display']) && $_REQUEST['display'] == 'pdf') {
 	$pdf = $pdfname = '';
 
 	if (!empty($printpages)) {
-		$pdf = $generator->getPdf('tiki-print_multi_pages.php', array('print' => 'print', 'printpages' => $_REQUEST['printpages'] ));
+		$pdf = $generator->getPdf('tiki-print_multi_pages.php', array('print' => 'print', 'printpages' => $printpages));
 		$pdfname = implode(', ', $printpages);
 
 	} else if (!empty($printstructures)) {
-		$pdf = $generator->getPdf('tiki-print_multi_pages.php', array('print' => 'print', 'printstructures' => $_REQUEST['printstructures'] ));
+		$pdf = $generator->getPdf('tiki-print_multi_pages.php', array('print' => 'print', 'printstructures' => $printstructures ));
 		$pdfname = implode(', ', $printstructures);
 
 	} else {

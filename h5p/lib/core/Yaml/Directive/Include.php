@@ -5,6 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+use Symfony\Component\Yaml\Yaml;
+
 class Yaml_Directive_Include
 {
 	protected $props;
@@ -47,7 +49,7 @@ class Yaml_Directive_Include
 		}
 
 		if ($result) {
-			$yaml = Horde_Yaml::load(file_get_contents($this->props['path'] . '/' . $yamlFile));
+			$yaml = Yaml::parse(file_get_contents($this->props['path'] . '/' . $yamlFile));
 			if (is_array($yaml) && (count($yaml) == 1) && array_key_exists($key, $yaml)) {
 				$value = $yaml[$key];
 			} else {

@@ -149,7 +149,8 @@ function wikiplugin_fancytable($data, $params)
 
 	//Start the table
 	$style = $sort === true ? ' style="visibility:hidden"' : '';
-	$wret = '<div id="wpfancytable' . $iFancytable . '-div"' . $style . ' class="ts-wrapperdiv">' . "\r\t";
+	$wret = '<div class="table-responsive"><div id="wpfancytable' . $iFancytable . '-div"' . $style
+		. ' class="ts-wrapperdiv">' . "\r\t";
 	$wret .= '<table class="table table-striped table-hover normal" id="wpfancytable' . $iFancytable . '">' . "\r\t";
 
 	//Header
@@ -221,7 +222,7 @@ function wikiplugin_fancytable($data, $params)
 			$wret .= $footer;
 		}
 	}
-	$wret .= "\r" . '</table></div>' . "\r" . $msg;
+	$wret .= "\r" . '</table></div></div>' . "\r" . $msg;
 	return $wret;
 }
 

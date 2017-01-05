@@ -34,7 +34,7 @@ class HistLib extends TikiLib
 		$logslib = TikiLib::lib('logs');
 		$logslib->add_action("Removed version", $page, 'wiki page', "version=$version");
 		//get_strings tra("Removed version $version")
-		return true;
+		return $result;
 	}
 
 	function use_version($page, $version, $comment = '')

@@ -1203,8 +1203,10 @@ textarea.wikiedit {
 .modal-dialog #alert-wrapper .alert {
   margin-bottom: 0;
 }
-fieldset {
-  display: table-column;
+@-moz-document url-prefix() {
+  fieldset {
+    display: table-cell;
+  }
 }
 .tiki .wiki.external + .icon-link-external {
   font-size: 70%;

@@ -16,9 +16,9 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  * -------------------------------------------------------------
  * Type:     modifier
  * Name:     tiki_date_format
- * Purpose:  format datestamps via Pear::Date using TikiLib static call, (timezone adjusted to user specified timezone)
- * Input:    string: input date string
- *           format: strftime format for output
+ * Purpose:  format a string representing a moment (timezone adjusted to user specified timezone)
+ * Input:    string: string representing a moment
+ *           format: strftime() format for output. For standard formats, see modifiers tiki_{long,short}_{date,datetime,time}.
  *           _user: if specified, use this user timezone instead of the current user
  * -------------------------------------------------------------
  */

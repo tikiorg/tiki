@@ -224,6 +224,9 @@ class Tracker_Field_WebService extends Tracker_Field_Abstract
 		} else {
 			unset($value['tiki_updated']);	// index the whole response
 		}
+		if (! is_array($value)) {
+			$value = [];
+		}
 
 		return array(
 			$baseKey => $typeFactory->multivalue(array_filter($value, 'is_string')),

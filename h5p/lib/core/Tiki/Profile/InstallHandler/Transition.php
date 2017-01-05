@@ -5,6 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+use Symfony\Component\Yaml\Yaml;
+
 class Tiki_Profile_InstallHandler_Transition extends Tiki_Profile_InstallHandler
 {
 	function getData()
@@ -18,7 +20,7 @@ class Tiki_Profile_InstallHandler_Transition extends Tiki_Profile_InstallHandler
 
 		foreach ( $data['guards'] as & $guard ) {
 			if ( is_string($guard[2])) {
-				$guard[2] = reset(Horde_Yaml::load("- " . $guard[2]));
+				$guard[2] = reset(Yaml::parse("- " . $guard[2]));
 			}
 		}
 

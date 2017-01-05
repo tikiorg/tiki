@@ -6,11 +6,33 @@
 	{if $data.displayFieldsListType === 'table'}
 		{wikiplugin _name=trackerlist _compactArguments_=$data.trackerListOptions}{/wikiplugin}
 		{if $field.options_map.addItems and $data.createTrackerItems}
-			<a class="btn btn-default insert-tracker-item" href="{service controller=tracker action=insert_item trackerId=$field.options_map.trackerId next=$data.next|escape}" data-href="{service controller=tracker action=insert_item trackerId=$field.options_map.trackerId next=$data.next|escape}">{$field.options_map.addItems|escape}</a>
+			{if $data.predefined}
+				<div class="form-group">
+					<div class="input-group col-sm-6">
+						<select name="addaction" class="form-control">
+							<option value="">{$field.options_map.addItems|escape}</a>
+							{foreach key=itemId item=label from=$data.predefined}
+							<option value="{$itemId}">{$label|escape}</a>
+							{/foreach}
+						</select>
+						<span class="input-group-btn">
+							<a class="btn btn-default insert-tracker-item" href="{service controller=tracker action=insert_item trackerId=$field.options_map.trackerId next=$data.next|escape}">{tr}OK{/tr}</a>
+						</span>
+					</div>
+				</div>
+			{else}
+				<a class="btn btn-default insert-tracker-item" href="{service controller=tracker action=insert_item trackerId=$field.options_map.trackerId next=$data.next|escape}">{$field.options_map.addItems|escape}</a>
+			{/if}
 			{if $field.options_map.preSelectFieldThere}
 			{jq}
 				$("#il{{$field.ins_id}}").find('.insert-tracker-item').on('click', function() {
-					$(this).attr('href', $(this).data('href')+'&ins_{{$field.options_map.preSelectFieldThere}}='+$('#ins_{{$field.options_map.preSelectFieldHere}}').val());
+					var preselectedValue = $('#ins_{{$field.options_map.preSelectFieldHere}}').length > 0 ? $('#ins_{{$field.options_map.preSelectFieldHere}}').val() : $('#trackerinput_{{$field.options_map.preSelectFieldHere}}').text();
+					var itemId = $('#il{{$field.ins_id}} select[name=addaction]').val();
+					if( itemId ) {
+						$(this).attr('href', "tiki-ajax_services.php?controller=tracker&action=clone_item&trackerId={{$field.options_map.trackerId}}&next={{$data.next|escape}}&itemId="+itemId+'&ins_{{$field.options_map.preSelectFieldThere}}='+preselectedValue);
+					} else {
+						$(this).attr('href', "tiki-ajax_services.php?controller=tracker&action=insert_item&trackerId={{$field.options_map.trackerId}}&next={{$data.next|escape}}&ins_{{$field.options_map.preSelectFieldThere}}="+preselectedValue);
+					}
 				});
 			{/jq}
 			{/if}
@@ -22,7 +44,7 @@
 							var displayed = {{$data.list|json_encode}};
 							var row = '<tr>';
 							if( {{$data.trackerListOptions.checkbox|json_encode}} ) {
-								row += '<td><input type="checkbox" class="{{$field.ins_id}}-checkbox" name="{{$field.ins_id}}[]" value="'+data.itemId+'" checked /></td>';
+								row += '<td><input type="checkbox" class="{{$field.ins_id}}-checkbox" name="{{$field.ins_id}}[]" value="'+( data.created ? data.created : data.itemId )+'" checked /></td>';
 							}
 							$.each(displayed, function(fieldId, permName) {
 								if( $('#il{{$field.ins_id}} th').filter(function(i, el){ return $(el).hasClass('field'+fieldId); }).length > 0 ) {

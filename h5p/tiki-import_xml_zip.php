@@ -19,8 +19,11 @@ if (isset($_REQUEST['import'])) {
 	check_ticket('import_xml_zip');
 	if (!empty($_REQUEST['local'])) {
 		$zipFile = $_REQUEST['local'];
+		$path = pathinfo($_REQUEST['local']);
+		$filename = $path['basename'];
 	} elseif (is_uploaded_file($_FILES['zip']['tmp_name'])) {
 		$zipFile = $_FILES['zip']['tmp_name'];
+		$filename = $_FILES['zip']['name'];
 	} else {
 		$error = tra('Unable to locate import file.');
 		$zipFile = '';
@@ -31,7 +34,7 @@ if (isset($_REQUEST['import'])) {
 		$config = array();
 		if ($xmllib->import_pages($zipFile, $config)) {
 
-			$success = tra('Operations executed successfully');
+			$success = tr('Pages in zip file %0 successfully imported.', $filename);
 		} else {
 			$error = $xmllib->get_error();
 		}

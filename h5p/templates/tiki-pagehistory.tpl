@@ -517,16 +517,20 @@
 				</table>
 			</div>
 			<div class="input-group col-sm-6">
-				<select class="form-control" name="confirmAction">
-					<option value="" selected="selected">
+				<select class="form-control" name="action">
+					<option value="no_action" selected="selected">
 						{tr}Select action to perform with checked{/tr}...
 					</option>
-					<option value="delete">
+					<option value="remove_page_versions">
 						{tr}Remove{/tr}
 					</option>
 				</select>
 				<span class="input-group-btn">
-					<button type="submit" form="pagehistory" class="btn btn-primary">
+					<button
+						type="submit"
+						form="pagehistory"
+						formaction="{bootstrap_modal controller=wiki}"
+						class="btn btn-primary confirm-submit">
 						{tr}OK{/tr}
 					</button>
 				</span>

@@ -755,6 +755,12 @@ if( $prefs['feature_hidden_links'] == 'y' && isset($jitRequest['wysiwyg']) && $j
 	});");
 }
 
+//adding pdf creation javascript, used to integrate plugins like tablesorter, trackerfilter with mpdf.
+if ($prefs['print_pdf_from_url'] != 'none') {
+	$headerlib->add_jsfile('lib/jquery_tiki/pdf.js');
+}
+
+
 // any furher $headerlib->add_js() call not using rank = 'external' will be put into rank 'late'
 // this should separate the overall JS from page specific JS
 $headerlib->forceJsRankLate();
@@ -773,3 +779,4 @@ if ( $prefs['conditions_enabled'] == 'y' ) {
 		exit;
 	}
 }
+

@@ -5,6 +5,8 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+use Symfony\Component\Yaml\Yaml;
+
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("Location: ../index.php");
@@ -749,7 +751,7 @@ class TikiAccessLib extends TikiLib
 
 				case 'yaml':
 					header("Content-Type: $full");
-					echo Horde_Yaml::dump($data);
+					echo Yaml::dump($data, 20, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
 					return;
 
 				case 'rss':

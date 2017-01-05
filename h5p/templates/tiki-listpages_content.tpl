@@ -31,7 +31,7 @@
 
 	{* Action attribute has to be set explicitly so that plugins could get use of it *}
 {if isset($checkboxes_on) and $checkboxes_on eq 'y'}
-	<form name="checkboxes_on" method="post" action="tiki-listpages.php">
+	<form name="checkboxes_on" id="checkboxes_on" method="post" action="tiki-listpages.php">
 {/if}
 
 {assign var='pagefound' value='n'}
@@ -352,7 +352,7 @@
 
 					{if $prefs.wiki_list_rating eq 'y'}
 						<td class="integer">
-							{$listpages[changes].rating}
+							{if isset($listpages[changes].rating)}$listpages[changes].rating{/if}
 						</td>
 					{/if}
 
@@ -379,7 +379,7 @@
 									{/if}
 
 									{if $listpages[changes].perms.tiki_p_remove eq 'y'}
-										{$libeg}<a href="tiki-removepage.php?page={$listpages[changes].pageName|escape:"url"}&amp;version=last">
+										{$libeg}<a href="{bootstrap_modal controller=wiki action=remove_pages checked=$listpages[changes].pageName version=last}">
 											{icon name='remove' _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
 										</a>{$liend}
 									{/if}
@@ -433,10 +433,11 @@
 {/if}
 {if !$ts.ajax}
 	{if $checkboxes_on eq 'y' && count($listpages) > 0} {* what happens to the checked items? *}
-		<p align="left"> {*on the left to have it close to the checkboxes*}
-			<label for="submit_mult">{tr}Perform action with checked:{/tr}</label>
-			<select name="submit_mult" class="form-control" id="submit_mult" onchange="this.form.submit();">
-				<option value="" selected="selected">...</option>
+		<div class="input-group col-sm-6">
+			<select name="action" class="form-control" id="submit_mult">
+				<option value="no_action" selected="selected">
+					{tr}Select action to perform with checked{/tr}...
+				</option>
 				{if $tiki_p_remove eq 'y'}
 					<option value="remove_pages" >{tr}Remove{/tr}</option>
 				{/if}
@@ -445,7 +446,7 @@
 					<option value="print_pages" >{tr}Print{/tr}</option>
 
 						{if $prefs.print_pdf_from_url neq 'none'}
-						<option value="export_pdf" >{tr}PDF{/tr}</option>
+						<option value="export_pdf" >{tr}Download PDF{/tr}</option>
 					{/if}
 				{/if}
 
@@ -454,23 +455,25 @@
 					<option value="unlock_pages" >{tr}Unlock{/tr}</option>
 				{/if}
 				{if $tiki_p_admin eq 'y'}
-					<option value="zip">{tr}Xml Zip{/tr}</option>
+					<option value="zip">{tr}Download zipped file{/tr}</option>
 				{/if}
 				{if $tiki_p_admin eq 'y'}
-					<option value="title">{tr}Add page name as an h1-size header at the beginning of the page content{/tr}</option>
+					<option value="title">{tr}Add page name as page header{/tr}</option>
 				{/if}
 
 				{* add here e.g. <option value="categorize" >{tr}categorize{/tr}</option> *}
 			</select>
-		</p>
-		<script type='text/javascript'>
-			<!--
-			// Fake js to allow the use of the <noscript> tag (so non-js-users can still submit)
-			//-->
-		</script>
-		<noscript>
-			<input type="submit" class="btn btn-default btn-sm" value="{tr}OK{/tr}">
-		</noscript>
+			<span class="input-group-btn">
+				<button
+					type="submit"
+					form="checkboxes_on"
+					formaction="{bootstrap_modal controller=wiki version=all}"
+					class="btn btn-primary confirm-submit"
+				>
+					{tr}OK{/tr}
+				</button>
+			</span>
+		</div>
 	{/if}
 
 	{if $find and $tiki_p_edit eq 'y' and $pagefound eq 'n' and $alias_found eq 'n'}

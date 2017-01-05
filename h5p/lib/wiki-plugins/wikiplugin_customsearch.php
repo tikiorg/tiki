@@ -469,7 +469,7 @@ $(document).trigger('formSearchReady');
 	}
 
 	global $page;
-	$script .= "
+	$script .= " $('.icon-pdf').parent().click(function(){storeSortTable('#customsearch_" . $id . "_results',$('#customsearch_" . $id . "_results').html())});
 customsearch._load = function (receive) {
 	var datamap = {
 		definition: this.definition,
@@ -519,12 +519,13 @@ $iconinsert";
 
 	if ($params['customsearchjs']) {
 		TikiLib::lib('header')->add_jsfile('lib/jquery_tiki/customsearch.js');
+
 	}
 
 	$out = '<div id="customsearch_' . $id . '_form"><form id="customsearch_' . $id . '">' . $matches->getText() . '</form></div>';
 
 	if (empty($params['destdiv'])) {
-		$out .= '<div id="customsearch_' . $id . '_results"></div>';
+		$out .= '<div id="customsearch_' . $id . '_results" class="customsearch_results"></div>';
 	}
 
 	if (!empty($params['wiki'])) {
@@ -938,10 +939,19 @@ function cs_design_distance($id, $fieldname, $fieldid, $arguments, $default, &$s
 {
 	$document = new DOMDocument;
 	$distanceElement = $document->createElement('input');
+	if (!empty($arguments['id'])) {
+		$arguments['id'] = $fieldid . '_dist';
+	}
 	cs_design_setbasic($distanceElement, $fieldid . '_dist', $fieldname, $arguments);
 	$latElement = $document->createElement('input');
+	if (!empty($arguments['id'])) {
+		$arguments['id'] = $fieldid . '_lat';
+	}
 	cs_design_setbasic($latElement, $fieldid . '_lat', $fieldname, $arguments);
 	$lonElement = $document->createElement('input');
+	if (!empty($arguments['id'])) {
+		$arguments['id'] = $fieldid . '_lon';
+	}
 	cs_design_setbasic($lonElement, $fieldid . '_lon', $fieldname, $arguments);
 
 	if (!empty($default)) {
