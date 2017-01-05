@@ -1168,16 +1168,29 @@ class TrackerLib extends TikiLib
 					$linkfilter[] = array('filterfield' => $ff, 'exactvalue' => $ev, 'filtervalue' => $fv);
 					continue;
 				}
+
+				$value = empty($fv) ? $ev : $fv;
+				$search_for_blank = ( is_null($ev) && is_null($fv) )
+					|| ( is_array($value) && count($value) == 1
+						&& ( empty($value[0])
+							|| ( is_array($value[0]) && count($value[0]) == 1 && empty($value[0][0]) )
+						)
+					);
+				
 				$j = ( $last > 0 ) ? '0' : '';
-				$cat_table .= " INNER JOIN `tiki_tracker_item_fields` ttif$i ON (ttif$i.`itemId` = ttif$j.`itemId`)";
+				$cat_table .= ' ' . ( $search_for_blank ? 'LEFT' : 'INNER' ) . " JOIN `tiki_tracker_item_fields` ttif$i ON ttif$i.`itemId` = ttif$j.`itemId`";
 				$last++;
 
 				if (isset($ff_array['sqlsearch']) && is_array($ff_array['sqlsearch'])) {
 					$mid .= " AND ttif$i.`fieldId` in (".implode(',', array_fill(0, count($ff_array['sqlsearch']), '?')).')';
 					$bindvars = array_merge($bindvars, $ff_array['sqlsearch']);
 				} elseif ( $ff ) {
-					$mid .= " AND ttif$i.`fieldId`=? ";
-					$bindvars[] = $ff;
+					if( $search_for_blank ) {
+						$cat_table .= " AND ttif$i.`fieldId` = ".intval($ff);
+					} else {
+						$mid .= " AND ttif$i.`fieldId`=? ";
+						$bindvars[] = $ff;
+					}
 				}
 
 				if ( $filter['type'] == 'e' && $prefs['feature_categories'] == 'y' && (!empty($ev) || !empty($fv)) ) {
