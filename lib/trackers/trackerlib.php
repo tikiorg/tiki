@@ -1771,7 +1771,7 @@ class TrackerLib extends TikiLib
 				if ($value !== false) {
 					$this->modify_field($currentItemId, $array['fieldId'], $value);
 
-					if ($itemId) {
+					if ($itemId && $old_value != $value) {
 						// On update, save old value
 						$this->log($version, $itemId, $array['fieldId'], $old_value);
 					}
@@ -4397,6 +4397,9 @@ class TrackerLib extends TikiLib
 	{
 		if (empty($version)) {
 			 return;
+		}
+		if( $value === null ) {
+			$value = ''; // we want to log it after all, so change is in history
 		}
 		$values = (array) $value;
 		foreach ($values as $v) {
