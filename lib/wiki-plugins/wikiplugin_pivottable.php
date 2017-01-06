@@ -144,10 +144,11 @@ function wikiplugin_pivottable($data, $params)
 	$headerlib->add_jsfile('lib/jquery_tiki/wikiplugin-pivottable.js', true);
 	
 	//checking data type
-	
-	$dataId = explode(":",$params['data']);
-	if($dataId[0] == "tracker") {
-		$trackerId = $dataId[1];
+	if( empty($params['data']) || !is_array($params['data']) ) {
+		return WikiParser_PluginOutput::internalError(tr('Missing data parameter with format: source:ID, e.g. tracker:1'));
+	}
+	if($params['data'][0] === "tracker") {
+		$trackerId = $params['data'][1];
 	} else {
 		$trackerId = 0;
 	}
