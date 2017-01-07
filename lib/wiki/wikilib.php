@@ -245,6 +245,7 @@ class WikiLib extends TikiLib
 			$info['is_html']
 		);
 
+		/* FIXME: This should check add_object per-category, not just globally.
 		if ($dupCateg && $prefs['feature_categories'] === 'y' && $userlib->user_has_permission($user, 'tiki_p_add_object')) {
 			$categlib = TikiLib::lib('categ');
 			$categories = $categlib->get_object_categories('wiki page', $name);
@@ -252,7 +253,7 @@ class WikiLib extends TikiLib
 			foreach ($categories as $catId) {
 				$categlib->categorizePage($copyName, $catId);
 			}
-		}
+		}*/
 
 		if ($dupTags && $prefs['feature_freetags'] === 'y' && $userlib->user_has_permission($user, 'tiki_p_freetags_tag')) {
 			$freetaglib = TikiLib::lib('freetag');
