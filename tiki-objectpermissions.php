@@ -185,6 +185,7 @@ if (isset($_REQUEST['group'])) {
 // Process the form to assign a new permission to this object
 if (isset($_REQUEST['assign']) && !isset($_REQUEST['quick_perms'])) {
 	check_ticket('object-perms');
+	$changed = [];
 	if (isset($_REQUEST['perm']) && !empty($_REQUEST['perm'])) {
 		foreach ($_REQUEST['perm'] as $group => $gperms) {
 			foreach ($gperms as $perm) {
@@ -195,6 +196,9 @@ if (isset($_REQUEST['assign']) && !isset($_REQUEST['quick_perms'])) {
 					die;
 				}
 			}
+			//keep track of permissions changed for feedback message
+			$changed['added'][$group] = array_diff($_REQUEST['perm'][$group], $_REQUEST['old_perm'][$group]);
+			$changed['deleted'][$group] = array_diff($_REQUEST['old_perm'][$group], $_REQUEST['perm'][$group]);
 		}
 	}
 
@@ -203,6 +207,37 @@ if (isset($_REQUEST['assign']) && !isset($_REQUEST['quick_perms'])) {
 	if (isset($_REQUEST['group'])) {
 		$smarty->assign('groupName', $_REQUEST['group']);
 	}
+
+	//clean up array of changed permissions and indicate section for feedback
+	$perminfo = $userlib->get_enabled_permissions();
+	$changecount = 0;
+	foreach ($changed as $dirname => $dirinfo) {
+		foreach ($dirinfo as $groupname => $groupinfo) {
+			if (empty($groupinfo)) {
+				unset($changed[$dirname][$groupname]);
+			} else {
+				foreach ($groupinfo as $no => $p) {
+					$changed[$dirname][$groupname][$no] = $p . ' (' . $perminfo[$p]['type'] . ')';
+					$changecount++;
+				}
+			}
+		}
+		if (empty($changed[$dirname])) {
+			unset($changed[$dirname]);
+		}
+	}
+	if ($changecount > 0) {
+		Feedback::add(['type' => $_REQUEST['permType'],
+			'mes' => $changed,
+			'objname' => $_REQUEST['objectName'],
+			'objid' => $_REQUEST['objectId'],
+			'objtype' => $_REQUEST['objectType'],
+			'count' => $changecount,
+			'tpl' => 'perm']);
+	} else {
+		Feedback::note(tr('No permissions were changed'));
+	}
+
 }
 
 if (isset($_REQUEST['remove'])) {
