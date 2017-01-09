@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c5d6ce125dcffafcf7cc8db0e55b4322",
-    "content-hash": "889a6aaf9c3395d6c33a31e4abcebf01",
+    "hash": "eaa354be4dbbc4057612452e24b52c8b",
+    "content-hash": "f0b76c8c6868780d12b730955b9b5f28",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -1206,20 +1206,46 @@
         },
         {
             "name": "nicolaskruchten/pivottable",
-            "version": "v2.0.2",
+            "version": "v2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nicolaskruchten/pivottable.git",
-                "reference": "a2f694fc3011471a7fe4d300c9f4b6c6edf1cffe"
+                "reference": "df476fad95f6e8c16eeb7c831e5390dc10625bde"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nicolaskruchten/pivottable/zipball/a2f694fc3011471a7fe4d300c9f4b6c6edf1cffe",
-                "reference": "a2f694fc3011471a7fe4d300c9f4b6c6edf1cffe",
+                "url": "https://api.github.com/repos/nicolaskruchten/pivottable/zipball/df476fad95f6e8c16eeb7c831e5390dc10625bde",
+                "reference": "df476fad95f6e8c16eeb7c831e5390dc10625bde",
                 "shasum": ""
             },
+            "require": {
+                "components/jquery": ">=1.9"
+            },
             "type": "library",
-            "notification-url": "https://packagist.org/downloads/"
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT License"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Kruchten",
+                    "email": "nicolas@kruchten.com"
+                }
+            ],
+            "description": "Javascript Pivot Table (aka Pivot Grid, Pivot Chart, Cross-Tab) implementation with drag'n'drop.",
+            "homepage": "http://nicolas.kruchten.com/pivottable/",
+            "keywords": [
+                "crosstab",
+                "grid",
+                "jquery",
+                "jquery-plugin",
+                "pivot",
+                "pivotchart",
+                "pivotgrid",
+                "pivottable",
+                "table"
+            ],
+            "time": "2016-12-31 05:15:14"
         },
         {
             "name": "nnnick/chartjs",
