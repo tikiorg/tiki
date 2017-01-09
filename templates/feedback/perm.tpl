@@ -26,18 +26,16 @@
         {/if}
         {remarksbox type='feedback' title="$poptitle"}
             <h5>{$header}{tr}:{/tr}</h5>
-            {foreach $info.mes as $direction => $change}
+            {foreach $info.mes as $direction => $directionPermissionsChanged}
                 {if !empty($direction)}
                     {$direction|capitalize}
                     <ul>
-                        {foreach $change as $group => $perm}
-                            {if count($perm) > 0}
-                                {foreach $perm as $name}
-                                    <li>
-                                        {$group}{tr}:{/tr} {$name}
-                                    </li>
-                                {/foreach}
-                            {/if}
+                        {foreach $directionPermissionsChanged as $group => $groupPermissionsChanged}
+                            {foreach $groupPermissionsChanged as $groupPermissionChanged}
+                                <li>
+                                    {$group|escape}{tr}:{/tr} {$groupPermissionChanged}
+                                </li>
+                            {/foreach}
                         {/foreach}
                     </ul>
                 {/if}
