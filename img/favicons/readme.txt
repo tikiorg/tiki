@@ -1,7 +1,8 @@
 Tiki has favicon support for modern Apple, Android & Windows integration.
 
-To disable the feature, simply delete the contents of img/favicons & the favicon.ico in the root folder.
+To use custom favicons on your website create favicons with the same demensions and filenames as the
+favicons found in themes/base_files/favicons
 
-To generate custom favicons and the supporting xml & jason files, visit http://realfavicongenerator.net.
+To generate these favicons and the supporting xml & jason files, visit http://realfavicongenerator.net.
 
-You may choose to use some or all of the favicons, but customized files must match the existing file name(s) exactly, including the extension. 
+To disable the feature, enable the tiki preference in "Look and Feel -> Miscellaneous -> Disable Favicons"

@@ -129,6 +129,39 @@ if (empty($custom_css)) {
 if (is_readable($custom_css)) {
 	$headerlib->add_cssfile($custom_css, 53);
 }
+if ($prefs['site_favicon_disable'] !== 'y') {
+    $favicon_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], 'apple-touch-icon.png', 'favicons/');
+    if (!$favicon_path) $favicon_path = $themelib->get_theme_path('base_files', '', 'apple-touch-icon.png', 'favicons/');
+    if ($favicon_path) $headerlib->add_link('apple-touch-icon', $favicon_path, '180x180');
+
+    $favicon_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], 'favicon-32x32.png', 'favicons/');
+    if (!$favicon_path) $favicon_path = $themelib->get_theme_path('base_files', '', 'favicon-32x32.png', 'favicons/');
+    if ($favicon_path) $headerlib->add_link('icon', $favicon_path, '32x32', 'image/png');
+
+    $favicon_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], 'favicon-16x16.png', 'favicons/');
+    if (!$favicon_path) $favicon_path = $themelib->get_theme_path('base_files', '', 'favicon-16x16.png', 'favicons/');
+    if ($favicon_path) $headerlib->add_link('icon', $favicon_path, '16x16', 'image/png');
+
+    $favicon_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], 'manifest.json', 'favicons/');
+    if (!$favicon_path) $favicon_path = $themelib->get_theme_path('base_files', '', 'manifest.json', 'favicons/');
+    if ($favicon_path) $headerlib->add_link('manifest', $favicon_path);
+
+    $favicon_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], 'safari-pinned-tab.svg', 'favicons/');
+    if (!$favicon_path) $favicon_path = $themelib->get_theme_path('base_files', '', 'safari-pinned-tab.svg', 'favicons/');
+    if ($favicon_path) $headerlib->add_link('mask-icon', $favicon_path, '', '', '#5bbad5');
+
+    $favicon_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], 'browserconfig.xml', 'favicons/');
+    if (!$favicon_path) $favicon_path = $themelib->get_theme_path('base_files', '', 'browserconfig.xml', 'favicons/');
+    if ($favicon_path) $headerlib->add_meta('msapplication-config', $favicon_path);
+    /*
+    {if $favicon_touch == true}<link rel="apple-touch-icon" sizes="180x180" href="img/favicons/apple-touch-icon.png">{/if}
+	{if $favicon_32 == true}<link rel="icon" type="image/png" href="img/favicons/favicon-32x32.png" sizes="32x32">{/if}
+	{if $favicon_16 == true}<link rel="icon" type="image/png" href="img/favicons/favicon-16x16.png" sizes="16x16">{/if}
+	{if $favicon_json == true}<link rel="manifest" href="img/favicons/manifest.json">{/if}
+	{if $favicon_pinned == true}<link rel="mask-icon" href="img/favicons/safari-pinned-tab.svg" color="#5bbad5">{/if}
+	{if $favicon_xml == true}<meta name="msapplication-config" content="img/favicons/browserconfig.xml">{/if}
+}*/
+}
 
 //8) produce $iconset to be used for generating icons
 $iconset = TikiLib::lib('iconset')->getIconsetForTheme($theme_active, $theme_option_active);
