@@ -280,7 +280,7 @@
 		<meta content="{$base_url_canonical}{if $hasImage eq 'y'}article_image.php?image_type=article&amp;id={$articleId}{else}article_image.php?image_type=topic&amp;id={$topicId}{/if}" property="og:image">
 		<meta content="{$base_url_canonical}{if $hasImage eq 'y'}article_image.php?image_type=article&amp;id={$articleId}{else}article_image.php?image_type=topic&amp;id={$topicId}{/if}" name="twitter:image">
 	{else}
-		<meta content="{$prefs.socialnetworks_facebook_site_image}" property="og:image">
+		{if $prefs.socialnetworks_facebook_site_image ne ''}<meta content="{$prefs.socialnetworks_facebook_site_image}" property="og:image">{/if}
 		<meta content="{$prefs.socialnetworks_twitter_site_image}" name="twitter:image">
 	{/if}
 {/if}

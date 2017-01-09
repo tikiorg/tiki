@@ -186,28 +186,32 @@ class HeaderLib
 
 	/**
 	 * Add a js url from this tiki instance to top priority load order.
-	 * These are usally dynamic created js scripts for configuration, module settings etc.
+	 * These are usually dynamic created js scripts for configuration, module settings etc.
 	 * Urls added here will not be further processed (like minified or put into a single file)
 	 * @param string $url - relative url to this tiki instance
 	 * @return object $HeaderLib
 	 */
 	function add_jsfile_dynamic($url)
 	{
-		$this->add_jsfile_by_rank($url, '10dynamic');
+		$this->add_jsfile_by_rank($url, '10dynamic', true);
 		return $this;
 	}
 		
 	
 	/**
 	 * Add a js url to top priority load order. That url must be loaded from an external source.
-	 * These are usally libraries like jquery that are loaded from a cdn = content delivery network.
- 	 * Urls added here will not be further processed (like minified or put into a single file) 
+	 * These are usually libraries like jquery that are loaded from a cdn = content delivery network.
+ 	 * Urls added here will not be further processed (like minified or put into a single file)
+	 *
+	 * N.B. skip_minify needs to be set to true here for when tiki_minify_late_js_files is active
+	 * and cdn files are added after page setup by plugins etc
+	 *
 	 * @param string $url - absolute url including http/https
 	 * @return object $HeaderLib
 	 */
 	function add_jsfile_cdn($url)
 	{
-		$this->add_jsfile_by_rank($url, '20cdn');
+		$this->add_jsfile_by_rank($url, '20cdn', true);
 		return $this;
 	}
 	

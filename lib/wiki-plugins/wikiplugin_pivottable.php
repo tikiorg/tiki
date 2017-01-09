@@ -137,17 +137,17 @@ function wikiplugin_pivottable($data, $params)
 	global $prefs, $page, $wikiplugin_included_page;
 
 	//checking if vendor files are present 
-	if (!file_exists('vendor/etdsolutions/pivottable/')) {
-		return WikiParser_PluginOutput::internalError(tr('Missing required files, please make sure plugin files are installed at vendor/etdsolutions/pivottable. <br/><br /> To install, please run composer or download from following url:<a href="https://github.com/nicolaskruchten/pivottable/archive/master.zip" target="_blank">https://github.com/nicolaskruchten/pivottable/archive/master.zip</a>'));
+	if (!file_exists('vendor/nicolaskruchten/pivottable/')) {
+		return WikiParser_PluginOutput::internalError(tr('Missing required files, please make sure plugin files are installed at vendor/nicolaskruchten/pivottable. <br/><br /> To install, please run composer or download from following url:<a href="https://github.com/nicolaskruchten/pivottable/archive/master.zip" target="_blank">https://github.com/nicolaskruchten/pivottable/archive/master.zip</a>'));
 	}
 
 	static $id = 0;
 	$id++;
 
 	$headerlib = TikiLib::lib('header');
-	$headerlib->add_cssfile('vendor/etdsolutions/pivottable/pivot.css');
-	$headerlib->add_jsfile('vendor/etdsolutions/pivottable/pivot.js', true);
-	$headerlib->add_jsfile('vendor/etdsolutions/pivottable/c3_renderers.js', true);
+	$headerlib->add_cssfile('vendor/nicolaskruchten/pivottable/dist/pivot.css');
+	$headerlib->add_jsfile('vendor/nicolaskruchten/pivottable/dist/pivot.js', true);
+	$headerlib->add_jsfile('vendor/nicolaskruchten/pivottable/dist/c3_renderers.js', true);
 	$headerlib->add_jsfile('lib/jquery_tiki/wikiplugin-pivottable.js', true);
 	
 	//checking data type
