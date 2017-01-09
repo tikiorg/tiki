@@ -54,8 +54,8 @@
 	<meta name="description" content="{$metatag_description}" property="og:description">
 	<meta name="twitter:description" content="{$metatag_description}">
 {else}
-	<meta name="description" content="{$prefs.browsertitle|tr_if|escape} {$prefs.site_nav_seper}{if isset($title)} {$title}{/if}" property="og:description">
-	<meta name="twitter:description" content="{$prefs.browsertitle|tr_if|escape} {$prefs.site_nav_seper}{if isset($title)} {$title}{/if}">
+	<meta name="description" content="{$prefs.browsertitle|tr_if|escape}{if isset($title)} {$prefs.site_nav_seper} {$title}{/if}" property="og:description">
+	<meta name="twitter:description" content="{$prefs.browsertitle|tr_if|escape}{if isset($title)} {$prefs.site_nav_seper} {$title}{/if}">
 {/if}
 
 {if $prefs.metatag_geoposition neq ''}
