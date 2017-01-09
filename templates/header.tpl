@@ -10,7 +10,6 @@
 <meta name="generator" content="Tiki Wiki CMS Groupware - https://tiki.org">
 
 {* --- SocialNetwork:Domain ---*}
-<meta content="{$base_url_canonical}" property="article:publisher">
 <meta content="{$base_url_canonical}" name="twitter:domain"> {* may be obsolete when using twitter:card *}
 
 
