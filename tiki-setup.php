@@ -332,13 +332,14 @@ if ( isset( $_GET['msgtype'] ) ) {
 	$smarty->assign('display_msgtype', '');
 }
 // Check for favicons and declare if they exist
-$smarty->assign('favicon_touch', file_exists('img/favicons/apple-touch-icon.png'));
-$smarty->assign('favicon_32', file_exists('img/favicons/favicon-32x32.png'));
-$smarty->assign('favicon_16', file_exists('img/favicons/favicon-16x16.png'));
-$smarty->assign('favicon_json', file_exists('img/favicons/manifest.json'));
-$smarty->assign('favicon_pinned', file_exists('img/favicons/safari-pinned-tab.svg'));
-$smarty->assign('favicon_xml', file_exists('img/favicons/browserconfig.xml'));
-
+if ($prefs['site_favicon_disable'] !== 'y') {
+    $smarty->assign('favicon_touch', file_exists('img/favicons/apple-touch-icon.png'));
+    $smarty->assign('favicon_32', file_exists('img/favicons/favicon-32x32.png'));
+    $smarty->assign('favicon_16', file_exists('img/favicons/favicon-16x16.png'));
+    $smarty->assign('favicon_json', file_exists('img/favicons/manifest.json'));
+    $smarty->assign('favicon_pinned', file_exists('img/favicons/safari-pinned-tab.svg'));
+    $smarty->assign('favicon_xml', file_exists('img/favicons/browserconfig.xml'));
+}
 
 require_once 'lib/setup/events.php';
 

@@ -284,13 +284,14 @@
 		<meta content="{$prefs.socialnetworks_twitter_site_image}" name="twitter:image">
 	{/if}
 {/if}
-
-{if $favicon_touch == true}<link rel="apple-touch-icon" sizes="180x180" href="img/favicons/apple-touch-icon.png">{/if}
-{if $favicon_32 == true}<link rel="icon" type="image/png" href="img/favicons/favicon-32x32.png" sizes="32x32">{/if}
-{if $favicon_16 == true}<link rel="icon" type="image/png" href="img/favicons/favicon-16x16.png" sizes="16x16">{/if}
-{if $favicon_json == true}<link rel="manifest" href="img/favicons/manifest.json">{/if}
-{if $favicon_pinned == true}<link rel="mask-icon" href="img/favicons/safari-pinned-tab.svg" color="#5bbad5">{/if}
-{if $favicon_xml == true}<meta name="msapplication-config" content="img/favicons/browserconfig.xml">{/if}
+{if $prefs.site_favicon_disable !== 'y'}
+	{if $favicon_touch == true}<link rel="apple-touch-icon" sizes="180x180" href="img/favicons/apple-touch-icon.png">{/if}
+	{if $favicon_32 == true}<link rel="icon" type="image/png" href="img/favicons/favicon-32x32.png" sizes="32x32">{/if}
+	{if $favicon_16 == true}<link rel="icon" type="image/png" href="img/favicons/favicon-16x16.png" sizes="16x16">{/if}
+	{if $favicon_json == true}<link rel="manifest" href="img/favicons/manifest.json">{/if}
+	{if $favicon_pinned == true}<link rel="mask-icon" href="img/favicons/safari-pinned-tab.svg" color="#5bbad5">{/if}
+	{if $favicon_xml == true}<meta name="msapplication-config" content="img/favicons/browserconfig.xml">{/if}
+{/if}
 
 {* --- universaleditbutton.org --- *}
 {if (isset($editable) and $editable) and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox' or $tiki_p_admin_wiki eq 'y')}
