@@ -119,6 +119,13 @@ function wikiplugin_pivottable_info()
 				'required' => false,
 				'filter' => 'text',
 			),
+			'menuLimit' => array(
+				'name' => tr('Filter list limit'),
+				'description' => tr('Pivottable menuLimit option override - number of entries to consider the menu list too big when filtering on a particular column or row.'),
+				'since' => '16.2',
+				'required' => false,
+				'filter' => 'digits',
+			),
 		),
 	);
 }
@@ -370,6 +377,7 @@ function wikiplugin_pivottable($data, $params)
 		'fieldsArr'=>$fieldsArr,
 		'dateFields' => $dateFields,
 		'inclusions' => $inclusions,
+		'menuLimit' => empty($params['menuLimit']) ? null : $params['menuLimit'],
 		'index'=>$id
 	));
 	
