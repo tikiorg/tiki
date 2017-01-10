@@ -675,10 +675,15 @@ class TrackerLib extends TikiLib
 	}
 
 	/* experimental shared */
-	public function get_items_list($trackerId, $fieldId, $value, $status='o')
+	public function get_items_list($trackerId, $fieldId, $value, $status='o', $multiple = false)
 	{
 		$query = "select distinct tti.`itemId`, tti.`itemId` i from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif ";
-		$query.= " where tti.`itemId`=ttif.`itemId` and ttif.`fieldId`=? and ttif.`value`=?";
+		$query.= " where tti.`itemId`=ttif.`itemId` and ttif.`fieldId`=?";
+		if( $multiple ) {
+			$query .= " and ttif.`value` REGEXP CONCAT('[[:<:]]', ?, '[[:>:]]')";
+		} else {
+			$query .= " and ttif.`value`=?";
+		}
 		$bindvars = array((int) $fieldId, $value);
 		if (!empty($status)) {
 			$query .= ' and ' . $this->in('tti.status', str_split($status, 1), $bindvars);
@@ -3632,7 +3637,7 @@ class TrackerLib extends TikiLib
 			if ($fieldId = $definition->getUserField()) {
 				// user creator field
 				$value = $userreal;
-				$items = $this->get_items_list($trackerId, $fieldId, $value, $status);
+				$items = $this->get_items_list($trackerId, $fieldId, $value, $status, true);
 				if (!empty($items)) {
 					return $items[0];
 				}
