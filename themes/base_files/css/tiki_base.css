@@ -948,6 +948,9 @@ body.fullscreen {
   top: 0;
   z-index: 1040;
 }
+#fullscreenbutton ~ nav .navbar-toggle {
+  right: 42px;
+}
 #show-errors-button {
   z-index: 1024;
 }
