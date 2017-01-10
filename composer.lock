@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "eaa354be4dbbc4057612452e24b52c8b",
-    "content-hash": "f0b76c8c6868780d12b730955b9b5f28",
+    "hash": "c8ed2a9f21d4c8781e000518b4a8417a",
+    "content-hash": "c90597b5ffc85129497b34ca50f4efd7",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -4125,55 +4125,6 @@
                 "instantiate"
             ],
             "time": "2015-06-14 21:17:01"
-        },
-        {
-            "name": "etdsolutions/jquery",
-            "version": "3.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/etd-framework/jquery.git",
-                "reference": "b9a30373401c53769aae8e5253d2005d7b256989"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/etdsolutions-jquery-b9a30373401c53769aae8e5253d2005d7b256989-zip-c8a4bd.zip",
-                "reference": "b9a30373401c53769aae8e5253d2005d7b256989",
-                "shasum": "fed18c065659cf90030dde2b5b05728b825ff5c2"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Shim repository for jQuery",
-            "homepage": "http://jquery.com",
-            "time": "2016-09-23 06:07:30"
-        },
-        {
-            "name": "etdsolutions/jquery-ui",
-            "version": "1.11.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/etd-framework/jquery-ui.git",
-                "reference": "af173f45b7af91a42c88e23955784a09ba96eb44"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.tiki.org/dist/etdsolutions-jquery-ui-af173f45b7af91a42c88e23955784a09ba96eb44-zip-a2837d.zip",
-                "reference": "af173f45b7af91a42c88e23955784a09ba96eb44",
-                "shasum": "a339de5dd4ad04cc435b8f31961d3208e8a6df52"
-            },
-            "require": {
-                "etdsolutions/jquery": ">=1.6"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Shim repository for jQuery UI",
-            "homepage": "http://jqueryui.com",
-            "time": "2015-05-13 14:14:41"
         },
         {
             "name": "mikey179/vfsStream",
