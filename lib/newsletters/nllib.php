@@ -1367,6 +1367,8 @@ class NlLib extends TikiLib
 		$zmail->getHeaders()->removeHeader('cc');
 		$zmail->getHeaders()->removeHeader('bcc');
 
+		$zmail->getHeaders()->get('content-type')->setType('multipart/alternative');
+
 		$zmail->addTo($target['email']);
 
 		return $zmail;
