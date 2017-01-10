@@ -83,8 +83,8 @@ if (isset($_REQUEST["copy"]) || isset($_REQUEST["confirm"])) {
 		} else {
 			$smarty->assign('msg', tra("Cannot copy page because maybe new page name already exists"));
 			$smarty->display("error.tpl");
-			die;
 		}
+		die;
 	}
 }
 ask_ticket('copy-page');

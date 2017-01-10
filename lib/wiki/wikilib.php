@@ -245,15 +245,24 @@ class WikiLib extends TikiLib
 			$info['is_html']
 		);
 
-		/* FIXME: This should check add_object per-category, not just globally.
-		if ($dupCateg && $prefs['feature_categories'] === 'y' && $userlib->user_has_permission($user, 'tiki_p_add_object')) {
-			$categlib = TikiLib::lib('categ');
-			$categories = $categlib->get_object_categories('wiki page', $name);
+		$warnings = array();
+		if ($dupCateg && $prefs['feature_categories'] === 'y') {
 
-			foreach ($categories as $catId) {
-				$categlib->categorizePage($copyName, $catId);
+			if ($userlib->user_has_permission($user, 'tiki_p_add_object')) {
+				$categlib = TikiLib::lib('categ');
+				$categories = $categlib->get_object_categories('wiki page', $name);
+
+				foreach ($categories as $catId) {
+					if ($categlib->has_edit_permission($user, $catId)) {
+						$categlib->categorizePage($copyName, $catId);
+					} else {
+						$warnings[] = tr("You can't use category '%0'", $categlib->get_category_name($catId));
+					}
+				}
+			} else {
+				$warnings[] = tr("You can't edit categories.");
 			}
-		}*/
+		}
 
 		if ($dupTags && $prefs['feature_freetags'] === 'y' && $userlib->user_has_permission($user, 'tiki_p_freetags_tag')) {
 			$freetaglib = TikiLib::lib('freetag');
@@ -262,6 +271,12 @@ class WikiLib extends TikiLib
 			foreach ($freetags['data'] as $tag) {
 				$freetaglib->tag_object($user, $copyName, 'wiki page', $tag['tag']);
 			}
+		} else {
+			$warnings[] = tr("You can't edit tags.");
+		}
+
+		if (count($warnings) > 0) {
+			Feedback::warning(array('mes' => $warnings), 'session');
 		}
 
 		return $copyPage;
