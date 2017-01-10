@@ -351,10 +351,10 @@
 		{
 			"type": "package",
 			"package": {
-				"name": "etdsolutions/pivottable",
-				"version": "2.0.2",
+				"name": "nicolaskruchten/pivottable",
+				"version": "v2.7.0",
 				"dist": {
-					"url": "https://github.com/etd-framework/pivottable/archive/master.zip",
+					"url": "https://github.com/nicolaskruchten/pivottable/archive/v2.7.0.zip",
 					"type": "zip"
 				}
 			}
@@ -1630,7 +1630,7 @@
 		"cwspear/bootstrap-hover-dropdown": ">=2.0.11",
 		"desandro/masonry": ">=4.1.1",
 		"dompdf/dompdf": ">=0.6.1",
-        "etdsolutions/pivottable": ">=2.0.2",
+        "nicolaskruchten/pivottable": ">=v2.7.0",
 		"ezyang/htmlpurifier": ">=4.5.0",
 		"fortawesome/font-awesome": ">=4.5.0",
 		"google/apiclient": ">=1.1.6",
