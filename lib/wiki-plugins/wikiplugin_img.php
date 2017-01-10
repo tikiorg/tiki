@@ -556,7 +556,7 @@ function wikiplugin_img( $data, $params )
 	$imgdata['fromFieldId'] = 0;		// "private" params set by Tracker_Field_Files
 	$imgdata['fromItemId']  = 0;		// ditto
 	$imgdata['checkItemPerms']  = 'y';	// ditto
-	$imgdata['noDrawIcon']  = 'y';
+	$imgdata['noDrawIcon']  = 'n';
 
 	$imgdata = array_merge($imgdata, $params);
 
