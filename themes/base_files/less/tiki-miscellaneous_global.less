@@ -183,6 +183,9 @@ body.fullscreen {
 	z-index: 1040;
 }
 
+// When Fullscreen is activated, shift menu toggle button to the left to avoid overlapping the full-screen button
+#fullscreenbutton ~ nav .navbar-toggle { right: 42px; }
+
 #show-errors-button {
 	z-index: 1024;
 }
