@@ -100,7 +100,7 @@
 					<form action="tiki-install.php" method="post" role="form">
 						<div class="form-group">
 							<label for="general-lang">{tr}Select your language{/tr}</label>
-							<select name="lang" id="general-lang" onchange="$('input[name=lang]:hidden').val($(this).val()); this.form.submit();" title="{tr}Select your language{/tr}" class="form-control">
+							<select name="lang" id="general-lang" onchange="$('.install-steps').tikiModal(tr('Loading...')); $('input[name=lang]:hidden').val($(this).val()); this.form.submit();" title="{tr}Select your language{/tr}" class="form-control">
 								{section name=ix loop=$languages}
 									<option value="{$languages[ix].value|escape}"
 										{if $prefs.site_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}
