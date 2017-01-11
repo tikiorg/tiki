@@ -185,12 +185,16 @@ if ( ! empty($info['path']) ) {
 	die;
 }
 
+$scale = 0;
+if (isset($_GET['scale'])) $scale =(float)$_GET['scale'];
+if ($scale >= 1) $scale =0;
+
 // ETag: Entity Tag used for strong cache validation.
-if ( ! isset($_GET['display']) || isset($_GET['x']) || isset($_GET['y']) || isset($_GET['scale']) || isset($_GET['max']) || isset($_GET['format']) ) {
+if ( ! isset($_GET['display']) || isset($_GET['x']) || isset($_GET['y']) || $scale || isset($_GET['max']) || isset($_GET['format']) ) {
   // if image will be modified, emit a different ETag for modifications.
 	$str = isset($_GET['x']) ? $_GET['x'] . 'x' : '';
 	$str .= isset($_GET['y']) ? $_GET['y'] . 'y' : '';
-	$str .= isset($_GET['scale']) ? $_GET['scale'] . 's' : '';
+	$str .= $scale ? $scale . 's' : '';
 	$str .= isset($_GET['max']) ? $_GET['max'] . 'm' : '';
 	$str .= isset($_GET['format']) ? $_GET['format'] . 'f' : '';
 	$etag = '"' . $md5 . '-' . crc32($md5) . '-' . crc32($str) . '"';
@@ -231,7 +235,7 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 	// Cache only thumbnails to avoid DOS attacks
 	$cacheName = '';
 	$cacheType = '';
-	if ( ( isset($_GET['thumbnail']) || isset($_GET['preview']) ) && ! isset($_GET['display']) && ! isset($_GET['icon']) && ! isset($_GET['scale']) && ! isset($_GET['x']) && ! isset($_GET['y']) && ! isset($_GET['format']) && ! isset($_GET['max']) ) {
+	if ( ( isset($_GET['thumbnail']) || isset($_GET['preview']) ) && ! isset($_GET['display']) && ! isset($_GET['icon']) && ! $scale && ! isset($_GET['x']) && ! isset($_GET['y']) && ! isset($_GET['format']) && ! isset($_GET['max']) ) {
 		$cachelib = TikiLib::lib('cache');
 		$cacheName = $md5;
 		$cacheType = ( isset($_GET['thumbnail']) ? 'thumbnail_' : 'preview_' ) . ((int)$_REQUEST['fileId']).'_';
@@ -252,7 +256,7 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 	if ($build_content) {
 
 		// Modify the original image if needed
-		if ( ! isset($_GET['display']) || isset($_GET['x']) || isset($_GET['y']) || isset($_GET['scale']) || isset($_GET['max']) || isset($_GET['format']) || isset($_GET['thumbnail']) ) {
+		if ( ! isset($_GET['display']) || isset($_GET['x']) || isset($_GET['y']) || $scale || isset($_GET['max']) || isset($_GET['format']) || isset($_GET['thumbnail']) ) {
 	
 			require_once('lib/images/images.php');
 			if (!class_exists('Image')) die();
@@ -309,9 +313,9 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 					if ( isset($_GET['x']) || isset($_GET['y']) ) {
 						$image->resize(isset($_GET['x']) ? (int) $_GET['x'] : 0, isset($_GET['y']) ? (int) $_GET['y'] : 0);
 						$resize = true;
-					} elseif ( isset($_GET['scale']) ) {
+					} elseif ($scale ) {
 				 		// We scale if needed
-						$image->scale($_GET['scale']+0);
+						$image->scale($scale);
 						$resize = true;
 					} elseif ( isset($_GET['max']) ) {
 					// We reduce size if length or width is greater that $_GET['max'] if needed
