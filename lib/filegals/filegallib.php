@@ -1578,6 +1578,7 @@ class FileGalLib extends TikiLib
 			$error = "Can not create directory $temp";
 			return false;
 		}
+		$fileIds = array_unique($fileIds);
 		foreach ($fileIds as $fileId) {
 			$info = $this->get_file($fileId);
 			if ($tiki_p_admin_file_galleries == 'y' || $userlib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files')) {
