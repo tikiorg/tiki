@@ -248,6 +248,19 @@ function wikiplugin_files_info()
 					array('text' => tra('No'), 'value' => 'n')
 				)
 			),
+			'showmodtimedate' => array(
+				'required' => false,
+				'name' => tra('Show Last Modification Time as well as Date'),
+				'description' => tra('if showmodified is set to y then this will show both the date and time that each file was last modified (not shown by default)'),
+				'since' => '16.0',
+				'default' => 'n',
+				'filter' => 'alpha',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
 			'showhits' => array(
 				'required' => false,
 				'name' => tra('Show Hits'),
@@ -675,6 +688,7 @@ function wikiplugin_files($data, $params)
 	if (!empty($showmodified)) {
 		$gal_info['show_lastmodif'] = $gal_info['show_modified'] = $showmodified;
 	}
+	if (!empty($showmodtimedate)) $gal_info['show_modtimedate'] = $showmodtimedate;
 	if (!empty($showlockedby)) $gal_info['show_lockedby'] = $showlockedby;
 	if (!empty($showhits)) $gal_info['show_hits'] = $showhits;
 	if (!empty($showfiles)) $gal_info['show_files'] = $showfiles;
