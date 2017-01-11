@@ -168,6 +168,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 							'partial' => tr('Field here is part of field there'),
 							'domain' => tr('Match domain, used for URL fields'),
 							'crossSelect' => tr('Cross select. Load all matching items in the remote tracker'),
+							'crossSelectWildcards' => tr('Cross select. Load all matching items in the remote tracker plus wildcards'),
 						),
 						'depends' => array(
 							'field' => 'preSelectFieldHere'
@@ -263,7 +264,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			return false;
 		}
 
-		if ($this->getOption('preSelectFieldMethod') === 'crossSelect') {
+		if ($this->getOption('preSelectFieldMethod') === 'crossSelect' || $this->getOption('preSelectFieldMethod') === 'crossSelectWildcards') {
 			return false;
 		}
 
@@ -360,7 +361,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 		//		1) The dropdown list is no longer disabled (else disabled)
 		//		2) All rows in the remote tracker matching the criterea are displayed in the dropdown list (else only 1 row is displayed)
 		$method = $this->getOption('preSelectFieldMethod');
-		if ($method == 'crossSelect') {
+		if ($method == 'crossSelect' || $method == 'crossSelectWildcards') {
 			$data['crossSelect'] = 'y';
 		} else {
 			$data['crossSelect'] = 'n';
@@ -399,7 +400,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 			}
 		}
 
-		if( $this->getOption('preSelectFieldThere') ) {
+		if( $this->getOption('preSelectFieldThere') && $this->getOption('preSelectFieldMethod') != 'crossSelectWildcards' ) {
 			$data['predefined'] = $this->getItemsToClone();
 		} else {
 			$data['predefined'] = array();
@@ -417,8 +418,6 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 				'tsfilteroptions' => 'type:reset',
 				'tspaginate' => 'max:5',
 				'checkbox' => '/'.$this->getInsertId().'//////y/'.implode(',', is_array($this->getValue()) ? $this->getValue() : array($this->getValue())),
-				'filterfield' => $this->getOption('preSelectFieldThere'),
-				'exactvalue' => $data['preselection_value'],
 				'ignoreRequestItemId' => 'y',
 				'url' => $servicelib->getUrl(array(
 					'controller' => 'tracker',
@@ -427,6 +426,13 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 					'itemId' => '#itemId',
 				))
 			);
+			if( $this->getOption('preSelectFieldThere') ) {
+				$data['trackerListOptions']['filterfield'] = $this->getOption('preSelectFieldThere');
+				$data['trackerListOptions']['exactvalue'] = $data['preselection_value'];
+				if( $this->getOption('preSelectFieldMethod') == 'crossSelectWildcards' ) {
+					$data['trackerListOptions']['exactvalue'] = 'or(*,'.$data['trackerListOptions']['exactvalue'].')';
+				}
+			}
 			if( $this->getOption('trackerListOptions') ) {
 				$parser = new WikiParser_PluginArgumentParser();
 				$arguments = $parser->parse($this->getOption('trackerListOptions'));

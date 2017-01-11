@@ -641,45 +641,8 @@ class Services_Tracker_Controller
 
 		$id = 0;
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$transaction = TikiLib::lib('tiki')->begin();
-
-			$id = $this->utilities->insertItem($definition, $itemData);
-
-			foreach ($definition->getFields() as $field) {
-				$handler = $definition->getFieldFactory()->getHandler($field, $itemData);
-				if (method_exists($handler, 'handleClone')) {
-					$handler->handleClone();
-				}
-			}
-
-			$itemObject = Tracker_Item::fromId($id);
-
-			foreach (TikiLib::lib('trk')->get_child_items($itemId) as $info) {
-				$childItem = Tracker_Item::fromId($info['itemId']);
-
-				if ($childItem->canView()) {
-					$childItem->asNew();
-					$data = $childItem->getData();
-					$data['fields'][$info['field']] = $id;
-
-					$childDefinition = $childItem->getDefinition();
-
-					// handle specific cloning actions
-
-					foreach ($childDefinition->getFields() as $field) {
-						$handler = $childDefinition->getFieldFactory()->getHandler($field, $data);
-						if (method_exists($handler, 'handleClone')) {
-							$newData = $handler->handleClone();
-							$data['fields'][$field['permName']] = $newData['value'];
-						}
-					}
-
-					$new = $this->utilities->insertItem($childDefinition, $data);
-
-				}
-			}
-
-			$transaction->commit();
+			$itemObject = $this->utilities->cloneItem($definition, $itemData);
+			$id = $itemObject->getId();
 
 			$processedItem = $this->utilities->processValues($definition, $itemData);
 			$processedFields = $processedItem['fields'];
@@ -1077,6 +1040,89 @@ class Services_Tracker_Controller
 		);
 	}
 
+	/**
+	 * Links wildcard ItemLink entries to the base tracker by cloning wildcard items
+	 * and removes unselected ItemLink entries that were already linked before.
+	 * Used by ItemLink update table button to refresh list of associated entries.
+	 */
+	function action_link_items($input)
+	{
+		$trackerId = $input->trackerId->int();
+		$definition = Tracker_Definition::get($trackerId);
+
+		if (! $definition) {
+			throw new Services_Exception_NotFound;
+		}
+
+		if (! $field = $definition->getField($input->linkField->int())) {
+			throw new Services_Exception_NotFound;
+		}
+
+		$linkedItemIds = array();
+		$linkValue = trim($input->linkValue->text());
+
+		foreach( $input->items as $itemId ) {
+			$itemObject = Tracker_Item::fromId($itemId);
+
+			if( !$itemObject ) {
+				throw new Services_Exception_NotFound;
+			}
+
+			if (! $itemObject->canView()) {
+				throw new Services_Exception_Denied(tr("The item to clone isn't visible"));
+			}
+
+			$output = $itemObject->prepareFieldOutput($field);
+			$currentValue = $output['value'];
+
+			if( $currentValue === '*' ) {
+				$itemData = $itemObject->getData();
+				$itemData['fields'][$field['permName']] = $linkValue;
+				$itemObject = $this->utilities->cloneItem($definition, $itemData);
+				$linkedItemIds[] = $itemObject->getId();
+			} else {
+				$this->utilities->updateItem(
+					$definition,
+					array(
+						'itemId' => $itemId,
+						'fields' => array(
+							$field['permName'] => $linkValue
+						)
+					)
+				);
+				$linkedItemIds[] = $itemId;
+			}
+		}
+
+		$allItemIds = TikiLib::lib('trk')->get_items_list($trackerId, $field['fieldId'], $linkValue);
+		$toDelete = array_diff($allItemIds, $linkedItemIds);
+		foreach( $toDelete as $itemId) {
+			$itemObject = Tracker_Item::fromId($itemId);
+
+			if( !$itemObject ) {
+				throw new Services_Exception_NotFound;
+			}
+
+			if (! $itemObject->canRemove()) {
+				throw new Services_Exception_Denied(tr("Cannot remove item %0 from this tracker", $itemId));
+			}
+
+			$uncascaded = TikiLib::lib('trk')->findUncascadedDeletes($itemId, $trackerId);
+			$this->utilities->removeItemAndReferences($definition, $itemObject, $uncascaded, '');
+		}
+
+		if( $trackerlistParams = $input->trackerlistParams->array() ) {
+			include_once 'lib/smarty_tiki/block.wikiplugin.php';
+			$trackerlistParams['_name'] = 'trackerlist';
+			$trackerlistParams['checkbox'] = preg_replace('#/[\d,]*$#', '/'.implode(',', $linkedItemIds), $trackerlistParams['checkbox']);
+			return smarty_block_wikiplugin($trackerlistParams, '').TikiLib::lib('header')->output_js();
+		} else {
+			return array(
+				'status' => 'ok'
+			);
+		}
+	}
+
 	function action_fetch_item_field($input)
 	{
 		$trackerId = $input->trackerId->int();
@@ -1194,21 +1240,7 @@ class Services_Tracker_Controller
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-			$tx = TikiDb::get()->begin();
-
-			$itemData = $itemObject->getData();
-			foreach ($definition->getFields() as $field) {
-				$handler = $definition->getFieldFactory()->getHandler($field, $itemData);
-				if (method_exists($handler, 'handleDelete')) {
-					$handler->handleDelete();
-				}
-			}
-
-			$trklib->replaceItemReferences($input->replacement->int() ?: '', $uncascaded['itemIds'], $uncascaded['fieldIds']);
-
-			$this->utilities->removeItem($itemId);
-
-			$tx->commit();
+			$this->utilities->removeItemAndReferences($definition, $itemObject, $uncascaded, $input->replacement->int() ?: '');
 
 			Feedback::success(tr('Tracker item %0 has been successfully deleted.', $itemId), 'session');
 
