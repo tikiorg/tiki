@@ -221,6 +221,7 @@ class WikiLib extends TikiLib
 
 		$tikilib = TikiLib::lib('tiki');
 		$userlib = TikiLib::lib('user');
+		$globalperms = Perms::get();
 
 		$info = $tikilib->get_page_info($name);
 
@@ -245,38 +246,43 @@ class WikiLib extends TikiLib
 			$info['is_html']
 		);
 
-		$warnings = array();
-		if ($dupCateg && $prefs['feature_categories'] === 'y') {
+		if ($copyPage) {
+			$warnings = array();
+			if ($dupCateg && $prefs['feature_categories'] === 'y') {
 
-			if ($userlib->user_has_permission($user, 'tiki_p_add_object')) {
-				$categlib = TikiLib::lib('categ');
-				$categories = $categlib->get_object_categories('wiki page', $name);
+				if ($globalperms->modify_object_categories) {
+					$categlib = TikiLib::lib('categ');
+					$categories = $categlib->get_object_categories('wiki page', $name);
+					Perms::bulk(array( 'type' => 'category' ), 'object', $categories);
 
-				foreach ($categories as $catId) {
-					if ($categlib->has_edit_permission($user, $catId)) {
-						$categlib->categorizePage($copyName, $catId);
-					} else {
-						$warnings[] = tr("You can't use category '%0'", $categlib->get_category_name($catId));
+					foreach ($categories as $catId) {
+						$perms = Perms::get(array( 'type' => 'category', 'object' => $catId));
+
+						if ($perms->modify_object_categories) {
+							$categlib->categorizePage($copyName, $catId);
+						} else {
+							$warnings[] = tr("You don't have permission to use category '%0'.", $categlib->get_category_name($catId));
+						}
 					}
+				} else {
+					$warnings[] = tr("You don't have permission to edit categories.");
+				}
+			}
+
+			if ($dupTags && $prefs['feature_freetags'] === 'y' && $globalperms->freetags_tag) {
+				$freetaglib = TikiLib::lib('freetag');
+				$freetags = $freetaglib->get_tags_on_object($name, 'wiki page');
+
+				foreach ($freetags['data'] as $tag) {
+					$freetaglib->tag_object($user, $copyName, 'wiki page', $tag['tag']);
 				}
 			} else {
-				$warnings[] = tr("You can't edit categories.");
+				$warnings[] = tr("You can't edit tags.");
 			}
-		}
 
-		if ($dupTags && $prefs['feature_freetags'] === 'y' && $userlib->user_has_permission($user, 'tiki_p_freetags_tag')) {
-			$freetaglib = TikiLib::lib('freetag');
-			$freetags = $freetaglib->get_tags_on_object($name, 'wiki page');
-
-			foreach ($freetags['data'] as $tag) {
-				$freetaglib->tag_object($user, $copyName, 'wiki page', $tag['tag']);
+			if (count($warnings) > 0) {
+				Feedback::warning(array('mes' => $warnings), 'session');
 			}
-		} else {
-			$warnings[] = tr("You can't edit tags.");
-		}
-
-		if (count($warnings) > 0) {
-			Feedback::warning(array('mes' => $warnings), 'session');
 		}
 
 		return $copyPage;
