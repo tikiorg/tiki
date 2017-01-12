@@ -143,7 +143,7 @@ class TikiFilter_PreventXss implements Zend\Filter\FilterInterface
 
 		// keep replacing as long as the previous round replaced something
 		while ( $this->RemoveXSSchars($val)
-			|| $this->RemoveXSSregexp($ra_as_tag_only, $val, '(\<|\<\/|\[\\\\xC0\]\[\\\\xBC\])\??')
+			|| $this->RemoveXSSregexp($ra_as_tag_only, $val, '(\<|\[\\\\xC0\]\[\\\\xBC\])\??')
 			|| $this->RemoveXSSregexp($ra_as_attribute, $val)
 			|| $this->RemoveXSSregexp($ra_as_content, $val, '[\.\\\\+\*\?\[\^\]\$\(\)\{\}\=\!\<\|\:;\-\/`#"\']', '(?!\s*[a-z0-9])', true)
 			|| $this->RemoveXSSregexp($ra_javascript, $val, '', ':', true)
@@ -245,7 +245,7 @@ class TikiFilter_PreventXss implements Zend\Filter\FilterInterface
 			$pattern .= $pattern_end;
 			$replacement = ( $prefix != '' ) ? '\\1' : '';
 			// add in <> to nerf the tag
-			$replacement .= substr($ra[$i], 0, 2).'-denied-'.substr($ra[$i], 2);
+			$replacement .= substr($ra[$i], 0, 2).'<x>'.substr($ra[$i], 2);
 			$patterns[] = $pattern;
 			$replacements[] = $replacement.$replacement_end;
 		}
