@@ -71,7 +71,9 @@ class Table_Code_MainOptions extends Table_Code_Manager
 					}
 					// add special filter type
 					if (isset($info['filter']['type']) && $info['filter']['type'] === 'dropdown' && !isset($info['filter']['options'])) {
-						$allcols[$col]['addClass'] = array_filter($allcols[$col]['addClass'], function($class){ return !strstr($class, 'sorter-'); });
+						if( !empty($allcols[$col]['addClass']) ) {
+							$allcols[$col]['addClass'] = array_filter($allcols[$col]['addClass'], function($class){ return !strstr($class, 'sorter-'); });
+						}
 						$allcols[$col]['addClass'][] = 'sorter-dropdown';
 						$allcols[$col]['addClass'][] = 'filter-parsed';
 						$allcols[$col]['addClass'][] = 'filter-match';
