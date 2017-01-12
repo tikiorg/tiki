@@ -921,6 +921,9 @@ if ($dbcon) {
 	if ($install_step == '6' && $has_tiki_db) {
 		if (isset($_POST['install_type']) && $_POST['install_type'] === 'scratch') {
 			require_once('lib/setup/prefs.php');
+			// fix some prefs thwt get reset here
+			$prefs['language'] = $language;
+			$prefs['javascript_enabled'] = null;	// seems the check is for $prefs['javascript_enabled'] == 'n'
 		}
 		update_preferences($prefs);
 		$smarty->assign('admin_email', get_admin_email());
