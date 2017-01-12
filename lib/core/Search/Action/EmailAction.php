@@ -69,7 +69,7 @@ class Search_Action_EmailAction implements Search_Action_Action
 
 			return true;
 		} catch (Exception $e) {
-			return false;
+			throw new Search_Action_Exception(tr('Error sending email: %0', $e->getMessage()));
 		}
 	}
 

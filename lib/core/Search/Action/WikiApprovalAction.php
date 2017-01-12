@@ -23,16 +23,16 @@ class Search_Action_WikiApprovalAction implements Search_Action_Action
 		$state = $data->wiki_approval_state->alpha();
 
 		if ($object_type != 'wiki page') {
-			return false;
+			throw new Search_Action_Exception(tr('Cannot apply wiki_approval action to an object type %0.', $object_type));
 		}
 
 		if ($state != 'pending') {
-			return false;
+			throw new Search_Action_Exception(tr('Wiki page %0 is not in pending state.', $object_id));
 		}
 
 		$flaggedrevisionlib = TikiLib::lib('flaggedrevision');
 		if (! $flaggedrevisionlib->page_requires_approval($object_id)) {
-			return false;
+			throw new Search_Action_Exception(tr('Wiki page %0 does not require approval.', $object_id));
 		}
 
 		return true;

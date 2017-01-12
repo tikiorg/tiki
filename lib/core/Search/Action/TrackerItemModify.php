@@ -27,25 +27,24 @@ class Search_Action_TrackerItemModify implements Search_Action_Action
 		$calc = $data->calc->text();
 
 		if ($object_type != 'trackeritem') {
-			return false;
+			throw new Search_Action_Exception(tr('Cannot apply tracker_item_modify action to an object type %0.', $object_type));
 		}
 
 		$trklib = TikiLib::lib('trk');
 		$info = $trklib->get_item_info($object_id);
 
 		if (! $info) {
-			return false;
+			throw new Search_Action_Exception(tr('Tracker item %0 not found.', $object_id));
 		}
 
 		$definition = Tracker_Definition::get($info['trackerId']);
 
 		if (! $definition->getFieldFromPermName($field)) {
-			return false;
+			throw new Search_Action_Exception(tr('Tracker field %0 not found for tracker %1.', $field, $info['trackerId']));
 		}
 
 		if( empty($value) && empty($calc) ) {
-			# TODO: make actions return more meaningful error messages
-			return false;
+			throw new Search_Action_Exception(tr('tracker_item_modify action missing value or calc parameter.'));
 		}
 
 		return true;
@@ -81,8 +80,7 @@ class Search_Action_TrackerItemModify implements Search_Action_Action
 				$runner->setVariables($data);
 				$value = $runner->evaluate();
 			} catch( Math_Formula_Exception $e ) {
-				# TODO: make actions return more meaningful error messages
-				return false;
+				throw new Search_Action_Exception(tr('Error applying tracker_item_modify calc formula to item %0: %1', $object_id, $e->getMessage()));
 			}
 		}
 
