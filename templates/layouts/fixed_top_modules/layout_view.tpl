@@ -146,6 +146,7 @@
                     <span class="icon-bar"></span>
                 </button>
             {/if}
+            <a class="navbar-brand" href="./">{if $prefs.sitelogo_icon}<img src="{$prefs.sitelogo_icon}">{/if} {$prefs.sitetitle|escape}</a>
         </div>
         <div class="collapse navbar-collapse fixed-topbar" id="navbar-collapse-social-modules">
             {modulelist zone="top" nobox="y" navbar="y" menuclass="navbar-inverse collapse navbar-collapse noclearfix" class="top_modules modules row context modules noclearfix"}
