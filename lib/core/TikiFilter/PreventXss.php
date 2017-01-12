@@ -45,23 +45,16 @@ class TikiFilter_PreventXss implements Zend\Filter\FilterInterface
                 'base',
                 'xml',
                 'import',
-                'link'
+                'link',
+                'audio',
+                'video'
 			);
 
 			$ra_as_attribute = array(
                 'onabort',
                 'onactivate',
-                'onafterprint',
-                'onafterupdate',
-                'onbeforeactivate',
-                'onbeforecopy',
-                'onbeforecut',
-                'onbeforedeactivate',
-                'onbeforeeditfocus',
-                'onbeforepaste',
-                'onbeforeprint',
-                'onbeforeunload',
-                'onbeforeupdate',
+                'onafter',             // filters all onafter events
+                'onbefore',            // filters all onbefore events
                 'onbegin',
                 'onblur',
                 'onbounce',
@@ -72,50 +65,27 @@ class TikiFilter_PreventXss implements Zend\Filter\FilterInterface
                 'oncontrolselect',
                 'oncopy',
                 'oncut',
-                'ondataavailable',
-                'ondatasetchanged',
-                'ondatasetcomplete',
+                'ondata',              // filters all ondata events
                 'ondblclick',
                 'ondeactivate',
-                'ondrag',
-                'ondragend',
-                'ondragleave',
-                'ondragenter',
-                'ondragover',
-                'ondragdrop',
-                'ondragstart',
+                'ondrag',              // filters all ondrag events
                 'ondrop',
                 'onend',
-                'onerror',
-                'onerrorupdate',
+                'onerror',             // filters all onerror events
                 'onfilterchange',
                 'onfinish',
-                'onfocus',
-                'onfocusin',
-                'onfocusout',
+                'onfocus',             // filters all onfocus events
                 'onhashchange',
                 'onhelp',
                 'oninput',
-                'onkeydown',
-                'onkeypress',
-                'onkeyup',
+                'onkey',               // filters all onkey events
                 'onlayoutcomplete',
                 'onload',
                 'onlosecapture',
-                'onmediacomplete',
-                'onmediaerror',
-                'onmessage',
-                'onmousedown',
-                'onmouseenter',
-                'onmouseleave',
-                'onmousemove',
-                'onmouseout',
-                'onmouseover',
-                'onmouseup',
-                'onmousewheel',
-                'onmove',
-                'onmoveend',
-                'onmovestart',
+                'onmedia',             // filters all onmedia events
+                'onmessage',           // filters all onmessage events
+                'onmouse',             // filters all onmouse events
+                'onmove',              // filters all onmove events
                 'onoffline',
                 'ononline',
                 'onoutofsync',
@@ -128,37 +98,37 @@ class TikiFilter_PreventXss implements Zend\Filter\FilterInterface
                 'onredo',
                 'onrepeat',
                 'onreset',
-                'onresize',
-                'onresizeend',
-                'onresizestart',
+                'onresize',              // filters all onresize events
                 'onresume',
                 'onreverse',
-                'onrowsenter',
-                'onrowexit',
-                'onrowdelete',
-                'onrowinserted',
+                'onrow',                // filters all onrow events
                 'onscroll',
                 'onseek',
-                'onselect',
-                'onselectionchange',
-                'onselectstart',
+                'onsearch',
+                'onselect',             // filters all onselect events
                 'onstart',
+                'onshow',
                 'onstop',
                 'onstorage',
                 'onsyncrestored',
                 'onsubmit',
                 'ontimeerror',
+                'ontoggle',
+                'ontouch',             // filters all ontouch events
                 'ontrackchange',
                 'onundo',
                 'onunload',
                 'onurlflip',
+                'onwheel',
+                'animation',           // filters all animation events
+                'codebase',
                 'dynsrc',
                 'lowsrc',
-                'codebase',
+                'transitionend',
                 'xmlns'
 			);
 
-			$ra_as_content = array('vbscript', 'mocha', 'livescript', 'alert', 'eval');
+			$ra_as_content = array('vbscript', 'eval');
 			$ra_javascript = array('javascript');
 	///		$ra_style = array('style'); // Commented as it has been considered as a bit too aggressive
 		}
@@ -267,7 +237,7 @@ class TikiFilter_PreventXss implements Zend\Filter\FilterInterface
 			$pattern .= $pattern_end;
 			$replacement = ( $prefix != '' ) ? '\\1' : '';
 			// add in <> to nerf the tag
-			$replacement .= substr($ra[$i], 0, 2).'<x>'.substr($ra[$i], 2);
+			$replacement .= substr($ra[$i], 0, 2).'-denied-'.substr($ra[$i], 2);
 			$patterns[] = $pattern;
 			$replacements[] = $replacement.$replacement_end;
 		}
