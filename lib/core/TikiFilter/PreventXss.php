@@ -37,8 +37,7 @@ class TikiFilter_PreventXss implements Zend\Filter\FilterInterface
                 'applet',
                 'meta',
                 'iframe',
-                'frame',
-                'frameset',
+                'frame',    // also filters frameset
                 'ilayer',
                 'layer',
                 'bgsound',
@@ -135,7 +134,7 @@ class TikiFilter_PreventXss implements Zend\Filter\FilterInterface
 
 		// keep replacing as long as the previous round replaced something
 		while ( $this->RemoveXSSchars($val)
-			|| $this->RemoveXSSregexp($ra_as_tag_only, $val, '(\<|\[\\\\xC0\]\[\\\\xBC\])\??')
+			|| $this->RemoveXSSregexp($ra_as_tag_only, $val, '(\<|\<\/|\[\\\\xC0\]\[\\\\xBC\])\??')
 			|| $this->RemoveXSSregexp($ra_as_attribute, $val)
 			|| $this->RemoveXSSregexp($ra_as_content, $val, '[\.\\\\+\*\?\[\^\]\$\(\)\{\}\=\!\<\|\:;\-\/`#"\']', '(?!\s*[a-z0-9])', true)
 			|| $this->RemoveXSSregexp($ra_javascript, $val, '', ':', true)
