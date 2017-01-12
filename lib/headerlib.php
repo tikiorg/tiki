@@ -138,6 +138,7 @@ class HeaderLib
 		$this->css = array();
 		$this->rssfeeds = array();
 		$this->metatags = array();
+		$this->rawhtml = '';
 
 		$this->wysiwyg_parsing = false;
 		$this->forceJsRankLate = false;
@@ -399,6 +400,12 @@ class HeaderLib
 		return $this;
 	}
 
+	function add_rawhtml($tags)
+	{
+		$this->rawhtml = $tags;
+		return $this;
+	}
+
     function add_link($rel,$href, $sizes='', $type ='',$color='')
     {
         $this->linktags[$href]['href'] = $href;
@@ -422,6 +429,10 @@ class HeaderLib
 		$back = "\n";
 		if ($this->title) {
 			$back = '<title>'.smarty_modifier_escape($this->title)."</title>\n\n";
+		}
+
+		if ($this->rawhtml) {
+			$back .= $this->rawhtml;
 		}
 
 		if (count($this->metatags)) {
