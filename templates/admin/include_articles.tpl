@@ -66,7 +66,6 @@
 				<div class="adminoptionboxchild" id="feature_cms_templates_childcontainer">
 					{preference name=lock_content_templates}
 				</div>
-				{preference name=feature_cms_print}
 				{preference name=feature_cms_emails}
 				{preference name=article_paginate}
 				{preference name=article_custom_attributes}

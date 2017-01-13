@@ -469,7 +469,7 @@ $(document).trigger('formSearchReady');
 	}
 
 	global $page;
-	$script .= "
+	$script .= "$('.icon-pdf').parent().click(function(){storeSortTable('#customsearch_" . $id . "_results',$('#customsearch_" . $id . "_results').html())});
 customsearch._load = function (receive) {
 	var datamap = {
 		definition: this.definition,
@@ -524,7 +524,7 @@ $iconinsert";
 	$out = '<div id="customsearch_' . $id . '_form"><form id="customsearch_' . $id . '">' . $matches->getText() . '</form></div>';
 
 	if (empty($params['destdiv'])) {
-		$out .= '<div id="customsearch_' . $id . '_results"></div>';
+		$out .= '<div id="customsearch_' . $id . '_results" class="customsearch_results"></div>';
 	}
 
 	if (!empty($params['wiki'])) {

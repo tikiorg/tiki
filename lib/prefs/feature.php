@@ -1353,7 +1353,7 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_cms_print' => array(
-			'name' => tra('Print'),
+			'name' => tra('Print Articles'),
 			'type' => 'flag',
 			'default' => 'y',
 			'tags' => array('basic'),
@@ -2292,7 +2292,7 @@ function prefs_feature_list($partial = false)
 		),
 
 		'feature_wiki_print' => array(
-			'name' => tra('Print'),
+			'name' => tra('Print Wiki'),
             'description' => tra('Provide a print icon and layout of the wiki page formatted for printing'),
 			'type' => 'flag',
 			'default' => 'n',

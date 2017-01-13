@@ -57,6 +57,126 @@ function prefs_print_list()
 			'dependencies' => array('auth_token_access'),
 			'default' => 'vendor_custom/mpdf/',
 		),
+		'print_pdf_mpdf_printfriendly' => array(
+			'name' => tra('Print Friendly PDF'),
+			'description' => tra('Useful for dark themes, Enabling this option will change theme background color to white and text / headings color to black. If turned off, theme colors will be retained in pdf'),
+			'type' => 'flag',
+			'default' => 'y'
+			
+		),
+		
+		'print_pdf_mpdf_orientation' => array(
+			'name' => tra('PDF Orientation'),
+			'description' => tra('Landscape or Portrait'),
+			'tags' => array('advanced'),
+			'type' => 'list',
+			'options' => array(
+			    'P' => tra('Portrait'),
+				'L' => tra('Landscape'),
+			),
+			'default' => 'P',
+		),
+		'print_pdf_mpdf_size' => array(
+			'name' => tra('PDF page size'),
+			'description' => tra('ISO Standard sizes: A0, A1, A2, A3, A4, A5 or North American paper sizes: Letter, Legal, Tabloid/Ledger (for ledger, select landscape orientation)'),
+			'tags' => array('advanced'), 
+			'type' => 'list',
+			'options' => array(
+			    'Letter' => tra('Letter'),
+			    'Legal' => tra('Legal'),
+				'Tabloid'=>tra('Tabloid/Ledger'),
+				'A0' => tra('A0'),
+				'A1' => tra('A1'),
+				'A2' => tra('A2'),
+				'A3' => tra('A3'),
+				'A4' => tra('A4'),
+				'A5' => tra('A5'),
+				'A6' => tra('A6'),
+			),
+			'default' => 'A4',
+		),
+		'print_pdf_mpdf_header' => array(
+			'name' => tra('PDF header text'),
+			'description' => tra('Possible values, custom text, {PAGENO},{PAGETITLE},{DATE j-m-Y}'),
+			'tags' => array('basic'),
+			'type' => 'text',
+			'default' => '',
+			'shorthint'=>'Left text |Center Text| Right Text'
+		),
+		'print_pdf_mpdf_footer' => array(
+			'name' => tra('PDF footer text'),
+			'description' => tra('Possible values, custom text, {PAGENO}, {DATE j-m-Y} For example:Document Title|Center Text|{PAGENO}'),
+			'tags' => array('basic'),
+			'type' => 'text',
+			'default' => '',
+		),
+		'print_pdf_mpdf_margin_left' => array(
+			'name' => tra('Left margin'),
+			'description' => tra('Numeric value.For example 10'),
+			'tags' => array('advanced'),
+			'type' => 'text',
+			'default' => '10',
+			'size' => '2',
+			'filter' => 'digits',
+			
+		),
+		'print_pdf_mpdf_margin_right' => array(
+			'name' => tra('Right margin'),
+			'description' => tra('Numeric value, no need to add px. For example 10'),
+			'tags' => array('advanced'),
+			'type' => 'text',
+			'default' => '10',
+			'size' => '2',
+			'filter' => 'digits',
+			
+		),
+		'print_pdf_mpdf_margin_top' => array(
+			'name' => tra('Top margin'),
+			'description' => tra('Numeric value, no need to add px. For example 10'),
+			'tags' => array('advanced'),
+			'type' => 'text',
+			'default' => '10',
+			'size' => '2',
+			'filter' => 'digits',
+			
+		),
+		'print_pdf_mpdf_margin_bottom' => array(
+			'name' => tra('Bottom margin'),
+			'description' => tra('Numeric value, no need to add px. For example 10'),
+			'tags' => array('advanced'),
+			'type' => 'text',
+			'default' => '10',
+			'size' => '2',
+			'filter' => 'digits',
+		
+		),
+		'print_pdf_mpdf_margin_header' => array(
+			'name' => tra('Header margin from top of document'),
+			'description' => tra('Only applicable if header is set. Numeric value, no need to add px. For example 10'),
+			'tags' => array('advanced'),
+			'type' => 'text',
+			'default' => '5',
+			'size' => '2',
+			'filter' => 'digits',
+			'shorthint' => tra('Warning: Header can overlap text if top margin is not set properly')
+		),
+		'print_pdf_mpdf_margin_footer' => array(
+			'name' => tra('Footer margin from bottom of document'),
+			'description' => tra('Only applicable if footer is set.Numeric value, no need to add px. For example 10'),
+			'tags' => array('advanced'),
+			'type' => 'text',
+			'default' => '5',
+			'size' => '2',
+			'filter' => 'digits',
+			'shorthint' => tra('Warning: Footer can overlap text if bottom margin is not set properly')
+		),
+		'print_pdf_mpdf_password' => array(
+			'name' => tra('PDF password for viewing'),
+			'description' => tra('Password protect generated PDF'),
+			'tags' => array('advanced'),
+			'type' => 'password',
+			'default' => '',
+		),
 		'print_wiki_authors' => array(
 			'name' => tra('Print wiki authors'),
             'description' => tra('Include wiki authors and date in wiki page print outs.'),
