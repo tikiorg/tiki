@@ -243,7 +243,7 @@
 				dayClick: function(date, allDay, jsEvent, view) {
 					$.ajax({
 						dataType: 'html',
-						url: 'tiki-calendar_edit_item.php?fullcalendar=y&todate=' + date.getTime()/1000 + '&isModal=1',
+						url: 'tiki-calendar_edit_item.php?fullcalendar=y&todate=' + date.getTime()/1000 + '&tzoffset=' + (new Date()).getTimezoneOffset() + '&isModal=1',
 						success: function(data){
 							var $dialog = $( "#calendar_dialog" ).remove()
 							$( "#calendar_dialog_content", $dialog ).html(data);
