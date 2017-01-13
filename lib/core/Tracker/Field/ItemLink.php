@@ -98,6 +98,7 @@ class Tracker_Field_ItemLink extends Tracker_Field_Abstract implements Tracker_F
 							'value' => 'table'
 						),
 						'legacy_index' => 15,
+						'profile_reference' => 'tracker_field_string',
 					),
 					'status' => array(
 						'name' => tr('Status Filter'),
