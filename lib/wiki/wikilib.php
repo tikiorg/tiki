@@ -258,7 +258,7 @@ class WikiLib extends TikiLib
 					foreach ($categories as $catId) {
 						$perms = Perms::get(array( 'type' => 'category', 'object' => $catId));
 
-						if ($perms->modify_object_categories) {
+						if ($perms->add_object) {
 							$categlib->categorizePage($copyName, $catId);
 						} else {
 							$warnings[] = tr("You don't have permission to use category '%0'.", $categlib->get_category_name($catId));
@@ -277,7 +277,7 @@ class WikiLib extends TikiLib
 					$freetaglib->tag_object($user, $copyName, 'wiki page', $tag['tag']);
 				}
 			} else {
-				$warnings[] = tr("You can't edit tags.");
+				$warnings[] = tr("You don't have permission to edit tags.");
 			}
 
 			if (count($warnings) > 0) {
