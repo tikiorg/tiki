@@ -613,7 +613,6 @@ $admin_icons = array(
 		'description' => tr('Settings and features for print versions and pdf generation'),
 		'help' => 'Print',
 	),
-	
 );
 
 if (isset($_REQUEST['page'])) {

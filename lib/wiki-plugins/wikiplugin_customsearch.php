@@ -469,7 +469,7 @@ $(document).trigger('formSearchReady');
 	}
 
 	global $page;
-	$script .= " $('.icon-pdf').parent().click(function(){storeSortTable('#customsearch_" . $id . "_results',$('#customsearch_" . $id . "_results').html())});
+	$script .= "$('.icon-pdf').parent().click(function(){storeSortTable('#customsearch_" . $id . "_results',$('#customsearch_" . $id . "_results').html())});
 customsearch._load = function (receive) {
 	var datamap = {
 		definition: this.definition,
