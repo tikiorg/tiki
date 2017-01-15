@@ -449,7 +449,6 @@ class HeaderLib
                 if (isset($link['color'])) $back.= ' color="' . $link['color'] . '"' ;
                 $back.= ">\n";
             }
-            $back.= "\n";
         }
 
 
@@ -463,7 +462,7 @@ class HeaderLib
 					$back.= "$c\n";
 				}
 			}
-			$back.= "-->\n</style>\n\n";
+			$back.= "-->\n</style>\n";
 		}
 
 		// Handle theme's special CSS file for IE8 or IE9 hacks
@@ -558,7 +557,7 @@ class HeaderLib
 		foreach ($ranks as $rank) {
 			if (isset($jsfiles[$rank])) {
 				foreach ($jsfiles[$rank] as $entry) {
-					$output[] = "<script type=\"text/javascript\" src=\"" . smarty_modifier_escape($entry) . "\"></script>\n";
+					$output[] = '<script type="text/javascript" src="' . smarty_modifier_escape($entry) . '"></script>';
 				}
 			}
 		}
@@ -574,7 +573,7 @@ class HeaderLib
 				if (isset($jsfiles[$rank])) {
 					foreach ($jsfiles[$rank] as $entry) {
 						$entry = $this->convert_cdn($entry, $rank);
-						$output[] = "<script type=\"text/javascript\" src=\"" . smarty_modifier_escape($entry) . "\"></script>\n";
+						$output[] = '<script type="text/javascript" src="' . smarty_modifier_escape($entry) . '"></script>';
 					}
 				}
 			}
@@ -587,17 +586,17 @@ class HeaderLib
 			
 			$ranks = array('30dependancy', '40external', '50standard');
  			$entry =  $this->minifyJSFiles($jsfiles, $ranks);
-			$output[] .= "<script type=\"text/javascript\" src=\"".smarty_modifier_escape($entry)."\"></script>\n";
+			$output[] .= '<script type="text/javascript" src="' . smarty_modifier_escape($entry) . '"></script>';
 
 			$minifyLateActive = isset($prefs['tiki_minify_late_js_files']) && $prefs['tiki_minify_late_js_files'] == 'y' ? true : false;
 			$rank = '60late';
 			if ($minifyLateActive) {
 				// handling of user defined cdn servers is done inside minifyJSFiles()
 				$entry =  $this->minifyJSFiles($jsfiles, array($rank));
-				$output[] .= "<script type=\"text/javascript\" src=\"".smarty_modifier_escape($entry)."\"></script>\n";
+				$output[] .= '<script type="text/javascript" src="' . smarty_modifier_escape($entry) . '"></script>';
 			} else {
 				foreach ($jsfiles[$rank] as $entry) {
-					$output[] = "<script type=\"text/javascript\" src=\"".smarty_modifier_escape($entry)."\"></script>\n";
+					$output[] = '<script type="text/javascript" src="' . smarty_modifier_escape($entry) . '"></script>';
 				}
 			}
 		}
