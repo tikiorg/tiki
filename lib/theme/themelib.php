@@ -201,6 +201,7 @@ class ThemeLib extends TikiLib
 			}
 		}
 
+		// Why does this look in 'themes/' . $dir_base . $subdir and 'themes/' . $subdir if and only if we have no $filename? Chealer 2017-01-16
 		if (empty($filename)) {
 			if (is_dir('themes/' . $dir_base . $theme_base . $option_base . $subdir)) {
 				$path = 'themes/' . $dir_base . $theme_base . $option_base . $subdir;
