@@ -187,6 +187,7 @@ class ThemeLib extends TikiLib
 				case 'gif':
 				case 'jpg':
 				case 'jpeg':
+                case 'svg':
 					$subdir = 'images/';
 					break;
 				case 'less':
