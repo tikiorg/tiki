@@ -1035,8 +1035,11 @@ select.form-control.date {
   -moz-column-count: auto;
   -moz-column-gap: 1.5rem;
   -moz-column-width: 21rem;
+  -webkit-column-count: auto;
   column-count: auto;
+  -webkit-column-gap: 1.5rem;
   column-gap: 1.5rem;
+  -webkit-column-width: 21rem;
   column-width: 21rem;
   font-size: 0;
   /* this is to prevent displaying of white space rendered by unwanted nbsp e.g. in plugin LIST */
@@ -1059,6 +1062,7 @@ select.form-control.date {
 }
 .masonry.nogaps {
   -moz-column-gap: 0;
+  -webkit-column-gap: 0;
   column-gap: 0;
 }
 .masonry.nogaps > a,
@@ -1067,10 +1071,15 @@ select.form-control.date {
   display: block;
 }
 .masonry.flex-horiz {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
 .masonry.flex-horiz > * {
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
   flex-grow: 1;
   margin: 0;
   width: auto;
@@ -2898,6 +2907,9 @@ input[type="checkbox"].preffilter-toggle + label {
   position: relative;
   cursor: pointer;
   outline: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 input[type="checkbox"].preffilter-toggle-round + label {
@@ -2921,6 +2933,7 @@ input[type="checkbox"].preffilter-toggle-round + label:before {
   right: 1px;
   background-color: #f1f1f1;
   border-radius: 20px;
+  -webkit-transition: background 0.4s;
   transition: background 0.4s;
   content: "Basic";
   font-size: 0.7em;
@@ -2933,6 +2946,7 @@ input[type="checkbox"].preffilter-toggle-round + label:after {
   background-color: #fff;
   border-radius: 100%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  -webkit-transition: margin 0.4s;
   transition: margin 0.4s;
 }
 input[type="checkbox"].preffilter-toggle-round:checked + label:before {
@@ -3027,7 +3041,7 @@ body > .ui-front {
 .ui-selectmenu span.ui-selectmenu-status {
   display: block;
   font-size: .8em !important;
-  margin-right: 0%;
+  margin-right: 0;
   position: absolute;
   overflow: hidden;
   padding-left: 0 !important;

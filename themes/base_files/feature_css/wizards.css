@@ -6,13 +6,13 @@
 	float: right;
 }
 .adminWizardPageTitle {
-    text-align:center;
+	text-align:center;
 }
 .adminWizardTable {
 	width:100%;
 }
 .adminWizardTOCItem {
-    padding-left:5px;
+	padding-left:5px;
 }
 .adminWizardTOC {
 	vertical-align: top;
@@ -23,8 +23,8 @@
 	opacity: 0.5;
 }
 .adminWizardBody {
-    vertical-align: top;
-    width:73%;
+	vertical-align: top;
+	width:73%;
 	margin-top: 4em;
 }
 

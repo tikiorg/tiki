@@ -106,6 +106,9 @@ input[type="checkbox"].preffilter-toggle + label {
 	position: relative;
 	cursor: pointer;
 	outline: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
 	user-select: none;
 }
 
@@ -132,6 +135,7 @@ input[type="checkbox"].preffilter-toggle-round + label:before {
 	right: 1px;
 	background-color: #f1f1f1;
 	border-radius: 20px;
+	-webkit-transition: background 0.4s;
 	transition: background 0.4s;
 	content: "Basic";
 	font-size: 0.7em;
@@ -145,6 +149,7 @@ input[type="checkbox"].preffilter-toggle-round + label:after {
 	background-color: #fff;
 	border-radius: 100%;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+	-webkit-transition: margin 0.4s;
 	transition: margin 0.4s;
 }
 
