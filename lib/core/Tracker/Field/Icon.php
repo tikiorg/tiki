@@ -38,6 +38,16 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 						'default' => 120,
 						'legacy_index' => 2,
 					),
+					'update' => array(
+						'name' => tr('Update icon event'),
+						'type' => 'list',
+						'description' => tr('Allow update during re-indexing. Selection of indexing is useful for changing the default icon for all items.'),
+						'filter' => 'word',
+						'options' => array(
+							'save' => tr('Save'),
+							'index' => tr('Indexing'),
+						),
+					),
 				),
 			),
 		);
@@ -140,8 +150,8 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 			$value = isset($args['values'][$fieldId]) ? $args['values'][$fieldId] : null;
 
 			if (! empty($value) && isset($_SERVER['REQUEST_METHOD'])) {	// leave URLs alone when run from a shell command
-				$tikilib = TikiLib::lib('tiki');
-				$value = $tikilib->tikiUrl($value);
+				$value = TikiLib::lib('tiki')->tikiUrl($value);
+				$value = TikiLib::makeAbsoluteLinkRelative($value);
 			}
 
 			$attributelib = TikiLib::lib('attribute');
@@ -151,6 +161,21 @@ class Tracker_Field_Icon extends Tracker_Field_Abstract
 
 	function getDocumentPart(Search_Type_Factory_Interface $typeFactory)
 	{
+		if ('index' == $this->getOption('update')) {
+			$value = $this->getValue();
+			if (empty($value)) {
+				$value = $this->getOption('default');	// value is often "" but default in getValue checks for isset
+			}
+			self::updateIcon([
+				'trackerId' => $this->getConfiguration('trackerId'),
+				'type' => 'trackeritem',
+				'object' => $this->getItemId(),
+				'values' => [
+					$this->getConfiguration('fieldId') => $value,
+				],
+			]);
+		}
+
 		$baseKey = $this->getBaseKey();
 		return array(
 			$baseKey => $typeFactory->identifier($this->getValue()),
