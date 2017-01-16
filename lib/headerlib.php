@@ -221,8 +221,8 @@ class HeaderLib
 	 * Add a js file to top priority load order, right after cdns and dynamics. That file must not be loaded from an external source.
 	 * Theses are usally libraries like jquery or codemirror, so files where other js file depend on.
 	 * Depending on prefs, it could be minified and put into a single js file.
-	 * @param string $filename with path relative to tiki dir
-	 * @param booloean $skip_minify default = false - true if the file must not be minified
+	 * @param string $file with path relative to tiki dir
+	 * @param boolean $skip_minify default = false - true if the file must not be minified
 	 * @return object $HeaderLib
 	 */
 	function add_jsfile_dependancy($file, $skip_minify = false)
@@ -266,7 +266,7 @@ class HeaderLib
 	 * @see $this->forceJsRankLate() 
 	 * Depending on prefs, it could be minified and put into a single js file.
 	 * @param string $filename with path relative to tiki dir
-	 * @param booloean $skip_minify default = false - true if the file must not be minified
+	 * @param boolean $skip_minify default = false - true if the file must not be minified
 	 * @return object $HeaderLib
 	 */
 	function add_jsfile_late($file, $skip_minify = false)
@@ -418,7 +418,7 @@ class HeaderLib
 
 	function output_headers()
 	{
-		global $style_ie6_css, $style_ie7_css, $style_ie8_css, $style_ie9_css;
+		global $style_ie8_css, $style_ie9_css;
 		$smarty = TikiLib::lib('smarty');
 		$smarty->loadPlugin('smarty_modifier_escape');
 
@@ -608,7 +608,7 @@ class HeaderLib
 	/**
 	 * Minify multiple JS files over multiple ranks into one single JS file. 
 	 * The file is identified by a hash over the given $jsfiles array and automatically created if needed.
-	 * @param array $jsfiles array of jsfiles ordered by ranks
+	 * @param array $allJsfiles array of jsfiles ordered by ranks
 	 * @param array $ranks simple array of ranks that needs to be processed. 
 	 * @return string $filename - name and relative path of the final js file.
 	 */
@@ -809,7 +809,6 @@ class HeaderLib
 	 */
 	function getJs()
 	{
-		global $prefs;
 
 		ksort($this->js);
 		ksort($this->jq_onready);
@@ -988,7 +987,6 @@ class HeaderLib
 
 	private function handle_css_imports( $minified )
 	{
-		global $tikiroot;
 
 		preg_match_all('/@import\s+url\("([^;]*)"\);/', $minified, $parts);
 		$top = [];
