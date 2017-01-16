@@ -196,6 +196,22 @@ function wikiplugin_pivottable($data, $params)
 			return WikiParser_PluginOutput::userError(tr('You do not have rights to view tracker data.'));
 		}
 	}
+
+	$fields[] = array(
+		'name' => 'creation_date',
+		'permName' => 'creation_date',
+		'type' => 'f'
+	);
+	$fields[] = array(
+		'name' => 'modification_date',
+		'permName' => 'modification_date',
+		'type' => 'f'
+	);
+	$fields[] = array(
+		'name' => 'tracker_status',
+		'permName' => 'tracker_status',
+		'type' => 't'
+	);
 	
 	if (!empty($params['rendererName'])) {
 		$rendererName=$params['rendererName'];	
@@ -255,7 +271,8 @@ function wikiplugin_pivottable($data, $params)
 		$plugin = new Search_Formatter_Plugin_ArrayTemplate($data);
 		$usedFields = array_keys($plugin->getFields());
 		foreach( $fields as $key => $field ) {
-			if( !in_array('tracker_field_'.$field['permName'], $usedFields) ) {
+			if( !in_array('tracker_field_'.$field['permName'], $usedFields)
+				&& !in_array($field['permName'], $usedFields) ) {
 				unset($fields[$key]);
 			}
 		}
@@ -264,7 +281,11 @@ function wikiplugin_pivottable($data, $params)
 	} else {
 		$plugin = new Search_Formatter_Plugin_ArrayTemplate(implode("", array_map(
 			function($f){
-				return '{display name="tracker_field_'.$f['permName'].'" default=" "}';
+				if( in_array($f['permName'], array('creation_date', 'modification_date', 'tracker_status')) ) {
+					return '{display name="'.$f['permName'].'" default=" "}';
+				} else {
+					return '{display name="tracker_field_'.$f['permName'].'" default=" "}';
+				}
 			}, $fields)));
 		$plugin->setFieldPermNames($fields);
 	}
@@ -281,9 +302,12 @@ function wikiplugin_pivottable($data, $params)
 	$pivotData = array();
 	foreach( $entries as $entry ) {
 		$row = array();
-		foreach( $entry as $field => $value ) {
-			$field = $definition->getFieldFromPermName($field);
-			$row[$field['name']] = $value;
+		foreach( $entry as $fieldName => $value ) {
+			if( $field = $definition->getFieldFromPermName($fieldName) ) {
+				$row[$field['name']] = $value;
+			} else {
+				$row[$fieldName] = $value;
+			}
 		}
 		$pivotData[] = $row;
 	}
@@ -294,10 +318,10 @@ function wikiplugin_pivottable($data, $params)
 		$colNames = explode(":", $params['cols']);
 		foreach($colNames as $colName)
 		{
-			$field = $definition->getFieldFromPermName(trim($colName));
-			if($field)
-			{
+			if( $field = $definition->getFieldFromPermName(trim($colName)) ) {
 				$cols[] = $field['name'];
+			} else {
+				$cols[] = $colName;
 			}
 		}
 	} elseif( !empty($fields) ) {
@@ -309,10 +333,10 @@ function wikiplugin_pivottable($data, $params)
 		$rowNames = explode(":", $params['rows']);
 		foreach($rowNames as $rowName)
 		{
-			$field = $definition->getFieldFromPermName(trim($rowName));
-			if($field)
-			{
+			if( $field = $definition->getFieldFromPermName(trim($rowName)) ) {
 				$rows[] = $field['name'];
+			} else {
+				$rows[] = $rowName;
 			}
 		}
 	} elseif( isset($fields[1]) ) {
@@ -324,10 +348,10 @@ function wikiplugin_pivottable($data, $params)
 		$valNames = explode(":", $params['vals']);
 		foreach($valNames as $valName)
 		{
-			$field = $definition->getFieldFromPermName(trim($valName));
-			if($field)
-			{
+			if( $field = $definition->getFieldFromPermName(trim($valName)) ) {
 				$vals[] = $field['name'];
+			} else {
+				$vals[] = $valName;
 			}
 		}
 	}
