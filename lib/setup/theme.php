@@ -133,16 +133,17 @@ if ($prefs['site_favicon_disable'] !== 'y') {    // if favicons are disabled in 
     $favicon_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], 'favicon-16x16.png', 'favicons/');
     if ($favicon_path) {  // if there is a 16x16 png favicon in the theme folder, then find and display others if they exist
         $headerlib->add_link('icon', $favicon_path, '16x16', 'image/png');
-        $favicon_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], 'apple-touch-icon.png', 'favicons/');
-        if ($favicon_path) $headerlib->add_link('apple-touch-icon', $favicon_path, '180x180');
-        $favicon_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], 'favicon-32x32.png', 'favicons/');
-        if ($favicon_path) $headerlib->add_link('icon', $favicon_path, '32x32', 'image/png');
-        $favicon_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], 'manifest.json', 'favicons/');
-        if ($favicon_path) $headerlib->add_link('manifest', $favicon_path);
-        $favicon_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], 'safari-pinned-tab.svg', 'favicons/');
-        if ($favicon_path) $headerlib->add_link('mask-icon', $favicon_path, '', '', '#5bbad5');
-        $favicon_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], 'browserconfig.xml', 'favicons/');
-        if ($favicon_path) $headerlib->add_meta('msapplication-config', $favicon_path);
+        $favicon_path = (dirname($favicon_path)); // get_theme_path makes a lot of system calls, so just remember what dir to look in.
+        if (is_file($favicon_path.'/apple-touch-icon.png'))
+            $headerlib->add_link('apple-touch-icon', $favicon_path.'/apple-touch-icon.png', '180x180');
+        if (is_file($favicon_path.'/favicon-32x32.png'))
+            $headerlib->add_link('icon', $favicon_path.'/favicon-32x32.png', '32x32', 'image/png');
+        if (is_file($favicon_path.'/manifest.json'))
+            $headerlib->add_link('manifest', $favicon_path.'/manifest.json');
+        if (is_file($favicon_path.'/safari-pinned-tab.svg'))
+            $headerlib->add_link('mask-icon', $favicon_path.'/safari-pinned-tab.svg', '', '', '#5bbad5');
+        if (is_file($favicon_path.'/browserconfig.xml'))
+            $headerlib->add_meta('msapplication-config', $favicon_path.'/browserconfig.xml');
     }else{    // if no 16x16 png favicon exists, diplay tiki icons
         $headerlib->add_link('icon', 'themes/base_files/favicons/favicon-16x16.png', '16x16', 'image/png');
         $headerlib->add_link('apple-touch-icon', 'themes/base_files/favicons/apple-touch-icon.png', '180x180');
