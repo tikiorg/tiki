@@ -119,6 +119,13 @@ function wikiplugin_pivottable_info()
 				'required' => false,
 				'filter' => 'text',
 			),
+			'menuLimit' => array(
+				'name' => tr('Filter list limit'),
+				'description' => tr('Pivottable menuLimit option override - number of entries to consider the menu list too big when filtering on a particular column or row.'),
+				'since' => '16.2',
+				'required' => false,
+				'filter' => 'digits',
+			),
 		),
 	);
 }
@@ -130,24 +137,25 @@ function wikiplugin_pivottable($data, $params)
 	global $prefs, $page, $wikiplugin_included_page;
 
 	//checking if vendor files are present 
-	if (!file_exists('vendor/etdsolutions/pivottable/')) {
-		return WikiParser_PluginOutput::internalError(tr('Missing required files, please make sure plugin files are installed at vendor/etdsolutions/pivottable. <br/><br /> To install, please run composer or download from following url:<a href="https://github.com/nicolaskruchten/pivottable/archive/master.zip" target="_blank">https://github.com/nicolaskruchten/pivottable/archive/master.zip</a>'));
+	if (!file_exists('vendor/nicolaskruchten/pivottable/')) {
+		return WikiParser_PluginOutput::internalError(tr('Missing required files, please make sure plugin files are installed at vendor/nicolaskruchten/pivottable. <br/><br /> To install, please run composer or download from following url:<a href="https://github.com/nicolaskruchten/pivottable/archive/master.zip" target="_blank">https://github.com/nicolaskruchten/pivottable/archive/master.zip</a>'));
 	}
 
 	static $id = 0;
 	$id++;
 
 	$headerlib = TikiLib::lib('header');
-	$headerlib->add_cssfile('vendor/etdsolutions/pivottable/pivot.css');
-	$headerlib->add_jsfile('vendor/etdsolutions/pivottable/pivot.js', true);
-	$headerlib->add_jsfile('vendor/etdsolutions/pivottable/c3_renderers.js', true);
+	$headerlib->add_cssfile('vendor/nicolaskruchten/pivottable/dist/pivot.css');
+	$headerlib->add_jsfile('vendor/nicolaskruchten/pivottable/dist/pivot.js', true);
+	$headerlib->add_jsfile('vendor/nicolaskruchten/pivottable/dist/c3_renderers.js', true);
 	$headerlib->add_jsfile('lib/jquery_tiki/wikiplugin-pivottable.js', true);
 	
 	//checking data type
-	
-	$dataId = explode(":",$params['data']);
-	if($dataId[0] == "tracker") {
-		$trackerId = $dataId[1];
+	if( empty($params['data']) || !is_array($params['data']) ) {
+		return WikiParser_PluginOutput::internalError(tr('Missing data parameter with format: source:ID, e.g. tracker:1'));
+	}
+	if($params['data'][0] === "tracker") {
+		$trackerId = $params['data'][1];
 	} else {
 		$trackerId = 0;
 	}
@@ -369,6 +377,7 @@ function wikiplugin_pivottable($data, $params)
 		'fieldsArr'=>$fieldsArr,
 		'dateFields' => $dateFields,
 		'inclusions' => $inclusions,
+		'menuLimit' => empty($params['menuLimit']) ? null : $params['menuLimit'],
 		'index'=>$id
 	));
 	

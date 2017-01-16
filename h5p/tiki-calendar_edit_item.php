@@ -133,6 +133,12 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 	$save = $_POST['save'];
 	// Take care of timestamps dates coming from jscalendar
 	if ( isset($save['date_start']) || isset($save['date_end']) ) {
+		if( isset($_REQUEST['tzoffset']) ) {
+			$browser_offset = 0 - intval($_REQUEST['tzoffset']) * 60;
+			$server_offset = TikiDate::tzServerOffset(TikiLib::lib('tiki')->get_display_timezone());
+			$save['date_start'] = $save['date_start'] - $server_offset + $browser_offset;
+			$save['date_end'] = $save['date_end'] - $server_offset + $browser_offset;
+		}
 		$_REQUEST['start_date_Month'] = TikiLib::date_format("%m", $save['date_start']);
 		$_REQUEST['start_date_Day'] = TikiLib::date_format("%d", $save['date_start']);
 		$_REQUEST['start_date_Year'] = TikiLib::date_format("%Y", $save['date_start']);
@@ -437,6 +443,11 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	$calendar = $calendarlib->get_calendar($calID);
 	if (isset($_REQUEST['todate'])) {
 		$now = $_REQUEST['todate'];
+		if( isset($_REQUEST['tzoffset']) ) {
+			$browser_offset = 0 - intval($_REQUEST['tzoffset']) * 60;
+			$server_offset = TikiDate::tzServerOffset(TikiLib::lib('tiki')->get_display_timezone());
+			$now = $now - $server_offset + $browser_offset;
+		}
 	} else {
 		$now = $tikilib->now;
 	}

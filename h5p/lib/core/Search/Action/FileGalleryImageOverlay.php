@@ -53,40 +53,34 @@ class Search_Action_FileGalleryImageOverlay implements Search_Action_Action
         }
 
         if ($object_type != 'trackeritem') {
-            return false;
+            throw new Search_Action_Exception(tr('Cannot apply filegal_image_overlay action to an object type %0.', $object_type));
         }
 
         $trklib = TikiLib::lib('trk');
         $info = $trklib->get_item_info($object_id);
 
         if (!$info) {
-            return false;
+            throw new Search_Action_Exception(tr('Tracker item %0 not found.', $object_id));
         }
 
         $definition = Tracker_Definition::get($info['trackerId']);
 
         $fieldDefinition = $definition->getFieldFromPermName($field);
         if (!$fieldDefinition) {
-            return false;
+            throw new Search_Action_Exception(tr('Tracker field %0 not found for tracker %1.', $field, $info['trackerId']));
         }
 
         if ($fieldDefinition['type'] != 'FG') {
-            return false;
+            throw new Search_Action_Exception(tr('Tracker field %0 is not a Files field type.', $field));
         }
 
         if (empty($value)) {
-            return false;
+            throw new Search_Action_Exception(tr('filegal_image_overlay action missing value parameter.'));
         }
 
         //At the moment there is only support for ImageMagik, so check if is available
         if (!class_exists('Imagick') || !class_exists('ImagickDraw')) {
-            static $firstError = true;
-            if ($firstError) {
-                Feedback::error(tr('filegal_image_overlay requires Imagick, please review your server setup!'));
-                $firstError = false;
-            }
-
-            return false;
+            throw new Search_Action_Exception(tr('filegal_image_overlay action requires Imagick, please review your server setup.'));
         }
 
         return true;
@@ -148,15 +142,9 @@ class Search_Action_FileGalleryImageOverlay implements Search_Action_Action
               $missingKeys
             );
             if ($overlayString === false) {
-                Feedback::error(
-                  tr(
-                    'filegal_image_overlay: Problem processing image "%0", the following values form the template are empty: %1',
+                throw new Search_Action_Exception(tr('filegal_image_overlay: Problem processing image "%0", the following values form the template are empty: %1',
                     $file['filename'],
-                    implode(', ', $missingKeys)
-                  )
-                );
-                $newFileList[] = $fileId;
-                continue;
+                    implode(', ', $missingKeys)));
             }
             $newImage = $this->addTextToImage($file['data'], $overlayString);
             if ($newImage) {

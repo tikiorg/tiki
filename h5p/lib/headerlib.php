@@ -106,6 +106,7 @@ class HeaderLib
 	public $css;
 	public $rssfeeds;
 	public $metatags;
+	public $linktags;
 	
 	public $wysiwyg_parsing;
 	
@@ -137,6 +138,7 @@ class HeaderLib
 		$this->css = array();
 		$this->rssfeeds = array();
 		$this->metatags = array();
+		$this->rawhtml = '';
 
 		$this->wysiwyg_parsing = false;
 		$this->forceJsRankLate = false;
@@ -185,28 +187,32 @@ class HeaderLib
 
 	/**
 	 * Add a js url from this tiki instance to top priority load order.
-	 * These are usally dynamic created js scripts for configuration, module settings etc.
+	 * These are usually dynamic created js scripts for configuration, module settings etc.
 	 * Urls added here will not be further processed (like minified or put into a single file)
 	 * @param string $url - relative url to this tiki instance
 	 * @return object $HeaderLib
 	 */
 	function add_jsfile_dynamic($url)
 	{
-		$this->add_jsfile_by_rank($url, '10dynamic');
+		$this->add_jsfile_by_rank($url, '10dynamic', true);
 		return $this;
 	}
 		
 	
 	/**
 	 * Add a js url to top priority load order. That url must be loaded from an external source.
-	 * These are usally libraries like jquery that are loaded from a cdn = content delivery network.
- 	 * Urls added here will not be further processed (like minified or put into a single file) 
+	 * These are usually libraries like jquery that are loaded from a cdn = content delivery network.
+ 	 * Urls added here will not be further processed (like minified or put into a single file)
+	 *
+	 * N.B. skip_minify needs to be set to true here for when tiki_minify_late_js_files is active
+	 * and cdn files are added after page setup by plugins etc
+	 *
 	 * @param string $url - absolute url including http/https
 	 * @return object $HeaderLib
 	 */
 	function add_jsfile_cdn($url)
 	{
-		$this->add_jsfile_by_rank($url, '20cdn');
+		$this->add_jsfile_by_rank($url, '20cdn', true);
 		return $this;
 	}
 	
@@ -387,12 +393,28 @@ class HeaderLib
 		return $this;
 	}
 
-	function set_metatags($tag,$value,$rank=0)
+	function add_meta($tag,$value)
 	{
 		$tag = addslashes($tag);
 		$this->metatags[$tag] = $value;
 		return $this;
 	}
+
+	function add_rawhtml($tags)
+	{
+		$this->rawhtml = $tags;
+		return $this;
+	}
+
+    function add_link($rel,$href, $sizes='', $type ='',$color='')
+    {
+        $this->linktags[$href]['href'] = $href;
+        $this->linktags[$href]['rel'] = $rel;
+        if ($sizes) $this->linktags[$href]['sizes'] = $sizes;
+        if ($type) $this->linktags[$href]['type'] = $type;
+        if ($color) $this->linktags[$href]['color'] = $color;
+        return $this;
+    }
 
 	function output_headers()
 	{
@@ -409,12 +431,26 @@ class HeaderLib
 			$back = '<title>'.smarty_modifier_escape($this->title)."</title>\n\n";
 		}
 
+		if ($this->rawhtml) {
+			$back .= $this->rawhtml;
+		}
+
 		if (count($this->metatags)) {
 			foreach ($this->metatags as $n=>$m) {
-				$back.= "<meta name=\"" . smarty_modifier_escape($n) . "\" content=\"" . smarty_modifier_escape($m) . "\" />\n";
+				$back.= '<meta name="' . smarty_modifier_escape($n) . '" content="' . smarty_modifier_escape($m) . "\">\n";
 			}
 			$back.= "\n";
 		}
+        if (count($this->linktags)) {
+            foreach ($this->linktags as $link) {
+                $back.= '<link rel="' . $link['rel'] . '" href="' . $link['href'] . '"';
+                if (isset($link['sizes'])) $back.= ' sizes="' . $link['sizes'] . '"' ;
+                if (isset($link['type'])) $back.= ' type="' . $link['type'] . '"' ;
+                if (isset($link['color'])) $back.= ' color="' . $link['color'] . '"' ;
+                $back.= ">\n";
+            }
+        }
+
 
 		$back .= $this->output_css_files();
 
@@ -426,18 +462,18 @@ class HeaderLib
 					$back.= "$c\n";
 				}
 			}
-			$back.= "-->\n</style>\n\n";
+			$back.= "-->\n</style>\n";
 		}
 
 		// Handle theme's special CSS file for IE8 or IE9 hacks
 		$back .= "<!--[if IE 8]>\n"
-				.'<link rel="stylesheet" href="themes/base_files/feature_css/ie8.css" type="text/css" />'."\n";
+				.'<link rel="stylesheet" href="themes/base_files/feature_css/ie8.css" type="text/css">'."\n";
 		if ( $style_ie8_css != '' ) {
 			$back .= '<link rel="stylesheet" href="'.smarty_modifier_escape($this->convert_cdn($style_ie8_css)).'" type="text/css" />'."\n";
 		}
 		$back .= "<![endif]-->\n";
 		$back .= "<!--[if IE 9]>\n"
-				.'<link rel="stylesheet" href="themes/base_files/feature_css/ie9.css" type="text/css" />'."\n";
+				.'<link rel="stylesheet" href="themes/base_files/feature_css/ie9.css" type="text/css">'."\n";
 		if ( $style_ie9_css != '' ) {
 			$back .= '<link rel="stylesheet" href="'.smarty_modifier_escape($this->convert_cdn($style_ie9_css)).'" type="text/css" />'."\n";
 		}
@@ -447,7 +483,7 @@ class HeaderLib
 			foreach ($this->rssfeeds as $x=>$rssf) {
 				$back.= "<!-- rss $x -->\n";
 				foreach ($rssf as $rsstitle=>$rssurl) {
-					$back.= "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"".smarty_modifier_escape($this->convert_cdn($rsstitle))."\" href=\"".smarty_modifier_escape($rssurl)."\" />\n";
+					$back.= "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"".smarty_modifier_escape($this->convert_cdn($rsstitle))."\" href=\"".smarty_modifier_escape($rssurl)."\">\n";
 				}
 			}
 			$back.= "\n";
@@ -521,7 +557,7 @@ class HeaderLib
 		foreach ($ranks as $rank) {
 			if (isset($jsfiles[$rank])) {
 				foreach ($jsfiles[$rank] as $entry) {
-					$output[] = "<script type=\"text/javascript\" src=\"" . smarty_modifier_escape($entry) . "\"></script>\n";
+					$output[] = '<script type="text/javascript" src="' . smarty_modifier_escape($entry) . '"></script>';
 				}
 			}
 		}
@@ -537,7 +573,7 @@ class HeaderLib
 				if (isset($jsfiles[$rank])) {
 					foreach ($jsfiles[$rank] as $entry) {
 						$entry = $this->convert_cdn($entry, $rank);
-						$output[] = "<script type=\"text/javascript\" src=\"" . smarty_modifier_escape($entry) . "\"></script>\n";
+						$output[] = '<script type="text/javascript" src="' . smarty_modifier_escape($entry) . '"></script>';
 					}
 				}
 			}
@@ -550,17 +586,17 @@ class HeaderLib
 			
 			$ranks = array('30dependancy', '40external', '50standard');
  			$entry =  $this->minifyJSFiles($jsfiles, $ranks);
-			$output[] .= "<script type=\"text/javascript\" src=\"".smarty_modifier_escape($entry)."\"></script>\n";
+			$output[] .= '<script type="text/javascript" src="' . smarty_modifier_escape($entry) . '"></script>';
 
 			$minifyLateActive = isset($prefs['tiki_minify_late_js_files']) && $prefs['tiki_minify_late_js_files'] == 'y' ? true : false;
 			$rank = '60late';
 			if ($minifyLateActive) {
 				// handling of user defined cdn servers is done inside minifyJSFiles()
 				$entry =  $this->minifyJSFiles($jsfiles, array($rank));
-				$output[] .= "<script type=\"text/javascript\" src=\"".smarty_modifier_escape($entry)."\"></script>\n";
+				$output[] .= '<script type="text/javascript" src="' . smarty_modifier_escape($entry) . '"></script>';
 			} else {
 				foreach ($jsfiles[$rank] as $entry) {
-					$output[] = "<script type=\"text/javascript\" src=\"".smarty_modifier_escape($entry)."\"></script>\n";
+					$output[] = '<script type="text/javascript" src="' . smarty_modifier_escape($entry) . '"></script>';
 				}
 			}
 		}
@@ -900,7 +936,7 @@ class HeaderLib
 			if (!empty($media)) {
 				$back .= " media=\"" . smarty_modifier_escape($media) . "\"";
 			}
-			$back .= " />\n";
+			$back .= ">\n";
 		}
 
 		return $back;

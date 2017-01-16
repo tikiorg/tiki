@@ -196,6 +196,9 @@ class Search_Formatter_Builder
 		// Heuristic based: only lowercase letters, digits and underscore
 		$fields = array();
 		foreach ($outputData as $candidate) {
+			if( !is_string($candidate) ) {
+				continue;
+			}
 			if (preg_match("/^[a-z0-9_]+$/", $candidate) || substr($candidate, 0, strlen('tracker_field_')) === 'tracker_field_') {
 				$fields[] = $candidate;
 			}

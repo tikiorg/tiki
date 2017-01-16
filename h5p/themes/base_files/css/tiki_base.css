@@ -856,6 +856,12 @@ div.highlight.adminoptionbox {
   display: block;
   font-weight: bold;
 }
+.wikiactions .icon.highlight {
+  border-radius: .2rem;
+  height: 2.2rem;
+  width: 2.2rem;
+  padding: .2rem;
+}
 address,
 blockquote,
 dd,
@@ -947,6 +953,9 @@ body.fullscreen {
   right: 0;
   top: 0;
   z-index: 1040;
+}
+#fullscreenbutton ~ nav .navbar-toggle {
+  right: 42px;
 }
 #show-errors-button {
   z-index: 1024;

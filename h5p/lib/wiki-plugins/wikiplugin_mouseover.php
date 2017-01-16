@@ -269,7 +269,7 @@ function wikiplugin_mouseover( $data, $params )
 	$id = "mo" . ++$lastval;
 
 	$headerlib = TikiLib::lib('header');
-	$headerlib->add_css('.plugin-mouseover-anchor:not([href]) { cursor: help; }');
+	$headerlib->add_css('.plugin-mouseover-anchor:not([href]) { border-bottom: 1px dotted; color: inherit; cursor: help; text-decoration: none; }');
 
 	if ($closeDelay && $sticky) {
 		$closeDelayStr = "setTimeout(function() {hideJQ('#$id', '$effect', '$speed')}, ".($closeDelay * 1000).");";

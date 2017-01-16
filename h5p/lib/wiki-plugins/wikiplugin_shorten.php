@@ -40,6 +40,31 @@ function wikiplugin_shorten_info()
 				'since' => '17',
 				'filter' => 'text',
 			),
+			'show_speed' => array(
+				'required' => false,
+				'name' => tra('Show Speed'),
+				'filter' => 'alnum',
+				'description' => tr('Speed of animation in milliseconds when showing content (%0200%1 is fast and
+					%0600%1 is slow. %01000%1 equals 1 second).', '<code>', '</code>'),
+				'default' => 0,
+				'since' => '17',
+				'accepted' => tr('Integer greater than 0 and less than or equal to 1000, or %0 or %1',
+					'<code>fast</code>', '<code>slow</code>'),
+				'advanced' => true,
+			),
+			'hide_speed' => array(
+				'required' => false,
+				'name' => tra('Hide Speed'),
+				'filter' => 'alnum',
+				'description' => tr('Speed of animation in milliseconds when hiding content (%0200%1 is fast and
+					%0600%1 is slow. %01000%1 equals 1 second).', '<code>', '</code>'),
+				'default' => 0,
+				'since' => '17',
+				'accepted' => tr('Integer greater than 0 and less than or equal to 1000, or %0 or %1',
+					'<code>fast</code>', '<code>slow</code>'),
+				'advanced' => true,
+			),
+
 		),
 	);
 }
@@ -48,50 +73,71 @@ function wikiplugin_shorten($data, $params)
 {
 	global $prefs;
 	static $shorten_count;
+	$headerlib = TikiLib::lib('header');
 
-	$defaults = array(
+	extract(array(
 		'length' => 20,
-		'moreText' => '...',
+		'moreText' => '[+]',
 		'lessText' => '[-]',
-	);
+		'show_speed' => 0,
+		'hide_speed' => 0,
+	));
 
-	$length = isset($params['length']) ? $params['length'] : $defaults['length'];
-	$length = (int) sprintf('%d', $length);
-	$length = max(1, $length);
+	if (isset($params['length'])) {
+		$length = (int) sprintf('%d', $params['length']);
+		$length = max(1, $length);
+	}
+
+	if (isset($params['show_speed'])) {
+		$show_speed = str_replace(array('slow', 'fast'), array('600', '200'), $params['show_speed']);
+		$show_speed = (int) sprintf('%d', $show_speed);
+	}
+
+	if (isset($params['hide_speed'])) {
+		$hide_speed = str_replace(array('slow', 'fast'), array('600', '200'), $params['hide_speed']);
+		$hide_speed = (int) sprintf('%d', $hide_speed);
+	}
 
 	$match = null;
 	if ( preg_match('/^\s*.{'.$length.'}[^\s]*/', $data, $match) ) {
-
-		$out = '';
 		if(!$shorten_count) {
-			$out .= '<style type="text/css">';
-			$out .= ' .toggle_shorten_text_wrapper { display: none; }';
-			$out .= ' .toggle_shorten_text_button:checked + .toggle_shorten_text_wrapper { display: inline; }';
-			$out .= ' .toggle_shorten_text_button ~ .toggle_shorten_text_more { display: inline; }';
-			$out .= ' .toggle_shorten_text_button ~ .toggle_shorten_text_less { display: none; }';
-			$out .= ' .toggle_shorten_text_button:checked ~ .toggle_shorten_text_more { display: none; }';
-			$out .= ' .toggle_shorten_text_button:checked ~ .toggle_shorten_text_less { display: inline; }';
-			$out .= ' .toggle_shorten_text_more, .toggle_shorten_text_less { cursor: pointer; margin-left: 3px; }';
-			$out .= '</style>';
+			$headerlib->add_css(
+				" .toggle_shorten_text_button ~ .toggle_shorten_text_more { display: inline; }"
+				. " .toggle_shorten_text_button ~ .toggle_shorten_text_less { display: none; }"
+				. " .toggle_shorten_text_button:checked ~ .toggle_shorten_text_more { display: none; }"
+				. " .toggle_shorten_text_button:checked ~ .toggle_shorten_text_less { display: inline; }"
+				. " .toggle_shorten_text_more, .toggle_shorten_text_less { cursor: pointer; margin-left: 3px; }"
+			);
 		}
 
-		$id = 'toggle_shorten_text-' . ++$shorten_count;
+		$shorten_count += 1;
 
-		$moreText = isset($params['moreText']) ? $params['moreText'] : $defaults['moreText'];
-		$moreText = strip_tags($moreText);
+		$span_id = 'toggle_shorten_text_span-' . $shorten_count;
+		$button_id = 'toggle_shorten_text_button-' . $shorten_count;
 
-		$lessText = isset($params['lessText']) ? $params['lessText'] : $defaults['lessText'];
-		$lessText = strip_tags($lessText);
+		$headerlib->add_css(
+			 "#{$span_id} .toggle_shorten_text_wrapper { font-size: 0; transition: font-size {$hide_speed}ms linear; }"
+			. "#{$span_id} .toggle_shorten_text_button:checked + .toggle_shorten_text_wrapper { font-size: inherit; transition-duration: {$show_speed}ms; }"
+		);
 
-		$html = '<span>';
-		$html .= '<input style="display: none" class="toggle_shorten_text_button" type="checkbox" id="'.$id.'"/>';
+
+		if(isset($params['moreText'])) {
+			$moreText = strip_tags($params['moreText']);
+		}
+
+		if(isset($params['lessText'])) {
+			$lessText = strip_tags($params['lessText']);
+		}
+
+		$html = '<span id="' . $span_id . '">';
+		$html .= '<input style="display: none" class="toggle_shorten_text_button" type="checkbox" id="'.$button_id.'"/>';
 		$html .= '<span class="toggle_shorten_text_wrapper">%s</span>';
-		$html .= '<label class="toggle_shorten_text_more" for="'.$id.'">'.$moreText.'</label>';
-		$html .= '<label class="toggle_shorten_text_less" for="'.$id.'">'.$lessText.'</label>';
+		$html .= '<label class="toggle_shorten_text_more" for="'.$button_id.'">'.$moreText.'</label>';
+		$html .= '<label class="toggle_shorten_text_less" for="'.$button_id.'">'.$lessText.'</label>';
 		$html .= '</span>';
 
 		$index = strlen($match[0]);
-		$out .= substr($data, 0, $index);
+		$out = substr($data, 0, $index);
 		$out .= sprintf($html, substr($data, $index));
 
 		return $out;

@@ -151,6 +151,15 @@ class TikiDate
 		return $tz;
 	}
 
+	static function tzServerOffset( $display_tz = null ) {
+		if ( !$display_tz ) {
+			$display_tz = 'UTC';
+		}
+		$tz = new DateTimeZone($display_tz);
+		$d = new DateTime('now', $tz);
+		return $tz->getOffset($d);
+	}
+
     /**
      * @param $format
      * @param bool $is_strftime_format

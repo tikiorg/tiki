@@ -17,6 +17,7 @@ function wikiplugin_quote_info()
 		'introduced' => 1,
 		'filter' => 'text',
 		'tags' => array( 'basic' ),
+		'format' => 'html',
 		'params' => array(
 			'replyto' => array(
 				'required' => false,
@@ -57,7 +58,6 @@ function wikiplugin_quote_info()
 function wikiplugin_quote($data, $params)
 {
 	global $smarty;
-	global $prefs;
 
 	$source_url = '';
 	$date = null;

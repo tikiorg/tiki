@@ -52,6 +52,11 @@ class Search_Formatter_ValueFormatter_Categorylist extends Search_Formatter_Valu
 
 		$arr = TikiLib::lib('categ')->getCategories();
 		$list = '';
+
+		// if coming from category field _text version
+		if( !is_array($value) ) {
+			$value = explode(' ', $value);
+		}
 		
 		foreach ($arr as $arx) {
 			$myArr[$arx['categId']] = Array('parentId' => $arx['parentId'],'name' => $arx['name'], 'tepath' => $arx['tepath']);

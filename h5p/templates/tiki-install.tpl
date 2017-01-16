@@ -78,7 +78,7 @@
 				</div>
 				<div class="panel-body">
 					<ul class="nav nav-pills nav-stacked">
-						<li><a href="https://tiki.org" target="_blank"><img src="img/favicons/favicon-16x16.png" alt="{tr}Tiki Icon{/tr}"> {tr}Tiki Project Web Site{/tr}</a></li>
+						<li><a href="https://tiki.org" target="_blank"><img src="themes/base_files/favicons/favicon-16x16.png" alt="{tr}Tiki Icon{/tr}"> {tr}Tiki Project Web Site{/tr}</a></li>
 						<li><a href="https://doc.tiki.org" target="_blank" title="{tr}Documentation{/tr}">{icon name="documentation"} {tr}Documentation{/tr}</a></li>
 						<li><a href="https://tiki.org/forums" target="_blank" title="{tr}Forums{/tr}">{icon name="admin_forums"} {tr}Support Forums{/tr}</a></li>
 					</ul>
@@ -100,7 +100,7 @@
 					<form action="tiki-install.php" method="post" role="form">
 						<div class="form-group">
 							<label for="general-lang">{tr}Select your language{/tr}</label>
-							<select name="lang" id="general-lang" onchange="$('input[name=lang]:hidden').val($(this).val()); this.form.submit();" title="{tr}Select your language{/tr}" class="form-control">
+							<select name="lang" id="general-lang" onchange="$('.install-steps').tikiModal(tr('Loading...')); $('input[name=lang]:hidden').val($(this).val()); this.form.submit();" title="{tr}Select your language{/tr}" class="form-control">
 								{section name=ix loop=$languages}
 									<option value="{$languages[ix].value|escape}"
 										{if $prefs.site_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}
@@ -551,7 +551,7 @@
 									<label for="browsertitle">
 										{tr}Browser title:{/tr}
 									</label>
-									<input class="form-control" type="text" size="40" name="browsertitle" id="browsertitle" onclick="if (this.value=='{tr}My Tiki{/tr}') this.value='';" onfocus="origval=this.value;" onblur="if (this.value=='') this.value=origval;" value="{if $prefs.browsertitle eq ''}{tr}My Tiki{/tr}{else}{$prefs.browsertitle|escape}{/if}">
+									<input class="form-control" type="text" size="40" name="browsertitle" id="browsertitle" value="" placeholder="{tr}My Tiki{/tr}">
 									<span class="help-block">
 										{tr}This will appear in the browser title bar.{/tr}
 									</span>
@@ -560,7 +560,7 @@
 									<label for="sender_email">
 										{tr}Sender email:{/tr}
 									</label>
-									<input type="text" class="form-control" size="40" name="sender_email" id="sender_email" value="{$prefs.sender_email|escape}">
+									<input type="text" class="form-control" size="40" name="sender_email" id="sender_email" value="{$prefs.sender_email|escape}" placeholder="{tr}tiki@example.com{/tr}">
 									<span class="help-block">
 										{tr}Email sent by your site will use this address.{/tr}
 									</span>

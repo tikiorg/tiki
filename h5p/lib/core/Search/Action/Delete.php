@@ -20,7 +20,7 @@ class Search_Action_Delete implements Search_Action_Action
 		$object_type = $data->object_type->text();
 
 		if ($object_type != 'file') {
-			return false;
+			throw new Search_Action_Exception(tr('Cannot apply delete action to an object type %0.', $object_type));
 		}
 
 		return true;
@@ -37,7 +37,7 @@ class Search_Action_Delete implements Search_Action_Action
 			$info = $filegallib->get_file_info($fileId);
 
 			if (! $info) {
-				return false;
+				throw new Search_Action_Exception(tr('Cannot find file to delete: %0.', $fileId));
 			}
 
 			$filegallib->remove_file($info);

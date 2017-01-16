@@ -125,6 +125,6 @@ function wikiplugin_remarksbox($data, $params)
 	// there probably is a better way @todo this
 	// but for now i'm escaping the html in ~np~s as the parser is adding odd <p> tags
 	$repeat = false;
-	$ret = '~np~'.smarty_block_remarksbox($params, '~/np~'.tra($data).'~np~', $smarty, $repeat).'~/np~';
+	$ret = '~np~'.smarty_block_remarksbox($params, '~/np~'.tra($data).' ~np~', $smarty, $repeat).'~/np~';
 	return $ret;
 }

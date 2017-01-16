@@ -214,12 +214,14 @@ class WikiLib extends TikiLib
 	 * @param string $copyName
 	 * @return bool
 	 */
-	public function wiki_duplicate_page($name, $copyName = null)
+	public function wiki_duplicate_page($name, $copyName = null, $dupCateg=true, $dupTags=true)
 	{
 		global $user;
+		global $prefs;
 
 		$tikilib = TikiLib::lib('tiki');
 		$userlib = TikiLib::lib('user');
+		$globalperms = Perms::get();
 
 		$info = $tikilib->get_page_info($name);
 
@@ -244,21 +246,42 @@ class WikiLib extends TikiLib
 			$info['is_html']
 		);
 
-		if ($userlib->user_has_permission($user, 'tiki_p_add_object')) {
-			$categlib = TikiLib::lib('categ');
-			$categories = $categlib->get_object_categories('wiki page', $name);
+		if ($copyPage) {
+			$warnings = array();
+			if ($dupCateg && $prefs['feature_categories'] === 'y') {
 
-			foreach ($categories as $catId) {
-				$categlib->categorizePage($copyName, $catId);
+				if ($globalperms->modify_object_categories) {
+					$categlib = TikiLib::lib('categ');
+					$categories = $categlib->get_object_categories('wiki page', $name);
+					Perms::bulk(array( 'type' => 'category' ), 'object', $categories);
+
+					foreach ($categories as $catId) {
+						$perms = Perms::get(array( 'type' => 'category', 'object' => $catId));
+
+						if ($perms->add_object) {
+							$categlib->categorizePage($copyName, $catId);
+						} else {
+							$warnings[] = tr("You don't have permission to use category '%0'.", $categlib->get_category_name($catId));
+						}
+					}
+				} else {
+					$warnings[] = tr("You don't have permission to edit categories.");
+				}
 			}
-		}
 
-		if ($userlib->user_has_permission($user, 'tiki_p_freetags_tag')) {
-			$freetaglib = TikiLib::lib('freetag');
-			$freetags = $freetaglib->get_tags_on_object($name, 'wiki page');
+			if ($dupTags && $prefs['feature_freetags'] === 'y' && $globalperms->freetags_tag) {
+				$freetaglib = TikiLib::lib('freetag');
+				$freetags = $freetaglib->get_tags_on_object($name, 'wiki page');
 
-			foreach ($freetags['data'] as $tag) {
-				$freetaglib->tag_object($user, $copyName, 'wiki page', $tag['tag']);
+				foreach ($freetags['data'] as $tag) {
+					$freetaglib->tag_object($user, $copyName, 'wiki page', $tag['tag']);
+				}
+			} else {
+				$warnings[] = tr("You don't have permission to edit tags.");
+			}
+
+			if (count($warnings) > 0) {
+				Feedback::warning(array('mes' => $warnings), 'session');
 			}
 		}
 

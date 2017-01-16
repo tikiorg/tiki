@@ -5,11 +5,8 @@
 	var pivotData{{$pivottable.index}} = {{$pivottable.data|json_encode}};
 	$('#output_{{$pivottable.id}}').each(function () {
 		var derivers = $.pivotUtilities.derivers;
-		var renderers = $.extend($.pivotUtilities.renderers, 
-		
-		$.pivotUtilities.c3_renderers);
-
-		$("#output_{{$pivottable.id}}").pivotUI(pivotData{{$pivottable.index}}, {
+		var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers);
+		var opts = {
 			renderers: renderers,
 			cols: {{$pivottable.tcolumns|json_encode}}, rows: {{$pivottable.trows|json_encode}},
 			rendererName: {{$pivottable.rendererName|json_encode}},
@@ -25,7 +22,12 @@
 					}
 				}
 			}
-		});
+		};
+		if( {{$pivottable.menuLimit|json_encode}} ) {
+			opts.menuLimit = {{$pivottable.menuLimit|json_encode}};
+		}
+
+		$("#output_{{$pivottable.id}}").pivotUI(pivotData{{$pivottable.index}}, opts);
 
 		$("#pivotEditBtn_{{$pivottable.id}}").on("click", function(){
 			showControls("#output_{{$pivottable.id}}",{{$pivottable.id|json_encode}});

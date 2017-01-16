@@ -46,29 +46,29 @@ class Search_Action_FileGalleryChangeFilename implements Search_Action_Action
         }
 
         if ($object_type != 'trackeritem') {
-            return false;
+            throw new Search_Action_Exception(tr('Cannot apply filegal_change_filename action to an object type %0.', $object_type));
         }
 
         $trklib = TikiLib::lib('trk');
         $info = $trklib->get_item_info($object_id);
 
         if (!$info) {
-            return false;
+            throw new Search_Action_Exception(tr('Tracker item %0 not found.', $object_id));
         }
 
         $definition = Tracker_Definition::get($info['trackerId']);
 
         $fieldDefinition = $definition->getFieldFromPermName($field);
         if (!$fieldDefinition) {
-            return false;
+            throw new Search_Action_Exception(tr('Tracker field %0 not found for tracker %1.', $field, $info['trackerId']));
         }
 
         if ($fieldDefinition['type'] != 'FG') {
-            return false;
+            throw new Search_Action_Exception(tr('Tracker field %0 is not a Files field type.', $field));
         }
 
         if (empty($value)) {
-            return false;
+            throw new Search_Action_Exception(tr('filegal_change_filename action missing value parameter.'));
         }
 
         return true;

@@ -41,9 +41,7 @@ if (file_exists('./db/local.php') && file_exists('./templates/tiki-check.tpl')) 
 	$standalone = false;
 	require_once ('tiki-setup.php');
 	// TODO : Proper authentication
-	if (!$nagios) {
-		$access->check_permission('tiki_p_admin');
-	}
+	$access->check_permission('tiki_p_admin');
 } else {
 	$standalone = true;
 	$render = "";

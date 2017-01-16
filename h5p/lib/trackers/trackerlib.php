@@ -675,10 +675,15 @@ class TrackerLib extends TikiLib
 	}
 
 	/* experimental shared */
-	public function get_items_list($trackerId, $fieldId, $value, $status='o')
+	public function get_items_list($trackerId, $fieldId, $value, $status='o', $multiple = false)
 	{
 		$query = "select distinct tti.`itemId`, tti.`itemId` i from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif ";
-		$query.= " where tti.`itemId`=ttif.`itemId` and ttif.`fieldId`=? and ttif.`value`=?";
+		$query.= " where tti.`itemId`=ttif.`itemId` and ttif.`fieldId`=?";
+		if( $multiple ) {
+			$query .= " and ttif.`value` REGEXP CONCAT('[[:<:]]', ?, '[[:>:]]')";
+		} else {
+			$query .= " and ttif.`value`=?";
+		}
 		$bindvars = array((int) $fieldId, $value);
 		if (!empty($status)) {
 			$query .= ' and ' . $this->in('tti.status', str_split($status, 1), $bindvars);
@@ -1168,16 +1173,29 @@ class TrackerLib extends TikiLib
 					$linkfilter[] = array('filterfield' => $ff, 'exactvalue' => $ev, 'filtervalue' => $fv);
 					continue;
 				}
+
+				$value = empty($fv) ? $ev : $fv;
+				$search_for_blank = ( is_null($ev) && is_null($fv) )
+					|| ( is_array($value) && count($value) == 1
+						&& ( empty($value[0])
+							|| ( is_array($value[0]) && count($value[0]) == 1 && empty($value[0][0]) )
+						)
+					);
+				
 				$j = ( $last > 0 ) ? '0' : '';
-				$cat_table .= " INNER JOIN `tiki_tracker_item_fields` ttif$i ON (ttif$i.`itemId` = ttif$j.`itemId`)";
+				$cat_table .= ' ' . ( $search_for_blank ? 'LEFT' : 'INNER' ) . " JOIN `tiki_tracker_item_fields` ttif$i ON ttif$i.`itemId` = ttif$j.`itemId`";
 				$last++;
 
 				if (isset($ff_array['sqlsearch']) && is_array($ff_array['sqlsearch'])) {
 					$mid .= " AND ttif$i.`fieldId` in (".implode(',', array_fill(0, count($ff_array['sqlsearch']), '?')).')';
 					$bindvars = array_merge($bindvars, $ff_array['sqlsearch']);
 				} elseif ( $ff ) {
-					$mid .= " AND ttif$i.`fieldId`=? ";
-					$bindvars[] = $ff;
+					if( $search_for_blank ) {
+						$cat_table .= " AND ttif$i.`fieldId` = ".intval($ff);
+					} else {
+						$mid .= " AND ttif$i.`fieldId`=? ";
+						$bindvars[] = $ff;
+					}
 				}
 
 				if ( $filter['type'] == 'e' && $prefs['feature_categories'] == 'y' && (!empty($ev) || !empty($fv)) ) {
@@ -1758,7 +1776,7 @@ class TrackerLib extends TikiLib
 				if ($value !== false) {
 					$this->modify_field($currentItemId, $array['fieldId'], $value);
 
-					if ($itemId) {
+					if ($itemId && $old_value != $value) {
 						// On update, save old value
 						$this->log($version, $itemId, $array['fieldId'], $old_value);
 					}
@@ -3619,7 +3637,7 @@ class TrackerLib extends TikiLib
 			if ($fieldId = $definition->getUserField()) {
 				// user creator field
 				$value = $userreal;
-				$items = $this->get_items_list($trackerId, $fieldId, $value, $status);
+				$items = $this->get_items_list($trackerId, $fieldId, $value, $status, true);
 				if (!empty($items)) {
 					return $items[0];
 				}
@@ -4384,6 +4402,9 @@ class TrackerLib extends TikiLib
 	{
 		if (empty($version)) {
 			 return;
+		}
+		if( $value === null ) {
+			$value = ''; // we want to log it after all, so change is in history
 		}
 		$values = (array) $value;
 		foreach ($values as $v) {

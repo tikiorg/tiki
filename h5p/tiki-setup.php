@@ -331,14 +331,6 @@ if ( isset( $_GET['msgtype'] ) ) {
 } else {
 	$smarty->assign('display_msgtype', '');
 }
-// Check for favicons and declare if they exist
-$smarty->assign('favicon_touch', file_exists('img/favicons/apple-touch-icon.png'));
-$smarty->assign('favicon_32', file_exists('img/favicons/favicon-32x32.png'));
-$smarty->assign('favicon_16', file_exists('img/favicons/favicon-16x16.png'));
-$smarty->assign('favicon_json', file_exists('img/favicons/manifest.json'));
-$smarty->assign('favicon_pinned', file_exists('img/favicons/safari-pinned-tab.svg'));
-$smarty->assign('favicon_xml', file_exists('img/favicons/browserconfig.xml'));
-
 
 require_once 'lib/setup/events.php';
 
@@ -759,7 +751,6 @@ if( $prefs['feature_hidden_links'] == 'y' && isset($jitRequest['wysiwyg']) && $j
 if ($prefs['print_pdf_from_url'] != 'none') {
 	$headerlib->add_jsfile('lib/jquery_tiki/pdf.js');
 }
-
 
 // any furher $headerlib->add_js() call not using rank = 'external' will be put into rank 'late'
 // this should separate the overall JS from page specific JS

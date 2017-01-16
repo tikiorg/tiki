@@ -131,9 +131,17 @@ function wikiplugin_listexecute($data, $params)
 						$entry['value'] = $_POST['list_input'];
 					}
 					
-					$success = $action->execute($entry);
-					if( !$success ) {
-						Feedback::error(tr("Error executing action %0 on item %1.", $_POST['list_action'], $entry['title']));
+					try {
+						$success = $action->execute($entry);
+						if( !$success ) {
+							Feedback::error(tr("Unknown error executing action %0 on item %1.", $_POST['list_action'], $entry['title']));
+						}
+					} catch( Search_Action_Exception $e ) {
+						Feedback::error(
+							tr("Error executing action %0 on item %1:", $_POST['list_action'], $entry['title'])
+							.' '.$e->getMessage()
+						);
+						$success = false;
 					}
 
 					$reportSource->setStatus($entry['object_type'], $entry['object_id'], $success);

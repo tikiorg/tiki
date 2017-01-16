@@ -83,7 +83,11 @@ class Search_Formatter_Plugin_ArrayTemplate implements Search_Formatter_Plugin_I
 			} else {
 				$searchField = $field;
 			}
-			$entry[str_replace('tracker_field_', '', $field)] = trim($valueFormatter->$format($searchField, $arguments));
+			$entry[str_replace('tracker_field_', '', $field)] = str_replace(
+				array('~np~', '~/np~'),
+				'',
+				trim($valueFormatter->$format($searchField, $arguments))
+			);
 		}
 		return $entry;
 	}

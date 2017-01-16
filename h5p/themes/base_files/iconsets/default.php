@@ -185,7 +185,6 @@ function iconset_default()
 			'admin_print' => array(
 				'id' => 'print',
 			),
-			
 			//align-center in defaults
 			//align-justify in defaults
 			//align-left in defaults

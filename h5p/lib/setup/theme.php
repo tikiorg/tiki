@@ -129,6 +129,30 @@ if (empty($custom_css)) {
 if (is_readable($custom_css)) {
 	$headerlib->add_cssfile($custom_css, 53);
 }
+if ($prefs['site_favicon_disable'] !== 'y') {    // if favicons are disabled in preferences, skip the lot of it.
+    $favicon_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], 'favicon-16x16.png', 'favicons/');
+    if ($favicon_path) {  // if there is a 16x16 png favicon in the theme folder, then find and display others if they exist
+        $headerlib->add_link('icon', $favicon_path, '16x16', 'image/png');
+        $favicon_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], 'apple-touch-icon.png', 'favicons/');
+        if ($favicon_path) $headerlib->add_link('apple-touch-icon', $favicon_path, '180x180');
+        $favicon_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], 'favicon-32x32.png', 'favicons/');
+        if ($favicon_path) $headerlib->add_link('icon', $favicon_path, '32x32', 'image/png');
+        $favicon_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], 'manifest.json', 'favicons/');
+        if ($favicon_path) $headerlib->add_link('manifest', $favicon_path);
+        $favicon_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], 'safari-pinned-tab.svg', 'favicons/');
+        if ($favicon_path) $headerlib->add_link('mask-icon', $favicon_path, '', '', '#5bbad5');
+        $favicon_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], 'browserconfig.xml', 'favicons/');
+        if ($favicon_path) $headerlib->add_meta('msapplication-config', $favicon_path);
+    }else{    // if no 16x16 png favicon exists, diplay tiki icons
+        $headerlib->add_link('icon', 'themes/base_files/favicons/favicon-16x16.png', '16x16', 'image/png');
+        $headerlib->add_link('apple-touch-icon', 'themes/base_files/favicons/apple-touch-icon.png', '180x180');
+        $headerlib->add_link('icon', 'themes/base_files/favicons/favicon-32x32.png', '32x32', 'image/png');
+        $headerlib->add_link('manifest', 'themes/base_files/favicons/manifest.json');
+        $headerlib->add_link('mask-icon', 'themes/base_files/favicons/safari-pinned-tab.svg', '', '', '#5bbad5');
+        $headerlib->add_meta('msapplication-config', 'themes/base_files/favicons/browserconfig.xml');
+    }
+    unset($favicon_path);  // no longer needed, so bye bye
+}
 
 //8) produce $iconset to be used for generating icons
 $iconset = TikiLib::lib('iconset')->getIconsetForTheme($theme_active, $theme_option_active);

@@ -23,7 +23,7 @@
 		"cwspear/bootstrap-hover-dropdown": "^2.2.1",
 		"dompdf/dompdf": "0.6.2",
 		"ezyang/htmlpurifier": "^4.8.0",
-		"etdsolutions/pivottable":"2.0.2",
+		"nicolaskruchten/pivottable":"v2.7.0",
 		"fortawesome/font-awesome": "^4.6.3",
 		"google/apiclient":"1.1.6",
 		"h5p/h5p-core":"dev-master",

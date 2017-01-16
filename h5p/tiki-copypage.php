@@ -14,6 +14,7 @@ $section_class = "tiki_wiki_page manage";	// This will be body class instead of 
 require_once ('tiki-setup.php');
 $histlib = TikiLib::lib('hist');
 $wikilib = TikiLib::lib('wiki');
+$userlib = TikiLib::lib('user');
 
 $access->check_feature('feature_wiki');
 
@@ -49,6 +50,9 @@ if (!$tikilib->page_exists($page)) {
 	die;
 }
 
+$smarty->assign('tiki_p_add_object', $userlib->user_has_permission($user, 'tiki_p_add_object'));
+$smarty->assign('tiki_p_freetags_tag', $userlib->user_has_permission($user, 'tiki_p_freetags_tag'));
+
 if (isset($_REQUEST["copy"]) || isset($_REQUEST["confirm"])) {
 	check_ticket('copy-page');
 	// If the new pagename does match userpage prefix then display an error
@@ -58,13 +62,16 @@ if (isset($_REQUEST["copy"]) || isset($_REQUEST["confirm"])) {
 		$smarty->display("error.tpl");
 		die;
 	}
+	$dupCateg = isset($_REQUEST['dupCateg']) && $_REQUEST['dupCateg'] === 'y';
+	$dupTags = isset($_REQUEST['dupTags']) && $_REQUEST['dupTags'] === 'y';
 
 	$smarty->assign('newname', $newName);
 	$result = false;
+
 	if (!isset($_REQUEST["confirm"]) && $wikilib->contains_badchars($newName)) {
 		$smarty->assign('page_badchars_display', $wikilib->get_badchars());
 	} else {
-		$result = $wikilib->wiki_duplicate_page($page, $newName);
+		$result = $wikilib->wiki_duplicate_page($page, $newName, $dupCateg, $dupTags);
 
 		if ($result) {
 			if ($prefs['feature_sefurl'] == 'y') {
@@ -76,8 +83,8 @@ if (isset($_REQUEST["copy"]) || isset($_REQUEST["confirm"])) {
 		} else {
 			$smarty->assign('msg', tra("Cannot copy page because maybe new page name already exists"));
 			$smarty->display("error.tpl");
-			die;
 		}
+		die;
 	}
 }
 ask_ticket('copy-page');

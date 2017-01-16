@@ -73,7 +73,7 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 		if( isset($requestData['tzoffset']) && $value && isset($requestData[$ins_id]) ) {
 			$browser_offset = 0 - intval($requestData['tzoffset']) * 60;
 
-			$server_offset = $this->tzServerOffset();	
+			$server_offset = TikiDate::tzServerOffset(TikiLib::lib('tiki')->get_display_timezone());
 
 			$value = $value - $server_offset + $browser_offset;
 		}
@@ -109,21 +109,11 @@ class Tracker_Field_JsCalendar extends Tracker_Field_DateTime
 
 		if( $params['date'] ) {
 			// convert to UTC to display it properly for browser based timezone
-			$params['date'] += $this->tzServerOffset();
+			$params['date'] += TikiDate::tzServerOffset(TikiLib::lib('tiki')->get_display_timezone());
 			$params['isutc'] = true;
 		}
 
 		return smarty_function_jscalendar($params, $smarty);
-	}
-
-	private function tzServerOffset() {
-		$tikilib = TikiLib::lib('tiki');
-		$display_tz = $tikilib->get_display_timezone();
-		if ( $display_tz == '' )
-			$display_tz = 'UTC';
-		$tz = new DateTimeZone($display_tz);
-		$d = new DateTime('now', $tz);
-		return $tz->getOffset($d);
 	}
 }
 

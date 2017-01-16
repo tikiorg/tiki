@@ -921,6 +921,9 @@ if ($dbcon) {
 	if ($install_step == '6' && $has_tiki_db) {
 		if (isset($_POST['install_type']) && $_POST['install_type'] === 'scratch') {
 			require_once('lib/setup/prefs.php');
+			// fix some prefs thwt get reset here
+			$prefs['language'] = $language;
+			$prefs['javascript_enabled'] = null;	// seems the check is for $prefs['javascript_enabled'] == 'n'
 		}
 		update_preferences($prefs);
 		$smarty->assign('admin_email', get_admin_email());
@@ -1223,6 +1226,7 @@ $headerlib = TikiLib::lib('header');
 $headerlib->add_js("var tiki_cookie_jar=new Array();");
 $headerlib->add_cssfile('vendor/twitter/bootstrap/dist/css/bootstrap.css');
 $headerlib->add_cssfile('vendor/fortawesome/font-awesome/css/font-awesome.min.css');
+$headerlib->add_cssfile('themes/base_files/css/tiki_base.css');
 $headerlib->add_jsfile('lib/tiki-js.js');
 $headerlib->add_jsfile_dependancy("vendor/components/jquery/jquery.min.js");
 $headerlib->add_jsfile('lib/jquery_tiki/tiki-jquery.js');

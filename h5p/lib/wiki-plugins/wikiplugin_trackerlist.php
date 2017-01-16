@@ -370,6 +370,7 @@ function wikiplugin_trackerlist_info()
 					 . '<code>notpreference(name)</code> - ' . tra('match if value does not equal a Tiki preference value') . '<br>'
 					 . '<code>not(value)</code> - ' . tra('match if the field does not equal "value"') . '<br>'
 					 . '<code>not()</code> - ' . tr('match for non empty values (opposite with %0exactvalue%1="")', '<code>', '</code>') . '<br>'
+					 . '<code>or(value1,value2)</code> - ' . tra('match if the field equals "value1" or "value2" (can list more than 2 alternative values)') . '<br>'
 					 . '<code>field(x, itemid)</code> - ' . tr('match field with ID x in item with ID itemid.
 						%0field(x)%1 can be used if the %0itemId%1 URL parameter is set', '<code>', '</code>') . '<br>'
 					 . '<code>notfield(x, itemid)</code> - ' . tr('match if not equal to field with ID x in item with ID itemid
@@ -1710,6 +1711,8 @@ function wikiplugin_trackerlist($data, $params)
 								$exactvalue[] = array($conv[$matches[1]]=>$matches[2]);
 							} elseif (preg_match('/not\((.*)\)/', $evs[$i], $matches)) {
 								$exactvalue[] = array('not' => $matches[1]);
+							} elseif (preg_match('/or\((.*)\)/', $evs[$i], $matches)) {
+								$exactvalue[] = preg_split('/\s*,\s*/', $matches[1]);
 							} else {
 								$exactvalue[] = $evs[$i];
 							}

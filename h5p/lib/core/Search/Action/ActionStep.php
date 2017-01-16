@@ -69,11 +69,7 @@ class Search_Action_ActionStep implements Search_Action_Step
 
 	function requiresInput()
 	{
-		if ($entry = $this->prepare(array('object_type' => '', 'object_id' => ''))) {
-			return $this->action->requiresInput($entry);
-		}
-
-		return false;
+		return $this->action->requiresInput(new JitFilter($this->definition));
 	}
 
 	private function prepare($entry)
@@ -105,7 +101,7 @@ class Search_Action_ActionStep implements Search_Action_Step
 			}
 
 			if (empty($values) && $isRequired) {
-				return null;
+				throw new Search_Action_Exception(tr('Missing required action parameter or value: %0', $fieldName));
 			} elseif ($requiresArray) {
 				$out[$fieldName] = $values;
 			} else {
