@@ -59,7 +59,13 @@ class Search_Formatter_Plugin_ArrayTemplate implements Search_Formatter_Plugin_I
 	}
 
 	function setFieldPermNames($fields) {
-		$this->fieldPermNames = array_map(function($f){ return 'tracker_field_'.$f['permName']; }, $fields);
+		$this->fieldPermNames = array_map(function($f){
+			if( in_array($f['permName'], array('creation_date', 'modification_date', 'tracker_status')) ) {
+				return $f['permName'];
+			} else {
+				return 'tracker_field_'.$f['permName'];
+			}
+		}, $fields);
 	}
 
 	function prepareEntry($valueFormatter)
