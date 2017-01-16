@@ -135,14 +135,14 @@ select[name=start_Hour],
 select[name=start_Minute],
 select[name=end_Hour],
 select[name=end_Minute] {
-		min-width: 40px;
+	min-width: 40px;
 }
 
 .caltable,
 #calscreen .normal {
-		clear: both;
-		border-collapse: collapse;
-		width: 100%;
+	clear: both;
+	border-collapse: collapse;
+	width: 100%;
 }
 
 .caltable td {
