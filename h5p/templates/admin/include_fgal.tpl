@@ -312,6 +312,10 @@
 						</div>
 					{/if}
 				</div>
+				{preference name='h5p_enabled'}
+				<div class="adminoptionboxchild" id="h5p_enabled_childcontainer">
+					{preference name='h5p_whitelist'}
+				</div>
 			</fieldset>
 
 			<fieldset>

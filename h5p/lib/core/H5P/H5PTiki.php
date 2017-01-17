@@ -7,6 +7,39 @@
 
 class H5PTiki implements H5PFrameworkInterface
 {
+
+	// properties for table objects
+	private $tiki_h5p_contents = null;
+	private $tiki_h5p_contents_libraries = null;
+	private $tiki_h5p_libraries = null;
+	private $tiki_h5p_libraries_cachedassets = null;
+	private $tiki_h5p_libraries_libraries = null;
+
+	function __construct()
+	{
+		// just as an example of how to get a table objects
+		// docs here https://dev.tiki.org/Database+Access
+
+		$tikiDb = TikiDb::get();
+
+		$this->tiki_h5p_contents = $tikiDb->table('tiki_h5p_contents');
+		$this->tiki_h5p_contents_libraries = $tikiDb->table('tiki_h5p_contents_libraries');
+		$this->tiki_h5p_libraries = $tikiDb->table('tiki_h5p_libraries');
+		$this->tiki_h5p_libraries_cachedassets = $tikiDb->table('tiki_h5p_libraries_cachedassets');
+		$this->tiki_h5p_libraries_libraries = $tikiDb->table('tiki_h5p_libraries_libraries');
+		// possibly others needed?
+
+		// example select via table
+		$contents = $this->tiki_h5p_libraries->fetchAll(
+			['id'],					// columns
+			['disable' => 0]		// conditions
+		);
+
+		// example of "plain" sql statement
+		$result = $tikiDb->query('SELECT `id` FROM `tiki_h5p_libraries` WHERE `disabled` = ?', [0]);
+
+	}
+
 	/**
 	 * Returns info for the current platform
 	 *
@@ -18,7 +51,13 @@ class H5PTiki implements H5PFrameworkInterface
 	 */
 	public function getPlatformInfo()
 	{
-		// TODO: Implement getPlatformInfo() method.
+		$TWV = new TWVersion();
+
+		return array(
+			'name' => 'Tiki',
+			'version' => $TWV->version,
+			'h5pVersion' => H5PLib::VERSION,
+		);
 	}
 
 	/**
@@ -52,7 +91,10 @@ class H5PTiki implements H5PFrameworkInterface
 	 */
 	public function setErrorMessage($message)
 	{
-		// TODO: Implement setErrorMessage() method.
+		if (Perms::get()->h5p_edit) {
+			// possibly needs 'session' as the method param if the error happens asychronously
+			Feedback::error(tra($message));
+		}
 	}
 
 	/**
@@ -63,7 +105,9 @@ class H5PTiki implements H5PFrameworkInterface
 	 */
 	public function setInfoMessage($message)
 	{
-		// TODO: Implement setInfoMessage() method.
+		if (Perms::get()->h5p_edit) {
+			Feedback::success(tra($message));
+		}
 	}
 
 	/**
@@ -84,7 +128,7 @@ class H5PTiki implements H5PFrameworkInterface
 	 */
 	public function t($message, $replacements = array())
 	{
-		// TODO: Implement t() method.
+		tr($message, $replacements);	// TODO convert messages to use %0 etc placeholders?
 	}
 
 	/**
@@ -165,7 +209,9 @@ class H5PTiki implements H5PFrameworkInterface
 	 */
 	public function getWhitelist($isLibrary, $defaultContentWhitelist, $defaultLibraryWhitelist)
 	{
-		// TODO: Implement getWhitelist() method.
+		global $prefs;
+
+		return $prefs['h5p_whitelist'] . ($isLibrary ? ' ' . $defaultLibraryWhitelist : '');
 	}
 
 	/**
@@ -699,5 +745,18 @@ class H5PTiki implements H5PFrameworkInterface
 	public function afterExportCreated()
 	{
 		// TODO: Implement afterExportCreated() method.
+	}
+
+	/**
+	 * Check if user has permissions to an action
+	 *
+	 * @method hasPermission
+	 * @param  [H5PPermission] $permission Permission type, ref H5PPermission
+	 * @param  [int]           $id         Id need by platform to determine permission
+	 * @return boolean
+	 */
+	public function hasPermission($permission, $id = NULL)
+	{
+		// TODO: Implement hasPermission() method.
 	}
 }

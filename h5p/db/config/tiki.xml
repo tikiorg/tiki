@@ -120,6 +120,9 @@
 		<service id="tiki.lib.groupalert" class="GroupAlertLib">
 			<file>%kernel.root_dir%/lib/groupalert/groupalertlib.php</file>
 		</service>
+		<service id="tiki.lib.h5p" class="H5PLib">
+			<file>%kernel.root_dir%/lib/filegals/h5plib.php</file>
+		</service>
 		<service id="tiki.lib.header" class="HeaderLib">
 			<file>%kernel.root_dir%/lib/headerlib.php</file>
 		</service>

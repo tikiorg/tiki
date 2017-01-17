@@ -63,7 +63,7 @@ if ($options['only-secdb']) {
 	include_once('lib/setup/twversion.class.php');
 	$TWV = new TWVersion();
 
-	write_secdb(ROOT . "/db/tiki-secdb_{$TWV->version}_mysql.sql", ROOT, $TWV->version);
+	write_secdb(ROOT . "/db/tiki-secdb_{$TWV->version}_mysql.sql", ROOT, $TWVtiki_h5p_libraries);
 	exit;
 }
 

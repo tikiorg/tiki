@@ -149,6 +149,11 @@ function tiki_setup_events()
 		$events->bind('tiki.file.update', $defer('scorm', 'handle_file_update'));
 	}
 
+	if ($prefs['h5p_enabled'] == 'y') {
+		$events->bind('tiki.file.create', $defer('h5p', 'handle_file_creation'));
+		$events->bind('tiki.file.update', $defer('h5p', 'handle_file_update'));
+	}
+
 	if ($prefs['feature_futurelinkprotocol'] == 'y') {
 		if ($prefs['feature_wikilingo'] == 'y') {
 			$events->bind("tiki.wiki.view", $defer('wlte', 'wikilingo_flp_view'));
