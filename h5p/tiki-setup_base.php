@@ -313,12 +313,11 @@ $vartype['rows'] = '+int';
 $vartype['cols'] = '+int';
 $vartype['topicname'] = '+string';
 $vartype['error'] = 'string';
-$vartype['editmode'] = 'char'; // from calendar
-$vartype['actpass'] = '+string'; // remind password page
-$vartype['user'] = '+string'; // remind password page
-$vartype['remind'] = 'string'; // remind password page
+$vartype['editmode'] = 'char';		// from calendar
+$vartype['actpass'] = '+string';	// remind password page
+$vartype['user'] = '+string';		// remind password page
+$vartype['remind'] = 'string';		// remind password page
 $vartype['url'] = 'url';
-
 $vartype['aid'] = '+int';
 $vartype['description'] = 'string';
 $vartype['filter_active'] = 'char';
@@ -333,7 +332,7 @@ $vartype['userole'] = 'int';
 $vartype['focus'] = 'string';
 $vartype['filegals_manager'] = 'vars';
 $vartype['filesyntax'] = 'string';
-$vartype['ver'] = 'dotvars'; // filename hash for drawlib + rss type for rsslib
+$vartype['ver'] = 'dotvars';		// filename hash for drawlib + rss type for rsslib
 $vartype['trackerId'] = 'int';
 $vartype['articleId'] = 'int';
 $vartype['galleryId'] = 'int';
@@ -358,7 +357,7 @@ $vartype['page_ref_id'] = 'int';
  */
 function varcheck(&$array, $category)
 {
-	global $patterns, $vartype, $prefs;
+	global $patterns, $vartype;
 	$return = array();
 	if (is_array($array)) {
 		foreach ($array as $rq => $rv) {

@@ -453,7 +453,7 @@ class PdfGenerator
 		 $jfo = json_decode($faCodes,true);
          for ($i = 0; $i < $fadivs->length; $i++) {
                $fadiv = $fadivs->item($i);
-               $faClass=split(" ",str_replace(array("fa ","-"),"",$fadiv->getAttribute('class')));
+               $faClass=explode(" ",str_replace(array("fa ","-"),"",$fadiv->getAttribute('class')));
 			   foreach($faClass as $class)
 			   {
 				   if($jfo[$class][codeValue])

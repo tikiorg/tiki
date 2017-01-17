@@ -5,7 +5,7 @@ AuthType Basic
 <Limit GET POST PUT>
 require valid-user
 </Limit>
-#
+
 <FilesMatch "\.(bak|inc|inc\.php|lib|sh|sql|tpl)$">
     <IfModule mod_authz_core.c>
        Require all denied
@@ -15,4 +15,4 @@ require valid-user
         deny from all
     </IfModule>
 </FilesMatch>
-#
+

@@ -91,7 +91,7 @@ FileETag none
     # Read more: wiki.mozilla.org/Security/Reviews/crossoriginAttribute
     <IfModule mod_setenvif.c>
     # Mod_headers, y u no match by Content-Type?!
-        <FilesMatch "(?i)\.(gif|png|jpe?g|svgz?|ico|webp)$">
+        <FilesMatch "(?i)\.(gif|png|jpe?g|svgz?|ico)$">
             SetEnvIf Origin ":" IS_CORS
             Header set Access-Control-Allow-Origin "*" env=IS_CORS
         </FilesMatch>
@@ -109,7 +109,7 @@ FileETag none
 # -- Expires Headers -- #
 # If the site is in active development, you may want to comment out this section.
 <IfModule mod_expires.c>
-	<FilesMatch "(?i)\.(gif|png|jpe?g|svgz?|ico|webp)$">
+	<FilesMatch "(?i)\.(gif|png|jpe?g|svgz?|ico)$">
 		ExpiresActive on
 		ExpiresDefault "access plus 1 month"
 	</FilesMatch>

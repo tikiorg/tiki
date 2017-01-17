@@ -327,8 +327,11 @@ select.form-control.date {
 	-moz-column-count: auto;
 	-moz-column-gap: 1.5rem;
 	-moz-column-width: 21rem;
+	-webkit-column-count: auto;
 	column-count: auto;
+	-webkit-column-gap: 1.5rem;
 	column-gap: 1.5rem;
+	-webkit-column-width: 21rem;
 	column-width: 21rem;
 	font-size: 0; /* this is to prevent displaying of white space rendered by unwanted nbsp e.g. in plugin LIST */
 }
@@ -341,14 +344,19 @@ select.form-control.date {
 .masonry > br, .masonry > .editplugin {display: none !important}
 .masonry > * .img-responsive {margin: auto}
 
-.masonry.nogaps {-moz-column-gap: 0; column-gap: 0}
+.masonry.nogaps {-moz-column-gap: 0; -webkit-column-gap: 0; column-gap: 0}
 .masonry.nogaps > a, .masonry.nogaps > img, .masonry.nogaps img {display: block}
 
 .masonry.flex-horiz {
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
+	-ms-flex-wrap: wrap;
 	flex-wrap: wrap;
 }
 .masonry.flex-horiz > * {
+	-webkit-box-flex: 1;
+	-ms-flex-positive: 1;
 	flex-grow: 1;
 	margin: 0;
 	width: auto;

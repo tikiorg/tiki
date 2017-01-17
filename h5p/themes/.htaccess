@@ -9,7 +9,7 @@
 </FilesMatch>
 
 
-<FilesMatch "\.(js)$">
+<FilesMatch "(?i)\.(css|js|jpe?g|png|ico|gif|svgz?|bmp|json|xml|ttf|eot|woff2?|otf|swf)$">
     <IfModule mod_authz_core.c>
        Require all granted
     </IfModule>

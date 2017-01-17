@@ -1,9 +1,21 @@
-<FilesMatch "\.php$">
-    <IfModule mod_authz_core.c>
-       Require all denied
-    </IfModule>
-    <IfModule !mod_authz_core.c>
-        order deny,allow
-        deny from all
-    </IfModule>
+<FilesMatch ".*">
+	<IfModule mod_authz_core.c>
+		Require all denied
+	</IfModule>
+	<IfModule !mod_authz_core.c>
+		order deny,allow
+		deny from all
+	</IfModule>
+</FilesMatch>
+
+#js swf          - need browser access    - belong here
+#css gif svg png - need browser access    - should be moved
+#remaining files - unknown browser access - some belong here, others unknown
+<FilesMatch "\.(js|swf|css|gif|png|svg|as|xsd|wsdl|fla|ynl|ttf|xml)$">
+	<IfModule mod_authz_core.c>
+		Require all granted
+	</IfModule>
+	<IfModule !mod_authz_core.c>
+		Allow from all
+	</IfModule>
 </FilesMatch>

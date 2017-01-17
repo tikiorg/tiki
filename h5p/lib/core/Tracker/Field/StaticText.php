@@ -32,6 +32,7 @@ class Tracker_Field_StaticText extends Tracker_Field_Abstract implements Tracker
 						'options' => array(
 							0 => tr('Handle line breaks as new lines only'),
 							1 => tr('Wiki Parse'),
+							2 => tr('Wiki Parse with Pretty Tracker replacements'),
 						),
 						'legacy_index' => 0,
 					),
@@ -53,6 +54,26 @@ class Tracker_Field_StaticText extends Tracker_Field_Abstract implements Tracker
 		$value = $this->getConfiguration('description');
 
 		if ($this->getOption('wikiparse') == 1) {
+
+			$value = $tikilib->parse_data($value);
+
+		} else if ($this->getOption('wikiparse') == 2) {	// do pretty tracker replacements
+
+			$definition = Tracker_Definition::get($this->getConfiguration('trackerId'));
+			$itemData = $this->getItemData();
+
+			preg_match_all('/\{\$f_(\w+)\}/', $value, $matches);
+
+			foreach ($matches[1] as $fieldIdOrName) {
+				$field = $definition->getField($fieldIdOrName);
+				$fieldId = $field['fieldId'];
+
+				if (isset($itemData[$fieldId])) {
+					$fieldValue = $itemData[$field['fieldId']];
+					$value = str_replace(['{$f_' . $fieldId . '}', '{$f_' . $field['permName'] . '}'], $fieldValue, $value);
+				}
+			}
+
 			$value = $tikilib->parse_data($value);
 		}
 		

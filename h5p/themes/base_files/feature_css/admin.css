@@ -243,12 +243,12 @@ a.admbox span.title {
 #toolbar_edit_div label,
 #toolbar_edit_div input,
 #toolbar_edit_div select {
-		display:block;
+	display:block;
 }
 
 #toolbar_edit_div input,
 #toolbar_edit_div select {
-		clear: right;
+	clear: right;
 }
 
 #toolbar_edit_div input.text {
@@ -306,6 +306,7 @@ a.admbox span.title {
 }
 #module_list li {
 	list-style: none;
+	-ms-user-select: none;
 	user-select: none;
 	-webkit-user-select: none;
 	-moz-user-select: none;

@@ -90,36 +90,48 @@ function wikiplugin_shorten($data, $params)
 
 	if (isset($params['show_speed'])) {
 		$show_speed = str_replace(array('slow', 'fast'), array('600', '200'), $params['show_speed']);
-		$show_speed = (int) sprintf('%d', $show_speed);
+		$show_speed = sprintf(' data-show-speed="%d"', $show_speed);
 	}
 
 	if (isset($params['hide_speed'])) {
 		$hide_speed = str_replace(array('slow', 'fast'), array('600', '200'), $params['hide_speed']);
-		$hide_speed = (int) sprintf('%d', $hide_speed);
+		$hide_speed = sprintf(' data-hide-speed="%d"', $hide_speed);
 	}
 
 	$match = null;
 	if ( preg_match('/^\s*.{'.$length.'}[^\s]*/', $data, $match) ) {
 		if(!$shorten_count) {
 			$headerlib->add_css(
-				" .toggle_shorten_text_button ~ .toggle_shorten_text_more { display: inline; }"
-				. " .toggle_shorten_text_button ~ .toggle_shorten_text_less { display: none; }"
-				. " .toggle_shorten_text_button:checked ~ .toggle_shorten_text_more { display: none; }"
-				. " .toggle_shorten_text_button:checked ~ .toggle_shorten_text_less { display: inline; }"
-				. " .toggle_shorten_text_more, .toggle_shorten_text_less { cursor: pointer; margin-left: 3px; }"
+				".wikiplugin-shorten .wrapper { display: none; white-space: pre-line; }"
+				.".wikiplugin-shorten .btn_less, .wikiplugin-shorten .btn_more { cursor: pointer; margin-left: 0.5em; }"
+				.".wikiplugin-shorten .btn_less { display: none; }"
+			);
+
+			$headerlib->add_jq_onready(
+				'$(".wikiplugin-shorten").each(function(){'
+				.'	var $this = $(this);'
+				.'	var $wrapper = $this.find(".wrapper");'
+				.'	var $btn_more = $this.find(".btn_more");'
+				.'	var $btn_less = $this.find(".btn_less");'
+				.'	var show_speed = $this.data("show-speed") || 0;'
+				.'	var hide_speed = $this.data("hide-speed") || 0;'
+
+				.'	$btn_more.click(function(){'
+				.'		$btn_more.hide();'
+				.'		$btn_less.show();'
+				.'		$wrapper.show(show_speed);'
+				.'	});'
+
+				.'	$btn_less.click(function(){'
+				.'		$btn_less.hide();'
+				.'		$btn_more.show();'
+				.'		$wrapper.hide(hide_speed);'
+				.'	});'
+				.'});'
 			);
 		}
 
 		$shorten_count += 1;
-
-		$span_id = 'toggle_shorten_text_span-' . $shorten_count;
-		$button_id = 'toggle_shorten_text_button-' . $shorten_count;
-
-		$headerlib->add_css(
-			 "#{$span_id} .toggle_shorten_text_wrapper { font-size: 0; transition: font-size {$hide_speed}ms linear; }"
-			. "#{$span_id} .toggle_shorten_text_button:checked + .toggle_shorten_text_wrapper { font-size: inherit; transition-duration: {$show_speed}ms; }"
-		);
-
 
 		if(isset($params['moreText'])) {
 			$moreText = strip_tags($params['moreText']);
@@ -129,11 +141,10 @@ function wikiplugin_shorten($data, $params)
 			$lessText = strip_tags($params['lessText']);
 		}
 
-		$html = '<span id="' . $span_id . '">';
-		$html .= '<input style="display: none" class="toggle_shorten_text_button" type="checkbox" id="'.$button_id.'"/>';
-		$html .= '<span class="toggle_shorten_text_wrapper">%s</span>';
-		$html .= '<label class="toggle_shorten_text_more" for="'.$button_id.'">'.$moreText.'</label>';
-		$html .= '<label class="toggle_shorten_text_less" for="'.$button_id.'">'.$lessText.'</label>';
+		$html = '<span class="wikiplugin-shorten"' . $show_speed . $hide_speed . '>';
+		$html .= '<span class="wrapper">%s</span>';
+		$html .= '<label class="btn_more">'.$moreText.'</label>';
+		$html .= '<label class="btn_less">'.$lessText.'</label>';
 		$html .= '</span>';
 
 		$index = strlen($match[0]);

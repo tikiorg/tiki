@@ -199,7 +199,7 @@ function wikiplugin_split($data, $params, $pos)
 				} else {
 					$width = '';
 				}
-				$result .= '<td valign="top"'.$width.$colspan.'>'
+				$result .= '<td'.$width.$colspan.'>'
 					// Insert "\n" at data begin (so start-of-line-sensitive syntaxes will be parsed OK)
 					."\n"
 					// now prepend any carriage return and newline char with br
@@ -228,7 +228,7 @@ function wikiplugin_split($data, $params, $pos)
 		$result .= '<tr>';
 		$idx = 0;
 		foreach ($rows as $r) {
-			$result .= '<td valign="top" '.(($fixedsize && isset($tdsize))? ' width="'.$tdsize[$idx].(strstr($tdsize[$idx], '%')?'':'%').'"' : '').'>';
+			$result .= '<td '.(($fixedsize && isset($tdsize))? ' width="'.$tdsize[$idx].(strstr($tdsize[$idx], '%')?'':'%').'"' : '').'>';
 			foreach ($r as $i) {
 				if (substr($i, 0, 2) == "\r\n") {
 					$i = substr($i, 2);

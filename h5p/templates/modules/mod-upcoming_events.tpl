@@ -20,7 +20,7 @@ html indentation and smarty indentation are independant. Please keep consistent 
 	<tr>
 
 			{if $nonums != 'y'}
-		<td class="module" valign="top">{$smarty.section.ix.index_next})&nbsp;</td>
+		<td class="module">{$smarty.section.ix.index_next})&nbsp;</td>
 			{/if}
 
 		<td class="module vevent"{if $showColor eq 'y' and $infocals.$calendarId.custombgcolor ne ''} style="background-color:#{$infocals.$calendarId.custombgcolor}"{/if}>

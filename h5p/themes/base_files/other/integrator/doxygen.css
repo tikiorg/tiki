@@ -90,7 +90,7 @@ div.fragment {
 div.ah {
 	background-color: black;
 	font-weight: bold;
-	color: #ffffff; 
+	color: #ffffff;
 	margin-bottom: 3px;
 	margin-top: 3px;
 }
@@ -126,34 +126,34 @@ div.groupText {
 	font-size: smaller;
 }
 
-td.indexkey { 
-   background-color: #eeeeff; 
-   font-weight: bold; 
-   padding-right  : 10px; 
-   padding-top    : 2px; 
-   padding-left   : 10px; 
-   padding-bottom : 2px; 
-   margin-left    : 0px; 
-   margin-right   : 0px; 
-   margin-top     : 2px; 
-   margin-bottom  : 2px;
+td.indexkey {
+	background-color: #eeeeff;
+	font-weight: bold;
+	padding-right  : 10px;
+	padding-top    : 2px;
+	padding-left   : 10px;
+	padding-bottom : 2px;
+	margin-left    : 0;
+	margin-right   : 0;
+	margin-top     : 2px;
+	margin-bottom  : 2px;
 }
 
-td.indexvalue { 
-   background-color: #eeeeff; 
-   font-style: italic; 
-   padding-right  : 10px; 
-   padding-top    : 2px; 
-   padding-left   : 10px; 
-   padding-bottom : 2px; 
-   margin-left    : 0px; 
-   margin-right   : 0px; 
-   margin-top     : 2px; 
-   margin-bottom  : 2px;
+td.indexvalue {
+	background-color: #eeeeff;
+	font-style: italic;
+	padding-right  : 10px;
+	padding-top    : 2px;
+	padding-left   : 10px;
+	padding-bottom : 2px;
+	margin-left    : 0;
+	margin-right   : 0;
+	margin-top     : 2px;
+	margin-bottom  : 2px;
 }
 
 tr.memlist {
-   background-color: #f0f0f0; 
+	background-color: #f0f0f0;
 }
 
 p.formulaDsp {
@@ -190,60 +190,41 @@ span.charliteral   { color: #008080 }
 	border-right: 1px none #E0E0E0;
 	border-bottom: 1px none #E0E0E0;
 	border-left: 1px none #E0E0E0;
-	margin: 0px;
+	margin: 0;
 }
 
 .mdescRight {
-	font-size: smaller;
-	font-family: Arial, Helvetica, sans-serif;
-	font-style: italic;
-	background-color: #FAFAFA;
-	padding-left: 4px;
-	border-top: 1px none #E0E0E0;
-	border-right: 1px none #E0E0E0;
-	border-bottom: 1px none #E0E0E0;
-	border-left: 1px none #E0E0E0;
-	margin: 0px;
-	padding-bottom: 0px;
-	padding-right: 8px;
+	font-size:smaller;
+	font-family:Arial, Helvetica, sans-serif;
+	font-style:italic;
+	background-color:#FAFAFA;
+	padding-left:4px;
+	border-top:1px none #E0E0E0;
+	border-right:1px none #E0E0E0;
+	border-bottom:1px none #E0E0E0;
+	border-left:1px none #E0E0E0;
+	margin:0;
+	padding-bottom:0;
+	padding-right:8px;
 }
 
 .memItemLeft {
-	padding: 1px 0px 0px 8px;
-	margin: 4px;
-	border-top-width: 1px;
-	border-right-width: 1px;
-	border-bottom-width: 1px;
-	border-left-width: 1px;
-	border-top-style: solid;
-	border-top-color: #E0E0E0;
-	border-right-color: #E0E0E0;
-	border-bottom-color: #E0E0E0;
-	border-left-color: #E0E0E0;
-	border-right-style: none;
-	border-bottom-style: none;
-	border-left-style: none;
-	background-color: #FAFAFA;
-	font-family: Geneva, Arial, Helvetica, sans-serif;
-	font-size: 12px;
+	padding:1px 0 0 8px;
+	margin:4px;
+	border-color:#E0E0E0;
+	border-style:solid none none;
+	border-width:1px;
+	background-color:#FAFAFA;
+	font-family:Geneva, Arial, Helvetica, sans-serif;
+	font-size:12px;
 }
 
 .memItemRight {
-	padding: 1px 0px 0px 8px;
-	margin: 4px;
-	border-top-width: 1px;
-	border-right-width: 1px;
-	border-bottom-width: 1px;
-	border-left-width: 1px;
-	border-top-style: solid;
-	border-top-color: #E0E0E0;
-	border-right-color: #E0E0E0;
-	border-bottom-color: #E0E0E0;
-	border-left-color: #E0E0E0;
-	border-right-style: none;
-	border-bottom-style: none;
-	border-left-style: none;
-	background-color: #FAFAFA;
-	font-family: Geneva, Arial, Helvetica, sans-serif;
-	font-size: 13px;
-}
+	padding:1px 0 0 8px;
+	margin:4px;
+	border-color:#E0E0E0;
+	border-style:solid none none;
+	border-width:1px;
+	background-color:#FAFAFA;
+	font-family:Geneva, Arial, Helvetica, sans-serif;
+	font-size:13px;

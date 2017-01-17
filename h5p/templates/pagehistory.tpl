@@ -29,8 +29,8 @@
 
 			{if $diff_style eq "sideview"}
 				<tr>
-					<td colspan="2" valign="top" ><div class="wikitext">{$old.data}</div></td>
-					<td colspan="2" valign="top" ><div class="wikitext">{$new.data}</div></td>
+					<td colspan="2"><div class="wikitext">{$old.data}</div></td>
+					<td colspan="2"><div class="wikitext">{$new.data}</div></td>
 				</tr>
 			{/if}
 			<tr>
