@@ -135,7 +135,7 @@ class Search_Elastic_QueryBuilder
 		} elseif ($node instanceof Initial) {
 			return array(
 				'match_phrase_prefix' => array(
-					$node->getField() . '.sort' => array(
+					$this->getNodeField($node) . '.sort' => array(
 						"query" => $this->getTerm($node),
 						"boost" => $node->getWeight(),
 					),
@@ -144,7 +144,7 @@ class Search_Elastic_QueryBuilder
 		} elseif ($node instanceof Range) {
 			return array(
 				'range' => array(
-					$node->getField() => array(
+					$this->getNodeField($node) => array(
 						"from" => $this->getTerm($node->getToken('from')),
 						"to" => $this->getTerm($node->getToken('to')),
 						"boost" => $node->getWeight(),
@@ -159,7 +159,7 @@ class Search_Elastic_QueryBuilder
 			$content = $node->getContent() ?: $this->getDocumentContent($type, $object);
 			return array(
 				'more_like_this' => array(
-					'fields' => array($node->getField() ?: 'contents'),
+					'fields' => array($this->getNodeField($node) ?: 'contents'),
 					'like_text' => $content,
 					'boost' => $node->getWeight(),
 				),
@@ -168,7 +168,7 @@ class Search_Elastic_QueryBuilder
 			return [
 				'geo_distance' => [
 					'distance' => $node->getDistance(),
-					$node->getField() => [
+					$this->getNodeField($node) => [
 						'lat' => $node->getLat(),
 						'lon' => $node->getLon(),
 					]
@@ -212,7 +212,7 @@ class Search_Elastic_QueryBuilder
 					"bool" => array(
 						"must_not" => array(
 							array(
-								"exists" => array("field" => $node->getField())
+								"exists" => array("field" => $this->getNodeField($node))
 							)
 						)
 					)
@@ -222,7 +222,7 @@ class Search_Elastic_QueryBuilder
 					"bool" => array(
 						"must_not" => array(
 							array(
-								"wildcard" => array($node->getField() => "*")
+								"wildcard" => array($this->getNodeField($node) => "*")
 							)
 						)
 					)
@@ -231,21 +231,21 @@ class Search_Elastic_QueryBuilder
 		}
 		if ($node->getType() == 'identifier') {
 			return array("match" => array(
-				$node->getField() => array(
+				$this->getNodeField($node) => array(
 					"query" => $value,
 					"operator" => "and",
 				),
 			));
 		} elseif ($node->getType() == 'multivalue') {
 			return array("match" => array(
-				$node->getField() => array(
+				$this->getNodeField($node) => array(
 					"query" => reset($value),
 					"operator" => "and",
 				),
 			));
 		} else {
 			return array("match" => array(
-				$node->getField() => array(
+				$this->getNodeField($node) => array(
 					"query" => $this->getTerm($node),
 					"boost" => $node->getWeight(),
 					"operator" => "and",
@@ -264,6 +264,15 @@ class Search_Elastic_QueryBuilder
 		}
 
 		return '';
+	}
+
+	private function getNodeField($node) {
+		$field = $node->getField();
+		$mapping = $this->index ? $this->index->getFieldMapping($field) : new stdClass;
+		if( empty($mapping) ) {
+			throw new Search_Elastic_QueryParsingException(tr('Field %0 does not exist in the current index. If this is a tracker field, the proper syntax is tracker_field_%0.', $field, $field));
+		}
+		return $field;
 	}
 }
 
