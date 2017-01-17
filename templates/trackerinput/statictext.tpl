@@ -1,4 +1,4 @@
-{if $field.options_array[0] eq 1}
+{if $field.options_array[0] eq 1 or $field.options_array[0] eq 2}
 	{$field.value}
 {elseif $field.options_array[1] ne '' and $list_mode eq 'y'}
 	{$field.value|truncate:$field.options_array[1]:"...":true|escape|nl2br}
