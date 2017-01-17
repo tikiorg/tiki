@@ -82,9 +82,9 @@ class Text_Diff_Renderer_sidebyside extends Tiki_Text_Diff_Renderer
 	            echo "<tr><td class='diffdeleted'>$prefix</td><td class='diffdeleted'>$line</td><td colspan='2'>&nbsp;</td></tr>\n";
 	        }
     	} elseif ($type == 'change-deleted') {
-    		echo '<tr><td class="diffdeleted" valign="top">'.$prefix.'</td><td class="diffdeleted" valign="top">'.implode("<br />", $lines)."</td>\n";
+    		echo '<tr><td class="diffdeleted">'.$prefix.'</td><td class="diffdeleted">'.implode("<br />", $lines)."</td>\n";
     	} elseif ($type == 'change-added') {
-    		echo '<td class="diffadded" valign="top">'.$prefix.'</td><td class="diffadded" valign="top">'.implode("<br />", $lines)."</td></tr>\n";
+    		echo '<td class="diffadded">'.$prefix.'</td><td class="diffadded">'.implode("<br />", $lines)."</td></tr>\n";
     	}
     }
 

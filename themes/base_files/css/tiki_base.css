@@ -1312,6 +1312,9 @@ li.archivedate {
 .box-since_last_visit_new .ui-tabs .ui-tabs-nav li a {
   padding: .3em .2em;
 }
+.box-upcoming_events tr:first-child {
+  vertical-align: top;
+}
 .TwitName {
   font-weight: bold;
 }
