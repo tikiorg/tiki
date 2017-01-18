@@ -19,6 +19,9 @@ class PaymentLib extends TikiDb_Bridge
 		'detail' => [
 			'table' => 'tpr',
 		],
+		'details' => [
+			'table' => 'tp',
+		],
 		'amount' => [
 			'table' => 'tpr',
 		],
@@ -496,7 +499,7 @@ class PaymentLib extends TikiDb_Bridge
 					$table = $this->setTable($field);
 					$col = $this->setField($field);
 					$ret .= " AND " . $table . '.`' . $col . '`';
-					if ($field == 'description' || $field == 'detail') {
+					if ($field == 'description' || $field == 'detail' || $field == 'details') {
 						$ret .= " LIKE '%" . $value . "%'";
 					} elseif (in_array($field, ['payment_date', 'request_date'])) {
 						$ret .= ' ' . $value;
