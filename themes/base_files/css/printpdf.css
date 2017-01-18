@@ -8,7 +8,7 @@ body { background:#fff; color:#000 }
 body h1, body h2, body h3,
 body h4, body h5, body h6 { page-break-after:avoid; color:#000 }
 body .alert { display:none; }
-a { text-decoration:none; color:#000 }
+a { text-decoration:none; color:#337ab7 }
 p{color:#000;}
 .editplugin{display:none;visibility:hidden}
 
@@ -19,6 +19,11 @@ table td { color:#000; }
   padding:0.5em; color:#000; background-color:#ccc;
   vertical-align:bottom; border-bottom:2px solid #696969;
 }
+.table td .calhighlight {
+  color: #31708f;
+  background: #d9edf7;
+}
+
 .table td {
   padding:0.5em; background-color:#fff;
   vertical-align:top; border-top:1px solid #696969; border-bottom:none;
