@@ -87,16 +87,16 @@ class PaymentLib extends TikiDb_Bridge
 		return $this->lastInsertId();
 	}
 
-	private function get_payments( $conditions, $offset, $max, $what='' )
+	private function get_payments( $conditions, $offset, $max, array $bindvars, $what='')
 	{
 		$mid = '`tiki_payment_requests` tpr LEFT JOIN `users_users` uu ON (uu.`userId` = tpr.`userId`)';
 		$count = 'SELECT COUNT(*) FROM ' . $mid . ' WHERE ' . $conditions;
 		$data = 'SELECT tpr.*, uu.`login` as `user` '.$what.' FROM ' . $mid . ' WHERE ' . $conditions;
 
-		$all = $this->fetchAll($data, array(), $max, $offset);
+		$all = $this->fetchAll($data, $bindvars, $max, $offset);
 
 		return array(
-			'cant' => $this->getOne($count),
+			'cant' => $this->getOne($count, $bindvars),
 			'data' => Perms::filter(
 				array( 'type' => 'payment' ),
 				'object',
@@ -113,8 +113,9 @@ class PaymentLib extends TikiDb_Bridge
 		if ($ofUser) {
 			$conditions .= " AND uu.`login` = " . $this->qstr($ofUser);
 		}
-		$conditions .= $this->addFilterSort($filter, $sort);
-		return $this->get_payments($conditions, $offset, $max);
+		$bindvars = [];
+		$conditions .= $this->addFilterSort($filter, $sort, $bindvars);
+		return $this->get_payments($conditions, $offset, $max, $bindvars);
 	}
 
 	function get_past( $offset, $max, $ofUser = '', $filter = [], $sort = null )
@@ -126,7 +127,8 @@ class PaymentLib extends TikiDb_Bridge
 		if ($ofUser) {
 			$conditions .= " AND uu.`login` = " . $this->qstr($ofUser);
 		}
-		$conditions .= $this->addFilterSort($filter, $sort);
+		$bindvars = [];
+		$conditions .= $this->addFilterSort($filter, $sort, $bindvars);
 
 		$count = 'SELECT COUNT(*)' .
 			' FROM `tiki_payment_requests` tpr' .
@@ -141,7 +143,7 @@ class PaymentLib extends TikiDb_Bridge
 			' LEFT JOIN `tiki_payment_received` tp ON (tp.`paymentRequestId`=tpr.`paymentRequestId` AND tp.`status` = "paid")' .
 			' LEFT JOIN `users_users` uup ON (uup.`userId` = tp.`userId`) WHERE ' . $conditions;
 
-		$all = $this->fetchAll($data, array(), $max, $offset);
+		$all = $this->fetchAll($data, $bindvars, $max, $offset);
 
 		foreach($all as & $payment) {
 
@@ -158,7 +160,7 @@ class PaymentLib extends TikiDb_Bridge
 		}
 
 		return array(
-			'cant' => $this->getOne($count),
+			'cant' => $this->getOne($count, $bindvars),
 			'data' => Perms::filter(
 				array( 'type' => 'payment' ),
 				'object',
@@ -175,8 +177,9 @@ class PaymentLib extends TikiDb_Bridge
 		if ($ofUser) {
 			$conditions .= " AND uu.`login` = " . $this->qstr($ofUser);
 		}
-		$conditions .= $this->addFilterSort($filter, $sort);
-		return $this->get_payments($conditions, $offset, $max);
+		$bindvars = [];
+		$conditions .= $this->addFilterSort($filter, $sort, $bindvars);
+		return $this->get_payments($conditions, $offset, $max, $bindvars);
 	}
 
 	function get_authorized( $offset, $max, $ofUser = '', $filter = [], $sort = null )
@@ -185,8 +188,9 @@ class PaymentLib extends TikiDb_Bridge
 		if ($ofUser) {
 			$conditions .= " AND uu.`login` = " . $this->qstr($ofUser);
 		}
-		$conditions .= $this->addFilterSort($filter, $sort);
-		return $this->get_payments($conditions, $offset, $max);
+		$bindvars = [];
+		$conditions .= $this->addFilterSort($filter, $sort, $bindvars);
+		return $this->get_payments($conditions, $offset, $max, $bindvars);
 	}
 
 	function get_canceled( $offset, $max, $ofUser = '', $filter = [], $sort = null )
@@ -195,8 +199,9 @@ class PaymentLib extends TikiDb_Bridge
 		if ($ofUser) {
 			$conditions .= " AND uu.`login` = " . $this->qstr($ofUser);
 		}
-		$conditions .= $this->addFilterSort($filter, $sort);
-		return $this->get_payments($conditions, $offset, $max);
+		$bindvars = [];
+		$conditions .= $this->addFilterSort($filter, $sort, $bindvars);
+		return $this->get_payments($conditions, $offset, $max, $bindvars);
 	}
 
 	function uncancel_payment( $id )
@@ -490,21 +495,45 @@ class PaymentLib extends TikiDb_Bridge
 		}
 	}
 
-	private function addFilterSort(array $filter, $sort)
+	private function addFilterSort(array $filter, $sort, array & $bindvars)
 	{
 		$ret = '';
 		if (!empty($filter)) {
 			foreach ($filter as $field => $value) {
 				if (isset($this->fieldmap[$field])) {
+					if ($field === 'payer') {
+						$field = 'details';
+					}
 					$table = $this->setTable($field);
 					$col = $this->setField($field);
 					$ret .= " AND " . $table . '.`' . $col . '`';
 					if ($field == 'description' || $field == 'detail' || $field == 'details') {
-						$ret .= " LIKE '%" . $value . "%'";
+						$ret .= ' LIKE ?';
+						$bindvars[] = "%$value%";
 					} elseif (in_array($field, ['payment_date', 'request_date'])) {
-						$ret .= ' ' . $value;
+						if (preg_match('/([<>=]*) \'?([^\']*)\' AND ([^ ]*) ([<>=]*) \'?([^\']*)/i', $value, $matches)) {
+							// quoted date range?
+							if ($matches[3] === $table . '.`' . $col . '`') {
+								$ret .= " {$matches[1]} ? AND {$matches[3]} {$matches[4]} ?";
+								$bindvars[] = $matches[2];
+								$bindvars[] = $matches[5];
+							}
+						} else if (preg_match('/([<>=]*) \'([^\']*)/', $value, $matches)) {
+							// single quoted date
+							$ret .= " {$matches[1]} ? ";
+							$bindvars[] = $matches[2];
+						} else if (preg_match('/BETWEEN FROM_UNIXTIME\(([^\)]*?)\) AND FROM_UNIXTIME\(([^\)]*)\)/i', $value, $matches)) {	// single quoted date
+							// between date range
+							$ret .= " BETWEEN FROM_UNIXTIME(?) AND  FROM_UNIXTIME(?)";
+							$bindvars[] = $matches[1];
+							$bindvars[] = $matches[2];
+						} else if (preg_match('/([<>=]*) FROM_UNIXTIME\(([^\)]*)\)/i', $value, $matches)) {	// single quoted date
+							$ret .= " {$matches[1]} FROM_UNIXTIME(?) ";
+							$bindvars[] = $matches[2];
+						}
 					} else {
-						$ret .= " LIKE '" . $value . "%'";
+						$ret .= ' LIKE ?';
+						$bindvars[] = "$value%";
 					}
 				}
 			}
