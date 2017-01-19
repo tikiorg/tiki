@@ -74,6 +74,7 @@ function wikiplugin_shorten($data, $params)
 	global $prefs;
 	static $shorten_count;
 	$headerlib = TikiLib::lib('header');
+	$tikilib = TikiLib::lib('tiki');
 
 	extract(array(
 		'length' => 20,
@@ -102,31 +103,34 @@ function wikiplugin_shorten($data, $params)
 	if ( preg_match('/^\s*.{'.$length.'}[^\s]*/', $data, $match) ) {
 		if(!$shorten_count) {
 			$headerlib->add_css(
-				".wikiplugin-shorten .wrapper { display: none; white-space: pre-line; }"
+				".wikiplugin-shorten .content { display: none; }"
 				.".wikiplugin-shorten .btn_less, .wikiplugin-shorten .btn_more { cursor: pointer; margin-left: 0.5em; }"
 				.".wikiplugin-shorten .btn_less { display: none; }"
 			);
 
 			$headerlib->add_jq_onready(
 				'$(".wikiplugin-shorten").each(function(){'
-				.'	var $this = $(this);'
-				.'	var $wrapper = $this.find(".wrapper");'
-				.'	var $btn_more = $this.find(".btn_more");'
-				.'	var $btn_less = $this.find(".btn_less");'
-				.'	var show_speed = $this.data("show-speed") || 0;'
-				.'	var hide_speed = $this.data("hide-speed") || 0;'
+				.	'var $this = $(this);'
+				.	'var $sample = $this.find("> .sample");'
+				.	'var $content = $this.find("> .content");'
+				.	'var $btn_more = $this.find("> .btn_more");'
+				.	'var $btn_less = $this.find("> .btn_less");'
+				.	'var show_speed = $this.data("show-speed") || 0;'
+				.	'var hide_speed = $this.data("hide-speed") || 0;'
 
-				.'	$btn_more.click(function(){'
-				.'		$btn_more.hide();'
-				.'		$btn_less.show();'
-				.'		$wrapper.show(show_speed);'
-				.'	});'
+				.	'$btn_more.click(function(){'
+				.		'$sample.hide();'
+				.		'$btn_more.hide();'
+				.		'$btn_less.show();'
+				.		'$content.show(show_speed);'
+				.	'});'
 
-				.'	$btn_less.click(function(){'
-				.'		$btn_less.hide();'
-				.'		$btn_more.show();'
-				.'		$wrapper.hide(hide_speed);'
-				.'	});'
+				.	'$btn_less.click(function(){'
+				.		'$sample.show();'
+				.		'$btn_less.hide();'
+				.		'$btn_more.show();'
+				.		'$content.hide(hide_speed);'
+				.	'});'
 				.'});'
 			);
 		}
@@ -142,15 +146,19 @@ function wikiplugin_shorten($data, $params)
 		}
 
 		$html = '<span class="wikiplugin-shorten"' . $show_speed . $hide_speed . '>';
-		$html .= '<span class="wrapper">%s</span>';
+		$html .= '<span class="sample">%s</span>';
+		$html .= '<span class="content">%s</span>';
 		$html .= '<label class="btn_more">'.$moreText.'</label>';
 		$html .= '<label class="btn_less">'.$lessText.'</label>';
 		$html .= '</span>';
 
 		$index = strlen($match[0]);
-		$out = substr($data, 0, $index);
-		$out .= sprintf($html, substr($data, $index));
 
+		$sample = substr($data, 0, $index);
+		$sample = $tikilib->parse_data($sample, array());
+		$content = $tikilib->parse_data($data, array());
+
+		$out = sprintf($html, $sample, $content);
 		return $out;
 	}
 
