@@ -126,6 +126,13 @@ function wikiplugin_pivottable_info()
 				'required' => false,
 				'filter' => 'digits',
 			),
+			'aggregateDetails' => array(
+				'name' => tr('Aggregate details'),
+				'description' => tr('When enabled, clicking a table cell will popup all items that were aggregated into that cell. Specify the name of the field to use to display the details.'),
+				'since' => '16.2',
+				'required' => false,
+				'filter' => 'text',
+			),
 		),
 	);
 }
@@ -370,6 +377,16 @@ function wikiplugin_pivottable($data, $params)
 			$dateFields[] = $field['name'];
 		}
 	}
+
+	if (!empty($params['aggregateDetails'])) {
+		if ($field = $definition->getFieldFromPermName(trim($params['aggregateDetails']))) {
+			$aggregateDetails = $field['name'];
+		} else {
+			$aggregateDetails = trim($params['aggregateDetails']);
+		}
+	} else {
+		$aggregateDetails = null;
+	}
 	
 	//checking if user can see edit button
 	if (!empty($wikiplugin_included_page)) {
@@ -405,6 +422,7 @@ function wikiplugin_pivottable($data, $params)
 		'dateFields' => $dateFields,
 		'inclusions' => $inclusions,
 		'menuLimit' => empty($params['menuLimit']) ? null : $params['menuLimit'],
+		'aggregateDetails' => $aggregateDetails,
 		'index'=>$id
 	));
 	

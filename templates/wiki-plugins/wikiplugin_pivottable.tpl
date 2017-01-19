@@ -26,6 +26,19 @@
 		if( {{$pivottable.menuLimit|json_encode}} ) {
 			opts.menuLimit = {{$pivottable.menuLimit|json_encode}};
 		}
+		if( {{$pivottable.aggregateDetails|json_encode}} ) {
+			opts.aggregateDetails = {{$pivottable.aggregateDetails|json_encode}};
+			opts.rendererOptions = {
+				table: {
+					clickCallback: function(e, value, filters, pivotData){
+						var details = [];
+						pivotData.forEachMatchingRecord(filters,
+							function(record){ details.push(record[{{$pivottable.aggregateDetails|json_encode}}]); });
+						feedback(details.join("<br>\n"), 'info', true);
+					}
+				}
+			};
+		}
 
 		$("#output_{{$pivottable.id}}").pivotUI(pivotData{{$pivottable.index}}, opts);
 
@@ -61,3 +74,5 @@
 	<input id="save_{$pivottable.id}" type="button" value="Save Changes" class="btn btn-primary ui-button ui-corner-all ui-widget" /><input class="btn btn-primary ui-button ui-corner-all ui-widget" id="restore_{$pivottable.id}" type="button" value="Cancel Edit" /></div>
 	{if $pivottable.showControls}<div id="pivotControls_{$pivottable.id}"  style="display:none;position:relative;"><input type="button" id="pivotEditBtn_{$pivottable.id}" value="Edit Pivot Table"  class="btn btn-primary ui-button ui-corner-all ui-widget" /></div>{/if}
 </div>
+
+<div id="pivotdetails_modal"></div>
