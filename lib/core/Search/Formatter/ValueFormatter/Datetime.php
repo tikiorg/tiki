@@ -9,10 +9,14 @@ class Search_Formatter_ValueFormatter_Datetime extends Search_Formatter_ValueFor
 {
 	protected $format;
 
-	function __construct()
+	function __construct($arguments)
 	{
-		$tikilib = TikiLib::lib('tiki');
-		$this->format = $tikilib->get_short_datetime_format();
+		if( isset($arguments['dateFormat']) ) {
+			$this->format = $arguments['dateFormat'];
+		} else {
+			$tikilib = TikiLib::lib('tiki');
+			$this->format = $tikilib->get_short_datetime_format();
+		}
 	}
 
 	function render($name, $value, array $entry)
