@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2017 by authors of the Tiki Wiki CMS Groupware Project
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -9,8 +9,8 @@ function wikiplugin_paymentlist_info()
 {
 	return array(
 		'name' => tra('Payment List'),
-		'documentaion' => 'PluginPaymentlist',
-		'description' => tra('Show details of payments by user or date range'),
+		'documentation' => 'PluginPaymentlist',
+		'description' => tra('Show details of payments. The payments considered may be restrained by user or date.'),
 		'prefs' => array( 'wikiplugin_payment', 'payment_feature' ),
 		'iconname' => 'money',
 		'introduced' => 16.2,
@@ -101,8 +101,7 @@ function wikiplugin_paymentlist_info()
 			),
 			'sort' => array(
 				'required' => false,
-				'name' => tra('Sort order (TODO)'),
-				'description' => tra(''),
+				'name' => tra('Sort order'),
 				'since' => 16.2,
 				'filter' => 'word',
 				'default' => '',
@@ -124,7 +123,7 @@ function wikiplugin_paymentlist_info()
 
 function wikiplugin_paymentlist( $data, $params )
 {
-	static $instance;
+	static $instance = 0;
 
 	$instance++;
 
@@ -158,7 +157,11 @@ function wikiplugin_paymentlist( $data, $params )
 
 	// payer filter
 	if ($params['payer']) {
-		$filter['details'] = '"payer_email":"' . $params['payer'] .'"';
+		if (isset($filter['details'])) {
+			Feedback::error(tra('Note, the paymentlist "payer" parameter cannot be used when search for "details" in an advance filter.'));
+		} else {
+			$filter['details'] = '"payer_email":"' . $params['payer'] .'"';
+		}
 	}
 
 	// list management
@@ -166,7 +169,6 @@ function wikiplugin_paymentlist( $data, $params )
 	if (empty($params['offset']) && !empty($_REQUEST[$offset_arg])) {
 		$params['offset'] = $_REQUEST[$offset_arg];
 	}
-	//$params['sort'] = null; // TODO
 
 	if ($params['type'] === 'past') {
 
