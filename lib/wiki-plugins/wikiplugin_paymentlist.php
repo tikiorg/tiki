@@ -79,7 +79,7 @@ function wikiplugin_paymentlist_info()
 			'filter' => array(
 				'required' => false,
 				'name' => tra('Advanced filter'),
-				'description' => tra('URL encoded string for advanced searching'),
+				'description' => tra('URL encoded string for advanced searching (e.g. description=Club+Membership&details=info@example.com)'),
 				'since' => 16.2,
 				'filter' => 'text',
 				'default' => '',

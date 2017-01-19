@@ -79,6 +79,24 @@ class Search_Query_WikiBuilder
 		$this->paginationArguments['max'] = max(1, (int) $value);
 	}
 
+	function wpquery_filter_editable($query, $editableType, array $arguments) {
+		$trklib = TikiLib::lib('trk');
+		$fields = $this->get_fields_from_arguments($arguments);
+		foreach ($fields as $fieldName) {
+			$field = $trklib->get_field_by_perm_name(str_replace('tracker_field_', '', $fieldName));
+			if ($field) {
+				$value = $_REQUEST['ins_'.$field['fieldId']];
+			} else {
+				$value = $_REQUEST['ins_'.$fieldName];
+			}
+			$value = is_array($value) ? implode(' OR ', $value) : (string)$value;
+			$function = "wpquery_filter_{$editableType}";
+			if (method_exists($this, $function)) {
+				call_user_func(array($this, $function), $query, $value, $arguments);
+			}
+		}
+	}
+
 	function wpquery_filter_type($query, $value)
 	{
 		$value = explode(',', $value);
@@ -125,23 +143,13 @@ class Search_Query_WikiBuilder
 
 	function wpquery_filter_content($query, $value, array $arguments)
 	{
-		if (isset($arguments['field'])) {
-			$fields = explode(',', $arguments['field']);
-		} else {
-			$fields = TikiLib::lib('tiki')->get_preference('unified_default_content', array('contents'), true);
-		}
-
+		$fields = $this->get_fields_from_arguments($arguments);
 		$query->filterContent($value, $fields);
 	}
 
 	function wpquery_filter_exact($query, $value, array $arguments)
 	{
-		if (isset($arguments['field'])) {
-			$fields = explode(',', $arguments['field']);
-		} else {
-			$fields = TikiLib::lib('tiki')->get_preference('unified_default_content', array('contents'), true);
-		}
-
+		$fields = $this->get_fields_from_arguments($arguments);
 		$query->filterIdentifier($value, $fields);
 	}
 
@@ -478,6 +486,15 @@ class Search_Query_WikiBuilder
 		}
 
 		return $ret;
+	}
+
+	private function get_fields_from_arguments($arguments){
+		if (isset($arguments['field'])) {
+			$fields = explode(',', $arguments['field']);
+		} else {
+			$fields = TikiLib::lib('tiki')->get_preference('unified_default_content', array('contents'), true);
+		}
+		return $fields;
 	}
 }
 

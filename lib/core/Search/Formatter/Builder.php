@@ -12,6 +12,7 @@ class Search_Formatter_Builder
 
 	private $formatterPlugin;
 	private $subFormatters = array();
+	private $customFilters = array();
 	private $alternateOutput;
 	private $id;
 	private $count;
@@ -64,6 +65,10 @@ class Search_Formatter_Builder
 				$this->handleTablesorter($match);
 			}
 
+			if ($name == 'filter') {
+				$this->handleFilter($match);
+			}
+
 		}
 	}
 
@@ -86,6 +91,10 @@ class Search_Formatter_Builder
 			$formatter->addSubFormatter($name, $plugin);
 		}
 
+		foreach ($this->customFilters as $field) {
+			$formatter->addCustomFilter($field);
+		}
+
 		return $formatter;
 	}
 
@@ -97,6 +106,15 @@ class Search_Formatter_Builder
 			$plugin = new Search_Formatter_Plugin_WikiTemplate($match->getBody());
 			$plugin->setRaw(! empty($arguments['mode']) && $arguments['mode'] == 'raw');
 			$this->subFormatters[$arguments['name']] = $plugin;
+		}
+	}
+
+	private function handleFilter($match)
+	{
+		$arguments = $this->parser->parse($match->getArguments());
+
+		if (isset($arguments['editable'], $arguments['field'])) {
+			$this->customFilters[] = $arguments['field'];
 		}
 	}
 

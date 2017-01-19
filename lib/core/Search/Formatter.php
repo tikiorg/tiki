@@ -9,6 +9,7 @@ class Search_Formatter
 {
 	private $plugin;
 	private $subFormatters = array();
+	private $customFilters = array();
 	private $alternateOutput;
 
 	function __construct(Search_Formatter_Plugin_Interface $plugin)
@@ -26,14 +27,19 @@ class Search_Formatter
 		$this->subFormatters[$name] = $formatter;
 	}
 
+	function addCustomFilter($field) {
+		$this->customFilters[] = $field;
+	}
+
 	function format($list)
 	{
 		if (0 == count($list) && $this->alternateOutput) {
-			return $this->alternateOutput;
+			return $this->renderFilters() . $this->alternateOutput;
 		}
 
 		$list = $this->getPopulatedList($list);
-		return $this->render($this->plugin, $list, Search_Formatter_Plugin_Interface::FORMAT_WIKI);
+		return $this->renderFilters()
+			. $this->render($this->plugin, $list, Search_Formatter_Plugin_Interface::FORMAT_WIKI);
 	}
 
 	function getPopulatedList($list, $preload = true)
@@ -83,6 +89,38 @@ class Search_Formatter
 		}
 
 		return $list->replaceEntries($data);
+	}
+
+	public function renderFilters() {
+		$trklib = TikiLib::lib('trk');
+		$fields = array();
+		foreach ($this->customFilters as $fieldName) {
+			$field = $trklib->get_field_by_perm_name(str_replace('tracker_field_', '', $fieldName));
+			if ($field) {
+				$field['ins_id'] = "ins_".$field['fieldId'];
+				$handler = $trklib->get_field_handler($field);
+				$field = array_merge($field, $handler->getFieldData($_REQUEST));
+				// TODO: refactor field handler to not require calling this twice to fit in the request data
+				$handler = $trklib->get_field_handler($field);
+				$field['renderedInput'] = $handler->renderInput();
+				$fields[] = $field;
+			} else {
+				// non-tracker field in the index
+				$fields[] = array(
+					'fieldId' => 0,
+					'name' => $fieldName,
+					'value' => $_REQUEST['ins_'.$fieldName]
+				);
+			}
+		}
+
+		if ($fields) {
+			$smarty = TikiLib::lib('smarty');
+			$smarty->assign('filterFields', $fields);
+			return '~np~' . $smarty->fetch('templates/search/list/filter.tpl') . '~/np~';
+		}
+
+		return '';
 	}
 
 	private function render($plugin, $resultSet, $target)

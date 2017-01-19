@@ -3236,9 +3236,14 @@ class TrackerLib extends TikiLib
 		return $options->fetchAll($options->all(), $conditions);
 	}
 
-	public function get_tracker_field($fieldId)
+	public function get_tracker_field($fieldIdOrPermName)
 	{
-		if ($res = $this->fields()->fetchFullRow(array('fieldId' => (int) $fieldId))) {
+		if (intval($fieldIdOrPermName) > 0) {
+			$res = $this->fields()->fetchFullRow(array('fieldId' => intval($fieldIdOrPermName)));
+		} else {
+			$res = $this->fields()->fetchFullRow(array('permName' => $fieldIdOrPermName));
+		}
+		if ($res) {
 			$factory = new Tracker_Field_Factory;
 			$options = Tracker_Options::fromSerialized($res['options'], $factory->getFieldInfo($res['type']));
 			$res['options_array'] = $options->buildOptionsArray();
@@ -5468,8 +5473,7 @@ class TrackerLib extends TikiLib
 	}
 
 	public function get_field_by_perm_name($permName) {
-		$res = $this->fetchAll('SELECT * FROM tiki_tracker_fields WHERE permName = ?', array($permName));
-		return reset($res);
+		return $this->get_tracker_field($permName);
 	}
 
 	public function refresh_index_on_master_update($args)

@@ -293,6 +293,7 @@ function wikiplugin_pivottable($data, $params)
 	$builder = new Search_Formatter_Builder;
 	$builder->setId('wppivottable-' . $id);
 	$builder->setCount($result->count());
+	$builder->apply($matches);
 	$builder->setFormatterPlugin($plugin);
 
 	$formatter = $builder->getFormatter();
@@ -384,6 +385,8 @@ function wikiplugin_pivottable($data, $params)
 		$showControls = FALSE;
 	}
 
+	$out = str_replace( array('~np~', '~/np~'), '', $formatter->renderFilters() );
+
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign('pivottable', array(
 		'id' => 'pivottable' . $id,
@@ -405,6 +408,8 @@ function wikiplugin_pivottable($data, $params)
 		'index'=>$id
 	));
 	
-	return $smarty->fetch('wiki-plugins/wikiplugin_pivottable.tpl');
+	$out .= $smarty->fetch('wiki-plugins/wikiplugin_pivottable.tpl');
+
+	return $out;
 }
 
