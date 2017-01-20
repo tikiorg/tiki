@@ -1572,12 +1572,12 @@ class FileGalLib extends TikiLib
 		global $tiki_p_admin_file_galleries, $prefs, $user;
 		$userlib = TikiLib::lib('user');
 		$list = array();
-		$temp = '/'.md5(\Zend\Math\Rand::getBytes(10)).'/';
-		if (!mkdir(sys_get_temp_dir().$temp)) {
-			$temp = $temp . sys_get_temp_dir();
-		}else if (mkdir('temp'.$temp)) {
+		$temp = '/' . md5(\Zend\Math\Rand::getBytes(10)) . '/';
+		if (! mkdir(sys_get_temp_dir() . $temp)) {
+			$temp = sys_get_temp_dir() . $temp;
+		} else if (mkdir('temp' . $temp)) {
 			$temp = 'temp' . $temp;
-		}else{
+		} else {
 			$error = "Can not create directory $temp";
 			return false;
 		}
