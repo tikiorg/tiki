@@ -20,6 +20,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "adodb/adodb-php",
+				"version": "5.20.9",
+				"dist": {
+					"url": "https://github.com/ADOdb/ADOdb/archive/v5.20.9.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "afarkas/html5shiv",
 				"version": "3.6.2",
 				"dist": {
