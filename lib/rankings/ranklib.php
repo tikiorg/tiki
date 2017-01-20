@@ -87,7 +87,7 @@ class RankLib extends TikiLib
 	{
 		global $user, $prefs;
 
-		$roll = rand(1, (int) $prefs['wiki_ranking_reload_probability']);
+		$roll = mt_rand(1, (int) $prefs['wiki_ranking_reload_probability']);
 		if ($roll == 1) {
 			$this->pageRank();
 		}

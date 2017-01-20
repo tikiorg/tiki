@@ -443,7 +443,7 @@ class RatingLib extends TikiDb_Bridge
 	function attempt_refresh( $all = false )
 	{
 		global $prefs;
-		if ( 1 == rand(1, $prefs['rating_recalculation_odd']) ) {
+		if ( 1 == mt_rand(1, $prefs['rating_recalculation_odd']) ) {
 			$this->internal_refresh_list($prefs['rating_recalculation_count']);
 		}
 	}

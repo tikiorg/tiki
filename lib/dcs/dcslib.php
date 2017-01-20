@@ -212,7 +212,7 @@ class DCSLib extends TikiLib
 			return '';
 		}
 
-		$x = rand(0, $cant - 1);
+		$x = mt_rand(0, $cant - 1);
 		$query = 'SELECT * FROM `tiki_programmed_content`' . $where;
 		$result = $this->fetchAll($query, $bindvars, 1, $x);
 

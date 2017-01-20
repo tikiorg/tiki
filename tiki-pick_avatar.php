@@ -69,7 +69,7 @@ while ($file = readdir($h)) {
 closedir($h);
 $smarty->assign_by_ref('avatars', $avatars);
 $smarty->assign('numav', count($avatars));
-$smarty->assign('yours', rand(0, count($avatars)));
+$smarty->assign('yours', mt_rand(0, count($avatars)));
 
 $avatar = $tikilib->get_user_avatar($userwatch);
 $smarty->assign('avatar', $avatar);

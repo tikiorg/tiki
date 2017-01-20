@@ -74,7 +74,7 @@ if (!empty($_REQUEST['type'])) {
 if (isset($_REQUEST['previewId'])) {
 	$previewId = $_REQUEST['previewId'];
 } else {
-	$previewId = rand();
+	$previewId = mt_rand();
 }
 
 $smarty->assign('articleId', $articleId);

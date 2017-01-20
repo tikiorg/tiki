@@ -15,7 +15,7 @@ class Math_Formula_Function_Random extends Math_Formula_Function
 			$range[] = $this->evaluateChild($child);
 		}
 
-		return rand(min($range), max($range));
+		return mt_rand(min($range), max($range));
 	}
 }
 

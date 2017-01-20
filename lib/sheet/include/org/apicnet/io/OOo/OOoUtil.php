@@ -7,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 
-/*This file is part of J4PHP - Ensembles de propriétés et méthodes permettant le developpment rapide d'application web modulaire
+/*This file is part of J4PHP - Ensembles de propriï¿½tï¿½s et mï¿½thodes permettant le developpment rapide d'application web modulaire
 Copyright (c) 2002-2004 @PICNet
 
 This program is free software; you can redistribute it and/or
@@ -83,7 +83,7 @@ class OOoUtil extends absOOo{
 			
 			$zip->zip($allFiles, $name);
 		} else {
-			$this -> ErrorTracker(4, "Vous devez d'abord créer un document OpenOffice", 'Zip', __FILE__, __LINE__);
+			$this -> ErrorTracker(4, "Vous devez d'abord crï¿½er un document OpenOffice", 'Zip', __FILE__, __LINE__);
 		}
 	}
 	
@@ -93,7 +93,7 @@ class OOoUtil extends absOOo{
 	}
 	
 	function createDirectories(){
-		$this->tmpdir = CACHE_PATH."/OOotmp".rand();
+		$this->tmpdir = CACHE_PATH."/OOotmp".mt_rand();
 		mkdir ($this->tmpdir);
 		
 		for($i = 0; $i < count($this->directories); $i++){

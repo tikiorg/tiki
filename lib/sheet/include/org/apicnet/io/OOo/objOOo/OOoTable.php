@@ -7,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 
-/*This file is part of J4PHP - Ensembles de propriétés et méthodes permettant le developpment rapide d'application web modulaire
+/*This file is part of J4PHP - Ensembles de propriï¿½tï¿½s et mï¿½thodes permettant le developpment rapide d'application web modulaire
 Copyright (c) 2002-2004 @PICNet
 
 This program is free software; you can redistribute it and/or
@@ -88,7 +88,7 @@ class OOoTable extends absOOo {
 	 * @return array
 	 **/
 	function colMaxNextSpan($argArray, $curentCol){
-		$max    = $curentCol*1000000;	// un nombre très grand
+		$max    = $curentCol*1000000;	// un nombre trï¿½s grand
 		
 		if (count($argArray) > 1) {
 		    for(reset($argArray); $key = key($argArray); next($argArray)) {
@@ -108,7 +108,7 @@ class OOoTable extends absOOo {
 	
 	
 	/**
-	 * OOoTable::colSpan(), méthode de fusion de colonnes. Le numéro des colonnes commence à 0.
+	 * OOoTable::colSpan(), mï¿½thode de fusion de colonnes. Le numï¿½ro des colonnes commence ï¿½ 0.
 	 * 
 	 * @param $argSpan = array(
 	 			"lignSPan"	=> 1,
@@ -142,7 +142,7 @@ class OOoTable extends absOOo {
 	
 	
 	/**
-	 * OOoTable::rowSpan(), méthode de fusion de lignes. Le numéro des lignes commence à 0.
+	 * OOoTable::rowSpan(), mï¿½thode de fusion de lignes. Le numï¿½ro des lignes commence ï¿½ 0.
 	 * 
 	 * @param $argSpan = array(
 	 			"lignDeb"	=> 1,
@@ -177,7 +177,7 @@ class OOoTable extends absOOo {
 	}
 
     /**
-     * table::addcellData(), méthode d'ajout de données dans une cellule.
+     * table::addcellData(), mï¿½thode d'ajout de donnï¿½es dans une cellule.
      * 
      * @param  $argData  = array(
 	 			"data"			=> DATA
@@ -208,7 +208,7 @@ class OOoTable extends absOOo {
 			    $this->_ligne[$row][$column] = $argData;
 			} 
 		} else {
-			$this -> ErrorTracker(4, "argData doit être un tableau", 'colSpan', __FILE__, __LINE__);
+			$this -> ErrorTracker(4, "argData doit ï¿½tre un tableau", 'colSpan', __FILE__, __LINE__);
 		}
     }
 	
@@ -244,7 +244,7 @@ class OOoTable extends absOOo {
 		    $backgroundImageNode =& $this->xml->createElement("style:background-image");
 				
 			$ext = substr($this->_style["img"]["src"], strlen($file)-3);
-			$tmpfile = rand().".".$ext;
+			$tmpfile = mt_rand().".".$ext;
 			copy($this->_style["img"]["src"], $dir."/Pictures/".$tmpfile);
 			
 			$backgroundImageNode->setAttribute("xlink:href", "#Pictures/".$tmpfile);
@@ -262,13 +262,13 @@ class OOoTable extends absOOo {
 		$styleNode->appendChild($propertiesNode);
 		$nodeStyle->appendChild($styleNode);
 		
-		/*********************Création du tableau**********************/
+		/*********************Crï¿½ation du tableau**********************/
 		$tableNode =& $this->xml->createElement("table:table");
 		$tableNode->setAttribute("table:name", $StyleName);
 		$tableNode->setAttribute("table:style-name", $StyleName);
 		
 		$nodeContent->appendChild($tableNode);
-		/**********************Fin de Création*************************/
+		/**********************Fin de Crï¿½ation*************************/
 		
 		$rowSpanNb = 0;
 		
@@ -282,7 +282,7 @@ class OOoTable extends absOOo {
 
 			for($j = 0; $j < $this->_column; $j++){
 				
-				/**********************Création du style de la colonne*********************************/
+				/**********************Crï¿½ation du style de la colonne*********************************/
 	  			if (isset($this -> _style["widthRow"][$j]) && $i === 0) {
 		  			$StyleNameR = $StyleName.".R".$STYLNUM['table_row'];
 					$STYLNUM['table_row']++;
@@ -306,9 +306,9 @@ class OOoTable extends absOOo {
 						$tableNode->appendChild($tableColumnNode);
 					}
 				}
-				/*********************Fin de la Création du style de la colonne**************************/
+				/*********************Fin de la Crï¿½ation du style de la colonne**************************/
 			   
-				/*****************************Création du style de la cellule************************/
+				/*****************************Crï¿½ation du style de la cellule************************/
 				$StyleNameC = $StyleName.".C".$STYLNUM['table_cel'];
 				$STYLNUM['table_cel']++;
 				$styleNode =& $this->xml->createElement("style:style");
@@ -332,7 +332,7 @@ class OOoTable extends absOOo {
 				    $backgroundImageNode =& $this->xml->createElement("style:background-image");
 					
 					$ext = substr($this->_ligne[$i][$j]["img"]["src"], strlen($file)-3);
-					$tmpfile = rand().".".$ext;
+					$tmpfile = mt_rand().".".$ext;
 					copy($this->_ligne[$i][$j]["img"]["src"], $dir."/Pictures/".$tmpfile);
 					
 					$backgroundImageNode->setAttribute("xlink:href", "#Pictures/".$tmpfile);
@@ -349,9 +349,9 @@ class OOoTable extends absOOo {
 				
 				$styleNode->appendChild($propertiesNode);
 				$nodeStyle->appendChild($styleNode);
-				/**********************Fin de Création*************************/
+				/**********************Fin de Crï¿½ation*************************/
 				
-				/********************Création de la cellule********************/
+				/********************Crï¿½ation de la cellule********************/
 			/*	"lignDeb"		=> TRUE,
 				"colDeb"		=> TRUE,
 				"nbLign"		=> TRUE,
@@ -404,7 +404,7 @@ class OOoTable extends absOOo {
 				}
 				
 				$tableRowNode->appendChild($tableCellNode);
-				/**********************Fin de Création*************************/
+				/**********************Fin de Crï¿½ation*************************/
 			}
 			
 			if ($i === 0) $tableNode->appendChild($tableHeaderRowsNode);

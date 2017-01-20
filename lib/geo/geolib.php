@@ -160,8 +160,8 @@ class GeoLib
 		if (empty($geo["lon"]) || empty($geo["lat"])) {
 			return array("lon" => 0, "lat" => 0);
 		}
-		$geo["lon"] = $geo["lon"] + rand(0, 10000) / 8000;
-		$geo["lat"] = $geo["lat"] + rand(0, 10000) / 10000;
+		$geo["lon"] = $geo["lon"] + mt_rand(0, 10000) / 8000;
+		$geo["lat"] = $geo["lat"] + mt_rand(0, 10000) / 10000;
 		return $geo;
 	}
 

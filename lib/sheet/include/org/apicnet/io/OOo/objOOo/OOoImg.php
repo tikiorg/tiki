@@ -8,7 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 
-/*This file is part of J4PHP - Ensembles de propriétés et méthodes permettant le developpment rapide d'application web modulaire
+/*This file is part of J4PHP - Ensembles de propriï¿½tï¿½s et mï¿½thodes permettant le developpment rapide d'application web modulaire
 Copyright (c) 2002-2004 @PICNet
 
 This program is free software; you can redistribute it and/or
@@ -116,7 +116,7 @@ class OOoImg extends absOOo {
 		$imageNode->setAttribute("draw:name", $name);
 		
 		$ext = substr($this->_styleImg["src"], strlen($file)-3);
-		$tmpfile = rand().".".$ext;
+		$tmpfile = mt_rand().".".$ext;
 		copy($this->_styleImg["src"], $dir."/Pictures/".$tmpfile);
 		if (isset($this->_styleImg["src"])) $imageNode->setAttribute("xlink:href", "#Pictures/".$tmpfile);
 		if (isset($this->_styleImg["anchorType"])) $imageNode->setAttribute("text:anchor-type", $this->_styleImg["anchorType"]);

@@ -1436,7 +1436,7 @@ if ( function_exists('apache_get_version')) {
 	if ($pos = strpos($_SERVER['REQUEST_URI'], 'tiki-check.php')){
 		$sef_test_protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']) ? 'https://' : 'http://';
 		$sef_test_base_url =  $sef_test_protocol . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'], 0, $pos);
-		$sef_test_ping_value = rand();
+		$sef_test_ping_value = mt_rand();
 		$sef_test_url = $sef_test_base_url . 'tiki-check?tiki-check-ping='.$sef_test_ping_value;
 		$sef_test_folder_created = false;
 		$sef_test_folder_writable = true;

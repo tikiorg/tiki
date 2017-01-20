@@ -30,7 +30,7 @@ class Services_Connect_Server
 		$capkey = $caplib->generate();
 
 		$status = 'pending';
-		$guid = uniqid(rand(), true);
+		$guid = uniqid(mt_rand(), true);
 
 		$captcha = strip_tags($caplib->render());
 
@@ -118,7 +118,7 @@ class Services_Connect_Server
 				$this->connectlib->recordConnection($status, $guid, $message, true);
 				$rdata = array(
 					'status' => $status,
-					'newguid' => uniqid(rand(), true),
+					'newguid' => uniqid(mt_rand(), true),
 					'message' => $message,
 				);
 			}

@@ -8,7 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 
 /*
-This file is part of J4PHP - Ensembles de propriétés et méthodes permettant le developpment rapide d'application web modulaire
+This file is part of J4PHP - Ensembles de propriï¿½tï¿½s et mï¿½thodes permettant le developpment rapide d'application web modulaire
 Copyright (c) 2002-2004 @PICNet
 
 This program is free software; you can redistribute it and/or
@@ -30,7 +30,7 @@ APIC::import("org.apicnet.io.File");
 
 
 /**
- * absOOo, classe d'abstraction de manipulation des fichiers XML, de sauvegarde des documents et de verification des données envoyé au parser OOo
+ * absOOo, classe d'abstraction de manipulation des fichiers XML, de sauvegarde des documents et de verification des donnï¿½es envoyï¿½ au parser OOo
  * 
  * @package 
  * @author diogene
@@ -40,23 +40,23 @@ APIC::import("org.apicnet.io.File");
  **/
 class absOOo extends ErrorManager {
 	
-	var $DIRXML			 = "";						// chemin du répertoire ou se situe le xml instancié
-	var $XMLTYPE 		 = array(					// Tableau des types de document pouvant être généré
+	var $DIRXML			 = "";						// chemin du rï¿½pertoire ou se situe le xml instanciï¿½
+	var $XMLTYPE 		 = array(					// Tableau des types de document pouvant ï¿½tre gï¿½nï¿½rï¿½
 			'Writer',
 			'Calc',
 			'Impress',
 			'Draw');
-	var $MIME			 = array(					// Instance tu type mime des fichiers OpenOffice crée
+	var $MIME			 = array(					// Instance tu type mime des fichiers OpenOffice crï¿½e
 			'Writer' => "vnd.sun.xml.writer",
 			'Calc' => "vnd.sun.xml.calc");
-	var $FILENAME;									// Nom du ficheir xml instanciée
-	var $xml;										// instance correspondant au xml chargé
-	var $ARGDATA		= array(					// Tableau des données pouvant être envoyé au parseur OOo
-		"PageStyle"	=>  array(						// lorsque la donnée a comme valeur TRUE cela signifie qu'elle est obligatoire si la valeur est FALSE elle est facultative et si une valeur est présente alors c'est la valeur par défaut dans le cas ou elle ne serai pas donnée
+	var $FILENAME;									// Nom du ficheir xml instanciï¿½e
+	var $xml;										// instance correspondant au xml chargï¿½
+	var $ARGDATA		= array(					// Tableau des donnï¿½es pouvant ï¿½tre envoyï¿½ au parseur OOo
+		"PageStyle"	=>  array(						// lorsque la donnï¿½e a comme valeur TRUE cela signifie qu'elle est obligatoire si la valeur est FALSE elle est facultative et si une valeur est prï¿½sente alors c'est la valeur par dï¿½faut dans le cas ou elle ne serai pas donnï¿½e
 			"NameStyle"		=> TRUE,				// 
 			"NameStyleSuiv"	=> FALSE,				// Nom du style de page suivant
 			"pageWidth"		=> "20.999",			
-			"pageHeight"	=> "29.699",			// ne serai pas donnée
+			"pageHeight"	=> "29.699",			// ne serai pas donnï¿½e
 			"printOrient"	=> FALSE,				// (portrait|paysage)
 			"marginT"		=> "2",
 			"marginB"		=> "2",
@@ -65,21 +65,21 @@ class absOOo extends ErrorManager {
 			"writingMode"	=> "lr-tb"),
 		"Header"	=> array(
 			"Text"			=> FALSE,
-			"marginB"		=> FALSE,				// Ecart entre l'entête et le corps du document
-			"marginL"		=> FALSE,				// Marge de gauche de l'entête
-			"marginR"		=> FALSE,				// Marge de Droite de l'entête
-			"minHeight"		=> FALSE,				// Hauteur de l'entête
-			"align"			=> FALSE,				// Alignement du texte de l'entête (left|center|right|justify)
-			"BgColor"		=> FALSE,				// Couleur de fond de l'entête dans le cas ou ce dernier n'a pas d'image #color en hexa
+			"marginB"		=> FALSE,				// Ecart entre l'entï¿½te et le corps du document
+			"marginL"		=> FALSE,				// Marge de gauche de l'entï¿½te
+			"marginR"		=> FALSE,				// Marge de Droite de l'entï¿½te
+			"minHeight"		=> FALSE,				// Hauteur de l'entï¿½te
+			"align"			=> FALSE,				// Alignement du texte de l'entï¿½te (left|center|right|justify)
+			"BgColor"		=> FALSE,				// Couleur de fond de l'entï¿½te dans le cas ou ce dernier n'a pas d'image #color en hexa
 			"color"			=> FALSE),				// Couleur du text
 		"Footer"	=> array(
 			"Text"			=> FALSE,
-			"marginB"		=> FALSE,				// Ecart entre l'entête et le corp du document
-			"marginL"		=> FALSE,				// Marge de gauche de l'entête
-			"marginR"		=> FALSE,				// Marge de Droite de l'entête
-			"minHeight"		=> FALSE,				// Hauteur de l'entête
-			"align"			=> FALSE,				// Alignement du texte de l'entête (left|center|right|justify)
-			"BgColor"		=> FALSE,				// Couleur de fond de l'entête dans le cas ou ce dernier n'a pas d'image #color en hexa
+			"marginB"		=> FALSE,				// Ecart entre l'entï¿½te et le corp du document
+			"marginL"		=> FALSE,				// Marge de gauche de l'entï¿½te
+			"marginR"		=> FALSE,				// Marge de Droite de l'entï¿½te
+			"minHeight"		=> FALSE,				// Hauteur de l'entï¿½te
+			"align"			=> FALSE,				// Alignement du texte de l'entï¿½te (left|center|right|justify)
+			"BgColor"		=> FALSE,				// Couleur de fond de l'entï¿½te dans le cas ou ce dernier n'a pas d'image #color en hexa
 			"color"			=> FALSE),				// Couleur du text
 		"img"		=> array(
 			"src"			=> TRUE,
@@ -111,7 +111,7 @@ class absOOo extends ErrorManager {
 			"underline"		=> FALSE,				// true
 			"bgColor"		=> FALSE,				// true
 			"color"			=> FALSE,				// true
-			"fontName"		=> FALSE,				// Le nom d'une police de caractère
+			"fontName"		=> FALSE,				// Le nom d'une police de caractï¿½re
 			"fontSize"		=> FALSE),				// integer
 		"tableStyle"	=> array(
 			"marginL"		=> FALSE,				// double
@@ -170,7 +170,7 @@ class absOOo extends ErrorManager {
 		);
 	
 	/**
-	 * absOOo::absOOo(), constructeur permettant uniquement d'instancié la classe pere de gestion des erreurs
+	 * absOOo::absOOo(), constructeur permettant uniquement d'instanciï¿½ la classe pere de gestion des erreurs
 	 * 
 	 * @return none
 	 * @access public
@@ -181,10 +181,10 @@ class absOOo extends ErrorManager {
 
 	
 	/**
-	 * absOOo::decode_text(), methode pour décode un text utf8 en texte local avec les caractères accentués et les sigles
+	 * absOOo::decode_text(), methode pour dï¿½code un text utf8 en texte local avec les caractï¿½res accentuï¿½s et les sigles
 	 * 
-	 * @param String $str chaine de caractère a coder
-	 * @return String la chaine de caractère decodé
+	 * @param String $str chaine de caractï¿½re a coder
+	 * @return String la chaine de caractï¿½re decodï¿½
 	 * @access public
 	 **/
 	function decode_text($str){
@@ -192,10 +192,10 @@ class absOOo extends ErrorManager {
 	}
 	
 	/**
-	 * absOOo::encode_text(), methode pour encoder un texte locale en texte utf8 (norme internationnal de codage des caractères)
+	 * absOOo::encode_text(), methode pour encoder un texte locale en texte utf8 (norme internationnal de codage des caractï¿½res)
 	 * 
-	 * @param String $str chaine de caractère a encoder
-	 * @return String la chaine de caractère encoder
+	 * @param String $str chaine de caractï¿½re a encoder
+	 * @return String la chaine de caractï¿½re encoder
 	 * @access public
 	 **/
 	function encode_text($str){
@@ -230,10 +230,10 @@ class absOOo extends ErrorManager {
 	}
 	
 	/**
-	 * absOOo::verifIntegrite(), vérifie l'intégrité des données pour la génération du document OOo
+	 * absOOo::verifIntegrite(), vï¿½rifie l'intï¿½gritï¿½ des donnï¿½es pour la gï¿½nï¿½ration du document OOo
 	 * 
-	 * @param array $arrayData le tableau de données a vérifier
-	 * @param String $typeArray le type du tableau de données. les type de données sont : "PageStyle", "Header", "Footer", "img", "paraStyle", "textStyle", "styleCarac", "tableStyle", 
+	 * @param array $arrayData le tableau de donnï¿½es a vï¿½rifier
+	 * @param String $typeArray le type du tableau de donnï¿½es. les type de donnï¿½es sont : "PageStyle", "Header", "Footer", "img", "paraStyle", "textStyle", "styleCarac", "tableStyle", 
 	 * @return none
 	 * @access private
 	 **/
@@ -299,7 +299,7 @@ class absOOo extends ErrorManager {
 			    $backgroundImageNode =& $this->xml->createElement("style:background-image");
 				
 				$ext = substr($style["img"]["src"], strlen($file)-3);
-				$tmpfile = rand().".".$ext;
+				$tmpfile = mt_rand().".".$ext;
 				copy($style["img"]["src"], $dir."/Pictures/".$tmpfile);
 				
 				$backgroundImageNode->setAttribute("xlink:href", "#Pictures/".$tmpfile);
@@ -354,15 +354,15 @@ class absOOo extends ErrorManager {
 			
 			return $tabsNode;
 		} else {
-			$this -> ErrorTracker(4, "Les tabulation sont mal définies", 'setTabs', __FILE__, __LINE__);
+			$this -> ErrorTracker(4, "Les tabulation sont mal dï¿½finies", 'setTabs', __FILE__, __LINE__);
 		}
 	}
 	
 	/**
-	 * absOOo::accessor(), méthode de recherche d'un enfant. cette méthode ne renvoit pas un pointeur sur l'enfant mais une copie de l'enfant
+	 * absOOo::accessor(), mï¿½thode de recherche d'un enfant. cette mï¿½thode ne renvoit pas un pointeur sur l'enfant mais une copie de l'enfant
 	 * 
-	 * @param String $path le chemin du noeud recherché
-	 * @param integer $item la position de l'enfant recherché
+	 * @param String $path le chemin du noeud recherchï¿½
+	 * @param integer $item la position de l'enfant recherchï¿½
 	 * @return DOMIT_Nodes l'enfant rechercher
 	 * @access private
 	 **/
@@ -600,9 +600,9 @@ class absOOo extends ErrorManager {
 	/**
 	 * absOOo::ChildText()
 	 * 
-	 * @param String $tagName, nom de l'élément (balise) à créer
-	 * @param String $text, valeur de la balise créée
-	 * @return DOMIT_Node le nouveau noeud crée
+	 * @param String $tagName, nom de l'ï¿½lï¿½ment (balise) ï¿½ crï¿½er
+	 * @param String $text, valeur de la balise crï¿½ï¿½e
+	 * @return DOMIT_Node le nouveau noeud crï¿½e
 	 * @access private
 	 **/
 	function ChildText($tagName, $text){
@@ -614,7 +614,7 @@ class absOOo extends ErrorManager {
 	
 	
 	/**
-	 * absOOo::toString(), convertir l'arbre xml en chaine de caractère.
+	 * absOOo::toString(), convertir l'arbre xml en chaine de caractï¿½re.
 	 * 
 	 * @return String 
 	 * @access private

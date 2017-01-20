@@ -150,7 +150,7 @@ class PdfGenerator
 		// There seemed to be encoding issues when using stdout (on Windows 7 64 bit).
 
 		// Use temp/public. It is cleaned up during a cache clean, in case some files are left
-		$filename = 'temp/public/out'.rand().'.pdf';
+		$filename = 'temp/public/out'.mt_rand().'.pdf';
 
 		// Run shell_exec command to generate out file
 		// NOTE: this requires write permissions
@@ -188,7 +188,7 @@ class PdfGenerator
 		// There seemed to be encoding issues when using stdout (on Windows 7 64 bit).
 
 		// Use temp/public. It is cleaned up during a cache clean, in case some files are left
-		$filename = 'temp/public/out'.rand().'.pdf';
+		$filename = 'temp/public/out'.mt_rand().'.pdf';
 
 		// Run shell_exec command to generate out file
 		// NOTE: this requires write permissions
@@ -390,7 +390,7 @@ class PdfGenerator
 	   $context = stream_context_create($opts);
 	   session_write_close();
 	   $data=file_get_contents($url, false, $context);
-	   $newFile='temp/pdfimg/pdfimg'.rand(9999,999999).'.png';
+	   $newFile='temp/pdfimg/pdfimg'.mt_rand(9999,999999).'.png';
 	   file_put_contents($newFile, $data);
 	   chmod($newFile,0755);
        return $newFile;

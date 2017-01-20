@@ -29,7 +29,7 @@ function wikiplugin_randominclude($data, $params)
 	$query='SELECT count(*) AS `max` FROM `tiki_pages` WHERE `pageName`!=?';
 	$cant = $tikilib->getOne($query, $params);
 	if ($cant) {
-		$pick = rand(0, $cant - 1);
+		$pick = mt_rand(0, $cant - 1);
 			
 		$query = 'select `pageName` from `tiki_pages` WHERE `pageName`!=?';
 		$incpage = $tikilib->getOne($query, $params, 1, $pick);

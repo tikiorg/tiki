@@ -104,7 +104,7 @@ class DirLib extends TikiLib
 		if ($count < $cant) $cant = $count;
 		$ret = array();
 		while (count($ret) < $cant) {
-			$x = rand(0, $count);
+			$x = mt_rand(0, $count);
 			if (!in_array($x, $ret)) {
 				$ret[] = $x;
 			}

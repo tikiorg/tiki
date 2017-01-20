@@ -101,7 +101,7 @@ class PollLibShared extends TikiLib
 		elseif (count($ret) == 1)
 			return $ret[0]['pollId'];
 		else {
-			$bid = rand(0, count($ret) - 1);
+			$bid = mt_rand(0, count($ret) - 1);
 			return $ret[$bid]['pollId'];
 		}
 	}
