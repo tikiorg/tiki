@@ -1508,8 +1508,12 @@ class FileGalLib extends TikiLib
 	{
 		global $tiki_p_admin_file_galleries, $userlib, $tikilib, $prefs, $user;
 		$list = array();
-		$temp = 'temp/'.md5($tikilib->now).'/';
-		if (!mkdir($temp)) {
+		$temp = '/'.md5($tikilib->now).'/';
+		if (!mkdir(sys_get_temp_dir().$temp)) {
+			$temp = $temp . sys_get_temp_dir();
+		}else if (mkdir('temp'.$temp)) {
+			$temp = 'temp' . $temp;
+		}else{
 			$error = "Can not create directory $temp";
 			return false;
 		}
