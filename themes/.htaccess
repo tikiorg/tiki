@@ -1,19 +1,18 @@
 <FilesMatch ".*">
-    <IfModule mod_authz_core.c>
-       Require all denied
-    </IfModule>
-    <IfModule !mod_authz_core.c>
-        order deny,allow
-        deny from all
-    </IfModule>
+	<IfModule mod_authz_core.c>
+		Require all denied
+	</IfModule>
+	<IfModule !mod_authz_core.c>
+		order deny,allow
+		deny from all
+	</IfModule>
 </FilesMatch>
 
-
 <FilesMatch "(?i)\.(css|js|jpe?g|png|ico|gif|svgz?|bmp|json|xml|ttf|eot|woff2?|otf|swf)$">
-    <IfModule mod_authz_core.c>
-       Require all granted
-    </IfModule>
-    <IfModule !mod_authz_core.c>
-        Allow from all
-    </IfModule>
+	<IfModule mod_authz_core.c>
+		Require all granted
+	</IfModule>
+	<IfModule !mod_authz_core.c>
+		Allow from all
+	</IfModule>
 </FilesMatch>
