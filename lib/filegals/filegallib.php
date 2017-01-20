@@ -1508,12 +1508,12 @@ class FileGalLib extends TikiLib
 	{
 		global $tiki_p_admin_file_galleries, $userlib, $tikilib, $prefs, $user;
 		$list = array();
-		$temp = '/'.md5($tikilib->now).'/';
-		if (!mkdir(sys_get_temp_dir().$temp)) {
-			$temp = $temp . sys_get_temp_dir();
-		}else if (mkdir('temp'.$temp)) {
+		$temp = '/' . md5(\Zend_Crypt_Math::randBytes(10)) . '/';
+		if (! mkdir(sys_get_temp_dir() . $temp)) {
+			$temp = sys_get_temp_dir() . $temp;
+		} else if (mkdir('temp' . $temp)) {
 			$temp = 'temp' . $temp;
-		}else{
+		} else {
 			$error = "Can not create directory $temp";
 			return false;
 		}
@@ -1866,7 +1866,7 @@ class FileGalLib extends TikiLib
 		}
 		return $quota;
 	}
-	
+
 	/**
 	 * get the max quota in MB of the children of a fgal,
 	 * or total contents size where no quota is set
@@ -1874,7 +1874,7 @@ class FileGalLib extends TikiLib
 	 * @param int $galleryId
 	 * @return float
 	 */
-	
+
 	function getMaxQuotaDescendants($galleryId=0)
 	{
 		if (empty($galleryId)) {
