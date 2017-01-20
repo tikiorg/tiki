@@ -1226,7 +1226,8 @@ textarea.wikiedit {
     display: table-cell;
   }
 }
-.tiki .wiki.external + .icon-link-external {
+.tiki .wiki.external + .icon-link-external,
+.tiki .wiki.external .icon-link- external {
   font-size: 70%;
   margin-left: 1px;
 }
