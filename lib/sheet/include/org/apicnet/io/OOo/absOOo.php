@@ -2,13 +2,13 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  header("location: index.php");
-  exit;
+	header("location: index.php");
+	exit;
 }
 
 
 /*
-This file is part of J4PHP - Ensembles de propri�t�s et m�thodes permettant le developpment rapide d'application web modulaire
+This file is part of J4PHP - Ensembles de propriétés et méthodes permettant le developpment rapide d'application web modulaire
 Copyright (c) 2002-2004 @PICNet
 
 This program is free software; you can redistribute it and/or
@@ -30,33 +30,33 @@ APIC::import("org.apicnet.io.File");
 
 
 /**
- * absOOo, classe d'abstraction de manipulation des fichiers XML, de sauvegarde des documents et de verification des donn�es envoy� au parser OOo
- * 
- * @package 
+ * absOOo, classe d'abstraction de manipulation des fichiers XML, de sauvegarde des documents et de verification des données envoyé au parser OOo
+ *
+ * @package
  * @author diogene
  * @copyright Copyright (c) 2004
  * @version $Id: absOOo.php,v 1.3 2005-05-18 11:01:39 mose Exp $
  * @access public
  **/
 class absOOo extends ErrorManager {
-	
-	var $DIRXML			 = "";						// chemin du r�pertoire ou se situe le xml instanci�
-	var $XMLTYPE 		 = array(					// Tableau des types de document pouvant �tre g�n�r�
-			'Writer',
-			'Calc',
-			'Impress',
-			'Draw');
-	var $MIME			 = array(					// Instance tu type mime des fichiers OpenOffice cr�e
-			'Writer' => "vnd.sun.xml.writer",
-			'Calc' => "vnd.sun.xml.calc");
-	var $FILENAME;									// Nom du ficheir xml instanci�e
-	var $xml;										// instance correspondant au xml charg�
-	var $ARGDATA		= array(					// Tableau des donn�es pouvant �tre envoy� au parseur OOo
-		"PageStyle"	=>  array(						// lorsque la donn�e a comme valeur TRUE cela signifie qu'elle est obligatoire si la valeur est FALSE elle est facultative et si une valeur est pr�sente alors c'est la valeur par d�faut dans le cas ou elle ne serai pas donn�e
-			"NameStyle"		=> TRUE,				// 
+
+	var $DIRXML			 = "";						// chemin du répertoire ou se situe le xml instancié
+	var $XMLTYPE 		 = array(					// Tableau des types de document pouvant être généré
+		'Writer',
+		'Calc',
+		'Impress',
+		'Draw');
+	var $MIME			 = array(					// Instance tu type mime des fichiers OpenOffice crée
+		'Writer' => "vnd.sun.xml.writer",
+		'Calc' => "vnd.sun.xml.calc");
+	var $FILENAME;									// Nom du ficheir xml instanciée
+	var $xml;										// instance correspondant au xml chargé
+	var $ARGDATA		= array(					// Tableau des données pouvant être envoyé au parseur OOo
+		"PageStyle"	=>  array(						// lorsque la donnée a comme valeur TRUE cela signifie qu'elle est obligatoire si la valeur est FALSE elle est facultative et si une valeur est présente alors c'est la valeur par défaut dans le cas ou elle ne serai pas donnée
+			"NameStyle"		=> TRUE,				//
 			"NameStyleSuiv"	=> FALSE,				// Nom du style de page suivant
-			"pageWidth"		=> "20.999",			
-			"pageHeight"	=> "29.699",			// ne serai pas donn�e
+			"pageWidth"		=> "20.999",
+			"pageHeight"	=> "29.699",			// ne serai pas donnée
 			"printOrient"	=> FALSE,				// (portrait|paysage)
 			"marginT"		=> "2",
 			"marginB"		=> "2",
@@ -65,21 +65,21 @@ class absOOo extends ErrorManager {
 			"writingMode"	=> "lr-tb"),
 		"Header"	=> array(
 			"Text"			=> FALSE,
-			"marginB"		=> FALSE,				// Ecart entre l'ent�te et le corps du document
-			"marginL"		=> FALSE,				// Marge de gauche de l'ent�te
-			"marginR"		=> FALSE,				// Marge de Droite de l'ent�te
-			"minHeight"		=> FALSE,				// Hauteur de l'ent�te
-			"align"			=> FALSE,				// Alignement du texte de l'ent�te (left|center|right|justify)
-			"BgColor"		=> FALSE,				// Couleur de fond de l'ent�te dans le cas ou ce dernier n'a pas d'image #color en hexa
+			"marginB"		=> FALSE,				// Ecart entre l'entête et le corps du document
+			"marginL"		=> FALSE,				// Marge de gauche de l'entête
+			"marginR"		=> FALSE,				// Marge de Droite de l'entête
+			"minHeight"		=> FALSE,				// Hauteur de l'entête
+			"align"			=> FALSE,				// Alignement du texte de l'entête (left|center|right|justify)
+			"BgColor"		=> FALSE,				// Couleur de fond de l'entête dans le cas ou ce dernier n'a pas d'image #color en hexa
 			"color"			=> FALSE),				// Couleur du text
 		"Footer"	=> array(
 			"Text"			=> FALSE,
-			"marginB"		=> FALSE,				// Ecart entre l'ent�te et le corp du document
-			"marginL"		=> FALSE,				// Marge de gauche de l'ent�te
-			"marginR"		=> FALSE,				// Marge de Droite de l'ent�te
-			"minHeight"		=> FALSE,				// Hauteur de l'ent�te
-			"align"			=> FALSE,				// Alignement du texte de l'ent�te (left|center|right|justify)
-			"BgColor"		=> FALSE,				// Couleur de fond de l'ent�te dans le cas ou ce dernier n'a pas d'image #color en hexa
+			"marginB"		=> FALSE,				// Ecart entre l'entête et le corp du document
+			"marginL"		=> FALSE,				// Marge de gauche de l'entête
+			"marginR"		=> FALSE,				// Marge de Droite de l'entête
+			"minHeight"		=> FALSE,				// Hauteur de l'entête
+			"align"			=> FALSE,				// Alignement du texte de l'entête (left|center|right|justify)
+			"BgColor"		=> FALSE,				// Couleur de fond de l'entête dans le cas ou ce dernier n'a pas d'image #color en hexa
 			"color"			=> FALSE),				// Couleur du text
 		"img"		=> array(
 			"src"			=> TRUE,
@@ -111,7 +111,7 @@ class absOOo extends ErrorManager {
 			"underline"		=> FALSE,				// true
 			"bgColor"		=> FALSE,				// true
 			"color"			=> FALSE,				// true
-			"fontName"		=> FALSE,				// Le nom d'une police de caract�re
+			"fontName"		=> FALSE,				// Le nom d'une police de caractère
 			"fontSize"		=> FALSE),				// integer
 		"tableStyle"	=> array(
 			"marginL"		=> FALSE,				// double
@@ -124,20 +124,20 @@ class absOOo extends ErrorManager {
 			"bgColor"		=> FALSE),				// #color en hexa
 		"widthRow"		=> array(),
 		"cellStyle"		=> array(
-			"data"			=> FALSE,				// 
-			"marginL"		=> FALSE,				// 
-			"marginR"		=> FALSE,				// 
-			"marginB"		=> FALSE,				// 
-			"marginT"		=> FALSE,				// 
+			"data"			=> FALSE,				//
+			"marginL"		=> FALSE,				//
+			"marginR"		=> FALSE,				//
+			"marginB"		=> FALSE,				//
+			"marginT"		=> FALSE,				//
 			"vAlign"		=> FALSE,				//
-			"bgColor"		=> FALSE,				// 
-			"padding"		=> FALSE,				// 
+			"bgColor"		=> FALSE,				//
+			"padding"		=> FALSE,				//
 			"valueType"		=> "string",			// (string|)
-			"borderL"		=> FALSE,				// 
-			"borderR"		=> FALSE,				// 
-			"borderB"		=> FALSE,				// 
+			"borderL"		=> FALSE,				//
+			"borderR"		=> FALSE,				//
+			"borderB"		=> FALSE,				//
 			"borderT"		=> FALSE,				//
-			"dataType"		=> FALSE),				// 
+			"dataType"		=> FALSE),				//
 		"imgStyle"		=> array(
 			"src"			=> TRUE,
 			"z-index"		=> "0",
@@ -159,19 +159,19 @@ class absOOo extends ErrorManager {
 			"color-mode"	=> "standard"),
 		"infCSpan"		=> array(
 			"lignSPan"		=> TRUE,
-	 		"colDeb"		=> TRUE,
+			"colDeb"		=> TRUE,
 			"nbCol"			=> TRUE),
 		"infRSpan"		=> array(
-	 		"lignDeb"		=> TRUE,
+			"lignDeb"		=> TRUE,
 			"colDeb"		=> TRUE,
 			"nbLign"		=> TRUE,
 			"nbCol"			=> TRUE,
-			)
-		);
-	
+		)
+	);
+
 	/**
-	 * absOOo::absOOo(), constructeur permettant uniquement d'instanci� la classe pere de gestion des erreurs
-	 * 
+	 * absOOo::absOOo(), constructeur permettant uniquement d'instancié la classe pere de gestion des erreurs
+	 *
 	 * @return none
 	 * @access public
 	 **/
@@ -179,23 +179,23 @@ class absOOo extends ErrorManager {
 		parent::ErrorManager();
 	}
 
-	
+
 	/**
-	 * absOOo::decode_text(), methode pour d�code un text utf8 en texte local avec les caract�res accentu�s et les sigles
-	 * 
-	 * @param String $str chaine de caract�re a coder
-	 * @return String la chaine de caract�re decod�
+	 * absOOo::decode_text(), methode pour décode un text utf8 en texte local avec les caractères accentués et les sigles
+	 *
+	 * @param String $str chaine de caractère a coder
+	 * @return String la chaine de caractère decodé
 	 * @access public
 	 **/
 	function decode_text($str){
 		//return iconv('UTF-8', 'ISO-8859-1', $str);
 	}
-	
+
 	/**
-	 * absOOo::encode_text(), methode pour encoder un texte locale en texte utf8 (norme internationnal de codage des caract�res)
-	 * 
-	 * @param String $str chaine de caract�re a encoder
-	 * @return String la chaine de caract�re encoder
+	 * absOOo::encode_text(), methode pour encoder un texte locale en texte utf8 (norme internationnal de codage des caractères)
+	 *
+	 * @param String $str chaine de caractère a encoder
+	 * @return String la chaine de caractère encoder
 	 * @access public
 	 **/
 	function encode_text($str){
@@ -206,14 +206,14 @@ class absOOo extends ErrorManager {
 		$tbl["&nbsp;"]="&#160;";
 		$tbl["\""]="&#34;";
 		$tbl[" "]="&#32;";
-		
+
 		return str_replace(array_keys($tbl), array_values($tbl), $str);
 	}
-	
-	
+
+
 	/**
 	 * absOOo::save(), sauvegarde le fichier xml courant
-	 * 
+	 *
 	 * @return  none
 	 * @access private
 	 **/
@@ -225,21 +225,21 @@ class absOOo extends ErrorManager {
 			$xmlFile->delFile();
 			$xmlFile->createFile();
 		}
-		
+
 		$xmlFile->writeData($XMLContent);
 	}
-	
+
 	/**
-	 * absOOo::verifIntegrite(), v�rifie l'int�grit� des donn�es pour la g�n�ration du document OOo
-	 * 
-	 * @param array $arrayData le tableau de donn�es a v�rifier
-	 * @param String $typeArray le type du tableau de donn�es. les type de donn�es sont : "PageStyle", "Header", "Footer", "img", "paraStyle", "textStyle", "styleCarac", "tableStyle", 
+	 * absOOo::verifIntegrite(), vérifie l'intégrité des données pour la génération du document OOo
+	 *
+	 * @param array $arrayData le tableau de données a vérifier
+	 * @param String $typeArray le type du tableau de données. les type de données sont : "PageStyle", "Header", "Footer", "img", "paraStyle", "textStyle", "styleCarac", "tableStyle",
 	 * @return none
 	 * @access private
 	 **/
 	function verifIntegrite(&$arrayData, $typeArray){
 		$ArrVerif = $this->ARGDATA[$typeArray];
-		
+
 		for(reset($ArrVerif); $key = key($ArrVerif); next($ArrVerif)) {
 			if (is_array($arrayData[$key])) {
 				$this->verifIntegrite($arrayData[$key], $key);
@@ -253,11 +253,11 @@ class absOOo extends ErrorManager {
 			}
 		}
 	}
-	
-	
+
+
 	function &setProperties($style, $dir){
 		if (is_array($style)) {
-			
+
 			$propertiesNode =& $this->xml->createElement("style:properties");
 			if (isset($style["bold"])){
 				$propertiesNode->setAttribute("fo:font-weight", "bold");
@@ -278,7 +278,7 @@ class absOOo extends ErrorManager {
 			}
 			if (isset($style["bgColor"]))$propertiesNode->setAttribute("style:text-background-color", $style["bgColor"]);
 			if (isset($style["color"]))$propertiesNode->setAttribute("fo:color", $style["color"]);
- 			if (isset($style["minHeight"])) $propertiesNode->setAttribute("fo:min-height", $style["minHeight"]."cm");
+			if (isset($style["minHeight"])) $propertiesNode->setAttribute("fo:min-height", $style["minHeight"]."cm");
 			if (isset($style["marginL"])) $propertiesNode->setAttribute("fo:margin-left", $style["marginL"]."cm" );
 			if (isset($style["marginR"])) $propertiesNode->setAttribute("fo:margin-right", $style["marginR"]."cm" );
 			if (isset($style["marginT"])) $propertiesNode->setAttribute("fo:margin-top", $style["marginT"]."cm" );
@@ -291,144 +291,144 @@ class absOOo extends ErrorManager {
 			if (isset($style["padding"])) $propertiesNode->setAttribute("fo:padding", $style["padding"]."cm" );
 			if (isset($style["border"])) $propertiesNode->setAttribute("fo:border", $style["border"]);
 			if (isset($style["color"])) $propertiesNode->setAttribute("fo:color", $style["color"]);
-			
+
 			$propertiesNode->setAttribute("style:page-number", "0");
 			$propertiesNode->setAttribute("style:dynamic-spacing", "false");
-		
+
 			if (isset($style["img"]) && isset($style["img"]["src"])) {
-			    $backgroundImageNode =& $this->xml->createElement("style:background-image");
-				
+				$backgroundImageNode =& $this->xml->createElement("style:background-image");
+
 				$ext = substr($style["img"]["src"], strlen($file)-3);
 				$tmpfile = rand().".".$ext;
 				copy($style["img"]["src"], $dir."/Pictures/".$tmpfile);
-				
+
 				$backgroundImageNode->setAttribute("xlink:href", "#Pictures/".$tmpfile);
 				$backgroundImageNode->setAttribute("xlink:type", "simple");
 				$backgroundImageNode->setAttribute("xlink:actuate", "onLoad");
 				if (isset($style["img"]["type"])) $backgroundImageNode->setAttribute("style:repeat", $style["img"]["type"]);
 				if (isset($style["img"]["position"])) $backgroundImageNode->setAttribute("style:position", $style["img"]["position"]);
-				
+
 				$propertiesNode->setAttribute("fo:background-color", "transparent");
 				$propertiesNode->appendChild($backgroundImageNode);
 			} else {
 				$propertiesNode->appendChild($this->ChildText("style:background-image", ""));
 			}
-			
-			
+
+
 			if (isset($style["tabs"])) {
 				$propertiesNode->appendChild($this->setTabs($style["tabs"]));
 			}
-			
+
 			return $propertiesNode;
 		} else {
 			$this -> ErrorTracker(4, "Le tableau en argument doit obligatoirement contenir l'information ".$key, 'setProperties', __FILE__, __LINE__);
 		}
 	}
-	
-	
+
+
 	/**
 	 * absOOo::setTabs()
-	 * 
+	 *
 	 * @param $tabs = array(
 	 * 			array(
-				  		"position"	 => "18cm",
-				 		"type"		 => "right", 
-						"leaderChar" => "_"
-				),
-				array(...
-	 * ) 
-	 * @return 
+	"position"	 => "18cm",
+	"type"		 => "right",
+	"leaderChar" => "_"
+	),
+	array(...
+	 * )
+	 * @return
 	 **/
 	function setTabs($tabs){
 		if (is_array($tabs)) {
-			
+
 			$tabsNode =& $this->xml->createElement("style:tab-stops");
-				
-				for($i=0; $i < count($tabs); $i++){
-					$tabNode =& $this->xml->createElement("style:tab-stop");
-					$tabNode->setAttribute("style:position", $tabs[$i]["position"]);
-					$tabNode->setAttribute("style:type", $tabs[$i]["type"]);
-					if (isset($tabs[$i]["leaderChar"])) $tabNode->setAttribute("style:leader-char", $tabs[$i]["leaderChar"]);
-					$tabsNode->appendChild($tabNode);
-				}
-			
+
+			for($i=0; $i < count($tabs); $i++){
+				$tabNode =& $this->xml->createElement("style:tab-stop");
+				$tabNode->setAttribute("style:position", $tabs[$i]["position"]);
+				$tabNode->setAttribute("style:type", $tabs[$i]["type"]);
+				if (isset($tabs[$i]["leaderChar"])) $tabNode->setAttribute("style:leader-char", $tabs[$i]["leaderChar"]);
+				$tabsNode->appendChild($tabNode);
+			}
+
 			return $tabsNode;
 		} else {
-			$this -> ErrorTracker(4, "Les tabulation sont mal d�finies", 'setTabs', __FILE__, __LINE__);
+			$this -> ErrorTracker(4, "Les tabulation sont mal définies", 'setTabs', __FILE__, __LINE__);
 		}
 	}
-	
+
 	/**
-	 * absOOo::accessor(), m�thode de recherche d'un enfant. cette m�thode ne renvoit pas un pointeur sur l'enfant mais une copie de l'enfant
-	 * 
-	 * @param String $path le chemin du noeud recherch�
-	 * @param integer $item la position de l'enfant recherch�
+	 * absOOo::accessor(), méthode de recherche d'un enfant. cette méthode ne renvoit pas un pointeur sur l'enfant mais une copie de l'enfant
+	 *
+	 * @param String $path le chemin du noeud recherché
+	 * @param integer $item la position de l'enfant recherché
 	 * @return DOMIT_Nodes l'enfant rechercher
 	 * @access private
 	 **/
 	function &accessor($path, $item = NULL){
 		if (eregi("@", $path)) {
-		
+
 			$arrPath     = split("@", $path);
 			$arrAtt		 = split("=", $arrPath[1]);
-			
+
 			$attName	 = substr($arrAtt[0], 1);
 			$attValue	 = substr($arrAtt[1], 1, strlen($arrAtt[1]) - 3);
-			
+
 			$path	 	 = $arrPath[0];
 			$strAtt		 = $arrPath[1];
 		}
-		
+
 		$arrPath       = split("/", $path);
 		$currentNode   = & $this->xml->documentElement;
-		
+
 		for($i=1; $i < count($arrPath); $i++){
 			$nodeListTemp = new DOMIT_NodeList();
 			$currentNode->getNamedElements($nodeListTemp, $arrPath[$i]);
-			
+
 			if ($nodeListTemp->getLength() == 0) {
 				return NULL;
 			}
 		}
-		
+
 		if ($strAtt != "") {
-				$find = FALSE;
-				for ($i = 0; $i < $nodeListTemp->getLength(); $i++) {
-					$node =& $nodeListTemp->item($i);
-					if ($node->getAttribute($attName) == $attValue) {
-						return $node;
-						$find = TRUE;
-					} 
+			$find = FALSE;
+			for ($i = 0; $i < $nodeListTemp->getLength(); $i++) {
+				$node =& $nodeListTemp->item($i);
+				if ($node->getAttribute($attName) == $attValue) {
+					return $node;
+					$find = TRUE;
 				}
-				
-				if (!$find) return NULL;
+			}
+
+			if (!$find) return NULL;
 		} else {
 			if (isset($item) && $item < $nodeListTemp->getLength()) return $nodeListTemp->item($item);
 			else  return NULL;
 		}
 	}
-	
+
 	/**
 	 * absOOo::getNodeRec()
-	 * 
+	 *
 	 * @param DOMIT_Nodes $node
 	 * @param String $path
 	 * @return DOMIT_Nodes
- 	 * @access private
+	 * @access private
 	 **/
 	function &getNodeRec(&$node, $path){
-		
+
 		$arrPath     = split("/", $path);
-		
-	//	echo("<h4>".$arrPath[1]."</h4>");
-		
+
+		//	echo("<h4>".$arrPath[1]."</h4>");
+
 		if (eregi("@", $arrPath[1])) {
 			$arrNode     = split("@", $arrPath[1]);
 			$arrAtt		 = split("=", $arrNode[1]);
-			
+
 			$attName	 = substr($arrAtt[0], 1);
 			$attValue	 = substr($arrAtt[1], 1, strlen($arrAtt[1]) - 3);
-			
+
 			$strAtt		 = $arrNode[1];
 			$curNodeName = $arrNode[0];
 		} else {
@@ -436,28 +436,28 @@ class absOOo extends ErrorManager {
 		}
 
 		$tmpPath     = "/".implode("/", array_slice ($arrPath, 2));
-	//	echo($path."======>tmpPath  : ".$tmpPath." et curNodeName : ".$curNodeName."<br>");
+		//	echo($path."======>tmpPath  : ".$tmpPath." et curNodeName : ".$curNodeName."<br>");
 		$currentNode = &$node;
 		$find        = FALSE;
-		
-		
+
+
 		if ($curNodeName == $currentNode->nodeName && count($arrPath) == 2) {
-		    return $currentNode;
+			return $currentNode;
 		} else {
-			
+
 			if ($curNodeName == $currentNode->nodeName) {
 				return $this->getNodeRec($currentNode->firstChild, $tmpPath);
 			} else {
 				$currentNode =& $currentNode->nextSibling;
 				while (!$find && $currentNode != NULL) {
-	//				echo("<b>".$curNodeName." == ".$currentNode->nodeName."</b><br>");
+					//				echo("<b>".$curNodeName." == ".$currentNode->nodeName."</b><br>");
 					if ($currentNode->nodeName == $curNodeName) {
-	//					echo("strAtt : ".$strAtt."<br>");
+						//					echo("strAtt : ".$strAtt."<br>");
 						if ($strAtt != "") {
 							$currentAtt = $currentNode->getAttribute($attName);
-	//						echo("getAttribute : ".$currentNode->getAttribute($attName)."<br>");
+							//						echo("getAttribute : ".$currentNode->getAttribute($attName)."<br>");
 							if ($currentAtt == $attValue) {
-							    $find = TRUE;
+								$find = TRUE;
 							} else {
 								$currentNode =& $currentNode->nextSibling;
 							}
@@ -468,7 +468,7 @@ class absOOo extends ErrorManager {
 						$currentNode =& $currentNode->nextSibling;
 					}
 				}
-				
+
 				if ($find) {
 					if ($find && count($arrPath) == 2)  return $currentNode;
 					else return $this->getNodeRec($currentNode->firstChild, $tmpPath);
@@ -478,22 +478,22 @@ class absOOo extends ErrorManager {
 			}
 		}
 	}
-	
+
 	/**
 	 * absOOo::getNode()
-	 * 
+	 *
 	 * @param String $path
-	 * @return DOMIT_Nodes 
+	 * @return DOMIT_Nodes
 	 * @access private
 	 **/
 	function &getNode($path){
-	//	echo("<h2>".$path."</h2>");
+		//	echo("<h2>".$path."</h2>");
 		return $this->getNodeRec($this->xml->documentElement, $path);
 	}
-	
+
 	/**
 	 * absOOo::removeNode()
-	 * 
+	 *
 	 * @param $path
 	 * @return none
 	 * @access private
@@ -504,13 +504,13 @@ class absOOo extends ErrorManager {
 		$childPath	 = $path;
 		$parentNode	 = &$this->getNode($parentPath);
 		$childNode	 = &$this->getNode($childPath);
-		
+
 		$parentNode->removeNode($childNode);
 	}
-	
+
 	/**
 	 * absOOo::ssNodeExist()
-	 * 
+	 *
 	 * @param DOMIT_Nodes $node
 	 * @param Boolean $nodeSearch
 	 * @return boolean vrai si le sous-noeud exist dans le noeud, faux dans le cas contraire
@@ -522,23 +522,23 @@ class absOOo extends ErrorManager {
 		if (eregi("@", $nodeSearch)) {
 			$arrNode     = split("@", $nodeSearch);
 			$arrAtt		 = split("=", $arrNode[1]);
-			
+
 			$nodeName	 = $arrNode[0];
 			$attName	 = substr($arrAtt[0], 1);
 			$attValue	 = substr($arrAtt[1], 1, strlen($arrAtt[1]) - 3);
 		} else {
 			$nodeName = $nodeSearch;
 		}
-		
+
 		while (!$find && $currentNode != NULL) {
 			if ($currentNode->nodeName == $nodeName) {
 				if (eregi("@", $nodeSearch)) {
 					$currentAtt = $currentNode->getAttribute($attName);
-					
+
 					if ($currentAtt = $attValue) {
-					    $find = TRUE;
+						$find = TRUE;
 						break;
-					} 
+					}
 				} else {
 					$find = TRUE;
 					break;
@@ -549,36 +549,36 @@ class absOOo extends ErrorManager {
 		}
 		if (!$find) return FALSE;
 		else return TRUE;
-		
+
 	}
-	
+
 	/**
 	 * absOOo::countNode()
-	 * 
+	 *
 	 * @param String $path
-	 * @return Integer 
+	 * @return Integer
 	 * @access private
 	 **/
 	function countNode($path){
 		$arrPath       = split("/", $path);
 		$currentNode   = & $this->xml->documentElement;
-		
+
 		for($i=1; $i < count($arrPath); $i++){
-			
+
 			$nodeListTemp = new DOMIT_NodeList();
 			$currentNode->getNamedElements($nodeListTemp, $arrPath[$i]);
-			
+
 			if ($nodeListTemp->getLength() == 0) {
 				return NULL;
 			}
 		}
-		
+
 		return $nodeListTemp->getLength();
 	}
-	
+
 	/**
 	 * absOOo::setNodeText()
-	 * 
+	 *
 	 * @param String $path
 	 * @param String $text
 	 * @return none
@@ -586,7 +586,7 @@ class absOOo extends ErrorManager {
 	 **/
 	function setNodeText($path, $text){
 		$node     = &$this->getNode($path);
-	//	$textNode = &$this->xml->createTextNode($this->encode_text($text));
+		//	$textNode = &$this->xml->createTextNode($this->encode_text($text));
 		$textNode = &$this->xml->createTextNode($text);
 
 		if ($node->hasChildNodes()) {
@@ -595,31 +595,31 @@ class absOOo extends ErrorManager {
 			$node->appendChild($textNode);
 		}
 	}
-	
-	
+
+
 	/**
 	 * absOOo::ChildText()
-	 * 
-	 * @param String $tagName, nom de l'�l�ment (balise) � cr�er
-	 * @param String $text, valeur de la balise cr��e
-	 * @return DOMIT_Node le nouveau noeud cr�e
+	 *
+	 * @param String $tagName, nom de l'élément (balise) à créer
+	 * @param String $text, valeur de la balise créée
+	 * @return DOMIT_Node le nouveau noeud crée
 	 * @access private
 	 **/
 	function ChildText($tagName, $text){
 		$appChildNode = &$this->xml->createElement($tagName);
-	//	$appChildNode->appendChild($this->xml->createTextNode($this->encode_text($text)));
+		//	$appChildNode->appendChild($this->xml->createTextNode($this->encode_text($text)));
 		$appChildNode->appendChild($this->xml->createTextNode($text));
 		return $appChildNode;
 	}
-	
-	
+
+
 	/**
-	 * absOOo::toString(), convertir l'arbre xml en chaine de caract�re.
-	 * 
-	 * @return String 
+	 * absOOo::toString(), convertir l'arbre xml en chaine de caractère.
+	 *
+	 * @return String
 	 * @access private
 	 **/
 	function toString(){
-		return $this->xml->toString(); 
+		return $this->xml->toString();
 	}
 }
