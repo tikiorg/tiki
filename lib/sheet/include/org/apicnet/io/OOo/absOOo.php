@@ -299,7 +299,7 @@ class absOOo extends ErrorManager {
 			    $backgroundImageNode =& $this->xml->createElement("style:background-image");
 				
 				$ext = substr($style["img"]["src"], strlen($file)-3);
-				$tmpfile = mt_rand().".".$ext;
+				$tmpfile = rand().".".$ext;
 				copy($style["img"]["src"], $dir."/Pictures/".$tmpfile);
 				
 				$backgroundImageNode->setAttribute("xlink:href", "#Pictures/".$tmpfile);

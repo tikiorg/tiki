@@ -93,7 +93,7 @@ class OOoUtil extends absOOo{
 	}
 	
 	function createDirectories(){
-		$this->tmpdir = CACHE_PATH."/OOotmp".mt_rand();
+		$this->tmpdir = CACHE_PATH."/OOotmp".rand();
 		mkdir ($this->tmpdir);
 		
 		for($i = 0; $i < count($this->directories); $i++){

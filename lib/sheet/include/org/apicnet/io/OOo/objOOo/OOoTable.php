@@ -244,7 +244,7 @@ class OOoTable extends absOOo {
 		    $backgroundImageNode =& $this->xml->createElement("style:background-image");
 				
 			$ext = substr($this->_style["img"]["src"], strlen($file)-3);
-			$tmpfile = mt_rand().".".$ext;
+			$tmpfile = rand().".".$ext;
 			copy($this->_style["img"]["src"], $dir."/Pictures/".$tmpfile);
 			
 			$backgroundImageNode->setAttribute("xlink:href", "#Pictures/".$tmpfile);
@@ -332,7 +332,7 @@ class OOoTable extends absOOo {
 				    $backgroundImageNode =& $this->xml->createElement("style:background-image");
 					
 					$ext = substr($this->_ligne[$i][$j]["img"]["src"], strlen($file)-3);
-					$tmpfile = mt_rand().".".$ext;
+					$tmpfile = rand().".".$ext;
 					copy($this->_ligne[$i][$j]["img"]["src"], $dir."/Pictures/".$tmpfile);
 					
 					$backgroundImageNode->setAttribute("xlink:href", "#Pictures/".$tmpfile);

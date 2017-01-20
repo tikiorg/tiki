@@ -116,7 +116,7 @@ class OOoImg extends absOOo {
 		$imageNode->setAttribute("draw:name", $name);
 		
 		$ext = substr($this->_styleImg["src"], strlen($file)-3);
-		$tmpfile = mt_rand().".".$ext;
+		$tmpfile = rand().".".$ext;
 		copy($this->_styleImg["src"], $dir."/Pictures/".$tmpfile);
 		if (isset($this->_styleImg["src"])) $imageNode->setAttribute("xlink:href", "#Pictures/".$tmpfile);
 		if (isset($this->_styleImg["anchorType"])) $imageNode->setAttribute("text:anchor-type", $this->_styleImg["anchorType"]);
