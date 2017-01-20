@@ -1456,7 +1456,7 @@ function wikiplugin_img( $data, $params )
 					$styleboxinit = $imgdata['stylebox'] . ';';
 				}
 			}
-			if (empty($imgdata['button']) && empty($imgdata['desc']) && empty($styleboxinit)) {
+			if (empty($imgdata['button']) && empty($imgdata['desc']) && empty($styleboxinit) && $boxwidth !== 2) {
 				$styleboxplus = $alignbox . ' width:' . $boxwidth . 'px; height:' . $boxheight . 'px';
 			} elseif (!empty($styleboxinit)) {
 				if ((strpos(trim($imgdata['stylebox'], ' '), 'height:') === false)
