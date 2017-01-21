@@ -42,6 +42,7 @@
 				</p>
 
 				<input type="submit" class="btn btn-primary" name="use-default-prefs" value="{tr}Start Configuration Profiles Wizard (Macros){/tr}" />
+				<p></p>
 			</div>
 		</div>
 		<div class="media">
@@ -60,6 +61,7 @@
 					</a>
 				</p>
 				<input type="submit" class="btn btn-primary" name="continue" value="{tr}Start Configuration Wizard{/tr}" />
+				<p></p>
 			</div>
 		</div>
 		<div class="media">
@@ -82,6 +84,7 @@
 				</p>
 
 					<input type="submit" class="btn btn-primary" name="use-upgrade-wizard" value="{tr}Start Upgrade Wizard{/tr}" />
+					<p></p>
 			</div>
 		</div>
 		<div class="media">
@@ -90,12 +93,14 @@
 				<p>{tr}Use the <b>Control Panels</b> to manually browse through the full list of preferences{/tr}.</p>
 
 				{button href="tiki-admin.php" _text="{tr}Go to the Control Panels{/tr}"}
+				<p></p>
 			</div>
 		</div>
-	</fieldset>
-
-	<fieldset>
+		<div class="media">
+			<div class="media-body">
 		<legend>{tr}Server Fitness{/tr}</legend>
 		{tr _0=$tiki_version}To check if your server meets the requirements for running Tiki version %0, please visit <a href="tiki-check.php" target="_blank">Tiki Server Compatibility Check</a>{/tr}.
+			</div>
+		</div>
 	</fieldset>
 </div>
