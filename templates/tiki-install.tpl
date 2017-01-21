@@ -172,7 +172,7 @@
 						<form action="tiki-install.php#mail" method="post" role="form">
 							<div class="form-group">
 								<label for="email_test_to">{tr}Test email:{/tr}</label>
-								<input type="text" size="40" name="email_test_to" id="email_test_to" value="{if isset($email_test_to)}{$email_test_to}{/if}">
+								<input type="text" size="40" name="email_test_to" id="email_test_to" value="{if isset($email_test_to)}{$email_test_to}{/if}" placeholder="{tr}tiki@example.com{/tr}">
 								{if isset($email_test_err)}<span class="attention"><em>{$email_test_err}</em></span>
 								{else}<em>{tr}Email address to send test to.{/tr}</em>{/if}
 								<br><br>
@@ -305,7 +305,7 @@
 								<div class="form-group">
 									<label for="name">{tr}Database name:{/tr}</label>
 									<div style="margin-left:1em;">
-										<input type="text" class=form-control id="name" name="name" size="40" value="{if isset($smarty.request.name)}{$smarty.request.name|escape:"html"}{elseif isset($preconfigname)}{$preconfigname|escape:"html"}{/if}" />
+										<input type="text" class=form-control id="name" name="name" size="40" value="{if isset($smarty.request.name)}{$smarty.request.name|escape:"html"}{elseif isset($preconfigname)}{$preconfigname|escape:"html"}{/if}" placeholder="{tr}databaseName{/tr}"/>
 										<a href="javascript:void(0)" onclick="flip('name_help');" title="{tr}Help{/tr}">
 											{icon name="help"}
 										</a>
@@ -322,7 +322,7 @@
 								<legend>{tr}Database user{/tr}</legend>
 								<p>{tr}Enter a database user with administrator permission for the Database.{/tr}</p>
 								<div style="padding:5px;">
-									<label for="user">{tr}User name:{/tr}</label> <input type="text" class=form-control id="user" name="user" value="{if (isset($smarty.request.user))}{$smarty.request.user|escape:"html"}{elseif isset($preconfiguser)}{$preconfiguser|escape:"html"}{/if}">
+									<label for="user">{tr}User name:{/tr}</label> <input type="text" class=form-control id="user" name="user" value="{if (isset($smarty.request.user))}{$smarty.request.user|escape:"html"}{elseif isset($preconfiguser)}{$preconfiguser|escape:"html"}{/if}" placeholder="{tr}databaseUsername{/tr}">
 								</div>
 								<div style="padding:5px;">
 									{if isset($preconfigpass)}
@@ -651,7 +651,7 @@
 									<label for="admin_email">
 										{tr}Admin email:{/tr}
 									</label>
-									<input type="text" class="form-control" size="40" name="admin_email" id="admin_email" value="{if isset($admin_email)}{$admin_email}{/if}">
+									<input type="text" class="form-control" size="40" name="admin_email" id="admin_email" value="{if isset($admin_email)}{$admin_email}{/if}" placeholder="{tr}admin@example.com{/tr}">
 									<span class="help-block">
 										{tr}This is the email address for your administrator account.{/tr}
 									</span>
