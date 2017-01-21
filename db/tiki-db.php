@@ -209,7 +209,9 @@ $initializer->setInitializeCallback(
 $db = $initializer->getConnection($credentials['primary']);
 
 if (! $db && ! defined('TIKI_IN_INSTALLER')) {
-	if(!empty($dbfail_url)) {
+	if (PHP_SAPI === 'cli') {
+		die("\033[31mDid you forget to start MySQL?\033[0m\n");
+	} else if(!empty($dbfail_url)) {
 		header('location: '.$dbfail_url);
 	} else {
 		echo file_get_contents('templates/database_connection_error.html');
