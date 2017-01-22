@@ -62,35 +62,7 @@ $ag_theme = '';
 if (isset($_REQUEST["home"])) $ag_home = $_REQUEST["home"];
 if (!empty($_REQUEST["defcat"])) $ag_defcat = $_REQUEST["defcat"];
 if (isset($_REQUEST["theme"])) $ag_theme = $_REQUEST["theme"];
-// Process the form to add a group
-if (isset($_REQUEST["newgroup"])) {
-	$access->check_authenticity(tra('Are you sure you want to create a new group?'));
-	if (!empty($_REQUEST['name'])) $_REQUEST['name'] = trim($_REQUEST['name']);
-	if (empty($_REQUEST['name'])) {
-		$smarty->assign('msg', tra("Group name can not be empty"));
-		$smarty->display("error.tpl");
-		die;
-	}
-	// Check if the user already exists
-	if ($userlib->group_exists($_REQUEST["name"])) {
-		$smarty->assign('msg', tra("Group already exists"));
-		$smarty->display("error.tpl");
-		die;
-	} else {
-		$_REQUEST['userChoice'] = (isset($_REQUEST['userChoice']) && $_REQUEST['userChoice'] == 'on') ? 'y' : '';
-		if (empty($_REQUEST['expireAfter'])) $_REQUEST['expireAfter'] = 0;
-		$userlib->add_group($_REQUEST['name'], $_REQUEST['desc'], $ag_home, $ag_utracker, $ag_gtracker, '', $_REQUEST['userChoice'], $ag_defcat, $ag_theme, 0, 0, 'n', $_REQUEST['expireAfter'], $_REQUEST['emailPattern'], $_REQUEST['anniversary'], $_REQUEST['prorateInterval']);
-		if (isset($_REQUEST["include_groups"])) {
-			foreach ($_REQUEST["include_groups"] as $include) {
-				if ($_REQUEST["name"] != $include) {
-					$userlib->group_inclusion($_REQUEST["name"], $include);
-				}
-			}
-		}
-	}
-	$_REQUEST["group"] = $_REQUEST["name"];
-	$logslib->add_log('admingroups', 'created group ' . $_REQUEST["group"]);
-}
+
 if (isset($_REQUEST['adduser'])) {
 	$access->check_authenticity(tra('Are you sure you want to add this user?'));
 	$user = $_REQUEST['user'];
@@ -150,29 +122,11 @@ if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUES
 	$logslib->add_log('admingroups', 'modified group ' . $_REQUEST["olgroup"] . ' to ' . $_REQUEST["group"]);
 	$cookietab = 1;
 }
-// Process a form to remove a group
-if (isset($_REQUEST["action"])) {
-	if ($_REQUEST["action"] == 'delete') {
-		$access->check_authenticity(tra('Remove group: ') . $_REQUEST['group']);
-		$userlib->remove_group($_REQUEST["group"]);
-		$logslib->add_log('admingroups', 'removed group ' . $_REQUEST["group"]);
-		unset($_REQUEST['group']);
-	}
-}
 // Unassign a list of members
 if (isset($_REQUEST['unassign_members']) && isset($_REQUEST['submit_mult_members']) && $_REQUEST['submit_mult_members'] == 'unassign' && isset($_REQUEST['group']) && !in_array($_REQUEST['group'], array('Registered', 'Anonymous'))) {
 	$access->check_authenticity(tra('Are you sure you want to unassign these users?'));
 	foreach ($_REQUEST['members'] as $m) {
 		$userlib->remove_user_from_group($userlib->get_user_login($m), $_REQUEST['group']);
-	}
-}
-if (!empty($_REQUEST['submit_mult']) && !empty($_REQUEST['checked'])) {
-	$access->check_authenticity(tra('Are you sure you want to delete these groups?'));
-	foreach ($_REQUEST['checked'] as $delete) {
-		if ($delete != 'Admins' && $delete != 'Anonymous' && $delete != 'Registered') {
-			$userlib->remove_group($delete);
-			$logslib->add_log('admingroups', 'removed group ' . $delete);
-		}
 	}
 }
 if (isset($_REQUEST['clean'])) {

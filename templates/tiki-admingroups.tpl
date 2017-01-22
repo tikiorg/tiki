@@ -42,7 +42,7 @@
 			{$libeg = ''}
 			{$liend = ''}
 		{/if}
-		<form name="checkform" method="post">
+		<form name="checkform" id="checkform" method="post">
 			<div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
 				<table class="table table-striped table-hover">
 					<tr>
@@ -98,7 +98,7 @@
 										</a>{$liend}
 										{$libeg}{permission_link mode=text group=$users[user].groupName count=$users[user].permcant}{$liend}
 										{if $users[user].groupName ne 'Anonymous' and $users[user].groupName ne 'Registered' and $users[user].groupName ne 'Admins'}
-											{$libeg}<a href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}">
+											{$libeg}<a href="{bootstrap_modal controller=group action=remove_groups checked=$users[user].groupName}">
 												{icon name="remove" _menu_text='y' _menu_icon='y' alt="{tr}Remove{/tr}"}
 											</a>{$liend}
 										{/if}
@@ -122,18 +122,23 @@
 					{/section}
 				</table>
 			</div>
-			<div class="form-group" >
 				<div class="input-group col-sm-6">
 					<label for="submit_mult" class="control-label sr-only">{tr}Select action to perform with checked{/tr}</label>
-						<select name="submit_mult" class="form-control">
-							<option value="" selected="selected">{tr}Select action to perform with checked{/tr}...</option>
+						<select name="action" class="form-control">
+							<option value="no_action" selected="selected">{tr}Select action to perform with checked{/tr}...</option>
 							<option value="remove_groups" >{tr}Remove{/tr}</option>
 						</select>
 					<div class="input-group-btn">
-						<input type="submit" class="btn btn-primary" value="{tr}OK{/tr}">
+						<button
+							type="submit"
+							form="checkform"
+							formaction="{bootstrap_modal controller=group}"
+							class="btn btn-primary confirm-submit"
+						>
+							{tr}OK{/tr}
+						</button>
 					</div>
 				</div>
-			</div>
 		</form>
 		{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 	{/tab}
@@ -162,7 +167,7 @@
 		{/if}
 		<h2>{$tabaddeditgroup_admgrp}</h2>
 
-		<form class="form-horizontal" action="tiki-admingroups.php" method="post">
+		<form class="form-horizontal" action="tiki-admingroups.php" id="group" method="post">
 			<div class="form-group">
 				<label for="groups_group" class="control-label col-md-3">{tr}Group{/tr}</label>
 				<div class="col-md-9">
@@ -419,7 +424,7 @@
 						<input type="hidden" name="olgroup" value="{$group|escape}">
 						<input type="submit" class="btn btn-primary" name="save" value="{tr}Save{/tr}">
 					{else}
-						<input type="submit" class="btn btn-primary" name="newgroup" value="{tr}Add{/tr}">
+						<input type="submit" class="btn btn-primary confirm-submit" form="group" formaction="{bootstrap_modal controller=group action=new_group}" value="{tr}Add{/tr}">
 					{/if}
 				</div>
 			</div>
@@ -546,54 +551,54 @@
 				<input type="hidden" name="group" value="{$groupname|escape}">
 
 				<h2>{tr}Download CSV export{/tr}</h2>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">{tr}Charset encoding{/tr}</label>
-                    <div class="col-sm-7">
-                        <select name="encoding" class="form-control">
-                            <option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option>
-                            <option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">{tr}Fields{/tr}</label>
-                    <div class="col-sm-7">
-                       <div class="col-sm-12">
-                           <input type="checkbox" name="username" checked="checked"> {tr}Username{/tr}
-                       </div>
-                        <div class="col-sm-12">
-                            <input type="checkbox" name="email"> {tr}Email{/tr}
-                        </div>
-                        <div class="col-sm-12">
-                            <input type="checkbox" name="lastLogin"> {tr}Last login{/tr}
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label"></label>
-                    <div class="col-sm-7">
-                        <input type="submit" class="btn btn-default btn-sm" name="export" value="{tr}Export{/tr}">
-                    </div>
-                </div>
-                <br>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">{tr}Charset encoding{/tr}</label>
+					<div class="col-sm-7">
+						<select name="encoding" class="form-control">
+							<option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option>
+							<option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">{tr}Fields{/tr}</label>
+					<div class="col-sm-7">
+					   <div class="col-sm-12">
+						   <input type="checkbox" name="username" checked="checked"> {tr}Username{/tr}
+					   </div>
+						<div class="col-sm-12">
+							<input type="checkbox" name="email"> {tr}Email{/tr}
+						</div>
+						<div class="col-sm-12">
+							<input type="checkbox" name="lastLogin"> {tr}Last login{/tr}
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label"></label>
+					<div class="col-sm-7">
+						<input type="submit" class="btn btn-default btn-sm" name="export" value="{tr}Export{/tr}">
+					</div>
+				</div>
+				<br>
 				<h2>{tr}Batch upload (CSV file){/tr}</h2>
-                <br>
+				<br>
 				<h3>{tr}Assign users to group:{/tr} {$groupname|escape} </h3>
 				{remarksbox type="tip" title="{tr}Tip{/tr}"}
 					{tr}Each user in the file must already exist.{/tr}<br>{tr}To create users or/and assign them to groups, got to <a href="tiki-adminusers.php">admin->users</a>{/tr}
 				{/remarksbox}
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">{tr}CSV File{/tr}<a title="{tr}Help{/tr}" {popup text='user<br>user1<br>user2'}>{icon name='help'}</a></label>
-                    <div class="col-sm-7">
-                        <input name="csvlist" type="file" >
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label"></label>
-                    <div class="col-sm-7">
-                        <input type="submit" class="btn btn-default btn-sm" name="import" value="{tr}Import{/tr}">
-                    </div>
-                </div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">{tr}CSV File{/tr}<a title="{tr}Help{/tr}" {popup text='user<br>user1<br>user2'}>{icon name='help'}</a></label>
+					<div class="col-sm-7">
+						<input name="csvlist" type="file" >
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label"></label>
+					<div class="col-sm-7">
+						<input type="submit" class="btn btn-default btn-sm" name="import" value="{tr}Import{/tr}">
+					</div>
+				</div>
 			</form>
 		{/tab}
 	{/if}
