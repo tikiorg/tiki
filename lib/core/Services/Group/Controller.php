@@ -109,7 +109,7 @@ class Services_Group_Controller
 		$util->checkTicket();
 		//first pass - show confirm modal popup
 		if ($util->ticketSet()) {
-			$util->setItems($input, 'checked');
+			$util->setItemsAction($input);
 			if (!empty($input['name'])) {
 				$newGroupName = trim($input['name']);
 				$userlib = TikiLib::lib('user');
@@ -123,56 +123,30 @@ class Services_Group_Controller
 			} else {
 				Services_Utilities::modalException(tra('Group name cannot be empty'));
 			}
-		//after confirm submit - perform action and return success feedback
+		//after confirm submit - perform action and return feedback
 		} elseif ($util->ticketMatch() && $_SERVER['REQUEST_METHOD'] === 'POST') {
 			//set parameters
 			$extra = json_decode($input['extra'], true);
-			$home = isset($extra['home']) ? $extra['home'] : '';
-			$theme = isset($extra['theme']) ? $extra['theme'] : '';
-			$defcat = !empty($extra['defcat']) ? $extra['defcat'] : 0;
-			$userChoice = isset($extra['userChoice']) && $extra['userChoice'] == 'on' ? 'y' : '';
-			$expireAfter = empty($extra['expireAfter']) ? 0 : $extra['expireAfter'];
-
-			global $prefs;
-			$groupTracker = 0;
-			if (isset($prefs['groupTracker']) and $prefs['groupTracker'] == 'y') {
-				$trklib = TikiLib::lib('trk');
-				$trackerlist = $trklib->list_trackers(0, -1, 'name_asc', '');
-				$trackers = $trackerlist['list'];
-				if (isset($extra["groupstracker"]) and isset($trackers[$extra["groupstracker"]])) {
-					$groupTracker = $extra["groupstracker"];
-				}
-			}
-			$userTracker = 0;
-			if (isset($prefs['userTracker']) and $prefs['userTracker'] == 'y') {
-				$trklib = TikiLib::lib('trk');
-				if (!isset($trackerlist)) {
-					$trackerlist = $trklib->list_trackers(0, -1, 'name_asc', '');
-					$trackers = $trackerlist['list'];
-				}
-				if (isset($extra['userstracker']) and isset($trackers[$extra['userstracker']])) {
-					$userTracker = $extra['userstracker'];
-				}
-			}
+			$params = $this->prepareParameters($extra);
 			$userlib = TikiLib::lib('user');
 			//add group and inclusions
 			$newGroupId = $userlib->add_group(
-				$extra['name'],
-				$extra['desc'],
-				$home,
-				$userTracker,
-				$groupTracker,
-				'',
-				$userChoice,
-				$defcat,
-				$theme,
-				0,
-				0,
+				$params['name'],
+				$params['desc'],
+				$params['home'],
+				$params['userstracker'],
+				$params['groupstracker'],
+				$params['registrationUsersFieldIds'],
+				$params['userChoice'],
+				$params['defcat'],
+				$params['theme'],
+				$params['usersfield'],
+				$params['groupfield'],
 				'n',
-				$expireAfter,
-				$extra['emailPattern'],
-				$extra['anniversary'],
-				$extra['prorateInterval']
+				$params['expireAfter'],
+				$params['emailPattern'],
+				$params['anniversary'],
+				$params['prorateInterval']
 			);
 			if (isset($extra['include_groups'])) {
 				foreach ($extra['include_groups'] as $include) {
@@ -200,5 +174,136 @@ class Services_Group_Controller
 			//return to page
 			return Services_Utilities::refresh($extra['referer']);
 		}
+	}
+
+	/**
+	 * Process modify group form
+	 *
+	 * @param $input
+	 * @return array
+	 */
+	function action_modify_group ($input)
+	{
+		Services_Exception_Denied::checkGlobal('admin');
+		$util = new Services_Utilities();
+		$util->checkTicket();
+		//first pass - show confirm modal popup
+		if ($util->ticketSet()) {
+			$util->setItemsAction($input);
+			if (!empty($input['name']) && isset($input['olgroup'])) {
+				$newGroupName = trim($input['name']);
+				$userlib = TikiLib::lib('user');
+				if ($input['olgroup'] !== $newGroupName && $userlib->group_exists($newGroupName)) {
+					Services_Utilities::modalException(tra('Group already exists'));
+				} else {
+					$msg = tr('Modify the group %0?', $newGroupName);
+					$extra = $input->asArray();
+					return $util->confirm($msg, 'group', tra('Modify'), $extra);
+				}
+			} else {
+				Services_Utilities::modalException(tra('Group name cannot be empty'));
+			}
+			//after confirm submit - perform action and return success feedback
+		} elseif ($util->ticketMatch() && $_SERVER['REQUEST_METHOD'] === 'POST') {
+			//set parameters
+			$extra = json_decode($input['extra'], true);
+			$params = $this->prepareParameters($extra);
+			$userlib = TikiLib::lib('user');
+			$success = $userlib->change_group(
+				$params['olgroup'],
+				$params['name'],
+				$params['desc'],
+				$params['home'],
+				$params['userstracker'],
+				$params['groupstracker'],
+				$params['usersfield'],
+				$params['groupfield'],
+				$params['registrationUsersFieldIds'],
+				$params['userChoice'],
+				$params['defcat'],
+				$params['theme'],
+				'n',
+				$params['expireAfter'],
+				$params['emailPattern'],
+				$params['anniversary'],
+				$params['prorateInterval']
+			);
+			$userlib->remove_all_inclusions($params['name']);
+			if (isset($params['include_groups']) and is_array($params['include_groups'])) {
+				foreach ($params['include_groups'] as $include) {
+					if ($include && $params["name"] != $include) {
+						$userlib->group_inclusion($params["name"], $include);
+					}
+				}
+			}
+			$logslib = TikiLib::lib('logs');
+			$logslib->add_log('admingroups', 'modified group ' . $params['olgroup'] . ' to ' . $params['name']);
+			//prepare feedback
+			if ($success) {
+				$feedback1 = [
+					'tpl' => 'action',
+					'mes' => tr('Group %0 successfully modified', $params['name']),
+				];
+				Feedback::success($feedback1, 'session');
+			} else {
+				$feedback2 = [
+					'tpl' => 'action',
+					'mes' => tr('Group %0 not modified', $params['name']),
+				];
+				Feedback::error($feedback2, 'session');
+			}
+			//return to page
+			return Services_Utilities::refresh($extra['referer']);
+		}
+	}
+
+	/**
+	 * Utility to prepare parameters for add_group and change group userlib functions
+	 *
+	 * @param array $extra
+	 * @return array
+	 */
+	private function prepareParameters (array $extra)
+	{
+		$extra['home'] = isset($extra['home']) ? $extra['home'] : '';
+		$extra['theme'] = isset($extra['theme']) ? $extra['theme'] : '';
+		$extra['defcat'] = !empty($extra['defcat']) ? $extra['defcat'] : 0;
+		$extra['userChoice'] = isset($extra['userChoice']) && $extra['userChoice'] == 'on' ? 'y' : '';
+		$extra['expireAfter'] = empty($extra['expireAfter']) ? 0 : $extra['expireAfter'];
+
+		$defaults = [
+			'groupstracker'             => 0,
+			'groupfield'                => 0,
+			'userstracker'              => 0,
+			'usersfield'                => 0,
+			'registrationUsersFieldIds' => ''
+		];
+		global $prefs;
+		$prefGroupTracker = isset($prefs['groupTracker']) and $prefs['groupTracker'] == 'y';
+		$prefUserTracker = isset($prefs['userTracker']) and $prefs['userTracker'] == 'y';
+		if (!empty($extra['groupstracker']) || !empty($extra['userstracker'])) {
+			if ($prefGroupTracker || $prefUserTracker) {
+				$trklib = TikiLib::lib('trk');
+				$trackerlist = $trklib->list_trackers(0, -1, 'name_asc', '');
+				$trackers = $trackerlist['list'];
+				if ($prefGroupTracker && isset($extra['groupstracker']) && isset($trackers[$extra['groupstracker']])) {
+					$defaults['groupstracker'] = $extra['groupstracker'];
+					if (isset($extra['groupfield']) && $extra['groupfield']) {
+						$defaults['groupfield'] = $extra['groupfield'];
+					}
+				}
+				if ($prefUserTracker && isset($extra['userstracker']) && isset($trackers[$extra['userstracker']])) {
+					$defaults['userstracker'] = $extra['userstracker'];
+				}
+				if (isset($extra['usersfield']) && $extra['usersfield']) {
+					$defaults['usersfield'] = $extra['usersfield'];
+				}
+				if (!empty($extra['registrationUsersFieldIds'])) {
+					$defaults['registrationUsersFieldIds'] = $extra['registrationUsersFieldIds'];
+				}
+			}
+		}
+		$ret = array_merge($extra, $defaults);
+		return $ret;
 	}
 }

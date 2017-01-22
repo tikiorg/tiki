@@ -187,9 +187,11 @@ class Services_Utilities
 	 * @param JitFilter $input
 	 * @param $offset
 	 */
-	function setItems(JitFilter $input, $offset)
+	function setItemsAction(JitFilter $input, $offset = false)
 	{
-		$this->items = $input->asArray($offset);
+		if ($offset) {
+			$this->items = $input->asArray($offset);
+		}
 		$this->action = $input->action->word();
 	}
 

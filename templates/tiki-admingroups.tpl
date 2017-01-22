@@ -431,7 +431,7 @@
 				<div class="col-md-9 col-md-offset-3">
 					{if $group ne ''}
 						<input type="hidden" name="olgroup" value="{$group|escape}">
-						<input type="submit" class="btn btn-primary" name="save" value="{tr}Save{/tr}">
+						<input type="submit" class="btn btn-primary confirm-submit" form="group" formaction="{bootstrap_modal controller=group action=modify_group}" value="{tr}Save{/tr}">
 					{else}
 						<input type="submit" class="btn btn-primary confirm-submit" form="group" formaction="{bootstrap_modal controller=group action=new_group}" value="{tr}Add{/tr}">
 					{/if}
