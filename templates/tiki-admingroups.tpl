@@ -204,10 +204,7 @@
 						{/foreach}
 					</select>
 					<div class="help-block">
-						<p>{tr}Permissions will be inherited from these groups.{/tr}</p>
-						{if $prefs.jquery_ui_chosen neq 'y'}
-							<p>{tr}Use Ctrl+Click to select multiple options{/tr}</p>
-						{/if}
+						<p>{tr}Permissions will be inherited from these groups.{/tr} {if $prefs.jquery_ui_chosen neq 'y'}{tr}Use Ctrl+Click to select multiple options{/tr}</p>{/if}
 					</div>
 					{if $indirectly_inherited_groups|@count > 0}
 						<p>{tr}Indirectly included groups:{/tr}</p>
@@ -353,8 +350,7 @@
 					<div class="col-md-9">
 						<input type="text" class="form-control" name="registrationUsersFieldIds" value="{$registrationUsersFieldIds|escape}">
 						<div class="help-block">
-							<p>{tr}Users Information Tracker Fields Asked at Registration Time{/tr}</p>
-							<p>{tr}fieldIds separated with colons (:){/tr}</p>
+							<p>{tr}User information tracker fields that a new user completes upon registration. Enter field ID numbers separated by colons (:){/tr}</p>
 						</div>
 					</div>
 				</div>
@@ -362,7 +358,7 @@
 					<div class="form-group">
 						<label for="groups_group" class="control-label col-md-3">{tr}User Wizard Fields{/tr}</label>
 						<div class="col-md-9">
-							{tr}By default, the same fields as in Registration are used.{/tr} {tr _0="tiki-admin.php?page=login"}You can choose in the <a href="%0">Login admin panel</a> to show different fields in User Wizard than the ones asked at Registration Time{/tr}.</td>
+							{tr}By default, the same fields as in registration are used.{/tr} {tr _0="tiki-admin.php?page=login"}You can choose in the <a href="%0">Login admin panel</a> to show different fields in User Wizard than the ones asked at Registration Time{/tr}.</td>
 						</div>
 					</div>
 				{/if}
@@ -381,13 +377,15 @@
 				<div class="form-group">
 					<label for="groups_group" class="control-label col-md-3">{tr}Expiry{/tr}</label>
 					<div class="col-md-9">
+						<p>{tr}Anniversary{/tr}</p>
+						<input type="text" name="anniversary" class="form-control" value="{$group_info.anniversary|escape}">
+						<div class="help-block">{tr}Use MMDD to specify the following month and day as of which all users will be unassigned from the group, or DD to specificy the month only.{/tr}</div>
+						<p>{tr}Or{/tr}</p>
+						<p>{tr}Number of Days{/tr}</p>
 						<input type="text" class="form-control" name="expireAfter" value="{$group_info.expireAfter|escape}">
 						<div class="help-block">
-							{tr}Amount of days after which the group will be unassigned from the users.{/tr}
+							{tr}Number of days after which all users will be unassigned from the group.{/tr}
 						</div>
-						<p>{tr}Or, users are automatically unassigned from the group at an anniversary date{/tr}</p>
-						<input type="text" name="anniversary" class="form-control" value="{$group_info.anniversary|escape}">
-						<div class="help-block">{tr}MMDD for annual or DD for monthly{/tr}</div>
 					</div>
 				</div>
 				<div class="form-group">
@@ -417,8 +415,8 @@
 
 			{if $group ne ''and $groupname neq 'Anonymous'}
 				<div class="form-group">
-					<label for="groups_group" class="control-label col-md-6">{tr}Assign group <em>management</em> permissions{/tr}</label>
-					<div class="col-md-6">
+					<label for="groups_group" class="control-label col-md-3">{tr}Assign group <em>management</em> permissions{/tr}</label>
+					<div class="col-md-9">
 						{self_link _script="tiki-objectpermissions.php" objectType="group" objectId=$groupname objectName=$groupname permType="group"}
 							{icon _text="{tr}Assign Permissions{/tr}" name="key"}
 						{/self_link}
