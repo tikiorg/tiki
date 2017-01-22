@@ -487,34 +487,6 @@ if (!in_array($page, $_SESSION['breadCrumb'])) {
 // Now increment page hits since we are visiting this page
 $tikilib->add_hit($page);
 
-// Check if we have to perform an action for this page
-// for example lock/unlock
-if ( $objectperms->admin_wiki
-		|| ($user and $objectperms->lock and ($prefs['feature_wiki_usrlock'] == 'y'))
-) {
-	if ( isset($_REQUEST['action']) ) {
-		check_ticket('index');
-		if ( $_REQUEST['action'] == 'lock' ) {
-			$wikilib->lock_page($page);
-			$pageRenderer->setInfo('flag', 'L');
-			$info['flag'] = 'L';
-		}
-	}
-}
-
-if ( $objectperms->admin_wiki
-		|| ($user and ($user == $info['user']) and $objectperms->lock and ($prefs['feature_wiki_usrlock'] == 'y'))
-) {
-	if ( isset($_REQUEST['action']) ) {
-		check_ticket('index');
-		if ( $_REQUEST['action'] == 'unlock' ) {
-			$wikilib->unlock_page($page);
-			$pageRenderer->setInfo('flag', 'U');
-			$info['flag'] = 'U';
-		}
-	}
-}
-
 // Save to notepad if user wants to
 if ( $user
 			&& $objectperms->notepad
