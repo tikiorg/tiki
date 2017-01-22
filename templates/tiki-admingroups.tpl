@@ -296,16 +296,20 @@
 						<select name="userstracker" id="userstracker" class="form-control">
 							<option value="0">{tr}choose a users tracker ...{/tr}</option>
 							{foreach key=tid item=tit from=$trackers}
-								<option value="{$tid}"{if $tid eq $userstrackerid} {assign var="ugr" value="$tit"}selected="selected"{/if}>{$tit|escape}</option>
+								<option value="{$tid}"{if isset($userstrackerid) && $tid eq $userstrackerid} {assign var="ugr" value="$tit"}selected="selected"{/if}>{$tit|escape}</option>
 							{/foreach}
 						</select>
-						{if $userstrackerid or $prefs.javascript_enabled eq 'y'}
+						{if (isset($userstrackerid) or $prefs.javascript_enabled eq 'y')}
 							<div>
 								<select name="usersfield"{if empty($userstrackerid) and $prefs.javascript_enabled eq 'y' and $prefs.jquery_ui_chosen neq 'y'} style="display: none;"{/if} class="form-control">
-									<option value="0">{tr}Choose a field ...{/tr}</option>
-									{section name=ix loop=$usersFields}
-										<option value="{$usersFields[ix].fieldId}"{if $usersFields[ix].fieldId eq $usersfieldid} selected="selected"{/if}>{$usersFields[ix].fieldId} - {$usersFields[ix].name|escape}</option>
-									{/section}
+									{if !empty($usersFields)}
+										<option value="0">{tr}Choose a field ...{/tr}</option>
+										{section name=ix loop=$usersFields}
+											<option value="{$usersFields[ix].fieldId}"{if $usersFields[ix].fieldId eq $usersfieldid} selected="selected"{/if}>{$usersFields[ix].fieldId} - {$usersFields[ix].name|escape}</option>
+										{/section}
+									{else}
+										<option value="0">{tr}No fields in tracker ...{/tr}</option>
+									{/if}
 								</select>
 							</div>
 							{jq}
@@ -313,16 +317,20 @@
 									$.getJSON($.service('tracker', 'list_fields'), {trackerId: $(this).val()}, function (data) {
 										if (data && data.fields) {
 											var $usersfield = $('select[name=usersfield]');
-											$usersfield.empty().append('<option value="0">{tr}choose a field ...{/tr}</option>');
-											var sel = '';
-											$(data.fields).each(function () {
-												if (this.type === 'u' && this.options_array[0] == 1) {
-													sel = ' selected="selected"';
-												} else {
-													sel = '';
-												}
-												$usersfield.append('<option value="' + this.fieldId + '"' + sel + '>' + this.fieldId + ' - ' + this.name + '</option>');
-											});
+											if (data.fields.length > 0) {
+												$usersfield.empty().append('<option value="0">{tr}choose a field ...{/tr}</option>');
+												var sel = '';
+												$(data.fields).each(function () {
+													if (this.type === 'u' && this.options_array[0] == 1) {
+														sel = ' selected="selected"';
+													} else {
+														sel = '';
+													}
+													$usersfield.append('<option value="' + this.fieldId + '"' + sel + '>' + this.fieldId + ' - ' + this.name + '</option>');
+												});
+											} else {
+												$usersfield.empty().append('<option value="0">{tr}No fields in this tracker{/tr}</option>');
+											}
 											if (jqueryTiki.chosen) {
 												$usersfield.trigger("chosen:updated");
 											} else {
@@ -333,7 +341,7 @@
 								});
 							{/jq}
 						{/if}
-						{if $userstrackerid}
+						{if isset($userstrackerid)}
 							{button href="tiki-admin_tracker_fields.php?trackerId=$userstrackerid" _text="{tr}Admin{/tr} $ugr"}
 						{else}
 							{button href="tiki-list_trackers.php" _text="{tr}Admin{/tr} $ugr"}
