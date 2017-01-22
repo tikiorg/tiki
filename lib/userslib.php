@@ -2756,7 +2756,7 @@ class UsersLib extends TikiLib
 		$cachelib->invalidate('grouplist');
 		$cachelib->invalidate('group_theme_' . $group);
 
-		return true;
+		return $result;
 	}
 
 	function get_user_default_group($user)
