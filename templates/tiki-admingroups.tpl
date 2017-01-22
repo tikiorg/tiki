@@ -288,17 +288,22 @@
 			{/if}
 			{if $prefs.userTracker eq 'y'}
 				<div class="form-group">
-					<label for="userstracker" class="control-label col-md-3">{tr}Users Information Tracker{/tr}</label>
+					<label for="userstracker" class="control-label col-md-3">{tr}User Registration Tracker{/tr}</label>
 					<div class="col-md-9">
+						<label>{tr}Select tracker{/tr}</label>
 						<select name="userstracker" id="userstracker" class="form-control">
-							<option value="0">{tr}choose a users tracker ...{/tr}</option>
+							<option value="0">{tr}choose a user tracker ...{/tr}</option>
 							{foreach key=tid item=tit from=$trackers}
 								<option value="{$tid}"{if isset($userstrackerid) && $tid eq $userstrackerid} {assign var="ugr" value="$tit"}selected="selected"{/if}>{$tit|escape}</option>
 							{/foreach}
 						</select>
+						<div class="help-block">
+							{tr}Choose a user tracker to provide fields for a new user to complete upon registration. Registration trackers need to be enabled in the log in control panel and the tracker must have one user selector field that is set to auto-assign.{/tr}
+						</div>
 						{if (isset($userstrackerid) or $prefs.javascript_enabled eq 'y')}
-							<div>
-								<select name="usersfield"{if empty($userstrackerid) and $prefs.javascript_enabled eq 'y' and $prefs.jquery_ui_chosen neq 'y'} style="display: none;"{/if} class="form-control">
+							<div id="usersfielddiv"{if empty($userstrackerid) and $prefs.javascript_enabled eq 'y' and $prefs.jquery_ui_chosen neq 'y'} style="display: none;"{/if}>
+								<label>{tr}Select user field{/tr}</label>
+								<select name="usersfield" class="form-control">
 									{if !empty($usersFields)}
 										<option value="0">{tr}Choose a field ...{/tr}</option>
 										{section name=ix loop=$usersFields}
@@ -308,50 +313,48 @@
 										<option value="0">{tr}No fields in tracker ...{/tr}</option>
 									{/if}
 								</select>
+								<div class="help-block">
+									{tr}Select the user selector field from the above tracker to link a tracker item to the user upon registration.{/tr}
+								</div>
+								<label for="registrationUserFieldIds">{tr}Specify registration fields{/tr}</label>
+								<input type="text" class="form-control" name="registrationUsersFieldIds" value="{$registrationUsersFieldIds|escape}">
+								<div class="help-block">
+									<p>{tr}Enter colon-separated fied ID numbers for the tracker fields in the above tracker to include on the registration form for a new user to complete.{/tr}</p>
+								</div>
 							</div>
-							{jq}
-								$("#userstracker").change(function () {
-									$.getJSON($.service('tracker', 'list_fields'), {trackerId: $(this).val()}, function (data) {
-										if (data && data.fields) {
-											var $usersfield = $('select[name=usersfield]');
-											if (data.fields.length > 0) {
-												$usersfield.empty().append('<option value="0">{tr}choose a field ...{/tr}</option>');
-												var sel = '';
-												$(data.fields).each(function () {
-													if (this.type === 'u' && this.options_array[0] == 1) {
-														sel = ' selected="selected"';
-													} else {
-														sel = '';
-													}
-													$usersfield.append('<option value="' + this.fieldId + '"' + sel + '>' + this.fieldId + ' - ' + this.name + '</option>');
-												});
-											} else {
-												$usersfield.empty().append('<option value="0">{tr}No fields in this tracker{/tr}</option>');
-											}
-											if (jqueryTiki.chosen) {
-												$usersfield.trigger("chosen:updated");
-											} else {
-												$usersfield.show();
-											}
-										}
-									});
-								});
-							{/jq}
+{jq}
+	$("#userstracker").change(function () {
+		$.getJSON($.service('tracker', 'list_fields'), {trackerId: $(this).val()}, function (data) {
+			if (data && data.fields) {
+				var $usersfield = $('select[name=usersfield]');
+				if (data.fields.length > 0) {
+					$usersfield.empty().append('<option value="0">{tr}choose a field ...{/tr}</option>');
+					var sel = '';
+					$(data.fields).each(function () {
+						if (this.type === 'u' && this.options_array[0] == 1) {
+							sel = ' selected="selected"';
+						} else {
+							sel = '';
+						}
+						$usersfield.append('<option value="' + this.fieldId + '"' + sel + '>' + this.fieldId + ' - ' + this.name + '</option>');
+					});
+				} else {
+					$usersfield.empty().append('<option value="0">{tr}No fields in this tracker{/tr}</option>');
+				}
+				$("#usersfielddiv").show();
+				if (jqueryTiki.chosen) {
+					$usersfield.trigger("chosen:updated");
+				}
+			}
+		});
+	});
+{/jq}
 						{/if}
 						{if isset($userstrackerid)}
 							{button href="tiki-admin_tracker_fields.php?trackerId=$userstrackerid" _text="{tr}Admin{/tr} $ugr"}
 						{else}
-							{button href="tiki-list_trackers.php" _text="{tr}Admin{/tr} $ugr"}
+							{button href="tiki-list_trackers.php" _text="{tr}Go to tracker list{/tr}"}
 						{/if}
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="registrationUserFieldIds" class="control-label col-md-3">{tr}Registration Fields{/tr}</label>
-					<div class="col-md-9">
-						<input type="text" class="form-control" name="registrationUsersFieldIds" value="{$registrationUsersFieldIds|escape}">
-						<div class="help-block">
-							<p>{tr}User information tracker fields that a new user completes upon registration. Enter field ID numbers separated by colons (:){/tr}</p>
-						</div>
 					</div>
 				</div>
 				{if $prefs.feature_wizard_user eq 'y' and $groupname == 'Registered'}
@@ -377,11 +380,11 @@
 				<div class="form-group">
 					<label for="groups_group" class="control-label col-md-3">{tr}Expiry{/tr}</label>
 					<div class="col-md-9">
-						<p>{tr}Anniversary{/tr}</p>
+						<label>{tr}Anniversary{/tr}</label>
 						<input type="text" name="anniversary" class="form-control" value="{$group_info.anniversary|escape}">
 						<div class="help-block">{tr}Use MMDD to specify the following month and day as of which all users will be unassigned from the group, or DD to specificy the month only.{/tr}</div>
-						<p>{tr}Or{/tr}</p>
-						<p>{tr}Number of Days{/tr}</p>
+						<label>{tr}Or{/tr}</label><br>
+						<label>{tr}Number of Days{/tr}</label>
 						<input type="text" class="form-control" name="expireAfter" value="{$group_info.expireAfter|escape}">
 						<div class="help-block">
 							{tr}Number of days after which all users will be unassigned from the group.{/tr}
