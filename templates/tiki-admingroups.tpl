@@ -458,103 +458,142 @@
 
 
 	{if $groupname}
-		{tab name="{tr}Members{/tr}"}
+		{if $prefs.javascript_enabled !== 'y'}
+			{$js = 'n'}
+			{$libeg = '<li>'}
+			{$liend = '</li>'}
+		{else}
+			{$js = 'y'}
+			{$libeg = ''}
+			{$liend = ''}
+		{/if}
+		{tab name="{tr _0="<i>{$groupname|escape}</i>"}Group %0 members{/tr}"}
 		{* ----------------------- tab with memberlist --------------------------------------- *}
-			<h2>{tr}Members List:{/tr} {$groupname|escape}</h2>
-			<form name="checkform" method="post">
-				<input type="hidden" name="group" value="{$group|escape}">
-				<div class="table-responsive">
-					<table class="table">
-						<tr>
-							<th class="auto">{if $memberslist}{select_all checkbox_names='members[]'}{/if}</th>
-							<th>{self_link _sort_arg='sort_mode_member' _sort_field='login'}{tr}User{/tr}{/self_link}</th>
-							<th>{self_link _sort_arg='sort_mode_member' _sort_field='created'}{tr}Assign{/tr}{/self_link}</th>
-							<th>{self_link _sort_arg='sort_mode_member' _sort_field='expire'}{tr}Expire{/tr}{/self_link}</th>
-							<th>{tr}Action{/tr}</th>
-						</tr>
+			<h3>{tr}Members{/tr} <span class="badge">{$membersCount}</span></h3>
+			{if $membersCount > 0}
+				<form name="checkform" method="post">
+					<input type="hidden" name="group" value="{$group|escape}">
+					<div class="table-responsive">
+						<table class="table">
+							<tr>
+								<th class="auto">{if $memberslist}{select_all checkbox_names='members[]'}{/if}</th>
+								<th>{self_link _sort_arg='sort_mode_member' _sort_field='login'}{tr}User{/tr}{/self_link}</th>
+								<th>{self_link _sort_arg='sort_mode_member' _sort_field='created'}{tr}Assign{/tr}{/self_link}</th>
+								<th>{self_link _sort_arg='sort_mode_member' _sort_field='expire'}{tr}Expire{/tr}{/self_link}</th>
+								<th></th>
+							</tr>
 
-						<tr>
-							{foreach from=$memberslist item=member}
-								<tr>
+							<tr>
+								{foreach from=$memberslist item=member}
+							<tr>
 								<td class="checkbox-cell"><input type="checkbox" name="members[]" value="{$member.userId}"></td>
 								<td class="username">{$member.login|userlink}</td>
 								<td class="date">{$member.created|tiki_short_datetime}</td>
 								<td class="date">{if !empty($member.expire)}{$member.expire|tiki_short_datetime}{/if}</td>
 								<td class="action">
-									<a href="tiki-adminusers.php?user={$member.userId|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}"
-									   class="link tips"
-									   title="{$member.login}:{tr}Edit user{/tr}">
-										{icon name="edit"}
-									</a>
-									{if $groupname neq 'Registered'}
-										<a href="tiki-adminusers.php?user={$member.login|escape:"url"}&amp;action=removegroup&amp;group={$groupname|escape:url}"
-										   class="link tips"
-										   title="{$member.login}:{tr}Remove from group{/tr}">
-											{icon name="remove"}
+									{capture name=members_actions}
+										{strip}
+											{$libeg}<a href="tiki-adminusers.php?user={$member.userId|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}">
+												{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit user{/tr}"}
+											</a>{$liend}
+											{if $groupname neq 'Registered'}
+												{$libeg}<a href="tiki-adminusers.php?user={$member.login|escape:"url"}&amp;action=removegroup&amp;group={$groupname|escape:url}">
+												 {icon name="remove" _menu_text='y' _menu_icon='y' alt="{tr}Remove from group{/tr}"}
+												</a>{$liend}
+											{/if}
+										{/strip}
+									{/capture}
+									{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+										<a
+											class="tips"
+											title="{tr}Actions{/tr}" href="#"
+											{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.members_actions|escape:"javascript"|escape:"html"}{/if}
+											style="padding:0; margin:0; border:0"
+										>
+											{icon name='settings'}
 										</a>
+										{if $js === 'n'}
+											<ul class="dropdown-menu" role="menu">{$smarty.capture.user_actions}</ul></li></ul>
 									{/if}
 								</td>
-								</tr>
+							</tr>
 							{/foreach}
-					</table>
-				</div>
+						</table>
+					</div>
 
-				{if $groupname neq 'Registered'}
-				<label>{tr}Perform action with checked:{/tr}
-					<select name="submit_mult_members">
-						<option value="" />
-						<option value="unassign">{tr}Unassign{/tr}</option>
-					</select>
-				</label>
-				<input type="submit" class="btn btn-default btn-sm" name="unassign_members" value="{tr}OK{/tr}">
-				{/if}
-			</form>
+					{if $groupname neq 'Registered'}
+						<div class="input-group col-sm-6">
+							<select class="form-control" name="submit_mult_members">
+								<option value="no_action" selected="selected">
+									{tr}Select action to perform with checked{/tr}...
+								</option>
+								<option value="unassign">{tr}Unassign{/tr}</option>
+							</select>
+							<span class="input-group-btn">
+							<input type="submit" class="btn btn-default btn-sm" name="unassign_members" value="{tr}OK{/tr}">
+						</span>
+						</div>
+					{/if}
+				</form>
 
-			{pagination_links cant=$membersCount step=$prefs.maxRecords offset=$membersOffset offset_arg='membersOffset'}{/pagination_links}
+				{pagination_links cant=$membersCount step=$prefs.maxRecords offset=$membersOffset offset_arg='membersOffset'}{/pagination_links}
+			{else}
+				<div class="col-sm-12">
+					<em>{tr}No members{/tr}</em>
+				</div><br>
+			{/if}
 
-			<div class="box">{$membersCount} {tr}users in group{/tr} {$groupname|escape}</div>
+			<h3>{tr}Banned members{/tr} <span class="badge">{$bannedlist|count}</span></h3>
+			{if $bannedlist|count > 0}
+				<div class="table-responsive">
+					<table class="table">
+						<tr>
+							<th>{tr}User{/tr}</th>
+							<th>{tr}Action{/tr}</th>
+						</tr>
 
-			<h2>{tr}Banned members List:{/tr} {$groupname|escape}</h2>
-			<div class="table-responsive">
-				<table class="table">
-					<tr>
-						<th>{tr}User{/tr}</th>
-						<th>{tr}Action{/tr}</th>
-					</tr>
-
-					<tr>
-						{foreach from=$bannedlist item=member}
-							<tr>
+						<tr>
+							{foreach from=$bannedlist item=member}
+						<tr>
 							<td class="username">{$member|userlink}</td>
 							<td class="action">
 								{self_link user=$member|escape:"url" action=unbanuser group=$groupname|escape:url _title="{tr}Unban user{/tr}"}
-									{icon name="remove"}
+								{icon name="remove"}
 								{/self_link}
 							</td>
-							</tr>
+						</tr>
 						{/foreach}
-				</table>
-			</div>
+					</table>
+				</div>
+			{else}
+				<div class="col-sm-12">
+					<em>{tr}No banned members{/tr}</em>
+				</div><br>
+			{/if}
 			{if ! empty($userslist)}
-				<h2>{tr}Add or Ban members to:{/tr} {$groupname|escape}</h2>
+				<h3>{tr}Add or ban users{/tr}</h3>
 				<form method="post" action="tiki-admingroups.php">
-					<p>
-						<input type="hidden" name="group" value="{$groupname|escape}">
-						<select name="user">
-							{foreach from=$userslist item=iuser}
-								<option>{$iuser|escape}</option>
-							{/foreach}
-						</select>
-						<input type="submit" class="btn btn-default btn-sm" name="adduser" value="{tr}Add to group{/tr}">
-						<input type="submit" class="btn btn-default btn-sm" name="banuser" value="{tr}Ban user from group{/tr}">
-					</p>
+					<div class="form-group">
+						<div class="col-sm-6">
+							<select name="user" class="form-control" style="width:100%">
+								{foreach from=$userslist item=iuser}
+									<option>{$iuser|escape}</option>
+								{/foreach}
+							</select>
+						</div><br><br><br>
+						<div class="col-sm-12">
+							<input type="submit" class="btn btn-default btn-sm" name="adduser" value="{tr}Add to group{/tr}">
+							<input type="submit" class="btn btn-default btn-sm" name="banuser" value="{tr}Ban from group{/tr}">
+						</div>
+						 <input type="hidden" name="group" value="{$groupname|escape}">
+					</div>
 				</form>
 			{/if}
 		{/tab}
 	{/if}
 
 	{if $groupname}
-		{tab name="{tr}Import/Export{/tr}"}
+		{tab name="{tr _0="<i>{$groupname|escape}</i>"}Group %0 import/export{/tr}"}
 			{* ----------------------- tab with import/export --------------------------------------- *}
 			<form method="post" action="tiki-admingroups.php" enctype="multipart/form-data" class="form-horizontal">
 				<input type="hidden" name="group" value="{$groupname|escape}">
