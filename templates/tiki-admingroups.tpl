@@ -144,12 +144,14 @@
 	{/tab}
 
 	{if $groupname}
-		{capture assign=tabaddeditgroup_admgrp}{tr}Edit group{/tr} <i>{$groupname|escape}</i>{/capture}
+        {assign var=tabaddeditgroup_admgrp value="{tr}Edit group{/tr}"}
+        {$gname = "<i>{$groupname|escape}</i>"}
 	{else}
-		{assign var=tabaddeditgroup_admgrp value="{tr}Add a New Group{/tr}"}
+		{assign var=tabaddeditgroup_admgrp value="{tr}Create group{/tr}"}
+        {$gname = ""}
 	{/if}
 
-	{tab name="{$tabaddeditgroup_admgrp}"}
+	{tab name="{$tabaddeditgroup_admgrp} {$gname}"}
 		{* ----------------------- tab with form --------------------------------------- *}
 
 		{if !empty($user) and $prefs.feature_user_watches eq 'y' && !empty($groupname)}
@@ -469,7 +471,7 @@
 		{/if}
 		{tab name="{tr _0="<i>{$groupname|escape}</i>"}Group %0 members{/tr}"}
 		{* ----------------------- tab with memberlist --------------------------------------- *}
-			<h3>{tr}Members{/tr} <span class="badge">{$membersCount}</span></h3>
+			<h2>{tr}Members{/tr} <span class="badge">{$membersCount}</span></h2>
 			{if $membersCount > 0}
 				<form name="checkform" method="post">
 					<input type="hidden" name="group" value="{$group|escape}">
@@ -543,7 +545,7 @@
 				</div><br>
 			{/if}
 
-			<h3>{tr}Banned members{/tr} <span class="badge">{$bannedlist|count}</span></h3>
+			<h2>{tr}Banned members{/tr} <span class="badge">{$bannedlist|count}</span></h2>
 			{if $bannedlist|count > 0}
 				<div class="table-responsive">
 					<table class="table">
@@ -571,7 +573,7 @@
 				</div><br>
 			{/if}
 			{if ! empty($userslist)}
-				<h3>{tr}Add or ban users{/tr}</h3>
+				<h2>{tr}Add or ban users{/tr}</h2>
 				<form method="post" action="tiki-admingroups.php">
 					<div class="form-group">
 						<div class="col-sm-6">
