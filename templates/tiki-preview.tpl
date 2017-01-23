@@ -53,9 +53,9 @@
 		{tr}Note: Remember that this is only a preview, and has not yet been saved!{/tr}
 	</div>
 	<div class="preview_contents">
-		<div class="wikitext">
+		<article class="wikitext">
 			{$parsed}
-		</div>
+		</article>
 		{if $has_footnote and isset($parsed_footnote)}
 			<div class="wikitext">{$parsed_footnote}</div>
 		{/if}
