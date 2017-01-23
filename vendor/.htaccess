@@ -1,7 +1,4 @@
 
-# -- Prevent Directory Browsing -- #
-Options -Indexes
-
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 
@@ -24,10 +21,7 @@ Options -Indexes
 	RewriteRule "^(ckeditor/).*/.*\.(html|json)$" "-" [PT,L]
 	RewriteRule "^(codemirror/).*/.*\.(html)$" "-" [PT,L]
 	RewriteRule "^(components/).*/.*\.(json)$" "-" [PT,L]
-	RewriteRule "^(composer/).*/.*\.(php|json)$" "-" [PT,L]
 	RewriteRule "^(container-interop/).*/.*\.(php)$" "-" [PT,L]
-	RewriteRule "^(dompdf/).*/.*\.(afm|ufm|skel|ser|php)$" "-" [PT,L]
-	RewriteRule "^(ezyang/).*/.*\.(ini|ser|txt|php)$" "-" [PT,L]
 	RewriteRule "^(fontawsome/).*/.*\.(yml|lock|rb|html|json|pdf|swf)$" "-" [PT,L]
 	RewriteRule "^(google/).*/.*\.(php|dist|pem|xml)$" "-" [PT,L]
 	RewriteRule "^(jcapture-applet/).*/.*\.(iml|php|html|jar|jnlp|xml)$" "-" [PT,L]
@@ -56,5 +50,7 @@ Options -Indexes
 	# -- Deny Everything Not Matched Above -- #
 	RewriteRule "/*" "-" [F]
 
-
 </IfModule>
+
+# -- Prevent Directory Browsing -- #
+Options -Indexes
