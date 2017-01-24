@@ -10,11 +10,13 @@ class Search_Formatter_Plugin_ArrayTemplate implements Search_Formatter_Plugin_I
 	private $fields;
 	private $format;
 	private $fieldPermNames;
+	private $nonTrackerFields;
 
 	function __construct($template)
 	{
 		$this->format = self::FORMAT_ARRAY;
 		$this->fieldPermNames = array();
+		$this->nonTrackerFields = array('object_id', 'object_type', 'creation_date', 'modification_date', 'tracker_status');
 		$this->parseTemplate($template);
 	}
 
@@ -60,7 +62,7 @@ class Search_Formatter_Plugin_ArrayTemplate implements Search_Formatter_Plugin_I
 
 	function setFieldPermNames($fields) {
 		$this->fieldPermNames = array_map(function($f){
-			if( in_array($f['permName'], array('creation_date', 'modification_date', 'tracker_status')) ) {
+			if( in_array($f['permName'], $this->nonTrackerFields) ) {
 				return $f['permName'];
 			} else {
 				return 'tracker_field_'.$f['permName'];
