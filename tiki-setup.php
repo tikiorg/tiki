@@ -608,7 +608,7 @@ if ($prefs['feature_draw'] == 'y') {
 	//svg-edit/empbedapi.js neededs to be external - why?
 	$headerlib->add_jsfile("vendor/svg-edit/svg-edit/embedapi.js");
 	$headerlib->add_jsfile("lib/svg-edit_tiki/draw.js");
-	$headerlib->add_cssfile("lib/svg-edit_tiki/draw.css");
+	$headerlib->add_cssfile("themes/base_files/feature_css/svg-edit-draw.css");
 }
 
 if ($prefs['geo_always_load_openlayers'] == 'y') {
