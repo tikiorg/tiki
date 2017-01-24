@@ -63,7 +63,7 @@ class WikiLingoTikiEvents
             ->add_jsfile('vendor/flp/flp/Phraser/Phraser.js')
             ->add_jsfile('vendor/jquery/md5/js/md5.js')
             ->add_jsfile('lib/wikiLingo_tiki/tiki_wikiLingo_flp_view.js')
-            ->add_jsfile('lib/ZeroClipboard.js')
+            ->add_jsfile('vendor/jquery/jquery-sheet/plugins/ZeroClipboard.min.js')
             ->add_jsfile('vendor/flp/flp/scripts/flp.js')
             ->add_jsfile('vendor/flp/flp/scripts/flp.Link.js')
             ->add_jsfile('lib/wikiLingo_tiki/tiki_flp.Link.js')
