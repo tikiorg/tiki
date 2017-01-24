@@ -25,7 +25,7 @@
 			{tr}Example: {/tr}
 		{/remarksbox}
 
-		<div class="media">
+		<div class="media margin-bottom-lg">
 			<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Configuration Profiles Wizard{/tr}" title="{tr}Configuration Profiles Wizard{/tr}" >
 				<i class="fa fa-cubes fa-stack-2x"></i>
 				<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
@@ -42,10 +42,9 @@
 				</p>
 
 				<input type="submit" class="btn btn-primary" name="use-default-prefs" value="{tr}Start Configuration Profiles Wizard (Macros){/tr}" />
-				<p></p>
 			</div>
 		</div>
-		<div class="media">
+		<div class="media margin-bottom-lg">
 			<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Configuration Walkthrough{/tr}" title="Configuration Walkthrough">
 				<i class="fa fa-gear fa-stack-2x"></i>
 				<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
@@ -61,10 +60,9 @@
 					</a>
 				</p>
 				<input type="submit" class="btn btn-primary" name="continue" value="{tr}Start Configuration Wizard{/tr}" />
-				<p></p>
 			</div>
 		</div>
-		<div class="media">
+		<div class="media margin-bottom-lg">
 			<span class="pull-left fa-stack fa-lg margin-right-18em" alt="{tr}Upgrade Wizard{/tr}" title="Upgrade Wizard">
 				<i class="fa fa-arrow-circle-up fa-stack-2x"></i>
 				<i class="fa fa-rotate-270 fa-magic fa-stack-2x margin-left-9em"></i>
@@ -84,19 +82,17 @@
 				</p>
 
 					<input type="submit" class="btn btn-primary" name="use-upgrade-wizard" value="{tr}Start Upgrade Wizard{/tr}" />
-					<p></p>
 			</div>
 		</div>
-		<div class="media">
+		<div class="media margin-bottom-lg">
 			<img class="pull-left" src="img/icons/large/controlpanels48x48.png" alt="{tr}Control Panels{/tr}" />
 			<div class="media-body">
 				<p>{tr}Use the <b>Control Panels</b> to manually browse through the full list of preferences{/tr}.</p>
 
 				{button href="tiki-admin.php" _text="{tr}Go to the Control Panels{/tr}"}
-				<p></p>
 			</div>
 		</div>
-		<div class="media">
+		<div class="media margin-bottom-lg">
 			<div class="media-body">
 		<legend>{tr}Server Fitness{/tr}</legend>
 		{tr _0=$tiki_version}To check if your server meets the requirements for running Tiki version %0, please visit <a href="tiki-check.php" target="_blank">Tiki Server Compatibility Check</a>{/tr}.

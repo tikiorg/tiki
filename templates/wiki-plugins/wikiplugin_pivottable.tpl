@@ -32,8 +32,9 @@
 				table: {
 					clickCallback: function(e, value, filters, pivotData){
 						var details = [];
-						pivotData.forEachMatchingRecord(filters,
-							function(record){ details.push(record[{{$pivottable.aggregateDetails|json_encode}}]); });
+						pivotData.forEachMatchingRecord(filters, function(record){
+							details.push(record.pivotLink);
+						});
 						feedback(details.join("<br>\n"), 'info', true);
 					}
 				}
