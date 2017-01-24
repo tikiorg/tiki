@@ -38,7 +38,7 @@ function wikiplugin_flash_info()
 			'movie' => array(
 				'required' => true,
 				'name' => tra('Movie URL'),
-				'description' => tr('URL to the movie to include, for example, %0', '<code>lib/test.swf</code>'),
+				'description' => tr('URL to the movie to include, for example, %0', '<code>themes/mytheme/movie.swf</code>'),
 				'since' => '1',
 				'parent' => array('name' => 'type', 'value' => 'url'),
 				'filter' => 'url',
