@@ -129,7 +129,7 @@ if (empty($custom_css)) {
 if (is_readable($custom_css)) {
 	$headerlib->add_cssfile($custom_css, 53);
 }
-if ($prefs['site_favicon_disable'] !== 'y') {    // if favicons are disabled in preferences, skip the lot of it.
+if (!isset($prefs['site_favicon_enable']) || $prefs['site_favicon_enable'] === 'y') {    // if favicons are disabled in preferences, skip the lot of it.
     $favicon_path = $themelib->get_theme_path($prefs['theme'], $prefs['theme_option'], 'favicon-16x16.png', 'favicons/');
     if ($favicon_path) {  // if there is a 16x16 png favicon in the theme folder, then find and display others if they exist
         $headerlib->add_link('icon', $favicon_path, '16x16', 'image/png');

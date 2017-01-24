@@ -223,7 +223,7 @@
 				{preference name=iepngfix_selectors}
 				{preference name=iepngfix_elements}
 			</div>
-            {preference name=site_favicon_disable}
+            {preference name=site_favicon_enable}
 			{preference name=image_responsive_class}
 			<div class="adminoptionbox">
 				<fieldset class="table">

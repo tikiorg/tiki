@@ -78,13 +78,12 @@ function prefs_site_list()
 			),
 			'default' => 'invertfull',
 		),
-        'site_favicon_disable' => array(
-            'name' => tr('Disable favicon functionality'),
-            'description' => tr('This option disables all tiki favicon functionality, so a custom solution may be deployed.'),
-            'type' => 'flag',
-            'default' => 'n',
-            'hint' => tra('Hint: You may drop custom favicons into your theme favicon directory for easy favicon customization.'),
-        ),
+		'site_favicon_enable' => array(
+			'name' => tr('Favicons'),
+			'description' => tra('You may drop custom favicons into /themes/yourtheme/favicons, or use the default tiki icons.'),
+			'type' => 'flag',
+			'default' => 'y',
+		),
 		'site_terminal_active' => array(
 			'name' => tra('Site terminal'),
 			'description' => tra('Allows users to be directed to a specific perspective depending on the origin IP address. Can be used inside intranets to use different configurations for users depending on their departements or discriminate people in web contexts. Unspecified IPs will fall back to default behavior, including multi-domain handling. Manually selected perspectives take precedence over this.'),
