@@ -384,7 +384,7 @@
 					<div class="col-md-9">
 						<label>{tr}Anniversary{/tr}</label>
 						<input type="text" name="anniversary" class="form-control" value="{$group_info.anniversary|escape}">
-						<div class="help-block">{tr}Use MMDD to specify the following month and day as of which all users will be unassigned from the group, or DD to specify the day only.{/tr}</div>
+						<div class="help-block">{tr}Use MMDD to specify an annual date as of which all users will be unassigned from the group, or DD to specify a monthly date.{/tr}</div>
 						<label>{tr}Or{/tr}</label><br>
 						<label>{tr}Number of Days{/tr}</label>
 						<input type="text" class="form-control" name="expireAfter" value="{$group_info.expireAfter|escape}">
