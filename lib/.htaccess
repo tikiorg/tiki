@@ -8,10 +8,10 @@
 	</IfModule>
 </FilesMatch>
 
-#js swf          - need browser access    - belong here
-#css gif svg png - need browser access    - should be moved
-#remaining files - unknown browser access - some belong here, others unknown
-<FilesMatch "\.(js|swf|gif|png|svg|as|xsd|wsdl|fla|ynl|ttf|xml)$">
+#js bbb          - need browser access    - belong here
+#swf             - need browser access    - should be moved
+#remaining files - unknown browser access
+<FilesMatch "\.(js|swf|as|xsd|wsdl|fla|ynl|ttf|xml)$">
 	<IfModule mod_authz_core.c>
 		Require all granted
 	</IfModule>
