@@ -8429,7 +8429,8 @@ table.tablesorter thead tr.tablesorter-filter-row {
   font-size: 13px;
 }
 .tiki table.pvtTable tr th {
-  background-color: transparent;
+  background-color: #9c27b0;
+  color: #ffffff;
   border: 1px solid #dddddd;
   font-size: 13px;
   padding: 5px;
@@ -8463,9 +8464,7 @@ table.tablesorter thead tr.tablesorter-filter-row {
   padding: 5px;
 }
 .tiki .pvtAxisContainer li.pvtPlaceholder {
-  -webkit-border-radius: 5px;
   padding: 3px 15px;
-  -moz-border-radius: 5px;
   border-radius: 5px;
   border: 1px dashed #dddddd;
 }

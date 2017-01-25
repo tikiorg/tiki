@@ -7626,9 +7626,7 @@ table.tablesorter thead tr.tablesorter-filter-row {
   padding: 5px;
 }
 .tiki .pvtAxisContainer li.pvtPlaceholder {
-  -webkit-border-radius: 5px;
   padding: 3px 15px;
-  -moz-border-radius: 5px;
   border-radius: 5px;
   border: 1px dashed #dddddd;
 }

@@ -2565,8 +2565,6 @@ ul.all_languages > li {
 }
 .lang_select .cssmenu_horiz li {
   border-radius: 3px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
   width: auto;
 }
 .lang_select .cssmenu_horiz li.tabmark {
@@ -3264,8 +3262,6 @@ div.form-group label.error {
 .tiki .anythingWindow,
 .tiki .anythingBase,
 .tiki .anythingBase > .panel {
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
   box-sizing: content-box;
 }
 .tiki .anythingBase > .panel {
@@ -3296,8 +3292,6 @@ div.form-group label.error {
   padding-top: 2px;
 }
 .tiki .elfinder .elfinder-button-search input {
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
   box-sizing: content-box;
 }
 body:not(.fixed_width) .container {
@@ -3539,8 +3533,6 @@ body.fullscreen.tiki.navbar-padding {
 /* Filter widget transition */
 .filterWidgetTransition {
   -webkit-transition: line-height 0.1s ease;
-  -moz-transition: line-height 0.1s ease;
-  -o-transition: line-height 0.1s ease;
   transition: line-height 0.1s ease;
 }
 /*** Arrows ***/
@@ -3583,8 +3575,6 @@ table.tablesorter thead tr.tablesorter-filter-row td {
   text-align: center;
   line-height: normal;
   -webkit-transition: line-height 0.1s ease;
-  -moz-transition: line-height 0.1s ease;
-  -o-transition: line-height 0.1s ease;
   transition: line-height 0.1s ease;
   /* Add tooltips to slider handles */
 }
@@ -3593,12 +3583,8 @@ table.tablesorter thead tr.tablesorter-filter-row td select {
   width: 98%;
   height: auto;
   margin: 0;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   -webkit-transition: line-height 0.1s ease;
-  -moz-transition: line-height 0.1s ease;
-  -o-transition: line-height 0.1s ease;
   transition: line-height 0.1s ease;
 }
 table.tablesorter thead tr.tablesorter-filter-row td label {
@@ -3640,14 +3626,9 @@ table.tablesorter thead tr.tablesorter-filter-row td .value-popup:after {
   background-color: #444444;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#444444 444), to(#999999 999));
   background-image: -webkit-linear-gradient(top, #444444, #999999);
-  background-image: -moz-linear-gradient(top, #444444, #999999);
-  background-image: -o-linear-gradient(top, #444444, #999999);
   background-image: linear-gradient(to bottom, #444444, #999999);
-  -webkit-border-radius: 3px;
   border-radius: 3px;
-  -webkit-background-clip: padding-box;
   background-clip: padding-box;
-  -webkit-box-shadow: 0 0 4px 0 #777777;
   box-shadow: 0 0 4px 0 #777777;
   border: #444444 1px solid;
   color: #ffffff;
@@ -3910,7 +3891,6 @@ table.tablesorter thead tr.tablesorter-filter-row {
 }
 .chosen-container-single .chosen-single {
   background-color: #ffffff;
-  -webkit-background-clip: padding-box;
   -moz-background-clip: padding;
   background-clip: padding-box;
   border: 1px solid #cccccc;
@@ -3994,7 +3974,6 @@ table.tablesorter thead tr.tablesorter-filter-row {
   margin-top: -1px;
   border-bottom-right-radius: 4px;
   border-bottom-left-radius: 4px;
-  -webkit-background-clip: padding-box;
   -moz-background-clip: padding;
   background-clip: padding-box;
 }
@@ -4043,7 +4022,6 @@ table.tablesorter thead tr.tablesorter-filter-row {
   color: #999999;
 }
 .chosen-container-multi .chosen-choices .search-choice {
-  -webkit-background-clip: padding-box;
   -moz-background-clip: padding;
   background-clip: padding-box;
   background-color: #eeeeee;
@@ -4522,8 +4500,6 @@ div.tiki_plugin {
 }
 .structure_select .cssmenu_horiz ul li {
   border-radius: 3px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
 }
 .structure_select li.tabmark {
   background: none;
@@ -4669,8 +4645,6 @@ h6:hover a.tiki_anchor {
   margin: 1px;
   padding: 1px;
   border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
   max-width: 30px;
   white-space: nowrap;
   overflow: hidden;
@@ -4827,8 +4801,6 @@ body.tiki_wiki #comments {
   -webkit-box-shadow: 1px 1px 2px 2px rgba(200, 200, 200, 0.5);
   box-shadow: 1px 1px 2px 2px rgba(200, 200, 200, 0.5);
   border-radius: 2px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
 }
 .toc {
   padding-left: 2em;
@@ -4964,9 +4936,7 @@ div.drillshow {
   padding: 5px;
 }
 .tiki .pvtAxisContainer li.pvtPlaceholder {
-  -webkit-border-radius: 5px;
   padding: 3px 15px;
-  -moz-border-radius: 5px;
   border-radius: 5px;
   border: 1px dashed #dddddd;
 }
