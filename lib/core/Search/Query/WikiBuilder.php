@@ -85,13 +85,22 @@ class Search_Query_WikiBuilder
 		foreach ($fields as $fieldName) {
 			$field = $trklib->get_field_by_perm_name(str_replace('tracker_field_', '', $fieldName));
 			if ($field) {
-				$value = $_REQUEST['ins_'.$field['fieldId']];
+				$value = isset($_REQUEST['ins_'.$field['fieldId']]) ? $_REQUEST['ins_'.$field['fieldId']] : '';
 			} else {
-				$value = $_REQUEST['ins_'.$fieldName];
+				$value = isset($_REQUEST['ins_'.$fieldName]) ? $_REQUEST['ins_'.$fieldName] : '';
+			}
+			if ($value === '') {
+				continue;
+			}
+			if ($value === '-Blank (no data)-' || is_array($value) && in_array('-Blank (no data)-', $value)) {
+				$value = '';
+				$editableType = 'exact';
+				$fieldName .= '_text';
 			}
 			$value = is_array($value) ? implode(' OR ', $value) : (string)$value;
 			$function = "wpquery_filter_{$editableType}";
 			if (method_exists($this, $function)) {
+				$arguments['field'] = $fieldName;
 				call_user_func(array($this, $function), $query, $value, $arguments);
 			}
 		}

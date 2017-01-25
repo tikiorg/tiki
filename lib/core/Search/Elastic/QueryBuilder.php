@@ -243,6 +243,10 @@ class Search_Elastic_QueryBuilder
 					"operator" => "and",
 				),
 			));
+		} elseif ($node->getType() == 'plaintext' && strstr($value, '*')) {
+			return array("wildcard" => array(
+				$this->getNodeField($node) => $value,
+			));
 		} else {
 			return array("match" => array(
 				$this->getNodeField($node) => array(

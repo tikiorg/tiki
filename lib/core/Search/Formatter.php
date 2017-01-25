@@ -102,14 +102,21 @@ class Search_Formatter
 				$field = array_merge($field, $handler->getFieldData($_REQUEST));
 				// TODO: refactor field handler to not require calling this twice to fit in the request data
 				$handler = $trklib->get_field_handler($field);
-				$field['renderedInput'] = $handler->renderInput();
+				$field['renderedInput'] = $handler->renderInput(array('allowNone' => 'n'));
+				$value = isset($_REQUEST[$field['ins_id']]) ? $_REQUEST[$field['ins_id']] : null;
+				$blank = '<option value="-Blank (no data)-" '
+					. ( ( $value === '-Blank (no data)-' || is_array($value) && in_array( '-Blank (no data)-', $value ) ) ? 'selected' : '' )
+					. '>-Blank (no data)-</option>';
+				$field['renderedInput'] = str_replace('</select>', $blank . '</select>', $field['renderedInput']);
+				$field['textInput'] = preg_match("/<input.*type=['\"]text['\"]/", $field['renderedInput']);
 				$fields[] = $field;
 			} else {
 				// non-tracker field in the index
 				$fields[] = array(
 					'fieldId' => 0,
 					'name' => $fieldName,
-					'value' => $_REQUEST['ins_'.$fieldName]
+					'value' => isset($_REQUEST['ins_'.$fieldName]) ? $_REQUEST['ins_'.$fieldName] : null,
+					'textInput' => true,
 				);
 			}
 		}
