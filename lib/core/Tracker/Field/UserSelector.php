@@ -115,7 +115,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 								$finaluser = $finalusers[0];
 							}
 						}
-						if (empty($finaluser)) {
+						if (empty($finaluser) && $auser !== '-Blank (no data)-') {
 							Feedback::error(tr('User "%0" not found', $auser), 'session');
 						} else {
 							$users[] = $finaluser;
@@ -223,7 +223,7 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 						'name' => $this->getConfiguration('ins_id'),
 						'multiple' => ( $this->getOption('multiple') ? 'true' : 'false' ),
 						'editable' => 'y',
-						'allowNone' => 'y',
+						'allowNone' => ( isset($context['allowNone']) && $context['allowNone'] === 'n' ? 'n' : 'y' ),
 						'groupIds' => $groupIds,
 						'realnames' => $realnames,
 					),
