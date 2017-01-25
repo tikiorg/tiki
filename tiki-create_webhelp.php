@@ -81,6 +81,13 @@ if (isset($_REQUEST['create'])) {
 	$output .= '<li>' . tr("Directory: <strong>%0</strong>", $dir) . '</li></ul>';
 	$base = "whelp/$dir";
 
+	if (!is_dir("whelp")) {
+		if (!mkdir("whelp")){
+			$smarty->assign('msg', tra("Unable to create directory Run <code>sh setup.sh</code> from the command line to fix."));
+			$smarty->display('error.tpl');
+			die;
+		}
+	}
 	if (!is_writeable('whelp')) {
 		$smarty->assign('msg', tra("You need to change chmod 'whelp' manually to 777"));
 		$smarty->display('error.tpl');
