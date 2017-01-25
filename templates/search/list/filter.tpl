@@ -6,7 +6,7 @@
 			<td class="list_filter_label">
 				<label>{$field.name|tr_if}</label>
 				{if $field.textInput}
-					<a href="#" class="tikihelp" title="Only full word matches shown by default: Use wildcards (*) to get partial matches also. E.g. searching for 'foo' will miss foobar in the results, but 'foo*' will include it.">
+					<a href="#" class="tikihelp" title="{tr}Only full word matches shown by default: Use wildcards (*) to get partial matches also. E.g. searching for 'foo' will miss foobar in the results, but 'foo*' will include it{/tr}.">
 						{icon name="information"}
 					</a>
 				{/if}
