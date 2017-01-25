@@ -28,7 +28,7 @@ test = { mode: function () {}, indentation: function() {} }
 		//load modes first
 		//tiki first, where are our priorities!
 		$js .= @file_get_contents("lib/codemirror_tiki/mode/tiki/tiki.js");
- 		$css .= @file_get_contents("lib/codemirror_tiki/mode/tiki/tiki.css");
+ 		$css .= @file_get_contents("themes/base_files/feature_css/codemirror_mode_tiki.css");
 
 		foreach (glob('vendor/codemirror/codemirror/mode/*', GLOB_ONLYDIR) as $dir) {
 			foreach (glob($dir.'/*.js', GLOB_NOCHECK) as $jsFile) {
