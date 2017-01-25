@@ -11,7 +11,7 @@
 #js bbb          - need browser access    - belong here
 #swf             - need browser access    - should be moved
 #remaining files - unknown browser access
-<FilesMatch "\.(js|swf|as|xsd|wsdl|fla|ynl|ttf|xml)$">
+<FilesMatch "\.(js|swf|as|fla|ttf|xml)$">
 	<IfModule mod_authz_core.c>
 		Require all granted
 	</IfModule>
