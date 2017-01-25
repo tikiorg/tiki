@@ -108,13 +108,15 @@ class Search_Formatter
 					. ( ( $value === '-Blank (no data)-' || is_array($value) && in_array( '-Blank (no data)-', $value ) ) ? 'selected' : '' )
 					. '>-Blank (no data)-</option>';
 				$field['renderedInput'] = str_replace('</select>', $blank . '</select>', $field['renderedInput']);
+				$field['textInput'] = preg_match("/<input.*type=['\"]text['\"]/", $field['renderedInput']);
 				$fields[] = $field;
 			} else {
 				// non-tracker field in the index
 				$fields[] = array(
 					'fieldId' => 0,
 					'name' => $fieldName,
-					'value' => isset($_REQUEST['ins_'.$fieldName]) ? $_REQUEST['ins_'.$fieldName] : null
+					'value' => isset($_REQUEST['ins_'.$fieldName]) ? $_REQUEST['ins_'.$fieldName] : null,
+					'textInput' => true,
 				);
 			}
 		}
