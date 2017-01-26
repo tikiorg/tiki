@@ -94,6 +94,15 @@
 				{tr}Filter UI added in any wiki plugin using unified search index{/tr}.
 				<a href="https://doc.tiki.org/Tiki16#Filter_UI_in_any_plugin_using_unified_search_index">{tr}More Information{/tr}...</a>
 		</fieldset>
+		<fieldset class="table clearfix featurelist">
+			<legend>{tr}New Profiles{/tr}</legend>
+			<ul>
+				<li>{tr}Bug_Tracker_16{/tr}</li>
+				<li>{tr}Execute on list{/tr}</li>
+				<li>{tr}GeoCMS_Maps{/tr}</li>
+				<li>{tr}Work_Custom_Pricing{/tr}</li>
+			</ul>
+		</fieldset>
 		<i>{tr}See the full list of changes{/tr}.</i>
 		<a href="https://doc.tiki.org/Tiki16" target="tikihelp" class="tikihelp" title="{tr}Tiki16:{/tr}
 			{tr}Click to read more{/tr}
