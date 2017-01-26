@@ -6917,6 +6917,8 @@ a.fc-event:hover {
 .cssmenu_vert > li:hover,
 .cssmenu_vert > li.sfHover {
   -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
   transition: none;
 }
 .topbar .nav > li > a:hover,

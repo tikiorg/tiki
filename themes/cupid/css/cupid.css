@@ -6771,6 +6771,8 @@ a.fc-event:hover {
 .cssmenu_vert > li:hover,
 .cssmenu_vert > li.sfHover {
   -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
   transition: none;
 }
 .topbar .nav > li > a:hover,
@@ -7572,6 +7574,8 @@ a:focus {
   border: 1px solid #dddddd;
   border-radius: 0;
   -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
 h1,
