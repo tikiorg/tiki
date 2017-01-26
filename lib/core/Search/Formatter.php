@@ -8,13 +8,15 @@
 class Search_Formatter
 {
 	private $plugin;
+	private $counter;
 	private $subFormatters = array();
 	private $customFilters = array();
 	private $alternateOutput;
 
-	function __construct(Search_Formatter_Plugin_Interface $plugin)
+	function __construct(Search_Formatter_Plugin_Interface $plugin, $counter = 0)
 	{
 		$this->plugin = $plugin;
+		$this->counter = $counter;
 	}
 
 	function setAlternateOutput($output)
@@ -124,10 +126,15 @@ class Search_Formatter
 		if ($fields) {
 			$smarty = TikiLib::lib('smarty');
 			$smarty->assign('filterFields', $fields);
+			$smarty->assign('filterCounter', $this->counter);
 			return '~np~' . $smarty->fetch('templates/search/list/filter.tpl') . '~/np~';
 		}
 
 		return '';
+	}
+
+	public function getCounter() {
+		return $this->counter;
 	}
 
 	private function render($plugin, $resultSet, $target)

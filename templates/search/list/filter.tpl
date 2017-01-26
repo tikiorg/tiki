@@ -1,5 +1,6 @@
-<div class="list_filter">
-	<form action="{$smarty.server.PHP_SELF}?{query}" method="post">
+<a name="list_filter{$filterCounter}"></a>
+<div class="list_filter" id="list_filter{$filterCounter}">
+	<form action="{$smarty.server.PHP_SELF}?{query}#list_filter{$filterCounter}" method="post">
 		<table class="table">
 		{foreach from=$filterFields item=field}
 		<tr>
