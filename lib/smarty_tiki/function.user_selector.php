@@ -48,6 +48,7 @@ function smarty_function_user_selector($params, $smarty)
 			'editable' => $tiki_p_admin,
 			'user_selector_threshold' => $prefs['user_selector_threshold'],
 			'allowNone' => 'n',
+			'noneLabel' => 'None',
 			'realnames' => 'y',
 			'class' => 'form-control',
 	);
@@ -145,7 +146,7 @@ function smarty_function_user_selector($params, $smarty)
 
 		$ret .= '<select name="' . $params['name'] . ( $params['multiple'] === 'true' ? '[]' : '' ) . '" id="' . $params['id'] . '"' . $sz . $ed . $mt . ' style="'.$params['style'].'" class="form-control">';
 		if ($params['allowNone'] === 'y') {
-			$ret .= '<option value=""' . (empty($params['user']) ? ' selected="selected"' : '') . ' >' . tra('None') .'</option>';
+			$ret .= '<option value=""' . (empty($params['user']) ? ' selected="selected"' : '') . ' >' . tra($params['noneLabel']) .'</option>';
 		}
 		foreach ($users as $usr => $usersname) {
 			$selected = isset($params['select']) && ( $params['select'] === $usr || (is_array($params['select']) && in_array($usr, $params['select'])) );
