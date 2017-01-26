@@ -7843,10 +7843,6 @@ footer.footer {
   color: #e0d6cc;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
-  -webkit-border-bottom-left-radius: 8px;
-  -webkit-border-bottom-right-radius: 8px;
-  -moz-border-radius-bottomleft: 8px;
-  -moz-border-radius-bottomright: 8px;
   padding-top: 20px;
 }
 .footer .modules h3 a,
