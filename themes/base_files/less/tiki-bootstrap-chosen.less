@@ -145,6 +145,7 @@
 .chosen-container-single {
 	.chosen-single {
 		background-color: @chosen-background;
+		-webkit-background-clip: padding-box;
 		-moz-background-clip: padding;
 		background-clip: padding-box;
 		border: @chosen-border;
@@ -229,6 +230,7 @@
 	.chosen-drop {
 		margin-top: -1px;
 		.border-bottom-radius(@chosen-border-radius);
+		-webkit-background-clip: padding-box;
 		-moz-background-clip: padding;
 		background-clip: padding-box;
 	}
@@ -285,6 +287,7 @@
 		}
 
 		.search-choice {
+			-webkit-background-clip: padding-box;
 			-moz-background-clip: padding;
 			background-clip: padding-box;
 			background-color: @gray-lighter;

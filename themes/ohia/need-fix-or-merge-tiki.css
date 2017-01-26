@@ -865,7 +865,7 @@ div#outerToc-static ul {
 .backlinks_button .cssmenu_horiz ul li {
   border: 1px solid #999;
   border-radius: 3px;
-  -moz-border-radius: 3px;
+
 }
 .backlinks_button li.tabmark {
   background: none;
