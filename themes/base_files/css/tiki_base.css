@@ -1036,12 +1036,12 @@ select.form-control.date {
 }
 .masonry {
   -moz-column-count: auto;
-  -moz-column-gap: 1.5rem;
-  -moz-column-width: 21rem;
   -webkit-column-count: auto;
   column-count: auto;
+  -moz-column-gap: 1.5rem;
   -webkit-column-gap: 1.5rem;
   column-gap: 1.5rem;
+  -moz-column-width: 21rem;
   -webkit-column-width: 21rem;
   column-width: 21rem;
   font-size: 0;
@@ -2247,12 +2247,12 @@ table.treetable tr.expanded span.indenter a {
   float: right;
 }
 .tracker-item-files {
-  column-count: 2;
-  column-gap: 30px;
-  -moz-column-count: 2;
-  -moz-column-gap: 30px;
   -webkit-column-count: 2;
+  -moz-column-count: 2;
+  column-count: 2;
+  -moz-column-gap: 30px;
   -webkit-column-gap: 30px;
+  column-gap: 30px;
 }
 .file-drop {
   min-height: 100px;
