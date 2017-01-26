@@ -5,7 +5,6 @@
 	"homepage": "https://tiki.org",
 	"minimum-stability": "stable",
 	"require": {
-		"adodb/adodb": "5.18",
 		"aFarkas/html5shiv": "3.7.3",
 		"alxlit/bootstrap-chosen": "1.0.1",
 		"blueimp/jquery-file-upload": "^9.12.5",
@@ -104,7 +103,8 @@
 		"zendframework/zendoauth": "~2.0",
 		"zendframework/zend-mime": "~2.4",
 		"zendframework/zend-mail": "~2.4",
-		"zendframework/zendsearch": "~2.0.0@RC"
+		"zendframework/zendsearch": "~2.0.0@RC",
+		"adodb/adodb-php": "^5.20"
 	},
 	"require-dev": {
 		"mikey179/vfsStream": "1.1.0",
@@ -151,7 +151,7 @@
 			"lib/rating/formula/",
 			"lib/core/StandardAnalyzer/",
 			"vendor/smarty/smarty/libs/sysplugins/smarty_security.php",
-			"vendor/adodb/adodb/",
+			"vendor/adodb/adodb-php/",
 			"vendor/phpcas/phpcas/",
 			"vendor/onelogin/php-saml/",
 			"installer/",
