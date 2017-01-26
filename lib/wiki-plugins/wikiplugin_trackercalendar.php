@@ -371,6 +371,12 @@ function wikiplugin_trackercalendar($data, $params)
 	$params['useSessionStorage'] = empty($params['useSessionStorage']) ? 'y' : $params['useSessionStorage'];
 	$params['weekends'] = empty($params['weekends']) ? 'y' : $params['weekends'];
 
+	$matches = WikiParser_PluginMatcher::match($data);
+	$builder = new Search_Formatter_Builder;
+	$builder->apply($matches);
+	$formatter = $builder->getFormatter();
+	$filters = str_replace( array('~np~', '~/np~'), '', $formatter->renderFilters() );
+
 	$smarty = TikiLib::lib('smarty');
 	$smarty->assign(
 		'trackercalendar',
@@ -395,6 +401,7 @@ function wikiplugin_trackercalendar($data, $params)
 			'canInsert' => $itemObject->canModify(),
 			'dView' => $dView,
 			'body' => $data,
+			'filterValues' => $_REQUEST,
 			'url' => $params['external'] === 'y' ? $params['url'] : '',
 			'trkitemid' => $params['external'] === 'y' ? $params['trkitemid'] : '',
 			'addAllFields' => $params['external'] === 'y' ? $params['addAllFields'] : '',
@@ -403,6 +410,7 @@ function wikiplugin_trackercalendar($data, $params)
 			'weekends' => $params['weekends'] === 'y' ? 1 : 0,
 		)
 	);
+	$smarty->assign('filters', $filters);
 	return $smarty->fetch('wiki-plugins/trackercalendar.tpl');
 }
 

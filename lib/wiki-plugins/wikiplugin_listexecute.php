@@ -109,7 +109,7 @@ function wikiplugin_listexecute($data, $params)
 				'iListExecute' => $iListExecute
 			)
 		);
-		$formatter = new Search_Formatter($plugin);
+		$formatter = Search_Formatter_Factory::newFormatter($plugin);
 	}
 
 	if (isset($_POST['list_action'], $_POST['objects'])) {

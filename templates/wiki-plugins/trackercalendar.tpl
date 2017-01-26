@@ -1,3 +1,4 @@
+{$filters}
 <div id="{$trackercalendar.id|escape}"></div>
 {jq}
 	var data = {{$trackercalendar|json_encode}};
@@ -31,14 +32,14 @@
 			editable: true,
 			timezone: '{{$prefs.server_timezone}}',
 			//theme: true, TODO: add support of jQuery UI theme to the plugin's PHP
-			events: $.service('tracker_calendar', 'list', {
+			events: $.service('tracker_calendar', 'list', $.extend(data.filterValues, {
 				trackerId: data.trackerId,
 				beginField: data.begin,
 				endField: data.end,
 				resourceField: data.resource,
 				coloringField: data.coloring,
 				filters: data.body
-			}),
+			})),
 			resources: data.resourceList,
 			year: data.viewyear,
 			month: data.viewmonth-1,

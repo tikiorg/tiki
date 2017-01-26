@@ -59,7 +59,7 @@ class Services_ActivityStream_Controller
 				'user_groups' => true,
 				'contributors' => true,
 			));
-			$formatter = new Search_Formatter($plugin);
+			$formatter = Search_Formatter_Factory::newFormatter($plugin);
 			$out = $formatter->format($result);
 		} catch (SmartyException $e) {
 			throw new Services_Exception_NotAvailable($e->getMessage());

@@ -125,7 +125,7 @@ if (count($filter) || count($postfilter)) {
 			}
 			$plugin->setFields($fields);
 
-			$formatter = new Search_Formatter($plugin);
+			$formatter = Search_Formatter_Factory::newFormatter($plugin);
 
 			$wiki = $formatter->format($results);
 			$html = $tikilib->parse_data(

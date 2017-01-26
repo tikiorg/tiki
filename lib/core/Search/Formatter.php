@@ -8,13 +8,15 @@
 class Search_Formatter
 {
 	private $plugin;
+	private $counter;
 	private $subFormatters = array();
 	private $customFilters = array();
 	private $alternateOutput;
 
-	function __construct(Search_Formatter_Plugin_Interface $plugin)
+	function __construct(Search_Formatter_Plugin_Interface $plugin, $counter = 0)
 	{
 		$this->plugin = $plugin;
+		$this->counter = $counter;
 	}
 
 	function setAlternateOutput($output)
@@ -102,7 +104,7 @@ class Search_Formatter
 				$field = array_merge($field, $handler->getFieldData($_REQUEST));
 				// TODO: refactor field handler to not require calling this twice to fit in the request data
 				$handler = $trklib->get_field_handler($field);
-				$field['renderedInput'] = $handler->renderInput(array('allowNone' => 'n'));
+				$field['renderedInput'] = $handler->renderInput(array('filter' => true));
 				$value = isset($_REQUEST[$field['ins_id']]) ? $_REQUEST[$field['ins_id']] : null;
 				$blank = '<option value="-Blank (no data)-" '
 					. ( ( $value === '-Blank (no data)-' || is_array($value) && in_array( '-Blank (no data)-', $value ) ) ? 'selected' : '' )
@@ -124,10 +126,15 @@ class Search_Formatter
 		if ($fields) {
 			$smarty = TikiLib::lib('smarty');
 			$smarty->assign('filterFields', $fields);
+			$smarty->assign('filterCounter', $this->counter);
 			return '~np~' . $smarty->fetch('templates/search/list/filter.tpl') . '~/np~';
 		}
 
 		return '';
+	}
+
+	public function getCounter() {
+		return $this->counter;
 	}
 
 	private function render($plugin, $resultSet, $target)

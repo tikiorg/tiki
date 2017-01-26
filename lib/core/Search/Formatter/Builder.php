@@ -79,7 +79,7 @@ class Search_Formatter_Builder
 			$plugin = new Search_Formatter_Plugin_WikiTemplate("* {display name=title format=objectlink}\n");
 		}
 
-		$formatter = new Search_Formatter($plugin);
+		$formatter = Search_Formatter_Factory::newFormatter($plugin);
 
 		if ($this->alternateOutput > '') {
 			$formatter->setAlternateOutput($this->alternateOutput);

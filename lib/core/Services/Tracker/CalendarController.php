@@ -35,7 +35,7 @@ class Services_Tracker_CalendarController
 		$query->setRange(0, $prefs['unified_lucene_max_result']);
 
 		if ($body = $input->filters->none()) {
-			$builder = new Search_Query_WikiBuilder($query);
+			$builder = new Search_Query_WikiBuilder($query, $input);
 			$builder->apply(WikiParser_PluginMatcher::match($body));
 		}
 
