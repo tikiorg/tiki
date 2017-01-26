@@ -20,17 +20,6 @@
 		{
 			"type": "package",
 			"package": {
-				"name": "adodb/adodb-php",
-				"version": "5.20.9",
-				"dist": {
-					"url": "https://github.com/ADOdb/ADOdb/archive/v5.20.9.zip",
-					"type": "zip"
-				}
-			}
-		},
-		{
-			"type": "package",
-			"package": {
 				"name": "afarkas/html5shiv",
 				"version": "3.6.2",
 				"dist": {
@@ -1621,6 +1610,7 @@
 	"require": {
 		"Sam152/Javascript-Equal-Height-Responsive-Rows": ">=1.0.0",
 		"adodb/adodb": ">=5.18",
+		"adodb/adodb-php": ">=5.20.9",
 		"afarkas/html5shiv": ">=3.6.2",
 		"alxlit/bootstrap-chosen": ">=1.0.0",
 		"blueimp/jquery-file-upload": ">=9.10.4",
