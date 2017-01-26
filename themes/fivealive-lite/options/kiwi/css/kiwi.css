@@ -566,12 +566,10 @@ hr {
 }
 .middle_outer {
   -webkit-box-shadow: inset 0 24px 0 0 #cdbe23;
-  -moz-box-shadow: inset 0 24px 0 0 #cdbe23;
   box-shadow: inset 0 24px 0 0 #cdbe23;
 }
 .fullscreen .middle_outer {
   -webkit-box-shadow: inset 0 3px 0 0 #cdbe23;
-  -moz-box-shadow: inset 0 3px 0 0 #cdbe23;
   box-shadow: inset 0 3px 0 0 #cdbe23;
 }
 .topbar,

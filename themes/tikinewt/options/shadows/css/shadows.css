@@ -25,7 +25,6 @@ article,
     background: #fff;
 	padding: 0 8px 9px 0;
     -webkit-box-shadow: 4px 4px 4px 0px rgba(210,210,210,1);
-    -moz-box-shadow: 4px 4px 4px 0px rgba(210,210,210,1);
     box-shadow: 4px 4px 4px 0px rgba(210,210,210,1);
 /*	margin: 6px !important;*/
 }
@@ -44,7 +43,6 @@ body.fullscreen .post {
     border: none;
     background: #f3f6f9;
     -webkit-box-shadow: none;
-    -moz-box-shadow: none;
     box-shadow: none;
 }
 

@@ -180,6 +180,7 @@ table.treetable.objectperms td.removed {
 .ui-selectmenu-icon {
   background-color: inherit;
   border: solid 5px transparent !important;
+  -webkit-box-shadow: -5px 0 5px 2px rgba(0, 0, 0, 0.1), -1px 0 0 rgba(0, 0, 0, 0.1), -2px 0 0 rgba(255, 255, 255, 0.25);
   box-shadow: -5px 0 5px 2px rgba(0, 0, 0, 0.1), -1px 0 0 rgba(0, 0, 0, 0.1), -2px 0 0 rgba(255, 255, 255, 0.25);
 }
 .dirsitetrail {
@@ -2951,6 +2952,7 @@ input[type="checkbox"].preffilter-toggle-round + label:after {
   width: 28px;
   background-color: #fff;
   border-radius: 100%;
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   -webkit-transition: margin 0.4s;
   -moz-transition: margin 0.4s;
@@ -3145,6 +3147,7 @@ div.olMap {
 }
 .cssmenu_horiz ul,
 .cssmenu_vert ul {
+  -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
 }
 .cssmenu_horiz a,
@@ -3238,6 +3241,7 @@ a.structure-home {
   font-size: 110%;
 }
 .ui-dialog {
+  webkit-box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
 }
 .ui-dialog label {
@@ -3279,6 +3283,7 @@ div.form-group label.error {
   background-color: inherit;
   border: none;
   border-radius: 0;
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 /* prevents elFinder dialog appearing under the embedded pane */

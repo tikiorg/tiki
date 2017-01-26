@@ -98,6 +98,7 @@ figure {
 }
 
 hr {
+	-webkit-box-sizing: content-box;
 	-moz-box-sizing: content-box;
 	box-sizing: content-box;
 	height: 0
@@ -145,6 +146,8 @@ input {
 }
 
 input[type="checkbox"], input[type="radio"] {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	padding: 0
 }
@@ -197,6 +200,7 @@ td, th {
 		text-shadow: none !important;
 		color: #000 !important;
 		background: transparent !important;
+		-webkit-box-shadow: none !important
 		box-shadow: none !important
 	}
 
@@ -696,6 +700,7 @@ kbd {
 	color: #ffffff;
 	background-color: #333333;
 	border-radius: 0;
+	-webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.25)
 	box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.25)
 }
 
@@ -3964,6 +3969,7 @@ textarea.input-group-sm > .form-control, textarea.input-group-sm > .input-group-
 	padding-right: 15px;
 	padding-left: 15px;
 	border-top: 1px solid transparent;
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
 	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
 	-webkit-overflow-scrolling: touch
 }
@@ -3976,6 +3982,7 @@ textarea.input-group-sm > .form-control, textarea.input-group-sm > .input-group-
 	.navbar-collapse {
 		width: auto;
 		border-top: 0;
+		-webkit-box-shadow: none;
 		box-shadow: none
 	}
 
@@ -4113,6 +4120,7 @@ textarea.input-group-sm > .form-control, textarea.input-group-sm > .input-group-
 		margin-top: 0;
 		background-color: transparent;
 		border: 0;
+		webkit-box-shadow: none;
 		box-shadow: none
 	}
 
