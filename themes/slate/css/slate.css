@@ -6737,6 +6737,7 @@ header.page-header::before,
   border-radius: 4px;
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  -webkit-background-clip: padding-box;
   background-clip: padding-box;
 }
 .cssmenu_horiz li ul > li > a,
@@ -8263,6 +8264,8 @@ table.tablesorter thead tr.tablesorter-filter-row {
 .panel-heading,
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form {
+  -webkit-background-image: linear-gradient(to bottom, #484e55, #3a3f44 60%, #313539);
+  -o-background-image: linear-gradient(to bottom, #484e55, #3a3f44 60%, #313539);
   background-image: linear-gradient(to bottom, #484e55, #3a3f44 60%, #313539);
 }
 body.fullscreen {

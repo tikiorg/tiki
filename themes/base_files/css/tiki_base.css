@@ -3920,7 +3920,6 @@ table.tablesorter thead tr.tablesorter-filter-row {
 .chosen-container-single .chosen-single {
   background-color: #ffffff;
   -webkit-background-clip: padding-box;
-  -moz-background-clip: padding;
   background-clip: padding-box;
   border: 1px solid #cccccc;
   border-top-right-radius: 4px;
@@ -4004,7 +4003,6 @@ table.tablesorter thead tr.tablesorter-filter-row {
   border-bottom-right-radius: 4px;
   border-bottom-left-radius: 4px;
   -webkit-background-clip: padding-box;
-  -moz-background-clip: padding;
   background-clip: padding-box;
 }
 .chosen-container-single-nosearch .chosen-search input {
@@ -4053,7 +4051,6 @@ table.tablesorter thead tr.tablesorter-filter-row {
 }
 .chosen-container-multi .chosen-choices .search-choice {
   -webkit-background-clip: padding-box;
-  -moz-background-clip: padding;
   background-clip: padding-box;
   background-color: #eeeeee;
   border: 1px solid #cccccc;

@@ -81,22 +81,18 @@ h2.sitesubtitle {
 
 .btn-default {
 	background: #ffd19f;
-	background: -moz-linear-gradient(top, #ffd19f 0%, #fea841 3%, #fca73a 5%, #fda541 8%, #ffa340 10%, #f8a441 13%, #ffa439 15%, #fba23e 18%, #fea23f 21%, #fc9338 46%, #fe9039 54%, #fc8c36 59%, #fd7931 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffd19f), color-stop(3%, #fea841), color-stop(5%, #fca73a), color-stop(8%, #fda541), color-stop(10%, #ffa340), color-stop(13%, #f8a441), color-stop(15%, #ffa439), color-stop(18%, #fba23e), color-stop(21%, #fea23f), color-stop(46%, #fc9338), color-stop(54%, #fe9039), color-stop(59%, #fc8c36), color-stop(100%, #fd7931));
 	background: -webkit-linear-gradient(top, #ffd19f 0%, #fea841 3%, #fca73a 5%, #fda541 8%, #ffa340 10%, #f8a441 13%, #ffa439 15%, #fba23e 18%, #fea23f 21%, #fc9338 46%, #fe9039 54%, #fc8c36 59%, #fd7931 100%);
 	background: -o-linear-gradient(top, #ffd19f 0%, #fea841 3%, #fca73a 5%, #fda541 8%, #ffa340 10%, #f8a441 13%, #ffa439 15%, #fba23e 18%, #fea23f 21%, #fc9338 46%, #fe9039 54%, #fc8c36 59%, #fd7931 100%);
-	background: -ms-linear-gradient(top, #ffd19f 0%, #fea841 3%, #fca73a 5%, #fda541 8%, #ffa340 10%, #f8a441 13%, #ffa439 15%, #fba23e 18%, #fea23f 21%, #fc9338 46%, #fe9039 54%, #fc8c36 59%, #fd7931 100%);
 	background: linear-gradient(to bottom, #ffd19f 0%, #fea841 3%, #fca73a 5%, #fda541 8%, #ffa340 10%, #f8a441 13%, #ffa439 15%, #fba23e 18%, #fea23f 21%, #fc9338 46%, #fe9039 54%, #fc8c36 59%, #fd7931 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffd19f', endColorstr='#fd7931', GradientType=0);
 }
 
 .btn-default:hover {
 	background: #fd7931;
-	background: -moz-linear-gradient(bottom, #ffd19f 0%, #fea841 3%, #fca73a 5%, #fda541 8%, #ffa340 10%, #f8a441 13%, #ffa439 15%, #fba23e 18%, #fea23f 21%, #fc9338 46%, #fe9039 54%, #fc8c36 59%, #fd7931 100%);
 	background: -webkit-gradient(linear, left bottom, left top, color-stop(0%, #ffd19f), color-stop(3%, #fea841), color-stop(5%, #fca73a), color-stop(8%, #fda541), color-stop(10%, #ffa340), color-stop(13%, #f8a441), color-stop(15%, #ffa439), color-stop(18%, #fba23e), color-stop(21%, #fea23f), color-stop(46%, #fc9338), color-stop(54%, #fe9039), color-stop(59%, #fc8c36), color-stop(100%, #fd7931));
 	background: -webkit-linear-gradient(bottom, #ffd19f 0%, #fea841 3%, #fca73a 5%, #fda541 8%, #ffa340 10%, #f8a441 13%, #ffa439 15%, #fba23e 18%, #fea23f 21%, #fc9338 46%, #fe9039 54%, #fc8c36 59%, #fd7931 100%);
 	background: -o-linear-gradient(bottom, #ffd19f 0%, #fea841 3%, #fca73a 5%, #fda541 8%, #ffa340 10%, #f8a441 13%, #ffa439 15%, #fba23e 18%, #fea23f 21%, #fc9338 46%, #fe9039 54%, #fc8c36 59%, #fd7931 100%);
-	background: -ms-linear-gradient(bottom, #ffd19f 0%, #fea841 3%, #fca73a 5%, #fda541 8%, #ffa340 10%, #f8a441 13%, #ffa439 15%, #fba23e 18%, #fea23f 21%, #fc9338 46%, #fe9039 54%, #fc8c36 59%, #fd7931 100%);
 	background: linear-gradient(to top, #ffd19f 0%, #fea841 3%, #fca73a 5%, #fda541 8%, #ffa340 10%, #f8a441 13%, #ffa439 15%, #fba23e 18%, #fea23f 21%, #fc9338 46%, #fe9039 54%, #fc8c36 59%, #fd7931 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffd19f', endColorstr='#fd7931', GradientType=0);
 }
@@ -182,6 +178,7 @@ h2.sitesubtitle {
 	border: 1px solid @dropdown-border;
 	border-radius: @border-radius-base;
 	.box-shadow(0 6px 12px rgba(0, 0, 0, .175));
+	-webkit-background-clip: padding-box;
 	background-clip: padding-box;
 
 	// Links within the dropdown menu
