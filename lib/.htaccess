@@ -7,11 +7,10 @@
 		deny from all
 	</IfModule>
 </FilesMatch>
-
-#js bbb          - need browser access    - belong here
-#swf             - need browser access    - should be moved
-#remaining files - unknown browser access
-<FilesMatch "\.(js|swf|as|fla|ttf|xml)$">
+#js						- need browser access    - belong here
+#css gif svg png swf	- need browser access    - should be moved
+#remaining files		- unknown browser access
+<FilesMatch "\.(js|swf|css|gif|png|svg|as|fla|ttf|xml)$">
 	<IfModule mod_authz_core.c>
 		Require all granted
 	</IfModule>
