@@ -8,11 +8,12 @@
 class Search_Query_WikiBuilder
 {
 	private $query;
+	private $input;
 	private $paginationArguments;
 	private $aggregate = false;
 	private $boost = 1;
 
-	function __construct(Search_Query $query)
+	function __construct(Search_Query $query, $input = null)
 	{
 		global $prefs;
 		if (!empty($prefs['maxRecords'])) {
@@ -22,6 +23,7 @@ class Search_Query_WikiBuilder
 		}
 
 		$this->query = $query;
+		$this->input = ( $input ?: new JitFilter($_REQUEST) );
 		$this->paginationArguments = array(
 			'offset_arg' => 'offset',
 			'sort_arg' => 'sort_mode',
@@ -85,9 +87,9 @@ class Search_Query_WikiBuilder
 		foreach ($fields as $fieldName) {
 			$field = $trklib->get_field_by_perm_name(str_replace('tracker_field_', '', $fieldName));
 			if ($field) {
-				$value = isset($_REQUEST['ins_'.$field['fieldId']]) ? $_REQUEST['ins_'.$field['fieldId']] : '';
+				$value = $this->input->{'ins_'.$field['fieldId']}->none();
 			} else {
-				$value = isset($_REQUEST['ins_'.$fieldName]) ? $_REQUEST['ins_'.$fieldName] : '';
+				$value = $this->input->{'ins_'.$fieldName}->none();
 			}
 			if ($value === '') {
 				continue;
