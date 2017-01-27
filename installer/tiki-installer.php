@@ -600,6 +600,31 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
 	return $dbcon;
 }
 
+
+/**
+ * Create an user to own created database
+ *
+ * @param $dbTiki  valid connection
+ * @param $user  username for new db user
+ * @param $pass  password for new db user
+ * @param $dbname  database name
+ * @return bool|int
+ */
+function createTikiDBUser(&$dbTiki, $user, $pass, $dbname) {
+
+	$pass = addslashes($pass);
+	$sql="GRANT ALL PRIVILEGES ON `$dbname`.* TO `$user`@`%` IDENTIFIED BY '$pass';";
+	$dbTiki->queryError($sql, $error);
+
+	if ( empty($error) ) {
+		Feedback::success(tra("User `%0` was created.", '', false, [$user]));
+	} else {
+		Feedback::error(tra("User `%0` creation failed.", '', false, [$user]));
+	}
+
+	return empty($error);
+}
+
 /**
  * @param $dbname
  */
@@ -877,10 +902,22 @@ if (
 			$client_charset, $dbTiki);
 
 		if ($dbcon) {
-			write_local_php($_POST['db'], $_POST['host'], $_POST['user'], $_POST['pass'], $_POST['name'],
-				$client_charset);
-			$logslib->add_log('install', 'database credentials updated with hostname=' . $_POST['host'] . '; dbname='
-				. $_POST['name'] .'; dbuser=' . $_POST['user']);
+
+			if($_POST['user'] === 'root'
+				&& !empty($_POST['create_new_user'])
+				&& !empty($_POST['new_user'])
+				&& !empty($_POST['new_pass'])) {
+
+				createTikiDBUser($dbTiki, $_POST['new_user'], $_POST['new_pass'], $_POST['name']);
+				write_local_php($_POST['db'], $_POST['host'], $_POST['new_user'], $_POST['new_pass'], $_POST['name'], $client_charset);
+			} else {
+				write_local_php($_POST['db'], $_POST['host'], $_POST['user'], $_POST['pass'], $_POST['name'], $client_charset);
+			}
+
+			// TODO: it is not possible to add_log if we don't have tables created
+			//$logslib->add_log('install', 'database credentials updated with hostname=' . $_POST['host'] . '; dbname='
+			//	. $_POST['name'] .'; dbuser=' . $_POST['user']);
+
 			include $local;
 			// In case of replication, ignore it during installer.
 			unset($shadow_dbs, $shadow_user, $shadow_pass, $shadow_host);
