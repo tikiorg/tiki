@@ -261,7 +261,7 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 
 						{foreach from=$items[user].field_values item=f}
 							{if in_array($f.fieldId, $popupfields)}
-								{capture name=popupl}{trackeroutput field=$f item=$items[user] url=$txturl|replacei:'#itemId':$items[user].itemId editable=in_array($f.fieldId, $editableFields)}{/capture}
+								{capture name=popupl}{trackeroutput field=$f item=$items[user] url=$txturl|replacei:'#itemId':$items[user].itemId editable=in_array($f.fieldId, $items[user].editableFields)}{/capture}
 								{if !empty($smarty.capture.popupl)}
 									<tr>{if count($popupfields) > 1}<th class="{cycle advance=false}">{$f.name}</th>{/if}<td>{$smarty.capture.popupl}</td></tr>
 								{/if}
@@ -304,11 +304,11 @@ the section loop so that the vars are not replaced by nested pretty tracker exec
 			{if $rowurl}<a href="{$rowurl|replacei:'#itemId':$items[user].itemId}" {$tdastyle}>{/if}
 					{if $field.isHidden eq 'c' and $fieldr and $perms.tiki_p_admin_trackers ne 'y'}
 					{elseif isset($perms)}
-						{trackeroutput item=$items[user] field=$field list_mode=$list_mode showlinks=$showlinks showpopup=$showpopup popupfields=$popupfields url=$txturl editable=in_array($field.fieldId, $editableFields)
+						{trackeroutput item=$items[user] field=$field list_mode=$list_mode showlinks=$showlinks showpopup=$showpopup popupfields=$popupfields url=$txturl editable=in_array($field.fieldId, $items[user].editableFields)
 								tiki_p_view_trackers=$perms.tiki_p_view_trackers tiki_p_modify_tracker_items=$perms.tiki_p_modify_tracker_items tiki_p_modify_tracker_items_pending=$perms.tiki_p_modify_tracker_items_pending
 								tiki_p_modify_tracker_items_closed=$perms.tiki_p_modify_tracker_items_closed tiki_p_comment_tracker_items=$perms.tiki_p_comment_tracker_items reloff=$itemoff}
 					{else}
-						{trackeroutput item=$items[user] field=$field list_mode=$list_mode reloff=$itemoff showlinks=$showlinks showpopup=$showpopup popupfields=$popupfields url=$txturl editable=in_array($field.fieldId, $editableFields)}
+						{trackeroutput item=$items[user] field=$field list_mode=$list_mode reloff=$itemoff showlinks=$showlinks showpopup=$showpopup popupfields=$popupfields url=$txturl editable=in_array($field.fieldId, $items[user].editableFields)}
 					{/if}
 			{if $rowurl}&nbsp;</a>{/if}
 		</td>

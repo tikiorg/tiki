@@ -1813,7 +1813,6 @@ function wikiplugin_trackerlist($data, $params)
 		$smarty->assign_by_ref('exactvalue', $exactvalue);
 		$smarty->assign_by_ref('listfields', $listfields);
 		$smarty->assign_by_ref('popupfields', $popupfields);
-		$smarty->assign('editableFields', $editable);
 		if (!empty($filterfield)) {
 			$urlquery['filterfield'] =  is_array($filtervalue) ? implode(':', $filterfield) : $filterfield;
 			if (!is_array($filtervalue)) {
@@ -2131,6 +2130,21 @@ function wikiplugin_trackerlist($data, $params)
 			} else {
 				$smarty->assign('computedFields', '');
 			}
+
+			if (!empty($items['data'])) {
+				foreach ($items['data'] as &$item) {
+					$item['editableFields'] = array();
+					if (!empty($editable)) {
+						$itemObject = Tracker_Item::fromInfo($item);
+						foreach ($editable as $editableFieldId) {
+							if ($itemObject->canModifyField($editableFieldId)) {
+								$item['editableFields'][] = $editableFieldId;
+							}
+						}
+					}
+				}
+			}
+
 			if (!empty($calendarfielddate)) {
 				foreach ($items['data'] as $i => $item) {
 					if (!empty($wiki)) {
