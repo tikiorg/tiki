@@ -149,7 +149,7 @@ function wikiplugin_tracker_info()
 				'description' => tr('To send an email once the tracker item has been created. Format: %0from', '<code>')
 						.'|'.tra('to').'|'.tr('template%0', '</code> ') . tr('For %0from%1 and %0to%1, use an email address
 						(separate multiple addresses with a comma), a username, a fieldId of a field containing either an email address or a username,
-						or "createdBy" or "lastModifBy" for the item creator or modifier.
+						a fieldId of a UserSelector or GroupSelector field, or "createdBy" or "lastModifBy" for the item creator or modifier.
 						When username is being used, the email will be sent to the email address of the user on file.
 						When sending to several emails using different template, provide the template name for the message body for each email;
 						I.e., the first template will be used for the first to, the second template if exists will be used
@@ -1210,7 +1210,7 @@ function wikiplugin_tracker($data, $params)
 					$emailOptions = preg_split("#\|#", $email);
 
 					// from:
-					$emailOptions[0] = wikiplugin_tracker_process_email_recipient($emailOptions[0], $flds['data'], $item, $trackerId, $rid);
+					$emailOptions[0] = reset(wikiplugin_tracker_process_email_recipients($emailOptions[0], $flds['data'], $item, $trackerId, $rid));
 
 					if (empty($emailOptions[0])) { // from is empty
 						$emailOptions[0] = $prefs['sender_email'];
@@ -1221,11 +1221,15 @@ function wikiplugin_tracker($data, $params)
 						$emailOptions[1][0] = $prefs['sender_email'];
 					} else {
 						// multiple recipients can be separated by a comma
-						$emailOptions[1] = explode(',', $emailOptions[1]);
-
-						foreach ($emailOptions[1] as & $recipient) {
-							$recipient = wikiplugin_tracker_process_email_recipient(trim($recipient), $flds['data'], $item, $trackerId, $rid);
+						$recipients = explode(',', $emailOptions[1]);
+						$emailOptions[1] = array();
+						foreach ($recipients as $recipient) {
+							$parsed = wikiplugin_tracker_process_email_recipients(trim($recipient), $flds['data'], $item, $trackerId, $rid);
+							foreach ($parsed as $recipient) {
+								$emailOptions[1][] = $recipient;
+							}
 						}
+						$emailOptions[1] = array_unique($emailOptions[1]);
 					}
 
 					include_once('lib/webmail/tikimaillib.php');
@@ -2017,17 +2021,17 @@ function wikiplugin_tracker_render_value($f, $item)
 }
 
 /**
- * Convert an email parameter componenet into a real email address
+ * Convert an email parameter componenet into a real email address or addresses.
  *
- * @param string $emailOrField   int for a fieldId, string for a username or email already
+ * @param string $emailOrField   int for a fieldId of UserSelector, GroupSelector, ItemsList, Email field, string for a username or email already
  * @param array $fields          tracker fields
  * @param array $item            item field values
  * @param int $trackerId
  * @param int $itemId
  *
- * @return bool|mixed
+ * @return array of emails
  */
-function wikiplugin_tracker_process_email_recipient($emailOrField, $fields, $item, $trackerId, $itemId)
+function wikiplugin_tracker_process_email_recipients($emailOrField, $fields, $item, $trackerId, $itemId)
 {
 	$output = $emailOrField;
 
@@ -2039,27 +2043,47 @@ function wikiplugin_tracker_process_email_recipient($emailOrField, $fields, $ite
 				break;
 			}
 		}
-		if ($f && $f['type'] === 'l') {
-			$output = wikiplugin_tracker_render_value($f, $item);
-		} else {
-			$output = TikiLib::lib('trk')->get_item_value($trackerId, $itemId, $emailOrField);
+		if (empty($f)) {
+			$f['type'] = '';
 		}
-		$output = trim($output);
+		switch($f['type']) {
+			case 'l':
+				$output = wikiplugin_tracker_render_value($f, $item);
+				break;
+			case 'u':
+				$users = empty($item[$emailOrField]) ? '' : $item[$emailOrField];
+				$output = TikiLib::lib('trk')->parse_user_field($users);
+				break;
+			case 'g':
+				$group = empty($item[$emailOrField]) ? '' : $item[$emailOrField];
+				$output = TikiLib::lib('user')->get_members($group);
+				break;
+			default:
+				$output = TikiLib::lib('trk')->get_item_value($trackerId, $itemId, $emailOrField);
+		}
 	}
 
-	// string but not an email yet, therefore a username
-	if( !empty($output) && !strstr($output, '@') ) {
-		$email = TikiLib::lib('user')->get_user_email($output);
-		if ( $email ) {
-			$output = $email;
-		} else if ($output === 'createdBy' || $output === 'lastModifBy') {
-			$email = TikiLib::lib('user')->get_user_email($item[$output]);
-			if ($email) {
-				$output = $email;
+	if (!is_array($output)) {
+		$output = array($output);
+	}
+
+	foreach ($output as &$single) {
+		$single = trim($single);
+		// string but not an email yet, therefore a username
+		if( !empty($single) && !strstr($single, '@') ) {
+			$email = TikiLib::lib('user')->get_user_email($single);
+			if ( $email ) {
+				$single = $email;
+			} else if ($single === 'createdBy' || $single === 'lastModifBy') {
+				$email = TikiLib::lib('user')->get_user_email($item[$single]);
+				if ($email) {
+					$single = $email;
+				}
 			}
 		}
 	}
-	return $output;
+
+	return array_filter($output);
 }
 
 function wikiplugin_tracker_save($trackerSavedState)
