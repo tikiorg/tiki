@@ -79,7 +79,7 @@ if (isset($_REQUEST["newgroup"])) {
 	} else {
 		$_REQUEST['userChoice'] = (isset($_REQUEST['userChoice']) && $_REQUEST['userChoice'] == 'on') ? 'y' : '';
 		if (empty($_REQUEST['expireAfter'])) $_REQUEST['expireAfter'] = 0;
-		$userlib->add_group($_REQUEST['name'], $_REQUEST['desc'], $ag_home, $ag_utracker, $ag_gtracker, '', $_REQUEST['userChoice'], $ag_defcat, $ag_theme, 0, 0, 'n', $_REQUEST['expireAfter'], $_REQUEST['emailPattern'], $_REQUEST['anniversary'], $_REQUEST['prorateInterval']);
+		$userlib->add_group($_REQUEST['name'], $_REQUEST['desc'], $ag_home, $ag_utracker, $ag_gtracker, $ag_rufields, $_REQUEST['userChoice'], $ag_defcat, $ag_theme, $ag_ufield, $ag_gfield, 'n', $_REQUEST['expireAfter'], $_REQUEST['emailPattern'], $_REQUEST['anniversary'], $_REQUEST['prorateInterval']);
 		if (isset($_REQUEST["include_groups"])) {
 			foreach ($_REQUEST["include_groups"] as $include) {
 				if ($_REQUEST["name"] != $include) {
