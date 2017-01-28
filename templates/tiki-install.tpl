@@ -858,7 +858,7 @@
 					{/if}
 					{if isset($smarty.post.update)}
 						<h3>{icon name='information'} {tr}Upgrade{/tr}</h3>
-						<p>{tr}If this is an upgrade, clean the Tiki caches manually (the <strong>templates_c</strong> directory) or by using the <strong>Admin &gt; System</strong> option from the Admin menu.{/tr}</p>
+						<p>{tr}If this is an upgrade, clean the Tiki caches manually (the <strong>temp/templates_c</strong> directory) or by using the <strong>Admin &gt; System</strong> option from the Admin menu.{/tr}</p>
 					{/if}
 					{if $tikidb_is20}
 						<form method="post" action="tiki-install.php" style="float: left">

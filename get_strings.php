@@ -58,7 +58,7 @@ $excludeDirs = array(
 	'dump' , 'img', 'lang',
 	 'vendor', 'vendor_extra',
 	 'lib/test',	'temp',
-	'temp/cache',	'templates_c',
+	'temp/cache',	'temp/templates_c',
 );
 
 $includeFiles = array(

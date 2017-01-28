@@ -91,7 +91,7 @@ class TikiSetup extends TikiInit
 				'img/wiki_up',
 				'modules/cache',
 				'temp',
-				'templates_c',
+				'temp/templates_c',
 				# 'var',
 				# 'var/log',
 				# 'var/log/irc',

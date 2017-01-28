@@ -40,7 +40,7 @@ function md5_check_dir($dir, &$result) // save all files in $result
 	while (false !== ($e = $d->read())) {
 		$entry = $dir . '/' . $e;
 		if (is_dir($entry)) {
-			if ($e != '..' && $e != '.' && $e != 'CVS' && $entry != './templates_c') { // do not descend and no CVS files
+			if ($e != '..' && $e != '.' && $e != 'CVS' && $entry != './temp/templates_c') { // do not descend and no CVS files
 				md5_check_dir($entry, $result);
 			}
 		} else {

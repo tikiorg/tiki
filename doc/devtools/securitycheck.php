@@ -238,7 +238,7 @@ function analyse_file_path($path) // {{{
 
 	if (strpos($path, '/CVS/') !== false) {
 		$type = 'cvs';
-	} elseif (strpos($path, './templates_c/') === 0) {
+	} elseif (strpos($path, './temp/templates_c/') === 0) {
 		$type = 'cache';
 	} elseif (regex_match($path, $safePaths)) {
 		$type = 'safe';

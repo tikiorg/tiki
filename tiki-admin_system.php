@@ -52,7 +52,7 @@ $smarty->assign('lostGroups', $userlib->get_lost_groups());
 $languages = array();
 $langLib = TikiLib::lib('language');
 $languages = $langLib->list_languages();
-$templates_c = $cachelib->count_cache_files("templates_c/$tikidomain");
+$templates_c = $cachelib->count_cache_files("temp/templates_c/$tikidomain");
 $smarty->assign('templates_c', $templates_c);
 $tempcache = $cachelib->count_cache_files("temp/cache/$tikidomain");
 $smarty->assign('tempcache', $tempcache);
@@ -63,9 +63,9 @@ $smarty->assign('modules', $modules);
 $templates = array();
 foreach ($languages as $clang) {
 	if ($smarty->use_sub_dirs) { // was if (is_dir("templates_c/$tikidomain/")) ppl with tikidomains should test. redflo
-		$templates[$clang["value"]] = $cachelib->count_cache_files("templates_c/$tikidomain/" . $clang["value"] . "/");
+		$templates[$clang["value"]] = $cachelib->count_cache_files("temp/templates_c/$tikidomain/" . $clang["value"] . "/");
 	} else {
-		$templates[$clang["value"]] = $cachelib->count_cache_files("templates_c/", $tikidomain . $clang["value"]);
+		$templates[$clang["value"]] = $cachelib->count_cache_files("temp/templates_c/", $tikidomain . $clang["value"]);
 	}
 }
 $smarty->assign_by_ref('templates', $templates);

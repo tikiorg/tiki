@@ -50,7 +50,6 @@ Disallow: /modules/
 Disallow: /permissioncheck/
 Disallow: /popups/
 Disallow: /templates/
-Disallow: /templates_c/
 Disallow: /tests/
 Disallow: /vendor*
 Disallow: /about.php

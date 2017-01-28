@@ -88,7 +88,7 @@ class Cachelib
 			$dir_names = array($dir_names);
 		}
 		if (in_array('all', $dir_names)) {
-			$this->erase_dir_content("templates_c/$tikidomain");
+			$this->erase_dir_content("temp/templates_c/$tikidomain");
 			$this->erase_dir_content("temp/public/$tikidomain");
 			$this->erase_dir_content("temp/cache/$tikidomain");
 			$this->erase_dir_content("modules/cache/$tikidomain");
@@ -107,7 +107,7 @@ class Cachelib
 			}
 		}
 		if (in_array('templates_c', $dir_names)) {
-			$this->erase_dir_content("templates_c/$tikidomain");
+			$this->erase_dir_content("temp/templates_c/$tikidomain");
 			$this->flush_opcode_cache();
 			if (! $inInstaller) {
 				$logslib->add_log($log_section, 'erased templates_c content');

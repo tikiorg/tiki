@@ -286,7 +286,7 @@ function md5_check_dir($root, $dir, $version, &$queries)
 		$entry = $dir . '/' . $e;
 		if (is_dir($entry)) {
 			// do not descend and no CVS/Subversion files
-			if ($e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry != $root . '/templates_c' && $entry != $root . '/temp' && $entry != $root . '/vendor_custom') {
+			if ($e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry != $root . '/temp/templates_c' && $entry != $root . '/temp' && $entry != $root . '/vendor_custom') {
 				md5_check_dir($root, $entry, $version, $queries);
 			}
 		} else {
@@ -357,7 +357,7 @@ function get_files_list($dir, &$entries, $regexp_pattern)
 		$entry = $dir . '/' . $e;
 		if (is_dir($entry)) {
 			// do not descend and no CVS/Subversion files
-			if ($e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry != './templates_c' && $entry != './vendor') {
+			if ($e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry != './temp/templates_c' && $entry != './vendor') {
 				if (! get_files_list($entry, $entries, $regexp_pattern)) {
 					return false;
 				}

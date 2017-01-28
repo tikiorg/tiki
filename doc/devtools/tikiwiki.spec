@@ -48,7 +48,7 @@ find . -type d -exec chmod 755 {} \;
 find . -type f -exec chmod 644 {} \;
 chmod 664 robots.txt tiki-install.php
 # Remove unneeded files
-rm -rf templates_c/*
+rm -rf temp/templates_c/*
 rm -f modules/cache/*.cache
 find . -name "CVS" -type d -print|xargs rm -rf
 find . -name ".cvsignore" -exec rm -f {} \;
@@ -58,7 +58,7 @@ find . -name ".cvsignore" -exec rm -f {} \;
 
 %preun
 # Remove unneeded files
-rm -rf /var/www/html/tiki-%{version}/templates_c/*
+rm -rf /var/www/html/tiki-%{version}/temp/templates_c/*
 rm -f /var/www/html/tiki-%{version}/modules/cache/*.cache
 
 %files

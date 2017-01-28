@@ -16,7 +16,7 @@
 		<th></th>
 	</tr>
 	<tr>
-		<td><b>./templates_c/</b></td>
+		<td><b>./temp/templates_c/</b></td>
 		<td>({$templates_c.cant} {tr}Files{/tr} / {$templates_c.total|kbsize|default:'0 Kb'})</td>
 		<td><a href="tiki-admin_system.php?do=templates_c" class="tips" title=":{tr}Empty{/tr}">{icon name="trash"}</a></td>
 	</tr>

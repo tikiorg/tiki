@@ -237,11 +237,11 @@
 		<br>
 		{tr}World writable files or directories{/tr}
 		<br>
-		{tr}In some environments where you cannot get root or have no other possibilities, it is unavoidable to let your webserver write to some tiki directories like "templates_c" or "temp". In any other case this is not needed. A bug in a script or other users could easily put malicious scripts on your webspace or upload illegal content.{/tr}
+		{tr}In some environments where you cannot get root or have no other possibilities, it is unavoidable to let your webserver write to some tiki directories like or "temp". In any other case this is not needed. A bug in a script or other users could easily put malicious scripts on your webspace or upload illegal content.{/tr}
 		<br>
 		{tr}Files or directories the Webserver can write to{/tr}
 		<br>
-		{tr}The risk is almost the same in shared hosting environments without proper privilege separation (suexec wrappers). The webserver has to be able to write to some directories like "templates_c" or "temp". Review the tiki install guide for further information.{/tr}
+		{tr}The risk is almost the same in shared hosting environments without proper privilege separation (suexec wrappers). The webserver has to be able to write to some directories like "temp". Review the tiki install guide for further information.{/tr}
 		<br>
 		{tr}Strange Inodes (not file, not link, not directory){/tr}
 		<br>

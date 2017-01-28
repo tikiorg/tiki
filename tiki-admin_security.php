@@ -248,7 +248,7 @@ function md5_check_dir($dir, &$result)
 	while (false !== ($e = $d->read())) {
 		$entry = $dir . '/' . $e;
 		if (is_dir($entry)) {
-			if ($e != '..' && $e != '.' && $entry != './templates_c' && $entry != './temp') { // do not descend and no checking of templates_c since the file based md5 database would grow to big
+			if ($e != '..' && $e != '.' && $entry != './temp/templates_c' && $entry != './temp') { // do not descend and no checking of templates_c since the file based md5 database would grow to big
 				md5_check_dir($entry, $result);
 			}
 		} else if (preg_match('/\.(sql|css|tpl|js|php)$/', $e)) {

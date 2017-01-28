@@ -242,9 +242,8 @@ function create_dirs($domain='')
 		'modules/cache',
 		'temp',
 		'temp/cache',
-		'templates_c',
-		'templates',
-		'whelp');
+		'temp/templates_c',
+		'templates');
 
 	$ret = "";
 	foreach ($dirs as $dir) {
