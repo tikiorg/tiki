@@ -1719,7 +1719,7 @@ if ( \$('#$id') ) {
 		// This is not HTML valid and avoids using <x> in a wiki text,
 		//   but hide '<x>' text inside some words like 'style' that are considered as dangerous by the sanitizer.
 		$data = str_replace(array( '&lt;x&gt;', '~np~', '~/np~' ), array( '<x>', '~np~', '~/np~' ), $data);
-		
+
 		$data = typography($data, $this->option['language']);
 
 		// Process pos_handlers here
@@ -3434,7 +3434,7 @@ if ( \$('#$id') ) {
 					// i-)
 					'/(\s|^)i-\)/' => "$1<img alt=\"(".tra('light bulb').")\" title=\"".tra('idea !')."\" src=\"img/smiles/icon_idea.png\" />",
 					// LOL
-					'/(\s|^)LOL(\s|$)/' => "$1<img alt=\"(".tra('LOL').")\" title=\"".tra('laughing out loud !')."\" src=\"img/smiles/icon_lol.png\" />$2",
+					'/(\s|^)LOL(\s|$)/' => "$1<img alt=\"(".tra('LOL').")\" title=\"".tra('laughing out loud !')."\" src=\"img/smiles/icon_lol.png\"  />$2",
 					// >X( >X[ >:[ >X-( >X-[ >:-[
 					'/(\s|^)\>[:X]-?\(/' => "$1<img alt=\">:[\" title=\"".tra('mad')."\" src=\"img/smiles/icon_mad.png\" />",
 					// =D =-D

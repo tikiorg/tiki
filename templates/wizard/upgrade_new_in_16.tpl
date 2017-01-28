@@ -44,6 +44,7 @@
 			<legend>{tr}Improved and extended features{/tr}</legend>
 				{preference name=feature_trackers}
 				{preference name=wikiplugin_iframe}
+				{preference name=wikiplugin_list}
 				{preference name=wikiplugin_listexecute}
 				{preference name=wikiplugin_toc}
 		</fieldset>
@@ -51,7 +52,15 @@
 			<legend>{tr}Removed features{/tr}</legend>
 			{tr}None{/tr}
 		</fieldset>
-
+		<fieldset class="table clearfix featurelist">
+			<legend>{tr}New Profiles{/tr}</legend>
+			<ul>
+				<li>{tr}Bug_Tracker_16{/tr}</li>
+				<li>{tr}Execute on list{/tr}</li>
+				<li>{tr}GeoCMS_Maps{/tr}</li>
+				<li>{tr}Work_Custom_Pricing{/tr}</li>
+			</ul>
+		</fieldset>
 		<i>{tr}See the full list of changes{/tr}.</i>
 		<a href="https://doc.tiki.org/Tiki16" target="tikihelp" class="tikihelp" title="{tr}Tiki16:{/tr}
 			{tr}Click to read more{/tr}
