@@ -382,7 +382,7 @@
 					<div class="col-md-9">
 						<input type="text" class="form-control" name="registrationUsersFieldIds" value="{$registrationUsersFieldIds|escape}">
 						<div class="help-block">
-							<p>{tr}If either a group information tracker or user registration tracker has been selected above, enter colon-separated fied ID numbers for the tracker fields in the above tracker to include on the registration form for a new user to complete.{/tr}</p>
+							<p>{tr}If either a group information tracker or user registration tracker has been selected above, enter colon-separated field ID numbers for the tracker fields in the above tracker to include on the registration form for a new user to complete.{/tr}</p>
 						</div>
 					</div>
 				</div>
