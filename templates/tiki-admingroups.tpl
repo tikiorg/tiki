@@ -144,11 +144,11 @@
 	{/tab}
 
 	{if $groupname}
-        {assign var=tabaddeditgroup_admgrp value="{tr}Edit group{/tr}"}
-        {$gname = "<i>{$groupname|escape}</i>"}
+		{assign var=tabaddeditgroup_admgrp value="{tr}Edit group{/tr}"}
+		{$gname = "<i>{$groupname|escape}</i>"}
 	{else}
 		{assign var=tabaddeditgroup_admgrp value="{tr}Create group{/tr}"}
-        {$gname = ""}
+		{$gname = ""}
 	{/if}
 
 	{tab name="{$tabaddeditgroup_admgrp} {$gname}"}
@@ -265,25 +265,31 @@
 					<label for="groupstracker" class="control-label col-md-3">{tr}Group Information Tracker{/tr}</label>
 					<div class="col-md-9">
 						<select name="groupstracker" id="groupstracker" class="form-control">
-							<option value="0">{tr}Choose a group tracker ...{/tr}</option>
+							<option value="0">{tr}choose a group tracker ...{/tr}</option>
 							{foreach key=tid item=tit from=$trackers}
 								<option value="{$tid}"{if $tid eq $grouptrackerid} {assign var="ggr" value="$tit"}selected="selected"{/if}>{$tit|escape}</option>
 							{/foreach}
 						</select>
-						{if $grouptrackerid}
-							<div>
-								<select name="groupfield" class="form-control">
-									<option value="0">{tr}choose a field ...{/tr}</option>
-									{section name=ix loop=$groupFields}
-										<option value="{$groupFields[ix].fieldId}"{if $groupFields[ix].fieldId eq $groupfieldid} selected="selected"{/if}>{$groupFields[ix].name|escape}</option>
-									{/section}
-								</select>
+						<div class="help-block">
+							{tr}Choose a group tracker which can be used to add user registration fields or allow group permissions on a tracker. The tracker must have one user selector field that is set to auto-assign.{/tr}
+						</div>
+						{if $grouptrackerid || $prefs.javascript_enabled eq 'y'}
+						<div id="groupfielddiv"{if empty($grouptrackerid) and $prefs.javascript_enabled eq 'y' and $prefs.jquery_ui_chosen neq 'y'} style="display: none;"{/if}>
+							<select name="groupfield" class="form-control">
+								<option value="0">{tr}choose a field ...{/tr}</option>
+								{section name=ix loop=$groupFields}
+									<option value="{$groupFields[ix].fieldId}"{if $groupFields[ix].fieldId eq $groupfieldid} selected="selected"{/if}>{$groupFields[ix].name|escape}</option>
+								{/section}
+							</select>
+							<div class="help-block">
+								{tr}Select the user selector field from the above tracker.{/tr}
 							</div>
+						</div>
 						{/if}
 						{if $grouptrackerid}
 							{button href="tiki-admin_tracker_fields.php?trackerId=$grouptrackerid" _text="{tr}Admin{/tr} $ggr"}
 						{else}
-							{button href="tiki-list_trackers.php" _text="{tr}Admin{/tr} $ggr"}
+							{button href="tiki-list_trackers.php" _text="{tr}Go to trackers list{/tr} $ggr"}
 						{/if}
 					</div>
 				</div>
@@ -292,7 +298,6 @@
 				<div class="form-group">
 					<label for="userstracker" class="control-label col-md-3">{tr}User Registration Tracker{/tr}</label>
 					<div class="col-md-9">
-						<label>{tr}Select tracker{/tr}</label>
 						<select name="userstracker" id="userstracker" class="form-control">
 							<option value="0">{tr}choose a user tracker ...{/tr}</option>
 							{foreach key=tid item=tit from=$trackers}
@@ -300,7 +305,7 @@
 							{/foreach}
 						</select>
 						<div class="help-block">
-							{tr}Choose a user tracker to provide fields for a new user to complete upon registration. Registration trackers need to be enabled in the log in control panel and the tracker must have one user selector field that is set to auto-assign.{/tr}
+							{tr}Choose a user tracker to provide fields for a new user to complete upon registration. The tracker must have one user selector field that is set to auto-assign.{/tr}
 						</div>
 						{if (isset($userstrackerid) or $prefs.javascript_enabled eq 'y')}
 							<div id="usersfielddiv"{if empty($userstrackerid) and $prefs.javascript_enabled eq 'y' and $prefs.jquery_ui_chosen neq 'y'} style="display: none;"{/if}>
@@ -318,37 +323,40 @@
 								<div class="help-block">
 									{tr}Select the user selector field from the above tracker to link a tracker item to the user upon registration.{/tr}
 								</div>
-								<label for="registrationUserFieldIds">{tr}Specify registration fields{/tr}</label>
-								<input type="text" class="form-control" name="registrationUsersFieldIds" value="{$registrationUsersFieldIds|escape}">
-								<div class="help-block">
-									<p>{tr}Enter colon-separated fied ID numbers for the tracker fields in the above tracker to include on the registration form for a new user to complete.{/tr}</p>
-								</div>
 							</div>
 {jq}
-	$("#userstracker").change(function () {
-		$.getJSON($.service('tracker', 'list_fields'), {trackerId: $(this).val()}, function (data) {
-			if (data && data.fields) {
-				var $usersfield = $('select[name=usersfield]');
-				if (data.fields.length > 0) {
-					$usersfield.empty().append('<option value="0">{tr}choose a field ...{/tr}</option>');
-					var sel = '';
-					$(data.fields).each(function () {
-						if (this.type === 'u' && this.options_array[0] == 1) {
-							sel = ' selected="selected"';
-						} else {
-							sel = '';
-						}
-						$usersfield.append('<option value="' + this.fieldId + '"' + sel + '>' + this.fieldId + ' - ' + this.name + '</option>');
-					});
-				} else {
-					$usersfield.empty().append('<option value="0">{tr}No fields in this tracker{/tr}</option>');
+	$("#userstracker, #groupstracker").change(function () {
+		var $element = this.id,
+			$fields = $element == 'userstracker' ? $('select[name=usersfield]') : $('select[name=groupfield]'),
+			$showid = $element == 'userstracker' ? '#usersfielddiv' : '#groupfielddiv';
+		if ($(this).val() > 0) {
+			$.getJSON($.service('tracker', 'list_fields'), {trackerId: $(this).val()}, function (data) {
+				if (data && data.fields) {
+					if (data.fields.length > 0) {
+						$fields.empty().append('<option value="0">{tr}choose a field ...{/tr}</option>');
+						var sel = '';
+						$(data.fields).each(function () {
+							if (this.type === 'u' && this.options_array[0] == 1) {
+								sel = ' selected="selected"';
+							} else {
+								sel = '';
+							}
+							$fields.append('<option value="' + this.fieldId + '"' + sel + '>' + this.fieldId + ' - ' + this.name + '</option>');
+						});
+					} else {
+						$fields.empty().append('<option value="0">{tr}No fields in this tracker{/tr}</option>');
+					}
+					$($showid).show();
+					$('#registerfields').show();
+					if (jqueryTiki.chosen) {
+						$fields.trigger("chosen:updated");
+					}
 				}
-				$("#usersfielddiv").show();
-				if (jqueryTiki.chosen) {
-					$usersfield.trigger("chosen:updated");
-				}
-			}
-		});
+			});
+		} else {
+			$fields.empty();
+			$($showid).hide();
+		}
 	});
 {/jq}
 						{/if}
@@ -367,6 +375,17 @@
 						</div>
 					</div>
 				{/if}
+			{/if}
+			{if $prefs.userTracker == 'y' || $prefs.useGroupTheme == 'y'}
+				<div id="registerfields" class="form-group"{if empty($userstrackerid) && empty($grouptrackerid) &&  $prefs.javascript_enabled == 'y' && $prefs.jquery_ui_chosen != 'y'} style="display: none;"{/if}>
+					<label for="registrationUserFieldIds" class="control-label col-md-3">{tr}Group or User Tracker Registration Fields{/tr}</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control" name="registrationUsersFieldIds" value="{$registrationUsersFieldIds|escape}">
+						<div class="help-block">
+							<p>{tr}If either a group information tracker or user registration tracker has been selected above, enter colon-separated fied ID numbers for the tracker fields in the above tracker to include on the registration form for a new user to complete.{/tr}</p>
+						</div>
+					</div>
+				</div>
 			{/if}
 			{if $groupname neq 'Anonymous' and $groupname neq 'Registered' and $groupname neq 'Admins'}
 				<div class="form-group">
