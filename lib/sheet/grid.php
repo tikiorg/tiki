@@ -1079,7 +1079,7 @@ class TikiSheetTrackerHandler extends TikiSheetDataHandler
 
 				$sheet->setValue( $i == 0 ? $key : $field );
 
-				$sheet->setSize( 1, 1 );
+				$sheet->setColSpan( 1, 1 );
 				$j++;
 			}
 			$i++;
@@ -1156,7 +1156,7 @@ class TikiSheetSimpleArrayHandler extends TikiSheetDataHandler
 
 				$sheet->setValue( $i == 0 ? $key : $col );
 
-				$sheet->setSize( 1, 1 );
+				$sheet->setColSpan( 1, 1 );
 				$j++;
 			}
 			$i++;
@@ -1231,7 +1231,7 @@ class TikiSheetCSVExcelHandler extends TikiSheetDataHandler
 					}
 				}
 
-				$sheet->setSize( 1, 1 );
+				$sheet->setColSpan( 1, 1 );
 			}
 		}
 
@@ -1605,7 +1605,7 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
                                 }
 							}
 						}
-						$sheet->setSize( $width, $height );
+						$sheet->setColSpan( $width, $height );
 					}
 			}
 
