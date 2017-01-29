@@ -22,52 +22,80 @@ class TikiFilter
 
 		switch( $filter )
 		{
-		case 'alpha':
-			return new TikiFilter_Alpha;    // Removes all but alphabetic characters.
-        case 'word':
-            return new TikiFilter_Word;     // A single word of alphabetic characters (im pretty sure) ?I18n?
-		case 'alnum':
-			return new TikiFilter_Alnum;    // Only alphabetic characters and digits. All other characters are suppressed. I18n support
-		case 'digits':
-			return new Zend\Filter\Digits;  // Removes everything except for digits eg. '12345 to 67890' returns 1234567890
-		case 'int':
-			return new Zend\Filter\ToInt;   // Allows you to transform a sclar value which contains into an integer. eg. '-4 is less than 0' returns -4
-		case 'isodate':
-			return new TikiFilter_IsoDate;
-		case 'isodatetime':
-			return new TikiFilter_IsoDate('Y-m-d H:i:s');
-		case 'username':
-		case 'groupname':
-		case 'pagename':
-		case 'topicname':
-		case 'themename':
-		case 'email':
-		case 'url':
-		case 'text':
-		case 'date':
-		case 'time':
-		case 'datetime':
-			// Use striptags
-		case 'striptags':
-			return new Zend\Filter\StripTags;   // Strips XML and HTML tags
-		case 'xss':
-			return new TikiFilter_PreventXss;   // Leave everything except for potentially malicious HTML
-		case 'purifier':
-			return new TikiFilter_HtmlPurifier('temp/cache');  // Strips non-valid HTML and potentially malicious HTML.
-		case 'wikicontent':
-			return new TikiFilter_WikiContent;
-		case 'rawhtml_unsafe':
-		case 'none':
-			return new TikiFilter_RawUnsafe;
-		case 'lang':
-			return new Zend\Filter\PregReplace('/^.*([a-z]{2})(\-[a-z]{2}).*$/', '$1$2');
-		case 'imgsize':
-			return new Zend\Filter\PregReplace('/^.*(\d+)\s*(%?).*$/', '$1$2');
-		case 'attribute_type':
-			return new TikiFilter_AttributeType;
-		default:
-			trigger_error('Filter not found: ' . $filter, E_USER_WARNING);
-			return new TikiFilter_PreventXss;
+			case 'alpha':
+				// Removes all but alphabetic characters
+				return new TikiFilter_Alpha;
+			case 'alphaspace':
+				// Removes all but alphabetic characters and spaces
+				return new TikiFilter_Alpha(true);
+			case 'word':
+				// A single word of alphabetic characters (im pretty sure) ?I18n?
+				return new Zend\Filter\PregReplace('/\W+/', '');
+			case 'wordspace':
+				// Words and spaces only (no trimming)
+				return new Zend\Filter\PregReplace('/[^\p{L}\p{M}\p{N}_\p{Zs}]*/u', '');
+			case 'alnum':
+				// Only alphabetic characters and digits. All other characters are suppressed. I18n support
+				return new TikiFilter_Alnum;
+			case 'alnumspace':
+				// Only alphabetic characters, digits and spaces. All other characters are suppressed. I18n support
+				return new TikiFilter_Alnum(true);
+			case 'digits':
+				// Removes everything except digits eg. '12345 to 67890' returns 1234567890
+				return new Zend\Filter\Digits;
+			case 'digitscolons':
+				// Removes everything except digits and colons, e.g., for colon-separated ID numbers.
+				// Only characters matched, not patterns - eg 'x75::xx44:' will return '75::44:'
+				return new Zend\Filter\PregReplace('/[^\p{N}:]*/', '');
+			case 'digitscommas':
+				// Removes everything except digits and commas, e.g., for comma-separated ID numbers.
+				// Only characters matched, not patterns - eg 'x75,,xx44,' will return 'x75,,44,'
+				return new Zend\Filter\PregReplace('/[^\p{N},]*/', '');
+			case 'digitspipes':
+				// Removes everything except digits and pipes, e.g., for pipe-separated ID numbers.
+				// Only characters matched, not patterns - eg 'x75||xx44|' will return '75||44|'
+				return new Zend\Filter\PregReplace('/[^\p{N}\|]*/', '');
+			case 'int':
+				// Transforms a sclar phrase into an integer. eg. '-4 is less than 0' returns -4
+				return new Zend\Filter\ToInt;
+			case 'isodate':
+				return new TikiFilter_IsoDate;
+			case 'isodatetime':
+				return new TikiFilter_IsoDate('Y-m-d H:i:s');
+			case 'username':
+			case 'groupname':
+			case 'pagename':
+			case 'topicname':
+			case 'themename':
+			case 'email':
+			case 'url':
+			case 'text':
+			case 'date':
+			case 'time':
+			case 'datetime':
+			case 'striptags':
+				// Strips XML and HTML tags
+				return new Zend\Filter\StripTags;
+			case 'xss':
+				// Leave everything except for potentially malicious HTML
+				return new TikiFilter_PreventXss;
+			case 'purifier':
+				// Strips non-valid HTML and potentially malicious HTML
+				return new TikiFilter_HtmlPurifier('temp/cache');
+			case 'wikicontent':
+				return new TikiFilter_WikiContent;
+			case 'rawhtml_unsafe':
+			case 'none':
+				return new TikiFilter_RawUnsafe;
+			case 'lang':
+				return new Zend\Filter\PregReplace('/^.*([a-z]{2})(\-[a-z]{2}).*$/', '$1$2');
+			case 'imgsize':
+				return new Zend\Filter\PregReplace('/^.*(\d+)\s*(%?).*$/', '$1$2');
+			case 'attribute_type':
+				return new TikiFilter_AttributeType;
+			default:
+				trigger_error('Filter not found: ' . $filter, E_USER_WARNING);
+				return new TikiFilter_PreventXss;
 		}
 	}
 }

@@ -9,13 +9,16 @@ class TikiFilter_Alnum extends Zend\Filter\PregReplace
 {
 	private $filter;
 
-	function __construct()
+	function __construct($space = false)
 	{
+		$space = is_bool($space) ? $space : false;
+		$regexSpace = $space === true ? '\p{Zs}' : '';
 		if (!extension_loaded('intl')) {
 			$this->filter = null;
-			parent::__construct('/[^\p{L}\p{N}]/u', '');    // a stright copy from \Zend\I18n\Filter\Alnum::filter
+			// a stright copy from \Zend\I18n\Filter\Alnum::filter
+			parent::__construct('/[^\p{L}\p{N}' . $regexSpace . ']/u', '');
 		} else {
-			$this->filter = new \Zend\I18n\Filter\Alnum;
+			$this->filter = new \Zend\I18n\Filter\Alnum($space);
 		}
 	}
 

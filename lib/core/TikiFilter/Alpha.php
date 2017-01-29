@@ -9,13 +9,16 @@ class TikiFilter_Alpha extends Zend\Filter\PregReplace
 {
 	private $filter;
 
-	function __construct()
+	function __construct($space = false)
 	{
+		$space = is_bool($space) ? $space : false;
+		$regexSpace = $space === true ? '\p{Zs}' : '';
 		if (!extension_loaded('intl')) {
 			$this->filter = null;
-			parent::__construct('/[^\p{L}]/u', '');    // a stright copy from \Zend\I18n\Filter\Alpha::filter
+			// a stright copy from \Zend\I18n\Filter\Alpha::filter
+			parent::__construct('/[^\p{L}' . $regexSpace . ']/u', '');
 		} else {
-			$this->filter = new \Zend\I18n\Filter\Alpha;
+			$this->filter = new \Zend\I18n\Filter\Alpha($space);
 		}
 	}
 
