@@ -96,7 +96,8 @@ class Services_Utilities
 	{
 		//no javascript
 		if (!empty($referer)) {
-			TikiLib::lib('access')->redirect($referer);
+			$referer = new JitFilter(['referer' => $referer]);
+			TikiLib::lib('access')->redirect($referer->referer->striptags());
 		//javascript
 		} else {
 			//the js confirmAction function in tiki-ajax_services.js uses this to close the modal and refresh the page

@@ -267,7 +267,7 @@
 						<select name="groupstracker" id="groupstracker" class="form-control">
 							<option value="0">{tr}choose a group tracker ...{/tr}</option>
 							{foreach key=tid item=tit from=$trackers}
-								<option value="{$tid}"{if $tid eq $grouptrackerid} {assign var="ggr" value="$tit"}selected="selected"{/if}>{$tit|escape}</option>
+								<option value="{$tid}"{if isset($grouptrackerid) && $tid eq $grouptrackerid} {assign var="ggr" value="$tit"}selected="selected"{/if}>{$tit|escape}</option>
 							{/foreach}
 						</select>
 						<div class="help-block">
@@ -461,18 +461,22 @@
 			<br><br>
 
 			{if $prefs.groupTracker eq 'y'}
-				{if $grouptrackerid and $groupitemid}
-					{tr}Group tracker item : {$groupitemid}{/tr}
+			<div class="form-group">
+				<div class="col-md-9 col-md-offset-3">
+					{if $grouptrackerid and $groupitemid}
+						{tr}Group tracker item : {$groupitemid}{/tr}
 						{button href="tiki-view_tracker_item.php?trackerId=$grouptrackerid&amp;itemId=$groupitemid&amp;show=mod" _text="{tr}Edit Item{/tr}"}
-				{elseif $grouptrackerid}
-					{if $groupfieldid}
-						{tr}Group tracker item not found{/tr}
-						{button href="tiki-view_tracker.php?trackerId=$grouptrackerid" _text="{tr}Create Item{/tr}"}
-					{else}
-						{tr}Choose a field ...{/tr}
+					{elseif $grouptrackerid}
+						{if $groupfieldid}
+							{tr}Group tracker item not found{/tr}
+							{button href="tiki-view_tracker.php?trackerId=$grouptrackerid" _text="{tr}Create Item{/tr}"}
+						{else}
+							{tr}Choose a field ...{/tr}
+						{/if}
 					{/if}
-				{/if}
-				<br><br>
+					<br><br>
+				</div>
+			</div>
 			{/if}
 		</form>
 	{/tab}
