@@ -7927,6 +7927,9 @@ table.tablesorter thead tr.tablesorter-filter-row {
   font-weight: normal;
   color: #333333;
 }
+.tiki .ui-widget-header a {
+  color: #4582ec;
+}
 .topbar,
 .cssmenu_horiz {
   font-family: Raleway, sans-serif;

@@ -7735,6 +7735,9 @@ table.tablesorter thead tr.tablesorter-filter-row {
   font-weight: normal;
   color: #fd0006;
 }
+.tiki .ui-widget-header a {
+  color: #fd0006;
+}
 .topbar {
   margin-bottom: 20px;
 }

@@ -8257,6 +8257,9 @@ table.tablesorter thead tr.tablesorter-filter-row {
   font-weight: normal;
   color: #ffffff;
 }
+.tiki .ui-widget-header a {
+  color: #ffffff;
+}
 .navbar-default,
 .topbar,
 .topbar .navbar-default .navbar-nav > li,

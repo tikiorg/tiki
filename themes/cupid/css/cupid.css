@@ -7851,3 +7851,6 @@ table.tablesorter thead tr.tablesorter-filter-row {
   font-weight: normal;
   color: #333333;
 }
+.tiki .ui-widget-header a {
+  color: #51acd0;
+}

@@ -2389,15 +2389,17 @@ ul.tree {
 .searchresults li {
   margin: 10px 0 0;
 }
-.tiki_sheet * {
-  line-height: normal;
-  font-size: 14px;
-}
-.tiki_sheet table td {
-  padding: 0;
-}
 .jSBarTopParent .jSBarController {
   height: 0 !important;
+}
+.tiki .jSParent .jS td {
+  font-size: 14px;
+}
+.tiki .jSMenu a {
+  padding: 4px 2px;
+}
+.tiki .jSParent .jS td {
+  border-color: #dddddd;
 }
 .plugin-sample {
   padding: 5px;

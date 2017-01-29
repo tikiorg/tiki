@@ -7735,6 +7735,9 @@ table.tablesorter thead tr.tablesorter-filter-row {
   font-weight: normal;
   color: #d8d8d8;
 }
+.tiki .ui-widget-header a {
+  color: #ababab;
+}
 body,
 body.fullscreen {
   background-image: url('../images/474747_5e5e5e_40.png');

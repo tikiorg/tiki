@@ -7950,6 +7950,9 @@ table.tablesorter thead tr.tablesorter-filter-row {
   font-weight: normal;
   color: #555555;
 }
+.tiki .ui-widget-header a {
+  color: #2fa4e7;
+}
 .topbar {
   background-image: -webkit-linear-gradient(#54b4eb, #2fa4e7 60%, #1d9ce5);
   background-image: -o-linear-gradient(#54b4eb, #2fa4e7 60%, #1d9ce5);

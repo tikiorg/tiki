@@ -7903,6 +7903,9 @@ table.tablesorter thead tr.tablesorter-filter-row {
   font-weight: normal;
   color: #ffffff;
 }
+.tiki .ui-widget-header a {
+  color: #eb6864;
+}
 .cssmenu_vert,
 .cssmenu_horiz {
   font-size: 18px;

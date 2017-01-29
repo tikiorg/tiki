@@ -7910,6 +7910,9 @@ table.tablesorter thead tr.tablesorter-filter-row {
   font-weight: normal;
   color: #444444;
 }
+.tiki .ui-widget-header a {
+  color: #e8d069;
+}
 .margin-bottom-xs {
   margin-bottom: 5px;
 }

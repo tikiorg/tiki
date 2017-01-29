@@ -1526,8 +1526,8 @@ samp {
 code {
   padding: 2px 4px;
   font-size: 90%;
-  color: #444444;
-  background-color: #f8f8f8;
+  color: #c7254e;
+  background-color: #f9f2f4;
   border-radius: 4px;
 }
 kbd {
@@ -7590,9 +7590,9 @@ a.admbox.off:active {
 }
 code,
 pre.codelisting {
-  color: #444444;
-  background: #f8f8f8;
-  border: 1px solid #dddddd;
+  color: #c7254e;
+  background: #f9f2f4;
+  border: 1px solid #ffffff;
   border-radius: 1px;
 }
 .edit-menu {
@@ -7631,19 +7631,6 @@ input[type="checkbox"].preffilter-toggle-round:checked + label:before {
   color: #ffffff;
   background-color: #284815;
   border-color: #1d340f;
-}
-.topbar,
-.topbar .navbar-default .navbar-nav > li,
-.topbar .nav > li {
-  background-color: #4b792e;
-  border-color: #3c6125;
-}
-h1::before {
-  content: "\2663";
-  margin-right: 10px;
-}
-body.fullscreen {
-  background: #538935;
 }
 /* black */
 /* white */
@@ -7824,4 +7811,25 @@ table.tablesorter thead tr.tablesorter-filter-row {
   background: #ffffff;
   font-weight: normal;
   color: #333333;
+}
+.tiki .ui-widget-header a {
+  color: #284815;
+}
+.topbar,
+.topbar .navbar-default .navbar-nav > li,
+.topbar .nav > li {
+  background-color: #4b792e;
+  border-color: #3c6125;
+}
+h1::before {
+  content: "\2663";
+  margin-right: 10px;
+}
+body.fullscreen {
+  background: #538935;
+}
+.tiki .ui-widget-content {
+  background: #538935;
+  color: #ffffff;
+  border: 1px solid #3a6624;
 }
