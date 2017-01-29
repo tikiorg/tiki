@@ -16,6 +16,7 @@ class Search_Action_EmailAction implements Search_Action_Action
 			'bcc+' => false,
 			'subject' => true,
 			'content' => true,
+			'pdf_page_attachment' => false,
 		);
 	}
 
@@ -61,8 +62,32 @@ class Search_Action_EmailAction implements Search_Action_Action
 			$bodyPart = new \Zend\Mime\Message();
 			$bodyMessage = new \Zend\Mime\Part($content);
 			$bodyMessage->type = \Zend\Mime\Mime::TYPE_HTML;
-			$bodyPart->setParts(array($bodyMessage));
 
+			$messageParts = array(
+				$bodyMessage
+			);
+
+			if (!empty($data->pdf_page_attachment->text())) {
+
+				$pageName = $data->pdf_page_attachment->text();
+				$fileName = $pageName . ".pdf";
+				$pdfContent = $this->getPDFAttachment($pageName);
+
+				if ($pdfContent) {
+
+					$attachment = new \Zend\Mime\Part($pdfContent);
+					$attachment->type = 'application/pdf';
+					$attachment->filename = $fileName;
+					$attachment->disposition = \Zend\Mime\Mime::DISPOSITION_ATTACHMENT;
+					$attachment->encoding = \Zend\Mime\Mime::ENCODING_BASE64;
+
+					$messageParts[] = $attachment;
+				} else {
+					return false;
+				}
+			}
+
+			$bodyPart->setParts($messageParts);
 			$mail->setBody($bodyPart);
 
 			tiki_send_email($mail);
@@ -104,6 +129,42 @@ class Search_Action_EmailAction implements Search_Action_Action
 			return $email_or_username;
 		} else {
 			return TikiLib::lib('user')->get_user_email($email_or_username);
+		}
+	}
+
+	private function getPDFAttachment($pageName) {
+
+		if (! Perms::get('wiki page', $pageName)->view) {
+			return array();
+		}
+
+		require_once ('tiki-setup.php');
+		$tikilib = TikiLib::lib('tiki');
+
+		require_once 'lib/pdflib.php';
+		$generator = new PdfGenerator;
+		if (!empty($generator->error)) {
+			Feedback::error($generator->error);
+			return false;
+		} else {
+			$params = array( 'page' => $pageName );
+
+			// If the page doesn't exist then display an error
+			if (!($info = $tikilib->get_page_info($pageName))) {
+				Feedback::error(sprintf(tra('Page %s cannot be found'), $pageName));
+				return false;
+			}
+
+			$pdata = $tikilib->parse_data($info["data"], array(
+				'page' => $pageName,
+				'is_html' => $info["is_html"],
+				'print' => 'y',
+				'namespace' => $info["namespace"]
+			));
+			//replacing bootstrap classes for print version.
+			$pdata = str_replace(array('col-sm','col-md','col-lg'),'col-xs',$pdata);
+
+			return $generator->getPdf('tiki-print.php', $params, $pdata);
 		}
 	}
 }
