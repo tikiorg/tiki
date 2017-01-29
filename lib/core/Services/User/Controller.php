@@ -411,10 +411,10 @@ class Services_User_Controller
 			if (count($items) > 0) {
 				if (count($items) === 1) {
 					$msg = tra('Ban the following user\'s IP?');
-					$help = tra('Clicking OK will redirect you to a form where this user\'s is preselected for IP banning.');
+					$help = tra('Clicking Ban will redirect you to a form where this user\'s is preselected for IP banning.');
 				} else {
 					$msg = tra('Ban the following users\' IPs?');
-					$help = tra('Clicking OK will redirect you to a form where these users\' are preselected for IP banning.');
+					$help = tra('Clicking Ban will redirect you to a form where these users\' are preselected for IP banning.');
 				}
 				return [
 					'FORWARD' => [
@@ -437,7 +437,9 @@ class Services_User_Controller
 		} elseif ($check === true && $_SERVER['REQUEST_METHOD'] === 'POST') {
 			$items = json_decode($input['items'], true);
 			$url = 'tiki-admin_banning.php?mass_ban_ip_users=' . implode('|', $items);
-			Services_Utilities::redirect($url);
+			$feedback = ['mes' => tr('See highlighted section in the form below for users you have selected for banning.'),];
+			Feedback::note($feedback, 'session');
+			return Services_Utilities::redirect($url);
 		}
 	}
 
