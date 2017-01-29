@@ -30,15 +30,15 @@
 	{else}
 		{$metatag_description = $post_info.title|cat:' - '|cat:$blog_data.title|escape}
 	{/if}
-	{* --- Article description --- *}
+{* --- Article description --- *}
 {elseif isset($section) and $section eq "cms"}
 	{if not empty($heading)}
 		{$metatag_description = $parsed_heading|strip_tags:false|truncate:200|escape}
 	{elseif not empty ($body)}
 		{$metatag_description = $parsed_body|strip_tags:false|truncate:200|escape}
 	{/if}
-{elseif $prefs.metatag_pagedesc eq 'y' and not empty($metatag_description)}
-	{$metatag_description = $metatag_description|escape}
+{elseif $prefs.metatag_pagedesc eq 'y' and not empty($description)}
+	{$metatag_description = $description|escape}
 {elseif not empty($prefs.metatag_description)}
 	{$metatag_description = $prefs.metatag_description|escape}
 {/if}
