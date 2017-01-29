@@ -36,6 +36,10 @@ class TikiDb_Adodb extends TikiDb
 		global $num_queries;
 		$num_queries++;
 
+		if ($values === null || is_array($values) && count($values) === 0){
+			$values = false;
+		}
+
 		$numrows = intval($numrows);
 		$offset = intval($offset);
 		if ( $query == null ) {
