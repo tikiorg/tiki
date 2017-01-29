@@ -63,54 +63,6 @@ if (isset($_REQUEST["home"])) $ag_home = $_REQUEST["home"];
 if (!empty($_REQUEST["defcat"])) $ag_defcat = $_REQUEST["defcat"];
 if (isset($_REQUEST["theme"])) $ag_theme = $_REQUEST["theme"];
 
-if (isset($_REQUEST['adduser'])) {
-	$access->check_authenticity(tra('Are you sure you want to add this user?'));
-	$user = $_REQUEST['user'];
-	$group = $_REQUEST['group'];
-	if ($user && $group) {
-		if ($userlib->assign_user_to_group($user, $group)) {
-			$logslib->add_log('admingroups', "added $user to $group");
-		}
-	}
-	$cookietab = "3";
-}
-
-// banning
-
-if (isset($_REQUEST['banuser'])) {
-	$auser = $_REQUEST['user'];
-	$agroup = $_REQUEST['group'];
-	$access->check_authenticity(tr('Are you sure you want to ban the user "%0" from the group "%1"?', $auser, $agroup));
-	$userlib->ban_user_from_group($auser, $agroup);
-	$logslib->add_log('admingroups', "banned $auser from $agroup");
-	$cookietab = "3";
-}
-
-if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'unbanuser') {
-	$auser = $_REQUEST['user'];
-	$agroup = $_REQUEST['group'];
-	$access->check_authenticity(tr('Are you sure you want to unban the user "%0" from the group "%1"?', $auser, $agroup));
-	$userlib->unban_user_from_group($auser, $agroup);
-	$logslib->add_log('admingroups', "unbanned $auser from $agroup");
-	$cookietab = "3";
-}
-
-// Unassign a list of members
-if (isset($_REQUEST['unassign_members']) && isset($_REQUEST['submit_mult_members']) && $_REQUEST['submit_mult_members'] == 'unassign' && isset($_REQUEST['group']) && !in_array($_REQUEST['group'], array('Registered', 'Anonymous'))) {
-	$access->check_authenticity(tra('Are you sure you want to unassign these users?'));
-	foreach ($_REQUEST['members'] as $m) {
-		$userlib->remove_user_from_group($userlib->get_user_login($m), $_REQUEST['group']);
-	}
-}
-if (!empty($_REQUEST['submit_mult']) && !empty($_REQUEST['checked'])) {
-	$access->check_authenticity(tra('Are you sure you want to delete these groups?'));
-	foreach ($_REQUEST['checked'] as $delete) {
-		if ($delete != 'Admins' && $delete != 'Anonymous' && $delete != 'Registered') {
-			$userlib->remove_group($delete);
-			$logslib->add_log('admingroups', 'removed group ' . $delete);
-		}
-	}
-}
 if (isset($_REQUEST['clean'])) {
 	$cachelib = TikiLib::lib('cache');
 	check_ticket('admin-groups');

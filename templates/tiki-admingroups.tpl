@@ -42,7 +42,7 @@
 			{$libeg = ''}
 			{$liend = ''}
 		{/if}
-		<form name="checkform" id="checkform" method="post">
+		<form name="checkform1" id="checkform" method="post">
 			<div class="{if $js === 'y'}table-responsive{/if}"> {* table-responsive class cuts off css drop-down menus *}
 				<table class="table table-striped table-hover">
 					<tr>
@@ -68,7 +68,7 @@
 							</td>
 							<td class="id">{$users[user].id|escape}</td>
 							<td class="text">
-								<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}" title="{tr}Edit{/tr}">{$users[user].groupName|escape}</a>
+								<a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}{if $prefs.feature_tabs ne 'y'}#tab2{/if}" title="{tr}Edit{/tr}">{$users[user].groupName|escape}</a>
 								<div class="text">{tr}{$users[user].groupDesc|escape|nl2br}{/tr}</div>
 							</td>
 							<td class="text">
@@ -93,7 +93,7 @@
 							<td class="action">
 								{capture name=group_actions}
 									{strip}
-										{$libeg}<a href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}">
+										{$libeg}<a href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}{if $prefs.feature_tabs ne 'y'}#tab2{/if}">
 											{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit{/tr}"}
 										</a>{$liend}
 										{$libeg}{permission_link mode=text group=$users[user].groupName count=$users[user].permcant}{$liend}
@@ -131,7 +131,7 @@
 					<div class="input-group-btn">
 						<button
 							type="submit"
-							form="checkform"
+							form="checkform1"
 							formaction="{bootstrap_modal controller=group}"
 							class="btn btn-primary confirm-submit"
 						>
@@ -273,12 +273,14 @@
 						<div class="help-block">
 							{tr}Choose a group tracker which can be used to add user registration fields or allow group permissions on a tracker. The tracker must have one user selector field that is set to auto-assign.{/tr}
 						</div>
-						{if $grouptrackerid || $prefs.javascript_enabled eq 'y'}
+						{if isset($grouptrackerid) || $prefs.javascript_enabled eq 'y'}
 						<div id="groupfielddiv"{if empty($grouptrackerid) and $prefs.javascript_enabled eq 'y' and $prefs.jquery_ui_chosen neq 'y'} style="display: none;"{/if}>
 							<select name="groupfield" class="form-control">
 								<option value="0">{tr}choose a field ...{/tr}</option>
 								{section name=ix loop=$groupFields}
-									<option value="{$groupFields[ix].fieldId}"{if $groupFields[ix].fieldId eq $groupfieldid} selected="selected"{/if}>{$groupFields[ix].name|escape}</option>
+									{if isset($groupFields)}
+										<option value="{$groupFields[ix].fieldId}"{if $groupFields[ix].fieldId eq $groupfieldid} selected="selected"{/if}>{$groupFields[ix].name|escape}</option>
+									{/if}
 								{/section}
 							</select>
 							<div class="help-block">
@@ -286,7 +288,7 @@
 							</div>
 						</div>
 						{/if}
-						{if $grouptrackerid}
+						{if isset($grouptrackerid)}
 							{button href="tiki-admin_tracker_fields.php?trackerId=$grouptrackerid" _text="{tr}Admin{/tr} $ggr"}
 						{else}
 							{button href="tiki-list_trackers.php" _text="{tr}Go to trackers list{/tr} $ggr"}
@@ -494,80 +496,109 @@
 		{/if}
 		{tab name="{tr _0="<i>{$groupname|escape}</i>"}Group %0 members{/tr}"}
 		{* ----------------------- tab with memberlist --------------------------------------- *}
-			<h2>{tr}Members{/tr} <span class="badge">{$membersCount}</span></h2>
 			{if $membersCount > 0}
-				<form name="checkform" method="post">
-					<input type="hidden" name="group" value="{$group|escape}">
-					<div class="table-responsive">
-						<table class="table">
-							<tr>
-								<th class="auto">{if $memberslist}{select_all checkbox_names='members[]'}{/if}</th>
-								<th>{self_link _sort_arg='sort_mode_member' _sort_field='login'}{tr}User{/tr}{/self_link}</th>
-								<th>{self_link _sort_arg='sort_mode_member' _sort_field='created'}{tr}Assign{/tr}{/self_link}</th>
-								<th>{self_link _sort_arg='sort_mode_member' _sort_field='expire'}{tr}Expire{/tr}{/self_link}</th>
-								<th></th>
-							</tr>
+				<div class="form-group">
+					<div class="col-sm-5">
+						<h2>{tr}Members{/tr} <span class="badge">{$membersCount}</span></h2>
+						<form id="checkform2" name="checkform" method="post">
+							<input type="hidden" name="group" value="{$group|escape}">
+							<div class="table-responsive">
+								<table class="table">
+									<tr>
+										<th class="auto">{if $memberslist}{select_all checkbox_names='members[]'}{/if}</th>
+										<th>{self_link _sort_arg='sort_mode_member' _sort_field='login'}{tr}User{/tr}{/self_link}</th>
+										<th>{self_link _sort_arg='sort_mode_member' _sort_field='created'}{tr}Assigned{/tr}{/self_link}</th>
+										<th>{self_link _sort_arg='sort_mode_member' _sort_field='expire'}{tr}Expires{/tr}{/self_link}</th>
+										<th></th>
+									</tr>
 
-							<tr>
-								{foreach from=$memberslist item=member}
-							<tr>
-								<td class="checkbox-cell"><input type="checkbox" name="members[]" value="{$member.userId}"></td>
-								<td class="username">{$member.login|userlink}</td>
-								<td class="date">{$member.created|tiki_short_datetime}</td>
-								<td class="date">{if !empty($member.expire)}{$member.expire|tiki_short_datetime}{/if}</td>
-								<td class="action">
-									{capture name=members_actions}
-										{strip}
-											{$libeg}<a href="tiki-adminusers.php?user={$member.userId|escape:"url"}&amp;cookietab=2{if $prefs.feature_tabs ne 'y'}#tab2{/if}">
-												{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit user{/tr}"}
-											</a>{$liend}
-											{if $groupname neq 'Registered'}
-												{$libeg}<a href="tiki-adminusers.php?user={$member.login|escape:"url"}&amp;action=removegroup&amp;group={$groupname|escape:url}">
-												 {icon name="remove" _menu_text='y' _menu_icon='y' alt="{tr}Remove from group{/tr}"}
-												</a>{$liend}
+									<tr>
+										{foreach from=$memberslist item=member}
+									<tr>
+										<td class="checkbox-cell"><input type="checkbox" name="checked[]" value="{$member.login}"></td>
+										<td class="username">{$member.login|userlink}</td>
+										<td class="date">{$member.created|tiki_short_datetime}</td>
+										<td class="date">{if !empty($member.expire)}{$member.expire|tiki_short_datetime}{/if}</td>
+										<td class="action">
+											{capture name=members_actions}
+												{strip}
+													{$libeg}<a href="tiki-adminusers.php?user={$member.userId|escape:"url"}{if $prefs.feature_tabs ne 'y'}#tab2{/if}">
+													{icon name="edit" _menu_text='y' _menu_icon='y' alt="{tr}Edit user{/tr}"}
+													</a>{$liend}
+													{if $groupname neq 'Registered'}
+														{$libeg}<a href="{bootstrap_modal controller=user action=manage_groups checked=$member.login groupremove=$groupname anchor='#contenttabs_admingroups-3'}">
+														{icon name="remove" _menu_text='y' _menu_icon='y' alt="{tr}Remove from group{/tr}"}
+														</a>{$liend}
+													{/if}
+												{/strip}
+											{/capture}
+											{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
+													<a
+															class="tips"
+															title="{tr}Actions{/tr}" href="#"
+															{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.members_actions|escape:"javascript"|escape:"html"}{/if}
+															style="padding:0; margin:0; border:0"
+													>
+														{icon name='settings'}
+													</a>
+													{if $js === 'n'}
+													<ul class="dropdown-menu" role="menu">{$smarty.capture.user_actions}</ul></li></ul>
 											{/if}
-										{/strip}
-									{/capture}
-									{if $js === 'n'}<ul class="cssmenu_horiz"><li>{/if}
-										<a
-											class="tips"
-											title="{tr}Actions{/tr}" href="#"
-											{if $js === 'y'}{popup fullhtml="1" center=true text=$smarty.capture.members_actions|escape:"javascript"|escape:"html"}{/if}
-											style="padding:0; margin:0; border:0"
-										>
-											{icon name='settings'}
-										</a>
-										{if $js === 'n'}
-											<ul class="dropdown-menu" role="menu">{$smarty.capture.user_actions}</ul></li></ul>
-									{/if}
-								</td>
-							</tr>
-							{/foreach}
-						</table>
-					</div>
+										</td>
+									</tr>
+									{/foreach}
+								</table>
+							</div>
 
-					{if $groupname neq 'Registered'}
-						<div class="input-group col-sm-6">
-							<select class="form-control" name="submit_mult_members">
-								<option value="no_action" selected="selected">
-									{tr}Select action to perform with checked{/tr}...
-								</option>
-								<option value="unassign">{tr}Unassign{/tr}</option>
-							</select>
-							<span class="input-group-btn">
-							<input type="submit" class="btn btn-default btn-sm" name="unassign_members" value="{tr}OK{/tr}">
-						</span>
-						</div>
-					{/if}
-				</form>
+							{if $groupname neq 'Registered'}
+								<div class="input-group">
+									<select class="form-control" name="action">
+										<option value="no_action" selected="selected">
+											{tr}Select action to perform with checked{/tr}...
+										</option>
+										<option value="manage_groups">{tr}Unassign{/tr}</option>
+									</select>
+									<span class="input-group-btn">
+										<input type="submit" class="btn btn-default btn-sm confirm-submit" form="checkform2" formaction="{bootstrap_modal controller=user groupremove="$groupname" anchor='#contenttabs_admingroups-3'} "value="{tr}OK{/tr}">
+									</span>
+								</div>
+							{/if}
+						</form>
+					</div>
+				</div>
 
 				{pagination_links cant=$membersCount step=$prefs.maxRecords offset=$membersOffset offset_arg='membersOffset'}{/pagination_links}
 			{else}
-				<div class="col-sm-12">
+				<div class="col-sm-6">
+					<h2>{tr}Members{/tr} <span class="badge">{$membersCount}</span></h2>
 					<em>{tr}No members{/tr}</em>
-				</div><br>
+				</div>
 			{/if}
-
+			{if ! empty($userslist)}
+				<div class="form-group">
+					<div class="col-sm-7">
+						<div class="col-sm-7">
+							<h2>{tr}Add or ban users{/tr}</h2>
+							<form id="addorban" method="post" action="tiki-admingroups.php">
+								<select name="user[]" multiple="multiple" width="100%" size="20" class="form-control" style="width:100%">
+									{foreach from=$userslist item=iuser}
+										<option>{$iuser|escape}</option>
+									{/foreach}
+								</select>
+						</div><br><br><br><br>
+						<div class="col-sm-1">
+							<input type="submit" class="btn btn-default btn-sm confirm-submit" form="addorban" formaction="{bootstrap_modal controller=group action=add_user}" value="{tr}Add to group{/tr}">
+							<br><br>
+							<input type="submit" class="btn btn-default btn-sm confirm-submit" form="addorban" formaction="{bootstrap_modal controller=group action=ban_user}" value="{tr}Ban from group{/tr}">
+						</div>
+						<input type="hidden" name="group" value="{$groupname|escape}">
+							</form>
+					</div>
+				</div>
+			{/if}
+		{/tab}
+		{tab name="{tr _0="<i>{$groupname|escape}</i>"}Users banned from group %0{/tr}"}
+			{* ----------------------- tab with users banned from group --------------------------------------- *}
 			<h2>{tr}Banned members{/tr} <span class="badge">{$bannedlist|count}</span></h2>
 			{if $bannedlist|count > 0}
 				<div class="table-responsive">
@@ -582,9 +613,9 @@
 						<tr>
 							<td class="username">{$member|userlink}</td>
 							<td class="action">
-								{self_link user=$member|escape:"url" action=unbanuser group=$groupname|escape:url _title="{tr}Unban user{/tr}"}
-								{icon name="remove"}
-								{/self_link}
+								<a href="{bootstrap_modal controller=group action=unban_user user=$member group=$groupname}" class="tips" title=":{tr}Unban user{/tr}">
+									{icon name="remove"}
+								</a>
 							</td>
 						</tr>
 						{/foreach}
@@ -594,25 +625,6 @@
 				<div class="col-sm-12">
 					<em>{tr}No banned members{/tr}</em>
 				</div><br>
-			{/if}
-			{if ! empty($userslist)}
-				<h2>{tr}Add or ban users{/tr}</h2>
-				<form method="post" action="tiki-admingroups.php">
-					<div class="form-group">
-						<div class="col-sm-6">
-							<select name="user" class="form-control" style="width:100%">
-								{foreach from=$userslist item=iuser}
-									<option>{$iuser|escape}</option>
-								{/foreach}
-							</select>
-						</div><br><br><br>
-						<div class="col-sm-12">
-							<input type="submit" class="btn btn-default btn-sm" name="adduser" value="{tr}Add to group{/tr}">
-							<input type="submit" class="btn btn-default btn-sm" name="banuser" value="{tr}Ban from group{/tr}">
-						</div>
-						 <input type="hidden" name="group" value="{$groupname|escape}">
-					</div>
-				</form>
 			{/if}
 		{/tab}
 	{/if}

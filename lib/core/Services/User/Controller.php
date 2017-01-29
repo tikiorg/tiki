@@ -462,7 +462,11 @@ class Services_User_Controller
 			$selected = $input->asArray('checked');
 			if (count($selected) > 0) {
 				//provide redirect if js is not enabled
-				$referer = Services_Utilities::noJsPath();
+				if (!empty($input['anchor'])) {
+					$referer = $_SERVER['HTTP_REFERER'];
+				} else {
+					$referer = Services_Utilities::noJsPath();
+				}
 				//remove from group icon clicked for a specific user
 				if (isset($input['groupremove'])) {
 					$items = $input->asArray('groupremove');
@@ -476,9 +480,10 @@ class Services_User_Controller
 								$selected[0]),
 							'items' => $items,
 							'extra' => [
-								'add_remove' => 'remove',
-								'user' => $selected[0],
-								'referer' => $referer
+								'add_remove'    => 'remove',
+								'user'          => $selected[0],
+								'referer'       => $referer,
+								'anchor'        => $input->anchor->striptags()
 							],
 							'ticket' => $check['ticket'],
 							'modal' => '1',
@@ -580,7 +585,11 @@ class Services_User_Controller
 				];
 				Feedback::success($feedback, 'session');
 				//return to page
-				return Services_Utilities::refresh($extra['referer']);
+				if (!empty($extra['anchor'])) {
+					return Services_Utilities::redirect($extra['referer'] . $extra['anchor']);
+				} else {
+					return Services_Utilities::refresh($extra['referer']);
+				}
 			} else {
 				Feedback::error(['mes' => tra('No groups were selected. Please select one or more groups.')], 'session');
 				return Services_Utilities::closeModal($extra['referer']);

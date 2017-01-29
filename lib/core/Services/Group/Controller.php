@@ -260,6 +260,169 @@ class Services_Group_Controller
 	}
 
 	/**
+	 * Process add user to group action
+	 *
+	 * @param $input
+	 * @return array
+	 */
+	function action_add_user ($input)
+	{
+		Services_Exception_Denied::checkGlobal('admin');
+		$util = new Services_Utilities();
+		$util->checkTicket();
+		//first pass - show confirm modal popup
+		if ($util->ticketSet()) {
+			$util->setItemsAction($input, 'user');
+			if (count($util->items) > 0) {
+				$group = $input->group->groupname();
+				if (count($util->items) === 1) {
+					$msg = tr('Add the following user to group %0?', $group);
+				} else {
+					$msg = tr('Add the following users to group %0?', $group);
+				}
+				return $util->confirm($msg, 'group', tra('Add'), ['group' => $group]);
+			} else {
+				Services_Utilities::modalException(tra('One or more users must be selected'));
+			}
+			//after confirm submit - perform action and return success feedback
+		} elseif ($util->ticketMatch() && $_SERVER['REQUEST_METHOD'] === 'POST') {
+			$items = json_decode($input['items'], true);
+			$extra = json_decode($input['extra'], true);
+			$userlib = TikiLib::lib('user');
+			$logslib = TikiLib::lib('logs');
+			foreach ($items as $user) {
+				$userlib->assign_user_to_group($user, $extra['group']);
+				$logslib->add_log('admingroups', 'added ' . $user . ' to ' . $extra['group']);
+			}
+			//prepare and send feedback
+			if (count($items) > 0) {
+				if (count($items) === 1) {
+					$msg = tr('The following user was added to group %0:', $extra['group']);
+				} else {
+					$msg = tr('The following users were added to group %0:', $extra['group']);
+				}
+				$feedback = [
+					'tpl' => 'action',
+					'mes' => $msg,
+					'items' => $items,
+				];
+				Feedback::success($feedback, 'session');
+			}
+			//return to page
+			return Services_Utilities::redirect($_SERVER['HTTP_REFERER'] . '#contenttabs_admingroups-3');
+		}
+	}
+
+
+	/**
+	 * Process ban user from group action
+	 *
+	 * @param $input
+	 * @return array
+	 */
+	function action_ban_user ($input)
+	{
+		Services_Exception_Denied::checkGlobal('admin');
+		$util = new Services_Utilities();
+		$util->checkTicket();
+		//first pass - show confirm modal popup
+		if ($util->ticketSet()) {
+			$util->setItemsAction($input, 'user');
+			if (count($util->items) > 0) {
+				$group = $input->group->groupname();
+				if (count($util->items) === 1) {
+					$msg = tr('Ban the following user from group %0?', $group);
+				} else {
+					$msg = tr('Ban the following users from group %0?', $group);
+				}
+				return $util->confirm($msg, 'group', tra('Ban'), ['group' => $group]);
+			} else {
+				Services_Utilities::modalException(tra('One or more users must be selected'));
+			}
+			//after confirm submit - perform action and return success feedback
+		} elseif ($util->ticketMatch() && $_SERVER['REQUEST_METHOD'] === 'POST') {
+			$items = json_decode($input['items'], true);
+			$extra = json_decode($input['extra'], true);
+			$userlib = TikiLib::lib('user');
+			$logslib = TikiLib::lib('logs');
+			foreach ($items as $user) {
+				$userlib->ban_user_from_group($user, $extra['group']);
+				$logslib->add_log('admingroups', 'banned ' . $user . ' from ' . $extra['group']);
+			}
+			//prepare and send feedback
+			if (count($items) > 0) {
+				if (count($items) === 1) {
+					$msg = tr('The following user was banned from group %0:', $extra['group']);
+				} else {
+					$msg = tr('The following users were banned from group %0:', $extra['group']);
+				}
+				$feedback = [
+					'tpl' => 'action',
+					'mes' => $msg,
+					'items' => $items,
+				];
+				Feedback::success($feedback, 'session');
+			}
+			//return to page
+			return Services_Utilities::redirect($_SERVER['HTTP_REFERER'] . '#contenttabs_admingroups-3');
+		}
+	}
+
+	/**
+	 * Process ban user from group action
+	 *
+	 * @param $input
+	 * @return array
+	 */
+	function action_unban_user ($input)
+	{
+		Services_Exception_Denied::checkGlobal('admin');
+		$util = new Services_Utilities();
+		$util->checkTicket();
+		//first pass - show confirm modal popup
+		if ($util->ticketSet()) {
+			$util->setItemsAction($input, 'user');
+			if (count($util->items) > 0) {
+				$group = $input->group->groupname();
+				if (count($util->items) === 1) {
+					$msg = tr('Unban the following user from group %0?', $group);
+				} else {
+					$msg = tr('Unban the following users from group %0?', $group);
+				}
+				return $util->confirm($msg, 'group', tra('Unban'), ['group' => $group]);
+			} else {
+				Services_Utilities::modalException(tra('One or more users must be selected'));
+			}
+			//after confirm submit - perform action and return success feedback
+		} elseif ($util->ticketMatch() && $_SERVER['REQUEST_METHOD'] === 'POST') {
+			$items = json_decode($input['items'], true);
+			$extra = json_decode($input['extra'], true);
+			$userlib = TikiLib::lib('user');
+			$logslib = TikiLib::lib('logs');
+			foreach ($items as $user) {
+				$userlib->unban_user_from_group($user, $extra['group']);
+				$logslib->add_log('admingroups', 'unbanned ' . $user . ' from ' . $extra['group']);
+			}
+			//prepare and send feedback
+			if (count($items) > 0) {
+				if (count($items) === 1) {
+					$msg = tr('The following user was unbanned from group %0:', $extra['group']);
+				} else {
+					$msg = tr('The following users were unbanned from group %0:', $extra['group']);
+				}
+				$feedback = [
+					'tpl' => 'action',
+					'mes' => $msg,
+					'items' => $items,
+				];
+				Feedback::success($feedback, 'session');
+			}
+			//return to page
+			return Services_Utilities::redirect($_SERVER['HTTP_REFERER'] . '#contenttabs_admingroups-3');
+		}
+	}
+
+	/**
 	 * Utility to prepare parameters for add_group and change group userlib functions
 	 *
 	 * @param array $extra
@@ -329,7 +492,7 @@ class Services_Group_Controller
 				'home'                      => 'pagename',
 				'groupstracker'             => 'digits',
 				'userstracker'              => 'digits',
-				'registrationUsersFieldIds' => 'striptags',
+				'registrationUsersFieldIds' => 'digitscommas',
 				'userChoice'                => 'word',
 				'defcat'                    => 'digits',
 				'theme'                     => 'themename',
