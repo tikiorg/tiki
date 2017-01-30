@@ -50,8 +50,8 @@ function wikiplugin_toc_info()
 				)
 			),
 			'sortalpha' => array(
-				'name' => tra('First Level Items Sort Order'),
-				'description' => tr('Display first level by structure order: %0 (the default) or by sorting the items in alphabetical order: %1', '<code>struct</code>','<code>alpha</code>'),
+				'name' => tra('Sort Order'),
+				'description' => tr('Order for the first Level of pages that will be displayed. Order by structure is the default.'),
 				'since' => '15.3.',
 				'required' => false,
 				'filter' => 'alpha',
@@ -102,19 +102,18 @@ function wikiplugin_toc_info()
 					array('text' => tra('Admin'), 'value' => 'admin'),
  				)
 			),
+            'mindepth' => array(
+                'name' => tra('Start Level Depth'),
+                'description' => tr('Starting from %0, set the level from which pages name are displayed. %0 or %1 (the default) means from level 1.', '<code>0</code>','<code>empty</code>'),
+                'since' => '15.3.',
+                'required' => false,
+                'filter' => 'digits',
+                'default' => 0,
+            ),
 			'maxdepth' => array(
-				'name' => tra('Maximum Depth'),
-				'description' => tr('Maximum number of levels to display. On very large structures, this should be
-					limited. %0 means no limit (and is the default).', '<code>0</code>'),
+				'name' => tra('Maximum Level Depth'),
+				'description' => tr('Set the number of levels to display. %0 means only 1 level will be displayed and %1 mean no limit (and is the default).', '<code>0</code>','<code>empty</code>'),
 				'since' => '3.0',
-				'required' => false,
-				'filter' => 'digits',
-				'default' => 0,
-			),
-			'mindepth' => array(
-				'name' => tra('Minimum Depth'),
-				'description' => tr('Hide number of levels below this number to display. %0 means no limit (and is the default).', '<code>0</code>'),
-				'since' => '15.3.',
 				'required' => false,
 				'filter' => 'digits',
 				'default' => 0,
