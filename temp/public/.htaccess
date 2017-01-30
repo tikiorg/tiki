@@ -8,7 +8,7 @@
     </IfModule>
 </FilesMatch>
 <IfModule mod_expires.c>
-<FilesMatch "avatar_.*\.jpg$">
+<FilesMatch "^avatar_.*">
 	ExpiresActive on
 	ExpiresDefault "modification"
 </FilesMatch>
