@@ -119,48 +119,6 @@
 			<div class="adminoptionboxchild" id="wiki_pagination_childcontainer">
 				{preference name=wiki_page_separator}
 			</div>
-			{preference name=feature_dump}
-			<div class="adminoptionboxchild" id="feature_dump_childcontainer">
-				<div class="adminoptionbox clearfix">
-					<div class="adminoptionlabel">
-						<label for="tagname">{tr}Tag for current wiki:{/tr}</label>
-						<input maxlength="20" size="20" type="text" name="tagname" id="tagname" />
-						<input type="submit" class="btn btn-default btn-sm" name="createtag" value="{tr}Create{/tr}" />
-					</div>
-				</div>
-				<div class="adminoptionbox clearfix">
-					<div class="adminoptionlabel">
-						<label for="restoretag">{tr}Restore wiki to tag:{/tr}</label>
-						<select name="tagname" id="restoretag"{if $tags|@count eq '0'} disabled="disabled"{/if}>
-							{section name=sel loop=$tags}
-								<option value="{$tags[sel]|escape}">{$tags[sel]}</option>
-							{sectionelse}
-								<option value=''>{tr}None{/tr}</option>
-							{/section}
-						</select>
-						<input type="submit" class="btn btn-default btn-sm" name="restoretag" value="{tr}Restore{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if} />
-					</div>
-				</div>
-				<div class="adminoptionbox clearfix">
-					<div class="adminoptionlabel">
-						<label for="removetag">{tr}Remove a tag:{/tr}</label>
-						<select name="tagname" id="removetag"{if $tags|@count eq '0'} disabled="disabled"{/if}>
-							{section name=sel loop=$tags}
-								<option value="{$tags[sel]|escape}">{$tags[sel]}</option>
-							{sectionelse}
-								<option value=''>{tr}None{/tr}</option>
-							{/section}
-						</select>
-						<input type="submit" class="btn btn-default btn-sm" name="removetag" value="{tr}Remove{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if} />
-					</div>
-				</div>
-				{button href="tiki-admin.php?page=wiki&amp;dump=1" _text="{tr}Generate dump{/tr}"}
-				{if $tikidomain}
-					{button href="dump/$tikidomain/new.tar" _text="{tr}Download last dump{/tr}"}
-				{else}
-					{button href="dump/new.tar" _text="{tr}Download last dump{/tr}"}
-				{/if}
-			</div>
 			{preference name=feature_wiki_export}
 			<div class="adminoptionboxchild col-md-8 col-sm-offset-4" id="feature_wiki_export_childcontainer">
 				{permission_link mode=button permType=wiki textFilter=export showDisabled=y label="{tr}Export permissions{/tr}"}
@@ -403,8 +361,37 @@
 		{/tab}
 		{tab name="{tr}Tools{/tr}"}
 			<h2>{tr}Tools{/tr}</h2>
-			<a href="tiki-search_replace.php">{tr}Mass search and replace{/tr}</a><br>
-			<a href="tiki-report_direct_object_perms.php">{tr}Report wiki pages with direct object permissions{/tr}</a><br>
+
+				<div>
+					<h4>Database Dumps & Restores</h4>
+
+					Create database archives of wiki pages for restoring at a later date.<br>
+					<label for="tagname">{tr}Name for Dump:{/tr}</label>
+					<input maxlength="20" size="20" type="text" name="newtagname" id="newtagname" />
+					<input type="submit" class="btn btn-default btn-sm" name="createtag" value="{tr}Create Database Dump{/tr}" /><br>
+
+					<label for="databasetag">{tr}Wiki Database:{/tr}</label>
+					<select name="tagname" {if $tags|@count eq '0'} disabled="disabled"{/if}>
+						{section name=sel loop=$tags}
+							<option value="{$tags[sel]|escape}">{$tags[sel]}</option>
+							{sectionelse}
+							<option value=''>{tr}None{/tr}</option>
+						{/section}
+					</select>
+					<input type="submit" class="btn btn-default btn-sm" name="restoretag" value="{tr}Restore{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if} />
+					<input type="submit" class="btn btn-default btn-sm" name="removetag" value="{tr}Remove{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if} />
+					<h4>Filesystem Dumps</h4>
+					Export wiki pages as a downloadable archive for off-line browsing, distribution on CD, presentations, and so on. Dumps do not include file attachments linked to by wiki pages. Generating a dump will overwrite a preexisting dump.
+					<br><br>
+
+					<input type="submit" class="btn btn-default btn-sm" name="createdump" value="{tr}Create File Dump{/tr}" />
+					<input type="submit" class="btn btn-default btn-sm" name="downloaddump" value="{tr}Download File Dump{/tr}" />
+					<input type="submit" class="btn btn-default btn-sm" name="removedump" data-target="_blank" value="{tr}Remove File Dump{/tr}" />
+				</div>
+			<br>
+			<h4><a href="tiki-search_replace.php">{tr}Mass search and replace{/tr}</a></h4>
+
+			<h4><a href="tiki-report_direct_object_perms.php">{tr}Report wiki pages with direct object permissions{/tr}</a></h4>
 		{/tab}
 	{/tabset}
 	<div class="t_navbar margin-bottom-md text-center">

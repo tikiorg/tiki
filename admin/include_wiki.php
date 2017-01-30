@@ -15,7 +15,7 @@ if (!empty($_REQUEST['w_use_dir'])) {
 	simple_set_value('w_use_dir');
 }
 
-if (isset($_REQUEST['dump'])) {
+if (isset($_REQUEST['createdump'])) {
 	check_ticket('admin-inc-wiki');
 	include ('lib/tar.class.php');
 	error_reporting(E_ERROR | E_WARNING);
@@ -38,11 +38,45 @@ if (!empty($_REQUEST['moveWikiUp'])) {
 if (isset($_REQUEST['createtag'])) {
 	check_ticket('admin-inc-wiki');
 	// Check existance
-	if ($adminlib->tag_exists($_REQUEST['tagname'])) {
+	if ($adminlib->tag_exists($_REQUEST['newtagname'])) {
 		$msg = tra('Tag already exists');
 		$access->display_error(basename(__FILE__), $msg);
 	}
-	$adminlib->create_tag($_REQUEST['tagname']);
+	$adminlib->create_tag($_REQUEST['newtagname']);
+}
+
+if (isset($_REQUEST['removedump'])) {
+	check_ticket('admin-inc-wiki');
+	global $tikidomain;
+	// Check existance
+	if ($tikidomain) {
+		@unlink("storage/$tikidomain/dump_wiki.tar");
+	}else {
+		@unlink("storage/dump_wiki.tar");
+	}
+}
+
+if (isset($_REQUEST['downloaddump'])) {
+	check_ticket('admin-inc-wiki');
+	global $tikidomain;
+	// Check existance
+	if ($tikidomain) {
+		$file = "storage/$tikidomain/dump_wiki.tar";
+	}else {
+		$file = "storage/dump_wiki.tar";
+	}
+
+	if (is_file($file)) {
+		header('Content-Description: File Transfer');
+		header('Content-Type: application/octet-stream');
+		header('Content-Disposition: attachment; filename="'.basename($file).'"');
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate');
+		header('Pragma: public');
+		header('Content-Length: ' . filesize($file));
+		readfile($file);
+		exit;
+	}
 }
 
 if (isset($_REQUEST['restoretag'])) {

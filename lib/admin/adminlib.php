@@ -344,10 +344,8 @@ class AdminLib extends TikiLib
      */
     function remove_tag($tagname)
 	{
-		global $prefs;
-
 		$query = "delete from `tiki_tags` where `tagName`=?";
-		$result = $this->query($query, array($tagname));
+		$this->query($query, array($tagname));
 		$logslib = TikiLib::lib('logs');
 		$logslib->add_log('dump', "removed tag: $tagname");
 		return true;
@@ -377,10 +375,8 @@ class AdminLib extends TikiLib
      * @param string $comment
      * @return bool
      */
-    function create_tag($tagname, $comment = '')
+    function create_tag($tagname)
 	{
-		global $prefs;
-
 		$query = "select * from `tiki_pages`";
 		$result = $this->query($query, array());
 
@@ -392,7 +388,7 @@ class AdminLib extends TikiLib
 			$this->query($query, array($tagname, $pageName), -1, -1, false);
 			$query = "insert into `tiki_tags`(`tagName`,`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`flag`,`description`)" .
                " values(?,?,?,?,?,?,?,?,?,?,?)";
-			$result2 = $this->query(
+			$this->query(
 				$query,
 				array(
 					$tagname,
@@ -411,7 +407,7 @@ class AdminLib extends TikiLib
 		}
 
 		$logslib = TikiLib::lib('logs');
-		$logslib->add_log('dump', "created tag: $tagname");
+		$logslib->add_log('dump', "wiki database dump created: $tagname");
 		return true;
 	}
 
@@ -423,7 +419,6 @@ class AdminLib extends TikiLib
      */
     function restore_tag($tagname)
 	{
-		global $prefs;
 
 		$query = "update `tiki_pages` set `cache_timestamp`=0";
 		$this->query($query, array());
@@ -436,7 +431,7 @@ class AdminLib extends TikiLib
 								" set `hits`=?,`data`=?,`lastModif`=?,`comment`=?,`version`=`version`+1,`user`=?,`ip`=?,`flag`=?,`description`=?" .
 								"  where `pageName`=?";
 
-			$result2 = $this->query(
+			$this->query(
 				$query,
 				array(
 					$res["hits"],
@@ -464,12 +459,12 @@ class AdminLib extends TikiLib
 		global $tikidomain, $prefs;
 		$parserlib = TikiLib::lib('parser');
 
-		$dump_path = "dump";
+		$dump_path = "storage";
 		if ($tikidomain) {
-			$dump_path.= "/$tikidomain";
+			$dump_path .= "/$tikidomain";
 		}
 
-		@unlink("$dump_path/new.tar");
+		@unlink("$dump_path/dump_wiki.tar");
 		$tar = new tar();
 		$tar->addFile('styles/' . $prefs['style']);
 		// Foreach page
@@ -500,10 +495,10 @@ class AdminLib extends TikiLib
 			$tar->addData($pageName, $data, $res["lastModif"]);
 		}
 
-		$tar->toTar("$dump_path/new.tar", FALSE);
+		$tar->toTar("$dump_path/dump_wiki.tar", FALSE);
 		unset ($tar);
 		$logslib = TikiLib::lib('logs');
-		$logslib->add_log('dump', 'dump created');
+		$logslib->add_log('dump', 'wiki file dump created: '.$filename);
 	}
 
 	public function getOpcodeCacheStatus()

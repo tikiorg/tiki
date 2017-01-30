@@ -2321,12 +2321,6 @@ function prefs_feature_list($partial = false)
 			'hint' => tra('Insert a ShareThis button from www.sharethis.com.'),
 			'default' => 'n',
 		),
-		'feature_dump' => array(
-			'name' => tra('Dumps'),
-            'description' => tra('Enable exporting the site as a downloadable archive'),
-			'type' => 'flag',
-			'default' => 'n',
-		),
 		'feature_wiki_mandatory_category' => array(
 			'name' =>  tra('Wiki:').' '.tra('Limit categorization to within the subtree of'),
 			'description' => tra('If an error message indicates a mandatory category is required when editing a wiki page, set this option to "None".'),
