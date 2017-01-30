@@ -7,13 +7,13 @@
   color: #242424;
 }
 a,
-a.btn-link {
+.btn-link {
   color: #c75a28;
 }
 a:hover,
-a.btn-link:hover,
+.btn-link:hover,
 a:focus,
-a.btn-link:focus {
+.btn-link:focus {
   color: #f9a013;
 }
 .btn-default {
