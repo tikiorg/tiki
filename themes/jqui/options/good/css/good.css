@@ -89,13 +89,13 @@ body {
   color: #395bb0;
 }
 a,
-a.btn-link {
+.btn-link {
   color: #395bb0;
 }
 a:hover,
-a.btn-link:hover,
+.btn-link:hover,
 a:focus,
-a.btn-link:focus {
+.btn-link:focus {
   color: #395bb0;
 }
 #col2 .panel a,
