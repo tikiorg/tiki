@@ -2096,7 +2096,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_export' => array(
 			'name' => tra('Export'),
-            'description' => tra('permit exporting wiki pages'),
+            'description' => tra('If enabled, users can export individual pages and structure pages content as a file (requires  tiki_p_admin_wiki ((permission))).'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -2120,7 +2120,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_history' => array(
 			'name' => tra('History'),
-            'description' => tra(''),
+            'description' => tra('If enabled, users with permission can see the history of each Wiki page. '),
 			'type' => 'flag',
 			'help' => 'History',
 			'default' => 'y',
@@ -2165,7 +2165,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_ratings' => array(
 			'name' => tra('Rating'),
-            'description' => tra(''),
+            'description' => tra('This allows you to add a poll from polls feature to any wiki page.  The poll is unique to the page, created from a "poll template" which is created in the Polls feature: set a poll\'s \'active\' drop-down to "template". You may have to adjust your groups permissions for tiki_p_wiki_view_ratings and tiki_p_wiki_vote_ratings.'),
 			'type' => 'flag',
 			'help' => 'Rating',
 			'dependencies' => array(
@@ -2175,7 +2175,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_backlinks' => array(
 			'name' => tra('Backlinks'),
-            'description' => tra(''),
+            'description' => tra('Allows users to view a list of pages, called backlinks, that link to the current page. '),
 			'type' => 'flag',
 			'help' => 'Backlinks',
 			'default' => 'n',
@@ -2189,7 +2189,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_wiki_rankings' => array(
 			'name' => tra('Rankings'),
-            'description' => tra(''),
+            'description' => tra('If enabled, users can see several charts or rankings about the Wiki.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
@@ -2237,7 +2237,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_create_webhelp' => array(
 			'name' => tra('Create webhelp from structure'),
-            'description' => tra(''),
+            'description' => tra('If enabled, the ((Structure Admin)) page will include a new option for generating ((WebHelp)) (an self-contained, HTML "help" version of the Wiki structure). Use this option to distribute Wiki pages to offline users in a usable format.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
