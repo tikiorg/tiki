@@ -1,12 +1,12 @@
 /*  The Orange theme option file for the FiveAlive-lite theme of Tiki Wiki CMS Groupware. */
 a,
-a.btn-link {
+.btn-link {
   color: #c74b23;
 }
 a:hover,
-a.btn-link:hover,
+.btn-link:hover,
 a:focus,
-a.btn-link:focus {
+.btn-link:focus {
   color: #ed6223;
 }
 .btn-default {

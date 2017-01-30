@@ -1,12 +1,12 @@
 /*  The Watermelon theme option file for the FiveAlive-lite theme of Tiki Wiki CMS Groupware. */
 a,
-a.btn-link {
+.btn-link {
   color: #c21e3b;
 }
 a:hover,
-a.btn-link:hover,
+.btn-link:hover,
 a:focus,
-a.btn-link:focus {
+.btn-link:focus {
   color: #e10c7c;
 }
 .btn-default {

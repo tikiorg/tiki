@@ -1,12 +1,12 @@
 /*  The Kiwi theme option file for the FiveAlive-lite themes of Tiki Wiki CMS Groupware. */
 a,
-a.btn-link {
+.btn-link {
   color: #638637;
 }
 a:hover,
-a.btn-link:hover,
+.btn-link:hover,
 a:focus,
-a.btn-link:focus {
+.btn-link:focus {
   color: #baba25;
 }
 .btn-default {

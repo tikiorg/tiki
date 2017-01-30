@@ -1,12 +1,12 @@
 /*  The Akebi theme option file for the FiveAlive-lite theme of Tiki Wiki CMS Groupware. */
 a,
-a.btn-link {
+.btn-link {
   color: #0b8a98;
 }
 a:hover,
-a.btn-link:hover,
+.btn-link:hover,
 a:focus,
-a.btn-link:focus {
+.btn-link:focus {
   color: #18a3bb;
 }
 .btn-default {
