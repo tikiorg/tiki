@@ -103,7 +103,7 @@ function wikiplugin_toc_info()
  				)
 			),
             'mindepth' => array(
-                'name' => tra('Start Level Depth'),
+                'name' => tra('Start Level'),
                 'description' => tr('Starting from %0, set the level from which pages name are displayed. %0 or %1 (the default) means from level 1.', '<code>0</code>','<code>empty</code>'),
                 'since' => '15.3.',
                 'required' => false,
