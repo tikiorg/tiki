@@ -335,7 +335,16 @@ class Services_Group_Controller
 				} else {
 					$msg = tr('Ban the following users from group %0?', $group);
 				}
-				return $util->confirm($msg, 'group', tra('Ban'), ['group' => $group]);
+				return $util->confirm
+				(
+					$msg,
+					'group',
+					tra('Ban'),
+					[
+						'group' => $group,
+						'anchor' => $input->anchor->striptags()
+					]
+				);
 			} else {
 				Services_Utilities::modalException(tra('One or more users must be selected'));
 			}
@@ -364,7 +373,7 @@ class Services_Group_Controller
 				Feedback::success($feedback, 'session');
 			}
 			//return to page
-			return Services_Utilities::redirect($_SERVER['HTTP_REFERER'] . '#contenttabs_admingroups-3');
+			return Services_Utilities::redirect($_SERVER['HTTP_REFERER'] . $input->anchor->striptags());
 		}
 	}
 
@@ -389,7 +398,16 @@ class Services_Group_Controller
 				} else {
 					$msg = tr('Unban the following users from group %0?', $group);
 				}
-				return $util->confirm($msg, 'group', tra('Unban'), ['group' => $group]);
+				return $util->confirm
+				(
+					$msg,
+					'group',
+					tra('Unban'),
+					[
+						'group' => $group,
+						'anchor' => $input->anchor->striptags()
+					]
+				);
 			} else {
 				Services_Utilities::modalException(tra('One or more users must be selected'));
 			}
@@ -418,7 +436,7 @@ class Services_Group_Controller
 				Feedback::success($feedback, 'session');
 			}
 			//return to page
-			return Services_Utilities::redirect($_SERVER['HTTP_REFERER'] . '#contenttabs_admingroups-3');
+			return Services_Utilities::redirect($_SERVER['HTTP_REFERER'] . $input->anchor->striptags());
 		}
 	}
 

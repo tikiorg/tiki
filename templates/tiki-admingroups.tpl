@@ -505,7 +505,7 @@
 							<div class="table-responsive">
 								<table class="table">
 									<tr>
-										<th class="auto">{if $memberslist}{select_all checkbox_names='members[]'}{/if}</th>
+										<th class="auto">{if $memberslist}{select_all checkbox_names='checked[]'}{/if}</th>
 										<th>{self_link _sort_arg='sort_mode_member' _sort_field='login'}{tr}User{/tr}{/self_link}</th>
 										<th>{self_link _sort_arg='sort_mode_member' _sort_field='created'}{tr}Assigned{/tr}{/self_link}</th>
 										<th>{self_link _sort_arg='sort_mode_member' _sort_field='expire'}{tr}Expires{/tr}{/self_link}</th>
@@ -592,6 +592,7 @@
 							<input type="submit" class="btn btn-default btn-sm confirm-submit" form="addorban" formaction="{bootstrap_modal controller=group action=ban_user}" value="{tr}Ban from group{/tr}">
 						</div>
 						<input type="hidden" name="group" value="{$groupname|escape}">
+						<input type="hidden" name="anchor" value="#contenttabs_admingroups-3">
 							</form>
 					</div>
 				</div>
@@ -602,25 +603,42 @@
 			<h2>{tr}Banned members{/tr} <span class="badge">{$bannedlist|count}</span></h2>
 			{if $bannedlist|count > 0}
 				<div class="table-responsive">
-					<table class="table">
-						<tr>
-							<th>{tr}User{/tr}</th>
-							<th>{tr}Action{/tr}</th>
-						</tr>
+					<form id="checkform3" method="post">
+						<table class="table">
+							<tr>
+								<th class="auto">{select_all checkbox_names='user[]'}</th>
+								<th>{tr}User{/tr}</th>
+								<th>{tr}Unban user{/tr}</th>
+							</tr>
 
-						<tr>
-							{foreach from=$bannedlist item=member}
-						<tr>
-							<td class="username">{$member|userlink}</td>
-							<td class="action">
-								<a href="{bootstrap_modal controller=group action=unban_user user=$member group=$groupname}" class="tips" title=":{tr}Unban user{/tr}">
-									{icon name="remove"}
-								</a>
-							</td>
-						</tr>
-						{/foreach}
-					</table>
+							<tr>
+								{foreach from=$bannedlist item=member}
+							<tr>
+								<td class="checkbox-cell"><input type="checkbox" name="user[]" value="{$member}"></td>
+								<td class="username">{$member|userlink}</td>
+								<td class="action">
+									<a href="{bootstrap_modal controller=group action=unban_user user=$member group=$groupname}" class="tips" title=":{tr _0=$member _1=$group}Unban user %0 from group %1{/tr}">
+										{icon name="ok"}
+									</a>
+								</td>
+							</tr>
+							{/foreach}
+						</table>
+						<input type="hidden" name="group" value="{$groupname}">
+						<input type="hidden" name="anchor" value="#contenttabs_admingroups-4">
 				</div>
+				<div class="input-group col-sm-6">
+					<select class="form-control" name="action">
+						<option value="no_action" selected="selected">
+							{tr}Select action to perform with checked{/tr}...
+						</option>
+						<option value="unban_user">{tr}Unban{/tr}</option>
+					</select>
+					<span class="input-group-btn">
+						<input type="submit" class="btn btn-default btn-sm confirm-submit" form="checkform3" formaction="{bootstrap_modal controller=group} "value="{tr}OK{/tr}">
+					</span>
+				</div>
+					</form>
 			{else}
 				<div class="col-sm-12">
 					<em>{tr}No banned members{/tr}</em>
