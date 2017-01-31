@@ -120,6 +120,8 @@ if (isset($_REQUEST['wikifeatures'])) {
 	}
 }
 
+
+$smarty->assign('isDump', is_file('storage/dump_wiki.tar'));
 $tags = $adminlib->get_tags();
 $smarty->assign_by_ref('tags', $tags);
 ask_ticket('admin-inc-wiki');

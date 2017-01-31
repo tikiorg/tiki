@@ -385,8 +385,8 @@
 					<br><br>
 
 					<input type="submit" class="btn btn-default btn-sm" name="createdump" value="{tr}Create File Dump{/tr}" />
-					<input type="submit" class="btn btn-default btn-sm" name="downloaddump" value="{tr}Download File Dump{/tr}" />
-					<input type="submit" class="btn btn-default btn-sm" name="removedump" data-target="_blank" value="{tr}Remove File Dump{/tr}" />
+					<input type="submit" class="btn btn-default btn-sm" name="downloaddump" value="{tr}Download File Dump{/tr}" {if !$isDump} disabled="disabled"{/if} />
+					<input type="submit" class="btn btn-default btn-sm" name="removedump" data-target="_blank" value="{tr}Remove File Dump{/tr}" {if !$isDump} disabled="disabled"{/if} />
 				</div>
 			<br>
 			<h4><a href="tiki-search_replace.php">{tr}Mass search and replace{/tr}</a></h4>
