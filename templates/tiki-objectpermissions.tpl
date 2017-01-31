@@ -108,6 +108,7 @@
 			<div class="table-responsive">
 				<div class="permission_table">
 					{treetable _data=$perms _checkbox=$permGroups _checkboxTitles=$groupNames
+						_checkboxTooltips=['_checkboxTitles', 'permDesc', 'permName'] _checkboxTooltipFormat='%0: %1 [%2]'
 						_checkboxColumnIndex=$permGroupCols _valueColumnIndex="permName"
 						_columns="\"label\"=\"{tr}Permission{/tr}\"" _groupColumn='type' _openall='y'
 						_showSelected='y' _columnsContainHtml='y' class='table table-striped objectperms'}
