@@ -1,12 +1,12 @@
 /*  The plum theme option file for the FiveAlive and FiveAlive-lite themes of Tiki Wiki CMS Groupware. */
 a,
-a.btn-link {
+.btn-link {
   color: #7a04b5;
 }
 a:hover,
-a.btn-link:hover,
+.btn-link:hover,
 a:focus,
-a.btn-link:focus {
+.btn-link:focus {
   color: #7a04b5;
 }
 .btn-default {

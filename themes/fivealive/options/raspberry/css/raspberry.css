@@ -3,13 +3,13 @@
   border-bottom: 1px solid #e60b7f;
 }
 a,
-a.btn-link {
+.btn-link {
   color: #b51360;
 }
 a:hover,
-a.btn-link:hover,
+.btn-link:hover,
 a:focus,
-a.btn-link:focus {
+.btn-link:focus {
   color: #e10c7c;
 }
 .btn-default {
