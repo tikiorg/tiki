@@ -8,9 +8,13 @@
 
 
 // can only be run from the command line
-if (php_sapi_name() !== 'cli') die;
+if (php_sapi_name() !== 'cli'){
+	echo 'can only be run from the command line';
+	die;
+}
 
 
+$baseDir = realpath(__DIR__ .'/../../../').'/';
 require_once ($baseDir.'tiki-setup.php');
 
 /**
@@ -30,9 +34,6 @@ require_once ($baseDir.'tiki-setup.php');
  * documentaion on doc.tiki.org is split into tabs.
  *
  */
-
-
-$baseDir = realpath(__DIR__ .'/../../../').'/';
 
 @mkdir ($baseDir.'storage/prefsdoc');			// create subdir for housing generated files, if it does not exist
 $PrefVars = array();
@@ -66,9 +67,12 @@ foreach ($docFiles as $fileName) {
 			} else if (is_array($PrefVars[$param]['default'])){
 				$PrefVars[$param]['default'] = implode(', ',$PrefVars[$param]['default']);
 			}
-
 			$writeFile .= $PrefVars[$param]['name'] . '~|~';
 			$writeFile .= $PrefVars[$param]['description'];
+			if ($PrefVars[$param]['hint'])
+				$writeFile .= " ''Hint: ".$PrefVars[$param]['hint']."''";
+			if ($PrefVars[$param]['help'])
+				$writeFile .= ' (('.$PrefVars[$param]['help'].'|Read More))';
 			foreach ($PrefVars[$param]['tags'] as $tag)
 				if ($tag === 'experimental')
 					$writeFile .= ' (experimental)';
