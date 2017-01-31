@@ -38,6 +38,10 @@
  *
  * _checkboxTitles = ''		:	Comma delimited list (or array) of header titles for checkboxes (optional, but needs to match number of checkboxes above)
  *
+ * _checkboxTooltips = ''	:	Defaults to _checkboxTitles. Columns get joined together using ' : '
+ *
+ * _checkboxTooltipFormat = '' : tr() type formatting string to format the array defined for each checkbox by _checkboxTooltips above
+ *
  * _listFilter = 'y'		:	include dynamic text filter
  *
  * _filterMinRows = 12		:	don't show filter box if less than this number of rows
@@ -68,6 +72,11 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
   exit;
 }
 
+/**
+ * @param array $params
+ * @param Smarty $smarty
+ * @return string html output
+ */
 function smarty_function_treetable($params, $smarty)
 {
 	global $tree_table_id, $prefs;
@@ -281,7 +290,7 @@ $("#'.$id.'_showSelected").click( function () {
 			$html .= smarty_function_select_all(
 				array(
 					'checkbox_names'=>array($_checkbox[$i] . '[]'),
-					'label' => empty($_checkboxTitles) ? '' : htmlspecialchars($_checkboxTitles[$i]),
+					'label' => empty($_checkboxTitles) ? '' : htmlspecialchars(tra($_checkboxTitles[$i])),
 					'hidden_too' => $_selectAllHiddenToo,
 				),
 				$smarty
@@ -349,7 +358,7 @@ $("#'.$id.'_showSelected").click( function () {
 					if (!empty($_checkbox)) {
 						for ($i = 0, $icount_checkbox = count($_checkbox); $i < $icount_checkbox; $i++) {
 							$html .= '<td class="checkBoxHeader">';
-							$html .= empty($_checkboxTitles) ? '' : htmlspecialchars($_checkboxTitles[$i]);
+							$html .= empty($_checkboxTitles) ? '' : htmlspecialchars(tra($_checkboxTitles[$i]));
 							$html .= '</td>';
 						}
 					}
@@ -384,7 +393,25 @@ $("#'.$id.'_showSelected").click( function () {
 				// get checkbox's "value"
 				$cbxVal = htmlspecialchars($row[$_checkboxColumnIndex[$i]]);
 				$rowVal = htmlspecialchars($row[$_valueColumnIndex]);
-				$cbxTit = empty($_checkboxTitles) ? $cbxVal : htmlspecialchars($_checkboxTitles[$i]);
+
+				if (empty($_checkboxTooltips)) {
+					$cbxTit = empty($_checkboxTitles) ? $cbxVal : htmlspecialchars($_checkboxTitles[$i]);
+				} else {
+					$cbxTit = [];
+					foreach ($_checkboxTooltips as $col) {
+						if (isset($row[$col])) {
+							$cbxTit[] = tra($row[$col]);
+						} else if ($col = '_checkboxTitles') {
+							$cbxTit[] = tra($_checkboxTitles[$i]);
+						}
+					}
+					if (empty($_checkboxTooltipFormat)) {
+						$cbxTit = htmlspecialchars(implode(' ', $cbxTit));
+					} else {
+						$cbxTit = htmlspecialchars(tra($_checkboxTooltipFormat, '', false, $cbxTit));
+					}
+				}
+
 				$html .= '<td class="checkBoxCell" style="white-space: nowrap;">';
 				$html .= '<input type="checkbox" name="' . htmlspecialchars($_checkbox[$i]) . '[]" value="' . $rowVal . '"' .
 									($cbxVal=='y' ? ' checked="checked"' : '') . ' title="' . $cbxTit . '" />';
