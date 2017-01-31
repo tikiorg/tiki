@@ -290,7 +290,7 @@ $("#'.$id.'_showSelected").click( function () {
 			$html .= smarty_function_select_all(
 				array(
 					'checkbox_names'=>array($_checkbox[$i] . '[]'),
-					'label' => empty($_checkboxTitles) ? '' : htmlspecialchars($_checkboxTitles[$i]),
+					'label' => empty($_checkboxTitles) ? '' : htmlspecialchars(tra($_checkboxTitles[$i])),
 					'hidden_too' => $_selectAllHiddenToo,
 				),
 				$smarty
@@ -358,7 +358,7 @@ $("#'.$id.'_showSelected").click( function () {
 					if (!empty($_checkbox)) {
 						for ($i = 0, $icount_checkbox = count($_checkbox); $i < $icount_checkbox; $i++) {
 							$html .= '<td class="checkBoxHeader">';
-							$html .= empty($_checkboxTitles) ? '' : htmlspecialchars($_checkboxTitles[$i]);
+							$html .= empty($_checkboxTitles) ? '' : htmlspecialchars(tra($_checkboxTitles[$i]));
 							$html .= '</td>';
 						}
 					}
