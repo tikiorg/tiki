@@ -2183,7 +2183,7 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_likePages' => array(
 			'name' => tra('Similar pages'),
-            'description' => tra(''),
+            'description' => tra('If enabled, users can see a listing of pages named similarly to the current page.'),
 			'type' => 'flag',
 			'default' => 'n',
 		),
