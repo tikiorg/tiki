@@ -3,7 +3,7 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: wikiplugin_meta.php 60884 2017-01-12 22:15:32Z luciash $
+// $Id$
 
 function wikiplugin_metatag_info()
 {
