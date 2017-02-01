@@ -372,8 +372,8 @@ class AdminLib extends TikiLib
 	// table preserving the state of the wiki under a tag name.
     /**
      * @param $tagname
-     * @param string $comment
      * @return bool
+	 * @see dump()
      */
     function create_tag($tagname)
 	{
@@ -452,8 +452,9 @@ class AdminLib extends TikiLib
 		return true;
 	}
 
-	// Dumps the database to dump/new.tar
-	// changed for virtualhost support
+	/** Dumps wiki pages to a tar file
+	 * @see create_tag()
+	 */
 	function dump()
 	{
 		global $tikidomain, $prefs;
@@ -466,7 +467,10 @@ class AdminLib extends TikiLib
 
 		@unlink("$dump_path/dump_wiki.tar");
 		$tar = new tar();
-		$tar->addFile('styles/' . $prefs['style']);
+
+		// @fixme: Completely outdated. styles/ no longer exists.
+		//$tar->addFile('styles/' . $prefs['theme']);
+
 		// Foreach page
 		$query = "select * from `tiki_pages`";
 		$result = $this->query($query, array());
@@ -475,8 +479,8 @@ class AdminLib extends TikiLib
 			$pageName = $res["pageName"] . '.html';
 
 			$dat = $parserlib->parse_data($res["data"]);
-			// Now change index.php?page=foo to foo.html
-			// and index.php to HomePage.html
+			// Now change tiki-index.php?page=foo to foo.html
+			// and tiki-index.php to HomePage.html
 			$dat = preg_replace("/tiki-index.php\?page=([^\'\"\$]+)/", "$1.html", $dat);
 			$dat = preg_replace("/tiki-editpage.php\?page=([^\'\"\$]+)/", "", $dat);
 			//preg_match_all("/tiki-index.php\?page=([^ ]+)/",$dat,$cosas);
