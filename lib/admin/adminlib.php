@@ -460,12 +460,13 @@ class AdminLib extends TikiLib
 		global $tikidomain, $prefs;
 		$parserlib = TikiLib::lib('parser');
 
-		$dump_path = "storage";
+		$dumpPath = "storage";
 		if ($tikidomain) {
-			$dump_path .= "/$tikidomain";
+			$dumpPath .= "/$tikidomain";
 		}
 
-		@unlink("$dump_path/dump_wiki.tar");
+		$dumpPath = $dumpPath . '/dump_wiki.tar';
+		@unlink($dumpPath);
 		$tar = new tar();
 
 		// @fixme: Completely outdated. styles/ no longer exists.
@@ -499,10 +500,10 @@ class AdminLib extends TikiLib
 			$tar->addData($pageName, $data, $res["lastModif"]);
 		}
 
-		$tar->toTar("$dump_path/dump_wiki.tar", FALSE);
+		$tar->toTar($dumpPath, FALSE);
 		unset ($tar);
 		$logslib = TikiLib::lib('logs');
-		$logslib->add_log('dump', 'wiki file dump created: ' . $filename);
+		$logslib->add_log('dump', 'wiki file dump created in ' . $dumpPath);
 	}
 
 	public function getOpcodeCacheStatus()
