@@ -478,17 +478,12 @@
 
 					{preference name=pass_blacklist_file}
 
-				<legend>{tr}Password Blacklist Tools{/tr}{help url="php.ini#Performance"
-                    desc="realpath_cache_size : {tr}Determines the size of the realpath cache to be used by PHP.{/tr}"}</legend>
+				<legend>{tr}Password Blacklist Tools{/tr}</legend>
 				{if isset($sucess_message)}
 					{remarksbox type="information" title="{tr}Sucess{/tr}" close="n"}
 					{tr}{$sucess_message}{/tr}
 					{/remarksbox}
 				{/if}
-				{remarksbox type="warning" title="{tr}Warning{/tr}" close="y"}
-                {tr}This feature sends password attempts during registration through a database query. To be completly safe, use mysql encryption
-                    or ensure your mysql server is hosted locally.{/tr}
-				{/remarksbox}
 
 				<div class="form-group">
 					<h3>Upload Word List for Processing</h3>
@@ -505,7 +500,8 @@
 
 					<form action="tiki-admin.php?page=login" class="admin form-horizontal" method="post" name="PassForm" enctype="multipart/form-data">
                         <input type="hidden" name="password_blacklist" />
-                        <input type="file" name="passwordlist" accept="text/plain" /><br />
+						<input type="file" name="passwordlist" accept="text/plain" />
+						Use 'LOAD DATA INFILE': <input type="checkbox" name="loaddata" /> Allows much larger files to be uploaded, but requires MySQL on localhost with extra permissions.<br />
 						<input type="submit" value="Create or Replace Word Index" name="uploadIndex" class="btn btn-primary btn-sm" />
 	                    <input type="submit" value="Delete Temporary Index" name="deleteIndex" class="btn btn-primary btn-sm" />
 

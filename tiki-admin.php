@@ -125,13 +125,21 @@ function simple_set_value($feature, $pref = '', $isMultiple = false)
  */
 function loadBlacklist($filename){
     if (is_readable($filename)){
+	    $passwords = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+	    $passwords = array_map('strtolower', $passwords);
+	    $passwords = array_map('trim', $passwords);
+	    $passwords = array_unique($passwords);
+	    $passwords = array_map('addslashes', $passwords);
+	    $passwords = "('".implode("'),('",$passwords)."')";
+
         $tikiDb = new TikiDb_Bridge();
         $query = 'DROP TABLE IF EXISTS tiki_password_blacklist;';
         $tikiDb->query($query, array());
         $query = 'CREATE TABLE `tiki_password_blacklist` ( `password` VARCHAR(30) NOT NULL , PRIMARY KEY (`password`) USING HASH)';
         $tikiDb->query($query, array());
-        $query = "LOAD DATA INFILE '".$filename."' IGNORE INTO TABLE `tiki_password_blacklist` LINES TERMINATED BY '\n' (`password`);";
-        $tikiDb->query($query, array());
+
+        $query = "INSERT INTO tiki_password_blacklist (password) VALUES $passwords";
+	    $tikiDb->query($query);
     }else Feedback::error(tr('Unable to Populate Blacklist: File dose not exist or is not readable.'));
 }
 
@@ -146,7 +154,12 @@ function loadBlacklist($filename){
 
 function genIndexedBlacks($returnFormatted = true){
 
-    $blacklist_options = array_diff(scandir('lib/pass_blacklists', SCANDIR_SORT_ASCENDING), array('..', '.', 'index.php', '.htaccess', '.svn', '.DS_Store', 'readme.txt'));
+	$blacklist_options = array_diff(scandir('lib/pass_blacklists'), array('..', '.', 'index.php', '.htaccess', '.svn', '.DS_Store', 'readme.txt'));
+	if (is_dir('storage/pass_blacklists')) {
+		$blacklist_options = array_merge($blacklist_options,array_diff(scandir('storage/pass_blacklists'), array('..', '.', 'index.php', '.htaccess', '.svn', '.DS_Store', 'readme.txt')));
+	}
+	sort($blacklist_options);
+
     $fileindex = array();
     foreach ($blacklist_options as $blacklist_file) {
         $blacklist_file = substr($blacklist_file, 0, -4);
@@ -241,19 +254,22 @@ if ( isset ($_REQUEST['pref_filters']) ) {
 
 if (isset($_POST['pass_blacklist'])) {                                                  // if preferences were updated and blacklist feature is enabled (or is being enabled)
     $pass_blacklist_file = $jitPost->pass_blacklist_file->striptags();
+    if ($pass_blacklist_file[7]){                       // if code matches user generated file
+    	$passDir = 'storage/pass_blacklists/';
+    }else {
+	    $passDir = 'lib/pass_blacklists/';
+    }
     if ($pass_blacklist_file === 'auto') {
         if ($_POST['min_pass_length']  != $GLOBALS['prefs']['min_pass_length'] ||
             $_POST['pass_chr_num']     != $GLOBALS['prefs']['pass_chr_num']    ||
             $_POST['pass_chr_special'] != $GLOBALS['prefs']['pass_chr_special']){       // if blacklist is auto and an option is changed that could effect the selection
-            echo 'here';
             $prefname = implode('-',selectBestBlacklist());
-            echo 'here';
-            $filename = 'lib/pass_blacklists/' . $prefname . '.txt';
+            $filename = $passDir . $prefname . '.txt';
             $tikilib->set_preference('pass_auto_blacklist', $prefname);
             loadBlacklist(dirname($_SERVER['SCRIPT_FILENAME']) . '/' . $filename);
         }
     }else if ($pass_blacklist_file != $GLOBALS['prefs']['pass_blacklist_file']){        // if manual selection mode has been changed
-        $filename = 'lib/pass_blacklists/' . $pass_blacklist_file . '.txt';
+        $filename = $passDir . $pass_blacklist_file . '.txt';
         loadBlacklist(dirname($_SERVER['SCRIPT_FILENAME']) . '/' . $filename);
 
     }

@@ -124,15 +124,30 @@ class blacklist extends TikiLib
 
     /**
      *
-     * Given a filename, it will load the pass index database with its contents. Files should be word lists seperated by new lines.
+     * Given a filename, it will load the pass index database with its contents.
+     * Files should be word lists separated by new lines.
      *
-     * @param $filename
+     * @param $filename string
+     * @param $load bool        Specifies if LOAD DATA INFILE is used. One needs to
+     *                          be running mysql locally and have permission to use it
+     *                          however it can handle much larger sets of data.
      */
-    public function loadPassIndex($filename)
+    public function loadPassIndex($filename,$load=false)
     {
 
-        $query = "LOAD DATA INFILE '" . $filename . "' IGNORE INTO TABLE `tiki_password_index` LINES TERMINATED BY '\n' (`password`);";
-        $this->query($query, array());
+	    if ($load) {
+		    $query = "LOAD DATA INFILE '" . $filename . "' IGNORE INTO TABLE `tiki_password_index` LINES TERMINATED BY '\n' (`password`);";
+		    $this->query($query, array());
+	    }else {
+		    $passwords = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+		    $passwords = array_map('strtolower', $passwords);
+		    $passwords = array_map('trim', $passwords);
+		    $passwords = array_unique($passwords);
+		    $passwords = array_map('addslashes', $passwords);
+		    $passwords = "('" . implode("'),('", $passwords) . "')";
+		    $query = "INSERT INTO tiki_password_index (password) VALUES $passwords";
+		    $this->query($query);
+	    }
 
         unlink($filename); // delete used temp file.
 
@@ -189,6 +204,8 @@ class blacklist extends TikiLib
 
         if ($toDisk){
             $filename = $this->generateBlacklistName();
+	        if (!is_dir(dirname($filename)))
+		        if (!mkdir(dirname($filename))) return false; // if the directory isnt there create it, return false on failure.
             if (file_exists($filename))
                 if (!unlink($filename)) return false; // if the file already exists, then delete, return false on failure.
             $pointer = @fopen($filename,'x');
@@ -217,7 +234,7 @@ class blacklist extends TikiLib
     {
 
         $filename = '';
-        if ($asFile) $filename = 'lib/pass_blacklists/'; // directory
+        if ($asFile) $filename = 'storage/pass_blacklists/'; // directory
         $filename .= $this->charnum;
         $filename .= '-' . $this->special;
         $filename .= '-' . $this->length;
@@ -246,7 +263,7 @@ if (isset($_POST['uploadIndex'])){
     else{  // if file has been uploaded, and there are no errors, then index the file in the databse.
         $blackL->deletePassIndex();
         $blackL->createPassIndex();
-        $blackL->loadPassIndex($_FILES['passwordlist']['tmp_name']);
+        $blackL->loadPassIndex($_FILES['passwordlist']['tmp_name'],$_POST['loaddata']);
         $smarty->assign('sucess_message', 'Uploaded file has been populated into database and indexed. Ready to generate password lists.');
     }
 }else if (isset($_POST['saveblacklist']) || isset($_POST['viewblacklist'])) {
@@ -269,7 +286,7 @@ if (isset($_POST['uploadIndex'])){
     if ($blackL->generatePassList(true)) {
         $filename = dirname($_SERVER['SCRIPT_FILENAME']).'/'.$blackL->generateBlacklistName();
         $smarty->assign('sucess_message', 'Passwod Blacklist Saved to Disk');
-        $blackL->set_preference('pass_blacklist', $blackL->generateBlacklistName(false));
+        $blackL->set_preference('pass_blacklist_file', $blackL->generateBlacklistName(false));
         loadBlacklist($filename);
     }else Feedback::error(tr('Unable to Write Password File to Disk'));
 
