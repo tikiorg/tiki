@@ -380,13 +380,14 @@
 					</select>
 					<input type="submit" class="btn btn-default btn-sm" name="restoretag" value="{tr}Restore{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if} />
 					<input type="submit" class="btn btn-default btn-sm" name="removetag" value="{tr}Remove{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if} />
-					<h4>Filesystem Dumps</h4>
-					Export wiki pages as a downloadable archive for off-line browsing, distribution on CD, presentations, and so on. Dumps do not include file attachments linked to by wiki pages. Generating a dump will overwrite a preexisting dump.
+					<h4>{tr}Dump Files{/tr}</h4>
+					{tr}Dump files archive wiki pages for various usages such as off-line browsing, distribution on optical disks and presentations. Dumps do not include files attached to wiki pages.{/tr}
+					{if $isDump}{tr}Dumping will overwrite the preexisting dump.{/tr}{/if}
 					<br><br>
 
-					<input type="submit" class="btn btn-default btn-sm" name="createdump" value="{tr}Create File Dump{/tr}" />
-					<input type="submit" class="btn btn-default btn-sm" name="downloaddump" value="{tr}Download File Dump{/tr}" {if !$isDump} disabled="disabled"{/if} />
-					<input type="submit" class="btn btn-default btn-sm" name="removedump" data-target="_blank" value="{tr}Remove File Dump{/tr}" {if !$isDump} disabled="disabled"{/if} />
+					<input type="submit" class="btn btn-default btn-sm" name="createdump" value="{tr}Create Dump File{/tr}" />
+					<input type="submit" class="btn btn-default btn-sm" name="downloaddump" value="{tr}Download Dump File{/tr}" {if !$isDump} disabled="disabled"{/if} />
+					<input type="submit" class="btn btn-default btn-sm" name="removedump" data-target="_blank" value="{tr}Remove Dump File{/tr}" {if !$isDump} disabled="disabled"{/if} />
 				</div>
 			<br>
 			<h4><a href="tiki-search_replace.php">{tr}Mass search and replace{/tr}</a></h4>
