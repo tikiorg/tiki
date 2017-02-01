@@ -486,17 +486,19 @@ class AdminLib extends TikiLib
 			$dat = preg_replace("/tiki-editpage.php\?page=([^\'\"\$]+)/", "", $dat);
 			//preg_match_all("/tiki-index.php\?page=([^ ]+)/",$dat,$cosas);
 			//print_r($cosas);
-			$data = "<html><head><title>" .
-				$res["pageName"] .
-				"</title><link rel='StyleSheet' href='styles/" .
-				$prefs['style'] .
-				"' type='text/css'></head><body><a class='wiki' href='" .
+			$data = "<html>";
+			$data .= "<head>";
+			$data .= "<title>" . $res["pageName"] . "</title>";
+			$data .= "<link rel='StyleSheet' href='styles/" . $prefs['style'] . "' type='text/css'>";
+			$data .= '</head>';
+			$data .= "<body><a class='wiki' href='" .
 				$prefs['wikiHomePage'] .
 				".html'>home</a><br /><h1>" .
 				$res["pageName"] .
 				"</h1><div class='wikitext'>" .
 				$dat .
-				'</div></body></html>';
+				'</div></body>';
+			$data .= '</html>';
 			$tar->addData($pageName, $data, $res["lastModif"]);
 		}
 
