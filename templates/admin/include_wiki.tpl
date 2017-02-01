@@ -381,8 +381,12 @@
 					<input type="submit" class="btn btn-default btn-sm" name="restoretag" value="{tr}Restore{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if} />
 					<input type="submit" class="btn btn-default btn-sm" name="removetag" value="{tr}Remove{/tr}"{if $tags|@count eq '0'} disabled="disabled"{/if} />
 					<h4>{tr}Dump Files{/tr}</h4>
-					{tr}Dump files archive wiki pages for various usages such as off-line browsing, distribution on optical disks and presentations. Dumps do not include files attached to wiki pages.{/tr}
-					{if $isDump}{tr}Dumping will overwrite the preexisting dump.{/tr}{/if}
+					{tr}Dump files archive wiki pages for various usages such as off-line browsing or distribution on optical disks.{/tr}
+					<h5>{tr}Warnings{/tr}</h5>
+					<ul>
+						<li>{tr}The HTML files generated may refer to files not included in the dump.{/tr} {tr}Dumps do not include files attached to wiki pages.{/tr}</li>
+						{if $isDump}<li>{tr}Dumping will overwrite the preexisting dump.{/tr}</li>{/if}
+					</ul>
 					<br><br>
 
 					<input type="submit" class="btn btn-default btn-sm" name="createdump" value="{tr}Create Dump File{/tr}" />
