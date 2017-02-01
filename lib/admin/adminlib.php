@@ -479,13 +479,15 @@ class AdminLib extends TikiLib
 		while ($res = $result->fetchRow()) {
 			$pageName = $res["pageName"] . '.html';
 
-			$dat = $parserlib->parse_data($res["data"]);
+			$pageContents = $parserlib->parse_data($res["data"]);
+
 			// Now change tiki-index.php?page=foo to foo.html
 			// and tiki-index.php to HomePage.html
-			$dat = preg_replace("/tiki-index.php\?page=([^\'\"\$]+)/", "$1.html", $dat);
-			$dat = preg_replace("/tiki-editpage.php\?page=([^\'\"\$]+)/", "", $dat);
+			$pageContents = preg_replace("/tiki-index.php\?page=([^\'\"\$]+)/", "$1.html", $pageContents);
+			$pageContents = preg_replace("/tiki-editpage.php\?page=([^\'\"\$]+)/", "", $pageContents);
 			//preg_match_all("/tiki-index.php\?page=([^ ]+)/",$dat,$cosas);
 			//print_r($cosas);
+
 			$data = "<html>";
 			$data .= "<head>";
 			$data .= "<title>" . $res["pageName"] . "</title>";
@@ -496,7 +498,7 @@ class AdminLib extends TikiLib
 				".html'>home</a><br /><h1>" .
 				$res["pageName"] .
 				"</h1><div class='wikitext'>" .
-				$dat .
+				$pageContents .
 				'</div></body>';
 			$data .= '</html>';
 			$tar->addData($pageName, $data, $res["lastModif"]);
