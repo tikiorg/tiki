@@ -3,15 +3,15 @@
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id$
+// $Id: wikiplugin_meta.php 60884 2017-01-12 22:15:32Z luciash $
 
-function wikiplugin_meta_info()
+function wikiplugin_metatag_info()
 {
 	return array(
-		'name' => tra('Meta'),
-		'documentation' => 'PluginMeta',
+		'name' => tra('MetaTag'),
+		'documentation' => 'PluginMetaTag',
 		'description' => tra('Add custom (meta) tags to HTML head on page where the plugin is used'),
-		'prefs' => array( 'wikiplugin_meta' ),
+		'prefs' => array( 'wikiplugin_metatag' ),
 		'body' => tra('Tags for the HTML head'),
 		'validate' => 'all',
 		'filter' => 'rawhtml_unsafe',
@@ -35,19 +35,11 @@ function wikiplugin_meta_info()
 				'filter' => 'url',
 				'default' => '',
 			),
-/* @todo?			'property' => array(
-				'required' => false,
-				'name' => tra('Property'),
-				'description' => tra('Proprietary property attribute of the meta tag (Facebook OpenGraph specific - used instead of the meta name attribute)'),
-				'since' => '17.0',
-				'filter' => 'url',
-				'default' => '',
-			),*/
 		),
 	);
 }
 
-function wikiplugin_meta($data, $params)
+function wikiplugin_metatag($data, $params)
 {
 	$headerlib = TikiLib::lib('header');
 	extract($params, EXTR_SKIP);
