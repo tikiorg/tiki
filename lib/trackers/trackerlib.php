@@ -1259,7 +1259,7 @@ class TrackerLib extends TikiLib
 		if ($csort_mode == '`created`') {
 			$csort_mode = 'tti.created';
 		}
-		$query = 'SELECT tti.*, ANY_VALUE(ttif.`value`), ANY_VALUE(ttf.`type`)'
+		$query = 'SELECT tti.*, ttif.`value`, ttf.`type`'
 				.', '.( ($numsort) ? "cast($csort_mode as decimal)" : $csort_mode).' as `sortvalue`'
 			.' FROM '.$base_tables.$sort_tables.$cat_table
 			.$mid
