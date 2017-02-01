@@ -31,6 +31,9 @@ require_once ($baseDir.'tiki-setup.php');
  * Currently a single file is generated for each preference page, however the
  * documentation on doc.tiki.org is split into tabs.
  *
+ * Help links dont alwyas link to doc.tiki.org (only a few exceptions) so
+ * this script should deal with that, or the help links should be changed
+ *
  *
  * Class PrefsDoc
  *
@@ -87,23 +90,31 @@ class PrefsDoc extends TWVersion{
 	 *
 	 * @param $param
 	 */
-	public function setParams($param){
+	public function setParams($param)
+	{
 
 		// set default
 		if ($this->PrefVars[$param]['default'] == 'n') {
 			$this->prefDefault = 'Disabled';
 		} else if ($this->PrefVars[$param]['default'] == 'y') {
-			$this->prefDefault = 'Enabled';			// Change default codes to human readable format
-		} else if (is_array($this->PrefVars[$param]['default'])){
-			$this->prefDefault = implode(', ',$this->PrefVars[$param]['default']);
-		}else{
+			$this->prefDefault = 'Enabled';            // Change default codes to human readable format
+		} else if (is_array($this->PrefVars[$param]['default'])) {
+			$this->prefDefault = implode(', ', $this->PrefVars[$param]['default']);
+		} else {
 			$this->prefDefault = $this->PrefVars[$param]['default'];
 		}
-		if (strlen($this->prefDefault) > 30){
-			$this->prefDefault = substr($this->prefDefault,0,27).'...';
+		// end first processing the below should be applied to the above.... not a continuation (eg. empty array)
+		$this->prefDefault = trim($this->prefDefault);
+		if (!$this->prefDefault) {
+			$this->prefDefault = '~~gray:None~~';
+		} else if (!preg_match('\W', $this->prefDefault)) {                // if Pref is a singe word
+			$this->prefDefault = ucfirst($this->prefDefault);            // then caps the first letter.
+		} else{
+			if (strlen($this->prefDefault) > 30) {
+				$this->prefDefault = substr($this->prefDefault, 0, 27) . '...';
+			}
+			$this->prefDefault = $this->wikiConvert($this->prefDefault,true);
 		}
-
-		$this->prefDefault = $this->wikiConvert($this->prefDefault,true);
 
 		// set name
 		if ($this->PrefVars[$param]['help']) {
