@@ -1,13 +1,15 @@
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css">
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
+{* TODO: switch to packagist bundled version of plotly in composer once it is there! *}
+<script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 {jq}
 	var pivotData{{$pivottable.index}} = {{$pivottable.data|json_encode}};
 	$('#output_{{$pivottable.id}}').each(function () {
 		var derivers = $.pivotUtilities.derivers;
-		var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers);
+		var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers);
 		var opts = {
 			renderers: renderers,
+			rendererOptions: {
+				pivotId: {{$pivottable.id|json_encode}},
+			},
 			cols: {{$pivottable.tcolumns|json_encode}}, rows: {{$pivottable.trows|json_encode}},
 			rendererName: {{$pivottable.rendererName|json_encode}},
 			width: {{$pivottable.width|json_encode}},
@@ -28,15 +30,13 @@
 		}
 		if( {{$pivottable.aggregateDetails|json_encode}} ) {
 			opts.aggregateDetails = {{$pivottable.aggregateDetails|json_encode}};
-			opts.rendererOptions = {
-				table: {
-					clickCallback: function(e, value, filters, pivotData){
-						var details = [];
-						pivotData.forEachMatchingRecord(filters, function(record){
-							details.push(record.pivotLink);
-						});
-						feedback(details.join("<br>\n"), 'info', true);
-					}
+			opts.rendererOptions.table = {
+				clickCallback: function(e, value, filters, pivotData){
+					var details = [];
+					pivotData.forEachMatchingRecord(filters, function(record){
+						details.push(record.pivotLink);
+					});
+					feedback(details.join("<br>\n"), 'info', true);
 				}
 			};
 		}
