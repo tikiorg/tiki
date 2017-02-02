@@ -165,15 +165,16 @@ function wikiplugin_fade( $body, $params )
     else
     {
 	$jq = '
-				$(document).ready(function(){
-					$(\'#' . $unique_link . '\').toggle(
+				$(document).ready( function() {
+					$(\'#' . $unique_link . '\').click(
 						function() {
-							$(\'#' . $unique . '\').show(\'blind\', {}, \'' . $params['show_speed'] . '\');
-							$(\'#' . $unique_link . '\').addClass(' . $a_class_shown . ').removeClass(' . $a_class_hidden . ');
-						},
-						function() {
-							$(\'#' . $unique . '\').hide(\'blind\', {}, \'' . $params['hide_speed'] . '\');
-							$(\'#' . $unique_link . '\').addClass(' . $a_class_hidden . ').removeClass(' . $a_class_shown . ');
+							if ( $(\'#' . $unique . '\').is(":hidden") ) {
+								$(\'#' . $unique . '\').show(\'blind\', {}, \'' . $params['show_speed'] . '\');
+								$(\'#' . $unique_link . '\').addClass(' . $a_class_shown . ').removeClass(' . $a_class_hidden . ');
+							} else {
+								$(\'#' . $unique . '\').hide(\'blind\', {}, \'' . $params['hide_speed'] . '\');
+								$(\'#' . $unique_link . '\').addClass(' . $a_class_hidden . ').removeClass(' . $a_class_shown . ');
+							}
 						}
 					);
 					return false;
