@@ -162,7 +162,6 @@ function wikiplugin_pivottable($data, $params)
 	$headerlib = TikiLib::lib('header');
 	$headerlib->add_cssfile('vendor/nicolaskruchten/pivottable/dist/pivot.css');
 	$headerlib->add_jsfile('vendor/nicolaskruchten/pivottable/dist/pivot.js', true);
-	$headerlib->add_jsfile('vendor/nicolaskruchten/pivottable/dist/c3_renderers.js', true);
 	$headerlib->add_jsfile('lib/jquery_tiki/wikiplugin-pivottable.js', true);
 	
 	//checking data type
