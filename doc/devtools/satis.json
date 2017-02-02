@@ -802,6 +802,17 @@
 		{
 			"type": "package",
 			"package": {
+				"name": "openannotation/annotator",
+				"version": "1.2.10",
+				"dist": {
+					"url": "https://github.com/openannotation/annotator/releases/download/v1.2.10/annotator-full.1.2.10.zip",
+					"type": "zip"
+				}
+			}
+		},
+		{
+			"type": "package",
+			"package": {
 				"name": "openlayers/ol3",
 				"version": "3.6.0",
 				"dist": {
