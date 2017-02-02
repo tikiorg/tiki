@@ -49,7 +49,7 @@ function wikiplugin_fade_info()
 				'default' => 400,
 				'since' => '7.0',
 				'accepted' => tr('Integer greater than 0 and less than or equal to 1000, or %0 or %1',
-					'<code>fast</code>', '<code>alow</code>'),
+					'<code>fast</code>', '<code>slow</code>'),
 				'advanced' => true,
 			),
 			'hide_speed' => array(
@@ -61,7 +61,7 @@ function wikiplugin_fade_info()
 				'default' => 400,
 				'since' => '7.0',
 				'accepted' => tr('Integer greater than 0 and less than or equal to 1000, or %0 or %1',
-					'<code>fast</code>', '<code>alow</code>'),
+					'<code>fast</code>', '<code>slow</code>'),
 				'advanced' => true,
 			),
             'bootstrap' => array(
