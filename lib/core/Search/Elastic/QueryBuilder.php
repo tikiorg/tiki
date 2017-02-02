@@ -274,7 +274,12 @@ class Search_Elastic_QueryBuilder
 		$field = $node->getField();
 		$mapping = $this->index ? $this->index->getFieldMapping($field) : new stdClass;
 		if( empty($mapping) ) {
-			throw new Search_Elastic_QueryParsingException(tr('Field %0 does not exist in the current index. If this is a tracker field, the proper syntax is tracker_field_%0.', $field, $field));
+			if( preg_match('/^tracker_field_/', $field) ) {
+				$msg = tr('Field %0 does not exist in the current index. Please check field permanent name and if you have any items in that tracker.', $field);
+			} else {
+				$msg = tr('Field %0 does not exist in the current index. If this is a tracker field, the proper syntax is tracker_field_%0.', $field, $field);
+			}
+			throw new Search_Elastic_QueryParsingException($msg);
 		}
 		return $field;
 	}
