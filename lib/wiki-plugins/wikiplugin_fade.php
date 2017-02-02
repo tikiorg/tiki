@@ -68,7 +68,7 @@ function wikiplugin_fade_info()
 				'required' => false,
 				'name' => tra('Use Boostrap'),
 				'description' => tra('Use Boostrap collapsible box'),
-				'since' => '17',
+				'since' => '16.0',
 				'filter' => 'alpha',
 				'default' => 'n',
 				'options' => array(
@@ -81,7 +81,7 @@ function wikiplugin_fade_info()
 				'required' => false,
 				'name' => tra('CSS Class'),
 				'description' => tra('Apply custom CSS class.'),
-				'since' => '17',
+				'since' => '16.0',
 				'filter' => 'text',
 				'default' => '',
 			),
