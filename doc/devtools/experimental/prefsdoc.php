@@ -4,7 +4,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: prefsdoc.php 60335 2016-11-20 19:23:21Z drsassafras $
+// $Id:
 
 
 // can only be run from the command line
@@ -25,15 +25,9 @@ require_once ($baseDir.'tiki-setup.php');
  *
  * Running this will overwrite any previously generated pref doc files
  *
+ * TODO: Handle help links that dont point at doc.tiki.org
  *
- * limitations
- *
- * Currently a single file is generated for each preference page, however the
- * documentation on doc.tiki.org is split into tabs.
- *
- * Help links dont alwyas link to doc.tiki.org (only a few exceptions) so
- * this script should deal with that, or the help links should be changed
- *
+ * TODO: There is 4 prefs that are not captured with tabs. (maybe outside a tab?)
  *
  * Class PrefsDoc
  *
@@ -77,10 +71,23 @@ class PrefsDoc extends TWVersion{
 	 *
 	 */
 	public function getAdminUIPrefs($fileName){
-			$file = file_get_contents($this->baseDir . 'templates/admin/' . $fileName);
-			$file = str_replace(array('\'', '"'), '', $file);
-			preg_match_all('{preference name=(\w*)(.*)}', $file, $out, PREG_PATTERN_ORDER);  // return array of every pref name in file
-			return $out[1];
+		$file = file_get_contents($this->baseDir . 'templates/admin/' . $fileName);
+		$fileName = substr(substr($fileName, 8), 0, -4);						// prepare the file name for further use
+		$count = preg_match_all('/{tab name="?\'?(?:{tr})?([\w\s]*)(?:{\/tr})?"?\'?}([\w\W]*?){\/tab}/i', $file, $tabs);
+		if ($count) {
+			while ($count >= 1) {
+				$count--;
+				$prefs = array();
+				preg_match_all('/{preference.*name="?\'?(\w*)"?\'?.*}/i', $tabs[2][$count], $prefs);	// Generate aray of all the prefs
+				$tabs[1][$count] = mb_ereg_replace('\W','',strtolower($tabs[1][$count]));				// sanitize the tab name for disk
+				if ($prefs[1])
+					$tabPrefs[$fileName.'-'.$tabs[1][$count]] = $prefs[1];											// Add named tabbed array
+			}
+		}else if (preg_match_all('/{preference.*name="?\'?(\w*)"?\'?.*}/i', $file, $prefs)){;
+			$tabPrefs[$fileName] = $prefs[1];
+		}
+
+		return $tabPrefs;
 	}
 
 
@@ -177,21 +184,21 @@ class PrefsDoc extends TWVersion{
 
 		$end = "{FANCYTABLE}\n/////\n";
 
-		$docName = substr(substr($fileName, 8), 0, -4) . ".txt";				// Name of file to be written
+		$fileName .=".txt";				// Name of file to be written
 
 		if (!is_dir($this->baseDir.'storage/prefsdoc')) {
-			if (!mkdir($this->baseDir . 'storage/prefsdoc')) ;
-			{            // create subdir for housing generated files, if it does not exist
+			if (!mkdir($this->baseDir . 'storage/prefsdoc')) {            // create subdir for housing generated files, if it does not exist
 				die("Cant create storage/prefsdoc directory\n");
 			}
-		}if (is_file($this->baseDir . 'storage/prefsdoc/' . $docName)) {
-			if (!unlink($this->baseDir . 'storage/prefsdoc/' . $docName)){
-				die("Cant overwrite existing $docName\n");
+		}if (is_file($this->baseDir . 'storage/prefsdoc/' . $fileName)) {
+			if (!unlink($this->baseDir . 'storage/prefsdoc/' . $fileName)){
+				die("Cant overwrite existing $fileName\n");
 				}
 			}
 
-		if (!file_put_contents($this->baseDir . 'storage/prefsdoc/' . $docName, $begining.$this->docTable.$end))		// write one file for each pref page on control panel
-			die("Unable to write $docName\n");
+		if (!file_put_contents($this->baseDir . 'storage/prefsdoc/' . $fileName, $begining.$this->docTable.$end))		// write one file for each pref page on control panel
+			die("Unable to write $fileName\n");
+		$this->docTable = '';
 	}
 }
 
@@ -205,14 +212,16 @@ $docFiles = scandir($baseDir.'templates/admin'); // grab all the files that hous
 foreach ($docFiles as $fileName) {
 	if (substr($fileName, 0, 8) === 'include_') {  // filter out any file thats not a pref file
 		$FilePrefs = $Doc->getAdminUIPrefs($fileName);
-		$Doc->fileCount ++;
 		$Doc->docTable = '';
-		foreach ($FilePrefs as $param) {
-			$Doc->setParams($param);
-			$Doc->prefCount++;
-			$Doc->docTable .= $Doc->prefName . '~|~' . $Doc->prefDescription . '~|~' . $Doc->prefDefault . "\n";
+		foreach ($FilePrefs as $tabName => $tab) {
+			foreach ($tab as $param) {
+				$Doc->setParams($param);
+				$Doc->prefCount++;
+				$Doc->docTable .= $Doc->prefName . '~|~' . $Doc->prefDescription . '~|~' . $Doc->prefDefault . "\n";
+			}
+			$Doc->writeFile($tabName);
+			$Doc->fileCount++;
 		}
-		$Doc->writeFile($fileName);
 	}
 }
 
