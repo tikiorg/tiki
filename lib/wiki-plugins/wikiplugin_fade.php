@@ -64,24 +64,24 @@ function wikiplugin_fade_info()
 					'<code>fast</code>', '<code>slow</code>'),
 				'advanced' => true,
 			),
-            'bootstrap' => array(
-                'required' => false,
-                'name' => tra('Use Boostrap'),
-                'description' => tra('Use Boostrap collapsible box'),
-                'since' => '17',
-                'filter' => 'alpha',
-                'default' => 'n',
-                'options' => array(
-                    array('text' => '', 'value' => ''),
-                    array('text' => tra('Yes'), 'value' => 'y'),
-                    array('text' => tra('No'), 'value' => 'n')
-                )
-            ),
+ 			'bootstrap' => array(
+				'required' => false,
+				'name' => tra('Use Boostrap'),
+				'description' => tra('Use Boostrap collapsible box'),
+				'since' => '16.0',
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''), 
+					array('text' => tra('Yes'), 'value' => 'y'), 
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
 			'class' => array(
 				'required' => false,
 				'name' => tra('CSS Class'),
 				'description' => tra('Apply custom CSS class.'),
-				'since' => '17',
+				'since' => '16.0',
 				'filter' => 'text',
 				'default' => '',
 			),
