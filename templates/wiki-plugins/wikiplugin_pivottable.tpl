@@ -58,6 +58,8 @@
 
 		createEditBtn({{$pivottable.id|json_encode}});
 	});
+    //adding bind call for pdf creation
+    $('.icon-pdf').parent().click(function(){storeSortTable('#container_{{$pivottable.id}}',$('#container_{{$pivottable.id}}').html())});
 {/jq}
 	
 <style type="text/css">

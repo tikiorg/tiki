@@ -337,9 +337,9 @@ class PdfGenerator
 		  $themecss=str_replace(array("media print","color : fff"),array("media p","color : #fff"),$themecss);
 		  $basecss=str_replace(array("media print","color : fff"),array("media p","color : #fff"),$basecss);
 		}
-		$mpdf->WriteHTML('<style>'.$basecss.$themecss.$printcss.$this->bootstrapReplace().'</style>'.$html);
+		$mpdf->WriteHTML(str_replace(array(".tiki","opacity: 0;"),array("","fill: #fff;opacity:0.3;stroke:black"),'<style>'.$basecss.$themecss.$printcss.$this->bootstrapReplace().'</style>'.$html));
 	    $this->clearTempImg($tempImgArr);
-		return $mpdf->Output('', 'S');					// Return as a string
+	    return $mpdf->Output('', 'S');					// Return as a string
 	}
 	
 	function _getImages(&$html,&$tempImgArr)
@@ -407,20 +407,27 @@ class PdfGenerator
 	{
 	   $doc = new DOMDocument();
        $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
-       $tables = $doc->getElementsByTagName('table');
-       
-	   $tempValue=array();
+	   
+	   $tables = $doc->getElementsByTagName('table');
+       $tempValue=array();
 	   $sortedContent=array();
        foreach ($tables as $table) {
-	     $this->sortContent($table,$tempValue,$sortedContent,'table');
-		 
+		    $this->sortContent($table,$tempValue,$sortedContent,$table->tagName);
 		}
 		$xpath = new DOMXpath($doc);
-        $customdivs = $xpath->query('//*[contains(@class, "customsearch_results")]');
-	   for ($i = 0; $i < $customdivs->length; $i++) {
-         $customdiv = $customdivs->item($i);
-         $this->sortContent($customdiv,$tempValue,$sortedContent,'div');
-	   }
+		
+		//defining array of plugins to be sorted
+		$pluginArr=array(array("class","customsearch_results","div"),array("id","container_pivottable","div"));
+		foreach($pluginArr as $pluginInfo)
+		{
+           $customdivs = $xpath->query('//*[contains(@'.$pluginInfo[0].', "'.$pluginInfo[1].'")]');
+	       for ($i = 0; $i < $customdivs->length; $i++) {
+             $customdiv = $customdivs->item($i);
+			 echo $customdiv->getAttribute('id');
+             $this->sortContent($customdiv,$tempValue,$sortedContent,$pluginInfo[2]);
+	       }
+		}
+	    
 	   //making tablesorter wrapper divs visible
 		$wrapperdivs = $xpath->query('//*[contains(@class, "ts-wrapperdiv")]');
 		   for ($i = 0; $i < $wrapperdivs->length; $i++) {
@@ -428,12 +435,12 @@ class PdfGenerator
         	   $wrapperdiv->setAttribute("style","visibility:visible");
         }
 
-	   $html=@$doc->saveHTML();
-  	   //replacing temp table with sorted content
+        $html=@$doc->saveHTML();
+	   //replacing temp table with sorted content
 			for($i=0;$i<count($sortedContent);$i++)
 			{
 			    $html=str_replace($tempValue[$i],$sortedContent[$i],$html);
-				$html=cleanContent($html,array(array("input","tablesorter-filter","class"),array("select","tablesorter-filter","class")));
+				$html=cleanContent($html,array(array("input","tablesorter-filter","class"),array("select","tablesorter-filter","class"),array("select","pvtRenderer","class"),array("select","pvtAggregator","class"),array("td","pvtCols","class"),array("td","pvtUnused","class"),array("td","pvtRows","class")));
 
 		    }
 			
@@ -478,13 +485,15 @@ class PdfGenerator
      }
 
 	 function bootstrapReplace(){
-	    return ".col-xs-12 {width: 90%;}.col-xs-11 {width: 81.66666667%;}.col-xs-10 {width: 72%;}.col-xs-9 {width: 64%;}.col-xs-8 {width: 57%;}.col-xs-7 {width: 49%;}.col-xs-6 {width: 42%;}.col-xs-5 {width: 35%;}.col-xs-4 {width: 28%;}.col-xs-3{width: 20%;}.col-xs-2 {width: 12.2%;}.col-xs-1 {width: 3.92%;}    .table-striped {border:1px solid #ccc;} .table-striped td { padding: 8px; line-height: 1.42857143;vertical-align: center;border-top: 1px solid #ccc;} .table-striped th { padding: 10px; line-height: 1.42857143;vertical-align: center;   } .table-striped .odd {padding:10px;} .trackerfilter form{display:none;}";
+	    return ".col-xs-12 {width: 90%;}.col-xs-11 {width: 81.66666667%;}.col-xs-10 {width: 72%;}.col-xs-9 {width: 64%;}.col-xs-8 {width: 57%;}.col-xs-7 {width: 49%;}.col-xs-6 {width: 42%;}.col-xs-5 {width: 35%;}.col-xs-4 {width: 28%;}.col-xs-3{width: 20%;}.col-xs-2 {width: 12.2%;}.col-xs-1 {width: 3.92%;}    .table-striped {border:1px solid #ccc;} .table-striped td { padding: 8px; line-height: 1.42857143;vertical-align: center;border-top: 1px solid #ccc;} .table-striped th { padding: 10px; line-height: 1.42857143;vertical-align: center;   } .table-striped .odd {padding:10px;} .trackerfilter form{display:none;} table.pvtTable tr td {border:1px solid}";
 	}
 	
 	function sortContent(&$table,&$tempValue,&$sortedContent,$tag)
 	{
 	   $content='';
 	   $tid= $table->getAttribute("id");
+	   
+	     
 		   if(file_exists("temp/#".$tid."_".session_id().".txt"))
            {
 			   $content=file_get_contents("temp/#".$tid."_".session_id().".txt");
