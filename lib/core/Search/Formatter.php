@@ -29,8 +29,8 @@ class Search_Formatter
 		$this->subFormatters[$name] = $formatter;
 	}
 
-	function addCustomFilter($field) {
-		$this->customFilters[] = $field;
+	function addCustomFilter($filter) {
+		$this->customFilters[] = $filter;
 	}
 
 	function format($list)
@@ -94,33 +94,28 @@ class Search_Formatter
 	}
 
 	public function renderFilters() {
-		$trklib = TikiLib::lib('trk');
+		$filters = array();
+		foreach ($this->customFilters as $filter) {
+			$fieldName = str_replace('tracker_field_', '', $filter['field']);
+			$mode = $filter['mode'];
+			$filters[] = Tracker\Filter\Collection::getFilter($fieldName, $mode);
+		}
+		$input = new JitFilter(@$_REQUEST);
 		$fields = array();
-		foreach ($this->customFilters as $fieldName) {
-			$field = $trklib->get_field_by_perm_name(str_replace('tracker_field_', '', $fieldName));
-			if ($field) {
-				$field['ins_id'] = "ins_".$field['fieldId'];
-				$handler = $trklib->get_field_handler($field);
-				$field = array_merge($field, $handler->getFieldData($_REQUEST));
-				// TODO: refactor field handler to not require calling this twice to fit in the request data
-				$handler = $trklib->get_field_handler($field);
-				$field['renderedInput'] = $handler->renderInput(array('filter' => true));
-				$value = isset($_REQUEST[$field['ins_id']]) ? $_REQUEST[$field['ins_id']] : null;
-				$blank = '<option value="-Blank (no data)-" '
-					. ( ( $value === '-Blank (no data)-' || is_array($value) && in_array( '-Blank (no data)-', $value ) ) ? 'selected' : '' )
-					. '>-Blank (no data)-</option>';
-				$field['renderedInput'] = str_replace('</select>', $blank . '</select>', $field['renderedInput']);
-				$field['textInput'] = preg_match("/<input.*type=['\"]text['\"]/", $field['renderedInput']);
-				$fields[] = $field;
-			} else {
-				// non-tracker field in the index
-				$fields[] = array(
-					'fieldId' => 0,
-					'name' => $fieldName,
-					'value' => isset($_REQUEST['ins_'.$fieldName]) ? $_REQUEST['ins_'.$fieldName] : null,
-					'textInput' => true,
-				);
+		foreach ($filters as $filter) {
+			if (! $filter->getControl()->isUsable()) {
+				continue;
 			}
+			$filter->applyInput($input);
+			$field = array(
+				'id' => $filter->getControl()->getId(),
+				'name' => $filter->getLabel(),
+				'renderedInput' => $filter->getControl(),
+			);
+			if (preg_match("/<input.*type=['\"](text|search)['\"]/", $field['renderedInput'])) {
+				$field['textInput'] = true;
+			}
+			$fields[] = $field;
 		}
 
 		if ($fields) {

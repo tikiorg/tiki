@@ -303,6 +303,7 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 		$baseKey = $this->getBaseKey();
 
 		$possibilities = $this->getPossibilities();
+		$possibilities['-Blank (no data)-'] = tr('-Blank (no data)-');
 
 		$filters->addNew($permName, 'dropdown')
 			->setLabel($name)
@@ -310,7 +311,9 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 			->setApplyCondition(function ($control, Search_Query $query) use ($baseKey) {
 				$value = $control->getValue();
 
-				if ($value) {
+				if ($value === '-Blank (no data)-') {
+					$query->filterIdentifier('', $baseKey.'_text');
+				} elseif ($value) {
 					$query->filterIdentifier($value, $baseKey);
 				}
 			});
@@ -325,7 +328,11 @@ class Tracker_Field_Dropdown extends Tracker_Field_Abstract implements Tracker_F
 					$sub = $query->getSubQuery("ms_$permName");
 
 					foreach ($values as $v) {
-						$sub->filterIdentifier((string) $v, $baseKey);
+						if ($v === '-Blank (no data)-') {
+							$sub->filterIdentifier('', $baseKey.'_text');
+						} elseif ($v) {
+							$sub->filterContent((string) $v, $baseKey);
+						}
 					}
 				}
 			});

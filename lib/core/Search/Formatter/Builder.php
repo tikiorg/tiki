@@ -91,8 +91,8 @@ class Search_Formatter_Builder
 			$formatter->addSubFormatter($name, $plugin);
 		}
 
-		foreach ($this->customFilters as $field) {
-			$formatter->addCustomFilter($field);
+		foreach ($this->customFilters as $filter) {
+			$formatter->addCustomFilter($filter);
 		}
 
 		return $formatter;
@@ -114,7 +114,10 @@ class Search_Formatter_Builder
 		$arguments = $this->parser->parse($match->getArguments());
 
 		if (isset($arguments['editable'], $arguments['field'])) {
-			$this->customFilters[] = $arguments['field'];
+			$this->customFilters[] = array(
+				'field' => $arguments['field'],
+				'mode' => $arguments['editable']
+			);
 		}
 	}
 
