@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2017 by authors of the Tiki Wiki CMS Groupware Project
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -14,7 +14,7 @@ function wikiplugin_pivottable_info()
 		'body' => tra('Leave one space in the box below to allow easier editing of current values with the plugin popup helper later on'),
 		'format' => 'html',
 		'iconname' => 'table',
-		'introduced' => 10,
+		'introduced' => '16.1',
 		'params' => array(
 			'data' => array(
 				'name' => tr('Data source'),
