@@ -15,7 +15,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__)) {
 }
 
 //
-// This section is being phased out. Please use the instructions at http://dev.tiki.org/Creating+New+Preferences instead.
+// This section is being phased out. Please use the instructions at https://dev.tiki.org/Create+a+new+preference instead.
 //
 
 // Prefs for which we want to use the site value (they will be prefixed with 'site_')
