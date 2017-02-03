@@ -4706,6 +4706,7 @@ class TikiLib extends TikiDb_Bridge
 				'user' => $GLOBALS['user'],
 				'page_id' => $info['page_id'],
 				'version' => $version,
+				'old_version' => $old_version,
 				'data' => $edit_data,
 				'old_data' => $info['data'],
 			)

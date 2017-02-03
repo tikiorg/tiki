@@ -104,7 +104,7 @@ function tiki_mail_setup()
 			array(
 				'path' => TIKI_PATH . '/temp',
 				'callback' => function ($transport) {
-					return 'Mail_' . date('YmdHis') . '_' . mt_rand() . '.tmp';
+					return 'Mail_' . date('YmdHis') . '_' . mt_rand() . '.eml';
 				},
 			)
 		);

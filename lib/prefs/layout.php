@@ -33,6 +33,7 @@ function prefs_layout_list()
 			'description' => tra('Either grp_Anonymous or grp_Registered and possibly grp_Admins as well'),
 			'type' => 'flag',
 			'default' => 'n',
+			'keywords' => 'body class html grp',
 		),
 	);
 }
