@@ -23,7 +23,7 @@ class Search_Query_WikiBuilder
 		}
 
 		$this->query = $query;
-		$this->input = ( $input ?: new JitFilter($_REQUEST) );
+		$this->input = ( $input ?: new JitFilter(@$_REQUEST) );
 		$this->paginationArguments = array(
 			'offset_arg' => 'offset',
 			'sort_arg' => 'sort_mode',
@@ -82,29 +82,12 @@ class Search_Query_WikiBuilder
 	}
 
 	function wpquery_filter_editable($query, $editableType, array $arguments) {
-		$trklib = TikiLib::lib('trk');
 		$fields = $this->get_fields_from_arguments($arguments);
 		foreach ($fields as $fieldName) {
-			$field = $trklib->get_field_by_perm_name(str_replace('tracker_field_', '', $fieldName));
-			if ($field) {
-				$value = $this->input->{'ins_'.$field['fieldId']}->none();
-			} else {
-				$value = $this->input->{'ins_'.$fieldName}->none();
-			}
-			if ($value === '') {
-				continue;
-			}
-			if ($value === '-Blank (no data)-' || is_array($value) && in_array('-Blank (no data)-', $value)) {
-				$value = '';
-				$editableType = 'exact';
-				$fieldName .= '_text';
-			}
-			$value = is_array($value) ? implode(' OR ', $value) : (string)$value;
-			$function = "wpquery_filter_{$editableType}";
-			if (method_exists($this, $function)) {
-				$arguments['field'] = $fieldName;
-				call_user_func(array($this, $function), $query, $value, $arguments);
-			}
+			$fieldName = str_replace('tracker_field_', '', $fieldName);
+			$filter = Tracker\Filter\Collection::getFilter($fieldName, $editableType);
+			$filter->applyInput($this->input);
+			$filter->applyCondition($query);
 		}
 	}
 

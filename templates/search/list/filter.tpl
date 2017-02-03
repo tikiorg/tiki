@@ -5,19 +5,15 @@
 		{foreach from=$filterFields item=field}
 		<tr>
 			<td class="list_filter_label">
-				<label>{$field.name|tr_if}</label>
+				<label for="{$filter.id|escape}">{$field.name|tr_if}</label>
 				{if $field.textInput}
 					<a href="#" class="tikihelp" title="{tr}Only full word matches shown by default: Use wildcards (*) to get partial matches also. E.g. searching for 'foo' will miss foobar in the results, but 'foo*' will include it{/tr}.">
 						{icon name="information"}
 					</a>
 				{/if}
 			</td>
-			<td class="list_filter_input tracker_field{$field.fieldId}">
-				{if array_key_exists('renderedInput', $field)}
-					{$field.renderedInput}
-				{else}
-					<input type="text" name="ins_{$field.name}" value="{$field.value|escape}" class="form-control">
-				{/if}
+			<td class="list_filter_input">
+				{$field.renderedInput}
 			</td>
 		</tr>
 		{/foreach}
@@ -33,7 +29,7 @@
 </div>
 
 {jq}
-$('input[name=reset_filter]').off('click').on('click', function() {
-	window.location.href = $(this).closest('form').attr('action');
+$('#list_filter{{$filterCounter}} input[name=reset_filter]').off('click').on('click', function() {
+	window.location.href = $(this).closest('form').attr('action').replace('#list_filter{{$filterCounter}}', '');
 });
 {/jq}

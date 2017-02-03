@@ -21,6 +21,33 @@ class Collection
 		$this->definition = $definition;
 	}
 
+	public static function getFilter($fieldName, $mode) {
+		$field = TikiLib::lib('trk')->get_field_by_perm_name($fieldName);
+		if ($field) {
+			if( !isset($collection) ) {
+				$definition = \Tracker_Definition::get($field['trackerId']);
+				$collection = new self($definition);
+			}
+			try {
+				return $collection->addFilter($field['permName'], $mode);
+			} catch( Exception\ModeNotSupported $e) {
+				return $collection->addFilter($field['permName']);
+			}
+		} else {
+			// non-tracker field in the index
+			$filter = new Filter($fieldName, 'default');
+			$filter->setLabel($fieldName)
+				->setControl(new Control\TextField("tf_".$fieldName))
+				->setApplyCondition(function ($control, Search_Query $query) use ($fieldName) {
+					$value = $control->getValue();
+					if ($value) {
+						$query->filterContent($value, $fieldName);
+					}
+				});
+			return $filter;
+		}
+	}
+
 	function addNew($permName, $mode)
 	{
 		$column = new Filter($permName, $mode);
@@ -70,12 +97,12 @@ class Collection
 		}
 	}
 
-	function addFilter($permName, $mode)
+	function addFilter($permName, $mode = null)
 	{
 		if (isset($this->collections[$permName])) {
 			$partial = $this->collections[$permName];
 		} else {
-			$partial = $this->getFieldCollection($permName, $mode);
+			$partial = $this->getFieldCollection($permName);
 			$this->collections[$permName] = $partial;
 		}
 
@@ -88,7 +115,7 @@ class Collection
 	private function lookupMode($permName, $mode)
 	{
 		foreach ($this->filters as $filter) {
-			if ($filter->getField() == $permName && $filter->getMode() == $mode) {
+			if ($filter->getField() == $permName && (!$mode || $filter->getMode() == $mode)) {
 				return $filter;
 			}
 		}

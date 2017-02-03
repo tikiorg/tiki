@@ -557,6 +557,7 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 		$options = array_map(function ($i) {
 			return $i['relativePathString'];
 		}, $sourceCategories);
+		$options['-Blank (no data)-'] = tr('-Blank (no data)-');
 
 		$collection->addNew($permName, 'dropdown')
 			->setLabel($name)
@@ -564,7 +565,9 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 			->setApplyCondition(function ($control, Search_Query $query) use ($baseKey) {
 				$value = $control->getValue();
 
-				if ($value) {
+				if ($value === '-Blank (no data)-') {
+					$query->filterIdentifier('', $baseKey.'_text');
+				} elseif ($value) {
 					$query->filterCategory((string) $value);
 				}
 			})
@@ -582,7 +585,11 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 					$values = $control->getValues();
 
 					if (! empty($values)) {
-						$query->filterCategory(implode(' OR ', $values));
+						if (in_array('-Blank (no data)-', $values)) {
+							$query->filterIdentifier('', $baseKey.'_text');
+						} else {
+							$query->filterCategory(implode(' OR ', $values));
+						}
 					}
 				})
 				;
@@ -603,7 +610,11 @@ class Tracker_Field_Category extends Tracker_Field_Abstract implements Tracker_F
 						$values = $control->getValues();
 
 						if (! empty($values)) {
-							$query->filterCategory(implode(' AND ', $values));
+							if (in_array('-Blank (no data)-', $values)) {
+								$query->filterIdentifier('', $baseKey.'_text');
+							} else {
+								$query->filterCategory(implode(' AND ', $values));
+							}
 						}
 					})
 					;

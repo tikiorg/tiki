@@ -11,7 +11,7 @@
  * Letter key: ~u~
  *
  */
-class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Exportable
+class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Tracker_Field_Synchronizable, Tracker_Field_Exportable, Tracker_Field_Filterable
 {
 	public static function getTypes()
 	{
@@ -457,6 +457,99 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 			;
 
 		return $schema;
+	}
+
+	function getFilterCollection()
+	{
+		global $prefs;
+
+		if ($prefs['user_selector_realnames_tracker'] === 'y' && $this->getOption('showRealname')) {
+			$smarty->loadPlugin('smarty_modifier_username');
+			$showRealname = true;
+		} else {
+			$showRealname = false;
+		}
+
+		$userlib = TikiLib::lib('user');
+		$tikilib = TikiLib::lib('tiki');
+		$users = array();
+
+		$groupIds = $this->getOption('groupIds', '');
+		if( !empty($groupIds) ) {
+			$groupIds = explode('|', $groupIds);
+		}
+		$groups = $userlib->list_all_groups_with_permission();
+		$groups = $userlib->get_group_info($groups);
+		if( !empty($groupIds) ) {
+			$groups = array_filter($groups, function($group) use ($groupIds) {
+				return in_array($group['id'], $groupIds);
+			});
+		}
+		$groups = array_map(function($group) {
+			return $group['groupName'];
+		}, $groups);
+		
+		if (!empty($groups)) {
+			$usrs = [];
+			foreach ($groups as $group) {
+				$group_users = $userlib->get_group_users($group);
+				$usrs = array_merge($usrs, $group_users);
+			}
+			$usrs = array_unique($usrs);
+			foreach ($usrs as $usr) {
+				$users["$usr"] = $showRealname ? smarty_modifier_username($usr) : $usr;
+			}
+		} else {
+			$usrs = $tikilib->list_users(0, -1, 'login_asc');
+			foreach ($usrs['data'] as $usr) {
+				$users[$usr['login']] = $showRealname ? smarty_modifier_username($usr['login']) : $usr['login'];
+			}
+		}
+
+		asort($users, SORT_NATURAL | SORT_FLAG_CASE);
+
+		$users['-Blank (no data)-'] = tr('-Blank (no data)-');
+
+		$filters = new Tracker\Filter\Collection($this->getTrackerDefinition());
+		$permName = $this->getConfiguration('permName');
+		$name = $this->getConfiguration('name');
+		$baseKey = $this->getBaseKey();
+
+		if ($this->getOption('multiple', 0) > 0) {
+			$filters->addNew($permName, 'multiselect')
+				->setLabel($name)
+				->setControl(new Tracker\Filter\Control\MultiSelect("tf_{$permName}_ms", $users))
+				->setApplyCondition(function ($control, Search_Query $query) use ($permName, $baseKey) {
+					$values = $control->getValues();
+
+					if (! empty($values)) {
+						$sub = $query->getSubQuery("ms_$permName");
+
+						foreach ($values as $v) {
+							if ($v === '-Blank (no data)-') {
+								$sub->filterIdentifier('', $baseKey.'_text');
+							} elseif ($v) {
+								$sub->filterContent((string) $v, $baseKey);
+							}
+						}
+					}
+				});
+		} else {
+			$filters->addNew($permName, 'dropdown')
+				->setLabel($name)
+				->setControl(new Tracker\Filter\Control\DropDown("tf_{$permName}_dd", $users))
+				->setApplyCondition(function ($control, Search_Query $query) use ($baseKey) {
+					$value = $control->getValue();
+
+					if ($value === '-Blank (no data)-') {
+						$query->filterIdentifier('', $baseKey.'_text');
+					} elseif ($value) {
+						$query->filterIdentifier($value, $baseKey);
+					}
+				});
+		}
+		
+		return $filters;
 	}
 
 	/** Checks if the current user can modify the value even if autoassigned usually
