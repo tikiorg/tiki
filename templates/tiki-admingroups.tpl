@@ -371,7 +371,7 @@
 				</div>
 				{if $prefs.feature_wizard_user eq 'y' and $groupname == 'Registered'}
 					<div class="form-group">
-						<label for="groups_group" class="control-label col-md-3">{tr}User Wizard Fields{/tr}</label>
+						<label class="control-label col-md-3">{tr}User Wizard Fields{/tr}</label>
 						<div class="col-md-9">
 							{tr}By default, the same fields as in registration are used.{/tr} {tr _0="tiki-admin.php?page=login"}You can choose in the <a href="%0">Login admin panel</a> to show different fields in User Wizard than the ones asked at Registration Time{/tr}.</td>
 						</div>
@@ -401,7 +401,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="groups_group" class="control-label col-md-3">{tr}Membership expiry{/tr}</label>
+					<label class="control-label col-md-3">{tr}Membership expiry{/tr}</label>
 					<div class="col-md-9">
 						<label>{tr}Anniversary{/tr}</label>
 						<input type="text" name="anniversary" class="form-control" value="{$group_info.anniversary|escape}">
@@ -429,7 +429,7 @@
 				</div>
 			{/if}
 			<div class="form-group">
-				<label for="groups_group" class="control-label col-md-3">{tr}Group{/tr}</label>
+				<label class="control-label col-md-3">{tr}Group{/tr}</label>
 				<div class="col-md-9">
 					<input class="form-control" type="text" size="40" name="emailPattern" value="{$group_info.emailPattern|escape}">
 					<div class="help-block">
@@ -441,7 +441,7 @@
 
 			{if $group ne ''and $groupname neq 'Anonymous'}
 				<div class="form-group">
-					<label for="groups_group" class="control-label col-md-3">{tr}Assign group <em>management</em> permissions{/tr}</label>
+					<label class="control-label col-md-3">{tr}Assign group <em>management</em> permissions{/tr}</label>
 					<div class="col-md-9">
 						{self_link _script="tiki-objectpermissions.php" objectType="group" objectId=$groupname objectName=$groupname permType="group"}
 							{icon _text="{tr}Assign Permissions{/tr}" name="key"}
