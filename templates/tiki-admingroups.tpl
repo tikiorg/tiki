@@ -401,7 +401,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="groups_group" class="control-label col-md-3">{tr}Expiry{/tr}</label>
+					<label for="groups_group" class="control-label col-md-3">{tr}Membership expiry{/tr}</label>
 					<div class="col-md-9">
 						<label>{tr}Anniversary{/tr}</label>
 						<input type="text" name="anniversary" class="form-control" value="{$group_info.anniversary|escape}">
