@@ -8,6 +8,15 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
 
+/**
+ * XML-RPC services
+ * As of 2017-02-06, these services are all related to blogs.
+ * These services implement part of the Blogger XML-RPC API (see https://codex.wordpress.org/XML-RPC_Blogger_API ).
+ * As of 2017-02-06, Blogger currently supports Blogger API version 3 (see https://developers.google.com/blogger/ ), which is no longer based on XML. The API implemented here seems to predate Blogger API version 1 and is presumably no longer supported by Blogger.
+ * One client of Blogger's XML-RPC API is wBloggar... which appears to be very close to death as of 2017-02-06. It may no longer implement this version of the API anyway. Is there any client still implementing this API? Chealer 2017-02-06
+ * See https://doc.tiki.org/XMLRPC
+ */
+
 include_once('tiki-setup.php');
 $bloglib = TikiLib::lib('blog');
 
@@ -34,7 +43,7 @@ $s = new XML_RPC_Server($map);
  * @param $permName
  * @return bool
  */
-function check_individual($user, $blogid, $permName)
+function check_individual($user, $blogId, $permName)
 {
 	$userlib = TikiLib::lib('user');
 
@@ -43,7 +52,7 @@ function check_individual($user, $blogid, $permName)
 		return true;
 
 	// If no individual permissions for the object then ok
-	if (!$userlib->object_has_one_permission($blogid, 'blog'))
+	if (!$userlib->object_has_one_permission($blogId, 'blog'))
 		return true;
 
 	// If the object has individual permissions then check
