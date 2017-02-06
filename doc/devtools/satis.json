@@ -1135,7 +1135,7 @@
 				"name": "jquery/plugins/galleriffic",
 				"version": "2.0.1",
 				"dist": {
-					"url": "http://www.twospy.com/galleriffic/galleriffic-2.0.zip",
+					"url": "https://sourceforge.net/projects/tikiwiki/files/vendors_abandoned/jquery-plugins-galleriffic-2.0.1.zip/download",
 					"type": "zip"
 				}
 			}
