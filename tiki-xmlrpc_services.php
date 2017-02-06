@@ -116,6 +116,11 @@ function newPost($params)
 	$passp = $params->getParam(5);
 	$publish = $passp->scalarval();
 
+	// Fix for w.bloggar
+	preg_match('/<title>(.*)</title>/', $content, $title);
+	$title = $title[1];
+	$content = preg_replace('#<title>(.*)</title>#', '', $content);
+
 	// Now check if the user is valid and if the user can post a submission
 	list($ok, $username, $e) = $userlib->validate_user($username, $password);
 	if (!$ok) {
@@ -144,7 +149,7 @@ function newPost($params)
 	}
 
 	// User ok and can submit then submit the post
-	$id = $bloglib->blog_post($blogid, $content, $username);
+	$id = $bloglib->blog_post($blogid, $content, '', $username, $title);
 
 	return new XML_RPC_Response(new XML_RPC_Value("$id"));
 }
@@ -172,6 +177,11 @@ function editPost($params)
 	$content = $passp->scalarval();
 	$passp = $params->getParam(5);
 	$publish = $passp->scalarval();
+
+	// Fix for w.bloggar
+	preg_match('/<title>(.*)</title>/', $content, $title);
+	$title = $title[1];
+	$content = preg_replace('#<title>(.*)</title>#', '', $content);
 
 	// Now check if the user is valid and if the user can post a submission
 	list($ok, $username, $e) = $userlib->validate_user($username, $password);
@@ -204,7 +214,7 @@ function editPost($params)
 		}
 	}
 
-	$id = $bloglib->update_post($postid, $blogid, $content, $username);
+	$id = $bloglib->update_post($postid, $blogid, $content, $username, $title);
 	return new XML_RPC_Response(new XML_RPC_Value(1, 'boolean'));
 }
 
@@ -308,7 +318,8 @@ function getPost($params)
 		array(
 			'userid' => new XML_RPC_Value($username),
 			'dateCreated' => new XML_RPC_Value($dateCreated, 'dateTime.iso8601'),
-			'content' => new XML_RPC_Value($post_data['data']),
+			// Fix for w.Bloggar
+			'content' => new XML_RPC_Value('<title>' . $post_data['title'] . '</title>' . $post_data['data']),
 			'postid' => new XML_RPC_Value($post_data['postId'])
 		),
 		'struct'
@@ -374,7 +385,8 @@ function getRecentPosts($params)
 			array(
 				'userid' => new XML_RPC_Value($username),
 				'dateCreated' => new XML_RPC_Value($dateCreated, 'dateTime.iso8601'),
-				'content' => new XML_RPC_Value($post['data']),
+				// Fix for w.Bloggar
+				'content' => new XML_RPC_Value('<title>' . $post['title'] . '</title>' . $post['data']),
 				'postid' => new XML_RPC_Value($post['postId'])
 			),
 			'struct'
