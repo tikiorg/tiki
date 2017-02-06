@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "145a4531992c9925822838d0ddbe7abc",
+    "content-hash": "40624d1c0d7c884e463cb1a7ad12764e",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -1383,6 +1383,17 @@
                 "saml"
             ],
             "time": "2017-01-11T17:18:41+00:00"
+        },
+        {
+            "name": "openannotation/annotator",
+            "version": "1.2.10",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/openannotation/annotator/openannotation-annotator-1.2.10.zip",
+                "reference": null,
+                "shasum": "0e982ad018a75edd758111f9534c03513c7be9bc"
+            },
+            "type": "library"
         },
         {
             "name": "openlayers/ol3",
