@@ -76,6 +76,7 @@
 	<div id="output_{$pivottable.id}_opControls" style="display:none">
 	<input id="save_{$pivottable.id}" type="button" value="Save Changes" class="btn btn-primary ui-button ui-corner-all ui-widget" /><input class="btn btn-primary ui-button ui-corner-all ui-widget" id="restore_{$pivottable.id}" type="button" value="Cancel Edit" /></div>
 	{if $pivottable.showControls}<div id="pivotControls_{$pivottable.id}"  style="display:none;position:relative;"><input type="button" id="pivotEditBtn_{$pivottable.id}" value="Edit Pivot Table"  class="btn btn-primary ui-button ui-corner-all ui-widget" /></div>{/if}
+    <img id="png_container_{$pivottable.id}" style="display:none"></img>
 </div>
 
 <div id="pivotdetails_modal"></div>

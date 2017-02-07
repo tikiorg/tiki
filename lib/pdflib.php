@@ -423,31 +423,34 @@ class PdfGenerator
            $customdivs = $xpath->query('//*[contains(@'.$pluginInfo[0].', "'.$pluginInfo[1].'")]');
 	       for ($i = 0; $i < $customdivs->length; $i++) {
              $customdiv = $customdivs->item($i);
-			 echo $customdiv->getAttribute('id');
              $this->sortContent($customdiv,$tempValue,$sortedContent,$pluginInfo[2]);
 	       }
 		}
-	    
-	   //making tablesorter wrapper divs visible
-		$wrapperdivs = $xpath->query('//*[contains(@class, "ts-wrapperdiv")]');
-		   for ($i = 0; $i < $wrapperdivs->length; $i++) {
-			   $wrapperdiv = $wrapperdivs->item($i);
-        	   $wrapperdiv->setAttribute("style","visibility:visible");
-        }
-
         $html=@$doc->saveHTML();
 	   //replacing temp table with sorted content
 			for($i=0;$i<count($sortedContent);$i++)
 			{
 			    $html=str_replace($tempValue[$i],$sortedContent[$i],$html);
-				$html=cleanContent($html,array(array("input","tablesorter-filter","class"),array("select","tablesorter-filter","class"),array("select","pvtRenderer","class"),array("select","pvtAggregator","class"),array("td","pvtCols","class"),array("td","pvtUnused","class"),array("td","pvtRows","class")));
+				$html=cleanContent($html,array(array("input","tablesorter-filter","class"),array("select","tablesorter-filter","class"),array("select","pvtRenderer","class"),array("select","pvtAggregator","class"),array("td","pvtCols","class"),array("td","pvtUnused","class"),array("td","pvtRows","class"),array("div","plot-container","class")));
 
 		    }
-			
-			//font awesome support call
-			$this->fontawesome($html);
-			//& sign added in fa unicodes for proper printing in pdf
-            $html=str_replace('#x',"&#x",$html); 
+		
+			//making tablesorter and pivottable charts wrapper divs visible
+		$doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+		$xpath = new DOMXpath($doc);
+		$wrapperDefs=array(array("class","ts-wrapperdiv","visibility:visible"),array("id","png_container_pivottable1","display:''"));
+		foreach($wrapperDefs as $wrapperDef)
+		{  $wrapperdivs = $xpath->query('//*[contains(@'.$wrapperDef[0].', "'.$wrapperDef[1].'")]');
+		   for ($i = 0; $i < $wrapperdivs->length; $i++) {
+			   $wrapperdiv = $wrapperdivs->item($i);
+        	   $wrapperdiv->setAttribute("style",$wrapperDef[2]);
+		   }
+        }
+		$html=@$doc->saveHTML();
+		//font awesome support call
+		$this->fontawesome($html);
+		//& sign added in fa unicodes for proper printing in pdf
+        $html=str_replace('#x',"&#x",$html); 
 
 	 }
 	 
@@ -505,8 +508,7 @@ class PdfGenerator
 	                   }
                   }
 			   $tableTag.=">";
-
-			   $content=$tableTag.$content.'</'.$tag.'>';
+               $content=$tableTag.$content.'</'.$tag.'>';
 			   //end of cleaning content
 			   $sortedContent[]=str_replace('<sc<x>ript type="text/javascript">
 <!--//--><![CDATA[//><!--
