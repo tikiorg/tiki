@@ -7,7 +7,7 @@
 
 class Search_Formatter_ValueFormatter_Plain extends Search_Formatter_ValueFormatter_Abstract
 {
-	private $separator = false;
+	private $separator = ', ';
 
 	function __construct($arguments)
 	{
@@ -18,7 +18,7 @@ class Search_Formatter_ValueFormatter_Plain extends Search_Formatter_ValueFormat
 
 	function render($name, $value, array $entry)
 	{
-		if (is_array($value) && $this->separator !== false) {
+		if (is_array($value)) {
 			return implode($this->separator, $value);
 		} else {
 			return $value;
