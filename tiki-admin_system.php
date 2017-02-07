@@ -22,6 +22,10 @@ if (isset($_GET['do'])) {
 		// Also rebuild admin index
 		TikiLib::lib('prefs')->rebuildIndex();
 
+		// also rebuild plugin prefdoc current version
+		if (file_exists('storage/prefsdoc/state.json'))
+			unlink('storage/prefsdoc/state.json');
+
 		// seems combination of clearing prefs and public now messes up the page, so reload
 		include_once('lib/setup/prefs.php');
 		initialize_prefs();
