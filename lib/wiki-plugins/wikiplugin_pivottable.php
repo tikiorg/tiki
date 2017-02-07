@@ -44,7 +44,7 @@ function wikiplugin_pivottable_info()
 			'rows' => array(
 				'required' => false,
 				'name' => tra('Pivot table Rows'),
-				'description' => tr('Will be derived from data, if left blank, first parameter found in data will be used. ') . ' ' . tr('Use permanentNames in case of tracker fields.') . ' ' . tr('Separated by colon (:) if more than one.'),
+				'description' => tr('Which field or fields to use as table rows. Leaving blank will remove grouping by table rows. ') . ' ' . tr('Use permanentNames in case of tracker fields.') . ' ' . tr('Separated by colon (:) if more than one.'),
 				'since' => '',
 				'filter' => 'text',
 				'default' => '',
@@ -54,7 +54,7 @@ function wikiplugin_pivottable_info()
 			'cols' => array(
 				'required' => false,
 				'name' => tra('Pivot table Columns'),
-				'description' => tr('Will be derived from data, if left blank, second parameter found in data will be used.') . ' ' . tr('Use permanentNames in case of tracker fields.') . ' ' . tr('Separated by colon (:) if more than one.'),
+				'description' => tr('Which field or fields to use as table columns. Leaving blank will use the first available field.') . ' ' . tr('Use permanentNames in case of tracker fields.') . ' ' . tr('Separated by colon (:) if more than one.'),
 				'since' => '',
 				'filter' => 'text',
 				'default' => '',
@@ -365,8 +365,6 @@ function wikiplugin_pivottable($data, $params)
 				$rows[] = $rowName;
 			}
 		}
-	} elseif( isset($fields[1]) ) {
-		$rows[] = $fields[1]['name'];
 	}
 
 	$vals = array();
