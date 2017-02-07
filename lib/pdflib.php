@@ -438,7 +438,7 @@ class PdfGenerator
 			//making tablesorter and pivottable charts wrapper divs visible
 		$doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
 		$xpath = new DOMXpath($doc);
-		$wrapperDefs=array(array("class","ts-wrapperdiv","visibility:visible"),array("id","png_container_pivottable1","display:''"));
+		$wrapperDefs=array(array("class","ts-wrapperdiv","visibility:visible"),array("id","png_container_pivottable","display:''"));
 		foreach($wrapperDefs as $wrapperDef)
 		{  $wrapperdivs = $xpath->query('//*[contains(@'.$wrapperDef[0].', "'.$wrapperDef[1].'")]');
 		   for ($i = 0; $i < $wrapperdivs->length; $i++) {
