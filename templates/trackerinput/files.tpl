@@ -26,10 +26,10 @@
 			{wikiplugin _name='vimeo' fromFieldId=$field.fieldId|escape fromItemId=$item.itemId|escape galleryId=$field.galleryId|escape}{/wikiplugin}
 		{else}
 			{if $field.options_map.uploadInModal neq 'n'}
-				<a href="{service controller=file action=uploader uploadInModal=1 galleryId=$field.galleryId limit=$field.limit|default:100 type=$field.filter image_max_size_x=$field.image_x image_max_size_y=$field.image_y}" class="btn btn-default upload-files">{tr}Upload File{if $field.limit !== 1}s{/if}{/tr}</a>
+				<a href="{service controller=file action=uploader uploadInModal=1 galleryId=$field.galleryId limit=$field.limit|default:100 type=$field.filter image_max_size_x=$field.image_x image_max_size_y=$field.image_y}" class="btn btn-default upload-files">{if $field.limit !== 1}{tr}Upload Files{/tr}{else}{tr}Upload File{/tr}{/if}</a>
 			{else}
 				<div class="upload-files-inline-form"></div>
-				<a href="{service controller=file action=uploader uploadInModal=0 galleryId=$field.galleryId limit=$field.limit|default:100 type=$field.filter image_max_size_x=$field.image_x image_max_size_y=$field.image_y}" class="btn btn-default upload-files-inline">{tr}Upload File{if $field.limit !== 1}s{/if}{/tr}</a>
+				<a href="{service controller=file action=uploader uploadInModal=0 galleryId=$field.galleryId limit=$field.limit|default:100 type=$field.filter image_max_size_x=$field.image_x image_max_size_y=$field.image_y}" class="btn btn-default upload-files-inline">{if $field.limit !== 1}{tr}Upload Files{/tr}{else}{tr}Upload File{/tr}{/if}</a>
 			{/if}
 		{/if}
 	{/if}
