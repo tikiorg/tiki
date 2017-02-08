@@ -11,7 +11,7 @@ function wikiplugin_shorten_info()
 		'name' => tra('Shorten'),
 		'documentation' => 'Shorten',
 		'description' => tra('Show/hide a portion of text'),
-		'prefs' => array('wikiplugin_shorten'),
+		'prefs' => array('wikiplugin_shorten', 'wikiplugin_button'),
 		'body' => tra('Code to be displayed'),
 		'iconname' => 'shorten',
 		'introduced' => 17,
@@ -116,17 +116,8 @@ function wikiplugin_shorten($data, $params)
 				.	'var show_speed = $this.data("show-speed") || 0;'
 				.	'var hide_speed = $this.data("hide-speed") || 0;'
 
-				.	'var appendingEl = $sample.children(":last-child").get(0) || $sample;'
-				.	'var $btn_more = $("<span>")'
-				.	              '.attr("class", "btn_more")'
-				.	              '.text($sample.data("btn-more"))'
-				.	              '.appendTo(appendingEl);'
-
-				.	'appendingEl = $content.children(":last-child").get(0) || $content;'
-				.	'var $btn_less = $("<span>")'
-				.	              '.attr("class", "btn_less")'
-				.	              '.text($content.data("btn-less"))'
-				.	              '.appendTo(appendingEl);'
+				.	'var $btn_more = $sample.find(".btn_more:first");'
+				.	'var $btn_less = $content.find(".btn_less:last");'
 
 				.	'$btn_more.click(function(){'
 				.		'$sample.hide();'
@@ -163,8 +154,11 @@ function wikiplugin_shorten($data, $params)
 		$index = strlen($match[0]);
 
 		$sample = substr($data, 0, $index);
+		$sample .= '{button _text="'.$moreText.'" _class="btn_more" href="#"}';
 		$sample = $tikilib->parse_data($sample, array());
-		$content = $tikilib->parse_data($data, array());
+
+		$content = $data . '{button _text="'.$lessText.'" _class="btn_less" href="#"}';
+		$content = $tikilib->parse_data($content, array());
 
 		$out = sprintf($html, $sample, $content);
 		return $out;
