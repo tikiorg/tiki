@@ -3,7 +3,7 @@
 //
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-// $Id: 20150508_perspectives_style_to_theme_tiki.php 57954 2016-03-17 19:34:29Z jyhem $
+// $Id$
 
 if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
 	header("location: index.php");
@@ -15,12 +15,13 @@ if (strpos($_SERVER["SCRIPT_NAME"], basename(__FILE__)) !== false) {
  */
 function upgrade_20170127_remove_templates_c_tiki($installer)
 {
-
 	$dirname = 'templates_c';
-	if (is_dir($dirname))
+	if (is_dir($dirname)) {
 		$dir_handle = opendir($dirname);
-	if (!$dir_handle)
+	}
+	if (!$dir_handle) {
 		return false;
+	}
 	while($file = readdir($dir_handle)) {
 		if ($file != "." && $file != "..") {
 			if (!is_dir($dirname."/".$file))
@@ -31,6 +32,5 @@ function upgrade_20170127_remove_templates_c_tiki($installer)
 	}
 	closedir($dir_handle);
 	rmdir($dirname);
-
 }
 
