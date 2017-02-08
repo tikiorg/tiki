@@ -113,10 +113,20 @@ function wikiplugin_shorten($data, $params)
 				.	'var $this = $(this);'
 				.	'var $sample = $this.find("> .sample");'
 				.	'var $content = $this.find("> .content");'
-				.	'var $btn_more = $this.find("> .btn_more");'
-				.	'var $btn_less = $this.find("> .btn_less");'
 				.	'var show_speed = $this.data("show-speed") || 0;'
 				.	'var hide_speed = $this.data("hide-speed") || 0;'
+
+				.	'var appendingEl = $sample.children(":last-child").get(0) || $sample;'
+				.	'var $btn_more = $("<span>")'
+				.	              '.attr("class", "btn_more")'
+				.	              '.text($sample.data("btn-more"))'
+				.	              '.appendTo(appendingEl);'
+
+				.	'appendingEl = $content.children(":last-child").get(0) || $content;'
+				.	'var $btn_less = $("<span>")'
+				.	              '.attr("class", "btn_less")'
+				.	              '.text($content.data("btn-less"))'
+				.	              '.appendTo(appendingEl);'
 
 				.	'$btn_more.click(function(){'
 				.		'$sample.hide();'
@@ -146,10 +156,8 @@ function wikiplugin_shorten($data, $params)
 		}
 
 		$html = '<span class="wikiplugin-shorten"' . $show_speed . $hide_speed . '>';
-		$html .= '<span class="sample">%s</span>';
-		$html .= '<span class="content">%s</span>';
-		$html .= '<label class="btn_more">'.$moreText.'</label>';
-		$html .= '<label class="btn_less">'.$lessText.'</label>';
+		$html .= '<span class="sample"  data-btn-more="'.$moreText.'">%s</span>';
+		$html .= '<span class="content" data-btn-less="'.$lessText.'">%s</span>';
 		$html .= '</span>';
 
 		$index = strlen($match[0]);
