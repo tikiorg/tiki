@@ -609,10 +609,16 @@ function initTikiDB( &$api, &$driver, $host, $user, $pass, $dbname, $client_char
  * @param $dbname  database name
  * @return bool|int
  */
-function createTikiDBUser(&$dbTiki, $user, $pass, $dbname) {
+function createTikiDBUser(&$dbTiki, $host, $user, $pass, $dbname) {
+
+	if( preg_match('/^(127\.0\.\d{1,3}\.\d{1,3}|localhost)') ) {
+		$host = 'localhost';
+	} else {
+		$host = '%';
+	}
 
 	$pass = addslashes($pass);
-	$sql="GRANT ALL PRIVILEGES ON `$dbname`.* TO `$user`@`%` IDENTIFIED BY '$pass';";
+	$sql="GRANT ALL PRIVILEGES ON `$dbname`.* TO `$user`@`$host` IDENTIFIED BY '$pass';";
 	$dbTiki->queryError($sql, $error);
 
 	if ( empty($error) ) {
@@ -897,21 +903,28 @@ if (
 			$client_charset = '';
 		}
 
-		$dbcon = initTikiDB($api_tiki, $_POST['db'], $_POST['host'], $_POST['user'], $_POST['pass'], $_POST['name'],
-			$client_charset, $dbTiki);
+		if(!empty($_POST['create_new_user'])
+			&& !empty($_POST['root_user'])
+			&& !empty($_POST['root_pass'])) {
+
+			$dbcon = initTikiDB( $api_tiki, $_POST['db'], $_POST['host'],
+	 			$_POST['root_user'], $_POST['root_pass'], $_POST['name'],
+				$client_charset, $dbTiki );
+		} else {
+			$dbcon = initTikiDB( $api_tiki, $_POST['db'], $_POST['host'],
+	 			$_POST['user'], $_POST['pass'], $_POST['name'], $client_charset,
+				$dbTiki );
+		}
 
 		if ($dbcon) {
 
-			if($_POST['user'] === 'root'
-				&& !empty($_POST['create_new_user'])
-				&& !empty($_POST['new_user'])
-				&& !empty($_POST['new_pass'])) {
+			if(!empty($_POST['create_new_user'])
+				&& !empty($_POST['root_user'])
+				&& !empty($_POST['root_pass'])) {
 
-				createTikiDBUser($dbTiki, $_POST['new_user'], $_POST['new_pass'], $_POST['name']);
-				write_local_php($_POST['db'], $_POST['host'], $_POST['new_user'], $_POST['new_pass'], $_POST['name'], $client_charset);
-			} else {
-				write_local_php($_POST['db'], $_POST['host'], $_POST['user'], $_POST['pass'], $_POST['name'], $client_charset);
+				createTikiDBUser($dbTiki, $_POST['host'], $_POST['user'], $_POST['pass'], $_POST['name']);
 			}
+			write_local_php($_POST['db'], $_POST['host'], $_POST['user'], $_POST['pass'], $_POST['name'], $client_charset);
 
 			// TODO: it is not possible to add_log if we don't have tables created
 			//$logslib->add_log('install', 'database credentials updated with hostname=' . $_POST['host'] . '; dbname='
