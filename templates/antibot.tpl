@@ -36,7 +36,7 @@
 						<input class="form-control" type="text" maxlength="8" size="22" name="captcha[input]" id="antibotcode">
 					</div>
 					<div class="col-md-1 col-sm-1">
-						<span class='text-danger tips' title=":{tr}This field is manadatory{/tr}">*</span>
+						<span class='text-danger tips' title=":{tr}This field is mandatory{/tr}">*</span>
 					</div>
 				{else}
 					<div class="{if $form === 'register' && !empty($inputclass)}{$inputclass}{else}col-md-8 col-sm-9 col-xs-12{/if}">
@@ -54,7 +54,7 @@
 				</div>
 				{if $showmandatory eq 'y'}
 					<div class="col-md-1 col-sm-1">
-						<span class='text-danger tips' title=":{tr}This field is manadatory{/tr}">*</span>
+						<span class='text-danger tips' title=":{tr}This field is mandatory{/tr}">*</span>
 					</div>
 				{/if}
 			</div>
