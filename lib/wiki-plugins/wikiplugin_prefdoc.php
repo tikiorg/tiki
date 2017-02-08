@@ -9,8 +9,8 @@ function wikiplugin_prefdoc_info()
 {
 	return array(
 		'name' => tra('Document Preferences'),
-		//'documentation' => tra('coming+soon'), TODO Fill in doc page
-		'description' => tra('Generates documentation for Tiki preferences tabs.'),
+		'documentation' => 'PluginPrefDoc',
+		'description' => tra('Generates documentation for Tiki preference tabs.'),
 		'prefs' => array( 'wikiplugin_prefdoc' ),
 		'validate' => 'all',
 		'introduced' => 17,
@@ -20,7 +20,7 @@ function wikiplugin_prefdoc_info()
 			'tab' => array(
 				'required' => false,
 				'name' => tra('Preference-Tab'),
-				'description' => tra('The name of the preference tab to display. In the format of "preference page name"-"Tab Name witout spaces" eg. To link to General Layout on the Look and Feel page you would use "look-generallayout". Note that the "look" can be found in the url tiki-admin.php?page=<strong>look</strong>.'),
+				'description' => tra('The name of the preference tab to display, or a list of available tabs upon invalid.'),
 				'filter' => 'text',
 				'since' => '17',
 			),
@@ -39,10 +39,10 @@ function wikiplugin_prefdoc_info()
  *
  * Generate, Display & Archive Tiki Pref Documentation
  *
- * @param $data     this is ignored
- * @param $params   paramiters to process
+ * @param $data string    this is ignored
+ * @param $params array   parameters to process
  *
- * @return string   returnes error or pref table
+ * @return string         formatted pref table (wiki format) or list of preference tabs (with errors)
  */
 
 function wikiplugin_prefdoc( $data, $params )
