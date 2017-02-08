@@ -239,34 +239,6 @@ var syntaxHighlighter = {
 	}
 
 	$headerlib->add_js($js);
-	
-	if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
-
-		$smarty->assign('ie6', true);
-
-		if ($prefs['feature_iepngfix'] == 'y') {
-			/**
-			 * \brief another attempt for PNG alpha transparency fix which seems to work best for IE6 and can be applied even on background positioned images
-			 *
-			 * is applied explicitly on defined CSS selectors or HTMLDomElement
-			 *
-			 */
-			if (($fixoncss = $prefs['iepngfix_selectors']) == '') {
-				$fixoncss = '.sitelogo a img';
-			}
-			if (($fixondom = $prefs['iepngfix_elements']) != '') {
-				$fixondom = "DD_belatedPNG.fixPng($fixondom); // list of HTMLDomElements to fix separated by commas (default is none)";
-			}
-			$scriptpath = 'lib/iepngfix/DD_belatedPNG-min.js';
-			$headerlib->add_jsfile($scriptpath, true);
-			$headerlib->add_js(
-<<<JS
-DD_belatedPNG.fix('$fixoncss'); // list of CSS selectors to fix separated by commas (default is set to fix sitelogo)
-$fixondom
-JS
-			);
-		}
-	}
 }
 
 if ($prefs['feature_ajax'] != 'y') {

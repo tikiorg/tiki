@@ -218,11 +218,6 @@
 			<div class="adminoptionboxchild" id="feature_tabs_childcontainer">
 				{preference name=layout_tabs_optional}
 			</div>
-			{preference name=feature_iepngfix}
-			<div class="adminoptionboxchild" id="feature_iepngfix_childcontainer">
-				{preference name=iepngfix_selectors}
-				{preference name=iepngfix_elements}
-			</div>
             {preference name=site_favicon_enable}
 			{preference name=image_responsive_class}
 			<div class="adminoptionbox">

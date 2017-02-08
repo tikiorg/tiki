@@ -2000,13 +2000,6 @@ function prefs_feature_list($partial = false)
 			'default' => 'y',
 			'tags' => array('basic'),
 		),
-		'feature_iepngfix' => array(
-			'name' => tra('IE Image Fix'),
-            'description' => tra('Correct PNG images alpha transparency in IE6 (experimental)'),
-			'tags' => array('experimental'),
-			'type' => 'flag',
-			'default' => 'n',
-		),
 		'feature_wiki_1like_redirection' => array(
 			'name' => tra("Redirect to similar wiki page"),
             'description' => tra("If a requested page doesn't exist, redirect to a similarly named page"),
