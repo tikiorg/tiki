@@ -4877,6 +4877,14 @@ div.drillshow {
   border: dashed 1px rgba(69, 255, 97, 0.68);
   background: rgba(85, 255, 68, 0.25);
 }
+.table-responsive.enlarge {
+  display: inline-table;
+  margin-right: 50px;
+  padding: 20px 10px 15px;
+  border: 1px solid #dddddd;
+  background-color: #ffffff;
+  overflow: visible;
+}
 .multilike .horizontal {
   display: inline-block;
   height: 38px;

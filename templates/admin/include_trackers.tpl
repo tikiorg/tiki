@@ -34,6 +34,7 @@
 				<div class="adminoptionboxchild" id="ajax_inline_edit_childcontainer">
 					{preference name=ajax_inline_edit_trackerlist}
 				</div>
+				{preference name=tracker_report_resize_button}
 				{preference name=tracker_show_comments_below}
 				{preference name=tracker_legacy_insert}
 				{preference name=tracker_status_in_objectlink}

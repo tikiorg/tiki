@@ -1,6 +1,6 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // $Id$
@@ -47,7 +47,7 @@ function prefs_tracker_list()
 			'description' => tr('Show comments for a tracker item below the item itself as in other trackers, instead of enclosed in a tab'),
 			'type' => 'flag',
 			'default' => 'n',
-		),		
+		),
 		'tracker_legacy_insert' => array(
 			'name' => tr('Use legacy tracker insertion screen'),
 			'description' => tr('Use the legacy tracker insertion screen (a tab) instead of a popup dialog.'),
@@ -80,8 +80,8 @@ function prefs_tracker_list()
  			'description' => tr('Have a tracker to supplement article information'),
  			'type' => 'flag',
 			'tags' => array('advanced'),
- 			'default' => 'n', 
- 			'dependencies' => array('feature_articles', 'feature_trackers', 'tracker_article_trackerId'), 
+ 			'default' => 'n',
+ 			'dependencies' => array('feature_articles', 'feature_trackers', 'tracker_article_trackerId'),
  		),
  		'tracker_article_trackerId' => array(
  			'name' => tr('Tracker ID of tracker for articles'),
@@ -158,6 +158,12 @@ function prefs_tracker_list()
 			'type' => 'flag',
 			'default' => 'y',
 			'dependencies' => ['feature_trackers','feature_sefurl', 'feature_sefurl_tracker_prefixalias'],
+		),
+		'tracker_report_resize_button' => array(
+			'name' => tr('Tracker report resize button'),
+			'description' => tr('Adds a button to resize long tracker reports'),
+			'type' => 'flag',
+			'default' => 'n',
 		),
 	);
 }

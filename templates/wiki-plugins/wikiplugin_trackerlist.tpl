@@ -68,6 +68,33 @@
 			<div class='trackercontainer' style='height: 250px ! important;'>
 		{/if}
 		<div id="wptrackerlist{$listTrackerId}-{$iTRACKERLIST}-div" {if $tsOn}style="visibility:hidden"{/if} class="ts-wrapperdiv">
+
+			{if $prefs.tracker_report_resize_button eq 'y'}
+				<p class="tracker-resize" style="display:none;text-align:right">
+					<button class="tracker-resize-expand btn btn-default" title="{tr}Resize{/tr}">{icon name='expand'}</button>
+					<button class="tracker-resize-compress btn btn-default" title="{tr}Resize{/tr}" style="display:none">{icon name='compress'}</button>
+				</p>
+				{jq}
+					$('[id^="wptrackerlist"].ts-wrapperdiv').each(function() {
+						if ($(this).width() < $(this).find('.table').width()) {
+							$(this).find('.tracker-resize').show();
+						}
+					});
+					$('.tracker-resize-expand').click(function() {
+						var selector = $(this).closest('.ts-wrapperdiv').find('.table-responsive');
+						selector.addClass('enlarge');
+						$(this).parent().find('.tracker-resize-compress').show();
+						$(this).hide();
+					});
+					$('.tracker-resize-compress').click(function() {
+						var selector = $(this).closest('.ts-wrapperdiv').find('.table-responsive');
+						selector.removeClass('enlarge');
+						$(this).parent().find('.tracker-resize-expand').show();
+						$(this).hide();
+					});
+				{/jq}
+			{/if}
+
 				<div class="table-responsive">
 					<table class="table table-striped table-hover normal wikiplugin_trackerlist" id="wptrackerlist{$listTrackerId}-{$iTRACKERLIST}"
 						{if isset($displaysheet) && $displaysheet eq 'true'}title="{$tracker_info.name}" readonly="true"{/if}

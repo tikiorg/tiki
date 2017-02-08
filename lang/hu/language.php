@@ -1,17 +1,17 @@
 <?php
 // (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
-// 
+//
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Note for translators about translation of text ending with punctuation
-// 
+//
 // The current list of concerned punctuation can be found in 'lib/init/tra.php'
 // On 2009-03-02, it is: (':', '!', ';', '.', ',', '?')
 // For clarity, we explain here only for colons: ':' but it is the same for the rest
-// 
+//
 // Short version: it is not a problem that string "Login:" has no translation. Only "Login" needs to be translated.
-// 
+//
 // Technical justification:
 // If a string ending with colon needs translating (like "{tr}Login:{/tr}")
 // then Tiki tries to translate 'Login' and ':' separately.
@@ -18245,4 +18245,6 @@ $lang = array(
 // "The TikiTest Replay File is Empty" => "The TikiTest Replay File is Empty",
 // "TikiTest Replay" => "TikiTest Replay",
 // "The page is empty" => "The page is empty",
+// "Tracker report resize button" => "Tracker report resize button"
+// "Adds a button to resize long tracker reports" => "Adds a button to resize long tracker reports"
 );
