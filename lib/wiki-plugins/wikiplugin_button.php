@@ -12,7 +12,6 @@ function wikiplugin_button_info()
 		'documentation' => 'PluginButton',
 		'description' => tra('Add a link formatted as a button'),
 		'prefs' => array('wikiplugin_button'),
-		'validate' => 'none',
 		'extraparams' => false,
 		'iconname' => 'play',
 		'introduced' => 6.1,
