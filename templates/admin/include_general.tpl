@@ -192,6 +192,7 @@
 					<div id="menus_items_icons_childcontainer">
 						{preference name='menus_items_icons_path'}
 					</div>
+					{preference name=menus_edit_icon}
 				</div>
 			</fieldset>
 			<fieldset>

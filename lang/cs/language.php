@@ -18200,4 +18200,6 @@ $lang = array(
 // "The page is empty" => "The page is empty",
 // "Tracker report resize button" => "Tracker report resize button"
 // "Adds a button to resize long tracker reports" => "Adds a button to resize long tracker reports"
+// "Edit menu icon" => "Edit menu icon"
+// "Adds an icon on the navbar to edit menu entries" => "Adds an icon on the navbar to edit menu entries"
 );

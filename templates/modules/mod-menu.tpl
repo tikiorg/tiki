@@ -19,7 +19,7 @@
 						{/if}
 					</div>
 					<div class="collapse navbar-collapse">
-						{if $tiki_p_admin eq 'y' AND $module_params.id neq '42'}
+						{if $prefs.menus_edit_icon eq 'y' AND $tiki_p_admin eq 'y' AND $module_params.id neq '42'}
 							<div class="edit-menu">
 								<a href="tiki-admin_menu_options.php?menuId={$module_params.id}" title="{tr}Edit this menu{/tr}">{icon name="edit"}</a>
 							</div>
@@ -33,7 +33,7 @@
 				{/if}
 			</nav>
 		{else}
-			{if $tiki_p_admin eq 'y' AND $module_params.id neq '42'}
+			{if $prefs.menus_edit_icon eq 'y' AND $tiki_p_admin eq 'y' AND $module_params.id neq '42'}
 				<div class="edit-menu">
 					<a href="tiki-admin_menu_options.php?menuId={$module_params.id}" title="{tr}Edit this menu{/tr}">{icon name="edit"}</a>
 				</div>

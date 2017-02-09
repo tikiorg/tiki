@@ -20,5 +20,11 @@ function prefs_menus_list()
 			'type' => 'text',
 			'default' => 'img/icons/large',
 		),
+		'menus_edit_icon' => array(
+			'name' => tra('Edit menu icon'),
+			'description' => tra('Adds an icon on the navbar to edit menu entries'),
+			'type' => 'flag',
+			'default' => 'n',
+		),
 	);
 }
