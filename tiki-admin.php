@@ -254,7 +254,9 @@ if ( isset ($_REQUEST['pref_filters']) ) {
 
 if (isset($_POST['pass_blacklist'])) {                                                  // if preferences were updated and blacklist feature is enabled (or is being enabled)
     $pass_blacklist_file = $jitPost->pass_blacklist_file->striptags();
-    if ($pass_blacklist_file[7]){                       // if code matches user generated file
+    $userfile = explode('-',$pass_blacklist_file);
+    $userfile = $userfile[3];
+    if ($userfile){                       // if the blacklist is a user generated file
     	$passDir = 'storage/pass_blacklists/';
     }else {
 	    $passDir = 'lib/pass_blacklists/';
