@@ -922,7 +922,8 @@ if ( \$('#$id') ) {
 		$data = $this->unprotectSpecialChars($data, true);
 
 		if ( $validate == 'all' || $validate == 'body' )
-			$validateBody = str_replace('<x>', '', $data);	// de-sanitize plugin body to make fingerprint consistant with 5.x
+			// Tiki 6 and ulterior may insert sequences in plugin body to break XSS exploits. The replacement works around removing them to keep fingerprints identical for upgrades from previous versions.
+			$validateBody = str_replace('<x>', '', $data);
 		else
 			$validateBody = '';
 
