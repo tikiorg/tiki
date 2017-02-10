@@ -12,6 +12,7 @@ function wikiplugin_button_info()
 		'documentation' => 'PluginButton',
 		'description' => tra('Add a link formatted as a button'),
 		'prefs' => array('wikiplugin_button'),
+		'validate' => 'all', // Parameters allow XSS.
 		'extraparams' => false,
 		'iconname' => 'play',
 		'introduced' => 6.1,
@@ -167,7 +168,6 @@ function wikiplugin_button($data, $params)
 {
 	$parserlib = TikiLib::lib('parser');
 	$smarty = TikiLib::lib('smarty');
-	$tikilib = TikiLib::lib('tiki');
 	if (empty($params['href'])) {
 		return tra('Incorrect param');
 	}
@@ -187,7 +187,6 @@ function wikiplugin_button($data, $params)
 	$parserlib->parse_wiki_argvariable($params['href']);
 
 	include_once($path);
-	$func = 'smarty_function_button';
-	$content = $func($params, $smarty);
+	$content = smarty_function_button($params, $smarty);
 	return '~np~'.$content.'~/np~';
 }
