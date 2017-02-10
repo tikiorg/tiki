@@ -141,6 +141,32 @@ function wikiplugin_pivottable_info()
 				'profile_reference' => 'tracker_field',
 				'separator' => ':',
 			),
+			'highlightMine' => array(
+				'name' => tra('Highlight my items'),
+				'description' => tra('Highlight owned items\' values in Charts.'),
+				'since' => '16.3',
+				'required' => false,
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			),
+			'highlightGroup' => array(
+				'name' => tra('Highlight my group items'),
+				'description' => tra('Highlight items\' values belonging to one of my groups in Charts.'),
+				'since' => '16.3',
+				'required' => false,
+				'filter' => 'alpha',
+				'default' => 'n',
+				'options' => array(
+					array('text' => '', 'value' => ''),
+					array('text' => tra('Yes'), 'value' => 'y'),
+					array('text' => tra('No'), 'value' => 'n')
+				)
+			)
 		),
 	);
 }
@@ -149,7 +175,7 @@ function wikiplugin_pivottable($data, $params)
 {
 	
 	//included globals for permission check
-	global $prefs, $page, $wikiplugin_included_page;
+	global $prefs, $page, $wikiplugin_included_page, $user;
 
 	//checking if vendor files are present 
 	if (!file_exists('vendor/nicolaskruchten/pivottable/')) {
@@ -339,6 +365,36 @@ function wikiplugin_pivottable($data, $params)
 		}
 		$pivotData[] = $row;
 	}
+
+	$highlight = array();
+	if( !empty($params['highlightMine']) && $params['highlightMine'] === 'y' ) {
+		$ownerField = $definition->getField($definition->getUserField());
+		if( $ownerField ) {
+			foreach( $pivotData as $item ) {
+				$itemUsers = TikiLib::lib('trk')->parse_user_field(@$item[$ownerField['name']]);
+				if( in_array($user, $itemUsers) ) {
+					$highlight[] = $item;
+				}
+			}
+		}
+	}
+	if( !empty($params['highlightGroup']) && $params['highlightGroup'] === 'y' ) {
+		$groupField = null;
+		foreach( $fields as $field ) {
+			if( $field['type'] == 'g' ) {
+				$groupField = $field;
+				break;
+			}
+		}
+		if( $groupField ) {
+			$myGroups = TikiLib::lib('tiki')->get_user_groups($user);
+			foreach( $pivotData as $item ) {
+				if( in_array(@$item[$groupField['name']], $myGroups) ) {
+					$highlight[] = $item;
+				}
+			}
+		}
+	}
 	
 	//translating permName to field name for columns and rows
 	$cols = array();
@@ -464,6 +520,9 @@ function wikiplugin_pivottable($data, $params)
 		'inclusions' => $inclusions,
 		'menuLimit' => empty($params['menuLimit']) ? null : $params['menuLimit'],
 		'aggregateDetails' => implode(':', $params['aggregateDetails']),
+		'highlight' => $highlight,
+		'highlightMine' => empty($params['highlightMine']) ? null : $params['highlightMine'],
+		'highlightGroup' => empty($params['highlightGroup']) ? null : $params['highlightGroup'],
 		'index'=>$id
 	));
 	

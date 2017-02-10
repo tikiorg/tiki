@@ -9,6 +9,7 @@
 			renderers: renderers,
 			rendererOptions: {
 				pivotId: {{$pivottable.id|json_encode}},
+				highlight: {{$pivottable.highlight|json_encode}}
 			},
 			cols: {{$pivottable.tcolumns|json_encode}}, rows: {{$pivottable.trows|json_encode}},
 			rendererName: {{$pivottable.rendererName|json_encode}},
@@ -23,7 +24,9 @@
 						return ( Date.parse(a) || 0 ) - ( Date.parse(b) || 0 );
 					}
 				}
-			}
+			},
+			highlightMine: {{$pivottable.highlightMine|json_encode}},
+			highlightGroup: {{$pivottable.highlightGroup|json_encode}}
 		};
 		if( {{$pivottable.menuLimit|json_encode}} ) {
 			opts.menuLimit = {{$pivottable.menuLimit|json_encode}};
