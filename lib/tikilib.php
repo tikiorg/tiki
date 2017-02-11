@@ -4709,6 +4709,7 @@ class TikiLib extends TikiDb_Bridge
 				'old_version' => $old_version,
 				'data' => $edit_data,
 				'old_data' => $info['data'],
+				'edit_comment' => $edit_comment,
 			)
 		);
 
