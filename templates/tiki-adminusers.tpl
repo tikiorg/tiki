@@ -374,7 +374,10 @@
 				<h2>{tr}Edit user{/tr} {$userinfo.login|escape}</h2>
 				{if $userinfo.login ne 'admin' and $userinfo.editable}
 					{assign var=thisloginescaped value=$userinfo.login|escape:'url'}
-					{button href="tiki-assignuser.php?assign_user=$thisloginescaped" _text="{tr}Assign user to Groups{/tr}"}
+					{button href="tiki-assignuser.php?assign_user=$thisloginescaped" _text="{tr}Assign user to Groups{/tr}" _icon_name='group'}
+				{/if}
+				{if $userinfo.waiting eq 'a'}
+					{button href='tiki-login_validate.php?user='|cat:$thisloginescaped|cat:'&pass='|cat:$userinfo.valid _text="{tr}Validate user{/tr}" _icon_name='ok'}
 				{/if}
 			{else}
 				<h2>{tr}Add a New User{/tr}</h2>
@@ -528,7 +531,7 @@
 									   onclick="$('[data-toggle=popover]').popover('hide');" class="btn btn-default edit-usertracker">
 										{tr}Edit Item{/tr}
 									</a>
-									<a href="{$usersitemid|sefurl:trackeritem}" class="btn btn-info">
+									<a href="{bootstrap_modal controller=tracker action=view id=$usersitemid}" class="btn btn-info">
 										{tr}View item{/tr}
 									<a>
 								{else}
