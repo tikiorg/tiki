@@ -510,7 +510,7 @@ class Services_Group_Controller
 				'home'                      => 'pagename',
 				'groupstracker'             => 'digits',
 				'userstracker'              => 'digits',
-				'registrationUsersFieldIds' => 'digitscommas',
+				'registrationUsersFieldIds' => 'digitscolons',
 				'userChoice'                => 'word',
 				'defcat'                    => 'digits',
 				'theme'                     => 'themename',
