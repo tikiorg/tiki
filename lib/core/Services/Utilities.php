@@ -155,7 +155,7 @@ class Services_Utilities
 
 
 	/**
-	 * CSFR ticket - Check the ticket to either set it or match to the ticket previously set
+	 * CSRF ticket - Check the ticket to either set it or match to the ticket previously set
 	 */
 	function checkTicket()
 	{
@@ -163,7 +163,7 @@ class Services_Utilities
 	}
 
 	/**
-	 * CSFR ticket - Check that the ticket has been created
+	 * CSRF ticket - Check that the ticket has been created
 	 *
 	 * @return bool
 	 */
@@ -173,7 +173,7 @@ class Services_Utilities
 	}
 
 	/**
-	 * CSFR ticket - Check that the ticket has been matched to the previous ticket set
+	 * CSRF ticket - Check that the ticket has been matched to the previous ticket set
 	 *
 	 * @return bool
 	 */
