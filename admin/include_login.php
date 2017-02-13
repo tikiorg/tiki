@@ -45,6 +45,22 @@ if (!empty($_REQUEST['refresh_email_group'])) {
 
 $smarty->assign('gd_lib_found', function_exists('gd_info') ? 'y' : 'n');
 
+
+if ($prefs['feature_antibot'] === 'y' && $prefs['captcha_questions_active'] !== 'y' && $prefs['recaptcha_enabled'] !== 'y') {
+	// check Zend captcha will work
+	$captcha = new Zend\Captcha\Dumb;
+
+	try {
+		$captchaId = $captcha->getId();	// simple test for missing random generator
+	} catch (Exception $e) {
+		$smarty->assign(
+			'captcha_error',
+			tr('This method of captcha is not supported by your server, please select another or upgrade it.') . '<br>' . $e->getMessage()
+		);
+	}
+
+}
+
 $listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 $smarty->assign("listgroups", $listgroups['data']);
 ask_ticket('admin-inc-login');
