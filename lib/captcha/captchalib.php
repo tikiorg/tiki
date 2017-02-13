@@ -155,7 +155,8 @@ class Captcha
 				$this->captcha->setSession($session);
 				$this->captcha->setKeepSession(false);
 			}
-		} catch (Zend\Captcha\Exception\ExceptionInterface $e) {
+		} catch (Exception $e) {
+			Feedback::error($e->getMessage());
 		}
 		return $key;
 	}
@@ -239,7 +240,11 @@ Recaptcha.create("' . $this->captcha->getPubKey() . '",
 	 */
 	function getPath()
 	{
-		return $this->captcha->getImgDir() . $this->captcha->getId() . $this->captcha->getSuffix();
+		try {
+			return $this->captcha->getImgDir() . $this->captcha->getId() . $this->captcha->getSuffix();
+		} catch (Exception $e) {
+			Feedback::error($e->getMessage());
+		}
 	}
 
 	/**
