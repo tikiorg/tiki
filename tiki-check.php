@@ -1095,6 +1095,22 @@ if ($s) {
 	);
 }
 
+// check Zend captcha will work which depends on \Zend\Math\Rand
+$captcha = new Zend\Captcha\Dumb;
+$math_random = array(
+		'fitness' => tra('good'),
+		'setting' => 'Available',
+		'message' => tra('Ability to generate random numbers, useful for example for CAPTCHA and other security features.'),
+	);
+try {
+	$captchaId = $captcha->getId();	// simple test for missing random generator
+} catch (Exception $e) {
+	$math_random['fitness'] = tra('ugly');
+	$math_random['setting'] = 'Not available';
+}
+$php_properties['\Zend\Math\Rand'] = $math_random;
+
+
 $s = extension_loaded('iconv');
 $msg = tra('This extension is required and used frequently in validation functions invoked within Zend Framework.');
 if ($s) {
