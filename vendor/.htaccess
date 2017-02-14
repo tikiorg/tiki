@@ -10,33 +10,14 @@
 
 	# -- Default Exception List -- #
 	# These rules may be deleted if the browser does not need to access them.
-	# None of these have been checked for browsr access, so its currently
-	# a list of file types contained within the subdirectories.
-	# If you are testing a vendor library (like during an update) you may
-	#  also want to test if these rules are needed at the same time by
-	#  disabling it while testing. If everything works fine, delete the rule.
+	#
+	# *** Work in progress, add exceptions before release where needed ***
+	#
 	# New vendor libraries can add exemptions if there is a issue, but the
 	#  likley senario is that it will not be needed.
 
-	RewriteRule "^(ckeditor/).*/.*\.(html|json)$" "-" [PT,L]
-	RewriteRule "^(codemirror/).*/.*\.(html)$" "-" [PT,L]
-	RewriteRule "^(components/).*/.*\.(json)$" "-" [PT,L]
-	RewriteRule "^(fontawsome/).*/.*\.(yml|lock|rb|html|json|pdf|swf)$" "-" [PT,L]
-	RewriteRule "^(google/).*/.*\.(php|dist|pem|xml)$" "-" [PT,L]
-	RewriteRule "^(jcapture-applet/).*/.*\.(iml|php|html|jar|jnlp|xml)$" "-" [PT,L]
-	RewriteRule "^(jquery/).*/.*\.(ai|jison|json|cur|html|swf)$" "-" [PT,L]
-	RewriteRule "^(mediumjs/).*/.*\.(html)$" "-" [PT,L]
-	RewriteRule "^(nicolaskruchten/).*/.*\.(coffee|html)$" "-" [PT,L]
-	RewriteRule "^(nnick/).*/.*\.(jshintrc)$" "-" [PT,L]
-	RewriteRule "^(onelogin/).*/.*\.(php|json|xml|xsd)$" "-" [PT,L]
-	RewriteRule "^(phpcas/).*/.*\.(php|xml)$" "-" [PT,L]
-	RewriteRule "^(phpseclib/).*/.*\.(php|cnf|dist|xml)$" "-" [PT,L]
-	RewriteRule "^(player/).*/.*\.(html|swf|xml)$" "-" [PT,L]
-	RewriteRule "^(simile_timeline/).*/.*\.(html)$" "-" [PT,L]
-	RewriteRule "^(sorich87/).*/.*\.(yml|coffee|json)$" "-" [PT,L]
-	RewriteRule "^(studio-42/).*/.*\.(php-dist|types|php|wav)$" "-" [PT,L]
-	RewriteRule "^(svg-edit/).*/.*\.(manifest|php|html|json|xml)$" "-" [PT,L]
-	RewriteRule "^(twitter/).*/.*\.(ml|nuspec|json)$" "-" [PT,L]
+	RewriteRule "^(jcapture-applet/).*/.*\.jar$" "-" [PT,L]
+	RewriteRule "^(player/).*/.*\.swf$" "-" [PT,L]
 
 	# -- Deny Everything Not Matched Above -- #
 	RewriteRule "/*" "-" [F]
