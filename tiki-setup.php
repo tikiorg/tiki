@@ -663,8 +663,8 @@ annotatorContent.annotator("addPlugin", "Store", {
 
 	urls: {
 		create:  "create",
-		update:  "update",
-		destroy: "destroy",
+		update:  "update&threadId=:id",
+		destroy: "destroy&threadId=:id",
 		search:  "search"
 	},
 

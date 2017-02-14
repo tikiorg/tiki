@@ -29,6 +29,22 @@ class Services_Comment_AnnotationController
 		$this->commentController = new Services_Comment_Controller();
 	}
 
+	/**
+	 * Remove an inline comment - warning, no confirmation yet
+	 *
+	 * @param jitFilter $input
+	 *        string    json encoded comment info from annotatorjs
+	 * containing:
+	 *        string    text    comment text
+	 *        string    quote   quoted text on page
+	 *        array     ranges  range info for quoted text
+	 *        string    uri     actually object-type:object-id identifier for the tiki object to be commented
+	 *
+	 * @return array    unused probably
+	 *
+	 * @throws Services_Exception_Denied
+	 */
+
 	function action_create($input)
 	{
 		global $user;
@@ -78,10 +94,36 @@ class Services_Comment_AnnotationController
 
 	}
 
+	/**
+	 * Remove an inline comment - warning, no confirmation yet
+	 *
+	 * @param jitFilter $input
+	 *        int       threadId  comment id to delete
+	 *
+	 * @return array
+	 * @throws Services_Exception_Denied
+	 */
+
 	function action_destroy($input)
 	{
+		$input->offsetSet('confirm', 1);	// TODO but not sure how?
 
+		$ret = $this->commentController->action_remove($input);
+
+		$ret['id'] = $ret['threadId'];
+		return $ret;
 	}
+
+	/**
+	 * List inline comments for a tiki object
+	 *
+	 * @param jitFilter $input
+	 *        int       limit   page size TODO
+	 *        int       offset  page start
+	 *        string    uri     object-type:object-id identifier for the tiki object to search
+	 *
+	 * @return array    [total, rows]
+	 */
 
 	function action_search($input)
 	{

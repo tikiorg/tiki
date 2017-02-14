@@ -3198,6 +3198,14 @@ class Comments extends TikiLib
 			$this->remove_thread_attachment($att['attId']);
 		}
 
+		// remove range attribute for inline "annotation" comments
+		TikiLib::lib('attribute')->set_attribute(
+			'comment',
+			$threadId,
+			'tiki.comment.ranges',
+			''
+		);
+
 		$tx = $this->begin();
 		// Update search index after deletion is done
 		foreach ($result as $res) {
