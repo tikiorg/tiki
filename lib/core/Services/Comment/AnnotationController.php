@@ -211,7 +211,7 @@ class Services_Comment_AnnotationController
 					'quote' => $quote,
 					'created' => $tikilib->get_iso8601_datetime($comment['commentDate']),
 					'updated' => $tikilib->get_iso8601_datetime($comment['commentDate']),	// we don't have a commentUpdated column?
-					'ranges' => $ranges,
+					'ranges' => $ranges ? $ranges : [],
 					'permissions' => $permissions,
 
 				];
