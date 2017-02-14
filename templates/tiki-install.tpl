@@ -336,7 +336,7 @@
 
 								<div style="padding:5px;">
 									<input type="checkbox" id="create-new-user" name="create_new_user" />
-									<label for="create-new-user">{tr}Create a new user just for this TikiWiki instance.{/tr}</label>&nbsp;
+									<label for="create-new-user">{tr}Create a new user just for this Tiki instance.{/tr}</label>&nbsp;
 								</div>
 							</fieldset>
 
