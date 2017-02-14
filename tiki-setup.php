@@ -677,7 +677,8 @@ annotatorContent.annotator("addPlugin", "Store", {
 		"uri": "' . $objectIdentifier . '"
 	},
 	
-	emulateJSON: true	// send the data in a form request so we can get it later
+	emulateJSON: true,	// send the data in a form request so we can get it later
+	emulateHTTP: true	// tiki services need GET or POST
 	
 });');
 

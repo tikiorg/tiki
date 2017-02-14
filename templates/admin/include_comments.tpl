@@ -37,7 +37,7 @@
 		</div>
 	</fieldset>
 	<fieldset>
-		<legend>{tr}Inline comments{/tr}</legend>
+		<legend>{tr}Annotations{/tr}</legend>
 		{preference name=feature_inline_comments}
 	</fieldset>
 	<fieldset>

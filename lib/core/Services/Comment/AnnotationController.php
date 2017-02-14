@@ -30,7 +30,7 @@ class Services_Comment_AnnotationController
 	}
 
 	/**
-	 * Remove an inline comment - warning, no confirmation yet
+	 * Create an inline comment
 	 *
 	 * @param jitFilter $input
 	 *        string    json encoded comment info from annotatorjs
@@ -53,7 +53,7 @@ class Services_Comment_AnnotationController
 		// but then need to decode the json string here
 		$params = new jitFilter(json_decode($input->json->none(), true));
 
-		$text = $params->text->text();
+		$text = $params->text->wikicontent();
 		$quote = $params->quote->text();
 		$ranges = $params->ranges->asArray();
 		$identifier = urldecode($params->uri->url());	// not really the uri but object-type:object-id identifier
@@ -63,8 +63,8 @@ class Services_Comment_AnnotationController
 			throw new Services_Exception_Denied;
 		}
 
-		$comment = ';note:' . $quote . "\n\n" . $text;
-		$title = 'Untitled ' . TikiLib::lib('tiki')->get_long_datetime(TikiLib::lib('tikidate')->getTime());
+		$comment = $this->formatComment($quote, $text);
+		$title = $this->createTitle($text);
 		$messageId = '';
 
 		// create the comment
@@ -89,8 +89,50 @@ class Services_Comment_AnnotationController
 		];
 	}
 
+	/**
+	 * Update an inline comment
+	 *
+	 * @param jitFilter $input
+	 *        string    json encoded comment info from annotatorjs
+	 * containing:
+	 *        int       id      comment threadId
+	 *        string    text    comment text
+	 *        string    quote   quoted text on page
+	 *        array     ranges  range info for quoted text
+	 *        string    uri     actually object-type:object-id identifier for the tiki object to be commented
+	 *        string    created datetime updated (?)
+	 *        string    updated datetime updated
+	 *
+	 * @return array    unused probably
+	 *
+	 * @throws Services_Exception_Denied
+	 */
+
 	function action_update($input)
 	{
+		$threadId = $input->threadId->int();
+		$params = new jitFilter(json_decode($input->json->none(), true));
+
+		$ranges = $params->ranges->asArray();
+		$text = $params->text->wikicontent();
+		$quote = $params->quote->text();
+
+		$input->offsetSet('data', $this->formatComment($quote, $text));
+		$input->offsetSet('title', $this->createTitle($text));
+		$input->offsetSet('edit', 1);
+
+		$ret = $this->commentController->action_edit($input);
+
+		if ($ret) {
+			TikiLib::lib('attribute')->set_attribute(
+				'comment',
+				$threadId,
+				RANGE_ATTRIBUTE,
+				json_encode($ranges)
+			);
+		}
+
+		return $ret;
 
 	}
 
@@ -129,7 +171,7 @@ class Services_Comment_AnnotationController
 	{
 		$tikilib = TikiLib::lib('tiki');
 
-		$limit = $input->limit->int();	// unused so far
+		$limit = $input->limit->int();		// unused so far
 		$offset = $input->offset->int();	// TODO pagination
 
 		$identifier = urldecode($input->uri->url());
@@ -173,6 +215,28 @@ class Services_Comment_AnnotationController
 			'total' => count($comments),	// TODO pagination
 			'rows' => $comments,
 		];
+	}
+
+	/**
+	 * @param $text
+	 * @return string
+	 */
+	private function createTitle($text): string
+	{
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_modifier_truncate');
+
+		return smarty_modifier_truncate($text, 50);
+	}
+
+	/**
+	 * @param $quote
+	 * @param $text
+	 * @return string
+	 */
+	private function formatComment($quote, $text): string
+	{
+		return ';note:' . $quote . "\n\n" . $text;
 	}
 
 }

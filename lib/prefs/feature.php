@@ -2795,8 +2795,8 @@ function prefs_feature_list($partial = false)
 			'default' => 'n',
 		),
 		'feature_inline_comments' => array(
-			'name' => tra('Inline Comments'),
-			'description' => tra('Enable/disable inline comments.'),
+			'name' => tra('Inline Comments (annotations)'),
+			'description' => tra('Enable/disable inline comments using Apache Annotator.'),
 			'dependencies' => array(
 				'feature_wiki_comments',
 				'feature_wiki_paragraph_formatting',
@@ -2804,6 +2804,7 @@ function prefs_feature_list($partial = false)
 			'type' => 'flag',
 			'default' => 'n',
 			'help' => 'Inline+comments',
+			'keywords' => 'annotation annotatorjs',
 		),
 		'feature_hidden_links' => array(
 			'name' => tra('Display hidden anchor on mouseover of headings'),
