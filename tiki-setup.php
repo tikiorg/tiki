@@ -649,7 +649,10 @@ if ($prefs['mustread_enabled'] == 'y') {
 	$headerlib->add_jsfile('lib/jquery_tiki/mustread.js');
 }
 
-if ($prefs['feature_inline_comments'] === 'y' && ! empty($object)) {
+if ($prefs['feature_inline_comments'] === 'y') {
+	if (empty($object)) {
+		$object = current_object();
+	}
 	$commentController = new Services_Comment_Controller();
 	$canPost = $commentController->canPost($object['type'], $object['object']);
 	$objectIdentifier = urlencode($object['type'] ) . ':' . urlencode($object['object']);	// spoof a URI from type and id
