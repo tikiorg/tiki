@@ -680,7 +680,16 @@ annotatorContent.annotator("addPlugin", "Store", {
 	emulateJSON: true,	// send the data in a form request so we can get it later
 	emulateHTTP: true	// tiki services need GET or POST
 	
-});');
+});
+annotatorContent.annotator("addPlugin", "Permissions", {
+	user: "' . $user . '",
+	showViewPermissionsCheckbox: false,	// TODO for private comments
+	showEditPermissionsCheckbox: false,
+	userAuthorize: function(action, annotation, user) {
+		return annotation.permissions[action];
+	}	
+});
+');
 
 }
 

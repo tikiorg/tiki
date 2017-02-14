@@ -199,6 +199,12 @@ class Services_Comment_AnnotationController
 					true
 				);
 
+				$permissions = [
+					'create' => $list['allow_post'],
+					'update' => $comment['can_edit'],
+					'delete' => $list['allow_remove'],
+				];
+
 				$comments[] = [
 					'id' => $comment['threadId'],
 					'text' => $text,
@@ -206,6 +212,7 @@ class Services_Comment_AnnotationController
 					'created' => $tikilib->get_iso8601_datetime($comment['commentDate']),
 					'updated' => $tikilib->get_iso8601_datetime($comment['commentDate']),	// we don't have a commentUpdated column?
 					'ranges' => $ranges,
+					'permissions' => $permissions,
 
 				];
 			}
@@ -221,7 +228,7 @@ class Services_Comment_AnnotationController
 	 * @param $text
 	 * @return string
 	 */
-	private function createTitle($text): string
+	private function createTitle($text)
 	{
 		$smarty = TikiLib::lib('smarty');
 		$smarty->loadPlugin('smarty_modifier_truncate');
@@ -234,7 +241,7 @@ class Services_Comment_AnnotationController
 	 * @param $text
 	 * @return string
 	 */
-	private function formatComment($quote, $text): string
+	private function formatComment($quote, $text)
 	{
 		return ';note:' . $quote . "\n\n" . $text;
 	}
