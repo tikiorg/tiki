@@ -71,6 +71,7 @@ if ($prefs['use_load_threshold'] == 'y') {
 	require_once ('lib/setup/load_threshold.php');
 }
 require_once ('lib/setup/sections.php');
+/** @var HeaderLib $headerlib */
 $headerlib = TikiLib::lib('header');
 
 $domain_map = array();
@@ -647,6 +648,41 @@ if ($prefs['ajax_inline_edit'] == 'y') {
 if ($prefs['mustread_enabled'] == 'y') {
 	$headerlib->add_jsfile('lib/jquery_tiki/mustread.js');
 }
+
+if ($prefs['feature_inline_comments'] === 'y' && ! empty($object)) {
+	$commentController = new Services_Comment_Controller();
+	$canPost = $commentController->canPost($object['type'], $object['object']);
+	$objectIdentifier = urlencode($object['type'] ) . ':' . urlencode($object['object']);	// spoof a URI from type and id
+
+	$headerlib
+		->add_jsfile('vendor/openannotation/annotator/annotator-full.min.js')
+		->add_cssfile('vendor/openannotation/annotator/annotator.min.css')
+		->add_jq_onready('var annotatorContent = $("#top").annotator({readOnly: ' . ($canPost ? 'false' : 'true') . '});
+annotatorContent.annotator("addPlugin", "Store", {
+	prefix: "tiki-ajax_services.php?controller=annotation&action=",
+
+	urls: {
+		create:  "create",
+		update:  "update",
+		destroy: "destroy",
+		search:  "search"
+	},
+
+	annotationData: {
+		"uri": "' . $objectIdentifier . '"
+	},
+
+	loadFromSearch: {
+		"limit": 20,
+		"uri": "' . $objectIdentifier . '"
+	},
+	
+	emulateJSON: true	// send the data in a form request so we can get it later
+	
+});');
+
+}
+
 
 if (true) {
 	// Before being clever and moving this close to where you think it's needed (again),
