@@ -243,7 +243,9 @@ class Services_Comment_AnnotationController
 	 */
 	private function formatComment($quote, $text)
 	{
-		return ';note:' . $quote . "\n\n" . $text;
+		$safeQuote = str_replace(["\n", "\r"], ' ', $quote);
+		$safeQuote = addslashes($safeQuote);
+		return ';note:' . $safeQuote . "\n\n" . $text;
 	}
 
 }
