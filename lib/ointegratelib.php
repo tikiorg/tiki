@@ -84,10 +84,15 @@ class OIntegrate
 				);
 		} else {
 			$method = 'POST';
+			if (json_decode($postBody)) {	// autodetect if the content type should be json
+				$requestContentType = 'application/json';
+			} else {
+				$requestContentType = 'application/x-www-form-urlencoded';
+			}
 			$http_headers = array(
 					'Accept' => 'application/json,text/x-yaml',
 					'OIntegrate-Version' => '1.0',
-					'Content-Type' => 'application/x-www-form-urlencoded',
+					'Content-Type' => $requestContentType,
 			);
 			$client->setRawBody($postBody);
 		}
@@ -104,14 +109,14 @@ class OIntegrate
 		$httpResponse = $client->send();
 		$content = $httpResponse->getBody();
 
-		$contentType = $httpResponse->getHeaders()->get('Content-Type');
+		$requestContentType = $httpResponse->getHeaders()->get('Content-Type');
 		$cacheControl = $httpResponse->getHeaders()->get('Cache-Control');
 
 		$response = new OIntegrate_Response;
-		$response->contentType = $contentType;
+		$response->contentType = $requestContentType;
 		$response->cacheControl = $cacheControl;
-		if ($contentType) {
-			$mediaType = $contentType->getMediaType();
+		if ($requestContentType) {
+			$mediaType = $requestContentType->getMediaType();
 		} else {
 			$mediaType = '';
 		}
