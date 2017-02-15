@@ -1,5 +1,5 @@
 <?php
-// (c) Copyright 2002-2016 by authors of the Tiki Wiki CMS Groupware Project
+// (c) Copyright 2002-2017 by authors of the Tiki Wiki CMS Groupware Project
 // 
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -349,7 +349,7 @@ class WikiPluginPluginManager extends PluginsLib
 			$pluginprefs = !empty($infoPlugin['prefs']) && $params['showtopinfo'] !== 'n' ? '<em>'
 				. tra('Preferences required:') . '</em> ' . implode(', ', $infoPlugin['prefs']). '<br/>' : '';
 			$title .= isset($infoPlugin['introduced']) && $params['showtopinfo'] !== 'n' ? '<em>' .
-				tr('Introduced in %0', 'Tiki' . $infoPlugin['introduced']) . '.</em>' : '';
+				tr('Introduced in %0', 'Tiki ' . $infoPlugin['introduced']) . '.</em>' : '';
 			$required = !empty($filteredparams) ? array_column($filteredparams, 'required') : false;
 			$bold = in_array(true, $required) > 0 ? '<em> ' . tr('Required parameters are in%0 %1bold%2', '</em>',
 				'<strong><code>', '</code></strong>.') : '';
