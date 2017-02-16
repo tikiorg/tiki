@@ -281,13 +281,12 @@ function prefs_feature_list($partial = false)
 		),
 		'feature_search' => array(
 			'name' => tra('Unified Search Index'),
-			'description' => tra('Enables searching for content at the site using a Tiki-managed index.'),
+			'description' => tra('Enables searching for content at the site using a Tiki-managed index.') . '<br>' . tra("It's recommended to set a cron job to periodically rebuild the search index."),
 			'help' => 'Search',
 			'type' => 'flag',
 			'default' => 'y',
 			'tags' => array('basic'),
 			'admin' => 'search',
-			'warning' => tra("Unified Search requires server processing resources and that you properly set the server permissions. It's recommended to set a cron job to periodically rebuild the search index."),
 			'module' => 'search',
 			'view' => 'tiki-searchindex.php',
 			'permission' => array(
