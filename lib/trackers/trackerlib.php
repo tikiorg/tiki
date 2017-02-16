@@ -4986,11 +4986,11 @@ class TrackerLib extends TikiLib
 		return false;
 	}
 
-	private function get_tracker_item_user($trackerId, $values)
+	private function get_tracker_item_users($trackerId, $values)
 	{
 		global $user, $prefs;
 		$userlib = TikiLib::lib('user');
-		$trackersync_user = $user;
+		$trackersync_users = array($user);
 
 		$definition = Tracker_Definition::get($trackerId);
 
@@ -4999,11 +4999,11 @@ class TrackerLib extends TikiLib
 			$value = isset($values[$fieldId]) ? $values[$fieldId] : '';
 
 			if ($value) {
-				$trackersync_user = $value;
+				$trackersync_users = $this->parse_user_field($value);
 			}
 		}
 
-		return $trackersync_user;
+		return $trackersync_users;
 	}
 
 	private function get_tracker_item_coordinates($trackerId, $values)
@@ -5031,13 +5031,16 @@ class TrackerLib extends TikiLib
 			return;
 		}
 
-		if (false === $trackersync_user = $this->get_tracker_item_user($trackerId, $args['values'])) {
+		$trackersync_users = $this->get_tracker_item_users($trackerId, $args['values']);
+		if (empty($trackersync_users)) {
 			return;
 		}
 
 		$definition = Tracker_Definition::get($trackerId);
 		if ($definition && $fieldId = $definition->getLanguageField()) {
-			TikiLib::lib('tiki')->set_user_preference($trackersync_user, 'language', $args['values'][$fieldId]);
+			foreach ($trackersync_users as $trackersync_user) {
+				TikiLib::lib('tiki')->set_user_preference($trackersync_user, 'language', $args['values'][$fieldId]);
+			}
 		}
 	}
 
@@ -5051,7 +5054,8 @@ class TrackerLib extends TikiLib
 			return;
 		}
 
-		if (false === $trackersync_user = $this->get_tracker_item_user($trackerId, $args['values'])) {
+		$trackersync_users = $this->get_tracker_item_users($trackerId, $args['values']);
+		if (empty($trackersync_users)) {
 			return;
 		}
 
@@ -5072,7 +5076,9 @@ class TrackerLib extends TikiLib
 				$realname = implode(' ', $parts);
 
 				if (! empty($realname)) {
-					TikiLib::lib('tiki')->set_user_preference($trackersync_user, 'realName', $realname);
+					foreach ($trackersync_users as $trackersync_user) {
+						TikiLib::lib('tiki')->set_user_preference($trackersync_user, 'realName', $realname);
+					}
 				}
 			}
 		}
@@ -5088,17 +5094,20 @@ class TrackerLib extends TikiLib
 			return;
 		}
 
-		if (false === $trackersync_user = $this->get_tracker_item_user($trackerId, $args['values'])) {
+		$trackersync_users = $this->get_tracker_item_users($trackerId, $args['values']);
+		if (empty($trackersync_users)) {
 			return;
 		}
 
 		if ($geo = $this->get_tracker_item_coordinates($trackerId, $args['values'])) {
 			$tikilib = TikiLib::lib('tiki');
 
-			$tikilib->set_user_preference($trackersync_user, 'lon', $geo['lon']);
-			$tikilib->set_user_preference($trackersync_user, 'lat', $geo['lat']);
-			if (!empty($geo['zoom'])) {
-				$tikilib->set_user_preference($trackersync_user, 'zoom', $geo['zoom']);
+			foreach ($trackersync_users as $trackersync_user) {
+				$tikilib->set_user_preference($trackersync_user, 'lon', $geo['lon']);
+				$tikilib->set_user_preference($trackersync_user, 'lat', $geo['lat']);
+				if (!empty($geo['zoom'])) {
+					$tikilib->set_user_preference($trackersync_user, 'zoom', $geo['zoom']);
+				}
 			}
 		}
 	}
@@ -5111,6 +5120,52 @@ class TrackerLib extends TikiLib
 		if ($geo = $this->get_tracker_item_coordinates($trackerId, $args['values'])) {
 			if ($geo && $itemId) {
 				TikiLib::lib('geo')->set_coordinates('trackeritem', $itemId, $geo);
+			}
+		}
+	}
+
+	public function sync_user_groups($args)
+	{
+		global $prefs;
+
+		$trackerId = $args['trackerId'];
+
+		if (! $this->tracker_is_syncable($trackerId)) {
+			return;
+		}
+
+		$trackersync_users = $this->get_tracker_item_users($trackerId, $args['values']);
+		if (empty($trackersync_users)) {
+			return;
+		}
+
+		if (empty($prefs["user_trackersync_groups"])) {
+			return;
+		}
+
+		$definition = Tracker_Definition::get($trackerId);
+		$userslib = TikiLib::lib('user');
+
+		$trackersync_groupfields = preg_split('/\s*,\s*/', $prefs["user_trackersync_groups"]);
+		foreach ($trackersync_groupfields as $field) {
+			$field = intval($field);
+			if (!isset($args['values'][$field])) {
+				continue;
+			}
+			$field = $definition->getField($field);
+			$handler = $this->get_field_handler($field, $args['values']);
+			$group = $handler->renderOutput();
+			if (empty($group) || !$userslib->group_exists($group)) {
+				continue;
+			}
+			foreach ($trackersync_users as $trackersync_user) {
+				if (!$userslib->user_exists($trackersync_user)) {
+					continue;
+				}
+				if ($userslib->user_is_in_group($trackersync_user, $group)) {
+					continue;
+				}
+				$userslib->assign_user_to_group($trackersync_user, $group);
 			}
 		}
 	}
