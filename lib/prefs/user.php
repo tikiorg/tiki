@@ -223,6 +223,17 @@ function prefs_user_list($partial = false)
 			'default' => '',
 			'profile_reference' => 'tracker_field',
 		),
+		'user_trackersync_groups' => array(
+			'name' => tra('Tracker field IDs to sync user groups'),
+			'description' => tra('Enter the IDs separated by commas of all fields that contain group names to sync user groups to'),
+			'type' => 'text',
+			'size' => '10',
+			'dependencies' => array(
+				'userTracker',
+				'user_trackersync_trackers',
+			),
+			'default' => '',
+		),
 		'user_trackersync_geo' => array(
 			'name' => tra('Synchronize long/lat/zoom to location field'),
 			'description' => tra('Synchronize user geolocation prefs to main location field'),
