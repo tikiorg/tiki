@@ -49,7 +49,7 @@
 		{/section}
 
 		<div style="text-align: center">
-			<a href="tiki-shoutbox.php" class="linkmodule more">{tr}Read More{/tr}&hellip;</a>
+			<a href="tiki-shoutbox.php" class="linkmodule more">{tr}Read More{/tr}…</a>
 		</div>
 	{/tikimodule}
 {/if}

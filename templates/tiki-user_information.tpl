@@ -175,7 +175,7 @@
 
 	{if $prefs.user_tracker_infos and $infoPublic eq "y"}
 		{tab name="{tr}Additional Information{/tr}"}
-			<h2>{tr}Additional Information{/tr} &ndash; {$userinfo.login}</h2>
+			<h2>{tr}Additional Information{/tr} – {$userinfo.login}</h2>
 			<div class="panel panel-default">
 				<div class="panel-body">
 
@@ -209,7 +209,7 @@
 				<div class="panel-body">
 					{if ($user_pages|@count > 0) or ($user_galleries|@count > 0) or ($user_blogs|@count > 0) or ($user_blog_posts|@count > 0) or ($user_articles|@count > 0) or ($user_forum_comments|@count > 0) or ($user_forum_topics|@count > 0) or ($user_items|@count > 0)}
 						<h2 class="text-center">{tr}User{/tr} {$userinfo.login|userlink}</h2>
-						<p><em>{tr}has contributed to the following content{/tr}&hellip;</em></p>
+						<p><em>{tr}has contributed to the following content{/tr}…</em></p>
 					{else}
 						<h2 class="text-center">{tr}User{/tr} {$userinfo.login|userlink}</h2>
 						<p><em>{tr}has not contributed to any content yet{/tr}</em></p>
@@ -375,7 +375,7 @@
 						<input type="hidden" name="to" value="{$userwatch|escape}">
 						<input type="hidden" name="view_user" value="{$userwatch|escape}">
 
-						<p>{tr}The following message will be sent to user{/tr} {$userinfo.login|userlink}&hellip;</p>
+						<p>{tr}The following message will be sent to user{/tr} {$userinfo.login|userlink}…</p>
 
 
 

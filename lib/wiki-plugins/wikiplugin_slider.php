@@ -445,8 +445,8 @@ function wikiplugin_slider($data, $params)
 
 			startText           : 'Start',
 			stopText            : 'Stop',
-			forwardText         : '&raquo;',
-			backText            : '&laquo;',
+			forwardText         : '»',
+			backText            : '«',
 			tooltipClass        : 'tooltip',
 
 			// Function

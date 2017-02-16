@@ -981,6 +981,6 @@
 
 	<div class="row install-footer text-center">
 		<hr>
-		<a href="https://tiki.org" target="_blank" title="{tr}Powered by{/tr} {tr}Tiki Wiki CMS Groupware{/tr} &#169; 2002&#8211;{$smarty.now|date_format:"%Y"} " class="btn"><img src="img/tiki/tikibutton.png" alt="{tr}Powered by Tiki Wiki CMS Groupware{/tr}"></a>
+		<a href="https://tiki.org" target="_blank" title="{tr}Powered by{/tr} {tr}Tiki Wiki CMS Groupware{/tr} &copy; 2002–{$smarty.now|date_format:"%Y"} " class="btn"><img src="img/tiki/tikibutton.png" alt="{tr}Powered by Tiki Wiki CMS Groupware{/tr}"></a>
 	</div><!-- End of install-footer -->
 </div><!-- End of tiki-install container -->

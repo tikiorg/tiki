@@ -231,11 +231,11 @@
 				<legend>{tr}Separators{/tr}</legend>
 				{preference name=site_crumb_seper}
 				<div class="adminoptionboxchild clearfix">
-					<span class="col-md-8 col-md-push-4 help-block">{tr}Examples:{/tr} &nbsp; &raquo; &nbsp; / &nbsp; &gt; &nbsp; : &nbsp; -> &nbsp; &#8594;</span>
+					<span class="col-md-8 col-md-push-4 help-block">{tr}Examples:{/tr} &nbsp; » &nbsp; / &nbsp; &gt; &nbsp; : &nbsp; -> &nbsp; →</span>
 				</div>
 				{preference name=site_nav_seper}
 				<div class="adminoptionboxchild clearfix">
-					<span class="col-md-8 col-md-push-4 help-block">{tr}Examples:{/tr} &nbsp; | &nbsp; / &nbsp; &brvbar; &nbsp; :</span>
+					<span class="col-md-8 col-md-push-4 help-block">{tr}Examples:{/tr} &nbsp; | &nbsp; / &nbsp; ¦ &nbsp; :</span>
 				</div>
 			</fieldset>
 			{preference name=log_tpl}
