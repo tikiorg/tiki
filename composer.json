@@ -67,6 +67,7 @@
 		"phpseclib/phpseclib": "0.3.6",
 		"player/flv": "1.0",
 		"player/mp3": "1.0",
+		"plotly/plotly.js": "~1.23.1",
 		"rangy/rangy": "1.3.0",
 		"Sam152/Javascript-Equal-Height-Responsive-Rows" : "1.0.0",
 		"simile_timeline/simile_timeline": "2.3.0",

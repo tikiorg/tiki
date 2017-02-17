@@ -1,5 +1,3 @@
-{* TODO: switch to packagist bundled version of plotly in composer once it is there! *}
-<script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 {jq}
 	var pivotData{{$pivottable.index}} = {{$pivottable.data|json_encode}};
 	$('#output_{{$pivottable.id}}').each(function () {

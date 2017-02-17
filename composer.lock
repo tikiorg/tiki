@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "40624d1c0d7c884e463cb1a7ad12764e",
+    "content-hash": "bf2f96c0ab407d7744d1b0034198bc43",
     "packages": [
         {
             "name": "Sam152/Javascript-Equal-Height-Responsive-Rows",
@@ -441,17 +441,20 @@
         },
         {
             "name": "container-interop/container-interop",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/container-interop/container-interop.git",
-                "reference": "fc08354828f8fd3245f77a66b9e23a6bca48297e"
+                "reference": "79cbf1341c22ec75643d841642dd5d6acd83bdb8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/container-interop/container-interop/container-interop-container-interop-fc08354828f8fd3245f77a66b9e23a6bca48297e-zip-55a405.zip",
-                "reference": "fc08354828f8fd3245f77a66b9e23a6bca48297e",
-                "shasum": "8a6195a669cb230df5721a905f23ab021bd9f99f"
+                "url": "https://composer.tiki.org/dist/container-interop/container-interop/container-interop-container-interop-79cbf1341c22ec75643d841642dd5d6acd83bdb8-zip-d0c942.zip",
+                "reference": "79cbf1341c22ec75643d841642dd5d6acd83bdb8",
+                "shasum": "7979a64682f172183ce5349043c1e89d9455e4c5"
+            },
+            "require": {
+                "psr/container": "^1.0"
             },
             "type": "library",
             "autoload": {
@@ -464,7 +467,8 @@
                 "MIT"
             ],
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
-            "time": "2014-12-30T15:22:37+00:00"
+            "homepage": "https://github.com/container-interop/container-interop",
+            "time": "2017-02-14T19:40:03+00:00"
         },
         {
             "name": "cwspear/bootstrap-hover-dropdown",
@@ -1295,13 +1299,13 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/chartjs/Chart.js.git",
-                "reference": "6ff34a5d4a29afea087f08568e01e2514e9d8b11"
+                "reference": "8dafbc02c0a222ce841d0a028eabd39c76dd5c86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/nnnick/chartjs/nnnick-chartjs-6ff34a5d4a29afea087f08568e01e2514e9d8b11-zip-355da3.zip",
-                "reference": "6ff34a5d4a29afea087f08568e01e2514e9d8b11",
-                "shasum": "260086961f3fea952a1e384cc55df977d34122a4"
+                "url": "https://composer.tiki.org/dist/nnnick/chartjs/nnnick-chartjs-8dafbc02c0a222ce841d0a028eabd39c76dd5c86-zip-7ea8af.zip",
+                "reference": "8dafbc02c0a222ce841d0a028eabd39c76dd5c86",
+                "shasum": "4acec14009940d2fbb9273b391bf6562f33fa005"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -1328,7 +1332,7 @@
                 "JS",
                 "chart"
             ],
-            "time": "2017-02-03T23:17:33+00:00"
+            "time": "2017-02-12T16:23:17+00:00"
         },
         {
             "name": "onelogin/php-saml",
@@ -1629,6 +1633,72 @@
                 "shasum": "b9e69e3cfc554dbabebea7f93995646252788570"
             },
             "type": "library"
+        },
+        {
+            "name": "plotly/plotly.js",
+            "version": "v1.23.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/plotly/plotly.js.git",
+                "reference": "233e0436fc99bfad5ed461832c336e83014b52d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/plotly/plotly-js/plotly-plotly-js-233e0436fc99bfad5ed461832c336e83014b52d9-zip-0d9fe7.zip",
+                "reference": "233e0436fc99bfad5ed461832c336e83014b52d9",
+                "shasum": "b77ee07f0456f33c08b5f0307ebcb747a964960a"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/"
+        },
+        {
+            "name": "psr/container",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/container.git",
+                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.tiki.org/dist/psr/container/psr-container-b7ce3b176482dbbc1245ebf52b181af44c2cf55f-zip-34fef8.zip",
+                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
+                "shasum": "8d2fc417729ad899e55796311063b87014b98544"
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Container\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common Container Interface (PHP FIG PSR-11)",
+            "homepage": "https://github.com/php-fig/container",
+            "keywords": [
+                "PSR-11",
+                "container",
+                "container-interface",
+                "container-interop",
+                "psr"
+            ],
+            "time": "2017-02-14T16:28:37+00:00"
         },
         {
             "name": "psr/log",
@@ -2066,17 +2136,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.2.3",
+            "version": "v3.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "e1718c6bf57e1efbb8793ada951584b2ab27775b"
+                "reference": "9724c684646fcb5387d579b4bfaa63ee0b0c64c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/symfony/yaml/symfony-yaml-e1718c6bf57e1efbb8793ada951584b2ab27775b-zip-a2be46.zip",
-                "reference": "e1718c6bf57e1efbb8793ada951584b2ab27775b",
-                "shasum": "332ca342baa474ac9ad30120a7317229815db9a8"
+                "url": "https://composer.tiki.org/dist/symfony/yaml/symfony-yaml-9724c684646fcb5387d579b4bfaa63ee0b0c64c8-zip-142eda.zip",
+                "reference": "9724c684646fcb5387d579b4bfaa63ee0b0c64c8",
+                "shasum": "50da8ddd9ff5ab76c4e59973affc16db9ecac01b"
             },
             "require": {
                 "php": ">=5.5.9"
@@ -2117,7 +2187,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-01-21T17:06:35+00:00"
+            "time": "2017-02-16T22:46:52+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -2994,17 +3064,17 @@
         },
         {
             "name": "zendframework/zend-mail",
-            "version": "2.7.2",
+            "version": "2.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-mail.git",
-                "reference": "8210faa6865f94962f9a5c76269703bfdcf2fa4c"
+                "reference": "e92b4bc1cf6fe0fdad571bd7b4af2762414d58ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://composer.tiki.org/dist/zendframework/zend-mail/zendframework-zend-mail-8210faa6865f94962f9a5c76269703bfdcf2fa4c-zip-76b2e6.zip",
-                "reference": "8210faa6865f94962f9a5c76269703bfdcf2fa4c",
-                "shasum": "4eedd1d028c5ab3c42cc09d59e0d968d66201d02"
+                "url": "https://composer.tiki.org/dist/zendframework/zend-mail/zendframework-zend-mail-e92b4bc1cf6fe0fdad571bd7b4af2762414d58ff-zip-2c94aa.zip",
+                "reference": "e92b4bc1cf6fe0fdad571bd7b4af2762414d58ff",
+                "shasum": "5090f6daaa707bf126d12ebbc3905bc1d6ebad13"
             },
             "require": {
                 "php": "^5.5 || ^7.0",
@@ -3015,7 +3085,7 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.8",
-                "squizlabs/php_codesniffer": "^2.3.1",
+                "zendframework/zend-coding-standard": "~1.0.0",
                 "zendframework/zend-config": "^2.6",
                 "zendframework/zend-crypt": "^2.6",
                 "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3"
@@ -3050,7 +3120,7 @@
                 "mail",
                 "zf2"
             ],
-            "time": "2016-12-19T22:46:35+00:00"
+            "time": "2017-02-14T18:03:34+00:00"
         },
         {
             "name": "zendframework/zend-math",
