@@ -148,6 +148,10 @@ if (empty($_POST['install_step'])) {
 // define the language to use, either from user-setting or default
 if (!empty($_POST['lang'])) {
 	$language = $prefs['site_language'] = $prefs['language'] = $_POST['lang'];
+	if (Language::isRTL()) {
+		$prefs['feature_bidi'] =  'y';
+		TikiLib::lib('header')->add_cssfile('vendor/morteza/bootstrap-rtl/dist/css/bootstrap-rtl.min.css', 99); // 99 is high rank order as it should load after all other css files
+	}
 } else {
 	$language = $prefs['site_language'] = $prefs['language'] = 'en';
 }
