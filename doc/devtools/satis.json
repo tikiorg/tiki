@@ -1704,6 +1704,7 @@
 		"player/flv": ">=1.0",
 		"player/mp3": ">=1.0",
 		"plotly/plotly.js": ">=1.23.0",
+		"psr/container": ">=1.0.0",
 		"psr/log": ">=1.0",
 		"rangy/rangy": ">=1.2.3",
 		"simile_timeline/simile_timeline": ">=2.3.0",
