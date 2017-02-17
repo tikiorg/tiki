@@ -145,7 +145,7 @@ class Net_POP3
 	 * the socket object.
 	 *
 	 */
-	function Net_POP3()
+	function __construct()
 	{
 		$this->_timestamp =  ''; // Used for APOP
 		$this->_maildrop  =  array();
