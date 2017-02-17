@@ -238,7 +238,11 @@ function wikiplugin_customsearch($data, $params)
 	}
 	$builder = new Search_Query_WikiBuilder($query);
 	$builder->apply($matches);
-
+	$tsret = $builder->applyTablesorter($matches);
+	if (!empty($tsret['max']) || !empty($_GET['numrows'])) {
+		$max = !empty($_GET['numrows']) ? $_GET['numrows'] : $tsret['max'];
+		$builder->wpquery_pagination_max($query, $max);
+	}
 	$paginationArguments = $builder->getPaginationArguments();
 
 	// Use maxRecords set in LIST parameters rather then global default if set.
@@ -254,9 +258,9 @@ function wikiplugin_customsearch($data, $params)
 	$paginationArguments['_onclick'] = "$('#customsearch_$id').submit();return false;";
 
 	$builder = new Search_Formatter_Builder;
+	$builder->setId('wpcs-' . $id);
 	$builder->setPaginationArguments($paginationArguments);
-	$builder->apply($matches);
-	$formatter = $builder->getFormatter();
+	$builder->setTsOn($tsret['tsOn']);
 
 	$facets = new Search_Query_FacetWikiBuilder;
 	$facets->apply($matches);
@@ -266,8 +270,10 @@ function wikiplugin_customsearch($data, $params)
 		$definitionKey, serialize(
 			array(
 				'query' => $query,
-				'formatter' => $formatter,
+				'data' => $data,
+				'builder' => $builder,
 				'facets' => $facets,
+				'tsret' => $tsret,
 			)
 		),
 		'customsearch'

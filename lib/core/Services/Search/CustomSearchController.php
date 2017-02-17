@@ -38,10 +38,16 @@ class Services_Search_CustomSearchController
 
 		/** @var Search_Query $query */
 		$query = $definition['query'];
-		/** @var Search_FacetProvider $formatter */
-		$formatter = $definition['formatter'];
+		/** @var Search_Formatter_Builder $builder */
+		$builder = $definition['builder'];
 		/** @var Search_Elastic_FacetBuilder $facetsBuilder */
 		$facetsBuilder = $definition['facets'];
+
+		$tsettings = $definition['tsettings'];
+		$tsret = $definition['tsret'];
+
+		$matches = WikiParser_PluginMatcher::match($definition['data']);
+		$builder->apply($matches);
 
 		$adddata = json_decode($input->adddata->text(), true);
 
@@ -173,6 +179,11 @@ class Services_Search_CustomSearchController
 		$index = $unifiedsearchlib->getIndex();
 		$resultSet = $query->search($index);
 
+		$resultSet->setTsSettings($builder->getTsSettings());
+		$resultSet->setId('wpcs-' . $id);
+		$resultSet->setTsOn($tsret['tsOn']);
+
+		$formatter = $builder->getFormatter();
 		$results = $formatter->format($resultSet);
 
 		$results = TikiLib::lib('tiki')->parse_data($results, array('is_html' => true, 'skipvalidation' => true));
