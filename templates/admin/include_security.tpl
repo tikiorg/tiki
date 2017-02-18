@@ -173,6 +173,24 @@
 			<div class="adminoptionboxchild" id="http_header_xss_protection_childcontainer">
 				{preference name=http_header_xss_protection_value}
 			</div>
+
+			{preference name=http_header_content_type_options}
+
+			{preference name=http_header_content_security_policy}
+			<div class="adminoptionboxchild" id="http_header_content_security_policy_childcontainer">
+				{preference name=http_header_content_security_policy_value}
+			</div>
+
+			{preference name=http_header_strict_transport_security}
+			<div class="adminoptionboxchild" id="http_header_strict_transport_security_childcontainer">
+				{preference name=http_header_strict_transport_security_value}
+			</div>
+
+			{preference name=http_header_public_key_pins}
+			<div class="adminoptionboxchild" id="http_header_public_key_pins_childcontainer">
+				{preference name=http_header_public_key_pins_value}
+			</div>
+
 		{/tab}
 
 		{tab name="{tr}Tokens{/tr}"}

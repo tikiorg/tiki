@@ -353,24 +353,57 @@ class Smarty_Tiki extends Smarty
 			}
 		}
 
-        /**
-         * Add security headers. By default there headers are not sent.
-         * To change go to admin > security > site access
-         */
-        if (!headers_sent()) {
-            if (!isset($prefs['http_header_frame_options'])) $frame = false;
-            else $frame = $prefs['http_header_frame_options'];
-            if (!isset($prefs['http_header_xss_protection'])) $xss = false;  // prevent smarty E_NOTICE
-            else $xss = $prefs['http_header_xss_protection'];
+		/**
+		 * Add security headers. By default there headers are not sent.
+		 * To change go to admin > security > site access
+		 */
+		if (!headers_sent()) {
+				if (!isset($prefs['http_header_frame_options'])) $frame = false;
+				else $frame = $prefs['http_header_frame_options'];
+				if (!isset($prefs['http_header_xss_protection'])) $xss = false;  // prevent smarty E_NOTICE
+				else $xss = $prefs['http_header_xss_protection'];
 
-            if ($frame == 'y') {
-                $header_value = $prefs['http_header_frame_options_value'];
-                header('X-Frame-Options: ' . $header_value);
-            }
-            if ($xss == 'y') {
-                $header_value = $prefs['http_header_xss_protection_value'];
-                header('X-XSS-Protection: ' . $header_value);
-            }
+			if (!isset($prefs['http_header_content_type_options']))
+				$content_type_options = false;  // prevent smarty E_NOTICE
+			else $content_type_options = $prefs['http_header_content_type_options'];
+
+			if (!isset($prefs['http_header_content_security_policy']))
+				$content_security_policy = false;  // prevent smarty E_NOTICE
+			else $content_security_policy = $prefs['http_header_content_security_policy'];
+
+			if (!isset($prefs['http_header_strict_transport_security']))
+				$strict_transport_security = false;  // prevent smarty E_NOTICE
+			else $strict_transport_security = $prefs['http_header_strict_transport_security'];
+
+			if (!isset($prefs['http_header_public_key_pins']))
+				$public_key_pins = false;  // prevent smarty E_NOTICE
+			else $public_key_pins = $prefs['http_header_public_key_pins'];
+
+			if ($frame == 'y') {
+					$header_value = $prefs['http_header_frame_options_value'];
+					header('X-Frame-Options: ' . $header_value);
+			}
+			if ($xss == 'y') {
+					$header_value = $prefs['http_header_xss_protection_value'];
+					header('X-XSS-Protection: ' . $header_value);
+			}
+			if ($content_type_options == 'y') {
+				header('X-Content-Type-Options: nosniff');
+			}
+			if ($content_security_policy == 'y') {
+				$header_value = $prefs['http_header_content_security_policy_value'];
+				header('Content-Security-Policy: ' . $header_value);
+			}
+
+			if ($strict_transport_security == 'y') {
+				$header_value = $prefs['http_header_strict_transport_security_value'];
+				header('Strict-Transport-Security: ' . $header_value);
+			}
+
+			if ($public_key_pins == 'y') {
+				$header_value = $prefs['http_header_public_key_pins_value'];
+				header('Public-Key-Pins: ' . $header_value);
+			}
         }
 
 		/**
