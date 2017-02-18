@@ -206,7 +206,7 @@ if ($_REQUEST['locSection'] == 'read') {
 		$smarty->assign('allbodies', htmlspecialchars($allbodies));
 
 		// collect addresses for reply
-		$to_addresses = $aux['from'];
+		$to_addresses = $aux['From'];
 
 		// Get email addresses from the 'from' portion
 		$to_addresses = explode(',', $to_addresses);
@@ -220,17 +220,17 @@ if ($_REQUEST['locSection'] == 'read') {
 			}
 		}
 
-		if (isset($aux['cc']) || preg_match('/,/', $aux['to'])) {
+		if (isset($aux['Cc']) || preg_match('/,/', $aux['To'])) {
 			$cc_addresses = '';
 
-			if (isset($aux['cc']))
-				$cc_addresses .= $aux['cc'];
+			if (isset($aux['Cc']))
+				$cc_addresses .= $aux['Cc'];
 
 			//add addresses to cc from 'to' field (for 'reply to all')
 			if ($cc_addresses != '')
 				$cc_addresses .= ',';
 
-			$cc_addresses .= $aux['to'];
+			$cc_addresses .= $aux['To'];
 			$cc_addresses = explode(',', $cc_addresses);
 
 			$temp_max = count($cc_addresses);
@@ -248,8 +248,8 @@ if ($_REQUEST['locSection'] == 'read') {
 		$to_addresses = join(',', $to_addresses);
 		$cc_addresses = join(',', $cc_addresses);
 
-		if (isset($aux['reply-to'])) {
-			$aux['replyto'] = $aux['reply-to'];
+		if (isset($aux['Reply-To'])) {
+			$aux['replyto'] = $aux['Reply-To'];
 
 			$aux['replycc'] = $cc_addresses;
 		} else {
@@ -257,17 +257,17 @@ if ($_REQUEST['locSection'] == 'read') {
 
 			$aux['replyto'] = $to_addresses;
 		}
-		if (!isset($aux['delivery-date'])) {
-			$aux['delivery-date'] = $aux['date'];
+		if (!isset($aux['Delivery-Date'])) {
+			$aux['delivery-date'] = $aux['Date'];
 		}
-		$aux['timestamp'] = strtotime($aux['delivery-date']);
+		$aux['timestamp'] = strtotime($aux['Delivery-Date']);
 
 		// the subject needs to be decoded
-		$aux['subject'] = isset($aux['subject'])	? mb_decode_mimeheader($aux['subject']) : '';
-		$aux['from']		= isset($aux['from'])			? utf8_encode($aux['from']) : '';
-		$aux['to']			= isset($aux['to'])				? utf8_encode($aux['to']) : '';
-		$aux['cc']			= isset($aux['cc'])				? utf8_encode($aux['cc']) : '';
-		$aux['date']		= isset($aux['date'])			? utf8_encode($aux['date']) : '';
+		$aux['subject'] = isset($aux['Subject'])	? mb_decode_mimeheader($aux['Subject']) : '';
+		$aux['from']		= isset($aux['From'])			? utf8_encode($aux['From']) : '';
+		$aux['to']			= isset($aux['To'])				? utf8_encode($aux['To']) : '';
+		$aux['cc']			= isset($aux['Cc'])				? utf8_encode($aux['Cc']) : '';
+		$aux['date']		= isset($aux['Date'])			? utf8_encode($aux['Date']) : '';
 
 		$smarty->assign('headers', $aux);
 

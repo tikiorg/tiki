@@ -389,10 +389,11 @@ class WebMailLib extends TikiLib
 	}
 
 	/**
-	 * @param $user			current user
-	 * @param $accountid	can be 0 (uses current account)
-	 * @param $reload		force reload from mail server?
-	 * @return array		of partial message headers
+	 * @param string $user		current user
+	 * @param int $accountid	can be 0 (uses current account)
+	 * @param bool $reload		force reload from mail server?
+	 * @return array			of partial message headers
+	 * @throws Exception
 	 */
 	function refresh_mailbox($user, $accountid, $reload)
 	{
@@ -443,14 +444,14 @@ class WebMailLib extends TikiLib
 
 			foreach ($mail as $messageNum => $message) {
 
-				$headers = $message->getHeaders();		// quicker than the Zend accessors?
+				$headers = $message->getHeaders()->toArray();		// quicker than the Zend accessors?
 				$wmail = Array();	// Tiki Webmail row
 
-				$wmail['from'] = $headers['from'];
-				$wmail['to'] = $headers['to'];
-				$wmail['subject'] = $headers['subject'];
-				$wmail['date'] = $headers['date'];
-				$wmail["timestamp"] = strtotime($headers['date']);
+				$wmail['from'] = $headers['From'];
+				$wmail['to'] = $headers['To'];
+				$wmail['subject'] = $headers['Subject'];
+				$wmail['date'] = $headers['Date'];
+				$wmail["timestamp"] = strtotime($headers['Date']);
 
 				$from = preg_split('/[<>]/', $wmail['from'], -1, PREG_SPLIT_NO_EMPTY);
 				$wmail['sender']['name'] = $from[0];
@@ -464,8 +465,8 @@ class WebMailLib extends TikiLib
 				}
 				$wmail['sender']['name'] = htmlspecialchars($wmail['sender']['name']);
 
-				if (!empty($headers['message-id'])) {
-					$wmail['realmsgid'] = preg_replace('/[<>]/', '', $headers['message-id']);
+				if (!empty($headers['Message-ID'])) {
+					$wmail['realmsgid'] = preg_replace('/[<>]/', '', $headers['Message-ID']);
 				} else {
 					$wmail['realmsgid'] = $wmail['timestamp'] . '.' . $wmail['sender']['email'];	// TODO better?
 				}

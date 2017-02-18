@@ -516,7 +516,7 @@
 		</tr>
 	</table>
 
-	<table class="webmail_message_headers">
+	<table class="webmail_message_headers table">
 		{if $fullheaders eq 'n'}
 			<tr>
 				<th><strong>{tr}Subject{/tr}</strong></th>
@@ -532,7 +532,7 @@
 			</tr>
 			{if $headers.cc}
 				<tr>
-					<td>{tr}Cc{/tr}</td>
+					<th>{tr}Cc{/tr}</th>
 					<td>{$headers.cc|escape}</td>
 				</tr>
 			{/if}
