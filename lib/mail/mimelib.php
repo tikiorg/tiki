@@ -16,7 +16,7 @@ if (strpos($_SERVER['SCRIPT_NAME'], basename(__FILE__)) !== false) {
  */
 class mime
 {
-	function mime()
+	function __construct()
 	{
 
 	}
