@@ -58,21 +58,29 @@ class TikiInit
 		$cache = TIKI_PATH . '/temp/cache/container.php';
 		if (is_readable($cache)) {
 			require_once $cache;
-			$container = new TikiCachedContainer;
 
-			/* If the server moved or was upgraded, the container must be recreated */
-			if (TIKI_PATH == $container->getParameter('kernel.root_dir') &&
-					$container->hasParameter('tiki.version') &&					// no version before 15.0
-					$container->getParameter('tiki.version') === $version)
-			{
-				if (TikiDb::get()) {
-					$container->set('tiki.lib.db', TikiDb::get());
-				}
-				return $container;
-			} else {
-				/* This server moved or was upgraded, container must be recreated */
+			if (! class_exists('TikiCachedContainer')) {
+				// mangled or otherwise invalid container
 				unlink($cache);
+			} else {
+
+				$container = new TikiCachedContainer;
+
+				/* If the server moved or was upgraded, the container must be recreated */
+				if (TIKI_PATH == $container->getParameter('kernel.root_dir') &&
+						$container->hasParameter('tiki.version') &&					// no version before 15.0
+						$container->getParameter('tiki.version') === $version)
+				{
+					if (TikiDb::get()) {
+						$container->set('tiki.lib.db', TikiDb::get());
+					}
+					return $container;
+				} else {
+					/* This server moved or was upgraded, container must be recreated */
+					unlink($cache);
+				}
 			}
+
 
 		}
 
