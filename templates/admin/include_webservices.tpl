@@ -40,9 +40,11 @@
 			</select>
 		</p>
 		<p id="ws_postbody">
-			{tr}Body of POST request{/tr}<br>
-			<textarea name="postbody">{$postbody|escape}</textarea><br>
-			{tr}Parameters (%name%):{/tr}
+			<label class="col-sm-4"> {tr}Body of POST request{/tr}</label>
+			<div class="col-sm-8">
+				<textarea name="postbody" class="form-control">{$postbody|escape}</textarea><br>
+				{tr}Parameters (%name%):{/tr}
+			</div>
 		</p>
 		<p id="ws_operation" style="display: none;">{tr}Operation:{/tr}<input type="text" name="operation" size="30" value="{$operation|escape}" /></p>
 		<p><input type="submit" class="btn btn-default btn-sm" name="parse" value="{tr}Lookup{/tr}"/></p>

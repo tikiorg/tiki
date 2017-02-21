@@ -129,147 +129,156 @@ if ($_REQUEST['locSection'] == 'read') {
 	}
 
 	if (isset($_REQUEST['msgid'])) {
-		$message = $mail->getMessage($_REQUEST['msgid']);
-		$aux = $message->getHeaders()->toArray();
-		$realmsgid = preg_replace('/[<>]/', '', $aux['message-id']);
-		$smarty->assign('msgid', $_REQUEST['msgid']);
-		$smarty->assign('realmsgid', $realmsgid);
-		$webmaillib->set_mail_flag($current['accountId'], $user, $realmsgid, 'isRead', 'y');
-		$mailsum = $mail->countMessages();
-		$numshow = $current['msgs'];
-
-		if ($_REQUEST['msgid'] == $mailsum) {
-			$smarty->assign('next', '');
-		} else {
-			$smarty->assign('next', $_REQUEST['msgid'] + 1);
-		}
-
-		if ($_REQUEST['msgid'] > 1) {
-			$smarty->assign('prev', $_REQUEST['msgid'] - 1);
-		} else {
-			$smarty->assign('prev', '');
-		}
-
-
-		$attachments = array();
-
-		//		if ($message->isMultipart()) {
-		//			TODO	deal with attachments here??
-		//		}
-
-		$bodies = $webmaillib->get_mail_content($user, $current['accountId'], $_REQUEST['msgid'], true);
-
-
-		for ($i = 0, $count_bodies = count($bodies); $i < $count_bodies; $i++) {
-			if ($bodies[$i]['contentType'] == 'text/html') {
-
-				$bod = $bodies[$i]['body'];
-
-				// Clean the string using HTML Purifier
-				require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
-				$bod = HTMLPurifier($bod);
-
-				if (preg_match_all('/<[\/]?body[^>]*>/i', $bod, $m, PREG_OFFSET_CAPTURE) && count($m) > 0 && count($m[0]) > 1) {
-					// gets positions of the start and end body tags then substr the bit inbetween
-					$bod = substr($bod, $m[0][0][1] + strlen($m[0][0][0]), $m[0][1][1]);
-				}
-				$bod = strip_tags(
-					$bod,
-					'<a><b><i><strong><em><p><blockquote><table><tbody><tr><td><th>' .
-					'<ul><li><img><hr><ol><br><h1><h2><h3><h4><h5><h6><div><span>'.
-					'<font><form><input><textarea><checkbox><select><style>'
-				);
-				// try to close malformed html not fixed by the purifier - because people email Really Bad Things and this messes up *lite.css layout
-				$bod = closetags($bod);
-				$bodies[$i]['body'] = $bod;
-
-			} else if ($bodies[$i]['contentType'] == 'text/plain') {
-				// reply text
-				$smarty->assign('plainbody', format_email_reply($bodies[$i]['body'], $aux['from'], $aux['date']));
-				$bodies[$i]['body'] = nl2br($bodies[$i]['body']);
-			}// else {
-				// attachments?
-			//}
-		}
-
-		array_multisort($bodies);	// this doesn't do what we need properly but seems to fluke it mostly - TODO a manual re-sort
-
-		$smarty->assign_by_ref('attachs', $attachments);
-		$smarty->assign_by_ref('bodies', $bodies);
-
 		try {
-			$allbodies = $message->getContent();
-		} catch (Exception $e) {
-			$allbodies = $e->getMessage();
-		}
+			$message = $mail->getMessage($_REQUEST['msgid']);
+			$aux = $message->getHeaders()->toArray();
+			$realmsgid = preg_replace('/[<>]/', '', $aux['message-id']);
+			$smarty->assign('msgid', $_REQUEST['msgid']);
+			$smarty->assign('realmsgid', $realmsgid);
+			$webmaillib->set_mail_flag($current['accountId'], $user, $realmsgid, 'isRead', 'y');
+			$mailsum = $mail->countMessages();
+			$numshow = $current['msgs'];
 
-		$smarty->assign('allbodies', htmlspecialchars($allbodies));
-
-		// collect addresses for reply
-		$to_addresses = $aux['From'];
-
-		// Get email addresses from the 'from' portion
-		$to_addresses = explode(',', $to_addresses);
-
-		$temp_max = count($to_addresses);
-		for ($i = 0; $i < $temp_max; $i++) {
-			preg_match('/<([^>]+)>/', $to_addresses[$i], $add);
-
-			if (isset($add[1])) {
-				$to_addresses[$i] = $add[1];
+			if ($_REQUEST['msgid'] == $mailsum) {
+				$smarty->assign('next', '');
+			} else {
+				$smarty->assign('next', $_REQUEST['msgid'] + 1);
 			}
-		}
 
-		if (isset($aux['Cc']) || preg_match('/,/', $aux['To'])) {
-			$cc_addresses = '';
+			if ($_REQUEST['msgid'] > 1) {
+				$smarty->assign('prev', $_REQUEST['msgid'] - 1);
+			} else {
+				$smarty->assign('prev', '');
+			}
 
-			if (isset($aux['Cc']))
-				$cc_addresses .= $aux['Cc'];
 
-			//add addresses to cc from 'to' field (for 'reply to all')
-			if ($cc_addresses != '')
-				$cc_addresses .= ',';
+			$attachments = array();
 
-			$cc_addresses .= $aux['To'];
-			$cc_addresses = explode(',', $cc_addresses);
+			//		if ($message->isMultipart()) {
+			//			TODO	deal with attachments here??
+			//		}
 
-			$temp_max = count($cc_addresses);
+			$bodies = $webmaillib->get_mail_content($user, $current['accountId'], $_REQUEST['msgid'], true);
+
+
+			for ($i = 0, $count_bodies = count($bodies); $i < $count_bodies; $i++) {
+				if ($bodies[$i]['contentType'] == 'text/html') {
+
+					$bod = $bodies[$i]['body'];
+
+					// Clean the string using HTML Purifier
+					require_once('lib/htmlpurifier_tiki/HTMLPurifier.tiki.php');
+					$bod = HTMLPurifier($bod);
+
+					if (preg_match_all('/<[\/]?body[^>]*>/i', $bod, $m, PREG_OFFSET_CAPTURE) && count($m) > 0 && count($m[0]) > 1) {
+						// gets positions of the start and end body tags then substr the bit inbetween
+						$bod = substr($bod, $m[0][0][1] + strlen($m[0][0][0]), $m[0][1][1]);
+					}
+					$bod = strip_tags(
+						$bod,
+						'<a><b><i><strong><em><p><blockquote><table><tbody><tr><td><th>' .
+						'<ul><li><img><hr><ol><br><h1><h2><h3><h4><h5><h6><div><span>' .
+						'<font><form><input><textarea><checkbox><select><style>'
+					);
+					// try to close malformed html not fixed by the purifier - because people email Really Bad Things and this messes up *lite.css layout
+					$bod = closetags($bod);
+					$bodies[$i]['body'] = $bod;
+
+				} else if ($bodies[$i]['contentType'] == 'text/plain') {
+					// reply text
+					$smarty->assign('plainbody', format_email_reply($bodies[$i]['body'], $aux['from'], $aux['date']));
+					$bodies[$i]['body'] = nl2br($bodies[$i]['body']);
+				}// else {
+				// attachments?
+				//}
+			}
+
+			array_multisort($bodies);    // this doesn't do what we need properly but seems to fluke it mostly - TODO a manual re-sort
+
+			$smarty->assign_by_ref('attachs', $attachments);
+			$smarty->assign_by_ref('bodies', $bodies);
+
+			try {
+				$allbodies = $message->getContent();
+			} catch (Exception $e) {
+				$allbodies = $e->getMessage();
+			}
+
+			$smarty->assign('allbodies', htmlspecialchars($allbodies));
+
+			// collect addresses for reply
+			$to_addresses = $aux['From'];
+
+			// Get email addresses from the 'from' portion
+			$to_addresses = explode(',', $to_addresses);
+
+			$temp_max = count($to_addresses);
 			for ($i = 0; $i < $temp_max; $i++) {
-				preg_match('/<([^>]+)>/', $cc_addresses[$i], $add);
+				preg_match('/<([^>]+)>/', $to_addresses[$i], $add);
 
 				if (isset($add[1])) {
-					$cc_addresses[$i] = $add[1];
+					$to_addresses[$i] = $add[1];
 				}
 			}
-		} else {
-			$cc_addresses = array();
+
+			if (isset($aux['Cc']) || preg_match('/,/', $aux['To'])) {
+				$cc_addresses = '';
+
+				if (isset($aux['Cc']))
+					$cc_addresses .= $aux['Cc'];
+
+				//add addresses to cc from 'to' field (for 'reply to all')
+				if ($cc_addresses != '')
+					$cc_addresses .= ',';
+
+				$cc_addresses .= $aux['To'];
+				$cc_addresses = explode(',', $cc_addresses);
+
+				$temp_max = count($cc_addresses);
+				for ($i = 0; $i < $temp_max; $i++) {
+					preg_match('/<([^>]+)>/', $cc_addresses[$i], $add);
+
+					if (isset($add[1])) {
+						$cc_addresses[$i] = $add[1];
+					}
+				}
+			} else {
+				$cc_addresses = array();
+			}
+
+			$to_addresses = join(',', $to_addresses);
+			$cc_addresses = join(',', $cc_addresses);
+
+			if (isset($aux['Reply-To'])) {
+				$aux['replyto'] = $aux['Reply-To'];
+
+				$aux['replycc'] = $cc_addresses;
+			} else {
+				$aux['replycc'] = $cc_addresses;
+
+				$aux['replyto'] = $to_addresses;
+			}
+			if (!isset($aux['Delivery-Date'])) {
+				$aux['delivery-date'] = $aux['Date'];
+			}
+			$aux['timestamp'] = strtotime($aux['Delivery-Date']);
+
+			// the subject needs to be decoded
+			$aux['subject'] = isset($aux['Subject']) ? mb_decode_mimeheader($aux['Subject']) : '';
+			$aux['from'] = isset($aux['From']) ? utf8_encode($aux['From']) : '';
+			$aux['to'] = isset($aux['To']) ? utf8_encode($aux['To']) : '';
+			$aux['cc'] = isset($aux['Cc']) ? utf8_encode($aux['Cc']) : '';
+			$aux['date'] = isset($aux['Date']) ? utf8_encode($aux['Date']) : '';
+
+			$smarty->assign('headers', $aux);
+
+		} catch (\Zend\Mail\Protocol\Exception\RuntimeException $e) {
+			Feedback::error(tr('Message not found with ID %0', $_REQUEST['msgid']), 'session');
+			handleWebmailRedirect('locSection=mailbox&refresh_mail=1');
+		} catch (Exception $e) {
+			Feedback::error(tr('An error occurred retrieving message ID %0', $_REQUEST['msgid']) . '<br>' . $e->getMessage(), 'session');
+			handleWebmailRedirect('locSection=mailbox');
 		}
-
-		$to_addresses = join(',', $to_addresses);
-		$cc_addresses = join(',', $cc_addresses);
-
-		if (isset($aux['Reply-To'])) {
-			$aux['replyto'] = $aux['Reply-To'];
-
-			$aux['replycc'] = $cc_addresses;
-		} else {
-			$aux['replycc'] = $cc_addresses;
-
-			$aux['replyto'] = $to_addresses;
-		}
-		if (!isset($aux['Delivery-Date'])) {
-			$aux['delivery-date'] = $aux['Date'];
-		}
-		$aux['timestamp'] = strtotime($aux['Delivery-Date']);
-
-		// the subject needs to be decoded
-		$aux['subject'] = isset($aux['Subject'])	? mb_decode_mimeheader($aux['Subject']) : '';
-		$aux['from']		= isset($aux['From'])			? utf8_encode($aux['From']) : '';
-		$aux['to']			= isset($aux['To'])				? utf8_encode($aux['To']) : '';
-		$aux['cc']			= isset($aux['Cc'])				? utf8_encode($aux['Cc']) : '';
-		$aux['date']		= isset($aux['Date'])			? utf8_encode($aux['Date']) : '';
-
-		$smarty->assign('headers', $aux);
 
 	} else {	// $_REQUEST['msgid'] unset by delete
 		handleWebmailRedirect('locSection=mailbox');
