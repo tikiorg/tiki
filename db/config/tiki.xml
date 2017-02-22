@@ -340,6 +340,9 @@
 		<service id="tiki.lib.zotero" class="ZoteroLib">
 			<file>%kernel.root_dir%/lib/zoterolib.php</file>
 		</service>
+		<service id="tiki.lib.blacklist" class="blacklistLib">
+			<file>%kernel.root_dir%/lib/user/blacklistlib.php</file>
+		</service>
 
 		<service id="tiki.wiki.slug.dash" class="Tiki\Wiki\SlugManager\DashGenerator">
 			<tag name="tiki.wiki.slug.generator"/>

@@ -10,6 +10,8 @@
  */
 function prefs_pass_list()
 {
+	$blackL = TikiLib::lib('blacklist');
+
 	return array(
         'pass_chr_num' => array(
             'name' => tra('Require characters and numerals'),
@@ -24,7 +26,7 @@ function prefs_pass_list()
             'default' => 'auto',
             'filter' => 'striptags',
             'options' => array_merge(array('auto' => 'Automatically select blacklist'),
-                           function_exists('genIndexedBlacks') ? genIndexedBlacks() : array()),
+                $blackL->genIndexedBlacks())
         ),
         'pass_blacklist' => array(
             'name' => tra('Prevent common passwords'),
