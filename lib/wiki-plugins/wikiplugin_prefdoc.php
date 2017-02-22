@@ -10,7 +10,7 @@ function wikiplugin_prefdoc_info()
 	return array(
 		'name' => tra('Document Preferences'),
 		'documentation' => 'PluginPrefDoc',
-		'description' => tra('Generates documentation for Tiki preference tabs.'),
+		'description' => tra('Generates documentation for Tiki preference tabs, mostly for use on Tiki’s documentation website.'),
 		'prefs' => array( 'wikiplugin_prefdoc' ),
 		'validate' => 'all',
 		'introduced' => 17,
@@ -84,6 +84,8 @@ function wikiplugin_prefdoc( $data, $params )
 
 class PrefsDoc extends TWVersion{
 
+	public $docTable;
+	public $error;
 	private $PrefVars;
 	private $prevFilePrefs;
 	private $fileCount;
@@ -91,9 +93,6 @@ class PrefsDoc extends TWVersion{
 	private $prefDefault;
 	private $prefDescription;
 	private $prefName;
-	public $docTable;
-	public $error;
-
 
 	/**
 	 *
@@ -166,6 +165,117 @@ class PrefsDoc extends TWVersion{
 		}
 		$files = implode('<br>',$files);
 		return $files;
+	}
+
+	/**
+	 *
+	 * Generates a wiki syntax table for a specific version of tiki
+	 *
+	 * @param string $fileName  The file name to write to disk.
+	 *
+	 * @return bool false on error, true otherwise
+	 */
+	private function genPrefVersion($fileName)
+	{
+		if (!is_file($fileName)){
+			$this->error .= "Cant read $fileName. ";
+			return false;
+		}
+		$this->docTable .= '{FANCYTABLE(head="Option | Description | Default" sortable="n")}';
+		$FilePrefs = json_decode(file_get_contents($fileName));
+		foreach ($FilePrefs->prefs as $prefName => &$pref) {
+			$this->prevFilePrefs;
+
+			// carry over missing information filled out in a newer version
+			if (!$pref->description)
+				$pref->description = $this->prevFilePrefs->$prefName->description;
+			if (!$pref->help)
+				$pref->help = $this->prevFilePrefs->$prefName->help;
+			if (!$pref->hint)
+				$pref->hint = $this->prevFilePrefs->$prefName->hint;
+			$this->setParams($pref);
+			$this->docTable .= $this->prefName . '~|~' . $this->prefDescription . '~|~' . $this->prefDefault . "\n";
+		}
+		$this->prevFilePrefs = $FilePrefs->prefs;
+		$this->docTable .= "{FANCYTABLE}";
+		return true;
+	}
+
+	/**
+	 *
+	 * This sets an vars of an individual preference
+	 *
+	 * @param $param object the prefs to be processed into pretty & standardized output
+	 */
+	private function setParams($param)
+	{
+		// set default
+		if ($param->default == 'n') {
+			$this->prefDefault = 'Disabled';
+		} else if ($param->default == 'y') {
+			$this->prefDefault = 'Enabled';            // Change default codes to human readable format
+		} else if (is_array($param->default)) {
+			$this->prefDefault = implode(', ', $param->default);
+		} else {
+			$this->prefDefault = $param->default;
+		}
+		// end first processing the below should be applied to the above.... not a continuation (eg. empty array)
+		$this->prefDefault = trim($this->prefDefault);
+		if (!$this->prefDefault) {
+			$this->prefDefault = '~~gray:None~~';
+		} else if (!preg_match('\W', $this->prefDefault)) {                // if Pref is a singe word
+			$this->prefDefault = ucfirst($this->prefDefault);            // then caps the first letter.
+		} else{
+			if (strlen($this->prefDefault) > 30) {
+				$this->prefDefault = substr($this->prefDefault, 0, 27) . '...';
+			}
+			$this->prefDefault = $this->wikiConvert($this->prefDefault,true);
+		}
+
+		// set name
+		if ($param->help) {
+			$this->prefName = '((' . $param->help . '|' . $param->name . '))';
+		}else {
+			$this->prefName = $param->name;
+		}
+		$this->prefName = $this->wikiConvert($this->prefName);
+
+		// set description
+		$this->prefDescription = $param->description;
+		if ($param->hint)
+			$this->prefDescription .= " ''Hint: ".$param->hint."''";
+		foreach ($param->tags as $tag)
+			if ($tag === 'experimental')
+				$this->prefDescription .= ' (experimental)';
+		$this->prefDescription = $this->wikiConvert($this->prefDescription);
+	}
+
+	/**
+	 * Preps a string from tiki prefs for insertion into tiki-syntax land
+	 *
+	 * @param $string string to be parsed
+	 *
+	 * @param $escape bool if $string should be enclosed in tiki no-parse tags
+	 *
+	 *
+	 * @return string parsed string sutable for wiki insertion
+	 *
+	 */
+	private function wikiConvert($string, $escape = false){
+		$escapedString = '';
+		if ($string) {
+			if ($escape) {
+				$escapedString = ' ~np~';
+			}
+			$escapedString .= str_replace("\n", ' ', $string);
+			$escapedString = trim($escapedString);
+			if ($escape) {
+				$escapedString .= '~/np~';
+			}
+		}
+
+		return $escapedString;
+
 	}
 
 	/**
@@ -243,8 +353,6 @@ class PrefsDoc extends TWVersion{
 		$this->PrefVars = $prefs;
 	}
 
-
-
 	/**
 	 *
 	 * This generates a list of prefs in the order that they appear on the admin panel.
@@ -275,119 +383,6 @@ class PrefsDoc extends TWVersion{
 		}
 
 		return $tabPrefs;
-	}
-
-
-	/**
-	 *
-	 * This sets an vars of an individual preference
-	 *
-	 * @param $param object the prefs to be processed into pretty & standardized output
-	 */
-	private function setParams($param)
-	{
-		// set default
-		if ($param->default == 'n') {
-			$this->prefDefault = 'Disabled';
-		} else if ($param->default == 'y') {
-			$this->prefDefault = 'Enabled';            // Change default codes to human readable format
-		} else if (is_array($param->default)) {
-			$this->prefDefault = implode(', ', $param->default);
-		} else {
-			$this->prefDefault = $param->default;
-		}
-		// end first processing the below should be applied to the above.... not a continuation (eg. empty array)
-		$this->prefDefault = trim($this->prefDefault);
-		if (!$this->prefDefault) {
-			$this->prefDefault = '~~gray:None~~';
-		} else if (!preg_match('\W', $this->prefDefault)) {                // if Pref is a singe word
-			$this->prefDefault = ucfirst($this->prefDefault);            // then caps the first letter.
-		} else{
-			if (strlen($this->prefDefault) > 30) {
-				$this->prefDefault = substr($this->prefDefault, 0, 27) . '...';
-			}
-			$this->prefDefault = $this->wikiConvert($this->prefDefault,true);
-		}
-
-		// set name
-		if ($param->help) {
-			$this->prefName = '((' . $param->help . '|' . $param->name . '))';
-		}else {
-			$this->prefName = $param->name;
-		}
-		$this->prefName = $this->wikiConvert($this->prefName);
-
-		// set description
-		$this->prefDescription = $param->description;
-		if ($param->hint)
-			$this->prefDescription .= " ''Hint: ".$param->hint."''";
-		foreach ($param->tags as $tag)
-			if ($tag === 'experimental')
-				$this->prefDescription .= ' (experimental)';
-		$this->prefDescription = $this->wikiConvert($this->prefDescription);
-	}
-
-
-	/**
-	 * Preps a string from tiki prefs for insertion into tiki-syntax land
-	 *
-	 * @param $string string to be parsed
-	 *
-	 * @param $escape bool if $string should be enclosed in tiki no-parse tags
-	 *
-	 *
-	 * @return string parsed string sutable for wiki insertion
-	 *
-	 */
-	private function wikiConvert($string, $escape = false){
-		$escapedString = '';
-		if ($string) {
-			if ($escape) {
-				$escapedString = ' ~np~';
-			}
-			$escapedString .= str_replace("\n", ' ', $string);
-			$escapedString = trim($escapedString);
-			if ($escape) {
-				$escapedString .= '~/np~';
-			}
-		}
-
-		return $escapedString;
-
-	}
-
-	/**
-	 *
-	 * Generates a wiki syntax table for a specific version of tiki
-	 *
-	 * @param string $fileName  The file name to write to disk.
-	 *
-	 * @return bool false on error, true otherwise
-	 */
-	private function genPrefVersion($fileName)
-	{
-		if (!is_file($fileName)){
-			$this->error .= "Cant read $fileName. ";
-			return false;
-		}
-		$this->docTable .= '{FANCYTABLE(head="Option | Description | Default" sortable="n")}';
-		$FilePrefs = json_decode(file_get_contents($fileName));
-		foreach ($FilePrefs->prefs as $prefName => &$pref) {
-			$this->prevFilePrefs;
-
-			// carry over missing information filled out in a newer version
-			if (!$pref->description)
-				$pref->description = $this->prevFilePrefs->$prefName->description;
-			if (!$pref->help)
-				$pref->help = $this->prevFilePrefs->$prefName->help;
-			if (!$pref->hint)
-				$pref->hint = $this->prevFilePrefs->$prefName->hint;
-			$this->setParams($pref);
-			$this->docTable .= $this->prefName . '~|~' . $this->prefDescription . '~|~' . $this->prefDefault . "\n";
-		}
-		$this->prevFilePrefs = $FilePrefs->prefs;
-		$this->docTable .= "{FANCYTABLE}";
-		return true;
 	}
 
 	/**
