@@ -19,7 +19,7 @@ class TikiHelpLib
 
 	}
 	*/
-/* end of class */
+	/* end of class */
 }
 
 
@@ -35,7 +35,7 @@ function help_doclink($params)
 
 	extract($params);
 	// Param = zone
-		$ret = '';
+	$ret = '';
 	if (empty($url) && empty($desc) && empty($crumb)) {
 		return;
 	}
@@ -45,17 +45,18 @@ function help_doclink($params)
 		$desc = $crumb->helpDescription;
 	}
 
-	if ($prefs['feature_help'] == 'y' and $url) {
-		if (!isset($desc)) {
-			$smarty = TikiLib::lib('smarty');
-			$smarty->loadPlugin('smarty_function_icon');
+	// always display help buttons with descriptions, but only display help links when option is enabled.
+	if (($prefs['feature_help'] == 'y' and $url) or ($desc && empty($crumb))) {
+		if (!isset($desc))
 			$desc = tra('Help link');
 
-			$ret = '<a title="' . $url . '|' . htmlentities($desc, ENT_COMPAT, 'UTF-8') . '" href="'
-						. $prefs['helpurl'] . $url . '" target="tikihelp" class="tikihelp btn btn-link">'
-						. smarty_function_icon(array('name' => 'help'), $smarty)
-						. '</a>';
-		}
+		$smarty = TikiLib::lib('smarty');
+		$smarty->loadPlugin('smarty_function_icon');
+
+		$ret = '<a title="' . $url . '|' . htmlentities($desc, ENT_COMPAT, 'UTF-8') . '" href="'
+			. $prefs['helpurl'] . $url . '" target="tikihelp" class="tikihelp btn btn-link">'
+			. smarty_function_icon(array('name' => 'help'), $smarty)
+			. '</a>';
 	}
 
 	return $ret;
