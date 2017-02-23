@@ -24,7 +24,7 @@ function wikiplugin_metatag_info()
 				'name' => tra('Name'),
 				'description' => tra('Name attribute of the meta tag'),
 				'since' => '17.0',
-				'filter' => 'url',
+				'filter' => 'text',
 				'default' => '',
 			),
 			'content' => array(
