@@ -495,7 +495,7 @@ class UnifiedSearchLib
 	}
 
     /**
-     * @param $aggregator
+     * @param Search_Indexer $aggregator
      * @param string $mode
      */
     private function addSources($aggregator, $mode = 'indexing')
@@ -577,6 +577,10 @@ class UnifiedSearchLib
 
 		if ($prefs['goal_enabled'] == 'y') {
 			$aggregator->addContentSource('goalevent', new Search_ContentSource_GoalEventSource);
+		}
+
+		if ($prefs['feature_webservices'] === 'y') {
+			$aggregator->addContentSource('webservice', new Search_ContentSource_WebserviceSource());
 		}
 
 		// Global Sources

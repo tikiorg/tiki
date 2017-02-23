@@ -65,6 +65,7 @@ if (!isset($_REQUEST['parse']) && $response = $webservice->performRequest($_REQU
 			'smarty/tikiwiki',
 			'smarty/html',
 			'javascript/html',
+			'index/index',
 		)
 	);
 

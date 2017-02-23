@@ -363,6 +363,9 @@ class Tiki_Webservice_Template
 				time(),
 			)
 		);
+
+		require_once 'lib/search/refresh-functions.php';
+		refresh_index('webservice', $this->name);
 	}
 
     /**

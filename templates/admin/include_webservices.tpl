@@ -152,6 +152,7 @@
 								<option value=""></option>
 								<option value="javascript" {if $nt_engine eq 'javascript'} selected="selected"{/if}>JavaScript</option>
 								<option value="smarty"{if $nt_engine eq 'smarty'} selected="selected"{/if}>Smarty</option>
+								<option value="index"{if $nt_output eq 'index'} selected="selected"{/if}>Index</option>
 							</select>
 						</td>
 						<td style="padding: 0 .5em" colspan="2">
@@ -159,6 +160,7 @@
 								<option value=""></option>
 								<option value="html" {if $nt_output eq 'html'} selected="selected"{/if}>HTML</option>
 								<option value="tikiwiki"{if $nt_output eq 'tikiwiki'} selected="selected"{/if}>Wiki</option>
+								<option value="index"{if $nt_output eq 'index'} selected="selected"{/if}>Index</option>
 							</select>
 						</td>
 					</tr>
