@@ -15,21 +15,6 @@
 
 class blacklistLib extends TikiLib
 {
-
-
-	/**
-	 * @var int the maximum length of the password
-	 */
-	public $length;
-
-	/**
-	 * @var bool  if the password requires numbers and letters
-	 */
-	public $charnum;
-	/**
-	 * @var bool if the password requries special characters
-	 */
-	public $special;
 	/**
 	 * @var int the number of passwords to generate (limit) or actual number, after the fact.
 	 */
@@ -47,9 +32,6 @@ class blacklistLib extends TikiLib
 	 */
 	public function __construct()
 	{
-		$this->length = $GLOBALS['prefs']['min_pass_length']; // the maximum length of the password
-		$this->charnum = $GLOBALS['prefs']['pass_chr_num']; // if the password requires numbers and letters
-		$this->special = $GLOBALS['prefs']['pass_chr_special']; // if the password reburies special characters
 		$this->limit = 1000; // the number of passwords to generate (limit)
 	}
 
@@ -150,13 +132,14 @@ LIMIT 1;';
 	 */
 	public function generatePassList($toDisk)
 	{
+		global $prefs;
 
 		$query = 'SELECT password FROM tiki_password_index WHERE length >= ?';
-		if ($this->special) $query .= ' && special';
-		if ($this->charnum) $query .= ' && numchar';
+		if ($prefs['pass_chr_special']) $query .= ' && special';
+		if ($prefs['pass_chr_num']) $query .= ' && numchar';
 		$query .= ' ORDER BY id ASC LIMIT ' . $this->limit;
 
-		$result = $this->query($query, array($this->length));
+		$result = $this->query($query, array($prefs['min_pass_length']));
 		$this->actual = $result->NumRows();
 
 		if ($toDisk){
@@ -189,12 +172,13 @@ LIMIT 1;';
 	 */
 	public function generateBlacklistName($asFile = true)
 	{
+		global $prefs;
 
 		$filename = '';
 		if ($asFile) $filename = 'storage/pass_blacklists/'; // directory
-		$filename .= $this->charnum;
-		$filename .= '-' . $this->special;
-		$filename .= '-' . $this->length;
+		$filename .= $prefs['pass_chr_num'];
+		$filename .= '-' . $prefs['pass_chr_special'];
+		$filename .= '-' . $prefs['min_pass_length'];
 		$filename .= '-1-'; // indicates user created file
 		$filename .= $this->actual;
 		if (!$asFile) return $filename;
