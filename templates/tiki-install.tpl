@@ -202,7 +202,7 @@
 					<h2>{tr}Image Processing{/tr}</h2>
 					{if $gd_test eq 'y'}
 						{remarksbox type=confirm title="{tr}Success{/tr}" close="n"}
-							{icon name="ok"} {tr}Tiki detected:{/tr} <strong>GD {$gd_info}</strong>
+							{icon name="ok"} {tr}Tiki detected:{/tr} <strong>GD {if $lang eq 'he' or $lang eq 'ar'}{$gd_info|regex_replace:"/[()]/":""}{else}{$gd_info}{/if}</strong>
 							{if $sample_image eq 'y'}
 								<p>{icon name="ok"} {tr}Tiki can create images.{/tr}</p>
 							{else}
@@ -239,8 +239,8 @@
 					{else}
 						{remarksbox type=confirm title="{tr}Success{/tr}" close="n"}
 							{if $dbname}
-								{tr}Tiki found an existing database connection in your local.php file.{/tr}
-								<strong>{tr _0=$dbname}Schema name: &quot;%0&quot;{/tr}</strong>
+								{tr}Tiki found an existing database connection in your local.php file.{/tr}<br>
+								<strong>{tr _0=$dbname}Database name: %0{/tr}</strong>
 							{else}
 								{tr}Tiki found an automatic database connection for your environment.{/tr}
 							{/if}
@@ -253,7 +253,7 @@
 								<input type="submit" class="btn btn-primary" value=" {tr}Use Existing Connection{/tr} ">
 							</form>
 							<hr>
-							<a href="#" onclick="$('#installer_3_new_db_form').toggle();return false;" class="btn btn-link">{tr}Modify database connection{/tr}</a>
+							<a href="#" onclick="$('#installer_3_new_db_form').toggle();return false;" class="btn btn-warning">{tr}Modify database connection{/tr}</a>
 						</div>
 					{/if}
 					<div id="installer_3_new_db_form"{if $dbcon eq 'y'} style="display:none;"{/if}>
@@ -303,15 +303,15 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="name">{tr}Schema name:{/tr}</label>
+									<label for="name">{tr}Database name:{/tr}</label>
 									<div style="margin-left:1em;">
 										<input type="text" class=form-control id="name" name="name" size="40" value="{if isset($smarty.request.name)}{$smarty.request.name|escape:"html"}{elseif isset($preconfigname)}{$preconfigname|escape:"html"}{/if}" placeholder="{tr}databaseName{/tr}"/>
 										<a href="javascript:void(0)" onclick="flip('name_help');" title="{tr}Help{/tr}">
 											{icon name="help"}
 										</a>
-										<br><em>{tr}Name of the database schema to be used. This schema will be created if it does not exist and permissions allow creation.{/tr}</em>
+										<br><em>{tr}Name of the database to be used. This database will be created if it does not exist and permissions allow creation.{/tr}</em>
 										<div style="margin-left:1em;display:none;" id="name_help">
-											<p>{tr}You can create the database schema using Adminer, MySQL Workbench, phpMyAdmin, cPanel, or ask your hosting provider. If the schema doesn't exist and the supplied username has permissions, it will be created.{/tr}</p>
+											<p>{tr}You can create the database using Adminer, MySQL Workbench, phpMyAdmin, cPanel, or ask your hosting provider. If the database doesn't exist and the supplied username has permissions, it will be created.{/tr}</p>
 											<p>{tr}If you are using a database which is already being used for something else (not recommended), check db/tiki.sql to make sure the table names used by Tiki are not already used.{/tr}</p>
 										</div>
 									</div>
@@ -388,7 +388,7 @@
 
 			{elseif $install_step eq '4'}
 				<div class="install-step4">
-					<h1>{if $tikidb_created}{tr}Install &amp; Upgrade{/tr}{else}{tr}Install{/tr}{/if}</h1>
+					<h1>{if $tikidb_created}{tr}Install & Upgrade{/tr}{else}{tr}Install{/tr}{/if}</h1>
 					{if $max_exec_set_failed eq 'y'}
 						{remarksbox type="warning" title="{tr}Warning{/tr}" close="n"}
 							{tr}Failed to set max_execution_time for PHP. You may experience problems when creating/upgrading the database using this installer on a slow system. This can manifest itself by a blank page.{/tr}
@@ -405,7 +405,7 @@
 					{if ($database_charset neq 'utf8' or isset($legacy_collation)) and $tikidb_created}
 						{remarksbox type=error title="{tr}Encoding Issue{/tr}" close="n"}
 							{if isset($legacy_collation)}
-								<strong style="color: red">Something is wrong with the database encoding.</strong> The schema has UTF-8 as default encoding but some tables in the schema have a different collation, {$legacy_collation}. Converting to UTF-8 may solve this but may also make matters worse. You should investigate what happened or only proceed with backups.
+								<strong style="color: red">Something is wrong with the database encoding.</strong> The database has UTF-8 as default encoding but some tables in the database have a different collation, {$legacy_collation}. Converting to UTF-8 may solve this but may also make matters worse. You should investigate what happened or only proceed with backups.
 							{else}
 								{tr _0=$database_charset}<p>Your database encoding is <strong>not</strong> in UTF-8.</p><p>Current encoding is <em>%0</em>. The languages that will be available for content on the site will be limited. If you plan on using languages not covered by the character set, you should re-create or alter the database so the default encoding is <em>utf8</em>.</p>{/tr}
 							{/if}
@@ -435,7 +435,7 @@
 										<h3>{tr}Install{/tr}</h3>
 										{if $tikidb_created}
 											{remarksbox type="warning" title="{tr}Warning{/tr}" close="n"}
-												{tr _0=$dbname}This will destroy your current database &quot;%0&quot;.{/tr}
+												{tr _0=$dbname}This will destroy your current database : %0.{/tr}
 											{/remarksbox}
 										{/if}
 										{if $tikidb_created}
@@ -448,7 +448,7 @@
 											{/literal}
 											//--><!]]></script>
 											<div id="install-link">
-												<p style="text-align:center"><a style="color: #1174a5;" href="javascript:install()">{tr}Reinstall the database{/tr}</a></p>
+												<p><a class="btn btn-warning" href="javascript:install()">{tr}Reinstall the database{/tr}</a></p>
 											</div>
 											<div id="install-table" style="visibility:hidden">
 										{else}
@@ -590,7 +590,7 @@
 									<label for="browsertitle">
 										{tr}Browser title:{/tr}
 									</label>
-									<input class="form-control" type="text" size="40" name="browsertitle" id="browsertitle" value="{$prefs.browsertitle|escape}" placeholder="{tr}My Tiki{/tr}">
+									<input class="form-control" type="text" size="40" name="browsertitle" id="browsertitle" value="{if $prefs.browsertitle}{$prefs.browsertitle|escape}{else}{tr}My Tiki{/tr}{/if}">
 									<span class="help-block">
 										{tr}This will appear in the browser title bar.{/tr}
 									</span>
@@ -771,14 +771,16 @@
 							</legend>
 							{tr}It is highly recommended that you subscribe to the Tiki Releases newsletter, so that you receive important notices about new releases and critical security updates.{/tr}
 							{tr}We don't share subscribed emails and we send very few of these newsletters per year.{/tr}<br /><br />
-							{tr}Please use the following link and subscribe	:{/tr} <a href="https://tiki.org/tiki-newsletters.php?nlId=8&info=1" title="Subscribe" target="_blank" class="text-danger">{tr}Tiki Releases newsletter{/tr}</a>
+							{tr}Please use the following link and subscribe:{/tr} <a href="https://tiki.org/tiki-newsletters.php?nlId=8&info=1" title="Subscribe" target="_blank" class="text-danger">{tr}Tiki Releases newsletter{/tr}</a>
 						</fieldset>
 						</br>
 						<fieldset>
 							<legend>
 								{icon name="magic"}{icon name="filter"} {tr}First Wizards, then Control Panels with Preference Filter{/tr}
 							</legend>
-							{tr}Tiki contains thousands of options and parameters (what we call "preferences"), which can be overwhelming for a new site administrator.{/tr} {tr}That's why we suggest you to get started using the <a class='alert-link' target='tikihelp' href='https://doc.tiki.org/Wizards'>Wizards</a> first ({icon name='magic'}), and when you need full control of the other options, you will only have the basic preferences displayed by default in a new installation.{/tr}<br /><br />
+							{tr}Tiki contains thousands of options and parameters (what we call "preferences"), which can be overwhelming for a new site administrator.{/tr}
+							{tr}That's why we suggest you to start by using our <a class='alert-link' target='tikihelp' href='https://doc.tiki.org/Wizards'>Wizards</a> ({icon name='magic'}).{/tr}
+							{tr}Once basic parameters will be set, you will always be able to gain full control of the options using the Control Panels. Note : basic preferences will be displayed by default after a new install.{/tr}<br /><br />
 							{tr}You can modify the default filter choice at your own convenience to also display Advanced, Experimental or Unavailable preferences in Control Panels.{/tr}
 							{tr}You'll find the <a class='alert-link' target='tikihelp' href='https://doc.tiki.org/Preference+Filters'>Preference Filter</a> at the top of the Navigation Bar in the <a class='alert-link' target='tikihelp' href='https://doc.tiki.org/Control+Panels'>Control Panels</a> by clicking on the funnel icon ({icon name='filter'}) or use the search box provided.{/tr}<br />
 						</fieldset>
@@ -788,7 +790,7 @@
 								{icon name="floppy-o"} {tr}Storing your uploaded files{/tr}
 							</legend>
 							{tr}To ease the install process and first access, Tiki saves your uploaded files (office documents, images, pdf, etc. attached to wiki pages, forum posts, tracker items, file galleries, ...) by default in its database.{/tr}
-							{tr}This works perfectly in most cases but it is not the recommended setup if you need to save many thousands of files or more.{/tr} <br /><br />{tr}In that case, consider switching from "<strong>Store to database</strong>" to "<strong>Store to directory</strong>", which you will find in the <em>Configuration Wizard</em> for the most usual features and in the <em>Control Panels</em> for all of them and it will allow you to migrate your currently uploaded files.{/tr}<br />
+							{tr}This works perfectly in most cases but it is not the recommended setup if you need to save many thousands of files or more.{/tr} <br /><br />{tr}In that case, consider switching from "<strong>Store to database</strong>" to "<strong>Store to directory</strong>", which you will find in the <em>Configuration Wizard - Set up File Gallery & Attachments</em> or in the <em>Control Panels - File Galleries</em> where you will be able to migrate your currently uploaded files from one to the other.{/tr}<br />
 							<br />
 						</fieldset>
 						</br>
@@ -845,7 +847,7 @@
 						<p>{tr}If this is an upgrade, clean the Tiki caches manually (the <strong>temp/templates_c</strong> directory) or by using the <strong>Admin &gt; System</strong> option from the Admin menu.{/tr}</p>
 					{/if}
 					{if $tikidb_is20}
-						<form method="post" action="tiki-install.php" style="float: left">
+						<form method="post" action="tiki-install.php" class="btn pvtVertList">
 							{if $multi}
 								<input type="hidden" name="multi" value="{$multi|escape}">
 							{/if}
@@ -853,14 +855,14 @@
 							<input type="hidden" name="install_step" value="9">
 							<input type="submit" value="{tr}Enter Tiki and Lock Installer{/tr} ({tr}Recommended{/tr})" class="btn btn-primary">
 						</form>
-						<form method="post" action="tiki-install.php" style="margin-left: 20px; display: inline-block;">
+						<form method="post" action="tiki-install.php" class="btn pvtVertList">
 							<input type="hidden" name="nolockenter" value="1">
 							{if $multi}
 								<input type="hidden" name="multi" value="{$multi|escape}">
 							{/if}
 							<input type="hidden" name="install_type" value="{$install_type}">
 							<input type="hidden" name="install_step" value="9">
-							<input type="submit" value="{tr}Enter Tiki Without Locking Installer{/tr}" class="btn btn-default">
+							<input type="submit" value="{tr}Enter Tiki Without Locking Installer{/tr}" class="btn btn-warning">
 							<br><em><span class="text-warning">{icon name="warning"}</span> {tr}Not recommended due to security risk{/tr}.</em>
 						</form>
 					{/if}
