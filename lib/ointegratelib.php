@@ -310,14 +310,14 @@ class OIntegrate_Response
     function render( $engine, $engineOutput, $outputContext, $templateFile ) // {{{
 	{
 		$engine = OIntegrate::getEngine($engine, $engineOutput);
-		if ( ! $output = OIntegrate::getConverter($engineOutput, $outputContext) ) {
-			$this->errors = array( 1001, 'Output converter not found.' );
-			return;
+		if ( ! $engine ) {
+			$this->errors = array( 1000, tr('Engine "%0" not found.', $engineOutput) );
+			return false;
 		}
 
-		if ( ! $engine ) {
-			$this->errors = array( 1000, 'Engine not found' );
-			return;
+		if ( ! $output = OIntegrate::getConverter($engineOutput, $outputContext) ) {
+			$this->errors = array( 1001, tr('Output converter "%0" not found.', $outputContext) );
+			return false;
 		}
 
 		$raw = $engine->process($this->data, $templateFile);
