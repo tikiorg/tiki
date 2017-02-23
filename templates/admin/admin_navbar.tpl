@@ -144,6 +144,9 @@
 			target = $('.modal.fade:not(.in)').first();
 			$('.modal-body', target).after(
 				'<div class="modal-footer">' +
+					'<a href="#" onclick="$.closeModal();return false;" class="btn btn-default">'
+						+ tr('Close') +
+					'</a>' +
 					'<a href="' + location.href + '" onclick="location.reload();return false;" class="btn btn-primary">'
 						+ tr('Reload') +
 					'</a>' +
