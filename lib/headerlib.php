@@ -437,7 +437,9 @@ class HeaderLib
 
 		if (count($this->metatags)) {
 			foreach ($this->metatags as $n=>$m) {
-				$back.= '<meta name="' . smarty_modifier_escape($n) . '" content="' . smarty_modifier_escape($m) . "\">\n";
+				// check if the meta name starts with OpenGraph protocol prefix and use property instead of name if true
+				$nameattrib = preg_match('/^og\:/', $n) ? 'property' : 'name';
+				$back.= '<meta ' . $nameattrib . '="' . smarty_modifier_escape($n) . '" content="' . smarty_modifier_escape($m) . "\">\n";
 			}
 			$back.= "\n";
 		}
