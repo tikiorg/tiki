@@ -8,11 +8,11 @@
 function wikiplugin_metatag_info()
 {
 	return array(
-		'name' => tra('MetaTag'),
+		'name' => tr('MetaTag'),
 		'documentation' => 'PluginMetaTag',
-		'description' => tra('Add custom (meta) tags to HTML head on page where the plugin is used'),
+		'description' => tr('Add custom meta tags to HTML head on page where the plugin is used'),
 		'prefs' => array( 'wikiplugin_metatag' ),
-		'body' => tra('Tags for the HTML head'),
+		'body' => tr('Meta tags attributes for the HTML head where each meta goes on one line and name of the meta tag and the content is separated by a pipe (%0) character. Or just copy paste the raw HTML tags here.', '<code>|</code>'),
 		'validate' => 'all',
 		'filter' => 'rawhtml_unsafe',
 		'iconname' => 'code',
@@ -21,16 +21,16 @@ function wikiplugin_metatag_info()
 		'params' => array(
 			'name' => array(
 				'required' => false,
-				'name' => tra('Name'),
-				'description' => tra('Name attribute of the meta tag'),
+				'name' => tr('Name'),
+				'description' => tr('Name attribute of the meta tag'),
 				'since' => '17.0',
 				'filter' => 'text',
 				'default' => '',
 			),
 			'content' => array(
 				'required' => false,
-				'name' => tra('Content'),
-				'description' => tra('Content attribute of the meta tag'),
+				'name' => tr('Content'),
+				'description' => tr('Content attribute of the meta tag'),
 				'since' => '17.0',
 				'filter' => 'url',
 				'default' => '',
@@ -49,7 +49,17 @@ function wikiplugin_metatag($data, $params)
 			$content = '';
 		}
 		$headerlib->add_meta($name,$content);
-	} else if ($data) {
+	} else if (strpos($data, '|') !== FALSE) {
+		// split data by lines (trimed whitespace from start and end)
+		$lines = preg_split("/\n/", trim($data));
+
+		foreach ($lines as $line) {
+			$metaTagAttrib = explode('|', $line);
+			//$result .= "<meta name=\"$metaTagAttrib[0]\" content=\"$metaTagAttrib[1]\">\n";
+			$headerlib->add_meta(trim($metaTagAttrib[0]),trim($metaTagAttrib[1]));
+		}
+	} else {
+		// just insert the raw data from the plugin body
 		$headerlib->add_rawhtml($data);
 	}
 	return '';
