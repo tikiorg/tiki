@@ -125,10 +125,10 @@
 			<div class="table-responsive">
 				<table>
 					<tr>
-						<th>{tr}Name{/tr}</th>
-						<th>{tr}Engine{/tr}</th>
-						<th>{tr}Output{/tr}</th>
-						<th>{tr}Preview{/tr}</th>
+						<th style="width: 25%">{tr}Name{/tr}</th>
+						<th style="width: 25%">{tr}Engine{/tr}</th>
+						<th style="width: 25%">{tr}Output{/tr}</th>
+						<th style="width: 25%">{tr}Preview{/tr}</th>
 					</tr>
 					{foreach from=$storedTemplates item=template}
 						<tr>
@@ -140,7 +140,7 @@
 							<td>{$template->output|escape}</td>
 							<td><input type="submit" class="btn btn-default btn-sm" name="preview" value="{$template->name|escape}"/></td>
 						</tr>
-						<tr><td colspan="4"><pre>{$template->content|escape}</pre></td></tr>
+						<tr><td colspan="4"><pre style="max-height: 30em; overflow: auto; white-space: pre-wrap">{$template->content|escape}</pre></td></tr>
 						{if $preview eq $template->name}
 							<tr><td colspan="4">{$preview_output}</td></tr>
 						{/if}
