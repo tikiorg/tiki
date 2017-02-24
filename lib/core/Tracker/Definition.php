@@ -197,6 +197,21 @@ class Tracker_Definition
 		}
 	}
 
+	function getItemOwnerFields()
+	{
+		$ownerFields = array();
+		foreach ($this->getFields() as $field) {
+			if ($field['type'] == 'u'
+				&& $field['options_map']['owner'] == 1) {
+				$ownerFields[] = $field['fieldId'];
+			}
+		}
+		if( !$ownerFields ) {
+			$ownerFields = array($this->getUserField());
+		}
+		return array_filter($ownerFields);
+	}
+
 	function getArticleField()
  	{
  		foreach ($this->getFields() as $field) {

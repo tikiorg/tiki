@@ -340,7 +340,7 @@
 					{tr}User can see his own items{/tr}
 				</label>
 				<div class="description">
-					{tr}The tracker needs a user field with the auto-assign activated{/tr}.
+					{tr}The tracker needs a user field with the item-owner activated{/tr}.
 					{tr}No extra permission is needed at the tracker permissions level to allow a user to see just his own items through Plugin TrackerList with the param view=user{/tr}
 				</div>
 			</div>

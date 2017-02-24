@@ -36,6 +36,16 @@ class Tracker_Field_UserSelector extends Tracker_Field_Abstract implements Track
 						),
 						'legacy_index' => 0,
 					),
+					'owner' => array(
+						'name' => tr('Item Owner'),
+						'description' => tr('Is this field an ItemOwner field that determines permissions of the item?'),
+						'filter' => 'int',
+						'options' => array(
+							0 => tr('No'),
+							1 => tr('Yes'),
+						),
+						'default' => 0,
+					),
 					'notify' => array(
 						'name' => tr('Email Notification'),
 						'description' => tr('Send an email notification to the user(s) every time the item is modified.'),

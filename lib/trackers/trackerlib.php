@@ -1585,11 +1585,11 @@ class TrackerLib extends TikiLib
 		$info = $this->get_tracker_item((int) $itemId);
 		$factory = $definition->getFieldFactory();
 
-		$userField = $definition->getUserField();
-		$itemUsers = array();
-		if ($userField && isset($info[$userField])) {
-			$itemUsers = $this->parse_user_field($info[$userField]);
-		}
+		$itemUsers = array_map(function($userField) use ($info) {
+			return isset($info[$userField]) ? $this->parse_user_field($info[$userField]) : array();
+		}, $definition->getItemOwnerFields());
+
+		$itemUsers = call_user_func_array('array_merge', $itemUsers);
 
 		$fields = array();
 		foreach ($listfields as $fieldId => $fopt) {
@@ -3663,13 +3663,15 @@ class TrackerLib extends TikiLib
 	public function get_item_creators($trackerId, $itemId)
 	{
 		$definition = Tracker_Definition::get($trackerId);
-		if ($fieldId = $definition->getUserField()) {
-			// user creator field
-			$creators = $this->get_item_value($trackerId, $itemId, $fieldId);
-			return $this->parse_user_field($creators);
-		} else {
-			return array();
-		}
+
+		$owners = array_map(function($fieldId) use ($trackerId, $itemId) {
+
+			$owners = $this->get_item_value($trackerId, $itemId, $fieldId);
+			return $this->parse_user_field($owners);
+			
+		}, $definition->getItemOwnerFields());
+
+		return call_user_func_array('array_merge', $owners);
 	}
 
 	/* find the best fieldwhere you can do a filter on the initial

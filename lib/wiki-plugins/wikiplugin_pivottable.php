@@ -369,12 +369,15 @@ function wikiplugin_pivottable($data, $params)
 
 	$highlight = array();
 	if( !empty($params['highlightMine']) && $params['highlightMine'] === 'y' ) {
-		$ownerField = $definition->getField($definition->getUserField());
-		if( $ownerField ) {
-			foreach( $pivotData as $item ) {
+		$ownerFields = array_map(function($fieldId) use($definition) {
+			return $definition->getField($fieldId);
+		}, $definition->getItemOwnerFields());
+		foreach( $pivotData as $item ) {
+			foreach( $ownerFields as $ownerField ) {
 				$itemUsers = TikiLib::lib('trk')->parse_user_field(@$item[$ownerField['name']]);
 				if( in_array($user, $itemUsers) ) {
 					$highlight[] = $item;
+					break;
 				}
 			}
 		}

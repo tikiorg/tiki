@@ -227,13 +227,14 @@ class Tracker_Item
 			return $this->info['itemUsers'];
 		}
 
-		$userField = $this->definition->getUserField();
-		if ($userField) {
-			$owners = $this->getValue($userField);
-			return TikiLib::lib('trk')->parse_user_field($owners);
-		}
+		$owners = array_map(function($field) {
 
-		return array();
+			$owners = $this->getValue($field);
+			return TikiLib::lib('trk')->parse_user_field($owners);
+			
+		}, $this->definition->getItemOwnerFields());
+
+		return call_user_func_array('array_merge', $owners);
 	}
 
 	private function getItemGroupOwner()
